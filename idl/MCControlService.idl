@@ -1,0 +1,14 @@
+#ifndef _IDL_MCCONTROLSERVICE_IDL_
+#define _IDL_MCCONTROLSERVICE_IDL_
+
+module OpenHRP
+{
+
+  interface MCControlService
+  {
+    void place_holder();
+  };
+
+};
+
+#endif
