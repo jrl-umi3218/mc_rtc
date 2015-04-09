@@ -85,8 +85,11 @@ class MCControl  : public RTC::DataFlowComponentBase
  protected:
   // Configuration variable declaration
   // <rtc-template block="config_declare">
-  std::string m_robot_urdf_urdf;
-  
+  std::string m_robot_urdf_url;
+  std::string m_stances_file;
+  std::string m_conf_file;
+  double m_timeStep;
+
   // </rtc-template>
 
   // DataInPort declaration

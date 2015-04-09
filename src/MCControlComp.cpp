@@ -6,6 +6,16 @@
  *
  * $Id$ 
  */
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wall"
+#pragma GCC diagnostic ignored "-Wignored-qualifiers"
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+#ifdef __clang__
+#pragma GCC diagnostic ignored "-Wdelete-incomplete"
+#pragma GCC diagnostic ignored "-Wshorten-64-to-32"
+#endif
+
 #include <rtm/Manager.h>
 #include <iostream>
 #include <string>
@@ -88,4 +98,6 @@ int main (int argc, char** argv)
 
   return 0;
 }
+
+#pragma GCC diagnostic pop
 

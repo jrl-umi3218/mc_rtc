@@ -4,6 +4,14 @@
  *
  * $Id$ 
  */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wall"
+#pragma GCC diagnostic ignored "-Wignored-qualifiers"
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+#ifdef __clang__
+#pragma GCC diagnostic ignored "-Wdelete-incomplete"
+#pragma GCC diagnostic ignored "-Wshorten-64-to-32"
+#endif
 #include "MCControl.h"
 
 // Module specification
@@ -22,7 +30,9 @@ static const char* mccontrol_spec[] =
     "language",          "C++",
     "lang_type",         "compile",
     // Configuration variables
-    "conf.default.robot_urdf_urdf", "undefined",
+    "conf.default.robot_urdf_url", "/home/gergondet/catkin_ws/src/hrp2_drc/hrp2_drc_description/urdf/hrp2drc.urdf",
+    "conf.default.stances_file", "/home/gergondet/devel-src/mcp/mcp_ws/src/mc_ros/mc_control_scenario/stances/hrp2_drc/drc_multi_robot_frame_1_87b.seq",
+    "conf.default.conf_file", "/home/gergondet/devel-src/mcp/mcp_ws/src/mc_ros/mc_control_scenario/config/classic/hrp2_drc/drc_test_conf.py",
     ""
   };
 // </rtc-template>
@@ -65,7 +75,10 @@ RTC::ReturnCode_t MCControl::onInitialize()
 
   // <rtc-template block="bind_config">
   // Bind variables and configuration variable
-  bindParameter("robot_urdf_urdf", m_robot_urdf_urdf, "undefined");
+  bindParameter("robot_urdf_url", m_robot_urdf_url, "/home/gergondet/catkin_ws/src/hrp2_drc/hrp2_drc_description/urdf/hrp2drc.urdf");
+  bindParameter("stances_file", m_stances_file, "/home/gergondet/devel-src/mcp/mcp_ws/src/mc_ros/mc_control_scenario/stances/hrp2_drc/drc_multi_robot_frame_1_87b.seq");
+  bindParameter("conf_file", m_conf_file, "/home/gergondet/devel-src/mcp/mcp_ws/src/mc_ros/mc_control_scenario/config/classic/hrp2_drc/drc_test_conf.py");
+  bindParameter("timeStep", m_timeStep, "0.002");
 
   // </rtc-template>
   return RTC::RTC_OK;
@@ -154,4 +167,5 @@ extern "C"
 };
 
 
+#pragma GCC diagnostic pop
 

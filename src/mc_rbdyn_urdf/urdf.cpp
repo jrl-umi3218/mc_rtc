@@ -45,6 +45,7 @@ Eigen::Vector3d attrToVector(const tinyxml2::XMLElement & dom, const std::string
     res(1) = vec[1];
     res(2) = vec[2];
   }
+  return res;
 }
 
 double getAttributeDefault(const tinyxml2::XMLElement & dom, const std::string & attr, const double & def)
@@ -100,8 +101,9 @@ rbd::Joint::Type rbdynFromUrdfJoint(const std::string & type)
     return rbd::Joint::Free;
   else if(type == "fixed")
     return rbd::Joint::Fixed;
-  else
-    return static_cast<rbd::Joint::Type>(-1);
+  std::cerr << "Unknown type in URDF " << type << std::endl;
+  std::cerr << "Conversion will default to fixed" << std::endl;
+  return rbd::Joint::Fixed;
 }
 
 sva::PTransformd originFromTag(const tinyxml2::XMLElement & root, const std::string & tagName)
@@ -167,14 +169,8 @@ URDFParserResult rbdyn_from_urdf(const std::string & content, bool fixed, const 
 
   std::string baseLink = baseLinkIn == "" ? links[0]->Attribute("name") : baseLinkIn;
 
-  unsigned int id = 0;
-  std::map<std::string, unsigned int> linksId;
-  res.visual_tf.resize(links.size());
-  res.collision_tf.resize(links.size());
-  res.limits.lower.resize(links.size());
-  res.limits.upper.resize(links.size());
-  res.limits.velocity.resize(links.size());
-  res.limits.torque.resize(links.size());
+  int id = 0;
+  std::map<std::string, int> linksId;
   for(tinyxml2::XMLElement * linkDom : links)
   {
     std::string linkName = linkDom->Attribute("name");
@@ -265,15 +261,15 @@ URDFParserResult rbdyn_from_urdf(const std::string & content, bool fixed, const 
     rbd::Joint j(type, axis, true, id, jointName);
     res.mbg.addJoint(j);
 
-    unsigned int jointParentId = linksId[jointParent];
-    unsigned int jointChildId = linksId[jointChild];
+    int jointParentId = linksId[jointParent];
+    int jointChildId = linksId[jointChild];
     res.mbg.linkBodies(jointParentId, staticTransform, jointChildId, sva::PTransformd::Identity(), id);
 
     // Articular limit
-    std::vector<double> lower(j.dof(), -INFINITY);
-    std::vector<double> upper(j.dof(), -INFINITY);
-    std::vector<double> effort(j.dof(), -INFINITY);
-    std::vector<double> velocity(j.dof(), -INFINITY);
+    std::vector<double> lower(static_cast<size_t>(j.dof()), -INFINITY);
+    std::vector<double> upper(static_cast<size_t>(j.dof()), -INFINITY);
+    std::vector<double> effort(static_cast<size_t>(j.dof()), -INFINITY);
+    std::vector<double> velocity(static_cast<size_t>(j.dof()), -INFINITY);
 
     tinyxml2::XMLElement * limitDom = jointDom->FirstChildElement("limit");
     if(limitDom)

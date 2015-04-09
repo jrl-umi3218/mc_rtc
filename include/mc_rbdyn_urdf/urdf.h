@@ -16,10 +16,10 @@ namespace mc_rbdyn_urdf
 struct Limits
 {
 public:
-  std::vector< std::vector<double> > lower;
-  std::vector< std::vector<double> > upper;
-  std::vector< std::vector<double> > velocity;
-  std::vector< std::vector<double> > torque;
+  std::map< int, std::vector<double> > lower;
+  std::map< int, std::vector<double> > upper;
+  std::map< int, std::vector<double> > velocity;
+  std::map< int, std::vector<double> > torque;
 };
 
 struct URDFParserResult
@@ -29,8 +29,8 @@ public:
   rbd::MultiBodyConfig mbc;
   rbd::MultiBodyGraph mbg;
   mc_rbdyn_urdf::Limits limits;
-  std::vector<sva::PTransformd> visual_tf;
-  std::vector<sva::PTransformd> collision_tf;
+  std::map<int, sva::PTransformd> visual_tf;
+  std::map<int, sva::PTransformd> collision_tf;
 };
 
 std::vector<double> attrToList(const tinyxml2::XMLElement & dom, const std::string & attr, const std::vector<double> & def = {});
