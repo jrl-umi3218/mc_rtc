@@ -11,6 +11,7 @@
 #pragma GCC diagnostic ignored "-Wall"
 #pragma GCC diagnostic ignored "-Wignored-qualifiers"
 #pragma GCC diagnostic ignored "-Wunused-parameter"
+#pragma GCC diagnostic ignored "-Wpedantic"
 #ifdef __clang__
 #pragma GCC diagnostic ignored "-Wdelete-incomplete"
 #pragma GCC diagnostic ignored "-Wshorten-64-to-32"
@@ -29,6 +30,7 @@ void MyModuleInit(RTC::Manager* manager)
 
   // Create a component
   comp = manager->createComponent("MCControl");
+  std::cout << comp << std::endl;
 
 
   // Example

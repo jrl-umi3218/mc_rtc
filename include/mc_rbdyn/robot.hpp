@@ -8,7 +8,7 @@ void applyTransformToSchById(const rbd::MultiBody & mb, const rbd::MultiBodyConf
 {
   for(std::pair<const std::string, std::pair<unsigned int, sch_T> > & p : schById)
   {
-    unsigned int index = mb.bodyIndexById(p.second.first);
+    int index = mb.bodyIndexById(static_cast<int>(p.second.first));
     sch::transform(p.second.second, mbc.bodyPosW[index]);
   }
 }

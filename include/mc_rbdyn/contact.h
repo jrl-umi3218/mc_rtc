@@ -11,6 +11,7 @@ namespace mc_rbdyn
 {
 
 struct Robot;
+struct Robots;
 
 std::vector<sva::PTransformd> computePoints(const mc_rbdyn::Surface & robotSurface, const mc_rbdyn::Surface & envSurface, const sva::PTransformd & X_es_rs);
 
@@ -36,8 +37,8 @@ public:
   std::vector<sva::PTransformd> points();
   std::vector<sva::PTransformd> points(const mc_rbdyn::Surface & robotSurfaceIn);
 
-  sva::PTransformd compute_X_es_rs(const mc_rbdyn::Robot & robot, const mc_rbdyn::Robot & env);
-  sva::PTransformd compute_X_es_rs(const mc_rbdyn::Robot & robot, const mc_rbdyn::Robot & env, const mc_rbdyn::Surface & robotSurfaceIn);
+  sva::PTransformd compute_X_es_rs(const mc_rbdyn::Robot & robot, const mc_rbdyn::Robot & env) const;
+  sva::PTransformd compute_X_es_rs(const mc_rbdyn::Robot & robot, const mc_rbdyn::Robot & env, const mc_rbdyn::Surface & robotSurfaceIn) const;
 
   std::vector<double> computeJointParam();
   std::vector<double> computeJointParam(const mc_rbdyn::Surface & robotSurfaceIn);
@@ -62,7 +63,38 @@ inline bool operator!=(const Contact & lhs, const Contact & rhs)
   return not(lhs == rhs);
 }
 
-/*TODO Port MRContact*/
+struct MRContact
+{
+public:
+  MRContact(unsigned int r1Index, unsigned int r2Index,
+            const std::shared_ptr<mc_rbdyn::Surface> & r1Surface,
+            const std::shared_ptr<mc_rbdyn::Surface> & r2Surface,
+            const sva::PTransformd * X_r2s_r1s = 0,
+            const sva::PTransformd & Xbs = sva::PTransformd::Identity(), int ambiguityId = -1);
+
+  bool isFixed() const;
+
+  std::pair<std::string, std::string> surfaceNames() const;
+
+  sva::PTransformd X_0_r1s(const Robots & robots) const;
+
+  sva::PTransformd X_0_r2s(const Robots & robots) const;
+
+  std::vector<sva::PTransformd> r1Points();
+
+  std::vector<sva::PTransformd> r2Points();
+
+  sva::PTransformd compute_X_r2s_r1s(const std::vector<Robot> & robots);
+public:
+  unsigned int r1Index;
+  unsigned int r2Index;
+  std::shared_ptr<mc_rbdyn::Surface> r1Surface;
+  std::shared_ptr<mc_rbdyn::Surface> r2Surface;
+  sva::PTransformd X_r2s_r1s;
+  bool is_fixed;
+  sva::PTransformd X_b_s;
+  int ambiguityId;
+};
 
 }
 

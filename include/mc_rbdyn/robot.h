@@ -120,9 +120,9 @@ struct Robots
 public:
   Robots(const std::vector<mc_rbdyn::Robot> & robots, int robotIndex = -1, int envIndex = -1);
 
-  const Robot & robot();
+  const Robot & robot() const;
 
-  const Robot & env();
+  const Robot & env() const;
 public:
   std::vector<mc_rbdyn::Robot> robots;
   std::vector<rbd::MultiBody> mbs;

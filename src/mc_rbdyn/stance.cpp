@@ -9,6 +9,10 @@
 namespace mc_rbdyn
 {
 
+unsigned int Stance::nrConeGen = 4;
+double Stance::defaultFriction = 0.7;
+unsigned int Stance::nrBilatPoints = 4;
+
 Stance::Stance(const std::vector< std::vector<double> > & q, const std::vector<Contact> & geomContacts, const std::vector<Contact> stabContacts)
 : q(q), geomContacts(geomContacts), stabContacts(stabContacts)
 {

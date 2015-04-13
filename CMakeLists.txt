@@ -5,8 +5,9 @@ cmake_minimum_required(VERSION 2.8)
 project(mc_rtc_core)
 
 add_definitions(-std=c++11)
-#add_definitions(-pedantic -Wno-long-long -Wall -Wextra -Wcast-align -Wcast-qual -Wformat -Wwrite-strings -Wconversion)
-#add_definitions(-Werror)
+add_definitions(-pedantic -Wno-long-long -Wall -Wextra -Wcast-align -Wcast-qual -Wformat -Wwrite-strings)
+add_definitions(-Wno-sign-conversion -Wno-shorten-64-to-32)
+add_definitions(-Werror)
 
 include_directories(/usr/include/openrtm-1.1 /usr/include/openrtm-1.1/rtm/idl /usr/include/coil-1.1 /usr/include/eigen3)
 
@@ -32,10 +33,24 @@ set(mc_rbdyn_SRC
 add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC})
 target_link_libraries(mc_rbdyn RBDyn tinyxml2 boost_filesystem boost_system geos jsoncpp sch-core Tasks)
 
+#set(mc_control_msg_SRC
+#./src/mc_control/msg/MRContact.cpp
+#)
+#
+#add_library(mc_control_msg SHARED ${mc_control_msg_SRC})
+#target_link_libraries(mc_control_msg mc_rbdyn)
+
+set(mc_control_solver_SRC
+./src/mc_control/mc_solver/contact_util.cpp
+./src/mc_control/mc_solver/qpsolver.cpp
+)
+
 set(MCControl_SRC
 ./src/MCControlServiceSVC_impl.cpp
 ./src/MCControl.cpp
 )
+add_library(mc_control_solver SHARED ${mc_control_solver_SRC})
+target_link_libraries(mc_control_solver RBDyn Tasks)
 
 add_library(MCControl SHARED ${MCControl_SRC})
 set_target_properties(MCControl PROPERTIES PREFIX "")

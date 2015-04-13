@@ -170,11 +170,11 @@ std::vector<sva::PTransformd> Contact::points(const mc_rbdyn::Surface & robotSur
   }
 }
 
-sva::PTransformd Contact::compute_X_es_rs(const mc_rbdyn::Robot & robot, const mc_rbdyn::Robot & env)
+sva::PTransformd Contact::compute_X_es_rs(const mc_rbdyn::Robot & robot, const mc_rbdyn::Robot & env) const
 {
   return compute_X_es_rs(robot, env, *robotSurface);
 }
-sva::PTransformd Contact::compute_X_es_rs(const mc_rbdyn::Robot & robot, const mc_rbdyn::Robot & env, const mc_rbdyn::Surface & robotSurfaceIn)
+sva::PTransformd Contact::compute_X_es_rs(const mc_rbdyn::Robot & robot, const mc_rbdyn::Robot & env, const mc_rbdyn::Surface & robotSurfaceIn) const
 {
   sva::PTransformd X_0_rs = robotSurfaceIn.X_0_s(robot);
   sva::PTransformd X_0_es = envSurface->X_0_s(env);
@@ -203,6 +203,73 @@ std::string Contact::toStr()
   std::stringstream ss;
   ss << robotSurface->toStr() << "/" << envSurface->toStr();
   return ss.str();
+}
+
+MRContact::MRContact(unsigned int r1Index, unsigned int r2Index,
+          const std::shared_ptr<mc_rbdyn::Surface> & r1Surface,
+          const std::shared_ptr<mc_rbdyn::Surface> & r2Surface,
+          const sva::PTransformd * X_r2s_r1s,
+          const sva::PTransformd & Xbs, int ambiguityId)
+: r1Index(r1Index), r2Index(r2Index),
+  r1Surface(r1Surface->copy()), r2Surface(r2Surface->copy()),
+  X_r2s_r1s(), is_fixed(X_r2s_r1s != 0), X_b_s(Xbs), ambiguityId(ambiguityId)
+{
+  if(is_fixed)
+  {
+    this->X_r2s_r1s = sva::PTransformd(*X_r2s_r1s);
+  }
+}
+
+bool MRContact::isFixed() const
+{
+  return is_fixed;
+}
+
+std::pair<std::string, std::string> MRContact::surfaceNames() const
+{
+  return std::pair<std::string, std::string>(r1Surface->name, r2Surface->name);
+}
+
+sva::PTransformd MRContact::X_0_r1s(const Robots & robots) const
+{
+  return X_r2s_r1s*(r2Surface->X_0_s(robots.robots[r2Index]));
+}
+
+sva::PTransformd MRContact::X_0_r2s(const Robots & robots) const
+{
+  /*FIXME Really r2Index here? */
+  return X_r2s_r1s.inv()*(r1Surface->X_0_s(robots.robots[r2Index]));
+}
+
+std::vector<sva::PTransformd> MRContact::r1Points()
+{
+  if(isFixed())
+  {
+    return computePoints(*r1Surface, *r2Surface, X_r2s_r1s);
+  }
+  else
+  {
+    return r1Surface->points;
+  }
+}
+
+std::vector<sva::PTransformd> MRContact::r2Points()
+{
+  if(isFixed())
+  {
+    return computePoints(*r2Surface, *r1Surface, X_r2s_r1s.inv());
+  }
+  else
+  {
+    return r2Surface->points;
+  }
+}
+
+sva::PTransformd MRContact::compute_X_r2s_r1s(const std::vector<Robot> & robots)
+{
+  sva::PTransformd X_0_r1 = r1Surface->X_0_s(robots[r1Index]);
+  sva::PTransformd X_0_r2 = r2Surface->X_0_s(robots[r2Index]);
+  return X_0_r1*X_0_r2.inv();
 }
 
 }

@@ -7,12 +7,13 @@
 namespace mc_rbdyn
 {
 
-static unsigned int nrConeGen = 4;
-static double defaultFriction = 0.7;
-static unsigned int nrBilatPoints = 4;
 
 struct Stance
 {
+public:
+  static unsigned int nrConeGen;
+  static double defaultFriction;
+  static unsigned int nrBilatPoints;
 public:
   Stance(const std::vector< std::vector<double> > & q, const std::vector<Contact> & geomContacts, const std::vector<Contact> stabContacts);
 

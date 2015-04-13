@@ -124,12 +124,12 @@ Robots::Robots(const std::vector<mc_rbdyn::Robot> & robots, int robotIndex, int 
   }
 }
 
-const Robot & Robots::robot()
+const Robot & Robots::robot() const
 {
   return robots[robotIndex];
 }
 
-const Robot & Robots::env()
+const Robot & Robots::env() const
 {
   return robots[envIndex];
 }
