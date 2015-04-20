@@ -33,12 +33,11 @@ set(mc_rbdyn_SRC
 add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC})
 target_link_libraries(mc_rbdyn RBDyn tinyxml2 boost_filesystem boost_system geos jsoncpp sch-core Tasks)
 
-#set(mc_control_msg_SRC
-#./src/mc_control/msg/MRContact.cpp
-#)
-#
-#add_library(mc_control_msg SHARED ${mc_control_msg_SRC})
-#target_link_libraries(mc_control_msg mc_rbdyn)
+set(mc_robots_SRC
+./src/mc_robots/hrp2_drc.cpp
+)
+add_library(mc_robots SHARED ${mc_robots_SRC})
+target_link_libraries(mc_robots mc_rbdyn)
 
 set(mc_control_solver_SRC
 ./src/mc_control/mc_solver/contact_util.cpp

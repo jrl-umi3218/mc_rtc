@@ -19,6 +19,16 @@ namespace mc_rbdyn
 #pragma clang diagnostic ignored "-Wshorten-64-to-32"
 #endif
 
+ForceSensor::ForceSensor()
+: ForceSensor("", "", sva::PTransformd())
+{
+}
+
+ForceSensor::ForceSensor(const std::string & n, const std::string & pn, const sva::PTransformd & xpf)
+: sensorName(n), parentBodyName(pn), X_p_f(xpf)
+{
+}
+
 Robot::Robot(const rbd::MultiBody & mb, const rbd::MultiBodyConfig & mbc, const rbd::MultiBodyGraph & mbg,
         const std::map<int, sva::PTransformd> & bodyTransforms,
         const std::vector< std::vector<double> > & ql, const std::vector< std::vector<double> > & qu,

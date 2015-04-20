@@ -13,6 +13,7 @@ namespace mc_rbdyn
 
 struct Robot;
 
+/* TODO Functions are declared const here but most implementations will likely not respect the constness */
 struct RobotModule
 {
   /* If implemented, returns limits in this order:
@@ -20,7 +21,7 @@ struct RobotModule
       - velocity limits (lower/upper)
       - torque limits (lower/upper)
   */
-  virtual const std::vector< std::map<unsigned int, std::vector<double> > > & bounds() const { return _bounds; }
+  virtual const std::vector< std::map<int, std::vector<double> > > & bounds() const { return _bounds; }
 
   /* return the initial configuration of the robot */
   virtual const std::map< unsigned int, std::vector<double> > & stance() const { return _stance; }
@@ -32,7 +33,7 @@ struct RobotModule
   virtual const std::map<std::string, std::pair<std::string, std::string> > & stpbvHull() const { return _stpbvHull; }
 
   /* return a map (unsigned int, sva::PTransformd) */
-  virtual const std::map<unsigned int, sva::PTransformd> & collisionTransforms() const { return _collisionTransforms; }
+  virtual const std::map<int, sva::PTransformd> & collisionTransforms() const { return _collisionTransforms; }
 
   /* return flexibilities */
   virtual const std::vector<Flexibility> & flexibility() const { return _flexibility; }
@@ -47,11 +48,11 @@ struct RobotModule
   rbd::MultiBody mb;
   rbd::MultiBodyConfig mbc;
   rbd::MultiBodyGraph mbg;
-  std::vector< std::map<unsigned int, std::vector<double> > > _bounds;
+  std::vector< std::map<int, std::vector<double> > > _bounds;
   std::map< unsigned int, std::vector<double> > _stance;
   std::map<std::string, std::pair<std::string, std::string> > _convexHull;
   std::map<std::string, std::pair<std::string, std::string> > _stpbvHull;
-  std::map<unsigned int, sva::PTransformd> _collisionTransforms;
+  std::map< int, sva::PTransformd> _collisionTransforms;
   std::vector<Flexibility> _flexibility;
   std::vector<ForceSensor> _forceSensors;
   std::string _accelerometerBody;

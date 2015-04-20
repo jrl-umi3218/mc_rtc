@@ -29,6 +29,9 @@ public:
 struct ForceSensor
 {
 public:
+  ForceSensor();
+  ForceSensor(const std::string &, const std::string &, const sva::PTransformd &);
+
   std::string sensorName;
   std::string parentBodyName;
   sva::PTransformd X_p_f;
