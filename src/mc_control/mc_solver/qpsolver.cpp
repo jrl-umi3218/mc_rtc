@@ -83,6 +83,9 @@ KinematicsConstraint::KinematicsConstraint(const mc_rbdyn::Robots & robots, unsi
       jointLimitsConstr = std::shared_ptr<tasks::qp::Constraint>(new tasks::qp::DamperJointLimitsConstr(robots.mbs, robotIndex,
                                                                                                   qBound, alphaBound, percentInter,
                                                                                                   percentSecur, offset, timeStep));
+      tasks::qp::DamperJointLimitsConstr * test = new tasks::qp::DamperJointLimitsConstr(robots.mbs, robotIndex,
+                                                                                                  qBound, alphaBound, percentInter,
+                                                                                                  percentSecur, offset, timeStep);
     }
     else
     {
@@ -363,21 +366,18 @@ void QPSolver::addConstraintSet(ConstraintSet & cs)
 {
   for(std::shared_ptr<tasks::qp::Constraint> & cptr : cs.constraints)
   {
-    if(auto c = dynamic_cast<tasks::qp::ConstraintFunction<tasks::qp::Bound>*>(cptr.get()))
+    if(auto c = dynamic_cast<tasks::qp::PositiveLambda*>(cptr.get())) { c->addToSolver(solver); }
+    else if(auto c = dynamic_cast<tasks::qp::MotionConstrCommon*>(cptr.get())) { c->addToSolver(solver); }
+    else if(auto c = dynamic_cast<tasks::qp::ContactConstr*>(cptr.get())) { c->addToSolver(solver); }
+    else if(auto c = dynamic_cast<tasks::qp::JointLimitsConstr*>(cptr.get())) { c->addToSolver(solver); }
+    else if(auto c = dynamic_cast<tasks::qp::DamperJointLimitsConstr*>(cptr.get())) { c->addToSolver(solver); }
+    else if(auto c = dynamic_cast<tasks::qp::CollisionConstr*>(cptr.get())) { c->addToSolver(solver); }
+    else if(auto c = dynamic_cast<tasks::qp::CoMIncPlaneConstr*>(cptr.get())) { c->addToSolver(solver); }
+    else if(auto c = dynamic_cast<tasks::qp::GripperTorqueConstr*>(cptr.get())) { c->addToSolver(solver); }
+    else if(auto c = dynamic_cast<tasks::qp::BoundedSpeedConstr*>(cptr.get())) { c->addToSolver(solver); }
+    else
     {
-      c->addToSolver(solver);
-    }
-    if(auto c = dynamic_cast<tasks::qp::ConstraintFunction<tasks::qp::Equality>*>(cptr.get()))
-    {
-      c->addToSolver(solver);
-    }
-    if(auto c = dynamic_cast<tasks::qp::ConstraintFunction<tasks::qp::GenInequality>*>(cptr.get()))
-    {
-      c->addToSolver(solver);
-    }
-    if(auto c = dynamic_cast<tasks::qp::ConstraintFunction<tasks::qp::Inequality>*>(cptr.get()))
-    {
-      c->addToSolver(solver);
+      std::cerr << "Tried to add a constraint but its type is not recognized..." << std::endl;
     }
   }
   for(auto & precb : cs.preQPCb)
@@ -394,21 +394,18 @@ void QPSolver::removeConstraintSet(ConstraintSet & cs)
 {
   for(std::shared_ptr<tasks::qp::Constraint> & cptr : cs.constraints)
   {
-    if(auto c = dynamic_cast<tasks::qp::ConstraintFunction<tasks::qp::Bound>*>(cptr.get()))
+    if(auto c = dynamic_cast<tasks::qp::PositiveLambda*>(cptr.get())) { c->removeFromSolver(solver); }
+    else if(auto c = dynamic_cast<tasks::qp::MotionConstrCommon*>(cptr.get())) { c->removeFromSolver(solver); }
+    else if(auto c = dynamic_cast<tasks::qp::ContactConstr*>(cptr.get())) { c->removeFromSolver(solver); }
+    else if(auto c = dynamic_cast<tasks::qp::JointLimitsConstr*>(cptr.get())) { c->removeFromSolver(solver); }
+    else if(auto c = dynamic_cast<tasks::qp::DamperJointLimitsConstr*>(cptr.get())) { c->removeFromSolver(solver); }
+    else if(auto c = dynamic_cast<tasks::qp::CollisionConstr*>(cptr.get())) { c->removeFromSolver(solver); }
+    else if(auto c = dynamic_cast<tasks::qp::CoMIncPlaneConstr*>(cptr.get())) { c->removeFromSolver(solver); }
+    else if(auto c = dynamic_cast<tasks::qp::GripperTorqueConstr*>(cptr.get())) { c->removeFromSolver(solver); }
+    else if(auto c = dynamic_cast<tasks::qp::BoundedSpeedConstr*>(cptr.get())) { c->removeFromSolver(solver); }
+    else
     {
-      c->removeFromSolver(solver);
-    }
-    if(auto c = dynamic_cast<tasks::qp::ConstraintFunction<tasks::qp::Equality>*>(cptr.get()))
-    {
-      c->removeFromSolver(solver);
-    }
-    if(auto c = dynamic_cast<tasks::qp::ConstraintFunction<tasks::qp::GenInequality>*>(cptr.get()))
-    {
-      c->removeFromSolver(solver);
-    }
-    if(auto c = dynamic_cast<tasks::qp::ConstraintFunction<tasks::qp::Inequality>*>(cptr.get()))
-    {
-      c->removeFromSolver(solver);
+      std::cerr << "Tried to remove a constraint but its type is not recognized..." << std::endl;
     }
   }
   for(auto & precb : cs.preQPCb)

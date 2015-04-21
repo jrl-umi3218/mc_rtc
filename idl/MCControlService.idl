@@ -8,6 +8,8 @@ module OpenHRP
   {
     boolean EnablePostureController();
 
+    boolean EnableBody6dController();
+
     boolean change_joint(in string jname);
 
     boolean joint_up();
@@ -15,6 +17,12 @@ module OpenHRP
     boolean joint_down();
 
     boolean set_joint_pos(in string jname, in double v);
+
+    boolean change_ef(in string body);
+
+    boolean translate_ef(in double x, in double y, in double z);
+
+    boolean rotate_ef(in double r, in double p, in double y);
   };
 
 };

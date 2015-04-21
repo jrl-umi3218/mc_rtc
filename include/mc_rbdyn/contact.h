@@ -20,6 +20,8 @@ std::vector<double> jointParam(const mc_rbdyn::Surface & robotSurface, const mc_
 struct Contact
 {
 public:
+  Contact(const std::shared_ptr<mc_rbdyn::Surface> & robotSurface, const std::shared_ptr<mc_rbdyn::Surface> & envSurface);
+  Contact(const std::shared_ptr<mc_rbdyn::Surface> & robotSurface, const std::shared_ptr<mc_rbdyn::Surface> & envSurface, const sva::PTransformd & X_es_rs);
   Contact(const mc_rbdyn::Surface & robotSurface, const mc_rbdyn::Surface & envSurface);
   Contact(const mc_rbdyn::Surface & robotSurface, const mc_rbdyn::Surface & envSurface, const sva::PTransformd & X_es_rs);
 private:

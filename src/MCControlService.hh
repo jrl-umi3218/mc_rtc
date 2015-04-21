@@ -120,10 +120,14 @@ _CORBA_MODULE_BEG
   {
   public:
     ::CORBA::Boolean EnablePostureController();
+    ::CORBA::Boolean EnableBody6dController();
     ::CORBA::Boolean change_joint(const char* jname);
     ::CORBA::Boolean joint_up();
     ::CORBA::Boolean joint_down();
     ::CORBA::Boolean set_joint_pos(const char* jname, ::CORBA::Double v);
+    ::CORBA::Boolean change_ef(const char* body);
+    ::CORBA::Boolean translate_ef(::CORBA::Double x, ::CORBA::Double y, ::CORBA::Double z);
+    ::CORBA::Boolean rotate_ef(::CORBA::Double r, ::CORBA::Double p, ::CORBA::Double y);
 
     inline _objref_MCControlService()  { _PR_setobj(0); }  // nil
     _objref_MCControlService(omniIOR*, omniIdentity*);
@@ -158,10 +162,14 @@ _CORBA_MODULE_BEG
     virtual ~_impl_MCControlService();
 
     virtual ::CORBA::Boolean EnablePostureController() = 0;
+    virtual ::CORBA::Boolean EnableBody6dController() = 0;
     virtual ::CORBA::Boolean change_joint(const char* jname) = 0;
     virtual ::CORBA::Boolean joint_up() = 0;
     virtual ::CORBA::Boolean joint_down() = 0;
     virtual ::CORBA::Boolean set_joint_pos(const char* jname, ::CORBA::Double v) = 0;
+    virtual ::CORBA::Boolean change_ef(const char* body) = 0;
+    virtual ::CORBA::Boolean translate_ef(::CORBA::Double x, ::CORBA::Double y, ::CORBA::Double z) = 0;
+    virtual ::CORBA::Boolean rotate_ef(::CORBA::Double r, ::CORBA::Double p, ::CORBA::Double y) = 0;
     
   public:  // Really protected, workaround for xlC
     virtual _CORBA_Boolean _dispatch(omniCallHandle&);

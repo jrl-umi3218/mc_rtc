@@ -181,9 +181,10 @@ void readRSDF(const std::string & rsdf_string, std::vector< std::shared_ptr<Surf
   tinyxml2::XMLDocument doc;
   doc.Parse(rsdf_string.c_str());
 
+  tinyxml2::XMLElement * root = doc.FirstChildElement("robot");
   std::vector<tinyxml2::XMLElement*> psurfaces;
   {
-    tinyxml2::XMLElement * psurface = doc.FirstChildElement("planar_surface");
+    tinyxml2::XMLElement * psurface = root->FirstChildElement("planar_surface");
     while(psurface)
     {
       psurfaces.push_back(psurface);
@@ -197,7 +198,7 @@ void readRSDF(const std::string & rsdf_string, std::vector< std::shared_ptr<Surf
     sva::PTransformd X_b_s = tfFromOriginDom(*(pdom->FirstChildElement("origin")));
     std::string materialName = pdom->FirstChildElement("material")->Attribute("name");
     std::vector< std::pair<double, double> > points;
-    tinyxml2::XMLElement * pointdom = doc.FirstChildElement("point");
+    tinyxml2::XMLElement * pointdom = pdom->FirstChildElement("points")->FirstChildElement("point");
     while(pointdom)
     {
       std::vector<double> pdata = mc_rbdyn_urdf::attrToList(*pointdom, "xy");
@@ -209,7 +210,7 @@ void readRSDF(const std::string & rsdf_string, std::vector< std::shared_ptr<Surf
 
   std::vector<tinyxml2::XMLElement*> csurfaces;
   {
-    tinyxml2::XMLElement * csurface = doc.FirstChildElement("cylindrical_surface");
+    tinyxml2::XMLElement * csurface = root->FirstChildElement("cylindrical_surface");
     while(csurface)
     {
       csurfaces.push_back(csurface);
@@ -229,7 +230,7 @@ void readRSDF(const std::string & rsdf_string, std::vector< std::shared_ptr<Surf
 
   std::vector<tinyxml2::XMLElement*> gsurfaces;
   {
-    tinyxml2::XMLElement * gsurface = doc.FirstChildElement("gripper_surface");
+    tinyxml2::XMLElement * gsurface = root->FirstChildElement("gripper_surface");
     while(gsurface)
     {
       gsurfaces.push_back(gsurface);
@@ -246,7 +247,7 @@ void readRSDF(const std::string & rsdf_string, std::vector< std::shared_ptr<Surf
     sva::PTransformd X_b_motor = tfFromOriginDom(*motorDom);
     double motorMaxTorque = motorDom->DoubleAttribute("max_torque");
     std::vector<sva::PTransformd> points;
-    tinyxml2::XMLElement * pointdom = doc.FirstChildElement("point");
+    tinyxml2::XMLElement * pointdom = gdom->FirstChildElement("points")->FirstChildElement("point");
     while(pointdom)
     {
       points.push_back(tfFromOriginDom(*pointdom));

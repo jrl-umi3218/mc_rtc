@@ -109,6 +109,16 @@ std::vector<double> jointParam(const mc_rbdyn::Surface & robotSurface, const mc_
   return res;
 }
 
+Contact::Contact(const std::shared_ptr<mc_rbdyn::Surface> & robotSurface, const std::shared_ptr<mc_rbdyn::Surface> & envSurface)
+: robotSurface(robotSurface), envSurface(envSurface), is_fixed(false)
+{
+}
+
+Contact::Contact(const std::shared_ptr<mc_rbdyn::Surface> & robotSurface, const std::shared_ptr<mc_rbdyn::Surface> & envSurface, const sva::PTransformd & X_es_rs)
+: robotSurface(robotSurface), envSurface(envSurface), X_es_rs(X_es_rs), is_fixed(true)
+{
+}
+
 Contact::Contact(const mc_rbdyn::Surface & robotSurface, const mc_rbdyn::Surface & envSurface)
 : Contact(robotSurface, envSurface, sva::PTransformd::Identity(), false)
 {

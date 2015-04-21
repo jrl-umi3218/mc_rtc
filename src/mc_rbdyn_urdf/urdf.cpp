@@ -253,7 +253,7 @@ URDFParserResult rbdyn_from_urdf(const std::string & content, bool fixed, const 
     tinyxml2::XMLElement * axisDom = jointDom->FirstChildElement("axis");
     if(axisDom)
     {
-      axis = attrToVector(*originDom, "xyz").normalized();
+      axis = attrToVector(*axisDom, "xyz").normalized();
     }
     rbd::Joint::Type type = rbdynFromUrdfJoint(jointType);
 

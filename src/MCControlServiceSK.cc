@@ -176,13 +176,34 @@ _0RL_lcfn_893794e416423500_10000000(omniCallDescriptor* cd, omniServant* svnt)
 
 
 }
+// Local call call-back function.
+static void
+_0RL_lcfn_893794e416423500_20000000(omniCallDescriptor* cd, omniServant* svnt)
+{
+  _0RL_cd_893794e416423500_00000000* tcd = (_0RL_cd_893794e416423500_00000000*)cd;
+  OpenHRP::_impl_MCControlService* impl = (OpenHRP::_impl_MCControlService*) svnt->_ptrToInterface(OpenHRP::MCControlService::_PD_repoId);
+  tcd->result = impl->EnableBody6dController();
+
+
+}
+
+::CORBA::Boolean OpenHRP::_objref_MCControlService::EnableBody6dController()
+{
+  _0RL_cd_893794e416423500_00000000 _call_desc(_0RL_lcfn_893794e416423500_20000000, "EnableBody6dController", 23);
+
+
+  _invoke(_call_desc);
+  return _call_desc.result;
+
+
+}
 // Proxy call descriptor class. Mangled signature:
 //  _cboolean_i_cstring
-class _0RL_cd_893794e416423500_20000000
+class _0RL_cd_893794e416423500_30000000
   : public omniCallDescriptor
 {
 public:
-  inline _0RL_cd_893794e416423500_20000000(LocalCallFn lcfn,const char* op_,size_t oplen,_CORBA_Boolean upcall=0):
+  inline _0RL_cd_893794e416423500_30000000(LocalCallFn lcfn,const char* op_,size_t oplen,_CORBA_Boolean upcall=0):
      omniCallDescriptor(lcfn, op_, oplen, 0, _user_exns, 0, upcall)
   {
     
@@ -202,40 +223,40 @@ public:
   ::CORBA::Boolean result;
 };
 
-void _0RL_cd_893794e416423500_20000000::marshalArguments(cdrStream& _n)
+void _0RL_cd_893794e416423500_30000000::marshalArguments(cdrStream& _n)
 {
   _n.marshalString(arg_0,0);
 
 }
 
-void _0RL_cd_893794e416423500_20000000::unmarshalArguments(cdrStream& _n)
+void _0RL_cd_893794e416423500_30000000::unmarshalArguments(cdrStream& _n)
 {
   arg_0_ = _n.unmarshalString(0);
   arg_0 = arg_0_.in();
 
 }
 
-void _0RL_cd_893794e416423500_20000000::marshalReturnedValues(cdrStream& _n)
+void _0RL_cd_893794e416423500_30000000::marshalReturnedValues(cdrStream& _n)
 {
   _n.marshalBoolean(result);
 
 }
 
-void _0RL_cd_893794e416423500_20000000::unmarshalReturnedValues(cdrStream& _n)
+void _0RL_cd_893794e416423500_30000000::unmarshalReturnedValues(cdrStream& _n)
 {
   result = _n.unmarshalBoolean();
 
 }
 
-const char* const _0RL_cd_893794e416423500_20000000::_user_exns[] = {
+const char* const _0RL_cd_893794e416423500_30000000::_user_exns[] = {
   0
 };
 
 // Local call call-back function.
 static void
-_0RL_lcfn_893794e416423500_30000000(omniCallDescriptor* cd, omniServant* svnt)
+_0RL_lcfn_893794e416423500_40000000(omniCallDescriptor* cd, omniServant* svnt)
 {
-  _0RL_cd_893794e416423500_20000000* tcd = (_0RL_cd_893794e416423500_20000000*)cd;
+  _0RL_cd_893794e416423500_30000000* tcd = (_0RL_cd_893794e416423500_30000000*)cd;
   OpenHRP::_impl_MCControlService* impl = (OpenHRP::_impl_MCControlService*) svnt->_ptrToInterface(OpenHRP::MCControlService::_PD_repoId);
   tcd->result = impl->change_joint(tcd->arg_0);
 
@@ -244,29 +265,8 @@ _0RL_lcfn_893794e416423500_30000000(omniCallDescriptor* cd, omniServant* svnt)
 
 ::CORBA::Boolean OpenHRP::_objref_MCControlService::change_joint(const char* jname)
 {
-  _0RL_cd_893794e416423500_20000000 _call_desc(_0RL_lcfn_893794e416423500_30000000, "change_joint", 13);
+  _0RL_cd_893794e416423500_30000000 _call_desc(_0RL_lcfn_893794e416423500_40000000, "change_joint", 13);
   _call_desc.arg_0 = jname;
-
-  _invoke(_call_desc);
-  return _call_desc.result;
-
-
-}
-// Local call call-back function.
-static void
-_0RL_lcfn_893794e416423500_40000000(omniCallDescriptor* cd, omniServant* svnt)
-{
-  _0RL_cd_893794e416423500_00000000* tcd = (_0RL_cd_893794e416423500_00000000*)cd;
-  OpenHRP::_impl_MCControlService* impl = (OpenHRP::_impl_MCControlService*) svnt->_ptrToInterface(OpenHRP::MCControlService::_PD_repoId);
-  tcd->result = impl->joint_up();
-
-
-}
-
-::CORBA::Boolean OpenHRP::_objref_MCControlService::joint_up()
-{
-  _0RL_cd_893794e416423500_00000000 _call_desc(_0RL_lcfn_893794e416423500_40000000, "joint_up", 9);
-
 
   _invoke(_call_desc);
   return _call_desc.result;
@@ -279,6 +279,27 @@ _0RL_lcfn_893794e416423500_50000000(omniCallDescriptor* cd, omniServant* svnt)
 {
   _0RL_cd_893794e416423500_00000000* tcd = (_0RL_cd_893794e416423500_00000000*)cd;
   OpenHRP::_impl_MCControlService* impl = (OpenHRP::_impl_MCControlService*) svnt->_ptrToInterface(OpenHRP::MCControlService::_PD_repoId);
+  tcd->result = impl->joint_up();
+
+
+}
+
+::CORBA::Boolean OpenHRP::_objref_MCControlService::joint_up()
+{
+  _0RL_cd_893794e416423500_00000000 _call_desc(_0RL_lcfn_893794e416423500_50000000, "joint_up", 9);
+
+
+  _invoke(_call_desc);
+  return _call_desc.result;
+
+
+}
+// Local call call-back function.
+static void
+_0RL_lcfn_893794e416423500_60000000(omniCallDescriptor* cd, omniServant* svnt)
+{
+  _0RL_cd_893794e416423500_00000000* tcd = (_0RL_cd_893794e416423500_00000000*)cd;
+  OpenHRP::_impl_MCControlService* impl = (OpenHRP::_impl_MCControlService*) svnt->_ptrToInterface(OpenHRP::MCControlService::_PD_repoId);
   tcd->result = impl->joint_down();
 
 
@@ -286,7 +307,7 @@ _0RL_lcfn_893794e416423500_50000000(omniCallDescriptor* cd, omniServant* svnt)
 
 ::CORBA::Boolean OpenHRP::_objref_MCControlService::joint_down()
 {
-  _0RL_cd_893794e416423500_00000000 _call_desc(_0RL_lcfn_893794e416423500_50000000, "joint_down", 11);
+  _0RL_cd_893794e416423500_00000000 _call_desc(_0RL_lcfn_893794e416423500_60000000, "joint_down", 11);
 
 
   _invoke(_call_desc);
@@ -296,11 +317,11 @@ _0RL_lcfn_893794e416423500_50000000(omniCallDescriptor* cd, omniServant* svnt)
 }
 // Proxy call descriptor class. Mangled signature:
 //  _cboolean_i_cstring_i_cdouble
-class _0RL_cd_893794e416423500_60000000
+class _0RL_cd_893794e416423500_70000000
   : public omniCallDescriptor
 {
 public:
-  inline _0RL_cd_893794e416423500_60000000(LocalCallFn lcfn,const char* op_,size_t oplen,_CORBA_Boolean upcall=0):
+  inline _0RL_cd_893794e416423500_70000000(LocalCallFn lcfn,const char* op_,size_t oplen,_CORBA_Boolean upcall=0):
      omniCallDescriptor(lcfn, op_, oplen, 0, _user_exns, 0, upcall)
   {
     
@@ -321,14 +342,14 @@ public:
   ::CORBA::Boolean result;
 };
 
-void _0RL_cd_893794e416423500_60000000::marshalArguments(cdrStream& _n)
+void _0RL_cd_893794e416423500_70000000::marshalArguments(cdrStream& _n)
 {
   _n.marshalString(arg_0,0);
   arg_1 >>= _n;
 
 }
 
-void _0RL_cd_893794e416423500_60000000::unmarshalArguments(cdrStream& _n)
+void _0RL_cd_893794e416423500_70000000::unmarshalArguments(cdrStream& _n)
 {
   arg_0_ = _n.unmarshalString(0);
   arg_0 = arg_0_.in();
@@ -336,27 +357,27 @@ void _0RL_cd_893794e416423500_60000000::unmarshalArguments(cdrStream& _n)
 
 }
 
-void _0RL_cd_893794e416423500_60000000::marshalReturnedValues(cdrStream& _n)
+void _0RL_cd_893794e416423500_70000000::marshalReturnedValues(cdrStream& _n)
 {
   _n.marshalBoolean(result);
 
 }
 
-void _0RL_cd_893794e416423500_60000000::unmarshalReturnedValues(cdrStream& _n)
+void _0RL_cd_893794e416423500_70000000::unmarshalReturnedValues(cdrStream& _n)
 {
   result = _n.unmarshalBoolean();
 
 }
 
-const char* const _0RL_cd_893794e416423500_60000000::_user_exns[] = {
+const char* const _0RL_cd_893794e416423500_70000000::_user_exns[] = {
   0
 };
 
 // Local call call-back function.
 static void
-_0RL_lcfn_893794e416423500_70000000(omniCallDescriptor* cd, omniServant* svnt)
+_0RL_lcfn_893794e416423500_80000000(omniCallDescriptor* cd, omniServant* svnt)
 {
-  _0RL_cd_893794e416423500_60000000* tcd = (_0RL_cd_893794e416423500_60000000*)cd;
+  _0RL_cd_893794e416423500_70000000* tcd = (_0RL_cd_893794e416423500_70000000*)cd;
   OpenHRP::_impl_MCControlService* impl = (OpenHRP::_impl_MCControlService*) svnt->_ptrToInterface(OpenHRP::MCControlService::_PD_repoId);
   tcd->result = impl->set_joint_pos(tcd->arg_0, tcd->arg_1);
 
@@ -365,9 +386,135 @@ _0RL_lcfn_893794e416423500_70000000(omniCallDescriptor* cd, omniServant* svnt)
 
 ::CORBA::Boolean OpenHRP::_objref_MCControlService::set_joint_pos(const char* jname, ::CORBA::Double v)
 {
-  _0RL_cd_893794e416423500_60000000 _call_desc(_0RL_lcfn_893794e416423500_70000000, "set_joint_pos", 14);
+  _0RL_cd_893794e416423500_70000000 _call_desc(_0RL_lcfn_893794e416423500_80000000, "set_joint_pos", 14);
   _call_desc.arg_0 = jname;
   _call_desc.arg_1 = v;
+
+  _invoke(_call_desc);
+  return _call_desc.result;
+
+
+}
+// Local call call-back function.
+static void
+_0RL_lcfn_893794e416423500_90000000(omniCallDescriptor* cd, omniServant* svnt)
+{
+  _0RL_cd_893794e416423500_30000000* tcd = (_0RL_cd_893794e416423500_30000000*)cd;
+  OpenHRP::_impl_MCControlService* impl = (OpenHRP::_impl_MCControlService*) svnt->_ptrToInterface(OpenHRP::MCControlService::_PD_repoId);
+  tcd->result = impl->change_ef(tcd->arg_0);
+
+
+}
+
+::CORBA::Boolean OpenHRP::_objref_MCControlService::change_ef(const char* body)
+{
+  _0RL_cd_893794e416423500_30000000 _call_desc(_0RL_lcfn_893794e416423500_90000000, "change_ef", 10);
+  _call_desc.arg_0 = body;
+
+  _invoke(_call_desc);
+  return _call_desc.result;
+
+
+}
+// Proxy call descriptor class. Mangled signature:
+//  _cboolean_i_cdouble_i_cdouble_i_cdouble
+class _0RL_cd_893794e416423500_a0000000
+  : public omniCallDescriptor
+{
+public:
+  inline _0RL_cd_893794e416423500_a0000000(LocalCallFn lcfn,const char* op_,size_t oplen,_CORBA_Boolean upcall=0):
+     omniCallDescriptor(lcfn, op_, oplen, 0, _user_exns, 0, upcall)
+  {
+    
+  }
+  
+  void marshalArguments(cdrStream&);
+  void unmarshalArguments(cdrStream&);
+
+  void unmarshalReturnedValues(cdrStream&);
+  void marshalReturnedValues(cdrStream&);
+  
+  
+  static const char* const _user_exns[];
+
+  ::CORBA::Double arg_0;
+  ::CORBA::Double arg_1;
+  ::CORBA::Double arg_2;
+  ::CORBA::Boolean result;
+};
+
+void _0RL_cd_893794e416423500_a0000000::marshalArguments(cdrStream& _n)
+{
+  arg_0 >>= _n;
+  arg_1 >>= _n;
+  arg_2 >>= _n;
+
+}
+
+void _0RL_cd_893794e416423500_a0000000::unmarshalArguments(cdrStream& _n)
+{
+  (::CORBA::Double&)arg_0 <<= _n;
+  (::CORBA::Double&)arg_1 <<= _n;
+  (::CORBA::Double&)arg_2 <<= _n;
+
+}
+
+void _0RL_cd_893794e416423500_a0000000::marshalReturnedValues(cdrStream& _n)
+{
+  _n.marshalBoolean(result);
+
+}
+
+void _0RL_cd_893794e416423500_a0000000::unmarshalReturnedValues(cdrStream& _n)
+{
+  result = _n.unmarshalBoolean();
+
+}
+
+const char* const _0RL_cd_893794e416423500_a0000000::_user_exns[] = {
+  0
+};
+
+// Local call call-back function.
+static void
+_0RL_lcfn_893794e416423500_b0000000(omniCallDescriptor* cd, omniServant* svnt)
+{
+  _0RL_cd_893794e416423500_a0000000* tcd = (_0RL_cd_893794e416423500_a0000000*)cd;
+  OpenHRP::_impl_MCControlService* impl = (OpenHRP::_impl_MCControlService*) svnt->_ptrToInterface(OpenHRP::MCControlService::_PD_repoId);
+  tcd->result = impl->translate_ef(tcd->arg_0, tcd->arg_1, tcd->arg_2);
+
+
+}
+
+::CORBA::Boolean OpenHRP::_objref_MCControlService::translate_ef(::CORBA::Double x, ::CORBA::Double y, ::CORBA::Double z)
+{
+  _0RL_cd_893794e416423500_a0000000 _call_desc(_0RL_lcfn_893794e416423500_b0000000, "translate_ef", 13);
+  _call_desc.arg_0 = x;
+  _call_desc.arg_1 = y;
+  _call_desc.arg_2 = z;
+
+  _invoke(_call_desc);
+  return _call_desc.result;
+
+
+}
+// Local call call-back function.
+static void
+_0RL_lcfn_893794e416423500_c0000000(omniCallDescriptor* cd, omniServant* svnt)
+{
+  _0RL_cd_893794e416423500_a0000000* tcd = (_0RL_cd_893794e416423500_a0000000*)cd;
+  OpenHRP::_impl_MCControlService* impl = (OpenHRP::_impl_MCControlService*) svnt->_ptrToInterface(OpenHRP::MCControlService::_PD_repoId);
+  tcd->result = impl->rotate_ef(tcd->arg_0, tcd->arg_1, tcd->arg_2);
+
+
+}
+
+::CORBA::Boolean OpenHRP::_objref_MCControlService::rotate_ef(::CORBA::Double r, ::CORBA::Double p, ::CORBA::Double y)
+{
+  _0RL_cd_893794e416423500_a0000000 _call_desc(_0RL_lcfn_893794e416423500_c0000000, "rotate_ef", 10);
+  _call_desc.arg_0 = r;
+  _call_desc.arg_1 = p;
+  _call_desc.arg_2 = y;
 
   _invoke(_call_desc);
   return _call_desc.result;
@@ -411,9 +558,17 @@ OpenHRP::_impl_MCControlService::_dispatch(omniCallHandle& _handle)
     return 1;
   }
 
+  if( omni::strMatch(op, "EnableBody6dController") ) {
+
+    _0RL_cd_893794e416423500_00000000 _call_desc(_0RL_lcfn_893794e416423500_20000000, "EnableBody6dController", 23, 1);
+    
+    _handle.upcall(this,_call_desc);
+    return 1;
+  }
+
   if( omni::strMatch(op, "change_joint") ) {
 
-    _0RL_cd_893794e416423500_20000000 _call_desc(_0RL_lcfn_893794e416423500_30000000, "change_joint", 13, 1);
+    _0RL_cd_893794e416423500_30000000 _call_desc(_0RL_lcfn_893794e416423500_40000000, "change_joint", 13, 1);
     
     _handle.upcall(this,_call_desc);
     return 1;
@@ -421,7 +576,7 @@ OpenHRP::_impl_MCControlService::_dispatch(omniCallHandle& _handle)
 
   if( omni::strMatch(op, "joint_up") ) {
 
-    _0RL_cd_893794e416423500_00000000 _call_desc(_0RL_lcfn_893794e416423500_40000000, "joint_up", 9, 1);
+    _0RL_cd_893794e416423500_00000000 _call_desc(_0RL_lcfn_893794e416423500_50000000, "joint_up", 9, 1);
     
     _handle.upcall(this,_call_desc);
     return 1;
@@ -429,7 +584,7 @@ OpenHRP::_impl_MCControlService::_dispatch(omniCallHandle& _handle)
 
   if( omni::strMatch(op, "joint_down") ) {
 
-    _0RL_cd_893794e416423500_00000000 _call_desc(_0RL_lcfn_893794e416423500_50000000, "joint_down", 11, 1);
+    _0RL_cd_893794e416423500_00000000 _call_desc(_0RL_lcfn_893794e416423500_60000000, "joint_down", 11, 1);
     
     _handle.upcall(this,_call_desc);
     return 1;
@@ -437,7 +592,31 @@ OpenHRP::_impl_MCControlService::_dispatch(omniCallHandle& _handle)
 
   if( omni::strMatch(op, "set_joint_pos") ) {
 
-    _0RL_cd_893794e416423500_60000000 _call_desc(_0RL_lcfn_893794e416423500_70000000, "set_joint_pos", 14, 1);
+    _0RL_cd_893794e416423500_70000000 _call_desc(_0RL_lcfn_893794e416423500_80000000, "set_joint_pos", 14, 1);
+    
+    _handle.upcall(this,_call_desc);
+    return 1;
+  }
+
+  if( omni::strMatch(op, "change_ef") ) {
+
+    _0RL_cd_893794e416423500_30000000 _call_desc(_0RL_lcfn_893794e416423500_90000000, "change_ef", 10, 1);
+    
+    _handle.upcall(this,_call_desc);
+    return 1;
+  }
+
+  if( omni::strMatch(op, "translate_ef") ) {
+
+    _0RL_cd_893794e416423500_a0000000 _call_desc(_0RL_lcfn_893794e416423500_b0000000, "translate_ef", 13, 1);
+    
+    _handle.upcall(this,_call_desc);
+    return 1;
+  }
+
+  if( omni::strMatch(op, "rotate_ef") ) {
+
+    _0RL_cd_893794e416423500_a0000000 _call_desc(_0RL_lcfn_893794e416423500_c0000000, "rotate_ef", 10, 1);
     
     _handle.upcall(this,_call_desc);
     return 1;

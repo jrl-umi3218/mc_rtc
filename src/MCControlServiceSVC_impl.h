@@ -18,11 +18,17 @@ namespace OpenHRP
       /* General services to switch between controllers */
       virtual CORBA::Boolean EnablePostureController();
 
+      virtual CORBA::Boolean EnableBody6dController();
+
       /* Joint services */
       virtual CORBA::Boolean change_joint(const char* jname);
       virtual CORBA::Boolean joint_up();
       virtual CORBA::Boolean joint_down();
-      virtual CORBA::Boolean set_joint_pos(const char* jname, ::CORBA::Double v);
+      virtual CORBA::Boolean set_joint_pos(const char* jname, CORBA::Double v);
+      /* End effector service */
+      virtual CORBA::Boolean change_ef(const char * body);
+      virtual CORBA::Boolean translate_ef(CORBA::Double x, CORBA::Double y, CORBA::Double z);
+      virtual CORBA::Boolean rotate_ef(CORBA::Double r, CORBA::Double p, CORBA::Double y);
     private:
       MCControl * m_plugin;
   };

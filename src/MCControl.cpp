@@ -143,16 +143,16 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
         {
           m_qOut.data[i - rlj0] = res.q[i];
         }
-        //ofs << "qIn" << std::endl;
-        //for(size_t i = 0; i < m_qIn.data.length(); ++i)
-        //{
-        //  ofs << "qIn[" << i << "] = " << m_qIn.data[i] << std::endl;
-        //}
-        //ofs << "res.q" << std::endl;
-        //for(size_t i = 0; i < res.q.size(); ++i)
-        //{
-        //  ofs << "res.q[" << i << "] = " << res.q[i] << std::endl;
-        //}
+        ofs << "qIn" << std::endl;
+        for(size_t i = 0; i < m_qIn.data.length(); ++i)
+        {
+          ofs << "qIn[" << i << "] = " << m_qIn.data[i] << std::endl;
+        }
+        ofs << "res.q" << std::endl;
+        for(size_t i = 0; i < res.q.size(); ++i)
+        {
+          ofs << "res.q[" << i << "] = " << res.q[i] << std::endl;
+        }
         ofs << "qOut" << std::endl;
         for(size_t i = 0; i < m_qOut.data.length(); ++i)
         {
