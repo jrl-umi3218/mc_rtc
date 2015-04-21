@@ -12,10 +12,13 @@
 
 #include <iostream>
 
+#include "MCControl.h"
+
 namespace OpenHRP
 {
 
-MCControlServiceSVC_impl::MCControlServiceSVC_impl()
+MCControlServiceSVC_impl::MCControlServiceSVC_impl(MCControl * plugin)
+: m_plugin(plugin)
 {
 }
 
@@ -25,7 +28,8 @@ MCControlServiceSVC_impl::~MCControlServiceSVC_impl()
 
 void MCControlServiceSVC_impl::place_holder()
 {
-  std::cout << "Yup that's working" << std::endl;
+  m_plugin->controller.change_joint("RARM_JOINT0");
+  m_plugin->controller.joint_up();
 }
 
 }

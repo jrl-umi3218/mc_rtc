@@ -12,6 +12,11 @@
 
 #include <memory>
 
+namespace mc_control
+{
+  struct MCController;
+}
+
 namespace mc_rbdyn
 {
 
@@ -91,9 +96,9 @@ public:
 
   std::string forceSensorByBody(const std::string & body) const;
 public:
-  rbd::MultiBody mb;
-  rbd::MultiBodyConfig mbc;
-  rbd::MultiBodyGraph mbg;
+  rbd::MultiBody * mb;
+  rbd::MultiBodyConfig * mbc;
+  rbd::MultiBodyGraph * mbg;
   std::map<int, sva::PTransformd> bodyTransforms;
   std::vector< std::vector<double> > ql;
   std::vector< std::vector<double> > qu;
@@ -116,12 +121,19 @@ public:
   std::map<std::string, unsigned int> bodyIndexByNameD;
   std::map<std::string, ForceSensor> forceSensorsParentD;
   std::map<std::string, std::string> parentBodyForceSensorD;
+public:
+  Robot() {}
 };
 
 struct Robots
 {
 public:
+  Robots() {}
   Robots(const std::vector<mc_rbdyn::Robot> & robots, int robotIndex = -1, int envIndex = -1);
+  Robots(const Robots & rhs);
+  Robots & operator=(const Robots & rhs);
+
+  Robot & robot();
 
   const Robot & robot() const;
 

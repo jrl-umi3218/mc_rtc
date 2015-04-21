@@ -3,6 +3,8 @@
 
 #include "MCControlService.hh"
 
+class MCControl;
+
 namespace OpenHRP
 {
   class MCControlServiceSVC_impl:
@@ -10,10 +12,12 @@ namespace OpenHRP
     public virtual PortableServer::RefCountServantBase
   {
     public:
-      MCControlServiceSVC_impl();
+      MCControlServiceSVC_impl(MCControl * plugin);
       virtual ~MCControlServiceSVC_impl();
 
       void place_holder();
+    private:
+      MCControl * m_plugin;
   };
 }
 

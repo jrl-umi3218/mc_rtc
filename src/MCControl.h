@@ -18,6 +18,8 @@
 // <rtc-template block="service_impl_h">
 #include "MCControlServiceSVC_impl.h"
 
+#include <mc_control/mc_drc_controller.h>
+
 // </rtc-template>
 
 // Service Consumer stub headers
@@ -51,15 +53,15 @@ class MCControl  : public RTC::DataFlowComponentBase
 
   // The activated action (Active state entry action)
   // former rtc_active_entry()
-  // virtual RTC::ReturnCode_t onActivated(RTC::UniqueId ec_id);
+  virtual RTC::ReturnCode_t onActivated(RTC::UniqueId ec_id);
 
   // The deactivated action (Active state exit action)
   // former rtc_active_exit()
-  // virtual RTC::ReturnCode_t onDeactivated(RTC::UniqueId ec_id);
+  virtual RTC::ReturnCode_t onDeactivated(RTC::UniqueId ec_id);
 
   // The execution action that is invoked periodically
   // former rtc_active_do()
-  // virtual RTC::ReturnCode_t onExecute(RTC::UniqueId ec_id);
+  virtual RTC::ReturnCode_t onExecute(RTC::UniqueId ec_id);
 
   // The aborting action when main logic error occurred.
   // former rtc_aborting_entry()
@@ -85,10 +87,8 @@ class MCControl  : public RTC::DataFlowComponentBase
  protected:
   // Configuration variable declaration
   // <rtc-template block="config_declare">
-  std::string m_robot_urdf_url;
-  std::string m_stances_file;
-  std::string m_conf_file;
   double m_timeStep;
+  bool m_enabled;
 
   // </rtc-template>
 
@@ -96,6 +96,7 @@ class MCControl  : public RTC::DataFlowComponentBase
   // <rtc-template block="inport_declare">
   TimedDoubleSeq m_qIn;
   InPort<TimedDoubleSeq> m_qInIn;
+  std::vector<double> qIn;
 
   // </rtc-template>
 
@@ -124,7 +125,8 @@ class MCControl  : public RTC::DataFlowComponentBase
   // </rtc-template>
 
  private:
-
+public:
+  mc_control::MCDRCPostureController controller;
 };
 
 

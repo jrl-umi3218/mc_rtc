@@ -15,6 +15,10 @@
 #endif
 #include "MCControl.h"
 
+#include <fstream>
+
+static std::ofstream ofs("/tmp/mc-control.log");
+
 // Module specification
 // <rtc-template block="module_spec">
 static const char* mccontrol_spec[] =
@@ -31,9 +35,8 @@ static const char* mccontrol_spec[] =
     "language",          "C++",
     "lang_type",         "compile",
     // Configuration variables
-    "conf.default.robot_urdf_url", "/home/gergondet/catkin_ws/src/hrp2_drc/hrp2_drc_description/urdf/hrp2drc.urdf",
-    "conf.default.stances_file", "/home/gergondet/devel-src/mcp/mcp_ws/src/mc_ros/mc_control_scenario/stances/hrp2_drc/drc_multi_robot_frame_1_87b.seq",
-    "conf.default.conf_file", "/home/gergondet/devel-src/mcp/mcp_ws/src/mc_ros/mc_control_scenario/config/classic/hrp2_drc/drc_test_conf.py",
+    "conf.default.timeStep", "0.005",
+    "conf.default.is_enabled", "0",
     ""
   };
 // </rtc-template>
@@ -43,10 +46,12 @@ MCControl::MCControl(RTC::Manager* manager)
   : RTC::DataFlowComponentBase(manager),
     m_qInIn("qIn", m_qIn),
     m_qOutOut("qOut", m_qOut),
-    m_MCControlServicePortPort("MCControlServicePort")
+    m_MCControlServicePortPort("MCControlServicePort"),
+    m_service0(this)
 
     // </rtc-template>
 {
+  std::cout << "MCControl::MCControl" << std::endl;
 }
 
 MCControl::~MCControl()
@@ -56,6 +61,7 @@ MCControl::~MCControl()
 
 RTC::ReturnCode_t MCControl::onInitialize()
 {
+  std::cout << "MCControl::onInitialize() starting" << std::endl;
   // Registration: InPort/OutPort/Service
   // <rtc-template block="registration">
   // Set InPort buffers
@@ -76,12 +82,11 @@ RTC::ReturnCode_t MCControl::onInitialize()
 
   // <rtc-template block="bind_config">
   // Bind variables and configuration variable
-  bindParameter("robot_urdf_url", m_robot_urdf_url, "/home/gergondet/catkin_ws/src/hrp2_drc/hrp2_drc_description/urdf/hrp2drc.urdf");
-  bindParameter("stances_file", m_stances_file, "/home/gergondet/devel-src/mcp/mcp_ws/src/mc_ros/mc_control_scenario/stances/hrp2_drc/drc_multi_robot_frame_1_87b.seq");
-  bindParameter("conf_file", m_conf_file, "/home/gergondet/devel-src/mcp/mcp_ws/src/mc_ros/mc_control_scenario/config/classic/hrp2_drc/drc_test_conf.py");
-  bindParameter("timeStep", m_timeStep, "0.002");
+  bindParameter("timeStep", m_timeStep, "0.005");
+  bindParameter("is_enabled", controller.running, "0");
 
   // </rtc-template>
+  std::cout << "MCControl::onInitialize() finished" << std::endl;
   return RTC::RTC_OK;
 }
 
@@ -104,24 +109,86 @@ RTC::ReturnCode_t MCControl::onShutdown(RTC::UniqueId ec_id)
   return RTC::RTC_OK;
 }
 */
-/*
+
 RTC::ReturnCode_t MCControl::onActivated(RTC::UniqueId ec_id)
 {
   return RTC::RTC_OK;
 }
-*/
-/*
+
+
 RTC::ReturnCode_t MCControl::onDeactivated(RTC::UniqueId ec_id)
 {
   return RTC::RTC_OK;
 }
-*/
-/*
+
+
 RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
 {
+  if(m_qInIn.isNew())
+  {
+    m_qInIn.read();
+    qIn.resize(m_qIn.data.length());
+    for(unsigned int i = 0; i < m_qIn.data.length(); ++i)
+    {
+      qIn[i] = m_qIn.data[i];
+    }
+    coil::TimeValue coiltm(coil::gettimeofday());
+    RTC::Time tm;
+    tm.sec = coiltm.sec();
+    tm.nsec = coiltm.usec()*1e3;
+    if(controller.running)
+    {
+      double t = tm.sec*1e9 + tm.nsec;
+      if(controller.run())
+      {
+        const mc_control::QPResultMsg & res = controller.send(t);
+        m_qOut.data.length(m_qIn.data.length());
+        for(unsigned int i = 7; i < res.q.size() + 1; ++i)
+        {
+          if(i < 30)
+          {
+            m_qOut.data[i-7] = res.q[i];
+          }
+          else if(i == 30)
+          {
+            m_qOut.data[i-7] = qIn[i];
+          }
+          else
+          {
+            m_qOut.data[i-7] = res.q[i-1];
+          }
+        }
+        for(unsigned int i = 37; i < m_qIn.data.length(); ++i)
+        {
+          m_qOut.data[i] = qIn[i];
+        }
+        //ofs << "qIn" << std::endl;
+        //for(size_t i = 0; i < m_qIn.data.length(); ++i)
+        //{
+        //  ofs << "qIn[" << i << "] = " << m_qIn.data[i] << std::endl;
+        //}
+        //ofs << "res.q" << std::endl;
+        //for(size_t i = 0; i < res.q.size(); ++i)
+        //{
+        //  ofs << "res.q[" << i << "] = " << res.q[i] << std::endl;
+        //}
+        //ofs << "qOut" << std::endl;
+        //for(size_t i = 0; i < m_qOut.data.length(); ++i)
+        //{
+        //  ofs << "qOut[" << i << "] = " << m_qOut.data[i] << std::endl;
+        //}
+      }
+    }
+    else
+    {
+      m_qOut = m_qIn;
+    }
+    m_qOut.tm = tm;
+    m_qOutOut.write();
+  }
   return RTC::RTC_OK;
 }
-*/
+
 /*
 RTC::ReturnCode_t MCControl::onAborting(RTC::UniqueId ec_id)
 {

@@ -131,11 +131,17 @@ URDFParserResult rbdyn_from_urdf(const std::string & content, bool fixed, const 
 
   tinyxml2::XMLDocument doc;
   doc.Parse(content.c_str());
+  tinyxml2::XMLElement * robot = doc.FirstChildElement("robot");
+  if(!robot)
+  {
+    std::cerr << "No robot tag in the URDF, parsing will stop now" << std::endl;
+    return res;
+  }
   std::vector<tinyxml2::XMLElement *> links;
   std::vector<std::string> filteredLinks = filteredLinksIn;
   // Extract link elements from the document, remove filtered links
   {
-    tinyxml2::XMLElement * link = doc.FirstChildElement("link");
+    tinyxml2::XMLElement * link = robot->FirstChildElement("link");
     while(link)
     {
       std::string linkName = link->Attribute("name");
@@ -212,7 +218,7 @@ URDFParserResult rbdyn_from_urdf(const std::string & content, bool fixed, const 
   std::vector<tinyxml2::XMLElement *> joints;
   // Extract joint elements from the document, remove joints that link with filtered links
   {
-    tinyxml2::XMLElement * joint = doc.FirstChildElement("joint");
+    tinyxml2::XMLElement * joint = robot->FirstChildElement("joint");
     while(joint)
     {
       std::string parent_link = joint->FirstChildElement("parent")->Attribute("link");

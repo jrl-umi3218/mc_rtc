@@ -16,6 +16,11 @@
 #include <memory>
 #include <set>
 
+namespace mc_control
+{
+  struct MCController;
+}
+
 namespace mc_solver
 {
 
@@ -54,6 +59,8 @@ public:
 public:
   /* This one actually holds a tasks::qp::ContactConstraint */
   std::shared_ptr<tasks::qp::Constraint> contactConstr;
+public:
+  ContactConstraint() {}
 };
 
 struct KinematicsConstraint : public ConstraintSet
@@ -65,6 +72,8 @@ public:
   /* This one actually holds a tasks::qp::JointLimitsConstr or a tasks::qp::DamperJointLimitsConstr */
   std::shared_ptr<tasks::qp::Constraint> jointLimitsConstr;
   bool damped;
+public:
+  KinematicsConstraint() {}
 };
 
 struct DynamicsConstraint : public KinematicsConstraint
@@ -77,11 +86,16 @@ public:
   std::shared_ptr<tasks::qp::Constraint> motionConstr;
   bool is_spring;
   bool is_poly;
+public:
+  DynamicsConstraint() {}
 };
 
 struct Collision
 {
   Collision() : body1("NONE"), body2("NONE") {}
+  Collision(const std::string & b1, const std::string & b2, double i, double s, double d)
+  : body1(b1), body2(b2), iDist(i), sDist(s), damping(d)
+  {}
   std::string body1;
   std::string body2;
   double iDist;
@@ -126,6 +140,8 @@ private:
   std::string __keyByNames(const std::string & name1, const std::string & name2);
   unsigned int __createCollId(const Collision & col);
   std::pair<unsigned int, Collision> __popCollId(const std::string & name1, const std::string & name2);
+public:
+  CollisionsConstraint() {}
 };
 
 struct RobotEnvCollisionsConstraint : public ConstraintSet
@@ -193,6 +209,8 @@ public:
   mc_control::QPResultMsg qpRes;
 private:
   void __fillResult();
+public:
+  QPSolver() {}
 };
 
 struct MRQPSolver
@@ -230,6 +248,8 @@ public:
   mc_control::MRQPResultMsg qpRes;
 private:
   void __fillResult();
+public:
+  MRQPSolver() {}
 };
 
 }

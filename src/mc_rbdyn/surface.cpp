@@ -21,7 +21,7 @@ Surface::Surface(const std::string & name, const std::string & bodyName, const s
 
 sva::PTransformd Surface::X_0_s(const mc_rbdyn::Robot & robot) const
 {
-  return X_0_s(robot, robot.mbc);
+  return X_0_s(robot, *(robot.mbc));
 }
 
 sva::PTransformd Surface::X_0_s(const mc_rbdyn::Robot & robot, const rbd::MultiBodyConfig & mbc) const

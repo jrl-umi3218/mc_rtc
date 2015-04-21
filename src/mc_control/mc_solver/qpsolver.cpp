@@ -504,22 +504,23 @@ void QPSolver::update()
 
 bool QPSolver::run()
 {
-  mc_rbdyn::Robot & robot = const_cast<mc_rbdyn::Robot&>(robots.robot());
+  mc_rbdyn::Robot & robot = robots.robot();
   for(auto & pcb : preQPCb)
   {
-    pcb.second(robot.mb, robot.mbc, solver);
+    pcb.second(*(robot.mb), *(robot.mbc), solver);
   }
   bool ret = false;
   if(solver.solveNoMbcUpdate(robots.mbs, robots.mbcs))
   {
-    solver.updateMbc(robot.mbc, robots.robotIndex);
-    rbd::eulerIntegration(robot.mb, robot.mbc, timeStep);
-    rbd::forwardKinematics(robot.mb, robot.mbc);
-    rbd::forwardVelocity(robot.mb, robot.mbc);
+    solver.updateMbc(*(robot.mbc), robots.robotIndex);
+    rbd::eulerIntegration(*(robot.mb), *(robot.mbc), timeStep);
+    rbd::forwardKinematics(*(robot.mb), *(robot.mbc));
+    rbd::forwardVelocity(*(robot.mb), *(robot.mbc));
+    ret = true;
   }
   for(auto & pcb : postQPCb)
   {
-    pcb.second(robot.mb, robot.mbc, solver);
+    pcb.second(*(robot.mb), *(robot.mbc), solver);
   }
   return ret;
 }
@@ -535,8 +536,8 @@ const mc_control::QPResultMsg & QPSolver::send(double/*curTime*/, unsigned int s
 void QPSolver::__fillResult()
 {
   const mc_rbdyn::Robot & robot = robots.robot();
-  const std::vector< std::vector<double> > & q = robot.mbc.q;
-  const std::vector< std::vector<double> > & torque = robot.mbc.jointTorque;
+  const std::vector< std::vector<double> > & q = robot.mbc->q;
+  const std::vector< std::vector<double> > & torque = robot.mbc->jointTorque;
   qpRes.q.clear();
   for(const auto & qi : q)
   {
@@ -702,7 +703,7 @@ void MRQPSolver::__fillResult()
     const mc_rbdyn::Robot & robot = robots.robots[i];
     qpRes.robots_state.push_back(mc_control::RobotMsg());
     std::vector<double> & q = qpRes.robots_state[i].q;
-    for(const auto & qv : robot.mbc.q)
+    for(const auto & qv : robot.mbc->q)
     {
       for(const auto & qi : qv)
       {
@@ -710,7 +711,7 @@ void MRQPSolver::__fillResult()
       }
     }
     std::vector<double> & alphaVec = qpRes.robots_state[i].alphaVec;
-    for(const auto & av : robot.mbc.alpha)
+    for(const auto & av : robot.mbc->alpha)
     {
       for(const auto & ai : av)
       {

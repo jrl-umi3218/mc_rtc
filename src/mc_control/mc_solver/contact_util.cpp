@@ -20,8 +20,8 @@ QPContactPtr mrTasksContactFromMcContact(const mc_rbdyn::Robots & robots, const 
   unsigned int r1BodyIndex = r1.bodyIndexByName(r1Surface->bodyName);
   unsigned int r2BodyIndex = r2.bodyIndexByName(r2Surface->bodyName);
 
-  sva::PTransformd X_0_b1 = r1.mbc.bodyPosW[r1BodyIndex];
-  sva::PTransformd X_0_b2 = r2.mbc.bodyPosW[r2BodyIndex];
+  sva::PTransformd X_0_b1 = r1.mbc->bodyPosW[r1BodyIndex];
+  sva::PTransformd X_0_b2 = r2.mbc->bodyPosW[r2BodyIndex];
   sva::PTransformd X_b1_b2 = X_0_b2*X_0_b1.inv();
   const sva::PTransformd & X_b_s = contact.X_b_s;
 
@@ -84,8 +84,8 @@ std::pair<QPContactPtr, std::vector<sva::PTransformd> >
   {
     unsigned int robotBodyIndex = robot.bodyIndexByName(robotSurface->bodyName);
     unsigned int envBodyIndex = env.bodyIndexByName(envSurface->bodyName);
-    sva::PTransformd X_0_b1 = robot.mbc.bodyPosW[robotBodyIndex];
-    sva::PTransformd X_0_b2 = env.mbc.bodyPosW[envBodyIndex];
+    sva::PTransformd X_0_b1 = robot.mbc->bodyPosW[robotBodyIndex];
+    sva::PTransformd X_0_b2 = env.mbc->bodyPosW[envBodyIndex];
     X_b1_b2 = X_0_b2*X_0_b1.inv();
   }
   for(const auto & p : svas)
@@ -159,8 +159,8 @@ std::vector<mc_control::MRContactMsg> mrContactsMsgFromMrContacts
     unsigned int r1BodyIndex = r1.bodyIndexByName(c.r1Surface->bodyName);
     unsigned int r2BodyIndex = r2.bodyIndexByName(c.r2Surface->bodyName);
 
-    sva::PTransformd X_0_b1 = r1.mbc.bodyPosW[r1BodyIndex];
-    sva::PTransformd X_0_b2 = r2.mbc.bodyPosW[r2BodyIndex];
+    sva::PTransformd X_0_b1 = r1.mbc->bodyPosW[r1BodyIndex];
+    sva::PTransformd X_0_b2 = r2.mbc->bodyPosW[r2BodyIndex];
     sva::PTransformd X_b1_b2 = X_0_b2*X_0_b1.inv();
 
     mc_control::MRContactMsg msg;
