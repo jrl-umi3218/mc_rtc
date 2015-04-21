@@ -38,8 +38,19 @@ struct HRP2DRCRobotModule : public HRP2DRCCommonRobotModule
 public:
   HRP2DRCRobotModule();
 
-  /* FIXME implemented in the python but not really used */
-  /* mb,mbc,mbg robot(const bool & fixed = false); */
+  virtual const std::map<std::string, std::pair<std::string, std::string> > & convexHull() const;
+
+  virtual const std::vector< std::map<int, std::vector<double> > > & bounds() const;
+
+  virtual const std::map< unsigned int, std::vector<double> > & stance() const;
+public:
+  std::vector<std::string> filteredLinks;
+};
+
+struct HRP2DRCGripperRobotModule : public HRP2DRCCommonRobotModule
+{
+public:
+  HRP2DRCGripperRobotModule();
 
   virtual const std::map<std::string, std::pair<std::string, std::string> > & convexHull() const;
 

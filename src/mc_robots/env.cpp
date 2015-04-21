@@ -14,10 +14,11 @@ GroundRobotModule::GroundRobotModule()
   std::ifstream ifs(urdfPath);
   std::stringstream urdf;
   urdf << ifs.rdbuf();
-  mc_rbdyn_urdf::URDFParserResult res = mc_rbdyn_urdf::rbdyn_from_urdf(urdf.str(), false, {});
+  mc_rbdyn_urdf::URDFParserResult res = mc_rbdyn_urdf::rbdyn_from_urdf(urdf.str());
   mb = res.mb;
   mbc = res.mbc;
   mbg = res.mbg;
+  _collisionTransforms = res.collision_tf;
 }
 
 const std::map<std::string, std::pair<std::string, std::string> > & GroundRobotModule::convexHull() const

@@ -101,7 +101,7 @@ bool MCDRCPostureController::change_joint(int jid)
 {
   if(jid < qpsolver->robots.robot().mb->nrJoints())
   {
-    current_joint = jid;
+    current_joint = jid + 1;
     return true;
   }
   else
@@ -126,13 +126,13 @@ bool MCDRCPostureController::change_joint(const std::string & jname)
 
 bool MCDRCPostureController::joint_up()
 {
-  add_joint_pos(0.5);
+  add_joint_pos(0.01);
   return true;
 }
 
 bool MCDRCPostureController::joint_down()
 {
-  add_joint_pos(-0.5);
+  add_joint_pos(-0.01);
   return true;
 }
 
@@ -141,6 +141,23 @@ void MCDRCPostureController::add_joint_pos(const double & v)
   auto p = postureTask->posture();
   p[current_joint][0] += v;
   postureTask->posture(p);
+}
+
+bool MCDRCPostureController::set_joint_pos(const std::string & jname, const double & v)
+{
+  if(qpsolver->robots.robot().hasJoint(jname))
+  {
+    unsigned int jid = qpsolver->robots.robot().jointIndexByName(jname);
+    auto p = postureTask->posture();
+    p[jid][0] = v;
+    postureTask->posture(p);
+    return true;
+  }
+  else
+  {
+    std::cerr << "Invalid joint name " << jname << " provided" << std::endl;
+    return false;
+  }
 }
 
 }

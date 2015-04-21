@@ -26,10 +26,31 @@ MCControlServiceSVC_impl::~MCControlServiceSVC_impl()
 {
 }
 
-void MCControlServiceSVC_impl::place_holder()
+/*FIXME Not implemented */
+CORBA::Boolean MCControlServiceSVC_impl::EnablePostureController()
 {
-  m_plugin->controller.change_joint("RARM_JOINT0");
-  m_plugin->controller.joint_up();
+  return true;
 }
+
+CORBA::Boolean MCControlServiceSVC_impl::change_joint(const char* jname)
+{
+  return m_plugin->controller.change_joint(jname);
+}
+
+CORBA::Boolean MCControlServiceSVC_impl::joint_up()
+{
+  return m_plugin->controller.joint_up();
+}
+
+CORBA::Boolean MCControlServiceSVC_impl::joint_down()
+{
+  return m_plugin->controller.joint_down();
+}
+
+CORBA::Boolean MCControlServiceSVC_impl::set_joint_pos(const char* jname, ::CORBA::Double v)
+{
+  return m_plugin->controller.set_joint_pos(jname, v);
+}
+
 
 }

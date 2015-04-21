@@ -119,7 +119,11 @@ _CORBA_MODULE_BEG
     public virtual omniObjRef
   {
   public:
-    void place_holder();
+    ::CORBA::Boolean EnablePostureController();
+    ::CORBA::Boolean change_joint(const char* jname);
+    ::CORBA::Boolean joint_up();
+    ::CORBA::Boolean joint_down();
+    ::CORBA::Boolean set_joint_pos(const char* jname, ::CORBA::Double v);
 
     inline _objref_MCControlService()  { _PR_setobj(0); }  // nil
     _objref_MCControlService(omniIOR*, omniIdentity*);
@@ -153,7 +157,11 @@ _CORBA_MODULE_BEG
   public:
     virtual ~_impl_MCControlService();
 
-    virtual void place_holder() = 0;
+    virtual ::CORBA::Boolean EnablePostureController() = 0;
+    virtual ::CORBA::Boolean change_joint(const char* jname) = 0;
+    virtual ::CORBA::Boolean joint_up() = 0;
+    virtual ::CORBA::Boolean joint_down() = 0;
+    virtual ::CORBA::Boolean set_joint_pos(const char* jname, ::CORBA::Double v) = 0;
     
   public:  // Really protected, workaround for xlC
     virtual _CORBA_Boolean _dispatch(omniCallHandle&);

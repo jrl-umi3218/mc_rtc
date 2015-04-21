@@ -165,12 +165,12 @@ std::map<std::string, std::pair<std::string, std::string>> HRP2DRCCommonRobotMod
   }
   res["RARM_LINK7"] = std::pair<std::string, std::string>("RARM_LINK7", "RARM_DRC_LINK7");
   res["LARM_LINK7"] = std::pair<std::string, std::string>("LARM_LINK7", "LARM_DRC_LINK7");
-  res["RARM_LINK6"] = std::pair<std::string, std::string>("RARM_LINK6", "RARM_LINK6_lower");
-  res["LARM_LINK6"] = std::pair<std::string, std::string>("LARM_LINK6", "LARM_LINK6_lower");
+  res["RARM_LINK6_sub1"] = std::pair<std::string, std::string>("RARM_LINK6", "RARM_LINK6_lower");
+  res["LARM_LINK6_sub1"] = std::pair<std::string, std::string>("LARM_LINK6", "LARM_LINK6_lower");
   res["RLEG_LINK5"] = std::pair<std::string, std::string>("RLEG_LINK5", "RLEG_LINK5-2");
   res["LLEG_LINK5"] = std::pair<std::string, std::string>("LLEG_LINK5", "LLEG_LINK5-2");
-  res["r_wrist_closed"] = std::pair<std::string, std::string>("RARM_LINK6", "r_wrist_closed");
-  res["l_wrist_closed"] = std::pair<std::string, std::string>("LARM_LINK6", "l_wrist_closed");
+  res["RARM_LINK6"] = std::pair<std::string, std::string>("RARM_LINK6", "r_wrist_closed");
+  res["LARM_LINK6"] = std::pair<std::string, std::string>("LARM_LINK6", "l_wrist_closed");
   res["CHEST_LINK1_FULL"] = std::pair<std::string, std::string>("CHEST_LINK1", "CHEST_LINK1_FULL");
   return res;
 }
@@ -186,9 +186,6 @@ HRP2DRCRobotModule::HRP2DRCRobotModule()
 
   _springs.springsBodies = {"LLEG_LINK5", "RLEG_LINK5"};
 }
-
-/* FIXME implemented in the python but not really used */
-/* mb,mbc,mbg robot(const bool & fixed = false); */
 
 const std::map<std::string, std::pair<std::string, std::string> > & HRP2DRCRobotModule::convexHull() const
 {
@@ -206,6 +203,33 @@ const std::vector< std::map<int, std::vector<double> > > & HRP2DRCRobotModule::b
 const std::map< unsigned int, std::vector<double> > & HRP2DRCRobotModule::stance() const
 {
   const_cast<HRP2DRCRobotModule*>(this)->_stance = halfSittingPose(mb);
+  return _stance;
+}
+
+HRP2DRCGripperRobotModule::HRP2DRCGripperRobotModule()
+{
+  filteredLinks = virtualLinks;
+  readUrdf("hrp2drc", filteredLinks);
+
+  _springs.springsBodies = {"LLEG_LINK5", "RLEG_LINK5"};
+}
+
+const std::map<std::string, std::pair<std::string, std::string> > & HRP2DRCGripperRobotModule::convexHull() const
+{
+  auto fileByBodyName = stdCollisionsFiles(mb);
+  const_cast<HRP2DRCGripperRobotModule*>(this)->_convexHull = getConvexHull(fileByBodyName);
+  return _convexHull;
+}
+
+const std::vector< std::map<int, std::vector<double> > > & HRP2DRCGripperRobotModule::bounds() const
+{
+  const_cast<HRP2DRCGripperRobotModule*>(this)->_bounds = nominalBounds(limits);
+  return _bounds;
+}
+
+const std::map< unsigned int, std::vector<double> > & HRP2DRCGripperRobotModule::stance() const
+{
+  const_cast<HRP2DRCGripperRobotModule*>(this)->_stance = halfSittingPose(mb);
   return _stance;
 }
 

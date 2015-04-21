@@ -1,8 +1,8 @@
 // -*- C++ -*-
 /*!
- * @file  MCControl.cpp * @brief Core component for MC control * $Date$ 
+ * @file  MCControl.cpp * @brief Core component for MC control * $Date$
  *
- * $Id$ 
+ * $Id$
  */
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wall"
@@ -90,28 +90,12 @@ RTC::ReturnCode_t MCControl::onInitialize()
   return RTC::RTC_OK;
 }
 
-
-/*
-RTC::ReturnCode_t MCControl::onFinalize()
-{
-  return RTC::RTC_OK;
-}
-*/
-/*
-RTC::ReturnCode_t MCControl::onStartup(RTC::UniqueId ec_id)
-{
-  return RTC::RTC_OK;
-}
-*/
-/*
-RTC::ReturnCode_t MCControl::onShutdown(RTC::UniqueId ec_id)
-{
-  return RTC::RTC_OK;
-}
-*/
-
 RTC::ReturnCode_t MCControl::onActivated(RTC::UniqueId ec_id)
 {
+  rlj0 = 7;
+  rhj7 = rlj0 + controller.qpsolver->robots.robot().jointIndexByName("RARM_JOINT7") - 1;
+  lhj0 = rhj7 + 6;
+  lhj7 = lhj0 + 7;
   return RTC::RTC_OK;
 }
 
@@ -142,25 +126,22 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
       if(controller.run())
       {
         const mc_control::QPResultMsg & res = controller.send(t);
-        m_qOut.data.length(m_qIn.data.length());
-        for(unsigned int i = 7; i < res.q.size() + 1; ++i)
+        m_qOut.data.length(res.q.size()-7);
+        for(unsigned int i = rlj0; i <= rhj7; ++i)
         {
-          if(i < 30)
-          {
-            m_qOut.data[i-7] = res.q[i];
-          }
-          else if(i == 30)
-          {
-            m_qOut.data[i-7] = qIn[i];
-          }
-          else
-          {
-            m_qOut.data[i-7] = res.q[i-1];
-          }
+          m_qOut.data[i - rlj0] = res.q[i];
         }
-        for(unsigned int i = 37; i < m_qIn.data.length(); ++i)
+        for(unsigned int i = lhj0; i <= lhj7; ++i)
         {
-          m_qOut.data[i] = qIn[i];
+          m_qOut.data[i - rlj0 - 5] = res.q[i];
+        }
+        for(unsigned int i = rhj7 + 1; i < rhj7 + 6; ++i)
+        {
+          m_qOut.data[lhj7 - rlj0 - 5 + i - rhj7] = res.q[i];
+        }
+        for(unsigned int i = lhj7 + 1; i < lhj7 + 6; ++i)
+        {
+          m_qOut.data[i - rlj0] = res.q[i];
         }
         //ofs << "qIn" << std::endl;
         //for(size_t i = 0; i < m_qIn.data.length(); ++i)
@@ -172,11 +153,11 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
         //{
         //  ofs << "res.q[" << i << "] = " << res.q[i] << std::endl;
         //}
-        //ofs << "qOut" << std::endl;
-        //for(size_t i = 0; i < m_qOut.data.length(); ++i)
-        //{
-        //  ofs << "qOut[" << i << "] = " << m_qOut.data[i] << std::endl;
-        //}
+        ofs << "qOut" << std::endl;
+        for(size_t i = 0; i < m_qOut.data.length(); ++i)
+        {
+          ofs << "qOut[" << i << "] = " << m_qOut.data[i] << std::endl;
+        }
       }
     }
     else
@@ -189,41 +170,9 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
   return RTC::RTC_OK;
 }
 
-/*
-RTC::ReturnCode_t MCControl::onAborting(RTC::UniqueId ec_id)
-{
-  return RTC::RTC_OK;
-}
-*/
-/*
-RTC::ReturnCode_t MCControl::onError(RTC::UniqueId ec_id)
-{
-  return RTC::RTC_OK;
-}
-*/
-/*
-RTC::ReturnCode_t MCControl::onReset(RTC::UniqueId ec_id)
-{
-  return RTC::RTC_OK;
-}
-*/
-/*
-RTC::ReturnCode_t MCControl::onStateUpdate(RTC::UniqueId ec_id)
-{
-  return RTC::RTC_OK;
-}
-*/
-/*
-RTC::ReturnCode_t MCControl::onRateChanged(RTC::UniqueId ec_id)
-{
-  return RTC::RTC_OK;
-}
-*/
-
-
 extern "C"
 {
- 
+
   void MCControlInit(RTC::Manager* manager)
   {
     coil::Properties profile(mccontrol_spec);
@@ -231,7 +180,7 @@ extern "C"
                              RTC::Create<MCControl>,
                              RTC::Delete<MCControl>);
   }
-  
+
 };
 
 

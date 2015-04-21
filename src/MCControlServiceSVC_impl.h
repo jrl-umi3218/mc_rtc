@@ -15,7 +15,14 @@ namespace OpenHRP
       MCControlServiceSVC_impl(MCControl * plugin);
       virtual ~MCControlServiceSVC_impl();
 
-      void place_holder();
+      /* General services to switch between controllers */
+      virtual CORBA::Boolean EnablePostureController();
+
+      /* Joint services */
+      virtual CORBA::Boolean change_joint(const char* jname);
+      virtual CORBA::Boolean joint_up();
+      virtual CORBA::Boolean joint_down();
+      virtual CORBA::Boolean set_joint_pos(const char* jname, ::CORBA::Double v);
     private:
       MCControl * m_plugin;
   };

@@ -33,11 +33,13 @@ public:
 
   bool joint_up();
   bool joint_down();
+
+  bool set_joint_pos(const std::string & jname, const double & pos);
 public:
   /* Common stuff */
   bool running;
   double timeStep;
-  mc_robots::HRP2DRCRobotModule robot_module;
+  mc_robots::HRP2DRCGripperRobotModule robot_module;
   mc_robots::GroundRobotModule ground_module;
   mc_solver::ContactConstraint contactConstraint;
   mc_solver::KinematicsConstraint kinematicsConstraint;

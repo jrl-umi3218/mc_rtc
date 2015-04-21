@@ -6,7 +6,15 @@ module OpenHRP
 
   interface MCControlService
   {
-    void place_holder();
+    boolean EnablePostureController();
+
+    boolean change_joint(in string jname);
+
+    boolean joint_up();
+
+    boolean joint_down();
+
+    boolean set_joint_pos(in string jname, in double v);
   };
 
 };

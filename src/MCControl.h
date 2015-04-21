@@ -127,6 +127,10 @@ class MCControl  : public RTC::DataFlowComponentBase
  private:
 public:
   mc_control::MCDRCPostureController controller;
+  unsigned int rlj0;
+  unsigned int rhj7;
+  unsigned int lhj0;
+  unsigned int lhj7;
 };
 
 
