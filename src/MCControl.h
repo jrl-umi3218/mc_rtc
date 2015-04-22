@@ -132,6 +132,7 @@ public:
   unsigned int rhj7;
   unsigned int lhj0;
   unsigned int lhj7;
+  unsigned int max_t;
 };
 
 
