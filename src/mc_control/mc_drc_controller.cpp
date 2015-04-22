@@ -49,41 +49,44 @@ MCController::MCController()
 : timeStep(0.005), running(false), robot_module(), ground_module()
 {
   std::cout << "Creating an MCController" << std::endl;
-  sva::PTransformd base = sva::PTransformd::Identity();
-
-  mc_rbdyn::Robot hrp2_drc_in;
-  mc_rbdyn::Robot ground;
-  loadRobotAndEnv(robot_module, robot_module.path + "/rsdf/hrp2_drc/",
-                ground_module, ground_module.path + "/rsdf/ground/",
-                &base, 0, hrp2_drc_in, ground);
-  std::cout << "Loaded the robot" << std::endl;
-  hrp2_drc_in.mbc->gravity = Eigen::Vector3d(0, 0, 9.81);
-  mc_rbdyn::Robots robots({hrp2_drc_in, ground});
-
-
   unsigned int hrp2_drc_index = 0;
+  {
+    /* Entering new scope to prevent access to robots from anywhere but the qpsolver object */
+    sva::PTransformd base = sva::PTransformd::Identity();
 
-  mc_rbdyn::Robot & hrp2_drc = robots.robot();
-  rbd::forwardKinematics(*(hrp2_drc.mb), *(hrp2_drc.mbc));
-  rbd::forwardVelocity(*(hrp2_drc.mb), *(hrp2_drc.mbc));
+    mc_rbdyn::Robot hrp2_drc_in;
+    mc_rbdyn::Robot ground;
+    loadRobotAndEnv(robot_module, robot_module.path + "/rsdf/hrp2_drc/",
+                  ground_module, ground_module.path + "/rsdf/ground/",
+                  &base, 0, hrp2_drc_in, ground);
+    std::cout << "Loaded the robot" << std::endl;
+    hrp2_drc_in.mbc->gravity = Eigen::Vector3d(0, 0, 9.81);
+    mc_rbdyn::Robots robots({hrp2_drc_in, ground});
 
 
-  std::cout << "Create a QPSolver" << std::endl;
-  qpsolver = std::shared_ptr<mc_solver::QPSolver>(new mc_solver::QPSolver(robots, timeStep));
+
+    mc_rbdyn::Robot & hrp2_drc = robots.robot();
+    rbd::forwardKinematics(*(hrp2_drc.mb), *(hrp2_drc.mbc));
+    rbd::forwardVelocity(*(hrp2_drc.mb), *(hrp2_drc.mbc));
+
+
+    std::cout << "Create a QPSolver" << std::endl;
+    qpsolver = std::shared_ptr<mc_solver::QPSolver>(new mc_solver::QPSolver(robots, timeStep));
+  }
 
   std::cout << "Create a ContactConstraint" << std::endl;
   contactConstraint = mc_solver::ContactConstraint(timeStep, mc_solver::ContactConstraint::Position);
 
   std::cout << "Create a KinematicsConstraint" << std::endl;
-  kinematicsConstraint = mc_solver::KinematicsConstraint(robots, hrp2_drc_index, timeStep,
+  kinematicsConstraint = mc_solver::KinematicsConstraint(qpsolver->robots, hrp2_drc_index, timeStep,
                                                          false, {0.1, 0.01, 0.5}, 0.5);
 
   std::cout << "Create a CollisionsConstraint" << std::endl;
-  selfCollisionConstraint = mc_solver::CollisionsConstraint(robots, hrp2_drc_index, hrp2_drc_index, timeStep);
+  selfCollisionConstraint = mc_solver::CollisionsConstraint(qpsolver->robots, hrp2_drc_index, hrp2_drc_index, timeStep);
 
   std::cout << "Add collisions to CollisionsConstraint" << std::endl;
   /* Give a reasonnable default set of self collisions for the upper body */
-  selfCollisionConstraint.addCollisions(robots, {
+  selfCollisionConstraint.addCollisions(qpsolver->robots, {
     mc_solver::Collision("RARM_LINK3", "BODY", 0.05, 0.01, 0.),
     mc_solver::Collision("RARM_LINK4", "BODY", 0.05, 0.01, 0.),
     mc_solver::Collision("RARM_LINK5", "BODY", 0.05, 0.01, 0.),

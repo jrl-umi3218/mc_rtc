@@ -68,9 +68,9 @@ public:
         const std::vector< std::vector<double> > & ql, const std::vector< std::vector<double> > & qu,
         const std::vector< std::vector<double> > & vl, const std::vector< std::vector<double> > & vu,
         const std::vector< std::vector<double> > & tl, const std::vector< std::vector<double> > & tu,
-        const std::map<std::string, std::pair<unsigned int, sch::S_Polyhedron> > & convex, 
-        const std::map<std::string, std::pair<unsigned int, sch::STP_BV> > & stpbv,
-        const std::map<int, sva::PTransformd> & collisionTransforms, 
+        const std::map<std::string, std::pair<unsigned int, std::shared_ptr<sch::S_Polyhedron> > > & convex,
+        const std::map<std::string, std::pair<unsigned int, std::shared_ptr<sch::STP_BV> > > & stpbv,
+        const std::map<int, sva::PTransformd> & collisionTransforms,
         const std::map<std::string, std::shared_ptr<mc_rbdyn::Surface> > & surfaces,
         const std::vector<ForceSensor> & forceSensors, const std::string & accelerometerBody = "",
         const Springs & springs = Springs(), const std::vector< std::vector<Eigen::VectorXd> > & tlPoly = {},
@@ -106,8 +106,8 @@ public:
   std::vector< std::vector<double> > vu;
   std::vector< std::vector<double> > tl;
   std::vector< std::vector<double> > tu;
-  std::map< std::string, std::pair<unsigned int, sch::S_Polyhedron> > convex;
-  std::map< std::string, std::pair<unsigned int, sch::STP_BV> > stpbv;
+  std::map< std::string, std::pair<unsigned int, std::shared_ptr<sch::S_Polyhedron> > > convex;
+  std::map< std::string, std::pair<unsigned int, std::shared_ptr<sch::STP_BV> > > stpbv;
   std::map<int, sva::PTransformd> collisionTransforms;
   std::map<std::string, std::shared_ptr<mc_rbdyn::Surface> > surfaces;
   std::vector<ForceSensor> forceSensors;

@@ -34,8 +34,8 @@ Robot::Robot(const rbd::MultiBody & mb, const rbd::MultiBodyConfig & mbc, const 
         const std::vector< std::vector<double> > & ql, const std::vector< std::vector<double> > & qu,
         const std::vector< std::vector<double> > & vl, const std::vector< std::vector<double> > & vu,
         const std::vector< std::vector<double> > & tl, const std::vector< std::vector<double> > & tu,
-        const std::map<std::string, std::pair< unsigned int, sch::S_Polyhedron> > & convex, 
-        const std::map<std::string, std::pair< unsigned int, sch::STP_BV> > & stpbv,
+        const std::map<std::string, std::pair< unsigned int, std::shared_ptr<sch::S_Polyhedron> > > & convex,
+        const std::map<std::string, std::pair< unsigned int, std::shared_ptr<sch::STP_BV> > > & stpbv,
         const std::map<int, sva::PTransformd> & collisionTransforms, const std::map<std::string, std::shared_ptr<mc_rbdyn::Surface> > & surfaces,
         const std::vector<ForceSensor> & forceSensors, const std::string & accelerometerBody,
         const Springs & springs, const std::vector< std::vector<Eigen::VectorXd> > & tlPoly,
@@ -364,29 +364,29 @@ Robot loadRobot(const RobotModule & module, const std::string & surfaceDir, sva:
     bodyIdByName[b.name()] = b.id();
   }
 
-  std::map<std::string, std::pair<unsigned int, sch::S_Polyhedron> > convexByName;
+  std::map<std::string, std::pair<unsigned int, std::shared_ptr<sch::S_Polyhedron> > > convexByName;
   {
     for(const auto & p : module.convexHull())
     {
       if(bodyIdByName.count(p.second.first))
       {
-        sch::S_Polyhedron poly;
-        poly.constructFromFile(p.second.second);
-        convexByName[p.first] = std::pair<unsigned int, sch::S_Polyhedron> (bodyIdByName[p.second.first], poly);
+        std::shared_ptr<sch::S_Polyhedron> poly(new sch::S_Polyhedron);
+        poly->constructFromFile(p.second.second);
+        convexByName[p.first] = std::pair<unsigned int, std::shared_ptr<sch::S_Polyhedron> > (bodyIdByName[p.second.first], poly);
       }
     }
     applyTransformToSchById(mb, mbc, convexByName);
   }
 
-  std::map<std::string, std::pair<unsigned int, sch::STP_BV> > stpbvByName;
+  std::map<std::string, std::pair<unsigned int, std::shared_ptr<sch::STP_BV> > > stpbvByName;
   {
     for(const auto & p : module.stpbvHull())
     {
       if(bodyIdByName.count(p.second.first))
       {
-        sch::STP_BV stpbv;
-        stpbv.constructFromFile(p.second.second);
-        stpbvByName[p.first] = std::pair<unsigned int, sch::STP_BV> (bodyIdByName[p.second.first], stpbv);
+        std::shared_ptr<sch::STP_BV> stpbv(new sch::STP_BV);
+        stpbv->constructFromFile(p.second.second);
+        stpbvByName[p.first] = std::pair<unsigned int, std::shared_ptr<sch::STP_BV> > (bodyIdByName[p.second.first], stpbv);
       }
     }
     applyTransformToSchById(mb, mbc, stpbvByName);

@@ -197,7 +197,7 @@ void CollisionsConstraint::addCollision(const mc_rbdyn::Robots & robots, const C
   const sva::PTransformd & X_b1_c = r1.collisionTransforms.at(body1.first);
   const sva::PTransformd & X_b2_c = r2.collisionTransforms.at(body2.first);
   unsigned int collId = __createCollId(col);
-  dynamic_cast<tasks::qp::CollisionConstr*>(collConstr.get())->addCollision(robots.mbs, collId, r1Index, body1.first, const_cast<sch::S_Polyhedron*>(&body1.second), X_b1_c, r2Index, body2.first, const_cast<sch::S_Polyhedron*>(&body2.second), X_b2_c, col.iDist, col.sDist, col.damping, defaultDampingOffset);
+  dynamic_cast<tasks::qp::CollisionConstr*>(collConstr.get())->addCollision(robots.mbs, collId, r1Index, body1.first, const_cast<sch::S_Polyhedron*>(body1.second.get()), X_b1_c, r2Index, body2.first, const_cast<sch::S_Polyhedron*>(body2.second.get()), X_b2_c, col.iDist, col.sDist, col.damping, defaultDampingOffset);
 }
 
 void CollisionsConstraint::addCollisions(const mc_rbdyn::Robots & robots, const std::vector<Collision> & cols)
