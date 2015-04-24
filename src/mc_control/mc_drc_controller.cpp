@@ -94,22 +94,23 @@ MCController::MCController()
 
   /* Give a reasonnable default set of self collisions for the upper body */
   selfCollisionConstraint.addCollisions(qpsolver->robots, {
-//    mc_solver::Collision("RARM_LINK3", "BODY", 0.05, 0.01, 0.),
-//    mc_solver::Collision("RARM_LINK4", "BODY", 0.05, 0.01, 0.),
-//    mc_solver::Collision("RARM_LINK5", "BODY", 0.05, 0.01, 0.),
-//    mc_solver::Collision("RARM_LINK3", "CHEST_LINK0", 0.05, 0.01, 0.),
-//    mc_solver::Collision("RARM_LINK4", "CHEST_LINK0", 0.05, 0.01, 0.),
-//    mc_solver::Collision("RARM_LINK5", "CHEST_LINK0", 0.05, 0.01, 0.),
-//    mc_solver::Collision("RARM_LINK4", "CHEST_LINK1", 0.05, 0.01, 0.),
-//    mc_solver::Collision("RARM_LINK5", "CHEST_LINK1", 0.05, 0.01, 0.),
-//    mc_solver::Collision("LARM_LINK3", "BODY", 0.05, 0.01, 0.),
-//    mc_solver::Collision("LARM_LINK4", "BODY", 0.05, 0.01, 0.),
-//    mc_solver::Collision("LARM_LINK5", "BODY", 0.05, 0.01, 0.),
-//    mc_solver::Collision("LARM_LINK3", "CHEST_LINK0", 0.05, 0.01, 0.),
-//    mc_solver::Collision("LARM_LINK4", "CHEST_LINK0", 0.05, 0.01, 0.),
-//    mc_solver::Collision("LARM_LINK5", "CHEST_LINK0", 0.05, 0.01, 0.),
-//    mc_solver::Collision("LARM_LINK4", "CHEST_LINK1", 0.05, 0.01, 0.),
-//    mc_solver::Collision("LARM_LINK5", "CHEST_LINK1", 0.05, 0.01, 0.)
+    //FIXME Collision with BODY seems bugged right now
+    //mc_solver::Collision("LARM_LINK3", "BODY", 0.05, 0.01, 0.),
+    //mc_solver::Collision("LARM_LINK4", "BODY", 0.05, 0.01, 0.),
+    //mc_solver::Collision("LARM_LINK5", "BODY", 0.05, 0.01, 0.),
+    //mc_solver::Collision("RARM_LINK3", "BODY", 0.05, 0.01, 0.),
+    //mc_solver::Collision("RARM_LINK4", "BODY", 0.05, 0.01, 0.),
+    //mc_solver::Collision("RARM_LINK5", "BODY", 0.05, 0.01, 0.),
+    mc_solver::Collision("RARM_LINK3", "CHEST_LINK0", 0.05, 0.01, 0.),
+    mc_solver::Collision("RARM_LINK4", "CHEST_LINK0", 0.05, 0.01, 0.),
+    mc_solver::Collision("RARM_LINK5", "CHEST_LINK0", 0.05, 0.01, 0.),
+    mc_solver::Collision("RARM_LINK4", "CHEST_LINK1", 0.05, 0.01, 0.),
+    mc_solver::Collision("RARM_LINK5", "CHEST_LINK1", 0.05, 0.01, 0.),
+    mc_solver::Collision("LARM_LINK3", "CHEST_LINK0", 0.05, 0.01, 0.),
+    mc_solver::Collision("LARM_LINK4", "CHEST_LINK0", 0.05, 0.01, 0.),
+    mc_solver::Collision("LARM_LINK5", "CHEST_LINK0", 0.05, 0.01, 0.),
+    mc_solver::Collision("LARM_LINK4", "CHEST_LINK1", 0.05, 0.01, 0.),
+    mc_solver::Collision("LARM_LINK5", "CHEST_LINK1", 0.05, 0.01, 0.)
   });
 
   postureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(qpsolver->robots.mbs, hrp2_drc_index, qpsolver->robots.robot().mbc->q, 1, 5));
@@ -200,10 +201,10 @@ void MCDRCBody6dController::reset(const std::vector< std::vector<double> > & q)
 
 MCDRCGlobalController::MCDRCGlobalController()
 : posture_controller(), body6d_controller(),
-  //current_ctrl(POSTURE), next_ctrl(POSTURE),
-  //controller(&posture_controller),
-  current_ctrl(BODY6D), next_ctrl(BODY6D),
-  controller(&body6d_controller),
+  current_ctrl(POSTURE), next_ctrl(POSTURE),
+  controller(&posture_controller),
+  //current_ctrl(BODY6D), next_ctrl(BODY6D),
+  //controller(&body6d_controller),
   next_controller(0)
 {
 }
