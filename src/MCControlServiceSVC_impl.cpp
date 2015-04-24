@@ -28,39 +28,34 @@ MCControlServiceSVC_impl::~MCControlServiceSVC_impl()
 {
 }
 
-/*FIXME Not implemented */
 CORBA::Boolean MCControlServiceSVC_impl::EnablePostureController()
 {
-  return true;
+  return m_plugin->controller.EnablePostureController();
 }
 
 CORBA::Boolean MCControlServiceSVC_impl::EnableBody6dController()
 {
-  return true;
+  return m_plugin->controller.EnableBody6dController();
 }
 
 CORBA::Boolean MCControlServiceSVC_impl::change_joint(const char* jname)
 {
-  return true;
-//  return m_plugin->controller.change_joint(jname);
+  return m_plugin->controller.change_joint(jname);
 }
 
 CORBA::Boolean MCControlServiceSVC_impl::joint_up()
 {
-  return true;
-//  return m_plugin->controller.joint_up();
+  return m_plugin->controller.joint_up();
 }
 
 CORBA::Boolean MCControlServiceSVC_impl::joint_down()
 {
-  return true;
-//  return m_plugin->controller.joint_down();
+  return m_plugin->controller.joint_down();
 }
 
 CORBA::Boolean MCControlServiceSVC_impl::set_joint_pos(const char* jname, ::CORBA::Double v)
 {
-  return true;
-//  return m_plugin->controller.set_joint_pos(jname, v);
+  return m_plugin->controller.set_joint_pos(jname, v);
 }
 
 CORBA::Boolean MCControlServiceSVC_impl::change_ef(const char * body)

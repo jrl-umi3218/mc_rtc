@@ -49,6 +49,7 @@ target_link_libraries(mc_control_solver RBDyn Tasks)
 
 set(mc_drc_controller_SRC
 ./src/mc_control/mc_drc_controller.cpp
+./src/mc_control/mc_drc_controller_services.cpp
 )
 add_library(mc_drc_controller SHARED ${mc_drc_controller_SRC})
 target_link_libraries(mc_drc_controller mc_control_solver mc_robots)

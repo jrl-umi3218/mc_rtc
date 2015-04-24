@@ -138,6 +138,8 @@ public:
   const Robot & robot() const;
 
   const Robot & env() const;
+
+  Robot & env();
 public:
   std::vector<mc_rbdyn::Robot> robots;
   std::vector<rbd::MultiBody> mbs;

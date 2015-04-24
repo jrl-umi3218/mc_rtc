@@ -185,6 +185,11 @@ const Robot & Robots::env() const
   return robots[envIndex];
 }
 
+Robot & Robots::env()
+{
+  return robots[envIndex];
+}
+
 void fixRobotSurfaces(Robot & robot)
 {
   for(std::pair<const std::string, std::shared_ptr<Surface> > & s : robot.surfaces)

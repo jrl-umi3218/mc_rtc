@@ -48,7 +48,8 @@ MCControl::MCControl(RTC::Manager* manager)
     m_qOutOut("qOut", m_qOut),
     m_MCControlServicePortPort("MCControlServicePort"),
     m_service0(this),
-    max_t(0)
+    max_t(0),
+    init(false)
 
     // </rtc-template>
 {
@@ -94,7 +95,7 @@ RTC::ReturnCode_t MCControl::onInitialize()
 RTC::ReturnCode_t MCControl::onActivated(RTC::UniqueId ec_id)
 {
   rlj0 = 7;
-  rhj7 = rlj0 + controller.qpsolver->robots.robot().jointIndexByName("RARM_JOINT7") - 1;
+  rhj7 = rlj0 + controller.qpsolver().robots.robot().jointIndexByName("RARM_JOINT7") - 1;
   lhj0 = rhj7 + 6;
   lhj7 = lhj0 + 7;
   return RTC::RTC_OK;
@@ -123,6 +124,11 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
     tm.nsec = coiltm.usec()*1e3;
     if(controller.running)
     {
+      if(!init)
+      {
+        controller.init(qIn);
+        init = true;
+      }
       double t = tm.sec*1e9 + tm.nsec;
       if(controller.run())
       {
@@ -160,13 +166,16 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
         //  ofs << "qOut[" << i << "] = " << m_qOut.data[i] << std::endl;
         //}
       }
+      m_qOut.tm = tm;
+      m_qOutOut.write();
     }
     else
     {
+      init = false;
       m_qOut = m_qIn;
+      /* Still run controller.run() in order to handle some service calls */
+      controller.run();
     }
-    m_qOut.tm = tm;
-    m_qOutOut.write();
     coil::TimeValue coiltmout(coil::gettimeofday());
     if((coiltmout.sec() - coiltm.sec())*1e6 + coiltmout.usec() - coiltm.usec() > max_t)
     {
