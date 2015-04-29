@@ -35,6 +35,7 @@ omniORB.registerType(MCControlService._NP_RepositoryId, _0_OpenHRP._d_MCControlS
 # MCControlService operations and attributes
 MCControlService._d_EnablePostureController = ((), (omniORB.tcInternal.tv_boolean, ), None)
 MCControlService._d_EnableBody6dController = ((), (omniORB.tcInternal.tv_boolean, ), None)
+MCControlService._d_EnableCoMController = ((), (omniORB.tcInternal.tv_boolean, ), None)
 MCControlService._d_change_joint = (((omniORB.tcInternal.tv_string,0), ), (omniORB.tcInternal.tv_boolean, ), None)
 MCControlService._d_joint_up = ((), (omniORB.tcInternal.tv_boolean, ), None)
 MCControlService._d_joint_down = ((), (omniORB.tcInternal.tv_boolean, ), None)
@@ -42,6 +43,7 @@ MCControlService._d_set_joint_pos = (((omniORB.tcInternal.tv_string,0), omniORB.
 MCControlService._d_change_ef = (((omniORB.tcInternal.tv_string,0), ), (omniORB.tcInternal.tv_boolean, ), None)
 MCControlService._d_translate_ef = ((omniORB.tcInternal.tv_double, omniORB.tcInternal.tv_double, omniORB.tcInternal.tv_double), (omniORB.tcInternal.tv_boolean, ), None)
 MCControlService._d_rotate_ef = ((omniORB.tcInternal.tv_double, omniORB.tcInternal.tv_double, omniORB.tcInternal.tv_double), (omniORB.tcInternal.tv_boolean, ), None)
+MCControlService._d_move_com = ((omniORB.tcInternal.tv_double, omniORB.tcInternal.tv_double, omniORB.tcInternal.tv_double), (omniORB.tcInternal.tv_boolean, ), None)
 
 # MCControlService object reference
 class _objref_MCControlService (CORBA.Object):
@@ -55,6 +57,9 @@ class _objref_MCControlService (CORBA.Object):
 
     def EnableBody6dController(self, *args):
         return _omnipy.invoke(self, "EnableBody6dController", _0_OpenHRP.MCControlService._d_EnableBody6dController, args)
+
+    def EnableCoMController(self, *args):
+        return _omnipy.invoke(self, "EnableCoMController", _0_OpenHRP.MCControlService._d_EnableCoMController, args)
 
     def change_joint(self, *args):
         return _omnipy.invoke(self, "change_joint", _0_OpenHRP.MCControlService._d_change_joint, args)
@@ -77,7 +82,10 @@ class _objref_MCControlService (CORBA.Object):
     def rotate_ef(self, *args):
         return _omnipy.invoke(self, "rotate_ef", _0_OpenHRP.MCControlService._d_rotate_ef, args)
 
-    __methods__ = ["EnablePostureController", "EnableBody6dController", "change_joint", "joint_up", "joint_down", "set_joint_pos", "change_ef", "translate_ef", "rotate_ef"] + CORBA.Object.__methods__
+    def move_com(self, *args):
+        return _omnipy.invoke(self, "move_com", _0_OpenHRP.MCControlService._d_move_com, args)
+
+    __methods__ = ["EnablePostureController", "EnableBody6dController", "EnableCoMController", "change_joint", "joint_up", "joint_down", "set_joint_pos", "change_ef", "translate_ef", "rotate_ef", "move_com"] + CORBA.Object.__methods__
 
 omniORB.registerObjref(MCControlService._NP_RepositoryId, _objref_MCControlService)
 _0_OpenHRP._objref_MCControlService = _objref_MCControlService
@@ -89,7 +97,7 @@ class MCControlService (PortableServer.Servant):
     _NP_RepositoryId = _0_OpenHRP.MCControlService._NP_RepositoryId
 
 
-    _omni_op_d = {"EnablePostureController": _0_OpenHRP.MCControlService._d_EnablePostureController, "EnableBody6dController": _0_OpenHRP.MCControlService._d_EnableBody6dController, "change_joint": _0_OpenHRP.MCControlService._d_change_joint, "joint_up": _0_OpenHRP.MCControlService._d_joint_up, "joint_down": _0_OpenHRP.MCControlService._d_joint_down, "set_joint_pos": _0_OpenHRP.MCControlService._d_set_joint_pos, "change_ef": _0_OpenHRP.MCControlService._d_change_ef, "translate_ef": _0_OpenHRP.MCControlService._d_translate_ef, "rotate_ef": _0_OpenHRP.MCControlService._d_rotate_ef}
+    _omni_op_d = {"EnablePostureController": _0_OpenHRP.MCControlService._d_EnablePostureController, "EnableBody6dController": _0_OpenHRP.MCControlService._d_EnableBody6dController, "EnableCoMController": _0_OpenHRP.MCControlService._d_EnableCoMController, "change_joint": _0_OpenHRP.MCControlService._d_change_joint, "joint_up": _0_OpenHRP.MCControlService._d_joint_up, "joint_down": _0_OpenHRP.MCControlService._d_joint_down, "set_joint_pos": _0_OpenHRP.MCControlService._d_set_joint_pos, "change_ef": _0_OpenHRP.MCControlService._d_change_ef, "translate_ef": _0_OpenHRP.MCControlService._d_translate_ef, "rotate_ef": _0_OpenHRP.MCControlService._d_rotate_ef, "move_com": _0_OpenHRP.MCControlService._d_move_com}
 
 MCControlService._omni_skeleton = MCControlService
 _0_OpenHRP__POA.MCControlService = MCControlService

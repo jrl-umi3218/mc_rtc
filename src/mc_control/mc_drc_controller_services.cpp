@@ -97,4 +97,16 @@ bool MCDRCGlobalController::rotate_ef(const Eigen::Matrix3d & m)
   }
 }
 
+bool MCDRCGlobalController::move_com(const Eigen::Vector3d & v)
+{
+  if(current_ctrl == COM)
+  {
+    return com_controller.move_com(v);
+  }
+  else
+  {
+    return false;
+  }
+}
+
 }

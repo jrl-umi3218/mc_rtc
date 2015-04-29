@@ -38,6 +38,11 @@ CORBA::Boolean MCControlServiceSVC_impl::EnableBody6dController()
   return m_plugin->controller.EnableBody6dController();
 }
 
+CORBA::Boolean MCControlServiceSVC_impl::EnableCoMController()
+{
+  return m_plugin->controller.EnableCoMController();
+}
+
 CORBA::Boolean MCControlServiceSVC_impl::change_joint(const char* jname)
 {
   return m_plugin->controller.change_joint(jname);
@@ -72,6 +77,11 @@ CORBA::Boolean MCControlServiceSVC_impl::rotate_ef(CORBA::Double r, CORBA::Doubl
 {
   Eigen::Matrix3d rpy = mc_rbdyn::rpyToMat(r, p, y);
   return m_plugin->controller.rotate_ef(rpy);
+}
+
+CORBA::Boolean MCControlServiceSVC_impl::move_com(CORBA::Double x, CORBA::Double y, CORBA::Double z)
+{
+  return m_plugin->controller.move_com(Eigen::Vector3d(x, y, z));
 }
 
 }

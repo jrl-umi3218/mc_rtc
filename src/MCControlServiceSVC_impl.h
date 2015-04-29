@@ -20,6 +20,8 @@ namespace OpenHRP
 
       virtual CORBA::Boolean EnableBody6dController();
 
+      virtual CORBA::Boolean EnableCoMController();
+
       /* Joint services */
       virtual CORBA::Boolean change_joint(const char* jname);
       virtual CORBA::Boolean joint_up();
@@ -29,6 +31,8 @@ namespace OpenHRP
       virtual CORBA::Boolean change_ef(const char * body);
       virtual CORBA::Boolean translate_ef(CORBA::Double x, CORBA::Double y, CORBA::Double z);
       virtual CORBA::Boolean rotate_ef(CORBA::Double r, CORBA::Double p, CORBA::Double y);
+      /* CoM services */
+      virtual CORBA::Boolean move_com(CORBA::Double x, CORBA::Double y, CORBA::Double z);
     private:
       MCControl * m_plugin;
   };

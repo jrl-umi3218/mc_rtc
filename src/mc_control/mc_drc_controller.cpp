@@ -10,11 +10,13 @@ namespace mc_control
 {
 
 MCDRCGlobalController::MCDRCGlobalController()
-: posture_controller(), body6d_controller(),
-  //current_ctrl(POSTURE), next_ctrl(POSTURE),
-  //controller(&posture_controller),
-  current_ctrl(BODY6D), next_ctrl(BODY6D),
-  controller(&body6d_controller),
+: posture_controller(), body6d_controller(), com_controller(),
+  current_ctrl(POSTURE), next_ctrl(POSTURE),
+  controller(&posture_controller),
+  //current_ctrl(BODY6D), next_ctrl(BODY6D),
+  //controller(&body6d_controller),
+  //current_ctrl(COM), next_ctrl(COM),
+  //controller(&com_controller),
   next_controller(0)
 {
 }
@@ -58,6 +60,15 @@ bool MCDRCGlobalController::run()
     else
     {
       /*XXX Need to be careful here */
+      /*XXX Need to get the current contacts from the controller when needed */
+      std::cout << "Reset with q[0]" << std::endl;
+      std::cout << controller->robot().mbc->q[0][0] << " ";
+      std::cout << controller->robot().mbc->q[0][1] << " ";
+      std::cout << controller->robot().mbc->q[0][2] << " ";
+      std::cout << controller->robot().mbc->q[0][3] << " ";
+      std::cout << controller->robot().mbc->q[0][4] << " ";
+      std::cout << controller->robot().mbc->q[0][5] << " ";
+      std::cout << controller->robot().mbc->q[0][6] << std::endl;
       next_controller->reset({controller->robot().mbc->q, {}});
       controller = next_controller;
     }
@@ -104,6 +115,16 @@ bool MCDRCGlobalController::EnableBody6dController()
     next_controller = &body6d_controller;
   }
   //while(next_controller != 0);
+  return true;
+}
+
+bool MCDRCGlobalController::EnableCoMController()
+{
+  next_ctrl = COM;
+  if(current_ctrl != COM)
+  {
+    next_controller = &com_controller;
+  }
   return true;
 }
 

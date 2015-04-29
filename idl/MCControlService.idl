@@ -10,6 +10,8 @@ module OpenHRP
 
     boolean EnableBody6dController();
 
+    boolean EnableCoMController();
+
     boolean change_joint(in string jname);
 
     boolean joint_up();
@@ -23,6 +25,8 @@ module OpenHRP
     boolean translate_ef(in double x, in double y, in double z);
 
     boolean rotate_ef(in double r, in double p, in double y);
+
+    boolean move_com(in double x, in double y, in double z);
   };
 
 };

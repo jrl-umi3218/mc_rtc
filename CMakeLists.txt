@@ -49,6 +49,7 @@ target_link_libraries(mc_control_solver RBDyn Tasks)
 
 set(mc_tasks_SRC
 ./src/mc_tasks/EndEffectorTask.cpp
+./src/mc_tasks/CoMTask.cpp
 )
 add_library(mc_tasks SHARED ${mc_tasks_SRC})
 target_link_libraries(mc_tasks mc_control_solver mc_rbdyn)
@@ -57,6 +58,7 @@ set(mc_drc_controller_SRC
 ./src/mc_control/mc_controller.cpp
 ./src/mc_control/mc_posture_controller.cpp
 ./src/mc_control/mc_body6d_controller.cpp
+./src/mc_control/mc_com_controller.cpp
 ./src/mc_control/mc_drc_controller.cpp
 ./src/mc_control/mc_drc_controller_services.cpp
 )
