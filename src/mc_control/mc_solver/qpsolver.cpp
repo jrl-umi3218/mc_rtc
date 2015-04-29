@@ -83,9 +83,6 @@ KinematicsConstraint::KinematicsConstraint(const mc_rbdyn::Robots & robots, unsi
       jointLimitsConstr = std::shared_ptr<tasks::qp::Constraint>(new tasks::qp::DamperJointLimitsConstr(robots.mbs, robotIndex,
                                                                                                   qBound, alphaBound, percentInter,
                                                                                                   percentSecur, offset, timeStep));
-      tasks::qp::DamperJointLimitsConstr * test = new tasks::qp::DamperJointLimitsConstr(robots.mbs, robotIndex,
-                                                                                                  qBound, alphaBound, percentInter,
-                                                                                                  percentSecur, offset, timeStep);
     }
     else
     {
