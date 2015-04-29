@@ -1,0 +1,119 @@
+#include <mc_control/mc_controller.h>
+
+#include <RBDyn/EulerIntegration.h>
+#include <RBDyn/FK.h>
+#include <RBDyn/FV.h>
+
+/* Note all service calls except for controller switches are implemented in mc_drc_controller_services.cpp */
+
+namespace mc_control
+{
+
+MCController::MCController()
+: timeStep(0.005), robot_module(), ground_module()
+{
+  unsigned int hrp2_drc_index = 0;
+  {
+    /* Entering new scope to prevent access to robots from anywhere but the qpsolver object */
+    sva::PTransformd base = sva::PTransformd::Identity();
+
+    mc_rbdyn::Robot hrp2_drc_in;
+    mc_rbdyn::Robot ground;
+    loadRobotAndEnv(robot_module, robot_module.path + "/rsdf/hrp2_drc/",
+                  ground_module, ground_module.path + "/rsdf/ground/",
+                  &base, 0, hrp2_drc_in, ground);
+    hrp2_drc_in.mbc->gravity = Eigen::Vector3d(0, 0, 9.81);
+    mc_rbdyn::Robots robots({hrp2_drc_in, ground});
+
+
+
+    mc_rbdyn::Robot & hrp2_drc = robots.robot();
+    rbd::forwardKinematics(*(hrp2_drc.mb), *(hrp2_drc.mbc));
+    rbd::forwardVelocity(*(hrp2_drc.mb), *(hrp2_drc.mbc));
+
+
+    qpsolver = std::shared_ptr<mc_solver::QPSolver>(new mc_solver::QPSolver(robots, timeStep));
+  }
+
+  contactConstraint = mc_solver::ContactConstraint(timeStep, mc_solver::ContactConstraint::Position);
+
+  dynamicsConstraint = mc_solver::DynamicsConstraint(qpsolver->robots, hrp2_drc_index, timeStep,
+                                                     false, {0.1, 0.01, 0.5}, 0.5);
+
+  kinematicsConstraint = mc_solver::KinematicsConstraint(qpsolver->robots, hrp2_drc_index, timeStep,
+                                                         false, {0.1, 0.01, 0.5}, 0.5);
+
+  selfCollisionConstraint = mc_solver::CollisionsConstraint(qpsolver->robots, hrp2_drc_index, hrp2_drc_index, timeStep);
+
+  /* Give a reasonnable default set of self collisions for the upper body */
+  selfCollisionConstraint.addCollisions(qpsolver->robots, {
+    //FIXME Collision with BODY seems bugged right now
+    mc_solver::Collision("LARM_LINK3", "BODY", 0.05, 0.01, 0.),
+    mc_solver::Collision("LARM_LINK4", "BODY", 0.05, 0.01, 0.),
+    mc_solver::Collision("LARM_LINK5", "BODY", 0.05, 0.01, 0.),
+    mc_solver::Collision("RARM_LINK3", "BODY", 0.05, 0.01, 0.),
+    mc_solver::Collision("RARM_LINK4", "BODY", 0.05, 0.01, 0.),
+    mc_solver::Collision("RARM_LINK5", "BODY", 0.05, 0.01, 0.),
+    mc_solver::Collision("RARM_LINK3", "CHEST_LINK0", 0.05, 0.01, 0.),
+    mc_solver::Collision("RARM_LINK4", "CHEST_LINK0", 0.05, 0.01, 0.),
+    mc_solver::Collision("RARM_LINK5", "CHEST_LINK0", 0.05, 0.01, 0.),
+    mc_solver::Collision("RARM_LINK4", "CHEST_LINK1", 0.05, 0.01, 0.),
+    mc_solver::Collision("RARM_LINK5", "CHEST_LINK1", 0.05, 0.01, 0.),
+    mc_solver::Collision("LARM_LINK3", "CHEST_LINK0", 0.05, 0.01, 0.),
+    mc_solver::Collision("LARM_LINK4", "CHEST_LINK0", 0.05, 0.01, 0.),
+    mc_solver::Collision("LARM_LINK5", "CHEST_LINK0", 0.05, 0.01, 0.),
+    mc_solver::Collision("LARM_LINK4", "CHEST_LINK1", 0.05, 0.01, 0.),
+    mc_solver::Collision("LARM_LINK5", "CHEST_LINK1", 0.05, 0.01, 0.)
+  });
+
+  postureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(qpsolver->robots.mbs, hrp2_drc_index, qpsolver->robots.robot().mbc->q, 1, 5));
+  std::cout << "MCController(base) ready" << std::endl;
+
+}
+
+bool MCController::run()
+{
+  if(!qpsolver->run())
+  {
+    std::cerr << "QP failed to run()" << std::endl;
+    return false;
+  }
+  return true;
+}
+
+const mc_control::QPResultMsg & MCController::send(const double & t)
+{
+  return qpsolver->send(t);
+}
+
+void MCController::reset(const std::vector< std::vector<double> > & q)
+{
+  robot().mbc->zero(*(robot().mb));
+  robot().mbc->q = q;
+  postureTask->posture(q);
+  //rbd::eulerIntegration(*(robot().mb), *(robot().mbc), qpsolver->timeStep);
+  rbd::forwardKinematics(*(robot().mb), *(robot().mbc));
+  rbd::forwardVelocity(*(robot().mb), *(robot().mbc));
+}
+
+const mc_rbdyn::Robot & MCController::robot() const
+{
+  return qpsolver->robots.robot();
+}
+
+const mc_rbdyn::Robot & MCController::env() const
+{
+  return qpsolver->robots.env();
+}
+
+mc_rbdyn::Robot & MCController::robot()
+{
+  return qpsolver->robots.robot();
+}
+
+mc_rbdyn::Robot & MCController::env()
+{
+  return qpsolver->robots.env();
+}
+
+}

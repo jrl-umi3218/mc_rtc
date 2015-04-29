@@ -47,12 +47,21 @@ set(mc_control_solver_SRC
 add_library(mc_control_solver SHARED ${mc_control_solver_SRC})
 target_link_libraries(mc_control_solver RBDyn Tasks)
 
+set(mc_tasks_SRC
+./src/mc_tasks/EndEffectorTask.cpp
+)
+add_library(mc_tasks SHARED ${mc_tasks_SRC})
+target_link_libraries(mc_tasks mc_control_solver mc_rbdyn)
+
 set(mc_drc_controller_SRC
+./src/mc_control/mc_controller.cpp
+./src/mc_control/mc_posture_controller.cpp
+./src/mc_control/mc_body6d_controller.cpp
 ./src/mc_control/mc_drc_controller.cpp
 ./src/mc_control/mc_drc_controller_services.cpp
 )
 add_library(mc_drc_controller SHARED ${mc_drc_controller_SRC})
-target_link_libraries(mc_drc_controller mc_control_solver mc_robots)
+target_link_libraries(mc_drc_controller mc_tasks mc_control_solver mc_robots)
 
 set(MCControl_SRC
 ./src/MCControlServiceSVC_impl.cpp
@@ -65,7 +74,7 @@ target_link_libraries(MCControl RTC coil omniORB4 omnithread omniDynamic4 mc_rbd
 add_executable(MCControlComp ./src/MCControlComp.cpp)
 target_link_libraries(MCControlComp MCControl)
 
-install(TARGETS MCControl MCControlComp mc_rbdyn mc_rbdyn_urdf mc_control_solver mc_robots mc_drc_controller
+install(TARGETS MCControl MCControlComp mc_rbdyn mc_rbdyn_urdf mc_control_solver mc_robots mc_tasks mc_drc_controller
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib)
