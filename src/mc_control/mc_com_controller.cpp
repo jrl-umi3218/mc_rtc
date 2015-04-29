@@ -10,7 +10,6 @@ MCCoMController::MCCoMController()
   sva::PTransformd leftFootSurfTf = robot().surfaces["LFullSole"]->X_0_s(robot());
   auto q = robot().mbc->q;
   q[0] = {1, 0, 0, 0, 0, 0, -leftFootSurfTf.translation().z()};
-  std::cout << "COM CONTROLLER INIT AT Z " << q[0][6] << std::endl;
   robot().mbc->q = q;
   rbd::forwardKinematics(*(robot().mb), *(robot().mbc));
   rbd::forwardVelocity(*(robot().mb), *(robot().mbc));

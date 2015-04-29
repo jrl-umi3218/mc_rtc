@@ -16,15 +16,15 @@ MCPostureController::MCPostureController()
   qpsolver->setContacts({});
 
   qpsolver->addConstraintSet(contactConstraint);
-  //qpsolver->addConstraintSet(kinematicsConstraint);
   qpsolver->addConstraintSet(dynamicsConstraint);
   qpsolver->addConstraintSet(selfCollisionConstraint);
   qpsolver->setContacts({
-    mc_rbdyn::Contact(robot().surfaces.at("Butthock"), env().surfaces.at("AllGround"))
+    mc_rbdyn::Contact(robot().surfaces.at("LFullSole"), env().surfaces.at("AllGround")),
+    mc_rbdyn::Contact(robot().surfaces.at("RFullSole"), env().surfaces.at("AllGround"))
   });
   qpsolver->solver.addTask(postureTask.get());
 
-  std::cout << "MCPostureController init done" << std::endl;
+  std::cout << "MCPostureController init done " << this << std::endl;
 }
 
 /* Specific to posture controller */

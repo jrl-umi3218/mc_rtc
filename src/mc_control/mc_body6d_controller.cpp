@@ -13,12 +13,12 @@ MCBody6dController::MCBody6dController()
 : MCController()
 {
   qpsolver->addConstraintSet(contactConstraint);
-  //qpsolver->addConstraintSet(kinematicsConstraint);
   qpsolver->addConstraintSet(dynamicsConstraint);
   qpsolver->addConstraintSet(selfCollisionConstraint);
   qpsolver->solver.addTask(postureTask.get());
   qpsolver->setContacts({
-    mc_rbdyn::Contact(robot().surfaces.at("Butthock"), env().surfaces.at("AllGround"))
+    mc_rbdyn::Contact(robot().surfaces.at("LFullSole"), env().surfaces.at("AllGround")),
+    mc_rbdyn::Contact(robot().surfaces.at("RFullSole"), env().surfaces.at("AllGround"))
   });
 
   std::cout << "MCBody6dController init done" << std::endl;

@@ -11,10 +11,10 @@ namespace mc_control
 
 MCDRCGlobalController::MCDRCGlobalController()
 : posture_controller(), body6d_controller(), com_controller(),
-  current_ctrl(POSTURE), next_ctrl(POSTURE),
-  controller(&posture_controller),
-  //current_ctrl(BODY6D), next_ctrl(BODY6D),
-  //controller(&body6d_controller),
+  //current_ctrl(POSTURE), next_ctrl(POSTURE),
+  //controller(&posture_controller),
+  current_ctrl(BODY6D), next_ctrl(BODY6D),
+  controller(&body6d_controller),
   //current_ctrl(COM), next_ctrl(COM),
   //controller(&com_controller),
   next_controller(0)
