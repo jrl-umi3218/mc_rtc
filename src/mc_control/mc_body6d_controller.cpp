@@ -26,9 +26,9 @@ MCBody6dController::MCBody6dController()
   efTask->addToSolver(*qpsolver);
 }
 
-void MCBody6dController::reset(const std::vector< std::vector<double> > & q)
+void MCBody6dController::reset(const ControllerResetData & reset_data)
 {
-  MCController::reset(q);
+  MCController::reset(reset_data);
   efTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex);
 }
 

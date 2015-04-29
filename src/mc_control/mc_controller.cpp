@@ -86,12 +86,11 @@ const mc_control::QPResultMsg & MCController::send(const double & t)
   return qpsolver->send(t);
 }
 
-void MCController::reset(const std::vector< std::vector<double> > & q)
+void MCController::reset(const ControllerResetData & reset_data)
 {
   robot().mbc->zero(*(robot().mb));
-  robot().mbc->q = q;
-  postureTask->posture(q);
-  //rbd::eulerIntegration(*(robot().mb), *(robot().mbc), qpsolver->timeStep);
+  robot().mbc->q = reset_data.q;
+  postureTask->posture(reset_data.q);
   rbd::forwardKinematics(*(robot().mb), *(robot().mbc));
   rbd::forwardVelocity(*(robot().mb), *(robot().mbc));
 }

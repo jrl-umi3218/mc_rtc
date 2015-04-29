@@ -13,6 +13,14 @@
 namespace mc_control
 {
 
+/* This structure will be filled in time with the necessary information */
+/* Coming most likely from the previous controller */
+struct ControllerResetData
+{
+  const std::vector< std::vector<double> > & q;
+  const std::vector<mc_rbdyn::Contact> & contacts;
+};
+
 struct MCDRCGlobalController;
 
 /*FIXME Get some data as parameters (e.g. timeStep) */
@@ -26,7 +34,7 @@ public:
 
   virtual const mc_control::QPResultMsg & send(const double & t);
 
-  virtual void reset(const std::vector< std::vector<double> > & q);
+  virtual void reset(const ControllerResetData & reset_data);
 
   /* Helper function to access the robot and the env */
   const mc_rbdyn::Robot & robot() const;

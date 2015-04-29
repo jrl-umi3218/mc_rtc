@@ -20,7 +20,7 @@ struct MCBody6dController : public MCController
 public:
   MCBody6dController();
 
-  virtual void reset(const std::vector< std::vector<double> > & q) override;
+  virtual void reset(const ControllerResetData & reset_data) override;
 
   /* Specific to 6d controller */
   bool change_ef(const std::string & ef_name);

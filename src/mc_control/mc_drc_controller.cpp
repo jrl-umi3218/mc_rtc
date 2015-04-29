@@ -42,7 +42,7 @@ void MCDRCGlobalController::init(const std::vector<double> & initq)
   {
     q.push_back({initq[i]});
   }
-  controller->reset(q);
+  controller->reset({q, {}});
 }
 
 bool MCDRCGlobalController::run()
@@ -58,7 +58,7 @@ bool MCDRCGlobalController::run()
     else
     {
       /*XXX Need to be careful here */
-      next_controller->reset(controller->robot().mbc->q);
+      next_controller->reset({controller->robot().mbc->q, {}});
       controller = next_controller;
     }
     next_controller = 0;
