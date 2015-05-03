@@ -11,10 +11,10 @@ namespace mc_control
 
 MCDRCGlobalController::MCDRCGlobalController()
 : posture_controller(), body6d_controller(), com_controller(),
-  //current_ctrl(POSTURE), next_ctrl(POSTURE),
-  //controller(&posture_controller),
-  current_ctrl(BODY6D), next_ctrl(BODY6D),
-  controller(&body6d_controller),
+  current_ctrl(POSTURE), next_ctrl(POSTURE),
+  controller(&posture_controller),
+  //current_ctrl(BODY6D), next_ctrl(BODY6D),
+  //controller(&body6d_controller),
   //current_ctrl(COM), next_ctrl(COM),
   //controller(&com_controller),
   next_controller(0)
@@ -25,7 +25,7 @@ void MCDRCGlobalController::init(const std::vector<double> & initq)
 {
   std::vector<std::vector<double>> q;
   /*FIXME Get the position/attitude of the robot? */
-  q.push_back({1,0,0,0,0,0,0});
+  q.push_back({1,0,0,0,0,0,0.7593188263796187});
 
   /* The OpenRTM components don't give q in the same order as the QP */
   for(size_t i = 0; i < 24; ++i) // until RARM_LINK7

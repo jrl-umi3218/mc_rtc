@@ -8,6 +8,7 @@
 #define MCCONTROL_H
 
 #include <rtm/idl/BasicDataTypeSkel.h>
+#include <rtm/idl/ExtendedDataTypesSkel.h>
 #include <rtm/Manager.h>
 #include <rtm/DataFlowComponentBase.h>
 #include <rtm/CorbaPort.h>
@@ -97,6 +98,10 @@ class MCControl  : public RTC::DataFlowComponentBase
   TimedDoubleSeq m_qIn;
   InPort<TimedDoubleSeq> m_qInIn;
   std::vector<double> qIn;
+  TimedPoint3D m_pIn;
+  InPort<TimedPoint3D> m_pInIn;
+  TimedOrientation3D m_rpyIn;
+  InPort<TimedOrientation3D> m_rpyInIn;
 
   // </rtc-template>
 
@@ -104,6 +109,10 @@ class MCControl  : public RTC::DataFlowComponentBase
   // <rtc-template block="outport_declare">
   TimedDoubleSeq m_qOut;
   OutPort<TimedDoubleSeq> m_qOutOut;
+  TimedPoint3D m_pOut;
+  OutPort<TimedPoint3D> m_pOutOut;
+  TimedOrientation3D m_rpyOut;
+  OutPort<TimedOrientation3D> m_rpyOutOut;
 
   // </rtc-template>
 
@@ -127,10 +136,6 @@ class MCControl  : public RTC::DataFlowComponentBase
  private:
 public:
   mc_control::MCDRCGlobalController controller;
-  unsigned int rlj0;
-  unsigned int rhj7;
-  unsigned int lhj0;
-  unsigned int lhj7;
   unsigned int max_t;
   bool init;
 };

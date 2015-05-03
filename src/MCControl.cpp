@@ -45,7 +45,11 @@ MCControl::MCControl(RTC::Manager* manager)
     // <rtc-template block="initializer">
   : RTC::DataFlowComponentBase(manager),
     m_qInIn("qIn", m_qIn),
+    m_pInIn("pIn", m_pIn),
+    m_rpyInIn("rpyIn", m_rpyIn),
     m_qOutOut("qOut", m_qOut),
+    m_pOutOut("pOut", m_pOut),
+    m_rpyOutOut("rpyOut", m_rpyOut),
     m_MCControlServicePortPort("MCControlServicePort"),
     m_service0(this),
     max_t(0),
@@ -68,9 +72,13 @@ RTC::ReturnCode_t MCControl::onInitialize()
   // <rtc-template block="registration">
   // Set InPort buffers
   addInPort("qIn", m_qInIn);
+  addInPort("pIn", m_pInIn);
+  addInPort("rpyIn", m_rpyInIn);
 
   // Set OutPort buffer
   addOutPort("qOut", m_qOutOut);
+  addOutPort("pOut", m_pOutOut);
+  addOutPort("rpyOut", m_rpyOutOut);
 
   // Set service provider to Ports
   m_MCControlServicePortPort.registerProvider("service0", "MCControlService", m_service0);
@@ -94,10 +102,6 @@ RTC::ReturnCode_t MCControl::onInitialize()
 
 RTC::ReturnCode_t MCControl::onActivated(RTC::UniqueId ec_id)
 {
-  rlj0 = 7;
-  rhj7 = rlj0 + controller.qpsolver().robots.robot().jointIndexByName("RARM_JOINT7") - 1;
-  lhj0 = rhj7 + 6;
-  lhj7 = lhj0 + 7;
   return RTC::RTC_OK;
 }
 
@@ -133,23 +137,28 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
       if(controller.run())
       {
         const mc_control::QPResultMsg & res = controller.send(t);
-        m_qOut.data.length(res.q.size()-7);
-        for(unsigned int i = rlj0; i <= rhj7; ++i)
+        m_qOut.data.length(m_qIn.data.length());
+        for(unsigned int i = 0; i < 23; ++i)
         {
-          m_qOut.data[i - rlj0] = res.q[i];
+          m_qOut.data[i] = res.q[i+7];
         }
-        for(unsigned int i = lhj0; i <= lhj7; ++i)
+        m_qOut.data[23] = m_qIn.data[23];
+        for(unsigned int i = 24; i < 31; ++i)
         {
-          m_qOut.data[i - rlj0 - 5] = res.q[i];
+          m_qOut.data[i] = res.q[i+12];
         }
-        for(unsigned int i = rhj7 + 1; i < rhj7 + 6; ++i)
+        for(unsigned int i = 31; i < 42; ++i)
         {
-          m_qOut.data[lhj7 - rlj0 - 5 + i - rhj7] = res.q[i];
+          m_qOut.data[i] = m_qIn.data[i];
         }
-        for(unsigned int i = lhj7 + 1; i < lhj7 + 6; ++i)
-        {
-          m_qOut.data[i - rlj0] = res.q[i];
-        }
+        /* FIXME Correction RPY convention here? */
+        Eigen::Vector3d rpy = Eigen::Quaterniond(res.q[0], res.q[1], res.q[2], res.q[3]).toRotationMatrix().eulerAngles(0, 1, 2);
+        m_rpyOut.data.r = rpy[0];
+        m_rpyOut.data.p = rpy[1];
+        m_rpyOut.data.y = rpy[2];
+        m_pOut.data.x = res.q[4];
+        m_pOut.data.y = res.q[5];
+        m_pOut.data.z = res.q[6];
         //ofs << "qIn" << std::endl;
         //for(size_t i = 0; i < m_qIn.data.length(); ++i)
         //{
@@ -167,7 +176,11 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
         //}
       }
       m_qOut.tm = tm;
+      m_rpyOut.tm = tm;
+      m_pOut.tm = tm;
       m_qOutOut.write();
+      m_pOutOut.write();
+      m_rpyOutOut.write();
     }
     else
     {

@@ -17,8 +17,7 @@ MCBody6dController::MCBody6dController()
   qpsolver->addConstraintSet(selfCollisionConstraint);
   qpsolver->solver.addTask(postureTask.get());
   qpsolver->setContacts({
-    mc_rbdyn::Contact(robot().surfaces.at("LFullSole"), env().surfaces.at("AllGround")),
-    mc_rbdyn::Contact(robot().surfaces.at("RFullSole"), env().surfaces.at("AllGround"))
+    mc_rbdyn::Contact(robot().surfaces.at("Butthock"), env().surfaces.at("AllGround"))
   });
 
   std::cout << "MCBody6dController init done" << std::endl;
@@ -29,6 +28,16 @@ MCBody6dController::MCBody6dController()
 void MCBody6dController::reset(const ControllerResetData & reset_data)
 {
   MCController::reset(reset_data);
+  if(reset_data.contacts.size())
+  {
+    qpsolver->setContacts(reset_data.contacts);
+  }
+  else
+  {
+    qpsolver->setContacts({
+      mc_rbdyn::Contact(robot().surfaces.at("Butthock"), env().surfaces.at("AllGround"))
+    });
+  }
   efTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex);
 }
 

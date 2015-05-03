@@ -47,7 +47,6 @@ MCController::MCController()
 
   /* Give a reasonnable default set of self collisions for the upper body */
   selfCollisionConstraint.addCollisions(qpsolver->robots, {
-    //FIXME Collision with BODY seems bugged right now
     mc_solver::Collision("LARM_LINK3", "BODY", 0.05, 0.01, 0.),
     mc_solver::Collision("LARM_LINK4", "BODY", 0.05, 0.01, 0.),
     mc_solver::Collision("LARM_LINK5", "BODY", 0.05, 0.01, 0.),
@@ -94,8 +93,6 @@ void MCController::reset(const ControllerResetData & reset_data)
   rbd::forwardKinematics(*(robot().mb), *(robot().mbc));
   rbd::forwardVelocity(*(robot().mb), *(robot().mbc));
   qpsolver->setContacts({
-    mc_rbdyn::Contact(robot().surfaces.at("LFullSole"), env().surfaces.at("AllGround")),
-    mc_rbdyn::Contact(robot().surfaces.at("RFullSole"), env().surfaces.at("AllGround"))
   });
 }
 
