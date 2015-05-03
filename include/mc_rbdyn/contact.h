@@ -47,7 +47,7 @@ public:
 
   tasks::qp::ContactId contactId(const mc_rbdyn::Robot & robot, const mc_rbdyn::Robot & env);
 
-  std::string toStr();
+  std::string toStr() const;
 public:
   std::shared_ptr<mc_rbdyn::Surface> robotSurface;
   std::shared_ptr<mc_rbdyn::Surface> envSurface;

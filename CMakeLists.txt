@@ -76,6 +76,9 @@ target_link_libraries(MCControl RTC coil omniORB4 omnithread omniDynamic4 mc_rbd
 add_executable(MCControlComp ./src/MCControlComp.cpp)
 target_link_libraries(MCControlComp MCControl)
 
+add_executable(testLoadJSON ./src/utils/testLoadJSON.cpp)
+target_link_libraries(testLoadJSON mc_rbdyn mc_rbdyn_urdf)
+
 install(TARGETS MCControl MCControlComp mc_rbdyn mc_rbdyn_urdf mc_control_solver mc_robots mc_tasks mc_drc_controller
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib

@@ -98,7 +98,7 @@ void AddContactAction::update(const Stance & stance)
 std::string AddContactAction::toStr()
 {
   std::stringstream ss;
-  ss << "Add " << contact.toStr() << std::endl;
+  ss << "Add " << contact.toStr();
   return ss.str();
 }
 

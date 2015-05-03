@@ -208,7 +208,7 @@ tasks::qp::ContactId Contact::contactId(const mc_rbdyn::Robot & robot, const mc_
 #pragma GCC diagnostic pop
 }
 
-std::string Contact::toStr()
+std::string Contact::toStr() const
 {
   std::stringstream ss;
   ss << robotSurface->toStr() << "/" << envSurface->toStr();
