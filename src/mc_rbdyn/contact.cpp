@@ -159,7 +159,7 @@ std::pair<std::string, std::string> Contact::surfaces()
   return std::pair<std::string, std::string>(robotSurface->name, envSurface->name);
 }
 
-sva::PTransformd Contact::X_0_rs(const mc_rbdyn::Robot & env)
+sva::PTransformd Contact::X_0_rs(const mc_rbdyn::Robot & env) const
 {
   return X_es_rs*envSurface->X_0_s(env);
 }

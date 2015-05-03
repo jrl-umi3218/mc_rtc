@@ -21,7 +21,7 @@ public:
 
   void updateContact(const Contact & oldContact, const Contact & newContact);
 
-  Eigen::Vector3d com(const Robot & robot);
+  Eigen::Vector3d com(const Robot & robot) const;
 
   std::vector<std::string> robotSurfacesInContact();
 public:

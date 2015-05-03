@@ -35,7 +35,7 @@ void Stance::updateContact(const Contact & oldContact, const Contact & newContac
   }
 }
 
-Eigen::Vector3d Stance::com(const Robot & robot)
+Eigen::Vector3d Stance::com(const Robot & robot) const
 {
   rbd::MultiBodyConfig mbc(*(robot.mbc));
   mbc.q = q;

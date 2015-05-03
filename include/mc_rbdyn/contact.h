@@ -34,7 +34,7 @@ public:
 
   std::pair<std::string, std::string> surfaces();
 
-  sva::PTransformd X_0_rs(const mc_rbdyn::Robot & env);
+  sva::PTransformd X_0_rs(const mc_rbdyn::Robot & env) const;
 
   std::vector<sva::PTransformd> points();
   std::vector<sva::PTransformd> points(const mc_rbdyn::Surface & robotSurfaceIn);
