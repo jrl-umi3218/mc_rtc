@@ -83,4 +83,20 @@ void AddRemoveContactTask::update()
   linVelTaskPid->weight(std::min(linVelTaskPid->weight() + 0.5, targetVelWeight));
 }
 
+AddContactTask::AddContactTask(mc_rbdyn::Robots & robots, std::shared_ptr<tasks::qp::BoundedSpeedConstr> constSpeedConstr,
+                               mc_rbdyn::Contact & contact,
+                               const mc_rbdyn::StanceConfig & config,
+                               Eigen::Vector3d * userT_0_s)
+: AddRemoveContactTask(robots, constSpeedConstr, contact, 1.0, config, userT_0_s)
+{
+}
+
+RemoveContactTask::RemoveContactTask(mc_rbdyn::Robots & robots, std::shared_ptr<tasks::qp::BoundedSpeedConstr> constSpeedConstr,
+                               mc_rbdyn::Contact & contact,
+                               const mc_rbdyn::StanceConfig & config,
+                               Eigen::Vector3d * userT_0_s)
+: AddRemoveContactTask(robots, constSpeedConstr, contact, -1.0, config, userT_0_s)
+{
+}
+
 }
