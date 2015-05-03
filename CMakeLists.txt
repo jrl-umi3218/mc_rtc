@@ -53,6 +53,7 @@ set(mc_tasks_SRC
 ./src/mc_tasks/MetaTask.cpp
 ./src/mc_tasks/StabilityTask.cpp
 ./src/mc_tasks/AddRemoveContactTask.cpp
+./src/mc_tasks/MoveContactTask.cpp
 )
 add_library(mc_tasks SHARED ${mc_tasks_SRC})
 target_link_libraries(mc_tasks mc_control_solver mc_rbdyn)
