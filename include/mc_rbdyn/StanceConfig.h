@@ -30,10 +30,21 @@ public:
     double stiffness;
     double weight;
   };
+  struct LinVel
+  {
+    double stiffness;
+    double weight;
+    double speed;
+  };
+  struct ContactTask
+  {
+    LinVel linVel;
+  };
 public:
   CoMTask comTask;
   CoMObj comObj;
   PostureTask postureTask;
+  ContactTask contactTask;
 };
 
 }
