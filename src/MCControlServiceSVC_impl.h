@@ -22,6 +22,8 @@ namespace OpenHRP
 
       virtual CORBA::Boolean EnableCoMController();
 
+      virtual CORBA::Boolean EnableSeqController();
+
       /* Joint services */
       virtual CORBA::Boolean change_joint(const char* jname);
       virtual CORBA::Boolean joint_up();

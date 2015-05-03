@@ -40,4 +40,9 @@ void CoMTask::move_com(const Eigen::Vector3d & com)
   comTask->com(cur_com);
 }
 
+void CoMTask::set_com(const Eigen::Vector3d & com)
+{
+  comTask->com(com);
+}
+
 }

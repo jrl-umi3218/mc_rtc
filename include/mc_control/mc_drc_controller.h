@@ -4,6 +4,7 @@
 #include <mc_control/mc_posture_controller.h>
 #include <mc_control/mc_body6d_controller.h>
 #include <mc_control/mc_com_controller.h>
+#include <mc_control/mc_seq_controller.h>
 
 /* FIXME For now, everything is in there, split it would be good */
 
@@ -26,6 +27,7 @@ public:
   bool EnablePostureController();
   bool EnableBody6dController();
   bool EnableCoMController();
+  bool EnableSeqController();
 
   /* Control the posture if provided by the controller */
   bool change_joint(int jid);
@@ -47,11 +49,13 @@ private:
   MCPostureController posture_controller;
   MCBody6dController body6d_controller;
   MCCoMController com_controller;
+  MCSeqController seq_controller;
   enum CurrentController
   {
     POSTURE = 1,
     BODY6D  = 2,
-    COM = 3
+    COM = 3,
+    SEQ = 4
   };
   CurrentController current_ctrl;
   CurrentController next_ctrl;

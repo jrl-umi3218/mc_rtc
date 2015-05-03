@@ -43,6 +43,11 @@ CORBA::Boolean MCControlServiceSVC_impl::EnableCoMController()
   return m_plugin->controller.EnableCoMController();
 }
 
+CORBA::Boolean MCControlServiceSVC_impl::EnableSeqController()
+{
+  return m_plugin->controller.EnableSeqController();
+}
+
 CORBA::Boolean MCControlServiceSVC_impl::change_joint(const char* jname)
 {
   return m_plugin->controller.change_joint(jname);

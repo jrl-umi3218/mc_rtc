@@ -53,4 +53,10 @@ void EndEffectorTask::add_ef_pose(const sva::PTransformd & dtr)
   orientationTask->orientation(curTransform.rotation());
 }
 
+void EndEffectorTask::set_ef_pose(const sva::PTransformd & tf)
+{
+  positionTask->position(tf.translation());
+  orientationTask->orientation(tf.rotation());
+}
+
 }

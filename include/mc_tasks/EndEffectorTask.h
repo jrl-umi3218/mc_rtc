@@ -20,6 +20,8 @@ public:
   void addToSolver(mc_solver::QPSolver & solver);
 
   void add_ef_pose(const sva::PTransformd & dtr);
+
+  void set_ef_pose(const sva::PTransformd & tf);
 public:
   std::shared_ptr<tasks::qp::PositionTask> positionTask;
   std::shared_ptr<tasks::qp::SetPointTask> positionTaskSp;

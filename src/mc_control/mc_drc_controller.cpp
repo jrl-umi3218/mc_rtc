@@ -9,14 +9,18 @@
 namespace mc_control
 {
 
+/* FIXME Seq loading is hardcoded for now... */
 MCDRCGlobalController::MCDRCGlobalController()
 : posture_controller(), body6d_controller(), com_controller(),
+  seq_controller("/home/gergondet/catkin_ws/src/hrp2_drc/hrp2_drc_description/", "drc_stairs2", "/home/gergondet/devel-src/mcp/mc_rtc/mc_rtc_core/build_clang/drc_stairs_climbing.json"),
   //current_ctrl(POSTURE), next_ctrl(POSTURE),
   //controller(&posture_controller),
-  current_ctrl(BODY6D), next_ctrl(BODY6D),
-  controller(&body6d_controller),
+  //current_ctrl(BODY6D), next_ctrl(BODY6D),
+  //controller(&body6d_controller),
   //current_ctrl(COM), next_ctrl(COM),
   //controller(&com_controller),
+  current_ctrl(SEQ), next_ctrl(SEQ),
+  controller(&seq_controller),
   next_controller(0)
 {
 }
@@ -124,6 +128,16 @@ bool MCDRCGlobalController::EnableCoMController()
   if(current_ctrl != COM)
   {
     next_controller = &com_controller;
+  }
+  return true;
+}
+
+bool MCDRCGlobalController::EnableSeqController()
+{
+  next_ctrl = SEQ;
+  if(current_ctrl != SEQ)
+  {
+    next_controller = &seq_controller;
   }
   return true;
 }

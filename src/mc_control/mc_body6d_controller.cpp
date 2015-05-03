@@ -1,4 +1,4 @@
-#include <mc_control/mc_drc_controller.h>
+#include <mc_control/mc_body6d_controller.h>
 
 #include <RBDyn/EulerIntegration.h>
 #include <RBDyn/FK.h>

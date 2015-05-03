@@ -20,6 +20,8 @@ public:
   void addToSolver(mc_solver::QPSolver & solver);
 
   void move_com(const Eigen::Vector3d & com);
+
+  void set_com(const Eigen::Vector3d & com);
 public:
   std::shared_ptr<tasks::qp::CoMTask> comTask;
   std::shared_ptr<tasks::qp::SetPointTask> comTaskSp;

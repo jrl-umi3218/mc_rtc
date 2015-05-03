@@ -59,6 +59,7 @@ set(mc_drc_controller_SRC
 ./src/mc_control/mc_posture_controller.cpp
 ./src/mc_control/mc_body6d_controller.cpp
 ./src/mc_control/mc_com_controller.cpp
+./src/mc_control/mc_seq_controller.cpp
 ./src/mc_control/mc_drc_controller.cpp
 ./src/mc_control/mc_drc_controller_services.cpp
 )

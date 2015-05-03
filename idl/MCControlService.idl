@@ -12,6 +12,8 @@ module OpenHRP
 
     boolean EnableCoMController();
 
+    boolean EnableSeqController();
+
     boolean change_joint(in string jname);
 
     boolean joint_up();

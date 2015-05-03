@@ -122,6 +122,7 @@ _CORBA_MODULE_BEG
     ::CORBA::Boolean EnablePostureController();
     ::CORBA::Boolean EnableBody6dController();
     ::CORBA::Boolean EnableCoMController();
+    ::CORBA::Boolean EnableSeqController();
     ::CORBA::Boolean change_joint(const char* jname);
     ::CORBA::Boolean joint_up();
     ::CORBA::Boolean joint_down();
@@ -166,6 +167,7 @@ _CORBA_MODULE_BEG
     virtual ::CORBA::Boolean EnablePostureController() = 0;
     virtual ::CORBA::Boolean EnableBody6dController() = 0;
     virtual ::CORBA::Boolean EnableCoMController() = 0;
+    virtual ::CORBA::Boolean EnableSeqController() = 0;
     virtual ::CORBA::Boolean change_joint(const char* jname) = 0;
     virtual ::CORBA::Boolean joint_up() = 0;
     virtual ::CORBA::Boolean joint_down() = 0;
