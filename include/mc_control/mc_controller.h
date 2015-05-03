@@ -23,12 +23,12 @@ struct ControllerResetData
 
 struct MCDRCGlobalController;
 
-/*FIXME Get some data as parameters (e.g. timeStep) */
+/*FIXME Get some data as parameters (e.g. timeStep, path to default env...) */
 struct MCController
 {
   friend struct MCDRCGlobalController;
 public:
-  MCController();
+  MCController(const std::string & env_path = "/home/gergondet/devel-src/mcp/mcp_ws/src/mc_ros/mc_env_description", const std::string & env_name = "ground");
 
   virtual bool run();
 
@@ -44,7 +44,7 @@ public:
   /* Common stuff */
   const double timeStep;
   mc_robots::HRP2DRCGripperRobotModule robot_module;
-  mc_robots::GroundRobotModule ground_module;
+  mc_robots::EnvRobotModule env_module;
   mc_solver::ContactConstraint contactConstraint;
   mc_solver::DynamicsConstraint dynamicsConstraint;
   mc_solver::KinematicsConstraint kinematicsConstraint;

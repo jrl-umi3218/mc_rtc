@@ -9,8 +9,8 @@
 namespace mc_control
 {
 
-MCController::MCController()
-: timeStep(0.005), robot_module(), ground_module()
+MCController::MCController(const std::string & env_path, const std::string & env_name)
+: timeStep(0.005), robot_module(), env_module(env_path, env_name)
 {
   unsigned int hrp2_drc_index = 0;
   {
@@ -18,12 +18,12 @@ MCController::MCController()
     sva::PTransformd base = sva::PTransformd::Identity();
 
     mc_rbdyn::Robot hrp2_drc_in;
-    mc_rbdyn::Robot ground;
+    mc_rbdyn::Robot env;
     loadRobotAndEnv(robot_module, robot_module.path + "/rsdf/hrp2_drc/",
-                  ground_module, ground_module.path + "/rsdf/ground/",
-                  &base, 0, hrp2_drc_in, ground);
+                  env_module, env_module.path + "/rsdf/" + env_module.name + "/",
+                  &base, 0, hrp2_drc_in, env);
     hrp2_drc_in.mbc->gravity = Eigen::Vector3d(0, 0, 9.81);
-    mc_rbdyn::Robots robots({hrp2_drc_in, ground});
+    mc_rbdyn::Robots robots({hrp2_drc_in, env});
 
 
 

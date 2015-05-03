@@ -7,15 +7,13 @@
 namespace mc_robots
 {
 
-struct GroundRobotModule : public mc_rbdyn::RobotModule
+struct EnvRobotModule : public mc_rbdyn::RobotModule
 {
 public:
-  //FIXME This path should be passed as a parameters
-  static const std::string path;
+  const std::string path;
+  const std::string name;
 public:
-  GroundRobotModule();
-  /* FIXME implemented in the python but not really used in the C++ so far */
-  /* mb,mbc,mbg robot(const bool & fixed = false); */
+  EnvRobotModule(const std::string & env_path, const std::string & env_name);
 
   virtual const std::map<std::string, std::pair<std::string, std::string> > & convexHull() const;
 };

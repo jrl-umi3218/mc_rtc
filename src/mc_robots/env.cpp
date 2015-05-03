@@ -2,15 +2,16 @@
 
 #include <fstream>
 
+#include <boost/filesystem.hpp>
+namespace bfs = boost::filesystem;
+
 namespace mc_robots
 {
 
-//FIXME This path should be passed as a parameters
-const std::string GroundRobotModule::path = "/home/gergondet/devel-src/mcp/mcp_ws/src/mc_ros/mc_env_description";
-
-GroundRobotModule::GroundRobotModule()
+EnvRobotModule::EnvRobotModule(const std::string & env_path, const std::string & env_name)
+: path(env_path), name(env_name)
 {
-  std::string urdfPath = path + "/urdf/ground.urdf";
+  std::string urdfPath = path + "/urdf/" + name + ".urdf";
   std::ifstream ifs(urdfPath);
   std::stringstream urdf;
   urdf << ifs.rdbuf();
@@ -21,12 +22,30 @@ GroundRobotModule::GroundRobotModule()
   _collisionTransforms = res.collision_tf;
 }
 
-const std::map<std::string, std::pair<std::string, std::string> > & GroundRobotModule::convexHull() const
+const std::map<std::string, std::pair<std::string, std::string> > & EnvRobotModule::convexHull() const
 {
-  std::string convexPath = path + "/convex/ground/";
+  std::string convexPath = path + "/convex/" + name + "/";
   std::map<std::string, std::pair<std::string, std::string> > res;
-  res["ground"] = std::pair<std::string, std::string>("ground", convexPath + "/ground-ch.txt");
-  const_cast<GroundRobotModule*>(this)->_convexHull = res;
+
+  bfs::path p(convexPath);
+
+  if(bfs::exists(p) and bfs::is_directory(p))
+  {
+    std::vector<bfs::path> files;
+    std::copy(bfs::directory_iterator(p), bfs::directory_iterator(), std::back_inserter(files));
+    for(const bfs::path & file : files)
+    {
+      size_t off = file.filename().string().rfind("-ch.txt");
+      if(off != std::string::npos)
+      {
+        std::string name = file.filename().string();
+        name.replace(off, 7, "");
+        res[name] = std::pair<std::string, std::string>(name, file.string());
+      }
+    }
+  }
+
+  const_cast<EnvRobotModule*>(this)->_convexHull = res;
   return _convexHull;
 }
 
