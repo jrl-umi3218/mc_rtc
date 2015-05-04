@@ -59,6 +59,7 @@ add_library(mc_tasks SHARED ${mc_tasks_SRC})
 target_link_libraries(mc_tasks mc_control_solver mc_rbdyn)
 
 set(mc_drc_controller_SRC
+./src/mc_control/generic_gripper.cpp
 ./src/mc_control/mc_controller.cpp
 ./src/mc_control/mc_posture_controller.cpp
 ./src/mc_control/mc_body6d_controller.cpp
