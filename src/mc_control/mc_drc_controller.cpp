@@ -48,6 +48,7 @@ void MCDRCGlobalController::init(const std::vector<double> & initq)
   {
     q.push_back({initq[i]});
   }
+  setGripperCurrentQ(initq[23], initq[31]);
   controller->reset({q, {}});
 }
 
@@ -73,6 +74,8 @@ bool MCDRCGlobalController::run()
       std::cout << controller->robot().mbc->q[0][4] << " ";
       std::cout << controller->robot().mbc->q[0][5] << " ";
       std::cout << controller->robot().mbc->q[0][6] << std::endl;
+      next_controller->lgripper->setCurrentQ(controller->lgripper->curPosition());
+      next_controller->rgripper->setCurrentQ(controller->rgripper->curPosition());
       next_controller->reset({controller->robot().mbc->q, {}});
       controller = next_controller;
     }
@@ -93,6 +96,46 @@ bool MCDRCGlobalController::run()
 const mc_control::QPResultMsg & MCDRCGlobalController::send(const double & t)
 {
   return controller->send(t);
+}
+
+const std::vector<double> & MCDRCGlobalController::gripperQ(bool lgripper)
+{
+  if(lgripper)
+  {
+    return controller->lgripper->q();
+  }
+  else
+  {
+    return controller->rgripper->q();
+  }
+}
+
+void MCDRCGlobalController::setGripperCurrentQ(double lQ, double rQ)
+{
+  controller->lgripper->setCurrentQ(lQ);
+  controller->rgripper->setCurrentQ(rQ);
+}
+
+void MCDRCGlobalController::setGripperTargetQ(double lQ, double rQ)
+{
+  controller->lgripper->setTargetQ(lQ);
+  controller->rgripper->setTargetQ(rQ);
+}
+
+void MCDRCGlobalController::setLGripperTargetQ(double lQ)
+{
+  controller->lgripper->setTargetQ(lQ);
+}
+
+void MCDRCGlobalController::setRGripperTargetQ(double rQ)
+{
+  controller->rgripper->setTargetQ(rQ);
+}
+
+void MCDRCGlobalController::setGripperOpenPercent(double lQ, double rQ)
+{
+  controller->lgripper->setTargetOpening(lQ);
+  controller->rgripper->setTargetOpening(rQ);
 }
 
 const mc_solver::QPSolver & MCDRCGlobalController::qpsolver() const

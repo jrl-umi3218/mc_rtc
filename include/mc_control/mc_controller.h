@@ -3,6 +3,7 @@
 
 #include <mc_rbdyn/robot.h>
 #include <mc_control/mc_solver/qpsolver.h>
+#include <mc_control/generic_gripper.h>
 
 #include <mc_robots/hrp2_drc.h>
 #include <mc_robots/env.h>
@@ -51,6 +52,8 @@ public:
   mc_solver::CollisionsConstraint selfCollisionConstraint;
   std::shared_ptr<tasks::qp::PostureTask> postureTask;
   std::shared_ptr<mc_solver::QPSolver> qpsolver;
+  std::shared_ptr<mc_control::Gripper> lgripper;
+  std::shared_ptr<mc_control::Gripper> rgripper;
 protected:
   mc_rbdyn::Robot & robot();
   mc_rbdyn::Robot & env();

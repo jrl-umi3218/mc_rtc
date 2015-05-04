@@ -4,6 +4,8 @@
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
+#include <fstream>
+
 /* Note all service calls except for controller switches are implemented in mc_drc_controller_services.cpp */
 
 namespace mc_control
@@ -33,6 +35,16 @@ MCController::MCController(const std::string & env_path, const std::string & env
 
 
     qpsolver = std::shared_ptr<mc_solver::QPSolver>(new mc_solver::QPSolver(robots, timeStep));
+  }
+  {
+    /* Initiate grippers */
+    std::string urdfPath = robot_module.path + "/urdf/hrp2drc.urdf";
+    std::ifstream ifs(urdfPath);
+    std::stringstream urdf;
+    urdf << ifs.rdbuf();
+    mc_rbdyn::Robot urdfRobot = mc_rbdyn::loadRobotFromUrdf(urdf.str());
+    lgripper.reset(new Gripper(urdfRobot, "l_gripper", robot(), urdf.str(), 0, timeStep));
+    rgripper.reset(new Gripper(urdfRobot, "r_gripper", robot(), urdf.str(), 0, timeStep));
   }
 
   contactConstraint = mc_solver::ContactConstraint(timeStep, mc_solver::ContactConstraint::Position);

@@ -29,6 +29,14 @@ public:
   bool EnableCoMController();
   bool EnableSeqController();
 
+  /* Gripper controls */
+  const std::vector<double> & gripperQ(bool lgripper);
+  void setGripperCurrentQ(double lQ, double rQ);
+  void setGripperTargetQ(double lQ, double rQ);
+  void setLGripperTargetQ(double lQ);
+  void setRGripperTargetQ(double rQ);
+  void setGripperOpenPercent(double lQ, double rQ);
+
   /* Control the posture if provided by the controller */
   bool change_joint(int jid);
   bool change_joint(const std::string & jname);

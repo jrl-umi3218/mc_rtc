@@ -57,7 +57,6 @@ MCControl::MCControl(RTC::Manager* manager)
 
     // </rtc-template>
 {
-  std::cout << "MCControl::MCControl" << std::endl;
 }
 
 MCControl::~MCControl()
@@ -137,19 +136,26 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
       if(controller.run())
       {
         const mc_control::QPResultMsg & res = controller.send(t);
+        const std::vector<double> & lgQ = controller.gripperQ(true);
+        const std::vector<double> & rgQ = controller.gripperQ(false);
         m_qOut.data.length(m_qIn.data.length());
         for(unsigned int i = 0; i < 23; ++i)
         {
           m_qOut.data[i] = res.q[i+7];
         }
-        m_qOut.data[23] = m_qIn.data[23];
+        m_qOut.data[23] = rgQ[0];
         for(unsigned int i = 24; i < 31; ++i)
         {
           m_qOut.data[i] = res.q[i+12];
         }
-        for(unsigned int i = 31; i < 42; ++i)
+        m_qOut.data[31] = lgQ[0];
+        for(unsigned int i = 32; i < 37; ++i)
         {
-          m_qOut.data[i] = m_qIn.data[i];
+          m_qOut.data[i] = rgQ[i-31];
+        }
+        for(unsigned int i = 37; i < 42; ++i)
+        {
+          m_qOut.data[i] = lgQ[i-36];
         }
         /* FIXME Correction RPY convention here? */
         Eigen::Vector3d rpy = Eigen::Quaterniond(res.q[0], res.q[1], res.q[2], res.q[3]).toRotationMatrix().eulerAngles(0, 1, 2);

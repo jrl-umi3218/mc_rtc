@@ -48,6 +48,31 @@ CORBA::Boolean MCControlServiceSVC_impl::EnableSeqController()
   return m_plugin->controller.EnableSeqController();
 }
 
+CORBA::Boolean MCControlServiceSVC_impl::open_grippers()
+{
+  m_plugin->controller.setGripperOpenPercent(1, 1);
+  return true;
+}
+
+CORBA::Boolean MCControlServiceSVC_impl::close_grippers()
+{
+  m_plugin->controller.setGripperOpenPercent(0, 0);
+  return true;
+}
+
+CORBA::Boolean MCControlServiceSVC_impl::set_gripper(CORBA::Boolean lgripper, CORBA::Double v)
+{
+  if(lgripper)
+  {
+    m_plugin->controller.setLGripperTargetQ(v);
+  }
+  else
+  {
+    m_plugin->controller.setRGripperTargetQ(v);
+  }
+  return true;
+}
+
 CORBA::Boolean MCControlServiceSVC_impl::change_joint(const char* jname)
 {
   return m_plugin->controller.change_joint(jname);

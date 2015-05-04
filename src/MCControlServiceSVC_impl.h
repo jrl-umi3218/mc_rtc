@@ -24,6 +24,13 @@ namespace OpenHRP
 
       virtual CORBA::Boolean EnableSeqController();
 
+      /* Grippers (always available) */
+      virtual CORBA::Boolean open_grippers();
+
+      virtual CORBA::Boolean close_grippers();
+
+      virtual CORBA::Boolean set_gripper(CORBA::Boolean lgripper, CORBA::Double v);
+
       /* Joint services */
       virtual CORBA::Boolean change_joint(const char* jname);
       virtual CORBA::Boolean joint_up();
