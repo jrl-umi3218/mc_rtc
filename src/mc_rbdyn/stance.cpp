@@ -18,7 +18,7 @@ Stance::Stance(const std::vector< std::vector<double> > & q, const std::vector<C
 {
 }
 
-const std::vector<Contact> & Stance::contacts()
+const std::vector<Contact> & Stance::contacts() const
 {
   return geomContacts;
 }

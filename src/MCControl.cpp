@@ -47,6 +47,7 @@ MCControl::MCControl(RTC::Manager* manager)
     m_qInIn("qIn", m_qIn),
     m_pInIn("pIn", m_pIn),
     m_rpyInIn("rpyIn", m_rpyIn),
+    m_wrenchesNames({"RightFootForceSensor", "LeftFootForceSensor", "RightHandForceSensor", "LeftHandForceSensor"}),
     m_qOutOut("qOut", m_qOut),
     m_pOutOut("pOut", m_pOut),
     m_rpyOutOut("rpyOut", m_rpyOut),
@@ -57,6 +58,12 @@ MCControl::MCControl(RTC::Manager* manager)
 
     // </rtc-template>
 {
+  for(size_t i = 0; i < m_wrenchesNames.size(); ++i)
+  {
+    m_wrenchesIn.push_back(TimedDoubleSeq());
+    m_wrenchesInIn.push_back(new InPort<TimedDoubleSeq>(m_wrenchesNames[i].c_str(), m_wrenchesIn[i]));
+    m_wrenches.push_back(std::pair<Eigen::Vector3d, Eigen::Vector3d>(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0)));
+  }
 }
 
 MCControl::~MCControl()
@@ -113,6 +120,15 @@ RTC::ReturnCode_t MCControl::onDeactivated(RTC::UniqueId ec_id)
 
 RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
 {
+  for(size_t i = 0; i < m_wrenchesInIn.size(); ++i)
+  {
+    if(m_wrenchesInIn[i]->isNew())
+    {
+      m_wrenchesInIn[i]->read();
+      m_wrenches[i].first = Eigen::Vector3d(m_wrenchesIn[i].data[0], m_wrenchesIn[i].data[1], m_wrenchesIn[i].data[2]);
+      m_wrenches[i].second = Eigen::Vector3d(m_wrenchesIn[i].data[3], m_wrenchesIn[i].data[4], m_wrenchesIn[i].data[5]);
+    }
+  }
   if(m_qInIn.isNew())
   {
     m_qInIn.read();
@@ -133,6 +149,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
         init = true;
       }
       double t = tm.sec*1e9 + tm.nsec;
+      controller.setWrenches(m_wrenches);
       if(controller.run())
       {
         const mc_control::QPResultMsg & res = controller.send(t);

@@ -45,7 +45,7 @@ public:
   std::vector<double> computeJointParam();
   std::vector<double> computeJointParam(const mc_rbdyn::Surface & robotSurfaceIn);
 
-  tasks::qp::ContactId contactId(const mc_rbdyn::Robot & robot, const mc_rbdyn::Robot & env);
+  tasks::qp::ContactId contactId(const mc_rbdyn::Robot & robot, const mc_rbdyn::Robot & env) const;
 
   std::string toStr() const;
 public:

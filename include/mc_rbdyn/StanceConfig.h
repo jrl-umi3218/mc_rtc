@@ -89,6 +89,17 @@ public:
     Eigen::Vector3d adjustOriTBNWeight;
     double preContactDist;
   };
+  struct BodiesCollisionConf
+  {
+    std::string body1;
+    std::string body2;
+    CollisionConf collisionConf;
+  };
+  struct Collisions
+  {
+    std::vector<BodiesCollisionConf> autoc;
+    std::vector<BodiesCollisionConf> robotEnv;
+  };
 public:
   StanceConfig();
 public:
@@ -97,6 +108,7 @@ public:
   PostureTask postureTask;
   ContactTask contactTask;
   ContactObj contactObj;
+  Collisions collisions;
 };
 
 }

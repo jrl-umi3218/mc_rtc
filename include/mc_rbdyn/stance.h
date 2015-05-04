@@ -17,7 +17,7 @@ public:
 public:
   Stance(const std::vector< std::vector<double> > & q, const std::vector<Contact> & geomContacts, const std::vector<Contact> stabContacts);
 
-  const std::vector<Contact> & contacts();
+  const std::vector<Contact> & contacts() const;
 
   void updateContact(const Contact & oldContact, const Contact & newContact);
 

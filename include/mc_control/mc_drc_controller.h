@@ -18,6 +18,8 @@ public:
 
   void init(const std::vector<double> & initq);
 
+  void setWrenches(const std::vector< std::pair<Eigen::Vector3d, Eigen::Vector3d> > & wrenches);
+
   bool run();
 
   const mc_control::QPResultMsg & send(const double & t);

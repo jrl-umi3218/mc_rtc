@@ -52,6 +52,11 @@ void MCDRCGlobalController::init(const std::vector<double> & initq)
   controller->reset({q, {}});
 }
 
+void MCDRCGlobalController::setWrenches(const std::vector< std::pair<Eigen::Vector3d, Eigen::Vector3d> > & wrenches)
+{
+  controller->setWrenches(wrenches);
+}
+
 bool MCDRCGlobalController::run()
 {
   /* Check if we need to change the controller this time */

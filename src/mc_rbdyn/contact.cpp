@@ -200,7 +200,7 @@ std::vector<double> Contact::computeJointParam(const mc_rbdyn::Surface & robotSu
   return jointParam(robotSurfaceIn, *envSurface, X_es_rs);
 }
 
-tasks::qp::ContactId Contact::contactId(const mc_rbdyn::Robot & robot, const mc_rbdyn::Robot & env)
+tasks::qp::ContactId Contact::contactId(const mc_rbdyn::Robot & robot, const mc_rbdyn::Robot & env) const
 {
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsign-conversion"

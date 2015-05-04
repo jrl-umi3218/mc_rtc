@@ -37,6 +37,7 @@ public:
 
   virtual void reset(const ControllerResetData & reset_data);
 
+  virtual void setWrenches(const std::vector< std::pair<Eigen::Vector3d, Eigen::Vector3d> > & wrenches);
   /* Helper function to access the robot and the env */
   const mc_rbdyn::Robot & robot() const;
 
@@ -44,6 +45,7 @@ public:
 public:
   /* Common stuff */
   const double timeStep;
+  std::vector< std::pair<Eigen::Vector3d, Eigen::Vector3d> > wrenches;
   mc_robots::HRP2DRCGripperRobotModule robot_module;
   mc_robots::EnvRobotModule env_module;
   mc_solver::ContactConstraint contactConstraint;

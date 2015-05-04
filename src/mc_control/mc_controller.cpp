@@ -108,6 +108,11 @@ void MCController::reset(const ControllerResetData & reset_data)
   });
 }
 
+void MCController::setWrenches(const std::vector< std::pair<Eigen::Vector3d, Eigen::Vector3d> > & wrenches)
+{
+  this->wrenches = wrenches;
+}
+
 const mc_rbdyn::Robot & MCController::robot() const
 {
   return qpsolver->robots.robot();
