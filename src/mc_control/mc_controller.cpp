@@ -128,4 +128,14 @@ mc_rbdyn::Robot & MCController::env()
   return qpsolver->robots.env();
 }
 
+const mc_rbdyn::Robots & MCController::robots() const
+{
+  return qpsolver->robots;
+}
+
+mc_rbdyn::Robots & MCController::robots()
+{
+  return qpsolver->robots;
+}
+
 }

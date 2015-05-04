@@ -28,6 +28,7 @@ set(mc_rbdyn_SRC
 ./src/mc_rbdyn/contact.cpp
 ./src/mc_rbdyn/robot.cpp
 ./src/mc_rbdyn/stance.cpp
+./src/mc_rbdyn/StanceConfig.cpp
 )
 
 add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC})

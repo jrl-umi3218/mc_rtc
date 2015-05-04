@@ -14,6 +14,12 @@
 namespace mc_rbdyn
 {
 
+std::function<Eigen::Vector3d (const sva::PTransformd &, const sva::PTransformd &, const Eigen::Vector3d &)>
+percentWaypoint(double x, double y, double z, double nOff);
+
+std::function<Eigen::Vector3d (const sva::PTransformd &, const sva::PTransformd &, const Eigen::Vector3d &)>
+hardCodedPos(double x, double y, double z);
+
 struct StanceConfig
 {
 public:
@@ -22,9 +28,12 @@ public:
     double stiffness;
     double extraStiffness;
     double weight;
+    double targetSpeed;
   };
   struct CoMObj
   {
+    double posThresh;
+    double velThresh;
     Eigen::Vector3d comOffset;
   };
   struct PostureTask
@@ -80,6 +89,8 @@ public:
     Eigen::Vector3d adjustOriTBNWeight;
     double preContactDist;
   };
+public:
+  StanceConfig();
 public:
   CoMTask comTask;
   CoMObj comObj;

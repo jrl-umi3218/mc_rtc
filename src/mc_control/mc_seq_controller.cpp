@@ -6,11 +6,14 @@ namespace mc_control
 {
 
 MCSeqController::MCSeqController(const std::string & env_path, const std::string & env_name, const std::string & seq_path)
-: MCController(env_path, env_name), paused(false), stanceIndex(0), seq_actions(0)
+: MCController(env_path, env_name), paused(false), stanceIndex(0), seq_actions(0),
+  collsConstraint(robots(), timeStep)
 {
   /* Load plan */
   loadStances(seq_path, stances, actions);
   assert(stances.size() == actions.size());
+  /*FIXME Load configs from a file */
+  configs.resize(stances.size());
   for(size_t i = 0; i < stances.size(); ++i)
   {
     seq_actions.push_back(seqActionFromStanceAction(stances[i], *(actions[i].get())));
@@ -24,18 +27,21 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
   rbd::forwardKinematics(*(robot().mb), *(robot().mbc));
   rbd::forwardVelocity(*(robot().mb), *(robot().mbc));
 
+  constSpeedConstr.reset(new tasks::qp::BoundedSpeedConstr(robots().mbs, 0, timeStep));
+  constSpeedConstr->addToSolver(qpsolver->solver);
+
   qpsolver->addConstraintSet(contactConstraint);
   qpsolver->addConstraintSet(dynamicsConstraint);
-  qpsolver->addConstraintSet(selfCollisionConstraint);
-  qpsolver->solver.addTask(postureTask.get());
-  qpsolver->setContacts({
-    mc_rbdyn::Contact(robot().surfaces.at("LFullSole"), env().surfaces.at("Ground")),
-    mc_rbdyn::Contact(robot().surfaces.at("RFullSole"), env().surfaces.at("Ground"))
-  });
-  comTask.reset(new mc_tasks::CoMTask(qpsolver->robots, qpsolver->robots.robotIndex));
-  comTask->addToSolver(*qpsolver);
-  /* No EF task in the controller initially but we still set-it up for reliable resets */
-  efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", qpsolver->robots, qpsolver->robots.robotIndex));
+  qpsolver->addConstraintSet(collsConstraint);
+  qpsolver->setContacts(stances[stanceIndex].geomContacts);
+
+  qpsolver->update();
+
+  stabilityTask.reset(new mc_tasks::StabilityTask(robots()));
+  stabilityTask->addToSolver(qpsolver->solver);
+  stabilityTask->target(env(), stances[stanceIndex], configs[stanceIndex], configs[stanceIndex].comTask.targetSpeed);
+
+  std::cout << "MCSeqController init done" << std::endl;
 }
 
 bool MCSeqController::run()
@@ -60,13 +66,9 @@ void MCSeqController::reset(const ControllerResetData & reset_data)
   }
   else
   {
-    qpsolver->setContacts({
-      mc_rbdyn::Contact(robot().surfaces.at("LFullSole"), env().surfaces.at("Ground")),
-      mc_rbdyn::Contact(robot().surfaces.at("RFullSole"), env().surfaces.at("Ground"))
-    });
+    qpsolver->setContacts(stances[stanceIndex].geomContacts);
   }
-  comTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex);
-  efTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex);
+  qpsolver->update();
 }
 
 std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::Stance & stance, mc_rbdyn::StanceAction & action)

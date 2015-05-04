@@ -24,7 +24,14 @@ void StabilityTask::target(const mc_rbdyn::Robot & env, const mc_rbdyn::Stance &
                            const mc_rbdyn::StanceConfig & config, double comSmoothPercent)
 {
   comObj = stance.com(robot);
-  qObj = stance.q;
+  for(size_t i = 0; i < 23; ++i)
+  {
+    qObj[i] = stance.q[i];
+  }
+  for(size_t i = 24; i < 31; ++i)
+  {
+    qObj[i+5] = stance.q[i-1];
+  }
 
   Eigen::Vector3d comOffset = Eigen::Vector3d::Zero();
   for(const auto & c : stance.stabContacts)

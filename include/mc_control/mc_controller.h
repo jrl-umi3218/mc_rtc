@@ -55,6 +55,8 @@ public:
   std::shared_ptr<mc_control::Gripper> lgripper;
   std::shared_ptr<mc_control::Gripper> rgripper;
 protected:
+  const mc_rbdyn::Robots & robots() const;
+  mc_rbdyn::Robots & robots();
   mc_rbdyn::Robot & robot();
   mc_rbdyn::Robot & env();
 };
