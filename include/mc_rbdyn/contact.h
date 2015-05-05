@@ -32,7 +32,7 @@ public:
 
   bool isFixed();
 
-  std::pair<std::string, std::string> surfaces();
+  std::pair<std::string, std::string> surfaces() const;
 
   sva::PTransformd X_0_rs(const mc_rbdyn::Robot & env) const;
 
@@ -57,7 +57,7 @@ public:
 
 inline bool operator==(const Contact & lhs, const Contact & rhs)
 {
-  return *(lhs.robotSurface) == *(rhs.robotSurface) && *(lhs.envSurface) == *(lhs.envSurface);
+  return (*(lhs.robotSurface) == *(rhs.robotSurface)) and (*(lhs.envSurface) == *(lhs.envSurface));
 }
 
 inline bool operator!=(const Contact & lhs, const Contact & rhs)

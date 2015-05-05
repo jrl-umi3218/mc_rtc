@@ -96,6 +96,11 @@ std::shared_ptr<Surface> PlanarSurface::copy() const
   return std::shared_ptr<Surface>(new PlanarSurface(*this));
 }
 
+std::string PlanarSurface::type() const
+{
+  return "planar";
+}
+
 CylindricalSurface::CylindricalSurface(const std::string & name, const std::string & bodyName, const sva::PTransformd & X_b_s, const std::string & materialName, const double & radius, const double & width)
 : Surface(name, bodyName, X_b_s, materialName),
   radius(radius), _width(width)
@@ -126,6 +131,11 @@ std::shared_ptr<Surface> CylindricalSurface::copy() const
   return std::shared_ptr<Surface>(new CylindricalSurface(*this));
 }
 
+std::string CylindricalSurface::type() const
+{
+  return "cylindrical";
+}
+
 GripperSurface::GripperSurface(const std::string & name, const std::string & bodyName, const sva::PTransformd & X_b_s, const std::string & materialName, const std::vector<sva::PTransformd> & pointsFromOrigin, const sva::PTransformd & X_b_motor, const double & motorMaxTorque)
 : Surface(name, bodyName, X_b_s, materialName),
   pointsFromOrigin(pointsFromOrigin), X_b_motor(X_b_motor), motorMaxTorque(motorMaxTorque)
@@ -154,6 +164,11 @@ void GripperSurface::originTransform(const sva::PTransformd & X_s_sp)
 std::shared_ptr<Surface> GripperSurface::copy() const
 {
   return std::shared_ptr<Surface>(new GripperSurface(*this));
+}
+
+std::string GripperSurface::type() const
+{
+  return "gripper";
 }
 
 Eigen::Matrix3d rpyToMat(const double & r, const double & p, const double & y)
@@ -247,11 +262,11 @@ void readRSDF(const std::string & rsdf_string, std::vector< std::shared_ptr<Surf
     sva::PTransformd X_b_motor = tfFromOriginDom(*motorDom);
     double motorMaxTorque = motorDom->DoubleAttribute("max_torque");
     std::vector<sva::PTransformd> points;
-    tinyxml2::XMLElement * pointdom = gdom->FirstChildElement("points")->FirstChildElement("point");
+    tinyxml2::XMLElement * pointdom = gdom->FirstChildElement("points")->FirstChildElement("origin");
     while(pointdom)
     {
       points.push_back(tfFromOriginDom(*pointdom));
-      pointdom = pointdom->NextSiblingElement("point");
+      pointdom = pointdom->NextSiblingElement("origin");
     }
     surfaces.push_back(std::shared_ptr<Surface>(new GripperSurface(name, bodyName, X_b_s, materialName, points, X_b_motor, motorMaxTorque)));
   }

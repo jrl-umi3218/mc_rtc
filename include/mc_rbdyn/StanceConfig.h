@@ -10,6 +10,7 @@
 #include <Eigen/Core>
 #include <SpaceVecAlg/SpaceVecAlg>
 #include <functional>
+#include <map>
 
 namespace mc_rbdyn
 {
@@ -99,6 +100,7 @@ public:
   {
     std::vector<BodiesCollisionConf> autoc;
     std::vector<BodiesCollisionConf> robotEnv;
+    std::map< std::pair<std::string, std::string>, std::vector< std::pair<std::string, std::string> > > robotEnvContactFilter;
   };
 public:
   StanceConfig();

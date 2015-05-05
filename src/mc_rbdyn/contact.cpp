@@ -154,7 +154,7 @@ bool Contact::isFixed()
   return is_fixed;
 }
 
-std::pair<std::string, std::string> Contact::surfaces()
+std::pair<std::string, std::string> Contact::surfaces() const
 {
   return std::pair<std::string, std::string>(robotSurface->name, envSurface->name);
 }

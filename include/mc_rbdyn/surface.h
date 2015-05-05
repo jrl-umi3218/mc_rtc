@@ -33,6 +33,8 @@ public:
   std::string toStr();
 
   virtual std::shared_ptr<Surface> copy() const = 0;
+
+  virtual std::string type() const = 0;
 public:
   std::string name;
   std::string bodyName;
@@ -63,6 +65,8 @@ struct PlanarSurface : public Surface
   void planarPoints(const std::vector< std::pair<double, double> > & planarPoints);
 
   virtual std::shared_ptr<Surface> copy() const;
+
+  virtual std::string type() const override;
 public:
   std::vector< std::pair<double, double> > _planarPoints;
 };
@@ -78,6 +82,8 @@ struct CylindricalSurface : public Surface
   void width(const double & width);
 
   virtual std::shared_ptr<Surface> copy() const;
+
+  virtual std::string type() const override;
 public:
   double radius;
   double _width;
@@ -93,6 +99,8 @@ public:
   void originTransform(const sva::PTransformd & X_s_sp);
 
   virtual std::shared_ptr<Surface> copy() const;
+
+  virtual std::string type() const override;
 public:
   std::vector<sva::PTransformd> pointsFromOrigin;
   sva::PTransformd X_b_motor;

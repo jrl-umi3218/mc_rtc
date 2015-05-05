@@ -217,7 +217,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
     {
       max_t = (coiltmout.sec() - coiltm.sec())*1e6 + coiltmout.usec() - coiltm.usec();
     }
-    std::cout << "\rMax time spent in controller: " << max_t << " ms" << std::flush;
+    //std::cout << "\rMax time spent in controller: " << max_t << " ms" << std::flush;
   }
   return RTC::RTC_OK;
 }

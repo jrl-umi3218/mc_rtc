@@ -38,9 +38,9 @@ def surface2dict(s):
     s_out["radius"] = s.radius
     s_out["width"] = s.width
   if hasattr(s, "pointsFromOrigin"):
-    s_out["pointFromOrigin"] = []
+    s_out["pointsFromOrigin"] = []
     for p in s.pointsFromOrigin:
-      s_out["pointFromOrigin"].append(svapt2dict(p))
+      s_out["pointsFromOrigin"].append(svapt2dict(p))
     s_out["X_b_motor"] = svapt2dict(s.X_b_motor)
     s_out["motorMaxTorque"] = s.motorMaxTorque
   return s_out

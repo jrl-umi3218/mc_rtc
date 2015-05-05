@@ -9,6 +9,8 @@
 #include <mc_tasks/MoveContactTask.h>
 #include <Tasks/QPConstr.h>
 
+#include <mc_control/ContactSensor.h>
+
 namespace mc_control
 {
 
@@ -49,11 +51,11 @@ public:
 
   virtual void reset(const ControllerResetData & reset_data) override;
   /* Utils functions called by SeqStep/SeqAction */
-  void updateRobotEnvCollisions(const mc_rbdyn::Stance & stance, const mc_rbdyn::StanceConfig & conf);
+  void updateRobotEnvCollisions(const std::vector<mc_rbdyn::Contact> & contacts, const mc_rbdyn::StanceConfig & conf);
 
-  void updateSelfCollisions(const mc_rbdyn::Stance & stance, const mc_rbdyn::StanceConfig & conf);
+  void updateSelfCollisions(const std::vector<mc_rbdyn::Contact> & contacts, const mc_rbdyn::StanceConfig & conf);
 
-  void updateContacts(const std::vector<mc_rbdyn::Contact> & contacts); /*FIXME Actually update sensorContacts... */
+  void updateContacts(const std::vector<mc_rbdyn::Contact> & contacts);
 
   void updateSolverEqInEq();
 
@@ -61,17 +63,21 @@ public:
 
   void post_live();
 
-  const mc_rbdyn::StanceConfig & curConf();
+  mc_rbdyn::StanceConfig & curConf();
 
-  const mc_rbdyn::Stance & curStance();
+  mc_rbdyn::Stance & curStance();
 
-  const mc_rbdyn::StanceAction & curAction();
+  mc_rbdyn::StanceAction & curAction();
 
-  const mc_rbdyn::Stance & targetStance();
+  mc_rbdyn::Stance & targetStance();
 
-  const mc_rbdyn::StanceAction & targetAction();
+  mc_rbdyn::StanceAction & targetAction();
 
   std::vector<std::string> bodiesFromContacts(const mc_rbdyn::Robot & robot, const std::vector<mc_rbdyn::Contact> & robotContacts);
+
+  std::vector< std::pair<std::string, std::string> > collisionsContactFilterList(const mc_rbdyn::Contact & contact, const mc_rbdyn::StanceConfig & conf);
+
+  bool setCollisionsContactFilter(const mc_rbdyn::Contact & contact, const mc_rbdyn::StanceConfig & conf);
   /* Services */
 public:
   /* Sequence playing logic */
@@ -84,13 +90,24 @@ public:
   std::vector< std::shared_ptr<SeqAction> > seq_actions;
   std::vector<mc_tasks::MetaTask*> metaTasks;
   std::map<std::string, ActiGripper> actiGrippers;
+  mc_rbdyn::Contact * currentContact;
+  mc_rbdyn::Contact * targetContact;
+  mc_control::Gripper * currentGripper;
+  bool isColl;
+  unsigned int notInContactCount;
+
+  /* Contact sensors */
+  bool use_real_sensors; /*FIXME Should be set by configuration */
+  std::shared_ptr<ContactSensor> contactSensor; /* Update the surfaces that are in contact */
+  std::vector<std::string> sensorContacts; /* Contain the name of surfaces in contact */
 
   /* Tasks and constraints specific to seq controller */
   mc_solver::RobotEnvCollisionsConstraint collsConstraint;
   std::shared_ptr<tasks::qp::BoundedSpeedConstr> constSpeedConstr;
   std::shared_ptr<mc_tasks::StabilityTask> stabilityTask;
   std::shared_ptr<mc_tasks::MoveContactTask> moveContactTask;
-  std::shared_ptr<mc_tasks::AddRemoveContactTask> addContactTask;
+  std::shared_ptr<mc_tasks::AddContactTask> addContactTask;
+  std::shared_ptr<mc_tasks::RemoveContactTask> rmContactTask;
   std::vector< std::shared_ptr<tasks::qp::GripperTorqueTask> > gripperTorqueTasks;
 };
 

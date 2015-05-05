@@ -38,10 +38,18 @@ public:
   virtual void reset(const ControllerResetData & reset_data);
 
   virtual void setWrenches(const std::vector< std::pair<Eigen::Vector3d, Eigen::Vector3d> > & wrenches);
-  /* Helper function to access the robot and the env */
+  /* Helper function to access robots, robot and env */
   const mc_rbdyn::Robot & robot() const;
 
   const mc_rbdyn::Robot & env() const;
+
+  const mc_rbdyn::Robots & robots() const;
+
+  mc_rbdyn::Robots & robots();
+
+  mc_rbdyn::Robot & robot();
+
+  mc_rbdyn::Robot & env();
 public:
   /* Common stuff */
   const double timeStep;
@@ -56,11 +64,6 @@ public:
   std::shared_ptr<mc_solver::QPSolver> qpsolver;
   std::shared_ptr<mc_control::Gripper> lgripper;
   std::shared_ptr<mc_control::Gripper> rgripper;
-protected:
-  const mc_rbdyn::Robots & robots() const;
-  mc_rbdyn::Robots & robots();
-  mc_rbdyn::Robot & robot();
-  mc_rbdyn::Robot & env();
 };
 
 }

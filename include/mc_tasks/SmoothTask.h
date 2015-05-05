@@ -64,6 +64,7 @@ void SmoothTask<objT>::update()
   {
     w_set(w_get() + stepW);
     obj_set(obj_get() + stepO);
+    iter++;
   }
   else
   {
