@@ -40,6 +40,8 @@ struct StanceAction
   virtual void update(const Stance & stance) = 0;
 
   virtual std::string toStr() = 0;
+
+  virtual std::string type() = 0;
 };
 
 struct IdentityContactAction : public StanceAction
@@ -50,6 +52,8 @@ public:
   virtual void update(const Stance & stance);
 
   virtual std::string toStr();
+
+  virtual std::string type();
 };
 
 struct AddContactAction : public StanceAction
@@ -62,6 +66,8 @@ public:
   virtual void update(const Stance & stance);
 
   virtual std::string toStr();
+
+  virtual std::string type();
 public:
   Contact contact;
 };
@@ -76,6 +82,8 @@ public:
   virtual void update(const Stance & stance);
 
   virtual std::string toStr();
+
+  virtual std::string type();
 public:
   Contact contact;
 };

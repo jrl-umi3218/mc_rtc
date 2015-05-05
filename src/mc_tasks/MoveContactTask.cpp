@@ -27,7 +27,8 @@ MoveContactTask::MoveContactTask(mc_rbdyn::Robots & robots, mc_rbdyn::Contact & 
     std::bind(static_cast<const Eigen::Vector3d & (tasks::qp::PositionTask::*)() const>(&tasks::qp::PositionTask::position), positionTask.get()),
     config.contactTask.position.weight, robotSurfacePos().translation(), 1),
   orientationTask(new tasks::qp::OrientationTask(robots.mbs, 0, robotBodyId, robot.mbc->bodyPosW[robotBodyIndex].rotation())),
-  orientationTaskSp(new tasks::qp::SetPointTask(robots.mbs, 0, orientationTask.get(), config.contactTask.orientation.stiffness, config.contactTask.orientation.weight))
+  orientationTaskSp(new tasks::qp::SetPointTask(robots.mbs, 0, orientationTask.get(), config.contactTask.orientation.stiffness, config.contactTask.orientation.weight)),
+  useSmoothTask(true)
 {
 }
 
@@ -89,7 +90,10 @@ void MoveContactTask::removeFromSolver(tasks::qp::QPSolver & solver)
 
 void MoveContactTask::update()
 {
-  positionTaskSm.update();
+  if(useSmoothTask)
+  {
+    positionTaskSm.update();
+  }
   double err = (robotSurfacePos().translation() - preTargetPos).norm();
   double extra = extraStiffness(err, extraPosStiff);
   positionTaskSp->stiffness(posStiff + extra);

@@ -25,6 +25,32 @@ ActiGripper::ActiGripper(unsigned int wrenchIndex, double actiForce, double stop
 {
 }
 
+CollisionPair::CollisionPair(const mc_rbdyn::Robot & r1, const mc_rbdyn::Robot & r2,
+                             const std::string & r1bodyName, const std::string & r2bodyName)
+: r1BodyIndex(r1.bodyIndexByName(r1bodyName)),
+  r2BodyIndex(r2.bodyIndexByName(r2bodyName))
+{
+  const auto & hull1 = r1.convex.at(r1bodyName);
+  X_b1_h1 = r1.collisionTransforms.at(hull1.first);
+  r1hull = hull1.second;
+  const auto & hull2 = r2.convex.at(r2bodyName);
+  X_b2_h2 = r2.collisionTransforms.at(hull2.first);
+  r2hull = hull2.second;
+  pair.reset(new sch::CD_Pair(r1hull.get(), r2hull.get()));
+}
+
+double CollisionPair::distance(const mc_rbdyn::Robot & r1, const mc_rbdyn::Robot & r2)
+{
+  setTransform(r1, r2);
+  return pair->getDistance();
+}
+
+void CollisionPair::setTransform(const mc_rbdyn::Robot & r1, const mc_rbdyn::Robot & r2)
+{
+  sch::transform(*(r1hull.get()), X_b1_h1*r1.mbc->bodyPosW[r1BodyIndex]);
+  sch::transform(*(r2hull.get()), X_b2_h2*r2.mbc->bodyPosW[r2BodyIndex]);
+}
+
 std::vector<mc_solver::Collision> confToColl(const std::vector<mc_rbdyn::StanceConfig::BodiesCollisionConf> & conf)
 {
   std::vector<mc_solver::Collision> res;

@@ -69,6 +69,11 @@ std::string IdentityContactAction::toStr()
   return "Identity";
 }
 
+std::string IdentityContactAction::type()
+{
+  return "identity";
+}
+
 AddContactAction::AddContactAction(const Contact & contact)
 : contact(contact)
 {
@@ -100,6 +105,11 @@ std::string AddContactAction::toStr()
   std::stringstream ss;
   ss << "Add " << contact.toStr();
   return ss.str();
+}
+
+std::string AddContactAction::type()
+{
+  return "add";
 }
 
 RemoveContactAction::RemoveContactAction(const Contact & contact)
@@ -141,6 +151,11 @@ std::string RemoveContactAction::toStr()
   std::stringstream ss;
   ss << "Remove " << contact.toStr();
   return ss.str();
+}
+
+std::string RemoveContactAction::type()
+{
+  return "remove";
 }
 
 sva::PTransformd svaPTransformdFromJSON(Json::Value & v)

@@ -62,6 +62,7 @@ public:
   std::shared_ptr<tasks::qp::PositionTask> positionTask;
   std::shared_ptr<tasks::qp::SetPointTask> positionTaskSp;
   SmoothTask<Eigen::Vector3d> positionTaskSm;
+  bool useSmoothTask;
 
   std::shared_ptr<tasks::qp::OrientationTask> orientationTask;
   std::shared_ptr<tasks::qp::SetPointTask> orientationTaskSp;

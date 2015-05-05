@@ -38,6 +38,25 @@ public:
   double targetError;
 };
 
+struct CollisionPair
+{
+public:
+  CollisionPair(const mc_rbdyn::Robot & r1, const mc_rbdyn::Robot & r2,
+                const std::string & r1bodyName, const std::string & r2bodyName);
+
+  double distance(const mc_rbdyn::Robot & r1, const mc_rbdyn::Robot & r2);
+public:
+  unsigned int r1BodyIndex;
+  unsigned int r2BodyIndex;
+  std::shared_ptr<sch::S_Polyhedron> r1hull;
+  std::shared_ptr<sch::S_Polyhedron> r2hull;
+  sva::PTransformd X_b1_h1;
+  sva::PTransformd X_b2_h2;
+  std::shared_ptr<sch::CD_Pair> pair;
+private:
+  void setTransform(const mc_rbdyn::Robot & r1, const mc_rbdyn::Robot & r2);
+};
+
 struct SeqAction;
 
 std::vector<mc_solver::Collision> confToColl(const std::vector<mc_rbdyn::StanceConfig::BodiesCollisionConf> & conf);
@@ -96,13 +115,23 @@ public:
   std::vector< std::shared_ptr<SeqAction> > seq_actions;
   std::vector<mc_tasks::MetaTask*> metaTasks;
   std::map<std::string, ActiGripper> actiGrippers;
+  std::vector< std::shared_ptr<CollisionPair> > distPairs;
   mc_rbdyn::Contact * currentContact;
   mc_rbdyn::Contact * targetContact;
   mc_control::Gripper * currentGripper;
+  Eigen::Vector3d errorI;
+  Eigen::Vector3d oriErrorI;
   bool isColl;
   bool isCollFiltered;
   bool push;
   unsigned int notInContactCount;
+  bool isGripperOpen;
+  bool isGripperClose;
+  bool isGripperAttached;
+  bool isGripperWillBeAttached;
+  bool isRemoved;
+  bool isBodyTask;
+  bool isAdjust;
 
   /* Contact sensors */
   bool use_real_sensors; /*FIXME Should be set by configuration */
@@ -116,6 +145,13 @@ public:
   std::shared_ptr<mc_tasks::MoveContactTask> moveContactTask;
   std::shared_ptr<mc_tasks::AddContactTask> addContactTask;
   std::shared_ptr<mc_tasks::RemoveContactTask> rmContactTask;
+  std::shared_ptr<mc_tasks::RemoveContactTask> removeContactTask;
+  std::shared_ptr<tasks::qp::OrientationTask> bodyOriTask;
+  std::shared_ptr<tasks::qp::SetPointTask> bodyOriTaskSp;
+  std::shared_ptr<tasks::qp::PositionTask> adjustPositionTask;
+  std::shared_ptr<tasks::qp::OrientationTask> adjustOrientationTask;
+  std::shared_ptr<tasks::qp::PIDTask> adjustPositionTaskPid;
+  std::shared_ptr<tasks::qp::PIDTask> adjustOrientationTaskPid;
   std::vector< std::shared_ptr<tasks::qp::GripperTorqueTask> > gripperTorqueTasks;
 };
 
