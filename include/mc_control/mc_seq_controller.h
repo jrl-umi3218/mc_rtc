@@ -69,6 +69,8 @@ public:
 
   mc_rbdyn::StanceAction & curAction();
 
+  mc_rbdyn::StanceConfig & targetConf();
+
   mc_rbdyn::Stance & targetStance();
 
   mc_rbdyn::StanceAction & targetAction();
@@ -78,6 +80,10 @@ public:
   std::vector< std::pair<std::string, std::string> > collisionsContactFilterList(const mc_rbdyn::Contact & contact, const mc_rbdyn::StanceConfig & conf);
 
   bool setCollisionsContactFilter(const mc_rbdyn::Contact & contact, const mc_rbdyn::StanceConfig & conf);
+
+  bool inContact(const std::string & sname);
+
+  void removeMetaTask(mc_tasks::MetaTask* mt);
   /* Services */
 public:
   /* Sequence playing logic */
@@ -94,6 +100,8 @@ public:
   mc_rbdyn::Contact * targetContact;
   mc_control::Gripper * currentGripper;
   bool isColl;
+  bool isCollFiltered;
+  bool push;
   unsigned int notInContactCount;
 
   /* Contact sensors */

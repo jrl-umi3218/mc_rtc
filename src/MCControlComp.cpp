@@ -22,6 +22,9 @@
 #include <string>
 #include "MCControl.h"
 
+#include <signal.h>
+#include <stdlib.h>
+
 
 void MyModuleInit(RTC::Manager* manager)
 {
@@ -76,8 +79,15 @@ void MyModuleInit(RTC::Manager* manager)
   return;
 }
 
+void catchs(int signo)
+{
+  std::cout << "ALL IZ GOOD" << std::endl;
+  exit(0);
+}
+
 int main (int argc, char** argv)
 {
+  signal(SIGINT, catchs);
   RTC::Manager* manager;
   manager = RTC::Manager::init(argc, argv);
 

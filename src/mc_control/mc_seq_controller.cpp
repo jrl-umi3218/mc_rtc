@@ -287,6 +287,11 @@ mc_rbdyn::StanceAction & MCSeqController::curAction()
   return *(actions[stanceIndex - 1]);
 }
 
+mc_rbdyn::StanceConfig & MCSeqController::targetConf()
+{
+  return configs[stanceIndex];
+}
+
 mc_rbdyn::Stance & MCSeqController::targetStance()
 {
   return stances[stanceIndex];
@@ -334,6 +339,16 @@ bool MCSeqController::setCollisionsContactFilter(const mc_rbdyn::Contact & conta
     ret |= collsConstraint.removeEnvCollisionByBody(robots(), p.first, p.second);
   }
   return ret;
+}
+
+bool MCSeqController::inContact(const std::string & sname)
+{
+  return std::find(sensorContacts.begin(), sensorContacts.end(), currentContact->robotSurface->name) != sensorContacts.end();
+}
+
+void MCSeqController::removeMetaTask(mc_tasks::MetaTask* mt)
+{
+  metaTasks.erase(std::find(metaTasks.begin(), metaTasks.end(), mt));
 }
 
 std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::Stance & stance, mc_rbdyn::StanceAction & action)

@@ -26,7 +26,7 @@ public:
   virtual void removeFromSolver(tasks::qp::QPSolver & solver) override;
 
   virtual void update() override;
-private:
+public:
   mc_rbdyn::Robots & robots;
   mc_rbdyn::Robot & robot;
 
