@@ -29,7 +29,7 @@ void MCDRCGlobalController::init(const std::vector<double> & initq)
 {
   std::vector<std::vector<double>> q;
   /*FIXME Get the position/attitude of the robot? */
-  q.push_back({1,0,0,0,-0.35,0,0.7593188263796187});
+  q.push_back({1,0,0,0,-0.35,0,0.75907});
 
   /* The OpenRTM components don't give q in the same order as the QP */
   for(size_t i = 0; i < 24; ++i) // until RARM_LINK7
