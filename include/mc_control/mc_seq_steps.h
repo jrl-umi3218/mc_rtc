@@ -14,6 +14,7 @@ struct sName : public SeqStep\
 
 CREATE_STRUCT(enter_initT)
 CREATE_STRUCT(live_initT)
+/* Contact branch */
 CREATE_STRUCT(live_chooseContactT)
 CREATE_STRUCT(enter_removeContactT)
 CREATE_STRUCT(live_removeContacT)
@@ -23,9 +24,11 @@ CREATE_STRUCT(enter_moveContactP)
 CREATE_STRUCT(live_moveContactT)
 CREATE_STRUCT(enter_pushContactT)
 CREATE_STRUCT(live_pushContactT)
+/* Move CoM branch */
 CREATE_STRUCT(live_chooseCoMT)
 CREATE_STRUCT(enter_moveCoMP)
 CREATE_STRUCT(live_moveCoMT)
+/* Gripper contact branch */
 CREATE_STRUCT(live_chooseGripperT)
 CREATE_STRUCT(enter_openGripperP)
 CREATE_STRUCT(live_openGripperP)

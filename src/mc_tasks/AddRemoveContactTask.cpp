@@ -12,7 +12,7 @@ AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots, std::share
   robotBodyId(robot.bodyIdByName(robotSurf->bodyName)),
   targetTf(contact.X_0_rs(env)),
   bodyId(robot.bodyIdByName(robotSurf->bodyName)),
-  dofMat(5,6), speedMat(6, 1)
+  dofMat(Eigen::MatrixXd::Zero(5,6)), speedMat(Eigen::MatrixXd::Zero(6, 1))
 {
   for(size_t i = 0; i < 5; ++i)
   {
@@ -87,7 +87,7 @@ AddContactTask::AddContactTask(mc_rbdyn::Robots & robots, std::shared_ptr<tasks:
                                mc_rbdyn::Contact & contact,
                                const mc_rbdyn::StanceConfig & config,
                                Eigen::Vector3d * userT_0_s)
-: AddRemoveContactTask(robots, constSpeedConstr, contact, 1.0, config, userT_0_s)
+: AddRemoveContactTask(robots, constSpeedConstr, contact, -1.0, config, userT_0_s)
 {
 }
 
@@ -95,7 +95,7 @@ RemoveContactTask::RemoveContactTask(mc_rbdyn::Robots & robots, std::shared_ptr<
                                mc_rbdyn::Contact & contact,
                                const mc_rbdyn::StanceConfig & config,
                                Eigen::Vector3d * userT_0_s)
-: AddRemoveContactTask(robots, constSpeedConstr, contact, -1.0, config, userT_0_s)
+: AddRemoveContactTask(robots, constSpeedConstr, contact, 1.0, config, userT_0_s)
 {
 }
 

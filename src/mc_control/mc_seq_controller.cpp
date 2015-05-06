@@ -6,6 +6,8 @@
 #include <mc_control/SimulationContactSensor.h>
 #include <mc_control/ForceContactSensor.h>
 
+#include <mc_control/mc_seq_steps.h>
+
 namespace mc_control
 {
 
@@ -68,20 +70,23 @@ std::vector<mc_solver::Collision> confToColl(const std::vector<mc_rbdyn::StanceC
 
 MCSeqController::MCSeqController(const std::string & env_path, const std::string & env_name, const std::string & seq_path)
 : MCController(env_path, env_name), paused(false), halted(false), stanceIndex(0), seq_actions(0),
-  collsConstraint(robots(), timeStep), currentContact(0), targetContact(0), currentGripper(0),
-  use_real_sensors(false)
+  currentContact(0), targetContact(0), currentGripper(0),
+  use_real_sensors(false),
+  collsConstraint(robots(), timeStep)
 {
   /* Load plan */
   loadStances(seq_path, stances, actions);
   assert(stances.size() == actions.size());
-  for(size_t i = 0; i < stances.size(); ++i)
+  seq_actions.push_back(seqActionFromStanceAction(0, actions[0].get()));
+  for(size_t i = 0; i < stances.size() - 1; ++i)
   {
-    seq_actions.push_back(seqActionFromStanceAction(stances[i], *(actions[i].get())));
+    seq_actions.push_back(seqActionFromStanceAction(actions[i].get(), actions[i+1].get()));
   }
   /*FIXME Hard-coded for stairs climbing */
   /*FIXME Load configs from a file */
   //configs.resize(stances.size());
-  for(size_t i = 0; i < seq_actions.size(); ++i)
+  configs.resize(0);
+  for(size_t i = 1; i < seq_actions.size(); ++i)
   {
     mc_rbdyn::StanceConfig sc;
 
@@ -148,7 +153,7 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
       sc.contactTask.orientation.weight = 1.0;
       sc.contactTask.orientation.finalWeight = 1000.0;
       sc.contactTask.linVel.stiffness = 15.0;
-      sc.contactTask.linVel.weight = 10000.0;
+      sc.contactTask.linVel.weight = 1000.0;
       sc.contactTask.linVel.speed = 0.05;
       sc.contactTask.waypointConf.thresh = 0.1;
       sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(0.1, 1.0, 0.5, 0.2);
@@ -166,7 +171,7 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
 
     /* Per-stance configuration */
     mc_rbdyn::AddContactAction* addA = dynamic_cast<mc_rbdyn::AddContactAction*>(actions[i].get());
-    mc_rbdyn::RemoveContactAction* rmA = dynamic_cast<mc_rbdyn::RemoveContactAction*>(actions[i].get());
+    //mc_rbdyn::RemoveContactAction* rmA = dynamic_cast<mc_rbdyn::RemoveContactAction*>(actions[i].get());
     if(addA)
     {
       if(addA->contact.robotSurface->name == "RFrontSole" &&
@@ -217,6 +222,7 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
 
     configs.push_back(sc);
   }
+  configs.push_back(mc_rbdyn::StanceConfig());
 
   /* Setup contact sensor */
   if(use_real_sensors)
@@ -252,6 +258,7 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
   stabilityTask->target(env(), stances[stanceIndex], configs[stanceIndex], configs[stanceIndex].comTask.targetSpeed);
 
   std::cout << "MCSeqController init done" << std::endl;
+  std::cout << "Setup to play " << seq_actions.size() << " actions" << std::endl;
 }
 
 bool MCSeqController::run()
@@ -262,14 +269,23 @@ bool MCSeqController::run()
     ret = MCController::run();
     if(ret)
     {
+      unsigned int stanceIndexIn = stanceIndex;
       sensorContacts = contactSensor->update(*this);
       pre_live(); /* pre_live can halt the execution */
       if(!halted && seq_actions[stanceIndex]->execute(*this))
       {
-        /*FIXME Should pause here to mimic ask_step */
-        stanceIndex++;
+        if(stanceIndex != stanceIndexIn)
+        {
+          std::cout << "Completed " << actions[stanceIndexIn]->toStr() << std::endl;
+          /*FIXME Should pause here, waiting for the service call */
+          // paused = true;
+        }
       }
       post_live();
+    }
+    else
+    {
+      std::exit(1);
     }
   }
   return ret;
@@ -465,7 +481,7 @@ mc_rbdyn::StanceAction & MCSeqController::targetAction()
   return *(actions[stanceIndex]);
 }
 
-std::vector<std::string> MCSeqController::bodiesFromContacts(const mc_rbdyn::Robot & robot, const std::vector<mc_rbdyn::Contact> & robotContacts)
+std::vector<std::string> MCSeqController::bodiesFromContacts(const mc_rbdyn::Robot &, const std::vector<mc_rbdyn::Contact> & robotContacts)
 {
   std::vector<std::string> res;
   for(const auto & c : robotContacts)
@@ -480,7 +496,7 @@ MCSeqController::collisionsContactFilterList(const mc_rbdyn::Contact & contact, 
 {
   std::vector< std::pair<std::string, std::string> > res;
 
-  res.push_back(contact.surfaces());
+  res.push_back(std::pair<std::string, std::string>(contact.robotSurface->bodyName, contact.envSurface->bodyName));
 
   if(conf.collisions.robotEnvContactFilter.count(contact.surfaces()))
   {
@@ -506,7 +522,7 @@ bool MCSeqController::setCollisionsContactFilter(const mc_rbdyn::Contact & conta
 
 bool MCSeqController::inContact(const std::string & sname)
 {
-  return std::find(sensorContacts.begin(), sensorContacts.end(), currentContact->robotSurface->name) != sensorContacts.end();
+  return std::find(sensorContacts.begin(), sensorContacts.end(), sname) != sensorContacts.end();
 }
 
 void MCSeqController::removeMetaTask(mc_tasks::MetaTask* mt)
@@ -514,11 +530,139 @@ void MCSeqController::removeMetaTask(mc_tasks::MetaTask* mt)
   metaTasks.erase(std::find(metaTasks.begin(), metaTasks.end(), mt));
 }
 
-std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::Stance & stance, mc_rbdyn::StanceAction & action)
+bool MCSeqController::play_next_stance()
 {
-  /*FIXME Implement stuff*/
+  if(paused and stanceIndex < stances.size())
+  {
+    std::cout << "Playing " << actions[stanceIndex]->toStr() << std::endl;
+    paused = false;
+    return true;
+  }
+  return false;
+}
+
+std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * curAction, mc_rbdyn::StanceAction * targetAction)
+{
   auto res = std::shared_ptr<SeqAction>(new SeqAction());
-  res->steps.push_back(SeqStep());
+  if(curAction == 0)
+  {
+    res->steps = {
+                  std::shared_ptr<SeqStep>(new enter_initT()),
+                  std::shared_ptr<SeqStep>(new live_initT())
+    };
+    res->_type = SeqAction::CoMMove;
+    return res;
+  }
+  /*FIXME Implement stuff*/
+  bool curIsAddContact = false;
+  bool curIsRemoveContact = false;
+  bool curIsGripperContact = false;
+  std::string curSurfaceName = "";
+  {
+    mc_rbdyn::AddContactAction* addA = dynamic_cast<mc_rbdyn::AddContactAction*>(curAction);
+    if(addA)
+    {
+      curIsAddContact = true;
+      curIsGripperContact = addA->contact.robotSurface->type() == "gripper";
+      curSurfaceName = addA->contact.robotSurface->name;
+    }
+  }
+  {
+    mc_rbdyn::RemoveContactAction* rmA = dynamic_cast<mc_rbdyn::RemoveContactAction*>(curAction);
+    if(rmA)
+    {
+      curIsRemoveContact = true;
+      curIsGripperContact = rmA->contact.robotSurface->type() == "gripper";
+      curSurfaceName = rmA->contact.robotSurface->name;
+    }
+  }
+  //bool curIsIdentity = (!curIsAddContact && !curIsRemoveContact);
+  bool targetIsAddContact = false;
+  bool targetIsRemoveContact = false;
+  bool targetIsGripperContact = false;
+  std::string targetSurfaceName = "";
+  {
+    mc_rbdyn::AddContactAction* addA = dynamic_cast<mc_rbdyn::AddContactAction*>(targetAction);
+    if(addA)
+    {
+      targetIsAddContact = true;
+      targetIsGripperContact = addA->contact.robotSurface->type() == "gripper";
+      targetSurfaceName = addA->contact.robotSurface->name;
+    }
+  }
+  {
+    mc_rbdyn::RemoveContactAction* rmA = dynamic_cast<mc_rbdyn::RemoveContactAction*>(targetAction);
+    if(rmA)
+    {
+      targetIsRemoveContact = true;
+      targetIsGripperContact = rmA->contact.robotSurface->type() == "gripper";
+      targetSurfaceName = rmA->contact.robotSurface->name;
+    }
+  }
+  bool targetIsIdentity = (!targetIsAddContact && !targetIsRemoveContact);
+  bool sameSurface = curSurfaceName == targetSurfaceName;
+
+
+  bool contactBranch = (curIsRemoveContact && targetIsAddContact && sameSurface  && !curIsGripperContact) || (targetIsAddContact && !targetIsGripperContact);
+  bool comBranch = (targetIsRemoveContact or targetIsIdentity);
+  bool gripperBranch = (curIsRemoveContact && targetIsAddContact && sameSurface && targetIsGripperContact) || (targetIsAddContact && targetIsGripperContact) || (curIsRemoveContact && curIsGripperContact);
+
+  if(contactBranch)
+  {
+    res->steps = {
+                  std::shared_ptr<SeqStep>(new live_chooseContactT()),
+                  std::shared_ptr<SeqStep>(new enter_removeContactT()),
+                  std::shared_ptr<SeqStep>(new live_removeContacT()),
+                  std::shared_ptr<SeqStep>(new enter_moveWPT()),
+                  std::shared_ptr<SeqStep>(new live_moveWPT()),
+                  std::shared_ptr<SeqStep>(new enter_moveContactP()),
+                  std::shared_ptr<SeqStep>(new live_moveContactT()),
+                  std::shared_ptr<SeqStep>(new enter_pushContactT()),
+                  std::shared_ptr<SeqStep>(new live_pushContactT())
+    };
+    res->_type = SeqAction::ContactMove;
+  }
+  else if(comBranch)
+  {
+    res->steps = {
+                  std::shared_ptr<SeqStep>(new live_chooseCoMT()),
+                  std::shared_ptr<SeqStep>(new enter_moveCoMP()),
+                  std::shared_ptr<SeqStep>(new live_moveCoMT())
+    };
+    res->_type = SeqAction::CoMMove;
+  }
+  else if(gripperBranch)
+  {
+    res->steps = {
+                  std::shared_ptr<SeqStep>(new live_chooseGripperT()),
+                  std::shared_ptr<SeqStep>(new enter_openGripperP()),
+                  std::shared_ptr<SeqStep>(new live_openGripperP()),
+                  std::shared_ptr<SeqStep>(new enter_removeGripperP()),
+                  std::shared_ptr<SeqStep>(new live_removeGripperP()),
+                  std::shared_ptr<SeqStep>(new enter_moveGripperWPT()),
+                  std::shared_ptr<SeqStep>(new live_moveGripperWPT()),
+                  std::shared_ptr<SeqStep>(new live_moveGripperT()),
+                  std::shared_ptr<SeqStep>(new enter_adjustGripperP()),
+                  std::shared_ptr<SeqStep>(new live_adjustGripperT()),
+                  std::shared_ptr<SeqStep>(new enter_addGripperT()),
+                  std::shared_ptr<SeqStep>(new live_addGripperT()),
+                  std::shared_ptr<SeqStep>(new enter_closeGripperP()),
+                  std::shared_ptr<SeqStep>(new live_closeGripperP()),
+                  std::shared_ptr<SeqStep>(new enter_contactGripperP()),
+                  std::shared_ptr<SeqStep>(new live_contactGripperT())
+    };
+    res->_type = SeqAction::GripperMove;
+  }
+  else
+  {
+    std::cerr << "Could not find a branch for the following action couple:"<< std::endl;
+    std::cerr << "Current: " << curAction->toStr() << std::endl;
+    std::cerr << "Target: " << targetAction->toStr() << std::endl;
+    res->steps = {
+                  std::shared_ptr<SeqStep>(new SeqStep())
+    };
+  }
+
   return res;
 }
 
@@ -529,7 +673,7 @@ SeqAction::SeqAction()
 
 bool SeqAction::execute(MCSeqController & controller)
 {
-  if(steps[currentStep].eval(controller))
+  if(steps[currentStep]->eval(controller))
   {
     currentStep++;
     if(currentStep == steps.size())
@@ -545,7 +689,7 @@ SeqAction::SeqActionType SeqAction::type() const
   return _type;
 }
 
-bool SeqStep::eval(MCSeqController & controller)
+bool SeqStep::eval(MCSeqController &)
 {
   return false;
 }

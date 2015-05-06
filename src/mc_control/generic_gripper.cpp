@@ -59,9 +59,9 @@ mimic_d_t readMimic(const std::string & urdf)
 
 unsigned int findSuccessorJoint(const mc_rbdyn::Robot & robot, unsigned int bodyIndex)
 {
-  for(size_t j = 0; j < robot.mb->nrJoints(); ++j)
+  for(int j = 0; j < robot.mb->nrJoints(); ++j)
   {
-    if(robot.mb->predecessor(j) == bodyIndex)
+    if(robot.mb->predecessor(j) == static_cast<int>(bodyIndex))
     {
       return j;
     }
@@ -99,7 +99,7 @@ std::string findFirstCommonBody(const mc_rbdyn::Robot & robotFull, const std::st
   else
   {
     unsigned int bodyIndex = robotFull.bodyIndexByName(bodyName);
-    unsigned int bodyPredIndex = robotFull.mb->parent(bodyIndex);
+    int bodyPredIndex = robotFull.mb->parent(bodyIndex);
     if(bodyPredIndex == -1)
     {
       return "";

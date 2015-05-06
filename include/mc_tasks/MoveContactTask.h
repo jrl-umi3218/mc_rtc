@@ -17,7 +17,7 @@ namespace mc_tasks
 struct MoveContactTask : public MetaTask
 {
 public:
-  MoveContactTask(mc_rbdyn::Robots & robots, mc_rbdyn::Contact & contact, mc_rbdyn::StanceConfig & config, double positionWStartPercent = 0);
+  MoveContactTask(mc_rbdyn::Robots & robots, mc_rbdyn::Robot & robot, mc_rbdyn::Robot & env, mc_rbdyn::Contact & contact, mc_rbdyn::StanceConfig & config, double positionWStartPercent = 0);
 
   void toWaypoint(mc_rbdyn::StanceConfig & config, double positionSmoothPercent = 1);
 
@@ -61,11 +61,11 @@ public:
   double extraPosStiff;
   std::shared_ptr<tasks::qp::PositionTask> positionTask;
   std::shared_ptr<tasks::qp::SetPointTask> positionTaskSp;
-  SmoothTask<Eigen::Vector3d> positionTaskSm;
-  bool useSmoothTask;
+  std::shared_ptr<SmoothTask<Eigen::Vector3d>> positionTaskSm;
 
   std::shared_ptr<tasks::qp::OrientationTask> orientationTask;
   std::shared_ptr<tasks::qp::SetPointTask> orientationTaskSp;
+  bool useSmoothTask;
 };
 
 }

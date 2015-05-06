@@ -104,6 +104,7 @@ public:
 
   void removeMetaTask(mc_tasks::MetaTask* mt);
   /* Services */
+  bool play_next_stance();
 public:
   /* Sequence playing logic */
   bool paused;
@@ -132,6 +133,7 @@ public:
   bool isRemoved;
   bool isBodyTask;
   bool isAdjust;
+  bool skipRemoveGripper;
 
   /* Contact sensors */
   bool use_real_sensors; /*FIXME Should be set by configuration */
@@ -155,7 +157,7 @@ public:
   std::vector< std::shared_ptr<tasks::qp::GripperTorqueTask> > gripperTorqueTasks;
 };
 
-std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::Stance & stance, mc_rbdyn::StanceAction & action);
+std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * curAction, mc_rbdyn::StanceAction * targetAction);
 
 struct SeqStep;
 
@@ -177,7 +179,7 @@ public:
 public:
   SeqActionType _type;
   unsigned int currentStep;
-  std::vector< SeqStep > steps;
+  std::vector< std::shared_ptr<SeqStep> > steps;
 };
 
 struct SeqStep
