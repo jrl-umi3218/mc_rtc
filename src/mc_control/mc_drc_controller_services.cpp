@@ -109,4 +109,16 @@ bool MCDRCGlobalController::move_com(const Eigen::Vector3d & v)
   }
 }
 
+bool MCDRCGlobalController::play_next_stance()
+{
+  if(current_ctrl == SEQ)
+  {
+    return seq_controller.play_next_stance();
+  }
+  else
+  {
+    return false;
+  }
+}
+
 }

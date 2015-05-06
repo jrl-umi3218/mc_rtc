@@ -114,4 +114,9 @@ CORBA::Boolean MCControlServiceSVC_impl::move_com(CORBA::Double x, CORBA::Double
   return m_plugin->controller.move_com(Eigen::Vector3d(x, y, z));
 }
 
+CORBA::Boolean MCControlServiceSVC_impl::play_next_stance()
+{
+  return m_plugin->controller.play_next_stance();
+}
+
 }

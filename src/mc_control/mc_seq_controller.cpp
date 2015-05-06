@@ -277,8 +277,7 @@ bool MCSeqController::run()
         if(stanceIndex != stanceIndexIn)
         {
           std::cout << "Completed " << actions[stanceIndexIn]->toStr() << std::endl;
-          /*FIXME Should pause here, waiting for the service call */
-          // paused = true;
+          paused = true;
         }
       }
       post_live();

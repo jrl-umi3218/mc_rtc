@@ -134,6 +134,7 @@ _CORBA_MODULE_BEG
     ::CORBA::Boolean translate_ef(::CORBA::Double x, ::CORBA::Double y, ::CORBA::Double z);
     ::CORBA::Boolean rotate_ef(::CORBA::Double r, ::CORBA::Double p, ::CORBA::Double y);
     ::CORBA::Boolean move_com(::CORBA::Double x, ::CORBA::Double y, ::CORBA::Double z);
+    ::CORBA::Boolean play_next_stance();
 
     inline _objref_MCControlService()  { _PR_setobj(0); }  // nil
     _objref_MCControlService(omniIOR*, omniIdentity*);
@@ -182,6 +183,7 @@ _CORBA_MODULE_BEG
     virtual ::CORBA::Boolean translate_ef(::CORBA::Double x, ::CORBA::Double y, ::CORBA::Double z) = 0;
     virtual ::CORBA::Boolean rotate_ef(::CORBA::Double r, ::CORBA::Double p, ::CORBA::Double y) = 0;
     virtual ::CORBA::Boolean move_com(::CORBA::Double x, ::CORBA::Double y, ::CORBA::Double z) = 0;
+    virtual ::CORBA::Boolean play_next_stance() = 0;
     
   public:  // Really protected, workaround for xlC
     virtual _CORBA_Boolean _dispatch(omniCallHandle&);

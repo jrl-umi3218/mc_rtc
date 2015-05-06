@@ -706,6 +706,27 @@ _0RL_lcfn_893794e416423500_31000000(omniCallDescriptor* cd, omniServant* svnt)
 
 
 }
+// Local call call-back function.
+static void
+_0RL_lcfn_893794e416423500_41000000(omniCallDescriptor* cd, omniServant* svnt)
+{
+  _0RL_cd_893794e416423500_00000000* tcd = (_0RL_cd_893794e416423500_00000000*)cd;
+  OpenHRP::_impl_MCControlService* impl = (OpenHRP::_impl_MCControlService*) svnt->_ptrToInterface(OpenHRP::MCControlService::_PD_repoId);
+  tcd->result = impl->play_next_stance();
+
+
+}
+
+::CORBA::Boolean OpenHRP::_objref_MCControlService::play_next_stance()
+{
+  _0RL_cd_893794e416423500_00000000 _call_desc(_0RL_lcfn_893794e416423500_41000000, "play_next_stance", 17);
+
+
+  _invoke(_call_desc);
+  return _call_desc.result;
+
+
+}
 OpenHRP::_pof_MCControlService::~_pof_MCControlService() {}
 
 
@@ -850,6 +871,14 @@ OpenHRP::_impl_MCControlService::_dispatch(omniCallHandle& _handle)
   if( omni::strMatch(op, "move_com") ) {
 
     _0RL_cd_893794e416423500_01000000 _call_desc(_0RL_lcfn_893794e416423500_31000000, "move_com", 9, 1);
+    
+    _handle.upcall(this,_call_desc);
+    return 1;
+  }
+
+  if( omni::strMatch(op, "play_next_stance") ) {
+
+    _0RL_cd_893794e416423500_00000000 _call_desc(_0RL_lcfn_893794e416423500_41000000, "play_next_stance", 17, 1);
     
     _handle.upcall(this,_call_desc);
     return 1;

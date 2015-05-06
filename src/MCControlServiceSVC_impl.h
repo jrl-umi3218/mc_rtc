@@ -42,6 +42,8 @@ namespace OpenHRP
       virtual CORBA::Boolean rotate_ef(CORBA::Double r, CORBA::Double p, CORBA::Double y);
       /* CoM services */
       virtual CORBA::Boolean move_com(CORBA::Double x, CORBA::Double y, CORBA::Double z);
+      /* Seq controller */
+      virtual CORBA::Boolean play_next_stance();
     private:
       MCControl * m_plugin;
   };

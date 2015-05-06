@@ -53,6 +53,9 @@ public:
 
   /* Control the CoM if provided by the current controller */
   bool move_com(const Eigen::Vector3d & v);
+
+  /* Start playing the next stance if in seq controller */
+  bool play_next_stance();
 public:
   bool running;
 private:

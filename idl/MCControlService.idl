@@ -35,6 +35,8 @@ module OpenHRP
     boolean rotate_ef(in double r, in double p, in double y);
 
     boolean move_com(in double x, in double y, in double z);
+
+    boolean play_next_stance();
   };
 
 };
