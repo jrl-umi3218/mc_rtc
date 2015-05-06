@@ -9,7 +9,8 @@ percentWaypoint(double x, double y, double z, double nOff)
   return [x, y, z, nOff](const sva::PTransformd & start, const sva::PTransformd & end, const Eigen::Vector3d & N)
   {
     Eigen::Vector3d dist = end.translation() - start.translation();
-    return start.translation() + Eigen::Vector3d(dist.x()*x, dist.y()*y, dist.z()*z) + N*nOff;
+    Eigen::Vector3d ret = start.translation() + Eigen::Vector3d(dist.x()*x, dist.y()*y, dist.z()*z) + N*nOff;
+    return ret;
   };
 }
 
