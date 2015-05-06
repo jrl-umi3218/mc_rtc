@@ -58,10 +58,12 @@ MCControl::MCControl(RTC::Manager* manager)
 
     // </rtc-template>
 {
+  m_wrenchesIn.resize(0);
+  m_wrenchesInIn.resize(0);
   for(size_t i = 0; i < m_wrenchesNames.size(); ++i)
   {
-    m_wrenchesIn.push_back(TimedDoubleSeq());
-    m_wrenchesInIn.push_back(new InPort<TimedDoubleSeq>(m_wrenchesNames[i].c_str(), m_wrenchesIn[i]));
+    m_wrenchesIn.push_back(new TimedDoubleSeq());
+    m_wrenchesInIn.push_back(new InPort<TimedDoubleSeq>(m_wrenchesNames[i].c_str(), *(m_wrenchesIn[i])));
     m_wrenches.push_back(std::pair<Eigen::Vector3d, Eigen::Vector3d>(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0)));
   }
 }
@@ -80,6 +82,10 @@ RTC::ReturnCode_t MCControl::onInitialize()
   addInPort("qIn", m_qInIn);
   addInPort("pIn", m_pInIn);
   addInPort("rpyIn", m_rpyInIn);
+  for(size_t i = 0; i < m_wrenchesNames.size(); ++i)
+  {
+    addInPort(m_wrenchesNames[i].c_str(), *(m_wrenchesInIn[i]));
+  }
 
   // Set OutPort buffer
   addOutPort("qOut", m_qOutOut);
@@ -125,8 +131,11 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
     if(m_wrenchesInIn[i]->isNew())
     {
       m_wrenchesInIn[i]->read();
-      m_wrenches[i].first = Eigen::Vector3d(m_wrenchesIn[i].data[0], m_wrenchesIn[i].data[1], m_wrenchesIn[i].data[2]);
-      m_wrenches[i].second = Eigen::Vector3d(m_wrenchesIn[i].data[3], m_wrenchesIn[i].data[4], m_wrenchesIn[i].data[5]);
+      if(m_wrenchesIn[i]->data.length() == 6)
+      {
+        m_wrenches[i].first = Eigen::Vector3d(m_wrenchesIn[i]->data[0], m_wrenchesIn[i]->data[1], m_wrenchesIn[i]->data[2]);
+        m_wrenches[i].second = Eigen::Vector3d(m_wrenchesIn[i]->data[3], m_wrenchesIn[i]->data[4], m_wrenchesIn[i]->data[5]);
+      }
     }
   }
   if(m_qInIn.isNew())
