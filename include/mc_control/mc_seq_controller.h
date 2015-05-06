@@ -162,10 +162,20 @@ struct SeqStep;
 struct SeqAction
 {
 public:
+  enum SeqActionType
+  {
+    CoMMove = 1,
+    ContactMove = 2,
+    GripperMove = 3
+  };
+public:
   SeqAction();
 
   virtual bool execute(MCSeqController & controller);
+
+  SeqActionType type() const;
 public:
+  SeqActionType _type;
   unsigned int currentStep;
   std::vector< SeqStep > steps;
 };

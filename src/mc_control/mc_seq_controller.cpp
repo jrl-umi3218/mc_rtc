@@ -74,11 +74,148 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
   /* Load plan */
   loadStances(seq_path, stances, actions);
   assert(stances.size() == actions.size());
-  /*FIXME Load configs from a file */
-  configs.resize(stances.size());
   for(size_t i = 0; i < stances.size(); ++i)
   {
     seq_actions.push_back(seqActionFromStanceAction(stances[i], *(actions[i].get())));
+  }
+  /*FIXME Hard-coded for stairs climbing */
+  /*FIXME Load configs from a file */
+  //configs.resize(stances.size());
+  for(size_t i = 0; i < seq_actions.size(); ++i)
+  {
+    mc_rbdyn::StanceConfig sc;
+
+    if(seq_actions[i]->type() == SeqAction::CoMMove)
+    {
+      sc.postureTask.stiffness = 0.5;
+      sc.postureTask.weight = 10.0;
+      sc.comTask.stiffness = 15.0;
+      sc.comTask.extraStiffness = 19.0;
+      sc.comTask.weight = 200.0;
+      sc.comTask.targetSpeed = 0.001;
+      sc.comObj.posThresh = 0.1,
+      sc.comObj.velThresh = 0.000099;
+      sc.comObj.comOffset = Eigen::Vector3d(0,0,0);
+    }
+    if(seq_actions[i]->type() == SeqAction::ContactMove)
+    {
+      sc.postureTask.stiffness = 2.0;
+      sc.postureTask.weight = 10.0;
+      sc.comTask.stiffness = 5.0;
+      sc.comTask.extraStiffness = 0.0;
+      sc.comTask.weight = 500.0;
+      sc.comTask.targetSpeed = 0.003;
+      sc.comObj.comOffset = Eigen::Vector3d(0,0,0);
+      sc.contactObj.posThresh = 0.03;
+      sc.contactObj.velThresh = 0.005;
+      sc.contactObj.preContactDist = 0.02;
+      sc.contactTask.position.stiffness = 5.0;
+      sc.contactTask.position.extraStiffness = 12.0;
+      sc.contactTask.position.weight = 300.0;
+      sc.contactTask.position.targetSpeed = 0.001;
+      sc.contactTask.orientation.stiffness = 15.0;
+      sc.contactTask.orientation.weight = 1.0;
+      sc.contactTask.orientation.finalWeight = 1000.0;
+      sc.contactTask.linVel.stiffness = 10.0;
+      sc.contactTask.linVel.weight = 10000.0;
+      sc.contactTask.linVel.speed = 0.05;
+      sc.contactTask.waypointConf.thresh = 0.15;
+      sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(0.15, 1, 1.1, 0.2);
+      sc.contactTask.collisionConf.iDist = 0.01;
+      sc.contactTask.collisionConf.sDist = 0.005;
+      sc.contactTask.collisionConf.damping = 0.05;
+    }
+    if(seq_actions[i]->type() == SeqAction::GripperMove)
+    {
+      sc.postureTask.stiffness = 0.1;
+      sc.postureTask.weight = 10.0;
+      sc.comTask.stiffness = 20.0;
+      sc.comTask.extraStiffness = 0.0;
+      sc.comTask.weight = 500.0;
+      sc.comTask.targetSpeed = 0.0005;
+      sc.contactObj.posThresh = 0.03;
+      sc.contactObj.velThresh = 0.05;
+      sc.contactObj.adjustPosThresh = 0.05;
+      sc.contactObj.adjustVelThresh = 0.02;
+      sc.contactObj.adjustOriThresh = 0.1;
+      sc.contactObj.adjustOriTBNWeight = Eigen::Vector3d(1,1,1);
+      sc.contactObj.preContactDist = 0.1;
+      sc.contactTask.position.stiffness = 0.1;
+      sc.contactTask.position.extraStiffness = 15.0;
+      sc.contactTask.position.weight = 600.0;
+      sc.contactTask.position.targetSpeed = 0.0005;
+      sc.contactTask.orientation.stiffness = 15.0;
+      sc.contactTask.orientation.weight = 1.0;
+      sc.contactTask.orientation.finalWeight = 1000.0;
+      sc.contactTask.linVel.stiffness = 15.0;
+      sc.contactTask.linVel.weight = 10000.0;
+      sc.contactTask.linVel.speed = 0.05;
+      sc.contactTask.waypointConf.thresh = 0.1;
+      sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(0.1, 1.0, 0.5, 0.2);
+      sc.contactTask.collisionConf.iDist = 0.01;
+      sc.contactTask.collisionConf.sDist = 0.005;
+      sc.contactTask.collisionConf.damping = 0.05;
+    }
+
+    /* Still general configuration */
+    sc.collisions.autoc.push_back({"RARM_LINK6", "RLEG_LINK2", {0.1, 0.05, 0.0}});
+    sc.collisions.autoc.push_back({"RARM_LINK6", "RLEG_LINK3", {0.1, 0.05, 0.0}});
+    sc.collisions.robotEnv.push_back({"RARM_LINK6", "stair_step2", {0.2, 0.1, 0.0}});
+    sc.collisions.robotEnv.push_back({"RARM_LINK6", "stair_step3", {0.2, 0.1, 0.0}});
+    sc.collisions.robotEnv.push_back({"RARM_LINK6", "platform", {0.2, 0.1, 0.0}});
+
+    /* Per-stance configuration */
+    mc_rbdyn::AddContactAction* addA = dynamic_cast<mc_rbdyn::AddContactAction*>(actions[i].get());
+    mc_rbdyn::RemoveContactAction* rmA = dynamic_cast<mc_rbdyn::RemoveContactAction*>(actions[i].get());
+    if(addA)
+    {
+      if(addA->contact.robotSurface->name == "RFrontSole" &&
+         addA->contact.envSurface->name == "StairStep2")
+      {
+        sc.collisions.autoc.push_back({"RLEG_LINK2", "BODY", {0.4, 0.03, 0.0}});
+      }
+      if(addA->contact.robotSurface->name == "RFrontSole" &&
+         addA->contact.envSurface->name == "StairStep3")
+      {
+        sc.collisions.autoc.push_back({"RLEG_LINK2", "BODY", {0.4, 0.03, 0.0}});
+      }
+      if(addA->contact.robotSurface->name == "LeftGripper" &&
+         addA->contact.envSurface->name == "StairLeftRung2")
+      {
+        sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(1.0, 1.0, 1.0, 0.0);
+      }
+      if(addA->contact.robotSurface->name == "LFullSole" &&
+         addA->contact.envSurface->name == "Platform")
+      {
+        sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(0.0, 1.0, 1.2, 0.2);
+      }
+      if(addA->contact.robotSurface->name == "RFullSole" &&
+         addA->contact.envSurface->name == "Platform")
+      {
+        sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(0.0, 1.0, 1.2, 0.2);
+      }
+      if(addA->contact.robotSurface->name == "RightGripper" &&
+         addA->contact.envSurface->name == "PlatformLeftRampS")
+      {
+        sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(1.0, 1.0, 1.0, 0.2);
+      }
+    }
+
+    if(i == seq_actions.size() - 2)
+    {
+      sc.collisions.robotEnv.push_back({"LARM_LINK6", "stair_left_railing_big_hull", {0.3, 0.02, 0.0}});
+      sc.collisions.robotEnv.push_back({"LARM_LINK6", "stair_left_railing", {0.3, 0.02, 0.0}});
+      sc.postureTask.stiffness = 1;
+    }
+    if(i == seq_actions.size() - 1)
+    {
+      sc.collisions.robotEnv.push_back({"LARM_LINK6", "stair_left_railing_big_hull", {0.2, 0.01, 0.0}});
+      sc.collisions.robotEnv.push_back({"LARM_LINK6", "stair_left_railing", {0.2, 0.01, 0.0}});
+      sc.collisions.robotEnv.push_back({"LARM_LINK5", "stair_left_rung2", {0.2, 0.03, 0.0}});
+      sc.postureTask.stiffness = 1;
+    }
+
+    configs.push_back(sc);
   }
 
   /* Setup contact sensor */
@@ -401,6 +538,11 @@ bool SeqAction::execute(MCSeqController & controller)
     }
   }
   return false;
+}
+
+SeqAction::SeqActionType SeqAction::type() const
+{
+  return _type;
 }
 
 bool SeqStep::eval(MCSeqController & controller)
