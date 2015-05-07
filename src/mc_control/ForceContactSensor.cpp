@@ -4,7 +4,7 @@ namespace mc_control
 {
 
 Threshold::Threshold()
-: Threshold(20, 4)
+: Threshold(5, 4)
 {
 }
 

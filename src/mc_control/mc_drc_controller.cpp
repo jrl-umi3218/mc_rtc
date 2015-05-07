@@ -12,7 +12,7 @@ namespace mc_control
 /* FIXME Seq loading is hardcoded for now... */
 MCDRCGlobalController::MCDRCGlobalController()
 : posture_controller(), body6d_controller(), com_controller(),
-  seq_controller("/home/gergondet/catkin_ws/src/hrp2_drc/hrp2_drc_description/", "drc_stairs2", "/home/gergondet/devel-src/mcp/mc_rtc/mc_rtc_core/build_clang/drc_stairs_climbing.json"),
+  seq_controller("/home/hrp2user/jrl/hrp2_drc/hrp2_drc_description/", "drc_stairs2", "/home/hrp2user/jrl/mc_rtc/build/drc_stairs_climbing.json"),
   //current_ctrl(POSTURE), next_ctrl(POSTURE),
   //controller(&posture_controller),
   //current_ctrl(BODY6D), next_ctrl(BODY6D),
@@ -90,6 +90,7 @@ bool MCDRCGlobalController::run()
   if(running)
   {
     bool r = controller->run();
+    if(!r) { running = false; }
     return r;
   }
   else

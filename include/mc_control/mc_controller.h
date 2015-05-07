@@ -29,7 +29,7 @@ struct MCController
 {
   friend struct MCDRCGlobalController;
 public:
-  MCController(const std::string & env_path = "/home/gergondet/devel-src/mcp/mcp_ws/src/mc_ros/mc_env_description", const std::string & env_name = "ground");
+  MCController(const std::string & env_path = "/home/hrp2user/jrl/mc_env_description", const std::string & env_name = "ground");
 
   virtual bool run();
 

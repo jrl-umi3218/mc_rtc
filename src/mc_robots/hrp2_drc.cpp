@@ -6,7 +6,7 @@ namespace mc_robots
 {
 
 //FIXME This path should be passed as a parameters
-const std::string HRP2DRCCommonRobotModule::path = "/home/gergondet/catkin_ws/src/hrp2_drc/hrp2_drc_description";
+const std::string HRP2DRCCommonRobotModule::path = "/home/hrp2user/jrl/hrp2_drc/hrp2_drc_description/";
 
 HRP2DRCCommonRobotModule::HRP2DRCCommonRobotModule()
 {

@@ -39,6 +39,8 @@ CollisionPair::CollisionPair(const mc_rbdyn::Robot & r1, const mc_rbdyn::Robot &
   X_b2_h2 = r2.collisionTransforms.at(hull2.first);
   r2hull = hull2.second;
   pair.reset(new sch::CD_Pair(r1hull.get(), r2hull.get()));
+  pair->setEpsilon(std::numeric_limits<double>::epsilon());
+  pair->setRelativePrecision(1e-6);
 }
 
 double CollisionPair::distance(const mc_rbdyn::Robot & r1, const mc_rbdyn::Robot & r2)
@@ -56,7 +58,6 @@ void CollisionPair::setTransform(const mc_rbdyn::Robot & r1, const mc_rbdyn::Rob
 std::vector<mc_solver::Collision> confToColl(const std::vector<mc_rbdyn::StanceConfig::BodiesCollisionConf> & conf)
 {
   std::vector<mc_solver::Collision> res;
-
   for(const auto & bcc : conf)
   {
     res.push_back(mc_solver::Collision(bcc.body1, bcc.body2,
@@ -71,7 +72,7 @@ std::vector<mc_solver::Collision> confToColl(const std::vector<mc_rbdyn::StanceC
 MCSeqController::MCSeqController(const std::string & env_path, const std::string & env_name, const std::string & seq_path)
 : MCController(env_path, env_name), paused(false), halted(false), stanceIndex(0), seq_actions(0),
   currentContact(0), targetContact(0), currentGripper(0),
-  use_real_sensors(true),
+  use_real_sensors(false),
   collsConstraint(robots(), timeStep)
 {
   /* Load plan */
@@ -165,9 +166,9 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
     /* Still general configuration */
     sc.collisions.autoc.push_back({"RARM_LINK6", "RLEG_LINK2", {0.1, 0.05, 0.0}});
     sc.collisions.autoc.push_back({"RARM_LINK6", "RLEG_LINK3", {0.1, 0.05, 0.0}});
-    sc.collisions.robotEnv.push_back({"RARM_LINK6", "stair_step2", {0.2, 0.1, 0.0}});
-    sc.collisions.robotEnv.push_back({"RARM_LINK6", "stair_step3", {0.2, 0.1, 0.0}});
-    sc.collisions.robotEnv.push_back({"RARM_LINK6", "platform", {0.2, 0.1, 0.0}});
+    //sc.collisions.robotEnv.push_back({"RARM_LINK6", "stair_step2", {0.2, 0.1, 0.0}});
+    //sc.collisions.robotEnv.push_back({"RARM_LINK6", "stair_step3", {0.2, 0.1, 0.0}});
+    //sc.collisions.robotEnv.push_back({"RARM_LINK6", "platform", {0.2, 0.1, 0.0}});
 
     /* Per-stance configuration */
     mc_rbdyn::AddContactAction* addA = dynamic_cast<mc_rbdyn::AddContactAction*>(actions[i].get());

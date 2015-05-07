@@ -222,11 +222,12 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
       controller.run();
     }
     coil::TimeValue coiltmout(coil::gettimeofday());
-    if((coiltmout.sec() - coiltm.sec())*1e6 + coiltmout.usec() - coiltm.usec() > max_t)
+    unsigned int loop_t = (coiltmout.sec() - coiltm.sec())*1e6 + coiltmout.usec() - coiltm.usec();
+    if(loop_t > max_t)
     {
-      max_t = (coiltmout.sec() - coiltm.sec())*1e6 + coiltmout.usec() - coiltm.usec();
+      max_t = loop_t;
     }
-    //std::cout << "\rMax time spent in controller: " << max_t << " ms" << std::flush;
+    std::cout << "\rTime spent in controller: " << loop_t << " us" << std::flush;
   }
   return RTC::RTC_OK;
 }

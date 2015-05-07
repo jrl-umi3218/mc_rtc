@@ -12,7 +12,7 @@ AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots, std::share
   robotBodyId(robot.bodyIdByName(robotSurf->bodyName)),
   targetTf(contact.X_0_rs(env)),
   bodyId(robot.bodyIdByName(robotSurf->bodyName)),
-  dofMat(Eigen::MatrixXd::Zero(5,6)), speedMat(Eigen::MatrixXd::Zero(6, 1))
+  dofMat(Eigen::MatrixXd::Zero(5,6)), speedMat(Eigen::VectorXd::Zero(5))
 {
   for(size_t i = 0; i < 5; ++i)
   {

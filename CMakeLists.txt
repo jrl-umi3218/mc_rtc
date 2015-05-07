@@ -4,12 +4,13 @@ cmake_minimum_required(VERSION 2.8)
 
 project(mc_rtc_core)
 
-add_definitions(-std=c++11)
+add_definitions(-std=c++0x)
+add_definitions(-mfpmath=sse -msse2)
 #add_definitions(-pedantic -Wno-long-long -Wall -Wextra -Wcast-align -Wcast-qual -Wformat -Wwrite-strings)
 #add_definitions(-Wno-sign-conversion -Wno-shorten-64-to-32)
 #add_definitions(-Werror)
 
-include_directories(/usr/include/openrtm-1.1 /usr/include/openrtm-1.1/rtm/idl /usr/include/coil-1.1 /usr/include/eigen3)
+include_directories(/usr/local/include/openrtm-1.1 /usr/local/include/openrtm-1.1/rtm/idl /usr/local/include/coil-1.1 /usr/local/include/eigen3)
 
 include_directories(include)
 
@@ -95,4 +96,4 @@ install(TARGETS MCControl MCControlComp mc_rbdyn mc_rbdyn_urdf mc_control_solver
   ARCHIVE DESTINATION lib)
 
 install(FILES python/MCControlService_idl.py DESTINATION lib/python2.7/dist-packages/hrpsys)
-install(FILES python/mc_rtc_interface.py DESTINATION bin PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+#install(FILES python/mc_rtc_interface.py DESTINATION bin PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)

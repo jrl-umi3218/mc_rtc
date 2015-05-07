@@ -795,7 +795,7 @@ bool enter_closeGripperP::eval(MCSeqController & ctl)
   unsigned int bodyId = ctl.robot().bodyIdByName(robotSurf->bodyName);
   Eigen::MatrixXd dofMat = Eigen::MatrixXd::Zero(6,6);
   for(size_t i = 0; i < 6; ++i) { dofMat(i,i) = 1; }
-  Eigen::VectorXd speedMat = Eigen::VectorXd::Zero(6,1);
+  Eigen::VectorXd speedMat = Eigen::VectorXd::Zero(6);
   ctl.constSpeedConstr->addBoundedSpeed(ctl.robots().mbs, bodyId, robotSurf->X_b_s().translation(), dofMat, speedMat);
   ctl.qpsolver->solver.updateConstrsNrVars(ctl.robots().mbs);
   ctl.qpsolver->solver.updateConstrSize();

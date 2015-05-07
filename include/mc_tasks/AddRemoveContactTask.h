@@ -43,7 +43,7 @@ public:
 
   unsigned int bodyId;
   Eigen::MatrixXd dofMat;
-  Eigen::MatrixXd speedMat;
+  Eigen::VectorXd speedMat;
   Eigen::Vector3d normal;
 
   double speed;
