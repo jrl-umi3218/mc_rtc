@@ -43,7 +43,7 @@ ContactConstraint::ContactConstraint(double timeStep, ContactType contactType, b
 }
 
 KinematicsConstraint::KinematicsConstraint(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double timeStep, bool isStatic,
-                                           std::vector<double> damper, double velocityPercent)
+                                           const std::vector<double> & damper, double velocityPercent)
 : damped(damper.size() >= 3)
 {
   const mc_rbdyn::Robot & robot = robots.robots[robotIndex];
@@ -93,7 +93,7 @@ KinematicsConstraint::KinematicsConstraint(const mc_rbdyn::Robots & robots, unsi
 }
 
 DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double timeStep, bool isStatic,
-                                       std::vector<double> damper, double velocityPercent, bool infTorque)
+                                       const std::vector<double> & damper, double velocityPercent, bool infTorque)
 : KinematicsConstraint(robots, robotIndex, timeStep, isStatic, damper, velocityPercent),
   is_spring(false), is_poly(false)
 {

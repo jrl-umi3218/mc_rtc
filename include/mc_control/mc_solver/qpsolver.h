@@ -67,7 +67,7 @@ struct KinematicsConstraint : public ConstraintSet
 {
 public:
   KinematicsConstraint(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double timeStep, bool isStatic = false,
-                       std::vector<double> damper = {}, double velocityPercent = 1.0);
+                       const std::vector<double> & damper = {}, double velocityPercent = 1.0);
 public:
   /* This one actually holds a tasks::qp::JointLimitsConstr or a tasks::qp::DamperJointLimitsConstr */
   std::shared_ptr<tasks::qp::Constraint> jointLimitsConstr;
@@ -80,7 +80,7 @@ struct DynamicsConstraint : public KinematicsConstraint
 {
 public:
   DynamicsConstraint(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double timeStep, bool isStatic = false,
-                     std::vector<double> damper = {}, double velocityPercent = 1.0, bool infTorque = false);
+                     const std::vector<double> & damper = {}, double velocityPercent = 1.0, bool infTorque = false);
 public:
   /* This one actually holds a tasks::qp::MotionSpringConstr, a tasks::qp::MotionPolyConstr or a tasks::qp::MotionConstr */
   std::shared_ptr<tasks::qp::Constraint> motionConstr;
