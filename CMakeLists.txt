@@ -10,7 +10,15 @@ add_definitions(-mfpmath=sse -msse2)
 #add_definitions(-Wno-sign-conversion -Wno-shorten-64-to-32)
 #add_definitions(-Werror)
 
-include_directories(/usr/local/include/openrtm-1.1 /usr/local/include/openrtm-1.1/rtm/idl /usr/local/include/coil-1.1 /usr/local/include/eigen3)
+find_package(PkgConfig)
+
+pkg_check_modules(OPENRTM REQUIRED openrtm-aist)
+include_directories(${OPENRTM_INCLUDE_DIRS})
+add_definitions(${OPENRTM_CFLAGS})
+link_directories(${OPENRTM_LIBRARY_DIRS})
+
+pkg_check_modules(EIGEN3 REQUIRED eigen3)
+include_directories(${EIGEN3_INCLUDE_DIRS})
 
 include_directories(include)
 
@@ -82,7 +90,7 @@ set(MCControl_SRC
 )
 add_library(MCControl SHARED ${MCControl_SRC})
 set_target_properties(MCControl PROPERTIES PREFIX "")
-target_link_libraries(MCControl RTC coil omniORB4 omnithread omniDynamic4 mc_rbdyn mc_rbdyn_urdf mc_drc_controller)
+target_link_libraries(MCControl ${OPENRTM_LIBRARIES} mc_rbdyn mc_rbdyn_urdf mc_drc_controller)
 
 add_executable(MCControlComp ./src/MCControlComp.cpp)
 target_link_libraries(MCControlComp MCControl)
