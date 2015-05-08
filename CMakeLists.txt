@@ -2,6 +2,8 @@
 
 cmake_minimum_required(VERSION 2.8)
 
+include(idl.cmake)
+
 project(mc_rtc_core)
 
 add_definitions(-std=c++0x)
@@ -21,6 +23,9 @@ pkg_check_modules(EIGEN3 REQUIRED eigen3)
 include_directories(${EIGEN3_INCLUDE_DIRS})
 
 include_directories(include)
+
+OMNIIDL_INCLUDE_DIRECTORIES("idl")
+add_subdirectory(idl)
 
 set(mc_rbdyn_urdf_SRC
 ./src/mc_rbdyn_urdf/urdf.cpp
@@ -87,8 +92,16 @@ target_link_libraries(mc_drc_controller mc_tasks mc_control_solver mc_robots)
 set(MCControl_SRC
 ./src/MCControlServiceSVC_impl.cpp
 ./src/MCControl.cpp
+${CMAKE_BINARY_DIR}/idl/MCControlServiceSK.cc
 )
+
+set_source_files_properties(${CMAKE_BINARY_DIR}/idl/MCControlServiceSK.cc
+                            PROPERTIES GENERATED 1)
+
+include_directories(${CMAKE_BINARY_DIR}/idl)
+
 add_library(MCControl SHARED ${MCControl_SRC})
+add_dependencies(MCControl generate_mc_idl_cpp)
 set_target_properties(MCControl PROPERTIES PREFIX "")
 target_link_libraries(MCControl ${OPENRTM_LIBRARIES} mc_rbdyn mc_rbdyn_urdf mc_drc_controller)
 

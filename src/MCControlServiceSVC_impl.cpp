@@ -7,7 +7,6 @@
 #ifdef __clang__
 #pragma GCC diagnostic ignored "-Wshorten-64-to-32"
 #endif
-#include "MCControlServiceSK.cc"
 #pragma GCC diagnostic pop
 
 #include <iostream>
