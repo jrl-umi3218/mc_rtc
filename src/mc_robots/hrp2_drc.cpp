@@ -5,10 +5,8 @@
 namespace mc_robots
 {
 
-//FIXME This path should be passed as a parameters
-const std::string HRP2DRCCommonRobotModule::path = "/home/hrp2user/jrl/hrp2_drc/hrp2_drc_description/";
-
 HRP2DRCCommonRobotModule::HRP2DRCCommonRobotModule()
+: RobotModule("/home/hrp2user/jrl/hrp2_drc/hrp2_drc_description/", "hrp2_drc")
 {
   virtualLinks.push_back("base_link");
   virtualLinks.push_back("Accelerometer");

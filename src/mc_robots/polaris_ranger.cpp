@@ -5,10 +5,8 @@
 namespace mc_robots
 {
 
-//FIXME This path should be passed as a parameters
-const std::string PolarisRangerRobotModule::path = "/home/hrp2user/jrl/hrp2_drc/hrp2_drc_description/";
-
 PolarisRangerRobotModule::PolarisRangerRobotModule()
+: RobotModule("/home/hrp2user/jrl/hrp2_drc/hrp2_drc_description/", "polaris_ranger")
 {
   halfSitting["steering_joint"] = {0};
 }

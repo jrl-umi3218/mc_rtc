@@ -10,9 +10,6 @@ namespace mc_robots
 struct HRP2DRCCommonRobotModule : public mc_rbdyn::RobotModule
 {
 public:
-  //FIXME This path should be passed as a parameters
-  static const std::string path;
-public:
   HRP2DRCCommonRobotModule();
 protected:
   std::map<std::string, std::pair<std::string, std::string> > getConvexHull(const std::map<std::string, std::pair<std::string, std::string>> & files) const;

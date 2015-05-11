@@ -9,7 +9,7 @@ namespace mc_robots
 {
 
 EnvRobotModule::EnvRobotModule(const std::string & env_path, const std::string & env_name)
-: path(env_path), name(env_name)
+: RobotModule(env_path, env_name)
 {
   std::string urdfPath = path + "/urdf/" + name + ".urdf";
   std::ifstream ifs(urdfPath);

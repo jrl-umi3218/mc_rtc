@@ -10,8 +10,6 @@ namespace mc_robots
 struct PolarisRangerRobotModule : public mc_rbdyn::RobotModule
 {
 public:
-  //FIXME This path should be passed as a parameters
-  static const std::string path;
 public:
   PolarisRangerRobotModule();
 protected:

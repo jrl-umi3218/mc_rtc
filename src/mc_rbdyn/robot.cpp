@@ -445,12 +445,12 @@ void loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir,
   env = loadRobot(envModule, envSurfaceDir);
 }
 
-Robots loadRobots(const std::vector<RobotModule> & modules, const std::vector<std::string> & surfaceDirs)
+Robots loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules, const std::vector<std::string> & surfaceDirs)
 {
   std::vector<Robot> res;
   for(size_t i = 0; i < modules.size(); ++i)
   {
-    res.push_back(loadRobot(modules[i], surfaceDirs[i]));
+    res.push_back(loadRobot(*(modules[i]), surfaceDirs[i]));
   }
   return Robots(res);
 }

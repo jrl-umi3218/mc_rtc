@@ -10,9 +10,6 @@ namespace mc_robots
 struct EnvRobotModule : public mc_rbdyn::RobotModule
 {
 public:
-  const std::string path;
-  const std::string name;
-public:
   EnvRobotModule(const std::string & env_path, const std::string & env_name);
 
   virtual const std::map<std::string, std::pair<std::string, std::string> > & convexHull() const;

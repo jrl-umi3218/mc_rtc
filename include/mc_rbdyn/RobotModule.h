@@ -16,6 +16,7 @@ struct Robot;
 /* TODO Functions are declared const here but most implementations will likely not respect the constness */
 struct RobotModule
 {
+  RobotModule(const std::string & path, const std::string & name) : path(path), name(name) {}
   /* If implemented, returns limits in this order:
       - joint limits (lower/upper)
       - velocity limits (lower/upper)
@@ -45,6 +46,8 @@ struct RobotModule
 
   virtual const Springs & springs() const { return _springs; }
 
+  std::string path;
+  std::string name;
   rbd::MultiBody mb;
   rbd::MultiBodyConfig mbc;
   rbd::MultiBodyGraph mbg;

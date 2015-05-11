@@ -170,7 +170,6 @@ std::vector< std::map< int, std::vector<double> > > defaultBounds(const rbd::Mul
 template<typename sch_T>
 void applyTransformToSchById(const rbd::MultiBody & mb, const rbd::MultiBodyConfig & mbc, std::map<std::string, std::pair<unsigned int, sch_T> > & schById);
 
-////FIXME ATM we don't have any implementation of a RobotModule
 Robot loadRobot(const RobotModule & module, const std::string & surfaceDir, sva::PTransformd * base = 0, int bId = -1);
 
 /*FIXME Not implemetend for now, only used for ATLAS
@@ -181,7 +180,7 @@ void loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir,
 
 void loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir, sva::PTransformd * base, int bId, Robot & robot, Robot & env);
 
-Robots loadRobots(const std::vector<RobotModule> & modules, const std::vector<std::string> & surfaceDirs);
+Robots loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules, const std::vector<std::string> & surfaceDirs);
 
 Robot loadRobotFromUrdf(const std::string & urdf, bool withVirtualLinks = true, const std::vector<std::string> & filteredLinks = {}, bool fixed = false, sva::PTransformd * base = 0, int bId = -1);
 
