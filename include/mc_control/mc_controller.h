@@ -19,7 +19,6 @@ namespace mc_control
 /*FIXME Get some data as parameters (e.g. timeStep, path to default env...) */
 struct MCController : public MCVirtualController
 {
-  friend struct MCDRCGlobalController;
 public:
   MCController(const std::string & env_path = "/home/hrp2user/jrl/mc_env_description", const std::string & env_name = "ground");
 
