@@ -144,11 +144,6 @@ void MCDRCGlobalController::setGripperOpenPercent(double lQ, double rQ)
   controller->rgripper->setTargetOpening(rQ);
 }
 
-const mc_solver::QPSolver & MCDRCGlobalController::qpsolver() const
-{
-  return *(controller->qpsolver);
-}
-
 bool MCDRCGlobalController::EnablePostureController()
 {
   next_ctrl = POSTURE;

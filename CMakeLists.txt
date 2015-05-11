@@ -77,6 +77,7 @@ set(mc_drc_controller_SRC
 ./src/mc_control/ForceContactSensor.cpp
 ./src/mc_control/SimulationContactSensor.cpp
 ./src/mc_control/generic_gripper.cpp
+./src/mc_control/mc_virtual_controller.cpp
 ./src/mc_control/mc_controller.cpp
 ./src/mc_control/mc_posture_controller.cpp
 ./src/mc_control/mc_body6d_controller.cpp

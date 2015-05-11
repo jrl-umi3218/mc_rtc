@@ -1,6 +1,8 @@
 #ifndef _H_MCCONTROLLER_H_
 #define _H_MCCONTROLLER_H_
 
+#include <mc_control/mc_virtual_controller.h>
+
 #include <mc_rbdyn/robot.h>
 #include <mc_control/mc_solver/qpsolver.h>
 #include <mc_control/generic_gripper.h>
@@ -14,45 +16,34 @@
 namespace mc_control
 {
 
-/* This structure will be filled in time with the necessary information */
-/* Coming most likely from the previous controller */
-struct ControllerResetData
-{
-  const std::vector< std::vector<double> > & q;
-  const std::vector<mc_rbdyn::Contact> & contacts;
-};
-
-struct MCDRCGlobalController;
-
 /*FIXME Get some data as parameters (e.g. timeStep, path to default env...) */
-struct MCController
+struct MCController : public MCVirtualController
 {
   friend struct MCDRCGlobalController;
 public:
   MCController(const std::string & env_path = "/home/hrp2user/jrl/mc_env_description", const std::string & env_name = "ground");
 
-  virtual bool run();
+  virtual bool run() override;
 
-  virtual const mc_control::QPResultMsg & send(const double & t);
+  virtual const mc_control::QPResultMsg & send(const double & t) override;
 
-  virtual void reset(const ControllerResetData & reset_data);
+  virtual void reset(const ControllerResetData & reset_data) override;
 
-  virtual void setWrenches(const std::vector< std::pair<Eigen::Vector3d, Eigen::Vector3d> > & wrenches);
+  virtual void setWrenches(const std::vector< std::pair<Eigen::Vector3d, Eigen::Vector3d> > & wrenches) override;
   /* Helper function to access robots, robot and env */
-  const mc_rbdyn::Robot & robot() const;
+  virtual const mc_rbdyn::Robot & robot() const override;
 
-  const mc_rbdyn::Robot & env() const;
+  virtual const mc_rbdyn::Robot & env() const override;
 
-  const mc_rbdyn::Robots & robots() const;
+  virtual const mc_rbdyn::Robots & robots() const override;
 
-  mc_rbdyn::Robots & robots();
+  virtual mc_rbdyn::Robots & robots() override;
 
-  mc_rbdyn::Robot & robot();
+  virtual mc_rbdyn::Robot & robot() override;
 
-  mc_rbdyn::Robot & env();
+  virtual mc_rbdyn::Robot & env() override;
 public:
   /* Common stuff */
-  const double timeStep;
   std::vector< std::pair<Eigen::Vector3d, Eigen::Vector3d> > wrenches;
   mc_robots::HRP2DRCGripperRobotModule robot_module;
   mc_robots::EnvRobotModule env_module;
@@ -62,8 +53,6 @@ public:
   mc_solver::CollisionsConstraint selfCollisionConstraint;
   std::shared_ptr<tasks::qp::PostureTask> postureTask;
   std::shared_ptr<mc_solver::QPSolver> qpsolver;
-  std::shared_ptr<mc_control::Gripper> lgripper;
-  std::shared_ptr<mc_control::Gripper> rgripper;
 };
 
 }

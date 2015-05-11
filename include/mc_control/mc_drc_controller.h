@@ -24,7 +24,6 @@ public:
 
   const mc_control::QPResultMsg & send(const double & t);
 
-  const mc_solver::QPSolver & qpsolver() const;
   /* Called by the RT component to switch between controllers */
   bool EnablePostureController();
   bool EnableBody6dController();
@@ -72,8 +71,8 @@ private:
   };
   CurrentController current_ctrl;
   CurrentController next_ctrl;
-  MCController * controller;
-  MCController * next_controller;
+  MCVirtualController * controller;
+  MCVirtualController * next_controller;
 };
 
 }
