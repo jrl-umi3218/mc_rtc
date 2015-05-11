@@ -22,7 +22,7 @@ MCBody6dController::MCBody6dController()
 
   std::cout << "MCBody6dController init done" << std::endl;
   efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", qpsolver->robots, qpsolver->robots.robotIndex));
-  efTask->addToSolver(*qpsolver);
+  efTask->addToSolver(qpsolver->solver);
 }
 
 void MCBody6dController::reset(const ControllerResetData & reset_data)
@@ -46,10 +46,10 @@ bool MCBody6dController::change_ef(const std::string & ef_name)
 {
   if(robot().hasBody(ef_name))
   {
-    efTask->removeFromSolver(*qpsolver);
+    efTask->removeFromSolver(qpsolver->solver);
     postureTask->posture(robot().mbc->q);
     efTask.reset(new mc_tasks::EndEffectorTask(ef_name, qpsolver->robots, qpsolver->robots.robotIndex));
-    efTask->addToSolver(*qpsolver);
+    efTask->addToSolver(qpsolver->solver);
     return true;
   }
   else

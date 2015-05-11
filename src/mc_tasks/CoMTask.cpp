@@ -4,6 +4,7 @@ namespace mc_tasks
 {
 
 CoMTask::CoMTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex)
+: robots(robots)
 {
   const mc_rbdyn::Robot & robot = robots.robots[robotIndex];
 
@@ -22,16 +23,19 @@ void CoMTask::resetTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex
   comTask->com(cur_com);
 }
 
-void CoMTask::removeFromSolver(mc_solver::QPSolver & qpsolver)
+void CoMTask::removeFromSolver(tasks::qp::QPSolver & solver)
 {
-  qpsolver.solver.removeTask(comTaskSp.get());
-  qpsolver.update();
+  solver.removeTask(comTaskSp.get());
+  solver.updateConstrsNrVars(robots.mbs);
+  solver.updateConstrSize();
 }
 
-void CoMTask::addToSolver(mc_solver::QPSolver & qpsolver)
+void CoMTask::addToSolver(tasks::qp::QPSolver & solver)
 {
-  qpsolver.solver.addTask(comTaskSp.get());
-  qpsolver.update();
+  solver.addTask(comTaskSp.get());
+  solver.updateTasksNrVars(robots.mbs);
+  solver.updateConstrsNrVars(robots.mbs);
+  solver.updateConstrSize();
 }
 
 void CoMTask::move_com(const Eigen::Vector3d & com)

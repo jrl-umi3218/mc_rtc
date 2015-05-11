@@ -15,14 +15,16 @@ public:
 
   void resetTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex);
 
-  void removeFromSolver(mc_solver::QPSolver & solver);
+  void removeFromSolver(tasks::qp::QPSolver & solver);
 
-  void addToSolver(mc_solver::QPSolver & solver);
+  void addToSolver(tasks::qp::QPSolver & solver);
 
   void move_com(const Eigen::Vector3d & com);
 
   void set_com(const Eigen::Vector3d & com);
 public:
+  const mc_rbdyn::Robots & robots;
+
   std::shared_ptr<tasks::qp::CoMTask> comTask;
   std::shared_ptr<tasks::qp::SetPointTask> comTaskSp;
 

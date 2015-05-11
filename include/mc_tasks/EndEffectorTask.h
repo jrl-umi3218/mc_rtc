@@ -2,8 +2,8 @@
 #define _H_MCTASKSEFTASK_H_
 
 #include <mc_rbdyn/robot.h>
-#include <mc_control/mc_solver/qpsolver.h>
 #include <Tasks/QPTasks.h>
+#include <Tasks/QPSolver.h>
 
 namespace mc_tasks
 {
@@ -15,14 +15,16 @@ public:
 
   void resetTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex);
 
-  void removeFromSolver(mc_solver::QPSolver & solver);
+  void removeFromSolver(tasks::qp::QPSolver & solver);
 
-  void addToSolver(mc_solver::QPSolver & solver);
+  void addToSolver(tasks::qp::QPSolver & solver);
 
   void add_ef_pose(const sva::PTransformd & dtr);
 
   void set_ef_pose(const sva::PTransformd & tf);
 public:
+  const mc_rbdyn::Robots & robots;
+
   std::shared_ptr<tasks::qp::PositionTask> positionTask;
   std::shared_ptr<tasks::qp::SetPointTask> positionTaskSp;
   std::shared_ptr<tasks::qp::OrientationTask> orientationTask;

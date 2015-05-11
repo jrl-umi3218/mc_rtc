@@ -24,7 +24,7 @@ MCCoMController::MCCoMController()
   });
 
   comTask.reset(new mc_tasks::CoMTask(qpsolver->robots, qpsolver->robots.robotIndex));
-  comTask->addToSolver(*qpsolver);
+  comTask->addToSolver(qpsolver->solver);
 }
 
 void MCCoMController::reset(const ControllerResetData & reset_data)

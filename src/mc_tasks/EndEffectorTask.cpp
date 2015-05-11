@@ -4,7 +4,7 @@ namespace mc_tasks
 {
 
 EndEffectorTask::EndEffectorTask(const std::string & bodyName, const mc_rbdyn::Robots & robots, unsigned int robotIndex)
-: bodyName(bodyName)
+: robots(robots), bodyName(bodyName)
 {
   const mc_rbdyn::Robot & robot = robots.robots[robotIndex];
   unsigned int bodyId = robot.bodyIdByName(bodyName);
@@ -30,18 +30,21 @@ void EndEffectorTask::resetTask(const mc_rbdyn::Robots & robots, unsigned int ro
   orientationTask->orientation(curTransform.rotation());
 }
 
-void EndEffectorTask::removeFromSolver(mc_solver::QPSolver & qpsolver)
+void EndEffectorTask::removeFromSolver(tasks::qp::QPSolver & solver)
 {
-  qpsolver.solver.removeTask(positionTaskSp.get());
-  qpsolver.solver.removeTask(orientationTaskSp.get());
-  qpsolver.update();
+  solver.removeTask(positionTaskSp.get());
+  solver.removeTask(orientationTaskSp.get());
+  solver.updateConstrsNrVars(robots.mbs);
+  solver.updateConstrSize();
 }
 
-void EndEffectorTask::addToSolver(mc_solver::QPSolver & qpsolver)
+void EndEffectorTask::addToSolver(tasks::qp::QPSolver & solver)
 {
-  qpsolver.solver.addTask(positionTaskSp.get());
-  qpsolver.solver.addTask(orientationTaskSp.get());
-  qpsolver.update();
+  solver.addTask(positionTaskSp.get());
+  solver.addTask(orientationTaskSp.get());
+  solver.updateTasksNrVars(robots.mbs);
+  solver.updateConstrsNrVars(robots.mbs);
+  solver.updateConstrSize();
 }
 
 void EndEffectorTask::add_ef_pose(const sva::PTransformd & dtr)
