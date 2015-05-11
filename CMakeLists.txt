@@ -51,6 +51,7 @@ target_link_libraries(mc_rbdyn RBDyn tinyxml2 boost_filesystem boost_system geos
 set(mc_robots_SRC
 ./src/mc_robots/hrp2_drc.cpp
 ./src/mc_robots/env.cpp
+./src/mc_robots/polaris_ranger.cpp
 )
 add_library(mc_robots SHARED ${mc_robots_SRC})
 target_link_libraries(mc_robots mc_rbdyn mc_rbdyn_urdf)
