@@ -12,7 +12,7 @@ namespace mc_control
 {
 
 MCController::MCController(const std::string & env_path, const std::string & env_name)
-: timeStep(0.002), robot_module(), env_module(env_path, env_name)
+: MCVirtualController(), robot_module(), env_module(env_path, env_name)
 {
   unsigned int hrp2_drc_index = 0;
   {
