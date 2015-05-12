@@ -1,7 +1,9 @@
 #include <mc_control/mc_driving_controller.h>
 #include <mc_robots/polaris_ranger.h>
-
 #include <mc_rbdyn/robot.h>
+
+#include <RBDyn/FK.h>
+#include <RBDyn/FV.h>
 
 namespace mc_control
 {
@@ -15,19 +17,29 @@ MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rb
   mrqpsolver->addConstraintSet(hrp2contactConstraint);
   mrqpsolver->addConstraintSet(hrp2kinematicsConstraint);
   mrqpsolver->addConstraintSet(polarisKinematicsConstraint);
-  mrqpsolver->addConstraintSet(hrp2selfCollisionConstraint);
+  //mrqpsolver->addConstraintSet(hrp2selfCollisionConstraint);
   mrqpsolver->solver.addTask(hrp2postureTask.get());
   robots().envIndex = 1;
 
   mc_rbdyn::Robot& polaris = env();
 
-  mrqpsolver->setContacts({mc_rbdyn::MRContact(0, 1, robot().surfaces.at("Butthock"),
-        env().surfaces.at("left_seat_deformed"))});
+  robot().mbc->q[0] = {0.8018680589369662, 0.09936561148509283, -0.06541812773434774, 0.5855378381237102, -0.3421374123035909, -0.0002850914593993392, 0.8847053544605464};
+
+  rbd::forwardKinematics(*(robot().mb), *(robot().mbc));
+  rbd::forwardVelocity(*(robot().mb), *(robot().mbc));
+
+  mrqpsolver->setContacts({mc_rbdyn::MRContact(robots().robotIndex,
+                           robots().envIndex,
+                           robot().surfaces.at("Butthock"),
+                           env().surfaces.at("left_seat_deformed")),
+                           mc_rbdyn::MRContact(robots().robotIndex,
+                           robots().envIndex,
+                           robot().surfaces.at("LowerBack"),
+                           env().surfaces.at("left_back"))});
 
   ef_task.addToSolver(mrqpsolver->solver);
   int steer_i = polaris.bodyIndexByName("steering_wheel");
-  //ef_task.set_ef_pose(polaris.mbc->bodyPosW[steer_i]);
-  ef_task.set_ef_pose(sva::PTransformd(Eigen::Vector3d(1, 1, 1)));
+  ef_task.set_ef_pose(polaris.mbc->bodyPosW[steer_i]);
 
   std::cout << "MCDrivingController init done" << std::endl;
 }
