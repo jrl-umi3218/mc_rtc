@@ -25,8 +25,11 @@ MCMRQPController::MCMRQPController(const std::vector<std::shared_ptr<mc_rbdyn::R
     mc_rbdyn::Robot & hrp2_drc = robots.robot();
     hrp2_drc.mbc->gravity = Eigen::Vector3d(0, 0, 9.81);
 
-    rbd::forwardKinematics(*(hrp2_drc.mb), *(hrp2_drc.mbc));
-    rbd::forwardVelocity(*(hrp2_drc.mb), *(hrp2_drc.mbc));
+    for(auto robot: robots.robots)
+    {
+      rbd::forwardKinematics(*(robot.mb), *(robot.mbc));
+      rbd::forwardVelocity(*(robot.mb), *(robot.mbc));
+    }
 
     mrqpsolver = std::shared_ptr<mc_solver::MRQPSolver>(new mc_solver::MRQPSolver(robots, timeStep));
   }
