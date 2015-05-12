@@ -30,20 +30,11 @@ MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rb
   ef_task.set_ef_pose(sva::PTransformd(Eigen::Vector3d(1, 1, 1)));
 
   std::cout << "MCDrivingController init done" << std::endl;
-  std::cout << env().mb->joint(0).type() << std::endl;
-  std::cout << env().mb->joint(1).name() << std::endl;
-  std::cout << (env().mb->joint(0).type() == rbd::Joint::Fixed) << std::endl;
-  std::cout << robots().envIndex << " " << robots().robotIndex << "Base size " << env().mbc->q[0].size() << std::endl;
-  std::cout << "EF : " << ef_task.positionTask->eval().norm() << std::endl;
 }
 
 bool MCDrivingController::run()
 {
   bool success = MCMRQPController::run();
-  //int ankle_i = robot().jointIndexByName("RLEG_JOINT4");
-  //std::cout << robot().mbc->q[ankle_i][0] << std::endl;
-  //std::cout << ef_task.positionTask->eval().norm() << std::endl;
-  std::cout << robot().mbc->q[0][3] << robot().mbc->q[0][4] << robot().mbc->q[0][5] << std::endl;
   return success;
 }
 
@@ -55,15 +46,11 @@ bool MCDrivingController::changeWheelAngle(double theta)
 
 bool MCDrivingController::changeAnkleAngle(double theta)
 {
-  std::cout << "get ankle" << std::endl;
   int ankle_i = robot().jointIndexByName("RLEG_JOINT4");
-  std::cout << "Get posture" << std::endl;
   auto p = hrp2postureTask->posture();
-  std::cout << "Change posture" << std::endl;
   p[ankle_i][0] = theta;
-  std::cout << "Set posture" << std::endl;
   hrp2postureTask->posture(p);
-  std::cout << "Ankle angle " << theta << std::endl;
+  std::cout << "Ankle angle set to : " << theta << std::endl;
   return true;
 }
 
