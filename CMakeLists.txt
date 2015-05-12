@@ -119,5 +119,8 @@ install(TARGETS MCControl MCControlComp mc_rbdyn mc_rbdyn_urdf mc_control_solver
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib)
 
-install(FILES python/MCControlService_idl.py DESTINATION lib/python2.7/dist-packages/hrpsys)
+set_source_files_properties(${CMAKE_BINARY_DIR}/idl/MCControlService_idl.py
+                            PROPERTIES GENERATED 1)
+
+install(FILES ${CMAKE_BINARY_DIR}/idl/MCControlService_idl.py DESTINATION lib/python2.7/dist-packages/hrpsys)
 #install(FILES python/mc_rtc_interface.py DESTINATION bin PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
