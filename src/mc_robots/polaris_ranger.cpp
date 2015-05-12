@@ -29,7 +29,7 @@ void PolarisRangerRobotModule::readUrdf(const std::string & robotName, const std
   std::ifstream ifs(urdfPath);
   std::stringstream urdf;
   urdf << ifs.rdbuf();
-  mc_rbdyn_urdf::URDFParserResult res = mc_rbdyn_urdf::rbdyn_from_urdf(urdf.str(), false, filteredLinks);
+  mc_rbdyn_urdf::URDFParserResult res = mc_rbdyn_urdf::rbdyn_from_urdf(urdf.str(), true, filteredLinks);
   mb = res.mb;
   mbc = res.mbc;
   mbg = res.mbg;
