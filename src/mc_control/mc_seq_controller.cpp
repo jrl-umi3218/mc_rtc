@@ -170,6 +170,8 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
     //sc.collisions.robotEnv.push_back({"RARM_LINK6", "stair_step3", {0.2, 0.1, 0.0}});
     if(i < 10)
     {
+      sc.collisions.robotEnv.push_back({"RARM_LINK6", "stair_step2", {0.2, 0.1, 0.0}});
+      sc.collisions.robotEnv.push_back({"RARM_LINK6", "stair_step3", {0.2, 0.1, 0.0}});
       sc.collisions.robotEnv.push_back({"RARM_LINK6", "platform", {0.2, 0.1, 0.0}});
     }
 
@@ -281,7 +283,7 @@ bool MCSeqController::run()
     {
       unsigned int stanceIndexIn = stanceIndex;
       sensorContacts = contactSensor->update(*this);
-      pre_live(); /* pre_live can halt the execution */
+      //pre_live(); /* pre_live can halt the execution */
       if(!halted && seq_actions[stanceIndex]->execute(*this))
       {
         if(stanceIndex != stanceIndexIn)
