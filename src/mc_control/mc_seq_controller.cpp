@@ -72,7 +72,7 @@ std::vector<mc_solver::Collision> confToColl(const std::vector<mc_rbdyn::StanceC
 MCSeqController::MCSeqController(const std::string & env_path, const std::string & env_name, const std::string & seq_path)
 : MCController(env_path, env_name), paused(false), halted(false), stanceIndex(0), seq_actions(0),
   currentContact(0), targetContact(0), currentGripper(0),
-  use_real_sensors(false),
+  use_real_sensors(true),
   collsConstraint(robots(), timeStep)
 {
   /* Load plan */
@@ -93,14 +93,14 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
 
     if(seq_actions[i]->type() == SeqAction::CoMMove)
     {
-      sc.postureTask.stiffness = 0.5;
+      sc.postureTask.stiffness = 1.0;
       sc.postureTask.weight = 10.0;
-      sc.comTask.stiffness = 15.0;
-      sc.comTask.extraStiffness = 19.0;
+      sc.comTask.stiffness = 3.0;
+      sc.comTask.extraStiffness = 6.0;
       sc.comTask.weight = 200.0;
       sc.comTask.targetSpeed = 0.001;
       sc.comObj.posThresh = 0.1,
-      sc.comObj.velThresh = 0.000099;
+      sc.comObj.velThresh = 0.0001;
       sc.comObj.comOffset = Eigen::Vector3d(0,0,0);
     }
     if(seq_actions[i]->type() == SeqAction::ContactMove)
@@ -135,7 +135,7 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
     {
       sc.postureTask.stiffness = 0.1;
       sc.postureTask.weight = 10.0;
-      sc.comTask.stiffness = 20.0;
+      sc.comTask.stiffness = 2.5;
       sc.comTask.extraStiffness = 0.0;
       sc.comTask.weight = 500.0;
       sc.comTask.targetSpeed = 0.0005;
@@ -147,13 +147,13 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
       sc.contactObj.adjustOriTBNWeight = Eigen::Vector3d(1,1,1);
       sc.contactObj.preContactDist = 0.1;
       sc.contactTask.position.stiffness = 0.1;
-      sc.contactTask.position.extraStiffness = 15.0;
+      sc.contactTask.position.extraStiffness = 5.0;
       sc.contactTask.position.weight = 600.0;
       sc.contactTask.position.targetSpeed = 0.0005;
-      sc.contactTask.orientation.stiffness = 15.0;
+      sc.contactTask.orientation.stiffness = 5.0;
       sc.contactTask.orientation.weight = 1.0;
       sc.contactTask.orientation.finalWeight = 1000.0;
-      sc.contactTask.linVel.stiffness = 15.0;
+      sc.contactTask.linVel.stiffness = 5.0;
       sc.contactTask.linVel.weight = 1000.0;
       sc.contactTask.linVel.speed = 0.05;
       sc.contactTask.waypointConf.thresh = 0.1;
@@ -188,7 +188,8 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
       if(addA->contact.robotSurface->name == "LeftGripper" &&
          addA->contact.envSurface->name == "StairLeftRung2")
       {
-        sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(1.0, 1.0, 1.0, 0.0);
+        sc.contactObj.preContactDist = 0.05;
+        sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(1.0, 1.0, 1.1, 0.0);
       }
       if(addA->contact.robotSurface->name == "LFullSole" &&
          addA->contact.envSurface->name == "Platform")
@@ -203,7 +204,12 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
       if(addA->contact.robotSurface->name == "RightGripper" &&
          addA->contact.envSurface->name == "PlatformLeftRampS")
       {
-        sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(1.0, 1.0, 1.0, 0.2);
+        sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(0.8, 0.8, 1.1, 0.2);
+      }
+      if(addA->contact.robotSurface->name == "LeftGripper" &&
+         addA->contact.envSurface->name == "PlatformLeftRampVS")
+      {
+        sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(0.6, 1.0, 1., 0.2);
       }
     }
 
@@ -352,7 +358,7 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
       double actiForce = 50; /* FIXME Hard-coded, should at least be an acti gripper const static member */
       double stopForce = 90; /* FIXME ^^ */
       std::shared_ptr<tasks::qp::PositionTask> positionTask(new tasks::qp::PositionTask(robots().mbs, 0, contactId.r1BodyId, X_0_s.translation(), is_gs->X_b_s().translation()));
-      std::shared_ptr<tasks::qp::SetPointTask> positionTaskSp(new tasks::qp::SetPointTask(robots().mbs, 0, positionTask.get(), 20, 10000.));
+      std::shared_ptr<tasks::qp::SetPointTask> positionTaskSp(new tasks::qp::SetPointTask(robots().mbs, 0, positionTask.get(), 4, 10000.));
       qpsolver->solver.addTask(positionTaskSp.get());
       actiGrippers[bodyName] = ActiGripper(wrenchIndex, actiForce, stopForce, contactId, X_0_s, 0.04, positionTask, positionTaskSp); /*FIXME 0.04 is ActiGripperMaxPull */
     }

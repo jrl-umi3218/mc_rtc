@@ -144,10 +144,11 @@ bool live_moveWPT::eval(MCSeqController & ctl)
 {
   if(ctl.currentGripper)
   {
-    ctl.currentGripper->percentOpen += 0.002;
+    ctl.currentGripper->percentOpen += 0.002/3;
     if(ctl.currentGripper->percentOpen >= 1)
     {
       ctl.currentGripper->percentOpen = 1;
+      ctl.currentGripper = 0;
     }
   }
   mc_rbdyn::StanceConfig & contactConf = ctl.curConf();
@@ -321,7 +322,7 @@ bool live_moveCoMT::eval(MCSeqController & ctl)
 {
   if(ctl.currentGripper)
   {
-    ctl.currentGripper->percentOpen -= 0.002;
+    ctl.currentGripper->percentOpen -= 0.002/3;
     if(ctl.currentGripper->percentOpen <= 0)
     {
       ctl.currentGripper->percentOpen = 0;

@@ -3,11 +3,6 @@
 namespace mc_control
 {
 
-Threshold::Threshold()
-: Threshold(5, 4)
-{
-}
-
 Threshold::Threshold(double t, unsigned int i)
 : thresh(t), iter(i)
 {
@@ -72,10 +67,10 @@ void ForceSensor::update(const Eigen::Vector3d & force)
 ForceContactSensor::ForceContactSensor(const mc_rbdyn::Robot & robot)
 {
   /*FIXME Hard-coded */
-  sensors.push_back(ForceSensor(robot, "RightFootForceSensor", Threshold(60, 9)));
-  sensors.push_back(ForceSensor(robot, "LeftFootForceSensor", Threshold(60, 9)));
-  sensors.push_back(ForceSensor(robot, "RightHandForceSensor", Threshold()));
-  sensors.push_back(ForceSensor(robot, "LeftHandForceSensor", Threshold()));
+  sensors.push_back(ForceSensor(robot, "RightFootForceSensor", Threshold(120, 9)));
+  sensors.push_back(ForceSensor(robot, "LeftFootForceSensor", Threshold(120, 9)));
+  sensors.push_back(ForceSensor(robot, "RightHandForceSensor", Threshold(20, 4)));
+  sensors.push_back(ForceSensor(robot, "LeftHandForceSensor", Threshold(10, 4)));
 }
 
 void ForceContactSensor::resetOffset()
