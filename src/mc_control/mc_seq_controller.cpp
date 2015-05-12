@@ -168,7 +168,10 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
     sc.collisions.autoc.push_back({"RARM_LINK6", "RLEG_LINK3", {0.1, 0.05, 0.0}});
     //sc.collisions.robotEnv.push_back({"RARM_LINK6", "stair_step2", {0.2, 0.1, 0.0}});
     //sc.collisions.robotEnv.push_back({"RARM_LINK6", "stair_step3", {0.2, 0.1, 0.0}});
-    //sc.collisions.robotEnv.push_back({"RARM_LINK6", "platform", {0.2, 0.1, 0.0}});
+    if(i < 10)
+    {
+      sc.collisions.robotEnv.push_back({"RARM_LINK6", "platform", {0.2, 0.1, 0.0}});
+    }
 
     /* Per-stance configuration */
     mc_rbdyn::AddContactAction* addA = dynamic_cast<mc_rbdyn::AddContactAction*>(actions[i].get());
@@ -632,7 +635,8 @@ std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * cu
     res->steps = {
                   std::shared_ptr<SeqStep>(new live_chooseCoMT()),
                   std::shared_ptr<SeqStep>(new enter_moveCoMP()),
-                  std::shared_ptr<SeqStep>(new live_moveCoMT())
+                  std::shared_ptr<SeqStep>(new live_moveCoMT()),
+                  std::shared_ptr<SeqStep>(new live_CoMCloseGripperT())
     };
     res->_type = SeqAction::CoMMove;
   }

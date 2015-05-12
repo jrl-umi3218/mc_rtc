@@ -320,14 +320,6 @@ bool enter_moveCoMP::eval(MCSeqController & ctl)
 
 bool live_moveCoMT::eval(MCSeqController & ctl)
 {
-  if(ctl.currentGripper)
-  {
-    ctl.currentGripper->percentOpen -= 0.002/3;
-    if(ctl.currentGripper->percentOpen <= 0)
-    {
-      ctl.currentGripper->percentOpen = 0;
-    }
-  }
   auto & obj = ctl.curConf().comObj;
 
   double error = (ctl.stabilityTask->comObj - rbd::computeCoM(*(ctl.robot().mb), *(ctl.robot().mbc))).norm();
@@ -346,11 +338,30 @@ bool live_moveCoMT::eval(MCSeqController & ctl)
     ctl.updateContacts(newS.stabContacts);
     ctl.updateSolverEqInEq();
 
-    ctl.stanceIndex++;
     return true;
   }
 
   return false;
+}
+
+bool live_CoMCloseGripperT::eval(MCSeqController & ctl)
+{
+  if(ctl.currentGripper)
+  {
+    ctl.currentGripper->percentOpen -= 0.002/3;
+    if(ctl.currentGripper->percentOpen <= 0)
+    {
+      ctl.currentGripper->percentOpen = 0;
+      ctl.stanceIndex++;
+      return true;
+    }
+    return false;
+  }
+  else
+  {
+    ctl.stanceIndex++;
+    return true;
+  }
 }
 
 bool live_chooseGripperT::eval(MCSeqController & ctl)

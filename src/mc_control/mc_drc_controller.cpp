@@ -14,8 +14,9 @@ namespace mc_control
 /* FIXME Seq loading is hardcoded for now... */
 MCDRCGlobalController::MCDRCGlobalController()
 : posture_controller(), body6d_controller(), com_controller(),
-  seq_controller("/home/hrp2user/jrl/hrp2_drc/hrp2_drc_description/", "drc_stairs2", "/home/hrp2user/jrl/mc_rtc/build/drc_stairs_climbing.json"),
-  driving_controller({std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::PolarisRangerRobotModule())}),
+  seq_controller("/home/hrp2user/jrl/hrp2_drc/hrp2_drc_description/", "drc_stairs2", "/home/hrp2user/jrl/mc_rtc/data/drc_stairs_climbing.json"),
+  driving_controller({std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::PolarisRangerRobotModule()),
+                      std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::EnvRobotModule("/home/hrp2user/jrl/mc_env_description/", "ground"))}),
   //current_ctrl(POSTURE), next_ctrl(POSTURE),
   //controller(&posture_controller),
   //current_ctrl(BODY6D), next_ctrl(BODY6D),
