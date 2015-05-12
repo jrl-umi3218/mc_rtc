@@ -11,7 +11,6 @@
 #include <mc_robots/env.h>
 
 #include <Tasks/QPTasks.h>
-#include <mc_tasks/EndEffectorTask.h>
 
 namespace mc_control
 {

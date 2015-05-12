@@ -10,7 +10,6 @@ namespace mc_robots
 struct PolarisRangerRobotModule : public mc_rbdyn::RobotModule
 {
 public:
-public:
   PolarisRangerRobotModule();
 protected:
   std::map<std::string, std::pair<std::string, std::string> > getConvexHull(const std::map<std::string, std::pair<std::string, std::string>> & files) const;

@@ -4,6 +4,8 @@
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
+#include <mc_robots/polaris_ranger.h>
+
 /* Note all service calls except for controller switches are implemented in mc_drc_controller_services.cpp */
 
 namespace mc_control
@@ -13,6 +15,7 @@ namespace mc_control
 MCDRCGlobalController::MCDRCGlobalController()
 : posture_controller(), body6d_controller(), com_controller(),
   seq_controller("/home/hrp2user/jrl/hrp2_drc/hrp2_drc_description/", "drc_stairs2", "/home/hrp2user/jrl/mc_rtc/build/drc_stairs_climbing.json"),
+  driving_controller({std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::PolarisRangerRobotModule())}),
   //current_ctrl(POSTURE), next_ctrl(POSTURE),
   //controller(&posture_controller),
   //current_ctrl(BODY6D), next_ctrl(BODY6D),

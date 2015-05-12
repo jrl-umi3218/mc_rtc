@@ -9,6 +9,7 @@ PolarisRangerRobotModule::PolarisRangerRobotModule()
 : RobotModule("/home/hrp2user/jrl/hrp2_drc/hrp2_drc_description/", "polaris_ranger")
 {
   halfSitting["steering_joint"] = {0};
+  readUrdf("polaris_ranger_interactive", virtualLinks);
 }
 
 std::map<std::string, std::pair<std::string, std::string> > PolarisRangerRobotModule::getConvexHull(const std::map<std::string, std::pair<std::string, std::string>> & files) const
