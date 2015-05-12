@@ -24,6 +24,8 @@ namespace OpenHRP
 
       virtual CORBA::Boolean EnableSeqController();
 
+      virtual CORBA::Boolean EnableDrivingController();
+
       /* Grippers (always available) */
       virtual CORBA::Boolean open_grippers();
 
@@ -44,6 +46,9 @@ namespace OpenHRP
       virtual CORBA::Boolean move_com(CORBA::Double x, CORBA::Double y, CORBA::Double z);
       /* Seq controller */
       virtual CORBA::Boolean play_next_stance();
+
+      virtual CORBA::Boolean change_wheel_angle(CORBA::Double theta);
+      virtual CORBA::Boolean change_ankle_angle(CORBA::Double theta);
     private:
       MCControl * m_plugin;
   };

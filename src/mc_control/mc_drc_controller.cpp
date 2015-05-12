@@ -21,6 +21,8 @@ MCDRCGlobalController::MCDRCGlobalController()
   //controller(&com_controller),
   current_ctrl(SEQ), next_ctrl(SEQ),
   controller(&seq_controller),
+  //current_ctrl(DRIVING), next_ctrl(DRIVING),
+  //controller(&driving_controller),
   next_controller(0)
 {
 }
@@ -182,6 +184,16 @@ bool MCDRCGlobalController::EnableSeqController()
   if(current_ctrl != SEQ)
   {
     next_controller = &seq_controller;
+  }
+  return true;
+}
+
+bool MCDRCGlobalController::EnableDrivingController()
+{
+  next_ctrl = DRIVING;
+  if(current_ctrl != DRIVING)
+  {
+    next_controller = &driving_controller;
   }
   return true;
 }

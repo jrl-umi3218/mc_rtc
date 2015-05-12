@@ -121,4 +121,28 @@ bool MCDRCGlobalController::play_next_stance()
   }
 }
 
+bool MCDRCGlobalController::change_wheel_angle(double theta)
+{
+  if(current_ctrl == DRIVING)
+  {
+    return driving_controller.changeWheelAngle(theta);
+  }
+  else
+  {
+    return false;
+  }
+}
+
+bool MCDRCGlobalController::change_ankle_angle(double theta)
+{
+  if(current_ctrl == DRIVING)
+  {
+    return driving_controller.changeAnkleAngle(theta);
+  }
+  else
+  {
+    return false;
+  }
+}
+
 }

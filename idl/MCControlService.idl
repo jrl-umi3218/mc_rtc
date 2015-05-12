@@ -14,6 +14,8 @@ module OpenHRP
 
     boolean EnableSeqController();
 
+    boolean EnableDrivingController();
+
     boolean open_grippers();
 
     boolean close_grippers();
@@ -37,6 +39,10 @@ module OpenHRP
     boolean move_com(in double x, in double y, in double z);
 
     boolean play_next_stance();
+
+    boolean change_wheel_angle(in double theta);
+
+    boolean change_ankle_angle(in double theta);
   };
 
 };

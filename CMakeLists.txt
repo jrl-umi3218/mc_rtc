@@ -86,6 +86,7 @@ set(mc_drc_controller_SRC
 ./src/mc_control/mc_seq_controller.cpp
 ./src/mc_control/mc_seq_steps.cpp
 ./src/mc_control/mc_mrqp_controller.cpp
+./src/mc_control/mc_driving_controller.cpp
 ./src/mc_control/mc_drc_controller.cpp
 ./src/mc_control/mc_drc_controller_services.cpp
 )

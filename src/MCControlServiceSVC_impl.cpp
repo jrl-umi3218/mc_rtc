@@ -47,6 +47,11 @@ CORBA::Boolean MCControlServiceSVC_impl::EnableSeqController()
   return m_plugin->controller.EnableSeqController();
 }
 
+CORBA::Boolean MCControlServiceSVC_impl::EnableDrivingController()
+{
+  return m_plugin->controller.EnableDrivingController();
+}
+
 CORBA::Boolean MCControlServiceSVC_impl::open_grippers()
 {
   m_plugin->controller.setGripperOpenPercent(1, 1);
@@ -116,6 +121,16 @@ CORBA::Boolean MCControlServiceSVC_impl::move_com(CORBA::Double x, CORBA::Double
 CORBA::Boolean MCControlServiceSVC_impl::play_next_stance()
 {
   return m_plugin->controller.play_next_stance();
+}
+
+CORBA::Boolean MCControlServiceSVC_impl::change_wheel_angle(CORBA::Double theta)
+{
+  return m_plugin->controller.change_wheel_angle(theta);
+}
+
+CORBA::Boolean MCControlServiceSVC_impl::change_ankle_angle(CORBA::Double theta)
+{
+  return m_plugin->controller.change_ankle_angle(theta);
 }
 
 }

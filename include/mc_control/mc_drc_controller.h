@@ -5,6 +5,7 @@
 #include <mc_control/mc_body6d_controller.h>
 #include <mc_control/mc_com_controller.h>
 #include <mc_control/mc_seq_controller.h>
+#include <mc_control/mc_driving_controller.h>
 
 /* FIXME For now, everything is in there, split it would be good */
 
@@ -29,6 +30,7 @@ public:
   bool EnableBody6dController();
   bool EnableCoMController();
   bool EnableSeqController();
+  bool EnableDrivingController();
 
   /* Gripper controls */
   const std::vector<double> & gripperQ(bool lgripper);
@@ -55,6 +57,11 @@ public:
 
   /* Start playing the next stance if in seq controller */
   bool play_next_stance();
+
+  /*Change wheel or ankle angle if in driving controller*/
+  bool change_wheel_angle(double theta);
+  bool change_ankle_angle(double theta);
+
 public:
   bool running;
 private:
@@ -62,12 +69,14 @@ private:
   MCBody6dController body6d_controller;
   MCCoMController com_controller;
   MCSeqController seq_controller;
+  MCDrivingController driving_controller;
   enum CurrentController
   {
     POSTURE = 1,
     BODY6D  = 2,
     COM = 3,
-    SEQ = 4
+    SEQ = 4,
+    DRIVING = 5
   };
   CurrentController current_ctrl;
   CurrentController next_ctrl;
