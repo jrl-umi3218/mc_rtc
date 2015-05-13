@@ -133,4 +133,9 @@ CORBA::Boolean MCControlServiceSVC_impl::change_ankle_angle(CORBA::Double theta)
   return m_plugin->controller.change_ankle_angle(theta);
 }
 
+CORBA::Boolean MCControlServiceSVC_impl::change_gaze(CORBA::Double pan, CORBA::Double tilt)
+{
+  return m_plugin->controller.change_gaze(pan, tilt);
+}
+
 }

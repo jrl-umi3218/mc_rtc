@@ -148,6 +148,20 @@ bool MCDrivingController::changeWheelAngle(double theta)
   return true;
 }
 
+bool MCDrivingController::changeGaze(double pan, double tilt)
+{
+  int pan_i = robot().jointIndexByName("HEAD_JOINT0");
+  int tilt_i = robot().jointIndexByName("HEAD_JOINT1");
+  auto p = hrp2postureTask->posture();
+  p[pan_i][0] = pan;
+  p[tilt_i][0] = tilt;
+  hrp2postureTask->posture(p);
+  std::cout << "Pan/tilt angles set to : ("
+            << pan << ","
+            << tilt << ")" << std::endl;
+  return true;
+}
+
 bool MCDrivingController::changeAnkleAngle(double theta)
 {
   int ankle_i = robot().jointIndexByName("RLEG_JOINT4");

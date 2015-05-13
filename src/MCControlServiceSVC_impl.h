@@ -49,6 +49,7 @@ namespace OpenHRP
 
       virtual CORBA::Boolean change_wheel_angle(CORBA::Double theta);
       virtual CORBA::Boolean change_ankle_angle(CORBA::Double theta);
+      virtual CORBA::Boolean change_gaze(CORBA::Double pan, CORBA::Double tilt);
     private:
       MCControl * m_plugin;
   };

@@ -145,4 +145,16 @@ bool MCDRCGlobalController::change_ankle_angle(double theta)
   }
 }
 
+bool MCDRCGlobalController::change_gaze(double pan, double tilt)
+{
+  if(current_ctrl == DRIVING)
+  {
+    return driving_controller.changeGaze(pan, tilt);
+  }
+  else
+  {
+    return false;
+  }
+}
+
 }
