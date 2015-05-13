@@ -18,8 +18,9 @@ struct MCDrivingController : MCMRQPController
 
     bool changeAnkleAngle(double theta);
 
-    bool run() override;
+    virtual bool run() override;
 
+    virtual void reset(const ControllerResetData & reset_data) override;
   private:
     std::shared_ptr<mc_rbdyn::RobotModule> polarisModule;
     std::vector<std::shared_ptr<mc_rbdyn::RobotModule> > robotModules;
