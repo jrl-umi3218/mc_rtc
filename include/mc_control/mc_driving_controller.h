@@ -21,10 +21,17 @@ struct MCDrivingController : MCMRQPController
     virtual bool run() override;
 
     virtual void reset(const ControllerResetData & reset_data) override;
+
+  protected:
+    void resetBasePose();
+    void resetWheelTransform();
+
   private:
+    sva::PTransformd graspOffset;
     std::shared_ptr<mc_rbdyn::RobotModule> polarisModule;
     std::vector<std::shared_ptr<mc_rbdyn::RobotModule> > robotModules;
     mc_tasks::EndEffectorTask ef_task;
+    std::shared_ptr<tasks::qp::PostureTask> polarisPostureTask;
     mc_solver::KinematicsConstraint polarisKinematicsConstraint;
 };
 
