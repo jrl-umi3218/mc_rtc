@@ -138,4 +138,9 @@ CORBA::Boolean MCControlServiceSVC_impl::change_gaze(CORBA::Double pan, CORBA::D
   return m_plugin->controller.change_gaze(pan, tilt);
 }
 
+CORBA::Boolean MCControlServiceSVC_impl::change_wrist_angle(CORBA::Double yaw)
+{
+  return m_plugin->controller.change_wrist_angle(yaw);
+}
+
 }

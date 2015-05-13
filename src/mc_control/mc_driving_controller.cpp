@@ -172,4 +172,14 @@ bool MCDrivingController::changeAnkleAngle(double theta)
   return true;
 }
 
+bool MCDrivingController::changeWristAngle(double yaw)
+{
+  int wrist_i = robot().jointIndexByName("RARM_JOINT6");
+  auto p = hrp2postureTask->posture();
+  p[wrist_i][0] = yaw;
+  hrp2postureTask->posture(p);
+  std::cout << "Wrist yaw angle set to : " << yaw << std::endl;
+  return true;
+}
+
 }

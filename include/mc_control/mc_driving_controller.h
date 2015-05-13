@@ -20,6 +20,8 @@ struct MCDrivingController : MCMRQPController
 
     bool changeGaze(double pan, double tilt);
 
+    bool changeWristAngle(double yaw);
+
     virtual bool run() override;
 
     virtual void reset(const ControllerResetData & reset_data) override;
