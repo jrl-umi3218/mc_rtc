@@ -61,6 +61,8 @@ public:
   /*Change wheel or ankle angle if in driving controller*/
   bool change_wheel_angle(double theta);
   bool change_ankle_angle(double theta);
+  bool change_gaze(double pan, double tilt);
+  bool change_wrist_angle(double yaw);
 
 public:
   bool running;

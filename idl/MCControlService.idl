@@ -43,6 +43,10 @@ module OpenHRP
     boolean change_wheel_angle(in double theta);
 
     boolean change_ankle_angle(in double theta);
+
+    boolean change_gaze(in double pan, in double tilt);
+
+    boolean change_wrist_angle(in double yaw);
   };
 
 };
