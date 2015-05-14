@@ -10,7 +10,7 @@ namespace mc_control
 
 MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule> >& env_modules)
   : MCMRQPController(env_modules),
-    graspOffset(Eigen::Vector3d(0., 0., 0.1)),
+    graspOffset(sva::RotX(-M_PI/2), Eigen::Vector3d(0., 0.01, 0.)),
     ef_task("RARM_LINK6", robots(), 0),
     polarisKinematicsConstraint(robots(), 1, timeStep, false,
         {0.1, 0.01, 0.5}, 0.5)
@@ -124,7 +124,7 @@ void MCDrivingController::resetWheelTransform()
   auto gripperSurface = robot().surfaces.at("RightGripper");
   auto wheelSurface = polaris.surfaces.at("bar_wheel");
 
-  sva::PTransformd X_wheel_s = wheelSurface->X_b_s();
+  sva::PTransformd X_wheel_s = graspOffset*wheelSurface->X_b_s();
 
   sva::PTransformd X_0_s = gripperSurface->X_0_s(robot(), *(robot().mbc));
 
