@@ -151,7 +151,7 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
       sc.contactTask.position.weight = 600.0;
       sc.contactTask.position.targetSpeed = 0.0005;
       sc.contactTask.orientation.stiffness = 5.0;
-      sc.contactTask.orientation.weight = 1.0;
+      sc.contactTask.orientation.weight = 200.0;
       sc.contactTask.orientation.finalWeight = 1000.0;
       sc.contactTask.linVel.stiffness = 5.0;
       sc.contactTask.linVel.weight = 1000.0;
@@ -166,6 +166,11 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
     /* Still general configuration */
     sc.collisions.autoc.push_back({"RARM_LINK6", "RLEG_LINK2", {0.1, 0.05, 0.0}});
     sc.collisions.autoc.push_back({"RARM_LINK6", "RLEG_LINK3", {0.1, 0.05, 0.0}});
+    sc.collisions.autoc.push_back({"RARM_LINK6", "LLEG_LINK2", {0.1, 0.05, 0.0}});
+    sc.collisions.autoc.push_back({"RARM_LINK6", "LLEG_LINK3", {0.1, 0.05, 0.0}});
+    sc.collisions.autoc.push_back({"RARM_LINK6", "CHEST_LINK1", {0.1, 0.05, 0.0}});
+    sc.collisions.autoc.push_back({"RARM_LINK6", "BODY", {0.1, 0.05, 0.0}});
+    //sc.collisions.robotEnv.push_back({"RARM_LINK6", "stair_left_railing", {0.1, 0.01, 0.0}});
     //sc.collisions.robotEnv.push_back({"RARM_LINK6", "stair_step2", {0.2, 0.1, 0.0}});
     //sc.collisions.robotEnv.push_back({"RARM_LINK6", "stair_step3", {0.2, 0.1, 0.0}});
     if(i < 10)
@@ -193,7 +198,13 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
       if(addA->contact.robotSurface->name == "LeftGripper" &&
          addA->contact.envSurface->name == "StairLeftRung2")
       {
-        sc.contactObj.preContactDist = 0.05;
+        sc.contactObj.preContactDist = -0.1;
+        sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(1.0, 1.0, 1.0, 0.0);
+      }
+      if(addA->contact.robotSurface->name == "LeftGripper" &&
+         addA->contact.envSurface->name == "StairLeftRung3")
+      {
+        sc.contactObj.preContactDist = 0.02;
         sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(1.0, 1.0, 1.1, 0.0);
       }
       if(addA->contact.robotSurface->name == "LFullSole" &&
@@ -207,13 +218,23 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
         sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(0.0, 1.0, 1.2, 0.2);
       }
       if(addA->contact.robotSurface->name == "RightGripper" &&
+         addA->contact.envSurface->name == "StairLeftRung3")
+      {
+        sc.contactObj.preContactDist = 0.0;
+        sc.contactObj.adjustOffset = Eigen::Vector3d(0,0,-0.075);
+        sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(1.0, 0.25, 1.0, 0.2);
+      }
+      if(addA->contact.robotSurface->name == "RightGripper" &&
          addA->contact.envSurface->name == "PlatformLeftRampS")
       {
+        sc.contactObj.preContactDist = 0.1;
         sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(0.8, 0.8, 1.1, 0.2);
       }
       if(addA->contact.robotSurface->name == "LeftGripper" &&
          addA->contact.envSurface->name == "PlatformLeftRampVS")
       {
+        sc.contactObj.adjustOffset = Eigen::Vector3d(0,-0.025,-0.05);
+        sc.contactObj.preContactDist = 0.05;
         sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(0.6, 1.0, 1., 0.2);
       }
     }
@@ -290,6 +311,7 @@ bool MCSeqController::run()
         {
           std::cout << "Completed " << actions[stanceIndexIn]->toStr() << std::endl;
           paused = true;
+          std::cout << "Starting " << actions[stanceIndex]->toStr() << std::endl;
         }
       }
       post_live();
@@ -637,6 +659,7 @@ std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * cu
     res->steps = {
                   std::shared_ptr<SeqStep>(new live_chooseCoMT()),
                   std::shared_ptr<SeqStep>(new enter_moveCoMP()),
+                  std::shared_ptr<SeqStep>(new live_CoMOpenGripperT()),
                   std::shared_ptr<SeqStep>(new live_moveCoMT()),
                   std::shared_ptr<SeqStep>(new live_CoMCloseGripperT())
     };

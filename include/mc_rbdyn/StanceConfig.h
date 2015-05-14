@@ -87,6 +87,7 @@ public:
     double adjustPosThresh;
     double adjustVelThresh;
     double adjustOriThresh;
+    Eigen::Vector3d adjustOffset;
     Eigen::Vector3d adjustOriTBNWeight;
     double preContactDist;
   };

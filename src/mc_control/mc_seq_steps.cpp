@@ -282,26 +282,40 @@ bool live_pushContactT::eval(MCSeqController & ctl)
 
 bool live_chooseCoMT::eval(MCSeqController & ctl)
 {
-  mc_rbdyn::StanceAction * curAction = &(ctl.curAction());
-  if(curAction->type() == "remove")
+  mc_rbdyn::StanceAction * currentAction = &(ctl.curAction());
+  if(currentAction->type() == "remove")
   {
-    mc_rbdyn::RemoveContactAction * rmCurAction = dynamic_cast<mc_rbdyn::RemoveContactAction*>(curAction);
+    mc_rbdyn::RemoveContactAction * rmCurAction = dynamic_cast<mc_rbdyn::RemoveContactAction*>(currentAction);
     std::string bodyName = rmCurAction->contact.robotSurface->bodyName;
     if(bodyName == "RARM_LINK6") /*FIXME hard-coded */
     {
       ctl.currentGripper = ctl.rgripper.get();
+      ctl.currentGripperIsClosed = ctl.currentGripper->percentOpen < 0.5;
     }
     else if(bodyName == "LARM_LINK6")
     {
       ctl.currentGripper = ctl.lgripper.get();
+      ctl.currentGripperIsClosed = ctl.currentGripper->percentOpen < 0.5;
     }
-    else
+  }
+  mc_rbdyn::StanceAction * targetAction = &(ctl.targetAction());
+  if(targetAction->type() == "remove")
+  {
+    std::cout << "This action is a removal" << std::endl;
+    mc_rbdyn::RemoveContactAction * rmCurAction = dynamic_cast<mc_rbdyn::RemoveContactAction*>(targetAction);
+    std::string bodyName = rmCurAction->contact.robotSurface->bodyName;
+    if(bodyName == "RARM_LINK6") /*FIXME hard-coded */
     {
-      ctl.currentGripper = 0;
+      ctl.currentGripper = ctl.rgripper.get();
+      ctl.currentGripperIsClosed = ctl.currentGripper->percentOpen < 0.5;
+    }
+    else if(bodyName == "LARM_LINK6")
+    {
+      ctl.currentGripper = ctl.lgripper.get();
+      ctl.currentGripperIsClosed = ctl.currentGripper->percentOpen < 0.5;
     }
   }
 
-  mc_rbdyn::StanceAction * targetAction = &(ctl.targetAction());
   if(targetAction->type() != "add")
   {
     return true;
@@ -316,6 +330,26 @@ bool enter_moveCoMP::eval(MCSeqController & ctl)
   std::cout << "COMP" << std::endl;
   ctl.stabilityTask->target(ctl.env(), ctl.targetStance(), ctl.curConf(), ctl.curConf().comTask.targetSpeed);
   return true;
+}
+
+bool live_CoMOpenGripperT::eval(MCSeqController & ctl)
+{
+  if(ctl.currentGripper && ctl.currentGripperIsClosed)
+  {
+    ctl.currentGripper->percentOpen += 0.002/3;
+    if(ctl.currentGripper->percentOpen >= 1)
+    {
+      ctl.currentGripper->percentOpen = 1;
+      ctl.currentGripper = 0;
+      return true;
+    }
+  }
+  else
+  {
+    std::cout << "No need to open gripper" << std::endl;
+    return true;
+  }
+  return false;
 }
 
 bool live_moveCoMT::eval(MCSeqController & ctl)
@@ -822,9 +856,12 @@ bool live_closeGripperP::eval(MCSeqController & ctl)
   if(ctl.currentGripper)
   {
     ctl.currentGripper->percentOpen -= 0.002;
-    if(ctl.currentGripper->percentOpen <= 0)
+    bool limitToZero = ctl.targetContact->envSurface->name == "PlatformLeftRampVS" or ctl.targetContact->envSurface->name == "PlatformLeftRampS"; /*FIXME Should be part of the configuration */
+    double percentOpenLimit = limitToZero ? 0.25 : 0;
+    if(ctl.currentGripper->percentOpen <= percentOpenLimit)
     {
-      ctl.currentGripper->percentOpen = 0;
+      ctl.currentGripper->percentOpen = percentOpenLimit;
+      ctl.currentGripper = 0;
       finish = true;
     }
   }

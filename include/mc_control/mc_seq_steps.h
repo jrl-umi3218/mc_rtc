@@ -27,6 +27,7 @@ CREATE_STRUCT(live_pushContactT)
 /* Move CoM branch */
 CREATE_STRUCT(live_chooseCoMT)
 CREATE_STRUCT(enter_moveCoMP)
+CREATE_STRUCT(live_CoMOpenGripperT)
 CREATE_STRUCT(live_moveCoMT)
 CREATE_STRUCT(live_CoMCloseGripperT)
 /* Gripper contact branch */

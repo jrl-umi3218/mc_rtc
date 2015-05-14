@@ -60,6 +60,7 @@ StanceConfig::StanceConfig()
   contactObj.posThresh = 0.03;
   contactObj.velThresh = 0.005;
   contactObj.preContactDist = 0.02;
+  contactObj.adjustOffset = Eigen::Vector3d(0,0,0);
 }
 
 }

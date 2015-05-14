@@ -13,7 +13,7 @@ MoveContactTask::MoveContactTask(mc_rbdyn::Robots & robots, mc_rbdyn::Robot & ro
   envBodyIndex = env.bodyIndexByName(envSurf->bodyName);
   envBodyId = env.bodyIdByName(envSurf->bodyName);
   targetTf = contact.X_0_rs(env);
-  targetPos = targetTf.translation();
+  targetPos = targetTf.translation() + config.contactObj.adjustOffset;
   targetOri = robotSurf->X_b_s().rotation().transpose()*targetTf.rotation();
   normal = targetTf.rotation().row(2);
   preTargetPos = targetPos + normal*config.contactObj.preContactDist;

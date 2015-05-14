@@ -120,6 +120,7 @@ public:
   mc_rbdyn::Contact * currentContact;
   mc_rbdyn::Contact * targetContact;
   mc_control::Gripper * currentGripper;
+  bool currentGripperIsClosed;
   Eigen::Vector3d errorI;
   Eigen::Vector3d oriErrorI;
   bool isColl;
