@@ -346,7 +346,6 @@ bool live_CoMOpenGripperT::eval(MCSeqController & ctl)
   }
   else
   {
-    std::cout << "No need to open gripper" << std::endl;
     return true;
   }
   return false;
