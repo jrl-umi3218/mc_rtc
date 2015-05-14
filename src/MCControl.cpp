@@ -184,10 +184,11 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
           m_qOut.data[i] = lgQ[i-36];
         }
         /* FIXME Correction RPY convention here? */
-        Eigen::Vector3d rpy = Eigen::Quaterniond(res.q[0], res.q[1], res.q[2], res.q[3]).toRotationMatrix().eulerAngles(0, 1, 2);
-        m_rpyOut.data.r = rpy[0];
+        Eigen::Vector3d rpy = Eigen::Quaterniond(res.q[0], res.q[1], res.q[2], res.q[3]).toRotationMatrix().eulerAngles(2, 1, 0);
+        m_rpyOut.data.r = rpy[2];
         m_rpyOut.data.p = rpy[1];
-        m_rpyOut.data.y = rpy[2];
+        m_rpyOut.data.y = rpy[0];
+
         m_pOut.data.x = res.q[4];
         m_pOut.data.y = res.q[5];
         m_pOut.data.z = res.q[6];
