@@ -8,7 +8,20 @@ namespace mc_robots
 PolarisRangerRobotModule::PolarisRangerRobotModule()
 : RobotModule("/home/hrp2user/jrl/hrp2_drc/hrp2_drc_description/", "polaris_ranger")
 {
+  halfSitting["POLARIS"] = {};
+  halfSitting["front_left_steering_joint"] = {};
+  halfSitting["front_left_wheel_joint"] = {};
+  halfSitting["front_right_steering_joint"] = {};
+  halfSitting["front_right_wheel_joint"] = {};
+  halfSitting["rear_left_wheel_joint"] = {};
+  halfSitting["rear_right_wheel_joint"] = {};
+  halfSitting["gas_joint"] = {};
+  halfSitting["brake_joint"] = {};
+  halfSitting["adjust_steering_wheel"] = {};
   halfSitting["steering_joint"] = {0};
+  halfSitting["hand_brake_joint"] = {};
+  halfSitting["FNR_switch_joint"] = {};
+
   readUrdf("polaris_ranger_interactive", virtualLinks);
 }
 
@@ -109,6 +122,25 @@ std::map<std::string, std::pair<std::string, std::string>> PolarisRangerRobotMod
   res["brake"] = std::pair<std::string, std::string>("chassis", "brake_hull");
   res["board"] = std::pair<std::string, std::string>("chassis", "board_hull");
   return res;
+}
+
+const std::map<std::string, std::pair<std::string, std::string> > & PolarisRangerRobotModule::convexHull() const
+{
+  auto fileByBodyName = stdCollisionsFiles(mb);
+  const_cast<PolarisRangerRobotModule*>(this)->_convexHull = getConvexHull(fileByBodyName);
+  return _convexHull;
+}
+
+const std::vector< std::map<int, std::vector<double> > > & PolarisRangerRobotModule::bounds() const
+{
+  const_cast<PolarisRangerRobotModule*>(this)->_bounds = nominalBounds(limits);
+  return _bounds;
+}
+
+const std::map< unsigned int, std::vector<double> > & PolarisRangerRobotModule::stance() const
+{
+  const_cast<PolarisRangerRobotModule*>(this)->_stance = halfSittingPose(mb);
+  return _stance;
 }
 
 }

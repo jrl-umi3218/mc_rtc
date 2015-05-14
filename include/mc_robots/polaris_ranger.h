@@ -20,8 +20,14 @@ protected:
 
   std::vector< std::map<int, std::vector<double> > > nominalBounds(const mc_rbdyn_urdf::Limits & limits) const;
 
+
   std::map<std::string, std::pair<std::string, std::string>> stdCollisionsFiles(const rbd::MultiBody & mb) const;
 
+  const std::map<std::string, std::pair<std::string, std::string> > & convexHull() const;
+
+  const std::vector< std::map<int, std::vector<double> > >& bounds() const;
+
+  const std::map< unsigned int, std::vector<double> > & stance() const;
 public:
   std::vector<std::string> virtualLinks;
   std::vector<std::string> gripperLinks;
