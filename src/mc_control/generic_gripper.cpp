@@ -112,6 +112,8 @@ std::string findFirstCommonBody(const mc_rbdyn::Robot & robotFull, const std::st
 Gripper::Gripper(const mc_rbdyn::Robot & robot, const std::string & gripperName,
                  const mc_rbdyn::Robot & controlRobot, const std::string & robot_urdf,
                  double currentQ, double timeStep)
+: overCommandLimit(false), overCommandLimitIter(0), overCommandLimitIterN(10),
+  actualQ(currentQ), actualCommandDiffTrigger(4*M_PI/180) /* 4 degress of difference */
 {
   auto mimicDict = readMimic(robot_urdf);
   name = gripperJoints(robot, gripperName, mimicDict);
@@ -168,11 +170,32 @@ double Gripper::curPosition() const
   return closeP + (openP - closeP)*percentOpen;
 }
 
+void Gripper::setActualQ(double q)
+{
+  actualQ = q;
+  double currentQ = curPosition();
+  if(std::abs(actualQ - currentQ) > actualCommandDiffTrigger)
+  {
+    overCommandLimitIter++;
+    if(overCommandLimitIter == overCommandLimitIterN)
+    {
+      std::cout << "Gripper safety triggered on " << name[0] << std::endl;
+      overCommandLimit = true;
+      setCurrentQ(actualQ - 0.01);
+    }
+  }
+  else
+  {
+    overCommandLimitIter = 0;
+    overCommandLimit = false;
+  }
+}
+
 const std::vector<double> & Gripper::q()
 {
   if(targetQ)
   {
-    if(std::abs(curPosition() - targetQIn) < 0.001)
+    if(overCommandLimit || std::abs(curPosition() - targetQIn) < 0.001)
     {
       targetQ = 0;
     }

@@ -47,6 +47,8 @@ public:
   double curPosition() const;
 
   const std::vector<double> & q();
+
+  void setActualQ(double q);
 public:
   std::vector<std::string> name;
 
@@ -62,6 +64,13 @@ public:
   std::string controlBodyName;
   double targetQIn;
   double * targetQ;
+
+  /* True if the gripper has been too far from the command for over overCommandLimitIterN iterations */
+  bool overCommandLimit;
+  unsigned int overCommandLimitIter;
+  unsigned int overCommandLimitIterN;
+  double actualQ;
+  double actualCommandDiffTrigger;
 };
 
 }

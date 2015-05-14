@@ -21,6 +21,8 @@ public:
 
   void setWrenches(const std::vector< std::pair<Eigen::Vector3d, Eigen::Vector3d> > & wrenches);
 
+  void setActualGripperQ(double rQ, double lQ);
+
   bool run();
 
   const mc_control::QPResultMsg & send(const double & t);

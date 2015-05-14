@@ -63,6 +63,12 @@ void MCDRCGlobalController::setWrenches(const std::vector< std::pair<Eigen::Vect
   controller->setWrenches(wrenches);
 }
 
+void MCDRCGlobalController::setActualGripperQ(double rQ, double lQ)
+{
+  controller->rgripper->setActualQ(rQ);
+  controller->lgripper->setActualQ(lQ);
+}
+
 bool MCDRCGlobalController::run()
 {
   /* Check if we need to change the controller this time */

@@ -382,9 +382,12 @@ bool live_CoMCloseGripperT::eval(MCSeqController & ctl)
   if(ctl.currentGripper)
   {
     ctl.currentGripper->percentOpen -= 0.002/3;
-    if(ctl.currentGripper->percentOpen <= 0)
+    if(ctl.currentGripper->overCommandLimit || ctl.currentGripper->percentOpen <= 0)
     {
-      ctl.currentGripper->percentOpen = 0;
+      if(!ctl.currentGripper->overCommandLimit)
+      {
+        ctl.currentGripper->percentOpen = 0;
+      }
       ctl.stanceIndex++;
       return true;
     }
@@ -857,9 +860,12 @@ bool live_closeGripperP::eval(MCSeqController & ctl)
     ctl.currentGripper->percentOpen -= 0.002;
     bool limitToZero = ctl.targetContact->envSurface->name == "PlatformLeftRampVS" or ctl.targetContact->envSurface->name == "PlatformLeftRampS"; /*FIXME Should be part of the configuration */
     double percentOpenLimit = limitToZero ? 0.25 : 0;
-    if(ctl.currentGripper->percentOpen <= percentOpenLimit)
+    if(ctl.currentGripper->overCommandLimit || ctl.currentGripper->percentOpen <= percentOpenLimit)
     {
-      ctl.currentGripper->percentOpen = percentOpenLimit;
+      if(!ctl.currentGripper->overCommandLimit)
+      {
+        ctl.currentGripper->percentOpen = percentOpenLimit;
+      }
       ctl.currentGripper = 0;
       finish = true;
     }
