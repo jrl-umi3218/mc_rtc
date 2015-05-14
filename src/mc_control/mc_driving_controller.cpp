@@ -41,7 +41,7 @@ MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rb
   ef_task.addToSolver(mrqpsolver->solver);
   ef_task.removeFromSolver(mrqpsolver->solver);
 
-  polarisPostureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(mrqpsolver->robots.mbs, 1, polaris.mbc->q, 2, 1000));
+  polarisPostureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(mrqpsolver->robots.mbs, 1, mrqpsolver->robots.robots[1].mbc->q, 2, 100));
 
   std::cout << "MCDrivingController init done" << std::endl;
 }
@@ -71,18 +71,28 @@ void MCDrivingController::reset(const ControllerResetData & reset_data)
                                    wheelSurface->X_0_s(polaris, *(polaris.mbc))) << std::endl;
   */
 
-  mrqpsolver->setContacts({mc_rbdyn::MRContact(robots().robotIndex,
+  mrqpsolver->setContacts({/*mc_rbdyn::MRContact(robots().robotIndex,
                            1,
                            robot().surfaces.at("Butthock"),
                            polaris.surfaces.at("left_seat_deformed")),
-                           /*mc_rbdyn::MRContact(robots().robotIndex,
+                           mc_rbdyn::MRContact(robots().robotIndex,
                            1,
                            robot().surfaces.at("LowerBack"),
                            polaris.surfaces.at("left_back")),*/
                            mc_rbdyn::MRContact(robots().robotIndex,
                            1,
+                           robot().surfaces.at("LFullSole"),
+                           polaris.surfaces.at("left_floor")),
+                           mc_rbdyn::MRContact(robots().robotIndex,
+                           1,
+                           robot().surfaces.at("LeftThight"),
+                           polaris.surfaces.at("left_seat_deformed")),
+                           mc_rbdyn::MRContact(robots().robotIndex,
+                           1,
                            robot().surfaces.at("RightGripper"),
-                           polaris.surfaces.at("bar_wheel"))});
+                           polaris.surfaces.at("bar_wheel"))
+                           });
+  mrqpsolver->update();
 
   mrqpsolver->solver.addTask(polarisPostureTask.get());
   std::cout << "End reset" << std::endl;
@@ -142,9 +152,10 @@ bool MCDrivingController::changeWheelAngle(double theta)
 {
   int wheel_i = robots().robots[1].jointIndexByName("steering_joint");
   auto p = polarisPostureTask->posture();
+  double old = p[wheel_i][0];
   p[wheel_i][0] = theta;
   polarisPostureTask->posture(p);
-  std::cout << "Wheel angle set to : " << theta << std::endl;
+  std::cout << "Wheel angle changed from " << old << " to : " << theta << std::endl;
   return true;
 }
 
