@@ -19,11 +19,12 @@ MCMRQPController::MCMRQPController(const std::vector<std::shared_ptr<mc_rbdyn::R
     for(const auto & m : robot_modules)
     {
       surfaceDirs.push_back(m->path + "/rsdf/" + m->name + "/");
+      std::cout << "In surfaceDirs " << surfaceDirs.back() << std::endl;
     }
 
     mc_rbdyn::Robots robots = loadRobots(robot_modules, surfaceDirs);
 
-    for(auto robot: robots.robots)
+    for(auto & robot: robots.robots)
     {
       robot.mbc->gravity = Eigen::Vector3d(0, 0, 9.81);
       rbd::forwardKinematics(*(robot.mb), *(robot.mbc));

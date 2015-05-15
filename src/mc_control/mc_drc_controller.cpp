@@ -58,6 +58,11 @@ void MCDRCGlobalController::init(const std::vector<double> & initq)
   controller->reset({q, {}});
 }
 
+void MCDRCGlobalController::setEncoderValues(const std::vector<double> & eValues)
+{
+  controller->encoderValues = eValues;
+}
+
 void MCDRCGlobalController::setWrenches(const std::vector< std::pair<Eigen::Vector3d, Eigen::Vector3d> > & wrenches)
 {
   controller->setWrenches(wrenches);

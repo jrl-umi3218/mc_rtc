@@ -53,6 +53,8 @@ public:
 public:
   /* Common stuff */
   const double timeStep;
+  /* Encoder values provided by the low-level controller */
+  std::vector<double> encoderValues;
   /* FIXME A bit dirty but needed */
   std::shared_ptr<mc_control::Gripper> lgripper;
   std::shared_ptr<mc_control::Gripper> rgripper;

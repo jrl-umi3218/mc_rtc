@@ -158,6 +158,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
         init = true;
       }
       double t = tm.sec*1e9 + tm.nsec;
+      controller.setEncoderValues(qIn);
       controller.setWrenches(m_wrenches);
       if(controller.run())
       {

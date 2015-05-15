@@ -34,7 +34,7 @@ QPContactPtr mrTasksContactFromMcContact(const mc_rbdyn::Robots & robots, const 
     frames.push_back(p.rotation());
   }
 
-  const unsigned int & ambId = contact.ambiguityId;
+  const int & ambId = contact.ambiguityId;
 
   if(dynamic_cast<const mc_rbdyn::PlanarSurface*>(r1Surface.get()))
   {
