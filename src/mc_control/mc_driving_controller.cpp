@@ -48,8 +48,6 @@ MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rb
 
   mrqpsolver->setContacts(drivingContacts);
 
-  std::cout << "NR CONTACTS : " << drivingContacts.size() << std::endl;
-
   ef_task.addToSolver(mrqpsolver->solver);
   ef_task.removeFromSolver(mrqpsolver->solver);
 
