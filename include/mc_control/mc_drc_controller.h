@@ -75,7 +75,7 @@ private:
   MCBody6dController body6d_controller;
   MCCoMController com_controller;
   MCSeqController seq_controller;
-  MCDrivingController driving_controller;
+  //MCDrivingController driving_controller;
   enum CurrentController
   {
     POSTURE = 1,

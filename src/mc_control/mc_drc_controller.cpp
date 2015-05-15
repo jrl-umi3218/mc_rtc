@@ -15,8 +15,8 @@ namespace mc_control
 MCDRCGlobalController::MCDRCGlobalController()
 : posture_controller(), body6d_controller(), com_controller(),
   seq_controller("/home/hrp2user/jrl/hrp2_drc/hrp2_drc_description/", "drc_stairs2", "/home/hrp2user/jrl/mc_rtc/data/drc_stairs_climbing.json"),
-  driving_controller({std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::PolarisRangerRobotModule()),
-                      std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::EnvRobotModule("/home/hrp2user/jrl/mc_env_description/", "ground"))}),
+  //driving_controller({std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::PolarisRangerRobotModule()),
+  //                    std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::EnvRobotModule("/home/hrp2user/jrl/mc_env_description/", "ground"))}),
   //current_ctrl(POSTURE), next_ctrl(POSTURE),
   //controller(&posture_controller),
   //current_ctrl(BODY6D), next_ctrl(BODY6D),
@@ -205,12 +205,13 @@ bool MCDRCGlobalController::EnableSeqController()
 
 bool MCDRCGlobalController::EnableDrivingController()
 {
-  next_ctrl = DRIVING;
-  if(current_ctrl != DRIVING)
-  {
-    next_controller = &driving_controller;
-  }
-  return true;
+//  next_ctrl = DRIVING;
+//  if(current_ctrl != DRIVING)
+//  {
+//    next_controller = &driving_controller;
+//  }
+//  return true;
+  return false;
 }
 
 }

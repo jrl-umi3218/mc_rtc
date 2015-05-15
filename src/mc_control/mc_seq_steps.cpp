@@ -820,6 +820,35 @@ bool enter_addGripperT::eval(MCSeqController & ctl)
   ctl.addContactTask->addToSolver(ctl.qpsolver->solver);
   ctl.metaTasks.push_back(ctl.addContactTask.get());
 
+  bool leftHand = ctl.targetContact->robotSurface->name == "LeftGripper";
+  if(leftHand)
+  {
+    ctl.lowerPGainsJoints = {"LARM_JOINT0", "LARM_JOINT1", "LARM_JOINT2", "LARM_JOINT3", "LARM_JOINT4", "LARM_JOINT5", "LARM_JOINT6"};
+  }
+  else
+  {
+    ctl.lowerPGainsJoints = {"RARM_JOINT0", "RARM_JOINT1", "RARM_JOINT2", "RARM_JOINT3", "RARM_JOINT4", "RARM_JOINT5", "RARM_JOINT6"};
+  }
+  ctl.lowerPGainsOriginalValues.clear();
+  for(const auto & jn : ctl.lowerPGainsJoints)
+  {
+    double pgain = 0;
+    if(pdgains::getPGain(jn, pgain))
+    {
+      std::cout << "Original pgain at " << jn << ": " << pgain << std::endl;
+      ctl.lowerPGainsOriginalValues.push_back(pgain);
+      if(pdgains::setPGain(jn, pgain/10))
+      {
+        std::cout << "Set pgain at " << jn << " to " << pgain/10 << std::endl;
+      }
+    }
+    else
+    {
+      std::cout << "Failed to get original pgain value for " << jn << std::endl;
+      ctl.lowerPGainsOriginalValues.push_back(-1);
+    }
+  }
+
   return true;
 }
 
@@ -899,34 +928,6 @@ bool enter_hardCloseGripperP::eval(MCSeqController & ctl)
   std::cout << "enter_hardCloseGripperP" << std::endl;
   ctl.isGripperClose = false;
 
-  bool leftHand = ctl.targetContact->robotSurface->name == "LeftGripper";
-  if(leftHand)
-  {
-    ctl.lowerPGainsJoints = {"LARM_JOINT3", "LARM_JOINT4", "LARM_JOINT5", "LARM_JOINT6"};
-  }
-  else
-  {
-    ctl.lowerPGainsJoints = {"RARM_JOINT3", "RARM_JOINT4", "RARM_JOINT5", "RARM_JOINT6"};
-  }
-  ctl.lowerPGainsOriginalValues.clear();
-  for(const auto & jn : ctl.lowerPGainsJoints)
-  {
-    double pgain = 0;
-    if(pdgains::getPGain(jn, pgain))
-    {
-      std::cout << "Original pgain at " << jn << ": " << pgain << std::endl;
-      ctl.lowerPGainsOriginalValues.push_back(pgain);
-      if(pdgains::setPGain(jn, pgain/10))
-      {
-        std::cout << "Set pgain at " << jn << " to " << pgain/10 << std::endl;
-      }
-    }
-    else
-    {
-      std::cout << "Failed to get original pgain value for " << jn << std::endl;
-      ctl.lowerPGainsOriginalValues.push_back(-1);
-    }
-  }
   ctl.iterSinceHardClose = 0;
   return true;
 }
@@ -953,11 +954,11 @@ bool live_hardCloseGripperP::eval(MCSeqController & ctl)
   else
   {
     /* We enter here once the gripper has been fully closed, wait a little for the hand to adjust itself */
-    ctl.iterSinceHardClose++;
-    if(ctl.iterSinceHardClose > 3/ctl.timeStep) /*Wait 3 seconds */
-    {
-      finish = true;
-    }
+    //ctl.iterSinceHardClose++;
+    //if(ctl.iterSinceHardClose > 3/ctl.timeStep) /*Wait 3 seconds */
+    //{
+    finish = true;
+    //}
   }
 
   if(finish)
@@ -965,7 +966,7 @@ bool live_hardCloseGripperP::eval(MCSeqController & ctl)
     ctl.isGripperClose = true;
     /*TODO Get the actual position of the hand, set it in the QP and reset the gains to their original value*/
     bool leftHand = ctl.targetContact->robotSurface->name == "LeftGripper";
-    unsigned int ji = leftHand ? 27 : 19;
+    unsigned int ji = leftHand ? 24 : 16;
     std::vector<double> & eValues = ctl.encoderValues;
     for(const auto & jn : ctl.lowerPGainsJoints)
     {

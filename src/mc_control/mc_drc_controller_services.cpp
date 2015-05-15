@@ -123,11 +123,11 @@ bool MCDRCGlobalController::play_next_stance()
 
 bool MCDRCGlobalController::change_wheel_angle(double theta)
 {
-  if(current_ctrl == DRIVING)
-  {
-    return driving_controller.changeWheelAngle(theta);
-  }
-  else
+//  if(current_ctrl == DRIVING)
+//  {
+//    return driving_controller.changeWheelAngle(theta);
+//  }
+//  else
   {
     return false;
   }
@@ -135,11 +135,11 @@ bool MCDRCGlobalController::change_wheel_angle(double theta)
 
 bool MCDRCGlobalController::change_ankle_angle(double theta)
 {
-  if(current_ctrl == DRIVING)
-  {
-    return driving_controller.changeAnkleAngle(theta);
-  }
-  else
+//  if(current_ctrl == DRIVING)
+//  {
+//    return driving_controller.changeAnkleAngle(theta);
+//  }
+//  else
   {
     return false;
   }
@@ -147,11 +147,11 @@ bool MCDRCGlobalController::change_ankle_angle(double theta)
 
 bool MCDRCGlobalController::change_gaze(double pan, double tilt)
 {
-  if(current_ctrl == DRIVING)
-  {
-    return driving_controller.changeGaze(pan, tilt);
-  }
-  else
+//  if(current_ctrl == DRIVING)
+//  {
+//    return driving_controller.changeGaze(pan, tilt);
+//  }
+//  else
   {
     return false;
   }
@@ -159,11 +159,11 @@ bool MCDRCGlobalController::change_gaze(double pan, double tilt)
 
 bool MCDRCGlobalController::change_wrist_angle(double yaw)
 {
-  if(current_ctrl == DRIVING)
-  {
-    return driving_controller.changeWristAngle(yaw);
-  }
-  else
+//  if(current_ctrl == DRIVING)
+//  {
+//    return driving_controller.changeWristAngle(yaw);
+//  }
+//  else
   {
     return false;
   }
