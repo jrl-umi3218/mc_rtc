@@ -71,11 +71,13 @@ void MCDrivingController::reset(const ControllerResetData & reset_data)
                                    wheelSurface->X_0_s(polaris, *(polaris.mbc))) << std::endl;
   */
 
-  mrqpsolver->setContacts({/*mc_rbdyn::MRContact(robots().robotIndex,
+  mrqpsolver->solver.addTask(polarisPostureTask.get());
+
+  mrqpsolver->setContacts({mc_rbdyn::MRContact(robots().robotIndex,
                            1,
                            robot().surfaces.at("Butthock"),
                            polaris.surfaces.at("left_seat_deformed")),
-                           mc_rbdyn::MRContact(robots().robotIndex,
+                           /*mc_rbdyn::MRContact(robots().robotIndex,
                            1,
                            robot().surfaces.at("LowerBack"),
                            polaris.surfaces.at("left_back")),*/
@@ -83,18 +85,16 @@ void MCDrivingController::reset(const ControllerResetData & reset_data)
                            1,
                            robot().surfaces.at("LFullSole"),
                            polaris.surfaces.at("left_floor")),
-                           mc_rbdyn::MRContact(robots().robotIndex,
+                           /*mc_rbdyn::MRContact(robots().robotIndex,
                            1,
                            robot().surfaces.at("LeftThight"),
-                           polaris.surfaces.at("left_seat_deformed")),
+                           polaris.surfaces.at("left_seat_deformed")),*/
                            mc_rbdyn::MRContact(robots().robotIndex,
                            1,
                            robot().surfaces.at("RightGripper"),
                            polaris.surfaces.at("bar_wheel"))
                            });
-  mrqpsolver->update();
 
-  mrqpsolver->solver.addTask(polarisPostureTask.get());
   std::cout << "End reset" << std::endl;
 }
 
@@ -143,6 +143,7 @@ void MCDrivingController::resetWheelTransform()
   sva::PTransformd X_chassis_wheel = (X_wheel_s).inv()*X_0_s*(X_0_chassis).inv();
 
   polaris.mb->transform(joint_index, X_chassis_wheel);
+  polaris.mbc->zero(*(polaris.mb));
 
   rbd::forwardKinematics(*(polaris.mb), *(polaris.mbc));
   rbd::forwardVelocity(*(polaris.mb), *(polaris.mbc));
