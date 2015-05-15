@@ -691,8 +691,10 @@ std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * cu
                   std::shared_ptr<SeqStep>(new live_adjustGripperT()),
                   std::shared_ptr<SeqStep>(new enter_addGripperT()),
                   std::shared_ptr<SeqStep>(new live_addGripperT()),
-                  std::shared_ptr<SeqStep>(new enter_closeGripperP()),
-                  std::shared_ptr<SeqStep>(new live_closeGripperP()),
+                  std::shared_ptr<SeqStep>(new enter_softCloseGripperP()),
+                  std::shared_ptr<SeqStep>(new live_softCloseGripperP()),
+                  std::shared_ptr<SeqStep>(new enter_hardCloseGripperP()),
+                  std::shared_ptr<SeqStep>(new live_hardCloseGripperP()),
                   std::shared_ptr<SeqStep>(new enter_contactGripperP()),
                   std::shared_ptr<SeqStep>(new live_contactGripperT())
     };

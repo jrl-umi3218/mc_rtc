@@ -22,6 +22,10 @@ link_directories(${OPENRTM_LIBRARY_DIRS})
 pkg_check_modules(EIGEN3 REQUIRED eigen3)
 include_directories(${EIGEN3_INCLUDE_DIRS})
 
+pkg_check_modules(HRPSYSBASE REQUIRED hrpsys-base)
+include_directories(${HRPSYSBASE_INCLUDE_DIRS})
+link_directories(${HRPSYSBASE_LIBRARY_DIRS})
+
 include_directories(include)
 
 OMNIIDL_INCLUDE_DIRECTORIES("idl")
@@ -91,7 +95,7 @@ set(mc_drc_controller_SRC
 ./src/mc_control/mc_drc_controller_services.cpp
 )
 add_library(mc_drc_controller SHARED ${mc_drc_controller_SRC})
-target_link_libraries(mc_drc_controller mc_tasks mc_control_solver mc_robots)
+target_link_libraries(mc_drc_controller mc_tasks mc_control_solver mc_robots hrpIo)
 
 set(MCControl_SRC
 ./src/MCControlServiceSVC_impl.cpp

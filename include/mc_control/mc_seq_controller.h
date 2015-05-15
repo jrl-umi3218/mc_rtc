@@ -135,6 +135,8 @@ public:
   bool isBodyTask;
   bool isAdjust;
   bool skipRemoveGripper;
+  std::vector<std::string> lowerPGainsJoints;
+  std::vector<double> lowerPGainsOriginalValues;
 
   /* Contact sensors */
   bool use_real_sensors; /*FIXME Should be set by configuration */

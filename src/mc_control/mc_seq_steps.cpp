@@ -1,5 +1,7 @@
 #include <mc_control/mc_seq_steps.h>
 
+#include "pdgains.cpp"
+
 namespace mc_control
 {
 
@@ -834,9 +836,9 @@ bool live_addGripperT::eval(MCSeqController & ctl)
   return false;
 }
 
-bool enter_closeGripperP::eval(MCSeqController & ctl)
+bool enter_softCloseGripperP::eval(MCSeqController & ctl)
 {
-  std::cout << "enter_closeGripperP" << std::endl;
+  std::cout << "enter_softCloseGripperP" << std::endl;
   ctl.isGripperClose = false;
 
   std::shared_ptr<mc_rbdyn::Surface> robotSurf = ctl.targetContact->robotSurface;
@@ -851,7 +853,55 @@ bool enter_closeGripperP::eval(MCSeqController & ctl)
   return true;
 }
 
-bool live_closeGripperP::eval(MCSeqController & ctl)
+bool live_softCloseGripperP::eval(MCSeqController & ctl)
+{
+  bool finish = false;
+
+  if(ctl.currentGripper)
+  {
+    ctl.currentGripper->percentOpen -= 0.002;
+    bool limitToZero = ctl.targetContact->envSurface->name == "PlatformLeftRampVS" or ctl.targetContact->envSurface->name == "PlatformLeftRampS"; /*FIXME Should be part of the configuration */
+    double percentOpenLimit = limitToZero ? 0.35 : 0.1;
+    if(ctl.currentGripper->overCommandLimit || ctl.currentGripper->percentOpen <= percentOpenLimit)
+    {
+      if(!ctl.currentGripper->overCommandLimit)
+      {
+        ctl.currentGripper->percentOpen = percentOpenLimit;
+      }
+      finish = true;
+    }
+  }
+  else
+  {
+    finish = true;
+  }
+
+  if(finish)
+  {
+    ctl.isGripperClose = true;
+    std::shared_ptr<mc_rbdyn::Surface> robotSurf = ctl.targetContact->robotSurface;
+    unsigned int bodyId = ctl.robot().bodyIdByName(robotSurf->bodyName);
+    ctl.constSpeedConstr->removeBoundedSpeed(bodyId);
+    ctl.qpsolver->solver.updateConstrsNrVars(ctl.robots().mbs);
+    ctl.qpsolver->solver.updateConstrSize();
+    std::cout << "Finished softCloseGripperP" << std::endl;
+    return true;
+  }
+
+  return false;
+}
+
+bool enter_hardCloseGripperP::eval(MCSeqController & ctl)
+{
+  std::cout << "enter_hardCloseGripperP" << std::endl;
+  ctl.isGripperClose = false;
+
+  /*TODO Get the current pgains on the hand and lower them strongly */
+
+  return true;
+}
+
+bool live_hardCloseGripperP::eval(MCSeqController & ctl)
 {
   bool finish = false;
 
@@ -878,26 +928,12 @@ bool live_closeGripperP::eval(MCSeqController & ctl)
   if(finish)
   {
     ctl.isGripperClose = true;
-    std::shared_ptr<mc_rbdyn::Surface> robotSurf = ctl.targetContact->robotSurface;
-    unsigned int bodyId = ctl.robot().bodyIdByName(robotSurf->bodyName);
-    ctl.constSpeedConstr->removeBoundedSpeed(bodyId);
-    ctl.qpsolver->solver.updateConstrsNrVars(ctl.robots().mbs);
-    ctl.qpsolver->solver.updateConstrSize();
-    std::cout << "Finished closeGripperP" << std::endl;
+    /*TODO Get the actual position of the hand, set it in the QP and reset the gains to their original value*/
+    std::cout << "Finished hardCloseGripperP" << std::endl;
     return true;
   }
 
   return false;
-}
-
-bool live_closeGripperT::eval(MCSeqController & ctl)
-{
-  return ctl.isGripperWillBeAttached and ctl.isGripperClose;
-}
-
-bool live_closeGripperMoveCoMT::eval(MCSeqController & ctl)
-{
-  return (not ctl.isGripperWillBeAttached) and ctl.isGripperClose;
 }
 
 bool enter_contactGripperP::eval(MCSeqController & ctl)
