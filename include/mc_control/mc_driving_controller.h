@@ -37,6 +37,7 @@ struct MCDrivingController : MCMRQPController
     mc_tasks::EndEffectorTask ef_task;
     std::shared_ptr<tasks::qp::PostureTask> polarisPostureTask;
     mc_solver::KinematicsConstraint polarisKinematicsConstraint;
+    std::vector<mc_rbdyn::MRContact> drivingContacts;
 };
 
 }
