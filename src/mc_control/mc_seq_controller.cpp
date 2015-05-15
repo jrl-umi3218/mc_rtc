@@ -198,14 +198,8 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
       if(addA->contact.robotSurface->name == "LeftGripper" &&
          addA->contact.envSurface->name == "StairLeftRung2")
       {
-        sc.contactObj.preContactDist = -0.1;
+        sc.contactObj.preContactDist = 0.05;
         sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(1.0, 1.0, 1.0, 0.0);
-      }
-      if(addA->contact.robotSurface->name == "LeftGripper" &&
-         addA->contact.envSurface->name == "StairLeftRung3")
-      {
-        sc.contactObj.preContactDist = 0.02;
-        sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(1.0, 1.0, 1.1, 0.0);
       }
       if(addA->contact.robotSurface->name == "LFullSole" &&
          addA->contact.envSurface->name == "Platform")
@@ -221,7 +215,7 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
          addA->contact.envSurface->name == "StairLeftRung3")
       {
         sc.contactObj.preContactDist = 0.0;
-        sc.contactObj.adjustOffset = Eigen::Vector3d(0,0,-0.075);
+        sc.contactObj.adjustOffset = Eigen::Vector3d(0,0,-0.1);
         sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(1.0, 0.25, 1.0, 0.2);
       }
       if(addA->contact.robotSurface->name == "RightGripper" &&
@@ -236,6 +230,20 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
         sc.contactObj.adjustOffset = Eigen::Vector3d(0,-0.025,-0.05);
         sc.contactObj.preContactDist = 0.05;
         sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(0.6, 1.0, 1., 0.2);
+      }
+    }
+    mc_rbdyn::RemoveContactAction* rmA = dynamic_cast<mc_rbdyn::RemoveContactAction*>(actions[i].get());
+    if(rmA)
+    {
+      if(rmA->contact.robotSurface->name == "RightGripper" &&
+         rmA->contact.envSurface->name == "StairLeftRung3")
+      {
+        sc.collisions.robotEnv.push_back({"RARM_LINK6", "stair_left_railing", {0.15, 0.1, 0.0}});
+      }
+      if(rmA->contact.robotSurface->name == "LFrontSole" &&
+         rmA->contact.envSurface->name == "StairStep2")
+      {
+        sc.collisions.robotEnv.push_back({"RARM_LINK6", "stair_left_railing", {0.15, 0.1, 0.0}});
       }
     }
 
@@ -310,8 +318,11 @@ bool MCSeqController::run()
         if(stanceIndex != stanceIndexIn)
         {
           std::cout << "Completed " << actions[stanceIndexIn]->toStr() << std::endl;
-          paused = true;
-          std::cout << "Starting " << actions[stanceIndex]->toStr() << std::endl;
+          if(stanceIndex < actions.size())
+          {
+            std::cout << "Starting " << actions[stanceIndex]->toStr() << std::endl;
+          }
+          //paused = true;
         }
       }
       post_live();
