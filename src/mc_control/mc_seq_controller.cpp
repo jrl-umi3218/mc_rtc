@@ -322,7 +322,7 @@ bool MCSeqController::run()
           {
             std::cout << "Starting " << actions[stanceIndex]->toStr() << std::endl;
           }
-          //paused = true;
+          paused = true;
         }
       }
       post_live();
@@ -695,6 +695,7 @@ std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * cu
                   std::shared_ptr<SeqStep>(new live_softCloseGripperP()),
                   std::shared_ptr<SeqStep>(new enter_hardCloseGripperP()),
                   std::shared_ptr<SeqStep>(new live_hardCloseGripperP()),
+                  std::shared_ptr<SeqStep>(new enter_restoreArmGainsP()),
                   std::shared_ptr<SeqStep>(new enter_contactGripperP()),
                   std::shared_ptr<SeqStep>(new live_contactGripperT())
     };

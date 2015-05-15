@@ -51,6 +51,7 @@ CREATE_STRUCT(enter_softCloseGripperP)
 CREATE_STRUCT(live_softCloseGripperP)
 CREATE_STRUCT(enter_hardCloseGripperP)
 CREATE_STRUCT(live_hardCloseGripperP)
+CREATE_STRUCT(enter_restoreArmGainsP)
 CREATE_STRUCT(enter_contactGripperP)
 CREATE_STRUCT(live_contactGripperT)
 

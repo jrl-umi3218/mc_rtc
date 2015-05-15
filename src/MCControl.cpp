@@ -230,7 +230,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
     {
       max_t = loop_t;
     }
-    std::cout << "\rTime spent in controller: " << loop_t << " us" << std::flush;
+    //std::cout << "\rTime spent in controller: " << loop_t << " us" << std::flush;
   }
   return RTC::RTC_OK;
 }

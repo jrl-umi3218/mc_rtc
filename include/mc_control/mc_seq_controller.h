@@ -137,6 +137,7 @@ public:
   bool skipRemoveGripper;
   std::vector<std::string> lowerPGainsJoints;
   std::vector<double> lowerPGainsOriginalValues;
+  unsigned int iterSinceHardClose;
 
   /* Contact sensors */
   bool use_real_sensors; /*FIXME Should be set by configuration */
