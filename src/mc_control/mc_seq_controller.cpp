@@ -150,7 +150,7 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
       sc.contactTask.position.extraStiffness = 5.0;
       sc.contactTask.position.weight = 600.0;
       sc.contactTask.position.targetSpeed = 0.0005;
-      sc.contactTask.orientation.stiffness = 30.0;
+      sc.contactTask.orientation.stiffness = 10.0;
       sc.contactTask.orientation.weight = 200.0;
       sc.contactTask.orientation.finalWeight = 1000.0;
       sc.contactTask.linVel.stiffness = 2.0;
@@ -337,7 +337,7 @@ bool MCSeqController::run()
             stabilityTask->comObj = rbd::computeCoM(*(robot().mb), *(robot().mbc));
             stabilityTask->comTaskSm.reset(curConf().comTask.weight, stabilityTask->comObj, curConf().comTask.targetSpeed);
           }
-          paused = true;
+          //paused = true;
         }
       }
       post_live();
@@ -391,7 +391,7 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
       mc_rbdyn::GripperSurface & robSurf = *is_gs;
       tasks::qp::ContactId contactId = c.contactId(robot(), env());
       Eigen::Vector3d T = robSurf.X_b_motor.rotation().row(0);
-      std::shared_ptr<tasks::qp::GripperTorqueTask> gTask(new tasks::qp::GripperTorqueTask(contactId, robSurf.X_b_motor.translation(), T, 1e-4));
+      std::shared_ptr<tasks::qp::GripperTorqueTask> gTask(new tasks::qp::GripperTorqueTask(contactId, robSurf.X_b_motor.translation(), T, 10));
       gripperTorqueTasks.push_back(gTask);
       qpsolver->solver.addTask(gTask.get());
     }
