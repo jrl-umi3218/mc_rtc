@@ -145,7 +145,7 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
       sc.contactObj.adjustVelThresh = 0.02;
       sc.contactObj.adjustOriThresh = 0.1;
       sc.contactObj.adjustOriTBNWeight = Eigen::Vector3d(1,1,1);
-      sc.contactObj.preContactDist = 0.1;
+      sc.contactObj.preContactDist = 0.02;
       sc.contactTask.position.stiffness = 0.1;
       sc.contactTask.position.extraStiffness = 5.0;
       sc.contactTask.position.weight = 600.0;
@@ -178,6 +178,9 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
       sc.collisions.robotEnv.push_back({"RARM_LINK6", "stair_step2", {0.2, 0.1, 0.0}});
       sc.collisions.robotEnv.push_back({"RARM_LINK6", "stair_step3", {0.2, 0.1, 0.0}});
       sc.collisions.robotEnv.push_back({"RARM_LINK6", "platform", {0.2, 0.1, 0.0}});
+      sc.collisions.robotEnv.push_back({"RARM_LINK5", "platform", {0.2, 0.1, 0.0}});
+      sc.collisions.robotEnv.push_back({"RARM_LINK4", "platform", {0.2, 0.1, 0.0}});
+      sc.collisions.robotEnv.push_back({"RARM_LINK3", "platform", {0.2, 0.1, 0.0}});
     }
 
     /* Per-stance configuration */
@@ -337,7 +340,7 @@ bool MCSeqController::run()
             stabilityTask->comObj = rbd::computeCoM(*(robot().mb), *(robot().mbc));
             stabilityTask->comTaskSm.reset(curConf().comTask.weight, stabilityTask->comObj, curConf().comTask.targetSpeed);
           }
-          //paused = true;
+          paused = true;
         }
       }
       post_live();

@@ -897,7 +897,7 @@ bool live_removeBeforeCloseT::eval(MCSeqController & ctl)
   {
     Eigen::Vector3d curPos = ctl.robot().mbc->bodyPosW[ctl.robot().bodyIndexByName(ctl.targetContact->robotSurface->bodyName)].translation();
     double d = (curPos - ctl.contactPos).norm();
-    if(d > 0.01)
+    if(d > 0.005)
     {
       ctl.removeContactTask->removeFromSolver(ctl.qpsolver->solver);
       ctl.removeMetaTask(ctl.removeContactTask.get());
