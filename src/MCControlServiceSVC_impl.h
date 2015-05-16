@@ -46,11 +46,12 @@ namespace OpenHRP
       virtual CORBA::Boolean move_com(CORBA::Double x, CORBA::Double y, CORBA::Double z);
       /* Seq controller */
       virtual CORBA::Boolean play_next_stance();
-
+      /* Driving services */
       virtual CORBA::Boolean change_wheel_angle(CORBA::Double theta);
       virtual CORBA::Boolean change_ankle_angle(CORBA::Double theta);
       virtual CORBA::Boolean change_gaze(CORBA::Double pan, CORBA::Double tilt);
       virtual CORBA::Boolean change_wrist_angle(CORBA::Double yaw);
+      virtual CORBA::Boolean driving_service(CORBA::Double w, CORBA::Double a, CORBA::Double p, CORBA::Double t);
     private:
       MCControl * m_plugin;
   };

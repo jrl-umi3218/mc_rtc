@@ -169,4 +169,16 @@ bool MCDRCGlobalController::change_wrist_angle(double yaw)
   }
 }
 
+bool MCDRCGlobalController::driving_service(double w, double a, double p, double t)
+{
+  if(current_ctrl == DRIVING)
+  {
+    return driving_controller.driving_service(w, a, p, t);
+  }
+  else
+  {
+    return false;
+  }
+}
+
 }

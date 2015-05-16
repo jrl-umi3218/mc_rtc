@@ -184,4 +184,13 @@ bool MCDrivingController::changeWristAngle(double yaw)
   return true;
 }
 
+bool MCDrivingController::driving_service(double wheel, double ankle, double pan, double tilt)
+{
+  bool r = true;
+  r = r && changeWheelAngle(wheel);
+  r = r && changeAnkleAngle(ankle);
+  r = r && changeGaze(pan, tilt);
+  return r;
+}
+
 }

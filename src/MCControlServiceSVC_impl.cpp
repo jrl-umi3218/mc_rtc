@@ -143,4 +143,9 @@ CORBA::Boolean MCControlServiceSVC_impl::change_wrist_angle(CORBA::Double yaw)
   return m_plugin->controller.change_wrist_angle(yaw);
 }
 
+CORBA::Boolean MCControlServiceSVC_impl::driving_service(CORBA::Double w, CORBA::Double a, CORBA::Double p, CORBA::Double t)
+{
+  return m_plugin->controller.driving_service(w, a, p, t);
+}
+
 }

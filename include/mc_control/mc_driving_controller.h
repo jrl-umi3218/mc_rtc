@@ -22,10 +22,11 @@ struct MCDrivingController : MCMRQPController
 
     bool changeWristAngle(double yaw);
 
+    bool driving_service(double w, double a, double p, double t);
+
     virtual bool run() override;
 
     virtual void reset(const ControllerResetData & reset_data) override;
-
   protected:
     void resetBasePose();
     void resetWheelTransform();

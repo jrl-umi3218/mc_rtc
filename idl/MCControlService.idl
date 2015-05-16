@@ -47,6 +47,8 @@ module OpenHRP
     boolean change_gaze(in double pan, in double tilt);
 
     boolean change_wrist_angle(in double yaw);
+
+    boolean driving_service(in double wheel, in double ankle, in double pan, in double tilt);
   };
 
 };
