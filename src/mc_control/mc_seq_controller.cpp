@@ -95,8 +95,8 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
     {
       sc.postureTask.stiffness = 1.0;
       sc.postureTask.weight = 10.0;
-      sc.comTask.stiffness = 3.0;
-      sc.comTask.extraStiffness = 6.0;
+      sc.comTask.stiffness = 1.0;
+      sc.comTask.extraStiffness = 2.0;
       sc.comTask.weight = 200.0;
       sc.comTask.targetSpeed = 0.001;
       sc.comObj.posThresh = 0.1,
@@ -119,14 +119,14 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
       sc.contactTask.position.extraStiffness = 12.0;
       sc.contactTask.position.weight = 300.0;
       sc.contactTask.position.targetSpeed = 0.001;
-      sc.contactTask.orientation.stiffness = 15.0;
-      sc.contactTask.orientation.weight = 1.0;
+      sc.contactTask.orientation.stiffness = 30.0;
+      sc.contactTask.orientation.weight = 300.0;
       sc.contactTask.orientation.finalWeight = 1000.0;
-      sc.contactTask.linVel.stiffness = 10.0;
+      sc.contactTask.linVel.stiffness = 2.0;
       sc.contactTask.linVel.weight = 10000.0;
-      sc.contactTask.linVel.speed = 0.05;
+      sc.contactTask.linVel.speed = 0.02;
       sc.contactTask.waypointConf.thresh = 0.15;
-      sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(0.15, 1, 1.1, 0.2);
+      sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(0.15, 1, 1., 0.2);
       sc.contactTask.collisionConf.iDist = 0.01;
       sc.contactTask.collisionConf.sDist = 0.005;
       sc.contactTask.collisionConf.damping = 0.05;
@@ -150,12 +150,12 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
       sc.contactTask.position.extraStiffness = 5.0;
       sc.contactTask.position.weight = 600.0;
       sc.contactTask.position.targetSpeed = 0.0005;
-      sc.contactTask.orientation.stiffness = 5.0;
+      sc.contactTask.orientation.stiffness = 30.0;
       sc.contactTask.orientation.weight = 200.0;
       sc.contactTask.orientation.finalWeight = 1000.0;
-      sc.contactTask.linVel.stiffness = 5.0;
+      sc.contactTask.linVel.stiffness = 2.0;
       sc.contactTask.linVel.weight = 1000.0;
-      sc.contactTask.linVel.speed = 0.05;
+      sc.contactTask.linVel.speed = 0.02;
       sc.contactTask.waypointConf.thresh = 0.1;
       sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(0.1, 1.0, 0.5, 0.2);
       sc.contactTask.collisionConf.iDist = 0.01;
@@ -321,6 +321,21 @@ bool MCSeqController::run()
           if(stanceIndex < actions.size())
           {
             std::cout << "Starting " << actions[stanceIndex]->toStr() << std::endl;
+            std::vector<double> & eValues = encoderValues;
+            for(size_t i = 0; i < 24; ++i)
+            {
+              robot().mbc->q[i+1][0] = eValues[i];
+            }
+            for(size_t i = 24; i < 32; ++i)
+            {
+              robot().mbc->q[i+6][0] = eValues[i];
+            }
+            /* At this point, the robot mbc holds the encoder values */
+            stabilityTask->postureTask->posture(robot().mbc->q);
+            rbd::forwardKinematics(*(robot().mb), *(robot().mbc));
+            rbd::forwardVelocity(*(robot().mb), *(robot().mbc));
+            stabilityTask->comObj = rbd::computeCoM(*(robot().mb), *(robot().mbc));
+            stabilityTask->comTaskSm.reset(curConf().comTask.weight, stabilityTask->comObj, curConf().comTask.targetSpeed);
           }
           paused = true;
         }
@@ -691,6 +706,8 @@ std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * cu
                   std::shared_ptr<SeqStep>(new live_adjustGripperT()),
                   std::shared_ptr<SeqStep>(new enter_addGripperT()),
                   std::shared_ptr<SeqStep>(new live_addGripperT()),
+                  std::shared_ptr<SeqStep>(new enter_removeBeforeCloseT()),
+                  std::shared_ptr<SeqStep>(new live_removeBeforeCloseT()),
                   std::shared_ptr<SeqStep>(new enter_softCloseGripperP()),
                   std::shared_ptr<SeqStep>(new live_softCloseGripperP()),
                   std::shared_ptr<SeqStep>(new enter_hardCloseGripperP()),

@@ -117,6 +117,7 @@ public:
   std::vector<mc_tasks::MetaTask*> metaTasks;
   std::map<std::string, ActiGripper> actiGrippers;
   std::vector< std::shared_ptr<CollisionPair> > distPairs;
+  Eigen::Vector3d contactPos;
   mc_rbdyn::Contact * currentContact;
   mc_rbdyn::Contact * targetContact;
   mc_control::Gripper * currentGripper;

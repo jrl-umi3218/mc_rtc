@@ -868,6 +868,52 @@ bool live_addGripperT::eval(MCSeqController & ctl)
   return false;
 }
 
+bool enter_removeBeforeCloseT::eval(MCSeqController & ctl)
+{
+  bool limitToZero = ctl.targetContact->envSurface->name == "PlatformLeftRampVS" or ctl.targetContact->envSurface->name == "PlatformLeftRampS"; /*FIXME Should be part of the configuration */
+  if(!limitToZero)
+  {
+    std::cout << "Moving the gripper away before grasp" << std::endl;
+    mc_rbdyn::StanceConfig & contactConf = ctl.targetConf();
+
+    /* Find the contact to remove */
+    mc_rbdyn::Contact & removedContact = *(ctl.targetContact);
+
+    /* Create the remove contact meta task */
+    ctl.removeContactTask.reset(new mc_tasks::RemoveContactTask(ctl.robots(), ctl.constSpeedConstr, removedContact, contactConf));
+    ctl.removeContactTask->addToSolver(ctl.qpsolver->solver);
+    ctl.metaTasks.push_back(ctl.removeContactTask.get());
+
+    /* Get the current position of the wrist */
+    ctl.contactPos = ctl.robot().mbc->bodyPosW[ctl.robot().bodyIndexByName(ctl.targetContact->robotSurface->bodyName)].translation();
+  }
+  return true;
+}
+
+bool live_removeBeforeCloseT::eval(MCSeqController & ctl)
+{
+  bool limitToZero = ctl.targetContact->envSurface->name == "PlatformLeftRampVS" or ctl.targetContact->envSurface->name == "PlatformLeftRampS"; /*FIXME Should be part of the configuration */
+  if(!limitToZero)
+  {
+    Eigen::Vector3d curPos = ctl.robot().mbc->bodyPosW[ctl.robot().bodyIndexByName(ctl.targetContact->robotSurface->bodyName)].translation();
+    double d = (curPos - ctl.contactPos).norm();
+    if(d > 0.01)
+    {
+      ctl.removeContactTask->removeFromSolver(ctl.qpsolver->solver);
+      ctl.removeMetaTask(ctl.removeContactTask.get());
+      ctl.removeContactTask.reset();
+      ctl.distPairs.clear();
+      std::cout << "Moved away, will now grasp" << std::endl;
+      return true;
+    }
+    return false;
+  }
+  else
+  {
+    return true;
+  }
+}
+
 bool enter_softCloseGripperP::eval(MCSeqController & ctl)
 {
   std::cout << "enter_softCloseGripperP" << std::endl;
