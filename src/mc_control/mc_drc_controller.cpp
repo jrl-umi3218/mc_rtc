@@ -54,8 +54,13 @@ void MCDRCGlobalController::init(const std::vector<double> & initq)
   {
     q.push_back({initq[i]});
   }
-  setGripperCurrentQ(initq[23], initq[31]);
+  setGripperCurrentQ(initq[31], initq[23]);
   controller->reset({q, {}});
+}
+
+void MCDRCGlobalController::setSensorOrientation(const Eigen::Matrix3d & ori)
+{
+  controller->sensorOri = ori;
 }
 
 void MCDRCGlobalController::setEncoderValues(const std::vector<double> & eValues)

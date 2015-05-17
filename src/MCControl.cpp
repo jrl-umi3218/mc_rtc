@@ -17,6 +17,8 @@
 
 #include <fstream>
 
+#include <mc_rbdyn/surface.h>
+
 static std::ofstream ofs("/tmp/mc-control.log");
 
 // Module specification
@@ -138,6 +140,14 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
       }
     }
   }
+  if(m_rpyInIn.isNew())
+  {
+    m_rpyInIn.read();
+    /* FIXME Correct ? */
+    rpyIn(0) = m_rpyIn.data.r;
+    rpyIn(1) = m_rpyIn.data.p;
+    rpyIn(2) = m_rpyIn.data.y;
+  }
   if(m_qInIn.isNew())
   {
     m_qInIn.read();
@@ -158,6 +168,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
         init = true;
       }
       double t = tm.sec*1e9 + tm.nsec;
+      controller.setSensorOrientation(mc_rbdyn::rpyToMat(rpyIn));
       controller.setEncoderValues(qIn);
       controller.setWrenches(m_wrenches);
       if(controller.run())
@@ -186,10 +197,10 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
           m_qOut.data[i] = lgQ[i-36];
         }
         /* FIXME Correction RPY convention here? */
-        Eigen::Vector3d rpy = Eigen::Quaterniond(res.q[0], res.q[1], res.q[2], res.q[3]).toRotationMatrix().eulerAngles(2, 1, 0);
-        m_rpyOut.data.r = rpy[2];
-        m_rpyOut.data.p = rpy[1];
-        m_rpyOut.data.y = rpy[0];
+        Eigen::Vector3d rpyOut = Eigen::Quaterniond(res.q[0], res.q[1], res.q[2], res.q[3]).toRotationMatrix().eulerAngles(2, 1, 0);
+        m_rpyOut.data.r = rpyOut[2];
+        m_rpyOut.data.p = rpyOut[1];
+        m_rpyOut.data.y = rpyOut[0];
 
         m_pOut.data.x = res.q[4];
         m_pOut.data.y = res.q[5];

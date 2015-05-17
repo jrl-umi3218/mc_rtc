@@ -102,6 +102,7 @@ class MCControl  : public RTC::DataFlowComponentBase
   InPort<TimedPoint3D> m_pInIn;
   TimedOrientation3D m_rpyIn;
   InPort<TimedOrientation3D> m_rpyInIn;
+  Eigen::Vector3d rpyIn;
 
   std::vector<std::string> m_wrenchesNames;
   std::vector<TimedDoubleSeq*> m_wrenchesIn;
