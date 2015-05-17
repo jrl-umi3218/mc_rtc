@@ -10,7 +10,7 @@ namespace mc_control
 
 MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule> >& env_modules)
   : MCMRQPController(env_modules),
-    graspOffset(sva::RotX(-M_PI/2), Eigen::Vector3d(0., 0.01, 0.)),
+    graspOffset(sva::RotX(0.0), Eigen::Vector3d(0., 0.01, 0.)),
     ef_task("RARM_LINK6", robots(), 0),
     polarisKinematicsConstraint(robots(), 1, timeStep, false,
         {0.1, 0.01, 0.5}, 0.5),
@@ -44,7 +44,7 @@ MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rb
                            polaris.surfaces.at("left_seat_deformed"));
   drivingContacts.emplace_back(robots().robotIndex, 1,
                            robot().surfaces.at("RightGripper"),
-                           polaris.surfaces.at("bar_wheel"));
+                           polaris.surfaces.at("steering_knob"));
 
   mrqpsolver->setContacts(drivingContacts);
 
@@ -122,7 +122,7 @@ void MCDrivingController::resetWheelTransform()
   int joint_index = polaris.jointIndexByName("adjust_steering_wheel");
 
   auto gripperSurface = robot().surfaces.at("RightGripper");
-  auto wheelSurface = polaris.surfaces.at("bar_wheel");
+  auto wheelSurface = polaris.surfaces.at("steering_knob");
 
   sva::PTransformd X_wheel_s = graspOffset*wheelSurface->X_b_s();
 
