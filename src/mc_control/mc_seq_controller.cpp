@@ -95,9 +95,9 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
     {
       sc.postureTask.stiffness = 1.0;
       sc.postureTask.weight = 10.0;
-      sc.comTask.stiffness = 1.0;
-      sc.comTask.extraStiffness = 2.0;
-      sc.comTask.weight = 200.0;
+      sc.comTask.stiffness = 2.0;
+      sc.comTask.extraStiffness = 6.0;
+      sc.comTask.weight = 400.0;
       sc.comTask.targetSpeed = 0.001;
       sc.comObj.posThresh = 0.1,
       sc.comObj.velThresh = 0.0001;
@@ -107,8 +107,8 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
     {
       sc.postureTask.stiffness = 2.0;
       sc.postureTask.weight = 10.0;
-      sc.comTask.stiffness = 5.0;
-      sc.comTask.extraStiffness = 0.0;
+      sc.comTask.stiffness = 10.0;
+      sc.comTask.extraStiffness = 30.0;
       sc.comTask.weight = 500.0;
       sc.comTask.targetSpeed = 0.003;
       sc.comObj.comOffset = Eigen::Vector3d(0,0,0);
@@ -218,13 +218,14 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
          addA->contact.envSurface->name == "StairLeftRung3")
       {
         sc.contactObj.preContactDist = 0.0;
-        sc.contactObj.adjustOffset = Eigen::Vector3d(0,0,-0.1);
+        sc.contactObj.adjustOffset = Eigen::Vector3d(0,0,-0.05);
         sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(1.0, 0.25, 1.0, 0.2);
       }
       if(addA->contact.robotSurface->name == "RightGripper" &&
          addA->contact.envSurface->name == "PlatformLeftRampS")
       {
         sc.contactObj.preContactDist = 0.1;
+        sc.contactObj.adjustOffset = Eigen::Vector3d(0,0.0,0.05);
         sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(0.8, 0.8, 1.1, 0.2);
       }
       if(addA->contact.robotSurface->name == "LeftGripper" &&
