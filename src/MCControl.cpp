@@ -176,7 +176,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
         const mc_control::QPResultMsg & res = controller.send(t);
         const std::vector<double> & lgQ = controller.gripperQ(true);
         const std::vector<double> & rgQ = controller.gripperQ(false);
-        controller.setActualGripperQ(m_qIn.data[31], m_qIn.data[23]);
+        controller.setActualGripperQ(m_qIn.data[23], m_qIn.data[31]);
         m_qOut.data.length(m_qIn.data.length());
         for(unsigned int i = 0; i < 23; ++i)
         {
