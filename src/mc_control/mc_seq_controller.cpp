@@ -117,14 +117,14 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
       sc.contactObj.posThresh = 0.03;
       sc.contactObj.velThresh = 0.005;
       sc.contactObj.preContactDist = 0.02;
-      sc.contactTask.position.stiffness = 0.5;
-      sc.contactTask.position.extraStiffness = 0.5;
+      sc.contactTask.position.stiffness = 1.0;
+      sc.contactTask.position.extraStiffness = 1.0;
       sc.contactTask.position.weight = 300.0;
       sc.contactTask.position.targetSpeed = 0.001;
-      sc.contactTask.orientation.stiffness = 0.5;
+      sc.contactTask.orientation.stiffness = 1.0;
       sc.contactTask.orientation.weight = 300.0;
       sc.contactTask.orientation.finalWeight = 1000.0;
-      sc.contactTask.linVel.stiffness = 0.5;
+      sc.contactTask.linVel.stiffness = 1.0;
       sc.contactTask.linVel.weight = 10000.0;
       sc.contactTask.linVel.speed = 0.02;
       sc.contactTask.waypointConf.thresh = 0.15;
@@ -147,7 +147,7 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
       sc.contactObj.adjustVelThresh = 0.02;
       sc.contactObj.adjustOriThresh = 0.1;
       sc.contactObj.adjustOriTBNWeight = Eigen::Vector3d(1,1,1);
-      sc.contactObj.preContactDist = 0.1;
+      sc.contactObj.preContactDist = 0.02;
       sc.contactTask.position.stiffness = 0.25;
       sc.contactTask.position.extraStiffness = 1.0;
       sc.contactTask.position.weight = 600.0;
@@ -159,7 +159,7 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
       sc.contactTask.linVel.weight = 1000.0;
       sc.contactTask.linVel.speed = 0.02;
       sc.contactTask.waypointConf.thresh = 0.1;
-      sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(0.8, 0.8, 0.9, 0.2);
+      sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(0.3, 0.8, 0.7, 0.2);
       sc.contactTask.collisionConf.iDist = 0.01;
       sc.contactTask.collisionConf.sDist = 0.005;
       sc.contactTask.collisionConf.damping = 0.05;
@@ -196,20 +196,14 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
     //mc_rbdyn::RemoveContactAction* rmA = dynamic_cast<mc_rbdyn::RemoveContactAction*>(actions[i].get());
     if(addA)
     {
-      if(addA->contact.robotSurface->name == "RightGripper" &&
+      if(addA->contact.robotSurface->name == "LeftGripper" &&
          addA->contact.envSurface->name == "StairLeftRung1")
       {
-        sc.comObj.comOffset = Eigen::Vector3d(0., 0.025,-0.05);
+        sc.comObj.comOffset = Eigen::Vector3d(0.05, 0.0,0.0);
       }
-      if(addA->contact.robotSurface->name == "RFrontSole" &&
+      if(addA->contact.robotSurface->name == "LFrontSole" &&
          addA->contact.envSurface->name == "StairStep1")
       {
-        sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(-0.2, 1, 1.0, 0.2);
-      }
-      if(addA->contact.robotSurface->name == "RFrontSole" &&
-         addA->contact.envSurface->name == "StairStep2")
-      {
-        sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(-0.2, 1, 1.0, 0.2);
       }
     }
     mc_rbdyn::RemoveContactAction* rmA = dynamic_cast<mc_rbdyn::RemoveContactAction*>(actions[i].get());
@@ -218,7 +212,6 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
       if(rmA->contact.robotSurface->name == "LFullSole" &&
          rmA->contact.envSurface->name == "Ground")
       {
-        //sc.comObj.comOffset = Eigen::Vector3d(0.025,0.025,0);
       }
     }
 
@@ -323,7 +316,7 @@ bool MCSeqController::run()
             stabilityTask->comObj = stances[stanceIndex-1].com(robot());//rbd::computeCoM(*(robot().mb), *(robot().mbc));
             stabilityTask->comTaskSm.reset(curConf().comTask.weight, stabilityTask->comObj, curConf().comTask.targetSpeed);
           }
-          paused = true;
+          //paused = true;
         }
       }
       post_live();
