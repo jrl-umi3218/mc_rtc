@@ -26,6 +26,10 @@ public:
   virtual void removeFromSolver(tasks::qp::QPSolver & solver) override;
 
   virtual void update() override;
+
+  void highStiffness(const std::vector<std::string> & stiffJoints);
+
+  void normalStiffness(const std::vector<std::string> & stiffJoints);
 public:
   mc_rbdyn::Robots & robots;
   mc_rbdyn::Robot & robot;

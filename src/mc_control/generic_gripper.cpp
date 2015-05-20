@@ -112,7 +112,7 @@ std::string findFirstCommonBody(const mc_rbdyn::Robot & robotFull, const std::st
 Gripper::Gripper(const mc_rbdyn::Robot & robot, const std::string & gripperName,
                  const mc_rbdyn::Robot & controlRobot, const std::string & robot_urdf,
                  double currentQ, double timeStep)
-: overCommandLimit(false), overCommandLimitIter(0), overCommandLimitIterN(10),
+: overCommandLimit(false), overCommandLimitIter(0), overCommandLimitIterN(5),
   actualQ(currentQ), actualCommandDiffTrigger(4*M_PI/180) /* 4 degress of difference */
 {
   auto mimicDict = readMimic(robot_urdf);

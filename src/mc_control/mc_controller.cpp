@@ -47,7 +47,7 @@ MCController::MCController(const std::string & env_path, const std::string & env
     rgripper.reset(new Gripper(urdfRobot, "r_gripper", robot(), urdf.str(), 0, timeStep));
   }
 
-  contactConstraint = mc_solver::ContactConstraint(timeStep, mc_solver::ContactConstraint::Position);
+  contactConstraint = mc_solver::ContactConstraint(timeStep, mc_solver::ContactConstraint::Velocity);
 
   dynamicsConstraint = mc_solver::DynamicsConstraint(qpsolver->robots, hrp2_drc_index, timeStep,
                                                      false, {0.1, 0.01, 0.5}, 0.5);

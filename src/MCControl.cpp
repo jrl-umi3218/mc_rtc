@@ -164,11 +164,12 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
     {
       if(!init)
       {
+        std::cout << "In init, actual gripper " << m_qIn.data[31] << " " << m_qIn.data[23] << std::endl;
         controller.init(qIn);
         init = true;
       }
       double t = tm.sec*1e9 + tm.nsec;
-      controller.setSensorOrientation(mc_rbdyn::rpyToMat(rpyIn));
+      controller.setSensorOrientation(rpyIn);
       controller.setEncoderValues(qIn);
       controller.setWrenches(m_wrenches);
       if(controller.run())

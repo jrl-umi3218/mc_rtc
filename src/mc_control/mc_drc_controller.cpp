@@ -35,7 +35,8 @@ void MCDRCGlobalController::init(const std::vector<double> & initq)
 {
   std::vector<std::vector<double>> q;
   /*FIXME Get the position/attitude of the robot? */
-  q.push_back({1,0,0,0,-0.275,-0.05,0.75907});
+  //q.push_back({1,0,0,0,-0.275,-0.05,0.76});
+  q.push_back({0.706871104171,-0.0106114468667,0.0123191000954,0.707155484357,-0.198454882917,-0.162544763323,0.760632940945});
 
   /* The OpenRTM components don't give q in the same order as the QP */
   for(size_t i = 0; i < 24; ++i) // until RARM_LINK7
@@ -58,9 +59,9 @@ void MCDRCGlobalController::init(const std::vector<double> & initq)
   controller->reset({q, {}});
 }
 
-void MCDRCGlobalController::setSensorOrientation(const Eigen::Matrix3d & ori)
+void MCDRCGlobalController::setSensorOrientation(const Eigen::Vector3d & rpy)
 {
-  controller->sensorOri = ori;
+  controller->sensorOri = rpy;
 }
 
 void MCDRCGlobalController::setEncoderValues(const std::vector<double> & eValues)

@@ -166,6 +166,9 @@ bool MCDrivingController::changeGaze(double pan, double tilt)
 
 bool MCDrivingController::changeAnkleAngle(double theta)
 {
+  double tMax = 0.5;
+  double tMin = -0.5;
+  theta = (tMax-tMin)*theta + tMax;
   int ankle_i = robot().jointIndexByName("RLEG_JOINT4");
   auto p = hrp2postureTask->posture();
   p[ankle_i][0] = theta;

@@ -19,7 +19,7 @@ public:
 
   void init(const std::vector<double> & initq);
 
-  void setSensorOrientation(const Eigen::Matrix3d & ori);
+  void setSensorOrientation(const Eigen::Vector3d & ori);
 
   void setEncoderValues(const std::vector<double> & eValues);
 

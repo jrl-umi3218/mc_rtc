@@ -149,7 +149,7 @@ bool live_moveWPT::eval(MCSeqController & ctl)
 {
   if(ctl.currentGripper)
   {
-    ctl.currentGripper->percentOpen += 0.002/3;
+    ctl.currentGripper->percentOpen += 0.0005;
     if(ctl.currentGripper->percentOpen >= 1)
     {
       ctl.currentGripper->percentOpen = 1;
@@ -171,10 +171,12 @@ bool live_moveWPT::eval(MCSeqController & ctl)
     ctl.moveContactTask->toPreEnv(contactConf, contactConf.contactTask.position.targetSpeed);
     if(ctl.currentGripper == 0)
     {
+      std::cout << "Finished to move to contact wp" << std::endl;
       return true;
     }
     else if(ctl.currentGripper->percentOpen >= 1)
     {
+      std::cout << "Finished to move to contact wp" << std::endl;
       return true;
     }
     else
@@ -194,6 +196,22 @@ bool enter_moveContactP::eval(MCSeqController & ctl)
 {
   ctl.isCollFiltered = false;
   ctl.contactSensor->resetOffset();
+
+  //mc_rbdyn::StanceConfig & contactConf = ctl.curConf();
+  //Eigen::Vector3d curSCoM = ctl.stances[ctl.stanceIndex].com(ctl.robot());
+  //std::cout << "Current stance com" << std::endl;
+  //std::cout << curSCoM << std::endl;
+  //std::cout << "Next stance com" << std::endl;
+  //Eigen::Vector3d tarSCoM = ctl.stances[ctl.stanceIndex+1].com(ctl.robot());
+  //std::cout << tarSCoM << std::endl;
+  //contactConf.comObj.comOffset = (tarSCoM - curSCoM);
+  //contactConf.comObj.comOffset(0) /= 3;
+  //contactConf.comObj.comOffset(1) /= 2;
+  //contactConf.comObj.comOffset(2) /= 3;
+  //std::cout << "Offset" << std::endl;
+  //std::cout << contactConf.comObj.comOffset << std::endl;
+  //ctl.stabilityTask->target(ctl.env(), ctl.stances[ctl.stanceIndex], contactConf, contactConf.comTask.targetSpeed);
+
   return true;
 }
 
@@ -287,6 +305,7 @@ bool live_pushContactT::eval(MCSeqController & ctl)
 
 bool live_chooseCoMT::eval(MCSeqController & ctl)
 {
+  ctl.comRemoveGripper = false;
   mc_rbdyn::StanceAction * currentAction = &(ctl.curAction());
   if(currentAction->type() == "remove")
   {
@@ -319,6 +338,11 @@ bool live_chooseCoMT::eval(MCSeqController & ctl)
       ctl.currentGripper = ctl.lgripper.get();
       ctl.currentGripperIsClosed = ctl.currentGripper->percentOpen < 0.5;
     }
+    if((bodyName == "RARM_LINK6" || bodyName == "LARM_LINK6") && ctl.actions[ctl.stanceIndex+1]->type() != "add")
+    {
+      std::cout << "Will move gripper away from contact in CoM" << std::endl;
+      ctl.comRemoveGripper = true;
+    }
   }
 
   if(targetAction->type() != "add")
@@ -334,18 +358,19 @@ bool enter_moveCoMP::eval(MCSeqController & ctl)
 {
   std::cout << "COMP" << std::endl;
   ctl.stabilityTask->target(ctl.env(), ctl.targetStance(), ctl.curConf(), ctl.curConf().comTask.targetSpeed);
+  /*FIXME Should be optionnal */
+  //ctl.stabilityTask->highStiffness({"RARM_JOINT0", "RARM_JOINT1", "RARM_JOINT2", "RARM_JOINT3", "RARM_JOINT4", "RARM_JOINT5", "RARM_JOINT6"});
   return true;
 }
 
 bool live_CoMOpenGripperT::eval(MCSeqController & ctl)
 {
-  if(ctl.currentGripper && ctl.currentGripperIsClosed)
+  if(ctl.currentGripper && ctl.currentGripperIsClosed && ctl.comRemoveGripper)
   {
-    ctl.currentGripper->percentOpen += 0.002/3;
+    ctl.currentGripper->percentOpen += 0.0005;
     if(ctl.currentGripper->percentOpen >= 1)
     {
       ctl.currentGripper->percentOpen = 1;
-      ctl.currentGripper = 0;
       return true;
     }
   }
@@ -354,6 +379,69 @@ bool live_CoMOpenGripperT::eval(MCSeqController & ctl)
     return true;
   }
   return false;
+}
+
+bool enter_CoMRemoveGripperT::eval(MCSeqController & ctl)
+{
+  if(ctl.comRemoveGripper)
+  {
+    std::cout << "CoMRemoveGripperT" << std::endl;
+    mc_rbdyn::StanceConfig & contactConf = ctl.targetConf();
+
+    /* Find the contact to remove */
+    mc_rbdyn::Contact & removedContact = *(ctl.targetContact);
+
+    /* Create the remove contact meta task */
+    ctl.removeContactTask.reset(new mc_tasks::RemoveContactTask(ctl.robots(), ctl.constSpeedConstr, removedContact, contactConf));
+    ctl.removeContactTask->addToSolver(ctl.qpsolver->solver);
+    ctl.metaTasks.push_back(ctl.removeContactTask.get());
+
+    /* We take the hull of the environment and the robot to know when the robot gripper is totally off */
+    ctl.distPairs.clear();
+    auto v = ctl.collisionsContactFilterList(removedContact, contactConf);
+    for(const auto & vi :v )
+    {
+      std::shared_ptr<CollisionPair> ptr(new CollisionPair(ctl.robot(), ctl.env(), vi.first, vi.second));
+      ctl.distPairs.push_back(ptr);
+    }
+    mc_rbdyn::Stance & targetS = ctl.targetStance();
+    /* Configure the QP */
+    ctl.updateRobotEnvCollisions(targetS.stabContacts, contactConf);
+    ctl.updateSelfCollisions(targetS.stabContacts, contactConf);
+    ctl.updateContacts(targetS.stabContacts);
+    ctl.updateSolverEqInEq();
+
+    ctl.isRemoved = false;
+  }
+  return true;
+}
+
+
+bool live_CoMRemoveGripperT::eval(MCSeqController & ctl)
+{
+  if(ctl.comRemoveGripper)
+  {
+    bool all = true;
+    for(const auto & p : ctl.distPairs)
+    {
+      all = all && (p->distance(ctl.robot(), ctl.env()) > 0.05*0.05);
+    }
+    if(all)
+    {
+      ctl.removeContactTask->removeFromSolver(ctl.qpsolver->solver);
+      ctl.removeMetaTask(ctl.removeContactTask.get());
+      ctl.removeContactTask.reset();
+      ctl.distPairs.clear();
+
+      ctl.isRemoved = true;
+      return true;
+    }
+    return false;
+  }
+  else
+  {
+    return true;
+  }
 }
 
 bool live_moveCoMT::eval(MCSeqController & ctl)
@@ -376,6 +464,9 @@ bool live_moveCoMT::eval(MCSeqController & ctl)
     ctl.updateContacts(newS.stabContacts);
     ctl.updateSolverEqInEq();
 
+    //ctl.stabilityTask->normalStiffness({"RARM_JOINT0", "RARM_JOINT1", "RARM_JOINT2", "RARM_JOINT3", "RARM_JOINT4", "RARM_JOINT5", "RARM_JOINT6"});
+
+    ctl.stanceIndex++;
     return true;
   }
 
@@ -386,13 +477,14 @@ bool live_CoMCloseGripperT::eval(MCSeqController & ctl)
 {
   if(ctl.currentGripper)
   {
-    ctl.currentGripper->percentOpen -= 0.002/3;
+    ctl.currentGripper->percentOpen -= 0.0005;
     if(ctl.currentGripper->overCommandLimit || ctl.currentGripper->percentOpen <= 0)
     {
       if(!ctl.currentGripper->overCommandLimit)
       {
         ctl.currentGripper->percentOpen = 0;
       }
+      ctl.currentGripper = 0;
       ctl.stanceIndex++;
       return true;
     }
@@ -409,10 +501,11 @@ bool live_chooseGripperT::eval(MCSeqController & ctl)
 {
   mc_rbdyn::RemoveContactAction * curRm = dynamic_cast<mc_rbdyn::RemoveContactAction*>(&(ctl.curAction()));
   mc_rbdyn::AddContactAction * tarAdd = dynamic_cast<mc_rbdyn::AddContactAction*>(&(ctl.targetAction()));
+  mc_rbdyn::RemoveContactAction * tarRm = dynamic_cast<mc_rbdyn::RemoveContactAction*>(&(ctl.targetAction()));
   bool isRemoveAdd = curRm != 0 && tarAdd != 0 &&
                      curRm->contact.robotSurface->bodyName == tarAdd->contact.robotSurface->bodyName;
   bool isAddOnly = tarAdd != 0;
-  bool isRemoveOnly = curRm != 0;
+  bool isRemoveOnly = tarRm != 0;
   if( (isRemoveAdd or isAddOnly) and tarAdd->contact.robotSurface->type() == "gripper" )
   {
     if(isRemoveAdd)
@@ -434,9 +527,9 @@ bool live_chooseGripperT::eval(MCSeqController & ctl)
   if(isRemoveOnly and curRm->contact.robotSurface->type() == "gripper")
   {
     ctl.isGripperAttached = true;
-    ctl.isGripperWillBeAttached = true;
-    ctl.currentContact = &(curRm->contact);
-    ctl.targetContact = &(curRm->contact);
+    ctl.isGripperWillBeAttached = false;
+    ctl.currentContact = &(tarRm->contact);
+    ctl.targetContact = &(tarRm->contact);
     return true;
   }
 
@@ -478,7 +571,7 @@ bool live_openGripperP::eval(MCSeqController & ctl)
 {
   if(ctl.currentGripper)
   {
-    ctl.currentGripper->percentOpen += 0.002;
+    ctl.currentGripper->percentOpen += 0.0005;
     if(ctl.currentGripper->percentOpen >= 1.)
     {
       ctl.currentGripper->percentOpen = 1.;
@@ -556,9 +649,10 @@ bool live_removeGripperP::eval(MCSeqController & ctl)
     return true;
   }
   bool all = true;
+  double dOut = ((not ctl.isGripperWillBeAttached) and ctl.isRemoved) ? 0.02 : 0.05;
   for(const auto & p : ctl.distPairs)
   {
-    all = all && (p->distance(ctl.robot(), ctl.env()) > 0.02*0.02);
+    all = all && (p->distance(ctl.robot(), ctl.env()) > dOut*dOut);
   }
   if(all)
   {
@@ -590,6 +684,7 @@ bool live_removeGripperNotAddT::eval(MCSeqController & ctl)
 
 bool enter_moveGripperWPT::eval(MCSeqController & ctl)
 {
+  if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
   std::cout << "Move gripper WPT" << std::endl;
   mc_rbdyn::StanceConfig & contactConf = ctl.curConf();
   mc_rbdyn::Stance & newS = ctl.targetStance();
@@ -618,6 +713,7 @@ bool enter_moveGripperWPT::eval(MCSeqController & ctl)
 
 bool live_moveGripperWPT::eval(MCSeqController & ctl)
 {
+  if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
   mc_rbdyn::StanceConfig & contactConf = ctl.curConf();
 
   Eigen::Vector3d robotSurfacePos = ctl.moveContactTask->robotSurfacePos().translation();
@@ -639,6 +735,7 @@ bool live_moveGripperWPT::eval(MCSeqController & ctl)
 
 bool live_moveGripperT::eval(MCSeqController & ctl)
 {
+  if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
   mc_rbdyn::StanceConfig::ContactObj & obj = ctl.curConf().contactObj;
 
   Eigen::Vector3d robotSurfacePos = ctl.moveContactTask->robotSurfacePos().translation();
@@ -667,6 +764,7 @@ bool live_moveGripperT::eval(MCSeqController & ctl)
 
 bool enter_adjustGripperP::eval(MCSeqController & ctl)
 {
+  if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
   std::cout << "Adjust Gripper P" << std::endl;
   double stiff = ctl.moveContactTask->posStiff + ctl.moveContactTask->extraPosStiff;
   ctl.adjustPositionTask.reset(new tasks::qp::PositionTask(ctl.robots().mbs, 0, ctl.moveContactTask->robotBodyId,
@@ -721,6 +819,7 @@ bool enter_adjustGripperP::eval(MCSeqController & ctl)
 
 bool live_adjustGripperT::eval(MCSeqController & ctl)
 {
+  if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
   mc_rbdyn::StanceConfig & contactConf = ctl.curConf();
   unsigned int bodyIndex = ctl.moveContactTask->robotBodyIndex;
 
@@ -813,6 +912,7 @@ bool live_adjustGripperT::eval(MCSeqController & ctl)
 
 bool enter_addGripperT::eval(MCSeqController & ctl)
 {
+  if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
   std::cout << "addGripperT" << std::endl;
   mc_rbdyn::StanceConfig & contactConf = ctl.curConf();
 
@@ -854,6 +954,7 @@ bool enter_addGripperT::eval(MCSeqController & ctl)
 
 bool live_addGripperT::eval(MCSeqController & ctl)
 {
+  if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
   bool ok = ctl.inContact(ctl.addContactTask->robotSurf->name);
 
   if(ok) /* Python compares nrIterNoContact with np.inf/timeStep (so np.inf) */
@@ -870,6 +971,7 @@ bool live_addGripperT::eval(MCSeqController & ctl)
 
 bool enter_removeBeforeCloseT::eval(MCSeqController & ctl)
 {
+  if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
   bool limitToZero = ctl.targetContact->envSurface->name == "PlatformLeftRampVS" or ctl.targetContact->envSurface->name == "PlatformLeftRampS"; /*FIXME Should be part of the configuration */
   if(!limitToZero)
   {
@@ -892,6 +994,7 @@ bool enter_removeBeforeCloseT::eval(MCSeqController & ctl)
 
 bool live_removeBeforeCloseT::eval(MCSeqController & ctl)
 {
+  if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
   bool limitToZero = ctl.targetContact->envSurface->name == "PlatformLeftRampVS" or ctl.targetContact->envSurface->name == "PlatformLeftRampS"; /*FIXME Should be part of the configuration */
   if(!limitToZero)
   {
@@ -937,7 +1040,7 @@ bool live_softCloseGripperP::eval(MCSeqController & ctl)
 
   if(ctl.currentGripper)
   {
-    ctl.currentGripper->percentOpen -= 0.002;
+    ctl.currentGripper->percentOpen -= 0.0005;
     bool limitToZero = ctl.targetContact->envSurface->name == "PlatformLeftRampVS" or ctl.targetContact->envSurface->name == "PlatformLeftRampS"; /*FIXME Should be part of the configuration */
     double percentOpenLimit = limitToZero ? 0.35 : 0.1;
     if(ctl.currentGripper->overCommandLimit || ctl.currentGripper->percentOpen <= percentOpenLimit)
@@ -984,7 +1087,7 @@ bool live_hardCloseGripperP::eval(MCSeqController & ctl)
 
   if(ctl.currentGripper)
   {
-    ctl.currentGripper->percentOpen -= 0.002;
+    ctl.currentGripper->percentOpen -= 0.0005;
     bool limitToZero = ctl.targetContact->envSurface->name == "PlatformLeftRampVS" or ctl.targetContact->envSurface->name == "PlatformLeftRampS"; /*FIXME Should be part of the configuration */
     double percentOpenLimit = limitToZero ? 0.25 : 0;
     if(ctl.currentGripper->overCommandLimit || ctl.currentGripper->percentOpen <= percentOpenLimit)
@@ -1010,6 +1113,7 @@ bool live_hardCloseGripperP::eval(MCSeqController & ctl)
   if(finish)
   {
     ctl.isGripperClose = true;
+    if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
     /*TODO Get the actual position of the hand, set it in the QP and reset the gains to their original value*/
     bool leftHand = ctl.targetContact->robotSurface->name == "LeftGripper";
     unsigned int ji = leftHand ? 24 : 16;
@@ -1034,6 +1138,7 @@ bool live_hardCloseGripperP::eval(MCSeqController & ctl)
 
 bool enter_restoreArmGainsP::eval(MCSeqController & ctl)
 {
+  if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
   std::cout << "Restoring arm gains to their original values" << std::endl;
   for(size_t i = 0; i < ctl.lowerPGainsJoints.size(); ++i)
   {
@@ -1050,6 +1155,7 @@ bool enter_restoreArmGainsP::eval(MCSeqController & ctl)
 
 bool enter_contactGripperP::eval(MCSeqController & ctl)
 {
+  if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
   std::cout << "enter_contactGripperP" << std::endl;
   mc_rbdyn::StanceConfig & contactConf = ctl.curConf();
 
@@ -1062,6 +1168,18 @@ bool enter_contactGripperP::eval(MCSeqController & ctl)
 
 bool live_contactGripperT::eval(MCSeqController & ctl)
 {
+  if((not ctl.isGripperWillBeAttached) and ctl.isRemoved)
+  {
+    mc_rbdyn::Stance & newS = ctl.targetStance();
+
+    ctl.updateRobotEnvCollisions(newS.contacts(), ctl.targetConf());
+    ctl.updateSelfCollisions(newS.contacts(), ctl.targetConf());
+    ctl.updateContacts(newS.contacts());
+    ctl.updateSolverEqInEq();
+
+    ctl.stanceIndex += 1;
+    return true;
+  }
   bool ok = true; /*FIXME Python used to check that _back was in the sensorContacts */
 
   if(ok)

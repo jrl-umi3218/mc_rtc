@@ -20,6 +20,26 @@ StabilityTask::StabilityTask(mc_rbdyn::Robots & robots)
 {
 }
 
+void StabilityTask::highStiffness(const std::vector<std::string> & stiffJoints)
+{
+  std::vector<tasks::qp::JointStiffness> jsv;
+  for(const auto & jn : stiffJoints)
+  {
+    jsv.push_back({static_cast<int>(robot.jointIdByName(jn)), 10*postureTask->stiffness()});
+  }
+  postureTask->jointsStiffness(robots.mbs, jsv);
+}
+
+void StabilityTask::normalStiffness(const std::vector<std::string> & stiffJoints)
+{
+  std::vector<tasks::qp::JointStiffness> jsv;
+  for(const auto & jn : stiffJoints)
+  {
+    jsv.push_back({static_cast<int>(robot.jointIdByName(jn)), postureTask->stiffness()});
+  }
+  postureTask->jointsStiffness(robots.mbs, jsv);
+}
+
 void StabilityTask::target(const mc_rbdyn::Robot & env, const mc_rbdyn::Stance & stance,
                            const mc_rbdyn::StanceConfig & config, double comSmoothPercent)
 {
