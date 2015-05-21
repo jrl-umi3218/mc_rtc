@@ -74,16 +74,23 @@ std::vector<mc_solver::Collision> confToColl(const std::vector<mc_rbdyn::StanceC
 MCSeqController::MCSeqController(const std::string & env_path, const std::string & env_name, const std::string & seq_path)
 : MCController(env_path, env_name), paused(false), halted(false), stanceIndex(0), seq_actions(0),
   currentContact(0), targetContact(0), currentGripper(0),
-  use_real_sensors(true),
+  use_real_sensors(false),
   collsConstraint(robots(), timeStep)
 {
   /* Load plan */
   loadStances(seq_path, stances, actions);
   assert(stances.size() == actions.size());
-  seq_actions.push_back(seqActionFromStanceAction(0, actions[0].get()));
+  seq_actions.push_back(seqActionFromStanceAction(0, actions[0].get(), 0));
   for(size_t i = 0; i < stances.size() - 1; ++i)
   {
-    seq_actions.push_back(seqActionFromStanceAction(actions[i].get(), actions[i+1].get()));
+    if(i + 2 < stances.size())
+    {
+      seq_actions.push_back(seqActionFromStanceAction(actions[i].get(), actions[i+1].get(), actions[i+2].get()));
+    }
+    else
+    {
+      seq_actions.push_back(seqActionFromStanceAction(actions[i].get(), actions[i+1].get(), 0));
+    }
   }
   /*FIXME Hard-coded for stairs climbing */
   /*FIXME Load configs from a file */
@@ -97,11 +104,11 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
     {
       sc.postureTask.stiffness = 0.1;
       sc.postureTask.weight = 10.0;
-      sc.comTask.stiffness = 0.5;
-      sc.comTask.extraStiffness = 0.5;
+      sc.comTask.stiffness = 1.0;
+      sc.comTask.extraStiffness = 1.0;
       sc.comTask.weight = 400.0;
       sc.comTask.targetSpeed = 0.001;
-      sc.comObj.posThresh = 0.1,
+      sc.comObj.posThresh = 0.05,
       sc.comObj.velThresh = 0.0001;
       sc.comObj.comOffset = Eigen::Vector3d(0,0,0);
     }
@@ -109,17 +116,17 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
     {
       sc.postureTask.stiffness = 0.1;
       sc.postureTask.weight = 10.0;
-      sc.comTask.stiffness = 1.0;
-      sc.comTask.extraStiffness = 1.0;
+      sc.comTask.stiffness = 3.0;
+      sc.comTask.extraStiffness = 6.0;
       sc.comTask.weight = 500.0;
       sc.comTask.targetSpeed = 0.003;
       sc.comObj.comOffset = Eigen::Vector3d(0,0,0);
       sc.contactObj.posThresh = 0.03;
       sc.contactObj.velThresh = 0.005;
       sc.contactObj.preContactDist = 0.02;
-      sc.contactTask.position.stiffness = 1.0;
-      sc.contactTask.position.extraStiffness = 1.0;
-      sc.contactTask.position.weight = 300.0;
+      sc.contactTask.position.stiffness = 2.0;
+      sc.contactTask.position.extraStiffness = 6.0;
+      sc.contactTask.position.weight = 600.0;
       sc.contactTask.position.targetSpeed = 0.001;
       sc.contactTask.orientation.stiffness = 1.0;
       sc.contactTask.orientation.weight = 300.0;
@@ -579,7 +586,7 @@ bool MCSeqController::play_next_stance()
   return false;
 }
 
-std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * curAction, mc_rbdyn::StanceAction * targetAction)
+std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * curAction, mc_rbdyn::StanceAction * targetAction, mc_rbdyn::StanceAction * targetTargetAction)
 {
   auto res = std::shared_ptr<SeqAction>(new SeqAction());
   if(curAction == 0)
@@ -636,13 +643,22 @@ std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * cu
       targetSurfaceName = rmA->contact.robotSurface->name;
     }
   }
+  bool targetTargetIsAddContact = false;
+  {
+    mc_rbdyn::AddContactAction * addA = dynamic_cast<mc_rbdyn::AddContactAction*>(targetTargetAction);
+    if(addA && targetIsRemoveContact && targetIsGripperContact
+       && targetSurfaceName == addA->contact.robotSurface->name)
+    {
+      targetTargetIsAddContact = true;
+    }
+  }
   bool targetIsIdentity = (!targetIsAddContact && !targetIsRemoveContact);
   bool sameSurface = curSurfaceName == targetSurfaceName;
 
 
   bool contactBranch = (curIsRemoveContact && targetIsAddContact && sameSurface  && !curIsGripperContact) || (targetIsAddContact && !targetIsGripperContact);
   bool comBranch = (targetIsRemoveContact or targetIsIdentity);
-  bool gripperBranch = (curIsRemoveContact && targetIsAddContact && sameSurface && targetIsGripperContact) || (targetIsAddContact && targetIsGripperContact) || (targetIsRemoveContact && targetIsGripperContact);
+  bool gripperBranch = (curIsRemoveContact && targetIsAddContact && sameSurface && targetIsGripperContact) || (targetIsAddContact && targetIsGripperContact) || (targetIsRemoveContact && targetIsGripperContact && (not targetTargetIsAddContact));
 
   if(contactBranch)
   {

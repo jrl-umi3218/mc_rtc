@@ -163,7 +163,7 @@ public:
   std::vector< std::shared_ptr<tasks::qp::GripperTorqueTask> > gripperTorqueTasks;
 };
 
-std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * curAction, mc_rbdyn::StanceAction * targetAction);
+std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * curAction, mc_rbdyn::StanceAction * targetAction, mc_rbdyn::StanceAction * targetTargetAction);
 
 struct SeqStep;
 

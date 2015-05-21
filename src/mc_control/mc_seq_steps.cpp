@@ -502,8 +502,11 @@ bool live_chooseGripperT::eval(MCSeqController & ctl)
   mc_rbdyn::RemoveContactAction * curRm = dynamic_cast<mc_rbdyn::RemoveContactAction*>(&(ctl.curAction()));
   mc_rbdyn::AddContactAction * tarAdd = dynamic_cast<mc_rbdyn::AddContactAction*>(&(ctl.targetAction()));
   mc_rbdyn::RemoveContactAction * tarRm = dynamic_cast<mc_rbdyn::RemoveContactAction*>(&(ctl.targetAction()));
-  bool isRemoveAdd = curRm != 0 && tarAdd != 0 &&
-                     curRm->contact.robotSurface->bodyName == tarAdd->contact.robotSurface->bodyName;
+  bool isRemoveAdd = (curRm != 0) and (tarAdd != 0);
+  if(isRemoveAdd)
+  {
+    isRemoveAdd = isRemoveAdd and (curRm->contact.robotSurface->bodyName == tarAdd->contact.robotSurface->bodyName);
+  }
   bool isAddOnly = tarAdd != 0;
   bool isRemoveOnly = tarRm != 0;
   if( (isRemoveAdd or isAddOnly) and tarAdd->contact.robotSurface->type() == "gripper" )
@@ -524,7 +527,7 @@ bool live_chooseGripperT::eval(MCSeqController & ctl)
     }
     return true;
   }
-  if(isRemoveOnly and curRm->contact.robotSurface->type() == "gripper")
+  if(isRemoveOnly and tarRm->contact.robotSurface->type() == "gripper")
   {
     ctl.isGripperAttached = true;
     ctl.isGripperWillBeAttached = false;
@@ -605,7 +608,7 @@ bool enter_removeGripperP::eval(MCSeqController & ctl)
     return true;
   }
   std::cout << "RemoveGripperP" << std::endl;
-  mc_rbdyn::StanceConfig & contactConf = ctl.curConf();
+  mc_rbdyn::StanceConfig & contactConf = (ctl.currentContact == ctl.targetContact) ? ctl.targetConf() : ctl.curConf();
 
   /* Find the contact to remove */
   mc_rbdyn::Contact & removedContact = *(ctl.currentContact);
@@ -623,7 +626,7 @@ bool enter_removeGripperP::eval(MCSeqController & ctl)
     std::shared_ptr<CollisionPair> ptr(new CollisionPair(ctl.robot(), ctl.env(), vi.first, vi.second));
     ctl.distPairs.push_back(ptr);
   }
-  mc_rbdyn::Stance & curS = ctl.curStance();
+  mc_rbdyn::Stance & curS = (ctl.currentContact == ctl.targetContact) ? ctl.targetStance() : ctl.curStance();
 
   /* Configure the stability task */
   ctl.stabilityTask->target(ctl.env(), curS, contactConf, contactConf.comTask.targetSpeed);
