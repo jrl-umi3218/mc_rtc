@@ -275,46 +275,47 @@ bool MCSeqController::run()
           if(stanceIndex < actions.size())
           {
             std::cout << "Starting " << actions[stanceIndex]->toStr() << std::endl;
-            std::cout << "Before modification by sensor " << robot().mbc->q[0][0] << " " << robot().mbc->q[0][1] << " " << robot().mbc->q[0][2] << " " << robot().mbc->q[0][3] << std::endl;
-            Eigen::Vector3d pos(robot().mbc->q[0][4], robot().mbc->q[0][5], robot().mbc->q[0][6]);
-            std::vector<double> rPose = robot().mbc->q[0];
-            robot().mbc->zero(*(robot().mb));
-            std::vector<double> & eValues = encoderValues;
-            for(size_t i = 0; i < 24; ++i)
-            {
-              robot().mbc->q[i+1][0] = eValues[i];
-            }
-            for(size_t i = 24; i < 32; ++i)
-            {
-              robot().mbc->q[i+6][0] = eValues[i];
-            }
-            /* At this point, the robot mbc holds the encoder values */
-            rbd::forwardKinematics(*(robot().mb), *(robot().mbc));
-            Eigen::Vector3d & rpy = sensorOri;
-            sva::PTransformd chestSensorOri(sva::RotZ(rpy(2))*sva::RotY(rpy(1))*sva::RotX(rpy(0)), Eigen::Vector3d(0,0,0));
-            sva::PTransformd X_0_body = robot().mbc->bodyPosW[robot().bodyIndexByName("BODY")];
-            sva::PTransformd X_0_acce = robot().mbc->bodyPosW[robot().bodyIndexByName("CHEST_LINK1")];
-            sva::PTransformd X_acce_body = X_0_body * X_0_acce.inv();
-            X_0_acce = sva::PTransformd(chestSensorOri.rotation(), X_0_acce.translation());
-            sva::PTransformd bodySensorOri = X_acce_body * X_0_acce;
-            Eigen::Quaterniond q(bodySensorOri.rotation());
-            q.normalize();
-            q = q.inverse();
-            robot().mbc->q[0][0] = q.w();
-            robot().mbc->q[0][1] = q.x();
-            robot().mbc->q[0][2] = q.y();
-            robot().mbc->q[0][3] = q.z();
-            robot().mbc->q[0][4] = pos(0);
-            robot().mbc->q[0][5] = pos(1);
-            robot().mbc->q[0][6] = pos(2);
-            robot().mbc->q[0] = rPose;
-            std::cout << "After modification by sensor " << robot().mbc->q[0][0] << " " << robot().mbc->q[0][1] << " " << robot().mbc->q[0][2] << " " << robot().mbc->q[0][3] << std::endl;
-            rbd::forwardKinematics(*(robot().mb), *(robot().mbc));
-            qpsolver->setContacts(stances[stanceIndex-1].geomContacts);
-            //qpsolver->update();
-            stabilityTask->postureTask->posture(robot().mbc->q);
-            stabilityTask->comObj = stances[stanceIndex-1].com(robot());//rbd::computeCoM(*(robot().mb), *(robot().mbc));
-            stabilityTask->comTaskSm.reset(curConf().comTask.weight, stabilityTask->comObj, curConf().comTask.targetSpeed);
+            /*FIXME Disabled for now... */
+            //std::cout << "Before modification by sensor " << robot().mbc->q[0][0] << " " << robot().mbc->q[0][1] << " " << robot().mbc->q[0][2] << " " << robot().mbc->q[0][3] << std::endl;
+            //Eigen::Vector3d pos(robot().mbc->q[0][4], robot().mbc->q[0][5], robot().mbc->q[0][6]);
+            //std::vector<double> rPose = robot().mbc->q[0];
+            //robot().mbc->zero(*(robot().mb));
+            //std::vector<double> & eValues = encoderValues;
+            //for(size_t i = 0; i < 24; ++i)
+            //{
+            //  robot().mbc->q[i+1][0] = eValues[i];
+            //}
+            //for(size_t i = 24; i < 32; ++i)
+            //{
+            //  robot().mbc->q[i+6][0] = eValues[i];
+            //}
+            ///* At this point, the robot mbc holds the encoder values */
+            //rbd::forwardKinematics(*(robot().mb), *(robot().mbc));
+            //Eigen::Vector3d & rpy = sensorOri;
+            //sva::PTransformd chestSensorOri(sva::RotZ(rpy(2))*sva::RotY(rpy(1))*sva::RotX(rpy(0)), Eigen::Vector3d(0,0,0));
+            //sva::PTransformd X_0_body = robot().mbc->bodyPosW[robot().bodyIndexByName("BODY")];
+            //sva::PTransformd X_0_acce = robot().mbc->bodyPosW[robot().bodyIndexByName("CHEST_LINK1")];
+            //sva::PTransformd X_acce_body = X_0_body * X_0_acce.inv();
+            //X_0_acce = sva::PTransformd(chestSensorOri.rotation(), X_0_acce.translation());
+            //sva::PTransformd bodySensorOri = X_acce_body * X_0_acce;
+            //Eigen::Quaterniond q(bodySensorOri.rotation());
+            //q.normalize();
+            //q = q.inverse();
+            //robot().mbc->q[0][0] = q.w();
+            //robot().mbc->q[0][1] = q.x();
+            //robot().mbc->q[0][2] = q.y();
+            //robot().mbc->q[0][3] = q.z();
+            //robot().mbc->q[0][4] = pos(0);
+            //robot().mbc->q[0][5] = pos(1);
+            //robot().mbc->q[0][6] = pos(2);
+            //robot().mbc->q[0] = rPose;
+            //std::cout << "After modification by sensor " << robot().mbc->q[0][0] << " " << robot().mbc->q[0][1] << " " << robot().mbc->q[0][2] << " " << robot().mbc->q[0][3] << std::endl;
+            //rbd::forwardKinematics(*(robot().mb), *(robot().mbc));
+            //qpsolver->setContacts(stances[stanceIndex-1].geomContacts);
+            ////qpsolver->update();
+            //stabilityTask->postureTask->posture(robot().mbc->q);
+            //stabilityTask->comObj = stances[stanceIndex-1].com(robot());//rbd::computeCoM(*(robot().mb), *(robot().mbc));
+            //stabilityTask->comTaskSm.reset(curConf().comTask.weight, stabilityTask->comObj, curConf().comTask.targetSpeed);
           }
           //paused = true;
         }
