@@ -10,10 +10,10 @@ namespace mc_control
 
 MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule> >& env_modules)
   : MCMRQPController(env_modules),
-    graspOffset(sva::RotX(0.0), Eigen::Vector3d(0., 0.01, 0.)),
+    graspOffset(sva::RotX(-M_PI/2), Eigen::Vector3d(0., 0., 0.)),
     ef_task("RARM_LINK6", robots(), 0),
     polarisKinematicsConstraint(robots(), 1, timeStep, false,
-        {0.1, 0.01, 0.5}, 0.5),
+        {0.1, 0.01, 0.01}, 0.5),
     drivingContacts()
 {
   mrqpsolver->addConstraintSet(hrp2contactConstraint);
@@ -25,26 +25,30 @@ MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rb
 
   mc_rbdyn::Robot& polaris = robots().robots[1];
 
-  robot().mbc->q[0] = {0.8018680589369662, 0.09936561148509283, -0.06541812773434774, 0.5855378381237102, -0.3421374123035909, -0.0002850914593993392, 0.8847053544605464};
+  //robot().mbc->q[0] = {0.8018680589369662, 0.09936561148509283, -0.06541812773434774, 0.5855378381237102, -0.3421374123035909, -0.0002850914593993392, 0.8847053544605464};
+  robot().mbc->q[0] = {1, 0, 0, 0, 0, 0, 0.76};
 
   rbd::forwardKinematics(*(robot().mb), *(robot().mbc));
   rbd::forwardVelocity(*(robot().mb), *(robot().mbc));
 
   drivingContacts.emplace_back(robots().robotIndex, 1,
                            robot().surfaces.at("Butthock"),
-                           polaris.surfaces.at("left_seat_deformed"));
-  drivingContacts.emplace_back(robots().robotIndex, 1,
-                           robot().surfaces.at("LowerBack"),
-                           polaris.surfaces.at("left_back"));
+                           polaris.surfaces.at("left_seat"));
+  //drivingContacts.emplace_back(robots().robotIndex, 1,
+  //                         robot().surfaces.at("LowerBack"),
+  //                         polaris.surfaces.at("left_back"));
   drivingContacts.emplace_back(robots().robotIndex, 1,
                            robot().surfaces.at("LFullSole"),
-                           polaris.surfaces.at("left_floor"));
+                           polaris.surfaces.at("exit_platform"));
   drivingContacts.emplace_back(robots().robotIndex, 1,
                            robot().surfaces.at("LeftThight"),
-                           polaris.surfaces.at("left_seat_deformed"));
+                           polaris.surfaces.at("left_seat"));
+  drivingContacts.emplace_back(robots().robotIndex, 1,
+                           robot().surfaces.at("RightThight"),
+                           polaris.surfaces.at("left_seat"));
   drivingContacts.emplace_back(robots().robotIndex, 1,
                            robot().surfaces.at("RightGripper"),
-                           polaris.surfaces.at("steering_knob"));
+                           polaris.surfaces.at("bar_wheel"));
 
   mrqpsolver->setContacts(drivingContacts);
 
@@ -70,7 +74,8 @@ void MCDrivingController::reset(const ControllerResetData & reset_data)
   mc_rbdyn::Robot& polaris = robots().robots[1];
   robot().mbc->zero(*(robot().mb));
   robot().mbc->q = reset_data.q;
-  robot().mbc->q[0] = {0.8018680589369662, 0.09936561148509283, -0.06541812773434774, 0.5855378381237102, -0.3421374123035909, -0.0002850914593993392, 0.8847053544605464};
+  //robot().mbc->q[0] = {0.8018680589369662, 0.09936561148509283, -0.06541812773434774, 0.5855378381237102, -0.3421374123035909, -0.0002850914593993392, 0.8847053544605464};
+  robot().mbc->q[0] = {1, 0, 0, 0, 0, 0, 0.76};
   rbd::forwardKinematics(*(robot().mb), *(robot().mbc));
   rbd::forwardVelocity(*(robot().mb), *(robot().mbc));
   hrp2postureTask->posture(robot().mbc->q);
@@ -122,7 +127,7 @@ void MCDrivingController::resetWheelTransform()
   int joint_index = polaris.jointIndexByName("adjust_steering_wheel");
 
   auto gripperSurface = robot().surfaces.at("RightGripper");
-  auto wheelSurface = polaris.surfaces.at("steering_knob");
+  auto wheelSurface = polaris.surfaces.at("bar_wheel");
 
   sva::PTransformd X_wheel_s = graspOffset*wheelSurface->X_b_s();
 

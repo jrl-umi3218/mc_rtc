@@ -17,16 +17,19 @@ MCDRCGlobalController::MCDRCGlobalController()
   seq_controller("/home/hrp2user/jrl/hrp2_drc/hrp2_drc_description/", "drc_stairs2", "/home/hrp2user/jrl/mc_rtc/data/drc_stairs_climbing.json"),
   driving_controller({std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::PolarisRangerRobotModule()),
                       std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::EnvRobotModule("/home/hrp2user/jrl/mc_env_description/", "ground"))}),
+  egress_controller("/home/hrp2user/jrl/hrp2_drc/hrp2_drc_description/", "polaris_ranger"),
   //current_ctrl(POSTURE), next_ctrl(POSTURE),
   //controller(&posture_controller),
   //current_ctrl(BODY6D), next_ctrl(BODY6D),
   //controller(&body6d_controller),
   //current_ctrl(COM), next_ctrl(COM),
   //controller(&com_controller),
-  current_ctrl(SEQ), next_ctrl(SEQ),
-  controller(&seq_controller),
-  //current_ctrl(DRIVING), next_ctrl(DRIVING),
-  //controller(&driving_controller),
+  //current_ctrl(SEQ), next_ctrl(SEQ),
+  //controller(&seq_controller),
+  current_ctrl(DRIVING), next_ctrl(DRIVING),
+  controller(&driving_controller),
+  //current_ctrl(EGRESS), next_ctrl(EGRESS),
+  //controller(&egress_controller),
   next_controller(0)
 {
 }
@@ -36,7 +39,18 @@ void MCDRCGlobalController::init(const std::vector<double> & initq)
   std::vector<std::vector<double>> q;
   /*FIXME Get the position/attitude of the robot? */
   //q.push_back({1,0,0,0,-0.275,-0.05,0.76});
-  q.push_back({0.999735735669,-0.000712226669955,0.0227020230143,-0.00354537868489,-0.364642021503,-0.00254821664029,0.762505884771});
+  if(current_ctrl == SEQ)
+  {
+    q.push_back({0.999735735669,-0.000712226669955,0.0227020230143,-0.00354537868489,-0.364642021503,-0.00254821664029,0.762505884771});
+  }
+  else if(current_ctrl == EGRESS)
+  {
+    q.push_back({1, 0, 0, 0, 0, 0, 0.76});
+  }
+  else
+  {
+    q.push_back({1, 0, 0, 0, 0, 0, 0.76});
+  }
 
   /* The OpenRTM components don't give q in the same order as the QP */
   for(size_t i = 0; i < 24; ++i) // until RARM_LINK7

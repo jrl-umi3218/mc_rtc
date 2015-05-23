@@ -43,29 +43,32 @@ MCMRQPController::MCMRQPController(const std::vector<std::shared_ptr<mc_rbdyn::R
     lgripper.reset(new Gripper(urdfRobot, "l_gripper", robot(), urdf.str(), 0, timeStep));
     rgripper.reset(new Gripper(urdfRobot, "r_gripper", robot(), urdf.str(), 0, timeStep));
   }
-  hrp2contactConstraint = mc_solver::ContactConstraint(timeStep, mc_solver::ContactConstraint::Position);
+  hrp2contactConstraint = mc_solver::ContactConstraint(timeStep, mc_solver::ContactConstraint::Velocity);
   hrp2dynamicsConstraint = mc_solver::DynamicsConstraint(mrqpsolver->robots, hrp2_drc_index, timeStep,
                                                      false, {0.1, 0.01, 0.5}, 0.5);
   hrp2kinematicsConstraint = mc_solver::KinematicsConstraint(mrqpsolver->robots, hrp2_drc_index, timeStep,
-                                                         false, {0.1, 0.01, 0.0}, 0.5);
+                                                         false, {0.1, 0.01, 1e-1}, 0.75);
   hrp2selfCollisionConstraint = mc_solver::CollisionsConstraint(mrqpsolver->robots, hrp2_drc_index, hrp2_drc_index, timeStep);
 
   /* Give a reasonnable default set of self collisions for the upper body */
   hrp2selfCollisionConstraint.addCollisions(mrqpsolver->robots, {
+    mc_solver::Collision("LARM_LINK2", "BODY", 0.05, 0.01, 0.),
     mc_solver::Collision("LARM_LINK3", "BODY", 0.05, 0.01, 0.),
     mc_solver::Collision("LARM_LINK4", "BODY", 0.05, 0.01, 0.),
     mc_solver::Collision("LARM_LINK5", "BODY", 0.05, 0.01, 0.),
+
+    mc_solver::Collision("RARM_LINK2", "BODY", 0.05, 0.01, 0.),
     mc_solver::Collision("RARM_LINK3", "BODY", 0.05, 0.01, 0.),
     mc_solver::Collision("RARM_LINK4", "BODY", 0.05, 0.01, 0.),
     mc_solver::Collision("RARM_LINK5", "BODY", 0.05, 0.01, 0.),
-    mc_solver::Collision("RARM_LINK3", "CHEST_LINK0", 0.05, 0.01, 0.),
-    mc_solver::Collision("RARM_LINK4", "CHEST_LINK0", 0.05, 0.01, 0.),
-    mc_solver::Collision("RARM_LINK5", "CHEST_LINK0", 0.05, 0.01, 0.),
+
+    mc_solver::Collision("RARM_LINK2", "CHEST_LINK1", 0.05, 0.01, 0.),
+    mc_solver::Collision("RARM_LINK3", "CHEST_LINK1", 0.05, 0.01, 0.),
     mc_solver::Collision("RARM_LINK4", "CHEST_LINK1", 0.05, 0.01, 0.),
     mc_solver::Collision("RARM_LINK5", "CHEST_LINK1", 0.05, 0.01, 0.),
-    mc_solver::Collision("LARM_LINK3", "CHEST_LINK0", 0.05, 0.01, 0.),
-    mc_solver::Collision("LARM_LINK4", "CHEST_LINK0", 0.05, 0.01, 0.),
-    mc_solver::Collision("LARM_LINK5", "CHEST_LINK0", 0.05, 0.01, 0.),
+
+    mc_solver::Collision("LARM_LINK2", "CHEST_LINK1", 0.05, 0.01, 0.),
+    mc_solver::Collision("LARM_LINK3", "CHEST_LINK1", 0.05, 0.01, 0.),
     mc_solver::Collision("LARM_LINK4", "CHEST_LINK1", 0.05, 0.01, 0.),
     mc_solver::Collision("LARM_LINK5", "CHEST_LINK1", 0.05, 0.01, 0.)
   });

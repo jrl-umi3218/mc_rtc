@@ -80,6 +80,10 @@ bool MCDRCGlobalController::translate_ef(const Eigen::Vector3d & t)
   {
     return body6d_controller.translate_ef(t);
   }
+  else if(current_ctrl == EGRESS)
+  {
+    return egress_controller.move_ef(t, Eigen::Matrix3d::Identity());
+  }
   else
   {
     return false;
@@ -90,6 +94,10 @@ bool MCDRCGlobalController::rotate_ef(const Eigen::Matrix3d & m)
   if(current_ctrl == BODY6D)
   {
     return body6d_controller.rotate_ef(m);
+  }
+  else if(current_ctrl == EGRESS)
+  {
+    return egress_controller.move_ef(Eigen::Vector3d(0,0,0), m);
   }
   else
   {
@@ -102,6 +110,10 @@ bool MCDRCGlobalController::move_com(const Eigen::Vector3d & v)
   if(current_ctrl == COM)
   {
     return com_controller.move_com(v);
+  }
+  else if(current_ctrl == EGRESS)
+  {
+    return egress_controller.move_com(v);
   }
   else
   {

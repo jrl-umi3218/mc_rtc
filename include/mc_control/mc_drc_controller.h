@@ -6,6 +6,7 @@
 #include <mc_control/mc_com_controller.h>
 #include <mc_control/mc_seq_controller.h>
 #include <mc_control/mc_driving_controller.h>
+#include <mc_control/mc_egress_controller.h>
 
 /* FIXME For now, everything is in there, split it would be good */
 
@@ -37,6 +38,7 @@ public:
   bool EnableCoMController();
   bool EnableSeqController();
   bool EnableDrivingController();
+  bool EnableEgressController();
 
   /* Gripper controls */
   const std::vector<double> & gripperQ(bool lgripper);
@@ -79,13 +81,15 @@ private:
   MCCoMController com_controller;
   MCSeqController seq_controller;
   MCDrivingController driving_controller;
+  MCEgressController egress_controller;
   enum CurrentController
   {
     POSTURE = 1,
     BODY6D  = 2,
     COM = 3,
     SEQ = 4,
-    DRIVING = 5
+    DRIVING = 5,
+    EGRESS = 6
   };
   CurrentController current_ctrl;
   CurrentController next_ctrl;
