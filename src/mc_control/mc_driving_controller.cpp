@@ -2,6 +2,8 @@
 #include <mc_robots/polaris_ranger.h>
 #include <mc_rbdyn/robot.h>
 
+#include <Tasks/QPContactConstr.h>
+
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
@@ -14,12 +16,15 @@ MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rb
     ef_task("RARM_LINK6", robots(), 0),
     polarisKinematicsConstraint(robots(), 1, timeStep, false,
         {0.1, 0.01, 0.01}, 0.5),
-    drivingContacts()
+    drivingContacts(),
+    collsConstraint(robots(), 0, 1, timeStep)
 {
   mrqpsolver->addConstraintSet(hrp2contactConstraint);
-  mrqpsolver->addConstraintSet(hrp2kinematicsConstraint);
+  mrqpsolver->addConstraintSet(hrp2dynamicsConstraint);
   mrqpsolver->addConstraintSet(polarisKinematicsConstraint);
   mrqpsolver->addConstraintSet(hrp2selfCollisionConstraint);
+  mrqpsolver->addConstraintSet(collsConstraint);
+
   mrqpsolver->solver.addTask(hrp2postureTask.get());
   robots().envIndex = 2;
 
@@ -34,9 +39,6 @@ MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rb
   drivingContacts.emplace_back(robots().robotIndex, 1,
                            robot().surfaces.at("Butthock"),
                            polaris.surfaces.at("left_seat"));
-  //drivingContacts.emplace_back(robots().robotIndex, 1,
-  //                         robot().surfaces.at("LowerBack"),
-  //                         polaris.surfaces.at("left_back"));
   drivingContacts.emplace_back(robots().robotIndex, 1,
                            robot().surfaces.at("LFullSole"),
                            polaris.surfaces.at("exit_platform"));
@@ -49,13 +51,18 @@ MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rb
   drivingContacts.emplace_back(robots().robotIndex, 1,
                            robot().surfaces.at("RightGripper"),
                            polaris.surfaces.at("bar_wheel"));
-
+  drivingContacts.emplace_back(robots().robotIndex, 1,
+                           robot().surfaces.at("LowerBack"),
+                           polaris.surfaces.at("left_back"));
   mrqpsolver->setContacts(drivingContacts);
+  //collsConstraint.addCollision(robots(),
+  //  mc_solver::Collision("CHEST_LINK1", "seat_back", 0.4, 0.25, 0.0)
+  //);
 
   ef_task.addToSolver(mrqpsolver->solver);
   ef_task.removeFromSolver(mrqpsolver->solver);
 
-  polarisPostureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(mrqpsolver->robots.mbs, 1, mrqpsolver->robots.robots[1].mbc->q, 2, 100));
+  polarisPostureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(mrqpsolver->robots.mbs, 1, mrqpsolver->robots.robots[1].mbc->q, 1, 100));
 
   std::cout << "MCDrivingController init done" << std::endl;
 }
@@ -81,6 +88,7 @@ void MCDrivingController::reset(const ControllerResetData & reset_data)
   hrp2postureTask->posture(robot().mbc->q);
 
   resetWheelTransform();
+  resetBasePose();
 
   /*std::cout << sva::transformError(gripperSurface->X_0_s(robot(), *(robot().mbc)),
                                    wheelSurface->X_0_s(polaris, *(polaris.mbc))) << std::endl;
