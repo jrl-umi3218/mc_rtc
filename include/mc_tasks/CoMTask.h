@@ -22,6 +22,8 @@ public:
   void move_com(const Eigen::Vector3d & com);
 
   void set_com(const Eigen::Vector3d & com);
+
+  Eigen::Vector3d get_com();
 public:
   const mc_rbdyn::Robots & robots;
 
@@ -29,6 +31,7 @@ public:
   std::shared_ptr<tasks::qp::SetPointTask> comTaskSp;
 
   Eigen::Vector3d cur_com;
+  bool in_solver;
 };
 
 }

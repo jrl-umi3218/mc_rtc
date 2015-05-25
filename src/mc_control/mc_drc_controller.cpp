@@ -26,10 +26,10 @@ MCDRCGlobalController::MCDRCGlobalController()
   //controller(&com_controller),
   //current_ctrl(SEQ), next_ctrl(SEQ),
   //controller(&seq_controller),
-  current_ctrl(DRIVING), next_ctrl(DRIVING),
-  controller(&driving_controller),
-  //current_ctrl(EGRESS), next_ctrl(EGRESS),
-  //controller(&egress_controller),
+  //current_ctrl(DRIVING), next_ctrl(DRIVING),
+  //controller(&driving_controller),
+  current_ctrl(EGRESS), next_ctrl(EGRESS),
+  controller(&egress_controller),
   next_controller(0)
 {
 }

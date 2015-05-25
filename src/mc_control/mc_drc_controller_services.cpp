@@ -127,6 +127,10 @@ bool MCDRCGlobalController::play_next_stance()
   {
     return seq_controller.play_next_stance();
   }
+  else if(current_ctrl == EGRESS)
+  {
+    return egress_controller.next_phase();
+  }
   else
   {
     return false;

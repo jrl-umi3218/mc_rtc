@@ -109,7 +109,8 @@ CORBA::Boolean MCControlServiceSVC_impl::translate_ef(CORBA::Double x, CORBA::Do
 
 CORBA::Boolean MCControlServiceSVC_impl::rotate_ef(CORBA::Double r, CORBA::Double p, CORBA::Double y)
 {
-  Eigen::Matrix3d rpy = mc_rbdyn::rpyToMat(r, p, y);
+  //Eigen::Matrix3d rpy = mc_rbdyn::rpyToMat(r, p, y);
+  Eigen::Matrix3d rpy = sva::RotX(r)*sva::RotY(p)*sva::RotZ(y);
   return m_plugin->controller.rotate_ef(rpy);
 }
 

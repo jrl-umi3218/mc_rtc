@@ -4,12 +4,15 @@ namespace mc_tasks
 {
 
 EndEffectorTask::EndEffectorTask(const std::string & bodyName, const mc_rbdyn::Robots & robots, unsigned int robotIndex)
-: robots(robots), bodyName(bodyName)
+: robots(robots), bodyName(bodyName), inSolver(false)
 {
   const mc_rbdyn::Robot & robot = robots.robots[robotIndex];
   unsigned int bodyId = robot.bodyIdByName(bodyName);
   unsigned int bodyIndex = robot.bodyIndexByName(bodyName);
   sva::PTransformd bpw = robot.mbc->bodyPosW[bodyIndex];
+  std::cout << "Creating task for body " << bodyName << std::endl;
+  std::cout << "Current pos " << std::endl << bpw.translation() << std::endl;
+  std::cout << "Current ori " << std::endl << bpw.rotation() << std::endl;
 
   curTransform = bpw;
 
@@ -32,19 +35,27 @@ void EndEffectorTask::resetTask(const mc_rbdyn::Robots & robots, unsigned int ro
 
 void EndEffectorTask::removeFromSolver(tasks::qp::QPSolver & solver)
 {
-  solver.removeTask(positionTaskSp.get());
-  solver.removeTask(orientationTaskSp.get());
-  solver.updateConstrsNrVars(robots.mbs);
-  solver.updateConstrSize();
+  if(inSolver)
+  {
+    solver.removeTask(positionTaskSp.get());
+    solver.removeTask(orientationTaskSp.get());
+    solver.updateConstrsNrVars(robots.mbs);
+    solver.updateConstrSize();
+    inSolver = false;
+  }
 }
 
 void EndEffectorTask::addToSolver(tasks::qp::QPSolver & solver)
 {
-  solver.addTask(positionTaskSp.get());
-  solver.addTask(orientationTaskSp.get());
-  solver.updateTasksNrVars(robots.mbs);
-  solver.updateConstrsNrVars(robots.mbs);
-  solver.updateConstrSize();
+  if(!inSolver)
+  {
+    solver.addTask(positionTaskSp.get());
+    solver.addTask(orientationTaskSp.get());
+    solver.updateTasksNrVars(robots.mbs);
+    solver.updateConstrsNrVars(robots.mbs);
+    solver.updateConstrSize();
+    inSolver = true;
+  }
 }
 
 void EndEffectorTask::add_ef_pose(const sva::PTransformd & dtr)
@@ -60,6 +71,11 @@ void EndEffectorTask::set_ef_pose(const sva::PTransformd & tf)
 {
   positionTask->position(tf.translation());
   orientationTask->orientation(tf.rotation());
+}
+
+sva::PTransformd EndEffectorTask::get_ef_pose()
+{
+  return sva::PTransformd(orientationTask->orientation(), positionTask->position());
 }
 
 }

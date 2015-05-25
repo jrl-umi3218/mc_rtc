@@ -22,6 +22,8 @@ public:
   void add_ef_pose(const sva::PTransformd & dtr);
 
   void set_ef_pose(const sva::PTransformd & tf);
+
+  sva::PTransformd get_ef_pose();
 public:
   const mc_rbdyn::Robots & robots;
 
@@ -32,6 +34,7 @@ public:
 
   std::string bodyName;
   sva::PTransformd curTransform;
+  bool inSolver;
 };
 
 }
