@@ -16,7 +16,7 @@ MCEgressController::MCEgressController(const std::string & env_path, const std::
 {
   /* Recreate the kinematics/dynamics constraints to lower the damper offset */
   kinematicsConstraint = mc_solver::KinematicsConstraint(qpsolver->robots, 0, timeStep,
-                                                     false, {0.1, 0.01, 0.1}, 0.5);
+                                                     false, {0.1, 0.01, 0.01}, 0.5);
   dynamicsConstraint = mc_solver::DynamicsConstraint(qpsolver->robots, 0, timeStep,
                                                      false, {0.1, 0.01, 0.1}, 0.5);
 

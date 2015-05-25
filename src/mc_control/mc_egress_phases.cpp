@@ -49,16 +49,18 @@ public:
         });
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5", ctl.qpsolver->robots, ctl.qpsolver->robots.robotIndex));
         ctl.efTask->addToSolver(ctl.qpsolver->solver);
-        Eigen::Vector3d lift(-0.1, 0, 0.25); /*XXX Hard-coded value */
+        Eigen::Vector3d lift(-0.125, 0, 0.15); /*XXX Hard-coded value */
         lift = ctl.efTask->get_ef_pose().rotation()*lift + ctl.efTask->get_ef_pose().translation();
         //ctl.efTask->set_ef_pose(sva::PTransformd(Eigen::Matrix3d::Identity(), lift)*ctl.efTask->get_ef_pose());
         ctl.efTask->set_ef_pose(sva::PTransformd(ctl.efTask->get_ef_pose().rotation(), lift));
+        iterSincePutDown = 0;
         done_setup_lift = true;
       }
       else
       {
+        iterSincePutDown++;
         double error = ctl.efTask->positionTask->eval().norm();
-        if(error < 0.01)
+        if(error < 0.05 || iterSincePutDown > 15*500)
         {
           ctl.efTask->removeFromSolver(ctl.qpsolver->solver);
           ctl.postureTask->posture(ctl.robot().mbc->q);
@@ -72,8 +74,8 @@ public:
       if(!done_setup_reorient)
       {
         ankle_i = ctl.robot().jointIndexByName("RLEG_JOINT4");
-        ankle_reorient_target = -1.; /*XXX Hard-coded value */
         auto p = ctl.postureTask->posture();
+        ankle_reorient_target = p[ankle_i][0]; /*XXX Hard-coded value */
         p[ankle_i][0] = ankle_reorient_target;
         ctl.postureTask->posture(p);
         done_setup_reorient = true;
@@ -95,7 +97,7 @@ public:
       {
         ctl.oriTask.reset(new mc_tasks::OrientationTask("RLEG_LINK5", ctl.robots(), 0));
         ctl.oriTask->addToSolver(ctl.qpsolver->solver);
-        Eigen::Matrix3d change = sva::RotZ(60*M_PI/180); /*XXX Hard-coded value */
+        Eigen::Matrix3d change = sva::RotZ(40*M_PI/180); /*XXX Hard-coded value */
         ctl.oriTask->set_ef_ori(ctl.oriTask->get_ef_ori()*change);
         done_setup_rotate = true;
       }
@@ -120,13 +122,16 @@ public:
         unsigned int bIdx = ctl.robot().bodyIndexByName("LLEG_LINK5");
         sva::PTransformd bpw = ctl.robot().mbc->bodyPosW[bIdx];
         ctl.efTask->set_ef_pose(sva::PTransformd(bpw.rotation(), ctl.efTask->get_ef_pose().translation()));
+        iterSincePutDown = 0;
         done_setup_flatten = true;
       }
       else
       {
+        iterSincePutDown++;
         double error = ctl.efTask->orientationTask->eval().norm();
-        if(error < 0.1)
+        if(error < 0.1 || iterSincePutDown > 15*500)
         {
+          ctl.efTask->removeFromSolver(ctl.qpsolver->solver);
           ctl.postureTask->posture(ctl.robot().mbc->q);
           done_flatten = true;
           std::cout << "Finished flatten foot" << std::endl;
@@ -137,17 +142,28 @@ public:
     {
       if(!done_setup_putdown)
       {
-        Eigen::Vector3d down(0, 0, -0.15); /*XXX Hard-coded value */
-        down = ctl.efTask->get_ef_pose().rotation()*down + ctl.efTask->get_ef_pose().translation();
+        ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5", ctl.qpsolver->robots, 0, 0.05));
+        ctl.efTask->addToSolver(ctl.qpsolver->solver);
+        Eigen::Vector3d down(0.01, 0.01, -0.2); /*XXX Hard-coded value */
+        down = down + ctl.efTask->get_ef_pose().translation();
         ctl.efTask->set_ef_pose(sva::PTransformd(ctl.efTask->get_ef_pose().rotation(), down));
         iterSincePutDown = 0;
+        iterForce = 0;
         done_setup_putdown = true;
       }
       else
       {
         iterSincePutDown++;
         double error = ctl.efTask->positionTask->eval().norm();
-        if(ctl.wrenches[0].first[0] > 50 || error < 0.1 || iterSincePutDown > 15*500)
+        if(ctl.wrenches[0].first[0] > 100)
+        {
+          iterForce++;
+        }
+        else
+        {
+          iterForce = 0;
+        }
+        if(iterForce > 20 || iterSincePutDown > 15*500)
         {
           ctl.efTask->removeFromSolver(ctl.qpsolver->solver);
           ctl.postureTask->posture(ctl.robot().mbc->q);
@@ -179,6 +195,7 @@ private:
   int ankle_i;
   double ankle_reorient_target;
   unsigned int iterSincePutDown;
+  unsigned int iterForce;
 };
 
 struct EgressRemoveHandPhase : public EgressPhaseExecution
@@ -221,7 +238,7 @@ public:
         unsigned int bIdx = ctl.robot().bodyIndexByName("RARM_LINK6");
         sva::PTransformd bpw = ctl.robot().mbc->bodyPosW[bIdx];
         double d = (bpw.translation() - initPos).norm();
-        if(d > 0.1) /*XXX Hard-coded*/
+        if(d > 0.14) /*XXX Hard-coded*/
         {
           ctl.postureTask->posture(ctl.robot().mbc->q);
           ctl.efTask->removeFromSolver(ctl.qpsolver->solver);
@@ -240,9 +257,9 @@ public:
       {
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", ctl.qpsolver->robots, 0, 0.5));
         ctl.efTask->addToSolver(ctl.qpsolver->solver);
-        Eigen::Vector3d move(-0.1, -0.3, 0.); /*XXX Hard-coded*/
-        move = ctl.efTask->get_ef_pose().rotation()*move;
-        ctl.efTask->set_ef_pose(sva::PTransformd(Eigen::Matrix3d::Identity(), move)*ctl.efTask->get_ef_pose());
+        Eigen::Vector3d move(0., -0.3, 0.); /*XXX Hard-coded*/
+        move = ctl.efTask->get_ef_pose().rotation()*move + ctl.efTask->get_ef_pose().translation();
+        ctl.efTask->set_ef_pose(sva::PTransformd(ctl.efTask->get_ef_pose().rotation(), move));
         iterSinceMoving = 0;
         done_setup_move_right = true;
       }
