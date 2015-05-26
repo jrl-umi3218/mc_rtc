@@ -3,17 +3,18 @@
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
+#include "mc_egress_phases.cpp"
+
 namespace mc_control
 {
 
 MCEgressController::MCEgressController(const std::string & env_path, const std::string & env_name)
 : MCController(env_path, env_name),
   collsConstraint(robots(), 0, 1, timeStep),
-  need_setup(true),
-  //phase(MOVEFOOTINSIDE)
-  phase(ROTATEBODY)
+  phase(START), phaseExec(new EgressStartPhase)
+  //phase(ROTATEBODY), phaseExec(new EgressRotateBodyPhase)
 {
-  /* Recreate the dynamics constrain to remove the damper offset */
+  /* Recreate the kinematics/dynamics constraints to lower the damper offset */
   kinematicsConstraint = mc_solver::KinematicsConstraint(qpsolver->robots, 0, timeStep,
                                                      false, {0.1, 0.01, 0.1}, 0.5);
   dynamicsConstraint = mc_solver::DynamicsConstraint(qpsolver->robots, 0, timeStep,
@@ -31,6 +32,7 @@ MCEgressController::MCEgressController(const std::string & env_path, const std::
     mc_rbdyn::Contact(robot().surfaces.at("LFullSole"), env().surfaces.at("exit_platform")),
     mc_rbdyn::Contact(robot().surfaces.at("LeftThight"), env().surfaces.at("left_seat")),
     mc_rbdyn::Contact(robot().surfaces.at("RightThight"), env().surfaces.at("left_seat")),
+    mc_rbdyn::Contact(robot().surfaces.at("RightGripper"), env().surfaces.at("bar_wheel"))
   });
 
   comTask.reset(new mc_tasks::CoMTask(qpsolver->robots, qpsolver->robots.robotIndex));
@@ -51,6 +53,7 @@ void MCEgressController::reset(const ControllerResetData & reset_data)
     mc_rbdyn::Contact(robot().surfaces.at("LFullSole"), env().surfaces.at("exit_platform")),
     mc_rbdyn::Contact(robot().surfaces.at("LeftThight"), env().surfaces.at("left_seat")),
     mc_rbdyn::Contact(robot().surfaces.at("RightThight"), env().surfaces.at("left_seat")),
+    mc_rbdyn::Contact(robot().surfaces.at("RightGripper"), env().surfaces.at("bar_wheel"))
   });
   efTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex);
   comTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex);
@@ -84,25 +87,16 @@ void MCEgressController::resetBasePose()
 
 bool MCEgressController::run()
 {
-  if(need_setup)
+  bool ret = MCController::run();
+  if(ret)
   {
-    need_setup = false;
-    switch(phase)
+    bool next = phaseExec->run(*this);
+    if(next)
     {
-      case MOVEFOOTINSIDE:
-        setup_movefootinside();
-        break;
-      case LIFTBODY:
-        setup_liftbody();
-        break;
-      case ROTATEBODY:
-        setup_rotatebody();
-        break;
-      default:
-        break;
+      next_phase();
     }
   }
-  return MCController::run();
+  return ret;
 }
 
 bool MCEgressController::change_ef(const std::string & ef_name)
@@ -141,32 +135,41 @@ bool MCEgressController::next_phase()
   bool new_phase = true;
   switch(phase)
   {
-    case MOVEFOOTINSIDE:
-      phase = LIFTBODY;
+    case START:
+      phase = MOVEFOOTINSIDE;
+      phaseExec.reset(new EgressMoveFootInsidePhase);
       break;
-    case LIFTBODY:
+    case MOVEFOOTINSIDE:
+      phase = REMOVEHAND;
+      phaseExec.reset(new EgressRemoveHandPhase);
+      break;
+    case REMOVEHAND:
       phase = ROTATEBODY;
+      phaseExec.reset(new EgressRotateBodyPhase);
       break;
     case ROTATEBODY:
-      phase = PUTDOWNBODY;
+      phase = MOVEFOOTOUT;
+      phaseExec.reset(new EgressMoveFootOutPhase);
       break;
-    case PUTDOWNBODY:
-      phase = FREEHAND;
+    case MOVEFOOTOUT:
+      phase = CORRECTLFOOT;
       break;
-    case FREEHAND:
-      phase = SAFEHAND;
+    case CORRECTLFOOT:
+      phase = CORRECTRFOOT;
       break;
-    case SAFEHAND:
-      phase = MOVEFOOTOUTSIDE;
+    case CORRECTRFOOT:
+      phase = CORRECTBODY;
+      break;
+    case CORRECTBODY:
+      phase = STANDUP;
       break;
     default:
       new_phase = false;
       break;
   }
-  need_setup = new_phase;
-  return need_setup;
+  return new_phase;
 }
-
+/*
 void MCEgressController::setup_movefootinside()
 {
   std::cout << "MOVEFOOTINSIDE" << std::endl;
@@ -206,5 +209,6 @@ void MCEgressController::setup_liftbody()
   comTask->resetTask(robots(), 0);
   comTask->addToSolver(qpsolver->solver);
 }
+*/
 
 }

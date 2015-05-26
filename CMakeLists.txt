@@ -68,6 +68,7 @@ add_library(mc_control_solver SHARED ${mc_control_solver_SRC})
 target_link_libraries(mc_control_solver RBDyn Tasks)
 
 set(mc_tasks_SRC
+./src/mc_tasks/OrientationTask.cpp
 ./src/mc_tasks/EndEffectorTask.cpp
 ./src/mc_tasks/CoMTask.cpp
 ./src/mc_tasks/MetaTask.cpp

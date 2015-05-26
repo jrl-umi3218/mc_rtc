@@ -8,8 +8,8 @@ import sys
 sys.path.insert(0, '/usr/local/lib/python2.7/dist-packages/hrpsys/')
 
 import rtm
-rtm.nshost = "localhost"
-#rtm.nshost = "hrp2001c"
+#rtm.nshost = "localhost"
+rtm.nshost = "hrp2001c"
 rtm.nsport = 2809
 
 import OpenHRP
@@ -121,7 +121,7 @@ if __name__ == "__main__":
   buttons = ["A","B","X","Y","L1","L2","Select","Start","Home","L3","R3"]
 
   #phases = itertools.cycle(["MOVEFOOTINSIDE", "LIFTBODY", "ROTATEBODY"])
-  phases = itertools.cycle(["ROTATEBODY"])
+  phases = itertools.cycle(["LIFTBODY"])
   def nextPhase():
     phaseName = phases.next()
     if phaseName == "MOVEFOOTINSIDE":
