@@ -16,7 +16,7 @@ MCEgressController::MCEgressController(const std::string & env_path, const std::
 {
   /* Recreate the kinematics/dynamics constraints to lower the damper offset */
   kinematicsConstraint = mc_solver::KinematicsConstraint(qpsolver->robots, 0, timeStep,
-                                                     false, {0.1, 0.01, 0.01}, 0.5);
+                                                     false, {0.1, 0.01, 0.00}, 0.5);
   dynamicsConstraint = mc_solver::DynamicsConstraint(qpsolver->robots, 0, timeStep,
                                                      false, {0.1, 0.01, 0.1}, 0.5);
 
@@ -30,8 +30,8 @@ MCEgressController::MCEgressController(const std::string & env_path, const std::
   qpsolver->setContacts({
     mc_rbdyn::Contact(robot().surfaces.at("Butthock"), env().surfaces.at("left_seat")),
     mc_rbdyn::Contact(robot().surfaces.at("LFullSole"), env().surfaces.at("exit_platform")),
-    mc_rbdyn::Contact(robot().surfaces.at("LeftThight"), env().surfaces.at("left_seat")),
-    mc_rbdyn::Contact(robot().surfaces.at("RightThight"), env().surfaces.at("left_seat")),
+    //mc_rbdyn::Contact(robot().surfaces.at("LeftThight"), env().surfaces.at("left_seat")),
+    //mc_rbdyn::Contact(robot().surfaces.at("RightThight"), env().surfaces.at("left_seat")),
     mc_rbdyn::Contact(robot().surfaces.at("RightGripper"), env().surfaces.at("bar_wheel"))
   });
 
@@ -51,8 +51,8 @@ void MCEgressController::reset(const ControllerResetData & reset_data)
   qpsolver->setContacts({
     mc_rbdyn::Contact(robot().surfaces.at("Butthock"), env().surfaces.at("left_seat")),
     mc_rbdyn::Contact(robot().surfaces.at("LFullSole"), env().surfaces.at("exit_platform")),
-    mc_rbdyn::Contact(robot().surfaces.at("LeftThight"), env().surfaces.at("left_seat")),
-    mc_rbdyn::Contact(robot().surfaces.at("RightThight"), env().surfaces.at("left_seat")),
+    //mc_rbdyn::Contact(robot().surfaces.at("LeftThight"), env().surfaces.at("left_seat")),
+    //mc_rbdyn::Contact(robot().surfaces.at("RightThight"), env().surfaces.at("left_seat")),
     mc_rbdyn::Contact(robot().surfaces.at("RightGripper"), env().surfaces.at("bar_wheel"))
   });
   efTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex);
@@ -74,6 +74,9 @@ void MCEgressController::resetBasePose()
   sva::PTransformd graspOffset(sva::RotX(-M_PI/2), Eigen::Vector3d(0., 0., 0.));
   sva::PTransformd X_0_base = X_0_s.inv()*(graspOffset*X_0_w);
   //sva::PTransformd X_0_base = X_0_s.inv()*X_0_w;
+  X_0_w = polaris.surfaces.at("exit_platform")->X_0_s(polaris);
+  X_0_s = robot().surfaces.at("LFullSole")->X_0_s(robot());
+  X_0_base = X_0_s.inv()*X_0_w;
 
   const auto quat = Eigen::Quaterniond(X_0_base.rotation()).inverse();
   const Eigen::Vector3d trans(X_0_base.translation());
@@ -148,20 +151,23 @@ bool MCEgressController::next_phase()
       phaseExec.reset(new EgressRotateBodyPhase);
       break;
     case ROTATEBODY:
+      phase = CORRECTLFOOT;
+      phaseExec.reset(new EgressCorrectLeftFootPhase);
+      break;
+    case CORRECTLFOOT:
+      phase = CORRECTBODY;
+      phaseExec.reset(new EgressRotateBodyPhase);
+      break;
+    case CORRECTBODY:
       phase = MOVEFOOTOUT;
       phaseExec.reset(new EgressMoveFootOutPhase);
       break;
     case MOVEFOOTOUT:
-      phase = CORRECTLFOOT;
-      break;
-    case CORRECTLFOOT:
-      phase = CORRECTRFOOT;
+      phase = STANDUP;
+      phaseExec.reset(new EgressStandupPhase);
       break;
     case CORRECTRFOOT:
       phase = CORRECTBODY;
-      break;
-    case CORRECTBODY:
-      phase = STANDUP;
       break;
     default:
       new_phase = false;
@@ -169,46 +175,5 @@ bool MCEgressController::next_phase()
   }
   return new_phase;
 }
-/*
-void MCEgressController::setup_movefootinside()
-{
-  std::cout << "MOVEFOOTINSIDE" << std::endl;
-  qpsolver->setContacts({
-    mc_rbdyn::Contact(robot().surfaces.at("Butthock"), env().surfaces.at("left_seat")),
-    mc_rbdyn::Contact(robot().surfaces.at("LFullSole"), env().surfaces.at("exit_platform")),
-    mc_rbdyn::Contact(robot().surfaces.at("LeftThight"), env().surfaces.at("left_seat")),
-    mc_rbdyn::Contact(robot().surfaces.at("RightGripper"), env().surfaces.at("bar_wheel"))
-  });
-  efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5", qpsolver->robots, qpsolver->robots.robotIndex));
-  efTask->addToSolver(qpsolver->solver);
-}
-
-void MCEgressController::setup_rotatebody()
-{
-  std::cout << "ROTATEBODY" << std::endl;
-  qpsolver->setContacts({
-    mc_rbdyn::Contact(robot().surfaces.at("LFullSole"), env().surfaces.at("exit_platform")),
-    mc_rbdyn::Contact(robot().surfaces.at("RFullSole"), env().surfaces.at("left_floor")),
-  });
-  comTask->removeFromSolver(qpsolver->solver);
-  efTask.reset(new mc_tasks::EndEffectorTask("BODY", qpsolver->robots, qpsolver->robots.robotIndex));
-  efTask->addToSolver(qpsolver->solver);
-  postureTask->posture(robot().mbc->q);
-}
-
-void MCEgressController::setup_liftbody()
-{
-  std::cout << "LIFTBODY" << std::endl;
-  qpsolver->setContacts({
-    mc_rbdyn::Contact(robot().surfaces.at("LFullSole"), env().surfaces.at("exit_platform")),
-    mc_rbdyn::Contact(robot().surfaces.at("RFullSole"), env().surfaces.at("left_floor")),
-    mc_rbdyn::Contact(robot().surfaces.at("RightGripper"), env().surfaces.at("bar_wheel"))
-  });
-  efTask->removeFromSolver(qpsolver->solver);
-  postureTask->posture(robot().mbc->q);
-  comTask->resetTask(robots(), 0);
-  comTask->addToSolver(qpsolver->solver);
-}
-*/
 
 }

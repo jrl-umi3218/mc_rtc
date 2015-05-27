@@ -47,7 +47,7 @@ MCMRQPController::MCMRQPController(const std::vector<std::shared_ptr<mc_rbdyn::R
   hrp2dynamicsConstraint = mc_solver::DynamicsConstraint(mrqpsolver->robots, hrp2_drc_index, timeStep,
                                                      false, {0.1, 0.01, 0.1}, 0.5);
   hrp2kinematicsConstraint = mc_solver::KinematicsConstraint(mrqpsolver->robots, hrp2_drc_index, timeStep,
-                                                         false, {0.1, 0.01, 1e-1}, 0.5);
+                                                         false, {0.1, 0.01, 1e-2}, 0.5);
   hrp2selfCollisionConstraint = mc_solver::CollisionsConstraint(mrqpsolver->robots, hrp2_drc_index, hrp2_drc_index, timeStep);
 
   /* Give a reasonnable default set of self collisions for the upper body */

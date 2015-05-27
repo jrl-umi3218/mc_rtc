@@ -20,7 +20,7 @@ MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rb
     collsConstraint(robots(), 0, 1, timeStep)
 {
   mrqpsolver->addConstraintSet(hrp2contactConstraint);
-  mrqpsolver->addConstraintSet(hrp2dynamicsConstraint);
+  mrqpsolver->addConstraintSet(hrp2kinematicsConstraint);
   mrqpsolver->addConstraintSet(polarisKinematicsConstraint);
   mrqpsolver->addConstraintSet(hrp2selfCollisionConstraint);
   mrqpsolver->addConstraintSet(collsConstraint);
@@ -51,9 +51,9 @@ MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rb
   drivingContacts.emplace_back(robots().robotIndex, 1,
                            robot().surfaces.at("RightGripper"),
                            polaris.surfaces.at("bar_wheel"));
-  drivingContacts.emplace_back(robots().robotIndex, 1,
-                           robot().surfaces.at("LowerBack"),
-                           polaris.surfaces.at("left_back"));
+  //drivingContacts.emplace_back(robots().robotIndex, 1,
+  //                         robot().surfaces.at("LowerBack"),
+  //                         polaris.surfaces.at("left_back"));
   mrqpsolver->setContacts(drivingContacts);
   //collsConstraint.addCollision(robots(),
   //  mc_solver::Collision("CHEST_LINK1", "seat_back", 0.4, 0.25, 0.0)
@@ -88,7 +88,7 @@ void MCDrivingController::reset(const ControllerResetData & reset_data)
   hrp2postureTask->posture(robot().mbc->q);
 
   resetWheelTransform();
-  resetBasePose();
+  //resetBasePose();
 
   /*std::cout << sva::transformError(gripperSurface->X_0_s(robot(), *(robot().mbc)),
                                    wheelSurface->X_0_s(polaris, *(polaris.mbc))) << std::endl;
@@ -159,7 +159,6 @@ bool MCDrivingController::changeWheelAngle(double theta)
   double old = p[wheel_i][0];
   p[wheel_i][0] = theta;
   polarisPostureTask->posture(p);
-  std::cout << "Wheel angle changed from " << old << " to : " << theta << std::endl;
   return true;
 }
 
@@ -171,9 +170,6 @@ bool MCDrivingController::changeGaze(double pan, double tilt)
   p[pan_i][0] = pan;
   p[tilt_i][0] = tilt;
   hrp2postureTask->posture(p);
-  std::cout << "Pan/tilt angles set to : ("
-            << pan << ","
-            << tilt << ")" << std::endl;
   return true;
 }
 
@@ -186,7 +182,6 @@ bool MCDrivingController::changeAnkleAngle(double theta)
   auto p = hrp2postureTask->posture();
   p[ankle_i][0] = theta;
   hrp2postureTask->posture(p);
-  std::cout << "Ankle angle set to : " << theta << std::endl;
   return true;
 }
 
@@ -196,7 +191,6 @@ bool MCDrivingController::changeWristAngle(double yaw)
   auto p = hrp2postureTask->posture();
   p[wrist_i][0] = yaw;
   hrp2postureTask->posture(p);
-  std::cout << "Wrist yaw angle set to : " << yaw << std::endl;
   return true;
 }
 
