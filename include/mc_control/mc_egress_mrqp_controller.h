@@ -19,13 +19,13 @@ struct MCEgressMRQPController : MCMRQPController
     virtual void reset(const ControllerResetData & reset_data) override;
   protected:
     void resetBasePose();
-
+    void resetWheelTransform();
   private:
     std::shared_ptr<tasks::qp::PostureTask> polarisPostureTask;
+    std::shared_ptr<tasks::qp::PostureTask> lazyPostureTask;
     mc_solver::KinematicsConstraint polarisKinematicsConstraint;
     std::vector<mc_rbdyn::MRContact> egressContacts;
     mc_solver::CollisionsConstraint collsConstraint;
-    double lazy_theta;
 };
 
 }

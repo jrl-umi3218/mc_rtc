@@ -18,7 +18,7 @@ PolarisRangerEgressRobotModule::PolarisRangerEgressRobotModule()
   halfSitting["gas_joint"] = {};
   halfSitting["brake_joint"] = {};
   halfSitting["adjust_steering_wheel"] = {};
-  halfSitting["steering_joint"] = {};
+  halfSitting["steering_joint"] = {0};
   halfSitting["hand_brake_joint"] = {};
   halfSitting["FNR_switch_joint"] = {};
   halfSitting["lazy_susan"] = {0};
