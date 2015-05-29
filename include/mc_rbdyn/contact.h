@@ -87,6 +87,9 @@ public:
   std::vector<sva::PTransformd> r2Points();
 
   sva::PTransformd compute_X_r2s_r1s(const std::vector<Robot> & robots);
+
+  tasks::qp::ContactId contactId(const std::vector<Robot> & robots) const;
+
 public:
   unsigned int r1Index;
   unsigned int r2Index;

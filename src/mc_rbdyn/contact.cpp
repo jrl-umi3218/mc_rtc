@@ -282,4 +282,16 @@ sva::PTransformd MRContact::compute_X_r2s_r1s(const std::vector<Robot> & robots)
   return X_0_r1*X_0_r2.inv();
 }
 
+
+tasks::qp::ContactId MRContact::contactId(const std::vector<Robot> & robots) const
+{
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+  return tasks::qp::ContactId(r1Index, r2Index,
+                              robots[r1Index].bodyIdByName(r1Surface->bodyName),
+                              robots[r2Index].bodyIdByName(r2Surface->bodyName));
+#pragma GCC diagnostic pop
+}
+
+
 }
