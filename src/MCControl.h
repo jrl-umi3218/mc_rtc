@@ -142,9 +142,6 @@ class MCControl  : public RTC::DataFlowComponentBase
 
   // </rtc-template>
 
-  boost::asio::io_service io_service;
-  boost::asio::ip::udp::endpoint driving_client_endpoint;
-  boost::asio::ip::udp::socket drivingSocket;
   boost::thread drivingThread;
   void drivingUDPThread();
 
