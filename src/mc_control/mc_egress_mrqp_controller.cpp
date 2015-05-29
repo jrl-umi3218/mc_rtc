@@ -69,10 +69,10 @@ MCEgressMRQPController::MCEgressMRQPController(const std::vector<std::shared_ptr
 bool MCEgressMRQPController::run()
 {
   bool success = MCMRQPController::run();
-  lazy_theta += 1e-4;
+  lazy_theta += 1;
   int lazy_i = robots().robots[1].jointIndexByName("lazy_susan");
   auto p = polarisPostureTask->posture();
-  p[lazy_i][0] = lazy_theta;
+  p[lazy_i][0] = M_PI/2;
   polarisPostureTask->posture(p);
   return success;
 }
@@ -95,6 +95,10 @@ void MCEgressMRQPController::reset(const ControllerResetData & reset_data)
   mrqpsolver->solver.addTask(polarisPostureTask.get());
 
   mrqpsolver->setContacts(egressContacts);
+
+  mrqpsolver->solver.updateTasksNrVars(robots().mbs);
+  mrqpsolver->solver.updateConstrsNrVars(robots().mbs);
+  mrqpsolver->solver.updateConstrSize();
 
   std::cout << "End egress reset" << std::endl;
 }
