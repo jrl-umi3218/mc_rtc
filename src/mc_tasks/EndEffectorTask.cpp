@@ -36,6 +36,7 @@ void EndEffectorTask::removeFromSolver(tasks::qp::QPSolver & solver)
   {
     solver.removeTask(positionTaskSp.get());
     solver.removeTask(orientationTaskSp.get());
+    solver.updateTasksNrVars(robots.mbs);
     solver.updateConstrsNrVars(robots.mbs);
     solver.updateConstrSize();
     inSolver = false;
