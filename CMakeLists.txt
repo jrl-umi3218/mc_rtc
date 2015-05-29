@@ -56,6 +56,7 @@ set(mc_robots_SRC
 ./src/mc_robots/hrp2_drc.cpp
 ./src/mc_robots/env.cpp
 ./src/mc_robots/polaris_ranger.cpp
+./src/mc_robots/polaris_ranger_egress.cpp
 )
 add_library(mc_robots SHARED ${mc_robots_SRC})
 target_link_libraries(mc_robots mc_rbdyn mc_rbdyn_urdf)
@@ -93,6 +94,7 @@ set(mc_drc_controller_SRC
 ./src/mc_control/mc_mrqp_controller.cpp
 ./src/mc_control/mc_driving_controller.cpp
 ./src/mc_control/mc_egress_controller.cpp
+./src/mc_control/mc_egress_mrqp_controller.cpp
 ./src/mc_control/mc_drc_controller.cpp
 ./src/mc_control/mc_drc_controller_services.cpp
 )

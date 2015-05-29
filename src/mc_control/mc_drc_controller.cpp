@@ -5,6 +5,7 @@
 #include <RBDyn/FV.h>
 
 #include <mc_robots/polaris_ranger.h>
+#include <mc_robots/polaris_ranger_egress.h>
 
 /* Note all service calls except for controller switches are implemented in mc_drc_controller_services.cpp */
 
@@ -18,6 +19,8 @@ MCDRCGlobalController::MCDRCGlobalController()
   driving_controller({std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::PolarisRangerRobotModule()),
                       std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::EnvRobotModule("/home/hrp2user/jrl/mc_env_description/", "ground"))}),
   egress_controller("/home/hrp2user/jrl/hrp2_drc/hrp2_drc_description/", "polaris_ranger"),
+  egress_mrqp_controller({std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::PolarisRangerEgressRobotModule()),
+                      std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::EnvRobotModule("/home/hrp2user/jrl/mc_env_description/", "ground"))}),
   //current_ctrl(POSTURE), next_ctrl(POSTURE),
   //controller(&posture_controller),
   //current_ctrl(BODY6D), next_ctrl(BODY6D),
@@ -28,8 +31,10 @@ MCDRCGlobalController::MCDRCGlobalController()
   //controller(&seq_controller),
   //current_ctrl(DRIVING), next_ctrl(DRIVING),
   //controller(&driving_controller),
-  current_ctrl(EGRESS), next_ctrl(EGRESS),
-  controller(&egress_controller),
+  //current_ctrl(EGRESS), next_ctrl(EGRESS),
+  //controller(&egress_controller),
+  current_ctrl(EGRESS_MRQP), next_ctrl(EGRESS_MRQP),
+  controller(&egress_mrqp_controller),
   next_controller(0)
 {
 }

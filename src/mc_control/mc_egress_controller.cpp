@@ -42,6 +42,7 @@ MCEgressController::MCEgressController(const std::string & env_path, const std::
   efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", qpsolver->robots, qpsolver->robots.robotIndex));
   efTask->addToSolver(qpsolver->solver);
   efTask->removeFromSolver(qpsolver->solver);
+  std::cout << "MCEgressController init done" << std::endl;
 }
 
 void MCEgressController::reset(const ControllerResetData & reset_data)

@@ -7,6 +7,7 @@
 #include <mc_control/mc_seq_controller.h>
 #include <mc_control/mc_driving_controller.h>
 #include <mc_control/mc_egress_controller.h>
+#include <mc_control/mc_egress_mrqp_controller.h>
 
 /* FIXME For now, everything is in there, split it would be good */
 
@@ -82,6 +83,7 @@ private:
   MCSeqController seq_controller;
   MCDrivingController driving_controller;
   MCEgressController egress_controller;
+  MCEgressMRQPController egress_mrqp_controller;
   enum CurrentController
   {
     POSTURE = 1,
@@ -89,7 +91,8 @@ private:
     COM = 3,
     SEQ = 4,
     DRIVING = 5,
-    EGRESS = 6
+    EGRESS = 6,
+    EGRESS_MRQP = 7
   };
   CurrentController current_ctrl;
   CurrentController next_ctrl;
