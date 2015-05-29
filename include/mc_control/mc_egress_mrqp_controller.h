@@ -20,6 +20,7 @@ struct MCEgressMRQPController : MCMRQPController
   protected:
     void resetBasePose();
     void resetWheelTransform();
+    void resetLazyTransform();
   private:
     std::shared_ptr<tasks::qp::PostureTask> polarisPostureTask;
     std::shared_ptr<tasks::qp::PostureTask> lazyPostureTask;
