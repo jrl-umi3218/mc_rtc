@@ -5,12 +5,26 @@
 #include <mc_control/mc_solver/qpsolver.h>
 #include <mc_control/mc_mrqp_controller.h>
 #include <mc_tasks/EndEffectorTask.h>
+#include <mc_tasks/OrientationTask.h>
+#include <mc_tasks/CoMTask.h>
 
 namespace mc_control
 {
 
+struct EgressMRPhaseExecution;
+
 struct MCEgressMRQPController : MCMRQPController
 {
+  public:
+    enum EgressPhase
+    {
+      START = 1,
+      ROTATELAZY,
+      REPLACELEFTFOOT,
+      PLACERIGHTFOOT,
+      REMOVEHAND,
+      STANDUP
+    };
   public:
     MCEgressMRQPController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule> >& env_modules);
 
@@ -21,12 +35,20 @@ struct MCEgressMRQPController : MCMRQPController
     void resetBasePose();
     void resetWheelTransform();
     void resetLazyTransform();
+    void nextPhase();
+
+  public:
+    std::shared_ptr<mc_tasks::CoMTask> comTask;
+    std::shared_ptr<mc_tasks::EndEffectorTask> efTask;
+    std::shared_ptr<tasks::qp::PostureTask> lazyPostureTask;
+    std::vector<mc_rbdyn::MRContact> egressContacts;
+
   private:
     std::shared_ptr<tasks::qp::PostureTask> polarisPostureTask;
-    std::shared_ptr<tasks::qp::PostureTask> lazyPostureTask;
     mc_solver::KinematicsConstraint polarisKinematicsConstraint;
-    std::vector<mc_rbdyn::MRContact> egressContacts;
     mc_solver::CollisionsConstraint collsConstraint;
+    EgressPhase curPhase;
+    std::shared_ptr<EgressMRPhaseExecution> execPhase;
 };
 
 }

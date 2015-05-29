@@ -4,6 +4,8 @@
 
 #include <Tasks/QPContactConstr.h>
 
+#include "mc_mr_egress_phases.cpp"
+
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
@@ -15,7 +17,9 @@ MCEgressMRQPController::MCEgressMRQPController(const std::vector<std::shared_ptr
     polarisKinematicsConstraint(robots(), 1, timeStep, false,
         {0.1, 0.01, 0.01}, 0.5),
     egressContacts(),
-    collsConstraint(robots(), 0, 1, timeStep)
+    collsConstraint(robots(), 0, 1, timeStep),
+    curPhase(START),
+    execPhase(new EgressMRStartPhase)
 {
   mrqpsolver->addConstraintSet(hrp2contactConstraint);
   mrqpsolver->addConstraintSet(hrp2kinematicsConstraint);
@@ -44,9 +48,6 @@ MCEgressMRQPController::MCEgressMRQPController(const std::vector<std::shared_ptr
                            robot().surfaces.at("RightGripper"),
                            polaris.surfaces.at("bar_wheel"));
   mrqpsolver->setContacts(egressContacts);
-  //collsConstraint.addCollision(robots(),
-  //  mc_solver::Collision("CHEST_LINK1", "seat_back", 0.4, 0.25, 0.0)
-  //);
 
   polarisPostureTask.reset(new tasks::qp::PostureTask(mrqpsolver->robots.mbs, 1, mrqpsolver->robots.robots[1].mbc->q, 1.0, 1));
   lazyPostureTask.reset(new tasks::qp::PostureTask(mrqpsolver->robots.mbs, 1, polaris.mbc->q, 0.0, 1000.0));
@@ -54,19 +55,31 @@ MCEgressMRQPController::MCEgressMRQPController(const std::vector<std::shared_ptr
   jsv.push_back({static_cast<int>(polaris.jointIdByName("lazy_susan")), 0.25});
   lazyPostureTask->jointsStiffness(robots().mbs, jsv);
 
+  comTask.reset(new mc_tasks::CoMTask(mrqpsolver->robots, mrqpsolver->robots.robotIndex));
+  efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", mrqpsolver->robots,
+                                             mrqpsolver->robots.robotIndex));
+
   std::cout << "MCEgressMRQPController init done" << std::endl;
 }
 
 bool MCEgressMRQPController::run()
 {
   bool success = MCMRQPController::run();
+  if(success)
+  {
+    bool next = execPhase->run(*this);
+    if(next)
+    {
+      nextPhase();
+    }
+  }
   return success;
 }
 
 void MCEgressMRQPController::reset(const ControllerResetData & reset_data)
 {
   MCMRQPController::reset(reset_data);
-  std::cout << "Enter egress reset" << std::endl;
+  std::cout << "Enter mr egress reset" << std::endl;
   robot().mbc->zero(*(robot().mb));
   robot().mbc->q = reset_data.q;
   robot().mbc->q[0] = {1, 0, 0, 0, 0, 0, 0.76};
@@ -87,13 +100,7 @@ void MCEgressMRQPController::reset(const ControllerResetData & reset_data)
   mrqpsolver->solver.updateConstrsNrVars(robots().mbs);
   mrqpsolver->solver.updateConstrSize();
 
-  int lazy_i = robots().robots[1].jointIndexByName("lazy_susan");
-  auto p = lazyPostureTask->posture();
-  p[lazy_i][0] = 3*M_PI/4;
-  lazyPostureTask->posture(p);
-  polarisPostureTask->posture(p);
-
-  std::cout << "End egress reset" << std::endl;
+  std::cout << "End mr egress reset" << std::endl;
 }
 
 void MCEgressMRQPController::resetWheelTransform()
@@ -170,6 +177,32 @@ void MCEgressMRQPController::resetBasePose()
   robot().mbc->q[0] = baseQ;
   rbd::forwardKinematics(*(robot().mb), *(robot().mbc));
   rbd::forwardVelocity(*(robot().mb), *(robot().mbc));
+}
+
+void MCEgressMRQPController::nextPhase()
+{
+  switch(curPhase)
+  {
+  case START:
+    curPhase = ROTATELAZY;
+    execPhase.reset(new EgressRotateLazyPhase);
+    break;
+  case ROTATELAZY:
+    curPhase = REPLACELEFTFOOT;
+    execPhase.reset(new EgressReplaceLeftFootPhase);
+    break;
+  case REPLACELEFTFOOT:
+    curPhase = PLACERIGHTFOOT;
+    execPhase.reset(new EgressPlaceRightFootPhase);
+    break;
+  case PLACERIGHTFOOT:
+    curPhase = REMOVEHAND;
+    execPhase.reset(new EgressRemoveRightGripperPhase);
+    break;
+  default:
+    std::cout << "Done" << std::endl;
+    break;
+  }
 }
 
 }
