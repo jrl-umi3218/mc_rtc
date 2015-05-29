@@ -22,8 +22,8 @@ struct MCEgressMRQPController : MCMRQPController
       ROTATELAZY,
       REPLACELEFTFOOT,
       PLACERIGHTFOOT,
-      REMOVEHAND,
-      STANDUP
+      STANDUP,
+      REMOVEHAND
     };
   public:
     MCEgressMRQPController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule> >& env_modules);

@@ -52,13 +52,16 @@ MCEgressMRQPController::MCEgressMRQPController(const std::vector<std::shared_ptr
   polarisPostureTask.reset(new tasks::qp::PostureTask(mrqpsolver->robots.mbs, 1, mrqpsolver->robots.robots[1].mbc->q, 1.0, 1));
   lazyPostureTask.reset(new tasks::qp::PostureTask(mrqpsolver->robots.mbs, 1, polaris.mbc->q, 0.0, 1000.0));
   std::vector<tasks::qp::JointStiffness> jsv;
-  jsv.push_back({static_cast<int>(polaris.jointIdByName("lazy_susan")), 0.25});
+  jsv.push_back({static_cast<int>(polaris.jointIdByName("lazy_susan")), 0.1});
   lazyPostureTask->jointsStiffness(robots().mbs, jsv);
 
   comTask.reset(new mc_tasks::CoMTask(mrqpsolver->robots, mrqpsolver->robots.robotIndex));
   efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", mrqpsolver->robots,
                                              mrqpsolver->robots.robotIndex));
 
+  //collsConstraint.addCollision(robots(), mc_solver::Collision("RLEG_LINK5", "floor", 0.2, 0.15, 0));
+  //collsConstraint.addCollision(robots(), mc_solver::Collision("RLEG_LINK5", "floor_step", 0.2, 0.15, 0));
+  //collsConstraint.addCollision(robots(), mc_solver::Collision("RLEG_LINK5", "front_plane", 0.3, 0.25, 0));
   std::cout << "MCEgressMRQPController init done" << std::endl;
 }
 
@@ -72,6 +75,10 @@ bool MCEgressMRQPController::run()
     {
       nextPhase();
     }
+  }
+  else
+  {
+    std::cout << "Failed to run" << std::endl;
   }
   return success;
 }
@@ -196,6 +203,10 @@ void MCEgressMRQPController::nextPhase()
     execPhase.reset(new EgressPlaceRightFootPhase);
     break;
   case PLACERIGHTFOOT:
+    curPhase = STANDUP;
+    execPhase.reset(new EgressMRStandupPhase);
+    break;
+  case STANDUP:
     curPhase = REMOVEHAND;
     execPhase.reset(new EgressRemoveRightGripperPhase);
     break;
