@@ -18,6 +18,9 @@
 #include <fstream>
 
 #include <mc_rbdyn/surface.h>
+#include <boost/array.hpp>
+
+using boost::asio::ip::udp;
 
 static std::ofstream ofs("/tmp/mc-control.log");
 
@@ -55,9 +58,9 @@ MCControl::MCControl(RTC::Manager* manager)
     m_rpyOutOut("rpyOut", m_rpyOut),
     m_MCControlServicePortPort("MCControlServicePort"),
     m_service0(this),
+    drivingSocket(io_service),
     max_t(0),
     init(false)
-
     // </rtc-template>
 {
   m_wrenchesIn.resize(0);
@@ -115,13 +118,26 @@ RTC::ReturnCode_t MCControl::onInitialize()
 }
 
 RTC::ReturnCode_t MCControl::onActivated(RTC::UniqueId ec_id)
-{
+{ 
+  std::cout << "onActivated" << std::endl;
+  udp::resolver resolver(io_service);
+  // XXX hardcoded
+  try {
+    udp::resolver::query query(udp::v4(), "localhost", "2809");
+    driving_client_endpoint = *resolver.resolve(query);
+    drivingSocket.open(udp::v4());
+  } catch(...) {
+    std::cerr << "UDP initialization failed" << std::endl;
+  }
+
+  //drivingThread = boost::thread(&MCControl::drivingUDPThread, this);
   return RTC::RTC_OK;
 }
 
 
 RTC::ReturnCode_t MCControl::onDeactivated(RTC::UniqueId ec_id)
 {
+  drivingThread.interrupt();
   return RTC::RTC_OK;
 }
 
@@ -250,6 +266,23 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
     //std::cout << "\rTime spent in controller: " << loop_t << " us" << std::flush;
   }
   return RTC::RTC_OK;
+}
+
+void MCControl::drivingUDPThread() 
+{
+  std::cout << "UDP Driving thread started" << std::endl;
+  //boost::array<double, 4> recv_buf;
+  //try {
+  //drivingSocket.receive_from( boost::asio::buffer(recv_buf), driving_client_endpoint);
+  //} catch (...) {
+  //  std::cerr << "UDP Thread failed to receive" << std::endl;
+  //}
+  //std::cout << "Received: ";
+  //for(double d: recv_buf) {
+  //  std::cout << d << "\t";
+  //}
+  //controller.driving_service(recv_buf[0], recv_buf[1], recv_buf[2], recv_buf[3]);
+  //std::cout << std::endl;
 }
 
 extern "C"

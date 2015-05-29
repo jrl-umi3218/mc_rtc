@@ -13,6 +13,7 @@ add_definitions(-mfpmath=sse -msse2)
 #add_definitions(-Werror)
 
 find_package(PkgConfig)
+find_package(Boost REQUIRED COMPONENTS system filesystem thread)
 
 pkg_check_modules(OPENRTM REQUIRED openrtm-aist)
 include_directories(${OPENRTM_INCLUDE_DIRS})
@@ -115,7 +116,7 @@ include_directories(${CMAKE_BINARY_DIR}/idl)
 add_library(MCControl SHARED ${MCControl_SRC})
 add_dependencies(MCControl generate_mc_idl_cpp)
 set_target_properties(MCControl PROPERTIES PREFIX "")
-target_link_libraries(MCControl ${OPENRTM_LIBRARIES} mc_rbdyn mc_rbdyn_urdf mc_drc_controller)
+target_link_libraries(MCControl ${OPENRTM_LIBRARIES} ${Boost_LIBRARIES} mc_rbdyn mc_rbdyn_urdf mc_drc_controller)
 
 add_executable(MCControlComp ./src/MCControlComp.cpp)
 target_link_libraries(MCControlComp MCControl)

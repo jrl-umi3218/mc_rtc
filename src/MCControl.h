@@ -21,6 +21,9 @@
 
 #include <mc_control/mc_drc_controller.h>
 
+#include <boost/asio.hpp>
+#include <boost/thread.hpp>
+
 // </rtc-template>
 
 // Service Consumer stub headers
@@ -138,6 +141,12 @@ class MCControl  : public RTC::DataFlowComponentBase
   // <rtc-template block="consumer_declare">
 
   // </rtc-template>
+
+  boost::asio::io_service io_service;
+  boost::asio::ip::udp::endpoint driving_client_endpoint;
+  boost::asio::ip::udp::socket drivingSocket;
+  boost::thread drivingThread;
+  void drivingUDPThread();
 
  private:
 public:
