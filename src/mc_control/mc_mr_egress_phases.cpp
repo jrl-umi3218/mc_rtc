@@ -297,6 +297,173 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
     std::vector<mc_rbdyn::MRContact> otherContacts;
 };
 
+struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
+{
+  public:
+    EgressReplaceRightFootPhase()
+      : started(false),
+        done_removing(false),
+        done_moving(false),
+        done_rotating(false),
+        done_contacting(false),
+        rfc_index(2),
+        prev_weight(0),
+        otherContacts()
+    {
+    }
+
+    virtual bool run(MCEgressMRQPController & ctl) override
+    {
+      if(not started)
+      {
+        std::cout << "Replacing right foot" << std::endl;
+        ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
+        ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5",
+                                                       ctl.mrqpsolver->robots,
+                                                       ctl.mrqpsolver->robots.robotIndex, 0.25));
+
+        int lfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
+        sva::PTransformd lift(Eigen::Vector3d(0.05, 0, 0.1));
+
+        ctl.efTask->positionTask->position((lift*ctl.robot().mbc->bodyPosW[lfindex]).translation());
+        ctl.efTask->orientationTask->orientation(sva::RotZ(-M_PI/3));
+
+        //Free movement along z axis
+        mc_rbdyn::MRContact& rfc = ctl.egressContacts.at(rfc_index);
+        //std::copy(ctl.egressContacts.begin(), ctl.egressContacts.begin() + lfc_index, otherContacts.end());
+        //std::copy(ctl.egressContacts.begin() + lfc_index + 1, ctl.egressContacts.end(), otherContacts.end());
+        otherContacts.push_back(ctl.egressContacts.at(0));
+        otherContacts.push_back(ctl.egressContacts.at(1));
+        ctl.mrqpsolver->setContacts(ctl.egressContacts);
+
+        tasks::qp::ContactId cId = rfc.contactId(ctl.robots().robots);
+        Eigen::MatrixXd dof(6,6);
+        dof.setIdentity();
+        dof(2, 2) = 0;
+        dof(5, 5) = 0;
+        auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.hrp2contactConstraint.contactConstr.get());
+        if(constr == 0)
+          std::cout << "NOPE NOPE" << std::endl;
+        else
+          constr->addDofContact(cId, dof);
+
+        ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
+
+        started = true;
+        timeoutIter = 0;
+        return false;
+      }
+      else
+      {
+        if(not done_removing)
+        {
+          timeoutIter++;
+          if((ctl.efTask->positionTask->eval().norm() < 1e-2
+              and ctl.efTask->positionTask->speed().norm() < 1e-4)
+              or timeoutIter > 15*500)
+          {
+            done_removing = true;
+            ctl.mrqpsolver->setContacts(otherContacts);
+            Eigen::Vector3d move(0.20, 0.05, 0.20);
+            int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
+            const sva::PTransformd& lfpos = ctl.robot().mbc->bodyPosW[lfindex];
+            ctl.efTask->positionTask->position(lfpos.translation()+move);
+            //prev_weight = ctl.efTask->orientationTaskSp->weight();
+            //ctl.efTask->orientationTaskSp->weight(0.1);
+            //auto p = ctl.hrp2postureTask->posture();
+            //int rankle_i = ctl.robot().jointIndexByName("RLEG_JOINT5");
+            //p[rankle_i][0] = -80*M_PI/180;
+            //ctl.hrp2postureTask->posture(p);
+            timeoutIter = 0;
+            std::cout << "Modified position" << std::endl;
+          }
+          return false;
+        }
+        else if(not done_moving)
+        {
+          timeoutIter++;
+          if((ctl.efTask->positionTask->eval().norm() < 1e-2
+              and ctl.efTask->positionTask->speed().norm() < 1e-4)
+              or timeoutIter > 15*500)
+          {
+            done_moving = true;
+            //int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
+            //Eigen::Matrix3d& rot = ctl.robot().mbc->bodyPosW[lfindex].rotation();
+            //Eigen::Vector3d rpy = rot.eulerAngles(2, 1, 0);
+            //Eigen::Matrix3d target = sva::RotZ(-M_PI/2)*
+            //                         sva::RotY(rpy(1))*
+            //                         sva::RotX(rpy(2));
+            //auto p = ctl.hrp2postureTask->posture();
+            //int rankle_i = ctl.robot().jointIndexByName("RLEG_JOINT4");
+            //p[rankle_i][0] = 0.0;
+            //ctl.hrp2postureTask->posture(p);
+            //ctl.efTask->orientationTask->orientation(target);
+            //ctl.efTask->orientationTaskSp->weight(prev_weight);
+            std::cout << "Modified orientation" << std::endl;
+          }
+          return false;
+        }
+        else if(not done_rotating)
+        {
+          timeoutIter++;
+          if((ctl.efTask->orientationTask->eval().norm() < 1e-2
+              and ctl.efTask->orientationTask->speed().norm() < 1e-4)
+              or timeoutIter > 15*500)
+          {
+            done_rotating = true;
+            ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
+            ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5",
+                                                           ctl.mrqpsolver->robots,
+                                                           ctl.mrqpsolver->robots.robotIndex, 0.1));
+            int lfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
+            sva::PTransformd lower(Eigen::Vector3d(0, 0, -0.2));
+            ctl.efTask->positionTask->position((lower*ctl.robot().mbc->bodyPosW[lfindex]).translation());
+            timeoutIter = 0;
+            forceIter = 0;
+            forceStart = ctl.wrenches[0].first[2];
+            std::cout << "Going to contact" << std::endl;
+          }
+          return false;
+        }
+        else if(not done_contacting)
+        {
+          timeoutIter++;
+          if(ctl.wrenches[0].first[2] > forceStart + 150)
+          {
+            std::cout << "Contact force triggered" << std::endl;
+            forceIter++;
+          }
+          else
+          {
+            forceIter = 0;
+          }
+          if(forceIter > 40 or timeoutIter > 15*500)
+          {
+            done_contacting = true;
+            ctl.mrqpsolver->setContacts(ctl.egressContacts);
+            std::cout << "Done moving left foot" << std::endl;
+            return true;
+          }
+          return false;
+        }
+        return false;
+      }
+    }
+
+  private:
+    bool started;
+    bool done_removing;
+    bool done_moving;
+    bool done_rotating;
+    bool done_contacting;
+    size_t rfc_index;
+    unsigned int forceIter;
+    double forceStart;
+    double prev_weight;
+    std::vector<mc_rbdyn::MRContact> otherContacts;
+};
+
+
 struct EgressPlaceRightFootPhase : public EgressMRPhaseExecution
 {
   public:
@@ -488,9 +655,10 @@ struct EgressRemoveRightGripperPhase : public EgressMRPhaseExecution
 struct EgressMRStandupPhase : public EgressMRPhaseExecution
 {
   public:
-    EgressMRStandupPhase()
+    EgressMRStandupPhase(Eigen::Vector3d offset)
       : started(false),
         done_standup(false),
+        altitude_(offset),
         otherContacts()
     {
       std::cout << "In egress standup phase" << std::endl;
@@ -507,15 +675,25 @@ struct EgressMRStandupPhase : public EgressMRPhaseExecution
         int rfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
         const auto & lfPose = ctl.robot().mbc->bodyPosW[lfindex];
         const auto & rfPose = ctl.robot().mbc->bodyPosW[rfindex];
-        Eigen::Vector3d bodyTarget = (lfPose.translation() + rfPose.translation())/2;
-        bodyTarget(2) = bodyTarget(2) + 0.76 - 0.15;
+        Eigen::Vector3d bodyTarget = (lfPose.translation() + rfPose.translation())/2 + altitude_;
+        bodyTarget(2) += 0.76;
         ctl.efTask->positionTask->position(bodyTarget);
         ctl.efTask->orientationTask->orientation(lfPose.rotation());
         ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
         otherContacts.push_back(ctl.egressContacts.at(1));
         otherContacts.push_back(ctl.egressContacts.at(2));
         otherContacts.push_back(ctl.egressContacts.at(3));
+        for(auto c: otherContacts)
+        {
+          std::cout << c.r1Surface->name << " / " << c.r2Surface->name << std::endl;
+        }
         ctl.mrqpsolver->setContacts(otherContacts);
+
+        auto p = ctl.hrp2postureTask->posture();
+        int shoulder_i = ctl.robot().jointIndexByName("LARM_JOINT0");
+        p[shoulder_i][0] = M_PI/2;
+        ctl.hrp2postureTask->posture(p);
+
         timeoutIter = 0;
         started = true;
       }
@@ -526,6 +704,7 @@ struct EgressMRStandupPhase : public EgressMRPhaseExecution
         {
           ctl.hrp2postureTask->posture(ctl.robot().mbc->q);
           ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
+          ctl.egressContacts.erase(ctl.egressContacts.begin());
           done_standup = true;
           std::cout << "Finished standup" << std::endl;
           return true;
@@ -537,7 +716,63 @@ struct EgressMRStandupPhase : public EgressMRPhaseExecution
   private:
     bool started;
     bool done_standup;
+    Eigen::Vector3d altitude_;
     std::vector<mc_rbdyn::MRContact> otherContacts;
+};
+
+struct EgressMoveComSurfPhase : public EgressMRPhaseExecution
+{
+  public:
+    EgressMoveComSurfPhase(std::string surfName, double altitude)
+      : started(false),
+        done_com(false),
+        iter_(0),
+        altitude_(altitude),
+        surfName_(surfName)
+    {
+    }
+
+    virtual bool run(MCEgressMRQPController & ctl) override
+    {
+      if(not started)
+      {
+        std::cout << "Moving com over " << surfName_ << std::endl;
+        const mc_rbdyn::Surface* target = ctl.robot().surfaces.at(surfName_).get();
+        Eigen::Vector3d pos = target->X_0_s(ctl.robot()).translation();
+        pos(2) += 0.76 + altitude_;
+
+        ctl.comTask->set_com(pos);
+        ctl.comTask->addToSolver(ctl.mrqpsolver->solver);
+        started = true;
+        return false;
+      }
+      else
+      {
+        if(not done_com)
+        {
+          ++iter_;
+          if((ctl.comTask->comTask->eval().norm() < 1e-2
+              and ctl.comTask->comTask->speed().norm() < 1e-3)
+              or iter_ > 10*500)
+          {
+            done_com = true;
+            ctl.hrp2postureTask->posture(ctl.robot().mbc->q);
+            //ctl.comTask->removeFromSolver(ctl.mrqpsolver->solver);
+            return true;
+          }
+        return false;
+        }
+        else
+          return true;
+      }
+    }
+
+  private:
+    bool started;
+    bool done_com;
+    int iter_;
+    double altitude_;
+    std::string surfName_;
 };
 
 }

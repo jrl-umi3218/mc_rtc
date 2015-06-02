@@ -20,8 +20,9 @@ struct MCEgressMRQPController : MCMRQPController
     {
       START = 1,
       ROTATELAZY,
+      MOVECOMLEFT,
       REPLACELEFTFOOT,
-      PLACERIGHTFOOT,
+      REPLACERIGHTFOOT,
       STANDUP,
       REMOVEHAND
     };

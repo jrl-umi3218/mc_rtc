@@ -200,20 +200,29 @@ void MCEgressMRQPController::nextPhase()
     execPhase.reset(new EgressRotateLazyPhase);
     break;
   case ROTATELAZY:
+  //  curPhase = REPLACELEFTFOOT;
+  //  execPhase.reset(new EgressReplaceLeftFootPhase);
+  //  break;
+  //case REPLACELEFTFOOT:
     curPhase = STANDUP;
-    execPhase.reset(new EgressMRStandupPhase);
-    //curPhase = REPLACELEFTFOOT;
-    //execPhase.reset(new EgressReplaceLeftFootPhase);
+    execPhase.reset(new EgressMRStandupPhase(Eigen::Vector3d(0.0, 0.2, -0.25)));
     break;
-  case REPLACELEFTFOOT:
-    curPhase = PLACERIGHTFOOT;
-    execPhase.reset(new EgressPlaceRightFootPhase);
-    break;
-  case PLACERIGHTFOOT:
-    curPhase = STANDUP;
-    execPhase.reset(new EgressMRStandupPhase);
-    break;
+  //  curPhase = PLACERIGHTFOOT;
+  //  execPhase.reset(new EgressPlaceRightFootPhase);
+  //  break;
+  //case PLACERIGHTFOOT:
+  //  curPhase = STANDUP;
+  //  execPhase.reset(new EgressMRStandupPhase(-0.15));
+  //  break;
   case STANDUP:
+    curPhase = MOVECOMLEFT;
+    execPhase.reset(new EgressMoveComSurfPhase("LFullSole", 0.15));
+    break;
+  case MOVECOMLEFT:
+    curPhase = REPLACERIGHTFOOT;
+    execPhase.reset(new EgressReplaceRightFootPhase);
+    break;
+  case REPLACERIGHTFOOT:
     curPhase = REMOVEHAND;
     execPhase.reset(new EgressRemoveRightGripperPhase);
     break;
