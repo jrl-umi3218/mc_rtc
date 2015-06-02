@@ -24,7 +24,10 @@ MCEgressMRQPController::MCEgressMRQPController(const std::vector<std::shared_ptr
   collsConstraint.addCollisions(robots(),
       {
         mc_solver::Collision("RLEG_LINK5", "left_column", 0.05, 0.01, 0.),
-        mc_solver::Collision("RLEG_LINK4", "left_column", 0.05, 0.01, 0.)
+        mc_solver::Collision("RLEG_LINK4", "left_column", 0.05, 0.01, 0.),
+        mc_solver::Collision("RARM_LINK6", "left_column", 0.05, 0.01, 0.),
+        mc_solver::Collision("RARM_LINK5", "left_column", 0.05, 0.01, 0.),
+        mc_solver::Collision("RARM_LINK4", "left_column", 0.05, 0.01, 0.)
         });
   mrqpsolver->addConstraintSet(hrp2contactConstraint);
   mrqpsolver->addConstraintSet(hrp2kinematicsConstraint);
@@ -223,6 +226,14 @@ void MCEgressMRQPController::nextPhase()
     execPhase.reset(new EgressReplaceRightFootPhase);
     break;
   case REPLACERIGHTFOOT:
+    curPhase = MOVECOMRIGHT;
+    execPhase.reset(new EgressMoveComSurfPhase("RFullSole", -0.15));
+    break;
+  case MOVECOMRIGHT:
+    curPhase = REPLACELEFTFOOT;
+    execPhase.reset(new EgressReplaceLeftFootPhase);
+    break;
+  case REPLACELEFTFOOT:
     curPhase = REMOVEHAND;
     execPhase.reset(new EgressRemoveRightGripperPhase);
     break;

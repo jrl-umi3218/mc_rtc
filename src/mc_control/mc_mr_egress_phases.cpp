@@ -166,7 +166,7 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
         done_removing(false),
         done_rotating(false),
         done_contacting(false),
-        lfc_index(1),
+        lfc_index(0),
         otherContacts()
     {
     }
@@ -190,12 +190,15 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
         mc_rbdyn::MRContact& lfc = ctl.egressContacts.at(lfc_index);
         //std::copy(ctl.egressContacts.begin(), ctl.egressContacts.begin() + lfc_index, otherContacts.end());
         //std::copy(ctl.egressContacts.begin() + lfc_index + 1, ctl.egressContacts.end(), otherContacts.end());
-        otherContacts.push_back(ctl.egressContacts.at(0));
+        otherContacts.push_back(ctl.egressContacts.at(1));
         otherContacts.push_back(ctl.egressContacts.at(2));
-        otherContacts.push_back(mc_rbdyn::MRContact(0, 1,
-                                  ctl.robot().surfaces.at("RFullSole"),
-                                  ctl.robots().robots[1].surfaces.at("left_floor")));
-        ctl.mrqpsolver->setContacts(otherContacts);
+
+        for(auto c: otherContacts)
+        {
+          std::cout << c.r1Surface->name << " / " << c.r2Surface->name << std::endl;
+        }
+
+        ctl.mrqpsolver->setContacts(ctl.egressContacts);
 
         tasks::qp::ContactId cId = lfc.contactId(ctl.robots().robots);
         Eigen::MatrixXd dof(6,6);
@@ -224,15 +227,17 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
           {
             done_removing = true;
             ctl.mrqpsolver->setContacts(otherContacts);
-            sva::PTransformd move(Eigen::Vector3d(0.1, 0., 0.));
+            Eigen::Vector3d move(0.2, -0.2, 0.);
             int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
+            int rfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
+            const sva::PTransformd& rfpos = ctl.robot().mbc->bodyPosW[rfindex];
             Eigen::Matrix3d& rot = ctl.robot().mbc->bodyPosW[lfindex].rotation();
             Eigen::Vector3d rpy = rot.eulerAngles(2, 1, 0);
             //Eigen::Vector3d rpy_body = ctl.robot().mbc->bodyPosW[0].rotation().eulerAngles(2, 1, 0);
-            Eigen::Matrix3d target = sva::RotZ(-M_PI/2)*
-                                     sva::RotY(rpy(1))*
-                                     sva::RotX(rpy(2));
-          ctl.efTask->positionTask->position((move*ctl.efTask->get_ef_pose()).translation());
+            Eigen::Matrix3d target = sva::RotZ(-M_PI/2);
+                                     //*sva::RotY(rpy(1))
+                                     //*sva::RotX(rpy(2));
+            ctl.efTask->positionTask->position(rfpos.translation()+move);
             ctl.efTask->orientationTask->orientation(target);
             timeoutIter = 0;
             std::cout << "Modified orientation" << std::endl;
@@ -276,6 +281,15 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
           if(forceIter > 40 or timeoutIter > 15*500)
           {
             done_contacting = true;
+            std::cout << ctl.robots().robots[2].surfaces.size() << std::endl;
+            for(auto s : ctl.robots().robots[2].surfaces)
+            {
+              std::cout << s.first << std::endl;
+            }
+            ctl.egressContacts.erase(ctl.egressContacts.begin()+lfc_index);
+            ctl.egressContacts.emplace_back(ctl.robots().robotIndex, 2,
+                                            ctl.robot().surfaces.at("LFullSole"),
+                                            ctl.robots().robots[2].surfaces.at("AllGround"));
             ctl.mrqpsolver->setContacts(ctl.egressContacts);
             std::cout << "Done moving left foot" << std::endl;
             return true;
@@ -364,7 +378,7 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
           {
             done_removing = true;
             ctl.mrqpsolver->setContacts(otherContacts);
-            Eigen::Vector3d move(0.20, 0.05, 0.20);
+            Eigen::Vector3d move(0.35, -0.15, 0.20);
             int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
             const sva::PTransformd& lfpos = ctl.robot().mbc->bodyPosW[lfindex];
             ctl.efTask->positionTask->position(lfpos.translation()+move);
@@ -418,6 +432,24 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
             int lfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
             sva::PTransformd lower(Eigen::Vector3d(0, 0, -0.2));
             ctl.efTask->positionTask->position((lower*ctl.robot().mbc->bodyPosW[lfindex]).translation());
+            ctl.mrqpsolver->setContacts(ctl.egressContacts);
+
+            //Free movement along z axis
+            mc_rbdyn::MRContact& rfc = ctl.egressContacts.at(rfc_index);
+            otherContacts.push_back(ctl.egressContacts.at(0));
+            otherContacts.push_back(ctl.egressContacts.at(1));
+            ctl.mrqpsolver->setContacts(ctl.egressContacts);
+
+            tasks::qp::ContactId cId = rfc.contactId(ctl.robots().robots);
+            Eigen::MatrixXd dof(6,6);
+            dof.setIdentity();
+            dof(5, 5) = 0;
+            auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.hrp2contactConstraint.contactConstr.get());
+            if(constr == 0)
+              std::cout << "NOPE NOPE" << std::endl;
+            else
+              constr->addDofContact(cId, dof);
+
             timeoutIter = 0;
             forceIter = 0;
             forceStart = ctl.wrenches[0].first[2];
@@ -440,8 +472,16 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
           if(forceIter > 40 or timeoutIter > 15*500)
           {
             done_contacting = true;
+            auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.hrp2contactConstraint.contactConstr.get());
+            constr->resetDofContacts();
             ctl.mrqpsolver->setContacts(ctl.egressContacts);
-            std::cout << "Done moving left foot" << std::endl;
+            auto p = ctl.hrp2postureTask->posture();
+            int lelbow_i = ctl.robot().jointIndexByName("LARM_JOINT3");
+            int lwrist_i = ctl.robot().jointIndexByName("LARM_JOINT5");
+            p[lelbow_i][0] = 0.0;
+            p[lwrist_i][0] = 0.0;
+            ctl.hrp2postureTask->posture(p);
+            std::cout << "Done moving right foot" << std::endl;
             return true;
           }
           return false;
