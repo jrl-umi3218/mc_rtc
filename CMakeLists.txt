@@ -71,6 +71,7 @@ target_link_libraries(mc_control_solver RBDyn Tasks)
 
 set(mc_trajectory_SRC
 ./src/mc_trajectory/BSplineTrajectory.cpp
+./src/mc_trajectory/spline_utils.cpp
 )
 add_library(mc_trajectory SHARED ${mc_trajectory_SRC})
 
