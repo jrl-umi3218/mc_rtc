@@ -20,6 +20,10 @@ struct Surface
 public:
   Surface(const std::string & name, const std::string & bodyName, const sva::PTransformd & X_b_s, const std::string & materialName);
 
+  unsigned int bodyIndex(const mc_rbdyn::Robot & robot) const;
+
+  unsigned int bodyId(const mc_rbdyn::Robot & robot) const;
+
   sva::PTransformd X_0_s(const mc_rbdyn::Robot & robot) const;
 
   sva::PTransformd X_0_s(const mc_rbdyn::Robot & robot, const rbd::MultiBodyConfig & mbc) const;
