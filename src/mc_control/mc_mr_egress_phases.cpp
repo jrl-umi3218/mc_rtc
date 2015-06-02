@@ -231,9 +231,6 @@ struct EgressRemoveLeftFootPhase : public EgressMRPhaseExecution
           //std::copy(ctl.egressContacts.begin() + lfc_index + 1, ctl.egressContacts.end(), otherContacts.end());
           otherContacts.push_back(ctl.egressContacts.at(0));
           otherContacts.push_back(ctl.egressContacts.at(2));
-          otherContacts.push_back(mc_rbdyn::MRContact(0, 1,
-                                    ctl.robot().surfaces.at("RFullSole"),
-                                    ctl.robots().robots[1].surfaces.at("left_floor")));
           ctl.mrqpsolver->setContacts(otherContacts);
 
           tasks::qp::ContactId cId = lfc.contactId(ctl.robots().robots);
