@@ -21,6 +21,7 @@ struct MCEgressMRQPController : MCMRQPController
       START = 1,
       REMOVERIGHTFOOT,
       REMOVELEFTFOOT,
+      MOVELEFTFOOT,
       ROTATELAZY,
       REPLACELEFTFOOT,
       PLACERIGHTFOOT,

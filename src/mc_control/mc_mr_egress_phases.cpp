@@ -279,6 +279,60 @@ struct EgressRemoveLeftFootPhase : public EgressMRPhaseExecution
     std::vector<mc_rbdyn::MRContact> otherContacts;
 };
 
+
+struct EgressMoveLeftFootPhase : public EgressMRPhaseExecution
+{
+  public:
+    EgressMoveLeftFootPhase()
+      : started(false),
+        done_moving(false),
+        iter(0)
+  {
+  }
+
+   virtual bool run(MCEgressMRQPController & ctl) override
+   {
+     if(not started)
+     {
+       std::cout << "Placing left foot" << std::endl;
+       started = true;
+       ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
+       ctl.efTask.reset(new mc_tasks::EndEffectorTask("LLEG_LINK5",
+                                                      ctl.robots(),
+                                                      ctl.robots().robotIndex,
+                                                      0.25));
+       sva::PTransformd moveOut(Eigen::Vector3d(0.2, 0.1, 0.0));
+       ctl.efTask->add_ef_pose(moveOut);
+       ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
+       return false;
+     }
+     else
+     {
+       if(not done_moving)
+       {
+         iter++;
+         if((ctl.efTask->positionTask->eval().norm() < 1e-2
+             and ctl.efTask->positionTask->speed().norm() < 1e-4)
+             or iter > 30*500)
+           {
+             done_moving = true;
+             ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
+             ctl.hrp2postureTask->posture(ctl.robot().mbc->q);
+             return true;
+           }
+           return false;
+       }
+       else
+         return true;
+     }
+   }
+
+  private:
+    bool started;
+    bool done_moving;
+    int iter;
+};
+
 struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
 {
   public:

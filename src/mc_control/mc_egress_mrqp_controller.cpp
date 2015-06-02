@@ -199,6 +199,10 @@ void MCEgressMRQPController::nextPhase()
     execPhase.reset(new EgressRemoveLeftFootPhase);
     break;
   case REMOVELEFTFOOT:
+    curPhase = MOVELEFTFOOT;
+    execPhase.reset(new EgressMoveLeftFootPhase);
+    break;
+  case MOVELEFTFOOT:
     curPhase = ROTATELAZY;
     execPhase.reset(new EgressRotateLazyPhase);
     break;
