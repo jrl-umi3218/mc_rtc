@@ -46,13 +46,24 @@ BSplineTrajectory::BSplineTrajectory(const std::vector<Eigen::Vector3d> & contro
   spline = Eigen::SplineFitting<Spline3d>::Interpolate(P, p, knot);
 }
 
-std::vector<Eigen::Vector3d> BSplineTrajectory::splev(const std::vector<double> & t, unsigned int der)
+std::vector< std::vector<Eigen::Vector3d> > BSplineTrajectory::splev(const std::vector<double> & t, unsigned int der)
 {
-  std::vector<Eigen::Vector3d> res(0);
+  std::vector< std::vector<Eigen::Vector3d> > res(0);
   res.reserve(t.size());
   for(const auto & ti : t)
   {
-    res.push_back( spline(ti/duration) );
+    std::vector<Eigen::Vector3d> pts;
+    pts.reserve(der + 1);
+    auto tmp = spline.derivatives(ti/duration, der);
+    for(unsigned int i = 0; i <= der; ++i)
+    {
+      Eigen::Vector3d cu;
+      cu(0) = tmp(0, i);
+      cu(1) = tmp(1, i);
+      cu(2) = tmp(2, i);
+      pts.push_back(cu);
+    }
+    res.push_back(pts);
   }
   return res;
 }

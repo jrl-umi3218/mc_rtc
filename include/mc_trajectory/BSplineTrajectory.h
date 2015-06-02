@@ -15,7 +15,7 @@ struct BSplineTrajectory
 public:
   BSplineTrajectory(const std::vector<Eigen::Vector3d> & controlPoints, double duration, unsigned int order = 4);
 
-  std::vector<Eigen::Vector3d> splev(const std::vector<double> & t, unsigned int der = 0);
+  std::vector< std::vector<Eigen::Vector3d> > splev(const std::vector<double> & t, unsigned int der = 0);
 private:
   double duration;
   unsigned int p;
