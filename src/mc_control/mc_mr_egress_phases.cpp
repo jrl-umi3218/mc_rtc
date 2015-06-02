@@ -21,23 +21,22 @@ public:
   }
 };
 
-struct EgressRotateLazyPhase : public EgressMRPhaseExecution
+
+struct EgressRemoveRightFootPhase : public EgressMRPhaseExecution
 {
   public:
-    EgressRotateLazyPhase()
+    EgressRemoveRightFootPhase()
       : started(false),
         done_move_foot(false),
         done_change_knee(false),
-        done_rotate(false),
-        done_reorient(false),
-        forceIter(0)
-    {
-    }
-
+        timeoutIter(0)
+  {
+  }
     virtual bool run(MCEgressMRQPController & ctl) override
     {
       if(not started)
       {
+        std::cout << "Removing right foot" << std::endl;
         started = true;
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5", ctl.mrqpsolver->robots, 0, 0.25));
         ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
@@ -68,19 +67,47 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
         if(ctl.hrp2postureTask->eval().norm() < 1e-2 or timeoutIter > 10*500)
         {
           done_change_knee = true;
-          ctl.hrp2postureTask->posture(ctl.robot().mbc->q);
-          std::cout << "Start rotating suzan" << std::endl;
-          int lazy_i = ctl.robots().robots[1].jointIndexByName("lazy_susan");
-          auto p = ctl.lazyPostureTask->posture();
-          p[lazy_i][0] = M_PI/4;
-          ctl.lazyPostureTask->posture(p);
+          return true;
         }
+        return false;
+      }
+      return false;
+  }
+
+  private:
+    bool started;
+    bool done_move_foot;
+    bool done_change_knee;
+    int timeoutIter;
+};
+
+struct EgressRotateLazyPhase : public EgressMRPhaseExecution
+{
+  public:
+    EgressRotateLazyPhase()
+      : started(false),
+        done_rotate(false),
+        done_reorient(false),
+        forceIter(0)
+    {
+    }
+
+    virtual bool run(MCEgressMRQPController & ctl) override
+    {
+     if(not started)
+      {
+        started = true;
+        ctl.hrp2postureTask->posture(ctl.robot().mbc->q);
+        std::cout << "Start rotating suzan" << std::endl;
+        int lazy_i = ctl.robots().robots[1].jointIndexByName("lazy_susan");
+        auto p = ctl.lazyPostureTask->posture();
+        p[lazy_i][0] = M_PI/2;
         return false;
       }
       else if(not done_rotate)
       {
         //Check if robot is no longer moving
-        if(ctl.mrqpsolver->solver.alphaDVec(0).norm() < 5e-3)
+        if(ctl.mrqpsolver->solver.alphaDVec(0).norm() < 5e-4)
         {
           std::cout << "Lazy susan rotation done" << std::endl;
           ctl.lazyPostureTask->posture(ctl.robots().robots[1].mbc->q);
@@ -146,67 +173,81 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
 
   private:
     bool started;
-    bool done_move_foot;
-    bool done_change_knee;
     bool done_rotate;
     bool done_reorient;
     unsigned int forceIter;
     double forceStart;
 };
 
-struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
+struct EgressRemoveLeftFootPhase : public EgressMRPhaseExecution
 {
   public:
-    EgressReplaceLeftFootPhase()
+    EgressRemoveLeftFootPhase()
       : started(false),
+        done_stabilizing(false),
         done_removing(false),
-        done_rotating(false),
-        done_contacting(false),
         lfc_index(1),
         otherContacts()
-    {
-    }
+  {
+  }
 
-    virtual bool run(MCEgressMRQPController & ctl) override
+   virtual bool run(MCEgressMRQPController & ctl) override
     {
       if(not started)
       {
-        std::cout << "Replacing left foot" << std::endl;
-        ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
-        ctl.efTask.reset(new mc_tasks::EndEffectorTask("LLEG_LINK5",
-                                                       ctl.mrqpsolver->robots,
-                                                       ctl.mrqpsolver->robots.robotIndex, 0.25));
-
-        int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
-        sva::PTransformd lift(Eigen::Vector3d(0.05, 0, 0.1));
-
-        ctl.efTask->positionTask->position((lift*ctl.robot().mbc->bodyPosW[lfindex]).translation());
-
-        //Free movement along z axis
-        mc_rbdyn::MRContact& lfc = ctl.egressContacts.at(lfc_index);
-        //std::copy(ctl.egressContacts.begin(), ctl.egressContacts.begin() + lfc_index, otherContacts.end());
-        //std::copy(ctl.egressContacts.begin() + lfc_index + 1, ctl.egressContacts.end(), otherContacts.end());
-        otherContacts.push_back(ctl.egressContacts.at(0));
-        otherContacts.push_back(ctl.egressContacts.at(2));
-        otherContacts.push_back(mc_rbdyn::MRContact(0, 1,
-                                  ctl.robot().surfaces.at("RFullSole"),
-                                  ctl.robots().robots[1].surfaces.at("left_floor")));
-        ctl.mrqpsolver->setContacts(otherContacts);
-
-        tasks::qp::ContactId cId = lfc.contactId(ctl.robots().robots);
-        Eigen::MatrixXd dof(6,6);
-        dof.setIdentity();
-        dof(5, 5) = 0;
-        auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.hrp2contactConstraint.contactConstr.get());
-        if(constr == 0)
-          std::cout << "NOPE NOPE" << std::endl;
-        else
-          constr->addDofContact(cId, dof);
-
-        ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
-
+        std::cout << "Removing left foot" << std::endl;
+        auto buttContact = ctl.egressContacts.at(0);
+        Eigen::Vector3d target = buttContact.X_0_r1s(ctl.robots()).translation();
+        Eigen::Vector3d cur_com = rbd::computeCoM(*(ctl.robot().mb),
+                                                  *(ctl.robot().mbc));
+        target(2) = cur_com(2);
+        ctl.comTask->set_com(target);
+        ctl.comTask->addToSolver(ctl.mrqpsolver->solver);
         started = true;
         timeoutIter = 0;
+        return false;
+      }
+      else if(not done_stabilizing)
+      {
+        if(ctl.comTask->comTask->speed().norm() < 1e-3
+            and ctl.comTask->comTask->eval().norm() < 1e-1)
+        {
+          done_stabilizing = true;
+          ctl.hrp2postureTask->posture(ctl.robot().mbc->q);
+          ctl.comTask->removeFromSolver(ctl.mrqpsolver->solver);
+          ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
+          ctl.efTask.reset(new mc_tasks::EndEffectorTask("LLEG_LINK5",
+                                                         ctl.mrqpsolver->robots,
+                                                         ctl.mrqpsolver->robots.robotIndex, 0.25));
+
+          int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
+          sva::PTransformd lift(Eigen::Vector3d(0.05, 0, 0.1));
+
+          ctl.efTask->positionTask->position((lift*ctl.robot().mbc->bodyPosW[lfindex]).translation());
+
+          //Free movement along z axis
+          mc_rbdyn::MRContact& lfc = ctl.egressContacts.at(lfc_index);
+          //std::copy(ctl.egressContacts.begin(), ctl.egressContacts.begin() + lfc_index, otherContacts.end());
+          //std::copy(ctl.egressContacts.begin() + lfc_index + 1, ctl.egressContacts.end(), otherContacts.end());
+          otherContacts.push_back(ctl.egressContacts.at(0));
+          otherContacts.push_back(ctl.egressContacts.at(2));
+          otherContacts.push_back(mc_rbdyn::MRContact(0, 1,
+                                    ctl.robot().surfaces.at("RFullSole"),
+                                    ctl.robots().robots[1].surfaces.at("left_floor")));
+          ctl.mrqpsolver->setContacts(otherContacts);
+
+          tasks::qp::ContactId cId = lfc.contactId(ctl.robots().robots);
+          Eigen::MatrixXd dof(6,6);
+          dof.setIdentity();
+          dof(5, 5) = 0;
+          auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.hrp2contactConstraint.contactConstr.get());
+          if(constr == 0)
+            std::cout << "NOPE NOPE" << std::endl;
+          else
+            constr->addDofContact(cId, dof);
+
+          ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
+        }
         return false;
       }
       else
@@ -220,23 +261,55 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
           {
             done_removing = true;
             ctl.mrqpsolver->setContacts(otherContacts);
-            sva::PTransformd move(Eigen::Vector3d(0.1, 0., 0.));
-            int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
-            Eigen::Matrix3d& rot = ctl.robot().mbc->bodyPosW[lfindex].rotation();
-            Eigen::Vector3d rpy = rot.eulerAngles(2, 1, 0);
-            //Eigen::Vector3d rpy_body = ctl.robot().mbc->bodyPosW[0].rotation().eulerAngles(2, 1, 0);
-            Eigen::Matrix3d target = sva::RotZ(-M_PI/2)*
-                                     sva::RotY(rpy(1))*
-                                     sva::RotX(rpy(2));
-          ctl.efTask->positionTask->position((move*ctl.efTask->get_ef_pose()).translation());
-            ctl.efTask->orientationTask->orientation(target);
-            timeoutIter = 0;
-            std::cout << "Modified orientation" << std::endl;
+            ctl.hrp2postureTask->posture(ctl.robot().mbc->q);
+            ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
+            return true;
           }
           return false;
         }
-        else if(not done_rotating)
-        {
+      return false;
+      }
+    }
+
+  private:
+    bool started;
+    bool done_stabilizing;
+    bool done_removing;
+    size_t lfc_index;
+    std::vector<mc_rbdyn::MRContact> otherContacts;
+};
+
+struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
+{
+  public:
+    EgressReplaceLeftFootPhase()
+      : started(false),
+        done_rotating(false),
+        done_contacting(false)
+    {
+    }
+
+    virtual bool run(MCEgressMRQPController & ctl) override
+    {
+      if(not started)
+      {
+        std::cout << "Replacing left foot" << std::endl;
+        started = true;
+        sva::PTransformd move(Eigen::Vector3d(0.1, 0., 0.));
+        int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
+        Eigen::Matrix3d& rot = ctl.robot().mbc->bodyPosW[lfindex].rotation();
+        Eigen::Vector3d rpy = rot.eulerAngles(2, 1, 0);
+        //Eigen::Vector3d rpy_body = ctl.robot().mbc->bodyPosW[0].rotation().eulerAngles(2, 1, 0);
+        Eigen::Matrix3d target = sva::RotZ(-M_PI/2)*
+                                 sva::RotY(rpy(1))*
+                                 sva::RotX(rpy(2));
+        ctl.efTask->positionTask->position((move*ctl.efTask->get_ef_pose()).translation());
+        ctl.efTask->orientationTask->orientation(target);
+        timeoutIter = 0;
+        return false;
+       }
+       else if(not done_rotating)
+       {
           timeoutIter++;
           if((ctl.efTask->orientationTask->eval().norm() < 1e-2
               and ctl.efTask->orientationTask->speed().norm() < 1e-4)
@@ -280,17 +353,13 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
         }
         return false;
       }
-    }
 
   private:
     bool started;
-    bool done_removing;
     bool done_rotating;
     bool done_contacting;
-    size_t lfc_index;
     unsigned int forceIter;
     double forceStart;
-    std::vector<mc_rbdyn::MRContact> otherContacts;
 };
 
 struct EgressPlaceRightFootPhase : public EgressMRPhaseExecution

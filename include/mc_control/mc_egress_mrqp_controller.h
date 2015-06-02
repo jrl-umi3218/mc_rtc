@@ -19,6 +19,8 @@ struct MCEgressMRQPController : MCMRQPController
     enum EgressPhase
     {
       START = 1,
+      REMOVERIGHTFOOT,
+      REMOVELEFTFOOT,
       ROTATELAZY,
       REPLACELEFTFOOT,
       PLACERIGHTFOOT,
