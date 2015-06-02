@@ -83,9 +83,10 @@ set(mc_tasks_SRC
 ./src/mc_tasks/StabilityTask.cpp
 ./src/mc_tasks/AddRemoveContactTask.cpp
 ./src/mc_tasks/MoveContactTask.cpp
+./src/mc_tasks/TrajectoryTask.cpp
 )
 add_library(mc_tasks SHARED ${mc_tasks_SRC})
-target_link_libraries(mc_tasks mc_control_solver mc_rbdyn)
+target_link_libraries(mc_tasks mc_control_solver mc_rbdyn mc_trajectory)
 
 set(mc_drc_controller_SRC
 ./src/mc_control/ForceContactSensor.cpp
@@ -130,7 +131,7 @@ target_link_libraries(MCControlComp MCControl)
 add_executable(testLoadJSON ./src/utils/testLoadJSON.cpp)
 target_link_libraries(testLoadJSON mc_rbdyn mc_rbdyn_urdf)
 
-install(TARGETS MCControl MCControlComp mc_rbdyn mc_rbdyn_urdf mc_control_solver mc_robots mc_tasks mc_drc_controller
+install(TARGETS MCControl MCControlComp mc_rbdyn mc_rbdyn_urdf mc_control_solver mc_robots mc_tasks mc_drc_controller mc_trajectory
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib)
