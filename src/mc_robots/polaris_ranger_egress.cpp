@@ -122,6 +122,8 @@ std::map<std::string, std::pair<std::string, std::string>> PolarisRangerEgressRo
   res["nofeetzone"] = std::pair<std::string, std::string>("chassis", "nofeetzone_hull");
   res["brake"] = std::pair<std::string, std::string>("chassis", "brake_hull");
   res["board"] = std::pair<std::string, std::string>("chassis", "board_hull");
+  res["left_column"] = std::pair<std::string, std::string>("chassis", "left_column_hull");
+  res["full_bench"] = std::pair<std::string, std::string>("chassis", "full_bench_hull");
   return res;
 }
 
