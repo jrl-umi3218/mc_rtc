@@ -102,6 +102,23 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
         int lazy_i = ctl.robots().robots[1].jointIndexByName("lazy_susan");
         auto p = ctl.lazyPostureTask->posture();
         p[lazy_i][0] = M_PI/2;
+        ctl.lazyPostureTask->posture(p);
+
+        auto hrp2p = ctl.hrp2postureTask->posture();
+        int rleg_i = ctl.robot().jointIndexByName("RLEG_JOINT0");
+        int rknee_i = ctl.robot().jointIndexByName("RLEG_JOINT3");
+        int rankle_i = ctl.robot().jointIndexByName("RLEG_JOINT4");
+        int lknee_i = ctl.robot().jointIndexByName("LLEG_JOINT3");
+        //int lleg_i = ctl.robot().jointIndexByName("LLEG_JOINT0");
+        hrp2p[rleg_i][0] = 0.0;
+        //hrp2p[rknee_i][0] = 80*M_PI/180;
+        hrp2p[rankle_i][0] = -70*M_PI/180;
+        //hrp2p[lknee_i][0] = 0.0;
+        //hrp2p[lleg_i][0] = 0.0;
+        ctl.hrp2postureTask->posture(hrp2p);
+
+        ctl.comTask->resetTask(ctl.robots(), ctl.robots().robotIndex);
+        ctl.comTask->addToSolver(ctl.mrqpsolver->solver);
         return false;
       }
       else if(not done_rotate)
@@ -221,7 +238,7 @@ struct EgressRemoveLeftFootPhase : public EgressMRPhaseExecution
                                                          ctl.mrqpsolver->robots.robotIndex, 0.25));
 
           int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
-          sva::PTransformd lift(Eigen::Vector3d(0.05, 0, 0.1));
+          sva::PTransformd lift(Eigen::Vector3d(0., 0, 0.1));
 
           ctl.efTask->positionTask->position((lift*ctl.robot().mbc->bodyPosW[lfindex]).translation());
 
