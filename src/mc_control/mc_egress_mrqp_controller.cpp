@@ -21,6 +21,11 @@ MCEgressMRQPController::MCEgressMRQPController(const std::vector<std::shared_ptr
     curPhase(START),
     execPhase(new EgressMRStartPhase)
 {
+  collsConstraint.addCollisions(robots(),
+      {
+        mc_solver::Collision("RLEG_LINK5", "left_column", 0.05, 0.01, 0.),
+        mc_solver::Collision("RLEG_LINK4", "left_column", 0.05, 0.01, 0.)
+        });
   mrqpsolver->addConstraintSet(hrp2contactConstraint);
   mrqpsolver->addConstraintSet(hrp2kinematicsConstraint);
   mrqpsolver->addConstraintSet(polarisKinematicsConstraint);
