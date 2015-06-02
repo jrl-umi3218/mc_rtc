@@ -138,6 +138,10 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
           ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
           ctl.hrp2postureTask->posture(ctl.robot().mbc->q);
           std::cout << "Found contact on right foot" << std::endl;
+          ctl.egressContacts.push_back(mc_rbdyn::MRContact(0, 1,
+                                       ctl.robot().surfaces.at("RFullSole"),
+                                       ctl.robots().robots[1].surfaces.at("left_floor")));
+          ctl.mrqpsolver->setContacts(ctl.egressContacts);
           return true;
         }
         return false;
