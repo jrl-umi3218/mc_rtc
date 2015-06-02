@@ -69,6 +69,11 @@ set(mc_control_solver_SRC
 add_library(mc_control_solver SHARED ${mc_control_solver_SRC})
 target_link_libraries(mc_control_solver RBDyn Tasks)
 
+set(mc_trajectory_SRC
+./src/mc_trajectory/BSplineTrajectory.cpp
+)
+add_library(mc_trajectory SHARED ${mc_trajectory_SRC})
+
 set(mc_tasks_SRC
 ./src/mc_tasks/OrientationTask.cpp
 ./src/mc_tasks/EndEffectorTask.cpp
