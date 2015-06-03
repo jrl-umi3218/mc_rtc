@@ -535,12 +535,12 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
             auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.hrp2contactConstraint.contactConstr.get());
             constr->resetDofContacts();
             ctl.mrqpsolver->setContacts(ctl.egressContacts);
-            auto p = ctl.hrp2postureTask->posture();
-            int lelbow_i = ctl.robot().jointIndexByName("LARM_JOINT3");
-            int lwrist_i = ctl.robot().jointIndexByName("LARM_JOINT5");
-            p[lelbow_i][0] = 0.0;
-            p[lwrist_i][0] = 0.0;
-            ctl.hrp2postureTask->posture(p);
+            //auto p = ctl.hrp2postureTask->posture();
+            //int lelbow_i = ctl.robot().jointIndexByName("LARM_JOINT3");
+            //int lwrist_i = ctl.robot().jointIndexByName("LARM_JOINT5");
+            //p[lelbow_i][0] = 0.0;
+            //p[lwrist_i][0] = 0.0;
+            //ctl.hrp2postureTask->posture(p);
             std::cout << "Done moving right foot" << std::endl;
             return true;
           }
