@@ -26,7 +26,7 @@ BSplineTrajectory::BSplineTrajectory(const std::vector<Eigen::Vector3d> & contro
     P(1, i + order - 2 + controlPoints.size()) = controlPoints[controlPoints.size() - 1](1);
     P(2, i + order - 2 + controlPoints.size()) = controlPoints[controlPoints.size() - 1](2);
   }
-  unsigned int n = P.size() - 1;
+  unsigned int n = P.cols() - 1;
   unsigned int m = p + n + 1;
 
   knot.resize(m+1);
@@ -36,14 +36,14 @@ BSplineTrajectory::BSplineTrajectory(const std::vector<Eigen::Vector3d> & contro
   }
   for(unsigned int i = 0; i < (m + 1 - 2*p); ++i)
   {
-    knot(i + p) = i*duration/(m - 2*p);
+    knot(i + p) = static_cast<double>(i)/static_cast<double>((m - 2*p));
   }
   for(unsigned int i = 0; i < p; ++i)
   {
-    knot(m + 1 - p + i) = duration;
+    knot(m + 1 - p + i) = 1.0;
   }
 
-  spline = Eigen::SplineFitting<Spline3d>::Interpolate(P, p, knot);
+  spline = Spline3d(knot, P);
 }
 
 std::vector< std::vector<Eigen::Vector3d> > BSplineTrajectory::splev(const std::vector<double> & t, unsigned int der)
