@@ -241,7 +241,8 @@ void MCEgressMRQPController::nextPhase()
   case REPLACELEFTFOOT:
     curPhase = MOVECOMFORCELEFT;
     execPhase.reset(new EgressMoveComSurfPhase("LFullSole", 0.10));
-    //execPhase.reset(new EgressMoveComForcePhase("LFullSole", 0.15, 0.1));
+    //Use this to lift the rear feet by a maximum of 10cm
+    //execPhase.reset(new EgressMoveComForcePhase("LFullSole", 0.10, 0.1));
     break;
   case MOVECOMFORCELEFT:
     curPhase = REMOVEHAND;

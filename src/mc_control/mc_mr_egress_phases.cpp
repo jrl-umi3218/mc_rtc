@@ -257,8 +257,10 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
             //                                               ctl.mrqpsolver->robots,
             //                                               ctl.mrqpsolver->robots.robotIndex, 10.1));
             int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
-            Eigen::Vector3d lower(0, 0, -0.5);
+            Eigen::Vector3d lower(0, -0.1, -0.5);
             ctl.efTask->positionTask->position(lower+ctl.robot().mbc->bodyPosW[lfindex].translation());
+            double w = ctl.efTask->orientationTaskSp->weight();
+            ctl.efTask->orientationTaskSp->weight(w*100);
             //ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
 
             timeoutIter = 0;
@@ -900,12 +902,26 @@ struct EgressMoveComForcePhase : public EgressMRPhaseExecution
         comDist_ = (pos-curCom).norm();
 
         ctl.comTask->set_com(pos);
+        ctl.comTask->comTaskSp->stiffness(0.5);
         ctl.comTask->addToSolver(ctl.mrqpsolver->solver);
 
         ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
         ctl.efTask.reset(new mc_tasks::EndEffectorTask(bodyName_,
                                                        ctl.mrqpsolver->robots,
                                                        0, 0.25));
+        ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
+
+        mc_rbdyn::MRContact lfc = ctl.egressContacts.at(0); //Should be a find_if
+        tasks::qp::ContactId cId = lfc.contactId(ctl.robots().robots);
+        Eigen::MatrixXd dof(6,6);
+        dof.setIdentity();
+        dof(5, 5) = 0;
+        auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.hrp2contactConstraint.contactConstr.get());
+        if(constr == 0)
+          std::cout << "NOPE NOPE" << std::endl;
+        else
+          constr->addDofContact(cId, dof);
+
 
         int bodyIndex = ctl.robot().bodyIndexByName(bodyName_);
         startPos_ = ctl.robot().mbc->bodyPosW[bodyIndex].translation();
@@ -934,8 +950,9 @@ struct EgressMoveComForcePhase : public EgressMRPhaseExecution
           else
           {
             updateCom(ctl);
-            double height = maxMove_*(ctl.comTask->get_com()-curCom).norm()/comDist_;
+            double height = maxMove_*(1-((ctl.comTask->get_com()-curCom).norm()/comDist_));
             Eigen::Vector3d target(startPos_(0), startPos_(1), startPos_(2)+height);
+            std::cout << height << std::endl;
             ctl.efTask->positionTask->position(target);
             return false;
           }
