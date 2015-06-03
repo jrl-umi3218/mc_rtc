@@ -29,6 +29,11 @@ MCEgressMRQPController::MCEgressMRQPController(const std::vector<std::shared_ptr
         mc_solver::Collision("RARM_LINK5", "left_column", 0.05, 0.01, 0.),
         mc_solver::Collision("RARM_LINK4", "left_column", 0.05, 0.01, 0.)
         });
+  hrp2selfCollisionConstraint.addCollisions(robots(),
+      {
+      mc_solver::Collision("LLEG_LINK3", "LARM_LINK3", 0.05, 0.01, 0.),
+      mc_solver::Collision("LLEG_LINK4", "LARM_LINK3", 0.05, 0.01, 0.)
+      });
   mrqpsolver->addConstraintSet(hrp2contactConstraint);
   mrqpsolver->addConstraintSet(hrp2kinematicsConstraint);
   mrqpsolver->addConstraintSet(polarisKinematicsConstraint);
