@@ -227,13 +227,18 @@ void MCEgressMRQPController::nextPhase()
     break;
   case REPLACERIGHTFOOT:
     curPhase = MOVECOMRIGHT;
-    execPhase.reset(new EgressMoveComSurfPhase("RFullSole", -0.15));
+    execPhase.reset(new EgressMoveComSurfPhase("RFullSole", 0.25));
     break;
   case MOVECOMRIGHT:
     curPhase = REPLACELEFTFOOT;
     execPhase.reset(new EgressReplaceLeftFootPhase);
     break;
   case REPLACELEFTFOOT:
+    curPhase = MOVECOMFORCELEFT;
+    execPhase.reset(new EgressMoveComSurfPhase("LFullSole", 0.45));
+    //execPhase.reset(new EgressMoveComForcePhase("LFullSole", 0.15, 0.1));
+    break;
+  case MOVECOMFORCELEFT:
     curPhase = REMOVEHAND;
     execPhase.reset(new EgressRemoveRightGripperPhase);
     break;
