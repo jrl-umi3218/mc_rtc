@@ -6,6 +6,7 @@
 #include <mc_control/mc_mrqp_controller.h>
 #include <mc_tasks/EndEffectorTask.h>
 #include <mc_tasks/OrientationTask.h>
+#include <mc_tasks/TrajectoryTask.h>
 #include <mc_tasks/CoMTask.h>
 
 namespace mc_control
@@ -43,6 +44,7 @@ struct MCEgressMRQPController : MCMRQPController
   public:
     std::shared_ptr<mc_tasks::CoMTask> comTask;
     std::shared_ptr<mc_tasks::EndEffectorTask> efTask;
+    std::shared_ptr<mc_tasks::TrajectoryTask> trajTask;
     std::shared_ptr<tasks::qp::PostureTask> lazyPostureTask;
     std::vector<mc_rbdyn::MRContact> egressContacts;
 

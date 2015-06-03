@@ -23,11 +23,11 @@ MCEgressMRQPController::MCEgressMRQPController(const std::vector<std::shared_ptr
 {
   collsConstraint.addCollisions(robots(),
       {
-        mc_solver::Collision("RLEG_LINK5", "left_column", 0.05, 0.01, 0.),
-        mc_solver::Collision("RLEG_LINK4", "left_column", 0.05, 0.01, 0.),
-        mc_solver::Collision("RARM_LINK6", "left_column", 0.05, 0.01, 0.),
-        mc_solver::Collision("RARM_LINK5", "left_column", 0.05, 0.01, 0.),
-        mc_solver::Collision("RARM_LINK4", "left_column", 0.05, 0.01, 0.)
+        mc_solver::Collision("RLEG_LINK5", "left_column", 0.1, 0.05, 0.),
+        mc_solver::Collision("RLEG_LINK4", "left_column", 0.1, 0.05, 0.),
+        mc_solver::Collision("RARM_LINK6", "left_column", 0.1, 0.05, 0.),
+        mc_solver::Collision("RARM_LINK5", "left_column", 0.1, 0.05, 0.),
+        mc_solver::Collision("RARM_LINK4", "left_column", 0.1, 0.05, 0.)
         });
   hrp2selfCollisionConstraint.addCollisions(robots(),
       {
@@ -213,7 +213,7 @@ void MCEgressMRQPController::nextPhase()
   //  break;
   //case REPLACELEFTFOOT:
     curPhase = STANDUP;
-    execPhase.reset(new EgressMRStandupPhase(Eigen::Vector3d(0.0, 0.2, -0.25)));
+    execPhase.reset(new EgressMRStandupPhase(Eigen::Vector3d(0.0, 0.05, -0.25)));
     break;
   //  curPhase = PLACERIGHTFOOT;
   //  execPhase.reset(new EgressPlaceRightFootPhase);
@@ -232,7 +232,7 @@ void MCEgressMRQPController::nextPhase()
     break;
   case REPLACERIGHTFOOT:
     curPhase = MOVECOMRIGHT;
-    execPhase.reset(new EgressMoveComSurfPhase("RFullSole", 0.25));
+    execPhase.reset(new EgressMoveComSurfPhase("RFullSole", -0.15));
     break;
   case MOVECOMRIGHT:
     curPhase = REPLACELEFTFOOT;

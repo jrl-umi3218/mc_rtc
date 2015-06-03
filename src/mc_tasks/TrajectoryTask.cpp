@@ -78,7 +78,7 @@ void TrajectoryTask::update()
 
 bool TrajectoryTask::timeElapsed()
 {
-  return t == duration;
+  return t >= duration;
 }
 
 const Eigen::VectorXd & TrajectoryTask::eval() const
