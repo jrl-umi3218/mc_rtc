@@ -131,6 +131,9 @@ target_link_libraries(MCControlComp MCControl)
 add_executable(testLoadJSON ./src/utils/testLoadJSON.cpp)
 target_link_libraries(testLoadJSON mc_rbdyn mc_rbdyn_urdf)
 
+add_executable(testBSplineTrajectory ./tests/testBSplineTrajectory.cpp)
+target_link_libraries(testBSplineTrajectory mc_trajectory)
+
 install(TARGETS MCControl MCControlComp mc_rbdyn mc_rbdyn_urdf mc_control_solver mc_robots mc_tasks mc_drc_controller mc_trajectory
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
