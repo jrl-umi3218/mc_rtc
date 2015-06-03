@@ -235,7 +235,7 @@ void MCEgressMRQPController::nextPhase()
     break;
   case REPLACELEFTFOOT:
     curPhase = MOVECOMFORCELEFT;
-    execPhase.reset(new EgressMoveComSurfPhase("LFullSole", 0.45));
+    execPhase.reset(new EgressMoveComSurfPhase("LFullSole", 0.10));
     //execPhase.reset(new EgressMoveComForcePhase("LFullSole", 0.15, 0.1));
     break;
   case MOVECOMFORCELEFT:

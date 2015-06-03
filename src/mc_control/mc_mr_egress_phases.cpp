@@ -323,6 +323,11 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
               std::cout << "NOPE NOPE" << std::endl;
             else
               constr->resetDofContacts();
+            //NB : When using dof contacts, do not add twice !
+            ctl.egressContacts.emplace_back(ctl.robots().robotIndex, 2,
+                                            ctl.robot().surfaces.at("LFullSole"),
+                                            ctl.robots().robots[2].surfaces.at("AllGround"));
+            ctl.mrqpsolver->setContacts(ctl.egressContacts);
             std::cout << "Done moving left foot" << std::endl;
             return true;
           }
