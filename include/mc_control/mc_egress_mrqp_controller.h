@@ -35,11 +35,11 @@ struct MCEgressMRQPController : MCMRQPController
     virtual bool run() override;
 
     virtual void reset(const ControllerResetData & reset_data) override;
+    void nextPhase();
   protected:
     void resetBasePose();
     void resetWheelTransform();
     void resetLazyTransform();
-    void nextPhase();
 
   public:
     std::shared_ptr<mc_tasks::CoMTask> comTask;
