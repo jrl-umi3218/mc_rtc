@@ -261,6 +261,11 @@ void MCEgressMRQPController::nextPhase()
     execPhase.reset(new EgressCenterComPhase(0.10));
     break;
   case CENTERCOM:
+    comTask->comTaskSp->weight(1.);
+    curPhase = OPENGRIPPER;
+    execPhase.reset(new EgressOpenRightGripperPhase);
+    break;
+  case OPENGRIPPER:
     curPhase = REMOVEHAND;
     execPhase.reset(new EgressRemoveRightGripperPhase);
     break;

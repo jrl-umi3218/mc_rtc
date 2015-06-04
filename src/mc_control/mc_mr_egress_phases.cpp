@@ -837,15 +837,58 @@ struct EgressPlaceRightFootPhase : public EgressMRPhaseExecution
     bool done_contacting;
 };
 
+struct EgressOpenRightGripperPhase : public EgressMRPhaseExecution
+{
+  public:
+    EgressOpenRightGripperPhase()
+      : started(false),
+        done_opening(false)
+  {
+  }
+
+    virtual bool run(MCEgressMRQPController & ctl) override
+    {
+      if(not started)
+      {
+        started = true;
+        std::cout << "Opening gripper" << std::endl;
+        return false;
+      }
+      else if(not done_opening)
+      {
+        if(ctl.rgripper->percentOpen >= 1.)
+        {
+          ctl.rgripper->percentOpen = 1.;
+          done_opening = true;
+          return true;
+        }
+        else
+        {
+          ctl.rgripper->percentOpen += 0.005;
+          return false;
+        }
+      }
+     else
+     {
+       std::cout << "We should never be here" << std::endl;
+       return false;
+     }
+  }
+
+
+
+  private:
+    bool started;
+    bool done_opening;
+};
+
 struct EgressRemoveRightGripperPhase : public EgressMRPhaseExecution
 {
   public:
     EgressRemoveRightGripperPhase()
       : started(false),
         done_removing(false),
-        done_posture(false),
-        rgc_index(2),
-        otherContacts()
+        done_posture(false)
     {
       std::cout << "In egress remove right gripper phase" << std::endl;
     }
@@ -869,24 +912,28 @@ struct EgressRemoveRightGripperPhase : public EgressMRPhaseExecution
         ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
 
         //Free movement along z axis
-        mc_rbdyn::MRContact& rgc = ctl.egressContacts.at(rgc_index);
-        otherContacts.push_back(ctl.egressContacts.at(0));
-        otherContacts.push_back(ctl.egressContacts.at(2));
-        otherContacts.push_back(ctl.egressContacts.at(3));
-
-        tasks::qp::ContactId cId = rgc.contactId(ctl.robots().robots);
-        Eigen::MatrixXd dof(6,6);
-        dof.setIdentity();
-        dof(5, 5) = 0;
-        auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.hrp2contactConstraint.contactConstr.get());
-        if(constr == 0)
-          std::cout << "NOPE NOPE" << std::endl;
+        auto rgc = std::find_if(ctl.egressContacts.begin(),
+                                ctl.egressContacts.end(),
+                                [](const mc_rbdyn::MRContact & c) -> bool { return c.r1Surface->name.compare("RightGripper") == 0; });
+        if(rgc != ctl.egressContacts.end())
+          ctl.egressContacts.erase(rgc);
         else
-          constr->addDofContact(cId, dof);
+          std::cout << "OOPSIE OOPS" << std::endl;
+        ctl.mrqpsolver->setContacts(ctl.egressContacts);
+        //tasks::qp::ContactId cId = (*rgc).contactId(ctl.robots().robots);
+        //Eigen::MatrixXd dof(6,6);
+        //dof.setIdentity();
+        //dof(5, 5) = 0;
+        //auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.hrp2contactConstraint.contactConstr.get());
+        //if(constr == 0)
+        //  std::cout << "NOPE NOPE" << std::endl;
+        //else
+        //  constr->addDofContact(cId, dof);
 
         ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
 
         started = true;
+        std::cout << "Taking right gripper out" << std::endl;
         return false;
       }
       else
@@ -923,8 +970,6 @@ struct EgressRemoveRightGripperPhase : public EgressMRPhaseExecution
     bool started;
     bool done_removing;
     bool done_posture;
-    size_t rgc_index;
-    std::vector<mc_rbdyn::MRContact> otherContacts;
 };
 
 struct EgressMRStandupPhase : public EgressMRPhaseExecution

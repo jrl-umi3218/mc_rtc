@@ -29,6 +29,7 @@ struct MCEgressMRQPController : MCMRQPController
       REPLACERIGHTFOOT,
       STANDUP,
       PUTDOWNRIGHTFOOT,
+      OPENGRIPPER,
       REMOVEHAND
     };
   public:
