@@ -1162,8 +1162,10 @@ struct EgressMoveComForcePhase : public EgressMRPhaseExecution
                                                        0, 0.25));
         ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
 
-        mc_rbdyn::MRContact lfc = ctl.egressContacts.at(0); //Should be a find_if
-        tasks::qp::ContactId cId = lfc.contactId(ctl.robots().robots);
+        auto lfc = std::find_if(ctl.egressContacts.begin(),
+                                ctl.egressContacts.end(),
+                                [&](const mc_rbdyn::MRContact & c) -> bool { return c.r1Surface->name.compare(otherSurf_) == 0; });
+        tasks::qp::ContactId cId = lfc->contactId(ctl.robots().robots);
         Eigen::MatrixXd dof(6,6);
         dof.setIdentity();
         dof(5, 5) = 0;
