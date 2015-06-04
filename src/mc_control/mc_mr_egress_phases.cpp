@@ -42,7 +42,7 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
         started = true;
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5", ctl.mrqpsolver->robots, 0, 0.25));
         ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
-        Eigen::Vector3d lift(-0.125, 0, 0.05); /*XXX Hard-coded value */
+        Eigen::Vector3d lift(-0.05, 0, 0.05); /*XXX Hard-coded value */
         ctl.efTask->positionTask->position((ctl.efTask->get_ef_pose().translation() + lift));
         timeoutIter = 0;
         return false;
@@ -77,7 +77,7 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
           //ctl.lazyPostureTask->posture(p);
           ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5", ctl.mrqpsolver->robots, 0, 0.25));
           ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
-          Eigen::Vector3d move(0., 0.2, -0.05); /*XXX Hard-coded value */
+          Eigen::Vector3d move(0., 0.2, 0.0); /*XXX Hard-coded value */
           ctl.efTask->positionTask->position((ctl.efTask->get_ef_pose().translation() + move));
           Eigen::Matrix3d change = sva::RotZ(20*M_PI/180);
           ctl.efTask->orientationTask->orientation(ctl.efTask->get_ef_pose().rotation()*change);
@@ -105,7 +105,7 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
           int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
           Eigen::Matrix3d& rot = ctl.robot().mbc->bodyPosW[lfindex].rotation();
           Eigen::Vector3d rpy = rot.eulerAngles(2, 1, 0);
-          Eigen::Matrix3d target = sva::RotZ(M_PI + rfrpy(0))*sva::RotY(rpy(1))*sva::RotX(rpy(2));
+          Eigen::Matrix3d target = sva::RotZ(M_PI)*sva::RotY(rpy(1))*sva::RotX(rpy(2));
           ctl.efTask->positionTask->position((ctl.efTask->get_ef_pose().translation() + lift));
           ctl.efTask->orientationTask->orientation(target);
           timeoutIter = 0;
@@ -134,7 +134,7 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
       else if(not done_putdown)
       {
         timeoutIter++;
-        if(ctl.wrenches[0].first[2] > forceStart + 150)
+        if(ctl.wrenches[0].first[2] > forceStart + 50)
         {
           std::cout << "Contact force triggered" << std::endl;
           forceIter++;
