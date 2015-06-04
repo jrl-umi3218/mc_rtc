@@ -184,6 +184,7 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
         done_rotating(false),
         done_contacting(false),
         lfc_index(0),
+        com_multiplier(0.1),
         otherContacts()
     {
     }
@@ -243,6 +244,8 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
               or timeoutIter > 15*500)
           {
             done_removing = true;
+            ctl.addCollision(mc_solver::Collision("RLEG_LINK4", "exit_platform", 0.05, 0.01, 0.));
+            //ctl.addCollision(mc_solver::Collision("RLEG_LINK3", "exit_platform", 0.05, 0.01, 0.));
             ctl.mrqpsolver->setContacts(otherContacts);
             Eigen::Vector3d move(-0.1, 0.35, 0.);
             int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
@@ -251,11 +254,11 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
             Eigen::Matrix3d& rot = ctl.robot().mbc->bodyPosW[lfindex].rotation();
             Eigen::Vector3d rpy = rot.eulerAngles(2, 1, 0);
             //Eigen::Vector3d rpy_body = ctl.robot().mbc->bodyPosW[0].rotation().eulerAngles(2, 1, 0);
-            Eigen::Matrix3d target = sva::RotZ(M_PI/2);
+            //Eigen::Matrix3d target = sva::RotZ(M_PI/2);
                                      //*sva::RotY(rpy(1))
                                      //*sva::RotX(rpy(2));
             ctl.efTask->positionTask->position(rfpos.translation()+move);
-            ctl.efTask->orientationTask->orientation(target);
+            ctl.efTask->orientationTask->orientation(rfpos.rotation());
             timeoutIter = 0;
             std::cout << "Modified orientation" << std::endl;
           }
@@ -284,7 +287,8 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
             forceIter = 0;
             forceStart = ctl.wrenches[1].first[2];
 
-            ctl.comTask->removeFromSolver(ctl.mrqpsolver->solver);
+            w = ctl.comTask->comTaskSp->weight();
+            ctl.comTask->comTaskSp->weight(w*com_multiplier);
 
             std::cout << "Reached contacts phase" << std::endl;
             ctl.egressContacts.erase(ctl.egressContacts.begin()+lfc_index);
@@ -347,6 +351,8 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
                                             ctl.robot().surfaces.at("LFullSole"),
                                             ctl.robots().robots[2].surfaces.at("AllGround"));
             ctl.mrqpsolver->setContacts(ctl.egressContacts);
+            double w = ctl.comTask->comTaskSp->weight();
+            ctl.comTask->comTaskSp->weight(w/com_multiplier);
             std::cout << "Done moving left foot" << std::endl;
             std::cout << "Phase finished, can transit" << std::endl;
             //return true;
@@ -365,8 +371,177 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
     size_t lfc_index;
     unsigned int forceIter;
     double forceStart;
+    double com_multiplier;
     std::vector<mc_rbdyn::MRContact> otherContacts;
 };
+
+struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
+{
+  public:
+    EgressPutDownRightFootPhase()
+      : started(false),
+        done_removing(false),
+        done_moving(false),
+        done_rotating(false),
+        done_contacting(false),
+        rfc_index(2),
+        prev_weight(0),
+        otherContacts()
+    {
+    }
+
+    virtual bool run(MCEgressMRQPController & ctl) override
+    {
+      if(not started)
+      {
+        std::cout << "Moving right foot to the ground" << std::endl;
+
+        ctl.comTask->comTaskSp->stiffness(5.);
+        ctl.comTask->comTaskSp->weight(100.);
+
+        ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
+        ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5",
+                                                       ctl.mrqpsolver->robots,
+                                                       ctl.mrqpsolver->robots.robotIndex, 0.25));
+
+        int lfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
+        sva::PTransformd lift(Eigen::Vector3d(0.0, 0, 0.1));
+
+        ctl.efTask->positionTask->position((lift*ctl.robot().mbc->bodyPosW[lfindex]).translation());
+
+        //Free movement along z axis
+        auto rfc = std::find_if(ctl.egressContacts.begin(),
+                                ctl.egressContacts.end(),
+                                [](const mc_rbdyn::MRContact & c) -> bool { return c.r1Surface->name.compare("RFullSole") == 0; });
+        //mc_rbdyn::MRContact& rfc = ctl.egressContacts.at(rfc_index);
+
+        ctl.mrqpsolver->setContacts(ctl.egressContacts);
+
+        tasks::qp::ContactId cId = (*rfc).contactId(ctl.robots().robots);
+        Eigen::MatrixXd dof(6,6);
+        dof.setIdentity();
+        dof(2, 2) = 0;
+        dof(5, 5) = 0;
+        auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.hrp2contactConstraint.contactConstr.get());
+        if(constr == 0)
+          std::cout << "NOPE NOPE" << std::endl;
+        else
+          constr->addDofContact(cId, dof);
+
+        ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
+
+        ctl.egressContacts.erase(rfc);
+
+        started = true;
+        timeoutIter = 0;
+        return false;
+      }
+      else
+      {
+        if(not done_removing)
+        {
+          timeoutIter++;
+          if((ctl.efTask->positionTask->eval().norm() < 1e-2
+              and ctl.efTask->positionTask->speed().norm() < 1e-4)
+              or timeoutIter > 15*500)
+          {
+            done_removing = true;
+            ctl.mrqpsolver->setContacts(ctl.egressContacts);
+            Eigen::Vector3d move(0.3, 0.2, 0);
+            int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
+            const sva::PTransformd& lfpos = ctl.robot().mbc->bodyPosW[lfindex];
+            Eigen::Vector3d target = move + lfpos.translation();
+            target(2) = ctl.efTask->positionTask->position()(2);
+            ctl.efTask->positionTask->position(target);
+            ctl.efTask->orientationTask->orientation(lfpos.rotation());
+            timeoutIter = 0;
+            std::cout << "Modified position" << std::endl;
+          }
+          return false;
+        }
+        else if(not done_moving)
+        {
+          timeoutIter++;
+          if((ctl.efTask->positionTask->eval().norm() < 1e-2
+              and ctl.efTask->positionTask->speed().norm() < 1e-4)
+              or timeoutIter > 15*500)
+          {
+            done_moving = true;
+            timeoutIter = 0;
+            std::cout << "Done moving" << std::endl;
+          }
+          return false;
+        }
+        else if(not done_rotating)
+        {
+          timeoutIter++;
+          if((ctl.efTask->orientationTask->eval().norm() < 1e-2
+              and ctl.efTask->orientationTask->speed().norm() < 1e-4)
+              or timeoutIter > 15*500)
+          {
+            done_rotating = true;
+            int rfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
+            Eigen::Vector3d lower(0, -0.2, -0.5);
+
+            double w = ctl.efTask->orientationTaskSp->weight();
+            ctl.efTask->orientationTaskSp->weight(w*100);
+
+            ctl.efTask->positionTask->position(lower+ctl.robot().mbc->bodyPosW[rfindex].translation());
+
+            ctl.mrqpsolver->setContacts(ctl.egressContacts);
+
+            timeoutIter = 0;
+            forceIter = 0;
+            forceStart = ctl.wrenches[0].first[2];
+            std::cout << "Going to contact" << std::endl;
+          }
+          return false;
+        }
+        else if(not done_contacting)
+        {
+          timeoutIter++;
+          if(ctl.wrenches[0].first[2] > forceStart + 150)
+          {
+            std::cout << "Contact force triggered" << std::endl;
+            forceIter++;
+          }
+          else
+          {
+            forceIter = 0;
+          }
+          if(forceIter > 40 or timeoutIter > 15*500)
+          {
+            done_contacting = true;
+            auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.hrp2contactConstraint.contactConstr.get());
+            constr->resetDofContacts();
+            //NB : When using dof contacts, do not add twice !
+            ctl.egressContacts.emplace_back(ctl.robots().robotIndex, 2,
+                                            ctl.robot().surfaces.at("RFullSole"),
+                                            ctl.robots().robots[2].surfaces.at("AllGround"));
+            ctl.mrqpsolver->setContacts(ctl.egressContacts);
+            ctl.comTask->comTaskSp->stiffness(1.);
+            std::cout << "Done putting down right foot" << std::endl;
+            return true;
+          }
+          return false;
+        }
+        return false;
+      }
+    }
+
+  private:
+    bool started;
+    bool done_removing;
+    bool done_moving;
+    bool done_rotating;
+    bool done_contacting;
+    size_t rfc_index;
+    unsigned int forceIter;
+    double forceStart;
+    double prev_weight;
+    std::vector<mc_rbdyn::MRContact> otherContacts;
+};
+
 
 struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
 {
@@ -600,7 +775,7 @@ struct EgressPlaceRightFootPhase : public EgressMRPhaseExecution
                                                        ctl.mrqpsolver->robots.robotIndex, 0.25));
 
         int lfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
-        sva::PTransformd lift(Eigen::Vector3d(0, 0., 0.2));
+        sva::PTransformd lift(Eigen::Vector3d(0, 0., 0.1));
 
         ctl.efTask->positionTask->position((lift*ctl.robot().mbc->bodyPosW[lfindex]).translation());
 
@@ -676,15 +851,58 @@ struct EgressPlaceRightFootPhase : public EgressMRPhaseExecution
     bool done_contacting;
 };
 
+struct EgressOpenRightGripperPhase : public EgressMRPhaseExecution
+{
+  public:
+    EgressOpenRightGripperPhase()
+      : started(false),
+        done_opening(false)
+  {
+  }
+
+    virtual bool run(MCEgressMRQPController & ctl) override
+    {
+      if(not started)
+      {
+        started = true;
+        std::cout << "Opening gripper" << std::endl;
+        return false;
+      }
+      else if(not done_opening)
+      {
+        if(ctl.rgripper->percentOpen >= 1.)
+        {
+          ctl.rgripper->percentOpen = 1.;
+          done_opening = true;
+          return true;
+        }
+        else
+        {
+          ctl.rgripper->percentOpen += 0.005;
+          return false;
+        }
+      }
+     else
+     {
+       std::cout << "We should never be here" << std::endl;
+       return false;
+     }
+  }
+
+
+
+  private:
+    bool started;
+    bool done_opening;
+};
+
 struct EgressRemoveRightGripperPhase : public EgressMRPhaseExecution
 {
   public:
     EgressRemoveRightGripperPhase()
       : started(false),
         done_removing(false),
-        done_posture(false),
-        rgc_index(2),
-        otherContacts()
+        done_posture(false)
     {
       std::cout << "In egress remove right gripper phase" << std::endl;
     }
@@ -708,24 +926,28 @@ struct EgressRemoveRightGripperPhase : public EgressMRPhaseExecution
         ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
 
         //Free movement along z axis
-        mc_rbdyn::MRContact& rgc = ctl.egressContacts.at(rgc_index);
-        otherContacts.push_back(ctl.egressContacts.at(0));
-        otherContacts.push_back(ctl.egressContacts.at(2));
-        otherContacts.push_back(ctl.egressContacts.at(3));
-
-        tasks::qp::ContactId cId = rgc.contactId(ctl.robots().robots);
-        Eigen::MatrixXd dof(6,6);
-        dof.setIdentity();
-        dof(5, 5) = 0;
-        auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.hrp2contactConstraint.contactConstr.get());
-        if(constr == 0)
-          std::cout << "Fuck you" << std::endl;
+        auto rgc = std::find_if(ctl.egressContacts.begin(),
+                                ctl.egressContacts.end(),
+                                [](const mc_rbdyn::MRContact & c) -> bool { return c.r1Surface->name.compare("RightGripper") == 0; });
+        if(rgc != ctl.egressContacts.end())
+          ctl.egressContacts.erase(rgc);
         else
-          constr->addDofContact(cId, dof);
+          std::cout << "OOPSIE OOPS" << std::endl;
+        ctl.mrqpsolver->setContacts(ctl.egressContacts);
+        //tasks::qp::ContactId cId = (*rgc).contactId(ctl.robots().robots);
+        //Eigen::MatrixXd dof(6,6);
+        //dof.setIdentity();
+        //dof(5, 5) = 0;
+        //auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.hrp2contactConstraint.contactConstr.get());
+        //if(constr == 0)
+        //  std::cout << "NOPE NOPE" << std::endl;
+        //else
+        //  constr->addDofContact(cId, dof);
 
         ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
 
         started = true;
+        std::cout << "Taking right gripper out" << std::endl;
         return false;
       }
       else
@@ -763,8 +985,6 @@ struct EgressRemoveRightGripperPhase : public EgressMRPhaseExecution
     bool started;
     bool done_removing;
     bool done_posture;
-    size_t rgc_index;
-    std::vector<mc_rbdyn::MRContact> otherContacts;
 };
 
 struct EgressMRStandupPhase : public EgressMRPhaseExecution
@@ -892,6 +1112,63 @@ struct EgressMoveComSurfPhase : public EgressMRPhaseExecution
     std::string surfName_;
 };
 
+struct EgressCenterComPhase : public EgressMRPhaseExecution
+{
+  public:
+    EgressCenterComPhase(double altitude)
+      : started(false),
+        done_com(false),
+        iter_(0),
+        altitude_(altitude)
+    {
+    }
+
+    virtual bool run(MCEgressMRQPController & ctl) override
+    {
+      if(not started)
+      {
+        std::cout << "Centering com " << std::endl;
+        const mc_rbdyn::Surface* rfs = ctl.robot().surfaces.at("RFullSole").get();
+        const mc_rbdyn::Surface* lfs = ctl.robot().surfaces.at("LFullSole").get();
+        Eigen::Vector3d pos = (rfs->X_0_s(ctl.robot()).translation()
+                               +lfs->X_0_s(ctl.robot()).translation())/2;
+        pos(2) = pos(2) + 0.76 + altitude_;
+
+        ctl.comTask->set_com(pos);
+        ctl.comTask->addToSolver(ctl.mrqpsolver->solver);
+        started = true;
+        return false;
+      }
+      else
+      {
+        if(not done_com)
+        {
+          ++iter_;
+          if((ctl.comTask->comTask->eval().norm() < 1e-2
+              and ctl.comTask->comTask->speed().norm() < 1e-3)
+              or iter_ > 10*500)
+          {
+            done_com = true;
+            ctl.hrp2postureTask->posture(ctl.robot().mbc->q);
+            //ctl.comTask->removeFromSolver(ctl.mrqpsolver->solver);
+            std::cout << "Centered com, error "
+                      << ctl.comTask->comTask->eval().transpose() << std::endl;
+            return true;
+          }
+        return false;
+        }
+        else
+          return true;
+      }
+    }
+
+  private:
+    bool started;
+    bool done_com;
+    int iter_;
+    double altitude_;
+};
+
 struct EgressMoveComForcePhase : public EgressMRPhaseExecution
 {
   public:
@@ -949,8 +1226,10 @@ struct EgressMoveComForcePhase : public EgressMRPhaseExecution
                                                        0, 0.25));
         ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
 
-        mc_rbdyn::MRContact lfc = ctl.egressContacts.at(0); //Should be a find_if
-        tasks::qp::ContactId cId = lfc.contactId(ctl.robots().robots);
+        auto lfc = std::find_if(ctl.egressContacts.begin(),
+                                ctl.egressContacts.end(),
+                                [&](const mc_rbdyn::MRContact & c) -> bool { return c.r1Surface->name.compare(otherSurf_) == 0; });
+        tasks::qp::ContactId cId = lfc->contactId(ctl.robots().robots);
         Eigen::MatrixXd dof(6,6);
         dof.setIdentity();
         dof(5, 5) = 0;

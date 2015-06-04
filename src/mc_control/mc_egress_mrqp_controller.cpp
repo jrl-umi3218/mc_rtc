@@ -69,6 +69,7 @@ MCEgressMRQPController::MCEgressMRQPController(const std::vector<std::shared_ptr
   lazyPostureTask->jointsStiffness(robots().mbs, jsv);
 
   comTask.reset(new mc_tasks::CoMTask(mrqpsolver->robots, mrqpsolver->robots.robotIndex));
+  comTask->comTaskSp->stiffness(1.);
   efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", mrqpsolver->robots,
                                              mrqpsolver->robots.robotIndex));
 
@@ -122,6 +123,12 @@ void MCEgressMRQPController::reset(const ControllerResetData & reset_data)
 
   std::cout << "End mr egress reset" << std::endl;
 }
+
+void MCEgressMRQPController::addCollision(const mc_solver::Collision& coll)
+{
+  collsConstraint.addCollisions(robots(), {coll});
+}
+
 
 void MCEgressMRQPController::resetWheelTransform()
 {
@@ -230,24 +237,38 @@ void MCEgressMRQPController::nextPhase()
     curPhase = REPLACERIGHTFOOT;
     execPhase.reset(new EgressReplaceRightFootPhase);
     break;
-  //case REPLACERIGHTFOOT:
-  //  curPhase = MOVECOMRIGHT;
-  //  execPhase.reset(new EgressMoveComSurfPhase("RFullSole", -0.15));
-  //  break;
-  //case MOVECOMRIGHT:
-  //  curPhase = REPLACELEFTFOOT;
-  //  execPhase.reset(new EgressReplaceLeftFootPhase);
-  //  break;
-  //case REPLACELEFTFOOT:
-  //  curPhase = MOVECOMFORCELEFT;
-  //  execPhase.reset(new EgressMoveComSurfPhase("LFullSole", 0.10));
-  //  //Use this to lift the rear feet by a maximum of 10cm
-  //  //execPhase.reset(new EgressMoveComForcePhase("LFullSole", 0.10, 0.1));
-  //  break;
-  //case MOVECOMFORCELEFT:
-  //  curPhase = REMOVEHAND;
-  //  execPhase.reset(new EgressRemoveRightGripperPhase);
-  //  break;
+  case REPLACERIGHTFOOT:
+    curPhase = MOVECOMRIGHT;
+    execPhase.reset(new EgressMoveComSurfPhase("RFullSole", 0.15));
+    break;
+  case MOVECOMRIGHT:
+    curPhase = REPLACELEFTFOOT;
+    execPhase.reset(new EgressReplaceLeftFootPhase);
+    break;
+  case REPLACELEFTFOOT:
+    curPhase = MOVECOMFORCELEFT;
+    execPhase.reset(new EgressMoveComSurfPhase("LFullSole", 0.10));
+    //Use this to lift the rear feet by a maximum of 10cm
+    //execPhase.reset(new EgressMoveComForcePhase("LFullSole", 0.10, 0.1));
+    break;
+  case MOVECOMFORCELEFT:
+    curPhase = PUTDOWNRIGHTFOOT;
+    execPhase.reset(new EgressPutDownRightFootPhase);
+    break;
+  case PUTDOWNRIGHTFOOT:
+    curPhase = CENTERCOM;
+    comTask->comTaskSp->weight(1000.);
+    execPhase.reset(new EgressCenterComPhase(0.10));
+    break;
+  case CENTERCOM:
+    comTask->comTaskSp->weight(1.);
+    curPhase = OPENGRIPPER;
+    execPhase.reset(new EgressOpenRightGripperPhase);
+    break;
+  case OPENGRIPPER:
+    curPhase = REMOVEHAND;
+    execPhase.reset(new EgressRemoveRightGripperPhase);
+    break;
   default:
     std::cout << "Done" << std::endl;
     break;

@@ -23,10 +23,13 @@ struct MCEgressMRQPController : MCMRQPController
       ROTATELAZY,
       MOVECOMLEFT,
       MOVECOMRIGHT,
+      CENTERCOM,
       MOVECOMFORCELEFT,
       REPLACELEFTFOOT,
       REPLACERIGHTFOOT,
       STANDUP,
+      PUTDOWNRIGHTFOOT,
+      OPENGRIPPER,
       REMOVEHAND
     };
   public:
@@ -35,7 +38,10 @@ struct MCEgressMRQPController : MCMRQPController
     virtual bool run() override;
 
     virtual void reset(const ControllerResetData & reset_data) override;
+
     void nextPhase();
+
+    virtual void addCollision(const mc_solver::Collision& coll);
   protected:
     void resetBasePose();
     void resetWheelTransform();
