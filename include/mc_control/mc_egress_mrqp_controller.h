@@ -23,10 +23,12 @@ struct MCEgressMRQPController : MCMRQPController
       ROTATELAZY,
       MOVECOMLEFT,
       MOVECOMRIGHT,
+      CENTERCOM,
       MOVECOMFORCELEFT,
       REPLACELEFTFOOT,
       REPLACERIGHTFOOT,
       STANDUP,
+      PUTDOWNRIGHTFOOT,
       REMOVEHAND
     };
   public:
