@@ -69,6 +69,7 @@ MCEgressMRQPController::MCEgressMRQPController(const std::vector<std::shared_ptr
   lazyPostureTask->jointsStiffness(robots().mbs, jsv);
 
   comTask.reset(new mc_tasks::CoMTask(mrqpsolver->robots, mrqpsolver->robots.robotIndex));
+  comTask->comTaskSp->stiffness(1.);
   efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", mrqpsolver->robots,
                                              mrqpsolver->robots.robotIndex));
 
