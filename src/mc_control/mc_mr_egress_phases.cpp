@@ -77,7 +77,7 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
           //ctl.lazyPostureTask->posture(p);
           ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5", ctl.mrqpsolver->robots, 0, 0.25));
           ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
-          Eigen::Vector3d move(0., 0.2, 0.0); /*XXX Hard-coded value */
+          Eigen::Vector3d move(-0.1, 0.2, 0.0); /*XXX Hard-coded value */
           ctl.efTask->positionTask->position((ctl.efTask->get_ef_pose().translation() + move));
           Eigen::Matrix3d change = sva::RotZ(20*M_PI/180);
           ctl.efTask->orientationTask->orientation(ctl.efTask->get_ef_pose().rotation()*change);
@@ -521,7 +521,7 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
             ctl.mrqpsolver->setContacts(ctl.egressContacts);
             ctl.comTask->comTaskSp->stiffness(1.);
             std::cout << "Done putting down right foot" << std::endl;
-            return true;
+            //return true;
           }
           return false;
         }
@@ -677,8 +677,10 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
                                                            ctl.mrqpsolver->robots,
                                                            ctl.mrqpsolver->robots.robotIndex, 0.1));
             int lfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
-            sva::PTransformd lower(Eigen::Vector3d(0, 0, -0.4));
-            ctl.efTask->positionTask->position((lower*ctl.robot().mbc->bodyPosW[lfindex]).translation());
+            Eigen::Vector3d lower(0, 0, -0.4);
+            ctl.hrp2postureTask->posture(ctl.robot().mbc->q);
+            ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
+            ctl.efTask->positionTask->position(lower + ctl.robot().mbc->bodyPosW[lfindex].translation());
             ctl.mrqpsolver->setContacts(ctl.egressContacts);
 
             //Free movement along z axis
@@ -1153,12 +1155,14 @@ struct EgressCenterComPhase : public EgressMRPhaseExecution
             //ctl.comTask->removeFromSolver(ctl.mrqpsolver->solver);
             std::cout << "Centered com, error "
                       << ctl.comTask->comTask->eval().transpose() << std::endl;
-            return true;
+            //return true;
           }
-        return false;
+          return false;
         }
         else
-          return true;
+        {
+          return false;
+        }
       }
     }
 
