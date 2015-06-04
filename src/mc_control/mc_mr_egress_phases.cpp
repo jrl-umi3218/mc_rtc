@@ -243,11 +243,11 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
             Eigen::Matrix3d& rot = ctl.robot().mbc->bodyPosW[lfindex].rotation();
             Eigen::Vector3d rpy = rot.eulerAngles(2, 1, 0);
             //Eigen::Vector3d rpy_body = ctl.robot().mbc->bodyPosW[0].rotation().eulerAngles(2, 1, 0);
-            Eigen::Matrix3d target = sva::RotZ(M_PI/2);
+            //Eigen::Matrix3d target = sva::RotZ(M_PI/2);
                                      //*sva::RotY(rpy(1))
                                      //*sva::RotX(rpy(2));
             ctl.efTask->positionTask->position(rfpos.translation()+move);
-            ctl.efTask->orientationTask->orientation(target);
+            ctl.efTask->orientationTask->orientation(rfpos.rotation());
             timeoutIter = 0;
             std::cout << "Modified orientation" << std::endl;
           }
@@ -435,13 +435,13 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
           {
             done_removing = true;
             ctl.mrqpsolver->setContacts(ctl.egressContacts);
-            Eigen::Vector3d move(0.2, 0.2, 0);
+            Eigen::Vector3d move(0.3, 0.2, 0);
             int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
             const sva::PTransformd& lfpos = ctl.robot().mbc->bodyPosW[lfindex];
             Eigen::Vector3d target = move + lfpos.translation();
             target(2) = ctl.efTask->positionTask->position()(2);
             ctl.efTask->positionTask->position(target);
-            ctl.efTask->orientationTask->orientation(sva::RotZ(M_PI/2));
+            ctl.efTask->orientationTask->orientation(lfpos.rotation());
             timeoutIter = 0;
             std::cout << "Modified position" << std::endl;
           }
