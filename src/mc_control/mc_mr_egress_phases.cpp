@@ -233,6 +233,8 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
               or timeoutIter > 15*500)
           {
             done_removing = true;
+            ctl.addCollision(mc_solver::Collision("RLEG_LINK4", "exit_platform", 0.05, 0.01, 0.));
+            //ctl.addCollision(mc_solver::Collision("RLEG_LINK3", "exit_platform", 0.05, 0.01, 0.));
             ctl.mrqpsolver->setContacts(otherContacts);
             Eigen::Vector3d move(-0.1, 0.35, 0.);
             int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");

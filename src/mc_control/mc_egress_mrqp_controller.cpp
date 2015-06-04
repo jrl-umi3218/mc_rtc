@@ -124,6 +124,12 @@ void MCEgressMRQPController::reset(const ControllerResetData & reset_data)
   std::cout << "End mr egress reset" << std::endl;
 }
 
+void MCEgressMRQPController::addCollision(const mc_solver::Collision& coll)
+{
+  collsConstraint.addCollisions(robots(), {coll});
+}
+
+
 void MCEgressMRQPController::resetWheelTransform()
 {
   sva::PTransformd graspOffset(sva::RotX(-M_PI/2), Eigen::Vector3d(0, 0, 0));

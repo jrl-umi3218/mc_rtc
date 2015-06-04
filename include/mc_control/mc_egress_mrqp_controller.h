@@ -37,6 +37,8 @@ struct MCEgressMRQPController : MCMRQPController
     virtual bool run() override;
 
     virtual void reset(const ControllerResetData & reset_data) override;
+
+    virtual void addCollision(const mc_solver::Collision& coll);
   protected:
     void resetBasePose();
     void resetWheelTransform();
