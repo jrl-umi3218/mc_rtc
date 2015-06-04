@@ -878,7 +878,7 @@ struct EgressRemoveRightGripperPhase : public EgressMRPhaseExecution
         dof(5, 5) = 0;
         auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.hrp2contactConstraint.contactConstr.get());
         if(constr == 0)
-          std::cout << "Fuck you" << std::endl;
+          std::cout << "NOPE NOPE" << std::endl;
         else
           constr->addDofContact(cId, dof);
 
