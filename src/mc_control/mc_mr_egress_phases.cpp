@@ -404,6 +404,7 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
                                                        ctl.mrqpsolver->robots,
                                                        ctl.mrqpsolver->robots.robotIndex, 0.25));
 
+        ctl.torsoOriTask->resetTask();
         ctl.torsoOriTask->addToSolver(ctl.mrqpsolver->solver);
 
         int lfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
