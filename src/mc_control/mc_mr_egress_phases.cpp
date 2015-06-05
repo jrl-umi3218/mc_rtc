@@ -1234,8 +1234,10 @@ struct EgressMoveComForcePhase : public EgressMRPhaseExecution
         ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
         ctl.efTask.reset(new mc_tasks::EndEffectorTask(bodyName_,
                                                        ctl.mrqpsolver->robots,
-                                                       0, 0.25));
-        ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
+                                                       ctl.mrqpsolver->robots.robotIndex,
+                                                       2.0, 1000));
+
+        ctl.mrqpsolver->setContacts(ctl.egressContacts);
 
         auto lfc = std::find_if(ctl.egressContacts.begin(),
                                 ctl.egressContacts.end(),
@@ -1248,12 +1250,16 @@ struct EgressMoveComForcePhase : public EgressMRPhaseExecution
         if(constr == 0)
           std::cout << "NOPE NOPE" << std::endl;
         else
+          constr->resetDofContacts();
+          std::cout << "Added a dof to " << lfc->r1Surface->name << " / "
+                    << lfc->r2Surface->name;
           constr->addDofContact(cId, dof);
-
 
         int bodyIndex = ctl.robot().bodyIndexByName(bodyName_);
         startPos_ = ctl.robot().mbc->bodyPosW[bodyIndex].translation();
+        ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
         started = true;
+        std::cout << "Going for it with a max displacement of " << maxMove_ << std::endl;
         return false;
       }
       else
@@ -1281,7 +1287,6 @@ struct EgressMoveComForcePhase : public EgressMRPhaseExecution
             updateCom(ctl);
             double height = maxMove_*(1-((ctl.comTask->get_com()-curCom).norm()/comDist_));
             Eigen::Vector3d target(startPos_(0), startPos_(1), startPos_(2)+height);
-            std::cout << height << std::endl;
             ctl.efTask->positionTask->position(target);
             return false;
           }
