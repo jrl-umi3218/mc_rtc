@@ -554,6 +554,7 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
     EgressReplaceRightFootPhase()
       : started(false),
         done_removing(false),
+        done_premoving(false),
         done_moving(false),
         done_rotating(false),
         done_contacting(false),
@@ -606,6 +607,21 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
       }
       else
       {
+        if(not done_premoving)
+        {
+          timeoutIter++;
+          if((ctl.efTask->positionTask->eval().norm() < 1e-2
+              and ctl.efTask->positionTask->speed().norm() < 1e-4)
+              or timeoutIter > 15*500)
+          {
+            done_premoving = true;
+            ctl.mrqpsolver->setContacts(otherContacts);
+            Eigen::Vector3d move(-0.14, 0.0, 0);/*FIXME For safer egress, this should be based on the relative position between the right and the left foot */
+            ctl.efTask->positionTask->position(ctl.efTask->positionTask->position() + move);
+            timeoutIter = 0;
+          }
+          return false;
+        }
         if(not done_removing)
         {
           timeoutIter++;
@@ -614,8 +630,8 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
               or timeoutIter > 15*500)
           {
             done_removing = true;
-            ctl.mrqpsolver->setContacts(otherContacts);
-            Eigen::Vector3d move(-0.1, 0.3, 0);/*FIXME For safer egress, this should be based on the relative position between the right and the left foot */
+            //ctl.mrqpsolver->setContacts(otherContacts);
+            Eigen::Vector3d move(0., 0.3, 0);/*FIXME For safer egress, this should be based on the relative position between the right and the left foot */
             ctl.efTask->positionTask->position(ctl.efTask->positionTask->position() + move);
             timeoutIter = 0;
             //ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
@@ -748,6 +764,7 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
   private:
     bool started;
     bool done_removing;
+    bool done_premoving;
     bool done_moving;
     bool done_rotating;
     bool done_contacting;
