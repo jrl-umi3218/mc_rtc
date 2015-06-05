@@ -524,7 +524,8 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
                                             ctl.robots().robots[2].surfaces.at("AllGround"));
             ctl.mrqpsolver->setContacts(ctl.egressContacts);
             ctl.comTask->comTaskSp->stiffness(1.);
-            ctl.torsoOriTask->removeFromSolver(ctl.mrqpsolver->solver);
+            //Do not remove orientation here if we are not in skip mode
+            //ctl.torsoOriTask->removeFromSolver(ctl.mrqpsolver->solver);
             std::cout << "Done putting down right foot" << std::endl;
             //return true;
           }
@@ -923,10 +924,15 @@ struct EgressOpenRightGripperPhase : public EgressMRPhaseExecution
 struct EgressRemoveRightGripperPhase : public EgressMRPhaseExecution
 {
   public:
-    EgressRemoveRightGripperPhase()
+    EgressRemoveRightGripperPhase(int max_wiggles, double dist, double deg)
       : started(false),
+        done_rotating(false),
         done_removing(false),
-        done_posture(false)
+        wiggles_(0),
+        maxWiggles_(max_wiggles),
+        dist_(dist),
+        rot(sva::RotX(deg*M_PI/180)),
+        birot(sva::RotX(2*deg*M_PI/180))
     {
       std::cout << "In egress remove right gripper phase" << std::endl;
     }
@@ -940,25 +946,27 @@ struct EgressRemoveRightGripperPhase : public EgressMRPhaseExecution
 
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6",
                                                        ctl.mrqpsolver->robots,
-                                                       ctl.mrqpsolver->robots.robotIndex, 0.25));
+                                                       ctl.mrqpsolver->robots.robotIndex,
+                                                       12., 1000));
 
         int rgindex = ctl.robot().bodyIndexByName("RARM_LINK6");
-        sva::PTransformd lift(Eigen::Vector3d(0, 0, 0.1));
 
-        ctl.efTask->positionTask->position((lift*ctl.robot().mbc->bodyPosW[rgindex]).translation());
-
-        ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
+        ctl.efTask->orientationTask->orientation((sva::PTransformd(rot)*ctl.robot().mbc->bodyPosW[rgindex]).rotation());
 
         //Free movement along z axis
         auto rgc = std::find_if(ctl.egressContacts.begin(),
                                 ctl.egressContacts.end(),
                                 [](const mc_rbdyn::MRContact & c) -> bool { return c.r1Surface->name.compare("RightGripper") == 0; });
+        ctl.mrqpsolver->setContacts(ctl.egressContacts);
+
         if(rgc != ctl.egressContacts.end())
+        {
           ctl.egressContacts.erase(rgc);
+          ctl.mrqpsolver->setContacts(ctl.egressContacts);
+        }
         else
           std::cout << "OOPSIE OOPS" << std::endl;
-        ctl.mrqpsolver->setContacts(ctl.egressContacts);
-        //tasks::qp::ContactId cId = (*rgc).contactId(ctl.robots().robots);
+        //tasks::qp::ContactId cId = rgc->contactId(ctl.robots().robots);
         //Eigen::MatrixXd dof(6,6);
         //dof.setIdentity();
         //dof(5, 5) = 0;
@@ -976,39 +984,57 @@ struct EgressRemoveRightGripperPhase : public EgressMRPhaseExecution
       }
       else
       {
+        if(not done_rotating)
+        {
+          if(ctl.efTask->orientationTask->eval().norm() < 1e-2
+              and ctl.efTask->orientationTask->speed().norm() < 1e-4)
+          {
+            if(wiggles_ > maxWiggles_)
+              done_rotating = true;
+            else
+              ++wiggles_;
+            sva::PTransformd lift(Eigen::Vector3d(0, 0, dist_));
+            int rgindex = ctl.robot().bodyIndexByName("RARM_LINK6");
+            ctl.efTask->positionTask->position((lift*ctl.robot().mbc->bodyPosW[rgindex]).translation());
+            Eigen::Matrix3d r;
+            if(wiggles_ % 2 == 1)
+              r = (sva::PTransformd(birot).inv()*ctl.robot().mbc->bodyPosW[rgindex]).rotation();
+            else
+              r = (sva::PTransformd(birot)*ctl.robot().mbc->bodyPosW[rgindex]).rotation();
+            ctl.efTask->orientationTask->orientation(r);
+          }
+          return false;
+        }
         if(not done_removing)
         {
           if(ctl.efTask->positionTask->eval().norm() < 1e-2
               and ctl.efTask->positionTask->speed().norm() < 1e-4)
           {
             done_removing = true;
+            ctl.mrqpsolver->setContacts(ctl.egressContacts);
             auto q = ctl.robot().mbc->q;
-            int chest_i = ctl.robot().jointIndexByName("CHEST_JOINT0");
-            q[chest_i][0] = 0;
+            //int chest_i = ctl.robot().jointIndexByName("CHEST_JOINT0");
+            //q[chest_i][0] = 0;
             ctl.hrp2postureTask->posture(q);
             ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
-          }
-          return false;
-        }
-        else if(not done_posture)
-        {
-          if(ctl.mrqpsolver->solver.alphaDVec(0).norm() < 5e-3)
-          {
-            done_posture = true;
             std::cout << "Phase finished, can transit" << std::endl;
-            //return true;
           }
           return false;
         }
-        else
+       else
           return false;
       }
     }
 
   private:
     bool started;
+    bool done_rotating;
     bool done_removing;
-    bool done_posture;
+    int wiggles_;
+    int maxWiggles_;
+    double dist_;
+    Eigen::Matrix3d rot;
+    Eigen::Matrix3d birot;
 };
 
 struct EgressMRStandupPhase : public EgressMRPhaseExecution

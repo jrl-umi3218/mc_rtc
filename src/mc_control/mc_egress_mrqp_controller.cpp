@@ -264,13 +264,14 @@ void MCEgressMRQPController::nextPhase()
     execPhase.reset(new EgressCenterComPhase(0.10));
     break;
   case CENTERCOM:
-    comTask->comTaskSp->weight(1.);
+    torsoOriTask->removeFromSolver(mrqpsolver->solver);
+    hrp2postureTask->weight(1.);
     curPhase = OPENGRIPPER;
     execPhase.reset(new EgressOpenRightGripperPhase);
     break;
   case OPENGRIPPER:
     curPhase = REMOVEHAND;
-    execPhase.reset(new EgressRemoveRightGripperPhase);
+    execPhase.reset(new EgressRemoveRightGripperPhase(10, 0.02, -10));
     break;
   default:
     std::cout << "Done" << std::endl;
