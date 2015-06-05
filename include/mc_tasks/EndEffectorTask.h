@@ -24,6 +24,13 @@ public:
   void set_ef_pose(const sva::PTransformd & tf);
 
   sva::PTransformd get_ef_pose();
+
+  int dim();
+
+  const Eigen::VectorXd& eval();
+
+  const Eigen::VectorXd& speed();
+
 public:
   const mc_rbdyn::Robots & robots;
 
@@ -35,6 +42,8 @@ public:
   std::string bodyName;
   sva::PTransformd curTransform;
   bool inSolver;
+  Eigen::VectorXd err;
+  Eigen::VectorXd spd;
 };
 
 }
