@@ -200,7 +200,7 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
                                                        ctl.mrqpsolver->robots.robotIndex, 0.25));
 
         int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
-        sva::PTransformd lift(Eigen::Vector3d(0.05, 0, 0.1));
+        sva::PTransformd lift(Eigen::Vector3d(0.0, 0, 0.1));
 
         ctl.efTask->positionTask->position((lift*ctl.robot().mbc->bodyPosW[lfindex]).translation());
 
@@ -267,8 +267,8 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
         else if(not done_rotating)
         {
           timeoutIter++;
-          if((ctl.efTask->orientationTask->eval().norm() < 1e-2
-              and ctl.efTask->orientationTask->speed().norm() < 1e-4)
+          if((ctl.efTask->positionTask->eval().norm() < 1e-2
+              and ctl.efTask->positionTask->speed().norm() < 1e-4)
               or timeoutIter > 15*500)
           {
             done_rotating = true;
@@ -1061,12 +1061,13 @@ struct EgressMRStandupPhase : public EgressMRPhaseExecution
 struct EgressMoveComSurfPhase : public EgressMRPhaseExecution
 {
   public:
-    EgressMoveComSurfPhase(std::string surfName, double altitude)
+    EgressMoveComSurfPhase(std::string surfName, double altitude, bool auto_transit = false)
       : started(false),
         done_com(false),
         iter_(0),
         altitude_(altitude),
-        surfName_(surfName)
+        surfName_(surfName),
+        auto_transit(auto_transit)
     {
     }
 
@@ -1098,6 +1099,7 @@ struct EgressMoveComSurfPhase : public EgressMRPhaseExecution
             //ctl.comTask->removeFromSolver(ctl.mrqpsolver->solver);
             std::cout << "Phase finished, can transit" << std::endl;
             //return true;
+            return auto_transit;
           }
           return false;
         }
@@ -1112,6 +1114,7 @@ struct EgressMoveComSurfPhase : public EgressMRPhaseExecution
     int iter_;
     double altitude_;
     std::string surfName_;
+    bool auto_transit;
 };
 
 struct EgressCenterComPhase : public EgressMRPhaseExecution
