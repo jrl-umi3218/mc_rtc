@@ -99,9 +99,9 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
           ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5", ctl.mrqpsolver->robots, 0, 0.25));
           ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
           Eigen::Vector3d lift(0., 0, 0.0); /*XXX Hard-coded value */
-          int rfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
-          Eigen::Matrix3d & rrot = ctl.robot().mbc->bodyPosW[rfindex].rotation();
-          Eigen::Vector3d rfrpy = rrot.eulerAngles(2,1,0);
+          //int rfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
+          //Eigen::Matrix3d & rrot = ctl.robot().mbc->bodyPosW[rfindex].rotation();
+          //Eigen::Vector3d rfrpy = rrot.eulerAngles(2,1,0);
           int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
           Eigen::Matrix3d& rot = ctl.robot().mbc->bodyPosW[lfindex].rotation();
           Eigen::Vector3d rpy = rot.eulerAngles(2, 1, 0);
@@ -248,11 +248,11 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
             //ctl.addCollision(mc_solver::Collision("RLEG_LINK3", "exit_platform", 0.05, 0.01, 0.));
             ctl.mrqpsolver->setContacts(otherContacts);
             Eigen::Vector3d move(-0.1, 0.35, 0.);
-            int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
+            //int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
             int rfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
             const sva::PTransformd& rfpos = ctl.robot().mbc->bodyPosW[rfindex];
-            Eigen::Matrix3d& rot = ctl.robot().mbc->bodyPosW[lfindex].rotation();
-            Eigen::Vector3d rpy = rot.eulerAngles(2, 1, 0);
+            //Eigen::Matrix3d& rot = ctl.robot().mbc->bodyPosW[lfindex].rotation();
+            //Eigen::Vector3d rpy = rot.eulerAngles(2, 1, 0);
             //Eigen::Vector3d rpy_body = ctl.robot().mbc->bodyPosW[0].rotation().eulerAngles(2, 1, 0);
             //Eigen::Matrix3d target = sva::RotZ(M_PI/2);
                                      //*sva::RotY(rpy(1))
@@ -1189,10 +1189,10 @@ struct EgressMoveComForcePhase : public EgressMRPhaseExecution
         iter_(0),
         lwrench_i(0),
         rwrench_i(1),
-        comDist_(0),
-        curCom(0, 0, 0),
         altitude_(altitude),
+        comDist_(0),
         maxMove_(max_move),
+        curCom(0, 0, 0),
         startPos_(0, 0, 0),
         surfName_(surfName)
     {
@@ -1305,8 +1305,8 @@ struct EgressMoveComForcePhase : public EgressMRPhaseExecution
     int rwrench_i;
     double altitude_;
     double comDist_;
-    Eigen::Vector3d curCom;
     double maxMove_;
+    Eigen::Vector3d curCom;
     Eigen::Vector3d startPos_;
     std::string surfName_;
     std::string otherSurf_;

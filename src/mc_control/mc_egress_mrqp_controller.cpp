@@ -14,9 +14,9 @@ namespace mc_control
 
 MCEgressMRQPController::MCEgressMRQPController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule> >& env_modules)
   : MCMRQPController(env_modules),
+    egressContacts(),
     polarisKinematicsConstraint(robots(), 1, timeStep, false,
         {0.1, 0.01, 0.01}, 0.5),
-    egressContacts(),
     collsConstraint(robots(), 0, 1, timeStep),
     curPhase(START),
     execPhase(new EgressMRStartPhase)
