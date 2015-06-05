@@ -1095,7 +1095,7 @@ struct EgressMoveComSurfPhase : public EgressMRPhaseExecution
           ++iter_;
           if((ctl.comTask->comTask->eval().norm() < 1e-2
               and ctl.comTask->comTask->speed().norm() < 1e-3)
-              or iter_ > 20*500)
+              or iter_ > 10*500)
           {
             done_com = true;
             ctl.hrp2postureTask->posture(ctl.robot().mbc->q);
