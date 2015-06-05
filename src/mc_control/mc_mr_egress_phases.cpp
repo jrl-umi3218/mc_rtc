@@ -1357,6 +1357,78 @@ struct EgressMoveComForcePhase : public EgressMRPhaseExecution
     std::string bodyName_;
 };
 
+struct EgressReplaceRightHandPhase : public EgressMRPhaseExecution
+{
+  public:
+    EgressReplaceRightHandPhase()
+      : started(false),
+        done_moving(false),
+        done_posturing(false),
+        nrIter_(0)
+  {
+  }
 
+    virtual bool run(MCEgressMRQPController & ctl) override
+    {
+      if(not started)
+      {
+        std::cout << "Replacing hand" << std::endl;
+        started = true;
+        ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
+
+        ctl.efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6",
+                                                       ctl.mrqpsolver->robots,
+                                                       ctl.mrqpsolver->robots.robotIndex,
+                                                       0.25));
+        int headIndex = ctl.robot().bodyIndexByName("HEAD_LINK1");
+        sva::PTransformd move(Eigen::Vector3d(0.5, 0., 0.5));
+
+        ctl.efTask->set_ef_pose(move*ctl.robot().mbc->bodyPosW[headIndex]);
+        ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
+        return false;
+      }
+      else
+      {
+        if(not done_moving)
+        {
+          ++nrIter_;
+          if((ctl.efTask->eval().norm() < 1e-2
+              and ctl.efTask->speed().norm() < 1e-3)
+              or nrIter_ > 10*500)
+          {
+            done_moving = true;
+            ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
+            auto stance = ctl.robot_module.stance();
+            auto p = ctl.hrp2postureTask->posture();
+            for(auto qi : stance)
+            {
+              p[qi.first] = qi.second;
+            }
+            ctl.hrp2postureTask->posture(p);
+            nrIter_ = 0;
+          }
+          return false;
+        }
+        else if(not done_posturing)
+        {
+          ++nrIter_;
+          if(ctl.mrqpsolver->solver.alphaDVec(0).norm() < 1e-3
+              or nrIter_ > 10*500)
+          {
+            done_posturing = true;
+            std::cout << "Phase done" << std::endl;
+          }
+          return false;
+        }
+      return false;
+      }
+    }
+
+  private:
+    bool started;
+    bool done_moving;
+    bool done_posturing;
+    int nrIter_;
+};
 
 }

@@ -273,6 +273,10 @@ void MCEgressMRQPController::nextPhase()
     curPhase = REMOVEHAND;
     execPhase.reset(new EgressRemoveRightGripperPhase(10, 0.02, -10));
     break;
+  case REMOVEHAND:
+    curPhase = REPLACEHAND;
+    execPhase.reset(new EgressReplaceRightHandPhase);
+    break;
   default:
     std::cout << "Done" << std::endl;
     break;

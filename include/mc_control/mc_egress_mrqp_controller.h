@@ -30,7 +30,8 @@ struct MCEgressMRQPController : MCMRQPController
       STANDUP,
       PUTDOWNRIGHTFOOT,
       OPENGRIPPER,
-      REMOVEHAND
+      REMOVEHAND,
+      REPLACEHAND
     };
   public:
     MCEgressMRQPController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule> >& env_modules);
