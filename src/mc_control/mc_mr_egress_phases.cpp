@@ -404,6 +404,8 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
                                                        ctl.mrqpsolver->robots,
                                                        ctl.mrqpsolver->robots.robotIndex, 0.25));
 
+        ctl.torsoOriTask->addToSolver(ctl.mrqpsolver->solver);
+
         int lfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
         sva::PTransformd lift(Eigen::Vector3d(0.0, 0, 0.1));
 
@@ -520,6 +522,7 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
                                             ctl.robots().robots[2].surfaces.at("AllGround"));
             ctl.mrqpsolver->setContacts(ctl.egressContacts);
             ctl.comTask->comTaskSp->stiffness(1.);
+            ctl.torsoOriTask->removeFromSolver(ctl.mrqpsolver->solver);
             std::cout << "Done putting down right foot" << std::endl;
             //return true;
           }

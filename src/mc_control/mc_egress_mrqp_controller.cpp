@@ -72,6 +72,9 @@ MCEgressMRQPController::MCEgressMRQPController(const std::vector<std::shared_ptr
   comTask->comTaskSp->stiffness(1.);
   efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", mrqpsolver->robots,
                                              mrqpsolver->robots.robotIndex));
+  torsoOriTask.reset(new mc_tasks::OrientationTask("CHEST_LINK1", mrqpsolver->robots,
+                                                   mrqpsolver->robots.robotIndex,
+                                                   1., 1.));
 
   //collsConstraint.addCollision(robots(), mc_solver::Collision("RLEG_LINK5", "floor", 0.2, 0.15, 0));
   //collsConstraint.addCollision(robots(), mc_solver::Collision("RLEG_LINK5", "floor_step", 0.2, 0.15, 0));
