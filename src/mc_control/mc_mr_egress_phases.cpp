@@ -355,7 +355,7 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
             ctl.comTask->comTaskSp->weight(w/com_multiplier);
             std::cout << "Done moving left foot" << std::endl;
             std::cout << "Phase finished, can transit" << std::endl;
-            //return true;
+            return true;
           }
           return false;
         }
@@ -1037,7 +1037,7 @@ struct EgressMRStandupPhase : public EgressMRPhaseExecution
       else if(not done_standup)
       {
         ++timeoutIter;
-        if((ctl.efTask->positionTask->eval().norm() < 1e-1 and ctl.efTask->orientationTask->speed().norm() < 1e-4 and ctl.efTask->positionTask->speed().norm() < 1e-4) or timeoutIter > 15*500)
+        if((ctl.efTask->positionTask->eval().norm() < 1e-1 and ctl.efTask->orientationTask->speed().norm() < 1e-4 and ctl.efTask->positionTask->speed().norm() < 1e-4) or timeoutIter > 5*500)
         {
           ctl.hrp2postureTask->posture(ctl.robot().mbc->q);
           ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
