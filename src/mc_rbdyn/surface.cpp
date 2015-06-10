@@ -19,6 +19,16 @@ Surface::Surface(const std::string & name, const std::string & bodyName, const s
 {
 }
 
+unsigned int Surface::bodyIndex(const mc_rbdyn::Robot & robot) const
+{
+  return robot.bodyIndexByName(bodyName);
+}
+
+unsigned int Surface::bodyId(const mc_rbdyn::Robot & robot) const
+{
+  return robot.bodyIdByName(bodyName);
+}
+
 sva::PTransformd Surface::X_0_s(const mc_rbdyn::Robot & robot) const
 {
   return X_0_s(robot, *(robot.mbc));

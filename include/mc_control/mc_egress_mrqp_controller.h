@@ -6,6 +6,7 @@
 #include <mc_control/mc_mrqp_controller.h>
 #include <mc_tasks/EndEffectorTask.h>
 #include <mc_tasks/OrientationTask.h>
+#include <mc_tasks/TrajectoryTask.h>
 #include <mc_tasks/CoMTask.h>
 
 namespace mc_control
@@ -23,10 +24,17 @@ struct MCEgressMRQPController : MCMRQPController
       REMOVELEFTFOOT,
       MOVELEFTFOOT,
       ROTATELAZY,
+      MOVECOMLEFT,
+      MOVECOMRIGHT,
+      CENTERCOM,
+      MOVECOMFORCELEFT,
       REPLACELEFTFOOT,
-      PLACERIGHTFOOT,
+      REPLACERIGHTFOOT,
       STANDUP,
-      REMOVEHAND
+      PUTDOWNRIGHTFOOT,
+      OPENGRIPPER,
+      REMOVEHAND,
+      REPLACEHAND
     };
   public:
     MCEgressMRQPController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule> >& env_modules);
@@ -34,16 +42,21 @@ struct MCEgressMRQPController : MCMRQPController
     virtual bool run() override;
 
     virtual void reset(const ControllerResetData & reset_data) override;
+
+    void nextPhase();
+
+    virtual void addCollision(const mc_solver::Collision& coll);
   protected:
     void resetBasePose();
     void resetWheelTransform();
     void resetLazyTransform();
-    void nextPhase();
 
   public:
     std::shared_ptr<mc_tasks::CoMTask> comTask;
     std::shared_ptr<mc_tasks::EndEffectorTask> efTask;
+    std::shared_ptr<mc_tasks::TrajectoryTask> trajTask;
     std::shared_ptr<tasks::qp::PostureTask> lazyPostureTask;
+    std::shared_ptr<mc_tasks::OrientationTask> torsoOriTask;
     std::vector<mc_rbdyn::MRContact> egressContacts;
 
   private:

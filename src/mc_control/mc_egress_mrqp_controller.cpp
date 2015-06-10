@@ -14,20 +14,25 @@ namespace mc_control
 
 MCEgressMRQPController::MCEgressMRQPController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule> >& env_modules)
   : MCMRQPController(env_modules),
+    egressContacts(),
     polarisKinematicsConstraint(robots(), 1, timeStep, false,
         {0.1, 0.01, 0.01}, 0.5),
-    egressContacts(),
     collsConstraint(robots(), 0, 1, timeStep),
     curPhase(START),
     execPhase(new EgressMRStartPhase)
 {
   collsConstraint.addCollisions(robots(),
       {
-      mc_solver::Collision("LLEG_LINK5", "floor_step", 0.05, 0.01, 0.),
-      mc_solver::Collision("LLEG_LINK5", "full_seat", 0.05, 0.01, 0.),
-      mc_solver::Collision("RLEG_LINK5", "full_bench", 0.05, 0.01, 0.),
-      mc_solver::Collision("RLEG_LINK4", "full_bench", 0.05, 0.01, 0.),
-      mc_solver::Collision("RLEG_LINK5", "left_column", 0.05, 0.01, 0.)
+        mc_solver::Collision("RLEG_LINK5", "left_column", 0.1, 0.05, 0.),
+        mc_solver::Collision("RLEG_LINK4", "left_column", 0.1, 0.05, 0.),
+        mc_solver::Collision("RARM_LINK6", "left_column", 0.1, 0.05, 0.),
+        mc_solver::Collision("RARM_LINK5", "left_column", 0.1, 0.05, 0.),
+        mc_solver::Collision("RARM_LINK4", "left_column", 0.1, 0.05, 0.)
+        });
+  hrp2selfCollisionConstraint.addCollisions(robots(),
+      {
+      mc_solver::Collision("LLEG_LINK3", "LARM_LINK3", 0.05, 0.01, 0.),
+      mc_solver::Collision("LLEG_LINK4", "LARM_LINK3", 0.05, 0.01, 0.)
       });
   mrqpsolver->addConstraintSet(hrp2contactConstraint);
   mrqpsolver->addConstraintSet(hrp2kinematicsConstraint);
@@ -64,8 +69,12 @@ MCEgressMRQPController::MCEgressMRQPController(const std::vector<std::shared_ptr
   lazyPostureTask->jointsStiffness(robots().mbs, jsv);
 
   comTask.reset(new mc_tasks::CoMTask(mrqpsolver->robots, mrqpsolver->robots.robotIndex));
+  comTask->comTaskSp->stiffness(1.);
   efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", mrqpsolver->robots,
                                              mrqpsolver->robots.robotIndex));
+  torsoOriTask.reset(new mc_tasks::OrientationTask("CHEST_LINK1", mrqpsolver->robots,
+                                                   mrqpsolver->robots.robotIndex,
+                                                   1., 1.));
 
   //collsConstraint.addCollision(robots(), mc_solver::Collision("RLEG_LINK5", "floor", 0.2, 0.15, 0));
   //collsConstraint.addCollision(robots(), mc_solver::Collision("RLEG_LINK5", "floor_step", 0.2, 0.15, 0));
@@ -117,6 +126,12 @@ void MCEgressMRQPController::reset(const ControllerResetData & reset_data)
 
   std::cout << "End mr egress reset" << std::endl;
 }
+
+void MCEgressMRQPController::addCollision(const mc_solver::Collision& coll)
+{
+  collsConstraint.addCollisions(robots(), {coll});
+}
+
 
 void MCEgressMRQPController::resetWheelTransform()
 {
@@ -199,36 +214,68 @@ void MCEgressMRQPController::nextPhase()
   switch(curPhase)
   {
   case START:
-    curPhase = REMOVERIGHTFOOT;
-    execPhase.reset(new EgressRemoveRightFootPhase);
-    break;
-  case REMOVERIGHTFOOT:
-    curPhase = REMOVELEFTFOOT;
-    execPhase.reset(new EgressRemoveLeftFootPhase);
-    break;
-  case REMOVELEFTFOOT:
-    curPhase = MOVELEFTFOOT;
-    execPhase.reset(new EgressMoveLeftFootPhase);
-    break;
-  case MOVELEFTFOOT:
     curPhase = ROTATELAZY;
     execPhase.reset(new EgressRotateLazyPhase);
     break;
   case ROTATELAZY:
+  //  curPhase = REPLACELEFTFOOT;
+  //  execPhase.reset(new EgressReplaceLeftFootPhase);
+  //  break;
+  //case REPLACELEFTFOOT:
+    curPhase = STANDUP;
+    execPhase.reset(new EgressMRStandupPhase(Eigen::Vector3d(0.0, 0.05, -0.25)));
+    break;
+  //  curPhase = PLACERIGHTFOOT;
+  //  execPhase.reset(new EgressPlaceRightFootPhase);
+  //  break;
+  //case PLACERIGHTFOOT:
+  //  curPhase = STANDUP;
+  //  execPhase.reset(new EgressMRStandupPhase(-0.15));
+  //  break;
+  case STANDUP:
+    curPhase = MOVECOMLEFT;
+    execPhase.reset(new EgressMoveComSurfPhase("LFullSole", 0.15));
+    break;
+  case MOVECOMLEFT:
+    curPhase = REPLACERIGHTFOOT;
+    execPhase.reset(new EgressReplaceRightFootPhase);
+    break;
+  case REPLACERIGHTFOOT:
+    curPhase = MOVECOMRIGHT;
+    execPhase.reset(new EgressMoveComSurfPhase("RFullSole", 0.15, true));
+    break;
+  case MOVECOMRIGHT:
     curPhase = REPLACELEFTFOOT;
     execPhase.reset(new EgressReplaceLeftFootPhase);
     break;
   case REPLACELEFTFOOT:
-    curPhase = PLACERIGHTFOOT;
-    execPhase.reset(new EgressPlaceRightFootPhase);
+    curPhase = MOVECOMFORCELEFT;
+    execPhase.reset(new EgressMoveComSurfPhase("LFullSole", 0.10, true));
+    //Use this to lift the rear feet by a maximum of 10cm (last arg)
+    //execPhase.reset(new EgressMoveComForcePhase("LFullSole", 0.10, 0.1));
     break;
-  case PLACERIGHTFOOT:
-    curPhase = STANDUP;
-    execPhase.reset(new EgressMRStandupPhase);
+  case MOVECOMFORCELEFT:
+    curPhase = PUTDOWNRIGHTFOOT;
+    execPhase.reset(new EgressPutDownRightFootPhase);
     break;
-  case STANDUP:
+  case PUTDOWNRIGHTFOOT:
+    curPhase = CENTERCOM;
+    comTask->comTaskSp->weight(1000.);
+    execPhase.reset(new EgressCenterComPhase(0.10));
+    break;
+  case CENTERCOM:
+    torsoOriTask->removeFromSolver(mrqpsolver->solver);
+    hrp2postureTask->weight(1.);
+    curPhase = OPENGRIPPER;
+    execPhase.reset(new EgressOpenRightGripperPhase);
+    break;
+  case OPENGRIPPER:
     curPhase = REMOVEHAND;
-    execPhase.reset(new EgressRemoveRightGripperPhase);
+    execPhase.reset(new EgressRemoveRightGripperPhase(10, 0.02, -10));
+    break;
+  case REMOVEHAND:
+    curPhase = REPLACEHAND;
+    execPhase.reset(new EgressReplaceRightHandPhase);
     break;
   default:
     std::cout << "Done" << std::endl;

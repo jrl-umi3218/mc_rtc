@@ -131,6 +131,11 @@ bool MCDRCGlobalController::play_next_stance()
   {
     return egress_controller.next_phase();
   }
+  else if(current_ctrl == EGRESS_MRQP)
+  {
+    egress_mrqp_controller.nextPhase();
+    return true;
+  }
   else
   {
     return false;
