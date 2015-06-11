@@ -8,6 +8,8 @@
 
 #include <mc_control/msg/MRContact.h>
 
+#include <memory>
+
 namespace mc_solver
 {
 

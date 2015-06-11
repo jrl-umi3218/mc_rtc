@@ -22,7 +22,7 @@ double SimulationContactPair::update(const mc_rbdyn::Robot & robot, const mc_rbd
 
 void SimulationContactPair::updateSCH(sch::S_Object * obj, const mc_rbdyn::Robot & robot, const std::shared_ptr<mc_rbdyn::Surface> & robotSurface)
 {
-  sch::transform(*obj, robot.mbc->bodyPosW[robot.bodyIndexByName(robotSurface->bodyName)]);
+  sch::transform(*obj, robot.mbc->bodyPosW[robot.bodyIndexByName(robotSurface->bodyName())]);
 }
 
 SimulationContactSensor::SimulationContactSensor(const std::vector<mc_rbdyn::Stance> & stances)
@@ -35,7 +35,7 @@ SimulationContactSensor::SimulationContactSensor(const std::vector<mc_rbdyn::Sta
       bool found = false;
       for(const auto & ci : cts)
       {
-        found = (ci.robotSurface->name == c.robotSurface->name and ci.envSurface->name == c.envSurface->name);
+        found = (ci.robotSurface->name() == c.robotSurface->name() and ci.envSurface->name() == c.envSurface->name());
         if(found) break;
       }
       if(!found)
@@ -59,9 +59,9 @@ std::vector<std::string> SimulationContactSensor::update(MCController & ctl)
     double dist = p.update(ctl.robot(), ctl.env());
     if(dist < 0)
     {
-      res.push_back(p.robotSurface->name);
+      res.push_back(p.robotSurface->name());
     }
-    res.push_back(p.robotSurface->name + "_back");
+    res.push_back(p.robotSurface->name() + "_back");
   }
 
   return res;

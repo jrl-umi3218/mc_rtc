@@ -8,7 +8,7 @@
 
 #include <mc_control/mc_seq_steps.h>
 
-#include <mc_rbdyn/surface.h>
+#include <mc_rbdyn/GripperSurface.h>
 
 namespace mc_control
 {
@@ -203,21 +203,21 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
     //mc_rbdyn::RemoveContactAction* rmA = dynamic_cast<mc_rbdyn::RemoveContactAction*>(actions[i].get());
     if(addA)
     {
-      if(addA->contact.robotSurface->name == "LeftGripper" &&
-         addA->contact.envSurface->name == "StairLeftRung1")
+      if(addA->contact.robotSurface->name() == "LeftGripper" &&
+         addA->contact.envSurface->name() == "StairLeftRung1")
       {
         sc.comObj.comOffset = Eigen::Vector3d(0.05, 0.0,0.0);
       }
-      if(addA->contact.robotSurface->name == "LFrontSole" &&
-         addA->contact.envSurface->name == "StairStep1")
+      if(addA->contact.robotSurface->name() == "LFrontSole" &&
+         addA->contact.envSurface->name() == "StairStep1")
       {
       }
     }
     mc_rbdyn::RemoveContactAction* rmA = dynamic_cast<mc_rbdyn::RemoveContactAction*>(actions[i].get());
     if(rmA)
     {
-      if(rmA->contact.robotSurface->name == "LFullSole" &&
-         rmA->contact.envSurface->name == "Ground")
+      if(rmA->contact.robotSurface->name() == "LFullSole" &&
+         rmA->contact.envSurface->name() == "Ground")
       {
       }
     }
@@ -377,8 +377,8 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
     {
       mc_rbdyn::GripperSurface & robSurf = *is_gs;
       tasks::qp::ContactId contactId = c.contactId(robot(), env());
-      Eigen::Vector3d T = robSurf.X_b_motor.rotation().row(0);
-      std::shared_ptr<tasks::qp::GripperTorqueTask> gTask(new tasks::qp::GripperTorqueTask(contactId, robSurf.X_b_motor.translation(), T, 10));
+      Eigen::Vector3d T = robSurf.X_b_motor().rotation().row(0);
+      std::shared_ptr<tasks::qp::GripperTorqueTask> gTask(new tasks::qp::GripperTorqueTask(contactId, robSurf.X_b_motor().translation(), T, 10));
       gripperTorqueTasks.push_back(gTask);
       qpsolver->solver.addTask(gTask.get());
     }
@@ -387,7 +387,7 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
   for(const auto & c : contacts)
   {
     mc_rbdyn::GripperSurface * is_gs = dynamic_cast<mc_rbdyn::GripperSurface*>(c.robotSurface.get());
-    std::string bodyName = c.robotSurface->bodyName;
+    std::string bodyName = c.robotSurface->bodyName();
     if(is_gs and actiGrippers.count(bodyName) == 0 and robot().hasForceSensor(bodyName) )
     {
       std::cout << "ActiGripper ADD " << bodyName << std::endl;
@@ -408,7 +408,7 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
   std::vector<std::string> rmActi;
   for(const auto & c : contacts)
   {
-    contactBodies.push_back(c.robotSurface->bodyName);
+    contactBodies.push_back(c.robotSurface->bodyName());
   }
   for(const auto & ka : actiGrippers)
   {
@@ -531,7 +531,7 @@ std::vector<std::string> MCSeqController::bodiesFromContacts(const mc_rbdyn::Rob
   std::vector<std::string> res;
   for(const auto & c : robotContacts)
   {
-    res.push_back(c.robotSurface->bodyName);
+    res.push_back(c.robotSurface->bodyName());
   }
   return res;
 }
@@ -541,7 +541,7 @@ MCSeqController::collisionsContactFilterList(const mc_rbdyn::Contact & contact, 
 {
   std::vector< std::pair<std::string, std::string> > res;
 
-  res.push_back(std::pair<std::string, std::string>(contact.robotSurface->bodyName, contact.envSurface->bodyName));
+  res.push_back(std::pair<std::string, std::string>(contact.robotSurface->bodyName(), contact.envSurface->bodyName()));
 
   if(conf.collisions.robotEnvContactFilter.count(contact.surfaces()))
   {
@@ -608,7 +608,7 @@ std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * cu
     {
       curIsAddContact = true;
       curIsGripperContact = addA->contact.robotSurface->type() == "gripper";
-      curSurfaceName = addA->contact.robotSurface->name;
+      curSurfaceName = addA->contact.robotSurface->name();
     }
   }
   {
@@ -617,7 +617,7 @@ std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * cu
     {
       curIsRemoveContact = true;
       curIsGripperContact = rmA->contact.robotSurface->type() == "gripper";
-      curSurfaceName = rmA->contact.robotSurface->name;
+      curSurfaceName = rmA->contact.robotSurface->name();
     }
   }
   //bool curIsIdentity = (!curIsAddContact && !curIsRemoveContact);
@@ -631,7 +631,7 @@ std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * cu
     {
       targetIsAddContact = true;
       targetIsGripperContact = addA->contact.robotSurface->type() == "gripper";
-      targetSurfaceName = addA->contact.robotSurface->name;
+      targetSurfaceName = addA->contact.robotSurface->name();
     }
   }
   {
@@ -640,14 +640,14 @@ std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * cu
     {
       targetIsRemoveContact = true;
       targetIsGripperContact = rmA->contact.robotSurface->type() == "gripper";
-      targetSurfaceName = rmA->contact.robotSurface->name;
+      targetSurfaceName = rmA->contact.robotSurface->name();
     }
   }
   bool targetTargetIsAddContact = false;
   {
     mc_rbdyn::AddContactAction * addA = dynamic_cast<mc_rbdyn::AddContactAction*>(targetTargetAction);
     if(addA && targetIsRemoveContact && targetIsGripperContact
-       && targetSurfaceName == addA->contact.robotSurface->name)
+       && targetSurfaceName == addA->contact.robotSurface->name())
     {
       targetTargetIsAddContact = true;
     }

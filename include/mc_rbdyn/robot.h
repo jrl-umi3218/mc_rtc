@@ -5,8 +5,6 @@
 #include <RBDyn/MultiBodyConfig.h>
 #include <RBDyn/MultiBodyGraph.h>
 
-#include <mc_rbdyn/surface.h>
-
 #include <sch/S_Polyhedron/S_Polyhedron.h>
 #include <sch/STP-BV/STP_BV.h>
 
@@ -19,6 +17,8 @@ namespace mc_control
 
 namespace mc_rbdyn
 {
+
+struct Surface;
 
 struct RobotModule;
 

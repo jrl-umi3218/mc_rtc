@@ -4,8 +4,9 @@
 #include <SpaceVecAlg/SpaceVecAlg>
 #include <Tasks/QPContacts.h>
 
-#include <mc_rbdyn/surface.h>
-#include <mc_rbdyn/contact_transform.h>
+#include <mc_rbdyn/Surface.h>
+
+#include <memory>
 
 namespace mc_rbdyn
 {

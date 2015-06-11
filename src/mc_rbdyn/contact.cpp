@@ -1,6 +1,9 @@
 #include <mc_rbdyn/contact.h>
 
+#include <mc_rbdyn/contact_transform.h>
 #include <mc_rbdyn/robot.h>
+
+#include <mc_rbdyn/PlanarSurface.h>
 
 #include <geos/geom/Polygon.h>
 #include <geos/geom/LinearRing.h>
@@ -12,16 +15,15 @@ namespace mc_rbdyn
 
 std::vector<sva::PTransformd> computePoints(const mc_rbdyn::Surface & robotSurface, const mc_rbdyn::Surface & envSurface, const sva::PTransformd & X_es_rs)
 {
-  if(dynamic_cast<const GripperSurface *>(&robotSurface))
+  if(robotSurface.type() == "gripper")
   {
-    return robotSurface.points;
+    return robotSurface.points();
   }
-  if( (dynamic_cast<const PlanarSurface*>(&envSurface) || dynamic_cast<const CylindricalSurface*>(&envSurface)) &&
-      (dynamic_cast<const PlanarSurface*>(&robotSurface)) )
+  if( (envSurface.type() == "planar" or envSurface.type() == "cylindrical") and robotSurface.type() == "planar" )
   {
     // Transform env points in robot surface coordinate
     std::vector<sva::PTransformd> envPointsInRobotSurface(0);
-    for(const sva::PTransformd & p : envSurface.points)
+    for(const sva::PTransformd & p : envSurface.points())
     {
       envPointsInRobotSurface.push_back(p*envSurface.X_b_s().inv()*X_es_rs.inv());
     }
@@ -65,8 +67,8 @@ std::vector<sva::PTransformd> computePoints(const mc_rbdyn::Surface & robotSurfa
     geos::geom::Polygon * newRobotSurfPoly = dynamic_cast<geos::geom::Polygon*>(newRobotSurfGeom);
     if(newRobotSurfPoly == 0)
     {
-      std::cout << robotSurface.name << " and " << envSurface.name << " surfaces don't intersect" << std::endl;
-      return robotSurface.points;
+      std::cout << robotSurface.name() << " and " << envSurface.name() << " surfaces don't intersect" << std::endl;
+      return robotSurface.points();
     }
     std::vector<sva::PTransformd> res;
     const geos::geom::CoordinateSequence * newPoints = newRobotSurfPoly->getExteriorRing()->getCoordinates();
@@ -77,14 +79,14 @@ std::vector<sva::PTransformd> computePoints(const mc_rbdyn::Surface & robotSurfa
     }
     return res;
   }
-  std::cerr << "Surfaces " << robotSurface.name << " and " << envSurface.name << " have incompatible types for contact" << std::endl;
+  std::cerr << "Surfaces " << robotSurface.name() << " and " << envSurface.name() << " have incompatible types for contact" << std::endl;
   throw(std::string("type error"));
 }
 
 std::vector<double> jointParam(const mc_rbdyn::Surface & robotSurface, const mc_rbdyn::Surface & envSurface, const sva::PTransformd & X_es_rs)
 {
   std::vector<double> res(0);
-  if(dynamic_cast<const PlanarSurface*>(&robotSurface) && dynamic_cast<const PlanarSurface*>(&envSurface))
+  if(robotSurface.type() == "planar" and envSurface.type() == "planar")
   {
     double T; double B; double N_rot;
     planarParam(X_es_rs, T, B, N_rot);
@@ -98,8 +100,7 @@ std::vector<double> jointParam(const mc_rbdyn::Surface & robotSurface, const mc_
     res.push_back(transJoint.x());
     res.push_back(transJoint.y());
   }
-  else if( (dynamic_cast<const PlanarSurface*>(&robotSurface) || dynamic_cast<const GripperSurface*>(&robotSurface)) &&
-      dynamic_cast<const CylindricalSurface*>(&envSurface) )
+  else if( (robotSurface.type() == "planar" or robotSurface.type() == "gripper") and envSurface.type() == "cylindrical" )
   {
     double T; double T_rot;
     cylindricalParam(X_es_rs, T, T_rot);
@@ -156,7 +157,7 @@ bool Contact::isFixed()
 
 std::pair<std::string, std::string> Contact::surfaces() const
 {
-  return std::pair<std::string, std::string>(robotSurface->name, envSurface->name);
+  return std::pair<std::string, std::string>(robotSurface->name(), envSurface->name());
 }
 
 sva::PTransformd Contact::X_0_rs(const mc_rbdyn::Robot & env) const
@@ -176,7 +177,7 @@ std::vector<sva::PTransformd> Contact::points(const mc_rbdyn::Surface & robotSur
   }
   else
   {
-    return robotSurfaceIn.points;
+    return robotSurfaceIn.points();
   }
 }
 
@@ -204,7 +205,7 @@ tasks::qp::ContactId Contact::contactId(const mc_rbdyn::Robot & robot, const mc_
 {
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsign-conversion"
-  return tasks::qp::ContactId(0, 1, robot.bodyIdByName(robotSurface->bodyName), env.bodyIdByName(envSurface->bodyName));
+  return tasks::qp::ContactId(0, 1, robot.bodyIdByName(robotSurface->bodyName()), env.bodyIdByName(envSurface->bodyName()));
 #pragma GCC diagnostic pop
 }
 
@@ -237,7 +238,7 @@ bool MRContact::isFixed() const
 
 std::pair<std::string, std::string> MRContact::surfaceNames() const
 {
-  return std::pair<std::string, std::string>(r1Surface->name, r2Surface->name);
+  return std::pair<std::string, std::string>(r1Surface->name(), r2Surface->name());
 }
 
 sva::PTransformd MRContact::X_0_r1s(const Robots & robots) const
@@ -259,7 +260,8 @@ std::vector<sva::PTransformd> MRContact::r1Points()
   }
   else
   {
-    return r1Surface->points;
+    const auto & s = *(r1Surface.get());
+    return s.points();
   }
 }
 
@@ -271,7 +273,8 @@ std::vector<sva::PTransformd> MRContact::r2Points()
   }
   else
   {
-    return r2Surface->points;
+    const auto & s = *(r2Surface.get());
+    return s.points();
   }
 }
 
@@ -288,8 +291,8 @@ tasks::qp::ContactId MRContact::contactId(const std::vector<Robot> & robots) con
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsign-conversion"
   return tasks::qp::ContactId(r1Index, r2Index,
-                              robots[r1Index].bodyIdByName(r1Surface->bodyName),
-                              robots[r2Index].bodyIdByName(r2Surface->bodyName));
+                              robots[r1Index].bodyIdByName(r1Surface->bodyName()),
+                              robots[r2Index].bodyIdByName(r2Surface->bodyName()));
 #pragma GCC diagnostic pop
 }
 

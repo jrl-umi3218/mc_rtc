@@ -1,5 +1,9 @@
 #include <mc_rbdyn/stance.h>
 
+#include <mc_rbdyn/PlanarSurface.h>
+#include <mc_rbdyn/CylindricalSurface.h>
+#include <mc_rbdyn/GripperSurface.h>
+
 #include <RBDyn/FK.h>
 #include <RBDyn/CoM.h>
 
@@ -48,7 +52,7 @@ std::vector<std::string> Stance::robotSurfacesInContact()
   std::vector<std::string> res;
   for(const Contact & c : geomContacts)
   {
-    res.push_back(c.robotSurface->name);
+    res.push_back(c.robotSurface->name());
   }
   return res;
 }
@@ -292,7 +296,7 @@ void loadStances(const std::string & filename, std::vector<Stance> & stances, st
   }
 }
 
-Json::Value svaPTransformdToJSON(sva::PTransformd & X)
+Json::Value svaPTransformdToJSON(const sva::PTransformd & X)
 {
   Json::Value ret(Json::objectValue);
   const Eigen::Matrix3d & rot = X.rotation();
@@ -315,18 +319,18 @@ Json::Value svaPTransformdToJSON(sva::PTransformd & X)
   return ret;
 }
 
-Json::Value surfaceToJSON(std::shared_ptr<Surface> surface)
+Json::Value surfaceToJSON(const std::shared_ptr<Surface> & surface)
 {
   Json::Value ret(Json::objectValue);
   // Save surfaces common part, points doesn't have to be saved
-  ret["name"] = Json::Value(surface->name);
-  ret["bodyName"] = Json::Value(surface->bodyName);
-  ret["X_b_s"] = svaPTransformdToJSON(surface->_X_b_s);
-  ret["materialName"] = Json::Value(surface->materialName);
+  ret["name"] = Json::Value(surface->name());
+  ret["bodyName"] = Json::Value(surface->bodyName());
+  ret["X_b_s"] = svaPTransformdToJSON(surface->X_b_s());
+  ret["materialName"] = Json::Value(surface->materialName());
   if(dynamic_cast<PlanarSurface*>(surface.get()))
   {
     Json::Value planarPoints(Json::arrayValue);
-    for(std::pair<double, double> & p : (dynamic_cast<PlanarSurface*>(surface.get()))->_planarPoints)
+    for(const std::pair<double, double> & p : (dynamic_cast<PlanarSurface*>(surface.get()))->planarPoints())
     {
       Json::Value pJSON(Json::objectValue);
       pJSON["x"] = Json::Value(p.first);
@@ -338,20 +342,20 @@ Json::Value surfaceToJSON(std::shared_ptr<Surface> surface)
   else if(dynamic_cast<CylindricalSurface*>(surface.get()))
   {
     CylindricalSurface * s = dynamic_cast<CylindricalSurface*>(surface.get());
-    ret["radius"] = Json::Value(s->radius);
-    ret["width"] = Json::Value(s->_width);
+    ret["radius"] = Json::Value(s->radius());
+    ret["width"] = Json::Value(s->width());
   }
   else if(dynamic_cast<GripperSurface*>(surface.get()))
   {
     GripperSurface * s = dynamic_cast<GripperSurface*>(surface.get());
     Json::Value pfo(Json::arrayValue);
-    for(sva::PTransformd & p : s->pointsFromOrigin)
+    for(const sva::PTransformd & p : s->pointsFromOrigin())
     {
       pfo.append(svaPTransformdToJSON(p));
     }
     ret["pointsFromOrigin"] = pfo;
-    ret["X_b_motor"] = svaPTransformdToJSON(s->X_b_motor);
-    ret["motorMaxTorque"] = Json::Value(s->motorMaxTorque);
+    ret["X_b_motor"] = svaPTransformdToJSON(s->X_b_motor());
+    ret["motorMaxTorque"] = Json::Value(s->motorMaxTorque());
   }
   return ret;
 }

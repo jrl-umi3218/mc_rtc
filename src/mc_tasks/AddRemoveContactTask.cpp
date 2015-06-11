@@ -8,10 +8,10 @@ AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots, std::share
                        Eigen::Vector3d * userT_0_s)
 : robots(robots), robot(robots.robot()), env(robots.env()),
   constSpeedConstr(constSpeedConstr), robotSurf(contact.robotSurface),
-  robotBodyIndex(robot.bodyIndexByName(robotSurf->bodyName)),
-  robotBodyId(robot.bodyIdByName(robotSurf->bodyName)),
+  robotBodyIndex(robot.bodyIndexByName(robotSurf->bodyName())),
+  robotBodyId(robot.bodyIdByName(robotSurf->bodyName())),
   targetTf(contact.X_0_rs(env)),
-  bodyId(robot.bodyIdByName(robotSurf->bodyName)),
+  bodyId(robot.bodyIdByName(robotSurf->bodyName())),
   dofMat(Eigen::MatrixXd::Zero(5,6)), speedMat(Eigen::VectorXd::Zero(5))
 {
   for(size_t i = 0; i < 5; ++i)

@@ -7,11 +7,18 @@
 #pragma GCC diagnostic pop
 #include <SpaceVecAlg/SpaceVecAlg>
 
-#include <mc_rbdyn/surface.h>
-#include <mc_rbdyn/SCHAddon.h>
+namespace sch
+{
+  class S_Object;
+}
 
 namespace mc_rbdyn
 {
+
+struct Surface;
+struct PlanarSurface;
+struct CylindricalSurface;
+struct GripperSurface;
 
 sch::S_Object * surface_to_sch(const mc_rbdyn::Surface & surface, const double & depth = 0.01, const unsigned int & slice = 8);
 

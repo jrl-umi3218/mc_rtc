@@ -17,7 +17,6 @@
 
 #include <fstream>
 
-#include <mc_rbdyn/surface.h>
 #include <boost/array.hpp>
 
 using boost::asio::ip::udp;

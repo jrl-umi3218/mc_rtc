@@ -8,10 +8,10 @@ MoveContactTask::MoveContactTask(mc_rbdyn::Robots & robots, mc_rbdyn::Robot & ro
 : robots(robots), robot(robot), env(env),
   robotSurf(contact.robotSurface), envSurf(contact.envSurface)
 {
-  robotBodyIndex = robot.bodyIndexByName(robotSurf->bodyName);
-  robotBodyId = robot.bodyIdByName(robotSurf->bodyName);
-  envBodyIndex = env.bodyIndexByName(envSurf->bodyName);
-  envBodyId = env.bodyIdByName(envSurf->bodyName);
+  robotBodyIndex = robot.bodyIndexByName(robotSurf->bodyName());
+  robotBodyId = robot.bodyIdByName(robotSurf->bodyName());
+  envBodyIndex = env.bodyIndexByName(envSurf->bodyName());
+  envBodyId = env.bodyIdByName(envSurf->bodyName());
   targetTf = contact.X_0_rs(env);
   targetPos = targetTf.translation() + config.contactObj.adjustOffset;
   targetOri = robotSurf->X_b_s().rotation().transpose()*targetTf.rotation();

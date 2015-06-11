@@ -13,8 +13,6 @@
 
 #include "MCControl.h"
 
-#include <mc_rbdyn/surface.h>
-
 namespace OpenHRP
 {
 

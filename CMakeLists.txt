@@ -42,7 +42,11 @@ target_link_libraries(mc_rbdyn_urdf RBDyn tinyxml2)
 set(mc_rbdyn_SRC
 ./src/mc_rbdyn/SCHAddon.cpp
 ./src/mc_rbdyn/contact_transform.cpp
-./src/mc_rbdyn/surface.cpp
+./src/mc_rbdyn/Surface.cpp
+./src/mc_rbdyn/PlanarSurface.cpp
+./src/mc_rbdyn/CylindricalSurface.cpp
+./src/mc_rbdyn/GripperSurface.cpp
+./src/mc_rbdyn/surface_utils.cpp
 ./src/mc_rbdyn/surface_hull.cpp
 ./src/mc_rbdyn/contact.cpp
 ./src/mc_rbdyn/robot.cpp

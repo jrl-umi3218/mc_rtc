@@ -1,5 +1,10 @@
 #include <mc_rbdyn/surface_hull.h>
 
+#include <mc_rbdyn/SCHAddon.h>
+#include <mc_rbdyn/PlanarSurface.h>
+#include <mc_rbdyn/CylindricalSurface.h>
+#include <mc_rbdyn/GripperSurface.h>
+
 #include <stdlib.h>
 #include <fstream>
 
@@ -65,9 +70,9 @@ sch::S_Object * sch_polyhedron(const std::vector<sva::PTransformd> & points)
 
 sch::S_Object * planar_hull(const mc_rbdyn::PlanarSurface & surface, const double & depth)
 {
-  std::vector<sva::PTransformd> points = surface.points;
+  std::vector<sva::PTransformd> points = surface.points();
   sva::PTransformd offset(Eigen::Vector3d(0, 0, depth));
-  for(const sva::PTransformd & p : surface.points)
+  for(const sva::PTransformd & p : surface.points())
   {
     points.push_back(offset*p);
   }
@@ -77,8 +82,8 @@ sch::S_Object * planar_hull(const mc_rbdyn::PlanarSurface & surface, const doubl
 sch::S_Object * cylindrical_hull(const mc_rbdyn::CylindricalSurface & surface, const unsigned int & slice)
 {
   std::vector<sva::PTransformd> points(0);
-  sva::PTransformd bTransform(Eigen::Vector3d(0, 0, surface.radius));
-  for(const sva::PTransformd & p : surface.points)
+  sva::PTransformd bTransform(Eigen::Vector3d(0, 0, surface.radius()));
+  for(const sva::PTransformd & p : surface.points())
   {
     for(unsigned int s = 0; s < slice; ++s)
     {
@@ -91,7 +96,7 @@ sch::S_Object * cylindrical_hull(const mc_rbdyn::CylindricalSurface & surface, c
 sch::S_Object * gripper_hull(const mc_rbdyn::GripperSurface & surface, const double & depth)
 {
   std::vector<sva::PTransformd> points(0);
-  for(const sva::PTransformd & p : surface.pointsFromOrigin)
+  for(const sva::PTransformd & p : surface.pointsFromOrigin())
   {
     points.push_back( sva::PTransformd(Eigen::Vector3d(p.translation().x(), p.translation().y(), fabs(p.translation().z()))) * surface.X_b_s() );
   }

@@ -1,5 +1,6 @@
 #include <mc_tasks/TrajectoryTask.h>
 
+#include <mc_rbdyn/Surface.h>
 #include <mc_trajectory/spline_utils.h>
 
 namespace mc_tasks

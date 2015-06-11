@@ -1,6 +1,8 @@
 #include <mc_rbdyn/robot.h>
 
 #include <mc_rbdyn/RobotModule.h>
+#include <mc_rbdyn/Surface.h>
+#include <mc_rbdyn/surface_utils.h>
 #include <mc_rbdyn_urdf/urdf.h>
 
 #include <RBDyn/FK.h>
@@ -194,7 +196,7 @@ void fixRobotSurfaces(Robot & robot)
 {
   for(std::pair<const std::string, std::shared_ptr<Surface> > & s : robot.surfaces)
   {
-    unsigned int bodyId = robot.bodyIdByName(s.second->bodyName);
+    unsigned int bodyId = robot.bodyIdByName(s.second->bodyName());
     const sva::PTransformd & trans = robot.bodyTransforms[bodyId];
     s.second->X_b_s(s.second->X_b_s()*trans);
   }
@@ -413,7 +415,7 @@ Robot loadRobot(const RobotModule & module, const std::string & surfaceDir, sva:
   std::map<std::string, std::shared_ptr<Surface> > surf;
   for(const auto & sp : surfaces)
   {
-    surf[sp->name] = sp;
+    surf[sp->name()] = sp;
   }
 
   const std::vector<Flexibility> & flexibility = module.flexibility();
