@@ -4,6 +4,8 @@
 
 #include <Tasks/QPContactConstr.h>
 
+#include <mc_rbdyn/Surface.h>
+
 #include "mc_mr_egress_phases.cpp"
 
 #include <RBDyn/FK.h>

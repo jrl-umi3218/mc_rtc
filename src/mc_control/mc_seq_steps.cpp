@@ -5,6 +5,8 @@
 
 #include "pdgains.cpp"
 
+#include <mc_rbdyn/Surface.h>
+
 namespace mc_control
 {
 

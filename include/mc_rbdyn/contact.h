@@ -4,8 +4,6 @@
 #include <SpaceVecAlg/SpaceVecAlg>
 #include <Tasks/QPContacts.h>
 
-#include <mc_rbdyn/Surface.h>
-
 #include <memory>
 
 namespace mc_rbdyn
@@ -13,6 +11,7 @@ namespace mc_rbdyn
 
 struct Robot;
 struct Robots;
+struct Surface;
 
 std::vector<sva::PTransformd> computePoints(const mc_rbdyn::Surface & robotSurface, const mc_rbdyn::Surface & envSurface, const sva::PTransformd & X_es_rs);
 
@@ -56,15 +55,9 @@ public:
   bool is_fixed;
 };
 
-inline bool operator==(const Contact & lhs, const Contact & rhs)
-{
-  return (*(lhs.robotSurface) == *(rhs.robotSurface)) and (*(lhs.envSurface) == *(lhs.envSurface));
-}
+bool operator==(const Contact & lhs, const Contact & rhs);
 
-inline bool operator!=(const Contact & lhs, const Contact & rhs)
-{
-  return not(lhs == rhs);
-}
+bool operator!=(const Contact & lhs, const Contact & rhs);
 
 struct MRContact
 {

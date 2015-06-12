@@ -1,5 +1,7 @@
 #include <mc_control/ForceContactSensor.h>
 
+#include <mc_rbdyn/Surface.h>
+
 namespace mc_control
 {
 

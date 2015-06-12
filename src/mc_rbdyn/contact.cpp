@@ -296,5 +296,14 @@ tasks::qp::ContactId MRContact::contactId(const std::vector<Robot> & robots) con
 #pragma GCC diagnostic pop
 }
 
+bool operator==(const Contact & lhs, const Contact & rhs)
+{
+  return (*(lhs.robotSurface) == *(rhs.robotSurface)) and (*(lhs.envSurface) == *(lhs.envSurface));
+}
+
+bool operator!=(const Contact & lhs, const Contact & rhs)
+{
+  return not(lhs == rhs);
+}
 
 }

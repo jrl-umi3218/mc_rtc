@@ -26,14 +26,9 @@ namespace mc_solver
 
 typedef std::pair<std::string, std::function<void (rbd::MultiBody&, rbd::MultiBodyConfig&, tasks::qp::QPSolver&)> > qpcallback_t;
 
-inline bool operator==(const qpcallback_t & lhs, const qpcallback_t & rhs)
-{
-  return lhs.first == rhs.first;
-}
-inline bool operator!=(const qpcallback_t & lhs, const qpcallback_t & rhs)
-{
-  return not (lhs == rhs);
-}
+bool operator==(const qpcallback_t & lhs, const qpcallback_t & rhs);
+
+bool operator!=(const qpcallback_t & lhs, const qpcallback_t & rhs);
 
 /* Note: a tasks::qp::Constraint is actually not very useful, we will need to
  * cast this later */
@@ -104,15 +99,9 @@ struct Collision
   bool isNone() { return body1 == "NONE" and body2 == "NONE"; }
 };
 
-inline bool operator==(const Collision & lhs, const Collision & rhs)
-{
-  return lhs.body1 == rhs.body1 && lhs.body2 == rhs.body2;
-}
+bool operator==(const Collision & lhs, const Collision & rhs);
 
-inline bool operator!=(const Collision & lhs, const Collision & rhs)
-{
-  return not (lhs == rhs);
-}
+bool operator!=(const Collision & lhs, const Collision & rhs);
 
 struct CollisionsConstraint : public ConstraintSet
 {

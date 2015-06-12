@@ -3,6 +3,8 @@
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
+#include <mc_rbdyn/Surface.h>
+
 #include "mc_egress_phases.cpp"
 
 namespace mc_control

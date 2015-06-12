@@ -54,13 +54,8 @@ private:
   std::unique_ptr<SurfaceImpl> impl;
 };
 
-inline bool operator==(const Surface & lhs, const Surface & rhs)
-{
-  return lhs.name() == rhs.name();
-}
-inline bool operator!=(const Surface & lhs, const Surface & rhs)
-{
-  return not (lhs == rhs);
-}
+bool operator==(const Surface & lhs, const Surface & rhs);
+
+bool operator!=(const Surface & lhs, const Surface & rhs);
 
 }

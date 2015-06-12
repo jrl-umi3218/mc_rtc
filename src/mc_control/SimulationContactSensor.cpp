@@ -1,6 +1,7 @@
 #include <mc_control/SimulationContactSensor.h>
 
 #include <mc_rbdyn/SCHAddon.h>
+#include <mc_rbdyn/Surface.h>
 
 namespace mc_control
 {

@@ -13,8 +13,20 @@
 
 #include <mc_rbdyn/stance.h>
 
+#include <mc_rbdyn/Surface.h>
+
 namespace mc_solver
 {
+
+bool operator==(const qpcallback_t & lhs, const qpcallback_t & rhs)
+{
+  return lhs.first == rhs.first;
+}
+
+bool operator!=(const qpcallback_t & lhs, const qpcallback_t & rhs)
+{
+  return not (lhs == rhs);
+}
 
 ContactConstraint::ContactConstraint(double timeStep, ContactType contactType, bool dynamics)
 {
@@ -138,6 +150,16 @@ DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots, unsigned
     motionConstr = std::shared_ptr<tasks::qp::Constraint>(new tasks::qp::MotionConstr(robots.mbs, robotIndex, tBound));
   }
   constraints.push_back(motionConstr);
+}
+
+bool operator==(const Collision & lhs, const Collision & rhs)
+{
+  return lhs.body1 == rhs.body1 && lhs.body2 == rhs.body2;
+}
+
+bool operator!=(const Collision & lhs, const Collision & rhs)
+{
+  return not (lhs == rhs);
 }
 
 double CollisionsConstraint::defaultDampingOffset = 0.1;
