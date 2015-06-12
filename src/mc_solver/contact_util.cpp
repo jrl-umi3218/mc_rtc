@@ -6,7 +6,7 @@
 namespace mc_solver
 {
 
-QPContactPtr mrTasksContactFromMcContact(const mc_rbdyn::Robots & robots, const mc_rbdyn::MRContact & contact)
+QPContactPtr mrTasksContactFromMcContact(const mc_rbdyn::Robots & robots, const mc_rbdyn::Contact & contact)
 {
   QPContactPtr res;
 
@@ -67,8 +67,8 @@ std::pair<QPContactPtr, std::vector<sva::PTransformd> >
   const mc_rbdyn::Robot & robot = robots.robot();
   const mc_rbdyn::Robot & env = robots.env();
 
-  const mc_rbdyn::Surface & robotSurface = *(contact.robotSurface);
-  const mc_rbdyn::Surface & envSurface = *(contact.envSurface);
+  const mc_rbdyn::Surface & robotSurface = *(contact.r1Surface);
+  const mc_rbdyn::Surface & envSurface = *(contact.r2Surface);
   unsigned int robotBodyId = robot.bodyIdByName(robotSurface.bodyName());
   unsigned int envBodyId = env.bodyIdByName(envSurface.bodyName());
 
@@ -148,7 +148,7 @@ std::vector<tasks::qp::BilateralContact> mrTasksContactFromMcContactMsg
 }
 
 std::vector<mc_control::MRContactMsg> mrContactsMsgFromMrContacts
-  (const mc_rbdyn::Robots & robots, const std::vector<mc_rbdyn::MRContact> & contacts)
+  (const mc_rbdyn::Robots & robots, const std::vector<mc_rbdyn::Contact> & contacts)
 {
   std::vector<mc_control::MRContactMsg> res;
 

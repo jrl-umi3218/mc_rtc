@@ -15,8 +15,6 @@ struct Surface;
 
 std::vector<sva::PTransformd> computePoints(const mc_rbdyn::Surface & robotSurface, const mc_rbdyn::Surface & envSurface, const sva::PTransformd & X_es_rs);
 
-std::vector<double> jointParam(const mc_rbdyn::Surface & robotSurface, const mc_rbdyn::Surface & envSurface, const sva::PTransformd & X_es_rs);
-
 struct Contact
 {
 public:
@@ -24,6 +22,11 @@ public:
   Contact(const std::shared_ptr<mc_rbdyn::Surface> & robotSurface, const std::shared_ptr<mc_rbdyn::Surface> & envSurface, const sva::PTransformd & X_es_rs);
   Contact(const mc_rbdyn::Surface & robotSurface, const mc_rbdyn::Surface & envSurface);
   Contact(const mc_rbdyn::Surface & robotSurface, const mc_rbdyn::Surface & envSurface, const sva::PTransformd & X_es_rs);
+  Contact(unsigned int r1Index, unsigned int r2Index,
+            const std::shared_ptr<mc_rbdyn::Surface> & r1Surface,
+            const std::shared_ptr<mc_rbdyn::Surface> & r2Surface,
+            const sva::PTransformd * X_r2s_r1s = 0,
+            const sva::PTransformd & Xbs = sva::PTransformd::Identity(), int ambiguityId = -1);
 private:
   Contact(const mc_rbdyn::Surface & robotSurface, const mc_rbdyn::Surface & envSurface, const sva::PTransformd & X_es_rs, bool is_fixed);
 public:
@@ -34,56 +37,19 @@ public:
 
   std::pair<std::string, std::string> surfaces() const;
 
-  sva::PTransformd X_0_rs(const mc_rbdyn::Robot & env) const;
+  sva::PTransformd X_0_r1s(const mc_rbdyn::Robots & robots) const;
 
-  std::vector<sva::PTransformd> points();
-  std::vector<sva::PTransformd> points(const mc_rbdyn::Surface & robotSurfaceIn);
-
-  sva::PTransformd compute_X_es_rs(const mc_rbdyn::Robot & robot, const mc_rbdyn::Robot & env) const;
-  sva::PTransformd compute_X_es_rs(const mc_rbdyn::Robot & robot, const mc_rbdyn::Robot & env, const mc_rbdyn::Surface & robotSurfaceIn) const;
-
-  std::vector<double> computeJointParam();
-  std::vector<double> computeJointParam(const mc_rbdyn::Surface & robotSurfaceIn);
-
-  tasks::qp::ContactId contactId(const mc_rbdyn::Robot & robot, const mc_rbdyn::Robot & env) const;
-
-  std::string toStr() const;
-public:
-  std::shared_ptr<mc_rbdyn::Surface> robotSurface;
-  std::shared_ptr<mc_rbdyn::Surface> envSurface;
-  sva::PTransformd X_es_rs;
-  bool is_fixed;
-};
-
-bool operator==(const Contact & lhs, const Contact & rhs);
-
-bool operator!=(const Contact & lhs, const Contact & rhs);
-
-struct MRContact
-{
-public:
-  MRContact(unsigned int r1Index, unsigned int r2Index,
-            const std::shared_ptr<mc_rbdyn::Surface> & r1Surface,
-            const std::shared_ptr<mc_rbdyn::Surface> & r2Surface,
-            const sva::PTransformd * X_r2s_r1s = 0,
-            const sva::PTransformd & Xbs = sva::PTransformd::Identity(), int ambiguityId = -1);
-
-  bool isFixed() const;
-
-  std::pair<std::string, std::string> surfaceNames() const;
-
-  sva::PTransformd X_0_r1s(const Robots & robots) const;
-
-  sva::PTransformd X_0_r2s(const Robots & robots) const;
+  sva::PTransformd X_0_r2s(const mc_rbdyn::Robots & robots) const;
 
   std::vector<sva::PTransformd> r1Points();
 
   std::vector<sva::PTransformd> r2Points();
 
-  sva::PTransformd compute_X_r2s_r1s(const std::vector<Robot> & robots);
+  sva::PTransformd compute_X_r2s_r1s(const mc_rbdyn::Robots & robots) const;
 
-  tasks::qp::ContactId contactId(const std::vector<Robot> & robots) const;
+  tasks::qp::ContactId contactId(const mc_rbdyn::Robots & robots) const;
 
+  std::string toStr() const;
 public:
   unsigned int r1Index;
   unsigned int r2Index;
@@ -94,6 +60,10 @@ public:
   sva::PTransformd X_b_s;
   int ambiguityId;
 };
+
+bool operator==(const Contact & lhs, const Contact & rhs);
+
+bool operator!=(const Contact & lhs, const Contact & rhs);
 
 }
 

@@ -36,19 +36,19 @@ bool live_chooseContactT::eval(MCSeqController & ctl)
   mc_rbdyn::RemoveContactAction * rmCurAction = dynamic_cast<mc_rbdyn::RemoveContactAction*>(curAction);
   mc_rbdyn::AddContactAction * addTargetAction = dynamic_cast<mc_rbdyn::AddContactAction*>(targetAction);
   bool isAddRemove = rmCurAction != 0 and addTargetAction != 0 and
-                     rmCurAction->contact.robotSurface->bodyName() == addTargetAction->contact.robotSurface->bodyName();
-  if(isAddRemove and rmCurAction->contact.robotSurface->type() != "gripper")
+                     rmCurAction->contact.r1Surface->bodyName() == addTargetAction->contact.r1Surface->bodyName();
+  if(isAddRemove and rmCurAction->contact.r1Surface->type() != "gripper")
   {
     ctl.currentContact = &(rmCurAction->contact);
     ctl.targetContact = &(addTargetAction->contact);
     return true;
   }
   bool isAddOnly = addTargetAction != 0;
-  if(isAddOnly and addTargetAction->contact.robotSurface->type() != "gripper")
+  if(isAddOnly and addTargetAction->contact.r1Surface->type() != "gripper")
   {
     ctl.currentContact = 0;
     ctl.targetContact = &(addTargetAction->contact);
-    std::string bodyName = ctl.targetContact->robotSurface->bodyName();
+    std::string bodyName = ctl.targetContact->r1Surface->bodyName();
     /* FIXME Hard-coded */
     if(bodyName == "RARM_LINK6")
     {
@@ -107,7 +107,7 @@ bool live_removeContacT::eval(MCSeqController & ctl)
     return true;
   }
 
-  bool notInContact = ! ctl.inContact(ctl.currentContact->robotSurface->name());
+  bool notInContact = ! ctl.inContact(ctl.currentContact->r1Surface->name());
   if(notInContact)
   {
     ctl.notInContactCount++;
@@ -238,7 +238,7 @@ bool live_moveContactT::eval(MCSeqController & ctl)
     ctl.isCollFiltered = true;
   }
 
-  bool inContact = ctl.inContact(ctl.targetContact->robotSurface->name());
+  bool inContact = ctl.inContact(ctl.targetContact->r1Surface->name());
   if( (posErr < obj.posThresh and velErr < obj.velThresh) or inContact )
   {
     ctl.moveContactTask->removeFromSolver(ctl.qpsolver->solver);
@@ -258,7 +258,7 @@ bool live_moveContactT::eval(MCSeqController & ctl)
 bool enter_pushContactT::eval(MCSeqController & ctl)
 {
   ctl.push = false;
-  bool inContact = ctl.inContact(ctl.targetContact->robotSurface->name());
+  bool inContact = ctl.inContact(ctl.targetContact->r1Surface->name());
 
   /* If not already in contact, move the contact in the normal direction */
   if(not inContact)
@@ -275,7 +275,7 @@ bool enter_pushContactT::eval(MCSeqController & ctl)
 
 bool live_pushContactT::eval(MCSeqController & ctl)
 {
-  bool inContact = ctl.inContact(ctl.targetContact->robotSurface->name());
+  bool inContact = ctl.inContact(ctl.targetContact->r1Surface->name());
 
   if(inContact)
   {
@@ -312,7 +312,7 @@ bool live_chooseCoMT::eval(MCSeqController & ctl)
   if(currentAction->type() == "remove")
   {
     mc_rbdyn::RemoveContactAction * rmCurAction = dynamic_cast<mc_rbdyn::RemoveContactAction*>(currentAction);
-    std::string bodyName = rmCurAction->contact.robotSurface->bodyName();
+    std::string bodyName = rmCurAction->contact.r1Surface->bodyName();
     if(bodyName == "RARM_LINK6") /*FIXME hard-coded */
     {
       ctl.currentGripper = ctl.rgripper.get();
@@ -329,7 +329,7 @@ bool live_chooseCoMT::eval(MCSeqController & ctl)
   {
     std::cout << "This action is a removal" << std::endl;
     mc_rbdyn::RemoveContactAction * rmCurAction = dynamic_cast<mc_rbdyn::RemoveContactAction*>(targetAction);
-    std::string bodyName = rmCurAction->contact.robotSurface->bodyName();
+    std::string bodyName = rmCurAction->contact.r1Surface->bodyName();
     if(bodyName == "RARM_LINK6") /*FIXME hard-coded */
     {
       ctl.currentGripper = ctl.rgripper.get();
@@ -507,11 +507,11 @@ bool live_chooseGripperT::eval(MCSeqController & ctl)
   bool isRemoveAdd = (curRm != 0) and (tarAdd != 0);
   if(isRemoveAdd)
   {
-    isRemoveAdd = isRemoveAdd and (curRm->contact.robotSurface->bodyName() == tarAdd->contact.robotSurface->bodyName());
+    isRemoveAdd = isRemoveAdd and (curRm->contact.r1Surface->bodyName() == tarAdd->contact.r1Surface->bodyName());
   }
   bool isAddOnly = tarAdd != 0;
   bool isRemoveOnly = tarRm != 0;
-  if( (isRemoveAdd or isAddOnly) and tarAdd->contact.robotSurface->type() == "gripper" )
+  if( (isRemoveAdd or isAddOnly) and tarAdd->contact.r1Surface->type() == "gripper" )
   {
     if(isRemoveAdd)
     {
@@ -529,7 +529,7 @@ bool live_chooseGripperT::eval(MCSeqController & ctl)
     }
     return true;
   }
-  if(isRemoveOnly and tarRm->contact.robotSurface->type() == "gripper")
+  if(isRemoveOnly and tarRm->contact.r1Surface->type() == "gripper")
   {
     ctl.isGripperAttached = true;
     ctl.isGripperWillBeAttached = false;
@@ -544,7 +544,7 @@ bool live_chooseGripperT::eval(MCSeqController & ctl)
 
 bool enter_openGripperP::eval(MCSeqController & ctl)
 {
-  mc_rbdyn::Surface & robSurf = *(ctl.currentContact->robotSurface.get());
+  mc_rbdyn::Surface & robSurf = *(ctl.currentContact->r1Surface.get());
   std::string bodyName = robSurf.bodyName();
 
   /* If the gripper is an acti gripper, we reset the position */
@@ -925,7 +925,7 @@ bool enter_addGripperT::eval(MCSeqController & ctl)
   ctl.addContactTask->addToSolver(ctl.qpsolver->solver);
   ctl.metaTasks.push_back(ctl.addContactTask.get());
 
-  bool leftHand = ctl.targetContact->robotSurface->name() == "LeftGripper";
+  bool leftHand = ctl.targetContact->r1Surface->name() == "LeftGripper";
   if(leftHand)
   {
     ctl.lowerPGainsJoints = {"LARM_JOINT0", "LARM_JOINT1", "LARM_JOINT2", "LARM_JOINT3", "LARM_JOINT4", "LARM_JOINT5", "LARM_JOINT6"};
@@ -977,7 +977,7 @@ bool live_addGripperT::eval(MCSeqController & ctl)
 bool enter_removeBeforeCloseT::eval(MCSeqController & ctl)
 {
   if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
-  bool limitToZero = ctl.targetContact->envSurface->name() == "PlatformLeftRampVS" or ctl.targetContact->envSurface->name() == "PlatformLeftRampS"; /*FIXME Should be part of the configuration */
+  bool limitToZero = ctl.targetContact->r2Surface->name() == "PlatformLeftRampVS" or ctl.targetContact->r2Surface->name() == "PlatformLeftRampS"; /*FIXME Should be part of the configuration */
   if(!limitToZero)
   {
     std::cout << "Moving the gripper away before grasp" << std::endl;
@@ -992,7 +992,7 @@ bool enter_removeBeforeCloseT::eval(MCSeqController & ctl)
     ctl.metaTasks.push_back(ctl.removeContactTask.get());
 
     /* Get the current position of the wrist */
-    ctl.contactPos = ctl.robot().mbc->bodyPosW[ctl.robot().bodyIndexByName(ctl.targetContact->robotSurface->bodyName())].translation();
+    ctl.contactPos = ctl.robot().mbc->bodyPosW[ctl.robot().bodyIndexByName(ctl.targetContact->r1Surface->bodyName())].translation();
   }
   return true;
 }
@@ -1000,10 +1000,10 @@ bool enter_removeBeforeCloseT::eval(MCSeqController & ctl)
 bool live_removeBeforeCloseT::eval(MCSeqController & ctl)
 {
   if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
-  bool limitToZero = ctl.targetContact->envSurface->name() == "PlatformLeftRampVS" or ctl.targetContact->envSurface->name() == "PlatformLeftRampS"; /*FIXME Should be part of the configuration */
+  bool limitToZero = ctl.targetContact->r2Surface->name() == "PlatformLeftRampVS" or ctl.targetContact->r2Surface->name() == "PlatformLeftRampS"; /*FIXME Should be part of the configuration */
   if(!limitToZero)
   {
-    Eigen::Vector3d curPos = ctl.robot().mbc->bodyPosW[ctl.robot().bodyIndexByName(ctl.targetContact->robotSurface->bodyName())].translation();
+    Eigen::Vector3d curPos = ctl.robot().mbc->bodyPosW[ctl.robot().bodyIndexByName(ctl.targetContact->r1Surface->bodyName())].translation();
     double d = (curPos - ctl.contactPos).norm();
     if(d > 0.005)
     {
@@ -1027,7 +1027,7 @@ bool enter_softCloseGripperP::eval(MCSeqController & ctl)
   std::cout << "enter_softCloseGripperP" << std::endl;
   ctl.isGripperClose = false;
 
-  std::shared_ptr<mc_rbdyn::Surface> robotSurf = ctl.targetContact->robotSurface;
+  std::shared_ptr<mc_rbdyn::Surface> robotSurf = ctl.targetContact->r1Surface;
   unsigned int bodyId = ctl.robot().bodyIdByName(robotSurf->bodyName());
   Eigen::MatrixXd dofMat = Eigen::MatrixXd::Zero(6,6);
   for(size_t i = 0; i < 6; ++i) { dofMat(i,i) = 1; }
@@ -1046,7 +1046,7 @@ bool live_softCloseGripperP::eval(MCSeqController & ctl)
   if(ctl.currentGripper)
   {
     ctl.currentGripper->percentOpen -= 0.0005;
-    bool limitToZero = ctl.targetContact->envSurface->name() == "PlatformLeftRampVS" or ctl.targetContact->envSurface->name() == "PlatformLeftRampS"; /*FIXME Should be part of the configuration */
+    bool limitToZero = ctl.targetContact->r2Surface->name() == "PlatformLeftRampVS" or ctl.targetContact->r2Surface->name() == "PlatformLeftRampS"; /*FIXME Should be part of the configuration */
     double percentOpenLimit = limitToZero ? 0.35 : 0.1;
     if(ctl.currentGripper->overCommandLimit || ctl.currentGripper->percentOpen <= percentOpenLimit)
     {
@@ -1065,7 +1065,7 @@ bool live_softCloseGripperP::eval(MCSeqController & ctl)
   if(finish)
   {
     ctl.isGripperClose = true;
-    std::shared_ptr<mc_rbdyn::Surface> robotSurf = ctl.targetContact->robotSurface;
+    std::shared_ptr<mc_rbdyn::Surface> robotSurf = ctl.targetContact->r1Surface;
     unsigned int bodyId = ctl.robot().bodyIdByName(robotSurf->bodyName());
     ctl.constSpeedConstr->removeBoundedSpeed(bodyId);
     ctl.qpsolver->solver.updateConstrsNrVars(ctl.robots().mbs);
@@ -1093,7 +1093,7 @@ bool live_hardCloseGripperP::eval(MCSeqController & ctl)
   if(ctl.currentGripper)
   {
     ctl.currentGripper->percentOpen -= 0.0005;
-    bool limitToZero = ctl.targetContact->envSurface->name() == "PlatformLeftRampVS" or ctl.targetContact->envSurface->name() == "PlatformLeftRampS"; /*FIXME Should be part of the configuration */
+    bool limitToZero = ctl.targetContact->r2Surface->name() == "PlatformLeftRampVS" or ctl.targetContact->r2Surface->name() == "PlatformLeftRampS"; /*FIXME Should be part of the configuration */
     double percentOpenLimit = limitToZero ? 0.25 : 0;
     if(ctl.currentGripper->overCommandLimit || ctl.currentGripper->percentOpen <= percentOpenLimit)
     {
@@ -1120,7 +1120,7 @@ bool live_hardCloseGripperP::eval(MCSeqController & ctl)
     ctl.isGripperClose = true;
     if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
     /*TODO Get the actual position of the hand, set it in the QP and reset the gains to their original value*/
-    bool leftHand = ctl.targetContact->robotSurface->name() == "LeftGripper";
+    bool leftHand = ctl.targetContact->r1Surface->name() == "LeftGripper";
     unsigned int ji = leftHand ? 24 : 16;
     std::vector<double> & eValues = ctl.encoderValues;
     for(const auto & jn : ctl.lowerPGainsJoints)

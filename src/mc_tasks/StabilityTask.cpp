@@ -58,13 +58,13 @@ void StabilityTask::target(const mc_rbdyn::Robot & env, const mc_rbdyn::Stance &
   Eigen::Vector3d comOffset = Eigen::Vector3d::Zero();
   for(const auto & c : stance.stabContacts)
   {
-    const std::string & rsname = c.robotSurface->name();
+    const std::string & rsname = c.r1Surface->name();
     if(rsname == "LeftFoot" or rsname == "RightFoot" or
        rsname == "LFrontSole" or rsname == "RFrontSole" or
        rsname == "LFullSole" or rsname == "RFullSole")
     {
-      sva::PTransformd pos = c.X_0_rs(env);
-      sva::PTransformd posRobot = c.robotSurface->X_0_s(robot);
+      sva::PTransformd pos = c.X_0_r1s(robots);
+      sva::PTransformd posRobot = c.r1Surface->X_0_s(robot);
       comOffset = posRobot.translation() - pos.translation();
       break;
     }

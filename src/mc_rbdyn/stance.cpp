@@ -52,7 +52,7 @@ std::vector<std::string> Stance::robotSurfacesInContact()
   std::vector<std::string> res;
   for(const Contact & c : geomContacts)
   {
-    res.push_back(c.robotSurface->name());
+    res.push_back(c.r1Surface->name());
   }
   return res;
 }
@@ -100,7 +100,7 @@ void AddContactAction::update(const Stance & stance)
   if(contactit != stance.geomContacts.end())
   {
     const Contact & contactIn = *contactit;
-    contact.X_es_rs = contactIn.X_es_rs;
+    contact.X_r2s_r1s = contactIn.X_r2s_r1s;
   }
 }
 
@@ -146,7 +146,7 @@ void RemoveContactAction::update(const Stance & stance)
   if(contactit != stance.geomContacts.end())
   {
     const Contact & contactIn = *contactit;
-    contact.X_es_rs = contactIn.X_es_rs;
+    contact.X_r2s_r1s = contactIn.X_r2s_r1s;
   }
 }
 
@@ -363,9 +363,9 @@ Json::Value surfaceToJSON(const std::shared_ptr<Surface> & surface)
 Json::Value contactToJSON(Contact & contact)
 {
   Json::Value ret(Json::objectValue);
-  ret["robotSurface"] = surfaceToJSON(contact.robotSurface);
-  ret["envSurface"] = surfaceToJSON(contact.envSurface);
-  ret["X_es_rs"] = svaPTransformdToJSON(contact.X_es_rs);
+  ret["robotSurface"] = surfaceToJSON(contact.r1Surface);
+  ret["envSurface"] = surfaceToJSON(contact.r2Surface);
+  ret["X_es_rs"] = svaPTransformdToJSON(contact.X_r2s_r1s);
   ret["is_fixed"] = Json::Value(contact.is_fixed);
   return ret;
 }

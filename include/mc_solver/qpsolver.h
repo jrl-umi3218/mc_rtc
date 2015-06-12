@@ -215,7 +215,7 @@ public:
 
   std::pair<int, const tasks::qp::BilateralContact&> contactById(const tasks::qp::ContactId & id);
 
-  void setContacts(const std::vector<mc_rbdyn::MRContact> & contacts);
+  void setContacts(const std::vector<mc_rbdyn::Contact> & contacts);
 
   void update();
 

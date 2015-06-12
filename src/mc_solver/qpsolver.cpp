@@ -370,7 +370,7 @@ std::set<unsigned int> RobotEnvCollisionsConstraint::__bodiesFromContacts(const 
   std::set<unsigned int> res;
   for(const auto & c : contacts)
   {
-    const std::string & s = c.robotSurface->name();
+    const std::string & s = c.r1Surface->name();
     res.insert(robot.bodyIdByName(robot.surfaces.at(s)->bodyName()));
   }
   return res;
@@ -469,12 +469,12 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts, bool
     sva::PTransformd * X_es_rs = 0;
     if(useFkPos)
     {
-      X_es_rs = new sva::PTransformd(c.compute_X_es_rs(robots.robot(), robots.env()));
+      X_es_rs = new sva::PTransformd(c.compute_X_r2s_r1s(robots));
     }
     std::pair<mc_solver::QPContactPtr, std::vector<sva::PTransformd> > tasksC = tasksContactFromMcContact(robots, c, X_es_rs);
     mc_control::ContactMsg msg;
-    msg.robot_surf = c.robotSurface->name();
-    msg.env_surf = c.envSurface->name();
+    msg.robot_surf = c.r1Surface->name();
+    msg.env_surf = c.r2Surface->name();
     msg.robot_surf_points = tasksC.second;
     msg.nr_generators = static_cast<uint16_t>(mc_rbdyn::Stance::nrConeGen);
     msg.mu = mc_rbdyn::Stance::defaultFriction;
@@ -644,13 +644,13 @@ std::pair<int, const tasks::qp::BilateralContact&> MRQPSolver::contactById(const
   return std::pair<int, const tasks::qp::BilateralContact&>(-1, tasks::qp::BilateralContact());
 }
 
-void MRQPSolver::setContacts(const std::vector<mc_rbdyn::MRContact> & contacts)
+void MRQPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
 {
   uniContacts.clear();
   biContacts.clear();
   qpRes.contacts.clear();
 
-  for(const mc_rbdyn::MRContact & c : contacts)
+  for(const mc_rbdyn::Contact & c : contacts)
   {
     QPContactPtr qcptr = mrTasksContactFromMcContact(robots, c);
     if(qcptr.unilateralContact)

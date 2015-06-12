@@ -56,7 +56,7 @@ struct MCEgressMRQPController : MCMRQPController
     std::shared_ptr<mc_tasks::TrajectoryTask> trajTask;
     std::shared_ptr<tasks::qp::PostureTask> lazyPostureTask;
     std::shared_ptr<mc_tasks::OrientationTask> torsoOriTask;
-    std::vector<mc_rbdyn::MRContact> egressContacts;
+    std::vector<mc_rbdyn::Contact> egressContacts;
 
   private:
     std::shared_ptr<tasks::qp::PostureTask> polarisPostureTask;

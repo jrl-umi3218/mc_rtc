@@ -21,7 +21,7 @@ struct QPContactPtr
 };
 
 QPContactPtr mrTasksContactFromMcContact
-  (const mc_rbdyn::Robots & robots, const mc_rbdyn::MRContact & contact);
+  (const mc_rbdyn::Robots & robots, const mc_rbdyn::Contact & contact);
 
 std::pair<QPContactPtr, std::vector<sva::PTransformd> > tasksContactFromMcContact
   (const mc_rbdyn::Robots & robots, const mc_rbdyn::Contact & contact, const sva::PTransformd * X_es_rs = 0);
@@ -30,7 +30,7 @@ std::vector<tasks::qp::BilateralContact> mrTasksContactFromMcContactMsg
   (const mc_rbdyn::Robots & robots, const std::vector<mc_control::MRContactMsg> & msgContacts);
 
 std::vector<mc_control::MRContactMsg> mrContactsMsgFromMrContacts
-  (const mc_rbdyn::Robots & robots, const std::vector<mc_rbdyn::MRContact> & contacts);
+  (const mc_rbdyn::Robots & robots, const std::vector<mc_rbdyn::Contact> & contacts);
 
 }
 

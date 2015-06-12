@@ -149,7 +149,7 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
           ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
           ctl.hrp2postureTask->posture(ctl.robot().mbc->q);
           std::cout << "Found contact on right foot" << std::endl;
-          ctl.egressContacts.push_back(mc_rbdyn::MRContact(0, 1,
+          ctl.egressContacts.push_back(mc_rbdyn::Contact(0, 1,
                                        ctl.robot().surfaces.at("RFullSole"),
                                        ctl.robots().robots[1].surfaces.at("left_floor")));
           ctl.mrqpsolver->setContacts(ctl.egressContacts);
@@ -205,7 +205,7 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
         ctl.efTask->positionTask->position((lift*ctl.robot().mbc->bodyPosW[lfindex]).translation());
 
         //Free movement along z axis
-        mc_rbdyn::MRContact& lfc = ctl.egressContacts.at(lfc_index);
+        mc_rbdyn::Contact& lfc = ctl.egressContacts.at(lfc_index);
         //std::copy(ctl.egressContacts.begin(), ctl.egressContacts.begin() + lfc_index, otherContacts.end());
         //std::copy(ctl.egressContacts.begin() + lfc_index + 1, ctl.egressContacts.end(), otherContacts.end());
         otherContacts.push_back(ctl.egressContacts.at(1));
@@ -303,7 +303,7 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
               std::cout << c.r1Surface->name() << " / " << c.r2Surface->name() << std::endl;
             }
 
-            //mc_rbdyn::MRContact& lfc = ctl.egressContacts.back();
+            //mc_rbdyn::Contact& lfc = ctl.egressContacts.back();
             //std::cout << "Found lfc" << std::endl;
             //tasks::qp::ContactId cId = lfc.contactId(ctl.robots().robots);
             //Eigen::MatrixXd dof(6,6);
@@ -372,7 +372,7 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
     unsigned int forceIter;
     double forceStart;
     double com_multiplier;
-    std::vector<mc_rbdyn::MRContact> otherContacts;
+    std::vector<mc_rbdyn::Contact> otherContacts;
 };
 
 struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
@@ -416,8 +416,8 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
         //Free movement along z axis
         auto rfc = std::find_if(ctl.egressContacts.begin(),
                                 ctl.egressContacts.end(),
-                                [](const mc_rbdyn::MRContact & c) -> bool { return c.r1Surface->name().compare("RFullSole") == 0; });
-        //mc_rbdyn::MRContact& rfc = ctl.egressContacts.at(rfc_index);
+                                [](const mc_rbdyn::Contact & c) -> bool { return c.r1Surface->name().compare("RFullSole") == 0; });
+        //mc_rbdyn::Contact& rfc = ctl.egressContacts.at(rfc_index);
 
         ctl.mrqpsolver->setContacts(ctl.egressContacts);
 
@@ -545,7 +545,7 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
     unsigned int forceIter;
     double forceStart;
     double prev_weight;
-    std::vector<mc_rbdyn::MRContact> otherContacts;
+    std::vector<mc_rbdyn::Contact> otherContacts;
 };
 
 
@@ -582,7 +582,7 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
         //ctl.efTask->orientationTask->orientation(sva::RotZ(-M_PI/3));
 
         //Free movement along z axis
-        mc_rbdyn::MRContact& rfc = ctl.egressContacts.at(rfc_index);
+        mc_rbdyn::Contact& rfc = ctl.egressContacts.at(rfc_index);
         //std::copy(ctl.egressContacts.begin(), ctl.egressContacts.begin() + lfc_index, otherContacts.end());
         //std::copy(ctl.egressContacts.begin() + lfc_index + 1, ctl.egressContacts.end(), otherContacts.end());
         otherContacts.push_back(ctl.egressContacts.at(0));
@@ -706,7 +706,7 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
             ctl.mrqpsolver->setContacts(ctl.egressContacts);
 
             //Free movement along z axis
-            mc_rbdyn::MRContact& rfc = ctl.egressContacts.at(rfc_index);
+            mc_rbdyn::Contact& rfc = ctl.egressContacts.at(rfc_index);
             otherContacts.push_back(ctl.egressContacts.at(0));
             otherContacts.push_back(ctl.egressContacts.at(1));
             ctl.mrqpsolver->setContacts(ctl.egressContacts);
@@ -773,7 +773,7 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
     unsigned int forceIter;
     double forceStart;
     double prev_weight;
-    std::vector<mc_rbdyn::MRContact> otherContacts;
+    std::vector<mc_rbdyn::Contact> otherContacts;
 };
 
 
@@ -956,7 +956,7 @@ struct EgressRemoveRightGripperPhase : public EgressMRPhaseExecution
         //Free movement along z axis
         auto rgc = std::find_if(ctl.egressContacts.begin(),
                                 ctl.egressContacts.end(),
-                                [](const mc_rbdyn::MRContact & c) -> bool { return c.r1Surface->name().compare("RightGripper") == 0; });
+                                [](const mc_rbdyn::Contact & c) -> bool { return c.r1Surface->name().compare("RightGripper") == 0; });
         ctl.mrqpsolver->setContacts(ctl.egressContacts);
 
         if(rgc != ctl.egressContacts.end())
@@ -1103,7 +1103,7 @@ struct EgressMRStandupPhase : public EgressMRPhaseExecution
     bool started;
     bool done_standup;
     Eigen::Vector3d altitude_;
-    std::vector<mc_rbdyn::MRContact> otherContacts;
+    std::vector<mc_rbdyn::Contact> otherContacts;
 };
 
 struct EgressMoveComSurfPhase : public EgressMRPhaseExecution
@@ -1285,7 +1285,7 @@ struct EgressMoveComForcePhase : public EgressMRPhaseExecution
 
         auto lfc = std::find_if(ctl.egressContacts.begin(),
                                 ctl.egressContacts.end(),
-                                [&](const mc_rbdyn::MRContact & c) -> bool { return c.r1Surface->name().compare(otherSurf_) == 0; });
+                                [&](const mc_rbdyn::Contact & c) -> bool { return c.r1Surface->name().compare(otherSurf_) == 0; });
         tasks::qp::ContactId cId = lfc->contactId(ctl.robots().robots);
         Eigen::MatrixXd dof(6,6);
         dof.setIdentity();
