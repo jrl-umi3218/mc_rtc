@@ -4,7 +4,7 @@
 #include <mc_control/mc_virtual_controller.h>
 
 #include <mc_rbdyn/robot.h>
-#include <mc_control/mc_solver/qpsolver.h>
+#include <mc_solver/qpsolver.h>
 #include <mc_control/generic_gripper.h>
 
 #include <mc_robots/hrp2_drc.h>

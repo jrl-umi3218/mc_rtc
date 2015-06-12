@@ -2,7 +2,6 @@
 #define _H_MCBODY6DCONTROLLER_H_
 
 #include <mc_rbdyn/robot.h>
-#include <mc_control/mc_solver/qpsolver.h>
 
 #include <mc_robots/hrp2_drc.h>
 #include <mc_robots/env.h>

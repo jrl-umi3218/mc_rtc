@@ -1,4 +1,4 @@
-#include <mc_control/mc_solver/contact_util.h>
+#include <mc_solver/contact_util.h>
 
 #include <mc_rbdyn/stance.h>
 #include <mc_rbdyn/Surface.h>

@@ -2,7 +2,7 @@
 #define _H_MCTASKCOMTASK_H_
 
 #include <mc_rbdyn/robot.h>
-#include <mc_control/mc_solver/qpsolver.h>
+#include <Tasks/QPSolver.h>
 #include <Tasks/QPTasks.h>
 
 namespace mc_tasks

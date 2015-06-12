@@ -2,7 +2,6 @@
 #define _H_MCDRIVINGCONTROLLER_H_
 
 #include <mc_rbdyn/robot.h>
-#include <mc_control/mc_solver/qpsolver.h>
 #include <mc_control/mc_mrqp_controller.h>
 #include <mc_tasks/EndEffectorTask.h>
 

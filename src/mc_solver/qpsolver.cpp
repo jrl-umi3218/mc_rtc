@@ -1,4 +1,4 @@
-#include <mc_control/mc_solver/qpsolver.h>
+#include <mc_solver/qpsolver.h>
 
 #include <Tasks/Bounds.h>
 #include <Tasks/QPConstr.h>
@@ -9,7 +9,7 @@
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
-#include <mc_control/mc_solver/contact_util.h>
+#include <mc_solver/contact_util.h>
 
 #include <mc_rbdyn/stance.h>
 
