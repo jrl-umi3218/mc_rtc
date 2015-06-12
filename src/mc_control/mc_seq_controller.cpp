@@ -203,21 +203,21 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
     //mc_rbdyn::RemoveContactAction* rmA = dynamic_cast<mc_rbdyn::RemoveContactAction*>(actions[i].get());
     if(addA)
     {
-      if(addA->contact.r1Surface->name() == "LeftGripper" &&
-         addA->contact.r2Surface->name() == "StairLeftRung1")
+      if(addA->contact.r1Surface()->name() == "LeftGripper" &&
+         addA->contact.r2Surface()->name() == "StairLeftRung1")
       {
         sc.comObj.comOffset = Eigen::Vector3d(0.05, 0.0,0.0);
       }
-      if(addA->contact.r1Surface->name() == "LFrontSole" &&
-         addA->contact.r2Surface->name() == "StairStep1")
+      if(addA->contact.r1Surface()->name() == "LFrontSole" &&
+         addA->contact.r2Surface()->name() == "StairStep1")
       {
       }
     }
     mc_rbdyn::RemoveContactAction* rmA = dynamic_cast<mc_rbdyn::RemoveContactAction*>(actions[i].get());
     if(rmA)
     {
-      if(rmA->contact.r1Surface->name() == "LFullSole" &&
-         rmA->contact.r2Surface->name() == "Ground")
+      if(rmA->contact.r1Surface()->name() == "LFullSole" &&
+         rmA->contact.r2Surface()->name() == "Ground")
       {
       }
     }
@@ -372,7 +372,7 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
 
   for(const auto & c : contacts)
   {
-    mc_rbdyn::GripperSurface * is_gs = dynamic_cast<mc_rbdyn::GripperSurface*>(c.r1Surface.get());
+    mc_rbdyn::GripperSurface * is_gs = dynamic_cast<mc_rbdyn::GripperSurface*>(c.r1Surface().get());
     if(is_gs)
     {
       mc_rbdyn::GripperSurface & robSurf = *is_gs;
@@ -386,15 +386,15 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
 
   for(const auto & c : contacts)
   {
-    mc_rbdyn::GripperSurface * is_gs = dynamic_cast<mc_rbdyn::GripperSurface*>(c.r1Surface.get());
-    std::string bodyName = c.r1Surface->bodyName();
+    mc_rbdyn::GripperSurface * is_gs = dynamic_cast<mc_rbdyn::GripperSurface*>(c.r1Surface().get());
+    std::string bodyName = c.r1Surface()->bodyName();
     if(is_gs and actiGrippers.count(bodyName) == 0 and robot().hasForceSensor(bodyName) )
     {
       std::cout << "ActiGripper ADD " << bodyName << std::endl;
       std::string forceSensor = robot().forceSensorByBody(bodyName);
       unsigned int wrenchIndex = forceSensor == "RightHandForceSensor" ? 2 : 3; /*FIXME Hard-coded */
       tasks::qp::ContactId contactId = c.contactId(robots());
-      sva::PTransformd X_0_s = c.r1Surface->X_0_s(robot());
+      sva::PTransformd X_0_s = c.r1Surface()->X_0_s(robot());
       double actiForce = 50; /* FIXME Hard-coded, should at least be an acti gripper const static member */
       double stopForce = 90; /* FIXME ^^ */
       std::shared_ptr<tasks::qp::PositionTask> positionTask(new tasks::qp::PositionTask(robots().mbs, 0, contactId.r1BodyId, X_0_s.translation(), is_gs->X_b_s().translation()));
@@ -408,7 +408,7 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
   std::vector<std::string> rmActi;
   for(const auto & c : contacts)
   {
-    contactBodies.push_back(c.r1Surface->bodyName());
+    contactBodies.push_back(c.r1Surface()->bodyName());
   }
   for(const auto & ka : actiGrippers)
   {
@@ -531,7 +531,7 @@ std::vector<std::string> MCSeqController::bodiesFromContacts(const mc_rbdyn::Rob
   std::vector<std::string> res;
   for(const auto & c : robotContacts)
   {
-    res.push_back(c.r1Surface->bodyName());
+    res.push_back(c.r1Surface()->bodyName());
   }
   return res;
 }
@@ -541,7 +541,7 @@ MCSeqController::collisionsContactFilterList(const mc_rbdyn::Contact & contact, 
 {
   std::vector< std::pair<std::string, std::string> > res;
 
-  res.push_back(std::pair<std::string, std::string>(contact.r1Surface->bodyName(), contact.r2Surface->bodyName()));
+  res.push_back(std::pair<std::string, std::string>(contact.r1Surface()->bodyName(), contact.r2Surface()->bodyName()));
 
   if(conf.collisions.robotEnvContactFilter.count(contact.surfaces()))
   {
@@ -607,8 +607,8 @@ std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * cu
     if(addA)
     {
       curIsAddContact = true;
-      curIsGripperContact = addA->contact.r1Surface->type() == "gripper";
-      curSurfaceName = addA->contact.r1Surface->name();
+      curIsGripperContact = addA->contact.r1Surface()->type() == "gripper";
+      curSurfaceName = addA->contact.r1Surface()->name();
     }
   }
   {
@@ -616,8 +616,8 @@ std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * cu
     if(rmA)
     {
       curIsRemoveContact = true;
-      curIsGripperContact = rmA->contact.r1Surface->type() == "gripper";
-      curSurfaceName = rmA->contact.r1Surface->name();
+      curIsGripperContact = rmA->contact.r1Surface()->type() == "gripper";
+      curSurfaceName = rmA->contact.r1Surface()->name();
     }
   }
   //bool curIsIdentity = (!curIsAddContact && !curIsRemoveContact);
@@ -630,8 +630,8 @@ std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * cu
     if(addA)
     {
       targetIsAddContact = true;
-      targetIsGripperContact = addA->contact.r1Surface->type() == "gripper";
-      targetSurfaceName = addA->contact.r1Surface->name();
+      targetIsGripperContact = addA->contact.r1Surface()->type() == "gripper";
+      targetSurfaceName = addA->contact.r1Surface()->name();
     }
   }
   {
@@ -639,15 +639,15 @@ std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * cu
     if(rmA)
     {
       targetIsRemoveContact = true;
-      targetIsGripperContact = rmA->contact.r1Surface->type() == "gripper";
-      targetSurfaceName = rmA->contact.r1Surface->name();
+      targetIsGripperContact = rmA->contact.r1Surface()->type() == "gripper";
+      targetSurfaceName = rmA->contact.r1Surface()->name();
     }
   }
   bool targetTargetIsAddContact = false;
   {
     mc_rbdyn::AddContactAction * addA = dynamic_cast<mc_rbdyn::AddContactAction*>(targetTargetAction);
     if(addA && targetIsRemoveContact && targetIsGripperContact
-       && targetSurfaceName == addA->contact.r1Surface->name())
+       && targetSurfaceName == addA->contact.r1Surface()->name())
     {
       targetTargetIsAddContact = true;
     }

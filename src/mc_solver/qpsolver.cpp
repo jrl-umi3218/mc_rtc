@@ -370,7 +370,7 @@ std::set<unsigned int> RobotEnvCollisionsConstraint::__bodiesFromContacts(const 
   std::set<unsigned int> res;
   for(const auto & c : contacts)
   {
-    const std::string & s = c.r1Surface->name();
+    const std::string & s = c.r1Surface()->name();
     res.insert(robot.bodyIdByName(robot.surfaces.at(s)->bodyName()));
   }
   return res;
@@ -473,8 +473,8 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts, bool
     }
     std::pair<mc_solver::QPContactPtr, std::vector<sva::PTransformd> > tasksC = tasksContactFromMcContact(robots, c, X_es_rs);
     mc_control::ContactMsg msg;
-    msg.robot_surf = c.r1Surface->name();
-    msg.env_surf = c.r2Surface->name();
+    msg.robot_surf = c.r1Surface()->name();
+    msg.env_surf = c.r2Surface()->name();
     msg.robot_surf_points = tasksC.second;
     msg.nr_generators = static_cast<uint16_t>(mc_rbdyn::Stance::nrConeGen);
     msg.mu = mc_rbdyn::Stance::defaultFriction;

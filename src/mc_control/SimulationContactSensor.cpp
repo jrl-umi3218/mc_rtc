@@ -36,7 +36,7 @@ SimulationContactSensor::SimulationContactSensor(const std::vector<mc_rbdyn::Sta
       bool found = false;
       for(const auto & ci : cts)
       {
-        found = (ci.r1Surface->name() == c.r1Surface->name() and ci.r2Surface->name() == c.r2Surface->name());
+        found = (ci.r1Surface()->name() == c.r1Surface()->name() and ci.r2Surface()->name() == c.r2Surface()->name());
         if(found) break;
       }
       if(!found)
@@ -47,7 +47,7 @@ SimulationContactSensor::SimulationContactSensor(const std::vector<mc_rbdyn::Sta
   }
   for(const auto & c : cts)
   {
-    surfacePairs.push_back(SimulationContactPair(c.r1Surface, c.r2Surface));
+    surfacePairs.push_back(SimulationContactPair(c.r1Surface(), c.r2Surface()));
   }
 }
 

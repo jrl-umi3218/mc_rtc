@@ -13,6 +13,19 @@
 namespace mc_rbdyn
 {
 
+struct ContactImpl
+{
+public:
+  unsigned int r1Index;
+  unsigned int r2Index;
+  std::shared_ptr<mc_rbdyn::Surface> r1Surface;
+  std::shared_ptr<mc_rbdyn::Surface> r2Surface;
+  sva::PTransformd X_r2s_r1s;
+  bool is_fixed;
+  sva::PTransformd X_b_s;
+  int ambiguityId;
+};
+
 std::vector<sva::PTransformd> computePoints(const mc_rbdyn::Surface & robotSurface, const mc_rbdyn::Surface & envSurface, const sva::PTransformd & X_es_rs)
 {
   if(robotSurface.type() == "gripper")
@@ -104,9 +117,7 @@ Contact::Contact(const mc_rbdyn::Surface & robotSurface, const mc_rbdyn::Surface
 }
 
 Contact::Contact(const mc_rbdyn::Surface & robotSurface, const mc_rbdyn::Surface & envSurface, const sva::PTransformd & X_es_rs, bool is_fixed)
-: r1Index(0), r2Index(1),
-  r1Surface(robotSurface.copy()), r2Surface(envSurface.copy()),
-  X_r2s_r1s(X_es_rs), is_fixed(is_fixed)
+: impl(new ContactImpl({0, 1, robotSurface.copy(), envSurface.copy(), X_es_rs, is_fixed, sva::PTransformd::Identity(), -1}))
 {
 }
 
@@ -115,62 +126,104 @@ Contact::Contact(unsigned int r1Index, unsigned int r2Index,
             const std::shared_ptr<mc_rbdyn::Surface> & r2Surface,
             const sva::PTransformd * X_r2s_r1s,
             const sva::PTransformd & Xbs, int ambiguityId)
-: r1Index(r1Index), r2Index(r2Index),
-  r1Surface(r1Surface->copy()), r2Surface(r2Surface->copy()),
-  X_r2s_r1s(), is_fixed(X_r2s_r1s != 0), X_b_s(Xbs),
-  ambiguityId(ambiguityId)
+: impl(new ContactImpl({r1Index, r2Index, r1Surface->copy(), r2Surface->copy(), sva::PTransformd::Identity(), X_r2s_r1s != 0, Xbs, ambiguityId}))
 {
-  if(is_fixed)
+  if(isFixed())
   {
-    this->X_r2s_r1s = sva::PTransformd(*X_r2s_r1s);
+    impl->X_r2s_r1s = sva::PTransformd(*X_r2s_r1s);
   }
 }
 
 Contact::Contact(const Contact & contact)
-: Contact(*(contact.r1Surface), *(contact.r2Surface), contact.X_r2s_r1s, contact.is_fixed)
+: Contact(*(contact.r1Surface()), *(contact.r2Surface()), contact.X_r2s_r1s(), contact.isFixed())
 {
 }
 
 Contact & Contact::operator=(const Contact & rhs)
 {
   if(this == &rhs) { return *this; }
-  this->r1Surface = rhs.r1Surface->copy();
-  this->r2Surface = rhs.r2Surface->copy();
-  this->X_r2s_r1s = rhs.X_r2s_r1s;
-  this->is_fixed = rhs.is_fixed;
-  this->X_b_s = rhs.X_b_s;
+  this->impl->r1Surface = rhs.r1Surface()->copy();
+  this->impl->r2Surface = rhs.r2Surface()->copy();
+  this->impl->X_r2s_r1s = rhs.X_r2s_r1s();
+  this->impl->is_fixed = rhs.isFixed();
+  this->impl->X_b_s = rhs.X_b_s();
+  this->impl->ambiguityId = rhs.ambiguityId();
   return *this;
 }
 
-bool Contact::isFixed()
+Contact::~Contact()
 {
-  return is_fixed;
+}
+
+unsigned int Contact::r1Index() const
+{
+  return impl->r1Index;
+}
+
+unsigned int Contact::r2Index() const
+{
+  return impl->r2Index;
+}
+
+const std::shared_ptr<mc_rbdyn::Surface> & Contact::r1Surface() const
+{
+  return impl->r1Surface;
+}
+
+const std::shared_ptr<mc_rbdyn::Surface> & Contact::r2Surface() const
+{
+  return impl->r2Surface;
+}
+
+const sva::PTransformd & Contact::X_r2s_r1s() const
+{
+  return impl->X_r2s_r1s;
+}
+
+void Contact::X_r2s_r1s(const sva::PTransformd & in)
+{
+  impl->X_r2s_r1s = in;
+}
+
+const sva::PTransformd & Contact::X_b_s() const
+{
+  return impl->X_b_s;
+}
+
+const int & Contact::ambiguityId() const
+{
+  return impl->ambiguityId;
+}
+
+bool Contact::isFixed() const
+{
+  return impl->is_fixed;
 }
 
 std::pair<std::string, std::string> Contact::surfaces() const
 {
-  return std::pair<std::string, std::string>(r1Surface->name(), r2Surface->name());
+  return std::pair<std::string, std::string>(impl->r1Surface->name(), impl->r2Surface->name());
 }
 
 sva::PTransformd Contact::X_0_r1s(const mc_rbdyn::Robots & robots) const
 {
-  return X_r2s_r1s*(r2Surface->X_0_s(robots.robots[r2Index]));
+  return impl->X_r2s_r1s*(impl->r2Surface->X_0_s(robots.robots[impl->r2Index]));
 }
 
 sva::PTransformd Contact::X_0_r2s(const mc_rbdyn::Robots & robots) const
 {
-  return X_r2s_r1s.inv()*(r1Surface->X_0_s(robots.robots[r1Index]));
+  return impl->X_r2s_r1s.inv()*(impl->r1Surface->X_0_s(robots.robots[impl->r1Index]));
 }
 
 std::vector<sva::PTransformd> Contact::r1Points()
 {
   if(isFixed())
   {
-    return computePoints(*r1Surface, *r2Surface, X_r2s_r1s);
+    return computePoints(*(r1Surface()), *(r2Surface()), X_r2s_r1s());
   }
   else
   {
-    const auto & s = *r1Surface;
+    const auto & s = *(r1Surface());
     return s.points();
   }
 }
@@ -179,19 +232,19 @@ std::vector<sva::PTransformd> Contact::r2Points()
 {
   if(isFixed())
   {
-    return computePoints(*r2Surface, *r1Surface, X_r2s_r1s.inv());
+    return computePoints(*(r2Surface()), *(r1Surface()), X_r2s_r1s().inv());
   }
   else
   {
-    const auto & s = *r2Surface;
+    const auto & s = *(r2Surface());
     return s.points();
   }
 }
 
 sva::PTransformd Contact::compute_X_r2s_r1s(const mc_rbdyn::Robots & robots) const
 {
-  sva::PTransformd X_0_r1 = r1Surface->X_0_s(robots.robots[r1Index]);
-  sva::PTransformd X_0_r2 = r2Surface->X_0_s(robots.robots[r2Index]);
+  sva::PTransformd X_0_r1 = impl->r1Surface->X_0_s(robots.robots[impl->r1Index]);
+  sva::PTransformd X_0_r2 = impl->r2Surface->X_0_s(robots.robots[impl->r2Index]);
   return X_0_r1*X_0_r2.inv();
 }
 
@@ -199,22 +252,22 @@ tasks::qp::ContactId Contact::contactId(const mc_rbdyn::Robots & robots) const
 {
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsign-conversion"
-  return tasks::qp::ContactId(r1Index, r2Index,
-                              robots.robots[r1Index].bodyIdByName(r1Surface->bodyName()),
-                              robots.robots[r2Index].bodyIdByName(r2Surface->bodyName()));
+  return tasks::qp::ContactId(impl->r1Index, impl->r2Index,
+                              robots.robots[impl->r1Index].bodyIdByName(impl->r1Surface->bodyName()),
+                              robots.robots[impl->r2Index].bodyIdByName(impl->r2Surface->bodyName()));
 #pragma GCC diagnostic pop
 }
 
 std::string Contact::toStr() const
 {
   std::stringstream ss;
-  ss << r1Surface->toStr() << "/" << r2Surface->toStr();
+  ss << impl->r1Surface->toStr() << "/" << impl->r2Surface->toStr();
   return ss.str();
 }
 
 bool operator==(const Contact & lhs, const Contact & rhs)
 {
-  return (*(lhs.r1Surface) == *(rhs.r1Surface)) and (*(lhs.r2Surface) == *(rhs.r2Surface));
+  return (*(lhs.r1Surface()) == *(rhs.r1Surface())) and (*(lhs.r2Surface()) == *(rhs.r2Surface()));
 }
 
 bool operator!=(const Contact & lhs, const Contact & rhs)

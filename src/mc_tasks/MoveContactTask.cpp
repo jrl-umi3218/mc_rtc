@@ -8,7 +8,7 @@ namespace mc_tasks
 MoveContactTask::MoveContactTask(mc_rbdyn::Robots & robots, mc_rbdyn::Robot & robot, mc_rbdyn::Robot & env, mc_rbdyn::Contact & contact,
                                  mc_rbdyn::StanceConfig & config, double positionWStartPercent)
 : robots(robots), robot(robot), env(env),
-  robotSurf(contact.r1Surface), envSurf(contact.r2Surface)
+  robotSurf(contact.r1Surface()), envSurf(contact.r2Surface())
 {
   robotBodyIndex = robot.bodyIndexByName(robotSurf->bodyName());
   robotBodyId = robot.bodyIdByName(robotSurf->bodyName());

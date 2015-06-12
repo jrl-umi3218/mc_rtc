@@ -15,6 +15,8 @@ struct Surface;
 
 std::vector<sva::PTransformd> computePoints(const mc_rbdyn::Surface & robotSurface, const mc_rbdyn::Surface & envSurface, const sva::PTransformd & X_es_rs);
 
+struct ContactImpl;
+
 struct Contact
 {
 public:
@@ -32,8 +34,25 @@ private:
 public:
   Contact(const Contact & contact);
   Contact & operator=(const Contact &);
+  ~Contact();
 
-  bool isFixed();
+  unsigned int r1Index() const;
+
+  unsigned int r2Index() const;
+
+  const std::shared_ptr<mc_rbdyn::Surface> & r1Surface() const;
+
+  const std::shared_ptr<mc_rbdyn::Surface> & r2Surface() const;
+
+  const sva::PTransformd & X_r2s_r1s() const;
+
+  void X_r2s_r1s(const sva::PTransformd & in);
+
+  const sva::PTransformd & X_b_s() const;
+
+  const int & ambiguityId() const;
+
+  bool isFixed() const;
 
   std::pair<std::string, std::string> surfaces() const;
 
@@ -51,14 +70,7 @@ public:
 
   std::string toStr() const;
 public:
-  unsigned int r1Index;
-  unsigned int r2Index;
-  std::shared_ptr<mc_rbdyn::Surface> r1Surface;
-  std::shared_ptr<mc_rbdyn::Surface> r2Surface;
-  sva::PTransformd X_r2s_r1s;
-  bool is_fixed;
-  sva::PTransformd X_b_s;
-  int ambiguityId;
+  std::unique_ptr<ContactImpl> impl;
 };
 
 bool operator==(const Contact & lhs, const Contact & rhs);

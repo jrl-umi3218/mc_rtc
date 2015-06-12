@@ -9,7 +9,7 @@ AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots, std::share
                        double direction, const mc_rbdyn::StanceConfig & config,
                        Eigen::Vector3d * userT_0_s)
 : robots(robots), robot(robots.robot()), env(robots.env()),
-  constSpeedConstr(constSpeedConstr), robotSurf(contact.r1Surface),
+  constSpeedConstr(constSpeedConstr), robotSurf(contact.r1Surface()),
   robotBodyIndex(robot.bodyIndexByName(robotSurf->bodyName())),
   robotBodyId(robot.bodyIdByName(robotSurf->bodyName())),
   targetTf(contact.X_0_r1s(robots)),

@@ -10,11 +10,11 @@ QPContactPtr mrTasksContactFromMcContact(const mc_rbdyn::Robots & robots, const 
 {
   QPContactPtr res;
 
-  const mc_rbdyn::Robot & r1 = robots.robots[contact.r1Index];
-  const mc_rbdyn::Robot & r2 = robots.robots[contact.r2Index];
+  const mc_rbdyn::Robot & r1 = robots.robots[contact.r1Index()];
+  const mc_rbdyn::Robot & r2 = robots.robots[contact.r2Index()];
 
-  const mc_rbdyn::Surface & r1Surface = *(contact.r1Surface);
-  const mc_rbdyn::Surface & r2Surface = *(contact.r2Surface);
+  const mc_rbdyn::Surface & r1Surface = *(contact.r1Surface());
+  const mc_rbdyn::Surface & r2Surface = *(contact.r2Surface());
 
   unsigned int r1BodyId = r1.bodyIdByName(r1Surface.bodyName());
   unsigned int r2BodyId = r2.bodyIdByName(r2Surface.bodyName());
@@ -24,7 +24,7 @@ QPContactPtr mrTasksContactFromMcContact(const mc_rbdyn::Robots & robots, const 
   sva::PTransformd X_0_b1 = r1.mbc->bodyPosW[r1BodyIndex];
   sva::PTransformd X_0_b2 = r2.mbc->bodyPosW[r2BodyIndex];
   sva::PTransformd X_b1_b2 = X_0_b2*X_0_b1.inv();
-  const sva::PTransformd & X_b_s = contact.X_b_s;
+  const sva::PTransformd & X_b_s = contact.X_b_s();
 
   const std::vector<sva::PTransformd> & svaPoints = r1Surface.points();
   std::vector<Eigen::Vector3d> points;
@@ -35,18 +35,18 @@ QPContactPtr mrTasksContactFromMcContact(const mc_rbdyn::Robots & robots, const 
     frames.push_back(p.rotation());
   }
 
-  const int & ambId = contact.ambiguityId;
+  const int & ambId = contact.ambiguityId();
 
   if(r1Surface.type() == "planar")
   {
-    res.unilateralContact = new tasks::qp::UnilateralContact(contact.r1Index, contact.r2Index,
+    res.unilateralContact = new tasks::qp::UnilateralContact(contact.r1Index(), contact.r2Index(),
                                                              r1BodyId, r2BodyId, ambId, points,
                                                              frames[0], X_b1_b2, mc_rbdyn::Stance::nrConeGen,
                                                              mc_rbdyn::Stance::defaultFriction, X_b_s);
   }
   else if(r1Surface.type() == "gripper")
   {
-    res.bilateralContact = new tasks::qp::BilateralContact(contact.r1Index, contact.r2Index,
+    res.bilateralContact = new tasks::qp::BilateralContact(contact.r1Index(), contact.r2Index(),
                                                              r1BodyId, r2BodyId, ambId, points,
                                                              frames, X_b1_b2, mc_rbdyn::Stance::nrConeGen,
                                                              mc_rbdyn::Stance::defaultFriction, X_b_s);
@@ -67,8 +67,8 @@ std::pair<QPContactPtr, std::vector<sva::PTransformd> >
   const mc_rbdyn::Robot & robot = robots.robot();
   const mc_rbdyn::Robot & env = robots.env();
 
-  const mc_rbdyn::Surface & robotSurface = *(contact.r1Surface);
-  const mc_rbdyn::Surface & envSurface = *(contact.r2Surface);
+  const mc_rbdyn::Surface & robotSurface = *(contact.r1Surface());
+  const mc_rbdyn::Surface & envSurface = *(contact.r2Surface());
   unsigned int robotBodyId = robot.bodyIdByName(robotSurface.bodyName());
   unsigned int envBodyId = env.bodyIdByName(envSurface.bodyName());
 
@@ -154,22 +154,22 @@ std::vector<mc_control::MRContactMsg> mrContactsMsgFromMrContacts
 
   for(const auto & c : contacts)
   {
-    const auto & r1 = robots.robots[c.r1Index];
-    const auto & r2 = robots.robots[c.r2Index];
+    const auto & r1 = robots.robots[c.r1Index()];
+    const auto & r2 = robots.robots[c.r2Index()];
 
-    unsigned int r1BodyIndex = r1.bodyIndexByName(c.r1Surface->bodyName());
-    unsigned int r2BodyIndex = r2.bodyIndexByName(c.r2Surface->bodyName());
+    unsigned int r1BodyIndex = r1.bodyIndexByName(c.r1Surface()->bodyName());
+    unsigned int r2BodyIndex = r2.bodyIndexByName(c.r2Surface()->bodyName());
 
     sva::PTransformd X_0_b1 = r1.mbc->bodyPosW[r1BodyIndex];
     sva::PTransformd X_0_b2 = r2.mbc->bodyPosW[r2BodyIndex];
     sva::PTransformd X_b1_b2 = X_0_b2*X_0_b1.inv();
 
     mc_control::MRContactMsg msg;
-    msg.r1_index = static_cast<uint16_t>(c.r1Index);
-    msg.r2_index = static_cast<uint16_t>(c.r2Index);
-    msg.r1_body = c.r1Surface->bodyName();
-    msg.r2_body = c.r2Surface->bodyName();
-    msg.r1_points = const_cast<const mc_rbdyn::Surface&>(*(c.r1Surface.get())).points();
+    msg.r1_index = static_cast<uint16_t>(c.r1Index());
+    msg.r2_index = static_cast<uint16_t>(c.r2Index());
+    msg.r1_body = c.r1Surface()->bodyName();
+    msg.r2_body = c.r2Surface()->bodyName();
+    msg.r1_points = const_cast<const mc_rbdyn::Surface&>(*(c.r1Surface())).points();
     msg.X_b1_b2 = X_b1_b2;
     msg.nr_generators = static_cast<uint16_t>(mc_rbdyn::Stance::nrConeGen);
     msg.mu = mc_rbdyn::Stance::defaultFriction;

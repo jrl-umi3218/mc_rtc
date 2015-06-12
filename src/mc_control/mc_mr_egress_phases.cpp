@@ -213,7 +213,7 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
 
         for(auto c: otherContacts)
         {
-          std::cout << c.r1Surface->name() << " / " << c.r2Surface->name() << std::endl;
+          std::cout << c.r1Surface()->name() << " / " << c.r2Surface()->name() << std::endl;
         }
 
         ctl.mrqpsolver->setContacts(ctl.egressContacts);
@@ -300,7 +300,7 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
             std::cout << "Set contacts" << std::endl;
             for(auto c : ctl.egressContacts)
             {
-              std::cout << c.r1Surface->name() << " / " << c.r2Surface->name() << std::endl;
+              std::cout << c.r1Surface()->name() << " / " << c.r2Surface()->name() << std::endl;
             }
 
             //mc_rbdyn::Contact& lfc = ctl.egressContacts.back();
@@ -313,8 +313,8 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
             //if(constr == 0)
             //  std::cout << "NOPE NOPE" << std::endl;
             //else
-            //  std::cout << "Added dof on " << lfc.r1Surface->name << " / "
-            //                               << lfc.r2Surface->name << std::endl;
+            //  std::cout << "Added dof on " << lfc.r1Surface()->name << " / "
+            //                               << lfc.r2Surface()->name << std::endl;
             //  constr->addDofContact(cId, dof);
 
             std::cout << "Going to contact" << std::endl;
@@ -416,7 +416,7 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
         //Free movement along z axis
         auto rfc = std::find_if(ctl.egressContacts.begin(),
                                 ctl.egressContacts.end(),
-                                [](const mc_rbdyn::Contact & c) -> bool { return c.r1Surface->name().compare("RFullSole") == 0; });
+                                [](const mc_rbdyn::Contact & c) -> bool { return c.r1Surface()->name().compare("RFullSole") == 0; });
         //mc_rbdyn::Contact& rfc = ctl.egressContacts.at(rfc_index);
 
         ctl.mrqpsolver->setContacts(ctl.egressContacts);
@@ -956,7 +956,7 @@ struct EgressRemoveRightGripperPhase : public EgressMRPhaseExecution
         //Free movement along z axis
         auto rgc = std::find_if(ctl.egressContacts.begin(),
                                 ctl.egressContacts.end(),
-                                [](const mc_rbdyn::Contact & c) -> bool { return c.r1Surface->name().compare("RightGripper") == 0; });
+                                [](const mc_rbdyn::Contact & c) -> bool { return c.r1Surface()->name().compare("RightGripper") == 0; });
         ctl.mrqpsolver->setContacts(ctl.egressContacts);
 
         if(rgc != ctl.egressContacts.end())
@@ -1070,7 +1070,7 @@ struct EgressMRStandupPhase : public EgressMRPhaseExecution
         otherContacts.push_back(ctl.egressContacts.at(3));
         for(auto c: otherContacts)
         {
-          std::cout << c.r1Surface->name() << " / " << c.r2Surface->name() << std::endl;
+          std::cout << c.r1Surface()->name() << " / " << c.r2Surface()->name() << std::endl;
         }
         ctl.mrqpsolver->setContacts(otherContacts);
 
@@ -1285,7 +1285,7 @@ struct EgressMoveComForcePhase : public EgressMRPhaseExecution
 
         auto lfc = std::find_if(ctl.egressContacts.begin(),
                                 ctl.egressContacts.end(),
-                                [&](const mc_rbdyn::Contact & c) -> bool { return c.r1Surface->name().compare(otherSurf_) == 0; });
+                                [&](const mc_rbdyn::Contact & c) -> bool { return c.r1Surface()->name().compare(otherSurf_) == 0; });
         tasks::qp::ContactId cId = lfc->contactId(ctl.robots().robots);
         Eigen::MatrixXd dof(6,6);
         dof.setIdentity();
@@ -1295,8 +1295,8 @@ struct EgressMoveComForcePhase : public EgressMRPhaseExecution
           std::cout << "NOPE NOPE" << std::endl;
         else
           constr->resetDofContacts();
-          std::cout << "Added a dof to " << lfc->r1Surface->name() << " / "
-                    << lfc->r2Surface->name();
+          std::cout << "Added a dof to " << lfc->r1Surface()->name() << " / "
+                    << lfc->r2Surface()->name();
           constr->addDofContact(cId, dof);
 
         int bodyIndex = ctl.robot().bodyIndexByName(bodyName_);
