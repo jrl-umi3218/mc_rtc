@@ -1,12 +1,16 @@
 #ifndef _H_MCVIRTUALCONTROLLER_H_
 #define _H_MCVIRTUALCONTROLLER_H_
 
-#include <mc_rbdyn/contact.h>
 #include <mc_rbdyn/robot.h>
 #include <mc_control/generic_gripper.h>
 #include <mc_control/msg/QPResult.h>
 
 #include <Tasks/QPTasks.h>
+
+namespace mc_rbdyn
+{
+  struct Contact;
+}
 
 namespace mc_control
 {

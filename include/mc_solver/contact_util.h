@@ -3,12 +3,16 @@
 
 #include <Tasks/QPContacts.h>
 #include <SpaceVecAlg/SpaceVecAlg>
-#include <mc_rbdyn/contact.h>
-#include <mc_rbdyn/robot.h>
 
 #include <mc_control/msg/MRContact.h>
 
 #include <memory>
+
+namespace mc_rbdyn
+{
+  struct Contact;
+  struct Robots;
+}
 
 namespace mc_solver
 {

@@ -4,6 +4,8 @@
 #include <mc_rbdyn/CylindricalSurface.h>
 #include <mc_rbdyn/GripperSurface.h>
 
+#include <mc_rbdyn/robot.h>
+
 #include <RBDyn/FK.h>
 #include <RBDyn/CoM.h>
 

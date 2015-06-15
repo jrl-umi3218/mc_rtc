@@ -48,7 +48,7 @@ set(mc_rbdyn_SRC
 ./src/mc_rbdyn/GripperSurface.cpp
 ./src/mc_rbdyn/surface_utils.cpp
 ./src/mc_rbdyn/surface_hull.cpp
-./src/mc_rbdyn/contact.cpp
+./src/mc_rbdyn/Contact.cpp
 ./src/mc_rbdyn/robot.cpp
 ./src/mc_rbdyn/stance.cpp
 ./src/mc_rbdyn/StanceConfig.cpp

@@ -1,5 +1,6 @@
 #include <mc_tasks/AddRemoveContactTask.h>
 
+#include <mc_rbdyn/Contact.h>
 #include <mc_rbdyn/Surface.h>
 
 namespace mc_tasks

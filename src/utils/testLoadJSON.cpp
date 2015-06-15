@@ -1,5 +1,6 @@
-#include <mc_rbdyn/stance.h>
+#include <iostream>
 #include <memory>
+#include <mc_rbdyn/stance.h>
 
 int main(int argc, char * argv[])
 {

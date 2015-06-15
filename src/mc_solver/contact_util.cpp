@@ -2,6 +2,7 @@
 
 #include <mc_rbdyn/stance.h>
 #include <mc_rbdyn/Surface.h>
+#include <mc_rbdyn/robot.h>
 
 namespace mc_solver
 {

@@ -1,4 +1,4 @@
-#include <mc_rbdyn/contact.h>
+#include <mc_rbdyn/Contact.h>
 
 #include <mc_rbdyn/contact_transform.h>
 #include <mc_rbdyn/robot.h>

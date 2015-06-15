@@ -1,12 +1,12 @@
 #ifndef _H_MCRBDYNSTANCE_H_
 #define _H_MCRBDYNSTANCE_H_
 
-#include <mc_rbdyn/contact.h>
-#include <mc_rbdyn/robot.h>
+#include <mc_rbdyn/Contact.h>
 
 namespace mc_rbdyn
 {
 
+struct Robot;
 
 struct Stance
 {

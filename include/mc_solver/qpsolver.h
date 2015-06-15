@@ -6,7 +6,7 @@
 #include <mc_control/msg/Robot.h>
 #include <mc_control/msg/MRQPResult.h>
 
-#include <mc_rbdyn/contact.h>
+#include <mc_rbdyn/Contact.h>
 #include <mc_rbdyn/robot.h>
 
 #include <SpaceVecAlg/SpaceVecAlg>

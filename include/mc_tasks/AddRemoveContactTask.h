@@ -3,12 +3,16 @@
 
 #include <mc_tasks/MetaTask.h>
 
-#include <mc_rbdyn/contact.h>
 #include <mc_rbdyn/robot.h>
 #include <mc_rbdyn/StanceConfig.h>
 
 #include <Tasks/QPConstr.h>
 #include <Tasks/QPTasks.h>
+
+namespace mc_rbdyn
+{
+  struct Contact;
+}
 
 namespace mc_tasks
 {
