@@ -17,14 +17,14 @@ int main(int argc, char * argv[])
   std::cout << "Loaded " << stances.size() << " stances and " << actions.size() << " actions" << std::endl;
   for(const auto & s : stances)
   {
-    std::cout << s.q.size() << std::endl;
+    std::cout << s.q().size() << std::endl;
     std::cout << "geomContacts" << std::endl;
-    for(const auto & c : s.geomContacts)
+    for(const auto & c : s.geomContacts())
     {
       std::cout << c.toStr() << std::endl;
     }
     std::cout << "stabContacts" << std::endl;
-    for(const auto & c : s.stabContacts)
+    for(const auto & c : s.stabContacts())
     {
       std::cout << c.toStr() << std::endl;
     }

@@ -48,15 +48,15 @@ void StabilityTask::target(const mc_rbdyn::Robot & env, const mc_rbdyn::Stance &
   comObj = stance.com(robot);
   for(size_t i = 0; i < 23; ++i)
   {
-    qObj[i] = stance.q[i];
+    qObj[i] = stance.q()[i];
   }
   for(size_t i = 24; i < 31; ++i)
   {
-    qObj[i+5] = stance.q[i-1];
+    qObj[i+5] = stance.q()[i-1];
   }
 
   Eigen::Vector3d comOffset = Eigen::Vector3d::Zero();
-  for(const auto & c : stance.stabContacts)
+  for(const auto & c : stance.stabContacts())
   {
     const std::string & rsname = c.r1Surface()->name();
     if(rsname == "LeftFoot" or rsname == "RightFoot" or

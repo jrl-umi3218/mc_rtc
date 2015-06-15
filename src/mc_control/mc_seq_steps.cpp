@@ -89,9 +89,9 @@ bool enter_removeContactT::eval(MCSeqController & ctl)
   ctl.rmContactTask->addToSolver(ctl.qpsolver->solver);
   ctl.metaTasks.push_back(ctl.rmContactTask.get());
 
-  ctl.updateRobotEnvCollisions(curS.stabContacts, contactConf);
-  ctl.updateSelfCollisions(curS.stabContacts, contactConf);
-  ctl.updateContacts(curS.stabContacts);
+  ctl.updateRobotEnvCollisions(curS.stabContacts(), contactConf);
+  ctl.updateSelfCollisions(curS.stabContacts(), contactConf);
+  ctl.updateContacts(curS.stabContacts());
   ctl.updateSolverEqInEq();
 
   ctl.isColl = ctl.setCollisionsContactFilter(*(ctl.currentContact), contactConf);
@@ -121,7 +121,7 @@ bool live_removeContacT::eval(MCSeqController & ctl)
 
     if(ctl.isColl)
     {
-      ctl.updateRobotEnvCollisions(ctl.curStance().stabContacts, ctl.curConf());
+      ctl.updateRobotEnvCollisions(ctl.curStance().stabContacts(), ctl.curConf());
     }
 
     return true;
@@ -408,9 +408,9 @@ bool enter_CoMRemoveGripperT::eval(MCSeqController & ctl)
     }
     mc_rbdyn::Stance & targetS = ctl.targetStance();
     /* Configure the QP */
-    ctl.updateRobotEnvCollisions(targetS.stabContacts, contactConf);
-    ctl.updateSelfCollisions(targetS.stabContacts, contactConf);
-    ctl.updateContacts(targetS.stabContacts);
+    ctl.updateRobotEnvCollisions(targetS.stabContacts(), contactConf);
+    ctl.updateSelfCollisions(targetS.stabContacts(), contactConf);
+    ctl.updateContacts(targetS.stabContacts());
     ctl.updateSolverEqInEq();
 
     ctl.isRemoved = false;
@@ -463,7 +463,7 @@ bool live_moveCoMT::eval(MCSeqController & ctl)
     mc_rbdyn::Stance & newS = ctl.targetStance();
     ctl.updateRobotEnvCollisions(newS.contacts(), ctl.targetConf());
     ctl.updateSelfCollisions(newS.contacts(), ctl.targetConf());
-    ctl.updateContacts(newS.stabContacts);
+    ctl.updateContacts(newS.stabContacts());
     ctl.updateSolverEqInEq();
 
     //ctl.stabilityTask->normalStiffness({"RARM_JOINT0", "RARM_JOINT1", "RARM_JOINT2", "RARM_JOINT3", "RARM_JOINT4", "RARM_JOINT5", "RARM_JOINT6"});
@@ -634,9 +634,9 @@ bool enter_removeGripperP::eval(MCSeqController & ctl)
   ctl.stabilityTask->target(ctl.env(), curS, contactConf, contactConf.comTask.targetSpeed);
 
   /* Configure the QP */
-  ctl.updateRobotEnvCollisions(curS.stabContacts, contactConf);
-  ctl.updateSelfCollisions(curS.stabContacts, contactConf);
-  ctl.updateContacts(curS.stabContacts);
+  ctl.updateRobotEnvCollisions(curS.stabContacts(), contactConf);
+  ctl.updateSelfCollisions(curS.stabContacts(), contactConf);
+  ctl.updateContacts(curS.stabContacts());
   ctl.updateSolverEqInEq();
 
   /* Remove collision avoidance between env and moving body */
@@ -668,7 +668,7 @@ bool live_removeGripperP::eval(MCSeqController & ctl)
 
     if(ctl.isColl)
     {
-      ctl.updateRobotEnvCollisions(ctl.curStance().stabContacts, ctl.curConf());
+      ctl.updateRobotEnvCollisions(ctl.curStance().stabContacts(), ctl.curConf());
     }
     ctl.isRemoved = true;
     return true;

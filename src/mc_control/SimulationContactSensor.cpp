@@ -31,7 +31,7 @@ SimulationContactSensor::SimulationContactSensor(const std::vector<mc_rbdyn::Sta
   std::vector<mc_rbdyn::Contact> cts;
   for(const auto & s : stances)
   {
-    for(const auto & c : s.geomContacts)
+    for(const auto & c : s.geomContacts())
     {
       bool found = false;
       for(const auto & ci : cts)

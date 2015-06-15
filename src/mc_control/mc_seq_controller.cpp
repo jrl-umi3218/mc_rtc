@@ -238,7 +238,7 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
 
   /* Setup the QP */
   auto q = robot().mbc->q;
-  auto ff = stances[stanceIndex].q[0];
+  auto ff = stances[stanceIndex].q()[0];
   q[0] = {ff[0], ff[1], ff[2], ff[3], ff[4], ff[5], ff[6]};
   robot().mbc->q = q;
   rbd::forwardKinematics(*(robot().mb), *(robot().mbc));
@@ -250,7 +250,7 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
   qpsolver->addConstraintSet(contactConstraint);
   qpsolver->addConstraintSet(dynamicsConstraint);
   qpsolver->addConstraintSet(collsConstraint);
-  qpsolver->setContacts(stances[stanceIndex].geomContacts);
+  qpsolver->setContacts(stances[stanceIndex].geomContacts());
 
   qpsolver->update();
 
@@ -345,7 +345,7 @@ void MCSeqController::reset(const ControllerResetData & reset_data)
   }
   else
   {
-    qpsolver->setContacts(stances[stanceIndex].geomContacts);
+    qpsolver->setContacts(stances[stanceIndex].geomContacts());
   }
   qpsolver->update();
 }

@@ -15,27 +15,54 @@
 namespace mc_rbdyn
 {
 
+struct StanceImpl
+{
+public:
+  std::vector< std::vector<double> > q;
+  std::vector< Contact > geomContacts;
+  std::vector< Contact > stabContacts;
+};
+
 unsigned int Stance::nrConeGen = 4;
 double Stance::defaultFriction = 0.7;
 unsigned int Stance::nrBilatPoints = 4;
 
 Stance::Stance(const std::vector< std::vector<double> > & q, const std::vector<Contact> & geomContacts, const std::vector<Contact> stabContacts)
-: q(q), geomContacts(geomContacts), stabContacts(stabContacts)
+: impl(new StanceImpl({q, geomContacts, stabContacts}))
+{
+}
+
+Stance::~Stance()
 {
 }
 
 const std::vector<Contact> & Stance::contacts() const
 {
-  return geomContacts;
+  return impl->geomContacts;
+}
+
+const std::vector< std::vector<double> > Stance::q() const
+{
+  return impl->q;
+}
+
+const std::vector<Contact> & Stance::geomContacts() const
+{
+  return impl->geomContacts;
+}
+
+const std::vector<Contact> & Stance::stabContacts() const
+{
+  return impl->stabContacts;
 }
 
 void Stance::updateContact(const Contact & oldContact, const Contact & newContact)
 {
-  for(Contact & c : geomContacts)
+  for(Contact & c : impl->geomContacts)
   {
     if(c == oldContact) { c = newContact; }
   }
-  for(Contact & c : stabContacts)
+  for(Contact & c : impl->stabContacts)
   {
     if(c == oldContact) { c = newContact; }
   }
@@ -44,7 +71,7 @@ void Stance::updateContact(const Contact & oldContact, const Contact & newContac
 Eigen::Vector3d Stance::com(const Robot & robot) const
 {
   rbd::MultiBodyConfig mbc(*(robot.mbc));
-  mbc.q = q;
+  mbc.q = impl->q;
   rbd::forwardKinematics(*(robot.mb), mbc);
   return rbd::computeCoM(*(robot.mb), mbc);
 }
@@ -52,7 +79,7 @@ Eigen::Vector3d Stance::com(const Robot & robot) const
 std::vector<std::string> Stance::robotSurfacesInContact()
 {
   std::vector<std::string> res;
-  for(const Contact & c : geomContacts)
+  for(const Contact & c : impl->geomContacts)
   {
     res.push_back(c.r1Surface()->name());
   }
@@ -61,8 +88,8 @@ std::vector<std::string> Stance::robotSurfacesInContact()
 
 apply_return_t IdentityContactAction::apply(const Stance & stance)
 {
-  contact_vector_pair_t p1(stance.geomContacts, stance.stabContacts);
-  contact_vector_pair_t p2(stance.geomContacts, stance.stabContacts);
+  contact_vector_pair_t p1(stance.geomContacts(), stance.stabContacts());
+  contact_vector_pair_t p2(stance.geomContacts(), stance.stabContacts());
   return apply_return_t(p1,p2);
 }
 
@@ -87,10 +114,10 @@ AddContactAction::AddContactAction(const Contact & contact)
 
 apply_return_t AddContactAction::apply(const Stance & stance)
 {
-  contact_vector_pair_t p1(stance.geomContacts, stance.stabContacts);
+  contact_vector_pair_t p1(stance.geomContacts(), stance.stabContacts());
   p1.first.push_back(contact);
 
-  contact_vector_pair_t p2(p1.first, stance.stabContacts);
+  contact_vector_pair_t p2(p1.first, stance.stabContacts());
   p2.second.push_back(contact);
 
   return apply_return_t(p1,p2);
@@ -98,8 +125,8 @@ apply_return_t AddContactAction::apply(const Stance & stance)
 
 void AddContactAction::update(const Stance & stance)
 {
-  auto contactit = std::find(stance.geomContacts.begin(), stance.geomContacts.end(), contact);
-  if(contactit != stance.geomContacts.end())
+  auto contactit = std::find(stance.geomContacts().begin(), stance.geomContacts().end(), contact);
+  if(contactit != stance.geomContacts().end())
   {
     const Contact & contactIn = *contactit;
     contact.X_r2s_r1s(contactIn.X_r2s_r1s());
@@ -125,7 +152,7 @@ RemoveContactAction::RemoveContactAction(const Contact & contact)
 
 apply_return_t RemoveContactAction::apply(const Stance & stance)
 {
-  contact_vector_pair_t p1(stance.geomContacts, stance.stabContacts);
+  contact_vector_pair_t p1(stance.geomContacts(), stance.stabContacts());
   auto contactit = std::find(p1.second.begin(), p1.second.end(), contact);
   if(contactit != p1.second.end())
   {
@@ -144,8 +171,8 @@ apply_return_t RemoveContactAction::apply(const Stance & stance)
 
 void RemoveContactAction::update(const Stance & stance)
 {
-  auto contactit = std::find(stance.geomContacts.begin(), stance.geomContacts.end(), contact);
-  if(contactit != stance.geomContacts.end())
+  auto contactit = std::find(stance.geomContacts().begin(), stance.geomContacts().end(), contact);
+  if(contactit != stance.geomContacts().end())
   {
     const Contact & contactIn = *contactit;
     contact.X_r2s_r1s(contactIn.X_r2s_r1s());
@@ -236,7 +263,7 @@ Contact contactFromJSON(Json::Value & v)
   }
 }
 
-Stance stanceFromJSON(Json::Value & v)
+inline void addStanceFromJSON(std::vector<Stance> & stances, Json::Value & v)
 {
   std::vector< std::vector<double> > q;
   for(Json::Value & vq : v["q"])
@@ -258,7 +285,7 @@ Stance stanceFromJSON(Json::Value & v)
   {
     stabContacts.push_back(contactFromJSON(vc));
   }
-  return Stance(q, geomContacts, stabContacts);
+  stances.emplace_back(q, geomContacts, stabContacts);
 }
 
 std::shared_ptr<StanceAction> stanceActionFromJSON(Json::Value & v)
@@ -290,7 +317,8 @@ void loadStances(const std::string & filename, std::vector<Stance> & stances, st
   ifs >> v;
   for(Json::Value & sv : v["stances"])
   {
-    stances.push_back(stanceFromJSON(sv));
+    //stances.emplace_back(std::move(stanceFromJSON(sv)));
+    addStanceFromJSON(stances, sv);
   }
   for(Json::Value & sav : v["actions"])
   {
@@ -362,7 +390,7 @@ Json::Value surfaceToJSON(const std::shared_ptr<Surface> & surface)
   return ret;
 }
 
-Json::Value contactToJSON(Contact & contact)
+Json::Value contactToJSON(const Contact & contact)
 {
   Json::Value ret(Json::objectValue);
   ret["robotSurface"] = surfaceToJSON(contact.r1Surface());
@@ -376,7 +404,7 @@ Json::Value stanceToJSON(Stance & stance)
 {
   Json::Value ret(Json::objectValue);
   ret["q"] = Json::Value(Json::arrayValue);
-  for(std::vector<double> & qi : stance.q)
+  for(const std::vector<double> & qi : stance.q())
   {
     Json::Value jqi = Json::Value(Json::arrayValue);
     for(double v : qi)
@@ -386,12 +414,12 @@ Json::Value stanceToJSON(Stance & stance)
     ret["q"].append(jqi);
   }
   ret["geomContacts"] = Json::Value(Json::arrayValue);
-  for(Contact & c : stance.geomContacts)
+  for(const Contact & c : stance.geomContacts())
   {
     ret["geomContacts"].append(contactToJSON(c));
   }
   ret["stabContacts"] = Json::Value(Json::arrayValue);
-  for(Contact & c : stance.stabContacts)
+  for(const Contact & c : stance.stabContacts())
   {
     ret["stabContacts"].append(contactToJSON(c));
   }

@@ -8,6 +8,8 @@ namespace mc_rbdyn
 
 struct Robot;
 
+struct StanceImpl;
+
 struct Stance
 {
 public:
@@ -17,7 +19,19 @@ public:
 public:
   Stance(const std::vector< std::vector<double> > & q, const std::vector<Contact> & geomContacts, const std::vector<Contact> stabContacts);
 
+  ~Stance();
+
+  /* Allow move operations to work on Stance vectors */
+  Stance(Stance &&) = default;
+  Stance& operator=(Stance&&) = default;
+
   const std::vector<Contact> & contacts() const;
+
+  const std::vector< std::vector<double> > q() const;
+
+  const std::vector<Contact> & geomContacts() const;
+
+  const std::vector<Contact> & stabContacts() const;
 
   void updateContact(const Contact & oldContact, const Contact & newContact);
 
@@ -25,9 +39,7 @@ public:
 
   std::vector<std::string> robotSurfacesInContact();
 public:
-  std::vector< std::vector<double> > q;
-  std::vector< Contact > geomContacts;
-  std::vector< Contact > stabContacts;
+  std::unique_ptr<StanceImpl> impl;
 };
 
 typedef std::pair<std::vector<Contact>, std::vector<Contact> > contact_vector_pair_t;
@@ -47,13 +59,13 @@ struct StanceAction
 struct IdentityContactAction : public StanceAction
 {
 public:
-  virtual apply_return_t apply(const Stance & stance);
+  virtual apply_return_t apply(const Stance & stance) override;
 
-  virtual void update(const Stance & stance);
+  virtual void update(const Stance & stance) override;
 
-  virtual std::string toStr();
+  virtual std::string toStr() override;
 
-  virtual std::string type();
+  virtual std::string type() override;
 };
 
 struct AddContactAction : public StanceAction
@@ -61,13 +73,13 @@ struct AddContactAction : public StanceAction
 public:
   AddContactAction(const Contact & contact);
 
-  virtual apply_return_t apply(const Stance & stance);
+  virtual apply_return_t apply(const Stance & stance) override;
 
-  virtual void update(const Stance & stance);
+  virtual void update(const Stance & stance) override;
 
-  virtual std::string toStr();
+  virtual std::string toStr() override;
 
-  virtual std::string type();
+  virtual std::string type() override;
 public:
   Contact contact;
 };
@@ -77,13 +89,13 @@ struct RemoveContactAction : public StanceAction
 public:
   RemoveContactAction(const Contact & contact);
 
-  virtual apply_return_t apply(const Stance & stance);
+  virtual apply_return_t apply(const Stance & stance) override;
 
-  virtual void update(const Stance & stance);
+  virtual void update(const Stance & stance) override;
 
-  virtual std::string toStr();
+  virtual std::string toStr() override;
 
-  virtual std::string type();
+  virtual std::string type() override;
 public:
   Contact contact;
 };
