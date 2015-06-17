@@ -203,21 +203,21 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
     //mc_rbdyn::RemoveContactAction* rmA = dynamic_cast<mc_rbdyn::RemoveContactAction*>(actions[i].get());
     if(addA)
     {
-      if(addA->contact.r1Surface()->name() == "LeftGripper" &&
-         addA->contact.r2Surface()->name() == "StairLeftRung1")
+      if(addA->contact().r1Surface()->name() == "LeftGripper" &&
+         addA->contact().r2Surface()->name() == "StairLeftRung1")
       {
         sc.comObj.comOffset = Eigen::Vector3d(0.05, 0.0,0.0);
       }
-      if(addA->contact.r1Surface()->name() == "LFrontSole" &&
-         addA->contact.r2Surface()->name() == "StairStep1")
+      if(addA->contact().r1Surface()->name() == "LFrontSole" &&
+         addA->contact().r2Surface()->name() == "StairStep1")
       {
       }
     }
     mc_rbdyn::RemoveContactAction* rmA = dynamic_cast<mc_rbdyn::RemoveContactAction*>(actions[i].get());
     if(rmA)
     {
-      if(rmA->contact.r1Surface()->name() == "LFullSole" &&
-         rmA->contact.r2Surface()->name() == "Ground")
+      if(rmA->contact().r1Surface()->name() == "LFullSole" &&
+         rmA->contact().r2Surface()->name() == "Ground")
       {
       }
     }
@@ -607,8 +607,8 @@ std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * cu
     if(addA)
     {
       curIsAddContact = true;
-      curIsGripperContact = addA->contact.r1Surface()->type() == "gripper";
-      curSurfaceName = addA->contact.r1Surface()->name();
+      curIsGripperContact = addA->contact().r1Surface()->type() == "gripper";
+      curSurfaceName = addA->contact().r1Surface()->name();
     }
   }
   {
@@ -616,8 +616,8 @@ std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * cu
     if(rmA)
     {
       curIsRemoveContact = true;
-      curIsGripperContact = rmA->contact.r1Surface()->type() == "gripper";
-      curSurfaceName = rmA->contact.r1Surface()->name();
+      curIsGripperContact = rmA->contact().r1Surface()->type() == "gripper";
+      curSurfaceName = rmA->contact().r1Surface()->name();
     }
   }
   //bool curIsIdentity = (!curIsAddContact && !curIsRemoveContact);
@@ -630,8 +630,8 @@ std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * cu
     if(addA)
     {
       targetIsAddContact = true;
-      targetIsGripperContact = addA->contact.r1Surface()->type() == "gripper";
-      targetSurfaceName = addA->contact.r1Surface()->name();
+      targetIsGripperContact = addA->contact().r1Surface()->type() == "gripper";
+      targetSurfaceName = addA->contact().r1Surface()->name();
     }
   }
   {
@@ -639,15 +639,15 @@ std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * cu
     if(rmA)
     {
       targetIsRemoveContact = true;
-      targetIsGripperContact = rmA->contact.r1Surface()->type() == "gripper";
-      targetSurfaceName = rmA->contact.r1Surface()->name();
+      targetIsGripperContact = rmA->contact().r1Surface()->type() == "gripper";
+      targetSurfaceName = rmA->contact().r1Surface()->name();
     }
   }
   bool targetTargetIsAddContact = false;
   {
     mc_rbdyn::AddContactAction * addA = dynamic_cast<mc_rbdyn::AddContactAction*>(targetTargetAction);
     if(addA && targetIsRemoveContact && targetIsGripperContact
-       && targetSurfaceName == addA->contact.r1Surface()->name())
+       && targetSurfaceName == addA->contact().r1Surface()->name())
     {
       targetTargetIsAddContact = true;
     }

@@ -36,18 +36,18 @@ bool live_chooseContactT::eval(MCSeqController & ctl)
   mc_rbdyn::RemoveContactAction * rmCurAction = dynamic_cast<mc_rbdyn::RemoveContactAction*>(curAction);
   mc_rbdyn::AddContactAction * addTargetAction = dynamic_cast<mc_rbdyn::AddContactAction*>(targetAction);
   bool isAddRemove = rmCurAction != 0 and addTargetAction != 0 and
-                     rmCurAction->contact.r1Surface()->bodyName() == addTargetAction->contact.r1Surface()->bodyName();
-  if(isAddRemove and rmCurAction->contact.r1Surface()->type() != "gripper")
+                     rmCurAction->contact().r1Surface()->bodyName() == addTargetAction->contact().r1Surface()->bodyName();
+  if(isAddRemove and rmCurAction->contact().r1Surface()->type() != "gripper")
   {
-    ctl.currentContact = &(rmCurAction->contact);
-    ctl.targetContact = &(addTargetAction->contact);
+    ctl.currentContact = const_cast<mc_rbdyn::Contact*>(&(rmCurAction->contact()));
+    ctl.targetContact = const_cast<mc_rbdyn::Contact*>(&(addTargetAction->contact()));
     return true;
   }
   bool isAddOnly = addTargetAction != 0;
-  if(isAddOnly and addTargetAction->contact.r1Surface()->type() != "gripper")
+  if(isAddOnly and addTargetAction->contact().r1Surface()->type() != "gripper")
   {
     ctl.currentContact = 0;
-    ctl.targetContact = &(addTargetAction->contact);
+    ctl.targetContact = const_cast<mc_rbdyn::Contact*>(&(addTargetAction->contact()));
     std::string bodyName = ctl.targetContact->r1Surface()->bodyName();
     /* FIXME Hard-coded */
     if(bodyName == "RARM_LINK6")
@@ -312,7 +312,7 @@ bool live_chooseCoMT::eval(MCSeqController & ctl)
   if(currentAction->type() == "remove")
   {
     mc_rbdyn::RemoveContactAction * rmCurAction = dynamic_cast<mc_rbdyn::RemoveContactAction*>(currentAction);
-    std::string bodyName = rmCurAction->contact.r1Surface()->bodyName();
+    std::string bodyName = rmCurAction->contact().r1Surface()->bodyName();
     if(bodyName == "RARM_LINK6") /*FIXME hard-coded */
     {
       ctl.currentGripper = ctl.rgripper.get();
@@ -329,7 +329,7 @@ bool live_chooseCoMT::eval(MCSeqController & ctl)
   {
     std::cout << "This action is a removal" << std::endl;
     mc_rbdyn::RemoveContactAction * rmCurAction = dynamic_cast<mc_rbdyn::RemoveContactAction*>(targetAction);
-    std::string bodyName = rmCurAction->contact.r1Surface()->bodyName();
+    std::string bodyName = rmCurAction->contact().r1Surface()->bodyName();
     if(bodyName == "RARM_LINK6") /*FIXME hard-coded */
     {
       ctl.currentGripper = ctl.rgripper.get();
@@ -507,34 +507,34 @@ bool live_chooseGripperT::eval(MCSeqController & ctl)
   bool isRemoveAdd = (curRm != 0) and (tarAdd != 0);
   if(isRemoveAdd)
   {
-    isRemoveAdd = isRemoveAdd and (curRm->contact.r1Surface()->bodyName() == tarAdd->contact.r1Surface()->bodyName());
+    isRemoveAdd = isRemoveAdd and (curRm->contact().r1Surface()->bodyName() == tarAdd->contact().r1Surface()->bodyName());
   }
   bool isAddOnly = tarAdd != 0;
   bool isRemoveOnly = tarRm != 0;
-  if( (isRemoveAdd or isAddOnly) and tarAdd->contact.r1Surface()->type() == "gripper" )
+  if( (isRemoveAdd or isAddOnly) and tarAdd->contact().r1Surface()->type() == "gripper" )
   {
     if(isRemoveAdd)
     {
       ctl.isGripperAttached = true;
       ctl.isGripperWillBeAttached = true;
-      ctl.currentContact = &(curRm->contact);
-      ctl.targetContact = &(tarAdd->contact);
+      ctl.currentContact = const_cast<mc_rbdyn::Contact*>(&(curRm->contact()));
+      ctl.targetContact =  const_cast<mc_rbdyn::Contact*>(&(tarAdd->contact()));
     }
     else
     {
       ctl.isGripperAttached = false;
       ctl.isGripperWillBeAttached = true;
-      ctl.currentContact = &(tarAdd->contact);
-      ctl.targetContact = &(tarAdd->contact);
+      ctl.currentContact = const_cast<mc_rbdyn::Contact*>(&(tarAdd->contact()));
+      ctl.targetContact =  const_cast<mc_rbdyn::Contact*>(&(tarAdd->contact()));
     }
     return true;
   }
-  if(isRemoveOnly and tarRm->contact.r1Surface()->type() == "gripper")
+  if(isRemoveOnly and tarRm->contact().r1Surface()->type() == "gripper")
   {
     ctl.isGripperAttached = true;
     ctl.isGripperWillBeAttached = false;
-    ctl.currentContact = &(tarRm->contact);
-    ctl.targetContact = &(tarRm->contact);
+    ctl.currentContact = const_cast<mc_rbdyn::Contact*>(&(tarRm->contact()));
+    ctl.targetContact =  const_cast<mc_rbdyn::Contact*>(&(tarRm->contact()));
     return true;
   }
 

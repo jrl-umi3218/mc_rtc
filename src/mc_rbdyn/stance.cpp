@@ -107,36 +107,43 @@ std::string IdentityContactAction::type()
   return "identity";
 }
 
+const Contact & IdentityContactAction::contact() const
+{
+  std::string err = "Tried to access contact on IdentityContactAction";
+  std::cerr << err << std::endl;
+  throw(err.c_str());
+}
+
 AddContactAction::AddContactAction(const Contact & contact)
-: contact(contact)
+: _contact(contact)
 {
 }
 
 apply_return_t AddContactAction::apply(const Stance & stance)
 {
   contact_vector_pair_t p1(stance.geomContacts(), stance.stabContacts());
-  p1.first.push_back(contact);
+  p1.first.push_back(_contact);
 
   contact_vector_pair_t p2(p1.first, stance.stabContacts());
-  p2.second.push_back(contact);
+  p2.second.push_back(_contact);
 
   return apply_return_t(p1,p2);
 }
 
 void AddContactAction::update(const Stance & stance)
 {
-  auto contactit = std::find(stance.geomContacts().begin(), stance.geomContacts().end(), contact);
+  auto contactit = std::find(stance.geomContacts().begin(), stance.geomContacts().end(), _contact);
   if(contactit != stance.geomContacts().end())
   {
     const Contact & contactIn = *contactit;
-    contact.X_r2s_r1s(contactIn.X_r2s_r1s());
+    _contact.X_r2s_r1s(contactIn.X_r2s_r1s());
   }
 }
 
 std::string AddContactAction::toStr()
 {
   std::stringstream ss;
-  ss << "Add " << contact.toStr();
+  ss << "Add " << _contact.toStr();
   return ss.str();
 }
 
@@ -145,22 +152,27 @@ std::string AddContactAction::type()
   return "add";
 }
 
+const Contact & AddContactAction::contact() const
+{
+  return _contact;
+}
+
 RemoveContactAction::RemoveContactAction(const Contact & contact)
-: contact(contact)
+: _contact(contact)
 {
 }
 
 apply_return_t RemoveContactAction::apply(const Stance & stance)
 {
   contact_vector_pair_t p1(stance.geomContacts(), stance.stabContacts());
-  auto contactit = std::find(p1.second.begin(), p1.second.end(), contact);
+  auto contactit = std::find(p1.second.begin(), p1.second.end(), _contact);
   if(contactit != p1.second.end())
   {
     p1.second.erase(contactit);
   }
 
   contact_vector_pair_t p2(p1.first, p1.second);
-  contactit = std::find(p2.first.begin(), p2.first.end(), contact);
+  contactit = std::find(p2.first.begin(), p2.first.end(), _contact);
   if(contactit != p2.first.end())
   {
     p2.first.erase(contactit);
@@ -171,24 +183,29 @@ apply_return_t RemoveContactAction::apply(const Stance & stance)
 
 void RemoveContactAction::update(const Stance & stance)
 {
-  auto contactit = std::find(stance.geomContacts().begin(), stance.geomContacts().end(), contact);
+  auto contactit = std::find(stance.geomContacts().begin(), stance.geomContacts().end(), _contact);
   if(contactit != stance.geomContacts().end())
   {
     const Contact & contactIn = *contactit;
-    contact.X_r2s_r1s(contactIn.X_r2s_r1s());
+    _contact.X_r2s_r1s(contactIn.X_r2s_r1s());
   }
 }
 
 std::string RemoveContactAction::toStr()
 {
   std::stringstream ss;
-  ss << "Remove " << contact.toStr();
+  ss << "Remove " << _contact.toStr();
   return ss.str();
 }
 
 std::string RemoveContactAction::type()
 {
   return "remove";
+}
+
+const Contact & RemoveContactAction::contact() const
+{
+  return _contact;
 }
 
 sva::PTransformd svaPTransformdFromJSON(Json::Value & v)
@@ -435,15 +452,13 @@ Json::Value stanceActionToJSON(StanceAction & action)
   }
   else if(dynamic_cast<AddContactAction*>(&action))
   {
-    Contact & contact = (reinterpret_cast<AddContactAction&>(action)).contact;
     ret["type"] = Json::Value("Add");
-    ret["contact"] = contactToJSON(contact);
+    ret["contact"] = contactToJSON(action.contact());
   }
   else if(dynamic_cast<RemoveContactAction*>(&action))
   {
-    Contact & contact = (reinterpret_cast<RemoveContactAction&>(action)).contact;
     ret["type"] = Json::Value("Remove");
-    ret["contact"] = contactToJSON(contact);
+    ret["contact"] = contactToJSON(action.contact());
   }
   return ret;
 }
