@@ -1,7 +1,8 @@
-#ifndef _H_CONTROLMSGCONTACT_H_
-#define _H_CONTROLMSGCONTACT_H_
+#ifndef _H_MCCONTROLMRCONTACTMSG_H_
+#define _H_MCCONTROLMRCONTACTMSG_H_
 
 #include <cstdint>
+#include <string>
 #include <vector>
 
 #include <SpaceVecAlg/SpaceVecAlg>
@@ -11,9 +12,14 @@ namespace mc_control
 
 struct ContactMsg
 {
-  std::string robot_surf;
-  std::string env_surf;
-  std::vector<sva::PTransformd> robot_surf_points;
+  uint16_t r1_index;
+  uint16_t r2_index;
+  std::string r1_body;
+  std::string r2_body;
+  std::string r1_surface;
+  std::string r2_surface;
+  std::vector<sva::PTransformd> r1_points;
+  sva::PTransformd X_b1_b2;
   uint16_t nr_generators;
   double mu;
 };

@@ -31,7 +31,7 @@ public:
 
   bool run();
 
-  const mc_control::QPResultMsg & send(const double & t);
+  const QPResultMsg & send(const double & t);
 
   /* Called by the RT component to switch between controllers */
   bool EnablePostureController();

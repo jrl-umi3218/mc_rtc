@@ -470,46 +470,14 @@ QPSolver::QPSolver(const mc_rbdyn::Robots & robots, double timeStep)
 {
 }
 
-void QPSolver::addConstraintSet(ConstraintSet & cs)
+void QPSolver::addConstraintSet(const ConstraintSet & cs)
 {
   cs.addToSolver(solver);
-  for(auto & precb : cs.preQPCb)
-  {
-    preQPCb.push_back(precb);
-  }
-  for(auto & postcb : cs.postQPCb)
-  {
-    postQPCb.push_back(postcb);
-  }
 }
 
-void QPSolver::removeConstraintSet(ConstraintSet & cs)
+void QPSolver::removeConstraintSet(const ConstraintSet & cs)
 {
   cs.removeFromSolver(solver);
-  for(auto & precb : cs.preQPCb)
-  {
-    for(std::vector<qpcallback_t>::iterator it = preQPCb.begin();
-        it != preQPCb.end(); ++it)
-    {
-      if(it->first == precb.first)
-      {
-        preQPCb.erase(it);
-        break;
-      }
-    }
-  }
-  for(auto & postcb : cs.postQPCb)
-  {
-    for(std::vector<qpcallback_t>::iterator it = postQPCb.begin();
-        it != postQPCb.end(); ++it)
-    {
-      if(it->first == postcb.first)
-      {
-        postQPCb.erase(it);
-        break;
-      }
-    }
-  }
 }
 
 void QPSolver::updateNrVars()
@@ -517,143 +485,7 @@ void QPSolver::updateNrVars()
   solver.nrVars(robots.mbs, uniContacts, biContacts);
 }
 
-void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts, bool useFkPos)
-{
-  uniContacts.clear();
-  biContacts.clear();
-  qpRes.contacts.clear();
-
-  for(const mc_rbdyn::Contact & c : contacts)
-  {
-    sva::PTransformd * X_es_rs = 0;
-    if(useFkPos)
-    {
-      X_es_rs = new sva::PTransformd(c.compute_X_r2s_r1s(robots));
-    }
-    auto tasksC = c.taskContactWPoints(robots, X_es_rs);
-    mc_control::ContactMsg msg;
-    msg.robot_surf = c.r1Surface()->name();
-    msg.env_surf = c.r2Surface()->name();
-    msg.robot_surf_points = tasksC.points;
-    msg.nr_generators = static_cast<uint16_t>(mc_rbdyn::Stance::nrConeGen);
-    msg.mu = mc_rbdyn::Stance::defaultFriction;
-    if(tasksC.qpcontact_ptr.unilateralContact)
-    {
-      uniContacts.push_back(*tasksC.qpcontact_ptr.unilateralContact);
-      delete tasksC.qpcontact_ptr.unilateralContact;
-      tasksC.qpcontact_ptr.unilateralContact = 0;
-    }
-    else
-    {
-      biContacts.push_back(*tasksC.qpcontact_ptr.bilateralContact);
-      delete tasksC.qpcontact_ptr.bilateralContact;
-      tasksC.qpcontact_ptr.bilateralContact = 0;
-    }
-    qpRes.contacts.push_back(msg);
-    delete X_es_rs;
-  }
-  solver.nrVars(robots.mbs, uniContacts, biContacts);
-}
-
-std::vector<double> QPSolver::unilateralContactForce()
-{
-  std::vector<double> forces;
-  Eigen::VectorXd lambda_ = solver.lambdaVec();
-  unsigned int lIndex = 0;
-  for(const tasks::qp::UnilateralContact & uc : uniContacts)
-  {
-    unsigned int newLindex = lIndex + uc.nrLambda();
-    Eigen::Vector3d f = uc.force(lambda_.block(lIndex,0,newLindex,1), uc.r1Cone);
-    lIndex = newLindex;
-    forces.push_back(f(0));
-    forces.push_back(f(1));
-    forces.push_back(f(2));
-  }
-  return forces;
-}
-
-void QPSolver::update()
-{
-  solver.updateConstrSize();
-}
-
-bool QPSolver::run()
-{
-  mc_rbdyn::Robot & robot = robots.robot();
-  for(auto & pcb : preQPCb)
-  {
-    pcb.second(*(robot.mb), *(robot.mbc), solver);
-  }
-  bool ret = false;
-  if(solver.solveNoMbcUpdate(robots.mbs, robots.mbcs))
-  {
-    solver.updateMbc(*(robot.mbc), robots.robotIndex);
-    rbd::eulerIntegration(*(robot.mb), *(robot.mbc), timeStep);
-    rbd::forwardKinematics(*(robot.mb), *(robot.mbc));
-    rbd::forwardVelocity(*(robot.mb), *(robot.mbc));
-    ret = true;
-  }
-  for(auto & pcb : postQPCb)
-  {
-    pcb.second(*(robot.mb), *(robot.mbc), solver);
-  }
-  return ret;
-}
-
-const mc_control::QPResultMsg & QPSolver::send(double/*curTime*/, unsigned int stanceIndex)
-{
-  __fillResult();
-  /*FIXME Maybe we need time in header*/
-  qpRes.stance = static_cast<uint16_t>(stanceIndex);
-  return qpRes;
-}
-
-void QPSolver::__fillResult()
-{
-  const mc_rbdyn::Robot & robot = robots.robot();
-  const std::vector< std::vector<double> > & q = robot.mbc->q;
-  const std::vector< std::vector<double> > & torque = robot.mbc->jointTorque;
-  qpRes.q.clear();
-  for(const auto & qi : q)
-  {
-    for(const auto & qv : qi)
-    {
-      qpRes.q.push_back(qv);
-    }
-  }
-  qpRes.alphaDVec = solver.alphaDVec(robots.robotIndex);
-  qpRes.lambdaVec = solver.lambdaVec();
-  qpRes.torqueVec.clear();
-  for(size_t i = 1; i < torque.size(); ++i)
-  {
-    for(const auto & tv : torque[i])
-    {
-      qpRes.torqueVec.push_back(tv);
-    }
-  }
-}
-
-MRQPSolver::MRQPSolver(const mc_rbdyn::Robots & robots, double timeStep)
-: robots(robots), timeStep(timeStep), solver()
-{
-}
-
-void MRQPSolver::addConstraintSet(const ConstraintSet & cs)
-{
-  cs.addToSolver(solver);
-}
-
-void MRQPSolver::removeConstraintSet(const ConstraintSet & cs)
-{
-  cs.removeFromSolver(solver);
-}
-
-void MRQPSolver::updateNrVars()
-{
-  solver.nrVars(robots.mbs, uniContacts, biContacts);
-}
-
-std::pair<int, const tasks::qp::BilateralContact&> MRQPSolver::contactById(const tasks::qp::ContactId & id)
+std::pair<int, const tasks::qp::BilateralContact&> QPSolver::contactById(const tasks::qp::ContactId & id)
 {
   const std::vector<tasks::qp::BilateralContact> & contacts = solver.data().allContacts();
   for(size_t i = 0; i < contacts.size(); ++i)
@@ -667,7 +499,7 @@ std::pair<int, const tasks::qp::BilateralContact&> MRQPSolver::contactById(const
   return std::pair<int, const tasks::qp::BilateralContact&>(-1, tasks::qp::BilateralContact());
 }
 
-void MRQPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
+void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
 {
   uniContacts.clear();
   biContacts.clear();
@@ -692,7 +524,7 @@ void MRQPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
 
   solver.nrVars(robots.mbs, uniContacts, biContacts);
   const tasks::qp::SolverData & data = solver.data();
-  qpRes.contacts = mrContactsMsgFromMrContacts(robots, contacts);
+  qpRes.contacts = contactsMsgFromContacts(robots, contacts);
   qpRes.contacts_lambda_begin.clear();
   for(int i = 0; i < data.nrContacts(); ++i)
   {
@@ -700,12 +532,12 @@ void MRQPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
   }
 }
 
-void MRQPSolver::update()
+void QPSolver::update()
 {
   solver.updateConstrSize();
 }
 
-bool MRQPSolver::run()
+bool QPSolver::run()
 {
   bool success = false;
   if(solver.solveNoMbcUpdate(robots.mbs, robots.mbcs))
@@ -727,14 +559,14 @@ bool MRQPSolver::run()
   return success;
 }
 
-const mc_control::MRQPResultMsg & MRQPSolver::send(double/*curTime*/)
+const mc_control::QPResultMsg & QPSolver::send(double/*curTime*/)
 {
   __fillResult();
   /*FIXME Use curTime? */
   return qpRes;
 }
 
-void MRQPSolver::__fillResult()
+void QPSolver::__fillResult()
 {
   qpRes.robots_state.resize(0);
   for(size_t i = 0; i < robots.robots.size(); ++i)

@@ -24,7 +24,7 @@ public:
 
   virtual bool run() override;
 
-  virtual const mc_control::QPResultMsg & send(const double & t) override;
+  virtual const QPResultMsg & send(const double & t) override;
 
   virtual void reset(const ControllerResetData & reset_data) override;
 

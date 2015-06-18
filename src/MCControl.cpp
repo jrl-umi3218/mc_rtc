@@ -190,12 +190,12 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
         m_qOut.data.length(m_qIn.data.length());
         for(unsigned int i = 0; i < 23; ++i)
         {
-          m_qOut.data[i] = res.q[i+7];
+          m_qOut.data[i] = res.robots_state[0].q[i+7];
         }
         m_qOut.data[23] = rgQ[0];
         for(unsigned int i = 24; i < 31; ++i)
         {
-          m_qOut.data[i] = res.q[i+12];
+          m_qOut.data[i] = res.robots_state[0].q[i+12];
         }
         m_qOut.data[31] = lgQ[0];
         for(unsigned int i = 32; i < 37; ++i)
@@ -207,14 +207,14 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
           m_qOut.data[i] = lgQ[i-36];
         }
         /* FIXME Correction RPY convention here? */
-        Eigen::Vector3d rpyOut = Eigen::Quaterniond(res.q[0], res.q[1], res.q[2], res.q[3]).toRotationMatrix().eulerAngles(2, 1, 0);
+        Eigen::Vector3d rpyOut = Eigen::Quaterniond(res.robots_state[0].q[0], res.robots_state[0].q[1], res.robots_state[0].q[2], res.robots_state[0].q[3]).toRotationMatrix().eulerAngles(2, 1, 0);
         m_rpyOut.data.r = rpyOut[2];
         m_rpyOut.data.p = rpyOut[1];
         m_rpyOut.data.y = rpyOut[0];
 
-        m_pOut.data.x = res.q[4];
-        m_pOut.data.y = res.q[5];
-        m_pOut.data.z = res.q[6];
+        m_pOut.data.x = res.robots_state[0].q[4];
+        m_pOut.data.y = res.robots_state[0].q[5];
+        m_pOut.data.z = res.robots_state[0].q[6];
         ofs << "qIn" << std::endl;
         for(size_t i = 0; i < m_qIn.data.length(); ++i)
         {

@@ -34,7 +34,7 @@ public:
 
   virtual bool run() = 0;
 
-  virtual const mc_control::QPResultMsg & send(const double & t) = 0;
+  virtual const QPResultMsg & send(const double & t) = 0;
 
   virtual void reset(const ControllerResetData & reset_data) = 0;
 

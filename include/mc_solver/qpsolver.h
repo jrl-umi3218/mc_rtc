@@ -4,7 +4,7 @@
 #include <mc_control/msg/QPResult.h>
 #include <mc_control/msg/Contact.h>
 #include <mc_control/msg/Robot.h>
-#include <mc_control/msg/MRQPResult.h>
+#include <mc_control/msg/QPResult.h>
 
 #include <mc_rbdyn/Contact.h>
 #include <mc_rbdyn/robot.h>
@@ -195,45 +195,6 @@ struct QPSolver
 public:
   QPSolver(const mc_rbdyn::Robots & robots, double timeStep);
 
-  void addConstraintSet(ConstraintSet & cs);
-
-  void removeConstraintSet(ConstraintSet & cs);
-
-  void updateNrVars();
-
-  void setContacts(const std::vector<mc_rbdyn::Contact> & contacts, bool useFkPos = false);
-
-  std::vector<double> unilateralContactForce();
-
-  void update();
-
-  bool run();
-
-  const mc_control::QPResultMsg & send(double curTime = 0, unsigned int stanceIndex = 0);
-public:
-  mc_rbdyn::Robots robots;
-  double timeStep;
-  /* FIXME Replace with ConstraintSet ? */
-  std::vector<std::shared_ptr<tasks::qp::Constraint> > constraints;
-  std::vector<qpcallback_t> preQPCb;
-  std::vector<qpcallback_t> postQPCb;
-
-  std::vector<tasks::qp::UnilateralContact> uniContacts;
-  std::vector<tasks::qp::BilateralContact> biContacts;
-
-  tasks::qp::QPSolver solver;
-  mc_control::QPResultMsg qpRes;
-private:
-  void __fillResult();
-public:
-  QPSolver() {}
-};
-
-struct MRQPSolver
-{
-public:
-  MRQPSolver(const mc_rbdyn::Robots & robots, double timeStep);
-
   void addConstraintSet(const ConstraintSet & cs);
 
   void removeConstraintSet(const ConstraintSet & cs);
@@ -248,12 +209,10 @@ public:
 
   bool run();
 
-  const mc_control::MRQPResultMsg & send(double curTime = 0);
+  const mc_control::QPResultMsg & send(double curTime = 0);
 public:
   mc_rbdyn::Robots robots;
   double timeStep;
-  /* FIXME Replace with ConstraintSet ? */
-  std::vector<std::shared_ptr<tasks::qp::Constraint> > constraints;
   std::vector<qpcallback_t> preQPCb;
   std::vector<qpcallback_t> postQPCb;
 
@@ -261,11 +220,11 @@ public:
   std::vector<tasks::qp::BilateralContact> biContacts;
 
   tasks::qp::QPSolver solver;
-  mc_control::MRQPResultMsg qpRes;
+  mc_control::QPResultMsg qpRes;
 private:
   void __fillResult();
 public:
-  MRQPSolver() {}
+  QPSolver() {}
 };
 
 }

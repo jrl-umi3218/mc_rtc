@@ -141,7 +141,7 @@ bool MCDRCGlobalController::run()
   }
 }
 
-const mc_control::QPResultMsg & MCDRCGlobalController::send(const double & t)
+const QPResultMsg & MCDRCGlobalController::send(const double & t)
 {
   return controller->send(t);
 }

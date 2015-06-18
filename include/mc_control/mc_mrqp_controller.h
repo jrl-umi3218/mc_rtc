@@ -27,7 +27,7 @@ public:
 
   /*FIXME Not very good/natural but once again the actual aim is to control one
    * robot, the states of other robots is internal */
-  virtual const mc_control::QPResultMsg & send(const double & t) override;
+  virtual const QPResultMsg & send(const double & t) override;
 
   virtual void reset(const ControllerResetData & reset_data) override;
 
@@ -54,7 +54,7 @@ public:
   mc_solver::KinematicsConstraint hrp2kinematicsConstraint;
   mc_solver::CollisionsConstraint hrp2selfCollisionConstraint;
   std::shared_ptr<tasks::qp::PostureTask> hrp2postureTask;
-  std::shared_ptr<mc_solver::MRQPSolver> mrqpsolver;
+  std::shared_ptr<mc_solver::QPSolver> mrqpsolver;
   QPResultMsg qpres;
 };
 

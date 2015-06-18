@@ -4,7 +4,7 @@
 #include <Tasks/QPContacts.h>
 #include <SpaceVecAlg/SpaceVecAlg>
 
-#include <mc_control/msg/MRContact.h>
+#include <mc_control/msg/Contact.h>
 
 #include <memory>
 
@@ -17,7 +17,7 @@ namespace mc_rbdyn
 namespace mc_solver
 {
 
-std::vector<mc_control::MRContactMsg> mrContactsMsgFromMrContacts
+std::vector<mc_control::ContactMsg> contactsMsgFromContacts
   (const mc_rbdyn::Robots & robots, const std::vector<mc_rbdyn::Contact> & contacts);
 
 }

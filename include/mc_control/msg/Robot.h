@@ -2,6 +2,7 @@
 #define _H_MCCONTROLMSGROBOT_H_
 
 #include <vector>
+#include <Eigen/Core>
 
 namespace mc_control
 {

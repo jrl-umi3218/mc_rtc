@@ -7,10 +7,10 @@
 namespace mc_solver
 {
 
-std::vector<mc_control::MRContactMsg> mrContactsMsgFromMrContacts
+std::vector<mc_control::ContactMsg> contactsMsgFromContacts
   (const mc_rbdyn::Robots & robots, const std::vector<mc_rbdyn::Contact> & contacts)
 {
-  std::vector<mc_control::MRContactMsg> res;
+  std::vector<mc_control::ContactMsg> res;
 
   for(const auto & c : contacts)
   {
@@ -24,7 +24,7 @@ std::vector<mc_control::MRContactMsg> mrContactsMsgFromMrContacts
     sva::PTransformd X_0_b2 = r2.mbc->bodyPosW[r2BodyIndex];
     sva::PTransformd X_b1_b2 = X_0_b2*X_0_b1.inv();
 
-    mc_control::MRContactMsg msg;
+    mc_control::ContactMsg msg;
     msg.r1_index = static_cast<uint16_t>(c.r1Index());
     msg.r2_index = static_cast<uint16_t>(c.r2Index());
     msg.r1_body = c.r1Surface()->bodyName();

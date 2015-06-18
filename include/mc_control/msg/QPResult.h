@@ -1,8 +1,9 @@
-#ifndef _H_MCCONTROLMSGQPRESULT_H_
-#define _H_MCCONTROLMSGQPRESULT_H_
+#ifndef _H_MCCONTROLMSGMRQPRESULT_H_
+#define _H_MCCONTROLMSGMRQPRESULT_H_
 
 #include <cstdint>
 #include <vector>
+#include <mc_control/msg/Robot.h>
 #include <mc_control/msg/Contact.h>
 
 namespace mc_control
@@ -10,12 +11,10 @@ namespace mc_control
 
 struct QPResultMsg
 {
-  uint16_t stance;
-  std::vector<double> q;
-  Eigen::VectorXd alphaDVec;
+  std::vector<RobotMsg> robots_state;
   Eigen::VectorXd lambdaVec;
-  std::vector<double> torqueVec;
-  std::vector<mc_control::ContactMsg> contacts;
+  std::vector<ContactMsg> contacts;
+  std::vector<uint16_t> contacts_lambda_begin;
 };
 
 }

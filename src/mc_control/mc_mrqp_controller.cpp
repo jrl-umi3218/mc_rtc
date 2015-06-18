@@ -30,7 +30,7 @@ MCMRQPController::MCMRQPController(const std::vector<std::shared_ptr<mc_rbdyn::R
       rbd::forwardVelocity(*(robot.mb), *(robot.mbc));
     }
 
-    mrqpsolver = std::shared_ptr<mc_solver::MRQPSolver>(new mc_solver::MRQPSolver(robots, timeStep));
+    mrqpsolver.reset(new mc_solver::QPSolver(robots, timeStep));
   }
   {
     /* Initiate grippers */
@@ -88,11 +88,7 @@ bool MCMRQPController::run()
 
 const QPResultMsg & MCMRQPController::send(const double & t)
 {
-  const MRQPResultMsg & mrqpres = mrqpsolver->send(t);
-  const std::vector<double> & mrq = mrqpres.robots_state[0].q;
-  qpres.q.resize(mrq.size());
-  std::copy(mrq.begin(), mrq.end(), qpres.q.begin());
-  return qpres;
+  return mrqpsolver->send(t);
 }
 
 void MCMRQPController::reset(const ControllerResetData & reset_data)
