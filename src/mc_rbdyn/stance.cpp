@@ -114,6 +114,13 @@ const Contact & IdentityContactAction::contact() const
   throw(err.c_str());
 }
 
+Contact & IdentityContactAction::contact()
+{
+  std::string err = "Tried to access contact on IdentityContactAction";
+  std::cerr << err << std::endl;
+  throw(err.c_str());
+}
+
 AddContactAction::AddContactAction(const Contact & contact)
 : _contact(contact)
 {
@@ -153,6 +160,11 @@ std::string AddContactAction::type()
 }
 
 const Contact & AddContactAction::contact() const
+{
+  return _contact;
+}
+
+Contact & AddContactAction::contact()
 {
   return _contact;
 }
@@ -204,6 +216,11 @@ std::string RemoveContactAction::type()
 }
 
 const Contact & RemoveContactAction::contact() const
+{
+  return _contact;
+}
+
+Contact & RemoveContactAction::contact()
 {
   return _contact;
 }

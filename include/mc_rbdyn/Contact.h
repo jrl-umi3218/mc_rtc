@@ -6,6 +6,24 @@
 
 #include <memory>
 
+namespace mc_solver
+{
+
+  struct QPContactPtr
+  {
+    QPContactPtr() : unilateralContact(0), bilateralContact(0) {}
+    tasks::qp::UnilateralContact * unilateralContact;
+    tasks::qp::BilateralContact * bilateralContact;
+  };
+
+  struct QPContactPtrWPoints
+  {
+    QPContactPtr qpcontact_ptr;
+    std::vector<sva::PTransformd> points;
+  };
+
+}
+
 namespace mc_rbdyn
 {
 
@@ -68,9 +86,14 @@ public:
 
   tasks::qp::ContactId contactId(const mc_rbdyn::Robots & robots) const;
 
+  mc_solver::QPContactPtr taskContact(const mc_rbdyn::Robots & robots) const;
+
+  mc_solver::QPContactPtrWPoints taskContactWPoints(const mc_rbdyn::Robots & robots, const sva::PTransformd * X_es_rs = 0) const;
+
   std::string toStr() const;
-public:
+private:
   std::unique_ptr<ContactImpl> impl;
+  mc_solver::QPContactPtr taskContact(const mc_rbdyn::Robots & robots, const sva::PTransformd & X_b1_b2, const std::vector<sva::PTransformd> & points) const;
 };
 
 bool operator==(const Contact & lhs, const Contact & rhs);

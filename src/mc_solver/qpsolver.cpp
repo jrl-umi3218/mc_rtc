@@ -471,24 +471,24 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts, bool
     {
       X_es_rs = new sva::PTransformd(c.compute_X_r2s_r1s(robots));
     }
-    std::pair<mc_solver::QPContactPtr, std::vector<sva::PTransformd> > tasksC = tasksContactFromMcContact(robots, c, X_es_rs);
+    auto tasksC = c.taskContactWPoints(robots, X_es_rs);
     mc_control::ContactMsg msg;
     msg.robot_surf = c.r1Surface()->name();
     msg.env_surf = c.r2Surface()->name();
-    msg.robot_surf_points = tasksC.second;
+    msg.robot_surf_points = tasksC.points;
     msg.nr_generators = static_cast<uint16_t>(mc_rbdyn::Stance::nrConeGen);
     msg.mu = mc_rbdyn::Stance::defaultFriction;
-    if(tasksC.first.unilateralContact)
+    if(tasksC.qpcontact_ptr.unilateralContact)
     {
-      uniContacts.push_back(*tasksC.first.unilateralContact);
-      delete tasksC.first.unilateralContact;
-      tasksC.first.unilateralContact = 0;
+      uniContacts.push_back(*tasksC.qpcontact_ptr.unilateralContact);
+      delete tasksC.qpcontact_ptr.unilateralContact;
+      tasksC.qpcontact_ptr.unilateralContact = 0;
     }
     else
     {
-      biContacts.push_back(*tasksC.first.bilateralContact);
-      delete tasksC.first.bilateralContact;
-      tasksC.first.bilateralContact = 0;
+      biContacts.push_back(*tasksC.qpcontact_ptr.bilateralContact);
+      delete tasksC.qpcontact_ptr.bilateralContact;
+      tasksC.qpcontact_ptr.bilateralContact = 0;
     }
     qpRes.contacts.push_back(msg);
     delete X_es_rs;
@@ -652,7 +652,7 @@ void MRQPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
 
   for(const mc_rbdyn::Contact & c : contacts)
   {
-    QPContactPtr qcptr = mrTasksContactFromMcContact(robots, c);
+    QPContactPtr qcptr = c.taskContact(robots);
     if(qcptr.unilateralContact)
     {
       uniContacts.push_back(tasks::qp::UnilateralContact(*qcptr.unilateralContact));

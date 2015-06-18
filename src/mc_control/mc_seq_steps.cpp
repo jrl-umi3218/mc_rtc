@@ -39,15 +39,15 @@ bool live_chooseContactT::eval(MCSeqController & ctl)
                      rmCurAction->contact().r1Surface()->bodyName() == addTargetAction->contact().r1Surface()->bodyName();
   if(isAddRemove and rmCurAction->contact().r1Surface()->type() != "gripper")
   {
-    ctl.currentContact = const_cast<mc_rbdyn::Contact*>(&(rmCurAction->contact()));
-    ctl.targetContact = const_cast<mc_rbdyn::Contact*>(&(addTargetAction->contact()));
+    ctl.currentContact = &(rmCurAction->contact());
+    ctl.targetContact  = &(addTargetAction->contact());
     return true;
   }
   bool isAddOnly = addTargetAction != 0;
   if(isAddOnly and addTargetAction->contact().r1Surface()->type() != "gripper")
   {
     ctl.currentContact = 0;
-    ctl.targetContact = const_cast<mc_rbdyn::Contact*>(&(addTargetAction->contact()));
+    ctl.targetContact = &(addTargetAction->contact());
     std::string bodyName = ctl.targetContact->r1Surface()->bodyName();
     /* FIXME Hard-coded */
     if(bodyName == "RARM_LINK6")
@@ -517,15 +517,15 @@ bool live_chooseGripperT::eval(MCSeqController & ctl)
     {
       ctl.isGripperAttached = true;
       ctl.isGripperWillBeAttached = true;
-      ctl.currentContact = const_cast<mc_rbdyn::Contact*>(&(curRm->contact()));
-      ctl.targetContact =  const_cast<mc_rbdyn::Contact*>(&(tarAdd->contact()));
+      ctl.currentContact = &(curRm->contact());
+      ctl.targetContact =  &(tarAdd->contact());
     }
     else
     {
       ctl.isGripperAttached = false;
       ctl.isGripperWillBeAttached = true;
-      ctl.currentContact = const_cast<mc_rbdyn::Contact*>(&(tarAdd->contact()));
-      ctl.targetContact =  const_cast<mc_rbdyn::Contact*>(&(tarAdd->contact()));
+      ctl.currentContact = &(tarAdd->contact());
+      ctl.targetContact =  &(tarAdd->contact());
     }
     return true;
   }
@@ -533,8 +533,8 @@ bool live_chooseGripperT::eval(MCSeqController & ctl)
   {
     ctl.isGripperAttached = true;
     ctl.isGripperWillBeAttached = false;
-    ctl.currentContact = const_cast<mc_rbdyn::Contact*>(&(tarRm->contact()));
-    ctl.targetContact =  const_cast<mc_rbdyn::Contact*>(&(tarRm->contact()));
+    ctl.currentContact = &(tarRm->contact());
+    ctl.targetContact =  &(tarRm->contact());
     return true;
   }
 

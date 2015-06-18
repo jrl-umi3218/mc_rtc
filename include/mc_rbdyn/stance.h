@@ -56,6 +56,8 @@ struct StanceAction
   virtual std::string type() = 0;
 
   virtual const Contact & contact() const = 0;
+
+  virtual Contact & contact() = 0;
 };
 
 struct IdentityContactAction : public StanceAction
@@ -70,6 +72,8 @@ public:
   virtual std::string type() override;
 
   virtual const Contact & contact() const override;
+
+  virtual Contact & contact() override;
 };
 
 struct AddContactAction : public StanceAction
@@ -86,6 +90,8 @@ public:
   virtual std::string type() override;
 
   virtual const Contact & contact() const override;
+
+  virtual Contact & contact() override;
 private:
   Contact _contact;
 };
@@ -104,6 +110,8 @@ public:
   virtual std::string type() override;
 
   virtual const Contact & contact() const override;
+
+  virtual Contact & contact() override;
 private:
   Contact _contact;
 };

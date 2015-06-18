@@ -4,6 +4,7 @@
 #include <mc_rbdyn/robot.h>
 
 #include <mc_rbdyn/PlanarSurface.h>
+#include <mc_rbdyn/stance.h>
 
 #include <geos/geom/Polygon.h>
 #include <geos/geom/LinearRing.h>
@@ -256,6 +257,73 @@ tasks::qp::ContactId Contact::contactId(const mc_rbdyn::Robots & robots) const
                               robots.robots[impl->r1Index].bodyIdByName(impl->r1Surface->bodyName()),
                               robots.robots[impl->r2Index].bodyIdByName(impl->r2Surface->bodyName()));
 #pragma GCC diagnostic pop
+}
+
+mc_solver::QPContactPtr Contact::taskContact(const mc_rbdyn::Robots & robots) const
+{
+  const mc_rbdyn::Robot & r1 = robots.robots[impl->r1Index];
+  const mc_rbdyn::Robot & r2 = robots.robots[impl->r2Index];
+  unsigned int r1BodyIndex = r1.bodyIndexByName(impl->r1Surface->bodyName());
+  unsigned int r2BodyIndex = r2.bodyIndexByName(impl->r2Surface->bodyName());
+  sva::PTransformd X_0_b1 = r1.mbc->bodyPosW[r1BodyIndex];
+  sva::PTransformd X_0_b2 = r2.mbc->bodyPosW[r2BodyIndex];
+  sva::PTransformd X_b1_b2 = X_0_b2*X_0_b1.inv();
+  const auto & r1Surface = *(impl->r1Surface);
+  return taskContact(robots, X_b1_b2, r1Surface.points());
+}
+
+mc_solver::QPContactPtrWPoints Contact::taskContactWPoints(const mc_rbdyn::Robots & robots, const sva::PTransformd * X_es_rs) const
+{
+  mc_solver::QPContactPtrWPoints res;
+  if(X_es_rs)
+  {
+    sva::PTransformd X_b1_b2 = X_es_rs->inv();
+    res.points = computePoints(*(impl->r1Surface), *(impl->r2Surface), *X_es_rs);
+    res.qpcontact_ptr = taskContact(robots, X_b1_b2, res.points);
+  }
+  else
+  {
+    res.qpcontact_ptr = taskContact(robots);
+    const auto & r1Surface = *(impl->r1Surface);
+    res.points = r1Surface.points();
+  }
+  return res;
+}
+
+mc_solver::QPContactPtr Contact::taskContact(const mc_rbdyn::Robots & robots, const sva::PTransformd & X_b1_b2, const std::vector<sva::PTransformd> & surf_points) const
+{
+  mc_solver::QPContactPtr res;
+
+  const mc_rbdyn::Robot & r1 = robots.robots[impl->r1Index];
+  const mc_rbdyn::Robot & r2 = robots.robots[impl->r2Index];
+
+  unsigned int r1BodyId = r1.bodyIdByName(impl->r1Surface->bodyName());
+  unsigned int r2BodyId = r2.bodyIdByName(impl->r2Surface->bodyName());
+
+  std::vector<Eigen::Vector3d> points;
+  std::vector<Eigen::Matrix3d> frames;
+  for(const auto & p : surf_points)
+  {
+    points.push_back(p.translation());
+    frames.push_back(p.rotation());
+  }
+
+  if(impl->r1Surface->type() == "planar")
+  {
+    res.unilateralContact = new tasks::qp::UnilateralContact(impl->r1Index, impl->r2Index, r1BodyId, r2BodyId, impl->ambiguityId, points, frames[0], X_b1_b2, Stance::nrConeGen, Stance::defaultFriction, impl->X_b_s);
+  }
+  else if(impl->r1Surface->type() == "gripper")
+  {
+    res.bilateralContact = new tasks::qp::BilateralContact(impl->r1Index, impl->r2Index, r1BodyId, r2BodyId, impl->ambiguityId, points, frames, X_b1_b2, Stance::nrConeGen, Stance::defaultFriction, impl->X_b_s);
+  }
+  else
+  {
+    std::string err = "Robot's contact surface is neither planar nor gripper";
+    std::cerr << err << std::endl;
+    throw(err.c_str());
+  }
+
+  return res;
 }
 
 std::string Contact::toStr() const
