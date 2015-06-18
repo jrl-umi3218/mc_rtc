@@ -1,9 +1,6 @@
 #include <mc_solver/qpsolver.h>
 
 #include <Tasks/Bounds.h>
-#include <Tasks/QPConstr.h>
-#include <Tasks/QPContactConstr.h>
-#include <Tasks/QPMotionConstr.h>
 
 #include <RBDyn/EulerIntegration.h>
 #include <RBDyn/FK.h>
@@ -32,25 +29,48 @@ ContactConstraint::ContactConstraint(double timeStep, ContactType contactType, b
 {
   if(contactType == Acceleration)
   {
-    contactConstr = std::shared_ptr<tasks::qp::Constraint>(new tasks::qp::ContactAccConstr());
+    contactConstr.reset(new tasks::qp::ContactAccConstr());
   }
   else if(contactType == Velocity)
   {
-    contactConstr = std::shared_ptr<tasks::qp::Constraint>(new tasks::qp::ContactSpeedConstr(timeStep));
+    contactConstr.reset(new tasks::qp::ContactSpeedConstr(timeStep));
   }
   else if(contactType == Position)
   {
-    contactConstr = std::shared_ptr<tasks::qp::Constraint>(new tasks::qp::ContactPosConstr(timeStep));
+    contactConstr.reset(new tasks::qp::ContactPosConstr(timeStep));
   }
   else
   {
     std::cerr << "Trying to create a contact constraint from an unknown contact constraint type" << std::endl;
     throw(std::string("bad constraint type"));
   }
-  constraints.push_back(contactConstr);
   if(dynamics)
   {
-    constraints.push_back(std::shared_ptr<tasks::qp::Constraint>(new tasks::qp::PositiveLambda()));
+    posLambdaConstr.reset(new tasks::qp::PositiveLambda());
+  }
+}
+
+void ContactConstraint::addToSolver(tasks::qp::QPSolver & solver) const
+{
+  if(contactConstr)
+  {
+    contactConstr->addToSolver(solver);
+  }
+  if(posLambdaConstr)
+  {
+    posLambdaConstr->addToSolver(solver);
+  }
+}
+
+void ContactConstraint::removeFromSolver(tasks::qp::QPSolver & solver) const
+{
+  if(contactConstr)
+  {
+    contactConstr->removeFromSolver(solver);
+  }
+  if(posLambdaConstr)
+  {
+    posLambdaConstr->removeFromSolver(solver);
   }
 }
 
@@ -92,15 +112,36 @@ KinematicsConstraint::KinematicsConstraint(const mc_rbdyn::Robots & robots, unsi
       }
       tasks::AlphaBound alphaBound(vl, vu);
 
-      jointLimitsConstr = std::shared_ptr<tasks::qp::Constraint>(new tasks::qp::DamperJointLimitsConstr(robots.mbs, robotIndex,
-                                                                                                  qBound, alphaBound, percentInter,
-                                                                                                  percentSecur, offset, timeStep));
+      damperJointLimitsConstr.reset(new tasks::qp::DamperJointLimitsConstr(robots.mbs, robotIndex, qBound, alphaBound, percentInter, percentSecur, offset, timeStep));
     }
     else
     {
-      jointLimitsConstr = std::shared_ptr<tasks::qp::Constraint>(new tasks::qp::JointLimitsConstr(robots.mbs, robotIndex, qBound, timeStep));
+      jointLimitsConstr.reset(new tasks::qp::JointLimitsConstr(robots.mbs, robotIndex, qBound, timeStep));
     }
-    constraints.push_back(jointLimitsConstr);
+  }
+}
+
+void KinematicsConstraint::addToSolver(tasks::qp::QPSolver & solver) const
+{
+  if(damperJointLimitsConstr)
+  {
+    damperJointLimitsConstr->addToSolver(solver);
+  }
+  if(jointLimitsConstr)
+  {
+    jointLimitsConstr->addToSolver(solver);
+  }
+}
+
+void KinematicsConstraint::removeFromSolver(tasks::qp::QPSolver & solver) const
+{
+  if(damperJointLimitsConstr)
+  {
+    damperJointLimitsConstr->removeFromSolver(solver);
+  }
+  if(jointLimitsConstr)
+  {
+    jointLimitsConstr->removeFromSolver(solver);
   }
 }
 
@@ -138,7 +179,7 @@ DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots, unsigned
     {
       sjList.push_back(tasks::qp::SpringJoint(robot.jointIdByName(flex.jointName), flex.K, flex.C, flex.O));
     }
-    motionConstr = std::shared_ptr<tasks::qp::Constraint>(new tasks::qp::MotionSpringConstr(robots.mbs, robotIndex, tBound, sjList));
+    motionSpringConstr.reset(new tasks::qp::MotionSpringConstr(robots.mbs, robotIndex, tBound, sjList));
   }
   else if(robot.tlPoly.size() != 0)
   {
@@ -147,9 +188,32 @@ DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots, unsigned
   }
   else
   {
-    motionConstr = std::shared_ptr<tasks::qp::Constraint>(new tasks::qp::MotionConstr(robots.mbs, robotIndex, tBound));
+    motionConstr.reset(new tasks::qp::MotionConstr(robots.mbs, robotIndex, tBound));
   }
-  constraints.push_back(motionConstr);
+}
+
+void DynamicsConstraint::addToSolver(tasks::qp::QPSolver & solver) const
+{
+  if(motionConstr)
+  {
+    motionConstr->addToSolver(solver);
+  }
+  if(motionSpringConstr)
+  {
+    motionSpringConstr->addToSolver(solver);
+  }
+}
+
+void DynamicsConstraint::removeFromSolver(tasks::qp::QPSolver & solver) const
+{
+  if(motionConstr)
+  {
+    motionConstr->removeFromSolver(solver);
+  }
+  if(motionSpringConstr)
+  {
+    motionSpringConstr->removeFromSolver(solver);
+  }
 }
 
 bool operator==(const Collision & lhs, const Collision & rhs)
@@ -168,7 +232,6 @@ CollisionsConstraint::CollisionsConstraint(const mc_rbdyn::Robots & robots, unsi
 : collConstr(new tasks::qp::CollisionConstr(robots.mbs, timeStep)),
   r1Index(r1Index), r2Index(r2Index), collId(0), collIdDict()
 {
-  constraints.push_back(collConstr);
 }
 
 bool CollisionsConstraint::removeCollision(const mc_rbdyn::Robots &/*robots*/, const std::string & b1Name, const std::string & b2Name)
@@ -177,7 +240,7 @@ bool CollisionsConstraint::removeCollision(const mc_rbdyn::Robots &/*robots*/, c
   if(not p.second.isNone())
   {
     cols.erase(std::find(cols.begin(), cols.end(), p.second));
-    return (dynamic_cast<tasks::qp::CollisionConstr*>(collConstr.get()))->rmCollision(p.first);
+    return collConstr->rmCollision(p.first);
   }
   return false;
 }
@@ -196,7 +259,7 @@ bool CollisionsConstraint::removeCollisionByBody(const mc_rbdyn::Robots & robots
     {
       auto out = __popCollId(col.body1, col.body2);
       toRm.push_back(out.second);
-      dynamic_cast<tasks::qp::CollisionConstr*>(collConstr.get())->rmCollision(out.first);
+      collConstr->rmCollision(out.first);
     }
   }
   for(const auto & it : toRm)
@@ -216,7 +279,7 @@ void CollisionsConstraint::addCollision(const mc_rbdyn::Robots & robots, const C
   const sva::PTransformd & X_b1_c = r1.collisionTransforms.at(body1.first);
   const sva::PTransformd & X_b2_c = r2.collisionTransforms.at(body2.first);
   unsigned int collId = __createCollId(col);
-  dynamic_cast<tasks::qp::CollisionConstr*>(collConstr.get())->addCollision(robots.mbs, collId, r1Index, body1.first, const_cast<sch::S_Polyhedron*>(body1.second.get()), X_b1_c, r2Index, body2.first, const_cast<sch::S_Polyhedron*>(body2.second.get()), X_b2_c, col.iDist, col.sDist, col.damping, defaultDampingOffset);
+  collConstr->addCollision(robots.mbs, collId, r1Index, body1.first, const_cast<sch::S_Polyhedron*>(body1.second.get()), X_b1_c, r2Index, body2.first, const_cast<sch::S_Polyhedron*>(body2.second.get()), X_b2_c, col.iDist, col.sDist, col.damping, defaultDampingOffset);
 }
 
 void CollisionsConstraint::addCollisions(const mc_rbdyn::Robots & robots, const std::vector<Collision> & cols)
@@ -224,6 +287,22 @@ void CollisionsConstraint::addCollisions(const mc_rbdyn::Robots & robots, const 
   for(const auto & c : cols)
   {
     addCollision(robots, c);
+  }
+}
+
+void CollisionsConstraint::addToSolver(tasks::qp::QPSolver & solver) const
+{
+  if(collConstr)
+  {
+    collConstr->addToSolver(solver);
+  }
+}
+
+void CollisionsConstraint::removeFromSolver(tasks::qp::QPSolver & solver) const
+{
+  if(collConstr)
+  {
+    collConstr->removeFromSolver(solver);
   }
 }
 
@@ -258,8 +337,6 @@ RobotEnvCollisionsConstraint::RobotEnvCollisionsConstraint(const mc_rbdyn::Robot
   selfCollConstrMng(robots, robots.robotIndex, robots.robotIndex, timeStep),
   envCollConstrMng(robots, robots.robotIndex, robots.envIndex, timeStep)
 {
-  constraints.push_back(selfCollConstrMng.collConstr);
-  constraints.push_back(envCollConstrMng.collConstr);
 }
 
 bool RobotEnvCollisionsConstraint::removeEnvCollision(const mc_rbdyn::Robots & robots, const std::string & rBodyName, const std::string & eBodyName)
@@ -365,6 +442,18 @@ void RobotEnvCollisionsConstraint::setSelfCollisions(const mc_rbdyn::Robots & ro
   }
 }
 
+void RobotEnvCollisionsConstraint::addToSolver(tasks::qp::QPSolver & solver) const
+{
+  selfCollConstrMng.addToSolver(solver);
+  envCollConstrMng.addToSolver(solver);
+}
+
+void RobotEnvCollisionsConstraint::removeFromSolver(tasks::qp::QPSolver & solver) const
+{
+  selfCollConstrMng.removeFromSolver(solver);
+  envCollConstrMng.removeFromSolver(solver);
+}
+
 std::set<unsigned int> RobotEnvCollisionsConstraint::__bodiesFromContacts(const mc_rbdyn::Robot & robot, const std::vector<mc_rbdyn::Contact> & contacts)
 {
   std::set<unsigned int> res;
@@ -383,22 +472,7 @@ QPSolver::QPSolver(const mc_rbdyn::Robots & robots, double timeStep)
 
 void QPSolver::addConstraintSet(ConstraintSet & cs)
 {
-  for(std::shared_ptr<tasks::qp::Constraint> & cptr : cs.constraints)
-  {
-    if(auto c = dynamic_cast<tasks::qp::PositiveLambda*>(cptr.get())) { c->addToSolver(solver); }
-    else if(auto c = dynamic_cast<tasks::qp::MotionConstrCommon*>(cptr.get())) { c->addToSolver(solver); }
-    else if(auto c = dynamic_cast<tasks::qp::ContactConstr*>(cptr.get())) { c->addToSolver(solver); }
-    else if(auto c = dynamic_cast<tasks::qp::JointLimitsConstr*>(cptr.get())) { c->addToSolver(solver); }
-    else if(auto c = dynamic_cast<tasks::qp::DamperJointLimitsConstr*>(cptr.get())) { c->addToSolver(solver); }
-    else if(auto c = dynamic_cast<tasks::qp::CollisionConstr*>(cptr.get())) { c->addToSolver(solver); }
-    else if(auto c = dynamic_cast<tasks::qp::CoMIncPlaneConstr*>(cptr.get())) { c->addToSolver(solver); }
-    else if(auto c = dynamic_cast<tasks::qp::GripperTorqueConstr*>(cptr.get())) { c->addToSolver(solver); }
-    else if(auto c = dynamic_cast<tasks::qp::BoundedSpeedConstr*>(cptr.get())) { c->addToSolver(solver); }
-    else
-    {
-      std::cerr << "Tried to add a constraint but its type is not recognized..." << std::endl;
-    }
-  }
+  cs.addToSolver(solver);
   for(auto & precb : cs.preQPCb)
   {
     preQPCb.push_back(precb);
@@ -411,22 +485,7 @@ void QPSolver::addConstraintSet(ConstraintSet & cs)
 
 void QPSolver::removeConstraintSet(ConstraintSet & cs)
 {
-  for(std::shared_ptr<tasks::qp::Constraint> & cptr : cs.constraints)
-  {
-    if(auto c = dynamic_cast<tasks::qp::PositiveLambda*>(cptr.get())) { c->removeFromSolver(solver); }
-    else if(auto c = dynamic_cast<tasks::qp::MotionConstrCommon*>(cptr.get())) { c->removeFromSolver(solver); }
-    else if(auto c = dynamic_cast<tasks::qp::ContactConstr*>(cptr.get())) { c->removeFromSolver(solver); }
-    else if(auto c = dynamic_cast<tasks::qp::JointLimitsConstr*>(cptr.get())) { c->removeFromSolver(solver); }
-    else if(auto c = dynamic_cast<tasks::qp::DamperJointLimitsConstr*>(cptr.get())) { c->removeFromSolver(solver); }
-    else if(auto c = dynamic_cast<tasks::qp::CollisionConstr*>(cptr.get())) { c->removeFromSolver(solver); }
-    else if(auto c = dynamic_cast<tasks::qp::CoMIncPlaneConstr*>(cptr.get())) { c->removeFromSolver(solver); }
-    else if(auto c = dynamic_cast<tasks::qp::GripperTorqueConstr*>(cptr.get())) { c->removeFromSolver(solver); }
-    else if(auto c = dynamic_cast<tasks::qp::BoundedSpeedConstr*>(cptr.get())) { c->removeFromSolver(solver); }
-    else
-    {
-      std::cerr << "Tried to remove a constraint but its type is not recognized..." << std::endl;
-    }
-  }
+  cs.removeFromSolver(solver);
   for(auto & precb : cs.preQPCb)
   {
     for(std::vector<qpcallback_t>::iterator it = preQPCb.begin();
@@ -581,48 +640,12 @@ MRQPSolver::MRQPSolver(const mc_rbdyn::Robots & robots, double timeStep)
 
 void MRQPSolver::addConstraintSet(const ConstraintSet & cs)
 {
-  for(const std::shared_ptr<tasks::qp::Constraint> & cptr : cs.constraints)
-  {
-    if(auto c = dynamic_cast<tasks::qp::ConstraintFunction<tasks::qp::Bound>*>(cptr.get()))
-    {
-      c->addToSolver(solver);
-    }
-    if(auto c = dynamic_cast<tasks::qp::ConstraintFunction<tasks::qp::Equality>*>(cptr.get()))
-    {
-      c->addToSolver(solver);
-    }
-    if(auto c = dynamic_cast<tasks::qp::ConstraintFunction<tasks::qp::GenInequality>*>(cptr.get()))
-    {
-      c->addToSolver(solver);
-    }
-    if(auto c = dynamic_cast<tasks::qp::ConstraintFunction<tasks::qp::Inequality>*>(cptr.get()))
-    {
-      c->addToSolver(solver);
-    }
-  }
+  cs.addToSolver(solver);
 }
 
 void MRQPSolver::removeConstraintSet(const ConstraintSet & cs)
 {
-  for(const std::shared_ptr<tasks::qp::Constraint> & cptr : cs.constraints)
-  {
-    if(auto c = dynamic_cast<tasks::qp::ConstraintFunction<tasks::qp::Bound>*>(cptr.get()))
-    {
-      c->removeFromSolver(solver);
-    }
-    if(auto c = dynamic_cast<tasks::qp::ConstraintFunction<tasks::qp::Equality>*>(cptr.get()))
-    {
-      c->removeFromSolver(solver);
-    }
-    if(auto c = dynamic_cast<tasks::qp::ConstraintFunction<tasks::qp::GenInequality>*>(cptr.get()))
-    {
-      c->removeFromSolver(solver);
-    }
-    if(auto c = dynamic_cast<tasks::qp::ConstraintFunction<tasks::qp::Inequality>*>(cptr.get()))
-    {
-      c->removeFromSolver(solver);
-    }
-  }
+  cs.removeFromSolver(solver);
 }
 
 void MRQPSolver::updateNrVars()

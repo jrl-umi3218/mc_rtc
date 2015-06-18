@@ -11,6 +11,9 @@
 
 #include <SpaceVecAlg/SpaceVecAlg>
 
+#include <Tasks/QPConstr.h>
+#include <Tasks/QPContactConstr.h>
+#include <Tasks/QPMotionConstr.h>
 #include <Tasks/QPSolver.h>
 
 #include <memory>
@@ -35,7 +38,10 @@ bool operator!=(const qpcallback_t & lhs, const qpcallback_t & rhs);
 struct ConstraintSet
 {
 public:
-  std::vector<std::shared_ptr<tasks::qp::Constraint> > constraints;
+  virtual void addToSolver(tasks::qp::QPSolver & solver) const = 0;
+
+  virtual void removeFromSolver(tasks::qp::QPSolver & solver) const = 0;
+
   std::vector<qpcallback_t> preQPCb;
   std::vector<qpcallback_t> postQPCb;
 };
@@ -51,9 +57,13 @@ public:
   };
 public:
   ContactConstraint(double timeStep, ContactType contactType= Velocity, bool dynamics = true);
+
+  virtual void addToSolver(tasks::qp::QPSolver & solver) const override;
+
+  virtual void removeFromSolver(tasks::qp::QPSolver & solver) const override;
 public:
-  /* This one actually holds a tasks::qp::ContactConstraint */
-  std::shared_ptr<tasks::qp::Constraint> contactConstr;
+  std::shared_ptr<tasks::qp::ContactConstr> contactConstr;
+  std::shared_ptr<tasks::qp::PositiveLambda> posLambdaConstr;
 public:
   ContactConstraint() {}
 };
@@ -63,9 +73,14 @@ struct KinematicsConstraint : public ConstraintSet
 public:
   KinematicsConstraint(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double timeStep, bool isStatic = false,
                        const std::vector<double> & damper = {}, double velocityPercent = 1.0);
+
+  virtual void addToSolver(tasks::qp::QPSolver & solver) const override;
+
+  virtual void removeFromSolver(tasks::qp::QPSolver & solver) const override;
 public:
   /* This one actually holds a tasks::qp::JointLimitsConstr or a tasks::qp::DamperJointLimitsConstr */
-  std::shared_ptr<tasks::qp::Constraint> jointLimitsConstr;
+  std::shared_ptr<tasks::qp::JointLimitsConstr> jointLimitsConstr;
+  std::shared_ptr<tasks::qp::DamperJointLimitsConstr> damperJointLimitsConstr;
   bool damped;
 public:
   KinematicsConstraint() {}
@@ -76,9 +91,14 @@ struct DynamicsConstraint : public KinematicsConstraint
 public:
   DynamicsConstraint(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double timeStep, bool isStatic = false,
                      const std::vector<double> & damper = {}, double velocityPercent = 1.0, bool infTorque = false);
+
+  virtual void addToSolver(tasks::qp::QPSolver & solver) const override;
+
+  virtual void removeFromSolver(tasks::qp::QPSolver & solver) const override;
 public:
   /* This one actually holds a tasks::qp::MotionSpringConstr, a tasks::qp::MotionPolyConstr or a tasks::qp::MotionConstr */
-  std::shared_ptr<tasks::qp::Constraint> motionConstr;
+  std::shared_ptr<tasks::qp::MotionConstr> motionConstr;
+  std::shared_ptr<tasks::qp::MotionSpringConstr> motionSpringConstr;
   bool is_spring;
   bool is_poly;
 public:
@@ -117,9 +137,12 @@ public:
   void addCollision(const mc_rbdyn::Robots & robots, const Collision & col);
 
   void addCollisions(const mc_rbdyn::Robots & robots, const std::vector<Collision> & cols);
+
+  virtual void addToSolver(tasks::qp::QPSolver & solver) const override;
+
+  virtual void removeFromSolver(tasks::qp::QPSolver & solver) const override;
 public:
-  /* This actually holds a tasks::qp::CollisionConstr */
-  std::shared_ptr<tasks::qp::Constraint> collConstr;
+  std::shared_ptr<tasks::qp::CollisionConstr> collConstr;
   unsigned int r1Index;
   unsigned int r2Index;
   std::vector<Collision> cols;
@@ -153,6 +176,10 @@ public:
 
   void setSelfCollisions(const mc_rbdyn::Robots & robots, const std::vector<mc_rbdyn::Contact> & contacts,
                                                          const std::vector<Collision> & cols);
+
+  virtual void addToSolver(tasks::qp::QPSolver & solver) const override;
+
+  virtual void removeFromSolver(tasks::qp::QPSolver & solver) const override;
 public:
   const mc_rbdyn::Robot & robot;
   const mc_rbdyn::Robot & env;
