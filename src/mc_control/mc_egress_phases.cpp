@@ -42,10 +42,10 @@ public:
       if(!done_setup_lift)
       {
         ctl.qpsolver->setContacts({
-          mc_rbdyn::Contact(ctl.robot().surfaces.at("Butthock"), ctl.env().surfaces.at("left_seat")),
-          mc_rbdyn::Contact(ctl.robot().surfaces.at("LFullSole"), ctl.env().surfaces.at("exit_platform")),
-          mc_rbdyn::Contact(ctl.robot().surfaces.at("LeftThight"), ctl.env().surfaces.at("left_seat")),
-          mc_rbdyn::Contact(ctl.robot().surfaces.at("RightGripper"), ctl.env().surfaces.at("bar_wheel"))
+          mc_rbdyn::Contact(ctl.robots(), "Butthock", "left_seat"),
+          mc_rbdyn::Contact(ctl.robots(), "LFullSole", "exit_platform"),
+          mc_rbdyn::Contact(ctl.robots(), "LeftThight", "left_seat"),
+          mc_rbdyn::Contact(ctl.robots(), "RightGripper", "bar_wheel")
         });
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5", ctl.qpsolver->robots, ctl.qpsolver->robots.robotIndex));
         ctl.efTask->addToSolver(ctl.qpsolver->solver);
@@ -168,10 +168,10 @@ public:
           done_putdown = true;
           std::cout << "Contact found, next step" << std::endl;
           ctl.qpsolver->setContacts({
-            mc_rbdyn::Contact(ctl.robot().surfaces.at("Butthock"), ctl.env().surfaces.at("left_seat")),
-            mc_rbdyn::Contact(ctl.robot().surfaces.at("LFullSole"), ctl.env().surfaces.at("exit_platform")),
-            mc_rbdyn::Contact(ctl.robot().surfaces.at("RFullSole"), ctl.env().surfaces.at("left_floor")),
-            mc_rbdyn::Contact(ctl.robot().surfaces.at("RightGripper"), ctl.env().surfaces.at("bar_wheel"))
+            mc_rbdyn::Contact(ctl.robots(), "Butthock", "left_seat"),
+            mc_rbdyn::Contact(ctl.robots(), "LFullSole", "exit_platform"),
+            mc_rbdyn::Contact(ctl.robots(), "RFullSole", "left_floor"),
+            mc_rbdyn::Contact(ctl.robots(), "RightGripper", "bar_wheel")
           });
           //return true;
         }
@@ -215,10 +215,10 @@ public:
       if(!done_setup_normal_move)
       {
         ctl.qpsolver->setContacts({
-          mc_rbdyn::Contact(ctl.robot().surfaces.at("Butthock"), ctl.env().surfaces.at("left_seat")),
-          mc_rbdyn::Contact(ctl.robot().surfaces.at("LFullSole"), ctl.env().surfaces.at("exit_platform")),
-          mc_rbdyn::Contact(ctl.robot().surfaces.at("RFullSole"), ctl.env().surfaces.at("left_floor")),
-          mc_rbdyn::Contact(ctl.robot().surfaces.at("LowerBack"), ctl.env().surfaces.at("left_back")),
+          mc_rbdyn::Contact(ctl.robots(), "Butthock", "left_seat"),
+          mc_rbdyn::Contact(ctl.robots(), "LFullSole", "exit_platform"),
+          mc_rbdyn::Contact(ctl.robots(), "RFullSole", "left_floor"),
+          mc_rbdyn::Contact(ctl.robots(), "LowerBack", "left_back"),
         });
         unsigned int bIdx = ctl.robot().bodyIndexByName("RARM_LINK6");
         sva::PTransformd bpw = ctl.robot().mbc->bodyPosW[bIdx];
@@ -297,9 +297,9 @@ public:
         {
           ctl.postureTask->posture(ctl.robot().mbc->q);
           ctl.qpsolver->setContacts({
-            mc_rbdyn::Contact(ctl.robot().surfaces.at("Butthock"), ctl.env().surfaces.at("left_seat")),
-            mc_rbdyn::Contact(ctl.robot().surfaces.at("LFullSole"), ctl.env().surfaces.at("exit_platform")),
-            mc_rbdyn::Contact(ctl.robot().surfaces.at("RFullSole"), ctl.env().surfaces.at("left_floor")),
+            mc_rbdyn::Contact(ctl.robots(), "Butthock", "left_seat"),
+            mc_rbdyn::Contact(ctl.robots(), "LFullSole", "exit_platform"),
+            mc_rbdyn::Contact(ctl.robots(), "RFullSole", "left_floor"),
           });
           done_go_to_posture = true;
           std::cout << "Arm reached a safe posture" << std::endl;
@@ -336,8 +336,8 @@ public:
       if(!done_setup_rotate_body)
       {
         ctl.qpsolver->setContacts({
-          mc_rbdyn::Contact(ctl.robot().surfaces.at("LFullSole"), ctl.env().surfaces.at("exit_platform")),
-          mc_rbdyn::Contact(ctl.robot().surfaces.at("RFullSole"), ctl.env().surfaces.at("left_floor")),
+          mc_rbdyn::Contact(ctl.robots(), "LFullSole", "exit_platform"),
+          mc_rbdyn::Contact(ctl.robots(), "RFullSole", "left_floor"),
         });
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("BODY", ctl.qpsolver->robots, ctl.qpsolver->robots.robotIndex, 0.5));
         ctl.efTask->addToSolver(ctl.qpsolver->solver);
@@ -354,9 +354,9 @@ public:
         if(error < 0.01 || timeoutIter > 15*500)
         {
           ctl.qpsolver->setContacts({
-            mc_rbdyn::Contact(ctl.robot().surfaces.at("Butthock"), ctl.env().surfaces.at("left_seat")),
-            mc_rbdyn::Contact(ctl.robot().surfaces.at("LFullSole"), ctl.env().surfaces.at("exit_platform")),
-            mc_rbdyn::Contact(ctl.robot().surfaces.at("RFullSole"), ctl.env().surfaces.at("left_floor")),
+            mc_rbdyn::Contact(ctl.robots(), "Butthock", "left_seat"),
+            mc_rbdyn::Contact(ctl.robots(), "LFullSole", "exit_platform"),
+            mc_rbdyn::Contact(ctl.robots(), "RFullSole", "left_floor"),
           });
           ctl.postureTask->posture(ctl.robot().mbc->q);
           ctl.efTask->removeFromSolver(ctl.qpsolver->solver);
@@ -398,8 +398,8 @@ struct EgressMoveFootOutPhase : public EgressPhaseExecution
       if(!done_setup_lift)
       {
         ctl.qpsolver->setContacts({
-          mc_rbdyn::Contact(ctl.robot().surfaces.at("Butthock"), ctl.env().surfaces.at("left_seat")),
-          mc_rbdyn::Contact(ctl.robot().surfaces.at("LFullSole"), ctl.env().surfaces.at("exit_platform")),
+          mc_rbdyn::Contact(ctl.robots(), "Butthock", "left_seat"),
+          mc_rbdyn::Contact(ctl.robots(), "LFullSole", "exit_platform"),
         });
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5", ctl.qpsolver->robots, ctl.qpsolver->robots.robotIndex));
         ctl.efTask->addToSolver(ctl.qpsolver->solver);
@@ -514,9 +514,9 @@ struct EgressMoveFootOutPhase : public EgressPhaseExecution
           ctl.efTask->removeFromSolver(ctl.qpsolver->solver);
           ctl.postureTask->posture(ctl.robot().mbc->q);
           ctl.qpsolver->setContacts({
-            mc_rbdyn::Contact(ctl.robot().surfaces.at("Butthock"), ctl.env().surfaces.at("left_seat")),
-            mc_rbdyn::Contact(ctl.robot().surfaces.at("LFullSole"), ctl.env().surfaces.at("exit_platform")),
-            mc_rbdyn::Contact(ctl.robot().surfaces.at("RFullSole"), ctl.env().surfaces.at("exit_platform"))
+            mc_rbdyn::Contact(ctl.robots(), "Butthock", "left_seat"),
+            mc_rbdyn::Contact(ctl.robots(), "LFullSole", "exit_platform"),
+            mc_rbdyn::Contact(ctl.robots(), "RFullSole", "exit_platform")
           });
           done_putdown = true;
           std::cout << "Contact found, next step" << std::endl;
@@ -561,9 +561,9 @@ public:
       if(!done_setup_lift)
       {
         ctl.qpsolver->setContacts({
-          mc_rbdyn::Contact(ctl.robot().surfaces.at("Butthock"), ctl.env().surfaces.at("left_seat")),
-          mc_rbdyn::Contact(ctl.robot().surfaces.at("RFullSole"), ctl.env().surfaces.at("left_floor")),
-          mc_rbdyn::Contact(ctl.robot().surfaces.at("RightThight"), ctl.env().surfaces.at("left_seat")),
+          mc_rbdyn::Contact(ctl.robots(), "Butthock", "left_seat"),
+          mc_rbdyn::Contact(ctl.robots(), "RFullSole", "left_floor"),
+          mc_rbdyn::Contact(ctl.robots(), "RightThight", "left_seat"),
         });
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("LLEG_LINK5", ctl.qpsolver->robots, ctl.qpsolver->robots.robotIndex));
         ctl.efTask->addToSolver(ctl.qpsolver->solver);
@@ -639,9 +639,9 @@ public:
           done_putdown = true;
           std::cout << "Contact found, next step" << std::endl;
           ctl.qpsolver->setContacts({
-            mc_rbdyn::Contact(ctl.robot().surfaces.at("Butthock"), ctl.env().surfaces.at("left_seat")),
-            mc_rbdyn::Contact(ctl.robot().surfaces.at("LFullSole"), ctl.env().surfaces.at("exit_platform")),
-            mc_rbdyn::Contact(ctl.robot().surfaces.at("RFullSole"), ctl.env().surfaces.at("left_floor")),
+            mc_rbdyn::Contact(ctl.robots(), "Butthock", "left_seat"),
+            mc_rbdyn::Contact(ctl.robots(), "LFullSole", "exit_platform"),
+            mc_rbdyn::Contact(ctl.robots(), "RFullSole", "left_floor"),
           });
           //return true;
         }
@@ -675,8 +675,8 @@ struct EgressStandupPhase : public EgressPhaseExecution
       if(!done_setup_standup)
       {
         ctl.qpsolver->setContacts({
-          mc_rbdyn::Contact(ctl.robot().surfaces.at("LFullSole"), ctl.env().surfaces.at("exit_platform")),
-          mc_rbdyn::Contact(ctl.robot().surfaces.at("RFullSole"), ctl.env().surfaces.at("exit_platform")),
+          mc_rbdyn::Contact(ctl.robots(), "LFullSole", "exit_platform"),
+          mc_rbdyn::Contact(ctl.robots(), "RFullSole", "exit_platform"),
         });
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("BODY", ctl.qpsolver->robots, ctl.qpsolver->robots.robotIndex, 1.0));
         ctl.efTask->addToSolver(ctl.qpsolver->solver);

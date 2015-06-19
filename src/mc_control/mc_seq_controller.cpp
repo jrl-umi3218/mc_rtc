@@ -78,7 +78,7 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
   collsConstraint(robots(), timeStep)
 {
   /* Load plan */
-  loadStances(seq_path, stances, actions);
+  loadStances(robots(), seq_path, stances, actions);
   assert(stances.size() == actions.size());
   seq_actions.push_back(seqActionFromStanceAction(0, actions[0].get(), 0));
   for(size_t i = 0; i < stances.size() - 1; ++i)

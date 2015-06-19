@@ -38,17 +38,14 @@ struct ContactImpl;
 struct Contact
 {
 public:
-  Contact(const std::shared_ptr<mc_rbdyn::Surface> & robotSurface, const std::shared_ptr<mc_rbdyn::Surface> & envSurface);
-  Contact(const std::shared_ptr<mc_rbdyn::Surface> & robotSurface, const std::shared_ptr<mc_rbdyn::Surface> & envSurface, const sva::PTransformd & X_es_rs);
-  Contact(const mc_rbdyn::Surface & robotSurface, const mc_rbdyn::Surface & envSurface);
-  Contact(const mc_rbdyn::Surface & robotSurface, const mc_rbdyn::Surface & envSurface, const sva::PTransformd & X_es_rs);
-  Contact(unsigned int r1Index, unsigned int r2Index,
-            const std::shared_ptr<mc_rbdyn::Surface> & r1Surface,
-            const std::shared_ptr<mc_rbdyn::Surface> & r2Surface,
+  Contact(const mc_rbdyn::Robots & robots, const std::string & robotSurface, const std::string & envSurface);
+  Contact(const mc_rbdyn::Robots & robots, const std::string & robotSurface, const std::string & envSurface, const sva::PTransformd & X_es_rs);
+  Contact(const mc_rbdyn::Robots & robots, unsigned int r1Index, unsigned int r2Index,
+            const std::string & r1Surface, const std::string & r2Surface,
             const sva::PTransformd * X_r2s_r1s = 0,
             const sva::PTransformd & Xbs = sva::PTransformd::Identity(), int ambiguityId = -1);
 private:
-  Contact(const mc_rbdyn::Surface & robotSurface, const mc_rbdyn::Surface & envSurface, const sva::PTransformd & X_es_rs, bool is_fixed);
+  Contact(const mc_rbdyn::Robots & robots, const std::string & robotSurface, const std::string & envSurface, const sva::PTransformd & X_es_rs, bool is_fixed);
 public:
   Contact(const Contact & contact);
   Contact & operator=(const Contact &);

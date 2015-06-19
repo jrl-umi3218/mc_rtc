@@ -38,21 +38,16 @@ MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rb
   rbd::forwardKinematics(*(robot().mb), *(robot().mbc));
   rbd::forwardVelocity(*(robot().mb), *(robot().mbc));
 
-  drivingContacts.emplace_back(robots().robotIndex, 1,
-                           robot().surfaces.at("Butthock"),
-                           polaris.surfaces.at("left_seat"));
-  drivingContacts.emplace_back(robots().robotIndex, 1,
-                           robot().surfaces.at("LFullSole"),
-                           polaris.surfaces.at("exit_platform"));
-  drivingContacts.emplace_back(robots().robotIndex, 1,
-                           robot().surfaces.at("LeftThight"),
-                           polaris.surfaces.at("left_seat"));
-  drivingContacts.emplace_back(robots().robotIndex, 1,
-                           robot().surfaces.at("RightThight"),
-                           polaris.surfaces.at("left_seat"));
-  drivingContacts.emplace_back(robots().robotIndex, 1,
-                           robot().surfaces.at("RightGripper"),
-                           polaris.surfaces.at("bar_wheel"));
+  drivingContacts.emplace_back(robots(), robots().robotIndex, 1,
+                           "Butthock", "left_seat");
+  drivingContacts.emplace_back(robots(), robots().robotIndex, 1,
+                           "LFullSole", "exit_platform");
+  drivingContacts.emplace_back(robots(), robots().robotIndex, 1,
+                           "LeftThight", "left_seat");
+  drivingContacts.emplace_back(robots(), robots().robotIndex, 1,
+                           "RightThight", "left_seat");
+  drivingContacts.emplace_back(robots(), robots().robotIndex, 1,
+                           "RightGripper", "bar_wheel");
   //drivingContacts.emplace_back(robots().robotIndex, 1,
   //                         robot().surfaces.at("LowerBack"),
   //                         polaris.surfaces.at("left_back"));

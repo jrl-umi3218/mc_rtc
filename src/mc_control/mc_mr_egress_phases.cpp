@@ -149,9 +149,8 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
           ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
           ctl.hrp2postureTask->posture(ctl.robot().mbc->q);
           std::cout << "Found contact on right foot" << std::endl;
-          ctl.egressContacts.push_back(mc_rbdyn::Contact(0, 1,
-                                       ctl.robot().surfaces.at("RFullSole"),
-                                       ctl.robots().robots[1].surfaces.at("left_floor")));
+          ctl.egressContacts.push_back(mc_rbdyn::Contact(ctl.robots(), 0, 1,
+                                       "RFullSole", "left_floor"));
           ctl.mrqpsolver->setContacts(ctl.egressContacts);
           std::cout << "Phase over, ready for next" << std::endl;
           //return true;
@@ -347,9 +346,8 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
             else
               constr->resetDofContacts();
             //NB : When using dof contacts, do not add twice !
-            ctl.egressContacts.emplace_back(ctl.robots().robotIndex, 2,
-                                            ctl.robot().surfaces.at("LFullSole"),
-                                            ctl.robots().robots[2].surfaces.at("AllGround"));
+            ctl.egressContacts.emplace_back(ctl.robots(), ctl.robots().robotIndex, 2,
+                                            "LFullSole", "AllGround");
             ctl.mrqpsolver->setContacts(ctl.egressContacts);
             double w = ctl.comTask->comTaskSp->weight();
             ctl.comTask->comTaskSp->weight(w/com_multiplier);
@@ -519,9 +517,8 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
             auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.hrp2contactConstraint.contactConstr.get());
             constr->resetDofContacts();
             //NB : When using dof contacts, do not add twice !
-            ctl.egressContacts.emplace_back(ctl.robots().robotIndex, 2,
-                                            ctl.robot().surfaces.at("RFullSole"),
-                                            ctl.robots().robots[2].surfaces.at("AllGround"));
+            ctl.egressContacts.emplace_back(ctl.robots(), ctl.robots().robotIndex, 2,
+                                            "RFullSole", "AllGround");
             ctl.mrqpsolver->setContacts(ctl.egressContacts);
             ctl.comTask->comTaskSp->stiffness(1.);
             //Do not remove orientation here if we are not in skip mode
@@ -855,9 +852,8 @@ struct EgressPlaceRightFootPhase : public EgressMRPhaseExecution
           {
             done_contacting = true;
             mc_rbdyn::Robot& polaris = ctl.robots().robots[1];
-            ctl.egressContacts.emplace_back(ctl.robots().robotIndex, 1,
-                                            ctl.robot().surfaces.at("RFullSole"),
-                                            polaris.surfaces.at("exit_platform"));
+            ctl.egressContacts.emplace_back(ctl.robots(), ctl.robots().robotIndex, 1,
+                                            "RFullSole", "exit_platform");
             ctl.mrqpsolver->setContacts(ctl.egressContacts);
             timeoutIter = 0;
             std::cout << "Phase finished, can transit" << std::endl;

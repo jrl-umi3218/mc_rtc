@@ -21,8 +21,8 @@ MCCoMController::MCCoMController()
   qpsolver->addConstraintSet(selfCollisionConstraint);
   qpsolver->solver.addTask(postureTask.get());
   qpsolver->setContacts({
-    mc_rbdyn::Contact(robot().surfaces.at("LFullSole"), env().surfaces.at("AllGround")),
-    mc_rbdyn::Contact(robot().surfaces.at("RFullSole"), env().surfaces.at("AllGround"))
+    mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"),
+    mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")
   });
 
   comTask.reset(new mc_tasks::CoMTask(qpsolver->robots, qpsolver->robots.robotIndex));
@@ -39,8 +39,8 @@ void MCCoMController::reset(const ControllerResetData & reset_data)
   else
   {
     qpsolver->setContacts({
-      mc_rbdyn::Contact(robot().surfaces.at("LFullSole"), env().surfaces.at("AllGround")),
-      mc_rbdyn::Contact(robot().surfaces.at("RFullSole"), env().surfaces.at("AllGround"))
+      mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"),
+      mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")
     });
   }
   comTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex);

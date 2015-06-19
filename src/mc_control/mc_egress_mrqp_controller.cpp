@@ -53,15 +53,12 @@ MCEgressMRQPController::MCEgressMRQPController(const std::vector<std::shared_ptr
   rbd::forwardKinematics(*(robot().mb), *(robot().mbc));
   rbd::forwardVelocity(*(robot().mb), *(robot().mbc));
 
-  egressContacts.emplace_back(robots().robotIndex, 1,
-                           robot().surfaces.at("Butthock"),
-                           polaris.surfaces.at("lazy_seat"));
-  egressContacts.emplace_back(robots().robotIndex, 1,
-                           robot().surfaces.at("LFullSole"),
-                           polaris.surfaces.at("exit_platform"));
-  egressContacts.emplace_back(robots().robotIndex, 1,
-                           robot().surfaces.at("RightGripper"),
-                           polaris.surfaces.at("bar_wheel"));
+  egressContacts.emplace_back(robots(), robots().robotIndex, 1,
+                           "Butthock", "lazy_seat");
+  egressContacts.emplace_back(robots(), robots().robotIndex, 1,
+                           "LFullSole", "exit_platform");
+  egressContacts.emplace_back(robots(), robots().robotIndex, 1,
+                           "RightGripper", "bar_wheel");
   mrqpsolver->setContacts(egressContacts);
 
   polarisPostureTask.reset(new tasks::qp::PostureTask(mrqpsolver->robots.mbs, 1, mrqpsolver->robots.robots[1].mbc->q, 1.0, 1));

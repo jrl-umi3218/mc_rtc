@@ -30,11 +30,9 @@ MCEgressController::MCEgressController(const std::string & env_path, const std::
   qpsolver->solver.addTask(postureTask.get());
 
   qpsolver->setContacts({
-    mc_rbdyn::Contact(robot().surfaces.at("Butthock"), env().surfaces.at("left_seat")),
-    mc_rbdyn::Contact(robot().surfaces.at("LFullSole"), env().surfaces.at("exit_platform")),
-    //mc_rbdyn::Contact(robot().surfaces.at("LeftThight"), env().surfaces.at("left_seat")),
-    //mc_rbdyn::Contact(robot().surfaces.at("RightThight"), env().surfaces.at("left_seat")),
-    mc_rbdyn::Contact(robot().surfaces.at("RightGripper"), env().surfaces.at("bar_wheel"))
+    mc_rbdyn::Contact(robots(), "Butthock", "left_seat"),
+    mc_rbdyn::Contact(robots(), "LFullSole", "exit_platform"),
+    mc_rbdyn::Contact(robots(), "RightGripper", "bar_wheel")
   });
 
   comTask.reset(new mc_tasks::CoMTask(qpsolver->robots, qpsolver->robots.robotIndex));
@@ -52,11 +50,9 @@ void MCEgressController::reset(const ControllerResetData & reset_data)
   MCController::reset(reset_data);
   resetBasePose();
   qpsolver->setContacts({
-    mc_rbdyn::Contact(robot().surfaces.at("Butthock"), env().surfaces.at("left_seat")),
-    mc_rbdyn::Contact(robot().surfaces.at("LFullSole"), env().surfaces.at("exit_platform")),
-    //mc_rbdyn::Contact(robot().surfaces.at("LeftThight"), env().surfaces.at("left_seat")),
-    //mc_rbdyn::Contact(robot().surfaces.at("RightThight"), env().surfaces.at("left_seat")),
-    mc_rbdyn::Contact(robot().surfaces.at("RightGripper"), env().surfaces.at("bar_wheel"))
+    mc_rbdyn::Contact(robots(), "Butthock", "left_seat"),
+    mc_rbdyn::Contact(robots(), "LFullSole", "exit_platform"),
+    mc_rbdyn::Contact(robots(), "RightGripper", "bar_wheel")
   });
   efTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex);
   comTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex);

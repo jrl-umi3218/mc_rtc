@@ -97,38 +97,61 @@ std::vector<sva::PTransformd> computePoints(const mc_rbdyn::Surface & robotSurfa
   throw(std::string("type error"));
 }
 
-Contact::Contact(const std::shared_ptr<mc_rbdyn::Surface> & robotSurface, const std::shared_ptr<mc_rbdyn::Surface> & envSurface)
-: Contact(*robotSurface, *envSurface, sva::PTransformd::Identity(), false)
+Contact::Contact(const mc_rbdyn::Robots & robots, const std::string & robotSurface, const std::string & envSurface)
+: Contact(robots, robotSurface, envSurface, sva::PTransformd::Identity(), false)
 {
 }
 
-Contact::Contact(const std::shared_ptr<mc_rbdyn::Surface> & robotSurface, const std::shared_ptr<mc_rbdyn::Surface> & envSurface, const sva::PTransformd & X_es_rs)
-: Contact(*robotSurface, *envSurface, X_es_rs, true)
+Contact::Contact(const mc_rbdyn::Robots & robots, const std::string & robotSurface, const std::string & envSurface, const sva::PTransformd & X_es_rs)
+: Contact(robots, robotSurface, envSurface, X_es_rs, true)
 {
 }
 
-Contact::Contact(const mc_rbdyn::Surface & robotSurface, const mc_rbdyn::Surface & envSurface)
-: Contact(robotSurface, envSurface, sva::PTransformd::Identity(), false)
+Contact::Contact(const mc_rbdyn::Robots & robots, const std::string & robotSurface, const std::string & envSurface, const sva::PTransformd & X_es_rs, bool is_fixed)
 {
+  if(robots.robots[0].surfaces.count(robotSurface) == 0)
+  {
+    std::stringstream ss;
+    ss << "No surface named " << robotSurface << " in robot" << std::endl;
+    std::cerr << ss.str() << std::endl;
+    throw(ss.str());
+  }
+  if(robots.robots[1].surfaces.count(envSurface) == 0)
+  {
+    std::stringstream ss;
+    ss << "No surface named " << envSurface << " in env" << std::endl;
+    std::cerr << ss.str() << std::endl;
+    throw(ss.str());
+  }
+  impl.reset(new ContactImpl({0, 1,
+    robots.robots[0].surfaces.at(robotSurface)->copy(),
+    robots.robots[1].surfaces.at(envSurface)->copy(),
+    X_es_rs, is_fixed, sva::PTransformd::Identity(), -1}));
 }
 
-Contact::Contact(const mc_rbdyn::Surface & robotSurface, const mc_rbdyn::Surface & envSurface, const sva::PTransformd & X_es_rs)
-: Contact(robotSurface, envSurface, X_es_rs, true)
-{
-}
-
-Contact::Contact(const mc_rbdyn::Surface & robotSurface, const mc_rbdyn::Surface & envSurface, const sva::PTransformd & X_es_rs, bool is_fixed)
-: impl(new ContactImpl({0, 1, robotSurface.copy(), envSurface.copy(), X_es_rs, is_fixed, sva::PTransformd::Identity(), -1}))
-{
-}
-
-Contact::Contact(unsigned int r1Index, unsigned int r2Index,
-            const std::shared_ptr<mc_rbdyn::Surface> & r1Surface,
-            const std::shared_ptr<mc_rbdyn::Surface> & r2Surface,
+Contact::Contact(const mc_rbdyn::Robots & robots, unsigned int r1Index, unsigned int r2Index,
+            const std::string & r1Surface, const std::string & r2Surface,
             const sva::PTransformd * X_r2s_r1s,
             const sva::PTransformd & Xbs, int ambiguityId)
-: impl(new ContactImpl({r1Index, r2Index, r1Surface->copy(), r2Surface->copy(), sva::PTransformd::Identity(), X_r2s_r1s != 0, Xbs, ambiguityId}))
 {
+  if(robots.robots[r1Index].surfaces.count(r1Surface) == 0)
+  {
+    std::stringstream ss;
+    ss << "No surfaces named " << r1Surface << " in robot " << r1Index << std::endl;
+    std::cerr << ss.str() << std::endl;
+    throw(ss.str());
+  }
+  if(robots.robots[r2Index].surfaces.count(r2Surface) == 0)
+  {
+    std::stringstream ss;
+    ss << "No surfaces named " << r2Surface << " in robot " << r2Index << std::endl;
+    std::cerr << ss.str() << std::endl;
+    throw(ss.str());
+  }
+  impl.reset(new ContactImpl({r1Index, r2Index,
+    robots.robots[r1Index].surfaces.at(r1Surface)->copy(),
+    robots.robots[r2Index].surfaces.at(r2Surface)->copy(),
+    sva::PTransformd::Identity(), X_r2s_r1s != 0, Xbs, ambiguityId}));
   if(isFixed())
   {
     impl->X_r2s_r1s = sva::PTransformd(*X_r2s_r1s);
@@ -136,13 +159,18 @@ Contact::Contact(unsigned int r1Index, unsigned int r2Index,
 }
 
 Contact::Contact(const Contact & contact)
-: Contact(*(contact.r1Surface()), *(contact.r2Surface()), contact.X_r2s_r1s(), contact.isFixed())
 {
+  impl.reset(new ContactImpl({contact.r1Index(), contact.r2Index(),
+    contact.r1Surface()->copy(), contact.r2Surface()->copy(),
+    contact.X_r2s_r1s(), contact.isFixed(),
+    contact.X_b_s(), contact.ambiguityId()}));
 }
 
 Contact & Contact::operator=(const Contact & rhs)
 {
   if(this == &rhs) { return *this; }
+  this->impl->r1Index = rhs.r1Index();
+  this->impl->r2Index = rhs.r2Index();
   this->impl->r1Surface = rhs.r1Surface()->copy();
   this->impl->r2Surface = rhs.r2Surface()->copy();
   this->impl->X_r2s_r1s = rhs.X_r2s_r1s();

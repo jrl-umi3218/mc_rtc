@@ -281,7 +281,7 @@ std::shared_ptr<Surface> surfaceFromJSON(Json::Value & v)
   throw(std::string("invalid json"));
 }
 
-Contact contactFromJSON(Json::Value & v)
+Contact contactFromJSON(const mc_rbdyn::Robots & robots, Json::Value & v)
 {
   std::shared_ptr<Surface> robotSurface = surfaceFromJSON(v["robotSurface"]);
   std::shared_ptr<Surface> envSurface = surfaceFromJSON(v["envSurface"]);
@@ -289,15 +289,15 @@ Contact contactFromJSON(Json::Value & v)
   bool is_fixed = v["is_fixed"].asBool();
   if(is_fixed)
   {
-    return Contact(*robotSurface, *envSurface, X_es_rs);
+    return Contact(robots, robotSurface->name(), envSurface->name(), X_es_rs);
   }
   else
   {
-    return Contact(*robotSurface, *envSurface);
+    return Contact(robots, robotSurface->name(), envSurface->name());
   }
 }
 
-inline void addStanceFromJSON(std::vector<Stance> & stances, Json::Value & v)
+inline void addStanceFromJSON(const mc_rbdyn::Robots & robots, std::vector<Stance> & stances, Json::Value & v)
 {
   std::vector< std::vector<double> > q;
   for(Json::Value & vq : v["q"])
@@ -312,17 +312,17 @@ inline void addStanceFromJSON(std::vector<Stance> & stances, Json::Value & v)
   std::vector<Contact> geomContacts;
   for(Json::Value & vc : v["geomContacts"])
   {
-    geomContacts.push_back(contactFromJSON(vc));
+    geomContacts.push_back(contactFromJSON(robots, vc));
   }
   std::vector<Contact> stabContacts;
   for(Json::Value & vc : v["stabContacts"])
   {
-    stabContacts.push_back(contactFromJSON(vc));
+    stabContacts.push_back(contactFromJSON(robots, vc));
   }
   stances.emplace_back(q, geomContacts, stabContacts);
 }
 
-std::shared_ptr<StanceAction> stanceActionFromJSON(Json::Value & v)
+std::shared_ptr<StanceAction> stanceActionFromJSON(const mc_rbdyn::Robots & robots, Json::Value & v)
 {
   std::string type = v["type"].asString();
   if(type == "Identity")
@@ -331,7 +331,7 @@ std::shared_ptr<StanceAction> stanceActionFromJSON(Json::Value & v)
   }
   else
   {
-    Contact contact = contactFromJSON(v["contact"]);
+    Contact contact = contactFromJSON(robots, v["contact"]);
     if(type == "Add")
     {
       return std::shared_ptr<StanceAction>(new AddContactAction(contact));
@@ -344,7 +344,7 @@ std::shared_ptr<StanceAction> stanceActionFromJSON(Json::Value & v)
   throw(std::string("Invalid StanceAction saved in JSON"));
 }
 
-void loadStances(const std::string & filename, std::vector<Stance> & stances, std::vector< std::shared_ptr<StanceAction> > & actions)
+void loadStances(const mc_rbdyn::Robots & robots, const std::string & filename, std::vector<Stance> & stances, std::vector< std::shared_ptr<StanceAction> > & actions)
 {
   Json::Value v;
   std::ifstream ifs(filename);
@@ -352,11 +352,11 @@ void loadStances(const std::string & filename, std::vector<Stance> & stances, st
   for(Json::Value & sv : v["stances"])
   {
     //stances.emplace_back(std::move(stanceFromJSON(sv)));
-    addStanceFromJSON(stances, sv);
+    addStanceFromJSON(robots, stances, sv);
   }
   for(Json::Value & sav : v["actions"])
   {
-    actions.push_back(stanceActionFromJSON(sav));
+    actions.push_back(stanceActionFromJSON(robots, sav));
   }
 }
 
@@ -480,12 +480,7 @@ Json::Value stanceActionToJSON(StanceAction & action)
   return ret;
 }
 
-void saveStances(const std::string & filename, std::vector<Stance> & stances, std::vector< std::shared_ptr<StanceAction> > & actions)
-{
-  saveStancesJSON(filename, stances, actions);
-}
-
-void saveStancesJSON(const std::string & filename, std::vector<Stance> & stances, std::vector< std::shared_ptr<StanceAction> > & actions)
+void saveStances(const mc_rbdyn::Robots & robots, const std::string & filename, std::vector<Stance> & stances, std::vector< std::shared_ptr<StanceAction> > & actions)
 {
   for(size_t i = 0; i < std::min(stances.size(), actions.size()); ++i)
   {
