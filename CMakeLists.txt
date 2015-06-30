@@ -140,6 +140,10 @@ install(TARGETS MCControl MCControlComp mc_rbdyn mc_rbdyn_urdf mc_solver mc_robo
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib)
 
+install(DIRECTORY include
+          DESTINATION ${CMAKE_INSTALL_PREFIX}
+          FILES_MATCHING REGEX "h(pp)?$")
+
 set_source_files_properties(${CMAKE_BINARY_DIR}/idl/MCControlService_idl.py
                             PROPERTIES GENERATED 1)
 
