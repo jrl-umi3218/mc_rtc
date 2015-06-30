@@ -3,7 +3,6 @@
 
 /* This struct holds the configuration for stances in a seq plan */
 
-/* TODO Fill-it up */
 /* TODO Build a tool to import from python */
 /* TODO Build a tool to read from configuration file */
 

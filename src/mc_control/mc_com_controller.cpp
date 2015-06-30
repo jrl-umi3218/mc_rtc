@@ -32,11 +32,11 @@ MCCoMController::MCCoMController()
 void MCCoMController::reset(const ControllerResetData & reset_data)
 {
   MCController::reset(reset_data);
-  if(reset_data.contacts.size())
-  {
-    qpsolver->setContacts(reset_data.contacts);
-  }
-  else
+  //if(reset_data.contacts.size())
+  //{
+  //  qpsolver->setContacts(reset_data.contacts);
+  //}
+  //else
   {
     qpsolver->setContacts({
       mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"),

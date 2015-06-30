@@ -20,7 +20,6 @@ namespace mc_control
 struct ControllerResetData
 {
   const std::vector< std::vector<double> > & q;
-  const std::vector<mc_rbdyn::Contact> & contacts;
 };
 
 struct MCDRCGlobalController;

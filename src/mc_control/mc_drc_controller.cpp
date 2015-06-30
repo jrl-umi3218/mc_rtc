@@ -75,7 +75,7 @@ void MCDRCGlobalController::init(const std::vector<double> & initq)
     q.push_back({initq[i]});
   }
   setGripperCurrentQ(initq[31], initq[23]);
-  controller->reset({q, {}});
+  controller->reset({q});
 }
 
 void MCDRCGlobalController::setSensorOrientation(const Eigen::Vector3d & rpy)
@@ -123,7 +123,7 @@ bool MCDRCGlobalController::run()
       std::cout << controller->robot().mbc->q[0][6] << std::endl;
       next_controller->lgripper->setCurrentQ(controller->lgripper->curPosition());
       next_controller->rgripper->setCurrentQ(controller->rgripper->curPosition());
-      next_controller->reset({controller->robot().mbc->q, {}});
+      next_controller->reset({controller->robot().mbc->q});
       controller = next_controller;
     }
     next_controller = 0;

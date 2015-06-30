@@ -339,11 +339,11 @@ bool MCSeqController::run()
 void MCSeqController::reset(const ControllerResetData & reset_data)
 {
   MCController::reset(reset_data);
-  if(reset_data.contacts.size())
-  {
-    qpsolver->setContacts(reset_data.contacts);
-  }
-  else
+  //if(reset_data.contacts.size())
+  //{
+  //  qpsolver->setContacts(reset_data.contacts);
+  //}
+  //else
   {
     qpsolver->setContacts(stances[stanceIndex].geomContacts());
   }
