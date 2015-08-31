@@ -10,6 +10,8 @@
 
 #include <mc_rbdyn/GripperSurface.h>
 
+#include <mc_rbdyn/json/StanceConfig.h>
+
 namespace mc_control
 {
 
@@ -584,6 +586,11 @@ bool MCSeqController::play_next_stance()
     return true;
   }
   return false;
+}
+
+void MCSeqController::loadStanceConfigs(const std::string & file)
+{
+  /*TODO*/
 }
 
 std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * curAction, mc_rbdyn::StanceAction * targetAction, mc_rbdyn::StanceAction * targetTargetAction)

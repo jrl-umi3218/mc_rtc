@@ -105,6 +105,8 @@ public:
   void removeMetaTask(mc_tasks::MetaTask* mt);
   /* Services */
   bool play_next_stance();
+  /* Configuration */
+  void loadStanceConfigs(const std::string & file);
 public:
   /* Sequence playing logic */
   bool paused;
