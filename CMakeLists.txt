@@ -27,17 +27,18 @@ pkg_check_modules(HRPSYSBASE REQUIRED hrpsys-base)
 include_directories(${HRPSYSBASE_INCLUDE_DIRS})
 link_directories(${HRPSYSBASE_LIBRARY_DIRS})
 
+pkg_check_modules(TASKS REQUIRED Tasks)
+include_directories(${TASKS_INCLUDE_DIRS})
+link_directories(${TASKS_LIBRARY_DIRS})
+
+pkg_check_modules(MC_RBDYN_URDF REQUIRED mc_rbdyn_urdf)
+include_directories(${MC_RBDYN_URDF_INCLUDE_DIRS})
+link_directories(${MC_RBDYN_URDF_LIBRARY_DIRS})
+
 include_directories(include)
 
 OMNIIDL_INCLUDE_DIRECTORIES("idl")
 add_subdirectory(idl)
-
-set(mc_rbdyn_urdf_SRC
-./src/mc_rbdyn_urdf/urdf.cpp
-)
-
-add_library(mc_rbdyn_urdf SHARED ${mc_rbdyn_urdf_SRC})
-target_link_libraries(mc_rbdyn_urdf RBDyn tinyxml2)
 
 set(mc_rbdyn_SRC
 ./src/mc_rbdyn/SCHAddon.cpp
@@ -135,7 +136,7 @@ target_link_libraries(MCControlComp MCControl)
 add_executable(testBSplineTrajectory ./tests/testBSplineTrajectory.cpp)
 target_link_libraries(testBSplineTrajectory mc_trajectory)
 
-install(TARGETS MCControl MCControlComp mc_rbdyn mc_rbdyn_urdf mc_solver mc_robots mc_tasks mc_drc_controller mc_trajectory
+install(TARGETS MCControl MCControlComp mc_rbdyn mc_solver mc_robots mc_tasks mc_drc_controller mc_trajectory
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib)
