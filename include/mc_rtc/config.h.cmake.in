@@ -1,0 +1,14 @@
+#pragma once
+
+#include <string>
+
+namespace mc_rtc
+{
+
+constexpr auto MC_ENV_DESCRIPTION_PATH = "${MC_ENV_DESCRIPTION_PATH}/";
+constexpr auto HRP2_DRC_DESCRIPTION_PATH = "${HRP2_DRC_DESCRIPTION_PATH}/";
+constexpr auto INSTALL_PREFIX = "${CMAKE_INSTALL_PREFIX}/";
+constexpr auto DATA_PATH = "${CMAKE_INSTALL_PREFIX}/share/mc_rtc/";
+constexpr auto CONF_PATH = "${CMAKE_INSTALL_PREFIX}/etc/mc_rtc.conf";
+
+}

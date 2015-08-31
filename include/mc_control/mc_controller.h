@@ -1,6 +1,8 @@
 #ifndef _H_MCCONTROLLER_H_
 #define _H_MCCONTROLLER_H_
 
+#include <mc_rtc/config.h>
+
 #include <mc_control/mc_virtual_controller.h>
 
 #include <mc_rbdyn/robot.h>
@@ -20,7 +22,7 @@ namespace mc_control
 struct MCController : public MCVirtualController
 {
 public:
-  MCController(const std::string & env_path = "/home/hrp2user/jrl/mc_env_description", const std::string & env_name = "ground");
+  MCController(const std::string & env_path = mc_rtc::MC_ENV_DESCRIPTION_PATH, const std::string & env_name = "ground");
 
   virtual bool run() override;
 

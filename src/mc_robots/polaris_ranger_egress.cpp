@@ -1,12 +1,14 @@
 #include <mc_robots/polaris_ranger_egress.h>
 
+#include <mc_rtc/config.h>
+
 #include <fstream>
 
 namespace mc_robots
 {
 
 PolarisRangerEgressRobotModule::PolarisRangerEgressRobotModule()
-: RobotModule("/home/hrp2user/jrl/hrp2_drc/hrp2_drc_description/", "polaris_ranger")
+: RobotModule(mc_rtc::HRP2_DRC_DESCRIPTION_PATH, "polaris_ranger")
 {
   halfSitting["POLARIS"] = {};
   halfSitting["front_left_steering_joint"] = {};

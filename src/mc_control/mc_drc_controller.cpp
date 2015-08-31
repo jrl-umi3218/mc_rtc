@@ -1,5 +1,7 @@
 #include <mc_control/mc_drc_controller.h>
 
+#include <mc_rtc/config.h>
+
 #include <RBDyn/EulerIntegration.h>
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
@@ -15,26 +17,26 @@ namespace mc_control
 /* FIXME Seq loading is hardcoded for now... */
 MCDRCGlobalController::MCDRCGlobalController()
 : posture_controller(), body6d_controller(), com_controller(),
-  seq_controller("/home/hrp2user/jrl/hrp2_drc/hrp2_drc_description/", "drc_stairs2", "/home/hrp2user/jrl/mc_rtc/data/drc_stairs_climbing.json"),
+  seq_controller(mc_rtc::HRP2_DRC_DESCRIPTION_PATH, "drc_stairs2", std::string(mc_rtc::DATA_PATH)+"drc_stairs_climbing.json"),
   driving_controller({std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::PolarisRangerRobotModule()),
-                      std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::EnvRobotModule("/home/hrp2user/jrl/mc_env_description/", "ground"))}),
-  egress_controller("/home/hrp2user/jrl/hrp2_drc/hrp2_drc_description/", "polaris_ranger"),
+                      std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::EnvRobotModule(mc_rtc::MC_ENV_DESCRIPTION_PATH, "ground"))}),
+  egress_controller(mc_rtc::HRP2_DRC_DESCRIPTION_PATH, "polaris_ranger"),
   egress_mrqp_controller({std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::PolarisRangerEgressRobotModule()),
-                      std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::EnvRobotModule("/home/hrp2user/jrl/mc_env_description/", "ground"))}),
+                      std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::EnvRobotModule(mc_rtc::MC_ENV_DESCRIPTION_PATH, "ground"))}),
   //current_ctrl(POSTURE), next_ctrl(POSTURE),
   //controller(&posture_controller),
   //current_ctrl(BODY6D), next_ctrl(BODY6D),
   //controller(&body6d_controller),
   //current_ctrl(COM), next_ctrl(COM),
   //controller(&com_controller),
-  //current_ctrl(SEQ), next_ctrl(SEQ),
-  //controller(&seq_controller),
+  current_ctrl(SEQ), next_ctrl(SEQ),
+  controller(&seq_controller),
   //current_ctrl(DRIVING), next_ctrl(DRIVING),
   //controller(&driving_controller),
   //current_ctrl(EGRESS), next_ctrl(EGRESS),
   //controller(&egress_controller),
-  current_ctrl(EGRESS_MRQP), next_ctrl(EGRESS_MRQP),
-  controller(&egress_mrqp_controller),
+  //current_ctrl(EGRESS_MRQP), next_ctrl(EGRESS_MRQP),
+  //controller(&egress_mrqp_controller),
   next_controller(0)
 {
 }

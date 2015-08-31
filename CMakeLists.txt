@@ -40,6 +40,30 @@ include_directories(include)
 OMNIIDL_INCLUDE_DIRECTORIES("idl")
 add_subdirectory(idl)
 
+execute_process(COMMAND rospack find mc_env_description
+                RESULT_VARIABLE MC_ENV_DESCRIPTION_FOUND
+                OUTPUT_VARIABLE MC_ENV_DESCRIPTION_PATH
+                OUTPUT_STRIP_TRAILING_WHITESPACE)
+if(${MC_ENV_DESCRIPTION_FOUND})
+  MESSAGE(SEND_ERROR "Failed to find mc_env_description, check your system configuration")
+else()
+  MESSAGE(STATUS "Found mc_env_description: ${MC_ENV_DESCRIPTION_PATH}")
+endif()
+
+execute_process(COMMAND rospack find hrp2_drc_description
+                RESULT_VARIABLE HRP2_DRC_DESCRIPTION_FOUND
+                OUTPUT_VARIABLE HRP2_DRC_DESCRIPTION_PATH
+                OUTPUT_STRIP_TRAILING_WHITESPACE)
+if(${HRP2_DRC_DESCRIPTION_FOUND})
+  MESSAGE(SEND_ERROR "Failed to find hrp2_drc_description, check your system configuration")
+else()
+  MESSAGE(STATUS "Found hrp2_drc_description: ${HRP2_DRC_DESCRIPTION_PATH}")
+endif()
+
+configure_file(${PROJECT_SOURCE_DIR}/include/mc_rtc/config.h.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/include/mc_rtc/config.h)
+
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
+
 set(mc_rbdyn_SRC
 ./src/mc_rbdyn/SCHAddon.cpp
 ./src/mc_rbdyn/contact_transform.cpp
@@ -150,3 +174,4 @@ set_source_files_properties(${CMAKE_BINARY_DIR}/idl/MCControlService_idl.py
 
 install(FILES ${CMAKE_BINARY_DIR}/idl/MCControlService_idl.py DESTINATION lib/python2.7/dist-packages/hrpsys)
 #install(FILES python/mc_rtc_interface.py DESTINATION bin PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+install(FILES data/drc_stairs_climbing.json DESTINATION share/mc_rtc)

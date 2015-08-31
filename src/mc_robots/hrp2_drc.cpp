@@ -1,12 +1,14 @@
 #include <mc_robots/hrp2_drc.h>
 
+#include <mc_rtc/config.h>
+
 #include <fstream>
 
 namespace mc_robots
 {
 
 HRP2DRCCommonRobotModule::HRP2DRCCommonRobotModule()
-: RobotModule("/home/hrp2user/jrl/hrp2_drc/hrp2_drc_description/", "hrp2_drc")
+: RobotModule(mc_rtc::HRP2_DRC_DESCRIPTION_PATH, "hrp2_drc")
 {
   virtualLinks.push_back("base_link");
   virtualLinks.push_back("Accelerometer");
