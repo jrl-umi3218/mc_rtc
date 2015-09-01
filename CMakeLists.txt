@@ -160,6 +160,9 @@ target_link_libraries(MCControlComp MCControl)
 add_executable(testBSplineTrajectory ./tests/testBSplineTrajectory.cpp)
 target_link_libraries(testBSplineTrajectory mc_trajectory)
 
+add_executable(StanceConfigGenerator src/utils/StanceConfigGenerator.cpp)
+target_link_libraries(StanceConfigGenerator mc_rbdyn mc_rbdyn_urdf)
+
 install(TARGETS MCControl MCControlComp mc_rbdyn mc_solver mc_robots mc_tasks mc_drc_controller mc_trajectory
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
@@ -174,4 +177,9 @@ set_source_files_properties(${CMAKE_BINARY_DIR}/idl/MCControlService_idl.py
 
 install(FILES ${CMAKE_BINARY_DIR}/idl/MCControlService_idl.py DESTINATION lib/python2.7/dist-packages/hrpsys)
 #install(FILES python/mc_rtc_interface.py DESTINATION bin PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
-install(FILES data/drc_stairs_climbing.json DESTINATION share/mc_rtc)
+install(
+  FILES
+    data/drc_stairs_climbing.json
+    data/drc_stairs_climbing_config.json
+  DESTINATION share/mc_rtc
+)

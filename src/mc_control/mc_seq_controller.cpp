@@ -12,6 +12,8 @@
 
 #include <mc_rbdyn/json/StanceConfig.h>
 
+#include <fstream>
+
 namespace mc_control
 {
 
@@ -94,140 +96,10 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
       seq_actions.push_back(seqActionFromStanceAction(actions[i].get(), actions[i+1].get(), 0));
     }
   }
-  /*FIXME Hard-coded for stairs climbing */
-  /*FIXME Load configs from a file */
-  //configs.resize(stances.size());
-  configs.resize(0);
-  for(size_t i = 1; i < seq_actions.size(); ++i)
-  {
-    mc_rbdyn::StanceConfig sc;
-
-    if(seq_actions[i]->type() == SeqAction::CoMMove)
-    {
-      sc.postureTask.stiffness = 0.1;
-      sc.postureTask.weight = 10.0;
-      sc.comTask.stiffness = 1.0;
-      sc.comTask.extraStiffness = 1.0;
-      sc.comTask.weight = 400.0;
-      sc.comTask.targetSpeed = 0.001;
-      sc.comObj.posThresh = 0.05,
-      sc.comObj.velThresh = 0.0001;
-      sc.comObj.comOffset = Eigen::Vector3d(0,0,0);
-    }
-    if(seq_actions[i]->type() == SeqAction::ContactMove)
-    {
-      sc.postureTask.stiffness = 0.1;
-      sc.postureTask.weight = 10.0;
-      sc.comTask.stiffness = 3.0;
-      sc.comTask.extraStiffness = 6.0;
-      sc.comTask.weight = 500.0;
-      sc.comTask.targetSpeed = 0.003;
-      sc.comObj.comOffset = Eigen::Vector3d(0,0,0);
-      sc.contactObj.posThresh = 0.03;
-      sc.contactObj.velThresh = 0.005;
-      sc.contactObj.preContactDist = 0.02;
-      sc.contactTask.position.stiffness = 2.0;
-      sc.contactTask.position.extraStiffness = 6.0;
-      sc.contactTask.position.weight = 600.0;
-      sc.contactTask.position.targetSpeed = 0.001;
-      sc.contactTask.orientation.stiffness = 1.0;
-      sc.contactTask.orientation.weight = 300.0;
-      sc.contactTask.orientation.finalWeight = 1000.0;
-      sc.contactTask.linVel.stiffness = 1.0;
-      sc.contactTask.linVel.weight = 10000.0;
-      sc.contactTask.linVel.speed = 0.02;
-      sc.contactTask.waypointConf.thresh = 0.15;
-      sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(0.2, 1, 0.9, 0.2);
-      sc.contactTask.collisionConf.iDist = 0.01;
-      sc.contactTask.collisionConf.sDist = 0.005;
-      sc.contactTask.collisionConf.damping = 0.05;
-    }
-    if(seq_actions[i]->type() == SeqAction::GripperMove)
-    {
-      sc.postureTask.stiffness = 0.05;
-      sc.postureTask.weight = 10.0;
-      sc.comTask.stiffness = 0.5;
-      sc.comTask.extraStiffness = 0.5;
-      sc.comTask.weight = 500.0;
-      sc.comTask.targetSpeed = 0.0005;
-      sc.contactObj.posThresh = 0.03;
-      sc.contactObj.velThresh = 0.05;
-      sc.contactObj.adjustPosThresh = 0.05;
-      sc.contactObj.adjustVelThresh = 0.02;
-      sc.contactObj.adjustOriThresh = 0.1;
-      sc.contactObj.adjustOriTBNWeight = Eigen::Vector3d(1,1,1);
-      sc.contactObj.preContactDist = 0.02;
-      sc.contactTask.position.stiffness = 0.25;
-      sc.contactTask.position.extraStiffness = 1.0;
-      sc.contactTask.position.weight = 600.0;
-      sc.contactTask.position.targetSpeed = 0.0005;
-      sc.contactTask.orientation.stiffness = 0.25;
-      sc.contactTask.orientation.weight = 200.0;
-      sc.contactTask.orientation.finalWeight = 1000.0;
-      sc.contactTask.linVel.stiffness = 0.5;
-      sc.contactTask.linVel.weight = 1000.0;
-      sc.contactTask.linVel.speed = 0.02;
-      sc.contactTask.waypointConf.thresh = 0.1;
-      sc.contactTask.waypointConf.pos = mc_rbdyn::percentWaypoint(0.3, 0.8, 0.7, 0.2);
-      sc.contactTask.collisionConf.iDist = 0.01;
-      sc.contactTask.collisionConf.sDist = 0.005;
-      sc.contactTask.collisionConf.damping = 0.05;
-    }
-
-    /* Still general configuration */
-    sc.collisions.autoc.push_back({"RLEG_LINK2", "LLEG_LINK2", {0.05, 0.01, 0.0}});
-    sc.collisions.autoc.push_back({"RLEG_LINK3", "LLEG_LINK3", {0.05, 0.01, 0.0}});
-    sc.collisions.autoc.push_back({"RLEG_LINK5", "LLEG_LINK5", {0.05, 0.01, 0.0}});
-    sc.collisions.autoc.push_back({"RLEG_LINK5", "LLEG_LINK3", {0.05, 0.01, 0.0}});
-    sc.collisions.autoc.push_back({"LLEG_LINK5", "RLEG_LINK3", {0.05, 0.01, 0.0}});
-    sc.collisions.autoc.push_back({"RARM_LINK6", "RLEG_LINK3", {0.1, 0.05, 0.0}});
-    sc.collisions.autoc.push_back({"RARM_LINK6", "RLEG_LINK2", {0.1, 0.05, 0.0}});
-    sc.collisions.autoc.push_back({"RARM_LINK6", "RLEG_LINK3", {0.1, 0.05, 0.0}});
-    sc.collisions.autoc.push_back({"RARM_LINK6", "LLEG_LINK2", {0.1, 0.05, 0.0}});
-    sc.collisions.autoc.push_back({"RARM_LINK6", "LLEG_LINK3", {0.1, 0.05, 0.0}});
-    sc.collisions.autoc.push_back({"RARM_LINK6", "CHEST_LINK1", {0.1, 0.05, 0.0}});
-    sc.collisions.autoc.push_back({"RARM_LINK6", "BODY", {0.1, 0.05, 0.0}});
-    sc.collisions.robotEnv.push_back({"RARM_LINK6", "stair_step2", {0.1, 0.05, 0.0}});
-    sc.collisions.robotEnv.push_back({"RARM_LINK6", "stair_step3", {0.1, 0.05, 0.0}});
-    sc.collisions.robotEnv.push_back({"RARM_LINK6", "platform", {0.1, 0.05, 0.0}});
-    if(i < 10)
-    {
-      //sc.collisions.robotEnv.push_back({"RARM_LINK6", "stair_step2", {0.05, 0.01, 0.0}});
-      //sc.collisions.robotEnv.push_back({"RARM_LINK6", "stair_step3", {0.05, 0.01, 0.0}});
-      //sc.collisions.robotEnv.push_back({"RARM_LINK6", "platform", {0.05, 0.01, 0.0}});
-      //sc.collisions.robotEnv.push_back({"RARM_LINK5", "platform", {0.05, 0.01, 0.0}});
-      //sc.collisions.robotEnv.push_back({"RARM_LINK4", "platform", {0.05, 0.01, 0.0}});
-      //sc.collisions.robotEnv.push_back({"RARM_LINK3", "platform", {0.05, 0.01, 0.0}});
-    }
-
-    /* Per-stance configuration */
-    mc_rbdyn::AddContactAction* addA = dynamic_cast<mc_rbdyn::AddContactAction*>(actions[i].get());
-    //mc_rbdyn::RemoveContactAction* rmA = dynamic_cast<mc_rbdyn::RemoveContactAction*>(actions[i].get());
-    if(addA)
-    {
-      if(addA->contact().r1Surface()->name() == "LeftGripper" &&
-         addA->contact().r2Surface()->name() == "StairLeftRung1")
-      {
-        sc.comObj.comOffset = Eigen::Vector3d(0.05, 0.0,0.0);
-      }
-      if(addA->contact().r1Surface()->name() == "LFrontSole" &&
-         addA->contact().r2Surface()->name() == "StairStep1")
-      {
-      }
-    }
-    mc_rbdyn::RemoveContactAction* rmA = dynamic_cast<mc_rbdyn::RemoveContactAction*>(actions[i].get());
-    if(rmA)
-    {
-      if(rmA->contact().r1Surface()->name() == "LFullSole" &&
-         rmA->contact().r2Surface()->name() == "Ground")
-      {
-      }
-    }
-
-    configs.push_back(sc);
-  }
-  configs.push_back(mc_rbdyn::StanceConfig());
-
+  /* Load plan configuration */
+  std::string config_path = seq_path;
+  config_path.replace(config_path.find(".json"), strlen(".json"), "_config.json");
+  loadStanceConfigs(config_path);
   /* Setup contact sensor */
   if(use_real_sensors)
   {
@@ -590,7 +462,98 @@ bool MCSeqController::play_next_stance()
 
 void MCSeqController::loadStanceConfigs(const std::string & file)
 {
-  /*TODO*/
+  std::cout << "Loading stance configs from " << file << std::endl;
+  configs.resize(0);
+  Json::Value v;
+  {
+    std::ifstream ifs(file);
+    if(ifs.failbit)
+    {
+      std::cerr << "Failed to open configuration file: " << file << std::endl;
+    }
+    try
+    {
+      ifs >> v;
+    }
+    catch(const std::runtime_error & exc)
+    {
+      std::cerr << "Failed to read configuration file" << std::endl;
+      std::cerr << exc.what() << std::endl;
+    }
+  }
+  /*
+    The JSON file contains two sections:
+    - A General section contains configuration information for the full sequence
+    - A StepByStep section contains configuration relative to single steps
+  */
+  mc_rbdyn::StanceConfig comMoveConfig;
+  mc_rbdyn::StanceConfig contactMoveConfig;
+  mc_rbdyn::StanceConfig gripperMoveConfig;
+  if(v.isMember("General"))
+  {
+    const Json::Value & scv = v["General"];
+    if(scv.isMember("CoMMove"))
+    {
+      mc_rbdyn::StanceConfigFromJSON(comMoveConfig, scv["CoMMove"]);
+    }
+    if(scv.isMember("ContactMove"))
+    {
+      mc_rbdyn::StanceConfigFromJSON(contactMoveConfig, scv["ContactMove"]);
+    }
+    if(scv.isMember("GripperMove"))
+    {
+      mc_rbdyn::StanceConfigFromJSON(gripperMoveConfig, scv["GripperMove"]);
+    }
+    if(scv.isMember("Collisions"))
+    {
+      mc_rbdyn::scCollisionsFromJSON(comMoveConfig.collisions, scv["Collisions"]);
+      mc_rbdyn::scCollisionsFromJSON(contactMoveConfig.collisions, scv["Collisions"]);
+      mc_rbdyn::scCollisionsFromJSON(gripperMoveConfig.collisions, scv["Collisions"]);
+    }
+  }
+  for(size_t i = 1; i < seq_actions.size(); ++i)
+  {
+    mc_rbdyn::StanceConfig sc;
+
+    /* Copy the general configuration for this step before finding specific information */
+    switch(seq_actions[i]->type())
+    {
+      case SeqAction::CoMMove:
+        sc = comMoveConfig;
+        break;
+      case SeqAction::ContactMove:
+        sc = contactMoveConfig;
+        break;
+      case SeqAction::GripperMove:
+        sc = gripperMoveConfig;
+        break;
+      default:
+        throw("Not happenning");
+        break;
+    }
+
+    /* Look for a matching state in the JSON file */
+    if(v.isMember("StepByStep"))
+    {
+      std::string type = actions[i]->type();
+      std::string r1Surface = "";
+      std::string r2Surface = "";
+      if(type != "identity")
+      {
+        r1Surface = actions[i]->contact().r1Surface()->name();
+        r2Surface = actions[i]->contact().r2Surface()->name();
+      }
+      for(const auto & scv : v["StepByStep"])
+      {
+        if(scv["type"] == type && scv["r1Surface"] == r1Surface && scv["r2Surface"] == r2Surface)
+        {
+          mc_rbdyn::StanceConfigFromJSON(sc, scv);
+        }
+      }
+    }
+    configs.push_back(sc);
+  }
+  configs.push_back(mc_rbdyn::StanceConfig());
 }
 
 std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * curAction, mc_rbdyn::StanceAction * targetAction, mc_rbdyn::StanceAction * targetTargetAction)
