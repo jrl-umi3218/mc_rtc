@@ -1,4 +1,4 @@
-#include <mc_control/mc_drc_controller.h>
+#include <mc_control/mc_global_controller.h>
 
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
@@ -7,7 +7,7 @@ namespace mc_control
 {
 
 /* Called by the RT component to access actual Controllers service */
-bool MCDRCGlobalController::change_joint(int jid)
+bool MCGlobalController::change_joint(int jid)
 {
   if(current_ctrl == POSTURE)
   {
@@ -18,7 +18,7 @@ bool MCDRCGlobalController::change_joint(int jid)
     return false;
   }
 }
-bool MCDRCGlobalController::change_joint(const std::string & jname)
+bool MCGlobalController::change_joint(const std::string & jname)
 {
   if(current_ctrl == POSTURE)
   {
@@ -29,7 +29,7 @@ bool MCDRCGlobalController::change_joint(const std::string & jname)
     return false;
   }
 }
-bool MCDRCGlobalController::joint_up()
+bool MCGlobalController::joint_up()
 {
   if(current_ctrl == POSTURE)
   {
@@ -40,7 +40,7 @@ bool MCDRCGlobalController::joint_up()
     return false;
   }
 }
-bool MCDRCGlobalController::joint_down()
+bool MCGlobalController::joint_down()
 {
   if(current_ctrl == POSTURE)
   {
@@ -51,7 +51,7 @@ bool MCDRCGlobalController::joint_down()
     return false;
   }
 }
-bool MCDRCGlobalController::set_joint_pos(const std::string & jname, const double & pos)
+bool MCGlobalController::set_joint_pos(const std::string & jname, const double & pos)
 {
   if(current_ctrl == POSTURE)
   {
@@ -63,7 +63,7 @@ bool MCDRCGlobalController::set_joint_pos(const std::string & jname, const doubl
   }
 }
 
-bool MCDRCGlobalController::change_ef(const std::string & ef_name)
+bool MCGlobalController::change_ef(const std::string & ef_name)
 {
   if(current_ctrl == BODY6D)
   {
@@ -74,7 +74,7 @@ bool MCDRCGlobalController::change_ef(const std::string & ef_name)
     return false;
   }
 }
-bool MCDRCGlobalController::translate_ef(const Eigen::Vector3d & t)
+bool MCGlobalController::translate_ef(const Eigen::Vector3d & t)
 {
   if(current_ctrl == BODY6D)
   {
@@ -89,7 +89,7 @@ bool MCDRCGlobalController::translate_ef(const Eigen::Vector3d & t)
     return false;
   }
 }
-bool MCDRCGlobalController::rotate_ef(const Eigen::Matrix3d & m)
+bool MCGlobalController::rotate_ef(const Eigen::Matrix3d & m)
 {
   if(current_ctrl == BODY6D)
   {
@@ -105,7 +105,7 @@ bool MCDRCGlobalController::rotate_ef(const Eigen::Matrix3d & m)
   }
 }
 
-bool MCDRCGlobalController::move_com(const Eigen::Vector3d & v)
+bool MCGlobalController::move_com(const Eigen::Vector3d & v)
 {
   if(current_ctrl == COM)
   {
@@ -121,7 +121,7 @@ bool MCDRCGlobalController::move_com(const Eigen::Vector3d & v)
   }
 }
 
-bool MCDRCGlobalController::play_next_stance()
+bool MCGlobalController::play_next_stance()
 {
   if(current_ctrl == SEQ)
   {
@@ -142,7 +142,7 @@ bool MCDRCGlobalController::play_next_stance()
   }
 }
 
-bool MCDRCGlobalController::change_wheel_angle(double theta)
+bool MCGlobalController::change_wheel_angle(double theta)
 {
   if(current_ctrl == DRIVING)
   {
@@ -154,7 +154,7 @@ bool MCDRCGlobalController::change_wheel_angle(double theta)
   }
 }
 
-bool MCDRCGlobalController::change_ankle_angle(double theta)
+bool MCGlobalController::change_ankle_angle(double theta)
 {
   if(current_ctrl == DRIVING)
   {
@@ -166,7 +166,7 @@ bool MCDRCGlobalController::change_ankle_angle(double theta)
   }
 }
 
-bool MCDRCGlobalController::change_gaze(double pan, double tilt)
+bool MCGlobalController::change_gaze(double pan, double tilt)
 {
   if(current_ctrl == DRIVING)
   {
@@ -178,7 +178,7 @@ bool MCDRCGlobalController::change_gaze(double pan, double tilt)
   }
 }
 
-bool MCDRCGlobalController::change_wrist_angle(double yaw)
+bool MCGlobalController::change_wrist_angle(double yaw)
 {
   if(current_ctrl == DRIVING)
   {
@@ -190,7 +190,7 @@ bool MCDRCGlobalController::change_wrist_angle(double yaw)
   }
 }
 
-bool MCDRCGlobalController::driving_service(double w, double a, double p, double t)
+bool MCGlobalController::driving_service(double w, double a, double p, double t)
 {
   if(current_ctrl == DRIVING)
   {

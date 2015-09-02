@@ -1,5 +1,4 @@
-#ifndef _H_MCDRCCONTROLLER_H_
-#define _H_MCDRCCONTROLLER_H_
+#pragma once
 
 #include <mc_control/mc_posture_controller.h>
 #include <mc_control/mc_body6d_controller.h>
@@ -14,10 +13,10 @@
 namespace mc_control
 {
 
-struct MCDRCGlobalController
+struct MCGlobalController
 {
 public:
-  MCDRCGlobalController();
+  MCGlobalController();
 
   void init(const std::vector<double> & initq);
 
@@ -101,5 +100,3 @@ private:
 };
 
 }
-
-#endif

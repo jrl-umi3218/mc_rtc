@@ -132,8 +132,8 @@ set(mc_drc_controller_SRC
 ./src/mc_control/mc_driving_controller.cpp
 ./src/mc_control/mc_egress_controller.cpp
 ./src/mc_control/mc_egress_mrqp_controller.cpp
-./src/mc_control/mc_drc_controller.cpp
-./src/mc_control/mc_drc_controller_services.cpp
+./src/mc_control/mc_global_controller.cpp
+./src/mc_control/mc_global_controller_services.cpp
 )
 add_library(mc_drc_controller SHARED ${mc_drc_controller_SRC})
 target_link_libraries(mc_drc_controller mc_tasks mc_solver mc_robots hrpIo)

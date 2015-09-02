@@ -19,7 +19,7 @@
 // <rtc-template block="service_impl_h">
 #include "MCControlServiceSVC_impl.h"
 
-#include <mc_control/mc_drc_controller.h>
+#include <mc_control/mc_global_controller.h>
 
 #include <boost/asio.hpp>
 #include <boost/thread.hpp>
@@ -147,7 +147,7 @@ class MCControl  : public RTC::DataFlowComponentBase
 
  private:
 public:
-  mc_control::MCDRCGlobalController controller;
+  mc_control::MCGlobalController controller;
   unsigned int max_t;
   bool init;
 };

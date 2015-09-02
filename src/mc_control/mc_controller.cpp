@@ -6,7 +6,7 @@
 
 #include <fstream>
 
-/* Note all service calls except for controller switches are implemented in mc_drc_controller_services.cpp */
+/* Note all service calls except for controller switches are implemented in mc_global_controller_services.cpp */
 
 namespace mc_control
 {

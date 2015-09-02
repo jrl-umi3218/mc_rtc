@@ -22,12 +22,12 @@ struct ControllerResetData
   const std::vector< std::vector<double> > & q;
 };
 
-struct MCDRCGlobalController;
+struct MCGlobalController;
 
 /*FIXME Get some data as parameters (e.g. timeStep, path to default env...) */
 struct MCVirtualController
 {
-  friend struct MCDRCGlobalController;
+  friend struct MCGlobalController;
 public:
   MCVirtualController();
 

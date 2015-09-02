@@ -1,4 +1,4 @@
-#include <mc_control/mc_drc_controller.h>
+#include <mc_control/mc_global_controller.h>
 
 #include <mc_rtc/config.h>
 
@@ -9,13 +9,13 @@
 #include <mc_robots/polaris_ranger.h>
 #include <mc_robots/polaris_ranger_egress.h>
 
-/* Note all service calls except for controller switches are implemented in mc_drc_controller_services.cpp */
+/* Note all service calls except for controller switches are implemented in mc_global_controller_services.cpp */
 
 namespace mc_control
 {
 
 /* FIXME Seq loading is hardcoded for now... */
-MCDRCGlobalController::MCDRCGlobalController()
+MCGlobalController::MCGlobalController()
 : posture_controller(), body6d_controller(), com_controller(),
   seq_controller(mc_rtc::HRP2_DRC_DESCRIPTION_PATH, "drc_stairs2", std::string(mc_rtc::DATA_PATH)+"drc_stairs_climbing.json"),
   driving_controller({std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::PolarisRangerRobotModule()),
@@ -41,7 +41,7 @@ MCDRCGlobalController::MCDRCGlobalController()
 {
 }
 
-void MCDRCGlobalController::init(const std::vector<double> & initq)
+void MCGlobalController::init(const std::vector<double> & initq)
 {
   std::vector<std::vector<double>> q;
   /*FIXME Get the position/attitude of the robot? */
@@ -80,28 +80,28 @@ void MCDRCGlobalController::init(const std::vector<double> & initq)
   controller->reset({q});
 }
 
-void MCDRCGlobalController::setSensorOrientation(const Eigen::Vector3d & rpy)
+void MCGlobalController::setSensorOrientation(const Eigen::Vector3d & rpy)
 {
   controller->sensorOri = rpy;
 }
 
-void MCDRCGlobalController::setEncoderValues(const std::vector<double> & eValues)
+void MCGlobalController::setEncoderValues(const std::vector<double> & eValues)
 {
   controller->encoderValues = eValues;
 }
 
-void MCDRCGlobalController::setWrenches(const std::vector< std::pair<Eigen::Vector3d, Eigen::Vector3d> > & wrenches)
+void MCGlobalController::setWrenches(const std::vector< std::pair<Eigen::Vector3d, Eigen::Vector3d> > & wrenches)
 {
   controller->setWrenches(wrenches);
 }
 
-void MCDRCGlobalController::setActualGripperQ(double rQ, double lQ)
+void MCGlobalController::setActualGripperQ(double rQ, double lQ)
 {
   controller->rgripper->setActualQ(rQ);
   controller->lgripper->setActualQ(lQ);
 }
 
-bool MCDRCGlobalController::run()
+bool MCGlobalController::run()
 {
   /* Check if we need to change the controller this time */
   if(next_controller)
@@ -143,12 +143,12 @@ bool MCDRCGlobalController::run()
   }
 }
 
-const QPResultMsg & MCDRCGlobalController::send(const double & t)
+const QPResultMsg & MCGlobalController::send(const double & t)
 {
   return controller->send(t);
 }
 
-const std::vector<double> & MCDRCGlobalController::gripperQ(bool lgripper)
+const std::vector<double> & MCGlobalController::gripperQ(bool lgripper)
 {
   if(lgripper)
   {
@@ -160,35 +160,35 @@ const std::vector<double> & MCDRCGlobalController::gripperQ(bool lgripper)
   }
 }
 
-void MCDRCGlobalController::setGripperCurrentQ(double lQ, double rQ)
+void MCGlobalController::setGripperCurrentQ(double lQ, double rQ)
 {
   controller->lgripper->setCurrentQ(lQ);
   controller->rgripper->setCurrentQ(rQ);
 }
 
-void MCDRCGlobalController::setGripperTargetQ(double lQ, double rQ)
+void MCGlobalController::setGripperTargetQ(double lQ, double rQ)
 {
   controller->lgripper->setTargetQ(lQ);
   controller->rgripper->setTargetQ(rQ);
 }
 
-void MCDRCGlobalController::setLGripperTargetQ(double lQ)
+void MCGlobalController::setLGripperTargetQ(double lQ)
 {
   controller->lgripper->setTargetQ(lQ);
 }
 
-void MCDRCGlobalController::setRGripperTargetQ(double rQ)
+void MCGlobalController::setRGripperTargetQ(double rQ)
 {
   controller->rgripper->setTargetQ(rQ);
 }
 
-void MCDRCGlobalController::setGripperOpenPercent(double lQ, double rQ)
+void MCGlobalController::setGripperOpenPercent(double lQ, double rQ)
 {
   controller->lgripper->setTargetOpening(lQ);
   controller->rgripper->setTargetOpening(rQ);
 }
 
-bool MCDRCGlobalController::EnablePostureController()
+bool MCGlobalController::EnablePostureController()
 {
   next_ctrl = POSTURE;
   if(current_ctrl != POSTURE)
@@ -199,7 +199,7 @@ bool MCDRCGlobalController::EnablePostureController()
   return true;
 }
 
-bool MCDRCGlobalController::EnableBody6dController()
+bool MCGlobalController::EnableBody6dController()
 {
   next_ctrl = BODY6D;
   if(current_ctrl != BODY6D)
@@ -210,7 +210,7 @@ bool MCDRCGlobalController::EnableBody6dController()
   return true;
 }
 
-bool MCDRCGlobalController::EnableCoMController()
+bool MCGlobalController::EnableCoMController()
 {
   next_ctrl = COM;
   if(current_ctrl != COM)
@@ -220,7 +220,7 @@ bool MCDRCGlobalController::EnableCoMController()
   return true;
 }
 
-bool MCDRCGlobalController::EnableSeqController()
+bool MCGlobalController::EnableSeqController()
 {
   next_ctrl = SEQ;
   if(current_ctrl != SEQ)
@@ -230,7 +230,7 @@ bool MCDRCGlobalController::EnableSeqController()
   return true;
 }
 
-bool MCDRCGlobalController::EnableDrivingController()
+bool MCGlobalController::EnableDrivingController()
 {
   next_ctrl = DRIVING;
   if(current_ctrl != DRIVING)
