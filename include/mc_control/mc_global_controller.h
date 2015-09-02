@@ -76,13 +76,28 @@ public:
 public:
   bool running;
 private:
-  MCPostureController posture_controller;
-  MCBody6dController body6d_controller;
-  MCCoMController com_controller;
-  MCSeqController seq_controller;
-  MCDrivingController driving_controller;
-  MCEgressController egress_controller;
-  MCEgressMRQPController egress_mrqp_controller;
+  struct Configuration
+  {
+    Configuration(const std::string & path);
+
+    inline bool enabled(const std::string & ctrl);
+
+    std::vector<std::string> enabled_controllers;
+    std::string initial_controller;
+    std::string seq_env_path;
+    std::string seq_env_name;
+    std::string seq_plan;
+    bool seq_use_real_sensors;
+  };
+private:
+  Configuration config;
+  std::shared_ptr<MCPostureController> posture_controller;
+  std::shared_ptr<MCBody6dController> body6d_controller;
+  std::shared_ptr<MCCoMController> com_controller;
+  std::shared_ptr<MCSeqController> seq_controller;
+  std::shared_ptr<MCDrivingController> driving_controller;
+  std::shared_ptr<MCEgressController> egress_controller;
+  std::shared_ptr<MCEgressMRQPController> egress_mrqp_controller;
   enum CurrentController
   {
     POSTURE = 1,
@@ -91,12 +106,14 @@ private:
     SEQ = 4,
     DRIVING = 5,
     EGRESS = 6,
-    EGRESS_MRQP = 7
+    EGRESS_MRQP = 7,
+    NONE = 42
   };
   CurrentController current_ctrl;
   CurrentController next_ctrl;
   MCVirtualController * controller;
   MCVirtualController * next_controller;
+  bool EnableNextController(const std::string & name, const CurrentController & index, const std::shared_ptr<MCVirtualController> & ctrl);
 };
 
 }

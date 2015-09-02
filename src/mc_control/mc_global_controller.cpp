@@ -9,36 +9,150 @@
 #include <mc_robots/polaris_ranger.h>
 #include <mc_robots/polaris_ranger_egress.h>
 
+#include <jsoncpp/json/json.h>
+#include <fstream>
+
 /* Note all service calls except for controller switches are implemented in mc_global_controller_services.cpp */
 
 namespace mc_control
 {
 
-/* FIXME Seq loading is hardcoded for now... */
+MCGlobalController::Configuration::Configuration(const std::string & path)
+{
+  Json::Value v;
+  std::ifstream ifs(path);
+  if(ifs.bad())
+  {
+    std::cerr << "Failed to open controller configuration file: " << path << std::endl;
+  }
+  try
+  {
+    ifs >> v;
+  }
+  catch(const std::runtime_error & exc)
+  {
+    std::cerr << "Failed to read configuration file" << std::endl;
+    std::cerr << exc.what() << std::endl;
+  }
+  if(v.isMember("Enabled"))
+  {
+    for(const auto & cv : v["Enabled"])
+    {
+      enabled_controllers.push_back(cv.asString());
+    }
+  }
+  if(v.isMember("Default"))
+  {
+    initial_controller = v["Default"].asString();
+  }
+  if(v.isMember("Seq"))
+  {
+    if(v["Seq"].isMember("Env"))
+    {
+      if(v["Seq"]["Env"].isMember("Path"))
+      {
+        seq_env_path = v["Seq"]["Env"]["Path"].asString();
+      }
+      if(v["Seq"]["Env"].isMember("Name"))
+      {
+        seq_env_name = v["Seq"]["Env"]["Name"].asString();
+      }
+    }
+    if(v["Seq"].isMember("Plan"))
+    {
+      seq_plan = v["Seq"]["Plan"].asString();
+    }
+    if(v["Seq"].isMember("UseRealSensors"))
+    {
+      seq_use_real_sensors = v["Seq"]["UseRealSensors"].asBool();
+    }
+  }
+}
+
+bool MCGlobalController::Configuration::enabled(const std::string & ctrl)
+{
+  return std::find(enabled_controllers.begin(), enabled_controllers.end(), ctrl) != enabled_controllers.end();
+}
+
 MCGlobalController::MCGlobalController()
-: posture_controller(), body6d_controller(), com_controller(),
-  seq_controller(mc_rtc::HRP2_DRC_DESCRIPTION_PATH, "drc_stairs2", std::string(mc_rtc::DATA_PATH)+"drc_stairs_climbing.json"),
-  driving_controller({std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::PolarisRangerRobotModule()),
-                      std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::EnvRobotModule(mc_rtc::MC_ENV_DESCRIPTION_PATH, "ground"))}),
-  egress_controller(mc_rtc::HRP2_DRC_DESCRIPTION_PATH, "polaris_ranger"),
-  egress_mrqp_controller({std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::PolarisRangerEgressRobotModule()),
-                      std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::EnvRobotModule(mc_rtc::MC_ENV_DESCRIPTION_PATH, "ground"))}),
-  //current_ctrl(POSTURE), next_ctrl(POSTURE),
-  //controller(&posture_controller),
-  //current_ctrl(BODY6D), next_ctrl(BODY6D),
-  //controller(&body6d_controller),
-  //current_ctrl(COM), next_ctrl(COM),
-  //controller(&com_controller),
-  current_ctrl(SEQ), next_ctrl(SEQ),
-  controller(&seq_controller),
-  //current_ctrl(DRIVING), next_ctrl(DRIVING),
-  //controller(&driving_controller),
-  //current_ctrl(EGRESS), next_ctrl(EGRESS),
-  //controller(&egress_controller),
-  //current_ctrl(EGRESS_MRQP), next_ctrl(EGRESS_MRQP),
-  //controller(&egress_mrqp_controller),
+: config(mc_rtc::CONF_PATH),
+  posture_controller(0), body6d_controller(0), com_controller(0),
+  seq_controller(0), driving_controller(0),
+  egress_controller(0), egress_mrqp_controller(0),
+  current_ctrl(NONE), next_ctrl(NONE),
+  controller(0),
   next_controller(0)
 {
+  if(config.enabled("Posture"))
+  {
+    posture_controller.reset(new MCPostureController());
+  }
+  if(config.enabled("Body6d"))
+  {
+    body6d_controller.reset(new MCBody6dController());
+  }
+  if(config.enabled("CoM"))
+  {
+    com_controller.reset(new MCCoMController());
+  }
+  if(config.enabled("Seq"))
+  {
+    seq_controller.reset(new MCSeqController(config.seq_env_path, config.seq_env_name, std::string(mc_rtc::DATA_PATH) + config.seq_plan, config.seq_use_real_sensors));
+  }
+  if(config.enabled("Driving"))
+  {
+    driving_controller.reset(new MCDrivingController({std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::PolarisRangerRobotModule()), std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::EnvRobotModule(mc_rtc::MC_ENV_DESCRIPTION_PATH, "ground"))}));
+  }
+  if(config.enabled("Egress"))
+  {
+    egress_controller.reset(new MCEgressController(mc_rtc::HRP2_DRC_DESCRIPTION_PATH, "polaris_ranger"));
+  }
+  if(config.enabled("EgressMRQP"))
+  {
+    egress_mrqp_controller.reset(new MCEgressMRQPController({std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::PolarisRangerEgressRobotModule()), std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::EnvRobotModule(mc_rtc::MC_ENV_DESCRIPTION_PATH, "ground"))}));
+  }
+  if(config.initial_controller == "Posture")
+  {
+    current_ctrl = POSTURE;
+    controller = posture_controller.get();
+  }
+  if(config.initial_controller == "Body6d")
+  {
+    current_ctrl = BODY6D;
+    controller = body6d_controller.get();
+  }
+  if(config.initial_controller == "CoM")
+  {
+    current_ctrl = COM;
+    controller = com_controller.get();
+  }
+  if(config.initial_controller == "Seq")
+  {
+    current_ctrl = SEQ;
+    controller = seq_controller.get();
+  }
+  if(config.initial_controller == "Driving")
+  {
+    current_ctrl = DRIVING;
+    controller = driving_controller.get();
+  }
+  if(config.initial_controller == "Egress")
+  {
+    current_ctrl = EGRESS;
+    controller = egress_controller.get();
+  }
+  if(config.initial_controller == "EgressMRQP")
+  {
+    current_ctrl = EGRESS_MRQP;
+    controller = egress_mrqp_controller.get();
+  }
+  next_ctrl = current_ctrl;
+  next_controller = 0;
+  if(current_ctrl == NONE || controller == 0)
+  {
+    std::cerr << "No controller selected or selected controller is not enabled, please check your configuration file" << std::endl;
+    throw("No controller enabled");
+  }
 }
 
 void MCGlobalController::init(const std::vector<double> & initq)
@@ -188,57 +302,47 @@ void MCGlobalController::setGripperOpenPercent(double lQ, double rQ)
   controller->rgripper->setTargetOpening(rQ);
 }
 
+bool MCGlobalController::EnableNextController(const std::string & name, const CurrentController & index, const std::shared_ptr<MCVirtualController> & ctrl)
+{
+  if(ctrl.get())
+  {
+    next_ctrl = index;
+    if(current_ctrl != index)
+    {
+      next_controller = ctrl.get();
+    }
+    return true;
+  }
+  else
+  {
+    std::cout << name << " controller not enabled." << std::endl;
+    return false;
+  }
+}
+
 bool MCGlobalController::EnablePostureController()
 {
-  next_ctrl = POSTURE;
-  if(current_ctrl != POSTURE)
-  {
-    next_controller = &posture_controller;
-  }
-  //while(next_controller != 0);
-  return true;
+  return EnableNextController("Posture", POSTURE, posture_controller);
 }
 
 bool MCGlobalController::EnableBody6dController()
 {
-  next_ctrl = BODY6D;
-  if(current_ctrl != BODY6D)
-  {
-    next_controller = &body6d_controller;
-  }
-  //while(next_controller != 0);
-  return true;
+  return EnableNextController("Body6d", BODY6D, body6d_controller);
 }
 
 bool MCGlobalController::EnableCoMController()
 {
-  next_ctrl = COM;
-  if(current_ctrl != COM)
-  {
-    next_controller = &com_controller;
-  }
-  return true;
+  return EnableNextController("CoM", COM, com_controller);
 }
 
 bool MCGlobalController::EnableSeqController()
 {
-  next_ctrl = SEQ;
-  if(current_ctrl != SEQ)
-  {
-    next_controller = &seq_controller;
-  }
-  return true;
+  return EnableNextController("Seq", SEQ, seq_controller);
 }
 
 bool MCGlobalController::EnableDrivingController()
 {
-  next_ctrl = DRIVING;
-  if(current_ctrl != DRIVING)
-  {
-    next_controller = &driving_controller;
-  }
-  return true;
-  return false;
+  return EnableNextController("Driving", DRIVING, driving_controller);
 }
 
 }

@@ -11,7 +11,7 @@ bool MCGlobalController::change_joint(int jid)
 {
   if(current_ctrl == POSTURE)
   {
-    return posture_controller.change_joint(jid);
+    return posture_controller->change_joint(jid);
   }
   else
   {
@@ -22,7 +22,7 @@ bool MCGlobalController::change_joint(const std::string & jname)
 {
   if(current_ctrl == POSTURE)
   {
-    return posture_controller.change_joint(jname);
+    return posture_controller->change_joint(jname);
   }
   else
   {
@@ -33,7 +33,7 @@ bool MCGlobalController::joint_up()
 {
   if(current_ctrl == POSTURE)
   {
-    return posture_controller.joint_up();
+    return posture_controller->joint_up();
   }
   else
   {
@@ -44,7 +44,7 @@ bool MCGlobalController::joint_down()
 {
   if(current_ctrl == POSTURE)
   {
-    return posture_controller.joint_down();
+    return posture_controller->joint_down();
   }
   else
   {
@@ -55,7 +55,7 @@ bool MCGlobalController::set_joint_pos(const std::string & jname, const double &
 {
   if(current_ctrl == POSTURE)
   {
-    return posture_controller.set_joint_pos(jname, pos);
+    return posture_controller->set_joint_pos(jname, pos);
   }
   else
   {
@@ -67,7 +67,7 @@ bool MCGlobalController::change_ef(const std::string & ef_name)
 {
   if(current_ctrl == BODY6D)
   {
-    return body6d_controller.change_ef(ef_name);
+    return body6d_controller->change_ef(ef_name);
   }
   else
   {
@@ -78,11 +78,11 @@ bool MCGlobalController::translate_ef(const Eigen::Vector3d & t)
 {
   if(current_ctrl == BODY6D)
   {
-    return body6d_controller.translate_ef(t);
+    return body6d_controller->translate_ef(t);
   }
   else if(current_ctrl == EGRESS)
   {
-    return egress_controller.move_ef(t, Eigen::Matrix3d::Identity());
+    return egress_controller->move_ef(t, Eigen::Matrix3d::Identity());
   }
   else
   {
@@ -93,11 +93,11 @@ bool MCGlobalController::rotate_ef(const Eigen::Matrix3d & m)
 {
   if(current_ctrl == BODY6D)
   {
-    return body6d_controller.rotate_ef(m);
+    return body6d_controller->rotate_ef(m);
   }
   else if(current_ctrl == EGRESS)
   {
-    return egress_controller.move_ef(Eigen::Vector3d(0,0,0), m);
+    return egress_controller->move_ef(Eigen::Vector3d(0,0,0), m);
   }
   else
   {
@@ -109,11 +109,11 @@ bool MCGlobalController::move_com(const Eigen::Vector3d & v)
 {
   if(current_ctrl == COM)
   {
-    return com_controller.move_com(v);
+    return com_controller->move_com(v);
   }
   else if(current_ctrl == EGRESS)
   {
-    return egress_controller.move_com(v);
+    return egress_controller->move_com(v);
   }
   else
   {
@@ -125,15 +125,15 @@ bool MCGlobalController::play_next_stance()
 {
   if(current_ctrl == SEQ)
   {
-    return seq_controller.play_next_stance();
+    return seq_controller->play_next_stance();
   }
   else if(current_ctrl == EGRESS)
   {
-    return egress_controller.next_phase();
+    return egress_controller->next_phase();
   }
   else if(current_ctrl == EGRESS_MRQP)
   {
-    egress_mrqp_controller.nextPhase();
+    egress_mrqp_controller->nextPhase();
     return true;
   }
   else
@@ -146,7 +146,7 @@ bool MCGlobalController::change_wheel_angle(double theta)
 {
   if(current_ctrl == DRIVING)
   {
-    return driving_controller.changeWheelAngle(theta);
+    return driving_controller->changeWheelAngle(theta);
   }
   else
   {
@@ -158,7 +158,7 @@ bool MCGlobalController::change_ankle_angle(double theta)
 {
   if(current_ctrl == DRIVING)
   {
-    return driving_controller.changeAnkleAngle(theta);
+    return driving_controller->changeAnkleAngle(theta);
   }
   else
   {
@@ -170,7 +170,7 @@ bool MCGlobalController::change_gaze(double pan, double tilt)
 {
   if(current_ctrl == DRIVING)
   {
-    return driving_controller.changeGaze(pan, tilt);
+    return driving_controller->changeGaze(pan, tilt);
   }
   else
   {
@@ -182,7 +182,7 @@ bool MCGlobalController::change_wrist_angle(double yaw)
 {
   if(current_ctrl == DRIVING)
   {
-    return driving_controller.changeWristAngle(yaw);
+    return driving_controller->changeWristAngle(yaw);
   }
   else
   {
@@ -194,7 +194,7 @@ bool MCGlobalController::driving_service(double w, double a, double p, double t)
 {
   if(current_ctrl == DRIVING)
   {
-    return driving_controller.driving_service(w, a, p, t);
+    return driving_controller->driving_service(w, a, p, t);
   }
   else
   {
