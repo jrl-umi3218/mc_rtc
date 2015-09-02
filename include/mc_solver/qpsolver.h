@@ -123,6 +123,8 @@ bool operator==(const Collision & lhs, const Collision & rhs);
 
 bool operator!=(const Collision & lhs, const Collision & rhs);
 
+std::ostream & operator<<(std::ostream & os, const Collision & c);
+
 struct CollisionsConstraint : public ConstraintSet
 {
 public:

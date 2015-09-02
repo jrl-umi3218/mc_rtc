@@ -221,15 +221,6 @@
                }
             },
             {
-               "body1" : "LLEG_LINK3",
-               "body2" : "step9_hull",
-               "collisionConf" : {
-                  "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.025
-               }
-            },
-            {
                "body1" : "RLEG_LINK3",
                "body2" : "step1_hull",
                "collisionConf" : {
@@ -302,15 +293,6 @@
                }
             },
             {
-               "body1" : "RLEG_LINK3",
-               "body2" : "step9_hull",
-               "collisionConf" : {
-                  "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.025
-               }
-            },
-            {
                "body1" : "LLEG_LINK5",
                "body2" : "step2_hull",
                "collisionConf" : {
@@ -340,15 +322,6 @@
             {
                "body1" : "LLEG_LINK5",
                "body2" : "step8_hull",
-               "collisionConf" : {
-                  "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.025
-               }
-            },
-            {
-               "body1" : "LLEG_LINK5",
-               "body2" : "step9_hull",
                "collisionConf" : {
                   "damping" : 0.0,
                   "iDist" : 0.05,
@@ -394,15 +367,6 @@
             {
                "body1" : "RLEG_LINK5",
                "body2" : "step8_hull",
-               "collisionConf" : {
-                  "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.025
-               }
-            },
-            {
-               "body1" : "RLEG_LINK5",
-               "body2" : "step9_hull",
                "collisionConf" : {
                   "damping" : 0.0,
                   "iDist" : 0.05,

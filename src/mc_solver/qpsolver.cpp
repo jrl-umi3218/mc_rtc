@@ -226,6 +226,12 @@ bool operator!=(const Collision & lhs, const Collision & rhs)
   return not (lhs == rhs);
 }
 
+std::ostream & operator<<(std::ostream & os, const Collision & col)
+{
+  os << "Collision: " << col.body1 << "/" << col.body2 << " { " << col.iDist << ", " << col.sDist << ", " << col.damping << "}" << std::endl;
+  return os;
+}
+
 double CollisionsConstraint::defaultDampingOffset = 0.1;
 
 CollisionsConstraint::CollisionsConstraint(const mc_rbdyn::Robots & robots, unsigned int r1Index, unsigned int r2Index, double timeStep)
@@ -274,6 +280,16 @@ void CollisionsConstraint::addCollision(const mc_rbdyn::Robots & robots, const C
   const mc_rbdyn::Robot & r1 = robots.robots[r1Index];
   const mc_rbdyn::Robot & r2 = robots.robots[r2Index];
   cols.push_back(col);
+  if(r1.convex.count(col.body1) == 0)
+  {
+    std::cerr << "No convex named " << col.body1 << " in robot, will not add collision" << std::endl;
+    return;
+  }
+  if(r2.convex.count(col.body2) == 0)
+  {
+    std::cerr << "No convex named " << col.body2 << " in env, will not add collision" << std::endl;
+    return;
+  }
   const auto & body1 = r1.convex.at(col.body1);
   const auto & body2 = r2.convex.at(col.body2);
   const sva::PTransformd & X_b1_c = r1.collisionTransforms.at(body1.first);
