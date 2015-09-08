@@ -6,6 +6,7 @@
 #include <mc_rbdyn/StanceConfig.h>
 
 #include <json/json.h>
+#include <iostream>
 
 namespace mc_rbdyn
 {
