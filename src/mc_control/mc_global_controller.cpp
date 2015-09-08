@@ -9,7 +9,7 @@
 #include <mc_robots/polaris_ranger.h>
 #include <mc_robots/polaris_ranger_egress.h>
 
-#include <jsoncpp/json/json.h>
+#include <json/json.h>
 #include <fstream>
 
 /* Note all service calls except for controller switches are implemented in mc_global_controller_services.cpp */

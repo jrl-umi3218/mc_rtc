@@ -23,6 +23,9 @@ link_directories(${OPENRTM_LIBRARY_DIRS})
 pkg_check_modules(EIGEN3 REQUIRED eigen3)
 include_directories(${EIGEN3_INCLUDE_DIRS})
 
+pkg_check_modules(JSONCPP REQUIRED jsoncpp)
+include_directories(${JSONCPP_INCLUDE_DIRS})
+
 pkg_check_modules(HRPSYSBASE REQUIRED hrpsys-base)
 include_directories(${HRPSYSBASE_INCLUDE_DIRS})
 link_directories(${HRPSYSBASE_LIBRARY_DIRS})
