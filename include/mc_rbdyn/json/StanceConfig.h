@@ -5,7 +5,7 @@
 
 #include <mc_rbdyn/StanceConfig.h>
 
-#include <jsoncpp/json/json.h>
+#include <json/json.h>
 
 namespace mc_rbdyn
 {

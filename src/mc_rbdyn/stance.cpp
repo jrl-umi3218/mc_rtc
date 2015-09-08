@@ -9,7 +9,7 @@
 #include <RBDyn/FK.h>
 #include <RBDyn/CoM.h>
 
-#include <jsoncpp/json/json.h>
+#include <json/json.h>
 #include <fstream>
 
 namespace mc_rbdyn
