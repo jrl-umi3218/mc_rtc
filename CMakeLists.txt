@@ -2,9 +2,19 @@
 
 cmake_minimum_required(VERSION 2.8)
 
-include(idl.cmake)
+include(cmake/base.cmake)
+include(cmake/eigen.cmake)
+include(cmake/pkg-config.cmake)
+include(cmake/idl.cmake)
 
-project(mc_rtc_core)
+set(PROJECT_NAME mc_rtc)
+set(PROJECT_DESCRIPTION mc_rtc)
+set(PROJECT_URL https://rob-dev.lirmm.fr/multi-contact/mc_rtc)
+
+set(CXX_DISABLE_WERROR 1)
+
+set(DOXYGEN_USE_MATHJAX "YES")
+setup_project()
 
 add_definitions(-std=c++0x)
 add_definitions(-mfpmath=sse -msse2)
@@ -12,164 +22,67 @@ add_definitions(-mfpmath=sse -msse2)
 #add_definitions(-Wno-sign-conversion -Wno-shorten-64-to-32)
 #add_definitions(-Werror)
 
-find_package(PkgConfig)
+search_for_eigen()
+
 find_package(Boost REQUIRED COMPONENTS system filesystem thread)
 
-pkg_check_modules(OPENRTM REQUIRED openrtm-aist)
-include_directories(${OPENRTM_INCLUDE_DIRS})
-add_definitions(${OPENRTM_CFLAGS})
-link_directories(${OPENRTM_LIBRARY_DIRS})
+add_required_dependency(jsoncpp)
+add_required_dependency(hrpsys-base)
+add_required_dependency(Tasks)
+add_required_dependency(mc_rbdyn_urdf)
 
-pkg_check_modules(EIGEN3 REQUIRED eigen3)
-include_directories(${EIGEN3_INCLUDE_DIRS})
-
-pkg_check_modules(JSONCPP REQUIRED jsoncpp)
-include_directories(${JSONCPP_INCLUDE_DIRS})
-
-pkg_check_modules(HRPSYSBASE REQUIRED hrpsys-base)
-include_directories(${HRPSYSBASE_INCLUDE_DIRS})
-link_directories(${HRPSYSBASE_LIBRARY_DIRS})
-
-pkg_check_modules(TASKS REQUIRED Tasks)
-include_directories(${TASKS_INCLUDE_DIRS})
-link_directories(${TASKS_LIBRARY_DIRS})
-
-pkg_check_modules(MC_RBDYN_URDF REQUIRED mc_rbdyn_urdf)
-include_directories(${MC_RBDYN_URDF_INCLUDE_DIRS})
-link_directories(${MC_RBDYN_URDF_LIBRARY_DIRS})
-
-include_directories(include)
-
-OMNIIDL_INCLUDE_DIRECTORIES("idl")
-add_subdirectory(idl)
-
-execute_process(COMMAND rospack find mc_env_description
-                RESULT_VARIABLE MC_ENV_DESCRIPTION_FOUND
-                OUTPUT_VARIABLE MC_ENV_DESCRIPTION_PATH
-                OUTPUT_STRIP_TRAILING_WHITESPACE)
-if(${MC_ENV_DESCRIPTION_FOUND})
-  MESSAGE(SEND_ERROR "Failed to find mc_env_description, check your system configuration")
+# Find GEOS flags using geos-config
+find_program(GEOS_CONFIG geos-config
+  /usr/local/bin
+  /usr/bin
+  ${CMAKE_INSTALL_PREFIX}/bin
+)
+if(GEOS_CONFIG)
+  exec_program(${GEOS_CONFIG}
+    ARGS --prefix
+    OUTPUT_VARIABLE GEOS_PREFIX)
+  set(GEOS_INCLUDE_DIR ${GEOS_PREFIX}/include)
+  set(GEOS_LIBRARY_DIR ${GEOS_PREFIX}/lib)
+  set(GEOS_LIBRARY geos)
+  include_directories(${GEOS_INCLUDE_DIR})
+  link_directories(${GEOS_LIBRARY_DIR})
 else()
-  MESSAGE(STATUS "Found mc_env_description: ${MC_ENV_DESCRIPTION_PATH}")
+  MESSAGE(SEND_ERROR "Could not find geos-config, missing dependency")
 endif()
 
-execute_process(COMMAND rospack find hrp2_drc_description
-                RESULT_VARIABLE HRP2_DRC_DESCRIPTION_FOUND
-                OUTPUT_VARIABLE HRP2_DRC_DESCRIPTION_PATH
-                OUTPUT_STRIP_TRAILING_WHITESPACE)
-if(${HRP2_DRC_DESCRIPTION_FOUND})
-  MESSAGE(SEND_ERROR "Failed to find hrp2_drc_description, check your system configuration")
-else()
-  MESSAGE(STATUS "Found hrp2_drc_description: ${HRP2_DRC_DESCRIPTION_PATH}")
+
+omniidl_include_directories("idl")
+add_subdirectory(idl)
+
+if(NOT DEFINED MC_ENV_DESCRIPTION_PATH)
+  execute_process(COMMAND rospack find mc_env_description
+                  RESULT_VARIABLE MC_ENV_DESCRIPTION_FOUND
+                  OUTPUT_VARIABLE MC_ENV_DESCRIPTION_PATH
+                  OUTPUT_STRIP_TRAILING_WHITESPACE)
+  if(${MC_ENV_DESCRIPTION_FOUND})
+    MESSAGE(SEND_ERROR "Failed to find mc_env_description, check your system configuration or define MC_ENV_DESCRIPTION_PATH")
+  else()
+    MESSAGE(STATUS "Found mc_env_description: ${MC_ENV_DESCRIPTION_PATH}")
+  endif()
+endif()
+
+if(NOT DEFINED HRP2_DESCRIPTION_PATH)
+  execute_process(COMMAND rospack find hrp2_drc_description
+                  RESULT_VARIABLE HRP2_DRC_DESCRIPTION_FOUND
+                  OUTPUT_VARIABLE HRP2_DRC_DESCRIPTION_PATH
+                  OUTPUT_STRIP_TRAILING_WHITESPACE)
+  if(${HRP2_DRC_DESCRIPTION_FOUND})
+    MESSAGE(SEND_ERROR "Failed to find hrp2_drc_description, check your system configuration or define HRP2_DRC_DESCRIPTION_PATH")
+  else()
+    MESSAGE(STATUS "Found hrp2_drc_description: ${HRP2_DRC_DESCRIPTION_PATH}")
+  endif()
 endif()
 
 configure_file(${PROJECT_SOURCE_DIR}/include/mc_rtc/config.h.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/include/mc_rtc/config.h)
 
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
+add_subdirectory(src)
 
-set(mc_rbdyn_SRC
-./src/mc_rbdyn/SCHAddon.cpp
-./src/mc_rbdyn/contact_transform.cpp
-./src/mc_rbdyn/Surface.cpp
-./src/mc_rbdyn/PlanarSurface.cpp
-./src/mc_rbdyn/CylindricalSurface.cpp
-./src/mc_rbdyn/GripperSurface.cpp
-./src/mc_rbdyn/surface_utils.cpp
-./src/mc_rbdyn/surface_hull.cpp
-./src/mc_rbdyn/Contact.cpp
-./src/mc_rbdyn/robot.cpp
-./src/mc_rbdyn/stance.cpp
-./src/mc_rbdyn/StanceConfig.cpp
-)
-
-add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC})
-target_link_libraries(mc_rbdyn RBDyn tinyxml2 boost_filesystem boost_system geos jsoncpp sch-core Tasks)
-
-set(mc_robots_SRC
-./src/mc_robots/hrp2_drc.cpp
-./src/mc_robots/env.cpp
-./src/mc_robots/polaris_ranger.cpp
-./src/mc_robots/polaris_ranger_egress.cpp
-)
-add_library(mc_robots SHARED ${mc_robots_SRC})
-target_link_libraries(mc_robots mc_rbdyn mc_rbdyn_urdf)
-
-set(mc_solver_SRC
-./src/mc_solver/contact_util.cpp
-./src/mc_solver/qpsolver.cpp
-)
-add_library(mc_solver SHARED ${mc_solver_SRC})
-target_link_libraries(mc_solver RBDyn Tasks)
-
-set(mc_trajectory_SRC
-./src/mc_trajectory/BSplineTrajectory.cpp
-./src/mc_trajectory/spline_utils.cpp
-)
-add_library(mc_trajectory SHARED ${mc_trajectory_SRC})
-
-set(mc_tasks_SRC
-./src/mc_tasks/OrientationTask.cpp
-./src/mc_tasks/EndEffectorTask.cpp
-./src/mc_tasks/CoMTask.cpp
-./src/mc_tasks/MetaTask.cpp
-./src/mc_tasks/StabilityTask.cpp
-./src/mc_tasks/AddRemoveContactTask.cpp
-./src/mc_tasks/MoveContactTask.cpp
-./src/mc_tasks/TrajectoryTask.cpp
-)
-add_library(mc_tasks SHARED ${mc_tasks_SRC})
-target_link_libraries(mc_tasks mc_solver mc_rbdyn mc_trajectory)
-
-set(mc_drc_controller_SRC
-./src/mc_control/ForceContactSensor.cpp
-./src/mc_control/SimulationContactSensor.cpp
-./src/mc_control/generic_gripper.cpp
-./src/mc_control/mc_virtual_controller.cpp
-./src/mc_control/mc_controller.cpp
-./src/mc_control/mc_posture_controller.cpp
-./src/mc_control/mc_body6d_controller.cpp
-./src/mc_control/mc_com_controller.cpp
-./src/mc_control/mc_seq_controller.cpp
-./src/mc_control/mc_seq_steps.cpp
-./src/mc_control/mc_mrqp_controller.cpp
-./src/mc_control/mc_driving_controller.cpp
-./src/mc_control/mc_egress_controller.cpp
-./src/mc_control/mc_egress_mrqp_controller.cpp
-./src/mc_control/mc_global_controller.cpp
-./src/mc_control/mc_global_controller_services.cpp
-)
-add_library(mc_drc_controller SHARED ${mc_drc_controller_SRC})
-target_link_libraries(mc_drc_controller mc_tasks mc_solver mc_robots hrpIo)
-
-set(MCControl_SRC
-./src/MCControlServiceSVC_impl.cpp
-./src/MCControl.cpp
-${CMAKE_BINARY_DIR}/idl/MCControlServiceSK.cc
-)
-
-set_source_files_properties(${CMAKE_BINARY_DIR}/idl/MCControlServiceSK.cc
-                            PROPERTIES GENERATED 1)
-
-include_directories(${CMAKE_BINARY_DIR}/idl)
-
-add_library(MCControl SHARED ${MCControl_SRC})
-add_dependencies(MCControl generate_mc_idl_cpp)
-set_target_properties(MCControl PROPERTIES PREFIX "")
-target_link_libraries(MCControl ${OPENRTM_LIBRARIES} ${Boost_LIBRARIES} mc_rbdyn mc_rbdyn_urdf mc_drc_controller)
-
-add_executable(MCControlComp ./src/MCControlComp.cpp)
-target_link_libraries(MCControlComp MCControl)
-
-add_executable(testBSplineTrajectory ./tests/testBSplineTrajectory.cpp)
-target_link_libraries(testBSplineTrajectory mc_trajectory)
-
-add_executable(StanceConfigGenerator src/utils/StanceConfigGenerator.cpp)
-target_link_libraries(StanceConfigGenerator mc_rbdyn mc_rbdyn_urdf)
-
-install(TARGETS MCControl MCControlComp mc_rbdyn mc_solver mc_robots mc_tasks mc_drc_controller mc_trajectory
-  RUNTIME DESTINATION bin
-  LIBRARY DESTINATION lib
-  ARCHIVE DESTINATION lib)
+add_subdirectory(tests)
 
 install(DIRECTORY include
           DESTINATION ${CMAKE_INSTALL_PREFIX}
@@ -193,3 +106,5 @@ install(
     etc/mc_rtc.conf
   DESTINATION etc
 )
+
+setup_project_finalize()

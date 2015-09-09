@@ -1,0 +1,3 @@
+add_executable(testBSplineTrajectory testBSplineTrajectory.cpp)
+target_link_libraries(testBSplineTrajectory mc_trajectory)
+
