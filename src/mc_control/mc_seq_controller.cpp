@@ -212,7 +212,15 @@ bool MCSeqController::run()
 
 void MCSeqController::reset(const ControllerResetData & reset_data)
 {
+  std::vector<double> ffposition = robot().mbc->q[0];
   MCController::reset(reset_data);
+
+  /* Reset the free flyer to the free flyer in the sequence */
+  robot().mbc->zero(*(robot().mb));
+  robot().mbc->q[0] = ffposition;
+  postureTask->posture(robot().mbc->q);
+  rbd::forwardKinematics(*(robot().mb), *(robot().mbc));
+  rbd::forwardVelocity(*(robot().mb), *(robot().mbc));
   //if(reset_data.contacts.size())
   //{
   //  qpsolver->setContacts(reset_data.contacts);
