@@ -88,8 +88,8 @@ target_link_libraries(mc_drc_controller mc_tasks mc_solver mc_robots hrpIo)
 pkg_config_append_libs(mc_drc_controller)
 
 set(MCControl_SRC
-MCControlServiceSVC_impl.cpp
-MCControl.cpp
+mc_rtc/MCControlServiceSVC_impl.cpp
+mc_rtc/MCControl.cpp
 ${CMAKE_BINARY_DIR}/idl/MCControlServiceSK.cc
 mc_rtc/ros.cpp
 )
@@ -109,7 +109,7 @@ if(${ROSCPP_FOUND})
   pkg_config_use_dependency(MCControl sensor_msgs)
 endif()
 
-add_executable(MCControlComp MCControlComp.cpp)
+add_executable(MCControlComp mc_rtc/MCControlComp.cpp)
 target_link_libraries(MCControlComp MCControl)
 
 add_executable(StanceConfigGenerator utils/StanceConfigGenerator.cpp)
