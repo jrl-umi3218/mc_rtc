@@ -30,6 +30,11 @@ inline ros::NodeHandle ros_init(const std::string & name)
   int argc = 0;
   char * argv[] = {0};
   ros::init(argc, argv, name.c_str());
+  if(!ros::master::check())
+  {
+    std::cerr << "ROS master is not available, continue without publishing" << std::endl;
+    throw("ROS master is not available, continue without publishing");
+  }
   return ros::NodeHandle();
 }
 

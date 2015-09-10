@@ -118,7 +118,13 @@ RTC::ReturnCode_t MCControl::onInitialize()
 RTC::ReturnCode_t MCControl::onActivated(RTC::UniqueId ec_id)
 { 
   std::cout << "onActivated" << std::endl;
-  jpub.reset(new mc_rtc::JointPublisher("hrp2_rtc"));
+  try
+  {
+    jpub.reset(new mc_rtc::JointPublisher("hrp2_rtc"));
+  }
+  catch(...)
+  {
+  }
   return RTC::RTC_OK;
 }
 
@@ -236,13 +242,19 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
       m_qOutOut.write();
       m_pOutOut.write();
       m_rpyOutOut.write();
-      jpub->new_state(m_qOut);
+      if(jpub)
+      {
+        jpub->new_state(m_qOut);
+      }
     }
     else
     {
       init = false;
       m_qOut = m_qIn;
-      jpub->new_state(m_qOut);
+      if(jpub)
+      {
+        jpub->new_state(m_qOut);
+      }
       /* Still run controller.run() in order to handle some service calls */
       controller.run();
     }
