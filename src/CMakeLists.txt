@@ -112,9 +112,6 @@ endif()
 add_executable(MCControlComp mc_rtc/MCControlComp.cpp)
 target_link_libraries(MCControlComp MCControl)
 
-add_executable(StanceConfigGenerator utils/StanceConfigGenerator.cpp)
-target_link_libraries(StanceConfigGenerator mc_rbdyn)
-
 install(TARGETS MCControl MCControlComp mc_rbdyn mc_solver mc_robots mc_tasks mc_drc_controller mc_trajectory
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib

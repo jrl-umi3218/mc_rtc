@@ -89,8 +89,8 @@ endif()
 configure_file(${PROJECT_SOURCE_DIR}/include/mc_rtc/config.h.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/include/mc_rtc/config.h)
 
 add_subdirectory(src)
-
 add_subdirectory(tests)
+add_subdirectory(utils)
 
 install(DIRECTORY include
           DESTINATION ${CMAKE_INSTALL_PREFIX}
