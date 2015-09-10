@@ -91,6 +91,7 @@ set(MCControl_SRC
 MCControlServiceSVC_impl.cpp
 MCControl.cpp
 ${CMAKE_BINARY_DIR}/idl/MCControlServiceSK.cc
+mc_rtc/ros.cpp
 )
 
 set_source_files_properties(${CMAKE_BINARY_DIR}/idl/MCControlServiceSK.cc
@@ -103,6 +104,10 @@ add_dependencies(MCControl generate_mc_idl_cpp)
 set_target_properties(MCControl PROPERTIES PREFIX "")
 pkg_config_use_dependency(MCControl hrpsys-base)
 target_link_libraries(MCControl mc_drc_controller)
+if(${ROSCPP_FOUND})
+  pkg_config_use_dependency(MCControl roscpp)
+  pkg_config_use_dependency(MCControl sensor_msgs)
+endif()
 
 add_executable(MCControlComp MCControlComp.cpp)
 target_link_libraries(MCControlComp MCControl)

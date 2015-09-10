@@ -78,6 +78,14 @@ if(NOT DEFINED HRP2_DESCRIPTION_PATH)
   endif()
 endif()
 
+add_optional_dependency(roscpp)
+if(${ROSCPP_FOUND})
+  set(DEFINE_HAS_ROS_MACRO "#define MC_RTC_HAS_ROS 1")
+  add_required_dependency(sensor_msgs)
+else()
+  set(DEFINE_HAS_ROS_MACRO "")
+endif()
+
 configure_file(${PROJECT_SOURCE_DIR}/include/mc_rtc/config.h.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/include/mc_rtc/config.h)
 
 add_subdirectory(src)

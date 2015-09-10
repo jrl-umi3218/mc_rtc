@@ -20,6 +20,7 @@
 #include "MCControlServiceSVC_impl.h"
 
 #include <mc_control/mc_global_controller.h>
+#include <mc_rtc/ros.h>
 
 #include <boost/asio.hpp>
 #include <boost/thread.hpp>
@@ -141,14 +142,10 @@ class MCControl  : public RTC::DataFlowComponentBase
   // <rtc-template block="consumer_declare">
 
   // </rtc-template>
-
-  boost::thread drivingThread;
-  void drivingUDPThread();
-
  private:
 public:
   mc_control::MCGlobalController controller;
-  unsigned int max_t;
+  std::shared_ptr<mc_rtc::JointPublisher> jpub;
   bool init;
 };
 
