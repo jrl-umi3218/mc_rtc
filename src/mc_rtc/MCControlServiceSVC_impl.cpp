@@ -75,24 +75,24 @@ CORBA::Boolean MCControlServiceSVC_impl::set_gripper(CORBA::Boolean lgripper, CO
   return true;
 }
 
-CORBA::Boolean MCControlServiceSVC_impl::change_joint(const char* jname)
+CORBA::Boolean MCControlServiceSVC_impl::joint_up(const char * jname)
 {
-  return m_plugin->controller.change_joint(jname);
+  return m_plugin->controller.joint_up(jname);
 }
 
-CORBA::Boolean MCControlServiceSVC_impl::joint_up()
+CORBA::Boolean MCControlServiceSVC_impl::joint_down(const char * jname)
 {
-  return m_plugin->controller.joint_up();
-}
-
-CORBA::Boolean MCControlServiceSVC_impl::joint_down()
-{
-  return m_plugin->controller.joint_down();
+  return m_plugin->controller.joint_down(jname);
 }
 
 CORBA::Boolean MCControlServiceSVC_impl::set_joint_pos(const char* jname, ::CORBA::Double v)
 {
   return m_plugin->controller.set_joint_pos(jname, v);
+}
+
+CORBA::Boolean MCControlServiceSVC_impl::get_joint_pos(const char* jname, ::CORBA::Double & v)
+{
+  return m_plugin->controller.get_joint_pos(jname, v);
 }
 
 CORBA::Boolean MCControlServiceSVC_impl::change_ef(const char * body)

@@ -143,4 +143,52 @@ mc_rbdyn::Robots & MCController::robots()
   return qpsolver->robots;
 }
 
+bool MCController::joint_up(const std::string & jname)
+{
+  if(robot().hasJoint(jname))
+  {
+    auto idx = robot().jointIndexByName(jname);
+    auto p = postureTask->posture();
+    if(p[idx].size() == 1)
+    {
+      p[idx][0] += 0.01;
+      postureTask->posture(p);
+      return true;
+    }
+  }
+  return false;
+}
+
+bool MCController::joint_down(const std::string & jname)
+{
+  if(robot().hasJoint(jname))
+  {
+    auto idx = robot().jointIndexByName(jname);
+    auto p = postureTask->posture();
+    if(p[idx].size() == 1)
+    {
+      p[idx][0] -= 0.01;
+      postureTask->posture(p);
+      return true;
+    }
+  }
+  return false;
+}
+
+bool MCController::set_joint_pos(const std::string & jname, const double & pos)
+{
+  if(robot().hasJoint(jname))
+  {
+    auto idx = robot().jointIndexByName(jname);
+    auto p = postureTask->posture();
+    if(p[idx].size() == 1)
+    {
+      p[idx][0] = pos;
+      postureTask->posture(p);
+      return true;
+    }
+  }
+  return false;
+}
+
 }

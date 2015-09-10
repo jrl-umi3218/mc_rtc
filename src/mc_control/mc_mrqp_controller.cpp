@@ -137,4 +137,52 @@ mc_rbdyn::Robot & MCMRQPController::env()
   return mrqpsolver->robots.env();
 }
 
+bool MCMRQPController::joint_up(const std::string & jname)
+{
+  if(robot().hasJoint(jname))
+  {
+    auto idx = robot().jointIndexByName(jname);
+    auto p = hrp2postureTask->posture();
+    if(p[idx].size() == 1)
+    {
+      p[idx][0] += 0.01;
+      hrp2postureTask->posture(p);
+      return true;
+    }
+  }
+  return false;
+}
+
+bool MCMRQPController::joint_down(const std::string & jname)
+{
+  if(robot().hasJoint(jname))
+  {
+    auto idx = robot().jointIndexByName(jname);
+    auto p = hrp2postureTask->posture();
+    if(p[idx].size() == 1)
+    {
+      p[idx][0] -= 0.01;
+      hrp2postureTask->posture(p);
+      return true;
+    }
+  }
+  return false;
+}
+
+bool MCMRQPController::set_joint_pos(const std::string & jname, const double & pos)
+{
+  if(robot().hasJoint(jname))
+  {
+    auto idx = robot().jointIndexByName(jname);
+    auto p = hrp2postureTask->posture();
+    if(p[idx].size() == 1)
+    {
+      p[idx][0] = pos;
+      hrp2postureTask->posture(p);
+      return true;
+    }
+  }
+  return false;
+}
+
 }

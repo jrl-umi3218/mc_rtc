@@ -50,6 +50,11 @@ public:
   virtual mc_rbdyn::Robot & robot() = 0;
 
   virtual mc_rbdyn::Robot & env() = 0;
+  /* Joint control service available to all controllers */
+  virtual bool joint_up(const std::string & jname) = 0;
+  virtual bool joint_down(const std::string & jname) = 0;
+
+  virtual bool set_joint_pos(const std::string & jname, const double & pos) = 0;
 public:
   /* Common stuff */
   const double timeStep;

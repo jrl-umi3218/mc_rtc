@@ -49,11 +49,10 @@ public:
   void setGripperOpenPercent(double lQ, double rQ);
 
   /* Control the posture if provided by the controller */
-  bool change_joint(int jid);
-  bool change_joint(const std::string & jname);
-  bool joint_up();
-  bool joint_down();
+  bool joint_up(const std::string & jname);
+  bool joint_down(const std::string & jname);
   bool set_joint_pos(const std::string & jname, const double & pos);
+  bool get_joint_pos(const std::string & jname, double & pos);
 
   /* Control the EFs if provided by the current controller */
   bool change_ef(const std::string & ef_name);

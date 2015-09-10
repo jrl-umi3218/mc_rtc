@@ -7,44 +7,22 @@ namespace mc_control
 {
 
 /* Called by the RT component to access actual Controllers service */
-bool MCGlobalController::change_joint(int jid)
+bool MCGlobalController::joint_up(const std::string & jname)
 {
-  if(current_ctrl == POSTURE)
+  if(controller)
   {
-    return posture_controller->change_joint(jid);
+    return controller->joint_up(jname);
   }
   else
   {
     return false;
   }
 }
-bool MCGlobalController::change_joint(const std::string & jname)
+bool MCGlobalController::joint_down(const std::string & jname)
 {
-  if(current_ctrl == POSTURE)
+  if(controller)
   {
-    return posture_controller->change_joint(jname);
-  }
-  else
-  {
-    return false;
-  }
-}
-bool MCGlobalController::joint_up()
-{
-  if(current_ctrl == POSTURE)
-  {
-    return posture_controller->joint_up();
-  }
-  else
-  {
-    return false;
-  }
-}
-bool MCGlobalController::joint_down()
-{
-  if(current_ctrl == POSTURE)
-  {
-    return posture_controller->joint_down();
+    return controller->joint_down(jname);
   }
   else
   {
@@ -53,14 +31,31 @@ bool MCGlobalController::joint_down()
 }
 bool MCGlobalController::set_joint_pos(const std::string & jname, const double & pos)
 {
-  if(current_ctrl == POSTURE)
+  if(controller)
   {
-    return posture_controller->set_joint_pos(jname, pos);
+    return controller->set_joint_pos(jname, pos);
   }
   else
   {
     return false;
   }
+}
+
+bool MCGlobalController::get_joint_pos(const std::string & jname, double & v)
+{
+  if(controller)
+  {
+    if(controller->robot().hasJoint(jname))
+    {
+      const auto & q = controller->robot().mbc->q[controller->robot().jointIndexByName(jname)];
+      if(q.size() == 1)
+      {
+        v = q[0];
+        return true;
+      }
+    }
+  }
+  return false;
 }
 
 bool MCGlobalController::change_ef(const std::string & ef_name)

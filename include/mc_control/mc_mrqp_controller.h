@@ -44,6 +44,11 @@ public:
   virtual mc_rbdyn::Robot & robot() override;
 
   virtual mc_rbdyn::Robot & env() override;
+  /* Common services */
+  virtual bool joint_up(const std::string & jname) override;
+  virtual bool joint_down(const std::string & jname) override;
+
+  virtual bool set_joint_pos(const std::string & jname, const double & pos) override;
 public:
   /* Common stuff */
   std::vector< std::pair<Eigen::Vector3d, Eigen::Vector3d> > wrenches;

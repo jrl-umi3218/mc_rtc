@@ -22,13 +22,13 @@ module OpenHRP
 
     boolean set_gripper(in boolean lgripper, in double v);
 
-    boolean change_joint(in string jname);
+    boolean joint_up(in string jname);
 
-    boolean joint_up();
-
-    boolean joint_down();
+    boolean joint_down(in string jname);
 
     boolean set_joint_pos(in string jname, in double v);
+
+    boolean get_joint_pos(in string jname, out double v);
 
     boolean change_ef(in string body);
 
