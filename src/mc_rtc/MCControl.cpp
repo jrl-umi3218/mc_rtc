@@ -220,21 +220,21 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
         m_pOut.data.x = res.robots_state[0].q[4];
         m_pOut.data.y = res.robots_state[0].q[5];
         m_pOut.data.z = res.robots_state[0].q[6];
-        ofs << "qIn" << std::endl;
-        for(size_t i = 0; i < m_qIn.data.length(); ++i)
-        {
-          ofs << "qIn[" << i << "] = " << m_qIn.data[i] << std::endl;
-        }
-        //ofs << "res.q" << std::endl;
-        //for(size_t i = 0; i < res.q.size(); ++i)
+        //ofs << "qIn" << std::endl;
+        //for(size_t i = 0; i < m_qIn.data.length(); ++i)
         //{
-        //  ofs << "res.q[" << i << "] = " << res.q[i] << std::endl;
+        //  ofs << "qIn[" << i << "] = " << m_qIn.data[i] << std::endl;
         //}
-        ofs << "qOut" << std::endl;
-        for(size_t i = 0; i < m_qOut.data.length(); ++i)
-        {
-          ofs << "qOut[" << i << "] = " << m_qOut.data[i] << std::endl;
-        }
+        ////ofs << "res.q" << std::endl;
+        ////for(size_t i = 0; i < res.q.size(); ++i)
+        ////{
+        ////  ofs << "res.q[" << i << "] = " << res.q[i] << std::endl;
+        ////}
+        //ofs << "qOut" << std::endl;
+        //for(size_t i = 0; i < m_qOut.data.length(); ++i)
+        //{
+        //  ofs << "qOut[" << i << "] = " << m_qOut.data[i] << std::endl;
+        //}
       }
       m_qOut.tm = tm;
       m_rpyOut.tm = tm;

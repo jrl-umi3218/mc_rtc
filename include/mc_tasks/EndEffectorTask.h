@@ -11,7 +11,7 @@ namespace mc_tasks
 struct EndEffectorTask
 {
 public:
-  EndEffectorTask(const std::string & bodyName, const mc_rbdyn::Robots & robots, unsigned int robotIndex, double stiffness = 2.0, double weight = 1000.0);
+  EndEffectorTask(const std::string & bodyName, const mc_rbdyn::Robots & robots, unsigned int robotIndex, double stiffness = 10.0, double weight = 1000.0);
 
   void resetTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex);
 

@@ -17,28 +17,26 @@ MCBody6dController::MCBody6dController()
   qpsolver->addConstraintSet(selfCollisionConstraint);
   qpsolver->solver.addTask(postureTask.get());
   qpsolver->setContacts({
-    mc_rbdyn::Contact(robots(), "Butthock", "AllGround")
+    mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"),
+    mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")
   });
 
   std::cout << "MCBody6dController init done" << std::endl;
-  efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", qpsolver->robots, qpsolver->robots.robotIndex));
+  efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK7", qpsolver->robots, qpsolver->robots.robotIndex));
   efTask->addToSolver(qpsolver->solver);
+  comTask.reset(new mc_tasks::CoMTask(qpsolver->robots, qpsolver->robots.robotIndex));
+  comTask->addToSolver(qpsolver->solver);
 }
 
 void MCBody6dController::reset(const ControllerResetData & reset_data)
 {
   MCController::reset(reset_data);
-  //if(reset_data.contacts.size())
-  //{
-  //  qpsolver->setContacts(reset_data.contacts);
-  //}
-  //else
-  {
-    qpsolver->setContacts({
-      mc_rbdyn::Contact(robots(), "Butthock", "AllGround")
-    });
-  }
+  qpsolver->setContacts({
+    mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"),
+    mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")
+  });
   efTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex);
+  comTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex);
 }
 
 

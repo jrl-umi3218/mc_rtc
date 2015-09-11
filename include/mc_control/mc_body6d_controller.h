@@ -1,15 +1,9 @@
-#ifndef _H_MCBODY6DCONTROLLER_H_
-#define _H_MCBODY6DCONTROLLER_H_
-
-#include <mc_rbdyn/robot.h>
-
-#include <mc_robots/hrp2_drc.h>
-#include <mc_robots/env.h>
-
-#include <Tasks/QPTasks.h>
-#include <mc_tasks/EndEffectorTask.h>
+#pragma once
 
 #include <mc_control/mc_controller.h>
+
+#include <mc_tasks/EndEffectorTask.h>
+#include <mc_tasks/CoMTask.h>
 
 namespace mc_control
 {
@@ -29,8 +23,7 @@ public:
   bool rotate_ef(const Eigen::Matrix3d & m);
 public:
   std::shared_ptr<mc_tasks::EndEffectorTask> efTask;
+  std::shared_ptr<mc_tasks::CoMTask> comTask;
 };
 
 }
-
-#endif
