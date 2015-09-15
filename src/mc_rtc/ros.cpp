@@ -1,10 +1,12 @@
 #include <mc_rtc/ros.h>
 #include <mc_rtc/config.h>
+#include <mc_rbdyn/robot.h>
 
 
 #ifdef MC_RTC_HAS_ROS
 #include <ros/ros.h>
 #include <sensor_msgs/JointState.h>
+#include <tf2_ros/transform_broadcaster.h>
 
 #include <mutex>
 #include <queue>
@@ -38,18 +40,41 @@ inline ros::NodeHandle ros_init(const std::string & name)
   return ros::NodeHandle();
 }
 
-struct JointPublisherImpl
+inline geometry_msgs::TransformStamped PT2TF(const sva::PTransformd & X, const ros::Time & tm, const std::string & from, const std::string & to)
+{
+  geometry_msgs::TransformStamped msg;
+  msg.header.stamp = tm;
+  msg.header.frame_id = from;
+  msg.child_frame_id = to;
+
+  Eigen::Vector4d q = Eigen::Quaterniond(X.rotation()).inverse().coeffs();
+  const Eigen::Vector3d & t = X.translation();
+
+  msg.transform.translation.x = t.x();
+  msg.transform.translation.y = t.y();
+  msg.transform.translation.z = t.z();
+
+  msg.transform.rotation.w = q.w();
+  msg.transform.rotation.x = q.x();
+  msg.transform.rotation.y = q.y();
+  msg.transform.rotation.z = q.z();
+
+  return msg;
+}
+
+struct RobotPublisherImpl
 {
 public:
-  JointPublisherImpl(const std::string & node_name)
+  RobotPublisherImpl(const std::string & node_name)
   : nh(ros_init(node_name)),
-    pub(nh.advertise<sensor_msgs::JointState>("joint_states", 1)),
+    j_state_pub(nh.advertise<sensor_msgs::JointState>("joint_states", 1)),
+    tf_caster(),
     seq(0), running(true), msgs(),
-    th(std::bind(&JointPublisherImpl::publishThread, this))
+    th(std::bind(&RobotPublisherImpl::publishThread, this))
   {
   }
 
-  ~JointPublisherImpl()
+  ~RobotPublisherImpl()
   {
     stop();
   }
@@ -59,32 +84,56 @@ public:
     running = false;
     th.join();
   }
-  void new_state(const RTC::TimedDoubleSeq & q)
+  void update(const mc_rbdyn::Robot & robot)
   {
+    ros::Time tm = ros::Time::now();
     sensor_msgs::JointState msg;
+    std::vector<geometry_msgs::TransformStamped> tfs;
+
     msg.header.seq = ++seq;
-    msg.header.stamp.sec = q.tm.sec;
-    msg.header.stamp.nsec = q.tm.nsec;
+    msg.header.stamp = tm;
     msg.header.frame_id = "";
     msg.name = REF_JOINT_ORDER;
     msg.position.reserve(REF_JOINT_ORDER.size());
-    for(size_t i = 0; i < q.data.length(); ++i)
+    for(size_t i = 0; i < REF_JOINT_ORDER.size(); ++i)
     {
-      msg.position.push_back(q.data[i]);
+      msg.position.push_back(robot.mbc->q[robot.jointIndexByName(REF_JOINT_ORDER[i])][0]);
     }
     msg.velocity.resize(0);
     msg.effort.resize(0);
+
+    tfs.push_back(PT2TF(robot.bodyTransforms.at(robot.mb->body(0).id())*robot.mbc->parentToSon[0], tm, std::string("/map"), robot.mb->body(0).name()));
+    for(int j = 1; j < robot.mb->nrJoints(); ++j)
+    {
+      const auto & predIndex = robot.mb->predecessor(j);
+      const auto & succIndex = robot.mb->successor(j);
+      const auto & predName = robot.mb->body(predIndex).name();
+      const auto & succName = robot.mb->body(succIndex).name();
+      const auto & predId = robot.mb->body(predIndex).id();
+      const auto & succId = robot.mb->body(succIndex).id();
+      const auto & X_predp_pred = robot.bodyTransforms.at(predId);
+      const auto & X_succp_succ = robot.bodyTransforms.at(succId);
+      tfs.push_back(PT2TF(X_succp_succ*robot.mbc->parentToSon[j]*X_predp_pred.inv(), tm, predName, succName));
+    }
+
     mut.lock();
-    msgs.push(msg);
+    msgs.push({msg, tfs});
     mut.unlock();
   }
 private:
   ros::NodeHandle nh;
-  ros::Publisher pub;
+  ros::Publisher j_state_pub;
+  tf2_ros::TransformBroadcaster tf_caster;
+
+  struct RobotStateData
+  {
+    sensor_msgs::JointState js;
+    std::vector<geometry_msgs::TransformStamped> tfs;
+  };
 
   uint64_t seq;
   bool running;
-  std::queue<sensor_msgs::JointState> msgs;
+  std::queue<RobotStateData> msgs;
   std::thread th;
   std::mutex mut;
 
@@ -100,7 +149,8 @@ private:
           const auto & msg = msgs.front();
           try
           {
-            pub.publish(msg);
+            j_state_pub.publish(msg.js);
+            tf_caster.sendTransform(msg.tfs);
           }
           catch(const ros::serialization::StreamOverrunException & e)
           {
@@ -116,27 +166,27 @@ private:
   }
 };
 #else
-struct JointPublisherImpl
+struct RobotPublisherImpl
 {
-  JointPublisherImpl(const std::string&) {}
+  RobotPublisherImpl(const std::string&) {}
   void stop() {}
-  void new_state(const RTC::TimedDoubleSeq &) {}
+  void update(const mc_rbdyn::Robot &) {}
 };
 #endif
 
-JointPublisher::JointPublisher(const std::string & node_name)
-: impl(new JointPublisherImpl(node_name))
+RobotPublisher::RobotPublisher(const std::string & node_name)
+: impl(new RobotPublisherImpl(node_name))
 {
 }
 
-void JointPublisher::stop()
+void RobotPublisher::stop()
 {
   impl->stop();
 }
 
-void JointPublisher::new_state(const RTC::TimedDoubleSeq & q)
+void RobotPublisher::update(const mc_rbdyn::Robot & robot)
 {
-  impl->new_state(q);
+  impl->update(robot);
 }
 
 }

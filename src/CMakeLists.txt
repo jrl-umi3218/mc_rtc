@@ -107,6 +107,7 @@ target_link_libraries(MCControl mc_drc_controller)
 if(${ROSCPP_FOUND})
   pkg_config_use_dependency(MCControl roscpp)
   pkg_config_use_dependency(MCControl sensor_msgs)
+  pkg_config_use_dependency(MCControl tf2_ros)
 endif()
 
 add_executable(MCControlComp mc_rtc/MCControlComp.cpp)

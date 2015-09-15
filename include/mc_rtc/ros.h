@@ -1,23 +1,27 @@
 #pragma once
 
-#include <rtm/idl/BasicDataTypeSkel.h>
 #include <memory>
+
+namespace mc_rbdyn
+{
+  struct Robot;
+}
 
 namespace mc_rtc
 {
 
-struct JointPublisherImpl;
+struct RobotPublisherImpl;
 
-struct JointPublisher
+struct RobotPublisher
 {
 public:
-  JointPublisher(const std::string & node_name);
+  RobotPublisher(const std::string & node_name);
 
   void stop();
 
-  void new_state(const RTC::TimedDoubleSeq & q);
+  void update(const mc_rbdyn::Robot & robot);
 private:
-  std::shared_ptr<JointPublisherImpl> impl;
+  std::shared_ptr<RobotPublisherImpl> impl;
 };
 
 }

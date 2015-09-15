@@ -8,8 +8,6 @@
 #include <mc_control/mc_egress_controller.h>
 #include <mc_control/mc_egress_mrqp_controller.h>
 
-/* FIXME For now, everything is in there, split it would be good */
-
 namespace mc_control
 {
 
@@ -31,6 +29,8 @@ public:
   bool run();
 
   const QPResultMsg & send(const double & t);
+
+  const mc_rbdyn::Robot & robot();
 
   /* Called by the RT component to switch between controllers */
   bool EnablePostureController();

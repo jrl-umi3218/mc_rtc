@@ -262,6 +262,11 @@ const QPResultMsg & MCGlobalController::send(const double & t)
   return controller->send(t);
 }
 
+const mc_rbdyn::Robot & MCGlobalController::robot()
+{
+  return controller->robot();
+}
+
 const std::vector<double> & MCGlobalController::gripperQ(bool lgripper)
 {
   if(lgripper)

@@ -57,7 +57,7 @@ MCControl::MCControl(RTC::Manager* manager)
     m_rpyOutOut("rpyOut", m_rpyOut),
     m_MCControlServicePortPort("MCControlServicePort"),
     m_service0(this),
-    jpub(0),
+    rpub(0),
     init(false)
     // </rtc-template>
 {
@@ -120,7 +120,7 @@ RTC::ReturnCode_t MCControl::onActivated(RTC::UniqueId ec_id)
   std::cout << "onActivated" << std::endl;
   try
   {
-    jpub.reset(new mc_rtc::JointPublisher("hrp2_rtc"));
+    rpub.reset(new mc_rtc::RobotPublisher("hrp2_rtc"));
   }
   catch(...)
   {
@@ -242,19 +242,15 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
       m_qOutOut.write();
       m_pOutOut.write();
       m_rpyOutOut.write();
-      if(jpub)
+      if(rpub)
       {
-        jpub->new_state(m_qOut);
+        rpub->update(controller.robot());
       }
     }
     else
     {
       init = false;
       m_qOut = m_qIn;
-      if(jpub)
-      {
-        jpub->new_state(m_qOut);
-      }
       /* Still run controller.run() in order to handle some service calls */
       controller.run();
     }
