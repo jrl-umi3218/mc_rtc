@@ -8,8 +8,8 @@
             "velThresh" : 0.00010
          },
          "comTask" : {
-            "extraStiffness" : 19.0,
-            "stiffness" : 15.0,
+            "extraStiffness" : 5.0,
+            "stiffness" : 2.0,
             "targetSpeed" : 0.001,
             "weight" : 200.0
          },
@@ -23,8 +23,8 @@
             "comOffset" : [ 0.0, 0.0, 0.0 ]
          },
          "comTask" : {
-            "extraStiffness" : 0.0,
-            "stiffness" : 5.0,
+            "extraStiffness" : 5.0,
+            "stiffness" : 2.0,
             "targetSpeed" : 0.003,
             "weight" : 500.0
          },
@@ -41,7 +41,7 @@
             },
             "linVel" : {
                "speed" : 0.05,
-               "stiffness" : 10.0,
+               "stiffness" : 5.0,
                "weight" : 10000.0
             },
             "orientation" : {
@@ -50,8 +50,8 @@
                "weight" : 300.0
             },
             "position" : {
-               "extraStiffness" : 12.0,
-               "stiffness" : 5.0,
+               "extraStiffness" : 5.0,
+               "stiffness" : 2.0,
                "targetSpeed" : 0.001,
                "weight" : 300.0
             },
@@ -73,8 +73,8 @@
       },
       "GripperMove" : {
          "comTask" : {
-            "extraStiffness" : 0.0,
-            "stiffness" : 20.0,
+            "extraStiffness" : 5.0,
+            "stiffness" : 2.0,
             "targetSpeed" : 0.0005,
             "weight" : 500.0
          },
@@ -96,16 +96,16 @@
             },
             "linVel" : {
                "speed" : 0.05,
-               "stiffness" : 15.0,
+               "stiffness" : 5.0,
                "weight" : 1000.0
             },
             "orientation" : {
                "finalWeight" : 1000.0,
-               "stiffness" : 15.0,
+               "stiffness" : 5.0,
                "weight" : 1.0
             },
             "position" : {
-               "extraStiffness" : 15.0,
+               "extraStiffness" : 5.0,
                "stiffness" : 0.1,
                "targetSpeed" : 0.00050,
                "weight" : 600.0

@@ -23,9 +23,13 @@ bool live_initT::eval(MCSeqController & controller)
   controller.updateContacts(controller.stances[controller.stanceIndex].contacts());
   controller.updateSolverEqInEq();
 
-  controller.stanceIndex += 1;
-
-  return true;
+  if(controller.stabilityTask->postureTask->eval().norm() < 0.1)
+  {
+    std::cout << "INIT done" << std::endl;
+    controller.stanceIndex += 1;
+    return true;
+  }
+  return false;
 }
 
 bool live_chooseContactT::eval(MCSeqController & ctl)
@@ -925,34 +929,34 @@ bool enter_addGripperT::eval(MCSeqController & ctl)
   ctl.addContactTask->addToSolver(ctl.qpsolver->solver);
   ctl.metaTasks.push_back(ctl.addContactTask.get());
 
-  bool leftHand = ctl.targetContact->r1Surface()->name() == "LeftGripper";
-  if(leftHand)
-  {
-    ctl.lowerPGainsJoints = {"LARM_JOINT0", "LARM_JOINT1", "LARM_JOINT2", "LARM_JOINT3", "LARM_JOINT4", "LARM_JOINT5", "LARM_JOINT6"};
-  }
-  else
-  {
-    ctl.lowerPGainsJoints = {"RARM_JOINT0", "RARM_JOINT1", "RARM_JOINT2", "RARM_JOINT3", "RARM_JOINT4", "RARM_JOINT5", "RARM_JOINT6"};
-  }
-  ctl.lowerPGainsOriginalValues.clear();
-  for(const auto & jn : ctl.lowerPGainsJoints)
-  {
-    double pgain = 0;
-    if(pdgains::getPGain(jn, pgain))
-    {
-      std::cout << "Original pgain at " << jn << ": " << pgain << std::endl;
-      ctl.lowerPGainsOriginalValues.push_back(pgain);
-      if(pdgains::setPGain(jn, pgain/10))
-      {
-        std::cout << "Set pgain at " << jn << " to " << pgain/10 << std::endl;
-      }
-    }
-    else
-    {
-      std::cout << "Failed to get original pgain value for " << jn << std::endl;
-      ctl.lowerPGainsOriginalValues.push_back(-1);
-    }
-  }
+  //bool leftHand = ctl.targetContact->r1Surface()->name() == "LeftGripper";
+  //if(leftHand)
+  //{
+  //  ctl.lowerPGainsJoints = {"LARM_JOINT0", "LARM_JOINT1", "LARM_JOINT2", "LARM_JOINT3", "LARM_JOINT4", "LARM_JOINT5", "LARM_JOINT6"};
+  //}
+  //else
+  //{
+  //  ctl.lowerPGainsJoints = {"RARM_JOINT0", "RARM_JOINT1", "RARM_JOINT2", "RARM_JOINT3", "RARM_JOINT4", "RARM_JOINT5", "RARM_JOINT6"};
+  //}
+  //ctl.lowerPGainsOriginalValues.clear();
+  //for(const auto & jn : ctl.lowerPGainsJoints)
+  //{
+  //  double pgain = 0;
+  //  if(pdgains::getPGain(jn, pgain))
+  //  {
+  //    std::cout << "Original pgain at " << jn << ": " << pgain << std::endl;
+  //    ctl.lowerPGainsOriginalValues.push_back(pgain);
+  //    if(pdgains::setPGain(jn, pgain/10))
+  //    {
+  //      std::cout << "Set pgain at " << jn << " to " << pgain/10 << std::endl;
+  //    }
+  //  }
+  //  else
+  //  {
+  //    std::cout << "Failed to get original pgain value for " << jn << std::endl;
+  //    ctl.lowerPGainsOriginalValues.push_back(-1);
+  //  }
+  //}
 
   return true;
 }
@@ -1120,20 +1124,20 @@ bool live_hardCloseGripperP::eval(MCSeqController & ctl)
     ctl.isGripperClose = true;
     if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
     /*TODO Get the actual position of the hand, set it in the QP and reset the gains to their original value*/
-    bool leftHand = ctl.targetContact->r1Surface()->name() == "LeftGripper";
-    unsigned int ji = leftHand ? 24 : 16;
-    std::vector<double> & eValues = ctl.encoderValues;
-    for(const auto & jn : ctl.lowerPGainsJoints)
-    {
-      ctl.robot().mbc->q[ctl.robot().jointIndexByName(jn)][0] = eValues[ji];
-      ji++;
-    }
-    /* At this point, the robot mbc holds the true values for the arm that was left loose */
-    ctl.stabilityTask->postureTask->posture(ctl.robot().mbc->q);
-    rbd::forwardKinematics(*(ctl.robot().mb), *(ctl.robot().mbc));
-    rbd::forwardVelocity(*(ctl.robot().mb), *(ctl.robot().mbc));
-    ctl.stabilityTask->comObj = rbd::computeCoM(*(ctl.robot().mb), *(ctl.robot().mbc));
-    ctl.stabilityTask->comTaskSm.reset(ctl.curConf().comTask.weight, ctl.stabilityTask->comObj, ctl.curConf().comTask.targetSpeed);
+    //bool leftHand = ctl.targetContact->r1Surface()->name() == "LeftGripper";
+    //unsigned int ji = leftHand ? 24 : 16;
+    //std::vector<double> & eValues = ctl.encoderValues;
+    //for(const auto & jn : ctl.lowerPGainsJoints)
+    //{
+    //  ctl.robot().mbc->q[ctl.robot().jointIndexByName(jn)][0] = eValues[ji];
+    //  ji++;
+    //}
+    ///* At this point, the robot mbc holds the true values for the arm that was left loose */
+    //ctl.stabilityTask->postureTask->posture(ctl.robot().mbc->q);
+    //rbd::forwardKinematics(*(ctl.robot().mb), *(ctl.robot().mbc));
+    //rbd::forwardVelocity(*(ctl.robot().mb), *(ctl.robot().mbc));
+    //ctl.stabilityTask->comObj = rbd::computeCoM(*(ctl.robot().mb), *(ctl.robot().mbc));
+    //ctl.stabilityTask->comTaskSm.reset(ctl.curConf().comTask.weight, ctl.stabilityTask->comObj, ctl.curConf().comTask.targetSpeed);
     std::cout << "Finished hardCloseGripperP" << std::endl;
     return true;
   }
@@ -1144,17 +1148,17 @@ bool live_hardCloseGripperP::eval(MCSeqController & ctl)
 bool enter_restoreArmGainsP::eval(MCSeqController & ctl)
 {
   if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
-  std::cout << "Restoring arm gains to their original values" << std::endl;
-  for(size_t i = 0; i < ctl.lowerPGainsJoints.size(); ++i)
-  {
-    if(ctl.lowerPGainsOriginalValues[i] >= 0)
-    {
-      if(not pdgains::setPGain(ctl.lowerPGainsJoints[i], ctl.lowerPGainsOriginalValues[i]))
-      {
-        std::cout << "Failed to restore gain for joint " << ctl.lowerPGainsJoints[i] << std::endl;
-      }
-    }
-  }
+  //std::cout << "Restoring arm gains to their original values" << std::endl;
+  //for(size_t i = 0; i < ctl.lowerPGainsJoints.size(); ++i)
+  //{
+  //  if(ctl.lowerPGainsOriginalValues[i] >= 0)
+  //  {
+  //    if(not pdgains::setPGain(ctl.lowerPGainsJoints[i], ctl.lowerPGainsOriginalValues[i]))
+  //    {
+  //      std::cout << "Failed to restore gain for joint " << ctl.lowerPGainsJoints[i] << std::endl;
+  //    }
+  //  }
+  //}
   return true;
 }
 

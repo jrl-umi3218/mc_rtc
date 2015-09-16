@@ -25,7 +25,7 @@ hardCodedPos(double x, double y, double z)
 
 StanceConfig::StanceConfig()
 {
-  comTask.stiffness = 5.0;
+  comTask.stiffness = 2.0;
   comTask.extraStiffness = 0.0;
   comTask.weight = 500.0;
   comTask.targetSpeed = 0.003;
@@ -37,16 +37,16 @@ StanceConfig::StanceConfig()
   postureTask.stiffness = 2.0;
   postureTask.weight = 10.0;
 
-  contactTask.position.stiffness = 5.0;
-  contactTask.position.extraStiffness = 12.0;
+  contactTask.position.stiffness = 2.0;
+  contactTask.position.extraStiffness = 5.0;
   contactTask.position.weight = 300.0;
   contactTask.position.targetSpeed = 0.001;
 
-  contactTask.orientation.stiffness = 15.0;
+  contactTask.orientation.stiffness = 2.0;
   contactTask.orientation.weight = 1.0;
   contactTask.orientation.finalWeight = 1000.0;
 
-  contactTask.linVel.stiffness = 10.0;
+  contactTask.linVel.stiffness = 5.0;
   contactTask.linVel.weight = 10000.0;
   contactTask.linVel.speed = 0.05;
 
