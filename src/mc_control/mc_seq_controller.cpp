@@ -342,7 +342,7 @@ void MCSeqController::pre_live()
         if(forceNorm < ba.second.actiForce)
         {
           std::cout << "ACTIVATED " << ba.first << std::endl;
-          Eigen::MatrixXd dof(5,6);
+          Eigen::MatrixXd dof = Eigen::MatrixXd::Zero(5,6);
           for(size_t i = 0; i < 5; ++i)
           {
             dof(i,i) = 1;

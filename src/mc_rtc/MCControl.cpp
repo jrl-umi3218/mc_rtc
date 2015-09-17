@@ -23,6 +23,9 @@ using boost::asio::ip::udp;
 
 static std::ofstream ofs("/tmp/mc-control.log");
 
+/* Hard-coded dofs to handle both HRP2DRC and HRP2JVRC */
+static const unsigned int MODEL_DOF = 42;
+
 // Module specification
 // <rtc-template block="module_spec">
 static const char* mccontrol_spec[] =
@@ -160,8 +163,10 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
   if(m_qInIn.isNew())
   {
     m_qInIn.read();
-    qIn.resize(m_qIn.data.length());
-    for(unsigned int i = 0; i < m_qIn.data.length(); ++i)
+    /*FIXME Quick fix to handle HRP2JVRC like HRP2DRC
+    qIn.resize(m_qIn.data.length()); */
+    qIn.resize(MODEL_DOF);
+    for(unsigned int i = 0; i < std::min(MODEL_DOF, m_qIn.data.length()); ++i)
     {
       qIn[i] = m_qIn.data[i];
     }
@@ -210,6 +215,10 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
         for(unsigned int i = 37; i < 42; ++i)
         {
           m_qOut.data[i] = lgQ[i-36];
+        }
+        for(unsigned int i = 42; i < m_qIn.data.length(); ++i)
+        {
+          m_qOut.data[i] = 0;
         }
         /* FIXME Correction RPY convention here? */
         Eigen::Vector3d rpyOut = Eigen::Quaterniond(res.robots_state[0].q[0], res.robots_state[0].q[1], res.robots_state[0].q[2], res.robots_state[0].q[3]).toRotationMatrix().eulerAngles(2, 1, 0);
