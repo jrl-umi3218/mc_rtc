@@ -155,7 +155,7 @@ bool MCSeqController::run()
           std::cout << "Completed " << actions[stanceIndexIn]->toStr() << std::endl;
           if(stanceIndex < actions.size())
           {
-            std::cout << "Starting " << actions[stanceIndex]->toStr() << std::endl;
+            std::cout << "Starting " << actions[stanceIndex]->toStr() << "(" << stanceIndex << "/" << actions.size() << ")" << std::endl;
             /*FIXME Disabled for now... */
             //std::cout << "Before modification by sensor " << robot().mbc->q[0][0] << " " << robot().mbc->q[0][1] << " " << robot().mbc->q[0][2] << " " << robot().mbc->q[0][3] << std::endl;
             //Eigen::Vector3d pos(robot().mbc->q[0][4], robot().mbc->q[0][5], robot().mbc->q[0][6]);
@@ -271,7 +271,7 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
       double actiForce = 50; /* FIXME Hard-coded, should at least be an acti gripper const static member */
       double stopForce = 90; /* FIXME ^^ */
       std::shared_ptr<tasks::qp::PositionTask> positionTask(new tasks::qp::PositionTask(robots().mbs, 0, contactId.r1BodyId, X_0_s.translation(), is_gs->X_b_s().translation()));
-      std::shared_ptr<tasks::qp::SetPointTask> positionTaskSp(new tasks::qp::SetPointTask(robots().mbs, 0, positionTask.get(), 20, 10000.));
+      std::shared_ptr<tasks::qp::SetPointTask> positionTaskSp(new tasks::qp::SetPointTask(robots().mbs, 0, positionTask.get(), 20, 100000.));
       qpsolver->solver.addTask(positionTaskSp.get());
       actiGrippers[bodyName] = ActiGripper(wrenchIndex, actiForce, stopForce, contactId, X_0_s, 0.04, positionTask, positionTaskSp); /*FIXME 0.04 is ActiGripperMaxPull */
     }
@@ -663,8 +663,8 @@ std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * cu
                   std::shared_ptr<SeqStep>(new live_removeBeforeCloseT()),
                   std::shared_ptr<SeqStep>(new enter_softCloseGripperP()),
                   std::shared_ptr<SeqStep>(new live_softCloseGripperP()),
-                  std::shared_ptr<SeqStep>(new enter_hardCloseGripperP()),
-                  std::shared_ptr<SeqStep>(new live_hardCloseGripperP()),
+                  //std::shared_ptr<SeqStep>(new enter_hardCloseGripperP()),
+                  //std::shared_ptr<SeqStep>(new live_hardCloseGripperP()),
                   std::shared_ptr<SeqStep>(new enter_restoreArmGainsP()),
                   std::shared_ptr<SeqStep>(new enter_contactGripperP()),
                   std::shared_ptr<SeqStep>(new live_contactGripperT())

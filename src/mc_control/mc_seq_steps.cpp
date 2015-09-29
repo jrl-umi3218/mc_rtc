@@ -18,6 +18,10 @@ bool enter_initT::eval(MCSeqController &)
 
 bool live_initT::eval(MCSeqController & controller)
 {
+  if(controller.stanceIndex != 0)
+  {
+    return true;
+  }
   controller.updateRobotEnvCollisions(controller.stances[controller.stanceIndex].contacts(), controller.configs[controller.stanceIndex]);
   controller.updateSelfCollisions(controller.stances[controller.stanceIndex].contacts(), controller.configs[controller.stanceIndex]);
   controller.updateContacts(controller.stances[controller.stanceIndex].contacts());
@@ -155,7 +159,7 @@ bool live_moveWPT::eval(MCSeqController & ctl)
 {
   if(ctl.currentGripper)
   {
-    ctl.currentGripper->percentOpen += 0.0005;
+    ctl.currentGripper->percentOpen += 0.001;
     if(ctl.currentGripper->percentOpen >= 1)
     {
       ctl.currentGripper->percentOpen = 1;
@@ -373,7 +377,7 @@ bool live_CoMOpenGripperT::eval(MCSeqController & ctl)
 {
   if(ctl.currentGripper && ctl.currentGripperIsClosed && ctl.comRemoveGripper)
   {
-    ctl.currentGripper->percentOpen += 0.0005;
+    ctl.currentGripper->percentOpen += 0.001;
     if(ctl.currentGripper->percentOpen >= 1)
     {
       ctl.currentGripper->percentOpen = 1;
@@ -580,7 +584,7 @@ bool live_openGripperP::eval(MCSeqController & ctl)
 {
   if(ctl.currentGripper)
   {
-    ctl.currentGripper->percentOpen += 0.0005;
+    ctl.currentGripper->percentOpen += 0.001;
     if(ctl.currentGripper->percentOpen >= 1.)
     {
       ctl.currentGripper->percentOpen = 1.;
@@ -633,6 +637,8 @@ bool enter_removeGripperP::eval(MCSeqController & ctl)
     ctl.distPairs.push_back(ptr);
   }
   mc_rbdyn::Stance & curS = (ctl.currentContact == ctl.targetContact) ? ctl.targetStance() : ctl.curStance();
+  /* Get the current position of the wrist */
+  ctl.contactPos = ctl.robot().mbc->bodyPosW[ctl.robot().bodyIndexByName(removedContact.r1Surface()->bodyName())].translation();
 
   /* Configure the stability task */
   ctl.stabilityTask->target(ctl.env(), curS, contactConf, contactConf.comTask.targetSpeed);
@@ -658,11 +664,15 @@ bool live_removeGripperP::eval(MCSeqController & ctl)
     return true;
   }
   bool all = true;
-  double dOut = ((not ctl.isGripperWillBeAttached) and ctl.isRemoved) ? 0.02 : 0.05;
+  double dOut = 0.02;//((not ctl.isGripperWillBeAttached) and ctl.isRemoved) ? 0.02 : 0.05;
   for(const auto & p : ctl.distPairs)
   {
     all = all && (p->distance(ctl.robot(), ctl.env()) > dOut*dOut);
   }
+  Eigen::Vector3d curPos = ctl.robot().mbc->bodyPosW[ctl.robot().bodyIndexByName(ctl.currentContact->r1Surface()->bodyName())].translation();
+  double d = (curPos - ctl.contactPos).norm();
+  /* Either we moved away from the model or we moved away "enough" */
+  all = all || (d > 0.1);
   if(all)
   {
     ctl.removeContactTask->removeFromSolver(ctl.qpsolver->solver);
@@ -1009,7 +1019,7 @@ bool live_removeBeforeCloseT::eval(MCSeqController & ctl)
   {
     Eigen::Vector3d curPos = ctl.robot().mbc->bodyPosW[ctl.robot().bodyIndexByName(ctl.targetContact->r1Surface()->bodyName())].translation();
     double d = (curPos - ctl.contactPos).norm();
-    if(d > 0.005)
+    if(d > 0.05)
     {
       ctl.removeContactTask->removeFromSolver(ctl.qpsolver->solver);
       ctl.removeMetaTask(ctl.removeContactTask.get());
@@ -1051,7 +1061,7 @@ bool live_softCloseGripperP::eval(MCSeqController & ctl)
   {
     ctl.currentGripper->percentOpen -= 0.0005;
     bool limitToZero = ctl.targetContact->r2Surface()->name() == "PlatformLeftRampVS" or ctl.targetContact->r2Surface()->name() == "PlatformLeftRampS"; /*FIXME Should be part of the configuration */
-    double percentOpenLimit = limitToZero ? 0.35 : 0.1;
+    double percentOpenLimit = 0.;//limitToZero ? 0.35 : 0.1;
     if(ctl.currentGripper->overCommandLimit || ctl.currentGripper->percentOpen <= percentOpenLimit)
     {
       if(!ctl.currentGripper->overCommandLimit)
