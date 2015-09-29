@@ -2,81 +2,85 @@
 {
    "General" : {
       "CoMMove" : {
-         "comObj" : {
-            "comOffset" : [ 0.0, 0.0, 0.0 ],
-            "posThresh" : 0.05,
-            "velThresh" : 0.00010
-         },
-         "comTask" : {
-            "extraStiffness" : 5.0,
-            "stiffness" : 2.0,
-            "targetSpeed" : 0.001,
-            "weight" : 200.0
-         },
          "postureTask" : {
             "stiffness" : 0.5,
             "weight" : 10.0
+         },
+         "comTask" : {
+            "stiffness" : 15.0,
+            "extraStiffness" : 19.0,
+            "weight" : 200.0,
+            "targetSpeed" : 0.001
+         },
+         "comObj" : {
+            "comOffset" : [ 0.0, 0.0, 0.0 ],
+            "posThresh" : 0.1,
+            "velThresh" : 0.0001
          }
       },
       "ContactMove" : {
-         "comObj" : {
-            "comOffset" : [ 0.0, 0.0, 0.0 ]
+         "postureTask" : {
+            "stiffness" : 2.0,
+            "weight" : 10.0
          },
          "comTask" : {
-            "extraStiffness" : 5.0,
-            "stiffness" : 2.0,
-            "targetSpeed" : 0.003,
-            "weight" : 500.0
+            "stiffness" : 5.0,
+            "extraStiffness" : 12.0,
+            "weight" : 300.0,
+            "targetSpeed" : 0.003
+         },
+         "comObj" : {
+            "comOffset" : [ 0.0, 0.0, 0.0 ]
          },
          "contactObj" : {
             "posThresh" : 0.03,
             "velThresh" : 0.005,
-            "preContactDist" : 0.020
+            "preContactDist" : 0.02
          },
          "contactTask" : {
-            "collisionConf" : {
-               "damping" : 0.05,
-               "iDist" : 0.01,
-               "sDist" : 0.005
-            },
-            "linVel" : {
-               "speed" : 0.05,
+            "position" : {
                "stiffness" : 5.0,
-               "weight" : 10000.0
+               "extraStiffness" : 12.0,
+               "weight" : 300.0,
+               "targetSpeed" : 0.003
             },
             "orientation" : {
-               "finalWeight" : 1000.0,
-               "stiffness" : 1.0,
-               "weight" : 300.0
+               "stiffness" : 15.0,
+               "weight" : 1.0,
+               "finalWeight" : 1000.0
             },
-            "position" : {
-               "extraStiffness" : 5.0,
-               "stiffness" : 2.0,
-               "targetSpeed" : 0.001,
-               "weight" : 300.0
+            "linVel" : {
+               "stiffness" : 10.0,
+               "weight" : 10000.0,
+               "speed" : 0.05
             },
             "waypointConf" : {
                "conf" : {
                   "x" : 1.0,
-                  "y" : -0.2,
-                  "z" : 1.1,
+                  "y" : -0.1,
+                  "z" : 1.2,
                   "nOff" : 0.1
                },
                "thresh" : 0.150,
                "type" : "percentWaypoint"
+            },
+            "collisionConf" : {
+               "iDist" : 0.01,
+               "sDist" : 0.005,
+               "damping" : 0.05
             }
-         },
-         "postureTask" : {
-            "stiffness" : 2.0,
-            "weight" : 10.0
          }
       },
       "GripperMove" : {
+         "postureTask" : {
+            "stiffness" : 0.1,
+            "weight" : 10.0
+         },
          "comTask" : {
-            "extraStiffness" : 5.0,
-            "stiffness" : 2.0,
-            "targetSpeed" : 0.0005,
-            "weight" : 500.0
+            "stiffness" : 20.0,
+            "extraStiffness" : 0.0,
+            "weight" : 500.0,
+            "targetSpeed" : 0.0005
          },
          "contactObj" : {
             "adjustOffset" : [ 0.0, 0.0, 0.0 ],
@@ -85,45 +89,41 @@
             "adjustVelThresh" : 0.02,
             "adjustOriThresh" : 0.1,
             "posThresh" : 0.03,
-            "preContactDist" : 0.1,
+            "preContactDist" : 0.09,
             "velThresh" : 0.05
          },
          "contactTask" : {
-            "collisionConf" : {
-               "damping" : 0.050,
-               "iDist" : 0.010,
-               "sDist" : 0.0050
-            },
-            "linVel" : {
-               "speed" : 0.05,
-               "stiffness" : 5.0,
-               "weight" : 1000.0
+            "position" : {
+               "stiffness" : 0.1,
+               "extraStiffness" : 15.0,
+               "weight" : 600.0,
+               "targetSpeed" : 0.0005
             },
             "orientation" : {
-               "finalWeight" : 1000.0,
-               "stiffness" : 5.0,
-               "weight" : 1.0
+               "stiffness" : 15.0,
+               "weight" : 1.0,
+               "finalWeight" : 1000.0
             },
-            "position" : {
-               "extraStiffness" : 5.0,
-               "stiffness" : 0.1,
-               "targetSpeed" : 0.00050,
-               "weight" : 600.0
+            "linVel" : {
+               "stiffness" : 15.0,
+               "weight" : 1000.0,
+               "speed" : 0.01
             },
             "waypointConf" : {
                "conf" : {
                   "x" : 0.1,
                   "y" : 1.0,
-                  "z" : 0.5,
-                  "nOff" : 0.20
+                  "z" : 0.75,
+                  "nOff" : 0.10
                },
                "thresh" : 0.10,
                "type" : "percentWaypoint"
+            },
+            "collisionConf" : {
+               "damping" : 0.050,
+               "iDist" : 0.010,
+               "sDist" : 0.0050
             }
-         },
-         "postureTask" : {
-            "stiffness" : 0.1,
-            "weight" : 10.0
          }
       },
       "Collisions" : {
@@ -372,6 +372,87 @@
                   "iDist" : 0.05,
                   "sDist" : 0.025
                }
+            },
+            {
+               "body1" : "RARM_LINK7",
+               "body2" : "step5_hull",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.02,
+                  "sDist" : 0.01
+               }
+            },
+            {
+               "body1" : "RARM_LINK7",
+               "body2" : "step6_hull",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.02,
+                  "sDist" : 0.01
+               }
+            },
+            {
+               "body1" : "RARM_LINK7",
+               "body2" : "step7_hull",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.02,
+                  "sDist" : 0.01
+               }
+            },
+            {
+               "body1" : "RARM_LINK7",
+               "body2" : "step8_hull",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.02,
+                  "sDist" : 0.01
+               }
+            },
+            {
+               "body1" : "LARM_LINK7",
+               "body2" : "step4_hull",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.02,
+                  "sDist" : 0.01
+               }
+            },
+            {
+               "body1" : "LARM_LINK7",
+               "body2" : "step5_hull",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.02,
+                  "sDist" : 0.01
+               }
+            },
+            {
+               "body1" : "LARM_LINK7",
+               "body2" : "step6_hull",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.02,
+                  "sDist" : 0.01
+               }
+            },
+            {
+               "body1" : "LARM_LINK7",
+               "body2" : "step7_hull",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.02,
+                  "sDist" : 0.01
+               }
+            },
+            {
+               "body1" : "LARM_LINK7",
+               "body2" : "step8_hull",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.02,
+                  "sDist" : 0.01
+               }
             }
          ],
          "robotEnvContactFilter" : []
@@ -383,7 +464,7 @@
          "r1Surface" : "LeftGripper",
          "r2Surface" : "StairLeftRung1",
          "comObj" : {
-            "comOffset" : [ 0.050, 0.0, 0.0 ]
+            "comOffset" : [ 0.0, 0.0, 0.0 ]
          }
       },
       {
@@ -391,8 +472,42 @@
          "r1Surface" : "LeftGripper",
          "r2Surface" : "StairLeftRung2",
          "comObj" : {
-            "comOffset" : [ 1.000000000000000e-06, 0.0, 0.0 ]
+            "comOffset" : [ 0.0, 0.0, 0.0 ]
          }
+      },
+      {
+        "type" : "add",
+        "r1Surface" : "RFrontSole",
+        "r2Surface" : "Step6",
+        "contactTask" : {
+           "waypointConf" : {
+              "conf" : {
+                 "x" : 1.0,
+                 "y" : 0.0,
+                 "z" : 1.4,
+                 "nOff" : 0.1
+              },
+              "thresh" : 0.10,
+              "type" : "percentWaypoint"
+           }
+        }
+      },
+      {
+        "type" : "add",
+        "r1Surface" : "LFrontSole",
+        "r2Surface" : "Step6",
+        "contactTask" : {
+           "waypointConf" : {
+              "conf" : {
+                 "x" : 1.0,
+                 "y" : -2.0,
+                 "z" : 1.5,
+                 "nOff" : 0.1
+              },
+              "thresh" : 0.10,
+              "type" : "percentWaypoint"
+           }
+        }
       }
    ]
 }
