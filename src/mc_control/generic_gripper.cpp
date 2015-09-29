@@ -181,7 +181,7 @@ void Gripper::setActualQ(double q)
     {
       std::cout << "Gripper safety triggered on " << name[0] << std::endl;
       overCommandLimit = true;
-      setCurrentQ(actualQ - 0.01);
+      //setCurrentQ(actualQ - 0.01);
     }
   }
   else
