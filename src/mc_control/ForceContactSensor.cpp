@@ -69,10 +69,10 @@ void ForceSensor::update(const Eigen::Vector3d & force)
 ForceContactSensor::ForceContactSensor(const mc_rbdyn::Robot & robot)
 {
   /*FIXME Hard-coded */
-  sensors.push_back(ForceSensor(robot, "RightFootForceSensor", Threshold(50, 9)));
-  sensors.push_back(ForceSensor(robot, "LeftFootForceSensor", Threshold(50, 9)));
-  sensors.push_back(ForceSensor(robot, "RightHandForceSensor", Threshold(20, 4)));
-  sensors.push_back(ForceSensor(robot, "LeftHandForceSensor", Threshold(5, 4)));
+  sensors.push_back(ForceSensor(robot, "RightFootForceSensor", Threshold(150, 9)));
+  sensors.push_back(ForceSensor(robot, "LeftFootForceSensor", Threshold(150, 9)));
+  sensors.push_back(ForceSensor(robot, "RightHandForceSensor", Threshold(25, 1)));
+  sensors.push_back(ForceSensor(robot, "LeftHandForceSensor", Threshold(25, 1)));
 }
 
 void ForceContactSensor::resetOffset()
