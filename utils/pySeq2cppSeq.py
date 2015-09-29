@@ -5,6 +5,7 @@
 from mc_rbdyn.stance import loadStances, IdentityContactAction, AddContactAction, RemoveContactAction
 import spacevecalg as sva
 import json
+import os
 import sys
 
 def usage():
@@ -86,7 +87,7 @@ if __name__ == "__main__":
 
   seq_in = sys.argv[1]
 
-  seq_out = seq_in.replace(".seq", ".json")
+  seq_out = os.getcwd() + '/' + os.path.basename(seq_in.replace('.seq', '.json'))
   data_out = {"stances" : [], "actions": []}
 
   stances, actions = loadStances(seq_in)
@@ -99,4 +100,4 @@ if __name__ == "__main__":
   with open(seq_out, 'w') as f_out:
     json.dump(data_out, f_out)
 
-  print "Saved {} stances and {} actions into json file".format(len(stances), len(actions))
+  print "Saved {} stances and {} actions into json file ({})".format(len(stances), len(actions), seq_out)
