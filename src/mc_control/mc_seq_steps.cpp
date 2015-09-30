@@ -664,7 +664,7 @@ bool live_removeGripperP::eval(MCSeqController & ctl)
     return true;
   }
   bool all = true;
-  double dOut = 0.02;//((not ctl.isGripperWillBeAttached) and ctl.isRemoved) ? 0.02 : 0.05;
+  double dOut = 0.05;//((not ctl.isGripperWillBeAttached) and ctl.isRemoved) ? 0.02 : 0.05;
   for(const auto & p : ctl.distPairs)
   {
     all = all && (p->distance(ctl.robot(), ctl.env()) > dOut*dOut);
@@ -672,7 +672,7 @@ bool live_removeGripperP::eval(MCSeqController & ctl)
   Eigen::Vector3d curPos = ctl.robot().mbc->bodyPosW[ctl.robot().bodyIndexByName(ctl.currentContact->r1Surface()->bodyName())].translation();
   double d = (curPos - ctl.contactPos).norm();
   /* Either we moved away from the model or we moved away "enough" */
-  all = all || (d > 0.1);
+  all = all || (d > 0.125);
   if(all)
   {
     ctl.removeContactTask->removeFromSolver(ctl.qpsolver->solver);

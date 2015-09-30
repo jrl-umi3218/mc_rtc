@@ -35,7 +35,7 @@
          "contactObj" : {
             "posThresh" : 0.03,
             "velThresh" : 0.005,
-            "preContactDist" : 0.02
+            "preContactDist" : 0.075
          },
          "contactTask" : {
             "position" : {
@@ -112,7 +112,7 @@
             "waypointConf" : {
                "conf" : {
                   "x" : 0.1,
-                  "y" : 1.0,
+                  "y" : 0.8,
                   "z" : 0.75,
                   "nOff" : 0.10
                },
@@ -477,14 +477,31 @@
       },
       {
         "type" : "add",
+        "r1Surface" : "RightGripperReverse",
+        "r2Surface" : "RightHandleCylinder",
+        "contactTask" : {
+           "waypointConf" : {
+              "conf" : {
+                 "x" : 0.25,
+                 "y" : 0.75,
+                 "z" : 0.8,
+                 "nOff" : 0.1
+              },
+              "thresh" : 0.10,
+              "type" : "percentWaypoint"
+           }
+        }
+      },
+      {
+        "type" : "add",
         "r1Surface" : "RFrontSole",
         "r2Surface" : "Step6",
         "contactTask" : {
            "waypointConf" : {
               "conf" : {
                  "x" : 1.0,
-                 "y" : 0.0,
-                 "z" : 1.4,
+                 "y" : -0.5,
+                 "z" : 1.5,
                  "nOff" : 0.1
               },
               "thresh" : 0.10,
