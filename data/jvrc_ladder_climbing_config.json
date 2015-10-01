@@ -207,8 +207,8 @@
                "body2" : "step7_hull",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.025
+                  "iDist" : 0.02,
+                  "sDist" : 0.01
                }
             },
             {
@@ -474,6 +474,23 @@
          "comObj" : {
             "comOffset" : [ 0.0, 0.0, 0.0 ]
          }
+      },
+      {
+        "type" : "add",
+        "r1Surface" : "LeftGripperReverse",
+        "r2Surface" : "LeftHandleCylinder0",
+        "contactTask" : {
+           "waypointConf" : {
+              "conf" : {
+                 "x" : -0.25,
+                 "y" : 0.75,
+                 "z" : 0.8,
+                 "nOff" : 0.1
+              },
+              "thresh" : 0.10,
+              "type" : "percentWaypoint"
+           }
+        }
       },
       {
         "type" : "add",
