@@ -196,7 +196,24 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
         const mc_control::QPResultMsg & res = controller.send(t);
         const std::vector<double> & lgQ = controller.gripperQ(true);
         const std::vector<double> & rgQ = controller.gripperQ(false);
-        controller.setActualGripperQ(m_qIn.data[23], m_qIn.data[31]);
+        /* In simulation, the gripper joints behave independently */
+        double realRQ = m_qIn.data[23];
+        //for(size_t i = 32; i < 37; ++i)
+        //{
+        //  if(std::abs( std::abs(realRQ) - std::abs(m_qIn.data[i]) ) > 0.05)
+        //  {
+        //    realRQ = std::copysign(m_qIn.data[i], realRQ);
+        //  }
+        //}
+        double realLQ = m_qIn.data[31];
+        //for(size_t i = 37; i < 42; ++i)
+        //{
+        //  if(std::abs( std::abs(realLQ) - std::abs(m_qIn.data[i]) ) > 0.05)
+        //  {
+        //    realLQ = std::copysign(m_qIn.data[i], realLQ);
+        //  }
+        //}
+        controller.setActualGripperQ(realRQ, realLQ);
         m_qOut.data.length(m_qIn.data.length());
         for(unsigned int i = 0; i < 23; ++i)
         {

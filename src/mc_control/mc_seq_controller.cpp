@@ -269,7 +269,7 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
       tasks::qp::ContactId contactId = c.contactId(robots());
       sva::PTransformd X_0_s = c.r1Surface()->X_0_s(robot());
       double actiForce = 50; /* FIXME Hard-coded, should at least be an acti gripper const static member */
-      double stopForce = 90; /* FIXME ^^ */
+      double stopForce = 180; /* FIXME ^^ */
       std::shared_ptr<tasks::qp::PositionTask> positionTask(new tasks::qp::PositionTask(robots().mbs, 0, contactId.r1BodyId, X_0_s.translation(), is_gs->X_b_s().translation()));
       std::shared_ptr<tasks::qp::SetPointTask> positionTaskSp(new tasks::qp::SetPointTask(robots().mbs, 0, positionTask.get(), 20, 100000.));
       qpsolver->solver.addTask(positionTaskSp.get());
@@ -318,7 +318,7 @@ void MCSeqController::pre_live()
       {
         if(forceNorm > ba.second.stopForce and ba.second.targetError < ba.second.maxDist*0.1)
         {
-          std::cout << "DESACTIVATED " << ba.first << std::endl;
+          //std::cout << "DESACTIVATED " << ba.first << std::endl;
           ba.second.activated = false;
           /* This cast is guaranted to work */
           (dynamic_cast<tasks::qp::ContactConstr*>(contactConstraint.contactConstr.get()))->removeDofContact(ba.second.contactId);
@@ -341,7 +341,7 @@ void MCSeqController::pre_live()
       {
         if(forceNorm < ba.second.actiForce)
         {
-          std::cout << "ACTIVATED " << ba.first << std::endl;
+          //std::cout << "ACTIVATED " << ba.first << std::endl;
           Eigen::MatrixXd dof = Eigen::MatrixXd::Zero(5,6);
           for(size_t i = 0; i < 5; ++i)
           {
