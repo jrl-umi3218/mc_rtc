@@ -75,8 +75,8 @@ std::vector<mc_solver::Collision> confToColl(const std::vector<mc_rbdyn::StanceC
   return res;
 }
 
-MCSeqController::MCSeqController(const std::string & env_path, const std::string & env_name, const std::string & seq_path, bool real_sensors)
-: MCController(env_path, env_name), paused(false), halted(false), stanceIndex(0), seq_actions(0),
+MCSeqController::MCSeqController(const std::string & env_path, const std::string & env_name, const std::string & seq_path, bool real_sensors, unsigned int start_stance)
+: MCController(env_path, env_name), paused(false), halted(false), stanceIndex(start_stance), seq_actions(0),
   currentContact(0), targetContact(0), currentGripper(0),
   use_real_sensors(real_sensors),
   collsConstraint(robots(), timeStep)

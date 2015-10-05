@@ -64,7 +64,7 @@ std::vector<mc_solver::Collision> confToColl(const std::vector<mc_rbdyn::StanceC
 struct MCSeqController : public MCController
 {
 public:
-  MCSeqController(const std::string & env_path, const std::string & env_name, const std::string & seq_path, bool real_sensors);
+  MCSeqController(const std::string & env_path, const std::string & env_name, const std::string & seq_path, bool real_sensors, unsigned int start_stance);
 
   virtual bool run() override;
 

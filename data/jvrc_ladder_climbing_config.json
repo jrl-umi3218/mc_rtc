@@ -622,6 +622,21 @@
               "type" : "percentWaypoint"
            }
         }
+      },
+      {
+        "type" : "identity",
+        "r1Surface" : "",
+        "r2Surface" : "",
+        "postureTask" : {
+            "stiffness" : 1.0,
+            "weight" : 50.0
+        },
+        "comTask" : {
+            "stiffness" : 1.0,
+            "extraStiffness" : 1.0,
+            "weight" : 100.0,
+            "targetSpeed" : 0.0005
+        }
       }
    ]
 }

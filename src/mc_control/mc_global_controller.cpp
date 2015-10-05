@@ -66,6 +66,14 @@ MCGlobalController::Configuration::Configuration(const std::string & path)
     {
       seq_use_real_sensors = v["Seq"]["UseRealSensors"].asBool();
     }
+    if(v["Seq"].isMember("StartStance"))
+    {
+      seq_start_stance = v["Seq"]["StartStance"].asInt();
+    }
+    else
+    {
+      seq_start_stance = 0;
+    }
   }
 }
 
@@ -97,7 +105,7 @@ MCGlobalController::MCGlobalController()
   }
   if(config.enabled("Seq"))
   {
-    seq_controller.reset(new MCSeqController(config.seq_env_path, config.seq_env_name, std::string(mc_rtc::DATA_PATH) + config.seq_plan, config.seq_use_real_sensors));
+    seq_controller.reset(new MCSeqController(config.seq_env_path, config.seq_env_name, std::string(mc_rtc::DATA_PATH) + config.seq_plan, config.seq_use_real_sensors, config.seq_start_stance));
   }
   if(config.enabled("Driving"))
   {

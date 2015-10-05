@@ -664,7 +664,7 @@ bool live_removeGripperP::eval(MCSeqController & ctl)
     return true;
   }
   bool all = true;
-  double dOut = 0.05;
+  double dOut = 0.075;
   double minD = 1;
   for(const auto & p : ctl.distPairs)
   {
@@ -1030,7 +1030,7 @@ bool live_removeBeforeCloseT::eval(MCSeqController & ctl)
   {
     Eigen::Vector3d curPos = ctl.robot().mbc->bodyPosW[ctl.robot().bodyIndexByName(ctl.targetContact->r1Surface()->bodyName())].translation();
     double d = (curPos - ctl.contactPos).norm();
-    if(d > 0.05)
+    if(d > 0.06)
     {
       ctl.removeContactTask->removeFromSolver(ctl.qpsolver->solver);
       ctl.removeMetaTask(ctl.removeContactTask.get());
@@ -1200,14 +1200,13 @@ bool live_contactGripperT::eval(MCSeqController & ctl)
 {
   if((not ctl.isGripperWillBeAttached) and ctl.isRemoved)
   {
+    ctl.stanceIndex += 1;
     mc_rbdyn::Stance & newS = ctl.targetStance();
 
     ctl.updateRobotEnvCollisions(newS.contacts(), ctl.targetConf());
     ctl.updateSelfCollisions(newS.contacts(), ctl.targetConf());
     ctl.updateContacts(newS.contacts());
     ctl.updateSolverEqInEq();
-
-    ctl.stanceIndex += 1;
     return true;
   }
   bool ok = true; /*FIXME Python used to check that _back was in the sensorContacts */
