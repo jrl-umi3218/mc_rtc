@@ -956,6 +956,7 @@ bool enter_addGripperT::eval(MCSeqController & ctl)
   std::cout << "addGripperT" << std::endl;
   mc_rbdyn::StanceConfig & contactConf = ctl.curConf();
 
+  ctl.notInContactCount = 0;
   ctl.addContactTask.reset(new mc_tasks::AddContactTask(ctl.robots(), ctl.constSpeedConstr, *(ctl.targetContact), contactConf, 0));
   ctl.addContactTask->addToSolver(ctl.qpsolver->solver);
   ctl.metaTasks.push_back(ctl.addContactTask.get());
@@ -1000,6 +1001,17 @@ bool live_addGripperT::eval(MCSeqController & ctl)
   if(ok) /* Python compares nrIterNoContact with np.inf/timeStep (so np.inf) */
   {
     std::cout << "Contact detected" << std::endl;
+    ctl.notInContactCount = 0;
+    ctl.addContactTask->removeFromSolver(ctl.qpsolver->solver);
+    ctl.removeMetaTask(ctl.addContactTask.get());
+    ctl.addContactTask.reset();
+    return true;
+  }
+  ctl.notInContactCount++;
+  /* Should be configurable per stance */
+  if(ctl.notInContactCount > 8*1/ctl.timeStep)
+  {
+    std::cout << "No contact detected since 8 seconds (" << ctl.notInContactCount << " iterations), skip ahead" << std::endl;
     ctl.addContactTask->removeFromSolver(ctl.qpsolver->solver);
     ctl.removeMetaTask(ctl.addContactTask.get());
     ctl.addContactTask.reset();
@@ -1012,6 +1024,7 @@ bool live_addGripperT::eval(MCSeqController & ctl)
 bool enter_removeBeforeCloseT::eval(MCSeqController & ctl)
 {
   if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
+  if(ctl.notInContactCount > 0) { return true; }
   mc_rbdyn::StanceConfig & contactConf = ctl.targetConf();
   std::cout << "Moving the gripper away before grasp (Move " << ctl.curConf().contactObj.gripperMoveAwayDist*100 << " cm)" << std::endl;
 
@@ -1031,6 +1044,7 @@ bool enter_removeBeforeCloseT::eval(MCSeqController & ctl)
 bool live_removeBeforeCloseT::eval(MCSeqController & ctl)
 {
   if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
+  if(ctl.notInContactCount > 0) { ctl.notInContactCount = 0; return true; }
   Eigen::Vector3d curPos = ctl.robot().mbc->bodyPosW[ctl.robot().bodyIndexByName(ctl.targetContact->r1Surface()->bodyName())].translation();
   double d = (curPos - ctl.contactPos).norm();
   if(d > ctl.curConf().contactObj.gripperMoveAwayDist)
