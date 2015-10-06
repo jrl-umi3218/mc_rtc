@@ -669,6 +669,23 @@
       {
         "type" : "add",
         "r1Surface" : "LFrontSole",
+        "r2Surface" : "Step1",
+        "contactTask" : {
+           "waypointConf" : {
+              "conf" : {
+                 "x" : 1.0,
+                 "y" : 0.5,
+                 "z" : 1.2,
+                 "nOff" : 0.1
+              },
+              "thresh" : 0.10,
+              "type" : "percentWaypoint"
+           }
+        }
+      },
+      {
+        "type" : "add",
+        "r1Surface" : "LFrontSole",
         "r2Surface" : "Step6",
         "contactObj" : {
           "adjustOffset" : [ 0.0, 0.05, 0.0 ]
