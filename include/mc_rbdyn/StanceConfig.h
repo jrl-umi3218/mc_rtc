@@ -62,6 +62,7 @@ public:
   };
   struct WaypointConf
   {
+    bool skip;
     double thresh;
     std::function<Eigen::Vector3d (const sva::PTransformd &, const sva::PTransformd &, const Eigen::Vector3d &)> pos;
   };

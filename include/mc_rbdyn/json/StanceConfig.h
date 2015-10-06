@@ -176,6 +176,10 @@ inline Json::Value scLinVelToJSON(const StanceConfig::LinVel& ct)
 
 inline void scWaypointConfFromJSON(StanceConfig::WaypointConf & ret, const Json::Value & v)
 {
+  if(v.isMember("skip"))
+  {
+    ret.skip = v["skip"].asBool();
+  }
   if(v.isMember("thresh"))
   {
     ret.thresh = v["thresh"].asDouble();

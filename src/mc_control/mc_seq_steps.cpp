@@ -149,8 +149,9 @@ bool enter_moveWPT::eval(MCSeqController & ctl)
   /* Create and setup move contact task */
   ctl.moveContactTask.reset(new mc_tasks::MoveContactTask(ctl.robots(), ctl.robot(), ctl.env(), *ctl.targetContact, contactConf, 0.5));
   ctl.moveContactTask->addToSolver(ctl.qpsolver->solver);
-  ctl.moveContactTask->toWaypoint(contactConf, contactConf.contactTask.position.targetSpeed);
   ctl.metaTasks.push_back(ctl.moveContactTask.get());
+
+  ctl.moveContactTask->toWaypoint(contactConf, contactConf.contactTask.position.targetSpeed);
 
   return true;
 }
@@ -176,7 +177,7 @@ bool live_moveWPT::eval(MCSeqController & ctl)
   Eigen::Vector3d targetPos = ctl.moveContactTask->wp;
   double error = (robotSurfacePos - targetPos).norm();
 
-  if(error < contactConf.contactTask.waypointConf.thresh)
+  if(contactConf.contactTask.waypointConf.skip || error < contactConf.contactTask.waypointConf.thresh)
   {
     ctl.moveContactTask->toPreEnv(contactConf, contactConf.contactTask.position.targetSpeed);
     if(ctl.currentGripper == 0)
@@ -728,11 +729,11 @@ bool enter_moveGripperWPT::eval(MCSeqController & ctl)
   mc_rbdyn::StanceConfig & contactConf = ctl.curConf();
   mc_rbdyn::Stance & newS = ctl.targetStance();
 
-  /* Craete and setup move contact task */
+  /* Create and setup move contact task */
   ctl.moveContactTask.reset(new mc_tasks::MoveContactTask(ctl.robots(), ctl.robot(), ctl.env(), *(ctl.targetContact), contactConf));
   ctl.moveContactTask->addToSolver(ctl.qpsolver->solver);
-  ctl.moveContactTask->toWaypoint(contactConf, contactConf.contactTask.position.targetSpeed);
   ctl.metaTasks.push_back(ctl.moveContactTask.get());
+  ctl.moveContactTask->toWaypoint(contactConf, contactConf.contactTask.position.targetSpeed);
 
   /* Configure the stability task */
   ctl.stabilityTask->target(ctl.env(), newS, contactConf, contactConf.comTask.targetSpeed);
@@ -759,7 +760,7 @@ bool live_moveGripperWPT::eval(MCSeqController & ctl)
   Eigen::Vector3d targetPos = ctl.moveContactTask->wp;
   double error = (robotSurfacePos - targetPos).norm();
 
-  if(error < contactConf.contactTask.waypointConf.thresh)
+  if(contactConf.contactTask.waypointConf.skip || error < contactConf.contactTask.waypointConf.thresh)
   {
     /* Waypoint reached, new goal is target */
     ctl.moveContactTask->toPreEnv(contactConf, contactConf.contactTask.position.targetSpeed);

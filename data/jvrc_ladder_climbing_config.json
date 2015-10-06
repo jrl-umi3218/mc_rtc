@@ -570,12 +570,7 @@
         },
         "contactTask" : {
           "waypointConf" : {
-             "conf" : {
-                "x" : 0.,
-                "y" : 0.,
-                "z" : 0.,
-                "nOff" : 0.
-             }
+             "skip" : 1
           }
         }
       },
@@ -595,12 +590,7 @@
              "targetSpeed" : 0.0005
           },
           "waypointConf" : {
-             "conf" : {
-                "x" : 0.,
-                "y" : 0.,
-                "z" : 0.,
-                "nOff" : 0.
-             }
+             "skip" : 1
           }
         }
       },
@@ -620,12 +610,7 @@
              "targetSpeed" : 0.0005
           },
           "waypointConf" : {
-             "conf" : {
-                "x" : 0.,
-                "y" : 0.,
-                "z" : 0.,
-                "nOff" : 0.
-             }
+             "skip" : 1
           }
         }
       },

@@ -50,6 +50,7 @@ StanceConfig::StanceConfig()
   contactTask.linVel.weight = 10000.0;
   contactTask.linVel.speed = 0.05;
 
+  contactTask.waypointConf.skip = false;
   contactTask.waypointConf.thresh = 0.15;
   contactTask.waypointConf.pos = percentWaypoint(0.5, 0.5, 0.5, 0.2);
 
