@@ -679,11 +679,20 @@ bool live_removeGripperP::eval(MCSeqController & ctl)
   {
     std::cout << "Will move away because got out of the model collision" << std::endl;
   }
-  if(minD < 0 && d > 0.1)
+  double dLimit = 0.1;
+  if(ctl.stanceIndex > 18 && ctl.stanceIndex < 41)
   {
-    std::cout << "Will move away because d > 0.1 even if in model collision" << std::endl;
+    dLimit = 0.05;
   }
-  all = all || (minD < 0 && d > 0.1);
+  if(ctl.stanceIndex > 40)
+  {
+    dLimit = 0.15;
+  }
+  if(minD < 0 && d > dLimit)
+  {
+    std::cout << "Will move away because d > " << dLimit << " even if in model collision" << std::endl;
+  }
+  all = all || (minD < 0 && d > dLimit);
   if(all)
   {
     ctl.removeContactTask->removeFromSolver(ctl.qpsolver->solver);

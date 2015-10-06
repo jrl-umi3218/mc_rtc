@@ -26,7 +26,7 @@
          "comTask" : {
             "stiffness" : 5.0,
             "extraStiffness" : 12.0,
-            "weight" : 300.0,
+            "weight" : 200.0,
             "targetSpeed" : 0.03
          },
          "comObj" : {
@@ -42,7 +42,7 @@
                "stiffness" : 5.0,
                "extraStiffness" : 12.0,
                "weight" : 300.0,
-               "targetSpeed" : 0.015
+               "targetSpeed" : 0.0075
             },
             "orientation" : {
                "stiffness" : 15.0,
@@ -79,7 +79,7 @@
          "comTask" : {
             "stiffness" : 20.0,
             "extraStiffness" : 0.0,
-            "weight" : 500.0,
+            "weight" : 100.0,
             "targetSpeed" : 0.005
          },
          "contactObj" : {
@@ -98,7 +98,7 @@
                "stiffness" : 0.1,
                "extraStiffness" : 2.5,
                "weight" : 600.0,
-               "targetSpeed" : 0.003
+               "targetSpeed" : 0.005
             },
             "orientation" : {
                "stiffness" : 2.5,
@@ -163,8 +163,8 @@
                "body2" : "step2_hull",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.025,
-                  "sDist" : 0.01
+                  "iDist" : 0.04,
+                  "sDist" : 0.02
                }
             },
             {
@@ -566,7 +566,17 @@
         "r2Surface" : "RightHandleCylinder6",
         "contactObj" : {
           "preContactDist" : -0.1,
-          "gripperMoveAwayDist" : 0.02
+          "gripperMoveAwayDist" : 0.04
+        },
+        "contactTask" : {
+          "waypointConf" : {
+             "conf" : {
+                "x" : 0.,
+                "y" : 0.,
+                "z" : 0.,
+                "nOff" : 0.
+             }
+          }
         }
       },
       {
@@ -575,7 +585,7 @@
         "r2Surface" : "LeftHandleCylinder6",
         "contactObj" : {
           "preContactDist" : -0.15,
-          "gripperMoveAwayDist" : 0.02
+          "gripperMoveAwayDist" : 0.04
         },
         "contactTask" : {
           "position" : {
@@ -586,10 +596,10 @@
           },
           "waypointConf" : {
              "conf" : {
-                "x" : 0.9,
-                "y" : 0.9,
-                "z" : 0.9,
-                "nOff" : 0.10
+                "x" : 0.,
+                "y" : 0.,
+                "z" : 0.,
+                "nOff" : 0.
              }
           }
         }
@@ -600,7 +610,7 @@
         "r2Surface" : "LeftHandleCylinder7",
         "contactObj" : {
           "preContactDist" : -0.15,
-          "gripperMoveAwayDist" : 0.02
+          "gripperMoveAwayDist" : 0.04
         },
         "contactTask" : {
           "position" : {
@@ -611,10 +621,10 @@
           },
           "waypointConf" : {
              "conf" : {
-                "x" : 0.9,
-                "y" : 0.9,
-                "z" : 0.9,
-                "nOff" : 0.10
+                "x" : 0.,
+                "y" : 0.,
+                "z" : 0.,
+                "nOff" : 0.
              }
           }
         }
@@ -647,8 +657,8 @@
            "waypointConf" : {
               "conf" : {
                  "x" : 1.0,
-                 "y" : 0.,
-                 "z" : 1.4,
+                 "y" : 0.25,
+                 "z" : 1.3,
                  "nOff" : 0.1
               },
               "thresh" : 0.10,
@@ -660,12 +670,15 @@
         "type" : "add",
         "r1Surface" : "LFrontSole",
         "r2Surface" : "Step6",
+        "contactObj" : {
+          "adjustOffset" : [ 0.0, 0.05, 0.0 ]
+        },
         "contactTask" : {
            "waypointConf" : {
               "conf" : {
                  "x" : 1.0,
-                 "y" : -2.0,
-                 "z" : 1.5,
+                 "y" : -1.5,
+                 "z" : 1.3,
                  "nOff" : 0.1
               },
               "thresh" : 0.10,
