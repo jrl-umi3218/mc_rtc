@@ -90,7 +90,8 @@
             "adjustOriThresh" : 0.1,
             "posThresh" : 0.03,
             "preContactDist" : 0.09,
-            "velThresh" : 0.05
+            "velThresh" : 0.05,
+            "gripperMoveAwayDist" : 0.06
          },
          "contactTask" : {
             "position" : {
@@ -153,8 +154,8 @@
                "body2" : "step1_hull",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.025
+                  "iDist" : 0.025,
+                  "sDist" : 0.01
                }
             },
             {
@@ -162,8 +163,8 @@
                "body2" : "step2_hull",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.025
+                  "iDist" : 0.025,
+                  "sDist" : 0.01
                }
             },
             {
@@ -171,8 +172,8 @@
                "body2" : "step3_hull",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.025
+                  "iDist" : 0.025,
+                  "sDist" : 0.01
                }
             },
             {
@@ -180,8 +181,8 @@
                "body2" : "step4_hull",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.025
+                  "iDist" : 0.025,
+                  "sDist" : 0.01
                }
             },
             {
@@ -189,8 +190,8 @@
                "body2" : "step5_hull",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.025
+                  "iDist" : 0.025,
+                  "sDist" : 0.01
                }
             },
             {
@@ -198,8 +199,8 @@
                "body2" : "step6_hull",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.025
+                  "iDist" : 0.025,
+                  "sDist" : 0.01
                }
             },
             {
@@ -207,7 +208,7 @@
                "body2" : "step7_hull",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.02,
+                  "iDist" : 0.025,
                   "sDist" : 0.01
                }
             },
@@ -216,8 +217,8 @@
                "body2" : "step8_hull",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.025
+                  "iDist" : 0.025,
+                  "sDist" : 0.01
                }
             },
             {
@@ -225,8 +226,8 @@
                "body2" : "step1_hull",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.025
+                  "iDist" : 0.025,
+                  "sDist" : 0.01
                }
             },
             {
@@ -234,8 +235,8 @@
                "body2" : "step2_hull",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.025
+                  "iDist" : 0.025,
+                  "sDist" : 0.01
                }
             },
             {
@@ -243,8 +244,8 @@
                "body2" : "step3_hull",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.025
+                  "iDist" : 0.025,
+                  "sDist" : 0.01
                }
             },
             {
@@ -252,8 +253,8 @@
                "body2" : "step4_hull",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.025
+                  "iDist" : 0.025,
+                  "sDist" : 0.01
                }
             },
             {
@@ -261,8 +262,8 @@
                "body2" : "step5_hull",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.025
+                  "iDist" : 0.025,
+                  "sDist" : 0.01
                }
             },
             {
@@ -270,8 +271,8 @@
                "body2" : "step6_hull",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.025
+                  "iDist" : 0.025,
+                  "sDist" : 0.01
                }
             },
             {
@@ -279,8 +280,8 @@
                "body2" : "step7_hull",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.025
+                  "iDist" : 0.025,
+                  "sDist" : 0.01
                }
             },
             {
@@ -288,8 +289,8 @@
                "body2" : "step8_hull",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.025
+                  "iDist" : 0.025,
+                  "sDist" : 0.01
                }
             },
             {
@@ -515,10 +516,21 @@
       {
         "type" : "add",
         "r1Surface" : "LeftGripperReverse",
+        "r2Surface" : "LeftHandleCylinder3",
+        "contactObj" : {
+          "adjustOffset" : [ 0.0, 0.0, 0.05 ],
+          "preContactDist" : 0.0,
+          "gripperMoveAwayDist" : 0.04
+        }
+      },
+      {
+        "type" : "add",
+        "r1Surface" : "LeftGripperReverse",
         "r2Surface" : "LeftHandleCylinder4",
         "contactObj" : {
           "adjustOffset" : [ 0.0, 0.0, 0.05 ],
-          "preContactDist" : 0.0
+          "preContactDist" : 0.0,
+          "gripperMoveAwayDist" : 0.04
         }
       },
       {
@@ -526,7 +538,17 @@
         "r1Surface" : "LeftGripperReverse",
         "r2Surface" : "LeftHandleCylinder5",
         "contactObj" : {
-          "preContactDist" : -0.05
+          "preContactDist" : -0.05,
+          "gripperMoveAwayDist" : 0.04
+        }
+      },
+      {
+        "type" : "add",
+        "r1Surface" : "RightGripperReverse",
+        "r2Surface" : "RightHandleCylinder4",
+        "contactObj" : {
+          "preContactDist" : 0.0,
+          "gripperMoveAwayDist" : 0.04
         }
       },
       {
@@ -534,7 +556,8 @@
         "r1Surface" : "RightGripperReverse",
         "r2Surface" : "RightHandleCylinder5",
         "contactObj" : {
-          "preContactDist" : -0.05
+          "preContactDist" : -0.05,
+          "gripperMoveAwayDist" : 0.04
         }
       },
       {
@@ -542,7 +565,8 @@
         "r1Surface" : "RightGripperReverse",
         "r2Surface" : "RightHandleCylinder6",
         "contactObj" : {
-          "preContactDist" : -0.05
+          "preContactDist" : -0.1,
+          "gripperMoveAwayDist" : 0.02
         }
       },
       {
@@ -550,7 +574,33 @@
         "r1Surface" : "LeftGripperReverse",
         "r2Surface" : "LeftHandleCylinder6",
         "contactObj" : {
-          "preContactDist" : -0.1
+          "preContactDist" : -0.15,
+          "gripperMoveAwayDist" : 0.02
+        },
+        "contactTask" : {
+          "position" : {
+             "stiffness" : 0.1,
+             "extraStiffness" : 2.5,
+             "weight" : 600.0,
+             "targetSpeed" : 0.0005
+          },
+          "waypointConf" : {
+             "conf" : {
+                "x" : 0.9,
+                "y" : 0.9,
+                "z" : 0.9,
+                "nOff" : 0.10
+             }
+          }
+        }
+      },
+      {
+        "type" : "add",
+        "r1Surface" : "LeftGripperReverse",
+        "r2Surface" : "LeftHandleCylinder7",
+        "contactObj" : {
+          "preContactDist" : -0.15,
+          "gripperMoveAwayDist" : 0.02
         },
         "contactTask" : {
           "position" : {
@@ -597,8 +647,8 @@
            "waypointConf" : {
               "conf" : {
                  "x" : 1.0,
-                 "y" : -0.5,
-                 "z" : 1.5,
+                 "y" : 0.,
+                 "z" : 1.4,
                  "nOff" : 0.1
               },
               "thresh" : 0.10,

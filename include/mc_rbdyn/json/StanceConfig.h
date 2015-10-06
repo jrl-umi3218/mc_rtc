@@ -340,6 +340,10 @@ inline void scContactObjFromJSON(StanceConfig::ContactObj & co, const Json::Valu
   {
     co.preContactDist = v["preContactDist"].asDouble();
   }
+  if(v.isMember("gripperMoveAwayDist"))
+  {
+    co.gripperMoveAwayDist = v["gripperMoveAwayDist"].asDouble();
+  }
 }
 
 inline Json::Value scContactObjToJSON(const StanceConfig::ContactObj & co)

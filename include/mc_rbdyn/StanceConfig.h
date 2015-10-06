@@ -89,6 +89,7 @@ public:
     Eigen::Vector3d adjustOffset;
     Eigen::Vector3d adjustOriTBNWeight;
     double preContactDist;
+    double gripperMoveAwayDist;
   };
   struct BodiesCollisionConf
   {

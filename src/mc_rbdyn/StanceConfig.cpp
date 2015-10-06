@@ -61,6 +61,7 @@ StanceConfig::StanceConfig()
   contactObj.velThresh = 0.005;
   contactObj.preContactDist = 0.02;
   contactObj.adjustOffset = Eigen::Vector3d(0,0,0);
+  contactObj.gripperMoveAwayDist = 0.0;
 }
 
 }

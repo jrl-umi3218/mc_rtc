@@ -1002,49 +1002,37 @@ bool live_addGripperT::eval(MCSeqController & ctl)
 bool enter_removeBeforeCloseT::eval(MCSeqController & ctl)
 {
   if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
-  bool limitToZero = ctl.targetContact->r2Surface()->name() == "PlatformLeftRampVS" or ctl.targetContact->r2Surface()->name() == "PlatformLeftRampS"; /*FIXME Should be part of the configuration */
-  if(!limitToZero)
-  {
-    std::cout << "Moving the gripper away before grasp" << std::endl;
-    mc_rbdyn::StanceConfig & contactConf = ctl.targetConf();
+  mc_rbdyn::StanceConfig & contactConf = ctl.targetConf();
+  std::cout << "Moving the gripper away before grasp (Move " << ctl.curConf().contactObj.gripperMoveAwayDist*100 << " cm)" << std::endl;
 
-    /* Find the contact to remove */
-    mc_rbdyn::Contact & removedContact = *(ctl.targetContact);
+  /* Find the contact to remove */
+  mc_rbdyn::Contact & removedContact = *(ctl.targetContact);
 
-    /* Create the remove contact meta task */
-    ctl.removeContactTask.reset(new mc_tasks::RemoveContactTask(ctl.robots(), ctl.constSpeedConstr, removedContact, contactConf));
-    ctl.removeContactTask->addToSolver(ctl.qpsolver->solver);
-    ctl.metaTasks.push_back(ctl.removeContactTask.get());
+  /* Create the remove contact meta task */
+  ctl.removeContactTask.reset(new mc_tasks::RemoveContactTask(ctl.robots(), ctl.constSpeedConstr, removedContact, contactConf));
+  ctl.removeContactTask->addToSolver(ctl.qpsolver->solver);
+  ctl.metaTasks.push_back(ctl.removeContactTask.get());
 
-    /* Get the current position of the wrist */
-    ctl.contactPos = ctl.robot().mbc->bodyPosW[ctl.robot().bodyIndexByName(ctl.targetContact->r1Surface()->bodyName())].translation();
-  }
+  /* Get the current position of the wrist */
+  ctl.contactPos = ctl.robot().mbc->bodyPosW[ctl.robot().bodyIndexByName(ctl.targetContact->r1Surface()->bodyName())].translation();
   return true;
 }
 
 bool live_removeBeforeCloseT::eval(MCSeqController & ctl)
 {
   if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
-  bool limitToZero = ctl.targetContact->r2Surface()->name() == "PlatformLeftRampVS" or ctl.targetContact->r2Surface()->name() == "PlatformLeftRampS"; /*FIXME Should be part of the configuration */
-  if(!limitToZero)
+  Eigen::Vector3d curPos = ctl.robot().mbc->bodyPosW[ctl.robot().bodyIndexByName(ctl.targetContact->r1Surface()->bodyName())].translation();
+  double d = (curPos - ctl.contactPos).norm();
+  if(d > ctl.curConf().contactObj.gripperMoveAwayDist)
   {
-    Eigen::Vector3d curPos = ctl.robot().mbc->bodyPosW[ctl.robot().bodyIndexByName(ctl.targetContact->r1Surface()->bodyName())].translation();
-    double d = (curPos - ctl.contactPos).norm();
-    if(d > 0.06)
-    {
-      ctl.removeContactTask->removeFromSolver(ctl.qpsolver->solver);
-      ctl.removeMetaTask(ctl.removeContactTask.get());
-      ctl.removeContactTask.reset();
-      ctl.distPairs.clear();
-      std::cout << "Moved away, will now grasp" << std::endl;
-      return true;
-    }
-    return false;
-  }
-  else
-  {
+    ctl.removeContactTask->removeFromSolver(ctl.qpsolver->solver);
+    ctl.removeMetaTask(ctl.removeContactTask.get());
+    ctl.removeContactTask.reset();
+    ctl.distPairs.clear();
+    std::cout << "Moved away, will now grasp" << std::endl;
     return true;
   }
+  return false;
 }
 
 bool enter_softCloseGripperP::eval(MCSeqController & ctl)
