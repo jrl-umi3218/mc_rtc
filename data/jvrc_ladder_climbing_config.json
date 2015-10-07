@@ -42,7 +42,7 @@
                "stiffness" : 5.0,
                "extraStiffness" : 12.0,
                "weight" : 300.0,
-               "targetSpeed" : 0.0075
+               "targetSpeed" : 0.005
             },
             "orientation" : {
                "stiffness" : 15.0,
@@ -57,7 +57,7 @@
             "waypointConf" : {
                "conf" : {
                   "x" : 1.0,
-                  "y" : -0.1,
+                  "y" : -0.5,
                   "z" : 1.2,
                   "nOff" : 0.1
                },
@@ -89,7 +89,7 @@
             "adjustVelThresh" : 0.02,
             "adjustOriThresh" : 0.1,
             "posThresh" : 0.03,
-            "preContactDist" : 0.09,
+            "preContactDist" : 0.075,
             "velThresh" : 0.05,
             "gripperMoveAwayDist" : 0.06
          },
@@ -298,8 +298,8 @@
                "body2" : "step2_hull",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.01
+                  "iDist" : 0.1,
+                  "sDist" : 0.03
                }
             },
             {
@@ -316,8 +316,8 @@
                "body2" : "step4_hull",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.01
+                  "iDist" : 0.1,
+                  "sDist" : 0.03
                }
             },
             {
@@ -334,8 +334,8 @@
                "body2" : "step1_hull",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.01
+                  "iDist" : 0.1,
+                  "sDist" : 0.03
                }
             },
             {
@@ -352,8 +352,8 @@
                "body2" : "step3_hull",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.01
+                  "iDist" : 0.1,
+                  "sDist" : 0.03
                }
             },
             {
@@ -370,8 +370,8 @@
                "body2" : "step5_hull",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.01
+                  "iDist" : 0.1,
+                  "sDist" : 0.03
                }
             },
             {
@@ -537,8 +537,8 @@
         "r1Surface" : "LeftGripperReverse",
         "r2Surface" : "LeftHandleCylinder4",
         "contactObj" : {
-          "adjustOffset" : [ 0.0, 0.0, 0.0 ],
-          "preContactDist" : 0.0,
+          "adjustOffset" : [ 0.0, 0.0, -0.05 ],
+          "preContactDist" : 0.025,
           "gripperMoveAwayDist" : 0.04
         }
       },
@@ -549,6 +549,14 @@
         "contactObj" : {
           "preContactDist" : 0.0,
           "gripperMoveAwayDist" : 0.04
+        },
+        "contactTask" : {
+          "position" : {
+             "stiffness" : 2.5,
+             "extraStiffness" : 2.5,
+             "weight" : 600.0,
+             "targetSpeed" : 0.05
+          }
         }
       },
       {
@@ -556,7 +564,8 @@
         "r1Surface" : "RightGripperReverse",
         "r2Surface" : "RightHandleCylinder4",
         "contactObj" : {
-          "preContactDist" : 0.0,
+          "adjustOffset" : [ 0.0, 0.0, -0.05 ],
+          "preContactDist" : 0.025,
           "gripperMoveAwayDist" : 0.04
         }
       },
@@ -618,6 +627,34 @@
              "weight" : 600.0,
              "targetSpeed" : 0.0005
           },
+          "waypointConf" : {
+             "skip" : 1
+          }
+        }
+      },
+      {
+        "type" : "add",
+        "r1Surface" : "LeftGripperReverse",
+        "r2Surface" : "LeftHandleCylinder2",
+        "contactObj" : {
+          "preContactDist" : 0.075,
+          "gripperMoveAwayDist" : 0.06
+        },
+        "contactTask" : {
+          "waypointConf" : {
+             "skip" : 1
+          }
+        }
+      },
+      {
+        "type" : "add",
+        "r1Surface" : "RightGripperReverse",
+        "r2Surface" : "RightHandleCylinder3",
+        "contactObj" : {
+          "preContactDist" : 0.075,
+          "gripperMoveAwayDist" : 0.05
+        },
+        "contactTask" : {
           "waypointConf" : {
              "skip" : 1
           }

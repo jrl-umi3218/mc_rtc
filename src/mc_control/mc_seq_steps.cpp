@@ -665,7 +665,7 @@ bool live_removeGripperP::eval(MCSeqController & ctl)
     return true;
   }
   bool all = true;
-  double dOut = 0.075;
+  double dOut = 0.05;
   double minD = 1;
   for(const auto & p : ctl.distPairs)
   {
@@ -680,7 +680,7 @@ bool live_removeGripperP::eval(MCSeqController & ctl)
   {
     std::cout << "Will move away because got out of the model collision" << std::endl;
   }
-  double dLimit = 0.1;
+  double dLimit = 0.075;
   if(ctl.stanceIndex > 18 && ctl.stanceIndex < 41)
   {
     dLimit = 0.05;

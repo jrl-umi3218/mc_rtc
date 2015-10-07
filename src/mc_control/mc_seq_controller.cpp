@@ -270,8 +270,8 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
       unsigned int wrenchIndex = forceSensor == "RightHandForceSensor" ? 2 : 3; /*FIXME Hard-coded */
       tasks::qp::ContactId contactId = c.contactId(robots());
       sva::PTransformd X_0_s = c.r1Surface()->X_0_s(robot());
-      double actiForce = 50; /* FIXME Hard-coded, should at least be an acti gripper const static member */
-      double stopForce = 180; /* FIXME ^^ */
+      double actiForce = 10; /* FIXME Hard-coded, should at least be an acti gripper const static member */
+      double stopForce = 100; /* FIXME ^^ */
       std::shared_ptr<tasks::qp::PositionTask> positionTask(new tasks::qp::PositionTask(robots().mbs, 0, contactId.r1BodyId, X_0_s.translation(), is_gs->X_b_s().translation()));
       std::shared_ptr<tasks::qp::SetPointTask> positionTaskSp(new tasks::qp::SetPointTask(robots().mbs, 0, positionTask.get(), 20, 100000.));
       qpsolver->solver.addTask(positionTaskSp.get());
