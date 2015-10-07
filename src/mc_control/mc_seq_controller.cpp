@@ -121,8 +121,10 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
   constSpeedConstr.reset(new tasks::qp::BoundedSpeedConstr(robots().mbs, 0, timeStep));
   constSpeedConstr->addToSolver(qpsolver->solver);
 
-  qpsolver->addConstraintSet(contactConstraint);
+  kinematicsConstraint = mc_solver::KinematicsConstraint(qpsolver->robots, 0, timeStep,
+                                                         false, {0.01, 0.001, 1e-6}, 0.5);
   qpsolver->addConstraintSet(dynamicsConstraint);
+  qpsolver->addConstraintSet(contactConstraint);
   qpsolver->addConstraintSet(collsConstraint);
   qpsolver->setContacts(stances[stanceIndex].geomContacts());
 
