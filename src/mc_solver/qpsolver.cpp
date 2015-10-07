@@ -194,6 +194,7 @@ DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots, unsigned
 
 void DynamicsConstraint::addToSolver(tasks::qp::QPSolver & solver) const
 {
+  KinematicsConstraint::addToSolver(solver);
   if(motionConstr)
   {
     motionConstr->addToSolver(solver);
@@ -206,6 +207,7 @@ void DynamicsConstraint::addToSolver(tasks::qp::QPSolver & solver) const
 
 void DynamicsConstraint::removeFromSolver(tasks::qp::QPSolver & solver) const
 {
+  KinematicsConstraint::removeFromSolver(solver);
   if(motionConstr)
   {
     motionConstr->removeFromSolver(solver);
