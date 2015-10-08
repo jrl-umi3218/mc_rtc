@@ -35,6 +35,7 @@ public:
     double posThresh;
     double velThresh;
     Eigen::Vector3d comOffset;
+    double timeout;
   };
   struct PostureTask
   {

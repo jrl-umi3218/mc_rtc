@@ -33,6 +33,7 @@ StanceConfig::StanceConfig()
   comObj.posThresh = 0.1;
   comObj.velThresh = 0.000099;
   comObj.comOffset = Eigen::Vector3d(0,0,0);;
+  comObj.timeout = 5.0;
 
   postureTask.stiffness = 2.0;
   postureTask.weight = 10.0;

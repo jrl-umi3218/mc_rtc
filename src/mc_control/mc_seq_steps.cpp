@@ -463,11 +463,11 @@ bool live_moveCoMT::eval(MCSeqController & ctl)
   double error = (ctl.stabilityTask->comObj - rbd::computeCoM(*(ctl.robot().mb), *(ctl.robot().mbc))).norm();
   double errorVel = rbd::computeCoMVelocity(*(ctl.robot().mb), *(ctl.robot().mbc)).norm();
 
-  if( (error < obj.posThresh and errorVel < obj.velThresh) or ctl.notInContactCount > 20*1/ctl.timeStep)
+  if( (error < obj.posThresh and errorVel < obj.velThresh) or ctl.notInContactCount > obj.timeout*1/ctl.timeStep)
   {
-    if(ctl.notInContactCount > 20*1/ctl.timeStep)
+    if(ctl.notInContactCount > obj.timeout*1/ctl.timeStep)
     {
-      std::cout << "COMP timeout" << std::endl;
+      std::cout << "COMP timeout (" << obj.timeout << "s)" << std::endl;
     }
     ctl.notInContactCount = 0;
     ctl.stabilityTask->comObj = rbd::computeCoM(*(ctl.robot().mb), *(ctl.robot().mbc));

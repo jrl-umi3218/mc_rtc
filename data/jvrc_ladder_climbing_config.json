@@ -15,7 +15,8 @@
          "comObj" : {
             "comOffset" : [ 0.0, 0.0, 0.0 ],
             "posThresh" : 0.01,
-            "velThresh" : 0.001
+            "velThresh" : 0.001,
+            "timeout" : 5.0
          }
       },
       "ContactMove" : {
@@ -765,6 +766,9 @@
             "extraStiffness" : 1.0,
             "weight" : 100.0,
             "targetSpeed" : 0.0005
+        },
+        "comObj" : {
+           "timeout" : 20.0
         }
       }
    ]

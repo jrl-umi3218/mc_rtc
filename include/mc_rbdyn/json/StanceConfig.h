@@ -58,6 +58,10 @@ inline void scCoMObjFromJSON(StanceConfig::CoMObj & ret, const Json::Value &v)
       ret.comOffset(i) = v["comOffset"][i].asDouble();
     }
   }
+  if(v.isMember("timeout"))
+  {
+    ret.timeout = v["timeout"].asDouble();
+  }
 }
 
 inline Json::Value scCoMObjToJSON(const StanceConfig::CoMObj & co)
