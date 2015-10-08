@@ -14,8 +14,8 @@
          },
          "comObj" : {
             "comOffset" : [ 0.0, 0.0, 0.0 ],
-            "posThresh" : 0.1,
-            "velThresh" : 0.0001
+            "posThresh" : 0.01,
+            "velThresh" : 0.001
          }
       },
       "ContactMove" : {
@@ -26,8 +26,8 @@
          "comTask" : {
             "stiffness" : 5.0,
             "extraStiffness" : 12.0,
-            "weight" : 200.0,
-            "targetSpeed" : 0.03
+            "weight" : 100.0,
+            "targetSpeed" : 0.001
          },
          "comObj" : {
             "comOffset" : [ 0.0, 0.0, 0.0 ]
@@ -35,14 +35,14 @@
          "contactObj" : {
             "posThresh" : 0.03,
             "velThresh" : 0.005,
-            "preContactDist" : 0.075
+            "preContactDist" : 0.1
          },
          "contactTask" : {
             "position" : {
-               "stiffness" : 5.0,
-               "extraStiffness" : 12.0,
+               "stiffness" : 10.0,
+               "extraStiffness" : 24.0,
                "weight" : 300.0,
-               "targetSpeed" : 0.005
+               "targetSpeed" : 0.0015
             },
             "orientation" : {
                "stiffness" : 15.0,
@@ -57,7 +57,7 @@
             "waypointConf" : {
                "conf" : {
                   "x" : 1.0,
-                  "y" : -0.5,
+                  "y" : -0.1,
                   "z" : 1.2,
                   "nOff" : 0.1
                },
@@ -77,9 +77,9 @@
             "weight" : 10.0
          },
          "comTask" : {
-            "stiffness" : 20.0,
-            "extraStiffness" : 0.0,
-            "weight" : 100.0,
+            "stiffness" : 2.0,
+            "extraStiffness" : 5.0,
+            "weight" : 400.0,
             "targetSpeed" : 0.005
          },
          "contactObj" : {
@@ -95,15 +95,15 @@
          },
          "contactTask" : {
             "position" : {
-               "stiffness" : 0.1,
-               "extraStiffness" : 2.5,
+               "stiffness" : 5.0,
+               "extraStiffness" : 7.5,
                "weight" : 600.0,
                "targetSpeed" : 0.005
             },
             "orientation" : {
-               "stiffness" : 2.5,
+               "stiffness" : 10.0,
                "weight" : 1.0,
-               "finalWeight" : 200.0
+               "finalWeight" : 1000.0
             },
             "linVel" : {
                "stiffness" : 100.0,
@@ -483,6 +483,15 @@
                }
             },
             {
+               "body1" : "LLEG_LINK3",
+               "body2" : "left_handle_hull",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.02,
+                  "sDist" : 0.01
+               }
+            },
+            {
                "body1" : "RARM_LINK2",
                "body2" : "right_handle_hull",
                "collisionConf" : {
@@ -493,6 +502,15 @@
             },
             {
                "body1" : "RARM_LINK3",
+               "body2" : "right_handle_hull",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.02,
+                  "sDist" : 0.01
+               }
+            },
+            {
+               "body1" : "RLEG_LINK3",
                "body2" : "right_handle_hull",
                "collisionConf" : {
                   "damping" : 0.0,
@@ -537,7 +555,7 @@
         "r1Surface" : "LeftGripperReverse",
         "r2Surface" : "LeftHandleCylinder4",
         "contactObj" : {
-          "adjustOffset" : [ 0.0, 0.0, -0.05 ],
+          "adjustOffset" : [ 0.0, 0.0, 0.0 ],
           "preContactDist" : 0.025,
           "gripperMoveAwayDist" : 0.04
         }
@@ -564,7 +582,7 @@
         "r1Surface" : "RightGripperReverse",
         "r2Surface" : "RightHandleCylinder4",
         "contactObj" : {
-          "adjustOffset" : [ 0.0, 0.0, -0.05 ],
+          "adjustOffset" : [ 0.0, 0.0, 0.0 ],
           "preContactDist" : 0.025,
           "gripperMoveAwayDist" : 0.04
         }
@@ -688,7 +706,7 @@
            "waypointConf" : {
               "conf" : {
                  "x" : 1.0,
-                 "y" : 0.25,
+                 "y" : -0.25,
                  "z" : 1.3,
                  "nOff" : 0.1
               },
