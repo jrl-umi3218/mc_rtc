@@ -369,6 +369,7 @@ bool enter_moveCoMP::eval(MCSeqController & ctl)
 {
   std::cout << "COMP" << std::endl;
   ctl.stabilityTask->target(ctl.env(), ctl.targetStance(), ctl.curConf(), ctl.curConf().comTask.targetSpeed);
+  ctl.notInContactCount = 0;
   /*FIXME Should be optionnal */
   //ctl.stabilityTask->highStiffness({"RARM_JOINT0", "RARM_JOINT1", "RARM_JOINT2", "RARM_JOINT3", "RARM_JOINT4", "RARM_JOINT5", "RARM_JOINT6"});
   return true;
@@ -462,8 +463,13 @@ bool live_moveCoMT::eval(MCSeqController & ctl)
   double error = (ctl.stabilityTask->comObj - rbd::computeCoM(*(ctl.robot().mb), *(ctl.robot().mbc))).norm();
   double errorVel = rbd::computeCoMVelocity(*(ctl.robot().mb), *(ctl.robot().mbc)).norm();
 
-  if(error < obj.posThresh and errorVel < obj.velThresh)
+  if( (error < obj.posThresh and errorVel < obj.velThresh) or ctl.notInContactCount > 5*1/ctl.timeStep)
   {
+    if(ctl.notInContactCount > 5*1/ctl.timeStep)
+    {
+      std::cout << "COMP timeout" << std::endl;
+    }
+    ctl.notInContactCount = 0;
     ctl.stabilityTask->comObj = rbd::computeCoM(*(ctl.robot().mb), *(ctl.robot().mbc));
     ctl.stabilityTask->comTaskSm.reset(10, ctl.stabilityTask->comObj, 1);
     ctl.stabilityTask->postureTask->weight(100);
@@ -481,6 +487,7 @@ bool live_moveCoMT::eval(MCSeqController & ctl)
     return true;
   }
 
+  ctl.notInContactCount++;
   return false;
 }
 

@@ -61,6 +61,23 @@ struct SeqAction;
 
 std::vector<mc_solver::Collision> confToColl(const std::vector<mc_rbdyn::StanceConfig::BodiesCollisionConf> & conf);
 
+struct MCSeqTimeLog
+{
+public:
+  MCSeqTimeLog(double timeStep);
+
+  void logPhase(const std::string & phase, uint64_t iter);
+
+  void report();
+
+  void report(const std::string & file);
+private:
+  void report(std::ostream & os);
+  double timeStep;
+  std::vector<std::string> phases;
+  std::vector<uint64_t> iters;
+};
+
 struct MCSeqController : public MCController
 {
 public:
@@ -108,6 +125,9 @@ public:
   /* Configuration */
   void loadStanceConfigs(const std::string & file);
 public:
+  /* For logging */
+  uint64_t nrIter;
+  MCSeqTimeLog logger;
   /* Sequence playing logic */
   bool paused;
   bool halted;

@@ -75,12 +75,47 @@ std::vector<mc_solver::Collision> confToColl(const std::vector<mc_rbdyn::StanceC
   return res;
 }
 
+MCSeqTimeLog::MCSeqTimeLog(double timeStep)
+: timeStep(timeStep), iters(0), phases(0)
+{
+}
+
+void MCSeqTimeLog::logPhase(const std::string & phase, uint64_t iter)
+{
+  phases.push_back(phase);
+  iters.push_back(iter);
+}
+
+void MCSeqTimeLog::report()
+{
+  report(std::cout);
+}
+
+void MCSeqTimeLog::report(const std::string & file)
+{
+  std::ofstream ofs(file);
+  report(ofs);
+}
+
+void MCSeqTimeLog::report(std::ostream & os)
+{
+  for(size_t i = 1; i < phases.size(); ++i)
+  {
+    os << "Phase " << phases[i] << ": " << (iters[i] - iters[i-1])*timeStep << "s" << std::endl;
+  }
+  os << "Total time: " << (iters.back() - iters[0])*timeStep << std::endl;
+}
+
+
 MCSeqController::MCSeqController(const std::string & env_path, const std::string & env_name, const std::string & seq_path, bool real_sensors, unsigned int start_stance)
-: MCController(env_path, env_name), paused(false), halted(false), stanceIndex(start_stance), seq_actions(0),
+: MCController(env_path, env_name),
+  nrIter(0), logger(timeStep),
+  paused(false), halted(false), stanceIndex(start_stance), seq_actions(0),
   currentContact(0), targetContact(0), currentGripper(0),
   use_real_sensors(real_sensors),
   collsConstraint(robots(), timeStep)
 {
+  logger.logPhase("START", 0);
   /* Load plan */
   loadStances(robots(), seq_path, stances, actions);
   assert(stances.size() == actions.size());
@@ -145,6 +180,7 @@ bool MCSeqController::run()
   if(!halted && !paused && stanceIndex < seq_actions.size())
   {
     ret = MCController::run();
+    nrIter++;
     if(ret)
     {
       unsigned int stanceIndexIn = stanceIndex;
@@ -155,6 +191,9 @@ bool MCSeqController::run()
         if(stanceIndex != stanceIndexIn)
         {
           std::cout << "Completed " << actions[stanceIndexIn]->toStr() << std::endl;
+          logger.logPhase(actions[stanceIndexIn]->toStr(), nrIter);
+          logger.report();
+          logger.report("/tmp/mc-control-seq-times.log");
           if(stanceIndex < actions.size())
           {
             std::cout << "Starting " << actions[stanceIndex]->toStr() << "(" << stanceIndex << "/" << actions.size() << ")" << std::endl;
