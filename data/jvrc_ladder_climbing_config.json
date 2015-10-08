@@ -16,7 +16,7 @@
             "comOffset" : [ 0.0, 0.0, 0.0 ],
             "posThresh" : 0.01,
             "velThresh" : 0.001,
-            "timeout" : 5.0
+            "timeout" : 10.0
          }
       },
       "ContactMove" : {
@@ -165,7 +165,7 @@
                "collisionConf" : {
                   "damping" : 0.0,
                   "iDist" : 0.04,
-                  "sDist" : 0.01
+                  "sDist" : 0.001
                }
             },
             {
@@ -583,7 +583,7 @@
         "r1Surface" : "RightGripperReverse",
         "r2Surface" : "RightHandleCylinder4",
         "contactObj" : {
-          "adjustOffset" : [ 0.0, 0.0, 0.0 ],
+          "adjustOffset" : [ 0.0, 0.0, 0.05 ],
           "preContactDist" : 0.025,
           "gripperMoveAwayDist" : 0.04
         }
@@ -671,7 +671,7 @@
         "r2Surface" : "RightHandleCylinder3",
         "contactObj" : {
           "preContactDist" : 0.075,
-          "gripperMoveAwayDist" : 0.05
+          "gripperMoveAwayDist" : 0.04
         },
         "contactTask" : {
           "waypointConf" : {
@@ -720,12 +720,15 @@
         "type" : "add",
         "r1Surface" : "LFrontSole",
         "r2Surface" : "Step1",
+        "contactObj" : {
+          "preContactDist" : 0.075
+        },
         "contactTask" : {
            "waypointConf" : {
               "conf" : {
                  "x" : 1.0,
-                 "y" : 0.5,
-                 "z" : 1.2,
+                 "y" : 0.4,
+                 "z" : 0.9,
                  "nOff" : 0.1
               },
               "thresh" : 0.10,
