@@ -84,7 +84,7 @@ public:
     running = false;
     th.join();
   }
-  void update(const mc_rbdyn::Robot & robot)
+  void update(const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy)
   {
     ros::Time tm = ros::Time::now();
     sensor_msgs::JointState msg;
@@ -115,6 +115,19 @@ public:
       const auto & X_succp_succ = robot.bodyTransforms.at(succId);
       tfs.push_back(PT2TF(X_succp_succ*robot.mbc->parentToSon[j]*X_predp_pred.inv(), tm, predName, succName));
     }
+
+    sva::PTransformd X_0_hl1 = robot.mbc->bodyPosW[robot.bodyIndexByName("HEAD_LINK1")];
+    sva::PTransformd X_hl1_xtion = sva::PTransformd(Eigen::Quaterniond(0.995397, 1.7518e-05, 0.0950535, -0.0122609).inverse(), Eigen::Vector3d(0.09699157105, 0.0185, 0.12699543329));
+    sva::PTransformd X_0_base_odom = sva::PTransformd(
+                        Eigen::Quaterniond(sva::RotZ(rpy.data.r)*sva::RotY(rpy.data.p)*sva::RotX(rpy.data.y)),
+                        Eigen::Vector3d(p.data.x, p.data.y, p.data.z));
+    sva::PTransformd X_0_xtion = X_hl1_xtion * X_0_hl1;
+    sva::PTransformd X_0_base = robot.mbc->bodyPosW[0];
+    sva::PTransformd X_base_xtion = X_0_xtion * (X_0_base.inv());
+
+    tfs.push_back(PT2TF(X_hl1_xtion, tm, "HEAD_LINK1", "xtion_link"));
+    tfs.push_back(PT2TF(X_0_base_odom, tm, "map", "odom_base_link"));
+    tfs.push_back(PT2TF(X_base_xtion, tm, "odom_base_link", "odom_xtion_link"));
 
     mut.lock();
     msgs.push({msg, tfs});
@@ -184,9 +197,9 @@ void RobotPublisher::stop()
   impl->stop();
 }
 
-void RobotPublisher::update(const mc_rbdyn::Robot & robot)
+void RobotPublisher::update(const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy)
 {
-  impl->update(robot);
+  impl->update(robot, p, rpy);
 }
 
 }

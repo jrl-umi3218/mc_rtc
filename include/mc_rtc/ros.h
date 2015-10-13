@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <rtm/idl/ExtendedDataTypesSkel.h>
 
 namespace mc_rbdyn
 {
@@ -19,7 +20,7 @@ public:
 
   void stop();
 
-  void update(const mc_rbdyn::Robot & robot);
+  void update(const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy);
 private:
   std::shared_ptr<RobotPublisherImpl> impl;
 };

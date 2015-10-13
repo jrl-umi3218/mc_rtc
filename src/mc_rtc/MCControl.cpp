@@ -54,6 +54,7 @@ MCControl::MCControl(RTC::Manager* manager)
     m_qInIn("qIn", m_qIn),
     m_pInIn("pIn", m_pIn),
     m_rpyInIn("rpyIn", m_rpyIn),
+    m_poseInIn("poseIn", m_poseIn),
     m_wrenchesNames({"RightFootForceSensor", "LeftFootForceSensor", "RightHandForceSensor", "LeftHandForceSensor"}),
     m_qOutOut("qOut", m_qOut),
     m_pOutOut("pOut", m_pOut),
@@ -88,6 +89,7 @@ RTC::ReturnCode_t MCControl::onInitialize()
   addInPort("qIn", m_qInIn);
   addInPort("pIn", m_pInIn);
   addInPort("rpyIn", m_rpyInIn);
+  addInPort("poseIn", m_poseInIn);
   for(size_t i = 0; i < m_wrenchesNames.size(); ++i)
   {
     addInPort(m_wrenchesNames[i].c_str(), *(m_wrenchesInIn[i]));
@@ -152,10 +154,22 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
       }
     }
   }
+  if(m_poseInIn.isNew())
+  {
+    m_poseInIn.read();
+    m_pIn.data = m_poseIn.data.position;
+    m_rpyIn.data = m_poseIn.data.orientation;
+    rpyIn(0) = m_rpyIn.data.r;
+    rpyIn(1) = m_rpyIn.data.p;
+    rpyIn(2) = m_rpyIn.data.y;
+  }
+  if(m_pInIn.isNew())
+  {
+    m_pInIn.read();
+  }
   if(m_rpyInIn.isNew())
   {
     m_rpyInIn.read();
-    /* FIXME Correct ? */
     rpyIn(0) = m_rpyIn.data.r;
     rpyIn(1) = m_rpyIn.data.p;
     rpyIn(2) = m_rpyIn.data.y;
@@ -270,7 +284,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
       m_rpyOutOut.write();
       if(rpub)
       {
-        rpub->update(controller.robot());
+        rpub->update(controller.robot(), m_pIn, m_rpyIn);
       }
     }
     else
