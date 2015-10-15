@@ -9,7 +9,7 @@ EndEffectorTask::EndEffectorTask(const std::string & bodyName, const mc_rbdyn::R
   const mc_rbdyn::Robot & robot = robots.robots[robotIndex];
   unsigned int bodyId = robot.bodyIdByName(bodyName);
   unsigned int bodyIndex = robot.bodyIndexByName(bodyName);
-  sva::PTransformd bpw = robot.mbc->bodyPosW[bodyIndex];
+  sva::PTransformd bpw = robot.mbc().bodyPosW[bodyIndex];
 
   curTransform = bpw;
 
@@ -28,7 +28,7 @@ void EndEffectorTask::resetTask(const mc_rbdyn::Robots & robots, unsigned int ro
   const mc_rbdyn::Robot & robot = robots.robots[robotIndex];
   unsigned int bodyIndex = robot.bodyIndexByName(bodyName);
 
-  curTransform = robot.mbc->bodyPosW[bodyIndex];
+  curTransform = robot.mbc().bodyPosW[bodyIndex];
   positionTask->position(curTransform.translation());
   orientationTask->orientation(curTransform.rotation());
 }

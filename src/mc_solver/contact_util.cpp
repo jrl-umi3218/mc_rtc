@@ -20,8 +20,8 @@ std::vector<mc_control::ContactMsg> contactsMsgFromContacts
     unsigned int r1BodyIndex = r1.bodyIndexByName(c.r1Surface()->bodyName());
     unsigned int r2BodyIndex = r2.bodyIndexByName(c.r2Surface()->bodyName());
 
-    sva::PTransformd X_0_b1 = r1.mbc->bodyPosW[r1BodyIndex];
-    sva::PTransformd X_0_b2 = r2.mbc->bodyPosW[r2BodyIndex];
+    sva::PTransformd X_0_b1 = r1.mbc().bodyPosW[r1BodyIndex];
+    sva::PTransformd X_0_b2 = r2.mbc().bodyPosW[r2BodyIndex];
     sva::PTransformd X_b1_b2 = X_0_b2*X_0_b1.inv();
 
     mc_control::ContactMsg msg;

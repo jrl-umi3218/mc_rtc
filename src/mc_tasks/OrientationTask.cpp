@@ -12,7 +12,7 @@ OrientationTask::OrientationTask(const std::string & bodyName, const mc_rbdyn::R
   bId = robot.bodyIdByName(bodyName);
   bIndex = robot.bodyIndexByName(bodyName);
 
-  Eigen::Matrix3d curOri = robot.mbc->bodyPosW[bIndex].rotation();
+  Eigen::Matrix3d curOri = robot.mbc().bodyPosW[bIndex].rotation();
   orientationTask.reset(new tasks::qp::OrientationTask(robots.mbs, rIndex, bId, curOri));
   orientationTaskSp.reset(new tasks::qp::SetPointTask(robots.mbs, robotIndex, orientationTask.get(), stiffness, weight));
 }
@@ -20,7 +20,7 @@ OrientationTask::OrientationTask(const std::string & bodyName, const mc_rbdyn::R
 void OrientationTask::resetTask()
 {
   const auto & robot = robots.robots[rIndex];
-  auto curOri = robot.mbc->bodyPosW[bIndex].rotation();
+  auto curOri = robot.mbc().bodyPosW[bIndex].rotation();
   orientationTask->orientation(curOri);
 }
 

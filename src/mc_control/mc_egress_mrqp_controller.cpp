@@ -48,10 +48,10 @@ MCEgressMRQPController::MCEgressMRQPController(const std::vector<std::shared_ptr
 
   mc_rbdyn::Robot& polaris = robots().robots[1];
 
-  robot().mbc->q[0] = {1, 0, 0, 0, 0, 0, 0.76};
+  robot().mbc().q[0] = {1, 0, 0, 0, 0, 0, 0.76};
 
-  rbd::forwardKinematics(*(robot().mb), *(robot().mbc));
-  rbd::forwardVelocity(*(robot().mb), *(robot().mbc));
+  rbd::forwardKinematics(robot().mb(), robot().mbc());
+  rbd::forwardVelocity(robot().mb(), robot().mbc());
 
   egressContacts.emplace_back(robots(), robots().robotIndex, 1,
                            "Butthock", "lazy_seat");
@@ -61,8 +61,8 @@ MCEgressMRQPController::MCEgressMRQPController(const std::vector<std::shared_ptr
                            "RightGripper", "bar_wheel");
   mrqpsolver->setContacts(egressContacts);
 
-  polarisPostureTask.reset(new tasks::qp::PostureTask(mrqpsolver->robots.mbs, 1, mrqpsolver->robots.robots[1].mbc->q, 1.0, 1));
-  lazyPostureTask.reset(new tasks::qp::PostureTask(mrqpsolver->robots.mbs, 1, polaris.mbc->q, 0.0, 1000.0));
+  polarisPostureTask.reset(new tasks::qp::PostureTask(mrqpsolver->robots.mbs, 1, mrqpsolver->robots.robots[1].mbc().q, 1.0, 1));
+  lazyPostureTask.reset(new tasks::qp::PostureTask(mrqpsolver->robots.mbs, 1, polaris.mbc().q, 0.0, 1000.0));
   std::vector<tasks::qp::JointStiffness> jsv;
   jsv.push_back({static_cast<int>(polaris.jointIdByName("lazy_susan")), 0.1});
   lazyPostureTask->jointsStiffness(robots().mbs, jsv);
@@ -103,12 +103,12 @@ void MCEgressMRQPController::reset(const ControllerResetData & reset_data)
 {
   MCMRQPController::reset(reset_data);
   std::cout << "Enter mr egress reset" << std::endl;
-  robot().mbc->zero(*(robot().mb));
-  robot().mbc->q = reset_data.q;
-  robot().mbc->q[0] = {1, 0, 0, 0, 0, 0, 0.76};
-  rbd::forwardKinematics(*(robot().mb), *(robot().mbc));
-  rbd::forwardVelocity(*(robot().mb), *(robot().mbc));
-  hrp2postureTask->posture(robot().mbc->q);
+  robot().mbc().zero(robot().mb());
+  robot().mbc().q = reset_data.q;
+  robot().mbc().q[0] = {1, 0, 0, 0, 0, 0, 0.76};
+  rbd::forwardKinematics(robot().mb(), robot().mbc());
+  rbd::forwardVelocity(robot().mb(), robot().mbc());
+  hrp2postureTask->posture(robot().mbc().q);
 
   resetBasePose();
   resetWheelTransform();
@@ -141,22 +141,22 @@ void MCEgressMRQPController::resetWheelTransform()
   //Do not take into account potential rotation of steering wheel
   int joint_index = polaris.jointIndexByName("adjust_steering_wheel");
 
-  auto gripperSurface = robot().surfaces.at("RightGripper");
-  auto wheelSurface = polaris.surfaces.at("bar_wheel");
+  const auto & gripperSurface = robot().surface("RightGripper");
+  const auto & wheelSurface = polaris.surface("bar_wheel");
 
-  sva::PTransformd X_wheel_s = graspOffset*wheelSurface->X_b_s();
+  sva::PTransformd X_wheel_s = graspOffset*wheelSurface.X_b_s();
 
-  sva::PTransformd X_0_s = gripperSurface->X_0_s(robot(), *(robot().mbc));
+  sva::PTransformd X_0_s = gripperSurface.X_0_s(robot(), robot().mbc());
 
-  sva::PTransformd X_0_chassis = polaris.mbc->bodyPosW[chassis_index];
+  sva::PTransformd X_0_chassis = polaris.mbc().bodyPosW[chassis_index];
 
   sva::PTransformd X_chassis_wheel = (X_wheel_s).inv()*X_0_s*(X_0_chassis).inv();
 
-  polaris.mb->transform(joint_index, X_chassis_wheel);
-  polaris.mbc->zero(*(polaris.mb));
+  polaris.mb().transform(joint_index, X_chassis_wheel);
+  polaris.mbc().zero(polaris.mb());
 
-  rbd::forwardKinematics(*(polaris.mb), *(polaris.mbc));
-  rbd::forwardVelocity(*(polaris.mb), *(polaris.mbc));
+  rbd::forwardKinematics(polaris.mb(), polaris.mbc());
+  rbd::forwardVelocity(polaris.mb(), polaris.mbc());
 }
 
 void MCEgressMRQPController::resetLazyTransform()
@@ -167,35 +167,35 @@ void MCEgressMRQPController::resetLazyTransform()
   //Do not take into account potential rotation of steering wheel
   int joint_index = polaris.jointIndexByName("lazy_susan");
 
-  auto gripperSurface = robot().surfaces.at("Butthock");
-  auto wheelSurface = polaris.surfaces.at("lazy_seat");
+  const auto & gripperSurface = robot().surface("Butthock");
+  const auto & wheelSurface = polaris.surface("lazy_seat");
 
-  sva::PTransformd X_wheel_s = wheelSurface->X_b_s();
+  sva::PTransformd X_wheel_s = wheelSurface.X_b_s();
 
-  sva::PTransformd X_0_s = gripperSurface->X_0_s(robot(), *(robot().mbc));
+  sva::PTransformd X_0_s = gripperSurface.X_0_s(robot(), robot().mbc());
 
-  sva::PTransformd X_0_chassis = polaris.mbc->bodyPosW[chassis_index];
+  sva::PTransformd X_0_chassis = polaris.mbc().bodyPosW[chassis_index];
 
   sva::PTransformd X_chassis_wheel = (X_wheel_s).inv()*X_0_s*(X_0_chassis).inv();
 
-  polaris.mb->transform(joint_index, X_chassis_wheel);
-  polaris.mbc->zero(*(polaris.mb));
+  polaris.mb().transform(joint_index, X_chassis_wheel);
+  polaris.mbc().zero(polaris.mb());
 
-  rbd::forwardKinematics(*(polaris.mb), *(polaris.mbc));
-  rbd::forwardVelocity(*(polaris.mb), *(polaris.mbc));
+  rbd::forwardKinematics(polaris.mb(), polaris.mbc());
+  rbd::forwardVelocity(polaris.mb(), polaris.mbc());
 }
 
 void MCEgressMRQPController::resetBasePose()
 {
   mc_rbdyn::Robot& polaris = robots().robots[1];
   //Reset freeflyer, compute its position frow wheel and re-set it
-  robot().mbc->q[0] = {1., 0., 0., 0., 0., 0., 0.};
-  rbd::forwardKinematics(*(robot().mb), *(robot().mbc));
-  rbd::forwardVelocity(*(robot().mb), *(robot().mbc));
+  robot().mbc().q[0] = {1., 0., 0., 0., 0., 0., 0.};
+  rbd::forwardKinematics(robot().mb(), robot().mbc());
+  rbd::forwardVelocity(robot().mb(), robot().mbc());
 
-  auto X_0_w = polaris.surfaces.at("exit_platform")->X_0_s(polaris);
+  auto X_0_w = polaris.surface("exit_platform").X_0_s(polaris);
   sva::PTransformd graspOffset(sva::RotZ(M_PI/4), Eigen::Vector3d(-0.1, -0.1, 0));
-  auto X_0_s = robot().surfaces.at("LFullSole")->X_0_s(robot());
+  auto X_0_s = robot().surface("LFullSole").X_0_s(robot());
   auto X_0_base = X_0_s.inv()*(graspOffset*X_0_w);
 
   const auto quat = Eigen::Quaterniond(X_0_base.rotation()).inverse();
@@ -203,9 +203,9 @@ void MCEgressMRQPController::resetBasePose()
   std::vector<double> baseQ = {quat.w(), quat.x(), quat.y(), quat.z(),
                                trans.x(), trans.y(), trans.z()};
 
-  robot().mbc->q[0] = baseQ;
-  rbd::forwardKinematics(*(robot().mb), *(robot().mbc));
-  rbd::forwardVelocity(*(robot().mb), *(robot().mbc));
+  robot().mbc().q[0] = baseQ;
+  rbd::forwardKinematics(robot().mb(), robot().mbc());
+  rbd::forwardVelocity(robot().mb(), robot().mbc());
 }
 
 void MCEgressMRQPController::nextPhase()

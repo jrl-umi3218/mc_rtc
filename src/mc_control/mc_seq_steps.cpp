@@ -460,8 +460,8 @@ bool live_moveCoMT::eval(MCSeqController & ctl)
 {
   auto & obj = ctl.curConf().comObj;
 
-  double error = (ctl.stabilityTask->comObj - rbd::computeCoM(*(ctl.robot().mb), *(ctl.robot().mbc))).norm();
-  double errorVel = rbd::computeCoMVelocity(*(ctl.robot().mb), *(ctl.robot().mbc)).norm();
+  double error = (ctl.stabilityTask->comObj - rbd::computeCoM(ctl.robot().mb(), ctl.robot().mbc())).norm();
+  double errorVel = rbd::computeCoMVelocity(ctl.robot().mb(), ctl.robot().mbc()).norm();
 
   if( (error < obj.posThresh and errorVel < obj.velThresh) or ctl.notInContactCount > obj.timeout*1/ctl.timeStep)
   {
@@ -470,10 +470,10 @@ bool live_moveCoMT::eval(MCSeqController & ctl)
       std::cout << "COMP timeout (" << obj.timeout << "s)" << std::endl;
     }
     ctl.notInContactCount = 0;
-    ctl.stabilityTask->comObj = rbd::computeCoM(*(ctl.robot().mb), *(ctl.robot().mbc));
+    ctl.stabilityTask->comObj = rbd::computeCoM(ctl.robot().mb(), ctl.robot().mbc());
     ctl.stabilityTask->comTaskSm.reset(10, ctl.stabilityTask->comObj, 1);
     ctl.stabilityTask->postureTask->weight(100);
-    ctl.stabilityTask->postureTask->posture(ctl.robot().mbc->q);
+    ctl.stabilityTask->postureTask->posture(ctl.robot().mbc().q);
 
     mc_rbdyn::Stance & newS = ctl.targetStance();
     ctl.updateRobotEnvCollisions(newS.contacts(), ctl.targetConf());
@@ -646,7 +646,7 @@ bool enter_removeGripperP::eval(MCSeqController & ctl)
   }
   mc_rbdyn::Stance & curS = (ctl.currentContact == ctl.targetContact) ? ctl.targetStance() : ctl.curStance();
   /* Get the current position of the wrist */
-  ctl.contactPos = ctl.robot().mbc->bodyPosW[ctl.robot().bodyIndexByName(removedContact.r1Surface()->bodyName())].translation();
+  ctl.contactPos = ctl.robot().mbc().bodyPosW[ctl.robot().bodyIndexByName(removedContact.r1Surface()->bodyName())].translation();
 
   /* Configure the stability task */
   ctl.stabilityTask->target(ctl.env(), curS, contactConf, contactConf.comTask.targetSpeed);
@@ -680,7 +680,7 @@ bool live_removeGripperP::eval(MCSeqController & ctl)
     minD = std::min(minD, d);
     all = all && (d > dOut*dOut);
   }
-  Eigen::Vector3d curPos = ctl.robot().mbc->bodyPosW[ctl.robot().bodyIndexByName(ctl.currentContact->r1Surface()->bodyName())].translation();
+  Eigen::Vector3d curPos = ctl.robot().mbc().bodyPosW[ctl.robot().bodyIndexByName(ctl.currentContact->r1Surface()->bodyName())].translation();
   double d = (curPos - ctl.contactPos).norm();
   /* Either we moved away from the model or we moved away "enough" */
   if(all)
@@ -749,7 +749,7 @@ bool enter_moveGripperWPT::eval(MCSeqController & ctl)
   if(ctl.curStance().contacts().size() <= 2)
   {
     unsigned int bodyIndex = ctl.robot().bodyIndexByName("BODY");
-    ctl.bodyOriTask.reset(new tasks::qp::OrientationTask(ctl.robots().mbs, 0, ctl.robot().bodyIdByName("BODY"), ctl.robot().mbc->bodyPosW[bodyIndex].rotation()));
+    ctl.bodyOriTask.reset(new tasks::qp::OrientationTask(ctl.robots().mbs, 0, ctl.robot().bodyIdByName("BODY"), ctl.robot().mbc().bodyPosW[bodyIndex].rotation()));
     ctl.bodyOriTaskSp.reset(new tasks::qp::SetPointTask(ctl.robots().mbs, 0, ctl.bodyOriTask.get(), 10, 1000));
     ctl.qpsolver->solver.addTask(ctl.bodyOriTaskSp.get());
     ctl.isBodyTask = true;
@@ -841,7 +841,7 @@ bool enter_adjustGripperP::eval(MCSeqController & ctl)
   ctl.errorI = Eigen::Vector3d(0,0,0);
   ctl.qpsolver->solver.addTask(ctl.adjustPositionTaskPid.get());
 
-  Eigen::Vector3d oriModelError = sva::rotationError(ctl.robot().mbc->bodyPosW[ctl.moveContactTask->robotBodyIndex].rotation(),
+  Eigen::Vector3d oriModelError = sva::rotationError(ctl.robot().mbc().bodyPosW[ctl.moveContactTask->robotBodyIndex].rotation(),
                                                      ctl.moveContactTask->targetOri, 1e-7);
   Eigen::Vector3d oriModelVel = M_0_s.angular();
   ctl.adjustOrientationTaskPid->error(oriModelError);
@@ -870,7 +870,7 @@ bool live_adjustGripperT::eval(MCSeqController & ctl)
   mc_rbdyn::StanceConfig & contactConf = ctl.curConf();
   unsigned int bodyIndex = ctl.moveContactTask->robotBodyIndex;
 
-  sva::PTransformd X_0_b = ctl.robot().mbc->bodyPosW[bodyIndex];
+  sva::PTransformd X_0_b = ctl.robot().mbc().bodyPosW[bodyIndex];
   sva::PTransformd X_0_s = ctl.moveContactTask->robotSurfacePos();
   sva::MotionVecd M_0_s = ctl.moveContactTask->robotSurfaceVel();
   Eigen::VectorXd velModel = M_0_s.linear();
@@ -933,7 +933,7 @@ bool live_adjustGripperT::eval(MCSeqController & ctl)
 
   double velErr = robotSurfaceVel.linear().norm();
 
-  sva::MotionVecd robotBodyVel = ctl.robot().mbc->bodyVelW[bodyIndex];
+  sva::MotionVecd robotBodyVel = ctl.robot().mbc().bodyVelW[bodyIndex];
   if(robotBodyVel.linear().norm() > 0.3)
   {
     ctl.halted = true;
@@ -1044,7 +1044,7 @@ bool enter_removeBeforeCloseT::eval(MCSeqController & ctl)
   ctl.metaTasks.push_back(ctl.removeContactTask.get());
 
   /* Get the current position of the wrist */
-  ctl.contactPos = ctl.robot().mbc->bodyPosW[ctl.robot().bodyIndexByName(ctl.targetContact->r1Surface()->bodyName())].translation();
+  ctl.contactPos = ctl.robot().mbc().bodyPosW[ctl.robot().bodyIndexByName(ctl.targetContact->r1Surface()->bodyName())].translation();
   return true;
 }
 
@@ -1052,7 +1052,7 @@ bool live_removeBeforeCloseT::eval(MCSeqController & ctl)
 {
   if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
   if(ctl.notInContactCount > 0) { ctl.notInContactCount = 0; return true; }
-  Eigen::Vector3d curPos = ctl.robot().mbc->bodyPosW[ctl.robot().bodyIndexByName(ctl.targetContact->r1Surface()->bodyName())].translation();
+  Eigen::Vector3d curPos = ctl.robot().mbc().bodyPosW[ctl.robot().bodyIndexByName(ctl.targetContact->r1Surface()->bodyName())].translation();
   double d = (curPos - ctl.contactPos).norm();
   if(d > ctl.curConf().contactObj.gripperMoveAwayDist)
   {
@@ -1169,11 +1169,11 @@ bool live_hardCloseGripperP::eval(MCSeqController & ctl)
     //std::vector<double> & eValues = ctl.encoderValues;
     //for(const auto & jn : ctl.lowerPGainsJoints)
     //{
-    //  ctl.robot().mbc->q[ctl.robot().jointIndexByName(jn)][0] = eValues[ji];
+    //  ctl.robot().mbc().q[ctl.robot().jointIndexByName(jn)][0] = eValues[ji];
     //  ji++;
     //}
     ///* At this point, the robot mbc holds the true values for the arm that was left loose */
-    //ctl.stabilityTask->postureTask->posture(ctl.robot().mbc->q);
+    //ctl.stabilityTask->postureTask->posture(ctl.robot().mbc().q);
     //rbd::forwardKinematics(*(ctl.robot().mb), *(ctl.robot().mbc));
     //rbd::forwardVelocity(*(ctl.robot().mb), *(ctl.robot().mbc));
     //ctl.stabilityTask->comObj = rbd::computeCoM(*(ctl.robot().mb), *(ctl.robot().mbc));

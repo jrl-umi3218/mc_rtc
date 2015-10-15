@@ -9,12 +9,12 @@ namespace mc_control
 
 MCCoMController::MCCoMController()
 {
-  sva::PTransformd leftFootSurfTf = robot().surfaces["LFullSole"]->X_0_s(robot());
-  auto q = robot().mbc->q;
+  sva::PTransformd leftFootSurfTf = robot().surface("LFullSole").X_0_s(robot());
+  auto q = robot().mbc().q;
   q[0] = {1, 0, 0, 0, 0, 0, -leftFootSurfTf.translation().z()};
-  robot().mbc->q = q;
-  rbd::forwardKinematics(*(robot().mb), *(robot().mbc));
-  rbd::forwardVelocity(*(robot().mb), *(robot().mbc));
+  robot().mbc().q = q;
+  rbd::forwardKinematics(robot().mb(), robot().mbc());
+  rbd::forwardVelocity(robot().mb(), robot().mbc());
 
   qpsolver->addConstraintSet(contactConstraint);
   qpsolver->addConstraintSet(dynamicsConstraint);

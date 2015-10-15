@@ -8,7 +8,7 @@ namespace mc_tasks
 StabilityTask::StabilityTask(mc_rbdyn::Robots & robots)
 : robots(robots), robot(robots.robot()),
   comStiff(1), extraComStiff(0),
-  comObj(rbd::computeCoM(*(robot.mb), *(robot.mbc))),
+  comObj(rbd::computeCoM(robot.mb(), robot.mbc())),
   comTask(new tasks::qp::CoMTask(robots.mbs, 0, comObj)),
   comTaskSp(new tasks::qp::SetPointTask(robots.mbs, 0, comTask.get(), comStiff, 1)),
   comTaskSm(
@@ -17,7 +17,7 @@ StabilityTask::StabilityTask(mc_rbdyn::Robots & robots)
     std::bind(static_cast<void (tasks::qp::CoMTask::*)(const Eigen::Vector3d&)>(&tasks::qp::CoMTask::com), comTask.get(), std::placeholders::_1),
     std::bind(static_cast<const Eigen::Vector3d (tasks::qp::CoMTask::*)() const>(&tasks::qp::CoMTask::com), comTask.get()),
     1, comObj, 1), /*FIXME There may be a more convenient way to do this... */
-  qObj(robot.mbc->q),
+  qObj(robot.mbc().q),
   postureTask(new tasks::qp::PostureTask(robots.mbs, 0, qObj, 1, 1))
 {
 }

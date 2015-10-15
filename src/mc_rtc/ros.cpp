@@ -97,32 +97,32 @@ public:
     msg.position.reserve(REF_JOINT_ORDER.size());
     for(size_t i = 0; i < REF_JOINT_ORDER.size(); ++i)
     {
-      msg.position.push_back(robot.mbc->q[robot.jointIndexByName(REF_JOINT_ORDER[i])][0]);
+      msg.position.push_back(robot.mbc().q[robot.jointIndexByName(REF_JOINT_ORDER[i])][0]);
     }
     msg.velocity.resize(0);
     msg.effort.resize(0);
 
-    tfs.push_back(PT2TF(robot.bodyTransforms.at(robot.mb->body(0).id())*robot.mbc->parentToSon[0], tm, std::string("/map"), robot.mb->body(0).name()));
-    for(int j = 1; j < robot.mb->nrJoints(); ++j)
+    tfs.push_back(PT2TF(robot.bodyTransform(robot.mb().body(0).id())*robot.mbc().parentToSon[0], tm, std::string("/map"), robot.mb().body(0).name()));
+    for(int j = 1; j < robot.mb().nrJoints(); ++j)
     {
-      const auto & predIndex = robot.mb->predecessor(j);
-      const auto & succIndex = robot.mb->successor(j);
-      const auto & predName = robot.mb->body(predIndex).name();
-      const auto & succName = robot.mb->body(succIndex).name();
-      const auto & predId = robot.mb->body(predIndex).id();
-      const auto & succId = robot.mb->body(succIndex).id();
-      const auto & X_predp_pred = robot.bodyTransforms.at(predId);
-      const auto & X_succp_succ = robot.bodyTransforms.at(succId);
-      tfs.push_back(PT2TF(X_succp_succ*robot.mbc->parentToSon[j]*X_predp_pred.inv(), tm, predName, succName));
+      const auto & predIndex = robot.mb().predecessor(j);
+      const auto & succIndex = robot.mb().successor(j);
+      const auto & predName = robot.mb().body(predIndex).name();
+      const auto & succName = robot.mb().body(succIndex).name();
+      const auto & predId = robot.mb().body(predIndex).id();
+      const auto & succId = robot.mb().body(succIndex).id();
+      const auto & X_predp_pred = robot.bodyTransform(predId);
+      const auto & X_succp_succ = robot.bodyTransform(succId);
+      tfs.push_back(PT2TF(X_succp_succ*robot.mbc().parentToSon[j]*X_predp_pred.inv(), tm, predName, succName));
     }
 
-    sva::PTransformd X_0_hl1 = robot.mbc->bodyPosW[robot.bodyIndexByName("HEAD_LINK1")];
+    sva::PTransformd X_0_hl1 = robot.mbc().bodyPosW[robot.bodyIndexByName("HEAD_LINK1")];
     sva::PTransformd X_hl1_xtion = sva::PTransformd(Eigen::Quaterniond(0.995397, 1.7518e-05, 0.0950535, -0.0122609).inverse(), Eigen::Vector3d(0.09699157105, 0.0185, 0.12699543329));
     sva::PTransformd X_0_base_odom = sva::PTransformd(
                         Eigen::Quaterniond(sva::RotZ(rpy.data.r)*sva::RotY(rpy.data.p)*sva::RotX(rpy.data.y)),
                         Eigen::Vector3d(p.data.x, p.data.y, p.data.z));
     sva::PTransformd X_0_xtion = X_hl1_xtion * X_0_hl1;
-    sva::PTransformd X_0_base = robot.mbc->bodyPosW[0];
+    sva::PTransformd X_0_base = robot.mbc().bodyPosW[0];
     sva::PTransformd X_base_xtion = X_0_xtion * (X_0_base.inv());
 
     tfs.push_back(PT2TF(X_hl1_xtion, tm, "HEAD_LINK1", "xtion_link"));

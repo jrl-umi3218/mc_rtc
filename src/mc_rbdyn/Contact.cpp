@@ -109,23 +109,9 @@ Contact::Contact(const mc_rbdyn::Robots & robots, const std::string & robotSurfa
 
 Contact::Contact(const mc_rbdyn::Robots & robots, const std::string & robotSurface, const std::string & envSurface, const sva::PTransformd & X_es_rs, bool is_fixed)
 {
-  if(robots.robots[0].surfaces.count(robotSurface) == 0)
-  {
-    std::stringstream ss;
-    ss << "No surface named " << robotSurface << " in robot" << std::endl;
-    std::cerr << ss.str() << std::endl;
-    throw(ss.str());
-  }
-  if(robots.robots[1].surfaces.count(envSurface) == 0)
-  {
-    std::stringstream ss;
-    ss << "No surface named " << envSurface << " in env" << std::endl;
-    std::cerr << ss.str() << std::endl;
-    throw(ss.str());
-  }
   impl.reset(new ContactImpl({0, 1,
-    robots.robots[0].surfaces.at(robotSurface)->copy(),
-    robots.robots[1].surfaces.at(envSurface)->copy(),
+    robots.robots[0].surface(robotSurface).copy(),
+    robots.robots[1].surface(envSurface).copy(),
     X_es_rs, is_fixed, sva::PTransformd::Identity(), -1}));
 }
 
@@ -134,23 +120,9 @@ Contact::Contact(const mc_rbdyn::Robots & robots, unsigned int r1Index, unsigned
             const sva::PTransformd * X_r2s_r1s,
             const sva::PTransformd & Xbs, int ambiguityId)
 {
-  if(robots.robots[r1Index].surfaces.count(r1Surface) == 0)
-  {
-    std::stringstream ss;
-    ss << "No surfaces named " << r1Surface << " in robot " << r1Index << std::endl;
-    std::cerr << ss.str() << std::endl;
-    throw(ss.str());
-  }
-  if(robots.robots[r2Index].surfaces.count(r2Surface) == 0)
-  {
-    std::stringstream ss;
-    ss << "No surfaces named " << r2Surface << " in robot " << r2Index << std::endl;
-    std::cerr << ss.str() << std::endl;
-    throw(ss.str());
-  }
   impl.reset(new ContactImpl({r1Index, r2Index,
-    robots.robots[r1Index].surfaces.at(r1Surface)->copy(),
-    robots.robots[r2Index].surfaces.at(r2Surface)->copy(),
+    robots.robots[r1Index].surface(r1Surface).copy(),
+    robots.robots[r2Index].surface(r2Surface).copy(),
     sva::PTransformd::Identity(), X_r2s_r1s != 0, Xbs, ambiguityId}));
   if(isFixed())
   {
@@ -293,8 +265,8 @@ mc_solver::QPContactPtr Contact::taskContact(const mc_rbdyn::Robots & robots) co
   const mc_rbdyn::Robot & r2 = robots.robots[impl->r2Index];
   unsigned int r1BodyIndex = r1.bodyIndexByName(impl->r1Surface->bodyName());
   unsigned int r2BodyIndex = r2.bodyIndexByName(impl->r2Surface->bodyName());
-  sva::PTransformd X_0_b1 = r1.mbc->bodyPosW[r1BodyIndex];
-  sva::PTransformd X_0_b2 = r2.mbc->bodyPosW[r2BodyIndex];
+  sva::PTransformd X_0_b1 = r1.mbc().bodyPosW[r1BodyIndex];
+  sva::PTransformd X_0_b2 = r2.mbc().bodyPosW[r2BodyIndex];
   sva::PTransformd X_b1_b2 = X_0_b2*X_0_b1.inv();
   const auto & r1Surface = *(impl->r1Surface);
   return taskContact(robots, X_b1_b2, r1Surface.points());

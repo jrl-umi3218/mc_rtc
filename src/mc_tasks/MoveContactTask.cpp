@@ -32,7 +32,7 @@ MoveContactTask::MoveContactTask(mc_rbdyn::Robots & robots, mc_rbdyn::Robot & ro
     std::bind(static_cast<void (tasks::qp::PositionTask::*)(const Eigen::Vector3d&)>(&tasks::qp::PositionTask::position), positionTask.get(), std::placeholders::_1),
     std::bind(static_cast<const Eigen::Vector3d & (tasks::qp::PositionTask::*)() const>(&tasks::qp::PositionTask::position), positionTask.get()),
     config.contactTask.position.weight, robotSurfacePos().translation(), 1));
-  orientationTask.reset(new tasks::qp::OrientationTask(robots.mbs, 0, robotBodyId, robot.mbc->bodyPosW[robotBodyIndex].rotation()));
+  orientationTask.reset(new tasks::qp::OrientationTask(robots.mbs, 0, robotBodyId, robot.mbc().bodyPosW[robotBodyIndex].rotation()));
   orientationTaskSp.reset(new tasks::qp::SetPointTask(robots.mbs, 0, orientationTask.get(), config.contactTask.orientation.stiffness, config.contactTask.orientation.weight));
   useSmoothTask = true;
 }
@@ -75,9 +75,9 @@ sva::PTransformd MoveContactTask::robotSurfacePos()
 sva::MotionVecd MoveContactTask::robotSurfaceVel()
 {
   Eigen::Vector3d T_b_s = robotSurf->X_b_s().translation();
-  Eigen::Matrix3d E_0_b = robot.mbc->bodyPosW[robotBodyIndex].rotation();
+  Eigen::Matrix3d E_0_b = robot.mbc().bodyPosW[robotBodyIndex].rotation();
   sva::PTransformd pts(E_0_b.transpose(), T_b_s);
-  return pts*robot.mbc->bodyVelB[robotBodyIndex];
+  return pts*robot.mbc().bodyVelB[robotBodyIndex];
 }
 
 void MoveContactTask::addToSolver(tasks::qp::QPSolver & solver)

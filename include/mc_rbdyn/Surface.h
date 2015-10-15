@@ -58,4 +58,6 @@ bool operator==(const Surface & lhs, const Surface & rhs);
 
 bool operator!=(const Surface & lhs, const Surface & rhs);
 
+typedef std::shared_ptr<Surface> SurfacePtr;
+
 }

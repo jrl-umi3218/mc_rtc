@@ -24,14 +24,14 @@ MCController::MCController(const std::string & env_path, const std::string & env
     loadRobotAndEnv(robot_module, robot_module.path + "/rsdf/hrp2_drc/",
                   env_module, env_module.path + "/rsdf/" + env_module.name + "/",
                   &base, 0, hrp2_drc_in, env);
-    hrp2_drc_in.mbc->gravity = Eigen::Vector3d(0, 0, 9.81);
+    hrp2_drc_in.mbc().gravity = Eigen::Vector3d(0, 0, 9.81);
     mc_rbdyn::Robots robots({hrp2_drc_in, env});
 
 
 
     mc_rbdyn::Robot & hrp2_drc = robots.robot();
-    rbd::forwardKinematics(*(hrp2_drc.mb), *(hrp2_drc.mbc));
-    rbd::forwardVelocity(*(hrp2_drc.mb), *(hrp2_drc.mbc));
+    rbd::forwardKinematics(hrp2_drc.mb(), hrp2_drc.mbc());
+    rbd::forwardVelocity(hrp2_drc.mb(), hrp2_drc.mbc());
 
 
     qpsolver = std::shared_ptr<mc_solver::QPSolver>(new mc_solver::QPSolver(robots, timeStep));
@@ -77,7 +77,7 @@ MCController::MCController(const std::string & env_path, const std::string & env
     mc_solver::Collision("LARM_LINK5", "CHEST_LINK1", 0.05, 0.01, 0.)
   });
 
-  postureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(qpsolver->robots.mbs, hrp2_drc_index, qpsolver->robots.robot().mbc->q, 10, 5));
+  postureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(qpsolver->robots.mbs, hrp2_drc_index, qpsolver->robots.robot().mbc().q, 10, 5));
   std::cout << "MCController(base) ready" << std::endl;
 
 }
@@ -99,11 +99,11 @@ const QPResultMsg & MCController::send(const double & t)
 
 void MCController::reset(const ControllerResetData & reset_data)
 {
-  robot().mbc->zero(*(robot().mb));
-  robot().mbc->q = reset_data.q;
+  robot().mbc().zero(robot().mb());
+  robot().mbc().q = reset_data.q;
   postureTask->posture(reset_data.q);
-  rbd::forwardKinematics(*(robot().mb), *(robot().mbc));
-  rbd::forwardVelocity(*(robot().mb), *(robot().mbc));
+  rbd::forwardKinematics(robot().mb(), robot().mbc());
+  rbd::forwardVelocity(robot().mb(), robot().mbc());
   qpsolver->setContacts({
   });
 }

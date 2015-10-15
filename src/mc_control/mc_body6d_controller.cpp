@@ -45,7 +45,7 @@ bool MCBody6dController::change_ef(const std::string & ef_name)
   if(robot().hasBody(ef_name))
   {
     efTask->removeFromSolver(qpsolver->solver);
-    postureTask->posture(robot().mbc->q);
+    postureTask->posture(robot().mbc().q);
     efTask.reset(new mc_tasks::EndEffectorTask(ef_name, qpsolver->robots, qpsolver->robots.robotIndex));
     efTask->addToSolver(qpsolver->solver);
     return true;

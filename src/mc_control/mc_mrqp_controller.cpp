@@ -25,9 +25,9 @@ MCMRQPController::MCMRQPController(const std::vector<std::shared_ptr<mc_rbdyn::R
 
     for(auto & robot: robots.robots)
     {
-      robot.mbc->gravity = Eigen::Vector3d(0, 0, 9.81);
-      rbd::forwardKinematics(*(robot.mb), *(robot.mbc));
-      rbd::forwardVelocity(*(robot.mb), *(robot.mbc));
+      robot.mbc().gravity = Eigen::Vector3d(0, 0, 9.81);
+      rbd::forwardKinematics(robot.mb(), robot.mbc());
+      rbd::forwardVelocity(robot.mb(), robot.mbc());
     }
 
     mrqpsolver.reset(new mc_solver::QPSolver(robots, timeStep));
@@ -72,7 +72,7 @@ MCMRQPController::MCMRQPController(const std::vector<std::shared_ptr<mc_rbdyn::R
     mc_solver::Collision("LARM_LINK5", "CHEST_LINK1", 0.05, 0.01, 0.)
   });
 
-  hrp2postureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(mrqpsolver->robots.mbs, hrp2_drc_index, mrqpsolver->robots.robot().mbc->q, 1, 5));
+  hrp2postureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(mrqpsolver->robots.mbs, hrp2_drc_index, mrqpsolver->robots.robot().mbc().q, 1, 5));
   std::cout << "MCController(base) ready" << std::endl;
 }
 
@@ -93,11 +93,11 @@ const QPResultMsg & MCMRQPController::send(const double & t)
 
 void MCMRQPController::reset(const ControllerResetData & reset_data)
 {
-  robot().mbc->zero(*(robot().mb));
-  robot().mbc->q = reset_data.q;
+  robot().mbc().zero(robot().mb());
+  robot().mbc().q = reset_data.q;
   hrp2postureTask->posture(reset_data.q);
-  rbd::forwardKinematics(*(robot().mb), *(robot().mbc));
-  rbd::forwardVelocity(*(robot().mb), *(robot().mbc));
+  rbd::forwardKinematics(robot().mb(), robot().mbc());
+  rbd::forwardVelocity(robot().mb(), robot().mbc());
   mrqpsolver->setContacts({
   });
 }

@@ -8,6 +8,8 @@
 #include <sch/S_Polyhedron/S_Polyhedron.h>
 #include <sch/STP-BV/STP_BV.h>
 
+#include <mc_rbdyn/Surface.h>
+
 #include <memory>
 
 namespace mc_control
@@ -17,8 +19,6 @@ namespace mc_control
 
 namespace mc_rbdyn
 {
-
-struct Surface;
 
 struct RobotModule;
 
@@ -60,10 +60,13 @@ struct Base
   rbd::Joint::Type baseType;
 };
 
+struct Robots;
+
 struct Robot
 {
+  friend struct Robots;
 public:
-  Robot(const rbd::MultiBody & mb, const rbd::MultiBodyConfig & mbc, const rbd::MultiBodyGraph & mbg,
+  Robot(const std::shared_ptr<rbd::MultiBody> & mb, const std::shared_ptr<rbd::MultiBodyConfig> & mbc, const std::shared_ptr<rbd::MultiBodyGraph> & mbg,
         const std::map<int, sva::PTransformd> & bodyTransforms,
         const std::vector< std::vector<double> > & ql, const std::vector< std::vector<double> > & qu,
         const std::vector< std::vector<double> > & vl, const std::vector< std::vector<double> > & vu,
@@ -71,7 +74,7 @@ public:
         const std::map<std::string, std::pair<unsigned int, std::shared_ptr<sch::S_Polyhedron> > > & convex,
         const std::map<std::string, std::pair<unsigned int, std::shared_ptr<sch::STP_BV> > > & stpbv,
         const std::map<int, sva::PTransformd> & collisionTransforms,
-        const std::map<std::string, std::shared_ptr<mc_rbdyn::Surface> > & surfaces,
+        const std::map<std::string, mc_rbdyn::SurfacePtr> & surfaces,
         const std::vector<ForceSensor> & forceSensors, const std::string & accelerometerBody = "",
         const Springs & springs = Springs(), const std::vector< std::vector<Eigen::VectorXd> > & tlPoly = {},
         const std::vector< std::vector<Eigen::VectorXd> > & tuPoly = {}, const std::vector<Flexibility> & flexibility = {});
@@ -95,28 +98,64 @@ public:
   bool hasForceSensor(const std::string & body) const;
 
   std::string forceSensorByBody(const std::string & body) const;
-public:
-  rbd::MultiBody * mb;
-  rbd::MultiBodyConfig * mbc;
-  rbd::MultiBodyGraph * mbg;
+
+  rbd::MultiBody & mb();
+  const rbd::MultiBody & mb() const;
+
+  rbd::MultiBodyConfig & mbc();
+  const rbd::MultiBodyConfig & mbc() const;
+
+  rbd::MultiBodyGraph & mbg();
+  const rbd::MultiBodyGraph & mbg() const;
+
+  const std::vector<std::vector<double>> & ql() const;
+  const std::vector<std::vector<double>> & qu() const;
+  const std::vector<std::vector<double>> & vl() const;
+  const std::vector<std::vector<double>> & vu() const;
+  const std::vector<std::vector<double>> & tl() const;
+  const std::vector<std::vector<double>> & tu() const;
+
+  const std::vector<Flexibility> & flexibility() const;
+
+  mc_rbdyn::Surface & surface(const std::string & sName);
+  const mc_rbdyn::Surface & surface(const std::string & sName) const;
+
+  const std::map<std::string, mc_rbdyn::SurfacePtr> & surfaces() const;
+
+  typedef std::pair<unsigned int, std::shared_ptr<sch::S_Polyhedron>> convex_pair_t;
+  convex_pair_t & convex(const std::string & cName);
+  const convex_pair_t & convex(const std::string & cName) const;
+
+  const sva::PTransformd & bodyTransform(int id) const;
+
+  const sva::PTransformd & collisionTransform(int id) const;
+
+  void fixSurfaces();
+
+  Robot createWithBase(const Base & base, const Eigen::Vector3d & baseAxis = Eigen::Vector3d::UnitZ()) const;
+  Robot copy() const;
+protected:
+  std::shared_ptr<rbd::MultiBody> mb_;
+  std::shared_ptr<rbd::MultiBodyConfig> mbc_;
+private:
+  std::shared_ptr<rbd::MultiBodyGraph> mbg_;
   std::map<int, sva::PTransformd> bodyTransforms;
-  std::vector< std::vector<double> > ql;
-  std::vector< std::vector<double> > qu;
-  std::vector< std::vector<double> > vl;
-  std::vector< std::vector<double> > vu;
-  std::vector< std::vector<double> > tl;
-  std::vector< std::vector<double> > tu;
-  std::map< std::string, std::pair<unsigned int, std::shared_ptr<sch::S_Polyhedron> > > convex;
-  std::map< std::string, std::pair<unsigned int, std::shared_ptr<sch::STP_BV> > > stpbv;
+  std::vector< std::vector<double> > ql_;
+  std::vector< std::vector<double> > qu_;
+  std::vector< std::vector<double> > vl_;
+  std::vector< std::vector<double> > vu_;
+  std::vector< std::vector<double> > tl_;
+  std::vector< std::vector<double> > tu_;
+  std::map< std::string, convex_pair_t > convexes;
+  std::map< std::string, std::pair<unsigned int, std::shared_ptr<sch::STP_BV> > > stpbvs;
   std::map<int, sva::PTransformd> collisionTransforms;
-  std::map<std::string, std::shared_ptr<mc_rbdyn::Surface> > surfaces;
+  std::map<std::string, mc_rbdyn::SurfacePtr> surfaces_;
   std::vector<ForceSensor> forceSensors;
   std::string accelerometerBody;
   Springs springs;
   std::vector< std::vector<Eigen::VectorXd> > tlPoly;
   std::vector< std::vector<Eigen::VectorXd> > tuPoly;
-  std::vector<Flexibility> flexibility;
-  std::map<int, sva::PTransformd> bodyTransform;
+  std::vector<Flexibility> flexibility_;
   std::map<std::string, unsigned int> jointIndexByNameD;
   std::map<std::string, unsigned int> bodyIndexByNameD;
   std::map<std::string, ForceSensor> forceSensorsParentD;
@@ -147,12 +186,6 @@ public:
   unsigned int robotIndex;
   unsigned int envIndex;
 };
-
-void fixRobotSurfaces(Robot & robot);
-
-Robot createRobotWithBase(Robot & robot, const Base & base, const Eigen::Vector3d & baseAxis = Eigen::Vector3d::UnitZ());
-
-Robot robotCopy(const Robot & robot);
 
 std::vector< std::vector<double> > jointsParameters(const rbd::MultiBody & mb, const double & coeff);
 

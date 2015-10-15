@@ -26,7 +26,7 @@ AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots, std::share
   if(userT_0_s)
   {
     normal = (*userT_0_s - targetTf.translation()).normalized();
-    Eigen::Vector3d normalBody = robot.mbc->bodyPosW[robotBodyIndex].rotation()*normal;
+    Eigen::Vector3d normalBody = robot.mbc().bodyPosW[robotBodyIndex].rotation()*normal;
     Eigen::Vector3d v1(normalBody.y(), -normalBody.x(), 0);
     Eigen::Vector3d v2(-normalBody.z(), 0, normalBody.x());
     Eigen::Vector3d T = (v1 + v2).normalized();
@@ -56,9 +56,9 @@ void AddRemoveContactTask::direction(double direction)
 Eigen::Vector3d AddRemoveContactTask::velError()
 {
   Eigen::Vector3d T_b_s = robotSurf->X_b_s().translation();
-  Eigen::Matrix3d E_0_b = robot.mbc->bodyPosW[robotBodyIndex].rotation();
+  Eigen::Matrix3d E_0_b = robot.mbc().bodyPosW[robotBodyIndex].rotation();
   sva::PTransformd pts(E_0_b.transpose(), T_b_s);
-  sva::MotionVecd surfVelB = pts*robot.mbc->bodyVelB[robotBodyIndex];
+  sva::MotionVecd surfVelB = pts*robot.mbc().bodyVelB[robotBodyIndex];
   return targetSpeed - surfVelB.linear();
 }
 

@@ -61,7 +61,7 @@ public:
         if(error < 0.05 || iterSincePutDown > 15*500)
         {
           ctl.efTask->removeFromSolver(ctl.qpsolver->solver);
-          ctl.postureTask->posture(ctl.robot().mbc->q);
+          ctl.postureTask->posture(ctl.robot().mbc().q);
           done_lift = true;
           std::cout << "Finished lift phase" << std::endl;
         }
@@ -80,10 +80,10 @@ public:
     //  }
     //  else
     //  {
-    //    double error = std::abs(ctl.robot().mbc->q[ankle_i][0] - ankle_reorient_target);
+    //    double error = std::abs(ctl.robot().mbc().q[ankle_i][0] - ankle_reorient_target);
     //    if(error < 0.01)
     //    {
-    //      ctl.postureTask->posture(ctl.robot().mbc->q);
+    //      ctl.postureTask->posture(ctl.robot().mbc().q);
     //      done_reorient = true;
     //      std::cout << "Finished changing ankle orientation" << std::endl;
     //    }
@@ -105,7 +105,7 @@ public:
         if(error < 0.01)
         {
           ctl.oriTask->removeFromSolver(ctl.qpsolver->solver);
-          ctl.postureTask->posture(ctl.robot().mbc->q);
+          ctl.postureTask->posture(ctl.robot().mbc().q);
           done_rotate = true;
           std::cout << "Finished rotate foot" << std::endl;
         }
@@ -118,7 +118,7 @@ public:
     //    ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5", ctl.qpsolver->robots, 0, 0.5));
     //    ctl.efTask->addToSolver(ctl.qpsolver->solver);
     //    unsigned int bIdx = ctl.robot().bodyIndexByName("LLEG_LINK5");
-    //    sva::PTransformd bpw = ctl.robot().mbc->bodyPosW[bIdx];
+    //    sva::PTransformd bpw = ctl.robot().mbc().bodyPosW[bIdx];
     //    ctl.efTask->set_ef_pose(sva::PTransformd(bpw.rotation(), ctl.efTask->get_ef_pose().translation()));
     //    iterSincePutDown = 0;
     //    done_setup_flatten = true;
@@ -130,7 +130,7 @@ public:
     //    if(error < 0.1 || iterSincePutDown > 15*500)
     //    {
     //      ctl.efTask->removeFromSolver(ctl.qpsolver->solver);
-    //      ctl.postureTask->posture(ctl.robot().mbc->q);
+    //      ctl.postureTask->posture(ctl.robot().mbc().q);
     //      done_flatten = true;
     //      std::cout << "Finished flatten foot" << std::endl;
     //    }
@@ -144,7 +144,7 @@ public:
         ctl.efTask->addToSolver(ctl.qpsolver->solver);
         sva::PTransformd down(Eigen::Vector3d(0.01,0.01, -0.3)); /*XXX Hard-coded*/
         unsigned int bIdx = ctl.robot().bodyIndexByName("LLEG_LINK5");
-        sva::PTransformd bpw = ctl.robot().mbc->bodyPosW[bIdx];
+        sva::PTransformd bpw = ctl.robot().mbc().bodyPosW[bIdx];
         ctl.efTask->set_ef_pose(sva::PTransformd(sva::RotZ(-M_PI/8)*bpw.rotation(), (ctl.efTask->get_ef_pose()*down).translation()));
         iterSincePutDown = 0;
         iterForce = 0;
@@ -164,7 +164,7 @@ public:
         if(iterForce > 20 || iterSincePutDown > 15*500)
         {
           ctl.efTask->removeFromSolver(ctl.qpsolver->solver);
-          ctl.postureTask->posture(ctl.robot().mbc->q);
+          ctl.postureTask->posture(ctl.robot().mbc().q);
           done_putdown = true;
           std::cout << "Contact found, next step" << std::endl;
           ctl.qpsolver->setContacts({
@@ -221,12 +221,12 @@ public:
           mc_rbdyn::Contact(ctl.robots(), "LowerBack", "left_back"),
         });
         unsigned int bIdx = ctl.robot().bodyIndexByName("RARM_LINK6");
-        sva::PTransformd bpw = ctl.robot().mbc->bodyPosW[bIdx];
+        sva::PTransformd bpw = ctl.robot().mbc().bodyPosW[bIdx];
         initPos = bpw.translation();
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", ctl.qpsolver->robots, 0));
         ctl.efTask->addToSolver(ctl.qpsolver->solver);
-        auto gripperSurface = ctl.robot().surfaces.at("RightGripper");
-        sva::PTransformd X_0_s = gripperSurface->X_0_s(ctl.robot(), *(ctl.robot().mbc));
+        const auto & gripperSurface = ctl.robot().surface("RightGripper");
+        sva::PTransformd X_0_s = gripperSurface.X_0_s(ctl.robot(), ctl.robot().mbc());
         Eigen::Vector3d normal = X_0_s.rotation().row(2);
         targetSpeed = 0.02*normal; /*XXX Hard-coded*/
         done_setup_normal_move = true;
@@ -234,11 +234,11 @@ public:
       else
       {
         unsigned int bIdx = ctl.robot().bodyIndexByName("RARM_LINK6");
-        sva::PTransformd bpw = ctl.robot().mbc->bodyPosW[bIdx];
+        sva::PTransformd bpw = ctl.robot().mbc().bodyPosW[bIdx];
         double d = (bpw.translation() - initPos).norm();
         if(d > 0.13) /*XXX Hard-coded*/
         {
-          ctl.postureTask->posture(ctl.robot().mbc->q);
+          ctl.postureTask->posture(ctl.robot().mbc().q);
           ctl.efTask->removeFromSolver(ctl.qpsolver->solver);
           std::cout << "Hand removed from wheel" << std::endl;
           done_normal_move = true;
@@ -266,7 +266,7 @@ public:
         iterSinceMoving++;
         if(error < 0.05 || iterSinceMoving > 15*500)
         {
-          ctl.postureTask->posture(ctl.robot().mbc->q);
+          ctl.postureTask->posture(ctl.robot().mbc().q);
           ctl.efTask->removeFromSolver(ctl.qpsolver->solver);
           std::cout << "Hand moved sideway" << std::endl;
           done_move_right = true;
@@ -295,7 +295,7 @@ public:
         double error = ctl.postureTask->eval().norm();
         if(error < 0.01)
         {
-          ctl.postureTask->posture(ctl.robot().mbc->q);
+          ctl.postureTask->posture(ctl.robot().mbc().q);
           ctl.qpsolver->setContacts({
             mc_rbdyn::Contact(ctl.robots(), "Butthock", "left_seat"),
             mc_rbdyn::Contact(ctl.robots(), "LFullSole", "exit_platform"),
@@ -342,7 +342,7 @@ public:
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("BODY", ctl.qpsolver->robots, ctl.qpsolver->robots.robotIndex, 0.5));
         ctl.efTask->addToSolver(ctl.qpsolver->solver);
         unsigned int bIdx = ctl.robot().bodyIndexByName("LLEG_LINK5");
-        sva::PTransformd bpw = ctl.robot().mbc->bodyPosW[bIdx];
+        sva::PTransformd bpw = ctl.robot().mbc().bodyPosW[bIdx];
         ctl.efTask->set_ef_pose(sva::PTransformd(bpw.rotation(), ctl.efTask->get_ef_pose().translation()));
         done_setup_rotate_body = true;
         timeoutIter = 0;
@@ -358,7 +358,7 @@ public:
             mc_rbdyn::Contact(ctl.robots(), "LFullSole", "exit_platform"),
             mc_rbdyn::Contact(ctl.robots(), "RFullSole", "left_floor"),
           });
-          ctl.postureTask->posture(ctl.robot().mbc->q);
+          ctl.postureTask->posture(ctl.robot().mbc().q);
           ctl.efTask->removeFromSolver(ctl.qpsolver->solver);
           done_rotate_body = true;
           std::cout << "Finished rotating the body" << std::endl;
@@ -413,7 +413,7 @@ struct EgressMoveFootOutPhase : public EgressPhaseExecution
         if(error < 0.01)
         {
           ctl.efTask->removeFromSolver(ctl.qpsolver->solver);
-          ctl.postureTask->posture(ctl.robot().mbc->q);
+          ctl.postureTask->posture(ctl.robot().mbc().q);
           done_lift = true;
           std::cout << "Finished lift phase" << std::endl;
         }
@@ -432,10 +432,10 @@ struct EgressMoveFootOutPhase : public EgressPhaseExecution
       }
       else
       {
-        double error = std::abs(ctl.robot().mbc->q[ankle_i][0] - ankle_reorient_target);
+        double error = std::abs(ctl.robot().mbc().q[ankle_i][0] - ankle_reorient_target);
         if(error < 0.01)
         {
-          ctl.postureTask->posture(ctl.robot().mbc->q);
+          ctl.postureTask->posture(ctl.robot().mbc().q);
           done_reorient = true;
           std::cout << "Finished changing ankle orientation" << std::endl;
         }
@@ -459,7 +459,7 @@ struct EgressMoveFootOutPhase : public EgressPhaseExecution
         if(error < 0.01 || timeoutIter > 15*500)
         {
           ctl.oriTask->removeFromSolver(ctl.qpsolver->solver);
-          ctl.postureTask->posture(ctl.robot().mbc->q);
+          ctl.postureTask->posture(ctl.robot().mbc().q);
           done_rotate = true;
           std::cout << "Finished rotate foot" << std::endl;
         }
@@ -482,10 +482,10 @@ struct EgressMoveFootOutPhase : public EgressPhaseExecution
     //  }
     //  else
     //  {
-    //    double error = std::abs(ctl.robot().mbc->q[ankle_i][0] - ankle_reorient_target);
+    //    double error = std::abs(ctl.robot().mbc().q[ankle_i][0] - ankle_reorient_target);
     //    if(error < 0.01)
     //    {
-    //      ctl.postureTask->posture(ctl.robot().mbc->q);
+    //      ctl.postureTask->posture(ctl.robot().mbc().q);
     //      done_flatten = true;
     //      std::cout << "Finished flatten foot" << std::endl;
     //    }
@@ -499,7 +499,7 @@ struct EgressMoveFootOutPhase : public EgressPhaseExecution
         ctl.efTask->addToSolver(ctl.qpsolver->solver);
         sva::PTransformd lmod(Eigen::Vector3d(0.2, -0.1, -0.1)); /*XXX Hard-coded value */
         unsigned int bIdx = ctl.robot().bodyIndexByName("LLEG_LINK5");
-        sva::PTransformd bpw = ctl.robot().mbc->bodyPosW[bIdx];
+        sva::PTransformd bpw = ctl.robot().mbc().bodyPosW[bIdx];
         sva::PTransformd targetEfPose = bpw*lmod;
         ctl.efTask->set_ef_pose(targetEfPose);
         timeoutIter = 0;
@@ -512,7 +512,7 @@ struct EgressMoveFootOutPhase : public EgressPhaseExecution
         if(ctl.wrenches[0].first[0] > 50 || error < 0.05 || timeoutIter > 15*500)
         {
           ctl.efTask->removeFromSolver(ctl.qpsolver->solver);
-          ctl.postureTask->posture(ctl.robot().mbc->q);
+          ctl.postureTask->posture(ctl.robot().mbc().q);
           ctl.qpsolver->setContacts({
             mc_rbdyn::Contact(ctl.robots(), "Butthock", "left_seat"),
             mc_rbdyn::Contact(ctl.robots(), "LFullSole", "exit_platform"),
@@ -579,7 +579,7 @@ public:
         if(error < 0.05 || timeoutIter > 15*500)
         {
           ctl.efTask->removeFromSolver(ctl.qpsolver->solver);
-          ctl.postureTask->posture(ctl.robot().mbc->q);
+          ctl.postureTask->posture(ctl.robot().mbc().q);
           done_lift = true;
           std::cout << "Finished lift phase" << std::endl;
         }
@@ -603,7 +603,7 @@ public:
         if(error < 0.01 || timeoutIter > 15*500)
         {
           ctl.oriTask->removeFromSolver(ctl.qpsolver->solver);
-          ctl.postureTask->posture(ctl.robot().mbc->q);
+          ctl.postureTask->posture(ctl.robot().mbc().q);
           done_rotate = true;
           std::cout << "Finished rotate foot" << std::endl;
         }
@@ -635,7 +635,7 @@ public:
         if(iterForce > 20 || timeoutIter > 15*500)
         {
           ctl.efTask->removeFromSolver(ctl.qpsolver->solver);
-          ctl.postureTask->posture(ctl.robot().mbc->q);
+          ctl.postureTask->posture(ctl.robot().mbc().q);
           done_putdown = true;
           std::cout << "Contact found, next step" << std::endl;
           ctl.qpsolver->setContacts({
@@ -681,9 +681,9 @@ struct EgressStandupPhase : public EgressPhaseExecution
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("BODY", ctl.qpsolver->robots, ctl.qpsolver->robots.robotIndex, 1.0));
         ctl.efTask->addToSolver(ctl.qpsolver->solver);
         unsigned int lbIdx = ctl.robot().bodyIndexByName("LLEG_LINK5");
-        sva::PTransformd lbpw = ctl.robot().mbc->bodyPosW[lbIdx];
+        sva::PTransformd lbpw = ctl.robot().mbc().bodyPosW[lbIdx];
         unsigned int rbIdx = ctl.robot().bodyIndexByName("RLEG_LINK5");
-        sva::PTransformd rbpw = ctl.robot().mbc->bodyPosW[rbIdx];
+        sva::PTransformd rbpw = ctl.robot().mbc().bodyPosW[rbIdx];
         Eigen::Vector3d bodyPos = (lbpw.translation() + rbpw.translation())/2;
         bodyPos(2) = bodyPos(2) + 0.76 - 0.15;
         ctl.efTask->set_ef_pose(sva::PTransformd(ctl.efTask->get_ef_pose().rotation(), bodyPos));
@@ -694,7 +694,7 @@ struct EgressStandupPhase : public EgressPhaseExecution
         double error = ctl.efTask->positionTask->eval().norm();
         if(error < 0.05)
         {
-          ctl.postureTask->posture(ctl.robot().mbc->q);
+          ctl.postureTask->posture(ctl.robot().mbc().q);
           ctl.efTask->removeFromSolver(ctl.qpsolver->solver);
           done_standup = true;
           std::cout << "Done standup" << std::endl;
