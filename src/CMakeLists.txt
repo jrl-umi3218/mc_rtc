@@ -14,7 +14,7 @@ mc_rbdyn/StanceConfig.cpp
 )
 
 add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC})
-pkg_config_use_dependency(mc_rbdyn mc_rbdyn_urdf)
+pkg_config_use_dependency(mc_rbdyn mc_rbdyn_urdf_cpp)
 pkg_config_use_dependency(mc_rbdyn Tasks)
 pkg_config_use_dependency(mc_rbdyn jsoncpp)
 target_link_libraries(mc_rbdyn ${Boost_LIBRARIES} ${GEOS_LIBRARY})

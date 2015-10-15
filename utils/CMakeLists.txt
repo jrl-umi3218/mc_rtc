@@ -1,5 +1,5 @@
 add_executable(StanceConfigGenerator StanceConfigGenerator.cpp)
-pkg_config_use_dependency(StanceConfigGenerator mc_rbdyn_urdf)
+pkg_config_use_dependency(StanceConfigGenerator mc_rbdyn_urdf_cpp)
 pkg_config_use_dependency(StanceConfigGenerator Tasks)
 pkg_config_use_dependency(StanceConfigGenerator jsoncpp)
 target_link_libraries(StanceConfigGenerator mc_rbdyn)
