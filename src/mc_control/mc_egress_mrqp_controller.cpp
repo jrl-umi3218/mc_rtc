@@ -44,35 +44,34 @@ MCEgressMRQPController::MCEgressMRQPController(const std::vector<std::shared_ptr
 
   mrqpsolver->solver.addTask(hrp2postureTask.get());
   hrp2postureTask->weight(1);
-  robots().envIndex = 2;
 
-  mc_rbdyn::Robot& polaris = robots().robots[1];
+  mc_rbdyn::Robot& polaris = robots().robot(1);
 
   robot().mbc().q[0] = {1, 0, 0, 0, 0, 0, 0.76};
 
   rbd::forwardKinematics(robot().mb(), robot().mbc());
   rbd::forwardVelocity(robot().mb(), robot().mbc());
 
-  egressContacts.emplace_back(robots(), robots().robotIndex, 1,
+  egressContacts.emplace_back(robots(), robots().robotIndex(), 1,
                            "Butthock", "lazy_seat");
-  egressContacts.emplace_back(robots(), robots().robotIndex, 1,
+  egressContacts.emplace_back(robots(), robots().robotIndex(), 1,
                            "LFullSole", "exit_platform");
-  egressContacts.emplace_back(robots(), robots().robotIndex, 1,
+  egressContacts.emplace_back(robots(), robots().robotIndex(), 1,
                            "RightGripper", "bar_wheel");
   mrqpsolver->setContacts(egressContacts);
 
-  polarisPostureTask.reset(new tasks::qp::PostureTask(mrqpsolver->robots.mbs, 1, mrqpsolver->robots.robots[1].mbc().q, 1.0, 1));
-  lazyPostureTask.reset(new tasks::qp::PostureTask(mrqpsolver->robots.mbs, 1, polaris.mbc().q, 0.0, 1000.0));
+  polarisPostureTask.reset(new tasks::qp::PostureTask(mrqpsolver->robots.mbs(), 1, mrqpsolver->robots.robot(1).mbc().q, 1.0, 1));
+  lazyPostureTask.reset(new tasks::qp::PostureTask(mrqpsolver->robots.mbs(), 1, polaris.mbc().q, 0.0, 1000.0));
   std::vector<tasks::qp::JointStiffness> jsv;
   jsv.push_back({static_cast<int>(polaris.jointIdByName("lazy_susan")), 0.1});
-  lazyPostureTask->jointsStiffness(robots().mbs, jsv);
+  lazyPostureTask->jointsStiffness(robots().mbs(), jsv);
 
-  comTask.reset(new mc_tasks::CoMTask(mrqpsolver->robots, mrqpsolver->robots.robotIndex));
+  comTask.reset(new mc_tasks::CoMTask(mrqpsolver->robots, mrqpsolver->robots.robotIndex()));
   comTask->comTaskSp->stiffness(1.);
   efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", mrqpsolver->robots,
-                                             mrqpsolver->robots.robotIndex));
+                                             mrqpsolver->robots.robotIndex()));
   torsoOriTask.reset(new mc_tasks::OrientationTask("CHEST_LINK1", mrqpsolver->robots,
-                                                   mrqpsolver->robots.robotIndex,
+                                                   mrqpsolver->robots.robotIndex(),
                                                    1., 1.));
 
   //collsConstraint.addCollision(robots(), mc_solver::Collision("RLEG_LINK5", "floor", 0.2, 0.15, 0));
@@ -119,8 +118,8 @@ void MCEgressMRQPController::reset(const ControllerResetData & reset_data)
 
   mrqpsolver->setContacts(egressContacts);
 
-  mrqpsolver->solver.updateTasksNrVars(robots().mbs);
-  mrqpsolver->solver.updateConstrsNrVars(robots().mbs);
+  mrqpsolver->solver.updateTasksNrVars(robots().mbs());
+  mrqpsolver->solver.updateConstrsNrVars(robots().mbs());
   mrqpsolver->solver.updateConstrSize();
 
   std::cout << "End mr egress reset" << std::endl;
@@ -135,7 +134,7 @@ void MCEgressMRQPController::addCollision(const mc_solver::Collision& coll)
 void MCEgressMRQPController::resetWheelTransform()
 {
   sva::PTransformd graspOffset(sva::RotX(-M_PI/2), Eigen::Vector3d(0, 0, 0));
-  mc_rbdyn::Robot& polaris = robots().robots[1];
+  mc_rbdyn::Robot& polaris = robots().robot(1);
   //Change wheel position
   int chassis_index = polaris.bodyIndexByName("chassis");
   //Do not take into account potential rotation of steering wheel
@@ -161,7 +160,7 @@ void MCEgressMRQPController::resetWheelTransform()
 
 void MCEgressMRQPController::resetLazyTransform()
 {
-  mc_rbdyn::Robot& polaris = robots().robots[1];
+  mc_rbdyn::Robot& polaris = robots().robot(1);
   //Change wheel position
   int chassis_index = polaris.bodyIndexByName("chassis");
   //Do not take into account potential rotation of steering wheel
@@ -187,7 +186,7 @@ void MCEgressMRQPController::resetLazyTransform()
 
 void MCEgressMRQPController::resetBasePose()
 {
-  mc_rbdyn::Robot& polaris = robots().robots[1];
+  mc_rbdyn::Robot& polaris = robots().robot(1);
   //Reset freeflyer, compute its position frow wheel and re-set it
   robot().mbc().q[0] = {1., 0., 0., 0., 0., 0., 0.};
   rbd::forwardKinematics(robot().mb(), robot().mbc());

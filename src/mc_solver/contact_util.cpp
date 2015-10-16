@@ -14,8 +14,8 @@ std::vector<mc_control::ContactMsg> contactsMsgFromContacts
 
   for(const auto & c : contacts)
   {
-    const auto & r1 = robots.robots[c.r1Index()];
-    const auto & r2 = robots.robots[c.r2Index()];
+    const auto & r1 = robots.robot(c.r1Index());
+    const auto & r2 = robots.robot(c.r2Index());
 
     unsigned int r1BodyIndex = r1.bodyIndexByName(c.r1Surface()->bodyName());
     unsigned int r2BodyIndex = r2.bodyIndexByName(c.r2Surface()->bodyName());

@@ -25,7 +25,7 @@ MCCoMController::MCCoMController()
     mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")
   });
 
-  comTask.reset(new mc_tasks::CoMTask(qpsolver->robots, qpsolver->robots.robotIndex));
+  comTask.reset(new mc_tasks::CoMTask(qpsolver->robots, qpsolver->robots.robotIndex()));
   comTask->addToSolver(qpsolver->solver);
 }
 
@@ -43,7 +43,7 @@ void MCCoMController::reset(const ControllerResetData & reset_data)
       mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")
     });
   }
-  comTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex);
+  comTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex());
 }
 
 bool MCCoMController::move_com(const Eigen::Vector3d & v)

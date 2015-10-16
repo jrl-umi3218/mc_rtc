@@ -24,16 +24,16 @@ MoveContactTask::MoveContactTask(mc_rbdyn::Robots & robots, mc_rbdyn::Robot & ro
   posStiff = config.contactTask.position.stiffness;
   extraPosStiff = config.contactTask.position.extraStiffness;
 
-  positionTask.reset(new tasks::qp::PositionTask(robots.mbs, 0, robotBodyId, robotSurfacePos().translation(), robotSurf->X_b_s().translation()));
-  positionTaskSp.reset(new tasks::qp::SetPointTask(robots.mbs, 0, positionTask.get(), posStiff, config.contactTask.position.weight*positionWStartPercent));
+  positionTask.reset(new tasks::qp::PositionTask(robots.mbs(), 0, robotBodyId, robotSurfacePos().translation(), robotSurf->X_b_s().translation()));
+  positionTaskSp.reset(new tasks::qp::SetPointTask(robots.mbs(), 0, positionTask.get(), posStiff, config.contactTask.position.weight*positionWStartPercent));
   positionTaskSm.reset(new SmoothTask<Eigen::Vector3d>(
     std::bind(static_cast<void (tasks::qp::SetPointTask::*)(double)>(&tasks::qp::SetPointTask::weight), positionTaskSp.get(), std::placeholders::_1),
     std::bind(static_cast<double (tasks::qp::SetPointTask::*)() const>(&tasks::qp::SetPointTask::weight), positionTaskSp.get()),
     std::bind(static_cast<void (tasks::qp::PositionTask::*)(const Eigen::Vector3d&)>(&tasks::qp::PositionTask::position), positionTask.get(), std::placeholders::_1),
     std::bind(static_cast<const Eigen::Vector3d & (tasks::qp::PositionTask::*)() const>(&tasks::qp::PositionTask::position), positionTask.get()),
     config.contactTask.position.weight, robotSurfacePos().translation(), 1));
-  orientationTask.reset(new tasks::qp::OrientationTask(robots.mbs, 0, robotBodyId, robot.mbc().bodyPosW[robotBodyIndex].rotation()));
-  orientationTaskSp.reset(new tasks::qp::SetPointTask(robots.mbs, 0, orientationTask.get(), config.contactTask.orientation.stiffness, config.contactTask.orientation.weight));
+  orientationTask.reset(new tasks::qp::OrientationTask(robots.mbs(), 0, robotBodyId, robot.mbc().bodyPosW[robotBodyIndex].rotation()));
+  orientationTaskSp.reset(new tasks::qp::SetPointTask(robots.mbs(), 0, orientationTask.get(), config.contactTask.orientation.stiffness, config.contactTask.orientation.weight));
   useSmoothTask = true;
 }
 
@@ -84,7 +84,7 @@ void MoveContactTask::addToSolver(tasks::qp::QPSolver & solver)
 {
   solver.addTask(positionTaskSp.get());
   solver.addTask(orientationTaskSp.get());
-  solver.updateTasksNrVars(robots.mbs);
+  solver.updateTasksNrVars(robots.mbs());
 }
 
 void MoveContactTask::removeFromSolver(tasks::qp::QPSolver & solver)

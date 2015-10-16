@@ -8,18 +8,18 @@ OrientationTask::OrientationTask(const std::string & bodyName, const mc_rbdyn::R
   rIndex(robotIndex), bId(0), bIndex(0),
   inSolver(false)
 {
-  const mc_rbdyn::Robot & robot = robots.robots[rIndex];
+  const mc_rbdyn::Robot & robot = robots.robot(rIndex);
   bId = robot.bodyIdByName(bodyName);
   bIndex = robot.bodyIndexByName(bodyName);
 
   Eigen::Matrix3d curOri = robot.mbc().bodyPosW[bIndex].rotation();
-  orientationTask.reset(new tasks::qp::OrientationTask(robots.mbs, rIndex, bId, curOri));
-  orientationTaskSp.reset(new tasks::qp::SetPointTask(robots.mbs, robotIndex, orientationTask.get(), stiffness, weight));
+  orientationTask.reset(new tasks::qp::OrientationTask(robots.mbs(), rIndex, bId, curOri));
+  orientationTaskSp.reset(new tasks::qp::SetPointTask(robots.mbs(), robotIndex, orientationTask.get(), stiffness, weight));
 }
 
 void OrientationTask::resetTask()
 {
-  const auto & robot = robots.robots[rIndex];
+  const auto & robot = robots.robot(rIndex);
   auto curOri = robot.mbc().bodyPosW[bIndex].rotation();
   orientationTask->orientation(curOri);
 }
@@ -29,7 +29,7 @@ void OrientationTask::removeFromSolver(tasks::qp::QPSolver & solver)
   if(inSolver)
   {
     solver.removeTask(orientationTaskSp.get());
-    solver.updateConstrsNrVars(robots.mbs);
+    solver.updateConstrsNrVars(robots.mbs());
     solver.updateConstrSize();
     inSolver = false;
   }
@@ -40,8 +40,8 @@ void OrientationTask::addToSolver(tasks::qp::QPSolver & solver)
   if(!inSolver)
   {
     solver.addTask(orientationTaskSp.get());
-    solver.updateTasksNrVars(robots.mbs);
-    solver.updateConstrsNrVars(robots.mbs);
+    solver.updateTasksNrVars(robots.mbs());
+    solver.updateConstrsNrVars(robots.mbs());
     solver.updateConstrSize();
     inSolver = true;
   }

@@ -60,25 +60,74 @@ struct Base
   rbd::Joint::Type baseType;
 };
 
-struct Robots;
+struct Robots
+{
+  friend struct Robot;
+public:
+  Robots() : robotIndex_(0), envIndex_(0) {}
+  Robots(const Robots & rhs);
+  Robots & operator=(const Robots & rhs);
+
+  std::vector<Robot> & robots();
+  const std::vector<Robot> & robots() const;
+
+  std::vector<rbd::MultiBody> & mbs();
+  const std::vector<rbd::MultiBody> & mbs() const;
+
+  std::vector<rbd::MultiBodyConfig> & mbcs();
+  const std::vector<rbd::MultiBodyConfig> & mbcs() const;
+
+  unsigned int robotIndex() const;
+  unsigned int envIndex() const;
+
+  /* Robot(s) loader functions */
+  Robot & load(const RobotModule & module, const std::string & surfaceDir, sva::PTransformd * base = 0, int bId = -1);
+
+  void load(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir);
+
+  void load(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir, sva::PTransformd * base, int bId);
+
+  void load(const std::vector<std::shared_ptr<RobotModule>> & modules, const std::vector<std::string> & surfaceDirs);
+
+  Robot & loadFromUrdf(const std::string & name, const std::string & urdf, bool withVirtualLinks = true, const std::vector<std::string> & filteredLinks = {}, bool fixed = false, sva::PTransformd * base = 0, int bId = -1);
+
+  void robotCopy(const Robots & robots, unsigned int robots_idx);
+
+  void createRobotWithBase(Robots & robots, unsigned int robots_idx, const Base & base, const Eigen::Vector3d & baseAxis = Eigen::Vector3d::UnitZ());
+  /* Static pendant of the loader functions to create Robots directly */
+  static Robots loadRobot(const RobotModule & module, const std::string & surfaceDir, sva::PTransformd * base = 0, int bId = -1);
+
+  static Robots loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules, const std::vector<std::string> & surfaceDirs);
+
+  static Robots loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir);
+
+  static Robots loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir, sva::PTransformd * base, int bId);
+
+  static Robots loadRobotFromUrdf(const std::string & name, const std::string & urdf, bool withVirtualLinks = true, const std::vector<std::string> & filteredLinks = {}, bool fixed = false, sva::PTransformd * base = 0, int bId = -1);
+
+  Robot & robot();
+  const Robot & robot() const;
+
+  Robot & env();
+  const Robot & env() const;
+
+  Robot & robot(unsigned int idx);
+  const Robot & robot(unsigned int idx) const;
+protected:
+  std::vector<mc_rbdyn::Robot> robots_;
+  std::vector<rbd::MultiBody> mbs_;
+  std::vector<rbd::MultiBodyConfig> mbcs_;
+  std::vector<rbd::MultiBodyGraph> mbgs_;
+  unsigned int robotIndex_;
+  unsigned int envIndex_;
+  void updateIndexes();
+};
 
 struct Robot
 {
   friend struct Robots;
+  friend class __gnu_cxx::new_allocator<Robot>;
 public:
-  Robot(const std::shared_ptr<rbd::MultiBody> & mb, const std::shared_ptr<rbd::MultiBodyConfig> & mbc, const std::shared_ptr<rbd::MultiBodyGraph> & mbg,
-        const std::map<int, sva::PTransformd> & bodyTransforms,
-        const std::vector< std::vector<double> > & ql, const std::vector< std::vector<double> > & qu,
-        const std::vector< std::vector<double> > & vl, const std::vector< std::vector<double> > & vu,
-        const std::vector< std::vector<double> > & tl, const std::vector< std::vector<double> > & tu,
-        const std::map<std::string, std::pair<unsigned int, std::shared_ptr<sch::S_Polyhedron> > > & convex,
-        const std::map<std::string, std::pair<unsigned int, std::shared_ptr<sch::STP_BV> > > & stpbv,
-        const std::map<int, sva::PTransformd> & collisionTransforms,
-        const std::map<std::string, mc_rbdyn::SurfacePtr> & surfaces,
-        const std::vector<ForceSensor> & forceSensors, const std::string & accelerometerBody = "",
-        const Springs & springs = Springs(), const std::vector< std::vector<Eigen::VectorXd> > & tlPoly = {},
-        const std::vector< std::vector<Eigen::VectorXd> > & tuPoly = {}, const std::vector<Flexibility> & flexibility = {});
-
   bool hasJoint(const std::string & name) const;
 
   bool hasBody(const std::string & name) const;
@@ -131,14 +180,10 @@ public:
   const sva::PTransformd & collisionTransform(int id) const;
 
   void fixSurfaces();
-
-  Robot createWithBase(const Base & base, const Eigen::Vector3d & baseAxis = Eigen::Vector3d::UnitZ()) const;
-  Robot copy() const;
-protected:
-  std::shared_ptr<rbd::MultiBody> mb_;
-  std::shared_ptr<rbd::MultiBodyConfig> mbc_;
 private:
-  std::shared_ptr<rbd::MultiBodyGraph> mbg_;
+  std::string name;
+  Robots & robots;
+  unsigned int robots_idx;
   std::map<int, sva::PTransformd> bodyTransforms;
   std::vector< std::vector<double> > ql_;
   std::vector< std::vector<double> > qu_;
@@ -160,31 +205,21 @@ private:
   std::map<std::string, unsigned int> bodyIndexByNameD;
   std::map<std::string, ForceSensor> forceSensorsParentD;
   std::map<std::string, std::string> parentBodyForceSensorD;
-public:
-  Robot() {}
-};
-
-struct Robots
-{
-public:
-  Robots() {}
-  Robots(const std::vector<mc_rbdyn::Robot> & robots, int robotIndex = -1, int envIndex = -1);
-  Robots(const Robots & rhs);
-  Robots & operator=(const Robots & rhs);
-
-  Robot & robot();
-
-  const Robot & robot() const;
-
-  const Robot & env() const;
-
-  Robot & env();
-public:
-  std::vector<mc_rbdyn::Robot> robots;
-  std::vector<rbd::MultiBody> mbs;
-  std::vector<rbd::MultiBodyConfig> mbcs;
-  unsigned int robotIndex;
-  unsigned int envIndex;
+protected:
+  Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
+        const std::map<int, sva::PTransformd> & bodyTransforms,
+        const std::vector< std::vector<double> > & ql, const std::vector< std::vector<double> > & qu,
+        const std::vector< std::vector<double> > & vl, const std::vector< std::vector<double> > & vu,
+        const std::vector< std::vector<double> > & tl, const std::vector< std::vector<double> > & tu,
+        const std::map<std::string, std::pair<unsigned int, std::shared_ptr<sch::S_Polyhedron> > > & convex,
+        const std::map<std::string, std::pair<unsigned int, std::shared_ptr<sch::STP_BV> > > & stpbv,
+        const std::map<int, sva::PTransformd> & collisionTransforms,
+        const std::map<std::string, mc_rbdyn::SurfacePtr> & surfaces,
+        const std::vector<ForceSensor> & forceSensors, const std::string & accelerometerBody = "",
+        const Springs & springs = Springs(), const std::vector< std::vector<Eigen::VectorXd> > & tlPoly = {},
+        const std::vector< std::vector<Eigen::VectorXd> > & tuPoly = {}, const std::vector<Flexibility> & flexibility = {});
+  void createWithBase(Robots & robots, unsigned int robots_idx, const Base & base, const Eigen::Vector3d & baseAxis = Eigen::Vector3d::UnitZ()) const;
+  void copy(Robots & robots, unsigned int robots_idx) const;
 };
 
 std::vector< std::vector<double> > jointsParameters(const rbd::MultiBody & mb, const double & coeff);
@@ -203,19 +238,9 @@ std::vector< std::map< int, std::vector<double> > > defaultBounds(const rbd::Mul
 template<typename sch_T>
 void applyTransformToSchById(const rbd::MultiBody & mb, const rbd::MultiBodyConfig & mbc, std::map<std::string, std::pair<unsigned int, sch_T> > & schById);
 
-Robot loadRobot(const RobotModule & module, const std::string & surfaceDir, sva::PTransformd * base = 0, int bId = -1);
-
 /*FIXME Not implemetend for now, only used for ATLAS
 void loadPolyTorqueBoundsData(const std::string & file, Robot & robot);
 */
-
-void loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir, Robot & robot, Robot & env);
-
-void loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir, sva::PTransformd * base, int bId, Robot & robot, Robot & env);
-
-Robots loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules, const std::vector<std::string> & surfaceDirs);
-
-Robot loadRobotFromUrdf(const std::string & urdf, bool withVirtualLinks = true, const std::vector<std::string> & filteredLinks = {}, bool fixed = false, sva::PTransformd * base = 0, int bId = -1);
 
 }
 

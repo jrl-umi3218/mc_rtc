@@ -749,8 +749,8 @@ bool enter_moveGripperWPT::eval(MCSeqController & ctl)
   if(ctl.curStance().contacts().size() <= 2)
   {
     unsigned int bodyIndex = ctl.robot().bodyIndexByName("BODY");
-    ctl.bodyOriTask.reset(new tasks::qp::OrientationTask(ctl.robots().mbs, 0, ctl.robot().bodyIdByName("BODY"), ctl.robot().mbc().bodyPosW[bodyIndex].rotation()));
-    ctl.bodyOriTaskSp.reset(new tasks::qp::SetPointTask(ctl.robots().mbs, 0, ctl.bodyOriTask.get(), 10, 1000));
+    ctl.bodyOriTask.reset(new tasks::qp::OrientationTask(ctl.robots().mbs(), 0, ctl.robot().bodyIdByName("BODY"), ctl.robot().mbc().bodyPosW[bodyIndex].rotation()));
+    ctl.bodyOriTaskSp.reset(new tasks::qp::SetPointTask(ctl.robots().mbs(), 0, ctl.bodyOriTask.get(), 10, 1000));
     ctl.qpsolver->solver.addTask(ctl.bodyOriTaskSp.get());
     ctl.isBodyTask = true;
   }
@@ -814,13 +814,13 @@ bool enter_adjustGripperP::eval(MCSeqController & ctl)
   if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
   std::cout << "Adjust Gripper P" << std::endl;
   double stiff = ctl.moveContactTask->posStiff + ctl.moveContactTask->extraPosStiff;
-  ctl.adjustPositionTask.reset(new tasks::qp::PositionTask(ctl.robots().mbs, 0, ctl.moveContactTask->robotBodyId,
+  ctl.adjustPositionTask.reset(new tasks::qp::PositionTask(ctl.robots().mbs(), 0, ctl.moveContactTask->robotBodyId,
                                                           ctl.moveContactTask->positionTask->position(),
                                                           ctl.moveContactTask->robotSurf->X_b_s().translation()));
-  ctl.adjustOrientationTask.reset(new tasks::qp::OrientationTask(ctl.robots().mbs, 0, ctl.moveContactTask->robotBodyId, ctl.moveContactTask->targetOri));
-  ctl.adjustPositionTaskPid.reset(new tasks::qp::PIDTask(ctl.robots().mbs, 0, ctl.adjustPositionTask.get(), stiff, 4, 2*std::sqrt(stiff), 0));
+  ctl.adjustOrientationTask.reset(new tasks::qp::OrientationTask(ctl.robots().mbs(), 0, ctl.moveContactTask->robotBodyId, ctl.moveContactTask->targetOri));
+  ctl.adjustPositionTaskPid.reset(new tasks::qp::PIDTask(ctl.robots().mbs(), 0, ctl.adjustPositionTask.get(), stiff, 4, 2*std::sqrt(stiff), 0));
   double oriStiff = ctl.moveContactTask->orientationTaskSp->stiffness();
-  ctl.adjustOrientationTaskPid.reset(new tasks::qp::PIDTask(ctl.robots().mbs, 0, ctl.adjustOrientationTask.get(), oriStiff, 0.5, 2*std::sqrt(oriStiff), 0));
+  ctl.adjustOrientationTaskPid.reset(new tasks::qp::PIDTask(ctl.robots().mbs(), 0, ctl.adjustOrientationTask.get(), oriStiff, 0.5, 2*std::sqrt(oriStiff), 0));
 
   Eigen::Vector3d error = ctl.moveContactTask->preTargetPos - ctl.moveContactTask->robotSurfacePos().translation();
   sva::MotionVecd M_0_s = ctl.moveContactTask->robotSurfaceVel();
@@ -1076,8 +1076,8 @@ bool enter_softCloseGripperP::eval(MCSeqController & ctl)
   Eigen::MatrixXd dofMat = Eigen::MatrixXd::Zero(6,6);
   for(size_t i = 0; i < 6; ++i) { dofMat(i,i) = 1; }
   Eigen::VectorXd speedMat = Eigen::VectorXd::Zero(6);
-  ctl.constSpeedConstr->addBoundedSpeed(ctl.robots().mbs, bodyId, robotSurf->X_b_s().translation(), dofMat, speedMat);
-  ctl.qpsolver->solver.updateConstrsNrVars(ctl.robots().mbs);
+  ctl.constSpeedConstr->addBoundedSpeed(ctl.robots().mbs(), bodyId, robotSurf->X_b_s().translation(), dofMat, speedMat);
+  ctl.qpsolver->solver.updateConstrsNrVars(ctl.robots().mbs());
   ctl.qpsolver->solver.updateConstrSize();
 
   return true;
@@ -1112,7 +1112,7 @@ bool live_softCloseGripperP::eval(MCSeqController & ctl)
     std::shared_ptr<mc_rbdyn::Surface> robotSurf = ctl.targetContact->r1Surface();
     unsigned int bodyId = ctl.robot().bodyIdByName(robotSurf->bodyName());
     ctl.constSpeedConstr->removeBoundedSpeed(bodyId);
-    ctl.qpsolver->solver.updateConstrsNrVars(ctl.robots().mbs);
+    ctl.qpsolver->solver.updateConstrsNrVars(ctl.robots().mbs());
     ctl.qpsolver->solver.updateConstrSize();
     std::cout << "Finished softCloseGripperP" << std::endl;
     return true;

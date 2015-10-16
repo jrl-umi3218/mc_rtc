@@ -4,7 +4,7 @@ namespace mc_control
 {
 
 MCVirtualController::MCVirtualController()
-: timeStep(0.005)
+: timeStep(0.002)
 {
 }
 

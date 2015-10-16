@@ -15,7 +15,7 @@ TrajectoryTask::TrajectoryTask(const mc_rbdyn::Robots & robots, unsigned int rob
 : robots(robots), surface(surface), X_0_t(X_0_t), wp(waypoints),
   duration(duration), timeStep(timeStep), t(0.)
 {
-  const mc_rbdyn::Robot & robot = robots.robots[robotIndex];
+  const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
   unsigned int bodyId = surface.bodyId(robot);
   X_0_start = surface.X_0_s(robot);
 
@@ -26,8 +26,8 @@ TrajectoryTask::TrajectoryTask(const mc_rbdyn::Robots & robots, unsigned int rob
     wp = mc_trajectory::generateInterpolatedWaypoints(start, end, nrWP);
   }
 
-  transTask.reset(new tasks::qp::TransformTask(robots.mbs, robotIndex, bodyId, X_0_start, surface.X_b_s()));
-  transTrajTask.reset(new tasks::qp::TrajectoryTask(robots.mbs, robotIndex, transTask.get(), stiffness, 2*sqrt(stiffness), 1.0));
+  transTask.reset(new tasks::qp::TransformTask(robots.mbs(), robotIndex, bodyId, X_0_start, surface.X_b_s()));
+  transTrajTask.reset(new tasks::qp::TrajectoryTask(robots.mbs(), robotIndex, transTask.get(), stiffness, 2*sqrt(stiffness), 1.0));
   Eigen::VectorXd dimWeight(6);
   for(unsigned int i = 0; i < 3; ++i)
   {
@@ -45,7 +45,7 @@ TrajectoryTask::TrajectoryTask(const mc_rbdyn::Robots & robots, unsigned int rob
 void TrajectoryTask::addToSolver(tasks::qp::QPSolver & solver)
 {
   solver.addTask(transTrajTask.get());
-  solver.updateTasksNrVars(robots.mbs);
+  solver.updateTasksNrVars(robots.mbs());
 }
 
 void TrajectoryTask::removeFromSolver(tasks::qp::QPSolver & solver)

@@ -110,8 +110,8 @@ Contact::Contact(const mc_rbdyn::Robots & robots, const std::string & robotSurfa
 Contact::Contact(const mc_rbdyn::Robots & robots, const std::string & robotSurface, const std::string & envSurface, const sva::PTransformd & X_es_rs, bool is_fixed)
 {
   impl.reset(new ContactImpl({0, 1,
-    robots.robots[0].surface(robotSurface).copy(),
-    robots.robots[1].surface(envSurface).copy(),
+    robots.robot(0).surface(robotSurface).copy(),
+    robots.robot(1).surface(envSurface).copy(),
     X_es_rs, is_fixed, sva::PTransformd::Identity(), -1}));
 }
 
@@ -121,8 +121,8 @@ Contact::Contact(const mc_rbdyn::Robots & robots, unsigned int r1Index, unsigned
             const sva::PTransformd & Xbs, int ambiguityId)
 {
   impl.reset(new ContactImpl({r1Index, r2Index,
-    robots.robots[r1Index].surface(r1Surface).copy(),
-    robots.robots[r2Index].surface(r2Surface).copy(),
+    robots.robot(r1Index).surface(r1Surface).copy(),
+    robots.robot(r2Index).surface(r2Surface).copy(),
     sva::PTransformd::Identity(), X_r2s_r1s != 0, Xbs, ambiguityId}));
   if(isFixed())
   {
@@ -208,12 +208,12 @@ std::pair<std::string, std::string> Contact::surfaces() const
 
 sva::PTransformd Contact::X_0_r1s(const mc_rbdyn::Robots & robots) const
 {
-  return impl->X_r2s_r1s*(impl->r2Surface->X_0_s(robots.robots[impl->r2Index]));
+  return impl->X_r2s_r1s*(impl->r2Surface->X_0_s(robots.robot(impl->r2Index)));
 }
 
 sva::PTransformd Contact::X_0_r2s(const mc_rbdyn::Robots & robots) const
 {
-  return impl->X_r2s_r1s.inv()*(impl->r1Surface->X_0_s(robots.robots[impl->r1Index]));
+  return impl->X_r2s_r1s.inv()*(impl->r1Surface->X_0_s(robots.robot(impl->r1Index)));
 }
 
 std::vector<sva::PTransformd> Contact::r1Points()
@@ -244,8 +244,8 @@ std::vector<sva::PTransformd> Contact::r2Points()
 
 sva::PTransformd Contact::compute_X_r2s_r1s(const mc_rbdyn::Robots & robots) const
 {
-  sva::PTransformd X_0_r1 = impl->r1Surface->X_0_s(robots.robots[impl->r1Index]);
-  sva::PTransformd X_0_r2 = impl->r2Surface->X_0_s(robots.robots[impl->r2Index]);
+  sva::PTransformd X_0_r1 = impl->r1Surface->X_0_s(robots.robot(impl->r1Index));
+  sva::PTransformd X_0_r2 = impl->r2Surface->X_0_s(robots.robot(impl->r2Index));
   return X_0_r1*X_0_r2.inv();
 }
 
@@ -254,15 +254,15 @@ tasks::qp::ContactId Contact::contactId(const mc_rbdyn::Robots & robots) const
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsign-conversion"
   return tasks::qp::ContactId(impl->r1Index, impl->r2Index,
-                              robots.robots[impl->r1Index].bodyIdByName(impl->r1Surface->bodyName()),
-                              robots.robots[impl->r2Index].bodyIdByName(impl->r2Surface->bodyName()));
+                              robots.robot(impl->r1Index).bodyIdByName(impl->r1Surface->bodyName()),
+                              robots.robot(impl->r2Index).bodyIdByName(impl->r2Surface->bodyName()));
 #pragma GCC diagnostic pop
 }
 
 mc_solver::QPContactPtr Contact::taskContact(const mc_rbdyn::Robots & robots) const
 {
-  const mc_rbdyn::Robot & r1 = robots.robots[impl->r1Index];
-  const mc_rbdyn::Robot & r2 = robots.robots[impl->r2Index];
+  const mc_rbdyn::Robot & r1 = robots.robot(impl->r1Index);
+  const mc_rbdyn::Robot & r2 = robots.robot(impl->r2Index);
   unsigned int r1BodyIndex = r1.bodyIndexByName(impl->r1Surface->bodyName());
   unsigned int r2BodyIndex = r2.bodyIndexByName(impl->r2Surface->bodyName());
   sva::PTransformd X_0_b1 = r1.mbc().bodyPosW[r1BodyIndex];
@@ -294,8 +294,8 @@ mc_solver::QPContactPtr Contact::taskContact(const mc_rbdyn::Robots & robots, co
 {
   mc_solver::QPContactPtr res;
 
-  const mc_rbdyn::Robot & r1 = robots.robots[impl->r1Index];
-  const mc_rbdyn::Robot & r2 = robots.robots[impl->r2Index];
+  const mc_rbdyn::Robot & r1 = robots.robot(impl->r1Index);
+  const mc_rbdyn::Robot & r2 = robots.robot(impl->r2Index);
 
   unsigned int r1BodyId = r1.bodyIdByName(impl->r1Surface->bodyName());
   unsigned int r2BodyId = r2.bodyIdByName(impl->r2Surface->bodyName());

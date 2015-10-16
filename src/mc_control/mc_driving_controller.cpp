@@ -28,9 +28,8 @@ MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rb
   mrqpsolver->addConstraintSet(collsConstraint);
 
   mrqpsolver->solver.addTask(hrp2postureTask.get());
-  robots().envIndex = 2;
 
-  mc_rbdyn::Robot& polaris = robots().robots[1];
+  mc_rbdyn::Robot& polaris = robots().robot(1);
 
   //robot().mbc().q[0] = {0.8018680589369662, 0.09936561148509283, -0.06541812773434774, 0.5855378381237102, -0.3421374123035909, -0.0002850914593993392, 0.8847053544605464};
   robot().mbc().q[0] = {1, 0, 0, 0, 0, 0, 0.76};
@@ -38,15 +37,15 @@ MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rb
   rbd::forwardKinematics(robot().mb(), robot().mbc());
   rbd::forwardVelocity(robot().mb(), robot().mbc());
 
-  drivingContacts.emplace_back(robots(), robots().robotIndex, 1,
+  drivingContacts.emplace_back(robots(), 0, 1,
                            "Butthock", "left_seat");
-  drivingContacts.emplace_back(robots(), robots().robotIndex, 1,
+  drivingContacts.emplace_back(robots(), 0, 1,
                            "LFullSole", "exit_platform");
-  drivingContacts.emplace_back(robots(), robots().robotIndex, 1,
+  drivingContacts.emplace_back(robots(), 0, 1,
                            "LeftThight", "left_seat");
-  drivingContacts.emplace_back(robots(), robots().robotIndex, 1,
+  drivingContacts.emplace_back(robots(), 0, 1,
                            "RightThight", "left_seat");
-  drivingContacts.emplace_back(robots(), robots().robotIndex, 1,
+  drivingContacts.emplace_back(robots(), 0, 1,
                            "RightGripper", "bar_wheel");
   //drivingContacts.emplace_back(robots().robotIndex, 1,
   //                         robot().surfaces.at("LowerBack"),
@@ -59,7 +58,7 @@ MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rb
   ef_task.addToSolver(mrqpsolver->solver);
   ef_task.removeFromSolver(mrqpsolver->solver);
 
-  polarisPostureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(mrqpsolver->robots.mbs, 1, mrqpsolver->robots.robots[1].mbc().q, 1, 100));
+  polarisPostureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(mrqpsolver->robots.mbs(), 1, mrqpsolver->robots.robot(1).mbc().q, 1, 100));
 
   std::cout << "MCDrivingController init done" << std::endl;
 }
@@ -75,7 +74,7 @@ void MCDrivingController::reset(const ControllerResetData & reset_data)
 {
   MCMRQPController::reset(reset_data);
   std::cout << "Enter reset" << std::endl;
-  mc_rbdyn::Robot& polaris = robots().robots[1];
+  mc_rbdyn::Robot& polaris = robots().robot(1);
   robot().mbc().zero(robot().mb());
   robot().mbc().q = reset_data.q;
   //robot().mbc().q[0] = {0.8018680589369662, 0.09936561148509283, -0.06541812773434774, 0.5855378381237102, -0.3421374123035909, -0.0002850914593993392, 0.8847053544605464};
@@ -100,7 +99,7 @@ void MCDrivingController::reset(const ControllerResetData & reset_data)
 
 void MCDrivingController::resetBasePose()
 {
-  mc_rbdyn::Robot& polaris = robots().robots[1];
+  mc_rbdyn::Robot& polaris = robots().robot(1);
   //Reset freeflyer, compute its position frow wheel and re-set it
   robot().mbc().q[0] = {1., 0., 0., 0., 0., 0., 0.};
   rbd::forwardKinematics(robot().mb(), robot().mbc());
@@ -125,7 +124,7 @@ void MCDrivingController::resetBasePose()
 
 void MCDrivingController::resetWheelTransform()
 {
-  mc_rbdyn::Robot& polaris = robots().robots[1];
+  mc_rbdyn::Robot& polaris = robots().robot(1);
   //Change wheel position
   int chassis_index = polaris.bodyIndexByName("chassis");
   //Do not take into account potential rotation of steering wheel
@@ -151,7 +150,7 @@ void MCDrivingController::resetWheelTransform()
 
 bool MCDrivingController::changeWheelAngle(double theta)
 {
-  int wheel_i = robots().robots[1].jointIndexByName("steering_joint");
+  int wheel_i = robots().robot(1).jointIndexByName("steering_joint");
   auto p = polarisPostureTask->posture();
   double old = p[wheel_i][0];
   p[wheel_i][0] = theta;

@@ -153,7 +153,7 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
   rbd::forwardKinematics(robot().mb(), robot().mbc());
   rbd::forwardVelocity(robot().mb(), robot().mbc());
 
-  constSpeedConstr.reset(new tasks::qp::BoundedSpeedConstr(robots().mbs, 0, timeStep));
+  constSpeedConstr.reset(new tasks::qp::BoundedSpeedConstr(robots().mbs(), 0, timeStep));
   constSpeedConstr->addToSolver(qpsolver->solver);
 
   dynamicsConstraint = mc_solver::DynamicsConstraint(qpsolver->robots, 0, timeStep,
@@ -311,8 +311,8 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
       sva::PTransformd X_0_s = c.r1Surface()->X_0_s(robot());
       double actiForce = 10; /* FIXME Hard-coded, should at least be an acti gripper const static member */
       double stopForce = 100; /* FIXME ^^ */
-      std::shared_ptr<tasks::qp::PositionTask> positionTask(new tasks::qp::PositionTask(robots().mbs, 0, contactId.r1BodyId, X_0_s.translation(), is_gs->X_b_s().translation()));
-      std::shared_ptr<tasks::qp::SetPointTask> positionTaskSp(new tasks::qp::SetPointTask(robots().mbs, 0, positionTask.get(), 20, 100000.));
+      std::shared_ptr<tasks::qp::PositionTask> positionTask(new tasks::qp::PositionTask(robots().mbs(), 0, contactId.r1BodyId, X_0_s.translation(), is_gs->X_b_s().translation()));
+      std::shared_ptr<tasks::qp::SetPointTask> positionTaskSp(new tasks::qp::SetPointTask(robots().mbs(), 0, positionTask.get(), 20, 100000.));
       qpsolver->solver.addTask(positionTaskSp.get());
       actiGrippers[bodyName] = ActiGripper(wrenchIndex, actiForce, stopForce, contactId, X_0_s, 0.04, positionTask, positionTaskSp); /*FIXME 0.04 is ActiGripperMaxPull */
     }

@@ -35,11 +35,11 @@ MCEgressController::MCEgressController(const std::string & env_path, const std::
     mc_rbdyn::Contact(robots(), "RightGripper", "bar_wheel")
   });
 
-  comTask.reset(new mc_tasks::CoMTask(qpsolver->robots, qpsolver->robots.robotIndex));
+  comTask.reset(new mc_tasks::CoMTask(qpsolver->robots, qpsolver->robots.robotIndex()));
   comTask->addToSolver(qpsolver->solver);
   comTask->removeFromSolver(qpsolver->solver);
 
-  efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", qpsolver->robots, qpsolver->robots.robotIndex));
+  efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", qpsolver->robots, qpsolver->robots.robotIndex()));
   efTask->addToSolver(qpsolver->solver);
   efTask->removeFromSolver(qpsolver->solver);
   std::cout << "MCEgressController init done" << std::endl;
@@ -54,13 +54,13 @@ void MCEgressController::reset(const ControllerResetData & reset_data)
     mc_rbdyn::Contact(robots(), "LFullSole", "exit_platform"),
     mc_rbdyn::Contact(robots(), "RightGripper", "bar_wheel")
   });
-  efTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex);
-  comTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex);
+  efTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex());
+  comTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex());
 }
 
 void MCEgressController::resetBasePose()
 {
-  mc_rbdyn::Robot& polaris = robots().robots[1];
+  mc_rbdyn::Robot& polaris = robots().robot(1);
   //Reset freeflyer, compute its position frow wheel and re-set it
   robot().mbc().q[0] = {1., 0., 0., 0., 0., 0., 0.};
   rbd::forwardKinematics(robot().mb(), robot().mbc());
@@ -107,7 +107,7 @@ bool MCEgressController::change_ef(const std::string & ef_name)
   {
     efTask->removeFromSolver(qpsolver->solver);
     postureTask->posture(robot().mbc().q);
-    efTask.reset(new mc_tasks::EndEffectorTask(ef_name, qpsolver->robots, qpsolver->robots.robotIndex));
+    efTask.reset(new mc_tasks::EndEffectorTask(ef_name, qpsolver->robots, qpsolver->robots.robotIndex()));
     efTask->addToSolver(qpsolver->solver);
     return true;
   }

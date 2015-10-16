@@ -6,18 +6,18 @@ namespace mc_tasks
 EndEffectorTask::EndEffectorTask(const std::string & bodyName, const mc_rbdyn::Robots & robots, unsigned int robotIndex, double stiffness, double weight)
 : robots(robots), bodyName(bodyName), inSolver(false)
 {
-  const mc_rbdyn::Robot & robot = robots.robots[robotIndex];
+  const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
   unsigned int bodyId = robot.bodyIdByName(bodyName);
   unsigned int bodyIndex = robot.bodyIndexByName(bodyName);
   sva::PTransformd bpw = robot.mbc().bodyPosW[bodyIndex];
 
   curTransform = bpw;
 
-  positionTask.reset(new tasks::qp::PositionTask(robots.mbs, robotIndex, bodyId, bpw.translation(), Eigen::Vector3d(0,0,0)));
-  positionTaskSp.reset(new tasks::qp::SetPointTask(robots.mbs, robotIndex, positionTask.get(), stiffness, weight));
+  positionTask.reset(new tasks::qp::PositionTask(robots.mbs(), robotIndex, bodyId, bpw.translation(), Eigen::Vector3d(0,0,0)));
+  positionTaskSp.reset(new tasks::qp::SetPointTask(robots.mbs(), robotIndex, positionTask.get(), stiffness, weight));
 
-  orientationTask.reset(new tasks::qp::OrientationTask(robots.mbs, robotIndex, bodyId, bpw.rotation()));
-  orientationTaskSp.reset(new tasks::qp::SetPointTask(robots.mbs, robotIndex, orientationTask.get(), stiffness, weight));
+  orientationTask.reset(new tasks::qp::OrientationTask(robots.mbs(), robotIndex, bodyId, bpw.rotation()));
+  orientationTaskSp.reset(new tasks::qp::SetPointTask(robots.mbs(), robotIndex, orientationTask.get(), stiffness, weight));
 
   err = Eigen::VectorXd(dim());
   spd = Eigen::VectorXd(dim());
@@ -25,7 +25,7 @@ EndEffectorTask::EndEffectorTask(const std::string & bodyName, const mc_rbdyn::R
 
 void EndEffectorTask::resetTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex)
 {
-  const mc_rbdyn::Robot & robot = robots.robots[robotIndex];
+  const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
   unsigned int bodyIndex = robot.bodyIndexByName(bodyName);
 
   curTransform = robot.mbc().bodyPosW[bodyIndex];
@@ -39,8 +39,8 @@ void EndEffectorTask::removeFromSolver(tasks::qp::QPSolver & solver)
   {
     solver.removeTask(positionTaskSp.get());
     solver.removeTask(orientationTaskSp.get());
-    solver.updateTasksNrVars(robots.mbs);
-    solver.updateConstrsNrVars(robots.mbs);
+    solver.updateTasksNrVars(robots.mbs());
+    solver.updateConstrsNrVars(robots.mbs());
     solver.updateConstrSize();
     inSolver = false;
   }
@@ -52,8 +52,8 @@ void EndEffectorTask::addToSolver(tasks::qp::QPSolver & solver)
   {
     solver.addTask(positionTaskSp.get());
     solver.addTask(orientationTaskSp.get());
-    solver.updateTasksNrVars(robots.mbs);
-    solver.updateConstrsNrVars(robots.mbs);
+    solver.updateTasksNrVars(robots.mbs());
+    solver.updateConstrsNrVars(robots.mbs());
     solver.updateConstrSize();
     inSolver = true;
   }
