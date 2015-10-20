@@ -42,7 +42,7 @@ static const char* mccontrol_spec[] =
     "language",          "C++",
     "lang_type",         "compile",
     // Configuration variables
-    "conf.default.timeStep", "0.005",
+    "conf.default.timeStep", "0.002",
     "conf.default.is_enabled", "0",
     ""
   };
@@ -112,7 +112,7 @@ RTC::ReturnCode_t MCControl::onInitialize()
 
   // <rtc-template block="bind_config">
   // Bind variables and configuration variable
-  bindParameter("timeStep", m_timeStep, "0.005");
+  bindParameter("timeStep", m_timeStep, "0.002");
   bindParameter("is_enabled", controller.running, "0");
 
   // </rtc-template>

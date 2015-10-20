@@ -108,6 +108,8 @@ install(
     data/drc_stairs_climbing_config.json
     data/jvrc_ladder_climbing.json
     data/jvrc_ladder_climbing_config.json
+    data/irex_ladder_climbing.json
+    data/irex_ladder_climbing_config.json
   DESTINATION share/mc_rtc
 )
 install(
