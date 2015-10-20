@@ -177,6 +177,69 @@
             }
          ],
          "robotEnv" : [
+            {
+               "body1" : "RLEG_LINK3",
+               "body2" : "step3",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.05,
+                  "sDist" : 0.025
+               }
+            },
+            {
+               "body1" : "RLEG_LINK3",
+               "body2" : "step4",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.05,
+                  "sDist" : 0.025
+               }
+            },
+            {
+               "body1" : "RLEG_LINK3",
+               "body2" : "step5",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.05,
+                  "sDist" : 0.025
+               }
+            },
+            {
+               "body1" : "RLEG_LINK3",
+               "body2" : "step6",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.05,
+                  "sDist" : 0.025
+               }
+            },
+            {
+               "body1" : "RLEG_LINK3",
+               "body2" : "step7",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.05,
+                  "sDist" : 0.025
+               }
+            },
+            {
+               "body1" : "RLEG_LINK3",
+               "body2" : "step8",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.05,
+                  "sDist" : 0.025
+               }
+            },
+            {
+               "body1" : "RLEG_LINK3",
+               "body2" : "step9",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.05,
+                  "sDist" : 0.025
+               }
+            }
          ],
          "robotEnvContactFilter" : []
       }
