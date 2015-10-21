@@ -5,6 +5,8 @@
 #include <mc_control/mc_mrqp_controller.h>
 #include <mc_tasks/EndEffectorTask.h>
 
+#include <fstream>
+
 namespace mc_control
 {
 
@@ -39,6 +41,11 @@ struct MCDrivingController : MCMRQPController
     mc_solver::KinematicsConstraint polarisKinematicsConstraint;
     std::vector<mc_rbdyn::Contact> drivingContacts;
     mc_solver::CollisionsConstraint collsConstraint;
+    unsigned iter_;
+    double theta_;
+    std::ofstream log_;
+    double tMax_;
+    double tMin_;
 };
 
 }

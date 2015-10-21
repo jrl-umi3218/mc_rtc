@@ -19,7 +19,9 @@ MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rb
     polarisKinematicsConstraint(robots(), 1, timeStep, false,
         {0.1, 0.01, 0.01}, 0.5),
     drivingContacts(),
-    collsConstraint(robots(), 0, 1, timeStep)
+    collsConstraint(robots(), 0, 1, timeStep),
+    iter_(0), theta_(0), log_("/tmp/driving-ankle-value.log"),
+    tMax_(0.5), tMin_(-0.5)
 {
   mrqpsolver->addConstraintSet(hrp2contactConstraint);
   mrqpsolver->addConstraintSet(hrp2kinematicsConstraint);
@@ -27,6 +29,9 @@ MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rb
   mrqpsolver->addConstraintSet(hrp2selfCollisionConstraint);
   mrqpsolver->addConstraintSet(collsConstraint);
 
+  std::vector<tasks::qp::JointStiffness> jsv;
+  jsv.push_back({static_cast<int>(robot().jointIdByName("RLEG_JOINT4")), 100.});
+  hrp2postureTask->jointsStiffness(robots().mbs(), jsv);
   mrqpsolver->solver.addTask(hrp2postureTask.get());
 
   mc_rbdyn::Robot& polaris = robots().robot(1);
@@ -67,6 +72,8 @@ bool MCDrivingController::run()
 {
   bool success = MCMRQPController::run();
   //std::cout << robots().robots[1].mbc().q[11][0] << std::endl;
+  log_ << iter_*timeStep << " " << robot().mbc().q[robot().jointIndexByName("RLEG_JOINT4")][0] << " " << theta_ << std::endl;
+  iter_++;
   return success;
 }
 
@@ -171,12 +178,10 @@ bool MCDrivingController::changeGaze(double pan, double tilt)
 
 bool MCDrivingController::changeAnkleAngle(double theta)
 {
-  double tMax = 0.5;
-  double tMin = -0.5;
-  theta = (tMax-tMin)*theta + tMax;
+  theta_ = (tMax_-tMin_)*theta + tMax_;
   int ankle_i = robot().jointIndexByName("RLEG_JOINT4");
   auto p = hrp2postureTask->posture();
-  p[ankle_i][0] = theta;
+  p[ankle_i][0] = theta_;
   hrp2postureTask->posture(p);
   return true;
 }
