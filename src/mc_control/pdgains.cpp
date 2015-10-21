@@ -2,7 +2,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include <io/iob.h>
+#include <hrpsys/io/iob.h>
 
 namespace hrp2
 {

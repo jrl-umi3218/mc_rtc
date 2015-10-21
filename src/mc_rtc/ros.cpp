@@ -118,8 +118,9 @@ public:
 
     sva::PTransformd X_0_hl1 = robot.mbc->bodyPosW[robot.bodyIndexByName("HEAD_LINK1")];
     sva::PTransformd X_hl1_xtion = sva::PTransformd(Eigen::Quaterniond(0.995397, 1.7518e-05, 0.0950535, -0.0122609).inverse(), Eigen::Vector3d(0.09699157105, 0.0185, 0.12699543329));
+    //sva::PTransformd X_hl1_xtion = sva::PTransformd(Eigen::Quaterniond(0.974478, -0.00161289, 0.224165, -0.0118453).inverse(), Eigen::Vector3d(0.09699157105, 0.0185, 0.12699543329));
     sva::PTransformd X_0_base_odom = sva::PTransformd(
-                        Eigen::Quaterniond(sva::RotZ(rpy.data.r)*sva::RotY(rpy.data.p)*sva::RotX(rpy.data.y)),
+                        Eigen::Quaterniond(sva::RotZ(rpy.data.y)*sva::RotY(rpy.data.p)*sva::RotX(-rpy.data.r).inverse()),
                         Eigen::Vector3d(p.data.x, p.data.y, p.data.z));
     sva::PTransformd X_0_xtion = X_hl1_xtion * X_0_hl1;
     sva::PTransformd X_0_base = robot.mbc->bodyPosW[0];

@@ -180,7 +180,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
     /*FIXME Quick fix to handle HRP2JVRC like HRP2DRC
     qIn.resize(m_qIn.data.length()); */
     qIn.resize(MODEL_DOF);
-    for(unsigned int i = 0; i < std::min(MODEL_DOF, m_qIn.data.length()); ++i)
+    for(unsigned int i = 0; i < std::min(MODEL_DOF, static_cast<unsigned int>(m_qIn.data.length())); ++i)
     {
       qIn[i] = m_qIn.data[i];
     }
