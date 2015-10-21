@@ -47,7 +47,7 @@ bool MCGlobalController::get_joint_pos(const std::string & jname, double & v)
   {
     if(controller->robot().hasJoint(jname))
     {
-      const auto & q = controller->robot().mbc->q[controller->robot().jointIndexByName(jname)];
+      const auto & q = controller->robot().mbc().q[controller->robot().jointIndexByName(jname)];
       if(q.size() == 1)
       {
         v = q[0];

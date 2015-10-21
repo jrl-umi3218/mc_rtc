@@ -29,7 +29,7 @@ find_package(Boost REQUIRED COMPONENTS system filesystem thread)
 add_required_dependency(jsoncpp)
 add_required_dependency(hrpsys-base)
 add_required_dependency(Tasks)
-add_required_dependency(mc_rbdyn_urdf)
+add_required_dependency(mc_rbdyn_urdf_cpp)
 
 # Find GEOS flags using geos-config
 find_program(GEOS_CONFIG geos-config
@@ -108,6 +108,8 @@ install(
     data/drc_stairs_climbing_config.json
     data/jvrc_ladder_climbing.json
     data/jvrc_ladder_climbing_config.json
+    data/irex_ladder_climbing.json
+    data/irex_ladder_climbing_config.json
   DESTINATION share/mc_rtc
 )
 install(

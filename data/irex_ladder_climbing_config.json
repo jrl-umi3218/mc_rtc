@@ -1,0 +1,309 @@
+
+{
+   "General" : {
+      "CoMMove" : {
+         "postureTask" : {
+            "stiffness" : 0.5,
+            "weight" : 10.0
+         },
+         "comTask" : {
+            "stiffness" : 15.0,
+            "extraStiffness" : 19.0,
+            "weight" : 200.0,
+            "targetSpeed" : 0.005
+         },
+         "comObj" : {
+            "comOffset" : [ 0.0, 0.0, 0.0 ],
+            "posThresh" : 0.01,
+            "velThresh" : 0.001,
+            "timeout" : 3.0
+         }
+      },
+      "ContactMove" : {
+         "postureTask" : {
+            "stiffness" : 2.0,
+            "weight" : 10.0
+         },
+         "comTask" : {
+            "stiffness" : 5.0,
+            "extraStiffness" : 12.0,
+            "weight" : 100.0,
+            "targetSpeed" : 0.001
+         },
+         "comObj" : {
+            "comOffset" : [ 0.0, 0.0, 0.0 ]
+         },
+         "contactObj" : {
+            "posThresh" : 0.03,
+            "velThresh" : 0.005,
+            "preContactDist" : 0.1
+         },
+         "contactTask" : {
+            "position" : {
+               "stiffness" : 10.0,
+               "extraStiffness" : 24.0,
+               "weight" : 300.0,
+               "targetSpeed" : 0.0015
+            },
+            "orientation" : {
+               "stiffness" : 15.0,
+               "weight" : 1.0,
+               "finalWeight" : 1000.0
+            },
+            "linVel" : {
+               "stiffness" : 100.0,
+               "weight" : 10000.0,
+               "speed" : 0.05
+            },
+            "waypointConf" : {
+               "conf" : {
+                  "x" : -0.6,
+                  "y" : 1.0,
+                  "z" : 1.2,
+                  "nOff" : 0.1
+               },
+               "thresh" : 0.150,
+               "type" : "percentWaypoint"
+            },
+            "collisionConf" : {
+               "iDist" : 0.01,
+               "sDist" : 0.005,
+               "damping" : 0.05
+            }
+         }
+      },
+      "GripperMove" : {
+         "postureTask" : {
+            "stiffness" : 0.1,
+            "weight" : 10.0
+         },
+         "comTask" : {
+            "stiffness" : 2.0,
+            "extraStiffness" : 5.0,
+            "weight" : 400.0,
+            "targetSpeed" : 0.005
+         },
+         "contactObj" : {
+            "adjustOffset" : [ 0.0, 0.0, 0.0 ],
+            "adjustOriTBNWeight" : [ 1.0, 1.0, 1.0 ],
+            "adjustPosThresh" : 0.05,
+            "adjustVelThresh" : 0.02,
+            "adjustOriThresh" : 0.1,
+            "posThresh" : 0.03,
+            "preContactDist" : 0.075,
+            "velThresh" : 0.05,
+            "gripperMoveAwayDist" : 0.0
+         },
+         "contactTask" : {
+            "position" : {
+               "stiffness" : 5.0,
+               "extraStiffness" : 7.5,
+               "weight" : 600.0,
+               "targetSpeed" : 0.005
+            },
+            "orientation" : {
+               "stiffness" : 10.0,
+               "weight" : 1.0,
+               "finalWeight" : 1000.0
+            },
+            "linVel" : {
+               "stiffness" : 100.0,
+               "weight" : 1000.0,
+               "speed" : 0.04
+            },
+            "waypointConf" : {
+               "conf" : {
+                  "x" : 0.25,
+                  "y" : 0.1,
+                  "z" : 0.75,
+                  "nOff" : 0.10
+               },
+               "thresh" : 0.10,
+               "type" : "percentWaypoint"
+            },
+            "collisionConf" : {
+               "damping" : 0.050,
+               "iDist" : 0.010,
+               "sDist" : 0.0050
+            }
+         }
+      },
+      "Collisions" : {
+         "autoc" : [
+            {
+               "body1" : "RARM_LINK6",
+               "body2" : "RLEG_LINK2",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.1,
+                  "sDist" : 0.05
+               }
+            },
+            {
+               "body1" : "LARM_LINK3",
+               "body2" : "BODY",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.1,
+                  "sDist" : 0.05
+               }
+            },
+            {
+               "body1" : "LLEG_LINK2",
+               "body2" : "BODY",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.05,
+                  "sDist" : 0.02
+               }
+            },
+            {
+               "body1" : "RLEG_LINK2",
+               "body2" : "BODY",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.05,
+                  "sDist" : 0.02
+               }
+            },
+            {
+               "body1" : "RARM_LINK6",
+               "body2" : "RLEG_LINK3",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.1,
+                  "sDist" : 0.05
+               }
+            }
+         ],
+         "robotEnv" : [
+            {
+               "body1" : "RLEG_LINK3",
+               "body2" : "step3",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.05,
+                  "sDist" : 0.025
+               }
+            },
+            {
+               "body1" : "RLEG_LINK3",
+               "body2" : "step4",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.05,
+                  "sDist" : 0.025
+               }
+            },
+            {
+               "body1" : "RLEG_LINK3",
+               "body2" : "step5",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.05,
+                  "sDist" : 0.025
+               }
+            },
+            {
+               "body1" : "RLEG_LINK3",
+               "body2" : "step6",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.05,
+                  "sDist" : 0.025
+               }
+            },
+            {
+               "body1" : "RLEG_LINK3",
+               "body2" : "step7",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.05,
+                  "sDist" : 0.025
+               }
+            },
+            {
+               "body1" : "RLEG_LINK3",
+               "body2" : "step8",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.05,
+                  "sDist" : 0.025
+               }
+            },
+            {
+               "body1" : "RLEG_LINK3",
+               "body2" : "step9",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.05,
+                  "sDist" : 0.025
+               }
+            }
+         ],
+         "robotEnvContactFilter" : []
+      }
+   },
+   "StepByStep" : [
+      {
+        "type" : "add",
+        "r1Surface" : "RightGripperReverse",
+        "r2Surface" : "StepC4",
+        "postureTask" : {
+           "stiffness" : 2.0,
+           "weight" : 15.0
+        }
+      },
+      {
+        "type" : "add",
+        "r1Surface" : "LFrontSole",
+        "r2Surface" : "Step1",
+        "contactTask" : {
+           "waypointConf" : {
+              "conf" : {
+                 "x" : 0.25,
+                 "y" : 1.0,
+                 "z" : 1.25,
+                 "nOff" : 0.1
+              },
+              "thresh" : 0.10,
+              "type" : "percentWaypoint"
+           }
+        }
+      },
+      {
+        "type" : "add",
+        "r1Surface" : "LFrontSole",
+        "r2Surface" : "Step1",
+        "contactTask" : {
+           "waypointConf" : {
+              "conf" : {
+                 "x" : 0.25,
+                 "y" : 1.0,
+                 "z" : 1.25,
+                 "nOff" : 0.1
+              },
+              "thresh" : 0.10,
+              "type" : "percentWaypoint"
+           }
+        }
+      },
+      {
+        "type" : "add",
+        "r1Surface" : "RFrontSole",
+        "r2Surface" : "Step2",
+        "contactTask" : {
+           "waypointConf" : {
+              "conf" : {
+                 "x" : 0.25,
+                 "y" : 1.0,
+                 "z" : 1.25,
+                 "nOff" : 0.1
+              },
+              "thresh" : 0.10,
+              "type" : "percentWaypoint"
+           }
+        }
+      }
+   ]
+}

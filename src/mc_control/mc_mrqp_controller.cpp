@@ -21,13 +21,13 @@ MCMRQPController::MCMRQPController(const std::vector<std::shared_ptr<mc_rbdyn::R
       surfaceDirs.push_back(m->path + "/rsdf/" + m->name + "/");
     }
 
-    mc_rbdyn::Robots robots = loadRobots(robot_modules, surfaceDirs);
+    mc_rbdyn::Robots robots = mc_rbdyn::loadRobots(robot_modules, surfaceDirs);
 
-    for(auto & robot: robots.robots)
+    for(auto & robot: robots.robots())
     {
-      robot.mbc->gravity = Eigen::Vector3d(0, 0, 9.81);
-      rbd::forwardKinematics(*(robot.mb), *(robot.mbc));
-      rbd::forwardVelocity(*(robot.mb), *(robot.mbc));
+      robot.mbc().gravity = Eigen::Vector3d(0, 0, 9.81);
+      rbd::forwardKinematics(robot.mb(), robot.mbc());
+      rbd::forwardVelocity(robot.mb(), robot.mbc());
     }
 
     mrqpsolver.reset(new mc_solver::QPSolver(robots, timeStep));
@@ -38,9 +38,9 @@ MCMRQPController::MCMRQPController(const std::vector<std::shared_ptr<mc_rbdyn::R
     std::ifstream ifs(urdfPath);
     std::stringstream urdf;
     urdf << ifs.rdbuf();
-    mc_rbdyn::Robot urdfRobot = mc_rbdyn::loadRobotFromUrdf(urdf.str());
-    lgripper.reset(new Gripper(urdfRobot, "l_gripper", robot(), urdf.str(), 0, timeStep));
-    rgripper.reset(new Gripper(urdfRobot, "r_gripper", robot(), urdf.str(), 0, timeStep));
+    mc_rbdyn::Robots urdfRobot = mc_rbdyn::loadRobotFromUrdf("temp_hrp2_drc", urdf.str());
+    lgripper.reset(new Gripper(urdfRobot.robot(), "l_gripper", robot(), urdf.str(), 0, timeStep));
+    rgripper.reset(new Gripper(urdfRobot.robot(), "r_gripper", robot(), urdf.str(), 0, timeStep));
   }
   hrp2contactConstraint = mc_solver::ContactConstraint(timeStep, mc_solver::ContactConstraint::Velocity);
   hrp2dynamicsConstraint = mc_solver::DynamicsConstraint(mrqpsolver->robots, hrp2_drc_index, timeStep,
@@ -72,7 +72,7 @@ MCMRQPController::MCMRQPController(const std::vector<std::shared_ptr<mc_rbdyn::R
     mc_solver::Collision("LARM_LINK5", "CHEST_LINK1", 0.05, 0.01, 0.)
   });
 
-  hrp2postureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(mrqpsolver->robots.mbs, hrp2_drc_index, mrqpsolver->robots.robot().mbc->q, 1, 5));
+  hrp2postureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(mrqpsolver->robots.mbs(), hrp2_drc_index, mrqpsolver->robots.robot().mbc().q, 1, 5));
   std::cout << "MCController(base) ready" << std::endl;
 }
 
@@ -93,11 +93,11 @@ const QPResultMsg & MCMRQPController::send(const double & t)
 
 void MCMRQPController::reset(const ControllerResetData & reset_data)
 {
-  robot().mbc->zero(*(robot().mb));
-  robot().mbc->q = reset_data.q;
+  robot().mbc().zero(robot().mb());
+  robot().mbc().q = reset_data.q;
   hrp2postureTask->posture(reset_data.q);
-  rbd::forwardKinematics(*(robot().mb), *(robot().mbc));
-  rbd::forwardVelocity(*(robot().mb), *(robot().mbc));
+  rbd::forwardKinematics(robot().mb(), robot().mbc());
+  rbd::forwardVelocity(robot().mb(), robot().mbc());
   mrqpsolver->setContacts({
   });
 }

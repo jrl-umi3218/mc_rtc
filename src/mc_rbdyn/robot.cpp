@@ -31,35 +31,35 @@ ForceSensor::ForceSensor(const std::string & n, const std::string & pn, const sv
 {
 }
 
-Robot::Robot(const rbd::MultiBody & mb, const rbd::MultiBodyConfig & mbc, const rbd::MultiBodyGraph & mbg,
+Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
         const std::map<int, sva::PTransformd> & bodyTransforms,
         const std::vector< std::vector<double> > & ql, const std::vector< std::vector<double> > & qu,
         const std::vector< std::vector<double> > & vl, const std::vector< std::vector<double> > & vu,
         const std::vector< std::vector<double> > & tl, const std::vector< std::vector<double> > & tu,
-        const std::map<std::string, std::pair< unsigned int, std::shared_ptr<sch::S_Polyhedron> > > & convex,
-        const std::map<std::string, std::pair< unsigned int, std::shared_ptr<sch::STP_BV> > > & stpbv,
+        const std::map<std::string, std::pair< unsigned int, std::shared_ptr<sch::S_Polyhedron> > > & convexes,
+        const std::map<std::string, std::pair< unsigned int, std::shared_ptr<sch::STP_BV> > > & stpbvs,
         const std::map<int, sva::PTransformd> & collisionTransforms, const std::map<std::string, std::shared_ptr<mc_rbdyn::Surface> > & surfaces,
         const std::vector<ForceSensor> & forceSensors, const std::string & accelerometerBody,
         const Springs & springs, const std::vector< std::vector<Eigen::VectorXd> > & tlPoly,
         const std::vector< std::vector<Eigen::VectorXd> > & tuPoly, const std::vector<Flexibility> & flexibility)
-: mb(new rbd::MultiBody(mb)), mbc(new rbd::MultiBodyConfig(mbc)), mbg(new rbd::MultiBodyGraph(mbg)),
-  bodyTransforms(bodyTransforms), ql(ql), qu(qu), vl(vl), vu(vu), tl(tl), tu(tu),
-  convex(convex), stpbv(stpbv), collisionTransforms(collisionTransforms), surfaces(),
+: name(name), robots(robots), robots_idx(robots_idx),
+  bodyTransforms(bodyTransforms), ql_(ql), qu_(qu), vl_(vl), vu_(vu), tl_(tl), tu_(tu),
+  convexes(convexes), stpbvs(stpbvs), collisionTransforms(collisionTransforms), surfaces_(),
   forceSensors(forceSensors), accelerometerBody(accelerometerBody), springs(springs), tlPoly(tlPoly),
-  tuPoly(tuPoly), flexibility(flexibility)
+  tuPoly(tuPoly), flexibility_(flexibility)
 {
   // Copy the surfaces
   for(const auto & p : surfaces)
   {
-    this->surfaces[p.first] = p.second->copy();
+    this->surfaces_[p.first] = p.second->copy();
   }
-  for(size_t i = 0; i < this->mb->joints().size(); ++i)
+  for(size_t i = 0; i < this->mb().joints().size(); ++i)
   {
-    jointIndexByNameD[this->mb->joints()[i].name()] = i;
+    jointIndexByNameD[this->mb().joints()[i].name()] = i;
   }
-  for(size_t i = 0; i < this->mb->bodies().size(); ++i)
+  for(size_t i = 0; i < this->mb().bodies().size(); ++i)
   {
-    bodyIndexByNameD[this->mb->bodies()[i].name()] = i;
+    bodyIndexByNameD[this->mb().bodies()[i].name()] = i;
   }
   for(const ForceSensor & sensor : forceSensors)
   {
@@ -69,7 +69,7 @@ Robot::Robot(const rbd::MultiBody & mb, const rbd::MultiBodyConfig & mbc, const 
   if(this->accelerometerBody == "" and this->hasBody("Accelerometer"))
   {
     unsigned int index = bodyIndexByName("Accelerometer");
-    this->accelerometerBody = this->mb->body(this->mb->parent(index)).name();
+    this->accelerometerBody = this->mb().body(this->mb().parent(index)).name();
   }
 }
 
@@ -95,12 +95,12 @@ unsigned int Robot::bodyIndexByName(const std::string & name) const
 
 unsigned int Robot::jointIdByName(const std::string & name) const
 {
-  return mb->joint(jointIndexByNameD.at(name)).id();
+  return mb().joint(jointIndexByNameD.at(name)).id();
 }
 
 unsigned int Robot::bodyIdByName(const std::string & name) const
 {
-  return mb->body(bodyIndexByNameD.at(name)).id();
+  return mb().body(bodyIndexByNameD.at(name)).id();
 }
 
 std::string Robot::forceSensorParentBodyName(const std::string & fs) const
@@ -123,91 +123,241 @@ std::string Robot::forceSensorByBody(const std::string & body) const
   return parentBodyForceSensorD.at(body);
 }
 
-Robots::Robots(const std::vector<mc_rbdyn::Robot> & robots, int robotIndex, int envIndex)
-: robots(robots), mbs(0), mbcs(0), robotIndex(0), envIndex(0)
+rbd::MultiBody & Robot::mb()
 {
-  if(robotIndex >= 0) { this->robotIndex = static_cast<unsigned int>(robotIndex); }
-  if(envIndex >= 0) { this->envIndex = static_cast<unsigned int>(envIndex); }
-  for(size_t i = 0; i < robots.size(); ++i)
+  return robots.mbs_[robots_idx];
+}
+const rbd::MultiBody & Robot::mb() const
+{
+  return robots.mbs_[robots_idx];
+}
+
+rbd::MultiBodyConfig & Robot::mbc()
+{
+  return robots.mbcs_[robots_idx];
+}
+const rbd::MultiBodyConfig & Robot::mbc() const
+{
+  return robots.mbcs_[robots_idx];
+}
+
+rbd::MultiBodyGraph & Robot::mbg()
+{
+  return robots.mbgs_[robots_idx];
+}
+const rbd::MultiBodyGraph & Robot::mbg() const
+{
+  return robots.mbgs_[robots_idx];
+}
+
+const std::vector<std::vector<double>> & Robot::ql() const
+{
+  return ql_;
+}
+const std::vector<std::vector<double>> & Robot::qu() const
+{
+  return qu_;
+}
+const std::vector<std::vector<double>> & Robot::vl() const
+{
+  return vl_;
+}
+const std::vector<std::vector<double>> & Robot::vu() const
+{
+  return vu_;
+}
+const std::vector<std::vector<double>> & Robot::tl() const
+{
+  return tl_;
+}
+const std::vector<std::vector<double>> & Robot::tu() const
+{
+  return tu_;
+}
+
+const std::vector<Flexibility> & Robot::flexibility() const
+{
+  return flexibility_;
+}
+
+mc_rbdyn::Surface & Robot::surface(const std::string & sName)
+{
+  return const_cast<mc_rbdyn::Surface&>(static_cast<const Robot*>(this)->surface(sName));
+}
+const mc_rbdyn::Surface & Robot::surface(const std::string & sName) const
+{
+  if(surfaces_.count(sName) == 0)
   {
-    mbs.push_back(*(this->robots[i].mb));
-    mbcs.push_back(*(this->robots[i].mbc));
-    if(robotIndex < 0 and this->robots[i].mb->nrDof()) { this->robotIndex = i; robotIndex = 0; }
-    if(envIndex < 0 and this->robots[i].mb->nrDof() == 0) { this->envIndex = i; envIndex = 0; }
-    /*FIXME Hackish to keep things coherent in Robots between the Robot vector and the mb/mbc vectors */
-    delete this->robots[i].mb;
-    delete this->robots[i].mbc;
+    std::cerr << "No surface named " << sName << " found in this robot" << std::endl;
+    throw("Surface does not exist");
   }
-  /* Should be done here, because vector adresses can change */
-  for(size_t i = 0; i < this->robots.size(); ++i)
+  return *(surfaces_.at(sName));
+}
+
+const std::map<std::string, SurfacePtr> & Robot::surfaces() const
+{
+  return surfaces_;
+}
+
+Robot::convex_pair_t & Robot::convex(const std::string & cName)
+{
+  return const_cast<Robot::convex_pair_t &>(static_cast<const Robot*>(this)->convex(cName));
+}
+const Robot::convex_pair_t & Robot::convex(const std::string & cName) const
+{
+  if(convexes.count(cName) == 0)
   {
-    this->robots[i].mb = &(mbs[i]);
-    this->robots[i].mbc = &(mbcs[i]);
+    std::cerr << "No convex named " << cName << " found in this robot" << std::endl;
+    throw("Convex does not exist");
+  }
+  return convexes.at(cName);
+}
+
+const sva::PTransformd & Robot::bodyTransform(int id) const
+{
+  if(bodyTransforms.count(id) == 0)
+  {
+    std::cerr << "No body transform with id " << id << " found in this robot" << std::endl;
+    throw("Body transform does not exist");
+  }
+  return bodyTransforms.at(id);
+}
+
+const sva::PTransformd & Robot::collisionTransform(int id) const
+{
+  if(collisionTransforms.count(id) == 0)
+  {
+    std::cerr << "No collision transform with id " << id << " found in this robot" << std::endl;
+    throw("Collision transform does not exist");
+  }
+  return collisionTransforms.at(id);
+}
+
+void Robot::fixSurfaces()
+{
+  for(auto & s : surfaces_)
+  {
+    unsigned int bodyId = bodyIdByName(s.second->bodyName());
+    const sva::PTransformd & trans = bodyTransforms[bodyId];
+    s.second->X_b_s(s.second->X_b_s()*trans);
   }
 }
 
-Robots::Robots(const Robots & rhs)
-: robots(rhs.robots), mbs(rhs.mbs), mbcs(rhs.mbcs), robotIndex(rhs.robotIndex), envIndex(rhs.envIndex)
+Robots::Robots()
+: robots_(), mbs_(), mbcs_(), robotIndex_(0), envIndex_(0)
 {
-  for(size_t i = 0; i < robots.size(); ++i)
+}
+
+Robots::Robots(const Robots & rhs)
+: robots_(), mbs_(rhs.mbs_), mbcs_(rhs.mbcs_), robotIndex_(rhs.robotIndex_), envIndex_(rhs.envIndex_)
+{
+  for(size_t i = 0; i < rhs.robots_.size(); ++i)
   {
-    this->robots[i].mb = &(mbs[i]);
-    this->robots[i].mbc = &(mbcs[i]);
+    const Robot & robot = rhs.robots_[i];
+    robot.copy(*this, i);
   }
 }
 
 Robots & Robots::operator=(const Robots & rhs)
 {
   if(&rhs == this) { return *this; }
-  robots = rhs.robots;
-  mbs = rhs.mbs;
-  mbcs = rhs.mbcs;
-  robotIndex = rhs.robotIndex;
-  envIndex = rhs.envIndex;
-  for(size_t i = 0; i < robots.size(); ++i)
+  robots_.clear();
+  mbs_ = rhs.mbs_;
+  mbcs_ = rhs.mbcs_;
+  mbgs_ = rhs.mbgs_;
+  robotIndex_ = rhs.robotIndex_;
+  envIndex_ = rhs.envIndex_;
+  for(size_t i = 0; i < rhs.robots_.size(); ++i)
   {
-    this->robots[i].mb = &(mbs[i]);
-    this->robots[i].mbc = &(mbcs[i]);
+    const Robot & robot = rhs.robots_[i];
+    robot.copy(*this, i);
   }
   return *this;
 }
 
+std::vector<Robot> & Robots::robots()
+{
+  return robots_;
+}
+const std::vector<Robot> & Robots::robots() const
+{
+  return robots_;
+}
+
+std::vector<rbd::MultiBody> & Robots::mbs()
+{
+  return mbs_;
+}
+const std::vector<rbd::MultiBody> & Robots::mbs() const
+{
+  return mbs_;
+}
+
+std::vector<rbd::MultiBodyConfig> & Robots::mbcs()
+{
+  return mbcs_;
+}
+const std::vector<rbd::MultiBodyConfig> & Robots::mbcs() const
+{
+  return mbcs_;
+}
+
+unsigned int Robots::robotIndex() const
+{
+  return robotIndex_;
+}
+unsigned int Robots::envIndex() const
+{
+  return envIndex_;
+}
+
 Robot & Robots::robot()
 {
-  return robots[robotIndex];
+  return robots_[robotIndex_];
 }
-
 const Robot & Robots::robot() const
 {
-  return robots[robotIndex];
-}
-
-const Robot & Robots::env() const
-{
-  return robots[envIndex];
+  return robots_[robotIndex_];
 }
 
 Robot & Robots::env()
 {
-  return robots[envIndex];
+  return robots_[envIndex_];
+}
+const Robot & Robots::env() const
+{
+  return robots_[envIndex_];
 }
 
-void fixRobotSurfaces(Robot & robot)
+Robot & Robots::robot(unsigned int idx)
 {
-  for(std::pair<const std::string, std::shared_ptr<Surface> > & s : robot.surfaces)
+  return const_cast<Robot&>(static_cast<const Robots*>(this)->robot(idx));
+}
+const Robot & Robots::robot(unsigned int idx) const
+{
+  if(idx >= robots_.size())
   {
-    unsigned int bodyId = robot.bodyIdByName(s.second->bodyName());
-    const sva::PTransformd & trans = robot.bodyTransforms[bodyId];
-    s.second->X_b_s(s.second->X_b_s()*trans);
+    std::cerr << "No robot with index " << idx << " (" << robots_.size()  << " robots loaded)" << std::endl;
+    throw("Wrong robot index");
   }
+  return robots_[idx];
 }
 
-Robot createRobotWithBase(Robot & robot, const Base & base, const Eigen::Vector3d & baseAxis)
+void Robots::createRobotWithBase(Robots & robots, unsigned int robots_idx, const Base & base, const Eigen::Vector3d & baseAxis)
 {
-  rbd::MultiBody mb = robot.mbg->makeMultiBody(base.baseId, base.baseType, baseAxis, base.X_0_s, base.X_b0_s);
-  rbd::MultiBodyConfig mbc = rbd::MultiBodyConfig(mb);
+  this->mbs_.push_back(robots.robot(robots_idx).mbg().makeMultiBody(base.baseId, base.baseType, baseAxis, base.X_0_s, base.X_b0_s));
+  this->mbcs_.emplace_back(this->mbs_.back());
+  this->mbgs_.push_back(robots.robot(robots_idx).mbg());
+  robots.robot(robots_idx).createWithBase(*this, this->mbs_.size() - 1, base, baseAxis);
+}
+
+void Robot::createWithBase(Robots & robots, unsigned int robots_idx, const Base & base, const Eigen::Vector3d & baseAxis) const
+{
+  rbd::MultiBody & mb = robots.mbs_[robots_idx];
+  rbd::MultiBodyConfig & mbc = robots.mbcs_[robots_idx];
+  rbd::MultiBodyGraph & mbg = robots.mbgs_[robots_idx];
   mbc.zero(mb);
-  std::map<int, sva::PTransformd> bodyTransforms = robot.mbg->bodiesBaseTransform(base.baseId, base.X_b0_s);
+  std::map<int, sva::PTransformd> bodyTransforms = mbg.bodiesBaseTransform(base.baseId, base.X_b0_s);
 
   typedef std::vector< std::vector<double> > bound_t;
   auto convertBound = [](const rbd::MultiBody & oldMb, const rbd::MultiBody & newMb, const bound_t & oldBound, const std::vector<double> & baseBound)
@@ -224,26 +374,33 @@ Robot createRobotWithBase(Robot & robot, const Base & base, const Eigen::Vector3
 
   int jParam = mb.joint(0).params();
   int jDof = mb.joint(0).dof();
-  bound_t ql = convertBound(*(robot.mb), mb, robot.ql, std::vector<double>(jParam, -INFINITY));
-  bound_t qu = convertBound(*(robot.mb), mb, robot.qu, std::vector<double>(jParam, INFINITY));
-  bound_t vl = convertBound(*(robot.mb), mb, robot.vl, std::vector<double>(jDof, -INFINITY));
-  bound_t vu = convertBound(*(robot.mb), mb, robot.vu, std::vector<double>(jDof, INFINITY));
-  bound_t tl = convertBound(*(robot.mb), mb, robot.tl, std::vector<double>(jDof, -INFINITY));
-  bound_t tu = convertBound(*(robot.mb), mb, robot.tu, std::vector<double>(jDof, INFINITY));
+  bound_t ql = convertBound(this->mb(), mb, this->ql(), std::vector<double>(jParam, -INFINITY));
+  bound_t qu = convertBound(this->mb(), mb, this->qu(), std::vector<double>(jParam, INFINITY));
+  bound_t vl = convertBound(this->mb(), mb, this->vl(), std::vector<double>(jDof, -INFINITY));
+  bound_t vu = convertBound(this->mb(), mb, this->vu(), std::vector<double>(jDof, INFINITY));
+  bound_t tl = convertBound(this->mb(), mb, this->tl(), std::vector<double>(jDof, -INFINITY));
+  bound_t tu = convertBound(this->mb(), mb, this->tu(), std::vector<double>(jDof, INFINITY));
 
-  Robot ret(mb, mbc, *(robot.mbg), bodyTransforms,
+  robots.robots_.emplace_back(this->name, robots, robots_idx, bodyTransforms,
               ql, qu, vl, vu, tl, tu,
-              robot.convex, robot.stpbv, robot.collisionTransforms,
-              robot.surfaces, robot.forceSensors, robot.accelerometerBody,
-              robot.springs, robot.tlPoly, robot.tuPoly,
-              robot.flexibility);
-  fixRobotSurfaces(ret);
-  return ret;
+              this->convexes, this->stpbvs, this->collisionTransforms,
+              this->surfaces_, this->forceSensors, this->accelerometerBody,
+              this->springs, this->tlPoly, this->tuPoly,
+              this->flexibility());
+  robots.robot(robots_idx).fixSurfaces();
 }
 
-Robot robotCopy(const Robot & robot)
+void Robots::robotCopy(const Robots & robots, unsigned int robots_idx)
 {
-  return Robot(rbd::MultiBody(*(robot.mb)), rbd::MultiBodyConfig(*(robot.mbc)), *(robot.mbg), robot.bodyTransforms, robot.ql, robot.qu, robot.vl, robot.vu, robot.tl, robot.tu, robot.convex, robot.stpbv, robot.collisionTransforms, robot.surfaces, robot.forceSensors, robot.accelerometerBody, robot.springs, robot.tlPoly, robot.tuPoly, robot.flexibility);
+  this->mbs_.push_back(robots.robot(robots_idx).mb());
+  this->mbcs_.push_back(robots.robot(robots_idx).mbc());
+  this->mbgs_.push_back(robots.robot(robots_idx).mbg());
+  robots.robot(robots_idx).copy(*this, this->mbs_.size() - 1);
+}
+
+void Robot::copy(Robots & robots, unsigned int robots_idx) const
+{
+  robots.robots_.emplace_back(this->name, robots, robots_idx, this->bodyTransforms, this->ql(), this->qu(), this->vl(), this->vu(), this->tl(), this->tu(), this->convexes, this->stpbvs, this->collisionTransforms, this->surfaces_, this->forceSensors, this->accelerometerBody, this->springs, this->tlPoly, this->tuPoly, this->flexibility());
 }
 
 std::vector< std::vector<double> > jointsParameters(const rbd::MultiBody & mb, const double & coeff)
@@ -313,11 +470,15 @@ std::vector< std::map< int, std::vector<double> > > defaultBounds(const rbd::Mul
   return res;
 }
 
-Robot loadRobot(const RobotModule & module, const std::string & surfaceDir, sva::PTransformd * base, int bId)
+Robot& Robots::load(const RobotModule & module, const std::string & surfaceDir, sva::PTransformd * base, int bId)
 {
-  rbd::MultiBody mb = module.mb;
-  rbd::MultiBodyConfig mbc = module.mbc;
-  rbd::MultiBodyGraph mbg = module.mbg;
+  mbs_.emplace_back(module.mb);
+  mbcs_.emplace_back(module.mbc);
+  mbgs_.emplace_back(module.mbg);
+
+  rbd::MultiBody & mb = mbs_.back();
+  rbd::MultiBodyConfig & mbc = mbcs_.back();
+  rbd::MultiBodyGraph & mbg = mbgs_.back();
 
   mbc.zero(mb);
 
@@ -371,7 +532,7 @@ Robot loadRobot(const RobotModule & module, const std::string & surfaceDir, sva:
     bodyIdByName[b.name()] = b.id();
   }
 
-  std::map<std::string, std::pair<unsigned int, std::shared_ptr<sch::S_Polyhedron> > > convexByName;
+  std::map<std::string, std::pair<unsigned int, std::shared_ptr<sch::S_Polyhedron> > > convexesByName;
   {
     for(const auto & p : module.convexHull())
     {
@@ -379,24 +540,24 @@ Robot loadRobot(const RobotModule & module, const std::string & surfaceDir, sva:
       {
         std::shared_ptr<sch::S_Polyhedron> poly(new sch::S_Polyhedron);
         poly->constructFromFile(p.second.second);
-        convexByName[p.first] = std::pair<unsigned int, std::shared_ptr<sch::S_Polyhedron> > (bodyIdByName[p.second.first], poly);
+        convexesByName[p.first] = std::pair<unsigned int, std::shared_ptr<sch::S_Polyhedron> > (bodyIdByName[p.second.first], poly);
       }
     }
-    applyTransformToSchById(mb, mbc, convexByName);
+    applyTransformToSchById(mb, mbc, convexesByName);
   }
 
-  std::map<std::string, std::pair<unsigned int, std::shared_ptr<sch::STP_BV> > > stpbvByName;
+  std::map<std::string, std::pair<unsigned int, std::shared_ptr<sch::STP_BV> > > stpbvsByName;
   {
     for(const auto & p : module.stpbvHull())
     {
       if(bodyIdByName.count(p.second.first))
       {
-        std::shared_ptr<sch::STP_BV> stpbv(new sch::STP_BV);
-        stpbv->constructFromFile(p.second.second);
-        stpbvByName[p.first] = std::pair<unsigned int, std::shared_ptr<sch::STP_BV> > (bodyIdByName[p.second.first], stpbv);
+        std::shared_ptr<sch::STP_BV> stpbvs(new sch::STP_BV);
+        stpbvs->constructFromFile(p.second.second);
+        stpbvsByName[p.first] = std::pair<unsigned int, std::shared_ptr<sch::STP_BV> > (bodyIdByName[p.second.first], stpbvs);
       }
     }
-    applyTransformToSchById(mb, mbc, stpbvByName);
+    applyTransformToSchById(mb, mbc, stpbvsByName);
   }
 
   std::map<int, sva::PTransformd> collisionTransforms;
@@ -411,8 +572,8 @@ Robot loadRobot(const RobotModule & module, const std::string & surfaceDir, sva:
     }
   }
 
-  std::vector< std::shared_ptr<Surface> > surfaces = readRSDFFromDir(surfaceDir);
-  std::map<std::string, std::shared_ptr<Surface> > surf;
+  std::vector<SurfacePtr> surfaces = readRSDFFromDir(surfaceDir);
+  std::map<std::string, SurfacePtr> surf;
   for(const auto & sp : surfaces)
   {
     surf[sp->name()] = sp;
@@ -426,35 +587,66 @@ Robot loadRobot(const RobotModule & module, const std::string & surfaceDir, sva:
 
   const Springs & springs = module.springs();
 
-  return Robot(mb, mbc, mbg, bodyTransforms, ql, qu, vl, vu, tl, tu,
-               convexByName, stpbvByName, collisionTransforms,
-               surf, forceSensors, accelBody, springs,
-               {}, {}, flexibility);
+  std::vector< std::vector<Eigen::VectorXd> > tlPoly;
+  std::vector< std::vector<Eigen::VectorXd> > tuPoly;
+  robots_.emplace_back(module.name, *this, this->mbs_.size() - 1,
+                      bodyTransforms, ql, qu, vl, vu, tl, tu,
+                      convexesByName, stpbvsByName, collisionTransforms,
+                      surf, forceSensors, accelBody, springs,
+                      tlPoly, tuPoly, flexibility);
+  updateIndexes();
+  return robots_.back();
 }
 
 /*void loadPolyTorqueBoundsData(const std::string & file, Robot & robot)
 {
 }*/
 
-void loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir, Robot & robot, Robot & env)
+Robots loadRobot(const RobotModule & module, const std::string & surfaceDir, sva::PTransformd * base, int bId)
 {
-  loadRobotAndEnv(module, surfaceDir, envModule, envSurfaceDir, 0, -1, robot, env);
+  Robots robots;
+  robots.load(module, surfaceDir, base, bId);
+  return robots;
 }
 
-void loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir, sva::PTransformd * base, int bId, Robot & robot, Robot & env)
+void Robots::load(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir)
 {
-  robot = loadRobot(module, surfaceDir, base, bId);
-  env = loadRobot(envModule, envSurfaceDir);
+  load(module, surfaceDir, envModule, envSurfaceDir, 0, -1);
+}
+
+Robots loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir)
+{
+  Robots robots;
+  robots.load(module, surfaceDir, envModule, envSurfaceDir);
+  return robots;
+}
+
+void Robots::load(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir, sva::PTransformd * base, int bId)
+{
+  load(module, surfaceDir, base, bId);
+  load(envModule, envSurfaceDir);
+}
+
+Robots loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir, sva::PTransformd * base, int bId)
+{
+  Robots robots;
+  robots.load(module, surfaceDir, envModule, envSurfaceDir, base, bId);
+  return robots;
+}
+
+void Robots::load(const std::vector<std::shared_ptr<RobotModule>> & modules, const std::vector<std::string> & surfaceDirs)
+{
+  for(size_t i = 0; i < modules.size(); ++i)
+  {
+    load(*modules[i], surfaceDirs[i]);
+  }
 }
 
 Robots loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules, const std::vector<std::string> & surfaceDirs)
 {
-  std::vector<Robot> res;
-  for(size_t i = 0; i < modules.size(); ++i)
-  {
-    res.push_back(loadRobot(*(modules[i]), surfaceDirs[i]));
-  }
-  return Robots(res);
+  Robots robots;
+  robots.load(modules, surfaceDirs);
+  return robots;
 }
 
 template<typename X, typename Y>
@@ -466,7 +658,7 @@ inline void update(std::map<X,Y> & oldData, const std::map<X,Y> & nData)
   }
 }
 
-Robot loadRobotFromUrdf(const std::string & urdf, bool withVirtualLinks, const std::vector<std::string> & filteredLinks, bool fixed, sva::PTransformd * base, int bId)
+Robot& Robots::loadFromUrdf(const std::string & name, const std::string & urdf, bool withVirtualLinks, const std::vector<std::string> & filteredLinks, bool fixed, sva::PTransformd * base, int bId)
 {
   mc_rbdyn_urdf::URDFParserResult res = mc_rbdyn_urdf::rbdyn_from_urdf(urdf, fixed, filteredLinks, true, "", withVirtualLinks);
   int baseId = res.mb.body(0).id();
@@ -514,7 +706,50 @@ Robot loadRobotFromUrdf(const std::string & urdf, bool withVirtualLinks, const s
   std::vector< std::vector<double> > tl = jointsIdToVector(res.mb, defBounds[4]);
   std::vector< std::vector<double> > tu = jointsIdToVector(res.mb, defBounds[5]);
 
-  return Robot(res.mb, res.mbc, res.mbg, bodyTransforms, ql, qu, vl, vu, tl, tu, {}, {}, res.collision_tf, {}, {});
+  mbs_.push_back(res.mb);
+  mbcs_.push_back(res.mbc);
+  mbgs_.push_back(res.mbg);
+
+  std::map<std::string, std::pair<unsigned int, std::shared_ptr<sch::S_Polyhedron> > > convex;
+  std::map<std::string, std::pair<unsigned int, std::shared_ptr<sch::STP_BV> > > stpbv;
+  std::map<std::string, mc_rbdyn::SurfacePtr> surfaces;
+  std::vector<ForceSensor> forceSensors;
+
+  robots_.emplace_back(name, *this, mbs_.size() - 1,
+               bodyTransforms, ql, qu, vl, vu, tl, tu,
+               convex, stpbv, res.collision_tf, surfaces, forceSensors);
+  updateIndexes();
+  return robots_.back();
+}
+
+Robots loadRobotFromUrdf(const std::string & name, const std::string & urdf, bool withVirtualLinks, const std::vector<std::string> & filteredLinks, bool fixed, sva::PTransformd * base, int bId)
+{
+  Robots robots;
+  robots.loadFromUrdf(name, urdf, withVirtualLinks, filteredLinks, fixed, base, bId);
+  return robots;
+}
+
+void Robots::updateIndexes()
+{
+  /* Sets robotIndex_ to the first robot with dofs != 0 and envIndex_ to the
+   * last robot with dof == 0 OR the last robot */
+  for(size_t i = 0; i < robots_.size(); ++i)
+  {
+    if(robots_[i].mb().nrDof())
+    {
+      robotIndex_ = i;
+      break;
+    }
+  }
+  envIndex_ = robots_.size() - 1;
+  for(size_t i = robots_.size(); i > 0; --i)
+  {
+    if(robots_[i-1].mb().nrDof() == 0)
+    {
+      envIndex_ = i-1;
+      break;
+    }
+  }
 }
 
 #pragma GCC diagnostic pop

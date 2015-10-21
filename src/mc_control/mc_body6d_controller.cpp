@@ -22,9 +22,9 @@ MCBody6dController::MCBody6dController()
   });
 
   std::cout << "MCBody6dController init done" << std::endl;
-  efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK7", qpsolver->robots, qpsolver->robots.robotIndex));
+  efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK7", qpsolver->robots, qpsolver->robots.robotIndex()));
   efTask->addToSolver(qpsolver->solver);
-  comTask.reset(new mc_tasks::CoMTask(qpsolver->robots, qpsolver->robots.robotIndex));
+  comTask.reset(new mc_tasks::CoMTask(qpsolver->robots, qpsolver->robots.robotIndex()));
   comTask->addToSolver(qpsolver->solver);
 }
 
@@ -35,8 +35,8 @@ void MCBody6dController::reset(const ControllerResetData & reset_data)
     mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"),
     mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")
   });
-  efTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex);
-  comTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex);
+  efTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex());
+  comTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex());
 }
 
 
@@ -45,8 +45,8 @@ bool MCBody6dController::change_ef(const std::string & ef_name)
   if(robot().hasBody(ef_name))
   {
     efTask->removeFromSolver(qpsolver->solver);
-    postureTask->posture(robot().mbc->q);
-    efTask.reset(new mc_tasks::EndEffectorTask(ef_name, qpsolver->robots, qpsolver->robots.robotIndex));
+    postureTask->posture(robot().mbc().q);
+    efTask.reset(new mc_tasks::EndEffectorTask(ef_name, qpsolver->robots, qpsolver->robots.robotIndex()));
     efTask->addToSolver(qpsolver->solver);
     return true;
   }

@@ -238,16 +238,16 @@ bool MCGlobalController::run()
       /*XXX Need to be careful here */
       /*XXX Need to get the current contacts from the controller when needed */
       std::cout << "Reset with q[0]" << std::endl;
-      std::cout << controller->robot().mbc->q[0][0] << " ";
-      std::cout << controller->robot().mbc->q[0][1] << " ";
-      std::cout << controller->robot().mbc->q[0][2] << " ";
-      std::cout << controller->robot().mbc->q[0][3] << " ";
-      std::cout << controller->robot().mbc->q[0][4] << " ";
-      std::cout << controller->robot().mbc->q[0][5] << " ";
-      std::cout << controller->robot().mbc->q[0][6] << std::endl;
+      std::cout << controller->robot().mbc().q[0][0] << " ";
+      std::cout << controller->robot().mbc().q[0][1] << " ";
+      std::cout << controller->robot().mbc().q[0][2] << " ";
+      std::cout << controller->robot().mbc().q[0][3] << " ";
+      std::cout << controller->robot().mbc().q[0][4] << " ";
+      std::cout << controller->robot().mbc().q[0][5] << " ";
+      std::cout << controller->robot().mbc().q[0][6] << std::endl;
       next_controller->lgripper->setCurrentQ(controller->lgripper->curPosition());
       next_controller->rgripper->setCurrentQ(controller->rgripper->curPosition());
-      next_controller->reset({controller->robot().mbc->q});
+      next_controller->reset({controller->robot().mbc().q});
       controller = next_controller;
     }
     next_controller = 0;

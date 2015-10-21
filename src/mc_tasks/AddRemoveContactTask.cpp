@@ -26,7 +26,7 @@ AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots, std::share
   if(userT_0_s)
   {
     normal = (*userT_0_s - targetTf.translation()).normalized();
-    Eigen::Vector3d normalBody = robot.mbc->bodyPosW[robotBodyIndex].rotation()*normal;
+    Eigen::Vector3d normalBody = robot.mbc().bodyPosW[robotBodyIndex].rotation()*normal;
     Eigen::Vector3d v1(normalBody.y(), -normalBody.x(), 0);
     Eigen::Vector3d v2(-normalBody.z(), 0, normalBody.x());
     Eigen::Vector3d T = (v1 + v2).normalized();
@@ -40,8 +40,8 @@ AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots, std::share
 
   speed = config.contactTask.linVel.speed;
   targetSpeed = direction*normal*speed;
-  linVelTask.reset(new tasks::qp::LinVelocityTask(robots.mbs, 0, robotBodyId, targetSpeed, robotSurf->X_b_s().translation())),
-  linVelTaskPid.reset(new tasks::qp::PIDTask(robots.mbs, 0, linVelTask.get(), config.contactTask.linVel.stiffness, 0, 0, 0));
+  linVelTask.reset(new tasks::qp::LinVelocityTask(robots.mbs(), 0, robotBodyId, targetSpeed, robotSurf->X_b_s().translation())),
+  linVelTaskPid.reset(new tasks::qp::PIDTask(robots.mbs(), 0, linVelTask.get(), config.contactTask.linVel.stiffness, 0, 0, 0));
   linVelTaskPid->error(velError());
   linVelTaskPid->errorI(Eigen::Vector3d(0, 0, 0));
   linVelTaskPid->errorD(Eigen::Vector3d(0, 0, 0));
@@ -56,9 +56,9 @@ void AddRemoveContactTask::direction(double direction)
 Eigen::Vector3d AddRemoveContactTask::velError()
 {
   Eigen::Vector3d T_b_s = robotSurf->X_b_s().translation();
-  Eigen::Matrix3d E_0_b = robot.mbc->bodyPosW[robotBodyIndex].rotation();
+  Eigen::Matrix3d E_0_b = robot.mbc().bodyPosW[robotBodyIndex].rotation();
   sva::PTransformd pts(E_0_b.transpose(), T_b_s);
-  sva::MotionVecd surfVelB = pts*robot.mbc->bodyVelB[robotBodyIndex];
+  sva::MotionVecd surfVelB = pts*robot.mbc().bodyVelB[robotBodyIndex];
   return targetSpeed - surfVelB.linear();
 }
 
@@ -66,9 +66,9 @@ Eigen::Vector3d AddRemoveContactTask::velError()
 void AddRemoveContactTask::addToSolver(tasks::qp::QPSolver & solver)
 {
   solver.addTask(linVelTaskPid.get());
-  constSpeedConstr->addBoundedSpeed(robots.mbs, bodyId, robotSurf->X_b_s().translation(), dofMat, speedMat);
-  solver.updateTasksNrVars(robots.mbs);
-  solver.updateConstrsNrVars(robots.mbs);
+  constSpeedConstr->addBoundedSpeed(robots.mbs(), bodyId, robotSurf->X_b_s().translation(), dofMat, speedMat);
+  solver.updateTasksNrVars(robots.mbs());
+  solver.updateConstrsNrVars(robots.mbs());
   solver.updateConstrSize();
 }
 
@@ -76,7 +76,7 @@ void AddRemoveContactTask::removeFromSolver(tasks::qp::QPSolver & solver)
 {
   solver.removeTask(linVelTaskPid.get());
   constSpeedConstr->removeBoundedSpeed(bodyId);
-  solver.updateConstrsNrVars(robots.mbs);
+  solver.updateConstrsNrVars(robots.mbs());
   solver.updateConstrSize();
 }
 

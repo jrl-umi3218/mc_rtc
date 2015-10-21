@@ -18,22 +18,12 @@ MCController::MCController(const std::string & env_path, const std::string & env
   {
     /* Entering new scope to prevent access to robots from anywhere but the qpsolver object */
     sva::PTransformd base = sva::PTransformd::Identity();
-
-    mc_rbdyn::Robot hrp2_drc_in;
-    mc_rbdyn::Robot env;
-    loadRobotAndEnv(robot_module, robot_module.path + "/rsdf/hrp2_drc/",
-                  env_module, env_module.path + "/rsdf/" + env_module.name + "/",
-                  &base, 0, hrp2_drc_in, env);
-    hrp2_drc_in.mbc->gravity = Eigen::Vector3d(0, 0, 9.81);
-    mc_rbdyn::Robots robots({hrp2_drc_in, env});
-
-
-
-    mc_rbdyn::Robot & hrp2_drc = robots.robot();
-    rbd::forwardKinematics(*(hrp2_drc.mb), *(hrp2_drc.mbc));
-    rbd::forwardVelocity(*(hrp2_drc.mb), *(hrp2_drc.mbc));
-
-
+    mc_rbdyn::Robots robots = mc_rbdyn::loadRobotAndEnv(robot_module, robot_module.path + "/rsdf/hrp2_drc/",
+                                                                env_module, env_module.path + "/rsdf/" + env_module.name + "/",
+                                                                &base, 0);
+    robots.robot().mbc().gravity = Eigen::Vector3d(0, 0, 9.81);
+    rbd::forwardKinematics(robots.robot().mb(), robots.robot().mbc());
+    rbd::forwardVelocity(robots.robot().mb(), robots.robot().mbc());
     qpsolver = std::shared_ptr<mc_solver::QPSolver>(new mc_solver::QPSolver(robots, timeStep));
   }
   {
@@ -42,9 +32,9 @@ MCController::MCController(const std::string & env_path, const std::string & env
     std::ifstream ifs(urdfPath);
     std::stringstream urdf;
     urdf << ifs.rdbuf();
-    mc_rbdyn::Robot urdfRobot = mc_rbdyn::loadRobotFromUrdf(urdf.str());
-    lgripper.reset(new Gripper(urdfRobot, "l_gripper", robot(), urdf.str(), 0, timeStep));
-    rgripper.reset(new Gripper(urdfRobot, "r_gripper", robot(), urdf.str(), 0, timeStep));
+    mc_rbdyn::Robots urdfRobot = mc_rbdyn::loadRobotFromUrdf("temp_hrp2", urdf.str());
+    lgripper.reset(new Gripper(urdfRobot.robot(), "l_gripper", robot(), urdf.str(), 0, timeStep));
+    rgripper.reset(new Gripper(urdfRobot.robot(), "r_gripper", robot(), urdf.str(), 0, timeStep));
   }
 
   contactConstraint = mc_solver::ContactConstraint(timeStep, mc_solver::ContactConstraint::Velocity);
@@ -77,7 +67,7 @@ MCController::MCController(const std::string & env_path, const std::string & env
     mc_solver::Collision("LARM_LINK5", "CHEST_LINK1", 0.05, 0.01, 0.)
   });
 
-  postureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(qpsolver->robots.mbs, hrp2_drc_index, qpsolver->robots.robot().mbc->q, 10, 5));
+  postureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(qpsolver->robots.mbs(), hrp2_drc_index, qpsolver->robots.robot().mbc().q, 10, 5));
   std::cout << "MCController(base) ready" << std::endl;
 
 }
@@ -99,11 +89,11 @@ const QPResultMsg & MCController::send(const double & t)
 
 void MCController::reset(const ControllerResetData & reset_data)
 {
-  robot().mbc->zero(*(robot().mb));
-  robot().mbc->q = reset_data.q;
+  robot().mbc().zero(robot().mb());
+  robot().mbc().q = reset_data.q;
   postureTask->posture(reset_data.q);
-  rbd::forwardKinematics(*(robot().mb), *(robot().mbc));
-  rbd::forwardVelocity(*(robot().mb), *(robot().mbc));
+  rbd::forwardKinematics(robot().mb(), robot().mbc());
+  rbd::forwardVelocity(robot().mb(), robot().mbc());
   qpsolver->setContacts({
   });
 }
