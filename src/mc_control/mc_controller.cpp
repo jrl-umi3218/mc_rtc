@@ -18,7 +18,7 @@ MCController::MCController(const std::string & env_path, const std::string & env
   {
     /* Entering new scope to prevent access to robots from anywhere but the qpsolver object */
     sva::PTransformd base = sva::PTransformd::Identity();
-    mc_rbdyn::Robots robots = mc_rbdyn::Robots::loadRobotAndEnv(robot_module, robot_module.path + "/rsdf/hrp2_drc/",
+    mc_rbdyn::Robots robots = mc_rbdyn::loadRobotAndEnv(robot_module, robot_module.path + "/rsdf/hrp2_drc/",
                                                                 env_module, env_module.path + "/rsdf/" + env_module.name + "/",
                                                                 &base, 0);
     robots.robot().mbc().gravity = Eigen::Vector3d(0, 0, 9.81);
@@ -32,7 +32,7 @@ MCController::MCController(const std::string & env_path, const std::string & env
     std::ifstream ifs(urdfPath);
     std::stringstream urdf;
     urdf << ifs.rdbuf();
-    mc_rbdyn::Robots urdfRobot = mc_rbdyn::Robots::loadRobotFromUrdf("temp_hrp2", urdf.str());
+    mc_rbdyn::Robots urdfRobot = mc_rbdyn::loadRobotFromUrdf("temp_hrp2", urdf.str());
     lgripper.reset(new Gripper(urdfRobot.robot(), "l_gripper", robot(), urdf.str(), 0, timeStep));
     rgripper.reset(new Gripper(urdfRobot.robot(), "r_gripper", robot(), urdf.str(), 0, timeStep));
   }

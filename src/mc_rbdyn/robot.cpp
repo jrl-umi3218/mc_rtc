@@ -243,6 +243,11 @@ void Robot::fixSurfaces()
   }
 }
 
+Robots::Robots()
+: robots_(), mbs_(), mbcs_(), robotIndex_(0), envIndex_(0)
+{
+}
+
 Robots::Robots(const Robots & rhs)
 : robots_(), mbs_(rhs.mbs_), mbcs_(rhs.mbcs_), robotIndex_(rhs.robotIndex_), envIndex_(rhs.envIndex_)
 {
@@ -597,7 +602,7 @@ Robot& Robots::load(const RobotModule & module, const std::string & surfaceDir, 
 {
 }*/
 
-Robots Robots::loadRobot(const RobotModule & module, const std::string & surfaceDir, sva::PTransformd * base, int bId)
+Robots loadRobot(const RobotModule & module, const std::string & surfaceDir, sva::PTransformd * base, int bId)
 {
   Robots robots;
   robots.load(module, surfaceDir, base, bId);
@@ -609,7 +614,7 @@ void Robots::load(const RobotModule & module, const std::string & surfaceDir, co
   load(module, surfaceDir, envModule, envSurfaceDir, 0, -1);
 }
 
-Robots Robots::loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir)
+Robots loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir)
 {
   Robots robots;
   robots.load(module, surfaceDir, envModule, envSurfaceDir);
@@ -622,7 +627,7 @@ void Robots::load(const RobotModule & module, const std::string & surfaceDir, co
   load(envModule, envSurfaceDir);
 }
 
-Robots Robots::loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir, sva::PTransformd * base, int bId)
+Robots loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir, sva::PTransformd * base, int bId)
 {
   Robots robots;
   robots.load(module, surfaceDir, envModule, envSurfaceDir, base, bId);
@@ -637,7 +642,7 @@ void Robots::load(const std::vector<std::shared_ptr<RobotModule>> & modules, con
   }
 }
 
-Robots Robots::loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules, const std::vector<std::string> & surfaceDirs)
+Robots loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules, const std::vector<std::string> & surfaceDirs)
 {
   Robots robots;
   robots.load(modules, surfaceDirs);
@@ -717,7 +722,7 @@ Robot& Robots::loadFromUrdf(const std::string & name, const std::string & urdf, 
   return robots_.back();
 }
 
-Robots Robots::loadRobotFromUrdf(const std::string & name, const std::string & urdf, bool withVirtualLinks, const std::vector<std::string> & filteredLinks, bool fixed, sva::PTransformd * base, int bId)
+Robots loadRobotFromUrdf(const std::string & name, const std::string & urdf, bool withVirtualLinks, const std::vector<std::string> & filteredLinks, bool fixed, sva::PTransformd * base, int bId)
 {
   Robots robots;
   robots.loadFromUrdf(name, urdf, withVirtualLinks, filteredLinks, fixed, base, bId);

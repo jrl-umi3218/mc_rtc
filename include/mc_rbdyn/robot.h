@@ -64,7 +64,7 @@ struct Robots
 {
   friend struct Robot;
 public:
-  Robots() : robotIndex_(0), envIndex_(0) {}
+  Robots();
   Robots(const Robots & rhs);
   Robots & operator=(const Robots & rhs);
 
@@ -94,16 +94,6 @@ public:
   void robotCopy(const Robots & robots, unsigned int robots_idx);
 
   void createRobotWithBase(Robots & robots, unsigned int robots_idx, const Base & base, const Eigen::Vector3d & baseAxis = Eigen::Vector3d::UnitZ());
-  /* Static pendant of the loader functions to create Robots directly */
-  static Robots loadRobot(const RobotModule & module, const std::string & surfaceDir, sva::PTransformd * base = 0, int bId = -1);
-
-  static Robots loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules, const std::vector<std::string> & surfaceDirs);
-
-  static Robots loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir);
-
-  static Robots loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir, sva::PTransformd * base, int bId);
-
-  static Robots loadRobotFromUrdf(const std::string & name, const std::string & urdf, bool withVirtualLinks = true, const std::vector<std::string> & filteredLinks = {}, bool fixed = false, sva::PTransformd * base = 0, int bId = -1);
 
   Robot & robot();
   const Robot & robot() const;
@@ -122,6 +112,17 @@ protected:
   unsigned int envIndex_;
   void updateIndexes();
 };
+
+/* Static pendant of the loader functions to create Robots directly */
+Robots loadRobot(const RobotModule & module, const std::string & surfaceDir, sva::PTransformd * base = 0, int bId = -1);
+
+Robots loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules, const std::vector<std::string> & surfaceDirs);
+
+Robots loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir);
+
+Robots loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir, sva::PTransformd * base, int bId);
+
+Robots loadRobotFromUrdf(const std::string & name, const std::string & urdf, bool withVirtualLinks = true, const std::vector<std::string> & filteredLinks = {}, bool fixed = false, sva::PTransformd * base = 0, int bId = -1);
 
 struct Robot
 {

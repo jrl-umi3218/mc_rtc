@@ -21,8 +21,7 @@ MCMRQPController::MCMRQPController(const std::vector<std::shared_ptr<mc_rbdyn::R
       surfaceDirs.push_back(m->path + "/rsdf/" + m->name + "/");
     }
 
-    mc_rbdyn::Robots robots;
-    robots.loadRobots(robot_modules, surfaceDirs);
+    mc_rbdyn::Robots robots = mc_rbdyn::loadRobots(robot_modules, surfaceDirs);
 
     for(auto & robot: robots.robots())
     {
@@ -39,7 +38,7 @@ MCMRQPController::MCMRQPController(const std::vector<std::shared_ptr<mc_rbdyn::R
     std::ifstream ifs(urdfPath);
     std::stringstream urdf;
     urdf << ifs.rdbuf();
-    mc_rbdyn::Robots urdfRobot = mc_rbdyn::Robots::loadRobotFromUrdf("temp_hrp2_drc", urdf.str());
+    mc_rbdyn::Robots urdfRobot = mc_rbdyn::loadRobotFromUrdf("temp_hrp2_drc", urdf.str());
     lgripper.reset(new Gripper(urdfRobot.robot(), "l_gripper", robot(), urdf.str(), 0, timeStep));
     rgripper.reset(new Gripper(urdfRobot.robot(), "r_gripper", robot(), urdf.str(), 0, timeStep));
   }
