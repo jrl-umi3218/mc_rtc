@@ -197,4 +197,12 @@ bool MCGlobalController::driving_service(double w, double a, double p, double t)
   }
 }
 
+bool MCGlobalController::send_msg(const std::string & msg)
+{
+  if(controller)
+  {
+    return controller->read_msg(msg);
+  }
+}
+
 }

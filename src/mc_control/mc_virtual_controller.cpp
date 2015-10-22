@@ -8,4 +8,9 @@ MCVirtualController::MCVirtualController()
 {
 }
 
+bool MCVirtualController::read_msg(const std::string & msg)
+{
+  return false;
+}
+
 }

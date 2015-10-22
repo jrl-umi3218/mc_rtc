@@ -71,7 +71,8 @@ public:
   bool change_gaze(double pan, double tilt);
   bool change_wrist_angle(double yaw);
   bool driving_service(double w, double a, double p, double t);
-
+  /* Generic message passing service */
+  bool send_msg(const std::string & msg);
 public:
   bool running;
 private:
