@@ -201,7 +201,7 @@ bool MCGlobalController::send_msg(const std::string & msg)
 {
   if(controller)
   {
-    return controller->read_msg(msg);
+    return controller->read_msg(const_cast<std::string&>(msg));
   }
 }
 
