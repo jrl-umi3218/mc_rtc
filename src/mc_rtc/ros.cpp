@@ -183,7 +183,7 @@ struct RobotPublisherImpl
 {
   RobotPublisherImpl(const std::string&) {}
   void stop() {}
-  void update(const mc_rbdyn::Robot &) {}
+  void update(const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy) {}
 };
 #endif
 
