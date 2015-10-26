@@ -194,6 +194,11 @@ const mc_rbdyn::Surface & Robot::surface(const std::string & sName) const
   return *(surfaces_.at(sName));
 }
 
+std::map<std::string, SurfacePtr> & Robot::surfaces()
+{
+  return surfaces_;
+}
+
 const std::map<std::string, SurfacePtr> & Robot::surfaces() const
 {
   return surfaces_;
