@@ -170,7 +170,6 @@ public:
   mc_rbdyn::Surface & surface(const std::string & sName);
   const mc_rbdyn::Surface & surface(const std::string & sName) const;
 
-  std::map<std::string, mc_rbdyn::SurfacePtr> & surfaces();
   const std::map<std::string, mc_rbdyn::SurfacePtr> & surfaces() const;
 
   typedef std::pair<unsigned int, std::shared_ptr<sch::S_Polyhedron>> convex_pair_t;
