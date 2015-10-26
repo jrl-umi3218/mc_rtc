@@ -248,6 +248,15 @@ void Robot::fixSurfaces()
   }
 }
 
+void Robot::loadRSDFFromDir(const std::string & surfaceDir)
+{
+  std::vector<SurfacePtr> surfacesIn = readRSDFFromDir(surfaceDir);
+  for(const auto & sp : surfacesIn)
+  {
+    surfaces_[sp->name()] = sp;
+  }
+}
+
 Robots::Robots()
 : robots_(), mbs_(), mbcs_(), robotIndex_(0), envIndex_(0)
 {
@@ -577,13 +586,6 @@ Robot& Robots::load(const RobotModule & module, const std::string & surfaceDir, 
     }
   }
 
-  std::vector<SurfacePtr> surfaces = readRSDFFromDir(surfaceDir);
-  std::map<std::string, SurfacePtr> surf;
-  for(const auto & sp : surfaces)
-  {
-    surf[sp->name()] = sp;
-  }
-
   const std::vector<Flexibility> & flexibility = module.flexibility();
 
   const std::vector<ForceSensor> & forceSensors = module.forceSensors();
@@ -592,6 +594,7 @@ Robot& Robots::load(const RobotModule & module, const std::string & surfaceDir, 
 
   const Springs & springs = module.springs();
 
+  std::map<std::string, SurfacePtr> surf;
   std::vector< std::vector<Eigen::VectorXd> > tlPoly;
   std::vector< std::vector<Eigen::VectorXd> > tuPoly;
   robots_.emplace_back(module.name, *this, this->mbs_.size() - 1,
@@ -599,6 +602,7 @@ Robot& Robots::load(const RobotModule & module, const std::string & surfaceDir, 
                       convexesByName, stpbvsByName, collisionTransforms,
                       surf, forceSensors, accelBody, springs,
                       tlPoly, tuPoly, flexibility);
+  robots_.back().loadRSDFFromDir(surfaceDir);
   updateIndexes();
   return robots_.back();
 }

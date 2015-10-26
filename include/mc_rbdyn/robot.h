@@ -182,6 +182,8 @@ public:
   const sva::PTransformd & collisionTransform(int id) const;
 
   void fixSurfaces();
+
+  void loadRSDFFromDir(const std::string & surfaceDir);
 private:
   std::string name;
   Robots & robots;
