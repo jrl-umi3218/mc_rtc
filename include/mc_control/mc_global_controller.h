@@ -7,6 +7,7 @@
 #include <mc_control/mc_driving_controller.h>
 #include <mc_control/mc_egress_controller.h>
 #include <mc_control/mc_egress_mrqp_controller.h>
+#include <mc_control/mc_bci_self_interact_controller.h>
 
 namespace mc_control
 {
@@ -99,6 +100,7 @@ private:
   std::shared_ptr<MCDrivingController> driving_controller;
   std::shared_ptr<MCEgressController> egress_controller;
   std::shared_ptr<MCEgressMRQPController> egress_mrqp_controller;
+  std::shared_ptr<MCBCISelfInteractController> bci_self_interact_controller;
   enum CurrentController
   {
     POSTURE = 1,
@@ -108,6 +110,7 @@ private:
     DRIVING = 5,
     EGRESS = 6,
     EGRESS_MRQP = 7,
+    BCISELFINTERACT = 8,
     NONE = 42
   };
   CurrentController current_ctrl;

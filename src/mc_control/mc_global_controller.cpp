@@ -45,6 +45,18 @@ MCGlobalController::Configuration::Configuration(const std::string & path)
   {
     initial_controller = v["Default"].asString();
   }
+  else
+  {
+    if(enabled_controllers.size())
+    {
+      initial_controller = enabled_controllers[0];
+    }
+  }
+  /* Allow the user not to worry about Default if only one controller is enabled */
+  if(enabled_controllers.size() == 1)
+  {
+    initial_controller = enabled_controllers[0];
+  }
   if(v.isMember("Seq"))
   {
     if(v["Seq"].isMember("Env"))
@@ -119,6 +131,10 @@ MCGlobalController::MCGlobalController()
   {
     egress_mrqp_controller.reset(new MCEgressMRQPController({std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::PolarisRangerEgressRobotModule()), std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::EnvRobotModule(mc_rtc::MC_ENV_DESCRIPTION_PATH, "ground"))}));
   }
+  if(config.enabled("BCISelfInteract"))
+  {
+    bci_self_interact_controller.reset(new MCBCISelfInteractController());
+  }
   if(config.initial_controller == "Posture")
   {
     current_ctrl = POSTURE;
@@ -153,6 +169,11 @@ MCGlobalController::MCGlobalController()
   {
     current_ctrl = EGRESS_MRQP;
     controller = egress_mrqp_controller.get();
+  }
+  if(config.initial_controller == "BCISelfInteract")
+  {
+    current_ctrl = BCISELFINTERACT;
+    controller = bci_self_interact_controller.get();
   }
   next_ctrl = current_ctrl;
   next_controller = 0;

@@ -74,6 +74,7 @@ mc_control/mc_virtual_controller.cpp
 mc_control/mc_controller.cpp
 mc_control/mc_posture_controller.cpp
 mc_control/mc_body6d_controller.cpp
+mc_control/mc_bci_self_interact_controller.cpp
 mc_control/mc_com_controller.cpp
 mc_control/mc_seq_controller.cpp
 mc_control/mc_seq_steps.cpp
