@@ -53,6 +53,7 @@ pkg_config_append_libs(mc_trajectory)
 set(mc_tasks_SRC
 mc_tasks/OrientationTask.cpp
 mc_tasks/EndEffectorTask.cpp
+mc_tasks/RelativeEndEffectorTask.cpp
 mc_tasks/CoMTask.cpp
 mc_tasks/MetaTask.cpp
 mc_tasks/StabilityTask.cpp

@@ -4,7 +4,8 @@ namespace mc_tasks
 {
 
 EndEffectorTask::EndEffectorTask(const std::string & bodyName, const mc_rbdyn::Robots & robots, unsigned int robotIndex, double stiffness, double weight)
-: robots(robots), bodyName(bodyName), inSolver(false)
+: robots(robots), robotIndex(robotIndex),
+  bodyName(bodyName), inSolver(false)
 {
   const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
   unsigned int bodyId = robot.bodyIdByName(bodyName);
@@ -59,6 +60,10 @@ void EndEffectorTask::addToSolver(tasks::qp::QPSolver & solver)
   }
 }
 
+void EndEffectorTask::update()
+{
+}
+
 void EndEffectorTask::add_ef_pose(const sva::PTransformd & dtr)
 {
   Eigen::Matrix3d new_rot = curTransform.rotation()*dtr.rotation();
@@ -70,6 +75,7 @@ void EndEffectorTask::add_ef_pose(const sva::PTransformd & dtr)
 
 void EndEffectorTask::set_ef_pose(const sva::PTransformd & tf)
 {
+  curTransform = tf;
   positionTask->position(tf.translation());
   orientationTask->orientation(tf.rotation());
 }
