@@ -147,7 +147,6 @@ class MCControl  : public RTC::DataFlowComponentBase
  private:
 public:
   mc_control::MCGlobalController controller;
-  std::shared_ptr<mc_rtc::RobotPublisher> rpub;
   bool init;
 };
 
