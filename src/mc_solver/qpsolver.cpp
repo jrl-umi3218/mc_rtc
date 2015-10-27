@@ -380,7 +380,7 @@ void RobotEnvCollisionsConstraint::setEnvCollisions(const mc_rbdyn::Robots & rob
   // Avoid reset to keep damping
   auto contactBodies = __bodiesFromContacts(robot, contacts);
 
-  auto idFromName = [robot](const std::string & name){ return robot.convex(name).first; };
+  auto idFromName = [&robot](const std::string & name){ return robot.convex(name).first; };
 
   for(size_t i = 0; i < envCols.size(); ++i)
   {
@@ -418,7 +418,7 @@ void RobotEnvCollisionsConstraint::setSelfCollisions(const mc_rbdyn::Robots & ro
   // Avoid reset to keep damping
   auto contactBodies = __bodiesFromContacts(robot, contacts);
 
-  auto idFromName = [robot](const std::string & name){ return robot.convex(name).first; };
+  auto idFromName = [&robot](const std::string & name){ return robot.convex(name).first; };
 
   for(size_t i = 0; i < selfCols.size(); ++i)
   {

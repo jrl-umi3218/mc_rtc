@@ -129,6 +129,9 @@ struct Robot
   friend struct Robots;
   friend class __gnu_cxx::new_allocator<Robot>;
 public:
+  Robot(Robot&&) = default;
+  Robot& operator=(Robot&&) = default;
+
   bool hasJoint(const std::string & name) const;
 
   bool hasBody(const std::string & name) const;
@@ -221,6 +224,8 @@ protected:
         const std::vector<ForceSensor> & forceSensors, const std::string & accelerometerBody = "",
         const Springs & springs = Springs(), const std::vector< std::vector<Eigen::VectorXd> > & tlPoly = {},
         const std::vector< std::vector<Eigen::VectorXd> > & tuPoly = {}, const std::vector<Flexibility> & flexibility = {});
+  Robot(const Robot&) = delete;
+  Robot& operator=(const Robot&) = delete;
   void createWithBase(Robots & robots, unsigned int robots_idx, const Base & base, const Eigen::Vector3d & baseAxis = Eigen::Vector3d::UnitZ()) const;
   void copy(Robots & robots, unsigned int robots_idx) const;
 };
