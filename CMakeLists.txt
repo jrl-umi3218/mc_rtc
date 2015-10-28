@@ -110,6 +110,8 @@ install(
     data/jvrc_ladder_climbing_config.json
     data/irex_ladder_climbing.json
     data/irex_ladder_climbing_config.json
+    data/drc_car_egress.json
+    data/drc_car_egress_config.json
   DESTINATION share/mc_rtc
 )
 install(
