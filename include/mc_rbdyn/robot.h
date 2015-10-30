@@ -132,6 +132,8 @@ public:
   Robot(Robot&&) = default;
   Robot& operator=(Robot&&) = default;
 
+  std::string name() const;
+
   bool hasJoint(const std::string & name) const;
 
   bool hasBody(const std::string & name) const;
@@ -170,6 +172,8 @@ public:
 
   const std::vector<Flexibility> & flexibility() const;
 
+  bool hasSurface(const std::string & surface) const;
+
   mc_rbdyn::Surface & surface(const std::string & sName);
   const mc_rbdyn::Surface & surface(const std::string & sName) const;
 
@@ -187,7 +191,7 @@ public:
 
   void loadRSDFFromDir(const std::string & surfaceDir);
 private:
-  std::string name;
+  std::string name_;
   Robots & robots;
   unsigned int robots_idx;
   std::map<int, sva::PTransformd> bodyTransforms;

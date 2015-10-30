@@ -65,9 +65,25 @@ MCGlobalController::Configuration::Configuration(const std::string & path)
       {
         seq_env_path = v["Seq"]["Env"]["Path"].asString();
       }
+      else
+      {
+        seq_env_path = "";
+      }
       if(v["Seq"]["Env"].isMember("Name"))
       {
         seq_env_name = v["Seq"]["Env"]["Name"].asString();
+      }
+      else
+      {
+        seq_env_name = "";
+      }
+      if(v["Seq"]["Env"].isMember("Module"))
+      {
+        seq_env_module = v["Seq"]["Env"]["Module"].asString();
+      }
+      else
+      {
+        seq_env_module = "";
       }
     }
     if(v["Seq"].isMember("Plan"))
@@ -117,7 +133,34 @@ MCGlobalController::MCGlobalController()
   }
   if(config.enabled("Seq"))
   {
-    seq_controller.reset(new MCSeqController(config.seq_env_path, config.seq_env_name, std::string(mc_rtc::DATA_PATH) + config.seq_plan, config.seq_use_real_sensors, config.seq_start_stance));
+    if(config.seq_env_name != "")
+    {
+      if(config.seq_env_path != "")
+      {
+        seq_controller.reset(new MCSeqController(config.seq_env_path, config.seq_env_name, std::string(mc_rtc::DATA_PATH) + config.seq_plan, config.seq_use_real_sensors, config.seq_start_stance));
+      }
+      else
+      {
+        seq_controller.reset(new MCSeqController(config.seq_env_name, std::string(mc_rtc::DATA_PATH) + config.seq_plan, config.seq_use_real_sensors, config.seq_start_stance));
+      }
+    }
+    else if(config.seq_env_module != "")
+    {
+      if(config.seq_env_module == "Polaris")
+      {
+        seq_controller.reset(new MCSeqController(std::make_shared<mc_robots::PolarisRangerRobotModule>(false),
+                                                 std::string(mc_rtc::DATA_PATH) + config.seq_plan,
+                                                 config.seq_use_real_sensors, config.seq_start_stance));
+      }
+      else
+      {
+        std::cerr << "Unknown environment module provided (" << config.seq_env_module << ")" << std::endl;
+      }
+    }
+    else
+    {
+      std::cerr << "Seq module enabled but no environment provided, Seq module not loaded" << std::endl;
+    }
   }
   if(config.enabled("Driving"))
   {

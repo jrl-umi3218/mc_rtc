@@ -42,7 +42,7 @@ Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
         const std::vector<ForceSensor> & forceSensors, const std::string & accelerometerBody,
         const Springs & springs, const std::vector< std::vector<Eigen::VectorXd> > & tlPoly,
         const std::vector< std::vector<Eigen::VectorXd> > & tuPoly, const std::vector<Flexibility> & flexibility)
-: name(name), robots(robots), robots_idx(robots_idx),
+: name_(name), robots(robots), robots_idx(robots_idx),
   bodyTransforms(bodyTransforms), ql_(ql), qu_(qu), vl_(vl), vu_(vu), tl_(tl), tu_(tu),
   convexes(convexes), stpbvs(stpbvs), collisionTransforms(collisionTransforms), surfaces_(),
   forceSensors(forceSensors), accelerometerBody(accelerometerBody), springs(springs), tlPoly(tlPoly),
@@ -71,6 +71,11 @@ Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
     unsigned int index = bodyIndexByName("Accelerometer");
     this->accelerometerBody = this->mb().body(this->mb().parent(index)).name();
   }
+}
+
+std::string Robot::name() const
+{
+  return name_;
 }
 
 bool Robot::hasJoint(const std::string & name) const
@@ -180,13 +185,18 @@ const std::vector<Flexibility> & Robot::flexibility() const
   return flexibility_;
 }
 
+bool Robot::hasSurface(const std::string & surface) const
+{
+  return surfaces_.count(surface) != 0;
+}
+
 mc_rbdyn::Surface & Robot::surface(const std::string & sName)
 {
   return const_cast<mc_rbdyn::Surface&>(static_cast<const Robot*>(this)->surface(sName));
 }
 const mc_rbdyn::Surface & Robot::surface(const std::string & sName) const
 {
-  if(surfaces_.count(sName) == 0)
+  if(!hasSurface(sName))
   {
     std::cerr << "No surface named " << sName << " found in this robot" << std::endl;
     throw("Surface does not exist");
@@ -207,7 +217,12 @@ const Robot::convex_pair_t & Robot::convex(const std::string & cName) const
 {
   if(convexes.count(cName) == 0)
   {
-    std::cerr << "No convex named " << cName << " found in this robot" << std::endl;
+    std::cerr << "No convex named " << cName << " found in this robot (" << this->name_ << ")" << std::endl;
+    std::cerr << "Convexes available are:" << std::endl;
+    for(const auto & cv : convexes)
+    {
+      std::cerr << cv.first << std::endl;
+    }
     throw("Convex does not exist");
   }
   return convexes.at(cName);
@@ -248,7 +263,15 @@ void Robot::loadRSDFFromDir(const std::string & surfaceDir)
   std::vector<SurfacePtr> surfacesIn = readRSDFFromDir(surfaceDir);
   for(const auto & sp : surfacesIn)
   {
-    surfaces_[sp->name()] = sp;
+    /* Check coherence of surface with mb */
+    if(hasBody(sp->bodyName()))
+    {
+      surfaces_[sp->name()] = sp;
+    }
+    else
+    {
+      std::cerr << "Loaded surface " << sp->name() << " attached to body " << sp->bodyName() << " from RSDF but the robot " << name() << " has no such body, discard this surface to avoid future problems..." << std::endl;
+    }
   }
 }
 
@@ -390,7 +413,7 @@ void Robot::createWithBase(Robots & robots, unsigned int robots_idx, const Base 
   bound_t tl = convertBound(this->mb(), mb, this->tl(), std::vector<double>(jDof, -INFINITY));
   bound_t tu = convertBound(this->mb(), mb, this->tu(), std::vector<double>(jDof, INFINITY));
 
-  robots.robots_.emplace_back(this->name, robots, robots_idx, bodyTransforms,
+  robots.robots_.emplace_back(this->name_, robots, robots_idx, bodyTransforms,
               ql, qu, vl, vu, tl, tu,
               this->convexes, this->stpbvs, this->collisionTransforms,
               this->surfaces_, this->forceSensors, this->accelerometerBody,
@@ -409,7 +432,7 @@ void Robots::robotCopy(const Robots & robots, unsigned int robots_idx)
 
 void Robot::copy(Robots & robots, unsigned int robots_idx) const
 {
-  robots.robots_.emplace_back(this->name, robots, robots_idx, this->bodyTransforms, this->ql(), this->qu(), this->vl(), this->vu(), this->tl(), this->tu(), this->convexes, this->stpbvs, this->collisionTransforms, this->surfaces_, this->forceSensors, this->accelerometerBody, this->springs, this->tlPoly, this->tuPoly, this->flexibility());
+  robots.robots_.emplace_back(this->name_, robots, robots_idx, this->bodyTransforms, this->ql(), this->qu(), this->vl(), this->vu(), this->tl(), this->tu(), this->convexes, this->stpbvs, this->collisionTransforms, this->surfaces_, this->forceSensors, this->accelerometerBody, this->springs, this->tlPoly, this->tuPoly, this->flexibility());
 }
 
 std::vector< std::vector<double> > jointsParameters(const rbd::MultiBody & mb, const double & coeff)

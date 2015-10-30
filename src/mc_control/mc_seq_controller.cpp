@@ -106,9 +106,18 @@ void MCSeqTimeLog::report(std::ostream & os)
   os << "Total time: " << (iters.back() - iters[0])*timeStep << std::endl;
 }
 
+MCSeqController::MCSeqController(const std::string & env_name, const std::string & seq_path, bool real_sensors, unsigned int start_stance)
+: MCSeqController(mc_rtc::MC_ENV_DESCRIPTION_PATH, env_name, seq_path, real_sensors, start_stance)
+{
+}
 
 MCSeqController::MCSeqController(const std::string & env_path, const std::string & env_name, const std::string & seq_path, bool real_sensors, unsigned int start_stance)
-: MCController(env_path, env_name),
+: MCSeqController(std::make_shared<mc_robots::EnvRobotModule>(env_path, env_name), seq_path, real_sensors, start_stance)
+{
+}
+
+MCSeqController::MCSeqController(const std::shared_ptr<mc_rbdyn::RobotModule> & env_module, const std::string & seq_path, bool real_sensors, unsigned int start_stance)
+: MCController(env_module),
   nrIter(0), logger(timeStep),
   paused(false), halted(false), stanceIndex(start_stance), seq_actions(0),
   currentContact(0), targetContact(0), currentGripper(0),

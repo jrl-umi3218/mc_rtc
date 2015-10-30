@@ -22,7 +22,14 @@ namespace mc_control
 struct MCController : public MCVirtualController
 {
 public:
-  MCController(const std::string & env_path = mc_rtc::MC_ENV_DESCRIPTION_PATH, const std::string & env_name = "ground");
+  /* Assumes an environment from mc_env_description */
+  MCController(const std::string & env_name = "ground");
+
+  /* Assumes an environment similar to those in mc_env_description but hosted somewhere */
+  MCController(const std::string & env_path, const std::string & env_name);
+
+  /* Generic module for the environment */
+  MCController(const std::shared_ptr<mc_rbdyn::RobotModule> & env);
 
   virtual bool run() override;
 
@@ -52,7 +59,7 @@ public:
   /* Common stuff */
   std::vector< std::pair<Eigen::Vector3d, Eigen::Vector3d> > wrenches;
   mc_robots::HRP2DRCGripperRobotModule robot_module;
-  mc_robots::EnvRobotModule env_module;
+  std::shared_ptr<mc_rbdyn::RobotModule> env_module;
   mc_solver::ContactConstraint contactConstraint;
   mc_solver::DynamicsConstraint dynamicsConstraint;
   mc_solver::KinematicsConstraint kinematicsConstraint;

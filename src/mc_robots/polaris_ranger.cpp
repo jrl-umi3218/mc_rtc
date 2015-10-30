@@ -7,7 +7,7 @@
 namespace mc_robots
 {
 
-PolarisRangerRobotModule::PolarisRangerRobotModule()
+PolarisRangerRobotModule::PolarisRangerRobotModule(bool is_interactive)
 : RobotModule(mc_rtc::HRP2_DRC_DESCRIPTION_PATH, "polaris_ranger")
 {
   halfSitting["POLARIS"] = {};
@@ -19,13 +19,22 @@ PolarisRangerRobotModule::PolarisRangerRobotModule()
   halfSitting["rear_right_wheel_joint"] = {};
   halfSitting["gas_joint"] = {};
   halfSitting["brake_joint"] = {};
-  halfSitting["adjust_steering_wheel"] = {};
-  halfSitting["steering_joint"] = {0};
   halfSitting["hand_brake_joint"] = {};
   halfSitting["FNR_switch_joint"] = {};
   halfSitting["lazy_susan"] = {};
 
-  readUrdf("polaris_ranger_interactive", virtualLinks);
+  if(is_interactive)
+  {
+    halfSitting["steering_joint"] = {0};
+    halfSitting["adjust_steering_wheel"] = {};
+    readUrdf("polaris_ranger_interactive", virtualLinks);
+  }
+  else
+  {
+    halfSitting["steering_joint"] = {};
+    halfSitting["top_left_frame_joint"] = {};
+    readUrdf("polaris_ranger", virtualLinks);
+  }
 }
 
 std::map<std::string, std::pair<std::string, std::string> > PolarisRangerRobotModule::getConvexHull(const std::map<std::string, std::pair<std::string, std::string>> & files) const
@@ -118,12 +127,16 @@ std::map<std::string, std::pair<std::string, std::string>> PolarisRangerRobotMod
   res["seat"] = std::pair<std::string, std::string>("chassis", "seat_hull");
   res["full_seat"] = std::pair<std::string, std::string>("chassis", "full_seat_hull");
   res["top_left_rung"] = std::pair<std::string, std::string>("chassis", "top_left_rung_hull");
+  res["top_left_rung_lower"] = std::pair<std::string, std::string>("top_left_frame", "top_left_rung_lower_hull");
+  res["top_left_frame"] = std::pair<std::string, std::string>("top_left_frame", "top_left_frame");
   res["wheel"] = std::pair<std::string, std::string>("chassis", "wheel_hull");
   res["little_wheel"] = std::pair<std::string, std::string>("chassis", "little_wheel_hull");
   res["windshield"] = std::pair<std::string, std::string>("chassis", "windshield_hull");
   res["nofeetzone"] = std::pair<std::string, std::string>("chassis", "nofeetzone_hull");
   res["brake"] = std::pair<std::string, std::string>("chassis", "brake_hull");
   res["board"] = std::pair<std::string, std::string>("chassis", "board_hull");
+  res["lateral_front"] = std::pair<std::string, std::string>("chassis", "lateral_front_hull");
+  res["chassis"] = std::pair<std::string, std::string>("chassis", "chassis");
   return res;
 }
 

@@ -87,6 +87,7 @@ private:
     std::string initial_controller;
     std::string seq_env_path;
     std::string seq_env_name;
+    std::string seq_env_module;
     std::string seq_plan;
     bool seq_use_real_sensors;
     unsigned int seq_start_stance;
