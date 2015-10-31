@@ -98,7 +98,7 @@
                "stiffness" : 5.0,
                "extraStiffness" : 7.5,
                "weight" : 600.0,
-               "targetSpeed" : 0.005
+               "targetSpeed" : 0.0005
             },
             "orientation" : {
                "stiffness" : 10.0,
@@ -108,7 +108,7 @@
             "linVel" : {
                "stiffness" : 100.0,
                "weight" : 1000.0,
-               "speed" : 0.04
+               "speed" : 0.01
             },
             "waypointConf" : {
                "conf" : {
@@ -324,6 +324,23 @@
               "collisionConf": { "iDist" : 0.05, "sDist" : 0.01, "damping" : 0.1 }
             }
           ]
+        }
+      },
+      {
+        "type" : "add",
+        "r1Surface" : "RFullSole",
+        "r2Surface" : "left_env_floor_low2",
+        "contactTask" : {
+           "waypointConf" : {
+              "conf" : {
+                 "x" : 0.9,
+                 "y" : 0.9,
+                 "z" : 0.1,
+                 "nOff" : 0.1
+              },
+              "thresh" : 0.1,
+              "type" : "percentWaypoint"
+           }
         }
       },
       {
