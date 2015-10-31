@@ -2,6 +2,7 @@
 #include <mc_rtc/config.h>
 #include <mc_rbdyn/robot.h>
 
+#include <RBDyn/FK.h>
 
 #ifdef MC_RTC_HAS_ROS
 #include <ros/ros.h>
@@ -25,6 +26,24 @@ static const std::vector<std::string> REF_JOINT_ORDER = {
   "LARM_JOINT0", "LARM_JOINT1", "LARM_JOINT2", "LARM_JOINT3", "LARM_JOINT4", "LARM_JOINT5", "LARM_JOINT6", "LARM_JOINT7",
   "RHAND_JOINT0", "RHAND_JOINT1", "RHAND_JOINT2", "RHAND_JOINT3", "RHAND_JOINT4",
   "LHAND_JOINT0", "LHAND_JOINT1", "LHAND_JOINT2", "LHAND_JOINT3", "LHAND_JOINT4"};
+
+static const std::map<std::string, int> LGRIPPER_JOINTS = {
+  {"LARM_JOINT7"  , 0},
+  {"LHAND_JOINT0" , 1},
+  {"LHAND_JOINT1" , 2},
+  {"LHAND_JOINT2" , 3},
+  {"LHAND_JOINT3" , 4},
+  {"LHAND_JOINT4" , 5}
+};
+
+static const std::map<std::string, int> RGRIPPER_JOINTS = {
+  {"RARM_JOINT7"  , 0},
+  {"RHAND_JOINT0" , 1},
+  {"RHAND_JOINT1" , 2},
+  {"RHAND_JOINT2" , 3},
+  {"RHAND_JOINT3" , 4},
+  {"RHAND_JOINT4" , 5}
+};
 
 inline geometry_msgs::TransformStamped PT2TF(const sva::PTransformd & X, const ros::Time & tm, const std::string & from, const std::string & to)
 {
@@ -60,11 +79,28 @@ public:
   {
   }
 
-  void update(const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy)
+  void update(const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy, const std::vector<double> & lGq, const std::vector<double> & rGq)
   {
     ros::Time tm = ros::Time::now();
     sensor_msgs::JointState msg;
     std::vector<geometry_msgs::TransformStamped> tfs;
+
+    rbd::MultiBodyConfig mbc = robot.mbc();
+    if(lGq.size() == LGRIPPER_JOINTS.size())
+    {
+      for(const auto & j : LGRIPPER_JOINTS)
+      {
+        mbc.q[robot.jointIndexByName(j.first)][0] = lGq[j.second];
+      }
+    }
+    if(rGq.size() == RGRIPPER_JOINTS.size())
+    {
+      for(const auto & j : RGRIPPER_JOINTS)
+      {
+        mbc.q[robot.jointIndexByName(j.first)][0] = rGq[j.second];
+      }
+    }
+    rbd::forwardKinematics(robot.mb(), mbc);
 
     msg.header.seq = ++seq;
     msg.header.stamp = tm;
@@ -73,12 +109,14 @@ public:
     msg.position.reserve(REF_JOINT_ORDER.size());
     for(size_t i = 0; i < REF_JOINT_ORDER.size(); ++i)
     {
-      msg.position.push_back(robot.mbc().q[robot.jointIndexByName(REF_JOINT_ORDER[i])][0]);
+      const std::string & jName = REF_JOINT_ORDER[i];
+      msg.position.push_back(mbc.q[robot.jointIndexByName(REF_JOINT_ORDER[i])][0]);
     }
     msg.velocity.resize(0);
     msg.effort.resize(0);
 
-    tfs.push_back(PT2TF(robot.bodyTransform(robot.mb().body(0).id())*robot.mbc().parentToSon[0], tm, std::string("/map"), robot.mb().body(0).name()));
+
+    tfs.push_back(PT2TF(robot.bodyTransform(robot.mb().body(0).id())*mbc.parentToSon[0], tm, std::string("/map"), robot.mb().body(0).name()));
     for(int j = 1; j < robot.mb().nrJoints(); ++j)
     {
       const auto & predIndex = robot.mb().predecessor(j);
@@ -89,16 +127,16 @@ public:
       const auto & succId = robot.mb().body(succIndex).id();
       const auto & X_predp_pred = robot.bodyTransform(predId);
       const auto & X_succp_succ = robot.bodyTransform(succId);
-      tfs.push_back(PT2TF(X_succp_succ*robot.mbc().parentToSon[j]*X_predp_pred.inv(), tm, predName, succName));
+      tfs.push_back(PT2TF(X_succp_succ*mbc.parentToSon[j]*X_predp_pred.inv(), tm, predName, succName));
     }
 
-    sva::PTransformd X_0_hl1 = robot.mbc().bodyPosW[robot.bodyIndexByName("HEAD_LINK1")];
+    sva::PTransformd X_0_hl1 = mbc.bodyPosW[robot.bodyIndexByName("HEAD_LINK1")];
     sva::PTransformd X_hl1_xtion = sva::PTransformd(Eigen::Quaterniond(0.995397, 1.7518e-05, 0.0950535, -0.0122609).inverse(), Eigen::Vector3d(0.09699157105, 0.0185, 0.12699543329));
     sva::PTransformd X_0_base_odom = sva::PTransformd(
                         Eigen::Quaterniond(sva::RotZ(rpy.data.r)*sva::RotY(rpy.data.p)*sva::RotX(rpy.data.y)),
                         Eigen::Vector3d(p.data.x, p.data.y, p.data.z));
     sva::PTransformd X_0_xtion = X_hl1_xtion * X_0_hl1;
-    sva::PTransformd X_0_base = robot.mbc().bodyPosW[0];
+    sva::PTransformd X_0_base = mbc.bodyPosW[0];
     sva::PTransformd X_base_xtion = X_0_xtion * (X_0_base.inv());
 
     tfs.push_back(PT2TF(X_hl1_xtion, tm, "HEAD_LINK1", "xtion_link"));
@@ -187,11 +225,11 @@ std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
   return impl->nh;
 }
 
-void ROSBridge::update_robot_publisher(const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy)
+void ROSBridge::update_robot_publisher(const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy, const std::vector<double> & lGq, const std::vector<double> & rGq)
 {
   if(impl->rpub)
   {
-    impl->rpub->update(robot, p, rpy);
+    impl->rpub->update(robot, p, rpy, lGq, rGq);
   }
 }
 
@@ -223,7 +261,7 @@ std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
   return impl->nh;
 }
 
-void ROSBridge::update_robot_publisher(const mc_rbdyn::Robot &, const RTC::TimedPoint3D &, const RTC::TimedOrientation3D &)
+void ROSBridge::update_robot_publisher(const mc_rbdyn::Robot &, const RTC::TimedPoint3D &, const RTC::TimedOrientation3D &, const std::vector<double>&, const std::vector<double>&)
 {
 }
 

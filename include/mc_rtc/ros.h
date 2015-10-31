@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <rtm/idl/ExtendedDataTypesSkel.h>
+#include <vector>
 
 namespace ros
 {
@@ -22,7 +23,7 @@ struct ROSBridge
 {
   static std::shared_ptr<ros::NodeHandle> get_node_handle();
 
-  static void update_robot_publisher(const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy);
+  static void update_robot_publisher(const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy, const std::vector<double> & lGq = {}, const std::vector<double> & rGq = {});
 
   static void shutdown();
 private:
