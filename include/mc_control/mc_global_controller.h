@@ -7,6 +7,7 @@
 #include <mc_control/mc_driving_controller.h>
 #include <mc_control/mc_egress_controller.h>
 #include <mc_control/mc_egress_mrqp_controller.h>
+#include <mc_control/mc_bci_self_interact_controller.h>
 
 namespace mc_control
 {
@@ -71,7 +72,9 @@ public:
   bool change_gaze(double pan, double tilt);
   bool change_wrist_angle(double yaw);
   bool driving_service(double w, double a, double p, double t);
-
+  /* Generic message passing service */
+  bool send_msg(const std::string & msg);
+  bool send_recv_msg(const std::string & msg, std::string & out);
 public:
   bool running;
 private:
@@ -85,6 +88,7 @@ private:
     std::string initial_controller;
     std::string seq_env_path;
     std::string seq_env_name;
+    std::string seq_env_module;
     std::string seq_plan;
     bool seq_use_real_sensors;
     unsigned int seq_start_stance;
@@ -98,6 +102,7 @@ private:
   std::shared_ptr<MCDrivingController> driving_controller;
   std::shared_ptr<MCEgressController> egress_controller;
   std::shared_ptr<MCEgressMRQPController> egress_mrqp_controller;
+  std::shared_ptr<MCBCISelfInteractController> bci_self_interact_controller;
   enum CurrentController
   {
     POSTURE = 1,
@@ -107,6 +112,7 @@ private:
     DRIVING = 5,
     EGRESS = 6,
     EGRESS_MRQP = 7,
+    BCISELFINTERACT = 8,
     NONE = 42
   };
   CurrentController current_ctrl;

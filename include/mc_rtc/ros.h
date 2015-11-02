@@ -2,6 +2,12 @@
 
 #include <memory>
 #include <rtm/idl/ExtendedDataTypesSkel.h>
+#include <vector>
+
+namespace ros
+{
+  class NodeHandle;
+}
 
 namespace mc_rbdyn
 {
@@ -11,18 +17,17 @@ namespace mc_rbdyn
 namespace mc_rtc
 {
 
-struct RobotPublisherImpl;
+struct ROSBridgeImpl;
 
-struct RobotPublisher
+struct ROSBridge
 {
-public:
-  RobotPublisher(const std::string & node_name);
+  static std::shared_ptr<ros::NodeHandle> get_node_handle();
 
-  void stop();
+  static void update_robot_publisher(const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy, const std::vector<double> & lGq = {}, const std::vector<double> & rGq = {});
 
-  void update(const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy);
+  static void shutdown();
 private:
-  std::shared_ptr<RobotPublisherImpl> impl;
+  static std::unique_ptr<ROSBridgeImpl> impl;
 };
 
 }

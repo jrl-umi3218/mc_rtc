@@ -245,55 +245,29 @@ sva::PTransformd svaPTransformdFromJSON(Json::Value & v)
   return sva::PTransformd(rot, t);
 }
 
-std::shared_ptr<Surface> surfaceFromJSON(Json::Value & v)
+const Surface& surfaceFromJSON(const mc_rbdyn::Robot & robot, Json::Value & v)
 {
-  std::string name = v["name"].asString();
-  std::string bodyName = v["bodyName"].asString();
-  sva::PTransformd X_b_s = svaPTransformdFromJSON(v["X_b_s"]);
-  std::string materialName = v["materialName"].asString();
-  if(v.isMember("planarPoints"))
+  if(robot.hasSurface(v["name"].asString()))
   {
-    std::vector< std::pair<double, double> > planarPoints;
-    for(Json::Value & pv : v["planarPoints"])
-    {
-      planarPoints.push_back(std::pair<double,double>(pv["x"].asDouble(), pv["y"].asDouble()));
-    }
-    return std::shared_ptr<Surface>(new PlanarSurface(name, bodyName, X_b_s, materialName, planarPoints));
+    return robot.surface(v["name"].asString());
   }
-  else if(v.isMember("radius"))
-  {
-    double radius = v["radius"].asDouble();
-    double width = v["width"].asDouble();
-    return std::shared_ptr<Surface>(new CylindricalSurface(name, bodyName, X_b_s, materialName, radius, width));
-  }
-  else if(v.isMember("X_b_motor"))
-  {
-    std::vector<sva::PTransformd> pfo;
-    for(Json::Value & pv : v["pointsFromOrigin"])
-    {
-      pfo.push_back(svaPTransformdFromJSON(pv));
-    }
-    sva::PTransformd X_b_motor = svaPTransformdFromJSON(v["X_b_motor"]);
-    double motorMaxTorque = v["motorMaxTorque"].asDouble();
-    return std::shared_ptr<Surface>(new GripperSurface(name, bodyName, X_b_s, materialName, pfo, X_b_motor, motorMaxTorque));
-  }
-  std::cerr << "Cannot restore surface from JSON value" << std::endl;
+  std::cerr << "Surface stored in JSON " << v["name"].asString() << " does not exist in robot " << robot.name() << std::endl;
   throw(std::string("invalid json"));
 }
 
 Contact contactFromJSON(const mc_rbdyn::Robots & robots, Json::Value & v)
 {
-  std::shared_ptr<Surface> robotSurface = surfaceFromJSON(v["robotSurface"]);
-  std::shared_ptr<Surface> envSurface = surfaceFromJSON(v["envSurface"]);
+  const Surface & robotSurface = surfaceFromJSON(robots.robot(), v["robotSurface"]);
+  const Surface & envSurface = surfaceFromJSON(robots.env(), v["envSurface"]);
   sva::PTransformd X_es_rs = svaPTransformdFromJSON(v["X_es_rs"]);
   bool is_fixed = v["is_fixed"].asBool();
   if(is_fixed)
   {
-    return Contact(robots, robotSurface->name(), envSurface->name(), X_es_rs);
+    return Contact(robots, robotSurface.name(), envSurface.name(), X_es_rs);
   }
   else
   {
-    return Contact(robots, robotSurface->name(), envSurface->name());
+    return Contact(robots, robotSurface.name(), envSurface.name());
   }
 }
 

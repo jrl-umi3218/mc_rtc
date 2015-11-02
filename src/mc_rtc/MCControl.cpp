@@ -61,7 +61,6 @@ MCControl::MCControl(RTC::Manager* manager)
     m_rpyOutOut("rpyOut", m_rpyOut),
     m_MCControlServicePortPort("MCControlServicePort"),
     m_service0(this),
-    rpub(0),
     init(false)
     // </rtc-template>
 {
@@ -123,13 +122,6 @@ RTC::ReturnCode_t MCControl::onInitialize()
 RTC::ReturnCode_t MCControl::onActivated(RTC::UniqueId ec_id)
 { 
   std::cout << "onActivated" << std::endl;
-  try
-  {
-    rpub.reset(new mc_rtc::RobotPublisher("hrp2_rtc"));
-  }
-  catch(...)
-  {
-  }
   return RTC::RTC_OK;
 }
 
@@ -282,10 +274,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
       m_qOutOut.write();
       m_pOutOut.write();
       m_rpyOutOut.write();
-      if(rpub)
-      {
-        rpub->update(controller.robot(), m_pIn, m_rpyIn);
-      }
+      mc_rtc::ROSBridge::update_robot_publisher(controller.robot(), m_pIn, m_rpyIn, controller.gripperQ(true), controller.gripperQ(false));
     }
     else
     {

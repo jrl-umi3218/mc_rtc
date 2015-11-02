@@ -45,6 +45,18 @@ MCGlobalController::Configuration::Configuration(const std::string & path)
   {
     initial_controller = v["Default"].asString();
   }
+  else
+  {
+    if(enabled_controllers.size())
+    {
+      initial_controller = enabled_controllers[0];
+    }
+  }
+  /* Allow the user not to worry about Default if only one controller is enabled */
+  if(enabled_controllers.size() == 1)
+  {
+    initial_controller = enabled_controllers[0];
+  }
   if(v.isMember("Seq"))
   {
     if(v["Seq"].isMember("Env"))
@@ -53,9 +65,25 @@ MCGlobalController::Configuration::Configuration(const std::string & path)
       {
         seq_env_path = v["Seq"]["Env"]["Path"].asString();
       }
+      else
+      {
+        seq_env_path = "";
+      }
       if(v["Seq"]["Env"].isMember("Name"))
       {
         seq_env_name = v["Seq"]["Env"]["Name"].asString();
+      }
+      else
+      {
+        seq_env_name = "";
+      }
+      if(v["Seq"]["Env"].isMember("Module"))
+      {
+        seq_env_module = v["Seq"]["Env"]["Module"].asString();
+      }
+      else
+      {
+        seq_env_module = "";
       }
     }
     if(v["Seq"].isMember("Plan"))
@@ -105,7 +133,34 @@ MCGlobalController::MCGlobalController()
   }
   if(config.enabled("Seq"))
   {
-    seq_controller.reset(new MCSeqController(config.seq_env_path, config.seq_env_name, std::string(mc_rtc::DATA_PATH) + config.seq_plan, config.seq_use_real_sensors, config.seq_start_stance));
+    if(config.seq_env_name != "")
+    {
+      if(config.seq_env_path != "")
+      {
+        seq_controller.reset(new MCSeqController(config.seq_env_path, config.seq_env_name, std::string(mc_rtc::DATA_PATH) + config.seq_plan, config.seq_use_real_sensors, config.seq_start_stance));
+      }
+      else
+      {
+        seq_controller.reset(new MCSeqController(config.seq_env_name, std::string(mc_rtc::DATA_PATH) + config.seq_plan, config.seq_use_real_sensors, config.seq_start_stance));
+      }
+    }
+    else if(config.seq_env_module != "")
+    {
+      if(config.seq_env_module == "Polaris")
+      {
+        seq_controller.reset(new MCSeqController(std::make_shared<mc_robots::PolarisRangerRobotModule>(false),
+                                                 std::string(mc_rtc::DATA_PATH) + config.seq_plan,
+                                                 config.seq_use_real_sensors, config.seq_start_stance));
+      }
+      else
+      {
+        std::cerr << "Unknown environment module provided (" << config.seq_env_module << ")" << std::endl;
+      }
+    }
+    else
+    {
+      std::cerr << "Seq module enabled but no environment provided, Seq module not loaded" << std::endl;
+    }
   }
   if(config.enabled("Driving"))
   {
@@ -118,6 +173,10 @@ MCGlobalController::MCGlobalController()
   if(config.enabled("EgressMRQP"))
   {
     egress_mrqp_controller.reset(new MCEgressMRQPController({std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::PolarisRangerEgressRobotModule()), std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::EnvRobotModule(mc_rtc::MC_ENV_DESCRIPTION_PATH, "ground"))}));
+  }
+  if(config.enabled("BCISelfInteract"))
+  {
+    bci_self_interact_controller.reset(new MCBCISelfInteractController());
   }
   if(config.initial_controller == "Posture")
   {
@@ -153,6 +212,11 @@ MCGlobalController::MCGlobalController()
   {
     current_ctrl = EGRESS_MRQP;
     controller = egress_mrqp_controller.get();
+  }
+  if(config.initial_controller == "BCISelfInteract")
+  {
+    current_ctrl = BCISELFINTERACT;
+    controller = bci_self_interact_controller.get();
   }
   next_ctrl = current_ctrl;
   next_controller = 0;

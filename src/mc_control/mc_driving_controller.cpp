@@ -9,6 +9,8 @@
 
 #include <mc_rbdyn/Surface.h>
 
+#include <boost/algorithm/string.hpp>
+
 namespace mc_control
 {
 
@@ -21,7 +23,9 @@ MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rb
     drivingContacts(),
     collsConstraint(robots(), 0, 1, timeStep),
     iter_(0), theta_(0), log_("/tmp/driving-ankle-value.log"),
-    tMax_(0.5), tMin_(-0.5)
+    tMax_(0.5), tMin_(-0.5),
+    head_task("HEAD_LINK1", robots(), 0),
+    lhand_task("LARM_LINK6", robots(), 0)
 {
   mrqpsolver->addConstraintSet(hrp2contactConstraint);
   mrqpsolver->addConstraintSet(hrp2kinematicsConstraint);
@@ -203,5 +207,51 @@ bool MCDrivingController::driving_service(double wheel, double ankle, double pan
   r = r && changeGaze(pan, tilt);
   return r;
 }
+
+bool MCDrivingController::read_msg(std::string & msg)
+{
+  boost::trim(msg);
+  if(msg == "lock_head")
+  {
+    lock_head();
+    return true;
+  }
+  if(msg == "unlock_head")
+  {
+    unlock_head();
+    return true;
+  }
+  if(msg == "lock_lhand")
+  {
+    lock_lhand();
+    return true;
+  }
+  if(msg == "unlock_lhand")
+  {
+    unlock_lhand();
+    return true;
+  }
+  return false;
+}
+
+void MCDrivingController::lock_head()
+{
+  head_task.resetTask(robots(), 0);
+  head_task.addToSolver(mrqpsolver->solver);
+}
+void MCDrivingController::unlock_head()
+{
+  head_task.removeFromSolver(mrqpsolver->solver);
+}
+void MCDrivingController::lock_lhand()
+{
+  lhand_task.resetTask(robots(), 0);
+  lhand_task.addToSolver(mrqpsolver->solver);
+}
+void MCDrivingController::unlock_lhand()
+{
+  lhand_task.removeFromSolver(mrqpsolver->solver);
+}
+
 
 }

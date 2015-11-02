@@ -1,29 +1,32 @@
 #ifndef _H_MCTASKSEFTASK_H_
 #define _H_MCTASKSEFTASK_H_
 
+#include <mc_tasks/MetaTask.h>
+
 #include <mc_rbdyn/robot.h>
 #include <Tasks/QPTasks.h>
-#include <Tasks/QPSolver.h>
 
 namespace mc_tasks
 {
 
-struct EndEffectorTask
+struct EndEffectorTask : public MetaTask
 {
 public:
   EndEffectorTask(const std::string & bodyName, const mc_rbdyn::Robots & robots, unsigned int robotIndex, double stiffness = 10.0, double weight = 1000.0);
 
-  void resetTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex);
+  virtual void resetTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex);
 
-  void removeFromSolver(tasks::qp::QPSolver & solver);
+  virtual void removeFromSolver(tasks::qp::QPSolver & solver) override;
 
-  void addToSolver(tasks::qp::QPSolver & solver);
+  virtual void addToSolver(tasks::qp::QPSolver & solver) override;
 
-  void add_ef_pose(const sva::PTransformd & dtr);
+  virtual void update() override;
 
-  void set_ef_pose(const sva::PTransformd & tf);
+  virtual void add_ef_pose(const sva::PTransformd & dtr);
 
-  sva::PTransformd get_ef_pose();
+  virtual void set_ef_pose(const sva::PTransformd & tf);
+
+  virtual sva::PTransformd get_ef_pose();
 
   int dim();
 
@@ -33,6 +36,7 @@ public:
 
 public:
   const mc_rbdyn::Robots & robots;
+  unsigned int robotIndex;
 
   std::shared_ptr<tasks::qp::PositionTask> positionTask;
   std::shared_ptr<tasks::qp::SetPointTask> positionTaskSp;

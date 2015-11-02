@@ -49,6 +49,10 @@ module OpenHRP
     boolean change_wrist_angle(in double yaw);
 
     boolean driving_service(in double wheel, in double ankle, in double pan, in double tilt);
+
+    boolean send_msg(in string msg);
+
+    boolean send_recv_msg(in string msg, out string msg_out);
   };
 
 };

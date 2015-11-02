@@ -28,6 +28,8 @@ struct MCDrivingController : MCMRQPController
     virtual bool run() override;
 
     virtual void reset(const ControllerResetData & reset_data) override;
+
+    virtual bool read_msg(std::string & msg) override;
   protected:
     void resetBasePose();
     void resetWheelTransform();
@@ -46,6 +48,13 @@ struct MCDrivingController : MCMRQPController
     std::ofstream log_;
     double tMax_;
     double tMin_;
+    mc_tasks::EndEffectorTask head_task;
+    mc_tasks::EndEffectorTask lhand_task;
+
+    void lock_head();
+    void unlock_head();
+    void lock_lhand();
+    void unlock_lhand();
 };
 
 }

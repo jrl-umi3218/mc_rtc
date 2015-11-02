@@ -55,6 +55,11 @@ public:
   virtual bool joint_down(const std::string & jname) = 0;
 
   virtual bool set_joint_pos(const std::string & jname, const double & pos) = 0;
+
+  /* Generic message passing service */
+  virtual bool read_msg(std::string & msg);
+
+  virtual bool read_write_msg(std::string & msg, std::string & out);
 public:
   /* Common stuff */
   const double timeStep;

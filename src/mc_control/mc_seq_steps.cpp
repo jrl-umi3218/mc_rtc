@@ -465,6 +465,21 @@ bool live_moveCoMT::eval(MCSeqController & ctl)
 
   if( (error < obj.posThresh and errorVel < obj.velThresh) or ctl.notInContactCount > obj.timeout*1/ctl.timeStep)
   {
+    if(ctl.stanceIndex + 1 == ctl.stances.size())
+    {
+      double alphaNorm = 0;
+      for(const auto & q : ctl.robot().mbc().alpha)
+      {
+        for(const auto & qi : q)
+        {
+          alphaNorm += qi*qi;
+        }
+      }
+      if(alphaNorm > 0.001)
+      {
+        return false;
+      }
+    }
     if(ctl.notInContactCount > obj.timeout*1/ctl.timeStep)
     {
       std::cout << "COMP timeout (" << obj.timeout << "s)" << std::endl;

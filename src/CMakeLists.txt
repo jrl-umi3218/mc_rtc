@@ -53,6 +53,7 @@ pkg_config_append_libs(mc_trajectory)
 set(mc_tasks_SRC
 mc_tasks/OrientationTask.cpp
 mc_tasks/EndEffectorTask.cpp
+mc_tasks/RelativeEndEffectorTask.cpp
 mc_tasks/CoMTask.cpp
 mc_tasks/MetaTask.cpp
 mc_tasks/StabilityTask.cpp
@@ -73,6 +74,7 @@ mc_control/mc_virtual_controller.cpp
 mc_control/mc_controller.cpp
 mc_control/mc_posture_controller.cpp
 mc_control/mc_body6d_controller.cpp
+mc_control/mc_bci_self_interact_controller.cpp
 mc_control/mc_com_controller.cpp
 mc_control/mc_seq_controller.cpp
 mc_control/mc_seq_steps.cpp

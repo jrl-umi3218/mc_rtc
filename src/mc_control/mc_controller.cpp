@@ -11,15 +11,25 @@
 namespace mc_control
 {
 
+MCController::MCController(const std::string & env_name)
+: MCController(mc_rtc::MC_ENV_DESCRIPTION_PATH, env_name)
+{
+}
+
 MCController::MCController(const std::string & env_path, const std::string & env_name)
-: MCVirtualController(), robot_module(), env_module(env_path, env_name)
+: MCController(std::make_shared<mc_robots::EnvRobotModule>(env_path, env_name))
+{
+}
+
+MCController::MCController(const std::shared_ptr<mc_rbdyn::RobotModule> & env)
+: MCVirtualController(), robot_module(), env_module(env)
 {
   unsigned int hrp2_drc_index = 0;
   {
     /* Entering new scope to prevent access to robots from anywhere but the qpsolver object */
     sva::PTransformd base = sva::PTransformd::Identity();
     mc_rbdyn::Robots robots = mc_rbdyn::loadRobotAndEnv(robot_module, robot_module.path + "/rsdf/hrp2_drc/",
-                                                                env_module, env_module.path + "/rsdf/" + env_module.name + "/",
+                                                                *env_module, env_module->path + "/rsdf/" + env_module->name + "/",
                                                                 &base, 0);
     robots.robot().mbc().gravity = Eigen::Vector3d(0, 0, 9.81);
     rbd::forwardKinematics(robots.robot().mb(), robots.robot().mbc());
