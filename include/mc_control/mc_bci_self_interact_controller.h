@@ -23,8 +23,12 @@ public:
   virtual void reset(const ControllerResetData & reset_data) override;
 
   virtual bool read_msg(std::string & msg) override;
+
+  virtual bool read_write_msg(std::string & msg, std::string & out) override;
 private:
-  std::shared_ptr<mc_tasks::RelativeEndEffectorTask> efTask;
+  std::shared_ptr<mc_tasks::RelativeEndEffectorTask> lh2Task;
+  std::shared_ptr<mc_tasks::RelativeEndEffectorTask> rh2Task;
+  std::shared_ptr<mc_tasks::EndEffectorTask> chestTask;
   std::shared_ptr<mc_tasks::CoMTask> comTask;
   std::shared_ptr<tf2_ros::TransformBroadcaster> tf_caster;
   unsigned int seq;
