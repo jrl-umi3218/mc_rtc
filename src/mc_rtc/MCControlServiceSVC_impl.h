@@ -55,6 +55,7 @@ namespace OpenHRP
 
       /* Generic method, allows any controller to implement simple service calls */
       virtual CORBA::Boolean send_msg(const char * msg) override;
+      virtual CORBA::Boolean send_recv_msg(const char * msg, ::CORBA::String_out out) override;
     private:
       MCControl * m_plugin;
   };

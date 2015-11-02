@@ -152,4 +152,15 @@ CORBA::Boolean MCControlServiceSVC_impl::send_msg(const char * msg)
   return m_plugin->controller.send_msg(msg);
 }
 
+CORBA::Boolean MCControlServiceSVC_impl::send_recv_msg(const char * msg, ::CORBA::String_out out)
+{
+  std::string out_str;
+  bool b = m_plugin->controller.send_recv_msg(msg, out_str);
+  if(b)
+  {
+    out = CORBA::string_dup(out_str.c_str());
+  }
+  return b;
+}
+
 }

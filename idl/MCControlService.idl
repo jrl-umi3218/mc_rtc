@@ -51,6 +51,8 @@ module OpenHRP
     boolean driving_service(in double wheel, in double ankle, in double pan, in double tilt);
 
     boolean send_msg(in string msg);
+
+    boolean send_recv_msg(in string msg, out string msg_out);
   };
 
 };

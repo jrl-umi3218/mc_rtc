@@ -58,6 +58,8 @@ public:
 
   /* Generic message passing service */
   virtual bool read_msg(std::string & msg);
+
+  virtual bool read_write_msg(std::string & msg, std::string & out);
 public:
   /* Common stuff */
   const double timeStep;

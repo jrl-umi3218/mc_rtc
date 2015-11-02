@@ -74,6 +74,7 @@ public:
   bool driving_service(double w, double a, double p, double t);
   /* Generic message passing service */
   bool send_msg(const std::string & msg);
+  bool send_recv_msg(const std::string & msg, std::string & out);
 public:
   bool running;
 private:
