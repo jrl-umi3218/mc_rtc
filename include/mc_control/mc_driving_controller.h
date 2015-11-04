@@ -45,7 +45,9 @@ struct MCDrivingController : MCMRQPController
     mc_solver::CollisionsConstraint collsConstraint;
     unsigned iter_;
     double theta_;
-    std::ofstream log_;
+    bool logging_;
+    std::ofstream log_ankle_;
+    std::ofstream log_wheel_;
     double tMax_;
     double tMin_;
     mc_tasks::EndEffectorTask head_task;
@@ -55,6 +57,8 @@ struct MCDrivingController : MCMRQPController
     void unlock_head();
     void lock_lhand();
     void unlock_lhand();
+    void start_logging();
+    void stop_logging();
 };
 
 }

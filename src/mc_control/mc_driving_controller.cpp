@@ -11,6 +11,8 @@
 
 #include <boost/algorithm/string.hpp>
 
+#include <sys/time.h>
+
 namespace mc_control
 {
 
@@ -22,7 +24,8 @@ MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rb
         {0.1, 0.01, 0.01}, 0.5),
     drivingContacts(),
     collsConstraint(robots(), 0, 1, timeStep),
-    iter_(0), theta_(0), log_("/tmp/driving-ankle-value.log"),
+    iter_(0), theta_(0),
+    logging_(false), log_ankle_("/tmp/driving-ankle-value.log"), log_wheel_("/tmp/driving-wheel-value.log"),
     tMax_(0.5), tMin_(-0.5),
     head_task("HEAD_LINK1", robots(), 0),
     lhand_task("LARM_LINK6", robots(), 0)
@@ -76,7 +79,16 @@ bool MCDrivingController::run()
 {
   bool success = MCMRQPController::run();
   //std::cout << robots().robots[1].mbc().q[11][0] << std::endl;
-  log_ << iter_*timeStep << " " << robot().mbc().q[robot().jointIndexByName("RLEG_JOINT4")][0] << " " << theta_ << std::endl;
+  if(logging_)
+  {
+    mc_rbdyn::Robot & polaris = robots().robot(1);
+    int wheel_i = robots().robot(1).jointIndexByName("steering_joint");
+    struct timeval tv;
+    gettimeofday(&tv, 0);
+    uint64_t t = tv.tv_sec*1000000 + tv.tv_usec;
+    log_ankle_ << t << " " << robot().mbc().q[robot().jointIndexByName("RLEG_JOINT4")][0] << " " << theta_ << std::endl;
+    log_wheel_ << t << " " << polaris.mbc().q[wheel_i][0] << " " << polarisPostureTask->posture()[wheel_i][0] << std::endl;
+  }
   iter_++;
   return success;
 }
@@ -231,6 +243,16 @@ bool MCDrivingController::read_msg(std::string & msg)
     unlock_lhand();
     return true;
   }
+  if(msg == "start_logging")
+  {
+    start_logging();
+    return true;
+  }
+  if(msg == "stop_logging")
+  {
+    stop_logging();
+    return true;
+  }
   return false;
 }
 
@@ -253,5 +275,25 @@ void MCDrivingController::unlock_lhand()
   lhand_task.removeFromSolver(mrqpsolver->solver);
 }
 
+void MCDrivingController::start_logging()
+{
+  struct timeval tv;
+  gettimeofday(&tv, 0);
+  uint64_t t = tv.tv_sec*1000000 + tv.tv_usec;
+  std::stringstream ss;
+  ss << "/tmp/driving-ankle-value-" << t << ".log";
+  std::stringstream ss2;
+  ss2 << "/tmp/drving-wheel-value-" << t << ".log";
+  log_ankle_.close();
+  log_ankle_.open(ss.str().c_str());
+  log_wheel_.close();
+  log_wheel_.open(ss2.str().c_str());
+  logging_ = true;
+}
+
+void MCDrivingController::stop_logging()
+{
+  logging_ = false;
+}
 
 }
