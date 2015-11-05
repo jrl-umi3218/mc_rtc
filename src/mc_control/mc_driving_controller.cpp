@@ -28,7 +28,7 @@ MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rb
     drivingContacts(),
     collsConstraint(robots(), 0, 1, timeStep),
     iter_(0), theta_(0),
-    logging_(false), log_ankle_("/tmp/driving-ankle-value.log"), log_wheel_("/tmp/driving-wheel-value.log"),
+    logging_(false), log_ankle_(), log_wheel_(), log_ef_(),
     tMax_(0.5), tMin_(-0.5),
     head_task("HEAD_LINK1", robots(), 0),
     lhand_task("LARM_LINK6", robots(), 0)
@@ -43,8 +43,6 @@ MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rb
   jsv.push_back({static_cast<int>(robot().jointIdByName("RLEG_JOINT4")), 100.});
   hrp2postureTask->jointsStiffness(robots().mbs(), jsv);
   mrqpsolver->solver.addTask(hrp2postureTask.get());
-
-  mc_rbdyn::Robot& polaris = robots().robot(1);
 
   //robot().mbc().q[0] = {0.8018680589369662, 0.09936561148509283, -0.06541812773434774, 0.5855378381237102, -0.3421374123035909, -0.0002850914593993392, 0.8847053544605464};
   robot().mbc().q[0] = {1, 0, 0, 0, 0, 0, 0.76};
@@ -81,7 +79,6 @@ MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rb
 bool MCDrivingController::run()
 {
   bool success = MCMRQPController::run();
-  //std::cout << robots().robots[1].mbc().q[11][0] << std::endl;
   if(logging_)
   {
     mc_rbdyn::Robot & polaris = robots().robot(1);
@@ -91,6 +88,11 @@ bool MCDrivingController::run()
     uint64_t t = tv.tv_sec*1000000 + tv.tv_usec;
     log_ankle_ << t << " " << robot().mbc().q[robot().jointIndexByName("RLEG_JOINT4")][0] << " " << theta_ << std::endl;
     log_wheel_ << t << " " << polaris.mbc().q[wheel_i][0] << " " << polarisPostureTask->posture()[wheel_i][0] << std::endl;
+    const auto & X_0_hand = robot().mbc().bodyPosW[robot().bodyIndexByName("RARM_LINK6")];
+    Eigen::Quaterniond ori(X_0_hand.rotation());
+    ori = ori.inverse();
+    const auto & v = X_0_hand.translation();
+    log_ef_ << t << " " << ori.w() << " " << ori.x() << " " << ori.y() << ori.z() << " " << v.transpose() << std::endl;
   }
   iter_++;
   return success;
@@ -100,7 +102,6 @@ void MCDrivingController::reset(const ControllerResetData & reset_data)
 {
   MCMRQPController::reset(reset_data);
   std::cout << "Enter reset" << std::endl;
-  mc_rbdyn::Robot& polaris = robots().robot(1);
   robot().mbc().zero(robot().mb());
   robot().mbc().q = reset_data.q;
   //robot().mbc().q[0] = {0.8018680589369662, 0.09936561148509283, -0.06541812773434774, 0.5855378381237102, -0.3421374123035909, -0.0002850914593993392, 0.8847053544605464};
@@ -178,7 +179,6 @@ bool MCDrivingController::changeWheelAngle(double theta)
 {
   int wheel_i = robots().robot(1).jointIndexByName("steering_joint");
   auto p = polarisPostureTask->posture();
-  double old = p[wheel_i][0];
   p[wheel_i][0] = theta;
   polarisPostureTask->posture(p);
   return true;
@@ -291,14 +291,16 @@ void MCDrivingController::start_logging()
   ss_now << boost::gregorian::to_iso_extended_string(now.date()) << "-" <<
             now.time_of_day().hours() << "-" << now.time_of_day().minutes()
             << "-" << now.time_of_day().seconds();
-  std::stringstream ss;
-  ss << log_path.string() << "/driving-ankle-value-" << ss_now.str() << ".log";
-  std::stringstream ss2;
-  ss2 << log_path.string() << "/drving-wheel-value-" << ss_now.str() << ".log";
-  log_ankle_.close();
-  log_ankle_.open(ss.str().c_str());
-  log_wheel_.close();
-  log_wheel_.open(ss2.str().c_str());
+  auto new_log = [&log_path, &ss_now](const std::string & base_name, std::ofstream & ofs)
+  {
+    std::stringstream ss;
+    ss << log_path.string() << "/" << base_name << "-" << ss_now.str() << ".log";
+    ofs.close();
+    ofs.open(ss.str().c_str());
+  };
+  new_log("driving-ankle-value", log_ankle_);
+  new_log("driving-wheel-value", log_wheel_);
+  new_log("driving-ef-pos", log_ef_);
   logging_ = true;
 }
 
