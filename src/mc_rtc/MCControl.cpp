@@ -54,6 +54,7 @@ MCControl::MCControl(RTC::Manager* manager)
     m_qInIn("qIn", m_qIn),
     m_pInIn("pIn", m_pIn),
     m_rpyInIn("rpyIn", m_rpyIn),
+    m_accInIn("accIn", m_accIn),
     m_poseInIn("poseIn", m_poseIn),
     m_wrenchesNames({"RightFootForceSensor", "LeftFootForceSensor", "RightHandForceSensor", "LeftHandForceSensor"}),
     m_qOutOut("qOut", m_qOut),
@@ -88,6 +89,7 @@ RTC::ReturnCode_t MCControl::onInitialize()
   addInPort("qIn", m_qInIn);
   addInPort("pIn", m_pInIn);
   addInPort("rpyIn", m_rpyInIn);
+  addInPort("accIn", m_accInIn);
   addInPort("poseIn", m_poseInIn);
   for(size_t i = 0; i < m_wrenchesNames.size(); ++i)
   {
@@ -166,6 +168,13 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
     rpyIn(1) = m_rpyIn.data.p;
     rpyIn(2) = m_rpyIn.data.y;
   }
+  if(m_accInIn.isNew())
+  {
+    m_accInIn.read();
+    accIn(0) = m_accIn.data.ax;
+    accIn(1) = m_accIn.data.ay;
+    accIn(2) = m_accIn.data.az;
+  }
   if(m_qInIn.isNew())
   {
     m_qInIn.read();
@@ -195,6 +204,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
       }
       double t = tm.sec*1e9 + tm.nsec;
       controller.setSensorOrientation(rpyIn);
+      controller.setSensorAcceleration(accIn);
       controller.setEncoderValues(qIn);
       controller.setWrenches(m_wrenches);
       if(controller.run())

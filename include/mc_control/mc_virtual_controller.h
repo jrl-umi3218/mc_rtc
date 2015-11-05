@@ -67,6 +67,8 @@ public:
   std::vector<double> encoderValues;
   /* Robot orientation provided by sensors */
   Eigen::Vector3d sensorOri;
+  /* Robot acceleration provided by sensors */
+  Eigen::Vector3d sensorAcc;
   /* FIXME A bit dirty but needed */
   std::shared_ptr<mc_control::Gripper> lgripper;
   std::shared_ptr<mc_control::Gripper> rgripper;

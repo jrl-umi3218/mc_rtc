@@ -271,6 +271,11 @@ void MCGlobalController::setSensorOrientation(const Eigen::Vector3d & rpy)
   controller->sensorOri = rpy;
 }
 
+void MCGlobalController::setSensorAcceleration(const Eigen::Vector3d & acc)
+{
+  controller->sensorAcc = acc;
+}
+
 void MCGlobalController::setEncoderValues(const std::vector<double> & eValues)
 {
   controller->encoderValues = eValues;
