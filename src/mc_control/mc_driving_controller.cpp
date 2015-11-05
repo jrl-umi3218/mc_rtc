@@ -10,6 +10,9 @@
 #include <mc_rbdyn/Surface.h>
 
 #include <boost/algorithm/string.hpp>
+#include <boost/date_time.hpp>
+#include <boost/filesystem.hpp>
+namespace bfs = boost::filesystem;
 
 #include <sys/time.h>
 
@@ -277,13 +280,21 @@ void MCDrivingController::unlock_lhand()
 
 void MCDrivingController::start_logging()
 {
-  struct timeval tv;
-  gettimeofday(&tv, 0);
-  uint64_t t = tv.tv_sec*1000000 + tv.tv_usec;
+  bfs::path log_path(getenv("HOME"));
+  log_path = log_path / "drc_driving_experiments";
+  if(!bfs::exists(log_path))
+  {
+    bfs::create_directories(log_path);
+  }
+  boost::posix_time::ptime now = boost::posix_time::microsec_clock::local_time();
+  std::stringstream ss_now;
+  ss_now << boost::gregorian::to_iso_extended_string(now.date()) << "-" <<
+            now.time_of_day().hours() << "-" << now.time_of_day().minutes()
+            << "-" << now.time_of_day().seconds();
   std::stringstream ss;
-  ss << "/tmp/driving-ankle-value-" << t << ".log";
+  ss << log_path.string() << "/driving-ankle-value-" << ss_now.str() << ".log";
   std::stringstream ss2;
-  ss2 << "/tmp/drving-wheel-value-" << t << ".log";
+  ss2 << log_path.string() << "/drving-wheel-value-" << ss_now.str() << ".log";
   log_ankle_.close();
   log_ankle_.open(ss.str().c_str());
   log_wheel_.close();
