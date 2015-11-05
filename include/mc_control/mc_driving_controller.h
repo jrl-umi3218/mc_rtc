@@ -49,6 +49,8 @@ struct MCDrivingController : MCMRQPController
     std::ofstream log_ankle_;
     std::ofstream log_wheel_;
     std::ofstream log_ef_;
+    std::ofstream log_acc_;
+    std::ofstream log_rpy_;
     double tMax_;
     double tMin_;
     mc_tasks::EndEffectorTask head_task;

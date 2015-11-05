@@ -28,7 +28,8 @@ MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rb
     drivingContacts(),
     collsConstraint(robots(), 0, 1, timeStep),
     iter_(0), theta_(0),
-    logging_(false), log_ankle_(), log_wheel_(), log_ef_(),
+    logging_(false), log_ankle_(), log_wheel_(),
+    log_ef_(), log_acc_(), log_rpy_(),
     tMax_(0.5), tMin_(-0.5),
     head_task("HEAD_LINK1", robots(), 0),
     lhand_task("LARM_LINK6", robots(), 0)
@@ -93,6 +94,8 @@ bool MCDrivingController::run()
     ori = ori.inverse();
     const auto & v = X_0_hand.translation();
     log_ef_ << t << " " << ori.w() << " " << ori.x() << " " << ori.y() << ori.z() << " " << v.transpose() << std::endl;
+    log_acc_ << t << " " << sensorAcc.transpose() << std::endl;
+    log_rpy_ << t << " " << sensorOri.transpose() << std::endl;
   }
   iter_++;
   return success;
@@ -301,6 +304,8 @@ void MCDrivingController::start_logging()
   new_log("driving-ankle-value", log_ankle_);
   new_log("driving-wheel-value", log_wheel_);
   new_log("driving-ef-pos", log_ef_);
+  new_log("driving-acc-sensor", log_acc_);
+  new_log("driving-rpy-sensor", log_rpy_);
   logging_ = true;
 }
 
