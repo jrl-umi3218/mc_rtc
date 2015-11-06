@@ -283,29 +283,38 @@ void MCDrivingController::unlock_lhand()
 
 void MCDrivingController::start_logging()
 {
+  boost::posix_time::ptime now = boost::posix_time::microsec_clock::local_time();
   bfs::path log_path(getenv("HOME"));
-  log_path = log_path / "drc_driving_experiments";
+  log_path = log_path / "drc_driving_experiments" / boost::gregorian::to_iso_string(now.date());
   if(!bfs::exists(log_path))
   {
     bfs::create_directories(log_path);
   }
-  boost::posix_time::ptime now = boost::posix_time::microsec_clock::local_time();
-  std::stringstream ss_now;
-  ss_now << boost::gregorian::to_iso_extended_string(now.date()) << "-" <<
-            now.time_of_day().hours() << "-" << now.time_of_day().minutes()
-            << "-" << now.time_of_day().seconds();
-  auto new_log = [&log_path, &ss_now](const std::string & base_name, std::ofstream & ofs)
+  unsigned int i = 1;
+  while(1)
   {
     std::stringstream ss;
-    ss << log_path.string() << "/" << base_name << "-" << ss_now.str() << ".log";
+    ss << std::setw(3) << std::setfill('0') << i;
+    ++i;
+    bfs::path test = log_path / ss.str();
+    if(!bfs::exists(test))
+    {
+      bfs::create_directory(test);
+      log_path = test;
+      break;
+    }
+  }
+  auto new_log = [&log_path](const std::string & log_name, std::ofstream & ofs)
+  {
+    bfs::path p = log_path / log_name;
     ofs.close();
-    ofs.open(ss.str().c_str());
+    ofs.open(p.string());
   };
-  new_log("driving-ankle-value", log_ankle_);
-  new_log("driving-wheel-value", log_wheel_);
-  new_log("driving-ef-pos", log_ef_);
-  new_log("driving-acc-sensor", log_acc_);
-  new_log("driving-rpy-sensor", log_rpy_);
+  new_log("driving-ankle-value.log", log_ankle_);
+  new_log("driving-wheel-value.log", log_wheel_);
+  new_log("driving-ef-pos.log", log_ef_);
+  new_log("driving-acc-sensor.log", log_acc_);
+  new_log("driving-rpy-sensor.log", log_rpy_);
   logging_ = true;
 }
 
