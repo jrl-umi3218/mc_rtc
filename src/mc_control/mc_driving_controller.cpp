@@ -86,7 +86,7 @@ bool MCDrivingController::run()
     int wheel_i = robots().robot(1).jointIndexByName("steering_joint");
     struct timeval tv;
     gettimeofday(&tv, 0);
-    uint64_t t = tv.tv_sec*1000000 + tv.tv_usec;
+    uint64_t t = static_cast<uint64_t>(tv.tv_sec)*1000000 + static_cast<uint64_t>(tv.tv_usec);
     log_ankle_ << t << " " << robot().mbc().q[robot().jointIndexByName("RLEG_JOINT4")][0] << " " << theta_ << std::endl;
     log_wheel_ << t << " " << polaris.mbc().q[wheel_i][0] << " " << polarisPostureTask->posture()[wheel_i][0] << std::endl;
     const auto & X_0_hand = robot().mbc().bodyPosW[robot().bodyIndexByName("RARM_LINK6")];
