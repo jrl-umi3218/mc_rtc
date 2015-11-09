@@ -23,7 +23,7 @@ public:
   std::vector< Contact > stabContacts;
 };
 
-unsigned int Stance::nrConeGen = 4;
+int Stance::nrConeGen = 4;
 double Stance::defaultFriction = 0.7;
 unsigned int Stance::nrBilatPoints = 4;
 
@@ -454,7 +454,7 @@ Json::Value stanceActionToJSON(StanceAction & action)
   return ret;
 }
 
-void saveStances(const mc_rbdyn::Robots & robots, const std::string & filename, std::vector<Stance> & stances, std::vector< std::shared_ptr<StanceAction> > & actions)
+void saveStances(const mc_rbdyn::Robots &/*robots*/, const std::string & filename, std::vector<Stance> & stances, std::vector< std::shared_ptr<StanceAction> > & actions)
 {
   for(size_t i = 0; i < std::min(stances.size(), actions.size()); ++i)
   {

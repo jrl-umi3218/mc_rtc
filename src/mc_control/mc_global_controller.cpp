@@ -96,7 +96,7 @@ MCGlobalController::Configuration::Configuration(const std::string & path)
     }
     if(v["Seq"].isMember("StartStance"))
     {
-      seq_start_stance = v["Seq"]["StartStance"].asInt();
+      seq_start_stance = static_cast<unsigned int>(v["Seq"]["StartStance"].asInt());
     }
     else
     {

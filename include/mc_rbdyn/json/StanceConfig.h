@@ -70,7 +70,7 @@ inline Json::Value scCoMObjToJSON(const StanceConfig::CoMObj & co)
   ret["posThresh"] = co.posThresh;
   ret["velThresh"] = co.velThresh;
   Json::Value cOff(Json::arrayValue);
-  for(size_t i = 0; i < 3; ++i)
+  for(int i = 0; i < 3; ++i)
   {
     cOff.append(Json::Value(co.comOffset(i)));
   }

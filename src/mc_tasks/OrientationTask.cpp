@@ -13,8 +13,8 @@ OrientationTask::OrientationTask(const std::string & bodyName, const mc_rbdyn::R
   bIndex = robot.bodyIndexByName(bodyName);
 
   Eigen::Matrix3d curOri = robot.mbc().bodyPosW[bIndex].rotation();
-  orientationTask.reset(new tasks::qp::OrientationTask(robots.mbs(), rIndex, bId, curOri));
-  orientationTaskSp.reset(new tasks::qp::SetPointTask(robots.mbs(), robotIndex, orientationTask.get(), stiffness, weight));
+  orientationTask.reset(new tasks::qp::OrientationTask(robots.mbs(), static_cast<int>(rIndex), bId, curOri));
+  orientationTaskSp.reset(new tasks::qp::SetPointTask(robots.mbs(), static_cast<int>(robotIndex), orientationTask.get(), stiffness, weight));
 }
 
 void OrientationTask::resetTask()

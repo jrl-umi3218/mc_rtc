@@ -13,7 +13,6 @@ RelativeEndEffectorTask::RelativeEndEffectorTask(const std::string & bodyName, c
 void RelativeEndEffectorTask::resetTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex)
 {
   const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
-  unsigned int bodyId = robot.bodyIdByName(bodyName);
   unsigned int bodyIndex = robot.bodyIndexByName(bodyName);
   sva::PTransformd X_0_body = robot.mbc().bodyPosW[bodyIndex];
   sva::PTransformd X_0_rel = robot.mbc().bodyPosW[relBodyIdx];

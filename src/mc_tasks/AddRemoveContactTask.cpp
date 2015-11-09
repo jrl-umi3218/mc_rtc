@@ -17,7 +17,7 @@ AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots, std::share
   bodyId(robot.bodyIdByName(robotSurf->bodyName())),
   dofMat(Eigen::MatrixXd::Zero(5,6)), speedMat(Eigen::VectorXd::Zero(5))
 {
-  for(size_t i = 0; i < 5; ++i)
+  for(int i = 0; i < 5; ++i)
   {
     dofMat(i,i) = 1;
   }
@@ -31,7 +31,7 @@ AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots, std::share
     Eigen::Vector3d v2(-normalBody.z(), 0, normalBody.x());
     Eigen::Vector3d T = (v1 + v2).normalized();
     Eigen::Vector3d B = normalBody.cross(T);
-    for(size_t i = 3; i < 6; ++i)
+    for(int i = 3; i < 6; ++i)
     {
       dofMat(3, i) = T[i-3];
       dofMat(4, i) = B[i-3];

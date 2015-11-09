@@ -27,7 +27,7 @@ static const std::vector<std::string> REF_JOINT_ORDER = {
   "RHAND_JOINT0", "RHAND_JOINT1", "RHAND_JOINT2", "RHAND_JOINT3", "RHAND_JOINT4",
   "LHAND_JOINT0", "LHAND_JOINT1", "LHAND_JOINT2", "LHAND_JOINT3", "LHAND_JOINT4"};
 
-static const std::map<std::string, int> LGRIPPER_JOINTS = {
+static const std::map<std::string, unsigned int> LGRIPPER_JOINTS = {
   {"LARM_JOINT7"  , 0},
   {"LHAND_JOINT0" , 1},
   {"LHAND_JOINT1" , 2},
@@ -36,7 +36,7 @@ static const std::map<std::string, int> LGRIPPER_JOINTS = {
   {"LHAND_JOINT4" , 5}
 };
 
-static const std::map<std::string, int> RGRIPPER_JOINTS = {
+static const std::map<std::string, unsigned int> RGRIPPER_JOINTS = {
   {"RARM_JOINT7"  , 0},
   {"RHAND_JOINT0" , 1},
   {"RHAND_JOINT1" , 2},
@@ -72,7 +72,7 @@ struct RobotPublisher
 public:
   RobotPublisher(ros::NodeHandle & nh)
   : nh(nh),
-    j_state_pub(nh.advertise<sensor_msgs::JointState>("joint_states", 1)),
+    j_state_pub(this->nh.advertise<sensor_msgs::JointState>("joint_states", 1)),
     tf_caster(),
     seq(0), msgs(),
     th(std::bind(&RobotPublisher::publishThread, this))
@@ -110,7 +110,7 @@ public:
     for(size_t i = 0; i < REF_JOINT_ORDER.size(); ++i)
     {
       const std::string & jName = REF_JOINT_ORDER[i];
-      msg.position.push_back(mbc.q[robot.jointIndexByName(REF_JOINT_ORDER[i])][0]);
+      msg.position.push_back(mbc.q[robot.jointIndexByName(jName)][0]);
     }
     msg.velocity.resize(0);
     msg.effort.resize(0);
@@ -127,7 +127,7 @@ public:
       const auto & succId = robot.mb().body(succIndex).id();
       const auto & X_predp_pred = robot.bodyTransform(predId);
       const auto & X_succp_succ = robot.bodyTransform(succId);
-      tfs.push_back(PT2TF(X_succp_succ*mbc.parentToSon[j]*X_predp_pred.inv(), tm, predName, succName));
+      tfs.push_back(PT2TF(X_succp_succ*mbc.parentToSon[static_cast<unsigned int>(j)]*X_predp_pred.inv(), tm, predName, succName));
     }
 
     sva::PTransformd X_0_hl1 = mbc.bodyPosW[robot.bodyIndexByName("HEAD_LINK1")];
@@ -159,7 +159,7 @@ private:
     std::vector<geometry_msgs::TransformStamped> tfs;
   };
 
-  uint64_t seq;
+  uint32_t seq;
   std::queue<RobotStateData> msgs;
   std::thread th;
   std::mutex mut;

@@ -13,7 +13,7 @@ protected:
 struct EgressMRStartPhase : public EgressMRPhaseExecution
 {
 public:
-  virtual bool run(MCEgressMRQPController & ctl) override
+  virtual bool run(MCEgressMRQPController &) override
   {
     return false;
     std::cout << "starting" << std::endl;
@@ -102,7 +102,7 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
           //int rfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
           //Eigen::Matrix3d & rrot = ctl.robot().mbc().bodyPosW[rfindex].rotation();
           //Eigen::Vector3d rfrpy = rrot.eulerAngles(2,1,0);
-          int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
+          unsigned int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
           Eigen::Matrix3d& rot = ctl.robot().mbc().bodyPosW[lfindex].rotation();
           Eigen::Vector3d rpy = rot.eulerAngles(2, 1, 0);
           Eigen::Matrix3d target = sva::RotZ(M_PI)*sva::RotY(rpy(1))*sva::RotX(rpy(2));
@@ -198,7 +198,7 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
                                                        ctl.mrqpsolver->robots,
                                                        ctl.mrqpsolver->robots.robotIndex(), 0.25));
 
-        int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
+        unsigned int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
         sva::PTransformd lift(Eigen::Vector3d(0.0, 0, 0.1));
 
         ctl.efTask->positionTask->position((lift*ctl.robot().mbc().bodyPosW[lfindex]).translation());
@@ -248,7 +248,7 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
             ctl.mrqpsolver->setContacts(otherContacts);
             Eigen::Vector3d move(-0.1, 0.35, 0.);
             //int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
-            int rfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
+            unsigned int rfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
             const sva::PTransformd& rfpos = ctl.robot().mbc().bodyPosW[rfindex];
             //Eigen::Matrix3d& rot = ctl.robot().mbc().bodyPosW[lfindex].rotation();
             //Eigen::Vector3d rpy = rot.eulerAngles(2, 1, 0);
@@ -275,7 +275,7 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
             //ctl.efTask.reset(new mc_tasks::EndEffectorTask("LLEG_LINK5",
             //                                               ctl.mrqpsolver->robots,
             //                                               ctl.mrqpsolver->robots.robotIndex(), 10.1));
-            int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
+            unsigned int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
             Eigen::Vector3d lower(0, -0.1, -0.5);
             ctl.efTask->positionTask->position(lower+ctl.robot().mbc().bodyPosW[lfindex].translation());
             double w = ctl.efTask->orientationTaskSp->weight();
@@ -290,7 +290,7 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
             ctl.comTask->comTaskSp->weight(w*com_multiplier);
 
             std::cout << "Reached contacts phase" << std::endl;
-            ctl.egressContacts.erase(ctl.egressContacts.begin()+lfc_index);
+            ctl.egressContacts.erase(ctl.egressContacts.begin()+static_cast<int>(lfc_index));
             ctl.mrqpsolver->setContacts(ctl.egressContacts);
             //ctl.egressContacts.emplace_back(ctl.robots().robotIndex, 2,
             //                                ctl.robot().surfaces.at("LFullSole"),
@@ -382,8 +382,6 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
         done_moving(false),
         done_rotating(false),
         done_contacting(false),
-        rfc_index(2),
-        prev_weight(0),
         otherContacts()
     {
     }
@@ -406,7 +404,7 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
         ctl.torsoOriTask->orientationTaskSp->weight(10.);
         ctl.torsoOriTask->addToSolver(ctl.mrqpsolver->solver);
 
-        int lfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
+        unsigned int lfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
         sva::PTransformd lift(Eigen::Vector3d(0.0, 0, 0.1));
 
         ctl.efTask->positionTask->position((lift*ctl.robot().mbc().bodyPosW[lfindex]).translation());
@@ -450,7 +448,7 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
             done_removing = true;
             ctl.mrqpsolver->setContacts(ctl.egressContacts);
             Eigen::Vector3d move(0.3, 0.2, 0);
-            int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
+            unsigned int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
             const sva::PTransformd& lfpos = ctl.robot().mbc().bodyPosW[lfindex];
             Eigen::Vector3d target = move + lfpos.translation();
             target(2) = ctl.efTask->positionTask->position()(2);
@@ -482,7 +480,7 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
               or timeoutIter > 15*500)
           {
             done_rotating = true;
-            int rfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
+            unsigned int rfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
             Eigen::Vector3d lower(0, -0.2, -0.5);
 
             double w = ctl.efTask->orientationTaskSp->weight();
@@ -538,10 +536,8 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
     bool done_moving;
     bool done_rotating;
     bool done_contacting;
-    size_t rfc_index;
     unsigned int forceIter;
     double forceStart;
-    double prev_weight;
     std::vector<mc_rbdyn::Contact> otherContacts;
 };
 
@@ -557,7 +553,6 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
         done_rotating(false),
         done_contacting(false),
         rfc_index(2),
-        prev_weight(0),
         otherContacts()
     {
     }
@@ -572,7 +567,7 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
                                                        ctl.mrqpsolver->robots,
                                                        ctl.mrqpsolver->robots.robotIndex(), 0.25));
 
-        int lfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
+        unsigned int lfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
         sva::PTransformd lift(Eigen::Vector3d(0.05, 0, 0.1));
 
         ctl.efTask->positionTask->position((lift*ctl.robot().mbc().bodyPosW[lfindex]).translation());
@@ -635,13 +630,13 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
             //ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
 
             //Eigen::Vector3d move(0.35, -0.15, 0.20);
-            //int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
+            //unsigned int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
             //const sva::PTransformd& lfpos = ctl.robot().mbc().bodyPosW[lfindex];
             //sva::PTransformd target(lfpos.rotation(), lfpos.translation()+move);
             //Eigen::MatrixXd wps(3,1);
-            //int bindex = ctl.robot().bodyIndexByName("BODY");
+            //unsigned int bindex = ctl.robot().bodyIndexByName("BODY");
             //const sva::PTransformd & bpos = ctl.robot().mbc().bodyPosW[bindex];
-            //int rfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
+            //unsigned int rfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
             //const sva::PTransformd& rfpos = ctl.robot().mbc().bodyPosW[rfindex];
             //wps.col(0) = bpos.translation();
             //wps.col(0)(0) += 0.2;
@@ -671,11 +666,11 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
             //ctl.trajTask->removeFromSolver(ctl.mrqpsolver->solver);
             //ctl.hrp2postureTask->posture(ctl.robot().mbc().q);
             //ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5", ctl.mrqpsolver->robots, 0, 0.25));
-            int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
+            unsigned int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
             const sva::PTransformd& lfpos = ctl.robot().mbc().bodyPosW[lfindex];
             ctl.efTask->orientationTask->orientation(lfpos.rotation());
             Eigen::Vector3d move(0.25, 0.05, 0.20);
-            //int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
+            //unsigned int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
             //const sva::PTransformd& lfpos = ctl.robot().mbc().bodyPosW[lfindex];
             ctl.efTask->positionTask->position(lfpos.translation() + move);
             timeoutIter = 0;
@@ -695,7 +690,7 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
             ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5",
                                                            ctl.mrqpsolver->robots,
                                                            ctl.mrqpsolver->robots.robotIndex(), 0.1));
-            int lfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
+            unsigned int lfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
             Eigen::Vector3d lower(0, 0, -0.4);
             ctl.hrp2postureTask->posture(ctl.robot().mbc().q);
             ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
@@ -769,7 +764,6 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
     size_t rfc_index;
     unsigned int forceIter;
     double forceStart;
-    double prev_weight;
     std::vector<mc_rbdyn::Contact> otherContacts;
 };
 
@@ -796,7 +790,7 @@ struct EgressPlaceRightFootPhase : public EgressMRPhaseExecution
                                                        ctl.mrqpsolver->robots,
                                                        ctl.mrqpsolver->robots.robotIndex(), 0.25));
 
-        int lfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
+        unsigned int lfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
         sva::PTransformd lift(Eigen::Vector3d(0, 0., 0.1));
 
         ctl.efTask->positionTask->position((lift*ctl.robot().mbc().bodyPosW[lfindex]).translation());
@@ -818,7 +812,7 @@ struct EgressPlaceRightFootPhase : public EgressMRPhaseExecution
               or timeoutIter > 15*500)
           {
             done_lifting = true;
-            int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
+            unsigned int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
             Eigen::Matrix3d& rot = ctl.robot().mbc().bodyPosW[lfindex].rotation();
             Eigen::Vector3d rpy = rot.eulerAngles(2, 1, 0);
             Eigen::Matrix3d target = sva::RotZ(-M_PI/2)*
@@ -837,7 +831,7 @@ struct EgressPlaceRightFootPhase : public EgressMRPhaseExecution
               or timeoutIter > 15*500)
           {
             done_rotating = true;
-            int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
+            unsigned int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
             sva::PTransformd interfeet(Eigen::Vector3d(0, -0.2, 0.));
             ctl.efTask->positionTask->position((interfeet*ctl.robot().mbc().bodyPosW[lfindex]).translation());
             timeoutIter = 0;
@@ -851,7 +845,6 @@ struct EgressPlaceRightFootPhase : public EgressMRPhaseExecution
               or timeoutIter > 15*500)
           {
             done_contacting = true;
-            mc_rbdyn::Robot& polaris = ctl.robots().robot(1);
             ctl.egressContacts.emplace_back(ctl.robots(), ctl.robots().robotIndex(), 1,
                                             "RFullSole", "exit_platform");
             ctl.mrqpsolver->setContacts(ctl.egressContacts);
@@ -945,7 +938,7 @@ struct EgressRemoveRightGripperPhase : public EgressMRPhaseExecution
                                                        ctl.mrqpsolver->robots.robotIndex(),
                                                        12., 1000));
 
-        int rgindex = ctl.robot().bodyIndexByName("RARM_LINK6");
+        unsigned int rgindex = ctl.robot().bodyIndexByName("RARM_LINK6");
 
         ctl.efTask->orientationTask->orientation((sva::PTransformd(rot)*ctl.robot().mbc().bodyPosW[rgindex]).rotation());
 
@@ -990,7 +983,7 @@ struct EgressRemoveRightGripperPhase : public EgressMRPhaseExecution
             else
               ++wiggles_;
             sva::PTransformd lift(Eigen::Vector3d(0, 0, dist_));
-            int rgindex = ctl.robot().bodyIndexByName("RARM_LINK6");
+            unsigned int rgindex = ctl.robot().bodyIndexByName("RARM_LINK6");
             ctl.efTask->positionTask->position((lift*ctl.robot().mbc().bodyPosW[rgindex]).translation());
             Eigen::Matrix3d r;
             if(wiggles_ % 2 == 1)
@@ -1052,8 +1045,8 @@ struct EgressMRStandupPhase : public EgressMRPhaseExecution
         std::cout << "Starting standup" << std::endl;
         ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("BODY", ctl.mrqpsolver->robots, 0));
-        int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
-        int rfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
+        unsigned int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
+        unsigned int rfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
         const auto & lfPose = ctl.robot().mbc().bodyPosW[lfindex];
         const auto & rfPose = ctl.robot().mbc().bodyPosW[rfindex];
         Eigen::Vector3d bodyTarget = (lfPose.translation() + rfPose.translation())/2 + altitude_;
@@ -1071,7 +1064,7 @@ struct EgressMRStandupPhase : public EgressMRPhaseExecution
         ctl.mrqpsolver->setContacts(otherContacts);
 
         auto p = ctl.hrp2postureTask->posture();
-        int shoulder_i = ctl.robot().jointIndexByName("LARM_JOINT0");
+        unsigned int shoulder_i = ctl.robot().jointIndexByName("LARM_JOINT0");
         p[shoulder_i][0] = M_PI/2;
         ctl.hrp2postureTask->posture(p);
 
@@ -1227,8 +1220,6 @@ struct EgressMoveComForcePhase : public EgressMRPhaseExecution
       : started(false),
         done_com(false),
         iter_(0),
-        lwrench_i(0),
-        rwrench_i(1),
         altitude_(altitude),
         comDist_(0),
         maxMove_(max_move),
@@ -1295,7 +1286,7 @@ struct EgressMoveComForcePhase : public EgressMRPhaseExecution
                     << lfc->r2Surface()->name();
           constr->addDofContact(cId, dof);
 
-        int bodyIndex = ctl.robot().bodyIndexByName(bodyName_);
+        unsigned int bodyIndex = ctl.robot().bodyIndexByName(bodyName_);
         startPos_ = ctl.robot().mbc().bodyPosW[bodyIndex].translation();
         ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
         started = true;
@@ -1341,8 +1332,6 @@ struct EgressMoveComForcePhase : public EgressMRPhaseExecution
     bool started;
     bool done_com;
     int iter_;
-    int lwrench_i;
-    int rwrench_i;
     double altitude_;
     double comDist_;
     double maxMove_;
@@ -1376,7 +1365,7 @@ struct EgressReplaceRightHandPhase : public EgressMRPhaseExecution
                                                        ctl.mrqpsolver->robots,
                                                        ctl.mrqpsolver->robots.robotIndex(),
                                                        0.25));
-        int headIndex = ctl.robot().bodyIndexByName("HEAD_LINK1");
+        unsigned int headIndex = ctl.robot().bodyIndexByName("HEAD_LINK1");
         sva::PTransformd move(Eigen::Vector3d(0.5, 0., 0.5));
 
         ctl.efTask->set_ef_pose(move*ctl.robot().mbc().bodyPosW[headIndex]);

@@ -41,11 +41,11 @@ public:
 
   std::shared_ptr<mc_rbdyn::Surface> robotSurf;
   unsigned int robotBodyIndex;
-  unsigned int robotBodyId;
+  int robotBodyId;
 
   sva::PTransformd targetTf;
 
-  unsigned int bodyId;
+  int bodyId;
   Eigen::MatrixXd dofMat;
   Eigen::VectorXd speedMat;
   Eigen::Vector3d normal;

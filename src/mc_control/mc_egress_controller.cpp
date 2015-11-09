@@ -66,7 +66,7 @@ void MCEgressController::resetBasePose()
   rbd::forwardKinematics(robot().mb(), robot().mbc());
   rbd::forwardVelocity(robot().mb(), robot().mbc());
 
-  int steer_i = polaris.bodyIndexByName("steering_wheel");
+  unsigned int steer_i = polaris.bodyIndexByName("steering_wheel");
   sva::PTransformd X_0_w = polaris.mbc().bodyPosW[steer_i];
   const auto & gripperSurface = robot().surface("RightGripper");
   sva::PTransformd X_0_s = gripperSurface.X_0_s(robot(), robot().mbc());

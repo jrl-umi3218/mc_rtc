@@ -36,8 +36,8 @@ Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
         const std::vector< std::vector<double> > & ql, const std::vector< std::vector<double> > & qu,
         const std::vector< std::vector<double> > & vl, const std::vector< std::vector<double> > & vu,
         const std::vector< std::vector<double> > & tl, const std::vector< std::vector<double> > & tu,
-        const std::map<std::string, std::pair< unsigned int, std::shared_ptr<sch::S_Polyhedron> > > & convexes,
-        const std::map<std::string, std::pair< unsigned int, std::shared_ptr<sch::STP_BV> > > & stpbvs,
+        const std::map<std::string, convex_pair_t> & convexes,
+        const std::map<std::string, stpbv_pair_t> & stpbvs,
         const std::map<int, sva::PTransformd> & collisionTransforms, const std::map<std::string, std::shared_ptr<mc_rbdyn::Surface> > & surfaces,
         const std::vector<ForceSensor> & forceSensors, const std::string & accelerometerBody,
         const Springs & springs, const std::vector< std::vector<Eigen::VectorXd> > & tlPoly,
@@ -98,12 +98,12 @@ unsigned int Robot::bodyIndexByName(const std::string & name) const
   return bodyIndexByNameD.at(name);
 }
 
-unsigned int Robot::jointIdByName(const std::string & name) const
+int Robot::jointIdByName(const std::string & name) const
 {
   return mb().joint(jointIndexByNameD.at(name)).id();
 }
 
-unsigned int Robot::bodyIdByName(const std::string & name) const
+int Robot::bodyIdByName(const std::string & name) const
 {
   return mb().body(bodyIndexByNameD.at(name)).id();
 }
@@ -380,10 +380,10 @@ void Robots::createRobotWithBase(Robots & robots, unsigned int robots_idx, const
   this->mbs_.push_back(robots.robot(robots_idx).mbg().makeMultiBody(base.baseId, base.baseType, baseAxis, base.X_0_s, base.X_b0_s));
   this->mbcs_.emplace_back(this->mbs_.back());
   this->mbgs_.push_back(robots.robot(robots_idx).mbg());
-  robots.robot(robots_idx).createWithBase(*this, this->mbs_.size() - 1, base, baseAxis);
+  robots.robot(robots_idx).createWithBase(*this, this->mbs_.size() - 1, base);
 }
 
-void Robot::createWithBase(Robots & robots, unsigned int robots_idx, const Base & base, const Eigen::Vector3d & baseAxis) const
+void Robot::createWithBase(Robots & robots, unsigned int robots_idx, const Base & base) const
 {
   rbd::MultiBody & mb = robots.mbs_[robots_idx];
   rbd::MultiBodyConfig & mbc = robots.mbcs_[robots_idx];
@@ -564,7 +564,7 @@ Robot& Robots::load(const RobotModule & module, const std::string & surfaceDir, 
     bodyIdByName[b.name()] = b.id();
   }
 
-  std::map<std::string, std::pair<unsigned int, std::shared_ptr<sch::S_Polyhedron> > > convexesByName;
+  std::map<std::string, Robot::convex_pair_t> convexesByName;
   {
     for(const auto & p : module.convexHull())
     {
@@ -572,13 +572,13 @@ Robot& Robots::load(const RobotModule & module, const std::string & surfaceDir, 
       {
         std::shared_ptr<sch::S_Polyhedron> poly(new sch::S_Polyhedron);
         poly->constructFromFile(p.second.second);
-        convexesByName[p.first] = std::pair<unsigned int, std::shared_ptr<sch::S_Polyhedron> > (bodyIdByName[p.second.first], poly);
+        convexesByName[p.first] = Robot::convex_pair_t(bodyIdByName[p.second.first], poly);
       }
     }
     applyTransformToSchById(mb, mbc, convexesByName);
   }
 
-  std::map<std::string, std::pair<unsigned int, std::shared_ptr<sch::STP_BV> > > stpbvsByName;
+  std::map<std::string, Robot::stpbv_pair_t> stpbvsByName;
   {
     for(const auto & p : module.stpbvHull())
     {
@@ -586,7 +586,7 @@ Robot& Robots::load(const RobotModule & module, const std::string & surfaceDir, 
       {
         std::shared_ptr<sch::STP_BV> stpbvs(new sch::STP_BV);
         stpbvs->constructFromFile(p.second.second);
-        stpbvsByName[p.first] = std::pair<unsigned int, std::shared_ptr<sch::STP_BV> > (bodyIdByName[p.second.first], stpbvs);
+        stpbvsByName[p.first] = Robot::stpbv_pair_t(bodyIdByName[p.second.first], stpbvs);
       }
     }
     applyTransformToSchById(mb, mbc, stpbvsByName);
@@ -737,8 +737,8 @@ Robot& Robots::loadFromUrdf(const std::string & name, const std::string & urdf, 
   mbcs_.push_back(res.mbc);
   mbgs_.push_back(res.mbg);
 
-  std::map<std::string, std::pair<unsigned int, std::shared_ptr<sch::S_Polyhedron> > > convex;
-  std::map<std::string, std::pair<unsigned int, std::shared_ptr<sch::STP_BV> > > stpbv;
+  std::map<std::string, Robot::convex_pair_t> convex;
+  std::map<std::string, Robot::stpbv_pair_t> stpbv;
   std::map<std::string, mc_rbdyn::SurfacePtr> surfaces;
   std::vector<ForceSensor> forceSensors;
 

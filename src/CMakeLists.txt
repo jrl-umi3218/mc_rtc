@@ -97,7 +97,10 @@ mc_rtc/ros.cpp
 )
 
 set_source_files_properties(${CMAKE_BINARY_DIR}/idl/MCControlServiceSK.cc
-                            PROPERTIES GENERATED 1)
+                            PROPERTIES
+                              GENERATED 1
+                              COMPILE_FLAGS -Wno-error
+                           )
 
 include_directories(${CMAKE_BINARY_DIR}/idl)
 

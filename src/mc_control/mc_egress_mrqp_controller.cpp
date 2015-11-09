@@ -136,9 +136,9 @@ void MCEgressMRQPController::resetWheelTransform()
   sva::PTransformd graspOffset(sva::RotX(-M_PI/2), Eigen::Vector3d(0, 0, 0));
   mc_rbdyn::Robot& polaris = robots().robot(1);
   //Change wheel position
-  int chassis_index = polaris.bodyIndexByName("chassis");
+  unsigned int chassis_index = polaris.bodyIndexByName("chassis");
   //Do not take into account potential rotation of steering wheel
-  int joint_index = polaris.jointIndexByName("adjust_steering_wheel");
+  unsigned int joint_index = polaris.jointIndexByName("adjust_steering_wheel");
 
   const auto & gripperSurface = robot().surface("RightGripper");
   const auto & wheelSurface = polaris.surface("bar_wheel");
@@ -151,7 +151,7 @@ void MCEgressMRQPController::resetWheelTransform()
 
   sva::PTransformd X_chassis_wheel = (X_wheel_s).inv()*X_0_s*(X_0_chassis).inv();
 
-  polaris.mb().transform(joint_index, X_chassis_wheel);
+  polaris.mb().transform(static_cast<int>(joint_index), X_chassis_wheel);
   polaris.mbc().zero(polaris.mb());
 
   rbd::forwardKinematics(polaris.mb(), polaris.mbc());
@@ -162,9 +162,9 @@ void MCEgressMRQPController::resetLazyTransform()
 {
   mc_rbdyn::Robot& polaris = robots().robot(1);
   //Change wheel position
-  int chassis_index = polaris.bodyIndexByName("chassis");
-  //Do not take into account potential rotation of steering wheel
-  int joint_index = polaris.jointIndexByName("lazy_susan");
+  unsigned int chassis_index = polaris.bodyIndexByName("chassis");
+  //Do not take unsigned into account potential rotation of steering wheel
+  unsigned int joint_index = polaris.jointIndexByName("lazy_susan");
 
   const auto & gripperSurface = robot().surface("Butthock");
   const auto & wheelSurface = polaris.surface("lazy_seat");
@@ -177,7 +177,7 @@ void MCEgressMRQPController::resetLazyTransform()
 
   sva::PTransformd X_chassis_wheel = (X_wheel_s).inv()*X_0_s*(X_0_chassis).inv();
 
-  polaris.mb().transform(joint_index, X_chassis_wheel);
+  polaris.mb().transform(static_cast<int>(joint_index), X_chassis_wheel);
   polaris.mbc().zero(polaris.mb());
 
   rbd::forwardKinematics(polaris.mb(), polaris.mbc());

@@ -44,7 +44,7 @@ unsigned int Surface::bodyIndex(const mc_rbdyn::Robot & robot) const
   return robot.bodyIndexByName(impl->bodyName);
 }
 
-unsigned int Surface::bodyId(const mc_rbdyn::Robot & robot) const
+int Surface::bodyId(const mc_rbdyn::Robot & robot) const
 {
   return robot.bodyIdByName(impl->bodyName);
 }

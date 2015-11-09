@@ -77,7 +77,7 @@ MCController::MCController(const std::shared_ptr<mc_rbdyn::RobotModule> & env)
     mc_solver::Collision("LARM_LINK5", "CHEST_LINK1", 0.05, 0.01, 0.)
   });
 
-  postureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(qpsolver->robots.mbs(), hrp2_drc_index, qpsolver->robots.robot().mbc().q, 10, 5));
+  postureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(qpsolver->robots.mbs(), static_cast<int>(hrp2_drc_index), qpsolver->robots.robot().mbc().q, 10, 5));
   std::cout << "MCController(base) ready" << std::endl;
 
 }

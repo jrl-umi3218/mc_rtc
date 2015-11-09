@@ -188,7 +188,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
     coil::TimeValue coiltm(coil::gettimeofday());
     RTC::Time tm;
     tm.sec = coiltm.sec();
-    tm.nsec = coiltm.usec()*1e3;
+    tm.nsec = coiltm.usec()*1000;
     if(controller.running)
     {
       if(!init)

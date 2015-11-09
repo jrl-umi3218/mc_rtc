@@ -112,11 +112,11 @@ KinematicsConstraint::KinematicsConstraint(const mc_rbdyn::Robots & robots, unsi
       }
       tasks::AlphaBound alphaBound(vl, vu);
 
-      damperJointLimitsConstr.reset(new tasks::qp::DamperJointLimitsConstr(robots.mbs(), robotIndex, qBound, alphaBound, percentInter, percentSecur, offset, timeStep));
+      damperJointLimitsConstr.reset(new tasks::qp::DamperJointLimitsConstr(robots.mbs(), static_cast<int>(robotIndex), qBound, alphaBound, percentInter, percentSecur, offset, timeStep));
     }
     else
     {
-      jointLimitsConstr.reset(new tasks::qp::JointLimitsConstr(robots.mbs(), robotIndex, qBound, timeStep));
+      jointLimitsConstr.reset(new tasks::qp::JointLimitsConstr(robots.mbs(), static_cast<int>(robotIndex), qBound, timeStep));
     }
   }
 }
@@ -179,7 +179,7 @@ DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots, unsigned
     {
       sjList.push_back(tasks::qp::SpringJoint(robot.jointIdByName(flex.jointName), flex.K, flex.C, flex.O));
     }
-    motionSpringConstr.reset(new tasks::qp::MotionSpringConstr(robots.mbs(), robotIndex, tBound, sjList));
+    motionSpringConstr.reset(new tasks::qp::MotionSpringConstr(robots.mbs(), static_cast<int>(robotIndex), tBound, sjList));
   }
   /*FIXME Implement?
   else if(robot.tlPoly.size() != 0)
@@ -188,7 +188,7 @@ DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots, unsigned
   } */
   else
   {
-    motionConstr.reset(new tasks::qp::MotionConstr(robots.mbs(), robotIndex, tBound));
+    motionConstr.reset(new tasks::qp::MotionConstr(robots.mbs(), static_cast<int>(robotIndex), tBound));
   }
 }
 
@@ -257,8 +257,8 @@ bool CollisionsConstraint::removeCollisionByBody(const mc_rbdyn::Robots & robots
 {
   const mc_rbdyn::Robot & r1 = robots.robot(r1Index);
   const mc_rbdyn::Robot & r2 = robots.robot(r2Index);
-  unsigned int b1Id = r1.bodyIdByName(b1Name);
-  unsigned int b2Id = r2.bodyIdByName(b2Name);
+  int b1Id = r1.bodyIdByName(b1Name);
+  int b2Id = r2.bodyIdByName(b2Name);
   std::vector<Collision> toRm;
   for(const auto & col : cols)
   {
@@ -286,8 +286,8 @@ void CollisionsConstraint::addCollision(const mc_rbdyn::Robots & robots, const C
   const auto & body2 = r2.convex(col.body2);
   const sva::PTransformd & X_b1_c = r1.collisionTransform(body1.first);
   const sva::PTransformd & X_b2_c = r2.collisionTransform(body2.first);
-  unsigned int collId = __createCollId(col);
-  collConstr->addCollision(robots.mbs(), collId, r1Index, body1.first, const_cast<sch::S_Polyhedron*>(body1.second.get()), X_b1_c, r2Index, body2.first, const_cast<sch::S_Polyhedron*>(body2.second.get()), X_b2_c, col.iDist, col.sDist, col.damping, defaultDampingOffset);
+  int collId = __createCollId(col);
+  collConstr->addCollision(robots.mbs(), collId, static_cast<int>(r1Index), body1.first, const_cast<sch::S_Polyhedron*>(body1.second.get()), X_b1_c, static_cast<int>(r2Index), body2.first, const_cast<sch::S_Polyhedron*>(body2.second.get()), X_b2_c, col.iDist, col.sDist, col.damping, defaultDampingOffset);
 }
 
 void CollisionsConstraint::addCollisions(const mc_rbdyn::Robots & robots, const std::vector<Collision> & cols)
@@ -319,21 +319,21 @@ std::string CollisionsConstraint::__keyByNames(const std::string & name1, const 
   return name1 + name2;
 }
 
-unsigned int CollisionsConstraint::__createCollId(const Collision & col)
+int CollisionsConstraint::__createCollId(const Collision & col)
 {
   std::string key = __keyByNames(col.body1, col.body2);
-  unsigned int collId = this->collId;
+  int collId = this->collId;
   collIdDict[key] = std::pair<unsigned int, Collision>(collId, col);
   this->collId += 1;
   return collId;
 }
 
-std::pair<unsigned int, Collision> CollisionsConstraint::__popCollId(const std::string & name1, const std::string & name2)
+std::pair<int, Collision> CollisionsConstraint::__popCollId(const std::string & name1, const std::string & name2)
 {
   std::string key = __keyByNames(name1, name2);
   if(collIdDict.count(key))
   {
-    std::pair<unsigned int, Collision> p = collIdDict[key];
+    std::pair<int, Collision> p = collIdDict[key];
     collIdDict.erase(key);
     return p;
   }
@@ -462,9 +462,9 @@ void RobotEnvCollisionsConstraint::removeFromSolver(tasks::qp::QPSolver & solver
   envCollConstrMng.removeFromSolver(solver);
 }
 
-std::set<unsigned int> RobotEnvCollisionsConstraint::__bodiesFromContacts(const mc_rbdyn::Robot & robot, const std::vector<mc_rbdyn::Contact> & contacts)
+std::set<int> RobotEnvCollisionsConstraint::__bodiesFromContacts(const mc_rbdyn::Robot & robot, const std::vector<mc_rbdyn::Contact> & contacts)
 {
-  std::set<unsigned int> res;
+  std::set<int> res;
   for(const auto & c : contacts)
   {
     const std::string & s = c.r1Surface()->name();
@@ -556,7 +556,7 @@ bool QPSolver::run()
       rbd::MultiBodyConfig & mbc = robots.mbcs()[i];
       if(mb.nrDof() > 0)
       {
-        solver.updateMbc(mbc, i);
+        solver.updateMbc(mbc, static_cast<int>(i));
         rbd::eulerIntegration(mb, mbc, timeStep);
         rbd::forwardKinematics(mb, mbc);
         rbd::forwardVelocity(mb, mbc);
@@ -577,7 +577,7 @@ const mc_control::QPResultMsg & QPSolver::send(double/*curTime*/)
 void QPSolver::__fillResult()
 {
   qpRes.robots_state.resize(0);
-  for(size_t i = 0; i < robots.robots().size(); ++i)
+  for(unsigned int i = 0; i < robots.robots().size(); ++i)
   {
     const mc_rbdyn::Robot & robot = robots.robot(i);
     qpRes.robots_state.push_back(mc_control::RobotMsg());
@@ -597,7 +597,7 @@ void QPSolver::__fillResult()
         alphaVec.push_back(ai);
       }
     }
-    qpRes.robots_state[i].alphaDVec = solver.alphaDVec(i);
+    qpRes.robots_state[i].alphaDVec = solver.alphaDVec(static_cast<int>(i));
   }
   qpRes.lambdaVec = solver.lambdaVec();
 }

@@ -9,14 +9,14 @@ namespace mc_tasks
 TrajectoryTask::TrajectoryTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex,
                const mc_rbdyn::Surface & surface, const sva::PTransformd & X_0_t,
                double duration, double timeStep, double stiffness, double posWeight, double oriWeight,
-               const std::string & name,
+               const std::string &/*name*/,
                const Eigen::MatrixXd & waypoints,
                unsigned int nrWP)
 : robots(robots), surface(surface), X_0_t(X_0_t), wp(waypoints),
   duration(duration), timeStep(timeStep), t(0.)
 {
   const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
-  unsigned int bodyId = surface.bodyId(robot);
+  int bodyId = surface.bodyId(robot);
   X_0_start = surface.X_0_s(robot);
 
   if(nrWP > 0)
@@ -26,8 +26,8 @@ TrajectoryTask::TrajectoryTask(const mc_rbdyn::Robots & robots, unsigned int rob
     wp = mc_trajectory::generateInterpolatedWaypoints(start, end, nrWP);
   }
 
-  transTask.reset(new tasks::qp::TransformTask(robots.mbs(), robotIndex, bodyId, X_0_start, surface.X_b_s()));
-  transTrajTask.reset(new tasks::qp::TrajectoryTask(robots.mbs(), robotIndex, transTask.get(), stiffness, 2*sqrt(stiffness), 1.0));
+  transTask.reset(new tasks::qp::TransformTask(robots.mbs(), static_cast<int>(robotIndex), bodyId, X_0_start, surface.X_b_s()));
+  transTrajTask.reset(new tasks::qp::TrajectoryTask(robots.mbs(), static_cast<int>(robotIndex), transTask.get(), stiffness, 2*sqrt(stiffness), 1.0));
   Eigen::VectorXd dimWeight(6);
   for(unsigned int i = 0; i < 3; ++i)
   {
@@ -95,7 +95,7 @@ const Eigen::VectorXd & TrajectoryTask::speed() const
 std::vector<Eigen::Vector3d> TrajectoryTask::controlPoints()
 {
   std::vector<Eigen::Vector3d> res;
-  res.reserve(wp.size() + 2);
+  res.reserve(static_cast<unsigned int>(wp.size()) + 2);
   res.push_back(X_0_start.translation());
   for(unsigned int i = 0; i < wp.cols(); ++i)
   {

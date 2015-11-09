@@ -53,7 +53,7 @@ void SmoothTask<objT>::reset(double weight, const objT & obj, double percent)
   stepW = (weight - w_get())*percent;
   stepO = (obj - obj_get())*percent;
 
-  nrIter = ceil(1/percent);
+  nrIter = static_cast<unsigned int>(ceil(1/percent));
   iter = 0;
 }
 

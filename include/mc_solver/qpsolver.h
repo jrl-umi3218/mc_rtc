@@ -148,12 +148,12 @@ public:
   unsigned int r1Index;
   unsigned int r2Index;
   std::vector<Collision> cols;
-  unsigned int collId;
+  int collId;
   std::map<std::string, std::pair<unsigned int, Collision> > collIdDict;
 private:
   std::string __keyByNames(const std::string & name1, const std::string & name2);
-  unsigned int __createCollId(const Collision & col);
-  std::pair<unsigned int, Collision> __popCollId(const std::string & name1, const std::string & name2);
+  int __createCollId(const Collision & col);
+  std::pair<int, Collision> __popCollId(const std::string & name1, const std::string & name2);
 public:
   CollisionsConstraint() {}
 };
@@ -189,7 +189,7 @@ public:
   CollisionsConstraint envCollConstrMng;
   /* Note this class maintains its constraints member as the concatenation of its two CollisionsConstraint constraints */
 private:
-  std::set<unsigned int> __bodiesFromContacts(const mc_rbdyn::Robot & robot, const std::vector<mc_rbdyn::Contact> & contacts);
+  std::set<int> __bodiesFromContacts(const mc_rbdyn::Robot & robot, const std::vector<mc_rbdyn::Contact> & contacts);
 };
 
 struct QPSolver

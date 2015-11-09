@@ -1087,9 +1087,9 @@ bool enter_softCloseGripperP::eval(MCSeqController & ctl)
   ctl.isGripperClose = false;
 
   std::shared_ptr<mc_rbdyn::Surface> robotSurf = ctl.targetContact->r1Surface();
-  unsigned int bodyId = ctl.robot().bodyIdByName(robotSurf->bodyName());
+  int bodyId = ctl.robot().bodyIdByName(robotSurf->bodyName());
   Eigen::MatrixXd dofMat = Eigen::MatrixXd::Zero(6,6);
-  for(size_t i = 0; i < 6; ++i) { dofMat(i,i) = 1; }
+  for(int i = 0; i < 6; ++i) { dofMat(i,i) = 1; }
   Eigen::VectorXd speedMat = Eigen::VectorXd::Zero(6);
   ctl.constSpeedConstr->addBoundedSpeed(ctl.robots().mbs(), bodyId, robotSurf->X_b_s().translation(), dofMat, speedMat);
   ctl.qpsolver->solver.updateConstrsNrVars(ctl.robots().mbs());
@@ -1105,7 +1105,7 @@ bool live_softCloseGripperP::eval(MCSeqController & ctl)
   if(ctl.currentGripper)
   {
     ctl.currentGripper->percentOpen -= 0.005;
-    bool limitToZero = ctl.targetContact->r2Surface()->name() == "PlatformLeftRampVS" or ctl.targetContact->r2Surface()->name() == "PlatformLeftRampS"; /*FIXME Should be part of the configuration */
+    //bool limitToZero = ctl.targetContact->r2Surface()->name() == "PlatformLeftRampVS" or ctl.targetContact->r2Surface()->name() == "PlatformLeftRampS"; /*FIXME Should be part of the configuration */
     double percentOpenLimit = 0.;//limitToZero ? 0.35 : 0.1;
     if(ctl.currentGripper->overCommandLimit || ctl.currentGripper->percentOpen <= percentOpenLimit)
     {
@@ -1125,7 +1125,7 @@ bool live_softCloseGripperP::eval(MCSeqController & ctl)
   {
     ctl.isGripperClose = true;
     std::shared_ptr<mc_rbdyn::Surface> robotSurf = ctl.targetContact->r1Surface();
-    unsigned int bodyId = ctl.robot().bodyIdByName(robotSurf->bodyName());
+    int bodyId = ctl.robot().bodyIdByName(robotSurf->bodyName());
     ctl.constSpeedConstr->removeBoundedSpeed(bodyId);
     ctl.qpsolver->solver.updateConstrsNrVars(ctl.robots().mbs());
     ctl.qpsolver->solver.updateConstrSize();

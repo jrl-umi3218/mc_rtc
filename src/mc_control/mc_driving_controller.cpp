@@ -83,7 +83,7 @@ bool MCDrivingController::run()
   if(logging_)
   {
     mc_rbdyn::Robot & polaris = robots().robot(1);
-    int wheel_i = robots().robot(1).jointIndexByName("steering_joint");
+    unsigned int wheel_i = robots().robot(1).jointIndexByName("steering_joint");
     struct timeval tv;
     gettimeofday(&tv, 0);
     uint64_t t = static_cast<uint64_t>(tv.tv_sec)*1000000 + static_cast<uint64_t>(tv.tv_usec);
@@ -135,7 +135,7 @@ void MCDrivingController::resetBasePose()
   rbd::forwardKinematics(robot().mb(), robot().mbc());
   rbd::forwardVelocity(robot().mb(), robot().mbc());
 
-  int steer_i = polaris.bodyIndexByName("steering_wheel");
+  unsigned int steer_i = polaris.bodyIndexByName("steering_wheel");
   sva::PTransformd X_0_w = polaris.mbc().bodyPosW[steer_i];
   const auto & gripperSurface = robot().surface("RightGripper");
   sva::PTransformd X_0_s = gripperSurface.X_0_s(robot(), robot().mbc());
@@ -156,9 +156,9 @@ void MCDrivingController::resetWheelTransform()
 {
   mc_rbdyn::Robot& polaris = robots().robot(1);
   //Change wheel position
-  int chassis_index = polaris.bodyIndexByName("chassis");
+  unsigned int chassis_index = polaris.bodyIndexByName("chassis");
   //Do not take into account potential rotation of steering wheel
-  int joint_index = polaris.jointIndexByName("adjust_steering_wheel");
+  unsigned int joint_index = polaris.jointIndexByName("adjust_steering_wheel");
 
   const auto & gripperSurface = robot().surface("RightGripper");
   const auto & wheelSurface = polaris.surface("bar_wheel");
@@ -171,7 +171,7 @@ void MCDrivingController::resetWheelTransform()
 
   sva::PTransformd X_chassis_wheel = (X_wheel_s).inv()*X_0_s*(X_0_chassis).inv();
 
-  polaris.mb().transform(joint_index, X_chassis_wheel);
+  polaris.mb().transform(static_cast<int>(joint_index), X_chassis_wheel);
   polaris.mbc().zero(polaris.mb());
 
   rbd::forwardKinematics(polaris.mb(), polaris.mbc());
@@ -180,7 +180,7 @@ void MCDrivingController::resetWheelTransform()
 
 bool MCDrivingController::changeWheelAngle(double theta)
 {
-  int wheel_i = robots().robot(1).jointIndexByName("steering_joint");
+  unsigned int wheel_i = robots().robot(1).jointIndexByName("steering_joint");
   auto p = polarisPostureTask->posture();
   p[wheel_i][0] = theta;
   polarisPostureTask->posture(p);
@@ -189,8 +189,8 @@ bool MCDrivingController::changeWheelAngle(double theta)
 
 bool MCDrivingController::changeGaze(double pan, double tilt)
 {
-  int pan_i = robot().jointIndexByName("HEAD_JOINT0");
-  int tilt_i = robot().jointIndexByName("HEAD_JOINT1");
+  unsigned int pan_i = robot().jointIndexByName("HEAD_JOINT0");
+  unsigned int tilt_i = robot().jointIndexByName("HEAD_JOINT1");
   auto p = hrp2postureTask->posture();
   p[pan_i][0] = pan;
   p[tilt_i][0] = tilt;
@@ -201,7 +201,7 @@ bool MCDrivingController::changeGaze(double pan, double tilt)
 bool MCDrivingController::changeAnkleAngle(double theta)
 {
   theta_ = (tMax_-tMin_)*theta + tMax_;
-  int ankle_i = robot().jointIndexByName("RLEG_JOINT4");
+  unsigned int ankle_i = robot().jointIndexByName("RLEG_JOINT4");
   auto p = hrp2postureTask->posture();
   p[ankle_i][0] = theta_;
   hrp2postureTask->posture(p);
@@ -210,7 +210,7 @@ bool MCDrivingController::changeAnkleAngle(double theta)
 
 bool MCDrivingController::changeWristAngle(double yaw)
 {
-  int wrist_i = robot().jointIndexByName("RARM_JOINT6");
+  unsigned int wrist_i = robot().jointIndexByName("RARM_JOINT6");
   auto p = hrp2postureTask->posture();
   p[wrist_i][0] = yaw;
   hrp2postureTask->posture(p);

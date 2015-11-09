@@ -57,7 +57,7 @@ mimic_d_t readMimic(const std::string & urdf)
   return res;
 }
 
-unsigned int findSuccessorJoint(const mc_rbdyn::Robot & robot, unsigned int bodyIndex)
+int findSuccessorJoint(const mc_rbdyn::Robot & robot, int bodyIndex)
 {
   for(int j = 0; j < robot.mb().nrJoints(); ++j)
   {
@@ -74,8 +74,8 @@ std::vector<std::string> gripperJoints(const mc_rbdyn::Robot & robot, const std:
   std::vector<std::string> res;
 
   unsigned int gripperBodyIndex = robot.bodyIndexByName(gripperName);
-  unsigned int rootBodyIndex = robot.mb().parent(gripperBodyIndex);
-  unsigned int rootJointIndex = findSuccessorJoint(robot, rootBodyIndex);
+  int rootBodyIndex = robot.mb().parent(static_cast<int>(gripperBodyIndex));
+  int rootJointIndex = findSuccessorJoint(robot, rootBodyIndex);
   std::string rootJointName = robot.mb().joint(rootJointIndex).name();
 
   res.push_back(rootJointName);
@@ -99,7 +99,7 @@ std::string findFirstCommonBody(const mc_rbdyn::Robot & robotFull, const std::st
   else
   {
     unsigned int bodyIndex = robotFull.bodyIndexByName(bodyName);
-    int bodyPredIndex = robotFull.mb().parent(bodyIndex);
+    int bodyPredIndex = robotFull.mb().parent(static_cast<int>(bodyIndex));
     if(bodyPredIndex == -1)
     {
       return "";
@@ -141,7 +141,7 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot, const std::string & gripperName,
     }
   }
 
-  unsigned int bodyIndex = robot.mb().predecessor(jointIndex);
+  int bodyIndex = robot.mb().predecessor(static_cast<int>(jointIndex));
   std::string bodyName = robot.mb().body(bodyIndex).name();
   controlBodyName = findFirstCommonBody(robot, bodyName, controlRobot);
 

@@ -251,12 +251,9 @@ sva::PTransformd Contact::compute_X_r2s_r1s(const mc_rbdyn::Robots & robots) con
 
 tasks::qp::ContactId Contact::contactId(const mc_rbdyn::Robots & robots) const
 {
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wsign-conversion"
-  return tasks::qp::ContactId(impl->r1Index, impl->r2Index,
+  return tasks::qp::ContactId(static_cast<int>(impl->r1Index), static_cast<int>(impl->r2Index),
                               robots.robot(impl->r1Index).bodyIdByName(impl->r1Surface->bodyName()),
                               robots.robot(impl->r2Index).bodyIdByName(impl->r2Surface->bodyName()));
-#pragma GCC diagnostic pop
 }
 
 mc_solver::QPContactPtr Contact::taskContact(const mc_rbdyn::Robots & robots) const
@@ -297,8 +294,8 @@ mc_solver::QPContactPtr Contact::taskContact(const mc_rbdyn::Robots & robots, co
   const mc_rbdyn::Robot & r1 = robots.robot(impl->r1Index);
   const mc_rbdyn::Robot & r2 = robots.robot(impl->r2Index);
 
-  unsigned int r1BodyId = r1.bodyIdByName(impl->r1Surface->bodyName());
-  unsigned int r2BodyId = r2.bodyIdByName(impl->r2Surface->bodyName());
+  int r1BodyId = r1.bodyIdByName(impl->r1Surface->bodyName());
+  int r2BodyId = r2.bodyIdByName(impl->r2Surface->bodyName());
 
   std::vector<Eigen::Vector3d> points;
   std::vector<Eigen::Matrix3d> frames;
@@ -310,11 +307,25 @@ mc_solver::QPContactPtr Contact::taskContact(const mc_rbdyn::Robots & robots, co
 
   if(impl->r1Surface->type() == "planar")
   {
-    res.unilateralContact = new tasks::qp::UnilateralContact(impl->r1Index, impl->r2Index, r1BodyId, r2BodyId, impl->ambiguityId, points, frames[0], X_b1_b2, Stance::nrConeGen, Stance::defaultFriction, impl->X_b_s);
+    res.unilateralContact = new
+      tasks::qp::UnilateralContact(static_cast<int>(impl->r1Index),
+                                   static_cast<int>(impl->r2Index),
+                                   r1BodyId,
+                                   r2BodyId,
+                                   impl->ambiguityId, points, frames[0],
+                                   X_b1_b2, Stance::nrConeGen,
+                                   Stance::defaultFriction, impl->X_b_s);
   }
   else if(impl->r1Surface->type() == "gripper")
   {
-    res.bilateralContact = new tasks::qp::BilateralContact(impl->r1Index, impl->r2Index, r1BodyId, r2BodyId, impl->ambiguityId, points, frames, X_b1_b2, Stance::nrConeGen, Stance::defaultFriction, impl->X_b_s);
+    res.bilateralContact = new
+      tasks::qp::BilateralContact(static_cast<int>(impl->r1Index),
+                                  static_cast<int>(impl->r2Index),
+                                  r1BodyId,
+                                  r2BodyId,
+                                  impl->ambiguityId, points, frames, X_b1_b2,
+                                  Stance::nrConeGen, Stance::defaultFriction,
+                                  impl->X_b_s);
   }
   else
   {

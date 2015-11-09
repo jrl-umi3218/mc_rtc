@@ -13,7 +13,7 @@ struct StanceImpl;
 struct Stance
 {
 public:
-  static unsigned int nrConeGen;
+  static int nrConeGen;
   static double defaultFriction;
   static unsigned int nrBilatPoints;
 public:

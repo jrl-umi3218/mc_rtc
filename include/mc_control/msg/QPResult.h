@@ -14,7 +14,7 @@ struct QPResultMsg
   std::vector<RobotMsg> robots_state;
   Eigen::VectorXd lambdaVec;
   std::vector<ContactMsg> contacts;
-  std::vector<uint16_t> contacts_lambda_begin;
+  std::vector<int> contacts_lambda_begin;
 };
 
 }

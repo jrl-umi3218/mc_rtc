@@ -7,7 +7,7 @@ BSplineTrajectory::BSplineTrajectory(const std::vector<Eigen::Vector3d> & contro
 : duration(duration), p(order), P(3,0), knot(0,1),
   spline(knot, P)
 {
-  P.resize(3, 2*(order - 2) + controlPoints.size());
+  P.resize(3, 2*(static_cast<int>(order) - 2) + static_cast<int>(controlPoints.size()));
   for(unsigned int i = 0; i < order - 2; ++i)
   {
     P(0, i) = controlPoints[0](0);
@@ -22,11 +22,14 @@ BSplineTrajectory::BSplineTrajectory(const std::vector<Eigen::Vector3d> & contro
   }
   for(unsigned int i = 0; i < order - 2; ++i)
   {
-    P(0, i + order - 2 + controlPoints.size()) = controlPoints[controlPoints.size() - 1](0);
-    P(1, i + order - 2 + controlPoints.size()) = controlPoints[controlPoints.size() - 1](1);
-    P(2, i + order - 2 + controlPoints.size()) = controlPoints[controlPoints.size() - 1](2);
+    P(0, i + order - 2 + static_cast<unsigned int>(controlPoints.size())) =
+      controlPoints[controlPoints.size() - 1](0);
+    P(1, i + order - 2 + static_cast<unsigned int>(controlPoints.size())) =
+      controlPoints[controlPoints.size() - 1](1);
+    P(2, i + order - 2 + static_cast<unsigned int>(controlPoints.size())) =
+      controlPoints[controlPoints.size() - 1](2);
   }
-  unsigned int n = P.cols() - 1;
+  unsigned int n = static_cast<unsigned int>(P.cols()) - 1;
   unsigned int m = p + n + 1;
 
   knot.resize(m+1);

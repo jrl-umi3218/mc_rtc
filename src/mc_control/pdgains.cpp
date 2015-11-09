@@ -162,8 +162,8 @@ inline bool setPDGains(const std::vector<double> & pgains, const std::vector<dou
   {
     for(size_t i = 0; i < pgains.size(); ++i)
     {
-      b = write_pgain(i, pgains[i]);
-      b = write_dgain(i, dgains[i]);
+      b = write_pgain(static_cast<int>(i), pgains[i]);
+      b = write_dgain(static_cast<int>(i), dgains[i]);
     }
     close_iob();
   }
@@ -193,7 +193,7 @@ inline bool getPGains(std::vector<double> &pgains)
   {
     for(size_t i = 0; i < pgains.size(); ++i)
     {
-      b = read_pgain(i, &(pgains[i]));
+      b = read_pgain(static_cast<int>(i), &(pgains[i]));
     }
     close_iob();
   }
@@ -223,7 +223,7 @@ inline bool getDGains(std::vector<double> &dgains)
   {
     for(size_t i = 0; i < dgains.size(); ++i)
     {
-      b = read_dgain(i, &(dgains[i]));
+      b = read_dgain(static_cast<int>(i), &(dgains[i]));
     }
     close_iob();
   }

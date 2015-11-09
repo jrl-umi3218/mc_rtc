@@ -76,7 +76,7 @@ std::vector<mc_solver::Collision> confToColl(const std::vector<mc_rbdyn::StanceC
 }
 
 MCSeqTimeLog::MCSeqTimeLog(double timeStep)
-: timeStep(timeStep), iters(0), phases(0)
+: timeStep(timeStep), phases(0), iters(0)
 {
 }
 
@@ -393,7 +393,7 @@ void MCSeqController::pre_live()
         {
           //std::cout << "ACTIVATED " << ba.first << std::endl;
           Eigen::MatrixXd dof = Eigen::MatrixXd::Zero(5,6);
-          for(size_t i = 0; i < 5; ++i)
+          for(int i = 0; i < 5; ++i)
           {
             dof(i,i) = 1;
           }

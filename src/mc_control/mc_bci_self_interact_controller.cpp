@@ -10,9 +10,9 @@ namespace
 {
   inline std::stringstream& operator>>(std::stringstream & ss, Eigen::Matrix3d & m)
   {
-    for(size_t i = 0; i < 3; ++i)
+    for(int i = 0; i < 3; ++i)
     {
-      for(size_t j = 0; j < 3; ++j)
+      for(int j = 0; j < 3; ++j)
       {
         ss >> m(i,j);
       }
@@ -21,7 +21,7 @@ namespace
   }
   inline std::stringstream& operator>>(std::stringstream & ss, Eigen::Vector3d & v)
   {
-    for(size_t i = 0; i < 3; ++i)
+    for(int i = 0; i < 3; ++i)
     {
       ss >> v(i);
     }
@@ -266,9 +266,9 @@ bool MCBCISelfInteractController::read_write_msg(std::string & msg, std::string 
       std::cerr << "Do not know how to read signal: " << signal << std::endl;
     }
     Eigen::Matrix3d ori = Eigen::Quaterniond(out_X.rotation()).inverse().toRotationMatrix();
-    for(size_t i = 0; i < 3; ++i)
+    for(int i = 0; i < 3; ++i)
     {
-      for(size_t j = 0; j < 3; ++j)
+      for(int j = 0; j < 3; ++j)
       {
         out_m(i,j) = ori(i,j);
       }

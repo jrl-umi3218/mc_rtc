@@ -104,7 +104,7 @@ std::vector< std::map<int, std::vector<double> > > PolarisRangerEgressRobotModul
   return res;
 }
 
-std::map<std::string, std::pair<std::string, std::string>> PolarisRangerEgressRobotModule::stdCollisionsFiles(const rbd::MultiBody & mb) const
+std::map<std::string, std::pair<std::string, std::string>> PolarisRangerEgressRobotModule::stdCollisionsFiles(const rbd::MultiBody &/*mb*/) const
 {
   std::map<std::string, std::pair<std::string, std::string>> res;
 

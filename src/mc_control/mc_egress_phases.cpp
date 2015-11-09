@@ -11,7 +11,7 @@ public:
 struct EgressStartPhase : public EgressPhaseExecution
 {
 public:
-  virtual bool run(MCEgressController & ctl) override
+  virtual bool run(MCEgressController &) override
   {
     return false;
     //return true;
@@ -24,12 +24,6 @@ public:
   EgressMoveFootInsidePhase()
   : done_setup_lift(false),
     done_lift(false),
-    done_setup_reorient(false),
-    done_reorient(false),
-    done_setup_rotate(false),
-    done_rotate(false),
-    done_setup_flatten(false),
-    done_flatten(false),
     done_setup_putdown(false),
     done_putdown(false)
   {
@@ -67,28 +61,6 @@ public:
         }
       }
     }
-    //else if(!done_reorient)
-    //{
-    //  if(!done_setup_reorient)
-    //  {
-    //    ankle_i = ctl.robot().jointIndexByName("RLEG_JOINT4");
-    //    auto p = ctl.postureTask->posture();
-    //    ankle_reorient_target = p[ankle_i][0]; /*XXX Hard-coded value */
-    //    p[ankle_i][0] = ankle_reorient_target;
-    //    ctl.postureTask->posture(p);
-    //    done_setup_reorient = true;
-    //  }
-    //  else
-    //  {
-    //    double error = std::abs(ctl.robot().mbc().q[ankle_i][0] - ankle_reorient_target);
-    //    if(error < 0.01)
-    //    {
-    //      ctl.postureTask->posture(ctl.robot().mbc().q);
-    //      done_reorient = true;
-    //      std::cout << "Finished changing ankle orientation" << std::endl;
-    //    }
-    //  }
-    //}
     else if(!done_rotate)
     {
       if(!done_setup_rotate)
@@ -111,31 +83,6 @@ public:
         }
       }
     }
-    //else if(!done_flatten)
-    //{
-    //  if(!done_setup_flatten)
-    //  {
-    //    ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5", ctl.qpsolver->robots, 0, 0.5));
-    //    ctl.efTask->addToSolver(ctl.qpsolver->solver);
-    //    unsigned int bIdx = ctl.robot().bodyIndexByName("LLEG_LINK5");
-    //    sva::PTransformd bpw = ctl.robot().mbc().bodyPosW[bIdx];
-    //    ctl.efTask->set_ef_pose(sva::PTransformd(bpw.rotation(), ctl.efTask->get_ef_pose().translation()));
-    //    iterSincePutDown = 0;
-    //    done_setup_flatten = true;
-    //  }
-    //  else
-    //  {
-    //    iterSincePutDown++;
-    //    double error = ctl.efTask->orientationTask->eval().norm();
-    //    if(error < 0.1 || iterSincePutDown > 15*500)
-    //    {
-    //      ctl.efTask->removeFromSolver(ctl.qpsolver->solver);
-    //      ctl.postureTask->posture(ctl.robot().mbc().q);
-    //      done_flatten = true;
-    //      std::cout << "Finished flatten foot" << std::endl;
-    //    }
-    //  }
-    //}
     else if(!done_putdown)
     {
       if(!done_setup_putdown)
@@ -182,16 +129,10 @@ public:
 private:
   bool done_setup_lift;
   bool done_lift;
-  bool done_setup_reorient;
-  bool done_reorient;
   bool done_setup_rotate;
   bool done_rotate;
-  bool done_setup_flatten;
-  bool done_flatten;
   bool done_setup_putdown;
   bool done_putdown;
-  int ankle_i;
-  double ankle_reorient_target;
   unsigned int iterSincePutDown;
   unsigned int iterForce;
 };
@@ -383,8 +324,6 @@ struct EgressMoveFootOutPhase : public EgressPhaseExecution
     done_reorient(false),
     done_setup_rotate(false),
     done_rotate(false),
-    done_setup_flatten(false),
-    done_flatten(false),
     done_setup_putdown(false),
     done_putdown(false)
   {
@@ -465,32 +404,6 @@ struct EgressMoveFootOutPhase : public EgressPhaseExecution
         }
       }
     }
-    //else if(!done_flatten)
-    //{
-    //  if(!done_setup_flatten)
-    //  {
-    //    ankle_i = ctl.robot().jointIndexByName("RLEG_JOINT4");
-    //    auto lankle_i = ctl.robot().jointIndexByName("LLEG_JOINT4");
-    //    auto roll_i = ctl.robot().jointIndexByName("RLEG_JOINT5");
-    //    auto lroll_i = ctl.robot().jointIndexByName("LLEG_JOINT5");
-    //    auto p = ctl.postureTask->posture();
-    //    ankle_reorient_target = -p[lankle_i][0]; /*XXX Hard-coded value */
-    //    p[ankle_i][0] = ankle_reorient_target;
-    //    p[roll_i][0] = p[lroll_i][0];
-    //    ctl.postureTask->posture(p);
-    //    done_setup_flatten = true;
-    //  }
-    //  else
-    //  {
-    //    double error = std::abs(ctl.robot().mbc().q[ankle_i][0] - ankle_reorient_target);
-    //    if(error < 0.01)
-    //    {
-    //      ctl.postureTask->posture(ctl.robot().mbc().q);
-    //      done_flatten = true;
-    //      std::cout << "Finished flatten foot" << std::endl;
-    //    }
-    //  }
-    //}
     else if(!done_putdown)
     {
       if(!done_setup_putdown)
@@ -533,11 +446,9 @@ private:
   bool done_reorient;
   bool done_setup_rotate;
   bool done_rotate;
-  bool done_setup_flatten;
-  bool done_flatten;
   bool done_setup_putdown;
   bool done_putdown;
-  int ankle_i;
+  unsigned int ankle_i;
   double ankle_reorient_target;
   unsigned int timeoutIter;
 };

@@ -25,7 +25,7 @@ typedef std::map<std::string, Mimic> mimic_d_t;
 
 mimic_d_t readMimic(const std::string & urdf);
 
-unsigned int findSuccessorJoint(const mc_rbdyn::Robot & robot, unsigned int bodyIndex);
+int findSuccessorJoint(const mc_rbdyn::Robot & robot, int bodyIndex);
 
 std::vector<std::string> gripperJoints(const mc_rbdyn::Robot & robot, const std::string & gripperName, const mimic_d_t & mimicDict);
 

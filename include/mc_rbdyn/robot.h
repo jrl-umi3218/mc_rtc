@@ -129,6 +129,9 @@ struct Robot
   friend struct Robots;
   friend class __gnu_cxx::new_allocator<Robot>;
 public:
+  typedef std::pair<int, std::shared_ptr<sch::S_Polyhedron>> convex_pair_t;
+  typedef std::pair<int, std::shared_ptr<sch::STP_BV>> stpbv_pair_t;
+public:
   Robot(Robot&&) = default;
   Robot& operator=(Robot&&) = default;
 
@@ -142,9 +145,9 @@ public:
 
   unsigned int bodyIndexByName(const std::string & name) const;
 
-  unsigned int jointIdByName(const std::string & name) const;
+  int jointIdByName(const std::string & name) const;
 
-  unsigned int bodyIdByName(const std::string & name) const;
+  int bodyIdByName(const std::string & name) const;
 
   std::string forceSensorParentBodyName(const std::string & fs) const;
 
@@ -179,7 +182,6 @@ public:
 
   const std::map<std::string, mc_rbdyn::SurfacePtr> & surfaces() const;
 
-  typedef std::pair<unsigned int, std::shared_ptr<sch::S_Polyhedron>> convex_pair_t;
   convex_pair_t & convex(const std::string & cName);
   const convex_pair_t & convex(const std::string & cName) const;
 
@@ -201,8 +203,8 @@ private:
   std::vector< std::vector<double> > vu_;
   std::vector< std::vector<double> > tl_;
   std::vector< std::vector<double> > tu_;
-  std::map< std::string, convex_pair_t > convexes;
-  std::map< std::string, std::pair<unsigned int, std::shared_ptr<sch::STP_BV> > > stpbvs;
+  std::map<std::string, convex_pair_t> convexes;
+  std::map<std::string, stpbv_pair_t> stpbvs;
   std::map<int, sva::PTransformd> collisionTransforms;
   std::map<std::string, mc_rbdyn::SurfacePtr> surfaces_;
   std::vector<ForceSensor> forceSensors;
@@ -221,8 +223,8 @@ protected:
         const std::vector< std::vector<double> > & ql, const std::vector< std::vector<double> > & qu,
         const std::vector< std::vector<double> > & vl, const std::vector< std::vector<double> > & vu,
         const std::vector< std::vector<double> > & tl, const std::vector< std::vector<double> > & tu,
-        const std::map<std::string, std::pair<unsigned int, std::shared_ptr<sch::S_Polyhedron> > > & convex,
-        const std::map<std::string, std::pair<unsigned int, std::shared_ptr<sch::STP_BV> > > & stpbv,
+        const std::map<std::string, convex_pair_t> & convex,
+        const std::map<std::string, stpbv_pair_t> & stpbv,
         const std::map<int, sva::PTransformd> & collisionTransforms,
         const std::map<std::string, mc_rbdyn::SurfacePtr> & surfaces,
         const std::vector<ForceSensor> & forceSensors, const std::string & accelerometerBody = "",
@@ -230,7 +232,7 @@ protected:
         const std::vector< std::vector<Eigen::VectorXd> > & tuPoly = {}, const std::vector<Flexibility> & flexibility = {});
   Robot(const Robot&) = delete;
   Robot& operator=(const Robot&) = delete;
-  void createWithBase(Robots & robots, unsigned int robots_idx, const Base & base, const Eigen::Vector3d & baseAxis = Eigen::Vector3d::UnitZ()) const;
+  void createWithBase(Robots & robots, unsigned int robots_idx, const Base & base) const;
   void copy(Robots & robots, unsigned int robots_idx) const;
 };
 
@@ -248,7 +250,7 @@ std::vector< std::vector<double> > jointsIdToVector(const rbd::MultiBody & mb, s
 std::vector< std::map< int, std::vector<double> > > defaultBounds(const rbd::MultiBody & mb);
 
 template<typename sch_T>
-void applyTransformToSchById(const rbd::MultiBody & mb, const rbd::MultiBodyConfig & mbc, std::map<std::string, std::pair<unsigned int, sch_T> > & schById);
+void applyTransformToSchById(const rbd::MultiBody & mb, const rbd::MultiBodyConfig & mbc, std::map<std::string, std::pair<int, sch_T> > & schById);
 
 /*FIXME Not implemetend for now, only used for ATLAS
 void loadPolyTorqueBoundsData(const std::string & file, Robot & robot);

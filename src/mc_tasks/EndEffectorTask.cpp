@@ -8,17 +8,17 @@ EndEffectorTask::EndEffectorTask(const std::string & bodyName, const mc_rbdyn::R
   bodyName(bodyName), inSolver(false)
 {
   const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
-  unsigned int bodyId = robot.bodyIdByName(bodyName);
+  int bodyId = robot.bodyIdByName(bodyName);
   unsigned int bodyIndex = robot.bodyIndexByName(bodyName);
   sva::PTransformd bpw = robot.mbc().bodyPosW[bodyIndex];
 
   curTransform = bpw;
 
-  positionTask.reset(new tasks::qp::PositionTask(robots.mbs(), robotIndex, bodyId, bpw.translation(), Eigen::Vector3d(0,0,0)));
-  positionTaskSp.reset(new tasks::qp::SetPointTask(robots.mbs(), robotIndex, positionTask.get(), stiffness, weight));
+  positionTask.reset(new tasks::qp::PositionTask(robots.mbs(), static_cast<int>(robotIndex), bodyId, bpw.translation(), Eigen::Vector3d(0,0,0)));
+  positionTaskSp.reset(new tasks::qp::SetPointTask(robots.mbs(), static_cast<int>(robotIndex), positionTask.get(), stiffness, weight));
 
-  orientationTask.reset(new tasks::qp::OrientationTask(robots.mbs(), robotIndex, bodyId, bpw.rotation()));
-  orientationTaskSp.reset(new tasks::qp::SetPointTask(robots.mbs(), robotIndex, orientationTask.get(), stiffness, weight));
+  orientationTask.reset(new tasks::qp::OrientationTask(robots.mbs(), static_cast<int>(robotIndex), bodyId, bpw.rotation()));
+  orientationTaskSp.reset(new tasks::qp::SetPointTask(robots.mbs(), static_cast<int>(robotIndex), orientationTask.get(), stiffness, weight));
 
   err = Eigen::VectorXd(dim());
   spd = Eigen::VectorXd(dim());

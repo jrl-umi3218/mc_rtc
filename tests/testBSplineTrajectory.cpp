@@ -1,7 +1,7 @@
 #include <mc_trajectory/BSplineTrajectory.h>
 #include <iostream>
 
-int main(int argc, char * argv[])
+int main()
 {
   std::vector<Eigen::Vector3d> cps;
   cps.push_back(Eigen::Vector3d(-0.45, -0.34, 0.54));

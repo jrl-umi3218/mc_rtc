@@ -42,7 +42,7 @@ void StabilityTask::normalStiffness(const std::vector<std::string> & stiffJoints
   postureTask->jointsStiffness(robots.mbs(), jsv);
 }
 
-void StabilityTask::target(const mc_rbdyn::Robot & env, const mc_rbdyn::Stance & stance,
+void StabilityTask::target(const mc_rbdyn::Robot &/*env*/, const mc_rbdyn::Stance & stance,
                            const mc_rbdyn::StanceConfig & config, double comSmoothPercent)
 {
   comObj = stance.com(robot);
