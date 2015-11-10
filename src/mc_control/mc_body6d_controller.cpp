@@ -22,7 +22,7 @@ MCBody6dController::MCBody6dController()
   });
 
   std::cout << "MCBody6dController init done" << std::endl;
-  efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK7", qpsolver->robots, qpsolver->robots.robotIndex()));
+  efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK7", qpsolver->robots, qpsolver->robots.robotIndex(), 2.0, 1e5));
   efTask->addToSolver(qpsolver->solver);
   comTask.reset(new mc_tasks::CoMTask(qpsolver->robots, qpsolver->robots.robotIndex()));
   comTask->addToSolver(qpsolver->solver);
