@@ -26,7 +26,7 @@ AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots, std::share
   if(userT_0_s)
   {
     normal = (*userT_0_s - targetTf.translation()).normalized();
-    Eigen::Vector3d normalBody = robot.mbc().bodyPosW[robotBodyIndex].rotation()*normal;
+    auto normalBody = robot.mbc().bodyPosW[robotBodyIndex].rotation()*normal;
     Eigen::Vector3d v1(normalBody.y(), -normalBody.x(), 0);
     Eigen::Vector3d v2(-normalBody.z(), 0, normalBody.x());
     Eigen::Vector3d T = (v1 + v2).normalized();

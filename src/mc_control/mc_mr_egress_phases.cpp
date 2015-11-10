@@ -105,7 +105,7 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
           unsigned int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
           Eigen::Matrix3d& rot = ctl.robot().mbc().bodyPosW[lfindex].rotation();
           Eigen::Vector3d rpy = rot.eulerAngles(2, 1, 0);
-          Eigen::Matrix3d target = sva::RotZ(M_PI)*sva::RotY(rpy(1))*sva::RotX(rpy(2));
+          auto target = sva::RotZ(M_PI)*sva::RotY(rpy(1))*sva::RotX(rpy(2));
           ctl.efTask->positionTask->position((ctl.efTask->get_ef_pose().translation() + lift));
           ctl.efTask->orientationTask->orientation(target);
           timeoutIter = 0;
@@ -815,9 +815,9 @@ struct EgressPlaceRightFootPhase : public EgressMRPhaseExecution
             unsigned int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
             Eigen::Matrix3d& rot = ctl.robot().mbc().bodyPosW[lfindex].rotation();
             Eigen::Vector3d rpy = rot.eulerAngles(2, 1, 0);
-            Eigen::Matrix3d target = sva::RotZ(-M_PI/2)*
-                                     sva::RotY(rpy(1))*
-                                     sva::RotX(rpy(2));
+            auto target = sva::RotZ(-M_PI/2)*
+                            sva::RotY(rpy(1))*
+                            sva::RotX(rpy(2));
             ctl.efTask->orientationTask->orientation(target);
             timeoutIter = 0;
             std::cout << "Modified orientation" << std::endl;

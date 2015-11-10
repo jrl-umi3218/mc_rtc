@@ -53,11 +53,11 @@ Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
   {
     this->surfaces_[p.first] = p.second->copy();
   }
-  for(size_t i = 0; i < this->mb().joints().size(); ++i)
+  for(unsigned int i = 0; i < this->mb().joints().size(); ++i)
   {
     jointIndexByNameD[this->mb().joints()[i].name()] = i;
   }
-  for(size_t i = 0; i < this->mb().bodies().size(); ++i)
+  for(unsigned int i = 0; i < this->mb().bodies().size(); ++i)
   {
     bodyIndexByNameD[this->mb().bodies()[i].name()] = i;
   }
@@ -283,7 +283,7 @@ Robots::Robots()
 Robots::Robots(const Robots & rhs)
 : robots_(), mbs_(rhs.mbs_), mbcs_(rhs.mbcs_), robotIndex_(rhs.robotIndex_), envIndex_(rhs.envIndex_)
 {
-  for(size_t i = 0; i < rhs.robots_.size(); ++i)
+  for(unsigned int i = 0; i < rhs.robots_.size(); ++i)
   {
     const Robot & robot = rhs.robots_[i];
     robot.copy(*this, i);
@@ -299,7 +299,7 @@ Robots & Robots::operator=(const Robots & rhs)
   mbgs_ = rhs.mbgs_;
   robotIndex_ = rhs.robotIndex_;
   envIndex_ = rhs.envIndex_;
-  for(size_t i = 0; i < rhs.robots_.size(); ++i)
+  for(unsigned int i = 0; i < rhs.robots_.size(); ++i)
   {
     const Robot & robot = rhs.robots_[i];
     robot.copy(*this, i);
@@ -380,7 +380,7 @@ void Robots::createRobotWithBase(Robots & robots, unsigned int robots_idx, const
   this->mbs_.push_back(robots.robot(robots_idx).mbg().makeMultiBody(base.baseId, base.baseType, baseAxis, base.X_0_s, base.X_b0_s));
   this->mbcs_.emplace_back(this->mbs_.back());
   this->mbgs_.push_back(robots.robot(robots_idx).mbg());
-  robots.robot(robots_idx).createWithBase(*this, this->mbs_.size() - 1, base);
+  robots.robot(robots_idx).createWithBase(*this, static_cast<unsigned int>(this->mbs_.size()) - 1, base);
 }
 
 void Robot::createWithBase(Robots & robots, unsigned int robots_idx, const Base & base) const
@@ -399,7 +399,7 @@ void Robot::createWithBase(Robots & robots, unsigned int robots_idx, const Base 
     newBound[0] = baseBound;
     for(size_t i = 1; i < oldBound.size(); ++i)
     {
-      newBound[newMb.jointIndexById(oldMb.joint(i).id())] = oldBound[i];
+      newBound[static_cast<size_t>(newMb.jointIndexById(oldMb.joint(static_cast<int>(i)).id()))] = oldBound[i];
     }
     return newBound;
   };
@@ -427,7 +427,7 @@ void Robots::robotCopy(const Robots & robots, unsigned int robots_idx)
   this->mbs_.push_back(robots.robot(robots_idx).mb());
   this->mbcs_.push_back(robots.robot(robots_idx).mbc());
   this->mbgs_.push_back(robots.robot(robots_idx).mbg());
-  robots.robot(robots_idx).copy(*this, this->mbs_.size() - 1);
+  robots.robot(robots_idx).copy(*this, static_cast<unsigned int>(this->mbs_.size()) - 1);
 }
 
 void Robot::copy(Robots & robots, unsigned int robots_idx) const
@@ -760,7 +760,7 @@ void Robots::updateIndexes()
 {
   /* Sets robotIndex_ to the first robot with dofs != 0 and envIndex_ to the
    * last robot with dof == 0 OR the last robot */
-  for(size_t i = 0; i < robots_.size(); ++i)
+  for(unsigned int i = 0; i < robots_.size(); ++i)
   {
     if(robots_[i].mb().nrDof())
     {
@@ -768,12 +768,12 @@ void Robots::updateIndexes()
       break;
     }
   }
-  envIndex_ = robots_.size() - 1;
+  envIndex_ = static_cast<unsigned int>(robots_.size()) - 1;
   for(size_t i = robots_.size(); i > 0; --i)
   {
     if(robots_[i-1].mb().nrDof() == 0)
     {
-      envIndex_ = i-1;
+      envIndex_ = static_cast<unsigned int>(i)-1;
       break;
     }
   }

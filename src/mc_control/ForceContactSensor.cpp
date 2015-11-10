@@ -31,7 +31,7 @@ void ForceSensor::computeOffset()
   {
     off += v;
   }
-  off = off / lastValues.size();
+  off = off / static_cast<double>(lastValues.size());
   offset = off;
 }
 

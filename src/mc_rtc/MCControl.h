@@ -157,7 +157,7 @@ public:
 extern "C"
 {
   DLL_EXPORT void MCControlInit(RTC::Manager* manager);
-};
+}
 
 #endif // MCCONTROL_H
 

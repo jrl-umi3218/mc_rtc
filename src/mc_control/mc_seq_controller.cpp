@@ -101,9 +101,9 @@ void MCSeqTimeLog::report(std::ostream & os)
 {
   for(size_t i = 1; i < phases.size(); ++i)
   {
-    os << "Phase " << phases[i] << ": " << (iters[i] - iters[i-1])*timeStep << "s" << std::endl;
+    os << "Phase " << phases[i] << ": " << (static_cast<double>(iters[i] - iters[i-1]))*timeStep << "s" << std::endl;
   }
-  os << "Total time: " << (iters.back() - iters[0])*timeStep << std::endl;
+  os << "Total time: " << (static_cast<double>(iters.back() - iters[0]))*timeStep << std::endl;
 }
 
 MCSeqController::MCSeqController(const std::string & env_name, const std::string & seq_path, bool real_sensors, unsigned int start_stance)
@@ -617,7 +617,6 @@ std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * cu
     res->_type = SeqAction::CoMMove;
     return res;
   }
-  bool curIsAddContact = false;
   bool curIsRemoveContact = false;
   bool curIsGripperContact = false;
   std::string curSurfaceName = "";
@@ -625,7 +624,6 @@ std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * cu
     mc_rbdyn::AddContactAction* addA = dynamic_cast<mc_rbdyn::AddContactAction*>(curAction);
     if(addA)
     {
-      curIsAddContact = true;
       curIsGripperContact = addA->contact().r1Surface()->type() == "gripper";
       curSurfaceName = addA->contact().r1Surface()->name();
     }

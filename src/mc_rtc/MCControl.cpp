@@ -187,8 +187,8 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
     }
     coil::TimeValue coiltm(coil::gettimeofday());
     RTC::Time tm;
-    tm.sec = coiltm.sec();
-    tm.nsec = coiltm.usec()*1000;
+    tm.sec  = static_cast<CORBA::ULong>(coiltm.sec());
+    tm.nsec = static_cast<CORBA::ULong>(coiltm.usec())*1000;
     if(controller.running)
     {
       if(!init)
@@ -197,7 +197,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
         controller.init(qIn);
         init = true;
         ofs << "qIn" << std::endl;
-        for(size_t i = 0; i < m_qIn.data.length(); ++i)
+        for(unsigned int i = 0; i < m_qIn.data.length(); ++i)
         {
           ofs << "qIn[" << i << "] = " << m_qIn.data[i] << std::endl;
         }

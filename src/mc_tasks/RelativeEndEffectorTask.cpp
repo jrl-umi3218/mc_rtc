@@ -22,7 +22,7 @@ void RelativeEndEffectorTask::resetTask(const mc_rbdyn::Robots & robots, unsigne
 
 void RelativeEndEffectorTask::add_ef_pose(const sva::PTransformd & dtr)
 {
-  Eigen::Matrix3d new_rot = curTransform.rotation()*dtr.rotation();
+  auto new_rot = curTransform.rotation()*dtr.rotation();
   Eigen::Vector3d new_t = curTransform.translation() + dtr.translation();
   curTransform = sva::PTransformd(new_rot, new_t);
 }
