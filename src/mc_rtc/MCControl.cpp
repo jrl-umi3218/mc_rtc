@@ -284,7 +284,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
       m_qOutOut.write();
       m_pOutOut.write();
       m_rpyOutOut.write();
-      mc_rtc::ROSBridge::update_robot_publisher(controller.robot(), m_pIn, m_rpyIn, controller.gripperQ(true), controller.gripperQ(false));
+      mc_rtc::ROSBridge::update_robot_publisher(controller.robot(), m_pIn, m_rpyIn, m_accIn, controller.gripperQ(true), controller.gripperQ(false));
     }
     else
     {

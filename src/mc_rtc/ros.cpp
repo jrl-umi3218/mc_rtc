@@ -6,6 +6,7 @@
 
 #ifdef MC_RTC_HAS_ROS
 #include <ros/ros.h>
+#include <sensor_msgs/Imu.h>
 #include <sensor_msgs/JointState.h>
 #include <tf2_ros/transform_broadcaster.h>
 
@@ -73,16 +74,20 @@ public:
   RobotPublisher(ros::NodeHandle & nh)
   : nh(nh),
     j_state_pub(this->nh.advertise<sensor_msgs::JointState>("joint_states", 1)),
+    imu_pub(this->nh.advertise<sensor_msgs::Imu>("imu", 1)),
+    iter_since_start(0),
+    imu_noise(Eigen::Vector3d::Zero()),
     tf_caster(),
     seq(0), msgs(),
     th(std::bind(&RobotPublisher::publishThread, this))
   {
   }
 
-  void update(const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy, const std::vector<double> & lGq, const std::vector<double> & rGq)
+  void update(const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy, const RTC::TimedAcceleration3D & gsensor, const std::vector<double> & lGq, const std::vector<double> & rGq)
   {
     ros::Time tm = ros::Time::now();
     sensor_msgs::JointState msg;
+    sensor_msgs::Imu imu;
     std::vector<geometry_msgs::TransformStamped> tfs;
 
     rbd::MultiBodyConfig mbc = robot.mbc();
@@ -115,6 +120,27 @@ public:
     msg.velocity.resize(0);
     msg.effort.resize(0);
 
+    imu.header = msg.header;
+    if(iter_since_start >= 2000)
+    {
+      imu.linear_acceleration.x = gsensor.data.ax - imu_noise.x();
+      imu.linear_acceleration.y = gsensor.data.ay - imu_noise.y();
+      imu.linear_acceleration.z = gsensor.data.az - imu_noise.z();
+    }
+    else
+    {
+      imu_noise.x() += gsensor.data.ax;
+      imu_noise.y() += gsensor.data.ay;
+      imu_noise.z() += gsensor.data.az;
+      imu.linear_acceleration.x = 0;
+      imu.linear_acceleration.y = 0;
+      imu.linear_acceleration.z = 0;
+    }
+    iter_since_start++;
+    if(iter_since_start == 2000)
+    {
+      imu_noise /= 2000;
+    }
 
     tfs.push_back(PT2TF(robot.bodyTransform(robot.mb().body(0).id())*mbc.parentToSon[0], tm, std::string("/map"), robot.mb().body(0).name()));
     for(int j = 1; j < robot.mb().nrJoints(); ++j)
@@ -145,18 +171,22 @@ public:
     tfs.push_back(PT2TF(X_base_xtion, tm, "odom_base_link", "odom_xtion_link"));
 
     mut.lock();
-    msgs.push({msg, tfs});
+    msgs.push({msg, tfs, imu});
     mut.unlock();
   }
 private:
   ros::NodeHandle & nh;
   ros::Publisher j_state_pub;
+  ros::Publisher imu_pub;
+  unsigned int iter_since_start;
+  Eigen::Vector3d imu_noise;
   tf2_ros::TransformBroadcaster tf_caster;
 
   struct RobotStateData
   {
     sensor_msgs::JointState js;
     std::vector<geometry_msgs::TransformStamped> tfs;
+    sensor_msgs::Imu imu;
   };
 
   uint32_t seq;
@@ -177,6 +207,7 @@ private:
           try
           {
             j_state_pub.publish(msg.js);
+            imu_pub.publish(msg.imu);
             tf_caster.sendTransform(msg.tfs);
           }
           catch(const ros::serialization::StreamOverrunException & e)
@@ -226,11 +257,11 @@ std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
   return impl->nh;
 }
 
-void ROSBridge::update_robot_publisher(const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy, const std::vector<double> & lGq, const std::vector<double> & rGq)
+void ROSBridge::update_robot_publisher(const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy, const RTC::TimedAcceleration3D & gsensor, const std::vector<double> & lGq, const std::vector<double> & rGq)
 {
   if(impl->rpub)
   {
-    impl->rpub->update(robot, p, rpy, lGq, rGq);
+    impl->rpub->update(robot, p, rpy, gsensor, lGq, rGq);
   }
 }
 
