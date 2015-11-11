@@ -174,6 +174,12 @@ public:
     msgs.push({msg, tfs, imu});
     mut.unlock();
   }
+
+  void reset_imu_offset()
+  {
+    imu_noise = Eigen::Vector3d::Zero();
+    iter_since_start = 0;
+  }
 private:
   ros::NodeHandle & nh;
   ros::Publisher j_state_pub;
@@ -265,6 +271,14 @@ void ROSBridge::update_robot_publisher(const mc_rbdyn::Robot & robot, const RTC:
   }
 }
 
+void ROSBridge::reset_imu_offset()
+{
+  if(impl->rpub)
+  {
+    impl->rpub->reset_imu_offset();
+  }
+}
+
 void ROSBridge::shutdown()
 {
   ros::shutdown();
@@ -294,6 +308,10 @@ std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
 }
 
 void ROSBridge::update_robot_publisher(const mc_rbdyn::Robot &, const RTC::TimedPoint3D &, const RTC::TimedOrientation3D &, const std::vector<double>&, const std::vector<double>&)
+{
+}
+
+void ROSBridge::reset_imu_offset()
 {
 }
 

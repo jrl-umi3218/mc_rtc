@@ -1,5 +1,7 @@
 #include <mc_control/mc_global_controller.h>
 
+#include <mc_rtc/ros.h>
+
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
@@ -199,6 +201,7 @@ bool MCGlobalController::driving_service(double w, double a, double p, double t)
 
 bool MCGlobalController::send_msg(const std::string & msg)
 {
+  if(msg == "reset_imu_offset") { mc_rtc::ROSBridge::reset_imu_offset(); return true; }
   if(controller)
   {
     return controller->read_msg(const_cast<std::string&>(msg));

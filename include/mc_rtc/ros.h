@@ -25,6 +25,8 @@ struct ROSBridge
 
   static void update_robot_publisher(const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy, const RTC::TimedAcceleration3D & gsensor, const std::vector<double> & lGq = {}, const std::vector<double> & rGq = {});
 
+  static void reset_imu_offset();
+
   static void shutdown();
 private:
   static std::unique_ptr<ROSBridgeImpl> impl;
