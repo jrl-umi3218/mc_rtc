@@ -38,6 +38,26 @@ MCBCISelfInteractController::MCBCISelfInteractController()
 {
   qpsolver->addConstraintSet(contactConstraint);
   qpsolver->addConstraintSet(dynamicsConstraint);
+  /* Set more restrictive auto collision constraints */
+  selfCollisionConstraint.reset();
+  selfCollisionConstraint.addCollisions(qpsolver->robots, {
+    mc_solver::Collision("LARM_LINK3", "BODY", 0.1, 0.05, 0.),
+    mc_solver::Collision("LARM_LINK4", "BODY", 0.1, 0.05, 0.),
+    mc_solver::Collision("LARM_LINK5", "BODY", 0.1, 0.05, 0.),
+    mc_solver::Collision("RARM_LINK3", "BODY", 0.1, 0.05, 0.),
+    mc_solver::Collision("RARM_LINK4", "BODY", 0.1, 0.05, 0.),
+    mc_solver::Collision("RARM_LINK5", "BODY", 0.1, 0.05, 0.),
+    mc_solver::Collision("RARM_LINK3", "CHEST_LINK0", 0.1, 0.05, 0.),
+    mc_solver::Collision("RARM_LINK4", "CHEST_LINK0", 0.1, 0.05, 0.),
+    mc_solver::Collision("RARM_LINK5", "CHEST_LINK0", 0.1, 0.05, 0.),
+    mc_solver::Collision("RARM_LINK4", "CHEST_LINK1", 0.1, 0.05, 0.),
+    mc_solver::Collision("RARM_LINK5", "CHEST_LINK1", 0.1, 0.05, 0.),
+    mc_solver::Collision("LARM_LINK3", "CHEST_LINK0", 0.1, 0.05, 0.),
+    mc_solver::Collision("LARM_LINK4", "CHEST_LINK0", 0.1, 0.05, 0.),
+    mc_solver::Collision("LARM_LINK5", "CHEST_LINK0", 0.1, 0.05, 0.),
+    mc_solver::Collision("LARM_LINK4", "CHEST_LINK1", 0.1, 0.05, 0.),
+    mc_solver::Collision("LARM_LINK5", "CHEST_LINK1", 0.1, 0.05, 0.)
+  });
   qpsolver->addConstraintSet(selfCollisionConstraint);
   qpsolver->solver.addTask(postureTask.get());
   qpsolver->setContacts({

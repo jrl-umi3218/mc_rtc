@@ -314,6 +314,13 @@ void CollisionsConstraint::removeFromSolver(tasks::qp::QPSolver & solver) const
   }
 }
 
+void CollisionsConstraint::reset()
+{
+  cols.clear();
+  collIdDict.clear();
+  collConstr->reset();
+}
+
 std::string CollisionsConstraint::__keyByNames(const std::string & name1, const std::string & name2)
 {
   return name1 + name2;

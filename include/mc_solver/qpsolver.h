@@ -140,6 +140,8 @@ public:
 
   void addCollisions(const mc_rbdyn::Robots & robots, const std::vector<Collision> & cols);
 
+  void reset();
+
   virtual void addToSolver(tasks::qp::QPSolver & solver) const override;
 
   virtual void removeFromSolver(tasks::qp::QPSolver & solver) const override;
