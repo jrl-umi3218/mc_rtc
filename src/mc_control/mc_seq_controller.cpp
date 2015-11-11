@@ -106,20 +106,21 @@ void MCSeqTimeLog::report(std::ostream & os)
   os << "Total time: " << (static_cast<double>(iters.back() - iters[0]))*timeStep << std::endl;
 }
 
-MCSeqController::MCSeqController(const std::string & env_name, const std::string & seq_path, bool real_sensors, unsigned int start_stance)
-: MCSeqController(mc_rtc::MC_ENV_DESCRIPTION_PATH, env_name, seq_path, real_sensors, start_stance)
+MCSeqController::MCSeqController(const std::string & env_name, const std::string & seq_path, bool real_sensors, unsigned int start_stance, bool step_by_step)
+: MCSeqController(mc_rtc::MC_ENV_DESCRIPTION_PATH, env_name, seq_path, real_sensors, start_stance, step_by_step)
 {
 }
 
-MCSeqController::MCSeqController(const std::string & env_path, const std::string & env_name, const std::string & seq_path, bool real_sensors, unsigned int start_stance)
-: MCSeqController(std::make_shared<mc_robots::EnvRobotModule>(env_path, env_name), seq_path, real_sensors, start_stance)
+MCSeqController::MCSeqController(const std::string & env_path, const std::string & env_name, const std::string & seq_path, bool real_sensors, unsigned int start_stance, bool step_by_step)
+: MCSeqController(std::make_shared<mc_robots::EnvRobotModule>(env_path, env_name), seq_path, real_sensors, start_stance, step_by_step)
 {
 }
 
-MCSeqController::MCSeqController(const std::shared_ptr<mc_rbdyn::RobotModule> & env_module, const std::string & seq_path, bool real_sensors, unsigned int start_stance)
+MCSeqController::MCSeqController(const std::shared_ptr<mc_rbdyn::RobotModule> & env_module, const std::string & seq_path, bool real_sensors, unsigned int start_stance, bool step_by_step)
 : MCController(env_module),
   nrIter(0), logger(timeStep),
-  paused(false), halted(false), stanceIndex(start_stance), seq_actions(0),
+  step_by_step(step_by_step), paused(false), halted(false),
+  stanceIndex(start_stance), seq_actions(0),
   currentContact(0), targetContact(0), currentGripper(0),
   use_real_sensors(real_sensors),
   collsConstraint(robots(), timeStep)
@@ -205,7 +206,7 @@ bool MCSeqController::run()
           logger.report("/tmp/mc-control-seq-times.log");
           if(stanceIndex < actions.size())
           {
-            std::cout << "Starting " << actions[stanceIndex]->toStr() << "(" << stanceIndex << "/" << actions.size() << ")" << std::endl;
+            std::cout << "Starting " << actions[stanceIndex]->toStr() << "(" << (stanceIndex+1) << "/" << actions.size() << ")" << std::endl;
             /*FIXME Disabled for now... */
             //std::cout << "Before modification by sensor " << robot().mbc().q[0][0] << " " << robot().mbc().q[0][1] << " " << robot().mbc().q[0][2] << " " << robot().mbc().q[0][3] << std::endl;
             //Eigen::Vector3d pos(robot().mbc().q[0][4], robot().mbc().q[0][5], robot().mbc().q[0][6]);
@@ -248,7 +249,7 @@ bool MCSeqController::run()
             //stabilityTask->comObj = stances[stanceIndex-1].com(robot());//rbd::computeCoM(robot().mb(), robot().mbc());
             //stabilityTask->comTaskSm.reset(curConf().comTask.weight, stabilityTask->comObj, curConf().comTask.targetSpeed);
           }
-          //paused = true;
+          paused = step_by_step;
         }
       }
       post_live();

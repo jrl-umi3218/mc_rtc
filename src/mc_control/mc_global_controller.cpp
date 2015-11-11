@@ -90,9 +90,21 @@ MCGlobalController::Configuration::Configuration(const std::string & path)
     {
       seq_plan = v["Seq"]["Plan"].asString();
     }
+    if(v["Seq"].isMember("StepByStep"))
+    {
+      seq_step_by_step = v["Seq"]["StepByStep"].asBool();
+    }
+    else
+    {
+      seq_step_by_step = false;
+    }
     if(v["Seq"].isMember("UseRealSensors"))
     {
       seq_use_real_sensors = v["Seq"]["UseRealSensors"].asBool();
+    }
+    else
+    {
+      seq_use_real_sensors = false;
     }
     if(v["Seq"].isMember("StartStance"))
     {
@@ -137,11 +149,11 @@ MCGlobalController::MCGlobalController()
     {
       if(config.seq_env_path != "")
       {
-        seq_controller.reset(new MCSeqController(config.seq_env_path, config.seq_env_name, std::string(mc_rtc::DATA_PATH) + config.seq_plan, config.seq_use_real_sensors, config.seq_start_stance));
+        seq_controller.reset(new MCSeqController(config.seq_env_path, config.seq_env_name, std::string(mc_rtc::DATA_PATH) + config.seq_plan, config.seq_use_real_sensors, config.seq_start_stance, config.seq_step_by_step));
       }
       else
       {
-        seq_controller.reset(new MCSeqController(config.seq_env_name, std::string(mc_rtc::DATA_PATH) + config.seq_plan, config.seq_use_real_sensors, config.seq_start_stance));
+        seq_controller.reset(new MCSeqController(config.seq_env_name, std::string(mc_rtc::DATA_PATH) + config.seq_plan, config.seq_use_real_sensors, config.seq_start_stance, config.seq_step_by_step));
       }
     }
     else if(config.seq_env_module != "")
@@ -150,7 +162,7 @@ MCGlobalController::MCGlobalController()
       {
         seq_controller.reset(new MCSeqController(std::make_shared<mc_robots::PolarisRangerRobotModule>(false),
                                                  std::string(mc_rtc::DATA_PATH) + config.seq_plan,
-                                                 config.seq_use_real_sensors, config.seq_start_stance));
+                                                 config.seq_use_real_sensors, config.seq_start_stance, config.seq_step_by_step));
       }
       else
       {

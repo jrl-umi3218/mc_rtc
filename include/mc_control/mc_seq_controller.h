@@ -81,11 +81,11 @@ private:
 struct MCSeqController : public MCController
 {
 public:
-  MCSeqController(const std::string & env_name, const std::string & seq_path, bool real_sensors, unsigned int start_stance);
+  MCSeqController(const std::string & env_name, const std::string & seq_path, bool real_sensors, unsigned int start_stance, bool step_by_step);
 
-  MCSeqController(const std::string & env_path, const std::string & env_name, const std::string & seq_path, bool real_sensors, unsigned int start_stance);
+  MCSeqController(const std::string & env_path, const std::string & env_name, const std::string & seq_path, bool real_sensors, unsigned int start_stance, bool step_by_step);
 
-  MCSeqController(const std::shared_ptr<mc_rbdyn::RobotModule> & env_module, const std::string & seq_path, bool real_sensors, unsigned int start_stance);
+  MCSeqController(const std::shared_ptr<mc_rbdyn::RobotModule> & env_module, const std::string & seq_path, bool real_sensors, unsigned int start_stance, bool step_by_step);
 
   virtual bool run() override;
 
@@ -133,6 +133,7 @@ public:
   uint64_t nrIter;
   MCSeqTimeLog logger;
   /* Sequence playing logic */
+  bool step_by_step;
   bool paused;
   bool halted;
   unsigned int stanceIndex;

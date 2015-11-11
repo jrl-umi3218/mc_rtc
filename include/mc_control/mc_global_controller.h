@@ -92,6 +92,7 @@ private:
     std::string seq_env_name;
     std::string seq_env_module;
     std::string seq_plan;
+    bool seq_step_by_step;
     bool seq_use_real_sensors;
     unsigned int seq_start_stance;
   };
