@@ -72,7 +72,7 @@ MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rb
   ef_task.addToSolver(mrqpsolver->solver);
   ef_task.removeFromSolver(mrqpsolver->solver);
 
-  polarisPostureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(mrqpsolver->robots.mbs(), 1, mrqpsolver->robots.robot(1).mbc().q, 1, 100));
+  polarisPostureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(mrqpsolver->robots.mbs(), 1, mrqpsolver->robots.robot(1).mbc().q, 5, 100));
 
   std::cout << "MCDrivingController init done" << std::endl;
 }
