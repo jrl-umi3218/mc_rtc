@@ -27,13 +27,9 @@ namespace sch
 
   void transform(S_Object& obj, const sva::PTransformd& t);
 
-  S_Object* Sphere(double radius);
+  STP_BV * STPBV(const std::string& filename);
 
-  S_Object* Box(double x, double y, double z);
-
-  S_Object* STPBV(const std::string& filename);
-
-  S_Object* Polyhedron(const std::string& filename);
+  S_Polyhedron * Polyhedron(const std::string& filename);
 
   double distance(CD_Pair& pair, Eigen::Vector3d& p1, Eigen::Vector3d& p2);
 

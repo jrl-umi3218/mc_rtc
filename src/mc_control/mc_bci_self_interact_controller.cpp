@@ -1,6 +1,8 @@
 #include <mc_control/mc_bci_self_interact_controller.h>
 
+#include <mc_rtc/logging.h>
 #include <mc_rtc/ros.h>
+
 #ifdef MC_RTC_HAS_ROS
 #include <ros/ros.h>
 #include <tf2_ros/transform_broadcaster.h>
@@ -80,7 +82,7 @@ MCBCISelfInteractController::MCBCISelfInteractController()
     tf_caster.reset(new tf2_ros::TransformBroadcaster());
   }
 #endif
-  std::cout << "MCBCISelfInteractController init done" << std::endl;
+  LOG_SUCCESS("MCBCISelfInteractController init done")
 }
 
 void MCBCISelfInteractController::reset(const ControllerResetData & reset_data)
@@ -206,11 +208,11 @@ bool MCBCISelfInteractController::read_msg(std::string & msg)
     ss >> lh;
     if(lh)
     {
-      std::cout << "GoToInitialRubberPose - Left Hand (FIND IMPLEMENTATION)" << std::endl;
+      LOG_INFO("GoToInitialRubberPose - Left Hand (FIND IMPLEMENTATION)")
     }
     else
     {
-      std::cout << "GoToInitialRubberPose - Right Hand (FIND IMPLEMENTATION)" << std::endl;
+      LOG_INFO("GoToInitialRubberPose - Right Hand (FIND IMPLEMENTATION)")
     }
   }
   else if(token == "SetEFPose")
@@ -231,7 +233,7 @@ bool MCBCISelfInteractController::read_msg(std::string & msg)
     }
     else
     {
-      std::cerr << "Do not know how to set ef pose for: " << ef << std::endl;
+      LOG_ERROR("Do not know how to set ef pose for: " << ef)
     }
   }
   else if(token == "SetPanTilt")
@@ -243,7 +245,7 @@ bool MCBCISelfInteractController::read_msg(std::string & msg)
   }
   else
   {
-    std::cerr << "BCISelfInteract controller cannot handle this token: " << token << std::endl;
+    LOG_ERROR("BCISelfInteract controller cannot handle this token: " << token)
     return false;
   }
   return true;
@@ -283,7 +285,7 @@ bool MCBCISelfInteractController::read_write_msg(std::string & msg, std::string 
     }
     else
     {
-      std::cerr << "Do not know how to read signal: " << signal << std::endl;
+      LOG_ERROR("Do not know how to read signal: " << signal)
     }
     Eigen::Matrix3d ori = Eigen::Quaterniond(out_X.rotation()).inverse().toRotationMatrix();
     for(int i = 0; i < 3; ++i)
@@ -300,7 +302,7 @@ bool MCBCISelfInteractController::read_write_msg(std::string & msg, std::string 
   }
   else
   {
-    std::cerr << "BCISelfInteract controller cannot handle this token: " << token << std::endl;
+    LOG_ERROR("BCISelfInteract controller cannot handle this token: " << token)
     return false;
   }
   return true;

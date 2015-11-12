@@ -5,6 +5,8 @@
 
 #include <mc_rbdyn/StanceConfig.h>
 
+#include <mc_rtc/logging.h>
+
 #include <json/json.h>
 #include <iostream>
 
@@ -207,7 +209,7 @@ inline void scWaypointConfFromJSON(StanceConfig::WaypointConf & ret, const Json:
     }
     else
     {
-      std::cerr << "Invalid waypoint type: " << v["type"] << std::endl;
+      LOG_ERROR("Invalid waypoint type: " << v["type"])
       throw(std::string("Invalid waypoint type in JSON string"));
     }
   }

@@ -1,5 +1,7 @@
 #include <mc_control/mc_seq_steps.h>
 
+#include <mc_rtc/logging.h>
+
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
@@ -12,7 +14,7 @@ namespace mc_control
 
 bool enter_initT::eval(MCSeqController &)
 {
-  std::cout << "INIT" << std::endl;
+  LOG_INFO("INIT")
   return true;
 }
 
@@ -29,7 +31,7 @@ bool live_initT::eval(MCSeqController & controller)
 
   if(controller.stabilityTask->postureTask->eval().norm() < 0.1)
   {
-    std::cout << "INIT done" << std::endl;
+    LOG_INFO("INIT done")
     controller.stanceIndex += 1;
     return true;
   }
@@ -79,7 +81,7 @@ bool live_chooseContactT::eval(MCSeqController & ctl)
 
 bool enter_removeContactT::eval(MCSeqController & ctl)
 {
-  std::cout << "MOVECONTACT" << std::endl;
+  LOG_INFO("MOVECONTACT")
   if(ctl.currentContact == 0)
   {
     return true;
@@ -182,12 +184,12 @@ bool live_moveWPT::eval(MCSeqController & ctl)
     ctl.moveContactTask->toPreEnv(contactConf, contactConf.contactTask.position.targetSpeed);
     if(ctl.currentGripper == 0)
     {
-      std::cout << "Finished to move to contact wp" << std::endl;
+      LOG_INFO("Finished to move to contact wp")
       return true;
     }
     else if(ctl.currentGripper->percentOpen >= 1)
     {
-      std::cout << "Finished to move to contact wp" << std::endl;
+      LOG_INFO("Finished to move to contact wp")
       return true;
     }
     else
@@ -210,17 +212,17 @@ bool enter_moveContactP::eval(MCSeqController & ctl)
 
   //mc_rbdyn::StanceConfig & contactConf = ctl.curConf();
   //Eigen::Vector3d curSCoM = ctl.stances[ctl.stanceIndex].com(ctl.robot());
-  //std::cout << "Current stance com" << std::endl;
-  //std::cout << curSCoM << std::endl;
-  //std::cout << "Next stance com" << std::endl;
+  //LOG_INFO("Current stance com")
+  //LOG_INFO(curSCoM)
+  //LOG_INFO("Next stance com")
   //Eigen::Vector3d tarSCoM = ctl.stances[ctl.stanceIndex+1].com(ctl.robot());
-  //std::cout << tarSCoM << std::endl;
+  //LOG_INFO(tarSCoM)
   //contactConf.comObj.comOffset = (tarSCoM - curSCoM);
   //contactConf.comObj.comOffset(0) /= 3;
   //contactConf.comObj.comOffset(1) /= 2;
   //contactConf.comObj.comOffset(2) /= 3;
-  //std::cout << "Offset" << std::endl;
-  //std::cout << contactConf.comObj.comOffset << std::endl;
+  //LOG_INFO("Offset")
+  //LOG_INFO(contactConf.comObj.comOffset)
   //ctl.stabilityTask->target(ctl.env(), ctl.stances[ctl.stanceIndex], contactConf, contactConf.comTask.targetSpeed);
 
   return true;
@@ -336,7 +338,7 @@ bool live_chooseCoMT::eval(MCSeqController & ctl)
   mc_rbdyn::StanceAction * targetAction = &(ctl.targetAction());
   if(targetAction->type() == "remove")
   {
-    std::cout << "This action is a removal" << std::endl;
+    LOG_INFO("This action is a removal")
     mc_rbdyn::RemoveContactAction * rmCurAction = dynamic_cast<mc_rbdyn::RemoveContactAction*>(targetAction);
     std::string bodyName = rmCurAction->contact().r1Surface()->bodyName();
     if(bodyName == "RARM_LINK6") /*FIXME hard-coded */
@@ -351,7 +353,7 @@ bool live_chooseCoMT::eval(MCSeqController & ctl)
     }
     if((bodyName == "RARM_LINK6" || bodyName == "LARM_LINK6") && ctl.actions[ctl.stanceIndex+1]->type() != "add")
     {
-      std::cout << "Will move gripper away from contact in CoM" << std::endl;
+      LOG_INFO("Will move gripper away from contact in CoM")
       ctl.comRemoveGripper = true;
     }
   }
@@ -367,7 +369,7 @@ bool live_chooseCoMT::eval(MCSeqController & ctl)
 
 bool enter_moveCoMP::eval(MCSeqController & ctl)
 {
-  std::cout << "COMP" << std::endl;
+  LOG_INFO("COMP")
   ctl.stabilityTask->target(ctl.env(), ctl.targetStance(), ctl.curConf(), ctl.curConf().comTask.targetSpeed);
   ctl.notInContactCount = 0;
   /*FIXME Should be optionnal */
@@ -397,7 +399,7 @@ bool enter_CoMRemoveGripperT::eval(MCSeqController & ctl)
 {
   if(ctl.comRemoveGripper)
   {
-    std::cout << "CoMRemoveGripperT" << std::endl;
+    LOG_INFO("CoMRemoveGripperT")
     mc_rbdyn::StanceConfig & contactConf = ctl.targetConf();
 
     /* Find the contact to remove */
@@ -482,7 +484,7 @@ bool live_moveCoMT::eval(MCSeqController & ctl)
     }
     if(ctl.notInContactCount > obj.timeout*1/ctl.timeStep)
     {
-      std::cout << "COMP timeout (" << obj.timeout << "s)" << std::endl;
+      LOG_WARNING("COMP timeout (" << obj.timeout << "s)")
     }
     ctl.notInContactCount = 0;
     ctl.stabilityTask->comObj = rbd::computeCoM(ctl.robot().mb(), ctl.robot().mbc());
@@ -640,7 +642,7 @@ bool enter_removeGripperP::eval(MCSeqController & ctl)
   {
     return true;
   }
-  std::cout << "RemoveGripperP" << std::endl;
+  LOG_INFO("RemoveGripperP")
   mc_rbdyn::StanceConfig & contactConf = (ctl.currentContact == ctl.targetContact) ? ctl.targetConf() : ctl.curConf();
 
   /* Find the contact to remove */
@@ -700,7 +702,7 @@ bool live_removeGripperP::eval(MCSeqController & ctl)
   /* Either we moved away from the model or we moved away "enough" */
   if(all)
   {
-    std::cout << "Will move away because got out of the model collision" << std::endl;
+    LOG_INFO("Will move away because got out of the model collision")
   }
   double dLimit = 0.15;
   if(ctl.stanceIndex > 18 && ctl.stanceIndex < 41)
@@ -713,7 +715,7 @@ bool live_removeGripperP::eval(MCSeqController & ctl)
   }
   if(minD < 0 && d > dLimit)
   {
-    std::cout << "Will move away because d > " << dLimit << " even if in model collision" << std::endl;
+    LOG_INFO("Will move away because d > " << dLimit << " even if in model collision")
   }
   all = all || (minD < 0 && d > dLimit);
   if(all)
@@ -747,7 +749,7 @@ bool live_removeGripperNotAddT::eval(MCSeqController & ctl)
 bool enter_moveGripperWPT::eval(MCSeqController & ctl)
 {
   if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
-  std::cout << "Move gripper WPT" << std::endl;
+  LOG_INFO("Move gripper WPT")
   mc_rbdyn::StanceConfig & contactConf = ctl.curConf();
   mc_rbdyn::Stance & newS = ctl.targetStance();
 
@@ -786,7 +788,7 @@ bool live_moveGripperWPT::eval(MCSeqController & ctl)
   {
     /* Waypoint reached, new goal is target */
     ctl.moveContactTask->toPreEnv(contactConf, contactConf.contactTask.position.targetSpeed);
-    std::cout << "Finished move gripper WPT" << std::endl;
+    LOG_INFO("Finished move gripper WPT")
     return true;
   }
   else
@@ -817,7 +819,7 @@ bool live_moveGripperT::eval(MCSeqController & ctl)
     {
       ctl.qpsolver->solver.removeTask(ctl.bodyOriTaskSp.get());
     }
-    std::cout << "Finished move gripper T" << std::endl;
+    LOG_INFO("Finished move gripper T")
     return true;
   }
 
@@ -827,7 +829,7 @@ bool live_moveGripperT::eval(MCSeqController & ctl)
 bool enter_adjustGripperP::eval(MCSeqController & ctl)
 {
   if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
-  std::cout << "Adjust Gripper P" << std::endl;
+  LOG_INFO("Adjust Gripper P")
   double stiff = ctl.moveContactTask->posStiff + ctl.moveContactTask->extraPosStiff;
   ctl.adjustPositionTask.reset(new tasks::qp::PositionTask(ctl.robots().mbs(), 0, ctl.moveContactTask->robotBodyId,
                                                           ctl.moveContactTask->positionTask->position(),
@@ -952,8 +954,8 @@ bool live_adjustGripperT::eval(MCSeqController & ctl)
   if(robotBodyVel.linear().norm() > 0.3)
   {
     ctl.halted = true;
-    std::cerr << robotSurfaceVel.linear().norm() << std::endl;
-    std::cerr << "OOPS Drive too fast" << std::endl;
+    LOG_ERROR(robotSurfaceVel.linear().norm())
+    LOG_ERROR("OOPS Drive too fast")
   }
 
   bool insert = posErr < obj.adjustPosThresh and oriErr < obj.adjustOriThresh and velErr < obj.adjustVelThresh;
@@ -965,7 +967,7 @@ bool live_adjustGripperT::eval(MCSeqController & ctl)
     ctl.removeMetaTask(ctl.moveContactTask.get());
     ctl.moveContactTask.reset();
 
-    std::cout << "Finished adjust gripper T" << std::endl;
+    LOG_INFO("Finished adjust gripper T")
     return true;
   }
 
@@ -975,7 +977,7 @@ bool live_adjustGripperT::eval(MCSeqController & ctl)
 bool enter_addGripperT::eval(MCSeqController & ctl)
 {
   if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
-  std::cout << "addGripperT" << std::endl;
+  LOG_INFO("addGripperT")
   mc_rbdyn::StanceConfig & contactConf = ctl.curConf();
 
   ctl.notInContactCount = 0;
@@ -998,16 +1000,16 @@ bool enter_addGripperT::eval(MCSeqController & ctl)
   //  double pgain = 0;
   //  if(pdgains::getPGain(jn, pgain))
   //  {
-  //    std::cout << "Original pgain at " << jn << ": " << pgain << std::endl;
+  //    LOG_INFO("Original pgain at " << jn << ": " << pgain)
   //    ctl.lowerPGainsOriginalValues.push_back(pgain);
   //    if(pdgains::setPGain(jn, pgain/10))
   //    {
-  //      std::cout << "Set pgain at " << jn << " to " << pgain/10 << std::endl;
+  //      LOG_INFO("Set pgain at " << jn << " to " << pgain/10)
   //    }
   //  }
   //  else
   //  {
-  //    std::cout << "Failed to get original pgain value for " << jn << std::endl;
+  //    LOG_INFO("Failed to get original pgain value for " << jn)
   //    ctl.lowerPGainsOriginalValues.push_back(-1);
   //  }
   //}
@@ -1022,7 +1024,7 @@ bool live_addGripperT::eval(MCSeqController & ctl)
 
   if(ok) /* Python compares nrIterNoContact with np.inf/timeStep (so np.inf) */
   {
-    std::cout << "Contact detected" << std::endl;
+    LOG_INFO("Contact detected")
     ctl.notInContactCount = 0;
     ctl.addContactTask->removeFromSolver(ctl.qpsolver->solver);
     ctl.removeMetaTask(ctl.addContactTask.get());
@@ -1033,7 +1035,7 @@ bool live_addGripperT::eval(MCSeqController & ctl)
   /* Should be configurable per stance */
   if(ctl.notInContactCount > 8*1/ctl.timeStep)
   {
-    std::cout << "No contact detected since 8 seconds (" << ctl.notInContactCount << " iterations), skip ahead" << std::endl;
+    LOG_WARNING("No contact detected since 8 seconds (" << ctl.notInContactCount << " iterations), skip ahead")
     ctl.addContactTask->removeFromSolver(ctl.qpsolver->solver);
     ctl.removeMetaTask(ctl.addContactTask.get());
     ctl.addContactTask.reset();
@@ -1048,7 +1050,7 @@ bool enter_removeBeforeCloseT::eval(MCSeqController & ctl)
   if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
   if(ctl.notInContactCount > 0) { return true; }
   mc_rbdyn::StanceConfig & contactConf = ctl.targetConf();
-  std::cout << "Moving the gripper away before grasp (Move " << ctl.curConf().contactObj.gripperMoveAwayDist*100 << " cm)" << std::endl;
+  LOG_INFO("Moving the gripper away before grasp (Move " << ctl.curConf().contactObj.gripperMoveAwayDist*100 << " cm)")
 
   /* Find the contact to remove */
   mc_rbdyn::Contact & removedContact = *(ctl.targetContact);
@@ -1075,7 +1077,7 @@ bool live_removeBeforeCloseT::eval(MCSeqController & ctl)
     ctl.removeMetaTask(ctl.removeContactTask.get());
     ctl.removeContactTask.reset();
     ctl.distPairs.clear();
-    std::cout << "Moved away, will now grasp" << std::endl;
+    LOG_INFO("Moved away, will now grasp")
     return true;
   }
   return false;
@@ -1083,7 +1085,7 @@ bool live_removeBeforeCloseT::eval(MCSeqController & ctl)
 
 bool enter_softCloseGripperP::eval(MCSeqController & ctl)
 {
-  std::cout << "enter_softCloseGripperP" << std::endl;
+  LOG_INFO("enter_softCloseGripperP")
   ctl.isGripperClose = false;
 
   std::shared_ptr<mc_rbdyn::Surface> robotSurf = ctl.targetContact->r1Surface();
@@ -1129,7 +1131,7 @@ bool live_softCloseGripperP::eval(MCSeqController & ctl)
     ctl.constSpeedConstr->removeBoundedSpeed(bodyId);
     ctl.qpsolver->solver.updateConstrsNrVars(ctl.robots().mbs());
     ctl.qpsolver->solver.updateConstrSize();
-    std::cout << "Finished softCloseGripperP" << std::endl;
+    LOG_INFO("Finished softCloseGripperP")
     return true;
   }
 
@@ -1138,7 +1140,7 @@ bool live_softCloseGripperP::eval(MCSeqController & ctl)
 
 bool enter_hardCloseGripperP::eval(MCSeqController & ctl)
 {
-  std::cout << "enter_hardCloseGripperP" << std::endl;
+  LOG_INFO("enter_hardCloseGripperP")
   ctl.isGripperClose = false;
 
   ctl.iterSinceHardClose = 0;
@@ -1161,7 +1163,7 @@ bool live_hardCloseGripperP::eval(MCSeqController & ctl)
         ctl.currentGripper->percentOpen = percentOpenLimit;
       }
       ctl.currentGripper = 0;
-      std::cout << "Gripper closed, waiting for adjustment" << std::endl;
+      LOG_INFO("Gripper closed, waiting for adjustment")
     }
   }
   else
@@ -1193,7 +1195,7 @@ bool live_hardCloseGripperP::eval(MCSeqController & ctl)
     //rbd::forwardVelocity(*(ctl.robot().mb), *(ctl.robot().mbc));
     //ctl.stabilityTask->comObj = rbd::computeCoM(*(ctl.robot().mb), *(ctl.robot().mbc));
     //ctl.stabilityTask->comTaskSm.reset(ctl.curConf().comTask.weight, ctl.stabilityTask->comObj, ctl.curConf().comTask.targetSpeed);
-    std::cout << "Finished hardCloseGripperP" << std::endl;
+    LOG_INFO("Finished hardCloseGripperP")
     return true;
   }
 
@@ -1203,14 +1205,14 @@ bool live_hardCloseGripperP::eval(MCSeqController & ctl)
 bool enter_restoreArmGainsP::eval(MCSeqController & ctl)
 {
   if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
-  //std::cout << "Restoring arm gains to their original values" << std::endl;
+  //LOG_INFO("Restoring arm gains to their original values")
   //for(size_t i = 0; i < ctl.lowerPGainsJoints.size(); ++i)
   //{
   //  if(ctl.lowerPGainsOriginalValues[i] >= 0)
   //  {
   //    if(not pdgains::setPGain(ctl.lowerPGainsJoints[i], ctl.lowerPGainsOriginalValues[i]))
   //    {
-  //      std::cout << "Failed to restore gain for joint " << ctl.lowerPGainsJoints[i] << std::endl;
+  //      LOG_INFO("Failed to restore gain for joint " << ctl.lowerPGainsJoints[i])
   //    }
   //  }
   //}
@@ -1220,7 +1222,7 @@ bool enter_restoreArmGainsP::eval(MCSeqController & ctl)
 bool enter_contactGripperP::eval(MCSeqController & ctl)
 {
   if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
-  std::cout << "enter_contactGripperP" << std::endl;
+  LOG_INFO("enter_contactGripperP")
   mc_rbdyn::StanceConfig & contactConf = ctl.curConf();
 
   ctl.removeContactTask.reset(new mc_tasks::RemoveContactTask(ctl.robots(), ctl.constSpeedConstr, *(ctl.targetContact), contactConf));
@@ -1247,7 +1249,7 @@ bool live_contactGripperT::eval(MCSeqController & ctl)
 
   if(ok)
   {
-    std::cout << "ok contactGripperT" << std::endl;
+    LOG_INFO("ok contactGripperT")
     ctl.removeContactTask->removeFromSolver(ctl.qpsolver->solver);
     ctl.removeMetaTask(ctl.removeContactTask.get());
     ctl.removeContactTask.reset();

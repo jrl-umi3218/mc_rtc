@@ -15,8 +15,8 @@ struct EgressMRStartPhase : public EgressMRPhaseExecution
 public:
   virtual bool run(MCEgressMRQPController &) override
   {
+    LOG_INFO("starting")
     return false;
-    std::cout << "starting" << std::endl;
     //return true;
   }
 };
@@ -31,7 +31,7 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
         done_rotate(false),
         done_reorient(false),
         done_putdown(false),
-        forceIter(0)
+        forceIter(0), forceStart(0)
     {
     }
 
@@ -70,7 +70,7 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
         {
           done_change_knee = true;
           ctl.hrp2postureTask->posture(ctl.robot().mbc().q);
-          std::cout << "Start rotating the leg" << std::endl;
+          LOG_INFO("Start rotating the leg")
           //int lazy_i = ctl.robots().robots[1].jointIndexByName("lazy_susan");
           //auto p = ctl.lazyPostureTask->posture();
           //p[lazy_i][0] = M_PI/6;
@@ -91,7 +91,7 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
         timeoutIter++;
         if((ctl.efTask->positionTask->eval().norm() < 1e-1 and ctl.efTask->positionTask->speed().norm() < 1e-4 and ctl.efTask->orientationTask->eval().norm() < 1e-2 and ctl.efTask->orientationTask->speed().norm() < 1e-4) or timeoutIter > 15*500)
         {
-          std::cout << "Lazy susan rotation done" << std::endl;
+          LOG_INFO("Lazy susan rotation done")
           ctl.lazyPostureTask->posture(ctl.robots().robot(1).mbc().q);
           ctl.hrp2postureTask->posture(ctl.robot().mbc().q);
           done_rotate = true;
@@ -126,7 +126,7 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
           forceIter = 0;
           forceStart = ctl.wrenches[0].first[2];
           timeoutIter = 0;
-          std::cout << "Reoriented the right foot" << std::endl;
+          LOG_INFO("Reoriented the right foot")
           done_reorient = true;
         }
         return false;
@@ -136,7 +136,7 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
         timeoutIter++;
         if(ctl.wrenches[0].first[2] > forceStart + 50)
         {
-          std::cout << "Contact force triggered" << std::endl;
+          LOG_INFO("Contact force triggered")
           forceIter++;
         }
         else
@@ -148,11 +148,11 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
           done_putdown = true;
           ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
           ctl.hrp2postureTask->posture(ctl.robot().mbc().q);
-          std::cout << "Found contact on right foot" << std::endl;
+          LOG_INFO("Found contact on right foot")
           ctl.egressContacts.push_back(mc_rbdyn::Contact(ctl.robots(), 0, 1,
                                        "RFullSole", "left_floor"));
           ctl.mrqpsolver->setContacts(ctl.egressContacts);
-          std::cout << "Phase over, ready for next" << std::endl;
+          LOG_INFO("Phase over, ready for next")
           //return true;
         }
         return false;
@@ -183,6 +183,7 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
         done_rotating(false),
         done_contacting(false),
         lfc_index(0),
+        forceIter(0), forceStart(0),
         com_multiplier(0.1),
         otherContacts()
     {
@@ -192,7 +193,7 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
     {
       if(not started)
       {
-        std::cout << "Replacing left foot" << std::endl;
+        LOG_INFO("Replacing left foot")
         ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("LLEG_LINK5",
                                                        ctl.mrqpsolver->robots,
@@ -212,7 +213,7 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
 
         for(auto c: otherContacts)
         {
-          std::cout << c.r1Surface()->name() << " / " << c.r2Surface()->name() << std::endl;
+          LOG_INFO(c.r1Surface()->name() << " / " << c.r2Surface()->name())
         }
 
         ctl.mrqpsolver->setContacts(ctl.egressContacts);
@@ -223,7 +224,7 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
         dof(5, 5) = 0;
         auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.hrp2contactConstraint.contactConstr.get());
         if(constr == 0)
-          std::cout << "NOPE NOPE" << std::endl;
+          LOG_INFO("NOPE NOPE")
         else
           constr->addDofContact(cId, dof);
 
@@ -259,7 +260,7 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
             ctl.efTask->positionTask->position(rfpos.translation()+move);
             ctl.efTask->orientationTask->orientation(rfpos.rotation());
             timeoutIter = 0;
-            std::cout << "Modified orientation" << std::endl;
+            LOG_INFO("Modified orientation")
           }
           return false;
         }
@@ -289,34 +290,34 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
             w = ctl.comTask->comTaskSp->weight();
             ctl.comTask->comTaskSp->weight(w*com_multiplier);
 
-            std::cout << "Reached contacts phase" << std::endl;
+            LOG_INFO("Reached contacts phase")
             ctl.egressContacts.erase(ctl.egressContacts.begin()+static_cast<int>(lfc_index));
             ctl.mrqpsolver->setContacts(ctl.egressContacts);
             //ctl.egressContacts.emplace_back(ctl.robots().robotIndex, 2,
             //                                ctl.robot().surfaces.at("LFullSole"),
             //                                ctl.robots().robots[2].surfaces.at("AllGround"));
             //ctl.mrqpsolver->setContacts(ctl.egressContacts);
-            std::cout << "Set contacts" << std::endl;
+            LOG_INFO("Set contacts")
             for(auto c : ctl.egressContacts)
             {
-              std::cout << c.r1Surface()->name() << " / " << c.r2Surface()->name() << std::endl;
+              LOG_INFO(c.r1Surface()->name() << " / " << c.r2Surface()->name())
             }
 
             //mc_rbdyn::Contact& lfc = ctl.egressContacts.back();
-            //std::cout << "Found lfc" << std::endl;
+            //LOG_INFO("Found lfc")
             //tasks::qp::ContactId cId = lfc.contactId(ctl.robots().robots);
             //Eigen::MatrixXd dof(6,6);
             //dof.setZero();
             //dof(5, 5) = 0;
             //auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.hrp2contactConstraint.contactConstr.get());
             //if(constr == 0)
-            //  std::cout << "NOPE NOPE" << std::endl;
+            //  LOG_INFO("NOPE NOPE")
             //else
             //  std::cout << "Added dof on " << lfc.r1Surface()->name << " / "
             //                               << lfc.r2Surface()->name << std::endl;
             //  constr->addDofContact(cId, dof);
 
-            std::cout << "Going to contact" << std::endl;
+            LOG_INFO("Going to contact")
           }
           return false;
         }
@@ -325,7 +326,7 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
           timeoutIter++;
           if(ctl.wrenches[1].first[2] > forceStart + 150)
           {
-            std::cout << "Contact force triggered" << std::endl;
+            LOG_INFO("Contact force triggered")
             forceIter++;
           }
           else
@@ -335,14 +336,14 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
           if(forceIter > 40 or timeoutIter > 15*500)
           {
             done_contacting = true;
-            std::cout << ctl.robots().robot(2).surfaces().size() << std::endl;
+            LOG_INFO(ctl.robots().robot(2).surfaces().size())
             for(auto s : ctl.robots().robot(2).surfaces())
             {
-              std::cout << s.first << std::endl;
+              LOG_INFO(s.first)
             }
             auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.hrp2contactConstraint.contactConstr.get());
             if(constr == 0)
-              std::cout << "NOPE NOPE" << std::endl;
+              LOG_INFO("NOPE NOPE")
             else
               constr->resetDofContacts();
             //NB : When using dof contacts, do not add twice !
@@ -351,8 +352,8 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
             ctl.mrqpsolver->setContacts(ctl.egressContacts);
             double w = ctl.comTask->comTaskSp->weight();
             ctl.comTask->comTaskSp->weight(w/com_multiplier);
-            std::cout << "Done moving left foot" << std::endl;
-            std::cout << "Phase finished, can transit" << std::endl;
+            LOG_INFO("Done moving left foot")
+            LOG_INFO("Phase finished, can transit")
             return true;
           }
           return false;
@@ -382,6 +383,7 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
         done_moving(false),
         done_rotating(false),
         done_contacting(false),
+        forceIter(0), forceStart(0),
         otherContacts()
     {
     }
@@ -390,7 +392,7 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
     {
       if(not started)
       {
-        std::cout << "Moving right foot to the ground" << std::endl;
+        LOG_INFO("Moving right foot to the ground")
 
         ctl.comTask->comTaskSp->stiffness(5.);
         ctl.comTask->comTaskSp->weight(100.);
@@ -424,7 +426,7 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
         dof(5, 5) = 0;
         auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.hrp2contactConstraint.contactConstr.get());
         if(constr == 0)
-          std::cout << "NOPE NOPE" << std::endl;
+          LOG_INFO("NOPE NOPE")
         else
           constr->addDofContact(cId, dof);
 
@@ -455,7 +457,7 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
             ctl.efTask->positionTask->position(target);
             ctl.efTask->orientationTask->orientation(lfpos.rotation());
             timeoutIter = 0;
-            std::cout << "Modified position" << std::endl;
+            LOG_INFO("Modified position")
           }
           return false;
         }
@@ -468,7 +470,7 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
           {
             done_moving = true;
             timeoutIter = 0;
-            std::cout << "Done moving" << std::endl;
+            LOG_INFO("Done moving")
           }
           return false;
         }
@@ -493,7 +495,7 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
             timeoutIter = 0;
             forceIter = 0;
             forceStart = ctl.wrenches[0].first[2];
-            std::cout << "Going to contact" << std::endl;
+            LOG_INFO("Going to contact")
           }
           return false;
         }
@@ -502,7 +504,7 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
           timeoutIter++;
           if(ctl.wrenches[0].first[2] > forceStart + 150)
           {
-            std::cout << "Contact force triggered" << std::endl;
+            LOG_INFO("Contact force triggered")
             forceIter++;
           }
           else
@@ -521,7 +523,7 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
             ctl.comTask->comTaskSp->stiffness(1.);
             //Do not remove orientation here if we are not in skip mode
             //ctl.torsoOriTask->removeFromSolver(ctl.mrqpsolver->solver);
-            std::cout << "Done putting down right foot" << std::endl;
+            LOG_INFO("Done putting down right foot")
             //return true;
           }
           return false;
@@ -553,6 +555,7 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
         done_rotating(false),
         done_contacting(false),
         rfc_index(2),
+        forceIter(0), forceStart(0),
         otherContacts()
     {
     }
@@ -561,7 +564,7 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
     {
       if(not started)
       {
-        std::cout << "Replacing right foot" << std::endl;
+        LOG_INFO("Replacing right foot")
         ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5",
                                                        ctl.mrqpsolver->robots,
@@ -588,7 +591,7 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
         dof(5, 5) = 0;
         auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.hrp2contactConstraint.contactConstr.get());
         if(constr == 0)
-          std::cout << "NOPE NOPE" << std::endl;
+          LOG_INFO("NOPE NOPE")
         else
           constr->addDofContact(cId, dof);
 
@@ -649,7 +652,7 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
             //int rankle_i = ctl.robot().jointIndexByName("RLEG_JOINT4");
             //p[rankle_i][0] = -90*M_PI/180;
             //ctl.hrp2postureTask->posture(p);
-            std::cout << "Modified position" << std::endl;
+            LOG_INFO("Modified position")
           }
           return false;
         }
@@ -674,7 +677,7 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
             //const sva::PTransformd& lfpos = ctl.robot().mbc().bodyPosW[lfindex];
             ctl.efTask->positionTask->position(lfpos.translation() + move);
             timeoutIter = 0;
-            std::cout << "Going above exit contact" << std::endl;
+            LOG_INFO("Going above exit contact")
           }
           return false;
         }
@@ -709,14 +712,14 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
             dof(5, 5) = 0;
             auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.hrp2contactConstraint.contactConstr.get());
             if(constr == 0)
-              std::cout << "NOPE NOPE" << std::endl;
+              LOG_INFO("NOPE NOPE")
             else
               constr->addDofContact(cId, dof);
 
             timeoutIter = 0;
             forceIter = 0;
             forceStart = ctl.wrenches[0].first[2];
-            std::cout << "Going to contact" << std::endl;
+            LOG_INFO("Going to contact")
           }
           return false;
         }
@@ -725,7 +728,7 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
           timeoutIter++;
           if(ctl.wrenches[0].first[2] > forceStart + 150)
           {
-            std::cout << "Contact force triggered" << std::endl;
+            LOG_INFO("Contact force triggered")
             forceIter++;
           }
           else
@@ -744,8 +747,8 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
             //p[lelbow_i][0] = 0.0;
             //p[lwrist_i][0] = 0.0;
             //ctl.hrp2postureTask->posture(p);
-            std::cout << "Done moving right foot" << std::endl;
-            std::cout << "Phase finished, can transit" << std::endl;
+            LOG_INFO("Done moving right foot")
+            LOG_INFO("Phase finished, can transit")
             //return true;
           }
           return false;
@@ -783,7 +786,7 @@ struct EgressPlaceRightFootPhase : public EgressMRPhaseExecution
     {
       if(not started)
       {
-        std::cout << "Replacing right foot" << std::endl;
+        LOG_INFO("Replacing right foot")
         ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
 
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5",
@@ -798,7 +801,7 @@ struct EgressPlaceRightFootPhase : public EgressMRPhaseExecution
         ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
 
         started = true;
-        std::cout << "Done starting rfplacement" << std::endl;
+        LOG_INFO("Done starting rfplacement")
         timeoutIter = 0;
         return false;
       }
@@ -820,7 +823,7 @@ struct EgressPlaceRightFootPhase : public EgressMRPhaseExecution
                             sva::RotX(rpy(2));
             ctl.efTask->orientationTask->orientation(target);
             timeoutIter = 0;
-            std::cout << "Modified orientation" << std::endl;
+            LOG_INFO("Modified orientation")
           }
           return false;
         }
@@ -849,7 +852,7 @@ struct EgressPlaceRightFootPhase : public EgressMRPhaseExecution
                                             "RFullSole", "exit_platform");
             ctl.mrqpsolver->setContacts(ctl.egressContacts);
             timeoutIter = 0;
-            std::cout << "Phase finished, can transit" << std::endl;
+            LOG_INFO("Phase finished, can transit")
             //return true;
           }
           return false;
@@ -879,7 +882,7 @@ struct EgressOpenRightGripperPhase : public EgressMRPhaseExecution
       if(not started)
       {
         started = true;
-        std::cout << "Opening gripper" << std::endl;
+        LOG_INFO("Opening gripper")
         return false;
       }
       else if(not done_opening)
@@ -898,7 +901,7 @@ struct EgressOpenRightGripperPhase : public EgressMRPhaseExecution
       }
      else
      {
-       std::cout << "We should never be here" << std::endl;
+       LOG_INFO("We should never be here")
        return false;
      }
   }
@@ -923,14 +926,14 @@ struct EgressRemoveRightGripperPhase : public EgressMRPhaseExecution
         rot(sva::RotX(deg*M_PI/180)),
         birot(sva::RotX(2*deg*M_PI/180))
     {
-      std::cout << "In egress remove right gripper phase" << std::endl;
+      LOG_INFO("In egress remove right gripper phase")
     }
 
     virtual bool run(MCEgressMRQPController & ctl) override
     {
       if(not started)
       {
-        std::cout << "Removing right gripper" << std::endl;
+        LOG_INFO("Removing right gripper")
         ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
 
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6",
@@ -954,21 +957,21 @@ struct EgressRemoveRightGripperPhase : public EgressMRPhaseExecution
           ctl.mrqpsolver->setContacts(ctl.egressContacts);
         }
         else
-          std::cout << "OOPSIE OOPS" << std::endl;
+          LOG_INFO("OOPSIE OOPS")
         //tasks::qp::ContactId cId = rgc->contactId(ctl.robots().robots);
         //Eigen::MatrixXd dof(6,6);
         //dof.setIdentity();
         //dof(5, 5) = 0;
         //auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.hrp2contactConstraint.contactConstr.get());
         //if(constr == 0)
-        //  std::cout << "NOPE NOPE" << std::endl;
+        //  LOG_INFO("NOPE NOPE")
         //else
         //  constr->addDofContact(cId, dof);
 
         ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
 
         started = true;
-        std::cout << "Taking right gripper out" << std::endl;
+        LOG_INFO("Taking right gripper out")
         return false;
       }
       else
@@ -1006,7 +1009,7 @@ struct EgressRemoveRightGripperPhase : public EgressMRPhaseExecution
             //q[chest_i][0] = 0;
             ctl.hrp2postureTask->posture(q);
             ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
-            std::cout << "Phase finished, can transit" << std::endl;
+            LOG_INFO("Phase finished, can transit")
           }
           return false;
         }
@@ -1035,14 +1038,14 @@ struct EgressMRStandupPhase : public EgressMRPhaseExecution
         altitude_(offset),
         otherContacts()
     {
-      std::cout << "In egress standup phase" << std::endl;
+      LOG_INFO("In egress standup phase")
     }
 
     virtual bool run(MCEgressMRQPController & ctl) override
     {
       if(not started)
       {
-        std::cout << "Starting standup" << std::endl;
+        LOG_INFO("Starting standup")
         ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("BODY", ctl.mrqpsolver->robots, 0));
         unsigned int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
@@ -1059,7 +1062,7 @@ struct EgressMRStandupPhase : public EgressMRPhaseExecution
         otherContacts.push_back(ctl.egressContacts.at(3));
         for(auto c: otherContacts)
         {
-          std::cout << c.r1Surface()->name() << " / " << c.r2Surface()->name() << std::endl;
+          LOG_INFO(c.r1Surface()->name() << " / " << c.r2Surface()->name())
         }
         ctl.mrqpsolver->setContacts(otherContacts);
 
@@ -1080,8 +1083,8 @@ struct EgressMRStandupPhase : public EgressMRPhaseExecution
           ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
           ctl.egressContacts.erase(ctl.egressContacts.begin());
           done_standup = true;
-          std::cout << "Finished standup" << std::endl;
-          std::cout << "Can transit" << std::endl;
+          LOG_INFO("Finished standup")
+          LOG_INFO("Can transit")
           //return true;
         }
       }
@@ -1112,7 +1115,7 @@ struct EgressMoveComSurfPhase : public EgressMRPhaseExecution
     {
       if(not started)
       {
-        std::cout << "Moving com over " << surfName_ << std::endl;
+        LOG_INFO("Moving com over " << surfName_)
         const auto & target = ctl.robot().surface(surfName_);
         Eigen::Vector3d pos = target.X_0_s(ctl.robot()).translation();
         pos(2) = pos(2) + 0.76 + altitude_;
@@ -1134,7 +1137,7 @@ struct EgressMoveComSurfPhase : public EgressMRPhaseExecution
             done_com = true;
             ctl.hrp2postureTask->posture(ctl.robot().mbc().q);
             //ctl.comTask->removeFromSolver(ctl.mrqpsolver->solver);
-            std::cout << "Phase finished, can transit" << std::endl;
+            LOG_INFO("Phase finished, can transit")
             //return true;
             return auto_transit;
           }
@@ -1169,7 +1172,7 @@ struct EgressCenterComPhase : public EgressMRPhaseExecution
     {
       if(not started)
       {
-        std::cout << "Centering com " << std::endl;
+        LOG_INFO("Centering com ")
         const auto & rfs = ctl.robot().surface("RFullSole");
         const auto & lfs = ctl.robot().surface("LFullSole");
         Eigen::Vector3d pos = (rfs.X_0_s(ctl.robot()).translation()
@@ -1193,8 +1196,8 @@ struct EgressCenterComPhase : public EgressMRPhaseExecution
             done_com = true;
             ctl.hrp2postureTask->posture(ctl.robot().mbc().q);
             //ctl.comTask->removeFromSolver(ctl.mrqpsolver->solver);
-            std::cout << "Centered com, error "
-                      << ctl.comTask->comTask->eval().transpose() << std::endl;
+            LOG_INFO("Centered com, error "
+                      << ctl.comTask->comTask->eval().transpose())
             //return true;
           }
           return false;
@@ -1249,8 +1252,8 @@ struct EgressMoveComForcePhase : public EgressMRPhaseExecution
     {
       if(not started)
       {
-        std::cout << "Moving com over " << surfName_
-                  << " and lifting " << otherSurf_ << std::endl;
+        LOG_INFO("Moving com over " << surfName_
+                  << " and lifting " << otherSurf_)
         const auto & target = ctl.robot().surface(surfName_);
         Eigen::Vector3d pos = target.X_0_s(ctl.robot()).translation();
         pos(2) += 0.76 + altitude_;
@@ -1279,18 +1282,18 @@ struct EgressMoveComForcePhase : public EgressMRPhaseExecution
         dof(5, 5) = 0;
         auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.hrp2contactConstraint.contactConstr.get());
         if(constr == 0)
-          std::cout << "NOPE NOPE" << std::endl;
+          LOG_INFO("NOPE NOPE")
         else
           constr->resetDofContacts();
-          std::cout << "Added a dof to " << lfc->r1Surface()->name() << " / "
-                    << lfc->r2Surface()->name();
+          LOG_INFO("Added a dof to " << lfc->r1Surface()->name() << " / "
+                    << lfc->r2Surface()->name())
           constr->addDofContact(cId, dof);
 
         unsigned int bodyIndex = ctl.robot().bodyIndexByName(bodyName_);
         startPos_ = ctl.robot().mbc().bodyPosW[bodyIndex].translation();
         ctl.efTask->addToSolver(ctl.mrqpsolver->solver);
         started = true;
-        std::cout << "Going for it with a max displacement of " << maxMove_ << std::endl;
+        LOG_INFO("Going for it with a max displacement of " << maxMove_)
         return false;
       }
       else
@@ -1306,11 +1309,11 @@ struct EgressMoveComForcePhase : public EgressMRPhaseExecution
             ctl.hrp2postureTask->posture(ctl.robot().mbc().q);
             auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.hrp2contactConstraint.contactConstr.get());
             if(constr == 0)
-              std::cout << "NOPE NOPE" << std::endl;
+              LOG_INFO("NOPE NOPE")
             else
               constr->resetDofContacts();
             //ctl.comTask->removeFromSolver(ctl.mrqpsolver->solver);
-            std::cout << "Phase finished, can transit" << std::endl;
+            LOG_INFO("Phase finished, can transit")
             //return true;
           }
           else
@@ -1357,7 +1360,7 @@ struct EgressReplaceRightHandPhase : public EgressMRPhaseExecution
     {
       if(not started)
       {
-        std::cout << "Replacing hand" << std::endl;
+        LOG_INFO("Replacing hand")
         started = true;
         ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
 
@@ -1401,7 +1404,7 @@ struct EgressReplaceRightHandPhase : public EgressMRPhaseExecution
               or nrIter_ > 10*500)
           {
             done_posturing = true;
-            std::cout << "Phase done" << std::endl;
+            LOG_INFO("Phase done")
           }
           return false;
         }

@@ -24,20 +24,7 @@ namespace sch
     obj.setTransformation(m);
   }
 
-
-  S_Object* Sphere(double radius)
-  {
-    return new S_Sphere(radius);
-  }
-
-
-  S_Object* Box(double x, double y, double z)
-  {
-    return new S_Box(x, y, z);
-  }
-
-
-  S_Object* STPBV(const std::string& filename)
+  STP_BV * STPBV(const std::string& filename)
   {
     STP_BV* s = new STP_BV;
     s->constructFromFile(filename);
@@ -45,7 +32,7 @@ namespace sch
   }
 
 
-  S_Object* Polyhedron(const std::string& filename)
+  S_Polyhedron * Polyhedron(const std::string& filename)
   {
     S_Polyhedron* s = new S_Polyhedron;
     s->constructFromFile(filename);

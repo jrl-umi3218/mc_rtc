@@ -2,6 +2,8 @@
 #include <mc_robots/polaris_ranger.h>
 #include <mc_rbdyn/robot.h>
 
+#include <mc_rtc/logging.h>
+
 #include <Tasks/QPContactConstr.h>
 
 #include <RBDyn/FK.h>
@@ -74,7 +76,7 @@ MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rb
 
   polarisPostureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(mrqpsolver->robots.mbs(), 1, mrqpsolver->robots.robot(1).mbc().q, 5, 100));
 
-  std::cout << "MCDrivingController init done" << std::endl;
+  LOG_SUCCESS("MCDrivingController init done")
 }
 
 bool MCDrivingController::run()
@@ -104,7 +106,7 @@ bool MCDrivingController::run()
 void MCDrivingController::reset(const ControllerResetData & reset_data)
 {
   MCMRQPController::reset(reset_data);
-  std::cout << "Enter reset" << std::endl;
+  LOG_INFO("Enter reset")
   robot().mbc().zero(robot().mb());
   robot().mbc().q = reset_data.q;
   //robot().mbc().q[0] = {0.8018680589369662, 0.09936561148509283, -0.06541812773434774, 0.5855378381237102, -0.3421374123035909, -0.0002850914593993392, 0.8847053544605464};
@@ -124,7 +126,7 @@ void MCDrivingController::reset(const ControllerResetData & reset_data)
 
   mrqpsolver->setContacts(drivingContacts);
 
-  std::cout << "End reset" << std::endl;
+  LOG_INFO("End reset")
 }
 
 void MCDrivingController::resetBasePose()

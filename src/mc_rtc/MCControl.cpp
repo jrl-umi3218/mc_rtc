@@ -18,6 +18,7 @@
 #include <fstream>
 
 #include <boost/array.hpp>
+#include <mc_rtc/logging.h>
 
 using boost::asio::ip::udp;
 
@@ -51,6 +52,8 @@ static const char* mccontrol_spec[] =
 MCControl::MCControl(RTC::Manager* manager)
     // <rtc-template block="initializer">
   : RTC::DataFlowComponentBase(manager),
+    m_timeStep(0.002),
+    m_enabled(false),
     m_qInIn("qIn", m_qIn),
     m_pInIn("pIn", m_pIn),
     m_rpyInIn("rpyIn", m_rpyIn),
@@ -82,7 +85,7 @@ MCControl::~MCControl()
 
 RTC::ReturnCode_t MCControl::onInitialize()
 {
-  std::cout << "MCControl::onInitialize() starting" << std::endl;
+  LOG_INFO("MCControl::onInitialize() starting")
   // Registration: InPort/OutPort/Service
   // <rtc-template block="registration">
   // Set InPort buffers
@@ -117,13 +120,13 @@ RTC::ReturnCode_t MCControl::onInitialize()
   bindParameter("is_enabled", controller.running, "0");
 
   // </rtc-template>
-  std::cout << "MCControl::onInitialize() finished" << std::endl;
+  LOG_INFO("MCControl::onInitialize() finished")
   return RTC::RTC_OK;
 }
 
 RTC::ReturnCode_t MCControl::onActivated(RTC::UniqueId ec_id)
 { 
-  std::cout << "onActivated" << std::endl;
+  LOG_INFO("onActivated")
   return RTC::RTC_OK;
 }
 
@@ -193,7 +196,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
     {
       if(!init)
       {
-        std::cout << "In init, actual gripper " << m_qIn.data[31] << " " << m_qIn.data[23] << std::endl;
+        LOG_INFO("In init, actual gripper " << m_qIn.data[31] << " " << m_qIn.data[23])
         controller.init(qIn);
         init = true;
         ofs << "qIn" << std::endl;

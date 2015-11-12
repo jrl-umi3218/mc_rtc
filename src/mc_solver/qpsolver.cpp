@@ -9,8 +9,9 @@
 #include <mc_solver/contact_util.h>
 
 #include <mc_rbdyn/stance.h>
-
 #include <mc_rbdyn/Surface.h>
+
+#include <mc_rtc/logging.h>
 
 namespace mc_solver
 {
@@ -41,7 +42,7 @@ ContactConstraint::ContactConstraint(double timeStep, ContactType contactType, b
   }
   else
   {
-    std::cerr << "Trying to create a contact constraint from an unknown contact constraint type" << std::endl;
+    LOG_ERROR("Trying to create a contact constraint from an unknown contact constraint type")
     throw(std::string("bad constraint type"));
   }
   if(dynamics)

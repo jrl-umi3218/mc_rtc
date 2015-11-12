@@ -1,5 +1,7 @@
 #include <mc_control/mc_controller.h>
 
+#include <mc_rtc/logging.h>
+
 #include <RBDyn/EulerIntegration.h>
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
@@ -78,15 +80,14 @@ MCController::MCController(const std::shared_ptr<mc_rbdyn::RobotModule> & env)
   });
 
   postureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(qpsolver->robots.mbs(), static_cast<int>(hrp2_drc_index), qpsolver->robots.robot().mbc().q, 10, 5));
-  std::cout << "MCController(base) ready" << std::endl;
-
+  LOG_INFO("MCController(base) ready")
 }
 
 bool MCController::run()
 {
   if(!qpsolver->run())
   {
-    std::cerr << "QP failed to run()" << std::endl;
+    LOG_ERROR("QP failed to run()")
     return false;
   }
   return true;

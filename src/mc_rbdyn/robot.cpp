@@ -5,6 +5,8 @@
 #include <mc_rbdyn/surface_utils.h>
 #include <mc_rbdyn_urdf/urdf.h>
 
+#include <mc_rtc/logging.h>
+
 #include <RBDyn/FK.h>
 
 #include <boost/filesystem.hpp>
@@ -198,7 +200,7 @@ const mc_rbdyn::Surface & Robot::surface(const std::string & sName) const
 {
   if(!hasSurface(sName))
   {
-    std::cerr << "No surface named " << sName << " found in this robot" << std::endl;
+    LOG_ERROR("No surface named " << sName << " found in this robot")
     throw("Surface does not exist");
   }
   return *(surfaces_.at(sName));
@@ -217,11 +219,11 @@ const Robot::convex_pair_t & Robot::convex(const std::string & cName) const
 {
   if(convexes.count(cName) == 0)
   {
-    std::cerr << "No convex named " << cName << " found in this robot (" << this->name_ << ")" << std::endl;
-    std::cerr << "Convexes available are:" << std::endl;
+    LOG_ERROR("No convex named " << cName << " found in this robot (" << this->name_ << ")")
+    LOG_WARNING("Convexes available are:")
     for(const auto & cv : convexes)
     {
-      std::cerr << cv.first << std::endl;
+      LOG_WARNING(cv.first)
     }
     throw("Convex does not exist");
   }
@@ -232,7 +234,7 @@ const sva::PTransformd & Robot::bodyTransform(int id) const
 {
   if(bodyTransforms.count(id) == 0)
   {
-    std::cerr << "No body transform with id " << id << " found in this robot" << std::endl;
+    LOG_ERROR("No body transform with id " << id << " found in this robot")
     throw("Body transform does not exist");
   }
   return bodyTransforms.at(id);
@@ -242,7 +244,7 @@ const sva::PTransformd & Robot::collisionTransform(int id) const
 {
   if(collisionTransforms.count(id) == 0)
   {
-    std::cerr << "No collision transform with id " << id << " found in this robot" << std::endl;
+    LOG_ERROR("No collision transform with id " << id << " found in this robot")
     throw("Collision transform does not exist");
   }
   return collisionTransforms.at(id);
@@ -270,7 +272,7 @@ void Robot::loadRSDFFromDir(const std::string & surfaceDir)
     }
     else
     {
-      std::cerr << "Loaded surface " << sp->name() << " attached to body " << sp->bodyName() << " from RSDF but the robot " << name() << " has no such body, discard this surface to avoid future problems..." << std::endl;
+      LOG_WARNING("Loaded surface " << sp->name() << " attached to body " << sp->bodyName() << " from RSDF but the robot " << name() << " has no such body, discard this surface to avoid future problems...")
     }
   }
 }
@@ -369,7 +371,7 @@ const Robot & Robots::robot(unsigned int idx) const
 {
   if(idx >= robots_.size())
   {
-    std::cerr << "No robot with index " << idx << " (" << robots_.size()  << " robots loaded)" << std::endl;
+    LOG_ERROR("No robot with index " << idx << " (" << robots_.size()  << " robots loaded)")
     throw("Wrong robot index");
   }
   return robots_[idx];
@@ -570,8 +572,7 @@ Robot& Robots::load(const RobotModule & module, const std::string & surfaceDir, 
     {
       if(bodyIdByName.count(p.second.first))
       {
-        std::shared_ptr<sch::S_Polyhedron> poly(new sch::S_Polyhedron);
-        poly->constructFromFile(p.second.second);
+        std::shared_ptr<sch::S_Polyhedron> poly(sch::Polyhedron(p.second.second));
         convexesByName[p.first] = Robot::convex_pair_t(bodyIdByName[p.second.first], poly);
       }
     }
@@ -584,8 +585,7 @@ Robot& Robots::load(const RobotModule & module, const std::string & surfaceDir, 
     {
       if(bodyIdByName.count(p.second.first))
       {
-        std::shared_ptr<sch::STP_BV> stpbvs(new sch::STP_BV);
-        stpbvs->constructFromFile(p.second.second);
+        std::shared_ptr<sch::STP_BV> stpbvs(sch::STPBV(p.second.second));
         stpbvsByName[p.first] = Robot::stpbv_pair_t(bodyIdByName[p.second.first], stpbvs);
       }
     }

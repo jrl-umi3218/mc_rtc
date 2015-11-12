@@ -6,6 +6,8 @@
 
 #include <mc_rbdyn/robot.h>
 
+#include <mc_rtc/logging.h>
+
 #include <RBDyn/FK.h>
 #include <RBDyn/CoM.h>
 
@@ -110,14 +112,14 @@ std::string IdentityContactAction::type()
 const Contact & IdentityContactAction::contact() const
 {
   std::string err = "Tried to access contact on IdentityContactAction";
-  std::cerr << err << std::endl;
+  LOG_ERROR(err)
   throw(err.c_str());
 }
 
 Contact & IdentityContactAction::contact()
 {
   std::string err = "Tried to access contact on IdentityContactAction";
-  std::cerr << err << std::endl;
+  LOG_ERROR(err)
   throw(err.c_str());
 }
 
@@ -251,7 +253,7 @@ const Surface& surfaceFromJSON(const mc_rbdyn::Robot & robot, Json::Value & v)
   {
     return robot.surface(v["name"].asString());
   }
-  std::cerr << "Surface stored in JSON " << v["name"].asString() << " does not exist in robot " << robot.name() << std::endl;
+  LOG_ERROR("Surface stored in JSON " << v["name"].asString() << " does not exist in robot " << robot.name())
   throw(std::string("invalid json"));
 }
 

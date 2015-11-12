@@ -3,6 +3,7 @@
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
+#include <mc_rtc/logging.h>
 #include <fstream>
 
 namespace mc_control
@@ -73,14 +74,14 @@ MCMRQPController::MCMRQPController(const std::vector<std::shared_ptr<mc_rbdyn::R
   });
 
   hrp2postureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(mrqpsolver->robots.mbs(), static_cast<int>(hrp2_drc_index), mrqpsolver->robots.robot().mbc().q, 1, 5));
-  std::cout << "MCController(base) ready" << std::endl;
+  LOG_INFO("MCController(MRQP) ready")
 }
 
 bool MCMRQPController::run()
 {
   if(!mrqpsolver->run())
   {
-    std::cerr << "MRQP failed to run()" << std::endl;
+    LOG_ERROR("MRQP failed to run()")
     return false;
   }
   return true;

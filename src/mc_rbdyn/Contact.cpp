@@ -6,6 +6,8 @@
 #include <mc_rbdyn/PlanarSurface.h>
 #include <mc_rbdyn/stance.h>
 
+#include <mc_rtc/logging.h>
+
 #include <geos/geom/Polygon.h>
 #include <geos/geom/LinearRing.h>
 #include <geos/geom/CoordinateSequenceFactory.h>
@@ -81,7 +83,7 @@ std::vector<sva::PTransformd> computePoints(const mc_rbdyn::Surface & robotSurfa
     geos::geom::Polygon * newRobotSurfPoly = dynamic_cast<geos::geom::Polygon*>(newRobotSurfGeom);
     if(newRobotSurfPoly == 0)
     {
-      std::cout << robotSurface.name() << " and " << envSurface.name() << " surfaces don't intersect" << std::endl;
+      LOG_INFO(robotSurface.name() << " and " << envSurface.name() << " surfaces don't intersect")
       return robotSurface.points();
     }
     std::vector<sva::PTransformd> res;
@@ -93,7 +95,7 @@ std::vector<sva::PTransformd> computePoints(const mc_rbdyn::Surface & robotSurfa
     }
     return res;
   }
-  std::cerr << "Surfaces " << robotSurface.name() << " and " << envSurface.name() << " have incompatible types for contact" << std::endl;
+  LOG_ERROR("Surfaces " << robotSurface.name() << " and " << envSurface.name() << " have incompatible types for contact")
   throw(std::string("type error"));
 }
 
@@ -330,7 +332,7 @@ mc_solver::QPContactPtr Contact::taskContact(const mc_rbdyn::Robots & robots, co
   else
   {
     std::string err = "Robot's contact surface is neither planar nor gripper";
-    std::cerr << err << std::endl;
+    LOG_ERROR(err)
     throw(err.c_str());
   }
 

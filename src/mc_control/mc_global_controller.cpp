@@ -9,6 +9,8 @@
 #include <mc_robots/polaris_ranger.h>
 #include <mc_robots/polaris_ranger_egress.h>
 
+#include <mc_rtc/logging.h>
+
 #include <json/json.h>
 #include <fstream>
 
@@ -23,7 +25,7 @@ MCGlobalController::Configuration::Configuration(const std::string & path)
   std::ifstream ifs(path);
   if(ifs.bad())
   {
-    std::cerr << "Failed to open controller configuration file: " << path << std::endl;
+    LOG_ERROR("Failed to open controller configuration file: " << path)
   }
   try
   {
@@ -31,8 +33,8 @@ MCGlobalController::Configuration::Configuration(const std::string & path)
   }
   catch(const std::runtime_error & exc)
   {
-    std::cerr << "Failed to read configuration file" << std::endl;
-    std::cerr << exc.what() << std::endl;
+    LOG_ERROR("Failed to read configuration file")
+    LOG_WARNING(exc.what())
   }
   if(v.isMember("Enabled"))
   {
@@ -166,12 +168,12 @@ MCGlobalController::MCGlobalController()
       }
       else
       {
-        std::cerr << "Unknown environment module provided (" << config.seq_env_module << ")" << std::endl;
+        LOG_ERROR("Unknown environment module provided (" << config.seq_env_module << ")")
       }
     }
     else
     {
-      std::cerr << "Seq module enabled but no environment provided, Seq module not loaded" << std::endl;
+      LOG_ERROR("Seq module enabled but no environment provided, Seq module not loaded")
     }
   }
   if(config.enabled("Driving"))
@@ -234,7 +236,7 @@ MCGlobalController::MCGlobalController()
   next_controller = 0;
   if(current_ctrl == NONE || controller == 0)
   {
-    std::cerr << "No controller selected or selected controller is not enabled, please check your configuration file" << std::endl;
+    LOG_ERROR("No controller selected or selected controller is not enabled, please check your configuration file")
     throw("No controller enabled");
   }
 }
@@ -247,10 +249,6 @@ void MCGlobalController::init(const std::vector<double> & initq)
   if(current_ctrl == SEQ)
   {
     q.push_back({0.999735735669,-0.000712226669955,0.0227020230143,-0.00354537868489,-0.364642021503,-0.00254821664029,0.762505884771});
-  }
-  else if(current_ctrl == EGRESS)
-  {
-    q.push_back({1, 0, 0, 0, 0, 0, 0.76});
   }
   else
   {
@@ -309,7 +307,7 @@ bool MCGlobalController::run()
   /* Check if we need to change the controller this time */
   if(next_controller)
   {
-    std::cout << "Switching controllers" << std::endl;
+    LOG_INFO("Switching controllers")
     if(!running)
     {
       controller = next_controller;
@@ -318,7 +316,7 @@ bool MCGlobalController::run()
     {
       /*XXX Need to be careful here */
       /*XXX Need to get the current contacts from the controller when needed */
-      std::cout << "Reset with q[0]" << std::endl;
+      LOG_INFO("Reset with q[0]")
       std::cout << controller->robot().mbc().q[0][0] << " ";
       std::cout << controller->robot().mbc().q[0][1] << " ";
       std::cout << controller->robot().mbc().q[0][2] << " ";
@@ -409,7 +407,7 @@ bool MCGlobalController::EnableNextController(const std::string & name, const Cu
   }
   else
   {
-    std::cout << name << " controller not enabled." << std::endl;
+    LOG_ERROR(name << " controller not enabled.")
     return false;
   }
 }

@@ -24,10 +24,14 @@ public:
   EgressMoveFootInsidePhase()
   : done_setup_lift(false),
     done_lift(false),
+    done_setup_rotate(false),
+    done_rotate(false),
     done_setup_putdown(false),
-    done_putdown(false)
+    done_putdown(false),
+    iterSincePutDown(0),
+    iterForce(0)
   {
-    std::cout << "EgressMoveFootInsidePhase" << std::endl;
+    LOG_INFO("EgressMoveFootInsidePhase")
   }
   virtual bool run(MCEgressController & ctl) override
   {
@@ -57,7 +61,7 @@ public:
           ctl.efTask->removeFromSolver(ctl.qpsolver->solver);
           ctl.postureTask->posture(ctl.robot().mbc().q);
           done_lift = true;
-          std::cout << "Finished lift phase" << std::endl;
+          LOG_INFO("Finished lift phase")
         }
       }
     }
@@ -79,7 +83,7 @@ public:
           ctl.oriTask->removeFromSolver(ctl.qpsolver->solver);
           ctl.postureTask->posture(ctl.robot().mbc().q);
           done_rotate = true;
-          std::cout << "Finished rotate foot" << std::endl;
+          LOG_INFO("Finished rotate foot")
         }
       }
     }
@@ -113,7 +117,7 @@ public:
           ctl.efTask->removeFromSolver(ctl.qpsolver->solver);
           ctl.postureTask->posture(ctl.robot().mbc().q);
           done_putdown = true;
-          std::cout << "Contact found, next step" << std::endl;
+          LOG_INFO("Contact found, next step")
           ctl.qpsolver->setContacts({
             mc_rbdyn::Contact(ctl.robots(), "Butthock", "left_seat"),
             mc_rbdyn::Contact(ctl.robots(), "LFullSole", "exit_platform"),
@@ -146,7 +150,8 @@ public:
     done_setup_move_right(false),
     done_move_right(false),
     done_setup_go_to_posture(false),
-    done_go_to_posture(false)
+    done_go_to_posture(false),
+    iterSinceMoving(0)
   {
   }
   virtual bool run(MCEgressController & ctl) override
@@ -181,7 +186,7 @@ public:
         {
           ctl.postureTask->posture(ctl.robot().mbc().q);
           ctl.efTask->removeFromSolver(ctl.qpsolver->solver);
-          std::cout << "Hand removed from wheel" << std::endl;
+          LOG_INFO("Hand removed from wheel")
           done_normal_move = true;
         }
         else
@@ -209,7 +214,7 @@ public:
         {
           ctl.postureTask->posture(ctl.robot().mbc().q);
           ctl.efTask->removeFromSolver(ctl.qpsolver->solver);
-          std::cout << "Hand moved sideway" << std::endl;
+          LOG_INFO("Hand moved sideway")
           done_move_right = true;
         }
       }
@@ -243,7 +248,7 @@ public:
             mc_rbdyn::Contact(ctl.robots(), "RFullSole", "left_floor"),
           });
           done_go_to_posture = true;
-          std::cout << "Arm reached a safe posture" << std::endl;
+          LOG_INFO("Arm reached a safe posture")
           //return true;
         }
       }
@@ -267,7 +272,8 @@ struct EgressRotateBodyPhase : public EgressPhaseExecution
 public:
   EgressRotateBodyPhase()
   : done_setup_rotate_body(false),
-    done_rotate_body(false)
+    done_rotate_body(false),
+    timeoutIter(0)
   {
   }
   virtual bool run(MCEgressController & ctl) override
@@ -302,7 +308,7 @@ public:
           ctl.postureTask->posture(ctl.robot().mbc().q);
           ctl.efTask->removeFromSolver(ctl.qpsolver->solver);
           done_rotate_body = true;
-          std::cout << "Finished rotating the body" << std::endl;
+          LOG_INFO("Finished rotating the body")
           //return true;
         }
       }
@@ -325,7 +331,9 @@ struct EgressMoveFootOutPhase : public EgressPhaseExecution
     done_setup_rotate(false),
     done_rotate(false),
     done_setup_putdown(false),
-    done_putdown(false)
+    done_putdown(false),
+    ankle_i(0), ankle_reorient_target(0),
+    timeoutIter(0)
   {
   }
 
@@ -354,7 +362,7 @@ struct EgressMoveFootOutPhase : public EgressPhaseExecution
           ctl.efTask->removeFromSolver(ctl.qpsolver->solver);
           ctl.postureTask->posture(ctl.robot().mbc().q);
           done_lift = true;
-          std::cout << "Finished lift phase" << std::endl;
+          LOG_INFO("Finished lift phase")
         }
       }
     }
@@ -376,7 +384,7 @@ struct EgressMoveFootOutPhase : public EgressPhaseExecution
         {
           ctl.postureTask->posture(ctl.robot().mbc().q);
           done_reorient = true;
-          std::cout << "Finished changing ankle orientation" << std::endl;
+          LOG_INFO("Finished changing ankle orientation")
         }
       }
     }
@@ -400,7 +408,7 @@ struct EgressMoveFootOutPhase : public EgressPhaseExecution
           ctl.oriTask->removeFromSolver(ctl.qpsolver->solver);
           ctl.postureTask->posture(ctl.robot().mbc().q);
           done_rotate = true;
-          std::cout << "Finished rotate foot" << std::endl;
+          LOG_INFO("Finished rotate foot")
         }
       }
     }
@@ -432,7 +440,7 @@ struct EgressMoveFootOutPhase : public EgressPhaseExecution
             mc_rbdyn::Contact(ctl.robots(), "RFullSole", "exit_platform")
           });
           done_putdown = true;
-          std::cout << "Contact found, next step" << std::endl;
+          LOG_INFO("Contact found, next step")
           //return true;
         }
       }
@@ -462,7 +470,8 @@ public:
     done_setup_rotate(false),
     done_rotate(false),
     done_setup_putdown(false),
-    done_putdown(false)
+    done_putdown(false),
+    iterForce(0), timeoutIter(0)
   {
   }
   virtual bool run(MCEgressController & ctl) override
@@ -492,7 +501,7 @@ public:
           ctl.efTask->removeFromSolver(ctl.qpsolver->solver);
           ctl.postureTask->posture(ctl.robot().mbc().q);
           done_lift = true;
-          std::cout << "Finished lift phase" << std::endl;
+          LOG_INFO("Finished lift phase")
         }
       }
     }
@@ -516,7 +525,7 @@ public:
           ctl.oriTask->removeFromSolver(ctl.qpsolver->solver);
           ctl.postureTask->posture(ctl.robot().mbc().q);
           done_rotate = true;
-          std::cout << "Finished rotate foot" << std::endl;
+          LOG_INFO("Finished rotate foot")
         }
       }
     }
@@ -548,7 +557,7 @@ public:
           ctl.efTask->removeFromSolver(ctl.qpsolver->solver);
           ctl.postureTask->posture(ctl.robot().mbc().q);
           done_putdown = true;
-          std::cout << "Contact found, next step" << std::endl;
+          LOG_INFO("Contact found, next step")
           ctl.qpsolver->setContacts({
             mc_rbdyn::Contact(ctl.robots(), "Butthock", "left_seat"),
             mc_rbdyn::Contact(ctl.robots(), "LFullSole", "exit_platform"),
@@ -608,7 +617,7 @@ struct EgressStandupPhase : public EgressPhaseExecution
           ctl.postureTask->posture(ctl.robot().mbc().q);
           ctl.efTask->removeFromSolver(ctl.qpsolver->solver);
           done_standup = true;
-          std::cout << "Done standup" << std::endl;
+          LOG_INFO("Done standup")
           //return true;
         }
       }

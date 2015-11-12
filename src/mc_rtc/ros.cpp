@@ -2,6 +2,8 @@
 #include <mc_rtc/config.h>
 #include <mc_rbdyn/robot.h>
 
+#include <mc_rtc/logging.h>
+
 #include <RBDyn/FK.h>
 
 #ifdef MC_RTC_HAS_ROS
@@ -218,8 +220,8 @@ private:
           }
           catch(const ros::serialization::StreamOverrunException & e)
           {
-            std::cerr << "EXCEPTION WHILE PUBLISHING STATE" << std::endl;
-            std::cerr << e.what() << std::endl;
+            LOG_ERROR("EXCEPTION WHILE PUBLISHING STATE")
+            LOG_WARNING(e.what())
           }
           msgs.pop();
           mut.unlock();
@@ -237,7 +239,7 @@ inline bool ros_init(const std::string & name)
   ros::init(argc, argv, name.c_str());
   if(!ros::master::check())
   {
-    std::cerr << "ROS master is not available, continue without ROS functionalities" << std::endl;
+    LOG_WARNING("ROS master is not available, continue without ROS functionalities")
     return false;
   }
   return true;

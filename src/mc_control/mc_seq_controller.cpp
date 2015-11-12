@@ -12,6 +12,8 @@
 
 #include <mc_rbdyn/json/StanceConfig.h>
 
+#include <mc_rtc/logging.h>
+
 #include <fstream>
 
 namespace mc_control
@@ -180,8 +182,8 @@ MCSeqController::MCSeqController(const std::shared_ptr<mc_rbdyn::RobotModule> & 
   metaTasks.push_back(stabilityTask.get());
   stabilityTask->target(env(), stances[stanceIndex], configs[stanceIndex], configs[stanceIndex].comTask.targetSpeed);
 
-  std::cout << "MCSeqController init done" << std::endl;
-  std::cout << "Setup to play " << seq_actions.size() << " actions" << std::endl;
+  LOG_SUCCESS("MCSeqController init done")
+  LOG_INFO("Setup to play " << seq_actions.size() << " actions")
 }
 
 bool MCSeqController::run()
@@ -200,15 +202,14 @@ bool MCSeqController::run()
       {
         if(stanceIndex != stanceIndexIn)
         {
-          std::cout << "Completed " << actions[stanceIndexIn]->toStr() << std::endl;
+          LOG_SUCCESS("Completed " << actions[stanceIndexIn]->toStr())
           logger.logPhase(actions[stanceIndexIn]->toStr(), nrIter);
           logger.report();
           logger.report("/tmp/mc-control-seq-times.log");
           if(stanceIndex < actions.size())
           {
-            std::cout << "Starting " << actions[stanceIndex]->toStr() << "(" << (stanceIndex+1) << "/" << actions.size() << ")" << std::endl;
+            LOG_INFO("Starting " << actions[stanceIndex]->toStr() << "(" << (stanceIndex+1) << "/" << actions.size() << ")")
             /*FIXME Disabled for now... */
-            //std::cout << "Before modification by sensor " << robot().mbc().q[0][0] << " " << robot().mbc().q[0][1] << " " << robot().mbc().q[0][2] << " " << robot().mbc().q[0][3] << std::endl;
             //Eigen::Vector3d pos(robot().mbc().q[0][4], robot().mbc().q[0][5], robot().mbc().q[0][6]);
             //std::vector<double> rPose = robot().mbc().q[0];
             //robot().mbc().zero(robot().mb());
@@ -241,7 +242,6 @@ bool MCSeqController::run()
             //robot().mbc().q[0][5] = pos(1);
             //robot().mbc().q[0][6] = pos(2);
             //robot().mbc().q[0] = rPose;
-            //std::cout << "After modification by sensor " << robot().mbc().q[0][0] << " " << robot().mbc().q[0][1] << " " << robot().mbc().q[0][2] << " " << robot().mbc().q[0][3] << std::endl;
             //rbd::forwardKinematics(robot().mb(), robot().mbc());
             //qpsolver->setContacts(stances[stanceIndex-1].geomContacts);
             ////qpsolver->update();
@@ -314,7 +314,7 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
     std::string bodyName = c.r1Surface()->bodyName();
     if(is_gs and actiGrippers.count(bodyName) == 0 and robot().hasForceSensor(bodyName) )
     {
-      std::cout << "ActiGripper ADD " << bodyName << std::endl;
+      LOG_INFO("ActiGripper ADD " << bodyName)
       std::string forceSensor = robot().forceSensorByBody(bodyName);
       unsigned int wrenchIndex = forceSensor == "RightHandForceSensor" ? 2 : 3; /*FIXME Hard-coded */
       tasks::qp::ContactId contactId = c.contactId(robots());
@@ -338,7 +338,7 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
   {
     if(std::find(contactBodies.begin(), contactBodies.end(), ka.first) == contactBodies.end())
     {
-      std::cout << "ActiGripper RM " << ka.first;
+      LOG_INFO("ActiGripper RM " << ka.first);
       qpsolver->solver.removeTask(ka.second.positionTaskSp.get());
       /* This cast is guaranted to work */
       (dynamic_cast<tasks::qp::ContactConstr*>(contactConstraint.contactConstr.get()))->removeDofContact(ka.second.contactId);
@@ -369,7 +369,6 @@ void MCSeqController::pre_live()
       {
         if(forceNorm > ba.second.stopForce and ba.second.targetError < ba.second.maxDist*0.1)
         {
-          //std::cout << "DESACTIVATED " << ba.first << std::endl;
           ba.second.activated = false;
           /* This cast is guaranted to work */
           (dynamic_cast<tasks::qp::ContactConstr*>(contactConstraint.contactConstr.get()))->removeDofContact(ba.second.contactId);
@@ -384,7 +383,7 @@ void MCSeqController::pre_live()
           if(ba.second.targetError > ba.second.maxDist*1.5)
           {
             halted = true;
-            std::cout << "OOPS too much error" << std::endl;
+            LOG_ERROR("OOPS too much error")
           }
         }
       }
@@ -392,7 +391,6 @@ void MCSeqController::pre_live()
       {
         if(forceNorm < ba.second.actiForce)
         {
-          //std::cout << "ACTIVATED " << ba.first << std::endl;
           Eigen::MatrixXd dof = Eigen::MatrixXd::Zero(5,6);
           for(int i = 0; i < 5; ++i)
           {
@@ -503,7 +501,7 @@ bool MCSeqController::play_next_stance()
 {
   if(paused and stanceIndex < stances.size())
   {
-    std::cout << "Playing " << actions[stanceIndex]->toStr() << std::endl;
+    LOG_INFO("Playing " << actions[stanceIndex]->toStr())
     paused = false;
     return true;
   }
@@ -512,14 +510,14 @@ bool MCSeqController::play_next_stance()
 
 void MCSeqController::loadStanceConfigs(const std::string & file)
 {
-  std::cout << "Loading stance configs from " << file << std::endl;
+  LOG_INFO("Loading stance configs from " << file)
   configs.resize(0);
   Json::Value v;
   {
     std::ifstream ifs(file);
     if(ifs.bad())
     {
-      std::cerr << "Failed to open configuration file: " << file << std::endl;
+      LOG_ERROR("Failed to open configuration file: " << file)
     }
     try
     {
@@ -527,8 +525,8 @@ void MCSeqController::loadStanceConfigs(const std::string & file)
     }
     catch(const std::runtime_error & exc)
     {
-      std::cerr << "Failed to read configuration file" << std::endl;
-      std::cerr << exc.what() << std::endl;
+      LOG_ERROR("Failed to read configuration file")
+      LOG_WARNING(exc.what())
     }
   }
   /*
@@ -731,9 +729,9 @@ std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * cu
   }
   else
   {
-    std::cerr << "Could not find a branch for the following action couple:"<< std::endl;
-    std::cerr << "Current: " << curAction->toStr() << std::endl;
-    std::cerr << "Target: " << targetAction->toStr() << std::endl;
+    LOG_ERROR("Could not find a branch for the following action couple:")
+    LOG_WARNING("Current: " << curAction->toStr())
+    LOG_WARNING("Target: " << targetAction->toStr())
     res->steps = {
                   std::shared_ptr<SeqStep>(new SeqStep())
     };

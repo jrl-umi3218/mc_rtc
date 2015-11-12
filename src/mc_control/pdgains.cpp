@@ -136,8 +136,8 @@ inline bool setPDGains(const std::vector<int> & joints, const std::vector<double
   {
     for(size_t i = 0; i < joints.size(); ++i)
     {
-      b = write_pgain(joints[i], pgains[i]);
-      b = write_dgain(joints[i], dgains[i]);
+      b = write_pgain(joints[i], pgains[i]) && b;
+      b = write_dgain(joints[i], dgains[i]) && b;
     }
     close_iob();
   }
@@ -162,8 +162,8 @@ inline bool setPDGains(const std::vector<double> & pgains, const std::vector<dou
   {
     for(size_t i = 0; i < pgains.size(); ++i)
     {
-      b = write_pgain(static_cast<int>(i), pgains[i]);
-      b = write_dgain(static_cast<int>(i), dgains[i]);
+      b = write_pgain(static_cast<int>(i), pgains[i]) && b;
+      b = write_dgain(static_cast<int>(i), dgains[i]) && b;
     }
     close_iob();
   }

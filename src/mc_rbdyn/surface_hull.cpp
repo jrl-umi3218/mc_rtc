@@ -5,6 +5,8 @@
 #include <mc_rbdyn/CylindricalSurface.h>
 #include <mc_rbdyn/GripperSurface.h>
 
+#include <mc_rtc/logging.h>
+
 #include <stdlib.h>
 #include <fstream>
 
@@ -35,13 +37,13 @@ sch::S_Object * sch_polyhedron(const std::vector<sva::PTransformd> & points)
   int err = mkstemp(qcIn);
   if(err < 0)
   {
-    std::cerr << "Failed to create temporary input file " << qcIn << std::endl;
+    LOG_ERROR("Failed to create temporary input file " << qcIn)
     return 0;
   }
   err = mkstemp(qcOut);
   if(err < 0)
   {
-    std::cerr << "Failed to create temporary output file " << qcOut << std::endl;
+    LOG_ERROR("Failed to create temporary output file " << qcOut)
     return 0;
   }
 
@@ -61,7 +63,7 @@ sch::S_Object * sch_polyhedron(const std::vector<sva::PTransformd> & points)
   err = system(ss.str().c_str());
   if(err != 0)
   {
-    std::cout << "Invokation of qconvex with the following command failed: " << ss.str() << std::endl;
+    LOG_ERROR("Invokation of qconvex with the following command failed: " << ss.str())
     return 0;
   }
 

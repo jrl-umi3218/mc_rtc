@@ -1,5 +1,7 @@
 #include <mc_control/mc_egress_controller.h>
 
+#include <mc_rtc/logging.h>
+
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
@@ -42,7 +44,7 @@ MCEgressController::MCEgressController(const std::string & env_path, const std::
   efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", qpsolver->robots, qpsolver->robots.robotIndex()));
   efTask->addToSolver(qpsolver->solver);
   efTask->removeFromSolver(qpsolver->solver);
-  std::cout << "MCEgressController init done" << std::endl;
+  LOG_SUCCESS("MCEgressController init done")
 }
 
 void MCEgressController::reset(const ControllerResetData & reset_data)
@@ -66,16 +68,16 @@ void MCEgressController::resetBasePose()
   rbd::forwardKinematics(robot().mb(), robot().mbc());
   rbd::forwardVelocity(robot().mb(), robot().mbc());
 
-  unsigned int steer_i = polaris.bodyIndexByName("steering_wheel");
-  sva::PTransformd X_0_w = polaris.mbc().bodyPosW[steer_i];
-  const auto & gripperSurface = robot().surface("RightGripper");
-  sva::PTransformd X_0_s = gripperSurface.X_0_s(robot(), robot().mbc());
-  sva::PTransformd graspOffset(sva::RotX(-M_PI/2), Eigen::Vector3d(0., 0., 0.));
-  sva::PTransformd X_0_base = X_0_s.inv()*(graspOffset*X_0_w);
+  //unsigned int steer_i = polaris.bodyIndexByName("steering_wheel");
+  //sva::PTransformd X_0_w = polaris.mbc().bodyPosW[steer_i];
+  //const auto & gripperSurface = robot().surface("RightGripper");
+  //sva::PTransformd X_0_s = gripperSurface.X_0_s(robot(), robot().mbc());
+  //sva::PTransformd graspOffset(sva::RotX(-M_PI/2), Eigen::Vector3d(0., 0., 0.));
+  //sva::PTransformd X_0_base = X_0_s.inv()*(graspOffset*X_0_w);
   //sva::PTransformd X_0_base = X_0_s.inv()*X_0_w;
-  X_0_w = polaris.surface("exit_platform").X_0_s(polaris);
-  X_0_s = robot().surface("LFullSole").X_0_s(robot());
-  X_0_base = X_0_s.inv()*X_0_w;
+  sva::PTransformd X_0_w = polaris.surface("exit_platform").X_0_s(polaris);
+  sva::PTransformd X_0_s = robot().surface("LFullSole").X_0_s(robot());
+  sva::PTransformd X_0_base = X_0_s.inv()*X_0_w;
 
   const auto quat = Eigen::Quaterniond(X_0_base.rotation()).inverse();
   const Eigen::Vector3d trans(X_0_base.translation());
@@ -113,7 +115,7 @@ bool MCEgressController::change_ef(const std::string & ef_name)
   }
   else
   {
-    std::cerr << "Invalid link name: " << ef_name << ", control unchanged" << std::endl;
+    LOG_ERROR("Invalid link name: " << ef_name << ", control unchanged")
     return false;
   }
 }

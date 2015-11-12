@@ -1,5 +1,7 @@
 #include <mc_control/generic_gripper.h>
 
+#include <mc_rtc/logging.h>
+
 #include <cmath>
 #include <tinyxml2.h>
 
@@ -179,7 +181,7 @@ void Gripper::setActualQ(double q)
     overCommandLimitIter++;
     if(overCommandLimitIter == overCommandLimitIterN)
     {
-      std::cout << "Gripper safety triggered on " << name[0] << std::endl;
+      LOG_INFO("Gripper safety triggered on " << name[0])
       overCommandLimit = true;
       //setCurrentQ(actualQ - 0.01);
     }

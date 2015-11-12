@@ -2,6 +2,8 @@
 #include <mc_robots/polaris_ranger_egress.h>
 #include <mc_rbdyn/robot.h>
 
+#include <mc_rtc/logging.h>
+
 #include <Tasks/QPContactConstr.h>
 
 #include <mc_rbdyn/Surface.h>
@@ -77,7 +79,7 @@ MCEgressMRQPController::MCEgressMRQPController(const std::vector<std::shared_ptr
   //collsConstraint.addCollision(robots(), mc_solver::Collision("RLEG_LINK5", "floor", 0.2, 0.15, 0));
   //collsConstraint.addCollision(robots(), mc_solver::Collision("RLEG_LINK5", "floor_step", 0.2, 0.15, 0));
   //collsConstraint.addCollision(robots(), mc_solver::Collision("RLEG_LINK5", "front_plane", 0.3, 0.25, 0));
-  std::cout << "MCEgressMRQPController init done" << std::endl;
+  LOG_SUCCESS("MCEgressMRQPController init done")
 }
 
 bool MCEgressMRQPController::run()
@@ -93,7 +95,7 @@ bool MCEgressMRQPController::run()
   }
   else
   {
-    std::cout << "Failed to run" << std::endl;
+    LOG_ERROR("Failed to run")
   }
   return success;
 }
@@ -101,7 +103,7 @@ bool MCEgressMRQPController::run()
 void MCEgressMRQPController::reset(const ControllerResetData & reset_data)
 {
   MCMRQPController::reset(reset_data);
-  std::cout << "Enter mr egress reset" << std::endl;
+  LOG_INFO("Enter mr egress reset")
   robot().mbc().zero(robot().mb());
   robot().mbc().q = reset_data.q;
   robot().mbc().q[0] = {1, 0, 0, 0, 0, 0, 0.76};
@@ -122,7 +124,7 @@ void MCEgressMRQPController::reset(const ControllerResetData & reset_data)
   mrqpsolver->solver.updateConstrsNrVars(robots().mbs());
   mrqpsolver->solver.updateConstrSize();
 
-  std::cout << "End mr egress reset" << std::endl;
+  LOG_INFO("End mr egress reset")
 }
 
 void MCEgressMRQPController::addCollision(const mc_solver::Collision& coll)
@@ -276,7 +278,7 @@ void MCEgressMRQPController::nextPhase()
     execPhase.reset(new EgressReplaceRightHandPhase);
     break;
   default:
-    std::cout << "Done" << std::endl;
+    LOG_SUCCESS("Done")
     break;
   }
 }

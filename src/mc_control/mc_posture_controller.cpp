@@ -1,5 +1,7 @@
 #include <mc_control/mc_posture_controller.h>
 
+#include <mc_rtc/logging.h>
+
 #include <RBDyn/EulerIntegration.h>
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
@@ -18,7 +20,7 @@ MCPostureController::MCPostureController()
   qpsolver->addConstraintSet(kinematicsConstraint);
   qpsolver->solver.addTask(postureTask.get());
 
-  std::cout << "MCPostureController init done " << this << std::endl;
+  LOG_SUCCESS("MCPostureController init done " << this)
 }
 
 }

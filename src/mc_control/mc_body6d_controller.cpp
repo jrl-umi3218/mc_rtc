@@ -1,5 +1,7 @@
 #include <mc_control/mc_body6d_controller.h>
 
+#include <mc_rtc/logging.h>
+
 #include <RBDyn/EulerIntegration.h>
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
@@ -21,7 +23,7 @@ MCBody6dController::MCBody6dController()
     mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")
   });
 
-  std::cout << "MCBody6dController init done" << std::endl;
+  LOG_SUCCESS("MCBody6dController init done")
   efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK7", qpsolver->robots, qpsolver->robots.robotIndex(), 2.0, 1e5));
   efTask->addToSolver(qpsolver->solver);
   comTask.reset(new mc_tasks::CoMTask(qpsolver->robots, qpsolver->robots.robotIndex()));
@@ -52,7 +54,7 @@ bool MCBody6dController::change_ef(const std::string & ef_name)
   }
   else
   {
-    std::cerr << "Invalid link name: " << ef_name << ", control unchanged" << std::endl;
+    LOG_ERROR("Invalid link name: " << ef_name << ", control unchanged")
     return false;
   }
 }
