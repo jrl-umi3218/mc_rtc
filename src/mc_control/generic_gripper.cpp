@@ -181,7 +181,7 @@ void Gripper::setActualQ(double q)
     overCommandLimitIter++;
     if(overCommandLimitIter == overCommandLimitIterN)
     {
-      LOG_INFO("Gripper safety triggered on " << name[0])
+      LOG_WARNING("Gripper safety triggered on " << name[0])
       overCommandLimit = true;
       //setCurrentQ(actualQ - 0.01);
     }

@@ -97,7 +97,7 @@ std::vector<Eigen::Vector3d> TrajectoryTask::controlPoints()
   std::vector<Eigen::Vector3d> res;
   res.reserve(static_cast<unsigned int>(wp.size()) + 2);
   res.push_back(X_0_start.translation());
-  for(unsigned int i = 0; i < wp.cols(); ++i)
+  for(int i = 0; i < wp.cols(); ++i)
   {
     Eigen::Vector3d tmp;
     tmp(0) = wp(0, i);
