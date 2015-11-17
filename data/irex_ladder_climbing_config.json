@@ -4,12 +4,12 @@
       "CoMMove" : {
          "postureTask" : {
             "stiffness" : 0.5,
-            "weight" : 10.0
+            "weight" : 100.0
          },
          "comTask" : {
             "stiffness" : 10.0,
             "extraStiffness" : 20.0,
-            "weight" : 500.0,
+            "weight" : 300.0,
             "targetSpeed" : 0.005
          },
          "comObj" : {
@@ -22,7 +22,7 @@
       "ContactMove" : {
          "postureTask" : {
             "stiffness" : 2.0,
-            "weight" : 10.0
+            "weight" : 30.0
          },
          "comTask" : {
             "stiffness" : 5.0,
@@ -57,7 +57,7 @@
             },
             "waypointConf" : {
                "conf" : {
-                  "x" : -0.6,
+                  "x" : -1.15,
                   "y" : 1.0,
                   "z" : 1.2,
                   "nOff" : 0.1
@@ -75,7 +75,7 @@
       "GripperMove" : {
          "postureTask" : {
             "stiffness" : 0.1,
-            "weight" : 10.0
+            "weight" : 60.0
          },
          "comTask" : {
             "stiffness" : 2.0,
@@ -108,7 +108,7 @@
             },
             "linVel" : {
                "stiffness" : 100.0,
-               "weight" : 1000.0,
+               "weight" : 800.0,
                "speed" : 0.04
             },
             "waypointConf" : {
@@ -141,6 +141,15 @@
             },
             {
                "body1" : "LARM_LINK3",
+               "body2" : "BODY",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.1,
+                  "sDist" : 0.05
+               }
+            },
+            {
+               "body1" : "RARM_LINK3",
                "body2" : "BODY",
                "collisionConf" : {
                   "damping" : 0.0,
@@ -341,7 +350,7 @@
         "r2Surface" : "StepC4",
         "postureTask" : {
            "stiffness" : 2.0,
-           "weight" : 15.0
+           "weight" : 30.0
         },
         "comTask" : {
            "targetSpeed" : 0.0005
@@ -369,7 +378,20 @@
         "type" : "add",
         "r1Surface" : "LeftGripper",
         "r2Surface" : "StepC6",
+        "postureTask" : {
+           "stiffness" : 2.0,
+           "weight" : 0.1
+        },
+        "comTask" : {
+           "targetSpeed" : 0.0005
+        },
         "contactTask" : {
+           "position" : {
+              "targetSpeed" : 0.0005
+           },
+           "linVel" : {
+              "speed" : 0.01
+           },
            "waypointConf" : {
               "conf" : {
                  "x" : 0.25,
@@ -426,9 +448,26 @@
         "contactTask" : {
            "waypointConf" : {
               "conf" : {
-                 "x" : 0.25,
+                 "x" : 0.5,
                  "y" : 1.0,
-                 "z" : 1.1,
+                 "z" : 1.0,
+                 "nOff" : 0.1
+              },
+              "thresh" : 0.10,
+              "type" : "percentWaypoint"
+           }
+        }
+      },
+      {
+        "type" : "add",
+        "r1Surface" : "LFrontSole",
+        "r2Surface" : "Step5",
+        "contactTask" : {
+           "waypointConf" : {
+              "conf" : {
+                 "x" : -0.75,
+                 "y" : 1.0,
+                 "z" : 1.0,
                  "nOff" : 0.1
               },
               "thresh" : 0.10,
