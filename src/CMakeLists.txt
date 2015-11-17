@@ -11,6 +11,7 @@ mc_rbdyn/Contact.cpp
 mc_rbdyn/robot.cpp
 mc_rbdyn/stance.cpp
 mc_rbdyn/StanceConfig.cpp
+mc_rbdyn/PolygonInterpolator.cpp
 )
 
 add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC})

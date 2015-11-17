@@ -129,7 +129,7 @@ MCSeqController::MCSeqController(const std::shared_ptr<mc_rbdyn::RobotModule> & 
 {
   logger.logPhase("START", 0);
   /* Load plan */
-  loadStances(robots(), seq_path, stances, actions);
+  loadStances(robots(), seq_path, stances, actions, interpolators);
   assert(stances.size() == actions.size());
   seq_actions.push_back(seqActionFromStanceAction(0, actions[0].get(), 0));
   for(size_t i = 0; i < stances.size() - 1; ++i)

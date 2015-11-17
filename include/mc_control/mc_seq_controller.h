@@ -139,6 +139,7 @@ public:
   unsigned int stanceIndex;
   std::vector<mc_rbdyn::Stance> stances;
   std::vector<mc_rbdyn::StanceConfig> configs;
+  std::vector<mc_rbdyn::PolygonInterpolator> interpolators;
   std::vector< std::shared_ptr<mc_rbdyn::StanceAction> > actions;
   std::vector< std::shared_ptr<SeqAction> > seq_actions;
   std::vector<mc_tasks::MetaTask*> metaTasks;

@@ -320,7 +320,7 @@ std::shared_ptr<StanceAction> stanceActionFromJSON(const mc_rbdyn::Robots & robo
   throw(std::string("Invalid StanceAction saved in JSON"));
 }
 
-void loadStances(const mc_rbdyn::Robots & robots, const std::string & filename, std::vector<Stance> & stances, std::vector< std::shared_ptr<StanceAction> > & actions)
+void loadStances(const mc_rbdyn::Robots & robots, const std::string & filename, std::vector<Stance> & stances, std::vector< std::shared_ptr<StanceAction> > & actions, std::vector<PolygonInterpolator> & interpolators)
 {
   Json::Value v;
   std::ifstream ifs(filename);
@@ -333,6 +333,13 @@ void loadStances(const mc_rbdyn::Robots & robots, const std::string & filename, 
   for(Json::Value & sav : v["actions"])
   {
     actions.push_back(stanceActionFromJSON(robots, sav));
+  }
+  if(v.isMember("polygon_interpolators"))
+  {
+    for(const auto & piv : v["polygon_interpolators"])
+    {
+      interpolators.emplace_back(piv);
+    }
   }
 }
 
