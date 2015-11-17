@@ -169,7 +169,7 @@ MCSeqController::MCSeqController(const std::shared_ptr<mc_rbdyn::RobotModule> & 
   constSpeedConstr->addToSolver(qpsolver->solver);
 
   dynamicsConstraint = mc_solver::DynamicsConstraint(qpsolver->robots, 0, timeStep,
-                                                         false, {0.01, 0.001, 1e-6}, 0.95);
+                                                         false, {0.01, 0.001, 1e-6}, 0.5);
   qpsolver->addConstraintSet(dynamicsConstraint);
   qpsolver->addConstraintSet(contactConstraint);
   qpsolver->addConstraintSet(collsConstraint);
