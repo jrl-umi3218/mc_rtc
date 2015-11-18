@@ -19,7 +19,7 @@ from eigen3 import toNumpy
 import numpy as np
 
 def usage():
-  print "{} [.seq file] [env_module]".format(sys.argv[0])
+  print "{} [.seq file]".format(sys.argv[0])
 
 def svapt2dict(pt):
   pt_out = {}
@@ -106,14 +106,12 @@ def polygonInterpolator2dict(p):
   return p_out
 
 if __name__ == "__main__":
-  if len(sys.argv) < 3:
+  if len(sys.argv) < 2:
     usage()
     sys.exit(1)
 
   seq_in = sys.argv[1]
   robot = loadRobot('hrp2_drc', rospkg.RosPack().get_path('hrp2_drc_description') + '/rsdf/hrp2_drc')
-  env = loadRobot(sys.argv[2], rospkg.RosPack().get_path('mc_env_description') + '/rsdf/' + sys.argv[2])
-  robots = Robots([robot, env])
   robot_mass = sum([l.inertia().mass() for l in robot.mb.bodies()])
   stab_poly = StabilityPolygon(robot_mass)
 
