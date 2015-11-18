@@ -225,8 +225,8 @@
                "body2" : "HEAD_LINK1",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.02
+                  "iDist" : 0.1,
+                  "sDist" : 0.05
                }
             },
             {
@@ -234,8 +234,8 @@
                "body2" : "HEAD_LINK1",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.02
+                  "iDist" : 0.1,
+                  "sDist" : 0.05
                }
             },
             {
@@ -243,8 +243,8 @@
                "body2" : "HEAD_LINK1",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.02
+                  "iDist" : 0.1,
+                  "sDist" : 0.05
                }
             },
             {
@@ -252,8 +252,8 @@
                "body2" : "HEAD_LINK1",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.02
+                  "iDist" : 0.1,
+                  "sDist" : 0.05
                }
             },
             {
@@ -261,8 +261,8 @@
                "body2" : "HEAD_LINK1",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.02
+                  "iDist" : 0.1,
+                  "sDist" : 0.05
                }
             },
             {
@@ -270,8 +270,8 @@
                "body2" : "HEAD_LINK1",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.05,
-                  "sDist" : 0.02
+                  "iDist" : 0.1,
+                  "sDist" : 0.05
                }
             }
          ],
