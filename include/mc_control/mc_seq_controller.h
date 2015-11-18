@@ -4,6 +4,7 @@
 #include <mc_control/mc_controller.h>
 
 #include <mc_rbdyn/stance.h>
+#include <mc_rbdyn/polygon_utils.h>
 #include <mc_tasks/StabilityTask.h>
 #include <mc_tasks/AddRemoveContactTask.h>
 #include <mc_tasks/MoveContactTask.h>
@@ -189,6 +190,11 @@ public:
   std::shared_ptr<tasks::qp::PIDTask> adjustPositionTaskPid;
   std::shared_ptr<tasks::qp::PIDTask> adjustOrientationTaskPid;
   std::vector< std::shared_ptr<tasks::qp::GripperTorqueTask> > gripperTorqueTasks;
+  std::shared_ptr<tasks::qp::CoMIncPlaneConstr> comIncPlaneConstr;
+  double max_perc;
+  unsigned int nr_points;
+  mc_rbdyn::QuadraticGenerator samples;
+  std::vector<mc_rbdyn::Plane> planes;
 };
 
 std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * curAction, mc_rbdyn::StanceAction * targetAction, mc_rbdyn::StanceAction * targetTargetAction);

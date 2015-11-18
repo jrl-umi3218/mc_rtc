@@ -125,7 +125,9 @@ MCSeqController::MCSeqController(const std::shared_ptr<mc_rbdyn::RobotModule> & 
   stanceIndex(start_stance), seq_actions(0),
   currentContact(0), targetContact(0), currentGripper(0),
   use_real_sensors(real_sensors),
-  collsConstraint(robots(), timeStep)
+  collsConstraint(robots(), timeStep),
+  max_perc(0.8), nr_points(500),
+  samples(0.0, max_perc, nr_points)
 {
   logger.logPhase("START", 0);
   /* Load plan */
@@ -175,6 +177,9 @@ MCSeqController::MCSeqController(const std::shared_ptr<mc_rbdyn::RobotModule> & 
   qpsolver->addConstraintSet(collsConstraint);
   qpsolver->setContacts(stances[stanceIndex].geomContacts());
 
+  comIncPlaneConstr.reset(new tasks::qp::CoMIncPlaneConstr(robots().mbs(), 0, timeStep));
+  comIncPlaneConstr->addToSolver(qpsolver->solver);
+
   qpsolver->update();
 
   stabilityTask.reset(new mc_tasks::StabilityTask(robots()));
@@ -198,6 +203,46 @@ bool MCSeqController::run()
       unsigned int stanceIndexIn = stanceIndex;
       sensorContacts = contactSensor->update(*this);
       pre_live(); /* pre_live can halt the execution */
+      /* Stability polygon interpolation */
+      double cur_sample = 0.0; double cur_speed = 0.0;
+      samples.next(cur_sample, cur_speed);
+      double interpol_percent = std::max(cur_sample, max_perc);
+      bool done = interpol_percent == max_perc;
+      if(!done)
+      {
+        auto clamp = [](const double & v) { return std::min(std::max(v, -0.13), 0.13); };
+        auto clamp_pos = [](const double & v) { return std::min(std::max(v, 0.), 0.15); };
+        auto poly = interpolators[stanceIndex].fast_interpolate(interpol_percent);
+        planes = mc_rbdyn::planes_from_polygon(poly);
+        std::vector<Eigen::Vector3d> speeds;
+        std::vector<Eigen::Vector3d> nds;
+        if(cur_speed != 0)
+        {
+          auto normal_speeds = interpolators[stanceIndex].normal_derivative(cur_speed/timeStep);
+          for(const auto & t : normal_speeds)
+          {
+            nds.emplace_back(clamp(t[0]), clamp(t[1]), 0);
+          }
+          auto mid_speeds = interpolators[stanceIndex].midpoint_derivative(cur_speed/timeStep);
+          for(const auto & t : mid_speeds)
+          {
+            speeds.emplace_back(clamp_pos(t[0]), clamp_pos(t[1]), 0.);
+          }
+        }
+        else
+        {
+          speeds = std::vector<Eigen::Vector3d>(planes.size(), Eigen::Vector3d::Zero());
+          nds = speeds;
+        }
+        set_planes(planes, comIncPlaneConstr, speeds, nds);
+      }
+      else
+      {
+        std::vector<Eigen::Vector3d> speeds(planes.size(), Eigen::Vector3d::Zero());
+        std::vector<Eigen::Vector3d> nds = speeds;
+        set_planes(planes, comIncPlaneConstr, speeds, nds);
+      }
+      /* Execute the step */
       if(!halted && seq_actions[stanceIndex]->execute(*this))
       {
         if(stanceIndex != stanceIndexIn)
@@ -249,6 +294,7 @@ bool MCSeqController::run()
             //stabilityTask->comObj = stances[stanceIndex-1].com(robot());//rbd::computeCoM(robot().mb(), robot().mbc());
             //stabilityTask->comTaskSm.reset(curConf().comTask.weight, stabilityTask->comObj, curConf().comTask.targetSpeed);
           }
+          samples = mc_rbdyn::QuadraticGenerator(0.0, max_perc, nr_points);
           paused = step_by_step;
         }
       }
