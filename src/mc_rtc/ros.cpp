@@ -309,7 +309,7 @@ std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
   return impl->nh;
 }
 
-void ROSBridge::update_robot_publisher(const mc_rbdyn::Robot &, const RTC::TimedPoint3D &, const RTC::TimedOrientation3D &, const std::vector<double>&, const std::vector<double>&)
+void ROSBridge::update_robot_publisher(const mc_rbdyn::Robot &, const RTC::TimedPoint3D &, const RTC::TimedOrientation3D &, const RTC::TimedAcceleration3D&, const std::vector<double>&, const std::vector<double>&)
 {
 }
 
