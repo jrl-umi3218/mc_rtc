@@ -71,8 +71,8 @@ ForceContactSensor::ForceContactSensor(const mc_rbdyn::Robot & robot)
   /*FIXME Hard-coded */
   sensors.push_back(ForceSensor(robot, "RightFootForceSensor", Threshold(100, 9)));
   sensors.push_back(ForceSensor(robot, "LeftFootForceSensor", Threshold(100, 9)));
-  sensors.push_back(ForceSensor(robot, "RightHandForceSensor", Threshold(10, 1)));
-  sensors.push_back(ForceSensor(robot, "LeftHandForceSensor", Threshold(10, 1)));
+  sensors.push_back(ForceSensor(robot, "RightHandForceSensor", Threshold(5, 3)));
+  sensors.push_back(ForceSensor(robot, "LeftHandForceSensor", Threshold(5, 3)));
 }
 
 void ForceContactSensor::resetOffset()

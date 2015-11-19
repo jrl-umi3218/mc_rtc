@@ -92,7 +92,7 @@
             "posThresh" : 0.03,
             "preContactDist" : 0.075,
             "velThresh" : 0.05,
-            "gripperMoveAwayDist" : 0.01
+            "gripperMoveAwayDist" : 0.0
          },
          "contactTask" : {
             "position" : {

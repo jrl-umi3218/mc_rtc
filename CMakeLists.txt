@@ -11,6 +11,8 @@ set(PROJECT_NAME mc_rtc)
 set(PROJECT_DESCRIPTION mc_rtc)
 set(PROJECT_URL https://rob-dev.lirmm.fr/multi-contact/mc_rtc)
 
+set(CXX_DISABLE_WERROR 1)
+
 set(DOXYGEN_USE_MATHJAX "YES")
 setup_project()
 

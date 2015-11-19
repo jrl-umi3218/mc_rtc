@@ -162,7 +162,7 @@ bool live_moveWPT::eval(MCSeqController & ctl)
 {
   if(ctl.currentGripper)
   {
-    ctl.currentGripper->percentOpen += 0.01;
+    ctl.currentGripper->percentOpen += 0.001;
     if(ctl.currentGripper->percentOpen >= 1)
     {
       ctl.currentGripper->percentOpen = 1;
@@ -381,7 +381,7 @@ bool live_CoMOpenGripperT::eval(MCSeqController & ctl)
 {
   if(ctl.currentGripper && ctl.currentGripperIsClosed && ctl.comRemoveGripper)
   {
-    ctl.currentGripper->percentOpen += 0.01;
+    ctl.currentGripper->percentOpen += 0.001;
     if(ctl.currentGripper->percentOpen >= 1)
     {
       ctl.currentGripper->percentOpen = 1;
@@ -512,7 +512,7 @@ bool live_CoMCloseGripperT::eval(MCSeqController & ctl)
 {
   if(ctl.currentGripper)
   {
-    ctl.currentGripper->percentOpen -= 0.005;
+    ctl.currentGripper->percentOpen -= 0.0005;
     if(ctl.currentGripper->overCommandLimit || ctl.currentGripper->percentOpen <= 0)
     {
       if(!ctl.currentGripper->overCommandLimit)
@@ -609,7 +609,7 @@ bool live_openGripperP::eval(MCSeqController & ctl)
 {
   if(ctl.currentGripper)
   {
-    ctl.currentGripper->percentOpen += 0.01;
+    ctl.currentGripper->percentOpen += 0.001;
     if(ctl.currentGripper->percentOpen >= 1.)
     {
       ctl.currentGripper->percentOpen = 1.;
@@ -1106,7 +1106,7 @@ bool live_softCloseGripperP::eval(MCSeqController & ctl)
 
   if(ctl.currentGripper)
   {
-    ctl.currentGripper->percentOpen -= 0.005;
+    ctl.currentGripper->percentOpen -= 0.0005;
     //bool limitToZero = ctl.targetContact->r2Surface()->name() == "PlatformLeftRampVS" or ctl.targetContact->r2Surface()->name() == "PlatformLeftRampS"; /*FIXME Should be part of the configuration */
     double percentOpenLimit = 0.;//limitToZero ? 0.35 : 0.1;
     if(ctl.currentGripper->overCommandLimit || ctl.currentGripper->percentOpen <= percentOpenLimit)
@@ -1153,7 +1153,7 @@ bool live_hardCloseGripperP::eval(MCSeqController & ctl)
 
   if(ctl.currentGripper)
   {
-    ctl.currentGripper->percentOpen -= 0.005;
+    ctl.currentGripper->percentOpen -= 0.0005;
     bool limitToZero = ctl.targetContact->r2Surface()->name() == "PlatformLeftRampVS" or ctl.targetContact->r2Surface()->name() == "PlatformLeftRampS"; /*FIXME Should be part of the configuration */
     double percentOpenLimit = limitToZero ? 0.25 : 0;
     if(ctl.currentGripper->overCommandLimit || ctl.currentGripper->percentOpen <= percentOpenLimit)

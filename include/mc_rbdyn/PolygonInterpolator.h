@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include <memory>
 #include <geos/geom/GeometryFactory.h>
 #include <jsoncpp/json/json.h>

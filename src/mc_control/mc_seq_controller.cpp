@@ -313,7 +313,8 @@ void MCSeqController::reset(const ControllerResetData & reset_data)
 
   /* Reset the free flyer to the free flyer in the sequence */
   robot().mbc().zero(robot().mb());
-  robot().mbc().q = stabilityTask->postureTask->posture();
+  robot().mbc().q[0] = stabilityTask->postureTask->posture()[0];
+  robot().mbc().q = reset_data.q;
   rbd::forwardKinematics(robot().mb(), robot().mbc());
   rbd::forwardVelocity(robot().mb(), robot().mbc());
   qpsolver->setContacts(stances[stanceIndex].geomContacts());
