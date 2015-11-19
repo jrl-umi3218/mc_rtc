@@ -79,7 +79,7 @@ void set_planes(const std::vector<Plane> & planes,
   {
     for(size_t i = 0; i < planes.size(); ++i)
     {
-      constr->addPlane(i, planes[i].normal, planes[i].offset, 0.05, 0.01, 0.1, speeds[i], normalsDots[i], 0.);
+      constr->addPlane(static_cast<int>(i), planes[i].normal, planes[i].offset, 0.05, 0.01, 0.1, speeds[i], normalsDots[i], 0.);
     }
   }
   else
@@ -91,7 +91,7 @@ void set_planes(const std::vector<Plane> & planes,
     }
     for(size_t i = 0; i < planes.size(); ++i)
     {
-      constr->addPlane(i, planes[i].normal, planes[i].offset, 0.04, 0.01, 0.01, 0.);
+      constr->addPlane(static_cast<int>(i), planes[i].normal, planes[i].offset, 0.04, 0.01, 0.01, 0.);
     }
   }
   constr->updateNrPlanes();
