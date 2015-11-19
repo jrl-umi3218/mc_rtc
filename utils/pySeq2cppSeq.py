@@ -12,7 +12,7 @@ import sys
 
 import rospkg
 
-from stability import StabilityPolygon
+from stability import StabilityPolygon, Mode
 from shapes import PolygonInterpolator
 from mc_ros_utils.polygons import contact_points_normals, stab_contacts
 from eigen3 import toNumpy
@@ -113,7 +113,7 @@ if __name__ == "__main__":
   seq_in = sys.argv[1]
   robot = loadRobot('hrp2_drc', rospkg.RosPack().get_path('hrp2_drc_description') + '/rsdf/hrp2_drc')
   robot_mass = sum([l.inertia().mass() for l in robot.mb.bodies()])
-  stab_poly = StabilityPolygon(robot_mass)
+  stab_poly = StabilityPolygon(robot_mass, dimension = 2)
 
 
   seq_out = os.getcwd() + '/' + os.path.basename(seq_in.replace('.seq', '.json'))
@@ -144,14 +144,14 @@ if __name__ == "__main__":
       stab_poly.addTorqueConstraint(s_c[b:e],
                                     pos,
                                     0.001*np.ones((3,1)))
-    stab_poly.compute(1e-2, plot_final = False)
+    stab_poly.compute(Mode.best, epsilon=1e-2, maxIter=100, solver='cdd', record_anim=False, plot_step=False, plot_final = False)
     polygons.append(stab_poly.polygon(offset))
 
     stab_poly.reset()
     offset, s_c = stab_contacts(planarContacts, 0.5, robot)
     stab_poly.contacts = s_c
     try:
-      stab_poly.compute(1e-2, plot_final = False)
+      stab_poly.compute(Mode.best, epsilon=1e-2, maxIter=100, solver='cdd', record_anim=False, plot_step=False, plot_final = False)
       s_poly = stab_poly.polygon(offset)
     except RuntimeError:
       pos = [c.r + offset for c in s_c]
