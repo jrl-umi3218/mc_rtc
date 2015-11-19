@@ -86,13 +86,13 @@
          "contactObj" : {
             "adjustOffset" : [ 0.0, 0.0, 0.0 ],
             "adjustOriTBNWeight" : [ 1.0, 1.0, 1.0 ],
-            "adjustPosThresh" : 0.05,
+            "adjustPosThresh" : 0.005,
             "adjustVelThresh" : 0.02,
-            "adjustOriThresh" : 0.1,
+            "adjustOriThresh" : 0.02,
             "posThresh" : 0.03,
-            "preContactDist" : 0.075,
+            "preContactDist" : 0.125,
             "velThresh" : 0.05,
-            "gripperMoveAwayDist" : 0.0
+            "gripperMoveAwayDist" : 0.01
          },
          "contactTask" : {
             "position" : {
@@ -144,8 +144,8 @@
                "body2" : "BODY",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.1,
-                  "sDist" : 0.05
+                  "iDist" : 0.05,
+                  "sDist" : 0.02
                }
             },
             {
@@ -153,8 +153,8 @@
                "body2" : "BODY",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.1,
-                  "sDist" : 0.05
+                  "iDist" : 0.05,
+                  "sDist" : 0.02
                }
             },
             {
@@ -338,6 +338,24 @@
                   "iDist" : 0.05,
                   "sDist" : 0.025
                }
+            },
+            {
+               "body1" : "RLEG_LINK3",
+               "body2" : "right_handle",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.05,
+                  "sDist" : 0.025
+               }
+            },
+            {
+               "body1" : "LLEG_LINK3",
+               "body2" : "left_handle",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.05,
+                  "sDist" : 0.025
+               }
             }
          ],
          "robotEnvContactFilter" : []
@@ -349,24 +367,29 @@
         "r1Surface" : "RightGripperReverse",
         "r2Surface" : "StepC4",
         "postureTask" : {
-           "stiffness" : 2.0,
-           "weight" : 30.0
+           "stiffness" : 0.1,
+           "weight" : 400.0
         },
         "comTask" : {
+           "weight" : 1000.0,
            "targetSpeed" : 0.0005
+        },
+        "contactObj" : {
+          "gripperMoveAwayDist" : 0.0,
+          "preContactDist" : 0.15
         },
         "contactTask" : {
            "position" : {
-              "targetSpeed" : 0.0005
+              "targetSpeed" : 0.00025
            },
            "linVel" : {
-              "speed" : 0.01
+              "speed" : 0.03
            },
            "waypointConf" : {
               "conf" : {
-                 "x" : 0.25,
-                 "y" : 0.1,
-                 "z" : 0.75,
+                 "x" : 0.75,
+                 "y" : 0.5,
+                 "z" : 0.85,
                  "nOff" : 0.1
               },
               "thresh" : 0.10,
@@ -379,24 +402,28 @@
         "r1Surface" : "LeftGripper",
         "r2Surface" : "StepC6",
         "postureTask" : {
-           "stiffness" : 2.0,
-           "weight" : 0.1
+           "stiffness" : 0.1,
+           "weight" : 90.
         },
         "comTask" : {
            "targetSpeed" : 0.0005
         },
+        "contactObj" : {
+          "gripperMoveAwayDist" : 0.02,
+          "preContactDist" : 0.15
+        },
         "contactTask" : {
            "position" : {
-              "targetSpeed" : 0.0005
+              "targetSpeed" : 0.00025
            },
            "linVel" : {
-              "speed" : 0.01
+              "speed" : 0.03
            },
            "waypointConf" : {
               "conf" : {
-                 "x" : 0.25,
+                 "x" : 0.75,
                  "y" : 1.0,
-                 "z" : 0.75,
+                 "z" : 0.85,
                  "nOff" : 0.1
               },
               "thresh" : 0.10,
@@ -409,9 +436,19 @@
         "r1Surface" : "RightGripperReverse",
         "r2Surface" : "StepC6",
         "contactObj" : {
-            "preContactDist" : 0.05
+          "gripperMoveAwayDist" : 0.02,
+          "preContactDist" : 0.15
+        },
+        "comTask" : {
+           "targetSpeed" : 0.0005
         },
         "contactTask" : {
+           "position" : {
+              "targetSpeed" : 0.001
+           },
+           "linVel" : {
+              "speed" : 0.03
+           },
            "waypointConf" : {
               "conf" : {
                  "x" : 0.5,
@@ -422,6 +459,22 @@
               "thresh" : 0.10,
               "type" : "percentWaypoint"
            }
+        }
+      },
+      {
+        "type" : "add",
+        "r1Surface" : "RightGripperReverse",
+        "r2Surface" : "StepC7",
+        "contactObj" : {
+            "adjustOffset" : [ 0.0, 0.0, 0.0 ]
+        }
+      },
+      {
+        "type" : "add",
+        "r1Surface" : "RightGripperReverse",
+        "r2Surface" : "StepC8",
+        "contactObj" : {
+            "adjustOffset" : [ 0.0, 0.0, 0.0 ]
         }
       },
       {

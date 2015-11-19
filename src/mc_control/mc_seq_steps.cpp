@@ -29,7 +29,7 @@ bool live_initT::eval(MCSeqController & controller)
   controller.updateContacts(controller.stances[controller.stanceIndex].contacts());
   controller.updateSolverEqInEq();
 
-  if(controller.stabilityTask->postureTask->eval().norm() < 0.1)
+  if(controller.stabilityTask->postureTask->eval().norm() < 0.5)
   {
     LOG_INFO("INIT done")
     controller.stanceIndex += 1;

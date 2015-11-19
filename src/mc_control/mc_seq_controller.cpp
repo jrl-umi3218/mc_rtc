@@ -174,14 +174,17 @@ MCSeqController::MCSeqController(const std::shared_ptr<mc_rbdyn::RobotModule> & 
   constSpeedConstr->addToSolver(qpsolver->solver);
 
   dynamicsConstraint = mc_solver::DynamicsConstraint(qpsolver->robots, 0, timeStep,
-                                                         false, {0.01, 0.001, 1e-6}, 0.5);
+                                                         false, {0.01, 0.001, 0.}, 0.5);
   qpsolver->addConstraintSet(dynamicsConstraint);
   qpsolver->addConstraintSet(contactConstraint);
   qpsolver->addConstraintSet(collsConstraint);
   qpsolver->setContacts(stances[stanceIndex].geomContacts());
 
   comIncPlaneConstr.reset(new tasks::qp::CoMIncPlaneConstr(robots().mbs(), 0, timeStep));
-  comIncPlaneConstr->addToSolver(qpsolver->solver);
+  if(stanceIndex < 8)
+  {
+    comIncPlaneConstr->addToSolver(qpsolver->solver);
+  }
 
   qpsolver->update();
 
@@ -261,6 +264,11 @@ bool MCSeqController::run()
           }
           samples = mc_rbdyn::QuadraticGenerator(0.0, max_perc, nr_points);
           paused = step_by_step;
+          if(stanceIndex == 8)
+          {
+            LOG_WARNING("Removing comIncPlaneConstr from solver now");
+            comIncPlaneConstr->removeFromSolver(qpsolver->solver);
+          }
         }
       }
       post_live();
@@ -356,11 +364,11 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
       tasks::qp::ContactId contactId = c.contactId(robots());
       sva::PTransformd X_0_s = c.r1Surface()->X_0_s(robot());
       double actiForce = 10; /* FIXME Hard-coded, should at least be an acti gripper const static member */
-      double stopForce = 100; /* FIXME ^^ */
+      double stopForce = 50; /* FIXME ^^ */
       std::shared_ptr<tasks::qp::PositionTask> positionTask(new tasks::qp::PositionTask(robots().mbs(), 0, contactId.r1BodyId, X_0_s.translation(), is_gs->X_b_s().translation()));
       std::shared_ptr<tasks::qp::SetPointTask> positionTaskSp(new tasks::qp::SetPointTask(robots().mbs(), 0, positionTask.get(), 20, 100000.));
       qpsolver->solver.addTask(positionTaskSp.get());
-      actiGrippers[bodyName] = ActiGripper(wrenchIndex, actiForce, stopForce, contactId, X_0_s, 0.04, positionTask, positionTaskSp); /*FIXME 0.04 is ActiGripperMaxPull */
+      actiGrippers[bodyName] = ActiGripper(wrenchIndex, actiForce, stopForce, contactId, X_0_s, use_real_sensors ? 0.04:0.01, positionTask, positionTaskSp); /*FIXME 0.04 is ActiGripperMaxPull */
     }
   }
 
