@@ -79,6 +79,9 @@ private:
   std::vector<uint64_t> iters;
 };
 
+/* Used to publish debug information specific to the seq controller */
+struct MCSeqPublisher;
+
 struct MCSeqController : public MCController
 {
 public:
@@ -133,6 +136,8 @@ public:
   /* For logging */
   uint64_t nrIter;
   MCSeqTimeLog logger;
+  /* Publish information */
+  std::shared_ptr<MCSeqPublisher> publisher;
   /* Sequence playing logic */
   bool step_by_step;
   bool paused;

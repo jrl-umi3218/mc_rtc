@@ -3,16 +3,15 @@
 #include <RBDyn/FV.h>
 #include <Tasks/QPContactConstr.h>
 
-#include <mc_control/SimulationContactSensor.h>
+#include <mc_rbdyn/GripperSurface.h>
+#include <mc_rbdyn/json/StanceConfig.h>
+#include <mc_rtc/logging.h>
+
 #include <mc_control/ForceContactSensor.h>
+#include <mc_control/MCSeqPublisher.h>
+#include <mc_control/SimulationContactSensor.h>
 
 #include <mc_control/mc_seq_steps.h>
-
-#include <mc_rbdyn/GripperSurface.h>
-
-#include <mc_rbdyn/json/StanceConfig.h>
-
-#include <mc_rtc/logging.h>
 
 #include <fstream>
 
@@ -121,12 +120,13 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
 MCSeqController::MCSeqController(const std::shared_ptr<mc_rbdyn::RobotModule> & env_module, const std::string & seq_path, bool real_sensors, unsigned int start_stance, bool step_by_step)
 : MCController(env_module),
   nrIter(0), logger(timeStep),
+  publisher(new MCSeqPublisher()),
   step_by_step(step_by_step), paused(false), halted(false),
   stanceIndex(start_stance), seq_actions(0),
   currentContact(0), targetContact(0), currentGripper(0),
   use_real_sensors(real_sensors),
   collsConstraint(robots(), timeStep),
-  max_perc(0.8), nr_points(500),
+  max_perc(1.0), nr_points(3000),
   samples(0.0, max_perc, nr_points)
 {
   logger.logPhase("START", 0);
@@ -213,6 +213,7 @@ bool MCSeqController::run()
         auto clamp = [](const double & v) { return std::min(std::max(v, -0.13), 0.13); };
         auto clamp_pos = [](const double & v) { return std::min(std::max(v, 0.), 0.15); };
         auto poly = interpolators[stanceIndex].fast_interpolate(interpol_percent);
+        publisher->publish_poly(poly);
         planes = mc_rbdyn::planes_from_polygon(poly);
         std::vector<Eigen::Vector3d> speeds;
         std::vector<Eigen::Vector3d> nds;
@@ -254,51 +255,14 @@ bool MCSeqController::run()
           if(stanceIndex < actions.size())
           {
             LOG_INFO("Starting " << actions[stanceIndex]->toStr() << "(" << (stanceIndex+1) << "/" << actions.size() << ")")
-            /*FIXME Disabled for now... */
-            //Eigen::Vector3d pos(robot().mbc().q[0][4], robot().mbc().q[0][5], robot().mbc().q[0][6]);
-            //std::vector<double> rPose = robot().mbc().q[0];
-            //robot().mbc().zero(robot().mb());
-            //std::vector<double> & eValues = encoderValues;
-            //for(size_t i = 0; i < 24; ++i)
-            //{
-            //  robot().mbc().q[i+1][0] = eValues[i];
-            //}
-            //for(size_t i = 24; i < 32; ++i)
-            //{
-            //  robot().mbc().q[i+6][0] = eValues[i];
-            //}
-            ///* At this point, the robot mbc holds the encoder values */
-            //rbd::forwardKinematics(robot().mb(), robot().mbc());
-            //Eigen::Vector3d & rpy = sensorOri;
-            //sva::PTransformd chestSensorOri(sva::RotZ(rpy(2))*sva::RotY(rpy(1))*sva::RotX(rpy(0)), Eigen::Vector3d(0,0,0));
-            //sva::PTransformd X_0_body = robot().mbc().bodyPosW[robot().bodyIndexByName("BODY")];
-            //sva::PTransformd X_0_acce = robot().mbc().bodyPosW[robot().bodyIndexByName("CHEST_LINK1")];
-            //sva::PTransformd X_acce_body = X_0_body * X_0_acce.inv();
-            //X_0_acce = sva::PTransformd(chestSensorOri.rotation(), X_0_acce.translation());
-            //sva::PTransformd bodySensorOri = X_acce_body * X_0_acce;
-            //Eigen::Quaterniond q(bodySensorOri.rotation());
-            //q.normalize();
-            //q = q.inverse();
-            //robot().mbc().q[0][0] = q.w();
-            //robot().mbc().q[0][1] = q.x();
-            //robot().mbc().q[0][2] = q.y();
-            //robot().mbc().q[0][3] = q.z();
-            //robot().mbc().q[0][4] = pos(0);
-            //robot().mbc().q[0][5] = pos(1);
-            //robot().mbc().q[0][6] = pos(2);
-            //robot().mbc().q[0] = rPose;
-            //rbd::forwardKinematics(robot().mb(), robot().mbc());
-            //qpsolver->setContacts(stances[stanceIndex-1].geomContacts);
-            ////qpsolver->update();
-            //stabilityTask->postureTask->posture(robot().mbc().q);
-            //stabilityTask->comObj = stances[stanceIndex-1].com(robot());//rbd::computeCoM(robot().mb(), robot().mbc());
-            //stabilityTask->comTaskSm.reset(curConf().comTask.weight, stabilityTask->comObj, curConf().comTask.targetSpeed);
           }
           samples = mc_rbdyn::QuadraticGenerator(0.0, max_perc, nr_points);
           paused = step_by_step;
         }
       }
       post_live();
+      /* Publish information */
+      publisher->publish_com(rbd::computeCoM(robot().mb(), robot().mbc()));
     }
     else
     {
