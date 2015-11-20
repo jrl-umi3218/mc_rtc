@@ -17,6 +17,7 @@ from shapes import PolygonInterpolator
 from mc_ros_utils.polygons import contact_points_normals, stab_contacts
 from eigen3 import toNumpy
 import numpy as np
+import rbdyn as rbd
 
 def usage():
   print "{} [.seq file]".format(sys.argv[0])
@@ -122,15 +123,22 @@ if __name__ == "__main__":
   stances, actions = loadStances(seq_in)
   polygons = []
   polygon_interpolators = []
-  for i,s in enumerate(stances):
+  for i,(s,a) in enumerate(zip(stances,actions)):
     print "Compute polygon {0} of {1}".format(i+1, len(stances))
     stab_poly.reset()
-    offset, s_c = stab_contacts(s.stabContacts, 0.5, robot)
+    robot.mbc.q = s.q
+    rbd.forwardKinematics(robot.mb, robot.mbc)
+    rbd.forwardVelocity(robot.mb, robot.mbc)
+    if isinstance(a, AddContactAction):
+        contacts = s.stabContacts
+    else:
+        contacts = s.contacts
+    offset, s_c = stab_contacts(contacts, 0.5, robot)
     stab_poly.contacts = s_c
     gripIndexes = []
     planarContacts = []
     begin = 0
-    for c in s.stabContacts:
+    for c in contacts:
       nrPoints = len(c.points())
       if isinstance(c.robotSurface, GripperSurface):
         bodyIndex = robot.bodyIndexByName(c.robotSurface.bodyName)
@@ -144,19 +152,30 @@ if __name__ == "__main__":
       stab_poly.addTorqueConstraint(s_c[b:e],
                                     pos,
                                     0.001*np.ones((3,1)))
-    stab_poly.compute(Mode.best, epsilon=1e-2, maxIter=100, solver='cdd', record_anim=False, plot_step=False, plot_final = False)
-    polygons.append(stab_poly.polygon(offset))
+    stab_poly.compute(Mode.best, epsilon=1e-2, maxIter=100, solver='plain', record_anim=False, plot_step=False, plot_final = False)
+    full_poly = stab_poly.polygon(offset)
+    if len(polygons) == 0:
+        polygons.append(full_poly)
 
     stab_poly.reset()
     offset, s_c = stab_contacts(planarContacts, 0.5, robot)
     stab_poly.contacts = s_c
     try:
-      stab_poly.compute(Mode.best, epsilon=1e-2, maxIter=100, solver='cdd', record_anim=False, plot_step=False, plot_final = False)
+      stab_poly.compute(Mode.best, epsilon=1e-2, maxIter=100, solver='plain', record_anim=False, plot_step=False, plot_final = False)
       s_poly = stab_poly.polygon(offset)
     except RuntimeError:
       pos = [c.r + offset for c in s_c]
       s_poly = geom.Polygon([(p.item(0), p.item(1)) for p in pos]).convex_hull
-    polygon_interpolators.append(PolygonInterpolator(polygons[-1], s_poly))
+    interp = PolygonInterpolator(full_poly, s_poly)
+    # FIXME Ok on this branch...
+    if i == 25:
+        intermediate_poly = interp.interpolate(0.5)
+    elif i < 8:
+        intermediate_poly = interp.interpolate(0.9)
+    else:
+        intermediate_poly = interp.interpolate(0.7)
+    polygon_interpolators.append(PolygonInterpolator(polygons[-1], intermediate_poly))
+    polygons.append(intermediate_poly)
 
   for s in stances:
     data_out["stances"].append(stance2dict(s))

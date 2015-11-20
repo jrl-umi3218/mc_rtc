@@ -79,7 +79,10 @@ void set_planes(const std::vector<Plane> & planes,
   {
     for(size_t i = 0; i < planes.size(); ++i)
     {
-      constr->addPlane(static_cast<int>(i), planes[i].normal, planes[i].offset, 0.05, 0.01, 0.1, speeds[i], normalsDots[i], 0.);
+      if(planes[i].normal.norm() > 0.5)
+      {
+        constr->addPlane(static_cast<int>(i), planes[i].normal, planes[i].offset, 0.05, 0.01, 0.1, speeds[i], normalsDots[i], 0.);
+      }
     }
   }
   else
@@ -87,11 +90,14 @@ void set_planes(const std::vector<Plane> & planes,
     if(speeds.size() != 0 and (normalsDots.size() != speeds.size()
                                or planes.size() != speeds.size()))
     {
-      LOG_WARNING("set_planes: speeds size > 0 but different from normalsDots or planes, acting as if speeds were not provided")
+      //LOG_WARNING("set_planes: speeds size > 0 but different from normalsDots or planes, acting as if speeds were not provided")
     }
     for(size_t i = 0; i < planes.size(); ++i)
     {
-      constr->addPlane(static_cast<int>(i), planes[i].normal, planes[i].offset, 0.04, 0.01, 0.01, 0.);
+      if(planes[i].normal.norm() > 0.5)
+      {
+        constr->addPlane(static_cast<int>(i), planes[i].normal, planes[i].offset, 0.04, 0.01, 0.01, 0.);
+      }
     }
   }
   constr->updateNrPlanes();

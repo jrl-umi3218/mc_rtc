@@ -62,12 +62,13 @@ std::shared_ptr<geos::geom::Geometry> PolygonInterpolator::fast_interpolate(doub
     perc = 1 + perc;
   }
   std::vector<tuple_t> points;
-  geos::geom::CoordinateSequence * seq = geom_factory.getCoordinateSequenceFactory()->create((std::size_t)0, 2);
+  geos::geom::CoordinateSequence * seq = geom_factory.getCoordinateSequenceFactory()->create((std::size_t)0, 0);
   for(const auto & p : tuple_pairs)
   {
     seq->add(geos::geom::Coordinate(p.first[0]*(1-perc) + p.second[0]*perc,
                                     p.first[1]*(1-perc) + p.second[1]*perc));
   }
+  seq->add(seq->getAt(0));
   geos::geom::LinearRing * shell = geom_factory.createLinearRing(seq);
   geos::geom::Polygon * poly = geom_factory.createPolygon(shell, 0);
   std::shared_ptr<geos::geom::Geometry> ret(poly->convexHull(), geom_deleter);
@@ -98,6 +99,8 @@ std::vector<PolygonInterpolator::tuple_t> PolygonInterpolator::normal_derivative
     seq_s->add(geos::geom::Coordinate(p.first[0], p.first[1]));
     seq_d->add(geos::geom::Coordinate(p.second[0], p.second[1]));
   }
+  seq_s->add(seq_s->getAt(0));
+  seq_d->add(seq_d->getAt(0));
   geos::geom::LinearRing * shell_s = geom_factory.createLinearRing(seq_s);
   geos::geom::LinearRing * shell_d = geom_factory.createLinearRing(seq_d);
   geos::geom::Polygon * poly_s = geom_factory.createPolygon(shell_s, 0);

@@ -206,7 +206,7 @@ bool MCSeqController::run()
       /* Stability polygon interpolation */
       double cur_sample = 0.0; double cur_speed = 0.0;
       samples.next(cur_sample, cur_speed);
-      double interpol_percent = std::max(cur_sample, max_perc);
+      double interpol_percent = std::min(cur_sample, max_perc);
       bool done = interpol_percent == max_perc;
       if(!done)
       {
