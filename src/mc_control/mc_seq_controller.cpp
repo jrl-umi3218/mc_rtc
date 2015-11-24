@@ -15,6 +15,9 @@
 
 #include <fstream>
 
+#include <geos/geom/LinearRing.h>
+#include <geos/geom/CoordinateSequence.h>
+
 namespace mc_control
 {
 
@@ -277,8 +280,16 @@ void MCSeqController::reset(const ControllerResetData & reset_data)
 
   /* Reset the free flyer to the free flyer in the sequence */
   robot().mbc().zero(robot().mb());
-  robot().mbc().q[0] = stabilityTask->postureTask->posture()[0];
-  robot().mbc().q = reset_data.q;
+  /* Heuristic guess for kinematics vs. dynamics mode */
+  if(use_real_sensors)
+  {
+    robot().mbc().q[0] = stabilityTask->postureTask->posture()[0];
+    robot().mbc().q = reset_data.q;
+  }
+  else
+  {
+    robot().mbc().q = stabilityTask->postureTask->posture();
+  }
   rbd::forwardKinematics(robot().mb(), robot().mbc());
   rbd::forwardVelocity(robot().mb(), robot().mbc());
   qpsolver->setContacts(stances[stanceIndex].geomContacts());
