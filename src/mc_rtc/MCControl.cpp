@@ -22,8 +22,6 @@
 
 using boost::asio::ip::udp;
 
-static std::ofstream ofs("/tmp/mc-control.log");
-
 /* Hard-coded dofs to handle both HRP2DRC and HRP2JVRC */
 static const unsigned int MODEL_DOF = 42;
 
@@ -59,6 +57,7 @@ MCControl::MCControl(RTC::Manager* manager)
     m_rpyInIn("rpyIn", m_rpyIn),
     m_accInIn("accIn", m_accIn),
     m_poseInIn("poseIn", m_poseIn),
+    m_taucInIn("taucIn", m_taucIn),
     m_wrenchesNames({"RightFootForceSensor", "LeftFootForceSensor", "RightHandForceSensor", "LeftHandForceSensor"}),
     m_qOutOut("qOut", m_qOut),
     m_pOutOut("pOut", m_pOut),
@@ -94,6 +93,7 @@ RTC::ReturnCode_t MCControl::onInitialize()
   addInPort("rpyIn", m_rpyInIn);
   addInPort("accIn", m_accInIn);
   addInPort("poseIn", m_poseInIn);
+  addInPort("taucIn", m_taucInIn);
   for(size_t i = 0; i < m_wrenchesNames.size(); ++i)
   {
     addInPort(m_wrenchesNames[i].c_str(), *(m_wrenchesInIn[i]));
@@ -178,6 +178,15 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
     accIn(1) = m_accIn.data.ay;
     accIn(2) = m_accIn.data.az;
   }
+  if(m_taucInIn.isNew())
+  {
+    m_taucInIn.read();
+    taucIn.resize(m_taucIn.data.length());
+    for(unsigned int i = 0; i < static_cast<unsigned int>(m_taucIn.data.length()); ++i)
+    {
+      taucIn[i] = m_taucIn.data[i];
+    }
+  }
   if(m_qInIn.isNew())
   {
     m_qInIn.read();
@@ -199,11 +208,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
         LOG_INFO("In init, actual gripper " << m_qIn.data[31] << " " << m_qIn.data[23])
         controller.init(qIn);
         init = true;
-        ofs << "qIn" << std::endl;
-        for(unsigned int i = 0; i < m_qIn.data.length(); ++i)
-        {
-          ofs << "qIn[" << i << "] = " << m_qIn.data[i] << std::endl;
-        }
+        log_header();
       }
       double t = tm.sec*1e9 + tm.nsec;
       controller.setSensorOrientation(rpyIn);
@@ -265,21 +270,6 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
         m_pOut.data.x = res.robots_state[0].q[4];
         m_pOut.data.y = res.robots_state[0].q[5];
         m_pOut.data.z = res.robots_state[0].q[6];
-        //ofs << "qIn" << std::endl;
-        //for(size_t i = 0; i < m_qIn.data.length(); ++i)
-        //{
-        //  ofs << "qIn[" << i << "] = " << m_qIn.data[i] << std::endl;
-        //}
-        ////ofs << "res.q" << std::endl;
-        ////for(size_t i = 0; i < res.q.size(); ++i)
-        ////{
-        ////  ofs << "res.q[" << i << "] = " << res.q[i] << std::endl;
-        ////}
-        //ofs << "qOut" << std::endl;
-        //for(size_t i = 0; i < m_qOut.data.length(); ++i)
-        //{
-        //  ofs << "qOut[" << i << "] = " << m_qOut.data[i] << std::endl;
-        //}
       }
       m_qOut.tm = tm;
       m_rpyOut.tm = tm;
@@ -288,6 +278,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
       m_pOutOut.write();
       m_rpyOutOut.write();
       mc_rtc::ROSBridge::update_robot_publisher(controller.robot(), m_pIn, m_rpyIn, m_accIn, controller.gripperQ(true), controller.gripperQ(false));
+      log_data();
     }
     else
     {
@@ -298,6 +289,66 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
     }
   }
   return RTC::RTC_OK;
+}
+
+void MCControl::log_header()
+{
+  m_log.open("/tmp/mc-control.log");
+  m_log << "t";
+  for(unsigned int i = 0; i < static_cast<unsigned int>(m_qIn.data.length()); ++i)
+  {
+    m_log << ";qIn" << i;
+  }
+  for(unsigned int i = 0; i < static_cast<unsigned int>(m_qOut.data.length()); ++i)
+  {
+    m_log << ";qOut" << i;
+  }
+  for(unsigned int i = 0; i < static_cast<unsigned int>(m_taucIn.data.length()); ++i)
+  {
+    m_log << ";taucIn" << i;
+  }
+  for(const auto & wn : m_wrenchesNames)
+  {
+    m_log << ";" << wn << "_fx";
+    m_log << ";" << wn << "_fy";
+    m_log << ";" << wn << "_fz";
+    m_log << ";" << wn << "_cx";
+    m_log << ";" << wn << "_cy";
+    m_log << ";" << wn << "_cz";
+  }
+  controller.log_header(m_log);
+  m_log << std::endl;
+}
+
+void MCControl::log_data()
+{
+  if(m_log.is_open())
+  {
+    m_log << m_qOut.tm.sec << "." << std::setw(9) << std::setfill('0') << m_qOut.tm.nsec;
+    for(unsigned int i = 0; i < static_cast<unsigned int>(m_qIn.data.length()); ++i)
+    {
+      m_log << ";" << m_qIn.data[i];
+    }
+    for(unsigned int i = 0; i < static_cast<unsigned int>(m_qOut.data.length()); ++i)
+    {
+      m_log << ";" << m_qOut.data[i];
+    }
+    for(unsigned int i = 0; i < static_cast<unsigned int>(m_taucIn.data.length()); ++i)
+    {
+      m_log << ";" << m_taucIn.data[i];
+    }
+    for(const auto & w : m_wrenches)
+    {
+      m_log << ";" << w.first.x();
+      m_log << ";" << w.first.y();
+      m_log << ";" << w.first.z();
+      m_log << ";" << w.second.x();
+      m_log << ";" << w.second.y();
+      m_log << ";" << w.second.z();
+    }
+    controller.log_data(m_log);
+    m_log << std::endl;
+  }
 }
 
 extern "C"

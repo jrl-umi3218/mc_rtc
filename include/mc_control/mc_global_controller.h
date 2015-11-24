@@ -35,6 +35,8 @@ public:
 
   const mc_rbdyn::Robot & robot();
 
+  std::ostream & log_header(std::ostream & os);
+  std::ostream & log_data(std::ostream & os);
   /* Called by the RT component to switch between controllers */
   bool EnablePostureController();
   bool EnableBody6dController();

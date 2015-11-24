@@ -12,6 +12,8 @@
 
 #include <mc_control/ContactSensor.h>
 
+#include <boost/timer/timer.hpp>
+
 namespace mc_control
 {
 
@@ -94,6 +96,9 @@ public:
   virtual bool run() override;
 
   virtual void reset(const ControllerResetData & reset_data) override;
+
+  virtual std::ostream& log_header(std::ostream & os) override;
+  virtual std::ostream& log_data(std::ostream & os) override;
   /* Utils functions called by SeqStep/SeqAction */
   void updateRobotEnvCollisions(const std::vector<mc_rbdyn::Contact> & contacts, const mc_rbdyn::StanceConfig & conf);
 
@@ -200,6 +205,7 @@ public:
   unsigned int nr_points;
   mc_rbdyn::QuadraticGenerator samples;
   std::vector<mc_rbdyn::Plane> planes;
+  boost::timer::cpu_timer timer;
 };
 
 std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * curAction, mc_rbdyn::StanceAction * targetAction, mc_rbdyn::StanceAction * targetTargetAction);

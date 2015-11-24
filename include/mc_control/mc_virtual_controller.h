@@ -60,6 +60,9 @@ public:
   virtual bool read_msg(std::string & msg);
 
   virtual bool read_write_msg(std::string & msg, std::string & out);
+  /* Logging interface */
+  virtual std::ostream& log_header(std::ostream & os) { return os; }
+  virtual std::ostream& log_data(std::ostream & os) { return os; }
 public:
   /* Common stuff */
   const double timeStep;

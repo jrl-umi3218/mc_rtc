@@ -287,6 +287,18 @@ void MCSeqController::reset(const ControllerResetData & reset_data)
   qpsolver->update();
 }
 
+std::ostream& MCSeqController::log_header(std::ostream & os)
+{
+  os << ";stance_index";
+  return os;
+}
+
+std::ostream& MCSeqController::log_data(std::ostream & os)
+{
+  os << ";" << stanceIndex;
+  return os;
+}
+
 void MCSeqController::updateRobotEnvCollisions(const std::vector<mc_rbdyn::Contact> & contacts, const mc_rbdyn::StanceConfig & conf)
 {
   collsConstraint.setEnvCollisions(robots(), contacts, confToColl(conf.collisions.robotEnv));

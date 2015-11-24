@@ -112,6 +112,9 @@ class MCControl  : public RTC::DataFlowComponentBase
   TimedPose3D m_poseIn;
   InPort<TimedPose3D> m_poseInIn;
   Eigen::Vector3d rpyIn;
+  TimedDoubleSeq m_taucIn;
+  InPort<TimedDoubleSeq> m_taucInIn;
+  std::vector<double> taucIn;
 
   std::vector<std::string> m_wrenchesNames;
   std::vector<TimedDoubleSeq*> m_wrenchesIn;
@@ -147,7 +150,10 @@ class MCControl  : public RTC::DataFlowComponentBase
   // <rtc-template block="consumer_declare">
 
   // </rtc-template>
- private:
+private:
+  std::ofstream m_log;
+  void log_header();
+  void log_data();
 public:
   mc_control::MCGlobalController controller;
   bool init;

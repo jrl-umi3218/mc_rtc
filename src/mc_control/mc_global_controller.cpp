@@ -394,6 +394,16 @@ void MCGlobalController::setGripperOpenPercent(double lQ, double rQ)
   controller->rgripper->setTargetOpening(rQ);
 }
 
+std::ostream & MCGlobalController::log_header(std::ostream & os)
+{
+  return controller->log_header(os);
+}
+
+std::ostream & MCGlobalController::log_data(std::ostream & os)
+{
+  return controller->log_data(os);
+}
+
 bool MCGlobalController::EnableNextController(const std::string & name, const CurrentController & index, const std::shared_ptr<MCVirtualController> & ctrl)
 {
   if(ctrl.get())
