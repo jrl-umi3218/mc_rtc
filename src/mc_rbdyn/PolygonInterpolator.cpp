@@ -65,8 +65,8 @@ std::shared_ptr<geos::geom::Geometry> PolygonInterpolator::fast_interpolate(doub
   geos::geom::CoordinateSequence * seq = geom_factory.getCoordinateSequenceFactory()->create((std::size_t)0, 0);
   for(const auto & p : tuple_pairs)
   {
-    seq->add(geos::geom::Coordinate(p.first[0]*(1-perc) + p.second[0]*perc,
-                                    p.first[1]*(1-perc) + p.second[1]*perc));
+    seq->add(geos::geom::Coordinate(static_cast<float>(p.first[0]*(1-perc) + p.second[0]*perc),
+                                    static_cast<float>(p.first[1]*(1-perc) + p.second[1]*perc)));
   }
   seq->add(seq->getAt(0));
   geos::geom::LinearRing * shell = geom_factory.createLinearRing(seq);
