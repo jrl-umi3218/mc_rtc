@@ -183,7 +183,7 @@ void Gripper::setActualQ(double q)
     {
       LOG_WARNING("Gripper safety triggered on " << name[0])
       overCommandLimit = true;
-      //setCurrentQ(actualQ - 0.01);
+      setTargetQ(actualQ - 2*M_PI/180);
     }
   }
   else
@@ -197,7 +197,7 @@ const std::vector<double> & Gripper::q()
 {
   if(targetQ)
   {
-    if(overCommandLimit || std::abs(curPosition() - targetQIn) < 0.001)
+    if(std::abs(curPosition() - targetQIn) < 0.001)
     {
       targetQ = 0;
     }
