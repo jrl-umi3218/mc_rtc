@@ -62,6 +62,14 @@ def set_ylim(ax, ymin, ymax):
     ax.set_xlim(xmin = 0, xmax = np.max(data['t']))
     ax.set_ylim(ymin = ymin, ymax = ymax)
 
+def get_ylim(ax):
+    ymin, ymax = ax.get_ylim()
+    if ymax == 1.0:
+        ymax = -1e6
+    if ymin == 0.0:
+        ymin = 1e6
+    return ymin, ymax
+
 def plot_stance_index_fig(ax, scale, cc):
     if scale:
         ymin, ymax = ax.get_ylim()
@@ -74,13 +82,7 @@ def plot_stance_index_fig(ax, scale, cc):
         ax.set_ylabel('stance')
 
 def plot_torque_fig(joint_names, ax, cc):
-    if isinstance(joint_names, str):
-        joint_names = [joint_names]
-    ymin, ymax = ax.get_ylim()
-    if ymax == 1.0:
-        ymax = -1e6
-    if ymin == 0.0:
-        ymin = 1e6
+    ymin, ymax = get_ylim(ax)
     for j in joint_names:
         if j in REF_JOINT_ORDER:
             tauc_idx = 'taucIn' + str(REF_JOINT_ORDER.index(j))
@@ -92,13 +94,7 @@ def plot_torque_fig(joint_names, ax, cc):
     ax.set_ylabel('Torque')
 
 def plot_encoder_fig(joint_names, ax, cc):
-    if isinstance(joint_names, str):
-        joint_names = [joint_names]
-    ymin, ymax = ax.get_ylim()
-    if ymax == 1.0:
-        ymax = -1e6
-    if ymin == 0.0:
-        ymin = 1e6
+    ymin, ymax = get_ylim(ax)
     for j in joint_names:
         if j in REF_JOINT_ORDER:
             qIn_idx = 'qIn' + str(REF_JOINT_ORDER.index(j))
@@ -110,13 +106,7 @@ def plot_encoder_fig(joint_names, ax, cc):
     ax.set_ylabel('Encoder')
 
 def plot_command_fig(joint_names, ax, cc):
-    if isinstance(joint_names, str):
-        joint_names = [joint_names]
-    ymin, ymax = ax.get_ylim()
-    if ymax == 1.0:
-        ymax = -1e6
-    if ymin == 0.0:
-        ymin = 1e6
+    ymin, ymax = get_ylim(ax)
     for j in joint_names:
         if j in REF_JOINT_ORDER:
             qOut_idx = 'qOut' + str(REF_JOINT_ORDER.index(j))
@@ -128,13 +118,7 @@ def plot_command_fig(joint_names, ax, cc):
     ax.set_ylabel('Command')
 
 def plot_error_fig(joint_names, ax, cc):
-    if isinstance(joint_names, str):
-        joint_names = [joint_names]
-    ymin, ymax = ax.get_ylim()
-    if ymax == 1.0:
-        ymax = -1e6
-    if ymin == 0.0:
-        ymin = 1e6
+    ymin, ymax = get_ylim(ax)
     for j in joint_names:
         if j in REF_JOINT_ORDER:
             qIn_idx = 'qIn' + str(REF_JOINT_ORDER.index(j))
@@ -146,6 +130,30 @@ def plot_error_fig(joint_names, ax, cc):
                 ymax = max(ymax, np.max(y_data))
     set_ylim(ax, ymin, ymax)
     ax.set_ylabel('Error')
+
+def plot_force_fig(force_sensors, ax, cc):
+    ymin, ymax = get_ylim(ax)
+    for force_sensor in force_sensors:
+        if force_sensor+'ForceSensor_fx' in data:
+            for i in ['fx', 'fy', 'fz']:
+                fv = force_sensor + 'ForceSensor_' + i
+                ax.plot(data['t'], data[fv], label = '{0}: {1}'.format(force_sensor, i), color = cc.next())
+                ymin = min(ymin, np.min(data[fv]))
+                ymax = max(ymax, np.max(data[fv]))
+            set_ylim(ax, ymin, ymax)
+            ax.set_ylabel('Force')
+
+def plot_moment_fig(force_sensors, ax, cc):
+    ymin, ymax = get_ylim(ax)
+    for force_sensor in force_sensors:
+        if force_sensor+'ForceSensor_cx' in data:
+            for i in ['cx', 'cy', 'cz']:
+                fv = force_sensor + 'ForceSensor_' + i
+                ax.plot(data['t'], data[fv], label = '{0}: {1}'.format(force_sensor, i), color = cc.next())
+                ymin = min(ymin, np.min(data[fv]))
+                ymax = max(ymax, np.max(data[fv]))
+            set_ylim(ax, ymin, ymax)
+            ax.set_ylabel('Moment')
 
 def prep_ax(title):
     fig, ax = plt.subplots()
@@ -212,6 +220,16 @@ def plot_command_encoder(joint_names):
     ax2.legend(bbox_to_anchor=(0., -.1, 1., -1.02), loc=3, ncol=4, mode="expand", borderaxespad=0.)
     plt.show()
 
+def plot_force(force_sensors):
+    force_sensors = sanitize_args(force_sensors)
+    ax, ax2, cc = prep_ax('Force/Moment: ' + ','.join(force_sensors))
+    plot_force_fig(force_sensors, ax, cc)
+    ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=4, mode="expand", borderaxespad=0.)
+    plot_moment_fig(force_sensors, ax2, cc)
+    plot_stance_index_fig(ax2, True, cc)
+    ax2.legend(bbox_to_anchor=(0., -.1, 1., -1.02), loc=3, ncol=4, mode="expand", borderaxespad=0.)
+    plt.show()
+
 def welcome():
     print "Available functions:"
     print "- plot_torque(joint_names)"
@@ -220,5 +238,6 @@ def welcome():
     print "- plot_error(joint_names)"
     print "- plot_torque_error(joint_names)"
     print "- plot_command_encoder(joint_names)"
+    print "- plot_force(Left|Right/Foot|Hand)"
 
 welcome()
