@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 from matplotlib import colors
 import numpy as np
 
+plt.ion()
+
 import sys
 
 REF_JOINT_ORDER = [
@@ -43,7 +45,22 @@ if not len(data):
 
 assert('t' in data)
 data['t'] = data['t'] - data['t'][0]
-plt.xlim(xmin = 0, xmax = np.max(data['t']))
+
+def set_ylim(ax, ymin, ymax):
+    if ymin < 0:
+        ymin = 1.2*ymin
+    else:
+        ymin = 0.8*ymin
+    if ymax > 0:
+        ymax = 1.2*ymax
+    else:
+        ymax = 0.8*ymax
+    if ymax > abs(ymin):
+        ymin = -ymax
+    else:
+        ymax = -ymin
+    ax.set_xlim(xmin = 0, xmax = np.max(data['t']))
+    ax.set_ylim(ymin = ymin, ymax = ymax)
 
 def plot_stance_index_fig(ax, scale, cc):
     if scale:
@@ -71,15 +88,7 @@ def plot_torque_fig(joint_names, ax, cc):
                 ax.plot(data['t'], data[tauc_idx], label='{0} torque'.format(j), color = cc.next())
                 ymin = min(ymin, np.min(data[tauc_idx]))
                 ymax = max(ymax, np.max(data[tauc_idx]))
-    if ymin < 0:
-        ymin = 1.2*ymin
-    else:
-        ymin = 0.8*ymin
-    if ymax > 0:
-        ymax = 1.2*ymax
-    else:
-        ymax = 0.8*ymax
-    ax.set_ylim(ymin = ymin, ymax = ymax)
+    set_ylim(ax, ymin, ymax)
     ax.set_ylabel('Torque')
 
 def plot_encoder_fig(joint_names, ax, cc):
@@ -97,15 +106,7 @@ def plot_encoder_fig(joint_names, ax, cc):
                 ax.plot(data['t'], data[qIn_idx], label='{0} encoder'.format(j), color = cc.next())
                 ymin = min(ymin, np.min(data[qIn_idx]))
                 ymax = max(ymax, np.max(data[qIn_idx]))
-    if ymin < 0:
-        ymin = 1.2*ymin
-    else:
-        ymin = 0.8*ymin
-    if ymax > 0:
-        ymax = 1.2*ymax
-    else:
-        ymax = 0.8*ymax
-    ax.set_ylim(ymin = ymin, ymax = ymax)
+    set_ylim(ax, ymin, ymax)
     ax.set_ylabel('Encoder')
 
 def plot_command_fig(joint_names, ax, cc):
@@ -123,15 +124,7 @@ def plot_command_fig(joint_names, ax, cc):
                 ax.plot(data['t'], data[qOut_idx], label='{0} command'.format(j), color = cc.next())
                 ymin = min(ymin, np.min(data[qOut_idx]))
                 ymax = max(ymax, np.max(data[qOut_idx]))
-    if ymin < 0:
-        ymin = 1.2*ymin
-    else:
-        ymin = 0.8*ymin
-    if ymax > 0:
-        ymax = 1.2*ymax
-    else:
-        ymax = 0.8*ymax
-    ax.set_ylim(ymin = ymin, ymax = ymax)
+    set_ylim(ax, ymin, ymax)
     ax.set_ylabel('Command')
 
 def plot_error_fig(joint_names, ax, cc):
@@ -151,56 +144,70 @@ def plot_error_fig(joint_names, ax, cc):
                 ax.plot(data['t'], y_data, label='{0} error'.format(j), color = cc.next())
                 ymin = min(ymin, np.min(y_data))
                 ymax = max(ymax, np.max(y_data))
-    if ymin < 0:
-        ymin = 1.2*ymin
-    else:
-        ymin = 0.8*ymin
-    if ymax > 0:
-        ymax = 1.2*ymax
-    else:
-        ymax = 0.8*y_max
-    ax.set_ylim(ymin = ymin, ymax = ymax)
+    set_ylim(ax, ymin, ymax)
     ax.set_ylabel('Error')
 
-def prep_ax():
+def prep_ax(title):
     fig, ax = plt.subplots()
+    fig.canvas.set_window_title(title)
     color_cycler = itertools.cycle(['r','g','b','y','k','c','m','orange'])
     ax2 = ax.twinx()
     return ax,ax2,color_cycler
 
+def sanitize_args(joint_names):
+    if isinstance(joint_names, str):
+        return [joint_names]
+    else:
+        return joint_names
+
 def plot_torque(joint_names):
-    ax, ax2, cc = prep_ax()
+    joint_names = sanitize_args(joint_names)
+    ax, ax2, cc = prep_ax('Torque: ' + ','.join(joint_names))
     plot_torque_fig(joint_names, ax, cc)
     ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=4, mode="expand", borderaxespad=0.)
     plot_stance_index_fig(ax2, False, cc)
     plt.show()
 
 def plot_encoder(joint_names):
-    ax, ax2, cc = prep_ax()
+    joint_names = sanitize_args(joint_names)
+    ax, ax2, cc = prep_ax('Encoder: ' + ','.join(joint_names))
     plot_encoder_fig(joint_names, ax, cc)
     ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=4, mode="expand", borderaxespad=0.)
     plot_stance_index_fig(ax2, False, cc)
     plt.show()
 
 def plot_command(joint_names):
-    ax, ax2, cc = prep_ax()
+    joint_names = sanitize_args(joint_names)
+    ax, ax2, cc = prep_ax('Command: ' + ','.join(joint_names))
     plot_command_fig(joint_names, ax, cc)
     ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=4, mode="expand", borderaxespad=0.)
     plot_stance_index_fig(ax2, False, cc)
     plt.show()
 
 def plot_error(joint_names):
-    ax, ax2, cc = prep_ax()
+    joint_names = sanitize_args(joint_names)
+    ax, ax2, cc = prep_ax('Error: ' + ','.join(joint_names))
     plot_error_fig(joint_names, ax, cc)
     ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=4, mode="expand", borderaxespad=0.)
     plot_stance_index_fig(ax2, False, cc)
     plt.show()
 
 def plot_torque_error(joint_names):
-    ax, ax2, cc = prep_ax()
-    plot_error_fig(joint_names, ax, cc)
+    joint_names = sanitize_args(joint_names)
+    ax, ax2, cc = prep_ax('Torque/Error: ' + ','.join(joint_names))
+    plot_torque_fig(joint_names, ax, cc)
     ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=4, mode="expand", borderaxespad=0.)
-    plot_torque_fig(joint_names, ax2, cc)
+    plot_error_fig(joint_names, ax2, cc)
+    plot_stance_index_fig(ax2, True, cc)
+    ax2.legend(bbox_to_anchor=(0., -.1, 1., -1.02), loc=3, ncol=4, mode="expand", borderaxespad=0.)
+    plt.show()
+
+def plot_command_encoder(joint_names):
+    joint_names = sanitize_args(joint_names)
+    ax, ax2, cc = prep_ax('Command/Encoder: ' + ','.join(joint_names))
+    plot_command_fig(joint_names, ax, cc)
+    ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=4, mode="expand", borderaxespad=0.)
+    plot_encoder_fig(joint_names, ax2, cc)
     plot_stance_index_fig(ax2, True, cc)
     ax2.legend(bbox_to_anchor=(0., -.1, 1., -1.02), loc=3, ncol=4, mode="expand", borderaxespad=0.)
     plt.show()
@@ -212,5 +219,6 @@ def welcome():
     print "- plot_command(joint_names)"
     print "- plot_error(joint_names)"
     print "- plot_torque_error(joint_names)"
+    print "- plot_command_encoder(joint_names)"
 
 welcome()
