@@ -123,7 +123,7 @@ try:
                 lines[m].set_data(t, data[m])
                 limit_lines[m][0].set_data(t, limit_data[m])
                 limit_lines[m][1].set_data(t, -1*limit_data[m])
-                if data[m][-1] > limits[m] or data[m][-1] < -limits[m]:
+                if abs(data[m][-1]) > limits[m]:
                   emergency_text.append('{0} over torque limit'.format(m))
             if len(emergency_text):
                 text = plt.text(t[0] + 0.05*(t[-1] - t[0]), 0.92*y_max, '\n'.join(emergency_text),bbox={'facecolor': 'red', 'pad': 2})
