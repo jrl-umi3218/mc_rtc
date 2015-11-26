@@ -144,7 +144,7 @@ public:
       imu_noise /= 2000;
     }
 
-    tfs.push_back(PT2TF(robot.bodyTransform(robot.mb().body(0).id())*mbc.parentToSon[0], tm, std::string("/map"), robot.mb().body(0).name()));
+    tfs.push_back(PT2TF(robot.bodyTransform(robot.mb().body(0).id())*mbc.parentToSon[0], tm, std::string("/robot_map"), robot.mb().body(0).name()));
     for(int j = 1; j < robot.mb().nrJoints(); ++j)
     {
       const auto & predIndex = robot.mb().predecessor(j);
@@ -169,7 +169,7 @@ public:
     sva::PTransformd X_base_xtion = X_0_xtion * (X_0_base.inv());
 
     tfs.push_back(PT2TF(X_hl1_xtion, tm, "HEAD_LINK1", "xtion_link"));
-    tfs.push_back(PT2TF(X_0_base_odom, tm, "map", "odom_base_link"));
+    tfs.push_back(PT2TF(X_0_base_odom, tm, "robot_map", "odom_base_link"));
     tfs.push_back(PT2TF(X_base_xtion, tm, "odom_base_link", "odom_xtion_link"));
 
     mut.lock();
