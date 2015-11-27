@@ -24,7 +24,7 @@ add_definitions(-mfpmath=sse -msse2)
 
 search_for_eigen()
 
-find_package(Boost REQUIRED COMPONENTS system filesystem thread)
+find_package(Boost REQUIRED COMPONENTS system filesystem thread date_time)
 
 add_required_dependency(jsoncpp)
 add_required_dependency(hrpsys-base)
