@@ -200,12 +200,12 @@ MCSeqController::MCSeqController(const std::shared_ptr<mc_rbdyn::RobotModule> & 
 bool MCSeqController::run()
 {
   bool ret = true;
-  if(!halted && !paused && stanceIndex < seq_actions.size())
+  if(!halted && stanceIndex < seq_actions.size())
   {
     ret = MCController::run();
-    nrIter++;
-    if(ret)
+    if(ret && !paused)
     {
+      nrIter++;
       unsigned int stanceIndexIn = stanceIndex;
       sensorContacts = contactSensor->update(*this);
       pre_live(); /* pre_live can halt the execution */
@@ -548,6 +548,24 @@ bool MCSeqController::play_next_stance()
     LOG_INFO("Playing " << actions[stanceIndex]->toStr())
     paused = false;
     return true;
+  }
+  return false;
+}
+
+bool MCSeqController::set_joint_pos(const std::string & jname, const double & pos)
+{
+  if(robot().hasJoint(jname))
+  {
+    auto idx = robot().jointIndexByName(jname);
+    auto p = stabilityTask->postureTask->posture();
+    if(p[idx].size() == 1)
+    {
+      p[idx][0] = pos;
+      stabilityTask->postureTask->posture(p);
+      stabilityTask->postureTask->weight(1e6);
+      stabilityTask->postureTask->stiffness(10);
+      return true;
+    }
   }
   return false;
 }

@@ -135,6 +135,7 @@ public:
   void removeMetaTask(mc_tasks::MetaTask* mt);
   /* Services */
   bool play_next_stance();
+  virtual bool set_joint_pos(const std::string & jname, const double & pos) override;
   /* Configuration */
   void loadStanceConfigs(const std::string & file);
 public:
