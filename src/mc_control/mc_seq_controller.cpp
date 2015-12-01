@@ -562,8 +562,7 @@ bool MCSeqController::set_joint_pos(const std::string & jname, const double & po
     {
       p[idx][0] = pos;
       stabilityTask->postureTask->posture(p);
-      stabilityTask->postureTask->weight(1e6);
-      stabilityTask->postureTask->stiffness(10);
+      stabilityTask->postureTask->stiffness(2.0);
       return true;
     }
   }
