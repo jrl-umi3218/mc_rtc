@@ -68,6 +68,14 @@ add_library(mc_tasks SHARED ${mc_tasks_SRC})
 target_link_libraries(mc_tasks mc_solver mc_rbdyn mc_trajectory)
 pkg_config_append_libs(mc_tasks)
 
+add_library(mc_rtc_ros SHARED mc_rtc/ros.cpp)
+if(${ROSCPP_FOUND})
+  pkg_config_use_dependency(mc_rtc_ros roscpp)
+  pkg_config_use_dependency(mc_rtc_ros sensor_msgs)
+  pkg_config_use_dependency(mc_rtc_ros tf2_ros)
+endif()
+pkg_config_append_libs(mc_rtc_ros)
+
 set(mc_drc_controller_SRC
 mc_control/ForceContactSensor.cpp
 mc_control/SimulationContactSensor.cpp
@@ -89,14 +97,13 @@ mc_control/mc_global_controller.cpp
 mc_control/mc_global_controller_services.cpp
 )
 add_library(mc_drc_controller SHARED ${mc_drc_controller_SRC})
-target_link_libraries(mc_drc_controller mc_tasks mc_solver mc_robots hrpIo)
+target_link_libraries(mc_drc_controller mc_tasks mc_solver mc_robots hrpIo mc_rtc_ros)
 pkg_config_append_libs(mc_drc_controller)
 
 set(MCControl_SRC
 mc_rtc/MCControlServiceSVC_impl.cpp
 mc_rtc/MCControl.cpp
 ${CMAKE_BINARY_DIR}/idl/MCControlServiceSK.cc
-mc_rtc/ros.cpp
 )
 
 set_source_files_properties(${CMAKE_BINARY_DIR}/idl/MCControlServiceSK.cc
@@ -111,17 +118,12 @@ add_library(MCControl SHARED ${MCControl_SRC})
 add_dependencies(MCControl generate_mc_idl_cpp)
 set_target_properties(MCControl PROPERTIES PREFIX "")
 pkg_config_use_dependency(MCControl hrpsys-base)
-target_link_libraries(MCControl mc_drc_controller)
-if(${ROSCPP_FOUND})
-  pkg_config_use_dependency(MCControl roscpp)
-  pkg_config_use_dependency(MCControl sensor_msgs)
-  pkg_config_use_dependency(MCControl tf2_ros)
-endif()
+target_link_libraries(MCControl mc_rtc_ros mc_drc_controller)
 
 add_executable(MCControlComp mc_rtc/MCControlComp.cpp)
 target_link_libraries(MCControlComp MCControl)
 
-install(TARGETS MCControl MCControlComp mc_rbdyn mc_solver mc_robots mc_tasks mc_drc_controller mc_trajectory
+install(TARGETS MCControl MCControlComp mc_rbdyn mc_solver mc_robots mc_tasks mc_drc_controller mc_trajectory mc_rtc_ros
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib)

@@ -93,7 +93,7 @@ add_subdirectory(src)
 add_subdirectory(tests)
 add_subdirectory(utils)
 
-install(DIRECTORY include
+install(DIRECTORY include ${CMAKE_BINARY_DIR}/include
           DESTINATION ${CMAKE_INSTALL_PREFIX}
           FILES_MATCHING REGEX "h(pp)?$")
 

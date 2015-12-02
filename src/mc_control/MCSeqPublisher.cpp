@@ -29,6 +29,7 @@ MCSeqPublisher::MCSeqPublisher(const mc_rbdyn::Robots & robots)
 MCSeqPublisher::~MCSeqPublisher()
 {
   running = false;
+  pub_thread.join();
 }
 
 void MCSeqPublisher::publish_com(const Eigen::Vector3d & com)

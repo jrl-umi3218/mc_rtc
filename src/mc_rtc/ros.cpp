@@ -80,9 +80,15 @@ public:
     iter_since_start(0),
     imu_noise(Eigen::Vector3d::Zero()),
     tf_caster(),
-    seq(0), msgs(),
+    running(true), seq(0), msgs(),
     th(std::bind(&RobotPublisher::publishThread, this))
   {
+  }
+
+  ~RobotPublisher()
+  {
+    running = false;
+    th.join();
   }
 
   void update(const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy, const RTC::TimedAcceleration3D & gsensor, const std::vector<double> & lGq, const std::vector<double> & rGq)
@@ -197,6 +203,7 @@ private:
     sensor_msgs::Imu imu;
   };
 
+  bool running;
   uint32_t seq;
   std::queue<RobotStateData> msgs;
   std::thread th;
@@ -205,7 +212,7 @@ private:
   void publishThread()
   {
     ros::Rate rt(500);
-    while(ros::ok())
+    while(running && ros::ok())
     {
       while(msgs.size())
       {
