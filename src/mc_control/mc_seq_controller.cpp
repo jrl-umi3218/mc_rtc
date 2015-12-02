@@ -123,7 +123,7 @@ MCSeqController::MCSeqController(const std::string & env_path, const std::string
 MCSeqController::MCSeqController(const std::shared_ptr<mc_rbdyn::RobotModule> & env_module, const std::string & seq_path, bool real_sensors, unsigned int start_stance, bool step_by_step)
 : MCController(env_module),
   nrIter(0), logger(timeStep),
-  publisher(new MCSeqPublisher()),
+  publisher(new MCSeqPublisher(robots())),
   step_by_step(step_by_step), paused(false), halted(false),
   stanceIndex(start_stance), seq_actions(0),
   currentContact(0), targetContact(0), currentGripper(0),
@@ -261,6 +261,7 @@ bool MCSeqController::run()
           if(stanceIndex < actions.size())
           {
             LOG_INFO("Starting " << actions[stanceIndex]->toStr() << "(" << (stanceIndex+1) << "/" << actions.size() << ")")
+            publisher->set_contacts(stances[stanceIndex].geomContacts());
           }
           samples = mc_rbdyn::QuadraticGenerator(0.0, max_perc, nr_points);
           paused = step_by_step;
