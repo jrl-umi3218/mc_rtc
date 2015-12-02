@@ -157,6 +157,8 @@ public:
 
   std::string forceSensorByBody(const std::string & body) const;
 
+  std::vector<std::string> forceSensorsByName() const;
+
   rbd::MultiBody & mb();
   const rbd::MultiBody & mb() const;
 

@@ -130,6 +130,16 @@ std::string Robot::forceSensorByBody(const std::string & body) const
   return parentBodyForceSensorD.at(body);
 }
 
+std::vector<std::string> Robot::forceSensorsByName() const
+{
+  std::vector<std::string> res;
+  for(const auto & fs : forceSensors)
+  {
+    res.push_back(fs.sensorName);
+  }
+  return res;
+}
+
 rbd::MultiBody & Robot::mb()
 {
   return robots.mbs_[robots_idx];
