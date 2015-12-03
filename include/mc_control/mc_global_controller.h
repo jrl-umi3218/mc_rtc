@@ -15,7 +15,7 @@ namespace mc_control
 struct MCGlobalController
 {
 public:
-  MCGlobalController();
+  MCGlobalController(const std::string & conf = mc_rtc::CONF_PATH);
 
   void init(const std::vector<double> & initq);
 

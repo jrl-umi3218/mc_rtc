@@ -132,8 +132,8 @@ bool MCGlobalController::Configuration::enabled(const std::string & ctrl)
   return std::find(enabled_controllers.begin(), enabled_controllers.end(), ctrl) != enabled_controllers.end();
 }
 
-MCGlobalController::MCGlobalController()
-: config(mc_rtc::CONF_PATH),
+MCGlobalController::MCGlobalController(const std::string & conf)
+: config(conf),
   posture_controller(0), body6d_controller(0), com_controller(0),
   seq_controller(0), driving_controller(0),
   egress_controller(0), egress_mrqp_controller(0),
