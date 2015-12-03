@@ -3,8 +3,8 @@
 namespace mc_control
 {
 
-MCVirtualController::MCVirtualController()
-: timeStep(0.002)
+MCVirtualController::MCVirtualController(double dt)
+: timeStep(dt)
 {
 }
 

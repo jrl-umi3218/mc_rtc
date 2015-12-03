@@ -34,8 +34,8 @@ namespace
 namespace mc_control
 {
 
-MCBCISelfInteractController::MCBCISelfInteractController()
-: MCController(),
+MCBCISelfInteractController::MCBCISelfInteractController(double dt)
+: MCController(dt),
   tf_caster(0), seq(0)
 {
   qpsolver->addConstraintSet(contactConstraint);

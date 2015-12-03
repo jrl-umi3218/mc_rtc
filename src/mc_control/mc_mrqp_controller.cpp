@@ -9,8 +9,8 @@
 namespace mc_control
 {
 
-MCMRQPController::MCMRQPController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & env_modules)
-: MCVirtualController(), robot_modules(env_modules)
+MCMRQPController::MCMRQPController(double dt, const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & env_modules)
+: MCVirtualController(dt), robot_modules(env_modules)
 {
   robot_modules.insert(robot_modules.begin(), std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::HRP2DRCGripperRobotModule()));
   unsigned int hrp2_drc_index = 0;

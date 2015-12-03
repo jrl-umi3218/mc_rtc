@@ -23,13 +23,13 @@ struct MCController : public MCVirtualController
 {
 public:
   /* Assumes an environment from mc_env_description */
-  MCController(const std::string & env_name = "ground");
+  MCController(double dt, const std::string & env_name = "ground");
 
   /* Assumes an environment similar to those in mc_env_description but hosted somewhere */
-  MCController(const std::string & env_path, const std::string & env_name);
+  MCController(double dt, const std::string & env_path, const std::string & env_name);
 
   /* Generic module for the environment */
-  MCController(const std::shared_ptr<mc_rbdyn::RobotModule> & env);
+  MCController(double dt, const std::shared_ptr<mc_rbdyn::RobotModule> & env);
 
   virtual bool run() override;
 

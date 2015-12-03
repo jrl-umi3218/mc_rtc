@@ -13,18 +13,18 @@
 namespace mc_control
 {
 
-MCController::MCController(const std::string & env_name)
-: MCController(mc_rtc::MC_ENV_DESCRIPTION_PATH, env_name)
+MCController::MCController(double dt, const std::string & env_name)
+: MCController(dt, mc_rtc::MC_ENV_DESCRIPTION_PATH, env_name)
 {
 }
 
-MCController::MCController(const std::string & env_path, const std::string & env_name)
-: MCController(std::make_shared<mc_robots::EnvRobotModule>(env_path, env_name))
+MCController::MCController(double dt, const std::string & env_path, const std::string & env_name)
+: MCController(dt, std::make_shared<mc_robots::EnvRobotModule>(env_path, env_name))
 {
 }
 
-MCController::MCController(const std::shared_ptr<mc_rbdyn::RobotModule> & env)
-: MCVirtualController(), robot_module(), env_module(env)
+MCController::MCController(double dt, const std::shared_ptr<mc_rbdyn::RobotModule> & env)
+: MCVirtualController(dt), robot_module(), env_module(env)
 {
   unsigned int hrp2_drc_index = 0;
   {

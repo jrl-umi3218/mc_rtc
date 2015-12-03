@@ -12,8 +12,8 @@
 namespace mc_control
 {
 
-MCEgressController::MCEgressController(const std::string & env_path, const std::string & env_name)
-: MCController(env_path, env_name),
+MCEgressController::MCEgressController(double dt, const std::string & env_path, const std::string & env_name)
+: MCController(dt, env_path, env_name),
   collsConstraint(robots(), 0, 1, timeStep),
   phase(START), phaseExec(new EgressStartPhase)
   //phase(ROTATEBODY), phaseExec(new EgressRotateBodyPhase)

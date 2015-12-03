@@ -28,7 +28,7 @@ public:
     STANDUP
   };
 public:
-  MCEgressController(const std::string & env_path, const std::string & env_name);
+  MCEgressController(double dt, const std::string & env_path, const std::string & env_name);
 
   virtual void reset(const ControllerResetData & reset_data) override;
 

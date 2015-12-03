@@ -21,7 +21,7 @@ public:
   /* FIXME Since this is aimed at controlling HRP-2 only for the moment, we
    * will assume that we only load additional robots and that the main robot is
    * robot 0 */
-  MCMRQPController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & env_modules);
+  MCMRQPController(double dt, const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & env_modules);
 
   virtual bool run() override;
 

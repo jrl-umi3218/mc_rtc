@@ -16,7 +16,7 @@ namespace mc_control
 struct MCBCISelfInteractController : public MCController
 {
 public:
-  MCBCISelfInteractController();
+  MCBCISelfInteractController(double dt);
 
   virtual bool run() override;
 

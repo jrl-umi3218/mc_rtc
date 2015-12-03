@@ -11,8 +11,8 @@
 namespace mc_control
 {
 
-MCBody6dController::MCBody6dController()
-: MCController()
+MCBody6dController::MCBody6dController(double dt)
+: MCController(dt)
 {
   qpsolver->addConstraintSet(contactConstraint);
   qpsolver->addConstraintSet(dynamicsConstraint);

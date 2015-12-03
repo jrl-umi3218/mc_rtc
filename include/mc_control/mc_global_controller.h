@@ -90,6 +90,7 @@ private:
 
     std::vector<std::string> enabled_controllers;
     std::string initial_controller;
+    double timestep;
     std::string seq_env_path;
     std::string seq_env_name;
     std::string seq_env_module;

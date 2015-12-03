@@ -11,7 +11,7 @@ namespace mc_control
 struct MCBody6dController : public MCController
 {
 public:
-  MCBody6dController();
+  MCBody6dController(double dt);
 
   virtual void reset(const ControllerResetData & reset_data) override;
 

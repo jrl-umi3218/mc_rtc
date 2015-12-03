@@ -21,8 +21,8 @@ namespace bfs = boost::filesystem;
 namespace mc_control
 {
 
-MCDrivingController::MCDrivingController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule> >& env_modules)
-  : MCMRQPController(env_modules),
+MCDrivingController::MCDrivingController(double dt, const std::vector<std::shared_ptr<mc_rbdyn::RobotModule> >& env_modules)
+  : MCMRQPController(dt, env_modules),
     graspOffset(sva::RotX(-M_PI/2), Eigen::Vector3d(0., 0., 0.)),
     ef_task("RARM_LINK6", robots(), 0),
     polarisKinematicsConstraint(robots(), 1, timeStep, false,

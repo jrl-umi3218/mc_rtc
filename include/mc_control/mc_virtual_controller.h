@@ -29,7 +29,7 @@ struct MCVirtualController
 {
   friend struct MCGlobalController;
 public:
-  MCVirtualController();
+  MCVirtualController(double dt);
 
   virtual bool run() = 0;
 

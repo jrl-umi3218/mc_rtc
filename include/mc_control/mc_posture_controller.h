@@ -10,7 +10,7 @@ struct MCPostureController : public MCController
 {
 public:
   /* Common stuff */
-  MCPostureController();
+  MCPostureController(double dt);
 };
 
 }

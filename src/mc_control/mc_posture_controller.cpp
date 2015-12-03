@@ -12,8 +12,8 @@ namespace mc_control
 {
 
 /* Common stuff */
-MCPostureController::MCPostureController()
-: MCController()
+MCPostureController::MCPostureController(double dt)
+: MCController(dt)
 {
   qpsolver->setContacts({});
   qpsolver->addConstraintSet(contactConstraint);

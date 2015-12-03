@@ -27,9 +27,10 @@ search_for_eigen()
 find_package(Boost REQUIRED COMPONENTS system filesystem thread date_time)
 
 add_required_dependency(jsoncpp)
-add_required_dependency(hrpsys-base)
 add_required_dependency(Tasks)
 add_required_dependency(mc_rbdyn_urdf_cpp)
+
+add_required_dependency(hrpsys-base)
 
 # Find GEOS flags using geos-config
 find_program(GEOS_CONFIG geos-config

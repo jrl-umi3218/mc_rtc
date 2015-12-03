@@ -54,6 +54,14 @@ MCGlobalController::Configuration::Configuration(const std::string & path)
       initial_controller = enabled_controllers[0];
     }
   }
+  if(v.isMember("Timestep"))
+  {
+    timestep = v["Timestep"].asDouble();
+  }
+  else
+  {
+    timestep = 0.002;
+  }
   /* Allow the user not to worry about Default if only one controller is enabled */
   if(enabled_controllers.size() == 1)
   {
@@ -135,15 +143,15 @@ MCGlobalController::MCGlobalController()
 {
   if(config.enabled("Posture"))
   {
-    posture_controller.reset(new MCPostureController());
+    posture_controller.reset(new MCPostureController(config.timestep));
   }
   if(config.enabled("Body6d"))
   {
-    body6d_controller.reset(new MCBody6dController());
+    body6d_controller.reset(new MCBody6dController(config.timestep));
   }
   if(config.enabled("CoM"))
   {
-    com_controller.reset(new MCCoMController());
+    com_controller.reset(new MCCoMController(config.timestep));
   }
   if(config.enabled("Seq"))
   {
@@ -151,18 +159,18 @@ MCGlobalController::MCGlobalController()
     {
       if(config.seq_env_path != "")
       {
-        seq_controller.reset(new MCSeqController(config.seq_env_path, config.seq_env_name, std::string(mc_rtc::DATA_PATH) + config.seq_plan, config.seq_use_real_sensors, config.seq_start_stance, config.seq_step_by_step));
+        seq_controller.reset(new MCSeqController(config.timestep, config.seq_env_path, config.seq_env_name, std::string(mc_rtc::DATA_PATH) + config.seq_plan, config.seq_use_real_sensors, config.seq_start_stance, config.seq_step_by_step));
       }
       else
       {
-        seq_controller.reset(new MCSeqController(config.seq_env_name, std::string(mc_rtc::DATA_PATH) + config.seq_plan, config.seq_use_real_sensors, config.seq_start_stance, config.seq_step_by_step));
+        seq_controller.reset(new MCSeqController(config.timestep, config.seq_env_name, std::string(mc_rtc::DATA_PATH) + config.seq_plan, config.seq_use_real_sensors, config.seq_start_stance, config.seq_step_by_step));
       }
     }
     else if(config.seq_env_module != "")
     {
       if(config.seq_env_module == "Polaris")
       {
-        seq_controller.reset(new MCSeqController(std::make_shared<mc_robots::PolarisRangerRobotModule>(false),
+        seq_controller.reset(new MCSeqController(config.timestep, std::make_shared<mc_robots::PolarisRangerRobotModule>(false),
                                                  std::string(mc_rtc::DATA_PATH) + config.seq_plan,
                                                  config.seq_use_real_sensors, config.seq_start_stance, config.seq_step_by_step));
       }
@@ -178,19 +186,19 @@ MCGlobalController::MCGlobalController()
   }
   if(config.enabled("Driving"))
   {
-    driving_controller.reset(new MCDrivingController({std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::PolarisRangerRobotModule()), std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::EnvRobotModule(mc_rtc::MC_ENV_DESCRIPTION_PATH, "ground"))}));
+    driving_controller.reset(new MCDrivingController(config.timestep, {std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::PolarisRangerRobotModule()), std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::EnvRobotModule(mc_rtc::MC_ENV_DESCRIPTION_PATH, "ground"))}));
   }
   if(config.enabled("Egress"))
   {
-    egress_controller.reset(new MCEgressController(mc_rtc::HRP2_DRC_DESCRIPTION_PATH, "polaris_ranger"));
+    egress_controller.reset(new MCEgressController(config.timestep, mc_rtc::HRP2_DRC_DESCRIPTION_PATH, "polaris_ranger"));
   }
   if(config.enabled("EgressMRQP"))
   {
-    egress_mrqp_controller.reset(new MCEgressMRQPController({std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::PolarisRangerEgressRobotModule()), std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::EnvRobotModule(mc_rtc::MC_ENV_DESCRIPTION_PATH, "ground"))}));
+    egress_mrqp_controller.reset(new MCEgressMRQPController(config.timestep, {std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::PolarisRangerEgressRobotModule()), std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::EnvRobotModule(mc_rtc::MC_ENV_DESCRIPTION_PATH, "ground"))}));
   }
   if(config.enabled("BCISelfInteract"))
   {
-    bci_self_interact_controller.reset(new MCBCISelfInteractController());
+    bci_self_interact_controller.reset(new MCBCISelfInteractController(config.timestep));
   }
   if(config.initial_controller == "Posture")
   {

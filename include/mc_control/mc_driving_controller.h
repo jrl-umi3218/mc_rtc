@@ -13,7 +13,7 @@ namespace mc_control
 struct MCDrivingController : MCMRQPController
 {
   public:
-    MCDrivingController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule> >& env_modules);
+    MCDrivingController(double dt, const std::vector<std::shared_ptr<mc_rbdyn::RobotModule> >& env_modules);
 
     bool changeWheelAngle(double theta);
 

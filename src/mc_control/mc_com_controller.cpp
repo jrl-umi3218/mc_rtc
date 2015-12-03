@@ -7,7 +7,8 @@
 namespace mc_control
 {
 
-MCCoMController::MCCoMController()
+MCCoMController::MCCoMController(double dt)
+: MCController(dt)
 {
   sva::PTransformd leftFootSurfTf = robot().surface("LFullSole").X_0_s(robot());
   auto q = robot().mbc().q;

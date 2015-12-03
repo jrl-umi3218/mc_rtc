@@ -11,7 +11,7 @@ namespace mc_control
 struct MCCoMController : public MCController
 {
 public:
-  MCCoMController();
+  MCCoMController(double dt);
 
   virtual void reset(const ControllerResetData & reset_data) override;
 

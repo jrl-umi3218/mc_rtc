@@ -36,7 +36,7 @@ struct MCEgressMRQPController : MCMRQPController
       REPLACEHAND
     };
   public:
-    MCEgressMRQPController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule> >& env_modules);
+    MCEgressMRQPController(double dt, const std::vector<std::shared_ptr<mc_rbdyn::RobotModule> >& env_modules);
 
     virtual bool run() override;
 
