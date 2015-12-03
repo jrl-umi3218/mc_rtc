@@ -30,7 +30,12 @@ add_required_dependency(jsoncpp)
 add_required_dependency(Tasks)
 add_required_dependency(mc_rbdyn_urdf_cpp)
 
-add_required_dependency(hrpsys-base)
+add_optional_dependency(hrpsys-base)
+if(${HRPSYS_BASE_FOUND})
+  set(DEFINE_HAS_HRPSYS_BASE_MACRO "#define MC_RTC_HAS_HRPSYS_BASE 1")
+else()
+  set(DEFINE_HAS_HRPSYS_BASE_MACRO "")
+endif()
 
 # Find GEOS flags using geos-config
 find_program(GEOS_CONFIG geos-config

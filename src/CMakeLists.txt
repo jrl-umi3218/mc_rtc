@@ -97,33 +97,43 @@ mc_control/mc_global_controller.cpp
 mc_control/mc_global_controller_services.cpp
 )
 add_library(mc_drc_controller SHARED ${mc_drc_controller_SRC})
-target_link_libraries(mc_drc_controller mc_tasks mc_solver mc_robots hrpIo mc_rtc_ros)
+target_link_libraries(mc_drc_controller mc_tasks mc_solver mc_robots mc_rtc_ros)
+if(${HRPSYS_BASE_FOUND})
+  target_link_libraries(mc_drc_controller hrpIo)
+endif()
 pkg_config_append_libs(mc_drc_controller)
 
-set(MCControl_SRC
-mc_rtc/MCControlServiceSVC_impl.cpp
-mc_rtc/MCControl.cpp
-${CMAKE_BINARY_DIR}/idl/MCControlServiceSK.cc
-)
+if(${HRPSYS_BASE_FOUND})
+  set(MCControl_SRC
+  mc_rtc/MCControlServiceSVC_impl.cpp
+  mc_rtc/MCControl.cpp
+  ${CMAKE_BINARY_DIR}/idl/MCControlServiceSK.cc
+  )
 
-set_source_files_properties(${CMAKE_BINARY_DIR}/idl/MCControlServiceSK.cc
-                            PROPERTIES
-                              GENERATED 1
-                              COMPILE_FLAGS -Wno-error
-                           )
+  set_source_files_properties(${CMAKE_BINARY_DIR}/idl/MCControlServiceSK.cc
+                              PROPERTIES
+                                GENERATED 1
+                                COMPILE_FLAGS -Wno-error
+                             )
 
-include_directories(${CMAKE_BINARY_DIR}/idl)
+  include_directories(${CMAKE_BINARY_DIR}/idl)
 
-add_library(MCControl SHARED ${MCControl_SRC})
-add_dependencies(MCControl generate_mc_idl_cpp)
-set_target_properties(MCControl PROPERTIES PREFIX "")
-pkg_config_use_dependency(MCControl hrpsys-base)
-target_link_libraries(MCControl mc_rtc_ros mc_drc_controller)
+  add_library(MCControl SHARED ${MCControl_SRC})
+  add_dependencies(MCControl generate_mc_idl_cpp)
+  set_target_properties(MCControl PROPERTIES PREFIX "")
+  pkg_config_use_dependency(MCControl hrpsys-base)
+  target_link_libraries(MCControl mc_rtc_ros mc_drc_controller)
 
-add_executable(MCControlComp mc_rtc/MCControlComp.cpp)
-target_link_libraries(MCControlComp MCControl)
+  add_executable(MCControlComp mc_rtc/MCControlComp.cpp)
+  target_link_libraries(MCControlComp MCControl)
 
-install(TARGETS MCControl MCControlComp mc_rbdyn mc_solver mc_robots mc_tasks mc_drc_controller mc_trajectory mc_rtc_ros
+  install(TARGETS MCControl MCControlComp
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib)
+endif()
+
+install(TARGETS mc_rbdyn mc_solver mc_robots mc_tasks mc_drc_controller mc_trajectory mc_rtc_ros
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib)

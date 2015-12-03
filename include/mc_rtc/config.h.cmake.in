@@ -1,6 +1,7 @@
 #pragma once
 
 ${DEFINE_HAS_ROS_MACRO}
+${DEFINE_HAS_HRPSYS_BASE_MACRO}
 
 #include <string>
 

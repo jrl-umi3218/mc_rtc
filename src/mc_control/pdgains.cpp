@@ -2,10 +2,33 @@
 #include <unordered_map>
 #include <vector>
 
+#include <mc_rtc/config.h>
+
+inline bool setPGain(int joint, double pgain);
+inline bool setPGain(const std::string & jname, double pgain);
+inline bool setDGain(int joint, double dgain);
+inline bool setDGain(const std::string & jname, double dgain);
+inline bool setPGains(const std::vector<int> & joints, const std::vector<double> & pgains);
+inline bool setPGains(const std::vector<std::string> & jnames, const std::vector<double> & pgains);
+inline bool setDGains(const std::vector<int> & joints, const std::vector<double> & dgains);
+inline bool setDGains(const std::vector<std::string> & jnames, const std::vector<double> & dgains);
+inline bool setPDGains(const std::vector<int> & joints, const std::vector<double> & pgains, const std::vector<double> & dgains);
+inline bool setPDGains(const std::vector<std::string> & jnames, const std::vector<double> & pgains, const std::vector<double> & dgains);
+inline bool setPDGains(const std::vector<double> & pgains, const std::vector<double> & dgains);
+inline bool getPGain(int joint, double &pgain);
+inline bool getPGain(const std::string & jname, double & pgain);
+inline bool getPGains(std::vector<double> &pgains);
+inline bool getDGain(int joint, double &dgain);
+inline bool getDGain(const std::string & jname, double & dgain);
+inline bool getDGains(std::vector<double> &dgains);
+
+#ifdef MC_RTC_HAS_HRPSYS_BASE
 #include <hrpsys/io/iob.h>
+#endif
 
 namespace hrp2
 {
+#ifdef MC_RTC_HAS_HRPSYS_BASE
   static const std::unordered_map<std::string, int> joints =
   {
     {"RLEG_JOINT0",0},
@@ -229,5 +252,24 @@ inline bool getDGains(std::vector<double> &dgains)
   }
   return b;
 }
+#else // isdef MC_RTC_HAS_HRPSYS_BASE
+inline bool set(int, double) { return true; }
+inline bool set(const std::string &, double) { return true; }
+inline bool setDGain(int, double) { return true; }
+inline bool setDGain(const std::string &, double) { return true; }
+inline bool sets(const std::vector<int> &, const std::vector<double> &) { return true; }
+inline bool sets(const std::vector<std::string> &, const std::vector<double> &) { return true; }
+inline bool setDGains(const std::vector<int> &, const std::vector<double> &) { return true; }
+inline bool setDGains(const std::vector<std::string> &, const std::vector<double> &) { return true; }
+inline bool setPDGains(const std::vector<int> &, const std::vector<double> &) { return true; }
+inline bool setPDGains(const std::vector<std::string> &, const std::vector<double> &) { return true; }
+inline bool setPDGains(const std::vector<double> &, const std::vector<double> &) { return true; }
+inline bool get(int, double &) { return true; }
+inline bool get(const std::string &, double &) { return true; }
+inline bool gets(std::vector<double> &) { return true; }
+inline bool getDGain(int, double &) { return true; }
+inline bool getDGain(const std::string &, double &) { return true; }
+inline bool getDGains(std::vector<double> &) { return true; }
+#endif // MC_RTC_HAS_HRPSYS_BASE
 
 } // namespace pdgains
