@@ -7,12 +7,14 @@
 #include <mc_tasks/OrientationTask.h>
 #include <mc_tasks/EndEffectorTask.h>
 
+#include <mc_control/api.h>
+
 namespace mc_control
 {
 
 struct EgressPhaseExecution;
 
-struct MCEgressController : public MCController
+struct MC_CONTROL_DLLAPI MCEgressController : public MCController
 {
 public:
   enum EgressPhase

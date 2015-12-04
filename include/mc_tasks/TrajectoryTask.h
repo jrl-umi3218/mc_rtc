@@ -7,10 +7,12 @@
 #include <mc_rbdyn/robot.h>
 #include <Tasks/QPTasks.h>
 
+#include <mc_tasks/api.h>
+
 namespace mc_tasks
 {
 
-struct TrajectoryTask : public MetaTask
+struct MC_TASKS_DLLAPI TrajectoryTask : public MetaTask
 {
 public:
   TrajectoryTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex,

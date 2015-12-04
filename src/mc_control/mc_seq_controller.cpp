@@ -357,11 +357,11 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
   {
     mc_rbdyn::GripperSurface * is_gs = dynamic_cast<mc_rbdyn::GripperSurface*>(c.r1Surface().get());
     std::string bodyName = c.r1Surface()->bodyName();
-    if(is_gs and actiGrippers.count(bodyName) == 0 and robot().hasForceSensor(bodyName) )
+    if(is_gs && actiGrippers.count(bodyName) == 0 && robot().hasForceSensor(bodyName) )
     {
       LOG_INFO("ActiGripper ADD " << bodyName)
       std::string forceSensor = robot().forceSensorByBody(bodyName);
-      unsigned int wrenchIndex = forceSensor == "RightHandForceSensor" ? 2 : 3; /*FIXME Hard-coded */
+      unsigned int wrenchIndex = forceSensor == "RightH&&ForceSensor" ? 2 : 3; /*FIXME Hard-coded */
       tasks::qp::ContactId contactId = c.contactId(robots());
       sva::PTransformd X_0_s = c.r1Surface()->X_0_s(robot());
       double actiForce = 10; /* FIXME Hard-coded, should at least be an acti gripper const static member */
@@ -408,11 +408,11 @@ void MCSeqController::pre_live()
     const Eigen::Vector3d & force = wrenches[ba.second.wrenchIndex].first;
     double forceNorm = force.norm();
     ba.second.targetError = ba.second.positionTask->eval().norm();
-    if(not ba.second.toRemove)
+    if(!ba.second.toRemove)
     {
       if(ba.second.activated)
       {
-        if(forceNorm > ba.second.stopForce and ba.second.targetError < ba.second.maxDist*0.1)
+        if(forceNorm > ba.second.stopForce && ba.second.targetError < ba.second.maxDist*0.1)
         {
           ba.second.activated = false;
           /* This cast is guaranted to work */
@@ -544,7 +544,7 @@ void MCSeqController::removeMetaTask(mc_tasks::MetaTask* mt)
 
 bool MCSeqController::play_next_stance()
 {
-  if(paused and stanceIndex < stances.size())
+  if(paused && stanceIndex < stances.size())
   {
     LOG_INFO("Playing " << actions[stanceIndex]->toStr())
     paused = false;
@@ -638,7 +638,7 @@ void MCSeqController::loadStanceConfigs(const std::string & file)
         sc = gripperMoveConfig;
         break;
       default:
-        throw("Not happenning");
+        throw("!happenning");
         break;
     }
 
@@ -735,8 +735,8 @@ std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * cu
 
 
   bool contactBranch = (curIsRemoveContact && targetIsAddContact && sameSurface  && !curIsGripperContact) || (targetIsAddContact && !targetIsGripperContact);
-  bool comBranch = (targetIsRemoveContact or targetIsIdentity);
-  bool gripperBranch = (curIsRemoveContact && targetIsAddContact && sameSurface && targetIsGripperContact) || (targetIsAddContact && targetIsGripperContact) || (targetIsRemoveContact && targetIsGripperContact && (not targetTargetIsAddContact));
+  bool comBranch = (targetIsRemoveContact || targetIsIdentity);
+  bool gripperBranch = (curIsRemoveContact && targetIsAddContact && sameSurface && targetIsGripperContact) || (targetIsAddContact && targetIsGripperContact) || (targetIsRemoveContact && targetIsGripperContact && (!targetTargetIsAddContact));
 
   if(contactBranch)
   {
@@ -791,7 +791,7 @@ std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * cu
   }
   else
   {
-    LOG_ERROR("Could not find a branch for the following action couple:")
+    LOG_ERROR("Could !find a branch for the following action couple:")
     LOG_WARNING("Current: " << curAction->toStr())
     LOG_WARNING("Target: " << targetAction->toStr())
     res->steps = {

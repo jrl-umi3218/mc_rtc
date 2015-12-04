@@ -3,12 +3,14 @@
 #include <array>
 #include <memory>
 #include <geos/geom/GeometryFactory.h>
-#include <jsoncpp/json/json.h>
+#include <json/json.h>
+
+#include <mc_rbdyn/api.h>
 
 namespace mc_rbdyn
 {
 
-struct PolygonInterpolator
+struct MC_RBDYN_DLLAPI PolygonInterpolator
 {
 private:
   typedef std::array<double, 2> tuple_t;
@@ -17,11 +19,11 @@ private:
   struct GeometryDeleter
   {
   public:
-    GeometryDeleter(geos::geom::GeometryFactory & factory);
+    GeometryDeleter(const geos::geom::GeometryFactory & factory);
 
     void operator()(geos::geom::Geometry * ptr);
   private:
-      geos::geom::GeometryFactory & factory;
+      const geos::geom::GeometryFactory & factory;
   };
 public:
   /* For now, the PolygonInterpolator can only be restored from a serialized
@@ -34,7 +36,7 @@ public:
 
   std::vector<tuple_t> normal_derivative(double epsilon_derivative);
 private:
-  geos::geom::GeometryFactory geom_factory;
+  const geos::geom::GeometryFactory & geom_factory;
   GeometryDeleter geom_deleter;
   std::vector<tuple_pair_t> tuple_pairs;
   std::vector<tuple_pair_t> midpoints;

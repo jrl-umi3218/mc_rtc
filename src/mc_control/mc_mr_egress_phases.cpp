@@ -37,7 +37,7 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
 
     virtual bool run(MCEgressMRQPController & ctl) override
     {
-      if(not started)
+      if(!started)
       {
         started = true;
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5", ctl.mrqpsolver->robots, 0, 0.25));
@@ -47,10 +47,10 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
         timeoutIter = 0;
         return false;
       }
-      else if(not done_move_foot)
+      else if(!done_move_foot)
       {
         timeoutIter++;
-        if((ctl.efTask->positionTask->eval().norm() < 1e-1 and ctl.efTask->positionTask->speed().norm() < 1e-4) or timeoutIter > 10*500)
+        if((ctl.efTask->positionTask->eval().norm() < 1e-1 && ctl.efTask->positionTask->speed().norm() < 1e-4) || timeoutIter > 10*500)
         {
           done_move_foot = true;
           ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
@@ -63,10 +63,10 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
         }
         return false;
       }
-      else if(not done_change_knee)
+      else if(!done_change_knee)
       {
         timeoutIter++;
-        if(ctl.hrp2postureTask->eval().norm() < 1e-2 or timeoutIter > 10*500)
+        if(ctl.hrp2postureTask->eval().norm() < 1e-2 || timeoutIter > 10*500)
         {
           done_change_knee = true;
           ctl.hrp2postureTask->posture(ctl.robot().mbc().q);
@@ -85,11 +85,11 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
         }
         return false;
       }
-      else if(not done_rotate)
+      else if(!done_rotate)
       {
         //Check if robot is no longer moving
         timeoutIter++;
-        if((ctl.efTask->positionTask->eval().norm() < 1e-1 and ctl.efTask->positionTask->speed().norm() < 1e-4 and ctl.efTask->orientationTask->eval().norm() < 1e-2 and ctl.efTask->orientationTask->speed().norm() < 1e-4) or timeoutIter > 15*500)
+        if((ctl.efTask->positionTask->eval().norm() < 1e-1 && ctl.efTask->positionTask->speed().norm() < 1e-4 && ctl.efTask->orientationTask->eval().norm() < 1e-2 && ctl.efTask->orientationTask->speed().norm() < 1e-4) || timeoutIter > 15*500)
         {
           LOG_INFO("Lazy susan rotation done")
           ctl.lazyPostureTask->posture(ctl.robots().robot(1).mbc().q);
@@ -112,10 +112,10 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
         }
         return false;
       }
-      else if(not done_reorient)
+      else if(!done_reorient)
       {
         timeoutIter++;
-        if((ctl.efTask->positionTask->eval().norm() < 1e-1 and ctl.efTask->positionTask->speed().norm() < 1e-4 and ctl.efTask->orientationTask->eval().norm() < 1e-2 and ctl.efTask->orientationTask->speed().norm() < 1e-4) or timeoutIter > 15*500)
+        if((ctl.efTask->positionTask->eval().norm() < 1e-1 && ctl.efTask->positionTask->speed().norm() < 1e-4 && ctl.efTask->orientationTask->eval().norm() < 1e-2 && ctl.efTask->orientationTask->speed().norm() < 1e-4) || timeoutIter > 15*500)
         {
           ctl.hrp2postureTask->posture(ctl.robot().mbc().q);
           ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
@@ -131,7 +131,7 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
         }
         return false;
       }
-      else if(not done_putdown)
+      else if(!done_putdown)
       {
         timeoutIter++;
         if(ctl.wrenches[0].first[2] > forceStart + 50)
@@ -143,7 +143,7 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
         {
           forceIter = 0;
         }
-        if(forceIter > 40 or timeoutIter > 15*500)
+        if(forceIter > 40 || timeoutIter > 15*500)
         {
           done_putdown = true;
           ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
@@ -191,7 +191,7 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
 
     virtual bool run(MCEgressMRQPController & ctl) override
     {
-      if(not started)
+      if(!started)
       {
         LOG_INFO("Replacing left foot")
         ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
@@ -236,12 +236,12 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
       }
       else
       {
-        if(not done_removing)
+        if(!done_removing)
         {
           timeoutIter++;
           if((ctl.efTask->positionTask->eval().norm() < 1e-2
-              and ctl.efTask->positionTask->speed().norm() < 1e-4)
-              or timeoutIter > 15*500)
+              && ctl.efTask->positionTask->speed().norm() < 1e-4)
+              || timeoutIter > 15*500)
           {
             done_removing = true;
             ctl.addCollision(mc_solver::Collision("RLEG_LINK4", "exit_platform", 0.05, 0.01, 0.));
@@ -264,12 +264,12 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
           }
           return false;
         }
-        else if(not done_rotating)
+        else if(!done_rotating)
         {
           timeoutIter++;
           if((ctl.efTask->positionTask->eval().norm() < 1e-2
-              and ctl.efTask->positionTask->speed().norm() < 1e-4)
-              or timeoutIter > 15*500)
+              && ctl.efTask->positionTask->speed().norm() < 1e-4)
+              || timeoutIter > 15*500)
           {
             done_rotating = true;
             //ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
@@ -321,7 +321,7 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
           }
           return false;
         }
-        else if(not done_contacting)
+        else if(!done_contacting)
         {
           timeoutIter++;
           if(ctl.wrenches[1].first[2] > forceStart + 150)
@@ -333,7 +333,7 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
           {
             forceIter = 0;
           }
-          if(forceIter > 40 or timeoutIter > 15*500)
+          if(forceIter > 40 || timeoutIter > 15*500)
           {
             done_contacting = true;
             LOG_INFO(ctl.robots().robot(2).surfaces().size())
@@ -346,7 +346,7 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
               LOG_INFO("NOPE NOPE")
             else
               constr->resetDofContacts();
-            //NB : When using dof contacts, do not add twice !
+            //NB : When using dof contacts, do !add twice !
             ctl.egressContacts.emplace_back(ctl.robots(), ctl.robots().robotIndex(), 2,
                                             "LFullSole", "AllGround");
             ctl.mrqpsolver->setContacts(ctl.egressContacts);
@@ -390,7 +390,7 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
 
     virtual bool run(MCEgressMRQPController & ctl) override
     {
-      if(not started)
+      if(!started)
       {
         LOG_INFO("Moving right foot to the ground")
 
@@ -440,12 +440,12 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
       }
       else
       {
-        if(not done_removing)
+        if(!done_removing)
         {
           timeoutIter++;
           if((ctl.efTask->positionTask->eval().norm() < 1e-2
-              and ctl.efTask->positionTask->speed().norm() < 1e-4)
-              or timeoutIter > 15*500)
+              && ctl.efTask->positionTask->speed().norm() < 1e-4)
+              || timeoutIter > 15*500)
           {
             done_removing = true;
             ctl.mrqpsolver->setContacts(ctl.egressContacts);
@@ -461,12 +461,12 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
           }
           return false;
         }
-        else if(not done_moving)
+        else if(!done_moving)
         {
           timeoutIter++;
           if((ctl.efTask->positionTask->eval().norm() < 1e-2
-              and ctl.efTask->positionTask->speed().norm() < 1e-4)
-              or timeoutIter > 15*500)
+              && ctl.efTask->positionTask->speed().norm() < 1e-4)
+              || timeoutIter > 15*500)
           {
             done_moving = true;
             timeoutIter = 0;
@@ -474,12 +474,12 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
           }
           return false;
         }
-        else if(not done_rotating)
+        else if(!done_rotating)
         {
           timeoutIter++;
           if((ctl.efTask->orientationTask->eval().norm() < 1e-2
-              and ctl.efTask->orientationTask->speed().norm() < 1e-4)
-              or timeoutIter > 15*500)
+              && ctl.efTask->orientationTask->speed().norm() < 1e-4)
+              || timeoutIter > 15*500)
           {
             done_rotating = true;
             unsigned int rfindex = ctl.robot().bodyIndexByName("RLEG_LINK5");
@@ -499,7 +499,7 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
           }
           return false;
         }
-        else if(not done_contacting)
+        else if(!done_contacting)
         {
           timeoutIter++;
           if(ctl.wrenches[0].first[2] > forceStart + 150)
@@ -511,17 +511,17 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
           {
             forceIter = 0;
           }
-          if(forceIter > 40 or timeoutIter > 15*500)
+          if(forceIter > 40 || timeoutIter > 15*500)
           {
             done_contacting = true;
             auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.hrp2contactConstraint.contactConstr.get());
             constr->resetDofContacts();
-            //NB : When using dof contacts, do not add twice !
+            //NB : When using dof contacts, do !add twice !
             ctl.egressContacts.emplace_back(ctl.robots(), ctl.robots().robotIndex(), 2,
                                             "RFullSole", "AllGround");
             ctl.mrqpsolver->setContacts(ctl.egressContacts);
             ctl.comTask->comTaskSp->stiffness(1.);
-            //Do not remove orientation here if we are not in skip mode
+            //Do !remove orientation here if we are !in skip mode
             //ctl.torsoOriTask->removeFromSolver(ctl.mrqpsolver->solver);
             LOG_INFO("Done putting down right foot")
             //return true;
@@ -562,7 +562,7 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
 
     virtual bool run(MCEgressMRQPController & ctl) override
     {
-      if(not started)
+      if(!started)
       {
         LOG_INFO("Replacing right foot")
         ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
@@ -603,31 +603,31 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
       }
       else
       {
-        if(not done_premoving)
+        if(!done_premoving)
         {
           timeoutIter++;
           if((ctl.efTask->positionTask->eval().norm() < 1e-2
-              and ctl.efTask->positionTask->speed().norm() < 1e-4)
-              or timeoutIter > 15*500)
+              && ctl.efTask->positionTask->speed().norm() < 1e-4)
+              || timeoutIter > 15*500)
           {
             done_premoving = true;
             ctl.mrqpsolver->setContacts(otherContacts);
-            Eigen::Vector3d move(-0.14, 0.0, 0);/*FIXME For safer egress, this should be based on the relative position between the right and the left foot */
+            Eigen::Vector3d move(-0.14, 0.0, 0);/*FIXME For safer egress, this should be based on the relative position between the right && the left foot */
             ctl.efTask->positionTask->position(ctl.efTask->positionTask->position() + move);
             timeoutIter = 0;
           }
           return false;
         }
-        if(not done_removing)
+        if(!done_removing)
         {
           timeoutIter++;
           if((ctl.efTask->positionTask->eval().norm() < 1e-2
-              and ctl.efTask->positionTask->speed().norm() < 1e-4)
-              or timeoutIter > 15*500)
+              && ctl.efTask->positionTask->speed().norm() < 1e-4)
+              || timeoutIter > 15*500)
           {
             done_removing = true;
             //ctl.mrqpsolver->setContacts(otherContacts);
-            Eigen::Vector3d move(0., 0.3, 0);/*FIXME For safer egress, this should be based on the relative position between the right and the left foot */
+            Eigen::Vector3d move(0., 0.3, 0);/*FIXME For safer egress, this should be based on the relative position between the right && the left foot */
             ctl.efTask->positionTask->position(ctl.efTask->positionTask->position() + move);
             timeoutIter = 0;
             //ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
@@ -656,14 +656,14 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
           }
           return false;
         }
-        else if(not done_moving)
+        else if(!done_moving)
         {
           //ctl.trajTask->update();
           //if(ctl.trajTask->timeElapsed())
           timeoutIter++;
           if((ctl.efTask->positionTask->eval().norm() < 1e-2
-              and ctl.efTask->positionTask->speed().norm() < 1e-4)
-              or timeoutIter > 15*500)
+              && ctl.efTask->positionTask->speed().norm() < 1e-4)
+              || timeoutIter > 15*500)
           {
             done_moving = true;
             //ctl.trajTask->removeFromSolver(ctl.mrqpsolver->solver);
@@ -681,12 +681,12 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
           }
           return false;
         }
-        else if(not done_rotating)
+        else if(!done_rotating)
         {
           timeoutIter++;
           if((ctl.efTask->orientationTask->eval().norm() < 1e-2
-              and ctl.efTask->orientationTask->speed().norm() < 1e-4)
-              or timeoutIter > 15*500)
+              && ctl.efTask->orientationTask->speed().norm() < 1e-4)
+              || timeoutIter > 15*500)
           {
             done_rotating = true;
             ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
@@ -723,7 +723,7 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
           }
           return false;
         }
-        else if(not done_contacting)
+        else if(!done_contacting)
         {
           timeoutIter++;
           if(ctl.wrenches[0].first[2] > forceStart + 150)
@@ -735,7 +735,7 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
           {
             forceIter = 0;
           }
-          if(forceIter > 40 or timeoutIter > 30*500)
+          if(forceIter > 40 || timeoutIter > 30*500)
           {
             done_contacting = true;
             auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.hrp2contactConstraint.contactConstr.get());
@@ -784,7 +784,7 @@ struct EgressPlaceRightFootPhase : public EgressMRPhaseExecution
 
     virtual bool run(MCEgressMRQPController & ctl) override
     {
-      if(not started)
+      if(!started)
       {
         LOG_INFO("Replacing right foot")
         ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
@@ -808,11 +808,11 @@ struct EgressPlaceRightFootPhase : public EgressMRPhaseExecution
       else
       {
         timeoutIter++;
-        if(not done_lifting)
+        if(!done_lifting)
         {
           if((ctl.efTask->positionTask->eval().norm() < 1e-2
-              and ctl.efTask->positionTask->speed().norm() < 1e-4)
-              or timeoutIter > 15*500)
+              && ctl.efTask->positionTask->speed().norm() < 1e-4)
+              || timeoutIter > 15*500)
           {
             done_lifting = true;
             unsigned int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
@@ -827,11 +827,11 @@ struct EgressPlaceRightFootPhase : public EgressMRPhaseExecution
           }
           return false;
         }
-        else if(not done_rotating)
+        else if(!done_rotating)
         {
           if((ctl.efTask->orientationTask->eval().norm() < 1e-1
-              and ctl.efTask->orientationTask->speed().norm() < 1e-4)
-              or timeoutIter > 15*500)
+              && ctl.efTask->orientationTask->speed().norm() < 1e-4)
+              || timeoutIter > 15*500)
           {
             done_rotating = true;
             unsigned int lfindex = ctl.robot().bodyIndexByName("LLEG_LINK5");
@@ -841,11 +841,11 @@ struct EgressPlaceRightFootPhase : public EgressMRPhaseExecution
           }
           return false;
         }
-        else if(not done_contacting)
+        else if(!done_contacting)
         {
           if((ctl.efTask->positionTask->eval().norm() < 1e-2
-              and ctl.efTask->positionTask->speed().norm() < 1e-4)
-              or timeoutIter > 15*500)
+              && ctl.efTask->positionTask->speed().norm() < 1e-4)
+              || timeoutIter > 15*500)
           {
             done_contacting = true;
             ctl.egressContacts.emplace_back(ctl.robots(), ctl.robots().robotIndex(), 1,
@@ -879,13 +879,13 @@ struct EgressOpenRightGripperPhase : public EgressMRPhaseExecution
 
     virtual bool run(MCEgressMRQPController & ctl) override
     {
-      if(not started)
+      if(!started)
       {
         started = true;
         LOG_INFO("Opening gripper")
         return false;
       }
-      else if(not done_opening)
+      else if(!done_opening)
       {
         if(ctl.rgripper->percentOpen >= 1.)
         {
@@ -931,7 +931,7 @@ struct EgressRemoveRightGripperPhase : public EgressMRPhaseExecution
 
     virtual bool run(MCEgressMRQPController & ctl) override
     {
-      if(not started)
+      if(!started)
       {
         LOG_INFO("Removing right gripper")
         ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
@@ -976,10 +976,10 @@ struct EgressRemoveRightGripperPhase : public EgressMRPhaseExecution
       }
       else
       {
-        if(not done_rotating)
+        if(!done_rotating)
         {
           if(ctl.efTask->orientationTask->eval().norm() < 1e-2
-              and ctl.efTask->orientationTask->speed().norm() < 1e-4)
+              && ctl.efTask->orientationTask->speed().norm() < 1e-4)
           {
             if(wiggles_ > maxWiggles_)
               done_rotating = true;
@@ -997,10 +997,10 @@ struct EgressRemoveRightGripperPhase : public EgressMRPhaseExecution
           }
           return false;
         }
-        if(not done_removing)
+        if(!done_removing)
         {
           if(ctl.efTask->positionTask->eval().norm() < 1e-2
-              and ctl.efTask->positionTask->speed().norm() < 1e-4)
+              && ctl.efTask->positionTask->speed().norm() < 1e-4)
           {
             done_removing = true;
             ctl.mrqpsolver->setContacts(ctl.egressContacts);
@@ -1043,7 +1043,7 @@ struct EgressMRStandupPhase : public EgressMRPhaseExecution
 
     virtual bool run(MCEgressMRQPController & ctl) override
     {
-      if(not started)
+      if(!started)
       {
         LOG_INFO("Starting standup")
         ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
@@ -1074,10 +1074,10 @@ struct EgressMRStandupPhase : public EgressMRPhaseExecution
         timeoutIter = 0;
         started = true;
       }
-      else if(not done_standup)
+      else if(!done_standup)
       {
         ++timeoutIter;
-        if((ctl.efTask->positionTask->eval().norm() < 1e-1 and ctl.efTask->orientationTask->speed().norm() < 1e-4 and ctl.efTask->positionTask->speed().norm() < 1e-4) or timeoutIter > 5*500)
+        if((ctl.efTask->positionTask->eval().norm() < 1e-1 && ctl.efTask->orientationTask->speed().norm() < 1e-4 && ctl.efTask->positionTask->speed().norm() < 1e-4) || timeoutIter > 5*500)
         {
           ctl.hrp2postureTask->posture(ctl.robot().mbc().q);
           ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
@@ -1113,7 +1113,7 @@ struct EgressMoveComSurfPhase : public EgressMRPhaseExecution
 
     virtual bool run(MCEgressMRQPController & ctl) override
     {
-      if(not started)
+      if(!started)
       {
         LOG_INFO("Moving com over " << surfName_)
         const auto & target = ctl.robot().surface(surfName_);
@@ -1127,12 +1127,12 @@ struct EgressMoveComSurfPhase : public EgressMRPhaseExecution
       }
       else
       {
-        if(not done_com)
+        if(!done_com)
         {
           ++iter_;
           if((ctl.comTask->comTask->eval().norm() < 1e-2
-              and ctl.comTask->comTask->speed().norm() < 1e-3)
-              or iter_ > 10*500)
+              && ctl.comTask->comTask->speed().norm() < 1e-3)
+              || iter_ > 10*500)
           {
             done_com = true;
             ctl.hrp2postureTask->posture(ctl.robot().mbc().q);
@@ -1170,7 +1170,7 @@ struct EgressCenterComPhase : public EgressMRPhaseExecution
 
     virtual bool run(MCEgressMRQPController & ctl) override
     {
-      if(not started)
+      if(!started)
       {
         LOG_INFO("Centering com ")
         const auto & rfs = ctl.robot().surface("RFullSole");
@@ -1186,12 +1186,12 @@ struct EgressCenterComPhase : public EgressMRPhaseExecution
       }
       else
       {
-        if(not done_com)
+        if(!done_com)
         {
           ++iter_;
           if((ctl.comTask->comTask->eval().norm() < 1e-2
-              and ctl.comTask->comTask->speed().norm() < 1e-3)
-              or iter_ > 10*500)
+              && ctl.comTask->comTask->speed().norm() < 1e-3)
+              || iter_ > 10*500)
           {
             done_com = true;
             ctl.hrp2postureTask->posture(ctl.robot().mbc().q);
@@ -1250,10 +1250,10 @@ struct EgressMoveComForcePhase : public EgressMRPhaseExecution
 
     virtual bool run(MCEgressMRQPController & ctl) override
     {
-      if(not started)
+      if(!started)
       {
         LOG_INFO("Moving com over " << surfName_
-                  << " and lifting " << otherSurf_)
+                  << " && lifting " << otherSurf_)
         const auto & target = ctl.robot().surface(surfName_);
         Eigen::Vector3d pos = target.X_0_s(ctl.robot()).translation();
         pos(2) += 0.76 + altitude_;
@@ -1298,12 +1298,12 @@ struct EgressMoveComForcePhase : public EgressMRPhaseExecution
       }
       else
       {
-        if(not done_com)
+        if(!done_com)
         {
           ++iter_;
           if((ctl.comTask->comTask->eval().norm() < 1e-2
-              and ctl.comTask->comTask->speed().norm() < 1e-3)
-              or iter_ > 10*500)
+              && ctl.comTask->comTask->speed().norm() < 1e-3)
+              || iter_ > 10*500)
           {
             done_com = true;
             ctl.hrp2postureTask->posture(ctl.robot().mbc().q);
@@ -1358,7 +1358,7 @@ struct EgressReplaceRightHandPhase : public EgressMRPhaseExecution
 
     virtual bool run(MCEgressMRQPController & ctl) override
     {
-      if(not started)
+      if(!started)
       {
         LOG_INFO("Replacing hand")
         started = true;
@@ -1377,12 +1377,12 @@ struct EgressReplaceRightHandPhase : public EgressMRPhaseExecution
       }
       else
       {
-        if(not done_moving)
+        if(!done_moving)
         {
           ++nrIter_;
           if((ctl.efTask->eval().norm() < 1e-2
-              and ctl.efTask->speed().norm() < 1e-3)
-              or nrIter_ > 10*500)
+              && ctl.efTask->speed().norm() < 1e-3)
+              || nrIter_ > 10*500)
           {
             done_moving = true;
             ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
@@ -1397,11 +1397,11 @@ struct EgressReplaceRightHandPhase : public EgressMRPhaseExecution
           }
           return false;
         }
-        else if(not done_posturing)
+        else if(!done_posturing)
         {
           ++nrIter_;
           if(ctl.mrqpsolver->solver.alphaDVec(0).norm() < 1e-3
-              or nrIter_ > 10*500)
+              || nrIter_ > 10*500)
           {
             done_posturing = true;
             LOG_INFO("Phase done")

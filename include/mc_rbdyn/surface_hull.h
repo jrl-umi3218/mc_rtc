@@ -7,6 +7,10 @@
 #pragma GCC diagnostic pop
 #include <SpaceVecAlg/SpaceVecAlg>
 
+#include <vector>
+
+#include <mc_rbdyn/api.h>
+
 namespace sch
 {
   class S_Object;
@@ -20,15 +24,15 @@ struct PlanarSurface;
 struct CylindricalSurface;
 struct GripperSurface;
 
-sch::S_Object * surface_to_sch(const mc_rbdyn::Surface & surface, const double & depth = 0.01, const unsigned int & slice = 8);
+MC_RBDYN_DLLAPI sch::S_Object * surface_to_sch(const mc_rbdyn::Surface & surface, const double & depth = 0.01, const unsigned int & slice = 8);
 
-sch::S_Object * sch_polyhedron(const std::vector<sva::PTransformd> & points);
+MC_RBDYN_DLLAPI sch::S_Object * sch_polyhedron(const std::vector<sva::PTransformd> & points);
 
-sch::S_Object * planar_hull(const mc_rbdyn::PlanarSurface & surface, const double & depth);
+MC_RBDYN_DLLAPI sch::S_Object * planar_hull(const mc_rbdyn::PlanarSurface & surface, const double & depth);
 
-sch::S_Object * cylindrical_hull(const mc_rbdyn::CylindricalSurface & surface, const unsigned int & slice);
+MC_RBDYN_DLLAPI sch::S_Object * cylindrical_hull(const mc_rbdyn::CylindricalSurface & surface, const unsigned int & slice);
 
-sch::S_Object * gripper_hull(const mc_rbdyn::GripperSurface & surface, const double & depth);
+MC_RBDYN_DLLAPI sch::S_Object * gripper_hull(const mc_rbdyn::GripperSurface & surface, const double & depth);
 
 }
 

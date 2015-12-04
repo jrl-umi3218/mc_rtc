@@ -4,10 +4,12 @@
 #include <mc_control/ContactSensor.h>
 #include <boost/circular_buffer.hpp>
 
+#include <mc_control/api.h>
+
 namespace mc_control
 {
 
-struct Threshold
+struct MC_CONTROL_DLLAPI Threshold
 {
 public:
   Threshold();
@@ -17,7 +19,7 @@ public:
   unsigned int iter;
 };
 
-struct ForceSensor
+struct MC_CONTROL_DLLAPI ForceSensor
 {
 public:
   enum SensorConfig
@@ -44,7 +46,7 @@ public:
   std::vector<std::string> surfacesName;
 };
 
-struct ForceContactSensor : public ContactSensor
+struct MC_CONTROL_DLLAPI ForceContactSensor : public ContactSensor
 {
 public:
   ForceContactSensor(const mc_rbdyn::Robot & robot);

@@ -14,10 +14,12 @@
 
 #include <boost/timer/timer.hpp>
 
+#include <mc_control/api.h>
+
 namespace mc_control
 {
 
-struct ActiGripper
+struct MC_CONTROL_DLLAPI ActiGripper
 {
 public:
   ActiGripper();
@@ -41,7 +43,7 @@ public:
   double targetError;
 };
 
-struct CollisionPair
+struct MC_CONTROL_DLLAPI CollisionPair
 {
 public:
   CollisionPair(const mc_rbdyn::Robot & r1, const mc_rbdyn::Robot & r2,
@@ -62,9 +64,9 @@ private:
 
 struct SeqAction;
 
-std::vector<mc_solver::Collision> confToColl(const std::vector<mc_rbdyn::StanceConfig::BodiesCollisionConf> & conf);
+MC_CONTROL_DLLAPI std::vector<mc_solver::Collision> confToColl(const std::vector<mc_rbdyn::StanceConfig::BodiesCollisionConf> & conf);
 
-struct MCSeqTimeLog
+struct MC_CONTROL_DLLAPI MCSeqTimeLog
 {
 public:
   MCSeqTimeLog(double timeStep);
@@ -84,7 +86,7 @@ private:
 /* Used to publish debug information specific to the seq controller */
 struct MCSeqPublisher;
 
-struct MCSeqController : public MCController
+struct MC_CONTROL_DLLAPI MCSeqController : public MCController
 {
 public:
   MCSeqController(double dt, const std::string & env_name, const std::string & seq_path, bool real_sensors, unsigned int start_stance, bool step_by_step);
@@ -92,6 +94,9 @@ public:
   MCSeqController(double dt, const std::string & env_path, const std::string & env_name, const std::string & seq_path, bool real_sensors, unsigned int start_stance, bool step_by_step);
 
   MCSeqController(double dt, const std::shared_ptr<mc_rbdyn::RobotModule> & env_module, const std::string & seq_path, bool real_sensors, unsigned int start_stance, bool step_by_step);
+
+  MCSeqController(const MCSeqController&) = delete;
+  MCSeqController& operator=(const MCSeqController&) = delete;
 
   virtual bool run() override;
 
@@ -209,11 +214,11 @@ public:
   boost::timer::cpu_timer timer;
 };
 
-std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * curAction, mc_rbdyn::StanceAction * targetAction, mc_rbdyn::StanceAction * targetTargetAction);
+MC_CONTROL_DLLAPI std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * curAction, mc_rbdyn::StanceAction * targetAction, mc_rbdyn::StanceAction * targetTargetAction);
 
 struct SeqStep;
 
-struct SeqAction
+struct MC_CONTROL_DLLAPI SeqAction
 {
 public:
   enum SeqActionType
@@ -234,7 +239,7 @@ public:
   std::vector< std::shared_ptr<SeqStep> > steps;
 };
 
-struct SeqStep
+struct MC_CONTROL_DLLAPI SeqStep
 {
 public:
   virtual bool eval(MCSeqController & controller);

@@ -6,10 +6,12 @@
 #include <mc_rbdyn/robot.h>
 #include <Tasks/QPTasks.h>
 
+#include <mc_tasks/api.h>
+
 namespace mc_tasks
 {
 
-struct EndEffectorTask : public MetaTask
+struct MC_TASKS_DLLAPI EndEffectorTask : public MetaTask
 {
 public:
   EndEffectorTask(const std::string & bodyName, const mc_rbdyn::Robots & robots, unsigned int robotIndex, double stiffness = 10.0, double weight = 1000.0);

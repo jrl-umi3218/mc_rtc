@@ -95,7 +95,7 @@ bool operator==(const Surface & lhs, const Surface & rhs)
 
 bool operator!=(const Surface & lhs, const Surface & rhs)
 {
-  return not (lhs == rhs);
+  return !(lhs == rhs);
 }
 
 }

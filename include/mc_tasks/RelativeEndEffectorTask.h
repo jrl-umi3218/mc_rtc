@@ -2,6 +2,8 @@
 
 #include <mc_tasks/EndEffectorTask.h>
 
+#include <mc_tasks/api.h>
+
 namespace mc_tasks
 {
 
@@ -9,7 +11,7 @@ namespace mc_tasks
  * end-effector. The main difference is that the control is done relatively to
  * a body of the robot rather than the world frame */
 
-struct RelativeEndEffectorTask : public EndEffectorTask
+struct MC_TASKS_DLLAPI RelativeEndEffectorTask : public EndEffectorTask
 {
 public:
   RelativeEndEffectorTask(const std::string & bodyName, const mc_rbdyn::Robots & robots, unsigned int robotIndex, unsigned int relBodyIdx = 0, double stiffness = 10.0, double weight = 1000.0);

@@ -10,10 +10,12 @@
 
 #include <Tasks/QPTasks.h>
 
+#include <mc_tasks/api.h>
+
 namespace mc_tasks
 {
 
-struct StabilityTask : public MetaTask
+struct MC_TASKS_DLLAPI StabilityTask : public MetaTask
 {
 public:
   StabilityTask(mc_rbdyn::Robots & robots);

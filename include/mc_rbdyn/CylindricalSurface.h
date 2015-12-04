@@ -9,7 +9,7 @@ struct Robot;
 
 struct CylindricalSurfaceImpl;
 
-struct CylindricalSurface : public Surface
+struct MC_RBDYN_DLLAPI CylindricalSurface : public Surface
 {
   CylindricalSurface(const std::string & name, const std::string & bodyName, const sva::PTransformd & X_b_s, const std::string & materialName, const double & radius, const double & width);
 

@@ -4,10 +4,12 @@
 #include <mc_rbdyn/RobotModule.h>
 #include <mc_rbdyn_urdf/urdf.h>
 
+#include <mc_robots/api.h>
+
 namespace mc_robots
 {
 
-struct PolarisRangerRobotModule : public mc_rbdyn::RobotModule
+struct MC_ROBOTS_DLLAPI PolarisRangerRobotModule : public mc_rbdyn::RobotModule
 {
 public:
   PolarisRangerRobotModule(bool is_interactive = true);

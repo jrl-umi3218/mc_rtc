@@ -6,6 +6,8 @@
 #include <map>
 #include <vector>
 
+#include <mc_rbdyn/api.h>
+
 /* This is an interface designed to provide additionnal information about a robot */
 
 namespace mc_rbdyn
@@ -14,7 +16,7 @@ namespace mc_rbdyn
 struct Robot;
 
 /* TODO Functions are declared const here but most implementations will likely not respect the constness */
-struct RobotModule
+struct MC_RBDYN_DLLAPI RobotModule
 {
   RobotModule(const std::string & path, const std::string & name) : path(path), name(name) {}
   /* If implemented, returns limits in this order:

@@ -31,8 +31,8 @@ std::vector<mc_control::ContactMsg> contactsMsgFromContacts
     msg.r2_body = c.r2Surface()->bodyName();
     msg.r1_points = const_cast<const mc_rbdyn::Surface&>(*(c.r1Surface())).points();
     msg.X_b1_b2 = X_b1_b2;
-    msg.nr_generators = static_cast<uint16_t>(mc_rbdyn::Stance::nrConeGen);
-    msg.mu = mc_rbdyn::Stance::defaultFriction;
+    msg.nr_generators = static_cast<uint16_t>(mc_rbdyn::Contact::nrConeGen);
+    msg.mu = mc_rbdyn::Contact::defaultFriction;
     res.push_back(msg);
   }
 

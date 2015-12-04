@@ -5,12 +5,14 @@
 #include <string>
 #include <vector>
 
+#include <mc_rbdyn/api.h>
+
 namespace mc_rbdyn
 {
 
 struct Surface;
 
-std::vector< std::shared_ptr<Surface> > readRSDFFromDir(const std::string & dirname);
+MC_RBDYN_DLLAPI std::vector< std::shared_ptr<Surface> > readRSDFFromDir(const std::string & dirname);
 
 }
 

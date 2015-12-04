@@ -10,6 +10,19 @@
 #include <stdlib.h>
 #include <fstream>
 
+#ifdef WIN32
+#include <Windows.h>
+
+inline int mkstemp(char * out)
+{
+  char tmp_dir[MAX_PATH + 1];
+  GetTempPath(MAX_PATH + 1, tmp_dir);
+  int ret = GetTempFileName(tmp_dir, "mkstemp", 0, out);
+  if (ret == 0) { return -1; }
+  else { return 0; }
+}
+#endif
+
 namespace mc_rbdyn
 {
 
@@ -32,8 +45,15 @@ sch::S_Object * surface_to_sch(const mc_rbdyn::Surface & surface, const double &
 
 sch::S_Object * sch_polyhedron(const std::vector<sva::PTransformd> & points)
 {
+#ifndef WIN32
   char qcIn[16] = "/tmp/qcINXXXXXX";
   char qcOut[17] = "/tmp/qcOUTXXXXXX";
+#else
+  char qcIn[MAX_PATH + 1];
+  memset(qcIn, 0, MAX_PATH + 1);
+  char qcOut[MAX_PATH + 1];
+  memset(qcOut, 0, MAX_PATH + 1);
+#endif
   int err = mkstemp(qcIn);
   if(err < 0)
   {

@@ -6,17 +6,19 @@
 
 #include <memory>
 
+#include <mc_rbdyn/api.h>
+
 namespace mc_solver
 {
 
-  struct QPContactPtr
+  struct MC_RBDYN_DLLAPI QPContactPtr
   {
     QPContactPtr() : unilateralContact(0), bilateralContact(0) {}
     tasks::qp::UnilateralContact * unilateralContact;
     tasks::qp::BilateralContact * bilateralContact;
   };
 
-  struct QPContactPtrWPoints
+  struct MC_RBDYN_DLLAPI QPContactPtrWPoints
   {
     QPContactPtr qpcontact_ptr;
     std::vector<sva::PTransformd> points;
@@ -31,12 +33,16 @@ struct Robot;
 struct Robots;
 struct Surface;
 
-std::vector<sva::PTransformd> computePoints(const mc_rbdyn::Surface & robotSurface, const mc_rbdyn::Surface & envSurface, const sva::PTransformd & X_es_rs);
+MC_RBDYN_DLLAPI std::vector<sva::PTransformd> computePoints(const mc_rbdyn::Surface & robotSurface, const mc_rbdyn::Surface & envSurface, const sva::PTransformd & X_es_rs);
 
 struct ContactImpl;
 
-struct Contact
+struct MC_RBDYN_DLLAPI Contact
 {
+public:
+  constexpr static int nrConeGen = 4;
+  constexpr static double defaultFriction = 0.7;
+  constexpr static unsigned int nrBilatPoints = 4;
 public:
   Contact(const mc_rbdyn::Robots & robots, const std::string & robotSurface, const std::string & envSurface);
   Contact(const mc_rbdyn::Robots & robots, const std::string & robotSurface, const std::string & envSurface, const sva::PTransformd & X_es_rs);
@@ -93,9 +99,9 @@ private:
   mc_solver::QPContactPtr taskContact(const mc_rbdyn::Robots & robots, const sva::PTransformd & X_b1_b2, const std::vector<sva::PTransformd> & points) const;
 };
 
-bool operator==(const Contact & lhs, const Contact & rhs);
+MC_RBDYN_DLLAPI bool operator==(const Contact & lhs, const Contact & rhs);
 
-bool operator!=(const Contact & lhs, const Contact & rhs);
+MC_RBDYN_DLLAPI bool operator!=(const Contact & lhs, const Contact & rhs);
 
 }
 

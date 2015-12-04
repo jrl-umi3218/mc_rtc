@@ -3,18 +3,20 @@
 
 #include <SpaceVecAlg/SpaceVecAlg>
 
+#include <mc_rbdyn/api.h>
+
 namespace mc_rbdyn
 {
 
 struct Surface;
 
-sva::PTransformd planar(const double & T, const double & B, const double & N_rot);
+MC_RBDYN_DLLAPI sva::PTransformd planar(const double & T, const double & B, const double & N_rot);
 
-sva::PTransformd cylindrical(const double & T, const double & T_rot);
+MC_RBDYN_DLLAPI sva::PTransformd cylindrical(const double & T, const double & T_rot);
 
-void planarParam(const sva::PTransformd & X_es_rs, double & T, double & B, double & N_rot);
+MC_RBDYN_DLLAPI void planarParam(const sva::PTransformd & X_es_rs, double & T, double & B, double & N_rot);
 
-void cylindricalParam(const sva::PTransformd & X_es_rs, double & T, double & T_rot);
+MC_RBDYN_DLLAPI void cylindricalParam(const sva::PTransformd & X_es_rs, double & T, double & T_rot);
 
 }
 

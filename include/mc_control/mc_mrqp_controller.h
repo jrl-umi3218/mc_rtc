@@ -12,10 +12,12 @@
 
 #include <Tasks/QPTasks.h>
 
+#include <mc_control/api.h>
+
 namespace mc_control
 {
 
-struct MCMRQPController : public MCVirtualController
+struct MC_CONTROL_DLLAPI MCMRQPController : public MCVirtualController
 {
 public:
   /* FIXME Since this is aimed at controlling HRP-2 only for the moment, we

@@ -9,6 +9,8 @@
 #include <Tasks/QPConstr.h>
 #include <Tasks/QPTasks.h>
 
+#include <mc_tasks/api.h>
+
 namespace mc_rbdyn
 {
   struct Contact;
@@ -17,7 +19,7 @@ namespace mc_rbdyn
 namespace mc_tasks
 {
 
-struct AddRemoveContactTask : public MetaTask
+struct MC_TASKS_DLLAPI AddRemoveContactTask : public MetaTask
 {
 public:
   AddRemoveContactTask(mc_rbdyn::Robots & robots, std::shared_ptr<tasks::qp::BoundedSpeedConstr> constSpeedConstr, mc_rbdyn::Contact & contact,
@@ -58,7 +60,7 @@ public:
 };
 
 
-struct AddContactTask : public AddRemoveContactTask
+struct MC_TASKS_DLLAPI AddContactTask : public AddRemoveContactTask
 {
 public:
   AddContactTask(mc_rbdyn::Robots & robots, std::shared_ptr<tasks::qp::BoundedSpeedConstr> constSpeedConstr, mc_rbdyn::Contact & contact,
@@ -66,7 +68,7 @@ public:
                        Eigen::Vector3d * userT_0_s = 0);
 };
 
-struct RemoveContactTask : public AddRemoveContactTask
+struct MC_TASKS_DLLAPI RemoveContactTask : public AddRemoveContactTask
 {
 public:
   RemoveContactTask(mc_rbdyn::Robots & robots, std::shared_ptr<tasks::qp::BoundedSpeedConstr> constSpeedConstr, mc_rbdyn::Contact & contact,

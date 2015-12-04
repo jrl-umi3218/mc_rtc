@@ -59,9 +59,9 @@ void StabilityTask::target(const mc_rbdyn::Robot &/*env*/, const mc_rbdyn::Stanc
   for(const auto & c : stance.stabContacts())
   {
     const std::string & rsname = c.r1Surface()->name();
-    if(rsname == "LeftFoot" or rsname == "RightFoot" or
-       rsname == "LFrontSole" or rsname == "RFrontSole" or
-       rsname == "LFullSole" or rsname == "RFullSole")
+    if(rsname == "LeftFoot" || rsname == "RightFoot" ||
+       rsname == "LFrontSole" || rsname == "RFrontSole" ||
+       rsname == "LFullSole" || rsname == "RFullSole")
     {
       sva::PTransformd pos = c.X_0_r1s(robots);
       sva::PTransformd posRobot = c.r1Surface()->X_0_s(robot);

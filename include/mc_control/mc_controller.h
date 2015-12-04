@@ -15,10 +15,12 @@
 #include <Tasks/QPTasks.h>
 #include <mc_tasks/EndEffectorTask.h>
 
+#include <mc_control/api.h>
+
 namespace mc_control
 {
 
-struct MCController : public MCVirtualController
+struct MC_CONTROL_DLLAPI MCController : public MCVirtualController
 {
 public:
   /* Assumes an environment from mc_env_description */

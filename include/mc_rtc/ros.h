@@ -1,8 +1,21 @@
 #pragma once
 
 #include <memory>
-#include <rtm/idl/ExtendedDataTypesSkel.h>
 #include <vector>
+
+#include <mc_rtc/config.h>
+#ifdef MC_RTC_HAS_HRPSYS_BASE
+#include <rtm/idl/ExtendedDataTypesSkel.h>
+#else
+namespace RTC
+{
+  struct TimedPoint3D {};
+  struct TimedOrientation3D {};
+  struct TimedAcceleration3D {};
+}
+#endif
+
+#include <mc_rtc/ros_api.h>
 
 namespace ros
 {
@@ -19,7 +32,7 @@ namespace mc_rtc
 
 struct ROSBridgeImpl;
 
-struct ROSBridge
+struct MC_RTC_ROS_DLLAPI ROSBridge
 {
   static std::shared_ptr<ros::NodeHandle> get_node_handle();
 

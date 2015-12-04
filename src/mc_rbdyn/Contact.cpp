@@ -4,14 +4,13 @@
 #include <mc_rbdyn/robot.h>
 
 #include <mc_rbdyn/PlanarSurface.h>
-#include <mc_rbdyn/stance.h>
 
 #include <mc_rtc/logging.h>
 
+#include <geos/geom/GeometryFactory.h>
 #include <geos/geom/Polygon.h>
 #include <geos/geom/LinearRing.h>
 #include <geos/geom/CoordinateSequenceFactory.h>
-#include <geos/geom/GeometryFactory.h>
 
 namespace mc_rbdyn
 {
@@ -35,7 +34,7 @@ std::vector<sva::PTransformd> computePoints(const mc_rbdyn::Surface & robotSurfa
   {
     return robotSurface.points();
   }
-  if( (envSurface.type() == "planar" or envSurface.type() == "cylindrical") and robotSurface.type() == "planar" )
+  if( (envSurface.type() == "planar" || envSurface.type() == "cylindrical") && robotSurface.type() == "planar" )
   {
     // Transform env points in robot surface coordinate
     std::vector<sva::PTransformd> envPointsInRobotSurface(0);
@@ -57,7 +56,8 @@ std::vector<sva::PTransformd> computePoints(const mc_rbdyn::Surface & robotSurfa
     const std::vector< std::pair<double, double> > & robotPoints2d = (reinterpret_cast<const PlanarSurface&>(robotSurface)).planarPoints();
 
     //Compute the intersection
-    geos::geom::GeometryFactory factory;
+    const geos::geom::GeometryFactory * factory_ptr = geos::geom::GeometryFactory::getDefaultInstance();
+    const geos::geom::GeometryFactory & factory = *factory_ptr;
 
     // Create robot surf polygon
     geos::geom::CoordinateSequence * robotPoints2dseq = factory.getCoordinateSequenceFactory()->create((std::size_t)0,0);
@@ -315,8 +315,8 @@ mc_solver::QPContactPtr Contact::taskContact(const mc_rbdyn::Robots & robots, co
                                    r1BodyId,
                                    r2BodyId,
                                    impl->ambiguityId, points, frames[0],
-                                   X_b1_b2, Stance::nrConeGen,
-                                   Stance::defaultFriction, impl->X_b_s);
+                                   X_b1_b2, nrConeGen,
+                                   defaultFriction, impl->X_b_s);
   }
   else if(impl->r1Surface->type() == "gripper")
   {
@@ -326,7 +326,7 @@ mc_solver::QPContactPtr Contact::taskContact(const mc_rbdyn::Robots & robots, co
                                   r1BodyId,
                                   r2BodyId,
                                   impl->ambiguityId, points, frames, X_b1_b2,
-                                  Stance::nrConeGen, Stance::defaultFriction,
+                                  nrConeGen, defaultFriction,
                                   impl->X_b_s);
   }
   else
@@ -348,12 +348,12 @@ std::string Contact::toStr() const
 
 bool operator==(const Contact & lhs, const Contact & rhs)
 {
-  return (*(lhs.r1Surface()) == *(rhs.r1Surface())) and (*(lhs.r2Surface()) == *(rhs.r2Surface()));
+  return (*(lhs.r1Surface()) == *(rhs.r1Surface())) && (*(lhs.r2Surface()) == *(rhs.r2Surface()));
 }
 
 bool operator!=(const Contact & lhs, const Contact & rhs)
 {
-  return not(lhs == rhs);
+  return !(lhs == rhs);
 }
 
 }

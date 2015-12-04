@@ -7,6 +7,9 @@
 #include <mc_control/msg/Contact.h>
 
 #include <memory>
+#include <vector>
+
+#include <mc_solver/api.h>
 
 namespace mc_rbdyn
 {
@@ -17,7 +20,7 @@ namespace mc_rbdyn
 namespace mc_solver
 {
 
-std::vector<mc_control::ContactMsg> contactsMsgFromContacts
+MC_SOLVER_DLLAPI std::vector<mc_control::ContactMsg> contactsMsgFromContacts
   (const mc_rbdyn::Robots & robots, const std::vector<mc_rbdyn::Contact> & contacts);
 
 }

@@ -5,10 +5,12 @@
 #include <Tasks/QPSolver.h>
 #include <Tasks/QPTasks.h>
 
+#include <mc_tasks/api.h>
+
 namespace mc_tasks
 {
 
-struct CoMTask
+struct MC_TASKS_DLLAPI CoMTask
 {
 public:
   CoMTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex);

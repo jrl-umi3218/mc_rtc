@@ -25,10 +25,6 @@ public:
   std::vector< Contact > stabContacts;
 };
 
-int Stance::nrConeGen = 4;
-double Stance::defaultFriction = 0.7;
-unsigned int Stance::nrBilatPoints = 4;
-
 Stance::Stance(const std::vector< std::vector<double> > & q, const std::vector<Contact> & geomContacts, const std::vector<Contact> stabContacts)
 : impl(new StanceImpl({q, geomContacts, stabContacts}))
 {
@@ -36,6 +32,17 @@ Stance::Stance(const std::vector< std::vector<double> > & q, const std::vector<C
 
 Stance::~Stance()
 {
+}
+
+Stance::Stance(Stance && rhs)
+: impl(std::move(rhs.impl))
+{
+}
+
+Stance& Stance::operator=(Stance&& rhs)
+{
+  impl = std::move(rhs.impl);
+  return *this;
 }
 
 const std::vector<Contact> & Stance::contacts() const

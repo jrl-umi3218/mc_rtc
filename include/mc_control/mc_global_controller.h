@@ -9,10 +9,12 @@
 #include <mc_control/mc_egress_mrqp_controller.h>
 #include <mc_control/mc_bci_self_interact_controller.h>
 
+#include <mc_control/api.h>
+
 namespace mc_control
 {
 
-struct MCGlobalController
+struct MC_CONTROL_DLLAPI MCGlobalController
 {
 public:
   MCGlobalController(const std::string & conf = mc_rtc::CONF_PATH);

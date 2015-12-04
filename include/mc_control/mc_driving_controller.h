@@ -7,10 +7,12 @@
 
 #include <fstream>
 
+#include <mc_control/api.h>
+
 namespace mc_control
 {
 
-struct MCDrivingController : MCMRQPController
+struct MC_CONTROL_DLLAPI MCDrivingController : MCMRQPController
 {
   public:
     MCDrivingController(double dt, const std::vector<std::shared_ptr<mc_rbdyn::RobotModule> >& env_modules);

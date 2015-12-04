@@ -10,17 +10,22 @@
 #include <SpaceVecAlg/SpaceVecAlg>
 #include <functional>
 #include <map>
+#include <vector>
+
+#include <mc_rbdyn/api.h>
 
 namespace mc_rbdyn
 {
 
+MC_RBDYN_DLLAPI
 std::function<Eigen::Vector3d (const sva::PTransformd &, const sva::PTransformd &, const Eigen::Vector3d &)>
 percentWaypoint(double x, double y, double z, double nOff);
 
+MC_RBDYN_DLLAPI
 std::function<Eigen::Vector3d (const sva::PTransformd &, const sva::PTransformd &, const Eigen::Vector3d &)>
 hardCodedPos(double x, double y, double z);
 
-struct StanceConfig
+struct MC_RBDYN_DLLAPI StanceConfig
 {
 public:
   struct CoMTask

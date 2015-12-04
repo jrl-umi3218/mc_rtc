@@ -19,6 +19,8 @@
 #include <memory>
 #include <set>
 
+#include <mc_solver/api.h>
+
 namespace mc_control
 {
   struct MCController;
@@ -35,7 +37,7 @@ bool operator!=(const qpcallback_t & lhs, const qpcallback_t & rhs);
 
 /* Note: a tasks::qp::Constraint is actually not very useful, we will need to
  * cast this later */
-struct ConstraintSet
+struct MC_SOLVER_DLLAPI ConstraintSet
 {
 public:
   virtual void addToSolver(tasks::qp::QPSolver & solver) const = 0;
@@ -46,7 +48,7 @@ public:
   std::vector<qpcallback_t> postQPCb;
 };
 
-struct ContactConstraint : public ConstraintSet
+struct MC_SOLVER_DLLAPI ContactConstraint : public ConstraintSet
 {
 public:
   enum ContactType
@@ -68,7 +70,7 @@ public:
   ContactConstraint() {}
 };
 
-struct KinematicsConstraint : public ConstraintSet
+struct MC_SOLVER_DLLAPI KinematicsConstraint : public ConstraintSet
 {
 public:
   KinematicsConstraint(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double timeStep, bool isStatic = false,
@@ -86,7 +88,7 @@ public:
   KinematicsConstraint() {}
 };
 
-struct DynamicsConstraint : public KinematicsConstraint
+struct MC_SOLVER_DLLAPI DynamicsConstraint : public KinematicsConstraint
 {
 public:
   DynamicsConstraint(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double timeStep, bool isStatic = false,
@@ -105,7 +107,7 @@ public:
   DynamicsConstraint() {}
 };
 
-struct Collision
+struct MC_SOLVER_DLLAPI Collision
 {
   Collision() : body1("NONE"), body2("NONE") {}
   Collision(const std::string & b1, const std::string & b2, double i, double s, double d)
@@ -116,19 +118,19 @@ struct Collision
   double iDist;
   double sDist;
   double damping;
-  bool isNone() { return body1 == "NONE" and body2 == "NONE"; }
+  bool isNone() { return body1 == "NONE" && body2 == "NONE"; }
 };
 
-bool operator==(const Collision & lhs, const Collision & rhs);
+MC_SOLVER_DLLAPI bool operator==(const Collision & lhs, const Collision & rhs);
 
-bool operator!=(const Collision & lhs, const Collision & rhs);
+MC_SOLVER_DLLAPI bool operator!=(const Collision & lhs, const Collision & rhs);
 
-std::ostream & operator<<(std::ostream & os, const Collision & c);
+MC_SOLVER_DLLAPI std::ostream & operator<<(std::ostream & os, const Collision & c);
 
-struct CollisionsConstraint : public ConstraintSet
+struct MC_SOLVER_DLLAPI CollisionsConstraint : public ConstraintSet
 {
 public:
-  static double defaultDampingOffset;
+  constexpr static double defaultDampingOffset = 0.1;
 public:
   CollisionsConstraint(const mc_rbdyn::Robots & robots, unsigned int r1Index, unsigned int r2Index, double timeStep);
 
@@ -160,7 +162,7 @@ public:
   CollisionsConstraint() {}
 };
 
-struct RobotEnvCollisionsConstraint : public ConstraintSet
+struct MC_SOLVER_DLLAPI RobotEnvCollisionsConstraint : public ConstraintSet
 {
 public:
   RobotEnvCollisionsConstraint(const mc_rbdyn::Robots & robots, double timeStep);
@@ -194,7 +196,7 @@ private:
   std::set<int> __bodiesFromContacts(const mc_rbdyn::Robot & robot, const std::vector<mc_rbdyn::Contact> & contacts);
 };
 
-struct QPSolver
+struct MC_SOLVER_DLLAPI QPSolver
 {
 public:
   QPSolver(const mc_rbdyn::Robots & robots, double timeStep);

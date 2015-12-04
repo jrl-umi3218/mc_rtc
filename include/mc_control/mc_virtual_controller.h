@@ -12,12 +12,14 @@ namespace mc_rbdyn
   struct Contact;
 }
 
+#include <mc_control/api.h>
+
 namespace mc_control
 {
 
 /* This structure will be filled in time with the necessary information */
 /* Coming most likely from the previous controller */
-struct ControllerResetData
+struct MC_CONTROL_DLLAPI ControllerResetData
 {
   const std::vector< std::vector<double> > & q;
 };
@@ -25,7 +27,7 @@ struct ControllerResetData
 struct MCGlobalController;
 
 /*FIXME Get some data as parameters (e.g. timeStep, path to default env...) */
-struct MCVirtualController
+struct MC_CONTROL_DLLAPI MCVirtualController
 {
   friend struct MCGlobalController;
 public:

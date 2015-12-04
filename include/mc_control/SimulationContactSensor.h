@@ -6,10 +6,12 @@
 #include <mc_rbdyn/surface_hull.h>
 #include <mc_rbdyn/stance.h>
 
+#include <mc_control/api.h>
+
 namespace mc_control
 {
 
-struct SimulationContactPair
+struct MC_CONTROL_DLLAPI SimulationContactPair
 {
 public:
   SimulationContactPair(const std::shared_ptr<mc_rbdyn::Surface> & robotSurface, const std::shared_ptr<mc_rbdyn::Surface> & envSurface);
@@ -25,7 +27,7 @@ private:
   void updateSCH(sch::S_Object * obj, const mc_rbdyn::Robot & robot, const std::shared_ptr<mc_rbdyn::Surface> & robotSurface);
 };
 
-struct SimulationContactSensor : public ContactSensor
+struct MC_CONTROL_DLLAPI SimulationContactSensor : public ContactSensor
 {
 public:
   SimulationContactSensor(const std::vector<mc_rbdyn::Stance> & stances);

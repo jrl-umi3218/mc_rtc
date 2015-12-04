@@ -7,10 +7,12 @@
 
 #include <mc_rbdyn/robot.h>
 
+#include <mc_control/api.h>
+
 namespace mc_control
 {
 
-struct Mimic
+struct MC_CONTROL_DLLAPI Mimic
 {
 public:
   Mimic();
@@ -23,15 +25,15 @@ public:
 
 typedef std::map<std::string, Mimic> mimic_d_t;
 
-mimic_d_t readMimic(const std::string & urdf);
+MC_CONTROL_DLLAPI mimic_d_t readMimic(const std::string & urdf);
 
-int findSuccessorJoint(const mc_rbdyn::Robot & robot, int bodyIndex);
+MC_CONTROL_DLLAPI int findSuccessorJoint(const mc_rbdyn::Robot & robot, int bodyIndex);
 
-std::vector<std::string> gripperJoints(const mc_rbdyn::Robot & robot, const std::string & gripperName, const mimic_d_t & mimicDict);
+MC_CONTROL_DLLAPI std::vector<std::string> gripperJoints(const mc_rbdyn::Robot & robot, const std::string & gripperName, const mimic_d_t & mimicDict);
 
-std::string findFirstCommonBody(const mc_rbdyn::Robot & robotFull, const std::string & bodyName, const mc_rbdyn::Robot & robot);
+MC_CONTROL_DLLAPI std::string findFirstCommonBody(const mc_rbdyn::Robot & robotFull, const std::string & bodyName, const mc_rbdyn::Robot & robot);
 
-struct Gripper
+struct MC_CONTROL_DLLAPI Gripper
 {
 public:
   Gripper(const mc_rbdyn::Robot & robot, const std::string & gripperName,

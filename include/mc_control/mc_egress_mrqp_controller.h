@@ -8,12 +8,14 @@
 #include <mc_tasks/TrajectoryTask.h>
 #include <mc_tasks/CoMTask.h>
 
+#include <mc_control/api.h>
+
 namespace mc_control
 {
 
 struct EgressMRPhaseExecution;
 
-struct MCEgressMRQPController : MCMRQPController
+struct MC_CONTROL_DLLAPI MCEgressMRQPController : MCMRQPController
 {
   public:
     enum EgressPhase

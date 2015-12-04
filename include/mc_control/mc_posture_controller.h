@@ -3,10 +3,12 @@
 
 #include <mc_control/mc_controller.h>
 
+#include <mc_control/api.h>
+
 namespace mc_control
 {
 
-struct MCPostureController : public MCController
+struct MC_CONTROL_DLLAPI MCPostureController : public MCController
 {
 public:
   /* Common stuff */

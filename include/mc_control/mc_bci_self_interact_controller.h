@@ -10,10 +10,12 @@ namespace tf2_ros
   class TransformBroadcaster;
 }
 
+#include <mc_control/api.h>
+
 namespace mc_control
 {
 
-struct MCBCISelfInteractController : public MCController
+struct MC_CONTROL_DLLAPI MCBCISelfInteractController : public MCController
 {
 public:
   MCBCISelfInteractController(double dt);

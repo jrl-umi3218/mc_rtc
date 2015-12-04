@@ -7,6 +7,8 @@
 #include <string>
 #include <vector>
 
+#include <mc_rbdyn/api.h>
+
 namespace mc_rbdyn
 {
 
@@ -14,7 +16,7 @@ struct Robot;
 
 struct SurfaceImpl;
 
-struct Surface
+struct MC_RBDYN_DLLAPI Surface
 {
 public:
   Surface(const std::string & name, const std::string & bodyName, const sva::PTransformd & X_b_s, const std::string & materialName);
@@ -54,9 +56,9 @@ private:
   std::unique_ptr<SurfaceImpl> impl;
 };
 
-bool operator==(const Surface & lhs, const Surface & rhs);
+MC_RBDYN_DLLAPI bool operator==(const Surface & lhs, const Surface & rhs);
 
-bool operator!=(const Surface & lhs, const Surface & rhs);
+MC_RBDYN_DLLAPI bool operator!=(const Surface & lhs, const Surface & rhs);
 
 typedef std::shared_ptr<Surface> SurfacePtr;
 

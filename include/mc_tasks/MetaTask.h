@@ -4,12 +4,14 @@
 #include <cmath>
 #include <Tasks/QPSolver.h>
 
+#include <mc_tasks/api.h>
+
 namespace mc_tasks
 {
 
-double extraStiffness(double error, double extraStiffness);
+MC_TASKS_DLLAPI double extraStiffness(double error, double extraStiffness);
 
-struct MetaTask
+struct MC_TASKS_DLLAPI MetaTask
 {
 public:
   virtual void addToSolver(tasks::qp::QPSolver & solver) = 0;

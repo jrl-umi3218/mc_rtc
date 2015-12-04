@@ -5,10 +5,12 @@
 #include <Tasks/QPTasks.h>
 #include <Tasks/QPSolver.h>
 
+#include <mc_tasks/api.h>
+
 namespace mc_tasks
 {
 
-struct OrientationTask
+struct MC_TASKS_DLLAPI OrientationTask
 {
 public:
   OrientationTask(const std::string & bodyName, const mc_rbdyn::Robots & robots, unsigned int robotIndex, double stiffness = 2.0, double weight = 500);

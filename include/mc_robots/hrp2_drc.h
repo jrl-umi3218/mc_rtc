@@ -4,10 +4,12 @@
 #include <mc_rbdyn/RobotModule.h>
 #include <mc_rbdyn_urdf/urdf.h>
 
+#include <mc_robots/api.h>
+
 namespace mc_robots
 {
 
-struct HRP2DRCCommonRobotModule : public mc_rbdyn::RobotModule
+struct MC_ROBOTS_DLLAPI HRP2DRCCommonRobotModule : public mc_rbdyn::RobotModule
 {
 public:
   HRP2DRCCommonRobotModule();
@@ -30,7 +32,7 @@ public:
   mc_rbdyn_urdf::Limits limits;
 };
 
-struct HRP2DRCRobotModule : public HRP2DRCCommonRobotModule
+struct MC_ROBOTS_DLLAPI HRP2DRCRobotModule : public HRP2DRCCommonRobotModule
 {
 public:
   HRP2DRCRobotModule();
@@ -44,7 +46,7 @@ public:
   std::vector<std::string> filteredLinks;
 };
 
-struct HRP2DRCGripperRobotModule : public HRP2DRCCommonRobotModule
+struct MC_ROBOTS_DLLAPI HRP2DRCGripperRobotModule : public HRP2DRCCommonRobotModule
 {
 public:
   HRP2DRCGripperRobotModule();

@@ -45,16 +45,16 @@ bool live_chooseContactT::eval(MCSeqController & ctl)
   mc_rbdyn::StanceAction * targetAction = &(ctl.targetAction());
   mc_rbdyn::RemoveContactAction * rmCurAction = dynamic_cast<mc_rbdyn::RemoveContactAction*>(curAction);
   mc_rbdyn::AddContactAction * addTargetAction = dynamic_cast<mc_rbdyn::AddContactAction*>(targetAction);
-  bool isAddRemove = rmCurAction != 0 and addTargetAction != 0 and
+  bool isAddRemove = rmCurAction != 0 && addTargetAction != 0 &&
                      rmCurAction->contact().r1Surface()->bodyName() == addTargetAction->contact().r1Surface()->bodyName();
-  if(isAddRemove and rmCurAction->contact().r1Surface()->type() != "gripper")
+  if(isAddRemove && rmCurAction->contact().r1Surface()->type() != "gripper")
   {
     ctl.currentContact = &(rmCurAction->contact());
     ctl.targetContact  = &(addTargetAction->contact());
     return true;
   }
   bool isAddOnly = addTargetAction != 0;
-  if(isAddOnly and addTargetAction->contact().r1Surface()->type() != "gripper")
+  if(isAddOnly && addTargetAction->contact().r1Surface()->type() != "gripper")
   {
     ctl.currentContact = 0;
     ctl.targetContact = &(addTargetAction->contact());
@@ -243,20 +243,20 @@ bool live_moveContactT::eval(MCSeqController & ctl)
   double velErr = robotSurfaceVel.norm();
 
   /* Remove collision avoidance when velocity reaches 0 to set the contact more precisely */
-  if( (not ctl.isCollFiltered) and velErr < obj.velThresh )
+  if( (!ctl.isCollFiltered) && velErr < obj.velThresh )
   {
     ctl.setCollisionsContactFilter(*(ctl.targetContact), ctl.curConf());
     ctl.isCollFiltered = true;
   }
 
   bool inContact = ctl.inContact(ctl.targetContact->r1Surface()->name());
-  if( (posErr < obj.posThresh and velErr < obj.velThresh) or inContact )
+  if( (posErr < obj.posThresh && velErr < obj.velThresh) || inContact )
   {
     ctl.moveContactTask->removeFromSolver(ctl.qpsolver->solver);
     ctl.removeMetaTask(ctl.moveContactTask.get());
     ctl.moveContactTask.reset();
 
-    if(not ctl.isCollFiltered)
+    if(!ctl.isCollFiltered)
     {
       ctl.setCollisionsContactFilter(*(ctl.targetContact), ctl.curConf());
     }
@@ -272,7 +272,7 @@ bool enter_pushContactT::eval(MCSeqController & ctl)
   bool inContact = ctl.inContact(ctl.targetContact->r1Surface()->name());
 
   /* If not already in contact, move the contact in the normal direction */
-  if(not inContact)
+  if(!inContact)
   {
     auto & contactConf = ctl.curConf();
     ctl.addContactTask.reset(new mc_tasks::AddContactTask(ctl.robots(), ctl.constSpeedConstr, *(ctl.targetContact), contactConf));
@@ -465,7 +465,7 @@ bool live_moveCoMT::eval(MCSeqController & ctl)
   double error = (ctl.stabilityTask->comObj - rbd::computeCoM(ctl.robot().mb(), ctl.robot().mbc())).norm();
   double errorVel = rbd::computeCoMVelocity(ctl.robot().mb(), ctl.robot().mbc()).norm();
 
-  if( (error < obj.posThresh and errorVel < obj.velThresh) or ctl.notInContactCount > obj.timeout*1/ctl.timeStep)
+  if( (error < obj.posThresh && errorVel < obj.velThresh) || ctl.notInContactCount > obj.timeout*1/ctl.timeStep)
   {
     if(ctl.stanceIndex + 1 == ctl.stances.size())
     {
@@ -537,14 +537,14 @@ bool live_chooseGripperT::eval(MCSeqController & ctl)
   mc_rbdyn::RemoveContactAction * curRm = dynamic_cast<mc_rbdyn::RemoveContactAction*>(&(ctl.curAction()));
   mc_rbdyn::AddContactAction * tarAdd = dynamic_cast<mc_rbdyn::AddContactAction*>(&(ctl.targetAction()));
   mc_rbdyn::RemoveContactAction * tarRm = dynamic_cast<mc_rbdyn::RemoveContactAction*>(&(ctl.targetAction()));
-  bool isRemoveAdd = (curRm != 0) and (tarAdd != 0);
+  bool isRemoveAdd = (curRm != 0) && (tarAdd != 0);
   if(isRemoveAdd)
   {
-    isRemoveAdd = isRemoveAdd and (curRm->contact().r1Surface()->bodyName() == tarAdd->contact().r1Surface()->bodyName());
+    isRemoveAdd = isRemoveAdd && (curRm->contact().r1Surface()->bodyName() == tarAdd->contact().r1Surface()->bodyName());
   }
   bool isAddOnly = tarAdd != 0;
   bool isRemoveOnly = tarRm != 0;
-  if( (isRemoveAdd or isAddOnly) and tarAdd->contact().r1Surface()->type() == "gripper" )
+  if( (isRemoveAdd || isAddOnly) && tarAdd->contact().r1Surface()->type() == "gripper" )
   {
     if(isRemoveAdd)
     {
@@ -562,7 +562,7 @@ bool live_chooseGripperT::eval(MCSeqController & ctl)
     }
     return true;
   }
-  if(isRemoveOnly and tarRm->contact().r1Surface()->type() == "gripper")
+  if(isRemoveOnly && tarRm->contact().r1Surface()->type() == "gripper")
   {
     ctl.isGripperAttached = true;
     ctl.isGripperWillBeAttached = false;
@@ -627,17 +627,17 @@ bool live_openGripperP::eval(MCSeqController & ctl)
 
 bool live_openGripperT::eval(MCSeqController & ctl)
 {
-  return ctl.isGripperAttached and ctl.isGripperOpen;
+  return ctl.isGripperAttached && ctl.isGripperOpen;
 }
 
 bool live_openGripperNotRmT::eval(MCSeqController & ctl)
 {
-  return (not ctl.isGripperAttached) and ctl.isGripperOpen;
+  return (!ctl.isGripperAttached) && ctl.isGripperOpen;
 }
 
 bool enter_removeGripperP::eval(MCSeqController & ctl)
 {
-  ctl.skipRemoveGripper = (not ctl.isGripperAttached) and ctl.isGripperOpen;
+  ctl.skipRemoveGripper = (!ctl.isGripperAttached) && ctl.isGripperOpen;
   if(ctl.skipRemoveGripper)
   {
     return true;
@@ -738,17 +738,17 @@ bool live_removeGripperP::eval(MCSeqController & ctl)
 
 bool live_removeGripperT::eval(MCSeqController & ctl)
 {
-  return ctl.isGripperWillBeAttached and ctl.isRemoved;
+  return ctl.isGripperWillBeAttached && ctl.isRemoved;
 }
 
 bool live_removeGripperNotAddT::eval(MCSeqController & ctl)
 {
-  return (not ctl.isGripperWillBeAttached) and ctl.isRemoved;
+  return (!ctl.isGripperWillBeAttached) && ctl.isRemoved;
 }
 
 bool enter_moveGripperWPT::eval(MCSeqController & ctl)
 {
-  if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
+  if((!ctl.isGripperWillBeAttached) && ctl.isRemoved) { return true; }
   LOG_INFO("Move gripper WPT")
   mc_rbdyn::StanceConfig & contactConf = ctl.curConf();
   mc_rbdyn::Stance & newS = ctl.targetStance();
@@ -777,7 +777,7 @@ bool enter_moveGripperWPT::eval(MCSeqController & ctl)
 
 bool live_moveGripperWPT::eval(MCSeqController & ctl)
 {
-  if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
+  if((!ctl.isGripperWillBeAttached) && ctl.isRemoved) { return true; }
   mc_rbdyn::StanceConfig & contactConf = ctl.curConf();
 
   Eigen::Vector3d robotSurfacePos = ctl.moveContactTask->robotSurfacePos().translation();
@@ -799,7 +799,7 @@ bool live_moveGripperWPT::eval(MCSeqController & ctl)
 
 bool live_moveGripperT::eval(MCSeqController & ctl)
 {
-  if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
+  if((!ctl.isGripperWillBeAttached) && ctl.isRemoved) { return true; }
   mc_rbdyn::StanceConfig::ContactObj & obj = ctl.curConf().contactObj;
 
   Eigen::Vector3d robotSurfacePos = ctl.moveContactTask->robotSurfacePos().translation();
@@ -813,7 +813,7 @@ bool live_moveGripperT::eval(MCSeqController & ctl)
     ctl.bodyOriTaskSp->weight(std::max(0.0, curBodyOriWeight - 0.5));
   }
 
-  if(posErr < obj.posThresh and velErr < obj.velThresh)
+  if(posErr < obj.posThresh && velErr < obj.velThresh)
   {
     if(ctl.isBodyTask)
     {
@@ -828,7 +828,7 @@ bool live_moveGripperT::eval(MCSeqController & ctl)
 
 bool enter_adjustGripperP::eval(MCSeqController & ctl)
 {
-  if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
+  if((!ctl.isGripperWillBeAttached) && ctl.isRemoved) { return true; }
   LOG_INFO("Adjust Gripper P")
   double stiff = ctl.moveContactTask->posStiff + ctl.moveContactTask->extraPosStiff;
   ctl.adjustPositionTask.reset(new tasks::qp::PositionTask(ctl.robots().mbs(), 0, ctl.moveContactTask->robotBodyId,
@@ -883,7 +883,7 @@ bool enter_adjustGripperP::eval(MCSeqController & ctl)
 
 bool live_adjustGripperT::eval(MCSeqController & ctl)
 {
-  if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
+  if((!ctl.isGripperWillBeAttached) && ctl.isRemoved) { return true; }
   mc_rbdyn::StanceConfig & contactConf = ctl.curConf();
   unsigned int bodyIndex = ctl.moveContactTask->robotBodyIndex;
 
@@ -958,7 +958,7 @@ bool live_adjustGripperT::eval(MCSeqController & ctl)
     LOG_ERROR("OOPS Drive too fast")
   }
 
-  bool insert = posErr < obj.adjustPosThresh and oriErr < obj.adjustOriThresh and velErr < obj.adjustVelThresh;
+  bool insert = posErr < obj.adjustPosThresh && oriErr < obj.adjustOriThresh && velErr < obj.adjustVelThresh;
   if(insert)
   {
     ctl.qpsolver->solver.removeTask(ctl.adjustPositionTaskPid.get());
@@ -976,7 +976,7 @@ bool live_adjustGripperT::eval(MCSeqController & ctl)
 
 bool enter_addGripperT::eval(MCSeqController & ctl)
 {
-  if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
+  if((!ctl.isGripperWillBeAttached) && ctl.isRemoved) { return true; }
   LOG_INFO("addGripperT")
   mc_rbdyn::StanceConfig & contactConf = ctl.curConf();
 
@@ -1019,7 +1019,7 @@ bool enter_addGripperT::eval(MCSeqController & ctl)
 
 bool live_addGripperT::eval(MCSeqController & ctl)
 {
-  if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
+  if((!ctl.isGripperWillBeAttached) && ctl.isRemoved) { return true; }
   bool ok = ctl.inContact(ctl.addContactTask->robotSurf->name());
 
   if(ok) /* Python compares nrIterNoContact with np.inf/timeStep (so np.inf) */
@@ -1047,7 +1047,7 @@ bool live_addGripperT::eval(MCSeqController & ctl)
 
 bool enter_removeBeforeCloseT::eval(MCSeqController & ctl)
 {
-  if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
+  if((!ctl.isGripperWillBeAttached) && ctl.isRemoved) { return true; }
   if(ctl.notInContactCount > 0) { return true; }
   mc_rbdyn::StanceConfig & contactConf = ctl.targetConf();
   LOG_INFO("Moving the gripper away before grasp (Move " << ctl.curConf().contactObj.gripperMoveAwayDist*100 << " cm)")
@@ -1067,7 +1067,7 @@ bool enter_removeBeforeCloseT::eval(MCSeqController & ctl)
 
 bool live_removeBeforeCloseT::eval(MCSeqController & ctl)
 {
-  if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
+  if((!ctl.isGripperWillBeAttached) && ctl.isRemoved) { return true; }
   if(ctl.notInContactCount > 0) { ctl.notInContactCount = 0; return true; }
   Eigen::Vector3d curPos = ctl.robot().mbc().bodyPosW[ctl.robot().bodyIndexByName(ctl.targetContact->r1Surface()->bodyName())].translation();
   double d = (curPos - ctl.contactPos).norm();
@@ -1154,7 +1154,7 @@ bool live_hardCloseGripperP::eval(MCSeqController & ctl)
   if(ctl.currentGripper)
   {
     ctl.currentGripper->percentOpen -= 0.0005;
-    bool limitToZero = ctl.targetContact->r2Surface()->name() == "PlatformLeftRampVS" or ctl.targetContact->r2Surface()->name() == "PlatformLeftRampS"; /*FIXME Should be part of the configuration */
+    bool limitToZero = ctl.targetContact->r2Surface()->name() == "PlatformLeftRampVS" || ctl.targetContact->r2Surface()->name() == "PlatformLeftRampS"; /*FIXME Should be part of the configuration */
     double percentOpenLimit = limitToZero ? 0.25 : 0;
     if(ctl.currentGripper->overCommandLimit || ctl.currentGripper->percentOpen <= percentOpenLimit)
     {
@@ -1179,7 +1179,7 @@ bool live_hardCloseGripperP::eval(MCSeqController & ctl)
   if(finish)
   {
     ctl.isGripperClose = true;
-    if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
+    if((!ctl.isGripperWillBeAttached) && ctl.isRemoved) { return true; }
     /*TODO Get the actual position of the hand, set it in the QP and reset the gains to their original value*/
     //bool leftHand = ctl.targetContact->r1Surface()->name() == "LeftGripper";
     //unsigned int ji = leftHand ? 24 : 16;
@@ -1204,7 +1204,7 @@ bool live_hardCloseGripperP::eval(MCSeqController & ctl)
 
 bool enter_restoreArmGainsP::eval(MCSeqController & ctl)
 {
-  if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
+  if((!ctl.isGripperWillBeAttached) && ctl.isRemoved) { return true; }
   //LOG_INFO("Restoring arm gains to their original values")
   //for(size_t i = 0; i < ctl.lowerPGainsJoints.size(); ++i)
   //{
@@ -1221,7 +1221,7 @@ bool enter_restoreArmGainsP::eval(MCSeqController & ctl)
 
 bool enter_contactGripperP::eval(MCSeqController & ctl)
 {
-  if((not ctl.isGripperWillBeAttached) and ctl.isRemoved) { return true; }
+  if((!ctl.isGripperWillBeAttached) && ctl.isRemoved) { return true; }
   LOG_INFO("enter_contactGripperP")
   mc_rbdyn::StanceConfig & contactConf = ctl.curConf();
 
@@ -1234,7 +1234,7 @@ bool enter_contactGripperP::eval(MCSeqController & ctl)
 
 bool live_contactGripperT::eval(MCSeqController & ctl)
 {
-  if((not ctl.isGripperWillBeAttached) and ctl.isRemoved)
+  if((!ctl.isGripperWillBeAttached) && ctl.isRemoved)
   {
     ctl.stanceIndex += 1;
     mc_rbdyn::Stance & newS = ctl.targetStance();

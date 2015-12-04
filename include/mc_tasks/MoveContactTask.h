@@ -10,6 +10,8 @@
 #include <Tasks/QPConstr.h>
 #include <Tasks/QPTasks.h>
 
+#include <mc_tasks/api.h>
+
 namespace mc_rbdyn
 {
   struct Contact;
@@ -18,7 +20,7 @@ namespace mc_rbdyn
 namespace mc_tasks
 {
 
-struct MoveContactTask : public MetaTask
+struct MC_TASKS_DLLAPI MoveContactTask : public MetaTask
 {
 public:
   MoveContactTask(mc_rbdyn::Robots & robots, mc_rbdyn::Robot & robot, mc_rbdyn::Robot & env, mc_rbdyn::Contact & contact, mc_rbdyn::StanceConfig & config, double positionWStartPercent = 0);

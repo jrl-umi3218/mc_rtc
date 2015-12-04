@@ -5,10 +5,12 @@
 #include <mc_tasks/EndEffectorTask.h>
 #include <mc_tasks/CoMTask.h>
 
+#include <mc_control/api.h>
+
 namespace mc_control
 {
 
-struct MCBody6dController : public MCController
+struct MC_CONTROL_DLLAPI MCBody6dController : public MCController
 {
 public:
   MCBody6dController(double dt);

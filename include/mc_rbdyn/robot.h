@@ -22,7 +22,7 @@ namespace mc_rbdyn
 
 struct RobotModule;
 
-struct Flexibility
+struct MC_RBDYN_DLLAPI Flexibility
 {
 public:
   std::string jointName;
@@ -31,7 +31,7 @@ public:
   double O;
 };
 
-struct ForceSensor
+struct MC_RBDYN_DLLAPI ForceSensor
 {
 public:
   ForceSensor();
@@ -42,7 +42,7 @@ public:
   sva::PTransformd X_p_f;
 };
 
-struct Springs
+struct MC_RBDYN_DLLAPI Springs
 {
 public:
   Springs() : springsBodies(0), afterSpringsBodies(0), springsJoints(0) {}
@@ -52,7 +52,7 @@ public:
   std::vector< std::vector<std::string> > springsJoints;
 };
 
-struct Base
+struct MC_RBDYN_DLLAPI Base
 {
   int baseId;
   sva::PTransformd X_0_s;
@@ -60,7 +60,7 @@ struct Base
   rbd::Joint::Type baseType;
 };
 
-struct Robots
+struct MC_RBDYN_DLLAPI Robots
 {
   friend struct Robot;
 public:
@@ -114,20 +114,24 @@ protected:
 };
 
 /* Static pendant of the loader functions to create Robots directly */
-Robots loadRobot(const RobotModule & module, const std::string & surfaceDir, sva::PTransformd * base = 0, int bId = -1);
+MC_RBDYN_DLLAPI Robots loadRobot(const RobotModule & module, const std::string & surfaceDir, sva::PTransformd * base = 0, int bId = -1);
 
-Robots loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules, const std::vector<std::string> & surfaceDirs);
+MC_RBDYN_DLLAPI Robots loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules, const std::vector<std::string> & surfaceDirs);
 
-Robots loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir);
+MC_RBDYN_DLLAPI Robots loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir);
 
-Robots loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir, sva::PTransformd * base, int bId);
+MC_RBDYN_DLLAPI Robots loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir, sva::PTransformd * base, int bId);
 
-Robots loadRobotFromUrdf(const std::string & name, const std::string & urdf, bool withVirtualLinks = true, const std::vector<std::string> & filteredLinks = {}, bool fixed = false, sva::PTransformd * base = 0, int bId = -1);
+MC_RBDYN_DLLAPI Robots loadRobotFromUrdf(const std::string & name, const std::string & urdf, bool withVirtualLinks = true, const std::vector<std::string> & filteredLinks = {}, bool fixed = false, sva::PTransformd * base = 0, int bId = -1);
 
-struct Robot
+struct MC_RBDYN_DLLAPI Robot
 {
   friend struct Robots;
+  #ifndef WIN32
   friend class __gnu_cxx::new_allocator<Robot>;
+  #else
+  friend class std::allocator<Robot>;
+  #endif
 public:
   typedef std::pair<int, std::shared_ptr<sch::S_Polyhedron>> convex_pair_t;
   typedef std::pair<int, std::shared_ptr<sch::STP_BV>> stpbv_pair_t;
@@ -238,18 +242,18 @@ protected:
   void copy(Robots & robots, unsigned int robots_idx) const;
 };
 
-std::vector< std::vector<double> > jointsParameters(const rbd::MultiBody & mb, const double & coeff);
+MC_RBDYN_DLLAPI std::vector< std::vector<double> > jointsParameters(const rbd::MultiBody & mb, const double & coeff);
 
-std::vector< std::vector<double> > jointsDof(const rbd::MultiBody & mb, const double & coeff);
+MC_RBDYN_DLLAPI std::vector< std::vector<double> > jointsDof(const rbd::MultiBody & mb, const double & coeff);
 
-std::map<int, std::vector<double> > jointsVectorToId(const rbd::MultiBody & mb, const std::vector< std::vector<double> > & jointsVec,
+MC_RBDYN_DLLAPI std::map<int, std::vector<double> > jointsVectorToId(const rbd::MultiBody & mb, const std::vector< std::vector<double> > & jointsVec,
                                                               const std::function<bool(const rbd::Joint &, const std::vector<double> &)> & filter
                                                                         = [](const rbd::Joint &, const std::vector<double> &){return true;});
 
-std::vector< std::vector<double> > jointsIdToVector(const rbd::MultiBody & mb, std::map<int, std::vector<double> > & jointsId, const std::vector<double> & def = {}, const std::function<bool (const rbd::Joint &)> & filter = [](const rbd::Joint &){return true;} );
+MC_RBDYN_DLLAPI std::vector< std::vector<double> > jointsIdToVector(const rbd::MultiBody & mb, std::map<int, std::vector<double> > & jointsId, const std::vector<double> & def = {}, const std::function<bool (const rbd::Joint &)> & filter = [](const rbd::Joint &){return true;} );
 
 // Return [ql, qu, vl, vu, tl, tu]
-std::vector< std::map< int, std::vector<double> > > defaultBounds(const rbd::MultiBody & mb);
+MC_RBDYN_DLLAPI std::vector< std::map< int, std::vector<double> > > defaultBounds(const rbd::MultiBody & mb);
 
 template<typename sch_T>
 void applyTransformToSchById(const rbd::MultiBody & mb, const rbd::MultiBodyConfig & mbc, std::map<std::string, std::pair<int, sch_T> > & schById);

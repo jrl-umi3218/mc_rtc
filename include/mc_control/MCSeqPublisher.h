@@ -13,10 +13,12 @@
 #include <queue>
 #include <thread>
 
+#include <mc_control/api.h>
+
 namespace mc_control
 {
 
-struct MCSeqPublisher
+struct MC_CONTROL_DLLAPI MCSeqPublisher
 {
 public:
   MCSeqPublisher(const mc_rbdyn::Robots & robots);

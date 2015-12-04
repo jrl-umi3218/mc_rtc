@@ -29,7 +29,7 @@ const std::map<std::string, std::pair<std::string, std::string> > & EnvRobotModu
 
   bfs::path p(convexPath);
 
-  if(bfs::exists(p) and bfs::is_directory(p))
+  if(bfs::exists(p) && bfs::is_directory(p))
   {
     std::vector<bfs::path> files;
     std::copy(bfs::directory_iterator(p), bfs::directory_iterator(), std::back_inserter(files));

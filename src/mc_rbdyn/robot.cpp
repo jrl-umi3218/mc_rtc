@@ -68,7 +68,7 @@ Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
     forceSensorsParentD[sensor.sensorName] = sensor;
     parentBodyForceSensorD[sensor.parentBodyName] = sensor.sensorName;
   }
-  if(this->accelerometerBody == "" and this->hasBody("Accelerometer"))
+  if(this->accelerometerBody == "" && this->hasBody("Accelerometer"))
   {
     unsigned int index = bodyIndexByName("Accelerometer");
     this->accelerometerBody = this->mb().body(this->mb().parent(index)).name();

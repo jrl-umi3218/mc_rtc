@@ -15,7 +15,29 @@ mc_rbdyn/PolygonInterpolator.cpp
 mc_rbdyn/polygon_utils.cpp
 )
 
-add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC})
+set(mc_rbdyn_HDR
+../include/mc_rbdyn/api.h
+../include/mc_rbdyn/Contact.h
+../include/mc_rbdyn/contact_transform.h
+../include/mc_rbdyn/CylindricalSurface.h
+../include/mc_rbdyn/GripperSurface.h
+../include/mc_rbdyn/json
+../include/mc_rbdyn/PlanarSurface.h
+../include/mc_rbdyn/polygon_utils.h
+../include/mc_rbdyn/PolygonInterpolator.h
+../include/mc_rbdyn/robot.h
+../include/mc_rbdyn/robot.hpp
+../include/mc_rbdyn/RobotModule.h
+../include/mc_rbdyn/SCHAddon.h
+../include/mc_rbdyn/stance.h
+../include/mc_rbdyn/StanceConfig.h
+../include/mc_rbdyn/Surface.h
+../include/mc_rbdyn/surface_hull.h
+../include/mc_rbdyn/surface_utils.h
+)
+
+add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC} ${mc_rbdyn_HDR})
+set_target_properties(mc_rbdyn PROPERTIES COMPILE_FLAGS "-DMC_RBDYN_EXPORTS")
 pkg_config_use_dependency(mc_rbdyn mc_rbdyn_urdf_cpp)
 pkg_config_use_dependency(mc_rbdyn Tasks)
 pkg_config_use_dependency(mc_rbdyn jsoncpp)
@@ -31,8 +53,22 @@ mc_robots/polaris_ranger.cpp
 mc_robots/polaris_ranger_egress.cpp
 )
 
-add_library(mc_robots SHARED ${mc_robots_SRC})
+set(mc_robots_HDR
+../include/mc_robots/api.h
+../include/mc_robots/env.h
+../include/mc_robots/hrp2_drc.h
+../include/mc_robots/polaris_ranger.h
+../include/mc_robots/polaris_ranger_egress.h
+)
+
+add_library(mc_robots SHARED ${mc_robots_SRC} ${mc_robots_HDR})
+set_target_properties(mc_robots PROPERTIES COMPILE_FLAGS "-DMC_ROBOTS_EXPORTS")
 target_link_libraries(mc_robots mc_rbdyn)
+#FIXME Apparently visual does not follow the dependency of mc_rbdyn?
+if(WIN32)
+target_link_libraries(mc_robots ${Boost_LIBRARIES})
+pkg_config_use_dependency(mc_robots mc_rbdyn_urdf_cpp)
+endif()
 pkg_config_append_libs(mc_robots)
 
 set(mc_solver_SRC
@@ -40,16 +76,31 @@ mc_solver/contact_util.cpp
 mc_solver/qpsolver.cpp
 )
 
-add_library(mc_solver SHARED ${mc_solver_SRC})
+set(mc_solver_HDR
+../include/mc_solver/api.h
+../include/mc_solver/contact_util.h
+../include/mc_solver/qpsolver.h
+)
+
+add_library(mc_solver SHARED ${mc_solver_SRC} ${mc_solver_HDR})
+set_target_properties(mc_solver PROPERTIES COMPILE_FLAGS "-DMC_SOLVER_EXPORTS")
 pkg_config_use_dependency(mc_solver Tasks)
 pkg_config_append_libs(mc_solver)
+target_link_libraries(mc_solver mc_rbdyn)
 
 set(mc_trajectory_SRC
 mc_trajectory/BSplineTrajectory.cpp
 mc_trajectory/spline_utils.cpp
 )
 
-add_library(mc_trajectory SHARED ${mc_trajectory_SRC})
+set(mc_trajectory_HDR
+../include/mc_trajectory/api.h
+../include/mc_trajectory/BSplineTrajectory.h
+../include/mc_trajectory/spline_utils.h
+)
+
+add_library(mc_trajectory SHARED ${mc_trajectory_SRC} ${mc_trajectory_HDR})
+set_target_properties(mc_trajectory PROPERTIES COMPILE_FLAGS "-DMC_TRAJECTORY_EXPORTS")
 pkg_config_append_libs(mc_trajectory)
 
 set(mc_tasks_SRC
@@ -64,11 +115,33 @@ mc_tasks/MoveContactTask.cpp
 mc_tasks/TrajectoryTask.cpp
 )
 
-add_library(mc_tasks SHARED ${mc_tasks_SRC})
+set(mc_tasks_HDR
+../include/mc_tasks/AddRemoveContactTask.h
+../include/mc_tasks/api.h
+../include/mc_tasks/CoMTask.h
+../include/mc_tasks/EndEffectorTask.h
+../include/mc_tasks/MetaTask.h
+../include/mc_tasks/MoveContactTask.h
+../include/mc_tasks/OrientationTask.h
+../include/mc_tasks/RelativeEndEffectorTask.h
+../include/mc_tasks/SmoothTask.h
+../include/mc_tasks/StabilityTask.h
+../include/mc_tasks/TrajectoryTask.h
+)
+
+add_library(mc_tasks SHARED ${mc_tasks_SRC} ${mc_tasks_HDR})
+set_target_properties(mc_tasks PROPERTIES COMPILE_FLAGS "-DMC_TASKS_EXPORTS")
 target_link_libraries(mc_tasks mc_solver mc_rbdyn mc_trajectory)
+#FIXME Apparently visual does not follow the dependency of mc_rbdyn?
+if(WIN32)
+target_link_libraries(mc_tasks ${Boost_LIBRARIES})
+pkg_config_use_dependency(mc_tasks mc_rbdyn_urdf_cpp)
+pkg_config_use_dependency(mc_tasks Tasks)
+endif()
 pkg_config_append_libs(mc_tasks)
 
-add_library(mc_rtc_ros SHARED mc_rtc/ros.cpp)
+add_library(mc_rtc_ros SHARED mc_rtc/ros.cpp ../include/mc_rtc/ros.h ../include/mc_rtc/ros_api.h)
+set_target_properties(mc_rtc_ros PROPERTIES COMPILE_FLAGS "-DMC_RTC_ROS_EXPORTS")
 if(${ROSCPP_FOUND})
   pkg_config_use_dependency(mc_rtc_ros roscpp)
   pkg_config_use_dependency(mc_rtc_ros sensor_msgs)
@@ -76,7 +149,7 @@ if(${ROSCPP_FOUND})
 endif()
 pkg_config_append_libs(mc_rtc_ros)
 
-set(mc_drc_controller_SRC
+set(mc_control_SRC
 mc_control/ForceContactSensor.cpp
 mc_control/SimulationContactSensor.cpp
 mc_control/generic_gripper.cpp
@@ -96,12 +169,46 @@ mc_control/mc_egress_mrqp_controller.cpp
 mc_control/mc_global_controller.cpp
 mc_control/mc_global_controller_services.cpp
 )
-add_library(mc_drc_controller SHARED ${mc_drc_controller_SRC})
-target_link_libraries(mc_drc_controller mc_tasks mc_solver mc_robots mc_rtc_ros)
+set(mc_control_HDR
+../include/mc_control/api.h
+../include/mc_control/ContactSensor.h
+../include/mc_control/ForceContactSensor.h
+../include/mc_control/generic_gripper.h
+../include/mc_control/MCSeqPublisher.h
+../include/mc_control/mc_bci_self_interact_controller.h
+../include/mc_control/mc_body6d_controller.h
+../include/mc_control/mc_com_controller.h
+../include/mc_control/mc_controller.h
+../include/mc_control/mc_driving_controller.h
+../include/mc_control/mc_egress_controller.h
+../include/mc_control/mc_egress_mrqp_controller.h
+../include/mc_control/mc_global_controller.h
+../include/mc_control/mc_mrqp_controller.h
+../include/mc_control/mc_posture_controller.h
+../include/mc_control/mc_seq_actions.h
+../include/mc_control/mc_seq_controller.h
+../include/mc_control/mc_seq_steps.h
+../include/mc_control/mc_virtual_controller.h
+../include/mc_control/msg
+../include/mc_control/msg/Contact.h
+../include/mc_control/msg/QPResult.h
+../include/mc_control/msg/Robot.h
+../include/mc_control/SimulationContactSensor.h
+)
+add_library(mc_control SHARED ${mc_control_SRC} ${mc_control_HDR})
+set_target_properties(mc_control PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_EXPORTS")
+target_link_libraries(mc_control mc_tasks mc_solver mc_robots mc_rtc_ros)
 if(${HRPSYS_BASE_FOUND})
-  target_link_libraries(mc_drc_controller hrpIo)
+  target_link_libraries(mc_control hrpIo)
 endif()
-pkg_config_append_libs(mc_drc_controller)
+#FIXME Apparently visual does not follow the dependency of mc_rbdyn?
+if(WIN32)
+target_link_libraries(mc_control ${Boost_LIBRARIES})
+pkg_config_use_dependency(mc_control mc_rbdyn_urdf_cpp)
+pkg_config_use_dependency(mc_control Tasks)
+pkg_config_use_dependency(mc_control jsoncpp)
+endif()
+pkg_config_append_libs(mc_control)
 
 if(${HRPSYS_BASE_FOUND})
   set(MCControl_SRC
@@ -122,7 +229,7 @@ if(${HRPSYS_BASE_FOUND})
   add_dependencies(MCControl generate_mc_idl_cpp)
   set_target_properties(MCControl PROPERTIES PREFIX "")
   pkg_config_use_dependency(MCControl hrpsys-base)
-  target_link_libraries(MCControl mc_rtc_ros mc_drc_controller)
+  target_link_libraries(MCControl mc_rtc_ros mc_control)
 
   add_executable(MCControlComp mc_rtc/MCControlComp.cpp)
   target_link_libraries(MCControlComp MCControl)
@@ -133,7 +240,7 @@ if(${HRPSYS_BASE_FOUND})
     ARCHIVE DESTINATION lib)
 endif()
 
-install(TARGETS mc_rbdyn mc_solver mc_robots mc_tasks mc_drc_controller mc_trajectory mc_rtc_ros
+install(TARGETS mc_rbdyn mc_solver mc_robots mc_tasks mc_control mc_trajectory mc_rtc_ros
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib)

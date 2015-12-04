@@ -4,10 +4,12 @@
 #include <mc_rbdyn/RobotModule.h>
 #include <mc_rbdyn_urdf/urdf.h>
 
+#include <mc_robots/api.h>
+
 namespace mc_robots
 {
 
-struct PolarisRangerEgressRobotModule : public mc_rbdyn::RobotModule
+struct MC_ROBOTS_DLLAPI PolarisRangerEgressRobotModule : public mc_rbdyn::RobotModule
 {
 public:
   PolarisRangerEgressRobotModule();

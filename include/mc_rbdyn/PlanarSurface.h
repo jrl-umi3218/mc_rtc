@@ -9,7 +9,7 @@ struct Robot;
 
 struct PlanarSurfaceImpl;
 
-struct PlanarSurface : public Surface
+struct MC_RBDYN_DLLAPI PlanarSurface : public Surface
 {
   PlanarSurface(const std::string & name, const std::string & bodyName, const sva::PTransformd & X_b_s, const std::string & materialName, const std::vector< std::pair<double, double> > & planarPoints);
 

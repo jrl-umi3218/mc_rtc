@@ -4,13 +4,17 @@
 #include <Eigen/Core>
 #include <unsupported/Eigen/Splines>
 
+#include <vector>
+
+#include <mc_trajectory/api.h>
+
 namespace mc_trajectory
 {
 
 typedef Eigen::Spline<double, 3, Eigen::Dynamic> Spline3d;
 typedef Eigen::Matrix<double, 3, Eigen::Dynamic> Matrix3Xd;
 
-struct BSplineTrajectory
+struct MC_TRAJECTORY_DLLAPI BSplineTrajectory
 {
 public:
   BSplineTrajectory(const std::vector<Eigen::Vector3d> & controlPoints, double duration, unsigned int order = 4);

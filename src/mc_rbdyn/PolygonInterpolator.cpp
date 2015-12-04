@@ -8,7 +8,7 @@
 namespace mc_rbdyn
 {
 
-PolygonInterpolator::GeometryDeleter::GeometryDeleter(geos::geom::GeometryFactory & factory)
+PolygonInterpolator::GeometryDeleter::GeometryDeleter(const geos::geom::GeometryFactory & factory)
 : factory(factory)
 {
 }
@@ -19,18 +19,18 @@ void PolygonInterpolator::GeometryDeleter::operator()(geos::geom::Geometry * ptr
 }
 
 PolygonInterpolator::PolygonInterpolator(const Json::Value & jsv)
-: geom_factory(), geom_deleter(geom_factory), tuple_pairs()
+: geom_factory(*geos::geom::GeometryFactory::getDefaultInstance()), geom_deleter(geom_factory), tuple_pairs()
 {
   if(jsv.isMember("tuple_pairs"))
   {
     for(const auto & tpv : jsv["tuple_pairs"])
     {
-      if(tpv.isMember("p1") and tpv.isMember("p2"))
+      if(tpv.isMember("p1") && tpv.isMember("p2"))
       {
         const auto & p1 = tpv["p1"];
         const auto & p2 = tpv["p2"];
-        if(p1.isArray() and p1.size() == 2 and
-           p2.isArray() and p2.size() == 2)
+        if(p1.isArray() && p1.size() == 2 &&
+           p2.isArray() && p2.size() == 2)
         {
           tuple_pairs.push_back({
             {{p1[0].asDouble(), p1[1].asDouble()}},
@@ -132,7 +132,7 @@ std::vector<PolygonInterpolator::tuple_t> PolygonInterpolator::normal_derivative
   geom_factory.destroyGeometry(poly_d);
   for(size_t i = 0; i < std::min(n_strt.size(), n_dest.size()); ++i)
   {
-    if(n_strt[i][0] == 0 and n_strt[i][1] == 0 and n_dest[i][0] == 0 and n_dest[i][1] == 0)
+    if(n_strt[i][0] == 0 && n_strt[i][1] == 0 && n_dest[i][0] == 0 && n_dest[i][1] == 0)
     {
       res.push_back({{0.,0.}});
     }

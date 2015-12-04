@@ -75,7 +75,7 @@ void set_planes(const std::vector<Plane> & planes,
                 const std::vector<Eigen::Vector3d> & normalsDots)
 {
   constr->reset();
-  if(speeds.size() != 0 and normalsDots.size() == speeds.size() and planes.size() == speeds.size())
+  if(speeds.size() != 0 && normalsDots.size() == speeds.size() && planes.size() == speeds.size())
   {
     for(size_t i = 0; i < planes.size(); ++i)
     {
@@ -87,8 +87,8 @@ void set_planes(const std::vector<Plane> & planes,
   }
   else
   {
-    if(speeds.size() != 0 and (normalsDots.size() != speeds.size()
-                               or planes.size() != speeds.size()))
+    if(speeds.size() != 0 && (normalsDots.size() != speeds.size()
+                               || planes.size() != speeds.size()))
     {
       //LOG_WARNING("set_planes: speeds size > 0 but different from normalsDots or planes, acting as if speeds were not provided")
     }

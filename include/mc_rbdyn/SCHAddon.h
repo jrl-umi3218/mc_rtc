@@ -22,16 +22,18 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with sch-core-python.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <mc_rbdyn/api.h>
+
 namespace sch
 {
 
-  void transform(S_Object& obj, const sva::PTransformd& t);
+  MC_RBDYN_DLLAPI void transform(S_Object& obj, const sva::PTransformd& t);
 
-  STP_BV * STPBV(const std::string& filename);
+  MC_RBDYN_DLLAPI STP_BV * STPBV(const std::string& filename);
 
-  S_Polyhedron * Polyhedron(const std::string& filename);
+  MC_RBDYN_DLLAPI S_Polyhedron * Polyhedron(const std::string& filename);
 
-  double distance(CD_Pair& pair, Eigen::Vector3d& p1, Eigen::Vector3d& p2);
+  MC_RBDYN_DLLAPI double distance(CD_Pair& pair, Eigen::Vector3d& p1, Eigen::Vector3d& p2);
 
 }
 

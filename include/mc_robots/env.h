@@ -4,10 +4,12 @@
 #include <mc_rbdyn/RobotModule.h>
 #include <mc_rbdyn_urdf/urdf.h>
 
+#include <mc_robots/api.h>
+
 namespace mc_robots
 {
 
-struct EnvRobotModule : public mc_rbdyn::RobotModule
+struct MC_ROBOTS_DLLAPI EnvRobotModule : public mc_rbdyn::RobotModule
 {
 public:
   EnvRobotModule(const std::string & env_path, const std::string & env_name);

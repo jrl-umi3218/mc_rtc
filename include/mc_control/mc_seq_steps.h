@@ -3,11 +3,13 @@
 
 #include <mc_control/mc_seq_controller.h>
 
+#include <mc_control/api.h>
+
 namespace mc_control
 {
 
 #define CREATE_STRUCT(sName)\
-struct sName : public SeqStep\
+struct MC_CONTROL_DLLAPI sName : public SeqStep\
 {\
   virtual bool eval(MCSeqController & controller) override;\
 };
