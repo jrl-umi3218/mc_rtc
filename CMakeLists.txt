@@ -5,7 +5,6 @@ cmake_minimum_required(VERSION 2.8)
 include(cmake/base.cmake)
 include(cmake/eigen.cmake)
 include(cmake/pkg-config.cmake)
-include(cmake/idl.cmake)
 
 set(PROJECT_NAME mc_rtc)
 set(PROJECT_DESCRIPTION mc_rtc)
@@ -33,6 +32,11 @@ add_required_dependency(mc_rbdyn_urdf_cpp)
 add_optional_dependency(hrpsys-base)
 if(${HRPSYS_BASE_FOUND})
   set(DEFINE_HAS_HRPSYS_BASE_MACRO "#define MC_RTC_HAS_HRPSYS_BASE 1")
+  include(cmake/idl.cmake)
+  omniidl_include_directories("idl")
+  add_subdirectory(idl)
+  set_source_files_properties(${CMAKE_BINARY_DIR}/idl/MCControlService_idl.py PROPERTIES GENERATED 1)
+  install(FILES ${CMAKE_BINARY_DIR}/idl/MCControlService_idl.py DESTINATION lib/python2.7/dist-packages/hrpsys)
 else()
   set(DEFINE_HAS_HRPSYS_BASE_MACRO "")
 endif()
@@ -55,10 +59,6 @@ if(GEOS_CONFIG)
 else()
   MESSAGE(SEND_ERROR "Could not find geos-config, missing dependency")
 endif()
-
-
-omniidl_include_directories("idl")
-add_subdirectory(idl)
 
 if(NOT DEFINED MC_ENV_DESCRIPTION_PATH)
   execute_process(COMMAND rospack find mc_env_description
@@ -103,11 +103,6 @@ install(DIRECTORY include ${CMAKE_BINARY_DIR}/include
           DESTINATION ${CMAKE_INSTALL_PREFIX}
           FILES_MATCHING REGEX "h(pp)?$")
 
-set_source_files_properties(${CMAKE_BINARY_DIR}/idl/MCControlService_idl.py
-                            PROPERTIES GENERATED 1)
-
-install(FILES ${CMAKE_BINARY_DIR}/idl/MCControlService_idl.py DESTINATION lib/python2.7/dist-packages/hrpsys)
-#install(FILES python/mc_rtc_interface.py DESTINATION bin PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
 install(
   FILES
     data/drc_stairs_climbing.json
