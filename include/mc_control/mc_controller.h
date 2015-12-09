@@ -18,7 +18,6 @@
 namespace mc_control
 {
 
-/*FIXME Get some data as parameters (e.g. timeStep, path to default env...) */
 struct MCController : public MCVirtualController
 {
 public:

@@ -126,11 +126,11 @@ Inside mc_rtc
 4. Handle the creation of the controller in `MCGlobalController` constructor
 5. (Optionnal) Implement controller switch from a service call (*NB* very optionnal as this is likely to become obsolete and is really cumbersome to do atm)
 
-###Functions to implement
+### Functions to implement
 
 A quick description of the `virtual` functions in `MCVirtualController` and what they are supposed to do.
 
-####`virtual void reset(const ControllerResetData & reset_data)`
+#### `virtual void reset(const ControllerResetData & reset_data)`
 
 Called when:
 1. the control loop starts
@@ -140,16 +140,16 @@ ATM, the `ControllerResetData` holds the following data: (depending on the momen
 1. "True" state of the robot (encoders)
 2. Controlled state of the robot forwarded by the previous controller
 
-####`virtual bool run()`
+#### `virtual bool run()`
 
 Called at every iteration of the control loop. Runs in the real-time context on the robot. Returns `false` to indicate a failure, `true` otherwise.
 
-####`virtual const QPResultMsg & send(const double & t)`
+#### `virtual const QPResultMsg & send(const double & t)`
 
 Returns the current control output. Does not run if `run()` invokation failed.
 
 
-####`bool read_msg(std::string & msg)` and `bool read_write_msg(std::string & msg, std::string & out)`
+#### `bool read_msg(std::string & msg)` and `bool read_write_msg(std::string & msg, std::string & out)`
 
 These functions are used to provide a generic service interface. In both functions, `msg` holds the content of the request made by the caller. In the `read_write_msg`, `out` may be filled with an answer for the caller. Both functions should return `false` to indicate that the controller was not able to handle the request `msg` and `true` otherwise.
 
