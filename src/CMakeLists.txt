@@ -48,6 +48,7 @@ pkg_config_append_libs(${GEOS_LIBRARY})
 
 set(mc_robots_SRC
 mc_robots/hrp2_drc.cpp
+mc_robots/hrp4.cpp
 mc_robots/env.cpp
 mc_robots/polaris_ranger.cpp
 mc_robots/polaris_ranger_egress.cpp
@@ -57,6 +58,7 @@ set(mc_robots_HDR
 ../include/mc_robots/api.h
 ../include/mc_robots/env.h
 ../include/mc_robots/hrp2_drc.h
+../include/mc_robots/hrp4.h
 ../include/mc_robots/polaris_ranger.h
 ../include/mc_robots/polaris_ranger_egress.h
 )

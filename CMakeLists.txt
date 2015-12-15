@@ -20,8 +20,25 @@ add_definitions(-mfpmath=sse -msse2)
 #add_definitions(-pedantic -Wno-long-long -Wall -Wextra -Wcast-align -Wcast-qual -Wformat -Wwrite-strings)
 #add_definitions(-Wno-sign-conversion -Wno-shorten-64-to-32)
 #add_definitions(-Werror)
+#set(HRP2_DRC_DESCRIPTION_PATH "C:/Work/Code/Joris/hrp2_drc/hrp2_drc_description")
+#set(HRP4_DESCRIPTION_PATH "C:/Work/Code/Joris/hrp4/hrp4_description")
+#set(MC_ENV_DESCRIPTION_PATH "C:/Work/Code/Joris/mc_ros/mc_env_description")
 
-search_for_eigen()
+IF(NOT WIN32)
+  SEARCH_FOR_EIGEN()
+ELSE()
+  find_path(Eigen_INCLUDE_DIR NAMES signature_of_eigen3_matrix_library
+    PATHS
+    ${CMAKE_INSTALL_PREFIX}/include
+    PATH_SUFFIXES eigen3 eigen
+  )
+  INCLUDE_DIRECTORIES(SYSTEM ${Eigen_INCLUDE_DIR})
+ENDIF()
+
+if(WIN32)
+  # TODO: ask explicitly the user for the value of PKG_CONFIG_INCLUDE_DIR
+  set( ENV{PKG_CONFIG_PATH} "$ENV{PKG_CONFIG_PATH};${PKG_CONFIG_INCLUDE_DIR}" )
+ENDIF()
 
 find_package(Boost REQUIRED COMPONENTS system filesystem thread date_time)
 

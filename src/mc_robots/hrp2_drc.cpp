@@ -102,7 +102,7 @@ std::map<std::string, std::pair<std::string, std::string> > HRP2DRCCommonRobotMo
 
 void HRP2DRCCommonRobotModule::readUrdf(const std::string & robotName, const std::vector<std::string> & filteredLinks)
 {
-  std::string urdfPath = path + "urdf/" + robotName + ".urdf";
+  std::string urdfPath = path + "/urdf/" + robotName + ".urdf";
   std::ifstream ifs(urdfPath);
   std::stringstream urdf;
   urdf << ifs.rdbuf();

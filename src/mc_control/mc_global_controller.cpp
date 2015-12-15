@@ -252,6 +252,7 @@ MCGlobalController::MCGlobalController(const std::string & conf)
 void MCGlobalController::init(const std::vector<double> & initq)
 {
   std::vector<std::vector<double>> q;
+#ifndef CHOOSE_HRP4
   /*FIXME Get the position/attitude of the robot? */
   //q.push_back({1,0,0,0,-0.275,-0.05,0.76});
   if(current_ctrl == SEQ)
@@ -281,6 +282,12 @@ void MCGlobalController::init(const std::vector<double> & initq)
     q.push_back({initq[i]});
   }
   setGripperCurrentQ(initq[31], initq[23]);
+#else
+  q.push_back({ 1, 0, 0, 0, 0, 0, 0.76 });
+  for (size_t i = 0; i < initq.size(); ++i)
+    q.push_back({ initq[i] });
+  setGripperCurrentQ(initq[44], initq[27]);
+#endif
   controller->reset({q});
 }
 
