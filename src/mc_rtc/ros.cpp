@@ -8,6 +8,7 @@
 
 #ifdef MC_RTC_HAS_ROS
 #include <ros/ros.h>
+#include <nav_msgs/Odometry.h>
 #include <sensor_msgs/Imu.h>
 #include <sensor_msgs/JointState.h>
 #include <tf2_ros/transform_broadcaster.h>
@@ -48,9 +49,10 @@ static const std::map<std::string, unsigned int> RGRIPPER_JOINTS = {
   {"RHAND_JOINT4" , 5}
 };
 
-inline geometry_msgs::TransformStamped PT2TF(const sva::PTransformd & X, const ros::Time & tm, const std::string & from, const std::string & to)
+inline geometry_msgs::TransformStamped PT2TF(const sva::PTransformd & X, const ros::Time & tm, const std::string & from, const std::string & to, unsigned int seq)
 {
   geometry_msgs::TransformStamped msg;
+  msg.header.seq = seq;
   msg.header.stamp = tm;
   msg.header.frame_id = from;
   msg.child_frame_id = to;
@@ -77,6 +79,7 @@ public:
   : nh(nh),
     j_state_pub(this->nh.advertise<sensor_msgs::JointState>("joint_states", 1)),
     imu_pub(this->nh.advertise<sensor_msgs::Imu>("imu", 1)),
+    odom_pub(this->nh.advertise<nav_msgs::Odometry>("odom", 1)),
     iter_since_start(0),
     imu_noise(Eigen::Vector3d::Zero()),
     tf_caster(),
@@ -91,7 +94,7 @@ public:
     th.join();
   }
 
-  void update(const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy, const RTC::TimedAcceleration3D & gsensor, const std::vector<double> & lGq, const std::vector<double> & rGq)
+  void update(double dt, const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy, const RTC::TimedAngularVelocity3D & rate, const RTC::TimedAcceleration3D & gsensor, const std::vector<double> & lGq, const std::vector<double> & rGq)
   {
     ros::Time tm = ros::Time::now();
     sensor_msgs::JointState msg;
@@ -152,7 +155,31 @@ public:
     }
 #endif
 
-    tfs.push_back(PT2TF(robot.bodyTransform(robot.mb().body(0).id())*mbc.parentToSon[0], tm, std::string("/robot_map"), robot.mb().body(0).name()));
+    nav_msgs::Odometry odom;
+    odom.header = msg.header;
+    odom.header.frame_id = "CHEST_LINK1",
+    odom.child_frame_id = "robot_odom",
+    /* Position of the sensor in CHEST_LINK1 frame */
+    odom.pose.pose.position.x = -0.13;
+    odom.pose.pose.position.y = 0.;
+    odom.pose.pose.position.z = 0.118;
+    odom.pose.pose.orientation.w = 1;
+    odom.pose.pose.orientation.x = 0;
+    odom.pose.pose.orientation.y = 0;
+    odom.pose.pose.orientation.z = 0;
+    odom.pose.covariance.fill(0);
+    /* Provide linear and angular velocity */
+#ifdef MC_RTC_HAS_HRPSYS_BASE
+    odom.twist.twist.linear.x = gsensor.data.ax * dt;
+    odom.twist.twist.linear.y = gsensor.data.ay * dt;
+    odom.twist.twist.linear.z = gsensor.data.az * dt;
+    odom.twist.twist.angular.x = rate.data.avx;
+    odom.twist.twist.angular.y = rate.data.avy;
+    odom.twist.twist.angular.z = rate.data.avz;
+    odom.twist.covariance.fill(0);
+#endif
+
+    tfs.push_back(PT2TF(robot.bodyTransform(robot.mb().body(0).id())*mbc.parentToSon[0], tm, std::string("/robot_map"), robot.mb().body(0).name(), seq));
     for(int j = 1; j < robot.mb().nrJoints(); ++j)
     {
       const auto & predIndex = robot.mb().predecessor(j);
@@ -163,28 +190,34 @@ public:
       const auto & succId = robot.mb().body(succIndex).id();
       const auto & X_predp_pred = robot.bodyTransform(predId);
       const auto & X_succp_succ = robot.bodyTransform(succId);
-      tfs.push_back(PT2TF(X_succp_succ*mbc.parentToSon[static_cast<unsigned int>(j)]*X_predp_pred.inv(), tm, predName, succName));
+      tfs.push_back(PT2TF(X_succp_succ*mbc.parentToSon[static_cast<unsigned int>(j)]*X_predp_pred.inv(), tm, predName, succName, seq));
     }
 
     sva::PTransformd X_0_hl1 = mbc.bodyPosW[robot.bodyIndexByName("HEAD_LINK1")];
-    sva::PTransformd X_hl1_xtion = sva::PTransformd(Eigen::Quaterniond(0.995397, 1.7518e-05, 0.0950535, -0.0122609).inverse(), Eigen::Vector3d(0.09699157105, 0.0185, 0.12699543329));
-    tfs.push_back(PT2TF(X_hl1_xtion, tm, "HEAD_LINK1", "xtion_link"));
-    //sva::PTransformd X_hl1_xtion = sva::PTransformd(Eigen::Quaterniond(0.974478, -0.00161289, 0.224165, -0.0118453).inverse(), Eigen::Vector3d(0.09699157105, 0.0185, 0.12699543329));
+    // Calib 2016/02/02
+    sva::PTransformd X_hl1_xtion = sva::PTransformd(Eigen::Quaterniond(0.995971, -0.00632932, 0.0894339, 0.00188757).inverse(), Eigen::Vector3d(0.109125, 0.0055295, 0.0915054));
+    tfs.push_back(PT2TF(X_hl1_xtion, tm, "HEAD_LINK1", "xtion_link", seq));
+
+    sva::PTransformd X_0_xtion = X_hl1_xtion * X_0_hl1;
+
+    // Relate the robot tf tree with SLAM tf tree
+    tfs.push_back(PT2TF(X_0_xtion, tm, "robot_map", "odom", seq));
 #ifdef MC_RTC_HAS_HRPSYS_BASE
     sva::PTransformd X_0_base_odom = sva::PTransformd(
                         Eigen::Quaterniond(sva::RotZ(rpy.data.y)*sva::RotY(rpy.data.p)*sva::RotX(-rpy.data.r).inverse()),
                         Eigen::Vector3d(p.data.x, p.data.y, p.data.z));
-    sva::PTransformd X_0_xtion = X_hl1_xtion * X_0_hl1;
     sva::PTransformd X_0_base = mbc.bodyPosW[0];
     sva::PTransformd X_base_xtion = X_0_xtion * (X_0_base.inv());
-
-    tfs.push_back(PT2TF(X_0_base_odom, tm, "robot_map", "odom_base_link"));
-    tfs.push_back(PT2TF(X_base_xtion, tm, "odom_base_link", "odom_xtion_link"));
+    tfs.push_back(PT2TF(X_0_base_odom, tm, "/robot_map", "/odom_base_link", seq));
+    tfs.push_back(PT2TF(X_base_xtion, tm, "/odom_base_link", "/odom_xtion_link", seq));
 #endif
 
-    mut.lock();
-    msgs.push({msg, tfs, imu});
-    mut.unlock();
+    if(seq % 5 == 0)
+    {
+      mut.lock();
+      msgs.push({msg, tfs, imu, odom});
+      mut.unlock();
+    }
   }
 
   void reset_imu_offset()
@@ -196,6 +229,7 @@ private:
   ros::NodeHandle & nh;
   ros::Publisher j_state_pub;
   ros::Publisher imu_pub;
+  ros::Publisher odom_pub;
   unsigned int iter_since_start;
   Eigen::Vector3d imu_noise;
   tf2_ros::TransformBroadcaster tf_caster;
@@ -205,6 +239,7 @@ private:
     sensor_msgs::JointState js;
     std::vector<geometry_msgs::TransformStamped> tfs;
     sensor_msgs::Imu imu;
+    nav_msgs::Odometry odom;
   };
 
   bool running;
@@ -215,7 +250,7 @@ private:
 
   void publishThread()
   {
-    ros::Rate rt(500);
+    ros::Rate rt(100);
     while(running && ros::ok())
     {
       while(msgs.size())
@@ -227,6 +262,7 @@ private:
           {
             j_state_pub.publish(msg.js);
             imu_pub.publish(msg.imu);
+            odom_pub.publish(msg.odom);
             tf_caster.sendTransform(msg.tfs);
           }
           catch(const ros::serialization::StreamOverrunException & e)
@@ -276,11 +312,11 @@ std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
   return impl->nh;
 }
 
-void ROSBridge::update_robot_publisher(const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy, const RTC::TimedAcceleration3D & gsensor, const std::vector<double> & lGq, const std::vector<double> & rGq)
+void ROSBridge::update_robot_publisher(double dt, const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy, const RTC::TimedAngularVelocity3D & rate, const RTC::TimedAcceleration3D & gsensor, const std::vector<double> & lGq, const std::vector<double> & rGq)
 {
   if(impl->rpub)
   {
-    impl->rpub->update(robot, p, rpy, gsensor, lGq, rGq);
+    impl->rpub->update(dt, robot, p, rpy, rate, gsensor, lGq, rGq);
   }
 }
 
@@ -320,7 +356,7 @@ std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
   return impl->nh;
 }
 
-void ROSBridge::update_robot_publisher(const mc_rbdyn::Robot &, const RTC::TimedPoint3D &, const RTC::TimedOrientation3D &, const RTC::TimedAcceleration3D&, const std::vector<double>&, const std::vector<double>&)
+void ROSBridge::update_robot_publisher(double, const mc_rbdyn::Robot &, const RTC::TimedPoint3D &, const RTC::TimedOrientation3D &, const RTC::TimedAngularVelocity3D &, const RTC::TimedAcceleration3D &, const std::vector<double> &, const std::vector<double> &)
 {
 }
 

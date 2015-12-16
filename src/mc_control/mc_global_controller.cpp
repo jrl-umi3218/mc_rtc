@@ -327,6 +327,11 @@ std::ostream & MCGlobalController::log_data(std::ostream & os)
   return controller->log_data(os);
 }
 
+double MCGlobalController::timestep()
+{
+  return config.timestep;
+}
+
 bool MCGlobalController::EnableController(const std::string & name)
 {
   if(name != current_ctrl && controllers.count(name))

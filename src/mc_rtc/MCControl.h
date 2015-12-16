@@ -106,6 +106,9 @@ class MCControl  : public RTC::DataFlowComponentBase
   InPort<TimedPoint3D> m_pInIn;
   TimedOrientation3D m_rpyIn;
   InPort<TimedOrientation3D> m_rpyInIn;
+  TimedAngularVelocity3D m_rateIn;
+  InPort<TimedAngularVelocity3D> m_rateInIn;
+  Eigen::Vector3d rateIn;
   TimedAcceleration3D m_accIn;
   InPort<TimedAcceleration3D> m_accInIn;
   Eigen::Vector3d accIn;

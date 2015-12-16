@@ -144,6 +144,7 @@ add_library(mc_rtc_ros SHARED mc_rtc/ros.cpp ../include/mc_rtc/ros.h ../include/
 set_target_properties(mc_rtc_ros PROPERTIES COMPILE_FLAGS "-DMC_RTC_ROS_EXPORTS")
 if(${ROSCPP_FOUND})
   pkg_config_use_dependency(mc_rtc_ros roscpp)
+  pkg_config_use_dependency(mc_rtc_ros nav_msgs)
   pkg_config_use_dependency(mc_rtc_ros sensor_msgs)
   pkg_config_use_dependency(mc_rtc_ros tf2_ros)
 endif()

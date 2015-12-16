@@ -20,6 +20,9 @@
 #include <boost/array.hpp>
 #include <mc_rtc/logging.h>
 
+#include <RBDyn/FK.h>
+#include <RBDyn/FV.h>
+
 using boost::asio::ip::udp;
 
 /* Hard-coded dofs to handle both HRP2DRC and HRP2JVRC */
@@ -55,6 +58,7 @@ MCControl::MCControl(RTC::Manager* manager)
     m_qInIn("qIn", m_qIn),
     m_pInIn("pIn", m_pIn),
     m_rpyInIn("rpyIn", m_rpyIn),
+    m_rateInIn("rateIn", m_rateIn),
     m_accInIn("accIn", m_accIn),
     m_poseInIn("poseIn", m_poseIn),
     m_taucInIn("taucIn", m_taucIn),
@@ -91,6 +95,7 @@ RTC::ReturnCode_t MCControl::onInitialize()
   addInPort("qIn", m_qInIn);
   addInPort("pIn", m_pInIn);
   addInPort("rpyIn", m_rpyInIn);
+  addInPort("rateIn", m_rateInIn);
   addInPort("accIn", m_accInIn);
   addInPort("poseIn", m_poseInIn);
   addInPort("taucIn", m_taucInIn);
@@ -170,6 +175,13 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
     rpyIn(0) = m_rpyIn.data.r;
     rpyIn(1) = m_rpyIn.data.p;
     rpyIn(2) = m_rpyIn.data.y;
+  }
+  if(m_rateInIn.isNew())
+  {
+    m_rateInIn.read();
+    rateIn(0) = m_rateIn.data.avx;
+    rateIn(1) = m_rateIn.data.avy;
+    rateIn(2) = m_rateIn.data.avz;
   }
   if(m_accInIn.isNew())
   {
@@ -277,7 +289,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
       m_qOutOut.write();
       m_pOutOut.write();
       m_rpyOutOut.write();
-      mc_rtc::ROSBridge::update_robot_publisher(controller.robot(), m_pIn, m_rpyIn, m_accIn, controller.gripperQ(true), controller.gripperQ(false));
+      mc_rtc::ROSBridge::update_robot_publisher(controller.timestep(), controller.robot(), m_pIn, m_rpyIn, m_rateIn, m_accIn, controller.gripperQ(true), controller.gripperQ(false));
       log_data();
     }
     else
@@ -285,6 +297,32 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
       init = false;
       m_qOut = m_qIn;
       /* Still run controller.run() in order to handle some service calls */
+      std::vector<std::vector<double>> q;
+      q.push_back({1, 0, 0, 0, 0, 0, 0.76});
+      const std::vector<double> & initq = qIn;
+      /* The OpenRTM components don't give q in the same order as the QP */
+      for(size_t i = 0; i < 24; ++i) // until RARM_LINK7
+      {
+        q.push_back({initq[i]});
+      }
+      for(size_t i = 32; i < 37; ++i) // RHAND
+      {
+        q.push_back({initq[i]});
+      }
+      for(size_t i = 24; i < 32; ++i) // LARM_LINK*
+      {
+        q.push_back({initq[i]});
+      }
+      for(size_t i = 37; i < 42; ++i) // LHAND
+      {
+        q.push_back({initq[i]});
+      }
+      controller.setGripperCurrentQ(initq[31], initq[23]);
+      mc_rbdyn::Robot & robot = const_cast<mc_rbdyn::Robot&>(controller.robot());
+      robot.mbc().q = q;
+      rbd::forwardKinematics(robot.mb(), robot.mbc());
+      rbd::forwardVelocity(robot.mb(), robot.mbc());
+      mc_rtc::ROSBridge::update_robot_publisher(controller.timestep(), robot, m_pIn, m_rpyIn, m_rateIn, m_accIn, controller.gripperQ(true), controller.gripperQ(false));
       controller.run();
     }
   }

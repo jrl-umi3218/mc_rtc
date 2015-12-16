@@ -35,6 +35,8 @@ public:
 
   const mc_rbdyn::Robot & robot();
 
+  double timestep();
+
   std::ostream & log_header(std::ostream & os);
   std::ostream & log_data(std::ostream & os);
   /* Called by the RT component to switch between controllers */

@@ -36,7 +36,7 @@ struct MC_RTC_ROS_DLLAPI ROSBridge
 {
   static std::shared_ptr<ros::NodeHandle> get_node_handle();
 
-  static void update_robot_publisher(const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy, const RTC::TimedAcceleration3D & gsensor, const std::vector<double> & lGq = {}, const std::vector<double> & rGq = {});
+  static void update_robot_publisher(double dt, const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy, const RTC::TimedAngularVelocity3D & rate, const RTC::TimedAcceleration3D & gsensor, const std::vector<double> & lGq = {}, const std::vector<double> & rGq = {});
 
   static void reset_imu_offset();
 
