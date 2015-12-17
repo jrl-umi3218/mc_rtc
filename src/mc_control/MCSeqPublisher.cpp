@@ -59,6 +59,7 @@ void MCSeqPublisher::set_contacts(const std::vector<mc_rbdyn::Contact> & cs)
   /* Skip new contact determination for first contact */
   if(contacts.size() != 0)
   {
+    std::string new_slam_contact = "";
     for(const auto & c : cs)
     {
       bool new_contact = true;
@@ -74,8 +75,11 @@ void MCSeqPublisher::set_contacts(const std::vector<mc_rbdyn::Contact> & cs)
       {
         std::stringstream ss;
         ss << "pxtools_contact_" << c.r1Surface()->name() << "_" << c.r2Surface()->name();
+        new_slam_contact = ss.str();
+        std::cout << "Tracking new slam contact " << new_slam_contact << std::endl;
       }
     }
+    slam_contact = new_slam_contact;
   }
   this->contacts = cs;
 }

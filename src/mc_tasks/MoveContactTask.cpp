@@ -15,12 +15,9 @@ MoveContactTask::MoveContactTask(mc_rbdyn::Robots & robots, mc_rbdyn::Robot & ro
   robotBodyId = robot.bodyIdByName(robotSurf->bodyName());
   envBodyIndex = env.bodyIndexByName(envSurf->bodyName());
   envBodyId = env.bodyIdByName(envSurf->bodyName());
-  targetTf = contact.X_0_r1s(robots);
-  targetPos = targetTf.translation() + config.contactObj.adjustOffset;
-  targetOri = robotSurf->X_b_s().rotation().transpose()*targetTf.rotation();
-  normal = targetTf.rotation().row(2);
-  preTargetPos = targetPos + normal*config.contactObj.preContactDist;
-  wp = config.contactTask.waypointConf.pos(robotSurfacePos(), targetTf, normal);
+
+  set_target_tf(contact.X_0_r1s(robots), config);
+
   posStiff = config.contactTask.position.stiffness;
   extraPosStiff = config.contactTask.position.extraStiffness;
 
@@ -102,6 +99,16 @@ void MoveContactTask::update()
   double err = (robotSurfacePos().translation() - preTargetPos).norm();
   double extra = extraStiffness(err, extraPosStiff);
   positionTaskSp->stiffness(posStiff + extra);
+}
+
+void MoveContactTask::set_target_tf(const sva::PTransformd & X_target, mc_rbdyn::StanceConfig & config)
+{
+  targetTf = X_target;
+  targetPos = targetTf.translation() + config.contactObj.adjustOffset;
+  targetOri = robotSurf->X_b_s().rotation().transpose()*targetTf.rotation();
+  normal = targetTf.rotation().row(2);
+  preTargetPos = targetPos + normal*config.contactObj.preContactDist;
+  wp = config.contactTask.waypointConf.pos(robotSurfacePos(), targetTf, normal);
 }
 
 }

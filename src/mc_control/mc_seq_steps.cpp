@@ -1,4 +1,5 @@
 #include "mc_seq_steps.h"
+#include "MCSeqPublisher.h"
 
 #include <mc_rtc/logging.h>
 
@@ -179,6 +180,19 @@ bool live_moveWPT::eval(MCSeqController & ctl)
   Eigen::Vector3d targetPos = ctl.moveContactTask->wp;
   double error = (robotSurfacePos - targetPos).norm();
 
+  sva::PTransformd X_slam_target = ctl.publisher->get_slam_contact();
+  std::cout << "WAYPOINT" << std::endl;
+  std::cout << "Plan target" << std::endl;
+  std::cout << ctl.moveContactTask->targetTf.translation().transpose() << std::endl;
+  std::cout << ctl.moveContactTask->targetTf.rotation() << std::endl;
+  std::cout << "SLAM target" << std::endl;
+  std::cout << X_slam_target.translation().transpose() << std::endl;
+  std::cout << X_slam_target.rotation() << std::endl;
+  /* Uncomment for hell
+  ctl.moveContactTask->set_target_tf(X_slam_target, ctl.curConf());
+  ctl.moveContactTask->toWaypoint(contactConf, ctl.curConf().contactTask.position.targetSpeed);
+   */
+
   if(contactConf.contactTask.waypointConf.skip || error < contactConf.contactTask.waypointConf.thresh)
   {
     ctl.moveContactTask->toPreEnv(contactConf, contactConf.contactTask.position.targetSpeed);
@@ -241,6 +255,19 @@ bool live_moveContactT::eval(MCSeqController & ctl)
   Eigen::Vector3d targetPos = ctl.moveContactTask->preTargetPos;
   double posErr = (targetPos - robotSurfacePos).norm();
   double velErr = robotSurfaceVel.norm();
+
+  sva::PTransformd X_slam_target = ctl.publisher->get_slam_contact();
+  std::cout << "Move foot" << std::endl;
+  std::cout << "Plan target" << std::endl;
+  std::cout << ctl.moveContactTask->targetTf.translation().transpose() << std::endl;
+  std::cout << ctl.moveContactTask->targetTf.rotation() << std::endl;
+  std::cout << "SLAM target" << std::endl;
+  std::cout << X_slam_target.translation().transpose() << std::endl;
+  std::cout << X_slam_target.rotation() << std::endl;
+  /* Uncomment for hell
+  ctl.moveContactTask->set_target_tf(X_slam_target, ctl.curConf());
+  ctl.moveContactTask->toPreEnv(ctl.curConf(), ctl.curConf().contactTask.position.targetSpeed);
+  */
 
   /* Remove collision avoidance when velocity reaches 0 to set the contact more precisely */
   if( (!ctl.isCollFiltered) && velErr < obj.velThresh )
@@ -784,6 +811,19 @@ bool live_moveGripperWPT::eval(MCSeqController & ctl)
   Eigen::Vector3d targetPos = ctl.moveContactTask->wp;
   double error = (robotSurfacePos - targetPos).norm();
 
+  sva::PTransformd X_slam_target = ctl.publisher->get_slam_contact();
+  std::cout << "WAYPOINT" << std::endl;
+  std::cout << "Plan target" << std::endl;
+  std::cout << ctl.moveContactTask->targetTf.translation().transpose() << std::endl;
+  std::cout << ctl.moveContactTask->targetTf.rotation() << std::endl;
+  std::cout << "SLAM target" << std::endl;
+  std::cout << X_slam_target.translation().transpose() << std::endl;
+  std::cout << X_slam_target.rotation() << std::endl;
+  /* Uncomment for hell
+  ctl.moveContactTask->set_target_tf(X_slam_target, ctl.curConf());
+  ctl.moveContactTask->toWaypoint(contactConf, ctl.curConf().contactTask.position.targetSpeed);
+   */
+
   if(contactConf.contactTask.waypointConf.skip || error < contactConf.contactTask.waypointConf.thresh)
   {
     /* Waypoint reached, new goal is target */
@@ -806,6 +846,19 @@ bool live_moveGripperT::eval(MCSeqController & ctl)
   Eigen::Vector3d targetPos = ctl.moveContactTask->preTargetPos;
   double posErr = (robotSurfacePos - targetPos).norm();
   double velErr = ctl.moveContactTask->robotSurfaceVel().linear().norm();
+
+  sva::PTransformd X_slam_target = ctl.publisher->get_slam_contact();
+  std::cout << "Move gripper" << std::endl;
+  std::cout << "Plan target" << std::endl;
+  std::cout << ctl.moveContactTask->targetTf.translation().transpose() << std::endl;
+  std::cout << ctl.moveContactTask->targetTf.rotation() << std::endl;
+  std::cout << "SLAM target" << std::endl;
+  std::cout << X_slam_target.translation().transpose() << std::endl;
+  std::cout << X_slam_target.rotation() << std::endl;
+  /* Uncomment for hell
+  ctl.moveContactTask->set_target_tf(X_slam_target, ctl.curConf());
+  ctl.moveContactTask->toPreEnv(ctl.curConf(), ctl.curConf().contactTask.position.targetSpeed);
+   */
 
   if(ctl.isBodyTask)
   {

@@ -42,6 +42,8 @@ public:
   virtual void removeFromSolver(tasks::qp::QPSolver & solver) override;
 
   virtual void update() override;
+
+  void set_target_tf(const sva::PTransformd & X_target, mc_rbdyn::StanceConfig & config);
 public:
   mc_rbdyn::Robots & robots;
   mc_rbdyn::Robot & robot;
