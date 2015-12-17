@@ -30,6 +30,9 @@ public:
   void publish_poly(const std::shared_ptr<geos::geom::Geometry> & geom);
 
   void set_contacts(const std::vector<mc_rbdyn::Contact> & contacts);
+
+  /* Return the slam position of the contact being added */
+  sva::PTransformd get_slam_contact();
 private:
   const mc_rbdyn::Robots & robots;
   std::shared_ptr<ros::NodeHandle> nh;
@@ -37,6 +40,8 @@ private:
   Eigen::Vector3d com;
   std::vector<Eigen::Vector3d> poly;
   std::vector<mc_rbdyn::Contact> contacts;
+  std::string slam_contact;
+  sva::PTransformd X_slam_contact;
 
   bool running;
   void publication_thread();

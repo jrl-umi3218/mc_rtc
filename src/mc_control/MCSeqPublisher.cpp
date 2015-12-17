@@ -9,6 +9,7 @@
 #include <geometry_msgs/PolygonStamped.h>
 #include <geometry_msgs/TransformStamped.h>
 #include <tf2_ros/transform_broadcaster.h>
+#include <tf2_ros/transform_listener.h>
 #include <visualization_msgs/Marker.h>
 #endif
 
@@ -21,7 +22,8 @@ MCSeqPublisher::MCSeqPublisher(const mc_rbdyn::Robots & robots)
 : robots(robots),
   nh(mc_rtc::ROSBridge::get_node_handle()),
   pub_thread(std::bind(&MCSeqPublisher::publication_thread, this)),
-  com(Eigen::Vector3d::Zero()),
+  com(Eigen::Vector3d::Zero()), poly(), contacts(),
+  slam_contact(""), X_slam_contact(sva::PTransformd::Identity()),
   running(true)
 {
 }
@@ -52,9 +54,42 @@ void MCSeqPublisher::publish_poly(const std::shared_ptr<geos::geom::Geometry> & 
   }
 }
 
-void MCSeqPublisher::set_contacts(const std::vector<mc_rbdyn::Contact> & contacts)
+void MCSeqPublisher::set_contacts(const std::vector<mc_rbdyn::Contact> & cs)
 {
-  this->contacts = contacts;
+  /* Skip new contact determination for first contact */
+  if(contacts.size() != 0)
+  {
+    for(const auto & c : cs)
+    {
+      bool new_contact = true;
+      for(const auto & pc : contacts)
+      {
+        if(pc == c)
+        {
+          new_contact = false;
+          break;
+        }
+      }
+      if(new_contact)
+      {
+        std::stringstream ss;
+        ss << "pxtools_contact_" << c.r1Surface()->name() << "_" << c.r2Surface()->name();
+      }
+    }
+  }
+  this->contacts = cs;
+}
+
+sva::PTransformd MCSeqPublisher::get_slam_contact()
+{
+  if(slam_contact != "")
+  {
+    return sva::PTransformd::Identity();
+  }
+  else
+  {
+    return X_slam_contact;
+  }
 }
 
 #ifdef MC_RTC_HAS_ROS
@@ -122,6 +157,19 @@ inline geometry_msgs::TransformStamped PT2TF(const sva::PTransformd & X, const r
   return msg;
 }
 
+inline void TF2PT(const geometry_msgs::TransformStamped & tf, sva::PTransformd & X)
+{
+  X = sva::PTransformd(Eigen::Quaterniond(
+                                          tf.transform.rotation.w,
+                                          tf.transform.rotation.x,
+                                          tf.transform.rotation.y,
+                                          tf.transform.rotation.z).inverse(),
+                       Eigen::Vector3d(
+                                       tf.transform.translation.x,
+                                       tf.transform.translation.y,
+                                       tf.transform.translation.z));
+}
+
 inline visualization_msgs::Marker contact_marker(const mc_rbdyn::Robots & robots, const mc_rbdyn::Contact & contact, const std_msgs::Header & header, std::vector<geometry_msgs::TransformStamped> & tfs)
 {
   visualization_msgs::Marker msg;
@@ -153,8 +201,9 @@ inline visualization_msgs::Marker contact_marker(const mc_rbdyn::Robots & robots
   /* TF expressed in robot's frame */
   tfs.push_back(PT2TF(X_0_c, header.stamp, header.frame_id, ss.str()));
   /* TF expressed in vision-based object's frame */
-  ss << "pxtools_" << ss;
-  tfs.push_back(PT2TF(X_0_c, header.stamp, "pxtools_relative", ss.str()));
+  std::stringstream ss2;
+  ss2 << "pxtools_" << ss.str();
+  tfs.push_back(PT2TF(X_0_c, header.stamp, "pxtools_relative", ss2.str()));
   return msg;
 }
 
@@ -164,6 +213,8 @@ void MCSeqPublisher::publication_thread()
   {
     ros::Rate rt(30);
     tf2_ros::TransformBroadcaster tf_caster;
+    tf2_ros::Buffer tf_buffer;
+    tf2_ros::TransformListener tf_listener(tf_buffer);
     std::vector<geometry_msgs::TransformStamped> tfs;
     ros::Publisher com_pub = nh->advertise<visualization_msgs::Marker>("com_marker", 1);
     ros::Publisher contact_pub = nh->advertise<visualization_msgs::Marker>("contact_makers", 1);
@@ -183,6 +234,17 @@ void MCSeqPublisher::publication_thread()
         contact_pub.publish(contact_marker(robots, contact, header, tfs));
       }
       tf_caster.sendTransform(tfs);
+      ros::spinOnce();
+      if(slam_contact != "")
+      {
+        try
+        {
+          TF2PT(tf_buffer.lookupTransform("robot_map", slam_contact, ros::Time(0)), X_slam_contact);
+        }
+        catch(...)
+        {
+        }
+      }
       rt.sleep();
     }
   }
