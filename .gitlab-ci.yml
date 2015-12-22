@@ -17,8 +17,6 @@ before_script:
   - echo "deb http://openrtm.org/pub/Linux/ubuntu/ trusty main" > /etc/apt/sources.list.d/openrtm.list
   - echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list
   - apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-key 0xB01FA116
-  - apt-get update -qq
-  - apt-get install --force-yes -qq openrtm-aist-dev openrtm-aist-python
   - ./.jrl-ci/dependencies/pybindgen-0.16
   - ./.jrl-ci/dependencies/eigen-3.2
   - ./.jrl-ci/run before_install
@@ -48,7 +46,7 @@ build_gcc_ros_nohrpsys:
   stage: build
   script:
     - ./.jrl-ci/dependencies/catkin
-    - export APT_DEPENDENCIES="sensor_msgs tf2_ros"; ./.jrl-ci/run before_install
+    - export APT_DEPENDENCIES="ros-indigo-common-msgs ros-indigo-tf2-ros"; ./.jrl-ci/run before_install
     - export CC=gcc
     - export CXX=g++
     - ./.jrl-ci/run build
@@ -60,7 +58,7 @@ build_gcc_ros_hrpsys:
   stage: build
   script:
     - ./.jrl-ci/dependencies/catkin
-    - export APT_DEPENDENCIES="sensor_msgs tf2_ros openrtm-aist-dev openrtm-aist-python"; export GIT_DEPENDENCIES="fkanehiro/openhrp3 OctoMap/octomap fkanehiro/hrpsys-base"; ./.jrl-ci/run before_install
+    - export APT_DEPENDENCIES="ros-indigo-common-msgs ros-indigo-tf2-ros openrtm-aist-dev openrtm-aist-python"; export GIT_DEPENDENCIES="fkanehiro/openhrp3 OctoMap/octomap fkanehiro/hrpsys-base"; ./.jrl-ci/run before_install
     - export CC=gcc
     - export CXX=g++
     - ./.jrl-ci/run build
