@@ -124,6 +124,7 @@ endif()
 
 configure_file(${PROJECT_SOURCE_DIR}/include/mc_rtc/config.h.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/include/mc_rtc/config.h)
 
+add_subdirectory(3rd-party)
 add_subdirectory(src)
 add_subdirectory(tests)
 add_subdirectory(utils)
