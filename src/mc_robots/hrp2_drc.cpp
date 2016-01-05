@@ -1,6 +1,7 @@
-#include <mc_robots/hrp2_drc.h>
+#include "hrp2_drc.h"
 
 #include <mc_rtc/config.h>
+#include <mc_rtc/logging.h>
 
 #include <fstream>
 
@@ -104,15 +105,23 @@ void HRP2DRCCommonRobotModule::readUrdf(const std::string & robotName, const std
 {
   std::string urdfPath = path + "/urdf/" + robotName + ".urdf";
   std::ifstream ifs(urdfPath);
-  std::stringstream urdf;
-  urdf << ifs.rdbuf();
-  mc_rbdyn_urdf::URDFParserResult res = mc_rbdyn_urdf::rbdyn_from_urdf(urdf.str(), false, filteredLinks);
-  mb = res.mb;
-  mbc = res.mbc;
-  mbg = res.mbg;
-  limits = res.limits;
-  visual_tf = res.visual_tf;
-  _collisionTransforms = res.collision_tf;
+  if(ifs.is_open())
+  {
+    std::stringstream urdf;
+    urdf << ifs.rdbuf();
+    mc_rbdyn_urdf::URDFParserResult res = mc_rbdyn_urdf::rbdyn_from_urdf(urdf.str(), false, filteredLinks);
+    mb = res.mb;
+    mbc = res.mbc;
+    mbg = res.mbg;
+    limits = res.limits;
+    visual_tf = res.visual_tf;
+    _collisionTransforms = res.collision_tf;
+  }
+  else
+  {
+    LOG_ERROR("Could not open HRP2DRC model at " << urdfPath)
+    throw("HRP2DRC model not found");
+  }
 }
 
 std::map<unsigned int, std::vector<double>> HRP2DRCCommonRobotModule::halfSittingPose(const rbd::MultiBody & mb) const

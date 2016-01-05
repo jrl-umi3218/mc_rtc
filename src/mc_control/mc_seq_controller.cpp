@@ -5,6 +5,7 @@
 
 #include <mc_rbdyn/GripperSurface.h>
 #include <mc_rbdyn/json/StanceConfig.h>
+#include <mc_rbdyn/RobotLoader.h>
 #include <mc_rtc/logging.h>
 
 #include <mc_control/ForceContactSensor.h>
@@ -116,7 +117,7 @@ MCSeqController::MCSeqController(double dt, const std::string & env_name, const 
 }
 
 MCSeqController::MCSeqController(double dt, const std::string & env_path, const std::string & env_name, const std::string & seq_path, bool real_sensors, unsigned int start_stance, bool step_by_step)
-: MCSeqController(dt, std::make_shared<mc_robots::EnvRobotModule>(env_path, env_name), seq_path, real_sensors, start_stance, step_by_step)
+: MCSeqController(dt, mc_rbdyn::RobotLoader::get_robot_module("env", env_path, env_name), seq_path, real_sensors, start_stance, step_by_step)
 {
 }
 

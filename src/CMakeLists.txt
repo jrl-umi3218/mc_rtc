@@ -1,3 +1,7 @@
+add_library(mc_rtc_loader SHARED mc_rtc/loader.cpp ../include/mc_rtc/loader.h ../include/mc_rtc/loader_api.h)
+set_target_properties(mc_rtc_loader PROPERTIES COMPILE_FLAGS "-DMC_RTC_LOADER_EXPORTS")
+target_link_libraries(mc_rtc_loader ${Boost_LIBRARIES} ltdl)
+
 set(mc_rbdyn_SRC
 mc_rbdyn/SCHAddon.cpp
 mc_rbdyn/contact_transform.cpp
@@ -13,6 +17,7 @@ mc_rbdyn/stance.cpp
 mc_rbdyn/StanceConfig.cpp
 mc_rbdyn/PolygonInterpolator.cpp
 mc_rbdyn/polygon_utils.cpp
+mc_rbdyn/RobotLoader.cpp
 )
 
 set(mc_rbdyn_HDR
@@ -27,6 +32,7 @@ set(mc_rbdyn_HDR
 ../include/mc_rbdyn/PolygonInterpolator.h
 ../include/mc_rbdyn/robot.h
 ../include/mc_rbdyn/robot.hpp
+../include/mc_rbdyn/RobotLoader.h
 ../include/mc_rbdyn/RobotModule.h
 ../include/mc_rbdyn/SCHAddon.h
 ../include/mc_rbdyn/stance.h
@@ -41,37 +47,26 @@ set_target_properties(mc_rbdyn PROPERTIES COMPILE_FLAGS "-DMC_RBDYN_EXPORTS")
 pkg_config_use_dependency(mc_rbdyn mc_rbdyn_urdf_cpp)
 pkg_config_use_dependency(mc_rbdyn Tasks)
 pkg_config_use_dependency(mc_rbdyn jsoncpp)
-target_link_libraries(mc_rbdyn ${Boost_LIBRARIES} ${GEOS_LIBRARY})
+target_link_libraries(mc_rbdyn ${Boost_LIBRARIES} ${GEOS_LIBRARY} mc_rtc_loader)
 pkg_config_append_libs(${Boost_LIBRARIES})
 pkg_config_append_libs(mc_rbdyn)
 pkg_config_append_libs(${GEOS_LIBRARY})
 
-set(mc_robots_SRC
-mc_robots/hrp2_drc.cpp
-mc_robots/hrp4.cpp
-mc_robots/env.cpp
-mc_robots/polaris_ranger.cpp
-mc_robots/polaris_ranger_egress.cpp
-)
+macro(add_robot robot_base)
+  set(robot_SRC mc_robots/${robot_base}.cpp)
+  set(robot_HDR mc_robots/api.h mc_robots/${robot_base}.h)
+  add_library(${robot_base} SHARED ${robot_SRC} ${robot_HDR})
+  set_target_properties(${robot_base} PROPERTIES COMPILE_FLAGS "-DMC_ROBOTS_EXPORTS" PREFIX "")
+  target_link_libraries(${robot_base} mc_rbdyn ${Boost_LIBRARIES})
+  pkg_config_use_dependency(${robot_base} mc_rbdyn_urdf_cpp)
+  install(TARGETS ${robot_base} DESTINATION ${MC_ROBOTS_INSTALL_PREFIX})
+endmacro()
 
-set(mc_robots_HDR
-../include/mc_robots/api.h
-../include/mc_robots/env.h
-../include/mc_robots/hrp2_drc.h
-../include/mc_robots/hrp4.h
-../include/mc_robots/polaris_ranger.h
-../include/mc_robots/polaris_ranger_egress.h
-)
-
-add_library(mc_robots SHARED ${mc_robots_SRC} ${mc_robots_HDR})
-set_target_properties(mc_robots PROPERTIES COMPILE_FLAGS "-DMC_ROBOTS_EXPORTS")
-target_link_libraries(mc_robots mc_rbdyn)
-#FIXME Apparently visual does not follow the dependency of mc_rbdyn?
-if(WIN32)
-target_link_libraries(mc_robots ${Boost_LIBRARIES})
-pkg_config_use_dependency(mc_robots mc_rbdyn_urdf_cpp)
-endif()
-pkg_config_append_libs(mc_robots)
+add_robot(env)
+add_robot(hrp2_drc)
+add_robot(hrp4)
+add_robot(polaris_ranger)
+add_robot(polaris_ranger_egress)
 
 set(mc_solver_SRC
 mc_solver/contact_util.cpp
@@ -199,7 +194,7 @@ set(mc_control_HDR
 )
 add_library(mc_control SHARED ${mc_control_SRC} ${mc_control_HDR})
 set_target_properties(mc_control PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_EXPORTS")
-target_link_libraries(mc_control mc_tasks mc_solver mc_robots mc_rtc_ros)
+target_link_libraries(mc_control mc_tasks mc_solver mc_robots mc_rtc_ros mc_rtc_loader)
 if(${HRPSYS_BASE_FOUND})
   target_link_libraries(mc_control hrpIo)
 endif()
@@ -242,7 +237,7 @@ if(${HRPSYS_BASE_FOUND})
     ARCHIVE DESTINATION lib)
 endif()
 
-install(TARGETS mc_rbdyn mc_solver mc_robots mc_tasks mc_control mc_trajectory mc_rtc_ros
+install(TARGETS mc_rbdyn mc_solver mc_tasks mc_control mc_trajectory mc_rtc_ros mc_rtc_loader
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib)

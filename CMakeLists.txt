@@ -113,6 +113,18 @@ if(NOT DEFINED HRP2_DRC_DESCRIPTION_PATH)
   endif()
 endif()
 
+if(NOT DEFINED HRP4_DESCRIPTION_PATH)
+  execute_process(COMMAND rospack find hrp4_description
+                  RESULT_VARIABLE HRP4_DESCRIPTION_FOUND
+                  OUTPUT_VARIABLE HRP4_DESCRIPTION_PATH
+                  OUTPUT_STRIP_TRAILING_WHITESPACE)
+  if(${HRP4_DESCRIPTION_FOUND})
+    MESSAGE(SEND_ERROR "Failed to find hrp4_description, check your system configuration or define HRP4_DESCRIPTION_PATH")
+  else()
+    MESSAGE(STATUS "Found hrp4_description: ${HRP4_DESCRIPTION_PATH}")
+  endif()
+endif()
+
 add_optional_dependency(roscpp)
 if(${ROSCPP_FOUND})
   set(DEFINE_HAS_ROS_MACRO "#define MC_RTC_HAS_ROS 1")
@@ -121,6 +133,15 @@ if(${ROSCPP_FOUND})
 else()
   set(DEFINE_HAS_ROS_MACRO "")
 endif()
+
+option(CHOOSE_HRP4 "Use HRP4 as main robot instead of HRP2DRC" False)
+if(CHOOSE_HRP4)
+  set(DEFINE_CHOOSE_HRP4 "#define CHOOSE_HRP4 1")
+else()
+  set(DEFINE_CHOOSE_HRP4 "")
+endif()
+
+set(MC_ROBOTS_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/lib/mc_robots)
 
 configure_file(${PROJECT_SOURCE_DIR}/include/mc_rtc/config.h.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/include/mc_rtc/config.h)
 

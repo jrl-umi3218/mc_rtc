@@ -1,10 +1,9 @@
-#ifndef _H_MCROBOTSHRP2DRC_H_
-#define _H_MCROBOTSHRP2DRC_H_
+#pragma once
 
 #include <mc_rbdyn/RobotModule.h>
 #include <mc_rbdyn_urdf/urdf.h>
 
-#include <mc_robots/api.h>
+#include "api.h"
 
 namespace mc_robots
 {
@@ -62,4 +61,5 @@ public:
 
 }
 
-#endif
+/*TODO Provide a different constructor to allow Gripper/NoGripper instantation */
+ROBOT_MODULE_DEFAULT_CONSTRUCTOR("HRP2DRC", mc_robots::HRP2DRCGripperRobotModule)

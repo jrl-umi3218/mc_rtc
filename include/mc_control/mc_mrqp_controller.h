@@ -7,9 +7,6 @@
 #include <mc_solver/qpsolver.h>
 #include <mc_control/generic_gripper.h>
 
-#include <mc_robots/hrp2_drc.h>
-#include <mc_robots/env.h>
-
 #include <Tasks/QPTasks.h>
 
 #include <mc_control/api.h>
@@ -54,7 +51,7 @@ public:
 public:
   /* Common stuff */
   std::vector< std::pair<Eigen::Vector3d, Eigen::Vector3d> > wrenches;
-  mc_robots::HRP2DRCGripperRobotModule robot_module;
+  std::shared_ptr<mc_rbdyn::RobotModule> robot_module;
   std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> robot_modules;
   mc_solver::ContactConstraint hrp2contactConstraint;
   mc_solver::DynamicsConstraint hrp2dynamicsConstraint;

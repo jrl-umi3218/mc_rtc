@@ -1,6 +1,7 @@
-#include <mc_robots/polaris_ranger_egress.h>
+#include "polaris_ranger_egress.h"
 
 #include <mc_rtc/config.h>
+#include <mc_rtc/logging.h>
 
 #include <fstream>
 
@@ -43,15 +44,23 @@ void PolarisRangerEgressRobotModule::readUrdf(const std::string & robotName, con
 {
   std::string urdfPath = path + "/urdf/" + robotName + ".urdf";
   std::ifstream ifs(urdfPath);
-  std::stringstream urdf;
-  urdf << ifs.rdbuf();
-  mc_rbdyn_urdf::URDFParserResult res = mc_rbdyn_urdf::rbdyn_from_urdf(urdf.str(), true, filteredLinks);
-  mb = res.mb;
-  mbc = res.mbc;
-  mbg = res.mbg;
-  limits = res.limits;
-  visual_tf = res.visual_tf;
-  _collisionTransforms = res.collision_tf;
+  if(ifs.is_open())
+  {
+    std::stringstream urdf;
+    urdf << ifs.rdbuf();
+    mc_rbdyn_urdf::URDFParserResult res = mc_rbdyn_urdf::rbdyn_from_urdf(urdf.str(), true, filteredLinks);
+    mb = res.mb;
+    mbc = res.mbc;
+    mbg = res.mbg;
+    limits = res.limits;
+    visual_tf = res.visual_tf;
+    _collisionTransforms = res.collision_tf;
+  }
+  else
+  {
+    LOG_ERROR("Could not open PolarisRanger model at " << urdfPath)
+    throw("Failed to open PolarisRanger model");
+  }
 }
 
 std::map<unsigned int, std::vector<double>> PolarisRangerEgressRobotModule::halfSittingPose(const rbd::MultiBody & mb) const

@@ -3,6 +3,7 @@
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
+#include <mc_rbdyn/RobotLoader.h>
 #include <mc_rtc/logging.h>
 #include <fstream>
 
@@ -10,9 +11,11 @@ namespace mc_control
 {
 
 MCMRQPController::MCMRQPController(double dt, const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & env_modules)
-: MCVirtualController(dt), robot_modules(env_modules)
+: MCVirtualController(dt),
+  robot_module(mc_rbdyn::RobotLoader::get_robot_module("HRP2DRC")),
+  robot_modules(env_modules)
 {
-  robot_modules.insert(robot_modules.begin(), std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::HRP2DRCGripperRobotModule()));
+  robot_modules.insert(robot_modules.begin(), robot_module);
   unsigned int hrp2_drc_index = 0;
   {
     /* Entering new scope to prevent access to robots from anywhere but the qpsolver object */
@@ -35,7 +38,7 @@ MCMRQPController::MCMRQPController(double dt, const std::vector<std::shared_ptr<
   }
   {
     /* Initiate grippers */
-    std::string urdfPath = robot_module.path + "/urdf/hrp2drc.urdf";
+    std::string urdfPath = robot_module->path + "/urdf/hrp2drc.urdf";
     std::ifstream ifs(urdfPath);
     std::stringstream urdf;
     urdf << ifs.rdbuf();

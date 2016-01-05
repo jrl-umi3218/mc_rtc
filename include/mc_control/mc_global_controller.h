@@ -90,6 +90,8 @@ private:
 
     inline bool enabled(const std::string & ctrl);
 
+    std::vector<std::string> robot_module_paths;
+
     std::vector<std::string> enabled_controllers;
     std::string initial_controller;
     double timestep;

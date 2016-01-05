@@ -1,10 +1,9 @@
-#ifndef _H_MCROBOTSGROUND_H_
-#define _H_MCROBOTSGROUND_H_
+#pragma once
 
 #include <mc_rbdyn/RobotModule.h>
 #include <mc_rbdyn_urdf/urdf.h>
 
-#include <mc_robots/api.h>
+#include "api.h"
 
 namespace mc_robots
 {
@@ -19,4 +18,4 @@ public:
 
 }
 
-#endif
+ROBOT_MODULE_CANONIC_CONSTRUCTOR("env", mc_robots::EnvRobotModule)

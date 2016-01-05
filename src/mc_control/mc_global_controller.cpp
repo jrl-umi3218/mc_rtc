@@ -1,15 +1,14 @@
 #include <mc_control/mc_global_controller.h>
 
+#include <mc_rbdyn/RobotLoader.h>
+
 #include <mc_rtc/config.h>
+#include <mc_rtc/logging.h>
 
 #include <RBDyn/EulerIntegration.h>
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
-#include <mc_robots/polaris_ranger.h>
-#include <mc_robots/polaris_ranger_egress.h>
-
-#include <mc_rtc/logging.h>
 
 #include <json/json.h>
 #include <fstream>
@@ -36,6 +35,23 @@ MCGlobalController::Configuration::Configuration(const std::string & path)
     LOG_ERROR("Failed to read configuration file")
     LOG_WARNING(exc.what())
   }
+
+  if(v.isMember("RobotModulePaths"))
+  {
+    for(const auto & cv : v["RobotModulePaths"])
+    {
+      robot_module_paths.push_back(cv.asString());
+    }
+  }
+  if(v.isMember("RobotModulePath"))
+  {
+    robot_module_paths.push_back(v["RobotModulePath"].asString());
+  }
+  if(robot_module_paths.size())
+  {
+    mc_rbdyn::RobotLoader::update_robot_module_path(robot_module_paths);
+  }
+
   if(v.isMember("Enabled"))
   {
     for(const auto & cv : v["Enabled"])
@@ -170,7 +186,7 @@ MCGlobalController::MCGlobalController(const std::string & conf)
     {
       if(config.seq_env_module == "Polaris")
       {
-        seq_controller.reset(new MCSeqController(config.timestep, std::make_shared<mc_robots::PolarisRangerRobotModule>(false),
+        seq_controller.reset(new MCSeqController(config.timestep, mc_rbdyn::RobotLoader::get_robot_module("PolarisRanger", false),
                                                  std::string(mc_rtc::DATA_PATH) + config.seq_plan,
                                                  config.seq_use_real_sensors, config.seq_start_stance, config.seq_step_by_step));
       }
@@ -186,7 +202,7 @@ MCGlobalController::MCGlobalController(const std::string & conf)
   }
   if(config.enabled("Driving"))
   {
-    driving_controller.reset(new MCDrivingController(config.timestep, {std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::PolarisRangerRobotModule()), std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::EnvRobotModule(mc_rtc::MC_ENV_DESCRIPTION_PATH, "ground"))}));
+    driving_controller.reset(new MCDrivingController(config.timestep, {mc_rbdyn::RobotLoader::get_robot_module("PolarisRanger", true), mc_rbdyn::RobotLoader::get_robot_module("env", mc_rtc::MC_ENV_DESCRIPTION_PATH, "ground")}));
   }
   if(config.enabled("Egress"))
   {
@@ -194,7 +210,7 @@ MCGlobalController::MCGlobalController(const std::string & conf)
   }
   if(config.enabled("EgressMRQP"))
   {
-    egress_mrqp_controller.reset(new MCEgressMRQPController(config.timestep, {std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::PolarisRangerEgressRobotModule()), std::shared_ptr<mc_rbdyn::RobotModule>(new mc_robots::EnvRobotModule(mc_rtc::MC_ENV_DESCRIPTION_PATH, "ground"))}));
+    egress_mrqp_controller.reset(new MCEgressMRQPController(config.timestep, {mc_rbdyn::RobotLoader::get_robot_module("PolarisRangerEgress"), mc_rbdyn::RobotLoader::get_robot_module("env", mc_rtc::MC_ENV_DESCRIPTION_PATH, "ground")}));
   }
   if(config.enabled("BCISelfInteract"))
   {

@@ -2,10 +2,9 @@
 
 ${DEFINE_HAS_ROS_MACRO}
 ${DEFINE_HAS_HRPSYS_BASE_MACRO}
+${DEFINE_CHOOSE_HRP4}
 
 #include <string>
-
-#define CHOOSE_HRP4
 
 namespace mc_rtc
 {
@@ -14,6 +13,7 @@ constexpr auto MC_ENV_DESCRIPTION_PATH = "${MC_ENV_DESCRIPTION_PATH}";
 constexpr auto HRP2_DRC_DESCRIPTION_PATH = "${HRP2_DRC_DESCRIPTION_PATH}";
 constexpr auto HRP4_DESCRIPTION_PATH = "${HRP4_DESCRIPTION_PATH}";
 constexpr auto INSTALL_PREFIX = "${CMAKE_INSTALL_PREFIX}/";
+constexpr auto MC_ROBOTS_INSTALL_PREFIX = "${MC_ROBOTS_INSTALL_PREFIX}/";
 constexpr auto DATA_PATH = "${CMAKE_INSTALL_PREFIX}/share/mc_rtc/";
 constexpr auto CONF_PATH = "${CMAKE_INSTALL_PREFIX}/etc/mc_rtc.conf";
 

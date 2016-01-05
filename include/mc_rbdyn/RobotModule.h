@@ -1,5 +1,4 @@
-#ifndef _H_MCRBDYNROBOTMODULE_H_
-#define _H_MCRBDYNROBOTMODULE_H_
+#pragma once
 
 #include <mc_rbdyn/robot.h>
 
@@ -19,6 +18,9 @@ struct Robot;
 struct MC_RBDYN_DLLAPI RobotModule
 {
   RobotModule(const std::string & path, const std::string & name) : path(path), name(name) {}
+
+  virtual ~RobotModule() {}
+
   /* If implemented, returns limits in this order:
       - joint limits (lower/upper)
       - velocity limits (lower/upper)
@@ -64,6 +66,38 @@ struct MC_RBDYN_DLLAPI RobotModule
   Springs _springs;
 };
 
+} // namespace mc_rbdyn
+
+/* Set of macros to assist with the writing of a RobotModule */
+
+/*! ROBOT_MODULE_COMMON
+ * Declare a destroy symbol and CLASS_NAME symbol
+ * Constructor should be declared by the user
+*/
+#define ROBOT_MODULE_COMMON(NAME)\
+  const char * CLASS_NAME() { return NAME; }\
+  void destroy(mc_rbdyn::RobotModule * ptr) { delete ptr; }
+
+/*! ROBOT_MODULE_DEFAULT_CONSTRUCTOR
+ * Declare an external symbol for creation using a default constructor
+ * Also declare destruction symbol
+ * Exclusive of ROBOT_MODULE_CANONIC_CONSTRUCTOR
+*/
+#define ROBOT_MODULE_DEFAULT_CONSTRUCTOR(NAME, TYPE)\
+extern "C"\
+{\
+  ROBOT_MODULE_COMMON(NAME)\
+  mc_rbdyn::RobotModule * create() { return new TYPE(); }\
 }
 
-#endif
+/*! ROBOT_MODULE_CANONIC_CONSTRUCTOR
+ * Declare an external symbol for creation using the cannonical constructor (const string &, const string &)
+ * Also declare destruction symbol
+ * Exclusive of ROBOT_MODULE_DEFAULT_CONSTRUCTOR
+*/
+#define ROBOT_MODULE_CANONIC_CONSTRUCTOR(NAME, TYPE)\
+extern "C"\
+{\
+  ROBOT_MODULE_COMMON(NAME)\
+  mc_rbdyn::RobotModule * create(const std::string & path, const std::string & name) { return new TYPE(path, name); }\
+}

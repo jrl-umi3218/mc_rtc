@@ -2,6 +2,8 @@
 
 #include <mc_rtc/logging.h>
 
+#include <mc_rbdyn/RobotLoader.h>
+
 #include <RBDyn/EulerIntegration.h>
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
@@ -19,23 +21,29 @@ MCController::MCController(double dt, const std::string & env_name)
 }
 
 MCController::MCController(double dt, const std::string & env_path, const std::string & env_name)
-: MCController(dt, std::make_shared<mc_robots::EnvRobotModule>(env_path, env_name))
+: MCController(dt, mc_rbdyn::RobotLoader::get_robot_module("env", env_path, env_name))
 {
 }
 
 MCController::MCController(double dt, const std::shared_ptr<mc_rbdyn::RobotModule> & env)
-: MCVirtualController(dt), robot_module(), env_module(env)
+: MCVirtualController(dt),
+#ifdef CHOOSE_HRP4
+  robot_module(mc_rbdyn::RobotLoader::get_robot_module("HRP4")),
+#else
+  robot_module(mc_rbdyn::RobotLoader::get_robot_module("HRP2DRC")),
+#endif
+  env_module(env)
 {
   unsigned int hrp2_drc_index = 0;
   {
     /* Entering new scope to prevent access to robots from anywhere but the qpsolver object */
     sva::PTransformd base = sva::PTransformd::Identity();
 #ifdef CHOOSE_HRP4
-    mc_rbdyn::Robots robots = mc_rbdyn::loadRobotAndEnv(robot_module, robot_module.path + "/rsdf/",
+    mc_rbdyn::Robots robots = mc_rbdyn::loadRobotAndEnv(*robot_module, robot_module->path + "/rsdf/",
                                                                 *env_module, env_module->path + "/rsdf/" + env_module->name + "/",
                                                                 &base, 0);
 #else
-    mc_rbdyn::Robots robots = mc_rbdyn::loadRobotAndEnv(robot_module, robot_module.path + "/rsdf/hrp2_drc/",
+    mc_rbdyn::Robots robots = mc_rbdyn::loadRobotAndEnv(*robot_module, robot_module->path + "/rsdf/hrp2_drc/",
       *env_module, env_module->path + "/rsdf/" + env_module->name + "/",
       &base, 0);
 #endif
@@ -47,7 +55,7 @@ MCController::MCController(double dt, const std::shared_ptr<mc_rbdyn::RobotModul
   {
     /* Initiate grippers */
 #ifdef CHOOSE_HRP4
-    std::string urdfPath = robot_module.path + "/urdf/hrp4.urdf";
+    std::string urdfPath = robot_module->path + "/urdf/hrp4.urdf";
     std::ifstream ifs(urdfPath);
     std::stringstream urdf;
     urdf << ifs.rdbuf();
@@ -55,7 +63,7 @@ MCController::MCController(double dt, const std::shared_ptr<mc_rbdyn::RobotModul
     lgripper.reset(new Gripper(urdfRobot.robot(), "l_gripper", robot(), urdf.str(), 0, timeStep));
     rgripper.reset(new Gripper(urdfRobot.robot(), "r_gripper", robot(), urdf.str(), 0, timeStep));
 #else
-    std::string urdfPath = robot_module.path + "/urdf/hrp2drc.urdf";
+    std::string urdfPath = robot_module->path + "/urdf/hrp2drc.urdf";
     std::ifstream ifs(urdfPath);
     std::stringstream urdf;
     urdf << ifs.rdbuf();

@@ -9,13 +9,6 @@
 #include <mc_solver/qpsolver.h>
 #include <mc_control/generic_gripper.h>
 
-#ifdef CHOOSE_HRP4
-#include <mc_robots/hrp4.h>
-#else
-#include <mc_robots/hrp2_drc.h>
-#endif
-#include <mc_robots/env.h>
-
 #include <Tasks/QPTasks.h>
 #include <mc_tasks/EndEffectorTask.h>
 
@@ -63,11 +56,7 @@ public:
 public:
   /* Common stuff */
   std::vector< std::pair<Eigen::Vector3d, Eigen::Vector3d> > wrenches;
-#ifdef CHOOSE_HRP4
-  mc_robots::HRP4WithHandRobotModule robot_module;
-#else
-  mc_robots::HRP2DRCGripperRobotModule robot_module;
-#endif
+  std::shared_ptr<mc_rbdyn::RobotModule> robot_module;
   std::shared_ptr<mc_rbdyn::RobotModule> env_module;
   mc_solver::ContactConstraint contactConstraint;
   mc_solver::DynamicsConstraint dynamicsConstraint;

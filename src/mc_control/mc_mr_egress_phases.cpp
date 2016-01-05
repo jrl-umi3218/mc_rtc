@@ -1386,7 +1386,7 @@ struct EgressReplaceRightHandPhase : public EgressMRPhaseExecution
           {
             done_moving = true;
             ctl.efTask->removeFromSolver(ctl.mrqpsolver->solver);
-            auto stance = ctl.robot_module.stance();
+            auto stance = ctl.robot_module->stance();
             auto p = ctl.hrp2postureTask->posture();
             for(auto qi : stance)
             {

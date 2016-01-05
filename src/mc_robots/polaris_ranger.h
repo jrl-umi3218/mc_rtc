@@ -1,18 +1,17 @@
-#ifndef _H_MCROBOTSPOLARISRANGEREGRESS_H_
-#define _H_MCROBOTSPOLARISRANGEREGRESS_H_
+#pragma once
 
 #include <mc_rbdyn/RobotModule.h>
 #include <mc_rbdyn_urdf/urdf.h>
 
-#include <mc_robots/api.h>
+#include "api.h"
 
 namespace mc_robots
 {
 
-struct MC_ROBOTS_DLLAPI PolarisRangerEgressRobotModule : public mc_rbdyn::RobotModule
+struct MC_ROBOTS_DLLAPI PolarisRangerRobotModule : public mc_rbdyn::RobotModule
 {
 public:
-  PolarisRangerEgressRobotModule();
+  PolarisRangerRobotModule(bool is_interactive = true);
 protected:
   std::map<std::string, std::pair<std::string, std::string> > getConvexHull(const std::map<std::string, std::pair<std::string, std::string>> & files) const;
 
@@ -39,4 +38,12 @@ public:
 };
 
 }
-#endif
+
+extern "C"
+{
+  ROBOT_MODULE_COMMON("PolarisRanger")
+  mc_rbdyn::RobotModule * create(bool is_interactive)
+  {
+    return new mc_robots::PolarisRangerRobotModule(is_interactive);
+  }
+}

@@ -1,4 +1,6 @@
-#include <mc_robots/env.h>
+#include "env.h"
+
+#include <mc_rtc/logging.h>
 
 #include <fstream>
 
@@ -13,13 +15,21 @@ EnvRobotModule::EnvRobotModule(const std::string & env_path, const std::string &
 {
   std::string urdfPath = path + "/urdf/" + name + ".urdf";
   std::ifstream ifs(urdfPath);
-  std::stringstream urdf;
-  urdf << ifs.rdbuf();
-  mc_rbdyn_urdf::URDFParserResult res = mc_rbdyn_urdf::rbdyn_from_urdf(urdf.str());
-  mb = res.mb;
-  mbc = res.mbc;
-  mbg = res.mbg;
-  _collisionTransforms = res.collision_tf;
+  if(ifs.is_open())
+  {
+    std::stringstream urdf;
+    urdf << ifs.rdbuf();
+    mc_rbdyn_urdf::URDFParserResult res = mc_rbdyn_urdf::rbdyn_from_urdf(urdf.str());
+    mb = res.mb;
+    mbc = res.mbc;
+    mbg = res.mbg;
+    _collisionTransforms = res.collision_tf;
+  }
+  else
+  {
+    LOG_ERROR("Could not load env model at " << urdfPath)
+    throw("Could not open env model");
+  }
 }
 
 const std::map<std::string, std::pair<std::string, std::string> > & EnvRobotModule::convexHull() const
