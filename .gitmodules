@@ -3,4 +3,4 @@
 	url = https://github.com/jrl-umi3218/jrl-cmakemodules
 [submodule ".jrl-ci"]
 	path = .jrl-ci
-	url = https://github.com/jrl-umi3218/jrl-travis.git
+	url = https://github.com/gergondet/jrl-travis.git

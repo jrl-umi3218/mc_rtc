@@ -129,6 +129,7 @@ public:
     msg.effort.resize(0);
 
     imu.header = msg.header;
+#ifdef MC_RTC_HAS_HRPSYS_BASE
     if(iter_since_start >= 2000)
     {
       imu.linear_acceleration.x = gsensor.data.ax - imu_noise.x();
@@ -149,6 +150,7 @@ public:
     {
       imu_noise /= 2000;
     }
+#endif
 
     tfs.push_back(PT2TF(robot.bodyTransform(robot.mb().body(0).id())*mbc.parentToSon[0], tm, std::string("/robot_map"), robot.mb().body(0).name()));
     for(int j = 1; j < robot.mb().nrJoints(); ++j)
@@ -166,7 +168,9 @@ public:
 
     sva::PTransformd X_0_hl1 = mbc.bodyPosW[robot.bodyIndexByName("HEAD_LINK1")];
     sva::PTransformd X_hl1_xtion = sva::PTransformd(Eigen::Quaterniond(0.995397, 1.7518e-05, 0.0950535, -0.0122609).inverse(), Eigen::Vector3d(0.09699157105, 0.0185, 0.12699543329));
+    tfs.push_back(PT2TF(X_hl1_xtion, tm, "HEAD_LINK1", "xtion_link"));
     //sva::PTransformd X_hl1_xtion = sva::PTransformd(Eigen::Quaterniond(0.974478, -0.00161289, 0.224165, -0.0118453).inverse(), Eigen::Vector3d(0.09699157105, 0.0185, 0.12699543329));
+#ifdef MC_RTC_HAS_HRPSYS_BASE
     sva::PTransformd X_0_base_odom = sva::PTransformd(
                         Eigen::Quaterniond(sva::RotZ(rpy.data.y)*sva::RotY(rpy.data.p)*sva::RotX(-rpy.data.r).inverse()),
                         Eigen::Vector3d(p.data.x, p.data.y, p.data.z));
@@ -174,9 +178,9 @@ public:
     sva::PTransformd X_0_base = mbc.bodyPosW[0];
     sva::PTransformd X_base_xtion = X_0_xtion * (X_0_base.inv());
 
-    tfs.push_back(PT2TF(X_hl1_xtion, tm, "HEAD_LINK1", "xtion_link"));
     tfs.push_back(PT2TF(X_0_base_odom, tm, "robot_map", "odom_base_link"));
     tfs.push_back(PT2TF(X_base_xtion, tm, "odom_base_link", "odom_xtion_link"));
+#endif
 
     mut.lock();
     msgs.push({msg, tfs, imu});
