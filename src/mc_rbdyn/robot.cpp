@@ -41,13 +41,15 @@ Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
         const std::map<std::string, convex_pair_t> & convexes,
         const std::map<std::string, stpbv_pair_t> & stpbvs,
         const std::map<int, sva::PTransformd> & collisionTransforms, const std::map<std::string, std::shared_ptr<mc_rbdyn::Surface> > & surfaces,
-        const std::vector<ForceSensor> & forceSensors, const std::string & accelerometerBody,
+        const std::vector<ForceSensor> & forceSensors,
+        const std::map<unsigned int, std::vector<double>> stance,
+        const std::string & accelerometerBody,
         const Springs & springs, const std::vector< std::vector<Eigen::VectorXd> > & tlPoly,
         const std::vector< std::vector<Eigen::VectorXd> > & tuPoly, const std::vector<Flexibility> & flexibility)
 : name_(name), robots(robots), robots_idx(robots_idx),
   bodyTransforms(bodyTransforms), ql_(ql), qu_(qu), vl_(vl), vu_(vu), tl_(tl), tu_(tu),
   convexes(convexes), stpbvs(stpbvs), collisionTransforms(collisionTransforms), surfaces_(),
-  forceSensors(forceSensors), accelerometerBody(accelerometerBody), springs(springs), tlPoly(tlPoly),
+  forceSensors(forceSensors), stance_(stance), accelerometerBody(accelerometerBody), springs(springs), tlPoly(tlPoly),
   tuPoly(tuPoly), flexibility_(flexibility)
 {
   // Copy the surfaces
@@ -287,6 +289,11 @@ void Robot::loadRSDFFromDir(const std::string & surfaceDir)
   }
 }
 
+std::map<unsigned int, std::vector<double>> Robot::stance() const
+{
+  return stance_;
+}
+
 Robots::Robots()
 : robots_(), mbs_(), mbcs_(), robotIndex_(0), envIndex_(0)
 {
@@ -428,8 +435,9 @@ void Robot::createWithBase(Robots & robots, unsigned int robots_idx, const Base 
   robots.robots_.emplace_back(this->name_, robots, robots_idx, bodyTransforms,
               ql, qu, vl, vu, tl, tu,
               this->convexes, this->stpbvs, this->collisionTransforms,
-              this->surfaces_, this->forceSensors, this->accelerometerBody,
-              this->springs, this->tlPoly, this->tuPoly,
+              this->surfaces_, this->forceSensors, this->stance_,
+              this->accelerometerBody, this->springs,
+              this->tlPoly, this->tuPoly,
               this->flexibility());
   robots.robot(robots_idx).fixSurfaces();
 }
@@ -444,7 +452,7 @@ void Robots::robotCopy(const Robots & robots, unsigned int robots_idx)
 
 void Robot::copy(Robots & robots, unsigned int robots_idx) const
 {
-  robots.robots_.emplace_back(this->name_, robots, robots_idx, this->bodyTransforms, this->ql(), this->qu(), this->vl(), this->vu(), this->tl(), this->tu(), this->convexes, this->stpbvs, this->collisionTransforms, this->surfaces_, this->forceSensors, this->accelerometerBody, this->springs, this->tlPoly, this->tuPoly, this->flexibility());
+  robots.robots_.emplace_back(this->name_, robots, robots_idx, this->bodyTransforms, this->ql(), this->qu(), this->vl(), this->vu(), this->tl(), this->tu(), this->convexes, this->stpbvs, this->collisionTransforms, this->surfaces_, this->forceSensors, this->stance_, this->accelerometerBody, this->springs, this->tlPoly, this->tuPoly, this->flexibility());
 }
 
 std::vector< std::vector<double> > jointsParameters(const rbd::MultiBody & mb, const double & coeff)
@@ -514,7 +522,7 @@ std::vector< std::map< int, std::vector<double> > > defaultBounds(const rbd::Mul
   return res;
 }
 
-Robot& Robots::load(const RobotModule & module, const std::string & surfaceDir, sva::PTransformd * base, int bId)
+Robot& Robots::load(const RobotModule & module, const std::string &, sva::PTransformd * base, int bId)
 {
   mbs_.emplace_back(module.mb);
   mbcs_.emplace_back(module.mbc);
@@ -622,15 +630,17 @@ Robot& Robots::load(const RobotModule & module, const std::string & surfaceDir, 
 
   const Springs & springs = module.springs();
 
+  const auto & stance = module.stance();
+
   std::map<std::string, SurfacePtr> surf;
   std::vector< std::vector<Eigen::VectorXd> > tlPoly;
   std::vector< std::vector<Eigen::VectorXd> > tuPoly;
   robots_.emplace_back(module.name, *this, this->mbs_.size() - 1,
                       bodyTransforms, ql, qu, vl, vu, tl, tu,
                       convexesByName, stpbvsByName, collisionTransforms,
-                      surf, forceSensors, accelBody, springs,
+                      surf, forceSensors, stance, accelBody, springs,
                       tlPoly, tuPoly, flexibility);
-  robots_.back().loadRSDFFromDir(surfaceDir);
+  robots_.back().loadRSDFFromDir(module.rsdf_dir);
   updateIndexes();
   return robots_.back();
 }

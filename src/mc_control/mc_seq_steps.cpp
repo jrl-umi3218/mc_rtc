@@ -1,4 +1,4 @@
-#include <mc_control/mc_seq_steps.h>
+#include "mc_seq_steps.h"
 
 #include <mc_rtc/logging.h>
 

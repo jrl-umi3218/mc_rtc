@@ -51,8 +51,8 @@ std::map<std::string, std::pair<std::string, std::string> > PolarisRangerRobotMo
 
 void PolarisRangerRobotModule::readUrdf(const std::string & robotName, const std::vector<std::string> & filteredLinks)
 {
-  std::string urdfPath = path + "/urdf/" + robotName + ".urdf";
-  std::ifstream ifs(urdfPath);
+  urdf_path = path + "/urdf/" + robotName + ".urdf";
+  std::ifstream ifs(urdf_path);
   if(ifs.is_open())
   {
     std::stringstream urdf;
@@ -67,7 +67,7 @@ void PolarisRangerRobotModule::readUrdf(const std::string & robotName, const std
   }
   else
   {
-    LOG_ERROR("Could not open PolarisRanger model at " << urdfPath)
+    LOG_ERROR("Could not open PolarisRanger model at " << urdf_path)
     throw("Failed to open PolarisRanger model");
   }
 }

@@ -1,6 +1,8 @@
-#include <mc_control/mc_driving_controller.h>
-#include <mc_robots/polaris_ranger.h>
+#include "mc_driving_controller.h"
+
 #include <mc_rbdyn/robot.h>
+#include <mc_rbdyn/RobotLoader.h>
+#include <mc_rbdyn/Surface.h>
 
 #include <mc_rtc/logging.h>
 
@@ -8,8 +10,6 @@
 
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
-
-#include <mc_rbdyn/Surface.h>
 
 #include <boost/algorithm/string.hpp>
 #include <boost/date_time.hpp>
@@ -53,8 +53,8 @@ inline void gettimeofday(struct timeval *tv, void *)
 namespace mc_control
 {
 
-MCDrivingController::MCDrivingController(double dt, const std::vector<std::shared_ptr<mc_rbdyn::RobotModule> >& env_modules)
-  : MCMRQPController(dt, env_modules),
+MCDrivingController::MCDrivingController(std::shared_ptr<mc_rbdyn::RobotModule> robot_module, double dt)
+  : MCController({robot_module, mc_rbdyn::RobotLoader::get_robot_module("PolarisRanger", true)}, dt),
     graspOffset(sva::RotX(-M_PI/2), Eigen::Vector3d(0., 0., 0.)),
     ef_task("RARM_LINK6", robots(), 0),
     polarisKinematicsConstraint(robots(), 1, timeStep, false,
@@ -68,16 +68,16 @@ MCDrivingController::MCDrivingController(double dt, const std::vector<std::share
     head_task("HEAD_LINK1", robots(), 0),
     lhand_task("LARM_LINK6", robots(), 0)
 {
-  mrqpsolver->addConstraintSet(hrp2contactConstraint);
-  mrqpsolver->addConstraintSet(hrp2kinematicsConstraint);
-  mrqpsolver->addConstraintSet(polarisKinematicsConstraint);
-  mrqpsolver->addConstraintSet(hrp2selfCollisionConstraint);
-  mrqpsolver->addConstraintSet(collsConstraint);
+  qpsolver->addConstraintSet(contactConstraint);
+  qpsolver->addConstraintSet(kinematicsConstraint);
+  qpsolver->addConstraintSet(polarisKinematicsConstraint);
+  qpsolver->addConstraintSet(selfCollisionConstraint);
+  qpsolver->addConstraintSet(collsConstraint);
 
   std::vector<tasks::qp::JointStiffness> jsv;
   jsv.push_back({static_cast<int>(robot().jointIdByName("RLEG_JOINT4")), 100.});
-  hrp2postureTask->jointsStiffness(robots().mbs(), jsv);
-  mrqpsolver->solver.addTask(hrp2postureTask.get());
+  postureTask->jointsStiffness(robots().mbs(), jsv);
+  qpsolver->solver.addTask(postureTask.get());
 
   //robot().mbc().q[0] = {0.8018680589369662, 0.09936561148509283, -0.06541812773434774, 0.5855378381237102, -0.3421374123035909, -0.0002850914593993392, 0.8847053544605464};
   robot().mbc().q[0] = {1, 0, 0, 0, 0, 0, 0.76};
@@ -98,22 +98,22 @@ MCDrivingController::MCDrivingController(double dt, const std::vector<std::share
   //drivingContacts.emplace_back(robots().robotIndex, 1,
   //                         robot().surfaces.at("LowerBack"),
   //                         polaris.surfaces.at("left_back"));
-  mrqpsolver->setContacts(drivingContacts);
+  qpsolver->setContacts(drivingContacts);
   //collsConstraint.addCollision(robots(),
-  //  mc_solver::Collision("CHEST_LINK1", "seat_back", 0.4, 0.25, 0.0)
+  //  mc_rbdyn::Collision("CHEST_LINK1", "seat_back", 0.4, 0.25, 0.0)
   //);
 
-  ef_task.addToSolver(mrqpsolver->solver);
-  ef_task.removeFromSolver(mrqpsolver->solver);
+  ef_task.addToSolver(qpsolver->solver);
+  ef_task.removeFromSolver(qpsolver->solver);
 
-  polarisPostureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(mrqpsolver->robots.mbs(), 1, mrqpsolver->robots.robot(1).mbc().q, 5, 100));
+  polarisPostureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(qpsolver->robots.mbs(), 1, qpsolver->robots.robot(1).mbc().q, 5, 100));
 
   LOG_SUCCESS("MCDrivingController init done")
 }
 
 bool MCDrivingController::run()
 {
-  bool success = MCMRQPController::run();
+  bool success = MCController::run();
   if(logging_)
   {
     mc_rbdyn::Robot & polaris = robots().robot(1);
@@ -137,7 +137,7 @@ bool MCDrivingController::run()
 
 void MCDrivingController::reset(const ControllerResetData & reset_data)
 {
-  MCMRQPController::reset(reset_data);
+  MCController::reset(reset_data);
   LOG_INFO("Enter reset")
   robot().mbc().zero(robot().mb());
   robot().mbc().q = reset_data.q;
@@ -145,7 +145,7 @@ void MCDrivingController::reset(const ControllerResetData & reset_data)
   robot().mbc().q[0] = {1, 0, 0, 0, 0, 0, 0.76};
   rbd::forwardKinematics(robot().mb(), robot().mbc());
   rbd::forwardVelocity(robot().mb(), robot().mbc());
-  hrp2postureTask->posture(robot().mbc().q);
+  postureTask->posture(robot().mbc().q);
 
   resetWheelTransform();
   //resetBasePose();
@@ -154,9 +154,9 @@ void MCDrivingController::reset(const ControllerResetData & reset_data)
                                    wheelSurface->X_0_s(polaris, *(polaris.mbc))) << std::endl;
   */
 
-  mrqpsolver->solver.addTask(polarisPostureTask.get());
+  qpsolver->solver.addTask(polarisPostureTask.get());
 
-  mrqpsolver->setContacts(drivingContacts);
+  qpsolver->setContacts(drivingContacts);
 
   LOG_INFO("End reset")
 }
@@ -225,10 +225,10 @@ bool MCDrivingController::changeGaze(double pan, double tilt)
 {
   unsigned int pan_i = robot().jointIndexByName("HEAD_JOINT0");
   unsigned int tilt_i = robot().jointIndexByName("HEAD_JOINT1");
-  auto p = hrp2postureTask->posture();
+  auto p = postureTask->posture();
   p[pan_i][0] = pan;
   p[tilt_i][0] = tilt;
-  hrp2postureTask->posture(p);
+  postureTask->posture(p);
   return true;
 }
 
@@ -236,18 +236,18 @@ bool MCDrivingController::changeAnkleAngle(double theta)
 {
   theta_ = (tMax_-tMin_)*theta + tMax_;
   unsigned int ankle_i = robot().jointIndexByName("RLEG_JOINT4");
-  auto p = hrp2postureTask->posture();
+  auto p = postureTask->posture();
   p[ankle_i][0] = theta_;
-  hrp2postureTask->posture(p);
+  postureTask->posture(p);
   return true;
 }
 
 bool MCDrivingController::changeWristAngle(double yaw)
 {
   unsigned int wrist_i = robot().jointIndexByName("RARM_JOINT6");
-  auto p = hrp2postureTask->posture();
+  auto p = postureTask->posture();
   p[wrist_i][0] = yaw;
-  hrp2postureTask->posture(p);
+  postureTask->posture(p);
   return true;
 }
 
@@ -299,20 +299,20 @@ bool MCDrivingController::read_msg(std::string & msg)
 void MCDrivingController::lock_head()
 {
   head_task.resetTask(robots(), 0);
-  head_task.addToSolver(mrqpsolver->solver);
+  head_task.addToSolver(qpsolver->solver);
 }
 void MCDrivingController::unlock_head()
 {
-  head_task.removeFromSolver(mrqpsolver->solver);
+  head_task.removeFromSolver(qpsolver->solver);
 }
 void MCDrivingController::lock_lhand()
 {
   lhand_task.resetTask(robots(), 0);
-  lhand_task.addToSolver(mrqpsolver->solver);
+  lhand_task.addToSolver(qpsolver->solver);
 }
 void MCDrivingController::unlock_lhand()
 {
-  lhand_task.removeFromSolver(mrqpsolver->solver);
+  lhand_task.removeFromSolver(qpsolver->solver);
 }
 
 void MCDrivingController::start_logging()
@@ -355,6 +355,11 @@ void MCDrivingController::start_logging()
 void MCDrivingController::stop_logging()
 {
   logging_ = false;
+}
+
+std::vector<std::string> MCDrivingController::supported_robots() const
+{
+  return {"hrp2_drc"};
 }
 
 }

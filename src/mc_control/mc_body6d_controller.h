@@ -13,12 +13,13 @@ namespace mc_control
 struct MC_CONTROL_DLLAPI MCBody6dController : public MCController
 {
 public:
-  MCBody6dController(double dt);
+  MCBody6dController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt);
 
   virtual void reset(const ControllerResetData & reset_data) override;
 
-  /* Specific to 6d controller */
-  bool change_ef(const std::string & ef_name);
+  virtual bool change_ef(const std::string & ef_name) override;
+
+  virtual bool move_ef(const Eigen::Vector3d & t, const Eigen::Matrix3d & m) override;
 
   bool translate_ef(const Eigen::Vector3d & t);
 
@@ -29,3 +30,5 @@ public:
 };
 
 }
+
+SIMPLE_CONTROLLER_CONSTRUCTOR("Body6d", mc_control::MCBody6dController)

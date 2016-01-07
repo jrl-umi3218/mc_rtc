@@ -1,5 +1,4 @@
-#ifndef _H_MCSEQCONTROLLER_H_
-#define _H_MCSEQCONTROLLER_H_
+#pragma once
 
 #include <mc_control/mc_controller.h>
 
@@ -64,7 +63,7 @@ private:
 
 struct SeqAction;
 
-MC_CONTROL_DLLAPI std::vector<mc_solver::Collision> confToColl(const std::vector<mc_rbdyn::StanceConfig::BodiesCollisionConf> & conf);
+MC_CONTROL_DLLAPI std::vector<mc_rbdyn::Collision> confToColl(const std::vector<mc_rbdyn::StanceConfig::BodiesCollisionConf> & conf);
 
 struct MC_CONTROL_DLLAPI MCSeqTimeLog
 {
@@ -86,14 +85,23 @@ private:
 /* Used to publish debug information specific to the seq controller */
 struct MCSeqPublisher;
 
+struct MCSeqControllerConfig
+{
+  MCSeqControllerConfig(const Json::Value & v);
+  //std::string env_path;
+  //std::string env_name;
+  //std::string env_module;
+  std::shared_ptr<mc_rbdyn::RobotModule> env_module;
+  std::string plan;
+  bool step_by_step;
+  bool use_real_sensors;
+  unsigned int start_stance;
+};
+
 struct MC_CONTROL_DLLAPI MCSeqController : public MCController
 {
 public:
-  MCSeqController(double dt, const std::string & env_name, const std::string & seq_path, bool real_sensors, unsigned int start_stance, bool step_by_step);
-
-  MCSeqController(double dt, const std::string & env_path, const std::string & env_name, const std::string & seq_path, bool real_sensors, unsigned int start_stance, bool step_by_step);
-
-  MCSeqController(double dt, const std::shared_ptr<mc_rbdyn::RobotModule> & env_module, const std::string & seq_path, bool real_sensors, unsigned int start_stance, bool step_by_step);
+  MCSeqController(std::shared_ptr<mc_rbdyn::RobotModule> robot_module, double dt, const MCSeqControllerConfig & config);
 
   MCSeqController(const MCSeqController&) = delete;
   MCSeqController& operator=(const MCSeqController&) = delete;
@@ -104,6 +112,8 @@ public:
 
   virtual std::ostream& log_header(std::ostream & os) override;
   virtual std::ostream& log_data(std::ostream & os) override;
+
+  virtual std::vector<std::string> supported_robots() const override;
   /* Utils functions called by SeqStep/SeqAction */
   void updateRobotEnvCollisions(const std::vector<mc_rbdyn::Contact> & contacts, const mc_rbdyn::StanceConfig & conf);
 
@@ -139,7 +149,7 @@ public:
 
   void removeMetaTask(mc_tasks::MetaTask* mt);
   /* Services */
-  bool play_next_stance();
+  virtual bool play_next_stance() override;
   virtual bool set_joint_pos(const std::string & jname, const double & pos) override;
   /* Configuration */
   void loadStanceConfigs(const std::string & file);
@@ -247,4 +257,9 @@ public:
 
 }
 
-#endif
+extern "C"
+{
+  const char * CLASS_NAME();
+  void destroy(mc_control::MCController * ptr);
+  mc_control::MCController * create(const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const Json::Value & conf);
+}

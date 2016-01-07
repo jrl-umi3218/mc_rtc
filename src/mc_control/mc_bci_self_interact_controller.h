@@ -18,7 +18,7 @@ namespace mc_control
 struct MC_CONTROL_DLLAPI MCBCISelfInteractController : public MCController
 {
 public:
-  MCBCISelfInteractController(double dt);
+  MCBCISelfInteractController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt);
 
   virtual bool run() override;
 
@@ -37,3 +37,5 @@ private:
 };
 
 }
+
+SIMPLE_CONTROLLER_CONSTRUCTOR("BCISelfInteract", mc_control::MCBCISelfInteractController)

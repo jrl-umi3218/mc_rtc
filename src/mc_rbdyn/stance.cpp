@@ -331,6 +331,11 @@ void loadStances(const mc_rbdyn::Robots & robots, const std::string & filename, 
 {
   Json::Value v;
   std::ifstream ifs(filename);
+  if(!ifs.is_open())
+  {
+    LOG_ERROR("Could not open stance file " << filename)
+    throw("Unable to open stance file");
+  }
   ifs >> v;
   for(Json::Value & sv : v["stances"])
   {

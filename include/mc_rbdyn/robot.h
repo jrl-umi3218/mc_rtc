@@ -198,6 +198,9 @@ public:
   void fixSurfaces();
 
   void loadRSDFFromDir(const std::string & surfaceDir);
+
+  /** Return the robot's default stance (e.g. half-sitting for humanoid) */
+  std::map<unsigned int, std::vector<double>> stance() const;
 private:
   std::string name_;
   Robots & robots;
@@ -214,6 +217,7 @@ private:
   std::map<int, sva::PTransformd> collisionTransforms;
   std::map<std::string, mc_rbdyn::SurfacePtr> surfaces_;
   std::vector<ForceSensor> forceSensors;
+  std::map<unsigned int, std::vector<double>> stance_;
   std::string accelerometerBody;
   Springs springs;
   std::vector< std::vector<Eigen::VectorXd> > tlPoly;
@@ -233,7 +237,9 @@ protected:
         const std::map<std::string, stpbv_pair_t> & stpbv,
         const std::map<int, sva::PTransformd> & collisionTransforms,
         const std::map<std::string, mc_rbdyn::SurfacePtr> & surfaces,
-        const std::vector<ForceSensor> & forceSensors, const std::string & accelerometerBody = "",
+        const std::vector<ForceSensor> & forceSensors,
+        const std::map<unsigned int, std::vector<double>> stance = {},
+        const std::string & accelerometerBody = "",
         const Springs & springs = Springs(), const std::vector< std::vector<Eigen::VectorXd> > & tlPoly = {},
         const std::vector< std::vector<Eigen::VectorXd> > & tuPoly = {}, const std::vector<Flexibility> & flexibility = {});
   Robot(const Robot&) = delete;

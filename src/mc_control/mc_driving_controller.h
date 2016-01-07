@@ -1,8 +1,7 @@
-#ifndef _H_MCDRIVINGCONTROLLER_H_
-#define _H_MCDRIVINGCONTROLLER_H_
+#pragma once
 
 #include <mc_rbdyn/robot.h>
-#include <mc_control/mc_mrqp_controller.h>
+#include <mc_control/mc_controller.h>
 #include <mc_tasks/EndEffectorTask.h>
 
 #include <fstream>
@@ -12,10 +11,10 @@
 namespace mc_control
 {
 
-struct MC_CONTROL_DLLAPI MCDrivingController : MCMRQPController
+struct MC_CONTROL_DLLAPI MCDrivingController : MCController
 {
   public:
-    MCDrivingController(double dt, const std::vector<std::shared_ptr<mc_rbdyn::RobotModule> >& env_modules);
+    MCDrivingController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt);
 
     bool changeWheelAngle(double theta);
 
@@ -25,13 +24,15 @@ struct MC_CONTROL_DLLAPI MCDrivingController : MCMRQPController
 
     bool changeWristAngle(double yaw);
 
-    bool driving_service(double w, double a, double p, double t);
+    virtual bool driving_service(double w, double a, double p, double t) override;
 
     virtual bool run() override;
 
     virtual void reset(const ControllerResetData & reset_data) override;
 
     virtual bool read_msg(std::string & msg) override;
+
+    virtual std::vector<std::string> supported_robots() const override;
   protected:
     void resetBasePose();
     void resetWheelTransform();
@@ -67,4 +68,5 @@ struct MC_CONTROL_DLLAPI MCDrivingController : MCMRQPController
 };
 
 }
-#endif
+
+SIMPLE_CONTROLLER_CONSTRUCTOR("Driving", mc_control::MCDrivingController)

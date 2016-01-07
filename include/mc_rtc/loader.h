@@ -95,6 +95,11 @@ public:
   */
   bool has_symbol(const std::string & name, const std::string & symbol);
 
+  /** Returns the list of available objects
+   * \return A list of available objects
+   */
+  std::vector<std::string> objects() const;
+
   /** Load libraries from the paths provided
    * \param paths directories searched for libraries
    * \throws See \ref loader_load_libraries_doc "Loader load_libraries throwing condition"

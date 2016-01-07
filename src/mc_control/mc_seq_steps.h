@@ -1,7 +1,7 @@
 #ifndef _H_MCSEQSTEPS_H_
 #define _H_MCSEQSTEPS_H_
 
-#include <mc_control/mc_seq_controller.h>
+#include "mc_seq_controller.h"
 
 #include <mc_control/api.h>
 

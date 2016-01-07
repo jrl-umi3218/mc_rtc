@@ -1,5 +1,6 @@
 #pragma once
 
+#include <mc_rbdyn/Collision.h>
 #include <mc_rbdyn/robot.h>
 
 #include <map>
@@ -17,7 +18,14 @@ struct Robot;
 /* TODO Functions are declared const here but most implementations will likely not respect the constness */
 struct MC_RBDYN_DLLAPI RobotModule
 {
-  RobotModule(const std::string & path, const std::string & name) : path(path), name(name) {}
+  RobotModule(const std::string & path, const std::string & name)
+  : RobotModule(path, name, path + "/urdf/" + name + ".urdf")
+  {}
+
+  RobotModule(const std::string & path, const std::string & name, const std::string & urdf_path)
+  : path(path), name(name), urdf_path(urdf_path),
+    rsdf_dir(path + "/rsdf/" + name)
+  {}
 
   virtual ~RobotModule() {}
 
@@ -50,8 +58,13 @@ struct MC_RBDYN_DLLAPI RobotModule
 
   virtual const Springs & springs() const { return _springs; }
 
+  /** Return default self-collision set */
+  virtual const std::vector<mc_rbdyn::Collision> & defaultSelfCollisions() { return _collisions; }
+
   std::string path;
   std::string name;
+  std::string urdf_path;
+  std::string rsdf_dir;
   rbd::MultiBody mb;
   rbd::MultiBodyConfig mbc;
   rbd::MultiBodyGraph mbg;
@@ -64,6 +77,7 @@ struct MC_RBDYN_DLLAPI RobotModule
   std::vector<ForceSensor> _forceSensors;
   std::string _accelerometerBody;
   Springs _springs;
+  std::vector<mc_rbdyn::Collision> _collisions;
 };
 
 } // namespace mc_rbdyn

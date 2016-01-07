@@ -40,6 +40,15 @@ public:
     init();
     robot_loader->load_libraries(paths);
   }
+
+  /** Check if a robot is available
+   * \param name Robot name
+   */
+  static bool has_robot(const std::string & name)
+  {
+    init();
+    return robot_loader->has_object(name);
+  }
 private:
   static inline void init()
   {

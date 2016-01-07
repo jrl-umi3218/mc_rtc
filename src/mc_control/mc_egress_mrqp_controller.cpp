@@ -1,12 +1,12 @@
-#include <mc_control/mc_egress_mrqp_controller.h>
-#include <mc_robots/polaris_ranger_egress.h>
+#include "mc_egress_mrqp_controller.h"
+
 #include <mc_rbdyn/robot.h>
+#include <mc_rbdyn/RobotLoader.h>
+#include <mc_rbdyn/Surface.h>
 
 #include <mc_rtc/logging.h>
 
 #include <Tasks/QPContactConstr.h>
-
-#include <mc_rbdyn/Surface.h>
 
 #include "mc_mr_egress_phases.cpp"
 
@@ -16,8 +16,8 @@
 namespace mc_control
 {
 
-MCEgressMRQPController::MCEgressMRQPController(double dt, const std::vector<std::shared_ptr<mc_rbdyn::RobotModule> >& env_modules)
-  : MCMRQPController(dt, env_modules),
+MCEgressMRQPController::MCEgressMRQPController(std::shared_ptr<mc_rbdyn::RobotModule> robot_module, double dt)
+  : MCController({robot_module, mc_rbdyn::RobotLoader::get_robot_module("PolarisRangerEgress"), mc_rbdyn::RobotLoader::get_robot_module("env", mc_rtc::MC_ENV_DESCRIPTION_PATH, "ground")}, dt),
     egressContacts(),
     polarisKinematicsConstraint(robots(), 1, timeStep, false,
         {0.1, 0.01, 0.01}, 0.5),
@@ -27,25 +27,25 @@ MCEgressMRQPController::MCEgressMRQPController(double dt, const std::vector<std:
 {
   collsConstraint.addCollisions(robots(),
       {
-        mc_solver::Collision("RLEG_LINK5", "left_column", 0.1, 0.05, 0.),
-        mc_solver::Collision("RLEG_LINK4", "left_column", 0.1, 0.05, 0.),
-        mc_solver::Collision("RARM_LINK6", "left_column", 0.1, 0.05, 0.),
-        mc_solver::Collision("RARM_LINK5", "left_column", 0.1, 0.05, 0.),
-        mc_solver::Collision("RARM_LINK4", "left_column", 0.1, 0.05, 0.)
+        mc_rbdyn::Collision("RLEG_LINK5", "left_column", 0.1, 0.05, 0.),
+        mc_rbdyn::Collision("RLEG_LINK4", "left_column", 0.1, 0.05, 0.),
+        mc_rbdyn::Collision("RARM_LINK6", "left_column", 0.1, 0.05, 0.),
+        mc_rbdyn::Collision("RARM_LINK5", "left_column", 0.1, 0.05, 0.),
+        mc_rbdyn::Collision("RARM_LINK4", "left_column", 0.1, 0.05, 0.)
         });
-  hrp2selfCollisionConstraint.addCollisions(robots(),
+  selfCollisionConstraint.addCollisions(robots(),
       {
-      mc_solver::Collision("LLEG_LINK3", "LARM_LINK3", 0.05, 0.01, 0.),
-      mc_solver::Collision("LLEG_LINK4", "LARM_LINK3", 0.05, 0.01, 0.)
+      mc_rbdyn::Collision("LLEG_LINK3", "LARM_LINK3", 0.05, 0.01, 0.),
+      mc_rbdyn::Collision("LLEG_LINK4", "LARM_LINK3", 0.05, 0.01, 0.)
       });
-  mrqpsolver->addConstraintSet(hrp2contactConstraint);
-  mrqpsolver->addConstraintSet(hrp2kinematicsConstraint);
-  mrqpsolver->addConstraintSet(polarisKinematicsConstraint);
-  mrqpsolver->addConstraintSet(hrp2selfCollisionConstraint);
-  mrqpsolver->addConstraintSet(collsConstraint);
+  qpsolver->addConstraintSet(contactConstraint);
+  qpsolver->addConstraintSet(kinematicsConstraint);
+  qpsolver->addConstraintSet(polarisKinematicsConstraint);
+  qpsolver->addConstraintSet(selfCollisionConstraint);
+  qpsolver->addConstraintSet(collsConstraint);
 
-  mrqpsolver->solver.addTask(hrp2postureTask.get());
-  hrp2postureTask->weight(1);
+  qpsolver->solver.addTask(postureTask.get());
+  postureTask->weight(1);
 
   mc_rbdyn::Robot& polaris = robots().robot(1);
 
@@ -60,37 +60,37 @@ MCEgressMRQPController::MCEgressMRQPController(double dt, const std::vector<std:
                            "LFullSole", "exit_platform");
   egressContacts.emplace_back(robots(), robots().robotIndex(), 1,
                            "RightGripper", "bar_wheel");
-  mrqpsolver->setContacts(egressContacts);
+  qpsolver->setContacts(egressContacts);
 
-  polarisPostureTask.reset(new tasks::qp::PostureTask(mrqpsolver->robots.mbs(), 1, mrqpsolver->robots.robot(1).mbc().q, 1.0, 1));
-  lazyPostureTask.reset(new tasks::qp::PostureTask(mrqpsolver->robots.mbs(), 1, polaris.mbc().q, 0.0, 1000.0));
+  polarisPostureTask.reset(new tasks::qp::PostureTask(qpsolver->robots.mbs(), 1, qpsolver->robots.robot(1).mbc().q, 1.0, 1));
+  lazyPostureTask.reset(new tasks::qp::PostureTask(qpsolver->robots.mbs(), 1, polaris.mbc().q, 0.0, 1000.0));
   std::vector<tasks::qp::JointStiffness> jsv;
   jsv.push_back({static_cast<int>(polaris.jointIdByName("lazy_susan")), 0.1});
   lazyPostureTask->jointsStiffness(robots().mbs(), jsv);
 
-  comTask.reset(new mc_tasks::CoMTask(mrqpsolver->robots, mrqpsolver->robots.robotIndex()));
+  comTask.reset(new mc_tasks::CoMTask(qpsolver->robots, qpsolver->robots.robotIndex()));
   comTask->comTaskSp->stiffness(1.);
-  efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", mrqpsolver->robots,
-                                             mrqpsolver->robots.robotIndex()));
-  torsoOriTask.reset(new mc_tasks::OrientationTask("CHEST_LINK1", mrqpsolver->robots,
-                                                   mrqpsolver->robots.robotIndex(),
+  efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", qpsolver->robots,
+                                             qpsolver->robots.robotIndex()));
+  torsoOriTask.reset(new mc_tasks::OrientationTask("CHEST_LINK1", qpsolver->robots,
+                                                   qpsolver->robots.robotIndex(),
                                                    1., 1.));
 
-  //collsConstraint.addCollision(robots(), mc_solver::Collision("RLEG_LINK5", "floor", 0.2, 0.15, 0));
-  //collsConstraint.addCollision(robots(), mc_solver::Collision("RLEG_LINK5", "floor_step", 0.2, 0.15, 0));
-  //collsConstraint.addCollision(robots(), mc_solver::Collision("RLEG_LINK5", "front_plane", 0.3, 0.25, 0));
+  //collsConstraint.addCollision(robots(), mc_rbdyn::Collision("RLEG_LINK5", "floor", 0.2, 0.15, 0));
+  //collsConstraint.addCollision(robots(), mc_rbdyn::Collision("RLEG_LINK5", "floor_step", 0.2, 0.15, 0));
+  //collsConstraint.addCollision(robots(), mc_rbdyn::Collision("RLEG_LINK5", "front_plane", 0.3, 0.25, 0));
   LOG_SUCCESS("MCEgressMRQPController init done")
 }
 
 bool MCEgressMRQPController::run()
 {
-  bool success = MCMRQPController::run();
+  bool success = MCController::run();
   if(success)
   {
     bool next = execPhase->run(*this);
     if(next)
     {
-      nextPhase();
+      play_next_stance();
     }
   }
   else
@@ -102,32 +102,32 @@ bool MCEgressMRQPController::run()
 
 void MCEgressMRQPController::reset(const ControllerResetData & reset_data)
 {
-  MCMRQPController::reset(reset_data);
+  MCController::reset(reset_data);
   LOG_INFO("Enter mr egress reset")
   robot().mbc().zero(robot().mb());
   robot().mbc().q = reset_data.q;
   robot().mbc().q[0] = {1, 0, 0, 0, 0, 0, 0.76};
   rbd::forwardKinematics(robot().mb(), robot().mbc());
   rbd::forwardVelocity(robot().mb(), robot().mbc());
-  hrp2postureTask->posture(robot().mbc().q);
+  postureTask->posture(robot().mbc().q);
 
   resetBasePose();
   resetWheelTransform();
   resetLazyTransform();
 
-  mrqpsolver->solver.addTask(polarisPostureTask.get());
-  mrqpsolver->solver.addTask(lazyPostureTask.get());
+  qpsolver->solver.addTask(polarisPostureTask.get());
+  qpsolver->solver.addTask(lazyPostureTask.get());
 
-  mrqpsolver->setContacts(egressContacts);
+  qpsolver->setContacts(egressContacts);
 
-  mrqpsolver->solver.updateTasksNrVars(robots().mbs());
-  mrqpsolver->solver.updateConstrsNrVars(robots().mbs());
-  mrqpsolver->solver.updateConstrSize();
+  qpsolver->solver.updateTasksNrVars(robots().mbs());
+  qpsolver->solver.updateConstrsNrVars(robots().mbs());
+  qpsolver->solver.updateConstrSize();
 
   LOG_INFO("End mr egress reset")
 }
 
-void MCEgressMRQPController::addCollision(const mc_solver::Collision& coll)
+void MCEgressMRQPController::addCollision(const mc_rbdyn::Collision& coll)
 {
   collsConstraint.addCollisions(robots(), {coll});
 }
@@ -209,7 +209,7 @@ void MCEgressMRQPController::resetBasePose()
   rbd::forwardVelocity(robot().mb(), robot().mbc());
 }
 
-void MCEgressMRQPController::nextPhase()
+bool MCEgressMRQPController::play_next_stance()
 {
   switch(curPhase)
   {
@@ -264,8 +264,8 @@ void MCEgressMRQPController::nextPhase()
     execPhase.reset(new EgressCenterComPhase(0.10));
     break;
   case CENTERCOM:
-    torsoOriTask->removeFromSolver(mrqpsolver->solver);
-    hrp2postureTask->weight(1.);
+    torsoOriTask->removeFromSolver(qpsolver->solver);
+    postureTask->weight(1.);
     curPhase = OPENGRIPPER;
     execPhase.reset(new EgressOpenRightGripperPhase);
     break;
@@ -281,6 +281,12 @@ void MCEgressMRQPController::nextPhase()
     LOG_SUCCESS("Done")
     break;
   }
+  return true;
+}
+
+std::vector<std::string> MCEgressMRQPController::supported_robots() const
+{
+  return {"hrp2_drc"};
 }
 
 }

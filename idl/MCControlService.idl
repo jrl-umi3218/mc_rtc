@@ -6,25 +6,13 @@ module OpenHRP
 
   interface MCControlService
   {
-    boolean EnablePostureController();
-
-    boolean EnableBody6dController();
-
-    boolean EnableCoMController();
-
-    boolean EnableSeqController();
-
-    boolean EnableDrivingController();
+    boolean EnableController(in string name);
 
     boolean open_grippers();
 
     boolean close_grippers();
 
     boolean set_gripper(in boolean lgripper, in double v);
-
-    boolean joint_up(in string jname);
-
-    boolean joint_down(in string jname);
 
     boolean set_joint_pos(in string jname, in double v);
 
@@ -39,14 +27,6 @@ module OpenHRP
     boolean move_com(in double x, in double y, in double z);
 
     boolean play_next_stance();
-
-    boolean change_wheel_angle(in double theta);
-
-    boolean change_ankle_angle(in double theta);
-
-    boolean change_gaze(in double pan, in double tilt);
-
-    boolean change_wrist_angle(in double yaw);
 
     boolean driving_service(in double wheel, in double ankle, in double pan, in double tilt);
 

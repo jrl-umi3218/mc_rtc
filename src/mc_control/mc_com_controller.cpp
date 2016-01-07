@@ -1,30 +1,40 @@
-#include <mc_control/mc_com_controller.h>
+#include "mc_com_controller.h"
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
 #include <mc_rbdyn/Surface.h>
 
+#include <mc_rtc/logging.h>
+
 namespace mc_control
 {
 
-MCCoMController::MCCoMController(double dt)
-: MCController(dt)
+MCCoMController::MCCoMController(std::shared_ptr<mc_rbdyn::RobotModule> robot_module, double dt)
+: MCController(robot_module, dt)
 {
-  sva::PTransformd leftFootSurfTf = robot().surface("LFullSole").X_0_s(robot());
-  auto q = robot().mbc().q;
-  q[0] = {1, 0, 0, 0, 0, 0, -leftFootSurfTf.translation().z()};
-  robot().mbc().q = q;
-  rbd::forwardKinematics(robot().mb(), robot().mbc());
-  rbd::forwardVelocity(robot().mb(), robot().mbc());
-
   qpsolver->addConstraintSet(contactConstraint);
   qpsolver->addConstraintSet(dynamicsConstraint);
   qpsolver->addConstraintSet(selfCollisionConstraint);
   qpsolver->solver.addTask(postureTask.get());
-  qpsolver->setContacts({
-    mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"),
-    mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")
-  });
+  if(robot().name() == "hrp2_drc")
+  {
+    qpsolver->setContacts({
+      mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"),
+      mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")
+    });
+  }
+  else if(robot().name() == "hrp4")
+  {
+    qpsolver->setContacts({
+      mc_rbdyn::Contact(robots(), "LeftFoot", "AllGround"),
+      mc_rbdyn::Contact(robots(), "RightFoot", "AllGround")
+    });
+  }
+  else
+  {
+    LOG_ERROR("MCBody6dController does not support robot " << robot().name())
+    throw("MCBody6dController does not support your robot");
+  }
 
   comTask.reset(new mc_tasks::CoMTask(qpsolver->robots, qpsolver->robots.robotIndex()));
   comTask->addToSolver(qpsolver->solver);
@@ -33,17 +43,6 @@ MCCoMController::MCCoMController(double dt)
 void MCCoMController::reset(const ControllerResetData & reset_data)
 {
   MCController::reset(reset_data);
-  //if(reset_data.contacts.size())
-  //{
-  //  qpsolver->setContacts(reset_data.contacts);
-  //}
-  //else
-  {
-    qpsolver->setContacts({
-      mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"),
-      mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")
-    });
-  }
   comTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex());
 }
 

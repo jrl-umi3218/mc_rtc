@@ -1,8 +1,7 @@
-#ifndef _H_MCEGRESSMRQPCONTROLLER_H_
-#define _H_MCEGRESSMRQPCONTROLLER_H_
+#pragma once
 
 #include <mc_rbdyn/robot.h>
-#include <mc_control/mc_mrqp_controller.h>
+#include <mc_control/mc_controller.h>
 #include <mc_tasks/EndEffectorTask.h>
 #include <mc_tasks/OrientationTask.h>
 #include <mc_tasks/TrajectoryTask.h>
@@ -15,7 +14,7 @@ namespace mc_control
 
 struct EgressMRPhaseExecution;
 
-struct MC_CONTROL_DLLAPI MCEgressMRQPController : MCMRQPController
+struct MC_CONTROL_DLLAPI MCEgressMRQPController : MCController
 {
   public:
     enum EgressPhase
@@ -38,15 +37,17 @@ struct MC_CONTROL_DLLAPI MCEgressMRQPController : MCMRQPController
       REPLACEHAND
     };
   public:
-    MCEgressMRQPController(double dt, const std::vector<std::shared_ptr<mc_rbdyn::RobotModule> >& env_modules);
+    MCEgressMRQPController(std::shared_ptr<mc_rbdyn::RobotModule> robot_module, double dt);
 
     virtual bool run() override;
 
     virtual void reset(const ControllerResetData & reset_data) override;
 
-    void nextPhase();
+    virtual bool play_next_stance() override;
 
-    virtual void addCollision(const mc_solver::Collision& coll);
+    virtual void addCollision(const mc_rbdyn::Collision& coll);
+
+    virtual std::vector<std::string> supported_robots() const override;
   protected:
     void resetBasePose();
     void resetWheelTransform();
@@ -69,4 +70,5 @@ struct MC_CONTROL_DLLAPI MCEgressMRQPController : MCMRQPController
 };
 
 }
-#endif
+
+SIMPLE_CONTROLLER_CONSTRUCTOR("EgressMRQP", mc_control::MCEgressMRQPController)

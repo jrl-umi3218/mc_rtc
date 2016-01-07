@@ -25,29 +25,9 @@ MCControlServiceSVC_impl::~MCControlServiceSVC_impl()
 {
 }
 
-CORBA::Boolean MCControlServiceSVC_impl::EnablePostureController()
+CORBA::Boolean MCControlServiceSVC_impl::EnableController(const char * name)
 {
-  return m_plugin->controller.EnablePostureController();
-}
-
-CORBA::Boolean MCControlServiceSVC_impl::EnableBody6dController()
-{
-  return m_plugin->controller.EnableBody6dController();
-}
-
-CORBA::Boolean MCControlServiceSVC_impl::EnableCoMController()
-{
-  return m_plugin->controller.EnableCoMController();
-}
-
-CORBA::Boolean MCControlServiceSVC_impl::EnableSeqController()
-{
-  return m_plugin->controller.EnableSeqController();
-}
-
-CORBA::Boolean MCControlServiceSVC_impl::EnableDrivingController()
-{
-  return m_plugin->controller.EnableDrivingController();
+  return m_plugin->controller.EnableController(name);
 }
 
 CORBA::Boolean MCControlServiceSVC_impl::open_grippers()
@@ -73,16 +53,6 @@ CORBA::Boolean MCControlServiceSVC_impl::set_gripper(CORBA::Boolean lgripper, CO
     m_plugin->controller.setRGripperTargetQ(v);
   }
   return true;
-}
-
-CORBA::Boolean MCControlServiceSVC_impl::joint_up(const char * jname)
-{
-  return m_plugin->controller.joint_up(jname);
-}
-
-CORBA::Boolean MCControlServiceSVC_impl::joint_down(const char * jname)
-{
-  return m_plugin->controller.joint_down(jname);
 }
 
 CORBA::Boolean MCControlServiceSVC_impl::set_joint_pos(const char* jname, ::CORBA::Double v)
@@ -120,26 +90,6 @@ CORBA::Boolean MCControlServiceSVC_impl::move_com(CORBA::Double x, CORBA::Double
 CORBA::Boolean MCControlServiceSVC_impl::play_next_stance()
 {
   return m_plugin->controller.play_next_stance();
-}
-
-CORBA::Boolean MCControlServiceSVC_impl::change_wheel_angle(CORBA::Double theta)
-{
-  return m_plugin->controller.change_wheel_angle(theta);
-}
-
-CORBA::Boolean MCControlServiceSVC_impl::change_ankle_angle(CORBA::Double theta)
-{
-  return m_plugin->controller.change_ankle_angle(theta);
-}
-
-CORBA::Boolean MCControlServiceSVC_impl::change_gaze(CORBA::Double pan, CORBA::Double tilt)
-{
-  return m_plugin->controller.change_gaze(pan, tilt);
-}
-
-CORBA::Boolean MCControlServiceSVC_impl::change_wrist_angle(CORBA::Double yaw)
-{
-  return m_plugin->controller.change_wrist_angle(yaw);
 }
 
 CORBA::Boolean MCControlServiceSVC_impl::driving_service(CORBA::Double w, CORBA::Double a, CORBA::Double p, CORBA::Double t)

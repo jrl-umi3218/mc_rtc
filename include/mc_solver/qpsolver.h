@@ -6,6 +6,7 @@
 #include <mc_control/msg/Robot.h>
 #include <mc_control/msg/QPResult.h>
 
+#include <mc_rbdyn/Collision.h>
 #include <mc_rbdyn/Contact.h>
 #include <mc_rbdyn/robot.h>
 
@@ -107,26 +108,6 @@ public:
   DynamicsConstraint() {}
 };
 
-struct MC_SOLVER_DLLAPI Collision
-{
-  Collision() : body1("NONE"), body2("NONE") {}
-  Collision(const std::string & b1, const std::string & b2, double i, double s, double d)
-  : body1(b1), body2(b2), iDist(i), sDist(s), damping(d)
-  {}
-  std::string body1;
-  std::string body2;
-  double iDist;
-  double sDist;
-  double damping;
-  bool isNone() { return body1 == "NONE" && body2 == "NONE"; }
-};
-
-MC_SOLVER_DLLAPI bool operator==(const Collision & lhs, const Collision & rhs);
-
-MC_SOLVER_DLLAPI bool operator!=(const Collision & lhs, const Collision & rhs);
-
-MC_SOLVER_DLLAPI std::ostream & operator<<(std::ostream & os, const Collision & c);
-
 struct MC_SOLVER_DLLAPI CollisionsConstraint : public ConstraintSet
 {
 public:
@@ -138,9 +119,9 @@ public:
 
   bool removeCollisionByBody(const mc_rbdyn::Robots & robots, const std::string & byName, const std::string & b2Name);
 
-  void addCollision(const mc_rbdyn::Robots & robots, const Collision & col);
+  void addCollision(const mc_rbdyn::Robots & robots, const mc_rbdyn::Collision & col);
 
-  void addCollisions(const mc_rbdyn::Robots & robots, const std::vector<Collision> & cols);
+  void addCollisions(const mc_rbdyn::Robots & robots, const std::vector<mc_rbdyn::Collision> & cols);
 
   void reset();
 
@@ -151,13 +132,13 @@ public:
   std::shared_ptr<tasks::qp::CollisionConstr> collConstr;
   unsigned int r1Index;
   unsigned int r2Index;
-  std::vector<Collision> cols;
+  std::vector<mc_rbdyn::Collision> cols;
   int collId;
-  std::map<std::string, std::pair<unsigned int, Collision> > collIdDict;
+  std::map<std::string, std::pair<unsigned int, mc_rbdyn::Collision> > collIdDict;
 private:
   std::string __keyByNames(const std::string & name1, const std::string & name2);
-  int __createCollId(const Collision & col);
-  std::pair<int, Collision> __popCollId(const std::string & name1, const std::string & name2);
+  int __createCollId(const mc_rbdyn::Collision & col);
+  std::pair<int, mc_rbdyn::Collision> __popCollId(const std::string & name1, const std::string & name2);
 public:
   CollisionsConstraint() {}
 };
@@ -173,15 +154,15 @@ public:
 
   bool removeSelfCollision(const mc_rbdyn::Robots & robots, const std::string & body1Name, const std::string & body2Name);
 
-  void addEnvCollision(const mc_rbdyn::Robots & robots, const Collision & col);
+  void addEnvCollision(const mc_rbdyn::Robots & robots, const mc_rbdyn::Collision & col);
 
-  void addSelfCollision(const mc_rbdyn::Robots & robots, const Collision & col);
+  void addSelfCollision(const mc_rbdyn::Robots & robots, const mc_rbdyn::Collision & col);
 
   void setEnvCollisions(const mc_rbdyn::Robots & robots, const std::vector<mc_rbdyn::Contact> & contacts,
-                                                         const std::vector<Collision> & cols);
+                                                         const std::vector<mc_rbdyn::Collision> & cols);
 
   void setSelfCollisions(const mc_rbdyn::Robots & robots, const std::vector<mc_rbdyn::Contact> & contacts,
-                                                         const std::vector<Collision> & cols);
+                                                         const std::vector<mc_rbdyn::Collision> & cols);
 
   virtual void addToSolver(tasks::qp::QPSolver & solver) const override;
 

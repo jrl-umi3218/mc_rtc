@@ -9,7 +9,7 @@ namespace mc_robots
 {
 
 HRP2DRCCommonRobotModule::HRP2DRCCommonRobotModule()
-: RobotModule(mc_rtc::HRP2_DRC_DESCRIPTION_PATH, "hrp2_drc")
+: RobotModule(mc_rtc::HRP2_DRC_DESCRIPTION_PATH, "hrp2_drc", std::string(mc_rtc::HRP2_DRC_DESCRIPTION_PATH) + "/urdf/hrp2drc.urdf")
 {
   virtualLinks.push_back("base_link");
   virtualLinks.push_back("Accelerometer");
@@ -88,6 +88,25 @@ HRP2DRCCommonRobotModule::HRP2DRCCommonRobotModule()
   _forceSensors.push_back(mc_rbdyn::ForceSensor("LeftFootForceSensor", "LLEG_LINK5", sva::PTransformd(Eigen::Vector3d(0, 0, -0.195))));
   _forceSensors.push_back(mc_rbdyn::ForceSensor("RightHandForceSensor", "RARM_LINK6", sva::PTransformd(Eigen::Vector3d(0, 0, -0.087))));
   _forceSensors.push_back(mc_rbdyn::ForceSensor("LeftHandForceSensor", "LARM_LINK6", sva::PTransformd(Eigen::Vector3d(0, 0, -0.087))));
+
+  _collisions = {
+    mc_rbdyn::Collision("LARM_LINK3", "BODY", 0.05, 0.01, 0.),
+    mc_rbdyn::Collision("LARM_LINK4", "BODY", 0.05, 0.01, 0.),
+    mc_rbdyn::Collision("LARM_LINK5", "BODY", 0.05, 0.01, 0.),
+    mc_rbdyn::Collision("RARM_LINK3", "BODY", 0.05, 0.01, 0.),
+    mc_rbdyn::Collision("RARM_LINK4", "BODY", 0.05, 0.01, 0.),
+    mc_rbdyn::Collision("RARM_LINK5", "BODY", 0.05, 0.01, 0.),
+    mc_rbdyn::Collision("RARM_LINK3", "CHEST_LINK0", 0.05, 0.01, 0.),
+    mc_rbdyn::Collision("RARM_LINK4", "CHEST_LINK0", 0.05, 0.01, 0.),
+    mc_rbdyn::Collision("RARM_LINK5", "CHEST_LINK0", 0.05, 0.01, 0.),
+    mc_rbdyn::Collision("RARM_LINK4", "CHEST_LINK1", 0.05, 0.01, 0.),
+    mc_rbdyn::Collision("RARM_LINK5", "CHEST_LINK1", 0.05, 0.01, 0.),
+    mc_rbdyn::Collision("LARM_LINK3", "CHEST_LINK0", 0.05, 0.01, 0.),
+    mc_rbdyn::Collision("LARM_LINK4", "CHEST_LINK0", 0.05, 0.01, 0.),
+    mc_rbdyn::Collision("LARM_LINK5", "CHEST_LINK0", 0.05, 0.01, 0.),
+    mc_rbdyn::Collision("LARM_LINK4", "CHEST_LINK1", 0.05, 0.01, 0.),
+    mc_rbdyn::Collision("LARM_LINK5", "CHEST_LINK1", 0.05, 0.01, 0.)
+  };
 }
 
 std::map<std::string, std::pair<std::string, std::string> > HRP2DRCCommonRobotModule::getConvexHull(const std::map<std::string, std::pair<std::string, std::string>> & files) const

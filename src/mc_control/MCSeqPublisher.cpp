@@ -1,4 +1,4 @@
-#include <mc_control/MCSeqPublisher.h>
+#include "MCSeqPublisher.h"
 
 #include <geos/geom/Polygon.h>
 #include <geos/geom/LinearRing.h>

@@ -1,4 +1,4 @@
-#include <mc_control/mc_posture_controller.h>
+#include "mc_posture_controller.h"
 
 #include <mc_rtc/logging.h>
 
@@ -12,13 +12,13 @@ namespace mc_control
 {
 
 /* Common stuff */
-MCPostureController::MCPostureController(double dt)
-: MCController(dt)
+MCPostureController::MCPostureController(std::shared_ptr<mc_rbdyn::RobotModule> robot_module, double dt)
+: MCController(robot_module, dt)
 {
-  qpsolver->setContacts({});
   qpsolver->addConstraintSet(contactConstraint);
   qpsolver->addConstraintSet(kinematicsConstraint);
   qpsolver->solver.addTask(postureTask.get());
+  qpsolver->setContacts({});
 
   LOG_SUCCESS("MCPostureController init done " << this)
 }

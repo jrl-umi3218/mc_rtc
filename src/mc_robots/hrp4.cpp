@@ -11,7 +11,11 @@ namespace mc_robots
   HRP4CommonRobotModule::HRP4CommonRobotModule()
     : RobotModule(mc_rtc::HRP4_DESCRIPTION_PATH, "hrp4")
   {
+    rsdf_dir = path + "/rsdf";
+
     virtualLinks.push_back("base_link");
+    virtualLinks.push_back("r_ankle");
+    virtualLinks.push_back("l_ankle");
     virtualLinks.push_back("r_sole");
     virtualLinks.push_back("l_sole");
     virtualLinks.push_back("Accelerometer");
@@ -98,8 +102,6 @@ namespace mc_robots
     halfSitting["L_F43"] = { 0 }; //0
     halfSitting["L_F52"] = { 0 }; //0
     halfSitting["L_F53"] = { 0 }; //0
-    halfSitting["R_FOOT"] = {};
-    halfSitting["L_FOOT"] = {};
 
     _forceSensors.push_back(mc_rbdyn::ForceSensor("RightFootForceSensor", "R_ANKLE_R_LINK", sva::PTransformd(Eigen::Vector3d(0, 0, -0.093))));
     _forceSensors.push_back(mc_rbdyn::ForceSensor("LeftFootForceSensor", "L_ANKLE_R_LINK", sva::PTransformd(Eigen::Vector3d(0, 0, -0.093))));

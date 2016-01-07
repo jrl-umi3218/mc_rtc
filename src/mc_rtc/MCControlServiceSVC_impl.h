@@ -15,16 +15,7 @@ namespace OpenHRP
       MCControlServiceSVC_impl(MCControl * plugin);
       virtual ~MCControlServiceSVC_impl();
 
-      /* General services to switch between controllers */
-      virtual CORBA::Boolean EnablePostureController() override;
-
-      virtual CORBA::Boolean EnableBody6dController() override;
-
-      virtual CORBA::Boolean EnableCoMController() override;
-
-      virtual CORBA::Boolean EnableSeqController() override;
-
-      virtual CORBA::Boolean EnableDrivingController() override;
+      virtual CORBA::Boolean EnableController(const char * name);
 
       /* Grippers (always available) */
       virtual CORBA::Boolean open_grippers() override;
@@ -34,8 +25,6 @@ namespace OpenHRP
       virtual CORBA::Boolean set_gripper(CORBA::Boolean lgripper, CORBA::Double v) override;
 
       /* Joint services */
-      virtual CORBA::Boolean joint_up(const char * jname) override;
-      virtual CORBA::Boolean joint_down(const char * jname) override;
       virtual CORBA::Boolean set_joint_pos(const char* jname, CORBA::Double v) override;
       virtual CORBA::Boolean get_joint_pos(const char * jname, CORBA::Double & v) override;
       /* End effector service */
@@ -47,10 +36,6 @@ namespace OpenHRP
       /* Seq controller */
       virtual CORBA::Boolean play_next_stance() override;
       /* Driving services */
-      virtual CORBA::Boolean change_wheel_angle(CORBA::Double theta) override;
-      virtual CORBA::Boolean change_ankle_angle(CORBA::Double theta) override;
-      virtual CORBA::Boolean change_gaze(CORBA::Double pan, CORBA::Double tilt) override;
-      virtual CORBA::Boolean change_wrist_angle(CORBA::Double yaw) override;
       virtual CORBA::Boolean driving_service(CORBA::Double w, CORBA::Double a, CORBA::Double p, CORBA::Double t) override;
 
       /* Generic method, allows any controller to implement simple service calls */

@@ -15,7 +15,7 @@ public:
 protected:
   std::map<std::string, std::pair<std::string, std::string> > getConvexHull(const std::map<std::string, std::pair<std::string, std::string>> & files) const;
 
-  void readUrdf(const std::string & robotName, const std::vector<std::string> & filteredLinks);
+  void readUrdf(const std::vector<std::string> & filteredLinks);
 
   std::map<unsigned int, std::vector<double>> halfSittingPose(const rbd::MultiBody & mb) const;
 

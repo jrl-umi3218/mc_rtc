@@ -219,22 +219,6 @@ void DynamicsConstraint::removeFromSolver(tasks::qp::QPSolver & solver) const
   }
 }
 
-bool operator==(const Collision & lhs, const Collision & rhs)
-{
-  return lhs.body1 == rhs.body1 && lhs.body2 == rhs.body2;
-}
-
-bool operator!=(const Collision & lhs, const Collision & rhs)
-{
-  return !(lhs == rhs);
-}
-
-std::ostream & operator<<(std::ostream & os, const Collision & col)
-{
-  os << "Collision: " << col.body1 << "/" << col.body2 << " { " << col.iDist << ", " << col.sDist << ", " << col.damping << "}" << std::endl;
-  return os;
-}
-
 CollisionsConstraint::CollisionsConstraint(const mc_rbdyn::Robots & robots, unsigned int r1Index, unsigned int r2Index, double timeStep)
 : collConstr(new tasks::qp::CollisionConstr(robots.mbs(), timeStep)),
   r1Index(r1Index), r2Index(r2Index), collId(0), collIdDict()
@@ -258,7 +242,7 @@ bool CollisionsConstraint::removeCollisionByBody(const mc_rbdyn::Robots & robots
   const mc_rbdyn::Robot & r2 = robots.robot(r2Index);
   int b1Id = r1.bodyIdByName(b1Name);
   int b2Id = r2.bodyIdByName(b2Name);
-  std::vector<Collision> toRm;
+  std::vector<mc_rbdyn::Collision> toRm;
   for(const auto & col : cols)
   {
     if(r1.convex(col.body1).first == b1Id &&
@@ -276,7 +260,7 @@ bool CollisionsConstraint::removeCollisionByBody(const mc_rbdyn::Robots & robots
   return toRm.size() > 0;
 }
 
-void CollisionsConstraint::addCollision(const mc_rbdyn::Robots & robots, const Collision & col)
+void CollisionsConstraint::addCollision(const mc_rbdyn::Robots & robots, const mc_rbdyn::Collision & col)
 {
   const mc_rbdyn::Robot & r1 = robots.robot(r1Index);
   const mc_rbdyn::Robot & r2 = robots.robot(r2Index);
@@ -289,7 +273,7 @@ void CollisionsConstraint::addCollision(const mc_rbdyn::Robots & robots, const C
   collConstr->addCollision(robots.mbs(), collId, static_cast<int>(r1Index), body1.first, const_cast<sch::S_Polyhedron*>(body1.second.get()), X_b1_c, static_cast<int>(r2Index), body2.first, const_cast<sch::S_Polyhedron*>(body2.second.get()), X_b2_c, col.iDist, col.sDist, col.damping, defaultDampingOffset);
 }
 
-void CollisionsConstraint::addCollisions(const mc_rbdyn::Robots & robots, const std::vector<Collision> & cols)
+void CollisionsConstraint::addCollisions(const mc_rbdyn::Robots & robots, const std::vector<mc_rbdyn::Collision> & cols)
 {
   for(const auto & c : cols)
   {
@@ -325,25 +309,25 @@ std::string CollisionsConstraint::__keyByNames(const std::string & name1, const 
   return name1 + name2;
 }
 
-int CollisionsConstraint::__createCollId(const Collision & col)
+int CollisionsConstraint::__createCollId(const mc_rbdyn::Collision & col)
 {
   std::string key = __keyByNames(col.body1, col.body2);
   int collId = this->collId;
-  collIdDict[key] = std::pair<unsigned int, Collision>(collId, col);
+  collIdDict[key] = std::pair<unsigned int, mc_rbdyn::Collision>(collId, col);
   this->collId += 1;
   return collId;
 }
 
-std::pair<int, Collision> CollisionsConstraint::__popCollId(const std::string & name1, const std::string & name2)
+std::pair<int, mc_rbdyn::Collision> CollisionsConstraint::__popCollId(const std::string & name1, const std::string & name2)
 {
   std::string key = __keyByNames(name1, name2);
   if(collIdDict.count(key))
   {
-    std::pair<int, Collision> p = collIdDict[key];
+    std::pair<int, mc_rbdyn::Collision> p = collIdDict[key];
     collIdDict.erase(key);
     return p;
   }
-  return std::pair<unsigned int, Collision>(0,Collision());
+  return std::pair<unsigned int, mc_rbdyn::Collision>(0, mc_rbdyn::Collision());
 }
 
 RobotEnvCollisionsConstraint::RobotEnvCollisionsConstraint(const mc_rbdyn::Robots & robots, double timeStep)
@@ -368,21 +352,21 @@ bool RobotEnvCollisionsConstraint::removeSelfCollision(const mc_rbdyn::Robots & 
   return selfCollConstrMng.removeCollision(robots, body1Name, body2Name);
 }
 
-void RobotEnvCollisionsConstraint::addEnvCollision(const mc_rbdyn::Robots & robots, const Collision & col)
+void RobotEnvCollisionsConstraint::addEnvCollision(const mc_rbdyn::Robots & robots, const mc_rbdyn::Collision & col)
 {
   envCollConstrMng.addCollision(robots, col);
 }
 
-void RobotEnvCollisionsConstraint::addSelfCollision(const mc_rbdyn::Robots & robots, const Collision & col)
+void RobotEnvCollisionsConstraint::addSelfCollision(const mc_rbdyn::Robots & robots, const mc_rbdyn::Collision & col)
 {
   selfCollConstrMng.addCollision(robots, col);
 }
 
 void RobotEnvCollisionsConstraint::setEnvCollisions(const mc_rbdyn::Robots & robots, const std::vector<mc_rbdyn::Contact> & contacts,
-                                                    const std::vector<Collision> & cols)
+                                                    const std::vector<mc_rbdyn::Collision> & cols)
 {
   const mc_rbdyn::Robot & robot = robots.robot();
-  const std::vector<Collision> & envCols = envCollConstrMng.cols;
+  const std::vector<mc_rbdyn::Collision> & envCols = envCollConstrMng.cols;
   // Avoid reset to keep damping
   auto contactBodies = __bodiesFromContacts(robot, contacts);
 
@@ -390,7 +374,7 @@ void RobotEnvCollisionsConstraint::setEnvCollisions(const mc_rbdyn::Robots & rob
 
   for(size_t i = 0; i < envCols.size(); ++i)
   {
-    const Collision & col = envCols[i];
+    const mc_rbdyn::Collision & col = envCols[i];
     // Remove body that are not in the new collision list
     if(std::find(cols.begin(), cols.end(), col) == cols.end())
     {
@@ -405,7 +389,7 @@ void RobotEnvCollisionsConstraint::setEnvCollisions(const mc_rbdyn::Robots & rob
     }
   }
 
-  for(const Collision & col : cols)
+  for(const mc_rbdyn::Collision & col : cols)
   {
     // New collision not in the old set and not in contactBodies
     if(std::find(envCols.begin(), envCols.end(), col) == envCols.end() &&
@@ -417,10 +401,10 @@ void RobotEnvCollisionsConstraint::setEnvCollisions(const mc_rbdyn::Robots & rob
 }
 
 void RobotEnvCollisionsConstraint::setSelfCollisions(const mc_rbdyn::Robots & robots, const std::vector<mc_rbdyn::Contact> & contacts,
-                                                     const std::vector<Collision> & cols)
+                                                     const std::vector<mc_rbdyn::Collision> & cols)
 {
   const mc_rbdyn::Robot & robot = robots.robot();
-  const std::vector<Collision> & selfCols = selfCollConstrMng.cols;
+  const std::vector<mc_rbdyn::Collision> & selfCols = selfCollConstrMng.cols;
   // Avoid reset to keep damping
   auto contactBodies = __bodiesFromContacts(robot, contacts);
 
@@ -428,7 +412,7 @@ void RobotEnvCollisionsConstraint::setSelfCollisions(const mc_rbdyn::Robots & ro
 
   for(size_t i = 0; i < selfCols.size(); ++i)
   {
-    const Collision & col = selfCols[i];
+    const mc_rbdyn::Collision & col = selfCols[i];
     // Remove body that are not in the new collision list
     if(std::find(cols.begin(), cols.end(), col) == cols.end())
     {
@@ -444,7 +428,7 @@ void RobotEnvCollisionsConstraint::setSelfCollisions(const mc_rbdyn::Robots & ro
     }
   }
 
-  for(const Collision & col : cols)
+  for(const mc_rbdyn::Collision & col : cols)
   {
     // New collision not in the old set and not in contactBodies
     if(std::find(selfCols.begin(), selfCols.end(), col) == selfCols.end() &&

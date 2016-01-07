@@ -1,4 +1,4 @@
-#include <mc_control/mc_seq_controller.h>
+#include "mc_seq_controller.h"
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 #include <Tasks/QPContactConstr.h>
@@ -6,13 +6,14 @@
 #include <mc_rbdyn/GripperSurface.h>
 #include <mc_rbdyn/json/StanceConfig.h>
 #include <mc_rbdyn/RobotLoader.h>
+#include <mc_rbdyn/RobotModule.h>
 #include <mc_rtc/logging.h>
 
 #include <mc_control/ForceContactSensor.h>
-#include <mc_control/MCSeqPublisher.h>
 #include <mc_control/SimulationContactSensor.h>
 
-#include <mc_control/mc_seq_steps.h>
+#include "mc_seq_steps.h"
+#include "MCSeqPublisher.h"
 
 #include <fstream>
 
@@ -66,12 +67,12 @@ void CollisionPair::setTransform(const mc_rbdyn::Robot & r1, const mc_rbdyn::Rob
   sch::transform(*(r2hull.get()), X_b2_h2*r2.mbc().bodyPosW[r2BodyIndex]);
 }
 
-std::vector<mc_solver::Collision> confToColl(const std::vector<mc_rbdyn::StanceConfig::BodiesCollisionConf> & conf)
+std::vector<mc_rbdyn::Collision> confToColl(const std::vector<mc_rbdyn::StanceConfig::BodiesCollisionConf> & conf)
 {
-  std::vector<mc_solver::Collision> res;
+  std::vector<mc_rbdyn::Collision> res;
   for(const auto & bcc : conf)
   {
-    res.push_back(mc_solver::Collision(bcc.body1, bcc.body2,
+    res.push_back(mc_rbdyn::Collision(bcc.body1, bcc.body2,
                                        bcc.collisionConf.iDist,
                                        bcc.collisionConf.sDist,
                                        bcc.collisionConf.damping));
@@ -111,31 +112,90 @@ void MCSeqTimeLog::report(std::ostream & os)
   os << "Total time: " << (static_cast<double>(iters.back() - iters[0]))*timeStep << std::endl;
 }
 
-MCSeqController::MCSeqController(double dt, const std::string & env_name, const std::string & seq_path, bool real_sensors, unsigned int start_stance, bool step_by_step)
-: MCSeqController(dt, mc_rtc::MC_ENV_DESCRIPTION_PATH, env_name, seq_path, real_sensors, start_stance, step_by_step)
+MCSeqControllerConfig::MCSeqControllerConfig(const Json::Value & v)
 {
+  if(!v.isMember("Seq"))
+  {
+    LOG_ERROR("No Seq section in configuration file, abort")
+    throw("No Seq section in configuration file");
+  }
+  const Json::Value & seq = v["Seq"];
+  if(!seq.isMember("Env"))
+  {
+    LOG_ERROR("No Env section in configuration for Seq controller, abort")
+    throw("No Env section in Seq section");
+  }
+  const Json::Value & env = seq["Env"];
+  if(env.isMember("Module"))
+  {
+    env_module = mc_rbdyn::RobotLoader::get_robot_module(env["Module"].asString());
+  }
+  else if(env.isMember("Name"))
+  {
+    std::string env_path = mc_rtc::MC_ENV_DESCRIPTION_PATH;
+    if(env.isMember("Path"))
+    {
+      env_path = env["Path"].asString();
+    }
+    std::string env_name = env["Name"].asString();
+    env_module = mc_rbdyn::RobotLoader::get_robot_module("env", env_path, env_name);
+  }
+  else
+  {
+    LOG_ERROR("No Name or Module value for Env in Seq configuration, abort")
+    throw("No Name or Module value for Env in Seq configuration");
+  }
+  if(seq.isMember("Plan"))
+  {
+    plan = seq["Plan"].asString();
+    plan = std::string(mc_rtc::DATA_PATH) + "/" + plan;
+  }
+  else
+  {
+    LOG_ERROR("No Plan in Seq configuration")
+    throw("No Plan in Seq configuration");
+  }
+  if(seq.isMember("StepByStep"))
+  {
+    step_by_step = seq["StepByStep"].asBool();
+  }
+  else
+  {
+    step_by_step = false;
+  }
+  if(seq.isMember("UseRealSensors"))
+  {
+    use_real_sensors = seq["UseRealSensors"].asBool();
+  }
+  else
+  {
+    use_real_sensors = false;
+  }
+  if(seq.isMember("StartStance"))
+  {
+    start_stance = static_cast<unsigned int>(seq["StartStance"].asInt());
+  }
+  else
+  {
+    start_stance = 0;
+  }
 }
 
-MCSeqController::MCSeqController(double dt, const std::string & env_path, const std::string & env_name, const std::string & seq_path, bool real_sensors, unsigned int start_stance, bool step_by_step)
-: MCSeqController(dt, mc_rbdyn::RobotLoader::get_robot_module("env", env_path, env_name), seq_path, real_sensors, start_stance, step_by_step)
-{
-}
-
-MCSeqController::MCSeqController(double dt, const std::shared_ptr<mc_rbdyn::RobotModule> & env_module, const std::string & seq_path, bool real_sensors, unsigned int start_stance, bool step_by_step)
-: MCController(dt, env_module),
+MCSeqController::MCSeqController(std::shared_ptr<mc_rbdyn::RobotModule> robot_module, double dt, const MCSeqControllerConfig & config)
+: MCController({robot_module, config.env_module}, dt),
   nrIter(0), logger(timeStep),
   publisher(new MCSeqPublisher(robots())),
-  step_by_step(step_by_step), paused(false), halted(false),
-  stanceIndex(start_stance), seq_actions(0),
+  step_by_step(config.step_by_step), paused(false), halted(false),
+  stanceIndex(config.start_stance), seq_actions(0),
   currentContact(0), targetContact(0), currentGripper(0),
-  use_real_sensors(real_sensors),
+  use_real_sensors(config.use_real_sensors),
   collsConstraint(robots(), timeStep),
   max_perc(1.0), nr_points(3000),
   samples(0.0, max_perc, nr_points)
 {
   logger.logPhase("START", 0);
   /* Load plan */
-  loadStances(robots(), seq_path, stances, actions, interpolators);
+  loadStances(robots(), config.plan, stances, actions, interpolators);
   assert(stances.size() == actions.size());
   seq_actions.push_back(seqActionFromStanceAction(0, actions[0].get(), 0));
   for(size_t i = 0; i < stances.size() - 1; ++i)
@@ -150,7 +210,7 @@ MCSeqController::MCSeqController(double dt, const std::shared_ptr<mc_rbdyn::Robo
     }
   }
   /* Load plan configuration */
-  std::string config_path = seq_path;
+  std::string config_path = config.plan;
   config_path.replace(config_path.find(".json"), strlen(".json"), "_config.json");
   loadStanceConfigs(config_path);
   /* Setup contact sensor */
@@ -318,6 +378,11 @@ std::ostream& MCSeqController::log_data(std::ostream & os)
 {
   os << ";" << stanceIndex;
   return os;
+}
+
+std::vector<std::string> MCSeqController::supported_robots() const
+{
+  return {"hrp2_drc"};
 }
 
 void MCSeqController::updateRobotEnvCollisions(const std::vector<mc_rbdyn::Contact> & contacts, const mc_rbdyn::StanceConfig & conf)
@@ -831,4 +896,19 @@ bool SeqStep::eval(MCSeqController &)
   return false;
 }
 
+}
+
+const char * CLASS_NAME()
+{
+  return "Seq";
+}
+
+void destroy(mc_control::MCController * ptr)
+{
+  delete ptr;
+}
+
+mc_control::MCController * create(const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const Json::Value & conf)
+{
+  return new mc_control::MCSeqController(robot, dt, {conf});
 }

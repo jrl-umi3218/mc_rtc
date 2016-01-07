@@ -50,6 +50,17 @@ bool ObjectLoader<T>::has_symbol(const std::string & object, const std::string &
 }
 
 template<typename T>
+std::vector<std::string> ObjectLoader<T>::objects() const
+{
+  std::vector<std::string> res;
+  for(const auto & h : handles_)
+  {
+    res.push_back(h.first);
+  }
+  return res;
+}
+
+template<typename T>
 void ObjectLoader<T>::load_libraries(const std::vector<std::string> & paths)
 {
   Loader::load_libraries(paths, handles_);

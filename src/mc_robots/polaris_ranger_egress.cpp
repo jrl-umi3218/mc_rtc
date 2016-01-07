@@ -9,7 +9,7 @@ namespace mc_robots
 {
 
 PolarisRangerEgressRobotModule::PolarisRangerEgressRobotModule()
-: RobotModule(mc_rtc::HRP2_DRC_DESCRIPTION_PATH, "polaris_ranger")
+: RobotModule(mc_rtc::HRP2_DRC_DESCRIPTION_PATH, "polaris_ranger", std::string(mc_rtc::HRP2_DRC_DESCRIPTION_PATH) + "/urdf/polaris_ranger_egress.urdf")
 {
   halfSitting["POLARIS"] = {};
   halfSitting["front_left_steering_joint"] = {};
@@ -26,7 +26,7 @@ PolarisRangerEgressRobotModule::PolarisRangerEgressRobotModule()
   halfSitting["FNR_switch_joint"] = {};
   halfSitting["lazy_susan"] = {0};
 
-  readUrdf("polaris_ranger_egress", virtualLinks);
+  readUrdf(virtualLinks);
 }
 
 std::map<std::string, std::pair<std::string, std::string> > PolarisRangerEgressRobotModule::getConvexHull(const std::map<std::string, std::pair<std::string, std::string>> & files) const
@@ -40,10 +40,9 @@ std::map<std::string, std::pair<std::string, std::string> > PolarisRangerEgressR
   return res;
 }
 
-void PolarisRangerEgressRobotModule::readUrdf(const std::string & robotName, const std::vector<std::string> & filteredLinks)
+void PolarisRangerEgressRobotModule::readUrdf(const std::vector<std::string> & filteredLinks)
 {
-  std::string urdfPath = path + "/urdf/" + robotName + ".urdf";
-  std::ifstream ifs(urdfPath);
+  std::ifstream ifs(urdf_path);
   if(ifs.is_open())
   {
     std::stringstream urdf;
@@ -58,7 +57,7 @@ void PolarisRangerEgressRobotModule::readUrdf(const std::string & robotName, con
   }
   else
   {
-    LOG_ERROR("Could not open PolarisRanger model at " << urdfPath)
+    LOG_ERROR("Could not open PolarisRanger model at " << urdf_path)
     throw("Failed to open PolarisRanger model");
   }
 }

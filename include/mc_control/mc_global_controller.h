@@ -1,15 +1,13 @@
 #pragma once
 
-#include <mc_control/mc_posture_controller.h>
-#include <mc_control/mc_body6d_controller.h>
-#include <mc_control/mc_com_controller.h>
-#include <mc_control/mc_seq_controller.h>
-#include <mc_control/mc_driving_controller.h>
-#include <mc_control/mc_egress_controller.h>
-#include <mc_control/mc_egress_mrqp_controller.h>
-#include <mc_control/mc_bci_self_interact_controller.h>
+#include <mc_control/mc_controller.h>
 
 #include <mc_control/api.h>
+
+#include <mc_rbdyn/RobotModule.h>
+
+#include <mc_rtc/config.h>
+#include <mc_rtc/loader.h>
 
 namespace mc_control
 {
@@ -40,12 +38,7 @@ public:
   std::ostream & log_header(std::ostream & os);
   std::ostream & log_data(std::ostream & os);
   /* Called by the RT component to switch between controllers */
-  bool EnablePostureController();
-  bool EnableBody6dController();
-  bool EnableCoMController();
-  bool EnableSeqController();
-  bool EnableDrivingController();
-  bool EnableEgressController();
+  bool EnableController(const std::string & name);
 
   /* Gripper controls */
   const std::vector<double> & gripperQ(bool lgripper);
@@ -56,8 +49,6 @@ public:
   void setGripperOpenPercent(double lQ, double rQ);
 
   /* Control the posture if provided by the controller */
-  bool joint_up(const std::string & jname);
-  bool joint_down(const std::string & jname);
   bool set_joint_pos(const std::string & jname, const double & pos);
   bool get_joint_pos(const std::string & jname, double & pos);
 
@@ -91,45 +82,23 @@ private:
     inline bool enabled(const std::string & ctrl);
 
     std::vector<std::string> robot_module_paths;
+    std::shared_ptr<mc_rbdyn::RobotModule> main_robot_module;
 
+    std::vector<std::string> controller_module_paths;
     std::vector<std::string> enabled_controllers;
     std::string initial_controller;
     double timestep;
-    std::string seq_env_path;
-    std::string seq_env_name;
-    std::string seq_env_module;
-    std::string seq_plan;
-    bool seq_step_by_step;
-    bool seq_use_real_sensors;
-    unsigned int seq_start_stance;
+
+    Json::Value v;
   };
 private:
   Configuration config;
-  std::shared_ptr<MCPostureController> posture_controller;
-  std::shared_ptr<MCBody6dController> body6d_controller;
-  std::shared_ptr<MCCoMController> com_controller;
-  std::shared_ptr<MCSeqController> seq_controller;
-  std::shared_ptr<MCDrivingController> driving_controller;
-  std::shared_ptr<MCEgressController> egress_controller;
-  std::shared_ptr<MCEgressMRQPController> egress_mrqp_controller;
-  std::shared_ptr<MCBCISelfInteractController> bci_self_interact_controller;
-  enum CurrentController
-  {
-    POSTURE = 1,
-    BODY6D  = 2,
-    COM = 3,
-    SEQ = 4,
-    DRIVING = 5,
-    EGRESS = 6,
-    EGRESS_MRQP = 7,
-    BCISELFINTERACT = 8,
-    NONE = 42
-  };
-  CurrentController current_ctrl;
-  CurrentController next_ctrl;
-  MCVirtualController * controller;
-  MCVirtualController * next_controller;
-  bool EnableNextController(const std::string & name, const CurrentController & index, const std::shared_ptr<MCVirtualController> & ctrl);
+  std::map<std::string, std::shared_ptr<mc_control::MCController>> controllers;
+  std::string current_ctrl;
+  std::string next_ctrl;
+  MCController * controller;
+  MCController * next_controller;
+  std::unique_ptr<mc_rtc::ObjectLoader<MCController>> controller_loader;
 };
 
 }

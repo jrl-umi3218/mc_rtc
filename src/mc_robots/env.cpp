@@ -13,8 +13,7 @@ namespace mc_robots
 EnvRobotModule::EnvRobotModule(const std::string & env_path, const std::string & env_name)
 : RobotModule(env_path, env_name)
 {
-  std::string urdfPath = path + "/urdf/" + name + ".urdf";
-  std::ifstream ifs(urdfPath);
+  std::ifstream ifs(urdf_path);
   if(ifs.is_open())
   {
     std::stringstream urdf;
@@ -27,7 +26,7 @@ EnvRobotModule::EnvRobotModule(const std::string & env_path, const std::string &
   }
   else
   {
-    LOG_ERROR("Could not load env model at " << urdfPath)
+    LOG_ERROR("Could not load env model at " << urdf_path)
     throw("Could not open env model");
   }
 }

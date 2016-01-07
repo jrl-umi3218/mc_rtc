@@ -1,5 +1,4 @@
-#ifndef _H_MCPOSTURECONTROLLER_H_
-#define _H_MCPOSTURECONTROLLER_H_
+#pragma once
 
 #include <mc_control/mc_controller.h>
 
@@ -12,9 +11,9 @@ struct MC_CONTROL_DLLAPI MCPostureController : public MCController
 {
 public:
   /* Common stuff */
-  MCPostureController(double dt);
+  MCPostureController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt);
 };
 
 }
 
-#endif
+SIMPLE_CONTROLLER_CONSTRUCTOR("Posture", mc_control::MCPostureController)

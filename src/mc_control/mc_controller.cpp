@@ -1,114 +1,76 @@
 #include <mc_control/mc_controller.h>
 
-#include <mc_rtc/logging.h>
-
 #include <mc_rbdyn/RobotLoader.h>
 
-#include <RBDyn/EulerIntegration.h>
+#include <mc_rtc/config.h>
+#include <mc_rtc/logging.h>
+
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
 #include <fstream>
 
-/* Note all service calls except for controller switches are implemented in mc_global_controller_services.cpp */
-
 namespace mc_control
 {
 
-MCController::MCController(double dt, const std::string & env_name)
-: MCController(dt, mc_rtc::MC_ENV_DESCRIPTION_PATH, env_name)
+MCController::MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt)
+: MCController({robot, mc_rbdyn::RobotLoader::get_robot_module("env", std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH), std::string("ground"))}, dt)
 {
 }
 
-MCController::MCController(double dt, const std::string & env_path, const std::string & env_name)
-: MCController(dt, mc_rbdyn::RobotLoader::get_robot_module("env", env_path, env_name))
+MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robots_modules, double dt)
+: timeStep(dt)
 {
-}
-
-MCController::MCController(double dt, const std::shared_ptr<mc_rbdyn::RobotModule> & env)
-: MCVirtualController(dt),
-#ifdef CHOOSE_HRP4
-  robot_module(mc_rbdyn::RobotLoader::get_robot_module("HRP4")),
-#else
-  robot_module(mc_rbdyn::RobotLoader::get_robot_module("HRP2DRC")),
-#endif
-  env_module(env)
-{
-  unsigned int hrp2_drc_index = 0;
+  /* Load the bots and initialize QP solver instance */
   {
-    /* Entering new scope to prevent access to robots from anywhere but the qpsolver object */
-    sva::PTransformd base = sva::PTransformd::Identity();
-#ifdef CHOOSE_HRP4
-    mc_rbdyn::Robots robots = mc_rbdyn::loadRobotAndEnv(*robot_module, robot_module->path + "/rsdf/",
-                                                                *env_module, env_module->path + "/rsdf/" + env_module->name + "/",
-                                                                &base, 0);
-#else
-    mc_rbdyn::Robots robots = mc_rbdyn::loadRobotAndEnv(*robot_module, robot_module->path + "/rsdf/hrp2_drc/",
-      *env_module, env_module->path + "/rsdf/" + env_module->name + "/",
-      &base, 0);
-#endif
-    robots.robot().mbc().gravity = Eigen::Vector3d(0, 0, 9.81);
-    rbd::forwardKinematics(robots.robot().mb(), robots.robot().mbc());
-    rbd::forwardVelocity(robots.robot().mb(), robots.robot().mbc());
-    qpsolver = std::shared_ptr<mc_solver::QPSolver>(new mc_solver::QPSolver(robots, timeStep));
+  std::vector<std::string> surfaceDirs;
+  for(const auto & m : robots_modules)
+  {
+    surfaceDirs.push_back(m->rsdf_dir);
   }
+  mc_rbdyn::Robots robots = mc_rbdyn::loadRobots(robots_modules, surfaceDirs);
+  for(auto & robot: robots.robots())
   {
-    /* Initiate grippers */
-#ifdef CHOOSE_HRP4
-    std::string urdfPath = robot_module->path + "/urdf/hrp4.urdf";
-    std::ifstream ifs(urdfPath);
-    std::stringstream urdf;
-    urdf << ifs.rdbuf();
-    mc_rbdyn::Robots urdfRobot = mc_rbdyn::loadRobotFromUrdf("temp_hrp4", urdf.str());
-    lgripper.reset(new Gripper(urdfRobot.robot(), "l_gripper", robot(), urdf.str(), 0, timeStep));
-    rgripper.reset(new Gripper(urdfRobot.robot(), "r_gripper", robot(), urdf.str(), 0, timeStep));
-#else
-    std::string urdfPath = robot_module->path + "/urdf/hrp2drc.urdf";
-    std::ifstream ifs(urdfPath);
-    std::stringstream urdf;
-    urdf << ifs.rdbuf();
-    mc_rbdyn::Robots urdfRobot = mc_rbdyn::loadRobotFromUrdf("temp_hrp2", urdf.str());
-    lgripper.reset(new Gripper(urdfRobot.robot(), "l_gripper", robot(), urdf.str(), 0, timeStep));
-    rgripper.reset(new Gripper(urdfRobot.robot(), "r_gripper", robot(), urdf.str(), 0, timeStep));
-#endif
+    robot.mbc().gravity = Eigen::Vector3d(0, 0, 9.81);
+    rbd::forwardKinematics(robot.mb(), robot.mbc());
+    rbd::forwardVelocity(robot.mb(), robot.mbc());
+  }
+  qpsolver.reset(new mc_solver::QPSolver(robots, timeStep));
   }
 
+  /* Initialize grippers */
+  {
+  std::string urdfPath = robots_modules[0]->urdf_path;
+  std::ifstream ifs(urdfPath);
+  if(ifs.is_open())
+  {
+    std::stringstream urdf;
+    urdf << ifs.rdbuf();
+    mc_rbdyn::Robots urdfRobot = mc_rbdyn::loadRobotFromUrdf("temp_robot", urdf.str());
+    lgripper.reset(new Gripper(urdfRobot.robot(), "l_gripper", robot(), urdf.str(), 0, timeStep));
+    rgripper.reset(new Gripper(urdfRobot.robot(), "r_gripper", robot(), urdf.str(), 0, timeStep));
+  }
+  else
+  {
+    LOG_ERROR("Could not open urdf file " << urdfPath << " for robot " << robots_modules[0]->name << ", cannot initialize grippers")
+    throw("Failed to initialize grippers");
+  }
+  }
+
+  /* Initialize constraints and tasks */
   contactConstraint = mc_solver::ContactConstraint(timeStep, mc_solver::ContactConstraint::Velocity);
-
-  dynamicsConstraint = mc_solver::DynamicsConstraint(qpsolver->robots, hrp2_drc_index, timeStep,
-                                                     false, {0.1, 0.01, 0.5}, 0.5);
-
-  kinematicsConstraint = mc_solver::KinematicsConstraint(qpsolver->robots, hrp2_drc_index, timeStep,
-                                                         false, {0.1, 0.01, 0.5}, 0.5);
-
-  selfCollisionConstraint = mc_solver::CollisionsConstraint(qpsolver->robots, hrp2_drc_index, hrp2_drc_index, timeStep);
-
-  /* Give a reasonnable default set of self collisions for the upper body */
-#ifdef CHOOSE_HRP4
-  selfCollisionConstraint.addCollisions(qpsolver->robots, {});
-#else
-  selfCollisionConstraint.addCollisions(qpsolver->robots, {
-    mc_solver::Collision("LARM_LINK3", "BODY", 0.05, 0.01, 0.),
-    mc_solver::Collision("LARM_LINK4", "BODY", 0.05, 0.01, 0.),
-    mc_solver::Collision("LARM_LINK5", "BODY", 0.05, 0.01, 0.),
-    mc_solver::Collision("RARM_LINK3", "BODY", 0.05, 0.01, 0.),
-    mc_solver::Collision("RARM_LINK4", "BODY", 0.05, 0.01, 0.),
-    mc_solver::Collision("RARM_LINK5", "BODY", 0.05, 0.01, 0.),
-    mc_solver::Collision("RARM_LINK3", "CHEST_LINK0", 0.05, 0.01, 0.),
-    mc_solver::Collision("RARM_LINK4", "CHEST_LINK0", 0.05, 0.01, 0.),
-    mc_solver::Collision("RARM_LINK5", "CHEST_LINK0", 0.05, 0.01, 0.),
-    mc_solver::Collision("RARM_LINK4", "CHEST_LINK1", 0.05, 0.01, 0.),
-    mc_solver::Collision("RARM_LINK5", "CHEST_LINK1", 0.05, 0.01, 0.),
-    mc_solver::Collision("LARM_LINK3", "CHEST_LINK0", 0.05, 0.01, 0.),
-    mc_solver::Collision("LARM_LINK4", "CHEST_LINK0", 0.05, 0.01, 0.),
-    mc_solver::Collision("LARM_LINK5", "CHEST_LINK0", 0.05, 0.01, 0.),
-    mc_solver::Collision("LARM_LINK4", "CHEST_LINK1", 0.05, 0.01, 0.),
-    mc_solver::Collision("LARM_LINK5", "CHEST_LINK1", 0.05, 0.01, 0.)
-  });
-#endif
-
-  postureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(qpsolver->robots.mbs(), static_cast<int>(hrp2_drc_index), qpsolver->robots.robot().mbc().q, 10, 5));
+  dynamicsConstraint = mc_solver::DynamicsConstraint(robots(), 0, timeStep,
+                                                  false, {0.1, 0.01, 0.5}, 0.5);
+  kinematicsConstraint = mc_solver::KinematicsConstraint(robots(), 0, timeStep,
+                                                  false, {0.1, 0.01, 0.5}, 0.5);
+  selfCollisionConstraint = mc_solver::CollisionsConstraint(robots(), 0, 0, timeStep);
+  selfCollisionConstraint.addCollisions(robots(), robots_modules[0]->defaultSelfCollisions());
+  postureTask.reset(new tasks::qp::PostureTask(robots().mbs(), 0, robot().mbc().q, 10, 5));
   LOG_INFO("MCController(base) ready")
+}
+
+MCController::~MCController()
+{
 }
 
 bool MCController::run()
@@ -133,8 +95,6 @@ void MCController::reset(const ControllerResetData & reset_data)
   postureTask->posture(reset_data.q);
   rbd::forwardKinematics(robot().mb(), robot().mbc());
   rbd::forwardVelocity(robot().mb(), robot().mbc());
-  qpsolver->setContacts({
-  });
 }
 
 void MCController::setWrenches(const std::vector< std::pair<Eigen::Vector3d, Eigen::Vector3d> > & wrenches)
@@ -172,38 +132,6 @@ mc_rbdyn::Robots & MCController::robots()
   return qpsolver->robots;
 }
 
-bool MCController::joint_up(const std::string & jname)
-{
-  if(robot().hasJoint(jname))
-  {
-    auto idx = robot().jointIndexByName(jname);
-    auto p = postureTask->posture();
-    if(p[idx].size() == 1)
-    {
-      p[idx][0] += 0.01;
-      postureTask->posture(p);
-      return true;
-    }
-  }
-  return false;
-}
-
-bool MCController::joint_down(const std::string & jname)
-{
-  if(robot().hasJoint(jname))
-  {
-    auto idx = robot().jointIndexByName(jname);
-    auto p = postureTask->posture();
-    if(p[idx].size() == 1)
-    {
-      p[idx][0] -= 0.01;
-      postureTask->posture(p);
-      return true;
-    }
-  }
-  return false;
-}
-
 bool MCController::set_joint_pos(const std::string & jname, const double & pos)
 {
   if(robot().hasJoint(jname))
@@ -218,6 +146,56 @@ bool MCController::set_joint_pos(const std::string & jname, const double & pos)
     }
   }
   return false;
+}
+
+bool MCController::change_ef(const std::string &)
+{
+  return false;
+}
+
+bool MCController::move_ef(const Eigen::Vector3d &, const Eigen::Matrix3d &)
+{
+  return false;
+}
+
+bool MCController::move_com(const Eigen::Vector3d &)
+{
+  return false;
+}
+
+bool MCController::play_next_stance()
+{
+  return false;
+}
+
+bool MCController::driving_service(double, double, double, double)
+{
+  return false;
+}
+
+bool MCController::read_msg(std::string &)
+{
+  return false;
+}
+
+bool MCController::read_write_msg(std::string &, std::string &)
+{
+  return true;
+}
+
+std::ostream& MCController::log_header(std::ostream & os)
+{
+  return os;
+}
+
+std::ostream& MCController::log_data(std::ostream & os)
+{
+  return os;
+}
+
+std::vector<std::string> MCController::supported_robots() const
+{
+  return {};
 }
 
 }

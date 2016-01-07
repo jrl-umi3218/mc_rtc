@@ -1,10 +1,11 @@
-#include <mc_control/mc_egress_controller.h>
+#include "mc_egress_controller.h"
 
 #include <mc_rtc/logging.h>
 
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
+#include <mc_rbdyn/RobotLoader.h>
 #include <mc_rbdyn/Surface.h>
 
 #include "mc_egress_phases.cpp"
@@ -12,8 +13,8 @@
 namespace mc_control
 {
 
-MCEgressController::MCEgressController(double dt, const std::string & env_path, const std::string & env_name)
-: MCController(dt, env_path, env_name),
+MCEgressController::MCEgressController(std::shared_ptr<mc_rbdyn::RobotModule> robot_module, double dt)
+: MCController({robot_module, mc_rbdyn::RobotLoader::get_robot_module("env", std::string(mc_rtc::HRP2_DRC_DESCRIPTION_PATH), std::string("polaris_ranger"))}, dt),
   collsConstraint(robots(), 0, 1, timeStep),
   phase(START), phaseExec(new EgressStartPhase)
   //phase(ROTATEBODY), phaseExec(new EgressRotateBodyPhase)
@@ -97,7 +98,7 @@ bool MCEgressController::run()
     bool next = phaseExec->run(*this);
     if(next)
     {
-      next_phase();
+      play_next_stance();
     }
   }
   return ret;
@@ -134,7 +135,7 @@ bool MCEgressController::move_com(const Eigen::Vector3d & v)
   return true;
 }
 
-bool MCEgressController::next_phase()
+bool MCEgressController::play_next_stance()
 {
   bool new_phase = true;
   switch(phase)
@@ -175,6 +176,11 @@ bool MCEgressController::next_phase()
       break;
   }
   return new_phase;
+}
+
+std::vector<std::string> MCEgressController::supported_robots() const
+{
+  return {"hrp2_drc"};
 }
 
 }

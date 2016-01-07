@@ -18,6 +18,7 @@ mc_rbdyn/StanceConfig.cpp
 mc_rbdyn/PolygonInterpolator.cpp
 mc_rbdyn/polygon_utils.cpp
 mc_rbdyn/RobotLoader.cpp
+mc_rbdyn/Collision.cpp
 )
 
 set(mc_rbdyn_HDR
@@ -40,6 +41,7 @@ set(mc_rbdyn_HDR
 ../include/mc_rbdyn/Surface.h
 ../include/mc_rbdyn/surface_hull.h
 ../include/mc_rbdyn/surface_utils.h
+../include/mc_rbdyn/Collision.h
 )
 
 add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC} ${mc_rbdyn_HDR})
@@ -150,19 +152,7 @@ set(mc_control_SRC
 mc_control/ForceContactSensor.cpp
 mc_control/SimulationContactSensor.cpp
 mc_control/generic_gripper.cpp
-mc_control/mc_virtual_controller.cpp
 mc_control/mc_controller.cpp
-mc_control/mc_posture_controller.cpp
-mc_control/mc_body6d_controller.cpp
-mc_control/mc_bci_self_interact_controller.cpp
-mc_control/mc_com_controller.cpp
-mc_control/MCSeqPublisher.cpp
-mc_control/mc_seq_controller.cpp
-mc_control/mc_seq_steps.cpp
-mc_control/mc_mrqp_controller.cpp
-mc_control/mc_driving_controller.cpp
-mc_control/mc_egress_controller.cpp
-mc_control/mc_egress_mrqp_controller.cpp
 mc_control/mc_global_controller.cpp
 mc_control/mc_global_controller_services.cpp
 )
@@ -171,30 +161,16 @@ set(mc_control_HDR
 ../include/mc_control/ContactSensor.h
 ../include/mc_control/ForceContactSensor.h
 ../include/mc_control/generic_gripper.h
-../include/mc_control/MCSeqPublisher.h
-../include/mc_control/mc_bci_self_interact_controller.h
-../include/mc_control/mc_body6d_controller.h
-../include/mc_control/mc_com_controller.h
 ../include/mc_control/mc_controller.h
-../include/mc_control/mc_driving_controller.h
-../include/mc_control/mc_egress_controller.h
-../include/mc_control/mc_egress_mrqp_controller.h
-../include/mc_control/mc_global_controller.h
-../include/mc_control/mc_mrqp_controller.h
-../include/mc_control/mc_posture_controller.h
-../include/mc_control/mc_seq_actions.h
-../include/mc_control/mc_seq_controller.h
-../include/mc_control/mc_seq_steps.h
-../include/mc_control/mc_virtual_controller.h
-../include/mc_control/msg
 ../include/mc_control/msg/Contact.h
 ../include/mc_control/msg/QPResult.h
 ../include/mc_control/msg/Robot.h
 ../include/mc_control/SimulationContactSensor.h
+../include/mc_control/mc_global_controller.h
 )
 add_library(mc_control SHARED ${mc_control_SRC} ${mc_control_HDR})
 set_target_properties(mc_control PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_EXPORTS")
-target_link_libraries(mc_control mc_tasks mc_solver mc_robots mc_rtc_ros mc_rtc_loader)
+target_link_libraries(mc_control mc_tasks mc_solver mc_rtc_ros mc_rtc_loader)
 if(${HRPSYS_BASE_FOUND})
   target_link_libraries(mc_control hrpIo)
 endif()
@@ -206,6 +182,34 @@ pkg_config_use_dependency(mc_control Tasks)
 pkg_config_use_dependency(mc_control jsoncpp)
 endif()
 pkg_config_append_libs(mc_control)
+
+macro(add_controller controller_name controller_SRC controller_HDR)
+  add_library(${controller_name} SHARED ${controller_SRC} ${controller_HDR})
+  set_target_properties(${controller_name} PROPERTIES COMPILE_FLAGS
+    "-DMC_ROBOTS_EXPORTS" PREFIX "")
+  target_link_libraries(${controller_name} mc_control)
+  install(TARGETS ${controller_name} DESTINATION
+    ${MC_CONTROLLER_INSTALL_PREFIX})
+endmacro()
+
+add_controller("posture" "mc_control/mc_posture_controller.cpp"
+  "mc_control/mc_posture_controller.h")
+add_controller("body6d" "mc_control/mc_body6d_controller.cpp"
+  "mc_control/mc_body6d_controller.h")
+add_controller("com" "mc_control/mc_com_controller.cpp"
+  "mc_control/mc_com_controller.h")
+add_controller("seq"
+  "mc_control/mc_seq_controller.cpp;mc_control/mc_seq_steps.cpp;mc_control/MCSeqPublisher.cpp"
+  "mc_control/mc_seq_controller.h;mc_control/mc_seq_actions.h;mc_control/mc_seq_steps.h;mc_control/MCSeqPublisher.h")
+add_controller("driving" "mc_control/mc_driving_controller.cpp"
+  "mc_control/mc_driving_controller.h")
+add_controller("egress" "mc_control/mc_egress_controller.cpp"
+  "mc_control/mc_egress_controller.h")
+add_controller("egress_mrqp" "mc_control/mc_egress_mrqp_controller.cpp"
+  "mc_control/mc_egress_mrqp_controller.h")
+add_controller("bci_self_interact"
+  "mc_control/mc_bci_self_interact_controller.cpp"
+  "mc_control/mc_bci_self_interact_controller.h")
 
 if(${HRPSYS_BASE_FOUND})
   set(MCControl_SRC

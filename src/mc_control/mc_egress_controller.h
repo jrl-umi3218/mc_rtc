@@ -1,5 +1,4 @@
-#ifndef _H_MCEGRESSCONTROLLER_H_
-#define _H_MCEGRESSCONTROLLER_H_
+#pragma once
 
 #include <mc_control/mc_controller.h>
 
@@ -30,19 +29,21 @@ public:
     STANDUP
   };
 public:
-  MCEgressController(double dt, const std::string & env_path, const std::string & env_name);
+  MCEgressController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt);
 
   virtual void reset(const ControllerResetData & reset_data) override;
 
   virtual bool run() override;
   /* Services */
-  bool change_ef(const std::string & ef_name);
+  virtual bool change_ef(const std::string & ef_name) override;
 
-  bool move_ef(const Eigen::Vector3d & v, const Eigen::Matrix3d & m);
+  virtual bool move_ef(const Eigen::Vector3d & v, const Eigen::Matrix3d & m) override;
 
-  bool move_com(const Eigen::Vector3d & v);
+  virtual bool move_com(const Eigen::Vector3d & v) override;
 
-  bool next_phase();
+  virtual bool play_next_stance() override;
+
+  virtual std::vector<std::string> supported_robots() const override;
 public:
   mc_solver::CollisionsConstraint collsConstraint;
   std::shared_ptr<mc_tasks::CoMTask> comTask;
@@ -56,4 +57,4 @@ private:
 
 }
 
-#endif
+SIMPLE_CONTROLLER_CONSTRUCTOR("Egress", mc_control::MCEgressController)
