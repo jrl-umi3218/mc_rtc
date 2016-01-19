@@ -87,7 +87,7 @@ sch::S_Object * sch_polyhedron(const std::vector<sva::PTransformd> & points)
     return 0;
   }
 
-  return sch::Polyhedron(qcOut);
+  return sch::mc_rbdyn::Polyhedron(qcOut);
 }
 
 sch::S_Object * planar_hull(const mc_rbdyn::PlanarSurface & surface, const double & depth)

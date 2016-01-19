@@ -88,14 +88,14 @@ std::vector<sva::PTransformd> & Surface::points()
   return impl->points;
 }
 
-bool operator==(const Surface & lhs, const Surface & rhs)
+bool Surface::operator==(const Surface & rhs)
 {
-  return lhs.name() == rhs.name();
+  return this->name() == rhs.name();
 }
 
-bool operator!=(const Surface & lhs, const Surface & rhs)
+bool Surface::operator!=(const Surface & rhs)
 {
-  return !(lhs == rhs);
+  return !(*this == rhs);
 }
 
 }

@@ -264,12 +264,12 @@ void CollisionsConstraint::addCollision(const mc_rbdyn::Robots & robots, const m
 {
   const mc_rbdyn::Robot & r1 = robots.robot(r1Index);
   const mc_rbdyn::Robot & r2 = robots.robot(r2Index);
-  cols.push_back(col);
   const auto & body1 = r1.convex(col.body1);
   const auto & body2 = r2.convex(col.body2);
   const sva::PTransformd & X_b1_c = r1.collisionTransform(body1.first);
   const sva::PTransformd & X_b2_c = r2.collisionTransform(body2.first);
   int collId = __createCollId(col);
+  cols.push_back(col);
   collConstr->addCollision(robots.mbs(), collId, static_cast<int>(r1Index), body1.first, const_cast<sch::S_Polyhedron*>(body1.second.get()), X_b1_c, static_cast<int>(r2Index), body2.first, const_cast<sch::S_Polyhedron*>(body2.second.get()), X_b2_c, col.iDist, col.sDist, col.damping, defaultDampingOffset);
 }
 
@@ -331,8 +331,7 @@ std::pair<int, mc_rbdyn::Collision> CollisionsConstraint::__popCollId(const std:
 }
 
 RobotEnvCollisionsConstraint::RobotEnvCollisionsConstraint(const mc_rbdyn::Robots & robots, double timeStep)
-: robot(robots.robot()), env(robots.env()),
-  selfCollConstrMng(robots, robots.robotIndex(), robots.robotIndex(), timeStep),
+: selfCollConstrMng(robots, robots.robotIndex(), robots.robotIndex(), timeStep),
   envCollConstrMng(robots, robots.robotIndex(), robots.envIndex(), timeStep)
 {
 }
@@ -463,7 +462,7 @@ std::set<int> RobotEnvCollisionsConstraint::__bodiesFromContacts(const mc_rbdyn:
   return res;
 }
 
-QPSolver::QPSolver(const mc_rbdyn::Robots & robots, double timeStep)
+QPSolver::QPSolver(std::shared_ptr<mc_rbdyn::Robots> robots, double timeStep)
 : robots(robots), timeStep(timeStep), solver()
 {
 }
@@ -480,7 +479,7 @@ void QPSolver::removeConstraintSet(const ConstraintSet & cs)
 
 void QPSolver::updateNrVars()
 {
-  solver.nrVars(robots.mbs(), uniContacts, biContacts);
+  solver.nrVars(robots->mbs(), uniContacts, biContacts);
 }
 
 std::pair<int, const tasks::qp::BilateralContact&> QPSolver::contactById(const tasks::qp::ContactId & id)
@@ -505,7 +504,7 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
 
   for(const mc_rbdyn::Contact & c : contacts)
   {
-    QPContactPtr qcptr = c.taskContact(robots);
+    QPContactPtr qcptr = c.taskContact(*robots);
     if(qcptr.unilateralContact)
     {
       uniContacts.push_back(tasks::qp::UnilateralContact(*qcptr.unilateralContact));
@@ -520,9 +519,9 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
     }
   }
 
-  solver.nrVars(robots.mbs(), uniContacts, biContacts);
+  solver.nrVars(robots->mbs(), uniContacts, biContacts);
   const tasks::qp::SolverData & data = solver.data();
-  qpRes.contacts = contactsMsgFromContacts(robots, contacts);
+  qpRes.contacts = contactsMsgFromContacts(*robots, contacts);
   qpRes.contacts_lambda_begin.clear();
   for(int i = 0; i < data.nrContacts(); ++i)
   {
@@ -538,12 +537,12 @@ void QPSolver::update()
 bool QPSolver::run()
 {
   bool success = false;
-  if(solver.solveNoMbcUpdate(robots.mbs(), robots.mbcs()))
+  if(solver.solveNoMbcUpdate(robots->mbs(), robots->mbcs()))
   {
-    for(size_t i = 0; i < robots.mbs().size(); ++i)
+    for(size_t i = 0; i < robots->mbs().size(); ++i)
     {
-      rbd::MultiBody & mb = robots.mbs()[i];
-      rbd::MultiBodyConfig & mbc = robots.mbcs()[i];
+      rbd::MultiBody & mb = robots->mbs()[i];
+      rbd::MultiBodyConfig & mbc = robots->mbcs()[i];
       if(mb.nrDof() > 0)
       {
         solver.updateMbc(mbc, static_cast<int>(i));
@@ -567,9 +566,9 @@ const mc_control::QPResultMsg & QPSolver::send(double/*curTime*/)
 void QPSolver::__fillResult()
 {
   qpRes.robots_state.resize(0);
-  for(unsigned int i = 0; i < robots.robots().size(); ++i)
+  for(unsigned int i = 0; i < robots->robots().size(); ++i)
   {
-    const mc_rbdyn::Robot & robot = robots.robot(i);
+    const mc_rbdyn::Robot & robot = robots->robot(i);
     qpRes.robots_state.push_back(mc_control::RobotMsg());
     std::vector<double> & q = qpRes.robots_state[i].q;
     for(const auto & qv : robot.mbc().q)

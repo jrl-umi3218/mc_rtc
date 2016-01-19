@@ -50,15 +50,14 @@ public:
   virtual std::shared_ptr<Surface> copy() const = 0;
 
   virtual std::string type() const = 0;
+
+  bool operator==(const Surface & rhs);
+  bool operator!=(const Surface & rhs);
 protected:
   std::vector<sva::PTransformd> & points();
 private:
   std::unique_ptr<SurfaceImpl> impl;
 };
-
-MC_RBDYN_DLLAPI bool operator==(const Surface & lhs, const Surface & rhs);
-
-MC_RBDYN_DLLAPI bool operator!=(const Surface & lhs, const Surface & rhs);
 
 typedef std::shared_ptr<Surface> SurfacePtr;
 

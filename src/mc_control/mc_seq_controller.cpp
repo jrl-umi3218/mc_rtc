@@ -63,8 +63,8 @@ double CollisionPair::distance(const mc_rbdyn::Robot & r1, const mc_rbdyn::Robot
 
 void CollisionPair::setTransform(const mc_rbdyn::Robot & r1, const mc_rbdyn::Robot & r2)
 {
-  sch::transform(*(r1hull.get()), X_b1_h1*r1.mbc().bodyPosW[r1BodyIndex]);
-  sch::transform(*(r2hull.get()), X_b2_h2*r2.mbc().bodyPosW[r2BodyIndex]);
+  sch::mc_rbdyn::transform(*(r1hull.get()), X_b1_h1*r1.mbc().bodyPosW[r1BodyIndex]);
+  sch::mc_rbdyn::transform(*(r2hull.get()), X_b2_h2*r2.mbc().bodyPosW[r2BodyIndex]);
 }
 
 std::vector<mc_rbdyn::Collision> confToColl(const std::vector<mc_rbdyn::StanceConfig::BodiesCollisionConf> & conf)
@@ -234,7 +234,7 @@ MCSeqController::MCSeqController(std::shared_ptr<mc_rbdyn::RobotModule> robot_mo
   constSpeedConstr.reset(new tasks::qp::BoundedSpeedConstr(robots().mbs(), 0, timeStep));
   constSpeedConstr->addToSolver(qpsolver->solver);
 
-  dynamicsConstraint = mc_solver::DynamicsConstraint(qpsolver->robots, 0, timeStep,
+  dynamicsConstraint = mc_solver::DynamicsConstraint(robots(), 0, timeStep,
                                                          false, {0.01, 0.001, 0.}, 0.5);
   qpsolver->addConstraintSet(dynamicsConstraint);
   qpsolver->addConstraintSet(contactConstraint);

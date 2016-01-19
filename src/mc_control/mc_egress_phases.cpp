@@ -45,7 +45,7 @@ public:
           mc_rbdyn::Contact(ctl.robots(), "LeftThight", "left_seat"),
           mc_rbdyn::Contact(ctl.robots(), "RightGripper", "bar_wheel")
         });
-        ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5", ctl.qpsolver->robots, ctl.qpsolver->robots.robotIndex()));
+        ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5", ctl.robots(), ctl.robots().robotIndex()));
         ctl.efTask->addToSolver(ctl.qpsolver->solver);
         sva::PTransformd lift(Eigen::Vector3d(-0.125, 0, 0.15)); /*XXX Hard-coded value */
         ctl.efTask->set_ef_pose(ctl.efTask->get_ef_pose()*lift);
@@ -91,7 +91,7 @@ public:
     {
       if(!done_setup_putdown)
       {
-        ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5", ctl.qpsolver->robots, 0, 0.25));
+        ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5", ctl.robots(), 0, 0.25));
         ctl.efTask->addToSolver(ctl.qpsolver->solver);
         sva::PTransformd down(Eigen::Vector3d(0.01,0.01, -0.3)); /*XXX Hard-coded*/
         unsigned int bIdx = ctl.robot().bodyIndexByName("LLEG_LINK5");
@@ -169,7 +169,7 @@ public:
         unsigned int bIdx = ctl.robot().bodyIndexByName("RARM_LINK6");
         sva::PTransformd bpw = ctl.robot().mbc().bodyPosW[bIdx];
         initPos = bpw.translation();
-        ctl.efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", ctl.qpsolver->robots, 0));
+        ctl.efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", ctl.robots(), 0));
         ctl.efTask->addToSolver(ctl.qpsolver->solver);
         const auto & gripperSurface = ctl.robot().surface("RightGripper");
         sva::PTransformd X_0_s = gripperSurface.X_0_s(ctl.robot(), ctl.robot().mbc());
@@ -199,7 +199,7 @@ public:
     {
       if(!done_setup_move_right)
       {
-        ctl.efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", ctl.qpsolver->robots, 0, 0.5));
+        ctl.efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", ctl.robots(), 0, 0.5));
         ctl.efTask->addToSolver(ctl.qpsolver->solver);
         sva::PTransformd move(Eigen::Matrix3d::Identity(), Eigen::Vector3d(-0.1, -0.2, 0.1));
         ctl.efTask->set_ef_pose(ctl.efTask->get_ef_pose()*move);
@@ -286,7 +286,7 @@ public:
           mc_rbdyn::Contact(ctl.robots(), "LFullSole", "exit_platform"),
           mc_rbdyn::Contact(ctl.robots(), "RFullSole", "left_floor"),
         });
-        ctl.efTask.reset(new mc_tasks::EndEffectorTask("BODY", ctl.qpsolver->robots, ctl.qpsolver->robots.robotIndex(), 0.5));
+        ctl.efTask.reset(new mc_tasks::EndEffectorTask("BODY", ctl.robots(), ctl.robots().robotIndex(), 0.5));
         ctl.efTask->addToSolver(ctl.qpsolver->solver);
         unsigned int bIdx = ctl.robot().bodyIndexByName("LLEG_LINK5");
         sva::PTransformd bpw = ctl.robot().mbc().bodyPosW[bIdx];
@@ -348,7 +348,7 @@ struct EgressMoveFootOutPhase : public EgressPhaseExecution
           mc_rbdyn::Contact(ctl.robots(), "Butthock", "left_seat"),
           mc_rbdyn::Contact(ctl.robots(), "LFullSole", "exit_platform"),
         });
-        ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5", ctl.qpsolver->robots, ctl.qpsolver->robots.robotIndex()));
+        ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5", ctl.robots(), ctl.robots().robotIndex()));
         ctl.efTask->addToSolver(ctl.qpsolver->solver);
         sva::PTransformd lift(Eigen::Vector3d(0, 0, 0.05)); /*XXX Hard-coded value */
         ctl.efTask->set_ef_pose(ctl.efTask->get_ef_pose()*lift);
@@ -416,7 +416,7 @@ struct EgressMoveFootOutPhase : public EgressPhaseExecution
     {
       if(!done_setup_putdown)
       {
-        ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5", ctl.qpsolver->robots, 0, 0.5));
+        ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5", ctl.robots(), 0, 0.5));
         ctl.efTask->addToSolver(ctl.qpsolver->solver);
         sva::PTransformd lmod(Eigen::Vector3d(0.2, -0.1, -0.1)); /*XXX Hard-coded value */
         unsigned int bIdx = ctl.robot().bodyIndexByName("LLEG_LINK5");
@@ -485,7 +485,7 @@ public:
           mc_rbdyn::Contact(ctl.robots(), "RFullSole", "left_floor"),
           mc_rbdyn::Contact(ctl.robots(), "RightThight", "left_seat"),
         });
-        ctl.efTask.reset(new mc_tasks::EndEffectorTask("LLEG_LINK5", ctl.qpsolver->robots, ctl.qpsolver->robots.robotIndex()));
+        ctl.efTask.reset(new mc_tasks::EndEffectorTask("LLEG_LINK5", ctl.robots(), ctl.robots().robotIndex()));
         ctl.efTask->addToSolver(ctl.qpsolver->solver);
         sva::PTransformd lift(Eigen::Vector3d(0, 0, 0.1)); /*XXX Hard-coded value */
         ctl.efTask->set_ef_pose(ctl.efTask->get_ef_pose()*lift);
@@ -533,7 +533,7 @@ public:
     {
       if(!done_setup_putdown)
       {
-        ctl.efTask.reset(new mc_tasks::EndEffectorTask("LLEG_LINK5", ctl.qpsolver->robots, 0, 0.25));
+        ctl.efTask.reset(new mc_tasks::EndEffectorTask("LLEG_LINK5", ctl.robots(), 0, 0.25));
         ctl.efTask->addToSolver(ctl.qpsolver->solver);
         sva::PTransformd down(Eigen::Vector3d(0.0,0.0, -0.2)); /*XXX Hard-coded*/
         ctl.efTask->set_ef_pose(ctl.efTask->get_ef_pose()*down);
@@ -598,7 +598,7 @@ struct EgressStandupPhase : public EgressPhaseExecution
           mc_rbdyn::Contact(ctl.robots(), "LFullSole", "exit_platform"),
           mc_rbdyn::Contact(ctl.robots(), "RFullSole", "exit_platform"),
         });
-        ctl.efTask.reset(new mc_tasks::EndEffectorTask("BODY", ctl.qpsolver->robots, ctl.qpsolver->robots.robotIndex(), 1.0));
+        ctl.efTask.reset(new mc_tasks::EndEffectorTask("BODY", ctl.robots(), ctl.robots().robotIndex(), 1.0));
         ctl.efTask->addToSolver(ctl.qpsolver->solver);
         unsigned int lbIdx = ctl.robot().bodyIndexByName("LLEG_LINK5");
         sva::PTransformd lbpw = ctl.robot().mbc().bodyPosW[lbIdx];

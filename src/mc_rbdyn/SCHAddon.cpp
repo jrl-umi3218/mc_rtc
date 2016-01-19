@@ -3,6 +3,9 @@
 namespace sch
 {
 
+namespace mc_rbdyn
+{
+
   void transform(S_Object& obj, const sva::PTransformd& t)
   {
     sch::Matrix4x4 m;
@@ -50,5 +53,7 @@ namespace sch
 
     return dist;
   }
+
+}
 
 }

@@ -9,7 +9,7 @@ void applyTransformToSchById(const rbd::MultiBody & mb, const rbd::MultiBodyConf
   for(auto & p : schById)
   {
     unsigned int index = static_cast<unsigned int>(mb.bodyIndexById(p.second.first));
-    sch::transform(*(p.second.second.get()), mbc.bodyPosW[index]);
+    sch::mc_rbdyn::transform(*(p.second.second.get()), mbc.bodyPosW[index]);
   }
 }
 

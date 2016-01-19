@@ -62,18 +62,18 @@ MCEgressMRQPController::MCEgressMRQPController(std::shared_ptr<mc_rbdyn::RobotMo
                            "RightGripper", "bar_wheel");
   qpsolver->setContacts(egressContacts);
 
-  polarisPostureTask.reset(new tasks::qp::PostureTask(qpsolver->robots.mbs(), 1, qpsolver->robots.robot(1).mbc().q, 1.0, 1));
-  lazyPostureTask.reset(new tasks::qp::PostureTask(qpsolver->robots.mbs(), 1, polaris.mbc().q, 0.0, 1000.0));
+  polarisPostureTask.reset(new tasks::qp::PostureTask(robots().mbs(), 1, robots().robot(1).mbc().q, 1.0, 1));
+  lazyPostureTask.reset(new tasks::qp::PostureTask(robots().mbs(), 1, polaris.mbc().q, 0.0, 1000.0));
   std::vector<tasks::qp::JointStiffness> jsv;
   jsv.push_back({static_cast<int>(polaris.jointIdByName("lazy_susan")), 0.1});
   lazyPostureTask->jointsStiffness(robots().mbs(), jsv);
 
-  comTask.reset(new mc_tasks::CoMTask(qpsolver->robots, qpsolver->robots.robotIndex()));
+  comTask.reset(new mc_tasks::CoMTask(robots(), robots().robotIndex()));
   comTask->comTaskSp->stiffness(1.);
-  efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", qpsolver->robots,
-                                             qpsolver->robots.robotIndex()));
-  torsoOriTask.reset(new mc_tasks::OrientationTask("CHEST_LINK1", qpsolver->robots,
-                                                   qpsolver->robots.robotIndex(),
+  efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", robots(),
+                                             robots().robotIndex()));
+  torsoOriTask.reset(new mc_tasks::OrientationTask("CHEST_LINK1", robots(),
+                                                   robots().robotIndex(),
                                                    1., 1.));
 
   //collsConstraint.addCollision(robots(), mc_rbdyn::Collision("RLEG_LINK5", "floor", 0.2, 0.15, 0));

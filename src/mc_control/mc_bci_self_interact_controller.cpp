@@ -44,7 +44,7 @@ MCBCISelfInteractController::MCBCISelfInteractController(std::shared_ptr<mc_rbdy
   {
     /* Set more restrictive auto collision constraints */
     selfCollisionConstraint.reset();
-    selfCollisionConstraint.addCollisions(qpsolver->robots, {
+    selfCollisionConstraint.addCollisions(robots(), {
       mc_rbdyn::Collision("LARM_LINK3", "BODY", 0.1, 0.05, 0.),
       mc_rbdyn::Collision("LARM_LINK4", "BODY", 0.1, 0.05, 0.),
       mc_rbdyn::Collision("LARM_LINK5", "BODY", 0.1, 0.05, 0.),
@@ -71,13 +71,13 @@ MCBCISelfInteractController::MCBCISelfInteractController(std::shared_ptr<mc_rbdy
     mc_rbdyn::Contact(robots(), "Butthock", "AllGround")
   });
 
-  lh2Task.reset(new mc_tasks::RelativeEndEffectorTask("LARM_LINK6", qpsolver->robots, qpsolver->robots.robotIndex(), 0, 2.0, 100000.0));
-  rh2Task.reset(new mc_tasks::RelativeEndEffectorTask("RARM_LINK6", qpsolver->robots, qpsolver->robots.robotIndex(), 0, 2.0, 100000.0));
-  chestTask.reset(new mc_tasks::EndEffectorTask("CHEST_LINK1", qpsolver->robots, qpsolver->robots.robotIndex(), 1.0, 1e6));
+  lh2Task.reset(new mc_tasks::RelativeEndEffectorTask("LARM_LINK6", robots(), robots().robotIndex(), 0, 2.0, 100000.0));
+  rh2Task.reset(new mc_tasks::RelativeEndEffectorTask("RARM_LINK6", robots(), robots().robotIndex(), 0, 2.0, 100000.0));
+  chestTask.reset(new mc_tasks::EndEffectorTask("CHEST_LINK1", robots(), robots().robotIndex(), 1.0, 1e6));
   lh2Task->addToSolver(qpsolver->solver);
   rh2Task->addToSolver(qpsolver->solver);
   chestTask->addToSolver(qpsolver->solver);
-  comTask.reset(new mc_tasks::CoMTask(qpsolver->robots, qpsolver->robots.robotIndex()));
+  comTask.reset(new mc_tasks::CoMTask(robots(), robots().robotIndex()));
   comTask->addToSolver(qpsolver->solver);
 #ifdef MC_RTC_HAS_ROS
   if(mc_rtc::ROSBridge::get_node_handle())
@@ -96,10 +96,10 @@ void MCBCISelfInteractController::reset(const ControllerResetData & reset_data)
     mc_rbdyn::Contact(robots(), "RFullSole", "AllGround"),
     mc_rbdyn::Contact(robots(), "Butthock", "AllGround")
   });
-  lh2Task->resetTask(qpsolver->robots, qpsolver->robots.robotIndex());
-  rh2Task->resetTask(qpsolver->robots, qpsolver->robots.robotIndex());
-  chestTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex());
-  comTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex());
+  lh2Task->resetTask(robots(), robots().robotIndex());
+  rh2Task->resetTask(robots(), robots().robotIndex());
+  chestTask->resetTask(robots(), robots().robotIndex());
+  comTask->resetTask(robots(), robots().robotIndex());
 }
 
 bool MCBCISelfInteractController::run()

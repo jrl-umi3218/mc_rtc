@@ -44,6 +44,8 @@ typedef std::pair< contact_vector_pair_t, contact_vector_pair_t > apply_return_t
 
 struct MC_RBDYN_DLLAPI StanceAction
 {
+  virtual ~StanceAction() {}
+
   virtual apply_return_t apply(const Stance & stance) = 0;
 
   virtual void update(const Stance & stance) = 0;
@@ -116,6 +118,9 @@ private:
 MC_RBDYN_DLLAPI void loadStances(const mc_rbdyn::Robots & robots, const std::string & filename, std::vector<Stance> & stances, std::vector< std::shared_ptr<StanceAction> > & actions, std::vector<PolygonInterpolator> & interpolators);
 
 MC_RBDYN_DLLAPI void saveStances(const mc_rbdyn::Robots & robots, const std::string & filename, std::vector<Stance> & stances, std::vector< std::shared_ptr<StanceAction> > & actions);
+
+/* For pyhon bindings */
+MC_RBDYN_DLLAPI void pSaveStances(const mc_rbdyn::Robots & robots, const std::string & filename, std::vector<Stance*> & stances, std::vector<std::shared_ptr<StanceAction>> & actions);
 
 }
 

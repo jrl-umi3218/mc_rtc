@@ -41,11 +41,11 @@ MCBody6dController::MCBody6dController(std::shared_ptr<mc_rbdyn::RobotModule> ro
   LOG_SUCCESS("MCBody6dController init done")
   if(robot().name() == "hrp2_drc")
   {
-    efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK7", qpsolver->robots, qpsolver->robots.robotIndex(), 2.0, 1e5));
+    efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK7", robots(), robots().robotIndex(), 2.0, 1e5));
   }
   else if(robot().name() == "hrp4")
   {
-    efTask.reset(new mc_tasks::EndEffectorTask("r_wrist", qpsolver->robots, qpsolver->robots.robotIndex(), 2.0, 1e5));
+    efTask.reset(new mc_tasks::EndEffectorTask("r_wrist", robots(), robots().robotIndex(), 2.0, 1e5));
   }
   else
   {
@@ -53,15 +53,15 @@ MCBody6dController::MCBody6dController(std::shared_ptr<mc_rbdyn::RobotModule> ro
     throw("MCBody6dController does not support your robot");
   }
   efTask->addToSolver(qpsolver->solver);
-  comTask.reset(new mc_tasks::CoMTask(qpsolver->robots, qpsolver->robots.robotIndex()));
+  comTask.reset(new mc_tasks::CoMTask(robots(), robots().robotIndex()));
   comTask->addToSolver(qpsolver->solver);
 }
 
 void MCBody6dController::reset(const ControllerResetData & reset_data)
 {
   MCController::reset(reset_data);
-  efTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex());
-  comTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex());
+  efTask->resetTask(robots(), robots().robotIndex());
+  comTask->resetTask(robots(), robots().robotIndex());
 }
 
 
@@ -71,7 +71,7 @@ bool MCBody6dController::change_ef(const std::string & ef_name)
   {
     efTask->removeFromSolver(qpsolver->solver);
     postureTask->posture(robot().mbc().q);
-    efTask.reset(new mc_tasks::EndEffectorTask(ef_name, qpsolver->robots, qpsolver->robots.robotIndex()));
+    efTask.reset(new mc_tasks::EndEffectorTask(ef_name, robots(), robots().robotIndex()));
     efTask->addToSolver(qpsolver->solver);
     return true;
   }

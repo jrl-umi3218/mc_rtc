@@ -36,14 +36,14 @@ MCCoMController::MCCoMController(std::shared_ptr<mc_rbdyn::RobotModule> robot_mo
     throw("MCBody6dController does not support your robot");
   }
 
-  comTask.reset(new mc_tasks::CoMTask(qpsolver->robots, qpsolver->robots.robotIndex()));
+  comTask.reset(new mc_tasks::CoMTask(robots(), robots().robotIndex()));
   comTask->addToSolver(qpsolver->solver);
 }
 
 void MCCoMController::reset(const ControllerResetData & reset_data)
 {
   MCController::reset(reset_data);
-  comTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex());
+  comTask->resetTask(robots(), robots().robotIndex());
 }
 
 bool MCCoMController::move_com(const Eigen::Vector3d & v)

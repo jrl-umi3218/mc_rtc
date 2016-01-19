@@ -94,14 +94,13 @@ public:
   mc_solver::QPContactPtrWPoints taskContactWPoints(const mc_rbdyn::Robots & robots, const sva::PTransformd * X_es_rs = 0) const;
 
   std::string toStr() const;
+
+  bool operator==(const Contact & rhs) const;
+  bool operator!=(const Contact & rhs) const;
 private:
   std::unique_ptr<ContactImpl> impl;
   mc_solver::QPContactPtr taskContact(const mc_rbdyn::Robots & robots, const sva::PTransformd & X_b1_b2, const std::vector<sva::PTransformd> & points) const;
 };
-
-MC_RBDYN_DLLAPI bool operator==(const Contact & lhs, const Contact & rhs);
-
-MC_RBDYN_DLLAPI bool operator!=(const Contact & lhs, const Contact & rhs);
 
 }
 

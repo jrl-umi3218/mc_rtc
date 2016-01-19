@@ -590,7 +590,7 @@ Robot& Robots::load(const RobotModule & module, const std::string &, sva::PTrans
     {
       if(bodyIdByName.count(p.second.first))
       {
-        std::shared_ptr<sch::S_Polyhedron> poly(sch::Polyhedron(p.second.second));
+        std::shared_ptr<sch::S_Polyhedron> poly(sch::mc_rbdyn::Polyhedron(p.second.second));
         convexesByName[p.first] = Robot::convex_pair_t(bodyIdByName[p.second.first], poly);
       }
     }
@@ -603,7 +603,7 @@ Robot& Robots::load(const RobotModule & module, const std::string &, sva::PTrans
     {
       if(bodyIdByName.count(p.second.first))
       {
-        std::shared_ptr<sch::STP_BV> stpbvs(sch::STPBV(p.second.second));
+        std::shared_ptr<sch::STP_BV> stpbvs(sch::mc_rbdyn::STPBV(p.second.second));
         stpbvsByName[p.first] = Robot::stpbv_pair_t(bodyIdByName[p.second.first], stpbvs);
       }
     }
@@ -649,10 +649,10 @@ Robot& Robots::load(const RobotModule & module, const std::string &, sva::PTrans
 {
 }*/
 
-Robots loadRobot(const RobotModule & module, const std::string & surfaceDir, sva::PTransformd * base, int bId)
+std::shared_ptr<Robots> loadRobot(const RobotModule & module, const std::string & surfaceDir, sva::PTransformd * base, int bId)
 {
-  Robots robots;
-  robots.load(module, surfaceDir, base, bId);
+  auto robots = std::make_shared<Robots>();
+  robots->load(module, surfaceDir, base, bId);
   return robots;
 }
 
@@ -661,10 +661,10 @@ void Robots::load(const RobotModule & module, const std::string & surfaceDir, co
   load(module, surfaceDir, envModule, envSurfaceDir, 0, -1);
 }
 
-Robots loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir)
+std::shared_ptr<Robots> loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir)
 {
-  Robots robots;
-  robots.load(module, surfaceDir, envModule, envSurfaceDir);
+  auto robots = std::make_shared<Robots>();
+  robots->load(module, surfaceDir, envModule, envSurfaceDir);
   return robots;
 }
 
@@ -674,10 +674,10 @@ void Robots::load(const RobotModule & module, const std::string & surfaceDir, co
   load(envModule, envSurfaceDir);
 }
 
-Robots loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir, sva::PTransformd * base, int bId)
+std::shared_ptr<Robots> loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir, sva::PTransformd * base, int bId)
 {
-  Robots robots;
-  robots.load(module, surfaceDir, envModule, envSurfaceDir, base, bId);
+  auto robots = std::make_shared<Robots>();
+  robots->load(module, surfaceDir, envModule, envSurfaceDir, base, bId);
   return robots;
 }
 
@@ -689,10 +689,10 @@ void Robots::load(const std::vector<std::shared_ptr<RobotModule>> & modules, con
   }
 }
 
-Robots loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules, const std::vector<std::string> & surfaceDirs)
+std::shared_ptr<Robots> loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules, const std::vector<std::string> & surfaceDirs)
 {
-  Robots robots;
-  robots.load(modules, surfaceDirs);
+  auto robots = std::make_shared<Robots>();
+  robots->load(modules, surfaceDirs);
   return robots;
 }
 
@@ -769,10 +769,10 @@ Robot& Robots::loadFromUrdf(const std::string & name, const std::string & urdf, 
   return robots_.back();
 }
 
-Robots loadRobotFromUrdf(const std::string & name, const std::string & urdf, bool withVirtualLinks, const std::vector<std::string> & filteredLinks, bool fixed, sva::PTransformd * base, int bId)
+std::shared_ptr<Robots> loadRobotFromUrdf(const std::string & name, const std::string & urdf, bool withVirtualLinks, const std::vector<std::string> & filteredLinks, bool fixed, sva::PTransformd * base, int bId)
 {
-  Robots robots;
-  robots.loadFromUrdf(name, urdf, withVirtualLinks, filteredLinks, fixed, base, bId);
+  auto robots = std::make_shared<Robots>();
+  robots->loadFromUrdf(name, urdf, withVirtualLinks, filteredLinks, fixed, base, bId);
   return robots;
 }
 

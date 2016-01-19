@@ -20,9 +20,9 @@ MCEgressController::MCEgressController(std::shared_ptr<mc_rbdyn::RobotModule> ro
   //phase(ROTATEBODY), phaseExec(new EgressRotateBodyPhase)
 {
   /* Recreate the kinematics/dynamics constraints to lower the damper offset */
-  kinematicsConstraint = mc_solver::KinematicsConstraint(qpsolver->robots, 0, timeStep,
+  kinematicsConstraint = mc_solver::KinematicsConstraint(robots(), 0, timeStep,
                                                      false, {0.1, 0.01, 0.00}, 0.5);
-  dynamicsConstraint = mc_solver::DynamicsConstraint(qpsolver->robots, 0, timeStep,
+  dynamicsConstraint = mc_solver::DynamicsConstraint(robots(), 0, timeStep,
                                                      false, {0.1, 0.01, 0.1}, 0.5);
 
   qpsolver->addConstraintSet(contactConstraint);
@@ -38,11 +38,11 @@ MCEgressController::MCEgressController(std::shared_ptr<mc_rbdyn::RobotModule> ro
     mc_rbdyn::Contact(robots(), "RightGripper", "bar_wheel")
   });
 
-  comTask.reset(new mc_tasks::CoMTask(qpsolver->robots, qpsolver->robots.robotIndex()));
+  comTask.reset(new mc_tasks::CoMTask(robots(), robots().robotIndex()));
   comTask->addToSolver(qpsolver->solver);
   comTask->removeFromSolver(qpsolver->solver);
 
-  efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", qpsolver->robots, qpsolver->robots.robotIndex()));
+  efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", robots(), robots().robotIndex()));
   efTask->addToSolver(qpsolver->solver);
   efTask->removeFromSolver(qpsolver->solver);
   LOG_SUCCESS("MCEgressController init done")
@@ -57,8 +57,8 @@ void MCEgressController::reset(const ControllerResetData & reset_data)
     mc_rbdyn::Contact(robots(), "LFullSole", "exit_platform"),
     mc_rbdyn::Contact(robots(), "RightGripper", "bar_wheel")
   });
-  efTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex());
-  comTask->resetTask(qpsolver->robots, qpsolver->robots.robotIndex());
+  efTask->resetTask(robots(), robots().robotIndex());
+  comTask->resetTask(robots(), robots().robotIndex());
 }
 
 void MCEgressController::resetBasePose()
@@ -110,7 +110,7 @@ bool MCEgressController::change_ef(const std::string & ef_name)
   {
     efTask->removeFromSolver(qpsolver->solver);
     postureTask->posture(robot().mbc().q);
-    efTask.reset(new mc_tasks::EndEffectorTask(ef_name, qpsolver->robots, qpsolver->robots.robotIndex()));
+    efTask.reset(new mc_tasks::EndEffectorTask(ef_name, robots(), robots().robotIndex()));
     efTask->addToSolver(qpsolver->solver);
     return true;
   }

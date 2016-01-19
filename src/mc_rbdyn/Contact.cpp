@@ -346,14 +346,14 @@ std::string Contact::toStr() const
   return ss.str();
 }
 
-bool operator==(const Contact & lhs, const Contact & rhs)
+bool Contact::operator==(const Contact & rhs) const
 {
-  return (*(lhs.r1Surface()) == *(rhs.r1Surface())) && (*(lhs.r2Surface()) == *(rhs.r2Surface()));
+  return (*(this->r1Surface()) == *(rhs.r1Surface())) && (*(this->r2Surface()) == *(rhs.r2Surface()));
 }
 
-bool operator!=(const Contact & lhs, const Contact & rhs)
+bool Contact::operator!=(const Contact & rhs) const
 {
-  return !(lhs == rhs);
+  return !(*this == rhs);
 }
 
 }

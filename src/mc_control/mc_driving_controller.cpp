@@ -106,7 +106,7 @@ MCDrivingController::MCDrivingController(std::shared_ptr<mc_rbdyn::RobotModule> 
   ef_task.addToSolver(qpsolver->solver);
   ef_task.removeFromSolver(qpsolver->solver);
 
-  polarisPostureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(qpsolver->robots.mbs(), 1, qpsolver->robots.robot(1).mbc().q, 5, 100));
+  polarisPostureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(robots().mbs(), 1, robots().robot(1).mbc().q, 5, 100));
 
   LOG_SUCCESS("MCDrivingController init done")
 }

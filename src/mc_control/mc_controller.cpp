@@ -28,8 +28,8 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   {
     surfaceDirs.push_back(m->rsdf_dir);
   }
-  mc_rbdyn::Robots robots = mc_rbdyn::loadRobots(robots_modules, surfaceDirs);
-  for(auto & robot: robots.robots())
+  auto robots = mc_rbdyn::loadRobots(robots_modules, surfaceDirs);
+  for(auto & robot: robots->robots())
   {
     robot.mbc().gravity = Eigen::Vector3d(0, 0, 9.81);
     rbd::forwardKinematics(robot.mb(), robot.mbc());
@@ -46,9 +46,9 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   {
     std::stringstream urdf;
     urdf << ifs.rdbuf();
-    mc_rbdyn::Robots urdfRobot = mc_rbdyn::loadRobotFromUrdf("temp_robot", urdf.str());
-    lgripper.reset(new Gripper(urdfRobot.robot(), "l_gripper", robot(), urdf.str(), 0, timeStep));
-    rgripper.reset(new Gripper(urdfRobot.robot(), "r_gripper", robot(), urdf.str(), 0, timeStep));
+    auto urdfRobot = mc_rbdyn::loadRobotFromUrdf("temp_robot", urdf.str());
+    lgripper.reset(new Gripper(urdfRobot->robot(), "l_gripper", robot(), urdf.str(), 0, timeStep));
+    rgripper.reset(new Gripper(urdfRobot->robot(), "r_gripper", robot(), urdf.str(), 0, timeStep));
   }
   else
   {
@@ -104,32 +104,32 @@ void MCController::setWrenches(const std::vector< std::pair<Eigen::Vector3d, Eig
 
 const mc_rbdyn::Robot & MCController::robot() const
 {
-  return qpsolver->robots.robot();
+  return qpsolver->robots->robot();
 }
 
 const mc_rbdyn::Robot & MCController::env() const
 {
-  return qpsolver->robots.env();
+  return qpsolver->robots->env();
 }
 
 mc_rbdyn::Robot & MCController::robot()
 {
-  return qpsolver->robots.robot();
+  return qpsolver->robots->robot();
 }
 
 mc_rbdyn::Robot & MCController::env()
 {
-  return qpsolver->robots.env();
+  return qpsolver->robots->env();
 }
 
 const mc_rbdyn::Robots & MCController::robots() const
 {
-  return qpsolver->robots;
+  return *(qpsolver->robots);
 }
 
 mc_rbdyn::Robots & MCController::robots()
 {
-  return qpsolver->robots;
+  return *(qpsolver->robots);
 }
 
 bool MCController::set_joint_pos(const std::string & jname, const double & pos)

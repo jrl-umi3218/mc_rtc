@@ -47,6 +47,8 @@ public:
 
   std::vector<qpcallback_t> preQPCb;
   std::vector<qpcallback_t> postQPCb;
+
+  virtual ~ConstraintSet() {}
 };
 
 struct MC_SOLVER_DLLAPI ContactConstraint : public ConstraintSet
@@ -133,9 +135,9 @@ public:
   unsigned int r1Index;
   unsigned int r2Index;
   std::vector<mc_rbdyn::Collision> cols;
+private:
   int collId;
   std::map<std::string, std::pair<unsigned int, mc_rbdyn::Collision> > collIdDict;
-private:
   std::string __keyByNames(const std::string & name1, const std::string & name2);
   int __createCollId(const mc_rbdyn::Collision & col);
   std::pair<int, mc_rbdyn::Collision> __popCollId(const std::string & name1, const std::string & name2);
@@ -168,8 +170,6 @@ public:
 
   virtual void removeFromSolver(tasks::qp::QPSolver & solver) const override;
 public:
-  const mc_rbdyn::Robot & robot;
-  const mc_rbdyn::Robot & env;
   CollisionsConstraint selfCollConstrMng;
   CollisionsConstraint envCollConstrMng;
   /* Note this class maintains its constraints member as the concatenation of its two CollisionsConstraint constraints */
@@ -180,7 +180,7 @@ private:
 struct MC_SOLVER_DLLAPI QPSolver
 {
 public:
-  QPSolver(const mc_rbdyn::Robots & robots, double timeStep);
+  QPSolver(std::shared_ptr<mc_rbdyn::Robots> robots, double timeStep);
 
   void addConstraintSet(const ConstraintSet & cs);
 
@@ -198,7 +198,7 @@ public:
 
   const mc_control::QPResultMsg & send(double curTime = 0);
 public:
-  mc_rbdyn::Robots robots;
+  std::shared_ptr<mc_rbdyn::Robots> robots;
   double timeStep;
   std::vector<qpcallback_t> preQPCb;
   std::vector<qpcallback_t> postQPCb;

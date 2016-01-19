@@ -23,11 +23,10 @@ struct MC_RBDYN_DLLAPI Collision
   double sDist; /** Security distance */
   double damping; /** Damping (0 is automatic */
   inline bool isNone() { return body1 == "NONE" && body2 == "NONE"; }
+
+  bool operator==(const Collision & rhs) const;
+  bool operator!=(const Collision & rhs) const;
 };
-
-MC_RBDYN_DLLAPI bool operator==(const Collision & lhs, const Collision & rhs);
-
-MC_RBDYN_DLLAPI bool operator!=(const Collision & lhs, const Collision & rhs);
 
 MC_RBDYN_DLLAPI std::ostream & operator<<(std::ostream & os, const Collision & c);
 

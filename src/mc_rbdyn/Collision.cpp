@@ -5,19 +5,19 @@
 namespace mc_rbdyn
 {
 
-bool operator==(const Collision & lhs, const Collision & rhs)
+bool Collision::operator==(const Collision & rhs) const
 {
-  return lhs.body1 == rhs.body1 && lhs.body2 == rhs.body2;
+  return body1 == rhs.body1 && body2 == rhs.body2;
 }
 
-bool operator!=(const Collision & lhs, const Collision & rhs)
+bool Collision::operator!=(const Collision & rhs) const
 {
-  return !(lhs == rhs);
+  return !(*this == rhs);
 }
 
 std::ostream & operator<<(std::ostream & os, const Collision & col)
 {
-  os << "Collision: " << col.body1 << "/" << col.body2 << " { " << col.iDist << ", " << col.sDist << ", " << col.damping << "}" << std::endl;
+  os << "Collision: " << col.body1 << "/" << col.body2 << " { " << col.iDist << ", " << col.sDist << ", " << col.damping << "}";
   return os;
 }
 

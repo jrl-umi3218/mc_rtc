@@ -504,4 +504,33 @@ void saveStances(const mc_rbdyn::Robots &/*robots*/, const std::string & filenam
   ofs.close();
 }
 
+void pSaveStances(const mc_rbdyn::Robots &/*robots*/, const std::string & filename, std::vector<Stance*> & stances, std::vector< std::shared_ptr<StanceAction> > & actions)
+{
+  for(size_t i = 0; i < std::min(stances.size(), actions.size()); ++i)
+  {
+    actions[i]->update(*stances[i]);
+  }
+
+  Json::Value stancesAndActionsJSON(Json::objectValue);
+
+  Json::Value stancesJSON(Json::arrayValue);
+  for(Stance * stance : stances)
+  {
+    stancesJSON.append(stanceToJSON(*stance));
+  }
+
+  Json::Value stanceActionsJSON(Json::arrayValue);
+  for(std::shared_ptr<StanceAction> & sa : actions)
+  {
+    stanceActionsJSON.append(stanceActionToJSON(*sa));
+  }
+
+  stancesAndActionsJSON["stances"] = stancesJSON;
+  stancesAndActionsJSON["actions"] = stanceActionsJSON;
+
+  std::ofstream ofs(filename);
+  ofs << stancesAndActionsJSON;
+  ofs.close();
+}
+
 }

@@ -1,3 +1,5 @@
+#pragma once
+
 #include <sch/S_Polyhedron/S_Polyhedron.h>
 #include <sch/S_Object/S_Sphere.h>
 #include <sch/S_Object/S_Box.h>
@@ -27,6 +29,9 @@
 namespace sch
 {
 
+namespace mc_rbdyn
+{
+
   MC_RBDYN_DLLAPI void transform(S_Object& obj, const sva::PTransformd& t);
 
   MC_RBDYN_DLLAPI STP_BV * STPBV(const std::string& filename);
@@ -37,3 +42,4 @@ namespace sch
 
 }
 
+}
