@@ -124,9 +124,24 @@ MCGlobalController::MCGlobalController(const std::string & conf)
   controller_loader.reset(new mc_rtc::ObjectLoader<mc_control::MCController>(config.controller_module_paths));
   for(const auto & c : config.enabled_controllers)
   {
-    if(controller_loader->has_object(c))
+    std::string controller_name = c;
+    std::string controller_subname = "";
+    size_t sep_pos = c.find('#');
+    if(sep_pos != std::string::npos)
     {
-      controllers[c] = controller_loader->create_object(c, config.main_robot_module, config.timestep, config.v);
+      controller_name = c.substr(0, sep_pos);
+      controller_subname = c.substr(sep_pos+1);
+    }
+    if(controller_loader->has_object(controller_name))
+    {
+      if(controller_subname != "")
+      {
+        controllers[c] = controller_loader->create_object(controller_name, controller_subname, config.main_robot_module, config.timestep, config.v);
+      }
+      else
+      {
+        controllers[c] = controller_loader->create_object(c, config.main_robot_module, config.timestep, config.v);
+      }
     }
     else
     {
