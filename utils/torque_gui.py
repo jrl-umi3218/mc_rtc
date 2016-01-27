@@ -24,7 +24,8 @@ REF_JOINT_ORDER = [
 plt.ion()
 
 import rtm
-rtm.nshost = "hrp2001c"
+#rtm.nshost = "hrp2001c"
+rtm.nshost = "hrp2012c"
 #rtm.nshost = "localhost"
 rtm.nsport = 2809
 
@@ -38,14 +39,14 @@ running = True
 
 nrPoints = 300
 portname = "ctau"
-joints = ["RARM_JOINT5", "RARM_JOINT7", "LARM_JOINT5", "LARM_JOINT7"]
+joints = ["LARM_JOINT4", "LARM_JOINT5", "LARM_JOINT6", "LARM_JOINT7"]
 monitoring = {}
 for j in joints:
   monitoring[j] = REF_JOINT_ORDER.index(j)
 limits = {
-  "RARM_JOINT5": 0.8*18.7,
-  "RARM_JOINT7": 0.5*100,
-  "LARM_JOINT5": 0.8*18.7,
+  "LARM_JOINT4": 0.8*14,
+  "LARM_JOINT5": 0.8*19,
+  "LARM_JOINT6": 0.8*16,
   "LARM_JOINT7": 0.5*100
 }
 data = {}

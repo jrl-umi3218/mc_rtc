@@ -2,6 +2,8 @@
 
 #include <mc_rbdyn/Surface.h>
 
+#include <mc_rtc/logging.h>
+
 namespace mc_tasks
 {
 
@@ -70,6 +72,7 @@ void StabilityTask::target(const mc_rbdyn::Robot &/*env*/, const mc_rbdyn::Stanc
     }
   }
 
+  LOG_INFO("comOffset applied from contact displacement " << comOffset.transpose())
   comObj += comOffset;
   comObj += config.comObj.comOffset;
 

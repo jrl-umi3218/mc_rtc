@@ -26,6 +26,8 @@ public:
 
   const std::vector< std::vector<double> > q() const;
 
+  void q(const std::vector<std::vector<double>> & q_in);
+
   const std::vector<Contact> & geomContacts() const;
 
   const std::vector<Contact> & stabContacts() const;

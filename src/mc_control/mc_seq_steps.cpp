@@ -505,7 +505,7 @@ bool live_moveCoMT::eval(MCSeqController & ctl)
     mc_rbdyn::Stance & newS = ctl.targetStance();
     ctl.updateRobotEnvCollisions(newS.contacts(), ctl.targetConf());
     ctl.updateSelfCollisions(newS.contacts(), ctl.targetConf());
-    ctl.updateContacts(newS.stabContacts());
+    //ctl.updateContacts(newS.stabContacts());
     ctl.updateSolverEqInEq();
 
     //ctl.stabilityTask->normalStiffness({"RARM_JOINT0", "RARM_JOINT1", "RARM_JOINT2", "RARM_JOINT3", "RARM_JOINT4", "RARM_JOINT5", "RARM_JOINT6"});
@@ -799,6 +799,7 @@ bool live_moveGripperWPT::eval(MCSeqController & ctl)
     /* Waypoint reached, new goal is target */
     ctl.moveContactTask->toPreEnv(contactConf, contactConf.contactTask.position.targetSpeed);
     ctl.publisher->publish_waypoint(sva::PTransformd::Identity());
+    ctl.setCollisionsContactFilter(*(ctl.targetContact), ctl.curConf());
     LOG_INFO("Finished move gripper WPT")
     return true;
   }

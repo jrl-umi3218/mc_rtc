@@ -121,11 +121,16 @@ if __name__ == "__main__":
   data_out = {"stances" : [], "actions": [], "polygon_interpolators": []}
 
   stances, actions = loadStances(seq_in)
+  for s in stances:
+    data_out["stances"].append(stance2dict(s))
+  for a in actions:
+    data_out["actions"].append(action2dict(a))
   polygons = []
   polygon_interpolators = []
   for i,(s,a) in enumerate(zip(stances,actions)):
     print "Compute polygon {0} of {1}".format(i+1, len(stances))
     stab_poly.reset()
+    robot.mbc.zero(robot.mb)
     robot.mbc.q = s.q
     rbd.forwardKinematics(robot.mb, robot.mbc)
     rbd.forwardVelocity(robot.mb, robot.mbc)
@@ -133,7 +138,16 @@ if __name__ == "__main__":
         contacts = s.stabContacts
     else:
         contacts = s.contacts
+    #contacts = s.stabContacts
+    for c in contacts:
+        if c.robotSurface.name == "LFrontSole":
+            c.robotSurface = robot.surfaces["LFullSole"]
+        if c.robotSurface.name == "RFrontSole":
+            c.robotSurface = robot.surfaces["RFullSole"]
     offset, s_c = stab_contacts(contacts, 0.5, robot)
+    if i == 1:
+      for c in s_c:
+          c.r = c.r*0.8
     stab_poly.contacts = s_c
     gripIndexes = []
     planarContacts = []
@@ -151,13 +165,14 @@ if __name__ == "__main__":
       pos = toNumpy(list(robot.mbc.bodyPosW)[bodyIndex].translation()) - offset
       stab_poly.addTorqueConstraint(s_c[b:e],
                                     pos,
-                                    0.001*np.ones((3,1)))
+                                    5*np.ones((3,1)))
     stab_poly.compute(Mode.best, epsilon=1e-2, maxIter=100, solver='plain', record_anim=False, plot_step=False, plot_final = False)
     full_poly = stab_poly.polygon(offset)
     if len(polygons) == 0:
         polygons.append(full_poly)
 
     stab_poly.reset()
+    print planarContacts
     offset, s_c = stab_contacts(planarContacts, 0.5, robot)
     stab_poly.contacts = s_c
     try:
@@ -168,19 +183,16 @@ if __name__ == "__main__":
       s_poly = geom.Polygon([(p.item(0), p.item(1)) for p in pos]).convex_hull
     interp = PolygonInterpolator(full_poly, s_poly)
     # FIXME Ok on this branch...
-    if i == 25:
-        intermediate_poly = interp.interpolate(0.5)
-    elif i < 8:
-        intermediate_poly = interp.interpolate(0.9)
-    else:
-        intermediate_poly = interp.interpolate(0.7)
+    #if i == 25:
+    #    intermediate_poly = interp.interpolate(0.5)
+    #elif i < 8:
+    #    intermediate_poly = interp.interpolate(0.9)
+    #else:
+    #    intermediate_poly = interp.interpolate(0.7)
+    intermediate_poly = interp.interpolate(0.9)
     polygon_interpolators.append(PolygonInterpolator(polygons[-1], intermediate_poly))
     polygons.append(intermediate_poly)
 
-  for s in stances:
-    data_out["stances"].append(stance2dict(s))
-  for a in actions:
-    data_out["actions"].append(action2dict(a))
   for pi in polygon_interpolators:
     data_out["polygon_interpolators"].append(polygonInterpolator2dict(pi))
 

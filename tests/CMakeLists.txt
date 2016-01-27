@@ -2,5 +2,6 @@ add_executable(testBSplineTrajectory testBSplineTrajectory.cpp)
 target_link_libraries(testBSplineTrajectory mc_trajectory)
 
 add_executable(testQuadraticGenerator testQuadraticGenerator.cpp)
+pkg_config_use_dependency(testQuadraticGenerator Tasks)
 target_link_libraries(testQuadraticGenerator mc_rbdyn)
 

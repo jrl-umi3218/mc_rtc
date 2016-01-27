@@ -55,6 +55,11 @@ const std::vector< std::vector<double> > Stance::q() const
   return impl->q;
 }
 
+void Stance::q(const std::vector<std::vector<double>> & q_in)
+{
+  impl->q = q_in;
+}
+
 const std::vector<Contact> & Stance::geomContacts() const
 {
   return impl->geomContacts;

@@ -192,7 +192,7 @@ MCSeqController::MCSeqController(std::shared_ptr<mc_rbdyn::RobotModule> robot_mo
   currentContact(0), targetContact(0), currentGripper(0),
   use_real_sensors(config.use_real_sensors),
   collsConstraint(robots(), timeStep),
-  max_perc(1.0), nr_points(3000),
+  max_perc(1.0), nr_points(300),
   samples(0.0, max_perc, nr_points)
 {
   logger.logPhase("START", 0);
@@ -244,10 +244,7 @@ MCSeqController::MCSeqController(std::shared_ptr<mc_rbdyn::RobotModule> robot_mo
   qpsolver->setContacts(stances[stanceIndex].geomContacts());
 
   comIncPlaneConstr.reset(new tasks::qp::CoMIncPlaneConstr(robots().mbs(), 0, timeStep));
-  if(stanceIndex < 8)
-  {
-    comIncPlaneConstr->addToSolver(qpsolver->solver);
-  }
+  comIncPlaneConstr->addToSolver(qpsolver->solver);
 
   qpsolver->update();
 
@@ -300,6 +297,11 @@ bool MCSeqController::run()
           }
         }
         else
+        {
+          speeds = std::vector<Eigen::Vector3d>(planes.size(), Eigen::Vector3d::Zero());
+          nds = speeds;
+        }
+        if(stanceIndex == 6)
         {
           speeds = std::vector<Eigen::Vector3d>(planes.size(), Eigen::Vector3d::Zero());
           nds = speeds;
@@ -363,19 +365,47 @@ void MCSeqController::reset(const ControllerResetData & reset_data)
   /* Heuristic guess for kinematics vs. dynamics mode */
   if(use_real_sensors)
   {
-    robot().mbc().q[0] = stabilityTask->postureTask->posture()[0];
     robot().mbc().q = reset_data.q;
+    robot().mbc().q[0] = stabilityTask->postureTask->posture()[0];
   }
   else
   {
     robot().mbc().q = stabilityTask->postureTask->posture();
   }
+  std::cout << "Start at ";
+  for(const auto & qi : robot().mbc().q[0])
+  {
+    std::cout << qi << ", ";
+  }
+  std::cout << std::endl;
   rbd::forwardKinematics(robot().mb(), robot().mbc());
   rbd::forwardVelocity(robot().mb(), robot().mbc());
   qpsolver->setContacts(stances[stanceIndex].geomContacts());
   publisher->set_contacts(stances[stanceIndex].geomContacts());
   LOG_INFO("LFullSole position: " << robot().surface("LFullSole").X_0_s(robot()).translation().transpose())
   LOG_INFO("RFullSole position: " << robot().surface("RFullSole").X_0_s(robot()).translation().transpose())
+  const mc_rbdyn::Contact & c = stances[stanceIndex].geomContacts()[0];
+  auto X_0_s = c.X_0_r2s(robots());
+  auto X_r2s_r1s = c.X_r2s_r1s();
+  X_0_s = X_r2s_r1s * X_0_s;
+  auto X_f_s = c.r1Surface()->X_b_s();
+  auto X_b_f = robot().mbc().bodyPosW[robot().bodyIndexByName(c.r1Surface()->bodyName())]*((robot().mbc().bodyPosW[0]).inv());
+  auto X_0_b = ((X_f_s * X_b_f).inv()) * X_0_s;
+  auto quat = Eigen::Quaterniond(X_0_b.rotation());
+  auto trans = X_0_b.translation();
+  robot().mbc().q[0][0] = quat.w();
+  robot().mbc().q[0][1] = quat.x();
+  robot().mbc().q[0][2] = quat.y();
+  robot().mbc().q[0][3] = quat.z();
+  robot().mbc().q[0][4] = trans.x();
+  robot().mbc().q[0][5] = trans.y();
+  robot().mbc().q[0][6] = trans.z();
+  rbd::forwardKinematics(robot().mb(), robot().mbc());
+  rbd::forwardVelocity(robot().mb(), robot().mbc());
+  auto q_target = stances[stanceIndex].q();
+  q_target[0] = robot().mbc().q[0];
+  stances[stanceIndex].q(q_target);
+  stabilityTask->target(env(), stances[stanceIndex], configs[stanceIndex], configs[stanceIndex].comTask.targetSpeed);
   qpsolver->update();
 }
 
@@ -441,8 +471,8 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
       unsigned int wrenchIndex = forceSensor == "RightH&&ForceSensor" ? 2 : 3; /*FIXME Hard-coded */
       tasks::qp::ContactId contactId = c.contactId(robots());
       sva::PTransformd X_0_s = c.r1Surface()->X_0_s(robot());
-      double actiForce = 10; /* FIXME Hard-coded, should at least be an acti gripper const static member */
-      double stopForce = 50; /* FIXME ^^ */
+      double actiForce = 50; /* FIXME Hard-coded, should at least be an acti gripper const static member */
+      double stopForce = 90; /* FIXME ^^ */
       std::shared_ptr<tasks::qp::PositionTask> positionTask(new tasks::qp::PositionTask(robots().mbs(), 0, contactId.r1BodyId, X_0_s.translation(), is_gs->X_b_s().translation()));
       std::shared_ptr<tasks::qp::SetPointTask> positionTaskSp(new tasks::qp::SetPointTask(robots().mbs(), 0, positionTask.get(), 20, 100000.));
       qpsolver->solver.addTask(positionTaskSp.get());

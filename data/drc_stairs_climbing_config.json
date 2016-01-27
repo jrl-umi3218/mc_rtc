@@ -2,14 +2,15 @@
    "General" : {
       "CoMMove" : {
          "comObj" : {
+            "timeout" : 10.0,
             "comOffset" : [ 0.0, 0.0, 0.0 ],
-            "posThresh" : 0.050,
-            "velThresh" : 0.00010
+            "posThresh" : 0.005,
+            "velThresh" : 0.0001
          },
          "comTask" : {
-            "extraStiffness" : 1.0,
+            "extraStiffness" : 5.0,
             "stiffness" : 1.0,
-            "targetSpeed" : 0.0010,
+            "targetSpeed" : 0.003,
             "weight" : 400.0
          },
          "postureTask" : {
@@ -19,29 +20,30 @@
       },
       "ContactMove" : {
          "comObj" : {
+            "timeout" : 10.0,
             "comOffset" : [ 0.0, 0.0, 0.0 ],
             "posThresh" : 0.10,
-            "velThresh" : 9.899999999999999e-05
+            "velThresh" : 0.001
          },
          "comTask" : {
-            "extraStiffness" : 6.0,
-            "stiffness" : 3.0,
-            "targetSpeed" : 0.0030,
+            "extraStiffness" : 0.0,
+            "stiffness" : 5.0,
+            "targetSpeed" : 0.006,
             "weight" : 500.0
          },
          "contactObj" : {
             "adjustOffset" : [ 0.0, 0.0, 0.0 ],
             "adjustOriTBNWeight" : [
-               6.930393177998353e-310,
-               4.940656458412465e-324,
-               3.122664840298848e-317
+               0,
+               0,
+               0
             ],
-            "adjustOriThresh" : 2.121996826526866e-314,
-            "adjustPosThresh" : 2.073131070151204e-317,
-            "adjustVelThresh" : 2.121995790965272e-314,
-            "posThresh" : 0.030,
-            "preContactDist" : 0.020,
-            "velThresh" : 0.030
+            "adjustOriThresh" : 0,
+            "adjustPosThresh" : 0,
+            "adjustVelThresh" : 0,
+            "posThresh" : 0.03,
+            "preContactDist" : 0.05,
+            "velThresh" : 0.03
          },
          "contactTask" : {
             "collisionConf" : {
@@ -50,20 +52,20 @@
                "sDist" : 0.0050
             },
             "linVel" : {
-               "speed" : 0.020,
+               "speed" : 0.08,
                "stiffness" : 1.0,
                "weight" : 10000.0
             },
             "orientation" : {
                "finalWeight" : 1000.0,
-               "stiffness" : 1.0,
-               "weight" : 300.0
+               "stiffness" : 15.0,
+               "weight" : 1.0
             },
             "position" : {
-               "extraStiffness" : 6.0,
-               "stiffness" : 2.0,
-               "targetSpeed" : 0.0010,
-               "weight" : 600.0
+               "extraStiffness" : 12.0,
+               "stiffness" : 5.0,
+               "targetSpeed" : 0.01,
+               "weight" : 300.0
             },
             "waypointConf" : {
                "conf" : {
@@ -77,19 +79,20 @@
             }
          },
          "postureTask" : {
-            "stiffness" : 0.10,
+            "stiffness" : 2.0,
             "weight" : 10.0
          }
       },
       "GripperMove" : {
          "comObj" : {
+            "timeout" : 10.0,
             "comOffset" : [ 0.0, 0.0, 0.0 ],
             "posThresh" : 0.10,
             "velThresh" : 9.899999999999999e-05
          },
          "comTask" : {
             "extraStiffness" : 0.50,
-            "stiffness" : 0.50,
+            "stiffness" : 1.0,
             "targetSpeed" : 0.00050,
             "weight" : 500.0
          },
@@ -101,7 +104,8 @@
             "adjustVelThresh" : 0.020,
             "posThresh" : 0.030,
             "preContactDist" : 0.020,
-            "velThresh" : 0.030
+            "velThresh" : 0.030,
+            "gripperMoveAwayDist" : 0.02
          },
          "contactTask" : {
             "collisionConf" : {
@@ -111,7 +115,7 @@
             },
             "linVel" : {
                "speed" : 0.020,
-               "stiffness" : 0.50,
+               "stiffness" : 1.0,
                "weight" : 1000.0
             },
             "orientation" : {
@@ -322,10 +326,10 @@
             }
          },
          "contactObj" : {
-           "preContactDist" : 0.13
+           "preContactDist" : 0.09
          },
          "comObj" : {
-            "comOffset" : [ 0.050, 0.0, 0.0 ]
+            "comOffset" : [ 0.05, 0.0, -0.0 ]
          }
       },
       {
