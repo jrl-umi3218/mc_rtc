@@ -11,31 +11,52 @@
 namespace mc_rbdyn
 {
 
-QuadraticGenerator::QuadraticGenerator(double start, double end, unsigned int nrSteps)
-: current(start), end(end), nrSteps(nrSteps), speed(0),
-  max_speed(2*(end-start)/nrSteps), sign(1.)
+QuadraticGenerator::QuadraticGenerator(double start, double end, unsigned int nrSteps,
+    unsigned int proportion)
+: start(start), end(end), nrSteps_(nrSteps), proportion(proportion), current(0),
+  s1(0), s2(0)
 {
+  if(nrSteps_ % proportion != 0)
+  {
+    LOG_WARNING("nrSteps is not divisible by proportion, rounding it up to the nearest multiple");
+    LOG_WARNING(nrSteps);
+    nrSteps_ += proportion - (nrSteps_ % proportion);
+  }
+  LOG_WARNING(nrSteps_);
+  t1 = nrSteps_/proportion;
+  t2 = nrSteps_/proportion*(proportion-1);
+  max_speed = (double)proportion/(proportion-1);
+  s1 = pow(t1,2)/2*max_speed*proportion/nrSteps_;
+  s2 = s1+(t2-t1)*max_speed;
 }
 
 void QuadraticGenerator::next(double & percentOut, double & speedOut)
 {
-  if(std::abs(current - end) > 1e-2)
+  double speed, sample;
+  if(current <= t1)
   {
-    current += speed;
-    speed = std::max(std::min(speed + sign*2*max_speed/nrSteps, max_speed), 0.0);
-    if(speed >= max_speed)
-    {
-      sign = -1;
-      speed += sign*2*max_speed/nrSteps;
-    }
-    percentOut = current;
-    speedOut = speed;
+    speed = current*max_speed*proportion/nrSteps_;
+    sample = pow(current, 2)/2*(max_speed*proportion/nrSteps_);
+  }
+  else if(current > t1 && current <= t2)
+  {
+    speed = max_speed;
+    sample = s1 + (current - t1)*max_speed;
+  }
+  else if(current > t2 && current <= nrSteps_)
+  {
+    speed = max_speed*(1 - (current-t2)*proportion/(double)nrSteps_);
+    sample = s2 + (current - t2)*max_speed - pow(current - t2, 2)/2*max_speed*proportion/nrSteps_;
   }
   else
   {
-    percentOut = end;
-    speedOut = 0.;
+    //current > nrSteps_
+    speed = 0.;
+    sample = nrSteps_;
   }
+  current += 1;
+  percentOut = start + (end-start)*sample/nrSteps_;
+  speedOut = (end-start)*speed/nrSteps_;
 }
 
 std::vector<Plane> planes_from_polygon(const std::shared_ptr<geos::geom::Geometry> & geometry)

@@ -11,16 +11,21 @@ namespace mc_rbdyn
 
 struct MC_RBDYN_DLLAPI QuadraticGenerator
 {
-  QuadraticGenerator(double start, double end, unsigned int nrSteps);
+  QuadraticGenerator(double start, double end, unsigned int nrSteps,
+                      unsigned int proportion=4);
 
   void next(double & percentOut, double & speedOut);
 private:
-  double current;
+  double start;
   double end;
-  unsigned int nrSteps;
-  double speed;
+  unsigned int nrSteps_;
+  unsigned int proportion;
+  unsigned int current;
+  double s1;
+  double s2;
+  unsigned int t1;
+  unsigned int t2;
   double max_speed;
-  double sign;
 };
 
 struct MC_RBDYN_DLLAPI Plane

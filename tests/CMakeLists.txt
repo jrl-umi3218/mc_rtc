@@ -1,3 +1,6 @@
 add_executable(testBSplineTrajectory testBSplineTrajectory.cpp)
 target_link_libraries(testBSplineTrajectory mc_trajectory)
 
+add_executable(testQuadraticGenerator testQuadraticGenerator.cpp)
+target_link_libraries(testQuadraticGenerator mc_rbdyn)
+
