@@ -20,6 +20,8 @@
 #include <geos/geom/LinearRing.h>
 #include <geos/geom/CoordinateSequence.h>
 
+#include "pdgains.cpp"
+
 namespace mc_control
 {
 
@@ -325,12 +327,20 @@ bool MCSeqController::run()
             publisher->set_contacts(stances[stanceIndex].geomContacts());
           }
           samples = mc_rbdyn::QuadraticGenerator(0.0, max_perc, nr_points);
-          paused = step_by_step;
-          if(stanceIndex == 8)
+          /*FIXME Hackish */
+          if(seq_actions[stanceIndexIn]->type() == mc_control::SeqAction::GripperMove)
           {
-            LOG_WARNING("Removing comIncPlaneConstr from solver now");
-            comIncPlaneConstr->removeFromSolver(qpsolver->solver);
+            std::vector<std::string> reduce_pdgains_joints = {"LARM_JOINT0", "LARM_JOINT1", "LARM_JOINT2", "LARM_JOINT3", "LARM_JOINT4", "LARM_JOINT5", "LARM_JOINT6"};
+            for(const auto & jn : reduce_pdgains_joints)
+            {
+              double pgain, dgain;
+              pdgains::getPGain(jn, pgain);
+              pdgains::getDGain(jn, dgain);
+              pdgains::setPGain(jn, pgain/2);
+              pdgains::setDGain(jn, dgain/2);
+            }
           }
+          paused = step_by_step;
         }
       }
       post_live();
