@@ -4,6 +4,9 @@
 
 #include <mc_rtc/config.h>
 
+namespace pdgains
+{
+
 inline bool setPGain(int joint, double pgain);
 inline bool setPGain(const std::string & jname, double pgain);
 inline bool setDGain(int joint, double dgain);
@@ -22,13 +25,15 @@ inline bool getDGain(int joint, double &dgain);
 inline bool getDGain(const std::string & jname, double & dgain);
 inline bool getDGains(std::vector<double> &dgains);
 
+}
+
 #ifdef MC_RTC_HAS_HRPSYS_BASE
 #include <hrpsys/io/iob.h>
 #endif
 
+#ifdef MC_RTC_HAS_HRPSYS_BASE
 namespace hrp2
 {
-#ifdef MC_RTC_HAS_HRPSYS_BASE
   static const std::unordered_map<std::string, int> joints =
   {
     {"RLEG_JOINT0",0},
@@ -252,7 +257,11 @@ inline bool getDGains(std::vector<double> &dgains)
   }
   return b;
 }
+
+} // namespace pdgains
 #else // isdef MC_RTC_HAS_HRPSYS_BASE
+namespace pdgains
+{
 inline bool set(int, double) { return true; }
 inline bool set(const std::string &, double) { return true; }
 inline bool setDGain(int, double) { return true; }
@@ -270,6 +279,5 @@ inline bool gets(std::vector<double> &) { return true; }
 inline bool getDGain(int, double &) { return true; }
 inline bool getDGain(const std::string &, double &) { return true; }
 inline bool getDGains(std::vector<double> &) { return true; }
-#endif // MC_RTC_HAS_HRPSYS_BASE
-
 } // namespace pdgains
+#endif // MC_RTC_HAS_HRPSYS_BASE
