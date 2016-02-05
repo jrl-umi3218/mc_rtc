@@ -373,6 +373,7 @@ void MCSeqController::reset(const ControllerResetData & reset_data)
   rbd::forwardKinematics(robot().mb(), robot().mbc());
   rbd::forwardVelocity(robot().mb(), robot().mbc());
   qpsolver->setContacts(stances[stanceIndex].geomContacts());
+  publisher->set_contacts(stances[stanceIndex].geomContacts());
   LOG_INFO("LFullSole position: " << robot().surface("LFullSole").X_0_s(robot()).translation().transpose())
   LOG_INFO("RFullSole position: " << robot().surface("RFullSole").X_0_s(robot()).translation().transpose())
   qpsolver->update();

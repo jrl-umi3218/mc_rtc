@@ -178,26 +178,15 @@ bool live_moveWPT::eval(MCSeqController & ctl)
 
   Eigen::Vector3d robotSurfacePos = ctl.moveContactTask->robotSurfacePos().translation();
   Eigen::Vector3d targetPos = ctl.moveContactTask->wp;
+  ctl.publisher->publish_waypoint(sva::PTransformd(targetPos));
   double error = (robotSurfacePos - targetPos).norm();
-
-  sva::PTransformd X_slam_target = ctl.publisher->get_slam_contact();
-  std::cout << "WAYPOINT" << std::endl;
-  std::cout << "Plan target" << std::endl;
-  std::cout << ctl.moveContactTask->targetTf.translation().transpose() << std::endl;
-  std::cout << ctl.moveContactTask->targetTf.rotation() << std::endl;
-  std::cout << "SLAM target" << std::endl;
-  std::cout << X_slam_target.translation().transpose() << std::endl;
-  std::cout << X_slam_target.rotation() << std::endl;
-  /* Uncomment for hell
-  ctl.moveContactTask->set_target_tf(X_slam_target, ctl.curConf());
-  ctl.moveContactTask->toWaypoint(contactConf, ctl.curConf().contactTask.position.targetSpeed);
-   */
 
   if(contactConf.contactTask.waypointConf.skip || error < contactConf.contactTask.waypointConf.thresh)
   {
     ctl.moveContactTask->toPreEnv(contactConf, contactConf.contactTask.position.targetSpeed);
     if(ctl.currentGripper == 0)
     {
+      ctl.publisher->publish_waypoint(sva::PTransformd::Identity());
       LOG_INFO("Finished to move to contact wp")
       return true;
     }
@@ -257,17 +246,11 @@ bool live_moveContactT::eval(MCSeqController & ctl)
   double velErr = robotSurfaceVel.norm();
 
   sva::PTransformd X_slam_target = ctl.publisher->get_slam_contact();
-  std::cout << "Move foot" << std::endl;
-  std::cout << "Plan target" << std::endl;
-  std::cout << ctl.moveContactTask->targetTf.translation().transpose() << std::endl;
-  std::cout << ctl.moveContactTask->targetTf.rotation() << std::endl;
-  std::cout << "SLAM target" << std::endl;
-  std::cout << X_slam_target.translation().transpose() << std::endl;
-  std::cout << X_slam_target.rotation() << std::endl;
-  /* Uncomment for hell
-  ctl.moveContactTask->set_target_tf(X_slam_target, ctl.curConf());
-  ctl.moveContactTask->toPreEnv(ctl.curConf(), ctl.curConf().contactTask.position.targetSpeed);
-  */
+  if(X_slam_target != sva::PTransformd::Identity())
+  {
+    ctl.moveContactTask->set_target_tf(X_slam_target, ctl.curConf());
+    ctl.moveContactTask->toPreEnv(ctl.curConf(), ctl.curConf().contactTask.position.targetSpeed);
+  }
 
   /* Remove collision avoidance when velocity reaches 0 to set the contact more precisely */
   if( (!ctl.isCollFiltered) && velErr < obj.velThresh )
@@ -809,25 +792,13 @@ bool live_moveGripperWPT::eval(MCSeqController & ctl)
 
   Eigen::Vector3d robotSurfacePos = ctl.moveContactTask->robotSurfacePos().translation();
   Eigen::Vector3d targetPos = ctl.moveContactTask->wp;
+  ctl.publisher->publish_waypoint(sva::PTransformd(targetPos));
   double error = (robotSurfacePos - targetPos).norm();
-
-  sva::PTransformd X_slam_target = ctl.publisher->get_slam_contact();
-  std::cout << "WAYPOINT" << std::endl;
-  std::cout << "Plan target" << std::endl;
-  std::cout << ctl.moveContactTask->targetTf.translation().transpose() << std::endl;
-  std::cout << ctl.moveContactTask->targetTf.rotation() << std::endl;
-  std::cout << "SLAM target" << std::endl;
-  std::cout << X_slam_target.translation().transpose() << std::endl;
-  std::cout << X_slam_target.rotation() << std::endl;
-  /* Uncomment for hell
-  ctl.moveContactTask->set_target_tf(X_slam_target, ctl.curConf());
-  ctl.moveContactTask->toWaypoint(contactConf, ctl.curConf().contactTask.position.targetSpeed);
-   */
-
   if(contactConf.contactTask.waypointConf.skip || error < contactConf.contactTask.waypointConf.thresh)
   {
     /* Waypoint reached, new goal is target */
     ctl.moveContactTask->toPreEnv(contactConf, contactConf.contactTask.position.targetSpeed);
+    ctl.publisher->publish_waypoint(sva::PTransformd::Identity());
     LOG_INFO("Finished move gripper WPT")
     return true;
   }
@@ -848,17 +819,11 @@ bool live_moveGripperT::eval(MCSeqController & ctl)
   double velErr = ctl.moveContactTask->robotSurfaceVel().linear().norm();
 
   sva::PTransformd X_slam_target = ctl.publisher->get_slam_contact();
-  std::cout << "Move gripper" << std::endl;
-  std::cout << "Plan target" << std::endl;
-  std::cout << ctl.moveContactTask->targetTf.translation().transpose() << std::endl;
-  std::cout << ctl.moveContactTask->targetTf.rotation() << std::endl;
-  std::cout << "SLAM target" << std::endl;
-  std::cout << X_slam_target.translation().transpose() << std::endl;
-  std::cout << X_slam_target.rotation() << std::endl;
-  /* Uncomment for hell
-  ctl.moveContactTask->set_target_tf(X_slam_target, ctl.curConf());
-  ctl.moveContactTask->toPreEnv(ctl.curConf(), ctl.curConf().contactTask.position.targetSpeed);
-   */
+  if(X_slam_target != sva::PTransformd::Identity())
+  {
+    ctl.moveContactTask->set_target_tf(X_slam_target, ctl.curConf());
+    ctl.moveContactTask->toPreEnv(ctl.curConf(), ctl.curConf().contactTask.position.targetSpeed);
+  }
 
   if(ctl.isBodyTask)
   {

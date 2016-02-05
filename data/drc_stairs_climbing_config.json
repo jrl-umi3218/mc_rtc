@@ -116,12 +116,12 @@
             },
             "orientation" : {
                "finalWeight" : 1000.0,
-               "stiffness" : 0.250,
+               "stiffness" : 0.25,
                "weight" : 200.0
             },
             "position" : {
                "extraStiffness" : 1.0,
-               "stiffness" : 0.250,
+               "stiffness" : 0.25,
                "targetSpeed" : 0.00050,
                "weight" : 600.0
             },
@@ -137,7 +137,7 @@
             }
          },
          "postureTask" : {
-            "stiffness" : 0.050,
+            "stiffness" : 2.0,
             "weight" : 10.0
          }
       },
@@ -254,6 +254,15 @@
          ],
          "robotEnv" : [
             {
+               "body1" : "LARM_LINK6",
+               "body2" : "stair_left_railing",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.02,
+                  "sDist" : 0.01
+               }
+            },
+            {
                "body1" : "RARM_LINK6",
                "body2" : "stair_step2",
                "collisionConf" : {
@@ -281,7 +290,18 @@
                }
             }
          ],
-         "robotEnvContactFilter" : []
+         "robotEnvContactFilter" : [
+           {
+             "surf1" : "LeftGripper",
+             "surf2" : "StairLeftRung1",
+             "filtered" : [
+              {
+                "body1" : "LARM_LINK6",
+                "body2" : "stair_left_railing"
+              }
+             ]
+           }
+         ]
       }
    },
    "StepByStep" : [
@@ -289,6 +309,21 @@
          "type" : "add",
          "r1Surface" : "LeftGripper",
          "r2Surface" : "StairLeftRung1",
+         "contactTask" : {
+            "waypointConf" : {
+               "conf" : {
+                  "x" : 0.15,
+                  "y" : 2.5,
+                  "z" : 0.6,
+                  "nOff" : 0.2
+               },
+               "thresh" : 0.15,
+               "type" : "percentWaypoint"
+            }
+         },
+         "contactObj" : {
+           "preContactDist" : 0.13
+         },
          "comObj" : {
             "comOffset" : [ 0.050, 0.0, 0.0 ]
          }
