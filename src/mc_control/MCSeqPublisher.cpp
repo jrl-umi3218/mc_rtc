@@ -22,7 +22,8 @@ MCSeqPublisher::MCSeqPublisher(const mc_rbdyn::Robots & robots)
 : robots(robots),
   nh(mc_rtc::ROSBridge::get_node_handle()),
   pub_thread(std::bind(&MCSeqPublisher::publication_thread, this)),
-  com(Eigen::Vector3d::Zero()), poly(), contacts(),
+  com(Eigen::Vector3d::Zero()), poly(),
+  X_waypoint(sva::PTransformd::Identity()), contacts(),
   slam_contact(""), X_slam_contact(sva::PTransformd::Identity()),
   running(true)
 {
@@ -52,6 +53,11 @@ void MCSeqPublisher::publish_poly(const std::shared_ptr<geos::geom::Geometry> & 
       poly.emplace_back(p.x, p.y, 0);
     }
   }
+}
+
+void MCSeqPublisher::publish_waypoint(const sva::PTransformd & X_waypoint)
+{
+  this->X_waypoint = X_waypoint;
 }
 
 void MCSeqPublisher::set_contacts(const std::vector<mc_rbdyn::Contact> & cs)
@@ -86,14 +92,7 @@ void MCSeqPublisher::set_contacts(const std::vector<mc_rbdyn::Contact> & cs)
 
 sva::PTransformd MCSeqPublisher::get_slam_contact()
 {
-  if(slam_contact != "")
-  {
-    return sva::PTransformd::Identity();
-  }
-  else
-  {
-    return X_slam_contact;
-  }
+  return X_slam_contact;
 }
 
 #ifdef MC_RTC_HAS_ROS
@@ -174,32 +173,38 @@ inline void TF2PT(const geometry_msgs::TransformStamped & tf, sva::PTransformd &
                                        tf.transform.translation.z));
 }
 
-inline visualization_msgs::Marker contact_marker(const mc_rbdyn::Robots & robots, const mc_rbdyn::Contact & contact, const std_msgs::Header & header, std::vector<geometry_msgs::TransformStamped> & tfs)
+inline visualization_msgs::Marker marker(const std::string & name, const sva::PTransformd & X, const std_msgs::Header & header, std::array<float, 4> rgba)
 {
   visualization_msgs::Marker msg;
   msg.header = header;
-  sva::PTransformd X_0_c = contact.X_0_r1s(robots);
-  Eigen::Quaterniond ori(X_0_c.rotation());
+  Eigen::Quaterniond ori(X.rotation());
   msg.ns = "robot";
-  msg.id = static_cast<int>(std::hash<std::string>()(contact.toStr()));
+  msg.id = static_cast<int>(std::hash<std::string>()(name));
   msg.type = visualization_msgs::Marker::SPHERE;
   msg.action = 0;
   msg.pose.orientation.w = ori.w();
   msg.pose.orientation.x = ori.x();
   msg.pose.orientation.y = ori.y();
   msg.pose.orientation.z = ori.z();
-  msg.pose.position.x = X_0_c.translation().x();
-  msg.pose.position.y = X_0_c.translation().y();
-  msg.pose.position.z = X_0_c.translation().z();
+  msg.pose.position.x = X.translation().x();
+  msg.pose.position.y = X.translation().y();
+  msg.pose.position.z = X.translation().z();
   msg.scale.x = 0.05;
   msg.scale.y = 0.05;
   msg.scale.z = 0.05;
-  msg.color.r = 0.0;
-  msg.color.g = 1.0;
-  msg.color.b = 0.0;
-  msg.color.a = 1.0;
+  msg.color.r = rgba[0];
+  msg.color.g = rgba[1];
+  msg.color.b = rgba[2];
+  msg.color.a = rgba[3];
   msg.lifetime = ros::Duration(0.5);
-  msg.text = contact.toStr();
+  msg.text = name;
+  return msg;
+}
+
+inline visualization_msgs::Marker contact_marker(const mc_rbdyn::Robots & robots, const mc_rbdyn::Contact & contact, const std_msgs::Header & header, std::vector<geometry_msgs::TransformStamped> & tfs)
+{
+  auto X_0_c = contact.X_0_r1s(robots);
+  visualization_msgs::Marker msg = marker(contact.toStr(), X_0_c, header, {{0.0, 1.0, 0.0, 1.0}});
   std::stringstream ss;
   ss << "contact_" << contact.r1Surface()->name() << "_" << contact.r2Surface()->name();
   /* TF expressed in robot's frame */
@@ -236,6 +241,11 @@ void MCSeqPublisher::publication_thread()
       for(const auto & contact : contacts)
       {
         contact_pub.publish(contact_marker(robots, contact, header, tfs));
+      }
+      if(X_waypoint != sva::PTransformd::Identity())
+      {
+        contact_pub.publish(marker("WPT", X_waypoint, header, {{1.0,0.0,0.0,1.0}}));
+        tfs.push_back(PT2TF(X_waypoint, header.stamp, header.frame_id, "WPT"));
       }
       tf_caster.sendTransform(tfs);
       ros::spinOnce();

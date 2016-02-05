@@ -29,6 +29,8 @@ public:
 
   void publish_poly(const std::shared_ptr<geos::geom::Geometry> & geom);
 
+  void publish_waypoint(const sva::PTransformd & X_waypoint);
+
   void set_contacts(const std::vector<mc_rbdyn::Contact> & contacts);
 
   /* Return the slam position of the contact being added */
@@ -39,6 +41,7 @@ private:
   std::thread pub_thread;
   Eigen::Vector3d com;
   std::vector<Eigen::Vector3d> poly;
+  sva::PTransformd X_waypoint;
   std::vector<mc_rbdyn::Contact> contacts;
   std::string slam_contact;
   sva::PTransformd X_slam_contact;
