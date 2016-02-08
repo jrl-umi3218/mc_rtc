@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#ifndef WIN32
+
 namespace mc_rtc
 {
 
@@ -21,3 +23,38 @@ constexpr auto OUT_RED = "\033[01;31m";
   std::cout << mc_rtc::OUT_BLUE << args << mc_rtc::OUT_NONE << std::endl;
 #define LOG_SUCCESS(args)\
   std::cout << mc_rtc::OUT_GREEN << args << mc_rtc::OUT_NONE << std::endl;
+
+#else
+
+#include <windows.h>
+namespace mc_rtc
+{
+  static const HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+  constexpr auto OUT_NONE = 15;
+  constexpr auto OUT_BLUE = 11;
+  constexpr auto OUT_GREEN = 10;
+  constexpr auto OUT_PURPLE = 13;
+  constexpr auto OUT_RED = 12;
+}
+
+#define LOG_ERROR(args)\
+  SetConsoleTextAttribute(mc_rtc::hConsole, mc_rtc::OUT_RED);\
+  std::cerr << args << std::endl;\
+  SetConsoleTextAttribute(mc_rtc::hConsole, mc_rtc::OUT_NONE);
+
+#define LOG_WARNING(args)\
+  SetConsoleTextAttribute(mc_rtc::hConsole, mc_rtc::OUT_PURPLE);\
+  std::cerr << args << std::endl;\
+  SetConsoleTextAttribute(mc_rtc::hConsole, mc_rtc::OUT_NONE);
+
+#define LOG_INFO(args)\
+  SetConsoleTextAttribute(mc_rtc::hConsole, mc_rtc::OUT_BLUE);\
+  std::cout << args << std::endl;\
+  SetConsoleTextAttribute(mc_rtc::hConsole, mc_rtc::OUT_NONE);
+
+#define LOG_SUCCESS(args)\
+  SetConsoleTextAttribute(mc_rtc::hConsole, mc_rtc::OUT_GREEN);\
+  std::cout << args << std::endl;\
+  SetConsoleTextAttribute(mc_rtc::hConsole, mc_rtc::OUT_NONE);
+
+#endif

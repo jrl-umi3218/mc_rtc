@@ -260,10 +260,9 @@ inline bool getDGains(std::vector<double> &dgains)
 
 } // namespace pdgains
 #else // isdef MC_RTC_HAS_HRPSYS_BASE
+
 namespace pdgains
 {
-inline bool set(int, double) { return true; }
-inline bool set(const std::string &, double) { return true; }
 inline bool setDGain(int, double) { return true; }
 inline bool setDGain(const std::string &, double) { return true; }
 inline bool sets(const std::vector<int> &, const std::vector<double> &) { return true; }
@@ -273,9 +272,9 @@ inline bool setDGains(const std::vector<std::string> &, const std::vector<double
 inline bool setPDGains(const std::vector<int> &, const std::vector<double> &) { return true; }
 inline bool setPDGains(const std::vector<std::string> &, const std::vector<double> &) { return true; }
 inline bool setPDGains(const std::vector<double> &, const std::vector<double> &) { return true; }
-inline bool get(int, double &) { return true; }
-inline bool get(const std::string &, double &) { return true; }
-inline bool gets(std::vector<double> &) { return true; }
+inline bool getPGain(int, double &) { return true; }
+inline bool getPGain(const std::string &, double &) { return true; }
+inline bool getPGains(std::vector<double> &) { return true; }
 inline bool getDGain(int, double &) { return true; }
 inline bool getDGain(const std::string &, double &) { return true; }
 inline bool getDGains(std::vector<double> &) { return true; }

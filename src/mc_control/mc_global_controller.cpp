@@ -33,7 +33,6 @@ MCGlobalController::Configuration::Configuration(const std::string & path)
     LOG_ERROR("Failed to read configuration file")
     LOG_WARNING(exc.what())
   }
-
   if(v.isMember("RobotModulePaths"))
   {
     for(const auto & cv : v["RobotModulePaths"])

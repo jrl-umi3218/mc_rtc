@@ -223,10 +223,14 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
         dof.setIdentity();
         dof(5, 5) = 0;
         auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.contactConstraint.contactConstr.get());
-        if(constr == 0)
+        if (constr == 0)
+        {
           LOG_INFO("NOPE NOPE")
+        }
         else
+        {
           constr->addDofContact(cId, dof);
+        }
 
         ctl.efTask->addToSolver(ctl.qpsolver->solver);
 
@@ -342,10 +346,14 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
               LOG_INFO(s.first)
             }
             auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.contactConstraint.contactConstr.get());
-            if(constr == 0)
+            if (constr == 0)
+            {
               LOG_INFO("NOPE NOPE")
+            }
             else
+            {
               constr->resetDofContacts();
+            }
             //NB : When using dof contacts, do !add twice !
             ctl.egressContacts.emplace_back(ctl.robots(), ctl.robots().robotIndex(), 2,
                                             "LFullSole", "AllGround");
@@ -425,10 +433,14 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
         dof(2, 2) = 0;
         dof(5, 5) = 0;
         auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.contactConstraint.contactConstr.get());
-        if(constr == 0)
+        if (constr == 0)
+        {
           LOG_INFO("NOPE NOPE")
+        }
         else
+        {
           constr->addDofContact(cId, dof);
+        }
 
         ctl.efTask->addToSolver(ctl.qpsolver->solver);
 
@@ -590,10 +602,14 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
         dof(2, 2) = 0;
         dof(5, 5) = 0;
         auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.contactConstraint.contactConstr.get());
-        if(constr == 0)
+        if (constr == 0)
+        {
           LOG_INFO("NOPE NOPE")
+        }
         else
+        {
           constr->addDofContact(cId, dof);
+        }
 
         ctl.efTask->addToSolver(ctl.qpsolver->solver);
 
@@ -711,11 +727,14 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
             dof.setIdentity();
             dof(5, 5) = 0;
             auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.contactConstraint.contactConstr.get());
-            if(constr == 0)
+            if (constr == 0)
+            {
               LOG_INFO("NOPE NOPE")
+            }
             else
+            {
               constr->addDofContact(cId, dof);
-
+            }
             timeoutIter = 0;
             forceIter = 0;
             forceStart = ctl.wrenches[0].first[2];
@@ -1281,13 +1300,17 @@ struct EgressMoveComForcePhase : public EgressMRPhaseExecution
         dof.setIdentity();
         dof(5, 5) = 0;
         auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.contactConstraint.contactConstr.get());
-        if(constr == 0)
+        if (constr == 0)
+        {
           LOG_INFO("NOPE NOPE")
+        }
         else
+        {
           constr->resetDofContacts();
           LOG_INFO("Added a dof to " << lfc->r1Surface()->name() << " / "
-                    << lfc->r2Surface()->name())
-          constr->addDofContact(cId, dof);
+            << lfc->r2Surface()->name())
+            constr->addDofContact(cId, dof);
+        }
 
         unsigned int bodyIndex = ctl.robot().bodyIndexByName(bodyName_);
         startPos_ = ctl.robot().mbc().bodyPosW[bodyIndex].translation();
@@ -1308,10 +1331,14 @@ struct EgressMoveComForcePhase : public EgressMRPhaseExecution
             done_com = true;
             ctl.postureTask->posture(ctl.robot().mbc().q);
             auto constr = dynamic_cast<tasks::qp::ContactConstr*>(ctl.contactConstraint.contactConstr.get());
-            if(constr == 0)
+            if (constr == 0)
+            {
               LOG_INFO("NOPE NOPE")
+            }
             else
+            {
               constr->resetDofContacts();
+            }
             //ctl.comTask->removeFromSolver(ctl.qpsolver->solver);
             LOG_INFO("Phase finished, can transit")
             //return true;

@@ -258,20 +258,26 @@ public:
 
 }
 
+#ifdef WIN32
+  #define CONTROLLER_MODULE_API __declspec(dllexport)
+#else
+  #define CONTROLLER_MODULE_API
+#endif
+
 /** Provides a handle to construct the controller with Json config */
 #define CONTROLLER_CONSTRUCTOR(NAME, TYPE)\
 extern "C"\
 {\
-  const char * CLASS_NAME() { return NAME; }\
-  void destroy(mc_control::MCController * ptr) { delete ptr; }\
-  mc_control::MCController * create(const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const Json::Value & conf) { return new TYPE(robot, dt, conf); }\
+  CONTROLLER_MODULE_API const char * CLASS_NAME() { return NAME; }\
+  CONTROLLER_MODULE_API void destroy(mc_control::MCController * ptr) { delete ptr; }\
+  CONTROLLER_MODULE_API mc_control::MCController * create(const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const Json::Value & conf) { return new TYPE(robot, dt, conf); }\
 }
 
 /** Provides a handle to construct a generic controller */
 #define SIMPLE_CONTROLLER_CONSTRUCTOR(NAME, TYPE)\
 extern "C"\
 {\
-  const char * CLASS_NAME() { return NAME; }\
-  void destroy(mc_control::MCController * ptr) { delete ptr; }\
-  mc_control::MCController * create(const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const Json::Value &) { return new TYPE(robot, dt); }\
+  CONTROLLER_MODULE_API const char * CLASS_NAME() { return NAME; }\
+  CONTROLLER_MODULE_API void destroy(mc_control::MCController * ptr) { delete ptr; }\
+  CONTROLLER_MODULE_API mc_control::MCController * create(const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const Json::Value &) { return new TYPE(robot, dt); }\
 }

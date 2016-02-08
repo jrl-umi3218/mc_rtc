@@ -60,14 +60,15 @@ void Loader::load_libraries(const std::vector<std::string> & paths, Loader::hand
         }
         #pragma GCC diagnostic push
         #pragma GCC diagnostic ignored "-Wpedantic"
-        const char * CLASS_NAME = ((const char *(*)(void))(lt_dlsym(h, "CLASS_NAME")))();
+        typedef const char*(*class_name_fun_t)(void);
+        class_name_fun_t CLASS_NAME_FUN = (class_name_fun_t)(lt_dlsym(h, "CLASS_NAME"));
         #pragma GCC diagnostic pop
-        if(CLASS_NAME == nullptr)
+        if(CLASS_NAME_FUN == nullptr)
         {
           LOG_WARNING("No symbol CLASS_NAME in library " << p.path().string() << std::endl << lt_dlerror())
           continue;
         }
-        std::string class_name(CLASS_NAME);
+        std::string class_name(CLASS_NAME_FUN());
         if(out.count(class_name))
         {
           /* We get the first library that declared this class name and only

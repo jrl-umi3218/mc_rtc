@@ -259,7 +259,7 @@ public:
 
 extern "C"
 {
-  const char * CLASS_NAME();
-  void destroy(mc_control::MCController * ptr);
-  mc_control::MCController * create(const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const Json::Value & conf);
+  MC_CONTROL_DLLAPI const char * CLASS_NAME();
+  MC_CONTROL_DLLAPI void destroy(mc_control::MCController * ptr);
+  MC_CONTROL_DLLAPI mc_control::MCController * create(const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const Json::Value & conf);
 }

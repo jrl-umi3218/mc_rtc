@@ -84,13 +84,19 @@ struct MC_RBDYN_DLLAPI RobotModule
 
 /* Set of macros to assist with the writing of a RobotModule */
 
+#ifdef WIN32
+#define ROBOT_MODULE_API __declspec(dllexport)
+#else
+#define ROBOT_MODULE_API
+#endif
+
 /*! ROBOT_MODULE_COMMON
  * Declare a destroy symbol and CLASS_NAME symbol
  * Constructor should be declared by the user
 */
 #define ROBOT_MODULE_COMMON(NAME)\
-  const char * CLASS_NAME() { return NAME; }\
-  void destroy(mc_rbdyn::RobotModule * ptr) { delete ptr; }
+  ROBOT_MODULE_API const char * CLASS_NAME() { return NAME; }\
+  ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr) { delete ptr; }
 
 /*! ROBOT_MODULE_DEFAULT_CONSTRUCTOR
  * Declare an external symbol for creation using a default constructor
@@ -101,7 +107,7 @@ struct MC_RBDYN_DLLAPI RobotModule
 extern "C"\
 {\
   ROBOT_MODULE_COMMON(NAME)\
-  mc_rbdyn::RobotModule * create() { return new TYPE(); }\
+  ROBOT_MODULE_API mc_rbdyn::RobotModule * create() { return new TYPE(); }\
 }
 
 /*! ROBOT_MODULE_CANONIC_CONSTRUCTOR
@@ -113,5 +119,5 @@ extern "C"\
 extern "C"\
 {\
   ROBOT_MODULE_COMMON(NAME)\
-  mc_rbdyn::RobotModule * create(const std::string & path, const std::string & name) { return new TYPE(path, name); }\
+  ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string & path, const std::string & name) { return new TYPE(path, name); }\
 }

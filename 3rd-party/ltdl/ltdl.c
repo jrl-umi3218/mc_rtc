@@ -25,6 +25,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 
 */
 
+#ifdef LIBLTDL_DLL_IMPORT
+#undef LIBLTDL_DLL_IMPORT
+#endif
+
 #if HAVE_CONFIG_H
 #  include <config.h>
 #endif
@@ -207,7 +211,11 @@ typedef struct _DIR
 #define LT_SYMBOL_OVERHEAD	5
 
 
-
+/* Typedef for Visual Studio */
+#ifdef __WINDOWS__
+  typedef int error_t;
+  #define LTDL_OBJDIR "./libs"
+#endif
 
 /* --- MEMORY HANDLING --- */
 

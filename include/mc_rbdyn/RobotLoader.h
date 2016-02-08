@@ -16,7 +16,7 @@ namespace mc_rbdyn
 /*! \class RobotLoader
  * \brief Load RobotModule instances from shared libraries
 */
-struct RobotLoader
+struct MC_RBDYN_DLLAPI RobotLoader
 {
 public:
   /** Return a RobotModule constructed with the provided Args

@@ -12,6 +12,7 @@ namespace RTC
   struct TimedPoint3D {};
   struct TimedOrientation3D {};
   struct TimedAcceleration3D {};
+  struct TimedAngularVelocity3D {};
 }
 #endif
 
