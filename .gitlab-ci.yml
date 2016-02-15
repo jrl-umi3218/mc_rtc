@@ -1,6 +1,6 @@
 variables:
   CI_TOOL: gitlab-ci
-  APT_DEPENDENCIES: "openjdk-6-jdk openjdk-6-jre jython libreadline-java java-common ttf-kochi-gothic ttf-kochi-mincho gcc g++ make build-essential cmake cmake-qt-gui cmake-curses-gui doxygen graphviz pkg-config python-yaml libcos4-dev libomnievents-dev libomniorb4-1 libomniorb4-dev libomnithread3-dev libomnithread3c2 omnievents omniidl omniidl-python omniorb omniorb-idl omniorb-nameserver python-omniorb python-tk liblapack3gf liblapack-dev libatlas-base-dev libatlas-dev libblas3gf libblas-dev f2c libf2c2 libf2c2-dev libgfortran3 libgfortran3-dbg zlib1g-dev libpng12-dev uuid-dev collada-dom-dev libsdl2-dev libglew-dev freeglut3-dev libopencv-dev libtinyxml2-dev libboost-all-dev libjsoncpp-dev libgeos++-dev libgeos-dev libsdl1.2-dev qhull-bin libqhull-dev libpcl-all libqt4-dev libqt4-opengl-dev libxmu-dev libltdl-dev"
+  APT_DEPENDENCIES: "libtinyxml2-dev libboost-all-dev libjsoncpp-dev libgeos++-dev libgeos-dev libsdl1.2-dev qhull-bin libqhull-dev libpcl-all libqt4-dev libqt4-opengl-dev libxmu-dev libltdl-dev"
   GIT_DEPENDENCIES: "jorisv/SpaceVecAlg jorisv/RBDyn jorisv/eigen-qld git@gite.lirmm.fr:multi-contact/eigen-lssol.git jrl-umi3218/sch-core gergondet/Tasks git@gite.lirmm.fr:multi-contact/mc_rbdyn_urdf_cpp.git"
   MASTER_PPA: "v-launchpad-jochen-sprickerhof-de/pcl"
   ROS_DISTRO: "indigo"
@@ -35,7 +35,7 @@ build_gcc_noros_hrpsys:
   stage: build
   script:
     - apt-get install -qq --force-yes openrtm-aist-dev openrtm-aist-python
-    - export APT_DEPENDENCIES=""; export GIT_DEPENDENCIES="fkanehiro/openhrp3 OctoMap/octomap fkanehiro/hrpsys-base"; ./.jrl-ci/run before_install
+    - export APT_DEPENDENCIES="openjdk-6-jdk openjdk-6-jre jython libreadline-java java-common ttf-kochi-gothic ttf-kochi-mincho gcc g++ make build-essential cmake cmake-qt-gui cmake-curses-gui doxygen graphviz pkg-config python-yaml libcos4-dev libomnievents-dev libomniorb4-1 libomniorb4-dev libomnithread3-dev libomnithread3c2 omnievents omniidl omniidl-python omniorb omniorb-idl omniorb-nameserver python-omniorb python-tk liblapack3gf liblapack-dev libatlas-base-dev libatlas-dev libblas3gf libblas-dev f2c libf2c2 libf2c2-dev libgfortran3 libgfortran3-dbg zlib1g-dev libpng12-dev uuid-dev collada-dom-dev libsdl2-dev libglew-dev freeglut3-dev libopencv-dev"; export GIT_DEPENDENCIES="fkanehiro/openhrp3 OctoMap/octomap fkanehiro/hrpsys-base"; ./.jrl-ci/run before_install
     - export CC=gcc
     - export CXX=g++
     - ./.jrl-ci/run build
@@ -63,7 +63,7 @@ build_gcc_ros_hrpsys:
   script:
     - ./.jrl-ci/dependencies/catkin
     - apt-get install -qq --force-yes openrtm-aist-dev openrtm-aist-python
-    - export APT_DEPENDENCIES="ros-indigo-common-msgs ros-indigo-tf2-ros ros-indigo-xacro ros-indigo-rviz-animated-view-controller"
+    - export APT_DEPENDENCIES="openjdk-6-jdk openjdk-6-jre jython libreadline-java java-common ttf-kochi-gothic ttf-kochi-mincho gcc g++ make build-essential cmake cmake-qt-gui cmake-curses-gui doxygen graphviz pkg-config python-yaml libcos4-dev libomnievents-dev libomniorb4-1 libomniorb4-dev libomnithread3-dev libomnithread3c2 omnievents omniidl omniidl-python omniorb omniorb-idl omniorb-nameserver python-omniorb python-tk liblapack3gf liblapack-dev libatlas-base-dev libatlas-dev libblas3gf libblas-dev f2c libf2c2 libf2c2-dev libgfortran3 libgfortran3-dbg zlib1g-dev libpng12-dev uuid-dev collada-dom-dev libsdl2-dev libglew-dev freeglut3-dev libopencv-devros-indigo-common-msgs ros-indigo-tf2-ros ros-indigo-xacro ros-indigo-rviz-animated-view-controller"
     - export GIT_DEPENDENCIES="fkanehiro/openhrp3 OctoMap/octomap fkanehiro/hrpsys-base"
     - export ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_ros#master git@gite.lirmm.fr:mc-hrp2/hrp2_drc#master git@gite.lirmm.fr:mc-hrp4/hrp4#master"
     - ./.jrl-ci/run before_install
