@@ -42,6 +42,7 @@ find_package(Boost REQUIRED COMPONENTS system filesystem thread date_time timer)
 add_required_dependency(jsoncpp)
 add_required_dependency(Tasks)
 add_required_dependency(mc_rbdyn_urdf_cpp)
+pkg_config_append_cflags("-I${Eigen_INCLUDE_DIR}")
 
 add_optional_dependency(hrpsys-base)
 if(${HRPSYS_BASE_FOUND})
