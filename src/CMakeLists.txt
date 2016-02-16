@@ -136,12 +136,9 @@ set(mc_tasks_HDR
 add_library(mc_tasks SHARED ${mc_tasks_SRC} ${mc_tasks_HDR})
 set_target_properties(mc_tasks PROPERTIES COMPILE_FLAGS "-DMC_TASKS_EXPORTS")
 target_link_libraries(mc_tasks mc_solver mc_rbdyn mc_trajectory)
-#FIXME Apparently visual does not follow the dependency of mc_rbdyn?
-if(WIN32)
 target_link_libraries(mc_tasks ${Boost_LIBRARIES})
 pkg_config_use_dependency(mc_tasks mc_rbdyn_urdf_cpp)
 pkg_config_use_dependency(mc_tasks Tasks)
-endif()
 pkg_config_append_libs(mc_tasks)
 
 add_library(mc_rtc_ros SHARED mc_rtc/ros.cpp ../include/mc_rtc/ros.h ../include/mc_rtc/ros_api.h)
@@ -186,13 +183,10 @@ target_link_libraries(mc_control mc_tasks mc_solver mc_rtc_ros mc_rtc_loader)
 if(${HRPSYS_BASE_FOUND})
   target_link_libraries(mc_control hrpIo)
 endif()
-#FIXME Apparently visual does not follow the dependency of mc_rbdyn?
-if(WIN32)
 target_link_libraries(mc_control ${Boost_LIBRARIES})
 pkg_config_use_dependency(mc_control mc_rbdyn_urdf_cpp)
 pkg_config_use_dependency(mc_control Tasks)
 pkg_config_use_dependency(mc_control jsoncpp)
-endif()
 pkg_config_append_libs(mc_control)
 
 macro(add_controller controller_name controller_SRC controller_HDR)

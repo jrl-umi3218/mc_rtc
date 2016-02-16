@@ -127,7 +127,7 @@ MC_RBDYN_DLLAPI std::shared_ptr<Robots> loadRobotFromUrdf(const std::string & na
 struct MC_RBDYN_DLLAPI Robot
 {
   friend struct Robots;
-  #ifndef WIN32
+  #if defined __GNUC__ && ! defined  __clang__
   friend class __gnu_cxx::new_allocator<Robot>;
   #else
   friend class std::allocator<Robot>;
