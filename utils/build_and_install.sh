@@ -20,7 +20,7 @@ else
 fi
 readonly ROS_DISTRO=indigo
 readonly ROS_APT_DEPENDENCIES="ros-${ROS_DISTRO}-common-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-rviz-animated-view-controller"
-readonly ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_ros#karim_drc git@gite.lirmm.fr:mc-hrp2/hrp2_drc#master git@gite.lirmm.fr:mc-hrp4/hrp4#master"
+ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_ros#karim_drc git@gite.lirmm.fr:mc-hrp2/hrp2_drc#master git@gite.lirmm.fr:mc-hrp4/hrp4#master"
 readonly git_clone="git clone --quiet --recursive"
 
 SUDO_CMD=sudo
@@ -202,6 +202,7 @@ then
   catkin_make
   . $SOURCE_DIR/catkin_ws/devel/setup.sh
 else
+  ROS_GIT_DEPENDENCIES=`echo $ROS_GIT_DEPENDENCIES|sed -e's/hrp4#master/hrp4#noxacro/'`
   for package in ${ROS_GIT_DEPENDENCIES}; do
     git_dependency_parsing $package
     cd $SOURCE_DIR
