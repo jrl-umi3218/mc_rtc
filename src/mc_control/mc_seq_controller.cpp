@@ -384,27 +384,27 @@ void MCSeqController::reset(const ControllerResetData & reset_data)
   publisher->set_contacts(stances[stanceIndex].geomContacts());
   LOG_INFO("LFullSole position: " << robot().surface("LFullSole").X_0_s(robot()).translation().transpose())
   LOG_INFO("RFullSole position: " << robot().surface("RFullSole").X_0_s(robot()).translation().transpose())
-  const mc_rbdyn::Contact & c = stances[stanceIndex].geomContacts()[0];
-  auto X_0_s = c.X_0_r2s(robots());
-  auto X_r2s_r1s = c.X_r2s_r1s();
-  X_0_s = X_r2s_r1s * X_0_s;
-  auto X_f_s = c.r1Surface()->X_b_s();
-  auto X_b_f = robot().mbc().bodyPosW[robot().bodyIndexByName(c.r1Surface()->bodyName())]*((robot().mbc().bodyPosW[0]).inv());
-  auto X_0_b = ((X_f_s * X_b_f).inv()) * X_0_s;
-  auto quat = Eigen::Quaterniond(X_0_b.rotation());
-  auto trans = X_0_b.translation();
-  robot().mbc().q[0][0] = quat.w();
-  robot().mbc().q[0][1] = quat.x();
-  robot().mbc().q[0][2] = quat.y();
-  robot().mbc().q[0][3] = quat.z();
-  robot().mbc().q[0][4] = trans.x();
-  robot().mbc().q[0][5] = trans.y();
-  robot().mbc().q[0][6] = trans.z();
-  rbd::forwardKinematics(robot().mb(), robot().mbc());
-  rbd::forwardVelocity(robot().mb(), robot().mbc());
-  auto q_target = stances[stanceIndex].q();
-  q_target[0] = robot().mbc().q[0];
-  stances[stanceIndex].q(q_target);
+  //const mc_rbdyn::Contact & c = stances[stanceIndex].geomContacts()[0];
+  //auto X_0_s = c.X_0_r2s(robots());
+  //auto X_r2s_r1s = c.X_r2s_r1s();
+  //X_0_s = X_r2s_r1s * X_0_s;
+  //auto X_f_s = c.r1Surface()->X_b_s();
+  //auto X_b_f = robot().mbc().bodyPosW[robot().bodyIndexByName(c.r1Surface()->bodyName())]*((robot().mbc().bodyPosW[0]).inv());
+  //auto X_0_b = ((X_f_s * X_b_f).inv()) * X_0_s;
+  //auto quat = Eigen::Quaterniond(X_0_b.rotation());
+  //auto trans = X_0_b.translation();
+  //robot().mbc().q[0][0] = quat.w();
+  //robot().mbc().q[0][1] = quat.x();
+  //robot().mbc().q[0][2] = quat.y();
+  //robot().mbc().q[0][3] = quat.z();
+  //robot().mbc().q[0][4] = trans.x();
+  //robot().mbc().q[0][5] = trans.y();
+  //robot().mbc().q[0][6] = trans.z();
+  //rbd::forwardKinematics(robot().mb(), robot().mbc());
+  //rbd::forwardVelocity(robot().mb(), robot().mbc());
+  //auto q_target = stances[stanceIndex].q();
+  //q_target[0] = robot().mbc().q[0];
+  //stances[stanceIndex].q(q_target);
   stabilityTask->target(env(), stances[stanceIndex], configs[stanceIndex], configs[stanceIndex].comTask.targetSpeed);
   qpsolver->update();
 }
@@ -468,7 +468,7 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
     {
       LOG_INFO("ActiGripper ADD " << bodyName)
       std::string forceSensor = robot().forceSensorByBody(bodyName);
-      unsigned int wrenchIndex = forceSensor == "RightH&&ForceSensor" ? 2 : 3; /*FIXME Hard-coded */
+      unsigned int wrenchIndex = forceSensor == "RightHandForceSensor" ? 2 : 3; /*FIXME Hard-coded */
       tasks::qp::ContactId contactId = c.contactId(robots());
       sva::PTransformd X_0_s = c.r1Surface()->X_0_s(robot());
       double actiForce = 50; /* FIXME Hard-coded, should at least be an acti gripper const static member */
@@ -892,7 +892,11 @@ std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * cu
     res->steps = {
                   std::shared_ptr<SeqStep>(new live_chooseCoMT()),
                   std::shared_ptr<SeqStep>(new enter_moveCoMP()),
-                  std::shared_ptr<SeqStep>(new live_moveCoMT())
+                  std::shared_ptr<SeqStep>(new live_CoMOpenGripperT()),
+                  std::shared_ptr<SeqStep>(new enter_CoMRemoveGripperT()),
+                  std::shared_ptr<SeqStep>(new live_CoMRemoveGripperT()),
+                  std::shared_ptr<SeqStep>(new live_moveCoMT()),
+                  std::shared_ptr<SeqStep>(new live_CoMCloseGripperT())
     };
     res->_type = SeqAction::CoMMove;
   }

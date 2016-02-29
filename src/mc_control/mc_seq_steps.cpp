@@ -365,6 +365,7 @@ bool live_chooseCoMT::eval(MCSeqController & ctl)
     {
       LOG_INFO("Will move gripper away from contact in CoM")
       ctl.comRemoveGripper = true;
+      ctl.currentContact = &(rmCurAction->contact());
     }
   }
 
@@ -413,7 +414,7 @@ bool enter_CoMRemoveGripperT::eval(MCSeqController & ctl)
     mc_rbdyn::StanceConfig & contactConf = ctl.targetConf();
 
     /* Find the contact to remove */
-    mc_rbdyn::Contact & removedContact = *(ctl.targetContact);
+    mc_rbdyn::Contact & removedContact = *(ctl.currentContact);
 
     /* Create the remove contact meta task */
     ctl.removeContactTask.reset(new mc_tasks::RemoveContactTask(ctl.robots(), ctl.constSpeedConstr, removedContact, contactConf));
@@ -510,7 +511,6 @@ bool live_moveCoMT::eval(MCSeqController & ctl)
 
     //ctl.stabilityTask->normalStiffness({"RARM_JOINT0", "RARM_JOINT1", "RARM_JOINT2", "RARM_JOINT3", "RARM_JOINT4", "RARM_JOINT5", "RARM_JOINT6"});
 
-    ctl.stanceIndex++;
     return true;
   }
 
@@ -699,7 +699,7 @@ bool live_removeGripperP::eval(MCSeqController & ctl)
     return true;
   }
   bool all = true;
-  double dOut = 0.075;
+  double dOut = 0.025;
   double minD = 1;
   for(const auto & p : ctl.distPairs)
   {

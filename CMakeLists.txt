@@ -157,16 +157,10 @@ install(DIRECTORY include ${CMAKE_BINARY_DIR}/include
           DESTINATION ${CMAKE_INSTALL_PREFIX}
           FILES_MATCHING REGEX "h(pp)?$")
 
+file(GLOB data_files "data/*.json")
 install(
   FILES
-    data/drc_stairs_climbing.json
-    data/drc_stairs_climbing_config.json
-    data/jvrc_ladder_climbing.json
-    data/jvrc_ladder_climbing_config.json
-    data/irex_ladder_climbing.json
-    data/irex_ladder_climbing_config.json
-    data/drc_car_egress.json
-    data/drc_car_egress_config.json
+    ${data_files}
   DESTINATION share/mc_rtc
 )
 install(
