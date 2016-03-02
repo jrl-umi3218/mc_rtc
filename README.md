@@ -26,8 +26,6 @@ Work in progress (last update 2015/12/08)
 ==
 
 - python bindings using cython ([current progress](https://gite.lirmm.fr/multi-contact/mc_cython)) aimed at replacing most of `mc_ros`
-- additions to `mc_control` to allow to define new controllers outside of `mc_rtc`
-- additions to `mc_robots` to allow to define new "complex" robots outside of `mc_rtc`
 - unify remote interactions with the controller(s)
 
 Library by library overview
@@ -52,6 +50,10 @@ Implementations of the `mc_rbdyn::RobotModule`, in particular:
 - `EnvRobotModule` is able to load any non-interactive robot (i.e. a static environment) that follows the `mc_env_description` scheme
 - `HRP2DRCRobotModule` and `HRP2DRCGripperRobotModule` provide a HRP2-kai robot (without/with grippers in the model respectively)
 
+These implementations are provided through a library. Examples are provided in `src/mc_robots`
+
+In `mc_rtc`, one can access those robots' modules by calling `mc_rbdyn::RobotLoader::get_robot_module("RobotName")`.
+
 mc_solver
 --
 
@@ -74,15 +76,15 @@ Set of functions/class to generate trajectories
 mc_control
 --
 
-Where the controllers are defined, more details regarding the implementation of a new controller are provided below but all controllers should inherit from the `MCVirtualController` class.
+The basis for new controller. More details regarding the implementation of a new controller are provided below but all controllers should inherit from the `MCController` class.
 
-Existing controllers include:
+Some controllers are provided in `mc_rtc` to serve as examples/basis for your own:
 - `PostureController` controls a robot's posture
 - `Body6dController` controls a robot's end-effector(s)
 - `CoMController` controls a robot's CoM
 - `SeqController` implements a FSM to play a sequence of stance/actions obtained from planning softwares
 
-The `MCGlobalController` class is used to manage the controllers and transfer the information from the simulation/robot (e.g. force sensors' data or joints positions) to the current controller.
+The `MCGlobalController` class is used to manage the controllers and transfer the information from the simulation/robot (e.g. force sensors' data or joints positions) to the current controller. It also decides what will be the "main" robot for the simulation/run.
 
 mc_rtc_ros
 --
@@ -102,13 +104,14 @@ Inside mc_rtc
 
 1. Write a new class that inherits from `mc_rbdyn::RobotModule` (e.g. `include/mc_robots/MyRobot.h` and `src/mc_robots/MyRobot.cpp`)
 2. Implement the virtual functions your robot requires
-3. Add your source files to the `mc_robots_SRC` variable in `src/CMakeLists.txt`
-4. Your robot can now be used in `mc_rtc`
+3. In your header file, invoke the `ROBOT_MODULE_DEFAULT_CONSTRUCTOR` or `ROBOT_MODULE_CANONIC_CONSTRUCTOR` macro (e.g. `ROBOT_MODULE_DEFAULT_CONSTRUCTOR("MyRobot", mc_robot::MyRobot)`). The first is adapted for classes which can be instantiated by a default constructor. The second is adapted for classes which should be instantiated by two `std::string` values. For more options, check `include/mc_rbdyn/RobotModule.h` for the full definition of the macros
+4. Add the entry `add_robot(MyRobot)` in `src/CMakeLists.txt`
+5. Your robot can now be used in `mc_rtc` by calling `mc_rbdyn::RobotLoader::get_robot_module("MyRobot")`
 
 Outisde mc_rtc
 --
 
-Not done yet. Should be similar to the previous case with the addition of external create/delete functions.
+The steps are similar to the previous option but do not require to write code inside `mc_rtc`. No sample project is available at the moment.
 
 Implementing a new controller
 ==
@@ -116,19 +119,15 @@ Implementing a new controller
 Inside mc_rtc
 --
 
-1. Choose a controller class to inherit from, there is 4 possible choices here. (*NB* It is fairly likely that option 1, 2 and 3 will be merged in the future)
-  1. `MCVirtualController`: this is the most basic class and as such many functions have to be re-implemented
-  2. `MCController`: implements a single robot controller and defines common constraints for it plus a posture task (none of which are put into the solver initially, this is up to the user)
-  3. `MCMRQPController`: implements a multi-robot controller. The controller considers that the first robot is the "main" robot (typically, `MCDrivingController` is such a controller where the main robot is HRP-2 and the second robot is the car which has only one dof) and defines a set of constraints for this robot.
-  4. Derive from any other controller
+1. Inherit from `mc_control::MCController`. Note that this controller already defines:
 2. Add the tasks/constraints you need, implement the functions you require, implement the services you provide
-3. Include your controller header in `mc_control/mc_global_controller.h` and add `std::shared_ptr` instance of your controller to the members of `MCGlobalController`
-4. Handle the creation of the controller in `MCGlobalController` constructor
-5. (Optionnal) Implement controller switch from a service call (*NB* very optionnal as this is likely to become obsolete and is really cumbersome to do atm)
+3. In your header file, invoke the `CONTROLLER_CONSTRUCTOR` or `SIMPLE_CONTROLLER_CONSTRUCTOR`. The first will construct your controller using the timestep `dt`, a pointer to the main robot module and the `Json::Value` obtained from the parsing of the `MCGlobalController` instance. The second macro will not pass you the `Json::Value`
+4. Add the entry `add_controller(MyController ${SOURCE_FILES})` in `src/CMakeLists.txt`
+5. Your controller can be enable by adding `MyController` to the `Enabled`/`Default` entry of `mc_rtc.conf`
 
 ### Functions to implement
 
-A quick description of the `virtual` functions in `MCVirtualController` and what they are supposed to do.
+A quick description of the `virtual` functions in `MCController` and what they are supposed to do.
 
 #### `virtual void reset(const ControllerResetData & reset_data)`
 
@@ -146,7 +145,7 @@ Called at every iteration of the control loop. Runs in the real-time context on 
 
 #### `virtual const QPResultMsg & send(const double & t)`
 
-Returns the current control output. Does not run if `run()` invokation failed.
+Returns the current control output. Does not run if `run()` invokation failed. The default implementation should be fine generally.
 
 
 #### `bool read_msg(std::string & msg)` and `bool read_write_msg(std::string & msg, std::string & out)`
@@ -156,7 +155,7 @@ These functions are used to provide a generic service interface. In both functio
 Outisde mc_rtc
 --
 
-Not done yet. Steps 1 and 2 are likely to remain identical while 3 and 4 will be streamlined.
+Similar to the previous method but steps 4 and 5 are obviously unnecessary. A sample project is available [here](https://gite.lirmm.fr/multi-contact/mc_sample_controller).
 
 A note on real-time
 --
