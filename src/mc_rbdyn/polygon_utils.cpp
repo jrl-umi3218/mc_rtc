@@ -2,8 +2,6 @@
 
 #include <mc_rtc/logging.h>
 
-#include <mc_solver/qpsolver.h>
-
 #include <geos/geom/LinearRing.h>
 #include <geos/geom/CoordinateSequence.h>
 

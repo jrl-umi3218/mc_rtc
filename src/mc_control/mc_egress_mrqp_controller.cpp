@@ -19,8 +19,7 @@ namespace mc_control
 MCEgressMRQPController::MCEgressMRQPController(std::shared_ptr<mc_rbdyn::RobotModule> robot_module, double dt)
   : MCController({robot_module, mc_rbdyn::RobotLoader::get_robot_module("PolarisRangerEgress"), mc_rbdyn::RobotLoader::get_robot_module("env", mc_rtc::MC_ENV_DESCRIPTION_PATH, "ground")}, dt),
     egressContacts(),
-    polarisKinematicsConstraint(robots(), 1, timeStep, false,
-        {0.1, 0.01, 0.01}, 0.5),
+    polarisKinematicsConstraint(robots(), 1, timeStep, {0.1, 0.01, 0.01}, 0.5),
     collsConstraint(robots(), 0, 1, timeStep),
     curPhase(START),
     execPhase(new EgressMRStartPhase)

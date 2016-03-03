@@ -2,7 +2,7 @@
 #define _H_METATASK_H_
 
 #include <cmath>
-#include <mc_solver/qpsolver.h>
+#include <mc_solver/QPSolver.h>
 
 #include <mc_tasks/api.h>
 

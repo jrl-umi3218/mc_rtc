@@ -2,7 +2,7 @@
 #define _H_MCTASKSORITASK_H_
 
 #include <mc_rbdyn/robot.h>
-#include <mc_solver/qpsolver.h>
+#include <mc_solver/QPSolver.h>
 #include <Tasks/QPTasks.h>
 
 #include <mc_tasks/api.h>

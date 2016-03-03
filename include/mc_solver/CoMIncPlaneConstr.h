@@ -1,7 +1,7 @@
 #pragma once
 
 #include <mc_solver/api.h>
-#include <mc_solver/qpsolver.h>
+#include <mc_solver/QPSolver.h>
 
 #include <mc_rbdyn/polygon_utils.h>
 

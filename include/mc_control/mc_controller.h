@@ -1,9 +1,15 @@
 #pragma once
 
 #include <mc_rbdyn/robot.h>
+
+
 #include <mc_control/generic_gripper.h>
 #include <mc_control/msg/QPResult.h>
-#include <mc_solver/qpsolver.h>
+#include <mc_solver/QPSolver.h>
+#include <mc_solver/CollisionsConstraint.h>
+#include <mc_solver/ContactConstraint.h>
+#include <mc_solver/DynamicsConstraint.h>
+#include <mc_solver/KinematicsConstraint.h>
 
 #include <Tasks/QPTasks.h>
 

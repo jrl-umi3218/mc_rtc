@@ -20,10 +20,8 @@ MCEgressController::MCEgressController(std::shared_ptr<mc_rbdyn::RobotModule> ro
   //phase(ROTATEBODY), phaseExec(new EgressRotateBodyPhase)
 {
   /* Recreate the kinematics/dynamics constraints to lower the damper offset */
-  kinematicsConstraint = mc_solver::KinematicsConstraint(robots(), 0, timeStep,
-                                                     false, {0.1, 0.01, 0.00}, 0.5);
-  dynamicsConstraint = mc_solver::DynamicsConstraint(robots(), 0, timeStep,
-                                                     false, {0.1, 0.01, 0.1}, 0.5);
+  kinematicsConstraint = mc_solver::KinematicsConstraint(robots(), 0, timeStep, {0.1, 0.01, 0.00}, 0.5);
+  dynamicsConstraint = mc_solver::DynamicsConstraint(robots(), 0, timeStep, {0.1, 0.01, 0.1}, 0.5);
 
   qpsolver->addConstraintSet(contactConstraint);
   //qpsolver->addConstraintSet(dynamicsConstraint);
