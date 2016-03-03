@@ -2,8 +2,8 @@
 #define _H_MCTASKSORITASK_H_
 
 #include <mc_rbdyn/robot.h>
+#include <mc_solver/qpsolver.h>
 #include <Tasks/QPTasks.h>
-#include <Tasks/QPSolver.h>
 
 #include <mc_tasks/api.h>
 
@@ -17,9 +17,9 @@ public:
 
   void resetTask();
 
-  void removeFromSolver(tasks::qp::QPSolver & solver);
+  void removeFromSolver(mc_solver::QPSolver & solver);
 
-  void addToSolver(tasks::qp::QPSolver & solver);
+  void addToSolver(mc_solver::QPSolver & solver);
 
   void set_ef_ori(const Eigen::Matrix3d & ori);
 

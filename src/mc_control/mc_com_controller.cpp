@@ -15,7 +15,7 @@ MCCoMController::MCCoMController(std::shared_ptr<mc_rbdyn::RobotModule> robot_mo
   qpsolver->addConstraintSet(contactConstraint);
   qpsolver->addConstraintSet(dynamicsConstraint);
   qpsolver->addConstraintSet(selfCollisionConstraint);
-  qpsolver->solver.addTask(postureTask.get());
+  qpsolver->addTask(postureTask.get());
   if(robot().name() == "hrp2_drc")
   {
     qpsolver->setContacts({
@@ -37,7 +37,7 @@ MCCoMController::MCCoMController(std::shared_ptr<mc_rbdyn::RobotModule> robot_mo
   }
 
   comTask.reset(new mc_tasks::CoMTask(robots(), robots().robotIndex()));
-  comTask->addToSolver(qpsolver->solver);
+  comTask->addToSolver(solver());
 }
 
 void MCCoMController::reset(const ControllerResetData & reset_data)

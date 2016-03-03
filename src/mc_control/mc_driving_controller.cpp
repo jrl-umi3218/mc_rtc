@@ -77,7 +77,7 @@ MCDrivingController::MCDrivingController(std::shared_ptr<mc_rbdyn::RobotModule> 
   std::vector<tasks::qp::JointStiffness> jsv;
   jsv.push_back({static_cast<int>(robot().jointIdByName("RLEG_JOINT4")), 100.});
   postureTask->jointsStiffness(robots().mbs(), jsv);
-  qpsolver->solver.addTask(postureTask.get());
+  qpsolver->addTask(postureTask.get());
 
   //robot().mbc().q[0] = {0.8018680589369662, 0.09936561148509283, -0.06541812773434774, 0.5855378381237102, -0.3421374123035909, -0.0002850914593993392, 0.8847053544605464};
   robot().mbc().q[0] = {1, 0, 0, 0, 0, 0, 0.76};
@@ -103,8 +103,8 @@ MCDrivingController::MCDrivingController(std::shared_ptr<mc_rbdyn::RobotModule> 
   //  mc_rbdyn::Collision("CHEST_LINK1", "seat_back", 0.4, 0.25, 0.0)
   //);
 
-  ef_task.addToSolver(qpsolver->solver);
-  ef_task.removeFromSolver(qpsolver->solver);
+  ef_task.addToSolver(solver());
+  ef_task.removeFromSolver(solver());
 
   polarisPostureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(robots().mbs(), 1, robots().robot(1).mbc().q, 5, 100));
 
@@ -154,7 +154,7 @@ void MCDrivingController::reset(const ControllerResetData & reset_data)
                                    wheelSurface->X_0_s(polaris, *(polaris.mbc))) << std::endl;
   */
 
-  qpsolver->solver.addTask(polarisPostureTask.get());
+  qpsolver->addTask(polarisPostureTask.get());
 
   qpsolver->setContacts(drivingContacts);
 
@@ -299,20 +299,20 @@ bool MCDrivingController::read_msg(std::string & msg)
 void MCDrivingController::lock_head()
 {
   head_task.resetTask(robots(), 0);
-  head_task.addToSolver(qpsolver->solver);
+  head_task.addToSolver(solver());
 }
 void MCDrivingController::unlock_head()
 {
-  head_task.removeFromSolver(qpsolver->solver);
+  head_task.removeFromSolver(solver());
 }
 void MCDrivingController::lock_lhand()
 {
   lhand_task.resetTask(robots(), 0);
-  lhand_task.addToSolver(qpsolver->solver);
+  lhand_task.addToSolver(solver());
 }
 void MCDrivingController::unlock_lhand()
 {
-  lhand_task.removeFromSolver(qpsolver->solver);
+  lhand_task.removeFromSolver(solver());
 }
 
 void MCDrivingController::start_logging()

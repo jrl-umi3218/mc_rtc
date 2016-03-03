@@ -2,7 +2,7 @@
 #define _H_MCTASKCOMTASK_H_
 
 #include <mc_rbdyn/robot.h>
-#include <Tasks/QPSolver.h>
+#include <mc_solver/qpsolver.h>
 #include <Tasks/QPTasks.h>
 
 #include <mc_tasks/api.h>
@@ -17,9 +17,9 @@ public:
 
   void resetTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex);
 
-  void removeFromSolver(tasks::qp::QPSolver & solver);
+  void removeFromSolver(mc_solver::QPSolver & solver);
 
-  void addToSolver(tasks::qp::QPSolver & solver);
+  void addToSolver(mc_solver::QPSolver & solver);
 
   void move_com(const Eigen::Vector3d & com);
 

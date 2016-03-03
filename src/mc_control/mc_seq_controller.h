@@ -7,6 +7,8 @@
 #include <mc_tasks/StabilityTask.h>
 #include <mc_tasks/AddRemoveContactTask.h>
 #include <mc_tasks/MoveContactTask.h>
+#include <mc_solver/BoundedSpeedConstr.h>
+#include <mc_solver/CoMIncPlaneConstr.h>
 #include <Tasks/QPConstr.h>
 
 #include <mc_control/ContactSensor.h>
@@ -121,8 +123,6 @@ public:
 
   void updateContacts(const std::vector<mc_rbdyn::Contact> & contacts);
 
-  void updateSolverEqInEq();
-
   void pre_live();
 
   void post_live();
@@ -203,7 +203,7 @@ public:
 
   /* Tasks and constraints specific to seq controller */
   mc_solver::RobotEnvCollisionsConstraint collsConstraint;
-  std::shared_ptr<tasks::qp::BoundedSpeedConstr> constSpeedConstr;
+  std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr;
   std::shared_ptr<mc_tasks::StabilityTask> stabilityTask;
   std::shared_ptr<mc_tasks::MoveContactTask> moveContactTask;
   std::shared_ptr<mc_tasks::AddContactTask> addContactTask;
@@ -216,7 +216,7 @@ public:
   std::shared_ptr<tasks::qp::PIDTask> adjustPositionTaskPid;
   std::shared_ptr<tasks::qp::PIDTask> adjustOrientationTaskPid;
   std::vector< std::shared_ptr<tasks::qp::GripperTorqueTask> > gripperTorqueTasks;
-  std::shared_ptr<tasks::qp::CoMIncPlaneConstr> comIncPlaneConstr;
+  mc_solver::CoMIncPlaneConstr comIncPlaneConstr;
   double max_perc;
   unsigned int nr_points;
   mc_rbdyn::QuadraticGenerator samples;

@@ -34,28 +34,22 @@ void EndEffectorTask::resetTask(const mc_rbdyn::Robots & robots, unsigned int ro
   orientationTask->orientation(curTransform.rotation());
 }
 
-void EndEffectorTask::removeFromSolver(tasks::qp::QPSolver & solver)
+void EndEffectorTask::removeFromSolver(mc_solver::QPSolver & solver)
 {
   if(inSolver)
   {
     solver.removeTask(positionTaskSp.get());
     solver.removeTask(orientationTaskSp.get());
-    solver.updateTasksNrVars(robots.mbs());
-    solver.updateConstrsNrVars(robots.mbs());
-    solver.updateConstrSize();
     inSolver = false;
   }
 }
 
-void EndEffectorTask::addToSolver(tasks::qp::QPSolver & solver)
+void EndEffectorTask::addToSolver(mc_solver::QPSolver & solver)
 {
   if(!inSolver)
   {
     solver.addTask(positionTaskSp.get());
     solver.addTask(orientationTaskSp.get());
-    solver.updateTasksNrVars(robots.mbs());
-    solver.updateConstrsNrVars(robots.mbs());
-    solver.updateConstrSize();
     inSolver = true;
   }
 }

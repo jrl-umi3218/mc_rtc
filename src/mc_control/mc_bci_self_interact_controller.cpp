@@ -44,7 +44,7 @@ MCBCISelfInteractController::MCBCISelfInteractController(std::shared_ptr<mc_rbdy
   {
     /* Set more restrictive auto collision constraints */
     selfCollisionConstraint.reset();
-    selfCollisionConstraint.addCollisions(robots(), {
+    selfCollisionConstraint.addCollisions(solver(), {
       mc_rbdyn::Collision("LARM_LINK3", "BODY", 0.1, 0.05, 0.),
       mc_rbdyn::Collision("LARM_LINK4", "BODY", 0.1, 0.05, 0.),
       mc_rbdyn::Collision("LARM_LINK5", "BODY", 0.1, 0.05, 0.),
@@ -64,7 +64,7 @@ MCBCISelfInteractController::MCBCISelfInteractController(std::shared_ptr<mc_rbdy
     });
   }
   qpsolver->addConstraintSet(selfCollisionConstraint);
-  qpsolver->solver.addTask(postureTask.get());
+  qpsolver->addTask(postureTask.get());
   qpsolver->setContacts({
     mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"),
     mc_rbdyn::Contact(robots(), "RFullSole", "AllGround"),
@@ -74,11 +74,11 @@ MCBCISelfInteractController::MCBCISelfInteractController(std::shared_ptr<mc_rbdy
   lh2Task.reset(new mc_tasks::RelativeEndEffectorTask("LARM_LINK6", robots(), robots().robotIndex(), 0, 2.0, 100000.0));
   rh2Task.reset(new mc_tasks::RelativeEndEffectorTask("RARM_LINK6", robots(), robots().robotIndex(), 0, 2.0, 100000.0));
   chestTask.reset(new mc_tasks::EndEffectorTask("CHEST_LINK1", robots(), robots().robotIndex(), 1.0, 1e6));
-  lh2Task->addToSolver(qpsolver->solver);
-  rh2Task->addToSolver(qpsolver->solver);
-  chestTask->addToSolver(qpsolver->solver);
+  lh2Task->addToSolver(solver());
+  rh2Task->addToSolver(solver());
+  chestTask->addToSolver(solver());
   comTask.reset(new mc_tasks::CoMTask(robots(), robots().robotIndex()));
-  comTask->addToSolver(qpsolver->solver);
+  comTask->addToSolver(solver());
 #ifdef MC_RTC_HAS_ROS
   if(mc_rtc::ROSBridge::get_node_handle())
   {

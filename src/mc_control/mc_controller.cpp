@@ -64,7 +64,7 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   kinematicsConstraint = mc_solver::KinematicsConstraint(robots(), 0, timeStep,
                                                   false, {0.1, 0.01, 0.5}, 0.5);
   selfCollisionConstraint = mc_solver::CollisionsConstraint(robots(), 0, 0, timeStep);
-  selfCollisionConstraint.addCollisions(robots(), robots_modules[0]->defaultSelfCollisions());
+  selfCollisionConstraint.addCollisions(solver(), robots_modules[0]->defaultSelfCollisions());
   postureTask.reset(new tasks::qp::PostureTask(robots().mbs(), 0, robot().mbc().q, 10, 5));
   LOG_INFO("MCController(base) ready")
 }
@@ -102,34 +102,51 @@ void MCController::setWrenches(const std::vector< std::pair<Eigen::Vector3d, Eig
   this->wrenches = wrenches;
 }
 
+const std::vector<std::pair<Eigen::Vector3d, Eigen::Vector3d>> & MCController::getWrenches()
+{
+  return this->wrenches;
+}
+
 const mc_rbdyn::Robot & MCController::robot() const
 {
-  return qpsolver->robots->robot();
+  return qpsolver->robot();
 }
 
 const mc_rbdyn::Robot & MCController::env() const
 {
-  return qpsolver->robots->env();
+  return qpsolver->env();
 }
 
 mc_rbdyn::Robot & MCController::robot()
 {
-  return qpsolver->robots->robot();
+  return qpsolver->robot();
 }
 
 mc_rbdyn::Robot & MCController::env()
 {
-  return qpsolver->robots->env();
+  return qpsolver->env();
 }
 
 const mc_rbdyn::Robots & MCController::robots() const
 {
-  return *(qpsolver->robots);
+  return qpsolver->robots();
 }
 
 mc_rbdyn::Robots & MCController::robots()
 {
-  return *(qpsolver->robots);
+  return qpsolver->robots();
+}
+
+const mc_solver::QPSolver & MCController::solver() const
+{
+  assert(qpsolver);
+  return *qpsolver;
+}
+
+mc_solver::QPSolver & MCController::solver()
+{
+  assert(qpsolver);
+  return *qpsolver;
 }
 
 bool MCController::set_joint_pos(const std::string & jname, const double & pos)

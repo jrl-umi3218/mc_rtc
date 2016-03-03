@@ -23,9 +23,9 @@ public:
   void target(const mc_rbdyn::Robot & env, const mc_rbdyn::Stance & stance,
               const mc_rbdyn::StanceConfig & config, double comSmoothPercent = 1);
 
-  virtual void addToSolver(tasks::qp::QPSolver & solver) override;
+  virtual void addToSolver(mc_solver::QPSolver & solver) override;
 
-  virtual void removeFromSolver(tasks::qp::QPSolver & solver) override;
+  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
 
   virtual void update() override;
 

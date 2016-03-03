@@ -2,7 +2,6 @@
 
 #include <Eigen/Geometry>
 #include <geos/geom/Polygon.h>
-#include <Tasks/QPConstr.h>
 
 #include <mc_rbdyn/api.h>
 
@@ -35,10 +34,5 @@ struct MC_RBDYN_DLLAPI Plane
 };
 
 MC_RBDYN_DLLAPI std::vector<Plane> planes_from_polygon(const std::shared_ptr<geos::geom::Geometry> & geometry);
-
-MC_RBDYN_DLLAPI void set_planes(const std::vector<Plane> & planes,
-                              const std::shared_ptr<tasks::qp::CoMIncPlaneConstr> & constr,
-                              const std::vector<Eigen::Vector3d> & speeds = {},
-                              const std::vector<Eigen::Vector3d> & normalsDots = {});
 
 }

@@ -30,7 +30,7 @@ MCEgressController::MCEgressController(std::shared_ptr<mc_rbdyn::RobotModule> ro
   qpsolver->addConstraintSet(kinematicsConstraint);
   qpsolver->addConstraintSet(selfCollisionConstraint);
   qpsolver->addConstraintSet(collsConstraint);
-  qpsolver->solver.addTask(postureTask.get());
+  qpsolver->addTask(postureTask.get());
 
   qpsolver->setContacts({
     mc_rbdyn::Contact(robots(), "Butthock", "left_seat"),
@@ -39,12 +39,12 @@ MCEgressController::MCEgressController(std::shared_ptr<mc_rbdyn::RobotModule> ro
   });
 
   comTask.reset(new mc_tasks::CoMTask(robots(), robots().robotIndex()));
-  comTask->addToSolver(qpsolver->solver);
-  comTask->removeFromSolver(qpsolver->solver);
+  comTask->addToSolver(solver());
+  comTask->removeFromSolver(solver());
 
   efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", robots(), robots().robotIndex()));
-  efTask->addToSolver(qpsolver->solver);
-  efTask->removeFromSolver(qpsolver->solver);
+  efTask->addToSolver(solver());
+  efTask->removeFromSolver(solver());
   LOG_SUCCESS("MCEgressController init done")
 }
 
@@ -108,10 +108,10 @@ bool MCEgressController::change_ef(const std::string & ef_name)
 {
   if(robot().hasBody(ef_name))
   {
-    efTask->removeFromSolver(qpsolver->solver);
+    efTask->removeFromSolver(solver());
     postureTask->posture(robot().mbc().q);
     efTask.reset(new mc_tasks::EndEffectorTask(ef_name, robots(), robots().robotIndex()));
-    efTask->addToSolver(qpsolver->solver);
+    efTask->addToSolver(solver());
     return true;
   }
   else

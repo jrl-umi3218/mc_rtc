@@ -23,25 +23,20 @@ void CoMTask::resetTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex
   comTask->com(cur_com);
 }
 
-void CoMTask::removeFromSolver(tasks::qp::QPSolver & solver)
+void CoMTask::removeFromSolver(mc_solver::QPSolver & solver)
 {
   if(in_solver)
   {
     solver.removeTask(comTaskSp.get());
-    solver.updateConstrsNrVars(robots.mbs());
-    solver.updateConstrSize();
     in_solver = false;
   }
 }
 
-void CoMTask::addToSolver(tasks::qp::QPSolver & solver)
+void CoMTask::addToSolver(mc_solver::QPSolver & solver)
 {
   if(!in_solver)
   {
     solver.addTask(comTaskSp.get());
-    solver.updateTasksNrVars(robots.mbs());
-    solver.updateConstrsNrVars(robots.mbs());
-    solver.updateConstrSize();
     in_solver = true;
   }
 }

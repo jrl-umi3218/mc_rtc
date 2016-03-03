@@ -17,7 +17,7 @@ MCPostureController::MCPostureController(std::shared_ptr<mc_rbdyn::RobotModule> 
 {
   qpsolver->addConstraintSet(contactConstraint);
   qpsolver->addConstraintSet(kinematicsConstraint);
-  qpsolver->solver.addTask(postureTask.get());
+  qpsolver->addTask(postureTask.get());
   qpsolver->setContacts({});
 
   LOG_SUCCESS("MCPostureController init done " << this)

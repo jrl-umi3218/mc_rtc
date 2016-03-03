@@ -77,14 +77,13 @@ sva::MotionVecd MoveContactTask::robotSurfaceVel()
   return pts*robot.mbc().bodyVelB[robotBodyIndex];
 }
 
-void MoveContactTask::addToSolver(tasks::qp::QPSolver & solver)
+void MoveContactTask::addToSolver(mc_solver::QPSolver & solver)
 {
   solver.addTask(positionTaskSp.get());
   solver.addTask(orientationTaskSp.get());
-  solver.updateTasksNrVars(robots.mbs());
 }
 
-void MoveContactTask::removeFromSolver(tasks::qp::QPSolver & solver)
+void MoveContactTask::removeFromSolver(mc_solver::QPSolver & solver)
 {
   solver.removeTask(orientationTaskSp.get());
   solver.removeTask(positionTaskSp.get());

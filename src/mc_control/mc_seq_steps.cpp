@@ -28,7 +28,6 @@ bool live_initT::eval(MCSeqController & controller)
   controller.updateRobotEnvCollisions(controller.stances[controller.stanceIndex].contacts(), controller.configs[controller.stanceIndex]);
   controller.updateSelfCollisions(controller.stances[controller.stanceIndex].contacts(), controller.configs[controller.stanceIndex]);
   controller.updateContacts(controller.stances[controller.stanceIndex].contacts());
-  controller.updateSolverEqInEq();
 
   if(controller.stabilityTask->postureTask->eval().norm() < 0.5)
   {
@@ -97,13 +96,12 @@ bool enter_removeContactT::eval(MCSeqController & ctl)
 
   /* Remove contact */
   ctl.rmContactTask.reset(new mc_tasks::RemoveContactTask(ctl.robots(), ctl.constSpeedConstr, *(ctl.currentContact), contactConf));
-  ctl.rmContactTask->addToSolver(ctl.qpsolver->solver);
+  ctl.rmContactTask->addToSolver(ctl.solver());
   ctl.metaTasks.push_back(ctl.rmContactTask.get());
 
   ctl.updateRobotEnvCollisions(curS.stabContacts(), contactConf);
   ctl.updateSelfCollisions(curS.stabContacts(), contactConf);
   ctl.updateContacts(curS.stabContacts());
-  ctl.updateSolverEqInEq();
 
   ctl.isColl = ctl.setCollisionsContactFilter(*(ctl.currentContact), contactConf);
   ctl.notInContactCount = 0;
@@ -126,7 +124,7 @@ bool live_removeContacT::eval(MCSeqController & ctl)
 
   if(ctl.notInContactCount > 50)
   {
-    ctl.rmContactTask->removeFromSolver(ctl.qpsolver->solver);
+    ctl.rmContactTask->removeFromSolver(ctl.solver());
     ctl.removeMetaTask(ctl.rmContactTask.get());
     ctl.rmContactTask.reset();
 
@@ -151,7 +149,7 @@ bool enter_moveWPT::eval(MCSeqController & ctl)
 
   /* Create and setup move contact task */
   ctl.moveContactTask.reset(new mc_tasks::MoveContactTask(ctl.robots(), ctl.robot(), ctl.env(), *ctl.targetContact, contactConf, 0.5));
-  ctl.moveContactTask->addToSolver(ctl.qpsolver->solver);
+  ctl.moveContactTask->addToSolver(ctl.solver());
   ctl.metaTasks.push_back(ctl.moveContactTask.get());
 
   ctl.moveContactTask->toWaypoint(contactConf, contactConf.contactTask.position.targetSpeed);
@@ -262,7 +260,7 @@ bool live_moveContactT::eval(MCSeqController & ctl)
   bool inContact = ctl.inContact(ctl.targetContact->r1Surface()->name());
   if( (posErr < obj.posThresh && velErr < obj.velThresh) || inContact )
   {
-    ctl.moveContactTask->removeFromSolver(ctl.qpsolver->solver);
+    ctl.moveContactTask->removeFromSolver(ctl.solver());
     ctl.removeMetaTask(ctl.moveContactTask.get());
     ctl.moveContactTask.reset();
 
@@ -286,7 +284,7 @@ bool enter_pushContactT::eval(MCSeqController & ctl)
   {
     auto & contactConf = ctl.curConf();
     ctl.addContactTask.reset(new mc_tasks::AddContactTask(ctl.robots(), ctl.constSpeedConstr, *(ctl.targetContact), contactConf));
-    ctl.addContactTask->addToSolver(ctl.qpsolver->solver);
+    ctl.addContactTask->addToSolver(ctl.solver());
     ctl.metaTasks.push_back(ctl.addContactTask.get());
     ctl.push = true;
   }
@@ -303,7 +301,7 @@ bool live_pushContactT::eval(MCSeqController & ctl)
     /* Remove AddContactTask if we had it */
     if(ctl.push)
     {
-      ctl.addContactTask->removeFromSolver(ctl.qpsolver->solver);
+      ctl.addContactTask->removeFromSolver(ctl.solver());
       ctl.removeMetaTask(ctl.addContactTask.get());
       ctl.addContactTask.reset();
     }
@@ -315,7 +313,6 @@ bool live_pushContactT::eval(MCSeqController & ctl)
     ctl.updateRobotEnvCollisions(newS.contacts(), ctl.targetConf());
     ctl.updateSelfCollisions(newS.contacts(), ctl.targetConf());
     ctl.updateContacts(newS.contacts());
-    ctl.updateSolverEqInEq();
 
     ctl.stanceIndex++;
     return true;
@@ -418,7 +415,7 @@ bool enter_CoMRemoveGripperT::eval(MCSeqController & ctl)
 
     /* Create the remove contact meta task */
     ctl.removeContactTask.reset(new mc_tasks::RemoveContactTask(ctl.robots(), ctl.constSpeedConstr, removedContact, contactConf));
-    ctl.removeContactTask->addToSolver(ctl.qpsolver->solver);
+    ctl.removeContactTask->addToSolver(ctl.solver());
     ctl.metaTasks.push_back(ctl.removeContactTask.get());
 
     /* We take the hull of the environment and the robot to know when the robot gripper is totally off */
@@ -434,7 +431,6 @@ bool enter_CoMRemoveGripperT::eval(MCSeqController & ctl)
     ctl.updateRobotEnvCollisions(targetS.stabContacts(), contactConf);
     ctl.updateSelfCollisions(targetS.stabContacts(), contactConf);
     ctl.updateContacts(targetS.stabContacts());
-    ctl.updateSolverEqInEq();
 
     ctl.isRemoved = false;
   }
@@ -453,7 +449,7 @@ bool live_CoMRemoveGripperT::eval(MCSeqController & ctl)
     }
     if(all)
     {
-      ctl.removeContactTask->removeFromSolver(ctl.qpsolver->solver);
+      ctl.removeContactTask->removeFromSolver(ctl.solver());
       ctl.removeMetaTask(ctl.removeContactTask.get());
       ctl.removeContactTask.reset();
       ctl.distPairs.clear();
@@ -507,7 +503,6 @@ bool live_moveCoMT::eval(MCSeqController & ctl)
     ctl.updateRobotEnvCollisions(newS.contacts(), ctl.targetConf());
     ctl.updateSelfCollisions(newS.contacts(), ctl.targetConf());
     //ctl.updateContacts(newS.stabContacts());
-    ctl.updateSolverEqInEq();
 
     //ctl.stabilityTask->normalStiffness({"RARM_JOINT0", "RARM_JOINT1", "RARM_JOINT2", "RARM_JOINT3", "RARM_JOINT4", "RARM_JOINT5", "RARM_JOINT6"});
 
@@ -660,7 +655,7 @@ bool enter_removeGripperP::eval(MCSeqController & ctl)
 
   /* Create the remove contact meta task */
   ctl.removeContactTask.reset(new mc_tasks::RemoveContactTask(ctl.robots(), ctl.constSpeedConstr, removedContact, contactConf));
-  ctl.removeContactTask->addToSolver(ctl.qpsolver->solver);
+  ctl.removeContactTask->addToSolver(ctl.solver());
   ctl.metaTasks.push_back(ctl.removeContactTask.get());
 
   /* We take the hull of the environment and the robot to know when the robot gripper is totally off */
@@ -682,7 +677,6 @@ bool enter_removeGripperP::eval(MCSeqController & ctl)
   ctl.updateRobotEnvCollisions(curS.stabContacts(), contactConf);
   ctl.updateSelfCollisions(curS.stabContacts(), contactConf);
   ctl.updateContacts(curS.stabContacts());
-  ctl.updateSolverEqInEq();
 
   /* Remove collision avoidance between env and moving body */
   ctl.isColl = ctl.setCollisionsContactFilter(*(ctl.currentContact), contactConf);
@@ -730,7 +724,7 @@ bool live_removeGripperP::eval(MCSeqController & ctl)
   all = all || (minD < 0 && d > dLimit);
   if(all)
   {
-    ctl.removeContactTask->removeFromSolver(ctl.qpsolver->solver);
+    ctl.removeContactTask->removeFromSolver(ctl.solver());
     ctl.removeMetaTask(ctl.removeContactTask.get());
     ctl.removeContactTask.reset();
     ctl.distPairs.clear();
@@ -765,7 +759,7 @@ bool enter_moveGripperWPT::eval(MCSeqController & ctl)
 
   /* Create and setup move contact task */
   ctl.moveContactTask.reset(new mc_tasks::MoveContactTask(ctl.robots(), ctl.robot(), ctl.env(), *(ctl.targetContact), contactConf));
-  ctl.moveContactTask->addToSolver(ctl.qpsolver->solver);
+  ctl.moveContactTask->addToSolver(ctl.solver());
   ctl.metaTasks.push_back(ctl.moveContactTask.get());
   ctl.moveContactTask->toWaypoint(contactConf, contactConf.contactTask.position.targetSpeed);
 
@@ -778,7 +772,7 @@ bool enter_moveGripperWPT::eval(MCSeqController & ctl)
     unsigned int bodyIndex = ctl.robot().bodyIndexByName("BODY");
     ctl.bodyOriTask.reset(new tasks::qp::OrientationTask(ctl.robots().mbs(), 0, ctl.robot().bodyIdByName("BODY"), ctl.robot().mbc().bodyPosW[bodyIndex].rotation()));
     ctl.bodyOriTaskSp.reset(new tasks::qp::SetPointTask(ctl.robots().mbs(), 0, ctl.bodyOriTask.get(), 10, 1000));
-    ctl.qpsolver->solver.addTask(ctl.bodyOriTaskSp.get());
+    ctl.solver().addTask(ctl.bodyOriTaskSp.get());
     ctl.isBodyTask = true;
   }
 
@@ -836,7 +830,7 @@ bool live_moveGripperT::eval(MCSeqController & ctl)
   {
     if(ctl.isBodyTask)
     {
-      ctl.qpsolver->solver.removeTask(ctl.bodyOriTaskSp.get());
+      ctl.solver().removeTask(ctl.bodyOriTaskSp.get());
     }
     LOG_INFO("Finished move gripper T")
     return true;
@@ -875,7 +869,7 @@ bool enter_adjustGripperP::eval(MCSeqController & ctl)
   TBN[2] = std::abs(TBN[2]);
   ctl.adjustPositionTaskPid->dimWeight(TBN);
   ctl.errorI = Eigen::Vector3d(0,0,0);
-  ctl.qpsolver->solver.addTask(ctl.adjustPositionTaskPid.get());
+  ctl.solver().addTask(ctl.adjustPositionTaskPid.get());
 
   Eigen::Vector3d oriModelError = sva::rotationError(ctl.robot().mbc().bodyPosW[ctl.moveContactTask->robotBodyIndex].rotation(),
                                                      ctl.moveContactTask->targetOri, 1e-7);
@@ -884,7 +878,7 @@ bool enter_adjustGripperP::eval(MCSeqController & ctl)
   ctl.adjustOrientationTaskPid->errorI(Eigen::Vector3d(0,0,0));
   ctl.adjustOrientationTaskPid->errorD(oriModelVel);
   ctl.oriErrorI = Eigen::Vector3d(0,0,0);
-  ctl.qpsolver->solver.addTask(ctl.adjustOrientationTaskPid.get());
+  ctl.solver().addTask(ctl.adjustOrientationTaskPid.get());
 
   /* Don't manager positionTask with a smooth task anymore */
   ctl.moveContactTask->useSmoothTask = false;
@@ -980,9 +974,9 @@ bool live_adjustGripperT::eval(MCSeqController & ctl)
   bool insert = posErr < obj.adjustPosThresh && oriErr < obj.adjustOriThresh && velErr < obj.adjustVelThresh;
   if(insert)
   {
-    ctl.qpsolver->solver.removeTask(ctl.adjustPositionTaskPid.get());
-    ctl.qpsolver->solver.removeTask(ctl.adjustOrientationTaskPid.get());
-    ctl.moveContactTask->removeFromSolver(ctl.qpsolver->solver);
+    ctl.solver().removeTask(ctl.adjustPositionTaskPid.get());
+    ctl.solver().removeTask(ctl.adjustOrientationTaskPid.get());
+    ctl.moveContactTask->removeFromSolver(ctl.solver());
     ctl.removeMetaTask(ctl.moveContactTask.get());
     ctl.moveContactTask.reset();
 
@@ -1001,7 +995,7 @@ bool enter_addGripperT::eval(MCSeqController & ctl)
 
   ctl.notInContactCount = 0;
   ctl.addContactTask.reset(new mc_tasks::AddContactTask(ctl.robots(), ctl.constSpeedConstr, *(ctl.targetContact), contactConf, 0));
-  ctl.addContactTask->addToSolver(ctl.qpsolver->solver);
+  ctl.addContactTask->addToSolver(ctl.solver());
   ctl.metaTasks.push_back(ctl.addContactTask.get());
 
   //bool leftHand = ctl.targetContact->r1Surface()->name() == "LeftGripper";
@@ -1045,7 +1039,7 @@ bool live_addGripperT::eval(MCSeqController & ctl)
   {
     LOG_INFO("Contact detected")
     ctl.notInContactCount = 0;
-    ctl.addContactTask->removeFromSolver(ctl.qpsolver->solver);
+    ctl.addContactTask->removeFromSolver(ctl.solver());
     ctl.removeMetaTask(ctl.addContactTask.get());
     ctl.addContactTask.reset();
     return true;
@@ -1055,7 +1049,7 @@ bool live_addGripperT::eval(MCSeqController & ctl)
   if(ctl.notInContactCount > 8*1/ctl.timeStep)
   {
     LOG_WARNING("No contact detected since 8 seconds (" << ctl.notInContactCount << " iterations), skip ahead")
-    ctl.addContactTask->removeFromSolver(ctl.qpsolver->solver);
+    ctl.addContactTask->removeFromSolver(ctl.solver());
     ctl.removeMetaTask(ctl.addContactTask.get());
     ctl.addContactTask.reset();
     return true;
@@ -1076,7 +1070,7 @@ bool enter_removeBeforeCloseT::eval(MCSeqController & ctl)
 
   /* Create the remove contact meta task */
   ctl.removeContactTask.reset(new mc_tasks::RemoveContactTask(ctl.robots(), ctl.constSpeedConstr, removedContact, contactConf));
-  ctl.removeContactTask->addToSolver(ctl.qpsolver->solver);
+  ctl.removeContactTask->addToSolver(ctl.solver());
   ctl.metaTasks.push_back(ctl.removeContactTask.get());
 
   /* Get the current position of the wrist */
@@ -1092,7 +1086,7 @@ bool live_removeBeforeCloseT::eval(MCSeqController & ctl)
   double d = (curPos - ctl.contactPos).norm();
   if(d > ctl.curConf().contactObj.gripperMoveAwayDist)
   {
-    ctl.removeContactTask->removeFromSolver(ctl.qpsolver->solver);
+    ctl.removeContactTask->removeFromSolver(ctl.solver());
     ctl.removeMetaTask(ctl.removeContactTask.get());
     ctl.removeContactTask.reset();
     ctl.distPairs.clear();
@@ -1108,13 +1102,10 @@ bool enter_softCloseGripperP::eval(MCSeqController & ctl)
   ctl.isGripperClose = false;
 
   std::shared_ptr<mc_rbdyn::Surface> robotSurf = ctl.targetContact->r1Surface();
-  int bodyId = ctl.robot().bodyIdByName(robotSurf->bodyName());
   Eigen::MatrixXd dofMat = Eigen::MatrixXd::Zero(6,6);
   for(int i = 0; i < 6; ++i) { dofMat(i,i) = 1; }
   Eigen::VectorXd speedMat = Eigen::VectorXd::Zero(6);
-  ctl.constSpeedConstr->addBoundedSpeed(ctl.robots().mbs(), bodyId, robotSurf->X_b_s().translation(), dofMat, speedMat);
-  ctl.qpsolver->solver.updateConstrsNrVars(ctl.robots().mbs());
-  ctl.qpsolver->solver.updateConstrSize();
+  ctl.constSpeedConstr->addBoundedSpeed(ctl.solver(), robotSurf->bodyName(), robotSurf->X_b_s().translation(), dofMat, speedMat);
 
   return true;
 }
@@ -1146,10 +1137,7 @@ bool live_softCloseGripperP::eval(MCSeqController & ctl)
   {
     ctl.isGripperClose = true;
     std::shared_ptr<mc_rbdyn::Surface> robotSurf = ctl.targetContact->r1Surface();
-    int bodyId = ctl.robot().bodyIdByName(robotSurf->bodyName());
-    ctl.constSpeedConstr->removeBoundedSpeed(bodyId);
-    ctl.qpsolver->solver.updateConstrsNrVars(ctl.robots().mbs());
-    ctl.qpsolver->solver.updateConstrSize();
+    ctl.constSpeedConstr->removeBoundedSpeed(ctl.solver(), robotSurf->bodyName());
     LOG_INFO("Finished softCloseGripperP")
     return true;
   }
@@ -1245,7 +1233,7 @@ bool enter_contactGripperP::eval(MCSeqController & ctl)
   mc_rbdyn::StanceConfig & contactConf = ctl.curConf();
 
   ctl.removeContactTask.reset(new mc_tasks::RemoveContactTask(ctl.robots(), ctl.constSpeedConstr, *(ctl.targetContact), contactConf));
-  ctl.removeContactTask->addToSolver(ctl.qpsolver->solver);
+  ctl.removeContactTask->addToSolver(ctl.solver());
   ctl.metaTasks.push_back(ctl.removeContactTask.get());
 
   return true;
@@ -1261,7 +1249,6 @@ bool live_contactGripperT::eval(MCSeqController & ctl)
     ctl.updateRobotEnvCollisions(newS.contacts(), ctl.targetConf());
     ctl.updateSelfCollisions(newS.contacts(), ctl.targetConf());
     ctl.updateContacts(newS.contacts());
-    ctl.updateSolverEqInEq();
     return true;
   }
   bool ok = true; /*FIXME Python used to check that _back was in the sensorContacts */
@@ -1269,7 +1256,7 @@ bool live_contactGripperT::eval(MCSeqController & ctl)
   if(ok)
   {
     LOG_INFO("ok contactGripperT")
-    ctl.removeContactTask->removeFromSolver(ctl.qpsolver->solver);
+    ctl.removeContactTask->removeFromSolver(ctl.solver());
     ctl.removeMetaTask(ctl.removeContactTask.get());
     ctl.removeContactTask.reset();
 
@@ -1278,7 +1265,6 @@ bool live_contactGripperT::eval(MCSeqController & ctl)
     ctl.updateRobotEnvCollisions(newS.contacts(), ctl.targetConf());
     ctl.updateSelfCollisions(newS.contacts(), ctl.targetConf());
     ctl.updateContacts(newS.contacts());
-    ctl.updateSolverEqInEq();
 
     ctl.stanceIndex += 1;
     return true;

@@ -51,15 +51,15 @@ ContactConstraint::ContactConstraint(double timeStep, ContactType contactType, b
   }
 }
 
-void ContactConstraint::addToSolver(tasks::qp::QPSolver & solver) const
+void ContactConstraint::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) const
 {
   if(contactConstr)
   {
-    contactConstr->addToSolver(solver);
+    contactConstr->addToSolver(mbs, solver);
   }
   if(posLambdaConstr)
   {
-    posLambdaConstr->addToSolver(solver);
+    posLambdaConstr->addToSolver(mbs, solver);
   }
 }
 
@@ -122,15 +122,15 @@ KinematicsConstraint::KinematicsConstraint(const mc_rbdyn::Robots & robots, unsi
   }
 }
 
-void KinematicsConstraint::addToSolver(tasks::qp::QPSolver & solver) const
+void KinematicsConstraint::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) const
 {
   if(damperJointLimitsConstr)
   {
-    damperJointLimitsConstr->addToSolver(solver);
+    damperJointLimitsConstr->addToSolver(mbs, solver);
   }
   if(jointLimitsConstr)
   {
-    jointLimitsConstr->addToSolver(solver);
+    jointLimitsConstr->addToSolver(mbs, solver);
   }
 }
 
@@ -193,16 +193,16 @@ DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots, unsigned
   }
 }
 
-void DynamicsConstraint::addToSolver(tasks::qp::QPSolver & solver) const
+void DynamicsConstraint::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) const
 {
-  KinematicsConstraint::addToSolver(solver);
+  KinematicsConstraint::addToSolver(mbs, solver);
   if(motionConstr)
   {
-    motionConstr->addToSolver(solver);
+    motionConstr->addToSolver(mbs, solver);
   }
   if(motionSpringConstr)
   {
-    motionSpringConstr->addToSolver(solver);
+    motionSpringConstr->addToSolver(mbs, solver);
   }
 }
 
@@ -225,21 +225,27 @@ CollisionsConstraint::CollisionsConstraint(const mc_rbdyn::Robots & robots, unsi
 {
 }
 
-bool CollisionsConstraint::removeCollision(const mc_rbdyn::Robots &/*robots*/, const std::string & b1Name, const std::string & b2Name)
+bool CollisionsConstraint::removeCollision(QPSolver & solver, const std::string & b1Name, const std::string & b2Name)
 {
   auto p = __popCollId(b1Name, b2Name);
   if(!p.second.isNone())
   {
     cols.erase(std::find(cols.begin(), cols.end(), p.second));
-    return collConstr->rmCollision(p.first);
+    bool ret = collConstr->rmCollision(p.first);
+    if(collConstr->nrInEq())
+    {
+      collConstr->updateNrCollisions();
+      solver.updateConstrSize();
+    }
+    return ret;
   }
   return false;
 }
 
-bool CollisionsConstraint::removeCollisionByBody(const mc_rbdyn::Robots & robots, const std::string & b1Name, const std::string & b2Name)
+bool CollisionsConstraint::removeCollisionByBody(QPSolver & solver, const std::string & b1Name, const std::string & b2Name)
 {
-  const mc_rbdyn::Robot & r1 = robots.robot(r1Index);
-  const mc_rbdyn::Robot & r2 = robots.robot(r2Index);
+  const mc_rbdyn::Robot & r1 = solver.robots().robot(r1Index);
+  const mc_rbdyn::Robot & r2 = solver.robots().robot(r2Index);
   int b1Id = r1.bodyIdByName(b1Name);
   int b2Id = r2.bodyIdByName(b2Name);
   std::vector<mc_rbdyn::Collision> toRm;
@@ -257,10 +263,15 @@ bool CollisionsConstraint::removeCollisionByBody(const mc_rbdyn::Robots & robots
   {
     cols.erase(std::find(cols.begin(), cols.end(), it));
   }
+  if(toRm.size() && collConstr->nrInEq())
+  {
+    collConstr->updateNrCollisions();
+    solver.updateConstrSize();
+  }
   return toRm.size() > 0;
 }
 
-void CollisionsConstraint::addCollision(const mc_rbdyn::Robots & robots, const mc_rbdyn::Collision & col)
+void CollisionsConstraint::__addCollision(const mc_rbdyn::Robots & robots, const mc_rbdyn::Collision & col)
 {
   const mc_rbdyn::Robot & r1 = robots.robot(r1Index);
   const mc_rbdyn::Robot & r2 = robots.robot(r2Index);
@@ -273,19 +284,29 @@ void CollisionsConstraint::addCollision(const mc_rbdyn::Robots & robots, const m
   collConstr->addCollision(robots.mbs(), collId, static_cast<int>(r1Index), body1.first, const_cast<sch::S_Polyhedron*>(body1.second.get()), X_b1_c, static_cast<int>(r2Index), body2.first, const_cast<sch::S_Polyhedron*>(body2.second.get()), X_b2_c, col.iDist, col.sDist, col.damping, defaultDampingOffset);
 }
 
-void CollisionsConstraint::addCollisions(const mc_rbdyn::Robots & robots, const std::vector<mc_rbdyn::Collision> & cols)
+void CollisionsConstraint::addCollision(QPSolver & solver, const mc_rbdyn::Collision & col)
+{
+  addCollisions(solver, {col});
+}
+
+void CollisionsConstraint::addCollisions(QPSolver & solver, const std::vector<mc_rbdyn::Collision> & cols)
 {
   for(const auto & c : cols)
   {
-    addCollision(robots, c);
+    __addCollision(solver.robots(), c);
+  }
+  if(collConstr->nrInEq())
+  {
+    collConstr->updateNrCollisions();
+    solver.updateConstrSize();
   }
 }
 
-void CollisionsConstraint::addToSolver(tasks::qp::QPSolver & solver) const
+void CollisionsConstraint::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) const
 {
   if(collConstr)
   {
-    collConstr->addToSolver(solver);
+    collConstr->addToSolver(mbs, solver);
   }
 }
 
@@ -336,35 +357,35 @@ RobotEnvCollisionsConstraint::RobotEnvCollisionsConstraint(const mc_rbdyn::Robot
 {
 }
 
-bool RobotEnvCollisionsConstraint::removeEnvCollision(const mc_rbdyn::Robots & robots, const std::string & rBodyName, const std::string & eBodyName)
+bool RobotEnvCollisionsConstraint::removeEnvCollision(QPSolver & solver, const std::string & rBodyName, const std::string & eBodyName)
 {
-  return envCollConstrMng.removeCollision(robots, rBodyName, eBodyName);
+  return envCollConstrMng.removeCollision(solver, rBodyName, eBodyName);
 }
 
-bool RobotEnvCollisionsConstraint::removeEnvCollisionByBody(const mc_rbdyn::Robots & robots, const std::string & rBodyName, const std::string & eBodyName)
+bool RobotEnvCollisionsConstraint::removeEnvCollisionByBody(QPSolver & solver, const std::string & rBodyName, const std::string & eBodyName)
 {
-  return envCollConstrMng.removeCollisionByBody(robots, rBodyName, eBodyName);
+  return envCollConstrMng.removeCollisionByBody(solver, rBodyName, eBodyName);
 }
 
-bool RobotEnvCollisionsConstraint::removeSelfCollision(const mc_rbdyn::Robots & robots, const std::string & body1Name, const std::string & body2Name)
+bool RobotEnvCollisionsConstraint::removeSelfCollision(QPSolver & solver, const std::string & body1Name, const std::string & body2Name)
 {
-  return selfCollConstrMng.removeCollision(robots, body1Name, body2Name);
+  return selfCollConstrMng.removeCollision(solver, body1Name, body2Name);
 }
 
-void RobotEnvCollisionsConstraint::addEnvCollision(const mc_rbdyn::Robots & robots, const mc_rbdyn::Collision & col)
+void RobotEnvCollisionsConstraint::addEnvCollision(QPSolver & solver, const mc_rbdyn::Collision & col)
 {
-  envCollConstrMng.addCollision(robots, col);
+  envCollConstrMng.addCollision(solver, col);
 }
 
-void RobotEnvCollisionsConstraint::addSelfCollision(const mc_rbdyn::Robots & robots, const mc_rbdyn::Collision & col)
+void RobotEnvCollisionsConstraint::addSelfCollision(QPSolver & solver, const mc_rbdyn::Collision & col)
 {
-  selfCollConstrMng.addCollision(robots, col);
+  selfCollConstrMng.addCollision(solver, col);
 }
 
-void RobotEnvCollisionsConstraint::setEnvCollisions(const mc_rbdyn::Robots & robots, const std::vector<mc_rbdyn::Contact> & contacts,
+void RobotEnvCollisionsConstraint::setEnvCollisions(QPSolver & solver, const std::vector<mc_rbdyn::Contact> & contacts,
                                                     const std::vector<mc_rbdyn::Collision> & cols)
 {
-  const mc_rbdyn::Robot & robot = robots.robot();
+  const mc_rbdyn::Robot & robot = solver.robots().robot();
   const std::vector<mc_rbdyn::Collision> & envCols = envCollConstrMng.cols;
   // Avoid reset to keep damping
   auto contactBodies = __bodiesFromContacts(robot, contacts);
@@ -377,13 +398,13 @@ void RobotEnvCollisionsConstraint::setEnvCollisions(const mc_rbdyn::Robots & rob
     // Remove body that are not in the new collision list
     if(std::find(cols.begin(), cols.end(), col) == cols.end())
     {
-      removeEnvCollision(robots, col.body1, col.body2);
+      removeEnvCollision(solver, col.body1, col.body2);
       i -= 1;
     }
     // Remove body that are in contacts
     else if(contactBodies.find(idFromName(col.body1)) != contactBodies.end())
     {
-      removeEnvCollision(robots, col.body1, col.body2);
+      removeEnvCollision(solver, col.body1, col.body2);
       i -= 1;
     }
   }
@@ -394,15 +415,15 @@ void RobotEnvCollisionsConstraint::setEnvCollisions(const mc_rbdyn::Robots & rob
     if(std::find(envCols.begin(), envCols.end(), col) == envCols.end() &&
        contactBodies.find(idFromName(col.body1)) == contactBodies.end())
     {
-      addEnvCollision(robots, col);
+      addEnvCollision(solver, col);
     }
   }
 }
 
-void RobotEnvCollisionsConstraint::setSelfCollisions(const mc_rbdyn::Robots & robots, const std::vector<mc_rbdyn::Contact> & contacts,
+void RobotEnvCollisionsConstraint::setSelfCollisions(QPSolver & solver, const std::vector<mc_rbdyn::Contact> & contacts,
                                                      const std::vector<mc_rbdyn::Collision> & cols)
 {
-  const mc_rbdyn::Robot & robot = robots.robot();
+  const mc_rbdyn::Robot & robot = solver.robots().robot();
   const std::vector<mc_rbdyn::Collision> & selfCols = selfCollConstrMng.cols;
   // Avoid reset to keep damping
   auto contactBodies = __bodiesFromContacts(robot, contacts);
@@ -415,14 +436,14 @@ void RobotEnvCollisionsConstraint::setSelfCollisions(const mc_rbdyn::Robots & ro
     // Remove body that are not in the new collision list
     if(std::find(cols.begin(), cols.end(), col) == cols.end())
     {
-      removeSelfCollision(robots, col.body1, col.body2);
+      removeSelfCollision(solver, col.body1, col.body2);
       i -= 1;
     }
     // Remove body that are in contacts
     else if(contactBodies.find(idFromName(col.body1)) != contactBodies.end()
         && contactBodies.find(idFromName(col.body2)) != contactBodies.end())
     {
-      removeSelfCollision(robots, col.body1, col.body2);
+      removeSelfCollision(solver, col.body1, col.body2);
       i -= 1;
     }
   }
@@ -434,15 +455,15 @@ void RobotEnvCollisionsConstraint::setSelfCollisions(const mc_rbdyn::Robots & ro
        contactBodies.find(idFromName(col.body1)) == contactBodies.end() &&
        contactBodies.find(idFromName(col.body2)) == contactBodies.end())
     {
-      addSelfCollision(robots, col);
+      addSelfCollision(solver, col);
     }
   }
 }
 
-void RobotEnvCollisionsConstraint::addToSolver(tasks::qp::QPSolver & solver) const
+void RobotEnvCollisionsConstraint::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) const
 {
-  selfCollConstrMng.addToSolver(solver);
-  envCollConstrMng.addToSolver(solver);
+  selfCollConstrMng.addToSolver(mbs, solver);
+  envCollConstrMng.addToSolver(mbs, solver);
 }
 
 void RobotEnvCollisionsConstraint::removeFromSolver(tasks::qp::QPSolver & solver) const
@@ -463,13 +484,13 @@ std::set<int> RobotEnvCollisionsConstraint::__bodiesFromContacts(const mc_rbdyn:
 }
 
 QPSolver::QPSolver(std::shared_ptr<mc_rbdyn::Robots> robots, double timeStep)
-: robots(robots), timeStep(timeStep), solver()
+: robots_p(robots), timeStep(timeStep), solver()
 {
 }
 
 void QPSolver::addConstraintSet(const ConstraintSet & cs)
 {
-  cs.addToSolver(solver);
+  cs.addToSolver(robots().mbs(), solver);
 }
 
 void QPSolver::removeConstraintSet(const ConstraintSet & cs)
@@ -477,9 +498,14 @@ void QPSolver::removeConstraintSet(const ConstraintSet & cs)
   cs.removeFromSolver(solver);
 }
 
-void QPSolver::updateNrVars()
+void QPSolver::addTask(tasks::qp::Task * task)
 {
-  solver.nrVars(robots->mbs(), uniContacts, biContacts);
+  solver.addTask(robots().mbs(), task);
+}
+
+void QPSolver::removeTask(tasks::qp::Task * task)
+{
+  solver.removeTask(task);
 }
 
 std::pair<int, const tasks::qp::BilateralContact&> QPSolver::contactById(const tasks::qp::ContactId & id)
@@ -504,7 +530,7 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
 
   for(const mc_rbdyn::Contact & c : contacts)
   {
-    QPContactPtr qcptr = c.taskContact(*robots);
+    QPContactPtr qcptr = c.taskContact(*robots_p);
     if(qcptr.unilateralContact)
     {
       uniContacts.push_back(tasks::qp::UnilateralContact(*qcptr.unilateralContact));
@@ -519,30 +545,26 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
     }
   }
 
-  solver.nrVars(robots->mbs(), uniContacts, biContacts);
+  solver.nrVars(robots_p->mbs(), uniContacts, biContacts);
   const tasks::qp::SolverData & data = solver.data();
-  qpRes.contacts = contactsMsgFromContacts(*robots, contacts);
+  qpRes.contacts = contactsMsgFromContacts(*robots_p, contacts);
   qpRes.contacts_lambda_begin.clear();
   for(int i = 0; i < data.nrContacts(); ++i)
   {
     qpRes.contacts_lambda_begin.push_back(data.lambdaBegin(i) - data.lambdaBegin());
   }
-}
-
-void QPSolver::update()
-{
-  solver.updateConstrSize();
+  updateConstrSize();
 }
 
 bool QPSolver::run()
 {
   bool success = false;
-  if(solver.solveNoMbcUpdate(robots->mbs(), robots->mbcs()))
+  if(solver.solveNoMbcUpdate(robots_p->mbs(), robots_p->mbcs()))
   {
-    for(size_t i = 0; i < robots->mbs().size(); ++i)
+    for(size_t i = 0; i < robots_p->mbs().size(); ++i)
     {
-      rbd::MultiBody & mb = robots->mbs()[i];
-      rbd::MultiBodyConfig & mbc = robots->mbcs()[i];
+      rbd::MultiBody & mb = robots_p->mbs()[i];
+      rbd::MultiBodyConfig & mbc = robots_p->mbcs()[i];
       if(mb.nrDof() > 0)
       {
         solver.updateMbc(mbc, static_cast<int>(i));
@@ -566,9 +588,9 @@ const mc_control::QPResultMsg & QPSolver::send(double/*curTime*/)
 void QPSolver::__fillResult()
 {
   qpRes.robots_state.resize(0);
-  for(unsigned int i = 0; i < robots->robots().size(); ++i)
+  for(unsigned int i = 0; i < robots_p->robots().size(); ++i)
   {
-    const mc_rbdyn::Robot & robot = robots->robot(i);
+    const mc_rbdyn::Robot & robot = robots_p->robot(i);
     qpRes.robots_state.push_back(mc_control::RobotMsg());
     std::vector<double> & q = qpRes.robots_state[i].q;
     for(const auto & qv : robot.mbc().q)
@@ -589,6 +611,40 @@ void QPSolver::__fillResult()
     qpRes.robots_state[i].alphaDVec = solver.alphaDVec(static_cast<int>(i));
   }
   qpRes.lambdaVec = solver.lambdaVec();
+}
+
+const mc_rbdyn::Robot & QPSolver::robot() const
+{
+  return robots_p->robot();
+}
+mc_rbdyn::Robot & QPSolver::robot()
+{
+  return robots_p->robot();
+}
+
+const mc_rbdyn::Robot & QPSolver::env() const
+{
+  return robots_p->env();
+}
+mc_rbdyn::Robot & QPSolver::env()
+{
+  return robots_p->env();
+}
+
+const mc_rbdyn::Robots & QPSolver::robots() const
+{
+  assert(robots_p);
+  return *robots_p;
+}
+mc_rbdyn::Robots & QPSolver::robots()
+{
+  assert(robots_p);
+  return *robots_p;
+}
+
+void QPSolver::updateConstrSize()
+{
+  solver.updateConstrSize();
 }
 
 }

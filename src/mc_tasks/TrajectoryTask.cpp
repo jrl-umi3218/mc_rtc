@@ -42,13 +42,12 @@ TrajectoryTask::TrajectoryTask(const mc_rbdyn::Robots & robots, unsigned int rob
   generateBS();
 }
 
-void TrajectoryTask::addToSolver(tasks::qp::QPSolver & solver)
+void TrajectoryTask::addToSolver(mc_solver::QPSolver & solver)
 {
   solver.addTask(transTrajTask.get());
-  solver.updateTasksNrVars(robots.mbs());
 }
 
-void TrajectoryTask::removeFromSolver(tasks::qp::QPSolver & solver)
+void TrajectoryTask::removeFromSolver(mc_solver::QPSolver & solver)
 {
   solver.removeTask(transTrajTask.get());
 }

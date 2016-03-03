@@ -30,6 +30,8 @@ namespace mc_control
 namespace mc_solver
 {
 
+struct QPSolver;
+
 typedef std::pair<std::string, std::function<void (rbd::MultiBody&, rbd::MultiBodyConfig&, tasks::qp::QPSolver&)> > qpcallback_t;
 
 bool operator==(const qpcallback_t & lhs, const qpcallback_t & rhs);
@@ -41,7 +43,7 @@ bool operator!=(const qpcallback_t & lhs, const qpcallback_t & rhs);
 struct MC_SOLVER_DLLAPI ConstraintSet
 {
 public:
-  virtual void addToSolver(tasks::qp::QPSolver & solver) const = 0;
+  virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) const = 0;
 
   virtual void removeFromSolver(tasks::qp::QPSolver & solver) const = 0;
 
@@ -63,7 +65,7 @@ public:
 public:
   ContactConstraint(double timeStep, ContactType contactType= Velocity, bool dynamics = true);
 
-  virtual void addToSolver(tasks::qp::QPSolver & solver) const override;
+  virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) const override;
 
   virtual void removeFromSolver(tasks::qp::QPSolver & solver) const override;
 public:
@@ -79,7 +81,7 @@ public:
   KinematicsConstraint(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double timeStep, bool isStatic = false,
                        const std::vector<double> & damper = {}, double velocityPercent = 1.0);
 
-  virtual void addToSolver(tasks::qp::QPSolver & solver) const override;
+  virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) const override;
 
   virtual void removeFromSolver(tasks::qp::QPSolver & solver) const override;
 public:
@@ -97,7 +99,7 @@ public:
   DynamicsConstraint(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double timeStep, bool isStatic = false,
                      const std::vector<double> & damper = {}, double velocityPercent = 1.0, bool infTorque = false);
 
-  virtual void addToSolver(tasks::qp::QPSolver & solver) const override;
+  virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) const override;
 
   virtual void removeFromSolver(tasks::qp::QPSolver & solver) const override;
 public:
@@ -117,17 +119,17 @@ public:
 public:
   CollisionsConstraint(const mc_rbdyn::Robots & robots, unsigned int r1Index, unsigned int r2Index, double timeStep);
 
-  bool removeCollision(const mc_rbdyn::Robots & robots, const std::string & b1Name, const std::string & b2Name);
+  bool removeCollision(QPSolver & solver, const std::string & b1Name, const std::string & b2Name);
 
-  bool removeCollisionByBody(const mc_rbdyn::Robots & robots, const std::string & byName, const std::string & b2Name);
+  bool removeCollisionByBody(QPSolver & solver, const std::string & byName, const std::string & b2Name);
 
-  void addCollision(const mc_rbdyn::Robots & robots, const mc_rbdyn::Collision & col);
+  void addCollision(QPSolver & solver, const mc_rbdyn::Collision & col);
 
-  void addCollisions(const mc_rbdyn::Robots & robots, const std::vector<mc_rbdyn::Collision> & cols);
+  void addCollisions(QPSolver & solver, const std::vector<mc_rbdyn::Collision> & cols);
 
   void reset();
 
-  virtual void addToSolver(tasks::qp::QPSolver & solver) const override;
+  virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) const override;
 
   virtual void removeFromSolver(tasks::qp::QPSolver & solver) const override;
 public:
@@ -141,6 +143,7 @@ private:
   std::string __keyByNames(const std::string & name1, const std::string & name2);
   int __createCollId(const mc_rbdyn::Collision & col);
   std::pair<int, mc_rbdyn::Collision> __popCollId(const std::string & name1, const std::string & name2);
+  void __addCollision(const mc_rbdyn::Robots & robots, const mc_rbdyn::Collision & col);
 public:
   CollisionsConstraint() {}
 };
@@ -150,23 +153,23 @@ struct MC_SOLVER_DLLAPI RobotEnvCollisionsConstraint : public ConstraintSet
 public:
   RobotEnvCollisionsConstraint(const mc_rbdyn::Robots & robots, double timeStep);
 
-  bool removeEnvCollision(const mc_rbdyn::Robots & robots, const std::string & rBodyName, const std::string & eBodyName);
+  bool removeEnvCollision(QPSolver & solver, const std::string & rBodyName, const std::string & eBodyName);
 
-  bool removeEnvCollisionByBody(const mc_rbdyn::Robots & robots, const std::string & rBodyName, const std::string & eBodyName);
+  bool removeEnvCollisionByBody(QPSolver & solver, const std::string & rBodyName, const std::string & eBodyName);
 
-  bool removeSelfCollision(const mc_rbdyn::Robots & robots, const std::string & body1Name, const std::string & body2Name);
+  bool removeSelfCollision(QPSolver & solver, const std::string & body1Name, const std::string & body2Name);
 
-  void addEnvCollision(const mc_rbdyn::Robots & robots, const mc_rbdyn::Collision & col);
+  void addEnvCollision(QPSolver & solver, const mc_rbdyn::Collision & col);
 
-  void addSelfCollision(const mc_rbdyn::Robots & robots, const mc_rbdyn::Collision & col);
+  void addSelfCollision(QPSolver & solver, const mc_rbdyn::Collision & col);
 
-  void setEnvCollisions(const mc_rbdyn::Robots & robots, const std::vector<mc_rbdyn::Contact> & contacts,
+  void setEnvCollisions(QPSolver & solver, const std::vector<mc_rbdyn::Contact> & contacts,
                                                          const std::vector<mc_rbdyn::Collision> & cols);
 
-  void setSelfCollisions(const mc_rbdyn::Robots & robots, const std::vector<mc_rbdyn::Contact> & contacts,
+  void setSelfCollisions(QPSolver & solver, const std::vector<mc_rbdyn::Contact> & contacts,
                                                          const std::vector<mc_rbdyn::Collision> & cols);
 
-  virtual void addToSolver(tasks::qp::QPSolver & solver) const override;
+  virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) const override;
 
   virtual void removeFromSolver(tasks::qp::QPSolver & solver) const override;
 public:
@@ -186,19 +189,42 @@ public:
 
   void removeConstraintSet(const ConstraintSet & cs);
 
-  void updateNrVars();
+  void addTask(tasks::qp::Task * task);
+
+  void removeTask(tasks::qp::Task * task);
+
+  template<typename ... Fun>
+  void addConstraint(tasks::qp::ConstraintFunction<Fun...> * constraint)
+  {
+    constraint->addToSolver(robots().mbs(), solver);
+  }
+
+  template<typename ... Fun>
+  void removeConstraint(tasks::qp::ConstraintFunction<Fun...> * constraint)
+  {
+    constraint->removeFromSolver(solver);
+  }
 
   std::pair<int, const tasks::qp::BilateralContact&> contactById(const tasks::qp::ContactId & id);
 
   void setContacts(const std::vector<mc_rbdyn::Contact> & contacts);
 
-  void update();
-
   bool run();
 
   const mc_control::QPResultMsg & send(double curTime = 0);
-public:
-  std::shared_ptr<mc_rbdyn::Robots> robots;
+
+  const mc_rbdyn::Robot & robot() const;
+  mc_rbdyn::Robot & robot();
+
+  const mc_rbdyn::Robot & env() const;
+  mc_rbdyn::Robot & env();
+
+  const mc_rbdyn::Robots & robots() const;
+  mc_rbdyn::Robots & robots();
+
+  void updateConstrSize();
+private:
+  std::shared_ptr<mc_rbdyn::Robots> robots_p;
   double timeStep;
   std::vector<qpcallback_t> preQPCb;
   std::vector<qpcallback_t> postQPCb;
@@ -208,7 +234,7 @@ public:
 
   tasks::qp::QPSolver solver;
   mc_control::QPResultMsg qpRes;
-private:
+
   void __fillResult();
 public:
   QPSolver() {}

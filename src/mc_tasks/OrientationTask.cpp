@@ -24,25 +24,20 @@ void OrientationTask::resetTask()
   orientationTask->orientation(curOri);
 }
 
-void OrientationTask::removeFromSolver(tasks::qp::QPSolver & solver)
+void OrientationTask::removeFromSolver(mc_solver::QPSolver & solver)
 {
   if(inSolver)
   {
     solver.removeTask(orientationTaskSp.get());
-    solver.updateConstrsNrVars(robots.mbs());
-    solver.updateConstrSize();
     inSolver = false;
   }
 }
 
-void OrientationTask::addToSolver(tasks::qp::QPSolver & solver)
+void OrientationTask::addToSolver(mc_solver::QPSolver & solver)
 {
   if(!inSolver)
   {
     solver.addTask(orientationTaskSp.get());
-    solver.updateTasksNrVars(robots.mbs());
-    solver.updateConstrsNrVars(robots.mbs());
-    solver.updateConstrSize();
     inSolver = true;
   }
 }

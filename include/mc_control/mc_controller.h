@@ -85,6 +85,11 @@ public:
    */
   virtual void setWrenches(const std::vector< std::pair<Eigen::Vector3d, Eigen::Vector3d> > & wrenches);
 
+  /** Get the current wrenches information
+   * \return A vector of (force,moment) pairs stored as Eigen::Vector3d
+   */
+  const std::vector<std::pair<Eigen::Vector3d, Eigen::Vector3d>> & getWrenches();
+
   /** Return the main robot (first robot provided in the constructor
    * \anchor mc_controller_robot_const_doc
    */
@@ -112,6 +117,14 @@ public:
 
   /** Non-const variant of \ref mc_controller_env_const_doc "env()" */
   virtual mc_rbdyn::Robot & env();
+
+  /** Return the mc_solver::QPSolver instance attached to this controller
+   * \anchor mc_controller_qpsolver_const_doc
+   */
+  const mc_solver::QPSolver & solver() const;
+
+  /** Non-const variant of \ref mc_controller_qpsolver_const_doc "solver()" */
+  mc_solver::QPSolver & solver();
 
   /** Set a joint position to the desired value
    * \param jname Name of the joint to control
@@ -225,9 +238,7 @@ protected:
    * \param dt Timestep of the controller
    */
   MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robot_modules, double dt);
-public:
-  /** Controller timestep */
-  const double timeStep;
+protected:
   /** Encoder values provided by the low-level controller */
   std::vector<double> encoderValues;
   /** Force/Torque sensors */
@@ -236,6 +247,11 @@ public:
   Eigen::Vector3d sensorOri;
   /** Robot acceleration provided by sensors */
   Eigen::Vector3d sensorAcc;
+  /** QP solver */
+  std::shared_ptr<mc_solver::QPSolver> qpsolver;
+public:
+  /** Controller timestep */
+  const double timeStep;
   /* FIXME Deal with grippers in a more generic way, perhaps through the
    * RobotModule interface */
   /** Left gripper state */
@@ -252,8 +268,6 @@ public:
   mc_solver::CollisionsConstraint selfCollisionConstraint;
   /** Posture task for the main robot */
   std::shared_ptr<tasks::qp::PostureTask> postureTask;
-  /** QP solver */
-  std::shared_ptr<mc_solver::QPSolver> qpsolver;
 };
 
 }

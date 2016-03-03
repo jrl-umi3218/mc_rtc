@@ -78,12 +78,16 @@ add_robot(polaris_ranger_egress)
 set(mc_solver_SRC
 mc_solver/contact_util.cpp
 mc_solver/qpsolver.cpp
+mc_solver/BoundedSpeedConstr.cpp
+mc_solver/CoMIncPlaneConstr.cpp
 )
 
 set(mc_solver_HDR
 ../include/mc_solver/api.h
 ../include/mc_solver/contact_util.h
 ../include/mc_solver/qpsolver.h
+../include/mc_solver/BoundedSpeedConstr.h
+../include/mc_solver/CoMIncPlaneConstr.h
 )
 
 add_library(mc_solver SHARED ${mc_solver_SRC} ${mc_solver_HDR})

@@ -6,7 +6,8 @@
 #include <mc_rbdyn/robot.h>
 #include <mc_rbdyn/StanceConfig.h>
 
-#include <Tasks/QPConstr.h>
+#include <mc_solver/BoundedSpeedConstr.h>
+
 #include <Tasks/QPTasks.h>
 
 #include <mc_tasks/api.h>
@@ -22,7 +23,7 @@ namespace mc_tasks
 struct MC_TASKS_DLLAPI AddRemoveContactTask : public MetaTask
 {
 public:
-  AddRemoveContactTask(mc_rbdyn::Robots & robots, std::shared_ptr<tasks::qp::BoundedSpeedConstr> constSpeedConstr, mc_rbdyn::Contact & contact,
+  AddRemoveContactTask(mc_rbdyn::Robots & robots, std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr, mc_rbdyn::Contact & contact,
                        double direction, const mc_rbdyn::StanceConfig & config,
                        Eigen::Vector3d * userT_0_s = 0);
 
@@ -30,16 +31,16 @@ public:
 
   Eigen::Vector3d velError();
 
-  virtual void addToSolver(tasks::qp::QPSolver & solver) override;
+  virtual void addToSolver(mc_solver::QPSolver & solver) override;
 
-  virtual void removeFromSolver(tasks::qp::QPSolver & solver) override;
+  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
 
   virtual void update() override;
 public:
   mc_rbdyn::Robots & robots;
   mc_rbdyn::Robot & robot;
   mc_rbdyn::Robot & env;
-  std::shared_ptr<tasks::qp::BoundedSpeedConstr> constSpeedConstr;
+  std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr;
 
   std::shared_ptr<mc_rbdyn::Surface> robotSurf;
   unsigned int robotBodyIndex;
@@ -47,7 +48,7 @@ public:
 
   sva::PTransformd targetTf;
 
-  int bodyId;
+  std::string bodyId;
   Eigen::MatrixXd dofMat;
   Eigen::VectorXd speedMat;
   Eigen::Vector3d normal;
@@ -63,7 +64,7 @@ public:
 struct MC_TASKS_DLLAPI AddContactTask : public AddRemoveContactTask
 {
 public:
-  AddContactTask(mc_rbdyn::Robots & robots, std::shared_ptr<tasks::qp::BoundedSpeedConstr> constSpeedConstr, mc_rbdyn::Contact & contact,
+  AddContactTask(mc_rbdyn::Robots & robots, std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr, mc_rbdyn::Contact & contact,
                        const mc_rbdyn::StanceConfig & config,
                        Eigen::Vector3d * userT_0_s = 0);
 };
@@ -71,7 +72,7 @@ public:
 struct MC_TASKS_DLLAPI RemoveContactTask : public AddRemoveContactTask
 {
 public:
-  RemoveContactTask(mc_rbdyn::Robots & robots, std::shared_ptr<tasks::qp::BoundedSpeedConstr> constSpeedConstr, mc_rbdyn::Contact & contact,
+  RemoveContactTask(mc_rbdyn::Robots & robots, std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr, mc_rbdyn::Contact & contact,
                        const mc_rbdyn::StanceConfig & config,
                        Eigen::Vector3d * userT_0_s = 0);
 };

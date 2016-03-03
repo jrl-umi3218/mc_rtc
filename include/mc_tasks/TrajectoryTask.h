@@ -22,9 +22,9 @@ public:
                  const Eigen::MatrixXd & waypoints = Eigen::MatrixXd(3,0),
                  unsigned int nrWP = 0);
 
-  virtual void addToSolver(tasks::qp::QPSolver & solver) override;
+  virtual void addToSolver(mc_solver::QPSolver & solver) override;
 
-  virtual void removeFromSolver(tasks::qp::QPSolver & solver) override;
+  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
 
   virtual void update() override;
 

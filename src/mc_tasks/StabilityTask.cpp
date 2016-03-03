@@ -86,14 +86,13 @@ void StabilityTask::target(const mc_rbdyn::Robot &/*env*/, const mc_rbdyn::Stanc
   comTaskSm.reset(config.comTask.weight, comObj, comSmoothPercent);
 }
 
-void StabilityTask::addToSolver(tasks::qp::QPSolver & solver)
+void StabilityTask::addToSolver(mc_solver::QPSolver & solver)
 {
   solver.addTask(comTaskSp.get());
   solver.addTask(postureTask.get());
-  solver.updateTasksNrVars(robots.mbs());
 }
 
-void StabilityTask::removeFromSolver(tasks::qp::QPSolver & solver)
+void StabilityTask::removeFromSolver(mc_solver::QPSolver & solver)
 {
   solver.removeTask(comTaskSp.get());
   solver.removeTask(postureTask.get());

@@ -192,6 +192,7 @@ MCSeqController::MCSeqController(std::shared_ptr<mc_rbdyn::RobotModule> robot_mo
   currentContact(0), targetContact(0), currentGripper(0),
   use_real_sensors(config.use_real_sensors),
   collsConstraint(robots(), timeStep),
+  comIncPlaneConstr(robots(), 0, timeStep),
   max_perc(1.0), nr_points(300),
   samples(0.0, max_perc, nr_points)
 {
@@ -233,23 +234,19 @@ MCSeqController::MCSeqController(std::shared_ptr<mc_rbdyn::RobotModule> robot_mo
   rbd::forwardKinematics(robot().mb(), robot().mbc());
   rbd::forwardVelocity(robot().mb(), robot().mbc());
 
-  constSpeedConstr.reset(new tasks::qp::BoundedSpeedConstr(robots().mbs(), 0, timeStep));
-  constSpeedConstr->addToSolver(qpsolver->solver);
+  constSpeedConstr.reset(new mc_solver::BoundedSpeedConstr(robots(), 0, timeStep));
+  qpsolver->addConstraintSet(*constSpeedConstr);
 
   dynamicsConstraint = mc_solver::DynamicsConstraint(robots(), 0, timeStep,
                                                          false, {0.01, 0.001, 0.}, 0.5);
   qpsolver->addConstraintSet(dynamicsConstraint);
   qpsolver->addConstraintSet(contactConstraint);
   qpsolver->addConstraintSet(collsConstraint);
+  qpsolver->addConstraintSet(comIncPlaneConstr);
   qpsolver->setContacts(stances[stanceIndex].geomContacts());
 
-  comIncPlaneConstr.reset(new tasks::qp::CoMIncPlaneConstr(robots().mbs(), 0, timeStep));
-  comIncPlaneConstr->addToSolver(qpsolver->solver);
-
-  qpsolver->update();
-
   stabilityTask.reset(new mc_tasks::StabilityTask(robots()));
-  stabilityTask->addToSolver(qpsolver->solver);
+  stabilityTask->addToSolver(solver());
   metaTasks.push_back(stabilityTask.get());
   stabilityTask->target(env(), stances[stanceIndex], configs[stanceIndex], configs[stanceIndex].comTask.targetSpeed);
 
@@ -306,13 +303,14 @@ bool MCSeqController::run()
           speeds = std::vector<Eigen::Vector3d>(planes.size(), Eigen::Vector3d::Zero());
           nds = speeds;
         }
-        set_planes(planes, comIncPlaneConstr, speeds, nds);
+        comIncPlaneConstr.set_planes(solver(), planes, speeds, nds);
+
       }
       else
       {
         std::vector<Eigen::Vector3d> speeds(planes.size(), Eigen::Vector3d::Zero());
         std::vector<Eigen::Vector3d> nds = speeds;
-        set_planes(planes, comIncPlaneConstr, speeds, nds);
+        comIncPlaneConstr.set_planes(solver(), planes, speeds, nds);
       }
       /* Execute the step */
       if(!halted && seq_actions[stanceIndex]->execute(*this))
@@ -406,7 +404,6 @@ void MCSeqController::reset(const ControllerResetData & reset_data)
   //q_target[0] = robot().mbc().q[0];
   //stances[stanceIndex].q(q_target);
   stabilityTask->target(env(), stances[stanceIndex], configs[stanceIndex], configs[stanceIndex].comTask.targetSpeed);
-  qpsolver->update();
 }
 
 std::ostream& MCSeqController::log_header(std::ostream & os)
@@ -428,12 +425,12 @@ std::vector<std::string> MCSeqController::supported_robots() const
 
 void MCSeqController::updateRobotEnvCollisions(const std::vector<mc_rbdyn::Contact> & contacts, const mc_rbdyn::StanceConfig & conf)
 {
-  collsConstraint.setEnvCollisions(robots(), contacts, confToColl(conf.collisions.robotEnv));
+  collsConstraint.setEnvCollisions(solver(), contacts, confToColl(conf.collisions.robotEnv));
 }
 
 void MCSeqController::updateSelfCollisions(const std::vector<mc_rbdyn::Contact> & contacts, const mc_rbdyn::StanceConfig & conf)
 {
-  collsConstraint.setSelfCollisions(robots(), contacts, confToColl(conf.collisions.autoc));
+  collsConstraint.setSelfCollisions(solver(), contacts, confToColl(conf.collisions.autoc));
 }
 
 void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & contacts)
@@ -442,7 +439,7 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
 
   for(const auto & gTT : gripperTorqueTasks)
   {
-    qpsolver->solver.removeTask(gTT.get());
+    qpsolver->removeTask(gTT.get());
   }
   gripperTorqueTasks.clear();
 
@@ -456,7 +453,7 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
       Eigen::Vector3d T = robSurf.X_b_motor().rotation().row(0);
       std::shared_ptr<tasks::qp::GripperTorqueTask> gTask(new tasks::qp::GripperTorqueTask(contactId, robSurf.X_b_motor().translation(), T, 1e-4));
       gripperTorqueTasks.push_back(gTask);
-      qpsolver->solver.addTask(gTask.get());
+      qpsolver->addTask(gTask.get());
     }
   }
 
@@ -475,7 +472,7 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
       double stopForce = 90; /* FIXME ^^ */
       std::shared_ptr<tasks::qp::PositionTask> positionTask(new tasks::qp::PositionTask(robots().mbs(), 0, contactId.r1BodyId, X_0_s.translation(), is_gs->X_b_s().translation()));
       std::shared_ptr<tasks::qp::SetPointTask> positionTaskSp(new tasks::qp::SetPointTask(robots().mbs(), 0, positionTask.get(), 20, 100000.));
-      qpsolver->solver.addTask(positionTaskSp.get());
+      qpsolver->addTask(positionTaskSp.get());
       actiGrippers[bodyName] = ActiGripper(wrenchIndex, actiForce, stopForce, contactId, X_0_s, use_real_sensors ? 0.04:0.01, positionTask, positionTaskSp); /*FIXME 0.04 is ActiGripperMaxPull */
     }
   }
@@ -491,7 +488,7 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
     if(std::find(contactBodies.begin(), contactBodies.end(), ka.first) == contactBodies.end())
     {
       LOG_INFO("ActiGripper RM " << ka.first);
-      qpsolver->solver.removeTask(ka.second.positionTaskSp.get());
+      qpsolver->removeTask(ka.second.positionTaskSp.get());
       /* This cast is guaranted to work */
       (dynamic_cast<tasks::qp::ContactConstr*>(contactConstraint.contactConstr.get()))->removeDofContact(ka.second.contactId);
       rmActi.push_back(ka.first);
@@ -501,11 +498,6 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
   {
     actiGrippers.erase(actiGrippers.find(k));
   }
-}
-
-void MCSeqController::updateSolverEqInEq()
-{
-  qpsolver->update();
 }
 
 void MCSeqController::pre_live()
@@ -634,7 +626,7 @@ bool MCSeqController::setCollisionsContactFilter(const mc_rbdyn::Contact & conta
   auto v = collisionsContactFilterList(contact, conf);
   for(const auto & p : v)
   {
-    ret |= collsConstraint.removeEnvCollisionByBody(robots(), p.first, p.second);
+    ret |= collsConstraint.removeEnvCollisionByBody(solver(), p.first, p.second);
   }
   return ret;
 }
