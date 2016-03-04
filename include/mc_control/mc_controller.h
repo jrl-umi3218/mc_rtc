@@ -96,6 +96,21 @@ public:
    */
   const std::vector<std::pair<Eigen::Vector3d, Eigen::Vector3d>> & getWrenches();
 
+  /** Get the current encoder values provided by simulation/low-level controller
+   * \return A vector of encoder values ordered by the controller/simulator
+   */
+  const std::vector<double> & getEncoderValues();
+
+  /** Get the sensor orientation
+   * \return The sensor orientation if provided, Eigen::Vector3d::Zero() otherwise
+   */
+  const Eigen::Vector3d & getSensorOrientation();
+
+  /** Get the sensor acceleration
+   * \return The sensor acceleration if provided, Eigen::Vector3d::Zero() otherwise
+   */
+  const Eigen::Vector3d & getSensorAcceleration();
+
   /** Return the main robot (first robot provided in the constructor
    * \anchor mc_controller_robot_const_doc
    */

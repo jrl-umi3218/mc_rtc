@@ -114,7 +114,14 @@ public:
    * Tasks rather than those wrapped in this library, you probably do not need
    * to call this
    */
-  void updateConstrSize(); private: std::shared_ptr<mc_rbdyn::Robots> robots_p;
+  void updateConstrSize();
+
+  /** Returns the timestep of the solver
+   * \return The timestep of the solver
+   */
+  double dt();
+private:
+  std::shared_ptr<mc_rbdyn::Robots> robots_p;
   double timeStep;
 
   /** Holds unilateral contacts in the solver */

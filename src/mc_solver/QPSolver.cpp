@@ -181,4 +181,9 @@ void QPSolver::updateConstrSize()
   solver.updateConstrSize();
 }
 
+double QPSolver::dt()
+{
+  return timeStep;
+}
+
 }

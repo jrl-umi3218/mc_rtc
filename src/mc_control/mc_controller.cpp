@@ -105,6 +105,21 @@ const std::vector<std::pair<Eigen::Vector3d, Eigen::Vector3d>> & MCController::g
   return this->wrenches;
 }
 
+const std::vector<double> & MCController::getEncoderValues()
+{
+  return this->encoderValues;
+}
+
+const Eigen::Vector3d & MCController::getSensorOrientation()
+{
+  return this->sensorOri;
+}
+
+const Eigen::Vector3d & MCController::getSensorAcceleration()
+{
+  return this->sensorAcc;
+}
+
 const mc_rbdyn::Robot & MCController::robot() const
 {
   return qpsolver->robot();
