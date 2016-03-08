@@ -3,6 +3,7 @@
 #include <mc_rtc/config.h>
 #include <mc_rtc/logging.h>
 
+#include <boost/algorithm/string.hpp>
 #include <fstream>
 
 namespace mc_robots
@@ -14,8 +15,8 @@ namespace mc_robots
     rsdf_dir = path + "/rsdf";
 
     virtualLinks.push_back("base_link");
-    virtualLinks.push_back("r_ankle");
-    virtualLinks.push_back("l_ankle");
+    //virtualLinks.push_back("r_ankle");
+    //virtualLinks.push_back("l_ankle");
     virtualLinks.push_back("r_sole");
     virtualLinks.push_back("l_sole");
     virtualLinks.push_back("Accelerometer");
@@ -197,20 +198,67 @@ namespace mc_robots
   std::map<std::string, std::pair<std::string, std::string>> HRP4CommonRobotModule::stdCollisionsFiles(const rbd::MultiBody & mb) const
   {
     std::map<std::string, std::pair<std::string, std::string>> res;
-    //TODO: add convex hulls
-    //for (const auto & b : mb.bodies())
-    //{
-    //  res[b.name()] = std::pair<std::string, std::string>(b.name(), b.name());
-    //}
-    //res["RARM_LINK7"] = std::pair<std::string, std::string>("RARM_LINK7", "RARM_DRC_LINK7");
-    //res["LARM_LINK7"] = std::pair<std::string, std::string>("LARM_LINK7", "LARM_DRC_LINK7");
-    //res["RARM_LINK6_sub1"] = std::pair<std::string, std::string>("RARM_LINK6", "RARM_LINK6_lower");
-    //res["LARM_LINK6_sub1"] = std::pair<std::string, std::string>("LARM_LINK6", "LARM_LINK6_lower");
-    //res["RLEG_LINK5"] = std::pair<std::string, std::string>("RLEG_LINK5", "RLEG_LINK5-2");
-    //res["LLEG_LINK5"] = std::pair<std::string, std::string>("LLEG_LINK5", "LLEG_LINK5-2");
-    //res["RARM_LINK6"] = std::pair<std::string, std::string>("RARM_LINK6", "r_wrist_closed");
-    //res["LARM_LINK6"] = std::pair<std::string, std::string>("LARM_LINK6", "l_wrist_closed");
-    //res["CHEST_LINK1_FULL"] = std::pair<std::string, std::string>("CHEST_LINK1", "CHEST_LINK1_FULL");
+    for(const auto & b : mb.bodies())
+    {
+      res[b.name()] = {b.name(), boost::algorithm::replace_first_copy(b.name(), "_LINK", "")};
+    }
+
+    auto addBody = [&res](const std::string & body, const std::string & file)
+    {
+      res[body] = {body, file};
+    };
+    addBody("body", "WAIST_LINK");
+    addBody("torso", "CHEST_Y");
+
+    addBody("R_HIP_Y_LINK", "HIP_Y");
+    addBody("R_HIP_R_LINK", "CHEST_P");
+    addBody("R_ANKLE_P_LINK", "L_ANKLE_P");
+    addBody("r_ankle", "R_FOOT");
+
+    addBody("L_HIP_Y_LINK", "HIP_Y");
+    addBody("L_HIP_R_LINK", "CHEST_P");
+    addBody("l_ankle", "L_FOOT");
+
+    addBody("CHEST_P_LINK", "CHEST");
+
+    addBody("R_SHOULDER_Y_LINK", "SHOULDER_Y");
+    addBody("R_ELBOW_P_LINK", "ELBOW_P");
+    addBody("R_WRIST_P_LINK", "WRIST_P");
+    addBody("r_wrist", "R_WRIST_R");
+
+    auto finger = [&addBody](const std::string & prefix)
+    {
+      addBody(prefix + "_HAND_J0_LINK", prefix + "_THUMB");
+      addBody(prefix + "_HAND_J1_LINK", prefix + "_F1");
+      for(unsigned int i = 2; i < 6; ++i)
+      {
+        std::stringstream key1;
+        key1 << prefix << "_F" << i << "2_LINK";
+        std::stringstream key2;
+        key2 << prefix << "_F" << i << "3_LINK";
+        addBody(key1.str(), "F2");
+        addBody(key2.str(), "F3");
+      }
+    };
+    finger("R");
+    finger("L");
+
+    addBody("L_SHOULDER_Y_LINK", "SHOULDER_Y");
+    addBody("L_ELBOW_P_LINK", "ELBOW_P");
+    addBody("L_WRIST_P_LINK", "WRIST_P");
+    addBody("l_wrist", "L_WRIST_R");
+
+    auto addWristSubConvex = [&res](const std::string & prefix)
+    {
+      std::string wristY = prefix + "_WRIST_Y_LINK";
+      std::string wristR = boost::algorithm::to_lower_copy(prefix) + "_wrist";
+      res[wristY + "_sub0"] = {wristY, prefix + "_WRIST_Y_sub0"};
+      res[wristR + "_sub0"] = {wristR, prefix + "_WRIST_R_sub0"};
+      res[wristR + "_sub1"] = {wristR, prefix + "_WRIST_R_sub1"};
+    };
+    addWristSubConvex("L");
+    addWristSubConvex("R");
+
     return res;
   }
 
