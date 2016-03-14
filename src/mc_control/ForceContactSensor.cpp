@@ -89,7 +89,7 @@ std::vector<std::string> ForceContactSensor::update(MCController & ctl)
 
   for(size_t i = 0; i < sensors.size(); ++i)
   {
-    sensors[i].update(ctl.getWrenches()[i].first);
+    sensors[i].update(ctl.getWrenches()[i].force());
     if(sensors[i].activated == ForceSensor::Activated)
     {
       if(sensors[i].direction == ForceSensor::Forward)

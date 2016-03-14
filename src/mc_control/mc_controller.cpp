@@ -95,12 +95,12 @@ void MCController::reset(const ControllerResetData & reset_data)
   rbd::forwardVelocity(robot().mb(), robot().mbc());
 }
 
-void MCController::setWrenches(const std::vector< std::pair<Eigen::Vector3d, Eigen::Vector3d> > & wrenches)
+void MCController::setWrenches(const std::vector<sva::ForceVecd> & wrenches)
 {
   this->wrenches = wrenches;
 }
 
-const std::vector<std::pair<Eigen::Vector3d, Eigen::Vector3d>> & MCController::getWrenches()
+const std::vector<sva::ForceVecd> & MCController::getWrenches()
 {
   return this->wrenches;
 }
