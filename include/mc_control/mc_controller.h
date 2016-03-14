@@ -92,7 +92,7 @@ public:
   virtual void setWrenches(const std::vector<sva::ForceVecd>& wrenches);
 
   /** Get the current wrenches information
-   * \return A vector of (force,moment) pairs stored as Eigen::Vector3d
+   * \return A vector of sva::ForceVecd representing force/torque pairs.
    */
   const std::vector<sva::ForceVecd> & getWrenches();
 
