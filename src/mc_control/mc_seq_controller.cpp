@@ -503,7 +503,7 @@ void MCSeqController::pre_live()
 {
   for(auto & ba : actiGrippers)
   {
-    const Eigen::Vector3d & force = wrenches[ba.second.wrenchIndex].first;
+    const Eigen::Vector3d & force = wrenches[ba.second.wrenchIndex].force();
     double forceNorm = force.norm();
     ba.second.targetError = ba.second.positionTask->eval().norm();
     if(!ba.second.toRemove)

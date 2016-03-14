@@ -213,7 +213,7 @@ void MCGlobalController::setEncoderValues(const std::vector<double> & eValues)
   controller->encoderValues = eValues;
 }
 
-void MCGlobalController::setWrenches(const std::vector< std::pair<Eigen::Vector3d, Eigen::Vector3d> > & wrenches)
+void MCGlobalController::setWrenches(const std::vector<sva::ForceVecd> & wrenches)
 {
   controller->setWrenches(wrenches);
 }

@@ -122,7 +122,7 @@ class MCControl  : public RTC::DataFlowComponentBase
   std::vector<std::string> m_wrenchesNames;
   std::vector<TimedDoubleSeq*> m_wrenchesIn;
   std::vector< InPort<TimedDoubleSeq>* > m_wrenchesInIn;
-  std::vector< std::pair<Eigen::Vector3d, Eigen::Vector3d> > m_wrenches;
+  std::vector<sva::ForceVecd> m_wrenches;
 
   // </rtc-template>
 
