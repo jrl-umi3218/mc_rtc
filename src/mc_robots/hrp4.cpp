@@ -13,6 +13,7 @@ namespace mc_robots
     : RobotModule(mc_rtc::HRP4_DESCRIPTION_PATH, "hrp4")
   {
     rsdf_dir = path + "/rsdf";
+    calib_dir = path + "/calib";
 
     virtualLinks.push_back("base_link");
     //virtualLinks.push_back("r_ankle");

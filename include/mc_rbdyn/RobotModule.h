@@ -24,7 +24,8 @@ struct MC_RBDYN_DLLAPI RobotModule
 
   RobotModule(const std::string & path, const std::string & name, const std::string & urdf_path)
   : path(path), name(name), urdf_path(urdf_path),
-    rsdf_dir(path + "/rsdf/" + name)
+    rsdf_dir(path + "/rsdf/" + name),
+    calib_dir(path + "/calib/" + name)
   {}
 
   virtual ~RobotModule() {}
@@ -65,6 +66,7 @@ struct MC_RBDYN_DLLAPI RobotModule
   std::string name;
   std::string urdf_path;
   std::string rsdf_dir;
+  std::string calib_dir;
   rbd::MultiBody mb;
   rbd::MultiBodyConfig mbc;
   rbd::MultiBodyGraph mbg;
