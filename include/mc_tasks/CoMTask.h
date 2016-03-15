@@ -13,7 +13,8 @@ namespace mc_tasks
 struct MC_TASKS_DLLAPI CoMTask
 {
 public:
-  CoMTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex);
+  CoMTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex,
+          double stifness = 5.0, double weight = 100.);
 
   void resetTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex);
 

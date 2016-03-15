@@ -3,7 +3,8 @@
 namespace mc_tasks
 {
 
-CoMTask::CoMTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex)
+CoMTask::CoMTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex,
+                 double stiffness, double weight)
 : robots(robots), in_solver(false)
 {
   const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
@@ -11,7 +12,7 @@ CoMTask::CoMTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex)
   cur_com = rbd::computeCoM(robot.mb(), robot.mbc());
 
   comTask.reset(new tasks::qp::CoMTask(robots.mbs(), static_cast<int>(robotIndex), cur_com));
-  comTaskSp.reset(new tasks::qp::SetPointTask(robots.mbs(), static_cast<int>(robotIndex), comTask.get(), 5, 100));
+  comTaskSp.reset(new tasks::qp::SetPointTask(robots.mbs(), static_cast<int>(robotIndex), comTask.get(), stiffness, weight));
 }
 
 void CoMTask::resetTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex)
