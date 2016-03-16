@@ -31,7 +31,7 @@ build_gcc_noros_hrpsys:
   stage: build
   script:
     - export MASTER_PPA=""
-    - export APT_DEPENDENCIES="hrpsys-base"
+    - export APT_DEPENDENCIES="hrpsys-base liblapack-dev libblas-dev"
     - export GIT_DEPENDENCIES=""
     - ./.jrl-ci/run before_install
     - ./.jrl-ci/run build
@@ -58,7 +58,7 @@ build_gcc_ros_hrpsys:
   script:
     - ./.jrl-ci/dependencies/catkin
     - export MASTER_PPA=""
-    - export APT_DEPENDENCIES="ros-indigo-common-msgs ros-indigo-tf2-ros ros-indigo-xacro ros-indigo-rviz-animated-view-controller hrpsys-base"
+    - export APT_DEPENDENCIES="ros-indigo-common-msgs ros-indigo-tf2-ros ros-indigo-xacro ros-indigo-rviz-animated-view-controller hrpsys-base liblapack-dev libblas-dev"
     - export GIT_DEPENDENCIES=""
     - export ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_ros#master git@gite.lirmm.fr:mc-hrp2/hrp2_drc#master git@gite.lirmm.fr:mc-hrp4/hrp4#master"
     - ./.jrl-ci/run before_install
