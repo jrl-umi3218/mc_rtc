@@ -31,7 +31,7 @@ build_gcc_noros_hrpsys:
   stage: build
   script:
     - export MASTER_PPA=""
-    - export APT_DEPENDENCIES="hrpsys-base liblapack-dev libblas-dev"
+    - export APT_DEPENDENCIES="hrpsys-base liblapack-dev libblas-dev libjpeg-dev libpng12-dev"
     - export GIT_DEPENDENCIES=""
     - ./.jrl-ci/run before_install
     - ./.jrl-ci/run build
