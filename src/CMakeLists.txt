@@ -264,8 +264,14 @@ if(${HRPSYS_BASE_FOUND})
     ARCHIVE DESTINATION lib)
 endif()
 
-install(TARGETS mc_rbdyn mc_solver mc_tasks mc_control mc_trajectory mc_rtc_ros mc_rtc_loader
+set(MC_LIBRARIES mc_rbdyn mc_solver mc_tasks mc_control mc_trajectory mc_rtc_ros mc_rtc_loader)
+foreach(MC_LIB ${MC_LIBRARIES})
+  set_target_properties(${MC_LIB} PROPERTIES SOVERSION 0 VERSION 0.1.0)
+endforeach()
+
+install(TARGETS ${MC_LIBRARIES}
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
-  ARCHIVE DESTINATION lib)
+  ARCHIVE DESTINATION lib
+)
 
