@@ -104,6 +104,9 @@ namespace mc_robots
     halfSitting["L_F43"] = { 0 }; //0
     halfSitting["L_F52"] = { 0 }; //0
     halfSitting["L_F53"] = { 0 }; //0
+    /* Virtual joints */
+    halfSitting["L_FOOT"] = {};
+    halfSitting["R_FOOT"] = {};
 
     _forceSensors.push_back(mc_rbdyn::ForceSensor("RightFootForceSensor", "R_ANKLE_R_LINK", sva::PTransformd(Eigen::Vector3d(0, 0, -0.093))));
     _forceSensors.push_back(mc_rbdyn::ForceSensor("LeftFootForceSensor", "L_ANKLE_R_LINK", sva::PTransformd(Eigen::Vector3d(0, 0, -0.093))));
