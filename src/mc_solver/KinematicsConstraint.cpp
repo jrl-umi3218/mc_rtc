@@ -2,6 +2,8 @@
 
 #include <Tasks/Bounds.h>
 
+#include <array>
+
 namespace mc_solver
 {
 

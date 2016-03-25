@@ -57,7 +57,7 @@ MCDrivingController::MCDrivingController(std::shared_ptr<mc_rbdyn::RobotModule> 
   : MCController({robot_module, mc_rbdyn::RobotLoader::get_robot_module("PolarisRanger", true)}, dt),
     graspOffset(sva::RotX(-M_PI/2), Eigen::Vector3d(0., 0., 0.)),
     ef_task("RARM_LINK6", robots(), 0),
-    polarisKinematicsConstraint(robots(), 1, timeStep, {0.1, 0.01, 0.01}, 0.5),
+    polarisKinematicsConstraint(robots(), 1, timeStep, std::array<double, 3>(0.1, 0.01, 0.01), 0.5),
     drivingContacts(),
     collsConstraint(robots(), 0, 1, timeStep),
     iter_(0), theta_(0),

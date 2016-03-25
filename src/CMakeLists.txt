@@ -224,15 +224,15 @@ add_controller("com" "mc_control/mc_com_controller.cpp"
 add_controller("seq"
   "mc_control/mc_seq_controller.cpp;mc_control/mc_seq_steps.cpp;mc_control/MCSeqPublisher.cpp"
   "mc_control/mc_seq_controller.h;mc_control/mc_seq_actions.h;mc_control/mc_seq_steps.h;mc_control/MCSeqPublisher.h")
-add_controller("driving" "mc_control/mc_driving_controller.cpp"
-  "mc_control/mc_driving_controller.h")
-add_controller("egress" "mc_control/mc_egress_controller.cpp"
-  "mc_control/mc_egress_controller.h")
-add_controller("egress_mrqp" "mc_control/mc_egress_mrqp_controller.cpp"
-  "mc_control/mc_egress_mrqp_controller.h")
-add_controller("bci_self_interact"
-  "mc_control/mc_bci_self_interact_controller.cpp"
-  "mc_control/mc_bci_self_interact_controller.h")
+#add_controller("driving" "mc_control/mc_driving_controller.cpp"
+#  "mc_control/mc_driving_controller.h")
+#add_controller("egress" "mc_control/mc_egress_controller.cpp"
+#  "mc_control/mc_egress_controller.h")
+#add_controller("egress_mrqp" "mc_control/mc_egress_mrqp_controller.cpp"
+#  "mc_control/mc_egress_mrqp_controller.h")
+#add_controller("bci_self_interact"
+#  "mc_control/mc_bci_self_interact_controller.cpp"
+#  "mc_control/mc_bci_self_interact_controller.h")
 
 if(${HRPSYS_BASE_FOUND})
   set(MCControl_SRC

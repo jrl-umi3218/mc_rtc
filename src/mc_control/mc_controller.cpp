@@ -8,6 +8,7 @@
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
+#include <array>
 #include <fstream>
 
 namespace mc_control
@@ -62,9 +63,10 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   }
 
   /* Initialize constraints and tasks */
+  std::array<double, 3> damper = {0.1, 0.01, 0.5};
   contactConstraint = mc_solver::ContactConstraint(timeStep, mc_solver::ContactConstraint::Velocity);
-  dynamicsConstraint = mc_solver::DynamicsConstraint(robots(), 0, timeStep, {0.1, 0.01, 0.5}, 0.5);
-  kinematicsConstraint = mc_solver::KinematicsConstraint(robots(), 0, timeStep, {0.1, 0.01, 0.5}, 0.5);
+  dynamicsConstraint = mc_solver::DynamicsConstraint(robots(), 0, timeStep, damper, 0.5);
+  kinematicsConstraint = mc_solver::KinematicsConstraint(robots(), 0, timeStep, damper, 0.5);
   selfCollisionConstraint = mc_solver::CollisionsConstraint(robots(), 0, 0, timeStep);
   selfCollisionConstraint.addCollisions(solver(), robots_modules[0]->defaultSelfCollisions());
   postureTask.reset(new tasks::qp::PostureTask(robots().mbs(), 0, robot().mbc().q, 10, 5));
