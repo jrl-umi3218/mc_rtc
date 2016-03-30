@@ -25,9 +25,6 @@
 
 using boost::asio::ip::udp;
 
-/* Hard-coded dofs to handle both HRP2DRC and HRP2JVRC */
-static const unsigned int MODEL_DOF = 42;
-
 // Module specification
 // <rtc-template block="module_spec">
 static const char* mccontrol_spec[] =
@@ -202,10 +199,8 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
   if(m_qInIn.isNew())
   {
     m_qInIn.read();
-    /*FIXME Quick fix to handle HRP2JVRC like HRP2DRC
-    qIn.resize(m_qIn.data.length()); */
-    qIn.resize(MODEL_DOF);
-    for(unsigned int i = 0; i < std::min(MODEL_DOF, static_cast<unsigned int>(m_qIn.data.length())); ++i)
+    qIn.resize(m_qIn.data.length());
+    for(unsigned int i = 0; i < qIn.size(); ++i)
     {
       qIn[i] = m_qIn.data[i];
     }
