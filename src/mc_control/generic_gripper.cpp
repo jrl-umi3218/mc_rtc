@@ -18,6 +18,9 @@ Mimic::Mimic(const std::string & j, double m, double o)
 {
 }
 
+namespace
+{
+
 mimic_d_t readMimic(const std::string & urdf)
 {
   mimic_d_t res;
@@ -109,6 +112,8 @@ std::string findFirstCommonBody(const mc_rbdyn::Robot & robotFull, const std::st
     std::string bodyPredName = robotFull.mb().body(bodyPredIndex).name();
     return findFirstCommonBody(robotFull, bodyPredName, robot);
   }
+}
+
 }
 
 Gripper::Gripper(const mc_rbdyn::Robot & robot, const std::string & gripperName,
