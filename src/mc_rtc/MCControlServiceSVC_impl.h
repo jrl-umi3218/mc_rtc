@@ -22,7 +22,7 @@ namespace OpenHRP
 
       virtual CORBA::Boolean close_grippers() override;
 
-      virtual CORBA::Boolean set_gripper(CORBA::Boolean lgripper, CORBA::Double v) override;
+      virtual CORBA::Boolean set_gripper(const char * gripper, const OpenHRP::DblSequence & v) override;
 
       /* Joint services */
       virtual CORBA::Boolean set_joint_pos(const char* jname, CORBA::Double v) override;

@@ -49,7 +49,7 @@ Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
 : name_(name), robots(robots), robots_idx(robots_idx),
   bodyTransforms(bodyTransforms), ql_(ql), qu_(qu), vl_(vl), vu_(vu), tl_(tl), tu_(tu),
   convexes(convexes), stpbvs(stpbvs), collisionTransforms(collisionTransforms), surfaces_(),
-  forceSensors(forceSensors), stance_(stance), accelerometerBody(accelerometerBody), springs(springs), tlPoly(tlPoly),
+  forceSensors(forceSensors), stance_(stance), _accelerometerBody(accelerometerBody), springs(springs), tlPoly(tlPoly),
   tuPoly(tuPoly), flexibility_(flexibility)
 {
   // Copy the surfaces
@@ -70,16 +70,21 @@ Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
     forceSensorsParentD[sensor.sensorName] = sensor;
     parentBodyForceSensorD[sensor.parentBodyName] = sensor.sensorName;
   }
-  if(this->accelerometerBody == "" && this->hasBody("Accelerometer"))
+  if(this->_accelerometerBody == "" && this->hasBody("Accelerometer"))
   {
     unsigned int index = bodyIndexByName("Accelerometer");
-    this->accelerometerBody = this->mb().body(this->mb().parent(index)).name();
+    this->_accelerometerBody = this->mb().body(this->mb().parent(index)).name();
   }
 }
 
 std::string Robot::name() const
 {
   return name_;
+}
+
+const std::string & Robot::accelerometerBody() const
+{
+  return _accelerometerBody;
 }
 
 bool Robot::hasJoint(const std::string & name) const
@@ -436,7 +441,7 @@ void Robot::createWithBase(Robots & robots, unsigned int robots_idx, const Base 
               ql, qu, vl, vu, tl, tu,
               this->convexes, this->stpbvs, this->collisionTransforms,
               this->surfaces_, this->forceSensors, this->stance_,
-              this->accelerometerBody, this->springs,
+              this->_accelerometerBody, this->springs,
               this->tlPoly, this->tuPoly,
               this->flexibility());
   robots.robot(robots_idx).fixSurfaces();
@@ -452,7 +457,7 @@ void Robots::robotCopy(const Robots & robots, unsigned int robots_idx)
 
 void Robot::copy(Robots & robots, unsigned int robots_idx) const
 {
-  robots.robots_.emplace_back(this->name_, robots, robots_idx, this->bodyTransforms, this->ql(), this->qu(), this->vl(), this->vu(), this->tl(), this->tu(), this->convexes, this->stpbvs, this->collisionTransforms, this->surfaces_, this->forceSensors, this->stance_, this->accelerometerBody, this->springs, this->tlPoly, this->tuPoly, this->flexibility());
+  robots.robots_.emplace_back(this->name_, robots, robots_idx, this->bodyTransforms, this->ql(), this->qu(), this->vl(), this->vu(), this->tl(), this->tu(), this->convexes, this->stpbvs, this->collisionTransforms, this->surfaces_, this->forceSensors, this->stance_, this->_accelerometerBody, this->springs, this->tlPoly, this->tuPoly, this->flexibility());
 }
 
 std::vector< std::vector<double> > jointsParameters(const rbd::MultiBody & mb, const double & coeff)

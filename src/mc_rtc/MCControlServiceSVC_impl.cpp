@@ -32,26 +32,24 @@ CORBA::Boolean MCControlServiceSVC_impl::EnableController(const char * name)
 
 CORBA::Boolean MCControlServiceSVC_impl::open_grippers()
 {
-  m_plugin->controller.setGripperOpenPercent(1, 1);
+  m_plugin->controller.setGripperOpenPercent(1);
   return true;
 }
 
 CORBA::Boolean MCControlServiceSVC_impl::close_grippers()
 {
-  m_plugin->controller.setGripperOpenPercent(0, 0);
+  m_plugin->controller.setGripperOpenPercent(0);
   return true;
 }
 
-CORBA::Boolean MCControlServiceSVC_impl::set_gripper(CORBA::Boolean lgripper, CORBA::Double v)
+CORBA::Boolean MCControlServiceSVC_impl::set_gripper(const char * gripper, const OpenHRP::DblSequence & v)
 {
-  if(lgripper)
+  std::vector<double> q;
+  for(unsigned int i = 0; i < v.length(); ++i)
   {
-    m_plugin->controller.setLGripperTargetQ(v);
+    q.push_back(v[i]);
   }
-  else
-  {
-    m_plugin->controller.setRGripperTargetQ(v);
-  }
+  m_plugin->controller.setGripperTargetQ(gripper, q);
   return true;
 }
 

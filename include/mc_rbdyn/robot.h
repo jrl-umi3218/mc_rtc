@@ -141,6 +141,8 @@ public:
 
   std::string name() const;
 
+  const std::string & accelerometerBody() const;
+
   bool hasJoint(const std::string & name) const;
 
   bool hasBody(const std::string & name) const;
@@ -218,7 +220,7 @@ private:
   std::map<std::string, mc_rbdyn::SurfacePtr> surfaces_;
   std::vector<ForceSensor> forceSensors;
   std::map<unsigned int, std::vector<double>> stance_;
-  std::string accelerometerBody;
+  std::string _accelerometerBody;
   Springs springs;
   std::vector< std::vector<Eigen::VectorXd> > tlPoly;
   std::vector< std::vector<Eigen::VectorXd> > tuPoly;
