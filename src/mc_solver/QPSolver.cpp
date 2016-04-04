@@ -127,11 +127,18 @@ void QPSolver::__fillResult()
     const mc_rbdyn::Robot & robot = robots_p->robot(i);
     qpRes.robots_state.push_back(mc_control::RobotMsg());
     std::vector<double> & q = qpRes.robots_state[i].q;
-    for(const auto & qv : robot.mbc().q)
+    for(size_t j = 0; j < robot.mbc().q.size(); ++j)
     {
-      for(const auto & qi : qv)
+      if(robot.mbc().q[j].size() > 0)
       {
-        q.push_back(qi);
+        for(const auto & qi : robot.mbc().q[j ])
+        {
+          q.push_back(qi);
+        }
+      }
+      else
+      {
+        q.push_back(0.);
       }
     }
     std::vector<double> & alphaVec = qpRes.robots_state[i].alphaVec;

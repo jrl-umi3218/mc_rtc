@@ -248,12 +248,38 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
         }
         controller.setActualGripperQ(realGripperQs);
         m_qOut.data.length(m_qIn.data.length());
+        for(unsigned int i = 0; i < controller.robot().mb().joints().size(); ++i)
+        {
+          std::cout << controller.robot().mb().joints()[i].name() << " " << i << std::endl;
+        }
         /* Update the general state */
+        std::cout << "=======================================================" << std::endl;
+        std::cout << "Size q: " << controller.robot().mbc().q.size() << std::endl;
+        std::cout << "Size joint order: " << controller.ref_joint_order().size() << std::endl;
+        std::cout << "Size robots_state: " << res.robots_state[0].q.size() << std::endl;
+        std::cout << "Size m_qOut: " << m_qOut.data.length() << std::endl;
+        for(unsigned int i = 0; i < res.robots_state[0].q.size() ; ++i){
+          std::cout << res.robots_state[0].q[i] << std::endl;
+        }
         for(unsigned int i = 0; i < ref_joint_order.size(); ++i)
         {
+          std::cout << "Idx: "        << std::setw(3)   << i <<
+                    " - Name: "       << std::setw(12)  << ref_joint_order[i] <<
+                    " - IdxR: "       << std::setw(3)   << controller.robot().jointIndexByName(ref_joint_order[i]) <<
+                    " - qIn: "        << std::setw(12)  << m_qIn.data[i];
+          if (controller.robot().mbc().q[controller.robot().jointIndexByName(ref_joint_order[i])].size() > 0){
+            std::cout << " - RealValue: "  << std::setw(12)  << controller.robot().mbc().q[controller.robot().jointIndexByName(ref_joint_order[i])][0];
+          }
+          if (controller.robot().jointIndexByName(ref_joint_order[i]) + 6 < res.robots_state[0].q.size()){
+            std::cout << " - Value: "      << std::setw(12)  << res.robots_state[0].q[controller.robot().jointIndexByName(ref_joint_order[i]) + 6];
+          }
+          std::cout << std::endl;
+          //m_qOut.data[i] = controller.robot().mbc().q[controller.robot().jointIndexByName(ref_joint_order[i])][0];
           m_qOut.data[i] = res.robots_state[0].q[controller.robot().jointIndexByName(ref_joint_order[i]) + 6];
         }
-        /* Update gripper state */
+        std::cout << "=======================================================" << std::endl;
+         /* Update gripper state */
+        /*
         for(const auto & g : gripperJs)
         {
           const auto & gName = g.first;
@@ -270,7 +296,8 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
               }
             }
           }
-        }
+        }*/
+
         /* FIXME Correction RPY convention here? */
         Eigen::Vector3d rpyOut = Eigen::Quaterniond(res.robots_state[0].q[0], res.robots_state[0].q[1], res.robots_state[0].q[2], res.robots_state[0].q[3]).toRotationMatrix().eulerAngles(2, 1, 0);
         m_rpyOut.data.r = rpyOut[2];
@@ -281,13 +308,14 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
         m_pOut.data.y = res.robots_state[0].q[5];
         m_pOut.data.z = res.robots_state[0].q[6];
       }
+
       m_qOut.tm = tm;
       m_rpyOut.tm = tm;
       m_pOut.tm = tm;
       m_qOutOut.write();
       m_pOutOut.write();
       m_rpyOutOut.write();
-      mc_rtc::ROSBridge::update_robot_publisher(controller.timestep(), controller.robot(), m_pIn, m_rpyIn, m_rateIn, m_accIn, controller.gripperJoints(), controller.gripperQ());
+      //mc_rtc::ROSBridge::update_robot_publisher(controller.timestep(), controller.robot(), m_pIn, m_rpyIn, m_rateIn, m_accIn, controller.gripperJoints(), controller.gripperQ());
       log_data();
     }
     else
@@ -328,7 +356,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
       robot.mbc().q = q;
       rbd::forwardKinematics(robot.mb(), robot.mbc());
       rbd::forwardVelocity(robot.mb(), robot.mbc());
-      mc_rtc::ROSBridge::update_robot_publisher(controller.timestep(), robot, m_pIn, m_rpyIn, m_rateIn, m_accIn, gripperJs, gripperQs);
+      //mc_rtc::ROSBridge::update_robot_publisher(controller.timestep(), robot, m_pIn, m_rpyIn, m_rateIn, m_accIn, gripperJs, gripperQs);
       controller.run();
     }
   }

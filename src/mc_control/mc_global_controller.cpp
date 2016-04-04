@@ -191,16 +191,57 @@ void MCGlobalController::init(const std::vector<double> & initq)
   }
   else if(config.main_robot_module->name == "hrp4")
   {
+    auto q_back = controller->robot().mbc().q;
     q.push_back({ 1, 0, 0, 0, 0, 0, 0.76 });
-    for (size_t i = 0; i < initq.size(); ++i)
+    for (size_t i = 0; i < 6; ++i)
     {
       q.push_back({ initq[i] });
+    }
+    q.push_back(q_back[7]);
+    for (size_t i = 6; i < 12; ++i)
+    {
+      q.push_back({ initq[i] });
+    }
+    q.push_back(q_back[14]);
+    for (size_t i = 12; i < 25; ++i)
+    {
+      q.push_back({ initq[i] });
+    }
+    //R_F
+    for (size_t i = 26; i < 34; ++i)
+    {
+      q.push_back({q_back[i]});
+    }
+    for (size_t i = 25; i < 34; ++i)
+    {
+      q.push_back({ initq[i] });
+    }
+    //L_F
+    for (size_t i = 45; i < 53; ++i)
+    {
+      q.push_back({0.});
     }
     setGripperCurrentQ({
       {"l_gripper", {initq[32], initq[33]}},
       {"r_gripper", {initq[23], initq[24]}}
     });
   }
+
+  for(size_t i = 0; i < q.size(); ++i){
+    std::cout << controller->robot().mb().joints()[i].name() << ": ";
+    for(size_t j = 0; j < controller->robot().mbc().q[i].size(); ++j){
+      if (controller->robot().mbc().q[i].size() == q[i].size()){
+        std::cout << "(" << controller->robot().mbc().q[i][j] << " " << q[i][j] << ") ";
+      } else {
+        std::cout << "ERROR - real size: " << controller->robot().mbc().q[i].size() << " - value:";
+        for(size_t k = 0; k < q[i].size(); ++k){
+            std::cout << "(" << q[i][k] << ") ";
+        }
+      }
+    }
+    std::cout << std::endl;
+  }
+
   controller->reset({q});
 }
 
