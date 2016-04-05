@@ -251,7 +251,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
         /* Update the general state */
         for(unsigned int i = 0; i < ref_joint_order.size(); ++i)
         {
-          m_qOut.data[i] = res.robots_state[0].q[controller.robot().jointIndexByName(ref_joint_order[i]) + 6];
+          m_qOut.data[i] = res.robots_state[0].q.at(ref_joint_order[i])[0];
         }
         /* Update gripper state */
         for(const auto & g : gripperJs)
@@ -272,14 +272,15 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
           }
         }
         /* FIXME Correction RPY convention here? */
-        Eigen::Vector3d rpyOut = Eigen::Quaterniond(res.robots_state[0].q[0], res.robots_state[0].q[1], res.robots_state[0].q[2], res.robots_state[0].q[3]).toRotationMatrix().eulerAngles(2, 1, 0);
+        const auto & ff_state = res.robots_state[0].q.at(controller.robot().mb().joint(0).name());
+        Eigen::Vector3d rpyOut = Eigen::Quaterniond(ff_state[0], ff_state[1], ff_state[2], ff_state[3]).toRotationMatrix().eulerAngles(2, 1, 0);
         m_rpyOut.data.r = rpyOut[2];
         m_rpyOut.data.p = rpyOut[1];
         m_rpyOut.data.y = rpyOut[0];
 
-        m_pOut.data.x = res.robots_state[0].q[4];
-        m_pOut.data.y = res.robots_state[0].q[5];
-        m_pOut.data.z = res.robots_state[0].q[6];
+        m_pOut.data.x = ff_state[4];
+        m_pOut.data.y = ff_state[5];
+        m_pOut.data.z = ff_state[6];
       }
       m_qOut.tm = tm;
       m_rpyOut.tm = tm;
@@ -296,8 +297,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
       m_qOut = m_qIn;
       /* Still run controller.run() in order to handle some service calls */
       mc_rbdyn::Robot & robot = const_cast<mc_rbdyn::Robot&>(controller.robot());
-      std::vector<std::vector<double>> q;
-      q.resize(robot.mb().nrJoints());
+      std::vector<std::vector<double>> q = robot.mbc().q;
       q[0] = {1, 0, 0, 0, 0, 0, 0.76};
       const std::vector<double> & initq = qIn;
       const auto & ref_joint_order = controller.ref_joint_order();
@@ -307,7 +307,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
         q[robot.jointIndexByName(jN)] = {initq[i]};
       }
       auto gripperQs = controller.gripperQ();
-      auto gripperJs = controller.gripperJoints();
+      auto gripperJs = controller.gripperActiveJoints();
       std::map<std::string, std::vector<double>> realGripperQs;
       for(const auto & g : gripperJs)
       {
