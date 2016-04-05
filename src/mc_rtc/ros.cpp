@@ -84,7 +84,10 @@ public:
       {
         const auto & j = gJoints[i];
         const auto & q = gQ[i];
-        mbc.q[robot.jointIndexByName(j)][0] = q;
+        if(robot.hasJoint(j) && mbc.q[robot.jointIndexByName(j)].size() > 0)
+        {
+          mbc.q[robot.jointIndexByName(j)][0] = q;
+        }
       }
     }
     rbd::forwardKinematics(robot.mb(), mbc);
@@ -99,7 +102,11 @@ public:
       if(j.dof() == 1)
       {
         msg.name.push_back(j.name());
-        msg.position.push_back(mbc.q[robot.jointIndexByName(j.name())][0]);
+        auto jIdx = robot.jointIndexByName(j.name());
+        if(mbc.q[jIdx].size() > 0)
+        {
+          msg.position.push_back(mbc.q[robot.jointIndexByName(j.name())][0]);
+        }
       }
     }
     msg.velocity.resize(0);

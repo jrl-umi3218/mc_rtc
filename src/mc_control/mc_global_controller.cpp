@@ -133,6 +133,7 @@ MCGlobalController::MCGlobalController(const std::string & conf)
     }
     if(controller_loader->has_object(controller_name))
     {
+      LOG_INFO("Create controller " << controller_name)
       if(controller_subname != "")
       {
         controllers[c] = controller_loader->create_object(controller_name, controller_subname, config.main_robot_module, config.timestep, config.v);
@@ -163,27 +164,19 @@ MCGlobalController::MCGlobalController(const std::string & conf)
 
 void MCGlobalController::init(const std::vector<double> & initq)
 {
-  std::vector<std::vector<double>> q;
+  std::vector<std::vector<double>> q = robot().mbc().q;
+  q[0] = {1, 0, 0, 0, 0, 0, 0.76};
+  const auto & rjo = ref_joint_order();
+  for(size_t i = 0; i < rjo.size(); ++i)
+  {
+    const auto & jn = rjo[i];
+    if(robot().hasJoint(jn))
+    {
+      q[robot().jointIndexByName(jn)][0] = initq[i];
+    }
+  }
   if(config.main_robot_module->name == "hrp2_drc")
   {
-    q.push_back({1, 0, 0, 0, 0, 0, 0.76});
-    /* The OpenRTM components don't give q in the same order as the QP */
-    for(size_t i = 0; i < 24; ++i) // until RARM_LINK7
-    {
-      q.push_back({initq[i]});
-    }
-    for(size_t i = 32; i < 37; ++i) // RHAND
-    {
-      q.push_back({initq[i]});
-    }
-    for(size_t i = 24; i < 32; ++i) // LARM_LINK*
-    {
-      q.push_back({initq[i]});
-    }
-    for(size_t i = 37; i < 42; ++i) // LHAND
-    {
-      q.push_back({initq[i]});
-    }
     setGripperCurrentQ({
       {"l_gripper", {initq[31]}},
       {"r_gripper", {initq[23]}}
@@ -191,36 +184,6 @@ void MCGlobalController::init(const std::vector<double> & initq)
   }
   else if(config.main_robot_module->name == "hrp4")
   {
-    auto q_back = controller->robot().mbc().q;
-    q.push_back({ 1, 0, 0, 0, 0, 0, 0.76 });
-    for (size_t i = 0; i < 6; ++i)
-    {
-      q.push_back({ initq[i] });
-    }
-    q.push_back(q_back[7]);
-    for (size_t i = 6; i < 12; ++i)
-    {
-      q.push_back({ initq[i] });
-    }
-    q.push_back(q_back[14]);
-    for (size_t i = 12; i < 25; ++i)
-    {
-      q.push_back({ initq[i] });
-    }
-    //R_F
-    for (size_t i = 26; i < 34; ++i)
-    {
-      q.push_back({q_back[i]});
-    }
-    for (size_t i = 25; i < 34; ++i)
-    {
-      q.push_back({ initq[i] });
-    }
-    //L_F
-    for (size_t i = 45; i < 53; ++i)
-    {
-      q.push_back({0.});
-    }
     setGripperCurrentQ({
       {"l_gripper", {initq[32], initq[33]}},
       {"r_gripper", {initq[23], initq[24]}}
@@ -362,8 +325,14 @@ void MCGlobalController::setGripperCurrentQ(const std::map<std::string, std::vec
 {
   for(const auto & gQ : gripperQs)
   {
-    assert(controller->grippers.count(gQ.first) > 0);
-    controller->grippers[gQ.first]->setCurrentQ(gQ.second);
+    if(controller->grippers.count(gQ.first) == 0)
+    {
+      LOG_ERROR("Cannot update gripper " << gQ.first)
+    }
+    else
+    {
+      controller->grippers[gQ.first]->setCurrentQ(gQ.second);
+    }
   }
 }
 
