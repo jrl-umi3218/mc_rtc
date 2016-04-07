@@ -64,7 +64,7 @@ MCEgressMRQPController::MCEgressMRQPController(std::shared_ptr<mc_rbdyn::RobotMo
   polarisPostureTask.reset(new tasks::qp::PostureTask(robots().mbs(), 1, robots().robot(1).mbc().q, 1.0, 1));
   lazyPostureTask.reset(new tasks::qp::PostureTask(robots().mbs(), 1, polaris.mbc().q, 0.0, 1000.0));
   std::vector<tasks::qp::JointStiffness> jsv;
-  jsv.push_back({static_cast<int>(polaris.jointIdByName("lazy_susan")), 0.1});
+  jsv.push_back({"lazy_susan", 0.1});
   lazyPostureTask->jointsStiffness(robots().mbs(), jsv);
 
   comTask.reset(new mc_tasks::CoMTask(robots(), robots().robotIndex()));

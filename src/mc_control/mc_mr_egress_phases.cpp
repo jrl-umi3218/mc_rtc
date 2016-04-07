@@ -1417,7 +1417,7 @@ struct EgressReplaceRightHandPhase : public EgressMRPhaseExecution
             auto p = ctl.postureTask->posture();
             for(auto qi : stance)
             {
-              p[qi.first] = qi.second;
+              p[ctl.robot().jointIndexByName(qi.first)] = qi.second;
             }
             ctl.postureTask->posture(p);
             nrIter_ = 0;

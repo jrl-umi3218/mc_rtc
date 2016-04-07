@@ -74,7 +74,7 @@ MCDrivingController::MCDrivingController(std::shared_ptr<mc_rbdyn::RobotModule> 
   qpsolver->addConstraintSet(collsConstraint);
 
   std::vector<tasks::qp::JointStiffness> jsv;
-  jsv.push_back({static_cast<int>(robot().jointIdByName("RLEG_JOINT4")), 100.});
+  jsv.push_back({"RLEG_JOINT4", 100.});
   postureTask->jointsStiffness(robots().mbs(), jsv);
   qpsolver->addTask(postureTask.get());
 
