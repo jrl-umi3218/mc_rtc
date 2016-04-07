@@ -5,15 +5,14 @@ namespace mc_tasks
 
 OrientationTask::OrientationTask(const std::string & bodyName, const mc_rbdyn::Robots & robots, unsigned int robotIndex, double stiffness, double weight)
 : bodyName(bodyName), robots(robots),
-  rIndex(robotIndex), bId(0), bIndex(0),
+  rIndex(robotIndex), bIndex(0),
   inSolver(false)
 {
   const mc_rbdyn::Robot & robot = robots.robot(rIndex);
-  bId = robot.bodyIdByName(bodyName);
   bIndex = robot.bodyIndexByName(bodyName);
 
   Eigen::Matrix3d curOri = robot.mbc().bodyPosW[bIndex].rotation();
-  orientationTask.reset(new tasks::qp::OrientationTask(robots.mbs(), static_cast<int>(rIndex), bId, curOri));
+  orientationTask.reset(new tasks::qp::OrientationTask(robots.mbs(), static_cast<int>(rIndex), bodyName, curOri));
   orientationTaskSp.reset(new tasks::qp::SetPointTask(robots.mbs(), static_cast<int>(robotIndex), orientationTask.get(), stiffness, weight));
 }
 

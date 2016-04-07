@@ -28,7 +28,6 @@ public:
   std::string bodyName;
   const mc_rbdyn::Robots & robots;
   unsigned int rIndex;
-  int bId;
   unsigned int bIndex;
 
   bool inSolver;

@@ -184,7 +184,7 @@ public:
   /** (robot, env) collision constraint */
   CollisionsConstraint envCollConstrMng;
 private:
-  std::set<int> __bodiesFromContacts(const mc_rbdyn::Robot & robot, const std::vector<mc_rbdyn::Contact> & contacts);
+  std::set<std::string> __bodiesFromContacts(const mc_rbdyn::Robot & robot, const std::vector<mc_rbdyn::Contact> & contacts);
 };
 
 
