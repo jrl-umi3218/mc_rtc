@@ -136,7 +136,18 @@ namespace mc_robots
       mbc = res.mbc;
       mbg = res.mbg;
       limits = res.limits;
-      visual_tf = res.visual_tf;
+
+      std::vector<sva::PTransformd> tfs;
+      for(const auto pair : res.visual)
+      {
+        tfs.clear();
+        for(const auto visual : pair.second)
+        {
+          tfs.push_back(visual.origin);
+        }
+        visual_tfs[pair.first] = tfs;
+      }
+
       _collisionTransforms = res.collision_tf;
     }
     else
@@ -146,16 +157,15 @@ namespace mc_robots
     }
   }
 
-  std::map<unsigned int, std::vector<double>> HRP4CommonRobotModule::halfSittingPose(const rbd::MultiBody & mb) const
+  std::map<std::string, std::vector<double>> HRP4CommonRobotModule::halfSittingPose(const rbd::MultiBody & mb) const
   {
-    std::map<unsigned int, std::vector<double>> res;
+    std::map<std::string, std::vector<double>> res;
     for (const auto & j : mb.joints())
     {
-      if (j.id() != -1)
+      if (!j.name().empty())
       {
-        unsigned int k = static_cast<unsigned int>(j.id());
-        res[k] = halfSitting.at(j.name());
-        for (auto & ji : res[k])
+        res[j.name()] = halfSitting.at(j.name());
+        for (auto & ji : res[j.name()])
         {
           ji = M_PI*ji / 180;
         }
@@ -164,9 +174,9 @@ namespace mc_robots
     return res;
   }
 
-  std::vector< std::map<int, std::vector<double> > > HRP4CommonRobotModule::nominalBounds(const mc_rbdyn_urdf::Limits & limits) const
+  std::vector< std::map<std::string, std::vector<double> > > HRP4CommonRobotModule::nominalBounds(const mc_rbdyn_urdf::Limits & limits) const
   {
-    std::vector< std::map<int, std::vector<double> > > res(0);
+    std::vector< std::map<std::string, std::vector<double> > > res(0);
     res.push_back(limits.lower);
     res.push_back(limits.upper);
     {
@@ -282,13 +292,13 @@ namespace mc_robots
     return _convexHull;
   }
 
-  const std::vector< std::map<int, std::vector<double> > > & HRP4NoHandRobotModule::bounds() const
+  const std::vector< std::map<std::string, std::vector<double> > > & HRP4NoHandRobotModule::bounds() const
   {
     const_cast<HRP4NoHandRobotModule*>(this)->_bounds = nominalBounds(limits);
     return _bounds;
   }
 
-  const std::map< unsigned int, std::vector<double> > & HRP4NoHandRobotModule::stance() const
+  const std::map<std::string, std::vector<double> > & HRP4NoHandRobotModule::stance() const
   {
     const_cast<HRP4NoHandRobotModule*>(this)->_stance = halfSittingPose(mb);
     return _stance;
@@ -309,13 +319,13 @@ namespace mc_robots
     return _convexHull;
   }
 
-  const std::vector< std::map<int, std::vector<double> > > & HRP4WithHandRobotModule::bounds() const
+  const std::vector< std::map<std::string, std::vector<double> > > & HRP4WithHandRobotModule::bounds() const
   {
     const_cast<HRP4WithHandRobotModule*>(this)->_bounds = nominalBounds(limits);
     return _bounds;
   }
 
-  const std::map< unsigned int, std::vector<double> > & HRP4WithHandRobotModule::stance() const
+  const std::map<std::string, std::vector<double> > & HRP4WithHandRobotModule::stance() const
   {
     const_cast<HRP4WithHandRobotModule*>(this)->_stance = halfSittingPose(mb);
     return _stance;
