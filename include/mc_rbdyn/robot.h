@@ -81,7 +81,7 @@ public:
   unsigned int envIndex() const;
 
   /* Robot(s) loader functions */
-  Robot & load(const RobotModule & module, const std::string & surfaceDir, sva::PTransformd * base = 0, const std::string& bName = "");
+  Robot & load(const RobotModule & module, const std::string & surfaceDir, sva::PTransformd * base = nullptr, const std::string& bName = "");
 
   void load(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir);
 
@@ -114,7 +114,7 @@ protected:
 };
 
 /* Static pendant of the loader functions to create Robots directly */
-MC_RBDYN_DLLAPI std::shared_ptr<Robots> loadRobot(const RobotModule & module, const std::string & surfaceDir, sva::PTransformd * base = 0, const std::string& baseName = "");
+MC_RBDYN_DLLAPI std::shared_ptr<Robots> loadRobot(const RobotModule & module, const std::string & surfaceDir, sva::PTransformd * base = nullptr, const std::string& baseName = "");
 
 MC_RBDYN_DLLAPI std::shared_ptr<Robots> loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules, const std::vector<std::string> & surfaceDirs);
 

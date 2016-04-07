@@ -125,7 +125,7 @@ Contact::Contact(const mc_rbdyn::Robots & robots, unsigned int r1Index, unsigned
   impl.reset(new ContactImpl({r1Index, r2Index,
     robots.robot(r1Index).surface(r1Surface).copy(),
     robots.robot(r2Index).surface(r2Surface).copy(),
-    sva::PTransformd::Identity(), X_r2s_r1s != 0, Xbs, ambiguityId}));
+    sva::PTransformd::Identity(), X_r2s_r1s != nullptr, Xbs, ambiguityId}));
   if(isFixed())
   {
     impl->X_r2s_r1s = sva::PTransformd(*X_r2s_r1s);

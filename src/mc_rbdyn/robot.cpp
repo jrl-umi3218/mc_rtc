@@ -642,7 +642,7 @@ std::shared_ptr<Robots> loadRobot(const RobotModule & module, const std::string 
 
 void Robots::load(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir)
 {
-  load(module, surfaceDir, envModule, envSurfaceDir, nullptr, "");
+  load(module, surfaceDir, envModule, envSurfaceDir, nullptr, "Root");
 }
 
 std::shared_ptr<Robots> loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir)
