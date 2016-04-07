@@ -162,7 +162,7 @@ namespace mc_robots
     std::map<std::string, std::vector<double>> res;
     for (const auto & j : mb.joints())
     {
-      if (!j.name().empty())
+      if (j.name() != "Root")
       {
         res[j.name()] = halfSitting.at(j.name());
         for (auto & ji : res[j.name()])
