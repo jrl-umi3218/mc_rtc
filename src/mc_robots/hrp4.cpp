@@ -30,7 +30,7 @@ namespace mc_robots
     virtualLinks.push_back("r_gripper");
     virtualLinks.push_back("gaze");
     virtualLinks.push_back("r_gripper_sensor");
-    virtualLinks.push_back("xtion_link");
+    // virtualLinks.push_back("xtion_link");
 
     gripperLinks.push_back("R_HAND_J0_LINK");
     gripperLinks.push_back("R_HAND_J1_LINK");
@@ -108,6 +108,7 @@ namespace mc_robots
     /* Virtual joints */
     halfSitting["L_FOOT"] = {};
     halfSitting["R_FOOT"] = {};
+    halfSitting["xtion_link_joint"] = {};
 
     _forceSensors.push_back(mc_rbdyn::ForceSensor("RightFootForceSensor", "R_ANKLE_R_LINK", sva::PTransformd(Eigen::Vector3d(0, 0, -0.093))));
     _forceSensors.push_back(mc_rbdyn::ForceSensor("LeftFootForceSensor", "L_ANKLE_R_LINK", sva::PTransformd(Eigen::Vector3d(0, 0, -0.093))));
@@ -224,7 +225,10 @@ namespace mc_robots
     std::map<std::string, std::pair<std::string, std::string>> res;
     for(const auto & b : mb.bodies())
     {
-      res[b.name()] = {b.name(), boost::algorithm::replace_first_copy(b.name(), "_LINK", "")};
+      // FIXME add convex for xtion_link
+      if(b.name() != "xtion_link") {
+        res[b.name()] = {b.name(), boost::algorithm::replace_first_copy(b.name(), "_LINK", "")};
+      }
     }
 
     auto addBody = [&res](const std::string & body, const std::string & file)
