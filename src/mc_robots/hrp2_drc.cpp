@@ -134,17 +134,7 @@ void HRP2DRCCommonRobotModule::readUrdf(const std::string & robotName, const std
     mbg = res.mbg;
     limits = res.limits;
 
-    std::vector<sva::PTransformd> tfs;
-    for(const auto pair : res.visual)
-    {
-      tfs.clear();
-      for(const auto visual : pair.second)
-      {
-        tfs.push_back(visual.origin);
-      }
-      visual_tfs[pair.first] = tfs;
-    }
-
+    _visual = res.visual;
     _collisionTransforms = res.collision_tf;
   }
   else

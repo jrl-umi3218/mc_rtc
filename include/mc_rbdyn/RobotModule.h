@@ -7,6 +7,7 @@
 #include <vector>
 
 #include <mc_rbdyn/api.h>
+#include <mc_rbdyn_urdf/urdf.h>
 
 /* This is an interface designed to provide additionnal information about a robot */
 
@@ -75,6 +76,7 @@ struct MC_RBDYN_DLLAPI RobotModule
   std::map<std::string, std::vector<double> > _stance;
   std::map<std::string, std::pair<std::string, std::string> > _convexHull;
   std::map<std::string, std::pair<std::string, std::string> > _stpbvHull;
+  std::map<std::string, std::vector<mc_rbdyn_urdf::Visual>> _visual;
   std::map<std::string, sva::PTransformd> _collisionTransforms;
   std::vector<Flexibility> _flexibility;
   std::vector<ForceSensor> _forceSensors;

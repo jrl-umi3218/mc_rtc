@@ -27,7 +27,6 @@ public:
   std::vector<std::string> virtualLinks;
   std::vector<std::string> gripperLinks;
   std::map< std::string, std::vector<double> > halfSitting;
-  std::map<std::string, std::vector<sva::PTransformd> > visual_tfs;
   mc_rbdyn_urdf::Limits limits;
 };
 
