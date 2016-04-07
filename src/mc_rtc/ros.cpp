@@ -179,17 +179,15 @@ public:
     odom.twist.covariance.fill(0);
 #endif
 
-    tfs.push_back(PT2TF(robot.bodyTransform(robot.mb().body(0).id())*mbc.parentToSon[0], tm, std::string("/robot_map"), robot.mb().body(0).name(), seq));
+    tfs.push_back(PT2TF(robot.bodyTransform(robot.mb().body(0).name())*mbc.parentToSon[0], tm, std::string("/robot_map"), robot.mb().body(0).name(), seq));
     for(int j = 1; j < robot.mb().nrJoints(); ++j)
     {
       const auto & predIndex = robot.mb().predecessor(j);
       const auto & succIndex = robot.mb().successor(j);
       const auto & predName = robot.mb().body(predIndex).name();
       const auto & succName = robot.mb().body(succIndex).name();
-      const auto & predId = robot.mb().body(predIndex).id();
-      const auto & succId = robot.mb().body(succIndex).id();
-      const auto & X_predp_pred = robot.bodyTransform(predId);
-      const auto & X_succp_succ = robot.bodyTransform(succId);
+      const auto & X_predp_pred = robot.bodyTransform(predName);
+      const auto & X_succp_succ = robot.bodyTransform(succName);
       tfs.push_back(PT2TF(X_succp_succ*mbc.parentToSon[static_cast<unsigned int>(j)]*X_predp_pred.inv(), tm, predName, succName, seq));
     }
 

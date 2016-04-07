@@ -34,15 +34,15 @@ ForceSensor::ForceSensor(const std::string & n, const std::string & pn, const sv
 }
 
 Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
-        const std::map<int, sva::PTransformd> & bodyTransforms,
+        const std::map<std::string, sva::PTransformd> & bodyTransforms,
         const std::vector< std::vector<double> > & ql, const std::vector< std::vector<double> > & qu,
         const std::vector< std::vector<double> > & vl, const std::vector< std::vector<double> > & vu,
         const std::vector< std::vector<double> > & tl, const std::vector< std::vector<double> > & tu,
         const std::map<std::string, convex_pair_t> & convexes,
         const std::map<std::string, stpbv_pair_t> & stpbvs,
-        const std::map<int, sva::PTransformd> & collisionTransforms, const std::map<std::string, std::shared_ptr<mc_rbdyn::Surface> > & surfaces,
+        const std::map<std::string, sva::PTransformd> & collisionTransforms, const std::map<std::string, std::shared_ptr<mc_rbdyn::Surface> > & surfaces,
         const std::vector<ForceSensor> & forceSensors,
-        const std::map<unsigned int, std::vector<double>> stance,
+        const std::map<std::string, std::vector<double>> stance,
         const std::string & accelerometerBody,
         const Springs & springs, const std::vector< std::vector<Eigen::VectorXd> > & tlPoly,
         const std::vector< std::vector<Eigen::VectorXd> > & tuPoly, const std::vector<Flexibility> & flexibility)
@@ -100,16 +100,6 @@ unsigned int Robot::jointIndexByName(const std::string & name) const
 unsigned int Robot::bodyIndexByName(const std::string & name) const
 {
   return bodyIndexByNameD.at(name);
-}
-
-int Robot::jointIdByName(const std::string & name) const
-{
-  return mb().joint(jointIndexByNameD.at(name)).id();
-}
-
-int Robot::bodyIdByName(const std::string & name) const
-{
-  return mb().body(bodyIndexByNameD.at(name)).id();
 }
 
 std::string Robot::forceSensorParentBodyName(const std::string & fs) const
@@ -242,32 +232,31 @@ const Robot::convex_pair_t & Robot::convex(const std::string & cName) const
   return convexes.at(cName);
 }
 
-const sva::PTransformd & Robot::bodyTransform(int id) const
+const sva::PTransformd & Robot::bodyTransform(const std::string& bName) const
 {
-  if(bodyTransforms.count(id) == 0)
+  if(bodyTransforms.count(bName) == 0)
   {
-    LOG_ERROR("No body transform with id " << id << " found in this robot")
+    LOG_ERROR("No body transform with name " << bName << " found in this robot")
     throw("Body transform does not exist");
   }
-  return bodyTransforms.at(id);
+  return bodyTransforms.at(bName);
 }
 
-const sva::PTransformd & Robot::collisionTransform(int id) const
+const sva::PTransformd & Robot::collisionTransform(const std::string& cName) const
 {
-  if(collisionTransforms.count(id) == 0)
+  if(collisionTransforms.count(cName) == 0)
   {
-    LOG_ERROR("No collision transform with id " << id << " found in this robot")
+    LOG_ERROR("No collision transform with name " << cName << " found in this robot")
     throw("Collision transform does not exist");
   }
-  return collisionTransforms.at(id);
+  return collisionTransforms.at(cName);
 }
 
 void Robot::fixSurfaces()
 {
   for(auto & s : surfaces_)
   {
-    unsigned int bodyId = bodyIdByName(s.second->bodyName());
-    const sva::PTransformd & trans = bodyTransforms[bodyId];
+    const sva::PTransformd & trans = bodyTransforms[s.second->bodyName()];
     s.second->X_b_s(s.second->X_b_s()*trans);
   }
 }
@@ -289,7 +278,7 @@ void Robot::loadRSDFFromDir(const std::string & surfaceDir)
   }
 }
 
-std::map<unsigned int, std::vector<double>> Robot::stance() const
+std::map<std::string, std::vector<double>> Robot::stance() const
 {
   return stance_;
 }
@@ -396,7 +385,7 @@ const Robot & Robots::robot(unsigned int idx) const
 
 void Robots::createRobotWithBase(Robots & robots, unsigned int robots_idx, const Base & base, const Eigen::Vector3d & baseAxis)
 {
-  this->mbs_.push_back(robots.robot(robots_idx).mbg().makeMultiBody(base.baseId, base.baseType, baseAxis, base.X_0_s, base.X_b0_s));
+  this->mbs_.push_back(robots.robot(robots_idx).mbg().makeMultiBody(base.baseName, base.baseType, baseAxis, base.X_0_s, base.X_b0_s));
   this->mbcs_.emplace_back(this->mbs_.back());
   this->mbgs_.push_back(robots.robot(robots_idx).mbg());
   robots.robot(robots_idx).createWithBase(*this, static_cast<unsigned int>(this->mbs_.size()) - 1, base);
@@ -408,7 +397,7 @@ void Robot::createWithBase(Robots & robots, unsigned int robots_idx, const Base 
   rbd::MultiBodyConfig & mbc = robots.mbcs_[robots_idx];
   rbd::MultiBodyGraph & mbg = robots.mbgs_[robots_idx];
   mbc.zero(mb);
-  std::map<int, sva::PTransformd> bodyTransforms = mbg.bodiesBaseTransform(base.baseId, base.X_b0_s);
+  std::map<std::string, sva::PTransformd> bodyTransforms = mbg.bodiesBaseTransform(base.baseName, base.X_b0_s);
 
   typedef std::vector< std::vector<double> > bound_t;
   auto convertBound = [](const rbd::MultiBody & oldMb, const rbd::MultiBody & newMb, const bound_t & oldBound, const std::vector<double> & baseBound)
@@ -418,7 +407,7 @@ void Robot::createWithBase(Robots & robots, unsigned int robots_idx, const Base 
     newBound[0] = baseBound;
     for(size_t i = 1; i < oldBound.size(); ++i)
     {
-      newBound[static_cast<size_t>(newMb.jointIndexById(oldMb.joint(static_cast<int>(i)).id()))] = oldBound[i];
+      newBound[static_cast<size_t>(newMb.jointIndexByName(oldMb.joint(static_cast<int>(i)).name()))] = oldBound[i];
     }
     return newBound;
   };
@@ -475,21 +464,21 @@ std::vector< std::vector<double> > jointsDof(const rbd::MultiBody & mb, const do
   return res;
 }
 
-std::map<int, std::vector<double> > jointsVectorToId(const rbd::MultiBody & mb, const std::vector< std::vector<double> > & jointsVec,
+std::map<std::string, std::vector<double> > jointsVectorToName(const rbd::MultiBody & mb, const std::vector< std::vector<double> > & jointsVec,
                                                               const std::function<bool(const rbd::Joint &, const std::vector<double> &)> & filter)
 {
-  std::map<int, std::vector<double> > res;
+  std::map<std::string, std::vector<double> > res;
   for(size_t i = 0; i < std::min(jointsVec.size(), mb.joints().size()); ++i)
   {
     if(filter(mb.joints()[i], jointsVec[i]))
     {
-      res[mb.joints()[i].id()] = jointsVec[i];
+      res[mb.joints()[i].name()] = jointsVec[i];
     }
   }
   return res;
 }
 
-std::vector< std::vector<double> > jointsIdToVector(const rbd::MultiBody & mb, std::map<int, std::vector<double> > & jointsId, const std::vector<double> & def, const std::function<bool (const rbd::Joint &)> & filter)
+std::vector< std::vector<double> > jointsNameToVector(const rbd::MultiBody & mb, std::map<std::string, std::vector<double> > & jointsName, const std::vector<double> & def, const std::function<bool (const rbd::Joint &)> & filter)
 {
   std::vector< std::vector<double> > res;
   for(const rbd::Joint & j : mb.joints())
@@ -497,22 +486,22 @@ std::vector< std::vector<double> > jointsIdToVector(const rbd::MultiBody & mb, s
     if(filter(j))
     {
       // Mimic python setdefault behaviour
-      if(jointsId.count(j.id()) == 0)
+      if(jointsName.count(j.name()) == 0)
       {
-        jointsId[j.id()] = def;
+        jointsName[j.name()] = def;
       }
-      res.push_back(jointsId[j.id()]);
+      res.push_back(jointsName[j.name()]);
     }
   }
   return res;
 }
 
 // Return [ql, qu, vl, vu, tl, tu]
-std::vector< std::map< int, std::vector<double> > > defaultBounds(const rbd::MultiBody & mb)
+std::vector< std::map< std::string, std::vector<double> > > defaultBounds(const rbd::MultiBody & mb)
 {
-  std::vector< std::map< int, std::vector<double> > > res;
-  auto jParam = [mb](const double & coeff) { return jointsVectorToId(mb, jointsParameters(mb, coeff)); };
-  auto jDof = [mb](const double & coeff) { return jointsVectorToId(mb, jointsDof(mb, coeff)); };
+  std::vector< std::map< std::string, std::vector<double> > > res;
+  auto jParam = [mb](const double & coeff) { return jointsVectorToName(mb, jointsParameters(mb, coeff)); };
+  auto jDof = [mb](const double & coeff) { return jointsVectorToName(mb, jointsDof(mb, coeff)); };
   res.push_back(jParam(-INFINITY));
   res.push_back(jParam(INFINITY));
   res.push_back(jDof(-INFINITY));
@@ -522,7 +511,8 @@ std::vector< std::map< int, std::vector<double> > > defaultBounds(const rbd::Mul
   return res;
 }
 
-Robot& Robots::load(const RobotModule & module, const std::string &, sva::PTransformd * base, int bId)
+Robot& Robots::load(const RobotModule & module, const std::string &, sva::PTransformd * base,
+    const std::string& bName)
 {
   mbs_.emplace_back(module.mb);
   mbcs_.emplace_back(module.mbc);
@@ -536,62 +526,56 @@ Robot& Robots::load(const RobotModule & module, const std::string &, sva::PTrans
 
   if(base)
   {
-    unsigned int baseId = bId < 0 ? mb.body(0).id() : bId;
-    mb = mbg.makeMultiBody(baseId, mb.joint(0).type() == rbd::Joint::Fixed, *base);
+    std::string baseName = bName.empty() ? mb.body(0).name() : bName;
+    mb = mbg.makeMultiBody(baseName, mb.joint(0).type() == rbd::Joint::Fixed, *base);
     mbc = rbd::MultiBodyConfig(mb);
     mbc.zero(mb);
   }
 
-  auto bodyTransforms = mbg.bodiesBaseTransform(mb.body(0).id());
+  auto bodyTransforms = mbg.bodiesBaseTransform(mb.body(0).name());
 
   auto defBounds = defaultBounds(mb);
   {
     auto rbounds = module.bounds();
     for(size_t i = 0; i < rbounds.size(); ++i)
     {
-      for(const std::pair<const unsigned int, std::vector<double> > & b : rbounds[i])
+      for(const std::pair<const std::string, std::vector<double> > & b : rbounds[i])
       {
         defBounds[i][b.first] = b.second;
       }
     }
   }
-  auto ql = jointsIdToVector(mb, defBounds[0]);
-  auto qu = jointsIdToVector(mb, defBounds[1]);
-  auto vl = jointsIdToVector(mb, defBounds[2]);
-  auto vu = jointsIdToVector(mb, defBounds[3]);
-  auto tl = jointsIdToVector(mb, defBounds[4]);
-  auto tu = jointsIdToVector(mb, defBounds[5]);
+  auto ql = jointsNameToVector(mb, defBounds[0]);
+  auto qu = jointsNameToVector(mb, defBounds[1]);
+  auto vl = jointsNameToVector(mb, defBounds[2]);
+  auto vu = jointsNameToVector(mb, defBounds[3]);
+  auto tl = jointsNameToVector(mb, defBounds[4]);
+  auto tu = jointsNameToVector(mb, defBounds[5]);
 
-  std::map< int, std::vector<double> > initQByJointsId;
+  std::map< std::string, std::vector<double> > initQByJointsName;
   for(const rbd::Joint & j : mb.joints())
   {
-    initQByJointsId[j.id()] = j.zeroParam();
+    initQByJointsName[j.name()] = j.zeroParam();
   }
   {
     auto initQ = module.stance();
     for(const auto & qi : initQ)
     {
-      initQByJointsId[qi.first] = qi.second;
+      initQByJointsName[qi.first] = qi.second;
     }
   }
-  auto initQ = jointsIdToVector(mb, initQByJointsId);
+  auto initQ = jointsNameToVector(mb, initQByJointsName);
   mbc.q = initQ;
   rbd::forwardKinematics(mb, mbc);
-
-  std::map<std::string, unsigned int> bodyIdByName;
-  for(const rbd::Body & b : mb.bodies())
-  {
-    bodyIdByName[b.name()] = b.id();
-  }
 
   std::map<std::string, Robot::convex_pair_t> convexesByName;
   {
     for(const auto & p : module.convexHull())
     {
-      if(bodyIdByName.count(p.second.first))
+      if(module.mb.bodyIndexByName().count(p.second.first))
       {
         std::shared_ptr<sch::S_Polyhedron> poly(sch::mc_rbdyn::Polyhedron(p.second.second));
-        convexesByName[p.first] = Robot::convex_pair_t(bodyIdByName[p.second.first], poly);
+        convexesByName[p.first] = Robot::convex_pair_t(p.second.first, poly);
       }
     }
     applyTransformToSchById(mb, mbc, convexesByName);
@@ -601,19 +585,19 @@ Robot& Robots::load(const RobotModule & module, const std::string &, sva::PTrans
   {
     for(const auto & p : module.stpbvHull())
     {
-      if(bodyIdByName.count(p.second.first))
+      if(module.mb.bodyIndexByName().count(p.second.first))
       {
         std::shared_ptr<sch::STP_BV> stpbvs(sch::mc_rbdyn::STPBV(p.second.second));
-        stpbvsByName[p.first] = Robot::stpbv_pair_t(bodyIdByName[p.second.first], stpbvs);
+        stpbvsByName[p.first] = Robot::stpbv_pair_t(p.second.first, stpbvs);
       }
     }
     applyTransformToSchById(mb, mbc, stpbvsByName);
   }
 
-  std::map<int, sva::PTransformd> collisionTransforms;
+  std::map<std::string, sva::PTransformd> collisionTransforms;
   for(const auto & b : mb.bodies())
   {
-    collisionTransforms[b.id()] = sva::PTransformd::Identity();
+    collisionTransforms[b.name()] = sva::PTransformd::Identity();
   }
   {
     for(const auto & p : module.collisionTransforms())
@@ -649,16 +633,16 @@ Robot& Robots::load(const RobotModule & module, const std::string &, sva::PTrans
 {
 }*/
 
-std::shared_ptr<Robots> loadRobot(const RobotModule & module, const std::string & surfaceDir, sva::PTransformd * base, int bId)
+std::shared_ptr<Robots> loadRobot(const RobotModule & module, const std::string & surfaceDir, sva::PTransformd * base, const std::string& baseName)
 {
   auto robots = std::make_shared<Robots>();
-  robots->load(module, surfaceDir, base, bId);
+  robots->load(module, surfaceDir, base, baseName);
   return robots;
 }
 
 void Robots::load(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir)
 {
-  load(module, surfaceDir, envModule, envSurfaceDir, 0, -1);
+  load(module, surfaceDir, envModule, envSurfaceDir, nullptr, "");
 }
 
 std::shared_ptr<Robots> loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir)
@@ -668,16 +652,16 @@ std::shared_ptr<Robots> loadRobotAndEnv(const RobotModule & module, const std::s
   return robots;
 }
 
-void Robots::load(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir, sva::PTransformd * base, int bId)
+void Robots::load(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir, sva::PTransformd * base, const std::string& baseName)
 {
-  load(module, surfaceDir, base, bId);
+  load(module, surfaceDir, base, baseName);
   load(envModule, envSurfaceDir);
 }
 
-std::shared_ptr<Robots> loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir, sva::PTransformd * base, int bId)
+std::shared_ptr<Robots> loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir, sva::PTransformd * base, const std::string& baseName)
 {
   auto robots = std::make_shared<Robots>();
-  robots->load(module, surfaceDir, envModule, envSurfaceDir, base, bId);
+  robots->load(module, surfaceDir, envModule, envSurfaceDir, base, baseName);
   return robots;
 }
 
@@ -705,23 +689,23 @@ inline void update(std::map<X,Y> & oldData, const std::map<X,Y> & nData)
   }
 }
 
-Robot& Robots::loadFromUrdf(const std::string & name, const std::string & urdf, bool withVirtualLinks, const std::vector<std::string> & filteredLinks, bool fixed, sva::PTransformd * base, int bId)
+Robot& Robots::loadFromUrdf(const std::string & name, const std::string & urdf, bool withVirtualLinks, const std::vector<std::string> & filteredLinks, bool fixed, sva::PTransformd * base, const std::string& baseName)
 {
   mc_rbdyn_urdf::URDFParserResult res = mc_rbdyn_urdf::rbdyn_from_urdf(urdf, fixed, filteredLinks, true, "", withVirtualLinks);
-  int baseId = res.mb.body(0).id();
+  std::string bName = res.mb.body(0).name();
   if(base)
   {
-    baseId = bId >= 0 ? bId : baseId;
-    res.mb = res.mbg.makeMultiBody(baseId, fixed, *base);
+    bName = baseName.empty() ? bName : baseName;
+    res.mb = res.mbg.makeMultiBody(bName, fixed, *base);
     res.mbc = rbd::MultiBodyConfig(res.mb);
     res.mbc.zero(res.mb);
   }
-  std::map<int, sva::PTransformd> bodyTransforms = res.mbg.bodiesBaseTransform(baseId);
+  std::map<std::string, sva::PTransformd> bodyTransforms = res.mbg.bodiesBaseTransform(bName);
 
   auto defBounds = defaultBounds(res.mb);
-  std::map< int, std::vector<double> > qlt = res.limits.lower;
-  std::map< int, std::vector<double> > qut = res.limits.upper;
-  std::map< int, std::vector<double> > vlt = res.limits.velocity;
+  std::map<std::string, std::vector<double> > qlt = res.limits.lower;
+  std::map<std::string, std::vector<double> > qut = res.limits.upper;
+  std::map<std::string, std::vector<double> > vlt = res.limits.velocity;
   for(auto & vl : vlt)
   {
     for(auto & v : vl.second)
@@ -729,8 +713,8 @@ Robot& Robots::loadFromUrdf(const std::string & name, const std::string & urdf, 
       v = -v;
     }
   }
-  std::map< int, std::vector<double> > vut = res.limits.velocity;
-  std::map< int, std::vector<double> > tlt = res.limits.torque;
+  std::map<std::string, std::vector<double> > vut = res.limits.velocity;
+  std::map<std::string, std::vector<double> > tlt = res.limits.torque;
   for(auto & tl : tlt)
   {
     for(auto & t : tl.second)
@@ -738,7 +722,7 @@ Robot& Robots::loadFromUrdf(const std::string & name, const std::string & urdf, 
       t= -t;
     }
   }
-  std::map< int, std::vector<double> > tut = res.limits.torque;
+  std::map<std::string, std::vector<double> > tut = res.limits.torque;
   update(defBounds[0], qlt);
   update(defBounds[1], qut);
   update(defBounds[2], vlt);
@@ -746,12 +730,12 @@ Robot& Robots::loadFromUrdf(const std::string & name, const std::string & urdf, 
   update(defBounds[4], tlt);
   update(defBounds[5], tut);
 
-  std::vector< std::vector<double> > ql = jointsIdToVector(res.mb, defBounds[0]);
-  std::vector< std::vector<double> > qu = jointsIdToVector(res.mb, defBounds[1]);
-  std::vector< std::vector<double> > vl = jointsIdToVector(res.mb, defBounds[2]);
-  std::vector< std::vector<double> > vu = jointsIdToVector(res.mb, defBounds[3]);
-  std::vector< std::vector<double> > tl = jointsIdToVector(res.mb, defBounds[4]);
-  std::vector< std::vector<double> > tu = jointsIdToVector(res.mb, defBounds[5]);
+  std::vector< std::vector<double> > ql = jointsNameToVector(res.mb, defBounds[0]);
+  std::vector< std::vector<double> > qu = jointsNameToVector(res.mb, defBounds[1]);
+  std::vector< std::vector<double> > vl = jointsNameToVector(res.mb, defBounds[2]);
+  std::vector< std::vector<double> > vu = jointsNameToVector(res.mb, defBounds[3]);
+  std::vector< std::vector<double> > tl = jointsNameToVector(res.mb, defBounds[4]);
+  std::vector< std::vector<double> > tu = jointsNameToVector(res.mb, defBounds[5]);
 
   mbs_.push_back(res.mb);
   mbcs_.push_back(res.mbc);
@@ -769,10 +753,10 @@ Robot& Robots::loadFromUrdf(const std::string & name, const std::string & urdf, 
   return robots_.back();
 }
 
-std::shared_ptr<Robots> loadRobotFromUrdf(const std::string & name, const std::string & urdf, bool withVirtualLinks, const std::vector<std::string> & filteredLinks, bool fixed, sva::PTransformd * base, int bId)
+std::shared_ptr<Robots> loadRobotFromUrdf(const std::string & name, const std::string & urdf, bool withVirtualLinks, const std::vector<std::string> & filteredLinks, bool fixed, sva::PTransformd * base, const std::string& baseName)
 {
   auto robots = std::make_shared<Robots>();
-  robots->loadFromUrdf(name, urdf, withVirtualLinks, filteredLinks, fixed, base, bId);
+  robots->loadFromUrdf(name, urdf, withVirtualLinks, filteredLinks, fixed, base, baseName);
   return robots;
 }
 

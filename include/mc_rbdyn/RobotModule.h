@@ -34,11 +34,12 @@ struct MC_RBDYN_DLLAPI RobotModule
       - joint limits (lower/upper)
       - velocity limits (lower/upper)
       - torque limits (lower/upper)
+    Limits are maps of (jointName, limit)
   */
-  virtual const std::vector< std::map<int, std::vector<double> > > & bounds() const { return _bounds; }
+  virtual const std::vector< std::map<std::string, std::vector<double> > > & bounds() const { return _bounds; }
 
-  /* return the initial configuration of the robot */
-  virtual const std::map< unsigned int, std::vector<double> > & stance() const { return _stance; }
+  /* return the initial configuration of the robot as a map (jointName, jointPos) */
+  virtual const std::map<std::string, std::vector<double> > & stance() const { return _stance; }
 
   /* return a map (name, (bodyName, PolyhedronURL)) */
   virtual const std::map<std::string, std::pair<std::string, std::string> > & convexHull() const { return _convexHull; }
@@ -46,8 +47,8 @@ struct MC_RBDYN_DLLAPI RobotModule
   /* return a map (name, (bodyName, STPBVURL)) */
   virtual const std::map<std::string, std::pair<std::string, std::string> > & stpbvHull() const { return _stpbvHull; }
 
-  /* return a map (unsigned int, sva::PTransformd) */
-  virtual const std::map<int, sva::PTransformd> & collisionTransforms() const { return _collisionTransforms; }
+  /* return a map (bodyName, sva::PTransformd) */
+  virtual const std::map<std::string, sva::PTransformd> & collisionTransforms() const { return _collisionTransforms; }
 
   /* return flexibilities */
   virtual const std::vector<Flexibility> & flexibility() const { return _flexibility; }
@@ -70,11 +71,11 @@ struct MC_RBDYN_DLLAPI RobotModule
   rbd::MultiBody mb;
   rbd::MultiBodyConfig mbc;
   rbd::MultiBodyGraph mbg;
-  std::vector< std::map<int, std::vector<double> > > _bounds;
-  std::map< unsigned int, std::vector<double> > _stance;
+  std::vector< std::map<std::string, std::vector<double> > > _bounds;
+  std::map<std::string, std::vector<double> > _stance;
   std::map<std::string, std::pair<std::string, std::string> > _convexHull;
   std::map<std::string, std::pair<std::string, std::string> > _stpbvHull;
-  std::map< int, sva::PTransformd> _collisionTransforms;
+  std::map<std::string, sva::PTransformd> _collisionTransforms;
   std::vector<Flexibility> _flexibility;
   std::vector<ForceSensor> _forceSensors;
   std::string _accelerometerBody;
