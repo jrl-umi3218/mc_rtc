@@ -64,6 +64,12 @@ struct MC_RBDYN_DLLAPI RobotModule
   /** Return default self-collision set */
   virtual const std::vector<mc_rbdyn::Collision> & defaultSelfCollisions() { return _collisions; }
 
+  /** Return a map of gripper. Keys represents the gripper name. Values indicate the active joints in the gripper. */
+  virtual const std::map<std::string, std::vector<std::string>> & grippers() { return _grippers; }
+
+  /** Return the reference (native controller) joint order of the robot */
+  virtual const std::vector<std::string> & ref_joint_order() { return _ref_joint_order; }
+
   std::string path;
   std::string name;
   std::string urdf_path;
@@ -83,6 +89,8 @@ struct MC_RBDYN_DLLAPI RobotModule
   std::string _accelerometerBody;
   Springs _springs;
   std::vector<mc_rbdyn::Collision> _collisions;
+  std::map<std::string, std::vector<std::string>> _grippers;
+  std::vector<std::string> _ref_joint_order;
 };
 
 } // namespace mc_rbdyn

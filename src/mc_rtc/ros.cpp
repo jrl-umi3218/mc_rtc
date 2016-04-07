@@ -22,33 +22,6 @@
 namespace mc_rtc
 {
 
-static const std::vector<std::string> REF_JOINT_ORDER = {
-  "RLEG_JOINT0", "RLEG_JOINT1", "RLEG_JOINT2", "RLEG_JOINT3", "RLEG_JOINT4", "RLEG_JOINT5",
-  "LLEG_JOINT0", "LLEG_JOINT1", "LLEG_JOINT2", "LLEG_JOINT3", "LLEG_JOINT4", "LLEG_JOINT5",
-  "CHEST_JOINT0", "CHEST_JOINT1", "HEAD_JOINT0", "HEAD_JOINT1",
-  "RARM_JOINT0", "RARM_JOINT1", "RARM_JOINT2", "RARM_JOINT3", "RARM_JOINT4", "RARM_JOINT5", "RARM_JOINT6", "RARM_JOINT7",
-  "LARM_JOINT0", "LARM_JOINT1", "LARM_JOINT2", "LARM_JOINT3", "LARM_JOINT4", "LARM_JOINT5", "LARM_JOINT6", "LARM_JOINT7",
-  "RHAND_JOINT0", "RHAND_JOINT1", "RHAND_JOINT2", "RHAND_JOINT3", "RHAND_JOINT4",
-  "LHAND_JOINT0", "LHAND_JOINT1", "LHAND_JOINT2", "LHAND_JOINT3", "LHAND_JOINT4"};
-
-static const std::map<std::string, unsigned int> LGRIPPER_JOINTS = {
-  {"LARM_JOINT7"  , 0},
-  {"LHAND_JOINT0" , 1},
-  {"LHAND_JOINT1" , 2},
-  {"LHAND_JOINT2" , 3},
-  {"LHAND_JOINT3" , 4},
-  {"LHAND_JOINT4" , 5}
-};
-
-static const std::map<std::string, unsigned int> RGRIPPER_JOINTS = {
-  {"RARM_JOINT7"  , 0},
-  {"RHAND_JOINT0" , 1},
-  {"RHAND_JOINT1" , 2},
-  {"RHAND_JOINT2" , 3},
-  {"RHAND_JOINT3" , 4},
-  {"RHAND_JOINT4" , 5}
-};
-
 inline geometry_msgs::TransformStamped PT2TF(const sva::PTransformd & X, const ros::Time & tm, const std::string & from, const std::string & to, unsigned int seq)
 {
   geometry_msgs::TransformStamped msg;
@@ -94,7 +67,7 @@ public:
     th.join();
   }
 
-  void update(double dt, const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy, const RTC::TimedAngularVelocity3D & rate, const RTC::TimedAcceleration3D & gsensor, const std::vector<double> & lGq, const std::vector<double> & rGq)
+  void update(double dt, const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy, const RTC::TimedAngularVelocity3D & rate, const RTC::TimedAcceleration3D & gsensor, const std::map<std::string, std::vector<std::string>> & gJs, const std::map<std::string, std::vector<double>> & gQs)
   {
     ros::Time tm = ros::Time::now();
     sensor_msgs::JointState msg;
@@ -102,18 +75,19 @@ public:
     std::vector<geometry_msgs::TransformStamped> tfs;
 
     rbd::MultiBodyConfig mbc = robot.mbc();
-    if(lGq.size() == LGRIPPER_JOINTS.size())
+    for(const auto & g : gJs)
     {
-      for(const auto & j : LGRIPPER_JOINTS)
+      const auto & gName = g.first;
+      const auto & gJoints = g.second;
+      const auto & gQ = gQs.at(gName);
+      for(size_t i = 0; i < gJoints.size(); ++i)
       {
-        mbc.q[robot.jointIndexByName(j.first)][0] = lGq[j.second];
-      }
-    }
-    if(rGq.size() == RGRIPPER_JOINTS.size())
-    {
-      for(const auto & j : RGRIPPER_JOINTS)
-      {
-        mbc.q[robot.jointIndexByName(j.first)][0] = rGq[j.second];
+        const auto & j = gJoints[i];
+        const auto & q = gQ[i];
+        if(robot.hasJoint(j) && mbc.q[robot.jointIndexByName(j)].size() > 0)
+        {
+          mbc.q[robot.jointIndexByName(j)][0] = q;
+        }
       }
     }
     rbd::forwardKinematics(robot.mb(), mbc);
@@ -121,12 +95,19 @@ public:
     msg.header.seq = ++seq;
     msg.header.stamp = tm;
     msg.header.frame_id = "";
-    msg.name = REF_JOINT_ORDER;
-    msg.position.reserve(REF_JOINT_ORDER.size());
-    for(size_t i = 0; i < REF_JOINT_ORDER.size(); ++i)
+    msg.name.reserve(robot.mb().nrJoints() - 1);
+    msg.position.reserve(robot.mb().nrJoints() - 1);
+    for(const auto & j : robot.mb().joints())
     {
-      const std::string & jName = REF_JOINT_ORDER[i];
-      msg.position.push_back(mbc.q[robot.jointIndexByName(jName)][0]);
+      if(j.dof() == 1)
+      {
+        msg.name.push_back(j.name());
+        auto jIdx = robot.jointIndexByName(j.name());
+        if(mbc.q[jIdx].size() > 0)
+        {
+          msg.position.push_back(mbc.q[robot.jointIndexByName(j.name())][0]);
+        }
+      }
     }
     msg.velocity.resize(0);
     msg.effort.resize(0);
@@ -157,7 +138,7 @@ public:
 
     nav_msgs::Odometry odom;
     odom.header = msg.header;
-    odom.header.frame_id = "CHEST_LINK1",
+    odom.header.frame_id = robot.accelerometerBody();
     odom.child_frame_id = "robot_odom",
     /* Position of the sensor in CHEST_LINK1 frame */
     odom.pose.pose.position.x = -0.13;
@@ -191,24 +172,25 @@ public:
       tfs.push_back(PT2TF(X_succp_succ*mbc.parentToSon[static_cast<unsigned int>(j)]*X_predp_pred.inv(), tm, predName, succName, seq));
     }
 
-    sva::PTransformd X_0_hl1 = mbc.bodyPosW[robot.bodyIndexByName("HEAD_LINK1")];
-    // Calib 2016/02/02
-    sva::PTransformd X_hl1_xtion = sva::PTransformd(Eigen::Quaterniond(0.995971, -0.00632932, 0.0894339, 0.00188757).inverse(), Eigen::Vector3d(0.109125, 0.0055295, 0.0915054));
-    tfs.push_back(PT2TF(X_hl1_xtion, tm, "HEAD_LINK1", "xtion_link", seq));
-
-    sva::PTransformd X_0_xtion = X_hl1_xtion * X_0_hl1;
-
-    // Relate the robot tf tree with SLAM tf tree
-    tfs.push_back(PT2TF(X_0_xtion, tm, "robot_map", "odom", seq));
+    if(robot.hasBody("HEAD_LINK1"))
+    {
+      sva::PTransformd X_0_hl1 = mbc.bodyPosW[robot.bodyIndexByName("HEAD_LINK1")];
+      // Calib 2016/02/02
+      sva::PTransformd X_hl1_xtion = sva::PTransformd(Eigen::Quaterniond(0.995971, -0.00632932, 0.0894339, 0.00188757).inverse(), Eigen::Vector3d(0.109125, 0.0055295, 0.0915054));
+      tfs.push_back(PT2TF(X_hl1_xtion, tm, "HEAD_LINK1", "xtion_link", seq));
+      sva::PTransformd X_0_xtion = X_hl1_xtion * X_0_hl1;
+      // Relate the robot tf tree with SLAM tf tree
+      tfs.push_back(PT2TF(X_0_xtion, tm, "robot_map", "odom", seq));
 #ifdef MC_RTC_HAS_HRPSYS_BASE
-    sva::PTransformd X_0_base_odom = sva::PTransformd(
-                        Eigen::Quaterniond(sva::RotZ(rpy.data.y)*sva::RotY(rpy.data.p)*sva::RotX(-rpy.data.r).inverse()),
-                        Eigen::Vector3d(p.data.x, p.data.y, p.data.z));
-    sva::PTransformd X_0_base = mbc.bodyPosW[0];
-    sva::PTransformd X_base_xtion = X_0_xtion * (X_0_base.inv());
-    tfs.push_back(PT2TF(X_0_base_odom, tm, "/robot_map", "/odom_base_link", seq));
-    tfs.push_back(PT2TF(X_base_xtion, tm, "/odom_base_link", "/odom_xtion_link", seq));
+      sva::PTransformd X_0_base_odom = sva::PTransformd(
+                          Eigen::Quaterniond(sva::RotZ(rpy.data.y)*sva::RotY(rpy.data.p)*sva::RotX(-rpy.data.r).inverse()),
+                          Eigen::Vector3d(p.data.x, p.data.y, p.data.z));
+      sva::PTransformd X_0_base = mbc.bodyPosW[0];
+      sva::PTransformd X_base_xtion = X_0_xtion * (X_0_base.inv());
+      tfs.push_back(PT2TF(X_0_base_odom, tm, "/robot_map", "/odom_base_link", seq));
+      tfs.push_back(PT2TF(X_base_xtion, tm, "/odom_base_link", "/odom_xtion_link", seq));
 #endif
+    }
 
     if(seq % 5 == 0)
     {
@@ -310,11 +292,11 @@ std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
   return impl->nh;
 }
 
-void ROSBridge::update_robot_publisher(double dt, const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy, const RTC::TimedAngularVelocity3D & rate, const RTC::TimedAcceleration3D & gsensor, const std::vector<double> & lGq, const std::vector<double> & rGq)
+void ROSBridge::update_robot_publisher(double dt, const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy, const RTC::TimedAngularVelocity3D & rate, const RTC::TimedAcceleration3D & gsensor, const std::map<std::string, std::vector<std::string>> & gJ, const std::map<std::string, std::vector<double>> & gQ)
 {
   if(impl->rpub)
   {
-    impl->rpub->update(dt, robot, p, rpy, rate, gsensor, lGq, rGq);
+    impl->rpub->update(dt, robot, p, rpy, rate, gsensor, gJ, gQ);
   }
 }
 
@@ -354,7 +336,7 @@ std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
   return impl->nh;
 }
 
-void ROSBridge::update_robot_publisher(double, const mc_rbdyn::Robot &, const RTC::TimedPoint3D &, const RTC::TimedOrientation3D &, const RTC::TimedAngularVelocity3D &, const RTC::TimedAcceleration3D &, const std::vector<double> &, const std::vector<double> &)
+void ROSBridge::update_robot_publisher(double, const mc_rbdyn::Robot &, const RTC::TimedPoint3D &, const RTC::TimedOrientation3D &, const RTC::TimedAngularVelocity3D &, const RTC::TimedAcceleration3D &, const std::map<std::string, std::vector<std::string>> &, const std::map<std::string, std::vector<double>> &)
 {
 }
 

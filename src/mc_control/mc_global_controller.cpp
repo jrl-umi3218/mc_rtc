@@ -133,6 +133,7 @@ MCGlobalController::MCGlobalController(const std::string & conf)
     }
     if(controller_loader->has_object(controller_name))
     {
+      LOG_INFO("Create controller " << controller_name)
       if(controller_subname != "")
       {
         controllers[c] = controller_loader->create_object(controller_name, controller_subname, config.main_robot_module, config.timestep, config.v);
@@ -163,38 +164,47 @@ MCGlobalController::MCGlobalController(const std::string & conf)
 
 void MCGlobalController::init(const std::vector<double> & initq)
 {
-  std::vector<std::vector<double>> q;
+  std::vector<std::vector<double>> q = robot().mbc().q;
+  q[0] = {1, 0, 0, 0, 0, 0, 0.76};
+  const auto & rjo = ref_joint_order();
+  for(size_t i = 0; i < rjo.size(); ++i)
+  {
+    const auto & jn = rjo[i];
+    if(robot().hasJoint(jn))
+    {
+      q[robot().jointIndexByName(jn)][0] = initq[i];
+    }
+  }
   if(config.main_robot_module->name == "hrp2_drc")
   {
-    q.push_back({1, 0, 0, 0, 0, 0, 0.76});
-    /* The OpenRTM components don't give q in the same order as the QP */
-    for(size_t i = 0; i < 24; ++i) // until RARM_LINK7
-    {
-      q.push_back({initq[i]});
-    }
-    for(size_t i = 32; i < 37; ++i) // RHAND
-    {
-      q.push_back({initq[i]});
-    }
-    for(size_t i = 24; i < 32; ++i) // LARM_LINK*
-    {
-      q.push_back({initq[i]});
-    }
-    for(size_t i = 37; i < 42; ++i) // LHAND
-    {
-      q.push_back({initq[i]});
-    }
-    setGripperCurrentQ(initq[31], initq[23]);
+    setGripperCurrentQ({
+      {"l_gripper", {initq[31]}},
+      {"r_gripper", {initq[23]}}
+    });
   }
   else if(config.main_robot_module->name == "hrp4")
   {
-    q.push_back({ 1, 0, 0, 0, 0, 0, 0.76 });
-    for (size_t i = 0; i < initq.size(); ++i)
-    {
-      q.push_back({ initq[i] });
-    }
-    setGripperCurrentQ(initq[44], initq[27]);
+    setGripperCurrentQ({
+      {"l_gripper", {initq[32], initq[33]}},
+      {"r_gripper", {initq[23], initq[24]}}
+    });
   }
+
+  for(size_t i = 0; i < q.size(); ++i){
+    std::cout << controller->robot().mb().joints()[i].name() << ": ";
+    for(size_t j = 0; j < controller->robot().mbc().q[i].size(); ++j){
+      if (controller->robot().mbc().q[i].size() == q[i].size()){
+        std::cout << "(" << controller->robot().mbc().q[i][j] << " " << q[i][j] << ") ";
+      } else {
+        std::cout << "ERROR - real size: " << controller->robot().mbc().q[i].size() << " - value:";
+        for(size_t k = 0; k < q[i].size(); ++k){
+            std::cout << "(" << q[i][k] << ") ";
+        }
+      }
+    }
+    std::cout << std::endl;
+  }
+
   controller->reset({q});
 }
 
@@ -218,10 +228,13 @@ void MCGlobalController::setWrenches(const std::vector<sva::ForceVecd> & wrenche
   controller->setWrenches(wrenches);
 }
 
-void MCGlobalController::setActualGripperQ(double rQ, double lQ)
+void MCGlobalController::setActualGripperQ(const std::map<std::string, std::vector<double>> & grippersQ)
 {
-  controller->rgripper->setActualQ(rQ);
-  controller->lgripper->setActualQ(lQ);
+  for(const auto & gQ : grippersQ)
+  {
+    assert(controller->grippers.count(gQ.first) > 0);
+    controller->grippers[gQ.first]->setActualQ(gQ.second);
+  }
 }
 
 bool MCGlobalController::run()
@@ -246,8 +259,10 @@ bool MCGlobalController::run()
       std::cout << controller->robot().mbc().q[0][4] << " ";
       std::cout << controller->robot().mbc().q[0][5] << " ";
       std::cout << controller->robot().mbc().q[0][6] << std::endl;
-      next_controller->lgripper->setCurrentQ(controller->lgripper->curPosition());
-      next_controller->rgripper->setCurrentQ(controller->rgripper->curPosition());
+      for(const auto & g: controller->grippers)
+      {
+        next_controller->grippers[g.first]->setCurrentQ(g.second->curPosition());
+      }
       next_controller->reset({controller->robot().mbc().q});
       controller = next_controller;
     }
@@ -276,44 +291,88 @@ const mc_rbdyn::Robot & MCGlobalController::robot()
   return controller->robot();
 }
 
-const std::vector<double> & MCGlobalController::gripperQ(bool lgripper)
+std::map<std::string, std::vector<double>> MCGlobalController::gripperQ()
 {
-  if(lgripper)
+  std::map<std::string, std::vector<double>> res;
+  for(const auto & g : controller->grippers)
   {
-    return controller->lgripper->q();
+    res[g.first] = g.second->q();
+  }
+  return res;
+}
+
+std::map<std::string, std::vector<std::string>> MCGlobalController::gripperJoints()
+{
+  std::map<std::string, std::vector<std::string>> res;
+  for(const auto & g : controller->grippers)
+  {
+    res[g.first] = g.second->names;
+  }
+  return res;
+}
+
+std::map<std::string, std::vector<std::string>> MCGlobalController::gripperActiveJoints()
+{
+  std::map<std::string, std::vector<std::string>> res;
+  for(const auto & g : controller->grippers)
+  {
+    res[g.first] = g.second->active_joints;
+  }
+  return res;
+}
+
+void MCGlobalController::setGripperCurrentQ(const std::map<std::string, std::vector<double>> & gripperQs)
+{
+  for(const auto & gQ : gripperQs)
+  {
+    if(controller->grippers.count(gQ.first) == 0)
+    {
+      LOG_ERROR("Cannot update gripper " << gQ.first)
+    }
+    else
+    {
+      controller->grippers[gQ.first]->setCurrentQ(gQ.second);
+    }
+  }
+}
+
+void MCGlobalController::setGripperTargetQ(const std::string & name, const std::vector<double> & q)
+{
+  if(controller->grippers.count(name))
+  {
+    if(controller->grippers[name]->active_idx.size() == q.size())
+    {
+      controller->grippers[name]->setTargetQ(q);
+    }
+    else
+    {
+      LOG_ERROR("Try to set gripper value for " << name << " with the wrong number of values")
+    }
   }
   else
   {
-    return controller->rgripper->q();
+    LOG_ERROR("Cannot set gripper value for non-existing gripper " << name)
   }
 }
 
-void MCGlobalController::setGripperCurrentQ(double lQ, double rQ)
+void MCGlobalController::setGripperOpenPercent(double pOpen)
 {
-  controller->lgripper->setCurrentQ(lQ);
-  controller->rgripper->setCurrentQ(rQ);
+  for(const auto & g : controller->grippers)
+  {
+    setGripperOpenPercent(g.first, pOpen);
+  }
 }
 
-void MCGlobalController::setGripperTargetQ(double lQ, double rQ)
+void MCGlobalController::setGripperOpenPercent(const std::string & name, double pOpen)
 {
-  controller->lgripper->setTargetQ(lQ);
-  controller->rgripper->setTargetQ(rQ);
-}
-
-void MCGlobalController::setLGripperTargetQ(double lQ)
-{
-  controller->lgripper->setTargetQ(lQ);
-}
-
-void MCGlobalController::setRGripperTargetQ(double rQ)
-{
-  controller->rgripper->setTargetQ(rQ);
-}
-
-void MCGlobalController::setGripperOpenPercent(double lQ, double rQ)
-{
-  controller->lgripper->setTargetOpening(lQ);
-  controller->rgripper->setTargetOpening(rQ);
+  if(controller->grippers.count(name))
+  {
+    controller->grippers[name]->setTargetOpening(pOpen);
+  }
+  else
+  {
+    LOG_ERROR("Cannot set gripper opening for non-existing gripper " << name)
+  }
 }
 
 std::ostream & MCGlobalController::log_header(std::ostream & os)
@@ -329,6 +388,11 @@ std::ostream & MCGlobalController::log_data(std::ostream & os)
 double MCGlobalController::timestep()
 {
   return config.timestep;
+}
+
+const std::vector<std::string> & MCGlobalController::ref_joint_order()
+{
+  return controller->ref_joint_order;
 }
 
 bool MCGlobalController::EnableController(const std::string & name)

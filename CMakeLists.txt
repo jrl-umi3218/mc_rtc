@@ -87,41 +87,28 @@ else()
   endif()
 endif()
 
-if(NOT DEFINED MC_ENV_DESCRIPTION_PATH)
-  execute_process(COMMAND rospack find mc_env_description
-                  RESULT_VARIABLE MC_ENV_DESCRIPTION_FOUND
-                  OUTPUT_VARIABLE MC_ENV_DESCRIPTION_PATH
-                  OUTPUT_STRIP_TRAILING_WHITESPACE)
-  if(${MC_ENV_DESCRIPTION_FOUND})
-    MESSAGE(SEND_ERROR "Failed to find mc_env_description, check your system configuration or define MC_ENV_DESCRIPTION_PATH")
-  else()
-    MESSAGE(STATUS "Found mc_env_description: ${MC_ENV_DESCRIPTION_PATH}")
+macro(find_description_package desc_pkg)
+  string(TOUPPER "${desc_pkg}" "DESC_PKG")
+  if(NOT DEFINED ${DESC_PKG}_PATH)
+    add_optional_dependency("${desc_pkg}")
+    if(${${DESC_PKG}_FOUND})
+      execute_process(
+        COMMAND "${PKG_CONFIG_EXECUTABLE}"
+        "--variable=datadir" "${desc_pkg}"
+        OUTPUT_VARIABLE "${DESC_PKG}_PATH"
+        ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
+    else()
+      MESSAGE(WARNING "${DESC_PKG}_PATH is not defined and pkg-config failed to find ${desc_pkg}, the related robots' modules will not work properly. Check your system configuration or define ${DESC_PKG} to fix this issue.")
+    endif()
   endif()
-endif()
+  if(DEFINED ${DESC_PKG}_PATH)
+    MESSAGE(STATUS "Found ${desc_pkg}: ${${DESC_PKG}_PATH}")
+  endif()
+endmacro()
 
-if(NOT DEFINED HRP2_DRC_DESCRIPTION_PATH)
-  execute_process(COMMAND rospack find hrp2_drc_description
-                  RESULT_VARIABLE HRP2_DRC_DESCRIPTION_FOUND
-                  OUTPUT_VARIABLE HRP2_DRC_DESCRIPTION_PATH
-                  OUTPUT_STRIP_TRAILING_WHITESPACE)
-  if(${HRP2_DRC_DESCRIPTION_FOUND})
-    MESSAGE(SEND_ERROR "Failed to find hrp2_drc_description, check your system configuration or define HRP2_DRC_DESCRIPTION_PATH")
-  else()
-    MESSAGE(STATUS "Found hrp2_drc_description: ${HRP2_DRC_DESCRIPTION_PATH}")
-  endif()
-endif()
-
-if(NOT DEFINED HRP4_DESCRIPTION_PATH)
-  execute_process(COMMAND rospack find hrp4_description
-                  RESULT_VARIABLE HRP4_DESCRIPTION_FOUND
-                  OUTPUT_VARIABLE HRP4_DESCRIPTION_PATH
-                  OUTPUT_STRIP_TRAILING_WHITESPACE)
-  if(${HRP4_DESCRIPTION_FOUND})
-    MESSAGE(SEND_ERROR "Failed to find hrp4_description, check your system configuration or define HRP4_DESCRIPTION_PATH")
-  else()
-    MESSAGE(STATUS "Found hrp4_description: ${HRP4_DESCRIPTION_PATH}")
-  endif()
-endif()
+find_description_package(mc_env_description)
+find_description_package(hrp2_drc_description)
+find_description_package(hrp4_description)
 
 add_optional_dependency(roscpp)
 if(${ROSCPP_FOUND})

@@ -27,7 +27,7 @@ public:
 
   void setWrenches(const std::vector<sva::ForceVecd> & wrenches);
 
-  void setActualGripperQ(double rQ, double lQ);
+  void setActualGripperQ(const std::map<std::string, std::vector<double>> & grippersQ);
 
   bool run();
 
@@ -37,18 +37,21 @@ public:
 
   double timestep();
 
+  const std::vector<std::string> & ref_joint_order();
+
   std::ostream & log_header(std::ostream & os);
   std::ostream & log_data(std::ostream & os);
   /* Called by the RT component to switch between controllers */
   bool EnableController(const std::string & name);
 
   /* Gripper controls */
-  const std::vector<double> & gripperQ(bool lgripper);
-  void setGripperCurrentQ(double lQ, double rQ);
-  void setGripperTargetQ(double lQ, double rQ);
-  void setLGripperTargetQ(double lQ);
-  void setRGripperTargetQ(double rQ);
-  void setGripperOpenPercent(double lQ, double rQ);
+  std::map<std::string, std::vector<double>> gripperQ();
+  std::map<std::string, std::vector<std::string>> gripperJoints();
+  std::map<std::string, std::vector<std::string>> gripperActiveJoints();
+  void setGripperCurrentQ(const std::map<std::string, std::vector<double>> & gripperQs);
+  void setGripperTargetQ(const std::string & name, const std::vector<double> & q);
+  void setGripperOpenPercent(double pOpen);
+  void setGripperOpenPercent(const std::string & name, double pOpen);
 
   /* Control the posture if provided by the controller */
   bool set_joint_pos(const std::string & jname, const double & pos);

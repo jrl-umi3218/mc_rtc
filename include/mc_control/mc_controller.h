@@ -273,12 +273,10 @@ protected:
 public:
   /** Controller timestep */
   const double timeStep;
-  /* FIXME Deal with grippers in a more generic way, perhaps through the
-   * RobotModule interface */
-  /** Left gripper state */
-  std::shared_ptr<mc_control::Gripper> lgripper;
-  /** Right gripper state */
-  std::shared_ptr<mc_control::Gripper> rgripper;
+  /** Reference joint order see mc_rbdyn::RobotModule */
+  std::vector<std::string> ref_joint_order;
+  /** Grippers */
+  std::map<std::string, std::shared_ptr<mc_control::Gripper>> grippers;
   /** Contact constraint for the main robot */
   mc_solver::ContactConstraint contactConstraint;
   /** Dynamics constraints for the main robot */

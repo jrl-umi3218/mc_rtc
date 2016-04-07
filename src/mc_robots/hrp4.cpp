@@ -30,6 +30,7 @@ namespace mc_robots
     virtualLinks.push_back("r_gripper");
     virtualLinks.push_back("gaze");
     virtualLinks.push_back("r_gripper_sensor");
+    virtualLinks.push_back("xtion_link");
 
     gripperLinks.push_back("R_HAND_J0_LINK");
     gripperLinks.push_back("R_HAND_J1_LINK");
@@ -104,12 +105,34 @@ namespace mc_robots
     halfSitting["L_F43"] = { 0 }; //0
     halfSitting["L_F52"] = { 0 }; //0
     halfSitting["L_F53"] = { 0 }; //0
+    /* Virtual joints */
+    halfSitting["L_FOOT"] = {};
+    halfSitting["R_FOOT"] = {};
 
     _forceSensors.push_back(mc_rbdyn::ForceSensor("RightFootForceSensor", "R_ANKLE_R_LINK", sva::PTransformd(Eigen::Vector3d(0, 0, -0.093))));
     _forceSensors.push_back(mc_rbdyn::ForceSensor("LeftFootForceSensor", "L_ANKLE_R_LINK", sva::PTransformd(Eigen::Vector3d(0, 0, -0.093))));
     Eigen::Matrix3d R; R << 0, -1, 0, -1, 0, 0, 0, 0, -1; // rpy="3.14159 0 -1.57079"
     _forceSensors.push_back(mc_rbdyn::ForceSensor("LeftHandForceSensor", "l_wrist", sva::PTransformd(R, Eigen::Vector3d(0, 0, -0.04435))));
     _forceSensors.push_back(mc_rbdyn::ForceSensor("RightHandForceSensor", "r_wrist", sva::PTransformd(R, Eigen::Vector3d(0, 0, -0.04435))));
+
+    _grippers = {
+      {"l_gripper", {"L_HAND_J0", "L_HAND_J1"}},
+      {"r_gripper", {"R_HAND_J0", "R_HAND_J1"}}
+    };
+
+    _ref_joint_order = {
+      "R_HIP_Y", "R_HIP_R", "R_HIP_P", "R_KNEE_P", "R_ANKLE_P", "R_ANKLE_R",
+      "L_HIP_Y", "L_HIP_R", "L_HIP_P", "L_KNEE_P", "L_ANKLE_P", "L_ANKLE_R",
+      "CHEST_P", "CHEST_Y", "NECK_Y", "NECK_P",
+      "R_SHOULDER_P", "R_SHOULDER_R", "R_SHOULDER_Y",
+      "R_ELBOW_P",
+      "R_WRIST_Y", "R_WRIST_P", "R_WRIST_R",
+      "R_HAND_J0", "R_HAND_J1",
+      "L_SHOULDER_P", "L_SHOULDER_R", "L_SHOULDER_Y",
+      "L_ELBOW_P",
+      "L_WRIST_Y", "L_WRIST_P", "L_WRIST_R",
+      "L_HAND_J0", "L_HAND_J1"
+    };
   }
 
   std::map<std::string, std::pair<std::string, std::string> > HRP4CommonRobotModule::getConvexHull(const std::map<std::string, std::pair<std::string, std::string>> & files) const

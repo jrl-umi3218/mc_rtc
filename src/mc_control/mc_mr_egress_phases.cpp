@@ -906,15 +906,15 @@ struct EgressOpenRightGripperPhase : public EgressMRPhaseExecution
       }
       else if(!done_opening)
       {
-        if(ctl.rgripper->percentOpen >= 1.)
+        if(ctl.grippers["r_gripper"]->percentOpen[0] >= 1.)
         {
-          ctl.rgripper->percentOpen = 1.;
+          ctl.grippers["r_gripper"]->percentOpen[0] = 1.;
           done_opening = true;
           return true;
         }
         else
         {
-          ctl.rgripper->percentOpen += 0.005;
+          ctl.grippers["r_gripper"]->percentOpen[0] += 0.005;
           return false;
         }
       }

@@ -3,6 +3,7 @@
 
 module OpenHRP
 {
+  typedef sequence<double> DblSequence;
 
   interface MCControlService
   {
@@ -12,7 +13,7 @@ module OpenHRP
 
     boolean close_grippers();
 
-    boolean set_gripper(in boolean lgripper, in double v);
+    boolean set_gripper(in string gripper_name, in DblSequence v);
 
     boolean set_joint_pos(in string jname, in double v);
 

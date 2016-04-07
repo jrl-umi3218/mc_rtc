@@ -67,6 +67,7 @@ else
   if [ $OS = Ubuntu ]
   then
     yaml_to_env "APT_DEPENDENCIES" $gitlab_ci_yml
+    APT_DEPENDENCIES=`echo $APT_DEPENDENCIES|sed -e's/libspacevecalg-dev//'|sed -e's/librbdyn-dev//'|sed -e's/libeigen-qld-dev//'`
     sudo apt-get update
     sudo apt-get install -qq cmake build-essential gfortran doxygen cython ${APT_DEPENDENCIES}
   else
@@ -159,10 +160,8 @@ build_git_dependency()
 #  --  GIT dependencies  --  #
 ##############################
 yaml_to_env "GIT_DEPENDENCIES" $gitlab_ci_yml
-if [ ${OS} = Darwin ]
-then
-  GIT_DEPENDENCIES=`echo $GIT_DEPENDENCIES|sed -e 's@jorisv/RBDyn@gergondet/RBDyn#topic/Win32@'`
-fi
+# Add some source dependencies
+GIT_DEPENDENCIES="jrl-umi3218/SpaceVecAlg jrl-umi3218/RBDyn jrl-umi3218/eigen-qld ${GIT_DEPENDENCIES}"
 for package in ${GIT_DEPENDENCIES}; do
   build_git_dependency "$package"
 done
