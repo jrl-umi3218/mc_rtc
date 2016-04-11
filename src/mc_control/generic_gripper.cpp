@@ -107,7 +107,7 @@ std::string findFirstCommonBody(const mc_rbdyn::Robot & robotFull, const std::st
 Gripper::Gripper(const mc_rbdyn::Robot & robot, const std::vector<std::string> & jointNames, const std::string & robot_urdf,
                  const std::vector<double> & currentQ, double timeStep)
 : overCommandLimitIter(0), overCommandLimitIterN(5),
-  actualQ(currentQ), actualCommandDiffTrigger(4*M_PI/180) /* 4 degress of difference */
+  actualQ(currentQ), actualCommandDiffTrigger(8*M_PI/180) /* 8 degress of difference */
 {
   auto mimicDict = readMimic(robot_urdf);
   names = gripperJoints(robot, jointNames, mimicDict);
@@ -122,7 +122,7 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot, const std::vector<std::string> &
       unsigned int jointIndex = robot.jointIndexByName(name);
       closeP.push_back(robot.ql()[jointIndex][0]);
       openP.push_back(robot.qu()[jointIndex][0]);
-      vmax.push_back(std::min(std::abs(robot.vl()[jointIndex][0]), robot.vu()[jointIndex][0])/20);
+      vmax.push_back(std::min(std::abs(robot.vl()[jointIndex][0]), robot.vu()[jointIndex][0])/10);
       active_idx.push_back(i);
       _q.push_back(currentQ[j]);
       ++j;
@@ -207,23 +207,22 @@ void Gripper::setActualQ(const std::vector<double> & q)
   auto currentQ = curPosition();
   for(size_t i = 0; i< actualQ.size(); ++i)
   {
-    //FIXME This safety is always triggered by VREP
-    //if(std::abs(actualQ[i] - currentQ[i]) > actualCommandDiffTrigger)
-    //{
-    //  overCommandLimitIter[i]++;
-    //  if(overCommandLimitIter[i] == overCommandLimitIterN)
-    //  {
-    //    LOG_WARNING("Gripper safety triggered on " << names[active_idx[i]])
-    //    overCommandLimit[i] = true;
-    //    actualQ[i] = actualQ[i] - 2*M_PI/180;
-    //    setTargetQ(actualQ);
-    //  }
-    //}
-    //else
-    //{
-    //  overCommandLimitIter[i] = 0;
-    //  overCommandLimit[i] = false;
-    //}
+    if(std::abs(actualQ[i] - currentQ[i]) > actualCommandDiffTrigger)
+    {
+      overCommandLimitIter[i]++;
+      if(overCommandLimitIter[i] == overCommandLimitIterN)
+      {
+        LOG_WARNING("Gripper safety triggered on " << names[active_idx[i]])
+        overCommandLimit[i] = true;
+        actualQ[i] = actualQ[i] - 2*M_PI/180;
+        setTargetQ(actualQ);
+      }
+    }
+    else
+    {
+      overCommandLimitIter[i] = 0;
+      overCommandLimit[i] = false;
+    }
   }
 }
 
