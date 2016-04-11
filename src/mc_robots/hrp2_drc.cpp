@@ -109,8 +109,8 @@ HRP2DRCCommonRobotModule::HRP2DRCCommonRobotModule()
   };
 
   _grippers = {
-    {"l_gripper", {"LARM_JOINT7"}},
-    {"r_gripper", {"RARM_JOINT7"}}
+    {"l_gripper", {"LARM_JOINT7"}, false},
+    {"r_gripper", {"RARM_JOINT7"}, false}
   };
 
   _ref_joint_order = {

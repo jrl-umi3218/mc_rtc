@@ -117,8 +117,8 @@ namespace mc_robots
     _forceSensors.push_back(mc_rbdyn::ForceSensor("RightHandForceSensor", "r_wrist", sva::PTransformd(R, Eigen::Vector3d(0, 0, -0.04435))));
 
     _grippers = {
-      {"l_gripper", {"L_HAND_J0", "L_HAND_J1"}},
-      {"r_gripper", {"R_HAND_J0", "R_HAND_J1"}}
+      {"l_gripper", {"L_HAND_J0", "L_HAND_J1"}, false},
+      {"r_gripper", {"R_HAND_J0", "R_HAND_J1"}, true}
     };
 
     _ref_joint_order = {

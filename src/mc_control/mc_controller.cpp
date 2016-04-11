@@ -49,9 +49,9 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
     std::stringstream urdf;
     urdf << ifs.rdbuf();
     auto urdfRobot = mc_rbdyn::loadRobotFromUrdf("temp_robot", urdf.str());
-    for(const auto & gjoints : robots_modules[0]->grippers())
+    for(const auto & gripper : robots_modules[0]->grippers())
     {
-      grippers[gjoints.first] = std::make_shared<mc_control::Gripper>(urdfRobot->robot(), gjoints.second, urdf.str(), std::vector<double>(gjoints.second.size(), 0.0), timeStep);
+      grippers[gripper.name] = std::make_shared<mc_control::Gripper>(urdfRobot->robot(), gripper.joints, urdf.str(), std::vector<double>(gripper.joints.size(), 0.0), timeStep, gripper.reverse_limits);
     }
   }
   else
