@@ -16,14 +16,12 @@
 #include "MCControl.h"
 
 #include <fstream>
+#include <iomanip>
 
-#include <boost/array.hpp>
 #include <mc_rtc/logging.h>
 
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
-
-using boost::asio::ip::udp;
 
 // Module specification
 // <rtc-template block="module_spec">
@@ -120,6 +118,41 @@ RTC::ReturnCode_t MCControl::onInitialize()
   // Bind variables and configuration variable
   bindParameter("timeStep", m_timeStep, "0.002");
   bindParameter("is_enabled", controller.running, "0");
+
+  auto gripperJs = controller.gripperJoints();
+  auto gripperActiveJs = controller.gripperActiveJoints();
+  const auto & ref_joint_order = controller.ref_joint_order();
+  for(const auto & g : gripperActiveJs)
+  {
+    gripper_in_index[g.first] = {};
+    realGripperQs[g.first] = {};
+    for(const auto & jn : g.second)
+    {
+      for(size_t i = 0; i < ref_joint_order.size(); ++i)
+      {
+        if(ref_joint_order[i] == jn)
+        {
+          gripper_in_index[g.first].push_back(i);
+          realGripperQs[g.first].push_back(0.0);
+        }
+      }
+    }
+  }
+  for(const auto & g : gripperJs)
+  {
+    gripper_out_index[g.first] = {};
+    for(size_t j = 0; j < g.second.size(); ++j)
+    {
+      const auto & jn = g.second[j];
+      for(size_t i = 0; i < ref_joint_order.size(); ++i)
+      {
+        if(ref_joint_order[i] == jn)
+        {
+          gripper_out_index[g.first].push_back({i, j});
+        }
+      }
+    }
+  }
 
   // </rtc-template>
   LOG_INFO("MCControl::onInitialize() finished")
@@ -225,25 +258,15 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
       if(controller.run())
       {
         const mc_control::QPResultMsg & res = controller.send(t);
-        /*FIXME The index correspondance should be computed only one time*/
         auto gripperQs = controller.gripperQ();
-        auto gripperJs = controller.gripperJoints();
-        auto gripperActiveJs = controller.gripperActiveJoints();
         const auto & ref_joint_order = controller.ref_joint_order();
-        std::map<std::string, std::vector<double>> realGripperQs;
-        for(const auto & g : gripperActiveJs)
+        for(auto & rG : realGripperQs)
         {
-          realGripperQs[g.first] = {};
-          for(const auto & jn : g.second)
+          const auto & idx = gripper_in_index[rG.first];
+          auto & qs = rG.second;
+          for(size_t i = 0; i < idx.size(); ++i)
           {
-            for(size_t i = 0; i < ref_joint_order.size(); ++i)
-            {
-              if(ref_joint_order[i] == jn)
-              {
-                realGripperQs[g.first].push_back(m_qIn.data[i]);
-                break;
-              }
-            }
+            qs[i] = m_qIn.data[idx[i]];
           }
         }
         controller.setActualGripperQ(realGripperQs);
@@ -252,25 +275,15 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
         {
           m_qOut.data[i] = res.robots_state[0].q.at(ref_joint_order[i])[0];
         }
-         /* Update gripper state */
-        for(const auto & g : gripperJs)
+        /* Update gripper state */
+        for(const auto & cG : gripper_out_index)
         {
-          const auto & gName = g.first;
-          const auto & jNames = g.second;
-          const auto & gQ = gripperQs[gName];
-          for(size_t i = 0; i < jNames.size(); ++i)
+          const auto & qs = gripperQs[cG.first];
+          for(const auto & idx_p : cG.second)
           {
-            for(size_t j = 0; j < ref_joint_order.size(); ++j)
-            {
-              if(ref_joint_order[j] == jNames[i])
-              {
-                m_qOut.data[j] = gQ[i];
-                break;
-              }
-            }
+            m_qOut.data[idx_p.first] = qs[idx_p.second];
           }
         }
-
         /* FIXME Correction RPY convention here? */
         const auto & ff_state = res.robots_state[0].q.at(controller.robot().mb().joint(0).name());
         Eigen::Vector3d rpyOut = Eigen::Quaterniond(ff_state[0], ff_state[1], ff_state[2], ff_state[3]).toRotationMatrix().eulerAngles(2, 1, 0);

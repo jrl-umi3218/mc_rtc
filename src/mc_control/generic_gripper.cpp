@@ -11,6 +11,7 @@ namespace mc_control
 namespace
 {
 
+/* Returns the mimic joints stored in the URDF model */
 mimic_d_t readMimic(const std::string & urdf)
 {
   mimic_d_t res;
@@ -52,18 +53,7 @@ mimic_d_t readMimic(const std::string & urdf)
   return res;
 }
 
-int findSuccessorJoint(const mc_rbdyn::Robot & robot, int bodyIndex)
-{
-  for(int j = 0; j < robot.mb().nrJoints(); ++j)
-  {
-    if(robot.mb().predecessor(j) == static_cast<int>(bodyIndex))
-    {
-      return j;
-    }
-  }
-  return robot.mb().nrJoints();
-}
-
+/* Returns all joints associated to a gripper's active joints */
 std::vector<std::string> gripperJoints(const std::vector<std::string> & jointNames, const mimic_d_t & mimicDict)
 {
   std::vector<std::string> res;
@@ -81,25 +71,6 @@ std::vector<std::string> gripperJoints(const std::vector<std::string> & jointNam
   }
 
   return res;
-}
-
-std::string findFirstCommonBody(const mc_rbdyn::Robot & robotFull, const std::string & bodyName, const mc_rbdyn::Robot & robot)
-{
-  if(robot.hasBody(bodyName))
-  {
-    return bodyName;
-  }
-  else
-  {
-    unsigned int bodyIndex = robotFull.bodyIndexByName(bodyName);
-    int bodyPredIndex = robotFull.mb().parent(static_cast<int>(bodyIndex));
-    if(bodyPredIndex == -1)
-    {
-      return "";
-    }
-    std::string bodyPredName = robotFull.mb().body(bodyPredIndex).name();
-    return findFirstCommonBody(robotFull, bodyPredName, robot);
-  }
 }
 
 }
