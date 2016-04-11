@@ -253,7 +253,6 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
           m_qOut.data[i] = res.robots_state[0].q.at(ref_joint_order[i])[0];
         }
          /* Update gripper state */
-        /*
         for(const auto & g : gripperJs)
         {
           const auto & gName = g.first;
@@ -270,7 +269,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
               }
             }
           }
-        }*/
+        }
 
         /* FIXME Correction RPY convention here? */
         const auto & ff_state = res.robots_state[0].q.at(controller.robot().mb().joint(0).name());
@@ -290,7 +289,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
       m_qOutOut.write();
       m_pOutOut.write();
       m_rpyOutOut.write();
-      //mc_rtc::ROSBridge::update_robot_publisher(controller.timestep(), controller.robot(), m_pIn, m_rpyIn, m_rateIn, m_accIn, controller.gripperJoints(), controller.gripperQ());
+      mc_rtc::ROSBridge::update_robot_publisher(controller.timestep(), controller.robot(), m_pIn, m_rpyIn, m_rateIn, m_accIn, controller.gripperJoints(), controller.gripperQ());
       log_data();
     }
     else
@@ -330,7 +329,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
       robot.mbc().q = q;
       rbd::forwardKinematics(robot.mb(), robot.mbc());
       rbd::forwardVelocity(robot.mb(), robot.mbc());
-      //mc_rtc::ROSBridge::update_robot_publisher(controller.timestep(), robot, m_pIn, m_rpyIn, m_rateIn, m_accIn, gripperJs, gripperQs);
+      mc_rtc::ROSBridge::update_robot_publisher(controller.timestep(), robot, m_pIn, m_rpyIn, m_rateIn, m_accIn, gripperJs, gripperQs);
       controller.run();
     }
   }

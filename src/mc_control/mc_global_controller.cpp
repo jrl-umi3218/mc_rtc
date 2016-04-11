@@ -190,21 +190,6 @@ void MCGlobalController::init(const std::vector<double> & initq)
     });
   }
 
-  for(size_t i = 0; i < q.size(); ++i){
-    std::cout << controller->robot().mb().joints()[i].name() << ": ";
-    for(size_t j = 0; j < controller->robot().mbc().q[i].size(); ++j){
-      if (controller->robot().mbc().q[i].size() == q[i].size()){
-        std::cout << "(" << controller->robot().mbc().q[i][j] << " " << q[i][j] << ") ";
-      } else {
-        std::cout << "ERROR - real size: " << controller->robot().mbc().q[i].size() << " - value:";
-        for(size_t k = 0; k < q[i].size(); ++k){
-            std::cout << "(" << q[i][k] << ") ";
-        }
-      }
-    }
-    std::cout << std::endl;
-  }
-
   controller->reset({q});
 }
 
