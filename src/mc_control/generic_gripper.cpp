@@ -64,7 +64,7 @@ int findSuccessorJoint(const mc_rbdyn::Robot & robot, int bodyIndex)
   return robot.mb().nrJoints();
 }
 
-std::vector<std::string> gripperJoints(const mc_rbdyn::Robot & robot, const std::vector<std::string> & jointNames, const mimic_d_t & mimicDict)
+std::vector<std::string> gripperJoints(const std::vector<std::string> & jointNames, const mimic_d_t & mimicDict)
 {
   std::vector<std::string> res;
 
@@ -105,12 +105,12 @@ std::string findFirstCommonBody(const mc_rbdyn::Robot & robotFull, const std::st
 }
 
 Gripper::Gripper(const mc_rbdyn::Robot & robot, const std::vector<std::string> & jointNames, const std::string & robot_urdf,
-                 const std::vector<double> & currentQ, double timeStep)
+                 const std::vector<double> & currentQ, double timeStep, bool reverseLimits)
 : overCommandLimitIter(0), overCommandLimitIterN(5),
   actualQ(currentQ), actualCommandDiffTrigger(8*M_PI/180) /* 8 degress of difference */
 {
   auto mimicDict = readMimic(robot_urdf);
-  names = gripperJoints(robot, jointNames, mimicDict);
+  names = gripperJoints(jointNames, mimicDict);
   active_joints = jointNames;
   active_idx.resize(0); mult.resize(0); _q.resize(0);
   unsigned int j = 0;
@@ -120,8 +120,16 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot, const std::vector<std::string> &
     if(robot.hasJoint(name) && mimicDict.count(name) == 0)
     {
       unsigned int jointIndex = robot.jointIndexByName(name);
-      closeP.push_back(robot.ql()[jointIndex][0]);
-      openP.push_back(robot.qu()[jointIndex][0]);
+      if(!reverseLimits)
+      {
+        closeP.push_back(robot.ql()[jointIndex][0]);
+        openP.push_back(robot.qu()[jointIndex][0]);
+      }
+      else
+      {
+        closeP.push_back(robot.qu()[jointIndex][0]);
+        openP.push_back(robot.ql()[jointIndex][0]);
+      }
       vmax.push_back(std::min(std::abs(robot.vl()[jointIndex][0]), robot.vu()[jointIndex][0])/10);
       active_idx.push_back(i);
       _q.push_back(currentQ[j]);

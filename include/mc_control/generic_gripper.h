@@ -33,12 +33,15 @@ typedef std::map<std::string, Mimic> mimic_d_t;
 
 /*! \brief A robot's gripper reprensentation
  *
- * A gripper is composed of a set of joints that we want to
- * control only through "manual" operations. It may include
- * passive joints.
+ * A gripper is composed of a set of joints that we want to control only
+ * through "manual" operations. It may include passive joints.
  *
- * In real operations the actuated joints are also
- * monitored to avoid potential servo errors.
+ * By default, a gripper is considered "open" when its joints' values
+ * are at maximum value and "closed" at minimum value. This behaviour
+ * can be reversed when the gripper is created.
+ *
+ * In real operations the actuated joints are also monitored to avoid
+ * potential servo errors.
  */
 struct MC_CONTROL_DLLAPI Gripper
 {
@@ -50,10 +53,11 @@ public:
    * \param robot_urdf URDF of the robot
    * \param currentQ Current values of the active joints involved in the gripper
    * \param timeStep Controller timestep
+   * \param reverseLimits If set to true, then the gripper is considered "open" when the joints' values are minimal
    */
   Gripper(const mc_rbdyn::Robot & robot, const std::vector<std::string> & jointNames,
           const std::string & robot_urdf,
-          const std::vector<double> & currentQ, double timeStep);
+          const std::vector<double> & currentQ, double timeStep, bool reverseLimits = false);
 
   /*! \brief Set the current configuration of the active joints involved in the gripper
    * \param curentQ Current values of the active joints involved in the gripper
