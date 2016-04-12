@@ -262,6 +262,16 @@ if(${HRPSYS_BASE_FOUND})
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib)
+
+  set(HEADERS mc_rtc-tcp/MCControlTCP.hxx)
+
+  add_required_dependency(tcp-com)
+  add_required_dependency(tcp-control)
+  add_executable(MCControlTCP mc_rtc-tcp/tcp_robot.cpp ${HEADERS})
+  target_link_libraries(MCControlTCP mc_rtc_ros mc_control)
+  PKG_CONFIG_USE_DEPENDENCY(MCControlTCP tcp-control)
+  PKG_CONFIG_USE_DEPENDENCY(MCControlTCP tcp-com)
+
 endif()
 
 set(MC_LIBRARIES mc_rbdyn mc_solver mc_tasks mc_control mc_trajectory mc_rtc_ros mc_rtc_loader)
