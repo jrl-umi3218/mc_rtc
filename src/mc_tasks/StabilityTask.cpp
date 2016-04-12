@@ -29,7 +29,7 @@ void StabilityTask::highStiffness(const std::vector<std::string> & stiffJoints)
   std::vector<tasks::qp::JointStiffness> jsv;
   for(const auto & jn : stiffJoints)
   {
-    jsv.push_back({static_cast<int>(robot.jointIdByName(jn)), 10*postureTask->stiffness()});
+    jsv.push_back({jn, 10*postureTask->stiffness()});
   }
   postureTask->jointsStiffness(robots.mbs(), jsv);
 }
@@ -39,7 +39,7 @@ void StabilityTask::normalStiffness(const std::vector<std::string> & stiffJoints
   std::vector<tasks::qp::JointStiffness> jsv;
   for(const auto & jn : stiffJoints)
   {
-    jsv.push_back({static_cast<int>(robot.jointIdByName(jn)), postureTask->stiffness()});
+    jsv.push_back({jn, postureTask->stiffness()});
   }
   postureTask->jointsStiffness(robots.mbs(), jsv);
 }

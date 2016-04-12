@@ -32,13 +32,11 @@ bool CollisionsConstraint::removeCollisionByBody(QPSolver & solver, const std::s
 {
   const mc_rbdyn::Robot & r1 = solver.robots().robot(r1Index);
   const mc_rbdyn::Robot & r2 = solver.robots().robot(r2Index);
-  int b1Id = r1.bodyIdByName(b1Name);
-  int b2Id = r2.bodyIdByName(b2Name);
   std::vector<mc_rbdyn::Collision> toRm;
   for(const auto & col : cols)
   {
-    if(r1.convex(col.body1).first == b1Id &&
-       r2.convex(col.body2).first == b2Id)
+    if(r1.convex(col.body1).first == b1Name &&
+       r2.convex(col.body2).first == b2Name)
     {
       auto out = __popCollId(col.body1, col.body2);
       toRm.push_back(out.second);
@@ -258,13 +256,13 @@ void RobotEnvCollisionsConstraint::removeFromSolver(tasks::qp::QPSolver & solver
   envCollConstrMng.removeFromSolver(solver);
 }
 
-std::set<int> RobotEnvCollisionsConstraint::__bodiesFromContacts(const mc_rbdyn::Robot & robot, const std::vector<mc_rbdyn::Contact> & contacts)
+std::set<std::string> RobotEnvCollisionsConstraint::__bodiesFromContacts(const mc_rbdyn::Robot & robot, const std::vector<mc_rbdyn::Contact> & contacts)
 {
-  std::set<int> res;
+  std::set<std::string> res;
   for(const auto & c : contacts)
   {
     const std::string & s = c.r1Surface()->name();
-    res.insert(robot.bodyIdByName(robot.surface(s).bodyName()));
+    res.insert(robot.surface(s).bodyName());
   }
   return res;
 }

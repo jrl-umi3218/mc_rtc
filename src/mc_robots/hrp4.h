@@ -17,9 +17,9 @@ namespace mc_robots
 
     void readUrdf(const std::string & robotName, const std::vector<std::string> & filteredLinks);
 
-    std::map<unsigned int, std::vector<double>> halfSittingPose(const rbd::MultiBody & mb) const;
+    std::map<std::string, std::vector<double>> halfSittingPose(const rbd::MultiBody & mb) const;
 
-    std::vector< std::map<int, std::vector<double> > > nominalBounds(const mc_rbdyn_urdf::Limits & limits) const;
+    std::vector< std::map<std::string, std::vector<double> > > nominalBounds(const mc_rbdyn_urdf::Limits & limits) const;
 
     std::map<std::string, std::pair<std::string, std::string>> stdCollisionsFiles(const rbd::MultiBody & mb) const;
 
@@ -27,7 +27,6 @@ namespace mc_robots
     std::vector<std::string> virtualLinks;
     std::vector<std::string> gripperLinks;
     std::map< std::string, std::vector<double> > halfSitting;
-    std::map<int, sva::PTransformd> visual_tf;
     mc_rbdyn_urdf::Limits limits;
   };
 
@@ -38,9 +37,9 @@ namespace mc_robots
 
     virtual const std::map<std::string, std::pair<std::string, std::string> > & convexHull() const;
 
-    virtual const std::vector< std::map<int, std::vector<double> > > & bounds() const;
+    virtual const std::vector< std::map<std::string, std::vector<double> > > & bounds() const;
 
-    virtual const std::map< unsigned int, std::vector<double> > & stance() const;
+    virtual const std::map<std::string, std::vector<double> > & stance() const;
   public:
     std::vector<std::string> filteredLinks;
   };
@@ -52,9 +51,9 @@ namespace mc_robots
 
     virtual const std::map<std::string, std::pair<std::string, std::string> > & convexHull() const;
 
-    virtual const std::vector< std::map<int, std::vector<double> > > & bounds() const;
+    virtual const std::vector< std::map<std::string, std::vector<double> > > & bounds() const;
 
-    virtual const std::map< unsigned int, std::vector<double> > & stance() const;
+    virtual const std::map<std::string, std::vector<double> > & stance() const;
   public:
     std::vector<std::string> filteredLinks;
   };

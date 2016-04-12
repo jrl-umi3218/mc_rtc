@@ -7,6 +7,7 @@
 #include <vector>
 
 #include <mc_rbdyn/api.h>
+#include <mc_rbdyn_urdf/urdf.h>
 
 /* This is an interface designed to provide additionnal information about a robot */
 
@@ -18,6 +19,17 @@ struct Robot;
 /* TODO Functions are declared const here but most implementations will likely not respect the constness */
 struct MC_RBDYN_DLLAPI RobotModule
 {
+  /*! Holds necessary information to create a gripper */
+  struct Gripper
+  {
+    /*! Gripper's name */
+    std::string name;
+    /*! Active joints in the gripper */
+    std::vector<std::string> joints;
+    /*! Whether the limits should be reversed, see mc_control::Gripper */
+    bool reverse_limits;
+  };
+
   RobotModule(const std::string & path, const std::string & name)
   : RobotModule(path, name, path + "/urdf/" + name + ".urdf")
   {}
@@ -34,11 +46,12 @@ struct MC_RBDYN_DLLAPI RobotModule
       - joint limits (lower/upper)
       - velocity limits (lower/upper)
       - torque limits (lower/upper)
+    Limits are maps of (jointName, limit)
   */
-  virtual const std::vector< std::map<int, std::vector<double> > > & bounds() const { return _bounds; }
+  virtual const std::vector< std::map<std::string, std::vector<double> > > & bounds() const { return _bounds; }
 
-  /* return the initial configuration of the robot */
-  virtual const std::map< unsigned int, std::vector<double> > & stance() const { return _stance; }
+  /* return the initial configuration of the robot as a map (jointName, jointPos) */
+  virtual const std::map<std::string, std::vector<double> > & stance() const { return _stance; }
 
   /* return a map (name, (bodyName, PolyhedronURL)) */
   virtual const std::map<std::string, std::pair<std::string, std::string> > & convexHull() const { return _convexHull; }
@@ -46,8 +59,8 @@ struct MC_RBDYN_DLLAPI RobotModule
   /* return a map (name, (bodyName, STPBVURL)) */
   virtual const std::map<std::string, std::pair<std::string, std::string> > & stpbvHull() const { return _stpbvHull; }
 
-  /* return a map (unsigned int, sva::PTransformd) */
-  virtual const std::map<int, sva::PTransformd> & collisionTransforms() const { return _collisionTransforms; }
+  /* return a map (bodyName, sva::PTransformd) */
+  virtual const std::map<std::string, sva::PTransformd> & collisionTransforms() const { return _collisionTransforms; }
 
   /* return flexibilities */
   virtual const std::vector<Flexibility> & flexibility() const { return _flexibility; }
@@ -62,6 +75,12 @@ struct MC_RBDYN_DLLAPI RobotModule
   /** Return default self-collision set */
   virtual const std::vector<mc_rbdyn::Collision> & defaultSelfCollisions() { return _collisions; }
 
+  /** Return a map of gripper. Keys represents the gripper name. Values indicate the active joints in the gripper. */
+  virtual const std::vector<Gripper> & grippers() { return _grippers; }
+
+  /** Return the reference (native controller) joint order of the robot */
+  virtual const std::vector<std::string> & ref_joint_order() { return _ref_joint_order; }
+
   std::string path;
   std::string name;
   std::string urdf_path;
@@ -70,16 +89,19 @@ struct MC_RBDYN_DLLAPI RobotModule
   rbd::MultiBody mb;
   rbd::MultiBodyConfig mbc;
   rbd::MultiBodyGraph mbg;
-  std::vector< std::map<int, std::vector<double> > > _bounds;
-  std::map< unsigned int, std::vector<double> > _stance;
+  std::vector< std::map<std::string, std::vector<double> > > _bounds;
+  std::map<std::string, std::vector<double> > _stance;
   std::map<std::string, std::pair<std::string, std::string> > _convexHull;
   std::map<std::string, std::pair<std::string, std::string> > _stpbvHull;
-  std::map< int, sva::PTransformd> _collisionTransforms;
+  std::map<std::string, std::vector<mc_rbdyn_urdf::Visual>> _visual;
+  std::map<std::string, sva::PTransformd> _collisionTransforms;
   std::vector<Flexibility> _flexibility;
   std::vector<ForceSensor> _forceSensors;
   std::string _accelerometerBody;
   Springs _springs;
   std::vector<mc_rbdyn::Collision> _collisions;
+  std::vector<Gripper> _grippers;
+  std::vector<std::string> _ref_joint_order;
 };
 
 } // namespace mc_rbdyn

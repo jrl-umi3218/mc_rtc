@@ -45,7 +45,7 @@ void DynamicsConstraint::build_constr(const mc_rbdyn::Robots & robots, unsigned 
     std::vector<tasks::qp::SpringJoint> sjList;
     for(const auto & flex : robot.flexibility())
     {
-      sjList.push_back(tasks::qp::SpringJoint(robot.jointIdByName(flex.jointName), flex.K, flex.C, flex.O));
+      sjList.push_back(tasks::qp::SpringJoint(flex.jointName, flex.K, flex.C, flex.O));
     }
     motionSpringConstr.reset(new tasks::qp::MotionSpringConstr(robots.mbs(), static_cast<int>(robotIndex), tBound, sjList));
   }

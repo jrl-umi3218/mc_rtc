@@ -38,6 +38,8 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   qpsolver.reset(new mc_solver::QPSolver(robots, timeStep));
   }
 
+  ref_joint_order = robots_modules[0]->ref_joint_order();
+
   /* Initialize grippers */
   {
   std::string urdfPath = robots_modules[0]->urdf_path;
@@ -47,8 +49,10 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
     std::stringstream urdf;
     urdf << ifs.rdbuf();
     auto urdfRobot = mc_rbdyn::loadRobotFromUrdf("temp_robot", urdf.str());
-    lgripper.reset(new Gripper(urdfRobot->robot(), "l_gripper", robot(), urdf.str(), 0, timeStep));
-    rgripper.reset(new Gripper(urdfRobot->robot(), "r_gripper", robot(), urdf.str(), 0, timeStep));
+    for(const auto & gripper : robots_modules[0]->grippers())
+    {
+      grippers[gripper.name] = std::make_shared<mc_control::Gripper>(urdfRobot->robot(), gripper.joints, urdf.str(), std::vector<double>(gripper.joints.size(), 0.0), timeStep, gripper.reverse_limits);
+    }
   }
   else
   {

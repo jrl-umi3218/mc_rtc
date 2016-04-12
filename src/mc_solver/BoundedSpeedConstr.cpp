@@ -28,10 +28,10 @@ void BoundedSpeedConstr::addBoundedSpeed(QPSolver & solver, const std::string & 
 
 void BoundedSpeedConstr::addBoundedSpeed(QPSolver & solver, const std::string & bodyName, const Eigen::Vector3d & bodyPoint, const Eigen::MatrixXd & dof, const Eigen::VectorXd & lowerSpeed, const Eigen::VectorXd & upperSpeed)
 {
-  int id = solver.robots().robot(robotIndex).bodyIdByName(bodyName);
-  if(id >= 0)
+  int index = solver.robots().robot(robotIndex).bodyIndexByName(bodyName);
+  if(index >= 0)
   {
-    constr->addBoundedSpeed(solver.robots().mbs(), id, bodyPoint, dof, lowerSpeed, upperSpeed);
+    constr->addBoundedSpeed(solver.robots().mbs(), bodyName, bodyPoint, dof, lowerSpeed, upperSpeed);
     constr->updateBoundedSpeeds();
     solver.updateConstrSize();
   }
@@ -43,10 +43,10 @@ void BoundedSpeedConstr::addBoundedSpeed(QPSolver & solver, const std::string & 
 
 void BoundedSpeedConstr::removeBoundedSpeed(QPSolver & solver, const std::string & bodyName)
 {
-  int id = solver.robots().robot(robotIndex).bodyIdByName(bodyName);
-  if(id >= 0)
+  int index = solver.robots().robot(robotIndex).bodyIndexByName(bodyName);
+  if(index >= 0)
   {
-    constr->removeBoundedSpeed(id);
+    constr->removeBoundedSpeed(bodyName);
     constr->updateBoundedSpeeds();
     solver.updateConstrSize();
   }

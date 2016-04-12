@@ -121,26 +121,17 @@ const mc_control::QPResultMsg & QPSolver::send(double/*curTime*/)
 
 void QPSolver::__fillResult()
 {
-  qpRes.robots_state.resize(0);
-  for(unsigned int i = 0; i < robots_p->robots().size(); ++i)
+  qpRes.robots_state.resize(robots().robots().size());
+  for(unsigned int i = 0; i < robots().robots().size(); ++i)
   {
-    const mc_rbdyn::Robot & robot = robots_p->robot(i);
-    qpRes.robots_state.push_back(mc_control::RobotMsg());
-    std::vector<double> & q = qpRes.robots_state[i].q;
-    for(const auto & qv : robot.mbc().q)
+    const mc_rbdyn::Robot & robot = robots().robot(i);
+    auto & q = qpRes.robots_state[i].q;
+    auto & alphaVec = qpRes.robots_state[i].alphaVec;
+    for(const auto & j : robot.mb().joints())
     {
-      for(const auto & qi : qv)
-      {
-        q.push_back(qi);
-      }
-    }
-    std::vector<double> & alphaVec = qpRes.robots_state[i].alphaVec;
-    for(const auto & av : robot.mbc().alpha)
-    {
-      for(const auto & ai : av)
-      {
-        alphaVec.push_back(ai);
-      }
+      auto jIndex = robot.jointIndexByName(j.name());
+      q[j.name()] = robot.mbc().q[jIndex];
+      alphaVec[j.name()] = robot.mbc().alpha[jIndex];
     }
     qpRes.robots_state[i].alphaDVec = solver.alphaDVec(static_cast<int>(i));
   }

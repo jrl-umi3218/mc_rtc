@@ -233,7 +233,7 @@ public:
         p[rarm0+5][0] = 0*M_PI/180;
         p[rarm0+6][0] = 0*M_PI/180;
         ctl.postureTask->posture(p);
-        ctl.rgripper->setTargetQ(0);
+        ctl.grippers["r_gripper"]->setTargetQ({0});
         done_setup_go_to_posture = true;
       }
       else

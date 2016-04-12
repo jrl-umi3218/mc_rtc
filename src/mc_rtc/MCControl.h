@@ -22,9 +22,6 @@
 #include <mc_control/mc_global_controller.h>
 #include <mc_rtc/ros.h>
 
-#include <boost/asio.hpp>
-#include <boost/thread.hpp>
-
 // </rtc-template>
 
 // Service Consumer stub headers
@@ -157,6 +154,11 @@ private:
   std::ofstream m_log;
   void log_header();
   void log_data();
+
+  /* For each gripper, store the joints to report as the actual gripper values */
+  std::map<std::string, std::vector<size_t>> gripper_in_index;
+  std::map<std::string, std::vector<double>> realGripperQs;
+  std::map<std::string, std::vector<std::pair<size_t, size_t>>> gripper_out_index;
 public:
   mc_control::MCGlobalController controller;
   bool init;

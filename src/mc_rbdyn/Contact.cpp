@@ -125,7 +125,7 @@ Contact::Contact(const mc_rbdyn::Robots & robots, unsigned int r1Index, unsigned
   impl.reset(new ContactImpl({r1Index, r2Index,
     robots.robot(r1Index).surface(r1Surface).copy(),
     robots.robot(r2Index).surface(r2Surface).copy(),
-    sva::PTransformd::Identity(), X_r2s_r1s != 0, Xbs, ambiguityId}));
+    sva::PTransformd::Identity(), X_r2s_r1s != nullptr, Xbs, ambiguityId}));
   if(isFixed())
   {
     impl->X_r2s_r1s = sva::PTransformd(*X_r2s_r1s);
@@ -251,11 +251,11 @@ sva::PTransformd Contact::compute_X_r2s_r1s(const mc_rbdyn::Robots & robots) con
   return X_0_r1*X_0_r2.inv();
 }
 
-tasks::qp::ContactId Contact::contactId(const mc_rbdyn::Robots & robots) const
+tasks::qp::ContactId Contact::contactId(const mc_rbdyn::Robots & /*robots*/) const
 {
   return tasks::qp::ContactId(static_cast<int>(impl->r1Index), static_cast<int>(impl->r2Index),
-                              robots.robot(impl->r1Index).bodyIdByName(impl->r1Surface->bodyName()),
-                              robots.robot(impl->r2Index).bodyIdByName(impl->r2Surface->bodyName()));
+                              impl->r1Surface->bodyName(),
+                              impl->r2Surface->bodyName());
 }
 
 mc_solver::QPContactPtr Contact::taskContact(const mc_rbdyn::Robots & robots) const
@@ -289,15 +289,9 @@ mc_solver::QPContactPtrWPoints Contact::taskContactWPoints(const mc_rbdyn::Robot
   return res;
 }
 
-mc_solver::QPContactPtr Contact::taskContact(const mc_rbdyn::Robots & robots, const sva::PTransformd & X_b1_b2, const std::vector<sva::PTransformd> & surf_points) const
+mc_solver::QPContactPtr Contact::taskContact(const mc_rbdyn::Robots & /*robots*/, const sva::PTransformd & X_b1_b2, const std::vector<sva::PTransformd> & surf_points) const
 {
   mc_solver::QPContactPtr res;
-
-  const mc_rbdyn::Robot & r1 = robots.robot(impl->r1Index);
-  const mc_rbdyn::Robot & r2 = robots.robot(impl->r2Index);
-
-  int r1BodyId = r1.bodyIdByName(impl->r1Surface->bodyName());
-  int r2BodyId = r2.bodyIdByName(impl->r2Surface->bodyName());
 
   std::vector<Eigen::Vector3d> points;
   std::vector<Eigen::Matrix3d> frames;
@@ -312,8 +306,8 @@ mc_solver::QPContactPtr Contact::taskContact(const mc_rbdyn::Robots & robots, co
     res.unilateralContact = new
       tasks::qp::UnilateralContact(static_cast<int>(impl->r1Index),
                                    static_cast<int>(impl->r2Index),
-                                   r1BodyId,
-                                   r2BodyId,
+                                   impl->r1Surface->bodyName(),
+                                   impl->r2Surface->bodyName(),
                                    impl->ambiguityId, points, frames[0],
                                    X_b1_b2, nrConeGen,
                                    defaultFriction, impl->X_b_s);
@@ -323,8 +317,8 @@ mc_solver::QPContactPtr Contact::taskContact(const mc_rbdyn::Robots & robots, co
     res.bilateralContact = new
       tasks::qp::BilateralContact(static_cast<int>(impl->r1Index),
                                   static_cast<int>(impl->r2Index),
-                                  r1BodyId,
-                                  r2BodyId,
+                                  impl->r1Surface->bodyName(),
+                                  impl->r2Surface->bodyName(),
                                   impl->ambiguityId, points, frames, X_b1_b2,
                                   nrConeGen, defaultFriction,
                                   impl->X_b_s);

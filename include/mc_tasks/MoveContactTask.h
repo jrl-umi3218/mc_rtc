@@ -53,9 +53,7 @@ public:
   std::shared_ptr<mc_rbdyn::Surface> envSurf;
 
   unsigned int robotBodyIndex;
-  int robotBodyId;
   unsigned int envBodyIndex;
-  int envBodyId;
 
   sva::PTransformd targetTf;
   Eigen::Vector3d targetPos;

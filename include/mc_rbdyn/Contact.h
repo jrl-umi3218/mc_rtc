@@ -13,7 +13,7 @@ namespace mc_solver
 
   struct MC_RBDYN_DLLAPI QPContactPtr
   {
-    QPContactPtr() : unilateralContact(0), bilateralContact(0) {}
+    QPContactPtr() : unilateralContact(nullptr), bilateralContact(nullptr) {}
     tasks::qp::UnilateralContact * unilateralContact;
     tasks::qp::BilateralContact * bilateralContact;
   };
@@ -48,7 +48,7 @@ public:
   Contact(const mc_rbdyn::Robots & robots, const std::string & robotSurface, const std::string & envSurface, const sva::PTransformd & X_es_rs);
   Contact(const mc_rbdyn::Robots & robots, unsigned int r1Index, unsigned int r2Index,
             const std::string & r1Surface, const std::string & r2Surface,
-            const sva::PTransformd * X_r2s_r1s = 0,
+            const sva::PTransformd * X_r2s_r1s = nullptr,
             const sva::PTransformd & Xbs = sva::PTransformd::Identity(), int ambiguityId = -1);
 private:
   Contact(const mc_rbdyn::Robots & robots, const std::string & robotSurface, const std::string & envSurface, const sva::PTransformd & X_es_rs, bool is_fixed);
@@ -91,7 +91,7 @@ public:
 
   mc_solver::QPContactPtr taskContact(const mc_rbdyn::Robots & robots) const;
 
-  mc_solver::QPContactPtrWPoints taskContactWPoints(const mc_rbdyn::Robots & robots, const sva::PTransformd * X_es_rs = 0) const;
+  mc_solver::QPContactPtrWPoints taskContactWPoints(const mc_rbdyn::Robots & robots, const sva::PTransformd * X_es_rs = nullptr) const;
 
   std::string toStr() const;
 

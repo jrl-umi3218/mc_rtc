@@ -28,19 +28,19 @@ namespace mc_rbdyn
 
 sch::S_Object * surface_to_sch(const mc_rbdyn::Surface & surface, const double & depth, const unsigned int & slice)
 {
-  if(dynamic_cast<const mc_rbdyn::PlanarSurface *>(&surface) != 0)
+  if(dynamic_cast<const mc_rbdyn::PlanarSurface *>(&surface) != nullptr)
   {
     return planar_hull(reinterpret_cast<const mc_rbdyn::PlanarSurface&>(surface), depth);
   }
-  if(dynamic_cast<const mc_rbdyn::CylindricalSurface *>(&surface) != 0)
+  if(dynamic_cast<const mc_rbdyn::CylindricalSurface *>(&surface) != nullptr)
   {
     return cylindrical_hull(reinterpret_cast<const mc_rbdyn::CylindricalSurface&>(surface), slice);
   }
-  if(dynamic_cast<const mc_rbdyn::GripperSurface *>(&surface) != 0)
+  if(dynamic_cast<const mc_rbdyn::GripperSurface *>(&surface) != nullptr)
   {
     return gripper_hull(reinterpret_cast<const mc_rbdyn::GripperSurface&>(surface), slice);
   }
-  return 0;
+  return nullptr;
 }
 
 sch::S_Object * sch_polyhedron(const std::vector<sva::PTransformd> & points)
@@ -58,13 +58,13 @@ sch::S_Object * sch_polyhedron(const std::vector<sva::PTransformd> & points)
   if(err < 0)
   {
     LOG_ERROR("Failed to create temporary input file " << qcIn)
-    return 0;
+    return nullptr;
   }
   err = mkstemp(qcOut);
   if(err < 0)
   {
     LOG_ERROR("Failed to create temporary output file " << qcOut)
-    return 0;
+    return nullptr;
   }
 
   std::ofstream ofs(qcIn);
@@ -84,7 +84,7 @@ sch::S_Object * sch_polyhedron(const std::vector<sva::PTransformd> & points)
   if(err != 0)
   {
     LOG_ERROR("Invokation of qconvex with the following command failed: " << ss.str())
-    return 0;
+    return nullptr;
   }
 
   return sch::mc_rbdyn::Polyhedron(qcOut);

@@ -33,8 +33,6 @@ public:
 
   unsigned int bodyIndex(const mc_rbdyn::Robot & robot) const;
 
-  int bodyId(const mc_rbdyn::Robot & robot) const;
-
   sva::PTransformd X_0_s(const mc_rbdyn::Robot & robot) const;
 
   sva::PTransformd X_0_s(const mc_rbdyn::Robot & robot, const rbd::MultiBodyConfig & mbc) const;

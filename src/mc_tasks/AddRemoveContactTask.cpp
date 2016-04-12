@@ -12,7 +12,6 @@ AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots, std::share
 : robots(robots), robot(robots.robot()), env(robots.env()),
   constSpeedConstr(constSpeedConstr), robotSurf(contact.r1Surface()),
   robotBodyIndex(robot.bodyIndexByName(robotSurf->bodyName())),
-  robotBodyId(robot.bodyIdByName(robotSurf->bodyName())),
   targetTf(contact.X_0_r1s(robots)),
   bodyId(robotSurf->bodyName()),
   dofMat(Eigen::MatrixXd::Zero(5,6)), speedMat(Eigen::VectorXd::Zero(5))
@@ -40,7 +39,7 @@ AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots, std::share
 
   speed = config.contactTask.linVel.speed;
   targetSpeed = direction*normal*speed;
-  linVelTask.reset(new tasks::qp::LinVelocityTask(robots.mbs(), 0, robotBodyId, targetSpeed, robotSurf->X_b_s().translation())),
+  linVelTask.reset(new tasks::qp::LinVelocityTask(robots.mbs(), 0, robotSurf->bodyName(), targetSpeed, robotSurf->X_b_s().translation())),
   linVelTaskPid.reset(new tasks::qp::PIDTask(robots.mbs(), 0, linVelTask.get(), config.contactTask.linVel.stiffness, 0, 0, 0));
   linVelTaskPid->error(velError());
   linVelTaskPid->errorI(Eigen::Vector3d(0, 0, 0));

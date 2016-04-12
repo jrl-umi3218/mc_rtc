@@ -107,6 +107,21 @@ HRP2DRCCommonRobotModule::HRP2DRCCommonRobotModule()
     mc_rbdyn::Collision("LARM_LINK4", "CHEST_LINK1", 0.05, 0.01, 0.),
     mc_rbdyn::Collision("LARM_LINK5", "CHEST_LINK1", 0.05, 0.01, 0.)
   };
+
+  _grippers = {
+    {"l_gripper", {"LARM_JOINT7"}, false},
+    {"r_gripper", {"RARM_JOINT7"}, false}
+  };
+
+  _ref_joint_order = {
+  "RLEG_JOINT0", "RLEG_JOINT1", "RLEG_JOINT2", "RLEG_JOINT3", "RLEG_JOINT4", "RLEG_JOINT5",
+  "LLEG_JOINT0", "LLEG_JOINT1", "LLEG_JOINT2", "LLEG_JOINT3", "LLEG_JOINT4", "LLEG_JOINT5",
+  "CHEST_JOINT0", "CHEST_JOINT1", "HEAD_JOINT0", "HEAD_JOINT1",
+  "RARM_JOINT0", "RARM_JOINT1", "RARM_JOINT2", "RARM_JOINT3", "RARM_JOINT4", "RARM_JOINT5", "RARM_JOINT6", "RARM_JOINT7",
+  "LARM_JOINT0", "LARM_JOINT1", "LARM_JOINT2", "LARM_JOINT3", "LARM_JOINT4", "LARM_JOINT5", "LARM_JOINT6", "LARM_JOINT7",
+  "RHAND_JOINT0", "RHAND_JOINT1", "RHAND_JOINT2", "RHAND_JOINT3", "RHAND_JOINT4",
+  "LHAND_JOINT0", "LHAND_JOINT1", "LHAND_JOINT2", "LHAND_JOINT3", "LHAND_JOINT4"
+  };
 }
 
 std::map<std::string, std::pair<std::string, std::string> > HRP2DRCCommonRobotModule::getConvexHull(const std::map<std::string, std::pair<std::string, std::string>> & files) const
@@ -133,7 +148,8 @@ void HRP2DRCCommonRobotModule::readUrdf(const std::string & robotName, const std
     mbc = res.mbc;
     mbg = res.mbg;
     limits = res.limits;
-    visual_tf = res.visual_tf;
+
+    _visual = res.visual;
     _collisionTransforms = res.collision_tf;
   }
   else
@@ -143,16 +159,15 @@ void HRP2DRCCommonRobotModule::readUrdf(const std::string & robotName, const std
   }
 }
 
-std::map<unsigned int, std::vector<double>> HRP2DRCCommonRobotModule::halfSittingPose(const rbd::MultiBody & mb) const
+std::map<std::string, std::vector<double> > HRP2DRCCommonRobotModule::halfSittingPose(const rbd::MultiBody & mb) const
 {
-  std::map<unsigned int, std::vector<double>> res;
+  std::map<std::string, std::vector<double> > res;
   for(const auto & j : mb.joints())
   {
-    if(j.id() != -1)
+    if(j.name() != "Root")
     {
-      unsigned int k = static_cast<unsigned int>(j.id());
-      res[k] = halfSitting.at(j.name());
-      for(auto & ji : res[k])
+      res[j.name()] = halfSitting.at(j.name());
+      for(auto & ji : res[j.name()])
       {
         ji = M_PI*ji/180;
       }
@@ -161,9 +176,9 @@ std::map<unsigned int, std::vector<double>> HRP2DRCCommonRobotModule::halfSittin
   return res;
 }
 
-std::vector< std::map<int, std::vector<double> > > HRP2DRCCommonRobotModule::nominalBounds(const mc_rbdyn_urdf::Limits & limits) const
+std::vector< std::map<std::string, std::vector<double> > > HRP2DRCCommonRobotModule::nominalBounds(const mc_rbdyn_urdf::Limits & limits) const
 {
-  std::vector< std::map<int, std::vector<double> > > res(0);
+  std::vector< std::map<std::string, std::vector<double> > > res(0);
   res.push_back(limits.lower);
   res.push_back(limits.upper);
   {
@@ -231,13 +246,13 @@ const std::map<std::string, std::pair<std::string, std::string> > & HRP2DRCRobot
   return _convexHull;
 }
 
-const std::vector< std::map<int, std::vector<double> > > & HRP2DRCRobotModule::bounds() const
+const std::vector< std::map<std::string, std::vector<double> > > & HRP2DRCRobotModule::bounds() const
 {
   const_cast<HRP2DRCRobotModule*>(this)->_bounds = nominalBounds(limits);
   return _bounds;
 }
 
-const std::map< unsigned int, std::vector<double> > & HRP2DRCRobotModule::stance() const
+const std::map<std::string, std::vector<double> > & HRP2DRCRobotModule::stance() const
 {
   const_cast<HRP2DRCRobotModule*>(this)->_stance = halfSittingPose(mb);
   return _stance;
@@ -258,13 +273,13 @@ const std::map<std::string, std::pair<std::string, std::string> > & HRP2DRCGripp
   return _convexHull;
 }
 
-const std::vector< std::map<int, std::vector<double> > > & HRP2DRCGripperRobotModule::bounds() const
+const std::vector< std::map<std::string, std::vector<double> > > & HRP2DRCGripperRobotModule::bounds() const
 {
   const_cast<HRP2DRCGripperRobotModule*>(this)->_bounds = nominalBounds(limits);
   return _bounds;
 }
 
-const std::map< unsigned int, std::vector<double> > & HRP2DRCGripperRobotModule::stance() const
+const std::map<std::string, std::vector<double> > & HRP2DRCGripperRobotModule::stance() const
 {
   const_cast<HRP2DRCGripperRobotModule*>(this)->_stance = halfSittingPose(mb);
   return _stance;

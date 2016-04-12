@@ -62,7 +62,18 @@ void PolarisRangerRobotModule::readUrdf(const std::string & robotName, const std
     mbc = res.mbc;
     mbg = res.mbg;
     limits = res.limits;
-    visual_tf = res.visual_tf;
+
+    std::vector<sva::PTransformd> tfs;
+    for(const auto pair : res.visual)
+    {
+      tfs.clear();
+      for(const auto visual : pair.second)
+      {
+        tfs.push_back(visual.origin);
+      }
+      visual_tfs[pair.first] = tfs;
+    }
+
     _collisionTransforms = res.collision_tf;
   }
   else
@@ -72,16 +83,15 @@ void PolarisRangerRobotModule::readUrdf(const std::string & robotName, const std
   }
 }
 
-std::map<unsigned int, std::vector<double>> PolarisRangerRobotModule::halfSittingPose(const rbd::MultiBody & mb) const
+std::map<std::string, std::vector<double>> PolarisRangerRobotModule::halfSittingPose(const rbd::MultiBody & mb) const
 {
-  std::map<unsigned int, std::vector<double>> res;
+  std::map<std::string, std::vector<double>> res;
   for(const auto & j : mb.joints())
   {
-    if(j.id() != -1)
+    if(j.name() != "Root")
     {
-      unsigned int k = static_cast<unsigned int>(j.id());
-      res[k] = halfSitting.at(j.name());
-      for(auto & ji : res[k])
+      res[j.name()] = halfSitting.at(j.name());
+      for(auto & ji : res[j.name()])
       {
         ji = M_PI*ji/180;
       }
@@ -90,9 +100,9 @@ std::map<unsigned int, std::vector<double>> PolarisRangerRobotModule::halfSittin
   return res;
 }
 
-std::vector< std::map<int, std::vector<double> > > PolarisRangerRobotModule::nominalBounds(const mc_rbdyn_urdf::Limits & limits) const
+std::vector< std::map<std::string, std::vector<double> > > PolarisRangerRobotModule::nominalBounds(const mc_rbdyn_urdf::Limits & limits) const
 {
-  std::vector< std::map<int, std::vector<double> > > res(0);
+  std::vector< std::map<std::string, std::vector<double> > > res(0);
   res.push_back(limits.lower);
   res.push_back(limits.upper);
   {
@@ -156,13 +166,13 @@ const std::map<std::string, std::pair<std::string, std::string> > & PolarisRange
   return _convexHull;
 }
 
-const std::vector< std::map<int, std::vector<double> > > & PolarisRangerRobotModule::bounds() const
+const std::vector< std::map<std::string, std::vector<double> > > & PolarisRangerRobotModule::bounds() const
 {
   const_cast<PolarisRangerRobotModule*>(this)->_bounds = nominalBounds(limits);
   return _bounds;
 }
 
-const std::map< unsigned int, std::vector<double> > & PolarisRangerRobotModule::stance() const
+const std::map<std::string, std::vector<double> > & PolarisRangerRobotModule::stance() const
 {
   const_cast<PolarisRangerRobotModule*>(this)->_stance = halfSittingPose(mb);
   return _stance;

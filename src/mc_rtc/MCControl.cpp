@@ -16,14 +16,12 @@
 #include "MCControl.h"
 
 #include <fstream>
+#include <iomanip>
 
-#include <boost/array.hpp>
 #include <mc_rtc/logging.h>
 
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
-
-using boost::asio::ip::udp;
 
 // Module specification
 // <rtc-template block="module_spec">
@@ -121,6 +119,41 @@ RTC::ReturnCode_t MCControl::onInitialize()
   bindParameter("timeStep", m_timeStep, "0.002");
   bindParameter("is_enabled", controller.running, "0");
 
+  auto gripperJs = controller.gripperJoints();
+  auto gripperActiveJs = controller.gripperActiveJoints();
+  const auto & ref_joint_order = controller.ref_joint_order();
+  for(const auto & g : gripperActiveJs)
+  {
+    gripper_in_index[g.first] = {};
+    realGripperQs[g.first] = {};
+    for(const auto & jn : g.second)
+    {
+      for(size_t i = 0; i < ref_joint_order.size(); ++i)
+      {
+        if(ref_joint_order[i] == jn)
+        {
+          gripper_in_index[g.first].push_back(i);
+          realGripperQs[g.first].push_back(0.0);
+        }
+      }
+    }
+  }
+  for(const auto & g : gripperJs)
+  {
+    gripper_out_index[g.first] = {};
+    for(size_t j = 0; j < g.second.size(); ++j)
+    {
+      const auto & jn = g.second[j];
+      for(size_t i = 0; i < ref_joint_order.size(); ++i)
+      {
+        if(ref_joint_order[i] == jn)
+        {
+          gripper_out_index[g.first].push_back({i, j});
+        }
+      }
+    }
+  }
+
   // </rtc-template>
   LOG_INFO("MCControl::onInitialize() finished")
   return RTC::RTC_OK;
@@ -212,7 +245,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
     {
       if(!init)
       {
-        LOG_INFO("In init, actual gripper " << m_qIn.data[31] << " " << m_qIn.data[23])
+        LOG_INFO("Init controller")
         controller.init(qIn);
         init = true;
         log_header();
@@ -225,66 +258,51 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
       if(controller.run())
       {
         const mc_control::QPResultMsg & res = controller.send(t);
-        const std::vector<double> & lgQ = controller.gripperQ(true);
-        const std::vector<double> & rgQ = controller.gripperQ(false);
-        /* In simulation, the gripper joints behave independently */
-        double realRQ = m_qIn.data[23];
-        //for(size_t i = 32; i < 37; ++i)
-        //{
-        //  if(std::abs( std::abs(realRQ) - std::abs(m_qIn.data[i]) ) > 0.05)
-        //  {
-        //    realRQ = std::copysign(m_qIn.data[i], realRQ);
-        //  }
-        //}
-        double realLQ = m_qIn.data[31];
-        //for(size_t i = 37; i < 42; ++i)
-        //{
-        //  if(std::abs( std::abs(realLQ) - std::abs(m_qIn.data[i]) ) > 0.05)
-        //  {
-        //    realLQ = std::copysign(m_qIn.data[i], realLQ);
-        //  }
-        //}
-        controller.setActualGripperQ(realRQ, realLQ);
+        auto gripperQs = controller.gripperQ();
+        const auto & ref_joint_order = controller.ref_joint_order();
+        for(auto & rG : realGripperQs)
+        {
+          const auto & idx = gripper_in_index[rG.first];
+          auto & qs = rG.second;
+          for(size_t i = 0; i < idx.size(); ++i)
+          {
+            qs[i] = m_qIn.data[idx[i]];
+          }
+        }
+        controller.setActualGripperQ(realGripperQs);
         m_qOut.data.length(m_qIn.data.length());
-        for(unsigned int i = 0; i < 23; ++i)
+        for(unsigned int i = 0; i < ref_joint_order.size(); ++i)
         {
-          m_qOut.data[i] = res.robots_state[0].q[i+7];
+          m_qOut.data[i] = res.robots_state[0].q.at(ref_joint_order[i])[0];
         }
-        m_qOut.data[23] = rgQ[0];
-        for(unsigned int i = 24; i < 31; ++i)
+        /* Update gripper state */
+        for(const auto & cG : gripper_out_index)
         {
-          m_qOut.data[i] = res.robots_state[0].q[i+12];
-        }
-        m_qOut.data[31] = lgQ[0];
-        for(unsigned int i = 32; i < 37; ++i)
-        {
-          m_qOut.data[i] = rgQ[i-31];
-        }
-        for(unsigned int i = 37; i < 42; ++i)
-        {
-          m_qOut.data[i] = lgQ[i-36];
-        }
-        for(unsigned int i = 42; i < m_qIn.data.length(); ++i)
-        {
-          m_qOut.data[i] = 0;
+          const auto & qs = gripperQs[cG.first];
+          for(const auto & idx_p : cG.second)
+          {
+            m_qOut.data[idx_p.first] = qs[idx_p.second];
+          }
         }
         /* FIXME Correction RPY convention here? */
-        Eigen::Vector3d rpyOut = Eigen::Quaterniond(res.robots_state[0].q[0], res.robots_state[0].q[1], res.robots_state[0].q[2], res.robots_state[0].q[3]).toRotationMatrix().eulerAngles(2, 1, 0);
+        const auto & ff_state = res.robots_state[0].q.at(controller.robot().mb().joint(0).name());
+        Eigen::Vector3d rpyOut = Eigen::Quaterniond(ff_state[0], ff_state[1], ff_state[2], ff_state[3]).toRotationMatrix().eulerAngles(2, 1, 0);
         m_rpyOut.data.r = rpyOut[2];
         m_rpyOut.data.p = rpyOut[1];
         m_rpyOut.data.y = rpyOut[0];
 
-        m_pOut.data.x = res.robots_state[0].q[4];
-        m_pOut.data.y = res.robots_state[0].q[5];
-        m_pOut.data.z = res.robots_state[0].q[6];
+        m_pOut.data.x = ff_state[4];
+        m_pOut.data.y = ff_state[5];
+        m_pOut.data.z = ff_state[6];
       }
+
       m_qOut.tm = tm;
       m_rpyOut.tm = tm;
       m_pOut.tm = tm;
       m_qOutOut.write();
       m_pOutOut.write();
       m_rpyOutOut.write();
-      mc_rtc::ROSBridge::update_robot_publisher(controller.timestep(), controller.robot(), m_pIn, m_rpyIn, m_rateIn, m_accIn, controller.gripperQ(true), controller.gripperQ(false));
+      mc_rtc::ROSBridge::update_robot_publisher(controller.timestep(), controller.robot(), m_pIn, m_rpyIn, m_rateIn, m_accIn, controller.gripperJoints(), controller.gripperQ());
       log_data();
     }
     else
@@ -292,32 +310,39 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
       init = false;
       m_qOut = m_qIn;
       /* Still run controller.run() in order to handle some service calls */
-      std::vector<std::vector<double>> q;
-      q.push_back({1, 0, 0, 0, 0, 0, 0.76});
-      const std::vector<double> & initq = qIn;
-      /* The OpenRTM components don't give q in the same order as the QP */
-      for(size_t i = 0; i < 24; ++i) // until RARM_LINK7
-      {
-        q.push_back({initq[i]});
-      }
-      for(size_t i = 32; i < 37; ++i) // RHAND
-      {
-        q.push_back({initq[i]});
-      }
-      for(size_t i = 24; i < 32; ++i) // LARM_LINK*
-      {
-        q.push_back({initq[i]});
-      }
-      for(size_t i = 37; i < 42; ++i) // LHAND
-      {
-        q.push_back({initq[i]});
-      }
-      controller.setGripperCurrentQ(initq[31], initq[23]);
       mc_rbdyn::Robot & robot = const_cast<mc_rbdyn::Robot&>(controller.robot());
+      std::vector<std::vector<double>> q = robot.mbc().q;
+      q[0] = {1, 0, 0, 0, 0, 0, 0.76};
+      const std::vector<double> & initq = qIn;
+      const auto & ref_joint_order = controller.ref_joint_order();
+      for(size_t i = 0; i < ref_joint_order.size(); ++i)
+      {
+        const auto & jN = ref_joint_order[i];
+        q[robot.jointIndexByName(jN)] = {initq[i]};
+      }
+      auto gripperQs = controller.gripperQ();
+      auto gripperJs = controller.gripperActiveJoints();
+      std::map<std::string, std::vector<double>> realGripperQs;
+      for(const auto & g : gripperJs)
+      {
+        realGripperQs[g.first] = {};
+        for(const auto & jn : g.second)
+        {
+          for(size_t i = 0; i < ref_joint_order.size(); ++i)
+          {
+            if(ref_joint_order[i] == jn)
+            {
+              realGripperQs[g.first].push_back(m_qIn.data[i]);
+              break;
+            }
+          }
+        }
+      }
+      controller.setGripperCurrentQ(realGripperQs);
       robot.mbc().q = q;
       rbd::forwardKinematics(robot.mb(), robot.mbc());
       rbd::forwardVelocity(robot.mb(), robot.mbc());
-      mc_rtc::ROSBridge::update_robot_publisher(controller.timestep(), robot, m_pIn, m_rpyIn, m_rateIn, m_accIn, controller.gripperQ(true), controller.gripperQ(false));
+      mc_rtc::ROSBridge::update_robot_publisher(controller.timestep(), robot, m_pIn, m_rpyIn, m_rateIn, m_accIn, gripperJs, gripperQs);
       controller.run();
     }
   }

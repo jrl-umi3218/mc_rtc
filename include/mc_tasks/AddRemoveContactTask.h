@@ -44,7 +44,6 @@ public:
 
   std::shared_ptr<mc_rbdyn::Surface> robotSurf;
   unsigned int robotBodyIndex;
-  int robotBodyId;
 
   sva::PTransformd targetTf;
 

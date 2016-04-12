@@ -62,11 +62,11 @@ bool live_chooseContactT::eval(MCSeqController & ctl)
     /* FIXME Hard-coded */
     if(bodyName == "RARM_LINK6")
     {
-      ctl.currentGripper = ctl.rgripper.get();
+      ctl.currentGripper = ctl.grippers["r_gripper"].get();
     }
     else if(bodyName == "LARM_LINK6")
     {
-      ctl.currentGripper = ctl.lgripper.get();
+      ctl.currentGripper = ctl.grippers["l_gripper"].get();
     }
     else
     {
@@ -161,10 +161,10 @@ bool live_moveWPT::eval(MCSeqController & ctl)
 {
   if(ctl.currentGripper)
   {
-    ctl.currentGripper->percentOpen += 0.001;
-    if(ctl.currentGripper->percentOpen >= 1)
+    ctl.currentGripper->percentOpen[0] += 0.001;
+    if(ctl.currentGripper->percentOpen[0] >= 1)
     {
-      ctl.currentGripper->percentOpen = 1;
+      ctl.currentGripper->percentOpen[0] = 1;
       ctl.currentGripper = 0;
     }
   }
@@ -188,7 +188,7 @@ bool live_moveWPT::eval(MCSeqController & ctl)
       LOG_INFO("Finished to move to contact wp")
       return true;
     }
-    else if(ctl.currentGripper->percentOpen >= 1)
+    else if(ctl.currentGripper->percentOpen[0] >= 1)
     {
       LOG_INFO("Finished to move to contact wp")
       return true;
@@ -333,13 +333,13 @@ bool live_chooseCoMT::eval(MCSeqController & ctl)
     std::string bodyName = rmCurAction->contact().r1Surface()->bodyName();
     if(bodyName == "RARM_LINK6") /*FIXME hard-coded */
     {
-      ctl.currentGripper = ctl.rgripper.get();
-      ctl.currentGripperIsClosed = ctl.currentGripper->percentOpen < 0.5;
+      ctl.currentGripper = ctl.grippers["r_gripper"].get();
+      ctl.currentGripperIsClosed = ctl.currentGripper->percentOpen[0] < 0.5;
     }
     else if(bodyName == "LARM_LINK6")
     {
-      ctl.currentGripper = ctl.lgripper.get();
-      ctl.currentGripperIsClosed = ctl.currentGripper->percentOpen < 0.5;
+      ctl.currentGripper = ctl.grippers["l_gripper"].get();
+      ctl.currentGripperIsClosed = ctl.currentGripper->percentOpen[0] < 0.5;
     }
   }
   mc_rbdyn::StanceAction * targetAction = &(ctl.targetAction());
@@ -350,13 +350,13 @@ bool live_chooseCoMT::eval(MCSeqController & ctl)
     std::string bodyName = rmCurAction->contact().r1Surface()->bodyName();
     if(bodyName == "RARM_LINK6") /*FIXME hard-coded */
     {
-      ctl.currentGripper = ctl.rgripper.get();
-      ctl.currentGripperIsClosed = ctl.currentGripper->percentOpen < 0.5;
+      ctl.currentGripper = ctl.grippers["r_gripper"].get();
+      ctl.currentGripperIsClosed = ctl.currentGripper->percentOpen[0] < 0.5;
     }
     else if(bodyName == "LARM_LINK6")
     {
-      ctl.currentGripper = ctl.lgripper.get();
-      ctl.currentGripperIsClosed = ctl.currentGripper->percentOpen < 0.5;
+      ctl.currentGripper = ctl.grippers["l_gripper"].get();
+      ctl.currentGripperIsClosed = ctl.currentGripper->percentOpen[0] < 0.5;
     }
     if((bodyName == "RARM_LINK6" || bodyName == "LARM_LINK6") && ctl.actions[ctl.stanceIndex+1]->type() != "add")
     {
@@ -389,10 +389,10 @@ bool live_CoMOpenGripperT::eval(MCSeqController & ctl)
 {
   if(ctl.currentGripper && ctl.currentGripperIsClosed && ctl.comRemoveGripper)
   {
-    ctl.currentGripper->percentOpen += 0.001;
-    if(ctl.currentGripper->percentOpen >= 1)
+    ctl.currentGripper->percentOpen[0] += 0.001;
+    if(ctl.currentGripper->percentOpen[0] >= 1)
     {
-      ctl.currentGripper->percentOpen = 1;
+      ctl.currentGripper->percentOpen[0] = 1;
       return true;
     }
   }
@@ -517,12 +517,12 @@ bool live_CoMCloseGripperT::eval(MCSeqController & ctl)
 {
   if(ctl.currentGripper)
   {
-    ctl.currentGripper->percentOpen -= 0.0005;
-    if(ctl.currentGripper->overCommandLimit || ctl.currentGripper->percentOpen <= 0)
+    ctl.currentGripper->percentOpen[0] -= 0.0005;
+    if(ctl.currentGripper->overCommandLimit[0] || ctl.currentGripper->percentOpen[0] <= 0)
     {
-      if(!ctl.currentGripper->overCommandLimit)
+      if(!ctl.currentGripper->overCommandLimit[0])
       {
-        ctl.currentGripper->percentOpen = 0;
+        ctl.currentGripper->percentOpen[0] = 0;
       }
       ctl.currentGripper = 0;
       ctl.stanceIndex++;
@@ -596,11 +596,11 @@ bool enter_openGripperP::eval(MCSeqController & ctl)
 
   if(bodyName == "RARM_LINK6")
   {
-    ctl.currentGripper = ctl.rgripper.get();
+    ctl.currentGripper = ctl.grippers["r_gripper"].get();
   }
   else if(bodyName == "LARM_LINK6")
   {
-    ctl.currentGripper = ctl.lgripper.get();
+    ctl.currentGripper = ctl.grippers["l_gripper"].get();
   }
   else
   {
@@ -614,10 +614,10 @@ bool live_openGripperP::eval(MCSeqController & ctl)
 {
   if(ctl.currentGripper)
   {
-    ctl.currentGripper->percentOpen += 0.001;
-    if(ctl.currentGripper->percentOpen >= 1.)
+    ctl.currentGripper->percentOpen[0] += 0.001;
+    if(ctl.currentGripper->percentOpen[0] >= 1.)
     {
-      ctl.currentGripper->percentOpen = 1.;
+      ctl.currentGripper->percentOpen[0] = 1.;
       ctl.isGripperOpen = true;
       return true;
     }
@@ -770,7 +770,7 @@ bool enter_moveGripperWPT::eval(MCSeqController & ctl)
   if(ctl.curStance().contacts().size() <= 2)
   {
     unsigned int bodyIndex = ctl.robot().bodyIndexByName("BODY");
-    ctl.bodyOriTask.reset(new tasks::qp::OrientationTask(ctl.robots().mbs(), 0, ctl.robot().bodyIdByName("BODY"), ctl.robot().mbc().bodyPosW[bodyIndex].rotation()));
+    ctl.bodyOriTask.reset(new tasks::qp::OrientationTask(ctl.robots().mbs(), 0, "BODY", ctl.robot().mbc().bodyPosW[bodyIndex].rotation()));
     ctl.bodyOriTaskSp.reset(new tasks::qp::SetPointTask(ctl.robots().mbs(), 0, ctl.bodyOriTask.get(), 10, 1000));
     ctl.solver().addTask(ctl.bodyOriTaskSp.get());
     ctl.isBodyTask = true;
@@ -844,10 +844,10 @@ bool enter_adjustGripperP::eval(MCSeqController & ctl)
   if((!ctl.isGripperWillBeAttached) && ctl.isRemoved) { return true; }
   LOG_INFO("Adjust Gripper P")
   double stiff = ctl.moveContactTask->posStiff + ctl.moveContactTask->extraPosStiff;
-  ctl.adjustPositionTask.reset(new tasks::qp::PositionTask(ctl.robots().mbs(), 0, ctl.moveContactTask->robotBodyId,
+  ctl.adjustPositionTask.reset(new tasks::qp::PositionTask(ctl.robots().mbs(), 0, ctl.moveContactTask->robotSurf->bodyName(),
                                                           ctl.moveContactTask->positionTask->position(),
                                                           ctl.moveContactTask->robotSurf->X_b_s().translation()));
-  ctl.adjustOrientationTask.reset(new tasks::qp::OrientationTask(ctl.robots().mbs(), 0, ctl.moveContactTask->robotBodyId, ctl.moveContactTask->targetOri));
+  ctl.adjustOrientationTask.reset(new tasks::qp::OrientationTask(ctl.robots().mbs(), 0, ctl.moveContactTask->robotSurf->bodyName(), ctl.moveContactTask->targetOri));
   ctl.adjustPositionTaskPid.reset(new tasks::qp::PIDTask(ctl.robots().mbs(), 0, ctl.adjustPositionTask.get(), stiff, 4, 2*std::sqrt(stiff), 0));
   double oriStiff = ctl.moveContactTask->orientationTaskSp->stiffness();
   ctl.adjustOrientationTaskPid.reset(new tasks::qp::PIDTask(ctl.robots().mbs(), 0, ctl.adjustOrientationTask.get(), oriStiff, 0.5, 2*std::sqrt(oriStiff), 0));
@@ -1116,14 +1116,14 @@ bool live_softCloseGripperP::eval(MCSeqController & ctl)
 
   if(ctl.currentGripper)
   {
-    ctl.currentGripper->percentOpen -= 0.0005;
+    ctl.currentGripper->percentOpen[0] -= 0.0005;
     //bool limitToZero = ctl.targetContact->r2Surface()->name() == "PlatformLeftRampVS" or ctl.targetContact->r2Surface()->name() == "PlatformLeftRampS"; /*FIXME Should be part of the configuration */
     double percentOpenLimit = 0.;//limitToZero ? 0.35 : 0.1;
-    if(ctl.currentGripper->overCommandLimit || ctl.currentGripper->percentOpen <= percentOpenLimit)
+    if(ctl.currentGripper->overCommandLimit[0] || ctl.currentGripper->percentOpen[0] <= percentOpenLimit)
     {
-      if(!ctl.currentGripper->overCommandLimit)
+      if(!ctl.currentGripper->overCommandLimit[0])
       {
-        ctl.currentGripper->percentOpen = percentOpenLimit;
+        ctl.currentGripper->percentOpen[0] = percentOpenLimit;
       }
       finish = true;
     }
@@ -1160,14 +1160,14 @@ bool live_hardCloseGripperP::eval(MCSeqController & ctl)
 
   if(ctl.currentGripper)
   {
-    ctl.currentGripper->percentOpen -= 0.0005;
+    ctl.currentGripper->percentOpen[0] -= 0.0005;
     bool limitToZero = ctl.targetContact->r2Surface()->name() == "PlatformLeftRampVS" || ctl.targetContact->r2Surface()->name() == "PlatformLeftRampS"; /*FIXME Should be part of the configuration */
     double percentOpenLimit = limitToZero ? 0.25 : 0;
-    if(ctl.currentGripper->overCommandLimit || ctl.currentGripper->percentOpen <= percentOpenLimit)
+    if(ctl.currentGripper->overCommandLimit[0] || ctl.currentGripper->percentOpen[0] <= percentOpenLimit)
     {
-      if(!ctl.currentGripper->overCommandLimit)
+      if(!ctl.currentGripper->overCommandLimit[0])
       {
-        ctl.currentGripper->percentOpen = percentOpenLimit;
+        ctl.currentGripper->percentOpen[0] = percentOpenLimit;
       }
       ctl.currentGripper = 0;
       LOG_INFO("Gripper closed, waiting for adjustment")

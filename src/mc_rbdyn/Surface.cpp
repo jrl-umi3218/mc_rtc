@@ -44,11 +44,6 @@ unsigned int Surface::bodyIndex(const mc_rbdyn::Robot & robot) const
   return robot.bodyIndexByName(impl->bodyName);
 }
 
-int Surface::bodyId(const mc_rbdyn::Robot & robot) const
-{
-  return robot.bodyIdByName(impl->bodyName);
-}
-
 sva::PTransformd Surface::X_0_s(const mc_rbdyn::Robot & robot) const
 {
   return X_0_s(robot, robot.mbc());
