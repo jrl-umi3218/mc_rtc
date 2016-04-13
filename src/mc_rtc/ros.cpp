@@ -67,7 +67,7 @@ public:
     th.join();
   }
 
-  void update(double dt, const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy, const RTC::TimedAngularVelocity3D & rate, const RTC::TimedAcceleration3D & gsensor, const std::map<std::string, std::vector<std::string>> & gJs, const std::map<std::string, std::vector<double>> & gQs)
+  void update(double dt, const mc_rbdyn::Robot & robot, const Eigen::Vector3d & p, const Eigen::Vector3d & rpy, const Eigen::Vector3d & rate, const Eigen::Vector3d & gsensor, const std::map<std::string, std::vector<std::string>> & gJs, const std::map<std::string, std::vector<double>> & gQs)
   {
     ros::Time tm = ros::Time::now();
     sensor_msgs::JointState msg;
@@ -116,15 +116,15 @@ public:
 #ifdef MC_RTC_HAS_HRPSYS_BASE
     if(iter_since_start >= 2000)
     {
-      imu.linear_acceleration.x = gsensor.data.ax - imu_noise.x();
-      imu.linear_acceleration.y = gsensor.data.ay - imu_noise.y();
-      imu.linear_acceleration.z = gsensor.data.az - imu_noise.z();
+      imu.linear_acceleration.x = gsensor.x() - imu_noise.x();
+      imu.linear_acceleration.y = gsensor.y() - imu_noise.y();
+      imu.linear_acceleration.z = gsensor.z() - imu_noise.z();
     }
     else
     {
-      imu_noise.x() += gsensor.data.ax;
-      imu_noise.y() += gsensor.data.ay;
-      imu_noise.z() += gsensor.data.az;
+      imu_noise.x() += gsensor.x();
+      imu_noise.y() += gsensor.y();
+      imu_noise.z() += gsensor.z();
       imu.linear_acceleration.x = 0;
       imu.linear_acceleration.y = 0;
       imu.linear_acceleration.z = 0;
@@ -151,12 +151,12 @@ public:
     odom.pose.covariance.fill(0);
     /* Provide linear and angular velocity */
 #ifdef MC_RTC_HAS_HRPSYS_BASE
-    odom.twist.twist.linear.x = gsensor.data.ax * dt;
-    odom.twist.twist.linear.y = gsensor.data.ay * dt;
-    odom.twist.twist.linear.z = gsensor.data.az * dt;
-    odom.twist.twist.angular.x = rate.data.avx;
-    odom.twist.twist.angular.y = rate.data.avy;
-    odom.twist.twist.angular.z = rate.data.avz;
+    odom.twist.twist.linear.x = gsensor.x() * dt;
+    odom.twist.twist.linear.y = gsensor.y() * dt;
+    odom.twist.twist.linear.z = gsensor.z() * dt;
+    odom.twist.twist.angular.x = rate.x();
+    odom.twist.twist.angular.y = rate.y();
+    odom.twist.twist.angular.z = rate.z();
     odom.twist.covariance.fill(0);
 #endif
 
@@ -183,8 +183,8 @@ public:
       tfs.push_back(PT2TF(X_0_xtion, tm, "robot_map", "odom", seq));
 #ifdef MC_RTC_HAS_HRPSYS_BASE
       sva::PTransformd X_0_base_odom = sva::PTransformd(
-                          Eigen::Quaterniond(sva::RotZ(rpy.data.y)*sva::RotY(rpy.data.p)*sva::RotX(-rpy.data.r).inverse()),
-                          Eigen::Vector3d(p.data.x, p.data.y, p.data.z));
+                          Eigen::Quaterniond(sva::RotZ(rpy.z())*sva::RotY(rpy.y())*sva::RotX(-rpy.x()).inverse()),
+                          Eigen::Vector3d(p.x(), p.y(), p.z()));
       sva::PTransformd X_0_base = mbc.bodyPosW[0];
       sva::PTransformd X_base_xtion = X_0_xtion * (X_0_base.inv());
       tfs.push_back(PT2TF(X_0_base_odom, tm, "/robot_map", "/odom_base_link", seq));
@@ -292,7 +292,7 @@ std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
   return impl->nh;
 }
 
-void ROSBridge::update_robot_publisher(double dt, const mc_rbdyn::Robot & robot, const RTC::TimedPoint3D & p, const RTC::TimedOrientation3D & rpy, const RTC::TimedAngularVelocity3D & rate, const RTC::TimedAcceleration3D & gsensor, const std::map<std::string, std::vector<std::string>> & gJ, const std::map<std::string, std::vector<double>> & gQ)
+void ROSBridge::update_robot_publisher(double dt, const mc_rbdyn::Robot & robot, const Eigen::Vector3d & p, const Eigen::Vector3d & rpy, const Eigen::Vector3d & rate, const Eigen::Vector3d & gsensor, const std::map<std::string, std::vector<std::string>> & gJ, const std::map<std::string, std::vector<double>> & gQ)
 {
   if(impl->rpub)
   {
@@ -336,7 +336,7 @@ std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
   return impl->nh;
 }
 
-void ROSBridge::update_robot_publisher(double, const mc_rbdyn::Robot &, const RTC::TimedPoint3D &, const RTC::TimedOrientation3D &, const RTC::TimedAngularVelocity3D &, const RTC::TimedAcceleration3D &, const std::map<std::string, std::vector<std::string>> &, const std::map<std::string, std::vector<double>> &)
+void ROSBridge::update_robot_publisher(double, const mc_rbdyn::Robot &, const Eigen::Vector3d &, const Eigen::Vector3d &, const Eigen::Vector3d &, const Eigen::Vector3d &, const std::map<std::string, std::vector<std::string>> &, const std::map<std::string, std::vector<double>> &)
 {
 }
 
