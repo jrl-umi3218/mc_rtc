@@ -56,6 +56,9 @@ else()
   set(DEFINE_HAS_HRPSYS_BASE_MACRO "")
 endif()
 
+add_optional_dependency(tcp-com)
+add_optional_dependency(tcp-control)
+
 # Find GEOS flags using geos-config
 find_program(GEOS_CONFIG geos-config
   /usr/local/bin

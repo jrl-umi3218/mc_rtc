@@ -262,17 +262,21 @@ if(${HRPSYS_BASE_FOUND})
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib)
-
-  set(HEADERS mc_rtc-tcp/MCControlTCP.hxx)
-
-  add_required_dependency(tcp-com)
-  add_required_dependency(tcp-control)
-  add_executable(MCControlTCP mc_rtc-tcp/tcp_robot.cpp ${HEADERS})
-  target_link_libraries(MCControlTCP mc_rtc_ros mc_control)
-  PKG_CONFIG_USE_DEPENDENCY(MCControlTCP tcp-control)
-  PKG_CONFIG_USE_DEPENDENCY(MCControlTCP tcp-com)
-
 endif()
+
+if(${TCP_COM_FOUND} AND ${TCP_CONTROL_FOUND})
+  set(MC_RTC_TCP_HEADERS mc_rtc-tcp/MCControlTCP.h mc_rtc-tcp/MCControlTCP.hxx)
+  set(MC_RTC_TCP_SRC mc_rtc-tcp/tcp_robot.cpp)
+  add_executable(MCControlTCP ${MC_RTC_TCP_HEADERS} ${MC_RTC_TCP_SRC})
+  target_link_libraries(MCControlTCP mc_rtc_ros mc_control)
+  pkg_config_use_dependency(MCControlTCP tcp-control)
+  pkg_config_use_dependency(MCControlTCP tcp-com)
+  install(TARGETS MCControlTCP
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib)
+endif()
+
 
 set(MC_LIBRARIES mc_rbdyn mc_solver mc_tasks mc_control mc_trajectory mc_rtc_ros mc_rtc_loader)
 foreach(MC_LIB ${MC_LIBRARIES})

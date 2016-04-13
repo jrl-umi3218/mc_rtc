@@ -1,30 +1,40 @@
-#include <Eigen/Core>
+#include "MCControlTCP.h"
 
-#include <tcp_control/hrp2_data.h>
 #include <tcp_control/hrp4_data.h>
 
-#include "MCControlTCP.hxx"
+#include <boost/program_options.hpp>
+namespace po = boost::program_options;
 
 int main(int argc, char **argv)
 {
-  std::string robot = "hrp4";
+  std::string conf_file = mc_rtc::CONF_PATH;
+  std::string host = "hrp4005c";
+  po::options_description desc("MCControlTCP options");
+  desc.add_options()
+    ("help", "display help message")
+    ("host,h", po::value<std::string>(&host)->default_value("hrp4005c"), "connection host")
+    ("conf,f", po::value<std::string>(&conf_file)->default_value(mc_rtc::CONF_PATH), "configuration file");
 
-  if (robot == "hrp2" || robot == "hrp2_10" || robot == "hrp2_10_flex")
+  po::variables_map vm;
+  po::store(po::parse_command_line(argc, argv, desc), vm);
+  po::notify(vm);
+
+  if(vm.count("help"))
   {
-    MCControlTCP<HRP2OpenHRPSensors, HRP2OpenHRPControl> nodeWrapper;
-    nodeWrapper.initialize(argc, argv);
-    nodeWrapper.start("HRP2JRL");
+    std::cout << desc << std::endl;
+    return 1;
   }
-  else if (robot == "hrp4" || robot == "hrp4_fixed_hands")
+
+  mc_control::MCGlobalController controller(conf_file);
+  if(controller.robot().name() != "hrp4")
   {
-    MCControlTCP<HRP4OpenHRPSensors, HRP4OpenHRPControl> nodeWrapper;
-    nodeWrapper.initialize(argc, argv);
-    nodeWrapper.start("HRP4LIRMM");
+    std::cerr << "This program can only handle hrp4 at the moment" << std::endl;
+    return 1;
   }
-  else
-  {
-    return -1;
-  }
+
+  MCControlTCP nodeWrapper(host, controller);
+  nodeWrapper.initialize();
+  nodeWrapper.start<HRP4OpenHRPSensors, HRP4OpenHRPControl>();
 
   return 0;
 }
