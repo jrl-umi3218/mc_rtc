@@ -5,6 +5,19 @@
 #include <boost/program_options.hpp>
 namespace po = boost::program_options;
 
+void input_thread(MCControlTCP & tcp)
+{
+  while(tcp.running())
+  {
+    std::string ui;
+    std::getline(std::cin, ui);
+    if(ui == "stop")
+    {
+      tcp.stop();
+    }
+  }
+}
+
 int main(int argc, char **argv)
 {
   std::string conf_file = mc_rtc::CONF_PATH;
@@ -34,7 +47,9 @@ int main(int argc, char **argv)
 
   MCControlTCP nodeWrapper(host, controller);
   nodeWrapper.initialize();
+  std::thread th(std::bind(&input_thread, std::ref(nodeWrapper)));
   nodeWrapper.start<HRP4OpenHRPSensors, HRP4OpenHRPControl>();
+  th.join();
 
   return 0;
 }

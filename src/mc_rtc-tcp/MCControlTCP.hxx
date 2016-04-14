@@ -73,6 +73,7 @@ MCControlTCP::MCControlTCP(const std::string & host, mc_control::MCGlobalControl
     m_controller(controller),
     m_service(this->m_controller),
     m_timeStep(ceil(1000*controller.timestep())),
+    m_running(true), init(false),
     m_wrenchesNames(controller.robot().forceSensorsByName()),
     m_wrenches(m_wrenchesNames.size()),
     iter_since_start(0),
@@ -136,13 +137,23 @@ void MCControlTCP::start()
 
   m_controller.running = true;
 
-  while(true)
+  while(m_running)
   {
     auto start = std::chrono::high_resolution_clock::now();
     controlCallback<Tcontrol>(cc.proto(), control_data);
     auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now()-start).count();
     std::this_thread::sleep_for(std::chrono::milliseconds(m_timeStep - elapsed));
   }
+}
+
+bool MCControlTCP::running()
+{
+  return m_running;
+}
+
+void MCControlTCP::stop()
+{
+  m_running = false;
 }
 
 template<class Tcontrol>

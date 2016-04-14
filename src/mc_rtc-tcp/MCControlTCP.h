@@ -68,6 +68,10 @@ public:
 
   template<class Tcontrol>
   void controlCallback(WriteAndAck<Tcontrol> & proto, Tcontrol & data);
+
+  bool running();
+
+  void stop();
 private:
   void log_header();
   void log_data(const double * qOut);
@@ -76,6 +80,7 @@ private:
   MCControlTCPService m_service;
   /*! Timestep expressed in ms */
   unsigned int m_timeStep;
+  bool m_running;
   bool init;
   /* Sensor information */
   /*! Encoder values */
