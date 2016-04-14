@@ -71,6 +71,7 @@ void ControlClient<Tsensor>::thread()
 
 MCControlTCP::MCControlTCP(const std::string & host, mc_control::MCGlobalController & controller):
     m_controller(controller),
+    m_service(this->m_controller),
     m_timeStep(ceil(1000*controller.timestep())),
     m_wrenchesNames(controller.robot().forceSensorsByName()),
     m_wrenches(m_wrenchesNames.size()),

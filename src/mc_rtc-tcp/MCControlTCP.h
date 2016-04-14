@@ -15,6 +15,9 @@
 // std
 #include <fstream>
 
+// service provider
+#include "MCControlTCPService.h"
+
 template<class Tsensor>
 class SensorClient
 {
@@ -70,6 +73,7 @@ private:
   void log_data(const double * qOut);
 private:
   mc_control::MCGlobalController & m_controller;
+  MCControlTCPService m_service;
   /*! Timestep expressed in ms */
   unsigned int m_timeStep;
   bool init;
