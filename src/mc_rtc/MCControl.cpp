@@ -375,6 +375,16 @@ void MCControl::log_header()
     m_log << ";" << wn << "_cy";
     m_log << ";" << wn << "_cz";
   }
+  m_log << ";" << "rpy_r";
+  m_log << ";" << "rpy_p";
+  m_log << ";" << "rpy_y";
+  m_log << ";" << "rate_x";
+  m_log << ";" << "rate_y";
+  m_log << ";" << "rate_z";
+  m_log << ";" << "acc_x";
+  m_log << ";" << "acc_y";
+  m_log << ";" << "acc_z";
+
   controller.log_header(m_log);
   m_log << std::endl;
 }
@@ -405,6 +415,18 @@ void MCControl::log_data()
       m_log << ";" << w.couple().y();
       m_log << ";" << w.couple().z();
     }
+    m_log << ";" << rpyIn.x();
+    m_log << ";" << rpyIn.y();
+    m_log << ";" << rpyIn.z();
+
+    m_log << ";" << rateIn.x();
+    m_log << ";" << rateIn.y();
+    m_log << ";" << rateIn.z();
+
+    m_log << ";" << accIn.x();
+    m_log << ";" << accIn.y();
+    m_log << ";" << accIn.z();
+
     controller.log_data(m_log);
     m_log << std::endl;
   }
