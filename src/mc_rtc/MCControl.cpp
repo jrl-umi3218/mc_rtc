@@ -303,7 +303,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
       m_qOutOut.write();
       m_pOutOut.write();
       m_rpyOutOut.write();
-      mc_rtc::ROSBridge::update_robot_publisher(controller.timestep(), controller.robot(), m_pIn, m_rpyIn, m_rateIn, m_accIn, controller.gripperJoints(), controller.gripperQ());
+      mc_rtc::ROSBridge::update_robot_publisher(controller.timestep(), controller.robot(), {m_pIn.data.x, m_pIn.data.y, m_pIn.data.z}, {m_rpyIn.data.r, m_rpyIn.data.p, m_rpyIn.data.y}, {m_rateIn.data.avx, m_rateIn.data.avy, m_rateIn.data.avz}, {m_accIn.data.ax, m_accIn.data.ay, m_accIn.data.az}, controller.gripperJoints(), controller.gripperQ());
       log_data();
     }
     else
@@ -343,7 +343,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
       robot.mbc().q = q;
       rbd::forwardKinematics(robot.mb(), robot.mbc());
       rbd::forwardVelocity(robot.mb(), robot.mbc());
-      mc_rtc::ROSBridge::update_robot_publisher(controller.timestep(), robot, m_pIn, m_rpyIn, m_rateIn, m_accIn, gripperJs, gripperQs);
+      mc_rtc::ROSBridge::update_robot_publisher(controller.timestep(), robot, {m_pIn.data.x, m_pIn.data.y, m_pIn.data.z}, {m_rpyIn.data.r, m_rpyIn.data.p, m_rpyIn.data.y}, {m_rateIn.data.avx, m_rateIn.data.avy, m_rateIn.data.avz}, {m_accIn.data.ax, m_accIn.data.ay, m_accIn.data.az}, controller.gripperJoints(), controller.gripperQ());
       controller.run();
     }
   }

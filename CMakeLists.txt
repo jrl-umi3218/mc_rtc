@@ -56,6 +56,9 @@ else()
   set(DEFINE_HAS_HRPSYS_BASE_MACRO "")
 endif()
 
+add_optional_dependency(tcp-com)
+add_optional_dependency(tcp-control)
+
 # Find GEOS flags using geos-config
 find_program(GEOS_CONFIG geos-config
   /usr/local/bin
@@ -118,6 +121,12 @@ if(${ROSCPP_FOUND})
   add_required_dependency(tf2_ros)
 else()
   set(DEFINE_HAS_ROS_MACRO "")
+endif()
+
+if("${TCP_COM_FOUND}" AND "${TCP_CONTROL_FOUND}" AND "${ROSCPP_FOUND}")
+  add_required_dependency(mc_tcp_msgs)
+else()
+  set(MC_TCP_MSGS_FOUND 0)
 endif()
 
 option(CHOOSE_HRP4 "Use HRP4 as main robot instead of HRP2DRC" False)

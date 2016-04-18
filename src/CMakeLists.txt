@@ -264,6 +264,25 @@ if(${HRPSYS_BASE_FOUND})
     ARCHIVE DESTINATION lib)
 endif()
 
+if("${TCP_COM_FOUND}" AND "${TCP_CONTROL_FOUND}")
+  set(MC_RTC_TCP_HEADERS mc_rtc-tcp/MCControlTCP.h mc_rtc-tcp/MCControlTCP.hxx mc_rtc-tcp/MCControlTCPService.h)
+  set(MC_RTC_TCP_SRC mc_rtc-tcp/tcp_robot.cpp)
+  if(${MC_TCP_MSGS_FOUND})
+    set(MC_RTC_TCP_SRC ${MC_RTC_TCP_SRC} mc_rtc-tcp/MCControlTCPService.cpp)
+  else()
+    set(MC_RTC_TCP_SRC ${MC_RTC_TCP_SRC} mc_rtc-tcp/MCControlTCPService_dummy.cpp)
+  endif()
+  add_executable(MCControlTCP ${MC_RTC_TCP_HEADERS} ${MC_RTC_TCP_SRC})
+  target_link_libraries(MCControlTCP mc_rtc_ros mc_control)
+  pkg_config_use_dependency(MCControlTCP tcp-control)
+  pkg_config_use_dependency(MCControlTCP tcp-com)
+  install(TARGETS MCControlTCP
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib)
+endif()
+
+
 set(MC_LIBRARIES mc_rbdyn mc_solver mc_tasks mc_control mc_trajectory mc_rtc_ros mc_rtc_loader)
 foreach(MC_LIB ${MC_LIBRARIES})
   set_target_properties(${MC_LIB} PROPERTIES SOVERSION 0 VERSION 0.1.0)
