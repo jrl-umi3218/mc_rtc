@@ -198,6 +198,12 @@ void MCGlobalController::setSensorOrientation(const Eigen::Vector3d & rpy)
   controller->sensorOri = rpy;
 }
 
+
+void MCGlobalController::setSensorVelocity(const Eigen::Vector3d & vel)
+{
+  controller->sensorVel = vel;
+}
+
 void MCGlobalController::setSensorAcceleration(const Eigen::Vector3d & acc)
 {
   controller->sensorAcc = acc;
