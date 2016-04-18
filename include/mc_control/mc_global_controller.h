@@ -21,6 +21,8 @@ public:
 
   void setSensorOrientation(const Eigen::Vector3d & ori);
 
+  void setSensorVelocity(const Eigen::Vector3d& vel);
+
   void setSensorAcceleration(const Eigen::Vector3d& acc);
 
   void setEncoderValues(const std::vector<double> & eValues);

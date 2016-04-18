@@ -119,6 +119,11 @@ const Eigen::Vector3d & MCController::getSensorOrientation()
   return this->sensorOri;
 }
 
+const Eigen::Vector3d & MCController::getSensorVelocity()
+{
+  return this->sensorVel;
+}
+
 const Eigen::Vector3d & MCController::getSensorAcceleration()
 {
   return this->sensorAcc;

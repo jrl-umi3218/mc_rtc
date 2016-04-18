@@ -106,6 +106,11 @@ public:
    */
   const Eigen::Vector3d & getSensorOrientation();
 
+  /** Get the sensor angular velocity
+   * \return The sensor angular velocity if provided, Eigen::Vector3d::Zero() otherwise
+   */
+  const Eigen::Vector3d & getSensorVelocity();
+
   /** Get the sensor acceleration
    * \return The sensor acceleration if provided, Eigen::Vector3d::Zero() otherwise
    */
@@ -268,6 +273,8 @@ protected:
   Eigen::Vector3d sensorOri;
   /** Robot acceleration provided by sensors */
   Eigen::Vector3d sensorAcc;
+  /** Robot angular velocity provided by sensors */
+  Eigen::Vector3d sensorVel;
   /** QP solver */
   std::shared_ptr<mc_solver::QPSolver> qpsolver;
 public:
