@@ -264,7 +264,7 @@ if(${HRPSYS_BASE_FOUND})
     ARCHIVE DESTINATION lib)
 endif()
 
-if(${TCP_COM_FOUND} AND ${TCP_CONTROL_FOUND})
+if("${TCP_COM_FOUND}" AND "${TCP_CONTROL_FOUND}")
   set(MC_RTC_TCP_HEADERS mc_rtc-tcp/MCControlTCP.h mc_rtc-tcp/MCControlTCP.hxx mc_rtc-tcp/MCControlTCPService.h)
   set(MC_RTC_TCP_SRC mc_rtc-tcp/tcp_robot.cpp)
   if(${MC_TCP_MSGS_FOUND})

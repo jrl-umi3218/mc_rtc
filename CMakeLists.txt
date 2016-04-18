@@ -123,7 +123,7 @@ else()
   set(DEFINE_HAS_ROS_MACRO "")
 endif()
 
-if(${TCP_COM_FOUND} AND ${TCP_CONTROL_FOUND} AND ${ROSCPP_FOUND})
+if("${TCP_COM_FOUND}" AND "${TCP_CONTROL_FOUND}" AND "${ROSCPP_FOUND}")
   add_required_dependency(mc_tcp_msgs)
 else()
   set(MC_TCP_MSGS_FOUND 0)
