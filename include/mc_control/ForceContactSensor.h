@@ -55,7 +55,7 @@ public:
 
   virtual std::vector<std::string> update(MCController & ctl) override;
 public:
-  std::vector<ForceSensor> sensors;
+  std::map<std::string, ForceSensor> sensors;
 };
 
 }

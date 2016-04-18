@@ -89,12 +89,12 @@ public:
    * \param wrenches Force/Torque sensors information provided by the
    * simulation/controller
    */
-  virtual void setWrenches(const std::vector<sva::ForceVecd>& wrenches);
+  virtual void setWrenches(const std::map<std::string, sva::ForceVecd>& wrenches);
 
   /** Get the current wrenches information
    * \return A vector of sva::ForceVecd representing force/torque pairs.
    */
-  const std::vector<sva::ForceVecd> & getWrenches();
+  const std::map<std::string, sva::ForceVecd> & getWrenches();
 
   /** Get the current encoder values provided by simulation/low-level controller
    * \return A vector of encoder values ordered by the controller/simulator
@@ -268,7 +268,7 @@ protected:
   /** Encoder values provided by the low-level controller */
   std::vector<double> encoderValues;
   /** Force/Torque sensors */
-  std::vector< sva::ForceVecd > wrenches;
+  std::map<std::string, sva::ForceVecd> wrenches;
   /** Robot orientation provided by sensors */
   Eigen::Vector3d sensorOri;
   /** Robot acceleration provided by sensors */

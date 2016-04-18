@@ -69,17 +69,17 @@ void ForceSensor::update(const Eigen::Vector3d & force)
 ForceContactSensor::ForceContactSensor(const mc_rbdyn::Robot & robot)
 {
   /*FIXME Hard-coded */
-  sensors.push_back(ForceSensor(robot, "RightFootForceSensor", Threshold(100, 9)));
-  sensors.push_back(ForceSensor(robot, "LeftFootForceSensor", Threshold(100, 9)));
-  sensors.push_back(ForceSensor(robot, "RightHandForceSensor", Threshold(5, 3)));
-  sensors.push_back(ForceSensor(robot, "LeftHandForceSensor", Threshold(5, 3)));
+  sensors.emplace("RightFootForceSensor", ForceSensor(robot, "RightFootForceSensor", Threshold(100, 9)));
+  sensors.emplace("LeftFootForceSensor", ForceSensor(robot, "LeftFootForceSensor", Threshold(100, 9)));
+  sensors.emplace("RightHandForceSensor", ForceSensor(robot, "RightHandForceSensor", Threshold(5, 3)));
+  sensors.emplace("LeftHandForceSensor", ForceSensor(robot, "LeftHandForceSensor", Threshold(5, 3)));
 }
 
 void ForceContactSensor::resetOffset()
 {
   for(auto & s : sensors)
   {
-    s.computeOffset();
+    s.second.computeOffset();
   }
 }
 
@@ -87,28 +87,29 @@ std::vector<std::string> ForceContactSensor::update(MCController & ctl)
 {
   std::vector<std::string> res;
 
-  for(size_t i = 0; i < sensors.size(); ++i)
+  for(auto& forceSensor: sensors)
   {
-    sensors[i].update(ctl.getWrenches()[i].force());
-    if(sensors[i].activated == ForceSensor::Activated)
+    auto& sensor = forceSensor.second;
+    std::map<std::string, sva::ForceVecd> wrenches = ctl.getWrenches();
+    sensor.update(wrenches[forceSensor.first].force());
+    if(sensor.activated == ForceSensor::Activated)
     {
-      if(sensors[i].direction == ForceSensor::Forward)
+      if(sensor.direction == ForceSensor::Forward)
       {
-        for(const auto & sn : sensors[i].surfacesName)
+        for(const auto & sn : sensor.surfacesName)
         {
           res.push_back(sn);
         }
       }
       else
       {
-        for(const auto & sn : sensors[i].surfacesName)
+        for(const auto & sn : sensor.surfacesName)
         {
           res.push_back(sn + "_back");
         }
       }
     }
   }
-
   return res;
 }
 
