@@ -88,7 +88,7 @@ private:
   /*! Names of force sensors */
   std::vector<std::string> m_wrenchesNames;
   /*! Value of force sensors */
-  std::vector<sva::ForceVecd> m_wrenches;
+  std::vector<std::string, sva::ForceVecd> m_wrenches;
   /*! Orientation sensor */
   Eigen::Vector3d rpyIn;
   /*! Accelerometer */
