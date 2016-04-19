@@ -15,17 +15,26 @@ namespace mc_robots
     rsdf_dir = path + "/rsdf";
     calib_dir = path + "/calib";
 
-    virtualLinks.push_back("base_link");
-    //virtualLinks.push_back("r_ankle");
-    //virtualLinks.push_back("l_ankle");
-    virtualLinks.push_back("Accelerometer");
-    virtualLinks.push_back("Gyro");
-    virtualLinks.push_back("RightFootForceSensor");
-    virtualLinks.push_back("LeftFootForceSensor");
-    virtualLinks.push_back("LeftHandForceSensor");
-    virtualLinks.push_back("RightHandForceSensor");
-    virtualLinks.push_back("gaze");
-    virtualLinks.push_back("r_gripper_sensor");
+    unusedVirtualLinks.push_back("base_link");
+    unusedVirtualLinks.push_back("Accelerometer");
+    unusedVirtualLinks.push_back("Gyro");
+    unusedVirtualLinks.push_back("RightFootForceSensor");
+    unusedVirtualLinks.push_back("LeftFootForceSensor");
+    unusedVirtualLinks.push_back("LeftHandForceSensor");
+    unusedVirtualLinks.push_back("RightHandForceSensor");
+    unusedVirtualLinks.push_back("gaze");
+    unusedVirtualLinks.push_back("r_gripper_sensor");
+
+    usedVirtualLinks.push_back("xtion_link");
+    usedVirtualJoints.push_back("xtion_link_joint");
+    usedVirtualLinks.push_back("r_gripper");
+    usedVirtualJoints.push_back("r_gripper_joint");
+    usedVirtualLinks.push_back("l_gripper");
+    usedVirtualJoints.push_back("l_gripper_joint");
+    usedVirtualLinks.push_back("r_sole");
+    usedVirtualJoints.push_back("r_sole_joint");
+    usedVirtualLinks.push_back("l_sole");
+    usedVirtualJoints.push_back("l_sole_joint");
 
     gripperLinks.push_back("R_HAND_J0_LINK");
     gripperLinks.push_back("R_HAND_J1_LINK");
@@ -103,11 +112,10 @@ namespace mc_robots
     /* Virtual joints */
     halfSitting["L_FOOT"] = {};
     halfSitting["R_FOOT"] = {};
-    halfSitting["xtion_link_joint"] = {};
-    halfSitting["r_gripper_joint"] = {};
-    halfSitting["l_gripper_joint"] = {};
-    halfSitting["r_sole_joint"] = {};
-    halfSitting["l_sole_joint"] = {};
+    for(const auto& virtualJoint : usedVirtualJoints)
+    {
+      halfSitting[virtualJoint] = {};
+    }
 
     _forceSensors.push_back(mc_rbdyn::ForceSensor("RightFootForceSensor", "R_ANKLE_R_LINK", sva::PTransformd(Eigen::Vector3d(0, 0, -0.093))));
     _forceSensors.push_back(mc_rbdyn::ForceSensor("LeftFootForceSensor", "L_ANKLE_R_LINK", sva::PTransformd(Eigen::Vector3d(0, 0, -0.093))));
@@ -127,7 +135,16 @@ namespace mc_robots
       mc_rbdyn::Collision("l_wrist_sub0", "L_WRIST_Y_LINK_sub0", 0.005, 0.001, 0.),
       mc_rbdyn::Collision("l_wrist_sub1", "L_WRIST_Y_LINK_sub0", 0.005, 0.001, 0.),
       mc_rbdyn::Collision("R_HIP_P_LINK", "body", 0.02, 0.01, 0.),
-      mc_rbdyn::Collision("L_HIP_P_LINK", "body", 0.02, 0.01, 0.)
+      mc_rbdyn::Collision("L_HIP_P_LINK", "body", 0.02, 0.01, 0.),
+      mc_rbdyn::Collision("L_HIP_P_LINK", "R_HIP_P_LINK", 0.02, 0.01, 0.),
+      mc_rbdyn::Collision("L_HIP_P_LINK", "R_KNEE_P_LINK", 0.02, 0.01, 0.),
+      mc_rbdyn::Collision("R_HIP_P_LINK", "L_KNEE_P_LINK", 0.02, 0.01, 0.),
+      mc_rbdyn::Collision("L_KNEE_P_LINK", "R_KNEE_P_LINK", 0.02, 0.01, 0.),
+      mc_rbdyn::Collision("l_ankle", "r_ankle", 0.02, 0.01, 0.),
+      mc_rbdyn::Collision("l_ankle", "R_KNEE_P_LINK", 0.02, 0.01, 0.),
+      mc_rbdyn::Collision("l_ankle", "R_HIP_P_LINK", 0.02, 0.01, 0.),
+      mc_rbdyn::Collision("r_ankle", "L_KNEE_P_LINK", 0.02, 0.01, 0.),
+      mc_rbdyn::Collision("r_ankle", "L_HIP_P_LINK", 0.02, 0.01, 0.),
     };
 
     _grippers = {
@@ -237,11 +254,10 @@ namespace mc_robots
   std::map<std::string, std::pair<std::string, std::string>> HRP4CommonRobotModule::stdCollisionsFiles(const rbd::MultiBody & mb) const
   {
     std::map<std::string, std::pair<std::string, std::string>> res;
-    // Filter out virtual links without convex files
-    std::vector<std::string> filter = {"xtion_link", "r_gripper", "l_gripper", "r_sole", "l_sole"};
     for(const auto & b : mb.bodies())
     {
-      if(std::find(std::begin(filter), std::end(filter), b.name()) == std::end(filter))
+      // Filter out virtual links without convex files
+      if(std::find(std::begin(usedVirtualLinks), std::end(usedVirtualLinks), b.name()) == std::end(usedVirtualLinks))
       {
         res[b.name()] = {b.name(), boost::algorithm::replace_first_copy(b.name(), "_LINK", "")};
       }
@@ -308,7 +324,7 @@ namespace mc_robots
 
   HRP4NoHandRobotModule::HRP4NoHandRobotModule()
   {
-    filteredLinks = virtualLinks;
+    filteredLinks = unusedVirtualLinks;
     for (const auto & gl : gripperLinks)
     {
       filteredLinks.push_back(gl);
@@ -339,7 +355,7 @@ namespace mc_robots
 
   HRP4WithHandRobotModule::HRP4WithHandRobotModule()
   {
-    filteredLinks = virtualLinks;
+    filteredLinks = unusedVirtualLinks;
     readUrdf("hrp4", filteredLinks);
 
     _springs.springsBodies = { "l_ankle", "r_ankle" }; //TODO: check these are the correct bodies
