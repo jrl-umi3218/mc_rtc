@@ -13,17 +13,20 @@
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
+#include <array>
+
 namespace mc_control
 {
 
 MCEgressMRQPController::MCEgressMRQPController(std::shared_ptr<mc_rbdyn::RobotModule> robot_module, double dt)
   : MCController({robot_module, mc_rbdyn::RobotLoader::get_robot_module("PolarisRangerEgress"), mc_rbdyn::RobotLoader::get_robot_module("env", mc_rtc::MC_ENV_DESCRIPTION_PATH, "ground")}, dt),
     egressContacts(),
-    polarisKinematicsConstraint(robots(), 1, timeStep, {0.1, 0.01, 0.01}, 0.5),
     collsConstraint(robots(), 0, 1, timeStep),
     curPhase(START),
     execPhase(new EgressMRStartPhase)
 {
+  std::array<double, 3> damper = {{0.1, 0.01, 0.01}};
+  polarisKinematicsConstraint = mc_solver::KinematicsConstraint(robots(), 1, timeStep, damper, 0.5);
   collsConstraint.addCollisions(solver(),
       {
         mc_rbdyn::Collision("RLEG_LINK5", "left_column", 0.1, 0.05, 0.),
