@@ -91,7 +91,8 @@ std::vector<std::string> ForceContactSensor::update(MCController & ctl)
   {
     const std::map<std::string, sva::ForceVecd>& wrenches = ctl.getWrenches();
     auto wrench = wrenches.find(sensor.name);
-    if(wrench != wrenches.end()) {
+    if(wrench != wrenches.end())
+    {
       sensor.update(wrench->second.force());
     }
     if(sensor.activated == ForceSensor::Activated)
