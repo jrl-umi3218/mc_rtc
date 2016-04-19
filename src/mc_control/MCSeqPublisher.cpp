@@ -13,6 +13,7 @@
 #include <visualization_msgs/Marker.h>
 #endif
 
+#include <array>
 #include <functional>
 
 namespace mc_control
@@ -204,7 +205,8 @@ inline visualization_msgs::Marker marker(const std::string & name, const sva::PT
 inline visualization_msgs::Marker contact_marker(const mc_rbdyn::Robots & robots, const mc_rbdyn::Contact & contact, const std_msgs::Header & header, std::vector<geometry_msgs::TransformStamped> & tfs)
 {
   auto X_0_c = contact.X_0_r1s(robots);
-  visualization_msgs::Marker msg = marker(contact.toStr(), X_0_c, header, {{0.0, 1.0, 0.0, 1.0}});
+  std::array<float, 4> rgba = {0.0, 1.0, 0.0, 1.0};
+  visualization_msgs::Marker msg = marker(contact.toStr(), X_0_c, header, rgba);
   std::stringstream ss;
   ss << "contact_" << contact.r1Surface()->name() << "_" << contact.r2Surface()->name();
   /* TF expressed in robot's frame */
@@ -220,6 +222,7 @@ void MCSeqPublisher::publication_thread()
 {
   if(nh)
   {
+    std::array<float, 4> rgba = {1.0, .0, 0.0, 1.0};
     ros::Rate rt(30);
     tf2_ros::TransformBroadcaster tf_caster;
     tf2_ros::Buffer tf_buffer;
@@ -244,7 +247,7 @@ void MCSeqPublisher::publication_thread()
       }
       if(X_waypoint != sva::PTransformd::Identity())
       {
-        contact_pub.publish(marker("WPT", X_waypoint, header, {{1.0,0.0,0.0,1.0}}));
+        contact_pub.publish(marker("WPT", X_waypoint, header, rgba));
         tfs.push_back(PT2TF(X_waypoint, header.stamp, header.frame_id, "WPT"));
       }
       tf_caster.sendTransform(tfs);

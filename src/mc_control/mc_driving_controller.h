@@ -5,6 +5,7 @@
 #include <mc_tasks/EndEffectorTask.h>
 
 #include <fstream>
+#include <array>
 
 #include <mc_control/api.h>
 
