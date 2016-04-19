@@ -12,7 +12,7 @@ Threshold::Threshold(double t, unsigned int i)
 
 ForceSensor::ForceSensor(const mc_rbdyn::Robot & robot, const std::string & sensorName, const Threshold & thresh)
 : activated(Unactivated), thresh(thresh), activatedIter(0), direction(Unactivated),
-  lastValues(WindowSize), offset(0), surfacesName(0)
+  lastValues(WindowSize), offset(0), name(sensorName), surfacesName(0)
 {
   std::string parent = robot.forceSensorParentBodyName(sensorName);
   for(const auto & p : robot.surfaces())
@@ -69,17 +69,17 @@ void ForceSensor::update(const Eigen::Vector3d & force)
 ForceContactSensor::ForceContactSensor(const mc_rbdyn::Robot & robot)
 {
   /*FIXME Hard-coded */
-  sensors.emplace("RightFootForceSensor", ForceSensor(robot, "RightFootForceSensor", Threshold(100, 9)));
-  sensors.emplace("LeftFootForceSensor", ForceSensor(robot, "LeftFootForceSensor", Threshold(100, 9)));
-  sensors.emplace("RightHandForceSensor", ForceSensor(robot, "RightHandForceSensor", Threshold(5, 3)));
-  sensors.emplace("LeftHandForceSensor", ForceSensor(robot, "LeftHandForceSensor", Threshold(5, 3)));
+  sensors.push_back(ForceSensor(robot, "RightFootForceSensor", Threshold(100, 9)));
+  sensors.push_back(ForceSensor(robot, "LeftFootForceSensor", Threshold(100, 9)));
+  sensors.push_back(ForceSensor(robot, "RightHandForceSensor", Threshold(5, 3)));
+  sensors.push_back(ForceSensor(robot, "LeftHandForceSensor", Threshold(5, 3)));
 }
 
 void ForceContactSensor::resetOffset()
 {
   for(auto & s : sensors)
   {
-    s.second.computeOffset();
+    s.computeOffset();
   }
 }
 
@@ -87,11 +87,13 @@ std::vector<std::string> ForceContactSensor::update(MCController & ctl)
 {
   std::vector<std::string> res;
 
-  for(auto& forceSensor: sensors)
+  for(auto& sensor: sensors)
   {
-    auto& sensor = forceSensor.second;
-    std::map<std::string, sva::ForceVecd> wrenches = ctl.getWrenches();
-    sensor.update(wrenches[forceSensor.first].force());
+    const std::map<std::string, sva::ForceVecd>& wrenches = ctl.getWrenches();
+    auto wrench = wrenches.find(sensor.name);
+    if(wrench != wrenches.end()) {
+      sensor.update(wrench->second.force());
+    }
     if(sensor.activated == ForceSensor::Activated)
     {
       if(sensor.direction == ForceSensor::Forward)

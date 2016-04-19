@@ -43,6 +43,7 @@ public:
   SensorConfig direction;
   boost::circular_buffer<double> lastValues;
   double offset;
+  std::string name;
   std::vector<std::string> surfacesName;
 };
 
@@ -55,7 +56,7 @@ public:
 
   virtual std::vector<std::string> update(MCController & ctl) override;
 public:
-  std::map<std::string, ForceSensor> sensors;
+  std::vector<ForceSensor> sensors;
 };
 
 }
