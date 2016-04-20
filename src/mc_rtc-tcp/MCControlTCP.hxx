@@ -269,8 +269,9 @@ void MCControlTCP::log_header()
   {
     m_log << ";qOut" << i;
   }
-  for(const auto & wn : m_wrenchesNames)
+  for(const auto & w : m_wrenches)
   {
+    const auto& wn = w.first;
     m_log << ";" << wn << "_fx";
     m_log << ";" << wn << "_fy";
     m_log << ";" << wn << "_fz";

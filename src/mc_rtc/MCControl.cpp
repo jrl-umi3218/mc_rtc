@@ -161,7 +161,7 @@ RTC::ReturnCode_t MCControl::onInitialize()
 }
 
 RTC::ReturnCode_t MCControl::onActivated(RTC::UniqueId ec_id)
-{ 
+{
   LOG_INFO("onActivated")
   return RTC::RTC_OK;
 }
@@ -367,8 +367,9 @@ void MCControl::log_header()
   {
     m_log << ";taucIn" << i;
   }
-  for(const auto & wn : m_wrenchesNames)
+  for(const auto & w : m_wrenches)
   {
+    const auto& wn = w.first;
     m_log << ";" << wn << "_fx";
     m_log << ";" << wn << "_fy";
     m_log << ";" << wn << "_fz";
