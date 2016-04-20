@@ -218,14 +218,14 @@ void MCControlTCP::sensorCallback(const Tsensor& data)
     m_controller.setActualGripperQ(realGripperQs);
 
     // Wrench
-    m_wrenches[m_wrenchesNames[0]].force()=Eigen::Vector3d(data.forceLF[0],data.forceLF[1],data.forceLF[2]);
-    m_wrenches[m_wrenchesNames[0]].couple()=Eigen::Vector3d(data.forceLF[3],data.forceLF[4],data.forceLF[5]);
-    m_wrenches[m_wrenchesNames[1]].force()=Eigen::Vector3d(data.forceRF[0],data.forceRF[1],data.forceRF[2]);
-    m_wrenches[m_wrenchesNames[1]].couple()=Eigen::Vector3d(data.forceRF[3],data.forceRF[4],data.forceRF[5]);
-    m_wrenches[m_wrenchesNames[2]].force()=Eigen::Vector3d(data.forceLH[0],data.forceLH[1],data.forceLH[2]);
-    m_wrenches[m_wrenchesNames[2]].couple()=Eigen::Vector3d(data.forceLH[3],data.forceLH[4],data.forceLH[5]);
-    m_wrenches[m_wrenchesNames[3]].force()=Eigen::Vector3d(data.forceRH[0],data.forceRH[1],data.forceRH[2]);
-    m_wrenches[m_wrenchesNames[3]].couple()=Eigen::Vector3d(data.forceRH[3],data.forceRH[4],data.forceRH[5]);
+    m_wrenches[m_wrenchesNames[0]].force()=Eigen::Vector3d(data.forceRF[0],data.forceRF[1],data.forceRF[2]);
+    m_wrenches[m_wrenchesNames[0]].couple()=Eigen::Vector3d(data.forceRF[3],data.forceRF[4],data.forceRF[5]);
+    m_wrenches[m_wrenchesNames[1]].force()=Eigen::Vector3d(data.forceLF[0],data.forceLF[1],data.forceLF[2]);
+    m_wrenches[m_wrenchesNames[1]].couple()=Eigen::Vector3d(data.forceLF[3],data.forceLF[4],data.forceLF[5]);
+    m_wrenches[m_wrenchesNames[2]].force()=Eigen::Vector3d(data.forceRH[0],data.forceRH[1],data.forceRH[2]);
+    m_wrenches[m_wrenchesNames[2]].couple()=Eigen::Vector3d(data.forceRH[3],data.forceRH[4],data.forceRH[5]);
+    m_wrenches[m_wrenchesNames[3]].force()=Eigen::Vector3d(data.forceLH[0],data.forceLH[1],data.forceLH[2]);
+    m_wrenches[m_wrenchesNames[3]].couple()=Eigen::Vector3d(data.forceLH[3],data.forceLH[4],data.forceLH[5]);
 
     // rpy
     rpyIn(0) = data.rpy[0];

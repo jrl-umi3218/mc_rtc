@@ -113,8 +113,8 @@ namespace mc_robots
     _forceSensors.push_back(mc_rbdyn::ForceSensor("RightFootForceSensor", "R_ANKLE_R_LINK", sva::PTransformd(Eigen::Vector3d(0, 0, -0.093))));
     _forceSensors.push_back(mc_rbdyn::ForceSensor("LeftFootForceSensor", "L_ANKLE_R_LINK", sva::PTransformd(Eigen::Vector3d(0, 0, -0.093))));
     Eigen::Matrix3d R; R << 0, -1, 0, -1, 0, 0, 0, 0, -1; // rpy="3.14159 0 -1.57079"
-    _forceSensors.push_back(mc_rbdyn::ForceSensor("LeftHandForceSensor", "l_wrist", sva::PTransformd(R, Eigen::Vector3d(0, 0, -0.04435))));
     _forceSensors.push_back(mc_rbdyn::ForceSensor("RightHandForceSensor", "r_wrist", sva::PTransformd(R, Eigen::Vector3d(0, 0, -0.04435))));
+    _forceSensors.push_back(mc_rbdyn::ForceSensor("LeftHandForceSensor", "l_wrist", sva::PTransformd(R, Eigen::Vector3d(0, 0, -0.04435))));
 
     _grippers = {
       {"l_gripper", {"L_HAND_J0", "L_HAND_J1"}, false},
