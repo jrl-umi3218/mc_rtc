@@ -24,9 +24,7 @@ namespace mc_robots
     std::map<std::string, std::pair<std::string, std::string>> stdCollisionsFiles(const rbd::MultiBody & mb) const;
 
   public:
-    std::vector<std::string> unusedVirtualLinks;
-    std::vector<std::string> usedVirtualLinks;
-    std::vector<std::string> usedVirtualJoints;
+    std::vector<std::string> virtualLinks;
     std::vector<std::string> gripperLinks;
     std::map< std::string, std::vector<double> > halfSitting;
     mc_rbdyn_urdf::Limits limits;
