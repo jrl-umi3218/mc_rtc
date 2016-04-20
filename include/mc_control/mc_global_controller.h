@@ -27,7 +27,7 @@ public:
 
   void setEncoderValues(const std::vector<double> & eValues);
 
-  void setWrenches(const std::vector<sva::ForceVecd> & wrenches);
+  void setWrenches(const std::map<std::string, sva::ForceVecd> & wrenches);
 
   void setActualGripperQ(const std::map<std::string, std::vector<double>> & grippersQ);
 

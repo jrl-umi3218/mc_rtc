@@ -12,7 +12,7 @@ Threshold::Threshold(double t, unsigned int i)
 
 ForceSensor::ForceSensor(const mc_rbdyn::Robot & robot, const std::string & sensorName, const Threshold & thresh)
 : activated(Unactivated), thresh(thresh), activatedIter(0), direction(Unactivated),
-  lastValues(WindowSize), offset(0), surfacesName(0)
+  lastValues(WindowSize), offset(0), name(sensorName), surfacesName(0)
 {
   std::string parent = robot.forceSensorParentBodyName(sensorName);
   for(const auto & p : robot.surfaces())
@@ -87,28 +87,32 @@ std::vector<std::string> ForceContactSensor::update(MCController & ctl)
 {
   std::vector<std::string> res;
 
-  for(size_t i = 0; i < sensors.size(); ++i)
+  for(auto& sensor: sensors)
   {
-    sensors[i].update(ctl.getWrenches()[i].force());
-    if(sensors[i].activated == ForceSensor::Activated)
+    const std::map<std::string, sva::ForceVecd>& wrenches = ctl.getWrenches();
+    auto wrench = wrenches.find(sensor.name);
+    if(wrench != wrenches.end())
     {
-      if(sensors[i].direction == ForceSensor::Forward)
+      sensor.update(wrench->second.force());
+    }
+    if(sensor.activated == ForceSensor::Activated)
+    {
+      if(sensor.direction == ForceSensor::Forward)
       {
-        for(const auto & sn : sensors[i].surfacesName)
+        for(const auto & sn : sensor.surfacesName)
         {
           res.push_back(sn);
         }
       }
       else
       {
-        for(const auto & sn : sensors[i].surfacesName)
+        for(const auto & sn : sensor.surfacesName)
         {
           res.push_back(sn + "_back");
         }
       }
     }
   }
-
   return res;
 }
 

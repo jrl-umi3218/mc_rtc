@@ -25,12 +25,12 @@ struct MC_CONTROL_DLLAPI ActiGripper
 public:
   ActiGripper();
 
-  ActiGripper(unsigned int wrenchIndex, double actiForce, double stopForce,
+  ActiGripper(const std::string& wrenchName, double actiForce, double stopForce,
               tasks::qp::ContactId contactId, sva::PTransformd & X_0_s, double maxDist,
               const std::shared_ptr<tasks::qp::PositionTask> & positionTask,
               const std::shared_ptr<tasks::qp::SetPointTask> & positionTaskSp);
 public:
-  unsigned int wrenchIndex;
+  std::string wrenchName;
   double actiForce;
   double stopForce;
   tasks::qp::ContactId contactId;

@@ -29,11 +29,11 @@ ActiGripper::ActiGripper()
 {
 }
 
-ActiGripper::ActiGripper(unsigned int wrenchIndex, double actiForce, double stopForce,
+ActiGripper::ActiGripper(const std::string& wrenchName, double actiForce, double stopForce,
                          tasks::qp::ContactId contactId, sva::PTransformd & X_0_s, double maxDist,
                          const std::shared_ptr<tasks::qp::PositionTask> & positionTask,
                          const std::shared_ptr<tasks::qp::SetPointTask> & positionTaskSp)
-: wrenchIndex(wrenchIndex), actiForce(actiForce), stopForce(stopForce),
+: wrenchName(wrenchName), actiForce(actiForce), stopForce(stopForce),
   contactId(contactId), X_0_s(X_0_s), maxDist(maxDist),
   positionTask(positionTask), positionTaskSp(positionTaskSp),
   activated(false), zVec(X_0_s.rotation().row(2)),
@@ -465,7 +465,6 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
     {
       LOG_INFO("ActiGripper ADD " << bodyName)
       std::string forceSensor = robot().forceSensorByBody(bodyName);
-      unsigned int wrenchIndex = forceSensor == "RightHandForceSensor" ? 2 : 3; /*FIXME Hard-coded */
       tasks::qp::ContactId contactId = c.contactId(robots());
       sva::PTransformd X_0_s = c.r1Surface()->X_0_s(robot());
       double actiForce = 50; /* FIXME Hard-coded, should at least be an acti gripper const static member */
@@ -473,7 +472,7 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
       std::shared_ptr<tasks::qp::PositionTask> positionTask(new tasks::qp::PositionTask(robots().mbs(), 0, contactId.r1BodyName, X_0_s.translation(), is_gs->X_b_s().translation()));
       std::shared_ptr<tasks::qp::SetPointTask> positionTaskSp(new tasks::qp::SetPointTask(robots().mbs(), 0, positionTask.get(), 20, 100000.));
       qpsolver->addTask(positionTaskSp.get());
-      actiGrippers[bodyName] = ActiGripper(wrenchIndex, actiForce, stopForce, contactId, X_0_s, use_real_sensors ? 0.04:0.01, positionTask, positionTaskSp); /*FIXME 0.04 is ActiGripperMaxPull */
+      actiGrippers[bodyName] = ActiGripper(forceSensor, actiForce, stopForce, contactId, X_0_s, use_real_sensors ? 0.04:0.01, positionTask, positionTaskSp); /*FIXME 0.04 is ActiGripperMaxPull */
     }
   }
 
@@ -504,7 +503,7 @@ void MCSeqController::pre_live()
 {
   for(auto & ba : actiGrippers)
   {
-    const Eigen::Vector3d & force = wrenches[ba.second.wrenchIndex].force();
+    const Eigen::Vector3d & force = wrenches[ba.second.wrenchName].force();
     double forceNorm = force.norm();
     ba.second.targetError = ba.second.positionTask->eval().norm();
     if(!ba.second.toRemove)

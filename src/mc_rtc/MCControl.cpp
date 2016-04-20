@@ -70,9 +70,10 @@ MCControl::MCControl(RTC::Manager* manager)
   m_wrenchesInIn.resize(0);
   for(size_t i = 0; i < m_wrenchesNames.size(); ++i)
   {
+    const auto& wrenchName = m_wrenchesNames[i];
     m_wrenchesIn.push_back(new TimedDoubleSeq());
-    m_wrenchesInIn.push_back(new InPort<TimedDoubleSeq>(m_wrenchesNames[i].c_str(), *(m_wrenchesIn[i])));
-    m_wrenches.push_back(sva::ForceVecd(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0)));
+    m_wrenchesInIn.push_back(new InPort<TimedDoubleSeq>(wrenchName.c_str(), *(m_wrenchesIn[i])));
+    m_wrenches[wrenchName] = sva::ForceVecd(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0));
   }
 }
 
@@ -181,8 +182,8 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
       m_wrenchesInIn[i]->read();
       if(m_wrenchesIn[i]->data.length() == 6)
       {
-        m_wrenches[i].force() = Eigen::Vector3d(m_wrenchesIn[i]->data[0], m_wrenchesIn[i]->data[1], m_wrenchesIn[i]->data[2]);
-        m_wrenches[i].couple() = Eigen::Vector3d(m_wrenchesIn[i]->data[3], m_wrenchesIn[i]->data[4], m_wrenchesIn[i]->data[5]);
+        m_wrenches[m_wrenchesNames[i]].force() = Eigen::Vector3d(m_wrenchesIn[i]->data[0], m_wrenchesIn[i]->data[1], m_wrenchesIn[i]->data[2]);
+        m_wrenches[m_wrenchesNames[i]].couple() = Eigen::Vector3d(m_wrenchesIn[i]->data[3], m_wrenchesIn[i]->data[4], m_wrenchesIn[i]->data[5]);
       }
     }
   }
@@ -408,12 +409,12 @@ void MCControl::log_data()
     }
     for(const auto & w : m_wrenches)
     {
-      m_log << ";" << w.force().x();
-      m_log << ";" << w.force().y();
-      m_log << ";" << w.force().z();
-      m_log << ";" << w.couple().x();
-      m_log << ";" << w.couple().y();
-      m_log << ";" << w.couple().z();
+      m_log << ";" << w.second.force().x();
+      m_log << ";" << w.second.force().y();
+      m_log << ";" << w.second.force().z();
+      m_log << ";" << w.second.couple().x();
+      m_log << ";" << w.second.couple().y();
+      m_log << ";" << w.second.couple().z();
     }
     m_log << ";" << rpyIn.x();
     m_log << ";" << rpyIn.y();

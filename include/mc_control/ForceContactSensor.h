@@ -43,6 +43,7 @@ public:
   SensorConfig direction;
   boost::circular_buffer<double> lastValues;
   double offset;
+  std::string name;
   std::vector<std::string> surfacesName;
 };
 
