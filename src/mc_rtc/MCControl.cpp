@@ -169,6 +169,7 @@ RTC::ReturnCode_t MCControl::onActivated(RTC::UniqueId ec_id)
 
 RTC::ReturnCode_t MCControl::onDeactivated(RTC::UniqueId ec_id)
 {
+  LOG_INFO("onDeactivated")
   return RTC::RTC_OK;
 }
 
