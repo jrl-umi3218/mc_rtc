@@ -113,7 +113,7 @@ namespace mc_robots
     _forceSensors.push_back(mc_rbdyn::ForceSensor("LeftHandForceSensor", "l_wrist", sva::PTransformd(R, Eigen::Vector3d(0, 0, -0.04435))));
     _forceSensors.push_back(mc_rbdyn::ForceSensor("RightHandForceSensor", "r_wrist", sva::PTransformd(R, Eigen::Vector3d(0, 0, -0.04435))));
 
-    _collisions = {
+    _minimalSelfCollisions = {
       mc_rbdyn::Collision("torso", "L_SHOULDER_Y_LINK", 0.02, 0.001, 0.),
       mc_rbdyn::Collision("body", "L_ELBOW_P_LINK", 0.05, 0.001, 0.),
       mc_rbdyn::Collision("torso", "R_SHOULDER_Y_LINK", 0.02, 0.001, 0.),
@@ -127,6 +127,18 @@ namespace mc_robots
       mc_rbdyn::Collision("R_HIP_P_LINK", "body", 0.02, 0.01, 0.),
       mc_rbdyn::Collision("L_HIP_P_LINK", "body", 0.02, 0.01, 0.)
     };
+
+    _commonSelfCollisions = _minimalSelfCollisions;
+    _commonSelfCollisions.push_back(mc_rbdyn::Collision("L_HIP_P_LINK", "body", 0.02, 0.01, 0.));
+    _commonSelfCollisions.push_back(mc_rbdyn::Collision("L_HIP_P_LINK", "R_HIP_P_LINK", 0.02, 0.01, 0.));
+    _commonSelfCollisions.push_back(mc_rbdyn::Collision("L_HIP_P_LINK", "R_KNEE_P_LINK", 0.02, 0.01, 0.));
+    _commonSelfCollisions.push_back(mc_rbdyn::Collision("R_HIP_P_LINK", "L_KNEE_P_LINK", 0.02, 0.01, 0.));
+    _commonSelfCollisions.push_back(mc_rbdyn::Collision("L_KNEE_P_LINK", "R_KNEE_P_LINK", 0.02, 0.01, 0.));
+    _commonSelfCollisions.push_back(mc_rbdyn::Collision("l_ankle", "r_ankle", 0.02, 0.01, 0.));
+    _commonSelfCollisions.push_back(mc_rbdyn::Collision("l_ankle", "R_KNEE_P_LINK", 0.02, 0.01, 0.));
+    _commonSelfCollisions.push_back(mc_rbdyn::Collision("l_ankle", "R_HIP_P_LINK", 0.02, 0.01, 0.));
+    _commonSelfCollisions.push_back(mc_rbdyn::Collision("r_ankle", "L_KNEE_P_LINK", 0.02, 0.01, 0.));
+    _commonSelfCollisions.push_back(mc_rbdyn::Collision("r_ankle", "L_HIP_P_LINK", 0.02, 0.01, 0.));
 
     _grippers = {
       {"l_gripper", {"L_HAND_J0", "L_HAND_J1"}, false},
