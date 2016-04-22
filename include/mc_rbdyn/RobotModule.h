@@ -72,8 +72,9 @@ struct MC_RBDYN_DLLAPI RobotModule
 
   virtual const Springs & springs() const { return _springs; }
 
-  /** Return default self-collision set */
+  /** Return a minimal self-collision set */
   virtual const std::vector<mc_rbdyn::Collision> & minimalSelfCollisions() { return _minimalSelfCollisions; }
+  /** Return a broader set of the most common self-collisions */
   virtual const std::vector<mc_rbdyn::Collision> & commonSelfCollisions() { return _commonSelfCollisions; }
 
   /** Return a map of gripper. Keys represents the gripper name. Values indicate the active joints in the gripper. */
