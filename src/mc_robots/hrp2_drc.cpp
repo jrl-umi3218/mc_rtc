@@ -89,7 +89,7 @@ HRP2DRCCommonRobotModule::HRP2DRCCommonRobotModule()
   _forceSensors.push_back(mc_rbdyn::ForceSensor("RightHandForceSensor", "RARM_LINK6", sva::PTransformd(Eigen::Vector3d(0, 0, -0.087))));
   _forceSensors.push_back(mc_rbdyn::ForceSensor("LeftHandForceSensor", "LARM_LINK6", sva::PTransformd(Eigen::Vector3d(0, 0, -0.087))));
 
-  _collisions = {
+  _minimalSelfCollisions = {
     mc_rbdyn::Collision("LARM_LINK3", "BODY", 0.05, 0.01, 0.),
     mc_rbdyn::Collision("LARM_LINK4", "BODY", 0.05, 0.01, 0.),
     mc_rbdyn::Collision("LARM_LINK5", "BODY", 0.05, 0.01, 0.),
@@ -107,6 +107,8 @@ HRP2DRCCommonRobotModule::HRP2DRCCommonRobotModule()
     mc_rbdyn::Collision("LARM_LINK4", "CHEST_LINK1", 0.05, 0.01, 0.),
     mc_rbdyn::Collision("LARM_LINK5", "CHEST_LINK1", 0.05, 0.01, 0.)
   };
+
+  _commonSelfCollisions = _minimalSelfCollisions;
 
   _grippers = {
     {"l_gripper", {"LARM_JOINT7"}, false},

@@ -72,8 +72,10 @@ struct MC_RBDYN_DLLAPI RobotModule
 
   virtual const Springs & springs() const { return _springs; }
 
-  /** Return default self-collision set */
-  virtual const std::vector<mc_rbdyn::Collision> & defaultSelfCollisions() { return _collisions; }
+  /** Return a minimal self-collision set */
+  virtual const std::vector<mc_rbdyn::Collision> & minimalSelfCollisions() { return _minimalSelfCollisions; }
+  /** Return a broader set of the most common self-collisions */
+  virtual const std::vector<mc_rbdyn::Collision> & commonSelfCollisions() { return _commonSelfCollisions; }
 
   /** Return a map of gripper. Keys represents the gripper name. Values indicate the active joints in the gripper. */
   virtual const std::vector<Gripper> & grippers() { return _grippers; }
@@ -99,7 +101,8 @@ struct MC_RBDYN_DLLAPI RobotModule
   std::vector<ForceSensor> _forceSensors;
   std::string _accelerometerBody;
   Springs _springs;
-  std::vector<mc_rbdyn::Collision> _collisions;
+  std::vector<mc_rbdyn::Collision> _minimalSelfCollisions;
+  std::vector<mc_rbdyn::Collision> _commonSelfCollisions;
   std::vector<Gripper> _grippers;
   std::vector<std::string> _ref_joint_order;
 };

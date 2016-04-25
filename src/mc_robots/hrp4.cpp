@@ -16,21 +16,19 @@ namespace mc_robots
     calib_dir = path + "/calib";
 
     virtualLinks.push_back("base_link");
-    //virtualLinks.push_back("r_ankle");
-    //virtualLinks.push_back("l_ankle");
-    virtualLinks.push_back("r_sole");
-    virtualLinks.push_back("l_sole");
     virtualLinks.push_back("Accelerometer");
     virtualLinks.push_back("Gyro");
     virtualLinks.push_back("RightFootForceSensor");
     virtualLinks.push_back("LeftFootForceSensor");
     virtualLinks.push_back("LeftHandForceSensor");
     virtualLinks.push_back("RightHandForceSensor");
-    virtualLinks.push_back("l_gripper");
-    virtualLinks.push_back("r_gripper");
     virtualLinks.push_back("gaze");
     virtualLinks.push_back("r_gripper_sensor");
-    // virtualLinks.push_back("xtion_link");
+    virtualLinks.push_back("xtion_link");
+    virtualLinks.push_back("r_gripper");
+    virtualLinks.push_back("l_gripper");
+    virtualLinks.push_back("r_sole");
+    virtualLinks.push_back("l_sole");
 
     gripperLinks.push_back("R_HAND_J0_LINK");
     gripperLinks.push_back("R_HAND_J1_LINK");
@@ -108,13 +106,39 @@ namespace mc_robots
     /* Virtual joints */
     halfSitting["L_FOOT"] = {};
     halfSitting["R_FOOT"] = {};
-    halfSitting["xtion_link_joint"] = {};
 
     _forceSensors.push_back(mc_rbdyn::ForceSensor("RightFootForceSensor", "R_ANKLE_R_LINK", sva::PTransformd(Eigen::Vector3d(0, 0, -0.093))));
     _forceSensors.push_back(mc_rbdyn::ForceSensor("LeftFootForceSensor", "L_ANKLE_R_LINK", sva::PTransformd(Eigen::Vector3d(0, 0, -0.093))));
     Eigen::Matrix3d R; R << 0, -1, 0, -1, 0, 0, 0, 0, -1; // rpy="3.14159 0 -1.57079"
     _forceSensors.push_back(mc_rbdyn::ForceSensor("RightHandForceSensor", "r_wrist", sva::PTransformd(R, Eigen::Vector3d(0, 0, -0.04435))));
     _forceSensors.push_back(mc_rbdyn::ForceSensor("LeftHandForceSensor", "l_wrist", sva::PTransformd(R, Eigen::Vector3d(0, 0, -0.04435))));
+
+    _minimalSelfCollisions = {
+      mc_rbdyn::Collision("torso", "L_SHOULDER_Y_LINK", 0.02, 0.001, 0.),
+      mc_rbdyn::Collision("body", "L_ELBOW_P_LINK", 0.05, 0.001, 0.),
+      mc_rbdyn::Collision("torso", "R_SHOULDER_Y_LINK", 0.02, 0.001, 0.),
+      mc_rbdyn::Collision("body", "R_ELBOW_P_LINK", 0.05, 0.001, 0.),
+      mc_rbdyn::Collision("l_wrist", "L_HIP_P_LINK", 0.07, 0.05, 0.),
+      mc_rbdyn::Collision("r_wrist", "R_HIP_P_LINK", 0.07, 0.05, 0.),
+      mc_rbdyn::Collision("r_wrist_sub0", "R_WRIST_Y_LINK_sub0", 0.005, 0.001, 0.),
+      mc_rbdyn::Collision("r_wrist_sub1", "R_WRIST_Y_LINK_sub0", 0.005, 0.001, 0.),
+      mc_rbdyn::Collision("l_wrist_sub0", "L_WRIST_Y_LINK_sub0", 0.005, 0.001, 0.),
+      mc_rbdyn::Collision("l_wrist_sub1", "L_WRIST_Y_LINK_sub0", 0.005, 0.001, 0.),
+      mc_rbdyn::Collision("R_HIP_P_LINK", "body", 0.02, 0.01, 0.),
+      mc_rbdyn::Collision("L_HIP_P_LINK", "body", 0.02, 0.01, 0.)
+    };
+
+    _commonSelfCollisions = _minimalSelfCollisions;
+    _commonSelfCollisions.push_back(mc_rbdyn::Collision("L_HIP_P_LINK", "body", 0.02, 0.01, 0.));
+    _commonSelfCollisions.push_back(mc_rbdyn::Collision("L_HIP_P_LINK", "R_HIP_P_LINK", 0.02, 0.01, 0.));
+    _commonSelfCollisions.push_back(mc_rbdyn::Collision("L_HIP_P_LINK", "R_KNEE_P_LINK", 0.02, 0.01, 0.));
+    _commonSelfCollisions.push_back(mc_rbdyn::Collision("R_HIP_P_LINK", "L_KNEE_P_LINK", 0.02, 0.01, 0.));
+    _commonSelfCollisions.push_back(mc_rbdyn::Collision("L_KNEE_P_LINK", "R_KNEE_P_LINK", 0.02, 0.01, 0.));
+    _commonSelfCollisions.push_back(mc_rbdyn::Collision("l_ankle", "r_ankle", 0.02, 0.01, 0.));
+    _commonSelfCollisions.push_back(mc_rbdyn::Collision("l_ankle", "R_KNEE_P_LINK", 0.02, 0.01, 0.));
+    _commonSelfCollisions.push_back(mc_rbdyn::Collision("l_ankle", "R_HIP_P_LINK", 0.02, 0.01, 0.));
+    _commonSelfCollisions.push_back(mc_rbdyn::Collision("r_ankle", "L_KNEE_P_LINK", 0.02, 0.01, 0.));
+    _commonSelfCollisions.push_back(mc_rbdyn::Collision("r_ankle", "L_HIP_P_LINK", 0.02, 0.01, 0.));
 
     _grippers = {
       {"l_gripper", {"L_HAND_J0", "L_HAND_J1"}, false},
@@ -176,13 +200,17 @@ namespace mc_robots
     std::map<std::string, std::vector<double>> res;
     for (const auto & j : mb.joints())
     {
-      if (j.name() != "Root")
+      if(halfSitting.count(j.name()))
       {
         res[j.name()] = halfSitting.at(j.name());
         for (auto & ji : res[j.name()])
         {
           ji = M_PI*ji / 180;
         }
+      }
+      else if(j.name() != "Root" && j.dof() > 0)
+      {
+        LOG_WARNING("Joint " << j.name() << " has " << j.dof() << " dof, but is not part of half sitting posture.");
       }
     }
     return res;
@@ -225,8 +253,9 @@ namespace mc_robots
     std::map<std::string, std::pair<std::string, std::string>> res;
     for(const auto & b : mb.bodies())
     {
-      // FIXME add convex for xtion_link
-      if(b.name() != "xtion_link") {
+      // Filter out virtual links without convex files
+      if(std::find(std::begin(virtualLinks), std::end(virtualLinks), b.name()) == std::end(virtualLinks))
+      {
         res[b.name()] = {b.name(), boost::algorithm::replace_first_copy(b.name(), "_LINK", "")};
       }
     }
@@ -292,7 +321,6 @@ namespace mc_robots
 
   HRP4NoHandRobotModule::HRP4NoHandRobotModule()
   {
-    filteredLinks = virtualLinks;
     for (const auto & gl : gripperLinks)
     {
       filteredLinks.push_back(gl);
@@ -323,7 +351,6 @@ namespace mc_robots
 
   HRP4WithHandRobotModule::HRP4WithHandRobotModule()
   {
-    filteredLinks = virtualLinks;
     readUrdf("hrp4", filteredLinks);
 
     _springs.springsBodies = { "l_ankle", "r_ankle" }; //TODO: check these are the correct bodies

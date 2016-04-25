@@ -68,7 +68,7 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   dynamicsConstraint = mc_solver::DynamicsConstraint(robots(), 0, timeStep, damper, 0.5);
   kinematicsConstraint = mc_solver::KinematicsConstraint(robots(), 0, timeStep, damper, 0.5);
   selfCollisionConstraint = mc_solver::CollisionsConstraint(robots(), 0, 0, timeStep);
-  selfCollisionConstraint.addCollisions(solver(), robots_modules[0]->defaultSelfCollisions());
+  selfCollisionConstraint.addCollisions(solver(), robots_modules[0]->minimalSelfCollisions());
   postureTask.reset(new tasks::qp::PostureTask(robots().mbs(), 0, robot().mbc().q, 10, 5));
   LOG_INFO("MCController(base) ready")
 }
