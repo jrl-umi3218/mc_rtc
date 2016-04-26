@@ -9,6 +9,8 @@
 #include <mc_rtc/config.h>
 #include <mc_rtc/loader.h>
 
+#include <thread>
+
 namespace mc_control
 {
 
@@ -16,6 +18,7 @@ struct MC_CONTROL_DLLAPI MCGlobalController
 {
 public:
   MCGlobalController(const std::string & conf = mc_rtc::CONF_PATH);
+  virtual ~MCGlobalController();
 
   void init(const std::vector<double> & initq);
 
@@ -79,6 +82,9 @@ public:
   /* Generic message passing service */
   bool send_msg(const std::string & msg);
   bool send_recv_msg(const std::string & msg, std::string & out);
+private:
+  void publish_thread();
+
 public:
   bool running;
 private:
@@ -96,6 +102,9 @@ private:
     std::string initial_controller;
     double timestep;
 
+    bool publish_robot_state;
+    double publish_timestep;
+
     Json::Value v;
   };
 private:
@@ -106,6 +115,9 @@ private:
   MCController * controller;
   MCController * next_controller;
   std::unique_ptr<mc_rtc::ObjectLoader<MCController>> controller_loader;
+
+  std::thread publish_th;
+  mc_rbdyn::Robots real_robots;
 };
 
 }

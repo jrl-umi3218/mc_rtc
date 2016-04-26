@@ -48,14 +48,15 @@ inline geometry_msgs::TransformStamped PT2TF(const sva::PTransformd & X, const r
 struct RobotPublisher
 {
 public:
-  RobotPublisher(ros::NodeHandle & nh)
+  RobotPublisher(ros::NodeHandle & nh, const std::string& prefix)
   : nh(nh),
-    j_state_pub(this->nh.advertise<sensor_msgs::JointState>("joint_states", 1)),
-    imu_pub(this->nh.advertise<sensor_msgs::Imu>("imu", 1)),
-    odom_pub(this->nh.advertise<nav_msgs::Odometry>("odom", 1)),
+    j_state_pub(this->nh.advertise<sensor_msgs::JointState>(prefix+"joint_states", 1)),
+    imu_pub(this->nh.advertise<sensor_msgs::Imu>(prefix+"imu", 1)),
+    odom_pub(this->nh.advertise<nav_msgs::Odometry>(prefix+"odom", 1)),
     iter_since_start(0),
     imu_noise(Eigen::Vector3d::Zero()),
     tf_caster(),
+    prefix(prefix),
     running(true), seq(0), msgs(),
     th(std::bind(&RobotPublisher::publishThread, this))
   {
@@ -160,7 +161,7 @@ public:
     odom.twist.covariance.fill(0);
 #endif
 
-    tfs.push_back(PT2TF(robot.bodyTransform(robot.mb().body(0).name())*mbc.parentToSon[0], tm, std::string("/robot_map"), robot.mb().body(0).name(), seq));
+    tfs.push_back(PT2TF(robot.bodyTransform(robot.mb().body(0).name())*mbc.parentToSon[0], tm, std::string("robot_map"), prefix+robot.mb().body(0).name(), seq));
     for(int j = 1; j < robot.mb().nrJoints(); ++j)
     {
       const auto & predIndex = robot.mb().predecessor(j);
@@ -169,7 +170,7 @@ public:
       const auto & succName = robot.mb().body(succIndex).name();
       const auto & X_predp_pred = robot.bodyTransform(predName);
       const auto & X_succp_succ = robot.bodyTransform(succName);
-      tfs.push_back(PT2TF(X_succp_succ*mbc.parentToSon[static_cast<unsigned int>(j)]*X_predp_pred.inv(), tm, predName, succName, seq));
+      tfs.push_back(PT2TF(X_succp_succ*mbc.parentToSon[static_cast<unsigned int>(j)]*X_predp_pred.inv(), tm, prefix + predName, prefix + succName, seq));
     }
 
     if(robot.hasBody("HEAD_LINK1"))
@@ -213,6 +214,7 @@ private:
   unsigned int iter_since_start;
   Eigen::Vector3d imu_noise;
   tf2_ros::TransformBroadcaster tf_caster;
+  std::string prefix;
 
   struct RobotStateData
   {
@@ -276,13 +278,17 @@ struct ROSBridgeImpl
 {
   ROSBridgeImpl()
   : ros_is_init(ros_init("mc_rtc")),
-    nh(ros_is_init ? new ros::NodeHandle() : 0),
-    rpub(ros_is_init ? new RobotPublisher(*nh) : 0)
+    nh(ros_is_init ? new ros::NodeHandle() : 0)
   {
+    if(ros_is_init)
+    {
+      rpubs["control"] = std::make_shared<RobotPublisher>(*nh, "control/");
+      rpubs["real"] = std::make_shared<RobotPublisher>(*nh, "real/");
+    }
   }
   bool ros_is_init;
   std::shared_ptr<ros::NodeHandle> nh;
-  std::shared_ptr<RobotPublisher> rpub;
+  std::map<std::string, std::shared_ptr<RobotPublisher>> rpubs;
 };
 
 std::unique_ptr<ROSBridgeImpl> ROSBridge::impl = std::unique_ptr<ROSBridgeImpl>(new ROSBridgeImpl());
@@ -292,19 +298,19 @@ std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
   return impl->nh;
 }
 
-void ROSBridge::update_robot_publisher(double dt, const mc_rbdyn::Robot & robot, const Eigen::Vector3d & p, const Eigen::Vector3d & rpy, const Eigen::Vector3d & rate, const Eigen::Vector3d & gsensor, const std::map<std::string, std::vector<std::string>> & gJ, const std::map<std::string, std::vector<double>> & gQ)
+void ROSBridge::update_robot_publisher(const std::string& publisher, double dt, const mc_rbdyn::Robot & robot, const Eigen::Vector3d & p, const Eigen::Vector3d & rpy, const Eigen::Vector3d & rate, const Eigen::Vector3d & gsensor, const std::map<std::string, std::vector<std::string>> & gJ, const std::map<std::string, std::vector<double>> & gQ)
 {
-  if(impl->rpub)
+  if(impl->rpubs.count(publisher))
   {
-    impl->rpub->update(dt, robot, p, rpy, rate, gsensor, gJ, gQ);
+    impl->rpubs[publisher]->update(dt, robot, p, rpy, rate, gsensor, gJ, gQ);
   }
 }
 
 void ROSBridge::reset_imu_offset()
 {
-  if(impl->rpub)
+  for(auto& pub : impl->rpubs)
   {
-    impl->rpub->reset_imu_offset();
+    pub.second->reset_imu_offset();
   }
 }
 
@@ -336,7 +342,7 @@ std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
   return impl->nh;
 }
 
-void ROSBridge::update_robot_publisher(double, const mc_rbdyn::Robot &, const Eigen::Vector3d &, const Eigen::Vector3d &, const Eigen::Vector3d &, const Eigen::Vector3d &, const std::map<std::string, std::vector<std::string>> &, const std::map<std::string, std::vector<double>> &)
+void ROSBridge::update_robot_publisher(const std::string&, double, const mc_rbdyn::Robot &, const Eigen::Vector3d &, const Eigen::Vector3d &, const Eigen::Vector3d &, const Eigen::Vector3d &, const std::map<std::string, std::vector<std::string>> &, const std::map<std::string, std::vector<double>> &)
 {
 }
 
