@@ -162,6 +162,7 @@ install(
 install(
   FILES
     etc/mc_rtc.conf
+    etc/mc_rtc-tcp_joints.conf
   DESTINATION etc
 )
 

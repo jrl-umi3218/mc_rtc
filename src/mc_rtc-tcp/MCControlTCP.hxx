@@ -16,6 +16,10 @@
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 
+//
+#include <mc_rbdyn/RobotLoader.h>
+#include <algorithm>
+
 template<class Tsensor>
 SensorClient<Tsensor>::SensorClient(const std::string & host, const std::string & port, typename ReadAndAck<Tsensor>::callback_t callback) :
   data_init_(createSensors<Tsensor>()),
@@ -69,7 +73,7 @@ void ControlClient<Tsensor>::thread()
   io_service_.run();
 }
 
-MCControlTCP::MCControlTCP(const std::string & host, mc_control::MCGlobalController & controller):
+MCControlTCP::MCControlTCP(const std::string & host, mc_control::MCGlobalController & controller, const std::string & conf_joints_file):
     m_controller(controller),
     m_service(this->m_controller),
     m_timeStep(ceil(1000*controller.timestep())),
@@ -113,6 +117,31 @@ MCControlTCP::MCControlTCP(const std::string & host, mc_control::MCGlobalControl
         }
       }
     }
+  }
+
+  Json::Value v;
+  std::ifstream ifs(conf_joints_file);
+  if(ifs.bad())
+  {
+    LOG_ERROR("Failed to open joints configuration file: " << conf_joints_file)
+  }
+  try
+  {
+    ifs >> v;
+  }
+  catch(const std::runtime_error & exc)
+  {
+    LOG_ERROR("Failed to read configuration file")
+    LOG_WARNING(exc.what())
+  }
+  if(v.isMember("Deactivated"))
+  {
+    for(const auto & cv: v["Deactivated"])
+    {
+      std::cout << cv.asString() << " ";
+      deactivatedJoints.insert(cv.asString());
+    }
+    std::cout << std::endl;
   }
 }
 
@@ -163,17 +192,32 @@ void MCControlTCP::controlCallback(WriteAndAck<Tcontrol>& control_proto, Tcontro
 
   if(m_controller.running && init)
   {
+    std::cout << "Control: isRunning" << std::endl;
     if(m_controller.run())
     {
+      std::cout << "Control: run" << std::endl;
       //FIXME Fill t
       double t = 0.; //in nano second
       const mc_control::QPResultMsg & res = m_controller.send(t);
       const auto & ref_joint_order = m_controller.ref_joint_order();
       //FIXME The index correspondance should be computed only one time
       auto gripperQs = m_controller.gripperQ();
+
+      //FIXME The controller's robot name should be the same as the module's name
+      std::string robot_name = m_controller.robot().name();
+      std::transform(robot_name.begin(), robot_name.end(), robot_name.begin(), ::toupper);
+      auto currentRobot =  mc_rbdyn::RobotLoader::get_robot_module(robot_name);
+      const auto & halfSit = currentRobot->stance();
       for(unsigned int i = 0; i < ref_joint_order.size(); ++i)
       {
-        control_data.control[i] = res.robots_state[0].q.at(ref_joint_order[i])[0];
+        if(deactivatedJoints.find(ref_joint_order[i]) != deactivatedJoints.end())
+        {
+          control_data.control[i] = halfSit.at(ref_joint_order[i])[0];
+        }
+        else
+        {
+          control_data.control[i] = res.robots_state[0].q.at(ref_joint_order[i])[0];
+        }
       }
       /* Update gripper state */
       for(const auto & cG : gripper_out_index)

@@ -56,7 +56,8 @@ private:
 class MCControlTCP
 {
 public:
-  MCControlTCP(const std::string & host, mc_control::MCGlobalController & controller);
+  MCControlTCP(const std::string & host, mc_control::MCGlobalController & controller,
+                    const std::string & conf_joints_file);
 
   int initialize();
 
@@ -112,6 +113,9 @@ private:
   std::map<std::string, std::vector<size_t>> gripper_in_index;
   std::map<std::string, std::vector<double>> realGripperQs;
   std::map<std::string, std::vector<std::pair<size_t, size_t>>> gripper_out_index;
+
+  /*! Deactivated Joints */
+  std::set<std::string> deactivatedJoints;
 };
 
 #include "MCControlTCP.hxx"

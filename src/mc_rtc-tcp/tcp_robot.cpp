@@ -21,12 +21,15 @@ void input_thread(MCControlTCP & tcp)
 int main(int argc, char **argv)
 {
   std::string conf_file = mc_rtc::CONF_PATH;
+  std::string conf_joints_file = mc_rtc::CONF_JOINTS_PATH;
   std::string host = "hrp4005c";
   po::options_description desc("MCControlTCP options");
   desc.add_options()
     ("help", "display help message")
     ("host,h", po::value<std::string>(&host)->default_value("hrp4005c"), "connection host")
-    ("conf,f", po::value<std::string>(&conf_file)->default_value(mc_rtc::CONF_PATH), "configuration file");
+    ("conf,f", po::value<std::string>(&conf_file)->default_value(mc_rtc::CONF_PATH), "configuration file")
+    ("joints,j", po::value<std::string>(&conf_joints_file)->default_value(mc_rtc::CONF_JOINTS_PATH), "configuration file to deactivated joints");
+
 
   po::variables_map vm;
   po::store(po::parse_command_line(argc, argv, desc), vm);
@@ -45,7 +48,7 @@ int main(int argc, char **argv)
     return 1;
   }
 
-  MCControlTCP nodeWrapper(host, controller);
+  MCControlTCP nodeWrapper(host, controller, conf_joints_file);
   nodeWrapper.initialize();
   std::thread th(std::bind(&input_thread, std::ref(nodeWrapper)));
   nodeWrapper.start<HRP4OpenHRPSensors, HRP4OpenHRPControl>();
