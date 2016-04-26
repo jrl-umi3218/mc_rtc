@@ -115,7 +115,7 @@ private:
   std::map<std::string, std::vector<std::pair<size_t, size_t>>> gripper_out_index;
 
   /*! Deactivated Joints */
-  std::set<std::string> deactivatedJoints;
+  std::map<std::string, double> deactivatedJoints;
 };
 
 #include "MCControlTCP.hxx"

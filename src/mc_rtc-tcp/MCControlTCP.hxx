@@ -136,12 +136,18 @@ MCControlTCP::MCControlTCP(const std::string & host, mc_control::MCGlobalControl
   }
   if(v.isMember("Deactivated"))
   {
+    std::string robot_name = m_controller.robot().name();
+    std::transform(robot_name.begin(), robot_name.end(), robot_name.begin(), ::toupper);
+    auto currentRobot =  mc_rbdyn::RobotLoader::get_robot_module(robot_name);
+    const auto & halfSit = currentRobot->stance();
     for(const auto & cv: v["Deactivated"])
     {
-      std::cout << cv.asString() << " ";
-      deactivatedJoints.insert(cv.asString());
+      if(halfSit.find(cv.asString()) != halfSit.end())
+      {
+        deactivatedJoints.insert(
+          std::pair<std::string, double>(cv.asString(), halfSit.at(cv.asString())[0]));
+      }
     }
-    std::cout << std::endl;
   }
 }
 
@@ -192,10 +198,8 @@ void MCControlTCP::controlCallback(WriteAndAck<Tcontrol>& control_proto, Tcontro
 
   if(m_controller.running && init)
   {
-    std::cout << "Control: isRunning" << std::endl;
     if(m_controller.run())
     {
-      std::cout << "Control: run" << std::endl;
       //FIXME Fill t
       double t = 0.; //in nano second
       const mc_control::QPResultMsg & res = m_controller.send(t);
@@ -204,15 +208,11 @@ void MCControlTCP::controlCallback(WriteAndAck<Tcontrol>& control_proto, Tcontro
       auto gripperQs = m_controller.gripperQ();
 
       //FIXME The controller's robot name should be the same as the module's name
-      std::string robot_name = m_controller.robot().name();
-      std::transform(robot_name.begin(), robot_name.end(), robot_name.begin(), ::toupper);
-      auto currentRobot =  mc_rbdyn::RobotLoader::get_robot_module(robot_name);
-      const auto & halfSit = currentRobot->stance();
       for(unsigned int i = 0; i < ref_joint_order.size(); ++i)
       {
         if(deactivatedJoints.find(ref_joint_order[i]) != deactivatedJoints.end())
         {
-          control_data.control[i] = halfSit.at(ref_joint_order[i])[0];
+          control_data.control[i] = deactivatedJoints.at(ref_joint_order[i]);
         }
         else
         {
@@ -245,9 +245,17 @@ void MCControlTCP::sensorCallback(const Tsensor& data)
   if(m_controller.running)
   {
     qIn.resize(m_controller.robot().mb().nrDof());
+    const auto & ref_joint_order = m_controller.ref_joint_order();
     for(unsigned i = 0; i < sensors_traits<Tsensor>::dof; ++i)
     {
-      qIn[i] = data.position[i];
+      if(deactivatedJoints.find(ref_joint_order[i]) != deactivatedJoints.end())
+      {
+        qIn[i] = deactivatedJoints.at(ref_joint_order[i]);
+      }
+      else
+      {
+        qIn[i] = data.position[i];
+      }
     }
     auto gripperQs = m_controller.gripperQ();
     for(auto & rG : realGripperQs)
