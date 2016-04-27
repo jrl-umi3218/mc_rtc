@@ -102,7 +102,8 @@ private:
     std::string initial_controller;
     double timestep;
 
-    bool publish_robot_state;
+    bool publish_control_state;
+    bool publish_real_state;
     double publish_timestep;
 
     Json::Value v;

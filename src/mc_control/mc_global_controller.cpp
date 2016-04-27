@@ -103,17 +103,29 @@ MCGlobalController::Configuration::Configuration(const std::string & path)
   {
     timestep = 0.002;
   }
-  if(v.isMember("Publish"))
+  if(v.isMember("PublishControlState"))
   {
-    publish_robot_state = v["Publish"].asBool();
-    if(v.isMember("PublishTimestep"))
-    {
-      publish_timestep = v["PublishTimestep"].asDouble();
-    }
-    else
-    {
-      publish_timestep = 0.0033;
-    }
+    publish_control_state = v["PublishControlState"].asBool();
+  }
+  else
+  {
+    publish_control_state = true;
+  }
+  if(v.isMember("PublishRealState"))
+  {
+    publish_real_state = v["PublishRealState"].asBool();
+  }
+  else
+  {
+    publish_real_state = false;
+  }
+  if(v.isMember("PublishTimestep"))
+  {
+    publish_timestep = v["PublishTimestep"].asDouble();
+  }
+  else
+  {
+    publish_timestep = 0.01;
   }
   /* Allow the user not to worry about Default if only one controller is enabled */
   if(enabled_controllers.size() == 1)
@@ -175,11 +187,8 @@ MCGlobalController::MCGlobalController(const std::string & conf)
   }
   else
   {
-    if(config.publish_robot_state)
-    {
-      real_robots.load(*config.main_robot_module, config.main_robot_module->rsdf_dir);
-      publish_th = std::thread(std::bind(&MCGlobalController::publish_thread, this));
-    }
+    real_robots.load(*config.main_robot_module, config.main_robot_module->rsdf_dir);
+    publish_th = std::thread(std::bind(&MCGlobalController::publish_thread, this));
   }
 }
 
@@ -442,24 +451,30 @@ void MCGlobalController::publish_thread()
     const auto start = std::chrono::high_resolution_clock::now();
 
     // Publish controlled robot
-    mc_rtc::ROSBridge::update_robot_publisher("control", timestep(), robot(), Eigen::Vector3d::Zero(), controller->getSensorOrientation(), controller->getSensorVelocity(), controller->getSensorAcceleration(), gripperJoints(), gripperQ());
-
-    const auto& real_q = controller->getEncoderValues();
-    if(real_q.size() > 0)
+    if(config.publish_control_state)
     {
-      auto& real_robot = real_robots.robot();
-      // Update free flyer
-      real_robot.mbc().q[0] = robot().mbc().q[0];
-      // Set all joints to encoder values
-      int i = 0;
-      for(const auto& ref_joint : config.main_robot_module->ref_joint_order())
+      mc_rtc::ROSBridge::update_robot_publisher("control", timestep(), robot(), Eigen::Vector3d::Zero(), controller->getSensorOrientation(), controller->getSensorVelocity(), controller->getSensorAcceleration(), gripperJoints(), gripperQ());
+    }
+
+    if(config.publish_real_state)
+    {
+      const auto& real_q = controller->getEncoderValues();
+      if(real_q.size() > 0)
       {
-        const auto joint_index = real_robot.mb().jointIndexByName(ref_joint);
-        real_robot.mbc().q[joint_index][0] = real_q[i];
-        i++;
+        auto& real_robot = real_robots.robot();
+        // Update free flyer
+        real_robot.mbc().q[0] = robot().mbc().q[0];
+        // Set all joints to encoder values
+        int i = 0;
+        for(const auto& ref_joint : config.main_robot_module->ref_joint_order())
+        {
+          const auto joint_index = real_robot.mb().jointIndexByName(ref_joint);
+          real_robot.mbc().q[joint_index][0] = real_q[i];
+          i++;
+        }
+        // Publish real robot
+        mc_rtc::ROSBridge::update_robot_publisher("real", timestep(), real_robot, Eigen::Vector3d::Zero(), controller->getSensorOrientation(), controller->getSensorVelocity(), controller->getSensorAcceleration(), gripperJoints(), gripperQ());
       }
-      // Publish real robot
-      mc_rtc::ROSBridge::update_robot_publisher("real", timestep(), real_robot, Eigen::Vector3d::Zero(), controller->getSensorOrientation(), controller->getSensorVelocity(), controller->getSensorAcceleration(), gripperJoints(), gripperQ());
     }
 
     const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now()-start).count();
