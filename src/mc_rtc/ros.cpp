@@ -173,7 +173,12 @@ public:
       tfs.push_back(PT2TF(X_succp_succ*mbc.parentToSon[static_cast<unsigned int>(j)]*X_predp_pred.inv(), tm, prefix + predName, prefix + succName, seq));
     }
 
-    if(robot.hasBody("HEAD_LINK1"))
+    if(robot.name() == "hrp4" && robot.hasBody("xtion_link"))
+    {
+      sva::PTransformd X_0_xtion = mbc.bodyPosW[robot.bodyIndexByName("xtion_link")];
+      tfs.push_back(PT2TF(X_0_xtion.inv(), tm, "odom", "robot_map", seq));
+    }
+    else if(robot.hasBody("HEAD_LINK1"))
     {
       sva::PTransformd X_0_hl1 = mbc.bodyPosW[robot.bodyIndexByName("HEAD_LINK1")];
       // Calib 2016/02/02

@@ -446,7 +446,7 @@ bool MCGlobalController::EnableController(const std::string & name)
 
 void MCGlobalController::publish_thread()
 {
-  while(running)
+  while(true)
   {
     const auto start = std::chrono::high_resolution_clock::now();
 
