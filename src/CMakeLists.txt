@@ -233,6 +233,8 @@ add_controller("egress_mrqp" "mc_control/mc_egress_mrqp_controller.cpp"
 add_controller("bci_self_interact"
   "mc_control/mc_bci_self_interact_controller.cpp"
   "mc_control/mc_bci_self_interact_controller.h")
+add_controller("halfsitpose" "mc_control/mc_halfsitpose_controller.cpp"
+  "mc_control/mc_halfsitpose_controller.h")
 
 if(${HRPSYS_BASE_FOUND})
   set(MCControl_SRC

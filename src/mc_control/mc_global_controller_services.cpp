@@ -108,6 +108,18 @@ bool MCGlobalController::driving_service(double w, double a, double p, double t)
   }
 }
 
+bool MCGlobalController::GoToHalfSitPose_service()
+{
+  if(controller)
+  {
+    return GoToHalfSitPose();
+  }
+  else
+  {
+    return false;
+  }
+}
+
 bool MCGlobalController::send_msg(const std::string & msg)
 {
   if(msg == "reset_imu_offset") { mc_rtc::ROSBridge::reset_imu_offset(); return true; }
