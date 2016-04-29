@@ -229,7 +229,6 @@ void MCControlTCP::controlCallback(WriteAndAck<Tcontrol>& control_proto, Tcontro
         }
       }
     }
-    mc_rtc::ROSBridge::update_robot_publisher(m_controller.timestep(), m_controller.robot(), Eigen::Vector3d::Zero(), rpyIn, rateIn, accIn, m_controller.gripperJoints(), m_controller.gripperQ());
     log_data(control_data.control);
     iter_since_start++;
   }
@@ -304,6 +303,7 @@ void MCControlTCP::sensorCallback(const Tsensor& data)
 
     m_controller.setSensorOrientation(rpyIn);
     m_controller.setSensorAcceleration(accIn);
+    m_controller.setSensorVelocity(rateIn);
     m_controller.setEncoderValues(qIn);
     m_controller.setWrenches(m_wrenches);
   }
