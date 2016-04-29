@@ -361,3 +361,8 @@ void MCControlTCP::log_data(const double * qOut)
     m_log << std::endl;
   }
 }
+
+mc_control::MCGlobalController & MCControlTCP::controller()
+{
+  return m_controller;
+}

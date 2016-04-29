@@ -12,6 +12,7 @@
 
 #include <json/json.h>
 #include <fstream>
+#include <algorithm>
 
 /* Note all service calls except for controller switches are implemented in mc_global_controller_services.cpp */
 
@@ -146,6 +147,11 @@ MCGlobalController::MCGlobalController(const std::string & conf)
   next_controller(0)
 {
   controller_loader.reset(new mc_rtc::ObjectLoader<mc_control::MCController>(config.controller_module_paths));
+  if(std::find(config.enabled_controllers.begin(), config.enabled_controllers.end(),
+            "HalfSitPose") == config.enabled_controllers.end())
+  {
+    config.enabled_controllers.push_back("HalfSitPose");
+  }
   for(const auto & c : config.enabled_controllers)
   {
     std::string controller_name = c;
@@ -480,6 +486,15 @@ void MCGlobalController::publish_thread()
     const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now()-start).count();
     std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<long>(1000 * config.publish_timestep) - elapsed));
   }
+}
+
+bool MCGlobalController::GoToHalfSitPose()
+{
+  if(current_ctrl != std::string("HalfSitPose"))
+  {
+    return EnableController("HalfSitPose");
+  }
+  return true;
 }
 
 }

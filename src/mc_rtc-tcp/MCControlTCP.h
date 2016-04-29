@@ -73,6 +73,9 @@ public:
   bool running();
 
   void stop();
+
+  mc_control::MCGlobalController & controller();
+
 private:
   void log_header();
   void log_data(const double * qOut);

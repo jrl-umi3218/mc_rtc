@@ -73,6 +73,10 @@ public:
   /* Start playing the next stance if in seq controller */
   bool play_next_stance();
 
+  /* Return to halfsit pose at the end of an experiment */
+  bool GoToHalfSitPose_service();
+  bool GoToHalfSitPose();
+
   /*Change wheel or ankle angle if in driving controller*/
   bool change_wheel_angle(double theta);
   bool change_ankle_angle(double theta);
