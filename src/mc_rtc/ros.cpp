@@ -173,20 +173,11 @@ public:
       tfs.push_back(PT2TF(X_succp_succ*mbc.parentToSon[static_cast<unsigned int>(j)]*X_predp_pred.inv(), tm, prefix + predName, prefix + succName, seq));
     }
 
-    if(robot.name() == "hrp4" && robot.hasBody("xtion_link"))
+    if(robot.hasBody("xtion_link"))
     {
       sva::PTransformd X_0_xtion = mbc.bodyPosW[robot.bodyIndexByName("xtion_link")];
       tfs.push_back(PT2TF(X_0_xtion.inv(), tm, "odom", "robot_map", seq));
-    }
-    else if(robot.hasBody("HEAD_LINK1"))
-    {
-      sva::PTransformd X_0_hl1 = mbc.bodyPosW[robot.bodyIndexByName("HEAD_LINK1")];
-      // Calib 2016/02/02
-      sva::PTransformd X_hl1_xtion = sva::PTransformd(Eigen::Quaterniond(0.995971, -0.00632932, 0.0894339, 0.00188757).inverse(), Eigen::Vector3d(0.109125, 0.0055295, 0.0915054));
-      tfs.push_back(PT2TF(X_hl1_xtion, tm, "HEAD_LINK1", "xtion_link", seq));
-      sva::PTransformd X_0_xtion = X_hl1_xtion * X_0_hl1;
-      // Relate the robot tf tree with SLAM tf tree
-      tfs.push_back(PT2TF(X_0_xtion, tm, "robot_map", "odom", seq));
+
 #ifdef MC_RTC_HAS_HRPSYS_BASE
       sva::PTransformd X_0_base_odom = sva::PTransformd(
                           Eigen::Quaterniond(sva::RotZ(rpy.z())*sva::RotY(rpy.y())*sva::RotX(-rpy.x()).inverse()),
