@@ -14,7 +14,7 @@ public:
   /* Common stuff */
   MCHalfSitPoseController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt);
 
-  virtual bool run() override;
+  virtual void reset(const ControllerResetData &) override;
 
 private:
   std::vector<std::vector<double>> halfSitPose;

@@ -19,15 +19,12 @@ MCHalfSitPoseController::MCHalfSitPoseController(std::shared_ptr<mc_rbdyn::Robot
   halfSitPose(robot().mbc().q)
 {
 
-  LOG_INFO("Before Collision")
   /* Set the halfSitPose in posture Task */
   const auto & halfSit = robot_module->stance();
-  LOG_INFO("Before Compute")
   for(unsigned int i = 0; i < ref_joint_order.size(); ++i)
   {
     halfSitPose[robot().jointIndexByName(ref_joint_order[i])] = halfSit.at(ref_joint_order[i]);
   }
-  LOG_INFO("After Compute")
 
   selfCollisionConstraint.reset();
   qpsolver->addConstraintSet(selfCollisionConstraint);
@@ -40,12 +37,15 @@ MCHalfSitPoseController::MCHalfSitPoseController(std::shared_ptr<mc_rbdyn::Robot
   LOG_SUCCESS("MCHalfSitPoseController init done " << this)
 }
 
-bool MCHalfSitPoseController::run()
+void MCHalfSitPoseController::reset(const ControllerResetData & reset_data)
 {
-  bool ret = MCController::run();
+  robot().mbc().zero(robot().mb());
+  robot().mbc().q = reset_data.q;
   postureTask->posture(halfSitPose);
   postureTask.get()->weight(100.);
-  return ret;
+  postureTask.get()->stiffness(2.);
+  rbd::forwardKinematics(robot().mb(), robot().mbc());
+  rbd::forwardVelocity(robot().mb(), robot().mbc());
 }
 
 }
