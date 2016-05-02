@@ -27,7 +27,7 @@ namespace mc_control
 
 /** \class ControllerResetData
  * \brief Contains information allowing the controller to start smoothly from
- * the current state of the robot 
+ * the current state of the robot
  * \note
  * For now, this only contains the state of the robot (free flyer and joints state)
  */
@@ -165,6 +165,20 @@ public:
    * The default implementation only works on the main robot.
    */
   virtual bool set_joint_pos(const std::string & jname, const double & pos);
+
+  /** Get a joint position to the desired value
+   * \param jname Name of the joint to control
+   * \param position (radians)
+   * \return True if jname is valid, false otherwise
+   * \note
+   * No control is made on the value of pos to ensure it is within the joints'
+   * limits of jname. It is assumed that this is done via the controller own
+   * constraint set
+   *
+   * \note
+   * The default implementation only works on the main robot.
+   */
+  virtual bool get_joint_pos(const std::string & jname, double & pos);
 
   /** Change the currently controlled end-effector
    * \param name End of the name effector
