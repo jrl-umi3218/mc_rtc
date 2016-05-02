@@ -178,7 +178,7 @@ public:
    * \note
    * The default implementation only works on the main robot.
    */
-  virtual bool get_joint_pos(const std::string & jname, double & pos);
+  bool get_joint_pos(const std::string & jname, double & pos);
 
   /** Change the currently controlled end-effector
    * \param name End of the name effector
