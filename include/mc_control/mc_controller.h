@@ -166,14 +166,13 @@ public:
    */
   virtual bool set_joint_pos(const std::string & jname, const double & pos);
 
-  /** Get a joint position to the desired value
-   * \param jname Name of the joint to control
-   * \param position (radians)
+  /** Get a joint position
+   * \param jname Name of the desired joint
+   * \param position position of jname joint (radians)
    * \return True if jname is valid, false otherwise
    * \note
-   * No control is made on the value of pos to ensure it is within the joints'
-   * limits of jname. It is assumed that this is done via the controller own
-   * constraint set
+   * Due to the overhead of checks on joint validity, it is not recommended
+   * to use this function to repeatedly access a specific joint value.
    *
    * \note
    * The default implementation only works on the main robot.
