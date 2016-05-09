@@ -25,17 +25,12 @@ bool MCGlobalController::get_joint_pos(const std::string & jname, double & v)
 {
   if(controller)
   {
-    if(controller->robot().hasJoint(jname))
-    {
-      const auto & q = controller->robot().mbc().q[controller->robot().jointIndexByName(jname)];
-      if(q.size() == 1)
-      {
-        v = q[0];
-        return true;
-      }
-    }
+    return controller->get_joint_pos(jname, v);
   }
-  return false;
+  else
+  {
+    return false;
+  }
 }
 
 bool MCGlobalController::change_ef(const std::string & ef_name)

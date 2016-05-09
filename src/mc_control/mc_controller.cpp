@@ -189,6 +189,21 @@ bool MCController::set_joint_pos(const std::string & jname, const double & pos)
   return false;
 }
 
+bool MCController::get_joint_pos(const std::string & jname, double & pos)
+{
+  if(robot().hasJoint(jname))
+  {
+    auto idx = robot().jointIndexByName(jname);
+    auto p = postureTask->posture();
+    if(p[idx].size() == 1)
+    {
+      pos = p[idx][0];
+      return true;
+    }
+  }
+  return false;
+}
+
 bool MCController::change_ef(const std::string &)
 {
   return false;
