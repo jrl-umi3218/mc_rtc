@@ -101,6 +101,11 @@ public:
    */
   const std::vector<double> & getEncoderValues();
 
+  /** Get the current joint torques provided by the low-level controller
+   * \return A vector of joint torques ordered according to RobotModule::ref_joint_order()
+   */
+  const std::vector<double> & getJointTorques();
+
   /** Get the sensor orientation
    * \return The sensor orientation if provided, Eigen::Vector3d::Zero() otherwise
    */
@@ -280,6 +285,8 @@ protected:
 protected:
   /** Encoder values provided by the low-level controller */
   std::vector<double> encoderValues;
+  /** Joint torques provided by the low-level controller */
+  std::vector<double> jointTorques;
   /** Force/Torque sensors */
   std::map<std::string, sva::ForceVecd> wrenches;
   /** Robot orientation provided by sensors */

@@ -9,10 +9,11 @@
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
-
 #include <json/json.h>
-#include <fstream>
+
 #include <algorithm>
+#include <fstream>
+#include <iomanip>
 
 /* Note all service calls except for controller switches are implemented in mc_global_controller_services.cpp */
 
@@ -96,37 +97,40 @@ MCGlobalController::Configuration::Configuration(const std::string & path)
       initial_controller = enabled_controllers[0];
     }
   }
+  timestep = 0.002;
   if(v.isMember("Timestep"))
   {
     timestep = v["Timestep"].asDouble();
   }
-  else
-  {
-    timestep = 0.002;
-  }
+  publish_control_state = true;
   if(v.isMember("PublishControlState"))
   {
     publish_control_state = v["PublishControlState"].asBool();
   }
-  else
-  {
-    publish_control_state = true;
-  }
+  publish_real_state = false;
   if(v.isMember("PublishRealState"))
   {
     publish_real_state = v["PublishRealState"].asBool();
   }
-  else
-  {
-    publish_real_state = false;
-  }
+  publish_timestep = 0.01;
   if(v.isMember("PublishTimestep"))
   {
     publish_timestep = v["PublishTimestep"].asDouble();
   }
-  else
+  enable_log = true;
+  if(v.isMember("Log"))
   {
-    publish_timestep = 0.01;
+    enable_log = v["Log"].asBool();
+  }
+  log_directory = bfs::temp_directory_path();
+  if(v.isMember("LogDirectory"))
+  {
+    log_directory = v["LogDirectory"].asString();
+  }
+  log_template = "mc-control";
+  if(v.isMember("LogTemplate"))
+  {
+    log_template = v["LogTemplate"].asString();
   }
   /* Allow the user not to worry about Default if only one controller is enabled */
   if(enabled_controllers.size() == 1)
@@ -232,8 +236,8 @@ void MCGlobalController::init(const std::vector<double> & initq)
       {"r_gripper", {initq[23], initq[24]}}
     });
   }
-
   controller->reset({q});
+  log_header();
 }
 
 void MCGlobalController::setSensorOrientation(const Eigen::Vector3d & rpy)
@@ -255,6 +259,11 @@ void MCGlobalController::setSensorAcceleration(const Eigen::Vector3d & acc)
 void MCGlobalController::setEncoderValues(const std::vector<double> & eValues)
 {
   controller->encoderValues = eValues;
+}
+
+void MCGlobalController::setJointTorques(const std::vector<double> & tValues)
+{
+  controller->jointTorques = tValues;
 }
 
 void MCGlobalController::setWrenches(const std::map<std::string, sva::ForceVecd> & wrenches)
@@ -302,10 +311,12 @@ bool MCGlobalController::run()
     }
     next_controller = 0;
     current_ctrl = next_ctrl;
+    log_header();
   }
   if(running)
   {
     bool r = controller->run();
+    log_data();
     if(!r) { running = false; }
     return r;
   }
@@ -409,16 +420,6 @@ void MCGlobalController::setGripperOpenPercent(const std::string & name, double 
   }
 }
 
-std::ostream & MCGlobalController::log_header(std::ostream & os)
-{
-  return controller->log_header(os);
-}
-
-std::ostream & MCGlobalController::log_data(std::ostream & os)
-{
-  return controller->log_data(os);
-}
-
 double MCGlobalController::timestep()
 {
   return config.timestep;
@@ -496,6 +497,126 @@ bool MCGlobalController::GoToHalfSitPose()
     return EnableController("HalfSitPose");
   }
   return true;
+}
+
+
+void MCGlobalController::log_header()
+{
+  auto get_log_path = [this]()
+  {
+    std::stringstream ss;
+    auto t = std::time(nullptr);
+    auto tm = std::localtime(&t);
+    ss << config.log_template
+       << "-" << current_ctrl
+       << "-" << (1900 + tm->tm_year)
+       << "-" << std::setw(2) << std::setfill('0') << (1 + tm->tm_mon)
+       << "-" << std::setw(2) << std::setfill('0') << tm->tm_mday
+       << "-" << std::setw(2) << std::setfill('0') << tm->tm_hour
+       << "-" << std::setw(2) << std::setfill('0') << tm->tm_min
+       << "-" << std::setw(2) << std::setfill('0') << tm->tm_sec
+       << ".log";
+    bfs::path log_path = config.log_directory / bfs::path(ss.str().c_str());
+    LOG_INFO("Will log controller outputs to " << log_path)
+    return log_path;
+  };
+  auto log_path = get_log_path();
+  if(log_.is_open())
+  {
+    log_.close();
+  }
+  log_.open(log_path.string());
+  if(log_.is_open())
+  {
+    log_ << "t";
+    for(unsigned int i = 0; i < static_cast<unsigned int>(controller->getEncoderValues().size()); ++i)
+    {
+      log_ << ";qIn" << i;
+    }
+    for(unsigned int i = 0; i < static_cast<unsigned int>(controller->getEncoderValues().size()); ++i)
+    {
+      log_ << ";qOut" << i;
+    }
+    for(unsigned int i = 0; i < static_cast<unsigned int>(controller->getJointTorques().size()); ++i)
+    {
+      log_ << ";taucIn" << i;
+    }
+    for(const auto & w : controller->getWrenches())
+    {
+      const auto& wn = w.first;
+      log_ << ";" << wn << "_fx";
+      log_ << ";" << wn << "_fy";
+      log_ << ";" << wn << "_fz";
+      log_ << ";" << wn << "_cx";
+      log_ << ";" << wn << "_cy";
+      log_ << ";" << wn << "_cz";
+    }
+    log_ << ";" << "rpy_r";
+    log_ << ";" << "rpy_p";
+    log_ << ";" << "rpy_y";
+    log_ << ";" << "rate_x";
+    log_ << ";" << "rate_y";
+    log_ << ";" << "rate_z";
+    log_ << ";" << "acc_x";
+    log_ << ";" << "acc_y";
+    log_ << ";" << "acc_z";
+
+    controller->log_header(log_);
+    log_ << std::endl;
+    log_iter_ = 0;
+  }
+  else
+  {
+    LOG_ERROR("Failed to open log file " << log_path)
+  }
+}
+
+void MCGlobalController::log_data()
+{
+  if(log_.is_open())
+  {
+    log_ << log_iter_;
+    log_iter_ += timestep();
+    for(const auto & qi : controller->getEncoderValues())
+    {
+      log_ << ";" << qi;
+    }
+    const auto & qOut = send(log_iter_).robots_state[0].q;
+    for(const auto & jn : ref_joint_order())
+    {
+      log_ << ";" << qOut.at(jn)[0];
+    }
+    for(const auto & ti : controller->getJointTorques())
+    {
+      log_ << ";" << ti;
+    }
+    for(const auto & w : controller->getWrenches())
+    {
+      log_ << ";" << w.second.force().x();
+      log_ << ";" << w.second.force().y();
+      log_ << ";" << w.second.force().z();
+      log_ << ";" << w.second.couple().x();
+      log_ << ";" << w.second.couple().y();
+      log_ << ";" << w.second.couple().z();
+    }
+    const auto & rpyIn = controller->getSensorOrientation();
+    log_ << ";" << rpyIn.x();
+    log_ << ";" << rpyIn.y();
+    log_ << ";" << rpyIn.z();
+
+    const auto & rateIn = controller->getSensorVelocity();
+    log_ << ";" << rateIn.x();
+    log_ << ";" << rateIn.y();
+    log_ << ";" << rateIn.z();
+
+    const auto & accIn = controller->getSensorAcceleration();
+    log_ << ";" << accIn.x();
+    log_ << ";" << accIn.y();
+    log_ << ";" << accIn.z();
+
+    controller->log_data(log_);
+    log_ << std::endl;
+  }
 }
 
 }

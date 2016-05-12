@@ -9,6 +9,10 @@
 #include <mc_rtc/config.h>
 #include <mc_rtc/loader.h>
 
+#include <boost/filesystem.hpp>
+namespace bfs = boost::filesystem;
+
+#include <fstream>
 #include <thread>
 
 namespace mc_control
@@ -30,6 +34,8 @@ public:
 
   void setEncoderValues(const std::vector<double> & eValues);
 
+  void setJointTorques(const std::vector<double> & tValues);
+
   void setWrenches(const std::map<std::string, sva::ForceVecd> & wrenches);
 
   void setActualGripperQ(const std::map<std::string, std::vector<double>> & grippersQ);
@@ -44,8 +50,6 @@ public:
 
   const std::vector<std::string> & ref_joint_order();
 
-  std::ostream & log_header(std::ostream & os);
-  std::ostream & log_data(std::ostream & os);
   /* Called by the RT component to switch between controllers */
   bool EnableController(const std::string & name);
 
@@ -110,6 +114,10 @@ private:
     bool publish_real_state;
     double publish_timestep;
 
+    bool enable_log;
+    bfs::path log_directory;
+    std::string log_template;
+
     Json::Value v;
   };
 private:
@@ -123,6 +131,11 @@ private:
 
   std::thread publish_th;
   mc_rbdyn::Robots real_robots;
+
+  std::ofstream log_;
+  double log_iter_;
+  void log_header();
+  void log_data();
 };
 
 }

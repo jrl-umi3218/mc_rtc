@@ -245,19 +245,18 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
     tm.nsec = static_cast<CORBA::ULong>(coiltm.usec())*1000;
     if(controller.running)
     {
-      if(!init)
-      {
-        LOG_INFO("Init controller")
-        controller.init(qIn);
-        init = true;
-        log_header();
-      }
       double t = tm.sec*1e9 + tm.nsec;
       controller.setSensorOrientation(rpyIn);
       controller.setSensorVelocity(rateIn);
       controller.setSensorAcceleration(accIn);
       controller.setEncoderValues(qIn);
       controller.setWrenches(m_wrenches);
+      if(!init)
+      {
+        LOG_INFO("Init controller")
+        controller.init(qIn);
+        init = true;
+      }
       if(controller.run())
       {
         const mc_control::QPResultMsg & res = controller.send(t);
@@ -305,7 +304,6 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
       m_qOutOut.write();
       m_pOutOut.write();
       m_rpyOutOut.write();
-      log_data();
     }
     else
     {
@@ -348,89 +346,6 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
     }
   }
   return RTC::RTC_OK;
-}
-
-void MCControl::log_header()
-{
-  m_log.open("/tmp/mc-control.log");
-  m_log << "t";
-  for(unsigned int i = 0; i < static_cast<unsigned int>(m_qIn.data.length()); ++i)
-  {
-    m_log << ";qIn" << i;
-  }
-  for(unsigned int i = 0; i < static_cast<unsigned int>(m_qOut.data.length()); ++i)
-  {
-    m_log << ";qOut" << i;
-  }
-  for(unsigned int i = 0; i < static_cast<unsigned int>(m_taucIn.data.length()); ++i)
-  {
-    m_log << ";taucIn" << i;
-  }
-  for(const auto & w : m_wrenches)
-  {
-    const auto& wn = w.first;
-    m_log << ";" << wn << "_fx";
-    m_log << ";" << wn << "_fy";
-    m_log << ";" << wn << "_fz";
-    m_log << ";" << wn << "_cx";
-    m_log << ";" << wn << "_cy";
-    m_log << ";" << wn << "_cz";
-  }
-  m_log << ";" << "rpy_r";
-  m_log << ";" << "rpy_p";
-  m_log << ";" << "rpy_y";
-  m_log << ";" << "rate_x";
-  m_log << ";" << "rate_y";
-  m_log << ";" << "rate_z";
-  m_log << ";" << "acc_x";
-  m_log << ";" << "acc_y";
-  m_log << ";" << "acc_z";
-
-  controller.log_header(m_log);
-  m_log << std::endl;
-}
-
-void MCControl::log_data()
-{
-  if(m_log.is_open())
-  {
-    m_log << m_qOut.tm.sec << "." << std::setw(9) << std::setfill('0') << m_qOut.tm.nsec;
-    for(unsigned int i = 0; i < static_cast<unsigned int>(m_qIn.data.length()); ++i)
-    {
-      m_log << ";" << m_qIn.data[i];
-    }
-    for(unsigned int i = 0; i < static_cast<unsigned int>(m_qOut.data.length()); ++i)
-    {
-      m_log << ";" << m_qOut.data[i];
-    }
-    for(unsigned int i = 0; i < static_cast<unsigned int>(m_taucIn.data.length()); ++i)
-    {
-      m_log << ";" << m_taucIn.data[i];
-    }
-    for(const auto & w : m_wrenches)
-    {
-      m_log << ";" << w.second.force().x();
-      m_log << ";" << w.second.force().y();
-      m_log << ";" << w.second.force().z();
-      m_log << ";" << w.second.couple().x();
-      m_log << ";" << w.second.couple().y();
-      m_log << ";" << w.second.couple().z();
-    }
-    m_log << ";" << rpyIn.x();
-    m_log << ";" << rpyIn.y();
-    m_log << ";" << rpyIn.z();
-
-    m_log << ";" << rateIn.x();
-    m_log << ";" << rateIn.y();
-    m_log << ";" << rateIn.z();
-
-    m_log << ";" << accIn.x();
-    m_log << ";" << accIn.y();
-    m_log << ";" << accIn.z();
-
-    controller.log_data(m_log);
-    m_log << std::endl;
-  }
 }
 
 extern "C"

@@ -151,10 +151,6 @@ class MCControl  : public RTC::DataFlowComponentBase
 
   // </rtc-template>
 private:
-  std::ofstream m_log;
-  void log_header();
-  void log_data();
-
   /* For each gripper, store the joints to report as the actual gripper values */
   std::map<std::string, std::vector<size_t>> gripper_in_index;
   std::map<std::string, std::vector<double>> realGripperQs;
