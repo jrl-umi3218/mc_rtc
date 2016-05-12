@@ -77,8 +77,10 @@ public:
 
   std::pair<std::string, std::string> surfaces() const;
 
+  sva::PTransformd X_0_r1s(const mc_rbdyn::Robot & robot) const;
   sva::PTransformd X_0_r1s(const mc_rbdyn::Robots & robots) const;
 
+  sva::PTransformd X_0_r2s(const mc_rbdyn::Robot & robot) const;
   sva::PTransformd X_0_r2s(const mc_rbdyn::Robots & robots) const;
 
   std::vector<sva::PTransformd> r1Points();

@@ -30,7 +30,11 @@ public:
 
   const std::vector<Contact> & geomContacts() const;
 
+  void geomContacts(const std::vector<Contact> & contacts);
+
   const std::vector<Contact> & stabContacts() const;
+
+  void stabContacts(const std::vector<Contact> & contacts);
 
   void updateContact(const Contact & oldContact, const Contact & newContact);
 

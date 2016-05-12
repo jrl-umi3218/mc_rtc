@@ -210,12 +210,22 @@ std::pair<std::string, std::string> Contact::surfaces() const
 
 sva::PTransformd Contact::X_0_r1s(const mc_rbdyn::Robots & robots) const
 {
-  return impl->X_r2s_r1s*(impl->r2Surface->X_0_s(robots.robot(impl->r2Index)));
+  return X_0_r1s(robots.robot(impl->r2Index));
+}
+
+sva::PTransformd Contact::X_0_r1s(const mc_rbdyn::Robot & robot) const
+{
+  return impl->X_r2s_r1s*(impl->r2Surface->X_0_s(robot));
 }
 
 sva::PTransformd Contact::X_0_r2s(const mc_rbdyn::Robots & robots) const
 {
-  return impl->X_r2s_r1s.inv()*(impl->r1Surface->X_0_s(robots.robot(impl->r1Index)));
+  return X_0_r2s(robots.robot(impl->r1Index));
+}
+
+sva::PTransformd Contact::X_0_r2s(const mc_rbdyn::Robot & robot) const
+{
+  return impl->X_r2s_r1s.inv()*(impl->r1Surface->X_0_s(robot));
 }
 
 std::vector<sva::PTransformd> Contact::r1Points()

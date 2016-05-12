@@ -65,9 +65,19 @@ const std::vector<Contact> & Stance::geomContacts() const
   return impl->geomContacts;
 }
 
+void Stance::geomContacts(const std::vector<Contact> & contacts)
+{
+  impl->geomContacts = contacts;
+}
+
 const std::vector<Contact> & Stance::stabContacts() const
 {
   return impl->stabContacts;
+}
+
+void Stance::stabContacts(const std::vector<Contact> & contacts)
+{
+  impl->stabContacts = contacts;
 }
 
 void Stance::updateContact(const Contact & oldContact, const Contact & newContact)

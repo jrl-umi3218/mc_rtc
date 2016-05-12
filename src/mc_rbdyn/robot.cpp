@@ -188,6 +188,30 @@ const std::vector<std::vector<double>> & Robot::tu() const
 {
   return tu_;
 }
+std::vector<std::vector<double>> & Robot::ql()
+{
+  return ql_;
+}
+std::vector<std::vector<double>> & Robot::qu()
+{
+  return qu_;
+}
+std::vector<std::vector<double>> & Robot::vl()
+{
+  return vl_;
+}
+std::vector<std::vector<double>> & Robot::vu()
+{
+  return vu_;
+}
+std::vector<std::vector<double>> & Robot::tl()
+{
+  return tl_;
+}
+std::vector<std::vector<double>> & Robot::tu()
+{
+  return tu_;
+}
 
 const std::vector<Flexibility> & Robot::flexibility() const
 {
@@ -390,10 +414,15 @@ const Robot & Robots::robot(unsigned int idx) const
 
 void Robots::createRobotWithBase(Robots & robots, unsigned int robots_idx, const Base & base, const Eigen::Vector3d & baseAxis)
 {
-  this->mbs_.push_back(robots.robot(robots_idx).mbg().makeMultiBody(base.baseName, base.baseType, baseAxis, base.X_0_s, base.X_b0_s));
+  createRobotWithBase(robots.robot(robots_idx), base, baseAxis);
+}
+
+void Robots::createRobotWithBase(Robot & robot, const Base & base, const Eigen::Vector3d & baseAxis)
+{
+  this->mbs_.push_back(robot.mbg().makeMultiBody(base.baseName, base.baseType, baseAxis, base.X_0_s, base.X_b0_s));
   this->mbcs_.emplace_back(this->mbs_.back());
-  this->mbgs_.push_back(robots.robot(robots_idx).mbg());
-  robots.robot(robots_idx).createWithBase(*this, static_cast<unsigned int>(this->mbs_.size()) - 1, base);
+  this->mbgs_.push_back(robot.mbg());
+  robot.createWithBase(*this, static_cast<unsigned int>(this->mbs_.size()) - 1, base);
 }
 
 void Robot::createWithBase(Robots & robots, unsigned int robots_idx, const Base & base) const
@@ -438,10 +467,15 @@ void Robot::createWithBase(Robots & robots, unsigned int robots_idx, const Base 
 
 void Robots::robotCopy(const Robots & robots, unsigned int robots_idx)
 {
-  this->mbs_.push_back(robots.robot(robots_idx).mb());
-  this->mbcs_.push_back(robots.robot(robots_idx).mbc());
-  this->mbgs_.push_back(robots.robot(robots_idx).mbg());
-  robots.robot(robots_idx).copy(*this, static_cast<unsigned int>(this->mbs_.size()) - 1);
+  this->robotCopy(robots.robot(robots_idx));
+}
+
+void Robots::robotCopy(const Robot & robot)
+{
+  this->mbs_.push_back(robot.mb());
+  this->mbcs_.push_back(robot.mbc());
+  this->mbgs_.push_back(robot.mbg());
+  robot.copy(*this, static_cast<unsigned int>(this->mbs_.size()) - 1);
 }
 
 void Robot::copy(Robots & robots, unsigned int robots_idx) const

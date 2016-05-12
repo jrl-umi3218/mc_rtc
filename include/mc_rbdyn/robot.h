@@ -93,7 +93,11 @@ public:
 
   void robotCopy(const Robots & robots, unsigned int robots_idx);
 
+  void robotCopy(const Robot & robot);
+
   void createRobotWithBase(Robots & robots, unsigned int robots_idx, const Base & base, const Eigen::Vector3d & baseAxis = Eigen::Vector3d::UnitZ());
+
+  void createRobotWithBase(Robot & robot, const Base & base, const Eigen::Vector3d & baseAxis = Eigen::Vector3d::UnitZ());
 
   Robot & robot();
   const Robot & robot() const;
@@ -176,6 +180,12 @@ public:
   const std::vector<std::vector<double>> & vu() const;
   const std::vector<std::vector<double>> & tl() const;
   const std::vector<std::vector<double>> & tu() const;
+  std::vector<std::vector<double>> & ql();
+  std::vector<std::vector<double>> & qu();
+  std::vector<std::vector<double>> & vl();
+  std::vector<std::vector<double>> & vu();
+  std::vector<std::vector<double>> & tl();
+  std::vector<std::vector<double>> & tu();
 
   const std::vector<Flexibility> & flexibility() const;
 
