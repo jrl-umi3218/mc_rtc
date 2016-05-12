@@ -83,6 +83,9 @@ struct MC_RBDYN_DLLAPI RobotModule
   /** Return the reference (native controller) joint order of the robot */
   virtual const std::vector<std::string> & ref_joint_order() { return _ref_joint_order; }
 
+  /** Return default attitude of the robot */
+  virtual const std::array<double, 7> & default_attitude() { return _default_attitude; }
+
   std::string path;
   std::string name;
   std::string urdf_path;
@@ -105,6 +108,7 @@ struct MC_RBDYN_DLLAPI RobotModule
   std::vector<mc_rbdyn::Collision> _commonSelfCollisions;
   std::vector<Gripper> _grippers;
   std::vector<std::string> _ref_joint_order;
+  std::array<double, 7> _default_attitude = {{1., 0., 0., 0., 0. , 0., 0.}};
 };
 
 } // namespace mc_rbdyn

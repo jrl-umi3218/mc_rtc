@@ -158,6 +158,8 @@ namespace mc_robots
       "L_WRIST_Y", "L_WRIST_P", "L_WRIST_R",
       "L_HAND_J0", "L_HAND_J1"
     };
+
+    _default_attitude = {{1., 0., 0., 0., 0., 0., 0.79216}};
   }
 
   std::map<std::string, std::pair<std::string, std::string> > HRP4CommonRobotModule::getConvexHull(const std::map<std::string, std::pair<std::string, std::string>> & files) const

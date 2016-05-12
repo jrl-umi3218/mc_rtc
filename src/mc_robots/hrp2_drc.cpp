@@ -124,6 +124,8 @@ HRP2DRCCommonRobotModule::HRP2DRCCommonRobotModule()
   "RHAND_JOINT0", "RHAND_JOINT1", "RHAND_JOINT2", "RHAND_JOINT3", "RHAND_JOINT4",
   "LHAND_JOINT0", "LHAND_JOINT1", "LHAND_JOINT2", "LHAND_JOINT3", "LHAND_JOINT4"
   };
+
+  _default_attitude = {{1., 0., 0., 0., 0., 0., 0.773}};
 }
 
 std::map<std::string, std::pair<std::string, std::string> > HRP2DRCCommonRobotModule::getConvexHull(const std::map<std::string, std::pair<std::string, std::string>> & files) const
