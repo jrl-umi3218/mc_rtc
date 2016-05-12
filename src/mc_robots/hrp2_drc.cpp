@@ -221,8 +221,6 @@ std::map<std::string, std::pair<std::string, std::string>> HRP2DRCCommonRobotMod
   res["LARM_LINK7"] = std::pair<std::string, std::string>("LARM_LINK7", "LARM_DRC_LINK7");
   res["RARM_LINK6_sub1"] = std::pair<std::string, std::string>("RARM_LINK6", "RARM_LINK6_lower");
   res["LARM_LINK6_sub1"] = std::pair<std::string, std::string>("LARM_LINK6", "LARM_LINK6_lower");
-  res["RLEG_LINK5"] = std::pair<std::string, std::string>("RLEG_LINK5", "RLEG_LINK5-2");
-  res["LLEG_LINK5"] = std::pair<std::string, std::string>("LLEG_LINK5", "LLEG_LINK5-2");
   res["RARM_LINK6"] = std::pair<std::string, std::string>("RARM_LINK6", "r_wrist_closed");
   res["LARM_LINK6"] = std::pair<std::string, std::string>("LARM_LINK6", "l_wrist_closed");
   res["CHEST_LINK1_FULL"] = std::pair<std::string, std::string>("CHEST_LINK1", "CHEST_LINK1_FULL");
