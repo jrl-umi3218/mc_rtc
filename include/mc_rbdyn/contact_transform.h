@@ -18,6 +18,8 @@ MC_RBDYN_DLLAPI void planarParam(const sva::PTransformd & X_es_rs, double & T, d
 
 MC_RBDYN_DLLAPI void cylindricalParam(const sva::PTransformd & X_es_rs, double & T, double & T_rot);
 
+MC_RBDYN_DLLAPI std::vector<double> jointParam(const Surface & r1Surface, const Surface & r2Surface, const sva::PTransformd & X_es_rs);
+
 }
 
 #endif

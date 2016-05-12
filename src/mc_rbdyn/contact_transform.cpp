@@ -1,5 +1,7 @@
 #include <mc_rbdyn/contact_transform.h>
 
+#include <mc_rbdyn/Surface.h>
+
 namespace mc_rbdyn
 {
 
@@ -46,6 +48,27 @@ void cylindricalParam(const sva::PTransformd & X_es_rs, double & T, double & T_r
 
   double normalizedBeBr = std::min(std::max(BEnv.dot(BRob), -1.0), 1.0);
   T_rot = -1*acos(normalizedBeBr)*sgn(NRob.dot(BEnv));
+}
+
+MC_RBDYN_DLLAPI std::vector<double> jointParam(const Surface & r1Surface, const Surface & r2Surface, const sva::PTransformd & X_es_rs)
+{
+  if(r1Surface.type() == "planar" && r2Surface.type() == "planar")
+  {
+    double T, B, N_rot;
+    planarParam(X_es_rs, T, B, N_rot);
+    auto rz = sva::RotZ(N_rot);
+    Eigen::Vector3d trans(T, B, 0);
+    auto transJoint = rz*trans;
+    return {N_rot, transJoint.x(), transJoint.y()};
+  }
+  else if( (r1Surface.type() == "planar" || r1Surface.type() == "gripper")
+           && r2Surface.type() == "cylindrical")
+  {
+    double T, T_rot;
+    cylindricalParam(X_es_rs, T, T_rot);
+    return {T, T_rot};
+  }
+  return {};
 }
 
 }
