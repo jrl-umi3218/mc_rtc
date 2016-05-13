@@ -116,6 +116,11 @@ const std::vector<double> & MCController::getEncoderValues()
   return this->encoderValues;
 }
 
+const std::vector<double> & MCController::getJointTorques()
+{
+  return this->jointTorques;
+}
+
 const Eigen::Vector3d & MCController::getSensorOrientation()
 {
   return this->sensorOri;

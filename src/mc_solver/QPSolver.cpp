@@ -108,14 +108,13 @@ bool QPSolver::run()
       }
       success = true;
     }
+    __fillResult();
   }
   return success;
 }
 
 const mc_control::QPResultMsg & QPSolver::send(double/*curTime*/)
 {
-  __fillResult();
-  /*FIXME Use curTime? */
   return qpRes;
 }
 

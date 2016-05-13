@@ -229,7 +229,6 @@ void MCControlTCP::controlCallback(WriteAndAck<Tcontrol>& control_proto, Tcontro
         }
       }
     }
-    log_data(control_data.control);
     iter_since_start++;
   }
   control_proto.data(control_data);
@@ -293,72 +292,17 @@ void MCControlTCP::sensorCallback(const Tsensor& data)
     rateIn(1) = data.gyrometer[1];
     rateIn(2) = data.gyrometer[2];
 
-    if(!init)
-    {
-      LOG_INFO("Init controller");
-      m_controller.init(qIn);
-      init = true;
-      log_header();
-    }
-
     m_controller.setSensorOrientation(rpyIn);
     m_controller.setSensorAcceleration(accIn);
     m_controller.setSensorVelocity(rateIn);
     m_controller.setEncoderValues(qIn);
     m_controller.setWrenches(m_wrenches);
-  }
-}
-
-void MCControlTCP::log_header()
-{
-  m_log.open("/tmp/mc-control.log");
-  m_log << "t";
-  for(unsigned int i = 0; i < qIn.size(); ++i)
-  {
-    m_log << ";qIn" << i;
-  }
-  for(unsigned int i = 0; i < qIn.size(); ++i)
-  {
-    m_log << ";qOut" << i;
-  }
-  for(const auto & w : m_wrenches)
-  {
-    const auto& wn = w.first;
-    m_log << ";" << wn << "_fx";
-    m_log << ";" << wn << "_fy";
-    m_log << ";" << wn << "_fz";
-    m_log << ";" << wn << "_cx";
-    m_log << ";" << wn << "_cy";
-    m_log << ";" << wn << "_cz";
-  }
-  m_controller.log_header(m_log);
-  m_log << std::endl;
-}
-
-void MCControlTCP::log_data(const double * qOut)
-{
-  if(m_log.is_open())
-  {
-    m_log << iter_since_start;
-    for(const auto & qi : qIn)
+    if(!init)
     {
-      m_log << ";" << qi;
+      LOG_INFO("Init controller");
+      m_controller.init(qIn);
+      init = true;
     }
-    for(size_t i = 0; i < qIn.size(); ++i)
-    {
-      m_log << ";" << qOut[i];
-    }
-    for(const auto & w : m_wrenches)
-    {
-      m_log << ";" << w.second.force().x();
-      m_log << ";" << w.second.force().y();
-      m_log << ";" << w.second.force().z();
-      m_log << ";" << w.second.couple().x();
-      m_log << ";" << w.second.couple().y();
-      m_log << ";" << w.second.couple().z();
-    }
-    m_controller.log_data(m_log);
-    m_log << std::endl;
   }
 }
 
