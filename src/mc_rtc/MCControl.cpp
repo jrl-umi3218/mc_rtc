@@ -251,6 +251,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
       controller.setSensorAcceleration(accIn);
       controller.setEncoderValues(qIn);
       controller.setWrenches(m_wrenches);
+      controller.setJointTorques(taucIn);
       if(!init)
       {
         LOG_INFO("Init controller")

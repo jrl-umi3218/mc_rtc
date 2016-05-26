@@ -12,6 +12,7 @@
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
 
+#include <array>
 #include <fstream>
 #include <thread>
 
@@ -25,6 +26,8 @@ public:
   virtual ~MCGlobalController();
 
   void init(const std::vector<double> & initq);
+
+  void init(const std::vector<double> & initq, const std::array<double, 7> & initAttitude);
 
   void setSensorOrientation(const Eigen::Vector3d & ori);
 

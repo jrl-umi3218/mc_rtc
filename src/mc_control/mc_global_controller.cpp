@@ -210,9 +210,13 @@ MCGlobalController::~MCGlobalController()
 
 void MCGlobalController::init(const std::vector<double> & initq)
 {
+  init(initq, config.main_robot_module->default_attitude());
+}
+
+void MCGlobalController::init(const std::vector<double> & initq, const std::array<double, 7> & initAttitude)
+{
   std::vector<std::vector<double>> q = robot().mbc().q;
-  const auto & p = config.main_robot_module->default_attitude();
-  q[0] = {std::begin(p), std::end(p)};
+  q[0] = {std::begin(initAttitude), std::end(initAttitude)};
   const auto & rjo = ref_joint_order();
   for(size_t i = 0; i < rjo.size(); ++i)
   {
