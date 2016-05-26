@@ -76,6 +76,12 @@ public:
    */
   std::pair<int, const tasks::qp::BilateralContact&> contactById(const tasks::qp::ContactId & id);
 
+  /** Gives access to a part to lambdaVec given a contact index
+   * \param cIndex The index of the contact
+   * \return The lambdaVec associated
+   */
+  Eigen::VectorXd lambdaVec(int cIndex) const;
+
   /** Reset all contacts in the solver and use the new set of contacts provided
    * \item contact Set of mc_rbdyn::Contact
    */
