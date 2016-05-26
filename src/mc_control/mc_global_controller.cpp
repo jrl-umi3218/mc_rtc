@@ -204,7 +204,7 @@ MCGlobalController::MCGlobalController(const std::string & conf)
 
 MCGlobalController::~MCGlobalController()
 {
-  running = false;
+  publish_th_running = false;
   publish_th.join();
 }
 
@@ -458,7 +458,7 @@ bool MCGlobalController::EnableController(const std::string & name)
 
 void MCGlobalController::publish_thread()
 {
-  while(running)
+  while(publish_th_running)
   {
     const auto start = std::chrono::high_resolution_clock::now();
 

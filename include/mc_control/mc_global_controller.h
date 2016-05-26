@@ -132,6 +132,7 @@ private:
   MCController * next_controller;
   std::unique_ptr<mc_rtc::ObjectLoader<MCController>> controller_loader;
 
+  bool publish_th_running = true;
   std::thread publish_th;
   mc_rbdyn::Robots real_robots;
 
