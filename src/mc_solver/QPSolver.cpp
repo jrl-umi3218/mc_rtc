@@ -56,6 +56,11 @@ std::pair<int, const tasks::qp::BilateralContact&> QPSolver::contactById(const t
   return std::pair<int, const tasks::qp::BilateralContact&>(-1, tasks::qp::BilateralContact());
 }
 
+Eigen::VectorXd QPSolver::lambdaVec(int cIndex) const
+{
+  return solver.lambdaVec(cIndex);
+}
+
 void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
 {
   uniContacts.clear();
