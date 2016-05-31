@@ -267,50 +267,54 @@ bool MCSeqController::run()
       sensorContacts = contactSensor->update(*this);
       pre_live(); /* pre_live can halt the execution */
       /* Stability polygon interpolation */
-      double cur_sample = 0.0; double cur_speed = 0.0;
-      samples.next(cur_sample, cur_speed);
-      double interpol_percent = std::min(cur_sample, max_perc);
-      bool done = interpol_percent == max_perc;
-      if(!done && stanceIndex < interpolators.size())
+      if(startPolygonInterpolator)
       {
-        auto clamp = [](const double & v) { return std::min(std::max(v, -0.13), 0.13); };
-        auto clamp_pos = [](const double & v) { return std::min(std::max(v, 0.), 0.15); };
-        auto poly = interpolators[stanceIndex].fast_interpolate(interpol_percent);
-        publisher->publish_poly(poly);
-        planes = mc_rbdyn::planes_from_polygon(poly);
-        std::vector<Eigen::Vector3d> speeds;
-        std::vector<Eigen::Vector3d> nds;
-        if(cur_speed != 0)
+        double cur_sample = 0.0; double cur_speed = 0.0;
+        samples.next(cur_sample, cur_speed);
+        double interpol_percent = std::min(cur_sample, max_perc);
+        bool done = interpol_percent == max_perc;
+        if(!done && stanceIndex < interpolators.size())
         {
-          auto normal_speeds = interpolators[stanceIndex].normal_derivative(cur_speed/timeStep);
-          for(const auto & t : normal_speeds)
+          auto clamp = [](const double & v) { return std::min(std::max(v, -0.13), 0.13); };
+          auto clamp_pos = [](const double & v) { return std::min(std::max(v, 0.), 0.15); };
+          auto poly = interpolators[stanceIndex].fast_interpolate(interpol_percent);
+          publisher->publish_poly(poly);
+          planes = mc_rbdyn::planes_from_polygon(poly);
+          std::vector<Eigen::Vector3d> speeds;
+          std::vector<Eigen::Vector3d> nds;
+          if(cur_speed != 0)
           {
-            nds.emplace_back(clamp(t[0]), clamp(t[1]), 0);
+            auto normal_speeds = interpolators[stanceIndex].normal_derivative(cur_speed/timeStep);
+            for(const auto & t : normal_speeds)
+            {
+              nds.emplace_back(clamp(t[0]), clamp(t[1]), 0);
+            }
+            auto mid_speeds = interpolators[stanceIndex].midpoint_derivative(cur_speed/timeStep);
+            for(const auto & t : mid_speeds)
+            {
+              speeds.emplace_back(clamp_pos(t[0]), clamp_pos(t[1]), 0.);
+            }
           }
-          auto mid_speeds = interpolators[stanceIndex].midpoint_derivative(cur_speed/timeStep);
-          for(const auto & t : mid_speeds)
+          else
           {
-            speeds.emplace_back(clamp_pos(t[0]), clamp_pos(t[1]), 0.);
+            speeds = std::vector<Eigen::Vector3d>(planes.size(), Eigen::Vector3d::Zero());
+            nds = speeds;
           }
+          if(stanceIndex == 6)
+          {
+            speeds = std::vector<Eigen::Vector3d>(planes.size(), Eigen::Vector3d::Zero());
+            nds = speeds;
+          }
+          comIncPlaneConstr.set_planes(solver(), planes, speeds, nds);
+
         }
         else
         {
-          speeds = std::vector<Eigen::Vector3d>(planes.size(), Eigen::Vector3d::Zero());
-          nds = speeds;
+          std::vector<Eigen::Vector3d> speeds(planes.size(), Eigen::Vector3d::Zero());
+          std::vector<Eigen::Vector3d> nds = speeds;
+          comIncPlaneConstr.set_planes(solver(), planes, speeds, nds);
+          startPolygonInterpolator = false;
         }
-        if(stanceIndex == 6)
-        {
-          speeds = std::vector<Eigen::Vector3d>(planes.size(), Eigen::Vector3d::Zero());
-          nds = speeds;
-        }
-        comIncPlaneConstr.set_planes(solver(), planes, speeds, nds);
-
-      }
-      else
-      {
-        std::vector<Eigen::Vector3d> speeds(planes.size(), Eigen::Vector3d::Zero());
-        std::vector<Eigen::Vector3d> nds = speeds;
-        comIncPlaneConstr.set_planes(solver(), planes, speeds, nds);
       }
       /* Execute the step */
       if(!halted && seq_actions[stanceIndex]->execute(*this))

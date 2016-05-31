@@ -217,6 +217,7 @@ public:
   std::shared_ptr<tasks::qp::PIDTask> adjustOrientationTaskPid;
   std::vector< std::shared_ptr<tasks::qp::GripperTorqueTask> > gripperTorqueTasks;
   mc_solver::CoMIncPlaneConstr comIncPlaneConstr;
+  bool startPolygonInterpolator = false;
   double max_perc;
   unsigned int nr_points;
   mc_rbdyn::QuadraticGenerator samples;

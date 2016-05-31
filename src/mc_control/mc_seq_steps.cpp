@@ -141,6 +141,7 @@ bool live_removeContacT::eval(MCSeqController & ctl)
 
 bool enter_moveWPT::eval(MCSeqController & ctl)
 {
+  ctl.startPolygonInterpolator = true;
   mc_rbdyn::StanceConfig & contactConf = ctl.curConf();
   mc_rbdyn::Stance & newS = ctl.targetStance();
 
@@ -378,6 +379,7 @@ bool live_chooseCoMT::eval(MCSeqController & ctl)
 bool enter_moveCoMP::eval(MCSeqController & ctl)
 {
   LOG_INFO("COMP")
+  ctl.startPolygonInterpolator = true;
   ctl.stabilityTask->target(ctl.env(), ctl.targetStance(), ctl.curConf(), ctl.curConf().comTask.targetSpeed);
   ctl.notInContactCount = 0;
   /*FIXME Should be optionnal */
@@ -752,6 +754,7 @@ bool live_removeGripperNotAddT::eval(MCSeqController & ctl)
 
 bool enter_moveGripperWPT::eval(MCSeqController & ctl)
 {
+  ctl.startPolygonInterpolator = true;
   if((!ctl.isGripperWillBeAttached) && ctl.isRemoved) { return true; }
   LOG_INFO("Move gripper WPT")
   mc_rbdyn::StanceConfig & contactConf = ctl.curConf();
