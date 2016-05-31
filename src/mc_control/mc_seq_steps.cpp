@@ -684,6 +684,7 @@ bool enter_removeGripperP::eval(MCSeqController & ctl)
   ctl.isColl = ctl.setCollisionsContactFilter(*(ctl.currentContact), contactConf);
 
   ctl.isRemoved = false;
+  ctl.notInContactCount = 0;
 
   return true;
 }
@@ -694,6 +695,7 @@ bool live_removeGripperP::eval(MCSeqController & ctl)
   {
     return true;
   }
+  double timeout = 10.*1/ctl.timeStep; //FIXME Should be part of the configuration
   bool all = true;
   double dOut = 0.025;
   double minD = 1;
@@ -723,7 +725,11 @@ bool live_removeGripperP::eval(MCSeqController & ctl)
   {
     LOG_INFO("Will move away because d > " << dLimit << " even if in model collision")
   }
-  all = all || (minD < 0 && d > dLimit);
+  if(ctl.notInContactCount++ > timeout)
+  {
+    LOG_WARNING("Will move away because of timeout")
+  }
+  all = all || (minD < 0 && d > dLimit) || ctl.notInContactCount > timeout;
   if(all)
   {
     ctl.removeContactTask->removeFromSolver(ctl.solver());
