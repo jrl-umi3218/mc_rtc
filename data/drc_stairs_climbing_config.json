@@ -9,7 +9,7 @@
          },
          "comTask" : {
             "extraStiffness" : 5.0,
-            "stiffness" : 1.0,
+            "stiffness" : 2.0,
             "targetSpeed" : 0.003,
             "weight" : 400.0
          },
@@ -59,7 +59,7 @@
             "orientation" : {
                "finalWeight" : 1000.0,
                "stiffness" : 15.0,
-               "weight" : 1.0
+               "weight" : 200.0
             },
             "position" : {
                "extraStiffness" : 12.0,
@@ -69,7 +69,7 @@
             },
             "waypointConf" : {
                "conf" : {
-                  "x" : 0.20,
+                  "x" : 0.10,
                   "y" : 1.0,
                   "z" : 0.90,
                   "nOff" : 0.20
@@ -141,7 +141,7 @@
             }
          },
          "postureTask" : {
-            "stiffness" : 2.0,
+            "stiffness" : 1.0,
             "weight" : 10.0
          }
       },
@@ -258,21 +258,12 @@
          ],
          "robotEnv" : [
             {
-               "body1" : "LARM_LINK6",
-               "body2" : "stair_left_railing",
-               "collisionConf" : {
-                  "damping" : 0.0,
-                  "iDist" : 0.02,
-                  "sDist" : 0.01
-               }
-            },
-            {
                "body1" : "RARM_LINK6",
                "body2" : "stair_step2",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.10,
-                  "sDist" : 0.050
+                  "iDist" : 0.2,
+                  "sDist" : 0.1
                }
             },
             {
@@ -280,8 +271,17 @@
                "body2" : "stair_step3",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.10,
-                  "sDist" : 0.050
+                  "iDist" : 0.2,
+                  "sDist" : 0.1
+               }
+            },
+            {
+               "body1" : "LLEG_LINK3",
+               "body2" : "stair_step3",
+               "collisionConf" : {
+                  "damping" : 0.0,
+                  "iDist" : 0.1,
+                  "sDist" : 0.05
                }
             },
             {
@@ -289,8 +289,8 @@
                "body2" : "platform",
                "collisionConf" : {
                   "damping" : 0.0,
-                  "iDist" : 0.10,
-                  "sDist" : 0.050
+                  "iDist" : 0.2,
+                  "sDist" : 0.1
                }
             }
          ],
@@ -298,6 +298,16 @@
            {
              "surf1" : "LeftGripper",
              "surf2" : "StairLeftRung1",
+             "filtered" : [
+              {
+                "body1" : "LARM_LINK6",
+                "body2" : "stair_left_railing"
+              }
+             ]
+           },
+           {
+             "surf1" : "LeftGripper",
+             "surf2" : "StairLeftRung2",
              "filtered" : [
               {
                 "body1" : "LARM_LINK6",
@@ -333,11 +343,60 @@
          }
       },
       {
+        "type" : "remove",
+        "r1Surface" : "LFrontSole",
+        "r2Surface" : "StairStep1",
+        "comObj" : {
+           "comOffset" : [ 0.0, -0.05, -0.0 ]
+        }
+      },
+      {
+        "type" : "add",
+        "r1Surface" : "LFrontSole",
+        "r2Surface" : "StairStep2",
+        "comObj" : {
+           "comOffset" : [ 0.25, 0.0, -0.0 ]
+        },
+        "comTask" : {
+           "extraStiffness" : 0.0,
+           "stiffness" : 1.0,
+           "targetSpeed" : 0.006,
+           "weight" : 500.0
+        },
+        "contactTask" : {
+           "waypointConf" : {
+              "conf" : {
+                 "x" : -0.05,
+                 "y" : 1.0,
+                 "z" : 0.9,
+                 "nOff" : 0.2
+              },
+              "thresh" : 0.15,
+              "type" : "percentWaypoint"
+           }
+        }
+      },
+      {
+        "type" : "add",
+        "r1Surface" : "RightFingers",
+        "r2Surface" : "Platform",
+        "contactTask" : {
+          "waypointConf" : {
+             "skip" : 1
+          }
+        }
+      },
+      {
          "type" : "add",
          "r1Surface" : "LeftGripper",
          "r2Surface" : "StairLeftRung2",
+         "contactTask" : {
+           "waypointConf" : {
+              "skip" : 1
+           }
+         },
          "comObj" : {
-            "comOffset" : [ 1.000000000000000e-06, 0.0, 0.0 ]
+            "comOffset" : [ 0.0, 0.0, 0.0 ]
          }
       }
    ]
