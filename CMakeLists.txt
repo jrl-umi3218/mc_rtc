@@ -9,6 +9,7 @@ include(cmake/pkg-config.cmake)
 set(PROJECT_NAME mc_rtc)
 set(PROJECT_DESCRIPTION mc_rtc)
 set(PROJECT_URL https://rob-dev.lirmm.fr/multi-contact/mc_rtc)
+set(PROJECT_DEBUG_POSTFIX "_d")
 
 set(CXX_DISABLE_WERROR 1)
 
@@ -40,8 +41,8 @@ ENDIF()
 find_package(Boost REQUIRED COMPONENTS system filesystem thread date_time timer)
 
 add_required_dependency(jsoncpp)
-add_required_dependency(Tasks)
-add_required_dependency(mc_rbdyn_urdf_cpp)
+add_required_dependency("Tasks" "Tasks_d")
+add_required_dependency("mc_rbdyn_urdf_cpp" "mc_rbdyn_urdf_cpp_d")
 pkg_config_append_cflags("-I${Eigen_INCLUDE_DIR}")
 
 add_optional_dependency(hrpsys-base)
