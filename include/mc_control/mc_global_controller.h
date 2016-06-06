@@ -29,9 +29,13 @@ public:
 
   void init(const std::vector<double> & initq, const std::array<double, 7> & initAttitude);
 
+  void setSensorPosition(const Eigen::Vector3d & pos);
+
   void setSensorOrientation(const Eigen::Vector3d & ori);
 
-  void setSensorVelocity(const Eigen::Vector3d& vel);
+  void setSensorLinearVelocity(const Eigen::Vector3d& vel);
+
+  void setSensorAngularVelocity(const Eigen::Vector3d& vel);
 
   void setSensorAcceleration(const Eigen::Vector3d& acc);
 

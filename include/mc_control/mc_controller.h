@@ -106,15 +106,25 @@ public:
    */
   const std::vector<double> & getJointTorques();
 
+  /** Get the sensor position
+   * \return The sensor position if provided, Eigen::Vector3d::Zero() otherwise
+   */
+  const Eigen::Vector3d & getSensorPosition();
+
   /** Get the sensor orientation
    * \return The sensor orientation if provided, Eigen::Vector3d::Zero() otherwise
    */
   const Eigen::Vector3d & getSensorOrientation();
 
+  /** Get the sensor linear velocity
+   * \return The sensor linear velocity if provided, Eigen::Vector3d::Zero() otherwise
+   */
+  const Eigen::Vector3d & getSensorLinearVelocity();
+
   /** Get the sensor angular velocity
    * \return The sensor angular velocity if provided, Eigen::Vector3d::Zero() otherwise
    */
-  const Eigen::Vector3d & getSensorVelocity();
+  const Eigen::Vector3d & getSensorAngularVelocity();
 
   /** Get the sensor acceleration
    * \return The sensor acceleration if provided, Eigen::Vector3d::Zero() otherwise
@@ -289,12 +299,16 @@ protected:
   std::vector<double> jointTorques;
   /** Force/Torque sensors */
   std::map<std::string, sva::ForceVecd> wrenches;
+  /** Robot position provided by sensors */
+  Eigen::Vector3d sensorPos;
   /** Robot orientation provided by sensors */
   Eigen::Vector3d sensorOri;
   /** Robot acceleration provided by sensors */
   Eigen::Vector3d sensorAcc;
+  /** Robot linear velocity provided by sensors */
+  Eigen::Vector3d sensorLinearVel;
   /** Robot angular velocity provided by sensors */
-  Eigen::Vector3d sensorVel;
+  Eigen::Vector3d sensorAngularVel;
   /** QP solver */
   std::shared_ptr<mc_solver::QPSolver> qpsolver;
 public:

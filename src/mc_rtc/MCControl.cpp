@@ -247,7 +247,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
     {
       double t = tm.sec*1e9 + tm.nsec;
       controller.setSensorOrientation(rpyIn);
-      controller.setSensorVelocity(rateIn);
+      controller.setSensorAngularVelocity(rateIn);
       controller.setSensorAcceleration(accIn);
       controller.setEncoderValues(qIn);
       controller.setWrenches(m_wrenches);

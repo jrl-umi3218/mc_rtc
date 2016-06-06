@@ -294,7 +294,7 @@ void MCControlTCP::sensorCallback(const Tsensor& data)
 
     m_controller.setSensorOrientation(rpyIn);
     m_controller.setSensorAcceleration(accIn);
-    m_controller.setSensorVelocity(rateIn);
+    m_controller.setSensorAngularVelocity(rateIn);
     m_controller.setEncoderValues(qIn);
     m_controller.setWrenches(m_wrenches);
     if(!init)

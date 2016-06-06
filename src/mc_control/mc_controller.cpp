@@ -121,14 +121,24 @@ const std::vector<double> & MCController::getJointTorques()
   return this->jointTorques;
 }
 
+const Eigen::Vector3d & MCController::getSensorPosition()
+{
+  return this->sensorPos;
+}
+
 const Eigen::Vector3d & MCController::getSensorOrientation()
 {
   return this->sensorOri;
 }
 
-const Eigen::Vector3d & MCController::getSensorVelocity()
+const Eigen::Vector3d & MCController::getSensorLinearVelocity()
 {
-  return this->sensorVel;
+  return this->sensorLinearVel;
+}
+
+const Eigen::Vector3d & MCController::getSensorAngularVelocity()
+{
+  return this->sensorAngularVel;
 }
 
 const Eigen::Vector3d & MCController::getSensorAcceleration()

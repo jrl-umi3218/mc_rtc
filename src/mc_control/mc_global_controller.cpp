@@ -244,15 +244,25 @@ void MCGlobalController::init(const std::vector<double> & initq, const std::arra
   log_header();
 }
 
+void MCGlobalController::setSensorPosition(const Eigen::Vector3d & pos)
+{
+  controller->sensorPos = pos;
+}
+
 void MCGlobalController::setSensorOrientation(const Eigen::Vector3d & rpy)
 {
   controller->sensorOri = rpy;
 }
 
-
-void MCGlobalController::setSensorVelocity(const Eigen::Vector3d & vel)
+void MCGlobalController::setSensorLinearVelocity(const Eigen::Vector3d & vel)
 {
-  controller->sensorVel = vel;
+  controller->sensorLinearVel = vel;
+}
+
+
+void MCGlobalController::setSensorAngularVelocity(const Eigen::Vector3d & vel)
+{
+  controller->sensorAngularVel = vel;
 }
 
 void MCGlobalController::setSensorAcceleration(const Eigen::Vector3d & acc)
@@ -465,7 +475,7 @@ void MCGlobalController::publish_thread()
     // Publish controlled robot
     if(config.publish_control_state)
     {
-      mc_rtc::ROSBridge::update_robot_publisher("control", timestep(), robot(), Eigen::Vector3d::Zero(), controller->getSensorOrientation(), controller->getSensorVelocity(), controller->getSensorAcceleration(), gripperJoints(), gripperQ());
+      mc_rtc::ROSBridge::update_robot_publisher("control", timestep(), robot(), Eigen::Vector3d::Zero(), controller->getSensorOrientation(), controller->getSensorAngularVelocity(), controller->getSensorAcceleration(), gripperJoints(), gripperQ());
     }
 
     if(config.publish_real_state)
@@ -485,7 +495,7 @@ void MCGlobalController::publish_thread()
           i++;
         }
         // Publish real robot
-        mc_rtc::ROSBridge::update_robot_publisher("real", timestep(), real_robot, Eigen::Vector3d::Zero(), controller->getSensorOrientation(), controller->getSensorVelocity(), controller->getSensorAcceleration(), gripperJoints(), gripperQ());
+        mc_rtc::ROSBridge::update_robot_publisher("real", timestep(), real_robot, Eigen::Vector3d::Zero(), controller->getSensorOrientation(), controller->getSensorAngularVelocity(), controller->getSensorAcceleration(), gripperJoints(), gripperQ());
       }
     }
 
@@ -555,9 +565,15 @@ void MCGlobalController::log_header()
       log_ << ";" << wn << "_cy";
       log_ << ";" << wn << "_cz";
     }
+    log_ << ";" << "p_x";
+    log_ << ";" << "p_y";
+    log_ << ";" << "p_z";
     log_ << ";" << "rpy_r";
     log_ << ";" << "rpy_p";
     log_ << ";" << "rpy_y";
+    log_ << ";" << "vel_x";
+    log_ << ";" << "vel_y";
+    log_ << ";" << "vel_z";
     log_ << ";" << "rate_x";
     log_ << ";" << "rate_y";
     log_ << ";" << "rate_z";
@@ -603,12 +619,22 @@ void MCGlobalController::log_data()
       log_ << ";" << w.second.couple().y();
       log_ << ";" << w.second.couple().z();
     }
+    const auto & pIn = controller->getSensorPosition();
+    log_ << ";" << pIn.x();
+    log_ << ";" << pIn.y();
+    log_ << ";" << pIn.z();
+
     const auto & rpyIn = controller->getSensorOrientation();
     log_ << ";" << rpyIn.x();
     log_ << ";" << rpyIn.y();
     log_ << ";" << rpyIn.z();
 
-    const auto & rateIn = controller->getSensorVelocity();
+    const auto & velIn = controller->getSensorLinearVelocity();
+    log_ << ";" << velIn.x();
+    log_ << ";" << velIn.y();
+    log_ << ";" << velIn.z();
+
+    const auto & rateIn = controller->getSensorAngularVelocity();
     log_ << ";" << rateIn.x();
     log_ << ";" << rateIn.y();
     log_ << ";" << rateIn.z();
