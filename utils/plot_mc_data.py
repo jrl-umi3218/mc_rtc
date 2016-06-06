@@ -71,6 +71,8 @@ def get_ylim(ax):
     return ymin, ymax
 
 def plot_stance_index_fig(ax, scale, cc):
+    if not 'stance_index' in data:
+      return
     if scale:
         ymin, ymax = ax.get_ylim()
         ymin += 0.1*(ymax-ymin)
