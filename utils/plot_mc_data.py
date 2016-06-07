@@ -157,6 +157,17 @@ def plot_moment_fig(force_sensors, ax, cc):
             set_ylim(ax, ymin, ymax)
             ax.set_ylabel('Moment')
 
+def plot_gen3d_fig(name, ax, cc):
+    ymin, ymax = get_ylim(ax)
+    if name + '_x' in data:
+        for i in ['x', 'y', 'z']:
+            v = name + '_' + i
+            ax.plot(data['t'], data[v], label = '{0}: {1}'.format(name, i), color = cc.next())
+            ymin = min(ymin, np.min(data[v]))
+            ymax = max(ymax, np.max(data[v]))
+        set_ylim(ax, ymin, ymax)
+        ax.set_ylabel(name + ' SI')
+
 def prep_ax(title):
     fig, ax = plt.subplots()
     fig.canvas.set_window_title(title)
@@ -232,6 +243,18 @@ def plot_force(force_sensors):
     ax2.legend(bbox_to_anchor=(0., -.1, 1., -1.02), loc=3, ncol=4, mode="expand", borderaxespad=0.)
     plt.show()
 
+def plot_acc():
+  ax, ax2, cc = prep_ax('Accelerometer')
+  plot_gen3d_fig('acc', ax, cc)
+  ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=4, mode="expand", borderaxespad=0.)
+  plt.show()
+
+def plot_gyro():
+  ax, ax2, cc = prep_ax('Gyrometer')
+  plot_gen3d_fig('rate', ax, cc)
+  ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=4, mode="expand", borderaxespad=0.)
+  plt.show()
+
 def welcome():
     print "Available functions:"
     print "- plot_torque(joint_names)"
@@ -241,5 +264,7 @@ def welcome():
     print "- plot_torque_error(joint_names)"
     print "- plot_command_encoder(joint_names)"
     print "- plot_force(Left|Right/Foot|Hand)"
+    print "- plot_acc()"
+    print "- plot_gyro()"
 
 welcome()
