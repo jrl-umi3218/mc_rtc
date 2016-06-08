@@ -255,6 +255,18 @@ def plot_gyro():
   ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=4, mode="expand", borderaxespad=0.)
   plt.show()
 
+def plot_vel():
+  ax, ax2, cc = prep_ax('Linear velocity')
+  plot_gen3d_fig('vel', ax, cc)
+  ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=4, mode="expand", borderaxespad=0.)
+  plt.show()
+
+def plot_p():
+  ax, ax2, cc = prep_ax('FF position')
+  plot_gen3d_fig('p', ax, cc)
+  ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=4, mode="expand", borderaxespad=0.)
+  plt.show()
+
 def welcome():
     print "Available functions:"
     print "- plot_torque(joint_names)"
@@ -264,7 +276,6 @@ def welcome():
     print "- plot_torque_error(joint_names)"
     print "- plot_command_encoder(joint_names)"
     print "- plot_force(Left|Right/Foot|Hand)"
-    print "- plot_acc()"
-    print "- plot_gyro()"
+    print "- plot_acc|gyro|vel|p()"
 
 welcome()
