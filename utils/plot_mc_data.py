@@ -159,9 +159,20 @@ def plot_moment_fig(force_sensors, ax, cc):
 
 def plot_gen3d_fig(name, ax, cc):
     ymin, ymax = get_ylim(ax)
-    if name + '_x' in data:
+    if name + 'x' in data:
         for i in ['x', 'y', 'z']:
-            v = name + '_' + i
+            v = name + i
+            ax.plot(data['t'], data[v], label = '{0}: {1}'.format(name, i), color = cc.next())
+            ymin = min(ymin, np.min(data[v]))
+            ymax = max(ymax, np.max(data[v]))
+        set_ylim(ax, ymin, ymax)
+        ax.set_ylabel(name + ' SI')
+
+def plot_gen4d_fig(name, ax, cc):
+    ymin, ymax = get_ylim(ax)
+    if name + 'w' in data:
+        for i in ['w', 'x', 'y', 'z']:
+            v = name + i
             ax.plot(data['t'], data[v], label = '{0}: {1}'.format(name, i), color = cc.next())
             ymin = min(ymin, np.min(data[v]))
             ymax = max(ymax, np.max(data[v]))
@@ -245,26 +256,34 @@ def plot_force(force_sensors):
 
 def plot_acc():
   ax, ax2, cc = prep_ax('Accelerometer')
-  plot_gen3d_fig('acc', ax, cc)
+  plot_gen3d_fig('acc_', ax, cc)
   ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=4, mode="expand", borderaxespad=0.)
   plt.show()
 
 def plot_gyro():
   ax, ax2, cc = prep_ax('Gyrometer')
-  plot_gen3d_fig('rate', ax, cc)
+  plot_gen3d_fig('rate_', ax, cc)
   ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=4, mode="expand", borderaxespad=0.)
   plt.show()
 
 def plot_vel():
   ax, ax2, cc = prep_ax('Linear velocity')
-  plot_gen3d_fig('vel', ax, cc)
+  plot_gen3d_fig('vel_', ax, cc)
   ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=4, mode="expand", borderaxespad=0.)
   plt.show()
 
 def plot_p():
-  ax, ax2, cc = prep_ax('FF position')
-  plot_gen3d_fig('p', ax, cc)
+  ax, ax2, cc = prep_ax('FF position (sensor)')
+  plot_gen3d_fig('p_', ax, cc)
   ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=4, mode="expand", borderaxespad=0.)
+  plt.show()
+
+def plot_ff():
+  ax, ax2, cc = prep_ax('FF position (control)')
+  plot_gen3d_fig('ff_t', ax, cc)
+  ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=4, mode="expand", borderaxespad=0.)
+  plot_gen4d_fig('ff_q', ax2, cc)
+  ax2.legend(bbox_to_anchor=(0., -.1, 1., -1.02), loc=3, ncol=4, mode="expand", borderaxespad=0.)
   plt.show()
 
 def welcome():
@@ -276,6 +295,6 @@ def welcome():
     print "- plot_torque_error(joint_names)"
     print "- plot_command_encoder(joint_names)"
     print "- plot_force(Left|Right/Foot|Hand)"
-    print "- plot_acc|gyro|vel|p()"
+    print "- plot_acc|gyro|vel|p|ff()"
 
 welcome()

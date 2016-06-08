@@ -547,6 +547,7 @@ void MCGlobalController::log_header()
     {
       log_ << ";qIn" << i;
     }
+    log_ << ";ff_qw;ff_qx;ff_qy;ff_qz;ff_tx;ff_ty;ff_tz";
     for(unsigned int i = 0; i < static_cast<unsigned int>(controller->getEncoderValues().size()); ++i)
     {
       log_ << ";qOut" << i;
@@ -600,6 +601,11 @@ void MCGlobalController::log_data()
     for(const auto & qi : controller->getEncoderValues())
     {
       log_ << ";" << qi;
+    }
+    const auto & ff = controller->robot().mbc().q[0];
+    for(const auto & ffi : ff)
+    {
+      log_ << ";" << ffi;
     }
     const auto & qOut = send(log_iter_).robots_state[0].q;
     for(const auto & jn : ref_joint_order())
