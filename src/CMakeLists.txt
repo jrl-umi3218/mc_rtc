@@ -22,6 +22,7 @@ mc_rbdyn/PolygonInterpolator.cpp
 mc_rbdyn/polygon_utils.cpp
 mc_rbdyn/RobotLoader.cpp
 mc_rbdyn/Collision.cpp
+mc_rbdyn/calibrator.cpp
 )
 
 set(mc_rbdyn_HDR
@@ -42,9 +43,11 @@ set(mc_rbdyn_HDR
 ../include/mc_rbdyn/stance.h
 ../include/mc_rbdyn/StanceConfig.h
 ../include/mc_rbdyn/Surface.h
+../include/mc_rbdyn/rpy_utils.h
 ../include/mc_rbdyn/surface_hull.h
 ../include/mc_rbdyn/surface_utils.h
 ../include/mc_rbdyn/Collision.h
+../include/mc_rbdyn/calibrator.h
 )
 
 add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC} ${mc_rbdyn_HDR})
@@ -130,6 +133,7 @@ mc_tasks/StabilityTask.cpp
 mc_tasks/AddRemoveContactTask.cpp
 mc_tasks/MoveContactTask.cpp
 mc_tasks/TrajectoryTask.cpp
+mc_tasks/ComplianceTask.cpp
 )
 
 set(mc_tasks_HDR
@@ -144,6 +148,7 @@ set(mc_tasks_HDR
 ../include/mc_tasks/SmoothTask.h
 ../include/mc_tasks/StabilityTask.h
 ../include/mc_tasks/TrajectoryTask.h
+../include/mc_tasks/ComplianceTask.h
 )
 
 add_library(mc_tasks SHARED ${mc_tasks_SRC} ${mc_tasks_HDR})
