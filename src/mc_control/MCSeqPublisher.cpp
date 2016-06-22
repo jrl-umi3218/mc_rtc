@@ -119,7 +119,7 @@ inline visualization_msgs::Marker com_marker(const Eigen::Vector3d & com, const 
   msg.color.g = 0.0;
   msg.color.b = 0.0;
   msg.color.a = 1.0;
-  msg.lifetime = ros::Duration(0);
+  msg.lifetime = ros::Duration(1);
   return msg;
 }
 
