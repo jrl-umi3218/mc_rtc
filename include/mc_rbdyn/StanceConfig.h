@@ -19,7 +19,7 @@ namespace mc_rbdyn
 
 MC_RBDYN_DLLAPI
 std::function<Eigen::Vector3d (const sva::PTransformd &, const sva::PTransformd &, const Eigen::Vector3d &)>
-percentWaypoint(double x, double y, double z, double nOff);
+percentWaypoint(double x, double y, double z, double nOff, double xOff = 0, double yOff = 0, double zOff = 0);
 
 MC_RBDYN_DLLAPI
 std::function<Eigen::Vector3d (const sva::PTransformd &, const sva::PTransformd &, const Eigen::Vector3d &)>
@@ -40,6 +40,7 @@ public:
     double posThresh;
     double velThresh;
     Eigen::Vector3d comOffset;
+    Eigen::Vector3d comAdjustOffset;
     double timeout;
   };
   struct PostureTask
@@ -94,9 +95,14 @@ public:
     double adjustVelThresh;
     double adjustOriThresh;
     Eigen::Vector3d adjustOffset;
+    Eigen::Vector3d adjustRPYOffset;
     Eigen::Vector3d adjustOriTBNWeight;
     double preContactDist;
     double gripperMoveAwayDist;
+    bool useComplianceTask;
+    double complianceVelThresh;
+    Eigen::Vector3d complianceTargetForce;
+    Eigen::Vector3d complianceTargetTorque;
   };
   struct BodiesCollisionConf
   {

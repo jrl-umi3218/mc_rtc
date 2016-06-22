@@ -60,6 +60,13 @@ inline void scCoMObjFromJSON(StanceConfig::CoMObj & ret, const Json::Value &v)
       ret.comOffset(i) = v["comOffset"][i].asDouble();
     }
   }
+  if(v.isMember("comAdjustOffset"))
+  {
+    for(Json::Value::ArrayIndex i = 0; i < 3; ++i)
+    {
+      ret.comAdjustOffset(i) = v["comAdjustOffset"][i].asDouble();
+    }
+  }
   if(v.isMember("timeout"))
   {
     ret.timeout = v["timeout"].asDouble();
@@ -198,7 +205,22 @@ inline void scWaypointConfFromJSON(StanceConfig::WaypointConf & ret, const Json:
       double y = v["conf"]["y"].asDouble();
       double z = v["conf"]["z"].asDouble();
       double nOff = v["conf"]["nOff"].asDouble();
-      ret.pos = percentWaypoint(x, y, z, nOff);
+      double xOff = 0;
+      if(v["conf"].isMember("xOff"))
+      {
+        xOff = v["conf"]["xOff"].asDouble();
+      }
+      double yOff = 0;
+      if(v["conf"].isMember("yOff"))
+      {
+        yOff = v["conf"]["yOff"].asDouble();
+      }
+      double zOff = 0;
+      if(v["conf"].isMember("zOff"))
+      {
+        zOff = v["conf"]["zOff"].asDouble();
+      }
+      ret.pos = percentWaypoint(x, y, z, nOff, xOff, yOff, zOff);
     }
     else if(v["type"] == "hardCodedPos")
     {
@@ -340,6 +362,12 @@ inline void scContactObjFromJSON(StanceConfig::ContactObj & co, const Json::Valu
     co.adjustOffset.y() = v["adjustOffset"][1].asDouble();
     co.adjustOffset.z() = v["adjustOffset"][2].asDouble();
   }
+  if(v.isMember("adjustRPYOffset"))
+  {
+    co.adjustRPYOffset.x() = v["adjustRPYOffset"][0].asDouble();
+    co.adjustRPYOffset.y() = v["adjustRPYOffset"][1].asDouble();
+    co.adjustRPYOffset.z() = v["adjustRPYOffset"][2].asDouble();
+  }
   if(v.isMember("adjustOriTBNWeight"))
   {
     co.adjustOriTBNWeight.x() = v["adjustOriTBNWeight"][0].asDouble();
@@ -353,6 +381,26 @@ inline void scContactObjFromJSON(StanceConfig::ContactObj & co, const Json::Valu
   if(v.isMember("gripperMoveAwayDist"))
   {
     co.gripperMoveAwayDist = v["gripperMoveAwayDist"].asDouble();
+  }
+  if(v.isMember("useComplianceTask"))
+  {
+    co.useComplianceTask = v["useComplianceTask"].asBool();
+  }
+  if(v.isMember("complianceVelThresh"))
+  {
+    co.complianceVelThresh = v["complianceVelThresh"].asDouble();
+  }
+  if(v.isMember("complianceTargetTorque"))
+  {
+    co.complianceTargetTorque.x() = v["complianceTargetTorque"][0].asDouble();
+    co.complianceTargetTorque.y() = v["complianceTargetTorque"][1].asDouble();
+    co.complianceTargetTorque.z() = v["complianceTargetTorque"][2].asDouble();
+  }
+  if(v.isMember("complianceTargetForce"))
+  {
+    co.complianceTargetForce.x() = v["complianceTargetForce"][0].asDouble();
+    co.complianceTargetForce.y() = v["complianceTargetForce"][1].asDouble();
+    co.complianceTargetForce.z() = v["complianceTargetForce"][2].asDouble();
   }
 }
 

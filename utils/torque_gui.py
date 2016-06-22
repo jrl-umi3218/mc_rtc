@@ -39,13 +39,14 @@ running = True
 
 nrPoints = 300
 portname = "ctau"
-joints = ["LARM_JOINT4", "LARM_JOINT5", "LARM_JOINT7"]
+joints = ["LARM_JOINT4", "LARM_JOINT5", "LARM_JOINT6", "LARM_JOINT7"]
 monitoring = {}
 for j in joints:
   monitoring[j] = REF_JOINT_ORDER.index(j)
 limits = {
   "LARM_JOINT4": 0.8*14,
   "LARM_JOINT5": 0.8*19,
+  "LARM_JOINT6": 0.8*16,
   "LARM_JOINT7": 0.5*100
 }
 data = {}

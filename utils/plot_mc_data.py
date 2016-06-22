@@ -71,7 +71,7 @@ def get_ylim(ax):
     return ymin, ymax
 
 def plot_stance_index_fig(ax, scale, cc):
-    if not 'stance_index' in data:
+    if 'stance_index' not in data:
       return
     if scale:
         ymin, ymax = ax.get_ylim()
@@ -163,6 +163,17 @@ def plot_gen3d_fig(name, ax, cc):
         for i in ['x', 'y', 'z']:
             v = name + i
             ax.plot(data['t'], data[v], label = '{0}: {1}'.format(name, i), color = cc.next())
+            ymin = min(ymin, np.min(data[v]))
+            ymax = max(ymax, np.max(data[v]))
+        set_ylim(ax, ymin, ymax)
+        ax.set_ylabel(name + ' SI')
+
+def plot_rpy_fig(ax, cc):
+    ymin, ymax = get_ylim(ax)
+    if 'rpy_r' in data:
+        for i in ['r', 'p', 'y']:
+            v = 'rpy_' + i
+            ax.plot(data['t'], data[v], label = '{0}: {1}'.format('rpy', i), color = cc.next())
             ymin = min(ymin, np.min(data[v]))
             ymax = max(ymax, np.max(data[v]))
         set_ylim(ax, ymin, ymax)
@@ -284,6 +295,12 @@ def plot_ff():
   ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=4, mode="expand", borderaxespad=0.)
   plot_gen4d_fig('ff_q', ax2, cc)
   ax2.legend(bbox_to_anchor=(0., -.1, 1., -1.02), loc=3, ncol=4, mode="expand", borderaxespad=0.)
+  plt.show()
+
+def plot_rpy():
+  ax, ax2, cc = prep_ax('RPY')
+  plot_rpy_fig(ax, cc)
+  ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=4, mode="expand", borderaxespad=0.)
   plt.show()
 
 def welcome():

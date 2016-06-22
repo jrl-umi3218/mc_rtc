@@ -3,6 +3,7 @@
 #include <mc_rbdyn/Collision.h>
 #include <mc_rbdyn/robot.h>
 
+#include <array>
 #include <map>
 #include <vector>
 

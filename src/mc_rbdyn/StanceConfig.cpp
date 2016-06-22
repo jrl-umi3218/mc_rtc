@@ -4,12 +4,12 @@ namespace mc_rbdyn
 {
 
 std::function<Eigen::Vector3d (const sva::PTransformd &, const sva::PTransformd &, const Eigen::Vector3d &)>
-percentWaypoint(double x, double y, double z, double nOff)
+percentWaypoint(double x, double y, double z, double nOff, double xOff, double yOff, double zOff)
 {
-  return [x, y, z, nOff](const sva::PTransformd & start, const sva::PTransformd & end, const Eigen::Vector3d & N)
+  return [x, y, z, nOff, xOff, yOff, zOff](const sva::PTransformd & start, const sva::PTransformd & end, const Eigen::Vector3d & N)
   {
     Eigen::Vector3d dist = end.translation() - start.translation();
-    Eigen::Vector3d ret = start.translation() + Eigen::Vector3d(dist.x()*x, dist.y()*y, dist.z()*z) + N*nOff;
+    Eigen::Vector3d ret = start.translation() + Eigen::Vector3d(dist.x()*x, dist.y()*y, dist.z()*z) + N*nOff + Eigen::Vector3d(xOff, yOff, zOff);
     return ret;
   };
 }
@@ -32,7 +32,8 @@ StanceConfig::StanceConfig()
 
   comObj.posThresh = 0.1;
   comObj.velThresh = 0.000099;
-  comObj.comOffset = Eigen::Vector3d(0,0,0);;
+  comObj.comOffset = Eigen::Vector3d(0,0,0);
+  comObj.comAdjustOffset = Eigen::Vector3d(0,0,0);
   comObj.timeout = 5.0;
 
   postureTask.stiffness = 2.0;
@@ -63,7 +64,12 @@ StanceConfig::StanceConfig()
   contactObj.velThresh = 0.005;
   contactObj.preContactDist = 0.02;
   contactObj.adjustOffset = Eigen::Vector3d(0,0,0);
+  contactObj.adjustRPYOffset = Eigen::Vector3d(0,0,0);
   contactObj.gripperMoveAwayDist = 0.0;
+  contactObj.useComplianceTask = true;
+  contactObj.complianceVelThresh = 1e-2;
+  contactObj.complianceTargetForce = Eigen::Vector3d::Zero();
+  contactObj.complianceTargetTorque = Eigen::Vector3d::Zero();
 }
 
 }

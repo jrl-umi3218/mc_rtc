@@ -74,6 +74,7 @@ void StabilityTask::target(const mc_rbdyn::Robot &/*env*/, const mc_rbdyn::Stanc
 
   LOG_INFO("comOffset applied from contact displacement " << comOffset.transpose())
   comObj += comOffset;
+  LOG_INFO("comOffset from config " << config.comObj.comOffset.transpose())
   comObj += config.comObj.comOffset;
 
   postureTask->stiffness(config.postureTask.stiffness);

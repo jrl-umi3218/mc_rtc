@@ -1,4 +1,5 @@
 #include <mc_rbdyn/surface_utils.h>
+#include <mc_rbdyn/rpy_utils.h>
 
 #include <mc_rbdyn/PlanarSurface.h>
 #include <mc_rbdyn/CylindricalSurface.h>
@@ -15,19 +16,6 @@ namespace bfs = boost::filesystem;
 
 namespace mc_rbdyn
 {
-
-inline Eigen::Matrix3d rpyToMat(const double & r, const double & p, const double & y)
-{
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wconversion"
-  return sva::RotX(r)*sva::RotY(p)*sva::RotZ(y);
-#pragma GCC diagnostic pop
-}
-
-inline Eigen::Matrix3d rpyToMat(const Eigen::Vector3d & rpy)
-{
-  return rpyToMat(rpy(0), rpy(1), rpy(2));
-}
 
 inline sva::PTransformd tfFromOriginDom(const tinyxml2::XMLElement & dom)
 {
