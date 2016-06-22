@@ -45,10 +45,10 @@ inline geometry_msgs::TransformStamped PT2TF(const sva::PTransformd & X, const r
   return msg;
 }
 
-struct RobotPublisher
+struct RobotPublisherImpl
 {
 public:
-  RobotPublisher(ros::NodeHandle & nh, const std::string& prefix)
+  RobotPublisherImpl(ros::NodeHandle & nh, const std::string& prefix, unsigned int rate, unsigned int skip)
   : nh(nh),
     j_state_pub(this->nh.advertise<sensor_msgs::JointState>(prefix+"joint_states", 1)),
     imu_pub(this->nh.advertise<sensor_msgs::Imu>(prefix+"imu", 1)),
@@ -58,11 +58,12 @@ public:
     tf_caster(),
     prefix(prefix),
     running(true), seq(0), msgs(),
-    th(std::bind(&RobotPublisher::publishThread, this))
+    rate(rate), skip(skip == 0 ? 1 : skip),
+    th(std::bind(&RobotPublisherImpl::publishThread, this))
   {
   }
 
-  ~RobotPublisher()
+  ~RobotPublisherImpl()
   {
     running = false;
     th.join();
@@ -114,7 +115,6 @@ public:
     msg.effort.resize(0);
 
     imu.header = msg.header;
-#ifdef MC_RTC_HAS_HRPSYS_BASE
     if(iter_since_start >= 2000)
     {
       imu.linear_acceleration.x = gsensor.x() - imu_noise.x();
@@ -135,7 +135,6 @@ public:
     {
       imu_noise /= 2000;
     }
-#endif
 
     nav_msgs::Odometry odom;
     odom.header = msg.header;
@@ -151,7 +150,6 @@ public:
     odom.pose.pose.orientation.z = 0;
     odom.pose.covariance.fill(0);
     /* Provide linear and angular velocity */
-#ifdef MC_RTC_HAS_HRPSYS_BASE
     odom.twist.twist.linear.x = gsensor.x() * dt;
     odom.twist.twist.linear.y = gsensor.y() * dt;
     odom.twist.twist.linear.z = gsensor.z() * dt;
@@ -159,7 +157,6 @@ public:
     odom.twist.twist.angular.y = rate.y();
     odom.twist.twist.angular.z = rate.z();
     odom.twist.covariance.fill(0);
-#endif
 
     tfs.push_back(PT2TF(robot.bodyTransform(robot.mb().body(0).name())*mbc.parentToSon[0], tm, std::string("robot_map"), prefix+robot.mb().body(0).name(), seq));
     for(int j = 1; j < robot.mb().nrJoints(); ++j)
@@ -178,7 +175,6 @@ public:
       sva::PTransformd X_0_xtion = mbc.bodyPosW[robot.bodyIndexByName("xtion_link")];
       tfs.push_back(PT2TF(X_0_xtion.inv(), tm, "odom", "robot_map", seq));
 
-#ifdef MC_RTC_HAS_HRPSYS_BASE
       sva::PTransformd X_0_base_odom = sva::PTransformd(
                           Eigen::Quaterniond(sva::RotZ(rpy.z())*sva::RotY(rpy.y())*sva::RotX(-rpy.x()).inverse()),
                           Eigen::Vector3d(p.x(), p.y(), p.z()));
@@ -186,10 +182,9 @@ public:
       sva::PTransformd X_base_xtion = X_0_xtion * (X_0_base.inv());
       tfs.push_back(PT2TF(X_0_base_odom, tm, "/robot_map", "/odom_base_link", seq));
       tfs.push_back(PT2TF(X_base_xtion, tm, "/odom_base_link", "/odom_xtion_link", seq));
-#endif
     }
 
-    if(seq % 5 == 0)
+    if(seq % skip == 0)
     {
       mut.lock();
       msgs.push({msg, tfs, imu, odom});
@@ -223,12 +218,14 @@ private:
   bool running;
   uint32_t seq;
   std::queue<RobotStateData> msgs;
+  unsigned int rate;
+  unsigned int skip;
   std::thread th;
   std::mutex mut;
 
   void publishThread()
   {
-    ros::Rate rt(100);
+    ros::Rate rt(rate);
     while(running && ros::ok())
     {
       while(msgs.size())
@@ -257,6 +254,36 @@ private:
   }
 };
 
+RobotPublisher::RobotPublisher(const std::string & prefix, unsigned int rate, unsigned int skip)
+  : impl(nullptr)
+{
+  auto nh = ROSBridge::get_node_handle();
+  if(nh)
+  {
+    impl.reset(new RobotPublisherImpl(*nh, prefix, rate, skip));
+  }
+}
+
+RobotPublisher::~RobotPublisher()
+{
+}
+
+void RobotPublisher::update(double dt, const mc_rbdyn::Robot & robot, const Eigen::Vector3d & p, const Eigen::Vector3d & rpy, const Eigen::Vector3d & rate, const Eigen::Vector3d & gsensor, const std::map<std::string, std::vector<std::string>> & gripperJ, const std::map<std::string, std::vector<double>> & gripperQ)
+{
+  if(impl)
+  {
+    impl->update(dt, robot, p, rpy, rate, gsensor, gripperJ, gripperQ);
+  }
+}
+
+void RobotPublisher::reset_imu_offset()
+{
+  if(impl)
+  {
+    impl->reset_imu_offset();
+  }
+}
+
 inline bool ros_init(const std::string & name)
 {
   int argc = 0;
@@ -276,11 +303,6 @@ struct ROSBridgeImpl
   : ros_is_init(ros_init("mc_rtc")),
     nh(ros_is_init ? new ros::NodeHandle() : 0)
   {
-    if(ros_is_init)
-    {
-      rpubs["control"] = std::make_shared<RobotPublisher>(*nh, "control/");
-      rpubs["real"] = std::make_shared<RobotPublisher>(*nh, "real/");
-    }
   }
   bool ros_is_init;
   std::shared_ptr<ros::NodeHandle> nh;
@@ -296,10 +318,11 @@ std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
 
 void ROSBridge::update_robot_publisher(const std::string& publisher, double dt, const mc_rbdyn::Robot & robot, const Eigen::Vector3d & p, const Eigen::Vector3d & rpy, const Eigen::Vector3d & rate, const Eigen::Vector3d & gsensor, const std::map<std::string, std::vector<std::string>> & gJ, const std::map<std::string, std::vector<double>> & gQ)
 {
-  if(impl->rpubs.count(publisher))
+  if(impl->rpubs.count(publisher) == 0)
   {
-    impl->rpubs[publisher]->update(dt, robot, p, rpy, rate, gsensor, gJ, gQ);
+    impl->rpubs[publisher] = std::make_shared<RobotPublisher>(publisher + "/", 100);
   }
+  impl->rpubs[publisher]->update(dt, robot, p, rpy, rate, gsensor, gJ, gQ);
 }
 
 void ROSBridge::reset_imu_offset()
