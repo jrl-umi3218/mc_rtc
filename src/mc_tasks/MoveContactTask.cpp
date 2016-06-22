@@ -3,6 +3,8 @@
 #include <mc_rbdyn/Contact.h>
 #include <mc_rbdyn/Surface.h>
 
+#include <mc_rbdyn/rpy_utils.h>
+
 namespace mc_tasks
 {
 
@@ -102,7 +104,7 @@ void MoveContactTask::set_target_tf(const sva::PTransformd & X_target, mc_rbdyn:
 {
   targetTf = X_target;
   targetPos = targetTf.translation() + config.contactObj.adjustOffset;
-  targetOri = robotSurf->X_b_s().rotation().transpose()*targetTf.rotation();
+  targetOri = mc_rbdyn::rpyToMat(config.contactObj.adjustRPYOffset)*robotSurf->X_b_s().rotation().transpose()*targetTf.rotation();
   normal = targetTf.rotation().row(2);
   preTargetPos = targetPos + normal*config.contactObj.preContactDist;
   wp = config.contactTask.waypointConf.pos(robotSurfacePos(), targetTf, normal);

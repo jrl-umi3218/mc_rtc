@@ -30,16 +30,134 @@ ActiGripper::ActiGripper()
 }
 
 ActiGripper::ActiGripper(const std::string& wrenchName, double actiForce, double stopForce,
-                         tasks::qp::ContactId contactId, sva::PTransformd & X_0_s, double maxDist,
+                         double actiTorque, double stopTorque,
+                         tasks::qp::ContactId contactId, sva::PTransformd & X_0_s,
+                         double maxDist, double maxRot,
                          const std::shared_ptr<tasks::qp::PositionTask> & positionTask,
-                         const std::shared_ptr<tasks::qp::SetPointTask> & positionTaskSp)
+                         const std::shared_ptr<tasks::qp::SetPointTask> & positionTaskSp,
+                         const std::shared_ptr<tasks::qp::OrientationTask> & orientationTask,
+                         const std::shared_ptr<tasks::qp::SetPointTask> & orientationTaskSp)
 : wrenchName(wrenchName), actiForce(actiForce), stopForce(stopForce),
-  contactId(contactId), X_0_s(X_0_s), maxDist(maxDist),
+  actiTorque(actiTorque), stopTorque(stopTorque),
+  contactId(contactId), X_0_s(X_0_s), maxDist(maxDist), maxRot(maxRot),
   positionTask(positionTask), positionTaskSp(positionTaskSp),
-  activated(false), zVec(X_0_s.rotation().row(2)),
-  toRemove(false), targetError(0)
+  orientationTask(orientationTask), orientationTaskSp(orientationTaskSp),
+  activatedForce(false), activatedTorque(false),
+  zVec(X_0_s.rotation().row(2)),
+  toRemove(false), targetError(0),
+  dof(6, 6)
 {
+  dof.setZero();
+  dof.diagonal().setOnes();
 }
+
+bool ActiGripper::update(std::map<std::string, sva::ForceVecd>& wrenches,
+    tasks::qp::ContactConstr* contactConstr)
+{
+  const sva::ForceVecd & wrench = wrenches[wrenchName];
+  double forceNorm = wrench.force().norm();
+  //Only consider z-axis torque
+  double torqueZ = wrench.couple()(2);
+  bool res = updateForce(forceNorm, contactConstr);
+  //res = res && updateTorque(torqueZ, contactConstr);
+  return res;
+}
+
+bool ActiGripper::updateForce(double forceNorm, tasks::qp::ContactConstr* contactConstr)
+{
+  targetError = positionTask->eval().norm();
+  if(!toRemove)
+  {
+    if(activatedForce)
+    {
+      if(forceNorm > stopForce && targetError < maxDist*0.1)
+      {
+        activatedForce = false;
+        dof(5, 5) = 1;
+        contactConstr->removeDofContact(contactId);
+        contactConstr->addDofContact(contactId, dof);
+        contactConstr->updateDofContacts();
+      }
+      else
+      {
+        double err = std::min(std::max(actiForce - forceNorm, 0.0)/actiForce, 1.0);
+        double pos = maxDist*err;
+        Eigen::Vector3d target = X_0_s.translation() + zVec*pos;
+        positionTask->position(target);
+        if(targetError > maxDist*1.5)
+        {
+          return false;
+        }
+      }
+    }
+    else
+    {
+      if(forceNorm < actiForce)
+      {
+        // Free translation on z-axis
+        dof(5,5) = 0;
+        activatedForce = true;
+        contactConstr->addDofContact(contactId, dof);
+        contactConstr->updateDofContacts();
+      }
+    }
+  }
+  else
+  {
+    Eigen::Vector3d target = X_0_s.translation();
+    positionTask->position(target);
+  }
+  return true;
+}
+
+bool ActiGripper::updateTorque(double torqueNorm, tasks::qp::ContactConstr* contactConstr)
+{
+  targetError = orientationTask->eval().norm();
+  if(!toRemove)
+  {
+    if(activatedTorque)
+    {
+      if(fabs(torqueNorm) < stopTorque && targetError < maxRot*0.1)
+      {
+        activatedTorque = false;
+        dof(2, 2) = 1;
+        contactConstr->removeDofContact(contactId);
+        contactConstr->addDofContact(contactId, dof);
+        contactConstr->updateDofContacts();
+      }
+      else
+      {
+        double err = std::min(std::max(fabs(torqueNorm), 0.0)/(actiTorque), 1.0);
+        Eigen::Matrix3d rot = sva::RotZ(copysign(maxRot*err, torqueNorm)); //FIXME: z-axis
+        sva::PTransformd move(rot);
+        Eigen::Matrix3d target = (move*X_0_s).rotation();
+        orientationTask->orientation(target);
+        if(targetError > maxRot*1.5)
+        {
+          return false;
+        }
+      }
+    }
+    else
+    {
+      if(torqueNorm > actiTorque)
+      {
+        dof(2,2) = 0; //FIXME : z-axis
+        activatedTorque = true;
+        contactConstr->removeDofContact(contactId);
+        contactConstr->addDofContact(contactId, dof);
+        contactConstr->updateDofContacts();
+      }
+    }
+  }
+  else
+  {
+    Eigen::Matrix3d target = X_0_s.rotation();
+    orientationTask->orientation(target);
+  }
+  return true;
+}
+
 
 CollisionPair::CollisionPair(const mc_rbdyn::Robot & r1, const mc_rbdyn::Robot & r2,
                              const std::string & r1bodyName, const std::string & r2bodyName)
@@ -122,6 +240,10 @@ MCSeqControllerConfig::MCSeqControllerConfig(const Json::Value & v)
     throw("No Seq section in configuration file");
   }
   const Json::Value & seq = v["Seq"];
+  if(seq.isMember("Simulation"))
+  {
+    is_simulation = seq["Simulation"].asBool();
+  }
   if(!seq.isMember("Env"))
   {
     LOG_ERROR("No Env section in configuration for Seq controller, abort")
@@ -190,11 +312,13 @@ MCSeqController::MCSeqController(std::shared_ptr<mc_rbdyn::RobotModule> robot_mo
   step_by_step(config.step_by_step), paused(false), halted(false),
   stanceIndex(config.start_stance), seq_actions(0),
   currentContact(0), targetContact(0), currentGripper(0),
+  is_simulation(config.is_simulation),
   use_real_sensors(config.use_real_sensors),
   collsConstraint(robots(), timeStep),
   comIncPlaneConstr(robots(), 0, timeStep),
   max_perc(1.0), nr_points(300),
-  samples(0.0, max_perc, nr_points)
+  samples(0.0, max_perc, nr_points),
+  calibrator(robot_module)
 {
   logger.logPhase("START", 0);
   /* Load plan */
@@ -271,7 +395,7 @@ bool MCSeqController::run()
       {
         double cur_sample = 0.0; double cur_speed = 0.0;
         samples.next(cur_sample, cur_speed);
-        double interpol_percent = std::min(cur_sample, max_perc);
+        interpol_percent = std::min(cur_sample, max_perc);
         bool done = interpol_percent == max_perc;
         if(!done && stanceIndex < interpolators.size())
         {
@@ -330,6 +454,7 @@ bool MCSeqController::run()
             LOG_INFO("Starting " << actions[stanceIndex]->toStr() << "(" << (stanceIndex+1) << "/" << actions.size() << ")")
             publisher->set_contacts(stances[stanceIndex].geomContacts());
           }
+          interpol_percent = 0;
           samples = mc_rbdyn::QuadraticGenerator(0.0, max_perc, nr_points);
           /*FIXME Hackish */
           //if(seq_actions[stanceIndexIn]->type() == mc_control::SeqAction::GripperMove)
@@ -412,13 +537,38 @@ void MCSeqController::reset(const ControllerResetData & reset_data)
 
 std::ostream& MCSeqController::log_header(std::ostream & os)
 {
-  os << ";stance_index";
+  os << ";stance_index;polygonInterpolatorPercent;filteredForceSensor_fx;filteredForceSensor_fy;filteredForceSensor_fz;filteredForceSensor_cx;filteredForceSensor_cy;filteredForceSensor_cz;comt_x;comt_y;comt_z";
   return os;
 }
 
 std::ostream& MCSeqController::log_data(std::ostream & os)
 {
   os << ";" << stanceIndex;
+  os << ";" << interpol_percent;
+  if(complianceTask)
+  {
+    const auto & w = complianceTask->getFilteredWrench();
+    os << ";" << w.force().x()
+       << ";" << w.force().y()
+       << ";" << w.force().z()
+       << ";" << w.couple().x()
+       << ";" << w.couple().y()
+       << ";" << w.couple().z();
+  }
+  else
+  {
+    os << ";0;0;0;0;0;0";
+  }
+  if(stabilityTask)
+  {
+    os << ";" << stabilityTask->comObj.x()
+       << ";" << stabilityTask->comObj.y()
+       << ";" << stabilityTask->comObj.z();
+  }
+  else
+  {
+    os << ";0;0;0";
+  }
   return os;
 }
 
@@ -473,10 +623,17 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
       sva::PTransformd X_0_s = c.r1Surface()->X_0_s(robot());
       double actiForce = 50; /* FIXME Hard-coded, should at least be an acti gripper const static member */
       double stopForce = 90; /* FIXME ^^ */
+      double actiTorque = 2.; /* FIXME ^^ */
+      double stopTorque = 1.; /* FIXME ^^ */
       std::shared_ptr<tasks::qp::PositionTask> positionTask(new tasks::qp::PositionTask(robots().mbs(), 0, contactId.r1BodyName, X_0_s.translation(), is_gs->X_b_s().translation()));
       std::shared_ptr<tasks::qp::SetPointTask> positionTaskSp(new tasks::qp::SetPointTask(robots().mbs(), 0, positionTask.get(), 20, 100000.));
+      std::shared_ptr<tasks::qp::OrientationTask> orientationTask(new tasks::qp::OrientationTask(robots().mbs(), 0, contactId.r1BodyName, X_0_s.rotation()));
+      std::shared_ptr<tasks::qp::SetPointTask> orientationTaskSp(new tasks::qp::SetPointTask(robots().mbs(), 0, orientationTask.get(), 20, 100000.));
+      qpsolver->addTask(orientationTaskSp.get());
+      actiGrippers[bodyName] = ActiGripper(forceSensor, actiForce, stopForce, actiTorque, stopTorque,
+          contactId, X_0_s, use_real_sensors ? 0.04:0.01, 0.2, positionTask, positionTaskSp, orientationTask, orientationTaskSp); /*FIXME 0.04 is ActiGripperMaxPull, 5 degrees is ActiGripper::maxRot */
       qpsolver->addTask(positionTaskSp.get());
-      actiGrippers[bodyName] = ActiGripper(forceSensor, actiForce, stopForce, contactId, X_0_s, use_real_sensors ? 0.04:0.01, positionTask, positionTaskSp); /*FIXME 0.04 is ActiGripperMaxPull */
+      qpsolver->addTask(orientationTaskSp.get());
     }
   }
 
@@ -492,6 +649,7 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
     {
       LOG_INFO("ActiGripper RM " << ka.first);
       qpsolver->removeTask(ka.second.positionTaskSp.get());
+      qpsolver->removeTask(ka.second.orientationTaskSp.get());
       /* This cast is guaranted to work */
       (dynamic_cast<tasks::qp::ContactConstr*>(contactConstraint.contactConstr.get()))->removeDofContact(ka.second.contactId);
       rmActi.push_back(ka.first);
@@ -507,52 +665,12 @@ void MCSeqController::pre_live()
 {
   for(auto & ba : actiGrippers)
   {
-    const Eigen::Vector3d & force = wrenches[ba.second.wrenchName].force();
-    double forceNorm = force.norm();
-    ba.second.targetError = ba.second.positionTask->eval().norm();
-    if(!ba.second.toRemove)
+    /* This cast is guaranted to work */
+    tasks::qp::ContactConstr* contactConstr = (dynamic_cast<tasks::qp::ContactConstr*>(contactConstraint.contactConstr.get()));
+    if(!ba.second.update(wrenches, contactConstr))
     {
-      if(ba.second.activated)
-      {
-        if(forceNorm > ba.second.stopForce && ba.second.targetError < ba.second.maxDist*0.1)
-        {
-          ba.second.activated = false;
-          /* This cast is guaranted to work */
-          (dynamic_cast<tasks::qp::ContactConstr*>(contactConstraint.contactConstr.get()))->removeDofContact(ba.second.contactId);
-          (dynamic_cast<tasks::qp::ContactConstr*>(contactConstraint.contactConstr.get()))->updateDofContacts();
-        }
-        else
-        {
-          double err = std::min(std::max(ba.second.actiForce - forceNorm, 0.0)/ba.second.actiForce, 1.0);
-          double pos = ba.second.maxDist*err;
-          Eigen::Vector3d target = ba.second.X_0_s.translation() + ba.second.zVec*pos;
-          ba.second.positionTask->position(target);
-          if(ba.second.targetError > ba.second.maxDist*1.5)
-          {
-            halted = true;
-            LOG_ERROR("OOPS too much error")
-          }
-        }
-      }
-      else
-      {
-        if(forceNorm < ba.second.actiForce)
-        {
-          Eigen::MatrixXd dof = Eigen::MatrixXd::Zero(5,6);
-          for(int i = 0; i < 5; ++i)
-          {
-            dof(i,i) = 1;
-          }
-          ba.second.activated = true;
-          (dynamic_cast<tasks::qp::ContactConstr*>(contactConstraint.contactConstr.get()))->addDofContact(ba.second.contactId, dof);
-          (dynamic_cast<tasks::qp::ContactConstr*>(contactConstraint.contactConstr.get()))->updateDofContacts();
-        }
-      }
-    }
-    else
-    {
-      Eigen::Vector3d target = ba.second.X_0_s.translation();
-      ba.second.positionTask->position(target);
+      halted = true;
+      LOG_ERROR("OOPS TOO MUCH ERROR")
     }
   }
 }

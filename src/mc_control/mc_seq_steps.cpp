@@ -225,7 +225,10 @@ bool enter_moveContactP::eval(MCSeqController & ctl)
   //contactConf.comObj.comOffset(2) /= 3;
   //LOG_INFO("Offset")
   //LOG_INFO(contactConf.comObj.comOffset)
-  //ctl.stabilityTask->target(ctl.env(), ctl.stances[ctl.stanceIndex], contactConf, contactConf.comTask.targetSpeed);
+  mc_rbdyn::StanceConfig & contactConf = ctl.curConf();
+  contactConf.comObj.comOffset = contactConf.comObj.comAdjustOffset;
+  mc_rbdyn::Stance & newS = ctl.targetStance();
+  ctl.stabilityTask->target(ctl.env(), newS, contactConf, contactConf.comTask.targetSpeed);
 
   return true;
 }
@@ -285,8 +288,29 @@ bool enter_pushContactT::eval(MCSeqController & ctl)
   {
     auto & contactConf = ctl.curConf();
     ctl.addContactTask.reset(new mc_tasks::AddContactTask(ctl.robots(), ctl.constSpeedConstr, *(ctl.targetContact), contactConf));
-    ctl.addContactTask->addToSolver(ctl.solver());
-    ctl.metaTasks.push_back(ctl.addContactTask.get());
+
+    std::shared_ptr<mc_rbdyn::Surface> robotSurf = ctl.targetContact->r1Surface();
+    const mc_rbdyn::ForceSensor& fs = ctl.robot().forceSensorData(ctl.robot().forceSensorByBody(robotSurf->bodyName()));
+
+    ctl.complianceTask = std::shared_ptr<mc_tasks::ComplianceTask>(new mc_tasks::ComplianceTask(ctl.robots(),
+        ctl.robots().robotIndex(), fs, ctl.getWrenches(), ctl.calibrator, ctl.timeStep, 10.0, 100000.));
+
+    ctl.complianceTask->setTargetWrench(sva::ForceVecd(contactConf.contactObj.complianceTargetTorque, contactConf.contactObj.complianceTargetForce));
+
+    bool useComplianceTask = contactConf.contactObj.useComplianceTask && (!ctl.is_simulation);
+    if(useComplianceTask)
+    {
+      LOG_INFO("Using compliance task with target torque: " << contactConf.contactObj.complianceTargetTorque.transpose()
+                                    << " and target force: " << contactConf.contactObj.complianceTargetForce.transpose()
+                                    << " compliance vel thresh: " << contactConf.contactObj.complianceVelThresh)
+      ctl.complianceTask->addToSolver(ctl.solver());
+      ctl.metaTasks.push_back(ctl.complianceTask.get());
+    }
+    else
+    {
+      ctl.addContactTask->addToSolver(ctl.solver());
+      ctl.metaTasks.push_back(ctl.addContactTask.get());
+    }
     ctl.push = true;
   }
 
@@ -297,14 +321,25 @@ bool live_pushContactT::eval(MCSeqController & ctl)
 {
   bool inContact = ctl.inContact(ctl.targetContact->r1Surface()->name());
 
-  if(inContact)
+  auto & contactConf = ctl.curConf();
+  bool useComplianceTask = contactConf.contactObj.useComplianceTask && (!ctl.is_simulation);
+  double complianceTargetF = contactConf.contactObj.complianceTargetForce.norm();
+  if((!useComplianceTask && inContact) || (useComplianceTask && ctl.complianceTask->speed().norm() < contactConf.contactObj.complianceVelThresh && ctl.complianceTask->eval().norm() < complianceTargetF/2))
   {
-    /* Remove AddContactTask if we had it */
+    /* Remove AddContactTask if we had it, else remove complianceTask */
     if(ctl.push)
     {
-      ctl.addContactTask->removeFromSolver(ctl.solver());
-      ctl.removeMetaTask(ctl.addContactTask.get());
-      ctl.addContactTask.reset();
+      if(useComplianceTask)
+      {
+        ctl.complianceTask->removeFromSolver(ctl.solver());
+        ctl.removeMetaTask(ctl.complianceTask.get());
+      }
+      else
+      {
+        ctl.addContactTask->removeFromSolver(ctl.solver());
+        ctl.removeMetaTask(ctl.addContactTask.get());
+        ctl.addContactTask.reset();
+      }
     }
     ctl.currentContact = 0;
     ctl.targetContact = 0;
@@ -517,22 +552,22 @@ bool live_moveCoMT::eval(MCSeqController & ctl)
 
 bool live_CoMCloseGripperT::eval(MCSeqController & ctl)
 {
-  if(ctl.currentGripper)
-  {
-    ctl.currentGripper->percentOpen[0] -= 0.0005;
-    if(ctl.currentGripper->overCommandLimit[0] || ctl.currentGripper->percentOpen[0] <= 0)
-    {
-      if(!ctl.currentGripper->overCommandLimit[0])
-      {
-        ctl.currentGripper->percentOpen[0] = 0;
-      }
-      ctl.currentGripper = 0;
-      ctl.stanceIndex++;
-      return true;
-    }
-    return false;
-  }
-  else
+  //if(ctl.currentGripper)
+  //{
+  //  ctl.currentGripper->percentOpen[0] -= 0.0005;
+  //  if(ctl.currentGripper->overCommandLimit[0] || ctl.currentGripper->percentOpen[0] <= 0)
+  //  {
+  //    if(!ctl.currentGripper->overCommandLimit[0])
+  //    {
+  //      ctl.currentGripper->percentOpen[0] = 0;
+  //    }
+  //    ctl.currentGripper = 0;
+  //    ctl.stanceIndex++;
+  //    return true;
+  //  }
+  //  return false;
+  //}
+  //else
   {
     ctl.stanceIndex++;
     return true;
@@ -1054,15 +1089,15 @@ bool live_addGripperT::eval(MCSeqController & ctl)
     return true;
   }
   ctl.notInContactCount++;
-  /* Should be configurable per stance */
-  if(ctl.notInContactCount > 8*1/ctl.timeStep)
-  {
-    LOG_WARNING("No contact detected since 8 seconds (" << ctl.notInContactCount << " iterations), skip ahead")
-    ctl.addContactTask->removeFromSolver(ctl.solver());
-    ctl.removeMetaTask(ctl.addContactTask.get());
-    ctl.addContactTask.reset();
-    return true;
-  }
+  ///* Should be configurable per stance */
+  //if(ctl.notInContactCount > 8*1/ctl.timeStep)
+  //{
+  //  LOG_WARNING("No contact detected since 8 seconds (" << ctl.notInContactCount << " iterations), skip ahead")
+  //  ctl.addContactTask->removeFromSolver(ctl.solver());
+  //  ctl.removeMetaTask(ctl.addContactTask.get());
+  //  ctl.addContactTask.reset();
+  //  return true;
+  //}
 
   return false;
 }
@@ -1111,11 +1146,21 @@ bool enter_softCloseGripperP::eval(MCSeqController & ctl)
   ctl.isGripperClose = false;
 
   std::shared_ptr<mc_rbdyn::Surface> robotSurf = ctl.targetContact->r1Surface();
-  Eigen::MatrixXd dofMat = Eigen::MatrixXd::Zero(6,6);
-  for(int i = 0; i < 6; ++i) { dofMat(i,i) = 1; }
-  Eigen::VectorXd speedMat = Eigen::VectorXd::Zero(6);
-  ctl.constSpeedConstr->addBoundedSpeed(ctl.solver(), robotSurf->bodyName(), robotSurf->X_b_s().translation(), dofMat, speedMat);
-
+  const mc_rbdyn::ForceSensor& fs = ctl.robot().forceSensorData(ctl.robot().forceSensorByBody(robotSurf->bodyName()));
+  ctl.complianceTask = std::shared_ptr<mc_tasks::ComplianceTask>(new mc_tasks::ComplianceTask(ctl.robots(),
+      ctl.robots().robotIndex(), fs, ctl.getWrenches(), ctl.calibrator, ctl.timeStep, 10.0, 100000., 3., 1., {0.005, 0}, {0.05, 0}));
+  if(!ctl.is_simulation)
+  {
+    ctl.complianceTask->addToSolver(ctl.solver());
+    ctl.metaTasks.push_back(ctl.complianceTask.get());
+    ctl.constSpeedConstr->removeBoundedSpeed(ctl.solver(), robotSurf->bodyName());
+  }
+  else
+  {
+    Eigen::MatrixXd dofMat = Eigen::MatrixXd::Identity(6,6);
+    Eigen::VectorXd speedMat = Eigen::VectorXd::Zero(6);
+    ctl.constSpeedConstr->addBoundedSpeed(ctl.solver(), robotSurf->bodyName(), robotSurf->X_b_s().translation(), dofMat, speedMat);
+  }
   return true;
 }
 
@@ -1145,8 +1190,16 @@ bool live_softCloseGripperP::eval(MCSeqController & ctl)
   if(finish)
   {
     ctl.isGripperClose = true;
-    std::shared_ptr<mc_rbdyn::Surface> robotSurf = ctl.targetContact->r1Surface();
-    ctl.constSpeedConstr->removeBoundedSpeed(ctl.solver(), robotSurf->bodyName());
+    if(!ctl.is_simulation)
+    {
+      ctl.complianceTask->removeFromSolver(ctl.solver());
+      ctl.removeMetaTask(ctl.complianceTask.get());
+    }
+    else
+    {
+      std::shared_ptr<mc_rbdyn::Surface> robotSurf = ctl.targetContact->r1Surface();
+      ctl.constSpeedConstr->removeBoundedSpeed(ctl.solver(), robotSurf->bodyName());
+    }
     LOG_INFO("Finished softCloseGripperP")
     return true;
   }

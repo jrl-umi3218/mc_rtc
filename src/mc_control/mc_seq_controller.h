@@ -3,10 +3,12 @@
 #include <mc_control/mc_controller.h>
 
 #include <mc_rbdyn/stance.h>
+#include <mc_rbdyn/calibrator.h>
 #include <mc_rbdyn/polygon_utils.h>
 #include <mc_tasks/StabilityTask.h>
 #include <mc_tasks/AddRemoveContactTask.h>
 #include <mc_tasks/MoveContactTask.h>
+#include <mc_tasks/ComplianceTask.h>
 #include <mc_solver/BoundedSpeedConstr.h>
 #include <mc_solver/CoMIncPlaneConstr.h>
 #include <Tasks/QPConstr.h>
@@ -26,22 +28,50 @@ public:
   ActiGripper();
 
   ActiGripper(const std::string& wrenchName, double actiForce, double stopForce,
-              tasks::qp::ContactId contactId, sva::PTransformd & X_0_s, double maxDist,
+              double actiTorque, double stopTorque,
+              tasks::qp::ContactId contactId, sva::PTransformd & X_0_s,
+              double maxDist, double maxRot,
               const std::shared_ptr<tasks::qp::PositionTask> & positionTask,
-              const std::shared_ptr<tasks::qp::SetPointTask> & positionTaskSp);
+              const std::shared_ptr<tasks::qp::SetPointTask> & positionTaskSp,
+              const std::shared_ptr<tasks::qp::OrientationTask> & orientationTask,
+              const std::shared_ptr<tasks::qp::SetPointTask> & orientationTaskSp);
+
+  /** \brief Update the position task reference according to the forceNorm measured
+   * on the sensor.
+   *
+   * This method will update the position task by following an impedance control
+   * law. It will add and remove dofs on the selected contact when activating
+   * or deactivating. If the error is too big, an emergency stop should be
+   * triggered on the FSM side.
+   * @return bool: true if update is successful, false if the error is too big.
+  **/
+ bool update(std::map<std::string, sva::ForceVecd>& wrenches,
+      tasks::qp::ContactConstr* contactConstr);
+
+protected:
+ bool updateForce(double forceNorm, tasks::qp::ContactConstr* contactConstr);
+ bool updateTorque(double torqueNorm, tasks::qp::ContactConstr* contactConstr);
+
 public:
   std::string wrenchName;
   double actiForce;
   double stopForce;
+  double actiTorque;
+  double stopTorque;
   tasks::qp::ContactId contactId;
   sva::PTransformd X_0_s;
   double maxDist;
+  double maxRot;
   std::shared_ptr<tasks::qp::PositionTask> positionTask;
   std::shared_ptr<tasks::qp::SetPointTask> positionTaskSp;
-  bool activated;
+  std::shared_ptr<tasks::qp::OrientationTask> orientationTask;
+  std::shared_ptr<tasks::qp::SetPointTask> orientationTaskSp;
+  bool activatedForce;
+  bool activatedTorque;
   Eigen::Vector3d zVec;
   bool toRemove;
   double targetError;
+  Eigen::MatrixXd dof;
 };
 
 struct MC_CONTROL_DLLAPI CollisionPair
@@ -96,6 +126,7 @@ struct MCSeqControllerConfig
   std::shared_ptr<mc_rbdyn::RobotModule> env_module;
   std::string plan;
   bool step_by_step;
+  bool is_simulation = false;
   bool use_real_sensors;
   unsigned int start_stance;
 };
@@ -167,6 +198,7 @@ public:
   std::vector<mc_rbdyn::Stance> stances;
   std::vector<mc_rbdyn::StanceConfig> configs;
   std::vector<mc_rbdyn::PolygonInterpolator> interpolators;
+  double interpol_percent;
   std::vector< std::shared_ptr<mc_rbdyn::StanceAction> > actions;
   std::vector< std::shared_ptr<SeqAction> > seq_actions;
   std::vector<mc_tasks::MetaTask*> metaTasks;
@@ -197,7 +229,8 @@ public:
   bool comRemoveGripper;
 
   /* Contact sensors */
-  bool use_real_sensors; /*FIXME Should be set by configuration */
+  bool is_simulation;
+  bool use_real_sensors;
   std::shared_ptr<ContactSensor> contactSensor; /* Update the surfaces that are in contact */
   std::vector<std::string> sensorContacts; /* Contain the name of surfaces in contact */
 
@@ -215,6 +248,7 @@ public:
   std::shared_ptr<tasks::qp::OrientationTask> adjustOrientationTask;
   std::shared_ptr<tasks::qp::PIDTask> adjustPositionTaskPid;
   std::shared_ptr<tasks::qp::PIDTask> adjustOrientationTaskPid;
+  std::shared_ptr<mc_tasks::ComplianceTask> complianceTask;
   std::vector< std::shared_ptr<tasks::qp::GripperTorqueTask> > gripperTorqueTasks;
   mc_solver::CoMIncPlaneConstr comIncPlaneConstr;
   bool startPolygonInterpolator = false;
@@ -223,6 +257,8 @@ public:
   mc_rbdyn::QuadraticGenerator samples;
   std::vector<mc_rbdyn::Plane> planes;
   boost::timer::cpu_timer timer;
+
+  mc_rbdyn::ForceSensorsCalibrator calibrator;
 };
 
 MC_CONTROL_DLLAPI std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * curAction, mc_rbdyn::StanceAction * targetAction, mc_rbdyn::StanceAction * targetTargetAction);
