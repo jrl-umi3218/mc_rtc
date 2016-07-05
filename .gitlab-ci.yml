@@ -14,14 +14,28 @@ variables:
 
 before_script:
   - git submodule update --quiet --init --recursive
-  - echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list
-  - apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-key 0xB01FA116
   - ./.jrl-ci/dependencies/eigen-3.2
-  - ./.jrl-ci/run before_install
+
+build_debian:
+  stage: build
+  script:
+    - export APT_DEPENDENCIES="libtinyxml2-dev libboost-all-dev libjsoncpp-dev libgeos++-dev libgeos-dev qhull-bin libqhull-dev libltdl-dev"
+    - export GIT_DEPENDENCIES="jrl-umi3218/SpaceVecAlg jrl-umi3218/eigen-qld git@gite.lirmm.fr:multi-contact/eigen-lssol.git jrl-umi3218/sch-core jrl-umi3218/RBDyn jrl-umi3218/Tasks git@gite.lirmm.fr:multi-contact/mc_rbdyn_urdf_cpp.git"
+    - export MASTER_PPA=""
+    - export ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_ros#master git@gite.lirmm.fr:mc-hrp2/hrp2_drc#master git@gite.lirmm.fr:mc-hrp4/hrp4#master"
+    - mkdir -p /tmp/_ci/catkin_dep_ws/src
+    - ./.jrl-ci/run before_install
+    - ./.jrl-ci/run build
+    - ./.jrl-ci/run after_success
+  tags:
+    - debian
 
 build_gcc_noros_nohrpsys:
   stage: build
   script:
+    - echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list
+    - apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-key 0xB01FA116
+    - ./.jrl-ci/run before_install
     - ./.jrl-ci/run build
     - ./.jrl-ci/run after_success
   tags:
@@ -30,6 +44,9 @@ build_gcc_noros_nohrpsys:
 build_gcc_noros_hrpsys:
   stage: build
   script:
+    - echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list
+    - apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-key 0xB01FA116
+    - ./.jrl-ci/run before_install
     - export MASTER_PPA=""
     - export APT_DEPENDENCIES="hrpsys-base liblapack-dev libblas-dev libjpeg-dev libpng12-dev"
     - export GIT_DEPENDENCIES=""
@@ -42,6 +59,9 @@ build_gcc_noros_hrpsys:
 build_gcc_ros_nohrpsys:
   stage: build
   script:
+    - echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list
+    - apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-key 0xB01FA116
+    - ./.jrl-ci/run before_install
     - ./.jrl-ci/dependencies/catkin
     - export MASTER_PPA=""
     - export APT_DEPENDENCIES="ros-indigo-common-msgs ros-indigo-tf2-ros ros-indigo-xacro ros-indigo-rviz-animated-view-controller"
@@ -56,6 +76,9 @@ build_gcc_ros_nohrpsys:
 build_gcc_ros_hrpsys:
   stage: build
   script:
+    - echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list
+    - apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-key 0xB01FA116
+    - ./.jrl-ci/run before_install
     - ./.jrl-ci/dependencies/catkin
     - export MASTER_PPA=""
     - export APT_DEPENDENCIES="ros-indigo-common-msgs ros-indigo-tf2-ros ros-indigo-xacro ros-indigo-rviz-animated-view-controller hrpsys-base liblapack-dev libblas-dev"
