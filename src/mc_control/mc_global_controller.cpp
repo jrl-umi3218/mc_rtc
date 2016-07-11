@@ -540,6 +540,26 @@ void MCGlobalController::log_header()
     log_.close();
   }
   log_.open(log_path.string());
+  std::stringstream ss_sym;
+  ss_sym << config.log_template << "-" << current_ctrl << "-latest.log";
+  bfs::path log_sym_path = config.log_directory / bfs::path(ss_sym.str().c_str());
+  if(bfs::is_symlink(log_sym_path))
+  {
+    bfs::remove(log_sym_path);
+  }
+  if(!bfs::exists(log_sym_path))
+  {
+    boost::system::error_code ec;
+    bfs::create_symlink(log_path, log_sym_path, ec);
+    if(!ec)
+    {
+      LOG_INFO("Updated latest log symlink: " << log_sym_path)
+    }
+    else
+    {
+      LOG_INFO("Failed to create latest log symlink: " << ec.message())
+    }
+  }
   if(log_.is_open())
   {
     log_ << "t";
