@@ -90,4 +90,20 @@ std::vector<Plane> planes_from_polygon(const std::shared_ptr<geos::geom::Geometr
   return res;
 }
 
+std::vector<Eigen::Vector3d> points_from_polygon(std::shared_ptr<geos::geom::Geometry> geometry)
+{
+  std::vector<Eigen::Vector3d> poly;
+  geos::geom::Polygon * polyIn = dynamic_cast<geos::geom::Polygon *>(geometry.get());
+  if(polyIn)
+  {
+    const geos::geom::CoordinateSequence * seq = polyIn->getExteriorRing()->getCoordinates();
+    for(size_t i = 0; i < seq->size(); ++i)
+    {
+      const geos::geom::Coordinate & p = seq->getAt(i);
+      poly.emplace_back(p.x, p.y, 0);
+    }
+  }
+  return poly;
+}
+
 }

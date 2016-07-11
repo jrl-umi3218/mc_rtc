@@ -35,4 +35,6 @@ struct MC_RBDYN_DLLAPI Plane
 
 MC_RBDYN_DLLAPI std::vector<Plane> planes_from_polygon(const std::shared_ptr<geos::geom::Geometry> & geometry);
 
+MC_RBDYN_DLLAPI std::vector<Eigen::Vector3d> points_from_polygon(std::shared_ptr<geos::geom::Geometry> geometry);
+
 }
