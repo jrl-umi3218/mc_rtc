@@ -43,7 +43,7 @@ void CoMIncPlaneConstr::set_planes(QPSolver & solver, const std::vector<mc_rbdyn
     {
       if(planes[i].normal.norm() > 0.5)
       {
-        constr->addPlane(static_cast<int>(i), planes[i].normal, planes[i].offset, 0.04, 0.01, 0.01, 0.);
+        constr->addPlane(static_cast<int>(i), planes[i].normal, planes[i].offset, iDist, sDist, damping, dampingOff);
       }
     }
   }
