@@ -96,8 +96,8 @@ std::vector<PolygonInterpolator::tuple_t> PolygonInterpolator::normal_derivative
   geos::geom::CoordinateSequence * seq_d = geom_factory.getCoordinateSequenceFactory()->create((std::size_t)0, 2);
   for(const auto & p : tuple_pairs)
   {
-    seq_s->add(geos::geom::Coordinate(p.first[0], p.first[1]));
-    seq_d->add(geos::geom::Coordinate(p.second[0], p.second[1]));
+    seq_s->add(geos::geom::Coordinate(static_cast<float>(p.first[0]),  static_cast<float>(p.first[1])));
+    seq_d->add(geos::geom::Coordinate(static_cast<float>(p.second[0]), static_cast<float>(p.second[1])));
   }
   seq_s->add(seq_s->getAt(0));
   seq_d->add(seq_d->getAt(0));
