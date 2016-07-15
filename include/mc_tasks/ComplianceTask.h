@@ -51,7 +51,7 @@ public:
 
   virtual void resetTask(const mc_rbdyn::Robots& robots, unsigned int robotIndex);
 
-  const sva::ForceVecd & getFilteredWrench() const;
+  sva::ForceVecd getFilteredWrench() const;
 
   void setTargetWrench(const sva::ForceVecd& wrench)
   {

@@ -113,9 +113,9 @@ void ComplianceTask::resetTask(const mc_rbdyn::Robots& robots, unsigned int robo
   efTask_->resetTask(robots, robotIndex);
 }
 
-const sva::ForceVecd & ComplianceTask::getFilteredWrench() const
+sva::ForceVecd ComplianceTask::getFilteredWrench() const
 {
-  return wrench_;
+  return wrench_ + sva::ForceVecd(dof_*obj_.vector());
 }
 
 } // mc_tasks
