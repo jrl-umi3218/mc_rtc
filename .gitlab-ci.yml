@@ -2,7 +2,7 @@ variables:
   CI_TOOL: gitlab-ci
   APT_DEPENDENCIES: "libtinyxml2-dev libboost-all-dev libjsoncpp-dev libgeos++-dev libgeos-dev qhull-bin libqhull-dev libltdl-dev libspacevecalg-dev libeigen-qld-dev librbdyn-dev libsch-core-dev"
   GIT_DEPENDENCIES: "git@gite.lirmm.fr:multi-contact/eigen-lssol.git jrl-umi3218/Tasks git@gite.lirmm.fr:multi-contact/mc_rbdyn_urdf_cpp.git"
-  GITE_PACKAGES: "multi-contact/eigen-lssol multi-contact/tasks-packaging#topic/CIPackaging multi-contact/mc_rbdyn_urdf_cpp"
+  GITE_PACKAGES: "multi-contact/eigen-lssol multi-contact/tasks-packaging#topic/CIPackaging multi-contact/mc_rbdyn_urdf_cpp multi-contact/mc_env_description mc-hrp2/hrp2_drc mc-hrp4/hrp4"
   MASTER_PPA: "v-launchpad-jochen-sprickerhof-de/pcl pierre-gergondet+ppa/multi-contact-unstable hrg/daily"
   ROS_DISTRO: "indigo"
 
