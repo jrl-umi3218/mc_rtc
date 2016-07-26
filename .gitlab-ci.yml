@@ -105,6 +105,20 @@ package_trusty_amd64:
   tags:
     - GCC
 
+package_trusty_amd64_ros:
+  stage: package
+  before_script:
+    - git submodule update --quiet --init --recursive
+    - ./.packaging/setup_pbuilder.sh trusty amd64
+  script:
+    - ./.packaging/build_recipe.sh .mc-rtc-ros.recipe trusty amd64
+  artifacts:
+    name: "tasks_trusty_amd64"
+    paths:
+      - "*.deb"
+  tags:
+    - GCC
+
 stages:
   - build
   - package
