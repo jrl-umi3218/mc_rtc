@@ -1,0 +1,5 @@
+# git-build-recipe format 0.4 deb-version {debupstream}+{revdate}+{git-commit}+{git-commit:debian}
+git+ssh://git@gite.lirmm.fr/multi-contact/mc_rtc master
+merge debian git+ssh://git@gite.lirmm.fr/multi-contact/mc_rtc debian
+run git submodule update --init
+run sed -i -e"s/# ros-indigo/ ros-${ROS_DISTRO}/" debian/control

@@ -1,8 +1,9 @@
 variables:
   CI_TOOL: gitlab-ci
-  APT_DEPENDENCIES: "libtinyxml2-dev libboost-all-dev libjsoncpp-dev libgeos++-dev libgeos-dev qhull-bin libqhull-dev libltdl-dev libspacevecalg-dev libeigen-qld-dev"
-  GIT_DEPENDENCIES: "git@gite.lirmm.fr:multi-contact/eigen-lssol.git jrl-umi3218/sch-core jrl-umi3218/RBDyn jrl-umi3218/Tasks git@gite.lirmm.fr:multi-contact/mc_rbdyn_urdf_cpp.git"
-  MASTER_PPA: "v-launchpad-jochen-sprickerhof-de/pcl pierre-gergondet+ppa/multi-contact hrg/daily"
+  APT_DEPENDENCIES: "libtinyxml2-dev libboost-all-dev libjsoncpp-dev libgeos++-dev libgeos-dev qhull-bin libqhull-dev libltdl-dev libspacevecalg-dev libeigen-qld-dev librbdyn-dev libsch-core-dev"
+  GIT_DEPENDENCIES: "git@gite.lirmm.fr:multi-contact/eigen-lssol.git jrl-umi3218/Tasks git@gite.lirmm.fr:multi-contact/mc_rbdyn_urdf_cpp.git"
+  GITE_PACKAGES: "multi-contact/eigen-lssol multi-contact/tasks-packaging#topic/CIPackaging multi-contact/mc_rbdyn_urdf_cpp multi-contact/mc_env_description#karim_drc mc-hrp2/hrp2_drc mc-hrp4/hrp4#noxacro"
+  MASTER_PPA: "v-launchpad-jochen-sprickerhof-de/pcl pierre-gergondet+ppa/multi-contact-unstable hrg/daily"
   ROS_DISTRO: "indigo"
 
 # Secured variable are stored in the project
@@ -90,5 +91,122 @@ build_gcc_ros_hrpsys:
   tags:
     - GCC
 
+package_trusty_amd64_noros:
+  stage: package
+  before_script:
+    - git submodule update --quiet --init --recursive
+    - ./.packaging/setup_pbuilder.sh trusty amd64
+  script:
+    - ./.packaging/build_recipe.sh .mc-rtc.recipe trusty amd64
+  artifacts:
+    name: "tasks_trusty_amd64"
+    paths:
+      - "*.deb"
+  tags:
+    - GCC
+
+package_trusty_amd64_ros:
+  stage: package
+  before_script:
+    - git submodule update --quiet --init --recursive
+    - ./.packaging/setup_pbuilder.sh trusty amd64
+  script:
+    - ./.packaging/build_recipe.sh .mc-rtc-ros.recipe trusty amd64
+  artifacts:
+    name: "tasks_trusty_amd64"
+    paths:
+      - "*.deb"
+  tags:
+    - GCC
+
+package_trusty_i386_noros:
+  stage: package
+  before_script:
+    - git submodule update --quiet --init --recursive
+    - ./.packaging/setup_pbuilder.sh trusty i386
+  script:
+    - ./.packaging/build_recipe.sh .mc-rtc.recipe trusty i386
+  artifacts:
+    name: "tasks_trusty_i386"
+    paths:
+      - "*.deb"
+  tags:
+    - GCC
+
+package_trusty_i386_ros:
+  stage: package
+  before_script:
+    - git submodule update --quiet --init --recursive
+    - ./.packaging/setup_pbuilder.sh trusty i386
+  script:
+    - ./.packaging/build_recipe.sh .mc-rtc-ros.recipe trusty i386
+  artifacts:
+    name: "tasks_trusty_i386"
+    paths:
+      - "*.deb"
+  tags:
+    - GCC
+
+package_xenial_amd64_noros:
+  stage: package
+  before_script:
+    - export ROS_DISTRO="kinetic"
+    - git submodule update --quiet --init --recursive
+    - ./.packaging/setup_pbuilder.sh xenial amd64
+  script:
+    - ./.packaging/build_recipe.sh .mc-rtc.recipe xenial amd64
+  artifacts:
+    name: "tasks_xenial_amd64"
+    paths:
+      - "*.deb"
+  tags:
+    - GCC
+
+package_xenial_amd64_ros:
+  stage: package
+  before_script:
+    - export ROS_DISTRO="kinetic"
+    - git submodule update --quiet --init --recursive
+    - ./.packaging/setup_pbuilder.sh xenial amd64
+  script:
+    - ./.packaging/build_recipe.sh .mc-rtc-ros.recipe xenial amd64
+  artifacts:
+    name: "tasks_xenial_amd64"
+    paths:
+      - "*.deb"
+  tags:
+    - GCC
+
+package_xenial_i386_noros:
+  stage: package
+  before_script:
+    - export ROS_DISTRO="kinetic"
+    - git submodule update --quiet --init --recursive
+    - ./.packaging/setup_pbuilder.sh xenial i386
+  script:
+    - ./.packaging/build_recipe.sh .mc-rtc.recipe xenial i386
+  artifacts:
+    name: "tasks_xenial_i386"
+    paths:
+      - "*.deb"
+  tags:
+    - GCC
+
+package_xenial_i386_ros:
+  stage: package
+  before_script:
+    - export ROS_DISTRO="kinetic"
+    - git submodule update --quiet --init --recursive
+    - ./.packaging/setup_pbuilder.sh xenial i386
+  script:
+    - ./.packaging/build_recipe.sh .mc-rtc-ros.recipe xenial i386
+  artifacts:
+    name: "tasks_xenial_i386"
+    paths:
+      - "*.deb"
+  tags:
+    - GCC
+
 stages:
   - build
+  - package
