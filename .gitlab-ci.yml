@@ -150,6 +150,7 @@ package_trusty_i386_ros:
 package_xenial_amd64_noros:
   stage: package
   before_script:
+    - export ROS_DISTRO="kinetic"
     - git submodule update --quiet --init --recursive
     - ./.packaging/setup_pbuilder.sh xenial amd64
   script:
@@ -164,6 +165,7 @@ package_xenial_amd64_noros:
 package_xenial_amd64_ros:
   stage: package
   before_script:
+    - export ROS_DISTRO="kinetic"
     - git submodule update --quiet --init --recursive
     - ./.packaging/setup_pbuilder.sh xenial amd64
   script:
@@ -178,6 +180,7 @@ package_xenial_amd64_ros:
 package_xenial_i386_noros:
   stage: package
   before_script:
+    - export ROS_DISTRO="kinetic"
     - git submodule update --quiet --init --recursive
     - ./.packaging/setup_pbuilder.sh xenial i386
   script:
@@ -192,6 +195,7 @@ package_xenial_i386_noros:
 package_xenial_i386_ros:
   stage: package
   before_script:
+    - export ROS_DISTRO="kinetic"
     - git submodule update --quiet --init --recursive
     - ./.packaging/setup_pbuilder.sh xenial i386
   script:
