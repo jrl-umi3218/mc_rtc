@@ -168,9 +168,6 @@ if(${ROSCPP_FOUND})
   pkg_config_use_dependency(mc_rtc_ros sensor_msgs)
   pkg_config_use_dependency(mc_rtc_ros tf2_ros)
 endif()
-if(${HRPSYS_BASE_FOUND})
-  pkg_config_use_dependency(mc_rtc_ros hrpsys-base)
-endif()
 pkg_config_append_libs(mc_rtc_ros)
 
 set(mc_control_SRC
@@ -240,36 +237,6 @@ add_controller("bci_self_interact"
   "mc_control/mc_bci_self_interact_controller.h")
 add_controller("halfsitpose" "mc_control/mc_halfsitpose_controller.cpp"
   "mc_control/mc_halfsitpose_controller.h")
-
-if(${HRPSYS_BASE_FOUND})
-  set(MCControl_SRC
-  mc_rtc/MCControlServiceSVC_impl.cpp
-  mc_rtc/MCControl.cpp
-  ${CMAKE_BINARY_DIR}/idl/MCControlServiceSK.cc
-  )
-
-  set_source_files_properties(${CMAKE_BINARY_DIR}/idl/MCControlServiceSK.cc
-                              PROPERTIES
-                                GENERATED 1
-                                COMPILE_FLAGS -Wno-error
-                             )
-
-  include_directories(${CMAKE_BINARY_DIR}/idl)
-
-  add_library(MCControl SHARED ${MCControl_SRC})
-  add_dependencies(MCControl generate_mc_idl_cpp)
-  set_target_properties(MCControl PROPERTIES PREFIX "")
-  pkg_config_use_dependency(MCControl hrpsys-base)
-  target_link_libraries(MCControl mc_rtc_ros mc_control)
-
-  add_executable(MCControlComp mc_rtc/MCControlComp.cpp)
-  target_link_libraries(MCControlComp MCControl)
-
-  install(TARGETS MCControl MCControlComp
-    RUNTIME DESTINATION bin
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib)
-endif()
 
 if("${TCP_COM_FOUND}" AND "${TCP_CONTROL_FOUND}")
   set(MC_RTC_TCP_HEADERS mc_rtc-tcp/MCControlTCP.h mc_rtc-tcp/MCControlTCP.hxx mc_rtc-tcp/MCControlTCPService.h)

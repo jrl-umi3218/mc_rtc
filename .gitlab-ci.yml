@@ -31,58 +31,22 @@ build_debian:
   tags:
     - debian
 
-build_gcc_noros_nohrpsys:
+build_gcc_noros:
   stage: build
   script:
-    - echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list
-    - apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-key 0xB01FA116
     - ./.jrl-ci/run before_install
     - ./.jrl-ci/run build
     - ./.jrl-ci/run after_success
   tags:
     - GCC
 
-build_gcc_noros_hrpsys:
+build_gcc_ros:
   stage: build
   script:
-    - echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list
-    - apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-key 0xB01FA116
-    - ./.jrl-ci/run before_install
-    - export MASTER_PPA=""
-    - export APT_DEPENDENCIES="hrpsys-base liblapack-dev libblas-dev libjpeg-dev libpng12-dev"
-    - export GIT_DEPENDENCIES=""
-    - ./.jrl-ci/run before_install
-    - ./.jrl-ci/run build
-    - ./.jrl-ci/run after_success
-  tags:
-    - GCC
-
-build_gcc_ros_nohrpsys:
-  stage: build
-  script:
-    - echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list
-    - apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-key 0xB01FA116
     - ./.jrl-ci/run before_install
     - ./.jrl-ci/dependencies/catkin
     - export MASTER_PPA=""
     - export APT_DEPENDENCIES="ros-indigo-common-msgs ros-indigo-tf2-ros ros-indigo-xacro ros-indigo-rviz-animated-view-controller"
-    - export GIT_DEPENDENCIES=""
-    - export ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_ros#master git@gite.lirmm.fr:mc-hrp2/hrp2_drc#master git@gite.lirmm.fr:mc-hrp4/hrp4#master"
-    - ./.jrl-ci/run before_install
-    - ./.jrl-ci/run build
-    - ./.jrl-ci/run after_success
-  tags:
-    - GCC
-
-build_gcc_ros_hrpsys:
-  stage: build
-  script:
-    - echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list
-    - apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-key 0xB01FA116
-    - ./.jrl-ci/run before_install
-    - ./.jrl-ci/dependencies/catkin
-    - export MASTER_PPA=""
-    - export APT_DEPENDENCIES="ros-indigo-common-msgs ros-indigo-tf2-ros ros-indigo-xacro ros-indigo-rviz-animated-view-controller hrpsys-base liblapack-dev libblas-dev"
     - export GIT_DEPENDENCIES=""
     - export ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_ros#master git@gite.lirmm.fr:mc-hrp2/hrp2_drc#master git@gite.lirmm.fr:mc-hrp4/hrp4#master"
     - ./.jrl-ci/run before_install
