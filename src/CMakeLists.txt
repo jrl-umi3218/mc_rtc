@@ -171,6 +171,7 @@ endif()
 pkg_config_append_libs(mc_rtc_ros)
 
 set(mc_control_SRC
+mc_control/Configuration.cpp
 mc_control/ForceContactSensor.cpp
 mc_control/SimulationContactSensor.cpp
 mc_control/generic_gripper.cpp
@@ -181,6 +182,7 @@ mc_control/mc_global_controller_services.cpp
 )
 set(mc_control_HDR
 ../include/mc_control/api.h
+../include/mc_control/Configuration.h
 ../include/mc_control/ContactSensor.h
 ../include/mc_control/ForceContactSensor.h
 ../include/mc_control/generic_gripper.h
