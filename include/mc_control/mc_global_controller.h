@@ -103,32 +103,32 @@ private:
 public:
   bool running;
 private:
-  struct Configuration
+  struct GlobalConfiguration
   {
-    Configuration(const std::string & path);
+    GlobalConfiguration(const std::string & path);
 
     inline bool enabled(const std::string & ctrl);
 
-    std::vector<std::string> robot_module_paths;
+    std::vector<std::string> robot_module_paths = {};
     std::shared_ptr<mc_rbdyn::RobotModule> main_robot_module;
 
-    std::vector<std::string> controller_module_paths;
-    std::vector<std::string> enabled_controllers;
-    std::string initial_controller;
-    double timestep;
+    std::vector<std::string> controller_module_paths = {};
+    std::vector<std::string> enabled_controllers = {};
+    std::string initial_controller = "";
+    double timestep = 0.002;
 
-    bool publish_control_state;
-    bool publish_real_state;
-    double publish_timestep;
+    bool publish_control_state = true;
+    bool publish_real_state = true;
+    double publish_timestep = 0.01;
 
-    bool enable_log;
+    bool enable_log = true;
     bfs::path log_directory;
-    std::string log_template;
+    std::string log_template = "mc-control";
 
-    Json::Value v;
+    Configuration config;
   };
 private:
-  Configuration config;
+  GlobalConfiguration config;
   std::map<std::string, std::shared_ptr<mc_control::MCController>> controllers;
   std::string current_ctrl;
   std::string next_ctrl;

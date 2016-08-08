@@ -119,16 +119,16 @@ struct MCSeqPublisher;
 
 struct MCSeqControllerConfig
 {
-  MCSeqControllerConfig(const Json::Value & v);
+  MCSeqControllerConfig(const mc_control::Configuration & conf);
   //std::string env_path;
   //std::string env_name;
   //std::string env_module;
   std::shared_ptr<mc_rbdyn::RobotModule> env_module;
   std::string plan;
-  bool step_by_step;
+  bool step_by_step = false;
   bool is_simulation = false;
-  bool use_real_sensors;
-  unsigned int start_stance;
+  bool use_real_sensors = false;
+  unsigned int start_stance = 0;
 };
 
 struct MC_CONTROL_DLLAPI MCSeqController : public MCController
@@ -298,5 +298,5 @@ extern "C"
 {
   MC_CONTROL_DLLAPI const char * CLASS_NAME();
   MC_CONTROL_DLLAPI void destroy(mc_control::MCController * ptr);
-  MC_CONTROL_DLLAPI mc_control::MCController * create(const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const Json::Value & conf);
+  MC_CONTROL_DLLAPI mc_control::MCController * create(const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const mc_control::Configuration & conf);
 }

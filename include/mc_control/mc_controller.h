@@ -3,8 +3,10 @@
 #include <mc_rbdyn/robot.h>
 
 
+#include <mc_control/Configuration.h>
 #include <mc_control/generic_gripper.h>
 #include <mc_control/msg/QPResult.h>
+
 #include <mc_solver/QPSolver.h>
 #include <mc_solver/CollisionsConstraint.h>
 #include <mc_solver/ContactConstraint.h>
@@ -12,8 +14,6 @@
 #include <mc_solver/KinematicsConstraint.h>
 
 #include <Tasks/QPTasks.h>
-
-#include <json/json.h>
 
 namespace mc_rbdyn
 {
@@ -344,7 +344,7 @@ extern "C"\
 {\
   CONTROLLER_MODULE_API const char * CLASS_NAME() { return NAME; }\
   CONTROLLER_MODULE_API void destroy(mc_control::MCController * ptr) { delete ptr; }\
-  CONTROLLER_MODULE_API mc_control::MCController * create(const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const Json::Value & conf) { return new TYPE(robot, dt, conf); }\
+  CONTROLLER_MODULE_API mc_control::MCController * create(const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const mc_control::Configuration & conf) { return new TYPE(robot, dt, conf); }\
 }
 
 /** Provides a handle to construct a generic controller */
@@ -353,5 +353,5 @@ extern "C"\
 {\
   CONTROLLER_MODULE_API const char * CLASS_NAME() { return NAME; }\
   CONTROLLER_MODULE_API void destroy(mc_control::MCController * ptr) { delete ptr; }\
-  CONTROLLER_MODULE_API mc_control::MCController * create(const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const Json::Value &) { return new TYPE(robot, dt); }\
+  CONTROLLER_MODULE_API mc_control::MCController * create(const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const mc_control::Configuration &) { return new TYPE(robot, dt); }\
 }

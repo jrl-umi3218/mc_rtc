@@ -20,42 +20,24 @@
 namespace mc_control
 {
 
-MCGlobalController::Configuration::Configuration(const std::string & path)
+MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string & path)
+: config(path)
 {
-  std::ifstream ifs(path);
-  if(ifs.bad())
+  config("RobotModulePaths", robot_module_paths);
   {
-    LOG_ERROR("Failed to open controller configuration file: " << path)
-  }
-  try
-  {
-    ifs >> v;
-  }
-  catch(const std::runtime_error & exc)
-  {
-    LOG_ERROR("Failed to read configuration file")
-    LOG_WARNING(exc.what())
-  }
-  if(v.isMember("RobotModulePaths"))
-  {
-    for(const auto & cv : v["RobotModulePaths"])
+    std::string rmp = "";
+    config("RobotModulePath", rmp);
+    if(rmp.size())
     {
-      robot_module_paths.push_back(cv.asString());
+      robot_module_paths.push_back(rmp);
     }
-  }
-  if(v.isMember("RobotModulePath"))
-  {
-    robot_module_paths.push_back(v["RobotModulePath"].asString());
   }
   if(robot_module_paths.size())
   {
     mc_rbdyn::RobotLoader::update_robot_module_path(robot_module_paths);
   }
   std::string robot_name = "HRP2DRC";
-  if(v.isMember("MainRobot"))
-  {
-    robot_name = v["MainRobot"].asString();
-  }
+  config("MainRobot", robot_name);
   if(mc_rbdyn::RobotLoader::has_robot(robot_name))
   {
     main_robot_module = mc_rbdyn::RobotLoader::get_robot_module(robot_name);
@@ -68,70 +50,42 @@ MCGlobalController::Configuration::Configuration(const std::string & path)
 
   controller_module_paths.resize(0);
   controller_module_paths.push_back(mc_rtc::MC_CONTROLLER_INSTALL_PREFIX);
-  if(v.isMember("ControllerModulePaths"))
   {
-    for(const auto & cv : v["ControllerModulePaths"])
+    std::vector<std::string> v = config("ControllerModulePaths");
+    for(const auto & cv : v)
     {
-      controller_module_paths.push_back(cv.asString());
+      controller_module_paths.push_back(cv);
     }
   }
-  if(v.isMember("ControllerModulePath"))
   {
-    controller_module_paths.push_back(v["ControllerModulePath"].asString());
-  }
-  if(v.isMember("Enabled"))
-  {
-    for(const auto & cv : v["Enabled"])
+    std::string v = "";
+    config("ControllerModulePaths", v);
+    if(v.size())
     {
-      enabled_controllers.push_back(cv.asString());
+      controller_module_paths.push_back(v);
     }
   }
-  if(v.isMember("Default"))
+  config("Enabled", enabled_controllers);
+  if(enabled_controllers.size())
   {
-    initial_controller = v["Default"].asString();
+    initial_controller = enabled_controllers[0];
   }
-  else
-  {
-    if(enabled_controllers.size())
-    {
-      initial_controller = enabled_controllers[0];
-    }
-  }
-  timestep = 0.002;
-  if(v.isMember("Timestep"))
-  {
-    timestep = v["Timestep"].asDouble();
-  }
-  publish_control_state = true;
-  if(v.isMember("PublishControlState"))
-  {
-    publish_control_state = v["PublishControlState"].asBool();
-  }
-  publish_real_state = false;
-  if(v.isMember("PublishRealState"))
-  {
-    publish_real_state = v["PublishRealState"].asBool();
-  }
-  publish_timestep = 0.01;
-  if(v.isMember("PublishTimestep"))
-  {
-    publish_timestep = v["PublishTimestep"].asDouble();
-  }
-  enable_log = true;
-  if(v.isMember("Log"))
-  {
-    enable_log = v["Log"].asBool();
-  }
+  config("Default", initial_controller);
+  config("Timestep", timestep);
+  config("PublishControlState", publish_control_state);
+  config("PublishRealState", publish_real_state);
+  config("PublishTimestep", publish_timestep);
+  config("Log", enable_log);
   log_directory = bfs::temp_directory_path();
-  if(v.isMember("LogDirectory"))
   {
-    log_directory = v["LogDirectory"].asString();
+    std::string v = "";
+    config("LogDirectory", v);
+    if(v.size())
+    {
+      log_directory = v;
+    }
   }
-  log_template = "mc-control";
-  if(v.isMember("LogTemplate"))
-  {
-    log_template = v["LogTemplate"].asString();
-  }
+  config("LogTemplate", log_template);
   /* Allow the user not to worry about Default if only one controller is enabled */
   if(enabled_controllers.size() == 1)
   {
@@ -139,7 +93,7 @@ MCGlobalController::Configuration::Configuration(const std::string & path)
   }
 }
 
-bool MCGlobalController::Configuration::enabled(const std::string & ctrl)
+bool MCGlobalController::GlobalConfiguration::enabled(const std::string & ctrl)
 {
   return std::find(enabled_controllers.begin(), enabled_controllers.end(), ctrl) != enabled_controllers.end();
 }
@@ -171,11 +125,11 @@ MCGlobalController::MCGlobalController(const std::string & conf)
       LOG_INFO("Create controller " << controller_name)
       if(controller_subname != "")
       {
-        controllers[c] = controller_loader->create_object(controller_name, controller_subname, config.main_robot_module, config.timestep, config.v);
+        controllers[c] = controller_loader->create_object(controller_name, controller_subname, config.main_robot_module, config.timestep, config.config);
       }
       else
       {
-        controllers[c] = controller_loader->create_object(c, config.main_robot_module, config.timestep, config.v);
+        controllers[c] = controller_loader->create_object(c, config.main_robot_module, config.timestep, config.config);
       }
     }
     else
