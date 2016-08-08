@@ -202,11 +202,19 @@ namespace mc_control
       const Json::Value & v;
     };
 
-    /*! \brief Constructor using an existing Json::Value */
-    Configuration(const Json::Value & v);
-
-    /*! \brief Constructor using a file path */
+    /*! \brief Constructor using a file path
+     *
+     * \param path Path to the configuration file
+     *
+     */
     Configuration(const std::string & path);
+
+    /*! \brief Load more data into the configuration
+     *
+     * \param path Path to the configuration file
+     *
+     */
+    void load(const std::string & path);
 
     /*! \brief Returns a Entry value stored within the
      * configuration

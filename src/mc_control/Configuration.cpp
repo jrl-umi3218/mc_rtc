@@ -142,13 +142,13 @@ Configuration::Entry::operator Eigen::Quaterniond() const
   throw Configuration::Exception("Stored Json value is not a Quaterniond");
 }
 
-Configuration::Configuration(const Json::Value & v)
-: v(v)
-{
-}
-
 Configuration::Configuration(const std::string & path)
 : v()
+{
+  load(path);
+}
+
+void Configuration::load(const std::string & path)
 {
   std::ifstream ifs(path);
   if(ifs.bad())

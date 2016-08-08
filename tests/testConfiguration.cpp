@@ -2,6 +2,39 @@
 
 #include <mc_control/Configuration.h>
 
+#include <fstream>
+
+#ifdef WIN32
+#include <Windows.h>
+inline int mkstemp(char * out)
+{
+  char tmp_dir[MAX_PATH + 1];
+  GetTempPath(MAX_PATH + 1, tmp_dir);
+  int ret = GetTempFileName(tmp_dir, "mkstemp", 0, out);
+  if (ret == 0) { return -1; }
+  else { return 0; }
+}
+#endif
+
+std::string getConfigFile(const std::string & data)
+{
+#ifndef WIN32
+  char fIn[17] = "/tmp/tConfXXXXXX";
+#else
+  char fIn[MAX_PATH + 1];
+  memset(fIn, 0, MAX_PATH + 1);
+#endif
+  int err = mkstemp(fIn);
+  if(err < 0)
+  {
+    std::cerr << "Failed to create temporary file, abort test" << std::endl;
+    throw std::runtime_error("Failed to create file");
+  }
+  std::ofstream ofs(fIn);
+  ofs << data;
+  return fIn;
+}
+
 bool operator==(const Eigen::Quaterniond & lhs,
                 const Eigen::Quaterniond & rhs)
 {
@@ -11,7 +44,7 @@ bool operator==(const Eigen::Quaterniond & lhs,
          lhs.z() == rhs.z();
 }
 
-Json::Value sampleConfig()
+std::string sampleConfig()
 {
   std::string data = R"(
 {
@@ -46,11 +79,17 @@ Json::Value sampleConfig()
   }
 }
 )";
-  std::stringstream ss;
-  ss << data;
-  Json::Value v;
-  ss >> v;
-  return v;
+  return getConfigFile(data);
+}
+
+std::string sampleConfig2()
+{
+  std::string data = R"(
+  {
+    "int": 12
+  }
+  )";
+  return getConfigFile(data);
 }
 
 BOOST_AUTO_TEST_CASE(TestConfiguration)
@@ -402,5 +441,12 @@ BOOST_AUTO_TEST_CASE(TestConfiguration)
     std::vector<std::string> c(0);
     config("dict")("stringV", c);
     BOOST_CHECK(c == ref);
+  }
+
+  /* Check load */
+  {
+    config.load(sampleConfig2());
+    int a = config("int");
+    BOOST_CHECK_EQUAL(a, 12);
   }
 }
