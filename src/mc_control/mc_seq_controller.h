@@ -120,9 +120,6 @@ struct MCSeqPublisher;
 struct MCSeqControllerConfig
 {
   MCSeqControllerConfig(const mc_control::Configuration & conf);
-  //std::string env_path;
-  //std::string env_name;
-  //std::string env_module;
   std::shared_ptr<mc_rbdyn::RobotModule> env_module;
   std::string plan;
   bool step_by_step = false;
