@@ -36,6 +36,14 @@ namespace mc_control
       std::string msg;
     };
 
+    /*! \brief Check if the key is part of the conf
+     *
+     * \param key The key to test
+     *
+     * \returns True if key is part of the configuration
+     */
+    bool isMember(const std::string & key) const;
+
     /*! \brief Represent entries in the configuration file
      *
      * These values are meant to be cast into useful types.
@@ -46,7 +54,15 @@ namespace mc_control
        *
        * \param v Json::Value corresponding to the entry
        */
-      Entry(Json::Value & v);
+      Entry(const Json::Value & v);
+
+      /*! \brief Check if the key is part of the conf
+       *
+       * \param key The key to test
+       *
+       * \returns True if key is part of the configuration
+       */
+      bool isMember(const std::string & key) const;
 
       /*! \brief Cast to bool
        *
@@ -61,6 +77,15 @@ namespace mc_control
        * \throws If the underlying value does not hold an int
        */
       operator int() const;
+
+      /*! \brief Cast to unsigned int
+       *
+       * Int entries that are strictly positive will be treated as
+       * unsigned int entries
+       *
+       * \throws If the underlying value does not hold an unsigned int
+       */
+      operator unsigned int() const;
 
       /*! \brief Cast to double
        *
@@ -149,7 +174,7 @@ namespace mc_control
        *
        * \throws If key is not stored in the Configuration
        */
-      Entry operator()(const std::string & key);
+      Entry operator()(const std::string & key) const;
 
       /*! \brief Retrieve and store a given value stored within the
        * configuration
@@ -163,7 +188,7 @@ namespace mc_control
        *
        */
       template<typename T>
-      void operator()(const std::string & key, T & v)
+      void operator()(const std::string & key, T & v) const
       {
         try
         {
@@ -174,7 +199,7 @@ namespace mc_control
         }
       }
 
-      Json::Value & v;
+      const Json::Value & v;
     };
 
     /*! \brief Constructor using an existing Json::Value */
@@ -193,7 +218,7 @@ namespace mc_control
      *
      * \throws If key is not stored in the Configuration
      */
-    Entry operator()(const std::string & key);
+    Entry operator()(const std::string & key) const;
 
     /*! \brief Retrieve and store a given value stored within the
      * configuration
@@ -207,7 +232,7 @@ namespace mc_control
      *
      */
     template<typename T>
-    void operator()(const std::string & key, T & v)
+    void operator()(const std::string & key, T & v) const
     {
       try
       {
@@ -221,27 +246,11 @@ namespace mc_control
     Json::Value v;
   };
 
+  /*! \brief Specialized version to lift ambiguity */
   template<>
-  void Configuration::operator()(const std::string & key, std::string & v)
-  {
-    try
-    {
-      v = (std::string)(*this)(key);
-    }
-    catch(Exception &)
-    {
-    }
-  }
+  void Configuration::operator()(const std::string & key, std::string & v) const;
 
+  /*! \brief Specialized version to lift ambiguity */
   template<>
-  void Configuration::Entry::operator()(const std::string & key, std::string & v)
-  {
-    try
-    {
-      v = (std::string)(*this)(key);
-    }
-    catch(Exception &)
-    {
-    }
-  }
+  void Configuration::Entry::operator()(const std::string & key, std::string & v) const;
 }

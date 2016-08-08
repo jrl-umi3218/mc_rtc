@@ -9,7 +9,7 @@ namespace mc_control
 
 namespace
 {
-  Configuration::Entry getEntry(Json::Value & v, const std::string & key)
+  Configuration::Entry getEntry(const Json::Value & v, const std::string & key)
   {
     if(v.isMember(key))
     {
@@ -29,12 +29,22 @@ const char * Configuration::Exception::what() const noexcept
   return msg.c_str();
 }
 
-Configuration::Entry::Entry(Json::Value & v)
+Configuration::Entry::Entry(const Json::Value & v)
 : v(v)
 {
 }
 
-Configuration::Entry Configuration::Entry::operator()(const std::string & key)
+bool Configuration::Entry::isMember(const std::string & key) const
+{
+  return v.isMember(key);
+}
+
+bool Configuration::isMember(const std::string & key) const
+{
+  return v.isMember(key);
+}
+
+Configuration::Entry Configuration::Entry::operator()(const std::string & key) const
 {
   return getEntry(v, key);
 }
@@ -55,6 +65,15 @@ Configuration::Entry::operator int() const
     return v.asInt();
   }
   throw Configuration::Exception("Stored Json value is not an int");
+}
+
+Configuration::Entry::operator unsigned int() const
+{
+  if(v.isUInt() || (v.isInt() && v.asInt() >= 0))
+  {
+    return v.asUInt();
+  }
+  throw Configuration::Exception("Stored Json value is not an unsigned int");
 }
 
 Configuration::Entry::operator double() const
@@ -147,9 +166,33 @@ Configuration::Configuration(const std::string & path)
   }
 }
 
-Configuration::Entry Configuration::operator()(const std::string & key)
+Configuration::Entry Configuration::operator()(const std::string & key) const
 {
   return getEntry(v, key);
+}
+
+template<>
+void Configuration::operator()(const std::string & key, std::string & v) const
+{
+  try
+  {
+    v = (std::string)(*this)(key);
+  }
+  catch(Exception &)
+  {
+  }
+}
+
+template<>
+void Configuration::Entry::operator()(const std::string & key, std::string & v) const
+{
+  try
+  {
+    v = (std::string)(*this)(key);
+  }
+  catch(Exception &)
+  {
+  }
 }
 
 }

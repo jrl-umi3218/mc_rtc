@@ -16,6 +16,7 @@ Json::Value sampleConfig()
   std::string data = R"(
 {
   "int": 42,
+  "sint": -42,
   "double": 42.5,
   "doubleOrInt": 42.0,
   "string": "sometext",
@@ -95,6 +96,50 @@ BOOST_AUTO_TEST_CASE(TestConfiguration)
 
     /*! Access a int from a dict */
     int g = 0;
+    config("dict")("int", g);
+    BOOST_CHECK_EQUAL(g, 42);
+  }
+
+  /* unsigned int tests */
+  {
+    /*! Check that we can access a direct unsigned int entry */
+    unsigned int a = config("int");
+    BOOST_CHECK_EQUAL(a, 42);
+
+    /*! Check that we can get the value of an unsigned int entry out of there */
+    unsigned int b = 0;
+    config("int", b);
+    BOOST_CHECK_EQUAL(b, 42);
+
+    /*! Check that accessing an unexisting entry does not modify the
+     * value */
+    unsigned int c = 100;
+    config("NONE", c);
+    BOOST_CHECK_EQUAL(c, 100);
+
+    /*! Check that accessing a different type of entry does not modify
+     * the value */
+    unsigned int d = 10;
+    config("double", d);
+    BOOST_CHECK_EQUAL(d, 10);
+
+    /*! Check double conversion does not happen */
+    unsigned int e = 10;
+    config("doubleOrInt", e);
+    BOOST_CHECK_EQUAL(e, 10);
+
+    /*! Check int to unsigned int does not happen */
+    unsigned int h = 10;
+    config("sint", h);
+    BOOST_CHECK_EQUAL(h, 10);
+
+    /*! Access a unsigned int from a dict */
+    unsigned int f = 0;
+    f = config("dict")("int");
+    BOOST_CHECK_EQUAL(f, 42);
+
+    /*! Access a unsigned int from a dict */
+    unsigned int g = 0;
     config("dict")("int", g);
     BOOST_CHECK_EQUAL(g, 42);
   }
