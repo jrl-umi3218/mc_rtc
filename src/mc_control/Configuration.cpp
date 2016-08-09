@@ -15,7 +15,7 @@ namespace
     {
       return Configuration::Entry(v[key]);
     }
-    throw Configuration::Exception("No entry named " + key + "in the configuration");
+    throw Configuration::Exception("No entry named " + key + " in the configuration");
   }
 }
 
@@ -155,14 +155,19 @@ void Configuration::load(const std::string & path)
   {
     LOG_ERROR("Failed to open controller configuration file: " << path)
   }
+  Json::Value newV;
   try
   {
-    ifs >> v;
+    ifs >> newV;
   }
   catch(const std::runtime_error & exc)
   {
-    LOG_ERROR("Failed to read configuration file")
+    LOG_ERROR("Failed to read configuration file: " << path)
     LOG_WARNING(exc.what())
+  }
+  for(const auto & m : newV.getMemberNames())
+  {
+    v[m] = newV[m];
   }
 }
 

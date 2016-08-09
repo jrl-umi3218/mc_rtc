@@ -448,5 +448,9 @@ BOOST_AUTO_TEST_CASE(TestConfiguration)
     config.load(sampleConfig2());
     int a = config("int");
     BOOST_CHECK_EQUAL(a, 12);
+
+    /* Check that other values are still there */
+    int b = config("sint");
+    BOOST_CHECK_EQUAL(b, -42);
   }
 }
