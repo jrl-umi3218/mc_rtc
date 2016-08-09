@@ -241,12 +241,12 @@ MCSeqControllerConfig::MCSeqControllerConfig(const mc_control::Configuration & c
   }
   auto seq = conf("Seq");
   seq("Simulation", is_simulation);
-  if(!conf.isMember("Env"))
+  if(!seq.isMember("Env"))
   {
     LOG_ERROR("No Env section in configuration for Seq controller, abort")
     throw("No Env section in Seq section");
   }
-  auto env = conf("Env");
+  auto env = seq("Env");
   if(env.isMember("Module"))
   {
     env_module = mc_rbdyn::RobotLoader::get_robot_module((std::string)env("Module"));
