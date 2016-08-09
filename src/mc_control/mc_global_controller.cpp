@@ -2,8 +2,9 @@
 
 #include <mc_rbdyn/RobotLoader.h>
 
-#include <mc_rtc/ros.h>
+#include <mc_rtc/config.h>
 #include <mc_rtc/logging.h>
+#include <mc_rtc/ros.h>
 
 #include <RBDyn/EulerIntegration.h>
 #include <RBDyn/FK.h>
@@ -12,6 +13,7 @@
 #include <json/json.h>
 
 #include <algorithm>
+#include <cstdlib>
 #include <fstream>
 #include <iomanip>
 
@@ -20,9 +22,23 @@
 namespace mc_control
 {
 
-MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string & path)
-: config(path)
+MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string & conf)
+: config(mc_rtc::CONF_PATH)
 {
+#ifndef WIN32
+  bfs::path config_path = bfs::path(std::getenv("HOME")) / ".config/mc_rtc/mc_rtc.conf";
+#else
+  // Should work for Windows Vista and up
+  bfs::path config_path = bfs::path(std::getenv("APPDATA")) / "mc_rtc/mc_rtc.conf";
+#endif
+  if(bfs::exists(config_path))
+  {
+    config.load(config_path.string());
+  }
+  if(bfs::exists(conf))
+  {
+    config.load(conf);
+  }
   config("RobotModulePaths", robot_module_paths);
   {
     std::string rmp = "";
@@ -90,6 +106,24 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   if(enabled_controllers.size() == 1)
   {
     initial_controller = enabled_controllers[0];
+  }
+  // Load controller-specific configuration
+  for(const auto & c : enabled_controllers)
+  {
+    bfs::path global = bfs::path(mc_rtc::MC_CONTROLLER_INSTALL_PREFIX) / "/etc" / (c + ".conf");
+    if(bfs::exists(global))
+    {
+      config.load(global.string());
+    }
+#ifndef WIN32
+    bfs::path local = bfs::path(std::getenv("HOME")) / ".config/mc_rtc/controllers" / (c + ".conf");
+#else
+    bfs::path local = bfs::path(std::getenv("APPDATA")) / "mc_rtc/controllers" / (c + ".conf");
+#endif
+    if(bfs::exists(local))
+    {
+      config.load(local.string());
+    }
   }
 }
 
