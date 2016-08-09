@@ -33,10 +33,12 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
 #endif
   if(bfs::exists(config_path))
   {
+    LOG_INFO("Loading additional global configuration " << config_path)
     config.load(config_path.string());
   }
   if(bfs::exists(conf))
   {
+    LOG_INFO("Loading additional global configuration " << conf)
     config.load(conf);
   }
   config("RobotModulePaths", robot_module_paths);
@@ -67,7 +69,8 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   controller_module_paths.resize(0);
   controller_module_paths.push_back(mc_rtc::MC_CONTROLLER_INSTALL_PREFIX);
   {
-    std::vector<std::string> v = config("ControllerModulePaths");
+    std::vector<std::string> v;
+    config("ControllerModulePaths", v);
     for(const auto & cv : v)
     {
       controller_module_paths.push_back(cv);
@@ -113,6 +116,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     bfs::path global = bfs::path(mc_rtc::MC_CONTROLLER_INSTALL_PREFIX) / "/etc" / (c + ".conf");
     if(bfs::exists(global))
     {
+      LOG_INFO("Loading additional controller configuration" << global)
       config.load(global.string());
     }
 #ifndef WIN32
@@ -122,6 +126,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
 #endif
     if(bfs::exists(local))
     {
+      LOG_INFO("Loading additional controller configuration" << local)
       config.load(local.string());
     }
   }
