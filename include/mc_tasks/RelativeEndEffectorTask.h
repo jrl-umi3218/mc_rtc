@@ -7,14 +7,36 @@
 namespace mc_tasks
 {
 
-/* As EndEffectorTask, RelativeEndEffectorTask aims at controlling an
- * end-effector. The main difference is that the control is done relatively to
- * a body of the robot rather than the world frame */
-
+/*! \brief Controls an end-effector relatively to another body
+ *
+ * This task is the relative counter-part to mc_tasks::EndEffectorTask.
+ * The difference is that the control is done relatively to a body of
+ * the robot rather than the world frame.
+ *
+ */
 struct MC_TASKS_DLLAPI RelativeEndEffectorTask : public EndEffectorTask
 {
 public:
-  RelativeEndEffectorTask(const std::string & bodyName, const mc_rbdyn::Robots & robots, unsigned int robotIndex, unsigned int relBodyIdx = 0, double stiffness = 10.0, double weight = 1000.0);
+  /*! \brief Constructor
+   *
+   * \param bodyName Name of the body to control
+   *
+   * \param robots Robots controlled by this task
+   *
+   * \param robotIndex Index of the robot controlled by this task
+   *
+   * \param relBodyIdx Index of the body relatively to which the end-effector
+   * is controlled. Default to 0 (the robot's base)
+   *
+   * \param stiffness Task stiffness
+   *
+   * \param weight Task weight
+   *
+   */
+  RelativeEndEffectorTask(const std::string & bodyName, const mc_rbdyn::Robots
+                          & robots, unsigned int robotIndex, unsigned int
+                          relBodyIdx = 0, double stiffness = 10.0, double
+                          weight = 1000.0);
 
   virtual void resetTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex) override;
 
