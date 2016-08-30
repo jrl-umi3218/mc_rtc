@@ -6,20 +6,23 @@
 #include <Tasks/QPTasks.h>
 
 #include <mc_tasks/api.h>
+#include <mc_tasks/MetaTask.h>
 
 namespace mc_tasks
 {
 
-struct MC_TASKS_DLLAPI OrientationTask
+struct MC_TASKS_DLLAPI OrientationTask : public MetaTask
 {
 public:
   OrientationTask(const std::string & bodyName, const mc_rbdyn::Robots & robots, unsigned int robotIndex, double stiffness = 2.0, double weight = 500);
 
   void resetTask();
 
-  void removeFromSolver(mc_solver::QPSolver & solver);
+  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
 
-  void addToSolver(mc_solver::QPSolver & solver);
+  virtual void addToSolver(mc_solver::QPSolver & solver) override;
+
+  virtual void update() override;
 
   void set_ef_ori(const Eigen::Matrix3d & ori);
 
