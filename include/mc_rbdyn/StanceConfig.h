@@ -3,9 +3,6 @@
 
 /* This struct holds the configuration for stances in a seq plan */
 
-/* TODO Build a tool to import from python */
-/* TODO Build a tool to read from configuration file */
-
 #include <Eigen/Core>
 #include <SpaceVecAlg/SpaceVecAlg>
 #include <functional>
@@ -17,12 +14,12 @@
 namespace mc_rbdyn
 {
 
-MC_RBDYN_DLLAPI
-std::function<Eigen::Vector3d (const sva::PTransformd &, const sva::PTransformd &, const Eigen::Vector3d &)>
+typedef std::function<Eigen::Vector3d (const sva::PTransformd&, const sva::PTransformd&, const Eigen::Vector3d&)> WaypointFunction;
+
+MC_RBDYN_DLLAPI WaypointFunction
 percentWaypoint(double x, double y, double z, double nOff, double xOff = 0, double yOff = 0, double zOff = 0);
 
-MC_RBDYN_DLLAPI
-std::function<Eigen::Vector3d (const sva::PTransformd &, const sva::PTransformd &, const Eigen::Vector3d &)>
+MC_RBDYN_DLLAPI WaypointFunction
 hardCodedPos(double x, double y, double z);
 
 struct MC_RBDYN_DLLAPI StanceConfig
@@ -71,7 +68,7 @@ public:
   {
     bool skip;
     double thresh;
-    std::function<Eigen::Vector3d (const sva::PTransformd &, const sva::PTransformd &, const Eigen::Vector3d &)> pos;
+    WaypointFunction pos;
   };
   struct CollisionConf
   {

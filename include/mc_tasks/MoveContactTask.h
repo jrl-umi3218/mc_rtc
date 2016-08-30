@@ -39,7 +39,7 @@ struct MC_TASKS_DLLAPI MoveContactTask : public MetaTask
 {
 public:
 
-  /*! \brief Constructor
+  /*! \brief Constructor using mc_rbdyn::StanceConfig for configuration
    *
    * \param robots Robots involved in the task
    *
@@ -55,8 +55,50 @@ public:
    */
   MoveContactTask(mc_rbdyn::Robots & robots, mc_rbdyn::Robot & robot,
                   mc_rbdyn::Robot & env, mc_rbdyn::Contact & contact,
-                  mc_rbdyn::StanceConfig & config, double positionWStartPercent
-                  = 0);
+                  mc_rbdyn::StanceConfig & config,
+                  double positionWStartPercent = 0);
+
+  /*! \brief Constructor
+   *
+   * \param robots Robots involved in the task
+   *
+   * \param robot Actual robot controlled by the task
+   *
+   * \param env Environment where the contact is established
+   *
+   * \param posStifness Initial stiffness of the position task
+   *
+   * \param extraPosStiffness Extra stiffness applied to the position task
+   * while the task is running
+   *
+   * \param posWeight Weight of the position task
+   *
+   * \param oriStiffness Stiffness of the orientation task
+   *
+   * \param oriWeight Weight of the orientation task
+   *
+   * \param preContactDist Distance to the contact location reached by toPreEnv
+   *
+   * \param pos Function used to compute the waypoint based on the initial and
+   * final location
+   *
+   * \param adjustOffset Can be used to apply a position offset to the task
+   *
+   * \param adjustRPYOffset Can be used to apply an orientation offset to the
+   * task
+   *
+   * \param positionWStartPercent Initial percentage of the task's final weight
+   *
+   */
+  MoveContactTask(mc_rbdyn::Robots & robots, mc_rbdyn::Robot & robot,
+                  mc_rbdyn::Robot & env, mc_rbdyn::Contact & contact,
+                  double posStiffness, double extraPosStiffness, double posWeight,
+                  double oriStiffness, double oriWeight,
+                  double preContactDist,
+                  mc_rbdyn::WaypointFunction waypointPos = mc_rbdyn::percentWaypoint(0.75, 0.75, 0.75, 0.25),
+                  const Eigen::Vector3d & adjustOffset = Eigen::Vector3d::Zero(),
+                  const Eigen::Vector3d & adjustRPYOffset = Eigen::Vector3d::Zero(),
+                  double positionWStartPercent = 0);
 
   /*! \brief Change the task objective to a waypoint determined by
    * configuration
@@ -69,6 +111,35 @@ public:
    */
   void toWaypoint(mc_rbdyn::StanceConfig & config, double positionSmoothPercent = 1);
 
+  /*! \brief Change the task objective to a waypoint determined by configuration
+   *
+   * \param posStifness Initial stiffness of the position task
+   *
+   * \param extraPosStiffness Extra stiffness applied to the position task
+   * while the task is running
+   *
+   * \param posWeight Weight of the position task
+   *
+   * \param oriStiffness Stiffness of the orientation task
+   *
+   * \param oriWeight Weight of the orientation task
+   *
+   * \param positionSmoothPercent Reset the task smoothing percentage to the
+   * provided value
+   *
+   */
+  void toWaypoint(double posStiffness,
+                  double extraPosStiffness, double posWeight,
+                  double oriStiffness, double oriWeight,
+                  double positionSmoothPercent);
+
+  /*! \brief Change the task objective to a waypoint determined by configuration
+   *
+   * Does not change the tasks stiffness or weight
+   *
+   */
+  void toWaypoint();
+
   /*! \brief Change the task objective to a point above the environment target
    *
    * \param config Used to configure the task
@@ -78,6 +149,35 @@ public:
    *
    */
   void toPreEnv(mc_rbdyn::StanceConfig & config, double positionSmoothPercent = 1);
+
+  /*! \brief Change the task objective to a waypoint determined by configuration
+   *
+   * \param posStifness Initial stiffness of the position task
+   *
+   * \param extraPosStiffness Extra stiffness applied to the position task
+   * while the task is running
+   *
+   * \param posWeight Weight of the position task
+   *
+   * \param oriStiffness Stiffness of the orientation task
+   *
+   * \param oriWeight Weight of the orientation task
+   *
+   * \param positionSmoothPercent Reset the task smoothing percentage to the
+   * provided value
+   *
+   */
+  void toPreEnv(double posStiffness,
+                  double extraPosStiffness, double posWeight,
+                  double oriStiffness, double oriWeight,
+                  double positionSmoothPercent);
+
+  /*! \brief Change the task objective to a point above the environment target
+   *
+   * Does not change the tasks stiffness or weight
+   *
+   */
+  void toPreEnv();
 
   /*! \brief Returns the current position of the controlled surface
    *
@@ -111,8 +211,39 @@ public:
    *
    */
   void set_target_tf(const sva::PTransformd & X_target, mc_rbdyn::StanceConfig & config);
+
+  /*! \brief Update the target transformation
+   *
+   * This can be used to change the target in real-time. For example when the
+   * target is updated by sensor inputs.
+   *
+   * After calling this function you should call either toWaypoint or toPreEnv
+   * to apply the change.
+   *
+   * \param X_target New target transformation
+   *
+   * \param preContactDist Distance to the contact location reached by toPreEnv
+   *
+   * \param pos Function used to compute the waypoint based on the initial and
+   * final location
+   *
+   * \param adjustOffset Can be used to apply a position offset to the task
+   *
+   * \param adjustRPYOffset Can be used to apply an orientation offset to the
+   * task
+   *
+   */
+  void set_target_tf(const sva::PTransformd & X_target,
+                     double preContactDist,
+                     mc_rbdyn::WaypointFunction waypointPos = mc_rbdyn::percentWaypoint(0.75, 0.75, 0.75, 0.25),
+                     const Eigen::Vector3d & adjustOffset = Eigen::Vector3d::Zero(),
+                     const Eigen::Vector3d & adjustRPYOffset = Eigen::Vector3d::Zero());
+
 private:
-  void target(const Eigen::Vector3d & pos, const Eigen::Matrix3d & ori, mc_rbdyn::StanceConfig & config, double positionSmoothPercent);
+  void target(const Eigen::Vector3d & pos, const Eigen::Matrix3d & ori,
+              double posStiffness, double extraPosStiffness, double posWeight,
+              double oriStiffness, double oriWeight,
+              double positionSmoothPercent);
 public:
   mc_rbdyn::Robots & robots;
   mc_rbdyn::Robot & robot;
