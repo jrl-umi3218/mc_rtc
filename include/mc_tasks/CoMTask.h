@@ -6,6 +6,7 @@
 #include <Tasks/QPTasks.h>
 
 #include <mc_tasks/api.h>
+#include <mc_tasks/MetaTask.h>
 
 namespace mc_tasks
 {
@@ -15,7 +16,7 @@ namespace mc_tasks
  * This task is a thin wrapper above the appropriate Tasks types
  *
  */
-struct MC_TASKS_DLLAPI CoMTask
+struct MC_TASKS_DLLAPI CoMTask : public MetaTask
 {
 public:
   /*! \brief Constructor
@@ -43,19 +44,11 @@ public:
    */
   void resetTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex);
 
-  /*! \brief Remove the task from a solver
-   *
-   * \param solver Solver from which to remove the task
-   *
-   */
-  void removeFromSolver(mc_solver::QPSolver & solver);
+  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
 
-  /*! \brief Add the task to a solver
-   *
-   * \param solver Solver where to add the task
-   *
-   */
-  void addToSolver(mc_solver::QPSolver & solver);
+  virtual void addToSolver(mc_solver::QPSolver & solver) override;
+
+  virtual void update() override;
 
   /*! \brief Change the CoM target by a given amount
    *
