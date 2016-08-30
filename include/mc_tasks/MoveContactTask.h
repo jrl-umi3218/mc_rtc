@@ -20,21 +20,75 @@ namespace mc_rbdyn
 namespace mc_tasks
 {
 
+/*! \brief Move a robot's surface towards a contact's position.
+ *
+ * The movement stops when the controlled robot's surface is at a certain
+ * distance (based on the parameters given to the task)
+ *
+ * The normal operation is:
+ * - create
+ * - add to solver and go to waypoint
+ * - monitor until waypoint is reached
+ * - go to pre-env target
+ * - monitor until pre-env target is reached
+ * - remove from solver and use mc_tasks::AddContactTask or
+ *   mc_tasks::ComplianceTask to add the contact
+ *
+ */
 struct MC_TASKS_DLLAPI MoveContactTask : public MetaTask
 {
 public:
-  MoveContactTask(mc_rbdyn::Robots & robots, mc_rbdyn::Robot & robot, mc_rbdyn::Robot & env, mc_rbdyn::Contact & contact, mc_rbdyn::StanceConfig & config, double positionWStartPercent = 0);
 
+  /*! \brief Constructor
+   *
+   * \param robots Robots involved in the task
+   *
+   * \param robot Actual robot controlled by the task
+   *
+   * \param env Environment where the contact is established
+   *
+   * \param config Use config.contactTask and config.contactObj for
+   * configuration purposes
+   *
+   * \param positionWStartPercent Initial percentage of the task's final weight
+   *
+   */
+  MoveContactTask(mc_rbdyn::Robots & robots, mc_rbdyn::Robot & robot,
+                  mc_rbdyn::Robot & env, mc_rbdyn::Contact & contact,
+                  mc_rbdyn::StanceConfig & config, double positionWStartPercent
+                  = 0);
+
+  /*! \brief Change the task objective to a waypoint determined by
+   * configuration
+   *
+   * \param config Used to configure the task
+   *
+   * \param positionSmoothPercent Reset the task smoothing percentage to the
+   * provided value
+   *
+   */
   void toWaypoint(mc_rbdyn::StanceConfig & config, double positionSmoothPercent = 1);
 
+  /*! \brief Change the task objective to a point above the environment target
+   *
+   * \param config Used to configure the task
+   *
+   * \param positionSmoothPercent Reset the task smoothing percentage to the
+   * provided value
+   *
+   */
   void toPreEnv(mc_rbdyn::StanceConfig & config, double positionSmoothPercent = 1);
 
-  void toEnv(mc_rbdyn::StanceConfig & config, double positionSmoothPercent = 1);
-
-  void target(const Eigen::Vector3d & pos, const Eigen::Matrix3d & ori, mc_rbdyn::StanceConfig & config, double positionSmoothPercent);
-
+  /*! \brief Returns the current position of the controlled surface
+   *
+   * \returns The current position of the controlled surface
+   */
   sva::PTransformd robotSurfacePos();
 
+  /*! \brief Returns the current velocity of the controlled surface
+   *
+   * \returns The current velocity of the controlled surface
+   */
   sva::MotionVecd robotSurfaceVel();
 
   virtual void addToSolver(mc_solver::QPSolver & solver) override;
@@ -43,7 +97,22 @@ public:
 
   virtual void update() override;
 
+  /*! \brief Update the target transformation
+   *
+   * This can be used to change the target in real-time. For example when the
+   * target is updated by sensor inputs.
+   *
+   * After calling this function you should call either toWaypoint or toPreEnv
+   * to apply the change.
+   *
+   * \param X_target New target transformation
+   *
+   * \param config Configuration used to configure the task
+   *
+   */
   void set_target_tf(const sva::PTransformd & X_target, mc_rbdyn::StanceConfig & config);
+private:
+  void target(const Eigen::Vector3d & pos, const Eigen::Matrix3d & ori, mc_rbdyn::StanceConfig & config, double positionSmoothPercent);
 public:
   mc_rbdyn::Robots & robots;
   mc_rbdyn::Robot & robot;

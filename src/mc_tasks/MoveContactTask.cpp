@@ -44,11 +44,6 @@ void MoveContactTask::toPreEnv(mc_rbdyn::StanceConfig & config, double positionS
   target(preTargetPos, targetOri, config, positionSmoothPercent);
 }
 
-void MoveContactTask::toEnv(mc_rbdyn::StanceConfig & config, double positionSmoothPercent)
-{
-  target(targetPos, targetOri, config, positionSmoothPercent);
-}
-
 void MoveContactTask::target(const Eigen::Vector3d & pos, const Eigen::Matrix3d & ori, mc_rbdyn::StanceConfig & config, double positionSmoothPercent)
 {
   const auto & positionConf = config.contactTask.position;
