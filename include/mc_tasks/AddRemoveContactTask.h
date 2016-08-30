@@ -20,15 +20,84 @@ namespace mc_rbdyn
 namespace mc_tasks
 {
 
+/*! \brief Add or remove a contact
+ *
+ * The goal of this task is to move a robot's surface towards a contact
+ * or away from a contact depending on construction parameters.
+ *
+ * The robot's surface will move along its normal axis. It is the
+ * programmer responsibility to stop the task when the desired
+ * destination has been reached.
+ */
 struct MC_TASKS_DLLAPI AddRemoveContactTask : public MetaTask
 {
 public:
-  AddRemoveContactTask(mc_rbdyn::Robots & robots, std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr, mc_rbdyn::Contact & contact,
-                       double direction, const mc_rbdyn::StanceConfig & config,
-                       Eigen::Vector3d * userT_0_s = 0);
+  /*! \brief Constructor based on mc_rbdyn::StanceConfig
+   *
+   * Constructs an AddRemoveContactTask using information stored in a
+   * mc_rbdyn::StanceConfig value and other elements
+   *
+   * \param robots Robots involved in the task
+   *
+   * \param constSpeedConstr Used by the solver to constraint the
+   * surface movement
+   *
+   * \param contact Contact that will be added/removed
+   *
+   * \param direction Direction of displacement
+   *
+   * \param config Use config.contactTask.linVel for configuration
+   * purposes
+   *
+   * \param userT_0_s If provided, overrides the chosen normal
+   * direction
+   */
+  AddRemoveContactTask(mc_rbdyn::Robots & robots,
+                       std::shared_ptr<mc_solver::BoundedSpeedConstr>
+                       constSpeedConstr, mc_rbdyn::Contact & contact,
+                       double direction, const mc_rbdyn::StanceConfig &
+                       config, Eigen::Vector3d * userT_0_s = nullptr);
 
+  /*! \brief General constructor
+   *
+   * Constructs an AddRemoveContactTask using information passed by the
+   * programmer
+   *
+   * \param robots Robots involved in the task
+   *
+   * \param constSpeedConstr Used by the solver to constraint the
+   * surface movement
+   *
+   * \param contact Contact that will be added/removed
+   *
+   * \param direction Direction of displacement
+   *
+   * \param speed Speed of the displacement
+   *
+   * \param stiffness Stiffness of the task
+   *
+   * \param weight Weight of the task
+   *
+   * \param userT_0_s If provided, overrides the chosen normal
+   * direction
+   */
+  AddRemoveContactTask(mc_rbdyn::Robots & robots,
+                       std::shared_ptr<mc_solver::BoundedSpeedConstr>
+                       constSpeedConstr, mc_rbdyn::Contact & contact,
+                       double direction, double speed,
+                       double stiffness, double weight,
+                       Eigen::Vector3d * userT_0_s = nullptr);
+
+  /*! \brief Set the displacement direction
+   *
+   * \param direction Direction of the displacement
+   *
+   */
   void direction(double direction);
 
+  /*! \brief Get the velocity error
+   *
+   * \returns Velocity error of the LinVelocity task */
   Eigen::Vector3d velError();
 
   virtual void addToSolver(mc_solver::QPSolver & solver) override;
@@ -60,20 +129,52 @@ public:
 };
 
 
+/*! \brief Add a contact
+ *
+ * This is simply a special case of the generic AddRemoveContactTask
+ * where direction is equal to -1
+ *
+ */
 struct MC_TASKS_DLLAPI AddContactTask : public AddRemoveContactTask
 {
 public:
-  AddContactTask(mc_rbdyn::Robots & robots, std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr, mc_rbdyn::Contact & contact,
-                       const mc_rbdyn::StanceConfig & config,
-                       Eigen::Vector3d * userT_0_s = 0);
+  /*! \brief Constructor (mc_rbdyn::StanceConfig variant) */
+  AddContactTask(mc_rbdyn::Robots & robots,
+                 std::shared_ptr<mc_solver::BoundedSpeedConstr>
+                 constSpeedConstr, mc_rbdyn::Contact & contact, const
+                 mc_rbdyn::StanceConfig & config, Eigen::Vector3d *
+                 userT_0_s = nullptr);
+
+  /*! \brief Constructor */
+  AddContactTask(mc_rbdyn::Robots & robots,
+                 std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr,
+                 mc_rbdyn::Contact & contact,
+                 double speed, double stiffness, double weight,
+                 Eigen::Vector3d * userT_0_s = nullptr);
 };
 
+/*! \brief Remove a contact
+ *
+ * This is simply a special case of the generic AddRemoveContactTask
+ * where direction is equal to 1
+ *
+ */
 struct MC_TASKS_DLLAPI RemoveContactTask : public AddRemoveContactTask
 {
 public:
-  RemoveContactTask(mc_rbdyn::Robots & robots, std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr, mc_rbdyn::Contact & contact,
-                       const mc_rbdyn::StanceConfig & config,
-                       Eigen::Vector3d * userT_0_s = 0);
+  /*! \brief Constructor (mc_rbdyn::StanceConfig variant) */
+  RemoveContactTask(mc_rbdyn::Robots & robots,
+                    std::shared_ptr<mc_solver::BoundedSpeedConstr>
+                    constSpeedConstr, mc_rbdyn::Contact & contact,
+                    const mc_rbdyn::StanceConfig & config,
+                    Eigen::Vector3d * userT_0_s = nullptr);
+
+  /*! \brief Constructor */
+  RemoveContactTask(mc_rbdyn::Robots & robots,
+                 std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr,
+                 mc_rbdyn::Contact & contact,
+                 double speed, double stiffness, double weight,
+                 Eigen::Vector3d * userT_0_s = nullptr);
 };
 
 }
