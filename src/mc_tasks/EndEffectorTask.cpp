@@ -19,8 +19,8 @@ EndEffectorTask::EndEffectorTask(const std::string & bodyName, const mc_rbdyn::R
   orientationTask.reset(new tasks::qp::OrientationTask(robots.mbs(), static_cast<int>(robotIndex), bodyName, bpw.rotation()));
   orientationTaskSp.reset(new tasks::qp::SetPointTask(robots.mbs(), static_cast<int>(robotIndex), orientationTask.get(), stiffness, weight));
 
-  err = Eigen::VectorXd(dim());
-  spd = Eigen::VectorXd(dim());
+  err = Eigen::VectorXd(6);
+  spd = Eigen::VectorXd(6);
 }
 
 void EndEffectorTask::resetTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex)
@@ -76,11 +76,6 @@ void EndEffectorTask::set_ef_pose(const sva::PTransformd & tf)
 sva::PTransformd EndEffectorTask::get_ef_pose()
 {
   return sva::PTransformd(orientationTask->orientation(), positionTask->position());
-}
-
-int EndEffectorTask::dim()
-{
-  return positionTask->dim()+orientationTask->dim();
 }
 
 const Eigen::VectorXd& EndEffectorTask::eval()
