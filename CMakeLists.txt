@@ -152,5 +152,9 @@ install(
     etc/mc_rtc.conf
   DESTINATION etc
 )
+install(
+  FILES
+    etc/Seq.conf
+  DESTINATION ${MC_CONTROLLER_INSTALL_PREFIX}/etc/)
 
 setup_project_finalize()

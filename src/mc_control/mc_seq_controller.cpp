@@ -232,36 +232,30 @@ void MCSeqTimeLog::report(std::ostream & os)
   os << "Total time: " << (static_cast<double>(iters.back() - iters[0]))*timeStep << std::endl;
 }
 
-MCSeqControllerConfig::MCSeqControllerConfig(const Json::Value & v)
+MCSeqControllerConfig::MCSeqControllerConfig(const mc_control::Configuration & conf)
 {
-  if(!v.isMember("Seq"))
+  if(!conf.isMember("Seq"))
   {
     LOG_ERROR("No Seq section in configuration file, abort")
     throw("No Seq section in configuration file");
   }
-  const Json::Value & seq = v["Seq"];
-  if(seq.isMember("Simulation"))
-  {
-    is_simulation = seq["Simulation"].asBool();
-  }
+  auto seq = conf("Seq");
+  seq("Simulation", is_simulation);
   if(!seq.isMember("Env"))
   {
     LOG_ERROR("No Env section in configuration for Seq controller, abort")
     throw("No Env section in Seq section");
   }
-  const Json::Value & env = seq["Env"];
+  auto env = seq("Env");
   if(env.isMember("Module"))
   {
-    env_module = mc_rbdyn::RobotLoader::get_robot_module(env["Module"].asString());
+    env_module = mc_rbdyn::RobotLoader::get_robot_module((std::string)env("Module"));
   }
   else if(env.isMember("Name"))
   {
     std::string env_path = mc_rtc::MC_ENV_DESCRIPTION_PATH;
-    if(env.isMember("Path"))
-    {
-      env_path = env["Path"].asString();
-    }
-    std::string env_name = env["Name"].asString();
+    env("Path", env_path);
+    std::string env_name = env("Name");
     env_module = mc_rbdyn::RobotLoader::get_robot_module("env", env_path, env_name);
   }
   else
@@ -271,7 +265,7 @@ MCSeqControllerConfig::MCSeqControllerConfig(const Json::Value & v)
   }
   if(seq.isMember("Plan"))
   {
-    plan = seq["Plan"].asString();
+    plan = (std::string)seq("Plan");
     plan = std::string(mc_rtc::DATA_PATH) + "/" + plan;
   }
   else
@@ -279,30 +273,9 @@ MCSeqControllerConfig::MCSeqControllerConfig(const Json::Value & v)
     LOG_ERROR("No Plan in Seq configuration")
     throw("No Plan in Seq configuration");
   }
-  if(seq.isMember("StepByStep"))
-  {
-    step_by_step = seq["StepByStep"].asBool();
-  }
-  else
-  {
-    step_by_step = false;
-  }
-  if(seq.isMember("UseRealSensors"))
-  {
-    use_real_sensors = seq["UseRealSensors"].asBool();
-  }
-  else
-  {
-    use_real_sensors = false;
-  }
-  if(seq.isMember("StartStance"))
-  {
-    start_stance = static_cast<unsigned int>(seq["StartStance"].asInt());
-  }
-  else
-  {
-    start_stance = 0;
-  }
+  seq("StepByStep", step_by_step);
+  seq("UseRealSensors", use_real_sensors);
+  seq("StartStance", start_stance);
 }
 
 MCSeqController::MCSeqController(std::shared_ptr<mc_rbdyn::RobotModule> robot_module, double dt, const MCSeqControllerConfig & config)
@@ -1066,7 +1039,7 @@ void destroy(mc_control::MCController * ptr)
   delete ptr;
 }
 
-mc_control::MCController * create(const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const Json::Value & conf)
+mc_control::MCController * create(const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const mc_control::Configuration & conf)
 {
   return new mc_control::MCSeqController(robot, dt, {conf});
 }

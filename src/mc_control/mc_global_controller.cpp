@@ -2,8 +2,9 @@
 
 #include <mc_rbdyn/RobotLoader.h>
 
-#include <mc_rtc/ros.h>
+#include <mc_rtc/config.h>
 #include <mc_rtc/logging.h>
+#include <mc_rtc/ros.h>
 
 #include <RBDyn/EulerIntegration.h>
 #include <RBDyn/FK.h>
@@ -12,6 +13,7 @@
 #include <json/json.h>
 
 #include <algorithm>
+#include <cstdlib>
 #include <fstream>
 #include <iomanip>
 
@@ -20,42 +22,40 @@
 namespace mc_control
 {
 
-MCGlobalController::Configuration::Configuration(const std::string & path)
+MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string & conf)
+: config(mc_rtc::CONF_PATH)
 {
-  std::ifstream ifs(path);
-  if(ifs.bad())
+#ifndef WIN32
+  bfs::path config_path = bfs::path(std::getenv("HOME")) / ".config/mc_rtc/mc_rtc.conf";
+#else
+  // Should work for Windows Vista and up
+  bfs::path config_path = bfs::path(std::getenv("APPDATA")) / "mc_rtc/mc_rtc.conf";
+#endif
+  if(bfs::exists(config_path))
   {
-    LOG_ERROR("Failed to open controller configuration file: " << path)
+    LOG_INFO("Loading additional global configuration " << config_path)
+    config.load(config_path.string());
   }
-  try
+  if(bfs::exists(conf))
   {
-    ifs >> v;
+    LOG_INFO("Loading additional global configuration " << conf)
+    config.load(conf);
   }
-  catch(const std::runtime_error & exc)
+  config("RobotModulePaths", robot_module_paths);
   {
-    LOG_ERROR("Failed to read configuration file")
-    LOG_WARNING(exc.what())
-  }
-  if(v.isMember("RobotModulePaths"))
-  {
-    for(const auto & cv : v["RobotModulePaths"])
+    std::string rmp = "";
+    config("RobotModulePath", rmp);
+    if(rmp.size())
     {
-      robot_module_paths.push_back(cv.asString());
+      robot_module_paths.push_back(rmp);
     }
-  }
-  if(v.isMember("RobotModulePath"))
-  {
-    robot_module_paths.push_back(v["RobotModulePath"].asString());
   }
   if(robot_module_paths.size())
   {
     mc_rbdyn::RobotLoader::update_robot_module_path(robot_module_paths);
   }
   std::string robot_name = "HRP2DRC";
-  if(v.isMember("MainRobot"))
-  {
-    robot_name = v["MainRobot"].asString();
-  }
+  config("MainRobot", robot_name);
   if(mc_rbdyn::RobotLoader::has_robot(robot_name))
   {
     main_robot_module = mc_rbdyn::RobotLoader::get_robot_module(robot_name);
@@ -68,78 +68,71 @@ MCGlobalController::Configuration::Configuration(const std::string & path)
 
   controller_module_paths.resize(0);
   controller_module_paths.push_back(mc_rtc::MC_CONTROLLER_INSTALL_PREFIX);
-  if(v.isMember("ControllerModulePaths"))
   {
-    for(const auto & cv : v["ControllerModulePaths"])
+    std::vector<std::string> v;
+    config("ControllerModulePaths", v);
+    for(const auto & cv : v)
     {
-      controller_module_paths.push_back(cv.asString());
+      controller_module_paths.push_back(cv);
     }
   }
-  if(v.isMember("ControllerModulePath"))
   {
-    controller_module_paths.push_back(v["ControllerModulePath"].asString());
-  }
-  if(v.isMember("Enabled"))
-  {
-    for(const auto & cv : v["Enabled"])
+    std::string v = "";
+    config("ControllerModulePaths", v);
+    if(v.size())
     {
-      enabled_controllers.push_back(cv.asString());
+      controller_module_paths.push_back(v);
     }
   }
-  if(v.isMember("Default"))
+  config("Enabled", enabled_controllers);
+  if(enabled_controllers.size())
   {
-    initial_controller = v["Default"].asString();
+    initial_controller = enabled_controllers[0];
   }
-  else
-  {
-    if(enabled_controllers.size())
-    {
-      initial_controller = enabled_controllers[0];
-    }
-  }
-  timestep = 0.002;
-  if(v.isMember("Timestep"))
-  {
-    timestep = v["Timestep"].asDouble();
-  }
-  publish_control_state = true;
-  if(v.isMember("PublishControlState"))
-  {
-    publish_control_state = v["PublishControlState"].asBool();
-  }
-  publish_real_state = false;
-  if(v.isMember("PublishRealState"))
-  {
-    publish_real_state = v["PublishRealState"].asBool();
-  }
-  publish_timestep = 0.01;
-  if(v.isMember("PublishTimestep"))
-  {
-    publish_timestep = v["PublishTimestep"].asDouble();
-  }
-  enable_log = true;
-  if(v.isMember("Log"))
-  {
-    enable_log = v["Log"].asBool();
-  }
+  config("Default", initial_controller);
+  config("Timestep", timestep);
+  config("PublishControlState", publish_control_state);
+  config("PublishRealState", publish_real_state);
+  config("PublishTimestep", publish_timestep);
+  config("Log", enable_log);
   log_directory = bfs::temp_directory_path();
-  if(v.isMember("LogDirectory"))
   {
-    log_directory = v["LogDirectory"].asString();
+    std::string v = "";
+    config("LogDirectory", v);
+    if(v.size())
+    {
+      log_directory = v;
+    }
   }
-  log_template = "mc-control";
-  if(v.isMember("LogTemplate"))
-  {
-    log_template = v["LogTemplate"].asString();
-  }
+  config("LogTemplate", log_template);
   /* Allow the user not to worry about Default if only one controller is enabled */
   if(enabled_controllers.size() == 1)
   {
     initial_controller = enabled_controllers[0];
   }
+  // Load controller-specific configuration
+  for(const auto & c : enabled_controllers)
+  {
+    bfs::path global = bfs::path(mc_rtc::MC_CONTROLLER_INSTALL_PREFIX) / "/etc" / (c + ".conf");
+    if(bfs::exists(global))
+    {
+      LOG_INFO("Loading additional controller configuration" << global)
+      config.load(global.string());
+    }
+#ifndef WIN32
+    bfs::path local = bfs::path(std::getenv("HOME")) / ".config/mc_rtc/controllers" / (c + ".conf");
+#else
+    bfs::path local = bfs::path(std::getenv("APPDATA")) / "mc_rtc/controllers" / (c + ".conf");
+#endif
+    if(bfs::exists(local))
+    {
+      LOG_INFO("Loading additional controller configuration" << local)
+      config.load(local.string());
+    }
+  }
 }
 
-bool MCGlobalController::Configuration::enabled(const std::string & ctrl)
+bool MCGlobalController::GlobalConfiguration::enabled(const std::string & ctrl)
 {
   return std::find(enabled_controllers.begin(), enabled_controllers.end(), ctrl) != enabled_controllers.end();
 }
@@ -171,11 +164,11 @@ MCGlobalController::MCGlobalController(const std::string & conf)
       LOG_INFO("Create controller " << controller_name)
       if(controller_subname != "")
       {
-        controllers[c] = controller_loader->create_object(controller_name, controller_subname, config.main_robot_module, config.timestep, config.v);
+        controllers[c] = controller_loader->create_object(controller_name, controller_subname, config.main_robot_module, config.timestep, config.config);
       }
       else
       {
-        controllers[c] = controller_loader->create_object(c, config.main_robot_module, config.timestep, config.v);
+        controllers[c] = controller_loader->create_object(c, config.main_robot_module, config.timestep, config.config);
       }
     }
     else
