@@ -22,11 +22,57 @@ The following packages are not required but bring additionnal features:
 - [hrpsys-base](https://github.com/fkanehiro/hrpsys-base)
 > If `hrpsys-base` is available during build then the RTC component `MCControl` will be built. This is necessary to use `mc_rtc` in the `choreonoid` simulator and on the robot.
 
-Work in progress (last update 2015/12/08)
+Work in progress (last update 2016/08/31)
 ==
 
-- python bindings using cython ([current progress](https://gite.lirmm.fr/multi-contact/mc_cython)) aimed at replacing most of `mc_ros`
+- automated controller testing
+- general documentation improvment on the usage of the framework
 - unify remote interactions with the controller(s)
+
+Overview
+==
+
+mc_rtc is an interface for simulation and robot control systems. These systems should provide the state of a given robot (joints' values, sensor readings...) and in return mc_rtc will provide the desired robot's state (command). This is done through the `mc_control::MCGlobalController` class. This class does not perform control by itself but rather delegates this task to the `mc_control::MCController` derived objects that it holds. Writing a controller within the mc_rtc framework is done by writing a class that inherits from the `mc_control::MCController` base class and implements the required functionnality. The details of this process can be found in a later section of this document.
+
+Configuration
+==
+
+The `mc_control::MCGlobalController` class is created by providing a configuration file. This configuration file holds important information regarding the framework configuration. While the provided configuration file shadows all other configuration files, there is two other files that are considered by the class when loading:
+
+1. `$INSTALL_PREFIX/etc/mc_rtc.conf`
+2. `$HOME/.config/mc_rtc/mc_rtc.conf` on Linux/MacOS or `$APPDATA/mc_rtc/mc_rtc.conf` on Windows
+
+For a given controller (later named `$CONTROLLER_NAME`) the following configurations are loaded:
+
+1. `$MC_CONTROLLER_INSTALL_PREFIX/etc/$CONTROLLER_NAME.conf`
+2. `$HOME/.config/mc_rtc/controllers/$CONTROLLER_NAME.conf` on Linux/MacOS or `$APPDATA/mc_rtc/controllers/$CONTROLLER_NAME.conf` on Windows
+
+An overview of the global controller configuration entries is given in the sample configuration file installed by this repository (located in `etc/mc_rtc.conf`). Note that overriding these entries in controller-specific files has no effect. We will introduce the most common entries here.
+
+MainRobot
+--
+
+This entry dictates the main robot used by all controllers. It should match the robot you are trying to use in the simulation environment or the robot you are actually trying to control.
+
+Enabled
+--
+
+Provides a list of enabled controllers.
+
+Default
+--
+
+Select which of the enabled controllers will be started first. Note that iff the default controller is not enabled or if no default entry is provided then the first enabled controller in the list is chosen as a default controller.
+
+Timestep
+--
+
+The controllers' timestep.
+
+Log
+--
+
+Dictate whether or not controllers will log their output.
 
 Library by library overview
 ==
@@ -104,11 +150,11 @@ Inside mc_rtc
 
 1. Write a new class that inherits from `mc_rbdyn::RobotModule` (e.g. `include/mc_robots/MyRobot.h` and `src/mc_robots/MyRobot.cpp`)
 2. Implement the virtual functions your robot requires
-3. In your header file, invoke the `ROBOT_MODULE_DEFAULT_CONSTRUCTOR` or `ROBOT_MODULE_CANONIC_CONSTRUCTOR` macro (e.g. `ROBOT_MODULE_DEFAULT_CONSTRUCTOR("MyRobot", mc_robot::MyRobot)`). The first is adapted for classes which can be instantiated by a default constructor. The second is adapted for classes which should be instantiated by two `std::string` values. For more options, check `include/mc_rbdyn/RobotModule.h` for the full definition of the macros
+3. In your header file, invoke the `ROBOT_MODULE_DEFAULT_CONSTRUCTOR` or `ROBOT_MODULE_CANONIC_CONSTRUCTOR` macro (e.g. `ROBOT_MODULE_DEFAULT_CONSTRUCTOR("MyRobot", mc_robot::MyRobot)`). The first is adapted for classes which can be instantiated by a default constructor. The second is adapted for classes which should be instantiated by two `std::string` values. For more options, check `include/mc_rbdyn/RobotModule.h` for the full definition of the macros.
 4. Add the entry `add_robot(MyRobot)` in `src/CMakeLists.txt`
 5. Your robot can now be used in `mc_rtc` by calling `mc_rbdyn::RobotLoader::get_robot_module("MyRobot")`
 
-Outisde mc_rtc
+Outside mc_rtc
 --
 
 The steps are similar to the previous option but do not require to write code inside `mc_rtc`. No sample project is available at the moment.
@@ -121,7 +167,7 @@ Inside mc_rtc
 
 1. Inherit from `mc_control::MCController`. Note that this controller already defines:
 2. Add the tasks/constraints you need, implement the functions you require, implement the services you provide
-3. In your header file, invoke the `CONTROLLER_CONSTRUCTOR` or `SIMPLE_CONTROLLER_CONSTRUCTOR`. The first will construct your controller using the timestep `dt`, a pointer to the main robot module and the `Json::Value` obtained from the parsing of the `MCGlobalController` instance. The second macro will not pass you the `Json::Value`
+3. In your header file, invoke the `CONTROLLER_CONSTRUCTOR` or `SIMPLE_CONTROLLER_CONSTRUCTOR`. The first will construct your controller using the timestep `dt`, a pointer to the main robot module and the `mc_control::Configuration` obtained by the `MCGlobalController` instance. The second macro will not pass you the `mc_control::Configuration`
 4. Add the entry `add_controller(MyController ${SOURCE_FILES})` in `src/CMakeLists.txt`
 5. Your controller can be enable by adding `MyController` to the `Enabled`/`Default` entry of `mc_rtc.conf`
 
@@ -132,7 +178,7 @@ A quick description of the `virtual` functions in `MCController` and what they a
 #### `virtual void reset(const ControllerResetData & reset_data)`
 
 Called when:
-1. the control loop starts
+1. the control loop starts and the controller is the initial one
 2. `MCGlobalController` switches from a different controller
 
 ATM, the `ControllerResetData` holds the following data: (depending on the moment of the invokation)
@@ -163,6 +209,12 @@ A note on real-time
 When writting a controller that will ultimately run as part of the real-time loop on the robot one has to be careful about potential performance bottleneck as missing real-time iterations will result in non-smooth behaviours. In particular, **everything that happens in the `run` method is happenning in the real-time loop** and thus one should avoid:
 - io-blocking function (in particular network-related, light-weight disk operation can be performed)
 - threading (any thread should be launched prior to entering the real-time context)
+- very large memory allocation (in particular those that would require the system to re-allocate memory for the process)
+
+Python bindings
+==
+
+Python bindings are available for mc_rtc and all underlying libraries. Please see the [mc_cython project](https://gite.lirmm.fr/multi-contact/mc_cython). It is possible to fully implement a controller in Python and have it run directly on the robot. For more details and some caveats of this approach, please refer to the project documentation.
 
 
 Remote interaction with the controller(s)
@@ -173,6 +225,8 @@ Using MCControl RTC component
 
 1. Implement a new function in the idl and its appropriate counter-part in `MCControllerService' that relies on `MCGlobalController` to call the appropriate function on the controller (as tedious as it sounds)
 2. Implement `send_msg` or `send_recv_msg` depending on your need and perform the appropriate command parsing (e.g. `MCBCISelfInteract`)
+
+In the future we would like to facilitate the addition of service functions in a type-safe and reliable fashion.
 
 Using mc_vrep
 --
