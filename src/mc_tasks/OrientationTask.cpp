@@ -41,6 +41,10 @@ void OrientationTask::addToSolver(mc_solver::QPSolver & solver)
   }
 }
 
+void OrientationTask::update()
+{
+}
+
 void OrientationTask::set_ef_ori(const Eigen::Matrix3d & ori)
 {
   orientationTask->orientation(ori);

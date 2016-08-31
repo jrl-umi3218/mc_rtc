@@ -15,11 +15,35 @@
 namespace mc_tasks
 {
 
+/*! \brief This task is a combination of a tasks::qp::PostureTask and a
+ * mc_tasks::CoMTask that is used as a stabilizing task for the Seq
+ * controller
+ *
+ * It is not advised to use this task outside of the Seq controller. In
+ * fact, it is voluntarily made hard to do so.
+ *
+ */
 struct MC_TASKS_DLLAPI StabilityTask : public MetaTask
 {
 public:
+  /*! Constructor
+   *
+   * \param robots Robots controlled by this task
+   *
+   */
   StabilityTask(mc_rbdyn::Robots & robots);
 
+  /*! Update the task target
+   *
+   * \param env Unused
+   *
+   * \param stance Target stance
+   *
+   * \param config Corresponding stance configuration
+   *
+   * \param comSmoothPercent Smooth task interpolation percentage
+   *
+   */
   void target(const mc_rbdyn::Robot & env, const mc_rbdyn::Stance & stance,
               const mc_rbdyn::StanceConfig & config, double comSmoothPercent = 1);
 
@@ -29,8 +53,22 @@ public:
 
   virtual void update() override;
 
+  /*! \brief Set a high stiffness for selected joints
+   *
+   * That is a stiffness 10 times as high as the posture task
+   *
+   * \param stiffJoints Joints whose stiffness should be modified
+   *
+   */
   void highStiffness(const std::vector<std::string> & stiffJoints);
 
+  /*! \brief Set a normal stiffness for selected joints
+   *
+   * That is the same stiffness as the posture task
+   *
+   * \param stiffJoints Joints whose stiffness should be modified
+   *
+   */
   void normalStiffness(const std::vector<std::string> & stiffJoints);
 public:
   mc_rbdyn::Robots & robots;

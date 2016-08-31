@@ -42,6 +42,10 @@ void CoMTask::addToSolver(mc_solver::QPSolver & solver)
   }
 }
 
+void CoMTask::update()
+{
+}
+
 void CoMTask::move_com(const Eigen::Vector3d & com)
 {
   cur_com += com;
