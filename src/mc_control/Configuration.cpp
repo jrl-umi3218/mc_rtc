@@ -2,6 +2,7 @@
 
 #include <mc_rtc/logging.h>
 
+#include <stdexcept>
 #include <fstream>
 
 namespace mc_control
