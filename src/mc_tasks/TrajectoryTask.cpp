@@ -9,7 +9,6 @@ namespace mc_tasks
 TrajectoryTask::TrajectoryTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex,
                const mc_rbdyn::Surface & surface, const sva::PTransformd & X_0_t,
                double duration, double timeStep, double stiffness, double posWeight, double oriWeight,
-               const std::string &/*name*/,
                const Eigen::MatrixXd & waypoints,
                unsigned int nrWP)
 : robots(robots), surface(surface), X_0_t(X_0_t), wp(waypoints),
