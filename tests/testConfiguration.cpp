@@ -3,6 +3,7 @@
 #include <mc_control/Configuration.h>
 
 #include <fstream>
+#include <iostream>
 
 #ifdef WIN32
 #include <Windows.h>
@@ -123,11 +124,6 @@ BOOST_AUTO_TEST_CASE(TestConfiguration)
     config("double", d);
     BOOST_CHECK_EQUAL(d, 10);
 
-    /*! Check double conversion does not happen */
-    int e = 10;
-    config("doubleOrInt", e);
-    BOOST_CHECK_EQUAL(e, 10);
-
     /*! Access a int from a dict */
     int f = 0;
     f = config("dict")("int");
@@ -161,11 +157,6 @@ BOOST_AUTO_TEST_CASE(TestConfiguration)
     unsigned int d = 10;
     config("double", d);
     BOOST_CHECK_EQUAL(d, 10);
-
-    /*! Check double conversion does not happen */
-    unsigned int e = 10;
-    config("doubleOrInt", e);
-    BOOST_CHECK_EQUAL(e, 10);
 
     /*! Check int to unsigned int does not happen */
     unsigned int h = 10;
