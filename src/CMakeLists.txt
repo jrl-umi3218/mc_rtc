@@ -62,21 +62,7 @@ endif()
 pkg_config_append_libs(mc_rbdyn)
 pkg_config_append_libs(${GEOS_LIBRARY})
 
-macro(add_robot robot_base)
-  set(robot_SRC mc_robots/${robot_base}.cpp)
-  set(robot_HDR mc_robots/api.h mc_robots/${robot_base}.h)
-  add_library(${robot_base} SHARED ${robot_SRC} ${robot_HDR})
-  set_target_properties(${robot_base} PROPERTIES COMPILE_FLAGS "-DMC_ROBOTS_EXPORTS" PREFIX "")
-  target_link_libraries(${robot_base} mc_rbdyn ${Boost_LIBRARIES})
-  pkg_config_use_dependency(${robot_base} mc_rbdyn_urdf_cpp)
-  install(TARGETS ${robot_base} DESTINATION ${MC_ROBOTS_INSTALL_PREFIX})
-endmacro()
-
-add_robot(env)
-add_robot(hrp2_drc)
-add_robot(hrp4)
-add_robot(polaris_ranger)
-add_robot(polaris_ranger_egress)
+add_subdirectory(mc_robots)
 
 set(mc_solver_SRC
 mc_solver/contact_util.cpp
