@@ -206,39 +206,7 @@ pkg_config_use_dependency(mc_control Tasks)
 pkg_config_use_dependency(mc_control jsoncpp)
 pkg_config_append_libs(mc_control)
 
-macro(add_controller controller_name controller_SRC controller_HDR)
-  add_library(${controller_name} SHARED ${controller_SRC} ${controller_HDR})
-  set_target_properties(${controller_name} PROPERTIES COMPILE_FLAGS
-    "-DMC_CONTROL_EXPORTS" PREFIX "")
-  target_link_libraries(${controller_name} mc_control)
-  pkg_config_use_dependency(${controller_name} mc_rbdyn_urdf_cpp)
-  pkg_config_use_dependency(${controller_name} Tasks)
-  pkg_config_use_dependency(${controller_name} jsoncpp)
-  target_link_libraries(${controller_name} ${Boost_LIBRARIES})
-  install(TARGETS ${controller_name} DESTINATION
-    ${MC_CONTROLLER_INSTALL_PREFIX})
-endmacro()
-
-add_controller("posture" "mc_control/mc_posture_controller.cpp"
-  "mc_control/mc_posture_controller.h")
-add_controller("body6d" "mc_control/mc_body6d_controller.cpp"
-  "mc_control/mc_body6d_controller.h")
-add_controller("com" "mc_control/mc_com_controller.cpp"
-  "mc_control/mc_com_controller.h")
-add_controller("seq"
-  "mc_control/mc_seq_controller.cpp;mc_control/mc_seq_steps.cpp;mc_control/MCSeqPublisher.cpp"
-  "mc_control/mc_seq_controller.h;mc_control/mc_seq_actions.h;mc_control/mc_seq_steps.h;mc_control/MCSeqPublisher.h")
-add_controller("driving" "mc_control/mc_driving_controller.cpp"
-  "mc_control/mc_driving_controller.h")
-add_controller("egress" "mc_control/mc_egress_controller.cpp"
-  "mc_control/mc_egress_controller.h")
-add_controller("egress_mrqp" "mc_control/mc_egress_mrqp_controller.cpp"
-  "mc_control/mc_egress_mrqp_controller.h")
-add_controller("bci_self_interact"
-  "mc_control/mc_bci_self_interact_controller.cpp"
-  "mc_control/mc_bci_self_interact_controller.h")
-add_controller("halfsitpose" "mc_control/mc_halfsitpose_controller.cpp"
-  "mc_control/mc_halfsitpose_controller.h")
+add_subdirectory(mc_control)
 
 set(MC_LIBRARIES mc_rbdyn mc_solver mc_tasks mc_control mc_trajectory mc_rtc_ros mc_rtc_loader)
 foreach(MC_LIB ${MC_LIBRARIES})
