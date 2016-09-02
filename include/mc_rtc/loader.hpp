@@ -80,6 +80,12 @@ void ObjectLoader<T>::load_libraries(const std::vector<std::string> & paths)
 }
 
 template<typename T>
+void ObjectLoader<T>::clear()
+{
+  handles_.clear();
+}
+
+template<typename T>
 template<typename... Args>
 std::shared_ptr<T> ObjectLoader<T>::create_object(const std::string & name, const Args & ... args)
 {

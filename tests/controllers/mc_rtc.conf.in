@@ -9,12 +9,10 @@
 
   "Timestep" : 0.005,
 
-  "Log" : false
+  "Log" : false,
 
-  // The following options are used to control the location of the controllers' and robots' modules (libraries)
-  // The paths added by this option are added to the default path
-  //"ControllerModulePath" : "/a/single/path/to/controller/directory/"
-  //"ControllerModulePath" : ["/one/path/to/controller/", "/another/path/"]
-  //"RobotModulePath" : "/a/single/path/to/robot/directory/"
-  //"RobotModulePath" : ["/one/path/to/robot/", "/another/path/"]
+  "ClearControllerModulePath" : true,
+  "ControllerModulePaths" : ["@CMAKE_BINARY_DIR@/src/mc_control", "@CMAKE_BINARY_DIR@/tests/controllers"],
+  "ClearRobotModulePath" : true,
+  "RobotModulePath" : "@CMAKE_BINARY_DIR@/src/mc_robots"
 }

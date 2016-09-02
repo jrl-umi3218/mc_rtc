@@ -50,6 +50,14 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
       robot_module_paths.push_back(rmp);
     }
   }
+  {
+    bool clear_rmp = false;
+    config("ClearRobotModulePath", clear_rmp);
+    if(clear_rmp)
+    {
+      mc_rbdyn::RobotLoader::clear();
+    }
+  }
   if(robot_module_paths.size())
   {
     mc_rbdyn::RobotLoader::update_robot_module_path(robot_module_paths);
@@ -67,7 +75,12 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   }
 
   controller_module_paths.resize(0);
-  controller_module_paths.push_back(mc_rtc::MC_CONTROLLER_INSTALL_PREFIX);
+  bool clear_cmp = false;
+  config("ClearControllerModulePath", clear_cmp);
+  if(!clear_cmp)
+  {
+    controller_module_paths.push_back(mc_rtc::MC_CONTROLLER_INSTALL_PREFIX);
+  }
   {
     std::vector<std::string> v;
     config("ControllerModulePaths", v);

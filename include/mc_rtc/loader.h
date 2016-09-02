@@ -107,6 +107,9 @@ public:
   */
   void load_libraries(const std::vector<std::string> & paths);
 
+  /** Remove all loaded libraries */
+  void clear();
+
   /** Create a new object of type name
    * \param name the object's name
    * \param Args argument required by the constructor

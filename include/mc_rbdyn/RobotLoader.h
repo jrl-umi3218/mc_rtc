@@ -41,6 +41,13 @@ public:
     robot_loader->load_libraries(paths);
   }
 
+  /** Remove all loaded libraries */
+  static inline void clear()
+  {
+    init();
+    robot_loader->clear();
+  }
+
   /** Check if a robot is available
    * \param name Robot name
    */
