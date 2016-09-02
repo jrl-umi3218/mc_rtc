@@ -17,3 +17,8 @@ MACRO(MC_RTC_TEST NAME)
 ENDMACRO()
 
 MC_RTC_TEST(testConfiguration mc_control)
+
+add_executable(test_controller_ticker test_controller_ticker.cpp)
+target_link_libraries(test_controller_ticker ${Boost_LIBRARIES} mc_control)
+
+add_subdirectory(controllers)
