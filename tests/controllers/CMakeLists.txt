@@ -1,9 +1,18 @@
-MACRO(CONTROLLER_TEST NAME)
+MACRO(CONTROLLER_TEST_COMMON NAME)
   add_library(${NAME} SHARED ${NAME}.cpp)
   target_link_libraries(${NAME} ${Boost_LIBRARIES} mc_control)
   set(TEST_CONTROLLER_NAME ${NAME})
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/mc_rtc.conf.in ${CMAKE_CURRENT_BINARY_DIR}/mc_rtc-${NAME}.conf)
-  add_test(NAME ${NAME} COMMAND test_controller_ticker mc_rtc-${NAME}.conf)
 ENDMACRO()
 
-CONTROLLER_TEST(NotAController)
+MACRO(CONTROLLER_TEST_CONSTRUCTION_FAILURE NAME)
+  CONTROLLER_TEST_COMMON(${NAME})
+  add_test(NAME ${NAME} COMMAND test_controller_ticker --run_test=CONSTRUCTION_FAILURE mc_rtc-${NAME}.conf)
+ENDMACRO()
+
+MACRO(CONTROLLER_TEST_RUN NAME NRITER)
+  CONTROLLER_TEST_COMMON(${NAME})
+  add_test(NAME ${NAME} COMMAND test_controller_ticker --run_test=RUN mc_rtc-${NAME}.conf ${NRITER})
+ENDMACRO()
+
+CONTROLLER_TEST_CONSTRUCTION_FAILURE(NotAController)
