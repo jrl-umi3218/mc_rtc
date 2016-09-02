@@ -186,7 +186,7 @@ MCGlobalController::MCGlobalController(const std::string & conf)
   if(current_ctrl == "" || controller == 0)
   {
     LOG_ERROR("No controller selected or selected controller is not enabled, please check your configuration file")
-    throw("No controller enabled");
+    throw std::runtime_error("No controller enabled");
   }
   else
   {
