@@ -12,7 +12,7 @@
   "Log" : false,
 
   "ClearControllerModulePath" : true,
-  "ControllerModulePaths" : ["@CMAKE_BINARY_DIR@/src/mc_control", "@CMAKE_BINARY_DIR@/tests/controllers"],
+  "ControllerModulePaths" : ["@CMAKE_BINARY_DIR@/src/mc_control", "@CMAKE_BINARY_DIR@/tests/controllers/@TEST_CONTROLLER_NAME@"],
   "ClearRobotModulePath" : true,
   "RobotModulePath" : "@CMAKE_BINARY_DIR@/src/mc_robots"
 }
