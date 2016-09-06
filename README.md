@@ -242,14 +242,13 @@ My controller/robot fails to load, what is the problem?
 
 Assuming you already modified your configuration file to load your own robot/controller, there is a few common issues that may prevent your controller/robot from loading. For the remainder of this section we will only address the controller's case but it applies to robots as well.
 
-Missing functions
-----
+### Missing functions
 
 Every controller module (library) needs to provide three functions:
 
 1. `CLASS_NAME()` that provides the controller's name
 2. `create(...)` that provides a function to create an instance of your controller
-3. `destroy(mc_control::MCController \*)` that provides a function to destroy your controller
+3. `destroy(mc_control::MCController *)` that provides a function to destroy your controller
 
 When the first one is missing from your library, you will get a message such as:
 
@@ -282,8 +281,7 @@ YourController.so: undefined symbol: create
 
 In order to solve this issue, you simply need to provide the missing function(s). See the documentation on MCController or RobotModule for more details.
 
-Name mismatch
-----
+### Name mismatch
 
 This is the case when you have provided a different name in the `CLASS_NAME()` function compared to what you provided in the configuration file. The typical error message is the following (without other errors):
 
@@ -291,8 +289,7 @@ This is the case when you have provided a different name in the `CLASS_NAME()` f
 No controller selected or selected controller is not enabled, please check your configuration file
 ```
 
-Creation failure
-----
+### Creation failure
 
 There is two reasons why your controller creation may fail:
 
