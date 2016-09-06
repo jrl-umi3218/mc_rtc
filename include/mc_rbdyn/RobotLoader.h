@@ -61,7 +61,15 @@ private:
   {
     if(!robot_loader)
     {
-      robot_loader.reset(new mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>({mc_rtc::MC_ROBOTS_INSTALL_PREFIX}));
+      try
+      {
+        robot_loader.reset(new mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>({mc_rtc::MC_ROBOTS_INSTALL_PREFIX}));
+      }
+      catch(const mc_rtc::LoaderException & exc)
+      {
+        LOG_ERROR("Failed to initialize RobotLoader")
+        throw(exc);
+      }
     }
   }
   static std::unique_ptr<mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>> robot_loader;

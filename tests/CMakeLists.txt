@@ -22,3 +22,4 @@ add_executable(test_controller_ticker test_controller_ticker.cpp)
 target_link_libraries(test_controller_ticker ${Boost_LIBRARIES} mc_control)
 
 add_subdirectory(controllers)
+add_subdirectory(robots)

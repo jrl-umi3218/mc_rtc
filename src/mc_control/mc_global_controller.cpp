@@ -60,18 +60,34 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   }
   if(robot_module_paths.size())
   {
-    mc_rbdyn::RobotLoader::update_robot_module_path(robot_module_paths);
+    try
+    {
+      mc_rbdyn::RobotLoader::update_robot_module_path(robot_module_paths);
+    }
+    catch(const mc_rtc::LoaderException & exc)
+    {
+      LOG_ERROR("Failed to update robot module path(s)")
+      throw std::runtime_error("Failed to update robot module path(s)");
+    }
   }
   std::string robot_name = "HRP2DRC";
   config("MainRobot", robot_name);
   if(mc_rbdyn::RobotLoader::has_robot(robot_name))
   {
-    main_robot_module = mc_rbdyn::RobotLoader::get_robot_module(robot_name);
+    try
+    {
+      main_robot_module = mc_rbdyn::RobotLoader::get_robot_module(robot_name);
+    }
+    catch(const mc_rtc::LoaderException & exc)
+    {
+      LOG_ERROR("Failed to create " << robot_name << " to use as a main robot")
+      throw std::runtime_error("Failed to create robot");
+    }
   }
   else
   {
     LOG_ERROR("Trying to use " << robot_name << " as main robot but this robot cannot be loaded")
-    throw("Main robot not available");
+    throw std::runtime_error("Main robot not available");
   }
 
   controller_module_paths.resize(0);

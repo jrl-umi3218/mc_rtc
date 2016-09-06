@@ -1,0 +1,18 @@
+// This configuration file is used to run controller tests
+{
+  "MainRobot" : "@TEST_ROBOT_NAME@",
+
+  "Enabled"   : ["Posture"],
+
+  "PublishControlState" : false,
+  "PublishRealState" : false,
+
+  "Timestep" : 0.005,
+
+  "Log" : false,
+
+  "ClearControllerModulePath" : true,
+  "ControllerModulePaths" : ["@CMAKE_BINARY_DIR@/src/mc_control"],
+  "ClearRobotModulePath" : true,
+  "RobotModulePath" : "@CMAKE_BINARY_DIR@/tests/robots/@TEST_ROBOT_NAME@"
+}
