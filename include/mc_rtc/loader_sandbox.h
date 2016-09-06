@@ -59,8 +59,8 @@ int sandbox(void * args)
   LoaderSandboxData<T> & data = *(static_cast<LoaderSandboxData<T>*>(args));
   try
   {
-    auto sys_segv_sigh = signal(SIGSEGV, signal_handler);
-    auto sys_fpe_sigh = signal(SIGFPE, signal_handler);
+    signal(SIGSEGV, signal_handler);
+    signal(SIGFPE, signal_handler);
     int jmp_res = setjmp(jmp);
     if(jmp_res == 0)
     {
@@ -80,8 +80,8 @@ int sandbox(void * args)
         LOG_ERROR("Loaded constructor raised a floating-point exception")
       }
     }
-    signal(SIGSEGV, sys_segv_sigh);
-    signal(SIGFPE, sys_fpe_sigh);
+    signal(SIGSEGV, SIG_DFL);
+    signal(SIGFPE, SIG_DFL);
   }
   catch(...)
   {
