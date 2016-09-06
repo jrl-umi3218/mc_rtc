@@ -81,6 +81,22 @@ T * sandbox_function_call(std::function<T*(const Args & ...)> create_fn, const A
   }
 #else
   /* TODO Port to MacOS/WIN32 (good luck) */
+  no_sandbox_function_call(create_fn, args...);
+#endif
+}
+
+/*! \brief Calls a function without sandboxing
+ *
+ * Only catches exceptions
+ *
+ * \tparam T Return type of the function
+ *
+ * \tparam Args Arguments passed to the creation function
+ *
+ */
+template<typename T, typename ... Args>
+T * no_sandbox_function_call(std::function<T*(const Args & ...)> create_fn, const Args & ... args)
+{
   try
   {
     return create_fn(args...);
@@ -90,7 +106,6 @@ T * sandbox_function_call(std::function<T*(const Args & ...)> create_fn, const A
     LOG_ERROR("Loaded constructor threw an exception")
     return nullptr;
   }
-#endif
 }
 
 } // namespace mc_rtc

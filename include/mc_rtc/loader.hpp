@@ -22,7 +22,8 @@ void ObjectLoader<T>::ObjectDeleter::operator()(T * ptr)
 }
 
 template<typename T>
-ObjectLoader<T>::ObjectLoader(const std::vector<std::string> & paths)
+ObjectLoader<T>::ObjectLoader(const std::vector<std::string> & paths, bool enable_sandbox)
+: enable_sandbox(enable_sandbox)
 {
   Loader::init();
   load_libraries(paths);
@@ -87,6 +88,12 @@ void ObjectLoader<T>::clear()
 }
 
 template<typename T>
+void ObjectLoader<T>::enable_sandboxing(bool enable_sandbox)
+{
+  this->enable_sandbox = enable_sandbox;
+}
+
+template<typename T>
 template<typename... Args>
 std::shared_ptr<T> ObjectLoader<T>::create_object(const std::string & name, const Args & ... args)
 {
@@ -111,7 +118,15 @@ std::shared_ptr<T> ObjectLoader<T>::create_object(const std::string & name, cons
   #pragma GCC diagnostic ignored "-Wpedantic"
   std::function<T*(const Args & ...)> create_fn = (T*(*)(const Args & ...))(sym);
   #pragma GCC diagnostic pop
-  T * ptr = sandbox_function_call(create_fn, args...);
+  T * ptr = nullptr;
+  if(enable_sandbox)
+  {
+    ptr = sandbox_function_call(create_fn, args...);
+  }
+  else
+  {
+    ptr = no_sandbox_function_call(create_fn, args...);
+  }
   if(ptr == nullptr)
   {
     LOG_ERROR("Call to create for object " << name << " failed")

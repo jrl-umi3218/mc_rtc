@@ -50,6 +50,8 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
       robot_module_paths.push_back(rmp);
     }
   }
+  config("UseSandbox", use_sandbox);
+  mc_rbdyn::RobotLoader::enable_sandboxing(use_sandbox);
   {
     bool clear_rmp = false;
     config("ClearRobotModulePath", clear_rmp);
@@ -174,7 +176,7 @@ MCGlobalController::MCGlobalController(const std::string & conf)
 {
   try
   {
-    controller_loader.reset(new mc_rtc::ObjectLoader<mc_control::MCController>(config.controller_module_paths));
+    controller_loader.reset(new mc_rtc::ObjectLoader<mc_control::MCController>(config.controller_module_paths, config.use_sandbox));
   }
   catch(mc_rtc::LoaderException & exc)
   {

@@ -56,6 +56,15 @@ public:
     init();
     return robot_loader->has_object(name);
   }
+
+  /** Enable robot's creation sandboxing
+   * \param enable_sandbox If true, robot's create call are sandboxed
+   */
+  static void enable_sandboxing(bool enable_sandbox)
+  {
+    init();
+    robot_loader->enable_sandboxing(enable_sandbox);
+  }
 private:
   static inline void init()
   {
@@ -63,7 +72,7 @@ private:
     {
       try
       {
-        robot_loader.reset(new mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>({mc_rtc::MC_ROBOTS_INSTALL_PREFIX}));
+        robot_loader.reset(new mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>({mc_rtc::MC_ROBOTS_INSTALL_PREFIX}, true));
       }
       catch(const mc_rtc::LoaderException & exc)
       {
