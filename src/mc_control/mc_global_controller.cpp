@@ -156,7 +156,15 @@ MCGlobalController::MCGlobalController(const std::string & conf)
   controller(0),
   next_controller(0)
 {
-  controller_loader.reset(new mc_rtc::ObjectLoader<mc_control::MCController>(config.controller_module_paths));
+  try
+  {
+    controller_loader.reset(new mc_rtc::ObjectLoader<mc_control::MCController>(config.controller_module_paths));
+  }
+  catch(mc_rtc::LoaderException & exc)
+  {
+    LOG_ERROR("Failed to initialize controller loader")
+    throw(std::runtime_error("Failed to initialize controller loader"));
+  }
   if(std::find(config.enabled_controllers.begin(), config.enabled_controllers.end(),
             "HalfSitPose") == config.enabled_controllers.end())
   {
