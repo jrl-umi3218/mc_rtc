@@ -175,13 +175,20 @@ MCGlobalController::MCGlobalController(const std::string & conf)
     if(controller_loader->has_object(controller_name))
     {
       LOG_INFO("Create controller " << controller_name)
-      if(controller_subname != "")
+      try
       {
-        controllers[c] = controller_loader->create_object(controller_name, controller_subname, config.main_robot_module, config.timestep, config.config);
+        if(controller_subname != "")
+        {
+          controllers[c] = controller_loader->create_object(controller_name, controller_subname, config.main_robot_module, config.timestep, config.config);
+        }
+        else
+        {
+          controllers[c] = controller_loader->create_object(c, config.main_robot_module, config.timestep, config.config);
+        }
       }
-      else
+      catch(const mc_rtc::LoaderException & exc)
       {
-        controllers[c] = controller_loader->create_object(c, config.main_robot_module, config.timestep, config.config);
+        throw std::runtime_error("Failed to create controller");
       }
     }
     else
