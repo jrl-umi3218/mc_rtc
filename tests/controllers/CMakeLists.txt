@@ -22,7 +22,9 @@ endmacro()
 
 CONTROLLER_TEST_CONSTRUCTION_FAILURE(NotAController)
 
-# To run properly this test requires controller creation sandboxing which is only enabled on Linux
+# To run properly these tests require controller creation sandboxing
+# which is only enabled on Linux
 if(UNIX AND NOT APPLE)
   CONTROLLER_TEST_CONSTRUCTION_FAILURE(UnresolvedSymbolController)
+  CONTROLLER_TEST_CONSTRUCTION_FAILURE(ThrowingController)
 endif()

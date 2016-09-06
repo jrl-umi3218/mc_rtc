@@ -1,5 +1,7 @@
 #pragma once
 
+#include <mc_rtc/logging.h>
+
 #include <functional>
 
 #ifdef __linux__
@@ -32,8 +34,16 @@ template<typename T>
 int sandbox(void * args)
 {
   LoaderSandboxData<T> & data = *(static_cast<LoaderSandboxData<T>*>(args));
-  data.ret = data.fn();
-  data.complete = true;
+  try
+  {
+    data.ret = data.fn();
+    data.complete = true;
+  }
+  catch(...)
+  {
+    LOG_ERROR("Loaded constructor threw an exception")
+    data.ret = nullptr;
+  }
   _exit(0);
 }
 #endif
@@ -71,7 +81,15 @@ T * sandbox_function_call(std::function<T*(const Args & ...)> create_fn, const A
   }
 #else
   /* TODO Port to MacOS/WIN32 (good luck) */
-  return create_fn(args...);
+  try
+  {
+    return create_fn(args...);
+  }
+  catch(...)
+  {
+    LOG_ERROR("Loaded constructor threw an exception")
+    return nullptr;
+  }
 #endif
 }
 
