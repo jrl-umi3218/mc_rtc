@@ -1,7 +1,11 @@
 #pragma once
 
 #include <functional>
-#include <iostream>//FIXME
+
+#ifdef __linux__
+#include <unistd.h>
+#include <sched.h>
+#endif
 
 namespace mc_rtc
 {
