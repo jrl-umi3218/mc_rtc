@@ -7,6 +7,29 @@
 #ifdef __linux__
 #include <unistd.h>
 #include <sched.h>
+#include <setjmp.h>
+#include <signal.h>
+
+namespace
+{
+  jmp_buf jmp;
+
+  void signal_handler(int signal)
+  {
+    if(signal == SIGSEGV || signal == SIGFPE)
+    {
+      /*! Avoid jumping back a second time */
+      static bool dead = false;
+      if(!dead)
+      {
+        dead = true;
+        longjmp(jmp, signal);
+      }
+    }
+    _exit(0);
+  }
+}
+
 #endif
 
 namespace mc_rtc
@@ -36,8 +59,29 @@ int sandbox(void * args)
   LoaderSandboxData<T> & data = *(static_cast<LoaderSandboxData<T>*>(args));
   try
   {
-    data.ret = data.fn();
-    data.complete = true;
+    auto sys_segv_sigh = signal(SIGSEGV, signal_handler);
+    auto sys_fpe_sigh = signal(SIGFPE, signal_handler);
+    int jmp_res = setjmp(jmp);
+    if(jmp_res == 0)
+    {
+      data.ret = data.fn();
+      data.complete = true;
+    }
+    else
+    {
+      data.ret = nullptr;
+      data.complete = false;
+      if(jmp_res == SIGSEGV)
+      {
+        LOG_ERROR("Loaded constructor segfaulted")
+      }
+      else
+      {
+        LOG_ERROR("Loaded constructor raised a floating-point exception")
+      }
+    }
+    signal(SIGSEGV, sys_segv_sigh);
+    signal(SIGFPE, sys_fpe_sigh);
   }
   catch(...)
   {

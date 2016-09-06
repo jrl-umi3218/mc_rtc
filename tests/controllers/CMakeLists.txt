@@ -23,9 +23,11 @@ endmacro()
 CONTROLLER_TEST_CONSTRUCTION_FAILURE(NotAController)
 CONTROLLER_TEST_CONSTRUCTION_FAILURE(NoDestroyController)
 CONTROLLER_TEST_CONSTRUCTION_FAILURE(NoCreateController)
-# To run properly this test requires controller creation sandboxing
+# To run properly these tests require controller creation sandboxing
 # which is only enabled on Linux
 if(UNIX AND NOT APPLE)
   CONTROLLER_TEST_CONSTRUCTION_FAILURE(UnresolvedSymbolController)
+  CONTROLLER_TEST_CONSTRUCTION_FAILURE(SegfaultController)
+  CONTROLLER_TEST_CONSTRUCTION_FAILURE(FPEController)
 endif()
 CONTROLLER_TEST_CONSTRUCTION_FAILURE(ThrowingController)
