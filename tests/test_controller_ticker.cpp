@@ -33,6 +33,7 @@ BOOST_AUTO_TEST_CASE(RUN)
     }
   }
   controller.init(initq);
+  controller.running = true;
   for(size_t i = 0; i < nrIter; ++i)
   {
     BOOST_CHECK(controller.run());

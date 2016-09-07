@@ -17,7 +17,7 @@ endmacro()
 
 macro(CONTROLLER_TEST_RUN NAME NRITER)
   CONTROLLER_TEST_COMMON(${NAME})
-  add_test(NAME ${NAME} COMMAND test_controller_ticker --run_test=RUN mc_rtc-${NAME}.conf ${NRITER})
+  add_test(NAME ${NAME} COMMAND test_controller_ticker --run_test=RUN ${NAME}/mc_rtc-${NAME}.conf ${NRITER})
 endmacro()
 
 CONTROLLER_TEST_CONSTRUCTION_FAILURE(NotAController)
@@ -31,3 +31,5 @@ if(UNIX AND NOT APPLE)
   CONTROLLER_TEST_CONSTRUCTION_FAILURE(FPEController)
 endif()
 CONTROLLER_TEST_CONSTRUCTION_FAILURE(ThrowingController)
+
+CONTROLLER_TEST_RUN(TestPostureController 400)
