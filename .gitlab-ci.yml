@@ -61,6 +61,14 @@ build_gcc_ros:
   tags:
     - GCC
 
+build_with_script:
+  stage: build
+  script:
+    - cd utils
+    - ./build_and_install.sh
+  tags:
+    - GCC
+
 package_trusty_amd64_noros:
   stage: package
   before_script:
