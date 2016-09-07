@@ -237,4 +237,91 @@ See mc_vrep for implementation details. mc_vrep already mimics the `send_msg` an
 FAQ
 ==
 
-These are not the questions you're looking for.
+My controller/robot fails to load, what is the problem?
+--
+
+Assuming you already modified your configuration file to load your own robot/controller, there is a few common issues that may prevent your controller/robot from loading. For the remainder of this section we will only address the controller's case but it applies to robots as well.
+
+### Missing functions
+
+Every controller module (library) needs to provide three functions:
+
+1. `CLASS_NAME()` that provides the controller's name
+2. `create(...)` that provides a function to create an instance of your controller
+3. `destroy(mc_control::MCController *)` that provides a function to destroy your controller
+
+When the first one is missing from your library, you will get a message such as:
+
+```
+No symbol CLASS_NAME in library YourController.so
+YourController.so: undefined symbol: CLASS_NAME
+Controller NotAController enabled in configuration but not available
+```
+
+And ultimately, the following error message: (assuming your controller is the only enabled controller or the default controller)
+
+```
+No controller selected or selected controller is not enabled, please check your configuration file
+```
+
+Similarly, when the `create` or `destroy` function is missing from your library, you will get such a message for the destroy function:
+
+```
+Symbol destroy not found in YourController.so
+YourController.so: undefined symbol: destroy
+Failed to initialize controller loader
+```
+
+And the following message for the create function:
+
+```
+Symbol create not found in YourController.so
+YourController.so: undefined symbol: create
+```
+
+In order to solve this issue, you simply need to provide the missing function(s). See the documentation on MCController or RobotModule for more details.
+
+### Name mismatch
+
+This is the case when you have provided a different name in the `CLASS_NAME()` function compared to what you provided in the configuration file. The typical error message is the following (without other errors):
+
+```
+No controller selected or selected controller is not enabled, please check your configuration file
+```
+
+### Creation failure
+
+There is two reasons why your controller creation may fail:
+
+1. The `create` function raised an exception
+2. The `create` function used undefined symbol or failed otherwise (e.g. segfault)
+
+In the first case you would see an error message such as:
+
+```
+Loaded constructor threw an exception
+Call to create for object YourController failed
+```
+
+The best way to figure the issue here is to refer to your own controller code.
+
+In the second case you should see an error message such as:
+
+```
+[executable that runs your controller]: symbol lookup error: YourController.so: undefined symbol: _ZN14NotImplementedC1Ev
+Call to create for object YourController failed
+```
+
+Generally the second line will indicate a failure to run the controller `create` function while the line prior to that will tell you more about the problem. For example:
+
+```
+Loaded constructor segfaulted
+```
+
+Or:
+
+```
+Loaded constructor raised a floating-point exception
+```
+
+*Note* The later point only applies to the Linux platform. On Windows/MacOS such controllers will crash the host program.

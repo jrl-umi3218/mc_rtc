@@ -77,10 +77,17 @@ struct ObjectLoader : public boost::noncopyable
 {
 public:
   /** Create ObjectLoader instance
+   *
    * \param paths directories searched for libraries
-   * \throws See \ref loader_load_libraries_doc "Loader load_libraries throwing condition"
+   *
+   * \param enable_sandbox If true, creation function called from the
+   * loaded modules are sandboxed allowing to recover from otherwise
+   * fatal crashes
+   *
+   * \throws See \ref loader_load_libraries_doc "Loader load_libraries
+   * throwing condition"
   */
-  ObjectLoader(const std::vector<std::string> & paths);
+  ObjectLoader(const std::vector<std::string> & paths, bool enable_sandbox);
 
   /** Destructor */
   ~ObjectLoader();
@@ -107,6 +114,17 @@ public:
   */
   void load_libraries(const std::vector<std::string> & paths);
 
+  /** Remove all loaded libraries */
+  void clear();
+
+  /** Enable/disable sandboxing
+   *
+   * \param enable_sandbox If true, object's creation is done in a
+   * sandbox environment
+   *
+   */
+  void enable_sandboxing(bool enable_sandbox);
+
   /** Create a new object of type name
    * \param name the object's name
    * \param Args argument required by the constructor
@@ -116,6 +134,7 @@ public:
   template<typename... Args>
   std::shared_ptr<T> create_object(const std::string & name, const Args & ... args);
 protected:
+  bool enable_sandbox;
   Loader::handle_map_t handles_;
   struct ObjectDeleter
   {

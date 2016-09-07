@@ -55,7 +55,12 @@ void Loader::load_libraries(const std::vector<std::string> & paths, Loader::hand
         lt_dlhandle h = lt_dlopen(p.path().string().c_str());
         if(h == nullptr)
         {
-          LOG_WARNING("Failed to load " << p.path().string() << std::endl << lt_dlerror())
+          /* Discard the "file not found" error as it only indicates that we
+           * tried to load something other than a library */
+          if(strcmp(lt_dlerror(), "file not found") != 0)
+          {
+            LOG_WARNING("Failed to load " << p.path().string() << std::endl << lt_dlerror())
+          }
           continue;
         }
         #pragma GCC diagnostic push

@@ -41,6 +41,13 @@ public:
     robot_loader->load_libraries(paths);
   }
 
+  /** Remove all loaded libraries */
+  static inline void clear()
+  {
+    init();
+    robot_loader->clear();
+  }
+
   /** Check if a robot is available
    * \param name Robot name
    */
@@ -49,12 +56,29 @@ public:
     init();
     return robot_loader->has_object(name);
   }
+
+  /** Enable robot's creation sandboxing
+   * \param enable_sandbox If true, robot's create call are sandboxed
+   */
+  static void enable_sandboxing(bool enable_sandbox)
+  {
+    init();
+    robot_loader->enable_sandboxing(enable_sandbox);
+  }
 private:
   static inline void init()
   {
     if(!robot_loader)
     {
-      robot_loader.reset(new mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>({mc_rtc::MC_ROBOTS_INSTALL_PREFIX}));
+      try
+      {
+        robot_loader.reset(new mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>({mc_rtc::MC_ROBOTS_INSTALL_PREFIX}, true));
+      }
+      catch(const mc_rtc::LoaderException & exc)
+      {
+        LOG_ERROR("Failed to initialize RobotLoader")
+        throw(exc);
+      }
     }
   }
   static std::unique_ptr<mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>> robot_loader;

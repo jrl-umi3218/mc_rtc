@@ -341,6 +341,8 @@ private:
 
     inline bool enabled(const std::string & ctrl);
 
+    bool use_sandbox = true;
+
     std::vector<std::string> robot_module_paths = {};
     std::shared_ptr<mc_rbdyn::RobotModule> main_robot_module;
 
@@ -361,12 +363,12 @@ private:
   };
 private:
   GlobalConfiguration config;
-  std::map<std::string, std::shared_ptr<mc_control::MCController>> controllers;
   std::string current_ctrl;
   std::string next_ctrl;
   MCController * controller;
   MCController * next_controller;
   std::unique_ptr<mc_rtc::ObjectLoader<MCController>> controller_loader;
+  std::map<std::string, std::shared_ptr<mc_control::MCController>> controllers;
 
   bool publish_th_running = true;
   std::thread publish_th;

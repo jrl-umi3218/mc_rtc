@@ -1,0 +1,18 @@
+// This configuration file is used to run controller tests
+{
+  "MainRobot" : "HRP2DRC",
+
+  "Enabled"   : ["@TEST_CONTROLLER_NAME@"],
+
+  "PublishControlState" : false,
+  "PublishRealState" : false,
+
+  "Timestep" : 0.005,
+
+  "Log" : false,
+
+  "ClearControllerModulePath" : true,
+  "ControllerModulePaths" : ["@CMAKE_BINARY_DIR@/src/mc_control", "@CMAKE_BINARY_DIR@/tests/controllers/@TEST_CONTROLLER_NAME@"],
+  "ClearRobotModulePath" : true,
+  "RobotModulePath" : "@CMAKE_BINARY_DIR@/src/mc_robots"
+}

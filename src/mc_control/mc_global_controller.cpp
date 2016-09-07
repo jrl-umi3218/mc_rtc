@@ -50,24 +50,55 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
       robot_module_paths.push_back(rmp);
     }
   }
+  config("UseSandbox", use_sandbox);
+  mc_rbdyn::RobotLoader::enable_sandboxing(use_sandbox);
+  {
+    bool clear_rmp = false;
+    config("ClearRobotModulePath", clear_rmp);
+    if(clear_rmp)
+    {
+      mc_rbdyn::RobotLoader::clear();
+    }
+  }
   if(robot_module_paths.size())
   {
-    mc_rbdyn::RobotLoader::update_robot_module_path(robot_module_paths);
+    try
+    {
+      mc_rbdyn::RobotLoader::update_robot_module_path(robot_module_paths);
+    }
+    catch(const mc_rtc::LoaderException & exc)
+    {
+      LOG_ERROR("Failed to update robot module path(s)")
+      throw std::runtime_error("Failed to update robot module path(s)");
+    }
   }
   std::string robot_name = "HRP2DRC";
   config("MainRobot", robot_name);
   if(mc_rbdyn::RobotLoader::has_robot(robot_name))
   {
-    main_robot_module = mc_rbdyn::RobotLoader::get_robot_module(robot_name);
+    try
+    {
+      main_robot_module = mc_rbdyn::RobotLoader::get_robot_module(robot_name);
+    }
+    catch(const mc_rtc::LoaderException & exc)
+    {
+      LOG_ERROR("Failed to create " << robot_name << " to use as a main robot")
+      throw std::runtime_error("Failed to create robot");
+    }
   }
   else
   {
     LOG_ERROR("Trying to use " << robot_name << " as main robot but this robot cannot be loaded")
-    throw("Main robot not available");
+    throw std::runtime_error("Main robot not available");
   }
 
   controller_module_paths.resize(0);
-  controller_module_paths.push_back(mc_rtc::MC_CONTROLLER_INSTALL_PREFIX);
+  bool clear_cmp = false;
+  config("ClearControllerModulePath", clear_cmp);
+  if(!clear_cmp)
+  {
+    controller_module_paths.push_back(mc_rtc::MC_CONTROLLER_INSTALL_PREFIX);
+  }
   {
     std::vector<std::string> v;
     config("ControllerModulePaths", v);
@@ -143,7 +174,15 @@ MCGlobalController::MCGlobalController(const std::string & conf)
   controller(0),
   next_controller(0)
 {
-  controller_loader.reset(new mc_rtc::ObjectLoader<mc_control::MCController>(config.controller_module_paths));
+  try
+  {
+    controller_loader.reset(new mc_rtc::ObjectLoader<mc_control::MCController>(config.controller_module_paths, config.use_sandbox));
+  }
+  catch(mc_rtc::LoaderException & exc)
+  {
+    LOG_ERROR("Failed to initialize controller loader")
+    throw(std::runtime_error("Failed to initialize controller loader"));
+  }
   if(std::find(config.enabled_controllers.begin(), config.enabled_controllers.end(),
             "HalfSitPose") == config.enabled_controllers.end())
   {
@@ -162,13 +201,20 @@ MCGlobalController::MCGlobalController(const std::string & conf)
     if(controller_loader->has_object(controller_name))
     {
       LOG_INFO("Create controller " << controller_name)
-      if(controller_subname != "")
+      try
       {
-        controllers[c] = controller_loader->create_object(controller_name, controller_subname, config.main_robot_module, config.timestep, config.config);
+        if(controller_subname != "")
+        {
+          controllers[c] = controller_loader->create_object(controller_name, controller_subname, config.main_robot_module, config.timestep, config.config);
+        }
+        else
+        {
+          controllers[c] = controller_loader->create_object(c, config.main_robot_module, config.timestep, config.config);
+        }
       }
-      else
+      catch(const mc_rtc::LoaderException & exc)
       {
-        controllers[c] = controller_loader->create_object(c, config.main_robot_module, config.timestep, config.config);
+        throw std::runtime_error("Failed to create controller");
       }
     }
     else
@@ -186,7 +232,7 @@ MCGlobalController::MCGlobalController(const std::string & conf)
   if(current_ctrl == "" || controller == 0)
   {
     LOG_ERROR("No controller selected or selected controller is not enabled, please check your configuration file")
-    throw("No controller enabled");
+    throw std::runtime_error("No controller enabled");
   }
   else
   {
