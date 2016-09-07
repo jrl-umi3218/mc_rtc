@@ -69,7 +69,7 @@ package_trusty_amd64_noros:
   script:
     - ./.packaging/build_recipe.sh .mc-rtc.recipe trusty amd64
   artifacts:
-    name: "tasks_trusty_amd64"
+    name: "mc_rtc_trusty_amd64"
     paths:
       - "*.deb"
   tags:
@@ -83,7 +83,7 @@ package_trusty_amd64_ros:
   script:
     - ./.packaging/build_recipe.sh .mc-rtc-ros.recipe trusty amd64
   artifacts:
-    name: "tasks_trusty_amd64"
+    name: "mc_rtc_trusty_amd64"
     paths:
       - "*.deb"
   tags:
@@ -97,7 +97,7 @@ package_trusty_i386_noros:
   script:
     - ./.packaging/build_recipe.sh .mc-rtc.recipe trusty i386
   artifacts:
-    name: "tasks_trusty_i386"
+    name: "mc_rtc_trusty_i386"
     paths:
       - "*.deb"
   tags:
@@ -111,7 +111,7 @@ package_trusty_i386_ros:
   script:
     - ./.packaging/build_recipe.sh .mc-rtc-ros.recipe trusty i386
   artifacts:
-    name: "tasks_trusty_i386"
+    name: "mc_rtc_trusty_i386"
     paths:
       - "*.deb"
   tags:
@@ -126,7 +126,7 @@ package_xenial_amd64_noros:
   script:
     - ./.packaging/build_recipe.sh .mc-rtc.recipe xenial amd64
   artifacts:
-    name: "tasks_xenial_amd64"
+    name: "mc_rtc_xenial_amd64"
     paths:
       - "*.deb"
   tags:
@@ -141,7 +141,7 @@ package_xenial_amd64_ros:
   script:
     - ./.packaging/build_recipe.sh .mc-rtc-ros.recipe xenial amd64
   artifacts:
-    name: "tasks_xenial_amd64"
+    name: "mc_rtc_xenial_amd64"
     paths:
       - "*.deb"
   tags:
@@ -156,7 +156,7 @@ package_xenial_i386_noros:
   script:
     - ./.packaging/build_recipe.sh .mc-rtc.recipe xenial i386
   artifacts:
-    name: "tasks_xenial_i386"
+    name: "mc_rtc_xenial_i386"
     paths:
       - "*.deb"
   tags:
@@ -171,7 +171,7 @@ package_xenial_i386_ros:
   script:
     - ./.packaging/build_recipe.sh .mc-rtc-ros.recipe xenial i386
   artifacts:
-    name: "tasks_xenial_i386"
+    name: "mc_rtc_xenial_i386"
     paths:
       - "*.deb"
   tags:
