@@ -1,4 +1,6 @@
-#!/bin/sh -ex
+#!/bin/bash -ex
+
+shopt -s expand_aliases
 
 ##########################
 #  --  Configuration --  #
@@ -8,8 +10,8 @@ readonly mc_rtc_dir=`cd $(dirname $0)/..; pwd`
 
 readonly SOURCE_DIR=`cd $mc_rtc_dir/../; pwd`
 readonly INSTALL_PREFIX="/tmp"
-readonly WITH_ROS_SUPPORT="false"
-VREP_PREFIX=
+readonly WITH_ROS_SUPPORT="true"
+VREP_PATH=
 
 readonly BUILD_TYPE="RelWithDebInfo"
 if command -v nproc
@@ -18,10 +20,11 @@ then
 else
   BUILD_CORE=`sysctl -n hw.ncpu`
 fi
-readonly ROS_DISTRO=indigo
+ROS_DISTRO=indigo
 readonly ROS_APT_DEPENDENCIES="ros-${ROS_DISTRO}-common-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-rviz-animated-view-controller"
 ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_ros#karim_drc git@gite.lirmm.fr:mc-hrp2/hrp2_drc#master git@gite.lirmm.fr:mc-hrp4/hrp4#master"
-readonly git_clone="git clone --quiet --recursive"
+alias git_clone="git clone --quiet --recursive"
+alias git_update="git pull && git submodule update"
 
 SUDO_CMD=sudo
 if [ -w $INSTALL_PREFIX ]
@@ -67,51 +70,12 @@ else
   if [ $OS = Ubuntu ]
   then
     yaml_to_env "APT_DEPENDENCIES" $gitlab_ci_yml
-    APT_DEPENDENCIES=`echo $APT_DEPENDENCIES|sed -e's/libspacevecalg-dev//'|sed -e's/librbdyn-dev//'|sed -e's/libeigen-qld-dev//'`
+    APT_DEPENDENCIES=`echo $APT_DEPENDENCIES|sed -e's/libspacevecalg-dev//'|sed -e's/librbdyn-dev//'|sed -e's/libeigen-qld-dev//'|sed -e's/libsch-core-dev//'`
     sudo apt-get update
-    sudo apt-get install -qq cmake build-essential gfortran doxygen cython ${APT_DEPENDENCIES}
+    sudo apt-get install -qq cmake build-essential gfortran doxygen libeigen3-dev python-pip ${APT_DEPENDENCIES}
   else
     echo "This script does not support your OS: ${OS}, please contact the maintainer"
     exit 1
-  fi
-fi
-
-###############################
-#  --  Get Cython-0.23.4  --  #
-###############################
-cd $SOURCE_DIR
-if [ ! -d Cython-0.23.4 ]
-then
-  wget --quiet http://cython.org/release/Cython-0.23.4.tar.gz
-  tar xzf Cython-0.23.4.tar.gz
-  cd Cython-0.23.4
-  sudo python setup.py install
-fi
-
-#######################
-#  --  Get Eigen  --  #
-#######################
-readonly EIGEN_VERSION=3.2.7
-readonly EIGEN_HASH=b30b87236a1b
-
-if [ ${OS} != Darwin ]
-then
-  if [ ! -d $SOURCE_DIR/eigen-eigen-${EIGEN_HASH} ]
-  then
-    # Checkout Eigen
-    cd "$SOURCE_DIR"
-    wget --quiet "http://bitbucket.org/eigen/eigen/get/${EIGEN_VERSION}.tar.gz"
-    tar xzf ${EIGEN_VERSION}.tar.gz
-    cd "$SOURCE_DIR/eigen-eigen-${EIGEN_HASH}/"
-    mkdir -p build
-    cd build
-    # Build, make and install Eigen
-    cmake .. -DCMAKE_INSTALL_PREFIX:STRING="$INSTALL_PREFIX" \
-      -Dpkg_config_libdir:STRING="$INSTALL_PREFIX/lib" \
-      -DEIGEN_INCLUDE_INSTALL_DIR:STRING="$INSTALL_PREFIX/include/eigen3" \
-      ${CMAKE_ADDITIONAL_OPTIONS}
-    make -j${BUILD_CORE}
-    ${SUDO_CMD} make install
   fi
 fi
 
@@ -145,7 +109,12 @@ build_git_dependency()
   mkdir -p "$git_dep"
   if [ ! -d "$git_dep/.git" ]
   then
-    $git_clone -b $git_dep_branch "$git_dep_uri" "$git_dep"
+    git_clone -b $git_dep_branch "$git_dep_uri" "$git_dep"
+  else
+    pushd .
+    cd "$git_dep"
+    git_update
+    popd
   fi
   mkdir -p $git_dep/build
   cd "$git_dep/build"
@@ -156,12 +125,12 @@ build_git_dependency()
   make -j${BUILD_CORE}
   ${SUDO_CMD} make install
 }
-##############################
-#  --  GIT dependencies  --  #
-##############################
+###############################
+##  --  GIT dependencies  --  #
+###############################
 yaml_to_env "GIT_DEPENDENCIES" $gitlab_ci_yml
 # Add some source dependencies
-GIT_DEPENDENCIES="jrl-umi3218/SpaceVecAlg jrl-umi3218/RBDyn jrl-umi3218/eigen-qld ${GIT_DEPENDENCIES}"
+GIT_DEPENDENCIES="jrl-umi3218/SpaceVecAlg jrl-umi3218/RBDyn jrl-umi3218/eigen-qld jrl-umi3218/sch-core ${GIT_DEPENDENCIES}"
 for package in ${GIT_DEPENDENCIES}; do
   build_git_dependency "$package"
 done
@@ -176,25 +145,28 @@ then
     if [ $OS = Ubuntu ]
     then
       sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu `lsb_release -c -s` main" > /etc/apt/sources.list.d/ros-latest.list'
-      wget http://packages.ros.org/ros.key -O - | ${SUDO_CMD} apt-key add -
+      wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
       sudo apt-get update
-      sudo apt-get install -qq ros-${ROS_DISTRO}-ros-base ros-${ROS_DISTRO}-rosdoc-lite python-catkin-lint
+      sudo apt-get install -qq ros-${ROS_DISTRO}-ros-base ros-${ROS_DISTRO}-rosdoc-lite python-catkin-lint ${ROS_APT_DEPENDENCIES}
     else
-      echo "Please install ROS before continuing your installation or disable ROS support"
+      echo "Please install ROS and the required dependencies (${ROS_APT_DEPENDENCIES}) before continuing your installation or disable ROS support"
       exit 1
     fi
   fi
   . /opt/ros/${ROS_DISTRO}/setup.sh
-  sudo apt-get install -qq ${ROS_APT_DEPENDENCIES}
-  mkdir -p $SOURCE_DIR/catkin_ws/src
-  cd $SOURCE_DIR/catkin_ws/src
-  catkin_init_workspace
+  CATKIN_SRC_DIR=$SOURCE_DIR/catkin_ws/src
+  mkdir -p $CATKIN_SRC_DIR
+  cd $CATKIN_SRC_DIR
+  catkin_init_workspace || true
   for package in ${ROS_GIT_DEPENDENCIES}; do
     git_dependency_parsing $package
-    cd $SOURCE_DIR
+    cd $CATKIN_SRC_DIR
     if [ ! -d "$git_dep/.git" ]
     then
-      $git_clone -b $git_dep_branch "$git_dep_uri" "$git_dep"
+      git_clone -b $git_dep_branch "$git_dep_uri" "$git_dep"
+    else
+      cd "$git_dep"
+      git_update
     fi
   done
   cd $SOURCE_DIR/catkin_ws
@@ -207,7 +179,10 @@ else
     cd $SOURCE_DIR
     if [ ! -d "$git_dep/.git" ]
     then
-      $git_clone -b $git_dep_branch "$git_dep_uri" "$git_dep"
+      git_clone -b $git_dep_branch "$git_dep_uri" "$git_dep"
+    else
+      cd "$git_dep"
+      git_update
     fi
   done
 fi
@@ -234,27 +209,19 @@ fi
 make -j$BUILD_CORE
 ${SUDO_CMD} make install
 
-####################################
-#  --  Fetch sch python addon  --  #
-####################################
-cd $SOURCE_DIR
-if [ ! -d sch-core-python/.git ]
-then
-  $git_clone https://github.com/jrl-umi3218/sch-core-python.git
-fi
-cd sch-core-python
-mkdir -p ${INSTALL_PREFIX}/include/sch/Python
-${SUDO_CMD} cp include/sch/Python/SCHAddon.h ${INSTALL_PREFIX}/include/sch/Python/
-
 #############################
 #  --  Build mc_cython  --  #
 #############################
 cd $SOURCE_DIR
 if [ ! -d mc_cython/.git ]
 then
-  $git_clone git@gite.lirmm.fr:multi-contact/mc_cython
-fi
+  git_clone git@gite.lirmm.fr:multi-contact/mc_cython
 cd mc_cython
+else
+  cd mc_cython
+  git_update
+fi
+pip install -r requirements.txt
 if [ ! -e eigen/eigen.pyx ]
 then
   python generate_pyx.py
@@ -264,47 +231,62 @@ make -j$BUILD_CORE
 mkdir -p ${INSTALL_PREFIX}/lib/python`python -c "import sys;print '{0}.{1}'.format(sys.version_info.major, sys.version_info.minor)"`/site-packages
 ${SUDO_CMD} make install
 
-#########################################
-#  -- Setup VREP plugin and mc_vrep --  #
-#########################################
-if [ "x${VREP_PREFIX}" = "x" ]
+####################################################
+#  -- Setup VREP, vrep-api-wrapper and mc_vrep --  #
+####################################################
+if [ "x${VREP_PATH}" = "x" ]
 then
   cd $SOURCE_DIR
   if [ $OS = Darwin ]
   then
-    if [ ! -d V-REP_PRO_EDU_V3_2_3_rev4_Mac ]
+    if [ ! -d V-REP_PRO_EDU_V3_3_2_Mac ]
     then
-      wget http://coppeliarobotics.com/V-REP_PRO_EDU_V3_2_3_rev4_Mac.zip
-      unzip V-REP_PRO_EDU_V3_2_3_rev4_Mac.zip
+      wget http://coppeliarobotics.com/V-REP_PRO_EDU_V3_3_2_Mac.zip
+      unzip V-REP_PRO_EDU_V3_3_2_Mac.zip
     fi
-    VREP_PREFIX=$SOURCE_DIR/V-REP_PRO_EDU_V3_2_3_rev4_Mac
+    VREP_PATH=$SOURCE_DIR/V-REP_PRO_EDU_V3_3_2_Mac
   else
-    if [ ! -d V-REP_PRO_EDU_V3_2_3_rev4_64_Linux ]
+    VREP_VERSION=""
+    if [ "`uname -i`" = "x86_64" ]
     then
-      wget http://coppeliarobotics.com/V-REP_PRO_EDU_V3_2_3_rev4_64_Linux.tar.gz
-      tar xzf V-REP_PRO_EDU_V3_2_3_rev4_64_Linux.tar.gz
+      VREP_VERSION="_64"
     fi
-    VREP_PREFIX=$SOURCE_DIR/V-REP_PRO_EDU_V3_2_3_rev4_64_Linux
+    if [ ! -d V-REP_PRO_EDU_V3_3_2${VREP_VERSION}_Linux ]
+    then
+      wget http://coppeliarobotics.com/V-REP_PRO_EDU_V3_3_2${VREP_VERSION}_Linux.tar.gz
+      tar xzf V-REP_PRO_EDU_V3_3_2${VREP_VERSION}_Linux.tar.gz
+    fi
+    VREP_PATH=$SOURCE_DIR/V-REP_PRO_EDU_V3_3_2${VREP_VERSION}_Linux
   fi
 fi
 
 cd $SOURCE_DIR
+if [ ! -d vrep-api-wrapper/.git ]
+then
+  git_clone git@gite.lirmm.fr:vrep-utils/vrep-api-wrapper
+  cd vrep-api-wrapper
+else
+  cd vrep-api-wrapper
+  git_update
+fi
+mkdir -p build && cd build
+cmake ../ -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
+          -DCMAKE_INSTALL_PREFIX:STRING="$INSTALL_PREFIX" \
+          -DVREP_PATH:STRING="$VREP_PATH" \
+          ${CMAKE_ADDITIONAL_OPTIONS}
+make
+${SUDO_CMD} make install
+
+cd $SOURCE_DIR
 if [ ! -d mc_vrep/.git ]
 then
-  $git_clone git@gite.lirmm.fr:multi-contact/mc_vrep
-fi
-cp $SOURCE_DIR/mc_vrep/ext/extApiCustom.h $VREP_PREFIX/programming/include
-cp $SOURCE_DIR/mc_vrep/src/vrep_remote_api/extApiCustomConst.h $VREP_PREFIX/programming/include
-cp $SOURCE_DIR/mc_vrep/ext/simxCustomCmd.cpp $VREP_PREFIX/programming/v_repExtRemoteApi
-cd $VREP_PREFIX/programming/v_repExtRemoteApi
-make -j$BUILD_CORE
-if [ $OS = Darwin ]
-then
-  cp lib/libv_repExtRemoteApi.dylib $VREP_PREFIX/vrep.app/Contents/MacOS/
+  git_clone git@gite.lirmm.fr:multi-contact/mc_vrep
+  cd mc_vrep
 else
-  cp lib/libv_repExtRemoteApi.so $VREP_PREFIX
+  cd mc_vrep
+  git_update
 fi
-cd $SOURCE_DIR/mc_vrep
+mkdir -p build && cd build
 cmake ../ -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
           -DCMAKE_INSTALL_PREFIX:STRING="$INSTALL_PREFIX" \
           ${CMAKE_ADDITIONAL_OPTIONS}
@@ -314,7 +296,7 @@ ${SUDO_CMD} make install
 cd $SOURCE_DIR
 if [ ! -d vrep_hrp/.git ]
 then
-  $git_clone git@gite.lirmm.fr:mc-hrp4/vrep_hrp.git
+  git_clone git@gite.lirmm.fr:mc-hrp4/vrep_hrp.git
 fi
 
 echo "Installation finished, please add the following lines to your .bashrc/.zshrc"
