@@ -35,7 +35,7 @@ public:
   {
     bool ret = MCController::run();
     BOOST_CHECK(ret);
-    if(nrIter++ > 200)
+    if(nrIter++ > 250)
     {
       BOOST_CHECK_SMALL(robot().mbc().q[head_joint_index][0] - head_joint_target, 0.05);
     }
