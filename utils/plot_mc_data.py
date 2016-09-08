@@ -119,6 +119,34 @@ def plot_command_fig(joint_names, ax, cc):
     set_ylim(ax, ymin, ymax)
     ax.set_ylabel('Command')
 
+def plot_velocity_command_fig(joint_names, ax, cc):
+    ymin, ymax = get_ylim(ax)
+    for j in joint_names:
+        if j in REF_JOINT_ORDER:
+            qOut_idx = 'qOut' + str(REF_JOINT_ORDER.index(j))
+            if qOut_idx in data:
+                vOut = [0]
+                vOut.extend([(180/np.pi)*(data[qOut_idx][i+1] - data[qOut_idx][i])/0.005 for i in xrange(len(data[qOut_idx])-1)])
+                ax.plot(data['t'], vOut, label='{0} velocity command'.format(j), color = cc.next())
+                ymin = min(ymin, np.min(vOut))
+                ymax = max(ymax, np.max(vOut))
+    set_ylim(ax, ymin, ymax)
+    ax.set_ylabel('Velocity command')
+
+def plot_velocity_actual_fig(joint_names, ax, cc):
+    ymin, ymax = get_ylim(ax)
+    for j in joint_names:
+        if j in REF_JOINT_ORDER:
+            qIn_idx = 'qIn' + str(REF_JOINT_ORDER.index(j))
+            if qIn_idx in data:
+                vIn = [0]
+                vIn.extend([(180/np.pi)*(data[qIn_idx][i+1] - data[qIn_idx][i])/0.005 for i in xrange(len(data[qIn_idx])-1)])
+                ax.plot(data['t'], vIn, label='{0} velocity motor'.format(j), color = cc.next())
+                ymin = min(ymin, np.min(vIn))
+                ymax = max(ymax, np.max(vIn))
+    set_ylim(ax, ymin, ymax)
+    ax.set_ylabel('Velocity motors')
+
 def plot_error_fig(joint_names, ax, cc):
     ymin, ymax = get_ylim(ax)
     for j in joint_names:
@@ -227,6 +255,22 @@ def plot_command(joint_names):
     plot_stance_index_fig(ax2, False, cc)
     plt.show()
 
+def plot_velocity_command(joint_names):
+    joint_names = sanitize_args(joint_names)
+    ax, ax2, cc = prep_ax('Velocity command: ' + ','.join(joint_names))
+    plot_velocity_command_fig(joint_names, ax, cc)
+    ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=4, mode="expand", borderaxespad=0.)
+    plot_stance_index_fig(ax2, False, cc)
+    plt.show()
+
+def plot_velocity_actual(joint_names):
+    joint_names = sanitize_args(joint_names)
+    ax, ax2, cc = prep_ax('Velocity actual: ' + ','.join(joint_names))
+    plot_velocity_actual_fig(joint_names, ax, cc)
+    ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=4, mode="expand", borderaxespad=0.)
+    plot_stance_index_fig(ax2, False, cc)
+    plt.show()
+
 def plot_error(joint_names):
     joint_names = sanitize_args(joint_names)
     ax, ax2, cc = prep_ax('Error: ' + ','.join(joint_names))
@@ -251,6 +295,16 @@ def plot_command_encoder(joint_names):
     plot_command_fig(joint_names, ax, cc)
     ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=4, mode="expand", borderaxespad=0.)
     plot_encoder_fig(joint_names, ax2, cc)
+    plot_stance_index_fig(ax2, True, cc)
+    ax2.legend(bbox_to_anchor=(0., -.1, 1., -1.02), loc=3, ncol=4, mode="expand", borderaxespad=0.)
+    plt.show()
+
+def plot_velocity_command_actual(joint_names):
+    joint_names = sanitize_args(joint_names)
+    ax, ax2, cc = prep_ax('Command/Encoder: ' + ','.join(joint_names))
+    plot_velocity_command_fig(joint_names, ax, cc)
+    ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=4, mode="expand", borderaxespad=0.)
+    plot_velocity_actual_fig(joint_names, ax2, cc)
     plot_stance_index_fig(ax2, True, cc)
     ax2.legend(bbox_to_anchor=(0., -.1, 1., -1.02), loc=3, ncol=4, mode="expand", borderaxespad=0.)
     plt.show()
@@ -307,10 +361,13 @@ def welcome():
     print "Available functions:"
     print "- plot_torque(joint_names)"
     print "- plot_encoder(joint_names)"
+    print "- plot_velocity_actual(joint_names)"
     print "- plot_command(joint_names)"
+    print "- plot_velocity_command(joint_names)"
     print "- plot_error(joint_names)"
     print "- plot_torque_error(joint_names)"
     print "- plot_command_encoder(joint_names)"
+    print "- plot_velocity_command_actual(joint_names)"
     print "- plot_force(Left|Right/Foot|Hand)"
     print "- plot_acc|gyro|vel|p|ff()"
 
