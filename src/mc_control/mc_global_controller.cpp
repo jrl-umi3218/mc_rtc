@@ -280,7 +280,10 @@ void MCGlobalController::init(const std::vector<double> & initq, const std::arra
     });
   }
   controller->reset({q});
-  log_header();
+  if(config.enable_log)
+  {
+    log_header();
+  }
 }
 
 void MCGlobalController::setSensorPosition(const Eigen::Vector3d & pos)
@@ -364,12 +367,18 @@ bool MCGlobalController::run()
     }
     next_controller = 0;
     current_ctrl = next_ctrl;
-    log_header();
+    if(config.enable_log)
+    {
+      log_header();
+    }
   }
   if(running)
   {
     bool r = controller->run();
-    log_data();
+    if(config.enable_log)
+    {
+      log_data();
+    }
     if(!r) { running = false; }
     return r;
   }
