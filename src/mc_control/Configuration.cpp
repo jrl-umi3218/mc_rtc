@@ -152,19 +152,21 @@ Configuration::Configuration(const std::string & path)
 void Configuration::load(const std::string & path)
 {
   std::ifstream ifs(path);
-  if(ifs.bad())
+  if(!ifs.is_open())
   {
     LOG_ERROR("Failed to open controller configuration file: " << path)
+    return;
   }
   Json::Value newV;
   try
   {
     ifs >> newV;
   }
-  catch(const std::runtime_error & exc)
+  catch(const std::exception & exc)
   {
     LOG_ERROR("Failed to read configuration file: " << path)
     LOG_WARNING(exc.what())
+    return;
   }
   for(const auto & m : newV.getMemberNames())
   {

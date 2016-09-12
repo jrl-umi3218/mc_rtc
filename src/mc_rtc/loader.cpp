@@ -45,6 +45,11 @@ void Loader::load_libraries(const std::vector<std::string> & paths, Loader::hand
 {
   for(const auto & path : paths)
   {
+    if(!bfs::exists(path))
+    {
+      LOG_WARNING("Tried to load libraries from " << path << " which does not exist")
+      continue;
+    }
     bfs::directory_iterator dit(path), endit;
     auto drange = boost::make_iterator_range(dit, endit);
     for(const auto & p : drange)

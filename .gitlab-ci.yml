@@ -34,6 +34,7 @@ build_debian:
 build_gcc_noros:
   stage: build
   script:
+    - export ROS_DISTRO=""
     - ./.jrl-ci/run before_install
     - pushd .
     - cd /tmp && git clone -b karim_drc --recursive git@gite.lirmm.fr:multi-contact/mc_ros
@@ -61,15 +62,25 @@ build_gcc_ros:
   tags:
     - GCC
 
+build_with_script:
+  stage: build
+  script:
+    - cd utils
+    - ./build_and_install.sh
+  tags:
+    - GCC
+
 package_trusty_amd64_noros:
   stage: package
   before_script:
+    - export ROS_DISTRO=""
     - git submodule update --quiet --init --recursive
     - ./.packaging/setup_pbuilder.sh trusty amd64
+    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc.recipe
   script:
     - ./.packaging/build_recipe.sh .mc-rtc.recipe trusty amd64
   artifacts:
-    name: "tasks_trusty_amd64"
+    name: "mc_rtc_trusty_amd64"
     paths:
       - "*.deb"
   tags:
@@ -80,10 +91,11 @@ package_trusty_amd64_ros:
   before_script:
     - git submodule update --quiet --init --recursive
     - ./.packaging/setup_pbuilder.sh trusty amd64
+    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc-ros.recipe
   script:
     - ./.packaging/build_recipe.sh .mc-rtc-ros.recipe trusty amd64
   artifacts:
-    name: "tasks_trusty_amd64"
+    name: "mc_rtc_trusty_amd64"
     paths:
       - "*.deb"
   tags:
@@ -92,12 +104,14 @@ package_trusty_amd64_ros:
 package_trusty_i386_noros:
   stage: package
   before_script:
+    - export ROS_DISTRO=""
     - git submodule update --quiet --init --recursive
     - ./.packaging/setup_pbuilder.sh trusty i386
+    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc.recipe
   script:
     - ./.packaging/build_recipe.sh .mc-rtc.recipe trusty i386
   artifacts:
-    name: "tasks_trusty_i386"
+    name: "mc_rtc_trusty_i386"
     paths:
       - "*.deb"
   tags:
@@ -108,10 +122,11 @@ package_trusty_i386_ros:
   before_script:
     - git submodule update --quiet --init --recursive
     - ./.packaging/setup_pbuilder.sh trusty i386
+    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc-ros.recipe
   script:
     - ./.packaging/build_recipe.sh .mc-rtc-ros.recipe trusty i386
   artifacts:
-    name: "tasks_trusty_i386"
+    name: "mc_rtc_trusty_i386"
     paths:
       - "*.deb"
   tags:
@@ -120,13 +135,14 @@ package_trusty_i386_ros:
 package_xenial_amd64_noros:
   stage: package
   before_script:
-    - export ROS_DISTRO="kinetic"
+    - export ROS_DISTRO=""
     - git submodule update --quiet --init --recursive
     - ./.packaging/setup_pbuilder.sh xenial amd64
+    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc.recipe
   script:
     - ./.packaging/build_recipe.sh .mc-rtc.recipe xenial amd64
   artifacts:
-    name: "tasks_xenial_amd64"
+    name: "mc_rtc_xenial_amd64"
     paths:
       - "*.deb"
   tags:
@@ -138,10 +154,11 @@ package_xenial_amd64_ros:
     - export ROS_DISTRO="kinetic"
     - git submodule update --quiet --init --recursive
     - ./.packaging/setup_pbuilder.sh xenial amd64
+    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc-ros.recipe
   script:
     - ./.packaging/build_recipe.sh .mc-rtc-ros.recipe xenial amd64
   artifacts:
-    name: "tasks_xenial_amd64"
+    name: "mc_rtc_xenial_amd64"
     paths:
       - "*.deb"
   tags:
@@ -150,13 +167,14 @@ package_xenial_amd64_ros:
 package_xenial_i386_noros:
   stage: package
   before_script:
-    - export ROS_DISTRO="kinetic"
+    - export ROS_DISTRO=""
     - git submodule update --quiet --init --recursive
     - ./.packaging/setup_pbuilder.sh xenial i386
+    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc.recipe
   script:
     - ./.packaging/build_recipe.sh .mc-rtc.recipe xenial i386
   artifacts:
-    name: "tasks_xenial_i386"
+    name: "mc_rtc_xenial_i386"
     paths:
       - "*.deb"
   tags:
@@ -168,10 +186,11 @@ package_xenial_i386_ros:
     - export ROS_DISTRO="kinetic"
     - git submodule update --quiet --init --recursive
     - ./.packaging/setup_pbuilder.sh xenial i386
+    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc-ros.recipe
   script:
     - ./.packaging/build_recipe.sh .mc-rtc-ros.recipe xenial i386
   artifacts:
-    name: "tasks_xenial_i386"
+    name: "mc_rtc_xenial_i386"
     paths:
       - "*.deb"
   tags:
