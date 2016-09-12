@@ -14,6 +14,7 @@ namespace bfs = boost::filesystem;
 
 #include <array>
 #include <fstream>
+#include <sstream>
 #include <thread>
 
 namespace mc_control
@@ -375,9 +376,17 @@ private:
   mc_rbdyn::Robots real_robots;
 
   std::ofstream log_;
+  std::stringstream log_ss_;
+  std::stringstream swap_ss_;
+  std::stringstream * write_ss_ = nullptr;
+  std::stringstream * sync_ss_ = nullptr;
   double log_iter_;
   void log_header();
   void log_data();
+
+  std::thread log_sync_th_;
+  bool log_sync_th_run_ = true;
+  unsigned int log_sync_iter_ = 0;
 };
 
 }

@@ -239,12 +239,48 @@ MCGlobalController::MCGlobalController(const std::string & conf)
     real_robots.load(*config.main_robot_module, config.main_robot_module->rsdf_dir);
     publish_th = std::thread(std::bind(&MCGlobalController::publish_thread, this));
   }
+  if(config.enable_log)
+  {
+    log_sync_th_ = std::thread([this]()
+    {
+      std::stringstream * tmp = nullptr;
+      while(log_sync_th_run_)
+      {
+        while(log_sync_th_run_ && tmp == sync_ss_)
+        {
+          usleep(500);
+        }
+        if(tmp != sync_ss_)
+        {
+          if(sync_ss_ != nullptr)
+          {
+            log_ << sync_ss_->str() << std::flush;
+            sync_ss_->str("");
+          }
+          tmp = sync_ss_;
+        }
+      }
+    }
+    );
+  }
 }
 
 MCGlobalController::~MCGlobalController()
 {
   publish_th_running = false;
   publish_th.join();
+  auto sync_ss_str = sync_ss_->str();
+  sync_ss_ = nullptr;
+  log_sync_th_run_ = false;
+  if(log_sync_th_.joinable())
+  {
+    log_sync_th_.join();
+  }
+  if(sync_ss_str.size())
+  {
+    log_ << sync_ss_str;
+  }
+  log_ << write_ss_->str();
 }
 
 void MCGlobalController::init(const std::vector<double> & initq)
@@ -585,9 +621,28 @@ void MCGlobalController::log_header()
   auto log_path = get_log_path();
   if(log_.is_open())
   {
+    if(sync_ss_)
+    {
+      std::string sync_ss_str = sync_ss_->str();
+      sync_ss_->str("");
+      if(sync_ss_str.size())
+      {
+        log_ << sync_ss_str;
+      }
+    }
+    std::string write_ss_str = write_ss_->str();
+    write_ss_->str("");
+    if(write_ss_str.size())
+    {
+      log_ << write_ss_str;
+    }
     log_.close();
   }
-  log_.open(log_path.string());
+  log_.open(log_path.string(), std::ofstream::out | std::ofstream::app);
+  log_ss_.str("");
+  swap_ss_.str("");
+  write_ss_ = &log_ss_;
+  sync_ss_ = nullptr;
   std::stringstream ss_sym;
   ss_sym << config.log_template << "-" << current_ctrl << "-latest.log";
   bfs::path log_sym_path = config.log_directory / bfs::path(ss_sym.str().c_str());
@@ -653,6 +708,7 @@ void MCGlobalController::log_header()
     controller->log_header(log_);
     log_ << std::endl;
     log_iter_ = 0;
+    log_sync_iter_ = 0;
   }
   else
   {
@@ -662,64 +718,76 @@ void MCGlobalController::log_header()
 
 void MCGlobalController::log_data()
 {
-  if(log_.is_open())
+  auto & log = *write_ss_;
+  log << log_iter_;
+  log_iter_ += timestep();
+  for(const auto & qi : controller->getEncoderValues())
   {
-    log_ << log_iter_;
-    log_iter_ += timestep();
-    for(const auto & qi : controller->getEncoderValues())
-    {
-      log_ << ";" << qi;
-    }
-    const auto & ff = controller->robot().mbc().q[0];
-    for(const auto & ffi : ff)
-    {
-      log_ << ";" << ffi;
-    }
-    const auto & qOut = send(log_iter_).robots_state[0].q;
-    for(const auto & jn : ref_joint_order())
-    {
-      log_ << ";" << qOut.at(jn)[0];
-    }
-    for(const auto & ti : controller->getJointTorques())
-    {
-      log_ << ";" << ti;
-    }
-    for(const auto & w : controller->getWrenches())
-    {
-      log_ << ";" << w.second.force().x();
-      log_ << ";" << w.second.force().y();
-      log_ << ";" << w.second.force().z();
-      log_ << ";" << w.second.couple().x();
-      log_ << ";" << w.second.couple().y();
-      log_ << ";" << w.second.couple().z();
-    }
-    const auto & pIn = controller->getSensorPosition();
-    log_ << ";" << pIn.x();
-    log_ << ";" << pIn.y();
-    log_ << ";" << pIn.z();
+    log << ";" << qi;
+  }
+  const auto & ff = controller->robot().mbc().q[0];
+  for(const auto & ffi : ff)
+  {
+    log << ";" << ffi;
+  }
+  const auto & qOut = send(log_iter_).robots_state[0].q;
+  for(const auto & jn : ref_joint_order())
+  {
+    log << ";" << qOut.at(jn)[0];
+  }
+  for(const auto & ti : controller->getJointTorques())
+  {
+    log << ";" << ti;
+  }
+  for(const auto & w : controller->getWrenches())
+  {
+    log << ";" << w.second.force().x();
+    log << ";" << w.second.force().y();
+    log << ";" << w.second.force().z();
+    log << ";" << w.second.couple().x();
+    log << ";" << w.second.couple().y();
+    log << ";" << w.second.couple().z();
+  }
+  const auto & pIn = controller->getSensorPosition();
+  log << ";" << pIn.x();
+  log << ";" << pIn.y();
+  log << ";" << pIn.z();
 
-    const auto & rpyIn = controller->getSensorOrientation();
-    log_ << ";" << rpyIn.x();
-    log_ << ";" << rpyIn.y();
-    log_ << ";" << rpyIn.z();
+  const auto & rpyIn = controller->getSensorOrientation();
+  log << ";" << rpyIn.x();
+  log << ";" << rpyIn.y();
+  log << ";" << rpyIn.z();
 
-    const auto & velIn = controller->getSensorLinearVelocity();
-    log_ << ";" << velIn.x();
-    log_ << ";" << velIn.y();
-    log_ << ";" << velIn.z();
+  const auto & velIn = controller->getSensorLinearVelocity();
+  log << ";" << velIn.x();
+  log << ";" << velIn.y();
+  log << ";" << velIn.z();
 
-    const auto & rateIn = controller->getSensorAngularVelocity();
-    log_ << ";" << rateIn.x();
-    log_ << ";" << rateIn.y();
-    log_ << ";" << rateIn.z();
+  const auto & rateIn = controller->getSensorAngularVelocity();
+  log << ";" << rateIn.x();
+  log << ";" << rateIn.y();
+  log << ";" << rateIn.z();
 
-    const auto & accIn = controller->getSensorAcceleration();
-    log_ << ";" << accIn.x();
-    log_ << ";" << accIn.y();
-    log_ << ";" << accIn.z();
+  const auto & accIn = controller->getSensorAcceleration();
+  log << ";" << accIn.x();
+  log << ";" << accIn.y();
+  log << ";" << accIn.z();
 
-    controller->log_data(log_);
-    log_ << std::endl;
+  controller->log_data(log);
+  log << "\n";
+  log_sync_iter_++;
+  if(log_sync_iter_ == 500)
+  {
+    log_sync_iter_ = 0;
+    if(sync_ss_)
+    {
+      std::swap(write_ss_, sync_ss_);
+    }
+    else
+    {
+      sync_ss_ = write_ss_;
+      write_ss_ = &swap_ss_;
+    }
   }
 }
 
