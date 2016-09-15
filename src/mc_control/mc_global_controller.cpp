@@ -22,152 +22,6 @@
 namespace mc_control
 {
 
-MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string & conf)
-: config(mc_rtc::CONF_PATH)
-{
-#ifndef WIN32
-  bfs::path config_path = bfs::path(std::getenv("HOME")) / ".config/mc_rtc/mc_rtc.conf";
-#else
-  // Should work for Windows Vista and up
-  bfs::path config_path = bfs::path(std::getenv("APPDATA")) / "mc_rtc/mc_rtc.conf";
-#endif
-  if(bfs::exists(config_path))
-  {
-    LOG_INFO("Loading additional global configuration " << config_path)
-    config.load(config_path.string());
-  }
-  if(bfs::exists(conf))
-  {
-    LOG_INFO("Loading additional global configuration " << conf)
-    config.load(conf);
-  }
-  config("RobotModulePaths", robot_module_paths);
-  {
-    std::string rmp = "";
-    config("RobotModulePath", rmp);
-    if(rmp.size())
-    {
-      robot_module_paths.push_back(rmp);
-    }
-  }
-  config("UseSandbox", use_sandbox);
-  mc_rbdyn::RobotLoader::enable_sandboxing(use_sandbox);
-  {
-    bool clear_rmp = false;
-    config("ClearRobotModulePath", clear_rmp);
-    if(clear_rmp)
-    {
-      mc_rbdyn::RobotLoader::clear();
-    }
-  }
-  if(robot_module_paths.size())
-  {
-    try
-    {
-      mc_rbdyn::RobotLoader::update_robot_module_path(robot_module_paths);
-    }
-    catch(const mc_rtc::LoaderException & exc)
-    {
-      LOG_ERROR("Failed to update robot module path(s)")
-      throw std::runtime_error("Failed to update robot module path(s)");
-    }
-  }
-  std::string robot_name = "HRP2DRC";
-  config("MainRobot", robot_name);
-  if(mc_rbdyn::RobotLoader::has_robot(robot_name))
-  {
-    try
-    {
-      main_robot_module = mc_rbdyn::RobotLoader::get_robot_module(robot_name);
-    }
-    catch(const mc_rtc::LoaderException & exc)
-    {
-      LOG_ERROR("Failed to create " << robot_name << " to use as a main robot")
-      throw std::runtime_error("Failed to create robot");
-    }
-  }
-  else
-  {
-    LOG_ERROR("Trying to use " << robot_name << " as main robot but this robot cannot be loaded")
-    throw std::runtime_error("Main robot not available");
-  }
-
-  controller_module_paths.resize(0);
-  bool clear_cmp = false;
-  config("ClearControllerModulePath", clear_cmp);
-  if(!clear_cmp)
-  {
-    controller_module_paths.push_back(mc_rtc::MC_CONTROLLER_INSTALL_PREFIX);
-  }
-  {
-    std::vector<std::string> v;
-    config("ControllerModulePaths", v);
-    for(const auto & cv : v)
-    {
-      controller_module_paths.push_back(cv);
-    }
-  }
-  {
-    std::string v = "";
-    config("ControllerModulePaths", v);
-    if(v.size())
-    {
-      controller_module_paths.push_back(v);
-    }
-  }
-  config("Enabled", enabled_controllers);
-  if(enabled_controllers.size())
-  {
-    initial_controller = enabled_controllers[0];
-  }
-  config("Default", initial_controller);
-  config("Timestep", timestep);
-  config("PublishControlState", publish_control_state);
-  config("PublishRealState", publish_real_state);
-  config("PublishTimestep", publish_timestep);
-  config("Log", enable_log);
-  log_directory = bfs::temp_directory_path();
-  {
-    std::string v = "";
-    config("LogDirectory", v);
-    if(v.size())
-    {
-      log_directory = v;
-    }
-  }
-  config("LogTemplate", log_template);
-  /* Allow the user not to worry about Default if only one controller is enabled */
-  if(enabled_controllers.size() == 1)
-  {
-    initial_controller = enabled_controllers[0];
-  }
-  // Load controller-specific configuration
-  for(const auto & c : enabled_controllers)
-  {
-    bfs::path global = bfs::path(mc_rtc::MC_CONTROLLER_INSTALL_PREFIX) / "/etc" / (c + ".conf");
-    if(bfs::exists(global))
-    {
-      LOG_INFO("Loading additional controller configuration" << global)
-      config.load(global.string());
-    }
-#ifndef WIN32
-    bfs::path local = bfs::path(std::getenv("HOME")) / ".config/mc_rtc/controllers" / (c + ".conf");
-#else
-    bfs::path local = bfs::path(std::getenv("APPDATA")) / "mc_rtc/controllers" / (c + ".conf");
-#endif
-    if(bfs::exists(local))
-    {
-      LOG_INFO("Loading additional controller configuration" << local)
-      config.load(local.string());
-    }
-  }
-}
-
-bool MCGlobalController::GlobalConfiguration::enabled(const std::string & ctrl)
-{
-  return std::find(enabled_controllers.begin(), enabled_controllers.end(), ctrl) != enabled_controllers.end();
-}
-
 MCGlobalController::MCGlobalController(const std::string & conf)
 : config(conf),
   current_ctrl(""), next_ctrl(""),
@@ -239,48 +93,12 @@ MCGlobalController::MCGlobalController(const std::string & conf)
     real_robots.load(*config.main_robot_module, config.main_robot_module->rsdf_dir);
     publish_th = std::thread(std::bind(&MCGlobalController::publish_thread, this));
   }
-  if(config.enable_log)
-  {
-    log_sync_th_ = std::thread([this]()
-    {
-      std::stringstream * tmp = nullptr;
-      while(log_sync_th_run_)
-      {
-        while(log_sync_th_run_ && tmp == sync_ss_)
-        {
-          usleep(500);
-        }
-        if(tmp != sync_ss_)
-        {
-          if(sync_ss_ != nullptr)
-          {
-            log_ << sync_ss_->str() << std::flush;
-            sync_ss_->str("");
-          }
-          tmp = sync_ss_;
-        }
-      }
-    }
-    );
-  }
 }
 
 MCGlobalController::~MCGlobalController()
 {
   publish_th_running = false;
   publish_th.join();
-  auto sync_ss_str = sync_ss_->str();
-  sync_ss_ = nullptr;
-  log_sync_th_run_ = false;
-  if(log_sync_th_.joinable())
-  {
-    log_sync_th_.join();
-  }
-  if(sync_ss_str.size())
-  {
-    log_ << sync_ss_str;
-  }
-  log_ << write_ss_->str();
 }
 
 void MCGlobalController::init(const std::vector<double> & initq)
@@ -318,7 +136,8 @@ void MCGlobalController::init(const std::vector<double> & initq, const std::arra
   controller->reset({q});
   if(config.enable_log)
   {
-    log_header();
+    logger_.reset(new Logger(config.log_policy, config.log_directory, config.log_template));
+    logger_->log_header(current_ctrl, controller);
   }
 }
 
@@ -405,7 +224,7 @@ bool MCGlobalController::run()
     current_ctrl = next_ctrl;
     if(config.enable_log)
     {
-      log_header();
+      logger_->log_header(current_ctrl, controller);
     }
   }
   if(running)
@@ -413,7 +232,7 @@ bool MCGlobalController::run()
     bool r = controller->run();
     if(config.enable_log)
     {
-      log_data();
+      logger_->log_data(*this, controller);
     }
     if(!r) { running = false; }
     return r;
@@ -597,198 +416,5 @@ bool MCGlobalController::GoToHalfSitPose()
   return true;
 }
 
-
-void MCGlobalController::log_header()
-{
-  auto get_log_path = [this]()
-  {
-    std::stringstream ss;
-    auto t = std::time(nullptr);
-    auto tm = std::localtime(&t);
-    ss << config.log_template
-       << "-" << current_ctrl
-       << "-" << (1900 + tm->tm_year)
-       << "-" << std::setw(2) << std::setfill('0') << (1 + tm->tm_mon)
-       << "-" << std::setw(2) << std::setfill('0') << tm->tm_mday
-       << "-" << std::setw(2) << std::setfill('0') << tm->tm_hour
-       << "-" << std::setw(2) << std::setfill('0') << tm->tm_min
-       << "-" << std::setw(2) << std::setfill('0') << tm->tm_sec
-       << ".log";
-    bfs::path log_path = config.log_directory / bfs::path(ss.str().c_str());
-    LOG_INFO("Will log controller outputs to " << log_path)
-    return log_path;
-  };
-  auto log_path = get_log_path();
-  if(log_.is_open())
-  {
-    if(sync_ss_)
-    {
-      std::string sync_ss_str = sync_ss_->str();
-      sync_ss_->str("");
-      if(sync_ss_str.size())
-      {
-        log_ << sync_ss_str;
-      }
-    }
-    std::string write_ss_str = write_ss_->str();
-    write_ss_->str("");
-    if(write_ss_str.size())
-    {
-      log_ << write_ss_str;
-    }
-    log_.close();
-  }
-  log_.open(log_path.string(), std::ofstream::out | std::ofstream::app);
-  log_ss_.str("");
-  swap_ss_.str("");
-  write_ss_ = &log_ss_;
-  sync_ss_ = nullptr;
-  std::stringstream ss_sym;
-  ss_sym << config.log_template << "-" << current_ctrl << "-latest.log";
-  bfs::path log_sym_path = config.log_directory / bfs::path(ss_sym.str().c_str());
-  if(bfs::is_symlink(log_sym_path))
-  {
-    bfs::remove(log_sym_path);
-  }
-  if(!bfs::exists(log_sym_path))
-  {
-    boost::system::error_code ec;
-    bfs::create_symlink(log_path, log_sym_path, ec);
-    if(!ec)
-    {
-      LOG_INFO("Updated latest log symlink: " << log_sym_path)
-    }
-    else
-    {
-      LOG_INFO("Failed to create latest log symlink: " << ec.message())
-    }
-  }
-  if(log_.is_open())
-  {
-    log_ << "t";
-    for(unsigned int i = 0; i < static_cast<unsigned int>(controller->getEncoderValues().size()); ++i)
-    {
-      log_ << ";qIn" << i;
-    }
-    log_ << ";ff_qw;ff_qx;ff_qy;ff_qz;ff_tx;ff_ty;ff_tz";
-    for(unsigned int i = 0; i < static_cast<unsigned int>(controller->getEncoderValues().size()); ++i)
-    {
-      log_ << ";qOut" << i;
-    }
-    for(unsigned int i = 0; i < static_cast<unsigned int>(controller->getJointTorques().size()); ++i)
-    {
-      log_ << ";taucIn" << i;
-    }
-    for(const auto & w : controller->getWrenches())
-    {
-      const auto& wn = w.first;
-      log_ << ";" << wn << "_fx";
-      log_ << ";" << wn << "_fy";
-      log_ << ";" << wn << "_fz";
-      log_ << ";" << wn << "_cx";
-      log_ << ";" << wn << "_cy";
-      log_ << ";" << wn << "_cz";
-    }
-    log_ << ";" << "p_x";
-    log_ << ";" << "p_y";
-    log_ << ";" << "p_z";
-    log_ << ";" << "rpy_r";
-    log_ << ";" << "rpy_p";
-    log_ << ";" << "rpy_y";
-    log_ << ";" << "vel_x";
-    log_ << ";" << "vel_y";
-    log_ << ";" << "vel_z";
-    log_ << ";" << "rate_x";
-    log_ << ";" << "rate_y";
-    log_ << ";" << "rate_z";
-    log_ << ";" << "acc_x";
-    log_ << ";" << "acc_y";
-    log_ << ";" << "acc_z";
-
-    controller->log_header(log_);
-    log_ << std::endl;
-    log_iter_ = 0;
-    log_sync_iter_ = 0;
-  }
-  else
-  {
-    LOG_ERROR("Failed to open log file " << log_path)
-  }
-}
-
-void MCGlobalController::log_data()
-{
-  auto & log = *write_ss_;
-  log << log_iter_;
-  log_iter_ += timestep();
-  for(const auto & qi : controller->getEncoderValues())
-  {
-    log << ";" << qi;
-  }
-  const auto & ff = controller->robot().mbc().q[0];
-  for(const auto & ffi : ff)
-  {
-    log << ";" << ffi;
-  }
-  const auto & qOut = send(log_iter_).robots_state[0].q;
-  for(const auto & jn : ref_joint_order())
-  {
-    log << ";" << qOut.at(jn)[0];
-  }
-  for(const auto & ti : controller->getJointTorques())
-  {
-    log << ";" << ti;
-  }
-  for(const auto & w : controller->getWrenches())
-  {
-    log << ";" << w.second.force().x();
-    log << ";" << w.second.force().y();
-    log << ";" << w.second.force().z();
-    log << ";" << w.second.couple().x();
-    log << ";" << w.second.couple().y();
-    log << ";" << w.second.couple().z();
-  }
-  const auto & pIn = controller->getSensorPosition();
-  log << ";" << pIn.x();
-  log << ";" << pIn.y();
-  log << ";" << pIn.z();
-
-  const auto & rpyIn = controller->getSensorOrientation();
-  log << ";" << rpyIn.x();
-  log << ";" << rpyIn.y();
-  log << ";" << rpyIn.z();
-
-  const auto & velIn = controller->getSensorLinearVelocity();
-  log << ";" << velIn.x();
-  log << ";" << velIn.y();
-  log << ";" << velIn.z();
-
-  const auto & rateIn = controller->getSensorAngularVelocity();
-  log << ";" << rateIn.x();
-  log << ";" << rateIn.y();
-  log << ";" << rateIn.z();
-
-  const auto & accIn = controller->getSensorAcceleration();
-  log << ";" << accIn.x();
-  log << ";" << accIn.y();
-  log << ";" << accIn.z();
-
-  controller->log_data(log);
-  log << "\n";
-  log_sync_iter_++;
-  if(log_sync_iter_ == 500)
-  {
-    log_sync_iter_ = 0;
-    if(sync_ss_)
-    {
-      std::swap(write_ss_, sync_ss_);
-    }
-    else
-    {
-      sync_ss_ = write_ss_;
-      write_ss_ = &swap_ss_;
-    }
-  }
-}
 
 }

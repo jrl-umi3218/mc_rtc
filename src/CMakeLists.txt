@@ -164,6 +164,8 @@ mc_control/generic_gripper.cpp
 mc_control/mc_controller.cpp
 mc_control/mc_python_controller.cpp
 mc_control/mc_global_controller.cpp
+mc_control/mc_global_controller_configuration.cpp
+mc_control/mc_global_controller_logger.cpp
 mc_control/mc_global_controller_services.cpp
 )
 set(mc_control_HDR
