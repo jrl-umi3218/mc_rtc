@@ -86,8 +86,8 @@ void Loader::load_libraries(const std::vector<std::string> & paths, Loader::hand
           bfs::path orig_p(lt_dlgetinfo(out[class_name])->filename);
           if(orig_p != p.path())
           {
-            LOG_ERROR("Multiple files export the same name " << class_name << " (new declaration in " << p.path().string() << ", previous declaration in " << lt_dlgetinfo(out[class_name])->filename << ")")
-            throw(LoaderException("Multiple libraries expose the same class"));
+            LOG_WARNING("Multiple files export the same name " << class_name << " (new declaration in " << p.path().string() << ", previous declaration in " << lt_dlgetinfo(out[class_name])->filename << ")")
+            continue;
           }
         }
         out[class_name] = h;
