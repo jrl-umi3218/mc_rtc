@@ -15,9 +15,10 @@ BOOST_AUTO_TEST_CASE(RUN)
 {
   auto argc = boost::unit_test::framework::master_test_suite().argc;
   auto argv = boost::unit_test::framework::master_test_suite().argv;
-  BOOST_CHECK_EQUAL(argc, 3);
+  BOOST_CHECK(argc >= 3);
   std::string conf = argv[1];
   unsigned int nrIter = std::atoi(argv[2]);
+  std::string nextController = argc > 3 ? argv[3] : "";
   BOOST_CHECK(nrIter > 0);
   mc_control::MCGlobalController controller(conf);
   // Simple init
@@ -37,5 +38,13 @@ BOOST_AUTO_TEST_CASE(RUN)
   for(size_t i = 0; i < nrIter; ++i)
   {
     BOOST_CHECK(controller.run());
+  }
+  if(nextController != "")
+  {
+    controller.EnableController(nextController);
+    for(size_t i = 0; i < nrIter; ++i)
+    {
+      BOOST_CHECK(controller.run());
+    }
   }
 }
