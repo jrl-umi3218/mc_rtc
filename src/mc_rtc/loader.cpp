@@ -64,7 +64,7 @@ void Loader::load_libraries(const std::vector<std::string> & paths, Loader::hand
     for(const auto & p : drange)
     {
       /* Attempt to load anything that is not a directory */
-      if(!bfs::is_directory(p))
+      if( (!bfs::is_directory(p)) && (!bfs::is_symlink(p)) )
       {
         lt_dlhandle h = lt_dlopen(p.string().c_str());
         if(h == nullptr)
