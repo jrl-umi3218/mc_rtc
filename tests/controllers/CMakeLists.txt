@@ -1,3 +1,5 @@
+set(LOG_ENABLED "false")
+
 macro(CONTROLLER_TEST_COMMON NAME)
   add_library(${NAME} SHARED ${NAME}.cpp)
   target_link_libraries(${NAME} ${Boost_LIBRARIES} mc_control)
@@ -32,4 +34,10 @@ if(UNIX AND NOT APPLE)
 endif()
 CONTROLLER_TEST_CONSTRUCTION_FAILURE(ThrowingController)
 
+set(LOG_ENABLED "true")
 CONTROLLER_TEST_RUN(TestPostureController 400)
+# These tests require a /tmp LogDirectory and symlinks to access the
+# *-latest.log symlink created by mc_rtc
+if(UNIX)
+  add_test(TestPostureControllerLog ${CMAKE_CURRENT_SOURCE_DIR}/check_log.py "TestPostureController" 400)
+endif()

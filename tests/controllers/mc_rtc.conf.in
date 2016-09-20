@@ -9,7 +9,9 @@
 
   "Timestep" : 0.005,
 
-  "Log" : false,
+  "Log" : @LOG_ENABLED@,
+  "LogDirectory" : "/tmp",
+  "LogTemplate" : "mc-rtc-test",
 
   "ClearControllerModulePath" : true,
   "ControllerModulePaths" : ["@CMAKE_BINARY_DIR@/src/mc_control", "@CMAKE_BINARY_DIR@/tests/controllers/@TEST_CONTROLLER_NAME@"],
