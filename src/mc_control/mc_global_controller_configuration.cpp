@@ -111,6 +111,23 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   config("PublishRealState", publish_real_state);
   config("PublishTimestep", publish_timestep);
   config("Log", enable_log);
+  {
+    std::string log_policy_str = "non-threaded";
+    config("LogPolicy", log_policy_str);
+    if(log_policy_str == "threaded")
+    {
+      log_policy = Logger::Policy::THREADED;
+    }
+    else if(log_policy_str == "non-threaded")
+    {
+      log_policy = Logger::Policy::NON_THREADED;
+    }
+    else
+    {
+      LOG_WARNING("Unrecognized LogPolicy entry, will default to non-threaded")
+      log_policy = Logger::Policy::NON_THREADED;
+    }
+  }
   log_directory = bfs::temp_directory_path();
   {
     std::string v = "";
