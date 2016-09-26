@@ -51,20 +51,29 @@ void Loader::load_libraries(const std::vector<std::string> & paths, Loader::hand
       continue;
     }
     bfs::directory_iterator dit(path), endit;
-    auto drange = boost::make_iterator_range(dit, endit);
+    std::vector<bfs::path> drange;
+    std::copy(dit, endit, std::back_inserter(drange));
+    // Sort by newest file
+    std::sort(drange.begin(), drange.end(),
+              [](const bfs::path & p1, const bfs::path & p2)
+              {
+                return bfs::last_write_time(p1) >
+                       bfs::last_write_time(p2);
+              }
+             );
     for(const auto & p : drange)
     {
       /* Attempt to load anything that is not a directory */
-      if(!bfs::is_directory(p))
+      if( (!bfs::is_directory(p)) && (!bfs::is_symlink(p)) )
       {
-        lt_dlhandle h = lt_dlopen(p.path().string().c_str());
+        lt_dlhandle h = lt_dlopen(p.string().c_str());
         if(h == nullptr)
         {
           /* Discard the "file not found" error as it only indicates that we
            * tried to load something other than a library */
           if(strcmp(lt_dlerror(), "file not found") != 0)
           {
-            LOG_WARNING("Failed to load " << p.path().string() << std::endl << lt_dlerror())
+            LOG_WARNING("Failed to load " << p.string() << std::endl << lt_dlerror())
           }
           continue;
         }
@@ -75,7 +84,7 @@ void Loader::load_libraries(const std::vector<std::string> & paths, Loader::hand
         #pragma GCC diagnostic pop
         if(CLASS_NAME_FUN == nullptr)
         {
-          LOG_WARNING("No symbol CLASS_NAME in library " << p.path().string() << std::endl << lt_dlerror())
+          LOG_WARNING("No symbol CLASS_NAME in library " << p.string() << std::endl << lt_dlerror())
           continue;
         }
         std::string class_name(CLASS_NAME_FUN());
@@ -84,10 +93,10 @@ void Loader::load_libraries(const std::vector<std::string> & paths, Loader::hand
           /* We get the first library that declared this class name and only
            * emit an exception if this is declared in a different file */
           bfs::path orig_p(lt_dlgetinfo(out[class_name])->filename);
-          if(orig_p != p.path())
+          if(orig_p != p)
           {
-            LOG_ERROR("Multiple files export the same name " << class_name << " (new declaration in " << p.path().string() << ", previous declaration in " << lt_dlgetinfo(out[class_name])->filename << ")")
-            throw(LoaderException("Multiple libraries expose the same class"));
+            LOG_WARNING("Multiple files export the same name " << class_name << " (new declaration in " << p.string() << ", previous declaration in " << lt_dlgetinfo(out[class_name])->filename << ")")
+            continue;
           }
         }
         out[class_name] = h;
