@@ -1,4 +1,5 @@
 set(LOG_ENABLED "false")
+set(LOG_POLICY "non-threaded")
 
 macro(CONTROLLER_TEST_COMMON NAME)
   add_library(${NAME} SHARED ${NAME}.cpp)
@@ -40,4 +41,8 @@ CONTROLLER_TEST_RUN(TestPostureController 400)
 # *-latest.log symlink created by mc_rtc
 if(UNIX)
   add_test(TestPostureControllerLog ${CMAKE_CURRENT_SOURCE_DIR}/check_log.py "TestPostureController" 400)
+  set(LOG_POLICY "threaded")
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/mc_rtc.conf.in ${CMAKE_CURRENT_BINARY_DIR}/TestPostureController/mc_rtc-TestPostureController-threaded-log.conf)
+  add_test(NAME TestPostureControllerThreadedLogging COMMAND test_controller_ticker --run_test=RUN TestPostureController/mc_rtc-TestPostureController-threaded-log.conf 1200)
+  add_test(TestPostureControllerThreadedLog ${CMAKE_CURRENT_SOURCE_DIR}/check_log.py "TestPostureController" 1200)
 endif()
