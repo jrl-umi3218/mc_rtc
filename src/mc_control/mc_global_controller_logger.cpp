@@ -85,8 +85,12 @@ namespace mc_control
 
       ~LoggerThreadedPolicyImpl()
       {
-        auto sync_ss_str = sync_ss_->str();
-        sync_ss_ = nullptr;
+        std::string sync_ss_str = "";
+        if(sync_ss_)
+        {
+          sync_ss_str = sync_ss_->str();
+          sync_ss_ = nullptr;
+        }
         log_sync_th_run_ = false;
         if(log_sync_th_.joinable())
         {
