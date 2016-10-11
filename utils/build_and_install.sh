@@ -191,6 +191,7 @@ fi
 #  --  Build mc_rtc  --  #
 ##########################
 cd $mc_rtc_dir
+git submodule update --init
 mkdir -p build
 cd build
 if $WITH_ROS_SUPPORT
@@ -221,7 +222,7 @@ else
   cd mc_cython
   git_update
 fi
-pip install -r requirements.txt
+${SUDO_CMD} pip install -r requirements.txt
 if [ ! -e eigen/eigen.pyx ]
 then
   python generate_pyx.py
