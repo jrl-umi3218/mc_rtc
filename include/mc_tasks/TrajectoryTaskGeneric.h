@@ -16,7 +16,7 @@ namespace mc_tasks
  *
  */
 template<typename T>
-struct MC_TASKS_DLLAPI TrajectoryTaskGeneric : public MetaTask
+struct TrajectoryTaskGeneric : public MetaTask
 {
 
   /*! \brief Constructor (auto damping)
@@ -36,6 +36,8 @@ struct MC_TASKS_DLLAPI TrajectoryTaskGeneric : public MetaTask
    */
   TrajectoryTaskGeneric(const mc_rbdyn::Robots & robots, unsigned int robotIndex,
                         double stiffness, double weight);
+
+  virtual ~TrajectoryTaskGeneric();
 
   virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
 

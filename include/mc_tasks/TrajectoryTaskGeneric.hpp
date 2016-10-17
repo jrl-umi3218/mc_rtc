@@ -18,6 +18,11 @@ TrajectoryTaskGeneric<T>::TrajectoryTaskGeneric(const mc_rbdyn::Robots & robots,
 }
 
 template<typename T>
+TrajectoryTaskGeneric<T>::~TrajectoryTaskGeneric()
+{
+}
+
+template<typename T>
 template<typename ... Args>
 void TrajectoryTaskGeneric<T>::finalize(Args && ... args)
 {
