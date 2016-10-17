@@ -123,7 +123,7 @@ public:
    * Set the end effector objective to the current position of the end-effector
    *
    */
-  virtual void resetTask(const mc_rbdyn::Robots& robots, unsigned int robotIndex);
+  virtual void reset();
 
   /*! \brief Get the filtered wrench used by the task as a measure */
   sva::ForceVecd getFilteredWrench() const;

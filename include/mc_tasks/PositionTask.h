@@ -1,11 +1,6 @@
 #pragma once
 
-#include <mc_rbdyn/robot.h>
-#include <mc_solver/QPSolver.h>
-#include <Tasks/QPTasks.h>
-
-#include <mc_tasks/api.h>
-#include <mc_tasks/MetaTask.h>
+#include <mc_tasks/TrajectoryTaskGeneric.h>
 
 namespace mc_tasks
 {
@@ -15,10 +10,9 @@ namespace mc_tasks
  * This task is thin wrapper around the appropriate tasks in Tasks.
  *
  */
-struct MC_TASKS_DLLAPI PositionTask : public MetaTask
+struct MC_TASKS_DLLAPI PositionTask : public TrajectoryTaskGeneric<tasks::qp::PositionTask>
 {
 public:
-
   /*! \brief Constructor
    *
    * \param bodyName Name of the body to control
@@ -40,13 +34,7 @@ public:
    *
    * Set the task objective to the current body position
    */
-  void resetTask();
-
-  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
-
-  virtual void addToSolver(mc_solver::QPSolver & solver) override;
-
-  virtual void update() override;
+  virtual void reset() override;
 
   /*! \brief Get the body position target */
   Eigen::Vector3d position();
@@ -59,13 +47,7 @@ public:
   void position(const Eigen::Vector3d & pos);
 protected:
   std::string bodyName;
-  const mc_rbdyn::Robots & robots;
-  unsigned int rIndex;
   unsigned int bIndex;
-
-  bool inSolver;
-  std::shared_ptr<tasks::qp::PositionTask> positionTask;
-  std::shared_ptr<tasks::qp::SetPointTask> positionTaskSp;
 };
 
 }

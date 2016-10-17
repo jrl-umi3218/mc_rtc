@@ -1,0 +1,128 @@
+#pragma once
+
+#include <mc_tasks/TrajectoryTaskGeneric.h>
+
+#include <cmath>
+
+namespace mc_tasks
+{
+
+template<typename T>
+TrajectoryTaskGeneric<T>::TrajectoryTaskGeneric(const mc_rbdyn::Robots & robots,
+                                             unsigned int robotIndex,
+                                             double stifness,
+                                             double w)
+: robots(robots), rIndex(robotIndex),
+  stiff(stifness), damp(2*std::sqrt(stiff)), wt(w)
+{
+}
+
+template<typename T>
+template<typename ... Args>
+void TrajectoryTaskGeneric<T>::finalize(Args && ... args)
+{
+  errorT = std::make_shared<T>(args...);
+  trajectoryT = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, errorT.get(), stiff, damp, wt);
+}
+
+template<typename T>
+void TrajectoryTaskGeneric<T>::removeFromSolver(mc_solver::QPSolver & solver)
+{
+  if(inSolver)
+  {
+    solver.removeTask(trajectoryT.get());
+    inSolver = false;
+  }
+}
+
+template<typename T>
+void TrajectoryTaskGeneric<T>::addToSolver(mc_solver::QPSolver & solver)
+{
+  if(!inSolver)
+  {
+    solver.addTask(trajectoryT.get());
+    inSolver = true;
+  }
+}
+
+template<typename T>
+void TrajectoryTaskGeneric<T>::update()
+{
+}
+
+template<typename T>
+void TrajectoryTaskGeneric<T>::refVel(const Eigen::VectorXd & vel)
+{
+  trajectoryT->refVel(vel);
+}
+
+template<typename T>
+void TrajectoryTaskGeneric<T>::refAccel(const Eigen::VectorXd & accel)
+{
+  trajectoryT->refAccel(accel);
+}
+
+template<typename T>
+void TrajectoryTaskGeneric<T>::stiffness(double s)
+{
+  setGains(s, 2*std::sqrt(s));
+}
+
+template<typename T>
+void TrajectoryTaskGeneric<T>::setGains(double s, double d)
+{
+  stiff = s;
+  damp = d;
+  trajectoryT->setGains(s, d);
+}
+
+template<typename T>
+double TrajectoryTaskGeneric<T>::stiffness() const
+{
+  return stiff;
+}
+
+template<typename T>
+double TrajectoryTaskGeneric<T>::damping() const
+{
+  return damp;
+}
+
+template<typename T>
+void TrajectoryTaskGeneric<T>::weight(double w)
+{
+  wt = w;
+  trajectoryT->weight(w);
+}
+
+template<typename T>
+double TrajectoryTaskGeneric<T>::weight() const
+{
+  return wt;
+}
+
+template<typename T>
+void TrajectoryTaskGeneric<T>::dimWeight(const Eigen::VectorXd & w)
+{
+  trajectoryT->dimWeight(w);
+}
+
+template<typename T>
+Eigen::VectorXd TrajectoryTaskGeneric<T>::dimWeight() const
+{
+  return trajectoryT->dimWeight();
+}
+
+template<typename T>
+Eigen::VectorXd TrajectoryTaskGeneric<T>::eval() const
+{
+  return errorT->eval();
+}
+
+template<typename T>
+Eigen::VectorXd TrajectoryTaskGeneric<T>::speed() const
+{
+  return errorT->speed();
+}
+
+}

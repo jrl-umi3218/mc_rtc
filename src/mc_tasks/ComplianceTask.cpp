@@ -44,8 +44,8 @@ ComplianceTask::ComplianceTask(const mc_rbdyn::Robots & robots,
    * feet are placed horizontally on the ground */
   efTask_ = std::make_shared<EndEffectorTask>(forceSensor.parentBodyName, robots,
                                               robotIndex, stiffness, weight);
-  efTask_->orientationTaskSp->dimWeight(dof_.diagonal().head(3));
-  efTask_->positionTaskSp->dimWeight(dof_.diagonal().tail(3));
+  efTask_->orientationTask->dimWeight(dof_.diagonal().head(3));
+  efTask_->positionTask->dimWeight(dof_.diagonal().tail(3));
   clampTrans_ = clamper(0.01);
   clampRot_ = clamper(0.1);
 }
@@ -108,9 +108,9 @@ void ComplianceTask::update()
   efTask_->update();
 }
 
-void ComplianceTask::resetTask(const mc_rbdyn::Robots& robots, unsigned int robotIndex)
+void ComplianceTask::reset()
 {
-  efTask_->resetTask(robots, robotIndex);
+  efTask_->reset();
 }
 
 sva::ForceVecd ComplianceTask::getFilteredWrench() const

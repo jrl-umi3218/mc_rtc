@@ -38,7 +38,7 @@ public:
                           relBodyIdx = 0, double stiffness = 10.0, double
                           weight = 1000.0);
 
-  virtual void resetTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex) override;
+  virtual void reset() override;
 
   virtual void add_ef_pose(const sva::PTransformd & dtr) override;
 

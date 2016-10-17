@@ -59,8 +59,8 @@ void MCEgressController::reset(const ControllerResetData & reset_data)
     mc_rbdyn::Contact(robots(), "LFullSole", "exit_platform"),
     mc_rbdyn::Contact(robots(), "RightGripper", "bar_wheel")
   });
-  efTask->resetTask(robots(), robots().robotIndex());
-  comTask->resetTask(robots(), robots().robotIndex());
+  efTask->reset();
+  comTask->reset();
 }
 
 void MCEgressController::resetBasePose()

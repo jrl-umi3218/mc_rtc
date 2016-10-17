@@ -1,12 +1,7 @@
-#ifndef _H_MCTASKSEFTASK_H_
-#define _H_MCTASKSEFTASK_H_
+#pragma once
 
-#include <mc_tasks/MetaTask.h>
-
-#include <mc_rbdyn/robot.h>
-#include <Tasks/QPTasks.h>
-
-#include <mc_tasks/api.h>
+#include <mc_tasks/PositionTask.h>
+#include <mc_tasks/OrientationTask.h>
 
 namespace mc_tasks
 {
@@ -41,7 +36,7 @@ public:
    *
    * Set the task objective to the current end-effector position
    */
-  virtual void resetTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex);
+  virtual void reset();
 
   virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
 
@@ -86,19 +81,15 @@ public:
 public:
   const mc_rbdyn::Robots & robots;
   unsigned int robotIndex;
+  unsigned int bodyIndex;
 
-  std::shared_ptr<tasks::qp::PositionTask> positionTask;
-  std::shared_ptr<tasks::qp::SetPointTask> positionTaskSp;
-  std::shared_ptr<tasks::qp::OrientationTask> orientationTask;
-  std::shared_ptr<tasks::qp::SetPointTask> orientationTaskSp;
+  std::shared_ptr<mc_tasks::PositionTask> positionTask;
+  std::shared_ptr<mc_tasks::OrientationTask> orientationTask;
 
   std::string bodyName;
   sva::PTransformd curTransform;
-  bool inSolver;
   Eigen::VectorXd err;
   Eigen::VectorXd spd;
 };
 
 }
-
-#endif

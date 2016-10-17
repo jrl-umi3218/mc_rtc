@@ -298,7 +298,7 @@ bool MCDrivingController::read_msg(std::string & msg)
 
 void MCDrivingController::lock_head()
 {
-  head_task.resetTask(robots(), 0);
+  head_task.reset();
   head_task.addToSolver(solver());
 }
 void MCDrivingController::unlock_head()
@@ -307,7 +307,7 @@ void MCDrivingController::unlock_head()
 }
 void MCDrivingController::lock_lhand()
 {
-  lhand_task.resetTask(robots(), 0);
+  lhand_task.reset();
   lhand_task.addToSolver(solver());
 }
 void MCDrivingController::unlock_lhand()

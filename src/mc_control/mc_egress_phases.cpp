@@ -72,12 +72,12 @@ public:
         ctl.oriTask.reset(new mc_tasks::OrientationTask("RLEG_LINK5", ctl.robots(), 0));
         ctl.oriTask->addToSolver(ctl.solver());
         Eigen::Matrix3d change = sva::RotZ(40*M_PI/180); /*XXX Hard-coded value */
-        ctl.oriTask->set_ef_ori(ctl.oriTask->get_ef_ori()*change);
+        ctl.oriTask->orientation(ctl.oriTask->orientation()*change);
         done_setup_rotate = true;
       }
       else
       {
-        double error = ctl.oriTask->orientationTask->eval().norm();
+        double error = ctl.oriTask->eval().norm();
         if(error < 0.01)
         {
           ctl.oriTask->removeFromSolver(ctl.solver());
@@ -395,14 +395,14 @@ struct EgressMoveFootOutPhase : public EgressPhaseExecution
         ctl.oriTask.reset(new mc_tasks::OrientationTask("RLEG_LINK5", ctl.robots(), 0, 0.5));
         ctl.oriTask->addToSolver(ctl.solver());
         Eigen::Matrix3d change = sva::RotZ(40*M_PI/180); /*XXX Hard-coded value */
-        ctl.oriTask->set_ef_ori(ctl.oriTask->get_ef_ori()*change);
+        ctl.oriTask->orientation(ctl.oriTask->orientation()*change);
         timeoutIter = 0;
         done_setup_rotate = true;
       }
       else
       {
         timeoutIter++;
-        double error = ctl.oriTask->orientationTask->eval().norm();
+        double error = ctl.oriTask->eval().norm();
         if(error < 0.01 || timeoutIter > 15*500)
         {
           ctl.oriTask->removeFromSolver(ctl.solver());
@@ -512,14 +512,14 @@ public:
         ctl.oriTask.reset(new mc_tasks::OrientationTask("LLEG_LINK5", ctl.robots(), 0, 1.0));
         ctl.oriTask->addToSolver(ctl.solver());
         Eigen::Matrix3d change = sva::RotZ(30*M_PI/180); /*XXX Hard-coded value */
-        ctl.oriTask->set_ef_ori(ctl.oriTask->get_ef_ori()*change);
+        ctl.oriTask->orientation(ctl.oriTask->orientation()*change);
         done_setup_rotate = true;
         timeoutIter = 0;
       }
       else
       {
         timeoutIter++;
-        double error = ctl.oriTask->orientationTask->eval().norm();
+        double error = ctl.oriTask->eval().norm();
         if(error < 0.01 || timeoutIter > 15*500)
         {
           ctl.oriTask->removeFromSolver(ctl.solver());

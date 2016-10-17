@@ -1,12 +1,6 @@
-#ifndef _H_MCTASKSORITASK_H_
-#define _H_MCTASKSORITASK_H_
+#pragma once
 
-#include <mc_rbdyn/robot.h>
-#include <mc_solver/QPSolver.h>
-#include <Tasks/QPTasks.h>
-
-#include <mc_tasks/api.h>
-#include <mc_tasks/MetaTask.h>
+#include <mc_tasks/TrajectoryTaskGeneric.h>
 
 namespace mc_tasks
 {
@@ -16,10 +10,9 @@ namespace mc_tasks
  * This task is thin wrapper around the appropriate tasks in Tasks.
  *
  */
-struct MC_TASKS_DLLAPI OrientationTask : public MetaTask
+struct MC_TASKS_DLLAPI OrientationTask : public TrajectoryTaskGeneric<tasks::qp::OrientationTask>
 {
 public:
-
   /*! \brief Constructor
    *
    * \param bodyName Name of the body to control
@@ -41,38 +34,24 @@ public:
    *
    * Set the task objective to the current body orientation
    */
-  void resetTask();
-
-  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
-
-  virtual void addToSolver(mc_solver::QPSolver & solver) override;
-
-  virtual void update() override;
+  virtual void reset() override;
 
   /*! \brief Set the body orientation target
    *
    * \param ori Body orientation in world frame
    *
    */
-  void set_ef_ori(const Eigen::Matrix3d & ori);
+  void orientation(const Eigen::Matrix3d & ori);
 
   /*! \brief Get the current body orientation target
    *
    * \returns The body orientation target in world frame
    *
    */
-  Eigen::Matrix3d get_ef_ori();
+  Eigen::Matrix3d orientation();
 public:
   std::string bodyName;
-  const mc_rbdyn::Robots & robots;
-  unsigned int rIndex;
   unsigned int bIndex;
-
-  bool inSolver;
-  std::shared_ptr<tasks::qp::OrientationTask> orientationTask;
-  std::shared_ptr<tasks::qp::SetPointTask> orientationTaskSp;
 };
 
 }
-
-#endif

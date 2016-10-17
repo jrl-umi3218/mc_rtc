@@ -136,6 +136,8 @@ set(mc_tasks_HDR
 ../include/mc_tasks/SmoothTask.h
 ../include/mc_tasks/StabilityTask.h
 ../include/mc_tasks/TrajectoryTask.h
+../include/mc_tasks/TrajectoryTaskGeneric.h
+../include/mc_tasks/TrajectoryTaskGeneric.hpp
 ../include/mc_tasks/ComplianceTask.h
 )
 

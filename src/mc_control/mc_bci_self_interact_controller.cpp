@@ -96,10 +96,10 @@ void MCBCISelfInteractController::reset(const ControllerResetData & reset_data)
     mc_rbdyn::Contact(robots(), "RFullSole", "AllGround"),
     mc_rbdyn::Contact(robots(), "Butthock", "AllGround")
   });
-  lh2Task->resetTask(robots(), robots().robotIndex());
-  rh2Task->resetTask(robots(), robots().robotIndex());
-  chestTask->resetTask(robots(), robots().robotIndex());
-  comTask->resetTask(robots(), robots().robotIndex());
+  lh2Task->reset();
+  rh2Task->reset();
+  chestTask->reset();
+  comTask->reset();
 }
 
 bool MCBCISelfInteractController::run()

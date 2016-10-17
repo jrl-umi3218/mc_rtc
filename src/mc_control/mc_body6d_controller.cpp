@@ -60,8 +60,8 @@ MCBody6dController::MCBody6dController(std::shared_ptr<mc_rbdyn::RobotModule> ro
 void MCBody6dController::reset(const ControllerResetData & reset_data)
 {
   MCController::reset(reset_data);
-  efTask->resetTask(robots(), robots().robotIndex());
-  comTask->resetTask(robots(), robots().robotIndex());
+  efTask->reset();
+  comTask->reset();
 }
 
 
