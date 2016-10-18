@@ -79,12 +79,12 @@ bool TrajectoryTask::timeElapsed()
   return t >= duration;
 }
 
-const Eigen::VectorXd & TrajectoryTask::eval() const
+Eigen::VectorXd TrajectoryTask::eval() const
 {
   return transTask->eval();
 }
 
-const Eigen::VectorXd & TrajectoryTask::speed() const
+Eigen::VectorXd TrajectoryTask::speed() const
 {
   return transTask->speed();
 }

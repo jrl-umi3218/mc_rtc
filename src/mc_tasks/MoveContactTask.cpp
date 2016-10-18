@@ -195,4 +195,18 @@ void MoveContactTask::set_target_tf(const sva::PTransformd & X_target,
   wp = waypointPos(robotSurfacePos(), targetTf, normal);
 }
 
+Eigen::VectorXd MoveContactTask::eval() const
+{
+  Eigen::Vector6d err;
+  err << orientationTask->eval(), positionTask->eval();
+  return err;
+}
+
+Eigen::VectorXd MoveContactTask::speed() const
+{
+  Eigen::Vector6d spd;
+  spd << orientationTask->speed(), positionTask->speed();
+  return spd;
+}
+
 }

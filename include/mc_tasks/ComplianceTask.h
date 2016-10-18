@@ -135,13 +135,13 @@ public:
   }
 
   /*! \brief Returns the task's error */
-  const Eigen::Vector6d eval()
+  virtual Eigen::VectorXd eval() const override
   {
     return wrench_.vector();
   }
 
   /*! \brief Returns the task's speed */
-  const Eigen::Vector6d speed()
+  virtual Eigen::VectorXd speed() const override
   {
     return robot_.mbc().bodyVelW[robot_.bodyIndexByName(sensor_.parentBodyName)].vector();
   }

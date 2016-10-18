@@ -105,6 +105,10 @@ public:
   virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
 
   virtual void update() override;
+
+  virtual Eigen::VectorXd eval() const override;
+
+  virtual Eigen::VectorXd speed() const override;
 public:
   mc_rbdyn::Robots & robots;
   mc_rbdyn::Robot & robot;
@@ -121,7 +125,7 @@ public:
   Eigen::VectorXd speedMat;
   Eigen::Vector3d normal;
 
-  double speed;
+  double speed_;
   Eigen::Vector3d targetSpeed;
   std::shared_ptr<tasks::qp::LinVelocityTask> linVelTask;
   std::shared_ptr<tasks::qp::PIDTask> linVelTaskPid;

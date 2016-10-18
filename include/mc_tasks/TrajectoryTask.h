@@ -75,14 +75,14 @@ public:
    * \returns The current task error
    *
    */
-  const Eigen::VectorXd & eval() const;
+  virtual Eigen::VectorXd eval() const override;
 
   /*! \brief Returns the current task speed
    *
    * \returns The current task speed
    *
    */
-  const Eigen::VectorXd & speed() const;
+  virtual Eigen::VectorXd speed() const override;
 
   /*! \brief Get the control points of the trajectory's b-spline
    *

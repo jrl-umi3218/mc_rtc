@@ -40,6 +40,20 @@ public:
    *
    */
   virtual void update() = 0;
+
+  /*! \brief Returns the task error
+   *
+   * The vector's dimensions depend on the underlying task
+   *
+   */
+  virtual Eigen::VectorXd eval() const = 0;
+
+  /*! \brief Returns the task velocity
+   *
+   * The vector's dimensions depend on the underlying task
+   *
+   */
+  virtual Eigen::VectorXd speed() const = 0;
 };
 
 }

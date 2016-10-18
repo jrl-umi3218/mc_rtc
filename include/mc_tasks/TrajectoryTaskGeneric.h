@@ -110,10 +110,10 @@ struct TrajectoryTaskGeneric : public MetaTask
   Eigen::VectorXd dimWeight() const;
 
   /*! \brief Returns the current task error */
-  Eigen::VectorXd eval() const;
+  virtual Eigen::VectorXd eval() const override;
 
   /*! \brief Returns the current task speed */
-  Eigen::VectorXd speed() const;
+  virtual Eigen::VectorXd speed() const override;
 protected:
   /*! This function should be called to finalize the task creation, it will
    * create the actual tasks objects */

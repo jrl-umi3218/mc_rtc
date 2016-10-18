@@ -70,6 +70,10 @@ public:
    *
    */
   void normalStiffness(const std::vector<std::string> & stiffJoints);
+
+  virtual Eigen::VectorXd eval() const override;
+
+  virtual Eigen::VectorXd speed() const override;
 public:
   mc_rbdyn::Robots & robots;
   mc_rbdyn::Robot & robot;

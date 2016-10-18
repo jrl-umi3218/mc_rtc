@@ -107,4 +107,18 @@ void StabilityTask::update()
   comTaskSp->stiffness(comStiff + extra);
 }
 
+Eigen::VectorXd StabilityTask::eval() const
+{
+  Eigen::VectorXd ret(comTask->dim() + postureTask->eval().size());
+  ret << comTask->eval(), postureTask->eval();
+  return ret;
+}
+
+Eigen::VectorXd StabilityTask::speed() const
+{
+  Eigen::VectorXd ret = Eigen::VectorXd::Zero(comTask->dim() + postureTask->eval().size());
+  ret << comTask->speed();
+  return ret;
+}
+
 }

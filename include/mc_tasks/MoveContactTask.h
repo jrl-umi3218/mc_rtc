@@ -239,6 +239,9 @@ public:
                      const Eigen::Vector3d & adjustOffset = Eigen::Vector3d::Zero(),
                      const Eigen::Vector3d & adjustRPYOffset = Eigen::Vector3d::Zero());
 
+  virtual Eigen::VectorXd eval() const override;
+
+  virtual Eigen::VectorXd speed() const override;
 private:
   void target(const Eigen::Vector3d & pos, const Eigen::Matrix3d & ori,
               double posStiffness, double extraPosStiffness, double posWeight,

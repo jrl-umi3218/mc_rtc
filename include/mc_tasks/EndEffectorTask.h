@@ -70,14 +70,14 @@ public:
    * \returns Task error
    *
    */
-  const Eigen::VectorXd& eval();
+  virtual Eigen::VectorXd eval() const override;
 
   /*! \brief Returns the task speed
    *
    * \returns Task speed
    *
    */
-  const Eigen::VectorXd& speed();
+  virtual Eigen::VectorXd speed() const override;
 public:
   const mc_rbdyn::Robots & robots;
   unsigned int robotIndex;
@@ -88,8 +88,6 @@ public:
 
   std::string bodyName;
   sva::PTransformd curTransform;
-  Eigen::VectorXd err;
-  Eigen::VectorXd spd;
 };
 
 }

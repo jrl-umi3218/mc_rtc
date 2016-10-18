@@ -16,7 +16,7 @@ AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots, std::share
 AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots,
                      std::shared_ptr<mc_solver::BoundedSpeedConstr>
                      constSpeedConstr, mc_rbdyn::Contact & contact,
-                     double direction, double speed,
+                     double direction, double _speed,
                      double stiffness, double weight,
                      Eigen::Vector3d * userT_0_s)
 : robots(robots), robot(robots.robot()), env(robots.env()),
@@ -47,8 +47,8 @@ AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots,
     }
   }
 
-  this->speed = speed;
-  targetSpeed = direction*normal*speed;
+  this->speed_ = _speed;
+  targetSpeed = direction*normal*speed_;
   linVelTask.reset(new tasks::qp::LinVelocityTask(robots.mbs(), 0, robotSurf->bodyName(), targetSpeed, robotSurf->X_b_s().translation())),
   linVelTaskPid.reset(new tasks::qp::PIDTask(robots.mbs(), 0, linVelTask.get(), stiffness, 0, 0, 0));
   linVelTaskPid->error(velError());
@@ -59,7 +59,7 @@ AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots,
 
 void AddRemoveContactTask::direction(double direction)
 {
-  linVelTask->velocity(direction*normal*speed);
+  linVelTask->velocity(direction*normal*speed_);
 }
 
 Eigen::Vector3d AddRemoveContactTask::velError()
@@ -88,6 +88,16 @@ void AddRemoveContactTask::update()
 {
   linVelTaskPid->error(velError());
   linVelTaskPid->weight(std::min(linVelTaskPid->weight() + 0.5, targetVelWeight));
+}
+
+Eigen::VectorXd AddRemoveContactTask::eval() const
+{
+  return linVelTask->eval();
+}
+
+Eigen::VectorXd AddRemoveContactTask::speed() const
+{
+  return linVelTask->speed();
 }
 
 AddContactTask::AddContactTask(mc_rbdyn::Robots & robots, std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr,
