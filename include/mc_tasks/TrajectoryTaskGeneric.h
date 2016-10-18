@@ -132,3 +132,5 @@ private:
 };
 
 }
+
+#include <mc_tasks/TrajectoryTaskGeneric.hpp>
