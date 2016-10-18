@@ -134,6 +134,14 @@ public:
     obj_ = wrench;
   }
 
+  virtual void selectActiveJoints(mc_solver::QPSolver & solver,
+                                  const std::vector<std::string> & activeJointsName) override;
+
+  virtual void selectUnactiveJoints(mc_solver::QPSolver & solver,
+                                    const std::vector<std::string> & unactiveJointsName) override;
+
+  virtual void resetJointsSelector(mc_solver::QPSolver & solver) override;
+
   /*! \brief Returns the task's error */
   virtual Eigen::VectorXd eval() const override
   {

@@ -239,6 +239,14 @@ public:
                      const Eigen::Vector3d & adjustOffset = Eigen::Vector3d::Zero(),
                      const Eigen::Vector3d & adjustRPYOffset = Eigen::Vector3d::Zero());
 
+  virtual void selectActiveJoints(mc_solver::QPSolver & solver,
+                                  const std::vector<std::string> & aJN) override;
+
+  virtual void selectUnactiveJoints(mc_solver::QPSolver & solver,
+                                    const std::vector<std::string> &uJN) override;
+
+  virtual void resetJointsSelector(mc_solver::QPSolver & solver) override;
+
   virtual Eigen::VectorXd eval() const override;
 
   virtual Eigen::VectorXd speed() const override;
@@ -248,6 +256,7 @@ private:
               double oriStiffness, double oriWeight,
               double positionSmoothPercent);
 public:
+  bool inSolver = false;
   mc_rbdyn::Robots & robots;
   mc_rbdyn::Robot & robot;
   mc_rbdyn::Robot & env;
@@ -268,12 +277,14 @@ public:
 
   double posStiff;
   double extraPosStiff;
-  std::shared_ptr<tasks::qp::PositionTask> positionTask;
-  std::shared_ptr<tasks::qp::SetPointTask> positionTaskSp;
-  std::shared_ptr<SmoothTask<Eigen::Vector3d>> positionTaskSm;
+  std::shared_ptr<tasks::qp::PositionTask> positionTask = nullptr;
+  std::shared_ptr<tasks::qp::JointsSelector> positionJSTask = nullptr;
+  std::shared_ptr<tasks::qp::SetPointTask> positionTaskSp = nullptr;
+  std::shared_ptr<SmoothTask<Eigen::Vector3d>> positionTaskSm = nullptr;
 
-  std::shared_ptr<tasks::qp::OrientationTask> orientationTask;
-  std::shared_ptr<tasks::qp::SetPointTask> orientationTaskSp;
+  std::shared_ptr<tasks::qp::OrientationTask> orientationTask = nullptr;
+  std::shared_ptr<tasks::qp::JointsSelector> orientationJSTask = nullptr;
+  std::shared_ptr<tasks::qp::SetPointTask> orientationTaskSp = nullptr;
   bool useSmoothTask;
 };
 

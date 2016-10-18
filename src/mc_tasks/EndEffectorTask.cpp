@@ -66,6 +66,26 @@ sva::PTransformd EndEffectorTask::get_ef_pose()
   return sva::PTransformd(orientationTask->orientation(), positionTask->position());
 }
 
+void EndEffectorTask::selectActiveJoints(mc_solver::QPSolver & solver,
+                                const std::vector<std::string> & activeJointsName)
+{
+  positionTask->selectActiveJoints(solver, activeJointsName);
+  orientationTask->selectActiveJoints(solver, activeJointsName);
+}
+
+void EndEffectorTask::selectUnactiveJoints(mc_solver::QPSolver & solver,
+                                  const std::vector<std::string> & unactiveJointsName)
+{
+  positionTask->selectUnactiveJoints(solver, unactiveJointsName);
+  orientationTask->selectUnactiveJoints(solver, unactiveJointsName);
+}
+
+void EndEffectorTask::resetJointsSelector(mc_solver::QPSolver & solver)
+{
+  positionTask->resetJointsSelector(solver);
+  orientationTask->resetJointsSelector(solver);
+}
+
 Eigen::VectorXd EndEffectorTask::eval() const
 {
   Eigen::Vector6d err;

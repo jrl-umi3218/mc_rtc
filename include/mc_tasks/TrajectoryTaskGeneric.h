@@ -109,10 +109,16 @@ struct TrajectoryTaskGeneric : public MetaTask
   /*! \brief Get the current task's dim weight vector */
   Eigen::VectorXd dimWeight() const;
 
-  /*! \brief Returns the current task error */
+  virtual void selectActiveJoints(mc_solver::QPSolver & solver,
+                                  const std::vector<std::string> & activeJointsName) override;
+
+  virtual void selectUnactiveJoints(mc_solver::QPSolver & solver,
+                                    const std::vector<std::string> & unactiveJointsName) override;
+
+  virtual void resetJointsSelector(mc_solver::QPSolver & solver) override;
+
   virtual Eigen::VectorXd eval() const override;
 
-  /*! \brief Returns the current task speed */
   virtual Eigen::VectorXd speed() const override;
 protected:
   /*! This function should be called to finalize the task creation, it will
@@ -128,6 +134,7 @@ private:
   double damp;
   double wt;
   bool inSolver = false;
+  std::shared_ptr<tasks::qp::JointsSelector> selectorT = nullptr;
   std::shared_ptr<tasks::qp::TrajectoryTask> trajectoryT = nullptr;
 };
 

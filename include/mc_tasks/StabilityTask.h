@@ -88,6 +88,15 @@ public:
 
   std::vector< std::vector<double> > qObj;
   std::shared_ptr<tasks::qp::PostureTask> postureTask;
+private:
+  /* Hide these virtual functions */
+  virtual void selectActiveJoints(mc_solver::QPSolver &,
+                                  const std::vector<std::string> &) override {}
+
+  virtual void selectUnactiveJoints(mc_solver::QPSolver &,
+                                    const std::vector<std::string> &) override {}
+
+  virtual void resetJointsSelector(mc_solver::QPSolver &) override {}
 };
 
 }

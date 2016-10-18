@@ -65,18 +65,16 @@ public:
    */
   virtual sva::PTransformd get_ef_pose();
 
-  /*! \brief Returns the task error
-   *
-   * \returns Task error
-   *
-   */
+  virtual void selectActiveJoints(mc_solver::QPSolver & solver,
+                                  const std::vector<std::string> & activeJointsName) override;
+
+  virtual void selectUnactiveJoints(mc_solver::QPSolver & solver,
+                                    const std::vector<std::string> & unactiveJointsName) override;
+
+  virtual void resetJointsSelector(mc_solver::QPSolver & solver) override;
+
   virtual Eigen::VectorXd eval() const override;
 
-  /*! \brief Returns the task speed
-   *
-   * \returns Task speed
-   *
-   */
   virtual Eigen::VectorXd speed() const override;
 public:
   const mc_rbdyn::Robots & robots;

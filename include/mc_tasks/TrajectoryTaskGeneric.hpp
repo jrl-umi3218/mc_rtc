@@ -119,14 +119,72 @@ Eigen::VectorXd TrajectoryTaskGeneric<T>::dimWeight() const
 }
 
 template<typename T>
+void TrajectoryTaskGeneric<T>::selectActiveJoints(mc_solver::QPSolver & solver,
+                                                  const std::vector<std::string> & activeJointsName)
+{
+  bool putBack = inSolver;
+  if(putBack)
+  {
+    removeFromSolver(solver);
+  }
+  selectorT = std::make_shared<tasks::qp::JointsSelector>(tasks::qp::JointsSelector::ActiveJoints(robots.mbs(), rIndex, errorT.get(), activeJointsName));
+  trajectoryT = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, selectorT.get(), stiff, damp, wt);
+  if(putBack)
+  {
+    addToSolver(solver);
+  }
+}
+
+template<typename T>
+void TrajectoryTaskGeneric<T>::selectUnactiveJoints(mc_solver::QPSolver & solver,
+                                                  const std::vector<std::string> & unactiveJointsName)
+{
+  bool putBack = inSolver;
+  if(putBack)
+  {
+    removeFromSolver(solver);
+  }
+  selectorT = std::make_shared<tasks::qp::JointsSelector>(tasks::qp::JointsSelector::UnactiveJoints(robots.mbs(), rIndex, errorT.get(), unactiveJointsName));
+  trajectoryT = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, selectorT.get(), stiff, damp, wt);
+  if(putBack)
+  {
+    addToSolver(solver);
+  }
+}
+
+template<typename T>
+void TrajectoryTaskGeneric<T>::resetJointsSelector(mc_solver::QPSolver & solver)
+{
+  bool putBack = inSolver;
+  if(putBack)
+  {
+    removeFromSolver(solver);
+  }
+  selectorT = nullptr;
+  trajectoryT = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, errorT.get(), stiff, damp, wt);
+  if(putBack)
+  {
+    addToSolver(solver);
+  }
+}
+
+template<typename T>
 Eigen::VectorXd TrajectoryTaskGeneric<T>::eval() const
 {
+  if(selectorT)
+  {
+    return selectorT->eval();
+  }
   return errorT->eval();
 }
 
 template<typename T>
 Eigen::VectorXd TrajectoryTaskGeneric<T>::speed() const
 {
+  if(selectorT)
+  {
+    return selectorT->speed();
+  }
   return errorT->speed();
 }
 

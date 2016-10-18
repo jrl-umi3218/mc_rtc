@@ -118,4 +118,22 @@ sva::ForceVecd ComplianceTask::getFilteredWrench() const
   return wrench_ + sva::ForceVecd(dof_*obj_.vector());
 }
 
+
+void ComplianceTask::selectActiveJoints(mc_solver::QPSolver & solver,
+                                const std::vector<std::string> & activeJointsName)
+{
+  efTask_->selectActiveJoints(solver, activeJointsName);
+}
+
+void ComplianceTask::selectUnactiveJoints(mc_solver::QPSolver & solver,
+                                  const std::vector<std::string> & unactiveJointsName)
+{
+  efTask_->selectUnactiveJoints(solver, unactiveJointsName);
+}
+
+void ComplianceTask::resetJointsSelector(mc_solver::QPSolver & solver)
+{
+  efTask_->resetJointsSelector(solver);
+}
+
 } // mc_tasks

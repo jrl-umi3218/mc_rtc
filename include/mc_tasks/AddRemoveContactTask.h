@@ -130,6 +130,15 @@ public:
   std::shared_ptr<tasks::qp::LinVelocityTask> linVelTask;
   std::shared_ptr<tasks::qp::PIDTask> linVelTaskPid;
   double targetVelWeight;
+private:
+  /* Hide these virtual functions */
+  virtual void selectActiveJoints(mc_solver::QPSolver &,
+                                  const std::vector<std::string> &) override {}
+
+  virtual void selectUnactiveJoints(mc_solver::QPSolver &,
+                                    const std::vector<std::string> &) override {}
+
+  virtual void resetJointsSelector(mc_solver::QPSolver &) override {}
 };
 
 
