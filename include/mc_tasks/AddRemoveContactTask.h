@@ -106,6 +106,10 @@ public:
 
   virtual void update() override;
 
+  virtual void dimWeight(const Eigen::VectorXd & dimW) override;
+
+  virtual Eigen::VectorXd dimWeight() const override;
+
   virtual Eigen::VectorXd eval() const override;
 
   virtual Eigen::VectorXd speed() const override;

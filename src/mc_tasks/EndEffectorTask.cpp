@@ -66,6 +66,20 @@ sva::PTransformd EndEffectorTask::get_ef_pose()
   return sva::PTransformd(orientationTask->orientation(), positionTask->position());
 }
 
+void EndEffectorTask::dimWeight(const Eigen::VectorXd & dimW)
+{
+  assert(dimW.size() == 6);
+  positionTask->dimWeight(dimW.head(3));
+  orientationTask->dimWeight(dimW.tail(3));
+}
+
+Eigen::VectorXd EndEffectorTask::dimWeight() const
+{
+  Eigen::VectorXd ret(6);
+  ret << positionTask->dimWeight(), orientationTask->dimWeight();
+  return ret;
+}
+
 void EndEffectorTask::selectActiveJoints(mc_solver::QPSolver & solver,
                                 const std::vector<std::string> & activeJointsName)
 {

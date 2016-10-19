@@ -239,6 +239,10 @@ public:
                      const Eigen::Vector3d & adjustOffset = Eigen::Vector3d::Zero(),
                      const Eigen::Vector3d & adjustRPYOffset = Eigen::Vector3d::Zero());
 
+  virtual void dimWeight(const Eigen::VectorXd & dimW) override;
+
+  virtual Eigen::VectorXd dimWeight() const override;
+
   virtual void selectActiveJoints(mc_solver::QPSolver & solver,
                                   const std::vector<std::string> & aJN) override;
 

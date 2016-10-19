@@ -66,6 +66,7 @@ Eigen::Vector3d AddRemoveContactTask::velError()
 {
   Eigen::Vector3d T_b_s = robotSurf->X_b_s().translation();
   Eigen::Matrix3d E_0_b = robot.mbc().bodyPosW[robotBodyIndex].rotation();
+
   sva::PTransformd pts(E_0_b.transpose(), T_b_s);
   sva::MotionVecd surfVelB = pts*robot.mbc().bodyVelB[robotBodyIndex];
   return targetSpeed - surfVelB.linear();
@@ -88,6 +89,16 @@ void AddRemoveContactTask::update()
 {
   linVelTaskPid->error(velError());
   linVelTaskPid->weight(std::min(linVelTaskPid->weight() + 0.5, targetVelWeight));
+}
+
+void AddRemoveContactTask::dimWeight(const Eigen::VectorXd & dimW)
+{
+  linVelTaskPid->dimWeight(dimW);
+}
+
+Eigen::VectorXd AddRemoveContactTask::dimWeight() const
+{
+  return linVelTaskPid->dimWeight();
 }
 
 Eigen::VectorXd AddRemoveContactTask::eval() const

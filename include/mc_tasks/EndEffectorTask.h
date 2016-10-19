@@ -65,6 +65,10 @@ public:
    */
   virtual sva::PTransformd get_ef_pose();
 
+  virtual void dimWeight(const Eigen::VectorXd & dimW) override;
+
+  virtual Eigen::VectorXd dimWeight() const override;
+
   virtual void selectActiveJoints(mc_solver::QPSolver & solver,
                                   const std::vector<std::string> & activeJointsName) override;
 

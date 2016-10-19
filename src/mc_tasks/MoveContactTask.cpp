@@ -203,6 +203,20 @@ void MoveContactTask::set_target_tf(const sva::PTransformd & X_target,
   wp = waypointPos(robotSurfacePos(), targetTf, normal);
 }
 
+void MoveContactTask::dimWeight(const Eigen::VectorXd & dimW)
+{
+  assert(dimW.size() == 6);
+  positionTaskSp->dimWeight(dimW.head(3));
+  orientationTaskSp->dimWeight(dimW.tail(3));
+}
+
+Eigen::VectorXd MoveContactTask::dimWeight() const
+{
+  Eigen::Vector6d ret;
+  ret << positionTaskSp->dimWeight(), orientationTaskSp->dimWeight();
+  return ret;
+}
+
 void MoveContactTask::selectActiveJoints(mc_solver::QPSolver & solver,
                                 const std::vector<std::string> & aJN)
 {

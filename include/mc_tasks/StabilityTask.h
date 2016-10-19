@@ -90,6 +90,10 @@ public:
   std::shared_ptr<tasks::qp::PostureTask> postureTask;
 private:
   /* Hide these virtual functions */
+  virtual void dimWeight(const Eigen::VectorXd & dimW) override {}
+
+  virtual Eigen::VectorXd dimWeight() const override {}
+
   virtual void selectActiveJoints(mc_solver::QPSolver &,
                                   const std::vector<std::string> &) override {}
 

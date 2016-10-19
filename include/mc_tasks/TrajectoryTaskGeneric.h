@@ -96,18 +96,9 @@ struct TrajectoryTaskGeneric : public MetaTask
   /*! \brief Returns the task weight */
   double weight() const;
 
-  /*! \brief Set the task's dimension weight vector
-   *
-   * It is the caller responsibility to ensure the dimensionality fits the
-   * underlying tasks' error function
-   *
-   * \param dimW The new task's dimension weight vector
-   *
-   */
-  void dimWeight(const Eigen::VectorXd & dimW);
+  virtual void dimWeight(const Eigen::VectorXd & dimW) override;
 
-  /*! \brief Get the current task's dim weight vector */
-  Eigen::VectorXd dimWeight() const;
+  virtual Eigen::VectorXd dimWeight() const override;
 
   virtual void selectActiveJoints(mc_solver::QPSolver & solver,
                                   const std::vector<std::string> & activeJointsName) override;

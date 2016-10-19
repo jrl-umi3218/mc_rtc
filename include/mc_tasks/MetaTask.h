@@ -18,6 +18,7 @@ MC_TASKS_DLLAPI double extraStiffness(double error, double extraStiffness);
  */
 struct MC_TASKS_DLLAPI MetaTask
 {
+friend struct mc_solver::QPSolver;
 public:
   /*! \brief Add the task to a solver
    *
@@ -40,6 +41,19 @@ public:
    *
    */
   virtual void update() = 0;
+
+  /*! \brief Set the task's dimension weight vector
+   *
+   * It is the caller responsibility to ensure the dimensionality fits the
+   * underlying tasks' error function
+   *
+   * \param dimW The new tasks's dimension weight vector
+   *
+   */
+  virtual void dimWeight(const Eigen::VectorXd & dimW) = 0;
+
+  /*! \brief Get the current task's dim weight vector */
+  virtual Eigen::VectorXd dimWeight() const = 0;
 
   /*! \brief Setup an active joints selector
    *

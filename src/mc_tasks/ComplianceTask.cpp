@@ -118,6 +118,15 @@ sva::ForceVecd ComplianceTask::getFilteredWrench() const
   return wrench_ + sva::ForceVecd(dof_*obj_.vector());
 }
 
+void ComplianceTask::dimWeight(const Eigen::VectorXd & dimW)
+{
+  efTask_->dimWeight(dimW);
+}
+
+Eigen::VectorXd ComplianceTask::dimWeight() const
+{
+  return efTask_->dimWeight();
+}
 
 void ComplianceTask::selectActiveJoints(mc_solver::QPSolver & solver,
                                 const std::vector<std::string> & activeJointsName)
