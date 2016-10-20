@@ -65,5 +65,6 @@ endif()
 
 set(LOG_POLICY "non-threaded")
 # mc_task test controllers
+CONTROLLER_TEST_RUN(TestCoMTaskController 4001)
 CONTROLLER_TEST_RUN(TestPositionTaskController 5000)
 CONTROLLER_TEST_RUN(TestOrientationTaskController 6001)
