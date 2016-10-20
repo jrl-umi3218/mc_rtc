@@ -29,7 +29,7 @@ public:
    *
    */
   EndEffectorTask(const std::string & bodyName, const mc_rbdyn::Robots &
-                  robots, unsigned int robotIndex, double stiffness = 10.0,
+                  robots, unsigned int robotIndex, double stiffness = 2.0,
                   double weight = 1000.0);
 
   /*! \brief Reset the task
