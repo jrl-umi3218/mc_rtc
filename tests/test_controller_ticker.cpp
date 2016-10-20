@@ -33,18 +33,19 @@ BOOST_AUTO_TEST_CASE(RUN)
       initq.push_back(qi);
     }
   }
+  controller.setEncoderValues(initq);
   controller.init(initq);
   controller.running = true;
   for(size_t i = 0; i < nrIter; ++i)
   {
-    BOOST_CHECK(controller.run());
+    BOOST_REQUIRE(controller.run());
   }
   if(nextController != "")
   {
     controller.EnableController(nextController);
     for(size_t i = 0; i < nrIter; ++i)
     {
-      BOOST_CHECK(controller.run());
+      BOOST_REQUIRE(controller.run());
     }
   }
 }
