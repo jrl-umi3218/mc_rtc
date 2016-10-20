@@ -69,14 +69,14 @@ sva::PTransformd EndEffectorTask::get_ef_pose()
 void EndEffectorTask::dimWeight(const Eigen::VectorXd & dimW)
 {
   assert(dimW.size() == 6);
-  positionTask->dimWeight(dimW.head(3));
-  orientationTask->dimWeight(dimW.tail(3));
+  orientationTask->dimWeight(dimW.head(3));
+  positionTask->dimWeight(dimW.tail(3));
 }
 
 Eigen::VectorXd EndEffectorTask::dimWeight() const
 {
   Eigen::VectorXd ret(6);
-  ret << positionTask->dimWeight(), orientationTask->dimWeight();
+  ret << orientationTask->dimWeight(), positionTask->dimWeight();
   return ret;
 }
 
