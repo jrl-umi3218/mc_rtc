@@ -62,3 +62,7 @@ if(UNIX)
   add_test(TestPostureControllerControllerSwitchThreadedLog ${CMAKE_CURRENT_SOURCE_DIR}/check_log.py "TestPostureController" 1200)
   add_test(TestPostureController2ControllerSwitchThreadedLog ${CMAKE_CURRENT_SOURCE_DIR}/check_log.py "TestPostureController2" 1200)
 endif()
+
+set(LOG_POLICY "non-threaded")
+# mc_task test controllers
+CONTROLLER_TEST_RUN(TestPositionTaskController 5000)
