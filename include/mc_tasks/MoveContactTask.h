@@ -191,12 +191,6 @@ public:
    */
   sva::MotionVecd robotSurfaceVel();
 
-  virtual void addToSolver(mc_solver::QPSolver & solver) override;
-
-  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
-
-  virtual void update() override;
-
   /*! \brief Update the target transformation
    *
    * This can be used to change the target in real-time. For example when the
@@ -292,6 +286,12 @@ public:
   std::shared_ptr<tasks::qp::JointsSelector> orientationJSTask = nullptr;
   std::shared_ptr<tasks::qp::SetPointTask> orientationTaskSp = nullptr;
   bool useSmoothTask;
+private:
+  virtual void addToSolver(mc_solver::QPSolver & solver) override;
+
+  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
+
+  virtual void update() override;
 };
 
 }

@@ -100,12 +100,6 @@ public:
    * \returns Velocity error of the LinVelocity task */
   Eigen::Vector3d velError();
 
-  virtual void addToSolver(mc_solver::QPSolver & solver) override;
-
-  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
-
-  virtual void update() override;
-
   virtual void dimWeight(const Eigen::VectorXd & dimW) override;
 
   virtual Eigen::VectorXd dimWeight() const override;
@@ -145,6 +139,12 @@ private:
   virtual void resetJointsSelector(mc_solver::QPSolver &) override {}
 
   virtual void reset() override {}
+private:
+  virtual void addToSolver(mc_solver::QPSolver & solver) override;
+
+  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
+
+  virtual void update() override;
 };
 
 

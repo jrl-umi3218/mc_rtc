@@ -46,7 +46,7 @@ public:
           mc_rbdyn::Contact(ctl.robots(), "RightGripper", "bar_wheel")
         });
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5", ctl.robots(), ctl.robots().robotIndex()));
-        ctl.efTask->addToSolver(ctl.solver());
+        ctl.solver().addTask(ctl.efTask);
         sva::PTransformd lift(Eigen::Vector3d(-0.125, 0, 0.15)); /*XXX Hard-coded value */
         ctl.efTask->set_ef_pose(ctl.efTask->get_ef_pose()*lift);
         iterSincePutDown = 0;
@@ -58,7 +58,7 @@ public:
         double error = ctl.efTask->positionTask->eval().norm();
         if(error < 0.05 || iterSincePutDown > 15*500)
         {
-          ctl.efTask->removeFromSolver(ctl.solver());
+          ctl.solver().removeTask(ctl.efTask);
           ctl.postureTask->posture(ctl.robot().mbc().q);
           done_lift = true;
           LOG_INFO("Finished lift phase")
@@ -70,7 +70,7 @@ public:
       if(!done_setup_rotate)
       {
         ctl.oriTask.reset(new mc_tasks::OrientationTask("RLEG_LINK5", ctl.robots(), 0));
-        ctl.oriTask->addToSolver(ctl.solver());
+        ctl.solver().addTask(ctl.oriTask);
         Eigen::Matrix3d change = sva::RotZ(40*M_PI/180); /*XXX Hard-coded value */
         ctl.oriTask->orientation(ctl.oriTask->orientation()*change);
         done_setup_rotate = true;
@@ -80,7 +80,7 @@ public:
         double error = ctl.oriTask->eval().norm();
         if(error < 0.01)
         {
-          ctl.oriTask->removeFromSolver(ctl.solver());
+          ctl.solver().removeTask(ctl.oriTask);
           ctl.postureTask->posture(ctl.robot().mbc().q);
           done_rotate = true;
           LOG_INFO("Finished rotate foot")
@@ -92,7 +92,7 @@ public:
       if(!done_setup_putdown)
       {
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5", ctl.robots(), 0, 0.25));
-        ctl.efTask->addToSolver(ctl.solver());
+        ctl.solver().addTask(ctl.efTask);
         sva::PTransformd down(Eigen::Vector3d(0.01,0.01, -0.3)); /*XXX Hard-coded*/
         unsigned int bIdx = ctl.robot().bodyIndexByName("LLEG_LINK5");
         sva::PTransformd bpw = ctl.robot().mbc().bodyPosW[bIdx];
@@ -114,7 +114,7 @@ public:
         }
         if(iterForce > 20 || iterSincePutDown > 15*500)
         {
-          ctl.efTask->removeFromSolver(ctl.solver());
+          ctl.solver().removeTask(ctl.efTask);
           ctl.postureTask->posture(ctl.robot().mbc().q);
           done_putdown = true;
           LOG_INFO("Contact found, next step")
@@ -170,7 +170,7 @@ public:
         sva::PTransformd bpw = ctl.robot().mbc().bodyPosW[bIdx];
         initPos = bpw.translation();
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", ctl.robots(), 0));
-        ctl.efTask->addToSolver(ctl.solver());
+        ctl.solver().addTask(ctl.efTask);
         const auto & gripperSurface = ctl.robot().surface("RightGripper");
         sva::PTransformd X_0_s = gripperSurface.X_0_s(ctl.robot(), ctl.robot().mbc());
         Eigen::Vector3d normal = X_0_s.rotation().row(2);
@@ -185,7 +185,7 @@ public:
         if(d > 0.13) /*XXX Hard-coded*/
         {
           ctl.postureTask->posture(ctl.robot().mbc().q);
-          ctl.efTask->removeFromSolver(ctl.solver());
+          ctl.solver().removeTask(ctl.efTask);
           LOG_INFO("Hand removed from wheel")
           done_normal_move = true;
         }
@@ -200,7 +200,7 @@ public:
       if(!done_setup_move_right)
       {
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", ctl.robots(), 0, 0.5));
-        ctl.efTask->addToSolver(ctl.solver());
+        ctl.solver().addTask(ctl.efTask);
         sva::PTransformd move(Eigen::Matrix3d::Identity(), Eigen::Vector3d(-0.1, -0.2, 0.1));
         ctl.efTask->set_ef_pose(ctl.efTask->get_ef_pose()*move);
         iterSinceMoving = 0;
@@ -213,7 +213,7 @@ public:
         if(error < 0.05 || iterSinceMoving > 15*500)
         {
           ctl.postureTask->posture(ctl.robot().mbc().q);
-          ctl.efTask->removeFromSolver(ctl.solver());
+          ctl.solver().removeTask(ctl.efTask);
           LOG_INFO("Hand moved sideway")
           done_move_right = true;
         }
@@ -287,7 +287,7 @@ public:
           mc_rbdyn::Contact(ctl.robots(), "RFullSole", "left_floor"),
         });
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("BODY", ctl.robots(), ctl.robots().robotIndex(), 0.5));
-        ctl.efTask->addToSolver(ctl.solver());
+        ctl.solver().addTask(ctl.efTask);
         unsigned int bIdx = ctl.robot().bodyIndexByName("LLEG_LINK5");
         sva::PTransformd bpw = ctl.robot().mbc().bodyPosW[bIdx];
         ctl.efTask->set_ef_pose(sva::PTransformd(bpw.rotation(), ctl.efTask->get_ef_pose().translation()));
@@ -306,7 +306,7 @@ public:
             mc_rbdyn::Contact(ctl.robots(), "RFullSole", "left_floor"),
           });
           ctl.postureTask->posture(ctl.robot().mbc().q);
-          ctl.efTask->removeFromSolver(ctl.solver());
+          ctl.solver().removeTask(ctl.efTask);
           done_rotate_body = true;
           LOG_INFO("Finished rotating the body")
           //return true;
@@ -349,7 +349,7 @@ struct EgressMoveFootOutPhase : public EgressPhaseExecution
           mc_rbdyn::Contact(ctl.robots(), "LFullSole", "exit_platform"),
         });
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5", ctl.robots(), ctl.robots().robotIndex()));
-        ctl.efTask->addToSolver(ctl.solver());
+        ctl.solver().addTask(ctl.efTask);
         sva::PTransformd lift(Eigen::Vector3d(0, 0, 0.05)); /*XXX Hard-coded value */
         ctl.efTask->set_ef_pose(ctl.efTask->get_ef_pose()*lift);
         done_setup_lift = true;
@@ -359,7 +359,7 @@ struct EgressMoveFootOutPhase : public EgressPhaseExecution
         double error = ctl.efTask->positionTask->eval().norm();
         if(error < 0.01)
         {
-          ctl.efTask->removeFromSolver(ctl.solver());
+          ctl.solver().removeTask(ctl.efTask);
           ctl.postureTask->posture(ctl.robot().mbc().q);
           done_lift = true;
           LOG_INFO("Finished lift phase")
@@ -393,7 +393,7 @@ struct EgressMoveFootOutPhase : public EgressPhaseExecution
       if(!done_setup_rotate)
       {
         ctl.oriTask.reset(new mc_tasks::OrientationTask("RLEG_LINK5", ctl.robots(), 0, 0.5));
-        ctl.oriTask->addToSolver(ctl.solver());
+        ctl.solver().addTask(ctl.oriTask);
         Eigen::Matrix3d change = sva::RotZ(40*M_PI/180); /*XXX Hard-coded value */
         ctl.oriTask->orientation(ctl.oriTask->orientation()*change);
         timeoutIter = 0;
@@ -405,7 +405,7 @@ struct EgressMoveFootOutPhase : public EgressPhaseExecution
         double error = ctl.oriTask->eval().norm();
         if(error < 0.01 || timeoutIter > 15*500)
         {
-          ctl.oriTask->removeFromSolver(ctl.solver());
+          ctl.solver().removeTask(ctl.oriTask);
           ctl.postureTask->posture(ctl.robot().mbc().q);
           done_rotate = true;
           LOG_INFO("Finished rotate foot")
@@ -417,7 +417,7 @@ struct EgressMoveFootOutPhase : public EgressPhaseExecution
       if(!done_setup_putdown)
       {
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("RLEG_LINK5", ctl.robots(), 0, 0.5));
-        ctl.efTask->addToSolver(ctl.solver());
+        ctl.solver().addTask(ctl.efTask);
         sva::PTransformd lmod(Eigen::Vector3d(0.2, -0.1, -0.1)); /*XXX Hard-coded value */
         unsigned int bIdx = ctl.robot().bodyIndexByName("LLEG_LINK5");
         sva::PTransformd bpw = ctl.robot().mbc().bodyPosW[bIdx];
@@ -432,7 +432,7 @@ struct EgressMoveFootOutPhase : public EgressPhaseExecution
         double error = ctl.efTask->positionTask->eval().norm();
         if(ctl.getWrenches().at("RightFootForceSensor").force()[0] > 50 || error < 0.05 || timeoutIter > 15*500)
         {
-          ctl.efTask->removeFromSolver(ctl.solver());
+          ctl.solver().removeTask(ctl.efTask);
           ctl.postureTask->posture(ctl.robot().mbc().q);
           ctl.solver().setContacts({
             mc_rbdyn::Contact(ctl.robots(), "Butthock", "left_seat"),
@@ -486,7 +486,7 @@ public:
           mc_rbdyn::Contact(ctl.robots(), "RightThight", "left_seat"),
         });
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("LLEG_LINK5", ctl.robots(), ctl.robots().robotIndex()));
-        ctl.efTask->addToSolver(ctl.solver());
+        ctl.solver().addTask(ctl.efTask);
         sva::PTransformd lift(Eigen::Vector3d(0, 0, 0.1)); /*XXX Hard-coded value */
         ctl.efTask->set_ef_pose(ctl.efTask->get_ef_pose()*lift);
         timeoutIter = 0;
@@ -498,7 +498,7 @@ public:
         double error = ctl.efTask->positionTask->eval().norm();
         if(error < 0.05 || timeoutIter > 15*500)
         {
-          ctl.efTask->removeFromSolver(ctl.solver());
+          ctl.solver().removeTask(ctl.efTask);
           ctl.postureTask->posture(ctl.robot().mbc().q);
           done_lift = true;
           LOG_INFO("Finished lift phase")
@@ -510,7 +510,7 @@ public:
       if(!done_setup_rotate)
       {
         ctl.oriTask.reset(new mc_tasks::OrientationTask("LLEG_LINK5", ctl.robots(), 0, 1.0));
-        ctl.oriTask->addToSolver(ctl.solver());
+        ctl.solver().addTask(ctl.oriTask);
         Eigen::Matrix3d change = sva::RotZ(30*M_PI/180); /*XXX Hard-coded value */
         ctl.oriTask->orientation(ctl.oriTask->orientation()*change);
         done_setup_rotate = true;
@@ -522,7 +522,7 @@ public:
         double error = ctl.oriTask->eval().norm();
         if(error < 0.01 || timeoutIter > 15*500)
         {
-          ctl.oriTask->removeFromSolver(ctl.solver());
+          ctl.solver().removeTask(ctl.oriTask);
           ctl.postureTask->posture(ctl.robot().mbc().q);
           done_rotate = true;
           LOG_INFO("Finished rotate foot")
@@ -534,7 +534,7 @@ public:
       if(!done_setup_putdown)
       {
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("LLEG_LINK5", ctl.robots(), 0, 0.25));
-        ctl.efTask->addToSolver(ctl.solver());
+        ctl.solver().addTask(ctl.efTask);
         sva::PTransformd down(Eigen::Vector3d(0.0,0.0, -0.2)); /*XXX Hard-coded*/
         ctl.efTask->set_ef_pose(ctl.efTask->get_ef_pose()*down);
         timeoutIter = 0;
@@ -554,7 +554,7 @@ public:
         }
         if(iterForce > 20 || timeoutIter > 15*500)
         {
-          ctl.efTask->removeFromSolver(ctl.solver());
+          ctl.solver().removeTask(ctl.efTask);
           ctl.postureTask->posture(ctl.robot().mbc().q);
           done_putdown = true;
           LOG_INFO("Contact found, next step")
@@ -599,7 +599,7 @@ struct EgressStandupPhase : public EgressPhaseExecution
           mc_rbdyn::Contact(ctl.robots(), "RFullSole", "exit_platform"),
         });
         ctl.efTask.reset(new mc_tasks::EndEffectorTask("BODY", ctl.robots(), ctl.robots().robotIndex(), 1.0));
-        ctl.efTask->addToSolver(ctl.solver());
+        ctl.solver().addTask(ctl.efTask);
         unsigned int lbIdx = ctl.robot().bodyIndexByName("LLEG_LINK5");
         sva::PTransformd lbpw = ctl.robot().mbc().bodyPosW[lbIdx];
         unsigned int rbIdx = ctl.robot().bodyIndexByName("RLEG_LINK5");
@@ -615,7 +615,7 @@ struct EgressStandupPhase : public EgressPhaseExecution
         if(error < 0.05)
         {
           ctl.postureTask->posture(ctl.robot().mbc().q);
-          ctl.efTask->removeFromSolver(ctl.solver());
+          ctl.solver().removeTask(ctl.efTask);
           done_standup = true;
           LOG_INFO("Done standup")
           //return true;

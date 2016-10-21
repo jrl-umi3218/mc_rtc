@@ -259,7 +259,7 @@ bool MCEgressMRQPController::play_next_stance()
     execPhase.reset(new EgressCenterComPhase(0.10));
     break;
   case CENTERCOM:
-    torsoOriTask->removeFromSolver(solver());
+    solver().removeTask(torsoOriTask);
     postureTask->weight(1.);
     curPhase = OPENGRIPPER;
     execPhase.reset(new EgressOpenRightGripperPhase);

@@ -74,11 +74,11 @@ MCBCISelfInteractController::MCBCISelfInteractController(std::shared_ptr<mc_rbdy
   lh2Task.reset(new mc_tasks::RelativeEndEffectorTask("LARM_LINK6", robots(), robots().robotIndex(), 0, 2.0, 100000.0));
   rh2Task.reset(new mc_tasks::RelativeEndEffectorTask("RARM_LINK6", robots(), robots().robotIndex(), 0, 2.0, 100000.0));
   chestTask.reset(new mc_tasks::EndEffectorTask("CHEST_LINK1", robots(), robots().robotIndex(), 1.0, 1e6));
-  lh2Task->addToSolver(solver());
-  rh2Task->addToSolver(solver());
-  chestTask->addToSolver(solver());
+  solver().addTask(lh2Task);
+  solver().addTask(rh2Task);
+  solver().addTask(chestTask);
   comTask.reset(new mc_tasks::CoMTask(robots(), robots().robotIndex()));
-  comTask->addToSolver(solver());
+  solver().addTask(comTask);
 #ifdef MC_RTC_HAS_ROS
   if(mc_rtc::ROSBridge::get_node_handle())
   {
@@ -107,8 +107,6 @@ bool MCBCISelfInteractController::run()
   bool ret = MCController::run();
   if(ret)
   {
-    lh2Task->update();
-    rh2Task->update();
     #ifdef MC_RTC_HAS_ROS
     if(tf_caster)
     {

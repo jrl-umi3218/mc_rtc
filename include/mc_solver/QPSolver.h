@@ -13,6 +13,11 @@
 
 #include <memory>
 
+namespace mc_tasks
+{
+  struct MetaTask;
+}
+
 namespace mc_solver
 {
 
@@ -47,10 +52,65 @@ public:
    */
   void addTask(tasks::qp::Task * task);
 
+  /** Add a task to the solver
+   *
+   * Adding the same task multiple times has no effect.
+   *
+   * \param task Pointer to an mc_tasks::MetaTask, QPSolver does not take
+   * ownership of this pointer. The MetaTask update function will be
+   * automatically called before the optimization is solved.
+   *
+   */
+  void addTask(mc_tasks::MetaTask * task);
+
+  /** Add a task to the solver
+   *
+   * Simple wrapper to add a shared_ptr
+   *
+   * \param task Shared-pointer to a task T that is derived from
+   * mc_tasks::MetaTask
+   *
+   */
+  template<typename T>
+  inline void addTask(std::shared_ptr<T> task)
+  {
+    static_assert(std::is_base_of<mc_tasks::MetaTask, T>::value ||
+                  std::is_base_of<tasks::qp::Task, T>::value,
+                  "You are trying to add a task that is neither a tasks::qp::Task or an mc_tasks::MetaTask");
+    if(task.get()) { addTask(task.get()); }
+  }
+
   /** Remove a task from the solver
    * \param task Pointer to the removed task. The task is not deleted after being removed
    */
   void removeTask(tasks::qp::Task * task);
+
+  /** Remove a task from the solver
+   *
+   * Removing a task that is not in the solver has no effect.
+   *
+   * \param task Pointer to an mc_tasks::MetaTask. The task will not be
+   * updated anymore and memory should be released by the task's owner.
+   *
+   */
+  void removeTask(mc_tasks::MetaTask * task);
+
+  /** Remove a task from the solver
+   *
+   * Simple wrapper to remove a shared_ptr
+   *
+   * \param task Shared-pointer to a task T that is derived from
+   * mc_tasks::MetaTask
+   *
+   */
+  template<typename T>
+  inline void removeTask(std::shared_ptr<T> task)
+  {
+    static_assert(std::is_base_of<mc_tasks::MetaTask, T>::value ||
+                  std::is_base_of<tasks::qp::Task, T>::value,
+                  "You are trying to add a task that is neither a tasks::qp::Task or an mc_tasks::MetaTask");
+    if(task.get()) { removeTask(task.get()); }
+  }
 
   /** Add a constraint function from the solver
    * \param constraint Pointer to the ConstraintFunction. QPSolver does not take ownserhip of this pointer and the caller should make sure the object remains valid until it is removed from the solver
@@ -135,6 +195,8 @@ private:
   /** Holds bilateral contacts in the solver */
   std::vector<tasks::qp::BilateralContact> biContacts;
 
+  /** Holds MetaTask currently in the solver */
+  std::vector<mc_tasks::MetaTask*> metaTasks;
 private:
   /** The actual solver instance */
   tasks::qp::QPSolver solver;

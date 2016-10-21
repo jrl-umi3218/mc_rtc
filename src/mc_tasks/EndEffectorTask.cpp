@@ -31,18 +31,20 @@ void EndEffectorTask::reset()
 
 void EndEffectorTask::removeFromSolver(mc_solver::QPSolver & solver)
 {
-  positionTask->removeFromSolver(solver);
-  orientationTask->removeFromSolver(solver);
+  MetaTask::removeFromSolver(*positionTask, solver);
+  MetaTask::removeFromSolver(*orientationTask, solver);
 }
 
 void EndEffectorTask::addToSolver(mc_solver::QPSolver & solver)
 {
-  positionTask->addToSolver(solver);
-  orientationTask->addToSolver(solver);
+  MetaTask::addToSolver(*positionTask, solver);
+  MetaTask::addToSolver(*orientationTask, solver);
 }
 
 void EndEffectorTask::update()
 {
+  MetaTask::update(*positionTask);
+  MetaTask::update(*orientationTask);
 }
 
 void EndEffectorTask::add_ef_pose(const sva::PTransformd & dtr)

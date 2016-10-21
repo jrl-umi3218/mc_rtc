@@ -38,12 +38,6 @@ public:
    */
   virtual void reset() override;
 
-  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
-
-  virtual void addToSolver(mc_solver::QPSolver & solver) override;
-
-  virtual void update() override;
-
   /*! \brief Increment the target position
    *
    * \param dtr Change in target position
@@ -90,6 +84,13 @@ public:
 
   std::string bodyName;
   sva::PTransformd curTransform;
+private:
+  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
+
+  virtual void addToSolver(mc_solver::QPSolver & solver) override;
+
+  virtual void update() override;
+
 };
 
 }

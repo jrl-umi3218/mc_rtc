@@ -112,12 +112,6 @@ public:
       std::pair<double,double> forceGain = defaultFGain,
       std::pair<double,double> torqueGain = defaultTGain);
 
-  virtual void addToSolver(mc_solver::QPSolver & solver);
-
-  virtual void removeFromSolver(mc_solver::QPSolver & solver);
-
-  virtual void update();
-
   /*! \brief Reset the task
    *
    * Set the end effector objective to the current position of the end-effector
@@ -175,6 +169,12 @@ private:
   std::pair<double,double> forceGain_, torqueGain_;
   Eigen::Matrix6d dof_;
   std::function<double(double)> clampTrans_, clampRot_;
+
+  virtual void addToSolver(mc_solver::QPSolver & solver);
+
+  virtual void removeFromSolver(mc_solver::QPSolver & solver);
+
+  virtual void update();
 };
 
 }

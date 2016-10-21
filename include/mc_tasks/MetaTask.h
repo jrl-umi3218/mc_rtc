@@ -19,28 +19,6 @@ struct MC_TASKS_DLLAPI MetaTask
 {
 friend struct mc_solver::QPSolver;
 public:
-  /*! \brief Add the task to a solver
-   *
-   * \param solver Solver where to add the task
-   *
-   */
-  virtual void addToSolver(mc_solver::QPSolver & solver) = 0;
-
-  /*! \brief Remove the task from a solver
-   *
-   * \param solver Solver from which to remove the task
-   *
-   */
-  virtual void removeFromSolver(mc_solver::QPSolver & solver) = 0;
-
-  /*! \brief Update the task
-   *
-   * This function (usually) has to be called at every iteration of the solver
-   * once it has been added. It should update the state of the task.
-   *
-   */
-  virtual void update() = 0;
-
   /*! \brief Reset the task */
   virtual void reset() = 0;
 
@@ -109,6 +87,48 @@ public:
    *
    */
   virtual Eigen::VectorXd speed() const = 0;
+protected:
+  /*! \brief Add the task to a solver
+   *
+   * \param solver Solver where to add the task
+   *
+   */
+  virtual void addToSolver(mc_solver::QPSolver & solver) = 0;
+
+  /*! Helper function when using another MetaTask inside a MetaTask as adding
+   * the task through the solver interface has important side-effects */
+  static inline void addToSolver(MetaTask & t, mc_solver::QPSolver & solver)
+  {
+    t.addToSolver(solver);
+  }
+
+  /*! \brief Remove the task from a solver
+   *
+   * \param solver Solver from which to remove the task
+   *
+   */
+  virtual void removeFromSolver(mc_solver::QPSolver & solver) = 0;
+
+  /*! Helper function when using another MetaTask inside a MetaTask as removing
+   * the task through the solver interface has important side-effects */
+  static inline void removeFromSolver(MetaTask & t, mc_solver::QPSolver & solver)
+  {
+    t.removeFromSolver(solver);
+  }
+
+  /*! \brief Update the task
+   *
+   * This function (usually) has to be called at every iteration of the solver
+   * once it has been added. It should update the state of the task.
+   *
+   */
+  virtual void update() = 0;
+
+  /*! Helper function when using another MetaTask inside a MetaTask */
+  static inline void update(MetaTask & t)
+  {
+    t.update();
+  }
 };
 
 }

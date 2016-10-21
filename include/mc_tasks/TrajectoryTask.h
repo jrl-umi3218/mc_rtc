@@ -56,12 +56,6 @@ public:
                  const Eigen::MatrixXd & waypoints = Eigen::MatrixXd(3,0),
                  unsigned int nrWP = 0);
 
-  virtual void addToSolver(mc_solver::QPSolver & solver) override;
-
-  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
-
-  virtual void update() override;
-
   /*! \brief Whether the trajectory has been fully fed to the task or not
    *
    * \returns True if the trajectory has been fully fed.
@@ -91,6 +85,12 @@ public:
   std::vector<Eigen::Vector3d> controlPoints();
 private:
   void generateBS();
+
+  virtual void addToSolver(mc_solver::QPSolver & solver) override;
+
+  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
+
+  virtual void update() override;
 public:
   const mc_rbdyn::Robots & robots;
   const mc_rbdyn::Surface & surface;

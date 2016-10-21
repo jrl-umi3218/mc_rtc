@@ -39,12 +39,6 @@ struct TrajectoryTaskGeneric : public MetaTask
 
   virtual ~TrajectoryTaskGeneric();
 
-  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
-
-  virtual void addToSolver(mc_solver::QPSolver & solver) override;
-
-  virtual void update() override;
-
   /*! \brief Set the trajectory reference velocity
    *
    * \param vel New reference velocity
@@ -124,6 +118,12 @@ private:
   bool inSolver = false;
   std::shared_ptr<tasks::qp::JointsSelector> selectorT = nullptr;
   std::shared_ptr<tasks::qp::TrajectoryTask> trajectoryT = nullptr;
+
+  virtual void addToSolver(mc_solver::QPSolver & solver) override;
+
+  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
+
+  virtual void update() override;
 };
 
 }

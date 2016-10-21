@@ -15,6 +15,8 @@
 
 #include <mc_solver/KinematicsConstraint.h>
 
+#include <mc_tasks/MetaTask.h>
+
 namespace mc_solver
 {
 QPSolver::QPSolver(std::shared_ptr<mc_rbdyn::Robots> robots, double timeStep)
@@ -37,9 +39,28 @@ void QPSolver::addTask(tasks::qp::Task * task)
   solver.addTask(robots().mbs(), task);
 }
 
+void QPSolver::addTask(mc_tasks::MetaTask * task)
+{
+  if(std::find(metaTasks.begin(), metaTasks.end(), task) == metaTasks.end())
+  {
+    metaTasks.push_back(task);
+    task->addToSolver(*this);
+  }
+}
+
 void QPSolver::removeTask(tasks::qp::Task * task)
 {
   solver.removeTask(task);
+}
+
+void QPSolver::removeTask(mc_tasks::MetaTask * task)
+{
+  auto it = std::find(metaTasks.begin(), metaTasks.end(), task);
+  if(it != metaTasks.end())
+  {
+    metaTasks.erase(it);
+    task->removeFromSolver(*this);
+  }
 }
 
 std::pair<int, const tasks::qp::BilateralContact&> QPSolver::contactById(const tasks::qp::ContactId & id)
@@ -98,6 +119,10 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
 bool QPSolver::run()
 {
   bool success = false;
+  for(auto & t : metaTasks)
+  {
+    t->update();
+  }
   if(solver.solveNoMbcUpdate(robots_p->mbs(), robots_p->mbcs()))
   {
     for(size_t i = 0; i < robots_p->mbs().size(); ++i)

@@ -44,11 +44,11 @@ public:
 
   virtual void set_ef_pose(const sva::PTransformd & tf) override;
 
-  virtual void update() override;
-
   virtual sva::PTransformd get_ef_pose() override;
 private:
   unsigned int relBodyIdx;
+
+  virtual void update() override;
 };
 
 }

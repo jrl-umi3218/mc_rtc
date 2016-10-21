@@ -41,12 +41,12 @@ MCEgressController::MCEgressController(std::shared_ptr<mc_rbdyn::RobotModule> ro
   });
 
   comTask.reset(new mc_tasks::CoMTask(robots(), robots().robotIndex()));
-  comTask->addToSolver(solver());
-  comTask->removeFromSolver(solver());
+  solver().addTask(comTask);
+  solver().removeTask(comTask);
 
   efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", robots(), robots().robotIndex()));
-  efTask->addToSolver(solver());
-  efTask->removeFromSolver(solver());
+  solver().addTask(efTask);
+  solver().removeTask(efTask);
   LOG_SUCCESS("MCEgressController init done")
 }
 
@@ -110,10 +110,10 @@ bool MCEgressController::change_ef(const std::string & ef_name)
 {
   if(robot().hasBody(ef_name))
   {
-    efTask->removeFromSolver(solver());
+    solver().removeTask(efTask);
     postureTask->posture(robot().mbc().q);
     efTask.reset(new mc_tasks::EndEffectorTask(ef_name, robots(), robots().robotIndex()));
-    efTask->addToSolver(solver());
+    solver().addTask(efTask);
     return true;
   }
   else

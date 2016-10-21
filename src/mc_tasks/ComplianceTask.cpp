@@ -67,12 +67,12 @@ ComplianceTask::ComplianceTask(const mc_rbdyn::Robots & robots,
 
 void ComplianceTask::addToSolver(mc_solver::QPSolver & solver)
 {
-  efTask_->addToSolver(solver);
+  MetaTask::addToSolver(*efTask_, solver);
 }
 
 void ComplianceTask::removeFromSolver(mc_solver::QPSolver & solver)
 {
-  efTask_->removeFromSolver(solver);
+  MetaTask::removeFromSolver(*efTask_, solver);
 }
 
 sva::PTransformd ComplianceTask::computePose()
@@ -105,7 +105,7 @@ void ComplianceTask::update()
   errorD_ = (wrench_ - error_)/timestep_;
   efTask_->set_ef_pose(computePose());
   /* Does nothing for now, but is here in case of changes */
-  efTask_->update();
+  MetaTask::update(*efTask_);
 }
 
 void ComplianceTask::reset()

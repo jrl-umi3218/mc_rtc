@@ -22,19 +22,19 @@ public:
     BOOST_CHECK_EQUAL(robots().robots().size(), 2);
     // Check that HRP2-DRC was loaded
     BOOST_CHECK_EQUAL(robot().name(), "hrp2_drc");
-    qpsolver->addConstraintSet(contactConstraint);
-    qpsolver->addConstraintSet(dynamicsConstraint);
+    solver().addConstraintSet(contactConstraint);
+    solver().addConstraintSet(dynamicsConstraint);
     postureTask->stiffness(1);
     postureTask->weight(1);
-    qpsolver->addTask(postureTask.get());
-    qpsolver->setContacts({
+    solver().addTask(postureTask.get());
+    solver().setContacts({
       mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"),
       mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")
     });
 
     /* Create and add the CoM task with the default stiffness/weight */
     comTask = std::make_shared<mc_tasks::CoMTask>(robots(), 0);
-    comTask->addToSolver(solver());
+    solver().addTask(comTask);
 
     LOG_SUCCESS("Created TestCoMTaskController")
   }

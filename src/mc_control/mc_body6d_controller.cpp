@@ -14,20 +14,20 @@ namespace mc_control
 MCBody6dController::MCBody6dController(std::shared_ptr<mc_rbdyn::RobotModule> robot_module, double dt)
 : MCController(robot_module, dt)
 {
-  qpsolver->addConstraintSet(contactConstraint);
-  qpsolver->addConstraintSet(dynamicsConstraint);
-  qpsolver->addConstraintSet(selfCollisionConstraint);
-  qpsolver->addTask(postureTask.get());
+  solver().addConstraintSet(contactConstraint);
+  solver().addConstraintSet(dynamicsConstraint);
+  solver().addConstraintSet(selfCollisionConstraint);
+  solver().addTask(postureTask.get());
   if(robot().name() == "hrp2_drc")
   {
-    qpsolver->setContacts({
+    solver().setContacts({
       mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"),
       mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")
     });
   }
   else if(robot().name() == "hrp4")
   {
-    qpsolver->setContacts({
+    solver().setContacts({
       mc_rbdyn::Contact(robots(), "LeftFoot", "AllGround"),
       mc_rbdyn::Contact(robots(), "RightFoot", "AllGround")
     });
@@ -52,9 +52,9 @@ MCBody6dController::MCBody6dController(std::shared_ptr<mc_rbdyn::RobotModule> ro
     LOG_ERROR("MCBody6dController does not support robot " << robot().name())
     throw("MCBody6dController does not support your robot");
   }
-  efTask->addToSolver(solver());
+  solver().addTask(efTask);
   comTask.reset(new mc_tasks::CoMTask(robots(), robots().robotIndex()));
-  comTask->addToSolver(solver());
+  solver().addTask(comTask);
 }
 
 void MCBody6dController::reset(const ControllerResetData & reset_data)
@@ -69,10 +69,10 @@ bool MCBody6dController::change_ef(const std::string & ef_name)
 {
   if(robot().hasBody(ef_name))
   {
-    efTask->removeFromSolver(solver());
+    solver().removeTask(efTask);
     postureTask->posture(robot().mbc().q);
     efTask.reset(new mc_tasks::EndEffectorTask(ef_name, robots(), robots().robotIndex()));
-    efTask->addToSolver(solver());
+    solver().addTask(efTask);
     return true;
   }
   else
