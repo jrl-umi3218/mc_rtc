@@ -36,7 +36,7 @@ public:
    *
    * Set the task objective to the current end-effector position
    */
-  virtual void reset();
+  virtual void reset() override;
 
   virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
 

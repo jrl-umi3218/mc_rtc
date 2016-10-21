@@ -1,5 +1,4 @@
-#ifndef _H_METATASK_H_
-#define _H_METATASK_H_
+#pragma once
 
 #include <cmath>
 #include <mc_solver/QPSolver.h>
@@ -41,6 +40,9 @@ public:
    *
    */
   virtual void update() = 0;
+
+  /*! \brief Reset the task */
+  virtual void reset() = 0;
 
   /*! \brief Set the task's dimension weight vector
    *
@@ -110,5 +112,3 @@ public:
 };
 
 }
-
-#endif

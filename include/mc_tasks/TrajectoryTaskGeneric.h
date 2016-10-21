@@ -45,9 +45,6 @@ struct TrajectoryTaskGeneric : public MetaTask
 
   virtual void update() override;
 
-  /*! \brief Reset the task objective to the current robot's state */
-  virtual void reset() = 0;
-
   /*! \brief Set the trajectory reference velocity
    *
    * \param vel New reference velocity

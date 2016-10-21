@@ -143,6 +143,8 @@ private:
                                     const std::vector<std::string> &) override {}
 
   virtual void resetJointsSelector(mc_solver::QPSolver &) override {}
+
+  virtual void reset() override {}
 };
 
 

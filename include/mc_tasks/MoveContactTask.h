@@ -259,6 +259,8 @@ private:
               double posStiffness, double extraPosStiffness, double posWeight,
               double oriStiffness, double oriWeight,
               double positionSmoothPercent);
+
+  virtual void reset() override {}
 public:
   bool inSolver = false;
   mc_rbdyn::Robots & robots;

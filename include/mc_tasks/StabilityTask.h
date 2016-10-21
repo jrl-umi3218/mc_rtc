@@ -53,6 +53,8 @@ public:
 
   virtual void update() override;
 
+  virtual void reset() override;
+
   /*! \brief Set a high stiffness for selected joints
    *
    * That is a stiffness 10 times as high as the posture task

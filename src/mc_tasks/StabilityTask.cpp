@@ -107,6 +107,13 @@ void StabilityTask::update()
   comTaskSp->stiffness(comStiff + extra);
 }
 
+void StabilityTask::reset()
+{
+  postureTask->posture(robot.mbc().q);
+  auto cur_com = rbd::computeCoM(robot.mb(), robot.mbc());
+  comTask->com(cur_com);
+}
+
 Eigen::VectorXd StabilityTask::eval() const
 {
   Eigen::VectorXd ret(comTask->dim() + postureTask->eval().size());

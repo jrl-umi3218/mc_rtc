@@ -1,5 +1,4 @@
-#ifndef _H_TRAJECTORYTASK_H_
-#define _H_TRAJECTORYTASK_H_
+#pragma once
 
 #include <mc_tasks/MetaTask.h>
 #include <mc_trajectory/BSplineTrajectory.h>
@@ -104,8 +103,21 @@ public:
   std::shared_ptr<tasks::qp::TransformTask> transTask;
   std::shared_ptr<tasks::qp::TrajectoryTask> transTrajTask;
   std::shared_ptr<mc_trajectory::BSplineTrajectory> bspline;
+private:
+  /* Hide these virtual functions */
+  virtual void dimWeight(const Eigen::VectorXd &) override {}
+
+  virtual Eigen::VectorXd dimWeight() const override {}
+
+  virtual void selectActiveJoints(mc_solver::QPSolver &,
+                                  const std::vector<std::string> &) override {}
+
+  virtual void selectUnactiveJoints(mc_solver::QPSolver &,
+                                    const std::vector<std::string> &) override {}
+
+  virtual void resetJointsSelector(mc_solver::QPSolver &) override {}
+
+  virtual void reset() override {}
 };
 
 }
-
-#endif
