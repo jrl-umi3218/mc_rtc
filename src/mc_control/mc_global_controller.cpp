@@ -380,6 +380,16 @@ void MCGlobalController::publish_thread()
     {
       mc_rtc::ROSBridge::update_robot_publisher("control", timestep(), robot(), Eigen::Vector3d::Zero(), controller->getSensorOrientation(), controller->getSensorAngularVelocity(), controller->getSensorAcceleration(), gripperJoints(), gripperQ());
     }
+    if(config.publish_env_state)
+    {
+      const auto & robots = controller->robots();
+      for(size_t i = 1; i < robots.robots().size(); ++i)
+      {
+        std::stringstream ss;
+        ss << "control/env_" << i;
+        mc_rtc::ROSBridge::update_robot_publisher(ss.str(), timestep(), robots.robot(i), Eigen::Vector3d::Zero(), Eigen::Vector3d::Zero(), Eigen::Vector3d::Zero(), Eigen::Vector3d::Zero(), {}, {});
+      }
+    }
 
     if(config.publish_real_state)
     {

@@ -421,6 +421,7 @@ private:
     double timestep = 0.002;
 
     bool publish_control_state = true;
+    bool publish_env_state = true;
     bool publish_real_state = true;
     double publish_timestep = 0.01;
 

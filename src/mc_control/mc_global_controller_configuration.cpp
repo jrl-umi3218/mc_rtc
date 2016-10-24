@@ -108,6 +108,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   config("Default", initial_controller);
   config("Timestep", timestep);
   config("PublishControlState", publish_control_state);
+  config("PublishEnvState", publish_env_state);
   config("PublishRealState", publish_real_state);
   config("PublishTimestep", publish_timestep);
   config("Log", enable_log);
