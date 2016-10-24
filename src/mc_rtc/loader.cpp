@@ -79,6 +79,24 @@ void Loader::load_libraries(const std::vector<std::string> & paths, Loader::hand
         }
         #pragma GCC diagnostic push
         #pragma GCC diagnostic ignored "-Wpedantic"
+        typedef void(*load_global_fun_t)(void);
+        load_global_fun_t LOAD_GLOBAL_FUN = (load_global_fun_t)(lt_dlsym(h, "LOAD_GLOBAL"));
+        #pragma GCC diagnostic pop
+        if(LOAD_GLOBAL_FUN != nullptr)
+        {
+          lt_dlclose(h);
+          lt_dladvise advise;
+          lt_dladvise_init(&advise);
+          lt_dladvise_global(&advise);
+          h = lt_dlopenadvise(p.string().c_str(), advise);
+        }
+        else
+        {
+          /* Discard error message */
+          lt_dlerror();
+        }
+        #pragma GCC diagnostic push
+        #pragma GCC diagnostic ignored "-Wpedantic"
         typedef const char*(*class_name_fun_t)(void);
         class_name_fun_t CLASS_NAME_FUN = (class_name_fun_t)(lt_dlsym(h, "CLASS_NAME"));
         #pragma GCC diagnostic pop
