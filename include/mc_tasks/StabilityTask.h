@@ -47,11 +47,7 @@ public:
   void target(const mc_rbdyn::Robot & env, const mc_rbdyn::Stance & stance,
               const mc_rbdyn::StanceConfig & config, double comSmoothPercent = 1);
 
-  virtual void addToSolver(mc_solver::QPSolver & solver) override;
-
-  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
-
-  virtual void update() override;
+  virtual void reset() override;
 
   /*! \brief Set a high stiffness for selected joints
    *
@@ -70,6 +66,10 @@ public:
    *
    */
   void normalStiffness(const std::vector<std::string> & stiffJoints);
+
+  virtual Eigen::VectorXd eval() const override;
+
+  virtual Eigen::VectorXd speed() const override;
 public:
   mc_rbdyn::Robots & robots;
   mc_rbdyn::Robot & robot;
@@ -84,6 +84,25 @@ public:
 
   std::vector< std::vector<double> > qObj;
   std::shared_ptr<tasks::qp::PostureTask> postureTask;
+private:
+  virtual void addToSolver(mc_solver::QPSolver & solver) override;
+
+  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
+
+  virtual void update() override;
+
+  /* Hide these virtual functions */
+  virtual void dimWeight(const Eigen::VectorXd & dimW) override {}
+
+  virtual Eigen::VectorXd dimWeight() const override {}
+
+  virtual void selectActiveJoints(mc_solver::QPSolver &,
+                                  const std::vector<std::string> &) override {}
+
+  virtual void selectUnactiveJoints(mc_solver::QPSolver &,
+                                    const std::vector<std::string> &) override {}
+
+  virtual void resetJointsSelector(mc_solver::QPSolver &) override {}
 };
 
 }

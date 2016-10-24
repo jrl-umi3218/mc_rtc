@@ -103,8 +103,8 @@ MCDrivingController::MCDrivingController(std::shared_ptr<mc_rbdyn::RobotModule> 
   //  mc_rbdyn::Collision("CHEST_LINK1", "seat_back", 0.4, 0.25, 0.0)
   //);
 
-  ef_task.addToSolver(solver());
-  ef_task.removeFromSolver(solver());
+  solver().addTask(&ef_task);
+  solver().removeTask(&ef_task);
 
   polarisPostureTask = std::shared_ptr<tasks::qp::PostureTask>(new tasks::qp::PostureTask(robots().mbs(), 1, robots().robot(1).mbc().q, 5, 100));
 
@@ -298,21 +298,21 @@ bool MCDrivingController::read_msg(std::string & msg)
 
 void MCDrivingController::lock_head()
 {
-  head_task.resetTask(robots(), 0);
-  head_task.addToSolver(solver());
+  head_task.reset();
+  solver().addTask(&head_task);
 }
 void MCDrivingController::unlock_head()
 {
-  head_task.removeFromSolver(solver());
+  solver().removeTask(&head_task);
 }
 void MCDrivingController::lock_lhand()
 {
-  lhand_task.resetTask(robots(), 0);
-  lhand_task.addToSolver(solver());
+  lhand_task.reset();
+  solver().removeTask(&lhand_task);
 }
 void MCDrivingController::unlock_lhand()
 {
-  lhand_task.removeFromSolver(solver());
+  solver().removeTask(&lhand_task);
 }
 
 void MCDrivingController::start_logging()

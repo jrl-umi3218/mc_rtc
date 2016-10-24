@@ -150,14 +150,22 @@ sva::MotionVecd MoveContactTask::robotSurfaceVel()
 
 void MoveContactTask::addToSolver(mc_solver::QPSolver & solver)
 {
-  solver.addTask(positionTaskSp.get());
-  solver.addTask(orientationTaskSp.get());
+  if(!inSolver)
+  {
+    inSolver = true;
+    solver.addTask(positionTaskSp.get());
+    solver.addTask(orientationTaskSp.get());
+  }
 }
 
 void MoveContactTask::removeFromSolver(mc_solver::QPSolver & solver)
 {
-  solver.removeTask(orientationTaskSp.get());
-  solver.removeTask(positionTaskSp.get());
+  if(inSolver)
+  {
+    inSolver = false;
+    solver.removeTask(orientationTaskSp.get());
+    solver.removeTask(positionTaskSp.get());
+  }
 }
 
 void MoveContactTask::update()
@@ -193,6 +201,147 @@ void MoveContactTask::set_target_tf(const sva::PTransformd & X_target,
   normal = targetTf.rotation().row(2);
   preTargetPos = targetPos + normal*preContactDist;
   wp = waypointPos(robotSurfacePos(), targetTf, normal);
+}
+
+void MoveContactTask::dimWeight(const Eigen::VectorXd & dimW)
+{
+  assert(dimW.size() == 6);
+  positionTaskSp->dimWeight(dimW.head(3));
+  orientationTaskSp->dimWeight(dimW.tail(3));
+}
+
+Eigen::VectorXd MoveContactTask::dimWeight() const
+{
+  Eigen::Vector6d ret;
+  ret << positionTaskSp->dimWeight(), orientationTaskSp->dimWeight();
+  return ret;
+}
+
+void MoveContactTask::selectActiveJoints(mc_solver::QPSolver & solver,
+                                const std::vector<std::string> & aJN)
+{
+  bool putBack = inSolver;
+  if(putBack)
+  {
+    removeFromSolver(solver);
+  }
+
+  /* JS on position task */
+  double positionStiff = positionTaskSp->stiffness();
+  double positionW = positionTaskSm->weight;
+  double positionWPercent = 1/static_cast<double>(positionTaskSm->nrIter);
+  positionJSTask = std::make_shared<tasks::qp::JointsSelector>(tasks::qp::JointsSelector::ActiveJoints(robots.mbs(), 0, positionTask.get(), aJN));
+  positionTaskSp = std::make_shared<tasks::qp::SetPointTask>(robots.mbs(), 0, positionJSTask.get(), positionStiff, positionW*positionWPercent);
+  positionTaskSm.reset(new SmoothTask<Eigen::Vector3d>(
+    std::bind(static_cast<void (tasks::qp::SetPointTask::*)(double)>(&tasks::qp::SetPointTask::weight), positionTaskSp.get(), std::placeholders::_1),
+    std::bind(static_cast<double (tasks::qp::SetPointTask::*)() const>(&tasks::qp::SetPointTask::weight), positionTaskSp.get()),
+    std::bind(static_cast<void (tasks::qp::PositionTask::*)(const Eigen::Vector3d&)>(&tasks::qp::PositionTask::position), positionTask.get(), std::placeholders::_1),
+    std::bind(static_cast<const Eigen::Vector3d & (tasks::qp::PositionTask::*)() const>(&tasks::qp::PositionTask::position), positionTask.get()),
+    positionW, robotSurfacePos().translation(), 1));
+
+  /* JS on orientation task */
+  orientationJSTask = std::make_shared<tasks::qp::JointsSelector>(tasks::qp::JointsSelector::ActiveJoints(robots.mbs(), 0, orientationTask.get(), aJN));
+  double oriStiffness = orientationTaskSp->stiffness();
+  double oriWeight = orientationTaskSp->weight();
+  orientationTaskSp = std::make_shared<tasks::qp::SetPointTask>(robots.mbs(), 0, orientationJSTask.get(), oriStiffness, oriWeight);
+  orientationTaskSp = std::make_shared<tasks::qp::SetPointTask>(robots.mbs(), 0, orientationJSTask.get(), oriStiffness, oriWeight);
+  if(putBack)
+  {
+    addToSolver(solver);
+  }
+}
+
+void MoveContactTask::selectUnactiveJoints(mc_solver::QPSolver & solver,
+                                  const std::vector<std::string> & uJN)
+{
+  bool putBack = inSolver;
+  if(putBack)
+  {
+    removeFromSolver(solver);
+  }
+  /* JS on position task */
+  double positionStiff = positionTaskSp->stiffness();
+  double positionW = positionTaskSm->weight;
+  double positionWPercent = 1/static_cast<double>(positionTaskSm->nrIter);
+  positionJSTask = std::make_shared<tasks::qp::JointsSelector>(tasks::qp::JointsSelector::UnactiveJoints(robots.mbs(), 0, positionTask.get(), uJN));
+  positionTaskSp = std::make_shared<tasks::qp::SetPointTask>(robots.mbs(), 0, positionJSTask.get(), positionStiff, positionW*positionWPercent);
+  positionTaskSm.reset(new SmoothTask<Eigen::Vector3d>(
+    std::bind(static_cast<void (tasks::qp::SetPointTask::*)(double)>(&tasks::qp::SetPointTask::weight), positionTaskSp.get(), std::placeholders::_1),
+    std::bind(static_cast<double (tasks::qp::SetPointTask::*)() const>(&tasks::qp::SetPointTask::weight), positionTaskSp.get()),
+    std::bind(static_cast<void (tasks::qp::PositionTask::*)(const Eigen::Vector3d&)>(&tasks::qp::PositionTask::position), positionTask.get(), std::placeholders::_1),
+    std::bind(static_cast<const Eigen::Vector3d & (tasks::qp::PositionTask::*)() const>(&tasks::qp::PositionTask::position), positionTask.get()),
+    positionW, robotSurfacePos().translation(), 1));
+
+  /* JS on orientation task */
+  orientationJSTask = std::make_shared<tasks::qp::JointsSelector>(tasks::qp::JointsSelector::UnactiveJoints(robots.mbs(), 0, orientationTask.get(), uJN));
+  double oriStiffness = orientationTaskSp->stiffness();
+  double oriWeight = orientationTaskSp->weight();
+  orientationTaskSp = std::make_shared<tasks::qp::SetPointTask>(robots.mbs(), 0, orientationJSTask.get(), oriStiffness, oriWeight);
+  orientationTaskSp = std::make_shared<tasks::qp::SetPointTask>(robots.mbs(), 0, orientationJSTask.get(), oriStiffness, oriWeight);
+  if(putBack)
+  {
+    addToSolver(solver);
+  }
+}
+
+void MoveContactTask::resetJointsSelector(mc_solver::QPSolver & solver)
+{
+  bool putBack = inSolver;
+  if(putBack)
+  {
+    removeFromSolver(solver);
+  }
+  /* JS on position task */
+  double positionStiff = positionTaskSp->stiffness();
+  double positionW = positionTaskSm->weight;
+  double positionWPercent = 1/static_cast<double>(positionTaskSm->nrIter);
+  positionJSTask = nullptr;
+  positionTaskSp = std::make_shared<tasks::qp::SetPointTask>(robots.mbs(), 0, positionTask.get(), positionStiff, positionW*positionWPercent);
+  positionTaskSm.reset(new SmoothTask<Eigen::Vector3d>(
+    std::bind(static_cast<void (tasks::qp::SetPointTask::*)(double)>(&tasks::qp::SetPointTask::weight), positionTaskSp.get(), std::placeholders::_1),
+    std::bind(static_cast<double (tasks::qp::SetPointTask::*)() const>(&tasks::qp::SetPointTask::weight), positionTaskSp.get()),
+    std::bind(static_cast<void (tasks::qp::PositionTask::*)(const Eigen::Vector3d&)>(&tasks::qp::PositionTask::position), positionTask.get(), std::placeholders::_1),
+    std::bind(static_cast<const Eigen::Vector3d & (tasks::qp::PositionTask::*)() const>(&tasks::qp::PositionTask::position), positionTask.get()),
+    positionW, robotSurfacePos().translation(), 1));
+
+  /* JS on orientation task */
+  orientationJSTask = nullptr;
+  double oriStiffness = orientationTaskSp->stiffness();
+  double oriWeight = orientationTaskSp->weight();
+  orientationTaskSp = std::make_shared<tasks::qp::SetPointTask>(robots.mbs(), 0, orientationTask.get(), oriStiffness, oriWeight);
+  orientationTaskSp = std::make_shared<tasks::qp::SetPointTask>(robots.mbs(), 0, orientationTask.get(), oriStiffness, oriWeight);
+  if(putBack)
+  {
+    addToSolver(solver);
+  }
+}
+
+Eigen::VectorXd MoveContactTask::eval() const
+{
+  Eigen::Vector6d err;
+  if(positionJSTask)
+  {
+    err << orientationJSTask->eval(), positionJSTask->eval();
+  }
+  else
+  {
+    err << orientationTask->eval(), positionTask->eval();
+  }
+  return err;
+}
+
+Eigen::VectorXd MoveContactTask::speed() const
+{
+  Eigen::Vector6d spd;
+  if(positionJSTask)
+  {
+    spd << orientationJSTask->speed(), positionJSTask->speed();
+  }
+  else
+  {
+    spd << orientationTask->speed(), positionTask->speed();
+  }
+  return spd;
 }
 
 }

@@ -1,5 +1,4 @@
-#ifndef _H_TRAJECTORYTASK_H_
-#define _H_TRAJECTORYTASK_H_
+#pragma once
 
 #include <mc_tasks/MetaTask.h>
 #include <mc_trajectory/BSplineTrajectory.h>
@@ -57,12 +56,6 @@ public:
                  const Eigen::MatrixXd & waypoints = Eigen::MatrixXd(3,0),
                  unsigned int nrWP = 0);
 
-  virtual void addToSolver(mc_solver::QPSolver & solver) override;
-
-  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
-
-  virtual void update() override;
-
   /*! \brief Whether the trajectory has been fully fed to the task or not
    *
    * \returns True if the trajectory has been fully fed.
@@ -75,14 +68,14 @@ public:
    * \returns The current task error
    *
    */
-  const Eigen::VectorXd & eval() const;
+  virtual Eigen::VectorXd eval() const override;
 
   /*! \brief Returns the current task speed
    *
    * \returns The current task speed
    *
    */
-  const Eigen::VectorXd & speed() const;
+  virtual Eigen::VectorXd speed() const override;
 
   /*! \brief Get the control points of the trajectory's b-spline
    *
@@ -92,6 +85,12 @@ public:
   std::vector<Eigen::Vector3d> controlPoints();
 private:
   void generateBS();
+
+  virtual void addToSolver(mc_solver::QPSolver & solver) override;
+
+  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
+
+  virtual void update() override;
 public:
   const mc_rbdyn::Robots & robots;
   const mc_rbdyn::Surface & surface;
@@ -104,8 +103,21 @@ public:
   std::shared_ptr<tasks::qp::TransformTask> transTask;
   std::shared_ptr<tasks::qp::TrajectoryTask> transTrajTask;
   std::shared_ptr<mc_trajectory::BSplineTrajectory> bspline;
+private:
+  /* Hide these virtual functions */
+  virtual void dimWeight(const Eigen::VectorXd &) override {}
+
+  virtual Eigen::VectorXd dimWeight() const override {}
+
+  virtual void selectActiveJoints(mc_solver::QPSolver &,
+                                  const std::vector<std::string> &) override {}
+
+  virtual void selectUnactiveJoints(mc_solver::QPSolver &,
+                                    const std::vector<std::string> &) override {}
+
+  virtual void resetJointsSelector(mc_solver::QPSolver &) override {}
+
+  virtual void reset() override {}
 };
 
 }
-
-#endif

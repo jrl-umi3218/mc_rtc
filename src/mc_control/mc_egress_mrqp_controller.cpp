@@ -71,7 +71,7 @@ MCEgressMRQPController::MCEgressMRQPController(std::shared_ptr<mc_rbdyn::RobotMo
   lazyPostureTask->jointsStiffness(robots().mbs(), jsv);
 
   comTask.reset(new mc_tasks::CoMTask(robots(), robots().robotIndex()));
-  comTask->comTaskSp->stiffness(1.);
+  comTask->stiffness(1.);
   efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK6", robots(),
                                              robots().robotIndex()));
   torsoOriTask.reset(new mc_tasks::OrientationTask("CHEST_LINK1", robots(),
@@ -255,11 +255,11 @@ bool MCEgressMRQPController::play_next_stance()
     break;
   case PUTDOWNRIGHTFOOT:
     curPhase = CENTERCOM;
-    comTask->comTaskSp->weight(1000.);
+    comTask->weight(1000.);
     execPhase.reset(new EgressCenterComPhase(0.10));
     break;
   case CENTERCOM:
-    torsoOriTask->removeFromSolver(solver());
+    solver().removeTask(torsoOriTask);
     postureTask->weight(1.);
     curPhase = OPENGRIPPER;
     execPhase.reset(new EgressOpenRightGripperPhase);

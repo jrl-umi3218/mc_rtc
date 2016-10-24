@@ -191,12 +191,6 @@ public:
    */
   sva::MotionVecd robotSurfaceVel();
 
-  virtual void addToSolver(mc_solver::QPSolver & solver) override;
-
-  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
-
-  virtual void update() override;
-
   /*! \brief Update the target transformation
    *
    * This can be used to change the target in real-time. For example when the
@@ -239,12 +233,30 @@ public:
                      const Eigen::Vector3d & adjustOffset = Eigen::Vector3d::Zero(),
                      const Eigen::Vector3d & adjustRPYOffset = Eigen::Vector3d::Zero());
 
+  virtual void dimWeight(const Eigen::VectorXd & dimW) override;
+
+  virtual Eigen::VectorXd dimWeight() const override;
+
+  virtual void selectActiveJoints(mc_solver::QPSolver & solver,
+                                  const std::vector<std::string> & aJN) override;
+
+  virtual void selectUnactiveJoints(mc_solver::QPSolver & solver,
+                                    const std::vector<std::string> &uJN) override;
+
+  virtual void resetJointsSelector(mc_solver::QPSolver & solver) override;
+
+  virtual Eigen::VectorXd eval() const override;
+
+  virtual Eigen::VectorXd speed() const override;
 private:
   void target(const Eigen::Vector3d & pos, const Eigen::Matrix3d & ori,
               double posStiffness, double extraPosStiffness, double posWeight,
               double oriStiffness, double oriWeight,
               double positionSmoothPercent);
+
+  virtual void reset() override {}
 public:
+  bool inSolver = false;
   mc_rbdyn::Robots & robots;
   mc_rbdyn::Robot & robot;
   mc_rbdyn::Robot & env;
@@ -265,13 +277,21 @@ public:
 
   double posStiff;
   double extraPosStiff;
-  std::shared_ptr<tasks::qp::PositionTask> positionTask;
-  std::shared_ptr<tasks::qp::SetPointTask> positionTaskSp;
-  std::shared_ptr<SmoothTask<Eigen::Vector3d>> positionTaskSm;
+  std::shared_ptr<tasks::qp::PositionTask> positionTask = nullptr;
+  std::shared_ptr<tasks::qp::JointsSelector> positionJSTask = nullptr;
+  std::shared_ptr<tasks::qp::SetPointTask> positionTaskSp = nullptr;
+  std::shared_ptr<SmoothTask<Eigen::Vector3d>> positionTaskSm = nullptr;
 
-  std::shared_ptr<tasks::qp::OrientationTask> orientationTask;
-  std::shared_ptr<tasks::qp::SetPointTask> orientationTaskSp;
+  std::shared_ptr<tasks::qp::OrientationTask> orientationTask = nullptr;
+  std::shared_ptr<tasks::qp::JointsSelector> orientationJSTask = nullptr;
+  std::shared_ptr<tasks::qp::SetPointTask> orientationTaskSp = nullptr;
   bool useSmoothTask;
+private:
+  virtual void addToSolver(mc_solver::QPSolver & solver) override;
+
+  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
+
+  virtual void update() override;
 };
 
 }

@@ -343,7 +343,7 @@ MCSeqController::MCSeqController(std::shared_ptr<mc_rbdyn::RobotModule> robot_mo
   qpsolver->setContacts(stances[stanceIndex].geomContacts());
 
   stabilityTask.reset(new mc_tasks::StabilityTask(robots()));
-  stabilityTask->addToSolver(solver());
+  solver().addTask(stabilityTask);
   metaTasks.push_back(stabilityTask.get());
   stabilityTask->target(env(), stances[stanceIndex], configs[stanceIndex], configs[stanceIndex].comTask.targetSpeed);
 
@@ -650,10 +650,6 @@ void MCSeqController::pre_live()
 
 void MCSeqController::post_live()
 {
-  for(const auto & t : metaTasks)
-  {
-    t->update();
-  }
 }
 
 mc_rbdyn::StanceConfig & MCSeqController::curConf()

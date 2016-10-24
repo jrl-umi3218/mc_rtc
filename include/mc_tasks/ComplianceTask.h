@@ -112,18 +112,12 @@ public:
       std::pair<double,double> forceGain = defaultFGain,
       std::pair<double,double> torqueGain = defaultTGain);
 
-  virtual void addToSolver(mc_solver::QPSolver & solver);
-
-  virtual void removeFromSolver(mc_solver::QPSolver & solver);
-
-  virtual void update();
-
   /*! \brief Reset the task
    *
    * Set the end effector objective to the current position of the end-effector
    *
    */
-  virtual void resetTask(const mc_rbdyn::Robots& robots, unsigned int robotIndex);
+  virtual void reset();
 
   /*! \brief Get the filtered wrench used by the task as a measure */
   sva::ForceVecd getFilteredWrench() const;
@@ -134,14 +128,26 @@ public:
     obj_ = wrench;
   }
 
+  virtual void dimWeight(const Eigen::VectorXd & dimW) override;
+
+  virtual Eigen::VectorXd dimWeight() const override;
+
+  virtual void selectActiveJoints(mc_solver::QPSolver & solver,
+                                  const std::vector<std::string> & activeJointsName) override;
+
+  virtual void selectUnactiveJoints(mc_solver::QPSolver & solver,
+                                    const std::vector<std::string> & unactiveJointsName) override;
+
+  virtual void resetJointsSelector(mc_solver::QPSolver & solver) override;
+
   /*! \brief Returns the task's error */
-  const Eigen::Vector6d eval()
+  virtual Eigen::VectorXd eval() const override
   {
     return wrench_.vector();
   }
 
   /*! \brief Returns the task's speed */
-  const Eigen::Vector6d speed()
+  virtual Eigen::VectorXd speed() const override
   {
     return robot_.mbc().bodyVelW[robot_.bodyIndexByName(sensor_.parentBodyName)].vector();
   }
@@ -163,6 +169,12 @@ private:
   std::pair<double,double> forceGain_, torqueGain_;
   Eigen::Matrix6d dof_;
   std::function<double(double)> clampTrans_, clampRot_;
+
+  virtual void addToSolver(mc_solver::QPSolver & solver);
+
+  virtual void removeFromSolver(mc_solver::QPSolver & solver);
+
+  virtual void update();
 };
 
 }

@@ -37,13 +37,13 @@ MCCoMController::MCCoMController(std::shared_ptr<mc_rbdyn::RobotModule> robot_mo
   }
 
   comTask.reset(new mc_tasks::CoMTask(robots(), robots().robotIndex()));
-  comTask->addToSolver(solver());
+  solver().addTask(comTask);
 }
 
 void MCCoMController::reset(const ControllerResetData & reset_data)
 {
   MCController::reset(reset_data);
-  comTask->resetTask(robots(), robots().robotIndex());
+  comTask->reset();
 }
 
 bool MCCoMController::move_com(const Eigen::Vector3d & v)

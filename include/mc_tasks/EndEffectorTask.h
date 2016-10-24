@@ -1,12 +1,7 @@
-#ifndef _H_MCTASKSEFTASK_H_
-#define _H_MCTASKSEFTASK_H_
+#pragma once
 
-#include <mc_tasks/MetaTask.h>
-
-#include <mc_rbdyn/robot.h>
-#include <Tasks/QPTasks.h>
-
-#include <mc_tasks/api.h>
+#include <mc_tasks/PositionTask.h>
+#include <mc_tasks/OrientationTask.h>
 
 namespace mc_tasks
 {
@@ -34,20 +29,14 @@ public:
    *
    */
   EndEffectorTask(const std::string & bodyName, const mc_rbdyn::Robots &
-                  robots, unsigned int robotIndex, double stiffness = 10.0,
+                  robots, unsigned int robotIndex, double stiffness = 2.0,
                   double weight = 1000.0);
 
   /*! \brief Reset the task
    *
    * Set the task objective to the current end-effector position
    */
-  virtual void resetTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex);
-
-  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
-
-  virtual void addToSolver(mc_solver::QPSolver & solver) override;
-
-  virtual void update() override;
+  virtual void reset() override;
 
   /*! \brief Increment the target position
    *
@@ -70,35 +59,38 @@ public:
    */
   virtual sva::PTransformd get_ef_pose();
 
-  /*! \brief Returns the task error
-   *
-   * \returns Task error
-   *
-   */
-  const Eigen::VectorXd& eval();
+  virtual void dimWeight(const Eigen::VectorXd & dimW) override;
 
-  /*! \brief Returns the task speed
-   *
-   * \returns Task speed
-   *
-   */
-  const Eigen::VectorXd& speed();
+  virtual Eigen::VectorXd dimWeight() const override;
+
+  virtual void selectActiveJoints(mc_solver::QPSolver & solver,
+                                  const std::vector<std::string> & activeJointsName) override;
+
+  virtual void selectUnactiveJoints(mc_solver::QPSolver & solver,
+                                    const std::vector<std::string> & unactiveJointsName) override;
+
+  virtual void resetJointsSelector(mc_solver::QPSolver & solver) override;
+
+  virtual Eigen::VectorXd eval() const override;
+
+  virtual Eigen::VectorXd speed() const override;
 public:
   const mc_rbdyn::Robots & robots;
   unsigned int robotIndex;
+  unsigned int bodyIndex;
 
-  std::shared_ptr<tasks::qp::PositionTask> positionTask;
-  std::shared_ptr<tasks::qp::SetPointTask> positionTaskSp;
-  std::shared_ptr<tasks::qp::OrientationTask> orientationTask;
-  std::shared_ptr<tasks::qp::SetPointTask> orientationTaskSp;
+  std::shared_ptr<mc_tasks::PositionTask> positionTask;
+  std::shared_ptr<mc_tasks::OrientationTask> orientationTask;
 
   std::string bodyName;
   sva::PTransformd curTransform;
-  bool inSolver;
-  Eigen::VectorXd err;
-  Eigen::VectorXd spd;
+private:
+  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
+
+  virtual void addToSolver(mc_solver::QPSolver & solver) override;
+
+  virtual void update() override;
+
 };
 
 }
-
-#endif

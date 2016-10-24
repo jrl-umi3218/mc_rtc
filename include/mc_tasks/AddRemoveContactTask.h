@@ -100,11 +100,13 @@ public:
    * \returns Velocity error of the LinVelocity task */
   Eigen::Vector3d velError();
 
-  virtual void addToSolver(mc_solver::QPSolver & solver) override;
+  virtual void dimWeight(const Eigen::VectorXd & dimW) override;
 
-  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
+  virtual Eigen::VectorXd dimWeight() const override;
 
-  virtual void update() override;
+  virtual Eigen::VectorXd eval() const override;
+
+  virtual Eigen::VectorXd speed() const override;
 public:
   mc_rbdyn::Robots & robots;
   mc_rbdyn::Robot & robot;
@@ -121,11 +123,28 @@ public:
   Eigen::VectorXd speedMat;
   Eigen::Vector3d normal;
 
-  double speed;
+  double speed_;
   Eigen::Vector3d targetSpeed;
   std::shared_ptr<tasks::qp::LinVelocityTask> linVelTask;
   std::shared_ptr<tasks::qp::PIDTask> linVelTaskPid;
   double targetVelWeight;
+private:
+  /* Hide these virtual functions */
+  virtual void selectActiveJoints(mc_solver::QPSolver &,
+                                  const std::vector<std::string> &) override {}
+
+  virtual void selectUnactiveJoints(mc_solver::QPSolver &,
+                                    const std::vector<std::string> &) override {}
+
+  virtual void resetJointsSelector(mc_solver::QPSolver &) override {}
+
+  virtual void reset() override {}
+private:
+  virtual void addToSolver(mc_solver::QPSolver & solver) override;
+
+  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
+
+  virtual void update() override;
 };
 
 

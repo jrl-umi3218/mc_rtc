@@ -44,8 +44,8 @@ ComplianceTask::ComplianceTask(const mc_rbdyn::Robots & robots,
    * feet are placed horizontally on the ground */
   efTask_ = std::make_shared<EndEffectorTask>(forceSensor.parentBodyName, robots,
                                               robotIndex, stiffness, weight);
-  efTask_->orientationTaskSp->dimWeight(dof_.diagonal().head(3));
-  efTask_->positionTaskSp->dimWeight(dof_.diagonal().tail(3));
+  efTask_->orientationTask->dimWeight(dof_.diagonal().head(3));
+  efTask_->positionTask->dimWeight(dof_.diagonal().tail(3));
   clampTrans_ = clamper(0.01);
   clampRot_ = clamper(0.1);
 }
@@ -67,12 +67,12 @@ ComplianceTask::ComplianceTask(const mc_rbdyn::Robots & robots,
 
 void ComplianceTask::addToSolver(mc_solver::QPSolver & solver)
 {
-  efTask_->addToSolver(solver);
+  MetaTask::addToSolver(*efTask_, solver);
 }
 
 void ComplianceTask::removeFromSolver(mc_solver::QPSolver & solver)
 {
-  efTask_->removeFromSolver(solver);
+  MetaTask::removeFromSolver(*efTask_, solver);
 }
 
 sva::PTransformd ComplianceTask::computePose()
@@ -105,17 +105,44 @@ void ComplianceTask::update()
   errorD_ = (wrench_ - error_)/timestep_;
   efTask_->set_ef_pose(computePose());
   /* Does nothing for now, but is here in case of changes */
-  efTask_->update();
+  MetaTask::update(*efTask_);
 }
 
-void ComplianceTask::resetTask(const mc_rbdyn::Robots& robots, unsigned int robotIndex)
+void ComplianceTask::reset()
 {
-  efTask_->resetTask(robots, robotIndex);
+  efTask_->reset();
 }
 
 sva::ForceVecd ComplianceTask::getFilteredWrench() const
 {
   return wrench_ + sva::ForceVecd(dof_*obj_.vector());
+}
+
+void ComplianceTask::dimWeight(const Eigen::VectorXd & dimW)
+{
+  efTask_->dimWeight(dimW);
+}
+
+Eigen::VectorXd ComplianceTask::dimWeight() const
+{
+  return efTask_->dimWeight();
+}
+
+void ComplianceTask::selectActiveJoints(mc_solver::QPSolver & solver,
+                                const std::vector<std::string> & activeJointsName)
+{
+  efTask_->selectActiveJoints(solver, activeJointsName);
+}
+
+void ComplianceTask::selectUnactiveJoints(mc_solver::QPSolver & solver,
+                                  const std::vector<std::string> & unactiveJointsName)
+{
+  efTask_->selectUnactiveJoints(solver, unactiveJointsName);
+}
+
+void ComplianceTask::resetJointsSelector(mc_solver::QPSolver & solver)
+{
+  efTask_->resetJointsSelector(solver);
 }
 
 } // mc_tasks

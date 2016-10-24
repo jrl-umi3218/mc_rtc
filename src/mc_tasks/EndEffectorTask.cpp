@@ -5,29 +5,25 @@ namespace mc_tasks
 
 EndEffectorTask::EndEffectorTask(const std::string & bodyName, const mc_rbdyn::Robots & robots, unsigned int robotIndex, double stiffness, double weight)
 : robots(robots), robotIndex(robotIndex),
-  bodyName(bodyName), inSolver(false)
+  bodyName(bodyName)
 {
   const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
-  unsigned int bodyIndex = robot.bodyIndexByName(bodyName);
+  bodyIndex = robot.bodyIndexByName(bodyName);
   sva::PTransformd bpw = robot.mbc().bodyPosW[bodyIndex];
 
   curTransform = bpw;
 
-  positionTask.reset(new tasks::qp::PositionTask(robots.mbs(), static_cast<int>(robotIndex), bodyName, bpw.translation(), Eigen::Vector3d(0,0,0)));
-  positionTaskSp.reset(new tasks::qp::SetPointTask(robots.mbs(), static_cast<int>(robotIndex), positionTask.get(), stiffness, weight));
-
-  orientationTask.reset(new tasks::qp::OrientationTask(robots.mbs(), static_cast<int>(robotIndex), bodyName, bpw.rotation()));
-  orientationTaskSp.reset(new tasks::qp::SetPointTask(robots.mbs(), static_cast<int>(robotIndex), orientationTask.get(), stiffness, weight));
-
-  err = Eigen::VectorXd(6);
-  spd = Eigen::VectorXd(6);
+  positionTask.reset(new mc_tasks::PositionTask(bodyName, robots,
+                                                robotIndex, stiffness,
+                                                weight));
+  orientationTask.reset(new mc_tasks::OrientationTask(bodyName, robots,
+                                                      robotIndex, stiffness,
+                                                      weight));
 }
 
-void EndEffectorTask::resetTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex)
+void EndEffectorTask::reset()
 {
   const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
-  unsigned int bodyIndex = robot.bodyIndexByName(bodyName);
-
   curTransform = robot.mbc().bodyPosW[bodyIndex];
   positionTask->position(curTransform.translation());
   orientationTask->orientation(curTransform.rotation());
@@ -35,26 +31,20 @@ void EndEffectorTask::resetTask(const mc_rbdyn::Robots & robots, unsigned int ro
 
 void EndEffectorTask::removeFromSolver(mc_solver::QPSolver & solver)
 {
-  if(inSolver)
-  {
-    solver.removeTask(positionTaskSp.get());
-    solver.removeTask(orientationTaskSp.get());
-    inSolver = false;
-  }
+  MetaTask::removeFromSolver(*positionTask, solver);
+  MetaTask::removeFromSolver(*orientationTask, solver);
 }
 
 void EndEffectorTask::addToSolver(mc_solver::QPSolver & solver)
 {
-  if(!inSolver)
-  {
-    solver.addTask(positionTaskSp.get());
-    solver.addTask(orientationTaskSp.get());
-    inSolver = true;
-  }
+  MetaTask::addToSolver(*positionTask, solver);
+  MetaTask::addToSolver(*orientationTask, solver);
 }
 
 void EndEffectorTask::update()
 {
+  MetaTask::update(*positionTask);
+  MetaTask::update(*orientationTask);
 }
 
 void EndEffectorTask::add_ef_pose(const sva::PTransformd & dtr)
@@ -78,14 +68,50 @@ sva::PTransformd EndEffectorTask::get_ef_pose()
   return sva::PTransformd(orientationTask->orientation(), positionTask->position());
 }
 
-const Eigen::VectorXd& EndEffectorTask::eval()
+void EndEffectorTask::dimWeight(const Eigen::VectorXd & dimW)
 {
+  assert(dimW.size() == 6);
+  orientationTask->dimWeight(dimW.head(3));
+  positionTask->dimWeight(dimW.tail(3));
+}
+
+Eigen::VectorXd EndEffectorTask::dimWeight() const
+{
+  Eigen::VectorXd ret(6);
+  ret << orientationTask->dimWeight(), positionTask->dimWeight();
+  return ret;
+}
+
+void EndEffectorTask::selectActiveJoints(mc_solver::QPSolver & solver,
+                                const std::vector<std::string> & activeJointsName)
+{
+  positionTask->selectActiveJoints(solver, activeJointsName);
+  orientationTask->selectActiveJoints(solver, activeJointsName);
+}
+
+void EndEffectorTask::selectUnactiveJoints(mc_solver::QPSolver & solver,
+                                  const std::vector<std::string> & unactiveJointsName)
+{
+  positionTask->selectUnactiveJoints(solver, unactiveJointsName);
+  orientationTask->selectUnactiveJoints(solver, unactiveJointsName);
+}
+
+void EndEffectorTask::resetJointsSelector(mc_solver::QPSolver & solver)
+{
+  positionTask->resetJointsSelector(solver);
+  orientationTask->resetJointsSelector(solver);
+}
+
+Eigen::VectorXd EndEffectorTask::eval() const
+{
+  Eigen::Vector6d err;
   err << orientationTask->eval(), positionTask->eval();
   return err;
 }
 
-const Eigen::VectorXd& EndEffectorTask::speed()
+Eigen::VectorXd EndEffectorTask::speed() const
 {
+  Eigen::Vector6d spd;
   spd << orientationTask->speed(), positionTask->speed();
   return spd;
 }

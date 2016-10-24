@@ -110,6 +110,7 @@ set_target_properties(mc_trajectory PROPERTIES COMPILE_FLAGS "-DMC_TRAJECTORY_EX
 pkg_config_append_libs(mc_trajectory)
 
 set(mc_tasks_SRC
+mc_tasks/PositionTask.cpp
 mc_tasks/OrientationTask.cpp
 mc_tasks/EndEffectorTask.cpp
 mc_tasks/RelativeEndEffectorTask.cpp
@@ -130,10 +131,13 @@ set(mc_tasks_HDR
 ../include/mc_tasks/MetaTask.h
 ../include/mc_tasks/MoveContactTask.h
 ../include/mc_tasks/OrientationTask.h
+../include/mc_tasks/PositionTask.h
 ../include/mc_tasks/RelativeEndEffectorTask.h
 ../include/mc_tasks/SmoothTask.h
 ../include/mc_tasks/StabilityTask.h
 ../include/mc_tasks/TrajectoryTask.h
+../include/mc_tasks/TrajectoryTaskGeneric.h
+../include/mc_tasks/TrajectoryTaskGeneric.hpp
 ../include/mc_tasks/ComplianceTask.h
 )
 

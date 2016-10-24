@@ -4,55 +4,31 @@ namespace mc_tasks
 {
 
 OrientationTask::OrientationTask(const std::string & bodyName, const mc_rbdyn::Robots & robots, unsigned int robotIndex, double stiffness, double weight)
-: bodyName(bodyName), robots(robots),
-  rIndex(robotIndex), bIndex(0),
-  inSolver(false)
+: TrajectoryTaskGeneric<tasks::qp::OrientationTask>(robots, robotIndex, stiffness, weight),
+  bodyName(bodyName), bIndex(0)
 {
   const mc_rbdyn::Robot & robot = robots.robot(rIndex);
   bIndex = robot.bodyIndexByName(bodyName);
 
   Eigen::Matrix3d curOri = robot.mbc().bodyPosW[bIndex].rotation();
-  orientationTask.reset(new tasks::qp::OrientationTask(robots.mbs(), static_cast<int>(rIndex), bodyName, curOri));
-  orientationTaskSp.reset(new tasks::qp::SetPointTask(robots.mbs(), static_cast<int>(robotIndex), orientationTask.get(), stiffness, weight));
+  finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, curOri);
 }
 
-void OrientationTask::resetTask()
+void OrientationTask::reset()
 {
   const auto & robot = robots.robot(rIndex);
   auto curOri = robot.mbc().bodyPosW[bIndex].rotation();
-  orientationTask->orientation(curOri);
+  errorT->orientation(curOri);
 }
 
-void OrientationTask::removeFromSolver(mc_solver::QPSolver & solver)
+void OrientationTask::orientation(const Eigen::Matrix3d & ori)
 {
-  if(inSolver)
-  {
-    solver.removeTask(orientationTaskSp.get());
-    inSolver = false;
-  }
+  errorT->orientation(ori);
 }
 
-void OrientationTask::addToSolver(mc_solver::QPSolver & solver)
+Eigen::Matrix3d OrientationTask::orientation()
 {
-  if(!inSolver)
-  {
-    solver.addTask(orientationTaskSp.get());
-    inSolver = true;
-  }
-}
-
-void OrientationTask::update()
-{
-}
-
-void OrientationTask::set_ef_ori(const Eigen::Matrix3d & ori)
-{
-  orientationTask->orientation(ori);
-}
-
-Eigen::Matrix3d OrientationTask::get_ef_ori()
-{
-  return orientationTask->orientation();
+  return errorT->orientation();
 }
 
 }

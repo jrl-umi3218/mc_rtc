@@ -16,7 +16,7 @@ AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots, std::share
 AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots,
                      std::shared_ptr<mc_solver::BoundedSpeedConstr>
                      constSpeedConstr, mc_rbdyn::Contact & contact,
-                     double direction, double speed,
+                     double direction, double _speed,
                      double stiffness, double weight,
                      Eigen::Vector3d * userT_0_s)
 : robots(robots), robot(robots.robot()), env(robots.env()),
@@ -47,8 +47,8 @@ AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots,
     }
   }
 
-  this->speed = speed;
-  targetSpeed = direction*normal*speed;
+  this->speed_ = _speed;
+  targetSpeed = direction*normal*speed_;
   linVelTask.reset(new tasks::qp::LinVelocityTask(robots.mbs(), 0, robotSurf->bodyName(), targetSpeed, robotSurf->X_b_s().translation())),
   linVelTaskPid.reset(new tasks::qp::PIDTask(robots.mbs(), 0, linVelTask.get(), stiffness, 0, 0, 0));
   linVelTaskPid->error(velError());
@@ -59,13 +59,14 @@ AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots,
 
 void AddRemoveContactTask::direction(double direction)
 {
-  linVelTask->velocity(direction*normal*speed);
+  linVelTask->velocity(direction*normal*speed_);
 }
 
 Eigen::Vector3d AddRemoveContactTask::velError()
 {
   Eigen::Vector3d T_b_s = robotSurf->X_b_s().translation();
   Eigen::Matrix3d E_0_b = robot.mbc().bodyPosW[robotBodyIndex].rotation();
+
   sva::PTransformd pts(E_0_b.transpose(), T_b_s);
   sva::MotionVecd surfVelB = pts*robot.mbc().bodyVelB[robotBodyIndex];
   return targetSpeed - surfVelB.linear();
@@ -88,6 +89,26 @@ void AddRemoveContactTask::update()
 {
   linVelTaskPid->error(velError());
   linVelTaskPid->weight(std::min(linVelTaskPid->weight() + 0.5, targetVelWeight));
+}
+
+void AddRemoveContactTask::dimWeight(const Eigen::VectorXd & dimW)
+{
+  linVelTaskPid->dimWeight(dimW);
+}
+
+Eigen::VectorXd AddRemoveContactTask::dimWeight() const
+{
+  return linVelTaskPid->dimWeight();
+}
+
+Eigen::VectorXd AddRemoveContactTask::eval() const
+{
+  return linVelTask->eval();
+}
+
+Eigen::VectorXd AddRemoveContactTask::speed() const
+{
+  return linVelTask->speed();
 }
 
 AddContactTask::AddContactTask(mc_rbdyn::Robots & robots, std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr,
