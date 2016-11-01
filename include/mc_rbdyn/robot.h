@@ -145,6 +145,8 @@ public:
 
   std::string name() const;
 
+  void name(const std::string & n);
+
   const std::string & accelerometerBody() const;
 
   bool hasJoint(const std::string & name) const;

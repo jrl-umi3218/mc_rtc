@@ -82,6 +82,11 @@ std::string Robot::name() const
   return name_;
 }
 
+void Robot::name(const std::string & name)
+{
+  name_ = name;
+}
+
 const std::string & Robot::accelerometerBody() const
 {
   return _accelerometerBody;
