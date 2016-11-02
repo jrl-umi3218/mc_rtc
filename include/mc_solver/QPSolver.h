@@ -174,6 +174,13 @@ public:
   /** Gives access to the robots controlled by this solver */
   mc_rbdyn::Robots & robots();
 
+  /** Update number of variables
+   *
+   * This should be called when/if you add new robots into the scene after the
+   * solver initialization, this is a costly operation.
+   */
+  void updateNrVars();
+
   /** Update constraints matrix sizes
    *
    * \note This is mainly provided to allow safe usage of raw constraint from

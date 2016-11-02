@@ -201,6 +201,11 @@ void QPSolver::updateConstrSize()
   solver.updateConstrSize();
 }
 
+void QPSolver::updateNrVars()
+{
+  solver.nrVars(robots_p->mbs(), uniContacts, biContacts);
+}
+
 double QPSolver::dt()
 {
   return timeStep;
