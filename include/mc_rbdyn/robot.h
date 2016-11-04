@@ -211,7 +211,7 @@ public:
   std::map<std::string, std::vector<double>> stance() const;
 private:
   std::string name_;
-  Robots & robots;
+  Robots * robots;
   unsigned int robots_idx;
   std::map<std::string, sva::PTransformd> bodyTransforms;
   std::vector< std::vector<double> > ql_;

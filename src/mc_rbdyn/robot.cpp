@@ -46,7 +46,7 @@ Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
         const std::string & accelerometerBody,
         const Springs & springs, const std::vector< std::vector<Eigen::VectorXd> > & tlPoly,
         const std::vector< std::vector<Eigen::VectorXd> > & tuPoly, const std::vector<Flexibility> & flexibility)
-: name_(name), robots(robots), robots_idx(robots_idx),
+: name_(name), robots(&robots), robots_idx(robots_idx),
   bodyTransforms(bodyTransforms), ql_(ql), qu_(qu), vl_(vl), vu_(vu), tl_(tl), tu_(tu),
   convexes(convexes), stpbvs(stpbvs), collisionTransforms(collisionTransforms), surfaces_(),
   forceSensors(forceSensors), stance_(stance), _accelerometerBody(accelerometerBody), springs(springs), tlPoly(tlPoly),
@@ -144,29 +144,29 @@ std::vector<std::string> Robot::forceSensorsByName() const
 
 rbd::MultiBody & Robot::mb()
 {
-  return robots.mbs_[robots_idx];
+  return robots->mbs_[robots_idx];
 }
 const rbd::MultiBody & Robot::mb() const
 {
-  return robots.mbs_[robots_idx];
+  return robots->mbs_[robots_idx];
 }
 
 rbd::MultiBodyConfig & Robot::mbc()
 {
-  return robots.mbcs_[robots_idx];
+  return robots->mbcs_[robots_idx];
 }
 const rbd::MultiBodyConfig & Robot::mbc() const
 {
-  return robots.mbcs_[robots_idx];
+  return robots->mbcs_[robots_idx];
 }
 
 rbd::MultiBodyGraph & Robot::mbg()
 {
-  return robots.mbgs_[robots_idx];
+  return robots->mbgs_[robots_idx];
 }
 const rbd::MultiBodyGraph & Robot::mbg() const
 {
-  return robots.mbgs_[robots_idx];
+  return robots->mbgs_[robots_idx];
 }
 
 const std::vector<std::vector<double>> & Robot::ql() const
