@@ -139,8 +139,11 @@ public:
    */
   const QPResultMsg & send(const double & t);
 
+  /*! \brief Access the current controller */
+  MCController & controller();
+
   /*! \brief Access the main robot */
-  const mc_rbdyn::Robot & robot();
+  mc_rbdyn::Robot & robot();
 
   /*! \brief Get the controller timestep */
   double timestep();
@@ -436,8 +439,8 @@ private:
   GlobalConfiguration config;
   std::string current_ctrl;
   std::string next_ctrl;
-  MCController * controller;
-  MCController * next_controller;
+  MCController * controller_;
+  MCController * next_controller_;
   std::unique_ptr<mc_rtc::ObjectLoader<MCController>> controller_loader;
   std::map<std::string, std::shared_ptr<mc_control::MCController>> controllers;
 

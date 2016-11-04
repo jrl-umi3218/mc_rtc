@@ -8,12 +8,12 @@
 namespace mc_control
 {
 
-/* Called by the RT component to access actual Controllers service */
+/* Called by the RT component to access actual controller_s service */
 bool MCGlobalController::set_joint_pos(const std::string & jname, const double & pos)
 {
-  if(controller)
+  if(controller_)
   {
-    return controller->set_joint_pos(jname, pos);
+    return controller_->set_joint_pos(jname, pos);
   }
   else
   {
@@ -23,9 +23,9 @@ bool MCGlobalController::set_joint_pos(const std::string & jname, const double &
 
 bool MCGlobalController::get_joint_pos(const std::string & jname, double & v)
 {
-  if(controller)
+  if(controller_)
   {
-    return controller->get_joint_pos(jname, v);
+    return controller_->get_joint_pos(jname, v);
   }
   else
   {
@@ -35,9 +35,9 @@ bool MCGlobalController::get_joint_pos(const std::string & jname, double & v)
 
 bool MCGlobalController::change_ef(const std::string & ef_name)
 {
-  if(controller)
+  if(controller_)
   {
-    return controller->change_ef(ef_name);
+    return controller_->change_ef(ef_name);
   }
   else
   {
@@ -46,9 +46,9 @@ bool MCGlobalController::change_ef(const std::string & ef_name)
 }
 bool MCGlobalController::translate_ef(const Eigen::Vector3d & t)
 {
-  if(controller)
+  if(controller_)
   {
-    return controller->move_ef(t, Eigen::Matrix3d::Identity());
+    return controller_->move_ef(t, Eigen::Matrix3d::Identity());
   }
   else
   {
@@ -57,9 +57,9 @@ bool MCGlobalController::translate_ef(const Eigen::Vector3d & t)
 }
 bool MCGlobalController::rotate_ef(const Eigen::Matrix3d & m)
 {
-  if(controller)
+  if(controller_)
   {
-    return controller->move_ef(Eigen::Vector3d(0,0,0), m);
+    return controller_->move_ef(Eigen::Vector3d(0,0,0), m);
   }
   else
   {
@@ -69,9 +69,9 @@ bool MCGlobalController::rotate_ef(const Eigen::Matrix3d & m)
 
 bool MCGlobalController::move_com(const Eigen::Vector3d & v)
 {
-  if(controller)
+  if(controller_)
   {
-    return controller->move_com(v);
+    return controller_->move_com(v);
   }
   else
   {
@@ -81,9 +81,9 @@ bool MCGlobalController::move_com(const Eigen::Vector3d & v)
 
 bool MCGlobalController::play_next_stance()
 {
-  if(controller)
+  if(controller_)
   {
-    return controller->play_next_stance();
+    return controller_->play_next_stance();
   }
   else
   {
@@ -93,9 +93,9 @@ bool MCGlobalController::play_next_stance()
 
 bool MCGlobalController::driving_service(double w, double a, double p, double t)
 {
-  if(controller)
+  if(controller_)
   {
-    return controller->driving_service(w, a, p, t);
+    return controller_->driving_service(w, a, p, t);
   }
   else
   {
@@ -105,7 +105,7 @@ bool MCGlobalController::driving_service(double w, double a, double p, double t)
 
 bool MCGlobalController::GoToHalfSitPose_service()
 {
-  if(controller)
+  if(controller_)
   {
     return GoToHalfSitPose();
   }
@@ -118,18 +118,18 @@ bool MCGlobalController::GoToHalfSitPose_service()
 bool MCGlobalController::send_msg(const std::string & msg)
 {
   if(msg == "reset_imu_offset") { mc_rtc::ROSBridge::reset_imu_offset(); return true; }
-  if(controller)
+  if(controller_)
   {
-    return controller->read_msg(const_cast<std::string&>(msg));
+    return controller_->read_msg(const_cast<std::string&>(msg));
   }
   return false;
 }
 
 bool MCGlobalController::send_recv_msg(const std::string & msg, std::string & out)
 {
-  if(controller)
+  if(controller_)
   {
-    return controller->read_write_msg(const_cast<std::string&>(msg), out);
+    return controller_->read_write_msg(const_cast<std::string&>(msg), out);
   }
   return false;
 }
