@@ -91,8 +91,6 @@ public:
 
   Robot & loadFromUrdf(const std::string & name, const std::string & urdf, bool withVirtualLinks = true, const std::vector<std::string> & filteredLinks = {}, bool fixed = false, sva::PTransformd * base = nullptr, const std::string& baseName = "");
 
-  void robotCopy(const Robots & robots, unsigned int robots_idx);
-
   void robotCopy(const Robot & robot);
 
   void createRobotWithBase(Robots & robots, unsigned int robots_idx, const Base & base, const Eigen::Vector3d & baseAxis = Eigen::Vector3d::UnitZ());

@@ -470,11 +470,6 @@ void Robot::createWithBase(Robots & robots, unsigned int robots_idx, const Base 
   robots.robot(robots_idx).fixSurfaces();
 }
 
-void Robots::robotCopy(const Robots & robots, unsigned int robots_idx)
-{
-  this->robotCopy(robots.robot(robots_idx));
-}
-
 void Robots::robotCopy(const Robot & robot)
 {
   this->mbs_.push_back(robot.mb());
