@@ -430,6 +430,38 @@ void Robots::createRobotWithBase(Robot & robot, const Base & base, const Eigen::
   robot.createWithBase(*this, static_cast<unsigned int>(this->mbs_.size()) - 1, base);
 }
 
+void Robots::removeRobot(const std::string & name)
+{
+  auto it = std::find_if(robots_.begin(), robots_.end(),
+                         [&name](const Robot & r){ return r.name() == name; });
+  if(it != robots_.end())
+  {
+    removeRobot(it->robots_idx);
+  }
+  else
+  {
+    LOG_ERROR("Did not find a robot named " << name << " to remove")
+  }
+}
+
+void Robots::removeRobot(unsigned int idx)
+{
+  if(idx >= robots_.size())
+  {
+    LOG_ERROR("Cannot remove a robot at index " << idx << " because there is " << robots_.size() << " robots loaded")
+    return;
+  }
+  robots_.erase(robots_.begin() + idx);
+  mbs_.erase(mbs_.begin() + idx);
+  mbcs_.erase(mbcs_.begin() + idx);
+  mbgs_.erase(mbgs_.begin() + idx);
+  for(unsigned int i = idx; i < robots_.size(); ++i)
+  {
+    auto & r = robots_[i];
+    r.robots_idx--;
+  }
+}
+
 void Robot::createWithBase(Robots & robots, unsigned int robots_idx, const Base & base) const
 {
   rbd::MultiBody & mb = robots.mbs_[robots_idx];

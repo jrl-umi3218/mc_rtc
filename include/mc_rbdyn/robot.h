@@ -97,6 +97,10 @@ public:
 
   void createRobotWithBase(Robot & robot, const Base & base, const Eigen::Vector3d & baseAxis = Eigen::Vector3d::UnitZ());
 
+  void removeRobot(const std::string & name);
+
+  void removeRobot(unsigned int idx);
+
   Robot & robot();
   const Robot & robot() const;
 
