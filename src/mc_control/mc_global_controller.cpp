@@ -244,6 +244,23 @@ bool MCGlobalController::run()
       logger_->log_header(current_ctrl, controller_);
     }
   }
+  const auto& real_q = controller_->getEncoderValues();
+  if(real_q.size() > 0)
+  {
+    auto& real_robot = real_robots->robot();
+    // Update free flyer
+    real_robot.mbc().q[0] = robot().mbc().q[0];
+    // Set all joints to encoder values
+    int i = 0;
+    for(const auto& ref_joint : config.main_robot_module->ref_joint_order())
+    {
+      const auto joint_index = real_robot.mb().jointIndexByName(ref_joint);
+      real_robot.mbc().q[joint_index][0] = real_q[i];
+      i++;
+    }
+    rbd::forwardKinematics(real_robot.mb(), real_robot.mbc());
+    rbd::forwardVelocity(real_robot.mb(), real_robot.mbc());
+  }
   if(running)
   {
     bool r = controller_->run();
@@ -414,25 +431,10 @@ void MCGlobalController::publish_thread()
       }
     }
 
-    const auto& real_q = controller_->getEncoderValues();
-    if(real_q.size() > 0)
+    if(config.publish_real_state)
     {
       auto& real_robot = real_robots->robot();
-      // Update free flyer
-      real_robot.mbc().q[0] = robot().mbc().q[0];
-      // Set all joints to encoder values
-      int i = 0;
-      for(const auto& ref_joint : config.main_robot_module->ref_joint_order())
-      {
-        const auto joint_index = real_robot.mb().jointIndexByName(ref_joint);
-        real_robot.mbc().q[joint_index][0] = real_q[i];
-        i++;
-      }
-      if(config.publish_real_state)
-      {
-        // Publish real robot
-        mc_rtc::ROSBridge::update_robot_publisher("real", timestep(), real_robot, Eigen::Vector3d::Zero(), controller_->getSensorOrientation(), controller_->getSensorAngularVelocity(), controller_->getSensorAcceleration(), gripperJoints(), gripperQ());
-      }
+      mc_rtc::ROSBridge::update_robot_publisher("real", timestep(), real_robot, Eigen::Vector3d::Zero(), controller_->getSensorOrientation(), controller_->getSensorAngularVelocity(), controller_->getSensorAcceleration(), gripperJoints(), gripperQ());
     }
 
     const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now()-start).count();
