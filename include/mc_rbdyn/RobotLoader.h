@@ -65,6 +65,13 @@ public:
     init();
     robot_loader->enable_sandboxing(enable_sandbox);
   }
+
+  /** Returns a list of available robots */
+  static std::vector<std::string> available_robots()
+  {
+    init();
+    return robot_loader->objects();
+  }
 private:
   static inline void init()
   {

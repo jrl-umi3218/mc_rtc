@@ -101,6 +101,21 @@ MCGlobalController::~MCGlobalController()
   publish_th.join();
 }
 
+std::vector<std::string> MCGlobalController::loaded_controllers() const
+{
+  return controller_loader->objects();
+}
+
+std::vector<std::string> MCGlobalController::loaded_robots() const
+{
+  return mc_rbdyn::RobotLoader::available_robots();
+}
+
+std::string MCGlobalController::current_controller() const
+{
+  return current_ctrl;
+}
+
 void MCGlobalController::init(const std::vector<double> & initq)
 {
   init(initq, config.main_robot_module->default_attitude());

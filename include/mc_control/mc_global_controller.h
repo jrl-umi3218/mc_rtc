@@ -61,6 +61,19 @@ public:
   /*! \brief Destructor */
   virtual ~MCGlobalController();
 
+  /*! \brief Returns a list of all the loaded controllers, whether they
+   * are enabled or not.
+   */
+  std::vector<std::string> loaded_controllers() const;
+
+  /*! \brief Returns a list of all the loaded robots, whether they
+   * are enabled or not.
+   */
+  std::vector<std::string> loaded_robots() const;
+
+  /*! \brief Returns the name of the current controller */
+  std::string current_controller() const;
+
   /*! \brief Initialize the default controller with the given configuration
    *
    * In this version, the robot's initial attitude is provided by
