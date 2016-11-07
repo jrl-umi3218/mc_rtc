@@ -249,7 +249,19 @@ bool MCGlobalController::run()
   {
     auto& real_robot = real_robots->robot();
     // Update free flyer
-    real_robot.mbc().q[0] = robot().mbc().q[0];
+    if(!config.update_real_from_sensors)
+    {
+      real_robot.mbc().q[0] = robot().mbc().q[0];
+    }
+    else
+    {
+      const auto & qt = controller_->sensorOri;
+      const auto & t = controller_->sensorPos;
+      real_robot.mbc().q[0] = {
+        qt.w(), qt.x(), qt.y(), qt.z(),
+        t.x(), t.y(), t.z()
+      };
+    }
     // Set all joints to encoder values
     int i = 0;
     for(const auto& ref_joint : config.main_robot_module->ref_joint_order())
