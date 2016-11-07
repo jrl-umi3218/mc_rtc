@@ -41,13 +41,16 @@ bool Loader::close()
   return true;
 }
 
-void Loader::load_libraries(const std::vector<std::string> & paths, Loader::handle_map_t & out)
+void Loader::load_libraries(const std::vector<std::string> & paths, Loader::handle_map_t & out, bool verbose)
 {
   for(const auto & path : paths)
   {
     if(!bfs::exists(path))
     {
-      LOG_WARNING("Tried to load libraries from " << path << " which does not exist")
+      if(verbose)
+      {
+        LOG_WARNING("Tried to load libraries from " << path << " which does not exist")
+      }
       continue;
     }
     bfs::directory_iterator dit(path), endit;
@@ -73,7 +76,10 @@ void Loader::load_libraries(const std::vector<std::string> & paths, Loader::hand
            * tried to load something other than a library */
           if(strcmp(lt_dlerror(), "file not found") != 0)
           {
-            LOG_WARNING("Failed to load " << p.string() << std::endl << lt_dlerror())
+            if(verbose)
+            {
+              LOG_WARNING("Failed to load " << p.string() << std::endl << lt_dlerror())
+            }
           }
           continue;
         }
@@ -102,7 +108,10 @@ void Loader::load_libraries(const std::vector<std::string> & paths, Loader::hand
         #pragma GCC diagnostic pop
         if(CLASS_NAME_FUN == nullptr)
         {
-          LOG_WARNING("No symbol CLASS_NAME in library " << p.string() << std::endl << lt_dlerror())
+          if(verbose)
+          {
+            LOG_WARNING("No symbol CLASS_NAME in library " << p.string() << std::endl << lt_dlerror())
+          }
           continue;
         }
         std::string class_name(CLASS_NAME_FUN());
@@ -113,7 +122,10 @@ void Loader::load_libraries(const std::vector<std::string> & paths, Loader::hand
           bfs::path orig_p(lt_dlgetinfo(out[class_name])->filename);
           if(orig_p != p)
           {
-            LOG_WARNING("Multiple files export the same name " << class_name << " (new declaration in " << p.string() << ", previous declaration in " << lt_dlgetinfo(out[class_name])->filename << ")")
+            if(verbose)
+            {
+              LOG_WARNING("Multiple files export the same name " << class_name << " (new declaration in " << p.string() << ", previous declaration in " << lt_dlgetinfo(out[class_name])->filename << ")")
+            }
             continue;
           }
         }

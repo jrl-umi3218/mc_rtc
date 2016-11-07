@@ -62,8 +62,20 @@ public:
    */
   static void enable_sandboxing(bool enable_sandbox)
   {
-    init();
-    robot_loader->enable_sandboxing(enable_sandbox);
+    enable_sandbox_ = enable_sandbox;
+    if(robot_loader)
+    {
+      robot_loader->enable_sandboxing(enable_sandbox_);
+    }
+  }
+
+  static void set_verbosity(bool verbose)
+  {
+    verbose_ = verbose;
+    if(robot_loader)
+    {
+      robot_loader->set_verbosity(verbose);
+    }
   }
 
   /** Returns a list of available robots */
@@ -79,7 +91,7 @@ private:
     {
       try
       {
-        robot_loader.reset(new mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>({mc_rtc::MC_ROBOTS_INSTALL_PREFIX}, true));
+        robot_loader.reset(new mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>({mc_rtc::MC_ROBOTS_INSTALL_PREFIX}, enable_sandbox_, verbose_));
       }
       catch(const mc_rtc::LoaderException & exc)
       {
@@ -89,6 +101,8 @@ private:
     }
   }
   static std::unique_ptr<mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>> robot_loader;
+  static bool enable_sandbox_;
+  static bool verbose_;
 };
 
 } // namespace mc_rbdyn

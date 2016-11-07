@@ -31,7 +31,7 @@ MCGlobalController::MCGlobalController(const std::string & conf)
 {
   try
   {
-    controller_loader.reset(new mc_rtc::ObjectLoader<mc_control::MCController>(config.controller_module_paths, config.use_sandbox));
+    controller_loader.reset(new mc_rtc::ObjectLoader<mc_control::MCController>(config.controller_module_paths, config.use_sandbox, config.verbose_loader));
   }
   catch(mc_rtc::LoaderException & exc)
   {

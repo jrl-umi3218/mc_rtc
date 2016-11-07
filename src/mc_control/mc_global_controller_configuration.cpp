@@ -26,6 +26,8 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     LOG_INFO("Loading additional global configuration " << conf)
     config.load(conf);
   }
+  config("VerboseLoader", verbose_loader);
+  mc_rbdyn::RobotLoader::set_verbosity(verbose_loader);
   config("RobotModulePaths", robot_module_paths);
   {
     std::string rmp = "";

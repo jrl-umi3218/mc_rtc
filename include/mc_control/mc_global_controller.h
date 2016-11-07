@@ -428,6 +428,8 @@ private:
 
     bool use_sandbox = false;
 
+    bool verbose_loader = true;
+
     std::vector<std::string> robot_module_paths = {};
     std::shared_ptr<mc_rbdyn::RobotModule> main_robot_module;
 
