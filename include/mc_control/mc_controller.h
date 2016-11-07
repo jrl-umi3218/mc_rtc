@@ -328,6 +328,8 @@ public:
   mc_solver::CollisionsConstraint selfCollisionConstraint;
   /** Posture task for the main robot */
   std::shared_ptr<tasks::qp::PostureTask> postureTask;
+  /** Real robots provided by MCGlobalController */
+  std::shared_ptr<mc_rbdyn::Robots> real_robots;
 };
 
 }

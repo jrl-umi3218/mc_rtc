@@ -26,7 +26,8 @@ MCGlobalController::MCGlobalController(const std::string & conf)
 : config(conf),
   current_ctrl(""), next_ctrl(""),
   controller_(nullptr),
-  next_controller_(nullptr)
+  next_controller_(nullptr),
+  real_robots(std::make_shared<mc_rbdyn::Robots>())
 {
   try
   {
@@ -65,6 +66,7 @@ MCGlobalController::MCGlobalController(const std::string & conf)
         {
           controllers[c] = controller_loader->create_object(c, config.main_robot_module, config.timestep, config.config);
         }
+        controllers[c]->real_robots = real_robots;
       }
       catch(const mc_rtc::LoaderException & exc)
       {
@@ -90,7 +92,7 @@ MCGlobalController::MCGlobalController(const std::string & conf)
   }
   else
   {
-    real_robots.load(*config.main_robot_module, config.main_robot_module->rsdf_dir);
+    real_robots->load(*config.main_robot_module, config.main_robot_module->rsdf_dir);
     publish_th = std::thread(std::bind(&MCGlobalController::publish_thread, this));
   }
 }
@@ -412,22 +414,22 @@ void MCGlobalController::publish_thread()
       }
     }
 
-    if(config.publish_real_state)
+    const auto& real_q = controller_->getEncoderValues();
+    if(real_q.size() > 0)
     {
-      const auto& real_q = controller_->getEncoderValues();
-      if(real_q.size() > 0)
+      auto& real_robot = real_robots->robot();
+      // Update free flyer
+      real_robot.mbc().q[0] = robot().mbc().q[0];
+      // Set all joints to encoder values
+      int i = 0;
+      for(const auto& ref_joint : config.main_robot_module->ref_joint_order())
       {
-        auto& real_robot = real_robots.robot();
-        // Update free flyer
-        real_robot.mbc().q[0] = robot().mbc().q[0];
-        // Set all joints to encoder values
-        int i = 0;
-        for(const auto& ref_joint : config.main_robot_module->ref_joint_order())
-        {
-          const auto joint_index = real_robot.mb().jointIndexByName(ref_joint);
-          real_robot.mbc().q[joint_index][0] = real_q[i];
-          i++;
-        }
+        const auto joint_index = real_robot.mb().jointIndexByName(ref_joint);
+        real_robot.mbc().q[joint_index][0] = real_q[i];
+        i++;
+      }
+      if(config.publish_real_state)
+      {
         // Publish real robot
         mc_rtc::ROSBridge::update_robot_publisher("real", timestep(), real_robot, Eigen::Vector3d::Zero(), controller_->getSensorOrientation(), controller_->getSensorAngularVelocity(), controller_->getSensorAcceleration(), gripperJoints(), gripperQ());
       }

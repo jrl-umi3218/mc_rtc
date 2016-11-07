@@ -459,7 +459,7 @@ private:
 
   bool publish_th_running = true;
   std::thread publish_th;
-  mc_rbdyn::Robots real_robots;
+  std::shared_ptr<mc_rbdyn::Robots> real_robots = nullptr;
 
   std::unique_ptr<Logger> logger_;
 };
