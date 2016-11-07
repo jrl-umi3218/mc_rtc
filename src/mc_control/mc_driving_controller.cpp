@@ -129,7 +129,7 @@ bool MCDrivingController::run()
     const auto & v = X_0_hand.translation();
     log_ef_ << t << " " << ori.w() << " " << ori.x() << " " << ori.y() << ori.z() << " " << v.transpose() << std::endl;
     log_acc_ << t << " " << sensorAcc.transpose() << std::endl;
-    log_rpy_ << t << " " << sensorOri.transpose() << std::endl;
+    log_rpy_ << t << " " << sensorOri.vec().transpose() << std::endl;
   }
   iter_++;
   return success;

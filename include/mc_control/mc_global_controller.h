@@ -105,7 +105,7 @@ public:
   void setSensorPosition(const Eigen::Vector3d & pos);
 
   /*! \brief A robot's orientation given by a sensor */
-  void setSensorOrientation(const Eigen::Vector3d & ori);
+  void setSensorOrientation(const Eigen::Quaterniond & ori);
 
   /*! \brief A robot's linear velocity given by a sensor */
   void setSensorLinearVelocity(const Eigen::Vector3d& vel);

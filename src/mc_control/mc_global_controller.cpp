@@ -163,9 +163,9 @@ void MCGlobalController::setSensorPosition(const Eigen::Vector3d & pos)
   controller_->sensorPos = pos;
 }
 
-void MCGlobalController::setSensorOrientation(const Eigen::Vector3d & rpy)
+void MCGlobalController::setSensorOrientation(const Eigen::Quaterniond & ori)
 {
-  controller_->sensorOri = rpy;
+  controller_->sensorOri = ori;
 }
 
 void MCGlobalController::setSensorLinearVelocity(const Eigen::Vector3d & vel)
@@ -427,7 +427,7 @@ void MCGlobalController::publish_thread()
       {
         std::stringstream ss;
         ss << "control/env_" << i;
-        mc_rtc::ROSBridge::update_robot_publisher(ss.str(), timestep(), robots.robot(i), Eigen::Vector3d::Zero(), Eigen::Vector3d::Zero(), Eigen::Vector3d::Zero(), Eigen::Vector3d::Zero(), {}, {});
+        mc_rtc::ROSBridge::update_robot_publisher(ss.str(), timestep(), robots.robot(i), Eigen::Vector3d::Zero(), Eigen::Quaterniond::Identity(), Eigen::Vector3d::Zero(), Eigen::Vector3d::Zero(), {}, {});
       }
     }
 

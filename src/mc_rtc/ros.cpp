@@ -69,7 +69,7 @@ public:
     th.join();
   }
 
-  void update(double dt, const mc_rbdyn::Robot & robot, const Eigen::Vector3d & p, const Eigen::Vector3d & rpy, const Eigen::Vector3d & rate, const Eigen::Vector3d & gsensor, const std::map<std::string, std::vector<std::string>> & gJs, const std::map<std::string, std::vector<double>> & gQs)
+  void update(double dt, const mc_rbdyn::Robot & robot, const Eigen::Vector3d & p, const Eigen::Quaterniond & ori, const Eigen::Vector3d & rate, const Eigen::Vector3d & gsensor, const std::map<std::string, std::vector<std::string>> & gJs, const std::map<std::string, std::vector<double>> & gQs)
   {
     ros::Time tm = ros::Time::now();
     sensor_msgs::JointState msg;
@@ -176,7 +176,7 @@ public:
       tfs.push_back(PT2TF(X_0_xtion.inv(), tm, "odom", "robot_map", seq));
 
       sva::PTransformd X_0_base_odom = sva::PTransformd(
-                          Eigen::Quaterniond(sva::RotZ(rpy.z())*sva::RotY(rpy.y())*sva::RotX(-rpy.x()).inverse()),
+                          ori,
                           Eigen::Vector3d(p.x(), p.y(), p.z()));
       sva::PTransformd X_0_base = mbc.bodyPosW[0];
       sva::PTransformd X_base_xtion = X_0_xtion * (X_0_base.inv());
@@ -268,11 +268,11 @@ RobotPublisher::~RobotPublisher()
 {
 }
 
-void RobotPublisher::update(double dt, const mc_rbdyn::Robot & robot, const Eigen::Vector3d & p, const Eigen::Vector3d & rpy, const Eigen::Vector3d & rate, const Eigen::Vector3d & gsensor, const std::map<std::string, std::vector<std::string>> & gripperJ, const std::map<std::string, std::vector<double>> & gripperQ)
+void RobotPublisher::update(double dt, const mc_rbdyn::Robot & robot, const Eigen::Vector3d & p, const Eigen::Quaterniond & ori, const Eigen::Vector3d & rate, const Eigen::Vector3d & gsensor, const std::map<std::string, std::vector<std::string>> & gripperJ, const std::map<std::string, std::vector<double>> & gripperQ)
 {
   if(impl)
   {
-    impl->update(dt, robot, p, rpy, rate, gsensor, gripperJ, gripperQ);
+    impl->update(dt, robot, p, ori, rate, gsensor, gripperJ, gripperQ);
   }
 }
 
@@ -316,13 +316,13 @@ std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
   return impl->nh;
 }
 
-void ROSBridge::update_robot_publisher(const std::string& publisher, double dt, const mc_rbdyn::Robot & robot, const Eigen::Vector3d & p, const Eigen::Vector3d & rpy, const Eigen::Vector3d & rate, const Eigen::Vector3d & gsensor, const std::map<std::string, std::vector<std::string>> & gJ, const std::map<std::string, std::vector<double>> & gQ)
+void ROSBridge::update_robot_publisher(const std::string& publisher, double dt, const mc_rbdyn::Robot & robot, const Eigen::Vector3d & p, const Eigen::Quaterniond & ori, const Eigen::Vector3d & rate, const Eigen::Vector3d & gsensor, const std::map<std::string, std::vector<std::string>> & gJ, const std::map<std::string, std::vector<double>> & gQ)
 {
   if(impl->rpubs.count(publisher) == 0)
   {
     impl->rpubs[publisher] = std::make_shared<RobotPublisher>(publisher + "/", 100);
   }
-  impl->rpubs[publisher]->update(dt, robot, p, rpy, rate, gsensor, gJ, gQ);
+  impl->rpubs[publisher]->update(dt, robot, p, ori, rate, gsensor, gJ, gQ);
 }
 
 void ROSBridge::reset_imu_offset()

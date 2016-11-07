@@ -114,7 +114,7 @@ public:
   /** Get the sensor orientation
    * \return The sensor orientation if provided, Eigen::Vector3d::Zero() otherwise
    */
-  const Eigen::Vector3d & getSensorOrientation();
+  const Eigen::Quaterniond & getSensorOrientation();
 
   /** Get the sensor linear velocity
    * \return The sensor linear velocity if provided, Eigen::Vector3d::Zero() otherwise
@@ -302,7 +302,7 @@ protected:
   /** Robot position provided by sensors */
   Eigen::Vector3d sensorPos;
   /** Robot orientation provided by sensors */
-  Eigen::Vector3d sensorOri;
+  Eigen::Quaterniond sensorOri;
   /** Robot acceleration provided by sensors */
   Eigen::Vector3d sensorAcc;
   /** Robot linear velocity provided by sensors */
