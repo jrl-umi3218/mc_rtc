@@ -27,9 +27,11 @@ alias git_clone="git clone --quiet --recursive"
 alias git_update="git pull && git submodule update"
 
 SUDO_CMD=sudo
+PIP_USER=
 if [ -w $INSTALL_PREFIX ]
 then
   SUDO_CMD=
+  PIP_USER='--user'
 fi
 
 readonly gitlab_ci_yml=$mc_rtc_dir/.gitlab-ci.yml
@@ -222,7 +224,7 @@ else
   cd mc_cython
   git_update
 fi
-${SUDO_CMD} pip install -r requirements.txt
+${SUDO_CMD} pip install -r requirements.txt ${PIP_USER}
 if [ ! -e eigen/eigen.pyx ]
 then
   python generate_pyx.py
