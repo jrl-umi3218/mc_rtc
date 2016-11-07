@@ -426,7 +426,7 @@ private:
 
     inline bool enabled(const std::string & ctrl);
 
-    bool use_sandbox = true;
+    bool use_sandbox = false;
 
     std::vector<std::string> robot_module_paths = {};
     std::shared_ptr<mc_rbdyn::RobotModule> main_robot_module;
