@@ -47,6 +47,7 @@ struct MCGlobalController;
  */
 struct MC_CONTROL_DLLAPI MCController
 {
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
   friend struct MCGlobalController;
 public:
   virtual ~MCController();

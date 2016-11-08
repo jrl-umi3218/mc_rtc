@@ -296,7 +296,7 @@ const QPResultMsg & MCGlobalController::send(const double & t)
 
 MCController & MCGlobalController::controller()
 {
-  assert(controller != nullptr);
+  assert(controller_ != nullptr);
   return *controller_;
 }
 

@@ -361,7 +361,7 @@ std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
   return impl->nh;
 }
 
-void ROSBridge::update_robot_publisher(const std::string&, double, const mc_rbdyn::Robot &, const Eigen::Vector3d &, const Eigen::Vector3d &, const Eigen::Vector3d &, const Eigen::Vector3d &, const std::map<std::string, std::vector<std::string>> &, const std::map<std::string, std::vector<double>> &)
+void ROSBridge::update_robot_publisher(const std::string&, double, const mc_rbdyn::Robot &, const Eigen::Vector3d &, const Eigen::Quaterniond &, const Eigen::Vector3d &, const Eigen::Vector3d &, const std::map<std::string, std::vector<std::string>> &, const std::map<std::string, std::vector<double>> &)
 {
 }
 
