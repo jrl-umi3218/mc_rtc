@@ -41,7 +41,7 @@ bool Loader::close()
   return true;
 }
 
-void Loader::load_libraries(const std::vector<std::string> & paths, Loader::handle_map_t & out, bool verbose)
+void Loader::load_libraries(const std::string & class_name, const std::vector<std::string> & paths, Loader::handle_map_t & out, bool verbose)
 {
   for(const auto & path : paths)
   {
@@ -104,13 +104,13 @@ void Loader::load_libraries(const std::vector<std::string> & paths, Loader::hand
         #pragma GCC diagnostic push
         #pragma GCC diagnostic ignored "-Wpedantic"
         typedef const char*(*class_name_fun_t)(void);
-        class_name_fun_t CLASS_NAME_FUN = (class_name_fun_t)(lt_dlsym(h, "CLASS_NAME"));
+        class_name_fun_t CLASS_NAME_FUN = (class_name_fun_t)(lt_dlsym(h, class_name.c_str()));
         #pragma GCC diagnostic pop
         if(CLASS_NAME_FUN == nullptr)
         {
           if(verbose)
           {
-            LOG_WARNING("No symbol CLASS_NAME in library " << p.string() << std::endl << lt_dlerror())
+            LOG_WARNING("No symbol " << class_name << " in library " << p.string() << std::endl << lt_dlerror())
           }
           continue;
         }

@@ -344,7 +344,7 @@ public:
 #define CONTROLLER_CONSTRUCTOR(NAME, TYPE)\
 extern "C"\
 {\
-  CONTROLLER_MODULE_API const char * CLASS_NAME() { return NAME; }\
+  CONTROLLER_MODULE_API const char * MC_RTC_CONTROLLER() { return NAME; }\
   CONTROLLER_MODULE_API void destroy(mc_control::MCController * ptr) { delete ptr; }\
   CONTROLLER_MODULE_API mc_control::MCController * create(const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const mc_control::Configuration & conf) { return new TYPE(robot, dt, conf); }\
 }
@@ -353,7 +353,7 @@ extern "C"\
 #define SIMPLE_CONTROLLER_CONSTRUCTOR(NAME, TYPE)\
 extern "C"\
 {\
-  CONTROLLER_MODULE_API const char * CLASS_NAME() { return NAME; }\
+  CONTROLLER_MODULE_API const char * MC_RTC_CONTROLLER() { return NAME; }\
   CONTROLLER_MODULE_API void destroy(mc_control::MCController * ptr) { delete ptr; }\
   CONTROLLER_MODULE_API mc_control::MCController * create(const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const mc_control::Configuration &) { return new TYPE(robot, dt); }\
 }

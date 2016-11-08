@@ -59,13 +59,20 @@ protected:
   static bool close();
 
   /*! \brief Provide libraries handles for the libraries in paths
+   *
+   * \param class_name The loader will filter out libraries that do not
+   * provide a class_name function that returns the object's name, this
+   * allows to filter the loaded libraries
+   *
    * \param paths a list of the directories searched by the function
+   *
    * \param out a map (string, handle_type) updated by the function
+   *
    * \param verbose If true, output some warning information
-   * \throws LoaderException if multiple libraries return the same CLASS_NAME() or if the name is already in out
+   *
    * \anchor loader_load_libraries_doc
   */
-  static void load_libraries(const std::vector<std::string> & paths, handle_map_t & out, bool verbose);
+  static void load_libraries(const std::string & class_name, const std::vector<std::string> & paths, handle_map_t & out, bool verbose);
 private:
   static unsigned int init_count_;
 };
@@ -79,6 +86,8 @@ struct ObjectLoader : public boost::noncopyable
 public:
   /** Create ObjectLoader instance
    *
+   * \param class_name Symbol used to distinguish the relevant libraries
+   *
    * \param paths directories searched for libraries
    *
    * \param enable_sandbox If true, creation function called from the
@@ -87,10 +96,8 @@ public:
    *
    * \param verbose If true, output some warning information
    *
-   * \throws See \ref loader_load_libraries_doc "Loader load_libraries
-   * throwing condition"
   */
-  ObjectLoader(const std::vector<std::string> & paths, bool enable_sandbox, bool verbose);
+  ObjectLoader(const std::string & class_name, const std::vector<std::string> & paths, bool enable_sandbox, bool verbose);
 
   /** Destructor */
   ~ObjectLoader();
@@ -114,7 +121,6 @@ public:
   /** Load libraries from the paths provided
    * \param paths directories searched for libraries
    * \param verbose If true, output some warning information
-   * \throws See \ref loader_load_libraries_doc "Loader load_libraries throwing condition"
   */
   void load_libraries(const std::vector<std::string> & paths);
 
@@ -145,6 +151,7 @@ public:
   template<typename... Args>
   std::shared_ptr<T> create_object(const std::string & name, const Args & ... args);
 protected:
+  std::string class_name;
   bool enable_sandbox;
   bool verbose;
   Loader::handle_map_t handles_;

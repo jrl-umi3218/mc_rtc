@@ -22,8 +22,9 @@ void ObjectLoader<T>::ObjectDeleter::operator()(T * ptr)
 }
 
 template<typename T>
-ObjectLoader<T>::ObjectLoader(const std::vector<std::string> & paths, bool enable_sandbox, bool verbose)
-: enable_sandbox(enable_sandbox),
+ObjectLoader<T>::ObjectLoader(const std::string & class_name, const std::vector<std::string> & paths, bool enable_sandbox, bool verbose)
+: class_name(class_name),
+  enable_sandbox(enable_sandbox),
   verbose(verbose)
 {
   Loader::init();
@@ -66,7 +67,7 @@ std::vector<std::string> ObjectLoader<T>::objects() const
 template<typename T>
 void ObjectLoader<T>::load_libraries(const std::vector<std::string> & paths)
 {
-  Loader::load_libraries(paths, handles_, verbose);
+  Loader::load_libraries(class_name, paths, handles_, verbose);
   for(const auto & h : handles_)
   {
     if(deleters_.count(h.first) == 0)

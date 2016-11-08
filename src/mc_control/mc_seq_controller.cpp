@@ -1025,7 +1025,7 @@ bool SeqStep::eval(MCSeqController &)
 
 }
 
-const char * CLASS_NAME()
+const char * MC_RTC_CONTROLLER()
 {
   return "Seq";
 }

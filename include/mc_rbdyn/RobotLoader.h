@@ -91,7 +91,7 @@ private:
     {
       try
       {
-        robot_loader.reset(new mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>({mc_rtc::MC_ROBOTS_INSTALL_PREFIX}, enable_sandbox_, verbose_));
+        robot_loader.reset(new mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>("MC_RTC_ROBOT_MODULE", {mc_rtc::MC_ROBOTS_INSTALL_PREFIX}, enable_sandbox_, verbose_));
       }
       catch(const mc_rtc::LoaderException & exc)
       {

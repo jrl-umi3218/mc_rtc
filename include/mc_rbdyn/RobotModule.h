@@ -127,7 +127,7 @@ struct MC_RBDYN_DLLAPI RobotModule
  * Constructor should be declared by the user
 */
 #define ROBOT_MODULE_COMMON(NAME)\
-  ROBOT_MODULE_API const char * CLASS_NAME() { return NAME; }\
+  ROBOT_MODULE_API const char * MC_RTC_ROBOT_MODULE() { return NAME; }\
   ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr) { delete ptr; }
 
 /*! ROBOT_MODULE_DEFAULT_CONSTRUCTOR
