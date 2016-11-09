@@ -127,7 +127,7 @@ struct MC_RBDYN_DLLAPI RobotModule
  * Constructor should be declared by the user
 */
 #define ROBOT_MODULE_COMMON(NAME)\
-  ROBOT_MODULE_API const char * MC_RTC_ROBOT_MODULE() { return NAME; }\
+  ROBOT_MODULE_API std::vector<std::string> MC_RTC_ROBOT_MODULE() { return {NAME}; }\
   ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr) { delete ptr; }
 
 /*! ROBOT_MODULE_DEFAULT_CONSTRUCTOR
@@ -139,7 +139,7 @@ struct MC_RBDYN_DLLAPI RobotModule
 extern "C"\
 {\
   ROBOT_MODULE_COMMON(NAME)\
-  ROBOT_MODULE_API mc_rbdyn::RobotModule * create() { return new TYPE(); }\
+  ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string &) { return new TYPE(); }\
 }
 
 /*! ROBOT_MODULE_CANONIC_CONSTRUCTOR
@@ -151,5 +151,5 @@ extern "C"\
 extern "C"\
 {\
   ROBOT_MODULE_COMMON(NAME)\
-  ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string & path, const std::string & name) { return new TYPE(path, name); }\
+  ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string&, const std::string & path, const std::string & name) { return new TYPE(path, name); }\
 }

@@ -124,16 +124,16 @@ std::shared_ptr<T> ObjectLoader<T>::create_object(const std::string & name, cons
   }
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wpedantic"
-  std::function<T*(const Args & ...)> create_fn = (T*(*)(const Args & ...))(sym);
+  std::function<T*(const std::string &, const Args & ...)> create_fn = (T*(*)(const std::string &, const Args & ...))(sym);
   #pragma GCC diagnostic pop
   T * ptr = nullptr;
   if(enable_sandbox)
   {
-    ptr = sandbox_function_call(create_fn, args...);
+    ptr = sandbox_function_call(create_fn, name, args...);
   }
   else
   {
-    ptr = no_sandbox_function_call(create_fn, args...);
+    ptr = no_sandbox_function_call(create_fn, name, args...);
   }
   if(ptr == nullptr)
   {
