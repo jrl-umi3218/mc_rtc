@@ -61,6 +61,9 @@ public:
   /*! \brief Destructor */
   virtual ~MCGlobalController();
 
+  /*! \brief Returns a list of enabled controllers */
+  std::vector<std::string> enabled_controllers() const;
+
   /*! \brief Returns a list of all the loaded controllers, whether they
    * are enabled or not.
    */

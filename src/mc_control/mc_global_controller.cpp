@@ -103,6 +103,16 @@ MCGlobalController::~MCGlobalController()
   publish_th.join();
 }
 
+std::vector<std::string> MCGlobalController::enabled_controllers() const
+{
+  std::vector<std::string> ret;
+  for(const auto & c : controllers)
+  {
+    ret.push_back(c.first);
+  }
+  return ret;
+}
+
 std::vector<std::string> MCGlobalController::loaded_controllers() const
 {
   return controller_loader->objects();
