@@ -22,8 +22,9 @@
 namespace mc_control
 {
 
-MCGlobalController::MCGlobalController(const std::string & conf)
-: config(conf),
+MCGlobalController::MCGlobalController(const std::string & conf,
+                                       std::shared_ptr<mc_rbdyn::RobotModule> rm)
+: config(conf, rm),
   current_ctrl(""), next_ctrl(""),
   controller_(nullptr),
   next_controller_(nullptr),
@@ -101,6 +102,11 @@ MCGlobalController::~MCGlobalController()
 {
   publish_th_running = false;
   publish_th.join();
+}
+
+std::shared_ptr<mc_rbdyn::RobotModule> MCGlobalController::get_robot_module()
+{
+  return config.main_robot_module;
 }
 
 std::vector<std::string> MCGlobalController::enabled_controllers() const

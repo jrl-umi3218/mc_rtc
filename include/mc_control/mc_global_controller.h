@@ -56,7 +56,8 @@ public:
    * \param conf Additional configuration to load
    *
    */
-  MCGlobalController(const std::string & conf = "");
+  MCGlobalController(const std::string & conf = "",
+                     std::shared_ptr<mc_rbdyn::RobotModule> rm = nullptr);
 
   /*! \brief Destructor */
   virtual ~MCGlobalController();
@@ -73,6 +74,9 @@ public:
    * are enabled or not.
    */
   std::vector<std::string> loaded_robots() const;
+
+  /*! \brief Returns the main robot module */
+  std::shared_ptr<mc_rbdyn::RobotModule> get_robot_module();
 
   /*! \brief Returns the name of the current controller */
   std::string current_controller() const;
@@ -425,7 +429,8 @@ private:
   /*! \brief Store the controller configuration */
   struct GlobalConfiguration
   {
-    GlobalConfiguration(const std::string & conf);
+    GlobalConfiguration(const std::string & conf,
+                        std::shared_ptr<mc_rbdyn::RobotModule> rm);
 
     inline bool enabled(const std::string & ctrl);
 
@@ -457,10 +462,10 @@ private:
   };
 private:
   GlobalConfiguration config;
-  std::string current_ctrl;
-  std::string next_ctrl;
-  MCController * controller_;
-  MCController * next_controller_;
+  std::string current_ctrl = "";
+  std::string next_ctrl = "";
+  MCController * controller_ = nullptr;
+  MCController * next_controller_ = nullptr;
   std::unique_ptr<mc_rtc::ObjectLoader<MCController>> controller_loader;
   std::map<std::string, std::shared_ptr<mc_control::MCController>> controllers;
 
