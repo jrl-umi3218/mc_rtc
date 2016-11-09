@@ -46,38 +46,7 @@ MCGlobalController::MCGlobalController(const std::string & conf,
   }
   for(const auto & c : config.enabled_controllers)
   {
-    std::string controller_name = c;
-    std::string controller_subname = "";
-    size_t sep_pos = c.find('#');
-    if(sep_pos != std::string::npos)
-    {
-      controller_name = c.substr(0, sep_pos);
-      controller_subname = c.substr(sep_pos+1);
-    }
-    if(controller_loader->has_object(controller_name))
-    {
-      LOG_INFO("Create controller " << controller_name)
-      try
-      {
-        if(controller_subname != "")
-        {
-          controllers[c] = controller_loader->create_object(controller_name, controller_subname, config.main_robot_module, config.timestep, config.config);
-        }
-        else
-        {
-          controllers[c] = controller_loader->create_object(c, config.main_robot_module, config.timestep, config.config);
-        }
-        controllers[c]->real_robots = real_robots;
-      }
-      catch(const mc_rtc::LoaderException & exc)
-      {
-        throw std::runtime_error("Failed to create controller");
-      }
-    }
-    else
-    {
-      LOG_WARNING("Controller " << c << " enabled in configuration but not available");
-    }
+    AddController(c);
     if(c == config.initial_controller && controllers.count(c))
     {
       current_ctrl = c;
@@ -413,6 +382,62 @@ double MCGlobalController::timestep()
 const std::vector<std::string> & MCGlobalController::ref_joint_order()
 {
   return controller_->ref_joint_order;
+}
+
+bool MCGlobalController::AddController(const std::string & name)
+{
+  if(controllers.count(name))
+  {
+    LOG_WARNING("Controller " << name << " already enabled")
+    return false;
+  }
+  std::string controller_name = name;
+  std::string controller_subname = "";
+  size_t sep_pos = name.find('#');
+  if(sep_pos != std::string::npos)
+  {
+    controller_name = name.substr(0, sep_pos);
+    controller_subname = name.substr(sep_pos+1);
+  }
+  if(controller_loader->has_object(controller_name))
+  {
+    LOG_INFO("Create controller " << controller_name)
+    try
+    {
+      if(controller_subname != "")
+      {
+        controllers[name] = controller_loader->create_object(controller_name, controller_subname, config.main_robot_module, config.timestep, config.config);
+      }
+      else
+      {
+        controllers[name] = controller_loader->create_object(name, config.main_robot_module, config.timestep, config.config);
+      }
+      controllers[name]->real_robots = real_robots;
+    }
+    catch(const mc_rtc::LoaderException & exc)
+    {
+      throw std::runtime_error("Failed to create controller");
+    }
+    return true;
+  }
+  else
+  {
+    LOG_WARNING("Controller " << name << " enabled in configuration but not available");
+    return false;
+  }
+}
+
+bool MCGlobalController::AddController(const std::string & name,
+                                       std::shared_ptr<mc_control::MCController> controller)
+{
+  if(controllers.count(name) || !controller)
+  {
+    LOG_WARNING("Controller " << name << " already enabled or invalid pointer passed")
+    return false;
+  }
+  controllers[name] = controller;
+  controllers[name]->real_robots = real_robots;
+  return true;
 }
 
 bool MCGlobalController::EnableController(const std::string & name)

@@ -175,6 +175,32 @@ public:
    */
   const std::vector<std::string> & ref_joint_order();
 
+  /*! \brief Add a controller to the enabled list
+   *
+   * This call enables a controller that was not enabled but loaded. If
+   * the provided name does not exist then it does nothing and returns
+   * false. Otherwise, the controller is created, added to the enabled map
+   * and the function returns true.
+   *
+   * \param name Name of the controller to add
+   */
+  bool AddController(const std::string & name);
+
+  /*! \brief Add an already created controller to the enabled list
+   *
+   * This call adds a controller that was created through another mean
+   * than MCGlobalController internal mechanism.
+   *
+   * The function returns false and does nothing if name is already among
+   * the enabled controllers or if controller is a null pointer.
+   *
+   * \param name Name of the controller to add
+   *
+   * \param controller Controller to add
+   *
+   */
+  bool AddController(const std::string & name, std::shared_ptr<mc_control::MCController> controller);
+
   /*! \brief Switch to the requested controller
    *
    * If the requested controller is not enabled, does not exist or is already
