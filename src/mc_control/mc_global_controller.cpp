@@ -427,6 +427,16 @@ bool MCGlobalController::AddController(const std::string & name)
   }
 }
 
+const MCGlobalController::GlobalConfiguration & MCGlobalController::configuration() const
+{
+  return config;
+}
+
+void MCGlobalController::add_controller_module_paths(const std::vector<std::string> & paths)
+{
+  controller_loader->load_libraries(paths);
+}
+
 bool MCGlobalController::AddController(const std::string & name,
                                        std::shared_ptr<mc_control::MCController> controller)
 {

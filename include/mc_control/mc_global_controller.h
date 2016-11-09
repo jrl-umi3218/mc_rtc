@@ -22,6 +22,8 @@ namespace mc_control
 
 struct MC_CONTROL_DLLAPI MCGlobalController
 {
+private:
+  struct GlobalConfiguration;
 public:
 
   /*! \brief Create the global controller
@@ -174,6 +176,21 @@ public:
    * in the native control system of the robot.
    */
   const std::vector<std::string> & ref_joint_order();
+
+  /*! \brief Access the global controller configuration */
+  const GlobalConfiguration & configuration() const;
+
+  /*! \brief Add the given directories to the controller search path
+   *
+   * Calling this function with the same arguments multiple times
+   * effectively refresh the loaded controller list
+   *
+   * e.g. the following code will rescan all directories
+   *
+   * add_controller_module_paths(configuration().controller_module_paths));
+   *
+   */
+  void add_controller_module_paths(const std::vector<std::string> & paths);
 
   /*! \brief Add a controller to the enabled list
    *
