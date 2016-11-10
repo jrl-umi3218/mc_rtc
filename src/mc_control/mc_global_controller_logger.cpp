@@ -299,7 +299,14 @@ namespace mc_control
     const auto & qOut = gc.send(impl->log_iter_).robots_state[0].q;
     for(const auto & jn : gc.ref_joint_order())
     {
-      log << ";" << qOut.at(jn)[0];
+      if(qOut.count(jn))
+      {
+        log << ";" << qOut.at(jn)[0];
+      }
+      else
+      {
+        log << ";" << 0;
+      }
     }
     for(const auto & ti : controller->getJointTorques())
     {

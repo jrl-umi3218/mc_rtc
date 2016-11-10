@@ -251,8 +251,11 @@ bool MCGlobalController::run()
     int i = 0;
     for(const auto& ref_joint : config.main_robot_module->ref_joint_order())
     {
-      const auto joint_index = real_robot.mb().jointIndexByName(ref_joint);
-      real_robot.mbc().q[joint_index][0] = real_q[i];
+      if(real_robot.hasJoint(ref_joint))
+      {
+        const auto joint_index = real_robot.mb().jointIndexByName(ref_joint);
+        real_robot.mbc().q[joint_index][0] = real_q[i];
+      }
       i++;
     }
     rbd::forwardKinematics(real_robot.mb(), real_robot.mbc());
