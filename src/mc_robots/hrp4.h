@@ -3,6 +3,8 @@
 #include <mc_rbdyn/RobotModule.h>
 #include <mc_rbdyn_urdf/urdf.h>
 
+#include <mc_rtc/logging.h>
+
 #include "api.h"
 
 namespace mc_robots
@@ -60,5 +62,27 @@ namespace mc_robots
 
 }
 
-/*TODO Provide a different constructor to allow WithHand/NoHand instantation */
-ROBOT_MODULE_DEFAULT_CONSTRUCTOR("HRP4", mc_robots::HRP4WithHandRobotModule)
+extern "C"
+{
+  ROBOT_MODULE_API std::vector<std::string> MC_RTC_ROBOT_MODULE()
+  {
+    return {"HRP4", "HRP4NoHand"};
+  }
+  ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr) { delete ptr; }
+  ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string & n)
+  {
+    if(n == "HRP4")
+    {
+      return new mc_robots::HRP4WithHandRobotModule();
+    }
+    else if(n == "HRP4NoHand")
+    {
+      return new mc_robots::HRP4NoHandRobotModule();
+    }
+    else
+    {
+      LOG_ERROR("HRP4 module Cannot create an object of type " << n)
+      return nullptr;
+    }
+  }
+}

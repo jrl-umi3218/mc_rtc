@@ -3,6 +3,8 @@
 #include <mc_rbdyn/RobotModule.h>
 #include <mc_rbdyn_urdf/urdf.h>
 
+#include <mc_rtc/logging.h>
+
 #include "api.h"
 
 namespace mc_robots
@@ -60,5 +62,27 @@ public:
 
 }
 
-/*TODO Provide a different constructor to allow Gripper/NoGripper instantation */
-ROBOT_MODULE_DEFAULT_CONSTRUCTOR("HRP2DRC", mc_robots::HRP2DRCGripperRobotModule)
+extern "C"
+{
+  ROBOT_MODULE_API std::vector<std::string> MC_RTC_ROBOT_MODULE()
+  {
+    return {"HRP2DRC", "HRP2DRCNoGripper"};
+  }
+  ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr) { delete ptr; }
+  ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string & n)
+  {
+    if(n == "HRP2DRC")
+    {
+      return new mc_robots::HRP2DRCGripperRobotModule();
+    }
+    else if(n == "HRP2DRCNoGripper")
+    {
+      return new mc_robots::HRP2DRCRobotModule();
+    }
+    else
+    {
+      LOG_ERROR("HRP2DRC module Cannot create an object of type " << n)
+      return nullptr;
+    }
+  }
+}
