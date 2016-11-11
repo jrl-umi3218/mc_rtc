@@ -29,6 +29,8 @@ std::vector<mc_control::ContactMsg> contactsMsgFromContacts
     msg.r2_index = static_cast<uint16_t>(c.r2Index());
     msg.r1_body = c.r1Surface()->bodyName();
     msg.r2_body = c.r2Surface()->bodyName();
+    msg.r1_surface = c.r1Surface()->name();
+    msg.r2_surface = c.r2Surface()->name();
     msg.r1_points = const_cast<const mc_rbdyn::Surface&>(*(c.r1Surface())).points();
     msg.X_b1_b2 = X_b1_b2;
     msg.nr_generators = static_cast<uint16_t>(mc_rbdyn::Contact::nrConeGen);
