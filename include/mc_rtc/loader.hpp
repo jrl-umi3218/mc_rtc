@@ -22,8 +22,10 @@ void ObjectLoader<T>::ObjectDeleter::operator()(T * ptr)
 }
 
 template<typename T>
-ObjectLoader<T>::ObjectLoader(const std::vector<std::string> & paths, bool enable_sandbox)
-: enable_sandbox(enable_sandbox)
+ObjectLoader<T>::ObjectLoader(const std::string & class_name, const std::vector<std::string> & paths, bool enable_sandbox, bool verbose)
+: class_name(class_name),
+  enable_sandbox(enable_sandbox),
+  verbose(verbose)
 {
   Loader::init();
   load_libraries(paths);
@@ -65,7 +67,7 @@ std::vector<std::string> ObjectLoader<T>::objects() const
 template<typename T>
 void ObjectLoader<T>::load_libraries(const std::vector<std::string> & paths)
 {
-  Loader::load_libraries(paths, handles_);
+  Loader::load_libraries(class_name, paths, handles_, verbose);
   for(const auto & h : handles_)
   {
     if(deleters_.count(h.first) == 0)
@@ -94,6 +96,12 @@ void ObjectLoader<T>::enable_sandboxing(bool enable_sandbox)
 }
 
 template<typename T>
+void ObjectLoader<T>::set_verbosity(bool verbose)
+{
+  this->verbose = verbose;
+}
+
+template<typename T>
 template<typename... Args>
 std::shared_ptr<T> ObjectLoader<T>::create_object(const std::string & name, const Args & ... args)
 {
@@ -116,16 +124,16 @@ std::shared_ptr<T> ObjectLoader<T>::create_object(const std::string & name, cons
   }
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wpedantic"
-  std::function<T*(const Args & ...)> create_fn = (T*(*)(const Args & ...))(sym);
+  std::function<T*(const std::string &, const Args & ...)> create_fn = (T*(*)(const std::string &, const Args & ...))(sym);
   #pragma GCC diagnostic pop
   T * ptr = nullptr;
   if(enable_sandbox)
   {
-    ptr = sandbox_function_call(create_fn, args...);
+    ptr = sandbox_function_call(create_fn, name, args...);
   }
   else
   {
-    ptr = no_sandbox_function_call(create_fn, args...);
+    ptr = no_sandbox_function_call(create_fn, name, args...);
   }
   if(ptr == nullptr)
   {

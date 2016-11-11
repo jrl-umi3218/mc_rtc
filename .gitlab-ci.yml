@@ -69,6 +69,7 @@ build_with_script:
     - ./build_and_install.sh
   tags:
     - GCC
+  allow_failure: true
 
 package_trusty_amd64_noros:
   stage: package

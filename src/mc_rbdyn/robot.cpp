@@ -46,7 +46,7 @@ Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
         const std::string & accelerometerBody,
         const Springs & springs, const std::vector< std::vector<Eigen::VectorXd> > & tlPoly,
         const std::vector< std::vector<Eigen::VectorXd> > & tuPoly, const std::vector<Flexibility> & flexibility)
-: name_(name), robots(robots), robots_idx(robots_idx),
+: name_(name), robots(&robots), robots_idx(robots_idx),
   bodyTransforms(bodyTransforms), ql_(ql), qu_(qu), vl_(vl), vu_(vu), tl_(tl), tu_(tu),
   convexes(convexes), stpbvs(stpbvs), collisionTransforms(collisionTransforms), surfaces_(),
   forceSensors(forceSensors), stance_(stance), _accelerometerBody(accelerometerBody), springs(springs), tlPoly(tlPoly),
@@ -144,29 +144,29 @@ std::vector<std::string> Robot::forceSensorsByName() const
 
 rbd::MultiBody & Robot::mb()
 {
-  return robots.mbs_[robots_idx];
+  return robots->mbs_[robots_idx];
 }
 const rbd::MultiBody & Robot::mb() const
 {
-  return robots.mbs_[robots_idx];
+  return robots->mbs_[robots_idx];
 }
 
 rbd::MultiBodyConfig & Robot::mbc()
 {
-  return robots.mbcs_[robots_idx];
+  return robots->mbcs_[robots_idx];
 }
 const rbd::MultiBodyConfig & Robot::mbc() const
 {
-  return robots.mbcs_[robots_idx];
+  return robots->mbcs_[robots_idx];
 }
 
 rbd::MultiBodyGraph & Robot::mbg()
 {
-  return robots.mbgs_[robots_idx];
+  return robots->mbgs_[robots_idx];
 }
 const rbd::MultiBodyGraph & Robot::mbg() const
 {
-  return robots.mbgs_[robots_idx];
+  return robots->mbgs_[robots_idx];
 }
 
 const std::vector<std::vector<double>> & Robot::ql() const
@@ -430,6 +430,38 @@ void Robots::createRobotWithBase(Robot & robot, const Base & base, const Eigen::
   robot.createWithBase(*this, static_cast<unsigned int>(this->mbs_.size()) - 1, base);
 }
 
+void Robots::removeRobot(const std::string & name)
+{
+  auto it = std::find_if(robots_.begin(), robots_.end(),
+                         [&name](const Robot & r){ return r.name() == name; });
+  if(it != robots_.end())
+  {
+    removeRobot(it->robots_idx);
+  }
+  else
+  {
+    LOG_ERROR("Did not find a robot named " << name << " to remove")
+  }
+}
+
+void Robots::removeRobot(unsigned int idx)
+{
+  if(idx >= robots_.size())
+  {
+    LOG_ERROR("Cannot remove a robot at index " << idx << " because there is " << robots_.size() << " robots loaded")
+    return;
+  }
+  robots_.erase(robots_.begin() + idx);
+  mbs_.erase(mbs_.begin() + idx);
+  mbcs_.erase(mbcs_.begin() + idx);
+  mbgs_.erase(mbgs_.begin() + idx);
+  for(unsigned int i = idx; i < robots_.size(); ++i)
+  {
+    auto & r = robots_[i];
+    r.robots_idx--;
+  }
+}
+
 void Robot::createWithBase(Robots & robots, unsigned int robots_idx, const Base & base) const
 {
   rbd::MultiBody & mb = robots.mbs_[robots_idx];
@@ -468,11 +500,6 @@ void Robot::createWithBase(Robots & robots, unsigned int robots_idx, const Base 
               this->tlPoly, this->tuPoly,
               this->flexibility());
   robots.robot(robots_idx).fixSurfaces();
-}
-
-void Robots::robotCopy(const Robots & robots, unsigned int robots_idx)
-{
-  this->robotCopy(robots.robot(robots_idx));
 }
 
 void Robots::robotCopy(const Robot & robot)

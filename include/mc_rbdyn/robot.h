@@ -91,13 +91,15 @@ public:
 
   Robot & loadFromUrdf(const std::string & name, const std::string & urdf, bool withVirtualLinks = true, const std::vector<std::string> & filteredLinks = {}, bool fixed = false, sva::PTransformd * base = nullptr, const std::string& baseName = "");
 
-  void robotCopy(const Robots & robots, unsigned int robots_idx);
-
   void robotCopy(const Robot & robot);
 
   void createRobotWithBase(Robots & robots, unsigned int robots_idx, const Base & base, const Eigen::Vector3d & baseAxis = Eigen::Vector3d::UnitZ());
 
   void createRobotWithBase(Robot & robot, const Base & base, const Eigen::Vector3d & baseAxis = Eigen::Vector3d::UnitZ());
+
+  void removeRobot(const std::string & name);
+
+  void removeRobot(unsigned int idx);
 
   Robot & robot();
   const Robot & robot() const;
@@ -213,7 +215,7 @@ public:
   std::map<std::string, std::vector<double>> stance() const;
 private:
   std::string name_;
-  Robots & robots;
+  Robots * robots;
   unsigned int robots_idx;
   std::map<std::string, sva::PTransformd> bodyTransforms;
   std::vector< std::vector<double> > ql_;

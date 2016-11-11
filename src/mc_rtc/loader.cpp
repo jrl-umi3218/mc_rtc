@@ -41,13 +41,16 @@ bool Loader::close()
   return true;
 }
 
-void Loader::load_libraries(const std::vector<std::string> & paths, Loader::handle_map_t & out)
+void Loader::load_libraries(const std::string & class_name, const std::vector<std::string> & paths, Loader::handle_map_t & out, bool verbose)
 {
   for(const auto & path : paths)
   {
     if(!bfs::exists(path))
     {
-      LOG_WARNING("Tried to load libraries from " << path << " which does not exist")
+      if(verbose)
+      {
+        LOG_WARNING("Tried to load libraries from " << path << " which does not exist")
+      }
       continue;
     }
     bfs::directory_iterator dit(path), endit;
@@ -73,7 +76,10 @@ void Loader::load_libraries(const std::vector<std::string> & paths, Loader::hand
            * tried to load something other than a library */
           if(strcmp(lt_dlerror(), "file not found") != 0)
           {
-            LOG_WARNING("Failed to load " << p.string() << std::endl << lt_dlerror())
+            if(verbose)
+            {
+              LOG_WARNING("Failed to load " << p.string() << std::endl << lt_dlerror())
+            }
           }
           continue;
         }
@@ -97,27 +103,36 @@ void Loader::load_libraries(const std::vector<std::string> & paths, Loader::hand
         }
         #pragma GCC diagnostic push
         #pragma GCC diagnostic ignored "-Wpedantic"
-        typedef const char*(*class_name_fun_t)(void);
-        class_name_fun_t CLASS_NAME_FUN = (class_name_fun_t)(lt_dlsym(h, "CLASS_NAME"));
+        typedef std::vector<std::string>(*class_name_fun_t)(void);
+        class_name_fun_t CLASS_NAME_FUN = (class_name_fun_t)(lt_dlsym(h, class_name.c_str()));
         #pragma GCC diagnostic pop
         if(CLASS_NAME_FUN == nullptr)
         {
-          LOG_WARNING("No symbol CLASS_NAME in library " << p.string() << std::endl << lt_dlerror())
+          if(verbose)
+          {
+            LOG_WARNING("No symbol " << class_name << " in library " << p.string() << std::endl << lt_dlerror())
+          }
           continue;
         }
-        std::string class_name(CLASS_NAME_FUN());
-        if(out.count(class_name))
+        std::vector<std::string> class_names(CLASS_NAME_FUN());
+        for(const auto & cn : class_names)
         {
-          /* We get the first library that declared this class name and only
-           * emit an exception if this is declared in a different file */
-          bfs::path orig_p(lt_dlgetinfo(out[class_name])->filename);
-          if(orig_p != p)
+          if(out.count(cn))
           {
-            LOG_WARNING("Multiple files export the same name " << class_name << " (new declaration in " << p.string() << ", previous declaration in " << lt_dlgetinfo(out[class_name])->filename << ")")
-            continue;
+            /* We get the first library that declared this class name and only
+             * emit an exception if this is declared in a different file */
+            bfs::path orig_p(lt_dlgetinfo(out[cn])->filename);
+            if(orig_p != p)
+            {
+              if(verbose)
+              {
+                LOG_WARNING("Multiple files export the same name " << cn << " (new declaration in " << p.string() << ", previous declaration in " << lt_dlgetinfo(out[cn])->filename << ")")
+              }
+              continue;
+            }
           }
+          out[cn] = h;
         }
-        out[class_name] = h;
       }
     }
   }

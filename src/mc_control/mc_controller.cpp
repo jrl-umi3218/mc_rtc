@@ -126,7 +126,7 @@ const Eigen::Vector3d & MCController::getSensorPosition()
   return this->sensorPos;
 }
 
-const Eigen::Vector3d & MCController::getSensorOrientation()
+const Eigen::Quaterniond & MCController::getSensorOrientation()
 {
   return this->sensorOri;
 }

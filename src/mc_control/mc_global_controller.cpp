@@ -22,15 +22,17 @@
 namespace mc_control
 {
 
-MCGlobalController::MCGlobalController(const std::string & conf)
-: config(conf),
+MCGlobalController::MCGlobalController(const std::string & conf,
+                                       std::shared_ptr<mc_rbdyn::RobotModule> rm)
+: config(conf, rm),
   current_ctrl(""), next_ctrl(""),
-  controller(0),
-  next_controller(0)
+  controller_(nullptr),
+  next_controller_(nullptr),
+  real_robots(std::make_shared<mc_rbdyn::Robots>())
 {
   try
   {
-    controller_loader.reset(new mc_rtc::ObjectLoader<mc_control::MCController>(config.controller_module_paths, config.use_sandbox));
+    controller_loader.reset(new mc_rtc::ObjectLoader<mc_control::MCController>("MC_RTC_CONTROLLER", config.controller_module_paths, config.use_sandbox, config.verbose_loader));
   }
   catch(mc_rtc::LoaderException & exc)
   {
@@ -44,53 +46,23 @@ MCGlobalController::MCGlobalController(const std::string & conf)
   }
   for(const auto & c : config.enabled_controllers)
   {
-    std::string controller_name = c;
-    std::string controller_subname = "";
-    size_t sep_pos = c.find('#');
-    if(sep_pos != std::string::npos)
-    {
-      controller_name = c.substr(0, sep_pos);
-      controller_subname = c.substr(sep_pos+1);
-    }
-    if(controller_loader->has_object(controller_name))
-    {
-      LOG_INFO("Create controller " << controller_name)
-      try
-      {
-        if(controller_subname != "")
-        {
-          controllers[c] = controller_loader->create_object(controller_name, controller_subname, config.main_robot_module, config.timestep, config.config);
-        }
-        else
-        {
-          controllers[c] = controller_loader->create_object(c, config.main_robot_module, config.timestep, config.config);
-        }
-      }
-      catch(const mc_rtc::LoaderException & exc)
-      {
-        throw std::runtime_error("Failed to create controller");
-      }
-    }
-    else
-    {
-      LOG_WARNING("Controller " << c << " enabled in configuration but not available");
-    }
+    AddController(c);
     if(c == config.initial_controller && controllers.count(c))
     {
       current_ctrl = c;
-      controller = controllers[c].get();
+      controller_ = controllers[c].get();
     }
   }
   next_ctrl = current_ctrl;
-  next_controller = 0;
-  if(current_ctrl == "" || controller == 0)
+  next_controller_ = nullptr;
+  if(current_ctrl == "" || controller_ == nullptr)
   {
     LOG_ERROR("No controller selected or selected controller is not enabled, please check your configuration file")
     throw std::runtime_error("No controller enabled");
   }
   else
   {
-    real_robots.load(*config.main_robot_module, config.main_robot_module->rsdf_dir);
+    real_robots->load(*config.main_robot_module, config.main_robot_module->rsdf_dir);
     publish_th = std::thread(std::bind(&MCGlobalController::publish_thread, this));
   }
 }
@@ -99,6 +71,36 @@ MCGlobalController::~MCGlobalController()
 {
   publish_th_running = false;
   publish_th.join();
+}
+
+std::shared_ptr<mc_rbdyn::RobotModule> MCGlobalController::get_robot_module()
+{
+  return config.main_robot_module;
+}
+
+std::vector<std::string> MCGlobalController::enabled_controllers() const
+{
+  std::vector<std::string> ret;
+  for(const auto & c : controllers)
+  {
+    ret.push_back(c.first);
+  }
+  return ret;
+}
+
+std::vector<std::string> MCGlobalController::loaded_controllers() const
+{
+  return controller_loader->objects();
+}
+
+std::vector<std::string> MCGlobalController::loaded_robots() const
+{
+  return mc_rbdyn::RobotLoader::available_robots();
+}
+
+std::string MCGlobalController::current_controller() const
+{
+  return current_ctrl;
 }
 
 void MCGlobalController::init(const std::vector<double> & initq)
@@ -133,106 +135,138 @@ void MCGlobalController::init(const std::vector<double> & initq, const std::arra
       {"r_gripper", {initq[23], initq[24]}}
     });
   }
-  controller->reset({q});
+  controller_->reset({q});
   if(config.enable_log)
   {
     logger_.reset(new Logger(config.log_policy, config.log_directory, config.log_template));
-    logger_->log_header(current_ctrl, controller);
+    logger_->log_header(current_ctrl, controller_);
   }
 }
 
 void MCGlobalController::setSensorPosition(const Eigen::Vector3d & pos)
 {
-  controller->sensorPos = pos;
+  controller_->sensorPos = pos;
 }
 
-void MCGlobalController::setSensorOrientation(const Eigen::Vector3d & rpy)
+void MCGlobalController::setSensorOrientation(const Eigen::Quaterniond & ori)
 {
-  controller->sensorOri = rpy;
+  controller_->sensorOri = ori;
 }
 
 void MCGlobalController::setSensorLinearVelocity(const Eigen::Vector3d & vel)
 {
-  controller->sensorLinearVel = vel;
+  controller_->sensorLinearVel = vel;
 }
 
 
 void MCGlobalController::setSensorAngularVelocity(const Eigen::Vector3d & vel)
 {
-  controller->sensorAngularVel = vel;
+  controller_->sensorAngularVel = vel;
 }
 
 void MCGlobalController::setSensorAcceleration(const Eigen::Vector3d & acc)
 {
-  controller->sensorAcc = acc;
+  controller_->sensorAcc = acc;
 }
 
 void MCGlobalController::setEncoderValues(const std::vector<double> & eValues)
 {
-  controller->encoderValues = eValues;
+  controller_->encoderValues = eValues;
 }
 
 void MCGlobalController::setJointTorques(const std::vector<double> & tValues)
 {
-  controller->jointTorques = tValues;
+  controller_->jointTorques = tValues;
 }
 
 void MCGlobalController::setWrenches(const std::map<std::string, sva::ForceVecd> & wrenches)
 {
-  controller->setWrenches(wrenches);
+  controller_->setWrenches(wrenches);
 }
 
 void MCGlobalController::setActualGripperQ(const std::map<std::string, std::vector<double>> & grippersQ)
 {
   for(const auto & gQ : grippersQ)
   {
-    assert(controller->grippers.count(gQ.first) > 0);
-    controller->grippers[gQ.first]->setActualQ(gQ.second);
+    assert(controller_->grippers.count(gQ.first) > 0);
+    controller_->grippers[gQ.first]->setActualQ(gQ.second);
   }
 }
 
 bool MCGlobalController::run()
 {
   /* Check if we need to change the controller this time */
-  if(next_controller)
+  if(next_controller_)
   {
     LOG_INFO("Switching controllers")
     if(!running)
     {
-      controller = next_controller;
+      controller_ = next_controller_;
     }
     else
     {
       /*XXX Need to be careful here */
       /*XXX Need to get the current contacts from the controller when needed */
       LOG_INFO("Reset with q[0]")
-      std::cout << controller->robot().mbc().q[0][0] << " ";
-      std::cout << controller->robot().mbc().q[0][1] << " ";
-      std::cout << controller->robot().mbc().q[0][2] << " ";
-      std::cout << controller->robot().mbc().q[0][3] << " ";
-      std::cout << controller->robot().mbc().q[0][4] << " ";
-      std::cout << controller->robot().mbc().q[0][5] << " ";
-      std::cout << controller->robot().mbc().q[0][6] << std::endl;
-      for(const auto & g: controller->grippers)
+      std::cout << controller_->robot().mbc().q[0][0] << " ";
+      std::cout << controller_->robot().mbc().q[0][1] << " ";
+      std::cout << controller_->robot().mbc().q[0][2] << " ";
+      std::cout << controller_->robot().mbc().q[0][3] << " ";
+      std::cout << controller_->robot().mbc().q[0][4] << " ";
+      std::cout << controller_->robot().mbc().q[0][5] << " ";
+      std::cout << controller_->robot().mbc().q[0][6] << std::endl;
+      for(const auto & g: controller_->grippers)
       {
-        next_controller->grippers[g.first]->setCurrentQ(g.second->curPosition());
+        next_controller_->grippers[g.first]->setCurrentQ(g.second->curPosition());
       }
-      next_controller->reset({controller->robot().mbc().q});
-      controller = next_controller;
+      next_controller_->reset({controller_->robot().mbc().q});
+      controller_ = next_controller_;
     }
-    next_controller = 0;
+    next_controller_ = 0;
     current_ctrl = next_ctrl;
     if(config.enable_log)
     {
-      logger_->log_header(current_ctrl, controller);
+      logger_->log_header(current_ctrl, controller_);
     }
+  }
+  const auto& real_q = controller_->getEncoderValues();
+  if(real_q.size() > 0)
+  {
+    auto& real_robot = real_robots->robot();
+    // Update free flyer
+    if(!config.update_real_from_sensors)
+    {
+      real_robot.mbc().q[0] = robot().mbc().q[0];
+    }
+    else
+    {
+      const auto & qt = controller_->sensorOri;
+      const auto & t = controller_->sensorPos;
+      real_robot.mbc().q[0] = {
+        qt.w(), qt.x(), qt.y(), qt.z(),
+        t.x(), t.y(), t.z()
+      };
+    }
+    // Set all joints to encoder values
+    int i = 0;
+    for(const auto& ref_joint : config.main_robot_module->ref_joint_order())
+    {
+      if(real_robot.hasJoint(ref_joint))
+      {
+        const auto joint_index = real_robot.mb().jointIndexByName(ref_joint);
+        real_robot.mbc().q[joint_index][0] = real_q[i];
+      }
+      i++;
+    }
+    rbd::forwardKinematics(real_robot.mb(), real_robot.mbc());
+    rbd::forwardVelocity(real_robot.mb(), real_robot.mbc());
   }
   if(running)
   {
-    bool r = controller->run();
+    bool r = controller_->run();
     if(config.enable_log)
     {
-      logger_->log_data(*this, controller);
+      logger_->log_data(*this, controller_);
     }
     if(!r) { running = false; }
     return r;
@@ -245,18 +279,24 @@ bool MCGlobalController::run()
 
 const QPResultMsg & MCGlobalController::send(const double & t)
 {
-  return controller->send(t);
+  return controller_->send(t);
 }
 
-const mc_rbdyn::Robot & MCGlobalController::robot()
+MCController & MCGlobalController::controller()
 {
-  return controller->robot();
+  assert(controller_ != nullptr);
+  return *controller_;
+}
+
+mc_rbdyn::Robot & MCGlobalController::robot()
+{
+  return controller_->robot();
 }
 
 std::map<std::string, std::vector<double>> MCGlobalController::gripperQ()
 {
   std::map<std::string, std::vector<double>> res;
-  for(const auto & g : controller->grippers)
+  for(const auto & g : controller_->grippers)
   {
     res[g.first] = g.second->q();
   }
@@ -266,7 +306,7 @@ std::map<std::string, std::vector<double>> MCGlobalController::gripperQ()
 std::map<std::string, std::vector<std::string>> MCGlobalController::gripperJoints()
 {
   std::map<std::string, std::vector<std::string>> res;
-  for(const auto & g : controller->grippers)
+  for(const auto & g : controller_->grippers)
   {
     res[g.first] = g.second->names;
   }
@@ -276,7 +316,7 @@ std::map<std::string, std::vector<std::string>> MCGlobalController::gripperJoint
 std::map<std::string, std::vector<std::string>> MCGlobalController::gripperActiveJoints()
 {
   std::map<std::string, std::vector<std::string>> res;
-  for(const auto & g : controller->grippers)
+  for(const auto & g : controller_->grippers)
   {
     res[g.first] = g.second->active_joints;
   }
@@ -287,24 +327,24 @@ void MCGlobalController::setGripperCurrentQ(const std::map<std::string, std::vec
 {
   for(const auto & gQ : gripperQs)
   {
-    if(controller->grippers.count(gQ.first) == 0)
+    if(controller_->grippers.count(gQ.first) == 0)
     {
       LOG_ERROR("Cannot update gripper " << gQ.first)
     }
     else
     {
-      controller->grippers[gQ.first]->setCurrentQ(gQ.second);
+      controller_->grippers[gQ.first]->setCurrentQ(gQ.second);
     }
   }
 }
 
 void MCGlobalController::setGripperTargetQ(const std::string & name, const std::vector<double> & q)
 {
-  if(controller->grippers.count(name))
+  if(controller_->grippers.count(name))
   {
-    if(controller->grippers[name]->active_idx.size() == q.size())
+    if(controller_->grippers[name]->active_idx.size() == q.size())
     {
-      controller->grippers[name]->setTargetQ(q);
+      controller_->grippers[name]->setTargetQ(q);
     }
     else
     {
@@ -319,7 +359,7 @@ void MCGlobalController::setGripperTargetQ(const std::string & name, const std::
 
 void MCGlobalController::setGripperOpenPercent(double pOpen)
 {
-  for(const auto & g : controller->grippers)
+  for(const auto & g : controller_->grippers)
   {
     setGripperOpenPercent(g.first, pOpen);
   }
@@ -327,9 +367,9 @@ void MCGlobalController::setGripperOpenPercent(double pOpen)
 
 void MCGlobalController::setGripperOpenPercent(const std::string & name, double pOpen)
 {
-  if(controller->grippers.count(name))
+  if(controller_->grippers.count(name))
   {
-    controller->grippers[name]->setTargetOpening(pOpen);
+    controller_->grippers[name]->setTargetOpening(pOpen);
   }
   else
   {
@@ -344,7 +384,73 @@ double MCGlobalController::timestep()
 
 const std::vector<std::string> & MCGlobalController::ref_joint_order()
 {
-  return controller->ref_joint_order;
+  return controller_->ref_joint_order;
+}
+
+bool MCGlobalController::AddController(const std::string & name)
+{
+  if(controllers.count(name))
+  {
+    LOG_WARNING("Controller " << name << " already enabled")
+    return false;
+  }
+  std::string controller_name = name;
+  std::string controller_subname = "";
+  size_t sep_pos = name.find('#');
+  if(sep_pos != std::string::npos)
+  {
+    controller_name = name.substr(0, sep_pos);
+    controller_subname = name.substr(sep_pos+1);
+  }
+  if(controller_loader->has_object(controller_name))
+  {
+    LOG_INFO("Create controller " << controller_name)
+    try
+    {
+      if(controller_subname != "")
+      {
+        controllers[name] = controller_loader->create_object(controller_name, controller_subname, config.main_robot_module, config.timestep, config.config);
+      }
+      else
+      {
+        controllers[name] = controller_loader->create_object(name, config.main_robot_module, config.timestep, config.config);
+      }
+      controllers[name]->real_robots = real_robots;
+    }
+    catch(const mc_rtc::LoaderException & exc)
+    {
+      throw std::runtime_error("Failed to create controller");
+    }
+    return true;
+  }
+  else
+  {
+    LOG_WARNING("Controller " << name << " enabled in configuration but not available");
+    return false;
+  }
+}
+
+const MCGlobalController::GlobalConfiguration & MCGlobalController::configuration() const
+{
+  return config;
+}
+
+void MCGlobalController::add_controller_module_paths(const std::vector<std::string> & paths)
+{
+  controller_loader->load_libraries(paths);
+}
+
+bool MCGlobalController::AddController(const std::string & name,
+                                       std::shared_ptr<mc_control::MCController> controller)
+{
+  if(controllers.count(name) || !controller)
+  {
+    LOG_WARNING("Controller " << name << " already enabled or invalid pointer passed")
+    return false;
+  }
+  controllers[name] = controller;
+  controllers[name]->real_robots = real_robots;
+  return true;
 }
 
 bool MCGlobalController::EnableController(const std::string & name)
@@ -352,7 +458,7 @@ bool MCGlobalController::EnableController(const std::string & name)
   if(name != current_ctrl && controllers.count(name))
   {
     next_ctrl = name;
-    next_controller = controllers[name].get();
+    next_controller_ = controllers[name].get();
     return true;
   }
   else
@@ -378,38 +484,23 @@ void MCGlobalController::publish_thread()
     // Publish controlled robot
     if(config.publish_control_state)
     {
-      mc_rtc::ROSBridge::update_robot_publisher("control", timestep(), robot(), Eigen::Vector3d::Zero(), controller->getSensorOrientation(), controller->getSensorAngularVelocity(), controller->getSensorAcceleration(), gripperJoints(), gripperQ());
+      mc_rtc::ROSBridge::update_robot_publisher("control", timestep(), robot(), Eigen::Vector3d::Zero(), controller_->getSensorOrientation(), controller_->getSensorAngularVelocity(), controller_->getSensorAcceleration(), gripperJoints(), gripperQ());
     }
     if(config.publish_env_state)
     {
-      const auto & robots = controller->robots();
+      const auto & robots = controller_->robots();
       for(size_t i = 1; i < robots.robots().size(); ++i)
       {
         std::stringstream ss;
         ss << "control/env_" << i;
-        mc_rtc::ROSBridge::update_robot_publisher(ss.str(), timestep(), robots.robot(i), Eigen::Vector3d::Zero(), Eigen::Vector3d::Zero(), Eigen::Vector3d::Zero(), Eigen::Vector3d::Zero(), {}, {});
+        mc_rtc::ROSBridge::update_robot_publisher(ss.str(), timestep(), robots.robot(i), Eigen::Vector3d::Zero(), Eigen::Quaterniond::Identity(), Eigen::Vector3d::Zero(), Eigen::Vector3d::Zero(), {}, {});
       }
     }
 
     if(config.publish_real_state)
     {
-      const auto& real_q = controller->getEncoderValues();
-      if(real_q.size() > 0)
-      {
-        auto& real_robot = real_robots.robot();
-        // Update free flyer
-        real_robot.mbc().q[0] = robot().mbc().q[0];
-        // Set all joints to encoder values
-        int i = 0;
-        for(const auto& ref_joint : config.main_robot_module->ref_joint_order())
-        {
-          const auto joint_index = real_robot.mb().jointIndexByName(ref_joint);
-          real_robot.mbc().q[joint_index][0] = real_q[i];
-          i++;
-        }
-        // Publish real robot
-        mc_rtc::ROSBridge::update_robot_publisher("real", timestep(), real_robot, Eigen::Vector3d::Zero(), controller->getSensorOrientation(), controller->getSensorAngularVelocity(), controller->getSensorAcceleration(), gripperJoints(), gripperQ());
-      }
+      auto& real_robot = real_robots->robot();
+      mc_rtc::ROSBridge::update_robot_publisher("real", timestep(), real_robot, Eigen::Vector3d::Zero(), controller_->getSensorOrientation(), controller_->getSensorAngularVelocity(), controller_->getSensorAcceleration(), gripperJoints(), gripperQ());
     }
 
     const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now()-start).count();

@@ -47,6 +47,7 @@ struct MCGlobalController;
  */
 struct MC_CONTROL_DLLAPI MCController
 {
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
   friend struct MCGlobalController;
 public:
   virtual ~MCController();
@@ -114,7 +115,7 @@ public:
   /** Get the sensor orientation
    * \return The sensor orientation if provided, Eigen::Vector3d::Zero() otherwise
    */
-  const Eigen::Vector3d & getSensorOrientation();
+  const Eigen::Quaterniond & getSensorOrientation();
 
   /** Get the sensor linear velocity
    * \return The sensor linear velocity if provided, Eigen::Vector3d::Zero() otherwise
@@ -302,7 +303,7 @@ protected:
   /** Robot position provided by sensors */
   Eigen::Vector3d sensorPos;
   /** Robot orientation provided by sensors */
-  Eigen::Vector3d sensorOri;
+  Eigen::Quaterniond sensorOri;
   /** Robot acceleration provided by sensors */
   Eigen::Vector3d sensorAcc;
   /** Robot linear velocity provided by sensors */
@@ -328,6 +329,8 @@ public:
   mc_solver::CollisionsConstraint selfCollisionConstraint;
   /** Posture task for the main robot */
   std::shared_ptr<tasks::qp::PostureTask> postureTask;
+  /** Real robots provided by MCGlobalController */
+  std::shared_ptr<mc_rbdyn::Robots> real_robots;
 };
 
 }
@@ -342,16 +345,16 @@ public:
 #define CONTROLLER_CONSTRUCTOR(NAME, TYPE)\
 extern "C"\
 {\
-  CONTROLLER_MODULE_API const char * CLASS_NAME() { return NAME; }\
+  CONTROLLER_MODULE_API std::vector<std::string> MC_RTC_CONTROLLER() { return {NAME}; }\
   CONTROLLER_MODULE_API void destroy(mc_control::MCController * ptr) { delete ptr; }\
-  CONTROLLER_MODULE_API mc_control::MCController * create(const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const mc_control::Configuration & conf) { return new TYPE(robot, dt, conf); }\
+  CONTROLLER_MODULE_API mc_control::MCController * create(const std::string &, const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const mc_control::Configuration & conf) { return new TYPE(robot, dt, conf); }\
 }
 
 /** Provides a handle to construct a generic controller */
 #define SIMPLE_CONTROLLER_CONSTRUCTOR(NAME, TYPE)\
 extern "C"\
 {\
-  CONTROLLER_MODULE_API const char * CLASS_NAME() { return NAME; }\
+  CONTROLLER_MODULE_API std::vector<std::string> MC_RTC_CONTROLLER() { return {NAME}; }\
   CONTROLLER_MODULE_API void destroy(mc_control::MCController * ptr) { delete ptr; }\
-  CONTROLLER_MODULE_API mc_control::MCController * create(const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const mc_control::Configuration &) { return new TYPE(robot, dt); }\
+  CONTROLLER_MODULE_API mc_control::MCController * create(const std::string&, const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const mc_control::Configuration &) { return new TYPE(robot, dt); }\
 }

@@ -23,7 +23,10 @@ MCHalfSitPoseController::MCHalfSitPoseController(std::shared_ptr<mc_rbdyn::Robot
   const auto & halfSit = robot_module->stance();
   for(unsigned int i = 0; i < ref_joint_order.size(); ++i)
   {
-    halfSitPose[robot().jointIndexByName(ref_joint_order[i])] = halfSit.at(ref_joint_order[i]);
+    if(robot().hasJoint(ref_joint_order[i]))
+    {
+      halfSitPose[robot().jointIndexByName(ref_joint_order[i])] = halfSit.at(ref_joint_order[i]);
+    }
   }
 
   selfCollisionConstraint.reset();

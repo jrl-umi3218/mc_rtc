@@ -1025,9 +1025,9 @@ bool SeqStep::eval(MCSeqController &)
 
 }
 
-const char * CLASS_NAME()
+std::vector<std::string> MC_RTC_CONTROLLER()
 {
-  return "Seq";
+  return {"Seq"};
 }
 
 void destroy(mc_control::MCController * ptr)
@@ -1035,7 +1035,7 @@ void destroy(mc_control::MCController * ptr)
   delete ptr;
 }
 
-mc_control::MCController * create(const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const mc_control::Configuration & conf)
+mc_control::MCController * create(const std::string &, const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const mc_control::Configuration & conf)
 {
   return new mc_control::MCSeqController(robot, dt, {conf});
 }

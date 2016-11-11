@@ -22,6 +22,8 @@ namespace mc_control
 
 struct MC_CONTROL_DLLAPI MCGlobalController
 {
+private:
+  struct GlobalConfiguration;
 public:
 
   /*! \brief Create the global controller
@@ -56,10 +58,30 @@ public:
    * \param conf Additional configuration to load
    *
    */
-  MCGlobalController(const std::string & conf = "");
+  MCGlobalController(const std::string & conf = "",
+                     std::shared_ptr<mc_rbdyn::RobotModule> rm = nullptr);
 
   /*! \brief Destructor */
   virtual ~MCGlobalController();
+
+  /*! \brief Returns a list of enabled controllers */
+  std::vector<std::string> enabled_controllers() const;
+
+  /*! \brief Returns a list of all the loaded controllers, whether they
+   * are enabled or not.
+   */
+  std::vector<std::string> loaded_controllers() const;
+
+  /*! \brief Returns a list of all the loaded robots, whether they
+   * are enabled or not.
+   */
+  std::vector<std::string> loaded_robots() const;
+
+  /*! \brief Returns the main robot module */
+  std::shared_ptr<mc_rbdyn::RobotModule> get_robot_module();
+
+  /*! \brief Returns the name of the current controller */
+  std::string current_controller() const;
 
   /*! \brief Initialize the default controller with the given configuration
    *
@@ -92,7 +114,7 @@ public:
   void setSensorPosition(const Eigen::Vector3d & pos);
 
   /*! \brief A robot's orientation given by a sensor */
-  void setSensorOrientation(const Eigen::Vector3d & ori);
+  void setSensorOrientation(const Eigen::Quaterniond & ori);
 
   /*! \brief A robot's linear velocity given by a sensor */
   void setSensorLinearVelocity(const Eigen::Vector3d& vel);
@@ -139,8 +161,11 @@ public:
    */
   const QPResultMsg & send(const double & t);
 
+  /*! \brief Access the current controller */
+  MCController & controller();
+
   /*! \brief Access the main robot */
-  const mc_rbdyn::Robot & robot();
+  mc_rbdyn::Robot & robot();
 
   /*! \brief Get the controller timestep */
   double timestep();
@@ -151,6 +176,47 @@ public:
    * in the native control system of the robot.
    */
   const std::vector<std::string> & ref_joint_order();
+
+  /*! \brief Access the global controller configuration */
+  const GlobalConfiguration & configuration() const;
+
+  /*! \brief Add the given directories to the controller search path
+   *
+   * Calling this function with the same arguments multiple times
+   * effectively refresh the loaded controller list
+   *
+   * e.g. the following code will rescan all directories
+   *
+   * add_controller_module_paths(configuration().controller_module_paths));
+   *
+   */
+  void add_controller_module_paths(const std::vector<std::string> & paths);
+
+  /*! \brief Add a controller to the enabled list
+   *
+   * This call enables a controller that was not enabled but loaded. If
+   * the provided name does not exist then it does nothing and returns
+   * false. Otherwise, the controller is created, added to the enabled map
+   * and the function returns true.
+   *
+   * \param name Name of the controller to add
+   */
+  bool AddController(const std::string & name);
+
+  /*! \brief Add an already created controller to the enabled list
+   *
+   * This call adds a controller that was created through another mean
+   * than MCGlobalController internal mechanism.
+   *
+   * The function returns false and does nothing if name is already among
+   * the enabled controllers or if controller is a null pointer.
+   *
+   * \param name Name of the controller to add
+   *
+   * \param controller Controller to add
+   *
+   */
+  bool AddController(const std::string & name, std::shared_ptr<mc_control::MCController> controller);
 
   /*! \brief Switch to the requested controller
    *
@@ -406,11 +472,14 @@ private:
   /*! \brief Store the controller configuration */
   struct GlobalConfiguration
   {
-    GlobalConfiguration(const std::string & conf);
+    GlobalConfiguration(const std::string & conf,
+                        std::shared_ptr<mc_rbdyn::RobotModule> rm);
 
     inline bool enabled(const std::string & ctrl);
 
-    bool use_sandbox = true;
+    bool use_sandbox = false;
+
+    bool verbose_loader = true;
 
     std::vector<std::string> robot_module_paths = {};
     std::shared_ptr<mc_rbdyn::RobotModule> main_robot_module;
@@ -419,6 +488,8 @@ private:
     std::vector<std::string> enabled_controllers = {};
     std::string initial_controller = "";
     double timestep = 0.002;
+
+    bool update_real_from_sensors = false;
 
     bool publish_control_state = true;
     bool publish_env_state = true;
@@ -434,16 +505,16 @@ private:
   };
 private:
   GlobalConfiguration config;
-  std::string current_ctrl;
-  std::string next_ctrl;
-  MCController * controller;
-  MCController * next_controller;
+  std::string current_ctrl = "";
+  std::string next_ctrl = "";
+  MCController * controller_ = nullptr;
+  MCController * next_controller_ = nullptr;
   std::unique_ptr<mc_rtc::ObjectLoader<MCController>> controller_loader;
   std::map<std::string, std::shared_ptr<mc_control::MCController>> controllers;
 
   bool publish_th_running = true;
   std::thread publish_th;
-  mc_rbdyn::Robots real_robots;
+  std::shared_ptr<mc_rbdyn::Robots> real_robots = nullptr;
 
   std::unique_ptr<Logger> logger_;
 };
