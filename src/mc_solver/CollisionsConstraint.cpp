@@ -18,9 +18,9 @@ bool CollisionsConstraint::removeCollision(QPSolver & solver, const std::string 
   {
     cols.erase(std::find(cols.begin(), cols.end(), p.second));
     bool ret = collConstr->rmCollision(p.first);
-    if(collConstr->nrInEq())
+    if(ret)
     {
-      collConstr->updateNrCollisions();
+      collConstr->updateNrVars({}, solver.data());
       solver.updateConstrSize();
     }
     return ret;
@@ -47,9 +47,9 @@ bool CollisionsConstraint::removeCollisionByBody(QPSolver & solver, const std::s
   {
     cols.erase(std::find(cols.begin(), cols.end(), it));
   }
-  if(toRm.size() && collConstr->nrInEq())
+  if(toRm.size())
   {
-    collConstr->updateNrCollisions();
+    collConstr->updateNrVars({}, solver.data());
     solver.updateConstrSize();
   }
   return toRm.size() > 0;
@@ -79,11 +79,8 @@ void CollisionsConstraint::addCollisions(QPSolver & solver, const std::vector<mc
   {
     __addCollision(solver.robots(), c);
   }
-  if(collConstr->nrInEq())
-  {
-    collConstr->updateNrCollisions();
-    solver.updateConstrSize();
-  }
+  collConstr->updateNrVars({}, solver.data());
+  solver.updateConstrSize();
 }
 
 void CollisionsConstraint::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) const
