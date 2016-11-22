@@ -244,7 +244,7 @@ then
   then
     if [ ! -d V-REP_PRO_EDU_V3_3_2_Mac ]
     then
-      wget http://coppeliarobotics.com/V-REP_PRO_EDU_V3_3_2_Mac.zip
+      wget http://coppeliarobotics.com/files/V-REP_PRO_EDU_V3_3_2_Mac.zip
       unzip V-REP_PRO_EDU_V3_3_2_Mac.zip
     fi
     VREP_PATH=$SOURCE_DIR/V-REP_PRO_EDU_V3_3_2_Mac
@@ -256,7 +256,7 @@ then
     fi
     if [ ! -d V-REP_PRO_EDU_V3_3_2${VREP_VERSION}_Linux ]
     then
-      wget http://coppeliarobotics.com/V-REP_PRO_EDU_V3_3_2${VREP_VERSION}_Linux.tar.gz
+      wget http://coppeliarobotics.com/files/V-REP_PRO_EDU_V3_3_2${VREP_VERSION}_Linux.tar.gz
       tar xzf V-REP_PRO_EDU_V3_3_2${VREP_VERSION}_Linux.tar.gz
     fi
     VREP_PATH=$SOURCE_DIR/V-REP_PRO_EDU_V3_3_2${VREP_VERSION}_Linux
