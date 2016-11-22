@@ -193,6 +193,11 @@ public:
    * \return The timestep of the solver
    */
   double dt();
+
+  /** Returns the internal QP solver data
+   * \return The data of the solver
+   */
+  tasks::qp::SolverData & data();
 private:
   std::shared_ptr<mc_rbdyn::Robots> robots_p;
   double timeStep;

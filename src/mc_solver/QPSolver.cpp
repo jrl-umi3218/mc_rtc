@@ -211,4 +211,9 @@ double QPSolver::dt()
   return timeStep;
 }
 
+tasks::qp::SolverData & QPSolver::data()
+{
+  return solver.data();
+}
+
 }
