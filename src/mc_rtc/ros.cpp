@@ -54,6 +54,7 @@ public:
     j_state_pub(this->nh.advertise<sensor_msgs::JointState>(prefix+"joint_states", 1)),
     imu_pub(this->nh.advertise<sensor_msgs::Imu>(prefix+"imu", 1)),
     odom_pub(this->nh.advertise<nav_msgs::Odometry>(prefix+"odom", 1)),
+    wrenches_pub(this->nh.advertise<sensor_msgs::MultiDOFJointState>(prefix+"wrenches", 1)),
     iter_since_start(0),
     imu_noise(Eigen::Vector3d::Zero()),
     tf_caster(),
