@@ -74,11 +74,12 @@ void Loader::load_libraries(const std::string & class_name, const std::vector<st
         {
           /* Discard the "file not found" error as it only indicates that we
            * tried to load something other than a library */
-          if(strcmp(lt_dlerror(), "file not found") != 0)
+          const char * error = lt_dlerror();
+          if(strcmp(error, "file not found") != 0)
           {
             if(verbose)
             {
-              LOG_WARNING("Failed to load " << p.string() << std::endl << lt_dlerror())
+              LOG_WARNING("Failed to load " << p.string() << std::endl << error)
             }
           }
           continue;
@@ -108,9 +109,10 @@ void Loader::load_libraries(const std::string & class_name, const std::vector<st
         #pragma GCC diagnostic pop
         if(CLASS_NAME_FUN == nullptr)
         {
+          const char * error = lt_dlerror();
           if(verbose)
           {
-            LOG_WARNING("No symbol " << class_name << " in library " << p.string() << std::endl << lt_dlerror())
+            LOG_WARNING("No symbol " << class_name << " in library " << p.string() << std::endl << error)
           }
           continue;
         }
