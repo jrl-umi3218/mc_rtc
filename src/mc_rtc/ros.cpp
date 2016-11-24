@@ -292,7 +292,7 @@ void RobotPublisher::update(double dt, const mc_rbdyn::Robot & robot, const Eige
 {
   if(impl)
   {
-    impl->update(dt, robot, p, rpy, rate, gsensor, gripperJ, gripperQ, wrenches);
+    impl->update(dt, robot, p, ori, rate, gsensor, gripperJ, gripperQ, wrenches);
   }
 }
 
