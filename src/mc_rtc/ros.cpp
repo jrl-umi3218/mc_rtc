@@ -11,7 +11,7 @@
 #include <nav_msgs/Odometry.h>
 #include <sensor_msgs/Imu.h>
 #include <sensor_msgs/JointState.h>
-#include <sensor_msgs/MultiDOFJointState.h>
+#include <geometry_msgs/WrenchStamped.h>
 #include <tf2_ros/transform_broadcaster.h>
 
 #include <mutex>
@@ -54,7 +54,6 @@ public:
     j_state_pub(this->nh.advertise<sensor_msgs::JointState>(prefix+"joint_states", 1)),
     imu_pub(this->nh.advertise<sensor_msgs::Imu>(prefix+"imu", 1)),
     odom_pub(this->nh.advertise<nav_msgs::Odometry>(prefix+"odom", 1)),
-    wrenches_pub(this->nh.advertise<sensor_msgs::MultiDOFJointState>(prefix+"wrenches", 1)),
     iter_since_start(0),
     imu_noise(Eigen::Vector3d::Zero()),
     tf_caster(),
@@ -160,19 +159,19 @@ public:
     odom.twist.twist.angular.z = rate.z();
     odom.twist.covariance.fill(0);
 
-    sensor_msgs::MultiDOFJointState ros_wrenches;
+    std::vector<geometry_msgs::WrenchStamped> ros_wrenches;
     for (const auto & pair : wrenches) {
         const auto & name = pair.first;
         const auto & wrench_sva = pair.second;
-        geometry_msgs::Wrench wrench;
-        wrench.force.x = wrench_sva.force().x();
-        wrench.force.y = wrench_sva.force().y();
-        wrench.force.z = wrench_sva.force().z();
-        wrench.torque.x = wrench_sva.couple().x();
-        wrench.torque.y = wrench_sva.couple().y();
-        wrench.torque.z = wrench_sva.couple().z();
-        ros_wrenches.joint_names.push_back(name);
-        ros_wrenches.wrench.push_back(wrench);
+        geometry_msgs::WrenchStamped wrench_st;
+        wrench_st.header.frame_id = name;
+        wrench_st.wrench.force.x = wrench_sva.force().x();
+        wrench_st.wrench.force.y = wrench_sva.force().y();
+        wrench_st.wrench.force.z = wrench_sva.force().z();
+        wrench_st.wrench.torque.x = wrench_sva.couple().x();
+        wrench_st.wrench.torque.y = wrench_sva.couple().y();
+        wrench_st.wrench.torque.z = wrench_sva.couple().z();
+        ros_wrenches.push_back(wrench_st);
     }
 
     tfs.push_back(PT2TF(robot.bodyTransform(robot.mb().body(0).name())*mbc.parentToSon[0], tm, std::string("robot_map"), prefix+robot.mb().body(0).name(), seq));
@@ -219,7 +218,7 @@ private:
   ros::Publisher j_state_pub;
   ros::Publisher imu_pub;
   ros::Publisher odom_pub;
-  ros::Publisher wrenches_pub;
+  std::map<std::string, ros::Publisher> wrenches_pub;
   unsigned int iter_since_start;
   Eigen::Vector3d imu_noise;
   tf2_ros::TransformBroadcaster tf_caster;
@@ -231,7 +230,7 @@ private:
     std::vector<geometry_msgs::TransformStamped> tfs;
     sensor_msgs::Imu imu;
     nav_msgs::Odometry odom;
-    sensor_msgs::MultiDOFJointState wrenches;
+    std::vector <geometry_msgs::WrenchStamped> wrenches;
   };
 
   bool running;
@@ -258,7 +257,12 @@ private:
             imu_pub.publish(msg.imu);
             odom_pub.publish(msg.odom);
             tf_caster.sendTransform(msg.tfs);
-            wrenches_pub.publish(msg.wrenches);
+            for (const auto & wrench : msg.wrenches) {
+                const auto & sensor_name = wrench.header.frame_id;
+                if (wrenches_pub.find(sensor_name) == wrenches_pub.end())
+                    wrenches_pub.insert({sensor_name, this->nh.advertise<geometry_msgs::WrenchStamped>(prefix+"force/"+sensor_name, 1) });
+                wrenches_pub[sensor_name].publish(wrench);
+            }
           }
           catch(const ros::serialization::StreamOverrunException & e)
           {
