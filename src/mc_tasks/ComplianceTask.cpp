@@ -39,13 +39,8 @@ ComplianceTask::ComplianceTask(const mc_rbdyn::Robots & robots,
     torqueGain_(torqueGain),
     dof_(dof)
 {
-  /* FIXME : What we really want is to have the efTask free in the body referential
-   * but the current implementation uses the world referential: it works because
-   * feet are placed horizontally on the ground */
   efTask_ = std::make_shared<EndEffectorTask>(forceSensor.parentBodyName, robots,
                                               robotIndex, stiffness, weight);
-  efTask_->orientationTask->dimWeight(dof_.diagonal().head(3));
-  efTask_->positionTask->dimWeight(dof_.diagonal().tail(3));
   clampTrans_ = clamper(0.01);
   clampRot_ = clamper(0.1);
 }
