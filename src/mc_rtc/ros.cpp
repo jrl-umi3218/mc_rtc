@@ -171,19 +171,20 @@ public:
     odom.twist.covariance.fill(0);
 
     std::vector<geometry_msgs::WrenchStamped> ros_wrenches;
-    for (const auto & pair : wrenches) {
-        const auto & name = pair.first;
-        const auto & wrench_sva = pair.second;
-        geometry_msgs::WrenchStamped wrench_msg;
-        wrench_msg.header = msg.header;
-        wrench_msg.header.frame_id = name;
-        wrench_msg.wrench.force.x = wrench_sva.force().x();
-        wrench_msg.wrench.force.y = wrench_sva.force().y();
-        wrench_msg.wrench.force.z = wrench_sva.force().z();
-        wrench_msg.wrench.torque.x = wrench_sva.couple().x();
-        wrench_msg.wrench.torque.y = wrench_sva.couple().y();
-        wrench_msg.wrench.torque.z = wrench_sva.couple().z();
-        ros_wrenches.push_back(wrench_msg);
+    for (const auto & pair : wrenches)
+    {
+      const std::string & name = pair.first;
+      const sva::ForceVecd & wrench_sva = pair.second;
+      geometry_msgs::WrenchStamped wrench_msg;
+      wrench_msg.header = msg.header;
+      wrench_msg.header.frame_id = name;
+      wrench_msg.wrench.force.x = wrench_sva.force().x();
+      wrench_msg.wrench.force.y = wrench_sva.force().y();
+      wrench_msg.wrench.force.z = wrench_sva.force().z();
+      wrench_msg.wrench.torque.x = wrench_sva.couple().x();
+      wrench_msg.wrench.torque.y = wrench_sva.couple().y();
+      wrench_msg.wrench.torque.z = wrench_sva.couple().z();
+      ros_wrenches.push_back(wrench_msg);
     }
 
     tfs.push_back(PT2TF(robot.bodyTransform(robot.mb().body(0).name())*mbc.parentToSon[0], tm, std::string("robot_map"), prefix+robot.mb().body(0).name(), seq));
