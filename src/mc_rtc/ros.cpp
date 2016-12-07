@@ -62,6 +62,16 @@ public:
     rate(rate), skip(skip == 0 ? 1 : skip),
     th(std::bind(&RobotPublisherImpl::publishThread, this))
   {
+    for (const std::string & sensor_name : {
+        "LeftFootForceSensor",
+        "RightFootForceSensor",
+        "LeftHandForceSensor",
+        "RightHandForceSensor"})
+    {
+      wrenches_pub.insert({
+          sensor_name,
+          this->nh.advertise<geometry_msgs::WrenchStamped>(prefix+"force/"+sensor_name, 1)});
+    }
   }
 
   ~RobotPublisherImpl()
@@ -231,7 +241,7 @@ private:
     std::vector<geometry_msgs::TransformStamped> tfs;
     sensor_msgs::Imu imu;
     nav_msgs::Odometry odom;
-    std::vector <geometry_msgs::WrenchStamped> wrenches;
+    std::vector<geometry_msgs::WrenchStamped> wrenches;
   };
 
   bool running;
@@ -258,11 +268,13 @@ private:
             imu_pub.publish(msg.imu);
             odom_pub.publish(msg.odom);
             tf_caster.sendTransform(msg.tfs);
-            for (const auto & wrench : msg.wrenches) {
-                const auto & sensor_name = wrench.header.frame_id;
-                if (wrenches_pub.find(sensor_name) == wrenches_pub.end())
-                    wrenches_pub.insert({sensor_name, this->nh.advertise<geometry_msgs::WrenchStamped>(prefix+"force/"+sensor_name, 1) });
+            for (const auto & wrench : msg.wrenches)
+            {
+              const std::string & sensor_name = wrench.header.frame_id;
+              if (wrenches_pub.find(sensor_name) != wrenches_pub.end())
+              {
                 wrenches_pub[sensor_name].publish(wrench);
+              }
             }
           }
           catch(const ros::serialization::StreamOverrunException & e)
