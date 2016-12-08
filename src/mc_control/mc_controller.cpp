@@ -103,7 +103,10 @@ void MCController::reset(const ControllerResetData & reset_data)
 
 void MCController::setWrenches(const std::map<std::string, sva::ForceVecd> & wrenches)
 {
-  this->wrenches = wrenches;
+  for(const auto & w : wrenches)
+  {
+    this->wrenches[w.first] = w.second;
+  }
 }
 
 const std::map<std::string, sva::ForceVecd> & MCController::getWrenches()
