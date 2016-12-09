@@ -484,7 +484,7 @@ void MCGlobalController::publish_thread()
     // Publish controlled robot
     if(config.publish_control_state)
     {
-      mc_rtc::ROSBridge::update_robot_publisher("control", timestep(), robot(), Eigen::Vector3d::Zero(), controller_->getSensorOrientation(), controller_->getSensorAngularVelocity(), controller_->getSensorAcceleration(), gripperJoints(), gripperQ());
+      mc_rtc::ROSBridge::update_robot_publisher("control", timestep(), robot(), Eigen::Vector3d::Zero(), controller_->getSensorOrientation(), controller_->getSensorAngularVelocity(), controller_->getSensorAcceleration(), gripperJoints(), gripperQ(), controller_->getWrenches());
     }
     if(config.publish_env_state)
     {
@@ -493,14 +493,14 @@ void MCGlobalController::publish_thread()
       {
         std::stringstream ss;
         ss << "control/env_" << i;
-        mc_rtc::ROSBridge::update_robot_publisher(ss.str(), timestep(), robots.robot(i), Eigen::Vector3d::Zero(), Eigen::Quaterniond::Identity(), Eigen::Vector3d::Zero(), Eigen::Vector3d::Zero(), {}, {});
+        mc_rtc::ROSBridge::update_robot_publisher(ss.str(), timestep(), robots.robot(i), Eigen::Vector3d::Zero(), Eigen::Quaterniond::Identity(), Eigen::Vector3d::Zero(), Eigen::Vector3d::Zero(), {}, {}, {});
       }
     }
 
     if(config.publish_real_state)
     {
       auto& real_robot = real_robots->robot();
-      mc_rtc::ROSBridge::update_robot_publisher("real", timestep(), real_robot, Eigen::Vector3d::Zero(), controller_->getSensorOrientation(), controller_->getSensorAngularVelocity(), controller_->getSensorAcceleration(), gripperJoints(), gripperQ());
+      mc_rtc::ROSBridge::update_robot_publisher("real", timestep(), real_robot, Eigen::Vector3d::Zero(), controller_->getSensorOrientation(), controller_->getSensorAngularVelocity(), controller_->getSensorAcceleration(), gripperJoints(), gripperQ(), controller_->getWrenches());
     }
 
     const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now()-start).count();

@@ -11,6 +11,7 @@
 #include <nav_msgs/Odometry.h>
 #include <sensor_msgs/Imu.h>
 #include <sensor_msgs/JointState.h>
+#include <geometry_msgs/WrenchStamped.h>
 #include <tf2_ros/transform_broadcaster.h>
 
 #include <mutex>
@@ -61,6 +62,16 @@ public:
     rate(rate), skip(skip == 0 ? 1 : skip),
     th(std::bind(&RobotPublisherImpl::publishThread, this))
   {
+    for (const std::string & sensor_name : {
+        "LeftFootForceSensor",
+        "RightFootForceSensor",
+        "LeftHandForceSensor",
+        "RightHandForceSensor"})
+    {
+      wrenches_pub.insert({
+          sensor_name,
+          this->nh.advertise<geometry_msgs::WrenchStamped>(prefix+"force/"+sensor_name, 1)});
+    }
   }
 
   ~RobotPublisherImpl()
@@ -69,7 +80,7 @@ public:
     th.join();
   }
 
-  void update(double dt, const mc_rbdyn::Robot & robot, const Eigen::Vector3d & p, const Eigen::Quaterniond & ori, const Eigen::Vector3d & rate, const Eigen::Vector3d & gsensor, const std::map<std::string, std::vector<std::string>> & gJs, const std::map<std::string, std::vector<double>> & gQs)
+  void update(double dt, const mc_rbdyn::Robot & robot, const Eigen::Vector3d & p, const Eigen::Quaterniond & ori, const Eigen::Vector3d & rate, const Eigen::Vector3d & gsensor, const std::map<std::string, std::vector<std::string>> & gJs, const std::map<std::string, std::vector<double>> & gQs, const std::map<std::string, sva::ForceVecd> & wrenches)
   {
     ros::Time tm = ros::Time::now();
     sensor_msgs::JointState msg;
@@ -158,6 +169,23 @@ public:
     odom.twist.twist.angular.z = rate.z();
     odom.twist.covariance.fill(0);
 
+    std::vector<geometry_msgs::WrenchStamped> ros_wrenches;
+    for (const auto & pair : wrenches)
+    {
+      const std::string & name = pair.first;
+      const sva::ForceVecd & wrench_sva = pair.second;
+      geometry_msgs::WrenchStamped wrench_msg;
+      wrench_msg.header = msg.header;
+      wrench_msg.header.frame_id = name;
+      wrench_msg.wrench.force.x = wrench_sva.force().x();
+      wrench_msg.wrench.force.y = wrench_sva.force().y();
+      wrench_msg.wrench.force.z = wrench_sva.force().z();
+      wrench_msg.wrench.torque.x = wrench_sva.couple().x();
+      wrench_msg.wrench.torque.y = wrench_sva.couple().y();
+      wrench_msg.wrench.torque.z = wrench_sva.couple().z();
+      ros_wrenches.push_back(wrench_msg);
+    }
+
     tfs.push_back(PT2TF(robot.bodyTransform(robot.mb().body(0).name())*mbc.parentToSon[0], tm, std::string("robot_map"), prefix+robot.mb().body(0).name(), seq));
     for(int j = 1; j < robot.mb().nrJoints(); ++j)
     {
@@ -187,7 +215,7 @@ public:
     if(seq % skip == 0)
     {
       mut.lock();
-      msgs.push({msg, tfs, imu, odom});
+      msgs.push({msg, tfs, imu, odom, ros_wrenches});
       mut.unlock();
     }
   }
@@ -202,6 +230,7 @@ private:
   ros::Publisher j_state_pub;
   ros::Publisher imu_pub;
   ros::Publisher odom_pub;
+  std::map<std::string, ros::Publisher> wrenches_pub;
   unsigned int iter_since_start;
   Eigen::Vector3d imu_noise;
   tf2_ros::TransformBroadcaster tf_caster;
@@ -213,6 +242,7 @@ private:
     std::vector<geometry_msgs::TransformStamped> tfs;
     sensor_msgs::Imu imu;
     nav_msgs::Odometry odom;
+    std::vector<geometry_msgs::WrenchStamped> wrenches;
   };
 
   bool running;
@@ -239,6 +269,14 @@ private:
             imu_pub.publish(msg.imu);
             odom_pub.publish(msg.odom);
             tf_caster.sendTransform(msg.tfs);
+            for (const auto & wrench : msg.wrenches)
+            {
+              const std::string & sensor_name = wrench.header.frame_id;
+              if (wrenches_pub.find(sensor_name) != wrenches_pub.end())
+              {
+                wrenches_pub[sensor_name].publish(wrench);
+              }
+            }
           }
           catch(const ros::serialization::StreamOverrunException & e)
           {
@@ -268,11 +306,11 @@ RobotPublisher::~RobotPublisher()
 {
 }
 
-void RobotPublisher::update(double dt, const mc_rbdyn::Robot & robot, const Eigen::Vector3d & p, const Eigen::Quaterniond & ori, const Eigen::Vector3d & rate, const Eigen::Vector3d & gsensor, const std::map<std::string, std::vector<std::string>> & gripperJ, const std::map<std::string, std::vector<double>> & gripperQ)
+void RobotPublisher::update(double dt, const mc_rbdyn::Robot & robot, const Eigen::Vector3d & p, const Eigen::Quaterniond & ori, const Eigen::Vector3d & rate, const Eigen::Vector3d & gsensor, const std::map<std::string, std::vector<std::string>> & gripperJ, const std::map<std::string, std::vector<double>> & gripperQ, const std::map<std::string, sva::ForceVecd> & wrenches)
 {
   if(impl)
   {
-    impl->update(dt, robot, p, ori, rate, gsensor, gripperJ, gripperQ);
+    impl->update(dt, robot, p, ori, rate, gsensor, gripperJ, gripperQ, wrenches);
   }
 }
 
@@ -316,13 +354,13 @@ std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
   return impl->nh;
 }
 
-void ROSBridge::update_robot_publisher(const std::string& publisher, double dt, const mc_rbdyn::Robot & robot, const Eigen::Vector3d & p, const Eigen::Quaterniond & ori, const Eigen::Vector3d & rate, const Eigen::Vector3d & gsensor, const std::map<std::string, std::vector<std::string>> & gJ, const std::map<std::string, std::vector<double>> & gQ)
+void ROSBridge::update_robot_publisher(const std::string& publisher, double dt, const mc_rbdyn::Robot & robot, const Eigen::Vector3d & p, const Eigen::Quaterniond & ori, const Eigen::Vector3d & rate, const Eigen::Vector3d & gsensor, const std::map<std::string, std::vector<std::string>> & gJ, const std::map<std::string, std::vector<double>> & gQ, const std::map<std::string, sva::ForceVecd> & wrenches)
 {
   if(impl->rpubs.count(publisher) == 0)
   {
     impl->rpubs[publisher] = std::make_shared<RobotPublisher>(publisher + "/", 100);
   }
-  impl->rpubs[publisher]->update(dt, robot, p, ori, rate, gsensor, gJ, gQ);
+  impl->rpubs[publisher]->update(dt, robot, p, ori, rate, gsensor, gJ, gQ, wrenches);
 }
 
 void ROSBridge::reset_imu_offset()
@@ -361,7 +399,7 @@ std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
   return impl->nh;
 }
 
-void ROSBridge::update_robot_publisher(const std::string&, double, const mc_rbdyn::Robot &, const Eigen::Vector3d &, const Eigen::Quaterniond &, const Eigen::Vector3d &, const Eigen::Vector3d &, const std::map<std::string, std::vector<std::string>> &, const std::map<std::string, std::vector<double>> &)
+void ROSBridge::update_robot_publisher(const std::string&, double, const mc_rbdyn::Robot &, const Eigen::Vector3d &, const Eigen::Quaterniond &, const Eigen::Vector3d &, const Eigen::Vector3d &, const std::map<std::string, std::vector<std::string>> &, const std::map<std::string, std::vector<double>> &, const std::map<std::string, sva::ForceVecd> &)
 {
 }
 
