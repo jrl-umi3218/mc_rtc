@@ -9,7 +9,7 @@ shopt -s expand_aliases
 readonly mc_rtc_dir=`cd $(dirname $0)/..; pwd`
 
 readonly SOURCE_DIR=`cd $mc_rtc_dir/../; pwd`
-readonly INSTALL_PREFIX="/tmp"
+readonly INSTALL_PREFIX="/usr/local"
 readonly WITH_ROS_SUPPORT="true"
 VREP_PATH=
 
