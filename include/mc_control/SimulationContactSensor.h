@@ -3,8 +3,9 @@
 
 #include <mc_control/ContactSensor.h>
 
-#include <mc_rbdyn/surface_hull.h>
+#include <mc_rbdyn/SCHAddon.h>
 #include <mc_rbdyn/stance.h>
+#include <mc_rbdyn/surface_hull.h>
 
 #include <mc_control/api.h>
 

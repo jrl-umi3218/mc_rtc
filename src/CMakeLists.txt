@@ -19,7 +19,9 @@ mc_rbdyn/GripperSurface.cpp
 mc_rbdyn/surface_utils.cpp
 mc_rbdyn/surface_hull.cpp
 mc_rbdyn/Contact.cpp
-mc_rbdyn/robot.cpp
+mc_rbdyn/Robot.cpp
+mc_rbdyn/Robots.cpp
+mc_rbdyn/stance.cpp
 mc_rbdyn/stance.cpp
 mc_rbdyn/StanceConfig.cpp
 mc_rbdyn/PolygonInterpolator.cpp
@@ -38,8 +40,8 @@ set(mc_rbdyn_HDR
 ../include/mc_rbdyn/PlanarSurface.h
 ../include/mc_rbdyn/polygon_utils.h
 ../include/mc_rbdyn/PolygonInterpolator.h
-../include/mc_rbdyn/robot.h
-../include/mc_rbdyn/robot.hpp
+../include/mc_rbdyn/Robot.h
+../include/mc_rbdyn/Robots.h
 ../include/mc_rbdyn/RobotLoader.h
 ../include/mc_rbdyn/RobotModule.h
 ../include/mc_rbdyn/SCHAddon.h

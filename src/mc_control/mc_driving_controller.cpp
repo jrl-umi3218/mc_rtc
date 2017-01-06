@@ -1,6 +1,6 @@
 #include "mc_driving_controller.h"
 
-#include <mc_rbdyn/robot.h>
+#include <mc_rbdyn/Robots.h>
 #include <mc_rbdyn/RobotLoader.h>
 #include <mc_rbdyn/Surface.h>
 

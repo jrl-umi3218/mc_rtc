@@ -1,7 +1,7 @@
 #include <mc_rbdyn/CylindricalSurface.h>
 
 #include <mc_rbdyn/contact_transform.h>
-#include <mc_rbdyn/robot.h>
+#include <mc_rbdyn/Robots.h>
 
 namespace mc_rbdyn
 {

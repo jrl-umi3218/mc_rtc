@@ -3,7 +3,7 @@
 #include <mc_tasks/MetaTask.h>
 #include <mc_trajectory/BSplineTrajectory.h>
 
-#include <mc_rbdyn/robot.h>
+#include <mc_rbdyn/Robots.h>
 #include <Tasks/QPTasks.h>
 
 #include <mc_tasks/api.h>

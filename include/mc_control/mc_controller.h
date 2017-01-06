@@ -1,6 +1,6 @@
 #pragma once
 
-#include <mc_rbdyn/robot.h>
+#include <mc_rbdyn/Robots.h>
 
 
 #include <mc_control/Configuration.h>

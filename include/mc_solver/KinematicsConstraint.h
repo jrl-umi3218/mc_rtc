@@ -2,7 +2,7 @@
 
 #include <mc_solver/ConstraintSet.h>
 
-#include <mc_rbdyn/robot.h>
+#include <mc_rbdyn/Robots.h>
 
 #include <Tasks/QPConstr.h>
 

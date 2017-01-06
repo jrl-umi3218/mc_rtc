@@ -1,7 +1,7 @@
 #pragma once
 
 #include <mc_rbdyn/Collision.h>
-#include <mc_rbdyn/robot.h>
+#include <mc_rbdyn/Robots.h>
 
 #include <array>
 #include <map>
