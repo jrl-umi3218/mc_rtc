@@ -65,7 +65,6 @@ pkg_config_append_libs(${GEOS_LIBRARY})
 add_subdirectory(mc_robots)
 
 set(mc_solver_SRC
-mc_solver/contact_util.cpp
 mc_solver/BoundedSpeedConstr.cpp
 mc_solver/CollisionsConstraint.cpp
 mc_solver/CoMIncPlaneConstr.cpp
@@ -77,7 +76,6 @@ mc_solver/QPSolver.cpp
 
 set(mc_solver_HDR
 ../include/mc_solver/api.h
-../include/mc_solver/contact_util.h
 ../include/mc_solver/msg/Contact.h
 ../include/mc_solver/msg/QPResult.h
 ../include/mc_solver/msg/Robot.h
