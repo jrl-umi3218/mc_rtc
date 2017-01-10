@@ -143,7 +143,7 @@ bool QPSolver::run()
   return success;
 }
 
-const mc_control::QPResultMsg & QPSolver::send(double/*curTime*/)
+const QPResultMsg & QPSolver::send(double/*curTime*/)
 {
   return qpRes;
 }

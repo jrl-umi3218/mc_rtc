@@ -5,9 +5,9 @@
 
 #include <mc_control/Configuration.h>
 #include <mc_control/generic_gripper.h>
-#include <mc_control/msg/QPResult.h>
 
 #include <mc_solver/QPSolver.h>
+#include <mc_solver/msg/QPResult.h>
 #include <mc_solver/CollisionsConstraint.h>
 #include <mc_solver/ContactConstraint.h>
 #include <mc_solver/DynamicsConstraint.h>
@@ -68,7 +68,7 @@ public:
   /** Gives access to the result of the QP execution
    * \param t Unused at the moment
    */
-  virtual const QPResultMsg & send(const double & t);
+  virtual const mc_solver::QPResultMsg & send(const double & t);
 
   /** Reset the controller with data provided by ControllerResetData. This is
    * called at two possible points during a simulation/live execution:

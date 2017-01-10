@@ -159,7 +159,7 @@ public:
    *
    * \returns A reference to the latest result
    */
-  const QPResultMsg & send(const double & t);
+  const mc_solver::QPResultMsg & send(const double & t);
 
   /*! \brief Access the current controller */
   MCController & controller();

@@ -4,7 +4,7 @@
 #include <mc_solver/api.h>
 #include <mc_solver/ConstraintSet.h>
 
-#include <mc_control/msg/QPResult.h>
+#include <mc_solver/msg/QPResult.h>
 
 #include <mc_rbdyn/Contact.h>
 #include <mc_rbdyn/robot.h>
@@ -157,7 +157,7 @@ public:
   /** Provides the result of run() for robots.robot()
    * \param curTime Unused
    */
-  const mc_control::QPResultMsg & send(double curTime = 0);
+  const QPResultMsg & send(double curTime = 0);
 
   /** Gives access to the main robot in the solver */
   const mc_rbdyn::Robot & robot() const;
@@ -213,7 +213,7 @@ private:
   /** The actual solver instance */
   tasks::qp::QPSolver solver;
   /** Latest result */
-  mc_control::QPResultMsg qpRes;
+  QPResultMsg qpRes;
 
   /** Update qpRes from the latest run() */
   void __fillResult();

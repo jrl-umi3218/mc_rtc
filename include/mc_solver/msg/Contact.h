@@ -1,5 +1,4 @@
-#ifndef _H_MCCONTROLMRCONTACTMSG_H_
-#define _H_MCCONTROLMRCONTACTMSG_H_
+#pragma once
 
 #include <cstdint>
 #include <string>
@@ -7,7 +6,7 @@
 
 #include <SpaceVecAlg/SpaceVecAlg>
 
-namespace mc_control
+namespace mc_solver
 {
 
 struct ContactMsg
@@ -25,5 +24,3 @@ struct ContactMsg
 };
 
 }
-
-#endif
