@@ -22,28 +22,19 @@ if(WIN32)
 add_definitions("-DNOMINMAX")
 endif()
 
-IF(NOT WIN32)
-  SEARCH_FOR_EIGEN()
-ELSE()
-  find_path(Eigen_INCLUDE_DIR NAMES signature_of_eigen3_matrix_library
-    PATHS
-    ${CMAKE_INSTALL_PREFIX}/include
-    PATH_SUFFIXES eigen3 eigen
-  )
-  INCLUDE_DIRECTORIES(SYSTEM ${Eigen_INCLUDE_DIR})
-ENDIF()
+SEARCH_FOR_EIGEN()
 
 if(WIN32)
   # TODO: ask explicitly the user for the value of PKG_CONFIG_INCLUDE_DIR
   set( ENV{PKG_CONFIG_PATH} "$ENV{PKG_CONFIG_PATH};${PKG_CONFIG_INCLUDE_DIR}" )
 ENDIF()
 
-find_package(Boost REQUIRED COMPONENTS system filesystem thread date_time timer)
+find_package(Boost REQUIRED COMPONENTS system filesystem thread date_time timer regex)
 
-add_required_dependency(jsoncpp)
+add_required_dependency(jsoncpp jsoncpp_d)
 add_required_dependency("Tasks" "Tasks_d")
 add_required_dependency("mc_rbdyn_urdf_cpp" "mc_rbdyn_urdf_cpp_d")
-pkg_config_append_cflags("-I${Eigen_INCLUDE_DIR}")
+#pkg_config_append_cflags("-I${Eigen_INCLUDE_DIR}")
 
 # At this point, this dependency is used to get access to PD gains setting on HRP robots
 add_optional_dependency(hrpsys-base)
@@ -129,10 +120,10 @@ set(MC_CONTROLLER_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/lib/mc_controller)
 
 configure_file(${PROJECT_SOURCE_DIR}/include/mc_rtc/config.h.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/include/mc_rtc/config.h)
 
-add_subdirectory(3rd-party)
 if(WIN32)
   include_directories(3rd-party/ltdl)
 endif()
+add_subdirectory(3rd-party)
 add_subdirectory(src)
 add_subdirectory(tests)
 add_subdirectory(utils)

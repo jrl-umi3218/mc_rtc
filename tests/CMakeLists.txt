@@ -5,9 +5,12 @@ add_executable(testQuadraticGenerator testQuadraticGenerator.cpp)
 pkg_config_use_dependency(testQuadraticGenerator Tasks)
 target_link_libraries(testQuadraticGenerator mc_rbdyn)
 
-FIND_PACKAGE(Boost REQUIRED COMPONENTS unit_test_framework)
+FIND_PACKAGE(Boost REQUIRED COMPONENTS unit_test_framework timer)
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 ADD_DEFINITIONS(-DBOOST_TEST_DYN_LINK -DBOOST_TEST_MAIN)
+if(WIN32)
+  ADD_DEFINITIONS( -DBOOST_ALL_DYN_LINK )
+endif()
 
 MACRO(MC_RTC_TEST NAME)
   add_executable(${NAME} ${NAME}.cpp)
