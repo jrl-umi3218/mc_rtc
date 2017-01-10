@@ -8,6 +8,8 @@ macro(ROBOT_TEST_COMMON NAME)
     )
   set(TEST_ROBOT_NAME ${NAME})
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/mc_rtc.conf.in ${CMAKE_CURRENT_BINARY_DIR}/${NAME}/mc_rtc-${NAME}.conf)
+  # Adding a project configuration file (for MSVC only)
+  GENERATE_MSVC_DOT_USER_FILE(${NAME})
 endmacro()
 
 macro(ROBOT_TEST_CONSTRUCTION_FAILURE NAME)
