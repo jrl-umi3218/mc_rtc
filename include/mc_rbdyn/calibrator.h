@@ -10,6 +10,7 @@
 #include <Eigen/Core>
 
 #include <mc_rbdyn/RobotModule.h>
+#include <mc_rbdyn/api.h>
 
 namespace mc_rbdyn
 {
@@ -18,7 +19,7 @@ namespace mc_rbdyn
  * ForceSensorsCalibrator::CalibData structures, and provide methods to remove this
  * static contribution on any combination of force sensors.
  */
-struct ForceSensorsCalibrator
+struct MC_RBDYN_DLLAPI ForceSensorsCalibrator
 {
 
   private:

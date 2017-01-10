@@ -1,6 +1,7 @@
 #include <mc_control/mc_global_controller.h>
 
 #include <iomanip>
+#include <chrono>
 
 namespace mc_control
 {
@@ -67,7 +68,7 @@ namespace mc_control
           {
             while(log_sync_th_run_ && tmp == sync_ss_)
             {
-              usleep(500);
+              std::this_thread::sleep_for(std::chrono::milliseconds(500));
             }
             if(tmp != sync_ss_)
             {
