@@ -4,6 +4,8 @@ set(LOG_POLICY "non-threaded")
 macro(CONTROLLER_TEST_COMMON NAME)
   add_library(${NAME} SHARED ${NAME}.cpp)
   target_link_libraries(${NAME} ${Boost_LIBRARIES} mc_control)
+  pkg_config_use_dependency(${NAME} jsoncpp)
+  pkg_config_use_dependency(${NAME} Tasks)
   set_target_properties(${NAME} PROPERTIES
     COMPILE_FLAGS "-DMC_CONTROL_EXPORTS"
     PREFIX ""

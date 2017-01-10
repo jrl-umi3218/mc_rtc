@@ -24,6 +24,7 @@ MC_RTC_TEST(testConfiguration mc_control)
 add_executable(test_controller_ticker test_controller_ticker.cpp)
 pkg_config_use_dependency(test_controller_ticker mc_rbdyn_urdf_cpp)
 target_link_libraries(test_controller_ticker ${Boost_LIBRARIES} mc_control)
+pkg_config_use_dependency(test_controller_ticker Tasks)
 
 add_subdirectory(controllers)
 add_subdirectory(robots)

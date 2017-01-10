@@ -117,7 +117,7 @@ private:
 /* Used to publish debug information specific to the seq controller */
 struct MCSeqPublisher;
 
-struct MCSeqControllerConfig
+struct MC_CONTROL_DLLAPI MCSeqControllerConfig
 {
   MCSeqControllerConfig(const mc_control::Configuration & conf);
   std::shared_ptr<mc_rbdyn::RobotModule> env_module;
