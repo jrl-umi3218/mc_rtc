@@ -1,11 +1,10 @@
-#ifndef _H_MCCONTROLMSGROBOT_H_
-#define _H_MCCONTROLMSGROBOT_H_
+#pragma once
 
 #include <map>
 #include <vector>
 #include <Eigen/Core>
 
-namespace mc_control
+namespace mc_solver
 {
 
 struct RobotMsg
@@ -16,5 +15,3 @@ struct RobotMsg
 };
 
 }
-
-#endif

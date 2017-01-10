@@ -277,7 +277,7 @@ bool MCGlobalController::run()
   }
 }
 
-const QPResultMsg & MCGlobalController::send(const double & t)
+const mc_solver::QPResultMsg & MCGlobalController::send(const double & t)
 {
   return controller_->send(t);
 }

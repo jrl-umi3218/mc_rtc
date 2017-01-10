@@ -65,7 +65,6 @@ pkg_config_append_libs(${GEOS_LIBRARY})
 add_subdirectory(mc_robots)
 
 set(mc_solver_SRC
-mc_solver/contact_util.cpp
 mc_solver/BoundedSpeedConstr.cpp
 mc_solver/CollisionsConstraint.cpp
 mc_solver/CoMIncPlaneConstr.cpp
@@ -77,7 +76,9 @@ mc_solver/QPSolver.cpp
 
 set(mc_solver_HDR
 ../include/mc_solver/api.h
-../include/mc_solver/contact_util.h
+../include/mc_solver/msg/Contact.h
+../include/mc_solver/msg/QPResult.h
+../include/mc_solver/msg/Robot.h
 ../include/mc_solver/BoundedSpeedConstr.h
 ../include/mc_solver/CollisionsConstraint.h
 ../include/mc_solver/CoMIncPlaneConstr.h
@@ -182,9 +183,6 @@ set(mc_control_HDR
 ../include/mc_control/generic_gripper.h
 ../include/mc_control/mc_controller.h
 ../include/mc_control/mc_python_controller.h
-../include/mc_control/msg/Contact.h
-../include/mc_control/msg/QPResult.h
-../include/mc_control/msg/Robot.h
 ../include/mc_control/SimulationContactSensor.h
 ../include/mc_control/mc_global_controller.h
 )

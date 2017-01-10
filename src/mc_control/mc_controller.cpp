@@ -87,7 +87,7 @@ bool MCController::run()
   return true;
 }
 
-const QPResultMsg & MCController::send(const double & t)
+const mc_solver::QPResultMsg & MCController::send(const double & t)
 {
   return qpsolver->send(t);
 }

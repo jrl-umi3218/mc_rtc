@@ -1,12 +1,11 @@
-#ifndef _H_MCCONTROLMSGMRQPRESULT_H_
-#define _H_MCCONTROLMSGMRQPRESULT_H_
+#pragma once
 
 #include <cstdint>
 #include <vector>
-#include <mc_control/msg/Robot.h>
-#include <mc_control/msg/Contact.h>
+#include <mc_solver/msg/Robot.h>
+#include <mc_solver/msg/Contact.h>
 
-namespace mc_control
+namespace mc_solver
 {
 
 struct QPResultMsg
@@ -18,5 +17,3 @@ struct QPResultMsg
 };
 
 }
-
-#endif
