@@ -1,7 +1,7 @@
 link_directories(${Boost_LIBRARY_DIR_RELEASE})
 
 if(WIN32)
-  ADD_DEFINITIONS( -DBOOST_ALL_DYN_LINK )
+  add_definitions( -DBOOST_ALL_DYN_LINK )
 endif()
 
 add_library(mc_rtc_loader SHARED mc_rtc/loader.cpp ../include/mc_rtc/loader.h ../include/mc_rtc/loader_api.h)

@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 2.8)
 include(cmake/base.cmake)
 include(cmake/eigen.cmake)
 include(cmake/pkg-config.cmake)
-INCLUDE(cmake/msvc-specific.cmake)
+include(cmake/msvc-specific.cmake)
 
 set(PROJECT_NAME mc_rtc)
 set(PROJECT_DESCRIPTION mc_rtc)
@@ -28,14 +28,13 @@ SEARCH_FOR_EIGEN()
 if(WIN32)
   # TODO: ask explicitly the user for the value of PKG_CONFIG_INCLUDE_DIR
   set( ENV{PKG_CONFIG_PATH} "$ENV{PKG_CONFIG_PATH};${PKG_CONFIG_INCLUDE_DIR}" )
-ENDIF()
+endif()
 
 find_package(Boost REQUIRED COMPONENTS system filesystem thread date_time timer regex)
 
-add_required_dependency(jsoncpp jsoncpp_d)
+add_required_dependency(jsoncpp)
 add_required_dependency("Tasks" "Tasks_d")
 add_required_dependency("mc_rbdyn_urdf_cpp" "mc_rbdyn_urdf_cpp_d")
-#pkg_config_append_cflags("-I${Eigen_INCLUDE_DIR}")
 
 # At this point, this dependency is used to get access to PD gains setting on HRP robots
 add_optional_dependency(hrpsys-base)
@@ -123,9 +122,9 @@ configure_file(${PROJECT_SOURCE_DIR}/include/mc_rtc/config.h.cmake.in ${CMAKE_CU
 
 # For MSVC, set local environment variable to enable finding the built dll
 # of the main library when launching ctest with RUN_TESTS
-IF(MSVC)
-  SET(CMAKE_MSVCIDE_RUN_PATH "\$(SolutionDir)/src/\$(Configuration)")
-ENDIF(MSVC)
+if(MSVC)
+  set(CMAKE_MSVCIDE_RUN_PATH "\$(SolutionDir)/src/\$(Configuration)")
+endif(MSVC)
 
 if(WIN32)
   include_directories(3rd-party/ltdl)
