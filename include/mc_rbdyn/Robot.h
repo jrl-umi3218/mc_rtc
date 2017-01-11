@@ -7,6 +7,10 @@
 #include <sch/S_Polyhedron/S_Polyhedron.h>
 #include <sch/STP-BV/STP_BV.h>
 
+#include <mc_rbdyn/Base.h>
+#include <mc_rbdyn/Flexibility.h>
+#include <mc_rbdyn/ForceSensor.h>
+#include <mc_rbdyn/Springs.h>
 #include <mc_rbdyn/Surface.h>
 
 #include <memory>
@@ -20,44 +24,6 @@ namespace mc_rbdyn
 {
 
 struct Robots;
-
-struct MC_RBDYN_DLLAPI Flexibility
-{
-public:
-  std::string jointName;
-  double K;
-  double C;
-  double O;
-};
-
-struct MC_RBDYN_DLLAPI ForceSensor
-{
-public:
-  ForceSensor();
-  ForceSensor(const std::string &, const std::string &, const sva::PTransformd &);
-
-  std::string sensorName;
-  std::string parentBodyName;
-  sva::PTransformd X_p_f;
-};
-
-struct MC_RBDYN_DLLAPI Springs
-{
-public:
-  Springs() : springsBodies(0), afterSpringsBodies(0), springsJoints(0) {}
-public:
-  std::vector<std::string> springsBodies;
-  std::vector<std::string> afterSpringsBodies;
-  std::vector< std::vector<std::string> > springsJoints;
-};
-
-struct MC_RBDYN_DLLAPI Base
-{
-  std::string baseName;
-  sva::PTransformd X_0_s;
-  sva::PTransformd X_b0_s;
-  rbd::Joint::Type baseType;
-};
 
 struct MC_RBDYN_DLLAPI Robot
 {
@@ -88,16 +54,6 @@ public:
 
   unsigned int bodyIndexByName(const std::string & name) const;
 
-  std::string forceSensorParentBodyName(const std::string & fs) const;
-
-  const ForceSensor & forceSensorData(const std::string & fs) const;
-
-  bool hasForceSensor(const std::string & body) const;
-
-  std::string forceSensorByBody(const std::string & body) const;
-
-  std::vector<std::string> forceSensorsByName() const;
-
   rbd::MultiBody & mb();
   const rbd::MultiBody & mb() const;
 
@@ -121,6 +77,66 @@ public:
   std::vector<std::vector<double>> & tu();
 
   const std::vector<Flexibility> & flexibility() const;
+
+  /** @name Force sensors
+   *
+   * These functions are related to force sensors
+   *
+   * @{
+   */
+
+  /*! Check if a force sensor exists
+   *
+   * @param name Name of the sensor
+   *
+   * @returns True if the sensor exists, false otherwise
+   */
+  bool hasForceSensor(const std::string & name) const;
+
+  /*! Check if the body has a force sensor attached to it
+   *
+   * @param body Name of the body
+   *
+   * @returns True if the body has a force sensor attached to it, false
+   * otherwise
+   */
+  bool bodyHasForceSensor(const std::string & body) const;
+
+  /*! Return a force sensor by name
+   *
+   * @param name Name of the sensor
+   *
+   * @return The sensor named name
+   *
+   * @throws If no sensor with this name exists
+   *
+   */
+  ForceSensor & forceSensor(const std::string & name);
+
+  /*! Const variant */
+  const ForceSensor & forceSensor(const std::string & name) const;
+
+  /*! Return a force sensor attached to the provided body
+   *
+   * @param body Name of the body to which the sensor is attached
+   *
+   * @return The attached sensor
+   *
+   * @throws If no sensor is attached to this body
+   */
+  ForceSensor & bodyForceSensor(const std::string & body);
+
+  /*! Const variant */
+  const ForceSensor & bodyForceSensor(const std::string & body) const;
+
+  /*! Returns all force sensors */
+  std::vector<ForceSensor> & forceSensors();
+
+  /*! Returns all force sensors (const) */
+  const std::vector<ForceSensor> & forceSensors() const;
+
+  /** @} */
+  /* End of Force sensors group */
 
   bool hasSurface(const std::string & surface) const;
 
@@ -160,7 +176,7 @@ private:
   std::map<std::string, stpbv_pair_t> stpbvs;
   std::map<std::string, sva::PTransformd> collisionTransforms;
   std::map<std::string, mc_rbdyn::SurfacePtr> surfaces_;
-  std::vector<ForceSensor> forceSensors;
+  std::vector<ForceSensor> forceSensors_;
   std::map<std::string, std::vector<double>> stance_;
   std::string _accelerometerBody;
   Springs springs;
@@ -169,8 +185,10 @@ private:
   std::vector<Flexibility> flexibility_;
   std::map<std::string, unsigned int> jointIndexByNameD;
   std::map<std::string, unsigned int> bodyIndexByNameD;
-  std::map<std::string, ForceSensor> forceSensorsParentD;
-  std::map<std::string, std::string> parentBodyForceSensorD;
+  /** Correspondance between sensor's name and sensor index */
+  std::map<std::string, size_t> forceSensorsIndex_;
+  /** Correspondance between bodies' names and attached sensors */
+  std::map<std::string, size_t> bodyForceSensors_;
 protected:
   Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
         const std::map<std::string, sva::PTransformd> & bodyTransforms,

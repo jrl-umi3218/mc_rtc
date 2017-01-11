@@ -20,16 +20,6 @@ namespace mc_rbdyn
 #pragma clang diagnostic ignored "-Wshorten-64-to-32"
 #endif
 
-ForceSensor::ForceSensor()
-: ForceSensor("", "", sva::PTransformd())
-{
-}
-
-ForceSensor::ForceSensor(const std::string & n, const std::string & pn, const sva::PTransformd & xpf)
-: sensorName(n), parentBodyName(pn), X_p_f(xpf)
-{
-}
-
 Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
         const std::map<std::string, sva::PTransformd> & bodyTransforms,
         const std::vector< std::vector<double> > & ql, const std::vector< std::vector<double> > & qu,
@@ -46,7 +36,7 @@ Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
 : name_(name), robots(&robots), robots_idx(robots_idx),
   bodyTransforms(bodyTransforms), ql_(ql), qu_(qu), vl_(vl), vu_(vu), tl_(tl), tu_(tu),
   convexes(convexes), stpbvs(stpbvs), collisionTransforms(collisionTransforms), surfaces_(),
-  forceSensors(forceSensors), stance_(stance), _accelerometerBody(accelerometerBody), springs(springs), tlPoly(tlPoly),
+  forceSensors_(forceSensors), stance_(stance), _accelerometerBody(accelerometerBody), springs(springs), tlPoly(tlPoly),
   tuPoly(tuPoly), flexibility_(flexibility)
 {
   // Copy the surfaces
@@ -62,15 +52,16 @@ Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
   {
     bodyIndexByNameD[this->mb().bodies()[i].name()] = i;
   }
-  for(const ForceSensor & sensor : forceSensors)
-  {
-    forceSensorsParentD[sensor.sensorName] = sensor;
-    parentBodyForceSensorD[sensor.parentBodyName] = sensor.sensorName;
-  }
   if(this->_accelerometerBody == "" && this->hasBody("Accelerometer"))
   {
     unsigned int index = bodyIndexByName("Accelerometer");
     this->_accelerometerBody = this->mb().body(this->mb().parent(index)).name();
+  }
+  for(size_t i = 0; i < forceSensors_.size(); ++i)
+  {
+    const auto & fs = forceSensors_[i];
+    forceSensorsIndex_[fs.name()] = i;
+    bodyForceSensors_[fs.parentBody()] = i;
   }
 }
 
@@ -107,36 +98,6 @@ unsigned int Robot::jointIndexByName(const std::string & name) const
 unsigned int Robot::bodyIndexByName(const std::string & name) const
 {
   return bodyIndexByNameD.at(name);
-}
-
-std::string Robot::forceSensorParentBodyName(const std::string & fs) const
-{
-  return forceSensorsParentD.at(fs).parentBodyName;
-}
-
-const ForceSensor & Robot::forceSensorData(const std::string & fs) const
-{
-  return forceSensorsParentD.at(fs);
-}
-
-bool Robot::hasForceSensor(const std::string & body) const
-{
-  return parentBodyForceSensorD.count(body) != 0;
-}
-
-std::string Robot::forceSensorByBody(const std::string & body) const
-{
-  return parentBodyForceSensorD.at(body);
-}
-
-std::vector<std::string> Robot::forceSensorsByName() const
-{
-  std::vector<std::string> res;
-  for(const auto & fs : forceSensors)
-  {
-    res.push_back(fs.sensorName);
-  }
-  return res;
 }
 
 rbd::MultiBody & Robot::mb()
@@ -220,9 +181,49 @@ const std::vector<Flexibility> & Robot::flexibility() const
   return flexibility_;
 }
 
+bool Robot::hasForceSensor(const std::string & name) const
+{
+  return forceSensorsIndex_.count(name) != 0;
+}
+
+bool Robot::bodyHasForceSensor(const std::string & body) const
+{
+  return bodyForceSensors_.count(body) != 0;
+}
+
+ForceSensor & Robot::forceSensor(const std::string & name)
+{
+  return const_cast<ForceSensor&>(static_cast<const Robot*>(this)->forceSensor(name));
+}
+
+const ForceSensor & Robot::forceSensor(const std::string & name) const
+{
+  return forceSensors_[forceSensorsIndex_.at(name)];
+}
+
+ForceSensor & Robot::bodyForceSensor(const std::string & body)
+{
+  return const_cast<ForceSensor&>(static_cast<const Robot*>(this)->bodyForceSensor(body));
+}
+
+const ForceSensor & Robot::bodyForceSensor(const std::string & body) const
+{
+  return forceSensors_.at(bodyForceSensors_.at(body));
+}
+
 bool Robot::hasSurface(const std::string & surface) const
 {
   return surfaces_.count(surface) != 0;
+}
+
+std::vector<ForceSensor> & Robot::forceSensors()
+{
+  return forceSensors_;
+}
+
+const std::vector<ForceSensor> & Robot::forceSensors() const
+{
+  return forceSensors_;
 }
 
 mc_rbdyn::Surface & Robot::surface(const std::string & sName)
@@ -347,7 +348,7 @@ void Robot::createWithBase(Robots & robots, unsigned int robots_idx, const Base 
   robots.robots_.emplace_back(this->name_, robots, robots_idx, bodyTransforms,
               ql, qu, vl, vu, tl, tu,
               this->convexes, this->stpbvs, this->collisionTransforms,
-              this->surfaces_, this->forceSensors, this->stance_,
+              this->surfaces_, this->forceSensors_, this->stance_,
               this->_accelerometerBody, this->springs,
               this->tlPoly, this->tuPoly,
               this->flexibility());
@@ -356,7 +357,7 @@ void Robot::createWithBase(Robots & robots, unsigned int robots_idx, const Base 
 
 void Robot::copy(Robots & robots, unsigned int robots_idx) const
 {
-  robots.robots_.emplace_back(this->name_, robots, robots_idx, this->bodyTransforms, this->ql(), this->qu(), this->vl(), this->vu(), this->tl(), this->tu(), this->convexes, this->stpbvs, this->collisionTransforms, this->surfaces_, this->forceSensors, this->stance_, this->_accelerometerBody, this->springs, this->tlPoly, this->tuPoly, this->flexibility());
+  robots.robots_.emplace_back(this->name_, robots, robots_idx, this->bodyTransforms, this->ql(), this->qu(), this->vl(), this->vu(), this->tl(), this->tu(), this->convexes, this->stpbvs, this->collisionTransforms, this->surfaces_, this->forceSensors_, this->stance_, this->_accelerometerBody, this->springs, this->tlPoly, this->tuPoly, this->flexibility());
 }
 
 std::vector< std::vector<double> > jointsParameters(const rbd::MultiBody & mb, const double & coeff)

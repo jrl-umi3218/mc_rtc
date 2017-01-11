@@ -1,7 +1,9 @@
 #pragma once
 
 #include <mc_rbdyn/Collision.h>
-#include <mc_rbdyn/Robots.h>
+#include <mc_rbdyn/Flexibility.h>
+#include <mc_rbdyn/ForceSensor.h>
+#include <mc_rbdyn/Springs.h>
 
 #include <array>
 #include <map>
@@ -111,6 +113,8 @@ struct MC_RBDYN_DLLAPI RobotModule
   std::vector<std::string> _ref_joint_order;
   std::array<double, 7> _default_attitude = {{1., 0., 0., 0., 0. , 0., 0.}};
 };
+
+typedef std::shared_ptr<RobotModule> RobotModulePtr;
 
 } // namespace mc_rbdyn
 

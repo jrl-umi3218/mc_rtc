@@ -28,7 +28,7 @@ mc_rbdyn/PolygonInterpolator.cpp
 mc_rbdyn/polygon_utils.cpp
 mc_rbdyn/RobotLoader.cpp
 mc_rbdyn/Collision.cpp
-mc_rbdyn/calibrator.cpp
+mc_rbdyn/ForceSensor.cpp
 )
 
 set(mc_rbdyn_HDR
@@ -52,7 +52,10 @@ set(mc_rbdyn_HDR
 ../include/mc_rbdyn/surface_hull.h
 ../include/mc_rbdyn/surface_utils.h
 ../include/mc_rbdyn/Collision.h
-../include/mc_rbdyn/calibrator.h
+../include/mc_rbdyn/ForceSensor.h
+../include/mc_rbdyn/Flexibility.h
+../include/mc_rbdyn/Springs.h
+../include/mc_rbdyn/Base.h
 )
 
 add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC} ${mc_rbdyn_HDR})

@@ -290,8 +290,7 @@ MCSeqController::MCSeqController(std::shared_ptr<mc_rbdyn::RobotModule> robot_mo
   collsConstraint(robots(), timeStep),
   comIncPlaneConstr(robots(), 0, timeStep),
   max_perc(1.0), nr_points(300),
-  samples(0.0, max_perc, nr_points),
-  calibrator(robot_module)
+  samples(0.0, max_perc, nr_points)
 {
   logger.logPhase("START", 0);
   /* Load plan */
@@ -568,7 +567,7 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
     if(is_gs && actiGrippers.count(bodyName) == 0 && robot().hasForceSensor(bodyName) )
     {
       LOG_INFO("ActiGripper ADD " << bodyName)
-      std::string forceSensor = robot().forceSensorByBody(bodyName);
+      std::string forceSensor = robot().bodyForceSensor(bodyName).name();
       tasks::qp::ContactId contactId = c.contactId(robots());
       sva::PTransformd X_0_s = c.r1Surface()->X_0_s(robot());
       double actiForce = 50; /* FIXME Hard-coded, should at least be an acti gripper const static member */

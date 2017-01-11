@@ -14,7 +14,7 @@ ForceSensor::ForceSensor(const mc_rbdyn::Robot & robot, const std::string & sens
 : activated(Unactivated), thresh(thresh), activatedIter(0), direction(Unactivated),
   lastValues(WindowSize), offset(0), name(sensorName), surfacesName(0)
 {
-  std::string parent = robot.forceSensorParentBodyName(sensorName);
+  std::string parent = robot.forceSensor(sensorName).parentBody();
   for(const auto & p : robot.surfaces())
   {
     if(p.second->bodyName() == parent)

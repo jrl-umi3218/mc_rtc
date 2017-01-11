@@ -17,21 +17,17 @@ std::function<double(double)> clamper(double value)
 
 ComplianceTask::ComplianceTask(const mc_rbdyn::Robots & robots,
       unsigned int robotIndex,
-      const mc_rbdyn::ForceSensor& forceSensor,
-      const std::map<std::string, sva::ForceVecd>& ctlWrenches,
-      const mc_rbdyn::ForceSensorsCalibrator& calibrator,
+      const std::string & body,
       double timestep,
       const Eigen::Matrix6d& dof,
       double stiffness, double weight, double forceThresh, double torqueThresh,
       std::pair<double, double> forceGain, std::pair<double, double> torqueGain)
-  : ctlWrenches_(ctlWrenches),
-    wrench_(Eigen::Vector6d::Zero()),
+  : wrench_(Eigen::Vector6d::Zero()),
     obj_(Eigen::Vector6d::Zero()),
     error_(Eigen::Vector6d::Zero()),
     errorD_(Eigen::Vector6d::Zero()),
-    calibrator_(calibrator),
     robot_(robots.robots()[robotIndex]),
-    sensor_(forceSensor),
+    sensor_(robot_.bodyForceSensor(body)),
     timestep_(timestep),
     forceThresh_(forceThresh),
     torqueThresh_(torqueThresh),
@@ -39,7 +35,7 @@ ComplianceTask::ComplianceTask(const mc_rbdyn::Robots & robots,
     torqueGain_(torqueGain),
     dof_(dof)
 {
-  efTask_ = std::make_shared<EndEffectorTask>(forceSensor.parentBodyName, robots,
+  efTask_ = std::make_shared<EndEffectorTask>(body, robots,
                                               robotIndex, stiffness, weight);
   clampTrans_ = clamper(0.01);
   clampRot_ = clamper(0.1);
@@ -47,14 +43,12 @@ ComplianceTask::ComplianceTask(const mc_rbdyn::Robots & robots,
 
 ComplianceTask::ComplianceTask(const mc_rbdyn::Robots & robots,
       unsigned int robotIndex,
-      const mc_rbdyn::ForceSensor& forceSensor,
-      const std::map<std::string, sva::ForceVecd>& ctlWrenches,
-      const mc_rbdyn::ForceSensorsCalibrator& calibrator,
+      const std::string & body,
       double timestep,
       double stiffness, double weight,
       double forceThresh, double torqueThresh,
       std::pair<double, double> forceGain, std::pair<double, double> torqueGain)
-  : ComplianceTask(robots, robotIndex, forceSensor, ctlWrenches, calibrator,
+  : ComplianceTask(robots, robotIndex, body,
       timestep, Eigen::Matrix6d::Identity(), stiffness, weight,
       forceThresh, torqueThresh, forceGain, torqueGain)
 {
@@ -83,10 +77,10 @@ sva::PTransformd ComplianceTask::computePose()
       Eigen::Vector3d rpy = (torqueGain_.first*wrench_.couple() + torqueGain_.second*errorD_.couple()).unaryExpr(clampRot_);
       rot = mc_rbdyn::rpyToMat(rpy);
     }
-    const auto X_p_f = sensor_.X_p_f;
-    const auto X_0_p = robot_.mbc().bodyPosW[robot_.bodyIndexByName(sensor_.parentBodyName)];
+    const auto & X_p_f = sensor_.X_p_f();
+    const auto & X_0_p = robot_.mbc().bodyPosW[robot_.bodyIndexByName(sensor_.parentBody())];
     sva::PTransformd move(rot, trans);
-    auto X_f_ds = calibrator_.X_fsmodel_fsactual(sensor_.sensorName);
+    const auto & X_f_ds = sensor_.X_fsmodel_fsactual();
     return ((X_f_ds*X_p_f).inv()*move*(X_f_ds*X_p_f))*X_0_p;
 }
 
@@ -94,8 +88,7 @@ void ComplianceTask::update()
 {
   error_ = wrench_;
   /* Get wrench, remove gravity, use dof_ to deactivate some axis */
-  wrench_ = ctlWrenches_.at(sensor_.sensorName);
-  calibrator_.removeGravity(wrench_, sensor_.sensorName, robot_);
+  wrench_ = sensor_.removeGravity(robot_);
   wrench_ = sva::ForceVecd(dof_*(wrench_ - obj_).vector());
   errorD_ = (wrench_ - error_)/timestep_;
   efTask_->set_ef_pose(computePose());
