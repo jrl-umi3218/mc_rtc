@@ -110,6 +110,8 @@ public:
     msg.header.frame_id = "";
     msg.name.reserve(robot.mb().nrJoints() - 1);
     msg.position.reserve(robot.mb().nrJoints() - 1);
+    msg.velocity.reserve(robot.mb().nrJoints() - 1);
+    msg.effort.reserve(robot.mb().nrJoints() - 1);
     for(const auto & j : robot.mb().joints())
     {
       if(j.dof() == 1)
@@ -119,11 +121,11 @@ public:
         if(mbc.q[jIdx].size() > 0)
         {
           msg.position.push_back(mbc.q[robot.jointIndexByName(j.name())][0]);
+          msg.velocity.push_back(mbc.alpha[robot.jointIndexByName(j.name())][0]);
+          msg.effort.push_back(mbc.alphaD[robot.jointIndexByName(j.name())][0]);
         }
       }
     }
-    msg.velocity.resize(0);
-    msg.effort.resize(0);
 
     imu.header = msg.header;
     if(iter_since_start >= 2000)
