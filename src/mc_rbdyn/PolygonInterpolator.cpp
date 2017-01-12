@@ -18,28 +18,9 @@ void PolygonInterpolator::GeometryDeleter::operator()(geos::geom::Geometry * ptr
   factory.destroyGeometry(ptr);
 }
 
-PolygonInterpolator::PolygonInterpolator(const Json::Value & jsv)
-: geom_factory(*geos::geom::GeometryFactory::getDefaultInstance()), geom_deleter(geom_factory), tuple_pairs()
+PolygonInterpolator::PolygonInterpolator(const std::vector<tuple_pair_t> & tpv)
+: geom_factory(*geos::geom::GeometryFactory::getDefaultInstance()), geom_deleter(geom_factory), tuple_pairs(tpv)
 {
-  if(jsv.isMember("tuple_pairs"))
-  {
-    for(const auto & tpv : jsv["tuple_pairs"])
-    {
-      if(tpv.isMember("p1") && tpv.isMember("p2"))
-      {
-        const auto & p1 = tpv["p1"];
-        const auto & p2 = tpv["p2"];
-        if(p1.isArray() && p1.size() == 2 &&
-           p2.isArray() && p2.size() == 2)
-        {
-          tuple_pairs.push_back({
-            {{p1[0].asDouble(), p1[1].asDouble()}},
-            {{p2[0].asDouble(), p2[1].asDouble()}}
-          });
-        }
-      }
-    }
-  }
   for(size_t i = 0; i < tuple_pairs.size(); ++i)
   {
     const tuple_pair_t & prev = (i == 0 ? tuple_pairs.back() : tuple_pairs[i-1]);

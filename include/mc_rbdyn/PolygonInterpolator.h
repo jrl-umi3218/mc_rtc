@@ -3,7 +3,6 @@
 #include <array>
 #include <memory>
 #include <geos/geom/GeometryFactory.h>
-#include <json/json.h>
 
 #include <mc_rbdyn/api.h>
 
@@ -12,10 +11,10 @@ namespace mc_rbdyn
 
 struct MC_RBDYN_DLLAPI PolygonInterpolator
 {
-private:
+public:
   typedef std::array<double, 2> tuple_t;
   typedef std::pair<tuple_t, tuple_t> tuple_pair_t;
-
+private:
   struct GeometryDeleter
   {
   public:
@@ -26,9 +25,7 @@ private:
       const geos::geom::GeometryFactory & factory;
   };
 public:
-  /* For now, the PolygonInterpolator can only be restored from a serialized
-   * instance of the Python object */
-  PolygonInterpolator(const Json::Value & v);
+  PolygonInterpolator(const std::vector<tuple_pair_t> & tpv);
 
   std::shared_ptr<geos::geom::Geometry> fast_interpolate(double percent);
 

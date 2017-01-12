@@ -17,6 +17,35 @@
 namespace mc_rbdyn
 {
 
+namespace
+{
+  std::vector<PolygonInterpolator::tuple_pair_t> tpvFromJson(const Json::Value & jsv)
+  {
+    std::vector<PolygonInterpolator::tuple_pair_t> tuple_pairs;
+    if(jsv.isMember("tuple_pairs"))
+    {
+      for(const auto & tpv : jsv["tuple_pairs"])
+      {
+        if(tpv.isMember("p1") && tpv.isMember("p2"))
+        {
+          const auto & p1 = tpv["p1"];
+          const auto & p2 = tpv["p2"];
+          if(p1.isArray() && p1.size() == 2 &&
+             p2.isArray() && p2.size() == 2)
+          {
+            tuple_pairs.push_back({
+              {{p1[0].asDouble(), p1[1].asDouble()}},
+              {{p2[0].asDouble(), p2[1].asDouble()}}
+            });
+          }
+        }
+      }
+    }
+    return tuple_pairs;
+  }
+}
+
+
 struct StanceImpl
 {
 public:
@@ -365,7 +394,7 @@ void loadStances(const mc_rbdyn::Robots & robots, const std::string & filename, 
   {
     for(const auto & piv : v["polygon_interpolators"])
     {
-      interpolators.emplace_back(piv);
+      interpolators.emplace_back(tpvFromJson(piv));
     }
   }
 }
