@@ -2,22 +2,44 @@
 
 #include <mc_rtc/logging.h>
 
+#include <json/json.h>
+
 #include <stdexcept>
 #include <fstream>
 
 namespace mc_control
 {
 
-namespace
+struct Configuration::Json::Impl : public ::Json::Value
 {
-  Configuration::Entry getEntry(const Json::Value & v, const std::string & key)
-  {
-    if(v.isMember(key))
-    {
-      return Configuration::Entry(v[key]);
-    }
-    throw Configuration::Exception("No entry named " + key + " in the configuration");
-  }
+  using ::Json::Value::Value;
+  Impl() : ::Json::Value() {}
+  Impl(const ::Json::Value & v) : ::Json::Value(v) {}
+};
+
+bool Configuration::Json::isArray() const
+{
+  return impl->isArray();
+}
+
+size_t Configuration::Json::size() const
+{
+  return impl->size();
+}
+
+Configuration::Json Configuration::Json::operator[](int idx) const
+{
+  Configuration::Json ret;
+  const ::Json::Value & v = (*impl)[idx];
+  ret.impl.reset(new Impl(v));
+  return ret;
+}
+
+Configuration::Json Configuration::Json::operator[](const std::string & key) const
+{
+  Configuration::Json ret;
+  ret.impl.reset(new Impl((*impl)[key]));
+  return ret;
 }
 
 Configuration::Exception::Exception(const std::string & msg)
@@ -30,114 +52,118 @@ const char * Configuration::Exception::what() const noexcept
   return msg.c_str();
 }
 
-Configuration::Entry::Entry(const Json::Value & v)
+Configuration::Configuration(const Json & v)
 : v(v)
 {
 }
 
-bool Configuration::Entry::isMember(const std::string & key) const
+Configuration::Configuration(const char * path)
+: Configuration(std::string(path))
 {
-  return v.isMember(key);
 }
 
 bool Configuration::isMember(const std::string & key) const
 {
-  return v.isMember(key);
+  return v.impl->isMember(key);
 }
 
-Configuration::Entry Configuration::Entry::operator()(const std::string & key) const
+Configuration Configuration::operator()(const std::string & key) const
 {
-  return getEntry(v, key);
-}
-
-Configuration::Entry::operator bool() const
-{
-  if(v.isBool() || v.isInt())
+  if(v.impl->isMember(key))
   {
-    return v.asBool();
+    return Configuration(v[key]);
+  }
+  throw Configuration::Exception("No entry named " + key + " in the configuration");
+}
+
+Configuration::operator bool() const
+{
+  if(v.impl->isBool() || v.impl->isInt())
+  {
+    return v.impl->asBool();
   }
   throw Configuration::Exception("Stored Json value is not a bool");
 }
 
-Configuration::Entry::operator int() const
+Configuration::operator int() const
 {
-  if(v.isInt())
+  if(v.impl->isInt())
   {
-    return v.asInt();
+    return v.impl->asInt();
   }
   throw Configuration::Exception("Stored Json value is not an int");
 }
 
-Configuration::Entry::operator unsigned int() const
+Configuration::operator unsigned int() const
 {
-  if(v.isUInt() || (v.isInt() && v.asInt() >= 0))
+  if(v.impl->isUInt() || (v.impl->isInt() && v.impl->asInt() >= 0))
   {
-    return v.asUInt();
+    return v.impl->asUInt();
   }
   throw Configuration::Exception("Stored Json value is not an unsigned int");
 }
 
-Configuration::Entry::operator double() const
+Configuration::operator double() const
 {
-  if(v.isNumeric())
+  if(v.impl->isNumeric())
   {
-    return v.asDouble();
+    return v.impl->asDouble();
   }
   throw Configuration::Exception("Stored Json value is not a double");
 }
 
-Configuration::Entry::operator std::string() const
+Configuration::operator std::string() const
 {
-  if(v.isString())
+  if(v.impl->isString())
   {
-    return v.asString();
+    return v.impl->asString();
   }
-  throw Configuration::Exception("Stored Json value is not a string");
+  throw Configuration::Exception("Stored Json v.impl->v.lue is not a string");
 }
 
-Configuration::Entry::operator Eigen::Vector3d() const
+Configuration::operator Eigen::Vector3d() const
 {
-  if(v.isArray() && v.size() == 3 && v[0].isNumeric())
+  if(v.isArray() && v.size() == 3 && v[0].impl->isNumeric())
   {
     Eigen::Vector3d ret;
-    ret << v[0].asDouble(), v[1].asDouble(), v[2].asDouble();
+    ret << v[0].impl->asDouble(), v[1].impl->asDouble(), v[2].impl->asDouble();
     return ret;
   }
   throw Configuration::Exception("Stored Json value is not a Vector3d");
 }
 
-Configuration::Entry::operator Eigen::Vector6d() const
+Configuration::operator Eigen::Vector6d() const
 {
-  if(v.isArray() && v.size() == 6 && v[0].isNumeric())
+  if(v.isArray() && v.size() == 6 && v[0].impl->isNumeric())
   {
     Eigen::Vector6d ret;
-    ret << v[0].asDouble(), v[1].asDouble(), v[2].asDouble(),
-           v[3].asDouble(), v[4].asDouble(), v[5].asDouble();
+    ret << v[0].impl->asDouble(), v[1].impl->asDouble(), v[2].impl->asDouble(),
+           v[3].impl->asDouble(), v[4].impl->asDouble(), v[5].impl->asDouble();
     return ret;
   }
   throw Configuration::Exception("Stored Json value is not a Vector6d");
 }
 
-Configuration::Entry::operator Eigen::VectorXd() const
+Configuration::operator Eigen::VectorXd() const
 {
-  if(v.isArray() && (v.size() == 0 || v[0].isNumeric()))
+  if(v.isArray() && (v.size() == 0 || v[0].impl->isNumeric()))
   {
     Eigen::VectorXd ret(v.size());
     for(size_t i = 0; i < v.size(); ++i)
     {
-      ret(i) = v[static_cast<int>(i)].asDouble();
+      ret(i) = v[static_cast<int>(i)].impl->asDouble();
     }
     return ret;
   }
   throw Configuration::Exception("Stored Json value is not a Vector6d");
 }
 
-Configuration::Entry::operator Eigen::Quaterniond() const
+Configuration::operator Eigen::Quaterniond() const
 {
-  if(v.isArray() && v.size() == 4 && v[0].isNumeric())
+  if(v.isArray() && v.size() == 4 && v[0].impl->isNumeric())
   {
-    return Eigen::Quaterniond(v[0].asDouble(), v[1].asDouble(),
-                              v[2].asDouble(), v[3].asDouble())
+    return Eigen::Quaterniond(v[0].impl->asDouble(), v[1].impl->asDouble(),
+                              v[2].impl->asDouble(), v[3].impl->asDouble())
                              .normalized();
   }
   throw Configuration::Exception("Stored Json value is not a Quaterniond");
@@ -146,6 +172,7 @@ Configuration::Entry::operator Eigen::Quaterniond() const
 Configuration::Configuration(const std::string & path)
 : v()
 {
+  v.impl.reset(new Json::Impl());
   load(path);
 }
 
@@ -157,7 +184,7 @@ void Configuration::load(const std::string & path)
     LOG_ERROR("Failed to open controller configuration file: " << path)
     return;
   }
-  Json::Value newV;
+  ::Json::Value newV;
   try
   {
     ifs >> newV;
@@ -170,29 +197,12 @@ void Configuration::load(const std::string & path)
   }
   for(const auto & m : newV.getMemberNames())
   {
-    v[m] = newV[m];
+    (*v.impl)[m] = newV[m];
   }
-}
-
-Configuration::Entry Configuration::operator()(const std::string & key) const
-{
-  return getEntry(v, key);
 }
 
 template<>
 void Configuration::operator()(const std::string & key, std::string & v) const
-{
-  try
-  {
-    v = (std::string)(*this)(key);
-  }
-  catch(Exception &)
-  {
-  }
-}
-
-template<>
-void Configuration::Entry::operator()(const std::string & key, std::string & v) const
 {
   try
   {
