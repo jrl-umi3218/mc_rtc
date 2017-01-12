@@ -5,6 +5,7 @@ cmake_minimum_required(VERSION 2.8)
 include(cmake/base.cmake)
 include(cmake/eigen.cmake)
 include(cmake/pkg-config.cmake)
+include(cmake/msvc-specific.cmake)
 
 set(PROJECT_NAME mc_rtc)
 set(PROJECT_DESCRIPTION mc_rtc)
@@ -22,28 +23,18 @@ if(WIN32)
 add_definitions("-DNOMINMAX")
 endif()
 
-IF(NOT WIN32)
-  SEARCH_FOR_EIGEN()
-ELSE()
-  find_path(Eigen_INCLUDE_DIR NAMES signature_of_eigen3_matrix_library
-    PATHS
-    ${CMAKE_INSTALL_PREFIX}/include
-    PATH_SUFFIXES eigen3 eigen
-  )
-  INCLUDE_DIRECTORIES(SYSTEM ${Eigen_INCLUDE_DIR})
-ENDIF()
+SEARCH_FOR_EIGEN()
 
 if(WIN32)
   # TODO: ask explicitly the user for the value of PKG_CONFIG_INCLUDE_DIR
   set( ENV{PKG_CONFIG_PATH} "$ENV{PKG_CONFIG_PATH};${PKG_CONFIG_INCLUDE_DIR}" )
-ENDIF()
+endif()
 
-find_package(Boost REQUIRED COMPONENTS system filesystem thread date_time timer)
+find_package(Boost REQUIRED COMPONENTS system filesystem thread date_time timer regex)
 
 add_required_dependency(jsoncpp)
 add_required_dependency("Tasks" "Tasks_d")
 add_required_dependency("mc_rbdyn_urdf_cpp" "mc_rbdyn_urdf_cpp_d")
-pkg_config_append_cflags("-I${Eigen_INCLUDE_DIR}")
 
 # At this point, this dependency is used to get access to PD gains setting on HRP robots
 add_optional_dependency(hrpsys-base)
@@ -71,7 +62,7 @@ if(GEOS_CONFIG)
 else()
   if(WIN32)
     if(NOT DEFINED GEOS_PREFIX)
-      MESSAGE(WARNING "GEOS_PREFIX not defined, assuming it is equal to CMAKE_INSTALL_PREFIX")
+      message(WARNING "GEOS_PREFIX not defined, assuming it is equal to CMAKE_INSTALL_PREFIX")
       set(GEOS_PREFIX ${CMAKE_INSTALL_PREFIX})
     endif()
     set(GEOS_INCLUDE_DIR ${GEOS_PREFIX}/include)
@@ -80,7 +71,7 @@ else()
     include_directories(${GEOS_INCLUDE_DIR})
     link_directories(${GEOS_LIBRARY_DIR})
   else()
-    MESSAGE(SEND_ERROR "Could not find geos-config, missing dependency")
+    message(SEND_ERROR "Could not find geos-config, missing dependency")
   endif()
 endif()
 
@@ -95,11 +86,11 @@ macro(find_description_package desc_pkg)
         OUTPUT_VARIABLE "${DESC_PKG}_PATH"
         ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
     else()
-      MESSAGE(WARNING "${DESC_PKG}_PATH is not defined and pkg-config failed to find ${desc_pkg}, the related robots' modules will not work properly. Check your system configuration or define ${DESC_PKG} to fix this issue.")
+      message(WARNING "${DESC_PKG}_PATH is not defined and pkg-config failed to find ${desc_pkg}, the related robots' modules will not work properly. Check your system configuration or define ${DESC_PKG} to fix this issue.")
     endif()
   endif()
   if(DEFINED ${DESC_PKG}_PATH)
-    MESSAGE(STATUS "Found ${desc_pkg}: ${${DESC_PKG}_PATH}")
+    message(STATUS "Found ${desc_pkg}: ${${DESC_PKG}_PATH}")
   endif()
 endmacro()
 
@@ -129,10 +120,16 @@ set(MC_CONTROLLER_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/lib/mc_controller)
 
 configure_file(${PROJECT_SOURCE_DIR}/include/mc_rtc/config.h.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/include/mc_rtc/config.h)
 
-add_subdirectory(3rd-party)
+# For MSVC, set local environment variable to enable finding the built dll
+# of the main library when launching ctest with RUN_TESTS
+if(MSVC)
+  set(CMAKE_MSVCIDE_RUN_PATH "\$(SolutionDir)/src/\$(Configuration)")
+endif(MSVC)
+
 if(WIN32)
   include_directories(3rd-party/ltdl)
 endif()
+add_subdirectory(3rd-party)
 add_subdirectory(src)
 add_subdirectory(tests)
 add_subdirectory(utils)

@@ -1,6 +1,8 @@
 #ifndef _H_CONTACTTRANSFORM_H_
 #define _H_CONTACTTRANSFORM_H_
 
+#include <vector>
+
 #include <SpaceVecAlg/SpaceVecAlg>
 
 #include <mc_rbdyn/api.h>

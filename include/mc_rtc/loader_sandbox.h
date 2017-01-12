@@ -125,7 +125,7 @@ T * sandbox_function_call(std::function<T*(const Args & ...)> create_fn, const A
   }
 #else
   /* TODO Port to MacOS/WIN32 (good luck) */
-  no_sandbox_function_call(create_fn, args...);
+  return no_sandbox_function_call(create_fn, args...);
 #endif
 }
 

@@ -84,6 +84,7 @@ void Loader::load_libraries(const std::string & class_name, const std::vector<st
           }
           continue;
         }
+#ifndef WIN32
         #pragma GCC diagnostic push
         #pragma GCC diagnostic ignored "-Wpedantic"
         typedef void(*load_global_fun_t)(void);
@@ -102,6 +103,7 @@ void Loader::load_libraries(const std::string & class_name, const std::vector<st
           /* Discard error message */
           lt_dlerror();
         }
+#endif
         #pragma GCC diagnostic push
         #pragma GCC diagnostic ignored "-Wpedantic"
         typedef std::vector<std::string>(*class_name_fun_t)(void);

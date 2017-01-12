@@ -10,6 +10,8 @@
 #include <string>
 #include <vector>
 
+#include <mc_control/api.h>
+
 namespace mc_control
 {
 
@@ -18,12 +20,12 @@ namespace mc_control
    * Configuration values can be accessed using a key system, type
    * conversion are ensured by the class.
    */
-  struct Configuration
+  struct MC_CONTROL_DLLAPI Configuration
   {
 
     /*! \brief Exception thrown by this class when something bad occurs
      */
-    struct Exception : public std::exception
+    struct MC_CONTROL_DLLAPI Exception : public std::exception
     {
       /*! \brief Constructor
        *
@@ -48,7 +50,7 @@ namespace mc_control
      *
      * These values are meant to be cast into useful types.
      */
-    struct Entry
+    struct MC_CONTROL_DLLAPI Entry
     {
       /*! \brief Constructor
        *
@@ -256,9 +258,9 @@ namespace mc_control
 
   /*! \brief Specialized version to lift ambiguity */
   template<>
-  void Configuration::operator()(const std::string & key, std::string & v) const;
+  MC_CONTROL_DLLAPI void Configuration::operator()(const std::string & key, std::string & v) const;
 
   /*! \brief Specialized version to lift ambiguity */
   template<>
-  void Configuration::Entry::operator()(const std::string & key, std::string & v) const;
+  MC_CONTROL_DLLAPI void Configuration::Entry::operator()(const std::string & key, std::string & v) const;
 }
