@@ -50,13 +50,13 @@ namespace mc_control
      *
      * These values are meant to be cast into useful types.
      */
-    struct Entry
+    struct MC_CONTROL_DLLAPI Entry
     {
       /*! \brief Constructor
        *
        * \param v Json::Value corresponding to the entry
        */
-      MC_CONTROL_DLLAPI Entry(const Json::Value & v);
+      Entry(const Json::Value & v);
 
       /*! \brief Check if the key is part of the conf
        *
@@ -64,13 +64,13 @@ namespace mc_control
        *
        * \returns True if key is part of the configuration
        */
-      MC_CONTROL_DLLAPI bool isMember(const std::string & key) const;
+      bool isMember(const std::string & key) const;
 
       /*! \brief Cast to bool
        *
        * \throws If the underlying value does not hold a boolean
        */
-      MC_CONTROL_DLLAPI operator bool() const;
+      operator bool() const;
 
       /*! \brief Cast to int
        *
@@ -78,7 +78,7 @@ namespace mc_control
        *
        * \throws If the underlying value does not hold an int
        */
-      MC_CONTROL_DLLAPI operator int() const;
+      operator int() const;
 
       /*! \brief Cast to unsigned int
        *
@@ -87,7 +87,7 @@ namespace mc_control
        *
        * \throws If the underlying value does not hold an unsigned int
        */
-      MC_CONTROL_DLLAPI operator unsigned int() const;
+      operator unsigned int() const;
 
       /*! \brief Cast to double
        *
@@ -95,7 +95,7 @@ namespace mc_control
        *
        * \throws If the underlying value does not hold a numeric value
        */
-      MC_CONTROL_DLLAPI operator double() const;
+      operator double() const;
 
       /*! \brief Cast to a string
        *
@@ -107,21 +107,21 @@ namespace mc_control
        *
        * \throws If the underlying value does not hold a string
        */
-      MC_CONTROL_DLLAPI operator std::string() const;
+      operator std::string() const;
 
       /*! \brief Retrieve as a Eigen::Vector3d instance
        *
        * \throws If the underlying value does not hold a numeric
        * sequence of size 3
        */
-      MC_CONTROL_DLLAPI operator Eigen::Vector3d() const;
+      operator Eigen::Vector3d() const;
 
       /*! \brief Retrieve as a Eigen::Vector6d instance
        *
        * \throws If the underlying value does not hold a numeric
        * sequence of size 6
        */
-      MC_CONTROL_DLLAPI operator Eigen::Vector6d() const;
+      operator Eigen::Vector6d() const;
 
       /*! \brief Retrieve as a Eigen::VectorXd instance
        *
@@ -131,7 +131,7 @@ namespace mc_control
        * \throws If the underlying value does not hold a numeric
        * sequence
        */
-      MC_CONTROL_DLLAPI operator Eigen::VectorXd() const;
+      operator Eigen::VectorXd() const;
 
       /*! \brief Retrieve as a Eigen::Quaterniond instance
        *
@@ -140,7 +140,7 @@ namespace mc_control
        * \throws If the underlying value does not hold a numeric
        * sequence of size 4
        */
-      MC_CONTROL_DLLAPI operator Eigen::Quaterniond() const;
+      operator Eigen::Quaterniond() const;
 
       /*! \brief Retrieve a vector instance
        *
@@ -176,7 +176,7 @@ namespace mc_control
        *
        * \throws If key is not stored in the Configuration
        */
-      MC_CONTROL_DLLAPI Entry operator()(const std::string & key) const;
+      Entry operator()(const std::string & key) const;
 
       /*! \brief Retrieve and store a given value stored within the
        * configuration
