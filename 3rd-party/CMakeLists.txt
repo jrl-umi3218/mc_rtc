@@ -19,7 +19,7 @@ else()
   include(CheckIncludeFileCXX)
   check_include_file_cxx(ltdl.h LTDL_H_FOUND)
   if(NOT LTDL_H_FOUND)
-    MESSAGE(FATAL_ERROR "Failed to find ltdl.h, check that libtool ltdl is installed")
+    message(FATAL_ERROR "Failed to find ltdl.h, check that libtool ltdl is installed")
   endif()
 endif()
 

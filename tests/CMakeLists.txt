@@ -12,7 +12,7 @@ if(WIN32)
   add_definitions( -DBOOST_ALL_DYN_LINK )
 endif()
 
-MACRO(MC_RTC_TEST NAME)
+MACRO(mc_rtc_test NAME)
   add_executable(${NAME} ${NAME}.cpp)
   target_link_libraries(${NAME} ${Boost_LIBRARIES} ${ARGN})
   pkg_config_use_dependency(${NAME} jsoncpp)
@@ -21,7 +21,7 @@ MACRO(MC_RTC_TEST NAME)
   generate_msvc_dot_user_file(${NAME})
 ENDMACRO()
 
-MC_RTC_TEST(testConfiguration mc_control)
+mc_rtc_test(testConfiguration mc_control)
 
 add_executable(test_controller_ticker test_controller_ticker.cpp)
 pkg_config_use_dependency(test_controller_ticker mc_rbdyn_urdf_cpp)
