@@ -482,29 +482,6 @@ void MCSeqController::reset(const ControllerResetData & reset_data)
   rbd::forwardVelocity(robot().mb(), robot().mbc());
   qpsolver->setContacts(stances[stanceIndex].geomContacts());
   publisher->set_contacts(stances[stanceIndex].geomContacts());
-  LOG_INFO("LFullSole position: " << robot().surface("LFullSole").X_0_s(robot()).translation().transpose())
-  LOG_INFO("RFullSole position: " << robot().surface("RFullSole").X_0_s(robot()).translation().transpose())
-  //const mc_rbdyn::Contact & c = stances[stanceIndex].geomContacts()[0];
-  //auto X_0_s = c.X_0_r2s(robots());
-  //auto X_r2s_r1s = c.X_r2s_r1s();
-  //X_0_s = X_r2s_r1s * X_0_s;
-  //auto X_f_s = c.r1Surface()->X_b_s();
-  //auto X_b_f = robot().mbc().bodyPosW[robot().bodyIndexByName(c.r1Surface()->bodyName())]*((robot().mbc().bodyPosW[0]).inv());
-  //auto X_0_b = ((X_f_s * X_b_f).inv()) * X_0_s;
-  //auto quat = Eigen::Quaterniond(X_0_b.rotation());
-  //auto trans = X_0_b.translation();
-  //robot().mbc().q[0][0] = quat.w();
-  //robot().mbc().q[0][1] = quat.x();
-  //robot().mbc().q[0][2] = quat.y();
-  //robot().mbc().q[0][3] = quat.z();
-  //robot().mbc().q[0][4] = trans.x();
-  //robot().mbc().q[0][5] = trans.y();
-  //robot().mbc().q[0][6] = trans.z();
-  //rbd::forwardKinematics(robot().mb(), robot().mbc());
-  //rbd::forwardVelocity(robot().mb(), robot().mbc());
-  //auto q_target = stances[stanceIndex].q();
-  //q_target[0] = robot().mbc().q[0];
-  //stances[stanceIndex].q(q_target);
   stabilityTask->target(env(), stances[stanceIndex], configs[stanceIndex], configs[stanceIndex].comTask.targetSpeed);
 }
 

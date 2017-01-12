@@ -290,19 +290,20 @@ bool enter_pushContactT::eval(MCSeqController & ctl)
     ctl.addContactTask.reset(new mc_tasks::AddContactTask(ctl.robots(), ctl.constSpeedConstr, *(ctl.targetContact), contactConf));
 
     std::shared_ptr<mc_rbdyn::Surface> robotSurf = ctl.targetContact->r1Surface();
-    const mc_rbdyn::ForceSensor& fs = ctl.robot().forceSensorData(ctl.robot().forceSensorByBody(robotSurf->bodyName()));
-
-    ctl.complianceTask = std::shared_ptr<mc_tasks::ComplianceTask>(new mc_tasks::ComplianceTask(ctl.robots(),
-        ctl.robots().robotIndex(), fs, ctl.getWrenches(), ctl.calibrator, ctl.timeStep, 10.0, 100000.));
-
-    ctl.complianceTask->setTargetWrench(sva::ForceVecd(contactConf.contactObj.complianceTargetTorque, contactConf.contactObj.complianceTargetForce));
-
     bool useComplianceTask = contactConf.contactObj.useComplianceTask && (!ctl.is_simulation);
     if(useComplianceTask)
     {
       LOG_INFO("Using compliance task with target torque: " << contactConf.contactObj.complianceTargetTorque.transpose()
                                     << " and target force: " << contactConf.contactObj.complianceTargetForce.transpose()
                                     << " compliance vel thresh: " << contactConf.contactObj.complianceVelThresh)
+
+      const mc_rbdyn::ForceSensor& fs = ctl.robot().forceSensorData(ctl.robot().forceSensorByBody(robotSurf->bodyName()));
+
+      ctl.complianceTask = std::shared_ptr<mc_tasks::ComplianceTask>(new mc_tasks::ComplianceTask(ctl.robots(),
+          ctl.robots().robotIndex(), fs, ctl.getWrenches(), ctl.calibrator, ctl.timeStep, 10.0, 100000.));
+
+      ctl.complianceTask->setTargetWrench(sva::ForceVecd(contactConf.contactObj.complianceTargetTorque, contactConf.contactObj.complianceTargetForce));
+
       ctl.solver().addTask(ctl.complianceTask);
       ctl.metaTasks.push_back(ctl.complianceTask.get());
     }
