@@ -87,6 +87,7 @@ std::string sampleConfig2()
 {
   std::string data = R"(
   {
+    "stringV": ["a2", "b2", "c2"],
     "int": 12
   }
   )";
@@ -443,5 +444,10 @@ BOOST_AUTO_TEST_CASE(TestConfiguration)
     /* Check that other values are still there */
     int b = config("sint");
     BOOST_CHECK_EQUAL(b, -42);
+
+    /* Check with a more complex type */
+    std::vector<std::string> ref2 = {"a2", "b2", "c2"};
+    std::vector<std::string> c = config("stringV");
+    BOOST_CHECK(c == ref2);
   }
 }

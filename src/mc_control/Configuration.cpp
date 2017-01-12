@@ -2,7 +2,11 @@
 
 #include <mc_rtc/logging.h>
 
-#include <json/json.h>
+#define RAPIDJSON_PARSE_DEFAULT_FLAGS rapidjson::kParseCommentsFlag | rapidjson::kParseTrailingCommasFlag
+
+#include "rapidjson/document.h"
+#include "rapidjson/pointer.h"
+#include "rapidjson/error/en.h"
 
 #include <stdexcept>
 #include <fstream>
@@ -10,11 +14,117 @@
 namespace mc_control
 {
 
-struct Configuration::Json::Impl : public ::Json::Value
+struct Configuration::Json::Impl
 {
-  using ::Json::Value::Value;
-  Impl() : ::Json::Value() {}
-  Impl(const ::Json::Value & v) : ::Json::Value(v) {}
+  Impl()
+  : pointer(""),
+    doc_p(new rapidjson::Document())
+  {
+  }
+
+  Impl(const Impl & other, int idx)
+  : pointer(other.pointer),
+    doc_p(other.doc_p)
+  {
+    std::stringstream ss;
+    ss << pointer << "/" << idx;
+    pointer = ss.str();
+  }
+
+  Impl(const Impl & other, const std::string & key)
+  : pointer(other.pointer),
+    doc_p(other.doc_p)
+  {
+    std::stringstream ss;
+    ss << pointer << "/" << key;
+    pointer = ss.str();
+  }
+
+  rapidjson::Value * value() const
+  {
+    if(pointer == "") { return rapidjson::Pointer("/").Get(*doc_p); }
+    return rapidjson::Pointer(pointer.c_str()).Get(*doc_p);
+  }
+
+  bool isMember(const std::string & key = "") const
+  {
+    std::string fkey = pointer + "/" + key;
+    rapidjson::Value * v = rapidjson::Pointer(fkey.c_str()).Get(*doc_p);
+    return v != nullptr;
+  }
+  bool isArray() const
+  {
+    assert(isMember());
+    return value()->IsArray();
+  }
+  bool isBool() const
+  {
+    assert(isMember());
+    return value()->IsBool();
+  }
+  bool isInt() const
+  {
+    assert(isMember());
+    return value()->IsInt();
+  }
+  bool isUInt() const
+  {
+    assert(isMember());
+    return value()->IsUint();
+  }
+  bool isNumeric() const
+  {
+    assert(isMember());
+    return value()->IsNumber();
+  }
+  bool isString() const
+  {
+    assert(isMember());
+    return value()->IsString();
+  }
+
+  bool asBool() const
+  {
+    assert(isMember());
+    return value()->GetBool();
+  }
+  int asInt() const
+  {
+    assert(isMember());
+    return value()->GetInt();
+  }
+  unsigned int asUInt() const
+  {
+    assert(isMember());
+    return value()->GetUint();
+  }
+  double asDouble() const
+  {
+    assert(isMember());
+    return value()->GetDouble();
+  }
+  std::string asString() const
+  {
+    assert(isMember());
+    return std::string(value()->GetString(), value()->GetStringLength());
+  }
+
+  size_t size() const
+  {
+    assert(isMember());
+    return value()->Capacity();
+  }
+  Impl operator[](int idx)
+  {
+    return Impl(*this, idx);
+  }
+  Impl operator[](const std::string & key)
+  {
+    return Impl(*this, key);
+  }
+
+  std::string pointer;
+  std::shared_ptr<rapidjson::Document> doc_p;
 };
 
 bool Configuration::Json::isArray() const
@@ -30,8 +140,7 @@ size_t Configuration::Json::size() const
 Configuration::Json Configuration::Json::operator[](int idx) const
 {
   Configuration::Json ret;
-  const ::Json::Value & v = (*impl)[idx];
-  ret.impl.reset(new Impl(v));
+  ret.impl.reset(new Impl((*impl)[idx]));
   return ret;
 }
 
@@ -78,9 +187,17 @@ Configuration Configuration::operator()(const std::string & key) const
 
 Configuration::operator bool() const
 {
-  if(v.impl->isBool() || v.impl->isInt())
+  if(v.impl->isBool())
   {
     return v.impl->asBool();
+  }
+  else if(v.impl->isUInt())
+  {
+    return static_cast<bool>(v.impl->asUInt());
+  }
+  else if(v.impl->isInt())
+  {
+    return static_cast<bool>(v.impl->asInt());
   }
   throw Configuration::Exception("Stored Json value is not a bool");
 }
@@ -118,7 +235,7 @@ Configuration::operator std::string() const
   {
     return v.impl->asString();
   }
-  throw Configuration::Exception("Stored Json v.impl->v.lue is not a string");
+  throw Configuration::Exception("Stored Json value is not a string");
 }
 
 Configuration::operator Eigen::Vector3d() const
@@ -184,20 +301,49 @@ void Configuration::load(const std::string & path)
     LOG_ERROR("Failed to open controller configuration file: " << path)
     return;
   }
-  ::Json::Value newV;
-  try
+
+  rapidjson::Document & target = *(v.impl->doc_p);
+
+  std::stringstream json;
+  json << ifs.rdbuf();
+  if(target.IsNull())
   {
-    ifs >> newV;
+    rapidjson::ParseResult res = target.Parse(json.str().c_str());
+    if(!res)
+    {
+      rapidjson::GetParseErrorFunc GetParseError = rapidjson::GetParseError_En;
+      std::stringstream ss;
+      ss << GetParseError(res.Code()) << std::endl;
+      ss << "Position: " << res.Offset();
+      LOG_ERROR("Failed to read configuration file: " << path)
+      LOG_WARNING(ss.str())
+      return;
+    }
   }
-  catch(const std::exception & exc)
+  else
   {
-    LOG_ERROR("Failed to read configuration file: " << path)
-    LOG_WARNING(exc.what())
-    return;
-  }
-  for(const auto & m : newV.getMemberNames())
-  {
-    (*v.impl)[m] = newV[m];
+    rapidjson::Document d;
+    rapidjson::ParseResult res = d.Parse(json.str().c_str());
+    if(!res)
+    {
+      rapidjson::GetParseErrorFunc GetParseError = rapidjson::GetParseError_En;
+      std::stringstream ss;
+      ss << GetParseError(res.Code()) << std::endl;
+      ss << "Position: " << res.Offset();
+      LOG_ERROR("Failed to read configuration file: " << path)
+      LOG_WARNING(ss.str())
+      return;
+    }
+    for(auto & m : d.GetObject())
+    {
+      if(target.HasMember(m.name))
+      {
+        target.RemoveMember(m.name);
+      }
+      rapidjson::Value n(m.name, target.GetAllocator());
+      rapidjson::Value v(m.value, target.GetAllocator());
+      target.AddMember(n, v, target.GetAllocator());
+    }
   }
 }
 

@@ -24,11 +24,3 @@ else()
 endif()
 
 pkg_config_append_libs(ltdl)
-
-###################
-# -- RapidJSON -- #
-###################
-
-# The code was copied from the 1.1.0 release tarball for RapidJSON
-# https://github.com/miloyip/rapidjson
-include_directories(RapidJSON)

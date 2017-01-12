@@ -129,6 +129,15 @@ endif(MSVC)
 if(WIN32)
   include_directories(3rd-party/ltdl)
 endif()
+
+###################
+# -- RapidJSON -- #
+###################
+
+# The code was copied from the 1.1.0 release tarball for RapidJSON
+# https://github.com/miloyip/rapidjson
+include_directories(3rd-party/RapidJSON)
+
 add_subdirectory(3rd-party)
 add_subdirectory(src)
 add_subdirectory(tests)
