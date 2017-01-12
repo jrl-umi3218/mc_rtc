@@ -35,7 +35,6 @@ set(mc_rbdyn_HDR
 ../include/mc_rbdyn/contact_transform.h
 ../include/mc_rbdyn/CylindricalSurface.h
 ../include/mc_rbdyn/GripperSurface.h
-../include/mc_rbdyn/json
 ../include/mc_rbdyn/PlanarSurface.h
 ../include/mc_rbdyn/polygon_utils.h
 ../include/mc_rbdyn/PolygonInterpolator.h

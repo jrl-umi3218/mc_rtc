@@ -4,7 +4,6 @@
 #include <Tasks/QPContactConstr.h>
 
 #include <mc_rbdyn/GripperSurface.h>
-#include <mc_rbdyn/json/StanceConfig.h>
 #include <mc_rbdyn/RobotLoader.h>
 #include <mc_rbdyn/RobotModule.h>
 #include <mc_rtc/logging.h>
@@ -14,6 +13,7 @@
 
 #include "mc_seq_steps.h"
 #include "MCSeqPublisher.h"
+#include "json/StanceConfig.h"
 
 #include <fstream>
 
