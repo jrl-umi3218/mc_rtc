@@ -198,6 +198,9 @@ public:
   mc_rbdyn::Surface & surface(const std::string & sName);
   const mc_rbdyn::Surface & surface(const std::string & sName) const;
 
+  /*! Copy an existing surface with a new name */
+  mc_rbdyn::Surface & copySurface(const std::string & sName, const std::string & name);
+
   const std::map<std::string, mc_rbdyn::SurfacePtr> & surfaces() const;
 
   convex_pair_t & convex(const std::string & cName);

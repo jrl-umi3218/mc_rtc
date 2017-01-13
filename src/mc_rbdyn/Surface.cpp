@@ -29,6 +29,11 @@ const std::string & Surface::name() const
   return impl->name;
 }
 
+void Surface::name(const std::string & name)
+{
+  impl->name = name;
+}
+
 const std::string & Surface::bodyName() const
 {
   return impl->bodyName;
