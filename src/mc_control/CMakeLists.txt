@@ -5,7 +5,6 @@ macro(add_controller controller_name controller_SRC controller_HDR)
   target_link_libraries(${controller_name} mc_control)
   pkg_config_use_dependency(${controller_name} mc_rbdyn_urdf_cpp)
   pkg_config_use_dependency(${controller_name} Tasks)
-  pkg_config_use_dependency(${controller_name} jsoncpp)
   target_link_libraries(${controller_name} ${Boost_LIBRARIES})
   install(TARGETS ${controller_name} DESTINATION
     ${MC_CONTROLLER_INSTALL_PREFIX})

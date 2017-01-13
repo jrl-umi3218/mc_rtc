@@ -32,7 +32,6 @@ endif()
 
 find_package(Boost REQUIRED COMPONENTS system filesystem thread date_time timer regex)
 
-add_required_dependency(jsoncpp)
 add_required_dependency("Tasks" "Tasks_d")
 add_required_dependency("mc_rbdyn_urdf_cpp" "mc_rbdyn_urdf_cpp_d")
 
