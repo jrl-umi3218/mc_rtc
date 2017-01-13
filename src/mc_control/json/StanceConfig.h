@@ -7,242 +7,248 @@
 
 #include <mc_rtc/logging.h>
 
-#include <json/json.h>
+#define RAPIDJSON_HAS_STDSTRING 1
+#define RAPIDJSON_PARSE_DEFAULT_FLAGS rapidjson::kParseCommentsFlag | rapidjson::kParseTrailingCommasFlag
+#include "rapidjson/document.h"
+#include "rapidjson/ostreamwrapper.h"
+#include "rapidjson/writer.h"
+#include "rapidjson/error/en.h"
+
 #include <iostream>
 
 namespace mc_rbdyn
 {
 
-inline void scCoMTaskFromJSON(StanceConfig::CoMTask & ret, const Json::Value & v)
+inline void scCoMTaskFromJSON(StanceConfig::CoMTask & ret, const rapidjson::Value & v)
 {
-  if(v.isMember("stiffness"))
+  if(v.HasMember("stiffness"))
   {
-    ret.stiffness = v["stiffness"].asDouble();
+    ret.stiffness = v["stiffness"].GetDouble();
   }
-  if(v.isMember("extraStiffness"))
+  if(v.HasMember("extraStiffness"))
   {
-    ret.extraStiffness = v["extraStiffness"].asDouble();
+    ret.extraStiffness = v["extraStiffness"].GetDouble();
   }
-  if(v.isMember("weight"))
+  if(v.HasMember("weight"))
   {
-    ret.weight = v["weight"].asDouble();
+    ret.weight = v["weight"].GetDouble();
   }
-  if(v.isMember("targetSpeed"))
+  if(v.HasMember("targetSpeed"))
   {
-    ret.targetSpeed = v["targetSpeed"].asDouble();
+    ret.targetSpeed = v["targetSpeed"].GetDouble();
   }
 }
 
-inline Json::Value scCoMTaskToJSON(const StanceConfig::CoMTask& ct)
+inline rapidjson::Value scCoMTaskToJSON(const StanceConfig::CoMTask& ct, rapidjson::Document::AllocatorType & allocator)
 {
-  Json::Value ret(Json::objectValue);
-  ret["stiffness"] = ct.stiffness;
-  ret["extraStiffness"] = ct.extraStiffness;
-  ret["weight"] = ct.weight;
-  ret["targetSpeed"] = ct.targetSpeed;
+  rapidjson::Value ret(rapidjson::kObjectType);
+  ret.AddMember("stiffness", ct.stiffness, allocator);
+  ret.AddMember("extraStiffness", ct.extraStiffness, allocator);
+  ret.AddMember("weight", ct.weight, allocator);
+  ret.AddMember("targetSpeed", ct.targetSpeed, allocator);
   return ret;
 }
 
-inline void scCoMObjFromJSON(StanceConfig::CoMObj & ret, const Json::Value &v)
+inline void scCoMObjFromJSON(StanceConfig::CoMObj & ret, const rapidjson::Value &v)
 {
-  if(v.isMember("posThresh"))
+  if(v.HasMember("posThresh"))
   {
-    ret.posThresh = v["posThresh"].asDouble();
+    ret.posThresh = v["posThresh"].GetDouble();
   }
-  if(v.isMember("velThresh"))
+  if(v.HasMember("velThresh"))
   {
-    ret.velThresh = v["velThresh"].asDouble();
+    ret.velThresh = v["velThresh"].GetDouble();
   }
-  if(v.isMember("comOffset"))
+  if(v.HasMember("comOffset"))
   {
-    for(Json::Value::ArrayIndex i = 0; i < 3; ++i)
+    for(int i = 0; i < 3; ++i)
     {
-      ret.comOffset(i) = v["comOffset"][i].asDouble();
+      ret.comOffset(i) = v["comOffset"][i].GetDouble();
     }
   }
-  if(v.isMember("comAdjustOffset"))
+  if(v.HasMember("comAdjustOffset"))
   {
-    for(Json::Value::ArrayIndex i = 0; i < 3; ++i)
+    for(int i = 0; i < 3; ++i)
     {
-      ret.comAdjustOffset(i) = v["comAdjustOffset"][i].asDouble();
+      ret.comAdjustOffset(i) = v["comAdjustOffset"][i].GetDouble();
     }
   }
-  if(v.isMember("timeout"))
+  if(v.HasMember("timeout"))
   {
-    ret.timeout = v["timeout"].asDouble();
+    ret.timeout = v["timeout"].GetDouble();
   }
 }
 
-inline Json::Value scCoMObjToJSON(const StanceConfig::CoMObj & co)
+inline rapidjson::Value scCoMObjToJSON(const StanceConfig::CoMObj & co, rapidjson::Document::AllocatorType & allocator)
 {
-  Json::Value ret(Json::objectValue);
-  ret["posThresh"] = co.posThresh;
-  ret["velThresh"] = co.velThresh;
-  Json::Value cOff(Json::arrayValue);
+  rapidjson::Value ret(rapidjson::kObjectType);
+  ret.AddMember("posThresh", co.posThresh, allocator);
+  ret.AddMember("velThresh", co.velThresh, allocator);
+  rapidjson::Value cOff(rapidjson::kArrayType);
   for(int i = 0; i < 3; ++i)
   {
-    cOff.append(Json::Value(co.comOffset(i)));
+    cOff.PushBack(co.comOffset(i), allocator);
   }
-  ret["comOffset"] = cOff;
+  ret.AddMember("comOffset", cOff, allocator);
   return ret;
 }
 
-inline void scPostureTaskFromJSON(StanceConfig::PostureTask & ret, const Json::Value & v)
+inline void scPostureTaskFromJSON(StanceConfig::PostureTask & ret, const rapidjson::Value & v)
 {
-  if(v.isMember("stiffness"))
+  if(v.HasMember("stiffness"))
   {
-    ret.stiffness = v["stiffness"].asDouble();
+    ret.stiffness = v["stiffness"].GetDouble();
   }
-  if(v.isMember("weight"))
+  if(v.HasMember("weight"))
   {
-    ret.weight = v["weight"].asDouble();
+    ret.weight = v["weight"].GetDouble();
   }
 }
 
-inline Json::Value scPostureTaskToJSON(const StanceConfig::PostureTask & pt)
+inline rapidjson::Value scPostureTaskToJSON(const StanceConfig::PostureTask & pt, rapidjson::Document::AllocatorType & allocator)
 {
-  Json::Value v(Json::objectValue);
-  v["stiffness"] = pt.stiffness;
-  v["weight"] = pt.weight;
+  rapidjson::Value v(rapidjson::kObjectType);
+  v.AddMember("stiffness", pt.stiffness, allocator);
+  v.AddMember("weight", pt.weight, allocator);
   return v;
 }
 
-inline void scPositionFromJSON(StanceConfig::Position & ret, const Json::Value & v)
+inline void scPositionFromJSON(StanceConfig::Position & ret, const rapidjson::Value & v)
 {
-  if(v.isMember("stiffness"))
+  if(v.HasMember("stiffness"))
   {
-    ret.stiffness = v["stiffness"].asDouble();
+    ret.stiffness = v["stiffness"].GetDouble();
   }
-  if(v.isMember("extraStiffness"))
+  if(v.HasMember("extraStiffness"))
   {
-    ret.extraStiffness = v["extraStiffness"].asDouble();
+    ret.extraStiffness = v["extraStiffness"].GetDouble();
   }
-  if(v.isMember("weight"))
+  if(v.HasMember("weight"))
   {
-    ret.weight = v["weight"].asDouble();
+    ret.weight = v["weight"].GetDouble();
   }
-  if(v.isMember("targetSpeed"))
+  if(v.HasMember("targetSpeed"))
   {
-    ret.targetSpeed = v["targetSpeed"].asDouble();
+    ret.targetSpeed = v["targetSpeed"].GetDouble();
   }
 }
 
-inline Json::Value scPositionToJSON(const StanceConfig::Position& ct)
+inline rapidjson::Value scPositionToJSON(const StanceConfig::Position& ct, rapidjson::Document::AllocatorType & allocator)
 {
-  Json::Value ret(Json::objectValue);
-  ret["stiffness"] = ct.stiffness;
-  ret["extraStiffness"] = ct.extraStiffness;
-  ret["weight"] = ct.weight;
-  ret["targetSpeed"] = ct.targetSpeed;
+  rapidjson::Value ret(rapidjson::kObjectType);
+  ret.AddMember("stiffness", ct.stiffness, allocator);
+  ret.AddMember("extraStiffness", ct.extraStiffness, allocator);
+  ret.AddMember("weight", ct.weight, allocator);
+  ret.AddMember("targetSpeed", ct.targetSpeed, allocator);
   return ret;
 }
 
-inline void scOrientationFromJSON(StanceConfig::Orientation & ret, const Json::Value & v)
+inline void scOrientationFromJSON(StanceConfig::Orientation & ret, const rapidjson::Value & v)
 {
-  if(v.isMember("stiffness"))
+  if(v.HasMember("stiffness"))
   {
-    ret.stiffness = v["stiffness"].asDouble();
+    ret.stiffness = v["stiffness"].GetDouble();
   }
-  if(v.isMember("finalWeight"))
+  if(v.HasMember("finalWeight"))
   {
-    ret.finalWeight = v["finalWeight"].asDouble();
+    ret.finalWeight = v["finalWeight"].GetDouble();
   }
-  if(v.isMember("weight"))
+  if(v.HasMember("weight"))
   {
-    ret.weight = v["weight"].asDouble();
+    ret.weight = v["weight"].GetDouble();
   }
 }
 
-inline Json::Value scOrientationToJSON(const StanceConfig::Orientation& ct)
+inline rapidjson::Value scOrientationToJSON(const StanceConfig::Orientation& ct, rapidjson::Document::AllocatorType & allocator)
 {
-  Json::Value ret(Json::objectValue);
-  ret["stiffness"] = ct.stiffness;
-  ret["weight"] = ct.weight;
-  ret["finalWeight"] = ct.finalWeight;
+  rapidjson::Value ret(rapidjson::kObjectType);
+  ret.AddMember("stiffness", ct.stiffness, allocator);
+  ret.AddMember("weight", ct.weight, allocator);
+  ret.AddMember("finalWeight", ct.finalWeight, allocator);
   return ret;
 }
 
-inline void scLinVelFromJSON(StanceConfig::LinVel & ret, const Json::Value & v)
+inline void scLinVelFromJSON(StanceConfig::LinVel & ret, const rapidjson::Value & v)
 {
-  if(v.isMember("stiffness"))
+  if(v.HasMember("stiffness"))
   {
-    ret.stiffness = v["stiffness"].asDouble();
+    ret.stiffness = v["stiffness"].GetDouble();
   }
-  if(v.isMember("weight"))
+  if(v.HasMember("weight"))
   {
-    ret.weight = v["weight"].asDouble();
+    ret.weight = v["weight"].GetDouble();
   }
-  if(v.isMember("speed"))
+  if(v.HasMember("speed"))
   {
-    ret.speed = v["speed"].asDouble();
+    ret.speed = v["speed"].GetDouble();
   }
 }
 
-inline Json::Value scLinVelToJSON(const StanceConfig::LinVel& ct)
+inline rapidjson::Value scLinVelToJSON(const StanceConfig::LinVel& ct, rapidjson::Document::AllocatorType & allocator)
 {
-  Json::Value ret(Json::objectValue);
-  ret["stiffness"] = ct.stiffness;
-  ret["weight"] = ct.weight;
-  ret["speed"] = ct.speed;
+  rapidjson::Value ret(rapidjson::kObjectType);
+  ret.AddMember("stiffness", ct.stiffness, allocator);
+  ret.AddMember("weight", ct.weight, allocator);
+  ret.AddMember("speed", ct.speed, allocator);
   return ret;
 }
 
-inline void scWaypointConfFromJSON(StanceConfig::WaypointConf & ret, const Json::Value & v)
+inline void scWaypointConfFromJSON(StanceConfig::WaypointConf & ret, const rapidjson::Value & v)
 {
-  if(v.isMember("skip"))
+  if(v.HasMember("skip"))
   {
-    ret.skip = v["skip"].asBool();
+    ret.skip = v["skip"].GetBool();
   }
-  if(v.isMember("thresh"))
+  if(v.HasMember("thresh"))
   {
-    ret.thresh = v["thresh"].asDouble();
+    ret.thresh = v["thresh"].GetDouble();
   }
-  if(v.isMember("type"))
+  if(v.HasMember("type"))
   {
     if(v["type"] == "percentWaypoint")
     {
-      double x = v["conf"]["x"].asDouble();
-      double y = v["conf"]["y"].asDouble();
-      double z = v["conf"]["z"].asDouble();
-      double nOff = v["conf"]["nOff"].asDouble();
+      double x = v["conf"]["x"].GetDouble();
+      double y = v["conf"]["y"].GetDouble();
+      double z = v["conf"]["z"].GetDouble();
+      double nOff = v["conf"]["nOff"].GetDouble();
       double xOff = 0;
-      if(v["conf"].isMember("xOff"))
+      if(v["conf"].HasMember("xOff"))
       {
-        xOff = v["conf"]["xOff"].asDouble();
+        xOff = v["conf"]["xOff"].GetDouble();
       }
       double yOff = 0;
-      if(v["conf"].isMember("yOff"))
+      if(v["conf"].HasMember("yOff"))
       {
-        yOff = v["conf"]["yOff"].asDouble();
+        yOff = v["conf"]["yOff"].GetDouble();
       }
       double zOff = 0;
-      if(v["conf"].isMember("zOff"))
+      if(v["conf"].HasMember("zOff"))
       {
-        zOff = v["conf"]["zOff"].asDouble();
+        zOff = v["conf"]["zOff"].GetDouble();
       }
       ret.pos = percentWaypoint(x, y, z, nOff, xOff, yOff, zOff);
     }
     else if(v["type"] == "hardCodedPos")
     {
-      double x = v["conf"]["x"].asDouble();
-      double y = v["conf"]["y"].asDouble();
-      double z = v["conf"]["z"].asDouble();
+      double x = v["conf"]["x"].GetDouble();
+      double y = v["conf"]["y"].GetDouble();
+      double z = v["conf"]["z"].GetDouble();
       ret.pos = hardCodedPos(x, y, z);
     }
     else
     {
-      LOG_ERROR("Invalid waypoint type: " << v["type"])
+      LOG_ERROR("Invalid waypoint type: " << v["type"].GetString())
       throw(std::string("Invalid waypoint type in JSON string"));
     }
   }
 }
 
 /*FIXME Not very clean and should not be used in practice */
-inline Json::Value scWaypointConfToJSON(const StanceConfig::WaypointConf & wpc)
+inline rapidjson::Value scWaypointConfToJSON(const StanceConfig::WaypointConf & wpc, rapidjson::Document::AllocatorType & allocator)
 {
-  Json::Value ret(Json::objectValue);
-  ret["thresh"] = wpc.thresh;
-  ret["conf"] = Json::Value(Json::objectValue);
+  rapidjson::Value ret(rapidjson::kObjectType);
+  ret.AddMember("thresh", wpc.thresh, allocator);
+  ret.AddMember("conf", rapidjson::Value(rapidjson::kObjectType), allocator);
   /* First check if it is an hardcoded pos */
   sva::PTransformd start = sva::PTransformd::Identity();
   Eigen::Vector3d N = Eigen::Vector3d::Zero();
@@ -252,301 +258,306 @@ inline Json::Value scWaypointConfToJSON(const StanceConfig::WaypointConf & wpc)
   Eigen::Vector3d pos2 = wpc.pos(start, pt2, N);
   if(pos1 == pos2)
   {
-    ret["type"] = "hardCodedPos";
-    Json::Value conf(Json::objectValue);
-    conf["x"] = pos1.x();
-    conf["y"] = pos1.y();
-    conf["z"] = pos1.z();
-    ret["conf"] = conf;
+    ret.AddMember("type", "hardCodedPos", allocator);
+    rapidjson::Value conf(rapidjson::kObjectType);
+    conf.AddMember("x", pos1.x(), allocator);
+    conf.AddMember("y", pos1.y(), allocator);
+    conf.AddMember("z", pos1.z(), allocator);
+    ret.AddMember("conf", conf, allocator);
   }
   else
   {
-    ret["type"] = "percentWaypoint";
-    Json::Value conf(Json::objectValue);
-    conf["x"] = pos1.x();
-    conf["y"] = pos1.y();
-    conf["z"] = pos1.z();
+    ret.AddMember("type", "percentWaypoint", allocator);
+    rapidjson::Value conf(rapidjson::kObjectType);
+    conf.AddMember("x", pos1.x(), allocator);
+    conf.AddMember("y", pos1.y(), allocator);
+    conf.AddMember("z", pos1.z(), allocator);
     N(0) = 1;
     pos1 = wpc.pos(start, start, N);
-    conf["nOff"] = pos1.x();
-    ret["conf"] = conf;
+    conf.AddMember("nOff", pos1.x(), allocator);
+    ret.AddMember("conf", conf, allocator);
   }
   return ret;
 }
 
-inline void scCollisionConfFromJSON(StanceConfig::CollisionConf & cc, const Json::Value & v)
+inline void scCollisionConfFromJSON(StanceConfig::CollisionConf & cc, const rapidjson::Value & v)
 {
-  if(v.isMember("iDist"))
+  if(v.HasMember("iDist"))
   {
-    cc.iDist = v["iDist"].asDouble();
+    cc.iDist = v["iDist"].GetDouble();
   }
-  if(v.isMember("sDist"))
+  if(v.HasMember("sDist"))
   {
-    cc.sDist = v["sDist"].asDouble();
+    cc.sDist = v["sDist"].GetDouble();
   }
-  if(v.isMember("damping"))
+  if(v.HasMember("damping"))
   {
-    cc.damping = v["damping"].asDouble();
+    cc.damping = v["damping"].GetDouble();
   }
 }
 
-inline Json::Value scCollisionConfToJSON(const StanceConfig::CollisionConf & cc)
+inline rapidjson::Value scCollisionConfToJSON(const StanceConfig::CollisionConf & cc, rapidjson::Document::AllocatorType & allocator)
 {
-  Json::Value v(Json::objectValue);
-  v["iDist"] = cc.iDist;
-  v["sDist"] = cc.sDist;
-  v["damping"] = cc.damping;
+  rapidjson::Value v(rapidjson::kObjectType);
+  v.AddMember("iDist", cc.iDist, allocator);
+  v.AddMember("sDist", cc.sDist, allocator);
+  v.AddMember("damping", cc.damping, allocator);
   return v;
 }
 
-inline void scContactTaskFromJSON(StanceConfig::ContactTask & ct, const Json::Value & v)
+inline void scContactTaskFromJSON(StanceConfig::ContactTask & ct, const rapidjson::Value & v)
 {
-  if(v.isMember("position"))
+  if(v.HasMember("position"))
   {
     scPositionFromJSON(ct.position, v["position"]);
   }
-  if(v.isMember("orientation"))
+  if(v.HasMember("orientation"))
   {
      scOrientationFromJSON(ct.orientation, v["orientation"]);
   }
-  if(v.isMember("linVel"))
+  if(v.HasMember("linVel"))
   {
     scLinVelFromJSON(ct.linVel, v["linVel"]);
   }
-  if(v.isMember("waypointConf"))
+  if(v.HasMember("waypointConf"))
   {
     scWaypointConfFromJSON(ct.waypointConf, v["waypointConf"]);
   }
-  if(v.isMember("collisionConf"))
+  if(v.HasMember("collisionConf"))
   {
     scCollisionConfFromJSON(ct.collisionConf, v["collisionConf"]);
   }
 }
 
-inline Json::Value scContactTaskToJSON(const StanceConfig::ContactTask & ct)
+inline rapidjson::Value scContactTaskToJSON(const StanceConfig::ContactTask & ct, rapidjson::Document::AllocatorType & allocator)
 {
-  Json::Value v(Json::objectValue);
-  v["position"] = scPositionToJSON(ct.position);
-  v["orientation"] = scOrientationToJSON(ct.orientation);
-  v["linVel"] = scLinVelToJSON(ct.linVel);
-  v["waypointConf"] = scWaypointConfToJSON(ct.waypointConf);
-  v["collisionConf"] = scCollisionConfToJSON(ct.collisionConf);
+  rapidjson::Value v(rapidjson::kObjectType);
+  v.AddMember("position", scPositionToJSON(ct.position, allocator).Move(), allocator);
+  v.AddMember("orientation", scOrientationToJSON(ct.orientation, allocator).Move(), allocator);
+  v.AddMember("linVel", scLinVelToJSON(ct.linVel, allocator).Move(), allocator);
+  v.AddMember("waypointConf", scWaypointConfToJSON(ct.waypointConf, allocator).Move(), allocator);
+  v.AddMember("collisionConf", scCollisionConfToJSON(ct.collisionConf, allocator).Move(), allocator);
   return v;
 }
 
-inline void scContactObjFromJSON(StanceConfig::ContactObj & co, const Json::Value & v)
+inline void scContactObjFromJSON(StanceConfig::ContactObj & co, const rapidjson::Value & v)
 {
-  if(v.isMember("posThresh"))
+  if(v.HasMember("posThresh"))
   {
-    co.posThresh = v["posThresh"].asDouble();
+    co.posThresh = v["posThresh"].GetDouble();
   }
-  if(v.isMember("velThresh"))
+  if(v.HasMember("velThresh"))
   {
-    co.velThresh = v["velThresh"].asDouble();
+    co.velThresh = v["velThresh"].GetDouble();
   }
-  if(v.isMember("adjustPosThresh"))
+  if(v.HasMember("adjustPosThresh"))
   {
-    co.adjustPosThresh = v["adjustPosThresh"].asDouble();
+    co.adjustPosThresh = v["adjustPosThresh"].GetDouble();
   }
-  if(v.isMember("adjustVelThresh"))
+  if(v.HasMember("adjustVelThresh"))
   {
-    co.adjustVelThresh = v["adjustVelThresh"].asDouble();
+    co.adjustVelThresh = v["adjustVelThresh"].GetDouble();
   }
-  if(v.isMember("adjustOriThresh"))
+  if(v.HasMember("adjustOriThresh"))
   {
-    co.adjustOriThresh = v["adjustOriThresh"].asDouble();
+    co.adjustOriThresh = v["adjustOriThresh"].GetDouble();
   }
-  if(v.isMember("adjustOffset"))
+  if(v.HasMember("adjustOffset"))
   {
-    co.adjustOffset.x() = v["adjustOffset"][0].asDouble();
-    co.adjustOffset.y() = v["adjustOffset"][1].asDouble();
-    co.adjustOffset.z() = v["adjustOffset"][2].asDouble();
+    co.adjustOffset.x() = v["adjustOffset"][0].GetDouble();
+    co.adjustOffset.y() = v["adjustOffset"][1].GetDouble();
+    co.adjustOffset.z() = v["adjustOffset"][2].GetDouble();
   }
-  if(v.isMember("adjustRPYOffset"))
+  if(v.HasMember("adjustRPYOffset"))
   {
-    co.adjustRPYOffset.x() = v["adjustRPYOffset"][0].asDouble();
-    co.adjustRPYOffset.y() = v["adjustRPYOffset"][1].asDouble();
-    co.adjustRPYOffset.z() = v["adjustRPYOffset"][2].asDouble();
+    co.adjustRPYOffset.x() = v["adjustRPYOffset"][0].GetDouble();
+    co.adjustRPYOffset.y() = v["adjustRPYOffset"][1].GetDouble();
+    co.adjustRPYOffset.z() = v["adjustRPYOffset"][2].GetDouble();
   }
-  if(v.isMember("adjustOriTBNWeight"))
+  if(v.HasMember("adjustOriTBNWeight"))
   {
-    co.adjustOriTBNWeight.x() = v["adjustOriTBNWeight"][0].asDouble();
-    co.adjustOriTBNWeight.y() = v["adjustOriTBNWeight"][1].asDouble();
-    co.adjustOriTBNWeight.z() = v["adjustOriTBNWeight"][2].asDouble();
+    co.adjustOriTBNWeight.x() = v["adjustOriTBNWeight"][0].GetDouble();
+    co.adjustOriTBNWeight.y() = v["adjustOriTBNWeight"][1].GetDouble();
+    co.adjustOriTBNWeight.z() = v["adjustOriTBNWeight"][2].GetDouble();
   }
-  if(v.isMember("preContactDist"))
+  if(v.HasMember("preContactDist"))
   {
-    co.preContactDist = v["preContactDist"].asDouble();
+    co.preContactDist = v["preContactDist"].GetDouble();
   }
-  if(v.isMember("gripperMoveAwayDist"))
+  if(v.HasMember("gripperMoveAwayDist"))
   {
-    co.gripperMoveAwayDist = v["gripperMoveAwayDist"].asDouble();
+    co.gripperMoveAwayDist = v["gripperMoveAwayDist"].GetDouble();
   }
-  if(v.isMember("useComplianceTask"))
+  if(v.HasMember("useComplianceTask"))
   {
-    co.useComplianceTask = v["useComplianceTask"].asBool();
+    co.useComplianceTask = v["useComplianceTask"].GetBool();
   }
-  if(v.isMember("complianceVelThresh"))
+  if(v.HasMember("complianceVelThresh"))
   {
-    co.complianceVelThresh = v["complianceVelThresh"].asDouble();
+    co.complianceVelThresh = v["complianceVelThresh"].GetDouble();
   }
-  if(v.isMember("complianceTargetTorque"))
+  if(v.HasMember("complianceTargetTorque"))
   {
-    co.complianceTargetTorque.x() = v["complianceTargetTorque"][0].asDouble();
-    co.complianceTargetTorque.y() = v["complianceTargetTorque"][1].asDouble();
-    co.complianceTargetTorque.z() = v["complianceTargetTorque"][2].asDouble();
+    co.complianceTargetTorque.x() = v["complianceTargetTorque"][0].GetDouble();
+    co.complianceTargetTorque.y() = v["complianceTargetTorque"][1].GetDouble();
+    co.complianceTargetTorque.z() = v["complianceTargetTorque"][2].GetDouble();
   }
-  if(v.isMember("complianceTargetForce"))
+  if(v.HasMember("complianceTargetForce"))
   {
-    co.complianceTargetForce.x() = v["complianceTargetForce"][0].asDouble();
-    co.complianceTargetForce.y() = v["complianceTargetForce"][1].asDouble();
-    co.complianceTargetForce.z() = v["complianceTargetForce"][2].asDouble();
+    co.complianceTargetForce.x() = v["complianceTargetForce"][0].GetDouble();
+    co.complianceTargetForce.y() = v["complianceTargetForce"][1].GetDouble();
+    co.complianceTargetForce.z() = v["complianceTargetForce"][2].GetDouble();
   }
 }
 
-inline Json::Value scContactObjToJSON(const StanceConfig::ContactObj & co)
+inline rapidjson::Value scContactObjToJSON(const StanceConfig::ContactObj & co, rapidjson::Document::AllocatorType & allocator)
 {
-  Json::Value v(Json::objectValue);
-  v["posThresh"] = co.posThresh;
-  v["velThresh"] = co.posThresh;
-  v["adjustPosThresh"] = co.adjustPosThresh;
-  v["adjustVelThresh"] = co.adjustVelThresh;
-  v["adjustOriThresh"] = co.adjustOriThresh;
-  v["adjustOffset"] = Json::Value(Json::arrayValue);
-  v["adjustOffset"].append(co.adjustOffset.x());
-  v["adjustOffset"].append(co.adjustOffset.y());
-  v["adjustOffset"].append(co.adjustOffset.z());
-  v["adjustOriTBNWeight"] = Json::Value(Json::arrayValue);
-  v["adjustOriTBNWeight"].append(co.adjustOriTBNWeight.x());
-  v["adjustOriTBNWeight"].append(co.adjustOriTBNWeight.y());
-  v["adjustOriTBNWeight"].append(co.adjustOriTBNWeight.z());
-  v["preContactDist"] = co.preContactDist;
+  rapidjson::Value v(rapidjson::kObjectType);
+  v.AddMember("posThresh", co.posThresh, allocator);
+  v.AddMember("velThresh", co.posThresh, allocator);
+  v.AddMember("adjustPosThresh", co.adjustPosThresh, allocator);
+  v.AddMember("adjustVelThresh", co.adjustVelThresh, allocator);
+  v.AddMember("adjustOriThresh", co.adjustOriThresh, allocator);
+  rapidjson::Value adjustOffset(rapidjson::kArrayType);
+  adjustOffset.PushBack(co.adjustOffset.x(), allocator);
+  adjustOffset.PushBack(co.adjustOffset.y(), allocator);
+  adjustOffset.PushBack(co.adjustOffset.z(), allocator);
+  v.AddMember("adjustOffset", adjustOffset, allocator);
+  rapidjson::Value adjustOriTBNWeight(rapidjson::kArrayType);
+  adjustOriTBNWeight.PushBack(co.adjustOriTBNWeight.x(), allocator);
+  adjustOriTBNWeight.PushBack(co.adjustOriTBNWeight.y(), allocator);
+  adjustOriTBNWeight.PushBack(co.adjustOriTBNWeight.z(), allocator);
+  v.AddMember("adjustOriTBNWeight", adjustOriTBNWeight, allocator);
+  v.AddMember("preContactDist", co.preContactDist, allocator);
   return v;
 }
 
-inline StanceConfig::BodiesCollisionConf scBodiesCollisionConfFromJSON(const Json::Value & v)
+inline StanceConfig::BodiesCollisionConf scBodiesCollisionConfFromJSON(const rapidjson::Value & v)
 {
   StanceConfig::BodiesCollisionConf ret;
-  ret.body1 = v["body1"].asString();
-  ret.body2 = v["body2"].asString();
-  if(v.isMember("collisionConf"))
+  ret.body1 = v["body1"].GetString();
+  ret.body2 = v["body2"].GetString();
+  if(v.HasMember("collisionConf"))
   {
     scCollisionConfFromJSON(ret.collisionConf, v["collisionConf"]);
   }
   return ret;
 }
 
-inline Json::Value scBodiesCollisionConfToJSON(const StanceConfig::BodiesCollisionConf & bcc)
+inline rapidjson::Value scBodiesCollisionConfToJSON(const StanceConfig::BodiesCollisionConf & bcc, rapidjson::Document::AllocatorType & allocator)
 {
-  Json::Value v(Json::objectValue);
-  v["body1"] = bcc.body1;
-  v["body2"] = bcc.body2;
-  v["collisionConf"] = scCollisionConfToJSON(bcc.collisionConf);
+  rapidjson::Value v(rapidjson::kObjectType);
+  v.AddMember("body1", bcc.body1, allocator);
+  v.AddMember("body2", bcc.body2, allocator);
+  v.AddMember("collisionConf", scCollisionConfToJSON(bcc.collisionConf, allocator).Move(), allocator);
   return v;
 }
 
-inline void scCollisionsFromJSON(StanceConfig::Collisions & cs, const Json::Value & v)
+inline void scCollisionsFromJSON(StanceConfig::Collisions & cs, const rapidjson::Value & v)
 {
-  if(v.isMember("autoc"))
+  if(v.HasMember("autoc"))
   {
-    for(const auto & c : v["autoc"])
+    for(const auto & c : v["autoc"].GetArray())
     {
       cs.autoc.push_back(scBodiesCollisionConfFromJSON(c));
     }
   }
-  if(v.isMember("robotEnv"))
+  if(v.HasMember("robotEnv"))
   {
-    for(const auto & c : v["robotEnv"])
+    for(const auto & c : v["robotEnv"].GetArray())
     {
       cs.robotEnv.push_back(scBodiesCollisionConfFromJSON(c));
     }
   }
-  if(v.isMember("robotEnvContactFilter"))
+  if(v.HasMember("robotEnvContactFilter"))
   {
-    for(const auto & f : v["robotEnvContactFilter"])
+    for(const auto & f : v["robotEnvContactFilter"].GetArray())
     {
-      std::pair<std::string, std::string> key(f["surf1"].asString(),f["surf2"].asString());
+      std::pair<std::string, std::string> key(f["surf1"].GetString(),f["surf2"].GetString());
       if(cs.robotEnvContactFilter.count(key) == 0)
       {
         cs.robotEnvContactFilter[key] = {};
       }
-      for(const auto & filtered : f["filtered"])
+      for(const auto & filtered : f["filtered"].GetArray())
       {
-        cs.robotEnvContactFilter[key].push_back(std::pair<std::string, std::string>(filtered["body1"].asString(), filtered["body2"].asString()));
+        cs.robotEnvContactFilter[key].push_back(std::pair<std::string, std::string>(filtered["body1"].GetString(), filtered["body2"].GetString()));
       }
     }
   }
 }
 
-inline Json::Value scCollisionsToJSON(const StanceConfig::Collisions & cs)
+inline rapidjson::Value scCollisionsToJSON(const StanceConfig::Collisions & cs, rapidjson::Document::AllocatorType & allocator)
 {
-  Json::Value v(Json::objectValue);
-  v["autoc"] = Json::Value(Json::arrayValue);
+  rapidjson::Value v(rapidjson::kObjectType);
+  rapidjson::Value autoc(rapidjson::kArrayType);
   for(const auto & bc : cs.autoc)
   {
-    v["autoc"].append(scBodiesCollisionConfToJSON(bc));
+    autoc.PushBack(scBodiesCollisionConfToJSON(bc, allocator), allocator);
   }
-  v["robotEnv"] = Json::Value(Json::arrayValue);
+  v.AddMember("autoc", autoc, allocator);
+  rapidjson::Value robotEnv(rapidjson::kArrayType);
   for(const auto & bc : cs.robotEnv)
   {
-    v["robotEnv"].append(scBodiesCollisionConfToJSON(bc));
+    robotEnv.PushBack(scBodiesCollisionConfToJSON(bc, allocator), allocator);
   }
-  v["robotEnvContactFilter"] = Json::Value(Json::arrayValue);
+  v.AddMember("robotEnv", robotEnv, allocator);
+  rapidjson::Value robotEnvContactFilter(rapidjson::kArrayType);
   for(const auto & recf : cs.robotEnvContactFilter)
   {
-    Json::Value vv(Json::objectValue);
-    vv["surf1"] = recf.first.first;
-    vv["surf2"] = recf.first.second;
-    vv["filtered"] = Json::Value(Json::arrayValue);
+    rapidjson::Value vv(rapidjson::kObjectType);
+    vv.AddMember("surf1", recf.first.first, allocator);
+    vv.AddMember("surf2", recf.first.second, allocator);
+    vv.AddMember("filtered", rapidjson::Value(rapidjson::kArrayType).Move(), allocator);
     for(const auto & p : recf.second)
     {
-      Json::Value vvv(Json::objectValue);
-      vvv["body1"] = p.first;
-      vvv["body2"] = p.second;
-      vv["filtered"].append(vvv);
+      rapidjson::Value vvv(rapidjson::kObjectType);
+      vvv.AddMember("body1", p.first, allocator);
+      vvv.AddMember("body2", p.second, allocator);
+      vv["filtered"].PushBack(vvv, allocator);
     }
-    v["robotEnvContactFilter"].append(vv);
+    robotEnvContactFilter.PushBack(vv, allocator);
   }
+  v.AddMember("robotEnvContactFilter", robotEnvContactFilter, allocator);
   return v;
 }
 
-inline void StanceConfigFromJSON(StanceConfig & sc, const Json::Value & v)
+inline void StanceConfigFromJSON(StanceConfig & sc, const rapidjson::Value & v)
 {
-  if(v.isMember("comTask"))
+  if(v.HasMember("comTask"))
   {
     scCoMTaskFromJSON(sc.comTask, v["comTask"]);
   }
-  if(v.isMember("comObj"))
+  if(v.HasMember("comObj"))
   {
     scCoMObjFromJSON(sc.comObj, v["comObj"]);
   }
-  if(v.isMember("postureTask"))
+  if(v.HasMember("postureTask"))
   {
     scPostureTaskFromJSON(sc.postureTask, v["postureTask"]);
   }
-  if(v.isMember("contactTask"))
+  if(v.HasMember("contactTask"))
   {
     scContactTaskFromJSON(sc.contactTask, v["contactTask"]);
   }
-  if(v.isMember("contactObj"))
+  if(v.HasMember("contactObj"))
   {
     scContactObjFromJSON(sc.contactObj, v["contactObj"]);
   }
-  if(v.isMember("collisions"))
+  if(v.HasMember("collisions"))
   {
     scCollisionsFromJSON(sc.collisions, v["collisions"]);
   }
 }
 
-inline Json::Value StanceConfigToJSON(const StanceConfig & sc)
+inline rapidjson::Value StanceConfigToJSON(const StanceConfig & sc, rapidjson::Document::AllocatorType & allocator)
 {
-  Json::Value v(Json::objectValue);
-  v["comTask"] = scCoMTaskToJSON(sc.comTask);
-  v["comObj"] = scCoMObjToJSON(sc.comObj);
-  v["postureTask"] = scPostureTaskToJSON(sc.postureTask);
-  v["contactTask"] = scContactTaskToJSON(sc.contactTask);
-  v["contactObj"] = scContactObjToJSON(sc.contactObj);
-  v["collisions"] = scCollisionsToJSON(sc.collisions);
+  rapidjson::Value v(rapidjson::kObjectType);
+  v.AddMember("comTask", scCoMTaskToJSON(sc.comTask, allocator).Move(), allocator);
+  v.AddMember("comObj", scCoMObjToJSON(sc.comObj, allocator).Move(), allocator);
+  v.AddMember("postureTask", scPostureTaskToJSON(sc.postureTask, allocator).Move(), allocator);
+  v.AddMember("contactTask", scContactTaskToJSON(sc.contactTask, allocator).Move(), allocator);
+  v.AddMember("contactObj", scContactObjToJSON(sc.contactObj, allocator).Move(), allocator);
+  v.AddMember("collisions", scCollisionsToJSON(sc.collisions, allocator).Move(), allocator);
   return v;
 }
 

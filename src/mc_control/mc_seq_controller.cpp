@@ -740,21 +740,25 @@ void MCSeqController::loadStanceConfigs(const std::string & file)
 {
   LOG_INFO("Loading stance configs from " << file)
   configs.resize(0);
-  Json::Value v;
+  rapidjson::Document v;
   {
     std::ifstream ifs(file);
     if(ifs.bad())
     {
       LOG_ERROR("Failed to open configuration file: " << file)
     }
-    try
+    std::stringstream json;
+    json << ifs.rdbuf();
+    rapidjson::ParseResult res = v.Parse(json.str().c_str());
+    if(!res)
     {
-      ifs >> v;
-    }
-    catch(const std::runtime_error & exc)
-    {
-      LOG_ERROR("Failed to read configuration file")
-      LOG_WARNING(exc.what())
+      rapidjson::GetParseErrorFunc GetParseError = rapidjson::GetParseError_En;
+      std::stringstream ss;
+      ss << GetParseError(res.Code()) << std::endl;
+      ss << "Position: " << res.Offset();
+      LOG_ERROR("Failed to read configuration file: " << file)
+      LOG_WARNING(ss.str())
+      return;
     }
   }
   /*
@@ -765,22 +769,22 @@ void MCSeqController::loadStanceConfigs(const std::string & file)
   mc_rbdyn::StanceConfig comMoveConfig;
   mc_rbdyn::StanceConfig contactMoveConfig;
   mc_rbdyn::StanceConfig gripperMoveConfig;
-  if(v.isMember("General"))
+  if(v.HasMember("General"))
   {
-    const Json::Value & scv = v["General"];
-    if(scv.isMember("CoMMove"))
+    rapidjson::Value & scv = v["General"];
+    if(scv.HasMember("CoMMove"))
     {
       mc_rbdyn::StanceConfigFromJSON(comMoveConfig, scv["CoMMove"]);
     }
-    if(scv.isMember("ContactMove"))
+    if(scv.HasMember("ContactMove"))
     {
       mc_rbdyn::StanceConfigFromJSON(contactMoveConfig, scv["ContactMove"]);
     }
-    if(scv.isMember("GripperMove"))
+    if(scv.HasMember("GripperMove"))
     {
       mc_rbdyn::StanceConfigFromJSON(gripperMoveConfig, scv["GripperMove"]);
     }
-    if(scv.isMember("Collisions"))
+    if(scv.HasMember("Collisions"))
     {
       mc_rbdyn::scCollisionsFromJSON(comMoveConfig.collisions, scv["Collisions"]);
       mc_rbdyn::scCollisionsFromJSON(contactMoveConfig.collisions, scv["Collisions"]);
@@ -809,7 +813,7 @@ void MCSeqController::loadStanceConfigs(const std::string & file)
     }
 
     /* Look for a matching state in the JSON file */
-    if(v.isMember("StepByStep"))
+    if(v.HasMember("StepByStep"))
     {
       std::string type = actions[i]->type();
       std::string r1Surface = "";
@@ -819,7 +823,7 @@ void MCSeqController::loadStanceConfigs(const std::string & file)
         r1Surface = actions[i]->contact().r1Surface()->name();
         r2Surface = actions[i]->contact().r2Surface()->name();
       }
-      for(const auto & scv : v["StepByStep"])
+      for(const auto & scv : v["StepByStep"].GetArray())
       {
         if(scv["type"] == type && scv["r1Surface"] == r1Surface && scv["r2Surface"] == r2Surface)
         {

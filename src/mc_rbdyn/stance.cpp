@@ -11,6 +11,7 @@
 #include <RBDyn/FK.h>
 #include <RBDyn/CoM.h>
 
+#define RAPIDJSON_HAS_STDSTRING 1
 #define RAPIDJSON_PARSE_DEFAULT_FLAGS rapidjson::kParseCommentsFlag | rapidjson::kParseTrailingCommasFlag
 #include "rapidjson/document.h"
 #include "rapidjson/ostreamwrapper.h"

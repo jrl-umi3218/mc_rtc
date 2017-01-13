@@ -2,6 +2,7 @@
 
 #include <mc_rtc/logging.h>
 
+#define RAPIDJSON_HAS_STDSTRING 1
 #define RAPIDJSON_PARSE_DEFAULT_FLAGS rapidjson::kParseCommentsFlag | rapidjson::kParseTrailingCommasFlag
 
 #include "rapidjson/document.h"
