@@ -1,7 +1,7 @@
 Introduction
 ==
 
-`mc_rtc` is a super-set of SpaceVecAlg/RBDyn/Tasks libraries which provides a friendlier/easier interface for the user. It was originally a C++ portage of the [mc_ros](https://gite.lirmm.fr/multi-contact/mc_ros) package aimed at running the controller on the embedded computer of the robot, as such, readers familiar with the Python interface proposed in `mc_ros` should easily find their way around `mc_rtc`.
+`mc_rtc` is a super-set of SpaceVecAlg/RBDyn/Tasks libraries which provides a friendlier/easier interface for the user. It was originally a C++ portage of the [mc_ros](https://gite.lirmm.fr/multi-contact/mc_ros) package aimed at running the controller on the embedded computer of the robot. As such, readers familiar with the Python interface proposed in `mc_ros` should easily find their way around `mc_rtc`.
 
 This document assumes some familiarity with the [SpaceVecAlg](https://github.com/jorisv/SpaceVecAlg), [RBDyn](https://github.com/jorisv/RBDyn) and [Tasks](https://github.com/jorisv/Tasks) although the libraries in the `mc_rtc` package abstract most of these libraries inner-workings. Unfamiliar users may refer to the [SpaceVecAlg and RBDyn tutorials](https://github.com/jorisv/sva_rbdyn_tutorials) and the [SpaceVecAlg and RBDyn presentations](https://github.com/jorisv/sva_rbdyn_presentation) authored by Joris Vaillant.
 
