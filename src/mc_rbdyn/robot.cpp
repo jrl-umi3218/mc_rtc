@@ -242,6 +242,20 @@ const mc_rbdyn::Surface & Robot::surface(const std::string & sName) const
   return *(surfaces_.at(sName));
 }
 
+mc_rbdyn::Surface & Robot::copySurface(const std::string & sName, const std::string & name)
+{
+  if(hasSurface(name))
+  {
+    LOG_ERROR(name << " already exists within this robot. Cannot overwrite an existing surface")
+    throw("Target surface already exists");
+  }
+  const Surface & surf = surface(sName);
+  SurfacePtr nSurf = surf.copy();
+  nSurf->name(name);
+  surfaces_[name] = nSurf;
+  return *nSurf;
+}
+
 const std::map<std::string, SurfacePtr> & Robot::surfaces() const
 {
   return surfaces_;

@@ -25,6 +25,8 @@ public:
 
   const std::string & name() const;
 
+  void name(const std::string & name);
+
   const std::string & bodyName() const;
 
   const std::string & materialName() const;
