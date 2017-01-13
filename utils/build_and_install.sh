@@ -225,14 +225,10 @@ else
   git_update
 fi
 ${SUDO_CMD} pip install -r requirements.txt ${PIP_USER}
-if [ ! -e eigen/eigen.pyx ]
-then
-  python generate_pyx.py
-fi
 make -j$BUILD_CORE
 # Make sure the python prefix exists
 mkdir -p ${INSTALL_PREFIX}/lib/python`python -c "import sys;print '{0}.{1}'.format(sys.version_info.major, sys.version_info.minor)"`/site-packages
-${SUDO_CMD} make install
+${SUDO_CMD} PKG_CONFIG_PATH=$PKG_CONFIG_PATH make install
 
 ####################################################
 #  -- Setup VREP, vrep-api-wrapper and mc_vrep --  #
