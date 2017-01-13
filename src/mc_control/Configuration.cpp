@@ -47,7 +47,12 @@ struct Configuration::Json::Impl
     return rapidjson::Pointer(pointer.c_str()).Get(*doc_p);
   }
 
-  bool isMember(const std::string & key = "") const
+  bool isMember() const
+  {
+    return value() != nullptr;
+  }
+
+  bool isMember(const std::string & key) const
   {
     std::string fkey = pointer + "/" + key;
     rapidjson::Value * v = rapidjson::Pointer(fkey.c_str()).Get(*doc_p);
