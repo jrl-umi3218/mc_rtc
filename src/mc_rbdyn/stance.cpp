@@ -11,12 +11,7 @@
 #include <RBDyn/FK.h>
 #include <RBDyn/CoM.h>
 
-#define RAPIDJSON_HAS_STDSTRING 1
-#define RAPIDJSON_PARSE_DEFAULT_FLAGS rapidjson::kParseCommentsFlag | rapidjson::kParseTrailingCommasFlag
-#include "rapidjson/document.h"
-#include "rapidjson/ostreamwrapper.h"
-#include "rapidjson/writer.h"
-#include "rapidjson/error/en.h"
+#include "../mc_rtc/internals/json.h"
 
 #include <fstream>
 
@@ -380,25 +375,7 @@ std::shared_ptr<StanceAction> stanceActionFromJSON(const mc_rbdyn::Robots & robo
 void loadStances(const mc_rbdyn::Robots & robots, const std::string & filename, std::vector<Stance> & stances, std::vector< std::shared_ptr<StanceAction> > & actions, std::vector<PolygonInterpolator> & interpolators)
 {
   rapidjson::Document v;
-  std::ifstream ifs(filename);
-  if(!ifs.is_open())
-  {
-    LOG_ERROR("Could not open stance file " << filename)
-    throw("Unable to open stance file");
-  }
-  std::stringstream json;
-  json << ifs.rdbuf();
-  rapidjson::ParseResult res = v.Parse(json.str().c_str());
-  if(!res)
-  {
-    rapidjson::GetParseErrorFunc GetParseError = rapidjson::GetParseError_En;
-    std::stringstream ss;
-    ss << GetParseError(res.Code()) << std::endl;
-    ss << "Position: " << res.Offset();
-    LOG_ERROR("Failed to read configuration file: " << filename)
-    LOG_WARNING(ss.str())
-    return;
-  }
+  if(!mc_rtc::internal::loadDocument(filename, v)) { return; }
   for(rapidjson::Value & sv : v["stances"].GetArray())
   {
     addStanceFromJSON(robots, stances, sv);
@@ -572,10 +549,7 @@ void saveStances(const mc_rbdyn::Robots &/*robots*/, const std::string & filenam
   stancesAndActionsJSON.AddMember("stances", stancesJSON, allocator);
   stancesAndActionsJSON.AddMember("actions", stanceActionsJSON, allocator);
 
-  std::ofstream ofs(filename);
-  rapidjson::OStreamWrapper osw(ofs);
-  rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
-  document.Accept(writer);
+  mc_rtc::internal::saveDocument(filename, document);
 }
 
 void pSaveStances(const mc_rbdyn::Robots &/*robots*/, const std::string & filename, std::vector<Stance*> & stances, std::vector< std::shared_ptr<StanceAction> > & actions)
@@ -604,10 +578,7 @@ void pSaveStances(const mc_rbdyn::Robots &/*robots*/, const std::string & filena
   stancesAndActionsJSON.AddMember("stances", stancesJSON, allocator);
   stancesAndActionsJSON.AddMember("actions", stanceActionsJSON, allocator);
 
-  std::ofstream ofs(filename);
-  rapidjson::OStreamWrapper osw(ofs);
-  rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
-  document.Accept(writer);
+  mc_rtc::internal::saveDocument(filename, document);
 }
 
 }

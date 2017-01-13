@@ -741,26 +741,7 @@ void MCSeqController::loadStanceConfigs(const std::string & file)
   LOG_INFO("Loading stance configs from " << file)
   configs.resize(0);
   rapidjson::Document v;
-  {
-    std::ifstream ifs(file);
-    if(ifs.bad())
-    {
-      LOG_ERROR("Failed to open configuration file: " << file)
-    }
-    std::stringstream json;
-    json << ifs.rdbuf();
-    rapidjson::ParseResult res = v.Parse(json.str().c_str());
-    if(!res)
-    {
-      rapidjson::GetParseErrorFunc GetParseError = rapidjson::GetParseError_En;
-      std::stringstream ss;
-      ss << GetParseError(res.Code()) << std::endl;
-      ss << "Position: " << res.Offset();
-      LOG_ERROR("Failed to read configuration file: " << file)
-      LOG_WARNING(ss.str())
-      return;
-    }
-  }
+  if(!mc_rtc::internal::loadDocument(file, v)) { return; }
   /*
     The JSON file contains two sections:
     - A General section contains configuration information for the full sequence

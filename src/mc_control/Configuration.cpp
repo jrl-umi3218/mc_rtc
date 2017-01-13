@@ -2,12 +2,7 @@
 
 #include <mc_rtc/logging.h>
 
-#define RAPIDJSON_HAS_STDSTRING 1
-#define RAPIDJSON_PARSE_DEFAULT_FLAGS rapidjson::kParseCommentsFlag | rapidjson::kParseTrailingCommasFlag
-
-#include "rapidjson/document.h"
-#include "rapidjson/pointer.h"
-#include "rapidjson/error/en.h"
+#include "../mc_rtc/internals/json.h"
 
 #include <stdexcept>
 #include <fstream>
@@ -301,45 +296,16 @@ Configuration::Configuration(const std::string & path)
 
 void Configuration::load(const std::string & path)
 {
-  std::ifstream ifs(path);
-  if(!ifs.is_open())
-  {
-    LOG_ERROR("Failed to open controller configuration file: " << path)
-    return;
-  }
-
   rapidjson::Document & target = *(v.impl->doc_p);
 
-  std::stringstream json;
-  json << ifs.rdbuf();
   if(target.IsNull())
   {
-    rapidjson::ParseResult res = target.Parse(json.str().c_str());
-    if(!res)
-    {
-      rapidjson::GetParseErrorFunc GetParseError = rapidjson::GetParseError_En;
-      std::stringstream ss;
-      ss << GetParseError(res.Code()) << std::endl;
-      ss << "Position: " << res.Offset();
-      LOG_ERROR("Failed to read configuration file: " << path)
-      LOG_WARNING(ss.str())
-      return;
-    }
+    mc_rtc::internal::loadDocument(path, target);
   }
   else
   {
     rapidjson::Document d;
-    rapidjson::ParseResult res = d.Parse(json.str().c_str());
-    if(!res)
-    {
-      rapidjson::GetParseErrorFunc GetParseError = rapidjson::GetParseError_En;
-      std::stringstream ss;
-      ss << GetParseError(res.Code()) << std::endl;
-      ss << "Position: " << res.Offset();
-      LOG_ERROR("Failed to read configuration file: " << path)
-      LOG_WARNING(ss.str())
-      return;
-    }
+    if(!mc_rtc::internal::loadDocument(path, d)) { return; }
     for(auto & m : d.GetObject())
     {
       if(target.HasMember(m.name))
