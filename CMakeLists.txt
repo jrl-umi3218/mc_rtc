@@ -32,7 +32,6 @@ endif()
 
 find_package(Boost REQUIRED COMPONENTS system filesystem thread date_time timer regex)
 
-add_required_dependency(jsoncpp)
 add_required_dependency("Tasks" "Tasks_d")
 add_required_dependency("mc_rbdyn_urdf_cpp" "mc_rbdyn_urdf_cpp_d")
 
@@ -129,6 +128,15 @@ endif(MSVC)
 if(WIN32)
   include_directories(3rd-party/ltdl)
 endif()
+
+###################
+# -- RapidJSON -- #
+###################
+
+# The code was copied from the 1.1.0 release tarball for RapidJSON
+# https://github.com/miloyip/rapidjson
+include_directories(3rd-party/RapidJSON)
+
 add_subdirectory(3rd-party)
 add_subdirectory(src)
 add_subdirectory(tests)

@@ -35,7 +35,6 @@ set(mc_rbdyn_HDR
 ../include/mc_rbdyn/contact_transform.h
 ../include/mc_rbdyn/CylindricalSurface.h
 ../include/mc_rbdyn/GripperSurface.h
-../include/mc_rbdyn/json
 ../include/mc_rbdyn/PlanarSurface.h
 ../include/mc_rbdyn/polygon_utils.h
 ../include/mc_rbdyn/PolygonInterpolator.h
@@ -58,7 +57,6 @@ add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC} ${mc_rbdyn_HDR})
 set_target_properties(mc_rbdyn PROPERTIES COMPILE_FLAGS "-DMC_RBDYN_EXPORTS")
 pkg_config_use_dependency(mc_rbdyn mc_rbdyn_urdf_cpp)
 pkg_config_use_dependency(mc_rbdyn Tasks)
-pkg_config_use_dependency(mc_rbdyn jsoncpp)
 target_link_libraries(mc_rbdyn ${Boost_LIBRARIES} ${GEOS_LIBRARY} mc_rtc_loader)
 if(NOT WIN32)
   pkg_config_append_libs(${Boost_LIBRARIES})
@@ -199,7 +197,6 @@ endif()
 target_link_libraries(mc_control ${Boost_LIBRARIES})
 pkg_config_use_dependency(mc_control mc_rbdyn_urdf_cpp)
 pkg_config_use_dependency(mc_control Tasks)
-pkg_config_use_dependency(mc_control jsoncpp)
 pkg_config_append_libs(mc_control)
 
 add_subdirectory(mc_control)

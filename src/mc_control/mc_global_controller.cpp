@@ -10,8 +10,6 @@
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
-#include <json/json.h>
-
 #include <algorithm>
 #include <cstdlib>
 #include <fstream>
