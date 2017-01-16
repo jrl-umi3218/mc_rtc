@@ -38,6 +38,8 @@ add_required_dependency("mc_rbdyn_urdf_cpp" "mc_rbdyn_urdf_cpp_d")
 # At this point, this dependency is used to get access to PD gains setting on HRP robots
 add_optional_dependency(hrpsys-base)
 if(${HRPSYS_BASE_FOUND})
+  include_directories(${HRPSYS_BASE_INCLUDE_DIRS})
+  link_directories(${HRPSYS_BASE_LIBRARY_DIRS})
   set(DEFINE_HAS_HRPSYS_BASE_MACRO "#define MC_RTC_HAS_HRPSYS_BASE 1")
 else()
   set(DEFINE_HAS_HRPSYS_BASE_MACRO "")
