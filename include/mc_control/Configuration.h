@@ -208,7 +208,7 @@ namespace mc_control
      * while allowing the template method implementation.
      *
      */
-    struct Json
+    struct MC_CONTROL_DLLAPI Json
     {
       struct Impl;
       bool isArray() const;
