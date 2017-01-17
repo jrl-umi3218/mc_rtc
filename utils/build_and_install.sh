@@ -26,7 +26,7 @@ ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_ros#karim_drc git@gite.
 alias git_clone="git clone --quiet --recursive"
 alias git_update="git pull && git submodule update"
 
-SUDO_CMD=sudo
+SUDO_CMD='sudo -E'
 PIP_USER=
 if [ -w $INSTALL_PREFIX ]
 then
@@ -228,7 +228,7 @@ ${SUDO_CMD} pip install -r requirements.txt ${PIP_USER}
 make -j$BUILD_CORE
 # Make sure the python prefix exists
 mkdir -p ${INSTALL_PREFIX}/lib/python`python -c "import sys;print '{0}.{1}'.format(sys.version_info.major, sys.version_info.minor)"`/site-packages
-${SUDO_CMD} PKG_CONFIG_PATH=$PKG_CONFIG_PATH make install
+${SUDO_CMD} make install
 
 ####################################################
 #  -- Setup VREP, vrep-api-wrapper and mc_vrep --  #
