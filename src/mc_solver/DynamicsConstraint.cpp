@@ -47,7 +47,7 @@ void DynamicsConstraint::build_constr(const mc_rbdyn::Robots & robots, unsigned 
     {
       sjList.push_back(tasks::qp::SpringJoint(flex.jointName, flex.K, flex.C, flex.O));
     }
-    motionSpringConstr.reset(new tasks::qp::MotionSpringConstr(robots.mbs(), static_cast<int>(robotIndex), tBound, sjList));
+    motionConstr.reset(new tasks::qp::MotionSpringConstr(robots.mbs(), static_cast<int>(robotIndex), tBound, sjList));
   }
   /*FIXME Implement?
   else if(robot.tlPoly.size() != 0)
@@ -62,27 +62,13 @@ void DynamicsConstraint::build_constr(const mc_rbdyn::Robots & robots, unsigned 
 void DynamicsConstraint::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) const
 {
   KinematicsConstraint::addToSolver(mbs, solver);
-  if(motionConstr)
-  {
-    motionConstr->addToSolver(mbs, solver);
-  }
-  if(motionSpringConstr)
-  {
-    motionSpringConstr->addToSolver(mbs, solver);
-  }
+  motionConstr->addToSolver(mbs, solver);
 }
 
 void DynamicsConstraint::removeFromSolver(tasks::qp::QPSolver & solver) const
 {
   KinematicsConstraint::removeFromSolver(solver);
-  if(motionConstr)
-  {
-    motionConstr->removeFromSolver(solver);
-  }
-  if(motionSpringConstr)
-  {
-    motionSpringConstr->removeFromSolver(solver);
-  }
+  motionConstr->removeFromSolver(solver);
 }
 
 } // namespace mc_solver
