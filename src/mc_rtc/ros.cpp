@@ -122,7 +122,7 @@ public:
         {
           msg.position.push_back(mbc.q[robot.jointIndexByName(j.name())][0]);
           msg.velocity.push_back(mbc.alpha[robot.jointIndexByName(j.name())][0]);
-          msg.effort.push_back(mbc.alphaD[robot.jointIndexByName(j.name())][0]);
+          msg.effort.push_back(mbc.jointTorque[robot.jointIndexByName(j.name())][0]);
         }
       }
     }
