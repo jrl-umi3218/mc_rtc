@@ -84,6 +84,7 @@ bool MCController::run()
     LOG_ERROR("QP failed to run()")
     return false;
   }
+  qpsolver->fillTorque(dynamicsConstraint);
   return true;
 }
 

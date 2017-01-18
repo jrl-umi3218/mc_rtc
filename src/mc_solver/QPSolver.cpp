@@ -253,4 +253,17 @@ tasks::qp::SolverData & QPSolver::data()
   return solver.data();
 }
 
+void QPSolver::fillTorque(const mc_solver::DynamicsConstraint& dynamicsConstraint)
+{
+  if(solver.lambdaVec().rows() > 0)
+  {
+    dynamicsConstraint.motionConstr->computeTorque(solver.alphaDVec(), solver.lambdaVec());
+    robot().mbc().jointTorque = rbd::vectorToDof(robot().mb(), dynamicsConstraint.motionConstr->torque());
+  }
+  else
+  {
+    robot().mbc().jointTorque = rbd::vectorToDof(robot().mb(), Eigen::VectorXd::Zero(robot().mb().nrDof()));
+  }
+}
+
 }
