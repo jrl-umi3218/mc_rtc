@@ -45,12 +45,10 @@ public:
   /** Implementation of mc_solver::ConstraintSet::removeFromSolver */
   virtual void removeFromSolver(tasks::qp::QPSolver & solver) const override;
 public:
-  /** Classic motion constraint, may be null **/
+  /** Motion constraint: if the robot contains flexibilites, it will take them
+   * into account, else will be a classical one **/
   std::shared_ptr<tasks::qp::MotionConstr> motionConstr;
-  /** Motion constraint used for robots with flexibilities in their model, may
-   * be null
-   */
-  std::shared_ptr<tasks::qp::MotionSpringConstr> motionSpringConstr;
+
 public:
   /** \deprecated{Default constructor, not made for general usage}
    */

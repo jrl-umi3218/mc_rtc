@@ -3,6 +3,7 @@
 
 #include <mc_solver/api.h>
 #include <mc_solver/ConstraintSet.h>
+#include <mc_solver/DynamicsConstraint.h>
 
 #include <mc_solver/msg/QPResult.h>
 
@@ -198,6 +199,8 @@ public:
    * \return The data of the solver
    */
   tasks::qp::SolverData & data();
+
+  void fillTorque(const mc_solver::DynamicsConstraint& dynamicsConstraint);
 private:
   std::shared_ptr<mc_rbdyn::Robots> robots_p;
   double timeStep;

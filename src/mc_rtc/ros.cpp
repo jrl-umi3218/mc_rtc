@@ -116,13 +116,13 @@ public:
     {
       if(j.dof() == 1)
       {
-        msg.name.push_back(j.name());
         auto jIdx = robot.jointIndexByName(j.name());
         if(mbc.q[jIdx].size() > 0)
         {
-          msg.position.push_back(mbc.q[robot.jointIndexByName(j.name())][0]);
-          msg.velocity.push_back(mbc.alpha[robot.jointIndexByName(j.name())][0]);
-          msg.effort.push_back(mbc.alphaD[robot.jointIndexByName(j.name())][0]);
+          msg.name.push_back(j.name());
+          msg.position.push_back(mbc.q[jIdx][0]);
+          msg.velocity.push_back(mbc.alpha[jIdx][0]);
+          msg.effort.push_back(mbc.jointTorque[jIdx][0]);
         }
       }
     }
