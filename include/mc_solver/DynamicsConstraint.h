@@ -44,6 +44,8 @@ public:
 
   /** Implementation of mc_solver::ConstraintSet::removeFromSolver */
   virtual void removeFromSolver(tasks::qp::QPSolver & solver) override;
+
+  bool inSolver() const { return inSolver_; }
 public:
   /** Motion constraint: if the robot contains flexibilites, it will take them
    * into account, else will be a classical one **/
@@ -56,6 +58,8 @@ public:
 private:
   /** Private function to build the proper MotionConstr */
   void build_constr(const mc_rbdyn::Robots & robots, unsigned int robotIndex, bool infTorque);
+  /** Boolean: is this constraint inserted in the solver? */
+  bool inSolver_;
 };
 
 } // namespace mc_solver

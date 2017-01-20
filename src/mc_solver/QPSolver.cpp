@@ -255,7 +255,7 @@ tasks::qp::SolverData & QPSolver::data()
 
 void QPSolver::fillTorque(const mc_solver::DynamicsConstraint& dynamicsConstraint)
 {
-  if(solver.lambdaVec().rows() > 0)
+  if(dynamicsConstraint.inSolver())
   {
     dynamicsConstraint.motionConstr->computeTorque(solver.alphaDVec(), solver.lambdaVec());
     robot().mbc().jointTorque = rbd::vectorToDof(robot().mb(), dynamicsConstraint.motionConstr->torque());
