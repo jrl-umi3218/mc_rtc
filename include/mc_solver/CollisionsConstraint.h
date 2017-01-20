@@ -67,10 +67,10 @@ public:
   void reset();
 
   /** Implementation of mc_solver::ConstraintSet::addToSolver */
-  virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) const override;
+  virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) override;
 
   /** Implementation of mc_solver::ConstraintSet::removeFromSolver */
-  virtual void removeFromSolver(tasks::qp::QPSolver & solver) const override;
+  virtual void removeFromSolver(tasks::qp::QPSolver & solver) override;
 public:
   /** The actual collision constraint object */
   std::shared_ptr<tasks::qp::CollisionConstr> collConstr;
@@ -174,10 +174,10 @@ public:
                                                          const std::vector<mc_rbdyn::Collision> & cols);
 
   /** Implementation of mc_solver::ConstraintSet::addToSolver */
-  virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) const override;
+  virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) override;
 
   /** Implementation of mc_solver::ConstraintSet::removeFromSolver */
-  virtual void removeFromSolver(tasks::qp::QPSolver & solver) const override;
+  virtual void removeFromSolver(tasks::qp::QPSolver & solver) override;
 public:
   /** (robot, robot) collision constraint */
   CollisionsConstraint selfCollConstrMng;

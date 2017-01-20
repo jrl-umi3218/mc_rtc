@@ -30,7 +30,7 @@ ContactConstraint::ContactConstraint(double timeStep, ContactType contactType, b
   }
 }
 
-void ContactConstraint::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) const
+void ContactConstraint::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver)
 {
   if(contactConstr)
   {
@@ -42,7 +42,7 @@ void ContactConstraint::addToSolver(const std::vector<rbd::MultiBody> & mbs, tas
   }
 }
 
-void ContactConstraint::removeFromSolver(tasks::qp::QPSolver & solver) const
+void ContactConstraint::removeFromSolver(tasks::qp::QPSolver & solver)
 {
   if(contactConstr)
   {

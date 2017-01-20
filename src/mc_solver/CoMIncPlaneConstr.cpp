@@ -8,12 +8,12 @@ CoMIncPlaneConstr::CoMIncPlaneConstr(const mc_rbdyn::Robots & robots, unsigned i
 {
 }
 
-void CoMIncPlaneConstr::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) const
+void CoMIncPlaneConstr::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver)
 {
   constr->addToSolver(mbs, solver);
 }
 
-void CoMIncPlaneConstr::removeFromSolver(tasks::qp::QPSolver & solver) const
+void CoMIncPlaneConstr::removeFromSolver(tasks::qp::QPSolver & solver)
 {
   constr->removeFromSolver(solver);
 }

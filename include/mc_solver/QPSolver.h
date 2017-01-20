@@ -41,12 +41,12 @@ public:
   /** Add a constraint set
    * \param cs Constraint set added to the solver
    */
-  void addConstraintSet(const ConstraintSet & cs);
+  void addConstraintSet(ConstraintSet & cs);
 
   /** Remove a constraint set
    * \param cs Constrain set removed from the solver
    */
-  void removeConstraintSet(const ConstraintSet & cs);
+  void removeConstraintSet(ConstraintSet & cs);
 
   /** Add a task to the solver
    * \param task Pointer to the added task, QPSolver does not take ownership of this pointer and the caller should make sure the object remains valid until it is removed from the solver

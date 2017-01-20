@@ -11,12 +11,12 @@ BoundedSpeedConstr::BoundedSpeedConstr(const mc_rbdyn::Robots & robots, unsigned
 {
 }
 
-void BoundedSpeedConstr::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) const
+void BoundedSpeedConstr::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver)
 {
   constr->addToSolver(mbs, solver);
 }
 
-void BoundedSpeedConstr::removeFromSolver(tasks::qp::QPSolver & solver) const
+void BoundedSpeedConstr::removeFromSolver(tasks::qp::QPSolver & solver)
 {
   constr->removeFromSolver(solver);
 }

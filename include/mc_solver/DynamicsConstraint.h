@@ -40,10 +40,12 @@ public:
   DynamicsConstraint(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double timeStep, const std::array<double, 3> & damper, double velocityPercent = 1.0, bool infTorque = false);
 
   /** Implementation of mc_solver::ConstraintSet::addToSolver */
-  virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) const override;
+  virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) override;
 
   /** Implementation of mc_solver::ConstraintSet::removeFromSolver */
-  virtual void removeFromSolver(tasks::qp::QPSolver & solver) const override;
+  virtual void removeFromSolver(tasks::qp::QPSolver & solver) override;
+
+  bool inSolver() const { return inSolver_; }
 public:
   /** Motion constraint: if the robot contains flexibilites, it will take them
    * into account, else will be a classical one **/
@@ -56,6 +58,8 @@ public:
 private:
   /** Private function to build the proper MotionConstr */
   void build_constr(const mc_rbdyn::Robots & robots, unsigned int robotIndex, bool infTorque);
+  /** Boolean: is this constraint inserted in the solver? */
+  bool inSolver_;
 };
 
 } // namespace mc_solver

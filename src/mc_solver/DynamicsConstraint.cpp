@@ -6,13 +6,15 @@ namespace mc_solver
 {
 
 DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double timeStep, bool infTorque)
-: KinematicsConstraint(robots, robotIndex, timeStep)
+: KinematicsConstraint(robots, robotIndex, timeStep),
+  inSolver_(false)
 {
   build_constr(robots, robotIndex, infTorque);
 }
 
 DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double timeStep, const std::array<double, 3> & damper, double velocityPercent, bool infTorque)
-: KinematicsConstraint(robots, robotIndex, timeStep, damper, velocityPercent)
+: KinematicsConstraint(robots, robotIndex, timeStep, damper, velocityPercent),
+  inSolver_(false)
 {
   build_constr(robots, robotIndex, infTorque);
 }
@@ -59,16 +61,24 @@ void DynamicsConstraint::build_constr(const mc_rbdyn::Robots & robots, unsigned 
   }
 }
 
-void DynamicsConstraint::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) const
+void DynamicsConstraint::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver)
 {
-  KinematicsConstraint::addToSolver(mbs, solver);
-  motionConstr->addToSolver(mbs, solver);
+  if(!inSolver_)
+  {
+    KinematicsConstraint::addToSolver(mbs, solver);
+    motionConstr->addToSolver(mbs, solver);
+    inSolver_ = true;
+  }
 }
 
-void DynamicsConstraint::removeFromSolver(tasks::qp::QPSolver & solver) const
+void DynamicsConstraint::removeFromSolver(tasks::qp::QPSolver & solver)
 {
-  KinematicsConstraint::removeFromSolver(solver);
-  motionConstr->removeFromSolver(solver);
+  if(inSolver_)
+  {
+    KinematicsConstraint::removeFromSolver(solver);
+    motionConstr->removeFromSolver(solver);
+    inSolver_ = false;
+  }
 }
 
 } // namespace mc_solver

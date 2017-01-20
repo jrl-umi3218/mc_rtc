@@ -83,7 +83,7 @@ void CollisionsConstraint::addCollisions(QPSolver & solver, const std::vector<mc
   solver.updateConstrSize();
 }
 
-void CollisionsConstraint::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) const
+void CollisionsConstraint::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver)
 {
   if(collConstr)
   {
@@ -91,7 +91,7 @@ void CollisionsConstraint::addToSolver(const std::vector<rbd::MultiBody> & mbs, 
   }
 }
 
-void CollisionsConstraint::removeFromSolver(tasks::qp::QPSolver & solver) const
+void CollisionsConstraint::removeFromSolver(tasks::qp::QPSolver & solver)
 {
   if(collConstr)
   {
@@ -241,13 +241,13 @@ void RobotEnvCollisionsConstraint::setSelfCollisions(QPSolver & solver, const st
   }
 }
 
-void RobotEnvCollisionsConstraint::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) const
+void RobotEnvCollisionsConstraint::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver)
 {
   selfCollConstrMng.addToSolver(mbs, solver);
   envCollConstrMng.addToSolver(mbs, solver);
 }
 
-void RobotEnvCollisionsConstraint::removeFromSolver(tasks::qp::QPSolver & solver) const
+void RobotEnvCollisionsConstraint::removeFromSolver(tasks::qp::QPSolver & solver)
 {
   selfCollConstrMng.removeFromSolver(solver);
   envCollConstrMng.removeFromSolver(solver);
