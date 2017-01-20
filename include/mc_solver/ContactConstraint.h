@@ -39,10 +39,10 @@ public:
   ContactConstraint(double timeStep, ContactType contactType= Velocity, bool dynamics = true);
 
   /** Implementation of mc_solver::ConstraintSet::addToSolver */
-  virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) const override;
+  virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) override;
 
   /** Implementation of mc_solver::ConstraintSet::removeFromSolver */
-  virtual void removeFromSolver(tasks::qp::QPSolver & solver) const override;
+  virtual void removeFromSolver(tasks::qp::QPSolver & solver) override;
 public:
   /** Holds the proper type of ContactConstr based on constructor input, always
    * holds a valid pointer */

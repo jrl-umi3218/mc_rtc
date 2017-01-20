@@ -59,13 +59,13 @@ void DynamicsConstraint::build_constr(const mc_rbdyn::Robots & robots, unsigned 
   }
 }
 
-void DynamicsConstraint::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) const
+void DynamicsConstraint::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver)
 {
   KinematicsConstraint::addToSolver(mbs, solver);
   motionConstr->addToSolver(mbs, solver);
 }
 
-void DynamicsConstraint::removeFromSolver(tasks::qp::QPSolver & solver) const
+void DynamicsConstraint::removeFromSolver(tasks::qp::QPSolver & solver)
 {
   KinematicsConstraint::removeFromSolver(solver);
   motionConstr->removeFromSolver(solver);

@@ -61,12 +61,12 @@ QPSolver::QPSolver(std::shared_ptr<mc_rbdyn::Robots> robots, double timeStep)
 {
 }
 
-void QPSolver::addConstraintSet(const ConstraintSet & cs)
+void QPSolver::addConstraintSet(ConstraintSet & cs)
 {
   cs.addToSolver(robots().mbs(), solver);
 }
 
-void QPSolver::removeConstraintSet(const ConstraintSet & cs)
+void QPSolver::removeConstraintSet(ConstraintSet & cs)
 {
   cs.removeFromSolver(solver);
 }

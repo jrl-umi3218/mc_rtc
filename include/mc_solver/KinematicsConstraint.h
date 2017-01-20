@@ -39,10 +39,10 @@ public:
   KinematicsConstraint(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double timeStep, const std::array<double, 3> & damper, double velocityPercent = 1.0);
 
   /** Implementation of mc_solver::ConstraintSet::addToSolver */
-  virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) const override;
+  virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) override;
 
   /** Implementation of mc_solver::ConstraintSet::removeFromSolver */
-  virtual void removeFromSolver(tasks::qp::QPSolver & solver) const override;
+  virtual void removeFromSolver(tasks::qp::QPSolver & solver) override;
 public:
   /** Holds JointLimitsConstr, can be null depending on construction */
   std::shared_ptr<tasks::qp::JointLimitsConstr> jointLimitsConstr;

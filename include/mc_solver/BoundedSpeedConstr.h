@@ -16,9 +16,9 @@ struct MC_SOLVER_DLLAPI BoundedSpeedConstr : public ConstraintSet
 public:
   BoundedSpeedConstr(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double dt);
 
-  virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) const override;
+  virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) override;
 
-  virtual void removeFromSolver(tasks::qp::QPSolver & solver) const override;
+  virtual void removeFromSolver(tasks::qp::QPSolver & solver) override;
 
   void addBoundedSpeed(QPSolver & solver, const std::string & bodyName, const Eigen::Vector3d & bodyPoint, const Eigen::MatrixXd & dof, const Eigen::VectorXd & speed);
 

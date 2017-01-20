@@ -25,7 +25,7 @@ public:
    * \param mbs The MultiBody vector controlled by the invoking mc_solver::QPSolver
    * \param solver The actual solver instance used by the invoking mc_solver::QPSolver
    */
-  virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) const = 0;
+  virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) = 0;
 
 
   /** This function is called by mc_solver::QPSolver when
@@ -36,7 +36,7 @@ public:
     \endverbatim
    * \param solver The actual solver instance used by the invoking mc_solver::QPSolver
    */
-  virtual void removeFromSolver(tasks::qp::QPSolver & solver) const = 0;
+  virtual void removeFromSolver(tasks::qp::QPSolver & solver) = 0;
 
   /** Virtual destructor
    */
