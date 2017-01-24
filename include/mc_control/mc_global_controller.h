@@ -489,6 +489,7 @@ private:
     std::string initial_controller = "";
     double timestep = 0.002;
 
+    bool update_real = true;
     bool update_real_from_sensors = false;
 
     bool publish_control_state = true;
