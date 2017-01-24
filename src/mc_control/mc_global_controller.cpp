@@ -228,10 +228,11 @@ bool MCGlobalController::run()
     }
   }
   const auto& real_q = controller_->getEncoderValues();
-  if(real_q.size() > 0)
+  if(config.update_real && real_q.size() > 0)
   {
     auto& real_robot = real_robots->robot();
     // Update free flyer
+
     if(!config.update_real_from_sensors)
     {
       real_robot.mbc().q[0] = robot().mbc().q[0];
