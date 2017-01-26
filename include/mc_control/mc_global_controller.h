@@ -142,6 +142,9 @@ public:
   /*! \brief Force sensors' readings provided by the sensors */
   void setWrenches(const std::map<std::string, sva::ForceVecd> & wrenches);
 
+  /*! \brief Force sensors' readings for another robot than the main robot */
+  void setWrenches(unsigned int robotIndex, const std::map<std::string, sva::ForceVecd> & wrenches);
+
   /*! \brief Gripper active joints actual values */
   void setActualGripperQ(const std::map<std::string, std::vector<double>> & grippersQ);
 

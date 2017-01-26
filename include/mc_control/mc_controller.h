@@ -85,18 +85,6 @@ public:
    */
   virtual void reset(const ControllerResetData & reset_data);
 
-  /** Pass force sensors information to the controller if available at the
-   * simulation/controller level
-   * \param wrenches Force/Torque sensors information provided by the
-   * simulation/controller
-   */
-  virtual void setWrenches(const std::map<std::string, sva::ForceVecd>& wrenches);
-
-  /** Get the current wrenches information
-   * \return A vector of sva::ForceVecd representing force/torque pairs.
-   */
-  const std::map<std::string, sva::ForceVecd> & getWrenches();
-
   /** Get the current encoder values provided by simulation/low-level controller
    * \return A vector of encoder values ordered by the controller/simulator
    */
@@ -298,8 +286,6 @@ protected:
   std::vector<double> encoderValues;
   /** Joint torques provided by the low-level controller */
   std::vector<double> jointTorques;
-  /** Force/Torque sensors */
-  std::map<std::string, sva::ForceVecd> wrenches;
   /** Robot position provided by sensors */
   Eigen::Vector3d sensorPos;
   /** Robot orientation provided by sensors */

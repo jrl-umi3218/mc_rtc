@@ -102,19 +102,6 @@ void MCController::reset(const ControllerResetData & reset_data)
   rbd::forwardVelocity(robot().mb(), robot().mbc());
 }
 
-void MCController::setWrenches(const std::map<std::string, sva::ForceVecd> & wrenches)
-{
-  for(const auto & w : wrenches)
-  {
-    this->wrenches[w.first] = w.second;
-  }
-}
-
-const std::map<std::string, sva::ForceVecd> & MCController::getWrenches()
-{
-  return this->wrenches;
-}
-
 const std::vector<double> & MCController::getEncoderValues()
 {
   return this->encoderValues;

@@ -51,10 +51,10 @@ ActiGripper::ActiGripper(const std::string& wrenchName, double actiForce, double
   dof.diagonal().setOnes();
 }
 
-bool ActiGripper::update(std::map<std::string, sva::ForceVecd>& wrenches,
+bool ActiGripper::update(const mc_rbdyn::Robot & robot,
     tasks::qp::ContactConstr* contactConstr)
 {
-  const sva::ForceVecd & wrench = wrenches[wrenchName];
+  const sva::ForceVecd & wrench = robot.forceSensor(wrenchName).wrench();
   double forceNorm = wrench.force().norm();
   //Only consider z-axis torque
   double torqueZ = wrench.couple()(2);
@@ -616,7 +616,7 @@ void MCSeqController::pre_live()
   {
     /* This cast is guaranted to work */
     tasks::qp::ContactConstr* contactConstr = (dynamic_cast<tasks::qp::ContactConstr*>(contactConstraint.contactConstr.get()));
-    if(!ba.second.update(wrenches, contactConstr))
+    if(!ba.second.update(robot(), contactConstr))
     {
       halted = true;
       LOG_ERROR("OOPS TOO MUCH ERROR")

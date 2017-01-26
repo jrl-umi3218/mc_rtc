@@ -245,9 +245,9 @@ namespace mc_control
       {
         log << ";taucIn" << i;
       }
-      for(const auto & w : controller->getWrenches())
+      for(const auto & fs : controller->robot().forceSensors())
       {
-        const auto& wn = w.first;
+        const auto& wn = fs.name();
         log << ";" << wn << "_fx";
         log << ";" << wn << "_fy";
         log << ";" << wn << "_fz";
@@ -313,14 +313,14 @@ namespace mc_control
     {
       log << ";" << ti;
     }
-    for(const auto & w : controller->getWrenches())
+    for(const auto & fs : controller->robot().forceSensors())
     {
-      log << ";" << w.second.force().x();
-      log << ";" << w.second.force().y();
-      log << ";" << w.second.force().z();
-      log << ";" << w.second.couple().x();
-      log << ";" << w.second.couple().y();
-      log << ";" << w.second.couple().z();
+      log << ";" << fs.wrench().force().x();
+      log << ";" << fs.wrench().force().y();
+      log << ";" << fs.wrench().force().z();
+      log << ";" << fs.wrench().couple().x();
+      log << ";" << fs.wrench().couple().y();
+      log << ";" << fs.wrench().couple().z();
     }
     const auto & pIn = controller->getSensorPosition();
     log << ";" << pIn.x();

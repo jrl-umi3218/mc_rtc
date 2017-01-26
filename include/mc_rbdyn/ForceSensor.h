@@ -56,6 +56,24 @@ public:
   /** Return the current wrench */
   const sva::ForceVecd & wrench() const;
 
+  /** Return the force reading
+   *
+   * Shortcut for wrench().force()
+   */
+  inline const Eigen::Vector3d & force() const
+  {
+    return wrench().force();
+  }
+
+  /** Return the couple reading
+   *
+   * Shortcut for wrench().couple()
+   */
+  inline const Eigen::Vector3d & couple() const
+  {
+    return wrench().couple();
+  }
+
   /** Set the current wrench
    *
    * @param wrench New wrench reading

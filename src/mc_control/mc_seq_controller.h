@@ -44,7 +44,7 @@ public:
    * triggered on the FSM side.
    * @return bool: true if update is successful, false if the error is too big.
   **/
- bool update(std::map<std::string, sva::ForceVecd>& wrenches,
+ bool update(const mc_rbdyn::Robot & robot,
       tasks::qp::ContactConstr* contactConstr);
 
 protected:

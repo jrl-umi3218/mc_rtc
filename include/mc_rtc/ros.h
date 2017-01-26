@@ -40,7 +40,7 @@ struct MC_RTC_ROS_DLLAPI ROSBridge
   static std::shared_ptr<ros::NodeHandle> get_node_handle();
 
   /*! \brief Update the robot publisher state */
-  static void update_robot_publisher(const std::string& publisher, double dt, const mc_rbdyn::Robot & robot, const Eigen::Vector3d & p, const Eigen::Quaterniond & ori, const Eigen::Vector3d & rate, const Eigen::Vector3d & gsensor, const std::map<std::string, std::vector<std::string>> & gripperJ, const std::map<std::string, std::vector<double>> & gripperQ, const std::map<std::string, sva::ForceVecd> & wrenches);
+  static void update_robot_publisher(const std::string& publisher, double dt, const mc_rbdyn::Robot & robot, const Eigen::Vector3d & p, const Eigen::Quaterniond & ori, const Eigen::Vector3d & rate, const Eigen::Vector3d & gsensor, const std::map<std::string, std::vector<std::string>> & gripperJ, const std::map<std::string, std::vector<double>> & gripperQ);
 
   /*! \brief Reset the IMU offset in publication */
   static void reset_imu_offset();
@@ -78,7 +78,7 @@ public:
   ~RobotPublisher();
 
   /*! \brief Update the publisher */
-  void update(double dt, const mc_rbdyn::Robot & robot, const Eigen::Vector3d & p, const Eigen::Quaterniond & ori, const Eigen::Vector3d & rate, const Eigen::Vector3d & gsensor, const std::map<std::string, std::vector<std::string>> & gripperJ, const std::map<std::string, std::vector<double>> & gripperQ, const std::map<std::string, sva::ForceVecd> & wrenches);
+  void update(double dt, const mc_rbdyn::Robot & robot, const Eigen::Vector3d & p, const Eigen::Quaterniond & ori, const Eigen::Vector3d & rate, const Eigen::Vector3d & gsensor, const std::map<std::string, std::vector<std::string>> & gripperJ, const std::map<std::string, std::vector<double>> & gripperQ);
 
   /*! \brief Reset the IMU offset in publication */
   void reset_imu_offset();
