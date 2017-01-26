@@ -28,6 +28,7 @@ struct Robots;
 
 struct MC_RBDYN_DLLAPI Robot
 {
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
   friend struct Robots;
   #if defined __GNUC__ && ! defined  __clang__
   friend class __gnu_cxx::new_allocator<Robot>;
