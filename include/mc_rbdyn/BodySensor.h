@@ -13,6 +13,7 @@ namespace mc_rbdyn
  * can hold more information */
 struct BodySensor
 {
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
   /** Default constructor, does not represent a valid body sensor */
   BodySensor()
   : BodySensor("", "", sva::PTransformd::Identity())
