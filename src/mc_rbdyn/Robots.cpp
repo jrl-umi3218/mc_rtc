@@ -7,6 +7,9 @@
 
 #include <RBDyn/FK.h>
 
+#include <boost/filesystem.hpp>
+namespace bfs = boost::filesystem;
+
 namespace
 {
   template<typename sch_T>
@@ -289,7 +292,15 @@ Robot& Robots::load(const RobotModule & module, const std::string &, sva::PTrans
 
   const std::vector<Flexibility> & flexibility = module.flexibility();
 
-  const std::vector<ForceSensor> & forceSensors = module.forceSensors();
+  std::vector<ForceSensor> forceSensors = module.forceSensors();
+  for(auto & fs : forceSensors)
+  {
+    bfs::path calib_file = bfs::path(module.calib_dir) / std::string("calib_data." + fs.name());
+    if(bfs::exists(calib_file))
+    {
+      fs.loadCalibrator(calib_file.string(), mbc.gravity);
+    }
+  }
 
   const std::string & accelBody = module.accelerometerBody();
 
