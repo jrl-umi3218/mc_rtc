@@ -78,18 +78,18 @@ struct MC_RBDYN_DLLAPI RobotModule
   virtual const Springs & springs() const { return _springs; }
 
   /** Return a minimal self-collision set */
-  virtual const std::vector<mc_rbdyn::Collision> & minimalSelfCollisions() { return _minimalSelfCollisions; }
+  virtual const std::vector<mc_rbdyn::Collision> & minimalSelfCollisions() const { return _minimalSelfCollisions; }
   /** Return a broader set of the most common self-collisions */
-  virtual const std::vector<mc_rbdyn::Collision> & commonSelfCollisions() { return _commonSelfCollisions; }
+  virtual const std::vector<mc_rbdyn::Collision> & commonSelfCollisions() const { return _commonSelfCollisions; }
 
   /** Return a map of gripper. Keys represents the gripper name. Values indicate the active joints in the gripper. */
-  virtual const std::vector<Gripper> & grippers() { return _grippers; }
+  virtual const std::vector<Gripper> & grippers() const { return _grippers; }
 
   /** Return the reference (native controller) joint order of the robot */
-  virtual const std::vector<std::string> & ref_joint_order() { return _ref_joint_order; }
+  virtual const std::vector<std::string> & ref_joint_order() const { return _ref_joint_order; }
 
   /** Return default attitude of the robot */
-  virtual const std::array<double, 7> & default_attitude() { return _default_attitude; }
+  virtual const std::array<double, 7> & default_attitude() const { return _default_attitude; }
 
   std::string path;
   std::string name;

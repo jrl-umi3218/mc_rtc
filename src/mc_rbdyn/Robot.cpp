@@ -29,6 +29,7 @@ Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
         const std::map<std::string, stpbv_pair_t> & stpbvs,
         const std::map<std::string, sva::PTransformd> & collisionTransforms, const std::map<std::string, std::shared_ptr<mc_rbdyn::Surface> > & surfaces,
         const std::vector<ForceSensor> & forceSensors,
+        const std::vector<std::string> & refJointOrder,
         const std::map<std::string, std::vector<double>> stance,
         const std::vector<BodySensor> & bodySensors,
         const Springs & springs, const std::vector< std::vector<Eigen::VectorXd> > & tlPoly,
@@ -36,7 +37,8 @@ Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
 : name_(name), robots(&robots), robots_idx(robots_idx),
   bodyTransforms(bodyTransforms), ql_(ql), qu_(qu), vl_(vl), vu_(vu), tl_(tl), tu_(tu),
   convexes(convexes), stpbvs(stpbvs), collisionTransforms(collisionTransforms), surfaces_(),
-  forceSensors_(forceSensors), stance_(stance), bodySensors_(bodySensors), springs(springs), tlPoly(tlPoly),
+  forceSensors_(forceSensors), stance_(stance), refJointOrder_(refJointOrder),
+  bodySensors_(bodySensors), springs(springs), tlPoly(tlPoly),
   tuPoly(tuPoly), flexibility_(flexibility)
 {
   // Copy the surfaces
@@ -226,6 +228,31 @@ const std::vector<Flexibility> & Robot::flexibility() const
   return flexibility_;
 }
 
+const std::vector<double> & Robot::encoderValues() const
+{
+  return encoderValues_;
+}
+
+void Robot::encoderValues(const std::vector<double> & encoderValues)
+{
+  encoderValues_ = encoderValues;
+}
+
+const std::vector<double> & Robot::jointTorques() const
+{
+  return jointTorques_;
+}
+
+void Robot::jointTorques(const std::vector<double> & jointTorques)
+{
+  jointTorques_ = jointTorques;
+}
+
+const std::vector<std::string> & Robot::refJointOrder() const
+{
+  return refJointOrder_;
+}
+
 bool Robot::hasForceSensor(const std::string & name) const
 {
   return forceSensorsIndex_.count(name) != 0;
@@ -393,7 +420,8 @@ void Robot::createWithBase(Robots & robots, unsigned int robots_idx, const Base 
   robots.robots_.emplace_back(this->name_, robots, robots_idx, bodyTransforms,
               ql, qu, vl, vu, tl, tu,
               this->convexes, this->stpbvs, this->collisionTransforms,
-              this->surfaces_, this->forceSensors_, this->stance_,
+              this->surfaces_, this->forceSensors_,
+              this->refJointOrder_, this->stance_,
               this->bodySensors_, this->springs,
               this->tlPoly, this->tuPoly,
               this->flexibility());
@@ -402,7 +430,7 @@ void Robot::createWithBase(Robots & robots, unsigned int robots_idx, const Base 
 
 void Robot::copy(Robots & robots, unsigned int robots_idx) const
 {
-  robots.robots_.emplace_back(this->name_, robots, robots_idx, this->bodyTransforms, this->ql(), this->qu(), this->vl(), this->vu(), this->tl(), this->tu(), this->convexes, this->stpbvs, this->collisionTransforms, this->surfaces_, this->forceSensors_, this->stance_, this->bodySensors_, this->springs, this->tlPoly, this->tuPoly, this->flexibility());
+  robots.robots_.emplace_back(this->name_, robots, robots_idx, this->bodyTransforms, this->ql(), this->qu(), this->vl(), this->vu(), this->tl(), this->tu(), this->convexes, this->stpbvs, this->collisionTransforms, this->surfaces_, this->forceSensors_, this->refJointOrder_, this->stance_, this->bodySensors_, this->springs, this->tlPoly, this->tuPoly, this->flexibility());
 }
 
 std::vector< std::vector<double> > jointsParameters(const rbd::MultiBody & mb, const double & coeff)

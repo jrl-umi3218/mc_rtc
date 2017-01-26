@@ -85,16 +85,6 @@ public:
    */
   virtual void reset(const ControllerResetData & reset_data);
 
-  /** Get the current encoder values provided by simulation/low-level controller
-   * \return A vector of encoder values ordered by the controller/simulator
-   */
-  const std::vector<double> & getEncoderValues();
-
-  /** Get the current joint torques provided by the low-level controller
-   * \return A vector of joint torques ordered according to RobotModule::ref_joint_order()
-   */
-  const std::vector<double> & getJointTorques();
-
   /** Return the main robot (first robot provided in the constructor
    * \anchor mc_controller_robot_const_doc
    */
@@ -257,17 +247,11 @@ protected:
    */
   MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robot_modules, double dt);
 protected:
-  /** Encoder values provided by the low-level controller */
-  std::vector<double> encoderValues;
-  /** Joint torques provided by the low-level controller */
-  std::vector<double> jointTorques;
   /** QP solver */
   std::shared_ptr<mc_solver::QPSolver> qpsolver;
 public:
   /** Controller timestep */
   const double timeStep;
-  /** Reference joint order see mc_rbdyn::RobotModule */
-  std::vector<std::string> ref_joint_order;
   /** Grippers */
   std::map<std::string, std::shared_ptr<mc_control::Gripper>> grippers;
   /** Contact constraint for the main robot */

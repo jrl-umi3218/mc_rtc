@@ -306,6 +306,8 @@ Robot& Robots::load(const RobotModule & module, const std::string &, sva::PTrans
 
   const Springs & springs = module.springs();
 
+  const auto & refJointOrder = module.ref_joint_order();
+
   const auto & stance = module.stance();
 
   std::map<std::string, SurfacePtr> surf;
@@ -314,7 +316,7 @@ Robot& Robots::load(const RobotModule & module, const std::string &, sva::PTrans
   robots_.emplace_back(module.name, *this, this->mbs_.size() - 1,
                       bodyTransforms, ql, qu, vl, vu, tl, tu,
                       convexesByName, stpbvsByName, collisionTransforms,
-                      surf, forceSensors, stance, bodySensors, springs,
+                      surf, forceSensors, refJointOrder, stance, bodySensors, springs,
                       tlPoly, tuPoly, flexibility);
   robots_.back().loadRSDFFromDir(module.rsdf_dir);
   updateIndexes();
@@ -428,10 +430,11 @@ Robot& Robots::loadFromUrdf(const std::string & name, const std::string & urdf, 
   std::map<std::string, Robot::stpbv_pair_t> stpbv;
   std::map<std::string, mc_rbdyn::SurfacePtr> surfaces;
   std::vector<ForceSensor> forceSensors;
+  std::vector<std::string> refJointOrder;
 
   robots_.emplace_back(name, *this, mbs_.size() - 1,
                bodyTransforms, ql, qu, vl, vu, tl, tu,
-               convex, stpbv, res.collision_tf, surfaces, forceSensors);
+               convex, stpbv, res.collision_tf, surfaces, forceSensors, refJointOrder);
   updateIndexes();
   return robots_.back();
 }

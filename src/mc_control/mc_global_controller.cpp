@@ -218,12 +218,12 @@ void MCGlobalController::setSensorAccelerations(mc_rbdyn::Robot & robot,
 
 void MCGlobalController::setEncoderValues(const std::vector<double> & eValues)
 {
-  controller_->encoderValues = eValues;
+  robot().encoderValues(eValues);
 }
 
 void MCGlobalController::setJointTorques(const std::vector<double> & tValues)
 {
-  controller_->jointTorques = tValues;
+  robot().jointTorques(tValues);
 }
 
 void MCGlobalController::setWrenches(const std::map<std::string, sva::ForceVecd> & wrenches)
@@ -289,7 +289,7 @@ bool MCGlobalController::run()
       logger_->log_header(current_ctrl, controller_);
     }
   }
-  const auto& real_q = controller_->getEncoderValues();
+  const auto& real_q = robot().encoderValues();
   if(config.update_real && real_q.size() > 0)
   {
     auto& real_robot = real_robots->robot();
@@ -445,7 +445,7 @@ double MCGlobalController::timestep()
 
 const std::vector<std::string> & MCGlobalController::ref_joint_order()
 {
-  return controller_->ref_joint_order;
+  return robot().refJointOrder();
 }
 
 bool MCGlobalController::AddController(const std::string & name)

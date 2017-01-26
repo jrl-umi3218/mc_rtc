@@ -232,16 +232,16 @@ namespace mc_control
     if(log.is_open())
     {
       log << "t";
-      for(unsigned int i = 0; i < static_cast<unsigned int>(controller->getEncoderValues().size()); ++i)
+      for(unsigned int i = 0; i < static_cast<unsigned int>(controller->robot().encoderValues().size()); ++i)
       {
         log << ";qIn" << i;
       }
       log << ";ff_qw;ff_qx;ff_qy;ff_qz;ff_tx;ff_ty;ff_tz";
-      for(unsigned int i = 0; i < static_cast<unsigned int>(controller->getEncoderValues().size()); ++i)
+      for(unsigned int i = 0; i < static_cast<unsigned int>(controller->robot().refJointOrder().size()); ++i)
       {
         log << ";qOut" << i;
       }
-      for(unsigned int i = 0; i < static_cast<unsigned int>(controller->getJointTorques().size()); ++i)
+      for(unsigned int i = 0; i < static_cast<unsigned int>(controller->robot().jointTorques().size()); ++i)
       {
         log << ";taucIn" << i;
       }
@@ -288,7 +288,7 @@ namespace mc_control
     auto & log = impl->get_stream();
     log << impl->log_iter_;
     impl->log_iter_ += gc.timestep();
-    for(const auto & qi : controller->getEncoderValues())
+    for(const auto & qi : controller->robot().encoderValues())
     {
       log << ";" << qi;
     }
@@ -309,7 +309,7 @@ namespace mc_control
         log << ";" << 0;
       }
     }
-    for(const auto & ti : controller->getJointTorques())
+    for(const auto & ti : controller->robot().jointTorques())
     {
       log << ";" << ti;
     }

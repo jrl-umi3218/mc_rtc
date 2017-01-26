@@ -52,7 +52,7 @@ public:
    * @{
    */
 
-  /*! Return the first BodySensor in the robot
+  /** Return the first BodySensor in the robot
    *
    * If the robot does not have body sensors, it returns a defautl
    * (invalid) one
@@ -60,24 +60,24 @@ public:
    */
   BodySensor & bodySensor();
 
-  /*! Return the first BodySensor in the robot (const) */
+  /** Return the first BodySensor in the robot (const) */
   const BodySensor & bodySensor() const;
 
-  /*! Return true if the robot has a body sensor named name
+  /** Return true if the robot has a body sensor named name
    *
    * @param name Name of the body sensor
    *
    */
   bool hasBodySensor(const std::string & name) const;
 
-  /*! Return true if the specified body has a body sensor attached to it
+  /** Return true if the specified body has a body sensor attached to it
    *
    * @param body Body to query
    *
    */
   bool bodyHasBodySensor(const std::string & body) const;
 
-  /*! Return a specific BobySensor by name
+  /** Return a specific BobySensor by name
    *
    * @param name Name of the sensor
    *
@@ -86,10 +86,10 @@ public:
    */
   BodySensor & bodySensor(const std::string & name);
 
-  /*! Return a specific BodySensor by name (const) */
+  /** Return a specific BodySensor by name (const) */
   const BodySensor & bodySensor(const std::string & name) const;
 
-  /*! Return a specific BodySensor by body name
+  /** Return a specific BodySensor by body name
    *
    * @param name Name of the body
    *
@@ -98,13 +98,13 @@ public:
    */
   BodySensor & bodyBodySensor(const std::string & name);
 
-  /*! Return a specific BodySensor by body name (const) */
+  /** Return a specific BodySensor by body name (const) */
   const BodySensor & bodyBodySensor(const std::string & name) const;
 
-  /*! Return all body sensors */
+  /** Return all body sensors */
   std::vector<BodySensor> & bodySensors();
 
-  /*! Return all body sensors (const) */
+  /** Return all body sensors (const) */
   const std::vector<BodySensor> & bodySensors() const;
 
   /** @} */
@@ -142,6 +142,31 @@ public:
 
   const std::vector<Flexibility> & flexibility() const;
 
+  /** @name Joint sensors
+   *
+   * These functions give information about joints' status
+   *
+   * @{
+   */
+
+  /** Return the encoder values */
+  const std::vector<double> & encoderValues() const;
+
+  /** Set the encoder values */
+  void encoderValues(const std::vector<double> & encoderValues);
+
+  /** Return the joint torques from sensors */
+  const std::vector<double> & jointTorques() const;
+
+  /** Set joint torques from sensors */
+  void jointTorques(const std::vector<double> & jointTorques);
+
+  /** Return the reference joint order for this robot */
+  const std::vector<std::string> & refJointOrder() const;
+
+  /** @} */
+  /* End Joints sensors section */
+
   /** @name Force sensors
    *
    * These functions are related to force sensors
@@ -149,7 +174,7 @@ public:
    * @{
    */
 
-  /*! Check if a force sensor exists
+  /** Check if a force sensor exists
    *
    * @param name Name of the sensor
    *
@@ -157,7 +182,7 @@ public:
    */
   bool hasForceSensor(const std::string & name) const;
 
-  /*! Check if the body has a force sensor attached to it
+  /** Check if the body has a force sensor attached to it
    *
    * @param body Name of the body
    *
@@ -166,7 +191,7 @@ public:
    */
   bool bodyHasForceSensor(const std::string & body) const;
 
-  /*! Return a force sensor by name
+  /** Return a force sensor by name
    *
    * @param name Name of the sensor
    *
@@ -177,10 +202,10 @@ public:
    */
   ForceSensor & forceSensor(const std::string & name);
 
-  /*! Const variant */
+  /** Const variant */
   const ForceSensor & forceSensor(const std::string & name) const;
 
-  /*! Return a force sensor attached to the provided body
+  /** Return a force sensor attached to the provided body
    *
    * @param body Name of the body to which the sensor is attached
    *
@@ -190,13 +215,13 @@ public:
    */
   ForceSensor & bodyForceSensor(const std::string & body);
 
-  /*! Const variant */
+  /** Const variant */
   const ForceSensor & bodyForceSensor(const std::string & body) const;
 
-  /*! Returns all force sensors */
+  /** Returns all force sensors */
   std::vector<ForceSensor> & forceSensors();
 
-  /*! Returns all force sensors (const) */
+  /** Returns all force sensors (const) */
   const std::vector<ForceSensor> & forceSensors() const;
 
   /** @} */
@@ -207,7 +232,7 @@ public:
   mc_rbdyn::Surface & surface(const std::string & sName);
   const mc_rbdyn::Surface & surface(const std::string & sName) const;
 
-  /*! Copy an existing surface with a new name */
+  /** Copy an existing surface with a new name */
   mc_rbdyn::Surface & copySurface(const std::string & sName, const std::string & name);
 
   const std::map<std::string, mc_rbdyn::SurfacePtr> & surfaces() const;
@@ -242,6 +267,12 @@ private:
   std::map<std::string, mc_rbdyn::SurfacePtr> surfaces_;
   std::vector<ForceSensor> forceSensors_;
   std::map<std::string, std::vector<double>> stance_;
+  /** Encoder values provided by the low-level controller */
+  std::vector<double> encoderValues_;
+  /** Joint torques provided by the low-level controller */
+  std::vector<double> jointTorques_;
+  /** Reference joint order see mc_rbdyn::RobotModule */
+  std::vector<std::string> refJointOrder_;
   /** Hold all body sensors */
   std::vector<BodySensor> bodySensors_;
   /** Correspondance between body sensor's name and body sensor index*/
@@ -269,6 +300,7 @@ protected:
         const std::map<std::string, sva::PTransformd> & collisionTransforms,
         const std::map<std::string, mc_rbdyn::SurfacePtr> & surfaces,
         const std::vector<ForceSensor> & forceSensors,
+        const std::vector<std::string> & refJointOrder,
         const std::map<std::string, std::vector<double>> stance = {},
         const std::vector<BodySensor> & bodySensors = {},
         const Springs & springs = Springs(), const std::vector< std::vector<Eigen::VectorXd> > & tlPoly = {},
