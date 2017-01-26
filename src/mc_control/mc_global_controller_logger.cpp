@@ -322,27 +322,27 @@ namespace mc_control
       log << ";" << fs.wrench().couple().y();
       log << ";" << fs.wrench().couple().z();
     }
-    const auto & pIn = controller->getSensorPosition();
+    const auto & pIn = controller->robot().bodySensor().position();
     log << ";" << pIn.x();
     log << ";" << pIn.y();
     log << ";" << pIn.z();
 
-    const auto & rpyIn = controller->getSensorOrientation();
+    const auto & rpyIn = controller->robot().bodySensor().orientation();
     log << ";" << rpyIn.x();
     log << ";" << rpyIn.y();
     log << ";" << rpyIn.z();
 
-    const auto & velIn = controller->getSensorLinearVelocity();
+    const auto & velIn = controller->robot().bodySensor().linearVelocity();
     log << ";" << velIn.x();
     log << ";" << velIn.y();
     log << ";" << velIn.z();
 
-    const auto & rateIn = controller->getSensorAngularVelocity();
+    const auto & rateIn = controller->robot().bodySensor().angularVelocity();
     log << ";" << rateIn.x();
     log << ";" << rateIn.y();
     log << ";" << rateIn.z();
 
-    const auto & accIn = controller->getSensorAcceleration();
+    const auto & accIn = controller->robot().bodySensor().acceleration();
     log << ";" << accIn.x();
     log << ";" << accIn.y();
     log << ";" << accIn.z();

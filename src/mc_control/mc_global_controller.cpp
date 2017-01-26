@@ -143,28 +143,77 @@ void MCGlobalController::init(const std::vector<double> & initq, const std::arra
 
 void MCGlobalController::setSensorPosition(const Eigen::Vector3d & pos)
 {
-  controller_->sensorPos = pos;
+  robot().bodySensor().position(pos);
+  real_robots->robot().bodySensor().position(pos);
+}
+
+void MCGlobalController::setSensorPositions(mc_rbdyn::Robot & robot,
+                                            const std::map<std::string, Eigen::Vector3d> & poses)
+{
+  for(const auto & p : poses)
+  {
+    robot.bodySensor(p.first).position(p.second);
+  }
 }
 
 void MCGlobalController::setSensorOrientation(const Eigen::Quaterniond & ori)
 {
-  controller_->sensorOri = ori;
+  robot().bodySensor().orientation(ori);
+  real_robots->robot().bodySensor().orientation(ori);
+}
+
+void MCGlobalController::setSensorOrientations(mc_rbdyn::Robot & robot,
+                                            const std::map<std::string, Eigen::Quaterniond> & oris)
+{
+  for(const auto & o : oris)
+  {
+    robot.bodySensor(o.first).orientation(o.second);
+  }
 }
 
 void MCGlobalController::setSensorLinearVelocity(const Eigen::Vector3d & vel)
 {
-  controller_->sensorLinearVel = vel;
+  robot().bodySensor().linearVelocity(vel);
+  real_robots->robot().bodySensor().linearVelocity(vel);
 }
 
+void MCGlobalController::setSensorLinearVelocities(mc_rbdyn::Robot & robot,
+                                                   const std::map<std::string, Eigen::Vector3d> & linearVels)
+{
+  for(const auto & lv : linearVels)
+  {
+    robot.bodySensor(lv.first).linearVelocity(lv.second);
+  }
+}
 
 void MCGlobalController::setSensorAngularVelocity(const Eigen::Vector3d & vel)
 {
-  controller_->sensorAngularVel = vel;
+  robot().bodySensor().angularVelocity(vel);
+  real_robots->robot().bodySensor().angularVelocity(vel);
+}
+
+void MCGlobalController::setSensorAngularVelocities(mc_rbdyn::Robot & robot,
+                                                    const std::map<std::string, Eigen::Vector3d> & angularVels)
+{
+  for(const auto & av : angularVels)
+  {
+    robot.bodySensor(av.first).angularVelocity(av.second);
+  }
 }
 
 void MCGlobalController::setSensorAcceleration(const Eigen::Vector3d & acc)
 {
-  controller_->sensorAcc = acc;
+  robot().bodySensor().acceleration(acc);
+  real_robots->robot().bodySensor().acceleration(acc);
+}
+
+void MCGlobalController::setSensorAccelerations(mc_rbdyn::Robot & robot,
+                                                const std::map<std::string, Eigen::Vector3d> & accels)
+{
+  for(const auto & a : accels)
+  {
+    robot.bodySensor(a.first).acceleration(a.second);
+  }
 }
 
 void MCGlobalController::setEncoderValues(const std::vector<double> & eValues)
@@ -252,8 +301,8 @@ bool MCGlobalController::run()
     }
     else
     {
-      const auto & qt = controller_->sensorOri;
-      const auto & t = controller_->sensorPos;
+      const auto & qt = robot().bodySensor().orientation();
+      const auto & t = robot().bodySensor().position();
       real_robot.mbc().q[0] = {
         qt.w(), qt.x(), qt.y(), qt.z(),
         t.x(), t.y(), t.z()
@@ -496,7 +545,7 @@ void MCGlobalController::publish_thread()
     // Publish controlled robot
     if(config.publish_control_state)
     {
-      mc_rtc::ROSBridge::update_robot_publisher("control", timestep(), robot(), Eigen::Vector3d::Zero(), controller_->getSensorOrientation(), controller_->getSensorAngularVelocity(), controller_->getSensorAcceleration(), gripperJoints(), gripperQ());
+      mc_rtc::ROSBridge::update_robot_publisher("control", timestep(), robot(), gripperJoints(), gripperQ());
     }
     if(config.publish_env_state)
     {
@@ -505,14 +554,14 @@ void MCGlobalController::publish_thread()
       {
         std::stringstream ss;
         ss << "control/env_" << i;
-        mc_rtc::ROSBridge::update_robot_publisher(ss.str(), timestep(), robots.robot(i), Eigen::Vector3d::Zero(), Eigen::Quaterniond::Identity(), Eigen::Vector3d::Zero(), Eigen::Vector3d::Zero(), {}, {});
+        mc_rtc::ROSBridge::update_robot_publisher(ss.str(), timestep(), robots.robot(i), {}, {});
       }
     }
 
     if(config.publish_real_state)
     {
       auto& real_robot = real_robots->robot();
-      mc_rtc::ROSBridge::update_robot_publisher("real", timestep(), real_robot, Eigen::Vector3d::Zero(), controller_->getSensorOrientation(), controller_->getSensorAngularVelocity(), controller_->getSensorAcceleration(), gripperJoints(), gripperQ());
+      mc_rtc::ROSBridge::update_robot_publisher("real", timestep(), real_robot, gripperJoints(), gripperQ());
     }
 
     const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now()-start).count();

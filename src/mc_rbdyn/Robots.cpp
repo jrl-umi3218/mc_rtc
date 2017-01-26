@@ -302,7 +302,7 @@ Robot& Robots::load(const RobotModule & module, const std::string &, sva::PTrans
     }
   }
 
-  const std::string & accelBody = module.accelerometerBody();
+  const std::vector<BodySensor> & bodySensors = module.bodySensors();
 
   const Springs & springs = module.springs();
 
@@ -314,7 +314,7 @@ Robot& Robots::load(const RobotModule & module, const std::string &, sva::PTrans
   robots_.emplace_back(module.name, *this, this->mbs_.size() - 1,
                       bodyTransforms, ql, qu, vl, vu, tl, tu,
                       convexesByName, stpbvsByName, collisionTransforms,
-                      surf, forceSensors, stance, accelBody, springs,
+                      surf, forceSensors, stance, bodySensors, springs,
                       tlPoly, tuPoly, flexibility);
   robots_.back().loadRSDFFromDir(module.rsdf_dir);
   updateIndexes();

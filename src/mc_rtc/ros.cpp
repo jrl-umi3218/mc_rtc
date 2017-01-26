@@ -70,7 +70,7 @@ public:
     th.join();
   }
 
-  void update(double dt, const mc_rbdyn::Robot & robot, const Eigen::Vector3d & p, const Eigen::Quaterniond & ori, const Eigen::Vector3d & rate, const Eigen::Vector3d & gsensor, const std::map<std::string, std::vector<std::string>> & gJs, const std::map<std::string, std::vector<double>> & gQs)
+  void update(double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::vector<std::string>> & gJs, const std::map<std::string, std::vector<double>> & gQs)
   {
     ros::Time tm = ros::Time::now();
     sensor_msgs::JointState msg;
@@ -118,6 +118,7 @@ public:
     }
 
     imu.header = msg.header;
+    const auto & gsensor = robot.bodySensor().acceleration();
     if(iter_since_start >= 2000)
     {
       imu.linear_acceleration.x = gsensor.x() - imu_noise.x();
@@ -141,21 +142,23 @@ public:
 
     nav_msgs::Odometry odom;
     odom.header = msg.header;
-    odom.header.frame_id = robot.accelerometerBody();
-    odom.child_frame_id = "robot_odom",
-    /* Position of the sensor in CHEST_LINK1 frame */
-    odom.pose.pose.position.x = -0.13;
-    odom.pose.pose.position.y = 0.;
-    odom.pose.pose.position.z = 0.118;
-    odom.pose.pose.orientation.w = 1;
-    odom.pose.pose.orientation.x = 0;
-    odom.pose.pose.orientation.y = 0;
-    odom.pose.pose.orientation.z = 0;
+    odom.header.frame_id = robot.bodySensor().parentBody();
+    odom.child_frame_id = "robot_odom";
+    const auto & odom_p = robot.bodySensor().X_b_s().translation();
+    Eigen::Quaterniond odom_q = Eigen::Quaterniond(robot.bodySensor().X_b_s().rotation());
+    odom.pose.pose.position.x = odom_p.x();
+    odom.pose.pose.position.y = odom_p.y();
+    odom.pose.pose.position.z = odom_p.z();
+    odom.pose.pose.orientation.w = odom_q.w();
+    odom.pose.pose.orientation.x = odom_q.x();
+    odom.pose.pose.orientation.y = odom_q.y();
+    odom.pose.pose.orientation.z = odom_q.z();
     odom.pose.covariance.fill(0);
     /* Provide linear and angular velocity */
     odom.twist.twist.linear.x = gsensor.x() * dt;
     odom.twist.twist.linear.y = gsensor.y() * dt;
     odom.twist.twist.linear.z = gsensor.z() * dt;
+    const auto & rate = robot.bodySensor().angularVelocity();
     odom.twist.twist.angular.x = rate.x();
     odom.twist.twist.angular.y = rate.y();
     odom.twist.twist.angular.z = rate.z();
@@ -195,9 +198,10 @@ public:
       sva::PTransformd X_0_xtion = mbc.bodyPosW[robot.bodyIndexByName("xtion_link")];
       tfs.push_back(PT2TF(X_0_xtion.inv(), tm, "odom", "robot_map", seq));
 
+
       sva::PTransformd X_0_base_odom = sva::PTransformd(
-                          ori,
-                          Eigen::Vector3d(p.x(), p.y(), p.z()));
+                          robot.bodySensor().orientation(),
+                          robot.bodySensor().position());
       sva::PTransformd X_0_base = mbc.bodyPosW[0];
       sva::PTransformd X_base_xtion = X_0_xtion * (X_0_base.inv());
       tfs.push_back(PT2TF(X_0_base_odom, tm, "/robot_map", "/odom_base_link", seq));
@@ -301,11 +305,11 @@ RobotPublisher::~RobotPublisher()
 {
 }
 
-void RobotPublisher::update(double dt, const mc_rbdyn::Robot & robot, const Eigen::Vector3d & p, const Eigen::Quaterniond & ori, const Eigen::Vector3d & rate, const Eigen::Vector3d & gsensor, const std::map<std::string, std::vector<std::string>> & gripperJ, const std::map<std::string, std::vector<double>> & gripperQ)
+void RobotPublisher::update(double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::vector<std::string>> & gripperJ, const std::map<std::string, std::vector<double>> & gripperQ)
 {
   if(impl)
   {
-    impl->update(dt, robot, p, ori, rate, gsensor, gripperJ, gripperQ);
+    impl->update(dt, robot, gripperJ, gripperQ);
   }
 }
 
@@ -349,13 +353,13 @@ std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
   return impl->nh;
 }
 
-void ROSBridge::update_robot_publisher(const std::string& publisher, double dt, const mc_rbdyn::Robot & robot, const Eigen::Vector3d & p, const Eigen::Quaterniond & ori, const Eigen::Vector3d & rate, const Eigen::Vector3d & gsensor, const std::map<std::string, std::vector<std::string>> & gJ, const std::map<std::string, std::vector<double>> & gQ)
+void ROSBridge::update_robot_publisher(const std::string& publisher, double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::vector<std::string>> & gJ, const std::map<std::string, std::vector<double>> & gQ)
 {
   if(impl->rpubs.count(publisher) == 0)
   {
     impl->rpubs[publisher] = std::make_shared<RobotPublisher>(publisher + "/", 100);
   }
-  impl->rpubs[publisher]->update(dt, robot, p, ori, rate, gsensor, gJ, gQ);
+  impl->rpubs[publisher]->update(dt, robot, gJ, gQ);
 }
 
 void ROSBridge::reset_imu_offset()
@@ -394,7 +398,7 @@ std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
   return impl->nh;
 }
 
-void ROSBridge::update_robot_publisher(const std::string&, double, const mc_rbdyn::Robot &, const Eigen::Vector3d &, const Eigen::Quaterniond &, const Eigen::Vector3d &, const Eigen::Vector3d &, const std::map<std::string, std::vector<std::string>> &, const std::map<std::string, std::vector<double>> &)
+void ROSBridge::update_robot_publisher(const std::string&, double, const mc_rbdyn::Robot &, const std::map<std::string, std::vector<std::string>> &, const std::map<std::string, std::vector<double>> &)
 {
 }
 

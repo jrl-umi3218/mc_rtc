@@ -30,13 +30,13 @@ Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
         const std::map<std::string, sva::PTransformd> & collisionTransforms, const std::map<std::string, std::shared_ptr<mc_rbdyn::Surface> > & surfaces,
         const std::vector<ForceSensor> & forceSensors,
         const std::map<std::string, std::vector<double>> stance,
-        const std::string & accelerometerBody,
+        const std::vector<BodySensor> & bodySensors,
         const Springs & springs, const std::vector< std::vector<Eigen::VectorXd> > & tlPoly,
         const std::vector< std::vector<Eigen::VectorXd> > & tuPoly, const std::vector<Flexibility> & flexibility)
 : name_(name), robots(&robots), robots_idx(robots_idx),
   bodyTransforms(bodyTransforms), ql_(ql), qu_(qu), vl_(vl), vu_(vu), tl_(tl), tu_(tu),
   convexes(convexes), stpbvs(stpbvs), collisionTransforms(collisionTransforms), surfaces_(),
-  forceSensors_(forceSensors), stance_(stance), _accelerometerBody(accelerometerBody), springs(springs), tlPoly(tlPoly),
+  forceSensors_(forceSensors), stance_(stance), bodySensors_(bodySensors), springs(springs), tlPoly(tlPoly),
   tuPoly(tuPoly), flexibility_(flexibility)
 {
   // Copy the surfaces
@@ -52,10 +52,10 @@ Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
   {
     bodyIndexByNameD[this->mb().bodies()[i].name()] = i;
   }
-  if(this->_accelerometerBody == "" && this->hasBody("Accelerometer"))
+  /* Add a single default sensor if no sensor is available */
+  if(bodySensors_.size() == 0)
   {
-    unsigned int index = bodyIndexByName("Accelerometer");
-    this->_accelerometerBody = this->mb().body(this->mb().parent(index)).name();
+    bodySensors_.emplace_back();
   }
   for(size_t i = 0; i < forceSensors_.size(); ++i)
   {
@@ -75,9 +75,54 @@ void Robot::name(const std::string & name)
   name_ = name;
 }
 
-const std::string & Robot::accelerometerBody() const
+BodySensor & Robot::bodySensor()
 {
-  return _accelerometerBody;
+  return bodySensors_[0];
+}
+
+const BodySensor & Robot::bodySensor() const
+{
+  return bodySensors_[0];
+}
+
+bool Robot::hasBodySensor(const std::string & name) const
+{
+  return bodySensorsIndex_.count(name) != 0;
+}
+
+bool Robot::bodyHasBodySensor(const std::string & body) const
+{
+  return bodyBodySensors_.count(body) != 0;
+}
+
+BodySensor & Robot::bodySensor(const std::string & name)
+{
+  return const_cast<BodySensor&>(static_cast<const Robot*>(this)->bodySensor(name));
+}
+
+const BodySensor & Robot::bodySensor(const std::string & name) const
+{
+  return bodySensors_[bodySensorsIndex_.at(name)];
+}
+
+BodySensor & Robot::bodyBodySensor(const std::string & body)
+{
+  return const_cast<BodySensor&>(static_cast<const Robot*>(this)->bodyBodySensor(body));
+}
+
+const BodySensor & Robot::bodyBodySensor(const std::string & body) const
+{
+  return bodySensors_[bodyBodySensors_.at(body)];
+}
+
+std::vector<BodySensor> & Robot::bodySensors()
+{
+  return bodySensors_;
+}
+
+const std::vector<BodySensor> & Robot::bodySensors() const
+{
+  return bodySensors_;
 }
 
 bool Robot::hasJoint(const std::string & name) const
@@ -349,7 +394,7 @@ void Robot::createWithBase(Robots & robots, unsigned int robots_idx, const Base 
               ql, qu, vl, vu, tl, tu,
               this->convexes, this->stpbvs, this->collisionTransforms,
               this->surfaces_, this->forceSensors_, this->stance_,
-              this->_accelerometerBody, this->springs,
+              this->bodySensors_, this->springs,
               this->tlPoly, this->tuPoly,
               this->flexibility());
   robots.robot(robots_idx).fixSurfaces();
@@ -357,7 +402,7 @@ void Robot::createWithBase(Robots & robots, unsigned int robots_idx, const Base 
 
 void Robot::copy(Robots & robots, unsigned int robots_idx) const
 {
-  robots.robots_.emplace_back(this->name_, robots, robots_idx, this->bodyTransforms, this->ql(), this->qu(), this->vl(), this->vu(), this->tl(), this->tu(), this->convexes, this->stpbvs, this->collisionTransforms, this->surfaces_, this->forceSensors_, this->stance_, this->_accelerometerBody, this->springs, this->tlPoly, this->tuPoly, this->flexibility());
+  robots.robots_.emplace_back(this->name_, robots, robots_idx, this->bodyTransforms, this->ql(), this->qu(), this->vl(), this->vu(), this->tl(), this->tu(), this->convexes, this->stpbvs, this->collisionTransforms, this->surfaces_, this->forceSensors_, this->stance_, this->bodySensors_, this->springs, this->tlPoly, this->tuPoly, this->flexibility());
 }
 
 std::vector< std::vector<double> > jointsParameters(const rbd::MultiBody & mb, const double & coeff)

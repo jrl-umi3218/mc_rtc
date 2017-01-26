@@ -34,12 +34,9 @@ HRP2DRCCommonRobotModule::HRP2DRCCommonRobotModule()
   gripperLinks.push_back("RHAND_LINK3");
   gripperLinks.push_back("RHAND_LINK4");
 
-  //_forceSensors.push_back(mc_rbdyn::ForceSensor("RightFootForceSensor", "RLEG_LIN5", sva::PTransformd(Eigen::Vector3d(0, 0, -0.105))));
-  //_forceSensors.push_back(mc_rbdyn::ForceSensor("LeftFootForceSensor", "LLEG_LINK5", sva::PTransformd(Eigen::Vector3d(0, 0, -0.105))));
-  //_forceSensors.push_back(mc_rbdyn::ForceSensor("RightHandForceSensor", "RARM_LINK6", sva::PTransformd(Eigen::Vector3d(0.005, 0, -0.05925))));
-  //_forceSensors.push_back(mc_rbdyn::ForceSensor("LeftHandForceSensor", "LARM_LINK6", sva::PTransformd(Eigen::Vector3d(0.005, 0, -0.05925))));
-
-  _accelerometerBody = "CHEST_LINK1";
+  _bodySensors = {
+    {"Accelerometer", "CHEST_LINK1", sva::PTransformd(Eigen::Vector3d(-0.13, 0, 0.118))}
+  };
 
   halfSitting["RLEG_JOINT0"] = {0};
   halfSitting["RLEG_JOINT1"] = {0};

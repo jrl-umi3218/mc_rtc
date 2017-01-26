@@ -112,31 +112,6 @@ const std::vector<double> & MCController::getJointTorques()
   return this->jointTorques;
 }
 
-const Eigen::Vector3d & MCController::getSensorPosition()
-{
-  return this->sensorPos;
-}
-
-const Eigen::Quaterniond & MCController::getSensorOrientation()
-{
-  return this->sensorOri;
-}
-
-const Eigen::Vector3d & MCController::getSensorLinearVelocity()
-{
-  return this->sensorLinearVel;
-}
-
-const Eigen::Vector3d & MCController::getSensorAngularVelocity()
-{
-  return this->sensorAngularVel;
-}
-
-const Eigen::Vector3d & MCController::getSensorAcceleration()
-{
-  return this->sensorAcc;
-}
-
 const mc_rbdyn::Robot & MCController::robot() const
 {
   return qpsolver->robot();

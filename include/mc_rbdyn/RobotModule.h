@@ -1,5 +1,6 @@
 #pragma once
 
+#include <mc_rbdyn/BodySensor.h>
 #include <mc_rbdyn/Collision.h>
 #include <mc_rbdyn/Flexibility.h>
 #include <mc_rbdyn/ForceSensor.h>
@@ -71,7 +72,8 @@ struct MC_RBDYN_DLLAPI RobotModule
   /* return force sensors */
   virtual const std::vector<ForceSensor> & forceSensors() const { return _forceSensors; }
 
-  const std::string & accelerometerBody() const { return _accelerometerBody; }
+  /* return body sensors */
+  virtual const std::vector<BodySensor> & bodySensors() const { return _bodySensors; }
 
   virtual const Springs & springs() const { return _springs; }
 
@@ -105,7 +107,7 @@ struct MC_RBDYN_DLLAPI RobotModule
   std::map<std::string, sva::PTransformd> _collisionTransforms;
   std::vector<Flexibility> _flexibility;
   std::vector<ForceSensor> _forceSensors;
-  std::string _accelerometerBody;
+  std::vector<BodySensor> _bodySensors;
   Springs _springs;
   std::vector<mc_rbdyn::Collision> _minimalSelfCollisions;
   std::vector<mc_rbdyn::Collision> _commonSelfCollisions;

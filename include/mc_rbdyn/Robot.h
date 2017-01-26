@@ -8,6 +8,7 @@
 #include <sch/STP-BV/STP_BV.h>
 
 #include <mc_rbdyn/Base.h>
+#include <mc_rbdyn/BodySensor.h>
 #include <mc_rbdyn/Flexibility.h>
 #include <mc_rbdyn/ForceSensor.h>
 #include <mc_rbdyn/Springs.h>
@@ -44,7 +45,70 @@ public:
 
   void name(const std::string & n);
 
-  const std::string & accelerometerBody() const;
+  /** @name Body sensors
+   *
+   * These functions are related to force sensors
+   *
+   * @{
+   */
+
+  /*! Return the first BodySensor in the robot
+   *
+   * If the robot does not have body sensors, it returns a defautl
+   * (invalid) one
+   *
+   */
+  BodySensor & bodySensor();
+
+  /*! Return the first BodySensor in the robot (const) */
+  const BodySensor & bodySensor() const;
+
+  /*! Return true if the robot has a body sensor named name
+   *
+   * @param name Name of the body sensor
+   *
+   */
+  bool hasBodySensor(const std::string & name) const;
+
+  /*! Return true if the specified body has a body sensor attached to it
+   *
+   * @param body Body to query
+   *
+   */
+  bool bodyHasBodySensor(const std::string & body) const;
+
+  /*! Return a specific BobySensor by name
+   *
+   * @param name Name of the sensor
+   *
+   * @throws If the sensor does not exist
+   *
+   */
+  BodySensor & bodySensor(const std::string & name);
+
+  /*! Return a specific BodySensor by name (const) */
+  const BodySensor & bodySensor(const std::string & name) const;
+
+  /*! Return a specific BodySensor by body name
+   *
+   * @param name Name of the body
+   *
+   * @throws If there is no sensor attached to the body
+   *
+   */
+  BodySensor & bodyBodySensor(const std::string & name);
+
+  /*! Return a specific BodySensor by body name (const) */
+  const BodySensor & bodyBodySensor(const std::string & name) const;
+
+  /*! Return all body sensors */
+  std::vector<BodySensor> & bodySensors();
+
+  /*! Return all body sensors (const) */
+  const std::vector<BodySensor> & bodySensors() const;
+
+  /** @} */
+  /* End of Body sensors group */
 
   bool hasJoint(const std::string & name) const;
 
@@ -178,16 +242,21 @@ private:
   std::map<std::string, mc_rbdyn::SurfacePtr> surfaces_;
   std::vector<ForceSensor> forceSensors_;
   std::map<std::string, std::vector<double>> stance_;
-  std::string _accelerometerBody;
+  /** Hold all body sensors */
+  std::vector<BodySensor> bodySensors_;
+  /** Correspondance between body sensor's name and body sensor index*/
+  std::map<std::string, size_t> bodySensorsIndex_;
+  /** Correspondance between bodies' names and attached body sensors */
+  std::map<std::string, size_t> bodyBodySensors_;
   Springs springs;
   std::vector< std::vector<Eigen::VectorXd> > tlPoly;
   std::vector< std::vector<Eigen::VectorXd> > tuPoly;
   std::vector<Flexibility> flexibility_;
   std::map<std::string, unsigned int> jointIndexByNameD;
   std::map<std::string, unsigned int> bodyIndexByNameD;
-  /** Correspondance between sensor's name and sensor index */
+  /** Correspondance between force sensor's name and force sensor index */
   std::map<std::string, size_t> forceSensorsIndex_;
-  /** Correspondance between bodies' names and attached sensors */
+  /** Correspondance between bodies' names and attached force sensors */
   std::map<std::string, size_t> bodyForceSensors_;
 protected:
   Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
@@ -201,7 +270,7 @@ protected:
         const std::map<std::string, mc_rbdyn::SurfacePtr> & surfaces,
         const std::vector<ForceSensor> & forceSensors,
         const std::map<std::string, std::vector<double>> stance = {},
-        const std::string & accelerometerBody = "",
+        const std::vector<BodySensor> & bodySensors = {},
         const Springs & springs = Springs(), const std::vector< std::vector<Eigen::VectorXd> > & tlPoly = {},
         const std::vector< std::vector<Eigen::VectorXd> > & tuPoly = {}, const std::vector<Flexibility> & flexibility = {});
   Robot(const Robot&) = delete;

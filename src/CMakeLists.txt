@@ -56,6 +56,7 @@ set(mc_rbdyn_HDR
 ../include/mc_rbdyn/Flexibility.h
 ../include/mc_rbdyn/Springs.h
 ../include/mc_rbdyn/Base.h
+../include/mc_rbdyn/BodySensor.h
 )
 
 add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC} ${mc_rbdyn_HDR})
