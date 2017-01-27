@@ -84,8 +84,8 @@ HRP2DRCCommonRobotModule::HRP2DRCCommonRobotModule()
   halfSitting["LHAND_JOINT3"] = {20};
   halfSitting["LHAND_JOINT4"] = {-20};
 
-  _forceSensors.push_back(mc_rbdyn::ForceSensor("RightFootForceSensor", "RLEG_LINK5", sva::PTransformd(Eigen::Vector3d(0, 0, -0.195))));
-  _forceSensors.push_back(mc_rbdyn::ForceSensor("LeftFootForceSensor", "LLEG_LINK5", sva::PTransformd(Eigen::Vector3d(0, 0, -0.195))));
+  _forceSensors.push_back(mc_rbdyn::ForceSensor("RightFootForceSensor", "RLEG_LINK5", sva::PTransformd(Eigen::Vector3d(0, 0, -0.1050))));
+  _forceSensors.push_back(mc_rbdyn::ForceSensor("LeftFootForceSensor", "LLEG_LINK5", sva::PTransformd(Eigen::Vector3d(0, 0, -0.1050))));
   _forceSensors.push_back(mc_rbdyn::ForceSensor("RightHandForceSensor", "RARM_LINK6", sva::PTransformd(Eigen::Vector3d(0, 0, -0.087))));
   _forceSensors.push_back(mc_rbdyn::ForceSensor("LeftHandForceSensor", "LARM_LINK6", sva::PTransformd(Eigen::Vector3d(0, 0, -0.087))));
 
