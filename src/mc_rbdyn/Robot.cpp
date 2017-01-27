@@ -31,7 +31,7 @@ Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
         const std::vector<ForceSensor> & forceSensors,
         const std::vector<std::string> & refJointOrder,
         const std::map<std::string, std::vector<double>> stance,
-        const std::vector<BodySensor> & bodySensors,
+        const BodySensorVector & bodySensors,
         const Springs & springs, const std::vector< std::vector<Eigen::VectorXd> > & tlPoly,
         const std::vector< std::vector<Eigen::VectorXd> > & tuPoly, const std::vector<Flexibility> & flexibility)
 : name_(name), robots(&robots), robots_idx(robots_idx),
@@ -117,12 +117,12 @@ const BodySensor & Robot::bodyBodySensor(const std::string & body) const
   return bodySensors_[bodyBodySensors_.at(body)];
 }
 
-std::vector<BodySensor> & Robot::bodySensors()
+BodySensorVector & Robot::bodySensors()
 {
   return bodySensors_;
 }
 
-const std::vector<BodySensor> & Robot::bodySensors() const
+const BodySensorVector & Robot::bodySensors() const
 {
   return bodySensors_;
 }

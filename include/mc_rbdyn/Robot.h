@@ -103,10 +103,10 @@ public:
   const BodySensor & bodyBodySensor(const std::string & name) const;
 
   /** Return all body sensors */
-  std::vector<BodySensor> & bodySensors();
+  BodySensorVector & bodySensors();
 
   /** Return all body sensors (const) */
-  const std::vector<BodySensor> & bodySensors() const;
+  const BodySensorVector & bodySensors() const;
 
   /** @} */
   /* End of Body sensors group */
@@ -275,7 +275,7 @@ private:
   /** Reference joint order see mc_rbdyn::RobotModule */
   std::vector<std::string> refJointOrder_;
   /** Hold all body sensors */
-  std::vector<BodySensor> bodySensors_;
+  BodySensorVector bodySensors_;
   /** Correspondance between body sensor's name and body sensor index*/
   std::map<std::string, size_t> bodySensorsIndex_;
   /** Correspondance between bodies' names and attached body sensors */
@@ -303,7 +303,7 @@ protected:
         const std::vector<ForceSensor> & forceSensors,
         const std::vector<std::string> & refJointOrder,
         const std::map<std::string, std::vector<double>> stance = {},
-        const std::vector<BodySensor> & bodySensors = {},
+        const BodySensorVector & bodySensors = {},
         const Springs & springs = Springs(), const std::vector< std::vector<Eigen::VectorXd> > & tlPoly = {},
         const std::vector< std::vector<Eigen::VectorXd> > & tuPoly = {}, const std::vector<Flexibility> & flexibility = {});
   Robot(const Robot&) = delete;

@@ -74,7 +74,7 @@ struct MC_RBDYN_DLLAPI RobotModule
   virtual const std::vector<ForceSensor> & forceSensors() const { return _forceSensors; }
 
   /* return body sensors */
-  virtual const std::vector<BodySensor> & bodySensors() const { return _bodySensors; }
+  virtual const BodySensorVector & bodySensors() const { return _bodySensors; }
 
   virtual const Springs & springs() const { return _springs; }
 
@@ -108,7 +108,7 @@ struct MC_RBDYN_DLLAPI RobotModule
   std::map<std::string, sva::PTransformd> _collisionTransforms;
   std::vector<Flexibility> _flexibility;
   std::vector<ForceSensor> _forceSensors;
-  std::vector<BodySensor> _bodySensors;
+  BodySensorVector _bodySensors;
   Springs _springs;
   std::vector<mc_rbdyn::Collision> _minimalSelfCollisions;
   std::vector<mc_rbdyn::Collision> _commonSelfCollisions;

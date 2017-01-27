@@ -302,7 +302,7 @@ Robot& Robots::load(const RobotModule & module, const std::string &, sva::PTrans
     }
   }
 
-  const std::vector<BodySensor> & bodySensors = module.bodySensors();
+  const BodySensorVector & bodySensors = module.bodySensors();
 
   const Springs & springs = module.springs();
 

@@ -126,4 +126,6 @@ private:
   Eigen::Vector3d acceleration_ = Eigen::Vector3d::Zero();
 };
 
+typedef std::vector<BodySensor, Eigen::aligned_allocator<BodySensor>> BodySensorVector;
+
 }
