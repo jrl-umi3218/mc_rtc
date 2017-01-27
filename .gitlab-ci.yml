@@ -5,6 +5,7 @@ variables:
   GITE_PACKAGES: "multi-contact/eigen-lssol multi-contact/tasks-packaging#topic/CIPackaging multi-contact/mc_rbdyn_urdf_cpp multi-contact/mc_env_description#karim_drc mc-hrp2/hrp2_drc mc-hrp4/hrp4#noxacro"
   MASTER_PPA: "v-launchpad-jochen-sprickerhof-de/pcl pierre-gergondet+ppa/multi-contact-unstable hrg/daily"
   ROS_DISTRO: "indigo"
+  CMAKE_ADDITIONAL_OPTIONS: "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
 
 # Secured variable are stored in the project
 # See: http://doc.gitlab.com/ci/variables/README.html
