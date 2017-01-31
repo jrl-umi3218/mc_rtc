@@ -171,7 +171,7 @@ public:
       const sva::ForceVecd & wrench_sva = fs.wrench();
       geometry_msgs::WrenchStamped wrench_msg;
       wrench_msg.header = msg.header;
-      wrench_msg.header.frame_id = name;
+      wrench_msg.header.frame_id = prefix + name;
       wrench_msg.wrench.force.x = wrench_sva.force().x();
       wrench_msg.wrench.force.y = wrench_sva.force().y();
       wrench_msg.wrench.force.z = wrench_sva.force().z();
@@ -179,6 +179,10 @@ public:
       wrench_msg.wrench.torque.y = wrench_sva.couple().y();
       wrench_msg.wrench.torque.z = wrench_sva.couple().z();
       ros_wrenches.push_back(wrench_msg);
+      if(!robot.hasBody(fs.name()))
+      {
+        tfs.push_back(PT2TF(fs.X_p_f(), tm, prefix + fs.parentBody(), prefix + name, seq));
+      }
     }
 
     tfs.push_back(PT2TF(robot.bodyTransform(robot.mb().body(0).name())*mbc.parentToSon[0], tm, std::string("robot_map"), prefix+robot.mb().body(0).name(), seq));
