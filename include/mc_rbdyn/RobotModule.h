@@ -1,7 +1,10 @@
 #pragma once
 
+#include <mc_rbdyn/BodySensor.h>
 #include <mc_rbdyn/Collision.h>
-#include <mc_rbdyn/robot.h>
+#include <mc_rbdyn/Flexibility.h>
+#include <mc_rbdyn/ForceSensor.h>
+#include <mc_rbdyn/Springs.h>
 
 #include <array>
 #include <map>
@@ -20,6 +23,7 @@ struct Robot;
 /* TODO Functions are declared const here but most implementations will likely not respect the constness */
 struct MC_RBDYN_DLLAPI RobotModule
 {
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
   /*! Holds necessary information to create a gripper */
   struct Gripper
   {
@@ -69,23 +73,24 @@ struct MC_RBDYN_DLLAPI RobotModule
   /* return force sensors */
   virtual const std::vector<ForceSensor> & forceSensors() const { return _forceSensors; }
 
-  const std::string & accelerometerBody() const { return _accelerometerBody; }
+  /* return body sensors */
+  virtual const BodySensorVector & bodySensors() const { return _bodySensors; }
 
   virtual const Springs & springs() const { return _springs; }
 
   /** Return a minimal self-collision set */
-  virtual const std::vector<mc_rbdyn::Collision> & minimalSelfCollisions() { return _minimalSelfCollisions; }
+  virtual const std::vector<mc_rbdyn::Collision> & minimalSelfCollisions() const { return _minimalSelfCollisions; }
   /** Return a broader set of the most common self-collisions */
-  virtual const std::vector<mc_rbdyn::Collision> & commonSelfCollisions() { return _commonSelfCollisions; }
+  virtual const std::vector<mc_rbdyn::Collision> & commonSelfCollisions() const { return _commonSelfCollisions; }
 
   /** Return a map of gripper. Keys represents the gripper name. Values indicate the active joints in the gripper. */
-  virtual const std::vector<Gripper> & grippers() { return _grippers; }
+  virtual const std::vector<Gripper> & grippers() const { return _grippers; }
 
   /** Return the reference (native controller) joint order of the robot */
-  virtual const std::vector<std::string> & ref_joint_order() { return _ref_joint_order; }
+  virtual const std::vector<std::string> & ref_joint_order() const { return _ref_joint_order; }
 
   /** Return default attitude of the robot */
-  virtual const std::array<double, 7> & default_attitude() { return _default_attitude; }
+  virtual const std::array<double, 7> & default_attitude() const { return _default_attitude; }
 
   std::string path;
   std::string name;
@@ -103,7 +108,7 @@ struct MC_RBDYN_DLLAPI RobotModule
   std::map<std::string, sva::PTransformd> _collisionTransforms;
   std::vector<Flexibility> _flexibility;
   std::vector<ForceSensor> _forceSensors;
-  std::string _accelerometerBody;
+  BodySensorVector _bodySensors;
   Springs _springs;
   std::vector<mc_rbdyn::Collision> _minimalSelfCollisions;
   std::vector<mc_rbdyn::Collision> _commonSelfCollisions;
@@ -111,6 +116,8 @@ struct MC_RBDYN_DLLAPI RobotModule
   std::vector<std::string> _ref_joint_order;
   std::array<double, 7> _default_attitude = {{1., 0., 0., 0., 0. , 0., 0.}};
 };
+
+typedef std::shared_ptr<RobotModule> RobotModulePtr;
 
 } // namespace mc_rbdyn
 

@@ -232,22 +232,22 @@ namespace mc_control
     if(log.is_open())
     {
       log << "t";
-      for(unsigned int i = 0; i < static_cast<unsigned int>(controller->getEncoderValues().size()); ++i)
+      for(unsigned int i = 0; i < static_cast<unsigned int>(controller->robot().encoderValues().size()); ++i)
       {
         log << ";qIn" << i;
       }
       log << ";ff_qw;ff_qx;ff_qy;ff_qz;ff_tx;ff_ty;ff_tz";
-      for(unsigned int i = 0; i < static_cast<unsigned int>(controller->getEncoderValues().size()); ++i)
+      for(unsigned int i = 0; i < static_cast<unsigned int>(controller->robot().refJointOrder().size()); ++i)
       {
         log << ";qOut" << i;
       }
-      for(unsigned int i = 0; i < static_cast<unsigned int>(controller->getJointTorques().size()); ++i)
+      for(unsigned int i = 0; i < static_cast<unsigned int>(controller->robot().jointTorques().size()); ++i)
       {
         log << ";taucIn" << i;
       }
-      for(const auto & w : controller->getWrenches())
+      for(const auto & fs : controller->robot().forceSensors())
       {
-        const auto& wn = w.first;
+        const auto& wn = fs.name();
         log << ";" << wn << "_fx";
         log << ";" << wn << "_fy";
         log << ";" << wn << "_fz";
@@ -288,7 +288,7 @@ namespace mc_control
     auto & log = impl->get_stream();
     log << impl->log_iter_;
     impl->log_iter_ += gc.timestep();
-    for(const auto & qi : controller->getEncoderValues())
+    for(const auto & qi : controller->robot().encoderValues())
     {
       log << ";" << qi;
     }
@@ -309,40 +309,40 @@ namespace mc_control
         log << ";" << 0;
       }
     }
-    for(const auto & ti : controller->getJointTorques())
+    for(const auto & ti : controller->robot().jointTorques())
     {
       log << ";" << ti;
     }
-    for(const auto & w : controller->getWrenches())
+    for(const auto & fs : controller->robot().forceSensors())
     {
-      log << ";" << w.second.force().x();
-      log << ";" << w.second.force().y();
-      log << ";" << w.second.force().z();
-      log << ";" << w.second.couple().x();
-      log << ";" << w.second.couple().y();
-      log << ";" << w.second.couple().z();
+      log << ";" << fs.wrench().force().x();
+      log << ";" << fs.wrench().force().y();
+      log << ";" << fs.wrench().force().z();
+      log << ";" << fs.wrench().couple().x();
+      log << ";" << fs.wrench().couple().y();
+      log << ";" << fs.wrench().couple().z();
     }
-    const auto & pIn = controller->getSensorPosition();
+    const auto & pIn = controller->robot().bodySensor().position();
     log << ";" << pIn.x();
     log << ";" << pIn.y();
     log << ";" << pIn.z();
 
-    const auto & rpyIn = controller->getSensorOrientation();
+    const auto & rpyIn = controller->robot().bodySensor().orientation();
     log << ";" << rpyIn.x();
     log << ";" << rpyIn.y();
     log << ";" << rpyIn.z();
 
-    const auto & velIn = controller->getSensorLinearVelocity();
+    const auto & velIn = controller->robot().bodySensor().linearVelocity();
     log << ";" << velIn.x();
     log << ";" << velIn.y();
     log << ";" << velIn.z();
 
-    const auto & rateIn = controller->getSensorAngularVelocity();
+    const auto & rateIn = controller->robot().bodySensor().angularVelocity();
     log << ";" << rateIn.x();
     log << ";" << rateIn.y();
     log << ";" << rateIn.z();
 
-    const auto & accIn = controller->getSensorAcceleration();
+    const auto & accIn = controller->robot().bodySensor().acceleration();
     log << ";" << accIn.x();
     log << ";" << accIn.y();
     log << ";" << accIn.z();

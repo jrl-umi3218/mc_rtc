@@ -51,10 +51,10 @@ ActiGripper::ActiGripper(const std::string& wrenchName, double actiForce, double
   dof.diagonal().setOnes();
 }
 
-bool ActiGripper::update(std::map<std::string, sva::ForceVecd>& wrenches,
+bool ActiGripper::update(const mc_rbdyn::Robot & robot,
     tasks::qp::ContactConstr* contactConstr)
 {
-  const sva::ForceVecd & wrench = wrenches[wrenchName];
+  const sva::ForceVecd & wrench = robot.forceSensor(wrenchName).wrench();
   double forceNorm = wrench.force().norm();
   //Only consider z-axis torque
   double torqueZ = wrench.couple()(2);
@@ -290,8 +290,7 @@ MCSeqController::MCSeqController(std::shared_ptr<mc_rbdyn::RobotModule> robot_mo
   collsConstraint(robots(), timeStep),
   comIncPlaneConstr(robots(), 0, timeStep),
   max_perc(1.0), nr_points(300),
-  samples(0.0, max_perc, nr_points),
-  calibrator(robot_module)
+  samples(0.0, max_perc, nr_points)
 {
   logger.logPhase("START", 0);
   /* Load plan */
@@ -568,7 +567,7 @@ void MCSeqController::updateContacts(const std::vector<mc_rbdyn::Contact> & cont
     if(is_gs && actiGrippers.count(bodyName) == 0 && robot().hasForceSensor(bodyName) )
     {
       LOG_INFO("ActiGripper ADD " << bodyName)
-      std::string forceSensor = robot().forceSensorByBody(bodyName);
+      std::string forceSensor = robot().bodyForceSensor(bodyName).name();
       tasks::qp::ContactId contactId = c.contactId(robots());
       sva::PTransformd X_0_s = c.r1Surface()->X_0_s(robot());
       double actiForce = 50; /* FIXME Hard-coded, should at least be an acti gripper const static member */
@@ -617,7 +616,7 @@ void MCSeqController::pre_live()
   {
     /* This cast is guaranted to work */
     tasks::qp::ContactConstr* contactConstr = (dynamic_cast<tasks::qp::ContactConstr*>(contactConstraint.contactConstr.get()));
-    if(!ba.second.update(wrenches, contactConstr))
+    if(!ba.second.update(robot(), contactConstr))
     {
       halted = true;
       LOG_ERROR("OOPS TOO MUCH ERROR")

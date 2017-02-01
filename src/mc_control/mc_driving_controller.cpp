@@ -1,6 +1,6 @@
 #include "mc_driving_controller.h"
 
-#include <mc_rbdyn/robot.h>
+#include <mc_rbdyn/Robots.h>
 #include <mc_rbdyn/RobotLoader.h>
 #include <mc_rbdyn/Surface.h>
 
@@ -128,8 +128,8 @@ bool MCDrivingController::run()
     ori = ori.inverse();
     const auto & v = X_0_hand.translation();
     log_ef_ << t << " " << ori.w() << " " << ori.x() << " " << ori.y() << ori.z() << " " << v.transpose() << std::endl;
-    log_acc_ << t << " " << sensorAcc.transpose() << std::endl;
-    log_rpy_ << t << " " << sensorOri.vec().transpose() << std::endl;
+    log_acc_ << t << " " << robot().bodySensor().acceleration().transpose() << std::endl;
+    log_rpy_ << t << " " << robot().bodySensor().orientation().vec().transpose() << std::endl;
   }
   iter_++;
   return success;

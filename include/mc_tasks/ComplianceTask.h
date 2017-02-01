@@ -4,8 +4,6 @@
 #include <mc_tasks/MetaTask.h>
 #include <mc_tasks/EndEffectorTask.h>
 
-#include <mc_rbdyn/calibrator.h>
-
 namespace mc_tasks
 {
 
@@ -34,13 +32,7 @@ public:
    *
    * \param robotIndex Which robot among the robots
    *
-   * \param forceSensor Which force sensor to read data from, the end-effector
-   * controlled by this task is the parent body of the force sensor
-   *
-   * \param ctlWrenches Map holding the force sensor data
-   *
-   * \param calibrator Calibrator structure used to filter the wrench at the
-   * force sensor
+   * \param body Name of the body controlled by this task.
    *
    * \param timestep Timestep of the controller
    *
@@ -59,12 +51,13 @@ public:
    *
    * \param torqueGain PD gains on the torque part
    *
+   * \throws If the body the task is attempting to control does not have a
+   * sensor attached to it
+   *
    */
   ComplianceTask(const mc_rbdyn::Robots & robots,
         unsigned int robotIndex,
-        const mc_rbdyn::ForceSensor& forceSensor,
-        const std::map<std::string, sva::ForceVecd>& ctlWrenches,
-        const mc_rbdyn::ForceSensorsCalibrator& calibrator,
+        const std::string & body,
         double timestep,
         const Eigen::Matrix6d& dof = Eigen::Matrix6d::Identity(),
         double stiffness = 5.0, double weight = 1000.0,
@@ -78,13 +71,7 @@ public:
    *
    * \param robotIndex Which robot among the robots
    *
-   * \param forceSensor Which force sensor to read data from, the end-effector
-   * controlled by this task is the parent body of the force sensor
-   *
-   * \param ctlWrenches Map holding the force sensor data
-   *
-   * \param calibrator Calibrator structure used to filter the wrench at the
-   * force sensor
+   * \param body Name of the body controlled by this task.
    *
    * \param timestep Timestep of the controller
    *
@@ -100,12 +87,13 @@ public:
    *
    * \param torqueGain PD gains on the torque part
    *
+   * \throws If the body the task is attempting to control does not have a
+   * sensor attached to it
+   *
    */
   ComplianceTask(const mc_rbdyn::Robots & robots,
       unsigned int robotIndex,
-      const mc_rbdyn::ForceSensor& forceSensor,
-      const std::map<std::string, sva::ForceVecd>& ctlWrenches,
-      const mc_rbdyn::ForceSensorsCalibrator& calibrator,
+      const std::string & body,
       double timestep,
       double stiffness = 5.0, double weight = 1000.0,
       double forceThresh = 3., double torqueThresh = 1.,
@@ -149,19 +137,17 @@ public:
   /*! \brief Returns the task's speed */
   virtual Eigen::VectorXd speed() const override
   {
-    return robot_.mbc().bodyVelW[robot_.bodyIndexByName(sensor_.parentBodyName)].vector();
+    return robot_.mbc().bodyVelW[robot_.bodyIndexByName(sensor_.parentBody())].vector();
   }
 
 private:
   sva::PTransformd computePose();
 
   std::shared_ptr<EndEffectorTask> efTask_;
-  const std::map<std::string, sva::ForceVecd>& ctlWrenches_;
   sva::ForceVecd wrench_;
   sva::ForceVecd obj_;
   sva::ForceVecd error_;
   sva::ForceVecd errorD_;
-  const mc_rbdyn::ForceSensorsCalibrator& calibrator_;
   const mc_rbdyn::Robot& robot_;
   const mc_rbdyn::ForceSensor& sensor_;
   double timestep_;
@@ -170,11 +156,11 @@ private:
   Eigen::Matrix6d dof_;
   std::function<double(double)> clampTrans_, clampRot_;
 
-  virtual void addToSolver(mc_solver::QPSolver & solver);
+  virtual void addToSolver(mc_solver::QPSolver & solver) override;
 
-  virtual void removeFromSolver(mc_solver::QPSolver & solver);
+  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
 
-  virtual void update();
+  virtual void update() override;
 };
 
 }

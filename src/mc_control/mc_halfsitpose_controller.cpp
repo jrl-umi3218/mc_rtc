@@ -21,6 +21,7 @@ MCHalfSitPoseController::MCHalfSitPoseController(std::shared_ptr<mc_rbdyn::Robot
 
   /* Set the halfSitPose in posture Task */
   const auto & halfSit = robot_module->stance();
+  const auto & ref_joint_order = robot().refJointOrder();
   for(unsigned int i = 0; i < ref_joint_order.size(); ++i)
   {
     if(robot().hasJoint(ref_joint_order[i]))

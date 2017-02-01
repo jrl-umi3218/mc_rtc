@@ -124,7 +124,7 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
           sva::PTransformd down(Eigen::Vector3d(-0.0,0.0, -0.3)); /*XXX Hard-coded*/
           ctl.efTask->positionTask->position((ctl.efTask->get_ef_pose()*down).translation());
           forceIter = 0;
-          forceStart = ctl.getWrenches().at("RightFootForceSensor").force()[2];
+          forceStart = ctl.robot().forceSensor("RightFootForceSensor").force()[2];
           timeoutIter = 0;
           LOG_INFO("Reoriented the right foot")
           done_reorient = true;
@@ -134,7 +134,7 @@ struct EgressRotateLazyPhase : public EgressMRPhaseExecution
       else if(!done_putdown)
       {
         timeoutIter++;
-        if(ctl.getWrenches().at("RightFootForceSensor").force()[2] > forceStart + 50)
+        if(ctl.robot().forceSensor("RightFootForceSensor").force()[2] > forceStart + 50)
         {
           LOG_INFO("Contact force triggered")
           forceIter++;
@@ -289,7 +289,7 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
 
             timeoutIter = 0;
             forceIter = 0;
-            forceStart = ctl.getWrenches().at("LeftFootForceSensor").force()[2];
+            forceStart = ctl.robot().forceSensor("LeftFootForceSensor").force()[2];
 
             w = ctl.comTask->weight();
             ctl.comTask->weight(w*com_multiplier);
@@ -328,7 +328,7 @@ struct EgressReplaceLeftFootPhase : public EgressMRPhaseExecution
         else if(!done_contacting)
         {
           timeoutIter++;
-          if(ctl.getWrenches().at("LeftFootForceSensor").force()[2] > forceStart + 150)
+          if(ctl.robot().forceSensor("LeftFootForceSensor").force()[2] > forceStart + 150)
           {
             LOG_INFO("Contact force triggered")
             forceIter++;
@@ -506,7 +506,7 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
 
             timeoutIter = 0;
             forceIter = 0;
-            forceStart = ctl.getWrenches().at("RightFootForceSensor").force()[2];
+            forceStart = ctl.robot().forceSensor("RightFootForceSensor").force()[2];
             LOG_INFO("Going to contact")
           }
           return false;
@@ -514,7 +514,7 @@ struct EgressPutDownRightFootPhase : public EgressMRPhaseExecution
         else if(!done_contacting)
         {
           timeoutIter++;
-          if(ctl.getWrenches().at("RightFootForceSensor").force()[2] > forceStart + 150)
+          if(ctl.robot().forceSensor("RightFootForceSensor").force()[2] > forceStart + 150)
           {
             LOG_INFO("Contact force triggered")
             forceIter++;
@@ -737,7 +737,7 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
             }
             timeoutIter = 0;
             forceIter = 0;
-            forceStart = ctl.getWrenches().at("RightFootForceSensor").force()[2];
+            forceStart = ctl.robot().forceSensor("RightFootForceSensor").force()[2];
             LOG_INFO("Going to contact")
           }
           return false;
@@ -745,7 +745,7 @@ struct EgressReplaceRightFootPhase : public EgressMRPhaseExecution
         else if(!done_contacting)
         {
           timeoutIter++;
-          if(ctl.getWrenches().at("RightFootForceSensor").force()[2] > forceStart + 150)
+          if(ctl.robot().forceSensor("RightFootForceSensor").force()[2] > forceStart + 150)
           {
             LOG_INFO("Contact force triggered")
             forceIter++;

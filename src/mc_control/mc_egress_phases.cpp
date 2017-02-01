@@ -104,7 +104,7 @@ public:
       else
       {
         iterSincePutDown++;
-        if(ctl.getWrenches().at("RightFootForceSensor").force()[0] > 100)
+        if(ctl.robot().forceSensor("RightFootForceSensor").force()[0] > 100)
         {
           iterForce++;
         }
@@ -430,7 +430,7 @@ struct EgressMoveFootOutPhase : public EgressPhaseExecution
       {
         timeoutIter++;
         double error = ctl.efTask->positionTask->eval().norm();
-        if(ctl.getWrenches().at("RightFootForceSensor").force()[0] > 50 || error < 0.05 || timeoutIter > 15*500)
+        if(ctl.robot().forceSensor("RightFootForceSensor").force()[0] > 50 || error < 0.05 || timeoutIter > 15*500)
         {
           ctl.solver().removeTask(ctl.efTask);
           ctl.postureTask->posture(ctl.robot().mbc().q);
@@ -544,7 +544,7 @@ public:
       else
       {
         timeoutIter++;
-        if(ctl.getWrenches().at("RightFootForceSensor").force()[0] > 100)
+        if(ctl.robot().forceSensor("RightFootForceSensor").force()[0] > 100)
         {
           iterForce++;
         }

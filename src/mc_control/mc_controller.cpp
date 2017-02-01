@@ -39,8 +39,6 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   qpsolver.reset(new mc_solver::QPSolver(robots, timeStep));
   }
 
-  ref_joint_order = robots_modules[0]->ref_joint_order();
-
   /* Initialize grippers */
   {
   std::string urdfPath = robots_modules[0]->urdf_path;
@@ -100,54 +98,6 @@ void MCController::reset(const ControllerResetData & reset_data)
   postureTask->posture(reset_data.q);
   rbd::forwardKinematics(robot().mb(), robot().mbc());
   rbd::forwardVelocity(robot().mb(), robot().mbc());
-}
-
-void MCController::setWrenches(const std::map<std::string, sva::ForceVecd> & wrenches)
-{
-  for(const auto & w : wrenches)
-  {
-    this->wrenches[w.first] = w.second;
-  }
-}
-
-const std::map<std::string, sva::ForceVecd> & MCController::getWrenches()
-{
-  return this->wrenches;
-}
-
-const std::vector<double> & MCController::getEncoderValues()
-{
-  return this->encoderValues;
-}
-
-const std::vector<double> & MCController::getJointTorques()
-{
-  return this->jointTorques;
-}
-
-const Eigen::Vector3d & MCController::getSensorPosition()
-{
-  return this->sensorPos;
-}
-
-const Eigen::Quaterniond & MCController::getSensorOrientation()
-{
-  return this->sensorOri;
-}
-
-const Eigen::Vector3d & MCController::getSensorLinearVelocity()
-{
-  return this->sensorLinearVel;
-}
-
-const Eigen::Vector3d & MCController::getSensorAngularVelocity()
-{
-  return this->sensorAngularVel;
-}
-
-const Eigen::Vector3d & MCController::getSensorAcceleration()
-{
-  return this->sensorAcc;
 }
 
 const mc_rbdyn::Robot & MCController::robot() const

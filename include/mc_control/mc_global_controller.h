@@ -113,17 +113,37 @@ public:
   /*! \brief A robot's position given by a sensor */
   void setSensorPosition(const Eigen::Vector3d & pos);
 
+  /*! \brief Set multiple body sensors' position for a given robot */
+  void setSensorPositions(mc_rbdyn::Robot & robot,
+                          const std::map<std::string, Eigen::Vector3d> & poses);
+
   /*! \brief A robot's orientation given by a sensor */
   void setSensorOrientation(const Eigen::Quaterniond & ori);
+
+  /*! \brief Set multiple body sensors' orientation for a given robot */
+  void setSensorOrientations(mc_rbdyn::Robot & robot,
+                             const std::map<std::string, Eigen::Quaterniond> & oris);
 
   /*! \brief A robot's linear velocity given by a sensor */
   void setSensorLinearVelocity(const Eigen::Vector3d& vel);
 
+  /*! \brief Set multiple body sensor's linear velocities for a given robot */
+  void setSensorLinearVelocities(mc_rbdyn::Robot & robot,
+                                 const std::map<std::string, Eigen::Vector3d> & linearVels);
+
   /*! \brief A robot's angular velocity given by a sensor */
   void setSensorAngularVelocity(const Eigen::Vector3d& vel);
 
+  /*! \brief Set multiple body sensor's angular velocities for a given robot */
+  void setSensorAngularVelocities(mc_rbdyn::Robot & robot,
+                                  const std::map<std::string, Eigen::Vector3d> & angularVels);
+
   /*! \brief A robot's acceleration given by a sensor */
   void setSensorAcceleration(const Eigen::Vector3d& acc);
+
+  /*! \brief Set multiple body sensors' acceleration for a given robot */
+  void setSensorAccelerations(mc_rbdyn::Robot & robot,
+                              const std::map<std::string, Eigen::Vector3d> & accels);
 
   /*! \brief A robot's actual joints' values provided by encoders
    *
@@ -141,6 +161,9 @@ public:
 
   /*! \brief Force sensors' readings provided by the sensors */
   void setWrenches(const std::map<std::string, sva::ForceVecd> & wrenches);
+
+  /*! \brief Force sensors' readings for another robot than the main robot */
+  void setWrenches(unsigned int robotIndex, const std::map<std::string, sva::ForceVecd> & wrenches);
 
   /*! \brief Gripper active joints actual values */
   void setActualGripperQ(const std::map<std::string, std::vector<double>> & grippersQ);

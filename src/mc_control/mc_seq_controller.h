@@ -3,7 +3,6 @@
 #include <mc_control/mc_controller.h>
 
 #include <mc_rbdyn/stance.h>
-#include <mc_rbdyn/calibrator.h>
 #include <mc_rbdyn/polygon_utils.h>
 #include <mc_tasks/StabilityTask.h>
 #include <mc_tasks/AddRemoveContactTask.h>
@@ -45,7 +44,7 @@ public:
    * triggered on the FSM side.
    * @return bool: true if update is successful, false if the error is too big.
   **/
- bool update(std::map<std::string, sva::ForceVecd>& wrenches,
+ bool update(const mc_rbdyn::Robot & robot,
       tasks::qp::ContactConstr* contactConstr);
 
 protected:
@@ -254,8 +253,6 @@ public:
   mc_rbdyn::QuadraticGenerator samples;
   std::vector<mc_rbdyn::Plane> planes;
   boost::timer::cpu_timer timer;
-
-  mc_rbdyn::ForceSensorsCalibrator calibrator;
 };
 
 MC_CONTROL_DLLAPI std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * curAction, mc_rbdyn::StanceAction * targetAction, mc_rbdyn::StanceAction * targetTargetAction);

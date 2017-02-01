@@ -14,7 +14,7 @@ ForceSensor::ForceSensor(const mc_rbdyn::Robot & robot, const std::string & sens
 : activated(Unactivated), thresh(thresh), activatedIter(0), direction(Unactivated),
   lastValues(WindowSize), offset(0), name(sensorName), surfacesName(0)
 {
-  std::string parent = robot.forceSensorParentBodyName(sensorName);
+  std::string parent = robot.forceSensor(sensorName).parentBody();
   for(const auto & p : robot.surfaces())
   {
     if(p.second->bodyName() == parent)
@@ -89,11 +89,9 @@ std::vector<std::string> ForceContactSensor::update(MCController & ctl)
 
   for(auto& sensor: sensors)
   {
-    const std::map<std::string, sva::ForceVecd>& wrenches = ctl.getWrenches();
-    auto wrench = wrenches.find(sensor.name);
-    if(wrench != wrenches.end())
+    if(ctl.robot().hasForceSensor(sensor.name))
     {
-      sensor.update(wrench->second.force());
+      sensor.update(ctl.robot().forceSensor(sensor.name).wrench().force());
     }
     if(sensor.activated == ForceSensor::Activated)
     {

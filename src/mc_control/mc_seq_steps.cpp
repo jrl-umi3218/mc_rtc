@@ -297,10 +297,8 @@ bool enter_pushContactT::eval(MCSeqController & ctl)
                                     << " and target force: " << contactConf.contactObj.complianceTargetForce.transpose()
                                     << " compliance vel thresh: " << contactConf.contactObj.complianceVelThresh)
 
-      const mc_rbdyn::ForceSensor& fs = ctl.robot().forceSensorData(ctl.robot().forceSensorByBody(robotSurf->bodyName()));
-
       ctl.complianceTask = std::shared_ptr<mc_tasks::ComplianceTask>(new mc_tasks::ComplianceTask(ctl.robots(),
-          ctl.robots().robotIndex(), fs, ctl.getWrenches(), ctl.calibrator, ctl.timeStep, 10.0, 100000.));
+          ctl.robots().robotIndex(), robotSurf->bodyName(), ctl.timeStep, 10.0, 100000.));
 
       ctl.complianceTask->setTargetWrench(sva::ForceVecd(contactConf.contactObj.complianceTargetTorque, contactConf.contactObj.complianceTargetForce));
 
@@ -1147,9 +1145,8 @@ bool enter_softCloseGripperP::eval(MCSeqController & ctl)
   ctl.isGripperClose = false;
 
   std::shared_ptr<mc_rbdyn::Surface> robotSurf = ctl.targetContact->r1Surface();
-  const mc_rbdyn::ForceSensor& fs = ctl.robot().forceSensorData(ctl.robot().forceSensorByBody(robotSurf->bodyName()));
   ctl.complianceTask = std::shared_ptr<mc_tasks::ComplianceTask>(new mc_tasks::ComplianceTask(ctl.robots(),
-      ctl.robots().robotIndex(), fs, ctl.getWrenches(), ctl.calibrator, ctl.timeStep, 10.0, 100000., 3., 1., {0.005, 0}, {0.05, 0}));
+      ctl.robots().robotIndex(), robotSurf->bodyName(), ctl.timeStep, 10.0, 100000., 3., 1., {0.005, 0}, {0.05, 0}));
   if(!ctl.is_simulation)
   {
     ctl.solver().addTask(ctl.complianceTask);

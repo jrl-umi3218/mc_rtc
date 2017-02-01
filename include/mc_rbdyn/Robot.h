@@ -1,5 +1,4 @@
-#ifndef _H_MCRBDYNROBOT_H_
-#define _H_MCRBDYNROBOT_H_
+#pragma once
 
 #include <RBDyn/MultiBody.h>
 #include <RBDyn/MultiBodyConfig.h>
@@ -8,6 +7,11 @@
 #include <sch/S_Polyhedron/S_Polyhedron.h>
 #include <sch/STP-BV/STP_BV.h>
 
+#include <mc_rbdyn/Base.h>
+#include <mc_rbdyn/BodySensor.h>
+#include <mc_rbdyn/Flexibility.h>
+#include <mc_rbdyn/ForceSensor.h>
+#include <mc_rbdyn/Springs.h>
 #include <mc_rbdyn/Surface.h>
 
 #include <memory>
@@ -20,118 +24,11 @@ namespace mc_control
 namespace mc_rbdyn
 {
 
-struct RobotModule;
-
-struct MC_RBDYN_DLLAPI Flexibility
-{
-public:
-  std::string jointName;
-  double K;
-  double C;
-  double O;
-};
-
-struct MC_RBDYN_DLLAPI ForceSensor
-{
-public:
-  ForceSensor();
-  ForceSensor(const std::string &, const std::string &, const sva::PTransformd &);
-
-  std::string sensorName;
-  std::string parentBodyName;
-  sva::PTransformd X_p_f;
-};
-
-struct MC_RBDYN_DLLAPI Springs
-{
-public:
-  Springs() : springsBodies(0), afterSpringsBodies(0), springsJoints(0) {}
-public:
-  std::vector<std::string> springsBodies;
-  std::vector<std::string> afterSpringsBodies;
-  std::vector< std::vector<std::string> > springsJoints;
-};
-
-struct MC_RBDYN_DLLAPI Base
-{
-  std::string baseName;
-  sva::PTransformd X_0_s;
-  sva::PTransformd X_b0_s;
-  rbd::Joint::Type baseType;
-};
-
-struct MC_RBDYN_DLLAPI Robots
-{
-  friend struct Robot;
-public:
-  Robots();
-  Robots(const Robots & rhs);
-  Robots & operator=(const Robots & rhs);
-
-  std::vector<Robot> & robots();
-  const std::vector<Robot> & robots() const;
-
-  std::vector<rbd::MultiBody> & mbs();
-  const std::vector<rbd::MultiBody> & mbs() const;
-
-  std::vector<rbd::MultiBodyConfig> & mbcs();
-  const std::vector<rbd::MultiBodyConfig> & mbcs() const;
-
-  unsigned int robotIndex() const;
-  unsigned int envIndex() const;
-
-  /* Robot(s) loader functions */
-  Robot & load(const RobotModule & module, const std::string & surfaceDir, sva::PTransformd * base = nullptr, const std::string& bName = "");
-
-  void load(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir);
-
-  void load(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir, sva::PTransformd * base, const std::string& baseName);
-
-  void load(const std::vector<std::shared_ptr<RobotModule>> & modules, const std::vector<std::string> & surfaceDirs);
-
-  Robot & loadFromUrdf(const std::string & name, const std::string & urdf, bool withVirtualLinks = true, const std::vector<std::string> & filteredLinks = {}, bool fixed = false, sva::PTransformd * base = nullptr, const std::string& baseName = "");
-
-  void robotCopy(const Robot & robot);
-
-  void createRobotWithBase(Robots & robots, unsigned int robots_idx, const Base & base, const Eigen::Vector3d & baseAxis = Eigen::Vector3d::UnitZ());
-
-  void createRobotWithBase(Robot & robot, const Base & base, const Eigen::Vector3d & baseAxis = Eigen::Vector3d::UnitZ());
-
-  void removeRobot(const std::string & name);
-
-  void removeRobot(unsigned int idx);
-
-  Robot & robot();
-  const Robot & robot() const;
-
-  Robot & env();
-  const Robot & env() const;
-
-  Robot & robot(unsigned int idx);
-  const Robot & robot(unsigned int idx) const;
-protected:
-  std::vector<mc_rbdyn::Robot> robots_;
-  std::vector<rbd::MultiBody> mbs_;
-  std::vector<rbd::MultiBodyConfig> mbcs_;
-  std::vector<rbd::MultiBodyGraph> mbgs_;
-  unsigned int robotIndex_;
-  unsigned int envIndex_;
-  void updateIndexes();
-};
-
-/* Static pendant of the loader functions to create Robots directly */
-MC_RBDYN_DLLAPI std::shared_ptr<Robots> loadRobot(const RobotModule & module, const std::string & surfaceDir, sva::PTransformd * base = nullptr, const std::string& baseName = "");
-
-MC_RBDYN_DLLAPI std::shared_ptr<Robots> loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules, const std::vector<std::string> & surfaceDirs);
-
-MC_RBDYN_DLLAPI std::shared_ptr<Robots> loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir);
-
-MC_RBDYN_DLLAPI std::shared_ptr<Robots> loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir, sva::PTransformd * base, const std::string& baseName);
-
-MC_RBDYN_DLLAPI std::shared_ptr<Robots> loadRobotFromUrdf(const std::string & name, const std::string & urdf, bool withVirtualLinks = true, const std::vector<std::string> & filteredLinks = {}, bool fixed = false, sva::PTransformd * base = nullptr, const std::string& baseName = "");
+struct Robots;
 
 struct MC_RBDYN_DLLAPI Robot
 {
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
   friend struct Robots;
   #if defined __GNUC__ && ! defined  __clang__
   friend class __gnu_cxx::new_allocator<Robot>;
@@ -149,7 +46,70 @@ public:
 
   void name(const std::string & n);
 
-  const std::string & accelerometerBody() const;
+  /** @name Body sensors
+   *
+   * These functions are related to force sensors
+   *
+   * @{
+   */
+
+  /** Return the first BodySensor in the robot
+   *
+   * If the robot does not have body sensors, it returns a defautl
+   * (invalid) one
+   *
+   */
+  BodySensor & bodySensor();
+
+  /** Return the first BodySensor in the robot (const) */
+  const BodySensor & bodySensor() const;
+
+  /** Return true if the robot has a body sensor named name
+   *
+   * @param name Name of the body sensor
+   *
+   */
+  bool hasBodySensor(const std::string & name) const;
+
+  /** Return true if the specified body has a body sensor attached to it
+   *
+   * @param body Body to query
+   *
+   */
+  bool bodyHasBodySensor(const std::string & body) const;
+
+  /** Return a specific BobySensor by name
+   *
+   * @param name Name of the sensor
+   *
+   * @throws If the sensor does not exist
+   *
+   */
+  BodySensor & bodySensor(const std::string & name);
+
+  /** Return a specific BodySensor by name (const) */
+  const BodySensor & bodySensor(const std::string & name) const;
+
+  /** Return a specific BodySensor by body name
+   *
+   * @param name Name of the body
+   *
+   * @throws If there is no sensor attached to the body
+   *
+   */
+  BodySensor & bodyBodySensor(const std::string & name);
+
+  /** Return a specific BodySensor by body name (const) */
+  const BodySensor & bodyBodySensor(const std::string & name) const;
+
+  /** Return all body sensors */
+  BodySensorVector & bodySensors();
+
+  /** Return all body sensors (const) */
+  const BodySensorVector & bodySensors() const;
+
+  /** @} */
+  /* End of Body sensors group */
 
   bool hasJoint(const std::string & name) const;
 
@@ -158,16 +118,6 @@ public:
   unsigned int jointIndexByName(const std::string & name) const;
 
   unsigned int bodyIndexByName(const std::string & name) const;
-
-  std::string forceSensorParentBodyName(const std::string & fs) const;
-
-  const ForceSensor & forceSensorData(const std::string & fs) const;
-
-  bool hasForceSensor(const std::string & body) const;
-
-  std::string forceSensorByBody(const std::string & body) const;
-
-  std::vector<std::string> forceSensorsByName() const;
 
   rbd::MultiBody & mb();
   const rbd::MultiBody & mb() const;
@@ -193,12 +143,97 @@ public:
 
   const std::vector<Flexibility> & flexibility() const;
 
+  /** @name Joint sensors
+   *
+   * These functions give information about joints' status
+   *
+   * @{
+   */
+
+  /** Return the encoder values */
+  const std::vector<double> & encoderValues() const;
+
+  /** Set the encoder values */
+  void encoderValues(const std::vector<double> & encoderValues);
+
+  /** Return the joint torques from sensors */
+  const std::vector<double> & jointTorques() const;
+
+  /** Set joint torques from sensors */
+  void jointTorques(const std::vector<double> & jointTorques);
+
+  /** Return the reference joint order for this robot */
+  const std::vector<std::string> & refJointOrder() const;
+
+  /** @} */
+  /* End Joints sensors section */
+
+  /** @name Force sensors
+   *
+   * These functions are related to force sensors
+   *
+   * @{
+   */
+
+  /** Check if a force sensor exists
+   *
+   * @param name Name of the sensor
+   *
+   * @returns True if the sensor exists, false otherwise
+   */
+  bool hasForceSensor(const std::string & name) const;
+
+  /** Check if the body has a force sensor attached to it
+   *
+   * @param body Name of the body
+   *
+   * @returns True if the body has a force sensor attached to it, false
+   * otherwise
+   */
+  bool bodyHasForceSensor(const std::string & body) const;
+
+  /** Return a force sensor by name
+   *
+   * @param name Name of the sensor
+   *
+   * @return The sensor named name
+   *
+   * @throws If no sensor with this name exists
+   *
+   */
+  ForceSensor & forceSensor(const std::string & name);
+
+  /** Const variant */
+  const ForceSensor & forceSensor(const std::string & name) const;
+
+  /** Return a force sensor attached to the provided body
+   *
+   * @param body Name of the body to which the sensor is attached
+   *
+   * @return The attached sensor
+   *
+   * @throws If no sensor is attached to this body
+   */
+  ForceSensor & bodyForceSensor(const std::string & body);
+
+  /** Const variant */
+  const ForceSensor & bodyForceSensor(const std::string & body) const;
+
+  /** Returns all force sensors */
+  std::vector<ForceSensor> & forceSensors();
+
+  /** Returns all force sensors (const) */
+  const std::vector<ForceSensor> & forceSensors() const;
+
+  /** @} */
+  /* End of Force sensors group */
+
   bool hasSurface(const std::string & surface) const;
 
   mc_rbdyn::Surface & surface(const std::string & sName);
   const mc_rbdyn::Surface & surface(const std::string & sName) const;
 
-  /*! Copy an existing surface with a new name */
+  /** Copy an existing surface with a new name */
   mc_rbdyn::Surface & copySurface(const std::string & sName, const std::string & name);
 
   const std::map<std::string, mc_rbdyn::SurfacePtr> & surfaces() const;
@@ -231,17 +266,30 @@ private:
   std::map<std::string, stpbv_pair_t> stpbvs;
   std::map<std::string, sva::PTransformd> collisionTransforms;
   std::map<std::string, mc_rbdyn::SurfacePtr> surfaces_;
-  std::vector<ForceSensor> forceSensors;
+  std::vector<ForceSensor> forceSensors_;
   std::map<std::string, std::vector<double>> stance_;
-  std::string _accelerometerBody;
+  /** Encoder values provided by the low-level controller */
+  std::vector<double> encoderValues_;
+  /** Joint torques provided by the low-level controller */
+  std::vector<double> jointTorques_;
+  /** Reference joint order see mc_rbdyn::RobotModule */
+  std::vector<std::string> refJointOrder_;
+  /** Hold all body sensors */
+  BodySensorVector bodySensors_;
+  /** Correspondance between body sensor's name and body sensor index*/
+  std::map<std::string, size_t> bodySensorsIndex_;
+  /** Correspondance between bodies' names and attached body sensors */
+  std::map<std::string, size_t> bodyBodySensors_;
   Springs springs;
   std::vector< std::vector<Eigen::VectorXd> > tlPoly;
   std::vector< std::vector<Eigen::VectorXd> > tuPoly;
   std::vector<Flexibility> flexibility_;
   std::map<std::string, unsigned int> jointIndexByNameD;
   std::map<std::string, unsigned int> bodyIndexByNameD;
-  std::map<std::string, ForceSensor> forceSensorsParentD;
-  std::map<std::string, std::string> parentBodyForceSensorD;
+  /** Correspondance between force sensor's name and force sensor index */
+  std::map<std::string, size_t> forceSensorsIndex_;
+  /** Correspondance between bodies' names and attached force sensors */
+  std::map<std::string, size_t> bodyForceSensors_;
 protected:
   Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
         const std::map<std::string, sva::PTransformd> & bodyTransforms,
@@ -253,8 +301,9 @@ protected:
         const std::map<std::string, sva::PTransformd> & collisionTransforms,
         const std::map<std::string, mc_rbdyn::SurfacePtr> & surfaces,
         const std::vector<ForceSensor> & forceSensors,
+        const std::vector<std::string> & refJointOrder,
         const std::map<std::string, std::vector<double>> stance = {},
-        const std::string & accelerometerBody = "",
+        const BodySensorVector & bodySensors = {},
         const Springs & springs = Springs(), const std::vector< std::vector<Eigen::VectorXd> > & tlPoly = {},
         const std::vector< std::vector<Eigen::VectorXd> > & tuPoly = {}, const std::vector<Flexibility> & flexibility = {});
   Robot(const Robot&) = delete;
@@ -276,15 +325,8 @@ MC_RBDYN_DLLAPI std::vector< std::vector<double> > jointsNameToVector(const rbd:
 // Return [ql, qu, vl, vu, tl, tu]
 MC_RBDYN_DLLAPI std::vector< std::map< std::string, std::vector<double> > > defaultBounds(const rbd::MultiBody & mb);
 
-template<typename sch_T>
-void applyTransformToSchById(const rbd::MultiBody & mb, const rbd::MultiBodyConfig & mbc, std::map<std::string, std::pair<int, sch_T> > & schById);
-
 /*FIXME Not implemetend for now, only used for ATLAS
 void loadPolyTorqueBoundsData(const std::string & file, Robot & robot);
 */
 
 }
-
-#include <mc_rbdyn/robot.hpp>
-
-#endif

@@ -8,7 +8,7 @@
 #include <mc_solver/msg/QPResult.h>
 
 #include <mc_rbdyn/Contact.h>
-#include <mc_rbdyn/robot.h>
+#include <mc_rbdyn/Robots.h>
 
 #include <Tasks/QPSolver.h>
 

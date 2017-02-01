@@ -2,6 +2,8 @@
 
 #include <mc_solver/QPSolver.h>
 
+#include <mc_rbdyn/SCHAddon.h>
+
 namespace mc_solver
 {
 

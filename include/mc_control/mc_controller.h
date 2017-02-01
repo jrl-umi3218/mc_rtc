@@ -1,6 +1,6 @@
 #pragma once
 
-#include <mc_rbdyn/robot.h>
+#include <mc_rbdyn/Robots.h>
 
 
 #include <mc_control/Configuration.h>
@@ -84,53 +84,6 @@ public:
    * they were set by the controller previously.
    */
   virtual void reset(const ControllerResetData & reset_data);
-
-  /** Pass force sensors information to the controller if available at the
-   * simulation/controller level
-   * \param wrenches Force/Torque sensors information provided by the
-   * simulation/controller
-   */
-  virtual void setWrenches(const std::map<std::string, sva::ForceVecd>& wrenches);
-
-  /** Get the current wrenches information
-   * \return A vector of sva::ForceVecd representing force/torque pairs.
-   */
-  const std::map<std::string, sva::ForceVecd> & getWrenches();
-
-  /** Get the current encoder values provided by simulation/low-level controller
-   * \return A vector of encoder values ordered by the controller/simulator
-   */
-  const std::vector<double> & getEncoderValues();
-
-  /** Get the current joint torques provided by the low-level controller
-   * \return A vector of joint torques ordered according to RobotModule::ref_joint_order()
-   */
-  const std::vector<double> & getJointTorques();
-
-  /** Get the sensor position
-   * \return The sensor position if provided, Eigen::Vector3d::Zero() otherwise
-   */
-  const Eigen::Vector3d & getSensorPosition();
-
-  /** Get the sensor orientation
-   * \return The sensor orientation if provided, Eigen::Vector3d::Zero() otherwise
-   */
-  const Eigen::Quaterniond & getSensorOrientation();
-
-  /** Get the sensor linear velocity
-   * \return The sensor linear velocity if provided, Eigen::Vector3d::Zero() otherwise
-   */
-  const Eigen::Vector3d & getSensorLinearVelocity();
-
-  /** Get the sensor angular velocity
-   * \return The sensor angular velocity if provided, Eigen::Vector3d::Zero() otherwise
-   */
-  const Eigen::Vector3d & getSensorAngularVelocity();
-
-  /** Get the sensor acceleration
-   * \return The sensor acceleration if provided, Eigen::Vector3d::Zero() otherwise
-   */
-  const Eigen::Vector3d & getSensorAcceleration();
 
   /** Return the main robot (first robot provided in the constructor
    * \anchor mc_controller_robot_const_doc
@@ -294,29 +247,11 @@ protected:
    */
   MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robot_modules, double dt);
 protected:
-  /** Encoder values provided by the low-level controller */
-  std::vector<double> encoderValues;
-  /** Joint torques provided by the low-level controller */
-  std::vector<double> jointTorques;
-  /** Force/Torque sensors */
-  std::map<std::string, sva::ForceVecd> wrenches;
-  /** Robot position provided by sensors */
-  Eigen::Vector3d sensorPos;
-  /** Robot orientation provided by sensors */
-  Eigen::Quaterniond sensorOri;
-  /** Robot acceleration provided by sensors */
-  Eigen::Vector3d sensorAcc;
-  /** Robot linear velocity provided by sensors */
-  Eigen::Vector3d sensorLinearVel;
-  /** Robot angular velocity provided by sensors */
-  Eigen::Vector3d sensorAngularVel;
   /** QP solver */
   std::shared_ptr<mc_solver::QPSolver> qpsolver;
 public:
   /** Controller timestep */
   const double timeStep;
-  /** Reference joint order see mc_rbdyn::RobotModule */
-  std::vector<std::string> ref_joint_order;
   /** Grippers */
   std::map<std::string, std::shared_ptr<mc_control::Gripper>> grippers;
   /** Contact constraint for the main robot */

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <mc_rbdyn/robot.h>
+#include <mc_rbdyn/Robots.h>
 #include <mc_control/mc_controller.h>
 #include <mc_tasks/EndEffectorTask.h>
 #include <mc_tasks/OrientationTask.h>

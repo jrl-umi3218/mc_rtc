@@ -3,7 +3,7 @@
 
 #include <mc_tasks/MetaTask.h>
 
-#include <mc_rbdyn/robot.h>
+#include <mc_rbdyn/Robots.h>
 #include <mc_rbdyn/StanceConfig.h>
 
 #include <mc_solver/BoundedSpeedConstr.h>
