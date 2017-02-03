@@ -197,21 +197,6 @@ public:
       tfs.push_back(PT2TF(X_succp_succ*mbc.parentToSon[static_cast<unsigned int>(j)]*X_predp_pred.inv(), tm, prefix + predName, prefix + succName, seq));
     }
 
-    if(robot.hasBody("xtion_link"))
-    {
-      sva::PTransformd X_0_xtion = mbc.bodyPosW[robot.bodyIndexByName("xtion_link")];
-      tfs.push_back(PT2TF(X_0_xtion.inv(), tm, "odom", "robot_map", seq));
-
-
-      sva::PTransformd X_0_base_odom = sva::PTransformd(
-                          robot.bodySensor().orientation(),
-                          robot.bodySensor().position());
-      sva::PTransformd X_0_base = mbc.bodyPosW[0];
-      sva::PTransformd X_base_xtion = X_0_xtion * (X_0_base.inv());
-      tfs.push_back(PT2TF(X_0_base_odom, tm, "/robot_map", "/odom_base_link", seq));
-      tfs.push_back(PT2TF(X_base_xtion, tm, "/odom_base_link", "/odom_xtion_link", seq));
-    }
-
     if(seq % skip == 0)
     {
       mut.lock();
