@@ -1,3 +1,5 @@
+#include <mc_control/log/Logger.h>
+
 #include <mc_control/mc_global_controller.h>
 
 #include <chrono>
@@ -6,7 +8,7 @@
 
 namespace mc_control
 {
-  struct MCGlobalController::LoggerImpl
+  struct LoggerImpl
   {
     LoggerImpl(const bfs::path & directory, const std::string & tmpl)
     : directory(directory), tmpl(tmpl)
@@ -27,10 +29,10 @@ namespace mc_control
 
   namespace
   {
-    struct LoggerNonThreadedPolicyImpl : public MCGlobalController::LoggerImpl
+    struct LoggerNonThreadedPolicyImpl : public LoggerImpl
     {
       LoggerNonThreadedPolicyImpl(const bfs::path & directory, const std::string & tmpl)
-      : MCGlobalController::LoggerImpl(directory, tmpl)
+      : LoggerImpl(directory, tmpl)
       {
       }
 
@@ -57,10 +59,10 @@ namespace mc_control
       std::ofstream log_;
     };
 
-    struct LoggerThreadedPolicyImpl : public MCGlobalController::LoggerImpl
+    struct LoggerThreadedPolicyImpl : public LoggerImpl
     {
       LoggerThreadedPolicyImpl(const bfs::path & directory, const std::string & tmpl)
-      : MCGlobalController::LoggerImpl(directory, tmpl)
+      : LoggerImpl(directory, tmpl)
       {
         log_sync_th_ = std::thread([this]()
         {
@@ -171,7 +173,7 @@ namespace mc_control
     };
   }
 
-  MCGlobalController::Logger::Logger(const Policy & policy, const bfs::path & directory, const std::string & tmpl)
+  Logger::Logger(const Policy & policy, const bfs::path & directory, const std::string & tmpl)
   {
     switch(policy)
     {
@@ -184,11 +186,11 @@ namespace mc_control
     };
   }
 
-  MCGlobalController::Logger::~Logger()
+  Logger::~Logger()
   {
   }
 
-  void MCGlobalController::Logger::log_header(const std::string & ctl_name, MCController * controller)
+  void Logger::log_header(const std::string & ctl_name, MCController * controller)
   {
     auto get_log_path = [this, &ctl_name]()
     {
@@ -284,7 +286,7 @@ namespace mc_control
     }
   }
 
-  void MCGlobalController::Logger::log_data(MCGlobalController & gc, MCController * controller)
+  void Logger::log_data(MCGlobalController & gc, MCController * controller)
   {
     auto & log = impl->get_stream();
     log << impl->log_iter_;

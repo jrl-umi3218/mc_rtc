@@ -202,7 +202,7 @@ mc_control/mc_controller.cpp
 mc_control/mc_python_controller.cpp
 mc_control/mc_global_controller.cpp
 mc_control/mc_global_controller_configuration.cpp
-mc_control/mc_global_controller_logger.cpp
+mc_control/Logger.cpp
 mc_control/mc_global_controller_services.cpp
 )
 set(mc_control_SRC ${mc_control_SRC} PARENT_SCOPE)
@@ -217,6 +217,7 @@ set(mc_control_HDR
 ../include/mc_control/mc_python_controller.h
 ../include/mc_control/SimulationContactSensor.h
 ../include/mc_control/mc_global_controller.h
+../include/mc_control/log/Logger.h
 )
 set(mc_control_HDR ${mc_control_HDR} PARENT_SCOPE)
 
