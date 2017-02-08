@@ -25,6 +25,8 @@ struct Quaterniond;
 
 struct PTransformd;
 
+struct ForceVecd;
+
 struct Log;
 
 enum LogData {
@@ -37,8 +39,9 @@ enum LogData {
   LogData_Vector3d = 6,
   LogData_Quaterniond = 7,
   LogData_PTransformd = 8,
+  LogData_ForceVecd = 9,
   LogData_MIN = LogData_NONE,
-  LogData_MAX = LogData_PTransformd
+  LogData_MAX = LogData_ForceVecd
 };
 
 inline const char **EnumNamesLogData() {
@@ -52,6 +55,7 @@ inline const char **EnumNamesLogData() {
     "Vector3d",
     "Quaterniond",
     "PTransformd",
+    "ForceVecd",
     nullptr
   };
   return names;
@@ -96,6 +100,10 @@ template<> struct LogDataTraits<Quaterniond> {
 
 template<> struct LogDataTraits<PTransformd> {
   static const LogData enum_value = LogData_PTransformd;
+};
+
+template<> struct LogDataTraits<ForceVecd> {
+  static const LogData enum_value = LogData_ForceVecd;
 };
 
 bool VerifyLogData(flatbuffers::Verifier &verifier, const void *obj, LogData type);
@@ -501,6 +509,58 @@ inline flatbuffers::Offset<PTransformd> CreatePTransformd(
   return builder_.Finish();
 }
 
+struct ForceVecd FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_COUPLE = 4,
+    VT_FORCE = 6
+  };
+  const Vector3d *couple() const {
+    return GetPointer<const Vector3d *>(VT_COUPLE);
+  }
+  const Vector3d *force() const {
+    return GetPointer<const Vector3d *>(VT_FORCE);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_COUPLE) &&
+           verifier.VerifyTable(couple()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_FORCE) &&
+           verifier.VerifyTable(force()) &&
+           verifier.EndTable();
+  }
+};
+
+struct ForceVecdBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_couple(flatbuffers::Offset<Vector3d> couple) {
+    fbb_.AddOffset(ForceVecd::VT_COUPLE, couple);
+  }
+  void add_force(flatbuffers::Offset<Vector3d> force) {
+    fbb_.AddOffset(ForceVecd::VT_FORCE, force);
+  }
+  ForceVecdBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  ForceVecdBuilder &operator=(const ForceVecdBuilder &);
+  flatbuffers::Offset<ForceVecd> Finish() {
+    const auto end = fbb_.EndTable(start_, 2);
+    auto o = flatbuffers::Offset<ForceVecd>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<ForceVecd> CreateForceVecd(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    flatbuffers::Offset<Vector3d> couple = 0,
+    flatbuffers::Offset<Vector3d> force = 0) {
+  ForceVecdBuilder builder_(_fbb);
+  builder_.add_force(force);
+  builder_.add_couple(couple);
+  return builder_.Finish();
+}
+
 struct Log FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_KEYS = 4,
@@ -613,6 +673,10 @@ inline bool VerifyLogData(flatbuffers::Verifier &verifier, const void *obj, LogD
     }
     case LogData_PTransformd: {
       auto ptr = reinterpret_cast<const PTransformd *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    case LogData_ForceVecd: {
+      auto ptr = reinterpret_cast<const ForceVecd *>(obj);
       return verifier.VerifyTable(ptr);
     }
     default: return false;

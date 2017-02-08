@@ -7,6 +7,9 @@
 namespace mc_control
 {
 
+namespace log
+{
+
 /** This structure allows to convert native C++ types to their flatbuffer
  * counterpart */
 template<typename T>
@@ -15,12 +18,15 @@ struct LogDataHelper
   /** Holds the value type corresponding to the C++ type */
   enum { value_type = mc_control::log::LogData_NONE };
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wreturn-type"
   /** Convert the C++ object to an anonymous flatbuffer object */
   static flatbuffers::Offset<void> serialize(flatbuffers::FlatBufferBuilder &,
                                              const T &)
   {
     static_assert(sizeof(T) == 0, "This type is not handled by the logger interface");
   }
+#pragma GCC diagnostic pop
 };
 
 /** This macro allows to define implementations for LogDataHelper in
@@ -63,6 +69,22 @@ struct LogDataHelper<sva::PTransformd>
   }
 };
 
+template<>
+struct LogDataHelper<sva::ForceVecd>
+{
+  enum { value_type = mc_control::log::LogData_ForceVecd };
+
+  static flatbuffers::Offset<void> serialize(flatbuffers::FlatBufferBuilder & builder,
+                                             const sva::ForceVecd & fv)
+  {
+    const auto & couple = fv.couple();
+    auto fb_couple = mc_control::log::CreateVector3d(builder, couple.x(), couple.y(), couple.z());
+    const auto & force = fv.force();
+    auto fb_force = mc_control::log::CreateVector3d(builder, force.x(), force.y(), force.z());
+    return mc_control::log::CreateForceVecd(builder, fb_couple, fb_force).Union();
+  }
+};
+
 template<typename T>
 void AddLogData(flatbuffers::FlatBufferBuilder & builder,
                 std::vector<uint8_t> & value_types,
@@ -71,6 +93,8 @@ void AddLogData(flatbuffers::FlatBufferBuilder & builder,
 {
   value_types.push_back(LogDataHelper<T>::value_type);
   values.push_back(LogDataHelper<T>::serialize(builder, value));
+}
+
 }
 
 }

@@ -469,7 +469,7 @@ private:
 
   std::shared_ptr<mc_rbdyn::Robots> real_robots = nullptr;
 
-  std::unique_ptr<Logger> logger_;
+  std::shared_ptr<Logger> logger_;
 
   void publish_robots();
 };

@@ -4,6 +4,7 @@
 
 #include <chrono>
 #include <condition_variable>
+#include <queue>
 #include <iomanip>
 
 namespace mc_control
@@ -11,20 +12,22 @@ namespace mc_control
   struct LoggerImpl
   {
     LoggerImpl(const bfs::path & directory, const std::string & tmpl)
-    : directory(directory), tmpl(tmpl)
+    : builder_(1024*1024), directory(directory), tmpl(tmpl)
     {
     }
 
     virtual ~LoggerImpl() {}
 
-    virtual std::ofstream & initialize(const bfs::path & path) = 0;
-    virtual std::ostream & get_stream() = 0;
-    virtual void write() = 0;
+    virtual void initialize(const bfs::path & path) = 0;
+    virtual void write(uint8_t * data, int size) = 0;
+
+    flatbuffers::FlatBufferBuilder builder_;
 
     bfs::path directory;
     std::string tmpl;
     double log_iter_ = 0;
     bool valid = true;
+    std::ofstream log_;
   };
 
   namespace
@@ -36,27 +39,20 @@ namespace mc_control
       {
       }
 
-      virtual std::ofstream & initialize(const bfs::path & path) final
+      virtual void initialize(const bfs::path & path) final
       {
         if(log_.is_open())
         {
           log_.close();
         }
-        log_.open(path.string());
-        return log_;
+        log_.open(path.string(), std::ofstream::binary);
       }
 
-      virtual std::ostream & get_stream() final
+      virtual void write(uint8_t * data, int size) final
       {
-        return log_;
+        log_.write((char*)&size, sizeof(int));
+        log_.write((char*)data, size);
       }
-
-      virtual void write() final
-      {
-        log_ << std::endl;
-      }
-
-      std::ofstream log_;
     };
 
     struct LoggerThreadedPolicyImpl : public LoggerImpl
@@ -68,26 +64,17 @@ namespace mc_control
         {
           while(log_sync_th_run_)
           {
-            std::unique_lock<std::mutex> lk(log_sync_mutex_);
-            log_sync_cv_.wait(lk, [this](){ return log_sync_ready_ || log_sync_conclude_ || (!log_sync_th_run_); });
-            if(log_sync_ready_)
+            while(data_.size())
             {
-              if(sync_ss_)
-              {
-                log_ << sync_ss_->str() << std::flush;
-                sync_ss_->str("");
-              }
-              log_sync_ready_ = false;
+              auto & d = data_.front();
+              uint8_t * data = d.first;
+              int size = d.second;
+              log_.write((char*)&size, sizeof(int));
+              log_.write((char*)data, size);
+              delete[] data;
+              data_.pop();
             }
-            if(log_sync_conclude_)
-            {
-              log_ << write_ss_->str() << std::flush;
-              write_ss_->str("");
-              log_.close();
-              log_sync_conclude_ = false;
-            }
-            lk.unlock();
-            log_sync_cv_.notify_one();
+            std::this_thread::sleep_for(std::chrono::microseconds(500));
           }
         }
         );
@@ -95,81 +82,36 @@ namespace mc_control
 
       ~LoggerThreadedPolicyImpl()
       {
-        {
-          std::lock_guard<std::mutex> lk(log_sync_mutex_);
-          log_sync_th_run_ = false;
-          log_sync_ready_ = true;
-          log_sync_conclude_ = true;
-        }
-        log_sync_cv_.notify_one();
+        log_sync_th_run_ = false;
         if(log_sync_th_.joinable())
         {
           log_sync_th_.join();
         }
       }
 
-      virtual std::ofstream & initialize(const bfs::path & path) final
+      virtual void initialize(const bfs::path & path) final
       {
         if(log_.is_open())
         {
+          /* Wait until the previous log is flushed */
+          while(data_.size())
           {
-            std::lock_guard<std::mutex> lk(log_sync_mutex_);
-            log_sync_ready_ = true;
-            log_sync_conclude_ = true;
+            std::this_thread::sleep_for(std::chrono::microseconds(500));
           }
-          log_sync_cv_.notify_one();
-          std::unique_lock<std::mutex> lk(log_sync_mutex_);
-          log_sync_cv_.wait(lk, [this](){ return !log_sync_conclude_; });
         }
         log_.open(path.string());
-        write_ss_ = &log_ss_;
-        sync_ss_ = nullptr;
-        log_sync_iter_ = 0;
-        return log_;
       }
 
-      virtual std::ostream & get_stream() final
+      virtual void write(uint8_t * data, int size) final
       {
-        return *write_ss_;
+        uint8_t * ndata = new uint8_t[size];
+        std::memcpy(ndata, data, size);
+        data_.emplace(ndata, size);
       }
 
-      virtual void write() final
-      {
-        auto & log = *write_ss_;
-        log << "\n";
-        log_sync_iter_++;
-        if(log_sync_iter_ == 500)
-        {
-          log_sync_iter_ = 0;
-          if(sync_ss_)
-          {
-            std::swap(write_ss_, sync_ss_);
-          }
-          else
-          {
-            sync_ss_ = write_ss_;
-            write_ss_ = &swap_ss_;
-          }
-          {
-            std::lock_guard<std::mutex> lk(log_sync_mutex_);
-            log_sync_ready_ = true;
-          }
-          log_sync_cv_.notify_one();
-        }
-      }
-
-      std::ofstream log_;
-      std::stringstream log_ss_;
-      std::stringstream swap_ss_;
-      std::stringstream * write_ss_ = nullptr;
-      std::stringstream * sync_ss_ = nullptr;
       std::thread log_sync_th_;
-      std::condition_variable log_sync_cv_;
-      std::mutex log_sync_mutex_;
-      bool log_sync_ready_ = false;
-      bool log_sync_conclude_ = false;
       bool log_sync_th_run_ = true;
-      unsigned int log_sync_iter_ = 0;
+      std::queue<std::pair<uint8_t*, int>> data_;
     };
   }
 
@@ -178,10 +120,10 @@ namespace mc_control
     switch(policy)
     {
       case Policy::NON_THREADED:
-        impl.reset(new LoggerNonThreadedPolicyImpl(directory, tmpl));
+        impl_.reset(new LoggerNonThreadedPolicyImpl(directory, tmpl));
         break;
       case Policy::THREADED:
-        impl.reset(new LoggerThreadedPolicyImpl(directory, tmpl));
+        impl_.reset(new LoggerThreadedPolicyImpl(directory, tmpl));
         break;
     };
   }
@@ -190,14 +132,15 @@ namespace mc_control
   {
   }
 
-  void Logger::log_header(const std::string & ctl_name, MCController * controller)
+  void Logger::start(const std::string & ctl_name, MCController * controller)
   {
+    log_entries_.clear();
     auto get_log_path = [this, &ctl_name]()
     {
       std::stringstream ss;
       auto t = std::time(nullptr);
       auto tm = std::localtime(&t);
-      ss << impl->tmpl
+      ss << impl_->tmpl
          << "-" << ctl_name
          << "-" << (1900 + tm->tm_year)
          << "-" << std::setw(2) << std::setfill('0') << (1 + tm->tm_mon)
@@ -205,16 +148,16 @@ namespace mc_control
          << "-" << std::setw(2) << std::setfill('0') << tm->tm_hour
          << "-" << std::setw(2) << std::setfill('0') << tm->tm_min
          << "-" << std::setw(2) << std::setfill('0') << tm->tm_sec
-         << ".log";
-      bfs::path log_path = impl->directory / bfs::path(ss.str().c_str());
+         << ".bin";
+      bfs::path log_path = impl_->directory / bfs::path(ss.str().c_str());
       LOG_INFO("Will log controller outputs to " << log_path)
       return log_path;
     };
     auto log_path = get_log_path();
-    auto & log = impl->initialize(log_path);
+    impl_->initialize(log_path);
     std::stringstream ss_sym;
-    ss_sym << impl->tmpl << "-" << ctl_name << "-latest.log";
-    bfs::path log_sym_path = impl->directory / bfs::path(ss_sym.str().c_str());
+    ss_sym << impl_->tmpl << "-" << ctl_name << "-latest.bin";
+    bfs::path log_sym_path = impl_->directory / bfs::path(ss_sym.str().c_str());
     if(bfs::is_symlink(log_sym_path))
     {
       bfs::remove(log_sym_path);
@@ -232,126 +175,113 @@ namespace mc_control
         LOG_INFO("Failed to create latest log symlink: " << ec.message())
       }
     }
-    if(log.is_open())
+    if(impl_->log_.is_open())
     {
-      log << "t";
-      for(unsigned int i = 0; i < static_cast<unsigned int>(controller->robot().encoderValues().size()); ++i)
-      {
-        log << ";qIn" << i;
-      }
-      log << ";ff_qw;ff_qx;ff_qy;ff_qz;ff_tx;ff_ty;ff_tz";
-      for(unsigned int i = 0; i < static_cast<unsigned int>(controller->robot().refJointOrder().size()); ++i)
-      {
-        log << ";qOut" << i;
-      }
-      for(unsigned int i = 0; i < static_cast<unsigned int>(controller->robot().jointTorques().size()); ++i)
-      {
-        log << ";taucIn" << i;
-      }
+      addLogEntry("t", [this, controller]()
+                  {
+                    impl_->log_iter_ += controller->timeStep;
+                    return impl_->log_iter_ - controller->timeStep;
+                  });
+      addLogEntry("qIn", [controller]() -> const std::vector<double>&
+                  {
+                    return controller->robot().encoderValues();
+                  });
+      addLogEntry("ff", [controller]() -> const sva::PTransformd&
+                  {
+                    return controller->robot().mbc().bodyPosW[0];
+                  });
+      addLogEntry("qOut", [controller]()
+                  {
+                    const auto & qOut = controller->send(0).robots_state[0].q;
+                    const auto & rjo = controller->robot().refJointOrder();
+                    std::vector<double> ret(rjo.size(), 0);
+                    for(size_t i = 0; i < rjo.size(); ++i)
+                    {
+                      const auto & jn = rjo[i];
+                      if(qOut.count(jn))
+                      {
+                        ret[i] = qOut.at(jn)[0];
+                      }
+                    }
+                    return ret;
+                  });
+      addLogEntry("tauIn", [controller]() -> const std::vector<double>&
+                  {
+                    return controller->robot().jointTorques();
+                  });
       for(const auto & fs : controller->robot().forceSensors())
       {
-        const auto& wn = fs.name();
-        log << ";" << wn << "_fx";
-        log << ";" << wn << "_fy";
-        log << ";" << wn << "_fz";
-        log << ";" << wn << "_cx";
-        log << ";" << wn << "_cy";
-        log << ";" << wn << "_cz";
+        const auto & fs_name = fs.name();
+        addLogEntry(fs.name(), [controller,fs_name]() -> const sva::ForceVecd&
+                    {
+                      return controller->robot().forceSensor(fs_name).wrench();
+                    });
       }
-      log << ";" << "p_x";
-      log << ";" << "p_y";
-      log << ";" << "p_z";
-      log << ";" << "rpy_r";
-      log << ";" << "rpy_p";
-      log << ";" << "rpy_y";
-      log << ";" << "vel_x";
-      log << ";" << "vel_y";
-      log << ";" << "vel_z";
-      log << ";" << "rate_x";
-      log << ";" << "rate_y";
-      log << ";" << "rate_z";
-      log << ";" << "acc_x";
-      log << ";" << "acc_y";
-      log << ";" << "acc_z";
-
-      controller->log_header(log);
-      log << std::endl;
-      impl->log_iter_ = 0;
-      impl->valid = true;
+      addLogEntry("pIn", [controller]() -> const Eigen::Vector3d&
+                  {
+                    return controller->robot().bodySensor().position();
+                  });
+      addLogEntry("rpyIn", [controller]() -> const Eigen::Quaterniond&
+                  {
+                    return controller->robot().bodySensor().orientation();
+                  });
+      addLogEntry("velIn", [controller]() -> const Eigen::Vector3d&
+                  {
+                    return controller->robot().bodySensor().linearVelocity();
+                  });
+      addLogEntry("rateIn", [controller]() -> const Eigen::Vector3d&
+                  {
+                    return controller->robot().bodySensor().angularVelocity();
+                  });
+      addLogEntry("accIn", [controller]() -> const Eigen::Vector3d&
+                  {
+                    return controller->robot().bodySensor().acceleration();
+                  });
+      impl_->log_iter_ = 0;
+      impl_->valid = true;
     }
     else
     {
-      impl->valid = false;
+      impl_->valid = false;
       LOG_ERROR("Failed to open log file " << log_path)
     }
   }
 
-  void Logger::log_data(MCGlobalController & gc, MCController * controller)
+  void Logger::log()
   {
-    auto & log = impl->get_stream();
-    log << impl->log_iter_;
-    impl->log_iter_ += gc.timestep();
-    for(const auto & qi : controller->robot().encoderValues())
+    std::vector<std::string> keys;
+    std::vector<uint8_t> types;
+    std::vector<flatbuffers::Offset<void>> values;
+    for(auto & e : log_entries_)
     {
-      log << ";" << qi;
+      keys.push_back(e.first);
+      e.second(impl_->builder_, types, values);
     }
-    const auto & ff = controller->robot().mbc().q[0];
-    for(const auto & ffi : ff)
+    auto s_types = impl_->builder_.CreateVector(types);
+    auto s_values = impl_->builder_.CreateVector(values);
+    mc_control::log::LogBuilder log_builder(impl_->builder_);
+    if(log_entries_changed_)
     {
-      log << ";" << ffi;
+      auto s_keys = impl_->builder_.CreateVectorOfStrings(keys);
+      log_builder.add_keys(s_keys);
+      log_entries_changed_ = false;
     }
-    const auto & qOut = gc.send(impl->log_iter_).robots_state[0].q;
-    for(const auto & jn : gc.ref_joint_order())
+    log_builder.add_values_type(s_types);
+    log_builder.add_values(s_values);
+    auto log = log_builder.Finish();
+    impl_->builder_.Finish(log);
+    int size = impl_->builder_.GetSize();
+    uint8_t * data = impl_->builder_.GetBufferPointer();
+    impl_->write(data, size);
+    impl_->builder_.Clear();
+  }
+
+  void Logger::removeLogEntry(const std::string & name)
+  {
+    if(log_entries_.count(name))
     {
-      if(qOut.count(jn))
-      {
-        log << ";" << qOut.at(jn)[0];
-      }
-      else
-      {
-        log << ";" << 0;
-      }
+      log_entries_changed_ = true;
+      log_entries_.erase(name);
     }
-    for(const auto & ti : controller->robot().jointTorques())
-    {
-      log << ";" << ti;
-    }
-    for(const auto & fs : controller->robot().forceSensors())
-    {
-      log << ";" << fs.wrench().force().x();
-      log << ";" << fs.wrench().force().y();
-      log << ";" << fs.wrench().force().z();
-      log << ";" << fs.wrench().couple().x();
-      log << ";" << fs.wrench().couple().y();
-      log << ";" << fs.wrench().couple().z();
-    }
-    const auto & pIn = controller->robot().bodySensor().position();
-    log << ";" << pIn.x();
-    log << ";" << pIn.y();
-    log << ";" << pIn.z();
-
-    const auto & rpyIn = controller->robot().bodySensor().orientation();
-    log << ";" << rpyIn.x();
-    log << ";" << rpyIn.y();
-    log << ";" << rpyIn.z();
-
-    const auto & velIn = controller->robot().bodySensor().linearVelocity();
-    log << ";" << velIn.x();
-    log << ";" << velIn.y();
-    log << ";" << velIn.z();
-
-    const auto & rateIn = controller->robot().bodySensor().angularVelocity();
-    log << ";" << rateIn.x();
-    log << ";" << rateIn.y();
-    log << ";" << rateIn.z();
-
-    const auto & accIn = controller->robot().bodySensor().acceleration();
-    log << ";" << accIn.x();
-    log << ";" << accIn.y();
-    log << ";" << accIn.z();
-
-    controller->log_data(log);
-
-    impl->write();
   }
 }

@@ -25,15 +25,10 @@ public:
   virtual bool read_msg(std::string & msg) override;
   virtual bool read_write_msg(std::string & msg, std::string & out) override;
 
-  virtual std::ostream& log_header(std::ostream & os) override;
-  virtual std::ostream& log_data(std::ostream & os) override;
-
   std::function<bool()> run_callback;
   std::function<void(const ControllerResetData&)> reset_callback;
   std::function<bool(std::string&)> read_msg_callback;
   std::function<PythonRWCallback(std::string&)> read_write_msg_callback;
-  std::function<std::string()> log_header_callback;
-  std::function<std::string()> log_data_callback;
 };
 
 }

@@ -208,14 +208,9 @@ bool MCController::read_write_msg(std::string &, std::string &)
   return true;
 }
 
-std::ostream& MCController::log_header(std::ostream & os)
+Logger & MCController::logger()
 {
-  return os;
-}
-
-std::ostream& MCController::log_data(std::ostream & os)
-{
-  return os;
+  return *logger_;
 }
 
 std::vector<std::string> MCController::supported_robots() const

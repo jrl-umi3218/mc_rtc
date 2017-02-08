@@ -63,6 +63,10 @@ MCGlobalController::MCGlobalController(const std::string & conf,
     real_robots->load(*config.main_robot_module, config.main_robot_module->rsdf_dir);
   }
   mc_rtc::ROSBridge::set_publisher_timestep(config.publish_timestep);
+  if(config.enable_log)
+  {
+    logger_.reset(new Logger(config.log_policy, config.log_directory, config.log_template));
+  }
 }
 
 MCGlobalController::~MCGlobalController()
@@ -134,8 +138,7 @@ void MCGlobalController::init(const std::vector<double> & initq, const std::arra
   controller_->reset({q});
   if(config.enable_log)
   {
-    logger_.reset(new Logger(config.log_policy, config.log_directory, config.log_template));
-    logger_->log_header(current_ctrl, controller_);
+    logger_->start(current_ctrl, controller_);
   }
 }
 
@@ -284,7 +287,7 @@ bool MCGlobalController::run()
     current_ctrl = next_ctrl;
     if(config.enable_log)
     {
-      logger_->log_header(current_ctrl, controller_);
+      logger_->start(current_ctrl, controller_);
     }
   }
   const auto& real_q = robot().encoderValues();
@@ -325,7 +328,7 @@ bool MCGlobalController::run()
     bool r = controller_->run();
     if(config.enable_log)
     {
-      logger_->log_data(*this, controller_);
+      logger_->log();
     }
     if(!r) { running = false; }
   }
@@ -472,6 +475,7 @@ bool MCGlobalController::AddController(const std::string & name)
         controllers[name] = controller_loader->create_object(name, config.main_robot_module, config.timestep, config.config);
       }
       controllers[name]->real_robots = real_robots;
+      controllers[name]->logger_ = logger_;
     }
     catch(const mc_rtc::LoaderException & exc)
     {

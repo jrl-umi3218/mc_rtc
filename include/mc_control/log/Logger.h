@@ -1,6 +1,14 @@
 #pragma once
 
+namespace mc_control
+{
+  struct Logger;
+}
+
 #include <mc_control/mc_controller.h>
+#include <mc_control/log/serialization/fb_utils.h>
+
+#include <mc_rtc/logging.h>
 
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
@@ -22,6 +30,10 @@ struct LoggerImpl;
 struct Logger
 {
 public:
+  /** A function that fills LogData vectors */
+  typedef std::function<void(flatbuffers::FlatBufferBuilder&,
+                             std::vector<uint8_t>&,
+                             std::vector<flatbuffers::Offset<void>>&)> serialize_fn;
   /*! \brief Defines available policies for the logger */
   enum struct Policy
   {
@@ -65,7 +77,7 @@ public:
    *
    * \param controller The running controller
    */
-  void log_header(const std::string & ctl_name, MCController * controller);
+  void start(const std::string & ctl_name, MCController * controller);
 
   /*! \brief Log controller's data
    *
@@ -73,9 +85,41 @@ public:
    *
    * \param controller The running controller
    */
-  void log_data(MCGlobalController & gc, MCController * controller);
+  void log();
+
+  /** Add a log entry into the log
+   *
+   * \param name Name of the log entry, this should be unique at any given time but the same key can be re-used during the logger's life
+   *
+   * \param get_fn A function that provides data that should be logged
+   *
+   */
+  template<typename T>
+  void addLogEntry(const std::string & name,
+                   T get_fn)
+  {
+    typedef decltype(get_fn()) ret_t;
+    typedef typename std::decay<ret_t>::type base_t;
+    if(log_entries_.count(name))
+    {
+      LOG_ERROR("Already logging an entry named " << name)
+      return;
+    }
+    log_entries_changed_ = true;
+    log_entries_[name] = [this, get_fn](flatbuffers::FlatBufferBuilder & builder,
+                                        std::vector<uint8_t> & types,
+                                        std::vector<flatbuffers::Offset<void>> & values)
+    {
+      mc_control::log::AddLogData<base_t>(builder, types, values, get_fn());
+    };
+  }
+
+  /** Remove a log entry from the log */
+  void removeLogEntry(const std::string & name);
 private:
-  std::unique_ptr<LoggerImpl> impl;
+  std::shared_ptr<LoggerImpl> impl_ = nullptr;
+  bool log_entries_changed_ = false;
+  std::map<std::string, serialize_fn> log_entries_ = {};
 };
 
 }
