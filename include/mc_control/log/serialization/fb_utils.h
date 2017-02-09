@@ -95,6 +95,227 @@ void AddLogData(flatbuffers::FlatBufferBuilder & builder,
   values.push_back(LogDataHelper<T>::serialize(builder, value));
 }
 
+/** This struct simplifies the conversion from LogData entries to CSV data.
+ *
+ * The template parameter is a mc_control::log::LogData enum value.
+ *
+ * The default implementation does not generate output to the file
+ *
+ */
+template<mc_control::log::LogData T>
+struct CSVWriterHelper
+{
+  static size_t key_size(const void *) { return 0; }
+  static void write_header(const std::string &, size_t, std::ostream &) {}
+  static void write_data(const void *, std::ostream &) {}
+};
+
+template<>
+struct CSVWriterHelper<mc_control::log::LogData_Bool>
+{
+  static size_t key_size(const void *) { return 1; }
+  static void write_header(const std::string & key, size_t,
+                    std::ostream & os)
+  {
+    os << key;
+  }
+  static void write_data(const void * data, std::ostream & os)
+  {
+    auto b = static_cast<const mc_control::log::Bool*>(data);
+    os << b->b();
+  }
+};
+
+template<>
+struct CSVWriterHelper<mc_control::log::LogData_Double>
+{
+  static size_t key_size(const void *) { return 1; }
+  static void write_header(const std::string & key, size_t,
+                    std::ostream & os)
+  {
+    os << key;
+  }
+  static void write_data(const void * data, std::ostream & os)
+  {
+    auto d = static_cast<const mc_control::log::Double*>(data);
+    os << d->d();
+  }
+};
+
+template<>
+struct CSVWriterHelper<mc_control::log::LogData_DoubleVector>
+{
+  static size_t key_size(const void * data)
+  {
+    auto v = static_cast<const mc_control::log::DoubleVector*>(data);
+    return v->v()->size();
+  }
+  static void write_header(const std::string & key, size_t size,
+                    std::ostream & os)
+  {
+    for(size_t i = 0; i < size; ++i)
+    {
+      if(i != 0) { os << ";"; }
+      os << key << "_" << i;
+    }
+  }
+  static void write_data(const void * data, std::ostream & os)
+  {
+    auto s_v = static_cast<const mc_control::log::DoubleVector*>(data);
+    const auto & v = *s_v->v();
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion"
+    for(size_t i = 0; i < v.size(); ++i)
+    {
+      if(i != 0) { os << ";"; }
+      os << v[i];
+    }
+#pragma GCC diagnostic pop
+  }
+};
+
+template<>
+struct CSVWriterHelper<mc_control::log::LogData_UnsignedInt>
+{
+  static size_t key_size(const void *) { return 1; }
+  static void write_header(const std::string & key, size_t,
+                    std::ostream & os)
+  {
+    os << key;
+  }
+  static void write_data(const void * data, std::ostream & os)
+  {
+    auto u = static_cast<const mc_control::log::UnsignedInt*>(data);
+    os << u->i();
+  }
+};
+
+template<>
+struct CSVWriterHelper<mc_control::log::LogData_String>
+{
+  static size_t key_size(const void *) { return 1; }
+  static void write_header(const std::string & key, size_t,
+                    std::ostream & os)
+  {
+    os << key;
+  }
+  static void write_data(const void * data, std::ostream & os)
+  {
+    auto s_s = static_cast<const mc_control::log::String*>(data);
+    std::string s = s_s->s()->str();
+    std::string safe_s;
+    safe_s.reserve(s.size());
+    size_t pos = 0;
+    size_t prev_pos = 0;
+    while(pos != std::string::npos)
+    {
+      pos = s.find('"', prev_pos);
+      safe_s.append(s, prev_pos, pos - prev_pos);
+      if(pos != std::string::npos)
+      {
+        safe_s.append(2, '"');
+      }
+      prev_pos = pos + 1;
+    }
+    os << '"' << safe_s << '"';
+  }
+};
+
+template<>
+struct CSVWriterHelper<mc_control::log::LogData_Vector3d>
+{
+  static size_t key_size(const void *) { return 3; }
+  static void write_header(const std::string & key, size_t,
+                    std::ostream & os)
+  {
+    os << key << "_x"
+       << ";" << key << "_y"
+       << ";" << key << "_z";
+  }
+  static void write_data(const void * data, std::ostream & os)
+  {
+    auto v3d = static_cast<const mc_control::log::Vector3d*>(data);
+    os << v3d->x() << ";" << v3d->y() << ";" << v3d->z();
+  }
+};
+
+template<>
+struct CSVWriterHelper<mc_control::log::LogData_Quaterniond>
+{
+  static size_t key_size(const void *) { return 4; }
+  static void write_header(const std::string & key, size_t,
+                    std::ostream & os)
+  {
+    os << key << "_w"
+       << ";" << key << "_x"
+       << ";" << key << "_y"
+       << ";" << key << "_z";
+  }
+  static void write_data(const void * data, std::ostream & os)
+  {
+    auto qd = static_cast<const mc_control::log::Quaterniond*>(data);
+    os << qd->w() << ";" << qd->x() << ";" << qd->y() << ";" << qd->z();
+  }
+};
+
+template<>
+struct CSVWriterHelper<mc_control::log::LogData_PTransformd>
+{
+  static size_t key_size(const void *) { return 7; }
+  static void write_header(const std::string & key, size_t,
+                    std::ostream & os)
+  {
+    os << key << "_qw"
+       << ";" << key << "_qx"
+       << ";" << key << "_qy"
+       << ";" << key << "_qz"
+       << ";" << key << "_tx"
+       << ";" << key << "_ty"
+       << ";" << key << "_tz";
+  }
+  static void write_data(const void * data, std::ostream & os)
+  {
+    auto pt = static_cast<const mc_control::log::PTransformd*>(data);
+    auto q = pt->ori();
+    auto t = pt->pos();
+    os << q->w()
+       << ";" << q->x()
+       << ";" << q->y()
+       << ";" << q->z()
+       << ";" << t->x()
+       << ";" << t->y()
+       << ";" << t->z();
+  }
+};
+
+template<>
+struct CSVWriterHelper<mc_control::log::LogData_ForceVecd>
+{
+  static size_t key_size(const void *) { return 6; }
+  static void write_header(const std::string & key, size_t,
+                    std::ostream & os)
+  {
+    os << key << "_fx"
+       << ";" << key << "_fy"
+       << ";" << key << "_fz"
+       << ";" << key << "_cx"
+       << ";" << key << "_cy"
+       << ";" << key << "_cz";
+  }
+  static void write_data(const void * data, std::ostream & os)
+  {
+    auto fv = static_cast<const mc_control::log::ForceVecd*>(data);
+    auto f = fv->force();
+    auto c = fv->couple();
+    os << f->x()
+       << ";" << f->y()
+       << ";" << f->z()
+       << ";" << c->x()
+       << ";" << c->y()
+       << ";" << c->z();
+  }
+};
+
 }
 
 }

@@ -1,0 +1,4 @@
+add_executable(mc_bin_to_log mc_bin_to_log.cpp)
+target_link_libraries(mc_bin_to_log mc_control)
+pkg_config_use_dependency(mc_bin_to_log Tasks)
+install(TARGETS mc_bin_to_log DESTINATION bin)
