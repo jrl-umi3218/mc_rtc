@@ -122,6 +122,10 @@ void QPSolver::removeTask(mc_tasks::MetaTask * task)
       {
         return task == p.get();
       }), shPtrTasksStorage.end());
+    if(logger_)
+    {
+      task->removeFromLogger(*logger_);
+    }
   }
 }
 
