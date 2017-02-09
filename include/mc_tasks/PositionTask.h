@@ -72,6 +72,8 @@ public:
 protected:
   std::string bodyName;
   unsigned int bIndex;
+  virtual void addToLogger(mc_control::Logger & logger) override;
+  virtual void removeFromLogger(mc_control::Logger & logger) override;
 };
 
 }

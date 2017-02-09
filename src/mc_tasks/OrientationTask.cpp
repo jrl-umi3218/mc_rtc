@@ -31,4 +31,26 @@ Eigen::Matrix3d OrientationTask::orientation()
   return errorT->orientation();
 }
 
+void OrientationTask::addToLogger(mc_control::Logger & logger)
+{
+  const auto & robot = robots.robot(rIndex);
+  logger.addLogEntry(robot.name() + "_" + bodyName + "_orientation_target",
+                     [this]()
+                     {
+                     return Eigen::Quaterniond(orientation());
+                     });
+  logger.addLogEntry(robot.name() + "_" + bodyName + "_orientation",
+                     [this]()
+                     {
+                     return Eigen::Quaterniond(robots.robot(rIndex).mbc().bodyPosW[bIndex].rotation());
+                     });
+}
+
+void OrientationTask::removeFromLogger(mc_control::Logger & logger)
+{
+  const auto & robot = robots.robot(rIndex);
+  logger.removeLogEntry(robot.name() + "_" + bodyName + "_orientation_target");
+  logger.removeLogEntry(robot.name() + "_" + bodyName + "_orientation");
+}
+
 }

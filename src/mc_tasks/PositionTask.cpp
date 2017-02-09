@@ -48,4 +48,26 @@ void PositionTask::bodyPoint(const Eigen::Vector3d& bodyPoint)
   errorT->bodyPoint(bodyPoint);
 }
 
+void PositionTask::addToLogger(mc_control::Logger & logger)
+{
+  const auto & robot = robots.robot(rIndex);
+  logger.addLogEntry(robot.name() + "_" + bodyName + "_position_target",
+                     [this]()
+                     {
+                     return position();
+                     });
+  logger.addLogEntry(robot.name() + "_" + bodyName + "_position",
+                     [this]() -> const Eigen::Vector3d&
+                     {
+                     return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation();
+                     });
+}
+
+void PositionTask::removeFromLogger(mc_control::Logger & logger)
+{
+  const auto & robot = robots.robot(rIndex);
+  logger.removeLogEntry(robot.name() + "_" + bodyName + "_position_target");
+  logger.removeLogEntry(robot.name() + "_" + bodyName + "_position");
+}
+
 }
