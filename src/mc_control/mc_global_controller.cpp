@@ -476,6 +476,7 @@ bool MCGlobalController::AddController(const std::string & name)
       }
       controllers[name]->real_robots = real_robots;
       controllers[name]->logger_ = logger_;
+      controllers[name]->solver().logger(logger_);
     }
     catch(const mc_rtc::LoaderException & exc)
     {

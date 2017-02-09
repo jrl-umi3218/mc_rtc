@@ -20,10 +20,5 @@ if __name__ == "__main__":
         assert(len(lines) == nrIter + 1)
         t_col = lines[0].split(';').index('t')
         t = [ int(round(float(lines[i].split(';')[t_col])/0.005)) for i in xrange(1, nrIter + 1) ]
-        #t = []
-        #for i in xrange(1, nrIter + 1):
-        #    print i
-        #    print lines[i]
-        #    t.append(int(round(float(lines[i].split(';')[t_col])/0.005)))
         assert(t == range(nrIter))
     sys.exit(0)

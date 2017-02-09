@@ -3,6 +3,8 @@
 #include <cmath>
 #include <mc_solver/QPSolver.h>
 
+#include <mc_control/log/Logger.h>
+
 #include <mc_tasks/api.h>
 
 #include <mc_rtc/Configuration.h>
@@ -134,6 +136,24 @@ protected:
   {
     t.update();
   }
+
+  /** Add entries to the logger
+   *
+   * This will be called by the solver if it holds a valid logger instance when
+   * the task is added.
+   *
+   * The default implementation adds nothing to the log.
+   */
+
+  virtual void addToLogger(mc_control::Logger &) {}
+
+  /** Remove entries from the logger
+   *
+   * This will be called by the solver when the task is removed.
+   *
+   * The default implementation removes nothing from the log.
+   */
+  virtual void removeFromLogger(mc_control::Logger &) {}
 };
 
 using MetaTaskPtr = std::shared_ptr<MetaTask>;

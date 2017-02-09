@@ -91,6 +91,10 @@ void QPSolver::addTask(mc_tasks::MetaTask * task)
   {
     metaTasks.push_back(task);
     task->addToSolver(*this);
+    if(logger_)
+    {
+      task->addToLogger(*logger_);
+    }
   }
 }
 
@@ -304,6 +308,25 @@ boost::timer::cpu_times QPSolver::solveTime()
 boost::timer::cpu_times QPSolver::solveAndBuildTime()
 {
   return solver.solveAndBuildTime();
+}
+
+void QPSolver::logger(std::shared_ptr<mc_control::Logger> logger)
+{
+  if(logger_)
+  {
+    for(auto t : metaTasks)
+    {
+      t->removeFromLogger(*logger_);
+    }
+  }
+  logger_ = logger;
+  if(logger_)
+  {
+    for(auto t : metaTasks)
+    {
+      t->addToLogger(*logger_);
+    }
+  }
 }
 
 }

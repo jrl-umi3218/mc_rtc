@@ -19,6 +19,11 @@ namespace mc_tasks
   struct MetaTask;
 }
 
+namespace mc_control
+{
+  struct Logger;
+}
+
 namespace mc_solver
 {
 
@@ -214,11 +219,15 @@ public:
    */
   tasks::qp::SolverData & data();
 
+  /** Use the dynamics constraint to fill torque in the main robot */
   void fillTorque(const mc_solver::DynamicsConstraint& dynamicsConstraint);
 
   boost::timer::cpu_times solveTime();
 
   boost::timer::cpu_times solveAndBuildTime();
+
+  /** Set the logger for this solver instance */
+  void logger(std::shared_ptr<mc_control::Logger> logger);
 private:
   std::shared_ptr<mc_rbdyn::Robots> robots_p;
   double timeStep;
@@ -240,6 +249,9 @@ private:
 
   /** Update qpRes from the latest run() */
   void __fillResult();
+
+  /** Pointer to the Logger */
+  std::shared_ptr<mc_control::Logger> logger_ = nullptr;
 public:
   /** \deprecated{Default constructor, not made for general usage} */
   QPSolver() {}
