@@ -66,10 +66,15 @@ MCGlobalController::MCGlobalController(const std::string & conf,
   if(config.enable_log)
   {
     logger_.reset(new Logger(config.log_policy, config.log_directory, config.log_template));
-    for(auto & c : controllers)
-    {
-      c.second->solver().logger(logger_);
-    }
+  }
+  else
+  {
+    /* Create a logger that has no performance impact */
+    logger_.reset(new Logger(mc_control::Logger::Policy::NON_THREADED, config.log_directory, config.log_template));
+  }
+  for(auto & c : controllers)
+  {
+    c.second->solver().logger(logger_);
   }
 }
 
