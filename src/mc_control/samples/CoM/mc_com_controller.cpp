@@ -37,13 +37,16 @@ MCCoMController::MCCoMController(std::shared_ptr<mc_rbdyn::RobotModule> robot_mo
   }
 
   comTask.reset(new mc_tasks::CoMTask(robots(), robots().robotIndex()));
-  solver().addTask(comTask);
+  postureTask->stiffness(1);
+  postureTask->weight(1);
+  comTask->weight(1000);
 }
 
 void MCCoMController::reset(const ControllerResetData & reset_data)
 {
   MCController::reset(reset_data);
   comTask->reset();
+  solver().addTask(comTask);
 }
 
 bool MCCoMController::move_com(const Eigen::Vector3d & v)

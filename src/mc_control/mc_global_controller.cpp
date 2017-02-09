@@ -66,6 +66,10 @@ MCGlobalController::MCGlobalController(const std::string & conf,
   if(config.enable_log)
   {
     logger_.reset(new Logger(config.log_policy, config.log_directory, config.log_template));
+    for(auto & c : controllers)
+    {
+      c.second->solver().logger(logger_);
+    }
   }
 }
 
@@ -110,6 +114,10 @@ void MCGlobalController::init(const std::vector<double> & initq)
 
 void MCGlobalController::init(const std::vector<double> & initq, const std::array<double, 7> & initAttitude)
 {
+  if(config.enable_log)
+  {
+    logger_->start(current_ctrl, controller_);
+  }
   std::vector<std::vector<double>> q = robot().mbc().q;
   q[0] = {std::begin(initAttitude), std::end(initAttitude)};
   const auto & rjo = ref_joint_order();
@@ -136,10 +144,6 @@ void MCGlobalController::init(const std::vector<double> & initq, const std::arra
     });
   }
   controller_->reset({q});
-  if(config.enable_log)
-  {
-    logger_->start(current_ctrl, controller_);
-  }
 }
 
 void MCGlobalController::setSensorPosition(const Eigen::Vector3d & pos)
@@ -476,7 +480,6 @@ bool MCGlobalController::AddController(const std::string & name)
       }
       controllers[name]->real_robots = real_robots;
       controllers[name]->logger_ = logger_;
-      controllers[name]->solver().logger(logger_);
     }
     catch(const mc_rtc::LoaderException & exc)
     {

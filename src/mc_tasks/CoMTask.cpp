@@ -8,26 +8,27 @@ namespace mc_tasks
 CoMTask::CoMTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex,
                  double stiffness, double weight)
 : TrajectoryTaskGeneric<tasks::qp::CoMTask>(robots, robotIndex, stiffness, weight),
-  cur_com(Eigen::Vector3d::Zero())
+  robot_index_(robotIndex),
+  cur_com_(Eigen::Vector3d::Zero())
 {
   const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
 
-  cur_com = rbd::computeCoM(robot.mb(), robot.mbc());
+  cur_com_ = rbd::computeCoM(robot.mb(), robot.mbc());
 
-  finalize(robots.mbs(), static_cast<int>(robotIndex), cur_com);
+  finalize(robots.mbs(), static_cast<int>(robotIndex), cur_com_);
 }
 
 void CoMTask::reset()
 {
   const mc_rbdyn::Robot & robot = robots.robot(rIndex);
-  cur_com = rbd::computeCoM(robot.mb(), robot.mbc());
-  errorT->com(cur_com);
+  cur_com_ = rbd::computeCoM(robot.mb(), robot.mbc());
+  errorT->com(cur_com_);
 }
 
 void CoMTask::move_com(const Eigen::Vector3d & com)
 {
-  cur_com += com;
-  errorT->com(cur_com);
+  cur_com_ += com;
+  errorT->com(cur_com_);
 }
 
 void CoMTask::com(const Eigen::Vector3d & com)
@@ -38,6 +39,26 @@ void CoMTask::com(const Eigen::Vector3d & com)
 Eigen::Vector3d CoMTask::com()
 {
   return errorT->com();
+}
+
+void CoMTask::addToLogger(mc_control::Logger & logger)
+{
+  logger.addLogEntry(robots.robot(robot_index_).name() + "_com_target",
+                     [this]() -> const Eigen::Vector3d &
+                     {
+                     return cur_com_;
+                     });
+  logger.addLogEntry(robots.robot(robot_index_).name() + "_com",
+                     [this]() -> Eigen::Vector3d
+                     {
+                     return cur_com_ - eval();
+                     });
+}
+
+void CoMTask::removeFromLogger(mc_control::Logger & logger)
+{
+  logger.removeLogEntry(robots.robot(robot_index_).name() + "_com_target");
+  logger.removeLogEntry(robots.robot(robot_index_).name() + "_com");
 }
 
 }
