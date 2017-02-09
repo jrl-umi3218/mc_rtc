@@ -25,7 +25,7 @@ GazeTask::GazeTask(const std::string & bodyName,
 
 void GazeTask::reset()
 {
-
+    errorT->error(Eigen::Vector2d::Zero(), Eigen::Vector2d::Zero());
 }
 
 void GazeTask::error(const Eigen::Vector2d & point2d, const Eigen::Vector2d & point2d_ref)
