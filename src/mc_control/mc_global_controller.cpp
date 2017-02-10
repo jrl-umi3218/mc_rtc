@@ -74,6 +74,7 @@ MCGlobalController::MCGlobalController(const std::string & conf,
   }
   for(auto & c : controllers)
   {
+    c.second->logger_ = logger_;
     c.second->solver().logger(logger_);
   }
 }
@@ -484,7 +485,6 @@ bool MCGlobalController::AddController(const std::string & name)
         controllers[name] = controller_loader->create_object(name, config.main_robot_module, config.timestep, config.config);
       }
       controllers[name]->real_robots = real_robots;
-      controllers[name]->logger_ = logger_;
     }
     catch(const mc_rtc::LoaderException & exc)
     {
