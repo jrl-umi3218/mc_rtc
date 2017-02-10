@@ -249,23 +249,38 @@ namespace mc_control
 
   void Logger::log()
   {
-    std::vector<std::string> keys;
     std::vector<uint8_t> types;
     std::vector<flatbuffers::Offset<void>> values;
     for(auto & e : log_entries_)
     {
-      keys.push_back(e.first);
       e.second(impl_->builder_, types, values);
     }
+    auto s_keys = impl_->builder_.CreateVectorOfStrings({});
     auto s_types = impl_->builder_.CreateVector(types);
     auto s_values = impl_->builder_.CreateVector(values);
-    mc_control::log::LogBuilder log_builder(impl_->builder_);
     if(log_entries_changed_)
     {
-      auto s_keys = impl_->builder_.CreateVectorOfStrings(keys);
-      log_builder.add_keys(s_keys);
+      std::vector<std::string> keys;
+      for(auto & e : log_entries_)
+      {
+        if(log_vector_entries_size_.count(e.first))
+        {
+          size_t k_size = log_vector_entries_size_.at(e.first);
+          for(size_t i = 0; i < k_size; ++i)
+          {
+            keys.push_back(e.first + "_" + std::to_string(i));
+          }
+        }
+        else
+        {
+          keys.push_back(e.first);
+        }
+      }
+      s_keys = impl_->builder_.CreateVectorOfStrings(keys);
       log_entries_changed_ = false;
     }
+    mc_control::log::LogBuilder log_builder(impl_->builder_);
+    log_builder.add_keys(s_keys);
     log_builder.add_values_type(s_types);
     log_builder.add_values(s_values);
     auto log = log_builder.Finish();
@@ -282,6 +297,10 @@ namespace mc_control
     {
       log_entries_changed_ = true;
       log_entries_.erase(name);
+    }
+    if(log_vector_entries_size_.count(name))
+    {
+      log_vector_entries_size_.erase(name);
     }
   }
 }

@@ -16,7 +16,7 @@ template<typename T>
 struct LogDataHelper
 {
   /** Holds the value type corresponding to the C++ type */
-  enum { value_type = mc_control::log::LogData_NONE };
+  static constexpr mc_control::log::LogData value_type = mc_control::log::LogData_NONE;
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wreturn-type"
@@ -35,7 +35,7 @@ struct LogDataHelper
 template<>\
 struct LogDataHelper<TYPE>\
 {\
-  enum { value_type = mc_control::log::LD_TYPE };\
+  static constexpr mc_control::log::LogData value_type = mc_control::log::LD_TYPE;\
   static flatbuffers::Offset<void> serialize(flatbuffers::FlatBufferBuilder & builder,\
                                              const TYPE & ARG_NAME)\
   {\
@@ -56,7 +56,7 @@ IMPL_LDH(Eigen::Quaterniond, LogData_Quaterniond, CreateQuaterniond, q, q.w(), q
 template<>
 struct LogDataHelper<sva::PTransformd>
 {
-  enum { value_type = mc_control::log::LogData_PTransformd };
+  static constexpr mc_control::log::LogData value_type = mc_control::log::LogData_PTransformd;
 
   static flatbuffers::Offset<void> serialize(flatbuffers::FlatBufferBuilder & builder,
                                              const sva::PTransformd & pt)
@@ -72,7 +72,7 @@ struct LogDataHelper<sva::PTransformd>
 template<>
 struct LogDataHelper<sva::ForceVecd>
 {
-  enum { value_type = mc_control::log::LogData_ForceVecd };
+  static constexpr mc_control::log::LogData value_type = mc_control::log::LogData_ForceVecd;
 
   static flatbuffers::Offset<void> serialize(flatbuffers::FlatBufferBuilder & builder,
                                              const sva::ForceVecd & fv)
@@ -85,7 +85,70 @@ struct LogDataHelper<sva::ForceVecd>
   }
 };
 
+/** Type-traits for serializable types
+ *
+ * value is true if T is serializable
+ *
+ */
 template<typename T>
+struct is_serializable
+{
+  static constexpr bool value = LogDataHelper<T>::value_type != mc_control::log::LogData_NONE;
+};
+
+/** Type-traits for callables that returns a serializable type
+ *
+ *  value is true if T() return type (after decaying) is serializable
+ *
+ */
+template<typename T>
+struct callback_is_serializable
+{
+  using ret_type = typename std::result_of<T()>::type;
+  using base_type = typename std::decay<ret_type>::type;
+  static constexpr bool value = is_serializable<base_type>::value;
+};
+
+/** Type-traits to recognize a vector */
+template<typename T>
+struct is_vector
+{
+  static constexpr bool value = false;
+};
+
+template<typename T>
+struct is_vector<std::vector<T>>
+{
+  static constexpr bool value = true;
+};
+
+/** Type-traits to recognize a callable object that returns a const reference
+ * to a vector */
+template<typename T>
+struct callback_returns_crv
+{
+  using ret_type = typename std::result_of<T()>::type;
+  using base_type = typename std::decay<ret_type>::type;
+  static constexpr bool value = ! is_serializable<base_type>::value &&
+                                is_vector<base_type>::value &&
+                                std::is_reference<ret_type>::value &&
+                                std::is_const<typename std::remove_reference<ret_type>::type>::value;
+};
+
+/** Type-traits for callables that returns a const reference to a vector of a
+ * serializable types
+ *
+ * value is true if T() returns a const reference to a vector of a serializable
+ * type
+ *
+ */
+template<typename T, typename std::enable_if<callback_returns_crv<T>::value, int>::type = 0>
+struct callback_is_crv_of_serializable
+{
+  static constexpr bool value = is_serializable<typename callback_returns_crv<T>::base_type::value_type>::value;
+};
+
+template<typename T, typename = typename std::enable_if<is_serializable<T>::value>::type>
 void AddLogData(flatbuffers::FlatBufferBuilder & builder,
                 std::vector<uint8_t> & value_types,
                 std::vector<flatbuffers::Offset<void>> & values,

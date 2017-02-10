@@ -89,17 +89,22 @@ public:
 
   /** Add a log entry into the log
    *
-   * \param name Name of the log entry, this should be unique at any given time but the same key can be re-used during the logger's life
+   * This function only accepts callable objects that returns a l/rvalue to a
+   * serializable object.
+   *
+   * \param name Name of the log entry, this should be unique at any given time
+   * but the same key can be re-used during the logger's life
    *
    * \param get_fn A function that provides data that should be logged
    *
    */
   template<typename T>
   void addLogEntry(const std::string & name,
-                   T get_fn)
+                   T get_fn,
+                   typename std::enable_if<mc_control::log::callback_is_serializable<T>::value>::type * = 0)
   {
-    typedef decltype(get_fn()) ret_t;
-    typedef typename std::decay<ret_t>::type base_t;
+    using ret_t = decltype(get_fn());
+    using base_t =  typename std::decay<ret_t>::type;
     if(log_entries_.count(name))
     {
       LOG_ERROR("Already logging an entry named " << name)
@@ -114,12 +119,66 @@ public:
     };
   }
 
-  /** Remove a log entry from the log */
+  /** Add log entry into the log
+   *
+   * This function only accepts callable objects that returns a const
+   * reference to a vector holding serializable objects.
+   *
+   * \param name Name of the log entry, this should be unique at any given
+   * time but the same key can be re-used during the logger's life
+   *
+   * \param get_fn A function that provides data that should be logged
+   *
+   */
+  template<typename T>
+  void addLogEntry(const std::string & name,
+                   T get_fn,
+                   typename std::enable_if<mc_control::log::callback_is_crv_of_serializable<T>::value>::type * = 0)
+  {
+    using ret_t = decltype(get_fn());
+    using base_t = typename std::decay<ret_t>::type;
+    using value_t = typename base_t::value_type;
+    if(log_entries_.count(name))
+    {
+      LOG_ERROR("Already logging an entry named " << name)
+      return;
+    }
+    log_entries_changed_ = true;
+    log_vector_entries_size_[name] = 0;
+    log_entries_[name] = [this, name, get_fn](flatbuffers::FlatBufferBuilder & builder,
+                                        std::vector<uint8_t> & types,
+                                        std::vector<flatbuffers::Offset<void>> & values)
+    {
+      const std::vector<value_t> & v = get_fn();
+      if(v.size() != log_vector_entries_size_[name])
+      {
+        log_entries_changed_ = true;
+        log_vector_entries_size_[name] = v.size();
+      }
+      for(const auto & e : v)
+      {
+        mc_control::log::AddLogData<value_t>(builder, types, values, e);
+      }
+    };
+  }
+
+  /** Remove a log entry from the log
+   *
+   * This has no effect if the log entry does not exist.
+   *
+   * \param name Name of the entry
+   *
+   */
   void removeLogEntry(const std::string & name);
 private:
+  /** Store implementation detail related to the logging policy */
   std::shared_ptr<LoggerImpl> impl_ = nullptr;
+  /** Set to true when log entries are added or removed */
   bool log_entries_changed_ = false;
+  /** Contains all the log entries callback */
   std::map<std::string, serialize_fn> log_entries_ = {};
+  /** For vector entries, retain the size of the vector in the previous call */
+  std::map<std::string, size_t> log_vector_entries_size_ = {};
 };
 
 }
