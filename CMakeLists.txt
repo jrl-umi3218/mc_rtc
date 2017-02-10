@@ -151,6 +151,7 @@ include_directories(3rd-party/RapidJSON)
 
 add_subdirectory(3rd-party)
 add_subdirectory(doc)
+add_subdirectory(idl)
 add_subdirectory(src)
 if(NOT ${DISABLE_TESTS})
   add_subdirectory(tests)

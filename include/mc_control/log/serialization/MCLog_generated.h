@@ -44,6 +44,22 @@ enum LogData {
   LogData_MAX = LogData_ForceVecd
 };
 
+inline LogData (&EnumValuesLogData())[10] {
+  static LogData values[] = {
+    LogData_NONE,
+    LogData_Bool,
+    LogData_Double,
+    LogData_DoubleVector,
+    LogData_UnsignedInt,
+    LogData_String,
+    LogData_Vector3d,
+    LogData_Quaterniond,
+    LogData_PTransformd,
+    LogData_ForceVecd
+  };
+  return values;
+}
+
 inline const char **EnumNamesLogData() {
   static const char *names[] = {
     "NONE",
@@ -198,7 +214,7 @@ struct DoubleVector FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, VT_V) &&
+           VerifyOffset(verifier, VT_V) &&
            verifier.Verify(v()) &&
            verifier.EndTable();
   }
@@ -233,7 +249,7 @@ inline flatbuffers::Offset<DoubleVector> CreateDoubleVector(
 inline flatbuffers::Offset<DoubleVector> CreateDoubleVectorDirect(
     flatbuffers::FlatBufferBuilder &_fbb,
     const std::vector<double> *v = nullptr) {
-  return CreateDoubleVector(
+  return mc_control::log::CreateDoubleVector(
       _fbb,
       v ? _fbb.CreateVector<double>(*v) : 0);
 }
@@ -287,7 +303,7 @@ struct String FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, VT_S) &&
+           VerifyOffset(verifier, VT_S) &&
            verifier.Verify(s()) &&
            verifier.EndTable();
   }
@@ -322,7 +338,7 @@ inline flatbuffers::Offset<String> CreateString(
 inline flatbuffers::Offset<String> CreateStringDirect(
     flatbuffers::FlatBufferBuilder &_fbb,
     const char *s = nullptr) {
-  return CreateString(
+  return mc_control::log::CreateString(
       _fbb,
       s ? _fbb.CreateString(s) : 0);
 }
@@ -470,9 +486,9 @@ struct PTransformd FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, VT_ORI) &&
+           VerifyOffset(verifier, VT_ORI) &&
            verifier.VerifyTable(ori()) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, VT_POS) &&
+           VerifyOffset(verifier, VT_POS) &&
            verifier.VerifyTable(pos()) &&
            verifier.EndTable();
   }
@@ -522,9 +538,9 @@ struct ForceVecd FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, VT_COUPLE) &&
+           VerifyOffset(verifier, VT_COUPLE) &&
            verifier.VerifyTable(couple()) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, VT_FORCE) &&
+           VerifyOffset(verifier, VT_FORCE) &&
            verifier.VerifyTable(force()) &&
            verifier.EndTable();
   }
@@ -578,12 +594,12 @@ struct Log FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, VT_KEYS) &&
+           VerifyOffset(verifier, VT_KEYS) &&
            verifier.Verify(keys()) &&
            verifier.VerifyVectorOfStrings(keys()) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, VT_VALUES_TYPE) &&
+           VerifyOffset(verifier, VT_VALUES_TYPE) &&
            verifier.Verify(values_type()) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, VT_VALUES) &&
+           VerifyOffset(verifier, VT_VALUES) &&
            verifier.Verify(values()) &&
            VerifyLogDataVector(verifier, values(), values_type()) &&
            verifier.EndTable();
@@ -631,7 +647,7 @@ inline flatbuffers::Offset<Log> CreateLogDirect(
     const std::vector<flatbuffers::Offset<flatbuffers::String>> *keys = nullptr,
     const std::vector<uint8_t> *values_type = nullptr,
     const std::vector<flatbuffers::Offset<void>> *values = nullptr) {
-  return CreateLog(
+  return mc_control::log::CreateLog(
       _fbb,
       keys ? _fbb.CreateVector<flatbuffers::Offset<flatbuffers::String>>(*keys) : 0,
       values_type ? _fbb.CreateVector<uint8_t>(*values_type) : 0,

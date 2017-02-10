@@ -218,6 +218,7 @@ set(mc_control_HDR
 ../include/mc_control/SimulationContactSensor.h
 ../include/mc_control/mc_global_controller.h
 ../include/mc_control/log/Logger.h
+../include/mc_control/log/serialization/MCLog_generated.h
 )
 set(mc_control_HDR ${mc_control_HDR} PARENT_SCOPE)
 
@@ -231,6 +232,13 @@ target_link_libraries(mc_control ${Boost_LIBRARIES})
 pkg_config_use_dependency(mc_control mc_rbdyn_urdf)
 pkg_config_use_dependency(mc_control Tasks)
 pkg_config_append_libs(mc_control)
+
+if(FLATC)
+  set_source_files_properties(../include/mc_control/log/serialization/MCLog_generated.h PROPERTIES GENERATED 1)
+  add_dependencies(mc_solver generate_mc_log_code)
+  add_dependencies(mc_tasks generate_mc_log_code)
+  add_dependencies(mc_control generate_mc_log_code)
+endif()
 
 add_subdirectory(mc_control)
 
