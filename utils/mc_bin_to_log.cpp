@@ -209,6 +209,13 @@ struct Log
       write_entry(e, ofs, current_keys);
     }
   }
+  ~Log()
+  {
+    for(auto & e : entries)
+    {
+      delete[] e.raw;
+    }
+  }
   std::vector<LogEntry> entries;
   std::vector<typed_key> keys;
 };
