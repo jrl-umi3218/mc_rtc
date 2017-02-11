@@ -433,6 +433,20 @@ void Robot::copy(Robots & robots, unsigned int robots_idx) const
   robots.robots_.emplace_back(this->name_, robots, robots_idx, this->bodyTransforms, this->ql(), this->qu(), this->vl(), this->vu(), this->tl(), this->tu(), this->convexes, this->stpbvs, this->collisionTransforms, this->surfaces_, this->forceSensors_, this->refJointOrder_, this->stance_, this->bodySensors_, this->springs, this->tlPoly, this->tuPoly, this->flexibility());
 }
 
+mc_rbdyn::Surface & Robot::copySurface(const std::string & sName, const std::string & name)
+{
+  if(hasSurface(name))
+  {
+    LOG_ERROR(name << " already exists within this robot. Cannot overwrite an existing surface")
+    throw("Target surface already exists");
+  }
+  const Surface & surf = surface(sName);
+  SurfacePtr nSurf = surf.copy();
+  nSurf->name(name);
+  surfaces_[name] = nSurf;
+  return *nSurf;
+}
+
 std::vector< std::vector<double> > jointsParameters(const rbd::MultiBody & mb, const double & coeff)
 {
   std::vector< std::vector<double> > res;
