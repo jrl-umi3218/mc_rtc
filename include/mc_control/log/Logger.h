@@ -150,10 +150,10 @@ public:
                                         std::vector<flatbuffers::Offset<void>> & values)
     {
       const std::vector<value_t> & v = get_fn();
-      if(v.size() != log_vector_entries_size_[name])
+      if(v.size() != this->log_vector_entries_size_[name])
       {
         log_entries_changed_ = true;
-        log_vector_entries_size_[name] = v.size();
+        this->log_vector_entries_size_[name] = v.size();
       }
       for(const auto & e : v)
       {
