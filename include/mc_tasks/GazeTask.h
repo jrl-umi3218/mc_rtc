@@ -21,7 +21,7 @@ public:
    *   
    * \param depthEstimate Distance of the monitored point from the camera   
    *   
-   * \param X_b_gaze Transformation between the camera link and the neck pitch link  
+   * \param X_b_gaze Transformation between the camera link and the parent body
    *    
    * \param robots Robots controlled by this task    
    *    
@@ -44,7 +44,7 @@ public:
    *   
    * \param point3d Equal to (point2d[0], point2d[1], depthEstimate) 
    *   
-   * \param X_b_gaze Transformation between the camera link and the neck pitch link  
+   * \param X_b_gaze Transformation between the camera link and the parent body  
    *    
    * \param robots Robots controlled by this task    
    *    
