@@ -132,6 +132,7 @@ mc_tasks/MoveContactTask.cpp
 mc_tasks/TrajectoryTask.cpp
 mc_tasks/ComplianceTask.cpp
 mc_tasks/GazeTask.cpp
+mc_tasks/PositionBasedVisServoTask.cpp
 )
 
 set(mc_tasks_HDR
@@ -152,6 +153,7 @@ set(mc_tasks_HDR
 ../include/mc_tasks/TrajectoryTaskGeneric.hpp
 ../include/mc_tasks/ComplianceTask.h
 ../include/mc_tasks/GazeTask.h
+../include/mc_tasks/PositionBasedVisServoTask.h
 )
 
 add_library(mc_tasks SHARED ${mc_tasks_SRC} ${mc_tasks_HDR})
