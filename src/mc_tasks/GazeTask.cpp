@@ -6,7 +6,7 @@ namespace mc_tasks
 GazeTask::GazeTask(const std::string & bodyName,
                     const Eigen::Vector2d & point2d,
                     double depthEstimate, const sva::PTransformd & X_b_gaze,
-                    const mc_rbdyn::Robots & robots, unsigned int robotIndex, 
+                    const mc_rbdyn::Robots & robots, unsigned int robotIndex,
                     double stiffness, double weight)
   : TrajectoryTaskGeneric<tasks::qp::GazeTask>(robots, robotIndex, stiffness, weight)
 {
@@ -16,7 +16,7 @@ GazeTask::GazeTask(const std::string & bodyName,
 GazeTask::GazeTask(const std::string & bodyName,
                     const Eigen::Vector3d & point3d,
                     const sva::PTransformd & X_b_gaze,
-                    const mc_rbdyn::Robots & robots, unsigned int robotIndex, 
+                    const mc_rbdyn::Robots & robots, unsigned int robotIndex,
                     double stiffness, double weight)
   : TrajectoryTaskGeneric<tasks::qp::GazeTask>(robots, robotIndex, stiffness, weight)
 {
