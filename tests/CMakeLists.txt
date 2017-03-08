@@ -1,7 +1,9 @@
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/tests_config.h.cmake.in"
                "${CMAKE_CURRENT_BINARY_DIR}/tests_config.h")
-
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
+
+add_executable(LoggerTraits LoggerTraits.cpp)
+target_link_libraries(LoggerTraits mc_control)
 
 add_executable(testBSplineTrajectory testBSplineTrajectory.cpp)
 target_link_libraries(testBSplineTrajectory mc_trajectory)

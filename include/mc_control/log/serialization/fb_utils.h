@@ -142,8 +142,14 @@ struct callback_returns_crv
  * type
  *
  */
-template<typename T, typename std::enable_if<callback_returns_crv<T>::value, int>::type = 0>
+template<typename T, typename enable = void>
 struct callback_is_crv_of_serializable
+{
+  static constexpr bool value = false;
+};
+
+template<typename T>
+struct callback_is_crv_of_serializable<T, typename std::enable_if<callback_returns_crv<T>::value>::type>
 {
   static constexpr bool value = is_serializable<typename callback_returns_crv<T>::base_type::value_type>::value;
 };
