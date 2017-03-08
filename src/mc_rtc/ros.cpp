@@ -72,7 +72,7 @@ public:
 
   void update(double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::vector<std::string>> & gJs, const std::map<std::string, std::vector<double>> & gQs)
   {
-    unsigned int skip = static_cast<unsigned int>(floor(1/(rate*dt)));
+    unsigned int skip = static_cast<unsigned int>(ceil(1/(rate*dt)));
     if(++seq % skip) { return; }
     ros::Time tm = ros::Time::now();
     sensor_msgs::JointState msg;

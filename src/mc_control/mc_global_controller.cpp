@@ -544,9 +544,7 @@ void MCGlobalController::publish_robots()
     const auto & robots = controller_->robots();
     for(size_t i = 1; i < robots.robots().size(); ++i)
     {
-      std::stringstream ss;
-      ss << "control/env_" << i;
-      mc_rtc::ROSBridge::update_robot_publisher(ss.str(), timestep(), robots.robot(i), {}, {});
+      mc_rtc::ROSBridge::update_robot_publisher("control/env_" + std::to_string(i), timestep(), robots.robot(i), {}, {});
     }
   }
   // Publish real robot
