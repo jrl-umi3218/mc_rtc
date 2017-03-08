@@ -39,7 +39,27 @@ struct MC_RTC_ROS_DLLAPI ROSBridge
    */
   static std::shared_ptr<ros::NodeHandle> get_node_handle();
 
-  /*! \brief Update the robot publisher state */
+  /** Set publisher timestep
+   *
+   * \param timestep Update timestep in ms
+   *
+   */
+  static void set_publisher_timestep(double timestep);
+
+  /** Update the robot publisher state
+   *
+   * \param publisher Name of the publisher
+   *
+   * \param dt Controller timestep
+   *
+   * \param robot Which robot to publish
+   *
+   * \param gripperJ List of gripper joints managed by mc_rtc
+   *
+   * \param gripperQ Actual gripper values for the gripper joints managed
+   * by mc_rtc
+   *
+   */
   static void update_robot_publisher(const std::string& publisher, double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::vector<std::string>> & gripperJ, const std::map<std::string, std::vector<double>> & gripperQ);
 
   /*! \brief Reset the IMU offset in publication */
@@ -64,15 +84,16 @@ struct RobotPublisherImpl;
 struct MC_RTC_ROS_DLLAPI RobotPublisher
 {
 public:
-  /*! \brief Constructor
+  /** Constructor
    *
    * If ROSBridge::get_node_handle returns a nullptr then this object does
    * nothing.
    *
-   * \param prefix TF prefix \param rate Publishing rate \param skip Only
-   * publish every "skip" calls to update
+   * \param prefix TF prefix
+   *
+   * \param rate Publishing rate
    */
-  RobotPublisher(const std::string & prefix, unsigned int rate, unsigned int skip = 5);
+  RobotPublisher(const std::string & prefix, unsigned int rate);
 
   /*! \brief Destructor */
   ~RobotPublisher();

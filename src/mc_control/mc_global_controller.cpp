@@ -61,14 +61,12 @@ MCGlobalController::MCGlobalController(const std::string & conf,
   else
   {
     real_robots->load(*config.main_robot_module, config.main_robot_module->rsdf_dir);
-    publish_th = std::thread(std::bind(&MCGlobalController::publish_thread, this));
   }
+  mc_rtc::ROSBridge::set_publisher_timestep(config.publish_timestep);
 }
 
 MCGlobalController::~MCGlobalController()
 {
-  publish_th_running = false;
-  publish_th.join();
 }
 
 std::shared_ptr<mc_rbdyn::RobotModule> MCGlobalController::get_robot_module()
@@ -330,12 +328,9 @@ bool MCGlobalController::run()
       logger_->log_data(*this, controller_);
     }
     if(!r) { running = false; }
-    return r;
   }
-  else
-  {
-    return false;
-  }
+  publish_robots();
+  return running;
 }
 
 const mc_solver::QPResultMsg & MCGlobalController::send(const double & t)
@@ -536,36 +531,29 @@ bool MCGlobalController::EnableController(const std::string & name)
   }
 }
 
-void MCGlobalController::publish_thread()
+void MCGlobalController::publish_robots()
 {
-  while(publish_th_running)
+  // Publish controlled robot
+  if(config.publish_control_state)
   {
-    const auto start = std::chrono::high_resolution_clock::now();
-
-    // Publish controlled robot
-    if(config.publish_control_state)
+    mc_rtc::ROSBridge::update_robot_publisher("control", timestep(), robot(), gripperJoints(), gripperQ());
+  }
+  // Publish environment state
+  if(config.publish_env_state)
+  {
+    const auto & robots = controller_->robots();
+    for(size_t i = 1; i < robots.robots().size(); ++i)
     {
-      mc_rtc::ROSBridge::update_robot_publisher("control", timestep(), robot(), gripperJoints(), gripperQ());
+      std::stringstream ss;
+      ss << "control/env_" << i;
+      mc_rtc::ROSBridge::update_robot_publisher(ss.str(), timestep(), robots.robot(i), {}, {});
     }
-    if(config.publish_env_state)
-    {
-      const auto & robots = controller_->robots();
-      for(size_t i = 1; i < robots.robots().size(); ++i)
-      {
-        std::stringstream ss;
-        ss << "control/env_" << i;
-        mc_rtc::ROSBridge::update_robot_publisher(ss.str(), timestep(), robots.robot(i), {}, {});
-      }
-    }
-
-    if(config.publish_real_state)
-    {
-      auto& real_robot = real_robots->robot();
-      mc_rtc::ROSBridge::update_robot_publisher("real", timestep(), real_robot, gripperJoints(), gripperQ());
-    }
-
-    const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now()-start).count();
-    std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<long>(1000 * config.publish_timestep) - elapsed));
+  }
+  // Publish real robot
+  if(config.publish_real_state)
+  {
+    auto& real_robot = real_robots->robot();
+    mc_rtc::ROSBridge::update_robot_publisher("real", timestep(), real_robot, gripperJoints(), gripperQ());
   }
 }
 
