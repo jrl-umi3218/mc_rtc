@@ -51,9 +51,7 @@ namespace mc_robots
     gripperLinks.push_back("L_F52_LINK");
     gripperLinks.push_back("L_F53_LINK");
 
-    _bodySensors = {
-      {"Accelerometer", "body", sva::PTransformd(Eigen::Vector3d(-0.0325, 0, 0.1095))}
-    };
+    _bodySensors.emplace_back("Accelerometer", "body", sva::PTransformd(Eigen::Vector3d(-0.0325, 0, 0.1095)));
 
     halfSitting["R_HIP_Y"] = { 0 }; //0
     halfSitting["R_HIP_R"] = { -0.76 }; //-0.0132645
