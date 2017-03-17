@@ -201,6 +201,10 @@ public:
   tasks::qp::SolverData & data();
 
   void fillTorque(const mc_solver::DynamicsConstraint& dynamicsConstraint);
+
+  boost::timer::cpu_times solveTime();
+
+  boost::timer::cpu_times solveAndBuildTime();
 private:
   std::shared_ptr<mc_rbdyn::Robots> robots_p;
   double timeStep;
