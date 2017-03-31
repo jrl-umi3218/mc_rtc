@@ -65,6 +65,9 @@ std::string sampleConfig()
   "boolFalse": false,
   "bool1": 1,
   "bool0": 0,
+  "doubleDoublePair": [42.5, -42.5],
+  "doubleStringPair": [42.5, "sometext"],
+  "doubleDoublePairV": [[0.0, 1.1],[2.2, 3.3], [4.4, 5.5]],
   "dict":
   {
     "boolTrue": true,
@@ -76,7 +79,9 @@ std::string sampleConfig()
     "stringV": ["a", "b", "c", "foo", "bar"],
     "v3d": [1.0, 2.3, -100],
     "v6d": [1.0, -1.5, 2.0, -2.5, 3.0, -3.5],
-    "quat": [0.71, 0, 0.71, 0]
+    "quat": [0.71, 0, 0.71, 0],
+    "doubleDoublePair": [42.5, -42.5],
+    "doubleStringPair": [42.5, "sometext"]
   }
 }
 )";
@@ -433,6 +438,54 @@ BOOST_AUTO_TEST_CASE(TestConfiguration)
     std::vector<std::string> c(0);
     config("dict")("stringV", c);
     BOOST_CHECK(c == ref);
+  }
+
+  /* pair<double, double> test */
+  {
+    std::pair<double, double> ref = {42.5, -42.5};
+
+    std::pair<double, double> a = config("doubleDoublePair");
+    BOOST_CHECK(a == ref);
+
+    std::pair<double, double> b = {0, 0};
+    config("doubleDoublePair", b);
+    BOOST_CHECK(b == ref);
+
+    std::pair<double, double> c = {0, 0};
+    config("dict")("doubleDoublePair", c);
+    BOOST_CHECK(b == ref);
+
+    BOOST_CHECK_THROW(c = config("quat"), mc_control::Configuration::Exception);
+    BOOST_CHECK_THROW(c = config("doubleStringPair"), mc_control::Configuration::Exception);
+  }
+
+  /* pair<double, string> test */
+  {
+    std::pair<double, std::string> ref = {42.5, "sometext"};
+
+    std::pair<double, std::string> a = config("doubleStringPair");
+    BOOST_CHECK(a == ref);
+
+    std::pair<double, std::string> b = {0, ""};
+    config("doubleStringPair", b);
+    BOOST_CHECK(b == ref);
+
+    std::pair<double, std::string> c = {0, ""};
+    config("dict")("doubleStringPair", c);
+    BOOST_CHECK(b == ref);
+  }
+
+  /* vector<pair<double,double>> */
+  {
+    using test_t = std::vector<std::pair<double, double>>;
+    test_t ref = { {0.0, 1.1}, {2.2, 3.3}, {4.4, 5.5} };
+
+    test_t a = config("doubleDoublePairV");
+    BOOST_CHECK(a == ref);
+
+    test_t b = {};
+    config("doubleDoublePairV", b);
+    BOOST_CHECK(b == ref);
   }
 
   /* Check load */
