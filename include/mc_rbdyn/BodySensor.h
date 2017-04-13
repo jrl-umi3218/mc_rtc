@@ -4,6 +4,8 @@
 
 #include <SpaceVecAlg/SpaceVecAlg>
 
+#include <vector>
+
 namespace mc_rbdyn
 {
 
