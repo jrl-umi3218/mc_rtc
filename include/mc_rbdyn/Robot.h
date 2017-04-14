@@ -303,7 +303,7 @@ protected:
         const std::vector<ForceSensor> & forceSensors,
         const std::vector<std::string> & refJointOrder,
         const std::map<std::string, std::vector<double>> stance = {},
-        const BodySensorVector & bodySensors = {},
+        const BodySensorVector & bodySensors = BodySensorVector(),
         const Springs & springs = Springs(), const std::vector< std::vector<Eigen::VectorXd> > & tlPoly = {},
         const std::vector< std::vector<Eigen::VectorXd> > & tuPoly = {}, const std::vector<Flexibility> & flexibility = {});
   Robot(const Robot&) = delete;
