@@ -5,7 +5,7 @@ namespace mc_tasks
 
 SurfaceTransformTask::SurfaceTransformTask(const std::string & surfaceName, const mc_rbdyn::Robots & robots, unsigned int robotIndex, double stiffness, double weight)
 : TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>(robots, robotIndex, stiffness, weight),
-  surfaceName(surfaceName), bIndex(0)
+  surfaceName(surfaceName)
 {
   const mc_rbdyn::Robot & robot = robots.robot(rIndex);
   std::string bodyName = robot.surface(surfaceName).bodyName();
