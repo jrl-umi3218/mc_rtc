@@ -15,7 +15,7 @@ struct MC_TASKS_DLLAPI SurfaceTransformTask : public TrajectoryTaskGeneric<tasks
 public:
   /*! \brief Constructor
    *
-   * \param bodyName Name of the body to control
+   * \param surfaceName Name of the body to control
    *
    * \param robots Robots controlled by this task
    *
@@ -32,7 +32,7 @@ public:
 
   /*! \brief Reset the task
    *
-   * Set the task objective to the current body Surface
+   * Set the task objective to the current surface
    */
   virtual void reset() override;
 
@@ -41,13 +41,12 @@ public:
 
   /*! \brief Set the body Surface target
    *
-   * \param pos Body Surface in world frame
+   * \param pos Surface in world frame
    *
    */
   void target(const sva::PTransformd & pos);
 protected:
   std::string surfaceName;
-  unsigned int bIndex;
 };
 
 }
