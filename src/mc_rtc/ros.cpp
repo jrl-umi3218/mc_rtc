@@ -49,7 +49,7 @@ inline geometry_msgs::TransformStamped PT2TF(const sva::PTransformd & X, const r
 struct RobotPublisherImpl
 {
 public:
-  RobotPublisherImpl(ros::NodeHandle & nh, const std::string& prefix, unsigned int rate, unsigned int skip)
+  RobotPublisherImpl(ros::NodeHandle & nh, const std::string& prefix, unsigned int rate)
   : nh(nh),
     j_state_pub(this->nh.advertise<sensor_msgs::JointState>(prefix+"joint_states", 1)),
     imu_pub(this->nh.advertise<sensor_msgs::Imu>(prefix+"imu", 1)),
@@ -59,7 +59,7 @@ public:
     tf_caster(),
     prefix(prefix),
     running(true), seq(0), msgs(),
-    rate(rate), skip(skip == 0 ? 1 : skip),
+    rate(rate),
     th(std::bind(&RobotPublisherImpl::publishThread, this))
   {
   }
@@ -72,6 +72,8 @@ public:
 
   void update(double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::vector<std::string>> & gJs, const std::map<std::string, std::vector<double>> & gQs)
   {
+    unsigned int skip = static_cast<unsigned int>(ceil(1/(rate*dt)));
+    if(++seq % skip) { return; }
     ros::Time tm = ros::Time::now();
     sensor_msgs::JointState msg;
     sensor_msgs::Imu imu;
@@ -95,7 +97,7 @@ public:
     }
     rbd::forwardKinematics(robot.mb(), mbc);
 
-    msg.header.seq = ++seq;
+    msg.header.seq = seq;
     msg.header.stamp = tm;
     msg.header.frame_id = "";
     msg.name.reserve(robot.mb().nrJoints() - 1);
@@ -199,9 +201,7 @@ public:
 
     if(seq % skip == 0)
     {
-      mut.lock();
       msgs.push({msg, tfs, imu, odom, ros_wrenches});
-      mut.unlock();
     }
   }
 
@@ -234,9 +234,7 @@ private:
   uint32_t seq;
   std::queue<RobotStateData> msgs;
   unsigned int rate;
-  unsigned int skip;
   std::thread th;
-  std::mutex mut;
 
   void publishThread()
   {
@@ -245,48 +243,44 @@ private:
     {
       while(msgs.size())
       {
-        if(mut.try_lock())
+        const auto & msg = msgs.front();
+        try
         {
-          const auto & msg = msgs.front();
-          try
+          j_state_pub.publish(msg.js);
+          imu_pub.publish(msg.imu);
+          odom_pub.publish(msg.odom);
+          tf_caster.sendTransform(msg.tfs);
+          for (const auto & wrench : msg.wrenches)
           {
-            j_state_pub.publish(msg.js);
-            imu_pub.publish(msg.imu);
-            odom_pub.publish(msg.odom);
-            tf_caster.sendTransform(msg.tfs);
-            for (const auto & wrench : msg.wrenches)
+            const std::string & sensor_name = wrench.header.frame_id;
+            if (wrenches_pub.count(sensor_name) == 0)
             {
-              const std::string & sensor_name = wrench.header.frame_id;
-              if (wrenches_pub.count(sensor_name) == 0)
-              {
-                wrenches_pub.insert({
-                            sensor_name,
-                            this->nh.advertise<geometry_msgs::WrenchStamped>(prefix + "force/" + sensor_name, 1)});
-              }
-              wrenches_pub[sensor_name].publish(wrench);
+              wrenches_pub.insert({
+                          sensor_name,
+                          this->nh.advertise<geometry_msgs::WrenchStamped>(prefix + "force/" + sensor_name, 1)});
             }
+            wrenches_pub[sensor_name].publish(wrench);
           }
-          catch(const ros::serialization::StreamOverrunException & e)
-          {
-            LOG_ERROR("EXCEPTION WHILE PUBLISHING STATE")
-            LOG_WARNING(e.what())
-          }
-          msgs.pop();
-          mut.unlock();
         }
+        catch(const ros::serialization::StreamOverrunException & e)
+        {
+          LOG_ERROR("EXCEPTION WHILE PUBLISHING STATE")
+          LOG_WARNING(e.what())
+        }
+        msgs.pop();
       }
       rt.sleep();
     }
   }
 };
 
-RobotPublisher::RobotPublisher(const std::string & prefix, unsigned int rate, unsigned int skip)
+RobotPublisher::RobotPublisher(const std::string & prefix, unsigned int rate)
   : impl(nullptr)
 {
   auto nh = ROSBridge::get_node_handle();
   if(nh)
   {
-    impl.reset(new RobotPublisherImpl(*nh, prefix, rate, skip));
+    impl.reset(new RobotPublisherImpl(*nh, prefix, rate));
   }
 }
 
@@ -333,6 +327,7 @@ struct ROSBridgeImpl
   bool ros_is_init;
   std::shared_ptr<ros::NodeHandle> nh;
   std::map<std::string, std::shared_ptr<RobotPublisher>> rpubs;
+  unsigned int publish_rate = 100;
 };
 
 std::unique_ptr<ROSBridgeImpl> ROSBridge::impl = std::unique_ptr<ROSBridgeImpl>(new ROSBridgeImpl());
@@ -342,11 +337,16 @@ std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
   return impl->nh;
 }
 
+void ROSBridge::set_publisher_timestep(double timestep)
+{
+  impl->publish_rate = static_cast<unsigned int>(floor(1/timestep));
+}
+
 void ROSBridge::update_robot_publisher(const std::string& publisher, double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::vector<std::string>> & gJ, const std::map<std::string, std::vector<double>> & gQ)
 {
   if(impl->rpubs.count(publisher) == 0)
   {
-    impl->rpubs[publisher] = std::make_shared<RobotPublisher>(publisher + "/", 100);
+    impl->rpubs[publisher] = std::make_shared<RobotPublisher>(publisher + "/", impl->publish_rate);
   }
   impl->rpubs[publisher]->update(dt, robot, gJ, gQ);
 }
@@ -385,6 +385,10 @@ std::unique_ptr<ROSBridgeImpl> ROSBridge::impl = std::unique_ptr<ROSBridgeImpl>(
 std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
 {
   return impl->nh;
+}
+
+void ROSBridge::set_publisher_timestep(double timestep)
+{
 }
 
 void ROSBridge::update_robot_publisher(const std::string&, double, const mc_rbdyn::Robot &, const std::map<std::string, std::vector<std::string>> &, const std::map<std::string, std::vector<double>> &)

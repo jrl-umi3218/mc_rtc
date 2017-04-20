@@ -123,6 +123,10 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   config("PublishEnvState", publish_env_state);
   config("PublishRealState", publish_real_state);
   config("PublishTimestep", publish_timestep);
+  if(publish_timestep < timestep)
+  {
+    LOG_WARNING("Your ROS publication timestep is lower than your control timestep, your publication timestep will be effectively set to the control timestep")
+  }
   config("Log", enable_log);
   {
     std::string log_policy_str = "non-threaded";

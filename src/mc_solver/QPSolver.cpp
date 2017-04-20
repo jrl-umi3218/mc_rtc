@@ -266,4 +266,14 @@ void QPSolver::fillTorque(const mc_solver::DynamicsConstraint& dynamicsConstrain
   }
 }
 
+boost::timer::cpu_times QPSolver::solveTime()
+{
+  return solver.solveTime();
+}
+
+boost::timer::cpu_times QPSolver::solveAndBuildTime()
+{
+  return solver.solveAndBuildTime();
+}
+
 }

@@ -145,6 +145,24 @@ namespace mc_control
       }
     }
 
+    /*! \brief Retrieve a pair instance
+     *
+     * \throws If the underlying value does not hold an array of size 2 or if
+     * the member of the array do not meet the requirement of the pair type
+     */
+    template<class T1, class T2>
+    operator std::pair<T1, T2>() const
+    {
+      if(v.isArray() && v.size() == 2)
+      {
+        return std::make_pair<T1, T2>(Configuration(v[0]), Configuration(v[1]));
+      }
+      else
+      {
+        throw Configuration::Exception("Stored Json value is not an array of size 2");
+      }
+    }
+
     /*! \brief Constructor using a file path
      *
      * \param path Path to the configuration file

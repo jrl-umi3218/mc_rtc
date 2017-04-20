@@ -97,6 +97,7 @@ void Loader::load_libraries(const std::string & class_name, const std::vector<st
           lt_dladvise_init(&advise);
           lt_dladvise_global(&advise);
           h = lt_dlopenadvise(p.string().c_str(), advise);
+          lt_dladvise_destroy(&advise);
         }
         else
         {

@@ -413,9 +413,6 @@ public:
   bool send_recv_msg(const std::string & msg, std::string & out);
 
   /** @} */
-private:
-  void publish_thread();
-
 public:
   /*! \brief Returns true if the controller is running
    *
@@ -536,11 +533,11 @@ private:
   std::unique_ptr<mc_rtc::ObjectLoader<MCController>> controller_loader;
   std::map<std::string, std::shared_ptr<mc_control::MCController>> controllers;
 
-  bool publish_th_running = true;
-  std::thread publish_th;
   std::shared_ptr<mc_rbdyn::Robots> real_robots = nullptr;
 
   std::unique_ptr<Logger> logger_;
+
+  void publish_robots();
 };
 
 }
