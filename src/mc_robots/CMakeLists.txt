@@ -13,5 +13,3 @@ add_robot(hrp2_drc)
 add_robot(hrp4)
 add_robot(polaris_ranger)
 add_robot(polaris_ranger_egress)
-add_robot(printer)
-
