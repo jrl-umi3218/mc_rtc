@@ -120,6 +120,7 @@ pkg_config_append_libs(mc_trajectory)
 
 set(mc_tasks_SRC
 mc_tasks/PositionTask.cpp
+mc_tasks/SurfaceTransformTask.cpp
 mc_tasks/OrientationTask.cpp
 mc_tasks/VectorOrientationTask.cpp
 mc_tasks/EndEffectorTask.cpp
@@ -145,6 +146,7 @@ set(mc_tasks_HDR
 ../include/mc_tasks/OrientationTask.h
 ../include/mc_tasks/VectorOrientationTask.h
 ../include/mc_tasks/PositionTask.h
+../include/mc_tasks/SurfaceTransformTask.h
 ../include/mc_tasks/RelativeEndEffectorTask.h
 ../include/mc_tasks/SmoothTask.h
 ../include/mc_tasks/StabilityTask.h
