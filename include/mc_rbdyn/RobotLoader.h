@@ -3,6 +3,7 @@
 /*! Interface used to load robots */
 
 #include <memory>
+#include <mutex>
 
 #include <mc_rbdyn/api.h>
 #include <mc_rbdyn/RobotModule.h>
@@ -28,6 +29,7 @@ public:
   template<typename ... Args>
   static std::shared_ptr<mc_rbdyn::RobotModule> get_robot_module(const std::string & name, const Args & ... args)
   {
+    std::lock_guard<std::mutex> guard{mtx};
     init();
     return robot_loader->create_object(name, args...);
   }
@@ -37,6 +39,7 @@ public:
   */
   static inline void update_robot_module_path(const std::vector<std::string> & paths)
   {
+    std::lock_guard<std::mutex> guard{mtx};
     init();
     robot_loader->load_libraries(paths);
   }
@@ -44,6 +47,7 @@ public:
   /** Remove all loaded libraries */
   static inline void clear()
   {
+    std::lock_guard<std::mutex> guard{mtx};
     init();
     robot_loader->clear();
   }
@@ -53,6 +57,7 @@ public:
    */
   static bool has_robot(const std::string & name)
   {
+    std::lock_guard<std::mutex> guard{mtx};
     init();
     return robot_loader->has_object(name);
   }
@@ -62,6 +67,7 @@ public:
    */
   static void enable_sandboxing(bool enable_sandbox)
   {
+    std::lock_guard<std::mutex> guard{mtx};
     enable_sandbox_ = enable_sandbox;
     if(robot_loader)
     {
@@ -71,6 +77,7 @@ public:
 
   static void set_verbosity(bool verbose)
   {
+    std::lock_guard<std::mutex> guard{mtx};
     verbose_ = verbose;
     if(robot_loader)
     {
@@ -81,6 +88,7 @@ public:
   /** Returns a list of available robots */
   static std::vector<std::string> available_robots()
   {
+    std::lock_guard<std::mutex> guard{mtx};
     init();
     return robot_loader->objects();
   }
@@ -103,6 +111,7 @@ private:
   static std::unique_ptr<mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>> robot_loader;
   static bool enable_sandbox_;
   static bool verbose_;
+  static std::mutex mtx;
 };
 
 } // namespace mc_rbdyn
