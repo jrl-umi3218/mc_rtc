@@ -173,7 +173,7 @@ public:
       const sva::ForceVecd & wrench_sva = fs.wrench();
       geometry_msgs::WrenchStamped wrench_msg;
       wrench_msg.header = msg.header;
-      wrench_msg.header.frame_id = prefix + name;
+      wrench_msg.header.frame_id = name;
       wrench_msg.wrench.force.x = wrench_sva.force().x();
       wrench_msg.wrench.force.y = wrench_sva.force().y();
       wrench_msg.wrench.force.z = wrench_sva.force().z();
