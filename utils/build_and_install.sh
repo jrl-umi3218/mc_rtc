@@ -11,15 +11,20 @@ readonly mc_rtc_dir=`cd $(dirname $0)/..; pwd`
 readonly SOURCE_DIR=`cd $mc_rtc_dir/../; pwd`
 readonly INSTALL_PREFIX="/usr/local"
 readonly WITH_ROS_SUPPORT="true"
+readonly WITH_PYTHON_SUPPORT="true"
 VREP_PATH=
 
 readonly BUILD_TYPE="RelWithDebInfo"
+readonly BUILD_CORE_MAX="999"
+readonly INSTALL_APT_DEPENDENCIES="true"
+
 if command -v nproc
 then
   BUILD_CORE=`nproc`
 else
   BUILD_CORE=`sysctl -n hw.ncpu`
 fi
+[ $BUILD_CORE_MAX -lt $BUILD_CORE ] && BUILD_CORE=$BUILD_CORE_MAX
 ROS_DISTRO=indigo
 readonly ROS_APT_DEPENDENCIES="ros-${ROS_DISTRO}-common-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-rviz-animated-view-controller"
 ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_ros#karim_drc git@gite.lirmm.fr:mc-hrp2/hrp2_drc#master git@gite.lirmm.fr:mc-hrp4/hrp4#master"
@@ -73,8 +78,14 @@ else
   then
     yaml_to_env "APT_DEPENDENCIES" $gitlab_ci_yml
     APT_DEPENDENCIES=`echo $APT_DEPENDENCIES|sed -e's/libspacevecalg-dev//'|sed -e's/librbdyn-dev//'|sed -e's/libeigen-qld-dev//'|sed -e's/libsch-core-dev//'`
-    sudo apt-get update
-    sudo apt-get install -qq cmake build-essential gfortran doxygen libeigen3-dev python-pip ${APT_DEPENDENCIES}
+    APT_DEPENDENCIES="cmake build-essential gfortran doxygen libeigen3-dev python-pip $APT_DEPENDENCIES"
+    if $INSTALL_APT_DEPENDENCIES
+    then
+        sudo apt-get update
+        sudo apt-get install -qq ${APT_DEPENDENCIES}
+    else
+        echo "SKIPPING INSTALLATION OF APT_DEPENDENCIES ($APT_DEPENDENCIES)"
+    fi
   else
     echo "This script does not support your OS: ${OS}, please contact the maintainer"
     exit 1
@@ -215,25 +226,27 @@ ${SUDO_CMD} make install
 #############################
 #  --  Build mc_cython  --  #
 #############################
-cd $SOURCE_DIR
-if [ ! -d mc_cython/.git ]
+if $WITH_PYTHON_SUPPORT
 then
-  git_clone git@gite.lirmm.fr:multi-contact/mc_cython
-cd mc_cython
-else
-  cd mc_cython
-  git_update
+    cd $SOURCE_DIR
+    if [ ! -d mc_cython/.git ]
+    then
+      git_clone git@gite.lirmm.fr:multi-contact/mc_cython
+    cd mc_cython
+    else
+      cd mc_cython
+      git_update
+    fi
+    ${SUDO_CMD} pip install -r requirements.txt ${PIP_USER}
+    make -j$BUILD_CORE
+    # Make sure the python prefix exists
+    mkdir -p ${INSTALL_PREFIX}/lib/python`python -c "import sys;print '{0}.{1}'.format(sys.version_info.major, sys.version_info.minor)"`/site-packages
+    ${SUDO_CMD} make install
 fi
-${SUDO_CMD} pip install -r requirements.txt ${PIP_USER}
-make -j$BUILD_CORE
-# Make sure the python prefix exists
-mkdir -p ${INSTALL_PREFIX}/lib/python`python -c "import sys;print '{0}.{1}'.format(sys.version_info.major, sys.version_info.minor)"`/site-packages
-${SUDO_CMD} make install
-
 ####################################################
 #  -- Setup VREP, vrep-api-wrapper and mc_vrep --  #
 ####################################################
-if [ "x${VREP_PATH}" = "x" ]
+if [ -z "${VREP_PATH}" ]
 then
   cd $SOURCE_DIR
   if [ $OS = Darwin ]
@@ -258,6 +271,7 @@ then
     VREP_PATH=$SOURCE_DIR/V-REP_PRO_EDU_V3_3_2${VREP_VERSION}_Linux
   fi
 fi
+[ ! -e "$SOURCE_DIR/vrep" ] && ln -s "$VREP_PATH" "$SOURCE_DIR/vrep"
 
 cd $SOURCE_DIR
 if [ ! -d vrep-api-wrapper/.git ]
