@@ -9,23 +9,112 @@ shopt -s expand_aliases
 readonly mc_rtc_dir=`cd $(dirname $0)/..; pwd`
 
 readonly SOURCE_DIR=`cd $mc_rtc_dir/../; pwd`
-readonly INSTALL_PREFIX="/usr/local"
-readonly WITH_ROS_SUPPORT="true"
-readonly WITH_PYTHON_SUPPORT="true"
+
+#default settings
+INSTALL_PREFIX="/usr/local"
+WITH_ROS_SUPPORT="true"
+WITH_PYTHON_SUPPORT="true"
 VREP_PATH=
-
-readonly BUILD_TYPE="RelWithDebInfo"
-readonly BUILD_CORE_MAX="999"
-readonly INSTALL_APT_DEPENDENCIES="true"
-
-if command -v nproc
-then
-  BUILD_CORE=`nproc`
-else
-  BUILD_CORE=`sysctl -n hw.ncpu`
+BUILD_TYPE="RelWithDebInfo"
+INSTALL_APT_DEPENDENCIES="true"
+if command -v nproc > /dev/null
+then   BUILD_CORE=`nproc` 
+    else   BUILD_CORE=`sysctl -n hw.ncpu` 
 fi
-[ $BUILD_CORE_MAX -lt $BUILD_CORE ] && BUILD_CORE=$BUILD_CORE_MAX
 ROS_DISTRO=indigo
+
+readonly HELP_STRING="$(basename $0) [OPTIONS] ...
+    --help                     (-h)               : print this help
+    --install-prefix           (-i) PATH          : the directory used to install everything         (default $INSTALL_PREFIX)
+    --build-type                    Type          : the build type to use                            (default $BUILD_TYPE)
+    --build-core               (-j) N             : number of cores used for building                (default $BUILD_CORE)
+    --with-python-support           {true, false} : whether to build with python support             (default $WITH_PYTHON_SUPPORT)
+    --with-ros-support              {true, false} : whether to build with ros support                (default $WITH_ROS_SUPPORT)
+    --ros-distro                    NAME          : the ros distro to use                            (default $ROS_DISTRO) 
+    --install-apt-dependencies      {true, false} : whether to install packages                      (default $INSTALL_APT_DEPENDENCIES)
+    --vrep-path                     PATH          : where to find vrep (will be downloaded if empty) (default $VREP_PATH)
+"
+
+#helper for parsing
+check_true_false()
+{
+    if [ "true" != "$2" ] && [ "false" != "$2" ]
+    then
+        echo "passed parameter '$2' as flag for '$1'. the parameter has to be 'true' or 'false'"
+        exit 1
+    fi
+}
+#parse arguments
+i=1
+while [[ $# -ge $i ]]
+do
+    key="${!i}"
+    case $key in
+        -h|--help)
+        echo "$HELP_STRING" 
+        exit
+        ;;
+
+        -i|--install-prefix)
+        i=$(($i+1))
+        INSTALL_PREFIX="${!i}"
+        ;;
+
+        --with-ros-support)
+        i=$(($i+1))
+        WITH_ROS_SUPPORT="${!i}"
+        check_true_false --with-ros-support "$WITH_ROS_SUPPORT"
+        ;;
+
+        --with-python-support)
+        i=$(($i+1))
+        WITH_PYTHON_SUPPORT="${!i}"
+        check_true_false --with-python-support "$WITH_PYTHON_SUPPORT"
+        ;;
+
+        --build-type)
+        i=$(($i+1))
+        BUILD_TYPE="${!i}"
+        ;;
+
+        --install-apt-dependencies)
+        i=$(($i+1))
+        INSTALL_APT_DEPENDENCIES="${!i}"
+        check_true_false --install-apt-dependencies "$INSTALL_APT_DEPENDENCIES"
+        ;;
+
+        -j|--build-core)
+        i=$(($i+1))
+        BUILD_CORE="${!i}"
+        ;;
+
+        --ros-distro)
+        i=$(($i+1))
+        ROS_DISTRO="${!i}"
+        ;;
+
+        --vrep-path)
+        i=$(($i+1))
+        VREP_PATH="${!i}"
+        ;;
+
+        *)
+        	echo "unknown parameter $i ($key)"
+            exit 1
+        ;;
+    esac
+
+    i=$(($i+1))
+done
+#make settings readonly
+readonly INSTALL_PREFIX
+readonly WITH_ROS_SUPPORT
+readonly WITH_PYTHON_SUPPORT
+readonly BUILD_TYPE
+readonly INSTALL_APT_DEPENDENCIES
+readonly BUILD_CORE
+readonly ROS_DISTRO
+
 readonly ROS_APT_DEPENDENCIES="ros-${ROS_DISTRO}-common-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-rviz-animated-view-controller"
 ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_ros#karim_drc git@gite.lirmm.fr:mc-hrp2/hrp2_drc#master git@gite.lirmm.fr:mc-hrp4/hrp4#master"
 alias git_clone="git clone --quiet --recursive"
