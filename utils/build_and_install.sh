@@ -18,8 +18,10 @@ VREP_PATH=
 BUILD_TYPE="RelWithDebInfo"
 INSTALL_APT_DEPENDENCIES="true"
 if command -v nproc > /dev/null
-then   BUILD_CORE=`nproc` 
-    else   BUILD_CORE=`sysctl -n hw.ncpu` 
+then
+   BUILD_CORE=`nproc` 
+else
+   BUILD_CORE=`sysctl -n hw.ncpu` 
 fi
 ROS_DISTRO=indigo
 
@@ -113,7 +115,6 @@ readonly WITH_PYTHON_SUPPORT
 readonly BUILD_TYPE
 readonly INSTALL_APT_DEPENDENCIES
 readonly BUILD_CORE
-readonly ROS_DISTRO
 
 readonly ROS_APT_DEPENDENCIES="ros-${ROS_DISTRO}-common-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-rviz-animated-view-controller"
 ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_ros#karim_drc git@gite.lirmm.fr:mc-hrp2/hrp2_drc#master git@gite.lirmm.fr:mc-hrp4/hrp4#master"
