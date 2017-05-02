@@ -9,18 +9,113 @@ shopt -s expand_aliases
 readonly mc_rtc_dir=`cd $(dirname $0)/..; pwd`
 
 readonly SOURCE_DIR=`cd $mc_rtc_dir/../; pwd`
-readonly INSTALL_PREFIX="/usr/local"
-readonly WITH_ROS_SUPPORT="true"
-VREP_PATH=
 
-readonly BUILD_TYPE="RelWithDebInfo"
-if command -v nproc
+#default settings
+INSTALL_PREFIX="/usr/local"
+WITH_ROS_SUPPORT="true"
+WITH_PYTHON_SUPPORT="true"
+VREP_PATH=
+BUILD_TYPE="RelWithDebInfo"
+INSTALL_APT_DEPENDENCIES="true"
+if command -v nproc > /dev/null
 then
-  BUILD_CORE=`nproc`
+   BUILD_CORE=`nproc` 
 else
-  BUILD_CORE=`sysctl -n hw.ncpu`
+   BUILD_CORE=`sysctl -n hw.ncpu` 
 fi
 ROS_DISTRO=indigo
+
+readonly HELP_STRING="$(basename $0) [OPTIONS] ...
+    --help                     (-h)               : print this help
+    --install-prefix           (-i) PATH          : the directory used to install everything         (default $INSTALL_PREFIX)
+    --build-type                    Type          : the build type to use                            (default $BUILD_TYPE)
+    --build-core               (-j) N             : number of cores used for building                (default $BUILD_CORE)
+    --with-python-support           {true, false} : whether to build with python support             (default $WITH_PYTHON_SUPPORT)
+    --with-ros-support              {true, false} : whether to build with ros support                (default $WITH_ROS_SUPPORT)
+    --ros-distro                    NAME          : the ros distro to use                            (default $ROS_DISTRO) 
+    --install-apt-dependencies      {true, false} : whether to install packages                      (default $INSTALL_APT_DEPENDENCIES)
+    --vrep-path                     PATH          : where to find vrep (will be downloaded if empty) (default $VREP_PATH)
+"
+
+#helper for parsing
+check_true_false()
+{
+    if [ "true" != "$2" ] && [ "false" != "$2" ]
+    then
+        echo "passed parameter '$2' as flag for '$1'. the parameter has to be 'true' or 'false'"
+        exit 1
+    fi
+}
+#parse arguments
+i=1
+while [[ $# -ge $i ]]
+do
+    key="${!i}"
+    case $key in
+        -h|--help)
+        echo "$HELP_STRING" 
+        exit
+        ;;
+
+        -i|--install-prefix)
+        i=$(($i+1))
+        INSTALL_PREFIX="${!i}"
+        ;;
+
+        --with-ros-support)
+        i=$(($i+1))
+        WITH_ROS_SUPPORT="${!i}"
+        check_true_false --with-ros-support "$WITH_ROS_SUPPORT"
+        ;;
+
+        --with-python-support)
+        i=$(($i+1))
+        WITH_PYTHON_SUPPORT="${!i}"
+        check_true_false --with-python-support "$WITH_PYTHON_SUPPORT"
+        ;;
+
+        --build-type)
+        i=$(($i+1))
+        BUILD_TYPE="${!i}"
+        ;;
+
+        --install-apt-dependencies)
+        i=$(($i+1))
+        INSTALL_APT_DEPENDENCIES="${!i}"
+        check_true_false --install-apt-dependencies "$INSTALL_APT_DEPENDENCIES"
+        ;;
+
+        -j|--build-core)
+        i=$(($i+1))
+        BUILD_CORE="${!i}"
+        ;;
+
+        --ros-distro)
+        i=$(($i+1))
+        ROS_DISTRO="${!i}"
+        ;;
+
+        --vrep-path)
+        i=$(($i+1))
+        VREP_PATH="${!i}"
+        ;;
+
+        *)
+        	echo "unknown parameter $i ($key)"
+            exit 1
+        ;;
+    esac
+
+    i=$(($i+1))
+done
+#make settings readonly
+readonly INSTALL_PREFIX
+readonly WITH_ROS_SUPPORT
+readonly WITH_PYTHON_SUPPORT
+readonly BUILD_TYPE
+readonly INSTALL_APT_DEPENDENCIES
+readonly BUILD_CORE
+
 readonly ROS_APT_DEPENDENCIES="ros-${ROS_DISTRO}-common-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-rviz-animated-view-controller"
 ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_ros#karim_drc git@gite.lirmm.fr:mc-hrp2/hrp2_drc#master git@gite.lirmm.fr:mc-hrp4/hrp4#master"
 alias git_clone="git clone --quiet --recursive"
@@ -73,8 +168,14 @@ else
   then
     yaml_to_env "APT_DEPENDENCIES" $gitlab_ci_yml
     APT_DEPENDENCIES=`echo $APT_DEPENDENCIES|sed -e's/libspacevecalg-dev//'|sed -e's/librbdyn-dev//'|sed -e's/libeigen-qld-dev//'|sed -e's/libsch-core-dev//'`
-    sudo apt-get update
-    sudo apt-get install -qq cmake build-essential gfortran doxygen libeigen3-dev python-pip ${APT_DEPENDENCIES}
+    APT_DEPENDENCIES="cmake build-essential gfortran doxygen libeigen3-dev python-pip $APT_DEPENDENCIES"
+    if $INSTALL_APT_DEPENDENCIES
+    then
+        sudo apt-get update
+        sudo apt-get install -qq ${APT_DEPENDENCIES}
+    else
+        echo "SKIPPING INSTALLATION OF APT_DEPENDENCIES ($APT_DEPENDENCIES)"
+    fi
   else
     echo "This script does not support your OS: ${OS}, please contact the maintainer"
     exit 1
@@ -215,25 +316,27 @@ ${SUDO_CMD} make install
 #############################
 #  --  Build mc_cython  --  #
 #############################
-cd $SOURCE_DIR
-if [ ! -d mc_cython/.git ]
+if $WITH_PYTHON_SUPPORT
 then
-  git_clone git@gite.lirmm.fr:multi-contact/mc_cython
-cd mc_cython
-else
-  cd mc_cython
-  git_update
+    cd $SOURCE_DIR
+    if [ ! -d mc_cython/.git ]
+    then
+      git_clone git@gite.lirmm.fr:multi-contact/mc_cython
+    cd mc_cython
+    else
+      cd mc_cython
+      git_update
+    fi
+    ${SUDO_CMD} pip install -r requirements.txt ${PIP_USER}
+    make -j$BUILD_CORE
+    # Make sure the python prefix exists
+    mkdir -p ${INSTALL_PREFIX}/lib/python`python -c "import sys;print '{0}.{1}'.format(sys.version_info.major, sys.version_info.minor)"`/site-packages
+    ${SUDO_CMD} make install
 fi
-${SUDO_CMD} pip install -r requirements.txt ${PIP_USER}
-make -j$BUILD_CORE
-# Make sure the python prefix exists
-mkdir -p ${INSTALL_PREFIX}/lib/python`python -c "import sys;print '{0}.{1}'.format(sys.version_info.major, sys.version_info.minor)"`/site-packages
-${SUDO_CMD} make install
-
 ####################################################
 #  -- Setup VREP, vrep-api-wrapper and mc_vrep --  #
 ####################################################
-if [ "x${VREP_PATH}" = "x" ]
+if [ -z "${VREP_PATH}" ]
 then
   cd $SOURCE_DIR
   if [ $OS = Darwin ]
@@ -258,6 +361,7 @@ then
     VREP_PATH=$SOURCE_DIR/V-REP_PRO_EDU_V3_3_2${VREP_VERSION}_Linux
   fi
 fi
+[ ! -e "$SOURCE_DIR/vrep" ] && ln -s "$VREP_PATH" "$SOURCE_DIR/vrep"
 
 cd $SOURCE_DIR
 if [ ! -d vrep-api-wrapper/.git ]
