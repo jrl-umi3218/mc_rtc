@@ -1,13 +1,13 @@
-#include <mc_control/Configuration.h>
+#include <mc_rtc/Configuration.h>
 
 #include <mc_rtc/logging.h>
 
-#include "../mc_rtc/internals/json.h"
+#include "internals/json.h"
 
 #include <stdexcept>
 #include <fstream>
 
-namespace mc_control
+namespace mc_rtc
 {
 
 struct Configuration::Json::Impl
