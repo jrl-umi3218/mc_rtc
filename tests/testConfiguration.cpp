@@ -1,6 +1,6 @@
 #include <boost/test/unit_test.hpp>
 
-#include <mc_control/Configuration.h>
+#include <mc_rtc/Configuration.h>
 
 #include <fstream>
 #include <iostream>
@@ -102,10 +102,10 @@ std::string sampleConfig2()
 BOOST_AUTO_TEST_CASE(TestConfiguration)
 {
   /*! Check construction from Json::Value */
-  mc_control::Configuration config(sampleConfig());
+  mc_rtc::Configuration config(sampleConfig());
 
   /*! Check that accessing a non-existing entry throws */
-  BOOST_CHECK_THROW(config("NONE"), mc_control::Configuration::Exception);
+  BOOST_CHECK_THROW(config("NONE"), mc_rtc::Configuration::Exception);
 
   /* int tests */
   {
@@ -259,7 +259,7 @@ BOOST_AUTO_TEST_CASE(TestConfiguration)
     config("v6d", c);
     BOOST_CHECK_EQUAL(c, zero);
 
-    BOOST_CHECK_THROW(Eigen::Vector3d d = config("v6d"), mc_control::Configuration::Exception);
+    BOOST_CHECK_THROW(Eigen::Vector3d d = config("v6d"), mc_rtc::Configuration::Exception);
 
     Eigen::Vector3d e = Eigen::Vector3d::Zero();
     e = config("dict")("v3d");
@@ -287,7 +287,7 @@ BOOST_AUTO_TEST_CASE(TestConfiguration)
     config("v3d", c);
     BOOST_CHECK_EQUAL(c, zero);
 
-    BOOST_CHECK_THROW(Eigen::Vector6d d = config("v3d"), mc_control::Configuration::Exception);
+    BOOST_CHECK_THROW(Eigen::Vector6d d = config("v3d"), mc_rtc::Configuration::Exception);
 
     Eigen::Vector6d e = Eigen::Vector6d::Zero();
     e = config("dict")("v6d");
@@ -323,7 +323,7 @@ BOOST_AUTO_TEST_CASE(TestConfiguration)
     Eigen::VectorXd d = config("vXd");
     BOOST_CHECK_EQUAL(d, ref);
 
-    BOOST_CHECK_THROW(Eigen::VectorXd e = config("int"), mc_control::Configuration::Exception);
+    BOOST_CHECK_THROW(Eigen::VectorXd e = config("int"), mc_rtc::Configuration::Exception);
 
     Eigen::VectorXd f = Eigen::VectorXd::Zero(0);
     f = config("dict")("v6d");
@@ -455,8 +455,8 @@ BOOST_AUTO_TEST_CASE(TestConfiguration)
     config("dict")("doubleDoublePair", c);
     BOOST_CHECK(b == ref);
 
-    BOOST_CHECK_THROW(c = config("quat"), mc_control::Configuration::Exception);
-    BOOST_CHECK_THROW(c = config("doubleStringPair"), mc_control::Configuration::Exception);
+    BOOST_CHECK_THROW(c = config("quat"), mc_rtc::Configuration::Exception);
+    BOOST_CHECK_THROW(c = config("doubleStringPair"), mc_rtc::Configuration::Exception);
   }
 
   /* pair<double, string> test */

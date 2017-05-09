@@ -12,6 +12,7 @@ pkg_config_append_libs(mc_rtc_loader)
 add_library(mc_rtc_utils SHARED mc_rtc/Configuration.cpp ../include/mc_rtc/Configuration.h ../include/mc_rtc/utils_api.h)
 set_target_properties(mc_rtc_utils PROPERTIES COMPILE_FLAGS "-DMC_RTC_UTILS_EXPORTS")
 target_link_libraries(mc_rtc_utils ${Boost_LIBRARIES})
+add_version_script(mc_rtc_utils ${CMAKE_CURRENT_SOURCE_DIR}/mc_rtc.lds)
 pkg_config_append_libs(mc_rtc_utils)
 
 set(mc_rbdyn_SRC
