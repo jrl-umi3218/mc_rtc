@@ -11,6 +11,8 @@
 
 #include <mc_rtc/utils_api.h>
 
+#include <mc/rtc/deprecated.hh>
+
 namespace mc_rtc
 {
 
@@ -37,13 +39,21 @@ namespace mc_rtc
       std::string msg;
     };
 
+    /*! \brief Deprecated, see has
+     *
+     * \param key The key to test
+     *
+     * \returns True if key is part of the configuration
+     */
+    bool isMember(const std::string & key) const MC_RTC_DEPRECATED;
+
     /*! \brief Check if the key is part of the conf
      *
      * \param key The key to test
      *
      * \returns True if key is part of the configuration
      */
-    bool isMember(const std::string & key) const;
+    bool has(const std::string & key) const;
 
     /*! \brief Cast to bool
      *

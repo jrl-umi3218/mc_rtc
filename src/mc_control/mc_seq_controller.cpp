@@ -234,24 +234,24 @@ void MCSeqTimeLog::report(std::ostream & os)
 
 MCSeqControllerConfig::MCSeqControllerConfig(const mc_control::Configuration & conf)
 {
-  if(!conf.isMember("Seq"))
+  if(!conf.has("Seq"))
   {
     LOG_ERROR("No Seq section in configuration file, abort")
     throw("No Seq section in configuration file");
   }
   auto seq = conf("Seq");
   seq("Simulation", is_simulation);
-  if(!seq.isMember("Env"))
+  if(!seq.has("Env"))
   {
     LOG_ERROR("No Env section in configuration for Seq controller, abort")
     throw("No Env section in Seq section");
   }
   auto env = seq("Env");
-  if(env.isMember("Module"))
+  if(env.has("Module"))
   {
     env_module = mc_rbdyn::RobotLoader::get_robot_module((std::string)env("Module"));
   }
-  else if(env.isMember("Name"))
+  else if(env.has("Name"))
   {
     std::string env_path = mc_rtc::MC_ENV_DESCRIPTION_PATH;
     env("Path", env_path);
@@ -263,7 +263,7 @@ MCSeqControllerConfig::MCSeqControllerConfig(const mc_control::Configuration & c
     LOG_ERROR("No Name or Module value for Env in Seq configuration, abort")
     throw("No Name or Module value for Env in Seq configuration");
   }
-  if(seq.isMember("Plan"))
+  if(seq.has("Plan"))
   {
     plan = (std::string)seq("Plan");
     plan = std::string(mc_rtc::DATA_PATH) + "/" + plan;

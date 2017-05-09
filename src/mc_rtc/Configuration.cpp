@@ -42,12 +42,12 @@ struct Configuration::Json::Impl
     return rapidjson::Pointer(pointer.c_str()).Get(*doc_p);
   }
 
-  bool isMember() const
+  bool is() const
   {
     return value() != nullptr;
   }
 
-  bool isMember(const std::string & key) const
+  bool has(const std::string & key) const
   {
     std::string fkey = pointer + "/" + key;
     rapidjson::Value * v = rapidjson::Pointer(fkey.c_str()).Get(*doc_p);
@@ -55,64 +55,64 @@ struct Configuration::Json::Impl
   }
   bool isArray() const
   {
-    assert(isMember());
+    assert(is());
     return value()->IsArray();
   }
   bool isBool() const
   {
-    assert(isMember());
+    assert(is());
     return value()->IsBool();
   }
   bool isInt() const
   {
-    assert(isMember());
+    assert(is());
     return value()->IsInt();
   }
   bool isUInt() const
   {
-    assert(isMember());
+    assert(is());
     return value()->IsUint();
   }
   bool isNumeric() const
   {
-    assert(isMember());
+    assert(is());
     return value()->IsNumber();
   }
   bool isString() const
   {
-    assert(isMember());
+    assert(is());
     return value()->IsString();
   }
 
   bool asBool() const
   {
-    assert(isMember());
+    assert(is());
     return value()->GetBool();
   }
   int asInt() const
   {
-    assert(isMember());
+    assert(is());
     return value()->GetInt();
   }
   unsigned int asUInt() const
   {
-    assert(isMember());
+    assert(is());
     return value()->GetUint();
   }
   double asDouble() const
   {
-    assert(isMember());
+    assert(is());
     return value()->GetDouble();
   }
   std::string asString() const
   {
-    assert(isMember());
+    assert(is());
     return std::string(value()->GetString(), value()->GetStringLength());
   }
 
   size_t size() const
   {
-    assert(isMember());
+    assert(is());
     return value()->Capacity();
   }
   Impl operator[](int idx)
@@ -174,12 +174,17 @@ Configuration::Configuration(const char * path)
 
 bool Configuration::isMember(const std::string & key) const
 {
-  return v.impl->isMember(key);
+  return has(key);
+}
+
+bool Configuration::has(const std::string & key) const
+{
+  return v.impl->has(key);
 }
 
 Configuration Configuration::operator()(const std::string & key) const
 {
-  if(v.impl->isMember(key))
+  if(v.impl->has(key))
   {
     return Configuration(v[key]);
   }
