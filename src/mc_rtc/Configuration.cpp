@@ -191,6 +191,24 @@ Configuration Configuration::operator()(const std::string & key) const
   throw Configuration::Exception("No entry named " + key + " in the configuration");
 }
 
+size_t Configuration::size() const
+{
+  if(v.impl->isArray())
+  {
+    return v.impl->size();
+  }
+  return 0;
+}
+
+Configuration Configuration::operator[](size_t i) const
+{
+  if(i >= size())
+  {
+    throw Configuration::Exception("Out-of-bound access for a Configuration element");
+  }
+  return Configuration(v[i]);
+}
+
 Configuration::operator bool() const
 {
   if(v.impl->isBool())
@@ -334,6 +352,17 @@ void Configuration::operator()(const std::string & key, std::string & v) const
   catch(Exception &)
   {
   }
+}
+
+bool Configuration::operator==(const char * rhs) const
+{
+  return static_cast<std::string>(*this) == rhs;
+}
+
+std::ostream & operator<<(std::ostream & os, const Configuration & c)
+{
+  os << static_cast<std::string>(c);
+  return os;
 }
 
 }

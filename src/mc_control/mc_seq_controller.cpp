@@ -739,8 +739,7 @@ void MCSeqController::loadStanceConfigs(const std::string & file)
 {
   LOG_INFO("Loading stance configs from " << file)
   configs.resize(0);
-  rapidjson::Document v;
-  if(!mc_rtc::internal::loadDocument(file, v)) { return; }
+  mc_rtc::Configuration stanceConfigs(file);
   /*
     The JSON file contains two sections:
     - A General section contains configuration information for the full sequence
@@ -749,26 +748,26 @@ void MCSeqController::loadStanceConfigs(const std::string & file)
   mc_rbdyn::StanceConfig comMoveConfig;
   mc_rbdyn::StanceConfig contactMoveConfig;
   mc_rbdyn::StanceConfig gripperMoveConfig;
-  if(v.HasMember("General"))
+  if(stanceConfigs.has("General"))
   {
-    rapidjson::Value & scv = v["General"];
-    if(scv.HasMember("CoMMove"))
+    auto generalConfig = stanceConfigs("General");
+    if(generalConfig.has("CoMMove"))
     {
-      mc_rbdyn::StanceConfigFromJSON(comMoveConfig, scv["CoMMove"]);
+      mc_rbdyn::StanceConfigFromJSON(comMoveConfig, generalConfig("CoMMove"));
     }
-    if(scv.HasMember("ContactMove"))
+    if(generalConfig.has("ContactMove"))
     {
-      mc_rbdyn::StanceConfigFromJSON(contactMoveConfig, scv["ContactMove"]);
+      mc_rbdyn::StanceConfigFromJSON(contactMoveConfig, generalConfig("ContactMove"));
     }
-    if(scv.HasMember("GripperMove"))
+    if(generalConfig.has("GripperMove"))
     {
-      mc_rbdyn::StanceConfigFromJSON(gripperMoveConfig, scv["GripperMove"]);
+      mc_rbdyn::StanceConfigFromJSON(gripperMoveConfig, generalConfig("GripperMove"));
     }
-    if(scv.HasMember("Collisions"))
+    if(generalConfig.has("Collisions"))
     {
-      mc_rbdyn::scCollisionsFromJSON(comMoveConfig.collisions, scv["Collisions"]);
-      mc_rbdyn::scCollisionsFromJSON(contactMoveConfig.collisions, scv["Collisions"]);
-      mc_rbdyn::scCollisionsFromJSON(gripperMoveConfig.collisions, scv["Collisions"]);
+      mc_rbdyn::scCollisionsFromJSON(comMoveConfig.collisions, generalConfig("Collisions"));
+      mc_rbdyn::scCollisionsFromJSON(contactMoveConfig.collisions, generalConfig("Collisions"));
+      mc_rbdyn::scCollisionsFromJSON(gripperMoveConfig.collisions, generalConfig("Collisions"));
     }
   }
   for(size_t i = 1; i < seq_actions.size(); ++i)
@@ -793,8 +792,9 @@ void MCSeqController::loadStanceConfigs(const std::string & file)
     }
 
     /* Look for a matching state in the JSON file */
-    if(v.HasMember("StepByStep"))
+    if(stanceConfigs.has("StepByStep"))
     {
+      auto stepByStep = stanceConfigs("StepByStep");
       std::string type = actions[i]->type();
       std::string r1Surface = "";
       std::string r2Surface = "";
@@ -803,9 +803,10 @@ void MCSeqController::loadStanceConfigs(const std::string & file)
         r1Surface = actions[i]->contact().r1Surface()->name();
         r2Surface = actions[i]->contact().r2Surface()->name();
       }
-      for(const auto & scv : v["StepByStep"].GetArray())
+      for(size_t i = 0; i <stepByStep.size(); ++i)
       {
-        if(scv["type"] == type && scv["r1Surface"] == r1Surface && scv["r2Surface"] == r2Surface)
+        auto scv = stepByStep[i];
+        if(scv("type") == type && scv("r1Surface") == r1Surface && scv("r2Surface") == r2Surface)
         {
           mc_rbdyn::StanceConfigFromJSON(sc, scv);
         }

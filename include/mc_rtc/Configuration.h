@@ -206,6 +206,23 @@ namespace mc_rtc
      */
     Configuration operator()(const std::string & key) const;
 
+    /*! \brief If the stored value is an array, returns its size, otherwise
+     * returns 0
+     *
+     * \returns Size of the underlying array
+     *
+     */
+    size_t size() const;
+
+    /*! \brief If the stored value is an array, return a Configuration element
+     * for the i-th element.
+     *
+     * \param i Access i-th element
+     *
+     * \throws If i >= size()
+     */
+    Configuration operator[](size_t i) const;
+
     /*! \brief Retrieve and store a given value stored within the
      * configuration
      *
@@ -227,6 +244,22 @@ namespace mc_rtc
       catch(Exception &)
       {
       }
+    }
+
+    /*! \brief Non-template version for C-style strings comparison
+     *
+     * \returns True if the comparison matches, false otherwise.
+     */
+    bool operator==(const char * rhs) const;
+
+    /*! \brief Compare stored values with given value
+     *
+     * \returns True if the comparison matches, false otherwise.
+     */
+    template<typename T>
+    bool operator==(const T & rhs) const
+    {
+      return static_cast<T>(*this) == rhs;
     }
   private:
 
@@ -252,4 +285,7 @@ namespace mc_rtc
   /*! \brief Specialized version to lift ambiguity */
   template<>
   void MC_RTC_UTILS_DLLAPI Configuration::operator()(const std::string & key, std::string & v) const;
+
+  /*! \brief Ostream operator */
+  std::ostream & operator<<(std::ostream & os, const Configuration & c);
 }
