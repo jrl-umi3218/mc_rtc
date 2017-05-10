@@ -126,7 +126,11 @@ typedef std::shared_ptr<RobotModule> RobotModulePtr;
 #ifdef WIN32
 #define ROBOT_MODULE_API __declspec(dllexport)
 #else
-#define ROBOT_MODULE_API
+# if __GNUC__ >= 4
+#   define ROBOT_MODULE_API __attribute__ ((visibility("default")))
+# else
+#   define ROBOT_MODULE_API
+# endif
 #endif
 
 /*! ROBOT_MODULE_COMMON
