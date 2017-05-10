@@ -13,6 +13,7 @@ set(PROJECT_URL https://rob-dev.lirmm.fr/multi-contact/mc_rtc)
 set(PROJECT_DEBUG_POSTFIX "_d")
 
 set(CXX_DISABLE_WERROR 1)
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
 set(DOXYGEN_USE_MATHJAX "YES")
 setup_project()
