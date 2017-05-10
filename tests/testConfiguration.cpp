@@ -68,6 +68,7 @@ std::string sampleConfig()
   "doubleDoublePair": [42.5, -42.5],
   "doubleStringPair": [42.5, "sometext"],
   "doubleDoublePairV": [[0.0, 1.1],[2.2, 3.3], [4.4, 5.5]],
+  "tuple" : [true, 42.42, "sometext", [1.2, 3.4, 5.6]],
   "dict":
   {
     "boolTrue": true,
@@ -486,6 +487,19 @@ BOOST_AUTO_TEST_CASE(TestConfiguration)
     test_t b = {};
     config("doubleDoublePairV", b);
     BOOST_CHECK(b == ref);
+  }
+
+  /* "tuple" */
+  {
+    auto tuple = config("tuple");
+    BOOST_CHECK(tuple.size() == 4);
+    Eigen::Vector3d vec = tuple[3];
+    std::tuple<bool, double, std::string, Eigen::Vector3d> data =
+      std::make_tuple(tuple[0], tuple[1], tuple[2], vec);
+    BOOST_CHECK(std::get<0>(data));
+    BOOST_CHECK(std::get<1>(data) == 42.42);
+    BOOST_CHECK(std::get<2>(data) == "sometext");
+    BOOST_CHECK(std::get<3>(data) == Eigen::Vector3d(1.2, 3.4, 5.6));
   }
 
   /* Check load */
