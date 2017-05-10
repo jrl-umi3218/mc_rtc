@@ -173,6 +173,9 @@ namespace mc_rtc
       }
     }
 
+    /*! \brief Creates an empty configuration */
+    Configuration();
+
     /*! \brief Constructor using a file path
      *
      * \param path Path to the configuration file
@@ -193,6 +196,15 @@ namespace mc_rtc
      *
      */
     void load(const std::string & path);
+
+    /*! \brief Save the configuration to a file
+     *
+     * \param path Path to the configuration file
+     *
+     * \param pretty Writes a human-readable file, defauls to true
+     *
+     */
+    void save(const std::string & path, bool pretty = true);
 
     /*! \brief Returns a Entry value stored within the
      * configuration
@@ -261,8 +273,158 @@ namespace mc_rtc
     {
       return static_cast<T>(*this) == rhs;
     }
-  private:
 
+    /*! \brief Add a bool element to the Configuration
+     *
+     * Overrides the existing value if it holds one for the given key.
+     *
+     * \param key Key of the element
+     *
+     * \param value Value of the element
+     */
+    void add(const std::string & key, bool value);
+
+    /*! \brief Add a int element to the Configuration
+     *
+     * \see add(const std::string&, bool)
+     */
+    void add(const std::string & key, int value);
+
+    /*! \brief Add a unsigned int element to the Configuration
+     *
+     * \see add(const std::string&, bool)
+     */
+    void add(const std::string & key, unsigned int value);
+
+    /*! \brief Add a double element to the Configuration
+     *
+     * \see add(const std::string&, bool)
+     */
+    void add(const std::string & key, double value);
+
+    /*! \brief Add a std::string element to the Configuration
+     *
+     * \see add(const std::string&, bool)
+     */
+    void add(const std::string & key, std::string value);
+
+    /*! \brief Add a Eigen::Vector3d element to the Configuration
+     *
+     * \see add(const std::string&, bool)
+     */
+    void add(const std::string & key, Eigen::Vector3d value);
+
+    /*! \brief Add a Eigen::Vector6d element to the Configuration
+     *
+     * \see add(const std::string&, bool)
+     */
+    void add(const std::string & key, Eigen::Vector6d value);
+
+
+    /*! \brief Add a Eigen::VectorXd element to the Configuration
+     *
+     * \see add(const std::string&, bool)
+     */
+    void add(const std::string & key, Eigen::VectorXd value);
+
+    /*! \brief Add a Eigen::Quaterniond element to the Configuration
+     *
+     * \see add(const std::string&, bool)
+     */
+    void add(const std::string & key, Eigen::Quaterniond value);
+
+    /*! \brief Create an empty object in the Configuration
+     *
+     * Overwrite existing content if any.
+     *
+     * \param key Key to add
+     */
+    Configuration add(const std::string & key);
+
+    /*! \brief Create an empty array in the Configuration
+     *
+     * Overwrite existing content if any.
+     *
+     * \param key Key to add
+     *
+     * \param size Size that is reserved for the array
+     */
+    Configuration array(const std::string & key, size_t size = 0);
+
+    /*! \brief Insert a bool element into an array
+     *
+     * \param value Value to add
+     *
+     * \throws If the underlying Json value is not an array.
+     */
+    void push(bool value);
+
+    /*! \brief Insert a int element into an array
+     *
+     * \see push(bool);
+     */
+    void push(int value);
+
+    /*! \brief Insert a unsigned int element into an array
+     *
+     * \see push(bool);
+     */
+    void push(unsigned int value);
+
+    /*! \brief Insert a double element into an array
+     *
+     * \see push(bool);
+     */
+    void push(double value);
+
+    /*! \brief Insert a std::string element into an array
+     *
+     * \see push(bool);
+     */
+    void push(std::string value);
+
+    /*! \brief Insert a Eigen::Vector3d element into an array
+     *
+     * \see push(bool);
+     */
+    void push(Eigen::Vector3d value);
+
+    /*! \brief Insert a Eigen::Vector6d element into an array
+     *
+     * \see push(bool);
+     */
+    void push(Eigen::Vector6d value);
+
+    /*! \brief Insert a Eigen::VectorXd element into an array
+     *
+     * \see push(bool);
+     */
+    void push(Eigen::VectorXd value);
+
+    /*! \brief Insert a Eigen::Quaterniond element into an array
+     *
+     * \see push(bool);
+     */
+    void push(Eigen::Quaterniond value);
+
+    /*! \brief Add a vector into the JSON document
+     *
+     * Overwrites existing content if any.
+     *
+     * \param key Key of the element
+     *
+     * \param value Vector of elements to add
+     */
+    template<typename T>
+    void add(const std::string & key, const std::vector<T> & value)
+    {
+      Configuration v = array(key);
+      for(const auto & vi : value)
+      {
+        v.push(vi);
+      }
+    }
+  private:
     /*! \brief Implementation details
      *
      * This structure is meant to hide the JSON library used by mc_rtc

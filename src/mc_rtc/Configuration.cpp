@@ -36,9 +36,19 @@ struct Configuration::Json::Impl
     pointer = ss.str();
   }
 
+  rapidjson::Document::AllocatorType & allocator()
+  {
+    return doc_p->GetAllocator();
+  }
+
   rapidjson::Value * value() const
   {
-    if(pointer == "") { return rapidjson::Pointer("/").Get(*doc_p); }
+    if(pointer == "")
+    {
+      rapidjson::Value * ret = rapidjson::Pointer("/").Get(*doc_p);
+      if(ret) { return ret; }
+      else { return doc_p.get(); }
+    }
     return rapidjson::Pointer(pointer.c_str()).Get(*doc_p);
   }
 
@@ -160,6 +170,13 @@ Configuration::Exception::Exception(const std::string & msg)
 const char * Configuration::Exception::what() const noexcept
 {
   return msg.c_str();
+}
+
+Configuration::Configuration()
+: v()
+{
+  v.impl.reset(new Json::Impl());
+  v.impl->doc_p->SetObject();
 }
 
 Configuration::Configuration(const Json & v)
@@ -342,6 +359,11 @@ void Configuration::load(const std::string & path)
   }
 }
 
+void Configuration::save(const std::string & path, bool pretty)
+{
+  mc_rtc::internal::saveDocument(path, *v.impl->doc_p, pretty);
+}
+
 template<>
 void Configuration::operator()(const std::string & key, std::string & v) const
 {
@@ -364,5 +386,78 @@ std::ostream & operator<<(std::ostream & os, const Configuration & c)
   os << static_cast<std::string>(c);
   return os;
 }
+
+namespace
+{
+  void add_impl(const std::string & key, rapidjson::Value & json,
+                rapidjson::Document::AllocatorType & allocator)
+  {
+    rapidjson::Value key_(key.c_str(), allocator);
+    rapidjson::Value value(rapidjson::kObjectType);
+    if(json.HasMember(key.c_str()))
+    {
+      json.RemoveMember(key.c_str());
+    }
+    json.AddMember(key_, value, allocator);
+  }
+
+  template<typename T>
+  void add_impl(const std::string & key, T value, rapidjson::Value & json,
+                rapidjson::Document::AllocatorType & allocator)
+  {
+    rapidjson::Value key_(key.c_str(), allocator);
+    rapidjson::Value value_ = mc_rtc::internal::toJSON(value, allocator);
+    if(json.HasMember(key.c_str()))
+    {
+      json.RemoveMember(key.c_str());
+    }
+    json.AddMember(key_, value_, allocator);
+  }
+
+  template<typename T>
+  void push_impl(T value, rapidjson::Value & json,
+                rapidjson::Document::AllocatorType & allocator)
+  {
+    rapidjson::Value value_ = mc_rtc::internal::toJSON(value, allocator);
+    if(! json.IsArray() )
+    {
+      throw Configuration::Exception("Trying to push data in a non-array value");
+    }
+    json.PushBack(value_, allocator);
+  }
+}
+
+void Configuration::add(const std::string & key, bool value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
+void Configuration::add(const std::string & key, int value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
+void Configuration::add(const std::string & key, unsigned int value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
+void Configuration::add(const std::string & key, double value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
+void Configuration::add(const std::string & key, std::string value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
+void Configuration::add(const std::string & key, Eigen::Vector3d value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
+void Configuration::add(const std::string & key, Eigen::Vector6d value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
+void Configuration::add(const std::string & key, Eigen::VectorXd value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
+void Configuration::add(const std::string & key, Eigen::Quaterniond value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
+
+Configuration Configuration::array(const std::string & key, size_t size)
+{
+  auto & allocator = v.impl->allocator();
+  rapidjson::Value key_(key.c_str(), allocator);
+  rapidjson::Value value(rapidjson::kArrayType);
+  if(size) { value.Reserve(size, allocator); }
+  if(has(key))
+  {
+    v.impl->value()->RemoveMember(key.c_str());
+  }
+  v.impl->value()->AddMember(key_, value, allocator);
+  return (*this)(key);
+}
+
+void Configuration::push(bool value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
+void Configuration::push(int value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
+void Configuration::push(unsigned int value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
+void Configuration::push(std::string value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
+void Configuration::push(Eigen::Vector3d value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
+void Configuration::push(Eigen::Vector6d value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
+void Configuration::push(Eigen::VectorXd value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
+void Configuration::push(Eigen::Quaterniond value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 
 }

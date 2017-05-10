@@ -517,4 +517,16 @@ BOOST_AUTO_TEST_CASE(TestConfiguration)
     std::vector<std::string> c = config("stringV");
     BOOST_CHECK(c == ref2);
   }
+
+  /* Check creation and saving of a configuration */
+  {
+    mc_rtc::Configuration config;
+    config.add("int", 42);
+    config.add("sint", -42);
+    config.add("double", 42.5);
+    config.add("string", "sometext");
+    std::vector<int> intV = {0, 1, 2, 3, 4, 5};
+    config.add("intV", intV);
+    config.save("/tmp/config.json");
+  }
 }
