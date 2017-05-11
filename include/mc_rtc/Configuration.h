@@ -271,7 +271,7 @@ namespace mc_rtc
     template<typename T>
     bool operator==(const T & rhs) const
     {
-      return static_cast<T>(*this) == rhs;
+      return (*this).operator T() == rhs;
     }
 
     /*! \brief Add a bool element to the Configuration
@@ -415,8 +415,8 @@ namespace mc_rtc
      *
      * \param value Vector of elements to add
      */
-    template<typename T>
-    void add(const std::string & key, const std::vector<T> & value)
+    template<typename T, typename A>
+    void add(const std::string & key, const std::vector<T, A> & value)
     {
       Configuration v = array(key);
       for(const auto & vi : value)

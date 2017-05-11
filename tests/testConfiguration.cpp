@@ -17,7 +17,7 @@ inline int mkstemp(char * out)
 }
 #endif
 
-std::string getConfigFile(const std::string & data)
+std::string getConfigFile()
 {
 #ifndef WIN32
   char fIn[17] = "/tmp/tConfXXXXXX";
@@ -31,6 +31,12 @@ std::string getConfigFile(const std::string & data)
     std::cerr << "Failed to create temporary file, abort test" << std::endl;
     throw std::runtime_error("Failed to create file");
   }
+  return fIn;
+}
+
+std::string getConfigFile(const std::string & data)
+{
+  std::string fIn = getConfigFile();
   std::ofstream ofs(fIn);
   ofs << data;
   return fIn;
@@ -339,7 +345,7 @@ BOOST_AUTO_TEST_CASE(TestConfiguration)
     BOOST_CHECK_EQUAL(h, Eigen::VectorXd::Zero(0));
   }
 
-  /* Eigen::Quaterniod test */
+  /* Eigen::Quaterniond test */
   {
     Eigen::Quaterniond ref(0.71, 0, 0.71, 0);
     ref.normalize();
@@ -520,13 +526,70 @@ BOOST_AUTO_TEST_CASE(TestConfiguration)
 
   /* Check creation and saving of a configuration */
   {
-    mc_rtc::Configuration config;
-    config.add("int", 42);
-    config.add("sint", -42);
-    config.add("double", 42.5);
-    config.add("string", "sometext");
-    std::vector<int> intV = {0, 1, 2, 3, 4, 5};
-    config.add("intV", intV);
-    config.save("/tmp/config.json");
+    std::string tmpF = getConfigFile();
+    mc_rtc::Configuration config_ref;
+
+    bool ref_bool = false;
+    config_ref.add("bool", ref_bool);
+    unsigned int ref_uint = 42;
+    config_ref.add("uint", ref_uint);
+    int ref_int = -42;
+    config_ref.add("int", ref_int);
+    double ref_double = 42.5;
+    config_ref.add("double", ref_double);
+    std::string ref_string = "sometext";
+    config_ref.add("string", ref_string);
+    Eigen::Vector3d ref_v3d = {1.2, 3.4, 5.6};
+    config_ref.add("v3d", ref_v3d);
+    Eigen::Vector6d ref_v6d;
+    ref_v6d << 0.1, 1.2, 2.3, 3.4, 4.5, 5.6;
+    config_ref.add("v6d", ref_v6d);
+    Eigen::VectorXd ref_vxd(5);
+    ref_vxd << 0.1, 3.2, 4.2, 4.5, 5.4;
+    config_ref.add("vxd", ref_vxd);
+    Eigen::Quaterniond ref_quat {0.71, 0., 0.71, 0.};
+    ref_quat.normalize();
+    config_ref.add("quat", ref_quat);
+    std::vector<int> ref_int_v = {0, 1, 2, 3, 4, 5};
+    config_ref.add("int_v", ref_int_v);
+    std::vector<double> ref_double_v = {0.1, 1.0, 0.2, 2.0, 0.3};
+    config_ref.add("double_v", ref_double_v);
+    std::vector<Eigen::Vector3d> ref_v3d_v;
+    for(size_t i = 0; i < 10; ++i) { ref_v3d_v.push_back(Eigen::Vector3d::Random()); }
+    config_ref.add("v3d_v", ref_v3d_v);
+    config_ref.add("dict");
+    config_ref("dict").add("int", ref_int);
+    config_ref.add("dict2").add("double_v", ref_double_v);
+
+    config_ref.save(tmpF);
+
+    mc_rtc::Configuration config_test(tmpF);
+    BOOST_CHECK(config_test("bool") == ref_bool);
+    BOOST_CHECK(config_test("uint") == ref_uint);
+    BOOST_CHECK(config_test("int") == ref_int);
+    BOOST_CHECK(config_test("double") == ref_double);
+    BOOST_CHECK(config_test("string") == ref_string);
+    BOOST_CHECK(config_test("v3d") == ref_v3d);
+    BOOST_CHECK(config_test("v6d") == ref_v6d);
+    BOOST_CHECK(config_test("vxd") == ref_vxd);
+    BOOST_CHECK(config_test("quat") == ref_quat);
+    BOOST_CHECK(config_test("int_v") == ref_int_v);
+    BOOST_CHECK(config_test("double_v") == ref_double_v);
+    std::vector<Eigen::Vector3d> test_v3d_v = config_test("v3d_v");
+    BOOST_REQUIRE(test_v3d_v.size() == ref_v3d_v.size());
+    for(size_t i = 0; i < test_v3d_v.size(); ++i)
+    {
+      BOOST_CHECK(test_v3d_v[i].isApprox(ref_v3d_v[i], 1e-9));
+    }
+    BOOST_REQUIRE(config_test.has("dict"));
+    BOOST_CHECK(config_test("dict")("int") == ref_int);
+    BOOST_REQUIRE(config_test.has("dict2"));
+    BOOST_CHECK(config_test("dict2")("double_v") == ref_double_v);
+
+    /* Save a part of the configuration */
+    config_test("dict2")("double_v").save(tmpF);
+
+    mc_rtc::Configuration config_partial(tmpF);
+    BOOST_CHECK(config_partial == ref_double_v);
   }
 }

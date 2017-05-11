@@ -69,7 +69,7 @@ inline bool loadDocument(const std::string & path, rapidjson::Document & documen
  * \param document Document to be saved
  *
  */
-inline void saveDocument(const std::string & path, rapidjson::Document & document, bool pretty = false)
+inline void saveDocument(const std::string & path, rapidjson::Value & document, bool pretty = false)
 {
   std::ofstream ofs(path);
   rapidjson::OStreamWrapper osw(ofs);

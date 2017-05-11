@@ -361,7 +361,7 @@ void Configuration::load(const std::string & path)
 
 void Configuration::save(const std::string & path, bool pretty)
 {
-  mc_rtc::internal::saveDocument(path, *v.impl->doc_p, pretty);
+  mc_rtc::internal::saveDocument(path, *v.impl->value(), pretty);
 }
 
 template<>
@@ -437,6 +437,19 @@ void Configuration::add(const std::string & key, Eigen::Vector6d value) { add_im
 void Configuration::add(const std::string & key, Eigen::VectorXd value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::add(const std::string & key, Eigen::Quaterniond value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
 
+Configuration Configuration::add(const std::string & key)
+{
+  auto & allocator = v.impl->allocator();
+  rapidjson::Value key_(key.c_str(), allocator);
+  rapidjson::Value value(rapidjson::kObjectType);
+  if(has(key))
+  {
+    v.impl->value()->RemoveMember(key.c_str());
+  }
+  v.impl->value()->AddMember(key_, value, allocator);
+  return (*this)(key);
+}
+
 Configuration Configuration::array(const std::string & key, size_t size)
 {
   auto & allocator = v.impl->allocator();
@@ -454,6 +467,7 @@ Configuration Configuration::array(const std::string & key, size_t size)
 void Configuration::push(bool value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(int value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(unsigned int value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
+void Configuration::push(double value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(std::string value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(Eigen::Vector3d value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(Eigen::Vector6d value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
