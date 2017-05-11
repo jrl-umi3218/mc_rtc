@@ -123,7 +123,7 @@ struct Configuration::Json::Impl
   size_t size() const
   {
     assert(is());
-    return value()->Capacity();
+    return value()->Size();
   }
   Impl operator[](int idx)
   {
@@ -437,6 +437,19 @@ void Configuration::add(const std::string & key, Eigen::Vector6d value) { add_im
 void Configuration::add(const std::string & key, Eigen::VectorXd value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::add(const std::string & key, Eigen::Quaterniond value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
 
+
+void Configuration::add(const std::string & key, Configuration value)
+{
+  auto & allocator = v.impl->allocator();
+  rapidjson::Value key_(key.c_str(), allocator);
+  rapidjson::Value value_(*value.v.impl->value(), allocator);
+  if(has(key))
+  {
+    v.impl->value()->RemoveMember(key.c_str());
+  }
+  v.impl->value()->AddMember(key_, value_, allocator);
+}
+
 Configuration Configuration::add(const std::string & key)
 {
   auto & allocator = v.impl->allocator();
@@ -473,5 +486,18 @@ void Configuration::push(Eigen::Vector3d value) { push_impl(value, *v.impl->valu
 void Configuration::push(Eigen::Vector6d value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(Eigen::VectorXd value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(Eigen::Quaterniond value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
+
+void Configuration::push(mc_rtc::Configuration value)
+{
+  auto & allocator = v.impl->allocator();
+  auto & json = *v.impl->value();
+  if(! json.IsArray() )
+  {
+    throw Configuration::Exception("Trying to push data in a non-array value");
+  }
+  rapidjson::Value value_(*value.v.impl->value(), allocator);
+  json.PushBack(value_, allocator);
+}
+
 
 }

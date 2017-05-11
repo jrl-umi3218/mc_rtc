@@ -197,11 +197,11 @@ namespace mc_rtc
      */
     void load(const std::string & path);
 
-    /*! \brief Save the configuration to a file
+    /*! \brief Save the configuration to a file.
      *
      * \param path Path to the configuration file
      *
-     * \param pretty Writes a human-readable file, defauls to true
+     * \param pretty Writes a human-readable file, defaults to true
      *
      */
     void save(const std::string & path, bool pretty = true);
@@ -333,6 +333,12 @@ namespace mc_rtc
      */
     void add(const std::string & key, Eigen::Quaterniond value);
 
+    /*! \brief Add another Configuration to the Configuration
+     *
+     * \see add(const std::string&, bool)
+     */
+    void add(const std::string & key, Configuration value);
+
     /*! \brief Create an empty object in the Configuration
      *
      * Overwrite existing content if any.
@@ -406,6 +412,12 @@ namespace mc_rtc
      * \see push(bool);
      */
     void push(Eigen::Quaterniond value);
+
+    /*! \brief Push a Configuration element into an array
+     *
+     * \see push(bool);
+     */
+    void push(Configuration value);
 
     /*! \brief Add a vector into the JSON document
      *
