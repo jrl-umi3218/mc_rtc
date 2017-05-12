@@ -447,9 +447,10 @@ namespace mc_rtc
     template<typename T, typename A>
     void push(const std::vector<T, A> & value)
     {
+      Configuration v = array(value.size());
       for(const auto & vi : value)
       {
-        push(vi);
+        v.push(vi);
       }
     }
 
@@ -457,6 +458,9 @@ namespace mc_rtc
 
     ConfigurationArrayIterator end() const;
   private:
+    /*! \brief Create an empty array */
+    Configuration array(size_t reserve);
+
     /*! \brief Implementation details
      *
      * This structure is meant to hide the JSON library used by mc_rtc

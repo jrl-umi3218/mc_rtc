@@ -471,6 +471,19 @@ Configuration Configuration::array(const std::string & key, size_t size)
   return (*this)(key);
 }
 
+Configuration Configuration::array(size_t reserve)
+{
+  if(!v.isArray())
+  {
+    throw(Exception("Cannot store an anonymous array outside of an array"));
+  }
+  auto & allocator = v.impl->allocator();
+  rapidjson::Value value(rapidjson::kArrayType);
+  value.Reserve(reserve, allocator);
+  v.impl->value()->PushBack(value, allocator);
+  return (*this)[size() - 1];
+}
+
 void Configuration::push(bool value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(int value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(unsigned int value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }

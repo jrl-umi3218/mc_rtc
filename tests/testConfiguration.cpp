@@ -555,6 +555,8 @@ BOOST_AUTO_TEST_CASE(TestConfigurationWriting)
   config_ref.add("int_v", ref_int_v);
   std::vector<double> ref_double_v = {0.1, 1.0, 0.2, 2.0, 0.3};
   config_ref.add("double_v", ref_double_v);
+  std::vector<std::vector<double>> ref_double_v_v = { ref_double_v, ref_double_v, {0}, {}, {5.0, 4.0, 3.5} };
+  config_ref.add("double_v_v", ref_double_v_v);
   std::vector<Eigen::Vector3d> ref_v3d_v;
   for(size_t i = 0; i < 10; ++i) { ref_v3d_v.push_back(Eigen::Vector3d::Random()); }
   config_ref.add("v3d_v", ref_v3d_v);
@@ -576,6 +578,7 @@ BOOST_AUTO_TEST_CASE(TestConfigurationWriting)
   BOOST_CHECK(config_test("quat") == ref_quat);
   BOOST_CHECK(config_test("int_v") == ref_int_v);
   BOOST_CHECK(config_test("double_v") == ref_double_v);
+  BOOST_CHECK(config_test("double_v_v") == ref_double_v_v);
   std::vector<Eigen::Vector3d> test_v3d_v = config_test("v3d_v");
   BOOST_REQUIRE(test_v3d_v.size() == ref_v3d_v.size());
   for(size_t i = 0; i < test_v3d_v.size(); ++i)
@@ -618,7 +621,6 @@ BOOST_AUTO_TEST_CASE(TestConfigurationCeption)
   {
     config_1("config_2_v").push(config_2);
   }
-  config_1.save("/tmp/config.json");
   BOOST_REQUIRE(config_1.has("config_2_v"));
   BOOST_REQUIRE(config_1("config_2_v").size() == 10);
   for(size_t i = 0; i < 10; ++i)
