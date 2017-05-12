@@ -16,6 +16,8 @@
 namespace mc_rtc
 {
 
+  struct MC_RTC_UTILS_DLLAPI ConfigurationArrayIterator;
+
   /*! \brief Simplify access to values hold within a JSON file
    *
    * Configuration values can be accessed using a key system, type
@@ -437,6 +439,23 @@ namespace mc_rtc
         v.push(vi);
       }
     }
+
+    /*! \brief Push a vector into the JSON document
+     *
+     * \param value Vector of elements to add
+     */
+    template<typename T, typename A>
+    void push(const std::vector<T, A> & value)
+    {
+      for(const auto & vi : value)
+      {
+        push(vi);
+      }
+    }
+
+    ConfigurationArrayIterator begin() const;
+
+    ConfigurationArrayIterator end() const;
   private:
     /*! \brief Implementation details
      *
@@ -457,10 +476,23 @@ namespace mc_rtc
     Configuration(const Json & v);
   };
 
+  struct MC_RTC_UTILS_DLLAPI ConfigurationArrayIterator
+  {
+    ConfigurationArrayIterator(const Configuration & conf);
+    bool operator!=(const ConfigurationArrayIterator & rhs) const;
+    ConfigurationArrayIterator & operator++();
+    Configuration operator*();
+    const Configuration operator*() const;
+    size_t i = 0;
+    Configuration conf;
+  };
+
+
   /*! \brief Specialized version to lift ambiguity */
   template<>
   void MC_RTC_UTILS_DLLAPI Configuration::operator()(const std::string & key, std::string & v) const;
 
-  /*! \brief Ostream operator */
-  std::ostream & operator<<(std::ostream & os, const Configuration & c);
 }
+
+/*! \brief Ostream operator */
+MC_RTC_UTILS_DLLAPI std::ostream & operator<<(std::ostream & os, const mc_rtc::Configuration & c);

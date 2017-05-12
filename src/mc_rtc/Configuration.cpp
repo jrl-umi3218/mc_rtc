@@ -381,12 +381,6 @@ bool Configuration::operator==(const char * rhs) const
   return static_cast<std::string>(*this) == rhs;
 }
 
-std::ostream & operator<<(std::ostream & os, const Configuration & c)
-{
-  os << static_cast<std::string>(c);
-  return os;
-}
-
 namespace
 {
   void add_impl(const std::string & key, rapidjson::Value & json,
@@ -499,5 +493,48 @@ void Configuration::push(mc_rtc::Configuration value)
   json.PushBack(value_, allocator);
 }
 
+ConfigurationArrayIterator Configuration::begin() const
+{
+  return ConfigurationArrayIterator(*this);
+}
 
+ConfigurationArrayIterator Configuration::end() const
+{
+  auto ret = begin();
+  ret.i = size();
+  return ret;
+}
+
+ConfigurationArrayIterator::ConfigurationArrayIterator(const Configuration & conf)
+  : i(0), conf(conf)
+{
+}
+
+bool ConfigurationArrayIterator::operator!=(const ConfigurationArrayIterator & rhs) const
+{
+  return i != rhs.i;
+}
+
+ConfigurationArrayIterator & ConfigurationArrayIterator::operator++()
+{
+  ++i;
+  return *this;
+}
+
+Configuration ConfigurationArrayIterator::operator*()
+{
+  return conf[i];
+}
+
+const Configuration ConfigurationArrayIterator::operator*() const
+{
+  return conf[i];
+}
+
+}
+
+std::ostream & operator<<(std::ostream & os, const mc_rtc::Configuration & c)
+{
+  os << static_cast<std::string>(c);
+  return os;
 }
