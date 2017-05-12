@@ -271,7 +271,8 @@ namespace mc_rtc
     template<typename T>
     bool operator==(const T & rhs) const
     {
-      return (*this).operator T() == rhs;
+      T lhs = *this;
+      return lhs == rhs;
     }
 
     /*! \brief Add a bool element to the Configuration
