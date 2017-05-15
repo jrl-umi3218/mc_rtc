@@ -6,6 +6,7 @@
 
 #include <mc_rbdyn/Robots.h>
 
+#include <mc_rtc/Configuration.h>
 #include <mc_rtc/logging.h>
 
 #include <RBDyn/FK.h>
@@ -20,23 +21,22 @@ namespace mc_rbdyn
 
 namespace
 {
-  std::vector<PolygonInterpolator::tuple_pair_t> tpvFromJson(const rapidjson::Value & jsv)
+  std::vector<PolygonInterpolator::tuple_pair_t> tpvFromJson(const mc_rtc::Configuration & conf)
   {
     std::vector<PolygonInterpolator::tuple_pair_t> tuple_pairs;
-    if(jsv.HasMember("tuple_pairs") && jsv["tuple_pairs"].IsArray())
+    if(conf.has("tuple_pairs") && conf("tuple_pairs").size())
     {
-      for(const auto & tpv : jsv["tuple_pairs"].GetArray())
+      for(const auto tpv : conf("tuple_pairs"))
       {
-        if(tpv.HasMember("p1") && tpv.HasMember("p2"))
+        if(tpv.has("p1") && tpv.has("p2"))
         {
-          const auto & p1 = tpv["p1"];
-          const auto & p2 = tpv["p2"];
-          if(p1.IsArray() && p1.Capacity() == 2 &&
-             p2.IsArray() && p2.Capacity() == 2)
+          const auto p1 = tpv("p1");
+          const auto p2 = tpv("p2");
+          if(p1.size() == 2 && p2.size() == 2)
           {
             tuple_pairs.push_back({
-              {{p1[0].GetDouble(), p1[1].GetDouble()}},
-              {{p2[0].GetDouble(), p2[1].GetDouble()}}
+              {{p1[0], p1[1]}},
+              {{p2[0], p2[1]}}
             });
           }
         }
@@ -279,42 +279,36 @@ Contact & RemoveContactAction::contact()
   return _contact;
 }
 
-sva::PTransformd svaPTransformdFromJSON(rapidjson::Value & v)
+sva::PTransformd svaPTransformdFromJSON(const mc_rtc::Configuration & conf)
 {
-  rapidjson::Value & rotation = v["rotation"];
+  auto rotation = conf("rotation");
   Eigen::Matrix3d rot;
   for(int i = 0; i < 3; ++i)
   {
     for(int j = 0; j < 3; ++j)
     {
-      rot(i,j) = rotation[3*i+j].GetDouble();
+      rot(i,j) = rotation[3*i+j];
     }
   }
-  rapidjson::Value & translation = v["translation"];
-  Eigen::Vector3d t;
-  for(int i = 0; i < 3; ++i)
-  {
-    t(i) = translation[i].GetDouble();
-  }
-  return sva::PTransformd(rot, t);
+  return sva::PTransformd(rot, conf("translation"));
 }
 
-const Surface& surfaceFromJSON(const mc_rbdyn::Robot & robot, rapidjson::Value & v)
+const Surface& surfaceFromJSON(const mc_rbdyn::Robot & robot, const mc_rtc::Configuration & conf)
 {
-  if(robot.hasSurface(v["name"].GetString()))
+  if(robot.hasSurface(conf("name")))
   {
-    return robot.surface(v["name"].GetString());
+    return robot.surface(conf("name"));
   }
-  LOG_ERROR("Surface stored in JSON " << v["name"].GetString() << " does not exist in robot " << robot.name())
+  LOG_ERROR("Surface stored in JSON " << conf("name") << " does not exist in robot " << robot.name())
   throw(std::string("invalid json"));
 }
 
-Contact contactFromJSON(const mc_rbdyn::Robots & robots, rapidjson::Value & v)
+Contact contactFromJSON(const mc_rbdyn::Robots & robots, const mc_rtc::Configuration & conf)
 {
-  const Surface & robotSurface = surfaceFromJSON(robots.robot(), v["robotSurface"]);
-  const Surface & envSurface = surfaceFromJSON(robots.env(), v["envSurface"]);
-  sva::PTransformd X_es_rs = svaPTransformdFromJSON(v["X_es_rs"]);
-  bool is_fixed = v["is_fixed"].GetBool();
+  const Surface & robotSurface = surfaceFromJSON(robots.robot(), conf("robotSurface"));
+  const Surface & envSurface = surfaceFromJSON(robots.env(), conf("envSurface"));
+  sva::PTransformd X_es_rs = svaPTransformdFromJSON(conf("X_es_rs"));
+  bool is_fixed = conf("is_fixed");
   if(is_fixed)
   {
     return Contact(robots, robotSurface.name(), envSurface.name(), X_es_rs);
@@ -325,41 +319,32 @@ Contact contactFromJSON(const mc_rbdyn::Robots & robots, rapidjson::Value & v)
   }
 }
 
-inline void addStanceFromJSON(const mc_rbdyn::Robots & robots, std::vector<Stance> & stances, rapidjson::Value & v)
+inline void addStanceFromJSON(const mc_rbdyn::Robots & robots, std::vector<Stance> & stances, const mc_rtc::Configuration & conf)
 {
-  std::vector< std::vector<double> > q;
-  for(rapidjson::Value & vq : v["q"].GetArray())
-  {
-    std::vector<double> qi;
-    for(rapidjson::Value & vqi : vq.GetArray())
-    {
-      qi.push_back(vqi.GetDouble());
-    }
-    q.push_back(qi);
-  }
+  std::vector< std::vector<double> > q = conf("q");
   std::vector<Contact> geomContacts;
-  for(rapidjson::Value & vc : v["geomContacts"].GetArray())
+  for(const auto vc : conf("geomContacts"))
   {
     geomContacts.push_back(contactFromJSON(robots, vc));
   }
   std::vector<Contact> stabContacts;
-  for(rapidjson::Value & vc : v["stabContacts"].GetArray())
+  for(const auto vc : conf("stabContacts"))
   {
     stabContacts.push_back(contactFromJSON(robots, vc));
   }
   stances.emplace_back(q, geomContacts, stabContacts);
 }
 
-std::shared_ptr<StanceAction> stanceActionFromJSON(const mc_rbdyn::Robots & robots, rapidjson::Value & v)
+std::shared_ptr<StanceAction> stanceActionFromJSON(const mc_rbdyn::Robots & robots, const mc_rtc::Configuration & conf)
 {
-  std::string type = v["type"].GetString();
+  std::string type = conf("type");
   if(type == "Identity")
   {
     return std::shared_ptr<StanceAction>(new IdentityContactAction());
   }
   else
   {
-    Contact contact = contactFromJSON(robots, v["contact"]);
+    Contact contact = contactFromJSON(robots, conf("contact"));
     if(type == "Add")
     {
       return std::shared_ptr<StanceAction>(new AddContactAction(contact));
@@ -374,153 +359,124 @@ std::shared_ptr<StanceAction> stanceActionFromJSON(const mc_rbdyn::Robots & robo
 
 void loadStances(const mc_rbdyn::Robots & robots, const std::string & filename, std::vector<Stance> & stances, std::vector< std::shared_ptr<StanceAction> > & actions, std::vector<PolygonInterpolator> & interpolators)
 {
-  rapidjson::Document v;
-  if(!mc_rtc::internal::loadDocument(filename, v)) { return; }
-  for(rapidjson::Value & sv : v["stances"].GetArray())
+  mc_rtc::Configuration conf(filename);
+  for(const auto sv : conf("stances"))
   {
     addStanceFromJSON(robots, stances, sv);
   }
-  for(rapidjson::Value & sav : v["actions"].GetArray())
+  for(const auto sav : conf("actions"))
   {
     actions.push_back(stanceActionFromJSON(robots, sav));
   }
-  if(v.HasMember("polygon_interpolators"))
+  if(conf.has("polygon_interpolators"))
   {
-    for(const auto & piv : v["polygon_interpolators"].GetArray())
+    for(const auto piv : conf("polygon_interpolators"))
     {
       interpolators.emplace_back(tpvFromJson(piv));
     }
   }
 }
 
-rapidjson::Value svaPTransformdToJSON(const sva::PTransformd & X, rapidjson::Document::AllocatorType & allocator)
+mc_rtc::Configuration svaPTransformdToJSON(const sva::PTransformd & X)
 {
-  rapidjson::Value ret(rapidjson::kObjectType);
+  mc_rtc::Configuration conf;
+  mc_rtc::Configuration rotation = conf.array("rotation");
   const Eigen::Matrix3d & rot = X.rotation();
-  rapidjson::Value rotation(rapidjson::kArrayType);
   for(int i = 0; i < 3; ++i)
   {
     for(int j = 0; j < 3; ++j)
     {
-      rotation.PushBack(rot(i,j), allocator);
+      rotation.push(rot(i,j));
     }
   }
-  ret["rotation"] = rotation;
-  const Eigen::Vector3d & t = X.translation();
-  rapidjson::Value translation(rapidjson::kArrayType);
-  for(int i = 0; i < 3; ++i)
-  {
-    translation.PushBack(t(i), allocator);
-  }
-  ret["translation"] = translation;
-  return ret;
+  conf.add("translation", X.translation());
+  return conf;
 }
 
-rapidjson::Value surfaceToJSON(const std::shared_ptr<Surface> & surface, rapidjson::Document::AllocatorType & allocator)
+mc_rtc::Configuration surfaceToJSON(const std::shared_ptr<Surface> & surface)
 {
-  rapidjson::Value ret(rapidjson::kObjectType);
+  mc_rtc::Configuration conf;
   // Save surfaces common part, points doesn't have to be saved
-  rapidjson::Value name(rapidjson::kStringType);
-  name.SetString(surface->name().c_str(), allocator);
-  ret.AddMember("name", name, allocator);
-  rapidjson::Value bodyName(rapidjson::kStringType);
-  bodyName.SetString(surface->bodyName().c_str(), allocator);
-  ret.AddMember("bodyName", bodyName, allocator);
-  rapidjson::Value X_b_s = svaPTransformdToJSON(surface->X_b_s(), allocator);
-  ret.AddMember("X_b_s", X_b_s, allocator);
-  rapidjson::Value materialName(rapidjson::kStringType);
-  materialName.SetString(surface->materialName().c_str(), allocator);
-  ret.AddMember("materialName", materialName, allocator);
+  conf.add("name", surface->name());
+  conf.add("bodyName", surface->bodyName());
+  conf.add("X_b_s", svaPTransformdToJSON(surface->X_b_s()));
+  conf.add("materialName", surface->materialName());
   if(dynamic_cast<PlanarSurface*>(surface.get()))
   {
-    rapidjson::Value planarPoints(rapidjson::kArrayType);
+    mc_rtc::Configuration planarPoints = conf.array("planarPoints");
     for(const std::pair<double, double> & p : (dynamic_cast<PlanarSurface*>(surface.get()))->planarPoints())
     {
-      rapidjson::Value pJSON(rapidjson::kObjectType);
-      pJSON.AddMember("x", rapidjson::Value(p.first).Move(), allocator);
-      pJSON.AddMember("y", rapidjson::Value(p.second).Move(), allocator);
-      planarPoints.PushBack(pJSON, allocator);
+      mc_rtc::Configuration pJSON;
+      pJSON.add("x", p.first);
+      pJSON.add("y", p.second);
+      planarPoints.push(pJSON);
     }
-    ret["planarPoints"] = planarPoints;
   }
   else if(dynamic_cast<CylindricalSurface*>(surface.get()))
   {
     CylindricalSurface * s = dynamic_cast<CylindricalSurface*>(surface.get());
-    ret.AddMember("radius", rapidjson::Value(s->radius()).Move(), allocator);
-    ret.AddMember("width", rapidjson::Value(s->width()).Move(), allocator);
+    conf.add("radius", s->radius());
+    conf.add("width", s->width());
   }
   else if(dynamic_cast<GripperSurface*>(surface.get()))
   {
     GripperSurface * s = dynamic_cast<GripperSurface*>(surface.get());
-    rapidjson::Value pfo(rapidjson::kArrayType);
+    auto pfo = conf.array("pointsFromOrigin");
     for(const sva::PTransformd & p : s->pointsFromOrigin())
     {
-      pfo.PushBack(svaPTransformdToJSON(p, allocator).Move(), allocator);
+      pfo.push(svaPTransformdToJSON(p));
     }
-    ret.AddMember("pointsFromOrigin", pfo, allocator);
-    ret.AddMember("X_b_motor", svaPTransformdToJSON(s->X_b_motor(), allocator).Move(), allocator);
-    ret.AddMember("motorMaxTorque", rapidjson::Value(s->motorMaxTorque()).Move(), allocator);
+    conf.add("X_b_motor", svaPTransformdToJSON(s->X_b_motor()));
+    conf.add("motorMaxTorque", s->motorMaxTorque());
   }
-  return ret;
+  return conf;
 }
 
-rapidjson::Value contactToJSON(const Contact & contact, rapidjson::Document::AllocatorType & allocator)
+mc_rtc::Configuration contactToJSON(const Contact & contact)
 {
-  rapidjson::Value ret(rapidjson::kObjectType);
-  ret.AddMember("robotSurface", surfaceToJSON(contact.r1Surface(), allocator).Move(), allocator);
-  ret.AddMember("envSurface", surfaceToJSON(contact.r2Surface(), allocator).Move(), allocator);
-  ret.AddMember("X_es_rs", svaPTransformdToJSON(contact.X_r2s_r1s(), allocator).Move(), allocator);
-  ret.AddMember("is_fixed", rapidjson::Value(contact.isFixed()).Move(), allocator);
-  return ret;
+  mc_rtc::Configuration conf;
+  conf.add("robotSurface", surfaceToJSON(contact.r1Surface()));
+  conf.add("envSurface", surfaceToJSON(contact.r2Surface()));
+  conf.add("X_es_rs", svaPTransformdToJSON(contact.X_r2s_r1s()));
+  conf.add("is_fixed", contact.isFixed());
+  return conf;
 }
 
-rapidjson::Value stanceToJSON(Stance & stance, rapidjson::Document::AllocatorType & allocator)
+mc_rtc::Configuration stanceToJSON(Stance & stance)
 {
-  rapidjson::Value ret(rapidjson::kObjectType);
-  rapidjson::Value q(rapidjson::kArrayType);
-  for(const std::vector<double> & qi : stance.q())
-  {
-    rapidjson::Value jqi = rapidjson::Value(rapidjson::kArrayType);
-    for(double v : qi)
-    {
-      jqi.PushBack(v, allocator);
-    }
-    q.PushBack(jqi, allocator);
-  }
-  ret.AddMember("q", q, allocator);
-  rapidjson::Value geomContacts = rapidjson::Value(rapidjson::kArrayType);
+  mc_rtc::Configuration conf;
+  conf.add("q", stance.q());
+  auto geomContacts = conf.array("geomContacts");
   for(const Contact & c : stance.geomContacts())
   {
-    geomContacts.PushBack(contactToJSON(c, allocator), allocator);
+    geomContacts.push(contactToJSON(c));
   }
-  ret.AddMember("geomContacts", geomContacts, allocator);
-  rapidjson::Value stabContacts = rapidjson::Value(rapidjson::kArrayType);
+  auto stabContacts = conf.array("stabContacts");
   for(const Contact & c : stance.stabContacts())
   {
-    stabContacts.PushBack(contactToJSON(c, allocator), allocator);
+    stabContacts.push(contactToJSON(c));
   }
-  ret.AddMember("stabContacts", stabContacts, allocator);
-  return ret;
+  return conf;
 }
 
-rapidjson::Value stanceActionToJSON(StanceAction & action, rapidjson::Document::AllocatorType & allocator)
+mc_rtc::Configuration stanceActionToJSON(StanceAction & action)
 {
-  rapidjson::Value ret(rapidjson::kObjectType);
+  mc_rtc::Configuration conf;
   if(dynamic_cast<IdentityContactAction*>(&action))
   {
-    ret.AddMember("type", "Identity", allocator);
+    conf.add("type", "Identity");
   }
   else if(dynamic_cast<AddContactAction*>(&action))
   {
-    ret.AddMember("type", "Add", allocator);
-    ret.AddMember("contact", contactToJSON(action.contact(), allocator).Move(), allocator);
+    conf.add("type", "Add");
+    conf.add("contact", contactToJSON(action.contact()));
   }
   else if(dynamic_cast<RemoveContactAction*>(&action))
   {
-    ret.AddMember("type", "Remove", allocator);
-    ret.AddMember("contact", contactToJSON(action.contact(), allocator).Move(), allocator);
+    conf.add("type", "Remove");
+    conf.add("contact", contactToJSON(action.contact()));
   }
-  return ret;
+  return conf;
 }
 
 void saveStances(const mc_rbdyn::Robots &/*robots*/, const std::string & filename, std::vector<Stance> & stances, std::vector< std::shared_ptr<StanceAction> > & actions)
@@ -530,26 +486,21 @@ void saveStances(const mc_rbdyn::Robots &/*robots*/, const std::string & filenam
     actions[i]->update(stances[i]);
   }
 
-  rapidjson::Document document;
-  rapidjson::Document::AllocatorType & allocator = document.GetAllocator();
-  rapidjson::Value stancesAndActionsJSON(rapidjson::kObjectType);
+  mc_rtc::Configuration conf;
 
-  rapidjson::Value stancesJSON(rapidjson::kArrayType);
+  auto stancesJSON = conf.array("stances");
   for(Stance & stance : stances)
   {
-    stancesJSON.PushBack(stanceToJSON(stance, allocator).Move(), allocator);
+    stancesJSON.push(stanceToJSON(stance));
   }
 
-  rapidjson::Value stanceActionsJSON(rapidjson::kArrayType);
+  auto stanceActionsJSON = conf.array("actions");
   for(std::shared_ptr<StanceAction> & sa : actions)
   {
-    stanceActionsJSON.PushBack(stanceActionToJSON(*sa, allocator).Move(), allocator);
+    stanceActionsJSON.push(stanceActionToJSON(*sa));
   }
 
-  stancesAndActionsJSON.AddMember("stances", stancesJSON, allocator);
-  stancesAndActionsJSON.AddMember("actions", stanceActionsJSON, allocator);
-
-  mc_rtc::internal::saveDocument(filename, document);
+  conf.save(filename);
 }
 
 void pSaveStances(const mc_rbdyn::Robots &/*robots*/, const std::string & filename, std::vector<Stance*> & stances, std::vector< std::shared_ptr<StanceAction> > & actions)
@@ -559,26 +510,21 @@ void pSaveStances(const mc_rbdyn::Robots &/*robots*/, const std::string & filena
     actions[i]->update(*stances[i]);
   }
 
-  rapidjson::Document document;
-  rapidjson::Document::AllocatorType & allocator = document.GetAllocator();
-  rapidjson::Value stancesAndActionsJSON(rapidjson::kObjectType);
+  mc_rtc::Configuration conf;
 
-  rapidjson::Value stancesJSON(rapidjson::kArrayType);
+  auto stancesJSON = conf.array("stances");
   for(Stance * stance : stances)
   {
-    stancesJSON.PushBack(stanceToJSON(*stance, allocator).Move(), allocator);
+    stancesJSON.push(stanceToJSON(*stance));
   }
 
-  rapidjson::Value stanceActionsJSON(rapidjson::kArrayType);
+  auto stanceActionsJSON = conf.array("actions");
   for(std::shared_ptr<StanceAction> & sa : actions)
   {
-    stanceActionsJSON.PushBack(stanceActionToJSON(*sa, allocator).Move(), allocator);
+    stanceActionsJSON.push(stanceActionToJSON(*sa));
   }
 
-  stancesAndActionsJSON.AddMember("stances", stancesJSON, allocator);
-  stancesAndActionsJSON.AddMember("actions", stanceActionsJSON, allocator);
-
-  mc_rtc::internal::saveDocument(filename, document);
+  conf.save(filename);
 }
 
 }

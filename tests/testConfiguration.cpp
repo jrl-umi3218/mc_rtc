@@ -1,6 +1,6 @@
 #include <boost/test/unit_test.hpp>
 
-#include <mc_control/Configuration.h>
+#include <mc_rtc/Configuration.h>
 
 #include <fstream>
 #include <iostream>
@@ -17,7 +17,7 @@ inline int mkstemp(char * out)
 }
 #endif
 
-std::string getConfigFile(const std::string & data)
+std::string getConfigFile()
 {
 #ifndef WIN32
   char fIn[17] = "/tmp/tConfXXXXXX";
@@ -31,6 +31,12 @@ std::string getConfigFile(const std::string & data)
     std::cerr << "Failed to create temporary file, abort test" << std::endl;
     throw std::runtime_error("Failed to create file");
   }
+  return fIn;
+}
+
+std::string getConfigFile(const std::string & data)
+{
+  std::string fIn = getConfigFile();
   std::ofstream ofs(fIn);
   ofs << data;
   return fIn;
@@ -68,6 +74,7 @@ std::string sampleConfig()
   "doubleDoublePair": [42.5, -42.5],
   "doubleStringPair": [42.5, "sometext"],
   "doubleDoublePairV": [[0.0, 1.1],[2.2, 3.3], [4.4, 5.5]],
+  "tuple" : [true, 42.42, "sometext", [1.2, 3.4, 5.6]],
   "dict":
   {
     "boolTrue": true,
@@ -99,13 +106,13 @@ std::string sampleConfig2()
   return getConfigFile(data);
 }
 
-BOOST_AUTO_TEST_CASE(TestConfiguration)
+BOOST_AUTO_TEST_CASE(TestConfigurationReading)
 {
   /*! Check construction from Json::Value */
-  mc_control::Configuration config(sampleConfig());
+  mc_rtc::Configuration config(sampleConfig());
 
   /*! Check that accessing a non-existing entry throws */
-  BOOST_CHECK_THROW(config("NONE"), mc_control::Configuration::Exception);
+  BOOST_CHECK_THROW(config("NONE"), mc_rtc::Configuration::Exception);
 
   /* int tests */
   {
@@ -259,7 +266,7 @@ BOOST_AUTO_TEST_CASE(TestConfiguration)
     config("v6d", c);
     BOOST_CHECK_EQUAL(c, zero);
 
-    BOOST_CHECK_THROW(Eigen::Vector3d d = config("v6d"), mc_control::Configuration::Exception);
+    BOOST_CHECK_THROW(Eigen::Vector3d d = config("v6d"), mc_rtc::Configuration::Exception);
 
     Eigen::Vector3d e = Eigen::Vector3d::Zero();
     e = config("dict")("v3d");
@@ -287,7 +294,7 @@ BOOST_AUTO_TEST_CASE(TestConfiguration)
     config("v3d", c);
     BOOST_CHECK_EQUAL(c, zero);
 
-    BOOST_CHECK_THROW(Eigen::Vector6d d = config("v3d"), mc_control::Configuration::Exception);
+    BOOST_CHECK_THROW(Eigen::Vector6d d = config("v3d"), mc_rtc::Configuration::Exception);
 
     Eigen::Vector6d e = Eigen::Vector6d::Zero();
     e = config("dict")("v6d");
@@ -323,7 +330,7 @@ BOOST_AUTO_TEST_CASE(TestConfiguration)
     Eigen::VectorXd d = config("vXd");
     BOOST_CHECK_EQUAL(d, ref);
 
-    BOOST_CHECK_THROW(Eigen::VectorXd e = config("int"), mc_control::Configuration::Exception);
+    BOOST_CHECK_THROW(Eigen::VectorXd e = config("int"), mc_rtc::Configuration::Exception);
 
     Eigen::VectorXd f = Eigen::VectorXd::Zero(0);
     f = config("dict")("v6d");
@@ -338,7 +345,7 @@ BOOST_AUTO_TEST_CASE(TestConfiguration)
     BOOST_CHECK_EQUAL(h, Eigen::VectorXd::Zero(0));
   }
 
-  /* Eigen::Quaterniod test */
+  /* Eigen::Quaterniond test */
   {
     Eigen::Quaterniond ref(0.71, 0, 0.71, 0);
     ref.normalize();
@@ -455,8 +462,8 @@ BOOST_AUTO_TEST_CASE(TestConfiguration)
     config("dict")("doubleDoublePair", c);
     BOOST_CHECK(b == ref);
 
-    BOOST_CHECK_THROW(c = config("quat"), mc_control::Configuration::Exception);
-    BOOST_CHECK_THROW(c = config("doubleStringPair"), mc_control::Configuration::Exception);
+    BOOST_CHECK_THROW(c = config("quat"), mc_rtc::Configuration::Exception);
+    BOOST_CHECK_THROW(c = config("doubleStringPair"), mc_rtc::Configuration::Exception);
   }
 
   /* pair<double, string> test */
@@ -488,6 +495,19 @@ BOOST_AUTO_TEST_CASE(TestConfiguration)
     BOOST_CHECK(b == ref);
   }
 
+  /* "tuple" */
+  {
+    auto tuple = config("tuple");
+    BOOST_CHECK(tuple.size() == 4);
+    Eigen::Vector3d vec = tuple[3];
+    std::tuple<bool, double, std::string, Eigen::Vector3d> data =
+      std::make_tuple(tuple[0], tuple[1], tuple[2], vec);
+    BOOST_CHECK(std::get<0>(data));
+    BOOST_CHECK(std::get<1>(data) == 42.42);
+    BOOST_CHECK(std::get<2>(data) == "sometext");
+    BOOST_CHECK(std::get<3>(data) == Eigen::Vector3d(1.2, 3.4, 5.6));
+  }
+
   /* Check load */
   {
     config.load(sampleConfig2());
@@ -502,5 +522,119 @@ BOOST_AUTO_TEST_CASE(TestConfiguration)
     std::vector<std::string> ref2 = {"a2", "b2", "c2"};
     std::vector<std::string> c = config("stringV");
     BOOST_CHECK(c == ref2);
+  }
+}
+
+BOOST_AUTO_TEST_CASE(TestConfigurationWriting)
+{
+  std::string tmpF = getConfigFile();
+  mc_rtc::Configuration config_ref;
+
+  bool ref_bool = false;
+  config_ref.add("bool", ref_bool);
+  unsigned int ref_uint = 42;
+  config_ref.add("uint", ref_uint);
+  int ref_int = -42;
+  config_ref.add("int", ref_int);
+  double ref_double = 42.5;
+  config_ref.add("double", ref_double);
+  std::string ref_string = "sometext";
+  config_ref.add("string", ref_string);
+  Eigen::Vector3d ref_v3d = {1.2, 3.4, 5.6};
+  config_ref.add("v3d", ref_v3d);
+  Eigen::Vector6d ref_v6d;
+  ref_v6d << 0.1, 1.2, 2.3, 3.4, 4.5, 5.6;
+  config_ref.add("v6d", ref_v6d);
+  Eigen::VectorXd ref_vxd(5);
+  ref_vxd << 0.1, 3.2, 4.2, 4.5, 5.4;
+  config_ref.add("vxd", ref_vxd);
+  Eigen::Quaterniond ref_quat {0.71, 0., 0.71, 0.};
+  ref_quat.normalize();
+  config_ref.add("quat", ref_quat);
+  std::vector<int> ref_int_v = {0, 1, 2, 3, 4, 5};
+  config_ref.add("int_v", ref_int_v);
+  std::vector<double> ref_double_v = {0.1, 1.0, 0.2, 2.0, 0.3};
+  config_ref.add("double_v", ref_double_v);
+  std::vector<std::vector<double>> ref_double_v_v = { ref_double_v, ref_double_v, {0}, {}, {5.0, 4.0, 3.5} };
+  config_ref.add("double_v_v", ref_double_v_v);
+  std::vector<Eigen::Vector3d> ref_v3d_v;
+  for(size_t i = 0; i < 10; ++i) { ref_v3d_v.push_back(Eigen::Vector3d::Random()); }
+  config_ref.add("v3d_v", ref_v3d_v);
+  config_ref.add("dict");
+  config_ref("dict").add("int", ref_int);
+  config_ref.add("dict2").add("double_v", ref_double_v);
+
+  config_ref.save(tmpF);
+
+  mc_rtc::Configuration config_test(tmpF);
+  BOOST_CHECK(config_test("bool") == ref_bool);
+  BOOST_CHECK(config_test("uint") == ref_uint);
+  BOOST_CHECK(config_test("int") == ref_int);
+  BOOST_CHECK(config_test("double") == ref_double);
+  BOOST_CHECK(config_test("string") == ref_string);
+  BOOST_CHECK(config_test("v3d") == ref_v3d);
+  BOOST_CHECK(config_test("v6d") == ref_v6d);
+  BOOST_CHECK(config_test("vxd") == ref_vxd);
+  BOOST_CHECK(config_test("quat") == ref_quat);
+  BOOST_CHECK(config_test("int_v") == ref_int_v);
+  BOOST_CHECK(config_test("double_v") == ref_double_v);
+  BOOST_CHECK(config_test("double_v_v") == ref_double_v_v);
+  std::vector<Eigen::Vector3d> test_v3d_v = config_test("v3d_v");
+  BOOST_REQUIRE(test_v3d_v.size() == ref_v3d_v.size());
+  for(size_t i = 0; i < test_v3d_v.size(); ++i)
+  {
+    BOOST_CHECK(test_v3d_v[i].isApprox(ref_v3d_v[i], 1e-9));
+  }
+  BOOST_REQUIRE(config_test.has("dict"));
+  BOOST_CHECK(config_test("dict")("int") == ref_int);
+  BOOST_REQUIRE(config_test.has("dict2"));
+  BOOST_CHECK(config_test("dict2")("double_v") == ref_double_v);
+
+  /* Save a part of the configuration */
+  config_test("dict2")("double_v").save(tmpF);
+
+  mc_rtc::Configuration config_partial(tmpF);
+  BOOST_CHECK(config_partial == ref_double_v);
+}
+
+BOOST_AUTO_TEST_CASE(TestConfigurationCeption)
+{
+  int ref_int = -42;
+  std::vector<double> ref_double_v = {0.1, 1.0, 0.2, 2.0, 0.3};
+  /* Create a simple config */
+  mc_rtc::Configuration config_1;
+  config_1.add("int", ref_int);
+  /* Create a second simple config */
+  mc_rtc::Configuration config_2;
+  config_2.add("double_v", ref_double_v);
+  /* Add config_2 in config_1 */
+  config_1.add("config_2", config_2);
+  BOOST_REQUIRE(config_1.has("config_2") && config_1("config_2").has("double_v"));
+  BOOST_CHECK(config_1("config_2")("double_v") == ref_double_v);
+  /* Add a part of config_2 in config_1 */
+  config_1.add("double_v", config_2("double_v"));
+  BOOST_REQUIRE(config_1.has("double_v"));
+  BOOST_CHECK(config_1("double_v") == ref_double_v);
+  /* Create an array and put a few copies of config_2 inside */
+  config_1.array("config_2_v", 5); // Reserve 5 but add 10 elements just 'cause
+  for(size_t i = 0; i < 10; ++i)
+  {
+    config_1("config_2_v").push(config_2);
+  }
+  BOOST_REQUIRE(config_1.has("config_2_v"));
+  BOOST_REQUIRE(config_1("config_2_v").size() == 10);
+  for(size_t i = 0; i < 10; ++i)
+  {
+    BOOST_CHECK(config_1("config_2_v")[i]("double_v") == ref_double_v);
+  }
+  /* Add config_1 to config_1 */
+  config_1.add("config_1", config_1);
+  BOOST_REQUIRE(config_1.has("config_1"));
+  BOOST_CHECK(config_1("config_1")("int") == ref_int);
+  BOOST_REQUIRE(config_1("config_1").has("config_2_v"));
+  BOOST_REQUIRE(config_1("config_1")("config_2_v").size() == 10);
+  for(size_t i = 0; i < 10; ++i)
+  {
+    BOOST_CHECK(config_1("config_1")("config_2_v")[i]("double_v") == ref_double_v);
   }
 }

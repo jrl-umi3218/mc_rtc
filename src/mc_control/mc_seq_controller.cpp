@@ -234,24 +234,24 @@ void MCSeqTimeLog::report(std::ostream & os)
 
 MCSeqControllerConfig::MCSeqControllerConfig(const mc_control::Configuration & conf)
 {
-  if(!conf.isMember("Seq"))
+  if(!conf.has("Seq"))
   {
     LOG_ERROR("No Seq section in configuration file, abort")
     throw("No Seq section in configuration file");
   }
   auto seq = conf("Seq");
   seq("Simulation", is_simulation);
-  if(!seq.isMember("Env"))
+  if(!seq.has("Env"))
   {
     LOG_ERROR("No Env section in configuration for Seq controller, abort")
     throw("No Env section in Seq section");
   }
   auto env = seq("Env");
-  if(env.isMember("Module"))
+  if(env.has("Module"))
   {
     env_module = mc_rbdyn::RobotLoader::get_robot_module((std::string)env("Module"));
   }
-  else if(env.isMember("Name"))
+  else if(env.has("Name"))
   {
     std::string env_path = mc_rtc::MC_ENV_DESCRIPTION_PATH;
     env("Path", env_path);
@@ -263,7 +263,7 @@ MCSeqControllerConfig::MCSeqControllerConfig(const mc_control::Configuration & c
     LOG_ERROR("No Name or Module value for Env in Seq configuration, abort")
     throw("No Name or Module value for Env in Seq configuration");
   }
-  if(seq.isMember("Plan"))
+  if(seq.has("Plan"))
   {
     plan = (std::string)seq("Plan");
     plan = std::string(mc_rtc::DATA_PATH) + "/" + plan;
@@ -739,8 +739,7 @@ void MCSeqController::loadStanceConfigs(const std::string & file)
 {
   LOG_INFO("Loading stance configs from " << file)
   configs.resize(0);
-  rapidjson::Document v;
-  if(!mc_rtc::internal::loadDocument(file, v)) { return; }
+  mc_rtc::Configuration stanceConfigs(file);
   /*
     The JSON file contains two sections:
     - A General section contains configuration information for the full sequence
@@ -749,26 +748,26 @@ void MCSeqController::loadStanceConfigs(const std::string & file)
   mc_rbdyn::StanceConfig comMoveConfig;
   mc_rbdyn::StanceConfig contactMoveConfig;
   mc_rbdyn::StanceConfig gripperMoveConfig;
-  if(v.HasMember("General"))
+  if(stanceConfigs.has("General"))
   {
-    rapidjson::Value & scv = v["General"];
-    if(scv.HasMember("CoMMove"))
+    auto generalConfig = stanceConfigs("General");
+    if(generalConfig.has("CoMMove"))
     {
-      mc_rbdyn::StanceConfigFromJSON(comMoveConfig, scv["CoMMove"]);
+      mc_rbdyn::StanceConfigFromJSON(comMoveConfig, generalConfig("CoMMove"));
     }
-    if(scv.HasMember("ContactMove"))
+    if(generalConfig.has("ContactMove"))
     {
-      mc_rbdyn::StanceConfigFromJSON(contactMoveConfig, scv["ContactMove"]);
+      mc_rbdyn::StanceConfigFromJSON(contactMoveConfig, generalConfig("ContactMove"));
     }
-    if(scv.HasMember("GripperMove"))
+    if(generalConfig.has("GripperMove"))
     {
-      mc_rbdyn::StanceConfigFromJSON(gripperMoveConfig, scv["GripperMove"]);
+      mc_rbdyn::StanceConfigFromJSON(gripperMoveConfig, generalConfig("GripperMove"));
     }
-    if(scv.HasMember("Collisions"))
+    if(generalConfig.has("Collisions"))
     {
-      mc_rbdyn::scCollisionsFromJSON(comMoveConfig.collisions, scv["Collisions"]);
-      mc_rbdyn::scCollisionsFromJSON(contactMoveConfig.collisions, scv["Collisions"]);
-      mc_rbdyn::scCollisionsFromJSON(gripperMoveConfig.collisions, scv["Collisions"]);
+      mc_rbdyn::scCollisionsFromJSON(comMoveConfig.collisions, generalConfig("Collisions"));
+      mc_rbdyn::scCollisionsFromJSON(contactMoveConfig.collisions, generalConfig("Collisions"));
+      mc_rbdyn::scCollisionsFromJSON(gripperMoveConfig.collisions, generalConfig("Collisions"));
     }
   }
   for(size_t i = 1; i < seq_actions.size(); ++i)
@@ -793,8 +792,9 @@ void MCSeqController::loadStanceConfigs(const std::string & file)
     }
 
     /* Look for a matching state in the JSON file */
-    if(v.HasMember("StepByStep"))
+    if(stanceConfigs.has("StepByStep"))
     {
+      auto stepByStep = stanceConfigs("StepByStep");
       std::string type = actions[i]->type();
       std::string r1Surface = "";
       std::string r2Surface = "";
@@ -803,9 +803,10 @@ void MCSeqController::loadStanceConfigs(const std::string & file)
         r1Surface = actions[i]->contact().r1Surface()->name();
         r2Surface = actions[i]->contact().r2Surface()->name();
       }
-      for(const auto & scv : v["StepByStep"].GetArray())
+      for(size_t i = 0; i <stepByStep.size(); ++i)
       {
-        if(scv["type"] == type && scv["r1Surface"] == r1Surface && scv["r2Surface"] == r2Surface)
+        auto scv = stepByStep[i];
+        if(scv("type") == type && scv("r1Surface") == r1Surface && scv("r2Surface") == r2Surface)
         {
           mc_rbdyn::StanceConfigFromJSON(sc, scv);
         }

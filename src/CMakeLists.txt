@@ -9,6 +9,11 @@ set_target_properties(mc_rtc_loader PROPERTIES COMPILE_FLAGS "-DMC_RTC_LOADER_EX
 target_link_libraries(mc_rtc_loader ${Boost_LIBRARIES} ltdl)
 pkg_config_append_libs(mc_rtc_loader)
 
+add_library(mc_rtc_utils SHARED mc_rtc/Configuration.cpp ../include/mc_rtc/Configuration.h ../include/mc_rtc/utils_api.h)
+set_target_properties(mc_rtc_utils PROPERTIES COMPILE_FLAGS "-DMC_RTC_UTILS_EXPORTS")
+target_link_libraries(mc_rtc_utils ${Boost_LIBRARIES})
+pkg_config_append_libs(mc_rtc_utils)
+
 set(mc_rbdyn_SRC
 mc_rbdyn/SCHAddon.cpp
 mc_rbdyn/contact_transform.cpp
@@ -63,7 +68,7 @@ add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC} ${mc_rbdyn_HDR})
 set_target_properties(mc_rbdyn PROPERTIES COMPILE_FLAGS "-DMC_RBDYN_EXPORTS")
 pkg_config_use_dependency(mc_rbdyn mc_rbdyn_urdf_cpp)
 pkg_config_use_dependency(mc_rbdyn Tasks)
-target_link_libraries(mc_rbdyn ${Boost_LIBRARIES} ${GEOS_LIBRARY} mc_rtc_loader)
+target_link_libraries(mc_rbdyn ${Boost_LIBRARIES} ${GEOS_LIBRARY} mc_rtc_loader mc_rtc_utils)
 if(NOT WIN32)
   pkg_config_append_libs(${Boost_LIBRARIES})
 endif()
@@ -178,7 +183,6 @@ endif()
 pkg_config_append_libs(mc_rtc_ros)
 
 set(mc_control_SRC
-mc_control/Configuration.cpp
 mc_control/ForceContactSensor.cpp
 mc_control/SimulationContactSensor.cpp
 mc_control/generic_gripper.cpp
@@ -202,7 +206,7 @@ set(mc_control_HDR
 )
 add_library(mc_control SHARED ${mc_control_SRC} ${mc_control_HDR})
 set_target_properties(mc_control PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_EXPORTS")
-target_link_libraries(mc_control mc_tasks mc_solver mc_rtc_ros mc_rtc_loader)
+target_link_libraries(mc_control mc_tasks mc_solver mc_rtc_ros mc_rtc_loader mc_rtc_utils)
 if(${HRPSYS_BASE_FOUND})
   target_link_libraries(mc_control hrpIo)
 endif()
@@ -213,7 +217,7 @@ pkg_config_append_libs(mc_control)
 
 add_subdirectory(mc_control)
 
-set(MC_LIBRARIES mc_rbdyn mc_solver mc_tasks mc_control mc_trajectory mc_rtc_ros mc_rtc_loader)
+set(MC_LIBRARIES mc_rbdyn mc_solver mc_tasks mc_control mc_trajectory mc_rtc_ros mc_rtc_loader mc_rtc_utils)
 foreach(MC_LIB ${MC_LIBRARIES})
   set_target_properties(${MC_LIB} PROPERTIES SOVERSION 0 VERSION 0.1.0)
 endforeach()

@@ -20,7 +20,7 @@ MACRO(mc_rtc_test NAME)
   generate_msvc_dot_user_file(${NAME})
 ENDMACRO()
 
-mc_rtc_test(testConfiguration mc_control)
+mc_rtc_test(testConfiguration mc_rtc_utils)
 
 add_executable(test_controller_ticker test_controller_ticker.cpp)
 pkg_config_use_dependency(test_controller_ticker mc_rbdyn_urdf_cpp)

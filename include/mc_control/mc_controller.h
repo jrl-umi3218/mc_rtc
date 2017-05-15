@@ -271,9 +271,13 @@ public:
 }
 
 #ifdef WIN32
-  #define CONTROLLER_MODULE_API __declspec(dllexport)
+#define CONTROLLER_MODULE_API __declspec(dllexport)
 #else
-  #define CONTROLLER_MODULE_API
+# if __GNUC__ >= 4
+#   define CONTROLLER_MODULE_API __attribute__ ((visibility("default")))
+# else
+#   define CONTROLLER_MODULE_API
+# endif
 #endif
 
 /** Provides a handle to construct the controller with Json config */
