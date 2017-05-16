@@ -311,6 +311,13 @@ namespace mc_rtc
      */
     void add(const std::string & key, std::string value);
 
+    /*! \brief Add a const char* element to the Configuration,
+     * Behaves like std::string
+     *
+     * \see add(const std::string&, bool)
+     */
+    void add(const std::string & key, const char * value);
+
     /*! \brief Add a Eigen::Vector3d element to the Configuration
      *
      * \see add(const std::string&, bool)
@@ -391,6 +398,12 @@ namespace mc_rtc
      * \see push(bool);
      */
     void push(std::string value);
+
+    /*! \brief Insert a const char * element into an array
+     * Behaves like push(std::string)
+     * \see push(bool);
+     */
+    void push(const char * value);
 
     /*! \brief Insert a Eigen::Vector3d element into an array
      *
