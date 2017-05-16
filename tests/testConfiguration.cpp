@@ -67,6 +67,7 @@ std::string sampleConfig()
   "string": "sometext",
   "intV": [0, 1, 2, 3, 4, 5],
   "stringV": ["a", "b", "c", "foo", "bar"],
+  "doubleA3": [1.1, 2.2, 3.3],
   "v3d": [1.0, 2.3, -100],
   "v6d": [1.0, -1.5, 2.0, -2.5, 3.0, -3.5],
   "vXd": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -452,6 +453,18 @@ BOOST_AUTO_TEST_CASE(TestConfigurationReading)
     BOOST_CHECK(c == ref);
   }
 
+  /* array<double, 3> test */
+  {
+    std::array<double, 3> ref = {{1.1, 2.2, 3.3}};
+
+    std::array<double, 3> a = config("doubleA3");
+    BOOST_CHECK(a == ref);
+
+    std::array<double, 3> b;
+    config("doubleA3", b);
+    BOOST_CHECK(b == ref);
+  }
+
   /* pair<double, double> test */
   {
     std::pair<double, double> ref = {42.5, -42.5};
@@ -565,6 +578,14 @@ BOOST_AUTO_TEST_CASE(TestConfigurationWriting)
   std::vector<Eigen::Vector3d> ref_v3d_v;
   for(size_t i = 0; i < 10; ++i) { ref_v3d_v.push_back(Eigen::Vector3d::Random()); }
   config_ref.add("v3d_v", ref_v3d_v);
+  std::array<double, 3> ref_d_a3 = {{1.1, 2.2, 3.3}};
+  config_ref.add("d_a3", ref_d_a3);
+  std::vector<std::array<double, 3>> ref_a3_v;
+  for(size_t i = 0; i < 5; ++i) { ref_a3_v.push_back(ref_d_a3); };
+  config_ref.add("a3_v", ref_a3_v);
+  std::array<std::array<double, 3>, 3> ref_a3_a;
+  for(size_t i = 0; i < 3; ++i) { ref_a3_a[i] = ref_d_a3; }
+  config_ref.add("a3_a", ref_a3_a);
   config_ref.add("dict");
   config_ref("dict").add("int", ref_int);
   config_ref.add("dict2").add("double_v", ref_double_v);
@@ -590,6 +611,9 @@ BOOST_AUTO_TEST_CASE(TestConfigurationWriting)
   {
     BOOST_CHECK(test_v3d_v[i].isApprox(ref_v3d_v[i], 1e-9));
   }
+  BOOST_CHECK(config_test("d_a3") == ref_d_a3);
+  BOOST_CHECK(config_test("a3_v") == ref_a3_v);
+  BOOST_CHECK(config_test("a3_a") == ref_a3_a);
   BOOST_REQUIRE(config_test.has("dict"));
   BOOST_CHECK(config_test("dict")("int") == ref_int);
   BOOST_REQUIRE(config_test.has("dict2"));

@@ -157,6 +157,30 @@ namespace mc_rtc
       }
     }
 
+    /*! \brief Retrieve an array instance
+     *
+     * \throws If the underlying value does not hold an array of the correct
+     * size or if any member of the array does not meet the requirements of the
+     * array elements' type.
+     */
+    template<class T, std::size_t N>
+    operator std::array<T, N>() const
+    {
+      if(v.isArray() && v.size() == N)
+      {
+        std::array<T, N> ret;
+        for(size_t i = 0; i < N; ++i)
+        {
+          ret[i] = Configuration(v[static_cast<int>(i)]);
+        }
+        return ret;
+      }
+      else
+      {
+        throw Configuration::Exception("Stored Json vaule is not an array or its size is incorrect");
+      }
+    }
+
     /*! \brief Retrieve a pair instance
      *
      * \throws If the underlying value does not hold an array of size 2 or if
@@ -446,7 +470,25 @@ namespace mc_rtc
     template<typename T, typename A>
     void add(const std::string & key, const std::vector<T, A> & value)
     {
-      Configuration v = array(key);
+      Configuration v = array(key, value.size());
+      for(const auto & vi : value)
+      {
+        v.push(vi);
+      }
+    }
+
+    /*! \brief Add an array into the JSON document
+     *
+     * Overwrites existing content if any.
+     *
+     * \param key Key of the element
+     *
+     * \param value Array of elements to add
+     */
+    template<typename T, std::size_t N>
+    void add(const std::string & key, const std::array<T, N> & value)
+    {
+      Configuration v = array(key, N);
       for(const auto & vi : value)
       {
         v.push(vi);
@@ -461,6 +503,20 @@ namespace mc_rtc
     void push(const std::vector<T, A> & value)
     {
       Configuration v = array(value.size());
+      for(const auto & vi : value)
+      {
+        v.push(vi);
+      }
+    }
+
+    /*! \brief Push an array into the JSON document
+     *
+     * \param value Array of elements to add
+     */
+    template<typename T, std::size_t N>
+    void push(const std::array<T, N> & value)
+    {
+      Configuration v = array(N);
       for(const auto & vi : value)
       {
         v.push(vi);
