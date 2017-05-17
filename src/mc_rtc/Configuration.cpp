@@ -426,6 +426,7 @@ void Configuration::add(const std::string & key, int value) { add_impl(key, valu
 void Configuration::add(const std::string & key, unsigned int value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::add(const std::string & key, double value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::add(const std::string & key, std::string value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
+void Configuration::add(const std::string & key, const char * value) { add(key, std::string(value)); }
 void Configuration::add(const std::string & key, Eigen::Vector3d value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::add(const std::string & key, Eigen::Vector6d value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::add(const std::string & key, Eigen::VectorXd value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
@@ -489,6 +490,7 @@ void Configuration::push(int value) { push_impl(value, *v.impl->value(), v.impl-
 void Configuration::push(unsigned int value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(double value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(std::string value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
+void Configuration::push(const char * value) { push(std::string(value)); }
 void Configuration::push(Eigen::Vector3d value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(Eigen::Vector6d value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(Eigen::VectorXd value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
