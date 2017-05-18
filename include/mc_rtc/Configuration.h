@@ -17,6 +17,45 @@ namespace mc_rtc
 {
 
   struct MC_RTC_UTILS_DLLAPI ConfigurationArrayIterator;
+  struct MC_RTC_UTILS_DLLAPI Configuration;
+
+  namespace internal
+  {
+    /** Helper trait to determine wheter:
+     * T& operator<<(T&, const Configuration&)
+     * is a valid construct or not
+     */
+    struct _has_configuration_input
+    {
+      template<typename T, typename std::enable_if<std::is_same<decltype(std::declval<T&>() << std::declval<const Configuration&>()), T&>::value, int>::type = 0>
+      static std::true_type test(T * p);
+
+      template<typename T>
+      static std::false_type test(...);
+    };
+
+    template<typename T>
+    struct has_configuration_input : decltype(_has_configuration_input::test<T>(nullptr))
+    {};
+
+    /** Helper trait to determine wheter:
+     * Configuration& operator<<(Configuration&, const T&)
+     * is a valid construct or not
+     */
+    struct _has_configuration_output
+    {
+      template<typename T, typename std::enable_if<std::is_same<decltype(std::declval<Configuration&>() << std::declval<const T&>()), Configuration&>::value, int>::type = 0>
+      static std::true_type test(T * p);
+
+      template<typename T>
+      static std::false_type test(...);
+    };
+
+    template<typename T>
+    struct has_configuration_output : decltype(_has_configuration_output::test<T>(nullptr))
+    {};
+  }
+
 
   /*! \brief Simplify access to values hold within a JSON file
    *
@@ -197,6 +236,23 @@ namespace mc_rtc
       {
         throw Configuration::Exception("Stored Json value is not an array of size 2");
       }
+    }
+
+    /*! \brief User-defined conversions
+     *
+     * Requires:
+     * - T should be default-constructible
+     * - T & operator<<(T &, const mc_rtc::Configuration config) should exist
+     */
+    template<typename T,
+      typename std::enable_if<
+        std::is_default_constructible<T>::value &&
+        internal::has_configuration_input<T>::value, int>::type = 0>
+    operator T() const
+    {
+      T ret;
+      ret << *this;
+      return ret;
     }
 
     /*! \brief Creates an empty configuration */
@@ -459,6 +515,22 @@ namespace mc_rtc
      */
     void push(Configuration value);
 
+    /*! \brief User-defined conversion
+     *
+     * Requires the existence of Configuration & operator<<(Configuration &, const T &)
+     *
+     * \param key Key of the element
+     *
+     * \param value Value to push
+     */
+    template<typename T,
+      typename std::enable_if<internal::has_configuration_output<T>::value, int>::type = 0>
+    void push(const T & value)
+    {
+      Configuration v = object();
+      v << value;
+    }
+
     /*! \brief Add a vector into the JSON document
      *
      * Overwrites existing content if any.
@@ -495,6 +567,22 @@ namespace mc_rtc
       }
     }
 
+    /*! \brief User-defined conversion
+     *
+     * Requires the existence of Configuration & operator<<(Configuration &, const T &)
+     *
+     * \param key Key of the element
+     *
+     * \param value Value to add
+     */
+    template<typename T,
+      typename std::enable_if<internal::has_configuration_output<T>::value, int>::type = 0>
+    void add(const std::string & key, const T & value)
+    {
+      auto config = add(key);
+      config << value;
+    }
+
     /*! \brief Push a vector into the JSON document
      *
      * \param value Vector of elements to add
@@ -529,6 +617,8 @@ namespace mc_rtc
   private:
     /*! \brief Create an empty array */
     Configuration array(size_t reserve);
+    /*! \brief Create an empty object */
+    Configuration object();
 
     /*! \brief Implementation details
      *

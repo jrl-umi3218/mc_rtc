@@ -667,3 +667,61 @@ BOOST_AUTO_TEST_CASE(TestConfigurationCeption)
     BOOST_CHECK(config_1("config_1")("config_2_v")[i]("double_v") == ref_double_v);
   }
 }
+
+struct Foo;
+Foo & operator<<(Foo & f, const mc_rtc::Configuration & config);
+struct Foo
+{
+  Foo() {}
+  Foo(const std::string & name, double d) : name(name), d(d) {}
+  std::string name = "";
+  double d = 0.0;
+  bool operator==(const Foo & rhs) const
+  {
+    return rhs.name == this->name && rhs.d == this->d;
+  }
+};
+Foo & operator<<(Foo & f, const mc_rtc::Configuration & config)
+{
+  f.name = static_cast<std::string>(config("name"));
+  f.d = config("d");
+  return f;
+}
+mc_rtc::Configuration & operator<<(mc_rtc::Configuration & config, const Foo & f)
+{
+  config.add("name", f.name);
+  config.add("d", f.d);
+  return config;
+}
+
+BOOST_AUTO_TEST_CASE(TestUserDefinedConversions)
+{
+  Foo f_ref { "foo", 1.0 };
+  mc_rtc::Configuration config;
+  config.add("foo", f_ref);
+
+  Foo f1;
+  f1 << config("foo");
+  BOOST_CHECK(f1 == f_ref);
+
+  Foo f2;
+  f2 = config("foo");
+  BOOST_CHECK(f2 == f_ref);
+
+  Foo f3 = config("foo");
+  BOOST_CHECK(f3 == f_ref);
+
+  std::vector<Foo> v_ref {f1, f2};
+  config.add("foo_v", v_ref);
+
+  std::vector<Foo> v1 = config("foo_v");
+  BOOST_CHECK(v1 == v_ref);
+
+  config.array("foo_v2");
+  for(const auto & f : v_ref)
+  {
+    config("foo_v2").push(f);
+  }
+  std::vector<Foo> v2 = config("foo_v2");
+  BOOST_CHECK(v2 == v_ref);
+}
