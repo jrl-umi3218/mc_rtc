@@ -160,6 +160,21 @@ inline rapidjson::Value toJSON(Eigen::Quaterniond value, rapidjson::Document::Al
   return ret;
 }
 
+template<>
+inline rapidjson::Value toJSON(Eigen::Matrix3d value, rapidjson::Document::AllocatorType & allocator)
+{
+  rapidjson::Value ret(rapidjson::kArrayType);
+  ret.Reserve(9, allocator);
+  for(size_t i = 0; i < 3; ++i)
+  {
+    for(size_t j = 0; j < 3; ++j)
+    {
+      ret.PushBack(value(i,j), allocator);
+    }
+  }
+  return ret;
+}
+
 } // namespace internal
 
 } // namespace mc_rtc

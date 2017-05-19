@@ -17,7 +17,7 @@ inline int mkstemp(char * out)
 }
 #endif
 
-std::string getConfigFile()
+std::string getTmpFile()
 {
 #ifndef WIN32
   char fIn[17] = "/tmp/tConfXXXXXX";
@@ -34,9 +34,9 @@ std::string getConfigFile()
   return fIn;
 }
 
-std::string getConfigFile(const std::string & data)
+std::string makeConfigFile(const std::string & data)
 {
-  std::string fIn = getConfigFile();
+  std::string fIn = getTmpFile();
   std::ofstream ofs(fIn);
   ofs << data;
   return fIn;
@@ -98,7 +98,7 @@ std::string sampleConfig()
   }
 }
 )";
-  return getConfigFile(data);
+  return makeConfigFile(data);
 }
 
 std::string sampleConfig2()
@@ -109,7 +109,7 @@ std::string sampleConfig2()
     "int": 12
   }
   )";
-  return getConfigFile(data);
+  return makeConfigFile(data);
 }
 
 BOOST_AUTO_TEST_CASE(TestConfigurationReading)
@@ -545,7 +545,7 @@ BOOST_AUTO_TEST_CASE(TestConfigurationReading)
 
 BOOST_AUTO_TEST_CASE(TestConfigurationWriting)
 {
-  std::string tmpF = getConfigFile();
+  std::string tmpF = getTmpFile();
   mc_rtc::Configuration config_ref;
 
   bool ref_bool = false;

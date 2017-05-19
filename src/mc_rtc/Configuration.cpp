@@ -327,6 +327,23 @@ Configuration::operator Eigen::Quaterniond() const
   throw Configuration::Exception("Stored Json value is not a Quaterniond");
 }
 
+Configuration::operator Eigen::Matrix3d() const
+{
+  if(v.isArray() && v.size() == 9 && v[0].impl->isNumeric())
+  {
+    Eigen::Matrix3d m;
+    for(size_t i = 0; i < 3; ++i)
+    {
+      for(size_t j = 0; j < 3; ++j)
+      {
+        m(i,j) = v[3*i+j].impl->asDouble();
+      }
+    }
+    return m;
+  }
+  throw Configuration::Exception("Stored Json value is not a Matrix3d");
+}
+
 Configuration::Configuration(const std::string & path)
 : v()
 {
@@ -431,6 +448,7 @@ void Configuration::add(const std::string & key, Eigen::Vector3d value) { add_im
 void Configuration::add(const std::string & key, Eigen::Vector6d value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::add(const std::string & key, Eigen::VectorXd value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::add(const std::string & key, Eigen::Quaterniond value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
+void Configuration::add(const std::string & key, Eigen::Matrix3d value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
 
 
 void Configuration::add(const std::string & key, Configuration value)
@@ -507,6 +525,7 @@ void Configuration::push(Eigen::Vector3d value) { push_impl(value, *v.impl->valu
 void Configuration::push(Eigen::Vector6d value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(Eigen::VectorXd value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(Eigen::Quaterniond value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
+void Configuration::push(Eigen::Matrix3d value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 
 void Configuration::push(mc_rtc::Configuration value)
 {

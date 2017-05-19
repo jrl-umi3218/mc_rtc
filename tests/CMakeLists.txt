@@ -26,6 +26,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests_config.h.in
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
 
 mc_rtc_test(testConfiguration mc_rtc_utils)
+mc_rtc_test(testJsonIO mc_rtc_utils mc_rbdyn)
 mc_rtc_test(testSolverTaskStorage mc_tasks)
 
 add_executable(test_controller_ticker test_controller_ticker.cpp)

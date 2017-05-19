@@ -4,6 +4,7 @@
 
 #include <Eigen/Core>
 
+#include <array>
 #include <exception>
 #include <memory>
 #include <string>
@@ -171,6 +172,12 @@ namespace mc_rtc
      * sequence of size 4
      */
     operator Eigen::Quaterniond() const;
+
+    /*! \brief Retrieve as a Eigen::Matrix3d instance
+     *
+     * \throws If the underlying value does not hold a numeric sequence of size 9
+     */
+    operator Eigen::Matrix3d() const;
 
     /*! \brief Retrieve a vector instance
      *
@@ -425,6 +432,12 @@ namespace mc_rtc
      */
     void add(const std::string & key, Eigen::Quaterniond value);
 
+    /*! \brief Add a Eigen::Matrix3d element to the Configuration
+     *
+     * \see add(const std::string&, bool)
+     */
+    void add(const std::string & key, Eigen::Matrix3d value);
+
     /*! \brief Add another Configuration to the Configuration
      *
      * \see add(const std::string&, bool)
@@ -510,6 +523,12 @@ namespace mc_rtc
      * \see push(bool);
      */
     void push(Eigen::Quaterniond value);
+
+    /*! \brief Insert a Eigen::Matrix3d element into an array
+     *
+     * \see push(bool);
+     */
+    void push(Eigen::Matrix3d value);
 
     /*! \brief Push a Configuration element into an array
      *
