@@ -246,7 +246,9 @@ namespace mc_rtc
      */
     template<typename T,
       typename std::enable_if<
+#if not defined __GNUC__ || (__GNUC__ >= 4 && __GNUC_MINOR > 7) // See GCC Bug 51213
         std::is_default_constructible<T>::value &&
+#endif
         internal::has_configuration_input<T>::value, int>::type = 0>
     operator T() const
     {
