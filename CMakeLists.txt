@@ -24,6 +24,9 @@ if(WIN32)
 add_definitions("-DNOMINMAX")
 endif()
 
+option(BUILD_CONTROLLER_SAMPLES "Build sample controllers in the project" ON)
+option(DISABLE_TESTS "Disable unit tests" OFF)
+
 SEARCH_FOR_EIGEN()
 
 if(WIN32)
@@ -142,7 +145,9 @@ include_directories(3rd-party/RapidJSON)
 
 add_subdirectory(3rd-party)
 add_subdirectory(src)
-add_subdirectory(tests)
+if(NOT ${DISABLE_TESTS})
+  add_subdirectory(tests)
+endif()
 add_subdirectory(utils)
 
 install(DIRECTORY include ${CMAKE_BINARY_DIR}/include
