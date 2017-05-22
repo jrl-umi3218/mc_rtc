@@ -23,12 +23,12 @@ namespace mc_rtc
   namespace internal
   {
     /** Helper trait to determine wheter:
-     * T& operator<<(T&, const Configuration&)
-     * is a valid construct or not
+     * void load_object(const mc_rtc::Configuration&, T&);
+     * is a valid function or not
      */
-    struct _has_configuration_input
+    struct _has_configuration_load_object
     {
-      template<typename T, typename std::enable_if<std::is_same<decltype(std::declval<T&>() << std::declval<const Configuration&>()), T&>::value, int>::type = 0>
+      template<typename T, typename std::enable_if<std::is_same<decltype(load_object(std::declval<const Configuration&>(), std::declval<T&>())), void>::value, int>::type = 0>
       static std::true_type test(T * p);
 
       template<typename T>
@@ -36,16 +36,16 @@ namespace mc_rtc
     };
 
     template<typename T>
-    struct has_configuration_input : decltype(_has_configuration_input::test<T>(nullptr))
+    struct has_configuration_load_object : decltype(_has_configuration_load_object::test<T>(nullptr))
     {};
 
     /** Helper trait to determine wheter:
-     * Configuration& operator<<(Configuration&, const T&)
+     * mc_rtc::Configuration save_object(const T&);
      * is a valid construct or not
      */
-    struct _has_configuration_output
+    struct _has_configuration_save_object
     {
-      template<typename T, typename std::enable_if<std::is_same<decltype(std::declval<Configuration&>() << std::declval<const T&>()), Configuration&>::value, int>::type = 0>
+      template<typename T, typename std::enable_if<std::is_same<decltype(save_object(std::declval<const T&>())), Configuration>::value, int>::type = 0>
       static std::true_type test(T * p);
 
       template<typename T>
@@ -53,7 +53,7 @@ namespace mc_rtc
     };
 
     template<typename T>
-    struct has_configuration_output : decltype(_has_configuration_output::test<T>(nullptr))
+    struct has_configuration_save_object : decltype(_has_configuration_save_object::test<T>(nullptr))
     {};
   }
 
@@ -249,18 +249,19 @@ namespace mc_rtc
      *
      * Requires:
      * - T should be default-constructible
-     * - T & operator<<(T &, const mc_rtc::Configuration config) should exist
+     * - void load_object(const mc_rtc::Configuration&, T&) should exist
+     * - load_object should be in the same namespace as T
      */
     template<typename T,
       typename std::enable_if<
 #if not defined __GNUC__ || (__GNUC__ >= 4 && __GNUC_MINOR > 7) // See GCC Bug 51213
         std::is_default_constructible<T>::value &&
 #endif
-        internal::has_configuration_input<T>::value, int>::type = 0>
+        internal::has_configuration_load_object<T>::value, int>::type = 0>
     operator T() const
     {
       T ret;
-      ret << *this;
+      load_object(*this, ret);
       return ret;
     }
 
@@ -538,18 +539,20 @@ namespace mc_rtc
 
     /*! \brief User-defined conversion
      *
-     * Requires the existence of Configuration & operator<<(Configuration &, const T &)
+     * Requires the existence of:
+     * mc_rtc::Configuration save_object(const T&);
+     *
+     * save_object should be in the same namespace as T
      *
      * \param key Key of the element
      *
      * \param value Value to push
      */
     template<typename T,
-      typename std::enable_if<internal::has_configuration_output<T>::value, int>::type = 0>
+      typename std::enable_if<internal::has_configuration_save_object<T>::value, int>::type = 0>
     void push(const T & value)
     {
-      Configuration v = object();
-      v << value;
+      push(save_object(value));
     }
 
     /*! \brief Add a vector into the JSON document
@@ -590,18 +593,20 @@ namespace mc_rtc
 
     /*! \brief User-defined conversion
      *
-     * Requires the existence of Configuration & operator<<(Configuration &, const T &)
+     * Requires the existence of:
+     * mc_rtc::Configuration save_object(const T&);
+     *
+     * save_object should be in the same namespace as T
      *
      * \param key Key of the element
      *
      * \param value Value to add
      */
     template<typename T,
-      typename std::enable_if<internal::has_configuration_output<T>::value, int>::type = 0>
+      typename std::enable_if<internal::has_configuration_save_object<T>::value, int>::type = 0>
     void add(const std::string & key, const T & value)
     {
-      auto config = add(key);
-      config << value;
+      add(key, save_object(value));
     }
 
     /*! \brief Push a vector into the JSON document

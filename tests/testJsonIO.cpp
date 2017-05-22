@@ -70,8 +70,8 @@ typedef boost::mpl::list<mc_rbdyn::Base> test_types;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(TestJsonIO, T, test_types)
 {
-  BOOST_CHECK(mc_rtc::internal::has_configuration_input<T>::value);
-  BOOST_CHECK(mc_rtc::internal::has_configuration_output<T>::value);
+  BOOST_CHECK(mc_rtc::internal::has_configuration_load_object<T>::value);
+  BOOST_CHECK(mc_rtc::internal::has_configuration_save_object<T>::value);
 
   T ref = make_ref<T>();
   mc_rtc::Configuration config;

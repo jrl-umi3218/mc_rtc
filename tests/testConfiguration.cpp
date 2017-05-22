@@ -681,14 +681,14 @@ struct Foo
     return rhs.name == this->name && rhs.d == this->d;
   }
 };
-Foo & operator<<(Foo & f, const mc_rtc::Configuration & config)
+void load_object(const mc_rtc::Configuration & config, Foo & f)
 {
   f.name = static_cast<std::string>(config("name"));
   f.d = config("d");
-  return f;
 }
-mc_rtc::Configuration & operator<<(mc_rtc::Configuration & config, const Foo & f)
+mc_rtc::Configuration save_object(const Foo & f)
 {
+  mc_rtc::Configuration config;
   config.add("name", f.name);
   config.add("d", f.d);
   return config;
@@ -701,7 +701,7 @@ BOOST_AUTO_TEST_CASE(TestUserDefinedConversions)
   config.add("foo", f_ref);
 
   Foo f1;
-  f1 << config("foo");
+  load_object(config("foo"), f1);
   BOOST_CHECK(f1 == f_ref);
 
   Foo f2;
