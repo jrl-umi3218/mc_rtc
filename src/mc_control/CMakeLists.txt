@@ -21,5 +21,12 @@ if(${BUILD_CONTROLLER_SAMPLES})
   add_subdirectory(samples/BCISelfInteract)
 endif()
 
+file(GLOB EXT_CONTROLLERS RELATIVE ext "ext/*")
+foreach(controller ${EXT_CONTROLLERS})
+  if(EXISTS ext/${controller}/CMakeLists.txt)
+    add_subdirectory(ext/${controller})
+  endif()
+endforeach()
+
 add_controller("halfsitpose" "mc_halfsitpose_controller.cpp"
   "mc_halfsitpose_controller.h")
