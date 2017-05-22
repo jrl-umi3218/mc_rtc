@@ -9,7 +9,13 @@ macro(add_robot robot_base)
 endmacro()
 
 add_robot(env)
-add_robot(hrp2_drc)
-add_robot(hrp4)
-add_robot(polaris_ranger)
-add_robot(polaris_ranger_egress)
+
+if(${HRP4_DESCRIPTION_FOUND})
+  add_robot(hrp4)
+endif()
+
+if(${HRP2_DRC_DESCRIPTION_FOUND})
+  add_robot(hrp2_drc)
+  add_robot(polaris_ranger)
+  add_robot(polaris_ranger_egress)
+endif()
