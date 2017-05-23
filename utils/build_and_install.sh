@@ -14,14 +14,16 @@ readonly SOURCE_DIR=`cd $mc_rtc_dir/../; pwd`
 INSTALL_PREFIX="/usr/local"
 WITH_ROS_SUPPORT="true"
 WITH_PYTHON_SUPPORT="true"
+WITH_HRP2="true"
+WITH_HRP4="true"
 VREP_PATH=
 BUILD_TYPE="RelWithDebInfo"
 INSTALL_APT_DEPENDENCIES="true"
 if command -v nproc > /dev/null
 then
-   BUILD_CORE=`nproc` 
+   BUILD_CORE=`nproc`
 else
-   BUILD_CORE=`sysctl -n hw.ncpu` 
+   BUILD_CORE=`sysctl -n hw.ncpu`
 fi
 ROS_DISTRO=indigo
 
@@ -30,9 +32,11 @@ readonly HELP_STRING="$(basename $0) [OPTIONS] ...
     --install-prefix           (-i) PATH          : the directory used to install everything         (default $INSTALL_PREFIX)
     --build-type                    Type          : the build type to use                            (default $BUILD_TYPE)
     --build-core               (-j) N             : number of cores used for building                (default $BUILD_CORE)
+    --with-hrp2                                   : enable HRP2 (requires mc-hrp2 group access)      (default $WITH_HRP2)
+    --with-hrp4                                   : enable HRP4 (requires mc-hrp4 group access)      (default $WITH_HRP4)
     --with-python-support           {true, false} : whether to build with python support             (default $WITH_PYTHON_SUPPORT)
     --with-ros-support              {true, false} : whether to build with ros support                (default $WITH_ROS_SUPPORT)
-    --ros-distro                    NAME          : the ros distro to use                            (default $ROS_DISTRO) 
+    --ros-distro                    NAME          : the ros distro to use                            (default $ROS_DISTRO)
     --install-apt-dependencies      {true, false} : whether to install packages                      (default $INSTALL_APT_DEPENDENCIES)
     --vrep-path                     PATH          : where to find vrep (will be downloaded if empty) (default $VREP_PATH)
 "
@@ -53,7 +57,7 @@ do
     key="${!i}"
     case $key in
         -h|--help)
-        echo "$HELP_STRING" 
+        echo "$HELP_STRING"
         exit
         ;;
 
@@ -72,6 +76,18 @@ do
         i=$(($i+1))
         WITH_PYTHON_SUPPORT="${!i}"
         check_true_false --with-python-support "$WITH_PYTHON_SUPPORT"
+        ;;
+
+      --with-hrp2)
+        i=$(($i+1))
+        WITH_HRP2="${!i}"
+        check_true_false --with-hrp2 "$WITH_HRP2"
+        ;;
+
+      --with-hrp4)
+        i=$(($i+1))
+        WITH_HRP4="${!i}"
+        check_true_false --with-hrp4 "$WITH_HRP4"
         ;;
 
         --build-type)
@@ -101,8 +117,8 @@ do
         ;;
 
         *)
-        	echo "unknown parameter $i ($key)"
-            exit 1
+        echo "unknown parameter $i ($key)"
+        exit 1
         ;;
     esac
 
@@ -117,7 +133,15 @@ readonly INSTALL_APT_DEPENDENCIES
 readonly BUILD_CORE
 
 readonly ROS_APT_DEPENDENCIES="ros-${ROS_DISTRO}-common-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-rviz-animated-view-controller"
-ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_ros#karim_drc git@gite.lirmm.fr:mc-hrp2/hrp2_drc#master git@gite.lirmm.fr:mc-hrp4/hrp4#master"
+ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data#master"
+if $WITH_HRP2
+then
+  ROS_GIT_DEPENDENCIES="$ROS_GIT_DEPENDENCIES git@gite.lirmm.fr:mc-hrp2/hrp2_drc#master"
+fi
+if $WITH_HRP4
+then
+  ROS_GIT_DEPENDENCIES="$ROS_GIT_DEPENDENCIES git@gite.lirmm.fr:mc-hrp4/hrp4#master"
+fi
 alias git_clone="git clone --quiet --recursive"
 alias git_update="git pull && git submodule update"
 
@@ -243,7 +267,7 @@ done
 ################################
 if $WITH_ROS_SUPPORT
 then
-  if [ ! -e /opt/ros/${ROS_DISTRO}/setup.sh ]
+  if [ ! -e /opt/ros/${ROS_DISTRO}/setup.bash ]
   then
     if [ $OS = Ubuntu ]
     then
@@ -256,7 +280,7 @@ then
       exit 1
     fi
   fi
-  . /opt/ros/${ROS_DISTRO}/setup.sh
+  . /opt/ros/${ROS_DISTRO}/setup.bash
   CATKIN_SRC_DIR=$SOURCE_DIR/catkin_ws/src
   mkdir -p $CATKIN_SRC_DIR
   cd $CATKIN_SRC_DIR
@@ -274,7 +298,7 @@ then
   done
   cd $SOURCE_DIR/catkin_ws
   catkin_make
-  . $SOURCE_DIR/catkin_ws/devel/setup.sh
+  . $SOURCE_DIR/catkin_ws/devel/setup.bash
 else
   ROS_GIT_DEPENDENCIES=`echo $ROS_GIT_DEPENDENCIES|sed -e's/hrp4#master/hrp4#noxacro/'`
   for package in ${ROS_GIT_DEPENDENCIES}; do
@@ -303,15 +327,48 @@ then
             -DCMAKE_INSTALL_PREFIX:STRING="$INSTALL_PREFIX" \
             ${CMAKE_ADDITIONAL_OPTIONS}
 else
+  CMAKE_ROBOT_OPTIONS=""
+  if $WITH_HRP2
+  then
+    CMAKE_ROBOT_OPTIONS="-DHRP2_DRC_DESCRIPTION_PATH:STRING=\"${SOURCE_DIR}/hrp2_drc/hrp2_drc_description\""
+  fi
+  if $WITH_HRP4
+  then
+    CMAKE_ROBOT_OPTIONS="$CMAKE_ROBOT_OPTIONS -DHRP4_DESCRIPTION_PATH:STRING=\"${SOURCE_DIR}/hrp4/hrp4_description\""
+  fi
   cmake ../ -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
             -DCMAKE_INSTALL_PREFIX:STRING="$INSTALL_PREFIX"\
-            -DMC_ENV_DESCRIPTION_PATH:STRING="$SOURCE_DIR/mc_ros/mc_env_description"\
-            -DHRP2_DRC_DESCRIPTION_PATH:STRING="$SOURCE_DIR/hrp2_drc/hrp2_drc_description"\
-            -DHRP4_DESCRIPTION_PATH:STRING="$SOURCE_DIR/hrp4/hrp4_description" \
+            -DMC_ENV_DESCRIPTION_PATH:STRING="$SOURCE_DIR/mc_rtc_ros_data/mc_env_description"\
+            ${CMAKE_ROBOT_OPTIONS}\
             ${CMAKE_ADDITIONAL_OPTIONS}
 fi
 make -j$BUILD_CORE
 ${SUDO_CMD} make install
+
+##############################
+#  --  Build mc_rtc_ros  --  #
+##############################
+if $WITH_ROS_SUPPORT
+then
+  if $INSTALL_APT_DEPENDENCIES
+  then
+    sudo add-apt-repository ppa:keithw/glfw3
+    sudo apt-get update
+    sudo apt-get install -qq libglfw3-dev
+  fi
+  CATKIN_DIR=$SOURCE_DIR/catkin_ws
+  cd $CATKIN_DIR/src
+  if [ ! -d mc_rtc_ros/.git ]
+  then
+    git_clone git@gite.lirmm.fr:multi-contact/mc_rtc_ros
+  else
+    cd mc_rtc_ros
+    git_update
+  fi
+  cd $CATKIN_DIR
+  catkin_make
+  . $CATKIN_DIR/devel/setup.bash
+fi
 
 #############################
 #  --  Build mc_cython  --  #
@@ -338,27 +395,30 @@ fi
 ####################################################
 if [ -z "${VREP_PATH}" ]
 then
+  VREP_MAJOR="V-REP_PRO_EDU_V3_4_0"
   cd $SOURCE_DIR
   if [ $OS = Darwin ]
   then
-    if [ ! -d V-REP_PRO_EDU_V3_3_2_Mac ]
+    VREP_MACOS="${VREP_MAJOR}_Mac"
+    if [ ! -d $VREP_MACOS ]
     then
-      wget http://coppeliarobotics.com/files/V-REP_PRO_EDU_V3_3_2_Mac.zip
-      unzip V-REP_PRO_EDU_V3_3_2_Mac.zip
+      wget http://coppeliarobotics.com/files/${VREP_MACOS}.zip
+      unzip ${VREP_MACOS}.zip
     fi
-    VREP_PATH=$SOURCE_DIR/V-REP_PRO_EDU_V3_3_2_Mac
+    VREP_PATH=$SOURCE_DIR/$VREP_MACOS
   else
-    VREP_VERSION=""
-    if [ "`uname -i`" = "x86_64" ]
+    if [ "`uname -i`" != "x86_64" ]
     then
-      VREP_VERSION="_64"
+      VREP_MAJOR="V-REP_PRO_EDU_V3_3_2"
+      echo "[WARNING] VREP support for 32 bits stopped after 3.3.2, it might not work properly with the models or softwares we provide"
     fi
-    if [ ! -d V-REP_PRO_EDU_V3_3_2${VREP_VERSION}_Linux ]
+    VREP_LINUX="${VREP_MAJOR}_Linux"
+    if [ ! -d ${VREP_LINUX} ]
     then
-      wget http://coppeliarobotics.com/files/V-REP_PRO_EDU_V3_3_2${VREP_VERSION}_Linux.tar.gz
-      tar xzf V-REP_PRO_EDU_V3_3_2${VREP_VERSION}_Linux.tar.gz
+      wget http://coppeliarobotics.com/files/${VREP_LINUX}.tar.gz
+      tar xzf ${VREP_LINUX}.tar.gz
     fi
-    VREP_PATH=$SOURCE_DIR/V-REP_PRO_EDU_V3_3_2${VREP_VERSION}_Linux
+    VREP_PATH=$SOURCE_DIR/$VREP_LINUX
   fi
 fi
 [ ! -e "$SOURCE_DIR/vrep" ] && ln -s "$VREP_PATH" "$SOURCE_DIR/vrep"
@@ -397,9 +457,27 @@ make
 ${SUDO_CMD} make install
 
 cd $SOURCE_DIR
-if [ ! -d vrep_hrp/.git ]
+if $WITH_HRP4
 then
-  git_clone git@gite.lirmm.fr:mc-hrp4/vrep_hrp.git
+  if [ ! -d vrep-hrp4/.git ]
+  then
+    git_clone git@gite.lirmm.fr:mc-hrp4/vrep_hrp.git vrep-hrp4
+  else
+    cd vrep-hrp4
+    git_update
+  fi
+fi
+
+cd $SOURCE_DIR
+if $WITH_HRP2
+then
+  if [ ! -d vrep-hrp2/.git ]
+  then
+    git_clone git@gite.lirmm.fr:mc-hrp2/vrep-hrp2.git
+  else
+    cd vrep-hrp2
+    git_update
+  fi
 fi
 
 echo "Installation finished, please add the following lines to your .bashrc/.zshrc"
@@ -418,4 +496,8 @@ else
   export PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig:\$PKG_CONFIG_PATH
   export PYTHONPATH=$INSTALL_PREFIX/lib/python2.7/site-packages:\$PYTHONPATH
   """
+  if $WITH_ROS_SUPPORT
+  then
+    echo "source $SOURCE_DIR/catkin_ws/devel/setup.bash"
+  fi
 fi

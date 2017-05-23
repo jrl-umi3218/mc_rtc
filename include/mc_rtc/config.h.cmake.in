@@ -2,7 +2,6 @@
 
 ${DEFINE_HAS_ROS_MACRO}
 ${DEFINE_HAS_HRPSYS_BASE_MACRO}
-${DEFINE_CHOOSE_HRP4}
 
 #include <string>
 

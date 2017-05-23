@@ -10,23 +10,23 @@ macro(add_controller controller_name controller_SRC controller_HDR)
     ${MC_CONTROLLER_INSTALL_PREFIX})
 endmacro()
 
-add_controller("posture" "mc_posture_controller.cpp"
-  "mc_posture_controller.h")
-add_controller("body6d" "mc_body6d_controller.cpp"
-  "mc_body6d_controller.h")
-add_controller("com" "mc_com_controller.cpp"
-  "mc_com_controller.h")
-add_controller("seq"
-  "mc_seq_controller.cpp;mc_seq_steps.cpp;MCSeqPublisher.cpp"
-  "mc_seq_controller.h;mc_seq_actions.h;mc_seq_steps.h;MCSeqPublisher.h;json/StanceConfig.h")
-add_controller("driving" "mc_driving_controller.cpp"
-  "mc_driving_controller.h")
-add_controller("egress" "mc_egress_controller.cpp"
-  "mc_egress_controller.h")
-add_controller("egress_mrqp" "mc_egress_mrqp_controller.cpp"
-  "mc_egress_mrqp_controller.h")
-add_controller("bci_self_interact"
-  "mc_bci_self_interact_controller.cpp"
-  "mc_bci_self_interact_controller.h")
+if(${BUILD_CONTROLLER_SAMPLES})
+  add_subdirectory(samples/Posture)
+  add_subdirectory(samples/Body6d)
+  add_subdirectory(samples/CoM)
+  add_subdirectory(samples/Seq)
+  add_subdirectory(samples/Driving)
+  add_subdirectory(samples/Egress)
+  add_subdirectory(samples/EgressMRQP)
+  add_subdirectory(samples/BCISelfInteract)
+endif()
+
+file(GLOB EXT_CONTROLLERS RELATIVE ext "ext/*")
+foreach(controller ${EXT_CONTROLLERS})
+  if(EXISTS ext/${controller}/CMakeLists.txt)
+    add_subdirectory(ext/${controller})
+  endif()
+endforeach()
+
 add_controller("halfsitpose" "mc_halfsitpose_controller.cpp"
   "mc_halfsitpose_controller.h")
