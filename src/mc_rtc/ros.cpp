@@ -55,7 +55,7 @@ public:
     imu_pub(this->nh.advertise<sensor_msgs::Imu>(prefix+"imu", 1)),
     odom_pub(this->nh.advertise<nav_msgs::Odometry>(prefix+"odom", 1)),
     iter_since_start(0),
-    imu_noise(Eigen::Vector3d::Zero()),
+    imu_offset(Eigen::Vector3d::Zero()),
     tf_caster(),
     prefix(prefix),
     running(true), seq(0), msgs(),
@@ -121,25 +121,30 @@ public:
 
     imu.header = msg.header;
     const auto & gsensor = robot.bodySensor().acceleration();
-    if(iter_since_start >= 2000)
+    if(iter_since_start >= IMU_SAMPLING_ITER)
     {
-      imu.linear_acceleration.x = gsensor.x() - imu_noise.x();
-      imu.linear_acceleration.y = gsensor.y() - imu_noise.y();
-      imu.linear_acceleration.z = gsensor.z() - imu_noise.z();
+      imu.linear_acceleration.x = gsensor.x() - imu_offset.x();
+      imu.linear_acceleration.y = gsensor.y() - imu_offset.y();
+      imu.linear_acceleration.z = gsensor.z() - imu_offset.z();
     }
     else
     {
-      imu_noise.x() += gsensor.x();
-      imu_noise.y() += gsensor.y();
-      imu_noise.z() += gsensor.z();
+      if(iter_since_start == 0)
+      {
+        LOG_INFO("ROS: sampling IMU noise for '" << robot.name() << "', don't move the robot...");
+      }
+      imu_offset.x() += gsensor.x();
+      imu_offset.y() += gsensor.y();
+      imu_offset.z() += gsensor.z();
       imu.linear_acceleration.x = 0;
       imu.linear_acceleration.y = 0;
       imu.linear_acceleration.z = 0;
     }
     iter_since_start++;
-    if(iter_since_start == 2000)
+    if(iter_since_start == IMU_SAMPLING_ITER)
     {
-      imu_noise /= 2000;
+      LOG_INFO("ROS: done sampling IMU for '" << robot.name() << "', you can move the robot.");
+      imu_offset /= IMU_SAMPLING_ITER;
     }
 
     nav_msgs::Odometry odom;
@@ -207,7 +212,7 @@ public:
 
   void reset_imu_offset()
   {
-    imu_noise = Eigen::Vector3d::Zero();
+    imu_offset = Eigen::Vector3d::Zero();
     iter_since_start = 0;
   }
 private:
@@ -217,7 +222,8 @@ private:
   ros::Publisher odom_pub;
   std::map<std::string, ros::Publisher> wrenches_pub;
   unsigned int iter_since_start;
-  Eigen::Vector3d imu_noise;
+  Eigen::Vector3d imu_offset;
+  const unsigned int IMU_SAMPLING_ITER = 100;
   tf2_ros::TransformBroadcaster tf_caster;
   std::string prefix;
 
