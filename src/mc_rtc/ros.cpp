@@ -137,9 +137,7 @@ public:
       {
         LOG_INFO("ROS: sampling IMU noise for '" << robot.name() << "', don't move the robot...");
       }
-      imu_offset.x() += gsensor.x();
-      imu_offset.y() += gsensor.y();
-      imu_offset.z() += gsensor.z();
+      imu_offset += gsensor;
       imu.linear_acceleration.x = 0;
       imu.linear_acceleration.y = 0;
       imu.linear_acceleration.z = 0;
