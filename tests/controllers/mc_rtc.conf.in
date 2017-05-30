@@ -9,6 +9,8 @@
 
   "Timestep" : 0.005,
 
+  "UseSandbox" : true,
+
   "Log" : @LOG_ENABLED@,
   "LogPolicy" : "@LOG_POLICY@",
   "LogDirectory" : "/tmp",

@@ -12,7 +12,7 @@ struct SegfaultController : public mc_control::MCController
 
 extern "C"
 {
-  CONTROLLER_MODULE_API const char * CLASS_NAME() { return "SegfaultController"; }
+  CONTROLLER_MODULE_API std::vector<std::string> MC_RTC_CONTROLLER() { return {"SegfaultController"}; }
   CONTROLLER_MODULE_API void destroy(mc_control::MCController * ptr)
   {
     delete ptr;

@@ -14,7 +14,7 @@ struct ThrowingRobot : public mc_rbdyn::RobotModule
 
 extern "C"
 {
-  ROBOT_MODULE_API const char * CLASS_NAME() { return "ThrowingRobot"; }
+  ROBOT_MODULE_API std::vector<std::string> MC_RTC_ROBOT_MODULE() { return {"ThrowingRobot"}; }
   ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr)
   {
     delete ptr;

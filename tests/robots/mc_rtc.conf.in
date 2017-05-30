@@ -11,6 +11,8 @@
 
   "Log" : false,
 
+  "UseSandbox" : true,
+
   "ClearControllerModulePath" : true,
   "ControllerModulePaths" : ["@CMAKE_BINARY_DIR@/src/mc_control"],
   "ClearRobotModulePath" : true,

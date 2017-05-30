@@ -1,7 +1,7 @@
-/*! Only implements the CLASS_NAME function */
+/*! Only implements the MC_RTC_ROBOT_MODULE function */
 #include <mc_rbdyn/RobotModule.h>
 
 extern "C"
 {
-  ROBOT_MODULE_API const char * CLASS_NAME() { return "NoDestroyRobot"; }
+  ROBOT_MODULE_API std::vector<std::string> MC_RTC_ROBOT_MODULE() { return {"NoDestroyRobot"}; }
 }
