@@ -18,7 +18,7 @@ struct BodySensor
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
   /** Default constructor, does not represent a valid body sensor */
   BodySensor()
-  : BodySensor("", "", Eigen::Vector3d::Zero())
+  : BodySensor("", "", sva::PTransformd::Identity())
   {
   }
 
@@ -28,13 +28,15 @@ struct BodySensor
    *
    * @param bodyName Name of the body to which the sensor is attached
    *
+   * @param X_b_s Transformation from the parent body to the sensor
+   *
    */
   BodySensor(const std::string & name,
              const std::string & bodyName,
-             const Eigen::Vector3d & position)
+             const sva::PTransformd & X_b_s)
   : name_(name),
     bodyName_(bodyName),
-    position_(position)
+    X_b_s_(X_b_s)
   {
   }
 
@@ -48,6 +50,12 @@ struct BodySensor
   inline const std::string & parentBody() const
   {
     return bodyName_;
+  }
+
+  /** Return the transformation from the parent body to the sensor */
+  inline const sva::PTransformd & X_b_s() const
+  {
+    return X_b_s_;
   }
 
   /** Return the sensor's position reading, Zero if not provided */
@@ -112,6 +120,7 @@ struct BodySensor
 private:
   std::string name_;
   std::string bodyName_;
+  sva::PTransformd X_b_s_;
   Eigen::Vector3d position_ = Eigen::Vector3d::Zero();
   Eigen::Quaterniond orientation_ = Eigen::Quaterniond::Identity();
   Eigen::Vector3d linear_velocity_ = Eigen::Vector3d::Zero();
