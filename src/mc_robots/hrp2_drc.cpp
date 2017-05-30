@@ -34,7 +34,7 @@ HRP2DRCCommonRobotModule::HRP2DRCCommonRobotModule()
   gripperLinks.push_back("RHAND_LINK3");
   gripperLinks.push_back("RHAND_LINK4");
 
-  _bodySensors.emplace_back("Accelerometer", "CHEST_LINK1", sva::PTransformd(Eigen::Vector3d(-0.13, 0, 0.118)));
+  _bodySensors.emplace_back("Accelerometer", "CHEST_LINK1", Eigen::Vector3d(-0.13, 0, 0.118));
 
   halfSitting["RLEG_JOINT0"] = {0};
   halfSitting["RLEG_JOINT1"] = {0};

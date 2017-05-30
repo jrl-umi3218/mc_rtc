@@ -153,8 +153,8 @@ public:
     odom.header = msg.header;
     odom.header.frame_id = robot.bodySensor().parentBody();
     odom.child_frame_id = "robot_odom";
-    const auto & odom_p = robot.bodySensor().X_b_s().translation();
-    Eigen::Quaterniond odom_q = Eigen::Quaterniond(robot.bodySensor().X_b_s().rotation());
+    const auto & odom_p = robot.bodySensor().position();
+    Eigen::Quaterniond odom_q = robot.bodySensor().orientation();
     odom.pose.pose.position.x = odom_p.x();
     odom.pose.pose.position.y = odom_p.y();
     odom.pose.pose.position.z = odom_p.z();
