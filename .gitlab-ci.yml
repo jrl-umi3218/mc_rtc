@@ -63,6 +63,21 @@ build_gcc_ros:
   tags:
     - GCC
 
+build_clang_ros:
+  stage: build
+  script:
+    - ./.jrl-ci/run before_install
+    - ./.jrl-ci/dependencies/catkin
+    - export MASTER_PPA=""
+    - export APT_DEPENDENCIES="ros-indigo-common-msgs ros-indigo-tf2-ros ros-indigo-xacro ros-indigo-rviz-animated-view-controller"
+    - export GIT_DEPENDENCIES=""
+    - export ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_ros#karim_drc git@gite.lirmm.fr:mc-hrp2/hrp2_drc#master git@gite.lirmm.fr:mc-hrp4/hrp4#master"
+    - ./.jrl-ci/run before_install
+    - ./.jrl-ci/run build
+    - ./.jrl-ci/run after_success
+  tags:
+    - clang
+
 build_with_script:
   stage: build
   script:
