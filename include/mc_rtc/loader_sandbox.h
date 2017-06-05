@@ -16,7 +16,7 @@ namespace
 
   void signal_handler(int signal)
   {
-    if(signal == SIGSEGV || signal == SIGFPE)
+    if(signal == SIGSEGV || signal == SIGFPE || signal == SIGILL)
     {
       /*! Avoid jumping back a second time */
       static bool dead = false;
@@ -61,6 +61,7 @@ int sandbox(void * args)
   {
     signal(SIGSEGV, signal_handler);
     signal(SIGFPE, signal_handler);
+    signal(SIGILL, signal_handler);
     int jmp_res = setjmp(jmp);
     if(jmp_res == 0)
     {
@@ -71,7 +72,7 @@ int sandbox(void * args)
     {
       data.ret = nullptr;
       data.complete = false;
-      if(jmp_res == SIGSEGV)
+      if(jmp_res == SIGSEGV || jmp_res == SIGILL)
       {
         LOG_ERROR("Loaded constructor segfaulted")
       }
@@ -82,6 +83,7 @@ int sandbox(void * args)
     }
     signal(SIGSEGV, SIG_DFL);
     signal(SIGFPE, SIG_DFL);
+    signal(SIGILL, SIG_DFL);
   }
   catch(...)
   {
