@@ -42,13 +42,18 @@ std::string getConfigFile(const std::string & data)
   return fIn;
 }
 
-bool operator==(const Eigen::Quaterniond & lhs,
-                const Eigen::Quaterniond & rhs)
+namespace Eigen
+{
+
+bool operator==(const Quaterniond & lhs,
+                const Quaterniond & rhs)
 {
   return lhs.w() == rhs.w() &&
          lhs.x() == rhs.x() &&
          lhs.y() == rhs.y() &&
          lhs.z() == rhs.z();
+}
+
 }
 
 std::string sampleConfig()
