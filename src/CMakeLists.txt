@@ -219,6 +219,10 @@ add_subdirectory(mc_control)
 
 set(MC_LIBRARIES mc_rbdyn mc_solver mc_tasks mc_control mc_trajectory mc_rtc_ros mc_rtc_loader mc_rtc_utils)
 foreach(MC_LIB ${MC_LIBRARIES})
+  if(GENERATE_COVERAGE)
+    target_compile_options(${MC_LIB} PRIVATE "--coverage")
+    set_target_properties(${MC_LIB} PROPERTIES LINK_FLAGS "--coverage")
+  endif()
   set_target_properties(${MC_LIB} PROPERTIES SOVERSION 0 VERSION 0.1.0)
 endforeach()
 
