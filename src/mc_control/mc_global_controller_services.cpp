@@ -117,7 +117,6 @@ bool MCGlobalController::GoToHalfSitPose_service()
 
 bool MCGlobalController::send_msg(const std::string & msg)
 {
-  if(msg == "reset_imu_offset") { mc_rtc::ROSBridge::reset_imu_offset(); return true; }
   if(controller_)
   {
     return controller_->read_msg(const_cast<std::string&>(msg));
