@@ -54,9 +54,6 @@ public:
     j_state_pub(this->nh.advertise<sensor_msgs::JointState>(prefix+"joint_states", 1)),
     imu_pub(this->nh.advertise<sensor_msgs::Imu>(prefix+"imu", 1)),
     odom_pub(this->nh.advertise<nav_msgs::Odometry>(prefix+"odom", 1)),
-    iter_since_start(0),
-    imu_offset(Eigen::Vector3d::Zero()),
-    imu_integral(Eigen::Vector3d::Zero()),
     tf_caster(),
     prefix(prefix),
     running(true), seq(0), msgs(),
@@ -122,32 +119,9 @@ public:
 
     imu.header = msg.header;
     const auto & gsensor = robot.bodySensor().acceleration();
-    if(iter_since_start >= IMU_SAMPLING_ITER)
-    {
-      imu.linear_acceleration.x = gsensor.x() - imu_offset.x();
-      imu.linear_acceleration.y = gsensor.y() - imu_offset.y();
-      imu.linear_acceleration.z = gsensor.z() - imu_offset.z();
-      imu_integral.x() += dt * imu.linear_acceleration.x;
-      imu_integral.y() += dt * imu.linear_acceleration.y;
-      imu_integral.z() += dt * imu.linear_acceleration.z;
-    }
-    else
-    {
-      if(iter_since_start == 0)
-      {
-        LOG_INFO("ROS: sampling IMU noise for '" << robot.name() << "', don't move the robot...");
-      }
-      imu_offset += gsensor;
-      imu.linear_acceleration.x = 0;
-      imu.linear_acceleration.y = 0;
-      imu.linear_acceleration.z = 0;
-    }
-    iter_since_start++;
-    if(iter_since_start == IMU_SAMPLING_ITER)
-    {
-      LOG_INFO("ROS: done sampling IMU for '" << robot.name() << "', you can move the robot.");
-      imu_offset /= IMU_SAMPLING_ITER;
-    }
+    imu.linear_acceleration.x = gsensor.x();
+    imu.linear_acceleration.y = gsensor.y();
+    imu.linear_acceleration.z = gsensor.z();
 
     nav_msgs::Odometry odom;
     odom.header = msg.header;
@@ -164,9 +138,10 @@ public:
     odom.pose.pose.orientation.z = odom_q.z();
     odom.pose.covariance.fill(0);
     /* Provide linear and angular velocity */
-    odom.twist.twist.linear.x = imu_integral.x();
-    odom.twist.twist.linear.y = imu_integral.y();
-    odom.twist.twist.linear.z = imu_integral.z();
+    const auto & vel = robot.bodySensor().linearVelocity();
+    odom.twist.twist.linear.x = vel.x();
+    odom.twist.twist.linear.y = vel.y();
+    odom.twist.twist.linear.z = vel.z();
     const auto & rate = robot.bodySensor().angularVelocity();
     odom.twist.twist.angular.x = rate.x();
     odom.twist.twist.angular.y = rate.y();
@@ -212,21 +187,12 @@ public:
     }
   }
 
-  void reset_imu_offset()
-  {
-    imu_offset = Eigen::Vector3d::Zero();
-    iter_since_start = 0;
-  }
 private:
   ros::NodeHandle & nh;
   ros::Publisher j_state_pub;
   ros::Publisher imu_pub;
   ros::Publisher odom_pub;
   std::map<std::string, ros::Publisher> wrenches_pub;
-  unsigned int iter_since_start;
-  Eigen::Vector3d imu_offset;
-  Eigen::Vector3d imu_integral;
-  const unsigned int IMU_SAMPLING_ITER = 100;
   tf2_ros::TransformBroadcaster tf_caster;
   std::string prefix;
 
@@ -305,14 +271,6 @@ void RobotPublisher::update(double dt, const mc_rbdyn::Robot & robot, const std:
   }
 }
 
-void RobotPublisher::reset_imu_offset()
-{
-  if(impl)
-  {
-    impl->reset_imu_offset();
-  }
-}
-
 inline bool ros_init(const std::string & name)
 {
   int argc = 0;
@@ -360,14 +318,6 @@ void ROSBridge::update_robot_publisher(const std::string& publisher, double dt, 
   impl->rpubs[publisher]->update(dt, robot, gJ, gQ);
 }
 
-void ROSBridge::reset_imu_offset()
-{
-  for(auto& pub : impl->rpubs)
-  {
-    pub.second->reset_imu_offset();
-  }
-}
-
 void ROSBridge::shutdown()
 {
   ros::shutdown();
@@ -401,10 +351,6 @@ void ROSBridge::set_publisher_timestep(double timestep)
 }
 
 void ROSBridge::update_robot_publisher(const std::string&, double, const mc_rbdyn::Robot &, const std::map<std::string, std::vector<std::string>> &, const std::map<std::string, std::vector<double>> &)
-{
-}
-
-void ROSBridge::reset_imu_offset()
 {
 }
 
