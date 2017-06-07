@@ -1,4 +1,4 @@
-#include <mc_control/log/serialization/MCLog_generated.h>
+#include <mc_rtc/log/serialization/MCLog_generated.h>
 
 #include <mc_rtc/logging.h>
 
@@ -19,13 +19,13 @@
 #include <string>
 #include <vector>
 
-using namespace mc_control::log;
+using namespace mc_rtc::log;
 
 /** Convert flatbuffer union type to message type.
  *
  * The default template is declared but not defined.
  */
-template<mc_control::log::LogData T>
+template<mc_rtc::log::LogData T>
 struct ROSMessageFromFBUnion;
 
 #define MAKE_RM_F_FB(FB_T, RM_T)\
@@ -45,7 +45,7 @@ MAKE_RM_F_FB(LogData_PTransformd, geometry_msgs::Transform);
 MAKE_RM_F_FB(LogData_ForceVecd, geometry_msgs::Wrench);
 #undef MAKE_RM_F_FB
 
-template<mc_control::log::LogData T>
+template<mc_rtc::log::LogData T>
 struct FBToROS
 {
   using ret_t = typename ROSMessageFromFBUnion<T>::message_t;
@@ -202,7 +202,7 @@ int main(int argc, char * argv[])
     {
       char * data = new char[size];
       ifs.read(data, size);
-      auto log = mc_control::log::GetLog(data);
+      auto log = mc_rtc::log::GetLog(data);
       if(log->keys())
       {
         topics.clear();

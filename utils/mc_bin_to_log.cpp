@@ -1,15 +1,15 @@
-#include <mc_control/log/serialization/fb_utils.h>
+#include <mc_rtc/log/serialization/fb_utils.h>
 
 #include <mc_rtc/logging.h>
 
 #include <fstream>
 
 
-typedef std::tuple<std::string, mc_control::log::LogData, size_t> typed_key;
+typedef std::tuple<std::string, mc_rtc::log::LogData, size_t> typed_key;
 
 struct LogEntry
 {
-  const mc_control::log::Log * entry;
+  const mc_rtc::log::Log * entry;
   char * raw;
   std::vector<typed_key> keys()
   {
@@ -22,23 +22,23 @@ struct LogEntry
       for(size_t i = 0; i < keys.size(); ++i)
       {
         auto k = keys[i];
-        auto vt = mc_control::log::LogData(values_type[i]);
+        auto vt = mc_rtc::log::LogData(values_type[i]);
         size_t size = 0;
 #define CASE_ENUM(VALUE)\
   case VALUE:\
-    size = mc_control::log::CSVWriterHelper<VALUE>::key_size(values[i]);\
+    size = mc_rtc::log::CSVWriterHelper<VALUE>::key_size(values[i]);\
     break;
         switch(vt)
         {
-          CASE_ENUM(mc_control::log::LogData_Bool)
-          CASE_ENUM(mc_control::log::LogData_Double)
-          CASE_ENUM(mc_control::log::LogData_DoubleVector)
-          CASE_ENUM(mc_control::log::LogData_UnsignedInt)
-          CASE_ENUM(mc_control::log::LogData_String)
-          CASE_ENUM(mc_control::log::LogData_Vector3d)
-          CASE_ENUM(mc_control::log::LogData_Quaterniond)
-          CASE_ENUM(mc_control::log::LogData_PTransformd)
-          CASE_ENUM(mc_control::log::LogData_ForceVecd)
+          CASE_ENUM(mc_rtc::log::LogData_Bool)
+          CASE_ENUM(mc_rtc::log::LogData_Double)
+          CASE_ENUM(mc_rtc::log::LogData_DoubleVector)
+          CASE_ENUM(mc_rtc::log::LogData_UnsignedInt)
+          CASE_ENUM(mc_rtc::log::LogData_String)
+          CASE_ENUM(mc_rtc::log::LogData_Vector3d)
+          CASE_ENUM(mc_rtc::log::LogData_Quaterniond)
+          CASE_ENUM(mc_rtc::log::LogData_PTransformd)
+          CASE_ENUM(mc_rtc::log::LogData_ForceVecd)
           default:
             break;
         };
@@ -63,7 +63,7 @@ struct Log
       {
         char * data = new char[size];
         ifs.read(data, size);
-        entries.push_back({mc_control::log::GetLog(data), data});
+        entries.push_back({mc_rtc::log::GetLog(data), data});
         auto new_keys = entries.back().keys();
         if(keys.size() == 0)
         {
@@ -114,19 +114,19 @@ struct Log
       else { os << ";"; }
 #define CASE_ENUM(VALUE)\
   case VALUE:\
-    mc_control::log::CSVWriterHelper<VALUE>::write_header(key, size, os);\
+    mc_rtc::log::CSVWriterHelper<VALUE>::write_header(key, size, os);\
     break;
         switch(vt)
         {
-          CASE_ENUM(mc_control::log::LogData_Bool)
-          CASE_ENUM(mc_control::log::LogData_Double)
-          CASE_ENUM(mc_control::log::LogData_DoubleVector)
-          CASE_ENUM(mc_control::log::LogData_UnsignedInt)
-          CASE_ENUM(mc_control::log::LogData_String)
-          CASE_ENUM(mc_control::log::LogData_Vector3d)
-          CASE_ENUM(mc_control::log::LogData_Quaterniond)
-          CASE_ENUM(mc_control::log::LogData_PTransformd)
-          CASE_ENUM(mc_control::log::LogData_ForceVecd)
+          CASE_ENUM(mc_rtc::log::LogData_Bool)
+          CASE_ENUM(mc_rtc::log::LogData_Double)
+          CASE_ENUM(mc_rtc::log::LogData_DoubleVector)
+          CASE_ENUM(mc_rtc::log::LogData_UnsignedInt)
+          CASE_ENUM(mc_rtc::log::LogData_String)
+          CASE_ENUM(mc_rtc::log::LogData_Vector3d)
+          CASE_ENUM(mc_rtc::log::LogData_Quaterniond)
+          CASE_ENUM(mc_rtc::log::LogData_PTransformd)
+          CASE_ENUM(mc_rtc::log::LogData_ForceVecd)
           default:
             break;
         };
@@ -170,19 +170,19 @@ struct Log
         const void * value = values[idx];
 #define CASE_ENUM(VALUE)\
   case VALUE:\
-    mc_control::log::CSVWriterHelper<VALUE>::write_data(value, os);\
+    mc_rtc::log::CSVWriterHelper<VALUE>::write_data(value, os);\
     break;
         switch(vt)
         {
-          CASE_ENUM(mc_control::log::LogData_Bool)
-          CASE_ENUM(mc_control::log::LogData_Double)
-          CASE_ENUM(mc_control::log::LogData_DoubleVector)
-          CASE_ENUM(mc_control::log::LogData_UnsignedInt)
-          CASE_ENUM(mc_control::log::LogData_String)
-          CASE_ENUM(mc_control::log::LogData_Vector3d)
-          CASE_ENUM(mc_control::log::LogData_Quaterniond)
-          CASE_ENUM(mc_control::log::LogData_PTransformd)
-          CASE_ENUM(mc_control::log::LogData_ForceVecd)
+          CASE_ENUM(mc_rtc::log::LogData_Bool)
+          CASE_ENUM(mc_rtc::log::LogData_Double)
+          CASE_ENUM(mc_rtc::log::LogData_DoubleVector)
+          CASE_ENUM(mc_rtc::log::LogData_UnsignedInt)
+          CASE_ENUM(mc_rtc::log::LogData_String)
+          CASE_ENUM(mc_rtc::log::LogData_Vector3d)
+          CASE_ENUM(mc_rtc::log::LogData_Quaterniond)
+          CASE_ENUM(mc_rtc::log::LogData_PTransformd)
+          CASE_ENUM(mc_rtc::log::LogData_ForceVecd)
           default:
             break;
         };
