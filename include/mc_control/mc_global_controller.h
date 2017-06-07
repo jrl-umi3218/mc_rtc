@@ -472,6 +472,8 @@ private:
   std::shared_ptr<Logger> logger_;
 
   void publish_robots();
+
+  void start_log();
 };
 
 }

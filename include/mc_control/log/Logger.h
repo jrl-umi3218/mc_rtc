@@ -1,11 +1,5 @@
 #pragma once
 
-namespace mc_control
-{
-  struct Logger;
-}
-
-#include <mc_control/mc_controller.h>
 #include <mc_control/log/serialization/fb_utils.h>
 
 #include <mc_rtc/logging.h>
@@ -13,6 +7,7 @@ namespace mc_control
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
 
+#include <map>
 #include <memory>
 
 namespace mc_control
@@ -75,9 +70,9 @@ public:
    *
    * \param ctl_name Name of the running controller
    *
-   * \param controller The running controller
+   * \param timestep Time increment for the log time entry
    */
-  void start(const std::string & ctl_name, MCController * controller);
+  void start(const std::string & ctl_name, double timestep);
 
   /*! \brief Log controller's data
    *

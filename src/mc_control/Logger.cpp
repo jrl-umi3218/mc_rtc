@@ -132,7 +132,7 @@ namespace mc_control
   {
   }
 
-  void Logger::start(const std::string & ctl_name, MCController * controller)
+  void Logger::start(const std::string & ctl_name, double timestep)
   {
     log_entries_.clear();
     auto get_log_path = [this, &ctl_name]()
@@ -177,65 +177,10 @@ namespace mc_control
     }
     if(impl_->log_.is_open())
     {
-      addLogEntry("t", [this, controller]()
+      addLogEntry("t", [this, timestep]()
                   {
-                    impl_->log_iter_ += controller->timeStep;
-                    return impl_->log_iter_ - controller->timeStep;
-                  });
-      addLogEntry("qIn", [controller]() -> const std::vector<double>&
-                  {
-                    return controller->robot().encoderValues();
-                  });
-      addLogEntry("ff", [controller]() -> const sva::PTransformd&
-                  {
-                    return controller->robot().mbc().bodyPosW[0];
-                  });
-      addLogEntry("qOut", [controller]()
-                  {
-                    const auto & qOut = controller->send(0).robots_state[0].q;
-                    const auto & rjo = controller->robot().refJointOrder();
-                    std::vector<double> ret(rjo.size(), 0);
-                    for(size_t i = 0; i < rjo.size(); ++i)
-                    {
-                      const auto & jn = rjo[i];
-                      if(qOut.count(jn))
-                      {
-                        ret[i] = qOut.at(jn)[0];
-                      }
-                    }
-                    return ret;
-                  });
-      addLogEntry("tauIn", [controller]() -> const std::vector<double>&
-                  {
-                    return controller->robot().jointTorques();
-                  });
-      for(const auto & fs : controller->robot().forceSensors())
-      {
-        const auto & fs_name = fs.name();
-        addLogEntry(fs.name(), [controller,fs_name]() -> const sva::ForceVecd&
-                    {
-                      return controller->robot().forceSensor(fs_name).wrench();
-                    });
-      }
-      addLogEntry("pIn", [controller]() -> const Eigen::Vector3d&
-                  {
-                    return controller->robot().bodySensor().position();
-                  });
-      addLogEntry("rpyIn", [controller]() -> const Eigen::Quaterniond&
-                  {
-                    return controller->robot().bodySensor().orientation();
-                  });
-      addLogEntry("velIn", [controller]() -> const Eigen::Vector3d&
-                  {
-                    return controller->robot().bodySensor().linearVelocity();
-                  });
-      addLogEntry("rateIn", [controller]() -> const Eigen::Vector3d&
-                  {
-                    return controller->robot().bodySensor().angularVelocity();
-                  });
-      addLogEntry("accIn", [controller]() -> const Eigen::Vector3d&
-                  {
-                    return controller->robot().bodySensor().acceleration();
+                    impl_->log_iter_ += timestep;
+                    return impl_->log_iter_ - timestep;
                   });
       impl_->log_iter_ = 0;
       impl_->valid = true;
