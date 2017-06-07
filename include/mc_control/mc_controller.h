@@ -5,7 +5,7 @@
 
 #include <mc_control/Configuration.h>
 #include <mc_control/generic_gripper.h>
-#include <mc_control/log/Logger.h>
+#include <mc_rtc/log/Logger.h>
 
 #include <mc_solver/QPSolver.h>
 #include <mc_solver/msg/QPResult.h>
@@ -204,8 +204,8 @@ public:
    */
   virtual bool read_write_msg(std::string & msg, std::string & out);
 
-  /** Returns mc_control::Logger instance */
-  Logger & logger();
+  /** Returns mc_rtc::Logger instance */
+  mc_rtc::Logger & logger();
 
   /** Returns a list of robots supported by the controller.
    * \return Vector of supported robots designed by name (as returned by
@@ -234,7 +234,7 @@ protected:
   /** Real robots provided by MCGlobalController */
   std::shared_ptr<mc_rbdyn::Robots> real_robots;
   /** Logger provided by MCGlobalController */
-  std::shared_ptr<Logger> logger_;
+  std::shared_ptr<mc_rtc::Logger> logger_;
 public:
   /** Controller timestep */
   const double timeStep;

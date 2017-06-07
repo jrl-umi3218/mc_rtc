@@ -3,7 +3,7 @@
 #include <cmath>
 #include <mc_solver/QPSolver.h>
 
-#include <mc_control/log/Logger.h>
+#include <mc_rtc/log/Logger.h>
 
 #include <mc_tasks/api.h>
 
@@ -145,7 +145,7 @@ protected:
    * The default implementation adds nothing to the log.
    */
 
-  virtual void addToLogger(mc_control::Logger &) {}
+  virtual void addToLogger(mc_rtc::Logger &) {}
 
   /** Remove entries from the logger
    *
@@ -153,7 +153,7 @@ protected:
    *
    * The default implementation removes nothing from the log.
    */
-  virtual void removeFromLogger(mc_control::Logger &) {}
+  virtual void removeFromLogger(mc_rtc::Logger &) {}
 };
 
 using MetaTaskPtr = std::shared_ptr<MetaTask>;

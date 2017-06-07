@@ -1,4 +1,4 @@
-namespace mc_control.log;
+namespace mc_rtc.log;
 
 table Bool
 {

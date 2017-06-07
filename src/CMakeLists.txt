@@ -9,7 +9,17 @@ set_target_properties(mc_rtc_loader PROPERTIES COMPILE_FLAGS "-DMC_RTC_LOADER_EX
 target_link_libraries(mc_rtc_loader ${Boost_LIBRARIES} ltdl)
 pkg_config_append_libs(mc_rtc_loader)
 
-add_library(mc_rtc_utils SHARED mc_rtc/Configuration.cpp ../include/mc_rtc/Configuration.h ../include/mc_rtc/utils_api.h)
+set(mc_rtc_utils_SRC
+  mc_rtc/Configuration.cpp
+  mc_rtc/Logger.cpp
+)
+set(mc_rtc_utils_HDR
+  ../include/mc_rtc/Configuration.h
+  ../include/mc_rtc/log/Logger.h
+  ../include/mc_rtc/log/serialization/MCLog_generated.h
+  ../include/mc_rtc/utils_api.h
+)
+add_library(mc_rtc_utils SHARED ${mc_rtc_utils_SRC} ${mc_rtc_utils_HDR})
 set_target_properties(mc_rtc_utils PROPERTIES COMPILE_FLAGS "-DMC_RTC_UTILS_EXPORTS")
 target_link_libraries(mc_rtc_utils ${Boost_LIBRARIES})
 pkg_config_append_libs(mc_rtc_utils)
@@ -177,7 +187,7 @@ set(mc_tasks_HDR ${mc_tasks_HDR} PARENT_SCOPE)
 
 add_library(mc_tasks SHARED ${mc_tasks_SRC} ${mc_tasks_HDR})
 set_target_properties(mc_tasks PROPERTIES COMPILE_FLAGS "-DMC_TASKS_EXPORTS")
-target_link_libraries(mc_tasks mc_solver mc_rbdyn mc_trajectory)
+target_link_libraries(mc_tasks mc_solver mc_rbdyn mc_trajectory mc_rtc_utils)
 target_link_libraries(mc_tasks ${Boost_LIBRARIES})
 pkg_config_use_dependency(mc_tasks mc_rbdyn_urdf)
 pkg_config_use_dependency(mc_tasks Tasks)
@@ -202,7 +212,6 @@ mc_control/mc_controller.cpp
 mc_control/mc_python_controller.cpp
 mc_control/mc_global_controller.cpp
 mc_control/mc_global_controller_configuration.cpp
-mc_control/Logger.cpp
 mc_control/mc_global_controller_services.cpp
 )
 set(mc_control_SRC ${mc_control_SRC} PARENT_SCOPE)
@@ -217,8 +226,6 @@ set(mc_control_HDR
 ../include/mc_control/mc_python_controller.h
 ../include/mc_control/SimulationContactSensor.h
 ../include/mc_control/mc_global_controller.h
-../include/mc_control/log/Logger.h
-../include/mc_control/log/serialization/MCLog_generated.h
 )
 set(mc_control_HDR ${mc_control_HDR} PARENT_SCOPE)
 
@@ -234,7 +241,8 @@ pkg_config_use_dependency(mc_control Tasks)
 pkg_config_append_libs(mc_control)
 
 if(FLATC)
-  set_source_files_properties(../include/mc_control/log/serialization/MCLog_generated.h PROPERTIES GENERATED 1)
+  set_source_files_properties(../include/mc_rtc/log/serialization/MCLog_generated.h PROPERTIES GENERATED 1)
+  add_dependencies(mc_rtc_utils generate_mc_log_code)
   add_dependencies(mc_solver generate_mc_log_code)
   add_dependencies(mc_tasks generate_mc_log_code)
   add_dependencies(mc_control generate_mc_log_code)

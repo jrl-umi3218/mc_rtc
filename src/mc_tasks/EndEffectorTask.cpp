@@ -121,7 +121,7 @@ Eigen::VectorXd EndEffectorTask::speed() const
   return spd;
 }
 
-void EndEffectorTask::addToLogger(mc_control::Logger & logger)
+void EndEffectorTask::addToLogger(mc_rtc::Logger & logger)
 {
   const auto & robot = robots.robot(robotIndex);
   logger.addLogEntry(robot.name() + "_" + bodyName + "_pt_target",
@@ -136,7 +136,7 @@ void EndEffectorTask::addToLogger(mc_control::Logger & logger)
                      });
 }
 
-void EndEffectorTask::removeFromLogger(mc_control::Logger & logger)
+void EndEffectorTask::removeFromLogger(mc_rtc::Logger & logger)
 {
   const auto & robot = robots.robot(robotIndex);
   logger.removeLogEntry(robot.name() + "_" + bodyName + "_pt_target");

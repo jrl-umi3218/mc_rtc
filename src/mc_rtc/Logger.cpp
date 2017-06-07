@@ -1,13 +1,13 @@
-#include <mc_control/log/Logger.h>
-
-#include <mc_control/mc_global_controller.h>
+#include <mc_rtc/log/Logger.h>
 
 #include <chrono>
-#include <condition_variable>
 #include <queue>
+#include <fstream>
 #include <iomanip>
+#include <queue>
+#include <thread>
 
-namespace mc_control
+namespace mc_rtc
 {
   struct LoggerImpl
   {
@@ -224,7 +224,7 @@ namespace mc_control
       s_keys = impl_->builder_.CreateVectorOfStrings(keys);
       log_entries_changed_ = false;
     }
-    mc_control::log::LogBuilder log_builder(impl_->builder_);
+    mc_rtc::log::LogBuilder log_builder(impl_->builder_);
     log_builder.add_keys(s_keys);
     log_builder.add_values_type(s_types);
     log_builder.add_values(s_values);

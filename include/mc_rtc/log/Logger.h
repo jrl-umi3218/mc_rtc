@@ -1,8 +1,9 @@
 #pragma once
 
-#include <mc_control/log/serialization/fb_utils.h>
+#include <mc_rtc/log/serialization/fb_utils.h>
 
 #include <mc_rtc/logging.h>
+#include <mc_rtc/utils_api.h>
 
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
@@ -10,7 +11,7 @@ namespace bfs = boost::filesystem;
 #include <map>
 #include <memory>
 
-namespace mc_control
+namespace mc_rtc
 {
 
 struct LoggerImpl;
@@ -19,10 +20,10 @@ struct LoggerImpl;
  * The user can select a desired logging policy that will impact the behaviour
  * of this class.
  *
- * See mc_control::Logger::Policy documentation for details on available
+ * See mc_rtc::Logger::Policy documentation for details on available
  * policies
  */
-struct Logger
+struct MC_RTC_UTILS_DLLAPI Logger
 {
 public:
   /** A function that fills LogData vectors */
@@ -96,7 +97,7 @@ public:
   template<typename T>
   void addLogEntry(const std::string & name,
                    T get_fn,
-                   typename std::enable_if<mc_control::log::callback_is_serializable<T>::value>::type * = 0)
+                   typename std::enable_if<mc_rtc::log::callback_is_serializable<T>::value>::type * = 0)
   {
     using ret_t = decltype(get_fn());
     using base_t =  typename std::decay<ret_t>::type;
@@ -110,7 +111,7 @@ public:
                                         std::vector<uint8_t> & types,
                                         std::vector<flatbuffers::Offset<void>> & values)
     {
-      mc_control::log::AddLogData<base_t>(builder, types, values, get_fn());
+      mc_rtc::log::AddLogData<base_t>(builder, types, values, get_fn());
     };
   }
 
@@ -128,7 +129,7 @@ public:
   template<typename T>
   void addLogEntry(const std::string & name,
                    T get_fn,
-                   typename std::enable_if<mc_control::log::callback_is_crv_of_serializable<T>::value>::type * = 0)
+                   typename std::enable_if<mc_rtc::log::callback_is_crv_of_serializable<T>::value>::type * = 0)
   {
     using ret_t = decltype(get_fn());
     using base_t = typename std::decay<ret_t>::type;
@@ -152,7 +153,7 @@ public:
       }
       for(const auto & e : v)
       {
-        mc_control::log::AddLogData<value_t>(builder, types, values, e);
+        mc_rtc::log::AddLogData<value_t>(builder, types, values, e);
       }
     };
   }

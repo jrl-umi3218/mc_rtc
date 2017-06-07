@@ -4,7 +4,7 @@
 
 #include <SpaceVecAlg/SpaceVecAlg>
 
-namespace mc_control
+namespace mc_rtc
 {
 
 namespace log
@@ -16,7 +16,7 @@ template<typename T>
 struct LogDataHelper
 {
   /** Holds the value type corresponding to the C++ type */
-  static constexpr mc_control::log::LogData value_type = mc_control::log::LogData_NONE;
+  static constexpr mc_rtc::log::LogData value_type = mc_rtc::log::LogData_NONE;
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wreturn-type"
@@ -35,11 +35,11 @@ struct LogDataHelper
 template<>\
 struct LogDataHelper<TYPE>\
 {\
-  static constexpr mc_control::log::LogData value_type = mc_control::log::LD_TYPE;\
+  static constexpr mc_rtc::log::LogData value_type = mc_rtc::log::LD_TYPE;\
   static flatbuffers::Offset<void> serialize(flatbuffers::FlatBufferBuilder & builder,\
                                              const TYPE & ARG_NAME)\
   {\
-    return mc_control::log::S_FN(builder, __VA_ARGS__).Union();\
+    return mc_rtc::log::S_FN(builder, __VA_ARGS__).Union();\
   }\
 }
 
@@ -56,32 +56,32 @@ IMPL_LDH(Eigen::Quaterniond, LogData_Quaterniond, CreateQuaterniond, q, q.w(), q
 template<>
 struct LogDataHelper<sva::PTransformd>
 {
-  static constexpr mc_control::log::LogData value_type = mc_control::log::LogData_PTransformd;
+  static constexpr mc_rtc::log::LogData value_type = mc_rtc::log::LogData_PTransformd;
 
   static flatbuffers::Offset<void> serialize(flatbuffers::FlatBufferBuilder & builder,
                                              const sva::PTransformd & pt)
   {
     auto q = Eigen::Quaterniond(pt.rotation());
-    auto fb_q = mc_control::log::CreateQuaterniond(builder, q.w(), q.x(), q.y(), q.z());
+    auto fb_q = mc_rtc::log::CreateQuaterniond(builder, q.w(), q.x(), q.y(), q.z());
     const auto & t = pt.translation();
-    auto fb_t = mc_control::log::CreateVector3d(builder, t.x(), t.y(), t.z());
-    return mc_control::log::CreatePTransformd(builder, fb_q, fb_t).Union();
+    auto fb_t = mc_rtc::log::CreateVector3d(builder, t.x(), t.y(), t.z());
+    return mc_rtc::log::CreatePTransformd(builder, fb_q, fb_t).Union();
   }
 };
 
 template<>
 struct LogDataHelper<sva::ForceVecd>
 {
-  static constexpr mc_control::log::LogData value_type = mc_control::log::LogData_ForceVecd;
+  static constexpr mc_rtc::log::LogData value_type = mc_rtc::log::LogData_ForceVecd;
 
   static flatbuffers::Offset<void> serialize(flatbuffers::FlatBufferBuilder & builder,
                                              const sva::ForceVecd & fv)
   {
     const auto & couple = fv.couple();
-    auto fb_couple = mc_control::log::CreateVector3d(builder, couple.x(), couple.y(), couple.z());
+    auto fb_couple = mc_rtc::log::CreateVector3d(builder, couple.x(), couple.y(), couple.z());
     const auto & force = fv.force();
-    auto fb_force = mc_control::log::CreateVector3d(builder, force.x(), force.y(), force.z());
-    return mc_control::log::CreateForceVecd(builder, fb_couple, fb_force).Union();
+    auto fb_force = mc_rtc::log::CreateVector3d(builder, force.x(), force.y(), force.z());
+    return mc_rtc::log::CreateForceVecd(builder, fb_couple, fb_force).Union();
   }
 };
 
@@ -93,7 +93,7 @@ struct LogDataHelper<sva::ForceVecd>
 template<typename T>
 struct is_serializable
 {
-  static constexpr bool value = LogDataHelper<T>::value_type != mc_control::log::LogData_NONE;
+  static constexpr bool value = LogDataHelper<T>::value_type != mc_rtc::log::LogData_NONE;
 };
 
 /** Type-traits for callables that returns a serializable type
@@ -166,12 +166,12 @@ void AddLogData(flatbuffers::FlatBufferBuilder & builder,
 
 /** This struct simplifies the conversion from LogData entries to CSV data.
  *
- * The template parameter is a mc_control::log::LogData enum value.
+ * The template parameter is a mc_rtc::log::LogData enum value.
  *
  * The default implementation does not generate output to the file
  *
  */
-template<mc_control::log::LogData T>
+template<mc_rtc::log::LogData T>
 struct CSVWriterHelper
 {
   static size_t key_size(const void *) { return 0; }
@@ -180,7 +180,7 @@ struct CSVWriterHelper
 };
 
 template<>
-struct CSVWriterHelper<mc_control::log::LogData_Bool>
+struct CSVWriterHelper<mc_rtc::log::LogData_Bool>
 {
   static size_t key_size(const void *) { return 1; }
   static void write_header(const std::string & key, size_t,
@@ -190,13 +190,13 @@ struct CSVWriterHelper<mc_control::log::LogData_Bool>
   }
   static void write_data(const void * data, std::ostream & os)
   {
-    auto b = static_cast<const mc_control::log::Bool*>(data);
+    auto b = static_cast<const mc_rtc::log::Bool*>(data);
     os << b->b();
   }
 };
 
 template<>
-struct CSVWriterHelper<mc_control::log::LogData_Double>
+struct CSVWriterHelper<mc_rtc::log::LogData_Double>
 {
   static size_t key_size(const void *) { return 1; }
   static void write_header(const std::string & key, size_t,
@@ -206,17 +206,17 @@ struct CSVWriterHelper<mc_control::log::LogData_Double>
   }
   static void write_data(const void * data, std::ostream & os)
   {
-    auto d = static_cast<const mc_control::log::Double*>(data);
+    auto d = static_cast<const mc_rtc::log::Double*>(data);
     os << d->d();
   }
 };
 
 template<>
-struct CSVWriterHelper<mc_control::log::LogData_DoubleVector>
+struct CSVWriterHelper<mc_rtc::log::LogData_DoubleVector>
 {
   static size_t key_size(const void * data)
   {
-    auto v = static_cast<const mc_control::log::DoubleVector*>(data);
+    auto v = static_cast<const mc_rtc::log::DoubleVector*>(data);
     return v->v()->size();
   }
   static void write_header(const std::string & key, size_t size,
@@ -230,7 +230,7 @@ struct CSVWriterHelper<mc_control::log::LogData_DoubleVector>
   }
   static void write_data(const void * data, std::ostream & os)
   {
-    auto s_v = static_cast<const mc_control::log::DoubleVector*>(data);
+    auto s_v = static_cast<const mc_rtc::log::DoubleVector*>(data);
     const auto & v = *s_v->v();
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wconversion"
@@ -244,7 +244,7 @@ struct CSVWriterHelper<mc_control::log::LogData_DoubleVector>
 };
 
 template<>
-struct CSVWriterHelper<mc_control::log::LogData_UnsignedInt>
+struct CSVWriterHelper<mc_rtc::log::LogData_UnsignedInt>
 {
   static size_t key_size(const void *) { return 1; }
   static void write_header(const std::string & key, size_t,
@@ -254,13 +254,13 @@ struct CSVWriterHelper<mc_control::log::LogData_UnsignedInt>
   }
   static void write_data(const void * data, std::ostream & os)
   {
-    auto u = static_cast<const mc_control::log::UnsignedInt*>(data);
+    auto u = static_cast<const mc_rtc::log::UnsignedInt*>(data);
     os << u->i();
   }
 };
 
 template<>
-struct CSVWriterHelper<mc_control::log::LogData_String>
+struct CSVWriterHelper<mc_rtc::log::LogData_String>
 {
   static size_t key_size(const void *) { return 1; }
   static void write_header(const std::string & key, size_t,
@@ -270,7 +270,7 @@ struct CSVWriterHelper<mc_control::log::LogData_String>
   }
   static void write_data(const void * data, std::ostream & os)
   {
-    auto s_s = static_cast<const mc_control::log::String*>(data);
+    auto s_s = static_cast<const mc_rtc::log::String*>(data);
     std::string s = s_s->s()->str();
     std::string safe_s;
     safe_s.reserve(s.size());
@@ -291,7 +291,7 @@ struct CSVWriterHelper<mc_control::log::LogData_String>
 };
 
 template<>
-struct CSVWriterHelper<mc_control::log::LogData_Vector3d>
+struct CSVWriterHelper<mc_rtc::log::LogData_Vector3d>
 {
   static size_t key_size(const void *) { return 3; }
   static void write_header(const std::string & key, size_t,
@@ -303,13 +303,13 @@ struct CSVWriterHelper<mc_control::log::LogData_Vector3d>
   }
   static void write_data(const void * data, std::ostream & os)
   {
-    auto v3d = static_cast<const mc_control::log::Vector3d*>(data);
+    auto v3d = static_cast<const mc_rtc::log::Vector3d*>(data);
     os << v3d->x() << ";" << v3d->y() << ";" << v3d->z();
   }
 };
 
 template<>
-struct CSVWriterHelper<mc_control::log::LogData_Quaterniond>
+struct CSVWriterHelper<mc_rtc::log::LogData_Quaterniond>
 {
   static size_t key_size(const void *) { return 4; }
   static void write_header(const std::string & key, size_t,
@@ -322,13 +322,13 @@ struct CSVWriterHelper<mc_control::log::LogData_Quaterniond>
   }
   static void write_data(const void * data, std::ostream & os)
   {
-    auto qd = static_cast<const mc_control::log::Quaterniond*>(data);
+    auto qd = static_cast<const mc_rtc::log::Quaterniond*>(data);
     os << qd->w() << ";" << qd->x() << ";" << qd->y() << ";" << qd->z();
   }
 };
 
 template<>
-struct CSVWriterHelper<mc_control::log::LogData_PTransformd>
+struct CSVWriterHelper<mc_rtc::log::LogData_PTransformd>
 {
   static size_t key_size(const void *) { return 7; }
   static void write_header(const std::string & key, size_t,
@@ -344,7 +344,7 @@ struct CSVWriterHelper<mc_control::log::LogData_PTransformd>
   }
   static void write_data(const void * data, std::ostream & os)
   {
-    auto pt = static_cast<const mc_control::log::PTransformd*>(data);
+    auto pt = static_cast<const mc_rtc::log::PTransformd*>(data);
     auto q = pt->ori();
     auto t = pt->pos();
     os << q->w()
@@ -358,7 +358,7 @@ struct CSVWriterHelper<mc_control::log::LogData_PTransformd>
 };
 
 template<>
-struct CSVWriterHelper<mc_control::log::LogData_ForceVecd>
+struct CSVWriterHelper<mc_rtc::log::LogData_ForceVecd>
 {
   static size_t key_size(const void *) { return 6; }
   static void write_header(const std::string & key, size_t,
@@ -373,7 +373,7 @@ struct CSVWriterHelper<mc_control::log::LogData_ForceVecd>
   }
   static void write_data(const void * data, std::ostream & os)
   {
-    auto fv = static_cast<const mc_control::log::ForceVecd*>(data);
+    auto fv = static_cast<const mc_rtc::log::ForceVecd*>(data);
     auto f = fv->force();
     auto c = fv->couple();
     os << f->x()

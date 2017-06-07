@@ -65,12 +65,12 @@ MCGlobalController::MCGlobalController(const std::string & conf,
   mc_rtc::ROSBridge::set_publisher_timestep(config.publish_timestep);
   if(config.enable_log)
   {
-    logger_.reset(new Logger(config.log_policy, config.log_directory, config.log_template));
+    logger_.reset(new mc_rtc::Logger(config.log_policy, config.log_directory, config.log_template));
   }
   else
   {
     /* Create a logger that has no performance impact */
-    logger_.reset(new Logger(mc_control::Logger::Policy::NON_THREADED, config.log_directory, config.log_template));
+    logger_.reset(new mc_rtc::Logger(mc_rtc::Logger::Policy::NON_THREADED, config.log_directory, config.log_template));
   }
   for(auto & c : controllers)
   {

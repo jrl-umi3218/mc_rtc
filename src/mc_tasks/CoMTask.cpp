@@ -41,7 +41,7 @@ Eigen::Vector3d CoMTask::com()
   return errorT->com();
 }
 
-void CoMTask::addToLogger(mc_control::Logger & logger)
+void CoMTask::addToLogger(mc_rtc::Logger & logger)
 {
   logger.addLogEntry(robots.robot(robot_index_).name() + "_com_target",
                      [this]() -> const Eigen::Vector3d &
@@ -55,7 +55,7 @@ void CoMTask::addToLogger(mc_control::Logger & logger)
                      });
 }
 
-void CoMTask::removeFromLogger(mc_control::Logger & logger)
+void CoMTask::removeFromLogger(mc_rtc::Logger & logger)
 {
   logger.removeLogEntry(robots.robot(robot_index_).name() + "_com_target");
   logger.removeLogEntry(robots.robot(robot_index_).name() + "_com");

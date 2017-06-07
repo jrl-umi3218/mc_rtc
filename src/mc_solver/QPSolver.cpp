@@ -314,7 +314,7 @@ boost::timer::cpu_times QPSolver::solveAndBuildTime()
   return solver.solveAndBuildTime();
 }
 
-void QPSolver::logger(std::shared_ptr<mc_control::Logger> logger)
+void QPSolver::logger(std::shared_ptr<mc_rtc::Logger> logger)
 {
   if(logger_)
   {

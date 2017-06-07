@@ -2,7 +2,7 @@
 #pragma once
 
 #include <mc_control/mc_controller.h>
-#include <mc_control/log/Logger.h>
+#include <mc_rtc/log/Logger.h>
 
 #include <mc_control/api.h>
 
@@ -452,7 +452,7 @@ private:
     double publish_timestep = 0.01;
 
     bool enable_log = true;
-    Logger::Policy log_policy = Logger::Policy::NON_THREADED;
+    mc_rtc::Logger::Policy log_policy = mc_rtc::Logger::Policy::NON_THREADED;
     bfs::path log_directory;
     std::string log_template = "mc-control";
 
@@ -469,7 +469,7 @@ private:
 
   std::shared_ptr<mc_rbdyn::Robots> real_robots = nullptr;
 
-  std::shared_ptr<Logger> logger_;
+  std::shared_ptr<mc_rtc::Logger> logger_;
 
   void publish_robots();
 

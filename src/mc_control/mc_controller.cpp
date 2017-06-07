@@ -208,7 +208,7 @@ bool MCController::read_write_msg(std::string &, std::string &)
   return true;
 }
 
-Logger & MCController::logger()
+mc_rtc::Logger & MCController::logger()
 {
   return *logger_;
 }

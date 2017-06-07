@@ -31,7 +31,7 @@ Eigen::Matrix3d OrientationTask::orientation()
   return errorT->orientation();
 }
 
-void OrientationTask::addToLogger(mc_control::Logger & logger)
+void OrientationTask::addToLogger(mc_rtc::Logger & logger)
 {
   const auto & robot = robots.robot(rIndex);
   logger.addLogEntry(robot.name() + "_" + bodyName + "_orientation_target",
@@ -46,7 +46,7 @@ void OrientationTask::addToLogger(mc_control::Logger & logger)
                      });
 }
 
-void OrientationTask::removeFromLogger(mc_control::Logger & logger)
+void OrientationTask::removeFromLogger(mc_rtc::Logger & logger)
 {
   const auto & robot = robots.robot(rIndex);
   logger.removeLogEntry(robot.name() + "_" + bodyName + "_orientation_target");

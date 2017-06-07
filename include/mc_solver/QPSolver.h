@@ -19,7 +19,7 @@ namespace mc_tasks
   struct MetaTask;
 }
 
-namespace mc_control
+namespace mc_rtc
 {
   struct Logger;
 }
@@ -227,7 +227,7 @@ public:
   boost::timer::cpu_times solveAndBuildTime();
 
   /** Set the logger for this solver instance */
-  void logger(std::shared_ptr<mc_control::Logger> logger);
+  void logger(std::shared_ptr<mc_rtc::Logger> logger);
 private:
   std::shared_ptr<mc_rbdyn::Robots> robots_p;
   double timeStep;
@@ -251,7 +251,7 @@ private:
   void __fillResult();
 
   /** Pointer to the Logger */
-  std::shared_ptr<mc_control::Logger> logger_ = nullptr;
+  std::shared_ptr<mc_rtc::Logger> logger_ = nullptr;
 public:
   /** \deprecated{Default constructor, not made for general usage} */
   QPSolver() {}
