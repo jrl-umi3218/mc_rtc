@@ -31,6 +31,13 @@ public:
                   2.0, double weight = 500);
 
 
+  /*! \brief Constructor
+   *
+   * @see PositionTask
+   *
+   * \param bodyPoint Point on the body being controlled, in body coordinates
+   *
+   */
   PositionTask(const std::string & bodyName, const Eigen::Vector3d& bodyPoint,
                const mc_rbdyn::Robots
                   & robots, unsigned int robotIndex, double stiffness =
