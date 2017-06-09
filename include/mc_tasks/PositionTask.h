@@ -30,6 +30,12 @@ public:
                   & robots, unsigned int robotIndex, double stiffness =
                   2.0, double weight = 500);
 
+
+  PositionTask(const std::string & bodyName, const Eigen::Vector3d& bodyPoint,
+               const mc_rbdyn::Robots
+                  & robots, unsigned int robotIndex, double stiffness =
+                  2.0, double weight = 500);
+
   /*! \brief Reset the task
    *
    * Set the task objective to the current body position
