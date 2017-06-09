@@ -38,4 +38,14 @@ void PositionTask::position(const Eigen::Vector3d & pos)
   errorT->position(pos);
 }
 
+Eigen::Vector3d PositionTask::bodyPoint() const
+{
+  return errorT->bodyPoint();
+}
+
+void PositionTask::bodyPoint(const Eigen::Vector3d& bodyPoint)
+{
+  errorT->bodyPoint(bodyPoint);
+}
+
 }

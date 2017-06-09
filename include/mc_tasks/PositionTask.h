@@ -51,6 +51,18 @@ public:
    *
    */
   void position(const Eigen::Vector3d & pos);
+
+  /*! \brief Get the body point being controlled
+   */
+  Eigen::Vector3d bodyPoint() const;
+
+  /*! \brief Set the body point being controlled
+   *
+   * \param bodyPoint point position in body frame
+   *
+   */
+  void bodyPoint(const Eigen::Vector3d& bodyPoint);
+
 protected:
   std::string bodyName;
   unsigned int bIndex;
