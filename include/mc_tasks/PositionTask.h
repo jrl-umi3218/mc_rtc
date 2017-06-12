@@ -67,7 +67,7 @@ public:
    * \param bodyPoint point position in body frame
    *
    */
-  void bodyPoint(const Eigen::Vector3d& bodyPoint);
+  void bodyPoint(const Eigen::Vector3d & bodyPoint);
 
 protected:
   std::string bodyName;
