@@ -142,6 +142,7 @@ public:
   std::vector<std::vector<double>> & tu();
 
   const std::vector<Flexibility> & flexibility() const;
+  std::vector<Flexibility> & flexibility();
 
   /** @name Joint sensors
    *
@@ -237,6 +238,8 @@ public:
   mc_rbdyn::Surface & copySurface(const std::string & sName, const std::string & name);
 
   const std::map<std::string, mc_rbdyn::SurfacePtr> & surfaces() const;
+
+  std::vector<std::string> availableSurfaces() const;
 
   convex_pair_t & convex(const std::string & cName);
   const convex_pair_t & convex(const std::string & cName) const;

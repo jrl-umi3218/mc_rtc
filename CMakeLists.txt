@@ -32,6 +32,9 @@ if(WIN32)
 add_definitions("-DNOMINMAX")
 endif()
 
+option(PYTHON_BINDING "Generate python binding." ON)
+option(PYTHON_BINDING_USER_INSTALL "Install the Python bindings in user space" OFF)
+
 option(BUILD_CONTROLLER_SAMPLES "Build sample controllers in the project" ON)
 option(DISABLE_TESTS "Disable unit tests" OFF)
 
@@ -150,6 +153,10 @@ if(NOT ${DISABLE_TESTS})
   add_subdirectory(tests)
 endif()
 add_subdirectory(utils)
+
+if(${PYTHON_BINDING})
+ add_subdirectory(binding/python)
+endif()
 
 install(DIRECTORY include ${CMAKE_BINARY_DIR}/include
           DESTINATION ${CMAKE_INSTALL_PREFIX}
