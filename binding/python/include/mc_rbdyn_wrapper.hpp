@@ -129,7 +129,7 @@ PolygonInterpolator * polygonInterpolatorFromTuplePairs(const std::vector<std::p
   std::vector<PolygonInterpolator::tuple_pair_t> tuple_pairs;
   for(const auto & p : pairs)
   {
-    tuple_pairs.push_back({{p.first.first, p.first.second}, {p.second.first, p.second.second}});
+    tuple_pairs.push_back({{{p.first.first, p.first.second}}, {{p.second.first, p.second.second}}});
   }
   return new PolygonInterpolator(tuple_pairs);
 }
