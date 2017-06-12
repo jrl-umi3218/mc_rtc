@@ -370,26 +370,6 @@ then
   . $CATKIN_DIR/devel/setup.bash
 fi
 
-#############################
-#  --  Build mc_cython  --  #
-#############################
-if $WITH_PYTHON_SUPPORT
-then
-    cd $SOURCE_DIR
-    if [ ! -d mc_cython/.git ]
-    then
-      git_clone git@gite.lirmm.fr:multi-contact/mc_cython
-    cd mc_cython
-    else
-      cd mc_cython
-      git_update
-    fi
-    ${SUDO_CMD} pip install -r requirements.txt ${PIP_USER}
-    make -j$BUILD_CORE
-    # Make sure the python prefix exists
-    mkdir -p ${INSTALL_PREFIX}/lib/python`python -c "import sys;print '{0}.{1}'.format(sys.version_info.major, sys.version_info.minor)"`/site-packages
-    ${SUDO_CMD} make install
-fi
 ####################################################
 #  -- Setup VREP, vrep-api-wrapper and mc_vrep --  #
 ####################################################
