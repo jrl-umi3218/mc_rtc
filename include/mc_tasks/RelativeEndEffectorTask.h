@@ -33,10 +33,24 @@ public:
    * \param weight Task weight
    *
    */
-  RelativeEndEffectorTask(const std::string & bodyName, const mc_rbdyn::Robots
-                          & robots, unsigned int robotIndex, unsigned int
-                          relBodyIdx = 0, double stiffness = 10.0, double
-                          weight = 1000.0);
+  RelativeEndEffectorTask(const std::string & bodyName,
+                          const mc_rbdyn::Robots & robots,
+                          unsigned int robotIndex,
+                          unsigned int relBodyIdx = 0,
+                          double stiffness = 10.0, double weight = 1000.0);
+  /*! \brief Constructor with bodyPoint
+   *
+   * \param bodyPoint Point to be controlled in body coordinates
+   *
+   * @see RelativeEndEffectorTask
+   *
+   */
+  RelativeEndEffectorTask(const std::string & bodyName,
+                          const Eigen::Vector3d & bodyPoint,
+                          const mc_rbdyn::Robots & robots,
+                          unsigned int robotIndex,
+                          unsigned int relBodyIdx = 0,
+                          double stiffness = 10.0, double weight = 1000.0);
 
   virtual void reset() override;
 
