@@ -120,6 +120,7 @@ for p in packages:
     data.append('{}.pxd'.format(p))
   if os.path.exists('{}/{}/c_{}.pxd'.format(this_path, p, p)):
     data.append('c_{}.pxd'.format(p))
+  packages_data[p] = data
 
 extensions = cythonize(extensions)
 
