@@ -3,6 +3,7 @@ target_link_libraries(testBSplineTrajectory mc_trajectory)
 
 add_executable(testQuadraticGenerator testQuadraticGenerator.cpp)
 pkg_config_use_dependency(testQuadraticGenerator Tasks)
+pkg_config_use_dependency(testQuadraticGenerator mc_rbdyn_urdf)
 target_link_libraries(testQuadraticGenerator mc_rbdyn)
 
 find_package(Boost REQUIRED COMPONENTS unit_test_framework timer)
