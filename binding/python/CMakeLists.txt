@@ -15,21 +15,21 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with mc_rtc.  If not, see <http://www.gnu.org/licenses/>.
 
-MACRO(GET_MC_RTC_PROPERTY PROPERTY)
-  GET_TARGET_PROPERTY(MC_RTC_${PROPERTY} mc_control ${PROPERTY})
-  IF(NOT MC_RTC_${PROPERTY})
-    SET(MC_RTC_${PROPERTY} "")
-  ENDIF()
-ENDMACRO()
+macro(GET_MC_RTC_PROPERTY PROPERTY)
+  get_target_property(MC_RTC_${PROPERTY} mc_control ${PROPERTY})
+  if(NOT MC_RTC_${PROPERTY})
+    set(MC_RTC_${PROPERTY} "")
+  endif()
+endmacro()
 GET_MC_RTC_PROPERTY(COMPILE_FLAGS)
 GET_MC_RTC_PROPERTY(INCLUDE_DIRECTORIES)
 GET_MC_RTC_PROPERTY(LINK_FLAGS)
 GET_MC_RTC_PROPERTY(LINK_LIBRARIES)
 GET_MC_RTC_PROPERTY(LOCATION)
-CONFIGURE_FILE(setup.in.py ${CMAKE_CURRENT_SOURCE_DIR}/setup.py)
+configure_file(setup.in.py ${CMAKE_CURRENT_SOURCE_DIR}/setup.py)
 
 # Build the bindings locally at build time for test purposes
-ADD_CUSTOM_TARGET(mc_rtc-python-bindings ALL
+add_custom_target(mc_rtc-python-bindings ALL
   COMMAND python setup.py build_ext --inplace
   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
   COMMENT "Generating local mc_rtc Python bindings"
@@ -40,7 +40,7 @@ ADD_CUSTOM_TARGET(mc_rtc-python-bindings ALL
           mc_solver/c_mc_solver.pxd mc_solver/mc_solver.pxd mc_solver/mc_solver.pyx
           mc_tasks/c_mc_tasks.pxd mc_tasks/mc_tasks.pxd mc_tasks/mc_tasks.pyx
 )
-ADD_DEPENDENCIES(mc_rtc-python-bindings mc_control)
+add_dependencies(mc_rtc-python-bindings mc_control)
 
 if(NOT ${DISABLE_TESTS})
   if(NOT DEFINED PYTHON_DEB_ROOT)
@@ -51,22 +51,22 @@ if(NOT ${DISABLE_TESTS})
   endif()
 endif()
 
-SET(PIP_EXTRA_OPTIONS "")
-IF(${PYTHON_BINDING_USER_INSTALL})
-  SET(PIP_EXTRA_OPTIONS "--user")
-ENDIF()
+set(PIP_EXTRA_OPTIONS "")
+if(${PYTHON_BINDING_USER_INSTALL})
+  set(PIP_EXTRA_OPTIONS "--user")
+endif()
 # Install the bindings
-IF(DEFINED PYTHON_DEB_ROOT)
-  ADD_CUSTOM_TARGET(install-mc_rtc-python-bindings
+if(DEFINED PYTHON_DEB_ROOT)
+  add_custom_target(install-mc_rtc-python-bindings
     COMMAND python setup.py install --root=${PYTHON_DEB_ROOT} --install-layout=deb && python3 setup.py install --root=${PYTHON_DEB_ROOT} --install-layout=deb
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     COMMENT "Install mc_rtc Python bindings (Debian package)"
   )
-ELSE()
-  ADD_CUSTOM_TARGET(install-mc_rtc-python-bindings
+else()
+  add_custom_target(install-mc_rtc-python-bindings
     COMMAND pip install . ${PIP_EXTRA_OPTIONS}
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     COMMENT "Install mc_rtc Python bindings"
   )
-ENDIF()
-INSTALL(CODE "EXECUTE_PROCESS(COMMAND ${CMAKE_MAKE_PROGRAM} install-mc_rtc-python-bindings)")
+endif()
+install(CODE "EXECUTE_PROCESS(COMMAND ${CMAKE_MAKE_PROGRAM} install-mc_rtc-python-bindings)")

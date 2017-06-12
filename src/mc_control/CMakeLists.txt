@@ -30,3 +30,7 @@ endforeach()
 
 add_controller("halfsitpose" "mc_halfsitpose_controller.cpp"
   "mc_halfsitpose_controller.h")
+
+if(${PYTHON_BINDING})
+  add_subdirectory(python)
+endif()
