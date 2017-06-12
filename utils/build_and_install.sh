@@ -246,7 +246,6 @@ build_git_dependency()
   mkdir -p $git_dep/build
   cd "$git_dep/build"
   cmake .. -DCMAKE_INSTALL_PREFIX:STRING="$INSTALL_PREFIX" \
-           -DPYTHON_BINDING:BOOL=OFF \
            -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
            ${CMAKE_ADDITIONAL_OPTIONS}
   make -j${BUILD_CORE}
