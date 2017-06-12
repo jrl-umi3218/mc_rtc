@@ -191,7 +191,7 @@ else
   if [ $OS = Ubuntu ]
   then
     yaml_to_env "APT_DEPENDENCIES" $gitlab_ci_yml
-    APT_DEPENDENCIES=`echo $APT_DEPENDENCIES|sed -e's/libspacevecalg-dev//'|sed -e's/librbdyn-dev//'|sed -e's/libeigen-qld-dev//'|sed -e's/libsch-core-dev//'`
+    APT_DEPENDENCIES=`echo $APT_DEPENDENCIES|sed -e's/libspacevecalg-dev//'|sed -e's/librbdyn-dev//'|sed -e's/libeigen-qld-dev//'|sed -e's/libsch-core-dev//'|sed -e's/libtasks-qld-dev//'|sed -e's/libmc-rbdyn-urdf-dev//'|sed -e's/python-tasks//'|sed -e's/python-mc-rbdyn-urdf//'`
     APT_DEPENDENCIES="cmake build-essential gfortran doxygen libeigen3-dev python-pip $APT_DEPENDENCIES"
     if $INSTALL_APT_DEPENDENCIES
     then
