@@ -26,9 +26,21 @@ public:
    * \param weight Task weight
    *
    */
-  PositionTask(const std::string & bodyName, const mc_rbdyn::Robots
-                  & robots, unsigned int robotIndex, double stiffness =
-                  2.0, double weight = 500);
+  PositionTask(const std::string & bodyName, const mc_rbdyn::Robots & robots,
+               unsigned int robotIndex, double stiffness = 2.0,
+               double weight = 500);
+
+
+  /*! \brief Constructor
+   *
+   * @see PositionTask
+   *
+   * \param bodyPoint Point on the body being controlled, in body coordinates
+   *
+   */
+  PositionTask(const std::string & bodyName, const Eigen::Vector3d& bodyPoint,
+               const mc_rbdyn::Robots & robots, unsigned int robotIndex,
+               double stiffness = 2.0, double weight = 500);
 
   /*! \brief Reset the task
    *
@@ -45,6 +57,18 @@ public:
    *
    */
   void position(const Eigen::Vector3d & pos);
+
+  /*! \brief Get the body point being controlled
+   */
+  Eigen::Vector3d bodyPoint() const;
+
+  /*! \brief Set the body point being controlled
+   *
+   * \param bodyPoint point position in body frame
+   *
+   */
+  void bodyPoint(const Eigen::Vector3d & bodyPoint);
+
 protected:
   std::string bodyName;
   unsigned int bIndex;

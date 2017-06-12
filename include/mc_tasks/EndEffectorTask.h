@@ -28,9 +28,21 @@ public:
    * \param weight Task weight
    *
    */
-  EndEffectorTask(const std::string & bodyName, const mc_rbdyn::Robots &
-                  robots, unsigned int robotIndex, double stiffness = 2.0,
-                  double weight = 1000.0);
+  EndEffectorTask(const std::string & bodyName,
+                  const mc_rbdyn::Robots & robots, unsigned int robotIndex,
+                  double stiffness = 2.0, double weight = 1000.0);
+
+  /*! \brief Constructor with bodyPoint
+   *
+   * \param bodyPoint Point to be controlled in body coordinates
+   *
+   * @see EndEffectorTask
+   *
+   */
+  EndEffectorTask(const std::string & bodyName,
+                  const Eigen::Vector3d & bodyPoint,
+                  const mc_rbdyn::Robots & robots, unsigned int robotIndex,
+                  double stiffness = 2.0, double weight = 1000.0);
 
   /*! \brief Reset the task
    *

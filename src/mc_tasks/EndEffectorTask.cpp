@@ -4,6 +4,11 @@ namespace mc_tasks
 {
 
 EndEffectorTask::EndEffectorTask(const std::string & bodyName, const mc_rbdyn::Robots & robots, unsigned int robotIndex, double stiffness, double weight)
+: EndEffectorTask(bodyName, Eigen::Vector3d::Zero(), robots, robotIndex, stiffness, weight)
+{
+}
+
+EndEffectorTask::EndEffectorTask(const std::string & bodyName, const Eigen::Vector3d & bodyPoint, const mc_rbdyn::Robots & robots, unsigned int robotIndex, double stiffness, double weight)
 : robots(robots), robotIndex(robotIndex),
   bodyName(bodyName)
 {
@@ -13,7 +18,7 @@ EndEffectorTask::EndEffectorTask(const std::string & bodyName, const mc_rbdyn::R
 
   curTransform = bpw;
 
-  positionTask.reset(new mc_tasks::PositionTask(bodyName, robots,
+  positionTask.reset(new mc_tasks::PositionTask(bodyName, bodyPoint, robots,
                                                 robotIndex, stiffness,
                                                 weight));
   orientationTask.reset(new mc_tasks::OrientationTask(bodyName, robots,

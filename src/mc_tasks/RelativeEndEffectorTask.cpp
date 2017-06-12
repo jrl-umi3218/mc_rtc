@@ -4,7 +4,12 @@ namespace mc_tasks
 {
 
 RelativeEndEffectorTask::RelativeEndEffectorTask(const std::string & bodyName, const mc_rbdyn::Robots & robots, unsigned int robotIndex, unsigned int relBodyIdx, double stiffness, double weight)
-: EndEffectorTask(bodyName, robots, robotIndex, stiffness, weight),
+: RelativeEndEffectorTask(bodyName, Eigen::Vector3d::Zero(), robots, robotIndex, relBodyIdx, stiffness, weight)
+{
+}
+
+RelativeEndEffectorTask::RelativeEndEffectorTask(const std::string & bodyName, const Eigen::Vector3d & bodyPoint, const mc_rbdyn::Robots & robots, unsigned int robotIndex, unsigned int relBodyIdx, double stiffness, double weight)
+: EndEffectorTask(bodyName, bodyPoint, robots, robotIndex, stiffness, weight),
   relBodyIdx(relBodyIdx)
 {
   reset();
