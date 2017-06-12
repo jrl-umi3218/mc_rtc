@@ -100,6 +100,7 @@ package_trusty_amd64_noros:
     name: "mc_rtc_trusty_amd64"
     paths:
       - "*.deb"
+    expire_in: '30d'
   tags:
     - GCC
 
@@ -115,6 +116,7 @@ package_trusty_amd64_ros:
     name: "mc_rtc_trusty_amd64"
     paths:
       - "*.deb"
+    expire_in: '30d'
   tags:
     - GCC
 
@@ -131,6 +133,7 @@ package_trusty_i386_noros:
     name: "mc_rtc_trusty_i386"
     paths:
       - "*.deb"
+    expire_in: '30d'
   tags:
     - GCC
 
@@ -146,6 +149,7 @@ package_trusty_i386_ros:
     name: "mc_rtc_trusty_i386"
     paths:
       - "*.deb"
+    expire_in: '30d'
   tags:
     - GCC
 
@@ -162,6 +166,7 @@ package_xenial_amd64_noros:
     name: "mc_rtc_xenial_amd64"
     paths:
       - "*.deb"
+    expire_in: '30d'
   tags:
     - GCC
 
@@ -178,6 +183,7 @@ package_xenial_amd64_ros:
     name: "mc_rtc_xenial_amd64"
     paths:
       - "*.deb"
+    expire_in: '30d'
   tags:
     - GCC
 
@@ -194,6 +200,7 @@ package_xenial_i386_noros:
     name: "mc_rtc_xenial_i386"
     paths:
       - "*.deb"
+    expire_in: '30d'
   tags:
     - GCC
 
@@ -210,6 +217,7 @@ package_xenial_i386_ros:
     name: "mc_rtc_xenial_i386"
     paths:
       - "*.deb"
+    expire_in: '30d'
   tags:
     - GCC
 
