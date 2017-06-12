@@ -12,7 +12,7 @@ Building
 
 The following packages are required to build mc_rtc:
 - `mc_non_ros` (see the [installation wiki](https://gite.lirmm.fr/multi-contact/installation_wiki/wikis/home) for more information)
-- [mc_rbdyn_urdf_cpp](https://gite.lirmm.fr/multi-contact/mc_rbdyn_urdf_cpp)
+- [mc_rbdyn_urdf](https://github.com/jrl-umi3218/mc_rbdyn_urdf)
 - [jsoncpp](https://github.com/open-source-parsers/jsoncpp) (or `libjsoncpp-dev` on debian-like systems)
 - [geos](https://github.com/libgeos/libgeos) (or `libgeos++-dev` on debian-like systems)o
 

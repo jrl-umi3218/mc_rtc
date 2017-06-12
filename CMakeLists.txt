@@ -48,7 +48,7 @@ endif()
 find_package(Boost REQUIRED COMPONENTS system filesystem thread date_time timer regex)
 
 add_required_dependency("Tasks" "Tasks_d")
-add_required_dependency("mc_rbdyn_urdf_cpp" "mc_rbdyn_urdf_cpp_d")
+add_required_dependency("mc_rbdyn_urdf" "mc_rbdyn_urdf_d")
 
 # At this point, this dependency is used to get access to PD gains setting on HRP robots
 add_optional_dependency(hrpsys-base)
