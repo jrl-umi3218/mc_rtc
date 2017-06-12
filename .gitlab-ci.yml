@@ -22,7 +22,7 @@ build_debian:
   stage: build
   script:
     - export APT_DEPENDENCIES="cython python-pip python-numpy python-nose libtinyxml2-dev libboost-all-dev libjsoncpp-dev libgeos++-dev libgeos-dev qhull-bin libqhull-dev libltdl-dev"
-    - export GIT_DEPENDENCIES="jrl-umi3218/Eigen3ToPython jrl-umi3218/SpaceVecAlg jrl-umi3218/eigen-qld git@gite.lirmm.fr:multi-contact/eigen-lssol.git jrl-umi3218/sch-core jrl-umi3218/RBDyn jrl-umi3218/Tasks git@gite.lirmm.fr:multi-contact/mc_rbdyn_urdf_cpp.git"
+    - export GIT_DEPENDENCIES="jrl-umi3218/Eigen3ToPython jrl-umi3218/SpaceVecAlg jrl-umi3218/eigen-qld git@gite.lirmm.fr:multi-contact/eigen-lssol.git jrl-umi3218/sch-core jrl-umi3218/sch-core-python jrl-umi3218/RBDyn jrl-umi3218/Tasks git@gite.lirmm.fr:multi-contact/mc_rbdyn_urdf_cpp.git"
     - export MASTER_PPA=""
     - export ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_ros#karim_drc git@gite.lirmm.fr:mc-hrp2/hrp2_drc#master git@gite.lirmm.fr:mc-hrp4/hrp4#master"
     - mkdir -p /tmp/_ci/catkin_dep_ws/src
