@@ -40,7 +40,10 @@ for b in packages:
   with open('{}/{}/__init__.py'.format(this_path, b), 'w') as fd:
     fd.write('from .{} import *\n'.format(b))
 
+src_dir = '@CMAKE_CURRENT_SOURCE_DIR@/../../src/'
 src_files = []
+src_files += [ src_dir + f for f in '@mc_control_SRC@;@mc_rbdyn_SRC@;@mc_solver_SRC@;@mc_tasks_SRC@'.split(';') if len(f) ]
+src_files += [ src_dir + f for f in '@mc_control_HDR@;@mc_rbdyn_HDR@;@mc_solver_HDR@;@mc_tasks_HDR@'.split(';') if len(f) ]
 for b in packages:
   b_path = '{}/{}/'.format(this_path, b)
   suffixes = [ ('c_', '.pxd'), ('', '.pyx', ('', '.pxd'), '../include/', '.hpp') ]
