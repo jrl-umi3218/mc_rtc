@@ -72,3 +72,10 @@ controller_test_run(TestCoMTaskController 4001)
 controller_test_run(TestPositionTaskController 5000)
 controller_test_run(TestOrientationTaskController 6001)
 controller_test_run(TestEndEffectorTaskController 4001)
+
+# Test Python bindings
+if(${PYTHON_BINDING})
+  set(TEST_CONTROLLER_NAME "PythonController#test_python.TestPythonController")
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/mc_rtc.conf.in ${CMAKE_CURRENT_BINARY_DIR}/TestPythonController/mc_rtc-TestPythonController.conf)
+  add_test(NAME "TestPythonController" COMMAND test_controller_ticker --run_test=RUN TestPythonController/mc_rtc-TestPythonController.conf 400 "" "${CMAKE_CURRENT_SOURCE_DIR}/test_python")
+endif()
