@@ -3,3 +3,5 @@
 binding/python/*/*.cpp
 binding/python/*/*.so
 binding/python/*/__init__.py
+binding/python/*/*.h
+binding/python/setup.py
