@@ -452,70 +452,97 @@ cdef Robots RobotsFromRef(c_mc_rbdyn.Robots & p):
     return RobotsFromRawPtr(&p)
 
 cdef class Robot(object):
+  def __is_valid(self):
+    assert self.impl, "This Robot instance has not been initialized correctly"
   def __cinit__(self, *args):
-    pass
+    if len(args):
+      raise TypeError("You cannot create a stand-alone Robot, please go through a Robots")
+    self.impl = NULL
   def name(self):
+    self.__is_valid()
     return self.impl.name()
   def hasJoint(self, name):
+    self.__is_valid()
     return self.impl.hasJoint(name)
   def hasBody(self, name):
+    self.__is_valid()
     return self.impl.hasBody(name)
   def jointIndexByName(self, name):
+    self.__is_valid()
     return self.impl.jointIndexByName(name)
   def bodyIndexByName(self, name):
+    self.__is_valid()
     return self.impl.bodyIndexByName(name)
 
   def forceSensor(self, name):
+    self.__is_valid()
     return ForceSensorFromRef(self.impl.forceSensor(name))
   def hasForceSensor(self, name):
+    self.__is_valid()
     return self.impl.hasForceSensor(name)
   def bodyForceSensor(self, name):
+    self.__is_valid()
     return ForceSensorFromRef(self.impl.bodyForceSensor(name))
   def bodyHasForceSensor(self, name):
+    self.__is_valid()
     return self.impl.bodyHasForceSensor(name)
 
   def bodySensor(self, name = None):
+    self.__is_valid()
     if name is None:
       return BodySensorFromRef(self.impl.bodySensor())
     else:
       return BodySensorFromRef(self.impl.bodySensor(name))
   def hasBodySensor(self, name):
+    self.__is_valid()
     return self.impl.hasBodySensor(name)
   def bodyHasBodySensor(self, name):
+    self.__is_valid()
     return self.impl.bodyHasBodySensor(name)
   def bodyBodySensor(self, name):
+    self.__is_valid()
     return BodySensorFromRef(self.impl.bodyBodySensor(name))
 
   property mb:
     def __get__(self):
-        return rbdyn.MultiBodyFromC(self.impl.mb(), False)
+      self.__is_valid()
+      return rbdyn.MultiBodyFromC(self.impl.mb(), False)
   property mbc:
     def __get__(self):
-        return rbdyn.MultiBodyConfigFromC(self.impl.mbc(), False)
+      self.__is_valid()
+      return rbdyn.MultiBodyConfigFromC(self.impl.mbc(), False)
   property mbg:
     def __get__(self):
-        return rbdyn.MultiBodyGraphFromC(self.impl.mbg(), False)
+      self.__is_valid()
+      return rbdyn.MultiBodyGraphFromC(self.impl.mbg(), False)
 
   property ql:
     def __get__(self):
+      self.__is_valid()
       return rbdyn.DoubleVectorVectorWrapperFromC(self.impl.ql(), self)
   property qu:
     def __get__(self):
+      self.__is_valid()
       return rbdyn.DoubleVectorVectorWrapperFromC(self.impl.qu(), self)
   property vl:
     def __get__(self):
+      self.__is_valid()
       return rbdyn.DoubleVectorVectorWrapperFromC(self.impl.vl(), self)
   property vu:
     def __get__(self):
+      self.__is_valid()
       return rbdyn.DoubleVectorVectorWrapperFromC(self.impl.vu(), self)
   property tl:
     def __get__(self):
+      self.__is_valid()
       return rbdyn.DoubleVectorVectorWrapperFromC(self.impl.tl(), self)
   property tu:
     def __get__(self):
+      self.__is_valid()
       return rbdyn.DoubleVectorVectorWrapperFromC(self.impl.tu(), self)
 
   def flexibility(self):
+    self.__is_valid()
     end = deref(self.impl).flexibility().end()
     it = deref(self.impl).flexibility().begin()
     ret = []
@@ -525,34 +552,44 @@ cdef class Robot(object):
     return ret
 
   def hasSurface(self, name):
+    self.__is_valid()
     return self.impl.hasSurface(name)
   def surface(self, name):
+    self.__is_valid()
     return SurfaceFromC(self.impl.surface(name))
   def surfaces(self):
+    self.__is_valid()
     availableSurfaces = self.impl.availableSurfaces()
     ret = {}
     for s in availableSurfaces:
       ret[s] = SurfaceFromC(self.impl.surface(s))
     return ret
   def copySurface(self, sName, name):
+    self.__is_valid()
     return SurfaceFromC(self.impl.copySurface(sName, name))
 
   def convex(self, name):
+    self.__is_valid()
     return (self.impl.convex(name).first,sch.S_PolyhedronFromPtr(self.impl.convex(name).second))
 
   def bodyTransform(self, bName):
+    self.__is_valid()
     return sva.PTransformdFromC(self.impl.bodyTransform(bName), False)
 
   def collisionTransform(self, bName):
+    self.__is_valid()
     return sva.PTransformdFromC(self.impl.collisionTransform(bName), False)
 
   def fixSurfaces(self):
+    self.__is_valid()
     self.impl.fixSurfaces()
 
   def loadRSDFFromDir(self, surfaceDir):
+    self.__is_valid()
     self.impl.loadRSDFFromDir(surfaceDir)
 
   def stance(self):
+    self.__is_valid()
     return self.impl.stance()
 
 cdef Robot RobotFromC(const c_mc_rbdyn.Robot & robot):
