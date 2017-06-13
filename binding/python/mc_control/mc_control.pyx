@@ -120,6 +120,7 @@ cdef string python_to_log_data_callback(void * f) with gil:
 cdef class MCPythonController(MCController):
   def __dealloc__(self):
     del self.impl
+    self.impl = NULL
   def __cinit__(self, robot_modules, double dt):
     cdef mc_rbdyn.RobotModuleVector rmv = mc_rbdyn.RobotModuleVector(robot_modules)
     self.impl = self.base = new c_mc_control.MCPythonController(rmv.v, dt)

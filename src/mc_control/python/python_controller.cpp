@@ -14,7 +14,9 @@ extern "C"
   std::vector<std::string> MC_RTC_CONTROLLER() { return {"PythonController"}; }
   void destroy(mc_control::MCController * ptr)
   {
-    delete ptr;
+    MCControllerObject * obj = static_cast<MCControllerObject*>(obj);
+    delete obj;
+    auto gstate = PyGILState_Ensure();
     Py_Finalize();
   }
   mc_control::MCController * create(const std::string &, const std::string & controller_name, const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const mc_control::Configuration &)
