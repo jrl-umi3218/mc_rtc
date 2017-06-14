@@ -26,10 +26,6 @@ class TestPythonController(mc_control.MCPythonController):
     self.positionTask.reset()
     self.positionTask.position(self.positionTask.position() + eigen.Vector3d(0.1, 0, 0))
     self.set_joint_pos(self.hj1_name, self.hj1_q)
-  def log_header_callback(self):
-    return ";PythonCustomLogValue;ASecondValue"
-  def log_data_callback(self):
-    return ";{0};42.0".format(self.robot().mbc.q[self.hj1_index][0])
   @staticmethod
   def create(robot, dt):
     env = mc_rbdyn.get_robot_module("env", mc_rtc.MC_ENV_DESCRIPTION_PATH, "ground")

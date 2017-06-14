@@ -31,7 +31,6 @@ cdef extern from "<mc_control/mc_controller.h>" namespace "mc_control":
     cppbool play_next_stance()
     cppbool read_msg(string)
     cppbool read_write_msg(string, string)
-    # FIXME log_header/log_data?
     vector[string] supported_robots()
 
     double timeStep
@@ -59,12 +58,8 @@ cdef extern from "mc_control_wrapper.hpp" namespace "mc_control":
   ctypedef void (*reset_callback_t)(const ControllerResetData&, void*)
   ctypedef cppbool (*read_msg_callback_t)(string, void*)
   ctypedef PythonRWCallback (*read_write_msg_callback_t)(string, void*)
-  ctypedef string (*log_header_callback_t)(void*)
-  ctypedef string (*log_data_callback_t)(void*)
 
   void set_run_callback(MCPythonController&, run_callback_t fn, void*)
   void set_reset_callback(MCPythonController&, reset_callback_t fn, void *)
   void set_read_msg_callback(MCPythonController&, read_msg_callback_t, void*)
   void set_read_write_msg_callback(MCPythonController&, read_write_msg_callback_t, void*)
-  void set_log_header_callback(MCPythonController&, log_header_callback_t, void*)
-  void set_log_data_callback(MCPythonController&, log_data_callback_t, void*)
