@@ -4,7 +4,7 @@ macro(add_robot robot_base)
   add_library(${robot_base} SHARED ${robot_SRC} ${robot_HDR})
   set_target_properties(${robot_base} PROPERTIES COMPILE_FLAGS "-DMC_ROBOTS_EXPORTS" PREFIX "")
   target_link_libraries(${robot_base} mc_rbdyn ${Boost_LIBRARIES})
-  pkg_config_use_dependency(${robot_base} mc_rbdyn_urdf_cpp)
+  pkg_config_use_dependency(${robot_base} mc_rbdyn_urdf)
   install(TARGETS ${robot_base} DESTINATION ${MC_ROBOTS_INSTALL_PREFIX})
 endmacro()
 

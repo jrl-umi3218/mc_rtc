@@ -2,6 +2,8 @@
 
 #include <mc_control/mc_global_controller.h>
 
+#include <stdlib.h>
+
 BOOST_AUTO_TEST_CASE(CONSTRUCTION_FAILURE)
 {
   auto argc = boost::unit_test::framework::master_test_suite().argc;
@@ -19,6 +21,21 @@ BOOST_AUTO_TEST_CASE(RUN)
   std::string conf = argv[1];
   unsigned int nrIter = std::atoi(argv[2]);
   std::string nextController = argc > 3 ? argv[3] : "";
+  std::string pythonPath = argc > 4 ? argv[4] : "";
+  if(pythonPath != "")
+  {
+    std::string PYTHONPATH = std::string(getenv("PYTHONPATH"));
+    std::stringstream ss;
+    ss << "PYTHONPATH=" << PYTHONPATH;
+    if(PYTHONPATH.size() && PYTHONPATH[PYTHONPATH.size() - 1] != ':')
+    {
+      ss << ":";
+    }
+    ss << pythonPath;
+    char * new_PYTHONPATH = new char[ss.str().size() + 1];
+    strncpy(new_PYTHONPATH, ss.str().c_str(), ss.str().size());
+    putenv(new_PYTHONPATH);
+  }
   BOOST_CHECK(nrIter > 0);
   mc_control::MCGlobalController controller(conf);
   // Simple init

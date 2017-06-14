@@ -32,6 +32,9 @@ if(WIN32)
 add_definitions("-DNOMINMAX")
 endif()
 
+option(PYTHON_BINDING "Generate python binding." ON)
+option(PYTHON_BINDING_USER_INSTALL "Install the Python bindings in user space" OFF)
+
 option(BUILD_CONTROLLER_SAMPLES "Build sample controllers in the project" ON)
 option(DISABLE_TESTS "Disable unit tests" OFF)
 
@@ -45,7 +48,7 @@ endif()
 find_package(Boost REQUIRED COMPONENTS system filesystem thread date_time timer regex)
 
 add_required_dependency("Tasks" "Tasks_d")
-add_required_dependency("mc_rbdyn_urdf_cpp" "mc_rbdyn_urdf_cpp_d")
+add_required_dependency("mc_rbdyn_urdf" "mc_rbdyn_urdf_d")
 
 # At this point, this dependency is used to get access to PD gains setting on HRP robots
 add_optional_dependency(hrpsys-base)
@@ -150,6 +153,10 @@ if(NOT ${DISABLE_TESTS})
   add_subdirectory(tests)
 endif()
 add_subdirectory(utils)
+
+if(${PYTHON_BINDING})
+ add_subdirectory(binding/python)
+endif()
 
 install(DIRECTORY include ${CMAKE_BINARY_DIR}/include
           DESTINATION ${CMAKE_INSTALL_PREFIX}

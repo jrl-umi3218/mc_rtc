@@ -3,6 +3,7 @@ target_link_libraries(testBSplineTrajectory mc_trajectory)
 
 add_executable(testQuadraticGenerator testQuadraticGenerator.cpp)
 pkg_config_use_dependency(testQuadraticGenerator Tasks)
+pkg_config_use_dependency(testQuadraticGenerator mc_rbdyn_urdf)
 target_link_libraries(testQuadraticGenerator mc_rbdyn)
 
 find_package(Boost REQUIRED COMPONENTS unit_test_framework timer)
@@ -23,7 +24,7 @@ ENDMACRO()
 mc_rtc_test(testConfiguration mc_rtc_utils)
 
 add_executable(test_controller_ticker test_controller_ticker.cpp)
-pkg_config_use_dependency(test_controller_ticker mc_rbdyn_urdf_cpp)
+pkg_config_use_dependency(test_controller_ticker mc_rbdyn_urdf)
 target_link_libraries(test_controller_ticker ${Boost_LIBRARIES} mc_control)
 pkg_config_use_dependency(test_controller_ticker Tasks)
 # Adding a project configuration file (for MSVC only)

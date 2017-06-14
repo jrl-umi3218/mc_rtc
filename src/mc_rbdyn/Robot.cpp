@@ -228,6 +228,11 @@ const std::vector<Flexibility> & Robot::flexibility() const
   return flexibility_;
 }
 
+std::vector<Flexibility> & Robot::flexibility()
+{
+  return flexibility_;
+}
+
 const std::vector<double> & Robot::encoderValues() const
 {
   return encoderValues_;
@@ -315,6 +320,17 @@ const mc_rbdyn::Surface & Robot::surface(const std::string & sName) const
 const std::map<std::string, SurfacePtr> & Robot::surfaces() const
 {
   return surfaces_;
+}
+
+std::vector<std::string> Robot::availableSurfaces() const
+{
+  std::vector<std::string> ret;
+  ret.reserve(surfaces_.size());
+  for(const auto & s : surfaces_)
+  {
+    ret.push_back(s.first);
+  }
+  return ret;
 }
 
 Robot::convex_pair_t & Robot::convex(const std::string & cName)

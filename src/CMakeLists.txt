@@ -35,6 +35,7 @@ mc_rbdyn/RobotLoader.cpp
 mc_rbdyn/Collision.cpp
 mc_rbdyn/ForceSensor.cpp
 )
+set(mc_rbdyn_SRC ${mc_rbdyn_SRC} PARENT_SCOPE)
 
 set(mc_rbdyn_HDR
 ../include/mc_rbdyn/api.h
@@ -63,10 +64,11 @@ set(mc_rbdyn_HDR
 ../include/mc_rbdyn/Base.h
 ../include/mc_rbdyn/BodySensor.h
 )
+set(mc_rbdyn_HDR ${mc_rbdyn_HDR} PARENT_SCOPE)
 
 add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC} ${mc_rbdyn_HDR})
 set_target_properties(mc_rbdyn PROPERTIES COMPILE_FLAGS "-DMC_RBDYN_EXPORTS")
-pkg_config_use_dependency(mc_rbdyn mc_rbdyn_urdf_cpp)
+pkg_config_use_dependency(mc_rbdyn mc_rbdyn_urdf)
 pkg_config_use_dependency(mc_rbdyn Tasks)
 target_link_libraries(mc_rbdyn ${Boost_LIBRARIES} ${GEOS_LIBRARY} mc_rtc_loader mc_rtc_utils)
 if(NOT WIN32)
@@ -86,6 +88,7 @@ mc_solver/DynamicsConstraint.cpp
 mc_solver/KinematicsConstraint.cpp
 mc_solver/QPSolver.cpp
 )
+set(mc_solver_SRC ${mc_solver_SRC} PARENT_SCOPE)
 
 set(mc_solver_HDR
 ../include/mc_solver/api.h
@@ -101,6 +104,7 @@ set(mc_solver_HDR
 ../include/mc_solver/KinematicsConstraint.h
 ../include/mc_solver/QPSolver.h
 )
+set(mc_solver_HDR ${mc_solver_HDR} PARENT_SCOPE)
 
 add_library(mc_solver SHARED ${mc_solver_SRC} ${mc_solver_HDR})
 set_target_properties(mc_solver PROPERTIES COMPILE_FLAGS "-DMC_SOLVER_EXPORTS")
@@ -140,6 +144,7 @@ mc_tasks/ComplianceTask.cpp
 mc_tasks/GazeTask.cpp
 mc_tasks/PositionBasedVisServoTask.cpp
 )
+set(mc_tasks_SRC ${mc_tasks_SRC} PARENT_SCOPE)
 
 set(mc_tasks_HDR
 ../include/mc_tasks/AddRemoveContactTask.h
@@ -162,12 +167,13 @@ set(mc_tasks_HDR
 ../include/mc_tasks/GazeTask.h
 ../include/mc_tasks/PositionBasedVisServoTask.h
 )
+set(mc_tasks_HDR ${mc_tasks_HDR} PARENT_SCOPE)
 
 add_library(mc_tasks SHARED ${mc_tasks_SRC} ${mc_tasks_HDR})
 set_target_properties(mc_tasks PROPERTIES COMPILE_FLAGS "-DMC_TASKS_EXPORTS")
 target_link_libraries(mc_tasks mc_solver mc_rbdyn mc_trajectory)
 target_link_libraries(mc_tasks ${Boost_LIBRARIES})
-pkg_config_use_dependency(mc_tasks mc_rbdyn_urdf_cpp)
+pkg_config_use_dependency(mc_tasks mc_rbdyn_urdf)
 pkg_config_use_dependency(mc_tasks Tasks)
 pkg_config_append_libs(mc_tasks)
 
@@ -193,6 +199,8 @@ mc_control/mc_global_controller_configuration.cpp
 mc_control/mc_global_controller_logger.cpp
 mc_control/mc_global_controller_services.cpp
 )
+set(mc_control_SRC ${mc_control_SRC} PARENT_SCOPE)
+
 set(mc_control_HDR
 ../include/mc_control/api.h
 ../include/mc_control/Configuration.h
@@ -204,6 +212,8 @@ set(mc_control_HDR
 ../include/mc_control/SimulationContactSensor.h
 ../include/mc_control/mc_global_controller.h
 )
+set(mc_control_HDR ${mc_control_HDR} PARENT_SCOPE)
+
 add_library(mc_control SHARED ${mc_control_SRC} ${mc_control_HDR})
 set_target_properties(mc_control PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_EXPORTS")
 target_link_libraries(mc_control mc_tasks mc_solver mc_rtc_ros mc_rtc_loader mc_rtc_utils)
@@ -211,7 +221,7 @@ if(${HRPSYS_BASE_FOUND})
   target_link_libraries(mc_control hrpIo)
 endif()
 target_link_libraries(mc_control ${Boost_LIBRARIES})
-pkg_config_use_dependency(mc_control mc_rbdyn_urdf_cpp)
+pkg_config_use_dependency(mc_control mc_rbdyn_urdf)
 pkg_config_use_dependency(mc_control Tasks)
 pkg_config_append_libs(mc_control)
 

@@ -1,0 +1,492 @@
+from eigen.c_eigen cimport *
+from sva.c_sva cimport *
+from rbdyn.c_rbdyn cimport *
+cimport sch.c_sch as sch
+cimport tasks.qp.c_qp
+
+from libcpp.map cimport map as cppmap
+from libcpp.pair cimport pair
+from libcpp.string cimport string
+from libcpp.vector cimport vector
+from libcpp cimport bool as cppbool
+
+cdef extern from "<memory>" namespace "std" nogil:
+  cdef cppclass shared_ptr[T]:
+    shared_ptr()
+    shared_ptr(T*)
+    T* get()
+    T& operator*()
+
+cdef extern from "<mc_rbdyn/Collision.h>" namespace "mc_rbdyn":
+  cdef cppclass Collision:
+    Collision()
+    Collision(const string&, const string&, double, double, double)
+    Collision(const Collision&)
+
+    cppbool isNone()
+
+    string body1
+    string body2
+    double iDist
+    double sDist
+    double damping
+
+    cppbool operator==(const Collision&)
+    cppbool operator!=(const Collision&)
+
+cdef extern from "<mc_rbdyn/BodySensor.h>" namespace "mc_rbdyn":
+  cdef cppclass BodySensor:
+    BodySensor()
+
+    string name()
+    string parentBody()
+    const PTransformd & X_b_s()
+    const Vector3d position()
+    const Quaterniond orientation()
+    const Vector3d linearVelocity()
+    const Vector3d angularVelocity()
+    const Vector3d acceleration()
+
+cdef extern from "<mc_rbdyn/Flexibility.h>" namespace "mc_rbdyn":
+  cdef cppclass Flexibility:
+    Flexibility()
+    Flexibility(const Flexibility&)
+    string jointName
+    double K
+    double C
+    double O
+
+cdef extern from "<mc_rbdyn/ForceSensor.h>" namespace "mc_rbdyn":
+  cdef cppclass ForceSensor:
+    ForceSensor()
+    ForceSensor(const string&, const string&, const PTransformd&)
+    ForceSensor(const ForceSensor&)
+
+    string name()
+    string parentBody()
+    const PTransformd & X_p_f()
+    const ForceVecd & wrench()
+    double mass()
+    ForceVecd removeGravity(const Robot &)
+
+cdef extern from "<mc_rbdyn/Springs.h>" namespace "mc_rbdyn":
+  cdef cppclass Springs:
+    Springs()
+    Springs(const Springs&)
+    vector[string] springsBodies
+    vector[string] afterSpringsBodies
+    vector[vector[string]] springsJoints
+
+cdef extern from "<mc_rbdyn/Base.h>" namespace "mc_rbdyn":
+  cdef cppclass Base:
+    Base()
+    Base(const Base&)
+    string baseName
+    PTransformd X_0_s
+    PTransformd X_b0_s
+    JointType baseType
+
+cdef extern from "<mc_rbdyn/RobotModule.h>" namespace "mc_rbdyn":
+  cdef cppclass RobotModule:
+    RobotModule(const string &, const string &)
+    RobotModule(const string &, const string &, const string&)
+
+    const vector[cppmap[string, vector[double]]] & bounds()
+    const map[string, vector[double]] & stance()
+    const map[string, pair[string, string]] & convexHull()
+    const map[string, pair[string, string]] & stpbvHull()
+    map[string, PTransformd] _collisionTransforms
+    vector[Flexibility] _flexibility
+    vector[ForceSensor] _forceSensors
+    const Springs & springs()
+    vector[Collision] _minimalSelfCollisions
+    vector[Collision] _commonSelfCollisions
+    const vector[string]& ref_joint_order()
+
+    string path
+    string name
+    string urdf_path
+    string rsdf_dir
+    string calib_dir
+    MultiBody mb
+    MultiBodyConfig mbc
+    MultiBodyGraph mbg
+
+cdef extern from "mc_rbdyn_wrapper.hpp" namespace "mc_rbdyn":
+  ctypedef shared_ptr[RobotModule] RobotModulePtr
+
+cdef extern from "<mc_rbdyn/Robots.h>" namespace "mc_rbdyn":
+  cdef cppclass Robots:
+    Robots()
+    Robots(const Robots &)
+
+    const vector[Robot] & robots()
+
+    const vector[MultiBody] & mbs()
+
+    const vector[MultiBodyConfig] & mbcs()
+
+    unsigned int robotIndex()
+    unsigned int envIndex()
+
+    const Robot & robot()
+    const Robot & env()
+
+    Robot & load(const RobotModule&, const string&, PTransformd*, const string&)
+
+    const Robot & robot(unsigned int)
+
+    void createRobotWithBase(Robots&, unsigned int, const Base&, const Vector3d&)
+
+    void createRobotWithBase(Robot&, const Base&, const Vector3d&)
+
+    void robotCopy(const Robots&, unsigned int)
+
+    void robotCopy(const Robot&)
+
+cdef extern from "<mc_rbdyn/Robot.h>" namespace "mc_rbdyn":
+  cdef cppclass Robot:
+    string name()
+    cppbool hasJoint(string)
+    cppbool hasBody(string)
+    unsigned int jointIndexByName(string)
+    unsigned int bodyIndexByName(string)
+
+    bool hasForceSensor(string)
+    ForceSensor& forceSensor(string)
+    bool bodyHasForceSensor(string)
+    ForceSensor & bodyForceSensor(string)
+
+    BodySensor& bodySensor()
+    bool hasBodySensor(string)
+    BodySensor& bodySensor(string)
+    bool bodyHasBodySensor(string)
+    BodySensor& bodyBodySensor(string)
+
+    const MultiBody& mb()
+    const MultiBodyConfig& mbc()
+    const MultiBodyGraph& mbg()
+
+    vector[vector[double]]& ql()
+    vector[vector[double]]& qu()
+    vector[vector[double]]& vl()
+    vector[vector[double]]& vu()
+    vector[vector[double]]& tl()
+    vector[vector[double]]& tu()
+
+    const vector[Flexibility]& flexibility()
+
+    bool hasSurface(string)
+    const Surface& surface(string)
+    Surface& copySurface(string, string)
+    const map[string, shared_ptr[Surface]]& surfaces()
+    vector[string] availableSurfaces()
+
+    const pair[string, shared_ptr[sch.S_Polyhedron]]& convex(string)
+
+    const PTransformd& bodyTransform(const string&)
+
+    const PTransformd& collisionTransform(const string&)
+
+    void fixSurfaces()
+
+    void loadRSDFFromDir(string)
+
+    map[string, vector[double]] stance()
+
+  shared_ptr[Robots] loadRobot(const RobotModule&, const string&, PTransformd *, const string&)
+  shared_ptr[Robots] loadRobots(const vector[RobotModulePtr]&, const vector[string]&)
+  shared_ptr[Robots] loadRobotAndEnv(const RobotModule&, const string&, const RobotModule&,
+      const string&)
+  shared_ptr[Robots] loadRobotAndEnv(const RobotModule&, const string&, const RobotModule&,
+      const string&, PTransformd*, const string&)
+  shared_ptr[Robots] loadRobotFromUrdf(const string&, const string&, cppbool, const
+      vector[string]&, cppbool, PTransformd*, const string&)
+
+cdef extern from "<mc_rbdyn/Surface.h>" namespace "mc_rbdyn":
+  cdef cppclass Surface:
+    string name()
+    string bodyName()
+    string materialName()
+
+    const vector[PTransformd]& points()
+
+    unsigned int bodyIndex(const Robot&)
+
+    PTransformd X_0_s(const Robot&)
+    PTransformd X_0_s(const Robot&, const MultiBodyConfig& mbc)
+
+    const PTransformd& X_b_s()
+    void X_b_s(const PTransformd&)
+
+    void computePoints()
+
+    string toStr()
+
+    shared_ptr[Surface] copy()
+
+    string type()
+
+    bool operator==(const Surface&)
+    bool operator!=(const Surface&)
+
+  ctypedef shared_ptr[Surface] SurfacePtr
+
+cdef extern from "<mc_rbdyn/PlanarSurface.h>" namespace "mc_rbdyn":
+  cdef cppclass PlanarSurface(Surface):
+    void planarTransform(const double&, const double&, const double&)
+
+    const vector[pair[double,double]]& planarPoints()
+
+    void planarPoints(const vector[pair[double,double]]&)
+
+  PlanarSurface * dynamic_cast_planar_surface"dynamic_cast<mc_rbdyn::PlanarSurface*>"(Surface*)
+
+cdef extern from "<mc_rbdyn/GripperSurface.h>" namespace "mc_rbdyn":
+  cdef cppclass GripperSurface(Surface):
+    void originTransform(const PTransformd&)
+
+    const vector[PTransformd]& pointsFromOrigin()
+
+    const PTransformd& X_b_motor()
+
+    const double& motorMaxTorque()
+
+  GripperSurface * dynamic_cast_gripper_surface"dynamic_cast<mc_rbdyn::GripperSurface*>"(Surface*)
+
+cdef extern from "<mc_rbdyn/CylindricalSurface.h>" namespace "mc_rbdyn":
+  cdef cppclass CylindricalSurface(Surface):
+    const double & radius()
+    const double & width()
+    void width(const double&)
+
+  CylindricalSurface * dynamic_cast_cylindrical_surface"dynamic_cast<mc_rbdyn::CylindricalSurface*>"(Surface*)
+
+cdef extern from "<mc_rbdyn/surface_utils.h>" namespace "mc_rbdyn":
+  vector[shared_ptr[Surface]] readRSDFFromDir(const string&)
+
+cdef extern from "<mc_rbdyn/Contact.h>" namespace "mc_rbdyn":
+  cdef cppclass Contact:
+    Contact(const Robots&, string, string)
+    Contact(const Robots&, string, string, const PTransformd&)
+    Contact(const Robots&, unsigned int, unsigned int, string, string, const
+        PTransformd*, const PTransformd&, int)
+    Contact(const Contact&)
+
+    unsigned int r1Index()
+    unsigned int r2Index()
+
+    SurfacePtr r1Surface()
+    SurfacePtr r2Surface()
+
+    const PTransformd& X_r2s_r1s()
+    void X_r2s_r1s(const PTransformd&)
+
+    const PTransformd& X_b_s()
+
+    int ambiguityId()
+
+    bool isFixed()
+
+    pair[string, string] surfaces()
+
+    PTransformd X_0_r1s(const Robot&)
+    PTransformd X_0_r1s(const Robots&)
+    PTransformd X_0_r2s(const Robot&)
+    PTransformd X_0_r2s(const Robots&)
+
+    vector[PTransformd] r1Points()
+    vector[PTransformd] r2Points()
+
+    PTransformd compute_X_r2s_r1s(const Robots&)
+
+    tasks.qp.c_qp.ContactId contactId(const Robots&)
+
+    #c_mc_solver.QPContactPtr taskContact(const Robots&)
+    #c_mc_solver.QPContactPtrWPoints taskContactWPoints(const Robots&, const PTransformd *)
+
+    string toStr()
+
+    cppbool operator==(const Contact&)
+    cppbool operator!=(const Contact&)
+
+  cdef double ContactnrConeGen "mc_rbdyn::Contact::nrConeGen"
+  cdef double ContactdefaultFriction "mc_rbdyn::Contact::defaultFriction"
+  cdef double ContactnrBilatPoints "mc_rbdyn::Contact::nrBilatPoints"
+
+cdef extern from "<mc_rbdyn/stance.h>" namespace "mc_rbdyn":
+  cdef cppclass Stance:
+    Stance(const vector[vector[double]] q, const vector[Contact] & geomContacts,
+        const vector[Contact] & stabContacts)
+    const vector[Contact]& contacts()
+    const vector[vector[double]]& q()
+    const vector[Contact]& geomContacts()
+    void geomContacts(const vector[Contact]&)
+    const vector[Contact]& stabContacts()
+    void stabContacts(const vector[Contact]&)
+    void updateContact(const Contact&, const Contact&)
+    Vector3d com(const Robot&)
+    vector[string] robotSurfacesInContact()
+
+  ctypedef pair[vector[Contact], vector[Contact]] contact_vector_pair_t
+  ctypedef pair[contact_vector_pair_t, contact_vector_pair_t] apply_return_t
+
+  cdef cppclass StanceAction:
+    apply_return_t apply(const Stance&)
+    void update(const Stance&)
+    string toStr()
+    string type()
+    const Contact& contact()
+
+  cdef cppclass IdentityContactAction(StanceAction):
+    IdentityContactAction()
+    IdentityContactAction(const IdentityContactAction&)
+
+  cdef cppclass AddContactAction(StanceAction):
+    AddContactAction(const Contact&)
+    AddContactAction(const AddContactAction&)
+
+  cdef cppclass RemoveContactAction(StanceAction):
+    RemoveContactAction(const Contact&)
+    RemoveContactAction(const RemoveContactAction&)
+
+cdef extern from "mc_rbdyn_wrapper.hpp" namespace "mc_rbdyn":
+  ctypedef Stance* StanceRawPtr
+
+cdef extern from "<geos/geom/Geometry.h>" namespace "geos::geom":
+  cdef cppclass Geometry:
+      pass
+
+cdef extern from "<mc_rbdyn/PolygonInterpolator.h>" namespace "mc_rbdyn":
+  cdef cppclass PolygonInterpolator:
+   # Actual constructor
+   # PolygonInterpolator(const Json::Value&)
+   shared_ptr[Geometry] fast_interpolate(double)
+
+cdef extern from "<mc_rbdyn/polygon_utils.h>" namespace "mc_rbdyn":
+  cdef vector[Vector3d] points_from_polygon(shared_ptr[Geometry])
+
+cdef extern from "<mc_rbdyn/stance.h>" namespace "mc_rbdyn":
+  cdef void loadStances(const Robots&, string, vector[Stance]&,
+      vector[shared_ptr[StanceAction]]&, vector[PolygonInterpolator]&)
+  cdef void pSaveStances(const Robots&, string, vector[StanceRawPtr]&,
+      vector[shared_ptr[StanceAction]]&)
+
+cdef extern from "mc_rbdyn_wrapper.hpp" namespace "mc_rbdyn":
+  ctypedef Vector3d(*pos_callback_t)(const PTransformd&, const PTransformd&, const Vector3d&)
+  ctypedef Vector3d(*user_pos_callback_t)(const PTransformd&, const PTransformd&, const Vector3d&, void*)
+
+cdef extern from "<mc_rbdyn/StanceConfig.h>" namespace "mc_rbdyn":
+  cdef cppclass StanceConfigCoMTask "mc_rbdyn::StanceConfig::CoMTask":
+    double stiffness
+    double extraStiffness
+    double weight
+    double targetSpeed
+
+  cdef cppclass StanceConfigCoMObj "mc_rbdyn::StanceConfig::CoMObj":
+    double posThresh
+    double velThresh
+    Vector3d comOffset
+    double timeout
+
+  cdef cppclass StanceConfigPostureTask "mc_rbdyn::StanceConfig::PostureTask":
+    double stiffness
+    double weight
+
+  cdef cppclass StanceConfigPosition "mc_rbdyn::StanceConfig::Position":
+    double stiffness
+    double extraStiffness
+    double weight
+    double targetSpeed
+
+  cdef cppclass StanceConfigOrientation "mc_rbdyn::StanceConfig::Orientation":
+    double stiffness
+    double weight
+    double finalWeight
+
+  cdef cppclass StanceConfigLinVel "mc_rbdyn::StanceConfig::LinVel":
+    double stiffness
+    double weight
+    double speed
+
+  cdef cppclass StanceConfigWaypointConf "mc_rbdyn::StanceConfig::WaypointConf":
+    cppbool skip
+    double thresh
+    # pos is not directly exposed
+    #std::function<Eigen::Vector3d(const PTransformd&, const PTransformd&, const Vector3d&) pos
+
+  cdef cppclass StanceConfigCollisionConf "mc_rbdyn::StanceConfig::CollisionConf":
+    double iDist
+    double sDist
+    double damping
+
+  cdef cppclass StanceConfigContactTask "mc_rbdyn::StanceConfig::ContactTask":
+    StanceConfigPosition position
+    StanceConfigOrientation orientation
+    StanceConfigLinVel linVel
+    StanceConfigWaypointConf waypointConf
+    StanceConfigCollisionConf collisionConf
+
+  cdef cppclass StanceConfigContactObj "mc_rbdyn::StanceConfig::ContactObj":
+    double posThresh
+    double velThresh
+    double adjustPosThresh
+    double adjustVelThresh
+    double adjustOriThresh
+    Vector3d adjustOffset
+    Vector3d adjustOriTBNWeight
+    double preContactDist
+    double gripperMoveAwayDist
+
+  cdef cppclass StanceConfigBodiesCollisionConf "mc_rbdyn::StanceConfig::BodiesCollisionConf":
+    string body1
+    string body2
+    StanceConfigCollisionConf collisionConf
+
+  cdef cppclass StanceConfigCollisions "mc_rbdyn::StanceConfig::Collisions":
+    vector[StanceConfigBodiesCollisionConf] autoc
+    vector[StanceConfigBodiesCollisionConf] robotEnv
+    map[pair[string,string], vector[pair[string,string]]] robotEnvContactFilter
+
+  cdef cppclass StanceConfig:
+    StanceConfigCoMTask comTask
+    StanceConfigCoMObj comObj
+    StanceConfigPostureTask postureTask
+    StanceConfigContactTask contactTask
+    StanceConfigContactObj contactObj
+    StanceConfigCollisions collisions
+
+cdef extern from "<mc_rbdyn/contact_transform.h>" namespace "mc_rbdyn":
+  PTransformd planar(const double&, const double&, const double&)
+  PTransformd cylindrical(const double&, const double&)
+  void planarParam(const PTransformd&, double&, double&, double&)
+  void cylindricalParam(const PTransformd&, double&, double&)
+  vector[double] jointParam(const Surface&, const Surface&, const PTransformd&)
+
+cdef extern from "mc_rbdyn_wrapper.hpp" namespace "mc_rbdyn":
+  string CollisionToString(const Collision &)
+  #FIXME Work-around the lack of variadic template support
+  RobotModulePtr get_robot_module(const string&)
+  RobotModulePtr get_robot_module(const string&, const cppbool&)
+  RobotModulePtr get_robot_module(const string&, const string&, const string&)
+  #XXX
+  Robots& const_cast_robots(const Robots&)
+  Robot& const_cast_robot(const Robot&)
+  ForceSensor& const_cast_force_sensor(const ForceSensor &)
+  Surface& const_cast_surface(const Surface&)
+  Contact& const_cast_contact(const Contact&)
+  vector[Contact]& const_cast_contact_vector(const vector[Contact]&)
+  void contact_vector_set_item(vector[Contact]&, unsigned int, const Contact&)
+  Stance& const_cast_stance(const Stance&)
+  IdentityContactAction* dynamic_cast_ica(StanceAction *)
+  AddContactAction* dynamic_cast_aca(StanceAction *)
+  RemoveContactAction* dynamic_cast_rca(StanceAction *)
+  shared_ptr[StanceAction] sa_fake_shared(StanceAction *)
+  void scbc_vector_set_item(vector[StanceConfigBodiesCollisionConf]&, unsigned int, StanceConfigBodiesCollisionConf&)
+  Vector3d call_pos(StanceConfigWaypointConf&, const PTransformd&, const PTransformd&, const Vector3d&)
+  void set_pos(StanceConfigWaypointConf&, user_pos_callback_t, void*)
+  shared_ptr[Robots] robots_fake_shared(Robots*)
+  PolygonInterpolator * polygonInterpolatorFromTuplePairs(const vector[pair[pair[double, double], pair[double, double]]]&)
+  #FIXME Work-around lack of array support
+  vector[double] robotModuleDefaultAttitude(RobotModulePtr rm)
+  #XXX

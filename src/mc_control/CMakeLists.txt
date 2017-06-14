@@ -3,7 +3,7 @@ macro(add_controller controller_name controller_SRC controller_HDR)
   set_target_properties(${controller_name} PROPERTIES COMPILE_FLAGS
     "-DMC_CONTROL_EXPORTS" PREFIX "")
   target_link_libraries(${controller_name} mc_control)
-  pkg_config_use_dependency(${controller_name} mc_rbdyn_urdf_cpp)
+  pkg_config_use_dependency(${controller_name} mc_rbdyn_urdf)
   pkg_config_use_dependency(${controller_name} Tasks)
   target_link_libraries(${controller_name} ${Boost_LIBRARIES})
   install(TARGETS ${controller_name} DESTINATION
@@ -30,3 +30,7 @@ endforeach()
 
 add_controller("halfsitpose" "mc_halfsitpose_controller.cpp"
   "mc_halfsitpose_controller.h")
+
+if(${PYTHON_BINDING})
+  add_subdirectory(python)
+endif()
