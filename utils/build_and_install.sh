@@ -256,7 +256,7 @@ build_git_dependency()
 ###############################
 yaml_to_env "GIT_DEPENDENCIES" $gitlab_ci_yml
 # Add some source dependencies
-GIT_DEPENDENCIES="jrl-umi3218/Eigen3ToPython jrl-umi3218/SpaceVecAlg jrl-umi3218/RBDyn jrl-umi3218/eigen-qld jrl-umi3218/sch-core jrl-umi3218/sch-core-python git@gite.lirmm.fr:multi-contact/mc_rbdyn_urdf_cpp#topic/Release ${GIT_DEPENDENCIES}"
+GIT_DEPENDENCIES="jrl-umi3218/Eigen3ToPython jrl-umi3218/SpaceVecAlg jrl-umi3218/RBDyn jrl-umi3218/eigen-qld jrl-umi3218/sch-core jrl-umi3218/sch-core-python jrl-umi3218/mc_rbdyn_urdf ${GIT_DEPENDENCIES}"
 for package in ${GIT_DEPENDENCIES}; do
   build_git_dependency "$package"
 done
