@@ -1,10 +1,11 @@
-from eigen.c_eigen import *
+from eigen.c_eigen cimport *
 from sva.c_sva cimport *
 from rbdyn.c_rbdyn cimport *
 cimport sch.c_sch as sch
 cimport tasks.qp.c_qp as c_qp
 from mc_rbdyn.c_mc_rbdyn cimport *
 from mc_solver.c_mc_solver cimport *
+cimport mc_rtc.c_mc_rtc as c_mc_rtc
 
 from libcpp.map cimport map as cppmap
 from libcpp.pair cimport pair
@@ -32,6 +33,7 @@ cdef extern from "<mc_control/mc_controller.h>" namespace "mc_control":
     cppbool read_msg(string)
     cppbool read_write_msg(string, string)
     vector[string] supported_robots()
+    c_mc_rtc.Logger & logger()
 
     double timeStep
     # FIXME Grippers?

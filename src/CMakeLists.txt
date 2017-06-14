@@ -13,12 +13,16 @@ set(mc_rtc_utils_SRC
   mc_rtc/Configuration.cpp
   mc_rtc/Logger.cpp
 )
+set(mc_rtc_utils_SRC ${mc_rtc_utils_SRC} PARENT_SCOPE)
+
 set(mc_rtc_utils_HDR
   ../include/mc_rtc/Configuration.h
   ../include/mc_rtc/log/Logger.h
   ../include/mc_rtc/log/serialization/MCLog_generated.h
   ../include/mc_rtc/utils_api.h
 )
+set(mc_rtc_utils_HDR ${mc_rtc_utils_HDR} PARENT_SCOPE)
+
 add_library(mc_rtc_utils SHARED ${mc_rtc_utils_SRC} ${mc_rtc_utils_HDR})
 set_target_properties(mc_rtc_utils PROPERTIES COMPILE_FLAGS "-DMC_RTC_UTILS_EXPORTS")
 target_link_libraries(mc_rtc_utils ${Boost_LIBRARIES})

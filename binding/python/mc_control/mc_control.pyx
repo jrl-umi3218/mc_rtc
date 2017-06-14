@@ -14,6 +14,8 @@ cimport mc_rbdyn.mc_rbdyn as mc_rbdyn
 
 cimport mc_solver.mc_solver as mc_solver
 
+cimport mc_rtc.mc_rtc as mc_rtc
+
 from cython.operator cimport preincrement as preinc
 from cython.operator cimport dereference as deref
 from libcpp.map cimport map as cppmap
@@ -56,6 +58,8 @@ cdef class MCController(object):
     return self.base.read_write_msg(msg, out)
   def supported_robots(self):
     return self.base.supported_robots()
+  def logger(self):
+    return mc_rtc.LoggerFromRef(self.base.logger())
   property timeStep:
     def __get__(self):
       return self.base.timeStep
