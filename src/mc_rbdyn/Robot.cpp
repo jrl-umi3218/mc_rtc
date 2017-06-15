@@ -41,6 +41,44 @@ Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
   bodySensors_(bodySensors), springs(springs), tlPoly(tlPoly),
   tuPoly(tuPoly), flexibility_(flexibility)
 {
+  //check whether bounds are valid
+  auto throwIfBoundsInvalid = [&](const std::vector< std::vector<double> > & l, const std::vector< std::vector<double> > & u, const std::string& bname)
+  {
+    if(l.size() != u.size())
+    {
+      throw std::invalid_argument{
+        "Robot '" + name + " has invalid " + bname + " bounds. The bound vectors have different sizes! number of entries in lower = " +
+        std::to_string(l.size()) + ", number of entries in upper = " + std::to_string(u.size())
+      };
+    }
+    for(std::size_t i = 0; i < l.size(); ++ i)
+    {
+      const auto& subL = l.at(i);
+      const auto& subU = u.at(i);
+      if(subL.size() != subU.size())
+      {
+        throw std::invalid_argument{
+          "Robot '" + name + " has invalid " + bname + " bounds. The bound vectors for entry " +
+          std::to_string(i) + " have different sizes! number of entries in lower = " +
+          std::to_string(subL.size()) + ", number of entries in upper = " + std::to_string(subU.size())
+        };
+      }
+      for(std::size_t j = 0; j < subL.size(); ++ j)
+      {
+        if(subL.at(j) > subU.at(j))
+        {
+          throw std::invalid_argument{
+            "Robot '" + name + " has invalid " + bname + " bounds. The lower bound for entry " +
+            std::to_string(i) + "/" + std::to_string(j) + " is not lower than or equal the upper bound! lower = " +
+            std::to_string(subL.at(j)) + ", upper = " + std::to_string(subU.at(j))
+          };
+        }
+      }
+    }
+  };
+  throwIfBoundsInvalid(ql_,qu_,"position");
+  throwIfBoundsInvalid(vl_,vu_,"velocity");
+  throwIfBoundsInvalid(tl_,tu_,"torque");
   // Copy the surfaces
   for(const auto & p : surfaces)
   {
