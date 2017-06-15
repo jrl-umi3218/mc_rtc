@@ -9,7 +9,7 @@
 
   "Timestep" : 0.005,
 
-  "UseSandbox" : true,
+  "UseSandbox" : @USE_SANDBOX@,
 
   "Log" : @LOG_ENABLED@,
   "LogPolicy" : "@LOG_POLICY@",
