@@ -237,6 +237,9 @@ public:
   /** Copy an existing surface with a new name */
   mc_rbdyn::Surface & copySurface(const std::string & sName, const std::string & name);
 
+  /** Adds a surface with a new name */
+  void addSurface(mc_rbdyn::SurfacePtr surface, bool doNotReplace = true);
+
   const std::map<std::string, mc_rbdyn::SurfacePtr> & surfaces() const;
 
   std::vector<std::string> availableSurfaces() const;
