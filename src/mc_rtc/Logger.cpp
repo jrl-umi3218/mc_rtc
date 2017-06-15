@@ -26,7 +26,7 @@ namespace mc_rtc
     bfs::path directory;
     std::string tmpl;
     double log_iter_ = 0;
-    bool valid = true;
+    bool valid_ = true;
     std::ofstream log_;
   };
 
@@ -50,8 +50,11 @@ namespace mc_rtc
 
       virtual void write(uint8_t * data, int size) final
       {
-        log_.write((char*)&size, sizeof(int));
-        log_.write((char*)data, size);
+        if(valid_)
+        {
+          log_.write((char*)&size, sizeof(int));
+          log_.write((char*)data, size);
+        }
       }
     };
 
@@ -62,7 +65,7 @@ namespace mc_rtc
       {
         log_sync_th_ = std::thread([this]()
         {
-          while(log_sync_th_run_)
+          while(log_sync_th_run_ && valid_)
           {
             while(data_.size())
             {
@@ -192,11 +195,11 @@ namespace mc_rtc
                     return impl_->log_iter_ - timestep;
                   });
       impl_->log_iter_ = 0;
-      impl_->valid = true;
+      impl_->valid_ = true;
     }
     else
     {
-      impl_->valid = false;
+      impl_->valid_ = false;
       LOG_ERROR("Failed to open log file " << log_path)
     }
   }
