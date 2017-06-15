@@ -469,8 +469,6 @@ private:
 
   std::shared_ptr<mc_rbdyn::Robots> real_robots = nullptr;
 
-  std::shared_ptr<mc_rtc::Logger> logger_;
-
   void publish_robots();
 
   void start_log();

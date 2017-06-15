@@ -129,6 +129,15 @@ namespace mc_rtc
 
   Logger::Logger(const Policy & policy, const bfs::path & directory, const std::string & tmpl)
   {
+    setup(policy, directory, tmpl);
+  }
+
+  Logger::~Logger()
+  {
+  }
+
+  void Logger::setup(const Policy & policy, const bfs::path & directory, const std::string & tmpl)
+  {
     switch(policy)
     {
       case Policy::NON_THREADED:
@@ -138,10 +147,6 @@ namespace mc_rtc
         impl_.reset(new LoggerThreadedPolicyImpl(directory, tmpl));
         break;
     };
-  }
-
-  Logger::~Logger()
-  {
   }
 
   void Logger::start(const std::string & ctl_name, double timestep)

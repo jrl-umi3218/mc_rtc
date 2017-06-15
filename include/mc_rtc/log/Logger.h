@@ -64,6 +64,16 @@ public:
   /*! \brief Destructor */
   ~Logger();
 
+  /*! \brief Setup the constructor configuration
+   *
+   * \param policy The chosen logging policy
+   *
+   * \param directory Path to the directory where log files will be stored
+   *
+   * \param tmpl Log file template
+   */
+  void setup(const Policy & policy, const bfs::path & directory, const std::string & tmpl);
+
   /*! \brief Start logging
    *
    * Print the file header to the log. This should be called at
@@ -79,7 +89,6 @@ public:
    *
    * Print controller data to the log.
    *
-   * \param controller The running controller
    */
   void log();
 

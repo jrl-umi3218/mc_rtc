@@ -65,17 +65,10 @@ MCGlobalController::MCGlobalController(const std::string & conf,
   mc_rtc::ROSBridge::set_publisher_timestep(config.publish_timestep);
   if(config.enable_log)
   {
-    logger_.reset(new mc_rtc::Logger(config.log_policy, config.log_directory, config.log_template));
-  }
-  else
-  {
-    /* Create a logger that has no performance impact */
-    logger_.reset(new mc_rtc::Logger(mc_rtc::Logger::Policy::NON_THREADED, config.log_directory, config.log_template));
-  }
-  for(auto & c : controllers)
-  {
-    c.second->logger_ = logger_;
-    c.second->solver().logger(logger_);
+    for(auto c : controllers)
+    {
+      c.second->logger().setup(config.log_policy, config.log_directory, config.log_template);
+    }
   }
 }
 
@@ -338,7 +331,7 @@ bool MCGlobalController::run()
     bool r = controller_->run();
     if(config.enable_log)
     {
-      logger_->log();
+      controller_->logger().log();
     }
     if(!r) { running = false; }
   }
@@ -485,6 +478,10 @@ bool MCGlobalController::AddController(const std::string & name)
         controllers[name] = controller_loader->create_object(name, config.main_robot_module, config.timestep, config.config);
       }
       controllers[name]->real_robots = real_robots;
+      if(config.enable_log)
+      {
+        controllers[name]->logger().setup(config.log_policy, config.log_directory, config.log_template);
+      }
     }
     catch(const mc_rtc::LoaderException & exc)
     {
@@ -519,6 +516,10 @@ bool MCGlobalController::AddController(const std::string & name,
   }
   controllers[name] = controller;
   controllers[name]->real_robots = real_robots;
+  if(config.enable_log)
+  {
+    controllers[name]->logger().setup(config.log_policy, config.log_directory, config.log_template);
+  }
   return true;
 }
 
@@ -579,20 +580,20 @@ bool MCGlobalController::GoToHalfSitPose()
 
 void MCGlobalController::start_log()
 {
-  logger_->start(current_ctrl, controller_->timeStep);
-  // Copy controller_ pointer to avoid issues when the log is stopped
+  // Copy controller pointer to avoid lambda issue
   MCController * controller = controller_;
-  logger_->addLogEntry("qIn",
+  controller->logger().start(current_ctrl, controller_->timeStep);
+  controller->logger().addLogEntry("qIn",
               [controller]() -> const std::vector<double>&
               {
                 return controller->robot().encoderValues();
               });
-  logger_->addLogEntry("ff",
+  controller->logger().addLogEntry("ff",
               [controller]() -> const sva::PTransformd&
               {
                 return controller->robot().mbc().bodyPosW[0];
               });
-  logger_->addLogEntry("qOut",
+  controller->logger().addLogEntry("qOut",
               [controller]()
               {
                 const auto & qOut = controller->send(0).robots_state[0].q;
@@ -608,7 +609,7 @@ void MCGlobalController::start_log()
                 }
                 return ret;
               });
-  logger_->addLogEntry("tauIn",
+  controller->logger().addLogEntry("tauIn",
               [controller]() -> const std::vector<double>&
               {
                 return controller->robot().jointTorques();
@@ -616,33 +617,33 @@ void MCGlobalController::start_log()
   for(const auto & fs : controller->robot().forceSensors())
   {
     const auto & fs_name = fs.name();
-    logger_->addLogEntry(fs.name(),
+    controller->logger().addLogEntry(fs.name(),
                 [controller,fs_name]() -> const sva::ForceVecd&
                 {
                   return controller->robot().forceSensor(fs_name).wrench();
                 });
   }
-  logger_->addLogEntry("pIn",
+  controller->logger().addLogEntry("pIn",
               [controller]() -> const Eigen::Vector3d&
               {
                 return controller->robot().bodySensor().position();
               });
-  logger_->addLogEntry("rpyIn",
+  controller->logger().addLogEntry("rpyIn",
               [controller]() -> const Eigen::Quaterniond&
               {
                 return controller->robot().bodySensor().orientation();
               });
-  logger_->addLogEntry("velIn",
+  controller->logger().addLogEntry("velIn",
               [controller]() -> const Eigen::Vector3d&
               {
                 return controller->robot().bodySensor().linearVelocity();
               });
-  logger_->addLogEntry("rateIn",
+  controller->logger().addLogEntry("rateIn",
               [controller]() -> const Eigen::Vector3d&
               {
                 return controller->robot().bodySensor().angularVelocity();
               });
-  logger_->addLogEntry("accIn",
+  controller->logger().addLogEntry("accIn",
               [controller]() -> const Eigen::Vector3d&
               {
                 return controller->robot().bodySensor().acceleration();
