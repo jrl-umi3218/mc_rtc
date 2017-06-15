@@ -66,15 +66,13 @@ namespace mc_rtc
           {
             while(data_.size())
             {
-              auto & d = data_.front();
-              uint8_t * data = d.first;
-              int size = d.second;
-              log_.write((char*)&size, sizeof(int));
-              log_.write((char*)data, size);
-              delete[] data;
-              data_.pop();
+              write_data();
             }
             std::this_thread::sleep_for(std::chrono::microseconds(500));
+          }
+          while(data_.size())
+          {
+            write_data();
           }
         }
         );
@@ -87,6 +85,17 @@ namespace mc_rtc
         {
           log_sync_th_.join();
         }
+      }
+
+      void write_data()
+      {
+        auto & d = data_.front();
+        uint8_t * data = d.first;
+        int size = d.second;
+        log_.write((char*)&size, sizeof(int));
+        log_.write((char*)data, size);
+        delete[] data;
+        data_.pop();
       }
 
       virtual void initialize(const bfs::path & path) final
