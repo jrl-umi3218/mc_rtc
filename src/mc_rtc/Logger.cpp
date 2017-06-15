@@ -151,7 +151,6 @@ namespace mc_rtc
 
   void Logger::start(const std::string & ctl_name, double timestep)
   {
-    log_entries_.clear();
     auto get_log_path = [this, &ctl_name]()
     {
       std::stringstream ss;
@@ -194,11 +193,14 @@ namespace mc_rtc
     }
     if(impl_->log_.is_open())
     {
-      addLogEntry("t", [this, timestep]()
-                  {
-                    impl_->log_iter_ += timestep;
-                    return impl_->log_iter_ - timestep;
-                  });
+      if(!log_entries_.count("t"))
+      {
+        addLogEntry("t", [this, timestep]()
+                    {
+                      impl_->log_iter_ += timestep;
+                      return impl_->log_iter_ - timestep;
+                    });
+      }
       impl_->log_iter_ = 0;
       impl_->valid_ = true;
     }

@@ -24,6 +24,7 @@ class TestPythonController(mc_control.MCPythonController):
     self.hj1_q = 0.5
     # Stuff to log
     self.v3d_data = eigen.Vector3d.Random()
+    self.logger().addLogEntry("PYTHONV3D", lambda: self.v3d_data)
     self.d_data = 0.0
     self.dv_data = [self.d_data]*3
     self.theta = 0
@@ -42,7 +43,6 @@ class TestPythonController(mc_control.MCPythonController):
     self.positionTask.reset()
     self.positionTask.position(self.positionTask.position() + eigen.Vector3d(0.1, 0, 0))
     self.set_joint_pos(self.hj1_name, self.hj1_q)
-    self.logger().addLogEntry("PYTHONV3D", lambda: self.v3d_data)
     self.logger().addLogEntry("PYTHONDOUBLE", lambda: self.d_data)
     self.logger().addLogEntry("PYTHONDOUBLEV", lambda: self.dv_data)
     self.logger().addLogEntry("PYTHONQUAT", lambda: self.quat_data)
