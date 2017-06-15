@@ -245,9 +245,15 @@ build_git_dependency()
   fi
   mkdir -p $git_dep/build
   cd "$git_dep/build"
-  cmake .. -DCMAKE_INSTALL_PREFIX:STRING="$INSTALL_PREFIX" \
-           -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
-           ${CMAKE_ADDITIONAL_OPTIONS}
+  if $WITH_PYTHON_SUPPORT
+  then cmake .. -DCMAKE_INSTALL_PREFIX:STRING="$INSTALL_PREFIX" \
+          -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
+          ${CMAKE_ADDITIONAL_OPTIONS}
+  else cmake .. -DCMAKE_INSTALL_PREFIX:STRING="$INSTALL_PREFIX" \
+          -DPYTHON_BINDING:BOOL=OFF \
+          -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
+          ${CMAKE_ADDITIONAL_OPTIONS}
+  fi
   make -j${BUILD_CORE}
   ${SUDO_CMD} make install
 }
@@ -256,7 +262,10 @@ build_git_dependency()
 ###############################
 yaml_to_env "GIT_DEPENDENCIES" $gitlab_ci_yml
 # Add some source dependencies
-GIT_DEPENDENCIES="jrl-umi3218/Eigen3ToPython jrl-umi3218/SpaceVecAlg jrl-umi3218/RBDyn jrl-umi3218/eigen-qld jrl-umi3218/sch-core jrl-umi3218/sch-core-python jrl-umi3218/mc_rbdyn_urdf ${GIT_DEPENDENCIES}"
+if $WITH_PYTHON_SUPPORT
+    then GIT_DEPENDENCIES="jrl-umi3218/Eigen3ToPython jrl-umi3218/SpaceVecAlg jrl-umi3218/RBDyn jrl-umi3218/eigen-qld jrl-umi3218/sch-core jrl-umi3218/sch-core-python jrl-umi3218/mc_rbdyn_urdf ${GIT_DEPENDENCIES}"
+    else GIT_DEPENDENCIES="jrl-umi3218/SpaceVecAlg jrl-umi3218/RBDyn jrl-umi3218/eigen-qld jrl-umi3218/sch-core jrl-umi3218/mc_rbdyn_urdf ${GIT_DEPENDENCIES}"
+fi
 for package in ${GIT_DEPENDENCIES}; do
   build_git_dependency "$package"
 done
@@ -334,6 +343,19 @@ else
   if $WITH_HRP4
   then
     CMAKE_ROBOT_OPTIONS="$CMAKE_ROBOT_OPTIONS -DHRP4_DESCRIPTION_PATH:STRING='${SOURCE_DIR}/hrp4/hrp4_description'"
+  fi
+  if $WITH_PYTHON_SUPPORT
+  then   cmake ../ -DCMAKE_BUILD_TYPE:STRING="'$BUILD_TYPE'" \
+                -DCMAKE_INSTALL_PREFIX:STRING="'$INSTALL_PREFIX'" \
+                -DMC_ENV_DESCRIPTION_PATH:STRING="'$SOURCE_DIR/mc_rtc_ros_data/mc_env_description'" \
+                ${CMAKE_ROBOT_OPTIONS} \
+                ${CMAKE_ADDITIONAL_OPTIONS}
+  else   cmake ../ -DCMAKE_BUILD_TYPE:STRING="'$BUILD_TYPE'" \
+                -DPYTHON_BINDING:BOOL=OFF \
+                -DCMAKE_INSTALL_PREFIX:STRING="'$INSTALL_PREFIX'" \
+                -DMC_ENV_DESCRIPTION_PATH:STRING="'$SOURCE_DIR/mc_rtc_ros_data/mc_env_description'" \
+                ${CMAKE_ROBOT_OPTIONS} \
+                ${CMAKE_ADDITIONAL_OPTIONS}
   fi
   cmake ../ -DCMAKE_BUILD_TYPE:STRING="'$BUILD_TYPE'" \
             -DCMAKE_INSTALL_PREFIX:STRING="'$INSTALL_PREFIX'" \
