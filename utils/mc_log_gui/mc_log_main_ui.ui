@@ -59,7 +59,13 @@
     <addaction name="actionLoad"/>
     <addaction name="actionExit"/>
    </widget>
+   <widget class="QMenu" name="menuCommonPlots">
+    <property name="title">
+     <string>Common plots</string>
+    </property>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuCommonPlots"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionLoad">

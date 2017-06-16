@@ -6,16 +6,33 @@ from mc_log_tab_ui import Ui_MCLogTab
 
 from functools import partial
 
+import re
+
 def get_full_text(item):
   if item.childCount():
-    return [ t for i in range(item.childCount()) for t in get_full_text(item.child(i)) ]
+    return [ (t,d) for i in range(item.childCount()) for t,d in get_full_text(item.child(i)) ]
   else:
-    base_text = item.text(0)
+    base_text = item.actualText
+    display_text = item.displayText
     parent = item.parent()
     while parent is not None:
-      base_text = parent.text(0) + "_" + base_text
+      base_text = parent.actualText + "_" + base_text
+      display_text = parent.displayText + "_" + display_text
       parent = parent.parent()
-    return [ base_text ]
+    return [ (base_text, display_text) ]
+
+class MCLogTreeWidgetItem(QtGui.QTreeWidgetItem):
+  def __init__(self, parent, values):
+    super(MCLogTreeWidgetItem, self).__init__(parent, values)
+    self._displayText = values[0]
+    self.actualText = values[0]
+  @property
+  def displayText(self):
+    return self._displayText
+  @displayText.setter
+  def displayText(self, value):
+    self._displayText = value
+    self.setText(0, self._displayText)
 
 class MCLogTab(QtGui.QWidget):
   def __init__(self, parent = None):
@@ -29,16 +46,37 @@ class MCLogTab(QtGui.QWidget):
     setupSelector(self.ui.y2Selector)
 
     self.data = None
+    self.rm = None
     self.x_data_trigger = False
     self.x_data = 't'
-    self.y1_data = []
-    self.y2_data = []
+    self.y_data = [[], []]
+    self.y_data_labels = [[], []]
     self.y_diff_data = [[], []]
+    self.y_diff_data_labels = [[], []]
 
   def setData(self, data):
     self.data = data
     self.update_x_selector()
     self.update_y_selectors()
+
+  def setRobotModule(self, rm):
+    self.rm = rm
+    def setQNames(ySelector):
+      qList = ySelector.findItems("q", QtCore.Qt.MatchFlag.MatchStartsWith)
+      for qIn in qList:
+        cCount = qIn.childCount()
+        for i in range(cCount):
+          c = qIn.child(i)
+          if c.actualText.isdigit():
+            jIndex = int(c.actualText)
+            if jIndex < self.rm.mb.nrJoints():
+              try:
+                jName = self.rm.mb.joint(jIndex + 1).name()
+                c.displayText = self.rm.ref_joint_order()[self.rm.ref_joint_order().index(jName)]
+              except ValueError,IndexError:
+                pass
+    setQNames(self.ui.y1Selector)
+
 
   @QtCore.Slot(str)
   def on_xSelector_activated(self, k):
@@ -46,28 +84,36 @@ class MCLogTab(QtGui.QWidget):
     self.update_canvas()
 
   @QtCore.Slot()
-  def on_y1Selector_itemSelectionChanged(self):
-    self.y1_data = self.itemSelectionChanged(self.ui.y1Selector)
-    self.update_canvas()
+  def on_y1Selector_itemClicked(self):
+    self.itemSelectionChanged(self.ui.y1Selector, 0)
 
   @QtCore.Slot()
-  def on_y2Selector_itemSelectionChanged(self):
-    self.y2_data = self.itemSelectionChanged(self.ui.y2Selector)
-    self.update_canvas()
+  def on_y2Selector_itemClicked(self):
+    self.itemSelectionChanged(self.ui.y2Selector, 1)
 
   def update_canvas(self):
-    self.ui.canvas.plot(self.data, self.x_data, self.y1_data, self.y2_data, self.y_diff_data)
+    self.ui.canvas.plot(self.data, self.x_data, self.y_data, self.y_diff_data, self.y_data_labels, self.y_diff_data_labels)
 
-  def itemSelectionChanged(self, ySelector):
+  def itemSelectionChanged(self, ySelector, idx):
+    self.y_data[idx] = []
+    self.y_data_labels[idx] = []
     selected = ySelector.selectedItems()
-    return [ t.encode(u'ascii') for item in selected for t in get_full_text(item) ]
+    for item in selected:
+      for t,d in get_full_text(item):
+        self.y_data[idx] += [t.encode(u'ascii')]
+        self.y_data_labels[idx] += [d.encode(u'ascii')]
+    self.update_canvas()
 
-  def checkboxChanged(self, entries, idx, state):
+  def checkboxChanged(self, item, idx, state):
+    y_diff_data, y_diff_data_labels = [list(t) for t in zip(*get_full_text(item))]
     if state:
-      self.y_diff_data[idx] += entries
+      self.y_diff_data[idx] += y_diff_data
+      self.y_diff_data_labels[idx] += y_diff_data_labels
     else:
-      for e in entries:
+      for e in y_diff_data:
         self.y_diff_data[idx].remove(e)
+      for e in y_diff_data_labels:
+        self.y_diff_data_labels[idx].remove(e)
     self.update_canvas()
 
   def update_x_selector(self):
@@ -94,26 +140,82 @@ class MCLogTab(QtGui.QWidget):
         tree_view[k] = []
     def update_y_selector(ySelector, idx):
       for k, values in sorted(tree_view.items()):
-        base = QtGui.QTreeWidgetItem(ySelector, [k])
+        base = MCLogTreeWidgetItem(ySelector, [k])
         box = QtGui.QCheckBox(ySelector)
 
-        entries = [ "{}_{}".format(k, v) for v in values ]
-        if len(entries) == 0:
-          entries = [k]
-        box.stateChanged.connect(partial(self.checkboxChanged, entries, idx))
+        if len(values) == 0:
+          if k in self.y_data[idx]:
+            base.setSelected(True)
+        box.stateChanged.connect(partial(self.checkboxChanged, base, idx))
         ySelector.setItemWidget(base, 1, box)
 
+        needExpand = False
         for v in values:
-          item = QtGui.QTreeWidgetItem(base, [v])
-          entries = ["{}_{}".format(k, v)]
+          item = MCLogTreeWidgetItem(base, [v])
+          if "{}_{}".format(k, v) in self.y_data[idx]:
+            item.setSelected(True)
+            needExpand = True
           box = QtGui.QCheckBox(ySelector)
-          box.stateChanged.connect(partial(self.checkboxChanged, entries, idx))
+          box.stateChanged.connect(partial(self.checkboxChanged, item, idx))
           ySelector.setItemWidget(item, 1, box)
+        base.setExpanded(needExpand)
 
-        if len(values) < 6:
-          base.setExpanded(True)
       ySelector.resizeColumnToContents(0)
       ySelector.resizeColumnToContents(1)
       ySelector.setMaximumWidth(ySelector.sizeHintForColumn(0) + 75)
     update_y_selector(self.ui.y1Selector, 0)
     update_y_selector(self.ui.y2Selector, 1)
+
+  @staticmethod
+  def ForceSensorPlot(parent, fs):
+    tab = MCLogTab(parent)
+    tab.x_data = 't'
+    tab.y_data[0] = [ '{}ForceSensor_f{}'.format(fs, ax) for ax in ['x', 'y', 'z' ] ]
+    tab.y_data_labels[0] = tab.y_data[0]
+    tab.y_data[1] = [ '{}ForceSensor_c{}'.format(fs, ax) for ax in ['x', 'y', 'z' ] ]
+    tab.y_data_labels[1] = tab.y_data[1]
+    tab.setData(parent.data)
+    tab.setRobotModule(parent.rm)
+    tab.ui.canvas.title('Force sensor: {}'.format(fs))
+    tab.ui.canvas.y1_label('Force')
+    tab.ui.canvas.y2_label('Moment')
+    tab.update_canvas()
+    return tab
+
+  @staticmethod
+  def JointPlot(parent, joints, y1_prefix, y2_prefix):
+    def prefix_to_label(prefix):
+      if prefix == "qIn":
+        return "encoder"
+      if prefix == "qOut":
+        return "command"
+      if prefix == "tauIn":
+        return "torque"
+      return prefix
+    y1_label = prefix_to_label(y1_prefix)
+    y2_label = prefix_to_label(y2_prefix)
+    tab = MCLogTab(parent)
+    tab.x_data = 't'
+    rjo = parent.rm.ref_joint_order()
+    for j in joints:
+      jIndex = rjo.index(j)
+      tab.y_data[0] += [ '{}_{}'.format(y1_prefix, jIndex) ]
+      tab.y_data_labels[0] += [ '{}_{}'.format(y1_label, j) ]
+      if y2_prefix:
+        tab.y_data[1] += [ '{}_{}'.format(y2_prefix, jIndex) ]
+        tab.y_data_labels[1] += [ '{}_{}'.format(y2_label, j) ]
+    tab.setData(parent.data)
+    tab.setRobotModule(parent.rm)
+    title = y1_label.title()
+    if len(joints) > 1:
+      title += 's'
+    if y2_label:
+      title += ' / {}'.format(y2_label.title())
+      if len(joints) > 1:
+        title += 's'
+    tab.ui.canvas.title(title)
+    tab.ui.canvas.y1_label(y1_label)
+    if y2_prefix:
+      tab.ui.canvas.y2_label(y2_label)
+    tab.update_canvas()
+    return tab
