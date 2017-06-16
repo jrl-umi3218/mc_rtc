@@ -42,43 +42,51 @@ Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
   tuPoly(tuPoly), flexibility_(flexibility)
 {
   //check whether bounds are valid
-  auto throwIfBoundsInvalid = [&](const std::vector< std::vector<double> > & l, const std::vector< std::vector<double> > & u, const std::string& bname)
+  auto throwIfBoundsInvalid = [&](
+    const std::vector< std::vector<double> > & l,
+    const std::vector< std::vector<double> > & u,
+    const std::string& bname,
+    const std::vector< int >& idxToJoint,
+    int maxSize)
   {
-    if(l.size() != u.size())
+    std::size_t expectedSize = mb().joints().size();
+    LOG_ERROR_AND_THROW_IF(l.size() != expectedSize, std::invalid_argument,
+       "Robot '" << name << "' has invalid " << bname << " bounds. The bound vector for lower bounds has the wrong size! number of entries in lower = "
+       << l.size() << ", number of joints = " << expectedSize);
+
+    LOG_ERROR_AND_THROW_IF(u.size() != expectedSize, std::invalid_argument,
+      "Robot '" << name << "' has invalid " << bname << " bounds. The bound vector for upper bounds has the wrong size! number of entries in upper = "
+      << u.size() << ", number of joints = " << expectedSize);
+
+    for(int i = 0; i < static_cast<int>(l.size()); ++ i)
     {
-      throw std::invalid_argument{
-        "Robot '" + name + " has invalid " + bname + " bounds. The bound vectors have different sizes! number of entries in lower = " +
-        std::to_string(l.size()) + ", number of entries in upper = " + std::to_string(u.size())
-      };
-    }
-    for(std::size_t i = 0; i < l.size(); ++ i)
-    {
+      const rbd::Joint& joint = mb().joint(i);
+      std::size_t expectedSize = (i+1<l.size()?idxToJoint.at(i+1):maxSize) - idxToJoint.at(i);
       const auto& subL = l.at(i);
       const auto& subU = u.at(i);
-      if(subL.size() != subU.size())
-      {
-        throw std::invalid_argument{
-          "Robot '" + name + " has invalid " + bname + " bounds. The bound vectors for entry " +
-          std::to_string(i) + " have different sizes! number of entries in lower = " +
-          std::to_string(subL.size()) + ", number of entries in upper = " + std::to_string(subU.size())
-        };
-      }
+      LOG_ERROR_AND_THROW_IF(subL.size() != expectedSize, std::invalid_argument,
+        "Robot '" << name << "' has invalid " << bname << " bounds. The lower bound vector for "
+        << "joint " << i << " '" << joint.name() << "' has the wrong size! number of entries in lower = "
+        << subL.size() << ", number of entries expected = " << expectedSize);
+      LOG_ERROR_AND_THROW_IF(subU.size() != expectedSize, std::invalid_argument,
+        "Robot '" << name << "' has invalid " << bname << " bounds. The upper bound vector for "
+        << "joint " << i << " '" << joint.name() << "' has the wrong size! number of entries in upper = "
+        << subU.size() << ", number of entries expected = " << expectedSize);
+
       for(std::size_t j = 0; j < subL.size(); ++ j)
       {
-        if(subL.at(j) > subU.at(j))
-        {
-          throw std::invalid_argument{
-            "Robot '" + name + " has invalid " + bname + " bounds. The lower bound for entry " +
-            std::to_string(i) + "/" + std::to_string(j) + " is not lower than or equal the upper bound! lower = " +
-            std::to_string(subL.at(j)) + ", upper = " + std::to_string(subU.at(j))
-          };
-        }
+        LOG_ERROR_AND_THROW_IF(subL.at(j) > subU.at(j), std::invalid_argument,
+          "Robot '" << name << "' has invalid " << bname << " bounds. The lower bound for "
+          << " joint " << i << " '" << joint.name()
+          << "' / " << j << " is not lower than or equal the upper bound! lower = "
+          <<
+                               subL.at(j) << ", upper = " << subU.at(j));
       }
     }
   };
-  throwIfBoundsInvalid(ql_,qu_,"position");
-  throwIfBoundsInvalid(vl_,vu_,"velocity");
-  throwIfBoundsInvalid(tl_,tu_,"torque");
+  throwIfBoundsInvalid(ql_, qu_, "position", mb().jointsPosInParam(), mb().nrParams());
+  throwIfBoundsInvalid(vl_, vu_, "velocity", mb().jointsPosInDof(), mb().nrDof());
+  throwIfBoundsInvalid(tl_, tu_, "torque", mb().jointsPosInDof(), mb().nrDof());
   // Copy the surfaces
   for(const auto & p : surfaces)
   {
