@@ -110,6 +110,27 @@ std::shared_ptr<T> ObjectLoader<T>::create_object(const std::string & name, cons
     LOG_ERROR("Requested creation of object named " << name << " which has not been loaded")
     throw(LoaderException("No such object"));
   }
+  unsigned int args_passed = 1 + sizeof...(Args);
+  unsigned int args_required = args_passed;
+  void * args_required_sym = lt_dlsym(handles_[name], "create_args_required");
+  if(args_required_sym)
+  {
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wpedantic"
+    auto create_args_required = (unsigned int(*)())(args_required_sym);
+    #pragma GCC diagnostic pop
+    args_required = create_args_required();
+  }
+  else
+  {
+    /* Discard error message */
+    lt_dlerror();
+  }
+  if(args_passed != args_required)
+  {
+    LOG_ERROR(args_passed << " arguments passed to create function of " << name << " which expects " << args_required)
+    throw(LoaderException("Missmatch arguments number"));
+  }
   void * sym = lt_dlsym(handles_[name], "create");
   if(sym == nullptr)
   {
