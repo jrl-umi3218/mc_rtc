@@ -38,6 +38,11 @@ public:
    */
   QPSolver(std::shared_ptr<mc_rbdyn::Robots> robots, double timeStep);
 
+  /** Constructor (the solver creates its own Robots instance)
+   * \param timeStep Timestep of the solver
+   */
+  QPSolver(double timeStep);
+
   /** Add a constraint set
    * \param cs Constraint set added to the solver
    */
@@ -146,7 +151,7 @@ public:
   /** Reset all contacts in the solver and use the new set of contacts provided
    * \item contact Set of mc_rbdyn::Contact
    */
-  void setContacts(const std::vector<mc_rbdyn::Contact> & contacts);
+  void setContacts(const std::vector<mc_rbdyn::Contact> & contacts = {});
 
   /** Run one iteration of the QP.
    *
@@ -193,7 +198,7 @@ public:
   /** Returns the timestep of the solver
    * \return The timestep of the solver
    */
-  double dt();
+  double dt() const;
 
   /** Returns the internal QP solver data
    * \return The data of the solver
