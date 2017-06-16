@@ -405,6 +405,22 @@ cdef class RobotModuleVector(object):
       for rm in args:
         self.__addRM(rm)
 
+class RobotLoader(object):
+  @staticmethod
+  def get_robot_module(string name, *args):
+    cdef shared_ptr[c_mc_rbdyn.RobotModule] rm
+    if len(args) == 0:
+      rm = c_mc_rbdyn.get_robot_module(name)
+    elif len(args) == 1:
+      rm = c_mc_rbdyn.get_robot_module(name, args[0])
+    elif len(args) == 2:
+      rm = c_mc_rbdyn.get_robot_module(name, args[0], args[1])
+    else:
+      raise TypeError("Wrong arguments passed to get_robot_module")
+    return RobotModuleFromC(rm)
+  @staticmethod
+  def available_robots():
+    return c_mc_rbdyn.available_robots()
 
 def get_robot_module(string name, *args):
   if len(args) == 0:
