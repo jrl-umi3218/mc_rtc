@@ -463,6 +463,21 @@ mc_rbdyn::Surface & Robot::copySurface(const std::string & sName, const std::str
   return *nSurf;
 }
 
+void mc_rbdyn::Robot::addSurface(SurfacePtr surface, bool doNotReplace)
+{
+    if(!hasBody(surface->bodyName()))
+    {
+      LOG_WARNING("Surface " << surface->name() << " attached to body " << surface->bodyName() << " but the robot " << name() << " has no such body.")
+      return;
+    }
+    if(hasSurface(surface->name()) && doNotReplace)
+    {
+      LOG_WARNING("Surface " << surface->name() << " already exists for the robot " << name() << ".")
+      return;
+    }
+    surfaces_[surface->name()] = std::move(surface);
+}
+
 std::vector< std::vector<double> > jointsParameters(const rbd::MultiBody & mb, const double & coeff)
 {
   std::vector< std::vector<double> > res;
