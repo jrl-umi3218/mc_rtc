@@ -5,3 +5,7 @@ binding/python/*/*.so
 binding/python/*/__init__.py
 binding/python/*/*.h
 binding/python/setup.py
+*~
+CMakeLists.txt.user*
+*.autosave
+build/
