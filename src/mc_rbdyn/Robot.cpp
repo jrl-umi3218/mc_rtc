@@ -61,7 +61,7 @@ Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
     for(int i = 0; i < static_cast<int>(l.size()); ++ i)
     {
       const rbd::Joint& joint = mb().joint(i);
-      std::size_t expectedSize = (i+1<l.size()?idxToJoint.at(i+1):maxSize) - idxToJoint.at(i);
+      std::size_t expectedSize = (static_cast<std::size_t>(i+1) < l.size() ? idxToJoint.at(i+1) : maxSize) - idxToJoint.at(i);
       const auto& subL = l.at(i);
       const auto& subU = u.at(i);
       LOG_ERROR_AND_THROW_IF(subL.size() != expectedSize, std::invalid_argument,
