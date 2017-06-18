@@ -170,6 +170,11 @@ public:
   /** Gives access to the main robot in the solver */
   mc_rbdyn::Robot & robot();
 
+  /** Gives access to the robot with the given index in the solver */
+  mc_rbdyn::Robot & robot(unsigned int idx);
+  /** Gives access to the robot with the given index in the solver */
+  const mc_rbdyn::Robot & robot(unsigned int idx) const;
+
   /** Gives access to the environment robot in the solver (see mc_rbdyn::Robots) */
   const mc_rbdyn::Robot & env() const;
   /** Gives access to the environment robot in the solver (see mc_rbdyn::Robots) */
