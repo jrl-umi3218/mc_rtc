@@ -46,22 +46,23 @@ Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
     const std::vector< std::vector<double> > & l,
     const std::vector< std::vector<double> > & u,
     const std::string& bname,
-    const std::vector< int >& idxToJoint,
-    int maxSize)
+    int(rbd::Joint::*JointMethod)()const)
   {
     std::size_t expectedSize = mb().joints().size();
     LOG_ERROR_AND_THROW_IF(l.size() != expectedSize, std::invalid_argument,
-       "Robot '" << name << "' has invalid " << bname << " bounds. The bound vector for lower bounds has the wrong size! number of entries in lower = "
+       "Robot '" << name << "' has invalid " << bname
+       << " bounds. The bound vector for lower bounds has the wrong size! number of entries in lower = "
        << l.size() << ", number of joints = " << expectedSize);
 
     LOG_ERROR_AND_THROW_IF(u.size() != expectedSize, std::invalid_argument,
-      "Robot '" << name << "' has invalid " << bname << " bounds. The bound vector for upper bounds has the wrong size! number of entries in upper = "
+      "Robot '" << name << "' has invalid " << bname
+      << " bounds. The bound vector for upper bounds has the wrong size! number of entries in upper = "
       << u.size() << ", number of joints = " << expectedSize);
 
     for(int i = 0; i < static_cast<int>(l.size()); ++ i)
     {
       const rbd::Joint& joint = mb().joint(i);
-      std::size_t expectedSize = (static_cast<std::size_t>(i+1) < l.size() ? idxToJoint.at(i+1) : maxSize) - idxToJoint.at(i);
+      std::size_t expectedSize = static_cast<std::size_t>((joint.*JointMethod)());
       const auto& subL = l.at(i);
       const auto& subU = u.at(i);
       LOG_ERROR_AND_THROW_IF(subL.size() != expectedSize, std::invalid_argument,
@@ -84,9 +85,9 @@ Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
       }
     }
   };
-  throwIfBoundsInvalid(ql_, qu_, "position", mb().jointsPosInParam(), mb().nrParams());
-  throwIfBoundsInvalid(vl_, vu_, "velocity", mb().jointsPosInDof(), mb().nrDof());
-  throwIfBoundsInvalid(tl_, tu_, "torque", mb().jointsPosInDof(), mb().nrDof());
+  throwIfBoundsInvalid(ql_, qu_, "position", &rbd::Joint::params);
+  throwIfBoundsInvalid(vl_, vu_, "velocity", &rbd::Joint::dof);
+  throwIfBoundsInvalid(tl_, tu_, "torque", &rbd::Joint::dof);
   // Copy the surfaces
   for(const auto & p : surfaces)
   {
