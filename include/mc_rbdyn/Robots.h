@@ -66,12 +66,6 @@ public:
 
   void removeRobot(unsigned int idx);
 
-  /** @name Iterators
-  *
-  * These functions provide an iterator interface to Robots
-  *
-  * @{
-  */
   Robot & robot();
   const Robot & robot() const;
 
@@ -81,6 +75,12 @@ public:
   Robot & robot(unsigned int idx);
   const Robot & robot(unsigned int idx) const;
 
+  /** @name Iterators
+  *
+  * These functions provide an iterator interface to Robots
+  *
+  * @{
+  */
   iterator begin() noexcept;
   const_iterator begin() const noexcept;
   const_iterator cbegin() const noexcept;
