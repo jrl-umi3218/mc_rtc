@@ -532,6 +532,9 @@ Robots::const_reverse_iterator Robots::crend() const noexcept
 void mc_rbdyn::Robots::reserve(mc_rbdyn::Robots::size_type new_cap)
 {
   robots_.reserve(new_cap);
+  mbs_.reserve(new_cap);
+  mbcs_.reserve(new_cap);
+  mbgs_.reserve(new_cap);
 }
 
 mc_rbdyn::Robots::size_type mc_rbdyn::Robots::size() const noexcept
