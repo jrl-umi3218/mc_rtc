@@ -66,5 +66,3 @@ namespace mc_rtc
     LOG_ERROR(strstrm.str())                        \
     throw exception_type(strstrm.str());            \
   }
-
-#define LOG_ERROR_AND_THROW_IF(condition, exception_type, args) if(condition) { LOG_ERROR_AND_THROW(exception_type, args) }
