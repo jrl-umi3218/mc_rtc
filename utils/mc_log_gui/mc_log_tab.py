@@ -108,12 +108,12 @@ class MCLogTab(QtGui.QWidget):
     y_diff_data, y_diff_data_labels = [list(t) for t in zip(*get_full_text(item))]
     if state:
       self.y_diff_data[idx] += y_diff_data
-      self.y_diff_data_labels[idx] += y_diff_data_labels
+      self.y_diff_data_labels[idx] += [ l + "_dot" for l in y_diff_data_labels ]
     else:
       for e in y_diff_data:
         self.y_diff_data[idx].remove(e)
       for e in y_diff_data_labels:
-        self.y_diff_data_labels[idx].remove(e)
+        self.y_diff_data_labels[idx].remove(e + "_dot")
     self.update_canvas()
 
   def update_x_selector(self):
@@ -146,6 +146,8 @@ class MCLogTab(QtGui.QWidget):
         if len(values) == 0:
           if k in self.y_data[idx]:
             base.setSelected(True)
+        if k in self.y_diff_data[idx]:
+          box.setChecked(True)
         box.stateChanged.connect(partial(self.checkboxChanged, base, idx))
         ySelector.setItemWidget(base, 1, box)
 
@@ -156,6 +158,8 @@ class MCLogTab(QtGui.QWidget):
             item.setSelected(True)
             needExpand = True
           box = QtGui.QCheckBox(ySelector)
+          if "{}_{}".format(k, v) in self.y_diff_data[idx]:
+            box.setChecked(True)
           box.stateChanged.connect(partial(self.checkboxChanged, item, idx))
           ySelector.setItemWidget(item, 1, box)
         base.setExpanded(needExpand)
@@ -183,39 +187,60 @@ class MCLogTab(QtGui.QWidget):
     return tab
 
   @staticmethod
-  def JointPlot(parent, joints, y1_prefix, y2_prefix):
-    def prefix_to_label(prefix):
+  def JointPlot(parent, joints, y1_prefix, y2_prefix, y1_diff_prefix, y2_diff_prefix):
+    def prefix_to_label(joints, prefix, diff):
+      suffix = ''
+      if diff:
+        suffix += '_velocity'
       if prefix == "qIn":
-        return "encoder"
+        return "encoder" + suffix
       if prefix == "qOut":
-        return "command"
+        return "command" + suffix
       if prefix == "tauIn":
-        return "torque"
+        return "torque" + suffix
       return prefix
-    y1_label = prefix_to_label(y1_prefix)
-    y2_label = prefix_to_label(y2_prefix)
+    y1_label = prefix_to_label(joints, y1_prefix, False)
+    y2_label = prefix_to_label(joints, y2_prefix, False)
+    y1_diff_label = prefix_to_label(joints, y1_diff_prefix, True)
+    y2_diff_label = prefix_to_label(joints, y2_diff_prefix, True)
     tab = MCLogTab(parent)
     tab.x_data = 't'
     rjo = parent.rm.ref_joint_order()
     for j in joints:
       jIndex = rjo.index(j)
-      tab.y_data[0] += [ '{}_{}'.format(y1_prefix, jIndex) ]
-      tab.y_data_labels[0] += [ '{}_{}'.format(y1_label, j) ]
+      if y1_prefix:
+        tab.y_data[0] += [ '{}_{}'.format(y1_prefix, jIndex) ]
+        tab.y_data_labels[0] += [ '{}_{}'.format(y1_label, j) ]
       if y2_prefix:
         tab.y_data[1] += [ '{}_{}'.format(y2_prefix, jIndex) ]
         tab.y_data_labels[1] += [ '{}_{}'.format(y2_label, j) ]
+      if y1_diff_prefix:
+        tab.y_diff_data[0] += [ '{}_{}'.format(y1_diff_prefix, jIndex) ]
+        tab.y_diff_data_labels[0] += [ '{}_{}'.format(y1_diff_label, j) ]
+      if y2_diff_prefix:
+        tab.y_diff_data[1] += [ '{}_{}'.format(y2_diff_prefix, jIndex) ]
+        tab.y_diff_data_labels[1] += [ '{}_{}'.format(y2_diff_label, j) ]
     tab.setData(parent.data)
     tab.setRobotModule(parent.rm)
-    title = y1_label.title()
-    if len(joints) > 1:
-      title += 's'
+    class nonlocal: pass
+    nonlocal.title = ''
+    def updateTitle(nTitle):
+      if len(nonlocal.title):
+        nonlocal.title += ' / '
+      nTitle = nTitle.replace('_', ' ')
+      nonlocal.title += nTitle
+    if y1_label:
+      updateTitle(y1_label.title())
+      tab.ui.canvas.y1_label(y1_label)
     if y2_label:
-      title += ' / {}'.format(y2_label.title())
-      if len(joints) > 1:
-        title += 's'
-    tab.ui.canvas.title(title)
-    tab.ui.canvas.y1_label(y1_label)
-    if y2_prefix:
+      updateTitle(y2_label.title())
       tab.ui.canvas.y2_label(y2_label)
+    if y1_diff_label:
+      updateTitle(y1_diff_label.title())
+      tab.ui.canvas.y1_label(y1_diff_label)
+    if y2_diff_label:
+      updateTitle(y2_diff_label.title())
+      tab.ui.canvas.y2_label(y2_diff_label)
+    tab.ui.canvas.title(nonlocal.title)
     tab.update_canvas()
     return tab

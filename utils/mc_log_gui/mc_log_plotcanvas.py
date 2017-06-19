@@ -64,8 +64,8 @@ class PlotCanvas(FigureCanvas):
       [ self.axes.plot(data[x], data[y], label = y_label, color = color_cycler.next()) for y, y_label in zip(y_[0], y_labels[0]) ]
       [ self.axes2.plot(data[x], data[y], label = y_label, color = color_cycler.next()) for y, y_label in zip(y_[1], y_labels[1]) ]
       dt = data[x][1] - data[x][0]
-      [ self.axes.plot(data[x][1:], np.diff(data[y])/dt, label = '{}_dot'.format(y_label)) for y, y_label in zip(ydiff[0], ydiff_labels[0]) ]
-      [ self.axes2.plot(data[x][1:], np.diff(data[y])/dt, label = '{}_dot'.format(y_label)) for y, y_label in zip(ydiff[1], ydiff_labels[1]) ]
+      [ self.axes.plot(data[x][1:], np.diff(data[y])/dt, label = '{}'.format(y_label), color = color_cycler.next()) for y, y_label in zip(ydiff[0], ydiff_labels[0]) ]
+      [ self.axes2.plot(data[x][1:], np.diff(data[y])/dt, label = '{}'.format(y_label), color = color_cycler.next()) for y, y_label in zip(ydiff[1], ydiff_labels[1]) ]
       self.axes.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=3, mode="expand", borderaxespad=0.5, fontsize = 10.0)
       self.axes2.legend(bbox_to_anchor=(0., -.1, 1., -1.02), loc=3, ncol=3, mode="expand", borderaxespad=-0.5, fontsize = 10.0)
       self.draw()

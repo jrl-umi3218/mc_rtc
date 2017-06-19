@@ -22,12 +22,15 @@ except ImportError:
   mc_rbdyn = None
 
 class MCLogJointDialog(QtGui.QDialog):
-  def __init__(self, parent, rm, y1_prefix, y2_prefix = None):
+  def __init__(self, parent, rm, name, y1_prefix = None, y2_prefix = None, y1_diff_prefix = None, y2_diff_prefix = None):
     super(MCLogJointDialog, self).__init__(parent)
     self.setModal(True)
     self.joints = []
+    self.name = name
     self.y1_prefix = y1_prefix
     self.y2_prefix = y2_prefix
+    self.y1_diff_prefix = y1_diff_prefix
+    self.y2_diff_prefix = y2_diff_prefix
     layout = QtGui.QGridLayout(self)
     self.setLayout(layout)
     row = 0
@@ -51,7 +54,7 @@ class MCLogJointDialog(QtGui.QDialog):
 
   def okButton(self):
     if len(self.joints):
-      self.parent().plot_joint_data(self.joints, self.y1_prefix, self.y2_prefix)
+      self.parent().plot_joint_data(self.name, self.joints, self.y1_prefix, self.y2_prefix, self.y1_diff_prefix, self.y2_diff_prefix)
     self.accept()
 
   def checkboxChanged(self, item, state):
@@ -171,15 +174,22 @@ class MCLogUI(QtGui.QMainWindow):
   def update_menu(self):
     self.ui.menuCommonPlots.clear()
     menuEntries = [
-        ("Encoders", "qIn", None),
-        ("Commands", "qOut", None),
-        ("Torques", "tau", None),
-        ("Encoders/Commands", "qIn", "qOut"),
+        ("Encoders", "qIn", None, None, None),
+        ("Commands", "qOut", None, None, None),
+        ("Torques", "tau", None, None, None),
+        ("Encoders/Commands", "qIn", "qOut", None, None),
+        ("Encoders velocity", None, None, "qIn", None),
+        ("Command velocity", None, None, "qOut", None),
+        ("Encoders/Commands velocity", None, None, "qIn", "qOut"),
+        ("Encoders/Encoders velocity", "qIn", None, None, "qIn"),
+        ("Command/Command velocity", "qOut", None, None, "qOut"),
         ]
-    menuEntries = [ (n, y1, y2) for n, y1, y2 in menuEntries if any([k.startswith(y1) or (y2 is not None and k.startswith(y2)) for k in self.data.keys()]) ]
-    for n, y1, y2 in menuEntries:
+    def validEntry(y):
+      return any([ y is None or (y is not None and k.startswith(y)) for k in self.data.keys() ])
+    menuEntries = [ (n, y1, y2, y1d, y2d) for n, y1, y2, y1d, y2d in menuEntries if all([validEntry(y) for y in [y1, y2, y1d, y2d]]) ]
+    for n, y1, y2, y1d, y2d in menuEntries:
       act = QtGui.QAction(n, self.ui.menuCommonPlots)
-      act.triggered.connect(MCLogJointDialog(self, self.rm, y1, y2).exec_)
+      act.triggered.connect(MCLogJointDialog(self, self.rm, n, y1, y2, y1d, y2d).exec_)
       self.ui.menuCommonPlots.addAction(act)
     fSensors = set()
     for k in self.data:
@@ -199,12 +209,10 @@ class MCLogUI(QtGui.QMainWindow):
     self.ui.tabWidget.setCurrentIndex(self.ui.tabWidget.count() - 2)
     self.updateClosable()
 
-  def plot_joint_data(self, joints, y1_prefix, y2_prefix = None):
-    plotW = MCLogTab.JointPlot(self, joints, y1_prefix, y2_prefix)
-    tabTitle = y1_prefix
-    if y2_prefix:
-      tabTitle += "/{}".format(y2_prefix)
-    self.ui.tabWidget.insertTab(self.ui.tabWidget.count() - 1, plotW, tabTitle)
+  def plot_joint_data(self, name, joints, y1_prefix = None, y2_prefix = None,
+                                    y1_diff_prefix = None, y2_diff_prefix = None):
+    plotW = MCLogTab.JointPlot(self, joints, y1_prefix, y2_prefix, y1_diff_prefix, y2_diff_prefix)
+    self.ui.tabWidget.insertTab(self.ui.tabWidget.count() - 1, plotW, name)
     self.ui.tabWidget.setCurrentIndex(self.ui.tabWidget.count() - 2)
     self.updateClosable()
 
