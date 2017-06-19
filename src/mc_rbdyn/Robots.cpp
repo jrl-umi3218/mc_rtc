@@ -469,6 +469,79 @@ void Robots::updateIndexes()
   }
 }
 
+Robots::iterator Robots::begin() noexcept
+{
+  return robots_.begin();
+}
+
+Robots::const_iterator Robots::begin() const noexcept
+{
+  return robots_.begin();
+}
+
+Robots::const_iterator Robots::cbegin() const noexcept
+{
+  return robots_.cbegin();
+}
+
+Robots::iterator Robots::end() noexcept
+{
+  return robots_.end();
+}
+
+Robots::const_iterator Robots::end() const noexcept
+{
+  return robots_.end();
+}
+
+Robots::const_iterator Robots::cend() const noexcept
+{
+  return robots_.cend();
+}
+
+Robots::reverse_iterator Robots::rbegin() noexcept
+{
+  return robots_.rbegin();
+}
+
+Robots::const_reverse_iterator Robots::rbegin() const noexcept
+{
+  return robots_.rbegin();
+}
+
+Robots::const_reverse_iterator Robots::crbegin() const noexcept
+{
+  return robots_.crbegin();
+}
+
+Robots::reverse_iterator Robots::rend() noexcept
+{
+  return robots_.rend();
+}
+
+Robots::const_reverse_iterator Robots::rend() const noexcept
+{
+  return robots_.rend();
+}
+
+Robots::const_reverse_iterator Robots::crend() const noexcept
+{
+  return robots_.crend();
+}
+
+void mc_rbdyn::Robots::reserve(mc_rbdyn::Robots::size_type new_cap)
+{
+  robots_.reserve(new_cap);
+  mbs_.reserve(new_cap);
+  mbcs_.reserve(new_cap);
+  mbgs_.reserve(new_cap);
+}
+
+mc_rbdyn::Robots::size_type mc_rbdyn::Robots::size() const noexcept
+{
+  return robots_.size();
+}
+
 #pragma GCC diagnostic pop
 
 }

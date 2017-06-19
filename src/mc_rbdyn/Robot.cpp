@@ -403,6 +403,11 @@ std::map<std::string, std::vector<double>> Robot::stance() const
   return stance_;
 }
 
+unsigned int mc_rbdyn::Robot::robotIndex() const
+{
+  return robots_idx;
+}
+
 void Robot::createWithBase(Robots & robots, unsigned int robots_idx, const Base & base) const
 {
   rbd::MultiBody & mb = robots.mbs_[robots_idx];

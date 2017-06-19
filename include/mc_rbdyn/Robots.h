@@ -16,6 +16,19 @@ struct MC_RBDYN_DLLAPI Robots
 {
   friend struct Robot;
 public:
+  /** @name Iterators
+  *
+  * These functions provide an iterator interface to Robots
+  *
+  * @{
+  */
+  typedef typename std::vector<mc_rbdyn::Robot>::iterator iterator;
+  typedef typename std::vector<mc_rbdyn::Robot>::const_iterator const_iterator;
+  typedef typename std::vector<mc_rbdyn::Robot>::reverse_iterator reverse_iterator;
+  typedef typename std::vector<mc_rbdyn::Robot>::const_reverse_iterator const_reverse_iterator;
+  typedef typename std::vector<mc_rbdyn::Robot>::size_type size_type;
+  /** @} */
+
   Robots();
   Robots(const Robots & rhs);
   Robots & operator=(const Robots & rhs);
@@ -61,6 +74,40 @@ public:
 
   Robot & robot(unsigned int idx);
   const Robot & robot(unsigned int idx) const;
+
+  /** @name Iterators
+  *
+  * These functions provide an iterator interface to Robots
+  *
+  * @{
+  */
+  iterator begin() noexcept;
+  const_iterator begin() const noexcept;
+  const_iterator cbegin() const noexcept;
+
+  iterator end() noexcept;
+  const_iterator end() const noexcept;
+  const_iterator cend() const noexcept;
+
+  reverse_iterator rbegin() noexcept;
+  const_reverse_iterator rbegin() const noexcept;
+  const_reverse_iterator crbegin() const noexcept;
+
+  reverse_iterator rend() noexcept;
+  const_reverse_iterator rend() const noexcept;
+  const_reverse_iterator crend() const noexcept;
+  /** @} */
+
+  /**
+  * @return The number of robots
+  */
+  size_type size() const noexcept;
+  /**
+  * @brief Reserves space for a total numer of new_cap Robots to prevent reallocation.
+  * (Does nothing if size > new_cap)
+  */
+  void reserve(size_type new_cap);
+
 protected:
   std::vector<mc_rbdyn::Robot> robots_;
   std::vector<rbd::MultiBody> mbs_;

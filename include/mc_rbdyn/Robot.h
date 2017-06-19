@@ -257,6 +257,8 @@ public:
 
   /** Return the robot's default stance (e.g. half-sitting for humanoid) */
   std::map<std::string, std::vector<double>> stance() const;
+
+  unsigned int robotIndex() const;
 private:
   std::string name_;
   Robots * robots;
