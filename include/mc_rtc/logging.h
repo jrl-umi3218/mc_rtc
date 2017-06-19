@@ -58,3 +58,11 @@ namespace mc_rtc
   SetConsoleTextAttribute(mc_rtc::hConsole, mc_rtc::OUT_NONE);
 
 #endif
+
+#define LOG_ERROR_AND_THROW(exception_type, args)   \
+  {                                                 \
+    std::stringstream strstrm;                      \
+    strstrm << args;                                \
+    LOG_ERROR(strstrm.str())                        \
+    throw exception_type(strstrm.str());            \
+  }

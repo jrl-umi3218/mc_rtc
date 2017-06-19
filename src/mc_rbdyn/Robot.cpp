@@ -41,6 +41,67 @@ Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
   bodySensors_(bodySensors), springs(springs), tlPoly(tlPoly),
   tuPoly(tuPoly), flexibility_(flexibility)
 {
+  //check whether bounds are valid
+  auto throwIfBoundsInvalid = [&](
+    const std::vector< std::vector<double> > & l,
+    const std::vector< std::vector<double> > & u,
+    const std::string& bname,
+    int(rbd::Joint::*JointMethod)()const)
+  {
+    std::size_t expectedSize = mb().joints().size();
+    if(l.size() != expectedSize)
+    {
+      LOG_ERROR_AND_THROW(std::invalid_argument,
+        "Robot '" << name << "' has invalid " << bname
+        << " bounds. The bound vector for lower bounds has the wrong size! number of entries in lower = "
+        << l.size() << ", number of joints = " << expectedSize);
+    }
+
+    if(u.size() != expectedSize)
+    {
+        LOG_ERROR_AND_THROW(std::invalid_argument,
+          "Robot '" << name << "' has invalid " << bname
+          << " bounds. The bound vector for upper bounds has the wrong size! number of entries in upper = "
+          << u.size() << ", number of joints = " << expectedSize);
+    }
+
+    for(int i = 0; i < static_cast<int>(l.size()); ++ i)
+    {
+      const rbd::Joint& joint = mb().joint(i);
+      std::size_t expectedSize = static_cast<std::size_t>((joint.*JointMethod)());
+      const auto& subL = l.at(i);
+      const auto& subU = u.at(i);
+      if(subL.size() != expectedSize)
+      {
+        LOG_ERROR_AND_THROW(std::invalid_argument,
+          "Robot '" << name << "' has invalid " << bname << " bounds. The lower bound vector for "
+          << "joint " << i << " '" << joint.name() << "' has the wrong size! number of entries in lower = "
+          << subL.size() << ", number of entries expected = " << expectedSize);
+      }
+      if(subU.size() != expectedSize)
+      {
+        LOG_ERROR_AND_THROW(std::invalid_argument,
+          "Robot '" << name << "' has invalid " << bname << " bounds. The upper bound vector for "
+          << "joint " << i << " '" << joint.name() << "' has the wrong size! number of entries in upper = "
+          << subU.size() << ", number of entries expected = " << expectedSize);
+      }
+
+      for(std::size_t j = 0; j < subL.size(); ++ j)
+      {
+          if(subL.at(j) > subU.at(j))
+          {
+            LOG_ERROR_AND_THROW(std::invalid_argument,
+              "Robot '" << name << "' has invalid " << bname << " bounds. The lower bound for "
+              << " joint " << i << " '" << joint.name()
+              << "' / " << j << " is not lower than or equal the upper bound! lower = "
+              << subL.at(j) << ", upper = " << subU.at(j));
+          }
+      }
+    }
+  };
+  throwIfBoundsInvalid(ql_, qu_, "position", &rbd::Joint::params);
+  throwIfBoundsInvalid(vl_, vu_, "velocity", &rbd::Joint::dof);
+  throwIfBoundsInvalid(tl_, tu_, "torque", &rbd::Joint::dof);
   // Copy the surfaces
   for(const auto & p : surfaces)
   {
