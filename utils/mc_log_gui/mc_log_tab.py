@@ -63,6 +63,7 @@ class MCLogTab(QtGui.QWidget):
     self.rm = rm
     def setQNames(ySelector):
       qList = ySelector.findItems("q", QtCore.Qt.MatchFlag.MatchStartsWith)
+      qList += ySelector.findItems("error", QtCore.Qt.MatchFlag.MatchStartsWith)
       for qIn in qList:
         cCount = qIn.childCount()
         for i in range(cCount):
@@ -198,6 +199,8 @@ class MCLogTab(QtGui.QWidget):
         return "command" + suffix
       if prefix == "tauIn":
         return "torque" + suffix
+      if prefix == "error":
+        return "error"+suffix
       return prefix
     y1_label = prefix_to_label(joints, y1_prefix, False)
     y2_label = prefix_to_label(joints, y2_prefix, False)

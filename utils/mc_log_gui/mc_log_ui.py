@@ -162,6 +162,10 @@ class MCLogUI(QtGui.QMainWindow):
           self.data[k].append(value)
     for k in self.data:
       self.data[k] = np.array(self.data[k])
+    i = 0
+    while "qIn_{}".format(i) in self.data and "qOut_{}".format(i) in self.data:
+      self.data["error_{}".format(i)] = self.data["qOut_{}".format(i)] - self.data["qIn_{}".format(i)]
+      i += 1
     self.update_data()
 
   def update_data(self):
@@ -177,8 +181,10 @@ class MCLogUI(QtGui.QMainWindow):
     menuEntries = [
         ("Encoders", "qIn", None, None, None),
         ("Commands", "qOut", None, None, None),
+        ("Error", "error", None, None, None),
         ("Torques", "tau", None, None, None),
         ("Encoders/Commands", "qIn", "qOut", None, None),
+        ("Error/Torque", "error", "tau", None, None),
         ("Encoders velocity", None, None, "qIn", None),
         ("Command velocity", None, None, "qOut", None),
         ("Encoders/Commands velocity", None, None, "qIn", "qOut"),
