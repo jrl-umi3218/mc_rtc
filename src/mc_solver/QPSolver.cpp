@@ -218,6 +218,15 @@ mc_rbdyn::Robot & QPSolver::robot()
   return robots_p->robot();
 }
 
+mc_rbdyn::Robot & QPSolver::robot(unsigned int idx)
+{
+  return robots_p->robot(idx);
+}
+const mc_rbdyn::Robot & QPSolver::robot(unsigned int idx) const
+{
+  return robots_p->robot(idx);
+}
+
 const mc_rbdyn::Robot & QPSolver::env() const
 {
   return robots_p->env();
