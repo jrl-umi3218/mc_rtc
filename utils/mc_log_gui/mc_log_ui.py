@@ -24,6 +24,7 @@ except ImportError:
 class MCLogJointDialog(QtGui.QDialog):
   def __init__(self, parent, rm, name, y1_prefix = None, y2_prefix = None, y1_diff_prefix = None, y2_diff_prefix = None):
     super(MCLogJointDialog, self).__init__(parent)
+    self.setWindowTitle("Select plot joints")
     self.setModal(True)
     self.joints = []
     self.name = name
