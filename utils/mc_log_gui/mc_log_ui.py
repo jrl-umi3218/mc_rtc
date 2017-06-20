@@ -8,6 +8,7 @@ import os
 import re
 import signal
 import sys
+import tempfile
 
 from functools import partial
 
@@ -149,19 +150,24 @@ class MCLogUI(QtGui.QMainWindow):
 
   def load_csv(self, fpath):
     self.data = {}
-    with open(fpath) as fd:
-      reader = csv.DictReader(fd, delimiter=';')
-      for row in reader:
-        for k in reader.fieldnames:
-          try:
-            value = float(row[k])
-          except ValueError:
-            value = None
-          if not k in self.data:
-            self.data[k] = []
-          self.data[k].append(value)
-    for k in self.data:
-      self.data[k] = np.array(self.data[k])
+    if fpath.endswith('.bin'):
+      tmpf = tempfile.mkstemp(suffix = '.log')[1]
+      os.system("mc_bin_to_log {} {}".format(fpath, tmpf))
+      return self.load_csv(tmpf)
+    else:
+      with open(fpath) as fd:
+        reader = csv.DictReader(fd, delimiter=';')
+        for row in reader:
+          for k in reader.fieldnames:
+            try:
+              value = float(row[k])
+            except ValueError:
+              value = None
+            if not k in self.data:
+              self.data[k] = []
+            self.data[k].append(value)
+      for k in self.data:
+        self.data[k] = np.array(self.data[k])
     i = 0
     while "qIn_{}".format(i) in self.data and "qOut_{}".format(i) in self.data:
       self.data["error_{}".format(i)] = self.data["qOut_{}".format(i)] - self.data["qIn_{}".format(i)]
