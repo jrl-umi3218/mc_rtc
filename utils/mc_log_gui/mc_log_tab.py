@@ -167,7 +167,10 @@ class MCLogTab(QtGui.QWidget):
 
       ySelector.resizeColumnToContents(0)
       ySelector.resizeColumnToContents(1)
-      ySelector.setMaximumWidth(ySelector.sizeHintForColumn(0) + 75)
+      cWidth = min(200, ySelector.sizeHintForColumn(0))
+      ySelector.setColumnWidth(0, cWidth)
+      ySelector.setColumnWidth(1, 75)
+      ySelector.setMaximumWidth(cWidth + 75)
     update_y_selector(self.ui.y1Selector, 0)
     update_y_selector(self.ui.y2Selector, 1)
 
