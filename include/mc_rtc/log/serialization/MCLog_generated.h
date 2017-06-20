@@ -249,7 +249,7 @@ inline flatbuffers::Offset<DoubleVector> CreateDoubleVector(
 inline flatbuffers::Offset<DoubleVector> CreateDoubleVectorDirect(
     flatbuffers::FlatBufferBuilder &_fbb,
     const std::vector<double> *v = nullptr) {
-  return mc_control::log::CreateDoubleVector(
+  return mc_rtc::log::CreateDoubleVector(
       _fbb,
       v ? _fbb.CreateVector<double>(*v) : 0);
 }
@@ -338,7 +338,7 @@ inline flatbuffers::Offset<String> CreateString(
 inline flatbuffers::Offset<String> CreateStringDirect(
     flatbuffers::FlatBufferBuilder &_fbb,
     const char *s = nullptr) {
-  return mc_control::log::CreateString(
+  return mc_rtc::log::CreateString(
       _fbb,
       s ? _fbb.CreateString(s) : 0);
 }
@@ -647,7 +647,7 @@ inline flatbuffers::Offset<Log> CreateLogDirect(
     const std::vector<flatbuffers::Offset<flatbuffers::String>> *keys = nullptr,
     const std::vector<uint8_t> *values_type = nullptr,
     const std::vector<flatbuffers::Offset<void>> *values = nullptr) {
-  return mc_control::log::CreateLog(
+  return mc_rtc::log::CreateLog(
       _fbb,
       keys ? _fbb.CreateVector<flatbuffers::Offset<flatbuffers::String>>(*keys) : 0,
       values_type ? _fbb.CreateVector<uint8_t>(*values_type) : 0,
