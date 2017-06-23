@@ -46,7 +46,7 @@ public:
   unsigned int envIndex() const;
 
   /* Robot(s) loader functions */
-  Robot & load(const RobotModule & module, const std::string & surfaceDir, sva::PTransformd * base = nullptr, const std::string& bName = "");
+  Robot & load(const RobotModule & module, const std::string & surfaceDir = "", sva::PTransformd * base = nullptr, const std::string& bName = "");
 
   void load(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir);
 
