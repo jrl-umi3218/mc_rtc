@@ -59,6 +59,10 @@ namespace mc_solver
 QPSolver::QPSolver(std::shared_ptr<mc_rbdyn::Robots> robots, double timeStep)
 : robots_p(robots), timeStep(timeStep), solver()
 {
+  if(timeStep <= 0)
+  {
+    LOG_ERROR_AND_THROW(std::invalid_argument, "timeStep has to be > 0! timeStep = " << timeStep)
+  }
 }
 
 QPSolver::QPSolver(double timeStep)
