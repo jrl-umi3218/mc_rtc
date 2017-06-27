@@ -39,6 +39,7 @@ struct LogEntry
           CASE_ENUM(mc_rtc::log::LogData_Quaterniond)
           CASE_ENUM(mc_rtc::log::LogData_PTransformd)
           CASE_ENUM(mc_rtc::log::LogData_ForceVecd)
+          CASE_ENUM(mc_rtc::log::LogData_MotionVecd)
           default:
             break;
         };
@@ -127,6 +128,7 @@ struct Log
           CASE_ENUM(mc_rtc::log::LogData_Quaterniond)
           CASE_ENUM(mc_rtc::log::LogData_PTransformd)
           CASE_ENUM(mc_rtc::log::LogData_ForceVecd)
+          CASE_ENUM(mc_rtc::log::LogData_MotionVecd)
           default:
             break;
         };
@@ -183,6 +185,7 @@ struct Log
           CASE_ENUM(mc_rtc::log::LogData_Quaterniond)
           CASE_ENUM(mc_rtc::log::LogData_PTransformd)
           CASE_ENUM(mc_rtc::log::LogData_ForceVecd)
+          CASE_ENUM(mc_rtc::log::LogData_MotionVecd)
           default:
             break;
         };

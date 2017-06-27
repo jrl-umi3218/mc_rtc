@@ -12,6 +12,7 @@
 
 #include <geometry_msgs/Quaternion.h>
 #include <geometry_msgs/Transform.h>
+#include <geometry_msgs/Twist.h>
 #include <geometry_msgs/Vector3.h>
 #include <geometry_msgs/Wrench.h>
 
@@ -43,6 +44,7 @@ MAKE_RM_F_FB(LogData_Vector3d, geometry_msgs::Vector3);
 MAKE_RM_F_FB(LogData_Quaterniond, geometry_msgs::Quaternion);
 MAKE_RM_F_FB(LogData_PTransformd, geometry_msgs::Transform);
 MAKE_RM_F_FB(LogData_ForceVecd, geometry_msgs::Wrench);
+MAKE_RM_F_FB(LogData_MotionVecd, geometry_msgs::Twist);
 #undef MAKE_RM_F_FB
 
 template<mc_rtc::log::LogData T>
@@ -170,6 +172,21 @@ FBToROS<LogData_ForceVecd>::ret_t
   return ret;
 }
 
+template<>
+FBToROS<LogData_MotionVecd>::ret_t
+  FBToROS<LogData_MotionVecd>::convert(const void * data)
+{
+  auto fb_data = static_cast<const MotionVecd *>(data);
+  ret_t ret;
+  ret.linear.x = fb_data->linear()->x();
+  ret.linear.y = fb_data->linear()->y();
+  ret.linear.z = fb_data->linear()->z();
+  ret.angular.x = fb_data->angular()->x();
+  ret.angular.y = fb_data->angular()->y();
+  ret.angular.z = fb_data->angular()->z();
+  return ret;
+}
+
 void usage(char * p)
 {
   LOG_ERROR("Usage: " << p << " [bin] [bag] (dt=0.005)")
@@ -231,6 +248,7 @@ int main(int argc, char * argv[])
           CASE_ENUM(LogData_Quaterniond);
           CASE_ENUM(LogData_PTransformd);
           CASE_ENUM(LogData_ForceVecd);
+          CASE_ENUM(LogData_MotionVecd);
           default:
             break;
 #undef CASE_ENUM

@@ -85,6 +85,22 @@ struct LogDataHelper<sva::ForceVecd>
   }
 };
 
+template<>
+struct LogDataHelper<sva::MotionVecd>
+{
+  static constexpr mc_rtc::log::LogData value_type = mc_rtc::log::LogData_MotionVecd;
+
+  static flatbuffers::Offset<void> serialize(flatbuffers::FlatBufferBuilder & builder,
+                                             const sva::MotionVecd & mv)
+  {
+    const auto & angular = mv.angular();
+    auto fb_angular = mc_rtc::log::CreateVector3d(builder, angular.x(), angular.y(), angular.z());
+    const auto & linear = mv.linear();
+    auto fb_linear = mc_rtc::log::CreateVector3d(builder, linear.x(), linear.y(), linear.z());
+    return mc_rtc::log::CreateMotionVecd(builder, fb_angular, fb_linear).Union();
+  }
+};
+
 /** Type-traits for serializable types
  *
  * value is true if T is serializable
@@ -382,6 +398,34 @@ struct CSVWriterHelper<mc_rtc::log::LogData_ForceVecd>
        << ";" << c->x()
        << ";" << c->y()
        << ";" << c->z();
+  }
+};
+
+template<>
+struct CSVWriterHelper<mc_rtc::log::LogData_MotionVecd>
+{
+  static size_t key_size(const void *) { return 6; }
+  static void write_header(const std::string & key, size_t,
+                    std::ostream & os)
+  {
+    os << key << "_wx"
+       << ";" << key << "_wy"
+       << ";" << key << "_wz"
+       << ";" << key << "_vx"
+       << ";" << key << "_vy"
+       << ";" << key << "_vz";
+  }
+  static void write_data(const void * data, std::ostream & os)
+  {
+    auto mv = static_cast<const mc_rtc::log::MotionVecd*>(data);
+    const auto & a = mv->angular();
+    const auto & l = mv->linear();
+    os << a->x()
+       << ";" << a->y()
+       << ";" << a->z()
+       << ";" << l->x()
+       << ";" << l->y()
+       << ";" << l->z();
   }
 };
 

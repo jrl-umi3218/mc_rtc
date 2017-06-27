@@ -27,6 +27,8 @@ struct PTransformd;
 
 struct ForceVecd;
 
+struct MotionVecd;
+
 struct Log;
 
 enum LogData {
@@ -40,11 +42,12 @@ enum LogData {
   LogData_Quaterniond = 7,
   LogData_PTransformd = 8,
   LogData_ForceVecd = 9,
+  LogData_MotionVecd = 10,
   LogData_MIN = LogData_NONE,
-  LogData_MAX = LogData_ForceVecd
+  LogData_MAX = LogData_MotionVecd
 };
 
-inline LogData (&EnumValuesLogData())[10] {
+inline LogData (&EnumValuesLogData())[11] {
   static LogData values[] = {
     LogData_NONE,
     LogData_Bool,
@@ -55,7 +58,8 @@ inline LogData (&EnumValuesLogData())[10] {
     LogData_Vector3d,
     LogData_Quaterniond,
     LogData_PTransformd,
-    LogData_ForceVecd
+    LogData_ForceVecd,
+    LogData_MotionVecd
   };
   return values;
 }
@@ -72,6 +76,7 @@ inline const char **EnumNamesLogData() {
     "Quaterniond",
     "PTransformd",
     "ForceVecd",
+    "MotionVecd",
     nullptr
   };
   return names;
@@ -120,6 +125,10 @@ template<> struct LogDataTraits<PTransformd> {
 
 template<> struct LogDataTraits<ForceVecd> {
   static const LogData enum_value = LogData_ForceVecd;
+};
+
+template<> struct LogDataTraits<MotionVecd> {
+  static const LogData enum_value = LogData_MotionVecd;
 };
 
 bool VerifyLogData(flatbuffers::Verifier &verifier, const void *obj, LogData type);
@@ -577,6 +586,58 @@ inline flatbuffers::Offset<ForceVecd> CreateForceVecd(
   return builder_.Finish();
 }
 
+struct MotionVecd FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_ANGULAR = 4,
+    VT_LINEAR = 6
+  };
+  const Vector3d *angular() const {
+    return GetPointer<const Vector3d *>(VT_ANGULAR);
+  }
+  const Vector3d *linear() const {
+    return GetPointer<const Vector3d *>(VT_LINEAR);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyOffset(verifier, VT_ANGULAR) &&
+           verifier.VerifyTable(angular()) &&
+           VerifyOffset(verifier, VT_LINEAR) &&
+           verifier.VerifyTable(linear()) &&
+           verifier.EndTable();
+  }
+};
+
+struct MotionVecdBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_angular(flatbuffers::Offset<Vector3d> angular) {
+    fbb_.AddOffset(MotionVecd::VT_ANGULAR, angular);
+  }
+  void add_linear(flatbuffers::Offset<Vector3d> linear) {
+    fbb_.AddOffset(MotionVecd::VT_LINEAR, linear);
+  }
+  MotionVecdBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  MotionVecdBuilder &operator=(const MotionVecdBuilder &);
+  flatbuffers::Offset<MotionVecd> Finish() {
+    const auto end = fbb_.EndTable(start_, 2);
+    auto o = flatbuffers::Offset<MotionVecd>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<MotionVecd> CreateMotionVecd(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    flatbuffers::Offset<Vector3d> angular = 0,
+    flatbuffers::Offset<Vector3d> linear = 0) {
+  MotionVecdBuilder builder_(_fbb);
+  builder_.add_linear(linear);
+  builder_.add_angular(angular);
+  return builder_.Finish();
+}
+
 struct Log FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_KEYS = 4,
@@ -693,6 +754,10 @@ inline bool VerifyLogData(flatbuffers::Verifier &verifier, const void *obj, LogD
     }
     case LogData_ForceVecd: {
       auto ptr = reinterpret_cast<const ForceVecd *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    case LogData_MotionVecd: {
+      auto ptr = reinterpret_cast<const MotionVecd *>(obj);
       return verifier.VerifyTable(ptr);
     }
     default: return false;
