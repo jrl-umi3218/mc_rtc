@@ -22,6 +22,12 @@ from libcpp.vector cimport vector
 from libcpp cimport bool as cppbool
 
 import json
+import warnings
+
+def deprecated():
+  warnings.simplefilter('always', category=DeprecationWarning)
+  warnings.warn("This call is deprecated", DeprecationWarning)
+  warnings.simplefilter('ignore', category=DeprecationWarning)
 
 # Hold python object that have to be kept alive
 global __MODULE_OBJECTS__
@@ -413,10 +419,17 @@ cdef class Robots(object):
       ret.append(RobotFromC(deref(it)))
     return ret
 
-  def load(self, RobotModule module, sva.PTransformd base = None, bName = ""):
+  def load(self, RobotModule module, *args):
     cdef c_sva.PTransformd * b = NULL
-    if base is not None:
-      b = base.impl
+    bName = ""
+    if len(args):
+      if isinstance(args[0], sva.PTransformd):
+        b = (<sva.PTransformd>(args[0])).impl
+        if len(args) > 1:
+          bName = args[1]
+      else:
+        deprecated()
+        return self.load(module, *args[1:])
     return RobotFromC(deref(self.impl).load(deref(module.impl), b, bName))
 
   def mbs(self):
@@ -1715,14 +1728,22 @@ def saveStances(Robots robots, filename, stances_in, actions_in):
     actions.push_back(fake_shared_from_sa(sa))
   c_mc_rbdyn.pSaveStances(deref(robots.impl), filename, stances, actions)
 
-def loadRobot(RobotModule module, sva.PTransformd base = None, bName = ""):
-  if base is None:
-    robots = RobotsFromPtr(c_mc_rbdyn.loadRobot(deref(module.impl.get()), NULL, bName))
-  else:
-    robots = RobotsFromPtr(c_mc_rbdyn.loadRobot(deref(module.impl.get()), base.impl, bName))
-  return robots
+def loadRobot(RobotModule module, *args):#sva.PTransformd base = None, bName = ""):
+  cdef c_sva.PTransformd * b = NULL
+  bName = ""
+  if len(args):
+    if isinstance(args[0], sva.PTransformd):
+      b = (<sva.PTransformd>(args[0])).impl;
+      if len(args) > 1:
+        bName = args[1]
+    else:
+      deprecated()
+      return loadRobot(module, *args[1:])
+  return RobotsFromPtr(c_mc_rbdyn.loadRobot(deref(module.impl.get()), b, bName))
 
-def loadRobots(robot_modules):
+def loadRobots(robot_modules, robot_surface_dirs = None):
+  if robot_surface_dirs is not None:
+    deprecated()
   return RobotsFromPtr(c_mc_rbdyn.loadRobots(RobotModuleVector(robot_modules).v))
 
 def loadRobotAndEnv(RobotModule module, RobotModule envModule,
