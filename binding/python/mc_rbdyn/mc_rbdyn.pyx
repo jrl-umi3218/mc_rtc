@@ -413,11 +413,11 @@ cdef class Robots(object):
       ret.append(RobotFromC(deref(it)))
     return ret
 
-  def load(self, RobotModule module, surfaceDir, sva.PTransformd base = None, bName = ""):
+  def load(self, RobotModule module, sva.PTransformd base = None, bName = ""):
     cdef c_sva.PTransformd * b = NULL
     if base is not None:
       b = base.impl
-    return RobotFromC(deref(self.impl).load(deref(module.impl), surfaceDir, b, bName))
+    return RobotFromC(deref(self.impl).load(deref(module.impl), b, bName))
 
   def mbs(self):
     return rbdyn.MultiBodyVectorFromPtr(&(deref(self.impl).mbs()))
@@ -1715,27 +1715,22 @@ def saveStances(Robots robots, filename, stances_in, actions_in):
     actions.push_back(fake_shared_from_sa(sa))
   c_mc_rbdyn.pSaveStances(deref(robots.impl), filename, stances, actions)
 
-def loadRobot(RobotModule module, surfaceDir, sva.PTransformd base = None, bName = ""):
+def loadRobot(RobotModule module, sva.PTransformd base = None, bName = ""):
   if base is None:
-    robots = RobotsFromPtr(c_mc_rbdyn.loadRobot(deref(module.impl.get()),
-      surfaceDir, NULL, bName))
+    robots = RobotsFromPtr(c_mc_rbdyn.loadRobot(deref(module.impl.get()), NULL, bName))
   else:
-    robots = RobotsFromPtr(c_mc_rbdyn.loadRobot(deref(module.impl.get()),
-      surfaceDir, base.impl, bName))
+    robots = RobotsFromPtr(c_mc_rbdyn.loadRobot(deref(module.impl.get()), base.impl, bName))
   return robots
 
-def loadRobots(robot_modules, surfaceDirs):
-  return RobotsFromPtr(c_mc_rbdyn.loadRobots(RobotModuleVector(robot_modules).v,
-    surfaceDirs))
+def loadRobots(robot_modules):
+  return RobotsFromPtr(c_mc_rbdyn.loadRobots(RobotModuleVector(robot_modules).v))
 
-def loadRobotAndEnv(RobotModule module, surfaceDir, RobotModule envModule,
-    envSurfaceDir, sva.PTransformd base = None, bId = -1):
+def loadRobotAndEnv(RobotModule module, RobotModule envModule,
+                    sva.PTransformd base = None, bId = -1):
   if base is None:
-    return RobotsFromPtr(c_mc_rbdyn.loadRobotAndEnv(deref(module.impl.get()),
-      surfaceDir, deref(envModule.impl.get()), envSurfaceDir))
+    return RobotsFromPtr(c_mc_rbdyn.loadRobotAndEnv(deref(module.impl.get()), deref(envModule.impl.get())))
   else:
-    return RobotsFromPtr(c_mc_rbdyn.loadRobotAndEnv(deref(module.impl.get()),
-      surfaceDir, deref(envModule.impl.get()), envSurfaceDir, base.impl, bId))
+    return RobotsFromPtr(c_mc_rbdyn.loadRobotAndEnv(deref(module.impl.get()), deref(envModule.impl.get()), base.impl, bId))
 
 def loadRobotFromUrdf(name, urdf, withVirtualLinks = True, filteredLinks = [],
     fixed = False, sva.PTransformd base = None, bName = ""):

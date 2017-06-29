@@ -195,8 +195,14 @@ void Robots::robotCopy(const Robot & robot)
   robot.copy(*this, static_cast<unsigned int>(this->mbs_.size()) - 1);
 }
 
-Robot& Robots::load(const RobotModule & module, const std::string &, sva::PTransformd * base,
-    const std::string& bName)
+Robot& Robots::load(const RobotModule & module, const std::string &,
+                    sva::PTransformd * base, const std::string& bName)
+{
+  return load(module, base, bName);
+}
+
+Robot& Robots::load(const RobotModule & module, sva::PTransformd * base,
+                    const std::string& bName)
 {
   mbs_.emplace_back(module.mb);
   mbcs_.emplace_back(module.mbc);
@@ -327,50 +333,63 @@ Robot& Robots::load(const RobotModule & module, const std::string &, sva::PTrans
 {
 }*/
 
-std::shared_ptr<Robots> loadRobot(const RobotModule & module, const std::string & surfaceDir, sva::PTransformd * base, const std::string& baseName)
+std::shared_ptr<Robots> loadRobot(const RobotModule & module, const std::string &, sva::PTransformd * base, const std::string& baseName)
+{
+  return loadRobot(module, base, baseName);
+}
+
+std::shared_ptr<Robots> loadRobot(const RobotModule & module, sva::PTransformd * base, const std::string& baseName)
 {
   auto robots = std::make_shared<Robots>();
-  robots->load(module, surfaceDir, base, baseName);
+  robots->load(module, base, baseName);
   return robots;
 }
 
-void Robots::load(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir)
+void Robots::load(const RobotModule & module, const std::string &, const RobotModule & envModule, const std::string &, sva::PTransformd * base, const std::string& baseName)
 {
-  load(module, surfaceDir, envModule, envSurfaceDir, nullptr, "Root");
+  load(module, envModule, base, baseName);
 }
 
-std::shared_ptr<Robots> loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir)
+void Robots::load(const RobotModule & module, const RobotModule & envModule, sva::PTransformd * base, const std::string& baseName)
+{
+  load(module, base, baseName);
+  load(envModule);
+}
+
+std::shared_ptr<Robots> loadRobotAndEnv(const RobotModule & module, const std::string &, const RobotModule & envModule, const std::string &, sva::PTransformd * base, const std::string& baseName)
+{
+  return loadRobotAndEnv(module, envModule, base, baseName);
+}
+
+std::shared_ptr<Robots> loadRobotAndEnv(const RobotModule & module, const RobotModule & envModule, sva::PTransformd * base, const std::string& baseName)
 {
   auto robots = std::make_shared<Robots>();
-  robots->load(module, surfaceDir, envModule, envSurfaceDir);
+  robots->load(module, envModule, base, baseName);
   return robots;
 }
 
-void Robots::load(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir, sva::PTransformd * base, const std::string& baseName)
+void Robots::load(const std::vector<std::shared_ptr<RobotModule>> & modules, const std::vector<std::string> &)
 {
-  load(module, surfaceDir, base, baseName);
-  load(envModule, envSurfaceDir);
+  load(modules);
 }
 
-std::shared_ptr<Robots> loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir, sva::PTransformd * base, const std::string& baseName)
-{
-  auto robots = std::make_shared<Robots>();
-  robots->load(module, surfaceDir, envModule, envSurfaceDir, base, baseName);
-  return robots;
-}
-
-void Robots::load(const std::vector<std::shared_ptr<RobotModule>> & modules, const std::vector<std::string> & surfaceDirs)
+void Robots::load(const std::vector<std::shared_ptr<RobotModule>> & modules)
 {
   for(size_t i = 0; i < modules.size(); ++i)
   {
-    load(*modules[i], surfaceDirs[i]);
+    load(*modules[i]);
   }
 }
 
-std::shared_ptr<Robots> loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules, const std::vector<std::string> & surfaceDirs)
+std::shared_ptr<Robots> loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules, const std::vector<std::string> &)
+{
+  return loadRobots(modules);
+}
+
+std::shared_ptr<Robots> loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules)
 {
   auto robots = std::make_shared<Robots>();
-  robots->load(modules, surfaceDirs);
+  robots->load(modules);
   return robots;
 }
 

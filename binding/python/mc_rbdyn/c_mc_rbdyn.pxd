@@ -132,7 +132,7 @@ cdef extern from "<mc_rbdyn/Robots.h>" namespace "mc_rbdyn":
     const Robot & robot()
     const Robot & env()
 
-    Robot & load(const RobotModule&, const string&, PTransformd*, const string&)
+    Robot & load(const RobotModule&, PTransformd*, const string&)
 
     const Robot & robot(unsigned int)
 
@@ -194,12 +194,10 @@ cdef extern from "<mc_rbdyn/Robot.h>" namespace "mc_rbdyn":
 
     map[string, vector[double]] stance()
 
-  shared_ptr[Robots] loadRobot(const RobotModule&, const string&, PTransformd *, const string&)
-  shared_ptr[Robots] loadRobots(const vector[RobotModulePtr]&, const vector[string]&)
-  shared_ptr[Robots] loadRobotAndEnv(const RobotModule&, const string&, const RobotModule&,
-      const string&)
-  shared_ptr[Robots] loadRobotAndEnv(const RobotModule&, const string&, const RobotModule&,
-      const string&, PTransformd*, const string&)
+  shared_ptr[Robots] loadRobot(const RobotModule&, PTransformd *, const string&)
+  shared_ptr[Robots] loadRobots(const vector[RobotModulePtr]&)
+  shared_ptr[Robots] loadRobotAndEnv(const RobotModule&, const RobotModule&)
+  shared_ptr[Robots] loadRobotAndEnv(const RobotModule&, const RobotModule&, PTransformd*, const string&)
   shared_ptr[Robots] loadRobotFromUrdf(const string&, const string&, cppbool, const
       vector[string]&, cppbool, PTransformd*, const string&)
 
