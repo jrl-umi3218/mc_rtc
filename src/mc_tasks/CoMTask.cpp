@@ -33,6 +33,7 @@ void CoMTask::move_com(const Eigen::Vector3d & com)
 
 void CoMTask::com(const Eigen::Vector3d & com)
 {
+  cur_com_ = com;
   errorT->com(com);
 }
 
