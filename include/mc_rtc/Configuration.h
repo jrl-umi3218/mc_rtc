@@ -20,15 +20,29 @@ namespace mc_rtc
   struct MC_RTC_UTILS_DLLAPI ConfigurationArrayIterator;
   struct MC_RTC_UTILS_DLLAPI Configuration;
 
+  /** This structure should be specialized to implement serialization for a new type.
+   *
+   * load return type should be T
+   *
+   * save return type should be mc_rtc::Configuration
+   */
+  template<typename T>
+  struct ConfigurationLoader
+  {
+    static void load(const mc_rtc::Configuration &) {}
+
+    static void save(const T&) {}
+  };
+
   namespace internal
   {
-    /** Helper trait to determine wheter:
-     * void load_object(const mc_rtc::Configuration&, T&);
+    /** Helper trait to determine whether:
+     * T ConfigurationLoader<T>::load(const mc_rtc::Configuration &);
      * is a valid function or not
      */
     struct _has_configuration_load_object
     {
-      template<typename T, typename std::enable_if<std::is_same<decltype(load_object(std::declval<const Configuration&>(), std::declval<T&>())), void>::value, int>::type = 0>
+      template<typename T, typename std::enable_if<std::is_same<decltype(ConfigurationLoader<T>::load(std::declval<const Configuration&>())), T>::value, int>::type = 0>
       static std::true_type test(T * p);
 
       template<typename T>
@@ -40,12 +54,12 @@ namespace mc_rtc
     {};
 
     /** Helper trait to determine wheter:
-     * mc_rtc::Configuration save_object(const T&);
+     * mc_rtc::Configuration mc_rtc::ConfigurationLoader<T>::save(const T&);
      * is a valid construct or not
      */
     struct _has_configuration_save_object
     {
-      template<typename T, typename std::enable_if<std::is_same<decltype(save_object(std::declval<const T&>())), Configuration>::value, int>::type = 0>
+      template<typename T, typename std::enable_if<std::is_same<decltype(ConfigurationLoader<T>::save(std::declval<const T&>())), Configuration>::value, int>::type = 0>
       static std::true_type test(T * p);
 
       template<typename T>
@@ -248,21 +262,14 @@ namespace mc_rtc
     /*! \brief User-defined conversions
      *
      * Requires:
-     * - T should be default-constructible
-     * - void load_object(const mc_rtc::Configuration&, T&) should exist
-     * - load_object should be in the same namespace as T
+     * - T mc_rtc::ConfigurationLoader<T>::load(const mc_rtc::Configuration &) should exist
      */
     template<typename T,
       typename std::enable_if<
-#if not defined __GNUC__ || (__GNUC__ >= 4 && __GNUC_MINOR > 7) // See GCC Bug 51213
-        std::is_default_constructible<T>::value &&
-#endif
         internal::has_configuration_load_object<T>::value, int>::type = 0>
     operator T() const
     {
-      T ret;
-      load_object(*this, ret);
-      return ret;
+      return ConfigurationLoader<T>::load(*this);
     }
 
     /*! \brief Creates an empty configuration */
@@ -540,9 +547,7 @@ namespace mc_rtc
     /*! \brief User-defined conversion
      *
      * Requires the existence of:
-     * mc_rtc::Configuration save_object(const T&);
-     *
-     * save_object should be in the same namespace as T
+     * mc_rtc::Configuration mc_rtc::ConfigurationLoader<T>::save(const T&);
      *
      * \param key Key of the element
      *
@@ -552,7 +557,7 @@ namespace mc_rtc
       typename std::enable_if<internal::has_configuration_save_object<T>::value, int>::type = 0>
     void push(const T & value)
     {
-      push(save_object(value));
+      push(mc_rtc::ConfigurationLoader<T>::save(value));
     }
 
     /*! \brief Add a vector into the JSON document
@@ -594,9 +599,7 @@ namespace mc_rtc
     /*! \brief User-defined conversion
      *
      * Requires the existence of:
-     * mc_rtc::Configuration save_object(const T&);
-     *
-     * save_object should be in the same namespace as T
+     * mc_rtc::Configuration mc_rtc::ConfigurationLoader<T>::save(const T&);
      *
      * \param key Key of the element
      *
@@ -606,7 +609,7 @@ namespace mc_rtc
       typename std::enable_if<internal::has_configuration_save_object<T>::value, int>::type = 0>
     void add(const std::string & key, const T & value)
     {
-      add(key, save_object(value));
+      add(key, ConfigurationLoader<T>::save(value));
     }
 
     /*! \brief Push a vector into the JSON document

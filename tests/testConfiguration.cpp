@@ -681,17 +681,25 @@ struct Foo
     return rhs.name == this->name && rhs.d == this->d;
   }
 };
-void load_object(const mc_rtc::Configuration & config, Foo & f)
+
+namespace mc_rtc
 {
-  f.name = static_cast<std::string>(config("name"));
-  f.d = config("d");
-}
-mc_rtc::Configuration save_object(const Foo & f)
-{
-  mc_rtc::Configuration config;
-  config.add("name", f.name);
-  config.add("d", f.d);
-  return config;
+  template<>
+  struct ConfigurationLoader<Foo>
+  {
+    static Foo load(const mc_rtc::Configuration & config)
+    {
+      return {config("name"), config("d")};
+    }
+
+    static mc_rtc::Configuration save(const Foo & f)
+    {
+      mc_rtc::Configuration config;
+      config.add("name", f.name);
+      config.add("d", f.d);
+      return config;
+    }
+  };
 }
 
 BOOST_AUTO_TEST_CASE(TestUserDefinedConversions)
@@ -700,8 +708,7 @@ BOOST_AUTO_TEST_CASE(TestUserDefinedConversions)
   mc_rtc::Configuration config;
   config.add("foo", f_ref);
 
-  Foo f1;
-  load_object(config("foo"), f1);
+  Foo f1 = mc_rtc::ConfigurationLoader<Foo>::load(config("foo"));
   BOOST_CHECK(f1 == f_ref);
 
   Foo f2;
