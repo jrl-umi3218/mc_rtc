@@ -640,6 +640,18 @@ namespace mc_rtc
       }
     }
 
+    /*! \brief Push a pair into the JSON document
+     *
+     * \param value Pair of elements to add
+     */
+    template<typename T1, typename T2>
+    void push(const std::pair<T1, T2> & value)
+    {
+      Configuration v = array(2);
+      v.push(value.first);
+      v.push(value.second);
+    }
+
     ConfigurationArrayIterator begin() const;
 
     ConfigurationArrayIterator end() const;
