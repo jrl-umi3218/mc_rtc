@@ -66,10 +66,144 @@ bool operator==(const mc_rbdyn::Base & lhs, const mc_rbdyn::Base & rhs)
          lhs.baseType == rhs.baseType;
 }
 
-typedef boost::mpl::list<mc_rbdyn::Base> test_types;
+template<>
+mc_rbdyn::BodySensor make_ref()
+{
+  return {"sensor", "parent", random_pt()};
+}
+
+bool operator==(const mc_rbdyn::BodySensor & lhs, const mc_rbdyn::BodySensor & rhs)
+{
+  return lhs.name() == rhs.name() &&
+         lhs.parentBody() == rhs.parentBody() &&
+         lhs.X_b_s() == rhs.X_b_s();
+}
+
+template<>
+mc_rbdyn::Collision make_ref()
+{
+  return {"Body1", "Body2", 0.05, 0.01, 0.123};
+}
+
+template<>
+std::shared_ptr<mc_rbdyn::PlanarSurface> make_ref()
+{
+  std::vector<std::pair<double, double>> pPoints = { {0.1, 2.3}, {4.5, 6.7}, {8.9, 0.1} };
+  return std::make_shared<mc_rbdyn::PlanarSurface>("planarSurfaceName", "bodyName", random_pt(), "material", pPoints);
+}
+
+/* Note: mc_rbdyn already defines comparison between two surfaces but it checks very superficially */
+bool operator==(const std::shared_ptr<mc_rbdyn::PlanarSurface> & lhs_p, const std::shared_ptr<mc_rbdyn::PlanarSurface> & rhs_p)
+{
+  assert(lhs_p);
+  assert(rhs_p);
+  const auto & lhs = *lhs_p;
+  const auto & rhs = *rhs_p;
+  return lhs.name() == rhs.name() &&
+         lhs.bodyName() == rhs.bodyName() &&
+         lhs.X_b_s() == rhs.X_b_s() &&
+         lhs.materialName() == rhs.materialName() &&
+         lhs.planarPoints() == rhs.planarPoints();
+}
+
+template<>
+std::shared_ptr<mc_rbdyn::CylindricalSurface> make_ref()
+{
+  return std::make_shared<mc_rbdyn::CylindricalSurface>("planarSurfaceName", "bodyName", random_pt(), "material", 0.42, 1.42);
+}
+
+bool operator==(const std::shared_ptr<mc_rbdyn::CylindricalSurface> & lhs_p, const std::shared_ptr<mc_rbdyn::CylindricalSurface> & rhs_p)
+{
+  assert(lhs_p);
+  assert(rhs_p);
+  const auto & lhs = *lhs_p;
+  const auto & rhs = *rhs_p;
+  return lhs.name() == rhs.name() &&
+         lhs.bodyName() == rhs.bodyName() &&
+         lhs.X_b_s() == rhs.X_b_s() &&
+         lhs.materialName() == rhs.materialName() &&
+         lhs.radius() == rhs.radius() &&
+         lhs.width() == rhs.width();
+}
+
+template<>
+std::shared_ptr<mc_rbdyn::GripperSurface> make_ref()
+{
+  std::vector<sva::PTransformd> pFo = { random_pt(), random_pt(), random_pt() };
+  return std::make_shared<mc_rbdyn::GripperSurface>("planarSurfaceName", "bodyName", random_pt(), "material", pFo, random_pt(), 1.42);
+}
+
+bool operator==(const std::shared_ptr<mc_rbdyn::GripperSurface> & lhs_p, const std::shared_ptr<mc_rbdyn::GripperSurface> & rhs_p)
+{
+  assert(lhs_p);
+  assert(rhs_p);
+  const auto & lhs = *lhs_p;
+  const auto & rhs = *rhs_p;
+  return lhs.name() == rhs.name() &&
+         lhs.bodyName() == rhs.bodyName() &&
+         lhs.X_b_s() == rhs.X_b_s() &&
+         lhs.materialName() == rhs.materialName() &&
+         lhs.pointsFromOrigin() == rhs.pointsFromOrigin() &&
+         lhs.X_b_motor() == rhs.X_b_motor() &&
+         lhs.motorMaxTorque() == rhs.motorMaxTorque();
+}
+
+template<>
+std::shared_ptr<mc_rbdyn::Surface> make_ref()
+{
+  static int i = -1;
+  i++;
+  if(i % 3 == 0)
+  {
+    return make_ref<std::shared_ptr<mc_rbdyn::PlanarSurface>>();
+  }
+  else if(i % 3 == 1)
+  {
+    return make_ref<std::shared_ptr<mc_rbdyn::CylindricalSurface>>();
+  }
+  else
+  {
+    return make_ref<std::shared_ptr<mc_rbdyn::GripperSurface>>();
+  }
+}
+
+bool operator==(const std::shared_ptr<mc_rbdyn::Surface> & lhs, const std::shared_ptr<mc_rbdyn::Surface> & rhs)
+{
+  if(lhs->type() == rhs->type())
+  {
+    auto type = lhs->type();
+    if(type == "planar")
+    {
+      return std::static_pointer_cast<mc_rbdyn::PlanarSurface>(lhs) ==
+             std::static_pointer_cast<mc_rbdyn::PlanarSurface>(rhs);
+    }
+    else if(type == "cylindrical")
+    {
+      return std::static_pointer_cast<mc_rbdyn::CylindricalSurface>(lhs) ==
+             std::static_pointer_cast<mc_rbdyn::CylindricalSurface>(rhs);
+    }
+    else if(type == "gripper")
+    {
+      return std::static_pointer_cast<mc_rbdyn::GripperSurface>(lhs) ==
+             std::static_pointer_cast<mc_rbdyn::GripperSurface>(rhs);
+    }
+  }
+  return false;
+}
+
+typedef boost::mpl::list<mc_rbdyn::Base,
+                         mc_rbdyn::BodySensor,
+                         mc_rbdyn::Collision,
+                         std::shared_ptr<mc_rbdyn::PlanarSurface>,
+                         std::shared_ptr<mc_rbdyn::CylindricalSurface>,
+                         std::shared_ptr<mc_rbdyn::GripperSurface>,
+                         std::shared_ptr<mc_rbdyn::Surface>
+                         > test_types;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(TestJsonIO, T, test_types)
 {
+  static_assert(mc_rtc::internal::has_configuration_load_object<T>::value, "No Configuration load function for this type");
+  static_assert(mc_rtc::internal::has_configuration_save_object<T>::value, "No Configuration save function for this type");
   BOOST_CHECK(mc_rtc::internal::has_configuration_load_object<T>::value);
   BOOST_CHECK(mc_rtc::internal::has_configuration_save_object<T>::value);
 
@@ -80,7 +214,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(TestJsonIO, T, test_types)
   T test = config("object");
   BOOST_CHECK(test == ref);
 
-  std::vector<T> ref_v = {ref, ref, ref, ref, ref};
+  std::vector<T> ref_v = {make_ref<T>(), make_ref<T>(), make_ref<T>(), make_ref<T>(), make_ref<T>()};
   config.add("object_v", ref_v);
 
   std::vector<T> test_v = config("object_v");
@@ -90,7 +224,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(TestJsonIO, T, test_types)
     BOOST_CHECK(test_v[i] == ref_v[i]);
   }
 
-  std::array<T, 3> ref_a = {ref, ref, ref};
+  std::array<T, 3> ref_a = {make_ref<T>(), make_ref<T>(), make_ref<T>()};
   config.add("object_a", ref_a);
 
   std::array<T, 3> test_a = config("object_a");

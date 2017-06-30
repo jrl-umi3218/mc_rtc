@@ -63,6 +63,7 @@ set(mc_rbdyn_HDR
 ../include/mc_rbdyn/Springs.h
 ../include/mc_rbdyn/Base.h
 ../include/mc_rbdyn/BodySensor.h
+../include/mc_rbdyn/configuration_io.h
 )
 set(mc_rbdyn_HDR ${mc_rbdyn_HDR} PARENT_SCOPE)
 
