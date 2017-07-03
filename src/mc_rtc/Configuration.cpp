@@ -68,6 +68,11 @@ struct Configuration::Json::Impl
     assert(is());
     return value()->IsArray();
   }
+  bool isObject() const
+  {
+    assert(is());
+    return value()->IsObject();
+  }
   bool isBool() const
   {
     assert(is());
@@ -134,6 +139,19 @@ struct Configuration::Json::Impl
     return Impl(*this, key);
   }
 
+  std::vector<std::string> keys() const
+  {
+    assert(isObject());
+    std::vector<std::string> ret;
+    for(auto it = value()->MemberBegin();
+        it != value()->MemberEnd();
+        ++it)
+    {
+      ret.push_back(it->name.GetString());
+    }
+    return ret;
+  }
+
   std::string pointer;
   std::shared_ptr<rapidjson::Document> doc_p;
 };
@@ -141,6 +159,16 @@ struct Configuration::Json::Impl
 bool Configuration::Json::isArray() const
 {
   return impl->isArray();
+}
+
+bool Configuration::Json::isObject() const
+{
+  return impl->isObject();
+}
+
+std::vector<std::string> Configuration::Json::keys() const
+{
+  return impl->keys();
 }
 
 size_t Configuration::Json::size() const

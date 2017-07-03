@@ -6,7 +6,9 @@
 
 #include <array>
 #include <exception>
+#include <map>
 #include <memory>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -256,6 +258,31 @@ namespace mc_rtc
       else
       {
         throw Configuration::Exception("Stored Json value is not an array of size 2");
+      }
+    }
+
+    /*! \brief Retrieve a string-indexed map instance
+     *
+     * \throws If the underlying value is not an object or if the member
+     * of the object do not meet the requiremenent of the value type.
+     */
+    template<typename T, class C, class A>
+    operator std::map<std::string, T, C, A>() const
+    {
+      if(v.isObject())
+      {
+        std::map<std::string, T, C, A> ret;
+        auto keys = v.keys();
+        assert(std::set<std::string>(keys.begin(), keys.end()).size() == keys.size());
+        for(const auto & k : keys)
+        {
+          ret[k] = static_cast<T>(Configuration(v[k]));
+        }
+        return ret;
+      }
+      else
+      {
+        throw Configuration::Exception("Stored Json value is not an object");
       }
     }
 
@@ -596,6 +623,24 @@ namespace mc_rtc
       }
     }
 
+    /*! \brief Add string-indexed map into the JSON document
+     *
+     * Overwrites existing content if any.
+     *
+     * \param key Key of the element
+     *
+     * \param value Map of elements to add
+     */
+    template<typename T, class C, class A>
+    void add(const std::string & key, const std::map<std::string, T, C, A> & value)
+    {
+      Configuration v = add(key);
+      for(const auto & el : value)
+      {
+        v.add(el.first, el.second);
+      }
+    }
+
     /*! \brief User-defined conversion
      *
      * Requires the existence of:
@@ -652,6 +697,21 @@ namespace mc_rtc
       v.push(value.second);
     }
 
+    /*! \brief Push a string-indexed map into the JSON document
+     *
+     * \param value Map of elements to add
+     *
+     */
+    template<typename T, class C, class A>
+    void push(const std::map<std::string, T, C, A> & value)
+    {
+      Configuration v = object();
+      for(const auto & el : value)
+      {
+        v.add(el.first, el.second);
+      }
+    }
+
     ConfigurationArrayIterator begin() const;
 
     ConfigurationArrayIterator end() const;
@@ -673,6 +733,8 @@ namespace mc_rtc
       bool isArray() const;
       size_t size() const;
       Json operator[](size_t idx) const;
+      bool isObject() const;
+      std::vector<std::string> keys() const;
       Json operator[](const std::string & key) const;
       std::shared_ptr<Impl> impl;
     };

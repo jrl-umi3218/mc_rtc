@@ -95,6 +95,20 @@ std::string sampleConfig()
     "quat": [0.71, 0, 0.71, 0],
     "doubleDoublePair": [42.5, -42.5],
     "doubleStringPair": [42.5, "sometext"]
+  },
+  "mapStr":
+  {
+    "str1": "sometext1",
+    "str2": "sometext2",
+    "str3": "sometext3",
+    "str4": "sometext4"
+  },
+  "mapDouble":
+  {
+    "str1" : 1.1,
+    "str2" : 2.2,
+    "str3" : 3.3,
+    "str4" : 4.4
   }
 }
 )";
@@ -524,6 +538,42 @@ BOOST_AUTO_TEST_CASE(TestConfigurationReading)
     BOOST_CHECK(std::get<1>(data) == 42.42);
     BOOST_CHECK(std::get<2>(data) == "sometext");
     BOOST_CHECK(std::get<3>(data) == Eigen::Vector3d(1.2, 3.4, 5.6));
+  }
+
+  /* map<string, string> */
+  {
+    using test_t = std::map<std::string, std::string>;
+
+    test_t ref;
+    ref["str1"] = "sometext1";
+    ref["str2"] = "sometext2";
+    ref["str3"] = "sometext3";
+    ref["str4"] = "sometext4";
+
+    test_t a = config("mapStr");
+    BOOST_CHECK(a == ref);
+
+    test_t b = {};
+    config("mapStr", b);
+    BOOST_CHECK(b == ref);
+  }
+
+  /* map<string, double> */
+  {
+    using test_t = std::map<std::string, double>;
+
+    test_t ref;
+    ref["str1"] = 1.1;
+    ref["str2"] = 2.2;
+    ref["str3"] = 3.3;
+    ref["str4"] = 4.4;
+
+    test_t a = config("mapDouble");
+    BOOST_CHECK(a == ref);
+
+    test_t b = {};
+    config("mapDouble", b);
+    BOOST_CHECK(b == ref);
   }
 
   /* Check load */
