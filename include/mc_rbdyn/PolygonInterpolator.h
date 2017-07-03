@@ -32,10 +32,12 @@ public:
   std::vector<tuple_t> midpoint_derivative(double epsilon_derivative);
 
   std::vector<tuple_t> normal_derivative(double epsilon_derivative);
+
+  const std::vector<tuple_pair_t> & tuple_pairs() const;
 private:
   const geos::geom::GeometryFactory & geom_factory;
   GeometryDeleter geom_deleter;
-  std::vector<tuple_pair_t> tuple_pairs;
+  std::vector<tuple_pair_t> tuple_pairs_;
   std::vector<tuple_pair_t> midpoints;
 };
 

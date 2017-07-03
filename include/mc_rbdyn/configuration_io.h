@@ -2,10 +2,17 @@
 
 #include <mc_rtc/Configuration.h>
 
+/* Easily serialized/deserialized types */
 #include <mc_rbdyn/Base.h>
 #include <mc_rbdyn/BodySensor.h>
 #include <mc_rbdyn/Collision.h>
+#include <mc_rbdyn/Flexibility.h>
+#include <mc_rbdyn/ForceSensor.h>
+#include <mc_rbdyn/PolygonInterpolator.h>
+#include <mc_rbdyn/Springs.h>
+#include <mc_rbdyn/RobotModule.h>
 
+/* Serialized/deserialized from/to shared pointers */
 #include <mc_rbdyn/CylindricalSurface.h>
 #include <mc_rbdyn/GripperSurface.h>
 #include <mc_rbdyn/PlanarSurface.h>
@@ -278,6 +285,82 @@ namespace mc_rtc
     static mc_rtc::Configuration save(const std::shared_ptr<mc_rbdyn::GripperSurface> & s)
     {
       return ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::save(s);
+    }
+  };
+
+  template<>
+  struct ConfigurationLoader<mc_rbdyn::Flexibility>
+  {
+    static mc_rbdyn::Flexibility load(const mc_rtc::Configuration & config)
+    {
+      return {config("jointName"), config("K"), config("C"), config("O")};
+    }
+
+    static mc_rtc::Configuration save(const mc_rbdyn::Flexibility & flex)
+    {
+      mc_rtc::Configuration config;
+      config.add("jointName", flex.jointName);
+      config.add("K", flex.K);
+      config.add("C", flex.C);
+      config.add("O", flex.O);
+      return config;
+    }
+  };
+
+  template<>
+  struct ConfigurationLoader<mc_rbdyn::ForceSensor>
+  {
+    static mc_rbdyn::ForceSensor load(const mc_rtc::Configuration & config)
+    {
+      return {config("name"), config("parentBody"), config("X_p_f")};
+    }
+
+    static mc_rtc::Configuration save(const mc_rbdyn::ForceSensor & fs)
+    {
+      mc_rtc::Configuration config;
+      config.add("name", fs.name());
+      config.add("parentBody", fs.parentBody());
+      config.add("X_p_f", fs.X_p_f());
+      return config;
+    }
+  };
+
+  template<>
+  struct ConfigurationLoader<mc_rbdyn::PolygonInterpolator>
+  {
+    static mc_rbdyn::PolygonInterpolator load(const mc_rtc::Configuration & config)
+    {
+      std::vector<mc_rbdyn::PolygonInterpolator::tuple_pair_t> vec = config("tuple_pairs");
+      return mc_rbdyn::PolygonInterpolator(vec);
+    }
+
+    static mc_rtc::Configuration save(const mc_rbdyn::PolygonInterpolator & pi)
+    {
+      mc_rtc::Configuration config;
+      config.add("tuple_pairs", pi.tuple_pairs());
+      return config;
+    }
+  };
+
+  template<>
+  struct ConfigurationLoader<mc_rbdyn::Springs>
+  {
+    static mc_rbdyn::Springs load(const mc_rtc::Configuration & config)
+    {
+      mc_rbdyn::Springs spr;
+      spr.springsBodies = config("springsBodies");
+      spr.afterSpringsBodies = config("afterSpringsBodies");
+      spr.springsJoints = config("springsJoints");
+      return spr;
+    }
+
+    static mc_rtc::Configuration save(const mc_rbdyn::Springs & spr)
+    {
+      mc_rtc::Configuration config;
+      config.add("springsBodies", spr.springsBodies);
+      config.add("afterSpringsBodies", spr.afterSpringsBodies);
+      config.add("springsJoints", spr.springsJoints);
+      return config;
     }
   };
 }

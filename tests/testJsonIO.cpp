@@ -7,6 +7,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <random>
 
 #ifdef WIN32
 #include <Windows.h>
@@ -43,6 +44,22 @@ sva::PTransformd random_pt()
   Eigen::Quaterniond q {Eigen::Vector4d::Random()};
   q.normalize();
   return {q, t};
+}
+
+double rnd()
+{
+  static std::random_device rd;
+  static std::mt19937_64 gen(rd());
+  static std::uniform_real_distribution<double> dis(-100.0, 100.0);
+  return dis(gen);
+}
+
+size_t random_size()
+{
+  static std::random_device rd;
+  static std::mt19937_64 gen(rd());
+  static std::uniform_int_distribution<size_t> dis(10, 100);
+  return dis(gen);
 }
 
 template<typename T>
@@ -191,14 +208,112 @@ bool operator==(const std::shared_ptr<mc_rbdyn::Surface> & lhs, const std::share
   return false;
 }
 
+template<>
+mc_rbdyn::Flexibility make_ref()
+{
+  return {"jointName", rnd(), rnd(), rnd()};
+}
+
+bool operator==(const mc_rbdyn::Flexibility & lhs, const mc_rbdyn::Flexibility & rhs)
+{
+  return lhs.jointName == rhs.jointName &&
+         lhs.K == rhs.K &&
+         lhs.C == rhs.C &&
+         lhs.O == rhs.O;
+}
+
+template<>
+mc_rbdyn::ForceSensor make_ref()
+{
+  return {"forceSensor", "parentBody", random_pt()};
+}
+
+bool operator==(const mc_rbdyn::ForceSensor & lhs, const mc_rbdyn::ForceSensor & rhs)
+{
+  return lhs.name() == rhs.name() &&
+         lhs.parentBody() == rhs.parentBody() &&
+         lhs.X_p_f() == rhs.X_p_f();
+}
+
+template<>
+mc_rbdyn::PolygonInterpolator make_ref()
+{
+  auto random_tuple = []()
+  {
+    return std::array<double, 2>{{rnd(), rnd()}};
+  };
+  auto random_tuple_pair = [&random_tuple]()
+  {
+    return std::make_pair(random_tuple(), random_tuple());
+  };
+  size_t size = random_size();
+  std::vector<mc_rbdyn::PolygonInterpolator::tuple_pair_t> vec(size);
+  for(size_t i = 0; i < size; ++i)
+  {
+    vec[i] = random_tuple_pair();
+  }
+  return {vec};
+}
+
+bool operator==(const mc_rbdyn::PolygonInterpolator & lhs, const mc_rbdyn::PolygonInterpolator & rhs)
+{
+  return lhs.tuple_pairs() == rhs.tuple_pairs();
+}
+
+template<>
+mc_rbdyn::Springs make_ref()
+{
+  mc_rbdyn::Springs spr;
+  spr.springsBodies = {"Body1", "Body2"};
+  spr.afterSpringsBodies = {"ABody1", "ABody2"};
+  spr.springsJoints = {{"Joint1"}, {"Joint2", "Joint3"}};
+  return spr;
+}
+
+bool operator==(const mc_rbdyn::Springs & lhs, const mc_rbdyn::Springs & rhs)
+{
+  return lhs.springsBodies == rhs.springsBodies &&
+         lhs.afterSpringsBodies == rhs.afterSpringsBodies &&
+         lhs.springsJoints == rhs.springsJoints;
+}
+
 typedef boost::mpl::list<mc_rbdyn::Base,
                          mc_rbdyn::BodySensor,
                          mc_rbdyn::Collision,
                          std::shared_ptr<mc_rbdyn::PlanarSurface>,
                          std::shared_ptr<mc_rbdyn::CylindricalSurface>,
                          std::shared_ptr<mc_rbdyn::GripperSurface>,
-                         std::shared_ptr<mc_rbdyn::Surface>
-                         > test_types;
+                         std::shared_ptr<mc_rbdyn::Surface>,
+                         mc_rbdyn::Flexibility,
+                         mc_rbdyn::ForceSensor,
+                         mc_rbdyn::PolygonInterpolator,
+                         mc_rbdyn::Springs> test_types;
+
+template<typename T,
+         typename std::enable_if<std::is_default_constructible<T>::value, int>::type = 0>
+void test_config_array_helper(mc_rtc::Configuration & config, int)
+{
+  std::array<T, 3> ref_a = {make_ref<T>(), make_ref<T>(), make_ref<T>()};
+  config.add("object_a", ref_a);
+
+  std::array<T, 3> test_a = config("object_a");
+  BOOST_REQUIRE(test_a.size() == ref_a.size());
+  for(size_t i = 0; i < test_a.size(); ++i)
+  {
+    BOOST_CHECK(test_a[i] == ref_a[i]);
+  }
+}
+
+template<typename T>
+void test_config_array_helper(mc_rtc::Configuration &, ...)
+{
+}
+
+template<typename T>
+void test_config_array(mc_rtc::Configuration & config)
+{
+  return test_config_array_helper<T>(config, 0);
+}
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(TestJsonIO, T, test_types)
 {
@@ -224,15 +339,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(TestJsonIO, T, test_types)
     BOOST_CHECK(test_v[i] == ref_v[i]);
   }
 
-  std::array<T, 3> ref_a = {make_ref<T>(), make_ref<T>(), make_ref<T>()};
-  config.add("object_a", ref_a);
-
-  std::array<T, 3> test_a = config("object_a");
-  BOOST_REQUIRE(test_a.size() == ref_a.size());
-  for(size_t i = 0; i < test_a.size(); ++i)
-  {
-    BOOST_CHECK(test_a[i] == ref_a[i]);
-  }
+  test_config_array<T>(config);
 
   config.save("/tmp/config.json");
 }

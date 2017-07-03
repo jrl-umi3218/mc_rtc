@@ -19,15 +19,15 @@ void PolygonInterpolator::GeometryDeleter::operator()(geos::geom::Geometry * ptr
 }
 
 PolygonInterpolator::PolygonInterpolator(const std::vector<tuple_pair_t> & tpv)
-: geom_factory(*geos::geom::GeometryFactory::getDefaultInstance()), geom_deleter(geom_factory), tuple_pairs(tpv)
+: geom_factory(*geos::geom::GeometryFactory::getDefaultInstance()), geom_deleter(geom_factory), tuple_pairs_(tpv)
 {
-  for(size_t i = 0; i < tuple_pairs.size(); ++i)
+  for(size_t i = 0; i < tuple_pairs_.size(); ++i)
   {
-    const tuple_pair_t & prev = (i == 0 ? tuple_pairs.back() : tuple_pairs[i-1]);
+    const tuple_pair_t & prev = (i == 0 ? tuple_pairs_.back() : tuple_pairs_[i-1]);
     const tuple_t & prev_1 = prev.first;
     const tuple_t & prev_2 = prev.second;
-    const tuple_t & point_1 = tuple_pairs[i].first;
-    const tuple_t & point_2 = tuple_pairs[i].second;
+    const tuple_t & point_1 = tuple_pairs_[i].first;
+    const tuple_t & point_2 = tuple_pairs_[i].second;
     midpoints.push_back({
       {{ (point_1[0] + prev_1[0])/2, (point_1[1] + prev_1[1])/2 }},
       {{ (point_2[0] + prev_2[0])/2, (point_2[1] + prev_2[1])/2 }}
@@ -126,6 +126,11 @@ std::vector<PolygonInterpolator::tuple_t> PolygonInterpolator::normal_derivative
     }
   }
   return res;
+}
+
+const std::vector<PolygonInterpolator::tuple_pair_t> & PolygonInterpolator::tuple_pairs() const
+{
+  return tuple_pairs_;
 }
 
 }
