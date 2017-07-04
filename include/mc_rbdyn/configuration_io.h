@@ -363,4 +363,449 @@ namespace mc_rtc
       return config;
     }
   };
+
+  template<>
+  struct ConfigurationLoader<sva::RBInertiad>
+  {
+    static sva::RBInertiad load(const mc_rtc::Configuration & config)
+    {
+      Eigen::Matrix3d inertia = config("inertia");
+      return {config("mass"), config("momentum"), inertia};
+    }
+
+    static mc_rtc::Configuration save(const sva::RBInertiad & rbi)
+    {
+      mc_rtc::Configuration config;
+      config.add("mass", rbi.mass());
+      config.add("momentum", rbi.momentum());
+      config.add("inertia", rbi.inertia());
+      return config;
+    }
+  };
+
+  template<>
+  struct ConfigurationLoader<rbd::Body>
+  {
+    static rbd::Body load(const mc_rtc::Configuration & config)
+    {
+      return {config("inertia"), config("name")};
+    }
+
+    static mc_rtc::Configuration save(const rbd::Body & bod)
+    {
+      mc_rtc::Configuration config;
+      config.add("name", bod.name());
+      config.add("inertia", bod.inertia());
+      return config;
+    }
+  };
+
+  template<>
+  struct ConfigurationLoader<rbd::Joint>
+  {
+    static rbd::Joint load(const mc_rtc::Configuration & config)
+    {
+      rbd::Joint j {config("type"), config("axis"), config("forward"), config("name")};
+      bool isMimic = config("isMimic");
+      if(isMimic)
+      {
+        j.makeMimic(config("mimicName"), config("mimicMultiplier"), config("mimicOffset"));
+      }
+      return j;
+    }
+
+    static mc_rtc::Configuration save(const rbd::Joint & j)
+    {
+      mc_rtc::Configuration config;
+      config.add("type", j.type());
+      Eigen::Vector3d axis = Eigen::Vector3d::UnitZ();
+      switch(j.type())
+      {
+        case rbd::Joint::Rev:
+        case rbd::Joint::Cylindrical:
+          axis = j.direction()*j.motionSubspace().col(0).head<3>();
+          break;
+        case rbd::Joint::Prism:
+          axis = j.direction()*j.motionSubspace().col(0).tail<3>();
+          break;
+        default:
+          break;
+      }
+      config.add("axis", axis);
+      config.add("forward", j.forward());
+      config.add("isMimic", j.isMimic());
+      if(j.isMimic())
+      {
+        config.add("mimicName", j.mimicName());
+        config.add("mimicMultiplier", j.mimicMultiplier());
+        config.add("mimicOffset", j.mimicOffset());
+      }
+      config.add("name", j.name());
+      return config;
+    }
+  };
+
+  template<>
+  struct ConfigurationLoader<rbd::MultiBody>
+  {
+    static rbd::MultiBody load(const mc_rtc::Configuration & config)
+    {
+      return {config("bodies"), config("joints"), config("preds"), config("succs"), config("parents"), config("transforms")};
+    }
+
+    static mc_rtc::Configuration save(const rbd::MultiBody & mb)
+    {
+      mc_rtc::Configuration config;
+      config.add("bodies", mb.bodies());
+      config.add("joints", mb.joints());
+      config.add("preds", mb.predecessors());
+      config.add("succs", mb.successors());
+      config.add("parents", mb.parents());
+      config.add("transforms", mb.transforms());
+      return config;
+    }
+  };
+
+  template<>
+  struct ConfigurationLoader<sva::ForceVecd>
+  {
+    static sva::ForceVecd load(const mc_rtc::Configuration & config)
+    {
+      return {config("couple"), config("force")};
+    }
+
+    static mc_rtc::Configuration save(const sva::ForceVecd & fv)
+    {
+      mc_rtc::Configuration config;
+      config.add("couple", fv.couple());
+      config.add("force", fv.force());
+      return config;
+    }
+  };
+
+  template<>
+  struct ConfigurationLoader<sva::MotionVecd>
+  {
+    static sva::MotionVecd load(const mc_rtc::Configuration & config)
+    {
+      return {config("angular"), config("linear")};
+    }
+
+    static mc_rtc::Configuration save(const sva::MotionVecd & mv)
+    {
+      mc_rtc::Configuration config;
+      config.add("angular", mv.angular());
+      config.add("linear", mv.linear());
+      return config;
+    }
+  };
+
+  template<>
+  struct ConfigurationLoader<Eigen::Matrix<double, 6, Eigen::Dynamic>>
+  {
+    static Eigen::Matrix<double, 6, Eigen::Dynamic> load(const mc_rtc::Configuration & config)
+    {
+      Eigen::Matrix<double, 6, Eigen::Dynamic> m(6, static_cast<int>(config("cols")));
+      auto data = config("data");
+      if(static_cast<Eigen::DenseIndex>(data.size()) != 6*m.cols())
+      {
+        LOG_ERROR_AND_THROW(mc_rtc::Configuration::Exception, "Stored data size (" << data.size() << ") is different from the expected size (" << 6*m.cols())
+      }
+      for(Eigen::DenseIndex i = 0; i < 6; ++i)
+      {
+        for(Eigen::DenseIndex j = 0; j < m.cols(); ++j)
+        {
+          m(i,j) = data[m.cols()*i + j];
+        }
+      }
+      return m;
+    }
+
+    static mc_rtc::Configuration save(const Eigen::Matrix<double, 6, Eigen::Dynamic> & m)
+    {
+      mc_rtc::Configuration config;
+      config.add("cols", static_cast<int>(m.cols()));
+      auto data = config.array("data", 6*m.cols());
+      for(Eigen::DenseIndex i = 0; i < 6; ++i)
+      {
+        for(Eigen::DenseIndex j = 0; j < m.cols(); ++j)
+        {
+          data.push(m(i,j));
+        }
+      }
+      return config;
+    }
+  };
+
+  template<>
+  struct ConfigurationLoader<rbd::MultiBodyConfig>
+  {
+    static rbd::MultiBodyConfig load(const mc_rtc::Configuration & config)
+    {
+      rbd::MultiBodyConfig mbc;
+      mbc.q = config("q");
+      mbc.alpha = config("alpha");
+      mbc.alphaD = config("alphaD");
+      mbc.force = config("force");
+      mbc.jointConfig = config("jointConfig");
+      mbc.jointVelocity = config("jointVelocity");
+      mbc.jointTorque = config("jointTorque");
+      mbc.motionSubspace = config("motionSubspace");
+      mbc.bodyPosW = config("bodyPosW");
+      mbc.parentToSon = config("parentToSon");
+      mbc.bodyVelW = config("bodyVelW");
+      mbc.bodyVelB = config("bodyVelB");
+      mbc.bodyAccB = config("bodyAccB");
+      mbc.gravity = config("gravity");
+      return mbc;
+    }
+
+    static mc_rtc::Configuration save(const rbd::MultiBodyConfig & mbc)
+    {
+      mc_rtc::Configuration config;
+      config.add("q", mbc.q);
+      config.add("alpha", mbc.alpha);
+      config.add("alphaD", mbc.alphaD);
+      config.add("force", mbc.force);
+      config.add("jointConfig", mbc.jointConfig);
+      config.add("jointVelocity", mbc.jointVelocity);
+      config.add("jointTorque", mbc.jointTorque);
+      config.add("motionSubspace", mbc.motionSubspace);
+      config.add("bodyPosW", mbc.bodyPosW);
+      config.add("parentToSon", mbc.parentToSon);
+      config.add("bodyVelW", mbc.bodyVelW);
+      config.add("bodyVelB", mbc.bodyVelB);
+      config.add("bodyAccB", mbc.bodyAccB);
+      config.add("gravity", mbc.gravity);
+      return config;
+    }
+  };
+
+  template<>
+  struct ConfigurationLoader<mc_rbdyn::RobotModule::Gripper>
+  {
+    static mc_rbdyn::RobotModule::Gripper load(const mc_rtc::Configuration & config)
+    {
+      return {config("name"), config("joints"), config("reverse_limits")};
+    }
+
+    static mc_rtc::Configuration save(const mc_rbdyn::RobotModule::Gripper & rmg)
+    {
+      mc_rtc::Configuration config;
+      config.add("name", rmg.name);
+      config.add("joints", rmg.joints);
+      config.add("reverse_limits", rmg.reverse_limits);
+      return config;
+    }
+  };
+
+  template<>
+  struct ConfigurationLoader<mc_rbdyn_urdf::Geometry::Box>
+  {
+    static mc_rbdyn_urdf::Geometry::Box load(const mc_rtc::Configuration & config)
+    {
+      mc_rbdyn_urdf::Geometry::Box b;
+      b.size = config("size");
+      return b;
+    }
+
+    static mc_rtc::Configuration save(const mc_rbdyn_urdf::Geometry::Box & b)
+    {
+      mc_rtc::Configuration config;
+      config.add("size", b.size);
+      return config;
+    }
+  };
+
+  template<>
+  struct ConfigurationLoader<mc_rbdyn_urdf::Geometry::Cylinder>
+  {
+    static mc_rbdyn_urdf::Geometry::Cylinder load(const mc_rtc::Configuration & config)
+    {
+      mc_rbdyn_urdf::Geometry::Cylinder c;
+      c.radius = config("radius");
+      c.length = config("length");
+      return c;
+    }
+
+    static mc_rtc::Configuration save(const mc_rbdyn_urdf::Geometry::Cylinder & c)
+    {
+      mc_rtc::Configuration config;
+      config.add("radius", c.radius);
+      config.add("length", c.length);
+      return config;
+    }
+  };
+
+  template<>
+  struct ConfigurationLoader<mc_rbdyn_urdf::Geometry::Sphere>
+  {
+    static mc_rbdyn_urdf::Geometry::Sphere load(const mc_rtc::Configuration & config)
+    {
+      mc_rbdyn_urdf::Geometry::Sphere s;
+      s.radius = config("radius");
+      return s;
+    }
+
+    static mc_rtc::Configuration save(const mc_rbdyn_urdf::Geometry::Sphere & s)
+    {
+      mc_rtc::Configuration config;
+      config.add("radius", s.radius);
+      return config;
+    }
+  };
+
+  template<>
+  struct ConfigurationLoader<mc_rbdyn_urdf::Geometry::Mesh>
+  {
+    static mc_rbdyn_urdf::Geometry::Mesh load(const mc_rtc::Configuration & config)
+    {
+      mc_rbdyn_urdf::Geometry::Mesh m;
+      m.filename = static_cast<std::string>(config("filename"));
+      m.scale = config("scale");
+      return m;
+    }
+
+    static mc_rtc::Configuration save(const mc_rbdyn_urdf::Geometry::Mesh & m)
+    {
+      mc_rtc::Configuration config;
+      config.add("filename", m.filename);
+      config.add("scale", m.scale);
+      return config;
+    }
+  };
+
+  template<>
+  struct ConfigurationLoader<mc_rbdyn_urdf::Geometry>
+  {
+    static mc_rbdyn_urdf::Geometry load(const mc_rtc::Configuration & config)
+    {
+      mc_rbdyn_urdf::Geometry geom;
+      if(config.has("box"))
+      {
+        geom.type = mc_rbdyn_urdf::Geometry::Type::BOX;
+        mc_rbdyn_urdf::Geometry::Box b = config("box");
+        geom.data = b;
+      }
+      else if(config.has("cylinder"))
+      {
+        geom.type = mc_rbdyn_urdf::Geometry::Type::CYLINDER;
+        mc_rbdyn_urdf::Geometry::Cylinder b = config("cylinder");
+        geom.data = b;
+      }
+      else if(config.has("sphere"))
+      {
+        geom.type = mc_rbdyn_urdf::Geometry::Type::SPHERE;
+        mc_rbdyn_urdf::Geometry::Sphere b = config("sphere");
+        geom.data = b;
+      }
+      else if(config.has("mesh"))
+      {
+        geom.type = mc_rbdyn_urdf::Geometry::Type::MESH;
+        mc_rbdyn_urdf::Geometry::Mesh b = config("mesh");
+        geom.data = b;
+      }
+      return geom;
+    }
+
+    static mc_rtc::Configuration save(const mc_rbdyn_urdf::Geometry & geom)
+    {
+      mc_rtc::Configuration config;
+      switch(geom.type)
+      {
+        case mc_rbdyn_urdf::Geometry::Type::BOX:
+          config.add("box", boost::get<mc_rbdyn_urdf::Geometry::Box>(geom.data));
+          break;
+        case mc_rbdyn_urdf::Geometry::Type::CYLINDER:
+          config.add("cylinder", boost::get<mc_rbdyn_urdf::Geometry::Cylinder>(geom.data));
+          break;
+        case mc_rbdyn_urdf::Geometry::Type::SPHERE:
+          config.add("sphere", boost::get<mc_rbdyn_urdf::Geometry::Sphere>(geom.data));
+          break;
+        case mc_rbdyn_urdf::Geometry::Type::MESH:
+          config.add("mesh", boost::get<mc_rbdyn_urdf::Geometry::Mesh>(geom.data));
+          break;
+        default:
+          break;
+      }
+      return config;
+    }
+  };
+
+  template<>
+  struct ConfigurationLoader<mc_rbdyn_urdf::Visual>
+  {
+    static mc_rbdyn_urdf::Visual load(const mc_rtc::Configuration & config)
+    {
+      return {config("name"), config("origin"), config("geometry")};
+    }
+
+    static mc_rtc::Configuration save(const mc_rbdyn_urdf::Visual & vis)
+    {
+      mc_rtc::Configuration config;
+      config.add("name", vis.name);
+      config.add("origin", vis.origin);
+      config.add("geometry", vis.geometry);
+      return config;
+    }
+  };
+
+  template<>
+  struct ConfigurationLoader<mc_rbdyn::RobotModule>
+  {
+    static mc_rbdyn::RobotModule load(const mc_rtc::Configuration & config)
+    {
+      mc_rbdyn::RobotModule rm(config("path"), config("name"), config("urdf_path"));
+      /** FIXME Instead of saving/restoring this provide a way to pass the correct parameters to mc_rbdyn_urdf */
+      rm.mb = config("mb");
+      rm.mbc = config("mbc");
+      rm._bounds = config("bounds");
+      /** End of FIXME  */
+      rm._stance = config("stance");
+      rm._convexHull = config("convexHulls");
+      rm._stpbvHull = config("stpbvHulls");
+      rm._visual = config("visuals");
+      rm._collisionTransforms = config("collisionTransforms");
+      rm._flexibility = config("flexibilities");
+      rm._forceSensors = config("forceSensors");
+      rm._bodySensors = config("bodySensors");
+      rm._springs = config("springs");
+      rm._minimalSelfCollisions = config("minimalSelfCollisions");
+      rm._commonSelfCollisions = config("commonSelfCollisions");
+      rm._grippers = config("grippers");
+      rm._ref_joint_order = config("ref_joint_order");
+      rm._default_attitude = config("default_attitude");
+      return rm;
+    }
+
+    static mc_rtc::Configuration save(const mc_rbdyn::RobotModule & rm)
+    {
+      mc_rtc::Configuration config;
+      config.add("path", rm.path);
+      config.add("name", rm.name);
+      config.add("urdf_path", rm.urdf_path);
+      /** FIXME Instead of saving/restoring this provide a way to pass the correct parameters to mc_rbdyn_urdf */
+      config.add("mb", rm.mb);
+      config.add("mbc", rm.mbc);
+      config.add("bounds", rm._bounds);
+      /** End of FIXME  */
+      config.add("stance", rm._stance);
+      config.add("convexHulls", rm._convexHull);
+      config.add("stpbvHulls", rm._stpbvHull);
+      config.add("visuals", rm._visual);
+      config.add("collisionTransforms", rm._collisionTransforms);
+      config.add("flexibilities", rm._flexibility);
+      config.add("forceSensors", rm._forceSensors);
+      config.add("bodySensors", rm._bodySensors);
+      config.add("springs", rm._springs);
+      config.add("minimalSelfCollisions", rm._minimalSelfCollisions);
+      config.add("commonSelfCollisions", rm._commonSelfCollisions);
+      config.add("grippers", rm._grippers);
+      config.add("ref_joint_order", rm._ref_joint_order);
+      config.add("default_attitude", rm._default_attitude);
+      return config;
+    }
+  };
+
+
 }

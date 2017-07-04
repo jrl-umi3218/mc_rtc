@@ -4,6 +4,7 @@
 #include <mc_rtc/Configuration.h>
 
 #include <mc_rbdyn/configuration_io.h>
+#include <mc_rbdyn/RobotLoader.h>
 
 #include <fstream>
 #include <iostream>
@@ -20,6 +21,49 @@ inline int mkstemp(char * out)
   else { return 0; }
 }
 #endif
+
+template<typename T, typename A>
+bool compare_vectors(const std::vector<T, A> & lhs,
+                     const std::vector<T, A> & rhs)
+{
+  if(lhs.size() != rhs.size())
+  {
+    return false;
+  }
+  for(size_t i = 0; i < lhs.size(); ++i)
+  {
+    if(!(lhs[i] == rhs[i]))
+    {
+      return false;
+    }
+  }
+  return true;
+}
+
+template<typename T>
+bool compare_vector_maps(const std::map<std::string, std::vector<T>> & lhs,
+                         const std::map<std::string, std::vector<T>> & rhs)
+{
+  for(const auto & el : lhs)
+  {
+    if(rhs.count(el.first))
+    {
+      if(!compare_vectors(el.second, rhs.at(el.first))) { return false; }
+    }
+    else
+    {
+      return false;
+    }
+  }
+  for(const auto & el : rhs)
+  {
+    if(!lhs.count(el.first))
+    {
+      return false;
+    }
+  }
+  return true;
+}
 
 std::string getTmpFile()
 {
@@ -277,6 +321,107 @@ bool operator==(const mc_rbdyn::Springs & lhs, const mc_rbdyn::Springs & rhs)
          lhs.springsJoints == rhs.springsJoints;
 }
 
+template<>
+mc_rbdyn::RobotModule make_ref()
+{
+  auto rm_ptr = mc_rbdyn::RobotLoader::get_robot_module("HRP2DRC");
+  mc_rbdyn::RobotModule rm = *rm_ptr;
+  return rm;
+}
+
+bool operator==(const mc_rbdyn_urdf::Geometry::Box & lhs,
+                const mc_rbdyn_urdf::Geometry::Box & rhs)
+{
+  return lhs.size == rhs.size;
+}
+
+bool operator==(const mc_rbdyn_urdf::Geometry::Cylinder & lhs,
+                const mc_rbdyn_urdf::Geometry::Cylinder & rhs)
+{
+  return lhs.radius == rhs.radius &&
+         lhs.length == rhs.length;
+}
+
+bool operator==(const mc_rbdyn_urdf::Geometry::Sphere & lhs,
+                const mc_rbdyn_urdf::Geometry::Sphere & rhs)
+{
+  return lhs.radius == rhs.radius;
+}
+
+bool operator==(const mc_rbdyn_urdf::Geometry::Mesh & lhs,
+                const mc_rbdyn_urdf::Geometry::Mesh & rhs)
+{
+  return lhs.filename == rhs.filename &&
+         lhs.scale == rhs.scale;
+}
+
+bool operator==(const mc_rbdyn_urdf::Geometry & lhs,
+                const mc_rbdyn_urdf::Geometry & rhs)
+{
+  bool ret = lhs.type == rhs.type;
+  if(ret)
+  {
+    switch(lhs.type)
+    {
+        case mc_rbdyn_urdf::Geometry::Type::BOX:
+          return boost::get<mc_rbdyn_urdf::Geometry::Box>(lhs.data) ==
+                 boost::get<mc_rbdyn_urdf::Geometry::Box>(rhs.data);
+        case mc_rbdyn_urdf::Geometry::Type::CYLINDER:
+          return boost::get<mc_rbdyn_urdf::Geometry::Cylinder>(lhs.data) ==
+                 boost::get<mc_rbdyn_urdf::Geometry::Cylinder>(rhs.data);
+        case mc_rbdyn_urdf::Geometry::Type::SPHERE:
+          return boost::get<mc_rbdyn_urdf::Geometry::Sphere>(lhs.data) ==
+                 boost::get<mc_rbdyn_urdf::Geometry::Sphere>(rhs.data);
+        case mc_rbdyn_urdf::Geometry::Type::MESH:
+          return boost::get<mc_rbdyn_urdf::Geometry::Mesh>(lhs.data) ==
+                 boost::get<mc_rbdyn_urdf::Geometry::Mesh>(rhs.data);
+        default:
+          break;
+    }
+  }
+  return ret;
+}
+
+bool operator==(const mc_rbdyn_urdf::Visual & lhs,
+                const mc_rbdyn_urdf::Visual & rhs)
+{
+  return lhs.name == rhs.name &&
+         lhs.origin == rhs.origin &&
+         lhs.geometry == rhs.geometry;
+}
+
+bool operator==(const mc_rbdyn::RobotModule::Gripper & lhs,
+                const mc_rbdyn::RobotModule::Gripper & rhs)
+{
+  return lhs.name == rhs.name &&
+         lhs.joints == rhs.joints &&
+         lhs.reverse_limits == rhs.reverse_limits;
+}
+
+bool operator==(const mc_rbdyn::RobotModule & lhs, const mc_rbdyn::RobotModule & rhs)
+{
+  return lhs.path == rhs.path &&
+         lhs.name == rhs.name &&
+         lhs.urdf_path == rhs.urdf_path &&
+         lhs.rsdf_dir == rhs.rsdf_dir &&
+         lhs.calib_dir == rhs.calib_dir &&
+         lhs._bounds == rhs._bounds &&
+         lhs._stance == rhs._stance &&
+         lhs._convexHull == rhs._convexHull &&
+         lhs._stpbvHull == rhs._stpbvHull &&
+         compare_vector_maps(lhs._visual, rhs._visual) &&
+         lhs._collisionTransforms == rhs._collisionTransforms &&
+         compare_vectors(lhs._flexibility, rhs._flexibility) &&
+         compare_vectors(lhs._forceSensors, rhs._forceSensors) &&
+         compare_vectors(lhs._bodySensors, rhs._bodySensors) &&
+         lhs._springs == rhs._springs &&
+         lhs._minimalSelfCollisions == rhs._minimalSelfCollisions &&
+         lhs._commonSelfCollisions == rhs._commonSelfCollisions &&
+         compare_vectors(lhs._grippers, rhs._grippers) &&
+         lhs._ref_joint_order == rhs._ref_joint_order &&
+         lhs._default_attitude == rhs._default_attitude;
+}
+
 typedef boost::mpl::list<mc_rbdyn::Base,
                          mc_rbdyn::BodySensor,
                          mc_rbdyn::Collision,
@@ -287,7 +432,8 @@ typedef boost::mpl::list<mc_rbdyn::Base,
                          mc_rbdyn::Flexibility,
                          mc_rbdyn::ForceSensor,
                          mc_rbdyn::PolygonInterpolator,
-                         mc_rbdyn::Springs> test_types;
+                         mc_rbdyn::Springs,
+                         mc_rbdyn::RobotModule> test_types;
 
 template<typename T,
          typename std::enable_if<std::is_default_constructible<T>::value, int>::type = 0>
