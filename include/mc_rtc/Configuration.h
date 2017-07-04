@@ -624,6 +624,22 @@ namespace mc_rtc
       }
     }
 
+    /*! \brief Add a pair into the JSON document
+     *
+     * Overwrite existing content if any.
+     *
+     * \param key Key of the element
+     *
+     * \param value Pair to add
+     */
+    template<typename T1, typename T2>
+    void add(const std::string & key, const std::pair<T1, T2> & value)
+    {
+      Configuration v = array(key, 2);
+      v.push(value.first);
+      v.push(value.second);
+    }
+
     /*! \brief Add string-indexed map into the JSON document
      *
      * Overwrites existing content if any.
