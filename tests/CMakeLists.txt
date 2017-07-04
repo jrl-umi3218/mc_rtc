@@ -36,5 +36,10 @@ pkg_config_use_dependency(test_controller_ticker Tasks)
 # Adding a project configuration file (for MSVC only)
 generate_msvc_dot_user_file(test_controller_ticker)
 
-add_subdirectory(controllers)
-add_subdirectory(robots)
+if(NOT DISABLE_CONTROLLER_TESTS)
+  add_subdirectory(controllers)
+endif()
+
+if(NOT DISABLE_ROBOT_TESTS)
+  add_subdirectory(robots)
+endif()
