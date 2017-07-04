@@ -326,6 +326,7 @@ mc_rbdyn::RobotModule make_ref()
 {
   auto rm_ptr = mc_rbdyn::RobotLoader::get_robot_module("HRP2DRC");
   mc_rbdyn::RobotModule rm = *rm_ptr;
+  rm.validate_stance();
   return rm;
 }
 
