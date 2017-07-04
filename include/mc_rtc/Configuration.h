@@ -276,7 +276,8 @@ namespace mc_rtc
         assert(std::set<std::string>(keys.begin(), keys.end()).size() == keys.size());
         for(const auto & k : keys)
         {
-          ret[k] = static_cast<T>(Configuration(v[k]));
+          T value = Configuration(v[k]);
+          ret[k] = value;
         }
         return ret;
       }

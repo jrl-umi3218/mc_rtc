@@ -109,6 +109,12 @@ std::string sampleConfig()
     "str2" : 2.2,
     "str3" : 3.3,
     "str4" : 4.4
+  },
+  "mapDoubleV":
+  {
+    "str1": [1.0, 2.3, -100],
+    "str2": [1.0, -1.5, 2.0, -2.5, 3.0, -3.5],
+    "str3": [0.71, 0, 0.71, 0]
   }
 }
 )";
@@ -573,6 +579,23 @@ BOOST_AUTO_TEST_CASE(TestConfigurationReading)
 
     test_t b = {};
     config("mapDouble", b);
+    BOOST_CHECK(b == ref);
+  }
+
+  /* map<string, vector<double>> */
+  {
+    using test_t = std::map<std::string, std::vector<double>>;
+
+    test_t ref;
+    ref["str1"] = {1.0, 2.3, -100};
+    ref["str2"] = {1.0, -1.5, 2.0, -2.5, 3.0, -3.5};
+    ref["str3"] = {0.71, 0, 0.71, 0};
+
+    test_t a = config("mapDoubleV");
+    BOOST_CHECK(a == ref);
+
+    test_t b = {};
+    config("mapDoubleV", b);
     BOOST_CHECK(b == ref);
   }
 
