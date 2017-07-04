@@ -19,6 +19,8 @@
 
 #include <mc_rtc/logging.h>
 
+#include <fstream>
+
 namespace mc_rtc
 {
   template<>
@@ -756,25 +758,62 @@ namespace mc_rtc
     static mc_rbdyn::RobotModule load(const mc_rtc::Configuration & config)
     {
       mc_rbdyn::RobotModule rm(config("path"), config("name"), config("urdf_path"));
-      /** FIXME Instead of saving/restoring this provide a way to pass the correct parameters to mc_rbdyn_urdf */
-      rm.mb = config("mb");
-      rm.mbc = config("mbc");
-      rm._bounds = config("bounds");
-      /** End of FIXME  */
-      rm._stance = config("stance");
-      rm._convexHull = config("convexHulls");
-      rm._stpbvHull = config("stpbvHulls");
-      rm._visual = config("visuals");
-      rm._collisionTransforms = config("collisionTransforms");
-      rm._flexibility = config("flexibilities");
-      rm._forceSensors = config("forceSensors");
-      rm._bodySensors = config("bodySensors");
-      rm._springs = config("springs");
-      rm._minimalSelfCollisions = config("minimalSelfCollisions");
-      rm._commonSelfCollisions = config("commonSelfCollisions");
-      rm._grippers = config("grippers");
-      rm._ref_joint_order = config("ref_joint_order");
-      rm._default_attitude = config("default_attitude");
+      if(config.has("mb"))
+      {
+        rm.mb = config("mb");
+        rm.mbc = config("mbc");
+        rm._bounds = config("bounds");
+        rm._visual = config("visuals");
+        rm._collisionTransforms = config("collisionTransforms");
+      }
+      else
+      {
+        std::vector<std::string> filteredLinks = {};
+        config("filteredLinks", filteredLinks);
+        bool fixed = false;
+        config("fixed", fixed);
+        std::ifstream ifs(rm.urdf_path);
+        if(ifs.is_open())
+        {
+          std::stringstream urdf;
+          urdf << ifs.rdbuf();
+          auto res = mc_rbdyn_urdf::rbdyn_from_urdf(urdf.str(), fixed, filteredLinks);
+          rm.mb = res.mb;
+          rm.mbc = res.mbc;
+          rm.mbg = res.mbg;
+          rm._visual = res.visual;
+          rm._collisionTransforms = res.collision_tf;
+          rm._bounds = mc_rbdyn::urdf_limits_to_bounds(res.limits);
+        }
+        else
+        {
+          LOG_ERROR_AND_THROW(std::runtime_error, "Could not open URDF model for " << rm.name << " at " << rm.urdf_path)
+        }
+      }
+
+      /* Default values work fine for those */
+      config("convexHulls", rm._convexHull);
+      config("stpbvHulls", rm._stpbvHull);
+      config("flexibilities", rm._flexibility);
+      config("forceSensors", rm._forceSensors);
+      config("bodySensors", rm._bodySensors);
+      config("springs", rm._springs);
+      config("minimalSelfCollisions", rm._minimalSelfCollisions);
+      config("commonSelfCollisions", rm._commonSelfCollisions);
+      config("grippers", rm._grippers);
+      config("default_attitude", rm._default_attitude);
+
+      /* Those cannot be empty */
+      config("stance", rm._stance);
+      rm.validate_stance();
+      if(config.has("ref_joint_order"))
+      {
+        rm._ref_joint_order = config("ref_joint_order");
+      }
+      else
+      {
+        rm.make_default_ref_joint_order();
+      }
       return rm;
     }
 
@@ -784,11 +823,9 @@ namespace mc_rtc
       config.add("path", rm.path);
       config.add("name", rm.name);
       config.add("urdf_path", rm.urdf_path);
-      /** FIXME Instead of saving/restoring this provide a way to pass the correct parameters to mc_rbdyn_urdf */
       config.add("mb", rm.mb);
       config.add("mbc", rm.mbc);
       config.add("bounds", rm._bounds);
-      /** End of FIXME  */
       config.add("stance", rm._stance);
       config.add("convexHulls", rm._convexHull);
       config.add("stpbvHulls", rm._stpbvHull);

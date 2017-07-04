@@ -34,6 +34,7 @@ mc_rbdyn/polygon_utils.cpp
 mc_rbdyn/RobotLoader.cpp
 mc_rbdyn/Collision.cpp
 mc_rbdyn/ForceSensor.cpp
+mc_rbdyn/RobotModule.cpp
 )
 set(mc_rbdyn_SRC ${mc_rbdyn_SRC} PARENT_SCOPE)
 

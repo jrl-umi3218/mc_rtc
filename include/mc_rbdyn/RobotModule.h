@@ -24,6 +24,18 @@ struct Robot;
 struct MC_RBDYN_DLLAPI RobotModule
 {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
+  /*! Holds information regarding the bounds
+   *
+   * The vector should have 6 entries:
+   * - lower/upper position bounds
+   * - lower/upper velocity bounds
+   * - lower/upper torque bounds
+   *
+   * Each entry is a map joint name <-> bound
+   */
+  using bounds_t = std::vector<std::map<std::string, std::vector<double>>>;
+
   /*! Holds necessary information to create a gripper */
   struct Gripper
   {
@@ -92,6 +104,12 @@ struct MC_RBDYN_DLLAPI RobotModule
   /** Return default attitude of the robot */
   virtual const std::array<double, 7> & default_attitude() const { return _default_attitude; }
 
+  /** Make sure stance is valid */
+  void validate_stance();
+
+  /** Make a valid ref_joint_order */
+  void make_default_ref_joint_order();
+
   std::string path;
   std::string name;
   std::string urdf_path;
@@ -100,7 +118,7 @@ struct MC_RBDYN_DLLAPI RobotModule
   rbd::MultiBody mb;
   rbd::MultiBodyConfig mbc;
   rbd::MultiBodyGraph mbg;
-  std::vector< std::map<std::string, std::vector<double> > > _bounds;
+  bounds_t _bounds;
   std::map<std::string, std::vector<double> > _stance;
   std::map<std::string, std::pair<std::string, std::string> > _convexHull;
   std::map<std::string, std::pair<std::string, std::string> > _stpbvHull;
@@ -118,6 +136,13 @@ struct MC_RBDYN_DLLAPI RobotModule
 };
 
 typedef std::shared_ptr<RobotModule> RobotModulePtr;
+
+/*! \brief Converts limits provided by mc_rbdyn_urdf to bounds
+ *
+ * \param limits Limits as provided by mc_rbdyn_urdf
+ *
+ */
+RobotModule::bounds_t MC_RBDYN_DLLAPI urdf_limits_to_bounds(const mc_rbdyn_urdf::Limits & limits);
 
 } // namespace mc_rbdyn
 
