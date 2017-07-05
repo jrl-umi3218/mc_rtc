@@ -707,4 +707,16 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule>::save(const mc_
   config.add("default_attitude", rm._default_attitude);
   return config;
 }
+
+mc_rbdyn::RobotModulePtr ConfigurationLoader<mc_rbdyn::RobotModulePtr>::load(const mc_rtc::Configuration & config)
+{
+  mc_rbdyn::RobotModule rm = config;
+  return std::make_shared<mc_rbdyn::RobotModule>(std::move(rm));
+}
+
+mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModulePtr>::save(const mc_rbdyn::RobotModulePtr & rm)
+{
+  return ConfigurationLoader<mc_rbdyn::RobotModule>::save(*rm);
+}
+
 }

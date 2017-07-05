@@ -66,6 +66,7 @@ DECLARE_IO(mc_rbdyn::PolygonInterpolator)
 DECLARE_IO(mc_rbdyn::Springs)
 DECLARE_IO(mc_rbdyn::RobotModule::Gripper)
 DECLARE_IO(mc_rbdyn::RobotModule)
+DECLARE_IO(mc_rbdyn::RobotModulePtr)
 
 #undef DECLARE_IO
 
