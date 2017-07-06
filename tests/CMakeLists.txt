@@ -27,6 +27,7 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
 
 mc_rtc_test(testConfiguration mc_rtc_utils)
 mc_rtc_test(testJsonIO mc_rtc_utils mc_rbdyn)
+mc_rtc_test(testMetaTaskLoader mc_tasks)
 mc_rtc_test(testSolverTaskStorage mc_tasks)
 
 add_executable(test_controller_ticker test_controller_ticker.cpp)

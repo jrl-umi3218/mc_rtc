@@ -146,6 +146,7 @@ mc_tasks/TrajectoryTask.cpp
 mc_tasks/ComplianceTask.cpp
 mc_tasks/GazeTask.cpp
 mc_tasks/PositionBasedVisServoTask.cpp
+mc_tasks/MetaTaskLoader.cpp
 )
 set(mc_tasks_SRC ${mc_tasks_SRC} PARENT_SCOPE)
 
@@ -155,6 +156,8 @@ set(mc_tasks_HDR
 ../include/mc_tasks/CoMTask.h
 ../include/mc_tasks/EndEffectorTask.h
 ../include/mc_tasks/MetaTask.h
+../include/mc_tasks/MetaTaskLoader.h
+../include/mc_tasks/MetaTaskLoader.hpp
 ../include/mc_tasks/MoveContactTask.h
 ../include/mc_tasks/OrientationTask.h
 ../include/mc_tasks/VectorOrientationTask.h

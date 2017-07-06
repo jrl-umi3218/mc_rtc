@@ -131,4 +131,6 @@ protected:
   }
 };
 
+using MetaTaskPtr = std::shared_ptr<MetaTask>;
+
 }
