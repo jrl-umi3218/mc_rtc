@@ -15,6 +15,7 @@ static auto em = mc_rbdyn::RobotLoader::get_robot_module("env",
                                                   std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH),
                                                   std::string("ground"));
 static auto robots = mc_rbdyn::loadRobotAndEnv(*rm, *em);
+static mc_solver::QPSolver solver(robots, 0.005);
 
 template<typename T>
 struct fail : public std::false_type {};
@@ -88,6 +89,6 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(TestMetaTaskLoader, T, test_types)
   auto tester = TaskTester<T>();
   auto ref = tester.make_ref();
   auto conf = tester.json();
-  auto loaded = mc_tasks::MetaTaskLoader::load(*robots, conf);
+  auto loaded = mc_tasks::MetaTaskLoader::load(solver, conf);
   tester.check(ref, loaded);
 }

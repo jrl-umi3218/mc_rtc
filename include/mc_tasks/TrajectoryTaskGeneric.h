@@ -102,6 +102,8 @@ struct TrajectoryTaskGeneric : public MetaTask
   virtual Eigen::VectorXd eval() const override;
 
   virtual Eigen::VectorXd speed() const override;
+
+  void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) override;
 protected:
   /*! This function should be called to finalize the task creation, it will
    * create the actual tasks objects */

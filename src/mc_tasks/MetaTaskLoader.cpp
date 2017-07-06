@@ -7,13 +7,13 @@ namespace mc_tasks
 
 std::unique_ptr<std::map<std::string, MetaTaskLoader::load_fun>> MetaTaskLoader::fns_ptr;
 
-MetaTaskPtr MetaTaskLoader::load(const mc_rbdyn::Robots & robots,
+MetaTaskPtr MetaTaskLoader::load(mc_solver::QPSolver & solver,
                                  const std::string & file)
 {
-  return load(robots, mc_rtc::Configuration(file));
+  return load(solver, mc_rtc::Configuration(file));
 }
 
-MetaTaskPtr MetaTaskLoader::load(const mc_rbdyn::Robots & robots,
+MetaTaskPtr MetaTaskLoader::load(mc_solver::QPSolver & solver,
                                  const mc_rtc::Configuration & config)
 {
   static auto & fns = get_fns();
@@ -22,7 +22,7 @@ MetaTaskPtr MetaTaskLoader::load(const mc_rbdyn::Robots & robots,
     std::string type = config("type");
     if(fns.count(type))
     {
-      return fns[type](robots, config);
+      return fns[type](solver, config);
     }
     LOG_ERROR_AND_THROW(std::runtime_error, "MetaTaskLoader cannot handle MetaTask type " << type)
   }
@@ -36,7 +36,6 @@ bool MetaTaskLoader::register_load_function(const std::string & type,
   if(fns.count(type) == 0)
   {
     fns[type] = fn;
-    LOG_SUCCESS("Register MetaTaskLoader for " << type)
     return true;
   }
   LOG_ERROR_AND_THROW(std::runtime_error, type << " is already handled by another loading function")
