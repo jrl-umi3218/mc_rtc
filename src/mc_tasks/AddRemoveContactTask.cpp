@@ -57,6 +57,23 @@ AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots,
   targetVelWeight = weight;
 }
 
+AddRemoveContactTask::AddRemoveContactTask(
+                     mc_solver::QPSolver & solver,
+                     mc_rbdyn::Contact & contact,
+                     double direction, double _speed,
+                     double stiffness, double weight,
+                     Eigen::Vector3d * userT_0_s)
+: AddRemoveContactTask(solver.robots(),
+                       nullptr,
+                       contact,
+                       direction, _speed,
+                       stiffness, weight,
+                       userT_0_s)
+{
+  manageConstraint = true;
+  constSpeedConstr = std::make_shared<mc_solver::BoundedSpeedConstr>(solver.robots(), contact.r1Index(), solver.dt());
+}
+
 void AddRemoveContactTask::direction(double direction)
 {
   linVelTask->velocity(direction*normal*speed_);
@@ -76,12 +93,20 @@ Eigen::Vector3d AddRemoveContactTask::velError()
 void AddRemoveContactTask::addToSolver(mc_solver::QPSolver & solver)
 {
   solver.addTask(linVelTaskPid.get());
+  if(manageConstraint)
+  {
+    solver.addConstraintSet(*constSpeedConstr);
+  }
   constSpeedConstr->addBoundedSpeed(solver, bodyId, robotSurf->X_b_s().translation(), dofMat, speedMat);
 }
 
 void AddRemoveContactTask::removeFromSolver(mc_solver::QPSolver & solver)
 {
   solver.removeTask(linVelTaskPid.get());
+  if(manageConstraint)
+  {
+    solver.removeConstraintSet(*constSpeedConstr);
+  }
   constSpeedConstr->removeBoundedSpeed(solver, bodyId);
 }
 
@@ -128,6 +153,15 @@ AddContactTask::AddContactTask(mc_rbdyn::Robots & robots,
 {
 }
 
+AddContactTask::AddContactTask(mc_solver::QPSolver & solver,
+                               mc_rbdyn::Contact & contact,
+                               double speed, double stiffness,
+                               double weight,
+                               Eigen::Vector3d * userT_0_s)
+: AddRemoveContactTask(solver, contact, -1.0, speed, stiffness, weight, userT_0_s)
+{
+}
+
 
 RemoveContactTask::RemoveContactTask(mc_rbdyn::Robots & robots, std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr,
                                mc_rbdyn::Contact & contact,
@@ -143,6 +177,15 @@ RemoveContactTask::RemoveContactTask(mc_rbdyn::Robots & robots,
                  double speed, double stiffness, double weight,
                  Eigen::Vector3d * userT_0_s)
 : AddRemoveContactTask(robots, constSpeedConstr, contact, 1.0, speed, stiffness, weight, userT_0_s)
+{
+}
+
+RemoveContactTask::RemoveContactTask(mc_solver::QPSolver & solver,
+                                     mc_rbdyn::Contact & contact,
+                                     double speed, double stiffness,
+                                     double weight,
+                                     Eigen::Vector3d * userT_0_s)
+: AddRemoveContactTask(solver, contact, 1.0, speed, stiffness, weight, userT_0_s)
 {
 }
 
