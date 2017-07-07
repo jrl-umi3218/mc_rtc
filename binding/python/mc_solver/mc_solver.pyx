@@ -10,9 +10,12 @@ cimport mc_rbdyn.mc_rbdyn as mc_rbdyn
 
 cimport mc_tasks.mc_tasks as mc_tasks
 
+cimport eigen.eigen as eigen
+
 from cython.operator cimport preincrement as preinc
 from cython.operator cimport dereference as deref
 from libcpp.map cimport map as cppmap
+from libcpp.pair cimport pair
 from libcpp.string cimport string
 from libcpp.vector cimport vector
 from libcpp cimport bool as cppbool
@@ -207,6 +210,11 @@ cdef RobotEnvCollisionsConstraint RobotEnvCollisionsConstraintFromPtr(c_mc_solve
     ret.impl = ret.cs_base = p
     return ret
 
+cdef qp.BilateralContact BilateralContactFromC(const c_qp.BilateralContact & bc):
+  cdef qp.BilateralContact ret = qp.BilateralContact()
+  ret.impl = bc
+  return ret
+
 cdef class QPSolver(object):
   def __dealloc__(self):
     if self.__own_impl:
@@ -262,6 +270,10 @@ cdef class QPSolver(object):
     self.impl.updateNrVars()
   def run(self):
     return self.impl.run()
+  def contactById(self, qp.ContactId cId):
+    return BilateralContactFromC(self.impl.contactById(cId.impl).second)
+  def lambdaVec(self, cIndex):
+    return eigen.VectorXdFromC(self.impl.lambdaVec(cIndex))
   property robots:
     def __get__(self):
       return mc_rbdyn.RobotsFromRef(self.impl.robots())

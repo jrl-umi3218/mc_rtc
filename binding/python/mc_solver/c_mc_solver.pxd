@@ -101,6 +101,10 @@ cdef extern from "<mc_solver/QPSolver.h>" namespace "mc_solver":
     void updateNrVars()
     cppbool run()
 
+    pair[int, const c_qp.BilateralContact&] contactById(c_qp.ContactId)
+
+    VectorXd lambdaVec(int)
+
     Robots& robots()
 
     double dt()
