@@ -95,6 +95,7 @@ cdef extern from "<mc_solver/QPSolver.h>" namespace "mc_solver":
     void addTask(c_qp.Task *)
     void addTask(c_mc_tasks.MetaTask *)
     void removeTask(c_qp.Task *)
+    void removeTask(c_mc_tasks.MetaTask *)
     void addConstraint[T](c_qp.ConstraintFunction[T] *)
     void removeConstraint[T](c_qp.ConstraintFunction[T] *)
     void updateConstrSize()

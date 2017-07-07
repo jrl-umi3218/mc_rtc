@@ -262,8 +262,11 @@ cdef class QPSolver(object):
       self.impl.addTask((<mc_tasks.MetaTask>task).mt_base)
     else:
       raise TypeError("Cannot add a Task of this type")
-  def removeTask(self, qp.Task task):
-    self.impl.removeTask(task.base)
+  def removeTask(self, task):
+    if isinstance(task, qp.Task):
+      self.impl.removeTask((<qp.Task>task).base)
+    elif isinstance(task, mc_tasks.MetaTask):
+      self.impl.removeTask((<mc_tasks.MetaTask>task).mt_base)
   def updateConstrSize(self):
     self.impl.updateConstrSize()
   def updateNrVars(self):
