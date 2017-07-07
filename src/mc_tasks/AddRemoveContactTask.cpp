@@ -1,7 +1,12 @@
 #include <mc_tasks/AddRemoveContactTask.h>
 
+#include <mc_tasks/MetaTaskLoader.h>
+
 #include <mc_rbdyn/Contact.h>
 #include <mc_rbdyn/Surface.h>
+#include <mc_rbdyn/configuration_io.h>
+
+#include <mc_rtc/logging.h>
 
 namespace mc_tasks
 {
@@ -188,5 +193,34 @@ RemoveContactTask::RemoveContactTask(mc_solver::QPSolver & solver,
 : AddRemoveContactTask(solver, contact, 1.0, speed, stiffness, weight, userT_0_s)
 {
 }
+
+}
+
+namespace
+{
+
+template<typename T>
+mc_tasks::MetaTaskPtr load_add_remove_contact_task(mc_solver::QPSolver & solver,
+                                            const mc_rtc::Configuration & config)
+{
+  auto contact = mc_rtc::ConfigurationLoader<mc_rbdyn::Contact>::load(solver.robots(), config("contact"));
+  Eigen::Vector3d T_0_s;
+  Eigen::Vector3d * userT_0_s = nullptr;
+  if(config.has("T_0_s"))
+  {
+    T_0_s = config("T_0_s");
+    userT_0_s = &T_0_s;
+  }
+  return std::make_shared<T>(solver, contact, config("speed"), config("stiffness"), config("weight"), userT_0_s);
+}
+
+struct AddRemoveContactTaskLoader
+{
+  static bool registered;
+};
+
+bool AddRemoveContactTaskLoader::registered =
+  mc_tasks::MetaTaskLoader::register_load_function("addContact", &load_add_remove_contact_task<mc_tasks::AddContactTask>) &&
+  mc_tasks::MetaTaskLoader::register_load_function("removeContact", &load_add_remove_contact_task<mc_tasks::RemoveContactTask>);
 
 }

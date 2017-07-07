@@ -48,10 +48,6 @@ namespace
 mc_tasks::MetaTaskPtr load_com_task(mc_solver::QPSolver & solver,
                                     const mc_rtc::Configuration & config)
 {
-  if(!config.has("robotIndex"))
-  {
-    LOG_ERROR_AND_THROW(std::runtime_error, "Stored CoMTask does not have a robotIndex parameter")
-  }
   auto t = std::make_shared<mc_tasks::CoMTask>(solver.robots(), config("robotIndex"));
   if(config.has("com"))
   {

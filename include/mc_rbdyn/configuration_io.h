@@ -17,6 +17,9 @@
 #include <mc_rbdyn/GripperSurface.h>
 #include <mc_rbdyn/PlanarSurface.h>
 
+/* Require a Robots instance to be deserialized */
+#include <mc_rbdyn/Contact.h>
+
 #include <mc_rtc/logging.h>
 
 #include <fstream>
@@ -69,5 +72,12 @@ DECLARE_IO(mc_rbdyn::RobotModule)
 DECLARE_IO(mc_rbdyn::RobotModulePtr)
 
 #undef DECLARE_IO
+
+template<>
+struct MC_RBDYN_DLLAPI ConfigurationLoader<mc_rbdyn::Contact>
+{
+  static mc_rbdyn::Contact load(const mc_rbdyn::Robots&, const mc_rtc::Configuration &);
+  static mc_rtc::Configuration save(const mc_rbdyn::Contact &);
+};
 
 }

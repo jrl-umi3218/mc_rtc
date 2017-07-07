@@ -719,4 +719,42 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModulePtr>::save(const 
   return ConfigurationLoader<mc_rbdyn::RobotModule>::save(*rm);
 }
 
+mc_rbdyn::Contact ConfigurationLoader<mc_rbdyn::Contact>::load(const mc_rbdyn::Robots & robots, const mc_rtc::Configuration & config)
+{
+  unsigned int r1Index = 0;
+  unsigned int r2Index = 1;
+  config("r1Index", r1Index);
+  config("r2Index", r2Index);
+  sva::PTransformd X_r2s_r1s_real;
+  sva::PTransformd * X_r2s_r1s = nullptr;
+  bool isFixed = config("isFixed");
+  if(isFixed)
+  {
+    X_r2s_r1s_real = config("X_r2s_r1s");
+    X_r2s_r1s = &X_r2s_r1s_real;
+  }
+  sva::PTransformd X_b_s = sva::PTransformd::Identity();
+  config("X_b_s", X_b_s);
+  int ambiguityId = -1;
+  config("ambiguityId", ambiguityId);
+  return mc_rbdyn::Contact(robots, r1Index, r2Index, config("r1Surface"), config("r2Surface"), X_r2s_r1s, X_b_s, ambiguityId);
+}
+
+mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Contact>::save(const mc_rbdyn::Contact & c)
+{
+  mc_rtc::Configuration config;
+  config.add("r1Index", c.r1Index());
+  config.add("r2Index", c.r2Index());
+  config.add("r1Surface", c.r1Surface()->name());
+  config.add("r2Surface", c.r2Surface()->name());
+  config.add("X_b_s", c.X_b_s());
+  config.add("ambiguityId", c.ambiguityId());
+  config.add("isFixed", c.isFixed());
+  if(c.isFixed())
+  {
+    config.add("X_r2s_r1s", c.X_r2s_r1s());
+  }
+  return config;
+}
+
 }
