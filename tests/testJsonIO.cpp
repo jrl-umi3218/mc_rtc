@@ -82,11 +82,16 @@ mc_rbdyn::BodySensor make_ref()
   return {"sensor", "parent", random_pt()};
 }
 
+namespace mc_rbdyn
+{
+
 bool operator==(const mc_rbdyn::BodySensor & lhs, const mc_rbdyn::BodySensor & rhs)
 {
   return lhs.name() == rhs.name() &&
          lhs.parentBody() == rhs.parentBody() &&
          lhs.X_b_s() == rhs.X_b_s();
+}
+
 }
 
 template<>
@@ -207,12 +212,15 @@ mc_rbdyn::Flexibility make_ref()
   return {"jointName", rnd(), rnd(), rnd()};
 }
 
-bool operator==(const mc_rbdyn::Flexibility & lhs, const mc_rbdyn::Flexibility & rhs)
+namespace mc_rbdyn
 {
-  return lhs.jointName == rhs.jointName &&
-         lhs.K == rhs.K &&
-         lhs.C == rhs.C &&
-         lhs.O == rhs.O;
+  bool operator==(const mc_rbdyn::Flexibility & lhs, const mc_rbdyn::Flexibility & rhs)
+  {
+    return lhs.jointName == rhs.jointName &&
+           lhs.K == rhs.K &&
+           lhs.C == rhs.C &&
+           lhs.O == rhs.O;
+  }
 }
 
 template<>
@@ -221,11 +229,14 @@ mc_rbdyn::ForceSensor make_ref()
   return {"forceSensor", "parentBody", random_pt()};
 }
 
-bool operator==(const mc_rbdyn::ForceSensor & lhs, const mc_rbdyn::ForceSensor & rhs)
+namespace mc_rbdyn
 {
-  return lhs.name() == rhs.name() &&
-         lhs.parentBody() == rhs.parentBody() &&
-         lhs.X_p_f() == rhs.X_p_f();
+  bool operator==(const mc_rbdyn::ForceSensor & lhs, const mc_rbdyn::ForceSensor & rhs)
+  {
+    return lhs.name() == rhs.name() &&
+           lhs.parentBody() == rhs.parentBody() &&
+           lhs.X_p_f() == rhs.X_p_f();
+  }
 }
 
 template<>
@@ -278,6 +289,9 @@ mc_rbdyn::RobotModule make_ref()
   rm.validate_stance();
   return rm;
 }
+
+namespace mc_rbdyn_urdf
+{
 
 bool operator==(const mc_rbdyn_urdf::Geometry::Box & lhs,
                 const mc_rbdyn_urdf::Geometry::Box & rhs)
@@ -340,12 +354,19 @@ bool operator==(const mc_rbdyn_urdf::Visual & lhs,
          lhs.geometry == rhs.geometry;
 }
 
+}
+
+namespace mc_rbdyn
+{
+
 bool operator==(const mc_rbdyn::RobotModule::Gripper & lhs,
                 const mc_rbdyn::RobotModule::Gripper & rhs)
 {
   return lhs.name == rhs.name &&
          lhs.joints == rhs.joints &&
          lhs.reverse_limits == rhs.reverse_limits;
+}
+
 }
 
 bool operator==(const mc_rbdyn::RobotModule & lhs, const mc_rbdyn::RobotModule & rhs)
