@@ -74,7 +74,7 @@ struct TaskTester<mc_tasks::CoMTask>
     BOOST_REQUIRE(com_loaded);
     BOOST_CHECK_CLOSE(com_ref->stiffness(), com_loaded->stiffness(), 1e-6);
     BOOST_CHECK_CLOSE(com_ref->weight(), com_loaded->weight(), 1e-6);
-    BOOST_CHECK(com_ref->com() == com_loaded->com());
+    BOOST_CHECK(com_ref->com().isApprox(com_loaded->com(), 1e-9));
   }
 
   Eigen::Vector3d com = Eigen::Vector3d::Random();

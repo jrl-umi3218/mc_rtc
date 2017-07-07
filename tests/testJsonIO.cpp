@@ -411,6 +411,18 @@ void test_config_array(mc_rtc::Configuration & config)
   return test_config_array_helper<T>(config, 0);
 }
 
+template<typename T>
+struct AllocatorHelper
+{
+  using Allocator = std::allocator<T>;
+};
+
+template<>
+struct AllocatorHelper<mc_rbdyn::BodySensor>
+{
+  using Allocator = Eigen::aligned_allocator<mc_rbdyn::BodySensor>;
+};
+
 BOOST_AUTO_TEST_CASE_TEMPLATE(TestJsonIO, T, test_types)
 {
   static_assert(mc_rtc::internal::has_configuration_load_object<T>::value, "No Configuration load function for this type");
@@ -425,10 +437,15 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(TestJsonIO, T, test_types)
   T test = config("object");
   BOOST_CHECK(test == ref);
 
-  std::vector<T> ref_v = {make_ref<T>(), make_ref<T>(), make_ref<T>(), make_ref<T>(), make_ref<T>()};
+  using vector_t = std::vector<T, typename AllocatorHelper<T>::Allocator>;
+  vector_t ref_v;
+  for(size_t i = 0; i < 5; ++i)
+  {
+    ref_v.push_back(make_ref<T>());
+  }
   config.add("object_v", ref_v);
 
-  std::vector<T> test_v = config("object_v");
+  vector_t test_v = config("object_v");
   BOOST_REQUIRE(test_v.size() == ref_v.size());
   for(size_t i = 0; i < test_v.size(); ++i)
   {
