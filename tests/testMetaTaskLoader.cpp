@@ -6,6 +6,7 @@
 #include <mc_tasks/AddRemoveContactTask.h>
 #include <mc_tasks/CoMTask.h>
 #include <mc_tasks/ComplianceTask.h>
+#include <mc_tasks/RelativeEndEffectorTask.h>
 
 #include <mc_rbdyn/RobotLoader.h>
 #include <mc_rbdyn/configuration_io.h>
@@ -184,10 +185,189 @@ struct TaskTester<mc_tasks::ComplianceTask>
   sva::ForceVecd wrench = {Eigen::Vector6d::Random()};
 };
 
+template<>
+struct TaskTester<mc_tasks::OrientationTask>
+{
+  mc_tasks::MetaTaskPtr make_ref()
+  {
+    auto t = std::make_shared<mc_tasks::OrientationTask>("RARM_LINK6", *robots, 0, stiffness, weight);
+    t->orientation(ori);
+    return t;
+  }
+
+  std::string json()
+  {
+    mc_rtc::Configuration config;
+    config.add("type", "orientation");
+    config.add("robotIndex", 0);
+    config.add("body", "RARM_LINK6");
+    config.add("stiffness", stiffness);
+    config.add("weight", weight);
+    config.add("orientation", ori);
+    auto ret = getTmpFile();
+    config.save(ret);
+    return ret;
+  }
+
+  void check(const mc_tasks::MetaTaskPtr & ref_p,
+             const mc_tasks::MetaTaskPtr & loaded_p)
+  {
+    auto ref = std::dynamic_pointer_cast<mc_tasks::OrientationTask>(ref_p);
+    auto loaded = std::dynamic_pointer_cast<mc_tasks::OrientationTask>(loaded_p);
+    BOOST_REQUIRE(ref);
+    BOOST_REQUIRE(loaded);
+    BOOST_CHECK_CLOSE(ref->stiffness(), loaded->stiffness(), 1e-6);
+    BOOST_CHECK_CLOSE(ref->weight(), loaded->weight(), 1e-6);
+    BOOST_CHECK(ref->orientation().isApprox(loaded->orientation(), 1e-6));
+  }
+
+  double stiffness = fabs(rnd());
+  double weight = fabs(rnd());
+  Eigen::Matrix3d ori = Eigen::Matrix3d::Random();
+};
+
+template<>
+struct TaskTester<mc_tasks::PositionTask>
+{
+  mc_tasks::MetaTaskPtr make_ref()
+  {
+    auto t = std::make_shared<mc_tasks::PositionTask>("RARM_LINK6", *robots, 0, stiffness, weight);
+    t->position(pos);
+    return t;
+  }
+
+  std::string json()
+  {
+    mc_rtc::Configuration config;
+    config.add("type", "position");
+    config.add("robotIndex", 0);
+    config.add("body", "RARM_LINK6");
+    config.add("stiffness", stiffness);
+    config.add("weight", weight);
+    config.add("position", pos);
+    auto ret = getTmpFile();
+    config.save(ret);
+    return ret;
+  }
+
+  void check(const mc_tasks::MetaTaskPtr & ref_p,
+             const mc_tasks::MetaTaskPtr & loaded_p)
+  {
+    auto ref = std::dynamic_pointer_cast<mc_tasks::PositionTask>(ref_p);
+    auto loaded = std::dynamic_pointer_cast<mc_tasks::PositionTask>(loaded_p);
+    BOOST_REQUIRE(ref);
+    BOOST_REQUIRE(loaded);
+    BOOST_CHECK_CLOSE(ref->stiffness(), loaded->stiffness(), 1e-6);
+    BOOST_CHECK_CLOSE(ref->weight(), loaded->weight(), 1e-6);
+    BOOST_CHECK(ref->position().isApprox(loaded->position(), 1e-6));
+  }
+
+  double stiffness = fabs(rnd());
+  double weight = fabs(rnd());
+  Eigen::Vector3d pos = Eigen::Vector3d::Random();
+};
+
+template<>
+struct TaskTester<mc_tasks::EndEffectorTask>
+{
+  mc_tasks::MetaTaskPtr make_ref()
+  {
+    auto t = std::make_shared<mc_tasks::EndEffectorTask>("RARM_LINK6", *robots, 0, stiffness, weight);
+    t->set_ef_pose({ori, pos});
+    return t;
+  }
+
+  std::string json()
+  {
+    mc_rtc::Configuration config;
+    config.add("type", "body6d");
+    config.add("robotIndex", 0);
+    config.add("body", "RARM_LINK6");
+    config.add("stiffness", stiffness);
+    config.add("weight", weight);
+    config.add("position", pos);
+    config.add("orientation", ori);
+    auto ret = getTmpFile();
+    config.save(ret);
+    return ret;
+  }
+
+  void check(const mc_tasks::MetaTaskPtr & ref_p,
+             const mc_tasks::MetaTaskPtr & loaded_p)
+  {
+    auto ref = std::dynamic_pointer_cast<mc_tasks::EndEffectorTask>(ref_p);
+    auto loaded = std::dynamic_pointer_cast<mc_tasks::EndEffectorTask>(loaded_p);
+    BOOST_REQUIRE(ref);
+    BOOST_REQUIRE(loaded);
+    BOOST_CHECK_CLOSE(ref->positionTask->stiffness(), loaded->positionTask->stiffness(), 1e-6);
+    BOOST_CHECK_CLOSE(ref->positionTask->weight(), loaded->positionTask->weight(), 1e-6);
+    BOOST_CHECK(ref->positionTask->position().isApprox(loaded->positionTask->position(), 1e-6));
+    BOOST_CHECK_CLOSE(ref->orientationTask->stiffness(), loaded->orientationTask->stiffness(), 1e-6);
+    BOOST_CHECK_CLOSE(ref->orientationTask->weight(), loaded->orientationTask->weight(), 1e-6);
+    BOOST_CHECK(ref->orientationTask->orientation().isApprox(loaded->orientationTask->orientation(), 1e-6));
+  }
+
+  double stiffness = fabs(rnd());
+  double weight = fabs(rnd());
+  Eigen::Matrix3d ori = Eigen::Matrix3d::Random();
+  Eigen::Vector3d pos = Eigen::Vector3d::Random();
+};
+
+template<>
+struct TaskTester<mc_tasks::RelativeEndEffectorTask>
+{
+  mc_tasks::MetaTaskPtr make_ref()
+  {
+    auto t = std::make_shared<mc_tasks::RelativeEndEffectorTask>("RARM_LINK6", *robots, 0, "LARM_LINK6", stiffness, weight);
+    t->set_ef_pose({ori, pos});
+    return t;
+  }
+
+  std::string json()
+  {
+    mc_rtc::Configuration config;
+    config.add("type", "relBody6d");
+    config.add("robotIndex", 0);
+    config.add("body", "RARM_LINK6");
+    config.add("relBody", "LARM_LINK6");
+    config.add("stiffness", stiffness);
+    config.add("weight", weight);
+    config.add("position", pos);
+    config.add("orientation", ori);
+    auto ret = getTmpFile();
+    config.save(ret);
+    return ret;
+  }
+
+  void check(const mc_tasks::MetaTaskPtr & ref_p,
+             const mc_tasks::MetaTaskPtr & loaded_p)
+  {
+    auto ref = std::dynamic_pointer_cast<mc_tasks::RelativeEndEffectorTask>(ref_p);
+    auto loaded = std::dynamic_pointer_cast<mc_tasks::RelativeEndEffectorTask>(loaded_p);
+    BOOST_REQUIRE(ref);
+    BOOST_REQUIRE(loaded);
+    BOOST_CHECK_CLOSE(ref->positionTask->stiffness(), loaded->positionTask->stiffness(), 1e-6);
+    BOOST_CHECK_CLOSE(ref->positionTask->weight(), loaded->positionTask->weight(), 1e-6);
+    BOOST_CHECK_CLOSE(ref->orientationTask->stiffness(), loaded->orientationTask->stiffness(), 1e-6);
+    BOOST_CHECK_CLOSE(ref->orientationTask->weight(), loaded->orientationTask->weight(), 1e-6);
+    BOOST_CHECK(ref->get_ef_pose().rotation().isApprox(loaded->get_ef_pose().rotation(), 1e-6));
+    BOOST_CHECK(ref->get_ef_pose().translation().isApprox(loaded->get_ef_pose().translation(), 1e-6));
+  }
+
+  double stiffness = fabs(rnd());
+  double weight = fabs(rnd());
+  Eigen::Matrix3d ori = Eigen::Matrix3d::Random();
+  Eigen::Vector3d pos = Eigen::Vector3d::Random();
+};
+
 typedef boost::mpl::list<mc_tasks::CoMTask,
                          mc_tasks::AddContactTask,
                          mc_tasks::RemoveContactTask,
-                         mc_tasks::ComplianceTask> test_types;
+                         mc_tasks::ComplianceTask,
+                         mc_tasks::OrientationTask,
+                         mc_tasks::PositionTask,
+                         mc_tasks::EndEffectorTask,
+                         mc_tasks::RelativeEndEffectorTask> test_types;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(TestMetaTaskLoader, T, test_types)
 {
