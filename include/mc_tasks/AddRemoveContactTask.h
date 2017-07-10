@@ -119,6 +119,16 @@ public:
    */
   void direction(double direction);
 
+  /*! \brief Get the desired dislacement speed */
+  double speed() { return speed_; }
+  /*! \brief Set the desired dislacement speed */
+  void speed(double s) { speed_ = s; }
+
+  /*! \brief Get the task stiffness */
+  double stiffness() { return stiffness_; }
+  /*! \brief Get the task weight */
+  double weight() { return weight_; }
+
   /*! \brief Get the velocity error
    *
    * \returns Velocity error of the LinVelocity task */
@@ -147,6 +157,8 @@ public:
   Eigen::VectorXd speedMat;
   Eigen::Vector3d normal;
 
+  double stiffness_;
+  double weight_;
   double speed_;
   Eigen::Vector3d targetSpeed;
   std::shared_ptr<tasks::qp::LinVelocityTask> linVelTask;

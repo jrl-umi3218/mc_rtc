@@ -29,7 +29,8 @@ AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots,
   robotBodyIndex(robot.bodyIndexByName(robotSurf->bodyName())),
   targetTf(contact.X_0_r1s(robots)),
   bodyId(robotSurf->bodyName()),
-  dofMat(Eigen::MatrixXd::Zero(5,6)), speedMat(Eigen::VectorXd::Zero(5))
+  dofMat(Eigen::MatrixXd::Zero(5,6)), speedMat(Eigen::VectorXd::Zero(5)),
+  stiffness_(stiffness), weight_(weight)
 {
   for(int i = 0; i < 5; ++i)
   {
