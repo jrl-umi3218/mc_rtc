@@ -119,6 +119,24 @@ public:
   /*! \brief Get the current target wrench */
   sva::ForceVecd getTargetWrench() { return obj_; }
 
+  /*! \brief Set the task stiffness */
+  void stiffness(double s)
+  {
+    efTask_->positionTask->stiffness(s);
+    efTask_->orientationTask->stiffness(s);
+  }
+  /*! \brief Get the task stiffness */
+  double stiffness() { return efTask_->positionTask->stiffness(); }
+
+  /*! \brief Set the task weight */
+  void weight(double w)
+  {
+    efTask_->positionTask->weight(w);
+    efTask_->orientationTask->weight(w);
+  }
+  /*! \brief Get the task weight */
+  double weight() { return efTask_->positionTask->weight(); }
+
   /*! \brief Set the force threshold */
   void forceThresh(double t) { forceThresh_ = t; }
   /*! \brief Get the force threshold */

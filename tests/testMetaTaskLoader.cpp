@@ -5,6 +5,7 @@
 
 #include <mc_tasks/AddRemoveContactTask.h>
 #include <mc_tasks/CoMTask.h>
+#include <mc_tasks/ComplianceTask.h>
 
 #include <mc_rbdyn/RobotLoader.h>
 #include <mc_rbdyn/configuration_io.h>
@@ -26,23 +27,13 @@ struct fail : public std::false_type {};
 template<typename T>
 struct TaskTester
 {
-  mc_tasks::MetaTaskPtr make_ref()
-  {
-    static_assert(fail<T>::value, "This should be specialized");
-    return nullptr;
-  }
+  static_assert(fail<T>::value, "This should be specialized");
+  mc_tasks::MetaTaskPtr make_ref() { return nullptr; }
 
-  std::string json()
-  {
-    static_assert(fail<T>::value, "This should be specialized");
-    return "";
-  }
+  std::string json() { return ""; }
 
   void check(const mc_tasks::MetaTaskPtr & /*ref*/,
-             const mc_tasks::MetaTaskPtr & /*loaded*/)
-  {
-    static_assert(fail<T>::value, "This should be specialized");
-  }
+             const mc_tasks::MetaTaskPtr & /*loaded*/) {}
 };
 
 template<>
@@ -135,9 +126,68 @@ struct TaskTester<T> \
 AddRemoveContactTaskTester(mc_tasks::AddContactTask, "addContact")
 AddRemoveContactTaskTester(mc_tasks::RemoveContactTask, "removeContact")
 
+template<>
+struct TaskTester<mc_tasks::ComplianceTask>
+{
+  mc_tasks::MetaTaskPtr make_ref()
+  {
+    auto t = std::make_shared<mc_tasks::ComplianceTask>(*robots, 0, "RARM_LINK6", solver.dt(), dof, stiffness, weight, forceThresh, torqueThresh, forceGain, torqueGain);
+    t->setTargetWrench(wrench);
+    return t;
+  }
+
+  std::string json()
+  {
+    mc_rtc::Configuration config;
+    config.add("type", "compliance");
+    config.add("robotIndex", 0);
+    config.add("body", "RARM_LINK6");
+    config.add("dof", dof);
+    config.add("stiffness", stiffness);
+    config.add("weight", weight);
+    config.add("forceThresh", forceThresh);
+    config.add("torqueThresh", torqueThresh);
+    config.add("forceGain", forceGain);
+    config.add("torqueGain", torqueGain);
+    config.add("wrench", wrench);
+    auto ret = getTmpFile();
+    config.save(ret);
+    return ret;
+  }
+
+  void check(const mc_tasks::MetaTaskPtr & ref_p,
+             const mc_tasks::MetaTaskPtr & loaded_p)
+  {
+    auto ref = std::dynamic_pointer_cast<mc_tasks::ComplianceTask>(ref_p);
+    auto loaded = std::dynamic_pointer_cast<mc_tasks::ComplianceTask>(loaded_p);
+    BOOST_REQUIRE(ref);
+    BOOST_REQUIRE(loaded);
+    BOOST_CHECK(ref->dof().isApprox(loaded->dof(), 1e-6));
+    BOOST_CHECK_CLOSE(ref->stiffness(), loaded->stiffness(), 1e-6);
+    BOOST_CHECK_CLOSE(ref->weight(), loaded->weight(), 1e-6);
+    BOOST_CHECK_CLOSE(ref->forceThresh(), loaded->forceThresh(), 1e-6);
+    BOOST_CHECK_CLOSE(ref->torqueThresh(), loaded->torqueThresh(), 1e-6);
+    BOOST_CHECK_CLOSE(ref->forceGain().first, loaded->forceGain().first, 1e-6);
+    BOOST_CHECK_CLOSE(ref->forceGain().second, loaded->forceGain().second, 1e-6);
+    BOOST_CHECK_CLOSE(ref->torqueGain().first, loaded->torqueGain().first, 1e-6);
+    BOOST_CHECK_CLOSE(ref->torqueGain().second, loaded->torqueGain().second, 1e-6);
+    BOOST_CHECK(ref->getTargetWrench() == loaded->getTargetWrench());
+  }
+
+  Eigen::Matrix6d dof = Eigen::Matrix6d::Random();
+  double stiffness = fabs(rnd());
+  double weight = fabs(rnd());
+  double forceThresh = fabs(rnd());
+  double torqueThresh = fabs(rnd());
+  std::pair<double, double> forceGain = {fabs(rnd()), fabs(rnd())};
+  std::pair<double, double> torqueGain = {fabs(rnd()), fabs(rnd())};
+  sva::ForceVecd wrench = {Eigen::Vector6d::Random()};
+};
+
 typedef boost::mpl::list<mc_tasks::CoMTask,
                          mc_tasks::AddContactTask,
-                         mc_tasks::RemoveContactTask> test_types;
+                         mc_tasks::RemoveContactTask,
+                         mc_tasks::ComplianceTask> test_types;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(TestMetaTaskLoader, T, test_types)
 {
