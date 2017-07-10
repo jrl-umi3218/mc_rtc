@@ -206,9 +206,9 @@ cdef class RelativeEndEffectorTask(EndEffectorTask):
     if self.__own_impl:
       del self.rel_impl
   def __ctor__(self, bodyName, mc_rbdyn.Robots robots,
-                robotIndex, relBodyIdx = 0, stiffness = 2.0, weight = 1000.0):
+                robotIndex, relBodyName = "", stiffness = 2.0, weight = 1000.0):
     self.__own_impl = True
-    self.rel_impl = self.impl = self.mt_base = new c_mc_tasks.RelativeEndEffectorTask(bodyName, deref(robots.impl), robotIndex, relBodyIdx, stiffness, weight)
+    self.rel_impl = self.impl = self.mt_base = new c_mc_tasks.RelativeEndEffectorTask(bodyName, deref(robots.impl), robotIndex, relBodyName, stiffness, weight)
   def __cinit__(self, *args, skip_alloc = False):
     if skip_alloc:
       self.__own_impl = False
