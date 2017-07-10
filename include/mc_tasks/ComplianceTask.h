@@ -116,6 +116,34 @@ public:
     obj_ = wrench;
   }
 
+  /*! \brief Get the current target wrench */
+  sva::ForceVecd getTargetWrench() { return obj_; }
+
+  /*! \brief Set the force threshold */
+  void forceThresh(double t) { forceThresh_ = t; }
+  /*! \brief Get the force threshold */
+  double forceThresh() { return forceThresh_; }
+
+  /*! \brief Set the torque threshold */
+  void torqueThresh(double t) { torqueThresh_ = t; }
+  /*! \brief Get the torque threshold */
+  double torqueThresh() { return torqueThresh_; }
+
+  /*! \brief Set the force gain */
+  void forceGain(std::pair<double, double> t) { forceGain_ = t; }
+  /*! \brief Get the force gain */
+  std::pair<double, double> forceGain() { return forceGain_; }
+
+  /*! \brief Set the torque gain */
+  void torqueGain(std::pair<double, double> t) { torqueGain_ = t; }
+  /*! \brief Get the torque gain */
+  std::pair<double, double> torqueGain() { return torqueGain_; }
+
+  /*! \brief Set the current dof matrix */
+  void dof(const Eigen::Matrix6d & dof) { dof_ = dof; }
+  /*! \brief Get the current dof matrix */
+  Eigen::Matrix6d dof() { return dof_; }
+
   virtual void dimWeight(const Eigen::VectorXd & dimW) override;
 
   virtual Eigen::VectorXd dimWeight() const override;

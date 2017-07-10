@@ -1,5 +1,9 @@
 #include <mc_tasks/ComplianceTask.h>
+
+#include <mc_rbdyn/configuration_io.h>
 #include <mc_rbdyn/rpy_utils.h>
+
+#include <mc_tasks/MetaTaskLoader.h>
 
 namespace mc_tasks
 {
@@ -134,3 +138,33 @@ void ComplianceTask::resetJointsSelector(mc_solver::QPSolver & solver)
 }
 
 } // mc_tasks
+
+namespace
+{
+
+mc_tasks::MetaTaskPtr load_compliance_task(mc_solver::QPSolver & solver,
+                                    const mc_rtc::Configuration & config)
+{
+  Eigen::Matrix6d dof = Eigen::Matrix6d::Identity();
+  config("dof", dof);
+  auto t = std::make_shared<mc_tasks::ComplianceTask>(solver.robots(), config("robotIndex"), config("body"), solver.dt(), dof);
+  if(config.has("forceThresh")) { t->forceThresh(config("forceThresh")); }
+  if(config.has("torqueThresh")) { t->torqueThresh(config("torqueThresh")); }
+  if(config.has("forceGain")) { t->forceGain(config("forceGain")); }
+  if(config.has("torqueGain")) { t->torqueGain(config("torqueGain")); }
+  if(config.has("wrench"))
+  {
+    t->setTargetWrench(config("wrench"));
+  }
+  t->load(solver, config);
+  return t;
+}
+
+struct ComplianceTaskLoader
+{
+  static bool registered;
+};
+
+bool ComplianceTaskLoader::registered = mc_tasks::MetaTaskLoader::register_load_function("compliance", &load_compliance_task);
+
+}
