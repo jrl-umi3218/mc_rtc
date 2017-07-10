@@ -1,3 +1,8 @@
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/tests_config.h.cmake.in"
+               "${CMAKE_CURRENT_BINARY_DIR}/tests_config.h")
+
+include_directories("${CMAKE_CURRENT_BINARY_DIR}")
+
 add_executable(testBSplineTrajectory testBSplineTrajectory.cpp)
 target_link_libraries(testBSplineTrajectory mc_trajectory)
 
@@ -25,7 +30,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests_config.h.in
                ${CMAKE_CURRENT_BINARY_DIR}/include/tests_config.h)
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
 
-mc_rtc_test(testConfiguration mc_rtc_utils)
+mc_rtc_test(testConfiguration mc_rtc_utils mc_rbdyn)
 mc_rtc_test(testJsonIO mc_rtc_utils mc_rbdyn)
 mc_rtc_test(testMetaTaskLoader mc_tasks)
 mc_rtc_test(testSolverTaskStorage mc_tasks)

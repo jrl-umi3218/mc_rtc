@@ -9,6 +9,7 @@
 
 #include "utils.h"
 
+static bool configured = configureRobotLoader();
 /* Create Robots with one robot and an environment for the purpose of the test */
 static auto rm = mc_rbdyn::RobotLoader::get_robot_module("HRP2DRC");
 static auto em = mc_rbdyn::RobotLoader::get_robot_module("env",

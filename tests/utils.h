@@ -1,5 +1,7 @@
 #pragma once
 
+#include <mc_rbdyn/RobotLoader.h>
+
 #include <SpaceVecAlg/SpaceVecAlg>
 
 #include <cstdlib>
@@ -8,6 +10,15 @@
 #include <random>
 #include <stdexcept>
 #include <string>
+
+#include "tests_config.h"
+
+bool configureRobotLoader()
+{
+  mc_rbdyn::RobotLoader::clear();
+  mc_rbdyn::RobotLoader::update_robot_module_path({std::string(ROBOTS_BUILD_DIR)});
+  return true;
+}
 
 /** This file contains various functions that are useful in unit tests */
 
