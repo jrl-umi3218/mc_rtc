@@ -6,6 +6,8 @@
 #include <mc_tasks/AddRemoveContactTask.h>
 #include <mc_tasks/CoMTask.h>
 #include <mc_tasks/ComplianceTask.h>
+#include <mc_tasks/GazeTask.h>
+#include <mc_tasks/PositionBasedVisServoTask.h>
 #include <mc_tasks/RelativeEndEffectorTask.h>
 
 #include <mc_rbdyn/RobotLoader.h>
@@ -60,16 +62,16 @@ struct TaskTester<mc_tasks::CoMTask>
     return ret;
   }
 
-  void check(const mc_tasks::MetaTaskPtr & ref,
-             const mc_tasks::MetaTaskPtr & loaded)
+  void check(const mc_tasks::MetaTaskPtr & ref_p,
+             const mc_tasks::MetaTaskPtr & loaded_p)
   {
-    auto com_ref = std::dynamic_pointer_cast<mc_tasks::CoMTask>(ref);
-    auto com_loaded = std::dynamic_pointer_cast<mc_tasks::CoMTask>(loaded);
-    BOOST_REQUIRE(com_ref);
-    BOOST_REQUIRE(com_loaded);
-    BOOST_CHECK_CLOSE(com_ref->stiffness(), com_loaded->stiffness(), 1e-6);
-    BOOST_CHECK_CLOSE(com_ref->weight(), com_loaded->weight(), 1e-6);
-    BOOST_CHECK(com_ref->com().isApprox(com_loaded->com(), 1e-9));
+    auto ref = std::dynamic_pointer_cast<mc_tasks::CoMTask>(ref_p);
+    auto loaded = std::dynamic_pointer_cast<mc_tasks::CoMTask>(loaded_p);
+    BOOST_REQUIRE(ref);
+    BOOST_REQUIRE(loaded);
+    BOOST_CHECK_CLOSE(ref->stiffness(), loaded->stiffness(), 1e-6);
+    BOOST_CHECK_CLOSE(ref->weight(), loaded->weight(), 1e-6);
+    BOOST_CHECK(ref->com().isApprox(loaded->com(), 1e-9));
   }
 
   Eigen::Vector3d com = Eigen::Vector3d::Random();
@@ -360,6 +362,84 @@ struct TaskTester<mc_tasks::RelativeEndEffectorTask>
   Eigen::Vector3d pos = Eigen::Vector3d::Random();
 };
 
+template<>
+struct TaskTester<mc_tasks::GazeTask>
+{
+  mc_tasks::MetaTaskPtr make_ref()
+  {
+    auto ret = std::make_shared<mc_tasks::GazeTask>("HEAD_LINK1", Eigen::Vector3d::Zero(), X_b_gaze, *robots, 0, stiffness, weight);
+    return ret;
+  }
+
+  std::string json()
+  {
+    mc_rtc::Configuration config;
+    config.add("type", "gaze");
+    config.add("robotIndex", 0);
+    config.add("body", "HEAD_LINK1");
+    config.add("stiffness", stiffness);
+    config.add("weight", weight);
+    config.add("X_b_gaze", X_b_gaze);
+    auto ret = getTmpFile();
+    config.save(ret);
+    return ret;
+  }
+
+  void check(const mc_tasks::MetaTaskPtr & ref_p,
+             const mc_tasks::MetaTaskPtr & loaded_p)
+  {
+    auto ref = std::dynamic_pointer_cast<mc_tasks::GazeTask>(ref_p);
+    auto loaded = std::dynamic_pointer_cast<mc_tasks::GazeTask>(loaded_p);
+    BOOST_REQUIRE(ref);
+    BOOST_REQUIRE(loaded);
+    BOOST_CHECK_CLOSE(ref->stiffness(), loaded->stiffness(), 1e-6);
+    BOOST_CHECK_CLOSE(ref->weight(), loaded->weight(), 1e-6);
+  }
+
+  double stiffness = fabs(rnd());
+  double weight = fabs(rnd());
+  sva::PTransformd X_b_gaze = random_pt();
+};
+
+template<>
+struct TaskTester<mc_tasks::PositionBasedVisServoTask>
+{
+  mc_tasks::MetaTaskPtr make_ref()
+  {
+    auto ret = std::make_shared<mc_tasks::PositionBasedVisServoTask>("HEAD_LINK1", sva::PTransformd::Identity(), X_b_s, *robots, 0, stiffness, weight);
+    return ret;
+  }
+
+  std::string json()
+  {
+    mc_rtc::Configuration config;
+    config.add("type", "pbvs");
+    config.add("robotIndex", 0);
+    config.add("body", "HEAD_LINK1");
+    config.add("stiffness", stiffness);
+    config.add("weight", weight);
+    config.add("X_b_s", X_b_s);
+    auto ret = getTmpFile();
+    config.save(ret);
+    return ret;
+  }
+
+  void check(const mc_tasks::MetaTaskPtr & ref_p,
+             const mc_tasks::MetaTaskPtr & loaded_p)
+  {
+    auto ref = std::dynamic_pointer_cast<mc_tasks::PositionBasedVisServoTask>(ref_p);
+    auto loaded = std::dynamic_pointer_cast<mc_tasks::PositionBasedVisServoTask>(loaded_p);
+    BOOST_REQUIRE(ref);
+    BOOST_REQUIRE(loaded);
+    BOOST_CHECK_CLOSE(ref->stiffness(), loaded->stiffness(), 1e-6);
+    BOOST_CHECK_CLOSE(ref->weight(), loaded->weight(), 1e-6);
+  }
+
+  double stiffness = fabs(rnd());
+  double weight = fabs(rnd());
+  sva::PTransformd X_b_s = random_pt();
+};
+
 typedef boost::mpl::list<mc_tasks::CoMTask,
                          mc_tasks::AddContactTask,
                          mc_tasks::RemoveContactTask,
@@ -367,7 +447,9 @@ typedef boost::mpl::list<mc_tasks::CoMTask,
                          mc_tasks::OrientationTask,
                          mc_tasks::PositionTask,
                          mc_tasks::EndEffectorTask,
-                         mc_tasks::RelativeEndEffectorTask> test_types;
+                         mc_tasks::RelativeEndEffectorTask,
+                         mc_tasks::GazeTask,
+                         mc_tasks::PositionBasedVisServoTask> test_types;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(TestMetaTaskLoader, T, test_types)
 {
