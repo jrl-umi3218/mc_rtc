@@ -112,6 +112,16 @@ inline rapidjson::Value toJSON(std::string value, rapidjson::Document::Allocator
 }
 
 template<>
+inline rapidjson::Value toJSON(Eigen::Vector2d value, rapidjson::Document::AllocatorType & allocator)
+{
+  rapidjson::Value ret(rapidjson::kArrayType);
+  ret.Reserve(2, allocator);
+  ret.PushBack(value(0), allocator);
+  ret.PushBack(value(1), allocator);
+  return ret;
+}
+
+template<>
 inline rapidjson::Value toJSON(Eigen::Vector3d value, rapidjson::Document::AllocatorType & allocator)
 {
   rapidjson::Value ret(rapidjson::kArrayType);

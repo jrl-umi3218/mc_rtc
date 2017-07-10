@@ -156,6 +156,13 @@ namespace mc_rtc
      */
     operator std::string() const;
 
+    /*! \brief Retrieve as a Eigen::Vector2d instance
+     *
+     * \throws If the underlying value does not hold a numeric
+     * sequence of size 2
+     */
+    operator Eigen::Vector2d() const;
+
     /*! \brief Retrieve as a Eigen::Vector3d instance
      *
      * \throws If the underlying value does not hold a numeric
@@ -449,6 +456,12 @@ namespace mc_rtc
      */
     void add(const std::string & key, const char * value);
 
+    /*! \brief Add a Eigen::Vector2d element to the Configuration
+     *
+     * \see add(const std::string&, bool)
+     */
+    void add(const std::string & key, Eigen::Vector2d value);
+
     /*! \brief Add a Eigen::Vector3d element to the Configuration
      *
      * \see add(const std::string&, bool)
@@ -547,6 +560,12 @@ namespace mc_rtc
      * \see push(bool);
      */
     void push(const char * value);
+
+    /*! \brief Insert a Eigen::Vector2d element into an array
+     *
+     * \see push(bool);
+     */
+    void push(Eigen::Vector2d value);
 
     /*! \brief Insert a Eigen::Vector3d element into an array
      *

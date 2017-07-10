@@ -307,6 +307,17 @@ Configuration::operator std::string() const
   throw Configuration::Exception("Stored Json value is not a string");
 }
 
+Configuration::operator Eigen::Vector2d() const
+{
+  if(v.isArray() && v.size() == 2 && v[0].impl->isNumeric())
+  {
+    Eigen::Vector2d ret;
+    ret << v[0].impl->asDouble(), v[1].impl->asDouble(), v[2].impl->asDouble();
+    return ret;
+  }
+  throw Configuration::Exception("Stored Json value is not a Vector2d");
+}
+
 Configuration::operator Eigen::Vector3d() const
 {
   if(v.isArray() && v.size() == 3 && v[0].impl->isNumeric())
@@ -489,6 +500,7 @@ void Configuration::add(const std::string & key, unsigned int value) { add_impl(
 void Configuration::add(const std::string & key, double value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::add(const std::string & key, std::string value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::add(const std::string & key, const char * value) { add(key, std::string(value)); }
+void Configuration::add(const std::string & key, Eigen::Vector2d value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::add(const std::string & key, Eigen::Vector3d value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::add(const std::string & key, Eigen::Vector6d value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::add(const std::string & key, Eigen::VectorXd value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
@@ -567,6 +579,7 @@ void Configuration::push(unsigned int value) { push_impl(value, *v.impl->value()
 void Configuration::push(double value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(std::string value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(const char * value) { push(std::string(value)); }
+void Configuration::push(Eigen::Vector2d value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(Eigen::Vector3d value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(Eigen::Vector6d value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(Eigen::VectorXd value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
