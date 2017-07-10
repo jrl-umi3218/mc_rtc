@@ -131,7 +131,7 @@ struct TaskTester<mc_tasks::ComplianceTask>
 {
   mc_tasks::MetaTaskPtr make_ref()
   {
-    auto t = std::make_shared<mc_tasks::ComplianceTask>(*robots, 0, "RARM_LINK6", solver.dt(), dof, stiffness, weight, forceThresh, torqueThresh, forceGain, torqueGain);
+    auto t = std::shared_ptr<mc_tasks::ComplianceTask>(new mc_tasks::ComplianceTask(*robots, 0, "RARM_LINK6", solver.dt(), dof, stiffness, weight, forceThresh, torqueThresh, forceGain, torqueGain));
     t->setTargetWrench(wrench);
     return t;
   }
