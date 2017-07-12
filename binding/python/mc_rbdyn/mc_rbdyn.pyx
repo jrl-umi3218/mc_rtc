@@ -1003,8 +1003,13 @@ cdef class Stance(object):
     return Stance(self)
   def contacts(self):
     return ContactVectorFromC(self.impl.contacts(), copy=False)
-  def q(self):
-    return self.impl.q()
+  property q:
+    def __get__(self):
+      return self.impl.q()
+    def __set__(self, value):
+      if not isinstance(value, rbdyn.DoubleVectorVectorWrapper):
+        value = rbdyn.DoubleVectorVectorWrapper(value)
+      self.impl.q(deref((<rbdyn.DoubleVectorVectorWrapper>value).v))
   property geomContacts:
     def __get__(self):
       return ContactVectorFromC(self.impl.geomContacts(), copy=False)
@@ -1036,11 +1041,18 @@ cdef class StanceVector(object):
   def __dealloc__(self):
     del self.v
   def __cinit__(self):
-    pass
+    self.v = new vector[c_mc_rbdyn.Stance]()
   def __getitem__(self, idx):
     return StanceFromC(self.v.at(idx))
   def __len__(self):
     return self.v.size()
+  def __copy__(StanceVector self):
+    cdef StanceVector ret = StanceVector()
+    for i in range(len(self)):
+      ret.v.push_back(c_mc_rbdyn.Stance(self.v.at(i).q(), self.v.at(i).geomContacts(), self.v.at(i).stabContacts()))
+    return ret
+  def __deepcopy__(StanceVector self, memo):
+    return self.__copy__()
 
 cdef class StanceAction(object):
   def __cinit__(self):
