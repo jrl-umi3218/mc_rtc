@@ -318,6 +318,7 @@ cdef extern from "<mc_rbdyn/stance.h>" namespace "mc_rbdyn":
         const vector[Contact] & stabContacts)
     const vector[Contact]& contacts()
     const vector[vector[double]]& q()
+    void q(const vector[vector[double]]&)
     const vector[Contact]& geomContacts()
     void geomContacts(const vector[Contact]&)
     const vector[Contact]& stabContacts()

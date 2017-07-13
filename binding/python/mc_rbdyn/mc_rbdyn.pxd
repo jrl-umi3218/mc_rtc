@@ -109,6 +109,7 @@ cdef Stance StanceFromC(const c_mc_rbdyn.Stance &)
 
 cdef class StanceVector(object):
   cdef vector[c_mc_rbdyn.Stance] * v
+  cdef cppbool __own_impl
 
 cdef class StanceAction(object):
   cdef c_mc_rbdyn.StanceAction * base

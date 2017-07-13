@@ -68,7 +68,7 @@ class pkg_config(object):
     self.compile_args = []
     self.include_dirs = [ x for x in '@MC_RTC_INCLUDE_DIRECTORIES@'.split(';') if len(x) ]
     self.library_dirs = [ x for x in '@MC_RTC_LINK_FLAGS@'.split(';') if len(x) ]
-    self.libraries = ['mc_control', 'mc_rbdyn', 'mc_rtc_utils', 'mc_solver', 'mc_tasks']
+    self.libraries = ['mc_control', 'mc_rbdyn', 'mc_rtc_utils', 'mc_solver', 'mc_tasks', 'mc_rtc_ros']
     mc_rtc_location = '@MC_RTC_LOCATION@'
     self.library_dirs.append(os.path.dirname(mc_rtc_location))
     self.found = True

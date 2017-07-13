@@ -28,6 +28,14 @@ GET_MC_RTC_PROPERTY(LINK_LIBRARIES)
 GET_MC_RTC_PROPERTY(LOCATION)
 configure_file(setup.in.py ${CMAKE_CURRENT_SOURCE_DIR}/setup.py)
 
+if(${ROSCPP_FOUND})
+  set(DEFINE_HAS_ROS_PYTHON_MACRO "DEF MC_RTC_HAS_ROS = 1")
+else()
+  set(DEFINE_HAS_ROS_PYTHON_MACRO "DEF MC_RTC_HAS_ROS = 0")
+endif()
+
+configure_file(mc_rtc/mc_rtc_config.pxi.in ${CMAKE_CURRENT_SOURCE_DIR}/mc_rtc/mc_rtc_config.pxi)
+
 # Build the bindings locally at build time for test purposes
 add_custom_target(mc_rtc-python-bindings ALL
   COMMAND python setup.py build_ext --inplace
