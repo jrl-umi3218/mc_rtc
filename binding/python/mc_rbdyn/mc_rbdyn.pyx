@@ -1039,9 +1039,15 @@ cdef Stance StanceFromC(const c_mc_rbdyn.Stance& s):
 
 cdef class StanceVector(object):
   def __dealloc__(self):
-    del self.v
-  def __cinit__(self):
-    self.v = new vector[c_mc_rbdyn.Stance]()
+    if self.__own_impl:
+      del self.v
+  def __cinit__(self, skip_alloc=False):
+    if skip_alloc:
+      __own_impl = False
+      self.v = NULL
+    else:
+      __own_impl = True
+      self.v = new vector[c_mc_rbdyn.Stance]()
   def __getitem__(self, idx):
     return StanceFromC(self.v.at(idx))
   def __len__(self):
@@ -1703,7 +1709,7 @@ def loadStances(Robots robots, filename):
   cdef vector[c_mc_rbdyn.Stance] * stances = new vector[c_mc_rbdyn.Stance]()
   cdef vector[shared_ptr[c_mc_rbdyn.StanceAction]] actions = vector[shared_ptr[c_mc_rbdyn.StanceAction]]()
   cdef vector[c_mc_rbdyn.PolygonInterpolator] * interpolators = new vector[c_mc_rbdyn.PolygonInterpolator]()
-  cdef StanceVector stances_ret = StanceVector()
+  cdef StanceVector stances_ret = StanceVector(skip_alloc=True)
   c_mc_rbdyn.loadStances(deref(robots.impl), filename, deref(stances), actions, deref(interpolators))
   actions_ret = []
   for i in range(actions.size()):
