@@ -90,16 +90,16 @@ default:
 
 mc_rbdyn::Base ConfigurationLoader<mc_rbdyn::Base>::load(const mc_rtc::Configuration & config)
 {
-  return {config("baseName"), config("X_0_s"), config("X_b0_s"), config("baseType")};
+  return {config("name"), config("X_0_s"), config("X_b0_s"), config("type")};
 }
 
 mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Base>::save(const mc_rbdyn::Base & b)
 {
   mc_rtc::Configuration config;
-  config.add("baseName", b.baseName);
+  config.add("name", b.baseName);
   config.add("X_0_s", b.X_0_s);
   config.add("X_b0_s", b.X_b0_s);
-  config.add("baseType", b.baseType);
+  config.add("type", b.baseType);
   return config;
 }
 
