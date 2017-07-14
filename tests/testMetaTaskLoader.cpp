@@ -9,6 +9,8 @@
 #include <mc_tasks/GazeTask.h>
 #include <mc_tasks/PositionBasedVisServoTask.h>
 #include <mc_tasks/RelativeEndEffectorTask.h>
+#include <mc_tasks/SurfaceTransformTask.h>
+#include <mc_tasks/VectorOrientationTask.h>
 
 #include <mc_rbdyn/RobotLoader.h>
 #include <mc_rbdyn/configuration_io.h>
@@ -439,6 +441,92 @@ struct TaskTester<mc_tasks::PositionBasedVisServoTask>
   sva::PTransformd X_b_s = random_pt();
 };
 
+template<>
+struct TaskTester<mc_tasks::SurfaceTransformTask>
+{
+  mc_tasks::MetaTaskPtr make_ref()
+  {
+    auto ret = std::make_shared<mc_tasks::SurfaceTransformTask>("LFullSole", *robots, 0, stiffness, weight);
+    ret->target(target);
+    return ret;
+  }
+
+  std::string json()
+  {
+    mc_rtc::Configuration config;
+    config.add("type", "surfaceTransform");
+    config.add("robotIndex", 0);
+    config.add("stiffness", stiffness);
+    config.add("weight", weight);
+    config.add("target", target);
+    config.add("surface", "LFullSole");
+    auto ret = getTmpFile();
+    config.save(ret);
+    return ret;
+  }
+
+  void check(const mc_tasks::MetaTaskPtr & ref_p,
+             const mc_tasks::MetaTaskPtr & loaded_p)
+  {
+    auto ref = std::dynamic_pointer_cast<mc_tasks::SurfaceTransformTask>(ref_p);
+    auto loaded = std::dynamic_pointer_cast<mc_tasks::SurfaceTransformTask>(loaded_p);
+    BOOST_REQUIRE(ref);
+    BOOST_REQUIRE(loaded);
+    BOOST_CHECK_CLOSE(ref->stiffness(), loaded->stiffness(), 1e-6);
+    BOOST_CHECK_CLOSE(ref->weight(), loaded->weight(), 1e-6);
+    BOOST_CHECK(ref->surface() == loaded->surface());
+    BOOST_CHECK(ref->target().rotation().isApprox(loaded->target().rotation(), 1e-6));
+    BOOST_CHECK(ref->target().translation().isApprox(loaded->target().translation(), 1e-6));
+  }
+
+  sva::PTransformd target = random_pt();
+  double stiffness = fabs(rnd());
+  double weight = fabs(rnd());
+};
+
+template<>
+struct TaskTester<mc_tasks::VectorOrientationTask>
+{
+  mc_tasks::MetaTaskPtr make_ref()
+  {
+    auto ret = std::make_shared<mc_tasks::VectorOrientationTask>("RARM_LINK6", bodyVector, targetVector, *robots, 0, stiffness, weight);
+    return ret;
+  }
+
+  std::string json()
+  {
+    mc_rtc::Configuration config;
+    config.add("type", "vectorOrientation");
+    config.add("body", "RARM_LINK6");
+    config.add("bodyVector", bodyVector);
+    config.add("targetVector", targetVector);
+    config.add("robotIndex", 0);
+    config.add("stiffness", stiffness);
+    config.add("weight", weight);
+    auto ret = getTmpFile();
+    config.save(ret);
+    return ret;
+  }
+
+  void check(const mc_tasks::MetaTaskPtr & ref_p,
+             const mc_tasks::MetaTaskPtr & loaded_p)
+  {
+    auto ref = std::dynamic_pointer_cast<mc_tasks::VectorOrientationTask>(ref_p);
+    auto loaded = std::dynamic_pointer_cast<mc_tasks::VectorOrientationTask>(loaded_p);
+    BOOST_REQUIRE(ref);
+    BOOST_REQUIRE(loaded);
+    BOOST_CHECK_CLOSE(ref->stiffness(), loaded->stiffness(), 1e-6);
+    BOOST_CHECK_CLOSE(ref->weight(), loaded->weight(), 1e-6);
+    BOOST_CHECK(ref->body() == loaded->body());
+    BOOST_CHECK(ref->bodyVector().isApprox(loaded->bodyVector()));
+  }
+
+  Eigen::Vector3d bodyVector = Eigen::Vector3d::Random();
+  Eigen::Vector3d targetVector = Eigen::Vector3d::Random();
+  double stiffness = fabs(rnd());
+  double weight = fabs(rnd());
+};
+
 typedef boost::mpl::list<mc_tasks::CoMTask,
                          mc_tasks::AddContactTask,
                          mc_tasks::RemoveContactTask,
@@ -448,7 +536,9 @@ typedef boost::mpl::list<mc_tasks::CoMTask,
                          mc_tasks::EndEffectorTask,
                          mc_tasks::RelativeEndEffectorTask,
                          mc_tasks::GazeTask,
-                         mc_tasks::PositionBasedVisServoTask> test_types;
+                         mc_tasks::PositionBasedVisServoTask,
+                         mc_tasks::SurfaceTransformTask,
+                         mc_tasks::VectorOrientationTask> test_types;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(TestMetaTaskLoader, T, test_types)
 {
