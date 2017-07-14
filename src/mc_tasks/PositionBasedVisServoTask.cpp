@@ -14,6 +14,17 @@ PositionBasedVisServoTask::PositionBasedVisServoTask(const std::string& bodyName
     finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, X_t_s, X_b_s);
 }
 
+PositionBasedVisServoTask::PositionBasedVisServoTask(const std::string& surfaceName,
+    const sva::PTransformd& X_t_s,
+    const mc_rbdyn::Robots & robots, unsigned int robotIndex,
+    double stiffness, double weight)
+: PositionBasedVisServoTask(robots.robot(robotIndex).surface(surfaceName).bodyName(),
+                            X_t_s,
+                            robots.robot(robotIndex).surface(surfaceName).X_b_s(),
+                            robots, robotIndex, stiffness, weight)
+{
+}
+
 void PositionBasedVisServoTask::reset()
 {
     errorT->error(sva::PTransformd::Identity());
@@ -32,7 +43,7 @@ namespace
 mc_tasks::MetaTaskPtr load_pbvs_task(mc_solver::QPSolver & solver,
                                     const mc_rtc::Configuration & config)
 {
-  auto t = std::make_shared<mc_tasks::PositionBasedVisServoTask>(config("body"), sva::PTransformd::Identity(), config("X_b_s"), solver.robots(), config("robotIndex"));
+  auto t = std::make_shared<mc_tasks::PositionBasedVisServoTask>(config("surface"), sva::PTransformd::Identity(), solver.robots(), config("robotIndex"));
   t->load(solver, config);
   return t;
 }

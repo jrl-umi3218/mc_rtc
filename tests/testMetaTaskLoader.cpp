@@ -415,10 +415,9 @@ struct TaskTester<mc_tasks::PositionBasedVisServoTask>
     mc_rtc::Configuration config;
     config.add("type", "pbvs");
     config.add("robotIndex", 0);
-    config.add("body", "HEAD_LINK1");
+    config.add("surface", "LFullSole");
     config.add("stiffness", stiffness);
     config.add("weight", weight);
-    config.add("X_b_s", X_b_s);
     auto ret = getTmpFile();
     config.save(ret);
     return ret;
