@@ -1,0 +1,5 @@
+{
+  "springsBodies": ["b0", "b1"],
+  "afterSpringsBodies": ["aB0", "aB1"],
+  "springsJoints": ["j0", "j1"]
+}

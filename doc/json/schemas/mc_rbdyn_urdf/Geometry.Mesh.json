@@ -1,0 +1,11 @@
+{
+  "title": "mc_rbdyn_urdf::Geometry::Mesh",
+  "type": "object",
+  "properties":
+  {
+    "filename": { "type": "string" },
+    "scale": { "type": "number" }
+  },
+  "required": ["filename", "scale"],
+  "additionalProperties": false
+}

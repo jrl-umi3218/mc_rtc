@@ -1,0 +1,19 @@
+{
+  "type": "planar",
+  "name": "surface",
+  "bodyName": "body",
+  "X_b_s":
+  {
+    "rotation": [1.0, 0.0, 0.0,
+                 0.0, 1.0, 0.0,
+                 0.0, 0.0, 1.0],
+    "translation": [0.0, 0.0, 0.0]
+  },
+  "materialName": "plastic",
+  "planarPoints": [
+    [0.0, 0.0],
+    [0.0, 0.0],
+    [0.0, 0.0],
+    [0.0, 0.0]
+  ]
+}

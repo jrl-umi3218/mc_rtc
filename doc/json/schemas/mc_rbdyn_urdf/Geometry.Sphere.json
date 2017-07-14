@@ -1,0 +1,10 @@
+{
+  "title": "mc_rbdyn_urdf::Geometry::Sphere",
+  "type": "object",
+  "properties":
+  {
+    "radius": { "type": "number" }
+  },
+  "required": ["radius"],
+  "additionalProperties": false
+}

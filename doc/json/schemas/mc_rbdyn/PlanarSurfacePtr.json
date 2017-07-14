@@ -1,0 +1,25 @@
+{
+  "title": "std::shared_ptr<mc_rbdyn::PlanarSurface>",
+  "type": "object",
+  "properties":
+  {
+    "type": { "enum": ["planar"] },
+    "name": { "type": "string" },
+    "bodyName": { "type": "string" },
+    "X_b_s": { "$ref": "/../../sva/PTransformd.json" },
+    "materialName": { "type": "string" },
+    "planarPoints": { "type": "array", "items": { "$ref": "#/definitions/number_pair" } }
+  },
+  "required": ["type", "name", "bodyName", "X_b_s", "materialName", "planarPoints"],
+  "additionalProperties": false,
+  "definitions":
+  {
+    "number_pair":
+    {
+      "type": "array",
+      "items": { "type": "number" },
+      "minItems": 2,
+      "maxItems": 2
+    }
+  }
+}

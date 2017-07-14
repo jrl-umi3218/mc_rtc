@@ -1,0 +1,7 @@
+{
+  "type": "vectorOrientation",
+  "robotIndex": 0,
+  "body": "bodyName",
+  "bodyVector": [0.0, 0.0, 0.0],
+  "targetVector": [0.0, 0.0, 0.0]
+}

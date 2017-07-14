@@ -1,0 +1,11 @@
+{
+  "title": "Eigen::Matrix3d",
+  "description": "Stored in row-major order.",
+  "type": "array",
+  "items":
+  {
+    "type": "number"
+  },
+  "minItems": 9,
+  "maxItems": 9
+}

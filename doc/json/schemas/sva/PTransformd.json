@@ -1,0 +1,11 @@
+{
+  "title": "sva::PTransformd",
+  "type": "object",
+  "properties":
+  {
+    "rotation": { "$ref": "/../../eigen/Matrix3d.json" },
+    "translation": { "$ref": "/../../eigen/Vector3d.json" }
+  },
+  "required": ["rotation", "translation"],
+  "additionalProperties": false
+}

@@ -1,0 +1,27 @@
+{
+  "title": "mc_tasks::EndEffectorTask",
+  "type": "object",
+  "properties":
+  {
+    "type": { "enum": ["body6d"] },
+    "robotIndex": { "type": "number", "minimum": 0 },
+    "body": { "type": "string" },
+
+    "orientation": { "$ref": "/../../eigen/Matrix3d.json" },
+    "position": { "$ref": "/../../eigen/Vector3d.json" },
+
+    "orientationStiffness": { "type": "number", "minimum": 0},
+    "orientationWeight": { "type": "number", "minimum": 0},
+
+    "positionStiffness": { "type": "number", "minimum": 0},
+    "positionWeight": { "type": "number", "minimum": 0},
+
+    "stiffness": { "type": "number", "minimum": 0},
+    "damping": { "type": "number", "minimum": 0},
+    "weight": { "type": "number", "minimum": 0},
+    "dimWeight": { "$ref": "/../../eigen/Vector3d.json" },
+    "activeJoints": { "type": "array", "items": { "type": "string" } },
+    "unactiveJoints": { "type": "array", "items": { "type": "string" } }
+  },
+  "required": ["type", "robotIndex", "body"]
+}

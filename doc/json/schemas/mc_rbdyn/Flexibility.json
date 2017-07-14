@@ -1,0 +1,13 @@
+{
+  "title": "mc_rbdyn::Flexibility",
+  "type": "object",
+  "properties":
+  {
+    "jointName": { "type": "string" },
+    "K": { "type": "number" },
+    "C": { "type": "number" },
+    "O": { "type": "number" }
+  },
+  "required": ["jointName", "K", "C", "O"],
+  "additionalProperties": false
+}
