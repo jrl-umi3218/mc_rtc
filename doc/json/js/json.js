@@ -6,7 +6,7 @@ function affixWidth() {
 
 function docson_widget(path)
 {
-  return "<script src=\"docson/widget.js\" data-schema=\"/schemas/" + path + "\"></script>";
+  return "<script src=\"docson/widget.js\" data-schema=\"../schemas/" + path + "\"></script>";
 }
 
 function make_list_group(dir, objects)
