@@ -80,28 +80,18 @@ namespace mc_control
               tmp = sync_ss_;
             }
           }
+          log_ << write_ss_->str();
         }
         );
       }
 
       ~LoggerThreadedPolicyImpl()
       {
-        std::string sync_ss_str = "";
-        if(sync_ss_)
-        {
-          sync_ss_str = sync_ss_->str();
-          sync_ss_ = nullptr;
-        }
         log_sync_th_run_ = false;
         if(log_sync_th_.joinable())
         {
           log_sync_th_.join();
         }
-        if(sync_ss_str.size())
-        {
-          log_ << sync_ss_str;
-        }
-        log_ << write_ss_->str();
       }
 
       virtual std::ofstream & initialize(const bfs::path & path) final
