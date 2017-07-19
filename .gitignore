@@ -5,6 +5,7 @@ binding/python/*/*.so
 binding/python/*/__init__.py
 binding/python/*/*.h
 binding/python/setup.py
+binding/python/mc_rtc/mc_rtc_config.pxi
 *~
 CMakeLists.txt.user*
 *.autosave
