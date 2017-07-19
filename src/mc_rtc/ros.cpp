@@ -14,12 +14,76 @@
 #include <geometry_msgs/WrenchStamped.h>
 #include <tf2_ros/transform_broadcaster.h>
 
+#include <atomic>
 #include <mutex>
 #include <queue>
 #include <thread>
 #endif
 
 #ifdef MC_RTC_HAS_ROS
+
+namespace
+{
+
+/** Simple lock-free thread-safe single-producer single-consumer circular
+ * buffer
+ *
+ * Loosely based off the article: https://www.codeproject.com/Articles/43510/Lock-Free-Single-Producer-Single-Consumer-Circular
+ *
+ */
+template<typename T, size_t Size>
+struct CircularBuffer
+{
+public:
+  enum { Capacity = Size + 1 };
+
+  CircularBuffer() : tail_(0), head_(0)
+  {
+    if(!tail_.is_lock_free())
+    {
+      LOG_WARNING("Your platform does not support std::atomic_size_t as lock free operations")
+    }
+  }
+
+  /** Returns false if the push failed (i.e. full buffer) */
+  bool push(const T & item)
+  {
+    size_t tail = tail_;
+    auto next_tail = increment(tail);
+    if(next_tail != head_)
+    {
+      data_[next_tail] = item;
+      tail_ = next_tail;
+      return true;
+    }
+    return false;
+  }
+
+  /** Returns false if the pop failed (i.e. empty buffer) */
+  bool pop(T & item)
+  {
+    const size_t head = head_;
+    if(head == tail_)
+    {
+      return false;
+    }
+    item = data_[head];
+    head_ = increment(head);
+    return true;
+  }
+private:
+  size_t increment(size_t idx) const
+  {
+    return (idx + 1) % Capacity;
+  }
+
+  T data_[Capacity];
+  std::atomic_size_t tail_;
+  std::atomic_size_t head_;
+};
+
+}
+
 namespace mc_rtc
 {
 
@@ -183,7 +247,10 @@ public:
 
     if(seq % skip == 0)
     {
-      msgs.push({msg, tfs, imu, odom, ros_wrenches});
+      if(!msgs.push({msg, tfs, imu, odom, ros_wrenches}))
+      {
+        LOG_ERROR("Full ROS message publishing queue")
+      }
     }
   }
 
@@ -207,18 +274,18 @@ private:
 
   bool running;
   uint32_t seq;
-  std::queue<RobotStateData> msgs;
+  CircularBuffer<RobotStateData, 128> msgs;
   unsigned int rate;
   std::thread th;
 
   void publishThread()
   {
     ros::Rate rt(rate);
+    RobotStateData msg;
     while(running && ros::ok())
     {
-      while(msgs.size())
+      while(msgs.pop(msg))
       {
-        const auto & msg = msgs.front();
         try
         {
           j_state_pub.publish(msg.js);
@@ -242,7 +309,6 @@ private:
           LOG_ERROR("EXCEPTION WHILE PUBLISHING STATE")
           LOG_WARNING(e.what())
         }
-        msgs.pop();
       }
       rt.sleep();
     }
