@@ -1,6 +1,7 @@
 #include <mc_control/mc_global_controller.h>
 
 #include <chrono>
+#include <condition_variable>
 #include <iomanip>
 
 namespace mc_control
@@ -63,31 +64,42 @@ namespace mc_control
       {
         log_sync_th_ = std::thread([this]()
         {
-          std::stringstream * tmp = nullptr;
           while(log_sync_th_run_)
           {
-            while(log_sync_th_run_ && tmp == sync_ss_)
+            std::unique_lock<std::mutex> lk(log_sync_mutex_);
+            log_sync_cv_.wait(lk, [this](){ return log_sync_ready_ || log_sync_conclude_ || (!log_sync_th_run_); });
+            if(log_sync_ready_)
             {
-              std::this_thread::sleep_for(std::chrono::microseconds(500));
-            }
-            if(tmp != sync_ss_)
-            {
-              if(sync_ss_ != nullptr)
+              if(sync_ss_)
               {
                 log_ << sync_ss_->str() << std::flush;
                 sync_ss_->str("");
               }
-              tmp = sync_ss_;
+              log_sync_ready_ = false;
             }
+            if(log_sync_conclude_)
+            {
+              log_ << write_ss_->str() << std::flush;
+              write_ss_->str("");
+              log_.close();
+              log_sync_conclude_ = false;
+            }
+            lk.unlock();
+            log_sync_cv_.notify_one();
           }
-          log_ << write_ss_->str();
         }
         );
       }
 
       ~LoggerThreadedPolicyImpl()
       {
-        log_sync_th_run_ = false;
+        {
+          std::lock_guard<std::mutex> lk(log_sync_mutex_);
+          log_sync_th_run_ = false;
+          log_sync_ready_ = true;
+          log_sync_conclude_ = true;
+        }
+        log_sync_cv_.notify_one();
         if(log_sync_th_.joinable())
         {
           log_sync_th_.join();
@@ -98,26 +110,16 @@ namespace mc_control
       {
         if(log_.is_open())
         {
-          if(sync_ss_)
           {
-            std::string sync_ss_str = sync_ss_->str();
-            sync_ss_->str("");
-            if(sync_ss_str.size())
-            {
-              log_ << sync_ss_str;
-            }
+            std::lock_guard<std::mutex> lk(log_sync_mutex_);
+            log_sync_ready_ = true;
+            log_sync_conclude_ = true;
           }
-          std::string write_ss_str = write_ss_->str();
-          write_ss_->str("");
-          if(write_ss_str.size())
-          {
-            log_ << write_ss_str;
-          }
-          log_.close();
+          log_sync_cv_.notify_one();
+          std::unique_lock<std::mutex> lk(log_sync_mutex_);
+          log_sync_cv_.wait(lk, [this](){ return !log_sync_conclude_; });
         }
         log_.open(path.string());
-        log_ss_.str("");
-        swap_ss_.str("");
         write_ss_ = &log_ss_;
         sync_ss_ = nullptr;
         log_sync_iter_ = 0;
@@ -146,6 +148,11 @@ namespace mc_control
             sync_ss_ = write_ss_;
             write_ss_ = &swap_ss_;
           }
+          {
+            std::lock_guard<std::mutex> lk(log_sync_mutex_);
+            log_sync_ready_ = true;
+          }
+          log_sync_cv_.notify_one();
         }
       }
 
@@ -155,6 +162,10 @@ namespace mc_control
       std::stringstream * write_ss_ = nullptr;
       std::stringstream * sync_ss_ = nullptr;
       std::thread log_sync_th_;
+      std::condition_variable log_sync_cv_;
+      std::mutex log_sync_mutex_;
+      bool log_sync_ready_ = false;
+      bool log_sync_conclude_ = false;
       bool log_sync_th_run_ = true;
       unsigned int log_sync_iter_ = 0;
     };
