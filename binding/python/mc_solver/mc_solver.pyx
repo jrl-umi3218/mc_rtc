@@ -61,7 +61,7 @@ cdef class KinematicsConstraint(ConstraintSet):
   def __dealloc__(self):
     if type(self) is KinematicsConstraint and self.__own_impl:
       del self.impl
-  def __cinit__(self, mc_rbdyn.Robots robots, robotIndex, timeStep, damper = None, velocityPercent = 1.0, skip_alloc = False):
+  def __cinit__(self, mc_rbdyn.Robots robots, robotIndex, timeStep, damper = None, velocityPercent = 1.0, infTorque = False, skip_alloc = False):
     cdef c_mc_solver.array3d damp = c_mc_solver.array3d()
     self.__own_impl = True
     if type(self) is KinematicsConstraint and not skip_alloc:
