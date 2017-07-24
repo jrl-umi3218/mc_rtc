@@ -411,7 +411,6 @@ cdef class Robots(object):
       raise TypeError("Wrong arguments passed to Robots ctor")
 
   def robots(self):
-    cdef const vector[c_mc_rbdyn.Robot] & rV = deref(self.impl).robots()
     end = deref(self.impl).robots().end()
     it = deref(self.impl).robots().begin()
     ret = []
