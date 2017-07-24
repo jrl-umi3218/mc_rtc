@@ -422,6 +422,7 @@ cdef class Robots(object):
     ret = []
     while it != end:
       ret.append(RobotFromC(deref(it)))
+      preinc(it)
     return ret
 
   def load(self, RobotModule module, *args):
