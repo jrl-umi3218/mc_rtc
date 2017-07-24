@@ -359,10 +359,16 @@ cdef class RobotModule(object):
     def __get__(self):
       assert(self.impl.get())
       return rbdyn.MultiBodyFromC(deref(self.impl).mb, copy = False)
+    def __set__(self, rbdyn.MultiBody mb):
+      assert(self.impl.get())
+      deref(self.impl).mb = deref(mb.impl)
   property mbc:
     def __get__(self):
       assert(self.impl.get())
       return rbdyn.MultiBodyConfigFromC(deref(self.impl).mbc, copy = False)
+    def __set__(self, rbdyn.MultiBodyConfig mbc):
+      assert(self.impl.get())
+      deref(self.impl).mbc = deref(mbc.impl)
   property mbg:
     def __get__(self):
       assert(self.impl.get())
