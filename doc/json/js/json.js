@@ -98,6 +98,11 @@ $(document).ready(function()
   ];
   $('#mc_rbdyn-objects').html(make_list_group('mc_rbdyn', mc_rbdyn_objects));
 
+  var constraintset_objects = [
+  'BoundedSpeedConstr',
+  ]
+  $('#constraintset-objects').html(make_list_group('constraintset', constraintset_objects));
+
   var metatask_objects = [
   'CoMTask',
   'PositionTask',
