@@ -1,5 +1,7 @@
 #include <mc_solver/BoundedSpeedConstr.h>
 
+#include <mc_solver/ConstraintSetLoader.h>
+
 #include <mc_rtc/logging.h>
 
 namespace mc_solver
@@ -69,5 +71,46 @@ void BoundedSpeedConstr::reset(QPSolver & solver)
   constr->updateBoundedSpeeds();
   solver.updateConstrSize();
 }
+
+}
+
+namespace
+{
+
+mc_solver::ConstraintSetPtr load_bspd_constr(mc_solver::QPSolver & solver,
+                                             const mc_rtc::Configuration & config)
+{
+  auto ret = std::make_shared<mc_solver::BoundedSpeedConstr>(solver.robots(), config("robotIndex"), solver.dt());
+  if(config.has("constraints"))
+  {
+    for(const auto & c : config("constraints"))
+    {
+      std::string bName = c("body");
+      Eigen::Vector3d bPoint = c("bodyPoint", Eigen::Vector3d::Zero().eval());
+      Eigen::Matrix6d dof = c("dof", Eigen::Matrix6d::Identity().eval());
+      if(c.has("speed"))
+      {
+        ret->addBoundedSpeed(solver, bName, bPoint, dof, c("speed"));
+      }
+      else if(c.has("lowerSpeed"))
+      {
+        assert(c.has("upperSpeed"));
+        ret->addBoundedSpeed(solver, bName, bPoint, dof, c("lowerSpeed"), c("upperSpeed"));
+      }
+      else
+      {
+        LOG_ERROR("No speed or lowerSpeed/upperSpeed entry for bounded speed constraint on " << bName)
+      }
+    }
+  }
+  return ret;
+}
+
+struct CSpdConstrLoader
+{
+  static bool registered;
+};
+
+bool CSpdConstrLoader::registered = mc_solver::ConstraintSetLoader::register_load_function("boundedSpeed", &load_bspd_constr);
 
 }
