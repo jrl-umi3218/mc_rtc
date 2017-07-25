@@ -32,6 +32,7 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
 
 mc_rtc_test(testConfiguration mc_rtc_utils mc_rbdyn)
 mc_rtc_test(testJsonIO mc_rtc_utils mc_rbdyn)
+mc_rtc_test(testConstraintSetLoader mc_solver)
 mc_rtc_test(testMetaTaskLoader mc_tasks)
 mc_rtc_test(testSolverTaskStorage mc_tasks)
 
