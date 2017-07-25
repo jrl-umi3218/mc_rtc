@@ -398,6 +398,29 @@ namespace mc_rtc
       }
     }
 
+    /*! \brief Retrieve a given value stored within the configuration with a
+     * default value
+     *
+     * If the key is not stored in the Configuration or if the underyling value
+     * does not match the requested type, the default value is returned.
+     *
+     * \param key The key used to store the value
+     *
+     * \param v The default value
+     */
+    template<typename T>
+    T operator()(const std::string & key, const T & v) const
+    {
+      try
+      {
+        return (*this)(key);
+      }
+      catch(Exception &)
+      {
+        return v;
+      }
+    }
+
     /*! \brief Non-template version for C-style strings comparison
      *
      * \returns True if the comparison matches, false otherwise.
