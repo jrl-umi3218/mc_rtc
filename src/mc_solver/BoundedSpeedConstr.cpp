@@ -21,6 +21,11 @@ void BoundedSpeedConstr::removeFromSolver(tasks::qp::QPSolver & solver)
   constr->removeFromSolver(solver);
 }
 
+size_t BoundedSpeedConstr::nrBoundedSpeeds() const
+{
+  return constr->nrBoundedSpeeds();
+}
+
 void BoundedSpeedConstr::addBoundedSpeed(QPSolver & solver, const std::string & bodyName, const Eigen::Vector3d & bodyPoint, const Eigen::MatrixXd & dof, const Eigen::VectorXd & speed)
 {
   addBoundedSpeed(solver, bodyName, bodyPoint, dof, speed, speed);
@@ -41,12 +46,13 @@ void BoundedSpeedConstr::addBoundedSpeed(QPSolver & solver, const std::string & 
   }
 }
 
-void BoundedSpeedConstr::removeBoundedSpeed(QPSolver & solver, const std::string & bodyName)
+bool BoundedSpeedConstr::removeBoundedSpeed(QPSolver & solver, const std::string & bodyName)
 {
+  bool r = false;
   int index = solver.robots().robot(robotIndex).bodyIndexByName(bodyName);
   if(index >= 0)
   {
-    constr->removeBoundedSpeed(bodyName);
+    r = constr->removeBoundedSpeed(bodyName);
     constr->updateBoundedSpeeds();
     solver.updateConstrSize();
   }
@@ -54,6 +60,7 @@ void BoundedSpeedConstr::removeBoundedSpeed(QPSolver & solver, const std::string
   {
     LOG_ERROR("Could not remove bounded speed constraint for body " << bodyName << " since it does not exist in robot " << solver.robots().robot(robotIndex).name())
   }
+  return r;
 }
 
 void BoundedSpeedConstr::reset(QPSolver & solver)
