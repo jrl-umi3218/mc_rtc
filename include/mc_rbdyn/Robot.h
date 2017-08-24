@@ -128,6 +128,23 @@ public:
   rbd::MultiBodyGraph & mbg();
   const rbd::MultiBodyGraph & mbg() const;
 
+  const std::vector<std::vector<double>> & q() const;
+  const std::vector<std::vector<double>> & alpha() const;
+  const std::vector<std::vector<double>> & alphaD() const;
+  const std::vector<std::vector<double>> & jointTorque() const;
+  const std::vector<sva::PTransformd> & bodyPosW() const;
+  const std::vector<sva::MotionVecd> & bodyVelW() const;
+  const std::vector<sva::MotionVecd> & bodyVelB() const;
+  const std::vector<sva::MotionVecd> & bodyAccB() const;
+  std::vector<std::vector<double>> & q();
+  std::vector<std::vector<double>> & alpha();
+  std::vector<std::vector<double>> & alphaD();
+  std::vector<std::vector<double>> & jointTorque();
+  std::vector<sva::PTransformd> & bodyPosW();
+  std::vector<sva::MotionVecd> & bodyVelW();
+  std::vector<sva::MotionVecd> & bodyVelB();
+  std::vector<sva::MotionVecd> & bodyAccB();
+
   const std::vector<std::vector<double>> & ql() const;
   const std::vector<std::vector<double>> & qu() const;
   const std::vector<std::vector<double>> & vl() const;
