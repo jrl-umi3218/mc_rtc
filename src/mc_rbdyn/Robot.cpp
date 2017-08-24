@@ -1,4 +1,8 @@
 #include <RBDyn/CoM.h>
+#include <RBDyn/FK.h>
+#include <RBDyn/FV.h>
+#include <RBDyn/FA.h>
+
 #include <mc_rbdyn/Robot.h>
 
 #include <mc_rbdyn/RobotModule.h>
@@ -546,6 +550,33 @@ std::map<std::string, std::vector<double>> Robot::stance() const
 unsigned int mc_rbdyn::Robot::robotIndex() const
 {
   return robots_idx;
+}
+
+void Robot::forwardKinematics()
+{
+    rbd::forwardKinematics(mb(), mbc());
+}
+void Robot::forwardKinematics(rbd::MultiBodyConfig& mbc)
+{
+  rbd::forwardKinematics(mb(), mbc);
+}
+
+void Robot::forwardVelocity()
+{
+  rbd::forwardVelocity(mb(), mbc());
+}
+void Robot::forwardVelocity(rbd::MultiBodyConfig& mbc)
+{
+  rbd::forwardVelocity(mb(), mbc);
+}
+
+void Robot::forwardAcceleration(const sva::MotionVecd& A_0)
+{
+  rbd::forwardAcceleration(mb(), mbc(), A_0);
+}
+void Robot::forwardAcceleration(rbd::MultiBodyConfig& mbc, const sva::MotionVecd& A_0)
+{
+  rbd::forwardAcceleration(mb(), mbc, A_0);
 }
 
 void Robot::createWithBase(Robots & robots, unsigned int robots_idx, const Base & base) const

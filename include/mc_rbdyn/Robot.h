@@ -280,6 +280,16 @@ public:
   std::map<std::string, std::vector<double>> stance() const;
 
   unsigned int robotIndex() const;
+
+  void forwardKinematics();
+  void forwardKinematics(rbd::MultiBodyConfig& mbc);
+
+  void forwardVelocity();
+  void forwardVelocity(rbd::MultiBodyConfig& mbc);
+
+  void forwardAcceleration(const sva::MotionVecd& A_0 = sva::MotionVecd(Eigen::Vector6d::Zero()));
+  void forwardAcceleration(rbd::MultiBodyConfig& mbc, const sva::MotionVecd& A_0 = sva::MotionVecd(Eigen::Vector6d::Zero()));
+
 private:
   std::string name_;
   Robots * robots;
