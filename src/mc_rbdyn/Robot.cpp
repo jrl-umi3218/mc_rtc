@@ -1,3 +1,4 @@
+#include <RBDyn/CoM.h>
 #include <mc_rbdyn/Robot.h>
 
 #include <mc_rbdyn/RobotModule.h>
@@ -298,6 +299,19 @@ std::vector<sva::MotionVecd>& Robot::bodyVelB()
 std::vector<sva::MotionVecd>& Robot::bodyAccB()
 {
   return mbc().bodyAccB;
+}
+
+Eigen::Vector3d Robot::com() const
+{
+  return rbd::computeCoM(mb(), mbc());
+}
+Eigen::Vector3d Robot::comVelocity() const
+{
+  return rbd::computeCoMVelocity(mb(), mbc());
+}
+Eigen::Vector3d Robot::comAcceleration() const
+{
+  return rbd::computeCoMAcceleration(mb(), mbc());
 }
 
 const std::vector<std::vector<double>> & Robot::ql() const

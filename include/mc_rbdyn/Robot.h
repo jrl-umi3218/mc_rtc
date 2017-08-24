@@ -145,6 +145,10 @@ public:
   std::vector<sva::MotionVecd> & bodyVelB();
   std::vector<sva::MotionVecd> & bodyAccB();
 
+  Eigen::Vector3d com() const;
+  Eigen::Vector3d comVelocity() const;
+  Eigen::Vector3d comAcceleration() const;
+
   const std::vector<std::vector<double>> & ql() const;
   const std::vector<std::vector<double>> & qu() const;
   const std::vector<std::vector<double>> & vl() const;
