@@ -290,6 +290,16 @@ public:
   void forwardAcceleration(const sva::MotionVecd& A_0 = sva::MotionVecd(Eigen::Vector6d::Zero()));
   void forwardAcceleration(rbd::MultiBodyConfig& mbc, const sva::MotionVecd& A_0 = sva::MotionVecd(Eigen::Vector6d::Zero()));
 
+  /** Return the robot's global pose */
+  const sva::PTransformd & posW() const;
+  /** Set the robot's global pose
+   *
+   * @param pt The new global pose
+   *
+   * @throws If joint(0) is no free flyer
+   */
+  void posW(const sva::PTransformd & pt);
+
 private:
   std::string name_;
   Robots * robots;

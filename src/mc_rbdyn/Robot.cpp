@@ -579,6 +579,27 @@ void Robot::forwardAcceleration(rbd::MultiBodyConfig& mbc, const sva::MotionVecd
   rbd::forwardAcceleration(mb(), mbc, A_0);
 }
 
+const sva::PTransformd& Robot::posW() const
+{
+  return bodyPosW().at(0);
+}
+void Robot::posW(const sva::PTransformd &pt)
+{
+  if(mb().joint(0).type() != rbd::Joint::Type::Free)
+  {
+    LOG_ERROR_AND_THROW(std::logic_error, "The root pose can only be changed for robots with a free flyer as joint(0)");
+  }
+  const sva::Quaterniond rotation{ pt.rotation().transpose() };
+  q().at(0).at(0) = rotation.w();
+  q().at(0).at(1) = rotation.x();
+  q().at(0).at(2) = rotation.y();
+  q().at(0).at(3) = rotation.z();
+  q().at(0).at(4) = pt.translation().x();
+  q().at(0).at(5) = pt.translation().y();
+  q().at(0).at(6) = pt.translation().z();
+  forwardKinematics();
+}
+
 void Robot::createWithBase(Robots & robots, unsigned int robots_idx, const Base & base) const
 {
   rbd::MultiBody & mb = robots.mbs_[robots_idx];
