@@ -263,22 +263,22 @@ inline bool getDGains(std::vector<double> &dgains)
 
 namespace pdgains
 {
-inline bool setPGain(int joint, double pgain) { return true; }
-inline bool setPGain(const std::string & jname, double pgain) { return true; }
-inline bool setDGain(int joint, double dgain) { return true; }
-inline bool setDGain(const std::string & jname, double dgain) { return true; }
-inline bool setPGains(const std::vector<int> & joints, const std::vector<double> & pgains) { return true; }
-inline bool setPGains(const std::vector<std::string> & jnames, const std::vector<double> & pgains) { return true; }
-inline bool setDGains(const std::vector<int> & joints, const std::vector<double> & dgains) { return true; }
-inline bool setDGains(const std::vector<std::string> & jnames, const std::vector<double> & dgains) { return true; }
-inline bool setPDGains(const std::vector<int> & joints, const std::vector<double> & pgains, const std::vector<double> & dgains) { return true; }
-inline bool setPDGains(const std::vector<std::string> & jnames, const std::vector<double> & pgains, const std::vector<double> & dgains) { return true; }
-inline bool setPDGains(const std::vector<double> & pgains, const std::vector<double> & dgains) { return true; }
-inline bool getPGain(int joint, double &pgain) { return true; }
-inline bool getPGain(const std::string & jname, double & pgain) { return true; }
-inline bool getPGains(std::vector<double> &pgains) { return true; }
-inline bool getDGain(int joint, double &dgain) { return true; }
-inline bool getDGain(const std::string & jname, double & dgain) { return true; }
-inline bool getDGains(std::vector<double> &dgains) { return true; }
+inline bool setPGain(int /*joint*/, double /*pgain*/) { return true; }
+inline bool setPGain(const std::string & /*jname*/, double /*pgain*/) { return true; }
+inline bool setDGain(int /*joint*/, double /*dgain*/) { return true; }
+inline bool setDGain(const std::string & /*jname*/, double /*dgain*/) { return true; }
+inline bool setPGains(const std::vector<int> & /*joints*/, const std::vector<double> & /*pgains*/) { return true; }
+inline bool setPGains(const std::vector<std::string> & /*jnames*/, const std::vector<double> & /*pgains*/) { return true; }
+inline bool setDGains(const std::vector<int> & /*joints*/, const std::vector<double> & /*dgains*/) { return true; }
+inline bool setDGains(const std::vector<std::string> & /*jnames*/, const std::vector<double> & /*dgains*/) { return true; }
+inline bool setPDGains(const std::vector<int> & /*joints*/, const std::vector<double> & /*pgains*/, const std::vector<double> & /*dgains*/) { return true; }
+inline bool setPDGains(const std::vector<std::string> & /*jnames*/, const std::vector<double> & /*pgains*/, const std::vector<double> & /*dgains*/) { return true; }
+inline bool setPDGains(const std::vector<double> & /*pgains*/, const std::vector<double> & /*dgains*/) { return true; }
+inline bool getPGain(int /*joint*/, double &/*pgain*/) { return true; }
+inline bool getPGain(const std::string & /*jname*/, double & /*pgain*/) { return true; }
+inline bool getPGains(std::vector<double> &/*pgains*/) { return true; }
+inline bool getDGain(int /*joint*/, double &/*dgain*/) { return true; }
+inline bool getDGain(const std::string & /*jname*/, double & /*dgain*/) { return true; }
+inline bool getDGains(std::vector<double> &/*dgains*/) { return true; }
 } // namespace pdgains
 #endif // MC_RTC_HAS_HRPSYS_BASE

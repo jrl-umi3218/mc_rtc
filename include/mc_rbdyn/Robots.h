@@ -131,8 +131,8 @@ public:
   Robot & env();
   const Robot & env() const;
 
-  Robot & robot(unsigned int idx);
-  const Robot & robot(unsigned int idx) const;
+  Robot & robot(std::size_t idx);
+  const Robot & robot(std::size_t idx) const;
 
   /** @name Iterators
    *

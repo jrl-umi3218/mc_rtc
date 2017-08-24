@@ -412,7 +412,7 @@ std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
   return impl->nh;
 }
 
-void ROSBridge::set_publisher_timestep(double timestep)
+void ROSBridge::set_publisher_timestep(double /*timestep*/)
 {
 }
 

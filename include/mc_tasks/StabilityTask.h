@@ -92,7 +92,7 @@ private:
   virtual void update() override;
 
   /* Hide these virtual functions */
-  virtual void dimWeight(const Eigen::VectorXd & dimW) override {}
+  virtual void dimWeight(const Eigen::VectorXd & /*dimW*/) override {}
 
   virtual Eigen::VectorXd dimWeight() const override { return Eigen::VectorXd(); }
 
