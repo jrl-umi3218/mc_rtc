@@ -13,6 +13,7 @@
 #include <Tasks/QPSolver.h>
 
 #include <memory>
+#include <map>
 
 namespace mc_tasks
 {
@@ -83,7 +84,11 @@ public:
     static_assert(std::is_base_of<mc_tasks::MetaTask, T>::value ||
                   std::is_base_of<tasks::qp::Task, T>::value,
                   "You are trying to add a task that is neither a tasks::qp::Task or an mc_tasks::MetaTask");
-    if(task.get()) { addTask(task.get()); }
+    if(task.get())
+    {
+      addTask(task.get());
+      sharedPtrTasks[task.get()] = task;
+    }
   }
 
   /** Remove a task from the solver
@@ -231,6 +236,8 @@ private:
   tasks::qp::QPSolver solver;
   /** Latest result */
   QPResultMsg qpRes;
+
+  std::map<void*, std::shared_ptr<void>> sharedPtrTasks;
 
   /** Update qpRes from the latest run() */
   void __fillResult();

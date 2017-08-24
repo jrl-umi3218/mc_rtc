@@ -97,6 +97,7 @@ void QPSolver::addTask(mc_tasks::MetaTask * task)
 void QPSolver::removeTask(tasks::qp::Task * task)
 {
   solver.removeTask(task);
+  sharedPtrTasks.erase(task);
 }
 
 void QPSolver::removeTask(mc_tasks::MetaTask * task)
@@ -106,6 +107,7 @@ void QPSolver::removeTask(mc_tasks::MetaTask * task)
   {
     metaTasks.erase(it);
     task->removeFromSolver(*this);
+    sharedPtrTasks.erase(task);
   }
 }
 
