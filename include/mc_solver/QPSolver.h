@@ -84,7 +84,7 @@ public:
     static_assert(std::is_base_of<mc_tasks::MetaTask, T>::value ||
                   std::is_base_of<tasks::qp::Task, T>::value,
                   "You are trying to add a task that is neither a tasks::qp::Task or an mc_tasks::MetaTask");
-    if(task.get())
+    if(task)
     {
       addTask(task.get());
       sharedPtrTasks[task.get()] = task;
@@ -120,7 +120,7 @@ public:
     static_assert(std::is_base_of<mc_tasks::MetaTask, T>::value ||
                   std::is_base_of<tasks::qp::Task, T>::value,
                   "You are trying to add a task that is neither a tasks::qp::Task or an mc_tasks::MetaTask");
-    if(task.get()) { removeTask(task.get()); }
+    if(task) { removeTask(task.get()); }
   }
 
   /** Add a constraint function from the solver
