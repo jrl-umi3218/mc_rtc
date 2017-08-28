@@ -102,7 +102,7 @@ void QPSolver::removeTask(tasks::qp::Task * task)
     [task](const std::shared_ptr<void> & p)
     {
       return task == p.get();
-    }));
+    }), shPtrTasksStorage.end());
 }
 
 void QPSolver::removeTask(mc_tasks::MetaTask * task)
@@ -117,7 +117,7 @@ void QPSolver::removeTask(mc_tasks::MetaTask * task)
       [task](const std::shared_ptr<void> & p)
       {
         return task == p.get();
-      }));
+      }), shPtrTasksStorage.end());
   }
 }
 
