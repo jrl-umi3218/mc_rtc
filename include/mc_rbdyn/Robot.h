@@ -295,7 +295,10 @@ public:
 
   /** Return the robot's global pose */
   const sva::PTransformd & posW() const;
-  /** Set the robot's global pose
+  /** Set the robot's global pose.
+   * This is mostly meant for initialization purposes.
+   * In other scenarios there might be more things to do
+   * to properly move a robot (e.g. update contacts, set speed to zero).
    *
    * @param pt The new global pose
    *
