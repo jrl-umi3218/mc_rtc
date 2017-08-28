@@ -57,7 +57,7 @@ bool ActiGripper::update(const mc_rbdyn::Robot & robot,
   const sva::ForceVecd & wrench = robot.forceSensor(wrenchName).wrench();
   double forceNorm = wrench.force().norm();
   //Only consider z-axis torque
-  double torqueZ = wrench.couple()(2);
+  //double torqueZ = wrench.couple()(2);
   bool res = updateForce(forceNorm, contactConstr);
   //res = res && updateTorque(torqueZ, contactConstr);
   return res;

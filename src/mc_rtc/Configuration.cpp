@@ -18,7 +18,7 @@ struct Configuration::Json::Impl
   {
   }
 
-  Impl(const Impl & other, int idx)
+  Impl(const Impl & other, size_t idx)
   : pointer(other.pointer),
     doc_p(other.doc_p)
   {
@@ -125,7 +125,7 @@ struct Configuration::Json::Impl
     assert(is());
     return value()->Size();
   }
-  Impl operator[](int idx)
+  Impl operator[](size_t idx)
   {
     return Impl(*this, idx);
   }
@@ -148,7 +148,7 @@ size_t Configuration::Json::size() const
   return impl->size();
 }
 
-Configuration::Json Configuration::Json::operator[](int idx) const
+Configuration::Json Configuration::Json::operator[](size_t idx) const
 {
   Configuration::Json ret;
   ret.impl.reset(new Impl((*impl)[idx]));

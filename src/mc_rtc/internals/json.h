@@ -5,6 +5,11 @@
 
 #define RAPIDJSON_HAS_STDSTRING 1
 #define RAPIDJSON_PARSE_DEFAULT_FLAGS rapidjson::kParseCommentsFlag | rapidjson::kParseTrailingCommasFlag
+#define RAPIDJSON_NO_SIZETYPEDEFINE
+namespace rapidjson
+{
+    typedef size_t SizeType;
+}
 
 #include "rapidjson/document.h"
 #include "rapidjson/ostreamwrapper.h"
