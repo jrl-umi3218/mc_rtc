@@ -48,7 +48,7 @@ Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
     const std::string& bname,
     int(rbd::Joint::*JointMethod)()const)
   {
-    std::size_t expectedSize = mb().joints().size();
+    size_t expectedSize = mb().joints().size();
     if(l.size() != expectedSize)
     {
       LOG_ERROR_AND_THROW(std::invalid_argument,
@@ -68,7 +68,7 @@ Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
     for(int i = 0; i < static_cast<int>(l.size()); ++ i)
     {
       const rbd::Joint& joint = mb().joint(i);
-      std::size_t expectedSize = static_cast<std::size_t>((joint.*JointMethod)());
+      size_t expectedSize = static_cast<size_t>((joint.*JointMethod)());
       const auto& subL = l.at(i);
       const auto& subU = u.at(i);
       if(subL.size() != expectedSize)
@@ -86,7 +86,7 @@ Robot::Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
           << subU.size() << ", number of entries expected = " << expectedSize);
       }
 
-      for(std::size_t j = 0; j < subL.size(); ++ j)
+      for(size_t j = 0; j < subL.size(); ++ j)
       {
           if(subL.at(j) > subU.at(j))
           {

@@ -60,7 +60,7 @@ std::vector<sva::PTransformd> computePoints(const mc_rbdyn::Surface & robotSurfa
     const geos::geom::GeometryFactory & factory = *factory_ptr;
 
     // Create robot surf polygon
-    geos::geom::CoordinateSequence * robotPoints2dseq = factory.getCoordinateSequenceFactory()->create((std::size_t)0,0);
+    geos::geom::CoordinateSequence * robotPoints2dseq = factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0),0);
     for(const std::pair<double, double> & p : robotPoints2d)
     {
       robotPoints2dseq->add(geos::geom::Coordinate(p.first, p.second));
@@ -70,7 +70,7 @@ std::vector<sva::PTransformd> computePoints(const mc_rbdyn::Surface & robotSurfa
     geos::geom::Polygon * robotSurfPoly = factory.createPolygon(robotPoints2dshell, 0);
 
     // Create env surf polygon
-    geos::geom::CoordinateSequence * envPoints2dseq = factory.getCoordinateSequenceFactory()->create((std::size_t)0,0);
+    geos::geom::CoordinateSequence * envPoints2dseq = factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0),0);
     for(const std::pair<double, double> & p : envPoints2d)
     {
       envPoints2dseq->add(geos::geom::Coordinate(p.first, p.second));

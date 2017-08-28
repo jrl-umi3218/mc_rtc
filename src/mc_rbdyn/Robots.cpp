@@ -128,11 +128,11 @@ const Robot & Robots::env() const
   return robots_[envIndex_];
 }
 
-Robot & Robots::robot(std::size_t idx)
+Robot & Robots::robot(size_t idx)
 {
   return const_cast<Robot&>(static_cast<const Robots*>(this)->robot(idx));
 }
-const Robot & Robots::robot(std::size_t idx) const
+const Robot & Robots::robot(size_t idx) const
 {
   if(idx >= robots_.size())
   {

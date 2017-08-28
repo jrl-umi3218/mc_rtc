@@ -43,7 +43,7 @@ std::shared_ptr<geos::geom::Geometry> PolygonInterpolator::fast_interpolate(doub
     perc = 1 + perc;
   }
   std::vector<tuple_t> points;
-  geos::geom::CoordinateSequence * seq = geom_factory.getCoordinateSequenceFactory()->create((std::size_t)0, 0);
+  geos::geom::CoordinateSequence * seq = geom_factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0), 0);
   for(const auto & p : tuple_pairs)
   {
     seq->add(geos::geom::Coordinate(static_cast<float>(p.first[0]*(1-perc) + p.second[0]*perc),
@@ -73,8 +73,8 @@ std::vector<PolygonInterpolator::tuple_t> PolygonInterpolator::midpoint_derivati
 std::vector<PolygonInterpolator::tuple_t> PolygonInterpolator::normal_derivative(double epsilon_derivative)
 {
   std::vector<tuple_t> res;
-  geos::geom::CoordinateSequence * seq_s = geom_factory.getCoordinateSequenceFactory()->create((std::size_t)0, 2);
-  geos::geom::CoordinateSequence * seq_d = geom_factory.getCoordinateSequenceFactory()->create((std::size_t)0, 2);
+  geos::geom::CoordinateSequence * seq_s = geom_factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0), 2);
+  geos::geom::CoordinateSequence * seq_d = geom_factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0), 2);
   for(const auto & p : tuple_pairs)
   {
     seq_s->add(geos::geom::Coordinate(static_cast<float>(p.first[0]),  static_cast<float>(p.first[1])));
