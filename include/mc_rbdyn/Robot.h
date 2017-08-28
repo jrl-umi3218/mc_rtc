@@ -290,6 +290,9 @@ public:
   void forwardAcceleration(const sva::MotionVecd & A_0 = sva::MotionVecd(Eigen::Vector6d::Zero()));
   void forwardAcceleration(rbd::MultiBodyConfig & mbc, const sva::MotionVecd & A_0 = sva::MotionVecd(Eigen::Vector6d::Zero())) const;
 
+  void eulerIntegration(double step);
+  void eulerIntegration(rbd::MultiBodyConfig & mbc, double step) const;
+
   /** Return the robot's global pose */
   const sva::PTransformd & posW() const;
   /** Set the robot's global pose

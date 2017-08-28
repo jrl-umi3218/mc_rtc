@@ -2,6 +2,7 @@
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 #include <RBDyn/FA.h>
+#include <RBDyn/EulerIntegration.h>
 
 #include <mc_rbdyn/Robot.h>
 
@@ -577,6 +578,15 @@ void Robot::forwardAcceleration(const sva::MotionVecd & A_0)
 void Robot::forwardAcceleration(rbd::MultiBodyConfig & mbc, const sva::MotionVecd & A_0) const
 {
   rbd::forwardAcceleration(mb(), mbc, A_0);
+}
+
+void mc_rbdyn::Robot::eulerIntegration(double step)
+{
+  rbd::eulerIntegration(mb(), mbc(), step);
+}
+void mc_rbdyn::Robot::eulerIntegration(rbd::MultiBodyConfig & mbc, double step) const
+{
+  rbd::eulerIntegration(mb(), mbc, step);
 }
 
 const sva::PTransformd & Robot::posW() const
