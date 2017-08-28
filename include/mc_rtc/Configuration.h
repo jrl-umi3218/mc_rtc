@@ -485,7 +485,7 @@ namespace mc_rtc
       struct Impl;
       bool isArray() const;
       size_t size() const;
-      Json operator[](int idx) const;
+      Json operator[](size_t idx) const;
       Json operator[](const std::string & key) const;
       std::shared_ptr<Impl> impl;
     };
