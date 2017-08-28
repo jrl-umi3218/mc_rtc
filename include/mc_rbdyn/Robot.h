@@ -282,13 +282,13 @@ public:
   unsigned int robotIndex() const;
 
   void forwardKinematics();
-  void forwardKinematics(rbd::MultiBodyConfig& mbc);
+  void forwardKinematics(rbd::MultiBodyConfig & mbc) const;
 
   void forwardVelocity();
-  void forwardVelocity(rbd::MultiBodyConfig& mbc);
+  void forwardVelocity(rbd::MultiBodyConfig & mbc) const;
 
   void forwardAcceleration(const sva::MotionVecd& A_0 = sva::MotionVecd(Eigen::Vector6d::Zero()));
-  void forwardAcceleration(rbd::MultiBodyConfig& mbc, const sva::MotionVecd& A_0 = sva::MotionVecd(Eigen::Vector6d::Zero()));
+  void forwardAcceleration(rbd::MultiBodyConfig & mbc, const sva::MotionVecd & A_0 = sva::MotionVecd(Eigen::Vector6d::Zero())) const;
 
   /** Return the robot's global pose */
   const sva::PTransformd & posW() const;

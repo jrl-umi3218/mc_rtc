@@ -556,7 +556,7 @@ void Robot::forwardKinematics()
 {
     rbd::forwardKinematics(mb(), mbc());
 }
-void Robot::forwardKinematics(rbd::MultiBodyConfig& mbc)
+void Robot::forwardKinematics(rbd::MultiBodyConfig & mbc) const
 {
   rbd::forwardKinematics(mb(), mbc);
 }
@@ -565,7 +565,7 @@ void Robot::forwardVelocity()
 {
   rbd::forwardVelocity(mb(), mbc());
 }
-void Robot::forwardVelocity(rbd::MultiBodyConfig& mbc)
+void Robot::forwardVelocity(rbd::MultiBodyConfig & mbc) const
 {
   rbd::forwardVelocity(mb(), mbc);
 }
@@ -574,7 +574,7 @@ void Robot::forwardAcceleration(const sva::MotionVecd& A_0)
 {
   rbd::forwardAcceleration(mb(), mbc(), A_0);
 }
-void Robot::forwardAcceleration(rbd::MultiBodyConfig& mbc, const sva::MotionVecd& A_0)
+void Robot::forwardAcceleration(rbd::MultiBodyConfig & mbc, const sva::MotionVecd & A_0) const
 {
   rbd::forwardAcceleration(mb(), mbc, A_0);
 }
