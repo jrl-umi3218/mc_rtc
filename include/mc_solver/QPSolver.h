@@ -87,7 +87,7 @@ public:
     if(task)
     {
       addTask(task.get());
-      sharedPtrTasks[task.get()] = task;
+      shPtrTasksStorage.emplace_back(task);
     }
   }
 
@@ -237,7 +237,7 @@ private:
   /** Latest result */
   QPResultMsg qpRes;
 
-  std::map<void*, std::shared_ptr<void>> sharedPtrTasks;
+  std::vector<std::shared_ptr<void>> shPtrTasksStorage;
 
   /** Update qpRes from the latest run() */
   void __fillResult();
