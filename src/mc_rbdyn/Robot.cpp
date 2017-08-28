@@ -240,67 +240,67 @@ const rbd::MultiBodyGraph & Robot::mbg() const
   return robots->mbgs_[robots_idx];
 }
 
-const std::vector<std::vector<double>>& Robot::q() const
+const std::vector<std::vector<double>> & Robot::q() const
 {
   return mbc().q;
 }
-const std::vector<std::vector<double>>& Robot::alpha() const
+const std::vector<std::vector<double>> & Robot::alpha() const
 {
   return mbc().alpha;
 }
-const std::vector<std::vector<double>>& Robot::alphaD() const
+const std::vector<std::vector<double>> & Robot::alphaD() const
 {
   return mbc().alphaD;
 }
-const std::vector<std::vector<double>>& Robot::jointTorque() const
+const std::vector<std::vector<double>> & Robot::jointTorque() const
 {
   return mbc().jointTorque;
 }
-const std::vector<sva::PTransformd>& Robot::bodyPosW() const
+const std::vector<sva::PTransformd> & Robot::bodyPosW() const
 {
   return mbc().bodyPosW;
 }
-const std::vector<sva::MotionVecd>& Robot::bodyVelW() const
+const std::vector<sva::MotionVecd> & Robot::bodyVelW() const
 {
   return mbc().bodyVelW;
 }
-const std::vector<sva::MotionVecd>& Robot::bodyVelB() const
+const std::vector<sva::MotionVecd> & Robot::bodyVelB() const
 {
   return mbc().bodyVelB;
 }
-const std::vector<sva::MotionVecd>& Robot::bodyAccB() const
+const std::vector<sva::MotionVecd> & Robot::bodyAccB() const
 {
   return mbc().bodyAccB;
 }
-std::vector<std::vector<double>>& Robot::q()
+std::vector<std::vector<double>> & Robot::q()
 {
     return mbc().q;
 }
-std::vector<std::vector<double>>& Robot::alpha()
+std::vector<std::vector<double>> & Robot::alpha()
 {
   return mbc().alpha;
 }
-std::vector<std::vector<double>>& Robot::alphaD()
+std::vector<std::vector<double>> & Robot::alphaD()
 {
   return mbc().alphaD;
 }
-std::vector<std::vector<double>>& Robot::jointTorque()
+std::vector<std::vector<double>> & Robot::jointTorque()
 {
   return mbc().jointTorque;
 }
-std::vector<sva::PTransformd>& Robot::bodyPosW()
+std::vector<sva::PTransformd> & Robot::bodyPosW()
 {
   return mbc().bodyPosW;
 }
-std::vector<sva::MotionVecd>& Robot::bodyVelW()
+std::vector<sva::MotionVecd> & Robot::bodyVelW()
 {
   return mbc().bodyVelW;
 }
-std::vector<sva::MotionVecd>& Robot::bodyVelB()
+std::vector<sva::MotionVecd> & Robot::bodyVelB()
 {
   return mbc().bodyVelB;
 }
-std::vector<sva::MotionVecd>& Robot::bodyAccB()
+std::vector<sva::MotionVecd> & Robot::bodyAccB()
 {
   return mbc().bodyAccB;
 }
@@ -570,7 +570,7 @@ void Robot::forwardVelocity(rbd::MultiBodyConfig & mbc) const
   rbd::forwardVelocity(mb(), mbc);
 }
 
-void Robot::forwardAcceleration(const sva::MotionVecd& A_0)
+void Robot::forwardAcceleration(const sva::MotionVecd & A_0)
 {
   rbd::forwardAcceleration(mb(), mbc(), A_0);
 }
@@ -579,11 +579,11 @@ void Robot::forwardAcceleration(rbd::MultiBodyConfig & mbc, const sva::MotionVec
   rbd::forwardAcceleration(mb(), mbc, A_0);
 }
 
-const sva::PTransformd& Robot::posW() const
+const sva::PTransformd & Robot::posW() const
 {
   return bodyPosW().at(0);
 }
-void Robot::posW(const sva::PTransformd &pt)
+void Robot::posW(const sva::PTransformd & pt)
 {
   if(mb().joint(0).type() != rbd::Joint::Type::Free)
   {

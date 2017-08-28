@@ -287,7 +287,7 @@ public:
   void forwardVelocity();
   void forwardVelocity(rbd::MultiBodyConfig & mbc) const;
 
-  void forwardAcceleration(const sva::MotionVecd& A_0 = sva::MotionVecd(Eigen::Vector6d::Zero()));
+  void forwardAcceleration(const sva::MotionVecd & A_0 = sva::MotionVecd(Eigen::Vector6d::Zero()));
   void forwardAcceleration(rbd::MultiBodyConfig & mbc, const sva::MotionVecd & A_0 = sva::MotionVecd(Eigen::Vector6d::Zero())) const;
 
   /** Return the robot's global pose */
