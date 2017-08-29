@@ -559,22 +559,31 @@ cdef class Robot(object):
     def __get__(self):
       self.__is_valid()
       ret = []
-      for mv in self.impl.bodyVelW():
-        ret.append(sva.MotionVecdFromC(mv))
+      end = self.impl.bodyVelW().end()
+      it = self.impl.bodyVelW().begin()
+      while it != end:
+        ret.append(sva.MotionVecdFromC(deref(it)))
+        preinc(it)
       return ret
   property bodyVelB:
     def __get__(self):
       self.__is_valid()
       ret = []
-      for mv in self.impl.bodyVelB():
-        ret.append(sva.MotionVecdFromC(mv))
+      end = self.impl.bodyVelB().end()
+      it = self.impl.bodyVelB().begin()
+      while it != end:
+        ret.append(sva.MotionVecdFromC(deref(it)))
+        preinc(it)
       return ret
   property bodyAccB:
     def __get__(self):
       self.__is_valid()
       ret = []
-      for mv in self.impl.bodyAccB():
-        ret.append(sva.MotionVecdFromC(mv))
+      end = self.impl.bodyAccB().end()
+      it = self.impl.bodyAccB().begin()
+      while it != end:
+        ret.append(sva.MotionVecdFromC(deref(it)))
+        preinc(it)
       return ret
   property com:
     def __get__(self):
