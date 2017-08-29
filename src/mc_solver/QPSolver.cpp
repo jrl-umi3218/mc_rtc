@@ -97,6 +97,12 @@ void QPSolver::addTask(mc_tasks::MetaTask * task)
 void QPSolver::removeTask(tasks::qp::Task * task)
 {
   solver.removeTask(task);
+  shPtrTasksStorage.erase(std::remove_if(
+    shPtrTasksStorage.begin(), shPtrTasksStorage.end(),
+    [task](const std::shared_ptr<void> & p)
+    {
+      return task == p.get();
+    }), shPtrTasksStorage.end());
 }
 
 void QPSolver::removeTask(mc_tasks::MetaTask * task)
@@ -106,6 +112,12 @@ void QPSolver::removeTask(mc_tasks::MetaTask * task)
   {
     metaTasks.erase(it);
     task->removeFromSolver(*this);
+    shPtrTasksStorage.erase(std::remove_if(
+      shPtrTasksStorage.begin(), shPtrTasksStorage.end(),
+      [task](const std::shared_ptr<void> & p)
+      {
+        return task == p.get();
+      }), shPtrTasksStorage.end());
   }
 }
 

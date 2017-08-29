@@ -83,7 +83,11 @@ public:
     static_assert(std::is_base_of<mc_tasks::MetaTask, T>::value ||
                   std::is_base_of<tasks::qp::Task, T>::value,
                   "You are trying to add a task that is neither a tasks::qp::Task or an mc_tasks::MetaTask");
-    if(task.get()) { addTask(task.get()); }
+    if(task)
+    {
+      addTask(task.get());
+      shPtrTasksStorage.emplace_back(task);
+    }
   }
 
   /** Remove a task from the solver
@@ -115,7 +119,7 @@ public:
     static_assert(std::is_base_of<mc_tasks::MetaTask, T>::value ||
                   std::is_base_of<tasks::qp::Task, T>::value,
                   "You are trying to add a task that is neither a tasks::qp::Task or an mc_tasks::MetaTask");
-    if(task.get()) { removeTask(task.get()); }
+    if(task) { removeTask(task.get()); }
   }
 
   /** Add a constraint function from the solver
@@ -231,6 +235,8 @@ private:
   tasks::qp::QPSolver solver;
   /** Latest result */
   QPResultMsg qpRes;
+
+  std::vector<std::shared_ptr<void>> shPtrTasksStorage;
 
   /** Update qpRes from the latest run() */
   void __fillResult();

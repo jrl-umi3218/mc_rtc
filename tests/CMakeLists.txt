@@ -21,7 +21,12 @@ MACRO(mc_rtc_test NAME)
   generate_msvc_dot_user_file(${NAME})
 ENDMACRO()
 
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests_config.h.in
+               ${CMAKE_CURRENT_BINARY_DIR}/include/tests_config.h)
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
+
 mc_rtc_test(testConfiguration mc_rtc_utils)
+mc_rtc_test(testSolverTaskStorage mc_tasks)
 
 add_executable(test_controller_ticker test_controller_ticker.cpp)
 pkg_config_use_dependency(test_controller_ticker mc_rbdyn_urdf)

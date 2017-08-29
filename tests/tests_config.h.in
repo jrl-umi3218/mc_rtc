@@ -1,0 +1,5 @@
+#pragma once
+
+#include <string>
+
+static const std::string ROBOTS_BUILD_DIR = "@CMAKE_BINARY_DIR@/src/mc_robots";
