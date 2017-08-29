@@ -5,6 +5,8 @@
 #include <mc_solver/QPSolver.h>
 #include <mc_tasks/CoMTask.h>
 
+#include "tests_config.h"
+
 /** This test verifies that task's life is properly extended by the solver */
 
 /** Normal CoMTask with static boolean to check the object is deleted */
@@ -22,6 +24,8 @@ bool CheckCoMTask::deleted = false;
 
 BOOST_AUTO_TEST_CASE(TestSolverTaskStorage)
 {
+  mc_rbdyn::RobotLoader::clear();
+  mc_rbdyn::RobotLoader::update_robot_module_path({ROBOTS_BUILD_DIR});
   auto rm = mc_rbdyn::RobotLoader::get_robot_module("HRP2DRC");
   auto robots = mc_rbdyn::loadRobot(*rm);
   mc_solver::QPSolver solver(robots, 0.005);
