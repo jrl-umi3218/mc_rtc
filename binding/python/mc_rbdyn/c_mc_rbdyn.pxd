@@ -208,6 +208,21 @@ cdef extern from "<mc_rbdyn/Robot.h>" namespace "mc_rbdyn":
 
     map[string, vector[double]] stance()
 
+    void forwardKinematics()
+    void forwardKinematics(MultiBodyConfig& mbc)
+    void forwardVelocity()
+    void forwardVelocity(MultiBodyConfig& mbc)
+    void forwardAcceleration()
+    void forwardAcceleration(MotionVecd & A_0)
+    void forwardAcceleration(MultiBodyConfig & mbc)
+    void forwardAcceleration(MultiBodyConfig & mbc, MotionVecd & A_0)
+
+    void eulerIntegration(double step)
+    void eulerIntegration(MultiBodyConfig & mbc, double step)
+
+    PTransformd posW()
+    void posW(PTransformd pt)
+
   shared_ptr[Robots] loadRobot(const RobotModule&, PTransformd *, const string&)
   shared_ptr[Robots] loadRobots(const vector[RobotModulePtr]&)
   shared_ptr[Robots] loadRobotAndEnv(const RobotModule&, const RobotModule&)

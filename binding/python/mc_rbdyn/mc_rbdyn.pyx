@@ -674,6 +674,41 @@ cdef class Robot(object):
     self.__is_valid()
     return self.impl.stance()
 
+  def forwardKinematics(self, rbdyn.MultiBodyConfig mbc=None):
+    self.__is_valid()
+    if mbc is None:
+      self.impl.forwardKinematics()
+    else:
+      self.impl.forwardKinematics(deref(mbc.impl))
+
+  def forwardVelocity(self, rbdyn.MultiBodyConfig mbc=None):
+    self.__is_valid()
+    if mbc is None:
+      self.impl.forwardVelocity()
+    else:
+      self.impl.forwardVelocity(deref(mbc.impl))
+
+  def forwardAcceleration(self, rbdyn.MultiBodyConfig mbc=None, sva.MotionVecd A_0 = None):
+    self.__is_valid()
+    if mbc is None:
+      if A_0 is None:
+        self.impl.forwardAcceleration()
+      else:
+        self.impl.forwardAcceleration(deref(A_0.impl))
+    else:
+      if A_0 is None:
+        self.impl.forwardAcceleration(deref(mbc.impl))
+      else:
+        self.impl.forwardAcceleration(deref(mbc.impl), deref(A_0.impl))
+
+  def posW(self, sva.PTransformd pt = None):
+    self.__is_valid()
+    if pt is None:
+      return sva.PTransformdFromC(self.impl.posW())
+    else:
+      self.impl.posW(deref(pt.impl))
+
+
 cdef Robot RobotFromC(const c_mc_rbdyn.Robot & robot):
   cdef Robot ret = Robot()
   ret.impl = &(c_mc_rbdyn.const_cast_robot(robot))
