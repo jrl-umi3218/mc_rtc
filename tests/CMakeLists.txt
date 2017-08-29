@@ -22,6 +22,7 @@ MACRO(mc_rtc_test NAME)
 ENDMACRO()
 
 mc_rtc_test(testConfiguration mc_rtc_utils)
+mc_rtc_test(testSolverTaskStorage mc_tasks)
 
 add_executable(test_controller_ticker test_controller_ticker.cpp)
 pkg_config_use_dependency(test_controller_ticker mc_rbdyn_urdf)
