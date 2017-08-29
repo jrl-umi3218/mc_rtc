@@ -13,7 +13,6 @@
 #include <Tasks/QPSolver.h>
 
 #include <memory>
-#include <map>
 
 namespace mc_tasks
 {
