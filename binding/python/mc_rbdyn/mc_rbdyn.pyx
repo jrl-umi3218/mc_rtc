@@ -535,6 +535,60 @@ cdef class Robot(object):
       self.__is_valid()
       return rbdyn.MultiBodyGraphFromC(self.impl.mbg(), False)
 
+  property q:
+    def __get__(self):
+      self.__is_valid()
+      return rbdyn.DoubleVectorVectorWrapperFromC(self.impl.q(), self)
+  property alpha:
+    def __get__(self):
+      self.__is_valid()
+      return rbdyn.DoubleVectorVectorWrapperFromC(self.impl.alpha(), self)
+  property alphaD:
+    def __get__(self):
+      self.__is_valid()
+      return rbdyn.DoubleVectorVectorWrapperFromC(self.impl.alphaD(), self)
+  property jointTorque:
+    def __get__(self):
+      self.__is_valid()
+      return rbdyn.DoubleVectorVectorWrapperFromC(self.impl.jointTorque(), self)
+  property bodyPosW:
+    def __get__(self):
+      self.__is_valid()
+      return sva.PTransformdVectorFromC(self.impl.bodyPosW())
+  property bodyVelW:
+    def __get__(self):
+      self.__is_valid()
+      ret = []
+      for mv in self.impl.bodyVelW():
+        ret.append(sva.MotionVecdFromC(mv))
+      return ret
+  property bodyVelB:
+    def __get__(self):
+      self.__is_valid()
+      ret = []
+      for mv in self.impl.bodyVelB():
+        ret.append(sva.MotionVecdFromC(mv))
+      return ret
+  property bodyAccB:
+    def __get__(self):
+      self.__is_valid()
+      ret = []
+      for mv in self.impl.bodyAccB():
+        ret.append(sva.MotionVecdFromC(mv))
+      return ret
+  property com:
+    def __get__(self):
+      self.__is_valid()
+      return eigen.Vector3dFromC(self.impl.com())
+  property comVelocity:
+    def __get__(self):
+      self.__is_valid()
+      return eigen.Vector3dFromC(self.impl.comVelocity())
+  property comAcceleration:
+    def __get__(self):
+      self.__is_valid()
+      return eigen.Vector3dFromC(self.impl.comAcceleration())
+
   property ql:
     def __get__(self):
       self.__is_valid()
