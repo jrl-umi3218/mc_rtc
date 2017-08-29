@@ -593,17 +593,25 @@ const sva::PTransformd & Robot::posW() const
 {
   return bodyPosW().at(0);
 }
+
 void Robot::posW(const sva::PTransformd & pt)
 {
-  if(mb().joint(0).type() != rbd::Joint::Type::Free)
-  {
-    LOG_ERROR_AND_THROW(std::logic_error, "The root pose can only be changed for robots with a free flyer as joint(0)");
-  }
   const sva::Quaterniond rotation{ pt.rotation().transpose() };
-  q()[0] = {
-    rotation.w(), rotation.x(), rotation.y(), rotation.z(),
-    pt.translation().x(), pt.translation().y(), pt.translation().z()
-  };
+  if(mb().joint(0).type() == rbd::Joint::Type::Free)
+  {
+    q()[0] = {
+      rotation.w(), rotation.x(), rotation.y(), rotation.z(),
+      pt.translation().x(), pt.translation().y(), pt.translation().z()
+    };
+  }
+  else if (mb().joint(0).type() == rbd::Joint::Type::Fixed)
+  {
+    mb().transform(0, sva::PTransformd(rotation, pt.translation()));
+  }
+  else
+  {
+    LOG_ERROR_AND_THROW(std::logic_error, "The root pose can only be changed for robots with a free flyer or a fixed joint as joint(0)");
+  }
   forwardKinematics();
 }
 
