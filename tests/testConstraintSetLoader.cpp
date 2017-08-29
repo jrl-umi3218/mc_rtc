@@ -4,6 +4,7 @@
 #include <mc_solver/ConstraintSetLoader.h>
 
 #include <mc_solver/BoundedSpeedConstr.h>
+#include <mc_solver/CollisionsConstraint.h>
 
 #include <mc_rbdyn/RobotLoader.h>
 #include <mc_rbdyn/configuration_io.h>
@@ -101,7 +102,49 @@ struct ConstraintTester<mc_solver::BoundedSpeedConstr>
   Eigen::Vector3d uS = Eigen::Vector3d::Zero();
 };
 
-typedef boost::mpl::list<mc_solver::BoundedSpeedConstr> test_types;
+template<>
+struct ConstraintTester<mc_solver::CollisionsConstraint>
+{
+  mc_solver::ConstraintSetPtr make_ref()
+  {
+    auto ret = std::make_shared<mc_solver::CollisionsConstraint>(*robots, 0, 0, solver.dt());
+    BOOST_REQUIRE(rm->commonSelfCollisions().size() > 0);
+    ret->addCollisions(solver, rm->commonSelfCollisions());
+    return ret;
+  }
+
+  std::string json()
+  {
+    mc_rtc::Configuration config;
+    config.add("type", "collision");
+    config.add("r1Index", 0);
+    config.add("r2Index", 0);
+    auto cv = config.array("collisions");
+    for(const auto & c : rm->commonSelfCollisions())
+    {
+      cv.push(c);
+    }
+    auto ret = getTmpFile();
+    config.save(ret);
+    return ret;
+  }
+
+  void check(const mc_solver::ConstraintSetPtr & ref_p,
+             const mc_solver::ConstraintSetPtr & loaded_p)
+  {
+    auto ref = std::dynamic_pointer_cast<mc_solver::CollisionsConstraint>(ref_p);
+    auto loaded = std::dynamic_pointer_cast<mc_solver::CollisionsConstraint>(loaded_p);
+    BOOST_REQUIRE(ref);
+    BOOST_REQUIRE(loaded);
+    BOOST_CHECK(ref->r1Index == loaded->r1Index);
+    BOOST_CHECK(ref->r2Index == loaded->r2Index);
+    BOOST_CHECK(ref->cols == loaded->cols);
+  }
+};
+
+typedef boost::mpl::list<
+          mc_solver::BoundedSpeedConstr,
+          mc_solver::CollisionsConstraint> test_types;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(TestConstraintSetLoader, T, test_types)
 {
