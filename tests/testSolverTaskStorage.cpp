@@ -10,7 +10,10 @@
 /** Normal CoMTask with static boolean to check the object is deleted */
 struct CheckCoMTask : public mc_tasks::CoMTask
 {
-  using mc_tasks::CoMTask::CoMTask;
+  CheckCoMTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex)
+  : mc_tasks::CoMTask(robots, robotIndex)
+  {
+  }
   ~CheckCoMTask() { deleted = true; }
   static bool deleted;
 };
