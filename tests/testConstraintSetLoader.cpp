@@ -5,6 +5,7 @@
 
 #include <mc_solver/BoundedSpeedConstr.h>
 #include <mc_solver/CollisionsConstraint.h>
+#include <mc_solver/CoMIncPlaneConstr.h>
 
 #include <mc_rbdyn/RobotLoader.h>
 #include <mc_rbdyn/configuration_io.h>
@@ -142,9 +143,39 @@ struct ConstraintTester<mc_solver::CollisionsConstraint>
   }
 };
 
+template<>
+struct ConstraintTester<mc_solver::CoMIncPlaneConstr>
+{
+  mc_solver::ConstraintSetPtr make_ref()
+  {
+    return std::make_shared<mc_solver::CoMIncPlaneConstr>(*robots, 0, solver.dt());
+  }
+
+  std::string json()
+  {
+    mc_rtc::Configuration config;
+    config.add("type", "CoMIncPlane");
+    config.add("robotIndex", 0);
+    auto ret = getTmpFile();
+    config.save(ret);
+    return ret;
+  }
+
+  void check(const mc_solver::ConstraintSetPtr & ref_p,
+             const mc_solver::ConstraintSetPtr & loaded_p)
+  {
+    auto ref = std::dynamic_pointer_cast<mc_solver::CoMIncPlaneConstr>(ref_p);
+    auto loaded = std::dynamic_pointer_cast<mc_solver::CoMIncPlaneConstr>(loaded_p);
+    BOOST_REQUIRE(ref);
+    BOOST_REQUIRE(loaded);
+  }
+};
+
 typedef boost::mpl::list<
           mc_solver::BoundedSpeedConstr,
-          mc_solver::CollisionsConstraint> test_types;
+          mc_solver::CollisionsConstraint,
+          mc_solver::CoMIncPlaneConstr
+          > test_types;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(TestConstraintSetLoader, T, test_types)
 {
