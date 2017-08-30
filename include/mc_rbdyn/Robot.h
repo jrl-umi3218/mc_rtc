@@ -302,7 +302,7 @@ public:
    *
    * @param pt The new global pose
    *
-   * @throws If joint(0) is no free flyer
+   * @throws If joint(0) is neither free flyer nor fixed
    */
   void posW(const sva::PTransformd & pt);
 

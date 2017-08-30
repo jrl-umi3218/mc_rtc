@@ -596,9 +596,9 @@ const sva::PTransformd & Robot::posW() const
 
 void Robot::posW(const sva::PTransformd & pt)
 {
-  const sva::Quaterniond rotation{ pt.rotation().transpose() };
   if(mb().joint(0).type() == rbd::Joint::Type::Free)
   {
+    const sva::Quaterniond rotation{ pt.rotation().transpose() };
     q()[0] = {
       rotation.w(), rotation.x(), rotation.y(), rotation.z(),
       pt.translation().x(), pt.translation().y(), pt.translation().z()
@@ -606,7 +606,7 @@ void Robot::posW(const sva::PTransformd & pt)
   }
   else if (mb().joint(0).type() == rbd::Joint::Type::Fixed)
   {
-    mb().transform(0, sva::PTransformd(rotation, pt.translation()));
+    mb().transform(0, pt);
   }
   else
   {
