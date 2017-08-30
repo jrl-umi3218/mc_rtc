@@ -102,6 +102,7 @@ $(document).ready(function()
   'BoundedSpeedConstr',
   'CollisionsConstraint',
   'CoMIncPlaneConstr',
+  'ContactConstraint',
   ]
   $('#constraintset-objects').html(make_list_group('constraintset', constraintset_objects));
 

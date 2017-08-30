@@ -6,6 +6,7 @@
 #include <mc_solver/BoundedSpeedConstr.h>
 #include <mc_solver/CollisionsConstraint.h>
 #include <mc_solver/CoMIncPlaneConstr.h>
+#include <mc_solver/ContactConstraint.h>
 
 #include <mc_rbdyn/RobotLoader.h>
 #include <mc_rbdyn/configuration_io.h>
@@ -171,10 +172,40 @@ struct ConstraintTester<mc_solver::CoMIncPlaneConstr>
   }
 };
 
+template<>
+struct ConstraintTester<mc_solver::ContactConstraint>
+{
+  mc_solver::ConstraintSetPtr make_ref()
+  {
+    return std::make_shared<mc_solver::ContactConstraint>(solver.dt(), mc_solver::ContactConstraint::Position, true);
+  }
+
+  std::string json()
+  {
+    mc_rtc::Configuration config;
+    config.add("type", "contact");
+    config.add("contactType", "position");
+    config.add("dynamics", true);
+    auto ret = getTmpFile();
+    config.save(ret);
+    return ret;
+  }
+
+  void check(const mc_solver::ConstraintSetPtr & ref_p,
+             const mc_solver::ConstraintSetPtr & loaded_p)
+  {
+    auto ref = std::dynamic_pointer_cast<mc_solver::ContactConstraint>(ref_p);
+    auto loaded = std::dynamic_pointer_cast<mc_solver::ContactConstraint>(loaded_p);
+    BOOST_REQUIRE(ref);
+    BOOST_REQUIRE(loaded);
+  }
+};
+
 typedef boost::mpl::list<
           mc_solver::BoundedSpeedConstr,
           mc_solver::CollisionsConstraint,
-          mc_solver::CoMIncPlaneConstr
+          mc_solver::CoMIncPlaneConstr,
+          mc_solver::ContactConstraint
           > test_types;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(TestConstraintSetLoader, T, test_types)
