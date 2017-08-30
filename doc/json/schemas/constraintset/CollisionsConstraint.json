@@ -1,5 +1,5 @@
 {
-  "title": "mc_solver::CollisionConstraint",
+  "title": "mc_solver::CollisionsConstraint",
   "type": "object",
   "properties":
   {

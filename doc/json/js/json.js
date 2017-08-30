@@ -100,7 +100,7 @@ $(document).ready(function()
 
   var constraintset_objects = [
   'BoundedSpeedConstr',
-  'CollisionConstraint',
+  'CollisionsConstraint',
   ]
   $('#constraintset-objects').html(make_list_group('constraintset', constraintset_objects));
 
