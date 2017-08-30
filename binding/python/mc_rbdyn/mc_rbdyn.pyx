@@ -554,7 +554,13 @@ cdef class Robot(object):
   property bodyPosW:
     def __get__(self):
       self.__is_valid()
-      return sva.PTransformdVectorFromC(self.impl.bodyPosW())
+      ret = []
+      end = self.impl.bodyPosW().end()
+      it = self.impl.bodyPosW().begin()
+      while it != end:
+        ret.append(sva.PTransformdFromC(deref(it)))
+        preinc(it)
+      return ret
   property bodyVelW:
     def __get__(self):
       self.__is_valid()
