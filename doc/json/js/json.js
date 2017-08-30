@@ -103,6 +103,8 @@ $(document).ready(function()
   'CollisionsConstraint',
   'CoMIncPlaneConstr',
   'ContactConstraint',
+  'KinematicsConstraint',
+  'DynamicsConstraint'
   ]
   $('#constraintset-objects').html(make_list_group('constraintset', constraintset_objects));
 
