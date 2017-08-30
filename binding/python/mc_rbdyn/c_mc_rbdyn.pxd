@@ -167,12 +167,26 @@ cdef extern from "<mc_rbdyn/Robot.h>" namespace "mc_rbdyn":
     const MultiBodyConfig& mbc()
     const MultiBodyGraph& mbg()
 
+    vector[vector[double]]& q()
+    vector[vector[double]]& alpha()
+    vector[vector[double]]& alphaD()
+    vector[vector[double]]& jointTorque()
+
+    vector[PTransformd]& bodyPosW()
+    vector[MotionVecd]& bodyVelW()
+    vector[MotionVecd]& bodyVelB()
+    vector[MotionVecd]& bodyAccB()
+
     vector[vector[double]]& ql()
     vector[vector[double]]& qu()
     vector[vector[double]]& vl()
     vector[vector[double]]& vu()
     vector[vector[double]]& tl()
     vector[vector[double]]& tu()
+
+    Vector3d com()
+    Vector3d comVelocity()
+    Vector3d comAcceleration()
 
     const vector[Flexibility]& flexibility()
 
@@ -193,6 +207,21 @@ cdef extern from "<mc_rbdyn/Robot.h>" namespace "mc_rbdyn":
     void loadRSDFFromDir(string)
 
     map[string, vector[double]] stance()
+
+    void forwardKinematics()
+    void forwardKinematics(MultiBodyConfig& mbc)
+    void forwardVelocity()
+    void forwardVelocity(MultiBodyConfig& mbc)
+    void forwardAcceleration()
+    void forwardAcceleration(MotionVecd & A_0)
+    void forwardAcceleration(MultiBodyConfig & mbc)
+    void forwardAcceleration(MultiBodyConfig & mbc, MotionVecd & A_0)
+
+    void eulerIntegration(double step)
+    void eulerIntegration(MultiBodyConfig & mbc, double step)
+
+    PTransformd posW()
+    void posW(PTransformd pt)
 
   shared_ptr[Robots] loadRobot(const RobotModule&, PTransformd *, const string&)
   shared_ptr[Robots] loadRobots(const vector[RobotModulePtr]&)

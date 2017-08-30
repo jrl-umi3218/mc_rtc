@@ -535,6 +535,75 @@ cdef class Robot(object):
       self.__is_valid()
       return rbdyn.MultiBodyGraphFromC(self.impl.mbg(), False)
 
+  property q:
+    def __get__(self):
+      self.__is_valid()
+      return rbdyn.DoubleVectorVectorWrapperFromC(self.impl.q(), self)
+  property alpha:
+    def __get__(self):
+      self.__is_valid()
+      return rbdyn.DoubleVectorVectorWrapperFromC(self.impl.alpha(), self)
+  property alphaD:
+    def __get__(self):
+      self.__is_valid()
+      return rbdyn.DoubleVectorVectorWrapperFromC(self.impl.alphaD(), self)
+  property jointTorque:
+    def __get__(self):
+      self.__is_valid()
+      return rbdyn.DoubleVectorVectorWrapperFromC(self.impl.jointTorque(), self)
+  property bodyPosW:
+    def __get__(self):
+      self.__is_valid()
+      ret = []
+      end = self.impl.bodyPosW().end()
+      it = self.impl.bodyPosW().begin()
+      while it != end:
+        ret.append(sva.PTransformdFromC(deref(it)))
+        preinc(it)
+      return ret
+  property bodyVelW:
+    def __get__(self):
+      self.__is_valid()
+      ret = []
+      end = self.impl.bodyVelW().end()
+      it = self.impl.bodyVelW().begin()
+      while it != end:
+        ret.append(sva.MotionVecdFromC(deref(it)))
+        preinc(it)
+      return ret
+  property bodyVelB:
+    def __get__(self):
+      self.__is_valid()
+      ret = []
+      end = self.impl.bodyVelB().end()
+      it = self.impl.bodyVelB().begin()
+      while it != end:
+        ret.append(sva.MotionVecdFromC(deref(it)))
+        preinc(it)
+      return ret
+  property bodyAccB:
+    def __get__(self):
+      self.__is_valid()
+      ret = []
+      end = self.impl.bodyAccB().end()
+      it = self.impl.bodyAccB().begin()
+      while it != end:
+        ret.append(sva.MotionVecdFromC(deref(it)))
+        preinc(it)
+      return ret
+  property com:
+    def __get__(self):
+      self.__is_valid()
+      return eigen.Vector3dFromC(self.impl.com())
+  property comVelocity:
+    def __get__(self):
+      self.__is_valid()
+      return eigen.Vector3dFromC(self.impl.comVelocity())
+  property comAcceleration:
+    def __get__(self):
+      self.__is_valid()
+      return eigen.Vector3dFromC(self.impl.comAcceleration())
+
   property ql:
     def __get__(self):
       self.__is_valid()
@@ -610,6 +679,41 @@ cdef class Robot(object):
   def stance(self):
     self.__is_valid()
     return self.impl.stance()
+
+  def forwardKinematics(self, rbdyn.MultiBodyConfig mbc=None):
+    self.__is_valid()
+    if mbc is None:
+      self.impl.forwardKinematics()
+    else:
+      self.impl.forwardKinematics(deref(mbc.impl))
+
+  def forwardVelocity(self, rbdyn.MultiBodyConfig mbc=None):
+    self.__is_valid()
+    if mbc is None:
+      self.impl.forwardVelocity()
+    else:
+      self.impl.forwardVelocity(deref(mbc.impl))
+
+  def forwardAcceleration(self, rbdyn.MultiBodyConfig mbc=None, sva.MotionVecd A_0 = None):
+    self.__is_valid()
+    if mbc is None:
+      if A_0 is None:
+        self.impl.forwardAcceleration()
+      else:
+        self.impl.forwardAcceleration(deref(A_0.impl))
+    else:
+      if A_0 is None:
+        self.impl.forwardAcceleration(deref(mbc.impl))
+      else:
+        self.impl.forwardAcceleration(deref(mbc.impl), deref(A_0.impl))
+
+  def posW(self, sva.PTransformd pt = None):
+    self.__is_valid()
+    if pt is None:
+      return sva.PTransformdFromC(self.impl.posW())
+    else:
+      self.impl.posW(deref(pt.impl))
+
 
 cdef Robot RobotFromC(const c_mc_rbdyn.Robot & robot):
   cdef Robot ret = Robot()

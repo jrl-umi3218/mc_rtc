@@ -1,3 +1,9 @@
+#include <RBDyn/CoM.h>
+#include <RBDyn/FK.h>
+#include <RBDyn/FV.h>
+#include <RBDyn/FA.h>
+#include <RBDyn/EulerIntegration.h>
+
 #include <mc_rbdyn/Robot.h>
 
 #include <mc_rbdyn/RobotModule.h>
@@ -235,6 +241,84 @@ const rbd::MultiBodyGraph & Robot::mbg() const
   return robots->mbgs_[robots_idx];
 }
 
+const std::vector<std::vector<double>> & Robot::q() const
+{
+  return mbc().q;
+}
+const std::vector<std::vector<double>> & Robot::alpha() const
+{
+  return mbc().alpha;
+}
+const std::vector<std::vector<double>> & Robot::alphaD() const
+{
+  return mbc().alphaD;
+}
+const std::vector<std::vector<double>> & Robot::jointTorque() const
+{
+  return mbc().jointTorque;
+}
+const std::vector<sva::PTransformd> & Robot::bodyPosW() const
+{
+  return mbc().bodyPosW;
+}
+const std::vector<sva::MotionVecd> & Robot::bodyVelW() const
+{
+  return mbc().bodyVelW;
+}
+const std::vector<sva::MotionVecd> & Robot::bodyVelB() const
+{
+  return mbc().bodyVelB;
+}
+const std::vector<sva::MotionVecd> & Robot::bodyAccB() const
+{
+  return mbc().bodyAccB;
+}
+std::vector<std::vector<double>> & Robot::q()
+{
+    return mbc().q;
+}
+std::vector<std::vector<double>> & Robot::alpha()
+{
+  return mbc().alpha;
+}
+std::vector<std::vector<double>> & Robot::alphaD()
+{
+  return mbc().alphaD;
+}
+std::vector<std::vector<double>> & Robot::jointTorque()
+{
+  return mbc().jointTorque;
+}
+std::vector<sva::PTransformd> & Robot::bodyPosW()
+{
+  return mbc().bodyPosW;
+}
+std::vector<sva::MotionVecd> & Robot::bodyVelW()
+{
+  return mbc().bodyVelW;
+}
+std::vector<sva::MotionVecd> & Robot::bodyVelB()
+{
+  return mbc().bodyVelB;
+}
+std::vector<sva::MotionVecd> & Robot::bodyAccB()
+{
+  return mbc().bodyAccB;
+}
+
+Eigen::Vector3d Robot::com() const
+{
+  return rbd::computeCoM(mb(), mbc());
+}
+Eigen::Vector3d Robot::comVelocity() const
+{
+  return rbd::computeCoMVelocity(mb(), mbc());
+}
+Eigen::Vector3d Robot::comAcceleration() const
+{
+  return rbd::computeCoMAcceleration(mb(), mbc());
+}
+
 const std::vector<std::vector<double>> & Robot::ql() const
 {
   return ql_;
@@ -467,6 +551,68 @@ std::map<std::string, std::vector<double>> Robot::stance() const
 unsigned int mc_rbdyn::Robot::robotIndex() const
 {
   return robots_idx;
+}
+
+void Robot::forwardKinematics()
+{
+    rbd::forwardKinematics(mb(), mbc());
+}
+void Robot::forwardKinematics(rbd::MultiBodyConfig & mbc) const
+{
+  rbd::forwardKinematics(mb(), mbc);
+}
+
+void Robot::forwardVelocity()
+{
+  rbd::forwardVelocity(mb(), mbc());
+}
+void Robot::forwardVelocity(rbd::MultiBodyConfig & mbc) const
+{
+  rbd::forwardVelocity(mb(), mbc);
+}
+
+void Robot::forwardAcceleration(const sva::MotionVecd & A_0)
+{
+  rbd::forwardAcceleration(mb(), mbc(), A_0);
+}
+void Robot::forwardAcceleration(rbd::MultiBodyConfig & mbc, const sva::MotionVecd & A_0) const
+{
+  rbd::forwardAcceleration(mb(), mbc, A_0);
+}
+
+void mc_rbdyn::Robot::eulerIntegration(double step)
+{
+  rbd::eulerIntegration(mb(), mbc(), step);
+}
+void mc_rbdyn::Robot::eulerIntegration(rbd::MultiBodyConfig & mbc, double step) const
+{
+  rbd::eulerIntegration(mb(), mbc, step);
+}
+
+const sva::PTransformd & Robot::posW() const
+{
+  return bodyPosW().at(0);
+}
+
+void Robot::posW(const sva::PTransformd & pt)
+{
+  if(mb().joint(0).type() == rbd::Joint::Type::Free)
+  {
+    const sva::Quaterniond rotation{ pt.rotation().transpose() };
+    q()[0] = {
+      rotation.w(), rotation.x(), rotation.y(), rotation.z(),
+      pt.translation().x(), pt.translation().y(), pt.translation().z()
+    };
+  }
+  else if (mb().joint(0).type() == rbd::Joint::Type::Fixed)
+  {
+    mb().transform(0, pt);
+  }
+  else
+  {
+    LOG_ERROR_AND_THROW(std::logic_error, "The root pose can only be changed for robots with a free flyer or a fixed joint as joint(0)");
+  }
+  forwardKinematics();
 }
 
 void Robot::createWithBase(Robots & robots, unsigned int robots_idx, const Base & base) const

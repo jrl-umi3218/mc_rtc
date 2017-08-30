@@ -128,6 +128,27 @@ public:
   rbd::MultiBodyGraph & mbg();
   const rbd::MultiBodyGraph & mbg() const;
 
+  const std::vector<std::vector<double>> & q() const;
+  const std::vector<std::vector<double>> & alpha() const;
+  const std::vector<std::vector<double>> & alphaD() const;
+  const std::vector<std::vector<double>> & jointTorque() const;
+  const std::vector<sva::PTransformd> & bodyPosW() const;
+  const std::vector<sva::MotionVecd> & bodyVelW() const;
+  const std::vector<sva::MotionVecd> & bodyVelB() const;
+  const std::vector<sva::MotionVecd> & bodyAccB() const;
+  std::vector<std::vector<double>> & q();
+  std::vector<std::vector<double>> & alpha();
+  std::vector<std::vector<double>> & alphaD();
+  std::vector<std::vector<double>> & jointTorque();
+  std::vector<sva::PTransformd> & bodyPosW();
+  std::vector<sva::MotionVecd> & bodyVelW();
+  std::vector<sva::MotionVecd> & bodyVelB();
+  std::vector<sva::MotionVecd> & bodyAccB();
+
+  Eigen::Vector3d com() const;
+  Eigen::Vector3d comVelocity() const;
+  Eigen::Vector3d comAcceleration() const;
+
   const std::vector<std::vector<double>> & ql() const;
   const std::vector<std::vector<double>> & qu() const;
   const std::vector<std::vector<double>> & vl() const;
@@ -259,6 +280,32 @@ public:
   std::map<std::string, std::vector<double>> stance() const;
 
   unsigned int robotIndex() const;
+
+  void forwardKinematics();
+  void forwardKinematics(rbd::MultiBodyConfig & mbc) const;
+
+  void forwardVelocity();
+  void forwardVelocity(rbd::MultiBodyConfig & mbc) const;
+
+  void forwardAcceleration(const sva::MotionVecd & A_0 = sva::MotionVecd(Eigen::Vector6d::Zero()));
+  void forwardAcceleration(rbd::MultiBodyConfig & mbc, const sva::MotionVecd & A_0 = sva::MotionVecd(Eigen::Vector6d::Zero())) const;
+
+  void eulerIntegration(double step);
+  void eulerIntegration(rbd::MultiBodyConfig & mbc, double step) const;
+
+  /** Return the robot's global pose */
+  const sva::PTransformd & posW() const;
+  /** Set the robot's global pose.
+   * This is mostly meant for initialization purposes.
+   * In other scenarios there might be more things to do
+   * to properly move a robot (e.g. update contacts, set speed to zero).
+   *
+   * @param pt The new global pose
+   *
+   * @throws If joint(0) is neither free flyer nor fixed
+   */
+  void posW(const sva::PTransformd & pt);
+
 private:
   std::string name_;
   Robots * robots;
