@@ -192,6 +192,7 @@ template<typename T>
 void TrajectoryTaskGeneric<T>::load(mc_solver::QPSolver & solver,
                                     const mc_rtc::Configuration & config)
 {
+  MetaTask::load(solver, config);
   if(config.has("stiffness"))
   {
     stiffness(config("stiffness"));
@@ -204,7 +205,6 @@ void TrajectoryTaskGeneric<T>::load(mc_solver::QPSolver & solver,
   {
     weight(config("weight"));
   }
-  MetaTask::load(solver, config);
 }
 
 }
