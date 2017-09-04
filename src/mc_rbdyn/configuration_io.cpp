@@ -23,31 +23,31 @@ rbd::Joint::Type ConfigurationLoader<rbd::Joint::Type>::load(const mc_rtc::Confi
   config("type", type);
   if(type == "rev")
   {
-return rbd::Joint::Type::Rev;
+    return rbd::Joint::Type::Rev;
   }
   if(type == "prism")
   {
-return rbd::Joint::Type::Prism;
+    return rbd::Joint::Type::Prism;
   }
   if(type == "spherical")
   {
-return rbd::Joint::Type::Spherical;
+    return rbd::Joint::Type::Spherical;
   }
   if(type == "planar")
   {
-return rbd::Joint::Type::Planar;
+    return rbd::Joint::Type::Planar;
   }
   if(type == "cylindrical")
   {
-return rbd::Joint::Type::Cylindrical;
+    return rbd::Joint::Type::Cylindrical;
   }
   if(type == "free")
   {
-return rbd::Joint::Type::Free;
+    return rbd::Joint::Type::Free;
   }
   if(type == "fixed")
   {
-return rbd::Joint::Type::Fixed;
+    return rbd::Joint::Type::Fixed;
   }
   LOG_ERROR(type << " was stored as joint type, cannot comprehend that")
   throw(std::runtime_error("Invalid joint type stored"));
