@@ -12,7 +12,7 @@ RelativeEndEffectorTask::RelativeEndEffectorTask(const std::string & bodyName, c
 
 RelativeEndEffectorTask::RelativeEndEffectorTask(const std::string & bodyName, const Eigen::Vector3d & bodyPoint, const mc_rbdyn::Robots & robots, unsigned int robotIndex, const std::string & relBodyName, double stiffness, double weight)
 : EndEffectorTask(bodyName, bodyPoint, robots, robotIndex, stiffness, weight),
-  relBodyIdx(robots.robot().bodyIndexByName(relBodyName.size()?relBodyName:robots.robot().mb().body(0).name()))
+  relBodyIdx(robots.robot().bodyIndexByName(relBodyName.size()?relBodyName:robots.robot(robotIndex).mb().body(0).name()))
 {
   reset();
 }
