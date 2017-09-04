@@ -44,10 +44,10 @@ RobotModule::bounds_t urdf_limits_to_bounds(const mc_rbdyn_urdf::Limits & limits
     }
     return ret;
   };
-  ret.push_back(limits.velocity);
   ret.push_back(convert(limits.velocity));
-  ret.push_back(limits.torque);
+  ret.push_back(limits.velocity);
   ret.push_back(convert(limits.torque));
+  ret.push_back(limits.torque);
   return ret;
 }
 
