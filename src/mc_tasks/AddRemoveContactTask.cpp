@@ -215,12 +215,7 @@ mc_tasks::MetaTaskPtr load_add_remove_contact_task(mc_solver::QPSolver & solver,
   return std::make_shared<T>(solver, contact, config("speed"), config("stiffness"), config("weight"), userT_0_s);
 }
 
-struct AddRemoveContactTaskLoader
-{
-  static bool registered;
-};
-
-bool AddRemoveContactTaskLoader::registered =
+static bool registered =
   mc_tasks::MetaTaskLoader::register_load_function("addContact", &load_add_remove_contact_task<mc_tasks::AddContactTask>) &&
   mc_tasks::MetaTaskLoader::register_load_function("removeContact", &load_add_remove_contact_task<mc_tasks::RemoveContactTask>);
 

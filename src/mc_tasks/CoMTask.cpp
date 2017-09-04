@@ -45,23 +45,18 @@ Eigen::Vector3d CoMTask::com()
 namespace
 {
 
-mc_tasks::MetaTaskPtr load_com_task(mc_solver::QPSolver & solver,
-                                    const mc_rtc::Configuration & config)
-{
-  auto t = std::make_shared<mc_tasks::CoMTask>(solver.robots(), config("robotIndex"));
-  if(config.has("com"))
+static bool registered = mc_tasks::MetaTaskLoader::register_load_function("com",
+  [](mc_solver::QPSolver & solver,
+     const mc_rtc::Configuration & config)
   {
-    t->com(config("com"));
+    auto t = std::make_shared<mc_tasks::CoMTask>(solver.robots(), config("robotIndex"));
+    if(config.has("com"))
+    {
+      t->com(config("com"));
+    }
+    t->load(solver, config);
+    return t;
   }
-  t->load(solver, config);
-  return t;
-}
-
-struct CoMLoader
-{
-  static bool registered;
-};
-
-bool CoMLoader::registered = mc_tasks::MetaTaskLoader::register_load_function("com", &load_com_task);
+);
 
 }

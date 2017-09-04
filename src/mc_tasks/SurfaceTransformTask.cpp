@@ -38,23 +38,18 @@ void SurfaceTransformTask::target(const sva::PTransformd & pose)
 namespace
 {
 
-mc_tasks::MetaTaskPtr load_surface_transform_task(mc_solver::QPSolver & solver,
-                                                  const mc_rtc::Configuration & config)
-{
-  auto t = std::make_shared<mc_tasks::SurfaceTransformTask>(config("surface"), solver.robots(), config("robotIndex"));
-  if(config.has("target"))
+static bool registered = mc_tasks::MetaTaskLoader::register_load_function("surfaceTransform",
+  [](mc_solver::QPSolver & solver,
+     const mc_rtc::Configuration & config)
   {
-    t->target(config("target"));
+    auto t = std::make_shared<mc_tasks::SurfaceTransformTask>(config("surface"), solver.robots(), config("robotIndex"));
+    if(config.has("target"))
+    {
+      t->target(config("target"));
+    }
+    t->load(solver, config);
+    return t;
   }
-  t->load(solver, config);
-  return t;
-}
-
-struct SurfaceTransformLoader
-{
-  static bool registered;
-};
-
-bool SurfaceTransformLoader::registered = mc_tasks::MetaTaskLoader::register_load_function("surfaceTransform", &load_surface_transform_task);
+);
 
 }

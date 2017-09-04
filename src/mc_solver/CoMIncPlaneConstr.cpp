@@ -58,18 +58,13 @@ void CoMIncPlaneConstr::set_planes(QPSolver & solver, const std::vector<mc_rbdyn
 namespace
 {
 
-mc_solver::ConstraintSetPtr load_comincplane_constr(mc_solver::QPSolver & solver,
-                                                    const mc_rtc::Configuration & config)
-{
-  auto ret = std::make_shared<mc_solver::CoMIncPlaneConstr>(solver.robots(), config("robotIndex"), solver.dt());
-  return ret;
-}
-
-struct CoMIncPlaneConstrLoader
-{
-  static bool registered;
-};
-
-bool CoMIncPlaneConstrLoader::registered = mc_solver::ConstraintSetLoader::register_load_function("CoMIncPlane", &load_comincplane_constr);
+static bool registered = mc_solver::ConstraintSetLoader::register_load_function("CoMIncPlane",
+  [](mc_solver::QPSolver & solver,
+     const mc_rtc::Configuration & config)
+  {
+    auto ret = std::make_shared<mc_solver::CoMIncPlaneConstr>(solver.robots(), config("robotIndex"), solver.dt());
+    return ret;
+  }
+);
 
 }

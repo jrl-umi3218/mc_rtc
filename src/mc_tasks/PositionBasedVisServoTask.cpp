@@ -40,19 +40,14 @@ void PositionBasedVisServoTask::error(const sva::PTransformd& X_t_s)
 namespace
 {
 
-mc_tasks::MetaTaskPtr load_pbvs_task(mc_solver::QPSolver & solver,
-                                    const mc_rtc::Configuration & config)
-{
-  auto t = std::make_shared<mc_tasks::PositionBasedVisServoTask>(config("surface"), sva::PTransformd::Identity(), solver.robots(), config("robotIndex"));
-  t->load(solver, config);
-  return t;
-}
-
-struct PositionBasedVisServoLoader
-{
-  static bool registered;
-};
-
-bool PositionBasedVisServoLoader::registered = mc_tasks::MetaTaskLoader::register_load_function("pbvs", &load_pbvs_task);
+static bool registered = mc_tasks::MetaTaskLoader::register_load_function("pbvs",
+  [](mc_solver::QPSolver & solver,
+     const mc_rtc::Configuration & config)
+  {
+    auto t = std::make_shared<mc_tasks::PositionBasedVisServoTask>(config("surface"), sva::PTransformd::Identity(), solver.robots(), config("robotIndex"));
+    t->load(solver, config);
+    return t;
+  }
+);
 
 }

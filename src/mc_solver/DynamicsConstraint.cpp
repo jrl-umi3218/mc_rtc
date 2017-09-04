@@ -114,11 +114,8 @@ mc_solver::ConstraintSetPtr load_dyn_constr(mc_solver::QPSolver & solver,
   }
 }
 
-struct DynamicsConstraintLoader
-{
-  static bool registered;
-};
-
-bool DynamicsConstraintLoader::registered = mc_solver::ConstraintSetLoader::register_load_function("kinematics", &load_kin_constr) && mc_solver::ConstraintSetLoader::register_load_function("dynamics", &load_dyn_constr);
+static bool registered =
+  mc_solver::ConstraintSetLoader::register_load_function("kinematics", &load_kin_constr) &&
+  mc_solver::ConstraintSetLoader::register_load_function("dynamics", &load_dyn_constr);
 
 }

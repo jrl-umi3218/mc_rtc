@@ -154,12 +154,7 @@ mc_tasks::MetaTaskPtr load_relef_task(mc_solver::QPSolver & solver,
   return t;
 }
 
-struct EFTaskLoader
-{
-  static bool registered;
-};
-
-bool EFTaskLoader::registered =
+static bool registered =
   mc_tasks::MetaTaskLoader::register_load_function("orientation", &load_orientation_task) &&
   mc_tasks::MetaTaskLoader::register_load_function("position", &load_position_task) &&
   mc_tasks::MetaTaskLoader::register_load_function("body6d", &load_ef_task) &&

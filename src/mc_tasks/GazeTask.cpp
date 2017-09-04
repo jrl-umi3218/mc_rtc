@@ -46,19 +46,14 @@ void GazeTask::error(const Eigen::Vector3d & point3d, const Eigen::Vector2d & po
 namespace
 {
 
-mc_tasks::MetaTaskPtr load_gaze_task(mc_solver::QPSolver & solver,
-                                    const mc_rtc::Configuration & config)
-{
-  auto t = std::make_shared<mc_tasks::GazeTask>(config("body"), Eigen::Vector3d::Zero(), config("X_b_gaze"), solver.robots(), config("robotIndex"));
-  t->load(solver, config);
-  return t;
-}
-
-struct GazeLoader
-{
-  static bool registered;
-};
-
-bool GazeLoader::registered = mc_tasks::MetaTaskLoader::register_load_function("gaze", &load_gaze_task);
+static bool registered = mc_tasks::MetaTaskLoader::register_load_function("gaze",
+  [](mc_solver::QPSolver & solver,
+     const mc_rtc::Configuration & config)
+  {
+    auto t = std::make_shared<mc_tasks::GazeTask>(config("body"), Eigen::Vector3d::Zero(), config("X_b_gaze"), solver.robots(), config("robotIndex"));
+    t->load(solver, config);
+    return t;
+  }
+);
 
 }

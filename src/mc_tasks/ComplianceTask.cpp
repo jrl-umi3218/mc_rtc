@@ -142,31 +142,26 @@ void ComplianceTask::resetJointsSelector(mc_solver::QPSolver & solver)
 namespace
 {
 
-mc_tasks::MetaTaskPtr load_compliance_task(mc_solver::QPSolver & solver,
-                                    const mc_rtc::Configuration & config)
-{
-  Eigen::Matrix6d dof = Eigen::Matrix6d::Identity();
-  config("dof", dof);
-  auto t = std::shared_ptr<mc_tasks::ComplianceTask>(new mc_tasks::ComplianceTask(solver.robots(), config("robotIndex"), config("body"), solver.dt(), dof));
-  if(config.has("stiffness")) { t->stiffness(config("stiffness")); }
-  if(config.has("weight")) { t->weight(config("weight")); }
-  if(config.has("forceThresh")) { t->forceThresh(config("forceThresh")); }
-  if(config.has("torqueThresh")) { t->torqueThresh(config("torqueThresh")); }
-  if(config.has("forceGain")) { t->forceGain(config("forceGain")); }
-  if(config.has("torqueGain")) { t->torqueGain(config("torqueGain")); }
-  if(config.has("wrench"))
+static bool registered = mc_tasks::MetaTaskLoader::register_load_function("compliance",
+  [](mc_solver::QPSolver & solver,
+     const mc_rtc::Configuration & config)
   {
-    t->setTargetWrench(config("wrench"));
+    Eigen::Matrix6d dof = Eigen::Matrix6d::Identity();
+    config("dof", dof);
+    auto t = std::shared_ptr<mc_tasks::ComplianceTask>(new mc_tasks::ComplianceTask(solver.robots(), config("robotIndex"), config("body"), solver.dt(), dof));
+    if(config.has("stiffness")) { t->stiffness(config("stiffness")); }
+    if(config.has("weight")) { t->weight(config("weight")); }
+    if(config.has("forceThresh")) { t->forceThresh(config("forceThresh")); }
+    if(config.has("torqueThresh")) { t->torqueThresh(config("torqueThresh")); }
+    if(config.has("forceGain")) { t->forceGain(config("forceGain")); }
+    if(config.has("torqueGain")) { t->torqueGain(config("torqueGain")); }
+    if(config.has("wrench"))
+    {
+      t->setTargetWrench(config("wrench"));
+    }
+    t->load(solver, config);
+    return t;
   }
-  t->load(solver, config);
-  return t;
-}
-
-struct ComplianceTaskLoader
-{
-  static bool registered;
-};
-
-bool ComplianceTaskLoader::registered = mc_tasks::MetaTaskLoader::register_load_function("compliance", &load_compliance_task);
+);
 
 }

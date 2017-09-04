@@ -35,19 +35,14 @@ Eigen::Vector3d VectorOrientationTask::bodyVector()
 namespace
 {
 
-mc_tasks::MetaTaskPtr load_vector_orientation_task(mc_solver::QPSolver & solver,
-                                    const mc_rtc::Configuration & config)
-{
-  auto t = std::make_shared<mc_tasks::VectorOrientationTask>(config("body"), config("bodyVector"), config("targetVector"), solver.robots(), config("robotIndex"));
-  t->load(solver, config);
-  return t;
-}
-
-struct VectorOrientationLoader
-{
-  static bool registered;
-};
-
-bool VectorOrientationLoader::registered = mc_tasks::MetaTaskLoader::register_load_function("vectorOrientation", &load_vector_orientation_task);
+static bool registered = mc_tasks::MetaTaskLoader::register_load_function("vectorOrientation",
+  [](mc_solver::QPSolver & solver,
+     const mc_rtc::Configuration & config)
+  {
+    auto t = std::make_shared<mc_tasks::VectorOrientationTask>(config("body"), config("bodyVector"), config("targetVector"), solver.robots(), config("robotIndex"));
+    t->load(solver, config);
+    return t;
+  }
+);
 
 }
