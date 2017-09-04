@@ -104,8 +104,15 @@ struct MC_RBDYN_DLLAPI RobotModule
   /** Return default attitude of the robot */
   virtual const std::array<double, 7> & default_attitude() const { return _default_attitude; }
 
-  /** Make sure stance is valid */
-  void validate_stance();
+  /** Add missing elements to the current module stance
+   *
+   *
+   * If joints are present in the MultiBody but absent from the default stance,
+   * this will add a default value for this joint to the stance (the joint's
+   * zero configuration).
+   *
+   */
+  void expand_stance();
 
   /** Make a valid ref_joint_order */
   void make_default_ref_joint_order();

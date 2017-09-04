@@ -3,7 +3,7 @@
 namespace mc_rbdyn
 {
 
-void RobotModule::validate_stance()
+void RobotModule::expand_stance()
 {
   for(const auto & j : mb.joints())
   {

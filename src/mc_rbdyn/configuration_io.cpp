@@ -670,7 +670,7 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
 
   /* Those cannot be empty */
   config("stance", rm._stance);
-  rm.validate_stance();
+  rm.expand_stance();
   if(config.has("ref_joint_order"))
   {
     rm._ref_joint_order = config("ref_joint_order");
