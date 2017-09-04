@@ -55,7 +55,7 @@ namespace mc_rtc
     struct has_configuration_load_object : decltype(_has_configuration_load_object::test<T>(nullptr))
     {};
 
-    /** Helper trait to determine wheter:
+    /** Helper trait to determine whether:
      * mc_rtc::Configuration mc_rtc::ConfigurationLoader<T>::save(const T&);
      * is a valid construct or not
      */
