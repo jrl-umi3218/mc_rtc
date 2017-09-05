@@ -1,9 +1,9 @@
 #include <mc_rbdyn/Contact.h>
 
 #include <mc_rbdyn/contact_transform.h>
-#include <mc_rbdyn/Robots.h>
-
+#include <mc_rbdyn/configuration_io.h>
 #include <mc_rbdyn/PlanarSurface.h>
+#include <mc_rbdyn/Robots.h>
 
 #include <mc_rtc/logging.h>
 
@@ -130,6 +130,21 @@ Contact::Contact(const mc_rbdyn::Robots & robots, unsigned int r1Index, unsigned
   {
     impl->X_r2s_r1s = sva::PTransformd(*X_r2s_r1s);
   }
+}
+
+mc_rbdyn::Contact Contact::load(const mc_rbdyn::Robots & robots, const mc_rtc::Configuration & config)
+{
+  return mc_rtc::ConfigurationLoader<mc_rbdyn::Contact>::load(config, robots);
+}
+
+std::vector<mc_rbdyn::Contact> Contact::loadVector(const mc_rbdyn::Robots & robots, const mc_rtc::Configuration & config)
+{
+  std::vector<mc_rbdyn::Contact> ret;
+  for(const auto & c : config)
+  {
+    ret.emplace_back(load(robots, c));
+  }
+  return ret;
 }
 
 Contact::Contact(const Contact & contact)

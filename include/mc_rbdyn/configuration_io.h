@@ -78,7 +78,7 @@ DECLARE_IO(mc_rbdyn::RobotModulePtr)
 template<>
 struct MC_RBDYN_DLLAPI ConfigurationLoader<mc_rbdyn::Contact>
 {
-  static mc_rbdyn::Contact load(const mc_rbdyn::Robots&, const mc_rtc::Configuration &);
+  static mc_rbdyn::Contact load(const mc_rtc::Configuration &, const mc_rbdyn::Robots &);
   static mc_rtc::Configuration save(const mc_rbdyn::Contact &);
 };
 

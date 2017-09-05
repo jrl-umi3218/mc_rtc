@@ -46,10 +46,7 @@ void MCTextController::reset(const mc_control::ControllerResetData & data)
   std::vector<mc_rbdyn::Contact> contacts = {};
   if(config_.has("contacts"))
   {
-    for(const auto & c : config_("contacts"))
-    {
-      contacts.emplace_back(mc_rtc::ConfigurationLoader<mc_rbdyn::Contact>::load(robots(), c));
-    }
+    contacts = mc_rbdyn::Contact::loadVector(robots(), config_("contacts"));
   }
   solver().setContacts(contacts);
 }

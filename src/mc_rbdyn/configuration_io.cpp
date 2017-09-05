@@ -732,7 +732,7 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModulePtr>::save(const 
   return ConfigurationLoader<mc_rbdyn::RobotModule>::save(*rm);
 }
 
-mc_rbdyn::Contact ConfigurationLoader<mc_rbdyn::Contact>::load(const mc_rbdyn::Robots & robots, const mc_rtc::Configuration & config)
+mc_rbdyn::Contact ConfigurationLoader<mc_rbdyn::Contact>::load(const mc_rtc::Configuration & config, const mc_rbdyn::Robots & robots)
 {
   unsigned int r1Index = 0;
   unsigned int r2Index = 1;

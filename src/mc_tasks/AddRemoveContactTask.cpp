@@ -204,7 +204,7 @@ template<typename T>
 mc_tasks::MetaTaskPtr load_add_remove_contact_task(mc_solver::QPSolver & solver,
                                             const mc_rtc::Configuration & config)
 {
-  auto contact = mc_rtc::ConfigurationLoader<mc_rbdyn::Contact>::load(solver.robots(), config("contact"));
+  auto contact = mc_rbdyn::Contact::load(solver.robots(), config("contact"));
   Eigen::Vector3d T_0_s;
   Eigen::Vector3d * userT_0_s = nullptr;
   if(config.has("T_0_s"))

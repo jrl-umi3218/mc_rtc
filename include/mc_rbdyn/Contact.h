@@ -7,6 +7,7 @@
 #include <memory>
 
 #include <mc_rbdyn/api.h>
+#include <mc_rtc/Configuration.h>
 
 namespace mc_solver
 {
@@ -102,6 +103,10 @@ public:
 private:
   std::unique_ptr<ContactImpl> impl;
   mc_solver::QPContactPtr taskContact(const mc_rbdyn::Robots & robots, const sva::PTransformd & X_b1_b2, const std::vector<sva::PTransformd> & points) const;
+public:
+  static mc_rbdyn::Contact load(const mc_rbdyn::Robots & robots, const mc_rtc::Configuration & config);
+
+  static std::vector<mc_rbdyn::Contact> loadVector(const mc_rbdyn::Robots & robots, const mc_rtc::Configuration & config);
 };
 
 }
