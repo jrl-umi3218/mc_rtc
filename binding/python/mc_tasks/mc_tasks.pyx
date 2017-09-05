@@ -63,6 +63,17 @@ include "position_trajectory_task.pxi"
 include "orientation_trajectory_task.pxi"
 include "vector_orientation_trajectory_task.pxi"
 
+def genericInit(AnyTask self, size, name, *args, **kwargs):
+  skip_alloc = kwargs.pop('skip_alloc', False)
+  if skip_alloc:
+    self.__own_impl = False
+    self.impl = self.ttg_base = self.mt_base = NULL
+    return
+  elif len(args) + len(kwargs) >= size:
+    self.__ctor__(*args, **kwargs)
+  else:
+    raise TypeError("Not enough arguments passed to {0} ctor".format(name))
+
 cdef class CoMTask(_CoMTrajectoryTask):
   def __dealloc__(self):
     if self.__own_impl:
@@ -71,16 +82,10 @@ cdef class CoMTask(_CoMTrajectoryTask):
                stiffness = 2.0, weight = 500.0):
     self.__own_impl = True
     self.impl = self.ttg_base = self.mt_base = new c_mc_tasks.CoMTask(deref(robots.impl), robotIndex, stiffness, weight)
+
   def __cinit__(self, *args, **kwargs):
-    skip_alloc = kwargs.pop('skip_alloc', False)
-    if skip_alloc:
-      self.__own_impl = False
-      self.impl = self.ttg_base = self.mt_base = NULL
-      return
-    elif len(args) + len(kwargs) >= 3:
-      self.__ctor__(*args, **kwargs)
-    else:
-      raise TypeError("Not enough arguments passed to CoMTask ctor")
+    genericInit[CoMTask](self, 3, 'CoMTask', *args, **kwargs)
+
   def com(self, eigen.Vector3d com = None):
     assert(self.impl)
     if com is None:
@@ -99,15 +104,10 @@ cdef class PositionTask(_PositionTrajectoryTask):
                 robotIndex, stiffness = 2.0, weight = 500.0):
     self.__own_impl = True
     self.impl = self.ttg_base = self.mt_base = new c_mc_tasks.PositionTask(bodyName, deref(robots.impl), robotIndex, stiffness, weight)
-  def __cinit__(self, *args, skip_alloc = False):
-    if skip_alloc:
-      self.__own_impl = False
-      self.impl = self.ttg_base = self.mt_base = NULL
-      return
-    elif len(args) >= 3:
-      self.__ctor__(*args)
-    else:
-      raise TypeError("Not enough arguments passed to PositionTask ctor")
+
+  def __cinit__(self, *args, **kwargs):
+    genericInit[PositionTask](self, 3, 'PositionTask', *args, **kwargs)
+
   def position(self, eigen.Vector3d pos = None):
     assert(self.impl)
     if pos is None:
