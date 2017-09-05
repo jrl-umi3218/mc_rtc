@@ -71,13 +71,14 @@ cdef class CoMTask(_CoMTrajectoryTask):
                stiffness = 2.0, weight = 500.0):
     self.__own_impl = True
     self.impl = self.ttg_base = self.mt_base = new c_mc_tasks.CoMTask(deref(robots.impl), robotIndex, stiffness, weight)
-  def __cinit__(self, *args, skip_alloc = False):
+  def __cinit__(self, *args, **kwargs):
+    skip_alloc = kwargs.pop('skip_alloc', False)
     if skip_alloc:
       self.__own_impl = False
       self.impl = self.ttg_base = self.mt_base = NULL
       return
-    elif len(args) >= 3:
-      self.__ctor__(*args)
+    elif len(args) + len(kwargs) >= 3:
+      self.__ctor__(*args, **kwargs)
     else:
       raise TypeError("Not enough arguments passed to CoMTask ctor")
   def com(self, eigen.Vector3d com = None):
