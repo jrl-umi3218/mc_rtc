@@ -633,10 +633,8 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
   }
   else
   {
-    std::vector<std::string> filteredLinks = {};
-    config("filteredLinks", filteredLinks);
-    bool fixed = false;
-    config("fixed", fixed);
+    auto filteredLinks = config("filteredLinks", std::vector<std::string>{});
+    auto fixed = config("fixed", false);
     std::ifstream ifs(rm.urdf_path);
     if(ifs.is_open())
     {
@@ -657,6 +655,7 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
   }
 
   /* Default values work fine for those */
+  config("rsdf_dir", rm.rsdf_dir);
   config("convexHulls", rm._convexHull);
   config("stpbvHulls", rm._stpbvHull);
   config("flexibilities", rm._flexibility);
@@ -688,6 +687,7 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule>::save(const mc_
   config.add("path", rm.path);
   config.add("name", rm.name);
   config.add("urdf_path", rm.urdf_path);
+  config.add("rsdf_dir", rm.rsdf_dir);
   config.add("mb", rm.mb);
   config.add("mbc", rm.mbc);
   config.add("bounds", rm._bounds);
