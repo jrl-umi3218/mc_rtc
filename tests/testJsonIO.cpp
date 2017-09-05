@@ -491,6 +491,16 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(TestJsonIO, T, test_types)
   }
 
   test_config_array<T>(config);
+}
 
-  config.save("/tmp/config.json");
+BOOST_AUTO_TEST_CASE(TestRobotModuleAltSave)
+{
+  auto rm = make_ref<mc_rbdyn::RobotModule>();
+  mc_rtc::Configuration config;
+  config.add("rm", rm, false);
+  std::vector<mc_rbdyn::RobotModule> rmV = {rm, rm ,rm};
+  config.add("rmV", rmV, false, std::vector<std::string>{}, true);
+  std::array<mc_rbdyn::RobotModule, 2> rmA = {{rm, rm}};
+  config.add("rmA", rmA, false, std::vector<std::string>{"RARM_LINK6", "LARM_LINK6"});
+  config.save("RobotModule.json");
 }

@@ -694,21 +694,32 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
   return rm;
 }
 
-mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule>::save(const mc_rbdyn::RobotModule & rm)
+mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule>::save(const mc_rbdyn::RobotModule & rm,
+                                                                       bool save_mbc,
+                                                                       const std::vector<std::string> & filteredLinks,
+                                                                       bool fixed)
 {
   mc_rtc::Configuration config;
   config.add("path", rm.path);
   config.add("name", rm.name);
   config.add("urdf_path", rm.urdf_path);
   config.add("rsdf_dir", rm.rsdf_dir);
-  config.add("mb", rm.mb);
-  config.add("mbc", rm.mbc);
-  config.add("bounds", rm._bounds);
+  if(save_mbc)
+  {
+    config.add("mb", rm.mb);
+    config.add("mbc", rm.mbc);
+    config.add("collisionTransforms", rm._collisionTransforms);
+    config.add("bounds", rm._bounds);
+    config.add("visuals", rm._visual);
+  }
+  else
+  {
+    config.add("filteredLinks", filteredLinks);
+    config.add("fixed", fixed);
+  }
   config.add("stance", rm._stance);
   config.add("convexHulls", rm._convexHull);
   config.add("stpbvHulls", rm._stpbvHull);
-  config.add("visuals", rm._visual);
-  config.add("collisionTransforms", rm._collisionTransforms);
   config.add("flexibilities", rm._flexibility);
   config.add("forceSensors", rm._forceSensors);
   config.add("bodySensors", rm._bodySensors);
@@ -727,9 +738,12 @@ mc_rbdyn::RobotModulePtr ConfigurationLoader<mc_rbdyn::RobotModulePtr>::load(con
   return std::make_shared<mc_rbdyn::RobotModule>(std::move(rm));
 }
 
-mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModulePtr>::save(const mc_rbdyn::RobotModulePtr & rm)
+mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModulePtr>::save(const mc_rbdyn::RobotModulePtr & rm,
+                                                                          bool save_mbc,
+                                                                          const std::vector<std::string> & filteredLinks,
+                                                                          bool fixed)
 {
-  return ConfigurationLoader<mc_rbdyn::RobotModule>::save(*rm);
+  return ConfigurationLoader<mc_rbdyn::RobotModule>::save(*rm, save_mbc, filteredLinks, fixed);
 }
 
 mc_rbdyn::Contact ConfigurationLoader<mc_rbdyn::Contact>::load(const mc_rtc::Configuration & config, const mc_rbdyn::Robots & robots)

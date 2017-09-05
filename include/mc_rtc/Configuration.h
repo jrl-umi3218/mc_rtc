@@ -36,6 +36,13 @@ namespace mc_rtc
     static void save(const T&) {}
   };
 
+  template<>
+  struct ConfigurationLoader<void>
+  {
+    static void load(const mc_rtc::Configuration&) {}
+    static void save() {}
+  };
+
   namespace internal
   {
     /** Helper trait to determine whether:
@@ -44,7 +51,8 @@ namespace mc_rtc
      */
     struct _has_configuration_load_object
     {
-      template<typename T, typename std::enable_if<std::is_same<decltype(ConfigurationLoader<T>::load(std::declval<const Configuration&>())), T>::value, int>::type = 0>
+      template<typename T,
+        typename std::enable_if<std::is_same<decltype(ConfigurationLoader<T>::load(std::declval<const Configuration&>())), T>::value, int>::type = 0>
       static std::true_type test(T * p);
 
       template<typename T>
@@ -56,20 +64,21 @@ namespace mc_rtc
     {};
 
     /** Helper trait to determine whether:
-     * mc_rtc::Configuration mc_rtc::ConfigurationLoader<T>::save(const T&);
+     * mc_rtc::Configuration mc_rtc::ConfigurationLoader<T>::save(const T&, Args ...);
      * is a valid construct or not
      */
     struct _has_configuration_save_object
     {
-      template<typename T, typename std::enable_if<std::is_same<decltype(ConfigurationLoader<T>::save(std::declval<const T&>())), Configuration>::value, int>::type = 0>
+      template<typename T, typename ... Args,
+        typename std::enable_if<std::is_same<decltype(ConfigurationLoader<T>::save(std::declval<const T&>(), std::declval<Args>()...)), Configuration>::value, int>::type = 0>
       static std::true_type test(T * p);
 
-      template<typename T>
+      template<typename T, typename ... Args>
       static std::false_type test(...);
     };
 
-    template<typename T>
-    struct has_configuration_save_object : decltype(_has_configuration_save_object::test<T>(nullptr))
+    template<typename T, typename ... Args>
+    struct has_configuration_save_object : decltype(_has_configuration_save_object::test<T, Args...>(nullptr))
     {};
   }
 
@@ -635,17 +644,17 @@ namespace mc_rtc
     /*! \brief User-defined conversion
      *
      * Requires the existence of:
-     * mc_rtc::Configuration mc_rtc::ConfigurationLoader<T>::save(const T&);
+     * mc_rtc::Configuration mc_rtc::ConfigurationLoader<T>::save(const T&, Args ...);
      *
      * \param key Key of the element
      *
      * \param value Value to push
      */
-    template<typename T,
-      typename std::enable_if<internal::has_configuration_save_object<T>::value, int>::type = 0>
-    void push(const T & value)
+    template<typename T, typename ... Args,
+      typename std::enable_if<internal::has_configuration_save_object<T, Args ...>::value, int>::type = 0>
+    void push(const T & value, Args && ... args)
     {
-      push(mc_rtc::ConfigurationLoader<T>::save(value));
+      push(mc_rtc::ConfigurationLoader<T>::save(value, std::forward<Args>(args)...));
     }
 
     /*! \brief Add a vector into the JSON document
@@ -656,13 +665,13 @@ namespace mc_rtc
      *
      * \param value Vector of elements to add
      */
-    template<typename T, typename A>
-    void add(const std::string & key, const std::vector<T, A> & value)
+    template<typename T, typename A = std::allocator<T>, typename ... Args>
+    void add(const std::string & key, const std::vector<T, A> & value, Args && ... args)
     {
       Configuration v = array(key, value.size());
       for(const auto & vi : value)
       {
-        v.push(vi);
+        v.push(vi, std::forward<Args>(args)...);
       }
     }
 
@@ -674,13 +683,13 @@ namespace mc_rtc
      *
      * \param value Array of elements to add
      */
-    template<typename T, std::size_t N>
-    void add(const std::string & key, const std::array<T, N> & value)
+    template<typename T, std::size_t N, typename ... Args>
+    void add(const std::string & key, const std::array<T, N> & value, Args && ... args)
     {
       Configuration v = array(key, N);
       for(const auto & vi : value)
       {
-        v.push(vi);
+        v.push(vi, std::forward<Args>(args)...);
       }
     }
 
@@ -692,12 +701,12 @@ namespace mc_rtc
      *
      * \param value Pair to add
      */
-    template<typename T1, typename T2>
-    void add(const std::string & key, const std::pair<T1, T2> & value)
+    template<typename T1, typename T2, typename ... Args>
+    void add(const std::string & key, const std::pair<T1, T2> & value, Args && ... args)
     {
       Configuration v = array(key, 2);
-      v.push(value.first);
-      v.push(value.second);
+      v.push(value.first, std::forward<Args>(args)...);
+      v.push(value.second, std::forward<Args>(args)...);
     }
 
     /*! \brief Add string-indexed map into the JSON document
@@ -708,43 +717,46 @@ namespace mc_rtc
      *
      * \param value Map of elements to add
      */
-    template<typename T, class C, class A>
-    void add(const std::string & key, const std::map<std::string, T, C, A> & value)
+    template<typename T,
+             class C = std::less<std::string>,
+             class A = std::allocator<std::pair<const std::string, T>>,
+             typename ... Args>
+    void add(const std::string & key, const std::map<std::string, T, C, A> & value, Args && ... args)
     {
       Configuration v = add(key);
       for(const auto & el : value)
       {
-        v.add(el.first, el.second);
+        v.add(el.first, el.second, std::forward<Args>(args)...);
       }
     }
 
     /*! \brief User-defined conversion
      *
      * Requires the existence of:
-     * mc_rtc::Configuration mc_rtc::ConfigurationLoader<T>::save(const T&);
+     * mc_rtc::Configuration mc_rtc::ConfigurationLoader<T>::save(const T&, Args ... args);
      *
      * \param key Key of the element
      *
      * \param value Value to add
      */
-    template<typename T,
-      typename std::enable_if<internal::has_configuration_save_object<T>::value, int>::type = 0>
-    void add(const std::string & key, const T & value)
+    template<typename T, typename ... Args,
+      typename std::enable_if<internal::has_configuration_save_object<T, Args ...>::value, int>::type = 0>
+    void add(const std::string & key, const T & value, Args && ... args)
     {
-      add(key, ConfigurationLoader<T>::save(value));
+      add(key, ConfigurationLoader<T>::save(value, std::forward<Args>(args)...));
     }
 
     /*! \brief Push a vector into the JSON document
      *
      * \param value Vector of elements to add
      */
-    template<typename T, typename A>
-    void push(const std::vector<T, A> & value)
+    template<typename T, typename A = std::allocator<T>, typename ... Args>
+    void push(const std::vector<T, A> & value, Args && ... args)
     {
       Configuration v = array(value.size());
       for(const auto & vi : value)
       {
-        v.push(vi);
+        v.push(vi, std::forward<Args>(args)...);
       }
     }
 
@@ -752,13 +764,13 @@ namespace mc_rtc
      *
      * \param value Array of elements to add
      */
-    template<typename T, std::size_t N>
-    void push(const std::array<T, N> & value)
+    template<typename T, std::size_t N, typename ... Args>
+    void push(const std::array<T, N> & value, Args && ... args)
     {
       Configuration v = array(N);
       for(const auto & vi : value)
       {
-        v.push(vi);
+        v.push(vi, std::forward<Args>(args)...);
       }
     }
 
@@ -766,12 +778,12 @@ namespace mc_rtc
      *
      * \param value Pair of elements to add
      */
-    template<typename T1, typename T2>
-    void push(const std::pair<T1, T2> & value)
+    template<typename T1, typename T2, typename ... Args>
+    void push(const std::pair<T1, T2> & value, Args && ... args)
     {
       Configuration v = array(2);
-      v.push(value.first);
-      v.push(value.second);
+      v.push(value.first, std::forward<Args>(args)...);
+      v.push(value.second, std::forward<Args>(args)...);
     }
 
     /*! \brief Push a string-indexed map into the JSON document
@@ -779,13 +791,16 @@ namespace mc_rtc
      * \param value Map of elements to add
      *
      */
-    template<typename T, class C, class A>
-    void push(const std::map<std::string, T, C, A> & value)
+    template<typename T,
+             class C = std::less<std::string>,
+             class A = std::allocator<std::pair<const std::string, T>>,
+             typename ... Args>
+    void push(const std::map<std::string, T, C, A> & value, Args && ... args)
     {
       Configuration v = object();
       for(const auto & el : value)
       {
-        v.add(el.first, el.second);
+        v.add(el.first, el.second, std::forward<Args>(args)...);
       }
     }
 

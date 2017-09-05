@@ -70,10 +70,28 @@ DECLARE_IO(mc_rbdyn::Plane)
 DECLARE_IO(mc_rbdyn::PolygonInterpolator)
 DECLARE_IO(mc_rbdyn::Springs)
 DECLARE_IO(mc_rbdyn::RobotModule::Gripper)
-DECLARE_IO(mc_rbdyn::RobotModule)
-DECLARE_IO(mc_rbdyn::RobotModulePtr)
 
 #undef DECLARE_IO
+
+template<>
+struct MC_RBDYN_DLLAPI ConfigurationLoader<mc_rbdyn::RobotModule>
+{
+  static mc_rbdyn::RobotModule load(const mc_rtc::Configuration &);
+  static mc_rtc::Configuration save(const mc_rbdyn::RobotModule &,
+                                    bool save_mbc = true,
+                                    const std::vector<std::string> & filteredLinks = {},
+                                    bool fixed = false);
+};
+
+template<>
+struct MC_RBDYN_DLLAPI ConfigurationLoader<mc_rbdyn::RobotModulePtr>
+{
+  static mc_rbdyn::RobotModulePtr load(const mc_rtc::Configuration &);
+  static mc_rtc::Configuration save(const mc_rbdyn::RobotModulePtr &,
+                                    bool save_mbc = true,
+                                    const std::vector<std::string> & filteredLinks = {},
+                                    bool fixed = false);
+};
 
 template<>
 struct MC_RBDYN_DLLAPI ConfigurationLoader<mc_rbdyn::Contact>
