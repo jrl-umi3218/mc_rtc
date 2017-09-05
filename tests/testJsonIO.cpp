@@ -239,6 +239,22 @@ namespace mc_rbdyn
 }
 
 template<>
+mc_rbdyn::Plane make_ref()
+{
+  return {Eigen::Vector3d::Random(), rnd()};
+}
+
+namespace mc_rbdyn
+{
+  bool operator==(const mc_rbdyn::Plane & lhs,
+                  const mc_rbdyn::Plane & rhs)
+  {
+    return lhs.normal == rhs.normal &&
+      lhs.offset == rhs.offset;
+  }
+}
+
+template<>
 mc_rbdyn::PolygonInterpolator make_ref()
 {
   auto random_tuple = []()
@@ -402,6 +418,7 @@ typedef boost::mpl::list<mc_rbdyn::Base,
                          std::shared_ptr<mc_rbdyn::Surface>,
                          mc_rbdyn::Flexibility,
                          mc_rbdyn::ForceSensor,
+                         mc_rbdyn::Plane,
                          mc_rbdyn::PolygonInterpolator,
                          mc_rbdyn::Springs,
                          mc_rbdyn::RobotModule> test_types;

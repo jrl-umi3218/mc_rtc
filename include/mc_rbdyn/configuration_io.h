@@ -8,6 +8,7 @@
 #include <mc_rbdyn/Collision.h>
 #include <mc_rbdyn/Flexibility.h>
 #include <mc_rbdyn/ForceSensor.h>
+#include <mc_rbdyn/polygon_utils.h>
 #include <mc_rbdyn/PolygonInterpolator.h>
 #include <mc_rbdyn/Springs.h>
 #include <mc_rbdyn/RobotModule.h>
@@ -65,6 +66,7 @@ DECLARE_IO(std::shared_ptr<mc_rbdyn::CylindricalSurface>)
 DECLARE_IO(std::shared_ptr<mc_rbdyn::GripperSurface>)
 DECLARE_IO(mc_rbdyn::Flexibility)
 DECLARE_IO(mc_rbdyn::ForceSensor)
+DECLARE_IO(mc_rbdyn::Plane)
 DECLARE_IO(mc_rbdyn::PolygonInterpolator)
 DECLARE_IO(mc_rbdyn::Springs)
 DECLARE_IO(mc_rbdyn::RobotModule::Gripper)

@@ -263,6 +263,19 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::ForceSensor>::save(const mc_
   return config;
 }
 
+mc_rbdyn::Plane ConfigurationLoader<mc_rbdyn::Plane>::load(const mc_rtc::Configuration & config)
+{
+  return mc_rbdyn::Plane { config("normal"), config("offset") };
+}
+
+mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Plane>::save(const mc_rbdyn::Plane & pl)
+{
+  mc_rtc::Configuration config;
+  config.add("normal", pl.normal);
+  config.add("offset", pl.offset);
+  return config;
+}
+
 mc_rbdyn::PolygonInterpolator ConfigurationLoader<mc_rbdyn::PolygonInterpolator>::load(const mc_rtc::Configuration & config)
 {
   std::vector<mc_rbdyn::PolygonInterpolator::tuple_pair_t> vec = config("tuple_pairs");

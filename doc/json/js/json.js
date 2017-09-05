@@ -87,6 +87,7 @@ $(document).ready(function()
   'Contact',
   'Flexibility',
   'ForceSensor',
+  'Plane',
   'PolygonInterpolator',
   'RobotModule.Gripper',
   'RobotModule',
