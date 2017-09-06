@@ -17,6 +17,11 @@ cdef extern from "<memory>" namespace "std" nogil:
     T* get()
     T& operator*()
 
+cdef extern from "<Eigen/Core>" namespace "Eigen" nogil:
+  cdef cppclass BodySensorAllocator "Eigen::aligned_allocator<mc_rbdyn::BodySensor>"
+
+ctypedef vector[BodySensor, BodySensorAllocator] BodySensorVector
+
 cdef extern from "<mc_rbdyn/Collision.h>" namespace "mc_rbdyn":
   cdef cppclass Collision:
     Collision()
@@ -98,6 +103,7 @@ cdef extern from "<mc_rbdyn/RobotModule.h>" namespace "mc_rbdyn":
     map[string, PTransformd] _collisionTransforms
     vector[Flexibility] _flexibility
     vector[ForceSensor] _forceSensors
+    BodySensorVector _bodySensors
     const Springs & springs()
     vector[Collision] _minimalSelfCollisions
     vector[Collision] _commonSelfCollisions
@@ -501,6 +507,7 @@ cdef extern from "mc_rbdyn_wrapper.hpp" namespace "mc_rbdyn":
   Robots& const_cast_robots(const Robots&)
   Robot& const_cast_robot(const Robot&)
   ForceSensor& const_cast_force_sensor(const ForceSensor &)
+  BodySensor& const_cast_body_sensor(const BodySensor &)
   Surface& const_cast_surface(const Surface&)
   Contact& const_cast_contact(const Contact&)
   vector[Contact]& const_cast_contact_vector(const vector[Contact]&)

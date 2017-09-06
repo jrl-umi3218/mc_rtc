@@ -54,6 +54,11 @@ ForceSensor& const_cast_force_sensor(const ForceSensor & fs)
   return const_cast<ForceSensor&>(fs);
 }
 
+BodySensor& const_cast_body_sensor(const BodySensor & bs)
+{
+  return const_cast<BodySensor&>(bs);
+}
+
 Surface& const_cast_surface(const Surface& rhs)
 {
   return const_cast<Surface&>(rhs);

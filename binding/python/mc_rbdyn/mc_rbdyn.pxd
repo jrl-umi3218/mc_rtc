@@ -20,6 +20,8 @@ cdef class BodySensor(object):
 
 cdef BodySensor BodySensorFromRef(c_mc_rbdyn.BodySensor&)
 
+cdef BodySensor BodySensorFromCRef(const c_mc_rbdyn.BodySensor&)
+
 cdef class Flexibility(object):
   cdef c_mc_rbdyn.Flexibility impl
 

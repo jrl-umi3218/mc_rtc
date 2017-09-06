@@ -161,6 +161,11 @@ cdef BodySensor BodySensorFromRef(c_mc_rbdyn.BodySensor & bs):
     ret.impl = &(bs)
     return ret
 
+cdef BodySensor BodySensorFromCRef(const c_mc_rbdyn.BodySensor & bs):
+    cdef BodySensor ret = BodySensor(skip_alloc = True)
+    ret.impl = &(c_mc_rbdyn.const_cast_body_sensor(bs))
+    return ret
+
 cdef class ForceSensor(object):
   def __dealloc__(self):
     if self.__own_impl:
@@ -306,6 +311,15 @@ cdef class RobotModule(object):
     ret = []
     while it != end:
       ret.append(ForceSensorFromCRef(deref(it)))
+      preinc(it)
+    return ret
+  def bodySensors(self):
+    assert(self.impl.get())
+    end = deref(self.impl)._bodySensors.end()
+    it = deref(self.impl)._bodySensors.begin()
+    ret = []
+    while it != end:
+      ret.append(BodySensorFromCRef(deref(it)))
       preinc(it)
     return ret
   def springs(self):
