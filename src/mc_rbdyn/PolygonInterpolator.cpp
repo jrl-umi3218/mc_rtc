@@ -19,15 +19,15 @@ void PolygonInterpolator::GeometryDeleter::operator()(geos::geom::Geometry * ptr
 }
 
 PolygonInterpolator::PolygonInterpolator(const std::vector<tuple_pair_t> & tpv)
-: geom_factory(*geos::geom::GeometryFactory::getDefaultInstance()), geom_deleter(geom_factory), tuple_pairs(tpv)
+: geom_factory(*geos::geom::GeometryFactory::getDefaultInstance()), geom_deleter(geom_factory), tuple_pairs_(tpv)
 {
-  for(size_t i = 0; i < tuple_pairs.size(); ++i)
+  for(size_t i = 0; i < tuple_pairs_.size(); ++i)
   {
-    const tuple_pair_t & prev = (i == 0 ? tuple_pairs.back() : tuple_pairs[i-1]);
+    const tuple_pair_t & prev = (i == 0 ? tuple_pairs_.back() : tuple_pairs_[i-1]);
     const tuple_t & prev_1 = prev.first;
     const tuple_t & prev_2 = prev.second;
-    const tuple_t & point_1 = tuple_pairs[i].first;
-    const tuple_t & point_2 = tuple_pairs[i].second;
+    const tuple_t & point_1 = tuple_pairs_[i].first;
+    const tuple_t & point_2 = tuple_pairs_[i].second;
     midpoints.push_back({
       {{ (point_1[0] + prev_1[0])/2, (point_1[1] + prev_1[1])/2 }},
       {{ (point_2[0] + prev_2[0])/2, (point_2[1] + prev_2[1])/2 }}
@@ -44,7 +44,7 @@ std::shared_ptr<geos::geom::Geometry> PolygonInterpolator::fast_interpolate(doub
   }
   std::vector<tuple_t> points;
   geos::geom::CoordinateSequence * seq = geom_factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0), 0);
-  for(const auto & p : tuple_pairs)
+  for(const auto & p : tuple_pairs_)
   {
     seq->add(geos::geom::Coordinate(static_cast<float>(p.first[0]*(1-perc) + p.second[0]*perc),
                                     static_cast<float>(p.first[1]*(1-perc) + p.second[1]*perc)));
@@ -75,7 +75,7 @@ std::vector<PolygonInterpolator::tuple_t> PolygonInterpolator::normal_derivative
   std::vector<tuple_t> res;
   geos::geom::CoordinateSequence * seq_s = geom_factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0), 2);
   geos::geom::CoordinateSequence * seq_d = geom_factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0), 2);
-  for(const auto & p : tuple_pairs)
+  for(const auto & p : tuple_pairs_)
   {
     seq_s->add(geos::geom::Coordinate(static_cast<float>(p.first[0]),  static_cast<float>(p.first[1])));
     seq_d->add(geos::geom::Coordinate(static_cast<float>(p.second[0]), static_cast<float>(p.second[1])));
@@ -126,6 +126,11 @@ std::vector<PolygonInterpolator::tuple_t> PolygonInterpolator::normal_derivative
     }
   }
   return res;
+}
+
+const std::vector<PolygonInterpolator::tuple_pair_t> & PolygonInterpolator::tuple_pairs() const
+{
+  return tuple_pairs_;
 }
 
 }

@@ -5,42 +5,7 @@
 #include <fstream>
 #include <iostream>
 
-#ifdef WIN32
-#include <Windows.h>
-inline int mkstemp(char * out)
-{
-  char tmp_dir[MAX_PATH + 1];
-  GetTempPath(MAX_PATH + 1, tmp_dir);
-  int ret = GetTempFileName(tmp_dir, "mkstemp", 0, out);
-  if (ret == 0) { return -1; }
-  else { return 0; }
-}
-#endif
-
-std::string getConfigFile()
-{
-#ifndef WIN32
-  char fIn[17] = "/tmp/tConfXXXXXX";
-#else
-  char fIn[MAX_PATH + 1];
-  memset(fIn, 0, MAX_PATH + 1);
-#endif
-  int err = mkstemp(fIn);
-  if(err < 0)
-  {
-    std::cerr << "Failed to create temporary file, abort test" << std::endl;
-    throw std::runtime_error("Failed to create file");
-  }
-  return fIn;
-}
-
-std::string getConfigFile(const std::string & data)
-{
-  std::string fIn = getConfigFile();
-  std::ofstream ofs(fIn);
-  ofs << data;
-  return fIn;
-}
+#include "utils.h"
 
 namespace Eigen
 {
@@ -67,6 +32,7 @@ std::string sampleConfig()
   "string": "sometext",
   "intV": [0, 1, 2, 3, 4, 5],
   "stringV": ["a", "b", "c", "foo", "bar"],
+  "doubleA3": [1.1, 2.2, 3.3],
   "v3d": [1.0, 2.3, -100],
   "v6d": [1.0, -1.5, 2.0, -2.5, 3.0, -3.5],
   "vXd": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -94,10 +60,30 @@ std::string sampleConfig()
     "quat": [0.71, 0, 0.71, 0],
     "doubleDoublePair": [42.5, -42.5],
     "doubleStringPair": [42.5, "sometext"]
+  },
+  "mapStr":
+  {
+    "str1": "sometext1",
+    "str2": "sometext2",
+    "str3": "sometext3",
+    "str4": "sometext4"
+  },
+  "mapDouble":
+  {
+    "str1" : 1.1,
+    "str2" : 2.2,
+    "str3" : 3.3,
+    "str4" : 4.4
+  },
+  "mapDoubleV":
+  {
+    "str1": [1.0, 2.3, -100],
+    "str2": [1.0, -1.5, 2.0, -2.5, 3.0, -3.5],
+    "str3": [0.71, 0, 0.71, 0]
   }
 }
 )";
-  return getConfigFile(data);
+  return makeConfigFile(data);
 }
 
 std::string sampleConfig2()
@@ -108,7 +94,7 @@ std::string sampleConfig2()
     "int": 12
   }
   )";
-  return getConfigFile(data);
+  return makeConfigFile(data);
 }
 
 BOOST_AUTO_TEST_CASE(TestConfigurationReading)
@@ -452,6 +438,18 @@ BOOST_AUTO_TEST_CASE(TestConfigurationReading)
     BOOST_CHECK(c == ref);
   }
 
+  /* array<double, 3> test */
+  {
+    std::array<double, 3> ref = {{1.1, 2.2, 3.3}};
+
+    std::array<double, 3> a = config("doubleA3");
+    BOOST_CHECK(a == ref);
+
+    std::array<double, 3> b;
+    config("doubleA3", b);
+    BOOST_CHECK(b == ref);
+  }
+
   /* pair<double, double> test */
   {
     std::pair<double, double> ref = {42.5, -42.5};
@@ -513,6 +511,59 @@ BOOST_AUTO_TEST_CASE(TestConfigurationReading)
     BOOST_CHECK(std::get<3>(data) == Eigen::Vector3d(1.2, 3.4, 5.6));
   }
 
+  /* map<string, string> */
+  {
+    using test_t = std::map<std::string, std::string>;
+
+    test_t ref;
+    ref["str1"] = "sometext1";
+    ref["str2"] = "sometext2";
+    ref["str3"] = "sometext3";
+    ref["str4"] = "sometext4";
+
+    test_t a = config("mapStr");
+    BOOST_CHECK(a == ref);
+
+    test_t b = {};
+    config("mapStr", b);
+    BOOST_CHECK(b == ref);
+  }
+
+  /* map<string, double> */
+  {
+    using test_t = std::map<std::string, double>;
+
+    test_t ref;
+    ref["str1"] = 1.1;
+    ref["str2"] = 2.2;
+    ref["str3"] = 3.3;
+    ref["str4"] = 4.4;
+
+    test_t a = config("mapDouble");
+    BOOST_CHECK(a == ref);
+
+    test_t b = {};
+    config("mapDouble", b);
+    BOOST_CHECK(b == ref);
+  }
+
+  /* map<string, vector<double>> */
+  {
+    using test_t = std::map<std::string, std::vector<double>>;
+
+    test_t ref;
+    ref["str1"] = {1.0, 2.3, -100};
+    ref["str2"] = {1.0, -1.5, 2.0, -2.5, 3.0, -3.5};
+    ref["str3"] = {0.71, 0, 0.71, 0};
+
+    test_t a = config("mapDoubleV");
+    BOOST_CHECK(a == ref);
+
+    test_t b = {};
+    config("mapDoubleV", b);
+    BOOST_CHECK(b == ref);
+  }
+
   /* Check load */
   {
     config.load(sampleConfig2());
@@ -532,7 +583,7 @@ BOOST_AUTO_TEST_CASE(TestConfigurationReading)
 
 BOOST_AUTO_TEST_CASE(TestConfigurationWriting)
 {
-  std::string tmpF = getConfigFile();
+  std::string tmpF = getTmpFile();
   mc_rtc::Configuration config_ref;
 
   bool ref_bool = false;
@@ -565,6 +616,14 @@ BOOST_AUTO_TEST_CASE(TestConfigurationWriting)
   std::vector<Eigen::Vector3d> ref_v3d_v;
   for(size_t i = 0; i < 10; ++i) { ref_v3d_v.push_back(Eigen::Vector3d::Random()); }
   config_ref.add("v3d_v", ref_v3d_v);
+  std::array<double, 3> ref_d_a3 = {{1.1, 2.2, 3.3}};
+  config_ref.add("d_a3", ref_d_a3);
+  std::vector<std::array<double, 3>> ref_a3_v;
+  for(size_t i = 0; i < 5; ++i) { ref_a3_v.push_back(ref_d_a3); };
+  config_ref.add("a3_v", ref_a3_v);
+  std::array<std::array<double, 3>, 3> ref_a3_a;
+  for(size_t i = 0; i < 3; ++i) { ref_a3_a[i] = ref_d_a3; }
+  config_ref.add("a3_a", ref_a3_a);
   config_ref.add("dict");
   config_ref("dict").add("int", ref_int);
   config_ref.add("dict2").add("double_v", ref_double_v);
@@ -590,6 +649,9 @@ BOOST_AUTO_TEST_CASE(TestConfigurationWriting)
   {
     BOOST_CHECK(test_v3d_v[i].isApprox(ref_v3d_v[i], 1e-9));
   }
+  BOOST_CHECK(config_test("d_a3") == ref_d_a3);
+  BOOST_CHECK(config_test("a3_v") == ref_a3_v);
+  BOOST_CHECK(config_test("a3_a") == ref_a3_a);
   BOOST_REQUIRE(config_test.has("dict"));
   BOOST_CHECK(config_test("dict")("int") == ref_int);
   BOOST_REQUIRE(config_test.has("dict2"));
@@ -642,4 +704,69 @@ BOOST_AUTO_TEST_CASE(TestConfigurationCeption)
   {
     BOOST_CHECK(config_1("config_1")("config_2_v")[i]("double_v") == ref_double_v);
   }
+}
+
+struct Foo;
+Foo & operator<<(Foo & f, const mc_rtc::Configuration & config);
+struct Foo
+{
+  Foo() {}
+  Foo(const std::string & name, double d) : name(name), d(d) {}
+  std::string name = "";
+  double d = 0.0;
+  bool operator==(const Foo & rhs) const
+  {
+    return rhs.name == this->name && rhs.d == this->d;
+  }
+};
+
+namespace mc_rtc
+{
+  template<>
+  struct ConfigurationLoader<Foo>
+  {
+    static Foo load(const mc_rtc::Configuration & config)
+    {
+      return {config("name"), config("d")};
+    }
+
+    static mc_rtc::Configuration save(const Foo & f)
+    {
+      mc_rtc::Configuration config;
+      config.add("name", f.name);
+      config.add("d", f.d);
+      return config;
+    }
+  };
+}
+
+BOOST_AUTO_TEST_CASE(TestUserDefinedConversions)
+{
+  Foo f_ref { "foo", 1.0 };
+  mc_rtc::Configuration config;
+  config.add("foo", f_ref);
+
+  Foo f1 = mc_rtc::ConfigurationLoader<Foo>::load(config("foo"));
+  BOOST_CHECK(f1 == f_ref);
+
+  Foo f2;
+  f2 = config("foo");
+  BOOST_CHECK(f2 == f_ref);
+
+  Foo f3 = config("foo");
+  BOOST_CHECK(f3 == f_ref);
+
+  std::vector<Foo> v_ref {f1, f2};
+  config.add("foo_v", v_ref);
+
+  std::vector<Foo> v1 = config("foo_v");
+  BOOST_CHECK(v1 == v_ref);
+
+  config.array("foo_v2");
+  for(const auto & f : v_ref)
+  {
+    config("foo_v2").push(f);
+  }
+  std::vector<Foo> v2 = config("foo_v2");
+  BOOST_CHECK(v2 == v_ref);
 }

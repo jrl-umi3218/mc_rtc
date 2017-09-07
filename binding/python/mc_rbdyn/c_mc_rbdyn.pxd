@@ -496,6 +496,7 @@ cdef extern from "mc_rbdyn_wrapper.hpp" namespace "mc_rbdyn":
   #FIXME Work-around the lack of variadic template support
   RobotModulePtr get_robot_module(const string&)
   RobotModulePtr get_robot_module(const string&, const cppbool&)
+  RobotModulePtr get_robot_module_str "mc_rbdyn::get_robot_module"(const string&, const string&)
   RobotModulePtr get_robot_module(const string&, const string&, const string&)
   #XXX
   Robots& const_cast_robots(const Robots&)

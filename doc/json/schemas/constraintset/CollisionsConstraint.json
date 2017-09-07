@@ -1,0 +1,20 @@
+{
+  "title": "mc_solver::CollisionsConstraint",
+  "type": "object",
+  "properties":
+  {
+    "type": { "enum": ["collision"] },
+    "r1Index": { "type": "number", "minimum": 0 },
+    "r2Index": { "type": "number", "minimum": 0 },
+    "collisions":
+    {
+      "type": "array",
+      "description": "List of collisions in the constraint",
+      "items":
+      {
+        "$ref": "/../../mc_rbdyn/Collision.json"
+      }
+    }
+  },
+  "required": ["type", "r1Index", "r2Index"]
+}

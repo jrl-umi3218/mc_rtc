@@ -1,0 +1,16 @@
+{
+  "title": "std::shared_ptr<mc_rbdyn::CylindricalSurface>",
+  "type": "object",
+  "properties":
+  {
+    "type": { "enum": ["cylindrical"] },
+    "name": { "type": "string" },
+    "bodyName": { "type": "string" },
+    "X_b_s": { "$ref": "/../../sva/PTransformd.json" },
+    "materialName": { "type": "string" },
+    "radius": { "type": "number" },
+    "width": { "type": "number" }
+  },
+  "required": ["type", "name", "bodyName", "X_b_s", "materialName", "radius", "width"],
+  "additionalProperties": false
+}

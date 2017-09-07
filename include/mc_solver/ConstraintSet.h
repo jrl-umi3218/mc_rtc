@@ -43,4 +43,6 @@ public:
   virtual ~ConstraintSet () {}
 };
 
+using ConstraintSetPtr = std::shared_ptr<ConstraintSet>;
+
 } // namespace mc_solver

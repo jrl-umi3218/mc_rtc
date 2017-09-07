@@ -25,8 +25,8 @@ public:
    *
    * \param robotIndex Index of the robot controlled by this task
    *
-   * \param relBodyIdx Index of the body relatively to which the end-effector
-   * is controlled. Default to 0 (the robot's base)
+   * \param relBodyName Name of the body relatively to which the end-effector
+   * is controlled. If empty, defaults to the robot's base.
    *
    * \param stiffness Task stiffness
    *
@@ -36,7 +36,7 @@ public:
   RelativeEndEffectorTask(const std::string & bodyName,
                           const mc_rbdyn::Robots & robots,
                           unsigned int robotIndex,
-                          unsigned int relBodyIdx = 0,
+                          const std::string & relBodyName = "",
                           double stiffness = 10.0, double weight = 1000.0);
   /*! \brief Constructor with bodyPoint
    *
@@ -49,7 +49,7 @@ public:
                           const Eigen::Vector3d & bodyPoint,
                           const mc_rbdyn::Robots & robots,
                           unsigned int robotIndex,
-                          unsigned int relBodyIdx = 0,
+                          const std::string & relBodyName,
                           double stiffness = 10.0, double weight = 1000.0);
 
   virtual void reset() override;

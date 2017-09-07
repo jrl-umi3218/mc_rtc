@@ -1,8 +1,10 @@
 #include <mc_solver/CollisionsConstraint.h>
 
-#include <mc_solver/QPSolver.h>
-
+#include <mc_rbdyn/configuration_io.h>
 #include <mc_rbdyn/SCHAddon.h>
+
+#include <mc_solver/ConstraintSetLoader.h>
+#include <mc_solver/QPSolver.h>
 
 namespace mc_solver
 {
@@ -267,3 +269,19 @@ std::set<std::string> RobotEnvCollisionsConstraint::__bodiesFromContacts(const m
 }
 
 }  // namespace mc_solver
+
+namespace
+{
+
+static bool registered = mc_solver::ConstraintSetLoader::register_load_function("collision",
+  [](mc_solver::QPSolver & solver,
+     const mc_rtc::Configuration & config)
+  {
+    auto ret = std::make_shared<mc_solver::CollisionsConstraint>(solver.robots(), config("r1Index"), config("r2Index"), solver.dt());
+    std::vector<mc_rbdyn::Collision> collisions = config("collisions", std::vector<mc_rbdyn::Collision>{});
+    ret->addCollisions(solver, collisions);
+    return ret;
+  }
+);
+
+}

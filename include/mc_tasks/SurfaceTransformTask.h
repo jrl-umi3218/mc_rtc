@@ -26,7 +26,7 @@ public:
    * \param weight Task weight
    *
    */
-  SurfaceTransformTask(const std::string & bodyName, const mc_rbdyn::Robots
+  SurfaceTransformTask(const std::string & surfaceName, const mc_rbdyn::Robots
                   & robots, unsigned int robotIndex, double stiffness =
                   2.0, double weight = 500);
 
@@ -45,6 +45,9 @@ public:
    *
    */
   void target(const sva::PTransformd & pos);
+
+  /*! \brief Retrieve the controlled surface name */
+  std::string surface() { return surfaceName; }
 protected:
   std::string surfaceName;
 };

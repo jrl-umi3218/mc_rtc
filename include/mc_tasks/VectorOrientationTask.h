@@ -27,9 +27,10 @@ public:
    *
    */
   VectorOrientationTask(const std::string & bodyName, const Eigen::Vector3d& bodyVector,
-		const Eigen::Vector3d& targetVector, const mc_rbdyn::Robots
-                  & robots, unsigned int robotIndex, double stiffness =
-                  2.0, double weight = 500);
+                        const Eigen::Vector3d& targetVector,
+                        const mc_rbdyn::Robots & robots,
+                        unsigned int robotIndex,
+                        double stiffness = 2.0, double weight = 500);
 
   /*! \brief Reset the task
    *
@@ -50,6 +51,9 @@ public:
    *
    */
   Eigen::Vector3d bodyVector();
+
+  /*! \brief Return the controlled body */
+  std::string body() { return bodyName; }
 public:
   std::string bodyName;
   unsigned int bIndex;

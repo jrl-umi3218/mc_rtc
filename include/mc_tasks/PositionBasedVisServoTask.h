@@ -33,6 +33,26 @@ public:
     const mc_rbdyn::Robots & robots, unsigned int robotIndex,
     double stiffness = 2.0, double weight = 500);
 
+  /*! \brief Constructor (from mc_rbdyn::Surface information)
+   *
+   * \param surfaceName Name of the surface the control
+   *
+   * \param X_t_s Transformation from the surface to the target
+   *
+   * \param robots Robots controlled by this task
+   *
+   * \param robotIndex Index of the robot controlled by this task
+   *
+   * \param stiffness Task stiffness
+   *
+   * \param weight Task weight
+   *
+   */
+  PositionBasedVisServoTask(const std::string & surfaceName,
+    const sva::PTransformd& X_t_s,
+    const mc_rbdyn::Robots & robots, unsigned int robotIndex,
+    double stiffness = 2.0, double weight = 500);
+
   /*! \brief Reset the task
    *
    * Set the task objective to the current body orientation

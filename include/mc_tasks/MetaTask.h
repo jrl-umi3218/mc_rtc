@@ -5,6 +5,8 @@
 
 #include <mc_tasks/api.h>
 
+#include <mc_rtc/Configuration.h>
+
 namespace mc_tasks
 {
 
@@ -87,6 +89,9 @@ public:
    *
    */
   virtual Eigen::VectorXd speed() const = 0;
+
+  /*! \brief Load parameters from a Configuration object */
+  virtual void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config);
 protected:
   /*! \brief Add the task to a solver
    *
@@ -130,5 +135,7 @@ protected:
     t.update();
   }
 };
+
+using MetaTaskPtr = std::shared_ptr<MetaTask>;
 
 }

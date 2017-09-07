@@ -1,0 +1,4 @@
+#pragma once
+
+constexpr auto BUILD_DIR = "${CMAKE_CURRENT_BINARY_DIR}";
+constexpr auto ROBOTS_BUILD_DIR = "${CMAKE_CURRENT_BINARY_DIR}/../src/mc_robots/";

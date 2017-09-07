@@ -1,0 +1,13 @@
+{
+  "title": "mc_rbdyn::Base",
+  "type": "object",
+  "properties":
+  {
+    "name": { "type": "string" },
+    "X_0_s": { "$ref": "/../../sva/PTransformd.json" },
+    "X_b0_s": { "$ref": "/../../sva/PTransformd.json" },
+    "type": { "$ref": "/../../rbd/Joint.Type.json" }
+  },
+  "required": ["name", "X_0_s", "X_b0_s", "type"],
+  "additionalProperties": false
+}

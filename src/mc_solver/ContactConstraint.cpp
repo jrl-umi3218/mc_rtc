@@ -1,5 +1,7 @@
 #include <mc_solver/ContactConstraint.h>
 
+#include <mc_solver/ConstraintSetLoader.h>
+
 #include <mc_rtc/logging.h>
 
 namespace mc_solver
@@ -55,3 +57,32 @@ void ContactConstraint::removeFromSolver(tasks::qp::QPSolver & solver)
 }
 
 } // namespace mc_solver
+
+namespace
+{
+
+static bool registered = mc_solver::ConstraintSetLoader::register_load_function("contact",
+  [](mc_solver::QPSolver & solver,
+     const mc_rtc::Configuration & config)
+  {
+    std::string cTypeStr = config("contactType", std::string{"velocity"});
+    auto cType = mc_solver::ContactConstraint::Velocity;
+    if(cTypeStr == "acceleration")
+    {
+      cType = mc_solver::ContactConstraint::Acceleration;
+    }
+    else if(cTypeStr == "position")
+    {
+      cType = mc_solver::ContactConstraint::Position;
+    }
+    else if(cTypeStr != "velocity")
+    {
+      LOG_ERROR("Stored contact type for contact constraint not recognized, default to velocity")
+      LOG_WARNING("(Read: " << cTypeStr << ", expect one of: acceleration, velocity, position)")
+    }
+    bool dynamics = config("dynamics", true);
+    return std::make_shared<mc_solver::ContactConstraint>(solver.dt(), cType, dynamics);
+  }
+);
+
+}

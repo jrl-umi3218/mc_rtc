@@ -1,5 +1,7 @@
 #include <mc_solver/DynamicsConstraint.h>
 
+#include <mc_solver/ConstraintSetLoader.h>
+
 #include <Tasks/Bounds.h>
 
 namespace mc_solver
@@ -82,3 +84,38 @@ void DynamicsConstraint::removeFromSolver(tasks::qp::QPSolver & solver)
 }
 
 } // namespace mc_solver
+
+namespace
+{
+
+mc_solver::ConstraintSetPtr load_kin_constr(mc_solver::QPSolver & solver,
+                                               const mc_rtc::Configuration & config)
+{
+  if(config.has("damper"))
+  {
+    return std::make_shared<mc_solver::KinematicsConstraint>(solver.robots(), config("robotIndex"), solver.dt(), config("damper"), config("velocityPercent", 0.5));
+  }
+  else
+  {
+    return std::make_shared<mc_solver::KinematicsConstraint>(solver.robots(), config("robotIndex"), solver.dt());
+  }
+}
+
+mc_solver::ConstraintSetPtr load_dyn_constr(mc_solver::QPSolver & solver,
+                                            const mc_rtc::Configuration & config)
+{
+  if(config.has("damper"))
+  {
+    return std::make_shared<mc_solver::DynamicsConstraint>(solver.robots(), config("robotIndex"), solver.dt(), config("damper"), config("velocityPercent", 0.5), config("infTorque", false));
+  }
+  else
+  {
+    return std::make_shared<mc_solver::DynamicsConstraint>(solver.robots(), config("robotIndex"), solver.dt(), config("infTorque", false));
+  }
+}
+
+static bool registered =
+  mc_solver::ConstraintSetLoader::register_load_function("kinematics", &load_kin_constr) &&
+  mc_solver::ConstraintSetLoader::register_load_function("dynamics", &load_dyn_constr);
+
+}

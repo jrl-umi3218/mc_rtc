@@ -1,0 +1,10 @@
+{
+  "title": "mc_rbdyn_urdf::Geometry::Box",
+  "type": "object",
+  "properties":
+  {
+    "size": { "type": "number" }
+  },
+  "required": ["size"],
+  "additionalProperties": false
+}

@@ -34,6 +34,8 @@ mc_rbdyn/polygon_utils.cpp
 mc_rbdyn/RobotLoader.cpp
 mc_rbdyn/Collision.cpp
 mc_rbdyn/ForceSensor.cpp
+mc_rbdyn/RobotModule.cpp
+mc_rbdyn/configuration_io.cpp
 )
 set(mc_rbdyn_SRC ${mc_rbdyn_SRC} PARENT_SCOPE)
 
@@ -63,6 +65,7 @@ set(mc_rbdyn_HDR
 ../include/mc_rbdyn/Springs.h
 ../include/mc_rbdyn/Base.h
 ../include/mc_rbdyn/BodySensor.h
+../include/mc_rbdyn/configuration_io.h
 )
 set(mc_rbdyn_HDR ${mc_rbdyn_HDR} PARENT_SCOPE)
 
@@ -103,6 +106,8 @@ set(mc_solver_HDR
 ../include/mc_solver/DynamicsConstraint.h
 ../include/mc_solver/KinematicsConstraint.h
 ../include/mc_solver/QPSolver.h
+../include/mc_solver/GenericLoader.h
+../include/mc_solver/GenericLoader.hpp
 )
 set(mc_solver_HDR ${mc_solver_HDR} PARENT_SCOPE)
 
@@ -152,6 +157,7 @@ set(mc_tasks_HDR
 ../include/mc_tasks/CoMTask.h
 ../include/mc_tasks/EndEffectorTask.h
 ../include/mc_tasks/MetaTask.h
+../include/mc_tasks/MetaTaskLoader.h
 ../include/mc_tasks/MoveContactTask.h
 ../include/mc_tasks/OrientationTask.h
 ../include/mc_tasks/VectorOrientationTask.h

@@ -19,6 +19,7 @@ if(${BUILD_CONTROLLER_SAMPLES})
   add_subdirectory(samples/Egress)
   add_subdirectory(samples/EgressMRQP)
   add_subdirectory(samples/BCISelfInteract)
+  add_subdirectory(samples/Text)
 endif()
 
 file(GLOB EXT_CONTROLLERS RELATIVE ext "ext/*")

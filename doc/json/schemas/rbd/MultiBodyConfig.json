@@ -1,0 +1,33 @@
+{
+  "title": "rbd::MultiBodyConfig",
+  "type": "object",
+  "properties":
+  {
+    "q": { "type": "array", "items" : { "$ref": "#/definitions/array_number" } },
+    "alpha": { "type": "array", "items" : { "$ref": "#/definitions/array_number" } },
+    "alphaD": { "type": "array", "items" : { "$ref": "#/definitions/array_number" } },
+    "force": { "type": "array", "items": { "$ref": "/../../sva/ForceVecd.json" } },
+    "jointConfig": { "type": "array", "items": { "$ref": "/../../sva/PTransformd.json" } },
+    "jointVelocity": { "type": "array", "items": { "$ref": "/../../sva/MotionVecd.json" } },
+    "jointTorque": { "type": "array", "items" : { "$ref": "#/definitions/array_number" } },
+    "motionSubspace": { "type": "array", "items": { "$ref": "/../../eigen/Matrix6Xd.json" } },
+    "bodyPosW": { "type": "array", "items": { "$ref": "/../../sva/PTransformd.json" } },
+    "parentToSon": { "type": "array", "items": { "$ref": "/../../sva/PTransformd.json" } },
+    "bodyVelW": { "type": "array", "items": { "$ref": "/../../sva/MotionVecd.json" } },
+    "bodyVelB": { "type": "array", "items": { "$ref": "/../../sva/MotionVecd.json" } },
+    "bodyAccB": { "type": "array", "items": { "$ref": "/../../sva/MotionVecd.json" } },
+    "gravity": { "$ref": "/../../eigen/Vector3d.json" }
+  },
+  "required": ["q", "alpha", "alphaD", "force", "jointConfig", "jointVelocity", "jointTorque", "motionSubspace", "bodyPosW", "parentToSon", "bodyVelW", "bodyVelB", "bodyAccB", "gravity"],
+  "additionalProperties": false,
+  "definitions":
+  {
+    "array_number": {
+      "type": "array",
+      "items":
+      {
+        "type": "number"
+      }
+    }
+  }
+}

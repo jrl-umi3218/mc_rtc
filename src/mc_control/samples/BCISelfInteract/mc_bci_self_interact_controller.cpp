@@ -71,8 +71,8 @@ MCBCISelfInteractController::MCBCISelfInteractController(std::shared_ptr<mc_rbdy
     mc_rbdyn::Contact(robots(), "Butthock", "AllGround")
   });
 
-  lh2Task.reset(new mc_tasks::RelativeEndEffectorTask("LARM_LINK6", robots(), robots().robotIndex(), 0, 2.0, 100000.0));
-  rh2Task.reset(new mc_tasks::RelativeEndEffectorTask("RARM_LINK6", robots(), robots().robotIndex(), 0, 2.0, 100000.0));
+  lh2Task.reset(new mc_tasks::RelativeEndEffectorTask("LARM_LINK6", robots(), robots().robotIndex(), "", 2.0, 100000.0));
+  rh2Task.reset(new mc_tasks::RelativeEndEffectorTask("RARM_LINK6", robots(), robots().robotIndex(), "", 2.0, 100000.0));
   chestTask.reset(new mc_tasks::EndEffectorTask("CHEST_LINK1", robots(), robots().robotIndex(), 1.0, 1e6));
   solver().addTask(lh2Task);
   solver().addTask(rh2Task);

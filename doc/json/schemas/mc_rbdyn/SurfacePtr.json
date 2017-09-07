@@ -1,0 +1,56 @@
+{
+  "title": "std::shared_ptr<mc_rbdyn::Surface>",
+  "type": "object",
+  "properties":
+  {
+    "type": { "enum": ["planar", "cylindrical", "gripper"] },
+    "name": { "type": "string" },
+    "bodyName": { "type": "string" },
+    "X_b_s": { "$ref": "/../../sva/PTransformd.json" },
+    "materialName": { "type": "string" },
+    "planarPoints": { "type": "array", "items": { "$ref": "#/definitions/number_pair" } },
+    "radius": { "type": "number" },
+    "width": { "type": "number" },
+    "pointsFromOrigin": { "type": "array", "items": { "$ref": "/../../sva/PTransformd.json" } },
+    "X_b_motor": { "$ref": "/../../sva/PTransformd.json" },
+    "motorMaxTorque": { "type": "number" }
+  },
+  "required": ["type", "name", "bodyName", "X_b_s", "materialName"],
+  "additionalProperties": false,
+  "anyOf" : [
+  {
+    "title": "Required if planar",
+    "properties":
+    {
+      "type": {"enum": ["planar"] }
+    },
+    "required": ["planarPoints"]
+  },
+  {
+    "title": "Required if cylindrical",
+    "properties":
+    {
+      "type": {"enum": ["cylindrical"] }
+    },
+    "required": ["radius", "width"]
+  },
+  {
+    "title": "Required if gripper",
+    "properties":
+    {
+      "type": {"enum": ["gripper"] }
+    },
+    "required": ["pointsFromOrigin", "X_b_motor", "motorMaxTorque"]
+  }
+  ],
+  "definitions":
+  {
+    "number_pair":
+    {
+      "type": "array",
+      "items": { "type": "number" },
+      "minItems": 2,
+      "maxItems": 2
+    }
+  }
+}

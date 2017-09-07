@@ -1,3 +1,8 @@
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/tests_config.h.cmake.in"
+               "${CMAKE_CURRENT_BINARY_DIR}/tests_config.h")
+
+include_directories("${CMAKE_CURRENT_BINARY_DIR}")
+
 add_executable(testBSplineTrajectory testBSplineTrajectory.cpp)
 target_link_libraries(testBSplineTrajectory mc_trajectory)
 
@@ -25,7 +30,10 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests_config.h.in
                ${CMAKE_CURRENT_BINARY_DIR}/include/tests_config.h)
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
 
-mc_rtc_test(testConfiguration mc_rtc_utils)
+mc_rtc_test(testConfiguration mc_rtc_utils mc_rbdyn)
+mc_rtc_test(testJsonIO mc_rtc_utils mc_rbdyn)
+mc_rtc_test(testConstraintSetLoader mc_solver)
+mc_rtc_test(testMetaTaskLoader mc_tasks)
 mc_rtc_test(testSolverTaskStorage mc_tasks)
 
 add_executable(test_controller_ticker test_controller_ticker.cpp)
@@ -35,5 +43,10 @@ pkg_config_use_dependency(test_controller_ticker Tasks)
 # Adding a project configuration file (for MSVC only)
 generate_msvc_dot_user_file(test_controller_ticker)
 
-add_subdirectory(controllers)
-add_subdirectory(robots)
+if(NOT DISABLE_CONTROLLER_TESTS)
+  add_subdirectory(controllers)
+endif()
+
+if(NOT DISABLE_ROBOT_TESTS)
+  add_subdirectory(robots)
+endif()

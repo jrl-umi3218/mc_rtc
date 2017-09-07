@@ -1,5 +1,7 @@
 #include <mc_solver/CoMIncPlaneConstr.h>
 
+#include <mc_solver/ConstraintSetLoader.h>
+
 namespace mc_solver
 {
 
@@ -52,3 +54,17 @@ void CoMIncPlaneConstr::set_planes(QPSolver & solver, const std::vector<mc_rbdyn
 }
 
 } // namespace mc_solver
+
+namespace
+{
+
+static bool registered = mc_solver::ConstraintSetLoader::register_load_function("CoMIncPlane",
+  [](mc_solver::QPSolver & solver,
+     const mc_rtc::Configuration & config)
+  {
+    auto ret = std::make_shared<mc_solver::CoMIncPlaneConstr>(solver.robots(), config("robotIndex"), solver.dt());
+    return ret;
+  }
+);
+
+}

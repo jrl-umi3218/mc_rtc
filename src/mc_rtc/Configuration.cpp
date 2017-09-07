@@ -68,6 +68,11 @@ struct Configuration::Json::Impl
     assert(is());
     return value()->IsArray();
   }
+  bool isObject() const
+  {
+    assert(is());
+    return value()->IsObject();
+  }
   bool isBool() const
   {
     assert(is());
@@ -134,6 +139,19 @@ struct Configuration::Json::Impl
     return Impl(*this, key);
   }
 
+  std::vector<std::string> keys() const
+  {
+    assert(isObject());
+    std::vector<std::string> ret;
+    for(auto it = value()->MemberBegin();
+        it != value()->MemberEnd();
+        ++it)
+    {
+      ret.push_back(it->name.GetString());
+    }
+    return ret;
+  }
+
   std::string pointer;
   std::shared_ptr<rapidjson::Document> doc_p;
 };
@@ -141,6 +159,16 @@ struct Configuration::Json::Impl
 bool Configuration::Json::isArray() const
 {
   return impl->isArray();
+}
+
+bool Configuration::Json::isObject() const
+{
+  return impl->isObject();
+}
+
+std::vector<std::string> Configuration::Json::keys() const
+{
+  return impl->keys();
 }
 
 size_t Configuration::Json::size() const
@@ -279,6 +307,17 @@ Configuration::operator std::string() const
   throw Configuration::Exception("Stored Json value is not a string");
 }
 
+Configuration::operator Eigen::Vector2d() const
+{
+  if(v.isArray() && v.size() == 2 && v[0].impl->isNumeric())
+  {
+    Eigen::Vector2d ret;
+    ret << v[0].impl->asDouble(), v[1].impl->asDouble(), v[2].impl->asDouble();
+    return ret;
+  }
+  throw Configuration::Exception("Stored Json value is not a Vector2d");
+}
+
 Configuration::operator Eigen::Vector3d() const
 {
   if(v.isArray() && v.size() == 3 && v[0].impl->isNumeric())
@@ -325,6 +364,40 @@ Configuration::operator Eigen::Quaterniond() const
                              .normalized();
   }
   throw Configuration::Exception("Stored Json value is not a Quaterniond");
+}
+
+Configuration::operator Eigen::Matrix3d() const
+{
+  if(v.isArray() && v.size() == 9 && v[0].impl->isNumeric())
+  {
+    Eigen::Matrix3d m;
+    for(size_t i = 0; i < 3; ++i)
+    {
+      for(size_t j = 0; j < 3; ++j)
+      {
+        m(i,j) = v[3*i+j].impl->asDouble();
+      }
+    }
+    return m;
+  }
+  throw Configuration::Exception("Stored Json value is not a Matrix3d");
+}
+
+Configuration::operator Eigen::Matrix6d() const
+{
+  if(v.isArray() && v.size() == 36 && v[0].impl->isNumeric())
+  {
+    Eigen::Matrix6d m;
+    for(size_t i = 0; i < 6; ++i)
+    {
+      for(size_t j = 0; j < 6; ++j)
+      {
+        m(i,j) = v[6*i+j].impl->asDouble();
+      }
+    }
+    return m;
+  }
+  throw Configuration::Exception("Stored Json value is not a Matrix6d");
 }
 
 Configuration::Configuration(const std::string & path)
@@ -427,10 +500,13 @@ void Configuration::add(const std::string & key, unsigned int value) { add_impl(
 void Configuration::add(const std::string & key, double value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::add(const std::string & key, std::string value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::add(const std::string & key, const char * value) { add(key, std::string(value)); }
+void Configuration::add(const std::string & key, Eigen::Vector2d value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::add(const std::string & key, Eigen::Vector3d value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::add(const std::string & key, Eigen::Vector6d value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::add(const std::string & key, Eigen::VectorXd value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::add(const std::string & key, Eigen::Quaterniond value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
+void Configuration::add(const std::string & key, Eigen::Matrix3d value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
+void Configuration::add(const std::string & key, Eigen::Matrix6d value) { add_impl(key, value, *v.impl->value(), v.impl->allocator()); }
 
 
 void Configuration::add(const std::string & key, Configuration value)
@@ -485,16 +561,31 @@ Configuration Configuration::array(size_t reserve)
   return (*this)[size() - 1];
 }
 
+Configuration Configuration::object()
+{
+  if(!v.isArray())
+  {
+    throw(Exception("Cannot store an anonymous object outside of an array"));
+  }
+  auto & allocator = v.impl->allocator();
+  rapidjson::Value value(rapidjson::kObjectType);
+  v.impl->value()->PushBack(value, allocator);
+  return (*this)[size() - 1];
+}
+
 void Configuration::push(bool value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(int value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(unsigned int value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(double value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(std::string value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(const char * value) { push(std::string(value)); }
+void Configuration::push(Eigen::Vector2d value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(Eigen::Vector3d value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(Eigen::Vector6d value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(Eigen::VectorXd value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 void Configuration::push(Eigen::Quaterniond value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
+void Configuration::push(Eigen::Matrix3d value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
+void Configuration::push(Eigen::Matrix6d value) { push_impl(value, *v.impl->value(), v.impl->allocator()); }
 
 void Configuration::push(mc_rtc::Configuration value)
 {

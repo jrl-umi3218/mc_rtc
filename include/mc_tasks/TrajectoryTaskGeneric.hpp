@@ -188,4 +188,23 @@ Eigen::VectorXd TrajectoryTaskGeneric<T>::speed() const
   return errorT->speed();
 }
 
+template<typename T>
+void TrajectoryTaskGeneric<T>::load(mc_solver::QPSolver & solver,
+                                    const mc_rtc::Configuration & config)
+{
+  MetaTask::load(solver, config);
+  if(config.has("stiffness"))
+  {
+    stiffness(config("stiffness"));
+  }
+  if(config.has("damping"))
+  {
+    setGains(stiffness(), config("damping"));
+  }
+  if(config.has("weight"))
+  {
+    weight(config("weight"));
+  }
+}
+
 }

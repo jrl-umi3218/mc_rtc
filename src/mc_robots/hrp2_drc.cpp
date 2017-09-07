@@ -234,24 +234,25 @@ HRP2DRCRobotModule::HRP2DRCRobotModule()
   readUrdf("hrp2drc", filteredLinks);
 
   _springs.springsBodies = {"LLEG_LINK5", "RLEG_LINK5"};
+
+  auto fileByBodyName = stdCollisionsFiles(mb);
+  _convexHull = getConvexHull(fileByBodyName);
+  _bounds = nominalBounds(limits);
+  _stance = halfSittingPose(mb);
 }
 
 const std::map<std::string, std::pair<std::string, std::string> > & HRP2DRCRobotModule::convexHull() const
 {
-  auto fileByBodyName = stdCollisionsFiles(mb);
-  const_cast<HRP2DRCRobotModule*>(this)->_convexHull = getConvexHull(fileByBodyName);
   return _convexHull;
 }
 
 const std::vector< std::map<std::string, std::vector<double> > > & HRP2DRCRobotModule::bounds() const
 {
-  const_cast<HRP2DRCRobotModule*>(this)->_bounds = nominalBounds(limits);
   return _bounds;
 }
 
 const std::map<std::string, std::vector<double> > & HRP2DRCRobotModule::stance() const
 {
-  const_cast<HRP2DRCRobotModule*>(this)->_stance = halfSittingPose(mb);
   return _stance;
 }
 
@@ -261,24 +262,24 @@ HRP2DRCGripperRobotModule::HRP2DRCGripperRobotModule()
   readUrdf("hrp2drc", filteredLinks);
 
   _springs.springsBodies = {"LLEG_LINK5", "RLEG_LINK5"};
+  auto fileByBodyName = stdCollisionsFiles(mb);
+  _convexHull = getConvexHull(fileByBodyName);
+  _bounds = nominalBounds(limits);
+  _stance = halfSittingPose(mb);
 }
 
 const std::map<std::string, std::pair<std::string, std::string> > & HRP2DRCGripperRobotModule::convexHull() const
 {
-  auto fileByBodyName = stdCollisionsFiles(mb);
-  const_cast<HRP2DRCGripperRobotModule*>(this)->_convexHull = getConvexHull(fileByBodyName);
   return _convexHull;
 }
 
 const std::vector< std::map<std::string, std::vector<double> > > & HRP2DRCGripperRobotModule::bounds() const
 {
-  const_cast<HRP2DRCGripperRobotModule*>(this)->_bounds = nominalBounds(limits);
   return _bounds;
 }
 
 const std::map<std::string, std::vector<double> > & HRP2DRCGripperRobotModule::stance() const
 {
-  const_cast<HRP2DRCGripperRobotModule*>(this)->_stance = halfSittingPose(mb);
   return _stance;
 }
 

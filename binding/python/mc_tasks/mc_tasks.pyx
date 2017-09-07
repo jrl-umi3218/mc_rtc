@@ -206,9 +206,9 @@ cdef class RelativeEndEffectorTask(EndEffectorTask):
     if self.__own_impl:
       del self.rel_impl
   def __ctor__(self, bodyName, mc_rbdyn.Robots robots,
-                robotIndex, relBodyIdx = 0, stiffness = 2.0, weight = 1000.0):
+                robotIndex, relBodyName = "", stiffness = 2.0, weight = 1000.0):
     self.__own_impl = True
-    self.rel_impl = self.impl = self.mt_base = new c_mc_tasks.RelativeEndEffectorTask(bodyName, deref(robots.impl), robotIndex, relBodyIdx, stiffness, weight)
+    self.rel_impl = self.impl = self.mt_base = new c_mc_tasks.RelativeEndEffectorTask(bodyName, deref(robots.impl), robotIndex, relBodyName, stiffness, weight)
   def __cinit__(self, *args, skip_alloc = False):
     if skip_alloc:
       self.__own_impl = False
@@ -218,3 +218,30 @@ cdef class RelativeEndEffectorTask(EndEffectorTask):
       self.__ctor__(*args)
     else:
       raise TypeError("Not enough arguments passed to RelativeEndEffectorTask ctor")
+
+cdef class ComplianceTask(MetaTask):
+  defaultFGain = c_mc_tasks.defaultFGain
+  defaultTGain = c_mc_tasks.defaultTGain
+  def __dealloc__(self):
+    if self.__own_impl:
+      del self.impl
+  def __ctor__(self, mc_rbdyn.Robots robots, robotIndex, body,
+                     timestep, stiffness = 5.0, weight = 1000.0,
+                     forceThresh = 3., torqueThresh = 1.,
+                     forceGain = defaultFGain, torqueGain = defaultTGain):
+    self.__own_impl = True
+    self.impl = self.mt_base = new c_mc_tasks.ComplianceTask(deref(robots.impl), robotIndex, body, timestep, stiffness, weight, forceThresh, torqueThresh, forceGain, torqueGain)
+  def __cinit__(self, *args, skip_alloc = False):
+    if skip_alloc:
+      self.__own_impl = False
+      self.impl = self.mt_base = NULL
+      return
+    elif len(args) >= 4:
+      self.__ctor__(*args)
+    else:
+      raise TypeError("Not enough arguments passed to ComplianceTask ctor")
+  def setTargetWrench(self, wrench):
+    if isinstance(wrench, sva.ForceVecd):
+      self.impl.setTargetWrench(deref((<sva.ForceVecd>(wrench)).impl))
+    else:
+      self.setTargetWrench(sva.ForceVecd(wrench))

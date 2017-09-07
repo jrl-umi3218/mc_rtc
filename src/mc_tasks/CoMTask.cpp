@@ -1,5 +1,7 @@
 #include <mc_tasks/CoMTask.h>
 
+#include <mc_tasks/MetaTaskLoader.h>
+
 namespace mc_tasks
 {
 
@@ -37,5 +39,24 @@ Eigen::Vector3d CoMTask::com()
 {
   return errorT->com();
 }
+
+}
+
+namespace
+{
+
+static bool registered = mc_tasks::MetaTaskLoader::register_load_function("com",
+  [](mc_solver::QPSolver & solver,
+     const mc_rtc::Configuration & config)
+  {
+    auto t = std::make_shared<mc_tasks::CoMTask>(solver.robots(), config("robotIndex"));
+    if(config.has("com"))
+    {
+      t->com(config("com"));
+    }
+    t->load(solver, config);
+    return t;
+  }
+);
 
 }

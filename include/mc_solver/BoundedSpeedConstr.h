@@ -24,7 +24,9 @@ public:
 
   void addBoundedSpeed(QPSolver & solver, const std::string & bodyName, const Eigen::Vector3d & bodyPoint, const Eigen::MatrixXd & dof, const Eigen::VectorXd & lowerSpeed, const Eigen::VectorXd & upperSpeed);
 
-  void removeBoundedSpeed(QPSolver & solver, const std::string & bodyName);
+  bool removeBoundedSpeed(QPSolver & solver, const std::string & bodyName);
+
+  size_t nrBoundedSpeeds() const;
 
   void reset(QPSolver & solver);
 private:

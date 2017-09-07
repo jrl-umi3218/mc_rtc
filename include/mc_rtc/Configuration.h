@@ -4,8 +4,11 @@
 
 #include <Eigen/Core>
 
+#include <array>
 #include <exception>
+#include <map>
 #include <memory>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -17,6 +20,68 @@ namespace mc_rtc
 {
 
   struct MC_RTC_UTILS_DLLAPI ConfigurationArrayIterator;
+  struct MC_RTC_UTILS_DLLAPI Configuration;
+
+  /** This structure should be specialized to implement serialization for a new type.
+   *
+   * load return type should be T
+   *
+   * save return type should be mc_rtc::Configuration
+   */
+  template<typename T>
+  struct ConfigurationLoader
+  {
+    static void load(const mc_rtc::Configuration &) {}
+
+    static void save(const T&) {}
+  };
+
+  template<>
+  struct ConfigurationLoader<void>
+  {
+    static void load(const mc_rtc::Configuration&) {}
+    static void save() {}
+  };
+
+  namespace internal
+  {
+    /** Helper trait to determine whether:
+     * T ConfigurationLoader<T>::load(const mc_rtc::Configuration &);
+     * is a valid function or not
+     */
+    struct _has_configuration_load_object
+    {
+      template<typename T,
+        typename std::enable_if<std::is_same<decltype(ConfigurationLoader<T>::load(std::declval<const Configuration&>())), T>::value, int>::type = 0>
+      static std::true_type test(T * p);
+
+      template<typename T>
+      static std::false_type test(...);
+    };
+
+    template<typename T>
+    struct has_configuration_load_object : decltype(_has_configuration_load_object::test<T>(nullptr))
+    {};
+
+    /** Helper trait to determine whether:
+     * mc_rtc::Configuration mc_rtc::ConfigurationLoader<T>::save(const T&, Args ...);
+     * is a valid construct or not
+     */
+    struct _has_configuration_save_object
+    {
+      template<typename T, typename ... Args,
+        typename std::enable_if<std::is_same<decltype(ConfigurationLoader<T>::save(std::declval<const T&>(), std::declval<Args>()...)), Configuration>::value, int>::type = 0>
+      static std::true_type test(T * p);
+
+      template<typename T, typename ... Args>
+      static std::false_type test(...);
+    };
+
+    template<typename T, typename ... Args>
+    struct has_configuration_save_object : decltype(_has_configuration_save_object::test<T, Args...>(nullptr))
+    {};
+  }
+
 
   /*! \brief Simplify access to values hold within a JSON file
    *
@@ -100,6 +165,13 @@ namespace mc_rtc
      */
     operator std::string() const;
 
+    /*! \brief Retrieve as a Eigen::Vector2d instance
+     *
+     * \throws If the underlying value does not hold a numeric
+     * sequence of size 2
+     */
+    operator Eigen::Vector2d() const;
+
     /*! \brief Retrieve as a Eigen::Vector3d instance
      *
      * \throws If the underlying value does not hold a numeric
@@ -133,6 +205,18 @@ namespace mc_rtc
      */
     operator Eigen::Quaterniond() const;
 
+    /*! \brief Retrieve as a Eigen::Matrix3d instance
+     *
+     * \throws If the underlying value does not hold a numeric sequence of size 9
+     */
+    operator Eigen::Matrix3d() const;
+
+    /*! \brief Retrieve as a Eigen::Matrix6d instance
+     *
+     * \throws If the underlying value does not hold a numeric sequence of size 36
+     */
+    operator Eigen::Matrix6d() const;
+
     /*! \brief Retrieve a vector instance
      *
      * \throws If the underlying value does not hold an array or if
@@ -157,6 +241,30 @@ namespace mc_rtc
       }
     }
 
+    /*! \brief Retrieve an array instance
+     *
+     * \throws If the underlying value does not hold an array of the correct
+     * size or if any member of the array does not meet the requirements of the
+     * array elements' type.
+     */
+    template<class T, std::size_t N>
+    operator std::array<T, N>() const
+    {
+      if(v.isArray() && v.size() == N)
+      {
+        std::array<T, N> ret;
+        for(size_t i = 0; i < N; ++i)
+        {
+          ret[i] = Configuration(v[static_cast<int>(i)]);
+        }
+        return ret;
+      }
+      else
+      {
+        throw Configuration::Exception("Stored Json vaule is not an array or its size is incorrect");
+      }
+    }
+
     /*! \brief Retrieve a pair instance
      *
      * \throws If the underlying value does not hold an array of size 2 or if
@@ -173,6 +281,45 @@ namespace mc_rtc
       {
         throw Configuration::Exception("Stored Json value is not an array of size 2");
       }
+    }
+
+    /*! \brief Retrieve a string-indexed map instance
+     *
+     * \throws If the underlying value is not an object or if the member
+     * of the object do not meet the requiremenent of the value type.
+     */
+    template<typename T, class C, class A>
+    operator std::map<std::string, T, C, A>() const
+    {
+      if(v.isObject())
+      {
+        std::map<std::string, T, C, A> ret;
+        auto keys = v.keys();
+        assert(std::set<std::string>(keys.begin(), keys.end()).size() == keys.size());
+        for(const auto & k : keys)
+        {
+          T value = Configuration(v[k]);
+          ret[k] = value;
+        }
+        return ret;
+      }
+      else
+      {
+        throw Configuration::Exception("Stored Json value is not an object");
+      }
+    }
+
+    /*! \brief User-defined conversions
+     *
+     * Requires:
+     * - T mc_rtc::ConfigurationLoader<T>::load(const mc_rtc::Configuration &) should exist
+     */
+    template<typename T,
+      typename std::enable_if<
+        internal::has_configuration_load_object<T>::value, int>::type = 0>
+    operator T() const
+    {
+      return ConfigurationLoader<T>::load(*this);
     }
 
     /*! \brief Creates an empty configuration */
@@ -260,6 +407,29 @@ namespace mc_rtc
       }
     }
 
+    /*! \brief Retrieve a given value stored within the configuration with a
+     * default value
+     *
+     * If the key is not stored in the Configuration or if the underyling value
+     * does not match the requested type, the default value is returned.
+     *
+     * \param key The key used to store the value
+     *
+     * \param v The default value
+     */
+    template<typename T>
+    T operator()(const std::string & key, const T & v) const
+    {
+      try
+      {
+        return (*this)(key);
+      }
+      catch(Exception &)
+      {
+        return v;
+      }
+    }
+
     /*! \brief Non-template version for C-style strings comparison
      *
      * \returns True if the comparison matches, false otherwise.
@@ -318,6 +488,12 @@ namespace mc_rtc
      */
     void add(const std::string & key, const char * value);
 
+    /*! \brief Add a Eigen::Vector2d element to the Configuration
+     *
+     * \see add(const std::string&, bool)
+     */
+    void add(const std::string & key, Eigen::Vector2d value);
+
     /*! \brief Add a Eigen::Vector3d element to the Configuration
      *
      * \see add(const std::string&, bool)
@@ -342,6 +518,18 @@ namespace mc_rtc
      * \see add(const std::string&, bool)
      */
     void add(const std::string & key, Eigen::Quaterniond value);
+
+    /*! \brief Add a Eigen::Matrix3d element to the Configuration
+     *
+     * \see add(const std::string&, bool)
+     */
+    void add(const std::string & key, Eigen::Matrix3d value);
+
+    /*! \brief Add a Eigen::Matrix6d element to the Configuration
+     *
+     * \see add(const std::string&, bool)
+     */
+    void add(const std::string & key, Eigen::Matrix6d value);
 
     /*! \brief Add another Configuration to the Configuration
      *
@@ -405,6 +593,12 @@ namespace mc_rtc
      */
     void push(const char * value);
 
+    /*! \brief Insert a Eigen::Vector2d element into an array
+     *
+     * \see push(bool);
+     */
+    void push(Eigen::Vector2d value);
+
     /*! \brief Insert a Eigen::Vector3d element into an array
      *
      * \see push(bool);
@@ -429,11 +623,39 @@ namespace mc_rtc
      */
     void push(Eigen::Quaterniond value);
 
+    /*! \brief Insert a Eigen::Matrix3d element into an array
+     *
+     * \see push(bool);
+     */
+    void push(Eigen::Matrix3d value);
+
+    /*! \brief Insert a Eigen::Matrix6d element into an array
+     *
+     * \see push(bool);
+     */
+    void push(Eigen::Matrix6d value);
+
     /*! \brief Push a Configuration element into an array
      *
      * \see push(bool);
      */
     void push(Configuration value);
+
+    /*! \brief User-defined conversion
+     *
+     * Requires the existence of:
+     * mc_rtc::Configuration mc_rtc::ConfigurationLoader<T>::save(const T&, Args ...);
+     *
+     * \param key Key of the element
+     *
+     * \param value Value to push
+     */
+    template<typename T, typename ... Args,
+      typename std::enable_if<internal::has_configuration_save_object<T, Args ...>::value, int>::type = 0>
+    void push(const T & value, Args && ... args)
+    {
+      push(mc_rtc::ConfigurationLoader<T>::save(value, std::forward<Args>(args)...));
+    }
 
     /*! \brief Add a vector into the JSON document
      *
@@ -443,27 +665,142 @@ namespace mc_rtc
      *
      * \param value Vector of elements to add
      */
-    template<typename T, typename A>
-    void add(const std::string & key, const std::vector<T, A> & value)
+    template<typename T, typename A = std::allocator<T>, typename ... Args>
+    void add(const std::string & key, const std::vector<T, A> & value, Args && ... args)
     {
-      Configuration v = array(key);
+      Configuration v = array(key, value.size());
       for(const auto & vi : value)
       {
-        v.push(vi);
+        v.push(vi, std::forward<Args>(args)...);
       }
+    }
+
+    /*! \brief Add an array into the JSON document
+     *
+     * Overwrites existing content if any.
+     *
+     * \param key Key of the element
+     *
+     * \param value Array of elements to add
+     */
+    template<typename T, std::size_t N, typename ... Args>
+    void add(const std::string & key, const std::array<T, N> & value, Args && ... args)
+    {
+      Configuration v = array(key, N);
+      for(const auto & vi : value)
+      {
+        v.push(vi, std::forward<Args>(args)...);
+      }
+    }
+
+    /*! \brief Add a pair into the JSON document
+     *
+     * Overwrite existing content if any.
+     *
+     * \param key Key of the element
+     *
+     * \param value Pair to add
+     */
+    template<typename T1, typename T2, typename ... Args>
+    void add(const std::string & key, const std::pair<T1, T2> & value, Args && ... args)
+    {
+      Configuration v = array(key, 2);
+      v.push(value.first, std::forward<Args>(args)...);
+      v.push(value.second, std::forward<Args>(args)...);
+    }
+
+    /*! \brief Add string-indexed map into the JSON document
+     *
+     * Overwrites existing content if any.
+     *
+     * \param key Key of the element
+     *
+     * \param value Map of elements to add
+     */
+    template<typename T,
+             class C = std::less<std::string>,
+             class A = std::allocator<std::pair<const std::string, T>>,
+             typename ... Args>
+    void add(const std::string & key, const std::map<std::string, T, C, A> & value, Args && ... args)
+    {
+      Configuration v = add(key);
+      for(const auto & el : value)
+      {
+        v.add(el.first, el.second, std::forward<Args>(args)...);
+      }
+    }
+
+    /*! \brief User-defined conversion
+     *
+     * Requires the existence of:
+     * mc_rtc::Configuration mc_rtc::ConfigurationLoader<T>::save(const T&, Args ... args);
+     *
+     * \param key Key of the element
+     *
+     * \param value Value to add
+     */
+    template<typename T, typename ... Args,
+      typename std::enable_if<internal::has_configuration_save_object<T, Args ...>::value, int>::type = 0>
+    void add(const std::string & key, const T & value, Args && ... args)
+    {
+      add(key, ConfigurationLoader<T>::save(value, std::forward<Args>(args)...));
     }
 
     /*! \brief Push a vector into the JSON document
      *
      * \param value Vector of elements to add
      */
-    template<typename T, typename A>
-    void push(const std::vector<T, A> & value)
+    template<typename T, typename A = std::allocator<T>, typename ... Args>
+    void push(const std::vector<T, A> & value, Args && ... args)
     {
       Configuration v = array(value.size());
       for(const auto & vi : value)
       {
-        v.push(vi);
+        v.push(vi, std::forward<Args>(args)...);
+      }
+    }
+
+    /*! \brief Push an array into the JSON document
+     *
+     * \param value Array of elements to add
+     */
+    template<typename T, std::size_t N, typename ... Args>
+    void push(const std::array<T, N> & value, Args && ... args)
+    {
+      Configuration v = array(N);
+      for(const auto & vi : value)
+      {
+        v.push(vi, std::forward<Args>(args)...);
+      }
+    }
+
+    /*! \brief Push a pair into the JSON document
+     *
+     * \param value Pair of elements to add
+     */
+    template<typename T1, typename T2, typename ... Args>
+    void push(const std::pair<T1, T2> & value, Args && ... args)
+    {
+      Configuration v = array(2);
+      v.push(value.first, std::forward<Args>(args)...);
+      v.push(value.second, std::forward<Args>(args)...);
+    }
+
+    /*! \brief Push a string-indexed map into the JSON document
+     *
+     * \param value Map of elements to add
+     *
+     */
+    template<typename T,
+             class C = std::less<std::string>,
+             class A = std::allocator<std::pair<const std::string, T>>,
+             typename ... Args>
+    void push(const std::map<std::string, T, C, A> & value, Args && ... args)
+    {
+      Configuration v = object();
+      for(const auto & el : value)
+      {
+        v.add(el.first, el.second, std::forward<Args>(args)...);
       }
     }
 
@@ -473,6 +810,8 @@ namespace mc_rtc
   private:
     /*! \brief Create an empty array */
     Configuration array(size_t reserve);
+    /*! \brief Create an empty object */
+    Configuration object();
 
     /*! \brief Implementation details
      *
@@ -486,6 +825,8 @@ namespace mc_rtc
       bool isArray() const;
       size_t size() const;
       Json operator[](size_t idx) const;
+      bool isObject() const;
+      std::vector<std::string> keys() const;
       Json operator[](const std::string & key) const;
       std::shared_ptr<Impl> impl;
     };

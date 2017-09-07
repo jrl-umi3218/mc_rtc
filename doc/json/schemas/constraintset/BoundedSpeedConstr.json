@@ -1,0 +1,29 @@
+{
+  "title": "mc_solver::BoundedSpeedConstr",
+  "type": "object",
+  "properties":
+  {
+    "type": { "enum": ["boundedSpeed"] },
+    "robotIndex": { "type": "number", "minimum": 0 },
+    "constraints":
+    {
+      "type": "array",
+      "description": "List of speed constraints in the constraint",
+      "items":
+      {
+        "type": "object",
+        "properties":
+        {
+          "body": { "type": "string" },
+          "bodyPoint": { "$ref": "/../../eigen/Vector3d.json", "description": "Defaults to zero" },
+          "dof": { "$ref": "/../../eigen/Matrix6d.json", "description": "Defaults to identity" },
+          "speed": { "$ref": "/../../eigen/Vector3d.json" },
+          "lowerSpeed": { "$ref": "/../../eigen/Vector3d.json", "description": "Ignored if speed is present" },
+          "upperSpeed": { "$ref": "/../../eigen/Vector3d.json", "description": "Required if lowerSpeed is present and speed is absent" }
+        },
+        "required": ["body"]
+      }
+    }
+  },
+  "required": ["type", "robotIndex"]
+}

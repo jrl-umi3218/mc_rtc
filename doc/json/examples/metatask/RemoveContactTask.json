@@ -1,0 +1,14 @@
+{
+  "type": "removeContact",
+  "contact":
+  {
+    "r1Surface": "surf1",
+    "r2Surface": "surf2",
+    "r1Index": 0,
+    "r2Index": 1,
+    "isFixed": false
+  },
+  "speed": 0.05,
+  "stiffness": 1.0,
+  "weight": 100.0
+}

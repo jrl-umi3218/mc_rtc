@@ -9,6 +9,7 @@ macro(add_robot robot_base)
 endmacro()
 
 add_robot(env)
+add_robot(json)
 
 if(${HRP4_DESCRIPTION_FOUND})
   add_robot(hrp4)
