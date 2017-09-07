@@ -501,6 +501,7 @@ cdef extern from "mc_rbdyn_wrapper.hpp" namespace "mc_rbdyn":
   Robots& const_cast_robots(const Robots&)
   Robot& const_cast_robot(const Robot&)
   ForceSensor& const_cast_force_sensor(const ForceSensor &)
+  BodySensor& const_cast_body_sensor(const BodySensor &)
   Surface& const_cast_surface(const Surface&)
   Contact& const_cast_contact(const Contact&)
   vector[Contact]& const_cast_contact_vector(const vector[Contact]&)
@@ -517,4 +518,8 @@ cdef extern from "mc_rbdyn_wrapper.hpp" namespace "mc_rbdyn":
   PolygonInterpolator * polygonInterpolatorFromTuplePairs(const vector[pair[pair[double, double], pair[double, double]]]&)
   #FIXME Work-around lack of array support
   vector[double] robotModuleDefaultAttitude(RobotModulePtr rm)
+  #XXX
+  #FIXME Lack of support for vector[T,A] in Cython 0.20
+  unsigned int getBodySensorsSize[T](T &)
+  (BodySensor&) getBodySensor[T](T &, unsigned int)
   #XXX
