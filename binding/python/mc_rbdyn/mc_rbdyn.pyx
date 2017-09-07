@@ -524,6 +524,13 @@ cdef class Robot(object):
       return BodySensorFromRef(self.impl.bodySensor())
     else:
       return BodySensorFromRef(self.impl.bodySensor(name))
+  def bodySensors(self):
+    self.__is_valid()
+    size = c_mc_rbdyn.getBodySensorsSize(deref(self.impl))
+    ret = []
+    for i in range(size):
+        ret.append(BodySensorFromCRef(c_mc_rbdyn.getBodySensor(deref(self.impl), i)))
+    return ret
   def hasBodySensor(self, name):
     self.__is_valid()
     return self.impl.hasBodySensor(name)
