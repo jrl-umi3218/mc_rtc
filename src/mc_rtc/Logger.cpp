@@ -1,10 +1,9 @@
 #include <mc_rtc/log/Logger.h>
+#include <mc_rtc/utils.h>
 
 #include <chrono>
-#include <queue>
 #include <fstream>
 #include <iomanip>
-#include <queue>
 #include <thread>
 
 namespace mc_rtc
@@ -67,16 +66,10 @@ namespace mc_rtc
         {
           while(log_sync_th_run_ && valid_)
           {
-            while(data_.size())
-            {
-              write_data();
-            }
+            while(!write_data());
             std::this_thread::sleep_for(std::chrono::microseconds(500));
           }
-          while(data_.size())
-          {
-            write_data();
-          }
+          while(!write_data());
         }
         );
       }
@@ -90,15 +83,19 @@ namespace mc_rtc
         }
       }
 
-      void write_data()
+      // Returns true when all data has been consumed
+      bool write_data()
       {
-        auto & d = data_.front();
-        uint8_t * data = d.first;
-        int size = d.second;
-        log_.write((char*)&size, sizeof(int));
-        log_.write((char*)data, size);
-        delete[] data;
-        data_.pop();
+        if(data_.pop(pop_))
+        {
+          uint8_t * data = pop_.first;
+          int size = pop_.second;
+          log_.write((char*)&size, sizeof(int));
+          log_.write((char*)data, size);
+          delete[] data;
+          return false;
+        }
+        return true;
       }
 
       virtual void initialize(const bfs::path & path) final
@@ -106,7 +103,7 @@ namespace mc_rtc
         if(log_.is_open())
         {
           /* Wait until the previous log is flushed */
-          while(data_.size())
+          while(!data_.empty())
           {
             std::this_thread::sleep_for(std::chrono::microseconds(500));
           }
@@ -118,12 +115,13 @@ namespace mc_rtc
       {
         uint8_t * ndata = new uint8_t[size];
         std::memcpy(ndata, data, size);
-        data_.emplace(ndata, size);
+        data_.push({ndata, size});
       }
 
       std::thread log_sync_th_;
       bool log_sync_th_run_ = true;
-      std::queue<std::pair<uint8_t*, int>> data_;
+      CircularBuffer<std::pair<uint8_t*, int>, 512> data_;
+      std::pair<uint8_t*, int> pop_;
     };
   }
 
