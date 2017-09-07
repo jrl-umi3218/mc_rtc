@@ -410,7 +410,10 @@ def get_robot_module(string name, *args):
   if len(args) == 0:
     return RobotModuleFromC(c_mc_rbdyn.get_robot_module(name))
   elif len(args) == 1:
-    return RobotModuleFromC(c_mc_rbdyn.get_robot_module(name, args[0]))
+    if isinstance(args[0], bool):
+      return RobotModuleFromC(c_mc_rbdyn.get_robot_module(name, args[0]))
+    else:
+      return RobotModuleFromC(c_mc_rbdyn.get_robot_module_str(name, args[0]))
   elif len(args) == 2:
     return RobotModuleFromC(c_mc_rbdyn.get_robot_module(name, args[0], args[1]))
   else:
