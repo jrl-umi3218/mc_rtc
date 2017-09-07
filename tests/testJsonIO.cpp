@@ -502,5 +502,4 @@ BOOST_AUTO_TEST_CASE(TestRobotModuleAltSave)
   config.add("rmV", rmV, false, std::vector<std::string>{}, true);
   std::array<mc_rbdyn::RobotModule, 2> rmA = {{rm, rm}};
   config.add("rmA", rmA, false, std::vector<std::string>{"RARM_LINK6", "LARM_LINK6"});
-  config.save("RobotModule.json");
 }

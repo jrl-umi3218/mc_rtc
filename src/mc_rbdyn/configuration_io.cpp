@@ -1,5 +1,35 @@
 #include <mc_rbdyn/configuration_io.h>
 
+#include <boost/filesystem.hpp>
+namespace bfs = boost::filesystem;
+
+namespace
+{
+  // Return relative path to go to "to" from "from"
+  bfs::path relative(bfs::path to, bfs::path from)
+  {
+    bfs::path::const_iterator fromIter = from.begin();
+    bfs::path::const_iterator toIter = to.begin();
+    while (fromIter != from.end() && toIter != to.end() && (*toIter) == (*fromIter))
+    {
+       ++toIter;
+       ++fromIter;
+    }
+    bfs::path relPath;
+    while (fromIter != from.end() && *fromIter != bfs::path("."))
+    {
+       relPath /= "..";
+       ++fromIter;
+    }
+    while (toIter != to.end())
+    {
+       relPath /= *toIter;
+       ++toIter;
+    }
+    return relPath;
+  }
+}
+
 namespace mc_rtc
 {
 
@@ -635,7 +665,13 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn_urdf::Visual>::save(const mc_
 
 mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_rtc::Configuration & config)
 {
-  mc_rbdyn::RobotModule rm(config("path"), config("name"), config("urdf_path"));
+  bfs::path path(config("path"));
+  bfs::path urdf_path(config("urdf_path"));
+  if(!urdf_path.is_absolute())
+  {
+    urdf_path = path / urdf_path;
+  }
+  mc_rbdyn::RobotModule rm(path.string(), config("name"), urdf_path.string());
   if(config.has("mb"))
   {
     rm.mb = config("mb");
@@ -668,9 +704,33 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
   }
 
   /* Default values work fine for those */
-  config("rsdf_dir", rm.rsdf_dir);
+  if(config.has("rsdf_dir"))
+  {
+    bfs::path rsdf_dir(config("rsdf_dir"));
+    if(!rsdf_dir.is_absolute())
+    {
+      rsdf_dir = path / rsdf_dir;
+    }
+    rm.rsdf_dir = rsdf_dir.string();
+  }
   config("convexHulls", rm._convexHull);
+  for(auto & cH : rm._convexHull)
+  {
+    bfs::path chPath(cH.second.second);
+    if(!chPath.is_absolute())
+    {
+      cH.second.second = (path / chPath).string();
+    }
+  }
   config("stpbvHulls", rm._stpbvHull);
+  for(auto & sH : rm._stpbvHull)
+  {
+    bfs::path stPath(sH.second.second);
+    if(!stPath.is_absolute())
+    {
+      sH.second.second = (path / stPath).string();
+    }
+  }
   config("flexibilities", rm._flexibility);
   config("forceSensors", rm._forceSensors);
   config("bodySensors", rm._bodySensors);
@@ -702,8 +762,8 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule>::save(const mc_
   mc_rtc::Configuration config;
   config.add("path", rm.path);
   config.add("name", rm.name);
-  config.add("urdf_path", rm.urdf_path);
-  config.add("rsdf_dir", rm.rsdf_dir);
+  config.add("urdf_path", relative(rm.urdf_path, rm.path).string());
+  config.add("rsdf_dir", relative(rm.rsdf_dir, rm.path).string());
   if(save_mbc)
   {
     config.add("mb", rm.mb);
@@ -718,7 +778,17 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule>::save(const mc_
     config.add("fixed", fixed);
   }
   config.add("stance", rm._stance);
-  config.add("convexHulls", rm._convexHull);
+  auto cHs = rm._convexHull;
+  for(auto & cH : cHs)
+  {
+    cH.second.second = relative(cH.second.second, rm.path).string();
+  }
+  config.add("convexHulls", cHs);
+  auto sHs = rm._convexHull;
+  for(auto & sH : sHs)
+  {
+    sH.second.second = relative(sH.second.second, rm.path).string();
+  }
   config.add("stpbvHulls", rm._stpbvHull);
   config.add("flexibilities", rm._flexibility);
   config.add("forceSensors", rm._forceSensors);
