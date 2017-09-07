@@ -17,11 +17,6 @@ cdef extern from "<memory>" namespace "std" nogil:
     T* get()
     T& operator*()
 
-cdef extern from "<Eigen/Core>" namespace "Eigen" nogil:
-  cdef cppclass BodySensorAllocator "Eigen::aligned_allocator<mc_rbdyn::BodySensor>"
-
-ctypedef vector[BodySensor, BodySensorAllocator] BodySensorVector
-
 cdef extern from "<mc_rbdyn/Collision.h>" namespace "mc_rbdyn":
   cdef cppclass Collision:
     Collision()
@@ -103,7 +98,6 @@ cdef extern from "<mc_rbdyn/RobotModule.h>" namespace "mc_rbdyn":
     map[string, PTransformd] _collisionTransforms
     vector[Flexibility] _flexibility
     vector[ForceSensor] _forceSensors
-    BodySensorVector _bodySensors
     const Springs & springs()
     vector[Collision] _minimalSelfCollisions
     vector[Collision] _commonSelfCollisions
@@ -524,4 +518,8 @@ cdef extern from "mc_rbdyn_wrapper.hpp" namespace "mc_rbdyn":
   PolygonInterpolator * polygonInterpolatorFromTuplePairs(const vector[pair[pair[double, double], pair[double, double]]]&)
   #FIXME Work-around lack of array support
   vector[double] robotModuleDefaultAttitude(RobotModulePtr rm)
+  #XXX
+  #FIXME Lack of support for vector[T,A] in Cython 0.20
+  unsigned int getBodySensorsSize[T](T &)
+  (BodySensor&) getBodySensor[T](T &, unsigned int)
   #XXX

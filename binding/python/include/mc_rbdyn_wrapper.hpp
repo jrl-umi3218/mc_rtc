@@ -5,6 +5,7 @@
 #include <mc_rbdyn/RobotLoader.h>
 #include <mc_rbdyn/Contact.h>
 #include <mc_rbdyn/stance.h>
+#include <mc_rbdyn/RobotModule.h>
 #include <mc_rbdyn/StanceConfig.h>
 
 #include <memory>
@@ -148,6 +149,18 @@ std::vector<double> robotModuleDefaultAttitude(RobotModulePtr rm)
     ret[i] = attitude[i];
   }
   return ret;
+}
+
+template<typename T>
+size_t getBodySensorsSize(const T & rm)
+{
+  return rm.bodySensors().size();
+}
+
+template<typename T>
+const BodySensor & getBodySensor(const T & rm, size_t i)
+{
+  return rm.bodySensors()[i];
 }
 
 }

@@ -315,12 +315,10 @@ cdef class RobotModule(object):
     return ret
   def bodySensors(self):
     assert(self.impl.get())
-    end = deref(self.impl)._bodySensors.end()
-    it = deref(self.impl)._bodySensors.begin()
+    size = c_mc_rbdyn.getBodySensorsSize(deref(self.impl))
     ret = []
-    while it != end:
-      ret.append(BodySensorFromCRef(deref(it)))
-      preinc(it)
+    for i in range(size):
+        ret.append(BodySensorFromCRef(c_mc_rbdyn.getBodySensor(deref(self.impl), i)))
     return ret
   def springs(self):
     assert(self.impl.get())
