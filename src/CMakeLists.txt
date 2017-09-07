@@ -19,6 +19,7 @@ set(mc_rtc_utils_HDR
   ../include/mc_rtc/Configuration.h
   ../include/mc_rtc/log/Logger.h
   ../include/mc_rtc/log/serialization/MCLog_generated.h
+  ../include/mc_rtc/utils.h
   ../include/mc_rtc/utils_api.h
 )
 set(mc_rtc_utils_HDR ${mc_rtc_utils_HDR} PARENT_SCOPE)
