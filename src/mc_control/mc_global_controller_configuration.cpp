@@ -133,16 +133,16 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     config("LogPolicy", log_policy_str);
     if(log_policy_str == "threaded")
     {
-      log_policy = Logger::Policy::THREADED;
+      log_policy = mc_rtc::Logger::Policy::THREADED;
     }
     else if(log_policy_str == "non-threaded")
     {
-      log_policy = Logger::Policy::NON_THREADED;
+      log_policy = mc_rtc::Logger::Policy::NON_THREADED;
     }
     else
     {
       LOG_WARNING("Unrecognized LogPolicy entry, will default to non-threaded")
-      log_policy = Logger::Policy::NON_THREADED;
+      log_policy = mc_rtc::Logger::Policy::NON_THREADED;
     }
   }
   log_directory = bfs::temp_directory_path();

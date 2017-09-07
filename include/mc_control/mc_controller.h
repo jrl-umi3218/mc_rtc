@@ -5,6 +5,7 @@
 
 #include <mc_control/Configuration.h>
 #include <mc_control/generic_gripper.h>
+#include <mc_rtc/log/Logger.h>
 
 #include <mc_solver/QPSolver.h>
 #include <mc_solver/msg/QPResult.h>
@@ -203,27 +204,8 @@ public:
    */
   virtual bool read_write_msg(std::string & msg, std::string & out);
 
-  /** Logging interface: add information to the csv header. The csv entries are
-   * separated by a ";"
-   * \param os Datastream containing the default header
-   * \note
-   * This is called once (when the controller is started)
-   *
-   * \note
-   * The default implementation does nothing.
-   */
-  virtual std::ostream& log_header(std::ostream & os);
-
-  /** Logging interface: add data to the csv file. The csv entries are
-   * separated by a ";"
-   * \param os Datastream containing the default header
-   * \note
-   * This is called at each timestep after run() invokation
-   *
-   * \note
-   * The default implementation does nothing.
-   */
-  virtual std::ostream& log_data(std::ostream & os);
+  /** Returns mc_rtc::Logger instance */
+  mc_rtc::Logger & logger();
 
   /** Returns a list of robots supported by the controller.
    * \return Vector of supported robots designed by name (as returned by
@@ -249,6 +231,10 @@ protected:
 protected:
   /** QP solver */
   std::shared_ptr<mc_solver::QPSolver> qpsolver;
+  /** Real robots provided by MCGlobalController */
+  std::shared_ptr<mc_rbdyn::Robots> real_robots;
+  /** Logger provided by MCGlobalController */
+  std::shared_ptr<mc_rtc::Logger> logger_;
 public:
   /** Controller timestep */
   const double timeStep;
@@ -264,8 +250,6 @@ public:
   mc_solver::CollisionsConstraint selfCollisionConstraint;
   /** Posture task for the main robot */
   std::shared_ptr<tasks::qp::PostureTask> postureTask;
-  /** Real robots provided by MCGlobalController */
-  std::shared_ptr<mc_rbdyn::Robots> real_robots;
 };
 
 }

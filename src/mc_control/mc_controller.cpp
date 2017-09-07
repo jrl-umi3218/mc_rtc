@@ -22,6 +22,8 @@ MCController::MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double 
 MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robots_modules, double dt)
 : timeStep(dt)
 {
+  /* Initialize the logger instance */
+  logger_.reset(new mc_rtc::Logger(mc_rtc::Logger::Policy::NON_THREADED, "", ""));
   /* Load the bots and initialize QP solver instance */
   {
   std::vector<std::string> surfaceDirs;
@@ -37,6 +39,7 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
     rbd::forwardVelocity(robot.mb(), robot.mbc());
   }
   qpsolver.reset(new mc_solver::QPSolver(robots, timeStep));
+  qpsolver->logger(logger_);
   }
 
   /* Initialize grippers */
@@ -208,14 +211,9 @@ bool MCController::read_write_msg(std::string &, std::string &)
   return true;
 }
 
-std::ostream& MCController::log_header(std::ostream & os)
+mc_rtc::Logger & MCController::logger()
 {
-  return os;
-}
-
-std::ostream& MCController::log_data(std::ostream & os)
-{
-  return os;
+  return *logger_;
 }
 
 std::vector<std::string> MCController::supported_robots() const

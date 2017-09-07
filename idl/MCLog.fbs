@@ -1,0 +1,69 @@
+namespace mc_rtc.log;
+
+table Bool
+{
+  b:bool;
+}
+
+table Double
+{
+  d:double;
+}
+
+table DoubleVector
+{
+  v:[double];
+}
+
+table UnsignedInt
+{
+  i:uint;
+}
+
+table String
+{
+  s:string;
+}
+
+table Vector3d
+{
+  x:double;
+  y:double;
+  z:double;
+}
+
+table Quaterniond
+{
+  w:double;
+  x:double;
+  y:double;
+  z:double;
+}
+
+table PTransformd
+{
+  ori:Quaterniond;
+  pos:Vector3d;
+}
+
+table ForceVecd
+{
+  couple:Vector3d;
+  force:Vector3d;
+}
+
+table MotionVecd
+{
+  angular:Vector3d;
+  linear:Vector3d;
+}
+
+union LogData { Bool, Double, DoubleVector, UnsignedInt, String, Vector3d, Quaterniond, PTransformd, ForceVecd, MotionVecd }
+
+table Log
+{
+  keys:[string];
+  values:[LogData];
+}
+
+root_type Log;

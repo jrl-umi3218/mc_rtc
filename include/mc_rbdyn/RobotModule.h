@@ -182,6 +182,7 @@ RobotModule::bounds_t MC_RBDYN_DLLAPI urdf_limits_to_bounds(const mc_rbdyn_urdf:
 extern "C"\
 {\
   ROBOT_MODULE_COMMON(NAME)\
+  ROBOT_MODULE_API unsigned int create_args_required() { return 1; }\
   ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string &) { return new TYPE(); }\
 }
 
@@ -194,5 +195,6 @@ extern "C"\
 extern "C"\
 {\
   ROBOT_MODULE_COMMON(NAME)\
+  ROBOT_MODULE_API unsigned int create_args_required() { return 3; }\
   ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string&, const std::string & path, const std::string & name) { return new TYPE(path, name); }\
 }

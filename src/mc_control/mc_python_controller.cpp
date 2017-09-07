@@ -50,22 +50,4 @@ bool MCPythonController::read_write_msg(std::string & msg, std::string & out)
   return false;
 }
 
-std::ostream& MCPythonController::log_header(std::ostream & os)
-{
-  if(log_header_callback)
-  {
-    os << ";" << log_header_callback();
-  }
-  return os;
-}
-
-std::ostream& MCPythonController::log_data(std::ostream & os)
-{
-  if(log_data_callback)
-  {
-    os << ";" << log_data_callback();
-  }
-  return os;
-}
-
 }

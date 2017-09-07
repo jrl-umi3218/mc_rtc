@@ -31,10 +31,14 @@ with open(sys.argv[1]) as fd:
     reader = csv.DictReader(fd, delimiter=';')
     for row in reader:
         for k in reader.fieldnames:
+            try:
+                value = float(row[k])
+            except ValueError:
+                value = None
             if k in data:
-                data[k].append(float(row[k]))
+                data[k].append(value)
             else:
-                data[k] = [float(row[k])]
+                data[k] = [value]
     for k in data:
         data[k] = np.array(data[k])
     print "Read data from log file"
@@ -87,7 +91,7 @@ def plot_torque_fig(joint_names, ax, cc):
     ymin, ymax = get_ylim(ax)
     for j in joint_names:
         if j in REF_JOINT_ORDER:
-            tauc_idx = 'taucIn' + str(REF_JOINT_ORDER.index(j))
+            tauc_idx = 'tauIn_' + str(REF_JOINT_ORDER.index(j))
             if tauc_idx in data:
                 ax.plot(data['t'], data[tauc_idx], label='{0} torque'.format(j), color = cc.next())
                 ymin = min(ymin, np.min(data[tauc_idx]))
@@ -99,7 +103,7 @@ def plot_encoder_fig(joint_names, ax, cc):
     ymin, ymax = get_ylim(ax)
     for j in joint_names:
         if j in REF_JOINT_ORDER:
-            qIn_idx = 'qIn' + str(REF_JOINT_ORDER.index(j))
+            qIn_idx = 'qIn_' + str(REF_JOINT_ORDER.index(j))
             if qIn_idx in data:
                 ax.plot(data['t'], data[qIn_idx], label='{0} encoder'.format(j), color = cc.next())
                 ymin = min(ymin, np.min(data[qIn_idx]))
@@ -111,7 +115,7 @@ def plot_command_fig(joint_names, ax, cc):
     ymin, ymax = get_ylim(ax)
     for j in joint_names:
         if j in REF_JOINT_ORDER:
-            qOut_idx = 'qOut' + str(REF_JOINT_ORDER.index(j))
+            qOut_idx = 'qOut_' + str(REF_JOINT_ORDER.index(j))
             if qOut_idx in data:
                 ax.plot(data['t'], data[qOut_idx], label='{0} command'.format(j), color = cc.next())
                 ymin = min(ymin, np.min(data[qOut_idx]))
@@ -137,7 +141,7 @@ def plot_velocity_actual_fig(joint_names, ax, cc):
     ymin, ymax = get_ylim(ax)
     for j in joint_names:
         if j in REF_JOINT_ORDER:
-            qIn_idx = 'qIn' + str(REF_JOINT_ORDER.index(j))
+            qIn_idx = 'qIn_' + str(REF_JOINT_ORDER.index(j))
             if qIn_idx in data:
                 vIn = [0]
                 vIn.extend([(180/np.pi)*(data[qIn_idx][i+1] - data[qIn_idx][i])/0.005 for i in xrange(len(data[qIn_idx])-1)])
@@ -151,8 +155,8 @@ def plot_error_fig(joint_names, ax, cc):
     ymin, ymax = get_ylim(ax)
     for j in joint_names:
         if j in REF_JOINT_ORDER:
-            qIn_idx = 'qIn' + str(REF_JOINT_ORDER.index(j))
-            qOut_idx = 'qOut' + str(REF_JOINT_ORDER.index(j))
+            qIn_idx = 'qIn_' + str(REF_JOINT_ORDER.index(j))
+            qOut_idx = 'qOut_' + str(REF_JOINT_ORDER.index(j))
             if qIn_idx in data and qOut_idx in data:
                 y_data = data[qOut_idx] - data[qIn_idx]
                 ax.plot(data['t'], y_data, label='{0} error'.format(j), color = cc.next())

@@ -42,8 +42,8 @@ for b in packages:
 
 src_dir = '@CMAKE_CURRENT_SOURCE_DIR@/../../src/'
 src_files = []
-src_files += [ src_dir + f for f in '@mc_control_SRC@;@mc_rbdyn_SRC@;@mc_solver_SRC@;@mc_tasks_SRC@'.split(';') if len(f) ]
-src_files += [ src_dir + f for f in '@mc_control_HDR@;@mc_rbdyn_HDR@;@mc_solver_HDR@;@mc_tasks_HDR@'.split(';') if len(f) ]
+src_files += [ src_dir + f for f in '@mc_control_SRC@;@mc_rbdyn_SRC@;@mc_rtc_utils_SRC@;@mc_solver_SRC@;@mc_tasks_SRC@'.split(';') if len(f) ]
+src_files += [ src_dir + f for f in '@mc_control_HDR@;@mc_rbdyn_HDR@;@mc_rtc_utils_HDR@;@mc_solver_HDR@;@mc_tasks_HDR@'.split(';') if len(f) ]
 for b in packages:
   b_path = '{}/{}/'.format(this_path, b)
   suffixes = [ ('c_', '.pxd'), ('', '.pyx', ('', '.pxd'), '../include/', '.hpp') ]
@@ -69,6 +69,7 @@ class pkg_config(object):
     self.include_dirs = [ x for x in '@MC_RTC_INCLUDE_DIRECTORIES@'.split(';') if len(x) ]
     self.library_dirs = [ x for x in '@MC_RTC_LINK_FLAGS@'.split(';') if len(x) ]
     self.libraries = ['mc_control', 'mc_rbdyn', 'mc_rtc_utils', 'mc_solver', 'mc_tasks', 'mc_rtc_ros']
+    self.libraries += [ os.path.splitext(os.path.basename(b))[0].replace('lib','') for b in '@Boost_LIBRARIES@'.split(';') if len(b) ]
     mc_rtc_location = '@MC_RTC_LOCATION@'
     self.library_dirs.append(os.path.dirname(mc_rtc_location))
     self.found = True

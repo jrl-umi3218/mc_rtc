@@ -40,6 +40,11 @@ RobotModulePtr get_robot_module(const std::string & name, const Args & ... args)
   return RobotLoader::get_robot_module(name, args...);
 }
 
+std::vector<std::string> available_robots()
+{
+  return RobotLoader::available_robots();
+}
+
 Robots& const_cast_robots(const Robots& rhs)
 {
   return const_cast<Robots&>(rhs);

@@ -14,6 +14,8 @@ cimport mc_rbdyn.mc_rbdyn as mc_rbdyn
 
 cimport mc_solver.mc_solver as mc_solver
 
+cimport mc_rtc.mc_rtc as mc_rtc
+
 from cython.operator cimport preincrement as preinc
 from cython.operator cimport dereference as deref
 from libcpp.map cimport map as cppmap
@@ -56,6 +58,8 @@ cdef class MCController(object):
     return self.base.read_write_msg(msg, out)
   def supported_robots(self):
     return self.base.supported_robots()
+  def logger(self):
+    return mc_rtc.LoggerFromRef(self.base.logger())
   property timeStep:
     def __get__(self):
       return self.base.timeStep
@@ -111,12 +115,6 @@ cdef c_mc_control.PythonRWCallback python_to_read_write_msg_callback(string & ms
   cdef PythonRWCallback ret = PythonRWCallback(*(<object>f).read_write_msg_callback(msg))
   return ret.impl
 
-cdef string python_to_log_header_callback(void * f) with gil:
-  return (<object>f).log_header_callback()
-
-cdef string python_to_log_data_callback(void * f) with gil:
-  return (<object>f).log_data_callback()
-
 cdef class MCPythonController(MCController):
   def __dealloc__(self):
     del self.impl
@@ -144,20 +142,3 @@ cdef class MCPythonController(MCController):
       c_mc_control.set_read_write_msg_callback(deref(self.impl), &python_to_read_write_msg_callback, <void*>(self))
     except AttributeError:
       pass
-    has_header_callback = False
-    has_data_callback = False
-    try:
-      self.log_header_callback
-      has_header_callback = True
-    except AttributeError:
-      pass
-    try:
-      self.log_data_callback
-      has_data_callback = True
-    except AttributeError:
-      pass
-    if has_header_callback != has_data_callback:
-      raise TypeError("You need to implement both log_header_callback and log_data_callback")
-    if has_header_callback:
-      c_mc_control.set_log_header_callback(deref(self.impl), &python_to_log_header_callback, <void*>(self))
-      c_mc_control.set_log_data_callback(deref(self.impl), &python_to_log_data_callback, <void*>(self))

@@ -494,11 +494,12 @@ cdef extern from "<mc_rbdyn/contact_transform.h>" namespace "mc_rbdyn":
 cdef extern from "mc_rbdyn_wrapper.hpp" namespace "mc_rbdyn":
   string CollisionToString(const Collision &)
   #FIXME Work-around the lack of variadic template support
-  RobotModulePtr get_robot_module(const string&)
-  RobotModulePtr get_robot_module(const string&, const cppbool&)
-  RobotModulePtr get_robot_module_str "mc_rbdyn::get_robot_module"(const string&, const string&)
-  RobotModulePtr get_robot_module(const string&, const string&, const string&)
+  RobotModulePtr get_robot_module(const string&) except +
+  RobotModulePtr get_robot_module(const string&, const cppbool&) except +
+  RobotModulePtr get_robot_module_str "mc_rbdyn::get_robot_module"(const string&, const string&) except +
+  RobotModulePtr get_robot_module(const string&, const string&, const string&) except +
   #XXX
+  vector[string] available_robots()
   Robots& const_cast_robots(const Robots&)
   Robot& const_cast_robot(const Robot&)
   ForceSensor& const_cast_force_sensor(const ForceSensor &)

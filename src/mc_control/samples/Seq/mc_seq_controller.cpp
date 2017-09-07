@@ -280,7 +280,7 @@ MCSeqControllerConfig::MCSeqControllerConfig(const mc_control::Configuration & c
 
 MCSeqController::MCSeqController(std::shared_ptr<mc_rbdyn::RobotModule> robot_module, double dt, const MCSeqControllerConfig & config)
 : MCController({robot_module, config.env_module}, dt),
-  nrIter(0), logger(timeStep),
+  nrIter(0), time_logger(timeStep),
   publisher(new MCSeqPublisher(robots())),
   step_by_step(config.step_by_step), paused(false), halted(false),
   stanceIndex(config.start_stance), seq_actions(0),
@@ -292,7 +292,7 @@ MCSeqController::MCSeqController(std::shared_ptr<mc_rbdyn::RobotModule> robot_mo
   max_perc(1.0), nr_points(300),
   samples(0.0, max_perc, nr_points)
 {
-  logger.logPhase("START", 0);
+  time_logger.logPhase("START", 0);
   /* Load plan */
   loadStances(robots(), config.plan, stances, actions, interpolators);
   assert(stances.size() == actions.size());
@@ -418,9 +418,9 @@ bool MCSeqController::run()
         if(stanceIndex != stanceIndexIn)
         {
           LOG_SUCCESS("Completed " << actions[stanceIndexIn]->toStr())
-          logger.logPhase(actions[stanceIndexIn]->toStr(), nrIter);
-          logger.report();
-          logger.report("/tmp/mc-control-seq-times.log");
+          time_logger.logPhase(actions[stanceIndexIn]->toStr(), nrIter);
+          time_logger.report();
+          time_logger.report("/tmp/mc-control-seq-times.log");
           if(stanceIndex < actions.size())
           {
             LOG_INFO("Starting " << actions[stanceIndex]->toStr() << "(" << (stanceIndex+1) << "/" << actions.size() << ")")
@@ -482,43 +482,37 @@ void MCSeqController::reset(const ControllerResetData & reset_data)
   qpsolver->setContacts(stances[stanceIndex].geomContacts());
   publisher->set_contacts(stances[stanceIndex].geomContacts());
   stabilityTask->target(env(), stances[stanceIndex], configs[stanceIndex], configs[stanceIndex].comTask.targetSpeed);
-}
 
-std::ostream& MCSeqController::log_header(std::ostream & os)
-{
-  os << ";stance_index;polygonInterpolatorPercent;filteredForceSensor_fx;filteredForceSensor_fy;filteredForceSensor_fz;filteredForceSensor_cx;filteredForceSensor_cy;filteredForceSensor_cz;comt_x;comt_y;comt_z";
-  return os;
-}
-
-std::ostream& MCSeqController::log_data(std::ostream & os)
-{
-  os << ";" << stanceIndex;
-  os << ";" << interpol_percent;
-  if(complianceTask)
-  {
-    const auto & w = complianceTask->getFilteredWrench();
-    os << ";" << w.force().x()
-       << ";" << w.force().y()
-       << ";" << w.force().z()
-       << ";" << w.couple().x()
-       << ";" << w.couple().y()
-       << ";" << w.couple().z();
-  }
-  else
-  {
-    os << ";0;0;0;0;0;0";
-  }
-  if(stabilityTask)
-  {
-    os << ";" << stabilityTask->comObj.x()
-       << ";" << stabilityTask->comObj.y()
-       << ";" << stabilityTask->comObj.z();
-  }
-  else
-  {
-    os << ";0;0;0";
-  }
-  return os;
+  logger().addLogEntry("stance_index", [this]()
+                       {
+                         return stanceIndex;
+                       });
+  logger().addLogEntry("polygonInterpolatorPercent", [this]()
+                       {
+                        return interpol_percent;
+                       });
+  logger().addLogEntry("filteredForceSensor", [this]() -> sva::ForceVecd
+                       {
+                         if(complianceTask)
+                         {
+                           return complianceTask->getFilteredWrench();
+                         }
+                         else
+                         {
+                           return sva::ForceVecd(Eigen::Vector6d::Zero());
+                         }
+                       });
+  logger().addLogEntry("comt", [this]() -> Eigen::Vector3d
+                       {
+                         if(stabilityTask)
+                         {
+                           return stabilityTask->comObj;
+                         }
+                         else
+                         {
+                           return Eigen::Vector3d::Zero();
+                         }
+                       });
 }
 
 std::vector<std::string> MCSeqController::supported_robots() const

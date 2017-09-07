@@ -63,6 +63,13 @@ MCGlobalController::MCGlobalController(const std::string & conf,
     real_robots->load(*config.main_robot_module, config.main_robot_module->rsdf_dir);
   }
   mc_rtc::ROSBridge::set_publisher_timestep(config.publish_timestep);
+  if(config.enable_log)
+  {
+    for(auto c : controllers)
+    {
+      c.second->logger().setup(config.log_policy, config.log_directory, config.log_template);
+    }
+  }
 }
 
 MCGlobalController::~MCGlobalController()
@@ -106,6 +113,10 @@ void MCGlobalController::init(const std::vector<double> & initq)
 
 void MCGlobalController::init(const std::vector<double> & initq, const std::array<double, 7> & initAttitude)
 {
+  if(config.enable_log)
+  {
+    start_log();
+  }
   std::vector<std::vector<double>> q = robot().mbc().q;
   q[0] = {std::begin(initAttitude), std::end(initAttitude)};
   const auto & rjo = ref_joint_order();
@@ -132,11 +143,6 @@ void MCGlobalController::init(const std::vector<double> & initq, const std::arra
     });
   }
   controller_->reset({q});
-  if(config.enable_log)
-  {
-    logger_.reset(new Logger(config.log_policy, config.log_directory, config.log_template));
-    logger_->log_header(current_ctrl, controller_);
-  }
 }
 
 void MCGlobalController::setSensorPosition(const Eigen::Vector3d & pos)
@@ -284,7 +290,7 @@ bool MCGlobalController::run()
     current_ctrl = next_ctrl;
     if(config.enable_log)
     {
-      logger_->log_header(current_ctrl, controller_);
+      start_log();
     }
   }
   const auto& real_q = robot().encoderValues();
@@ -325,7 +331,7 @@ bool MCGlobalController::run()
     bool r = controller_->run();
     if(config.enable_log)
     {
-      logger_->log_data(*this, controller_);
+      controller_->logger().log();
     }
     if(!r) { running = false; }
   }
@@ -472,6 +478,10 @@ bool MCGlobalController::AddController(const std::string & name)
         controllers[name] = controller_loader->create_object(name, config.main_robot_module, config.timestep, config.config);
       }
       controllers[name]->real_robots = real_robots;
+      if(config.enable_log)
+      {
+        controllers[name]->logger().setup(config.log_policy, config.log_directory, config.log_template);
+      }
     }
     catch(const mc_rtc::LoaderException & exc)
     {
@@ -506,6 +516,10 @@ bool MCGlobalController::AddController(const std::string & name,
   }
   controllers[name] = controller;
   controllers[name]->real_robots = real_robots;
+  if(config.enable_log)
+  {
+    controllers[name]->logger().setup(config.log_policy, config.log_directory, config.log_template);
+  }
   return true;
 }
 
@@ -562,6 +576,78 @@ bool MCGlobalController::GoToHalfSitPose()
     return EnableController("HalfSitPose");
   }
   return true;
+}
+
+void MCGlobalController::start_log()
+{
+  // Copy controller pointer to avoid lambda issue
+  MCController * controller = controller_;
+  controller->logger().start(current_ctrl, controller_->timeStep);
+  controller->logger().addLogEntry("qIn",
+              [controller]() -> const std::vector<double>&
+              {
+                return controller->robot().encoderValues();
+              });
+  controller->logger().addLogEntry("ff",
+              [controller]() -> const sva::PTransformd&
+              {
+                return controller->robot().mbc().bodyPosW[0];
+              });
+  controller->logger().addLogEntry("qOut",
+              [controller]()
+              {
+                const auto & qOut = controller->send(0).robots_state[0].q;
+                const auto & rjo = controller->robot().refJointOrder();
+                std::vector<double> ret(rjo.size(), 0);
+                for(size_t i = 0; i < rjo.size(); ++i)
+                {
+                  const auto & jn = rjo[i];
+                  if(qOut.count(jn))
+                  {
+                    ret[i] = qOut.at(jn)[0];
+                  }
+                }
+                return ret;
+              });
+  controller->logger().addLogEntry("tauIn",
+              [controller]() -> const std::vector<double>&
+              {
+                return controller->robot().jointTorques();
+              });
+  for(const auto & fs : controller->robot().forceSensors())
+  {
+    const auto & fs_name = fs.name();
+    controller->logger().addLogEntry(fs.name(),
+                [controller,fs_name]() -> const sva::ForceVecd&
+                {
+                  return controller->robot().forceSensor(fs_name).wrench();
+                });
+  }
+  controller->logger().addLogEntry("pIn",
+              [controller]() -> const Eigen::Vector3d&
+              {
+                return controller->robot().bodySensor().position();
+              });
+  controller->logger().addLogEntry("rpyIn",
+              [controller]() -> const Eigen::Quaterniond&
+              {
+                return controller->robot().bodySensor().orientation();
+              });
+  controller->logger().addLogEntry("velIn",
+              [controller]() -> const Eigen::Vector3d&
+              {
+                return controller->robot().bodySensor().linearVelocity();
+              });
+  controller->logger().addLogEntry("rateIn",
+              [controller]() -> const Eigen::Vector3d&
+              {
+                return controller->robot().bodySensor().angularVelocity();
+              });
+  controller->logger().addLogEntry("accIn",
+              [controller]() -> const Eigen::Vector3d&
+              {
+                return controller->robot().bodySensor().acceleration();
+              });
 }
 
 

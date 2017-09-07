@@ -48,8 +48,11 @@ public:
    * \returns The current CoM target
    */
   Eigen::Vector3d com();
-public:
-  Eigen::Vector3d cur_com;
+private:
+  unsigned int robot_index_;
+  Eigen::Vector3d cur_com_;
+  virtual void addToLogger(mc_rtc::Logger & logger) override;
+  virtual void removeFromLogger(mc_rtc::Logger & logger) override;
 };
 
 }

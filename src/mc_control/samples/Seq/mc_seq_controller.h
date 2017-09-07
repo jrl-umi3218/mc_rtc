@@ -139,9 +139,6 @@ public:
 
   virtual void reset(const ControllerResetData & reset_data) override;
 
-  virtual std::ostream& log_header(std::ostream & os) override;
-  virtual std::ostream& log_data(std::ostream & os) override;
-
   virtual std::vector<std::string> supported_robots() const override;
   /* Utils functions called by SeqStep/SeqAction */
   void updateRobotEnvCollisions(const std::vector<mc_rbdyn::Contact> & contacts, const mc_rbdyn::StanceConfig & conf);
@@ -183,7 +180,7 @@ public:
 public:
   /* For logging */
   uint64_t nrIter;
-  MCSeqTimeLog logger;
+  MCSeqTimeLog time_logger;
   /* Publish information */
   std::shared_ptr<MCSeqPublisher> publisher;
   /* Sequence playing logic */
