@@ -4,6 +4,7 @@
   "properties":
   {
     "type": { "enum": ["vectorOrientation"] },
+    "name": { "type": "string" },
     "robotIndex": { "type": "number", "minimum": 0 },
     "body": { "type": "string" },
     "bodyVector": { "$ref": "/../../eigen/Vector3d.json" },

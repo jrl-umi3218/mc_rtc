@@ -15,6 +15,7 @@ TrajectoryTask::TrajectoryTask(const mc_rbdyn::Robots & robots, unsigned int rob
   duration(duration), timeStep(timeStep), t(0.)
 {
   const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
+  name_ = "trajectory_" + robot.name() + "_" + surface.name();
   X_0_start = surface.X_0_s(robot);
 
   if(nrWP > 0)

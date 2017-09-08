@@ -12,6 +12,7 @@ OrientationTask::OrientationTask(const std::string & bodyName, const mc_rbdyn::R
 
   Eigen::Matrix3d curOri = robot.mbc().bodyPosW[bIndex].rotation();
   finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, curOri);
+  name_ = "orientation_" + robot.name() + "_" + bodyName;
 }
 
 void OrientationTask::reset()
@@ -33,13 +34,12 @@ Eigen::Matrix3d OrientationTask::orientation()
 
 void OrientationTask::addToLogger(mc_rtc::Logger & logger)
 {
-  const auto & robot = robots.robot(rIndex);
-  logger.addLogEntry(robot.name() + "_" + bodyName + "_orientation_target",
+  logger.addLogEntry(name_ + "_target",
                      [this]()
                      {
                      return Eigen::Quaterniond(orientation());
                      });
-  logger.addLogEntry(robot.name() + "_" + bodyName + "_orientation",
+  logger.addLogEntry(name_,
                      [this]()
                      {
                      return Eigen::Quaterniond(robots.robot(rIndex).mbc().bodyPosW[bIndex].rotation());

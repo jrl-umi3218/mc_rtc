@@ -43,6 +43,8 @@ ComplianceTask::ComplianceTask(const mc_rbdyn::Robots & robots,
                                               robotIndex, stiffness, weight);
   clampTrans_ = clamper(0.01);
   clampRot_ = clamper(0.1);
+
+  name_ = "compliance_" + robot_.name() + "_" + body;
 }
 
 ComplianceTask::ComplianceTask(const mc_rbdyn::Robots & robots,

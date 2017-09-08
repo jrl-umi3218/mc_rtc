@@ -4,6 +4,7 @@
   "properties":
   {
     "type": { "enum": ["addContact"] },
+    "name": { "type": "string" },
     "contact": { "$ref": "/../../mc_rbdyn/Contact.json" },
     "speed": { "type": "number", "minimum": 0},
     "stiffness": { "type": "number", "minimum": 0},

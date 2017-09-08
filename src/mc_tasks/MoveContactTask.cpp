@@ -36,6 +36,9 @@ MoveContactTask::MoveContactTask(mc_rbdyn::Robots & robots, mc_rbdyn::Robot & ro
 : robots(robots), robot(robot), env(env),
   robotSurf(contact.r1Surface()), envSurf(contact.r2Surface())
 {
+  name_ = "move_contact_" +
+            robot.name() + "_" + contact.r1Surface()->name() + "_" +
+            env.name() + "_" + contact.r2Surface()->name();
   robotBodyIndex = robot.bodyIndexByName(robotSurf->bodyName());
   envBodyIndex = env.bodyIndexByName(envSurf->bodyName());
 

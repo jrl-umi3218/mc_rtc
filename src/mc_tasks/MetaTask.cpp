@@ -29,6 +29,10 @@ void MetaTask::load(mc_solver::QPSolver & solver,
   {
     selectUnactiveJoints(solver, config("unactiveJoints"));
   }
+  if(config.has("name"))
+  {
+    name(config("name"));
+  }
 }
 
 }

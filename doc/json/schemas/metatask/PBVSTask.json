@@ -4,6 +4,7 @@
   "properties":
   {
     "type": { "enum": ["pbvs"] },
+    "name": { "type": "string" },
     "robotIndex": { "type": "number", "minimum": 0 },
     "surface": { "type": "string" },
 

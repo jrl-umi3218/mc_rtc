@@ -15,6 +15,8 @@ RelativeEndEffectorTask::RelativeEndEffectorTask(const std::string & bodyName, c
   relBodyIdx(robots.robot().bodyIndexByName(relBodyName.size()?relBodyName:robots.robot(robotIndex).mb().body(0).name()))
 {
   reset();
+  const auto & robot = robots.robot(robotIndex);
+  name_ = "body6d_" + robot.name() + "_" + bodyName + "_rel_" + relBodyName;
 }
 
 void RelativeEndEffectorTask::reset()

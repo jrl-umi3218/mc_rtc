@@ -24,7 +24,7 @@ AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots,
                      double direction, double _speed,
                      double stiffness, double weight,
                      Eigen::Vector3d * userT_0_s)
-: robots(robots), robot(robots.robot()), env(robots.env()),
+: robots(robots), robot(robots.robot(contact.r1Index())), env(robots.robot(contact.r2Index())),
   constSpeedConstr(constSpeedConstr), robotSurf(contact.r1Surface()),
   robotBodyIndex(robot.bodyIndexByName(robotSurf->bodyName())),
   targetTf(contact.X_0_r1s(robots)),
@@ -32,6 +32,7 @@ AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots,
   dofMat(Eigen::MatrixXd::Zero(5,6)), speedMat(Eigen::VectorXd::Zero(5)),
   stiffness_(stiffness), weight_(weight)
 {
+  name_ = std::string(direction > 0 ? "remove" : "add") + "_contact_" + robot.name() + "_" + contact.r1Surface()->name() + "_" + env.name() + "_" + contact.r2Surface()->name();
   for(int i = 0; i < 5; ++i)
   {
     dofMat(i,i) = 1;
