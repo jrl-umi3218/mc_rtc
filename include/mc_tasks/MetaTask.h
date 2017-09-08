@@ -23,6 +23,18 @@ struct MC_TASKS_DLLAPI MetaTask
 {
 friend struct mc_solver::QPSolver;
 public:
+  /** Set a name for the task
+   *
+   * This name will be used to identify the task in logs, GUI...
+   *
+   * The name should be set before being added to the solver.
+   *
+   */
+  void name(const std::string & name) { name_ = name; }
+
+  /** Get the name of the task */
+  const std::string & name() const { return name_; }
+
   /*! \brief Reset the task */
   virtual void reset() = 0;
 
@@ -154,6 +166,8 @@ protected:
    * The default implementation removes nothing from the log.
    */
   virtual void removeFromLogger(mc_rtc::Logger &) {}
+
+  std::string name_;
 };
 
 using MetaTaskPtr = std::shared_ptr<MetaTask>;

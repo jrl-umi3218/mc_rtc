@@ -50,6 +50,13 @@ cdef class MetaTask(object):
   def speed(self):
     assert(self.mt_base)
     return eigen.VectorXdFromC(self.mt_base.speed())
+  property name:
+    def __get__(self):
+      assert(self.mt_base)
+      return self.mt_base.name()
+    def __set__(self, value):
+      assert(self.mt_base)
+      self.mt_base.name(value)
 
 include "com_trajectory_task.pxi"
 include "position_trajectory_task.pxi"

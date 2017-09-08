@@ -4,6 +4,7 @@
   "properties":
   {
     "type": { "enum": ["position"] },
+    "name": { "type": "string" },
     "robotIndex": { "type": "number", "minimum": 0 },
     "body": { "type": "string" },
 

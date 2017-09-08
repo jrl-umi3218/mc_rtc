@@ -16,6 +16,7 @@ CoMTask::CoMTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex,
   cur_com_ = rbd::computeCoM(robot.mb(), robot.mbc());
 
   finalize(robots.mbs(), static_cast<int>(robotIndex), cur_com_);
+  name_ = "com_" + robots.robot(robot_index_).name();
 }
 
 void CoMTask::reset()
@@ -44,12 +45,12 @@ Eigen::Vector3d CoMTask::com()
 
 void CoMTask::addToLogger(mc_rtc::Logger & logger)
 {
-  logger.addLogEntry(robots.robot(robot_index_).name() + "_com_target",
+  logger.addLogEntry(name_ + "_target",
                      [this]() -> const Eigen::Vector3d &
                      {
                      return cur_com_;
                      });
-  logger.addLogEntry(robots.robot(robot_index_).name() + "_com",
+  logger.addLogEntry(name_,
                      [this]() -> Eigen::Vector3d
                      {
                      return cur_com_ - eval();

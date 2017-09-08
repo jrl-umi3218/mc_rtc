@@ -24,6 +24,8 @@ EndEffectorTask::EndEffectorTask(const std::string & bodyName, const Eigen::Vect
   orientationTask.reset(new mc_tasks::OrientationTask(bodyName, robots,
                                                       robotIndex, stiffness,
                                                       weight));
+
+  name_ = "body6d_" + robot.name() + "_" + bodyName;
 }
 
 void EndEffectorTask::reset()
@@ -123,13 +125,12 @@ Eigen::VectorXd EndEffectorTask::speed() const
 
 void EndEffectorTask::addToLogger(mc_rtc::Logger & logger)
 {
-  const auto & robot = robots.robot(robotIndex);
-  logger.addLogEntry(robot.name() + "_" + bodyName + "_pt_target",
+  logger.addLogEntry(name_ + "_target",
                      [this]() -> const sva::PTransformd &
                      {
                      return curTransform;
                      });
-  logger.addLogEntry(robot.name() + "_" + bodyName + "_pt",
+  logger.addLogEntry(name_,
                      [this]() -> const sva::PTransformd&
                      {
                      return robots.robot(robotIndex).mbc().bodyPosW[bodyIndex];

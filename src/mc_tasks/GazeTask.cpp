@@ -14,6 +14,7 @@ GazeTask::GazeTask(const std::string & bodyName,
   : TrajectoryTaskGeneric<tasks::qp::GazeTask>(robots, robotIndex, stiffness, weight)
 {
     finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, point2d, depthEstimate, X_b_gaze);
+    name_ = "gaze_" + robots.robot(robotIndex).name() + "_" + bodyName;
 }
 
 GazeTask::GazeTask(const std::string & bodyName,
@@ -24,6 +25,7 @@ GazeTask::GazeTask(const std::string & bodyName,
   : TrajectoryTaskGeneric<tasks::qp::GazeTask>(robots, robotIndex, stiffness, weight)
 {
     finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, point3d, X_b_gaze);
+    name_ = "gaze_" + robots.robot(robotIndex).name() + "_" + bodyName;
 }
 
 void GazeTask::reset()

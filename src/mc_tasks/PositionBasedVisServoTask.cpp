@@ -12,6 +12,7 @@ PositionBasedVisServoTask::PositionBasedVisServoTask(const std::string& bodyName
   : TrajectoryTaskGeneric<tasks::qp::PositionBasedVisServoTask>(robots, robotIndex, stiffness, weight)
 {
     finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, X_t_s, X_b_s);
+    name_ = "pbvs_" + robots.robot(robotIndex).name() + "_" + bodyName;
 }
 
 PositionBasedVisServoTask::PositionBasedVisServoTask(const std::string& surfaceName,

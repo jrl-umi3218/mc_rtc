@@ -18,6 +18,8 @@ cdef extern from "<memory>" namespace "std" nogil:
 
 cdef extern from "<mc_tasks/MetaTask.h>" namespace "mc_tasks":
   cdef cppclass MetaTask:
+    string name()
+    void name(string)
     void reset()
     void dimWeight(const c_eigen.VectorXd &)
     c_eigen.VectorXd dimWeight()
