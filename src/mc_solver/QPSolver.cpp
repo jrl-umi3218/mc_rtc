@@ -95,6 +95,7 @@ void QPSolver::addTask(mc_tasks::MetaTask * task)
     {
       task->addToLogger(*logger_);
     }
+    LOG_INFO("Added task " << task->name())
   }
 }
 
@@ -126,6 +127,7 @@ void QPSolver::removeTask(mc_tasks::MetaTask * task)
     {
       task->removeFromLogger(*logger_);
     }
+    LOG_INFO("Removed task " << task->name())
   }
 }
 
