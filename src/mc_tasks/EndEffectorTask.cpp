@@ -139,9 +139,8 @@ void EndEffectorTask::addToLogger(mc_rtc::Logger & logger)
 
 void EndEffectorTask::removeFromLogger(mc_rtc::Logger & logger)
 {
-  const auto & robot = robots.robot(robotIndex);
-  logger.removeLogEntry(robot.name() + "_" + bodyName + "_pt_target");
-  logger.removeLogEntry(robot.name() + "_" + bodyName + "_pt");
+  logger.removeLogEntry(name_ + "_target");
+  logger.removeLogEntry(name_);
 }
 
 }

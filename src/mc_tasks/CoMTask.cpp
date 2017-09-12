@@ -59,8 +59,8 @@ void CoMTask::addToLogger(mc_rtc::Logger & logger)
 
 void CoMTask::removeFromLogger(mc_rtc::Logger & logger)
 {
-  logger.removeLogEntry(robots.robot(robot_index_).name() + "_com_target");
-  logger.removeLogEntry(robots.robot(robot_index_).name() + "_com");
+  logger.removeLogEntry(name_ + "_target");
+  logger.removeLogEntry(name_);
 }
 
 }

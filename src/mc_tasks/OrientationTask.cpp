@@ -48,9 +48,8 @@ void OrientationTask::addToLogger(mc_rtc::Logger & logger)
 
 void OrientationTask::removeFromLogger(mc_rtc::Logger & logger)
 {
-  const auto & robot = robots.robot(rIndex);
-  logger.removeLogEntry(robot.name() + "_" + bodyName + "_orientation_target");
-  logger.removeLogEntry(robot.name() + "_" + bodyName + "_orientation");
+  logger.removeLogEntry(name_ + "_target");
+  logger.removeLogEntry(name_);
 }
 
 }

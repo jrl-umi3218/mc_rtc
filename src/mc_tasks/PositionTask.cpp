@@ -65,9 +65,8 @@ void PositionTask::addToLogger(mc_rtc::Logger & logger)
 
 void PositionTask::removeFromLogger(mc_rtc::Logger & logger)
 {
-  const auto & robot = robots.robot(rIndex);
-  logger.removeLogEntry(robot.name() + "_" + bodyName + "_position_target");
-  logger.removeLogEntry(robot.name() + "_" + bodyName + "_position");
+  logger.removeLogEntry(name_ + "_target");
+  logger.removeLogEntry(name_);
 }
 
 }
