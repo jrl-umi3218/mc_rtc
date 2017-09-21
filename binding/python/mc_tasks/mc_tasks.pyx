@@ -69,7 +69,7 @@ def genericInit(AnyTask self, size, name, *args, **kwargs):
     self.__own_impl = False
     self.impl = self.ttg_base = self.mt_base = NULL
     return
-  elif len(args) + len(kwargs) >= size:
+  elif len(args) >= size:
     self.__ctor__(*args, **kwargs)
   else:
     raise TypeError("Not enough arguments passed to {0} ctor".format(name))
@@ -84,7 +84,7 @@ cdef class CoMTask(_CoMTrajectoryTask):
     self.impl = self.ttg_base = self.mt_base = new c_mc_tasks.CoMTask(deref(robots.impl), robotIndex, stiffness, weight)
 
   def __cinit__(self, *args, **kwargs):
-    genericInit[CoMTask](self, 3, 'CoMTask', *args, **kwargs)
+    genericInit[CoMTask](self, 2, 'CoMTask', *args, **kwargs)
 
   def com(self, eigen.Vector3d com = None):
     assert(self.impl)
