@@ -66,6 +66,8 @@ include "vector_orientation_trajectory_task.pxi"
 def genericInit(AnyTask self, size, name, *args, **kwargs):
   skip_alloc = kwargs.pop('skip_alloc', False)
   if skip_alloc:
+    if len(args) + len(kwargs) > 0:
+      raise TypeError("Cannot pass skip_alloc=True and other arguments to {0} ctor".format(name))
     self.__own_impl = False
     self.impl = self.ttg_base = self.mt_base = NULL
     return
