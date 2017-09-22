@@ -118,7 +118,7 @@ cdef class PositionTask(_PositionTrajectoryTask):
 
 cdef PositionTask PositionTaskFromSharedPtr(shared_ptr[c_mc_tasks.PositionTask] ptr):
   cdef PositionTask ret = PositionTask(skip_alloc = True)
-  ret.impl = ret.mt_base = ptr.get()
+  ret.impl = ret.mt_base = ret.ttg_base = ptr.get()
   return ret
 
 cdef class OrientationTask(_OrientationTrajectoryTask):
@@ -140,7 +140,7 @@ cdef class OrientationTask(_OrientationTrajectoryTask):
 
 cdef OrientationTask OrientationTaskFromSharedPtr(shared_ptr[c_mc_tasks.OrientationTask] ptr):
   cdef OrientationTask ret = OrientationTask(skip_alloc = True)
-  ret.impl = ret.mt_base = ptr.get()
+  ret.impl = ret.mt_base = ret.ttg_base = ptr.get()
   return ret
 
 cdef class VectorOrientationTask(_VectorOrientationTrajectoryTask):
