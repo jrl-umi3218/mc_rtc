@@ -67,3 +67,8 @@ ctypedef fused AnyMT:
   EndEffectorTask
   RelativeEndEffectorTask
   ComplianceTask
+
+ctypedef fused AnyTask:
+  AnyTTG
+  AnyMT
+
