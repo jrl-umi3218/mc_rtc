@@ -63,8 +63,7 @@ include "position_trajectory_task.pxi"
 include "orientation_trajectory_task.pxi"
 include "vector_orientation_trajectory_task.pxi"
 
-def genericInit(AnyTask self, size, name, *args, **kwargs):
-  skip_alloc = kwargs.pop('skip_alloc', False)
+def genericInit(AnyTask self, size, name, *args, skip_alloc=False, **kwargs):
   if skip_alloc:
     if len(args) + len(kwargs) > 0:
       raise TypeError("Cannot pass skip_alloc=True and other arguments to {0} ctor".format(name))
@@ -130,15 +129,8 @@ cdef class OrientationTask(_OrientationTrajectoryTask):
                 robotIndex, stiffness = 2.0, weight = 500.0):
     self.__own_impl = True
     self.impl = self.ttg_base = self.mt_base = new c_mc_tasks.OrientationTask(bodyName, deref(robots.impl), robotIndex, stiffness, weight)
-  def __cinit__(self, *args, skip_alloc = False):
-    if skip_alloc:
-      self.__own_impl = False
-      self.impl = self.ttg_base = self.mt_base = NULL
-      return
-    elif len(args) >= 3:
-      self.__ctor__(*args)
-    else:
-      raise TypeError("Not enough arguments passed to OrientationTask ctor")
+  def __cinit__(self, *args, **kwargs):
+    genericInit[OrientationTask](self, 3, 'OrientationTask', *args, **kwargs)
   def orientation(self, eigen.Matrix3d ori = None):
     assert(self.impl)
     if ori is None:
@@ -160,15 +152,9 @@ cdef class VectorOrientationTask(_VectorOrientationTrajectoryTask):
                 robotIndex, stiffness = 2.0, weight = 500.0):
     self.__own_impl = True
     self.impl = self.ttg_base = self.mt_base = new c_mc_tasks.VectorOrientationTask(bodyName, bodyVector.impl, targetVector.impl, deref(robots.impl), robotIndex, stiffness, weight)
-  def __cinit__(self, *args, skip_alloc = False):
-    if skip_alloc:
-      self.__own_impl = False
-      self.impl = self.ttg_base = self.mt_base = NULL
-      return
-    elif len(args) >= 5:
-      self.__ctor__(*args)
-    else:
-      raise TypeError("Not enough arguments passed to VectorOrientationTask ctor")
+  def __cinit__(self, *args, **kwargs):
+    genericInit[VectorOrientationTask](self, 5, 'VectorOrientationTask', *args, **kwargs)
+
   def bodyVector(self, eigen.Vector3d ori = None):
     assert(self.impl)
     if ori is None:

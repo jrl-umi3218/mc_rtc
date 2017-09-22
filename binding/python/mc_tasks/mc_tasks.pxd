@@ -60,3 +60,5 @@ cdef class ComplianceTask(MetaTask):
 ctypedef fused AnyTask:
   CoMTask
   PositionTask
+  OrientationTask
+  VectorOrientationTask
