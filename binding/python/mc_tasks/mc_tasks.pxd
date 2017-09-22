@@ -57,8 +57,13 @@ cdef class ComplianceTask(MetaTask):
   cdef c_mc_tasks.ComplianceTask * impl
   cdef cppbool __own_impl
 
-ctypedef fused AnyTask:
+ctypedef fused AnyTTG:
   CoMTask
   PositionTask
   OrientationTask
   VectorOrientationTask
+
+ctypedef fused AnyMT:
+  EndEffectorTask
+  RelativeEndEffectorTask
+  ComplianceTask

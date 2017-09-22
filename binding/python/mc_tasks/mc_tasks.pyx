@@ -63,7 +63,7 @@ include "position_trajectory_task.pxi"
 include "orientation_trajectory_task.pxi"
 include "vector_orientation_trajectory_task.pxi"
 
-def genericInit(AnyTask self, size, name, *args, skip_alloc=False, **kwargs):
+def genericTTGInit(AnyTTG self, size, name, *args, skip_alloc=False, **kwargs):
   if skip_alloc:
     if len(args) + len(kwargs) > 0:
       raise TypeError("Cannot pass skip_alloc=True and other arguments to {0} ctor".format(name))
@@ -75,6 +75,20 @@ def genericInit(AnyTask self, size, name, *args, skip_alloc=False, **kwargs):
   else:
     raise TypeError("Not enough arguments passed to {0} ctor".format(name))
 
+
+def genericMTInit(AnyMT self, size, name, *args, skip_alloc=False, **kwargs):
+  if skip_alloc:
+    if len(args) + len(kwargs) > 0:
+      raise TypeError("Cannot pass skip_alloc=True and other arguments to {0} ctor".format(name))
+    self.__own_impl = False
+    self.impl = self.mt_base = NULL
+    return
+  elif len(args) >= size:
+    self.__ctor__(*args, **kwargs)
+  else:
+    raise TypeError("Not enough arguments passed to {0} ctor".format(name))
+
+
 cdef class CoMTask(_CoMTrajectoryTask):
   def __dealloc__(self):
     if self.__own_impl:
@@ -85,7 +99,7 @@ cdef class CoMTask(_CoMTrajectoryTask):
     self.impl = self.ttg_base = self.mt_base = new c_mc_tasks.CoMTask(deref(robots.impl), robotIndex, stiffness, weight)
 
   def __cinit__(self, *args, **kwargs):
-    genericInit[CoMTask](self, 2, 'CoMTask', *args, **kwargs)
+    genericTTGInit[CoMTask](self, 2, 'CoMTask', *args, **kwargs)
 
   def com(self, eigen.Vector3d com = None):
     assert(self.impl)
@@ -107,7 +121,7 @@ cdef class PositionTask(_PositionTrajectoryTask):
     self.impl = self.ttg_base = self.mt_base = new c_mc_tasks.PositionTask(bodyName, deref(robots.impl), robotIndex, stiffness, weight)
 
   def __cinit__(self, *args, **kwargs):
-    genericInit[PositionTask](self, 3, 'PositionTask', *args, **kwargs)
+    genericTTGInit[PositionTask](self, 3, 'PositionTask', *args, **kwargs)
 
   def position(self, eigen.Vector3d pos = None):
     assert(self.impl)
@@ -130,7 +144,7 @@ cdef class OrientationTask(_OrientationTrajectoryTask):
     self.__own_impl = True
     self.impl = self.ttg_base = self.mt_base = new c_mc_tasks.OrientationTask(bodyName, deref(robots.impl), robotIndex, stiffness, weight)
   def __cinit__(self, *args, **kwargs):
-    genericInit[OrientationTask](self, 3, 'OrientationTask', *args, **kwargs)
+    genericTTGInit[OrientationTask](self, 3, 'OrientationTask', *args, **kwargs)
   def orientation(self, eigen.Matrix3d ori = None):
     assert(self.impl)
     if ori is None:
@@ -153,7 +167,7 @@ cdef class VectorOrientationTask(_VectorOrientationTrajectoryTask):
     self.__own_impl = True
     self.impl = self.ttg_base = self.mt_base = new c_mc_tasks.VectorOrientationTask(bodyName, bodyVector.impl, targetVector.impl, deref(robots.impl), robotIndex, stiffness, weight)
   def __cinit__(self, *args, **kwargs):
-    genericInit[VectorOrientationTask](self, 5, 'VectorOrientationTask', *args, **kwargs)
+    genericTTGInit[VectorOrientationTask](self, 5, 'VectorOrientationTask', *args, **kwargs)
 
   def bodyVector(self, eigen.Vector3d ori = None):
     assert(self.impl)
@@ -170,15 +184,8 @@ cdef class EndEffectorTask(MetaTask):
                 robotIndex, stiffness = 2.0, weight = 1000.0):
     self.__own_impl = True
     self.impl = self.mt_base = new c_mc_tasks.EndEffectorTask(bodyName, deref(robots.impl), robotIndex, stiffness, weight)
-  def __cinit__(self, *args, skip_alloc = False):
-    if skip_alloc:
-      self.__own_impl = False
-      self.impl = self.mt_base = NULL
-      return
-    elif len(args) >= 3:
-      self.__ctor__(*args)
-    else:
-      raise TypeError("Not enough arguments passed to EndEffectorTask ctor")
+  def __cinit__(self, *args, **kwargs):
+    genericMTInit[EndEffectorTask](self, 3, 'EndEffectorTask', *args, **kwargs)
   def add_ef_pose(self, sva.PTransformd pt):
     assert(self.impl)
     self.impl.add_ef_pose(deref(pt.impl))
@@ -205,15 +212,8 @@ cdef class RelativeEndEffectorTask(EndEffectorTask):
                 robotIndex, relBodyName = "", stiffness = 2.0, weight = 1000.0):
     self.__own_impl = True
     self.rel_impl = self.impl = self.mt_base = new c_mc_tasks.RelativeEndEffectorTask(bodyName, deref(robots.impl), robotIndex, relBodyName, stiffness, weight)
-  def __cinit__(self, *args, skip_alloc = False):
-    if skip_alloc:
-      self.__own_impl = False
-      self.rel_impl = self.impl = self.mt_base = NULL
-      return
-    elif len(args) >= 3:
-      self.__ctor__(*args)
-    else:
-      raise TypeError("Not enough arguments passed to RelativeEndEffectorTask ctor")
+  def __cinit__(self, *args, **kwargs):
+    genericMTInit[RelativeEndEffectorTask](self, 3, 'RelativeEndEffectorTask', *args, **kwargs)
 
 cdef class ComplianceTask(MetaTask):
   defaultFGain = c_mc_tasks.defaultFGain
@@ -227,15 +227,9 @@ cdef class ComplianceTask(MetaTask):
                      forceGain = defaultFGain, torqueGain = defaultTGain):
     self.__own_impl = True
     self.impl = self.mt_base = new c_mc_tasks.ComplianceTask(deref(robots.impl), robotIndex, body, timestep, stiffness, weight, forceThresh, torqueThresh, forceGain, torqueGain)
-  def __cinit__(self, *args, skip_alloc = False):
-    if skip_alloc:
-      self.__own_impl = False
-      self.impl = self.mt_base = NULL
-      return
-    elif len(args) >= 4:
-      self.__ctor__(*args)
-    else:
-      raise TypeError("Not enough arguments passed to ComplianceTask ctor")
+  def __cinit__(self, *args, **kwargs):
+    genericMTInit[ComplianceTask](self, 4, 'ComplianceTask', *args, **kwargs)
+
   def setTargetWrench(self, wrench):
     if isinstance(wrench, sva.ForceVecd):
       self.impl.setTargetWrench(deref((<sva.ForceVecd>(wrench)).impl))
