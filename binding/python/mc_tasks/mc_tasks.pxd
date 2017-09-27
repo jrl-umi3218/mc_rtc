@@ -63,13 +63,8 @@ ctypedef fused AnyTTG:
   OrientationTask
   VectorOrientationTask
 
-ctypedef fused AnyMT:
-  EndEffectorTask
-  RelativeEndEffectorTask
-  ComplianceTask
-
 #Note : In recent versions of Cython, fused types can be fused and thus
-# AnyTask can simply be the fusion of AnyTTG and AnyMT
+# AnyTask can simply be the fusion of AnyTTG and other tasks
 ctypedef fused AnyTask:
   CoMTask
   PositionTask

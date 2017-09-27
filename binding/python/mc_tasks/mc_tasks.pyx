@@ -67,7 +67,7 @@ include "vector_orientation_trajectory_task.pxi"
 def genericTTGNull(AnyTTG self):
   self.impl = self.ttg_base = self.mt_base = NULL
 
-def genericMTNull(AnyMT self):
+def genericMTNull(AnyTask self):
   self.impl = self.mt_base = NULL
 
 def genericInit(AnyTask self, size, name, *args, skip_alloc=False, **kwargs):
@@ -77,10 +77,8 @@ def genericInit(AnyTask self, size, name, *args, skip_alloc=False, **kwargs):
     self.__own_impl = False
     if AnyTask in AnyTTG:
       genericTTGNull(self)
-    elif AnyTask in AnyMT:
-      genericMTNull(self)
     else:
-      raise TypeError("A MetaTask should be in either AnyTTG or AnyMT!")
+      genericMTNull(self)
     return
   elif len(args) >= size:
     self.__ctor__(*args, **kwargs)
