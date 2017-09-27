@@ -205,11 +205,11 @@ cdef class EndEffectorTask(MetaTask):
 cdef class RelativeEndEffectorTask(EndEffectorTask):
   def __dealloc__(self):
     if self.__own_impl:
-      del self.rel_impl
+      del self.impl
   def __ctor__(self, bodyName, mc_rbdyn.Robots robots,
                 robotIndex, relBodyName = "", stiffness = 2.0, weight = 1000.0):
     self.__own_impl = True
-    self.rel_impl = self.impl = self.mt_base = new c_mc_tasks.RelativeEndEffectorTask(bodyName, deref(robots.impl), robotIndex, relBodyName, stiffness, weight)
+    self.impl = self.mt_base = new c_mc_tasks.RelativeEndEffectorTask(bodyName, deref(robots.impl), robotIndex, relBodyName, stiffness, weight)
   def __cinit__(self, *args, **kwargs):
     genericInit[RelativeEndEffectorTask](self, 3, 'RelativeEndEffectorTask', *args, **kwargs)
 

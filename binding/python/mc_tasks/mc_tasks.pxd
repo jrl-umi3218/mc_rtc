@@ -51,7 +51,7 @@ cdef class EndEffectorTask(MetaTask):
   cdef cppbool __own_impl
 
 cdef class RelativeEndEffectorTask(EndEffectorTask):
-  cdef c_mc_tasks.RelativeEndEffectorTask * rel_impl
+  pass
 
 cdef class ComplianceTask(MetaTask):
   cdef c_mc_tasks.ComplianceTask * impl
