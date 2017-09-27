@@ -51,8 +51,25 @@ cdef class EndEffectorTask(MetaTask):
   cdef cppbool __own_impl
 
 cdef class RelativeEndEffectorTask(EndEffectorTask):
-  cdef c_mc_tasks.RelativeEndEffectorTask * rel_impl
+  pass
 
 cdef class ComplianceTask(MetaTask):
   cdef c_mc_tasks.ComplianceTask * impl
   cdef cppbool __own_impl
+
+ctypedef fused AnyTTG:
+  CoMTask
+  PositionTask
+  OrientationTask
+  VectorOrientationTask
+
+#Note : In recent versions of Cython, fused types can be fused and thus
+# AnyTask can simply be the fusion of AnyTTG and other tasks
+ctypedef fused AnyTask:
+  CoMTask
+  PositionTask
+  OrientationTask
+  VectorOrientationTask
+  EndEffectorTask
+  RelativeEndEffectorTask
+  ComplianceTask
