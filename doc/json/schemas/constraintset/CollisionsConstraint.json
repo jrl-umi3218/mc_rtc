@@ -6,6 +6,18 @@
     "type": { "enum": ["collision"] },
     "r1Index": { "type": "number", "minimum": 0 },
     "r2Index": { "type": "number", "minimum": 0 },
+    "useCommon":
+    {
+      "type": "boolean",
+      "default": false,
+      "description": "If true and r1Index == r2Index, add the common self-collisions set"
+    },
+    "useMinimal":
+    {
+      "type": "boolean",
+      "default": false,
+      "description": "If true and r1Index == r2Index, add the minimal self-collisions set"
+    },
     "collisions":
     {
       "type": "array",

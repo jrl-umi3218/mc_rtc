@@ -278,6 +278,17 @@ static bool registered = mc_solver::ConstraintSetLoader::register_load_function(
      const mc_rtc::Configuration & config)
   {
     auto ret = std::make_shared<mc_solver::CollisionsConstraint>(solver.robots(), config("r1Index"), config("r2Index"), solver.dt());
+    if(ret->r1Index == ret->r2Index)
+    {
+      if(config("useCommon", false))
+      {
+        ret->addCollisions(solver, solver.robots().robotModule(ret->r1Index).commonSelfCollisions());
+      }
+      else if(config("useMinimal", false))
+      {
+        ret->addCollisions(solver, solver.robots().robotModule(ret->r1Index).minimalSelfCollisions());
+      }
+    }
     std::vector<mc_rbdyn::Collision> collisions = config("collisions", std::vector<mc_rbdyn::Collision>{});
     ret->addCollisions(solver, collisions);
     return ret;
