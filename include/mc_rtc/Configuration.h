@@ -309,6 +309,36 @@ namespace mc_rtc
       }
     }
 
+    /*! \brief Retrieve a set of objects
+     *
+     * \throws If the underlying value is not an array, if the member of the
+     * array do not meet the requirement of the set key type or if the elements
+     * in the array are not unique
+     */
+    template<typename T,
+      typename C = std::less<T>,
+      typename A = std::allocator<T>>
+    operator std::set<T, C, A>() const
+    {
+      if(v.isArray())
+      {
+        std::set<T, C, A> ret;
+        for(size_t i = 0; i < v.size(); ++i)
+        {
+          auto ins = ret.insert(Configuration(v[static_cast<int>(i)]));
+          if(!ins.second)
+          {
+            throw Configuration::Exception("Stored Json set does not hold unique values");
+          }
+        }
+        return ret;
+      }
+      else
+      {
+        throw Configuration::Exception("Stored Json value is not an array");
+      }
+    }
+
     /*! \brief User-defined conversions
      *
      * Requires:
@@ -730,6 +760,29 @@ namespace mc_rtc
       }
     }
 
+    /*! \brief Add a set into the JSON document
+     *
+     * Overwrites existing content if any.
+     *
+     * \param key Key of the element
+     *
+     * \param value Set of elements to add
+     */
+    template<typename T,
+      typename C = std::less<T>,
+      typename A = std::allocator<T>,
+      typename ... Args>
+    void add(const std::string & key,
+             const std::set<T, C, A> & value,
+             Args && ... args)
+    {
+      Configuration v = array(key, value.size());
+      for(const auto & v : value)
+      {
+        v.push(*v, std::forward<Args>(args)...);
+      }
+    }
+
     /*! \brief User-defined conversion
      *
      * Requires the existence of:
@@ -801,6 +854,28 @@ namespace mc_rtc
       for(const auto & el : value)
       {
         v.add(el.first, el.second, std::forward<Args>(args)...);
+      }
+    }
+
+    /*! \brief Push a set into the JSON document
+     *
+     * Overwrites existing content if any.
+     *
+     * \param key Key of the element
+     *
+     * \param value Set of elements to add
+     */
+    template<typename T,
+      typename C = std::less<T>,
+      typename A = std::allocator<T>,
+      typename ... Args>
+    void push(const std::set<T, C, A> & value,
+              Args && ... args)
+    {
+      Configuration v = array(value.size());
+      for(const auto & v : value)
+      {
+        v.push(*v, std::forward<Args>(args)...);
       }
     }
 
