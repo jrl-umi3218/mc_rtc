@@ -94,6 +94,19 @@ int sandbox(void * args)
 }
 #endif
 
+
+/*! \brief Calls a function without sandboxing
+ *
+ * Only catches exceptions
+ *
+ * \tparam T Return type of the function
+ *
+ * \tparam Args Arguments passed to the creation function
+ *
+ */
+template<typename T, typename ... Args>
+T * no_sandbox_function_call(std::function<T*(const Args & ...)> create_fn, const Args & ... args);
+
 /*! \brief Calls a function in a sandbox
  *
  * Allows a function call to fail horribly without crashing the main
@@ -131,15 +144,6 @@ T * sandbox_function_call(std::function<T*(const Args & ...)> create_fn, const A
 #endif
 }
 
-/*! \brief Calls a function without sandboxing
- *
- * Only catches exceptions
- *
- * \tparam T Return type of the function
- *
- * \tparam Args Arguments passed to the creation function
- *
- */
 template<typename T, typename ... Args>
 T * no_sandbox_function_call(std::function<T*(const Args & ...)> create_fn, const Args & ... args)
 {

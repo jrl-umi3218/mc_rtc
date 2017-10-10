@@ -176,7 +176,7 @@ struct TaskTester<mc_tasks::ComplianceTask>
     BOOST_CHECK_CLOSE(ref->forceGain().second, loaded->forceGain().second, 1e-6);
     BOOST_CHECK_CLOSE(ref->torqueGain().first, loaded->torqueGain().first, 1e-6);
     BOOST_CHECK_CLOSE(ref->torqueGain().second, loaded->torqueGain().second, 1e-6);
-    BOOST_CHECK(ref->getTargetWrench() == loaded->getTargetWrench());
+    BOOST_CHECK(ref->getTargetWrench().vector().isApprox(loaded->getTargetWrench().vector()));
   }
 
   Eigen::Matrix6d dof = Eigen::Matrix6d::Random();
