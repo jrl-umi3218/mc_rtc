@@ -22,6 +22,7 @@ EnvRobotModule::EnvRobotModule(const std::string & env_path, const std::string &
     mb = res.mb;
     mbc = res.mbc;
     mbg = res.mbg;
+    boundsFromURDF(res.limits);
     _collisionTransforms = res.collision_tf;
   }
   else
