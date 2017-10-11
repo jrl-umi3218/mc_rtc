@@ -6,6 +6,7 @@
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
+#include <mc_rbdyn/RobotModule.h>
 #include <mc_rbdyn/stance.h>
 #include <mc_rbdyn/Surface.h>
 
