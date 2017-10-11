@@ -149,6 +149,7 @@ void Robots::createRobotWithBase(Robots & robots, unsigned int robots_idx, const
 
 void Robots::createRobotWithBase(Robot & robot, const Base & base, const Eigen::Vector3d & baseAxis)
 {
+  this->robot_modules_.push_back(robot.module());
   this->mbs_.push_back(robot.mbg().makeMultiBody(base.baseName, base.baseType, baseAxis, base.X_0_s, base.X_b0_s));
   this->mbcs_.emplace_back(this->mbs_.back());
   this->mbgs_.push_back(robot.mbg());
@@ -176,6 +177,7 @@ void Robots::removeRobot(unsigned int idx)
     LOG_ERROR("Cannot remove a robot at index " << idx << " because there is " << robots_.size() << " robots loaded")
     return;
   }
+  robot_modules_.erase(robot_modules_.begin() + idx);
   robots_.erase(robots_.begin() + idx);
   mbs_.erase(mbs_.begin() + idx);
   mbcs_.erase(mbcs_.begin() + idx);
@@ -189,6 +191,7 @@ void Robots::removeRobot(unsigned int idx)
 
 void Robots::robotCopy(const Robot & robot)
 {
+  this->robot_modules_.push_back(robot.module());
   this->mbs_.push_back(robot.mb());
   this->mbcs_.push_back(robot.mbc());
   this->mbgs_.push_back(robot.mbg());
@@ -204,6 +207,7 @@ Robot& Robots::load(const RobotModule & module, const std::string &,
 Robot& Robots::load(const RobotModule & module, sva::PTransformd * base,
                     const std::string& bName)
 {
+  robot_modules_.emplace_back(module);
   mbs_.emplace_back(module.mb);
   mbcs_.emplace_back(module.mbc);
   mbgs_.emplace_back(module.mbg);
@@ -441,6 +445,7 @@ Robot& Robots::loadFromUrdf(const std::string & name, const std::string & urdf, 
   std::vector< std::vector<double> > tl = jointsNameToVector(res.mb, defBounds[4]);
   std::vector< std::vector<double> > tu = jointsNameToVector(res.mb, defBounds[5]);
 
+  robot_modules_.emplace_back();
   mbs_.push_back(res.mb);
   mbcs_.push_back(res.mbc);
   mbgs_.push_back(res.mbg);
@@ -550,6 +555,7 @@ Robots::const_reverse_iterator Robots::crend() const noexcept
 
 void mc_rbdyn::Robots::reserve(mc_rbdyn::Robots::size_type new_cap)
 {
+  robot_modules_.reserve(new_cap);
   robots_.reserve(new_cap);
   mbs_.reserve(new_cap);
   mbcs_.reserve(new_cap);

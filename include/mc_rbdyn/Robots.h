@@ -35,6 +35,9 @@ public:
   Robots(const Robots & rhs);
   Robots & operator=(const Robots & rhs);
 
+  /** Give access to the underlying list of RobotModule objects */
+  const std::vector<mc_rbdyn::RobotModule> & robotModules() const;
+
   /** Give access to the underlying list of Robot objects */
   std::vector<Robot> & robots();
   /** Give access to the underlying list of Robot objects (const) */
@@ -125,6 +128,8 @@ public:
   /** @} */
   /* End of Robot(s) loading/unloading functions group */
 
+  const RobotModule & robotModule(size_t idx) const;
+
   Robot & robot();
   const Robot & robot() const;
 
@@ -173,6 +178,7 @@ public:
   void reserve(size_type new_cap);
 
 protected:
+  std::vector<mc_rbdyn::RobotModule> robot_modules_;
   std::vector<mc_rbdyn::Robot> robots_;
   std::vector<rbd::MultiBody> mbs_;
   std::vector<rbd::MultiBodyConfig> mbcs_;

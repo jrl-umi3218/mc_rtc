@@ -144,6 +144,11 @@ void Robot::name(const std::string & name)
   name_ = name;
 }
 
+const RobotModule & Robot::module() const
+{
+  return robots->robotModule(robots_idx);
+}
+
 BodySensor & Robot::bodySensor()
 {
   return bodySensors_[0];

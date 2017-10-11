@@ -24,6 +24,7 @@ namespace mc_control
 namespace mc_rbdyn
 {
 
+struct RobotModule;
 struct Robots;
 
 struct MC_RBDYN_DLLAPI Robot
@@ -45,6 +46,9 @@ public:
   std::string name() const;
 
   void name(const std::string & n);
+
+  /** Retrieve the associated RobotModule */
+  const RobotModule & module() const;
 
   /** @name Body sensors
    *
