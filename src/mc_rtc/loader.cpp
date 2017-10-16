@@ -7,6 +7,8 @@ namespace bfs = boost::filesystem;
 namespace mc_rtc
 {
 
+Loader::callback_t Loader::default_cb  = [](const std::string&, lt_dlhandle){};
+
 unsigned int Loader::init_count_ = 0;
 
 bool Loader::init()
@@ -41,7 +43,10 @@ bool Loader::close()
   return true;
 }
 
-void Loader::load_libraries(const std::string & class_name, const std::vector<std::string> & paths, Loader::handle_map_t & out, bool verbose)
+void Loader::load_libraries(const std::string & class_name,
+                            const std::vector<std::string> & paths,
+                            Loader::handle_map_t & out, bool verbose,
+                            Loader::callback_t cb)
 {
   for(const auto & path : paths)
   {
@@ -137,6 +142,7 @@ void Loader::load_libraries(const std::string & class_name, const std::vector<st
             }
           }
           out[cn] = h;
+          cb(cn, h);
         }
       }
     }

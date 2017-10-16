@@ -22,13 +22,13 @@ void ObjectLoader<T>::ObjectDeleter::operator()(T * ptr)
 }
 
 template<typename T>
-ObjectLoader<T>::ObjectLoader(const std::string & class_name, const std::vector<std::string> & paths, bool enable_sandbox, bool verbose)
+ObjectLoader<T>::ObjectLoader(const std::string & class_name, const std::vector<std::string> & paths, bool enable_sandbox, bool verbose, Loader::callback_t cb)
 : class_name(class_name),
   enable_sandbox(enable_sandbox),
   verbose(verbose)
 {
   Loader::init();
-  load_libraries(paths);
+  load_libraries(paths, cb);
 }
 
 template<typename T>
@@ -42,15 +42,15 @@ ObjectLoader<T>::~ObjectLoader()
 }
 
 template<typename T>
-bool ObjectLoader<T>::has_object(const std::string & object)
+bool ObjectLoader<T>::has_object(const std::string & object) const
 {
   return handles_.count(object) != 0;
 }
 
 template<typename T>
-bool ObjectLoader<T>::has_symbol(const std::string & object, const std::string & symbol)
+bool ObjectLoader<T>::has_symbol(const std::string & object, const std::string & symbol) const
 {
-  return has_object(object) && lt_dlsym(handles_[object], symbol.c_str()) != nullptr;
+  return has_object(object) && lt_dlsym(handles_.at(object), symbol.c_str()) != nullptr;
 }
 
 template<typename T>
@@ -65,9 +65,10 @@ std::vector<std::string> ObjectLoader<T>::objects() const
 }
 
 template<typename T>
-void ObjectLoader<T>::load_libraries(const std::vector<std::string> & paths)
+void ObjectLoader<T>::load_libraries(const std::vector<std::string> & paths,
+                                     Loader::callback_t cb)
 {
-  Loader::load_libraries(class_name, paths, handles_, verbose);
+  Loader::load_libraries(class_name, paths, handles_, verbose, cb);
   for(const auto & h : handles_)
   {
     if(deleters_.count(h.first) == 0)
@@ -103,7 +104,7 @@ void ObjectLoader<T>::set_verbosity(bool verbose)
 
 template<typename T>
 template<typename... Args>
-std::shared_ptr<T> ObjectLoader<T>::create_object(const std::string & name, const Args & ... args)
+std::shared_ptr<T> ObjectLoader<T>::create_object(const std::string & name, Args & ... args)
 {
   if(!has_object(name))
   {
