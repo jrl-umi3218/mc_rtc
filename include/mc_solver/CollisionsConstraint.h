@@ -43,6 +43,14 @@ public:
    */
   bool removeCollision(QPSolver & solver, const std::string & b1Name, const std::string & b2Name);
 
+  /** Remove a set of collisions
+   *
+   * \param solver The solver into which this constraint was added
+   *
+   * \param cols List of collisions to remove
+   */
+  void removeCollisions(QPSolver & solver, const std::vector<mc_rbdyn::Collision> & cols);
+
   /** Remove all collisions between two bodies
    * \param solver The solver into which this constraint was added
    * \param b1Name Name of the first body

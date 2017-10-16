@@ -32,6 +32,15 @@ bool CollisionsConstraint::removeCollision(QPSolver & solver, const std::string 
   return false;
 }
 
+void CollisionsConstraint::removeCollisions(QPSolver & solver,
+                                            const std::vector<mc_rbdyn::Collision> & cols)
+{
+  for(const auto & c : cols)
+  {
+    removeCollision(solver, c.body1, c.body2);
+  }
+}
+
 bool CollisionsConstraint::removeCollisionByBody(QPSolver & solver, const std::string & b1Name, const std::string & b2Name)
 {
   const mc_rbdyn::Robot & r1 = solver.robots().robot(r1Index);
