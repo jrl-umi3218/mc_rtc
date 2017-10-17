@@ -1,0 +1,13 @@
+macro(add_fsm_test_state state_name)
+  set(state_SRC ${state_name}.cpp)
+  if(EXISTS ${state_name}.h)
+    list(state_SRC ${state_SRC} ${state_name}.h)
+  endif()
+  add_library(${state_name} SHARED ${state_SRC})
+  set_target_properties(${state_name} PROPERTIES
+    PREFIX ""
+    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${state_name})
+  target_link_libraries(${state_name} fsm)
+endmacro()
+
+add_fsm_test_state(SingleState)

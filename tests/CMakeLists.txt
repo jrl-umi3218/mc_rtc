@@ -65,6 +65,15 @@ mc_rtc_test(testSimulationContactPair mc_control)
 # -- Controllers and robots tests -- #
 ######################################
 
+add_subdirectory(fsm_states)
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/testFSMStateFactory.in.cpp
+  ${CMAKE_CURRENT_BINARY_DIR}/testFSMStateFactory.cpp)
+add_executable(testFSMStateFactory ${CMAKE_CURRENT_BINARY_DIR}/testFSMStateFactory.cpp)
+target_link_libraries(testFSMStateFactory ${Boost_LIBRARIES} fsm)
+add_test(testFSMStateFactory testFSMStateFactory)
+generate_msvc_dot_user_file(testFSMStateFactory)
+
 add_executable(test_controller_ticker test_controller_ticker.cpp)
 pkg_config_use_dependency(test_controller_ticker mc_rbdyn_urdf)
 target_link_libraries(test_controller_ticker ${Boost_LIBRARIES} mc_control)
