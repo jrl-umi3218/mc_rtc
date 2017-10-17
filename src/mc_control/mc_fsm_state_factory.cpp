@@ -75,7 +75,7 @@ void resolve_pass(FSMStateFactory & factory, std::vector<UDState> & states)
 void resolve(FSMStateFactory & factory, std::vector<UDState> & states)
 {
   size_t prev_size = 0;
-  while(prev_size != states.size())
+  while(states.size() != 0)
   {
     resolve_pass(factory, states);
     if(states.size() == prev_size)
@@ -86,7 +86,7 @@ void resolve(FSMStateFactory & factory, std::vector<UDState> & states)
   }
   if(states.size() != 0)
   {
-    LOG_ERROR("Some states could not be loaded as their base is not available")
+    LOG_ERROR("Some states could not be loaded as their base is not available, check for typos or cycles")
     for(const auto & s : states)
     {
       LOG_WARNING("- " << s.state << " (base: " << s.base << ")")
@@ -198,7 +198,7 @@ void FSMStateFactory::load(const std::string & name,
     LOG_ERROR_AND_THROW(std::runtime_error, "State " << name << " already exists")
   }
   states_.push_back(name);
-  states_factories_[name] = [config, base, name](FSMStateFactory & f)
+  states_factories_[name] = [config, base](FSMStateFactory & f)
   {
     auto ret = f.create(base);
     ret->configure(config);
