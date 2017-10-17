@@ -44,6 +44,8 @@ struct MC_CONTROL_DLLAPI FSMController;
  */
 struct MC_CONTROL_DLLAPI FSMState
 {
+  virtual ~FSMState() {}
+
   /** Called to configure the state.
    *
    * This might be called multiple times.

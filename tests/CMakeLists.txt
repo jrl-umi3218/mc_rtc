@@ -71,6 +71,8 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/testFSMStateFactory.in.cpp
   ${CMAKE_CURRENT_BINARY_DIR}/testFSMStateFactory.cpp)
 add_executable(testFSMStateFactory ${CMAKE_CURRENT_BINARY_DIR}/testFSMStateFactory.cpp)
 target_link_libraries(testFSMStateFactory ${Boost_LIBRARIES} fsm)
+# Need to link with some of the test states to run tests
+target_link_libraries(testFSMStateFactory ConfigureState)
 add_test(testFSMStateFactory testFSMStateFactory)
 generate_msvc_dot_user_file(testFSMStateFactory)
 

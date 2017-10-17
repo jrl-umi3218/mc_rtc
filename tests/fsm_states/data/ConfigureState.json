@@ -1,0 +1,17 @@
+{
+  "ConfigureState2":
+  {
+    "base": "ConfigureState",
+    "value": 2
+  },
+  "ConfigureState4":
+  {
+    "base": "ConfigureState2",
+    "value": 4
+  },
+  "ConfigureState8":
+  {
+    "base": "ConfigureState4",
+    "value": 8
+  }
+}
