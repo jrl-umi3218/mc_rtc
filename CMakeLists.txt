@@ -40,6 +40,8 @@ option(DISABLE_TESTS "Disable unit tests" OFF)
 option(DISABLE_CONTROLLER_TESTS "Disable controller unit tests" OFF)
 option(DISABLE_ROBOT_TESTS "Disable RobotModule unit tests" OFF)
 
+option(BUILD_BENCHMARKS "Build benchmarks" OFF)
+
 SEARCH_FOR_EIGEN()
 
 if(WIN32)
@@ -156,6 +158,9 @@ add_subdirectory(idl)
 add_subdirectory(src)
 if(NOT ${DISABLE_TESTS})
   add_subdirectory(tests)
+endif()
+if(${BUILD_BENCHMARKS})
+  add_subdirectory(benchmarks)
 endif()
 add_subdirectory(utils)
 
