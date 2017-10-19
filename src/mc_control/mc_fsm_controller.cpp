@@ -223,8 +223,26 @@ FSMController::FSMController(std::shared_ptr<mc_rbdyn::RobotModule> rm,
         }
       }
       auto t = std::make_shared<mc_tasks::PostureTask>(solver(), robot.robotIndex(), stiffness, weight);
+      t->name("FSM_" + t->name());
       posture_tasks_[robot.name()] = t;
       solver().addTask(t);
+    }
+    if(robot.mb().joint(0).type() == rbd::Joint::Free)
+    {
+      double stiffness = 1.0;
+      double weight = 1.0;
+      if(config.has(robot.name()))
+      {
+        auto robot_config = config(robot.name());
+        if(robot_config.has("com"))
+        {
+          robot_config("com")("stiffness", stiffness);
+          robot_config("com")("weight", weight);
+        }
+      }
+      auto t = std::make_shared<mc_tasks::CoMTask>(solver().robots(), robot.robotIndex(), stiffness, weight);
+      t->name("FSM_" + t->name());
+      com_tasks_[robot.name()] = t;
     }
   }
   /** Create contacts */
@@ -338,12 +356,21 @@ void FSMController::resetPostures()
   {
     pt.second->reset();
   }
+  for(auto & ct : com_tasks_)
+  {
+    ct.second->reset();
+    solver().addTask(ct.second);
+  }
 }
 
 void FSMController::nextState()
 {
   if(next_state_.empty()) { return; }
   LOG_INFO("Starting state " << next_state_)
+  for(auto & ct : com_tasks_)
+  {
+    solver().removeTask(ct.second);
+  }
   state_ = factory_.create(next_state_,
                            *this,
                            config_(next_state_, mc_rtc::Configuration{}));

@@ -3,6 +3,7 @@
 #include <mc_control/mc_controller.h>
 #include <mc_control/mc_fsm_state_factory.h>
 
+#include <mc_tasks/CoMTask.h>
 #include <mc_tasks/PostureTask.h>
 
 namespace mc_control
@@ -152,6 +153,9 @@ private:
   /** Creates a posture task for each actuated robots
    * (i.e. robot.dof() - robot.joint(0).dof() > 0 ) */
   std::map<std::string, std::shared_ptr<mc_tasks::PostureTask>> posture_tasks_;
+
+  /** Creates a CoM task for each robots with a free-flyer base */
+  std::map<std::string, std::shared_ptr<mc_tasks::CoMTask>> com_tasks_;
 
   /** FSM contacts */
   std::set<FSMContact> contacts_;
