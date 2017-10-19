@@ -7,6 +7,7 @@
     "name": { "type": "string" },
     "robotIndex": { "type": "number", "minimum": 0 },
     "com": { "$ref": "/../../eigen/Vector3d.json" },
+    "move_com": { "$ref": "/../../eigen/Vector3d.json" },
     "stiffness": { "type": "number", "minimum": 0},
     "damping": { "type": "number", "minimum": 0},
     "weight": { "type": "number", "minimum": 0},
