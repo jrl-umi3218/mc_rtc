@@ -2,7 +2,7 @@
   // If true, the FSM transitions are managed by an external tool
   "Managed": false,
   // If true and the FSM is self-managed, transitions should be triggered
-  "StepByStep": false,
+  "StepByStep": true,
   // Where to look for state libraries
   "StatesLibraries": ["@MC_CONTROLLER_INSTALL_PREFIX@/fsm_states"],
   // Where to look for state files
@@ -63,6 +63,11 @@
     {
       "stiffness": 1.0,
       "weight": 10.0
+    },
+    "com":
+    {
+      "stiffness": 2.0,
+      "weight": 100.0
     }
   },
   // Initial state
@@ -79,10 +84,28 @@
         {
           "type": "com",
           "robotIndex": 0,
-          "com": [0, 0, 0.6],
+          "move_com": [0, 0, -0.1],
           "stiffness": 5.0,
           "weight": 1000,
-          "completion": { "OR": [ { "eval": 1e-3 }, { "speed": 1e-5 } ] }
+          "completion": { "OR": [ { "eval": 1e-3 },
+                                  {"AND": [ { "timeout": 1.0 }, { "speed": 1e-3 } ] } ] }
+        }
+      }
+    },
+    "RaiseCoM":
+    {
+      "base": "MetaTasks",
+      "tasks":
+      {
+        "CoM":
+        {
+          "type": "com",
+          "robotIndex": 0,
+          "move_com": [0, 0, 0.1],
+          "stiffness": 5.0,
+          "weight": 1000,
+          "completion": { "OR": [ { "eval": 1e-3 },
+                                  {"AND": [ { "timeout": 1.0 }, { "speed": 1e-3 } ] } ] }
         }
       }
     }
@@ -91,6 +114,7 @@
   "transitions":
   [
     ["Pause", "OK", "LowerCoM", "Strict"],
-    ["LowerCoM", "OK", "Pause", "Auto"]
+    ["LowerCoM", "OK", "RaiseCoM"],
+    ["RaiseCoM", "OK", "LowerCoM"]
   ]
 }
