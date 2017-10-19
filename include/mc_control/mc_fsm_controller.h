@@ -25,8 +25,10 @@ struct MC_CONTROL_DLLAPI FSMContact
 
   bool operator<(const FSMContact & rhs) const
   {
-    return r1 < rhs.r1 && r1Surface < rhs.r1Surface &&
-           r2 < rhs.r2 && r2Surface < rhs.r2Surface;
+    return r1 < rhs.r1 ||
+           ( r1 == rhs.r1 && r1Surface < rhs.r1Surface ) ||
+           ( r1 == rhs.r1 && r1Surface == rhs.r1Surface && r2 < rhs.r2 ) ||
+           ( r1 == rhs.r1 && r1Surface == rhs.r1Surface && r2 == rhs.r2 && r2Surface < rhs.r2Surface );
   }
 };
 

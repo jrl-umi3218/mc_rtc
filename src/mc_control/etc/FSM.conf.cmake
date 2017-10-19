@@ -61,17 +61,36 @@
   {
     "posture":
     {
-      "stiffness": 2.0,
-      "weight": 2.0
+      "stiffness": 1.0,
+      "weight": 10.0
     }
   },
   // Initial state
   "init": "Pause",
+  // Test some states
+  "states":
+  {
+    "LowerCoM":
+    {
+      "base": "MetaTasks",
+      "tasks":
+      {
+        "CoM":
+        {
+          "type": "com",
+          "robotIndex": 0,
+          "com": [0, 0, 0.6],
+          "stiffness": 5.0,
+          "weight": 1000,
+          "completion": { "OR": [ { "eval": 1e-3 }, { "speed": 1e-5 } ] }
+        }
+      }
+    }
+  },
   // Transitions map
   "transitions":
   [
-    ["Pause", "OK", "Pause_1s", "Strict"],
-    ["Pause_1s", "OK", "Pause_2s", "Auto"],
-    ["Pause_2s", "OK", "Pause", "StepByStep"]
+    ["Pause", "OK", "LowerCoM", "Strict"],
+    ["LowerCoM", "OK", "Pause", "Auto"]
   ]
 }

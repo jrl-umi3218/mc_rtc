@@ -19,3 +19,4 @@ macro(add_fsm_state_simple state_name)
 endmacro()
 
 add_fsm_state_simple(Pause)
+add_fsm_state_simple(MetaTasks)

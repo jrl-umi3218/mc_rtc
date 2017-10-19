@@ -207,32 +207,33 @@ FSMController::FSMController(std::shared_ptr<mc_rbdyn::RobotModule> rm,
     }
   }
   /** Create posture task for actuated robots */
+  for(auto & robot : robots())
   {
-    for(auto & robot : robots())
+    if(robot.mb().nrDof() - robot.mb().joint(0).dof() > 0)
     {
-      if(robot.mb().nrDof() - robot.mb().joint(0).dof() > 0)
+      double stiffness = 1.0;
+      double weight = 1.0;
+      if(config.has(robot.name()))
       {
-        double stiffness = 1.0;
-        double weight = 1.0;
-        if(config.has(robot.name()))
+        auto robot_config = config(robot.name());
+        if(robot_config.has("posture"))
         {
-          auto robot_config = config(robot.name());
-          if(robot_config.has("posture"))
-          {
-            robot_config("posture")("stiffness", stiffness);
-            robot_config("posture")("weight", weight);
-          }
+          robot_config("posture")("stiffness", stiffness);
+          robot_config("posture")("weight", weight);
         }
-        auto t = std::make_shared<mc_tasks::PostureTask>(solver(), robot.robotIndex(), stiffness, weight);
-        posture_tasks_[robot.name()] = t;
-        solver().addTask(t);
       }
+      auto t = std::make_shared<mc_tasks::PostureTask>(solver(), robot.robotIndex(), stiffness, weight);
+      posture_tasks_[robot.name()] = t;
+      solver().addTask(t);
     }
   }
   /** Create contacts */
+  contacts_ = config("contacts", std::set<FSMContact>{});
+  contacts_changed_ = true;
+  /** Load more states if they are provided in the configuration */
+  if(config.has("states"))
   {
-    contacts_ = config("contacts", std::set<FSMContact>{});
-    contacts_changed_ = true;
+    factory_.load(config("states"));
   }
   /** Load transition map if necessary */
   if(!managed_)
