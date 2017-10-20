@@ -94,18 +94,12 @@
     },
     "RaiseCoM":
     {
-      "base": "MetaTasks",
+      "base": "LowerCoM",
       "tasks":
       {
         "CoM":
         {
-          "type": "com",
-          "robotIndex": 0,
-          "move_com": [0, 0, 0.1],
-          "stiffness": 5.0,
-          "weight": 1000,
-          "completion": { "OR": [ { "eval": 1e-3 },
-                                  {"AND": [ { "timeout": 1.0 }, { "speed": 1e-3 } ] } ] }
+          "move_com": [0, 0, 0.1]
         }
       }
     }
