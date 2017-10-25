@@ -34,7 +34,15 @@ target_link_libraries(testQuadraticGenerator mc_rbdyn)
 #################################
 
 MACRO(mc_rtc_test NAME)
-  add_executable(${NAME} ${NAME}.cpp)
+  if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${NAME}.cpp)
+    add_executable(${NAME} ${NAME}.cpp)
+  elseif(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${NAME}.in.cpp)
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/${NAME}.in.cpp
+      ${CMAKE_CURRENT_BINARY_DIR}/${NAME}.cpp)
+    add_executable(${NAME} ${CMAKE_CURRENT_BINARY_DIR}/${NAME}.cpp)
+  else()
+    message(FATAL_ERROR "Cannot add mc_rtc_test: neither ${NAME}.cpp nor ${NAME}.in.cpp exists in ${CMAKE_CURRENT_SOURCE_DIR}")
+  endif()
   target_link_libraries(${NAME} ${Boost_LIBRARIES} ${ARGN})
   add_test(${NAME} ${NAME})
   # Adding a project configuration file (for MSVC only)
@@ -50,13 +58,8 @@ mc_rtc_test(testJsonIO mc_rtc_utils mc_rbdyn)
 mc_rtc_test(testConstraintSetLoader mc_solver)
 mc_rtc_test(testMetaTaskLoader mc_tasks)
 mc_rtc_test(testSolverTaskStorage mc_tasks)
-
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/testCompletionCriteria.in.cpp
-  ${CMAKE_CURRENT_BINARY_DIR}/testCompletionCriteria.cpp)
-add_executable(testCompletionCriteria ${CMAKE_CURRENT_BINARY_DIR}/testCompletionCriteria.cpp)
-target_link_libraries(testCompletionCriteria ${Boost_LIBRARIES} mc_control)
-add_test(testCompletionCriteria testCompletionCriteria)
-generate_msvc_dot_user_file(testCompletionCriteria)
+mc_rtc_test(testCompletionCriteria mc_control)
+mc_rtc_test(testSimulationContactPair mc_control)
 
 ######################################
 # -- Controllers and robots tests -- #
