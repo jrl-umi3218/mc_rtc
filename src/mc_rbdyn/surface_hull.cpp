@@ -43,30 +43,45 @@ sch::S_Object * surface_to_sch(const mc_rbdyn::Surface & surface, const double &
   return nullptr;
 }
 
-sch::S_Object * sch_polyhedron(const std::vector<sva::PTransformd> & points)
+namespace
 {
-#ifndef WIN32
-  char qcIn[16] = "/tmp/qcINXXXXXX";
-  char qcOut[17] = "/tmp/qcOUTXXXXXX";
-#else
-  char qcIn[MAX_PATH + 1];
-  memset(qcIn, 0, MAX_PATH + 1);
-  char qcOut[MAX_PATH + 1];
-  memset(qcOut, 0, MAX_PATH + 1);
-#endif
-  int err = mkstemp(qcIn);
-  if(err < 0)
+  std::string makeRandomFile(char * tpl)
   {
-    LOG_ERROR("Failed to create temporary input file " << qcIn)
-    return nullptr;
-  }
-  err = mkstemp(qcOut);
-  if(err < 0)
-  {
-    LOG_ERROR("Failed to create temporary output file " << qcOut)
-    return nullptr;
+    int err = mkstemp(tpl);
+    if(err < 0)
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, "Failed to create temporary file " << tpl)
+    }
+    close(err);
+    return std::string(tpl);
   }
 
+  std::string makeRandomInputFile()
+  {
+#ifndef WIN32
+    char qcIn[16] = "/tmp/qcINXXXXXX";
+#else
+    char qcIn[MAX_PATH + 1];
+    memset(qcIn, 0, MAX_PATH + 1);
+#endif
+    return makeRandomFile(qcIn);
+  }
+  std::string makeRandomOutputFile()
+  {
+#ifndef WIN32
+    char qcOut[17] = "/tmp/qcOUTXXXXXX";
+#else
+    char qcOut[MAX_PATH + 1];
+    memset(qcOut, 0, MAX_PATH + 1);
+#endif
+    return makeRandomFile(qcOut);
+  }
+}
+
+sch::S_Object * sch_polyhedron(const std::vector<sva::PTransformd> & points)
+{
+  static std::string qcIn = makeRandomInputFile();
+  static std::string qcOut = makeRandomOutputFile();
   std::ofstream ofs(qcIn);
   ofs << "3" << std::endl;
   ofs << points.size() << std::endl;
@@ -80,7 +95,7 @@ sch::S_Object * sch_polyhedron(const std::vector<sva::PTransformd> & points)
   /*FIXME Use libqhull directly for that? */
   std::stringstream ss;
   ss << "qconvex TI " << qcIn << " TO " << qcOut << " Qt o f";
-  err = system(ss.str().c_str());
+  int err = system(ss.str().c_str());
   if(err != 0)
   {
     LOG_ERROR("Invokation of qconvex with the following command failed: " << ss.str())
