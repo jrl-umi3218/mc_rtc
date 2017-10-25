@@ -483,6 +483,16 @@ void FSMController::removeCollisions(const std::string & r1,
   cc->reset();
 }
 
+bool FSMController::hasRobot(const std::string & robot) const
+{
+  return robots_idx_.count(robot) != 0;
+}
+
+mc_rbdyn::Robot & FSMController::robot(const std::string & name)
+{
+  return solver().robot(robots_idx_.at(name));
+}
+
 std::shared_ptr<mc_tasks::PostureTask> FSMController::getPostureTask(const std::string & robot)
 {
   if(posture_tasks_.count(robot))
@@ -502,6 +512,11 @@ void FSMController::addContact(const FSMContact & c)
 void FSMController::removeContact(const FSMContact & c)
 {
   contacts_changed_ |= contacts_.erase(c);
+}
+
+const std::set<FSMContact> & FSMController::contacts() const
+{
+  return contacts_;
 }
 
 }

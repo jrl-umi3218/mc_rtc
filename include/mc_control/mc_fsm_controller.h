@@ -103,6 +103,19 @@ struct MC_CONTROL_DLLAPI FSMController : public MCController
   void removeCollisions(const std::string & r1,
                         const std::string & r2);
 
+  /** Returns true if the robot is part of the controller */
+  bool hasRobot(const std::string & robot) const;
+
+  using MCController::robot;
+
+  /** Access robot by name
+   *
+   * \param name Name of the robot
+   *
+   * \throws If hasRobot(name) returns false
+   */
+  mc_rbdyn::Robot & robot(const std::string & name);
+
   /** Get the posture task associated to a robot
    *
    * Returns a nullptr if the task does not exist (i.e. robot is not
@@ -124,6 +137,9 @@ struct MC_CONTROL_DLLAPI FSMController : public MCController
    *
    */
   void removeContact(const FSMContact & c);
+
+  /** Access the current contacts */
+  const std::set<FSMContact> & contacts() const;
 private:
   /** Reset all posture tasks */
   void resetPostures();
