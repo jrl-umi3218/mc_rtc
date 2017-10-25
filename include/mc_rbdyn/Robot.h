@@ -348,8 +348,13 @@ private:
   /** Correspondance between bodies' names and attached force sensors */
   std::map<std::string, size_t> bodyForceSensors_;
 protected:
-  /** Invoked by Robots parent instance after mb/mbc/mbg/RobotModule are stored */
-  Robot(Robots & robots, unsigned int robots_idx, const sva::PTransformd * base, const std::string & baseName);
+  /** Invoked by Robots parent instance after mb/mbc/mbg/RobotModule are stored
+   *
+   * When loadFiles is set to false, the convex and surfaces files are not
+   * loaded. This is used when copying one robot into another.
+   *
+   */
+  Robot(Robots & robots, unsigned int robots_idx, bool loadFiles, const sva::PTransformd * base = nullptr, const std::string & baseName = "");
 
   /** Copy existing Robot with a new base */
   void copy(Robots & robots, unsigned int robots_idx, const Base & base) const;

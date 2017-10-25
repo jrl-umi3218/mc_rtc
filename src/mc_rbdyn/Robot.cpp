@@ -104,6 +104,16 @@ void loadSCH(const mc_rbdyn::Robot & robot,
   }
 }
 
+template<typename mapT>
+void fixSCH(const mc_rbdyn::Robot & robot,
+            mapT & data_)
+{
+  for(const auto & d : data_)
+  {
+    sch::mc_rbdyn::transform(*d.second.second, robot.bodyPosW()[robot.bodyIndexByName(d.second.first)]);
+  }
+}
+
 }
 
 namespace mc_rbdyn
@@ -117,8 +127,8 @@ namespace mc_rbdyn
 #pragma clang diagnostic ignored "-Wshorten-64-to-32"
 #endif
 
-Robot::Robot(Robots & robots, unsigned int robots_idx,
-             const sva::PTransformd * base = nullptr, const std::string & bName = "")
+Robot::Robot(Robots & robots, unsigned int robots_idx, bool loadFiles,
+             const sva::PTransformd * base, const std::string & bName)
 : robots_(&robots),
   robots_idx_(robots_idx)
 {
@@ -149,6 +159,11 @@ Robot::Robot(Robots & robots, unsigned int robots_idx,
         initQ[i] = jQ;
       }
     }
+    if(initQ[0].size())
+    {
+      const auto & attitude = module_.default_attitude();
+      initQ[0] = {std::begin(attitude), std::end(attitude)};
+    }
     mbc().q = initQ;
     forwardKinematics();
   }
@@ -159,8 +174,11 @@ Robot::Robot(Robots & robots, unsigned int robots_idx,
 
   std::tie(ql_, qu_, vl_, vu_, tl_, tu_) = bounds(mb(), module_.bounds());
 
-  loadSCH(*this, module_.convexHull(), &sch::mc_rbdyn::Polyhedron, convexes_);
-  loadSCH(*this, module_.stpbvHull(), &sch::mc_rbdyn::STPBV, stpbvs_);
+  if(loadFiles)
+  {
+    loadSCH(*this, module_.convexHull(), &sch::mc_rbdyn::Polyhedron, convexes_);
+    loadSCH(*this, module_.stpbvHull(), &sch::mc_rbdyn::STPBV, stpbvs_);
+  }
 
   for(const auto & b : mb().bodies())
   {
@@ -171,13 +189,16 @@ Robot::Robot(Robots & robots, unsigned int robots_idx,
     collisionTransforms_[p.first] = p.second;
   }
 
-  if(bfs::exists(module_.rsdf_dir))
+  if(loadFiles)
   {
-    loadRSDFFromDir(module_.rsdf_dir);
-  }
-  else if(module_.rsdf_dir.size())
-  {
-    LOG_ERROR("RSDF directory (" << module_.rsdf_dir << ") specified by RobotModule for " << module_.name << " does not exist")
+    if(bfs::exists(module_.rsdf_dir))
+    {
+      loadRSDFFromDir(module_.rsdf_dir);
+    }
+    else if(module_.rsdf_dir.size())
+    {
+      LOG_ERROR("RSDF directory (" << module_.rsdf_dir << ") specified by RobotModule for " << module_.name << " does not exist")
+    }
   }
 
   forceSensors_ = module_.forceSensors();
@@ -705,7 +726,7 @@ void Robot::posW(const sva::PTransformd & pt)
 
 void Robot::copy(Robots & robots, unsigned int robots_idx, const Base & base) const
 {
-  robots.robots_.emplace_back(robots, robots_idx, &base.X_0_s, base.baseName);
+  robots.robots_.emplace_back(robots, robots_idx, false, &base.X_0_s, base.baseName);
   auto & robot = robots.robots_.back();
   for(const auto & s : surfaces_)
   {
@@ -713,11 +734,23 @@ void Robot::copy(Robots & robots, unsigned int robots_idx, const Base & base) co
   }
   robot.bodyTransforms_ = robot.mbg().bodiesBaseTransform(base.baseName, base.X_b0_s);
   robot.fixSurfaces();
+  for(const auto & cH : convexes_)
+  {
+    robot.convexes_[cH.first] = {cH.second.first,
+      std::make_shared<sch::S_Polyhedron>(*cH.second.second)};
+  }
+  fixSCH(robot, robot.convexes_);
+  for(const auto & stpbv : stpbvs_)
+  {
+    robot.stpbvs_[stpbv.first] = {stpbv.second.first,
+      std::make_shared<sch::STP_BV>(*stpbv.second.second)};
+  }
+  fixSCH(robot, robot.stpbvs_);
 }
 
 void Robot::copy(Robots & robots, unsigned int robots_idx) const
 {
-  robots.robots_.emplace_back(robots, robots_idx);
+  robots.robots_.emplace_back(robots, robots_idx, false);
   auto & robot = robots.robots_.back();
   for(const auto & s : surfaces_)
   {
