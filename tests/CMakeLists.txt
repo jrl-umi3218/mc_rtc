@@ -61,31 +61,13 @@ mc_rtc_test(testSolverTaskStorage mc_tasks)
 mc_rtc_test(testCompletionCriteria mc_control)
 mc_rtc_test(testSimulationContactPair mc_control)
 
-######################################
-# -- Controllers and robots tests -- #
-######################################
-
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/testCompletionCriteria.in.cpp
-  ${CMAKE_CURRENT_BINARY_DIR}/testCompletionCriteria.cpp)
-add_executable(testCompletionCriteria ${CMAKE_CURRENT_BINARY_DIR}/testCompletionCriteria.cpp)
-target_link_libraries(testCompletionCriteria ${Boost_LIBRARIES} mc_control)
-add_test(testCompletionCriteria testCompletionCriteria)
-generate_msvc_dot_user_file(testCompletionCriteria)
-
 ###########################
 # -- FSM related tests -- #
 ###########################
 
 add_subdirectory(fsm_states)
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/testFSMStateFactory.in.cpp
-  ${CMAKE_CURRENT_BINARY_DIR}/testFSMStateFactory.cpp)
-add_executable(testFSMStateFactory ${CMAKE_CURRENT_BINARY_DIR}/testFSMStateFactory.cpp)
-target_link_libraries(testFSMStateFactory ${Boost_LIBRARIES} fsm)
-# Need to link with some of the test states to run tests
-target_link_libraries(testFSMStateFactory ConfigureState)
-add_test(testFSMStateFactory testFSMStateFactory)
-generate_msvc_dot_user_file(testFSMStateFactory)
+mc_rtc_test(testFSMStateFactory fsm ConfigureState)
 
 ######################################
 # -- Controllers and robots tests -- #
