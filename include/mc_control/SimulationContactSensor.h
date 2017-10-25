@@ -21,8 +21,8 @@ public:
 public:
   std::shared_ptr<mc_rbdyn::Surface> robotSurface;
   std::shared_ptr<mc_rbdyn::Surface> envSurface;
-  sch::S_Object * robotSch;
-  sch::S_Object * envSch;
+  std::shared_ptr<sch::S_Object> robotSch;
+  std::shared_ptr<sch::S_Object> envSch;
   sch::CD_Pair pair;
 private:
   void updateSCH(sch::S_Object * obj, const mc_rbdyn::Robot & robot, const std::shared_ptr<mc_rbdyn::Surface> & robotSurface);

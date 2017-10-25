@@ -10,14 +10,14 @@ SimulationContactPair::SimulationContactPair(const std::shared_ptr<mc_rbdyn::Sur
 : robotSurface(robotSurface), envSurface(envSurface),
   robotSch(mc_rbdyn::surface_to_sch(*(robotSurface.get()), 0.005, 8)),
   envSch(mc_rbdyn::surface_to_sch(*(envSurface.get()), -0.001, 8)),
-  pair(robotSch, envSch)
+  pair(robotSch.get(), envSch.get())
 {
 }
 
 double SimulationContactPair::update(const mc_rbdyn::Robot & robot, const mc_rbdyn::Robot & env)
 {
-  updateSCH(robotSch, robot, robotSurface);
-  updateSCH(envSch, env, envSurface);
+  updateSCH(robotSch.get(), robot, robotSurface);
+  updateSCH(envSch.get(), env, envSurface);
   return pair.getDistance();
 }
 
