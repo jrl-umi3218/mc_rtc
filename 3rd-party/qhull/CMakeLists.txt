@@ -62,6 +62,7 @@
 
 project(qhull)
 cmake_minimum_required(VERSION 2.6)
+remove_definitions(-std=c++0x)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # Define qhull_VERSION in CMakeLists.txt, Makefile, qhull-exports.def, qhull_p-exports.def, qhull_r-exports.def, qhull-warn.pri
