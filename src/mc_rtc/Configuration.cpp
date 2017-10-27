@@ -417,17 +417,39 @@ void Configuration::load(const std::string & path)
   }
   else
   {
-    rapidjson::Document d;
-    if(!mc_rtc::internal::loadDocument(path, d)) { return; }
-    for(auto & m : d.GetObject())
+    load(mc_rtc::Configuration{path});
+  }
+}
+
+void Configuration::load(const mc_rtc::Configuration & config)
+{
+  rapidjson::Document & doc = *(v.impl->doc_p);
+  rapidjson::Value & target = *(v.impl->value());
+
+  if(target.IsNull())
+  {
+    target.CopyFrom(*(config.v.impl->doc_p), doc.GetAllocator());
+  }
+  else
+  {
+    rapidjson::Value & v = *(config.v.impl->value());
+    for(auto & m : v.GetObject())
     {
       if(target.HasMember(m.name))
       {
-        target.RemoveMember(m.name);
+        if(m.value.IsObject() && target.FindMember(m.name)->value.IsObject())
+        {
+          (*this)(m.name.GetString()).load(config(m.name.GetString()));
+          continue;
+        }
+        else
+        {
+          target.RemoveMember(m.name);
+        }
       }
-      rapidjson::Value n(m.name, target.GetAllocator());
-      rapidjson::Value v(m.value, target.GetAllocator());
-      target.AddMember(n, v, target.GetAllocator());
+      rapidjson::Value n(m.name, doc.GetAllocator());
+      rapidjson::Value v(m.value, doc.GetAllocator());
+      target.AddMember(n, v, doc.GetAllocator());
     }
   }
 }

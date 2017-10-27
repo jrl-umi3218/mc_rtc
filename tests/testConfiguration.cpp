@@ -770,3 +770,49 @@ BOOST_AUTO_TEST_CASE(TestUserDefinedConversions)
   std::vector<Foo> v2 = config("foo_v2");
   BOOST_CHECK(v2 == v_ref);
 }
+
+BOOST_AUTO_TEST_CASE(TestLoadConfigurationInConfiguration)
+{
+  auto make_c1 = []()
+  {
+    mc_rtc::Configuration c1;
+    c1.add("a", std::vector<int>{0, 1, 2, 3});
+    c1.add("i", 42);
+    c1.add("d", 42.42);
+    {
+      auto o1 = c1.add("o");
+      o1.add("i", 42);
+      o1.add("d", 42.42);
+      auto o2 = o1.add("o");
+      o2.add("i", 42);
+      o2.add("d", 42.42);
+    }
+    return c1;
+  };
+  auto c1 = make_c1();
+  // c2 should:
+  // - overwrite "a"
+  // - overwrite "i"
+  // - add "dd
+  // - change "o"("d")
+  // - add "o"("ii")
+  // - replace "o"("o") with an array
+  std::vector<double> ref_v = {0.1, 0.2, 0.3};
+  mc_rtc::Configuration c2;
+  c2.add("a", ref_v);
+  c2.add("i", 0);
+  c2.add("dd", 100.0);
+  {
+    auto o1 = c2.add("o");
+    o1.add("ii", 42);
+    o1.add("d", 0.42);
+    o1.add("o", ref_v);
+  }
+  c1.load(c2);
+  BOOST_REQUIRE(c1("a") == ref_v);
+  BOOST_REQUIRE(c1("i") == 0);
+  BOOST_REQUIRE(c1("dd") == 100.0);
+  BOOST_REQUIRE(c1("o")("ii") == 42);
+  BOOST_REQUIRE(c1("o")("d") == 0.42);
+  BOOST_REQUIRE(c1("o")("o") == ref_v);
+}

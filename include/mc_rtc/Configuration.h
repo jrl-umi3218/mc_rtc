@@ -371,10 +371,27 @@ namespace mc_rtc
 
     /*! \brief Load more data into the configuration
      *
+     * For any key existing in both objects:
+     * - (*this)(key) is overwritten for values and arrays
+     * - config(key) is loaded into (*this)(key) for objects
+     *
      * \param path Path to the configuration file
      *
      */
     void load(const std::string & path);
+
+    /*! \brief Load data from another Configuration object
+     *
+     * For any key existing in both objects:
+     * - (*this)(key) is overwritten for values and arrays
+     * - if config(key) and (*this)(key) are objects, config(key) is
+     *   loaded into (*this)(key)
+     * - otherwise, config(key) overwrites (*this)(key)
+     *
+     * \param config The configuration object
+     *
+     */
+    void load(const mc_rtc::Configuration & config);
 
     /*! \brief Save the configuration to a file.
      *
