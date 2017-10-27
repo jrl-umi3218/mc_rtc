@@ -519,6 +519,15 @@ const std::set<FSMContact> & FSMController::contacts() const
   return contacts_;
 }
 
+bool FSMController::hasContact(const FSMContact & c) const
+{
+  for(const auto & co : contacts_)
+  {
+    if(co == c) { return true; }
+  }
+  return false;
+}
+
 }
 
 CONTROLLER_CONSTRUCTOR("FSM", mc_control::FSMController)

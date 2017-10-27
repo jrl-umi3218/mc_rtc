@@ -1,0 +1,19 @@
+{
+  // Define Add/RemoveContact with reasonable default values
+
+  "AddContact":
+  {
+    "base": "AddRemoveContact",
+    "type": "addContact"
+  },
+  "RemoveContact":
+  {
+    "base": "AddRemoveContact",
+    "type": "removeContact"
+  },
+  "AddContactCompliant":
+  {
+    "base": "AddRemoveContact",
+    "type": "compliance"
+  }
+}

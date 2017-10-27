@@ -31,6 +31,12 @@ struct MC_CONTROL_DLLAPI FSMContact
            ( r1 == rhs.r1 && r1Surface == rhs.r1Surface && r2 < rhs.r2 ) ||
            ( r1 == rhs.r1 && r1Surface == rhs.r1Surface && r2 == rhs.r2 && r2Surface < rhs.r2Surface );
   }
+
+  bool operator==(const FSMContact & rhs) const
+  {
+    return r1 == rhs.r1 && r2 == rhs.r2 &&
+           r1Surface == rhs.r1Surface && r2Surface == rhs.r2Surface;
+  }
 };
 
 /** \class FSMController
@@ -140,6 +146,9 @@ struct MC_CONTROL_DLLAPI FSMController : public MCController
 
   /** Access the current contacts */
   const std::set<FSMContact> & contacts() const;
+
+  /** Check if a contact is already present */
+  bool hasContact(const FSMContact & c) const;
 private:
   /** Reset all posture tasks */
   void resetPostures();

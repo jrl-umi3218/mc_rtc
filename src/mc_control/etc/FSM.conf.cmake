@@ -75,7 +75,7 @@
   // Test some states
   "states":
   {
-    "LowerCoM":
+    "CoM":
     {
       "base": "MetaTasks",
       "tasks":
@@ -84,7 +84,6 @@
         {
           "type": "com",
           "robotIndex": 0,
-          "move_com": [0, 0, -0.1],
           "stiffness": 5.0,
           "weight": 1000,
           "completion": { "OR": [ { "eval": 1e-3 },
@@ -92,23 +91,78 @@
         }
       }
     },
-    "RaiseCoM":
+    "LeftCoM":
     {
-      "base": "LowerCoM",
+      "base": "CoM",
       "tasks":
       {
         "CoM":
         {
-          "move_com": [0, 0, 0.1]
+          "move_com": [0, 0.10, 0]
         }
       }
-    }
+    },
+    "RightCoM":
+    {
+      "base": "CoM",
+      "tasks":
+      {
+        "CoM":
+        {
+          "move_com": [0, -0.10, 0]
+        }
+      }
+    },
+    "RemoveLFullSole"
+    {
+      "base": "RemoveContact",
+      "contact":
+      {
+        "r1Surface": "LFullSole",
+        "r2Surface": "AllGround",
+        "isFixed": false
+      }
+    },
+    "AddLFullSole"
+    {
+      "base": "AddContact",
+      "contact":
+      {
+        "r1Surface": "LFullSole",
+        "r2Surface": "AllGround",
+        "isFixed": false
+      }
+    },
+    "RemoveRFullSole"
+    {
+      "base": "RemoveContact",
+      "contact":
+      {
+        "r1Surface": "RFullSole",
+        "r2Surface": "AllGround",
+        "isFixed": false
+      }
+    },
+    "AddRFullSole"
+    {
+      "base": "AddContact",
+      "contact":
+      {
+        "r1Surface": "RFullSole",
+        "r2Surface": "AllGround",
+        "isFixed": false
+      }
+    },
   },
   // Transitions map
   "transitions":
   [
-    ["Pause", "OK", "LowerCoM", "Strict"],
-    ["LowerCoM", "OK", "RaiseCoM"],
-    ["RaiseCoM", "OK", "LowerCoM"]
+    ["Pause", "OK", "LeftCoM", "Strict"],
+    ["LeftCoM", "OK", "RemoveRFullSole"],
+    ["RemoveRFullSole", "OK", "AddRFullSole"],
+    ["AddRFullSole", "OK", "RightCoM"],
+    ["RightCoM", "OK", "RemoveLFullSole"],
+    ["RemoveLFullSole", "OK", "AddLFullSole"],
+    ["AddLFullSole", "OK", "LeftCoM"],
   ]
 }

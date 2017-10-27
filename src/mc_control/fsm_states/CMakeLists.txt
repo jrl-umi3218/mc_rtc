@@ -20,3 +20,4 @@ endmacro()
 
 add_fsm_state_simple(Pause)
 add_fsm_state_simple(MetaTasks)
+add_fsm_state_simple(AddRemoveContact)
