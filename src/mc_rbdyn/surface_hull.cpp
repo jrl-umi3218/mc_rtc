@@ -11,10 +11,10 @@
 #include <fstream>
 
 // Does not look nice but make sure it's not confused with system headers
-#include "src/libqhullcpp/Qhull.h"
-#include "src/libqhullcpp/QhullFacetList.h"
-#include "src/libqhullcpp/QhullPoints.h"
-#include "src/libqhullcpp/QhullVertexSet.h"
+#include "libqhullcpp/Qhull.h"
+#include "libqhullcpp/QhullFacetList.h"
+#include "libqhullcpp/QhullPoints.h"
+#include "libqhullcpp/QhullVertexSet.h"
 
 #ifdef WIN32
 #include <Windows.h>

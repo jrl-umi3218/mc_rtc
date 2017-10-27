@@ -90,7 +90,7 @@ pkg_config_use_dependency(mc_rbdyn mc_rbdyn_urdf)
 pkg_config_use_dependency(mc_rbdyn Tasks)
 target_link_libraries(mc_rbdyn ${Boost_LIBRARIES} ${GEOS_LIBRARY} mc_rtc_loader mc_rtc_utils)
 # qhull
-target_include_directories(mc_rbdyn SYSTEM PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../3rd-party/qhull")
+target_include_directories(mc_rbdyn SYSTEM PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../3rd-party/qhull/src")
 target_link_libraries(mc_rbdyn qhullcpp)
 target_link_libraries(mc_rbdyn qhullstatic_r)
 if(NOT WIN32)
