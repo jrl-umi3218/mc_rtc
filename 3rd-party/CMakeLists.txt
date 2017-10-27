@@ -24,3 +24,5 @@ else()
 endif()
 
 pkg_config_append_libs(ltdl)
+
+add_subdirectory(qhull)
