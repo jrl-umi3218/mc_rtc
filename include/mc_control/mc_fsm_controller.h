@@ -37,6 +37,8 @@ struct MC_CONTROL_DLLAPI FSMContact
     return r1 == rhs.r1 && r2 == rhs.r2 &&
            r1Surface == rhs.r1Surface && r2Surface == rhs.r2Surface;
   }
+
+  static FSMContact from_mc_rbdyn(const FSMController &, const mc_rbdyn::Contact &);
 };
 
 /** \class FSMController

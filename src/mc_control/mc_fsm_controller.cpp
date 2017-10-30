@@ -27,6 +27,16 @@ struct ConfigurationLoader<mc_control::FSMContact>
 namespace mc_control
 {
 
+FSMContact FSMContact::from_mc_rbdyn(const FSMController & ctl, const mc_rbdyn::Contact & contact)
+{
+  return {
+    ctl.robots().robot(contact.r1Index()).name(),
+    ctl.robots().robot(contact.r2Index()).name(),
+    contact.r1Surface()->name(),
+    contact.r2Surface()->name()
+  };
+}
+
 std::pair<bool, FSMController::Transition>
   FSMController::TransitionMap::transition(const std::string & state,
                                            const std::string & output) const

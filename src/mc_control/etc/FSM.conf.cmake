@@ -2,7 +2,7 @@
   // If true, the FSM transitions are managed by an external tool
   "Managed": false,
   // If true and the FSM is self-managed, transitions should be triggered
-  "StepByStep": true,
+  "StepByStep": false,
   // Where to look for state libraries
   "StatesLibraries": ["@MC_CONTROLLER_INSTALL_PREFIX@/fsm_states"],
   // Where to look for state files
@@ -87,10 +87,27 @@
           "stiffness": 5.0,
           "weight": 1000,
           "completion": { "OR": [ { "eval": 1e-3 },
-                                  {"AND": [ { "timeout": 1.0 }, { "speed": 1e-3 } ] } ] }
+                                  {"AND": [ { "timeout": 5.0 }, { "speed": 1e-3 } ] } ] }
         }
       }
     },
+    "HalfSitting":
+    {
+      "base": "CoM",
+      "tasks":
+      {
+        "CoM": { "com": [0, 0, 0.87] },
+        "Posture":
+        {
+          "type": "posture",
+          "robotIndex": 0,
+          "stiffness": 2.0,
+          "weight": 100,
+          "posture": [[1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.773], [0.0], [0.0], [-0.4537856055185257], [0.8726646259971648], [-0.41887902047863906], [0.0], [0.0], [0.0], [-0.4537856055185257], [0.8726646259971648], [-0.41887902047863906], [0.0], [0.0], [0.0], [0.0], [0.0], [0.7853981633974483], [-0.3490658503988659], [0.0], [-1.3089969389957472], [0.0], [0.0], [0.0], [0.3490658503988659], [-0.3490658503988659], [0.3490658503988659], [-0.3490658503988659], [0.3490658503988659], [-0.3490658503988659], [0.7853981633974483], [0.3490658503988659], [0.0], [-1.3089969389957472], [0.0], [0.0], [0.0], [0.3490658503988659], [-0.3490658503988659], [0.3490658503988659], [-0.3490658503988659], [0.3490658503988659], [-0.3490658503988659], []]
+        }
+      }
+    },
+    "HalfSitting2": { "base": "HalfSitting" },
     "LeftCoM":
     {
       "base": "CoM",
@@ -98,7 +115,7 @@
       {
         "CoM":
         {
-          "move_com": [0, 0.10, 0]
+          "move_com": [0, 0.1, 0]
         }
       }
     },
@@ -109,11 +126,11 @@
       {
         "CoM":
         {
-          "move_com": [0, -0.10, 0]
+          "move_com": [0, -0.1, 0]
         }
       }
     },
-    "RemoveLFullSole"
+    "RemoveLFullSole":
     {
       "base": "RemoveContact",
       "contact":
@@ -123,7 +140,7 @@
         "isFixed": false
       }
     },
-    "AddLFullSole"
+    "AddLFullSole":
     {
       "base": "AddContact",
       "contact":
@@ -133,7 +150,7 @@
         "isFixed": false
       }
     },
-    "RemoveRFullSole"
+    "RemoveRFullSole":
     {
       "base": "RemoveContact",
       "contact":
@@ -143,7 +160,7 @@
         "isFixed": false
       }
     },
-    "AddRFullSole"
+    "AddRFullSole":
     {
       "base": "AddContact",
       "contact":
@@ -152,17 +169,19 @@
         "r2Surface": "AllGround",
         "isFixed": false
       }
-    },
+    }
   },
   // Transitions map
   "transitions":
   [
-    ["Pause", "OK", "LeftCoM", "Strict"],
+    ["Pause", "OK", "HalfSitting", "Strict" ],
+    ["HalfSitting", "OK", "LeftCoM"],
+    ["HalfSitting2", "OK", "RightCoM"],
     ["LeftCoM", "OK", "RemoveRFullSole"],
     ["RemoveRFullSole", "OK", "AddRFullSole"],
-    ["AddRFullSole", "OK", "RightCoM"],
+    ["AddRFullSole", "OK", "HalfSitting2"],
     ["RightCoM", "OK", "RemoveLFullSole"],
     ["RemoveLFullSole", "OK", "AddLFullSole"],
-    ["AddLFullSole", "OK", "LeftCoM"],
+    ["AddLFullSole", "OK", "HalfSitting"]
   ]
 }

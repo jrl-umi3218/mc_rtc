@@ -4,11 +4,14 @@
   "AddContact":
   {
     "base": "AddRemoveContact",
-    "type": "addContact"
+    "type": "addContact",
+    "speed": 0.05,
+    "weight": 1000,
+    "stiffness": 2.0
   },
   "RemoveContact":
   {
-    "base": "AddRemoveContact",
+    "base": "AddContact",
     "type": "removeContact"
   },
   "AddContactCompliant":
