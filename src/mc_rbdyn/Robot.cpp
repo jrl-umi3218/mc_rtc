@@ -712,16 +712,19 @@ void Robot::posW(const sva::PTransformd & pt)
       rotation.w(), rotation.x(), rotation.y(), rotation.z(),
       pt.translation().x(), pt.translation().y(), pt.translation().z()
     };
+    forwardKinematics();
   }
   else if (mb().joint(0).type() == rbd::Joint::Type::Fixed)
   {
     mb().transform(0, pt);
+    forwardKinematics();
+    fixSCH(*this, this->convexes_);
+    fixSCH(*this, this->stpbvs_);
   }
   else
   {
     LOG_ERROR_AND_THROW(std::logic_error, "The root pose can only be changed for robots with a free flyer or a fixed joint as joint(0)");
   }
-  forwardKinematics();
 }
 
 void Robot::copy(Robots & robots, unsigned int robots_idx, const Base & base) const
