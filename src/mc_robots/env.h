@@ -14,8 +14,6 @@ struct MC_ROBOTS_DLLAPI EnvRobotModule : public mc_rbdyn::RobotModule
 {
 public:
   EnvRobotModule(const std::string & env_path, const std::string & env_name);
-
-  virtual const std::map<std::string, std::pair<std::string, std::string> > & convexHull() const;
 };
 
 }
