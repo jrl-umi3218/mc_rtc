@@ -2,7 +2,6 @@
 
 #include <mc_control/mc_completion_criteria.h>
 
-#include <mc_control/mc_fsm_controller.h>
 #include <mc_rbdyn/RobotLoader.h>
 #include <mc_tasks/CoMTask.h>
 
