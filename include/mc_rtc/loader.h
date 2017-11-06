@@ -47,6 +47,9 @@ struct MC_RTC_LOADER_DLLAPI Loader
 {
 template<typename T> friend struct ObjectLoader;
 typedef std::map<std::string, lt_dlhandle> handle_map_t;
+typedef std::function<void(const std::string&, lt_dlhandle)> callback_t;
+public:
+  static callback_t default_cb;
 protected:
   /*! \brief Initialize ltdl
    * \throws LoaderException if ltdl fails to init
@@ -70,9 +73,14 @@ protected:
    *
    * \param verbose If true, output some warning information
    *
+   * \param cb User-provided callback when a new class is discovered
+   *
    * \anchor loader_load_libraries_doc
   */
-  static void load_libraries(const std::string & class_name, const std::vector<std::string> & paths, handle_map_t & out, bool verbose);
+  static void load_libraries(const std::string & class_name,
+                             const std::vector<std::string> & paths,
+                             handle_map_t & out, bool verbose,
+                             callback_t cb);
 private:
   static unsigned int init_count_;
 };
@@ -96,8 +104,10 @@ public:
    *
    * \param verbose If true, output some warning information
    *
+   * \param cb Function called when a new object is loaded
+   *
   */
-  ObjectLoader(const std::string & class_name, const std::vector<std::string> & paths, bool enable_sandbox, bool verbose);
+  ObjectLoader(const std::string & class_name, const std::vector<std::string> & paths, bool enable_sandbox, bool verbose, Loader::callback_t cb = Loader::default_cb);
 
   /** Destructor */
   ~ObjectLoader();
@@ -105,13 +115,13 @@ public:
   /** Returns true if the loader has the name object
    * \param name Name to be tested
   */
-  bool has_object(const std::string & name);
+  bool has_object(const std::string & name) const;
 
   /** Returns true if the loader has the name object and the symbol symbol in this library
    * \param name Name to be tested
    * \param symbol Symbol to be tested
   */
-  bool has_symbol(const std::string & name, const std::string & symbol);
+  bool has_symbol(const std::string & name, const std::string & symbol) const;
 
   /** Returns the list of available objects
    * \return A list of available objects
@@ -122,7 +132,8 @@ public:
    * \param paths directories searched for libraries
    * \param verbose If true, output some warning information
   */
-  void load_libraries(const std::vector<std::string> & paths);
+  void load_libraries(const std::vector<std::string> & paths,
+                      Loader::callback_t cb = Loader::default_cb);
 
   /** Remove all loaded libraries */
   void clear();
@@ -149,7 +160,7 @@ public:
    * \throws LoaderException throw if the name does not exist or if symbol resolution fails
   */
   template<typename... Args>
-  std::shared_ptr<T> create_object(const std::string & name, const Args & ... args);
+  std::shared_ptr<T> create_object(const std::string & name, Args & ... args);
 protected:
   std::string class_name;
   bool enable_sandbox;

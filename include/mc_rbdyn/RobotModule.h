@@ -57,6 +57,9 @@ struct MC_RBDYN_DLLAPI RobotModule
     calib_dir(path + "/calib/" + name)
   {}
 
+  /** Construct from the result of an URDF parse */
+  RobotModule(const std::string & name, const mc_rbdyn_urdf::URDFParserResult & res);
+
   virtual ~RobotModule() {}
 
   /* If implemented, returns limits in this order:
@@ -103,6 +106,15 @@ struct MC_RBDYN_DLLAPI RobotModule
 
   /** Return default attitude of the robot */
   virtual const std::array<double, 7> & default_attitude() const { return _default_attitude; }
+
+  /** Generate correct bounds from URDF bounds
+   *
+   * URDF outputs bounds in {lower, upper, velocity, torque} forms
+   *
+   * This function set _bounds to:
+   * {lower, upper, -velocity, velocity, -torque, torque}
+   */
+  void boundsFromURDF(const mc_rbdyn_urdf::Limits & limits);
 
   /** Add missing elements to the current module stance
    *

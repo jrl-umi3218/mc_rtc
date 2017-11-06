@@ -89,6 +89,10 @@ set_target_properties(mc_rbdyn PROPERTIES COMPILE_FLAGS "-DMC_RBDYN_EXPORTS")
 pkg_config_use_dependency(mc_rbdyn mc_rbdyn_urdf)
 pkg_config_use_dependency(mc_rbdyn Tasks)
 target_link_libraries(mc_rbdyn ${Boost_LIBRARIES} ${GEOS_LIBRARY} mc_rtc_loader mc_rtc_utils)
+# qhull
+target_include_directories(mc_rbdyn SYSTEM PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../3rd-party/qhull/src")
+target_link_libraries(mc_rbdyn qhullcpp)
+target_link_libraries(mc_rbdyn qhullstatic_r)
 if(NOT WIN32)
   pkg_config_append_libs(${Boost_LIBRARIES})
 endif()
@@ -163,6 +167,7 @@ mc_tasks/TrajectoryTask.cpp
 mc_tasks/ComplianceTask.cpp
 mc_tasks/GazeTask.cpp
 mc_tasks/PositionBasedVisServoTask.cpp
+mc_tasks/PostureTask.cpp
 )
 set(mc_tasks_SRC ${mc_tasks_SRC} PARENT_SCOPE)
 
@@ -187,6 +192,7 @@ set(mc_tasks_HDR
 ../include/mc_tasks/ComplianceTask.h
 ../include/mc_tasks/GazeTask.h
 ../include/mc_tasks/PositionBasedVisServoTask.h
+../include/mc_tasks/PostureTask.h
 )
 set(mc_tasks_HDR ${mc_tasks_HDR} PARENT_SCOPE)
 
@@ -218,6 +224,7 @@ mc_control/mc_python_controller.cpp
 mc_control/mc_global_controller.cpp
 mc_control/mc_global_controller_configuration.cpp
 mc_control/mc_global_controller_services.cpp
+mc_control/mc_completion_criteria.cpp
 )
 set(mc_control_SRC ${mc_control_SRC} PARENT_SCOPE)
 
@@ -231,6 +238,7 @@ set(mc_control_HDR
 ../include/mc_control/mc_python_controller.h
 ../include/mc_control/SimulationContactSensor.h
 ../include/mc_control/mc_global_controller.h
+../include/mc_control/mc_completion_criteria.h
 )
 set(mc_control_HDR ${mc_control_HDR} PARENT_SCOPE)
 

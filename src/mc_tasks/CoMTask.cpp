@@ -77,6 +77,10 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function("com",
     {
       t->com(config("com"));
     }
+    if(config.has("move_com"))
+    {
+      t->move_com(config("move_com"));
+    }
     t->load(solver, config);
     return t;
   }

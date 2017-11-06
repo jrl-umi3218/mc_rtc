@@ -32,6 +32,15 @@ bool CollisionsConstraint::removeCollision(QPSolver & solver, const std::string 
   return false;
 }
 
+void CollisionsConstraint::removeCollisions(QPSolver & solver,
+                                            const std::vector<mc_rbdyn::Collision> & cols)
+{
+  for(const auto & c : cols)
+  {
+    removeCollision(solver, c.body1, c.body2);
+  }
+}
+
 bool CollisionsConstraint::removeCollisionByBody(QPSolver & solver, const std::string & b1Name, const std::string & b2Name)
 {
   const mc_rbdyn::Robot & r1 = solver.robots().robot(r1Index);
@@ -278,6 +287,17 @@ static bool registered = mc_solver::ConstraintSetLoader::register_load_function(
      const mc_rtc::Configuration & config)
   {
     auto ret = std::make_shared<mc_solver::CollisionsConstraint>(solver.robots(), config("r1Index"), config("r2Index"), solver.dt());
+    if(ret->r1Index == ret->r2Index)
+    {
+      if(config("useCommon", false))
+      {
+        ret->addCollisions(solver, solver.robots().robotModule(ret->r1Index).commonSelfCollisions());
+      }
+      else if(config("useMinimal", false))
+      {
+        ret->addCollisions(solver, solver.robots().robotModule(ret->r1Index).minimalSelfCollisions());
+      }
+    }
     std::vector<mc_rbdyn::Collision> collisions = config("collisions", std::vector<mc_rbdyn::Collision>{});
     ret->addCollisions(solver, collisions);
     return ret;

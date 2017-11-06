@@ -120,6 +120,7 @@ $(document).ready(function()
   'RemoveContactTask',
   'GazeTask',
   'PBVSTask',
+  'PostureTask',
   'SurfaceTransformTask',
   'VectorOrientationTask',
   ]

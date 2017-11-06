@@ -10,6 +10,12 @@
 #include <stdlib.h>
 #include <fstream>
 
+// Does not look nice but make sure it's not confused with system headers
+#include "libqhullcpp/Qhull.h"
+#include "libqhullcpp/QhullFacetList.h"
+#include "libqhullcpp/QhullPoints.h"
+#include "libqhullcpp/QhullVertexSet.h"
+
 #ifdef WIN32
 #include <Windows.h>
 
@@ -30,64 +36,80 @@ sch::S_Object * surface_to_sch(const mc_rbdyn::Surface & surface, const double &
 {
   if(dynamic_cast<const mc_rbdyn::PlanarSurface *>(&surface) != nullptr)
   {
-    return planar_hull(reinterpret_cast<const mc_rbdyn::PlanarSurface&>(surface), depth);
+    return planar_hull(static_cast<const mc_rbdyn::PlanarSurface&>(surface), depth);
   }
   if(dynamic_cast<const mc_rbdyn::CylindricalSurface *>(&surface) != nullptr)
   {
-    return cylindrical_hull(reinterpret_cast<const mc_rbdyn::CylindricalSurface&>(surface), slice);
+    return cylindrical_hull(static_cast<const mc_rbdyn::CylindricalSurface&>(surface), slice);
   }
   if(dynamic_cast<const mc_rbdyn::GripperSurface *>(&surface) != nullptr)
   {
-    return gripper_hull(reinterpret_cast<const mc_rbdyn::GripperSurface&>(surface), slice);
+    return gripper_hull(static_cast<const mc_rbdyn::GripperSurface&>(surface), slice);
   }
   return nullptr;
 }
 
-sch::S_Object * sch_polyhedron(const std::vector<sva::PTransformd> & points)
+sch::S_Object * sch_polyhedron(const std::vector<sva::PTransformd> & points_pt)
 {
-#ifndef WIN32
-  char qcIn[16] = "/tmp/qcINXXXXXX";
-  char qcOut[17] = "/tmp/qcOUTXXXXXX";
-#else
-  char qcIn[MAX_PATH + 1];
-  memset(qcIn, 0, MAX_PATH + 1);
-  char qcOut[MAX_PATH + 1];
-  memset(qcOut, 0, MAX_PATH + 1);
-#endif
-  int err = mkstemp(qcIn);
-  if(err < 0)
+  sch::S_Polyhedron * poly = new sch::S_Polyhedron();
+  auto & poly_algo = *(poly->getPolyhedronAlgorithm());
+
+  // Build the input for qhull
+  std::vector<double> points_in;
+  points_in.reserve(points_pt.size()*3);
+  for(const auto & p : points_pt)
   {
-    LOG_ERROR("Failed to create temporary input file " << qcIn)
-    return nullptr;
-  }
-  err = mkstemp(qcOut);
-  if(err < 0)
-  {
-    LOG_ERROR("Failed to create temporary output file " << qcOut)
-    return nullptr;
+    const auto & t = p.translation();
+    points_in.push_back(t.x());
+    points_in.push_back(t.y());
+    points_in.push_back(t.z());
   }
 
-  std::ofstream ofs(qcIn);
-  ofs << "3" << std::endl;
-  ofs << points.size() << std::endl;
-  for(const sva::PTransformd & p : points)
-  {
-    const Eigen::Vector3d & t = p.translation();
-    ofs << t(0) << " " << t(1) << " " << t(2) << std::endl;
-  }
-  ofs.close();
+  // Run qhull
+  orgQhull::Qhull qhull;
+  qhull.runQhull("", 3, points_pt.size(), points_in.data(), "Qt");
 
-  /*FIXME Use libqhull directly for that? */
-  std::stringstream ss;
-  ss << "qconvex TI " << qcIn << " TO " << qcOut << " Qt o f";
-  err = system(ss.str().c_str());
-  if(err != 0)
+  auto points = qhull.points();
+  poly_algo.vertexes_.reserve(points.size());
+  for(const auto & p : points)
   {
-    LOG_ERROR("Invokation of qconvex with the following command failed: " << ss.str())
-    return nullptr;
+    auto v = new sch::S_PolyhedronVertex();
+    v->setCordinates(p.coordinates()[0], p.coordinates()[1], p.coordinates()[2]);
+    v->setNumber(p.id());
+    poly_algo.vertexes_.push_back(v);
+  }
+  auto facets = qhull.facetList();
+  poly_algo.triangles_.reserve(facets.size());
+  for(const auto & f :facets)
+  {
+    if(!f.isGood())
+    {
+      continue;
+    }
+    sch::PolyhedronTriangle t;
+    t.normal.Set(f.hyperplane().coordinates());
+    t.normal.normalize();
+    t.a = f.vertices()[0].point().id();
+    t.b = f.vertices()[1].point().id();
+    t.c = f.vertices()[2].point().id();
+    auto addNeighbors = [](std::vector<sch::S_PolyhedronVertex*> & vertexes_, unsigned int a, unsigned int b, unsigned int c)
+    {
+      vertexes_[a]->addNeighbor(vertexes_[b]);
+      vertexes_[a]->addNeighbor(vertexes_[c]);
+    };
+    addNeighbors(poly_algo.vertexes_, t.a, t.b, t.c);
+    addNeighbors(poly_algo.vertexes_, t.b, t.a, t.c);
+    addNeighbors(poly_algo.vertexes_, t.c, t.a, t.b);
+    poly_algo.triangles_.push_back(t);
   }
 
-  return sch::mc_rbdyn::Polyhedron(qcOut);
+  for(const auto & v : poly_algo.vertexes_)
+  {
+    v->updateFastArrays();
+  }
+  poly_algo.deleteVertexesWithoutNeighbors();
+
+  return poly;
 }
 
 sch::S_Object * planar_hull(const mc_rbdyn::PlanarSurface & surface, const double & depth)

@@ -24,6 +24,7 @@ namespace mc_control
 namespace mc_rbdyn
 {
 
+struct RobotModule;
 struct Robots;
 
 struct MC_RBDYN_DLLAPI Robot
@@ -45,6 +46,9 @@ public:
   std::string name() const;
 
   void name(const std::string & n);
+
+  /** Retrieve the associated RobotModule */
+  const RobotModule & module() const;
 
   /** @name Body sensors
    *
@@ -307,78 +311,59 @@ public:
   void posW(const sva::PTransformd & pt);
 
 private:
+  Robots * robots_;
+  unsigned int robots_idx_;
   std::string name_;
-  Robots * robots;
-  unsigned int robots_idx;
-  std::map<std::string, sva::PTransformd> bodyTransforms;
+  std::map<std::string, sva::PTransformd> bodyTransforms_;
   std::vector< std::vector<double> > ql_;
   std::vector< std::vector<double> > qu_;
   std::vector< std::vector<double> > vl_;
   std::vector< std::vector<double> > vu_;
   std::vector< std::vector<double> > tl_;
   std::vector< std::vector<double> > tu_;
-  std::map<std::string, convex_pair_t> convexes;
-  std::map<std::string, stpbv_pair_t> stpbvs;
-  std::map<std::string, sva::PTransformd> collisionTransforms;
+  std::map<std::string, convex_pair_t> convexes_;
+  std::map<std::string, stpbv_pair_t> stpbvs_;
+  std::map<std::string, sva::PTransformd> collisionTransforms_;
   std::map<std::string, mc_rbdyn::SurfacePtr> surfaces_;
   std::vector<ForceSensor> forceSensors_;
   std::map<std::string, std::vector<double>> stance_;
+  /** Reference joint order see mc_rbdyn::RobotModule */
+  std::vector<std::string> refJointOrder_;
   /** Encoder values provided by the low-level controller */
   std::vector<double> encoderValues_;
   /** Joint torques provided by the low-level controller */
   std::vector<double> jointTorques_;
-  /** Reference joint order see mc_rbdyn::RobotModule */
-  std::vector<std::string> refJointOrder_;
   /** Hold all body sensors */
   BodySensorVector bodySensors_;
   /** Correspondance between body sensor's name and body sensor index*/
   std::map<std::string, size_t> bodySensorsIndex_;
   /** Correspondance between bodies' names and attached body sensors */
   std::map<std::string, size_t> bodyBodySensors_;
-  Springs springs;
-  std::vector< std::vector<Eigen::VectorXd> > tlPoly;
-  std::vector< std::vector<Eigen::VectorXd> > tuPoly;
+  Springs springs_;
+  std::vector< std::vector<Eigen::VectorXd> > tlPoly_;
+  std::vector< std::vector<Eigen::VectorXd> > tuPoly_;
   std::vector<Flexibility> flexibility_;
-  std::map<std::string, unsigned int> jointIndexByNameD;
-  std::map<std::string, unsigned int> bodyIndexByNameD;
   /** Correspondance between force sensor's name and force sensor index */
   std::map<std::string, size_t> forceSensorsIndex_;
   /** Correspondance between bodies' names and attached force sensors */
   std::map<std::string, size_t> bodyForceSensors_;
 protected:
-  Robot(const std::string & name, Robots & robots, unsigned int robots_idx,
-        const std::map<std::string, sva::PTransformd> & bodyTransforms,
-        const std::vector< std::vector<double> > & ql, const std::vector< std::vector<double> > & qu,
-        const std::vector< std::vector<double> > & vl, const std::vector< std::vector<double> > & vu,
-        const std::vector< std::vector<double> > & tl, const std::vector< std::vector<double> > & tu,
-        const std::map<std::string, convex_pair_t> & convex,
-        const std::map<std::string, stpbv_pair_t> & stpbv,
-        const std::map<std::string, sva::PTransformd> & collisionTransforms,
-        const std::map<std::string, mc_rbdyn::SurfacePtr> & surfaces,
-        const std::vector<ForceSensor> & forceSensors,
-        const std::vector<std::string> & refJointOrder,
-        const std::map<std::string, std::vector<double>> stance = {},
-        const BodySensorVector & bodySensors = BodySensorVector(),
-        const Springs & springs = Springs(), const std::vector< std::vector<Eigen::VectorXd> > & tlPoly = {},
-        const std::vector< std::vector<Eigen::VectorXd> > & tuPoly = {}, const std::vector<Flexibility> & flexibility = {});
+  /** Invoked by Robots parent instance after mb/mbc/mbg/RobotModule are stored
+   *
+   * When loadFiles is set to false, the convex and surfaces files are not
+   * loaded. This is used when copying one robot into another.
+   *
+   */
+  Robot(Robots & robots, unsigned int robots_idx, bool loadFiles, const sva::PTransformd * base = nullptr, const std::string & baseName = "");
+
+  /** Copy existing Robot with a new base */
+  void copy(Robots & robots, unsigned int robots_idx, const Base & base) const;
+  /** Copy existing Robot */
+  void copy(Robots & robots, unsigned int robots_idx) const;
+private:
   Robot(const Robot&) = delete;
   Robot& operator=(const Robot&) = delete;
-  void createWithBase(Robots & robots, unsigned int robots_idx, const Base & base) const;
-  void copy(Robots & robots, unsigned int robots_idx) const;
 };
-
-MC_RBDYN_DLLAPI std::vector< std::vector<double> > jointsParameters(const rbd::MultiBody & mb, const double & coeff);
-
-MC_RBDYN_DLLAPI std::vector< std::vector<double> > jointsDof(const rbd::MultiBody & mb, const double & coeff);
-
-MC_RBDYN_DLLAPI std::map<std::string, std::vector<double> > jointsVectorToName(const rbd::MultiBody & mb, const std::vector< std::vector<double> > & jointsVec,
-                                                              const std::function<bool(const rbd::Joint &, const std::vector<double> &)> & filter
-                                                                        = [](const rbd::Joint &, const std::vector<double> &){return true;});
-
-MC_RBDYN_DLLAPI std::vector< std::vector<double> > jointsNameToVector(const rbd::MultiBody & mb, std::map<std::string, std::vector<double> > & jointsName, const std::vector<double> & def = {}, const std::function<bool (const rbd::Joint &)> & filter = [](const rbd::Joint &){return true;} );
-
-// Return [ql, qu, vl, vu, tl, tu]
-MC_RBDYN_DLLAPI std::vector< std::map< std::string, std::vector<double> > > defaultBounds(const rbd::MultiBody & mb);
 
 /*FIXME Not implemetend for now, only used for ATLAS
 void loadPolyTorqueBoundsData(const std::string & file, Robot & robot);
