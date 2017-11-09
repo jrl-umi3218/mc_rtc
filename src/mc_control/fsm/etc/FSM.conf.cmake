@@ -4,9 +4,9 @@
   // If true and the FSM is self-managed, transitions should be triggered
   "StepByStep": false,
   // Where to look for state libraries
-  "StatesLibraries": ["@MC_CONTROLLER_INSTALL_PREFIX@/fsm_states"],
+  "StatesLibraries": ["@MC_CONTROLLER_INSTALL_PREFIX@/fsm/states"],
   // Where to look for state files
-  "StatesFiles": ["@MC_CONTROLLER_INSTALL_PREFIX@/fsm_states/data"],
+  "StatesFiles": ["@MC_CONTROLLER_INSTALL_PREFIX@/fsm/states/data"],
   // If true, state factory will be more verbose
   "VerboseStateFactory": false,
   // Additional robots to load
@@ -87,7 +87,7 @@
           "stiffness": 5.0,
           "weight": 1000,
           "completion": { "OR": [ { "eval": 1e-3 },
-                                  {"AND": [ { "timeout": 5.0 }, { "speed": 1e-3 } ] } ] }
+                                  {"AND": [ { "timeout": 1.0 }, { "speed": 1e-3 } ] } ] }
         }
       }
     },
