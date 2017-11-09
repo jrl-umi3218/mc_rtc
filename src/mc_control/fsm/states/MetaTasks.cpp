@@ -16,19 +16,7 @@ void MetaTasksState::configure(const mc_rtc::Configuration & config)
   {
     const auto & tName = e.first;
     const auto & tConfig = e.second;
-    if(tasks_configs_.count(tName))
-    {
-      auto & currentConfig = tasks_configs_.at(tName);
-      std::map<std::string, mc_rtc::Configuration> tEntries = tConfig;
-      for(const auto & p : tEntries)
-      {
-        currentConfig.add(p.first, p.second);
-      }
-    }
-    else
-    {
-      tasks_configs_[tName] = tConfig;
-    }
+    tasks_configs_[tName].load(tConfig);
   }
 }
 
