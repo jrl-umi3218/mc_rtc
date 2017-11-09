@@ -87,16 +87,40 @@
           "stiffness": 5.0,
           "weight": 1000,
           "completion": { "OR": [ { "eval": 1e-3 },
-                                  {"AND": [ { "timeout": 1.0 }, { "speed": 1e-3 } ] } ] }
+                                  {"AND": [ { "timeout": 1.0 }, { "speed": 1e-2 } ] } ] }
+        }
+      }
+    },
+    "RelativeEndEffector":
+    {
+      "base": "CoM",
+      "tasks":
+      {
+        "RelativeEndEffector":
+        {
+          "type": "relBody6d",
+          "robotIndex": 0,
+          "positionStiffness": 5.0,
+          "positionWeight": 2000,
+          "orientationStiffness": 100.0,
+          "orientationWeight": 0,
+          "completion": { "OR": [ { "eval": 1e-3 },
+                                  {"AND": [ { "timeout": 1.0 }, { "speed": 1e-2 } ] } ] }
+        },
+        "Orientation":
+        {
+          "type": "orientation",
+          "robotIndex": 0,
+          "orientationStiffness": 100.0,
+          "orientationWeight": 10000.0
         }
       }
     },
     "HalfSitting":
     {
-      "base": "CoM",
+      "base": "MiddleCoM",
       "tasks":
       {
-        "CoM": { "com": [0, 0, 0.87] },
         "Posture":
         {
           "type": "posture",
@@ -115,7 +139,7 @@
       {
         "CoM":
         {
-          "move_com": [0, 0.1, 0]
+          "above": ["LFullSole"]
         }
       }
     },
@@ -126,7 +150,18 @@
       {
         "CoM":
         {
-          "move_com": [0, -0.1, 0]
+          "above": ["RFullSole"]
+        }
+      }
+    },
+    "MiddleCoM":
+    {
+      "base": "CoM",
+      "tasks":
+      {
+        "CoM":
+        {
+          "above": ["LFullSole", "RFullSole"]
         }
       }
     },
@@ -169,6 +204,34 @@
         "r2Surface": "AllGround",
         "isFixed": false
       }
+    },
+    "MoveLFullSole":
+    {
+      "base": "RelativeEndEffector",
+      "tasks":
+      {
+        "RelativeEndEffector":
+        {
+          "body": "LLEG_LINK5",
+          "relBody": "RLEG_LINK5",
+          "position": [0.25, 0.19, 0.1]
+        },
+        "Orientation": { "body": "LLEG_LINK5" }
+      }
+    },
+    "MoveRFullSole":
+    {
+      "base": "RelativeEndEffector",
+      "tasks":
+      {
+        "RelativeEndEffector":
+        {
+          "body": "RLEG_LINK5",
+          "relBody": "LLEG_LINK5",
+          "position": [0.25, -0.19, 0.1]
+        },
+        "Orientation": { "body": "RLEG_LINK5" }
+      }
     }
   },
   // Transitions map
@@ -178,10 +241,12 @@
     ["HalfSitting", "OK", "LeftCoM"],
     ["HalfSitting2", "OK", "RightCoM"],
     ["LeftCoM", "OK", "RemoveRFullSole"],
-    ["RemoveRFullSole", "OK", "AddRFullSole"],
+    ["RemoveRFullSole", "OK", "MoveRFullSole"],
+    ["MoveRFullSole", "OK", "AddRFullSole"],
     ["AddRFullSole", "OK", "HalfSitting2"],
     ["RightCoM", "OK", "RemoveLFullSole"],
-    ["RemoveLFullSole", "OK", "AddLFullSole"],
+    ["RemoveLFullSole", "OK", "MoveLFullSole"],
+    ["MoveLFullSole", "OK", "AddLFullSole"],
     ["AddLFullSole", "OK", "HalfSitting"]
   ]
 }

@@ -5,7 +5,7 @@
   {
     "base": "AddRemoveContact",
     "type": "addContact",
-    "speed": 0.05,
+    "speed": 0.5,
     "weight": 1000,
     "stiffness": 2.0
   },

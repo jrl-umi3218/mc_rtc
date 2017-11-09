@@ -81,6 +81,19 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function("com",
     {
       t->move_com(config("move_com"));
     }
+    if(config.has("above"))
+    {
+      std::vector<std::string> surfaces = config("above");
+      auto com = t->com();
+      Eigen::Vector3d target = Eigen::Vector3d::Zero();
+      auto & robot = solver.robot(config("robotIndex"));
+      for(const auto & s : surfaces)
+      {
+        target += robot.surface(s).X_0_s(robot).translation();
+      }
+      target /= surfaces.size();
+      t->com({target.x(), target.y(), com.z()});
+    }
     t->load(solver, config);
     return t;
   }
