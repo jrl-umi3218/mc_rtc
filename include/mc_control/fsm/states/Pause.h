@@ -1,8 +1,11 @@
 #pragma once
 
-#include <mc_control/mc_fsm_state.h>
+#include <mc_control/fsm/State.h>
 
 namespace mc_control
+{
+
+namespace fsm
 {
 
 /** Implements a pause state
@@ -13,19 +16,21 @@ namespace mc_control
  * - duration Duration of the pause in seconds (double, defaults: 0)
  *
  */
-struct PauseState : mc_control::FSMState
+struct PauseState : State
 {
   void configure(const mc_rtc::Configuration & config) override;
 
-  void start(FSMController&) override;
+  void start(Controller&) override;
 
-  bool run(FSMController&) override;
+  bool run(Controller&) override;
 
-  void teardown(FSMController&) override {}
+  void teardown(Controller&) override {}
 protected:
   double duration_ = 0.0;
   unsigned int tick_;
   unsigned int goal_;
 };
 
-}
+} // namespace fsm
+
+} // namespace mc_control

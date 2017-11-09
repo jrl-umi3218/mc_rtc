@@ -7,9 +7,12 @@
 namespace mc_control
 {
 
-struct MC_CONTROL_DLLAPI FSMController;
+namespace fsm
+{
 
-/** \class FSMState
+struct MC_CONTROL_DLLAPI Controller;
+
+/** \class State
  *
  * A state of an FSM.
  *
@@ -18,7 +21,7 @@ struct MC_CONTROL_DLLAPI FSMController;
  * - Contacts are handled at the global level, the state should go through the
  *   addContact/removeContact methods of FSMController
  * - Collision constraints are handled at the global level, the state should go
- *   through the addCollisons/removeCollisions methods of FSMController
+ *   through the addCollisons/removeCollisions methods of Controller
  * - Kinematics/Dynamics constraints are handled at the global level
  * - Posture tasks are handled at the global level, if a state removes a
  *   posture task from the solver, it should put it back afterwards
@@ -42,9 +45,9 @@ struct MC_CONTROL_DLLAPI FSMController;
  * as teardown(...) is called anyway.
  *
  */
-struct MC_CONTROL_DLLAPI FSMState
+struct MC_CONTROL_DLLAPI State
 {
-  virtual ~FSMState() {}
+  virtual ~State() {}
 
   /** Called to configure the state.
    *
@@ -58,16 +61,16 @@ struct MC_CONTROL_DLLAPI FSMState
    * This will be called only once with the state fully configured.
    *
    */
-  virtual void start(FSMController & ctl) = 0;
+  virtual void start(Controller & ctl) = 0;
 
   /** Called every iteration until it returns true */
-  virtual bool run(FSMController & ctl) = 0;
+  virtual bool run(Controller & ctl) = 0;
 
   /** Called right before destruction */
-  virtual void teardown(FSMController & ctl) = 0;
+  virtual void teardown(Controller & ctl) = 0;
 
   /** Called if the state is interrupted */
-  virtual void stop(FSMController &) {}
+  virtual void stop(Controller &) {}
 
   /** Returns the output of the state, should only be consulted once run has
    * returned true */
@@ -79,9 +82,11 @@ private:
   std::string output_ = "";
 };
 
-using FSMStatePtr = std::shared_ptr<FSMState>;
+using StatePtr = std::shared_ptr<State>;
 
-}
+} // namespace fsm
+
+} // namespace mc_control
 
 /* The following macros are used to simplify the required symbol exports */
 
@@ -99,7 +104,7 @@ using FSMStatePtr = std::shared_ptr<FSMState>;
 extern "C"\
 {\
   FSM_STATE_API std::vector<std::string> MC_RTC_FSM_STATE() { return {NAME}; }\
-  FSM_STATE_API void destroy(mc_control::FSMState * ptr) { delete ptr; }\
-  FSM_STATE_API mc_control::FSMState * create(const std::string &) { return new TYPE(); }\
+  FSM_STATE_API void destroy(mc_control::fsm::State * ptr) { delete ptr; }\
+  FSM_STATE_API mc_control::fsm::State * create(const std::string &) { return new TYPE(); }\
   FSM_STATE_API std::vector<std::string> outputs(const std::string &) { return {__VA_ARGS__}; }\
 }

@@ -1,4 +1,4 @@
-#include <mc_control/mc_completion_criteria.h>
+#include <mc_control/CompletionCriteria.h>
 
 namespace mc_control
 {

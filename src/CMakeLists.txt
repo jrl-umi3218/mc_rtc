@@ -221,6 +221,7 @@ endif()
 pkg_config_append_libs(mc_rtc_ros)
 
 set(mc_control_SRC
+mc_control/CompletionCriteria.cpp
 mc_control/ForceContactSensor.cpp
 mc_control/SimulationContactSensor.cpp
 mc_control/generic_gripper.cpp
@@ -229,12 +230,12 @@ mc_control/mc_python_controller.cpp
 mc_control/mc_global_controller.cpp
 mc_control/mc_global_controller_configuration.cpp
 mc_control/mc_global_controller_services.cpp
-mc_control/mc_completion_criteria.cpp
 )
 set(mc_control_SRC ${mc_control_SRC} PARENT_SCOPE)
 
 set(mc_control_HDR
 ../include/mc_control/api.h
+../include/mc_control/CompletionCriteria.h
 ../include/mc_control/Configuration.h
 ../include/mc_control/ContactSensor.h
 ../include/mc_control/ForceContactSensor.h
@@ -243,7 +244,6 @@ set(mc_control_HDR
 ../include/mc_control/mc_python_controller.h
 ../include/mc_control/SimulationContactSensor.h
 ../include/mc_control/mc_global_controller.h
-../include/mc_control/mc_completion_criteria.h
 )
 set(mc_control_HDR ${mc_control_HDR} PARENT_SCOPE)
 

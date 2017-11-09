@@ -1,14 +1,14 @@
-#include <mc_control/mc_fsm_state.h>
+#include <mc_control/fsm/State.h>
 
-struct SingleState : public mc_control::FSMState
+struct SingleState : public mc_control::fsm::State
 {
   void configure(const mc_rtc::Configuration &) override {}
 
-  void start(mc_control::FSMController &) override {}
+  void start(mc_control::fsm::Controller &) override {}
 
-  bool run(mc_control::FSMController &) override { return false; }
+  bool run(mc_control::fsm::Controller &) override { return false; }
 
-  void teardown(mc_control::FSMController &) override {}
+  void teardown(mc_control::fsm::Controller &) override {}
 };
 
 EXPORT_SINGLE_STATE("SingleState", SingleState, "OK")

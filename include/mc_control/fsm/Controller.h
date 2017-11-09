@@ -1,7 +1,7 @@
 #pragma once
 
 #include <mc_control/mc_controller.h>
-#include <mc_control/mc_fsm_state_factory.h>
+#include <mc_control/fsm/StateFactory.h>
 
 #include <mc_tasks/CoMTask.h>
 #include <mc_tasks/PostureTask.h>
@@ -9,22 +9,26 @@
 namespace mc_control
 {
 
-struct FSMState;
+namespace fsm
+{
 
-/** \class FSMContact
+struct Controller;
+struct State;
+
+/** \class Contact
  *
  * A lightweight variant of mc_rbdyn::Contact meant to simplify contact
  * manipulation in the FSM
  *
  */
-struct MC_CONTROL_DLLAPI FSMContact
+struct MC_CONTROL_DLLAPI Contact
 {
   std::string r1;
   std::string r2;
   std::string r1Surface;
   std::string r2Surface;
 
-  bool operator<(const FSMContact & rhs) const
+  bool operator<(const Contact & rhs) const
   {
     return r1 < rhs.r1 ||
            ( r1 == rhs.r1 && r1Surface < rhs.r1Surface ) ||
@@ -32,16 +36,16 @@ struct MC_CONTROL_DLLAPI FSMContact
            ( r1 == rhs.r1 && r1Surface == rhs.r1Surface && r2 == rhs.r2 && r2Surface < rhs.r2Surface );
   }
 
-  bool operator==(const FSMContact & rhs) const
+  bool operator==(const Contact & rhs) const
   {
     return r1 == rhs.r1 && r2 == rhs.r2 &&
            r1Surface == rhs.r1Surface && r2Surface == rhs.r2Surface;
   }
 
-  static FSMContact from_mc_rbdyn(const FSMController &, const mc_rbdyn::Contact &);
+  static Contact from_mc_rbdyn(const Controller &, const mc_rbdyn::Contact &);
 };
 
-/** \class FSMController
+/** \class Controller
  *
  * This controller implements a finite-state machine to handle complex
  * scenarios in a generic fashion.
@@ -69,9 +73,9 @@ struct MC_CONTROL_DLLAPI FSMContact
  * sure that the map is coherent.
  *
  */
-struct MC_CONTROL_DLLAPI FSMController : public MCController
+struct MC_CONTROL_DLLAPI Controller : public MCController
 {
-  FSMController(std::shared_ptr<mc_rbdyn::RobotModule> rm,
+  Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
                 double dt,
                 const mc_rtc::Configuration & config);
 
@@ -137,20 +141,20 @@ struct MC_CONTROL_DLLAPI FSMController : public MCController
    * No effect if the contact is already present.
    *
    */
-  void addContact(const FSMContact & c);
+  void addContact(const Contact & c);
 
   /** Remove a contact between two robots
    *
    * No effect if the contact is already absent.
    *
    */
-  void removeContact(const FSMContact & c);
+  void removeContact(const Contact & c);
 
   /** Access the current contacts */
-  const std::set<FSMContact> & contacts() const;
+  const std::set<Contact> & contacts() const;
 
   /** Check if a contact is already present */
-  bool hasContact(const FSMContact & c) const;
+  bool hasContact(const Contact & c) const;
 private:
   /** Reset all posture tasks */
   void resetPostures();
@@ -185,15 +189,15 @@ private:
   std::map<std::string, std::shared_ptr<mc_tasks::CoMTask>> com_tasks_;
 
   /** FSM contacts */
-  std::set<FSMContact> contacts_;
+  std::set<Contact> contacts_;
   /** True if contacts were changed in the previous round */
   bool contacts_changed_;
 
   /** State factory */
-  FSMStateFactory factory_;
+  StateFactory factory_;
 
   /** Current state */
-  std::shared_ptr<FSMState> state_ = nullptr;
+  std::shared_ptr<State> state_ = nullptr;
   /** Current state (name) */
   std::string curr_state_ = "";
   /** State output */
@@ -232,7 +236,7 @@ private:
                                             const std::string & output) const;
 
     /** Build the map from a Configuration */
-    void init(const FSMStateFactory & factory,
+    void init(const StateFactory & factory,
               const mc_rtc::Configuration & config);
 
     /** Returns the initial state value */
@@ -255,4 +259,6 @@ private:
   std::string next_state_ = "";
 };
 
-}
+} // namespace fsm
+
+} // namespace mc_control

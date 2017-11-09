@@ -2,7 +2,7 @@
 
 #include <mc_rtc/loader.h>
 
-#include <mc_control/mc_fsm_state.h>
+#include <mc_control/fsm/State.h>
 
 namespace mc_rtc
 {
@@ -12,17 +12,20 @@ namespace mc_rtc
 namespace mc_control
 {
 
-struct MC_CONTROL_DLLAPI FSMController;
+namespace fsm
+{
 
-/** \class FSMStateFactory
+struct MC_CONTROL_DLLAPI Controller;
+
+/** \class StateFactory
  *
- * Creates FSMState objects based on name and configuration entries.
+ * Creates State objects based on name and configuration entries.
  *
  * Also maintains a list of available states and outputs provided by said
  * states.
  *
  */
-struct MC_CONTROL_DLLAPI FSMStateFactory : public mc_rtc::ObjectLoader<FSMState>
+struct MC_CONTROL_DLLAPI StateFactory : public mc_rtc::ObjectLoader<State>
 {
   /** Constructor
    *
@@ -35,9 +38,9 @@ struct MC_CONTROL_DLLAPI FSMStateFactory : public mc_rtc::ObjectLoader<FSMState>
    *
    * \bool verbose If true, output some warning information
    */
-  FSMStateFactory(const std::vector<std::string> & paths,
-                  const std::vector<std::string> & files,
-                  bool verbose);
+  StateFactory(const std::vector<std::string> & paths,
+               const std::vector<std::string> & files,
+               bool verbose);
 
   /** Load more states libraries */
   void load_libraries(const std::vector<std::string> & paths);
@@ -70,9 +73,9 @@ struct MC_CONTROL_DLLAPI FSMStateFactory : public mc_rtc::ObjectLoader<FSMState>
    * through a state file. Otherwise the returned pointer is nullptr.
    *
    */
-  FSMStatePtr create(const std::string & state,
-                     FSMController & ctl,
-                     const mc_rtc::Configuration & config);
+  StatePtr create(const std::string & state,
+                  Controller & ctl,
+                  const mc_rtc::Configuration & config);
 
   /** Query existence of a state */
   bool hasState(const std::string & state) const;
@@ -94,14 +97,16 @@ struct MC_CONTROL_DLLAPI FSMStateFactory : public mc_rtc::ObjectLoader<FSMState>
                      const std::string & output) const;
 private:
   /** Create a state from libraries or factory */
-  FSMStatePtr create(const std::string & state);
+  StatePtr create(const std::string & state);
   /** Update the outputs list */
   void update(const std::string & cn, lt_dlhandle handle);
 private:
   std::vector<std::string> states_;
   std::map<std::string, std::vector<std::string>> outputs_;
-  using state_factory_fn = std::function<FSMStatePtr(FSMStateFactory&)>;
+  using state_factory_fn = std::function<StatePtr(StateFactory&)>;
   std::map<std::string, state_factory_fn> states_factories_;
 };
 
-}
+} // namespace fsm
+
+} // namespace mc_control

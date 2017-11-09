@@ -1,4 +1,4 @@
-#include <mc_control/mc_fsm_state_factory.h>
+#include <mc_control/fsm/StateFactory.h>
 
 #include <mc_rtc/Configuration.h>
 
@@ -8,10 +8,13 @@ namespace bfs = boost::filesystem;
 namespace mc_control
 {
 
-FSMStateFactory::FSMStateFactory(const std::vector<std::string> & paths,
-                                 const std::vector<std::string> & files,
-                                 bool verbose)
-: mc_rtc::ObjectLoader<FSMState>("MC_RTC_FSM_STATE",
+namespace fsm
+{
+
+StateFactory::StateFactory(const std::vector<std::string> & paths,
+                           const std::vector<std::string> & files,
+                           bool verbose)
+: mc_rtc::ObjectLoader<State>("MC_RTC_FSM_STATE",
                                  {},
                                  false,
                                  verbose)
@@ -20,9 +23,9 @@ FSMStateFactory::FSMStateFactory(const std::vector<std::string> & paths,
   load_files(files);
 }
 
-void FSMStateFactory::load_libraries(const std::vector<std::string> & paths)
+void StateFactory::load_libraries(const std::vector<std::string> & paths)
 {
-  mc_rtc::ObjectLoader<FSMState>::load_libraries(paths,
+  mc_rtc::ObjectLoader<State>::load_libraries(paths,
                                                  [this](const std::string & cn,
                                                         lt_dlhandle h)
                                                  { update(cn, h); });
@@ -50,7 +53,7 @@ struct UDState
  * remove the undefined state from the states' vector
  *
  */
-void resolve_pass(FSMStateFactory & factory, std::vector<UDState> & states)
+void resolve_pass(StateFactory & factory, std::vector<UDState> & states)
 {
   for(auto it = states.begin(); it != states.end();)
   {
@@ -72,7 +75,7 @@ void resolve_pass(FSMStateFactory & factory, std::vector<UDState> & states)
  * Do passes until a pass does nothing or all states have been created
  *
  */
-void resolve(FSMStateFactory & factory, std::vector<UDState> & states)
+void resolve(StateFactory & factory, std::vector<UDState> & states)
 {
   size_t prev_size = 0;
   while(states.size() != 0)
@@ -95,7 +98,7 @@ void resolve(FSMStateFactory & factory, std::vector<UDState> & states)
 }
 
 /** Build up a list of undefined states */
-void load_ud(FSMStateFactory & factory, const std::map<std::string, mc_rtc::Configuration> & states, std::vector<UDState> & ud_states)
+void load_ud(StateFactory & factory, const std::map<std::string, mc_rtc::Configuration> & states, std::vector<UDState> & ud_states)
 {
   for(const auto & s : states)
   {
@@ -117,7 +120,7 @@ void load_ud(FSMStateFactory & factory, const std::map<std::string, mc_rtc::Conf
   }
 }
 
-void load_file(FSMStateFactory & factory,
+void load_file(StateFactory & factory,
                const std::string & file,
                std::vector<UDState> & ud_states)
 {
@@ -125,7 +128,7 @@ void load_file(FSMStateFactory & factory,
   load_ud(factory, states, ud_states);
 }
 
-void load_dir(FSMStateFactory & factory,
+void load_dir(StateFactory & factory,
               const std::string & dir,
               std::vector<UDState> & ud_states)
 {
@@ -147,7 +150,7 @@ void load_dir(FSMStateFactory & factory,
 
 }
 
-void FSMStateFactory::load_files(const std::vector<std::string> & files)
+void StateFactory::load_files(const std::vector<std::string> & files)
 {
   std::vector<UDState> ud_states;
   for(const auto & f : files)
@@ -175,7 +178,7 @@ void FSMStateFactory::load_files(const std::vector<std::string> & files)
   }
 }
 
-void FSMStateFactory::load(const std::map<std::string, mc_rtc::Configuration> & states)
+void StateFactory::load(const std::map<std::string, mc_rtc::Configuration> & states)
 {
   std::vector<UDState> ud_states;
   load_ud(*this, states, ud_states);
@@ -185,9 +188,9 @@ void FSMStateFactory::load(const std::map<std::string, mc_rtc::Configuration> & 
   }
 }
 
-void FSMStateFactory::load(const std::string & name,
-                           const std::string & base,
-                           const mc_rtc::Configuration & config)
+void StateFactory::load(const std::string & name,
+                        const std::string & base,
+                        const mc_rtc::Configuration & config)
 {
   if(!hasState(base))
   {
@@ -198,7 +201,7 @@ void FSMStateFactory::load(const std::string & name,
     LOG_ERROR_AND_THROW(std::runtime_error, "State " << name << " already exists")
   }
   states_.push_back(name);
-  states_factories_[name] = [config, base](FSMStateFactory & f)
+  states_factories_[name] = [config, base](StateFactory & f)
   {
     auto ret = f.create(base);
     ret->configure(config);
@@ -207,11 +210,11 @@ void FSMStateFactory::load(const std::string & name,
   outputs_[name] = outputs_[base];
 }
 
-FSMStatePtr FSMStateFactory::create(const std::string & state,
-                                    FSMController & ctl,
-                                    const mc_rtc::Configuration & config)
+StatePtr StateFactory::create(const std::string & state,
+                              Controller & ctl,
+                              const mc_rtc::Configuration & config)
 {
-  FSMStatePtr ret = create(state);
+  StatePtr ret = create(state);
   if(!ret)
   {
     LOG_ERROR("Creation of " << state << " state failed")
@@ -222,7 +225,7 @@ FSMStatePtr FSMStateFactory::create(const std::string & state,
   return ret;
 }
 
-FSMStatePtr FSMStateFactory::create(const std::string & state)
+StatePtr StateFactory::create(const std::string & state)
 {
   if(!hasState(state))
   {
@@ -239,23 +242,23 @@ FSMStatePtr FSMStateFactory::create(const std::string & state)
   }
 }
 
-bool FSMStateFactory::hasState(const std::string & state) const
+bool StateFactory::hasState(const std::string & state) const
 {
   return std::find(states_.begin(), states_.end(), state) != states_.end();
 }
 
-const std::vector<std::string> & FSMStateFactory::states() const
+const std::vector<std::string> & StateFactory::states() const
 {
   return states_;
 }
 
-const std::vector<std::string> & FSMStateFactory::stateOutputs(const std::string & state) const
+const std::vector<std::string> & StateFactory::stateOutputs(const std::string & state) const
 {
   return outputs_.at(state);
 }
 
-bool FSMStateFactory::isValidOutput(const std::string & state,
-                                    const std::string & output) const
+bool StateFactory::isValidOutput(const std::string & state,
+                                 const std::string & output) const
 {
   return hasState(state) &&
     std::find(outputs_.at(state).begin(),
@@ -263,7 +266,7 @@ bool FSMStateFactory::isValidOutput(const std::string & state,
               output) != outputs_.at(state).end();
 }
 
-void FSMStateFactory::update(const std::string & cn, lt_dlhandle handle)
+void StateFactory::update(const std::string & cn, lt_dlhandle handle)
 {
   void * sym = lt_dlsym(handle, "outputs");
   if(sym == nullptr)
@@ -285,4 +288,6 @@ void FSMStateFactory::update(const std::string & cn, lt_dlhandle handle)
   states_.push_back(cn);
 }
 
-}
+} // namespace fsm
+
+} // namespace mc_control

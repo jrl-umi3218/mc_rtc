@@ -1,11 +1,14 @@
 #pragma once
 
-#include <mc_control/mc_fsm_state.h>
+#include <mc_control/fsm/State.h>
 
-#include <mc_control/mc_completion_criteria.h>
+#include <mc_control/CompletionCriteria.h>
 #include <mc_tasks/MetaTask.h>
 
 namespace mc_control
+{
+
+namespace fsm
 {
 
 /** Implements a generic tasks state
@@ -90,19 +93,21 @@ namespace mc_control
  *
  */
 
-struct MetaTasksState : mc_control::FSMState
+struct MetaTasksState : State
 {
   void configure(const mc_rtc::Configuration & config) override;
 
-  void start(FSMController&) override;
+  void start(Controller&) override;
 
-  bool run(FSMController&) override;
+  bool run(Controller&) override;
 
-  void teardown(FSMController&) override;
+  void teardown(Controller&) override;
 protected:
   std::map<std::string, mc_rtc::Configuration> tasks_configs_;
   std::vector<mc_tasks::MetaTaskPtr> tasks_;
   std::vector<std::pair<size_t, mc_control::CompletionCriteria>> criterias_;
 };
 
-}
+} // namespace fsm
+
+} // namespace mc_control

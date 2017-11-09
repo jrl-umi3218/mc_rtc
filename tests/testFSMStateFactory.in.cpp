@@ -2,17 +2,17 @@
 
 #include <mc_rbdyn/RobotLoader.h>
 
-#include <mc_control/mc_fsm_state_factory.h>
-#include <mc_control/mc_fsm_controller.h>
+#include <mc_control/fsm/StateFactory.h>
+#include <mc_control/fsm/Controller.h>
 
 #include "@CMAKE_CURRENT_SOURCE_DIR@/fsm_states/ConfigureState.h"
 
 const std::string FSM_STATES_DIR = "@CMAKE_CURRENT_BINARY_DIR@/fsm_states/";
 const std::string FSM_STATES_JSON_DIR = "@CMAKE_CURRENT_SOURCE_DIR@/fsm_states/data/";
 
-mc_control::FSMController & get_default_controller()
+mc_control::fsm::Controller & get_default_controller()
 {
-  static std::shared_ptr<mc_control::FSMController> ctl_ptr = nullptr;
+  static std::shared_ptr<mc_control::fsm::Controller> ctl_ptr = nullptr;
   if(ctl_ptr)
   {
     return *ctl_ptr;
@@ -22,11 +22,11 @@ mc_control::FSMController & get_default_controller()
   auto rm = mc_rbdyn::RobotLoader::get_robot_module("HRP2DRC");
   mc_rtc::Configuration config;
   config.add("Managed", true);
-  ctl_ptr = std::make_shared<mc_control::FSMController>(rm, 0.005, config);
+  ctl_ptr = std::make_shared<mc_control::fsm::Controller>(rm, 0.005, config);
   return *ctl_ptr;
 }
 
-void check_state(mc_control::FSMStateFactory & factory,
+void check_state(mc_control::fsm::StateFactory & factory,
                  const std::string & state,
                  const std::vector<std::string> & outputs)
 {
@@ -38,7 +38,7 @@ void check_state(mc_control::FSMStateFactory & factory,
   }
 }
 
-void check_states(mc_control::FSMStateFactory & factory,
+void check_states(mc_control::fsm::StateFactory & factory,
                   const std::map<std::string, std::vector<std::string>> & states)
 {
   BOOST_REQUIRE(factory.states().size() == states.size());
@@ -50,7 +50,7 @@ void check_states(mc_control::FSMStateFactory & factory,
 
 BOOST_AUTO_TEST_CASE(TestSingleStateLoading)
 {
-  mc_control::FSMStateFactory factory {
+  mc_control::fsm::StateFactory factory {
     {FSM_STATES_DIR + "SingleState"},
     {},
     false
@@ -63,7 +63,7 @@ BOOST_AUTO_TEST_CASE(TestSingleStateLoading)
 
 BOOST_AUTO_TEST_CASE(TestJsonInheritanceSingle)
 {
-  mc_control::FSMStateFactory factory {
+  mc_control::fsm::StateFactory factory {
     {FSM_STATES_DIR + "SingleState"},
     {FSM_STATES_JSON_DIR + "SingleState.json"},
     false
@@ -77,7 +77,7 @@ BOOST_AUTO_TEST_CASE(TestJsonInheritanceSingle)
 
 BOOST_AUTO_TEST_CASE(TestJsonInheritanceMultiple)
 {
-  mc_control::FSMStateFactory factory {
+  mc_control::fsm::StateFactory factory {
     {FSM_STATES_DIR + "SingleState"},
     {FSM_STATES_JSON_DIR + "SingleStateMulti.json"},
     false
@@ -94,7 +94,7 @@ BOOST_AUTO_TEST_CASE(TestJsonInheritanceMultiple)
 
 BOOST_AUTO_TEST_CASE(TestJsonInheritanceSplit)
 {
-  mc_control::FSMStateFactory factory {
+  mc_control::fsm::StateFactory factory {
     {FSM_STATES_DIR + "SingleState"},
     {
       FSM_STATES_JSON_DIR + "SingleState1.json",
@@ -116,7 +116,7 @@ BOOST_AUTO_TEST_CASE(TestJsonInheritanceSplit)
 
 BOOST_AUTO_TEST_CASE(TestMultipleStatesLoading)
 {
-  mc_control::FSMStateFactory factory {
+  mc_control::fsm::StateFactory factory {
     {FSM_STATES_DIR + "MultipleStates"},
     {},
     false
@@ -130,7 +130,7 @@ BOOST_AUTO_TEST_CASE(TestMultipleStatesLoading)
 
 BOOST_AUTO_TEST_CASE(TestConfigureState)
 {
-  mc_control::FSMStateFactory factory {
+  mc_control::fsm::StateFactory factory {
     {FSM_STATES_DIR + "ConfigureState"},
     {FSM_STATES_JSON_DIR + "ConfigureState.json"},
     false

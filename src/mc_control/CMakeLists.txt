@@ -32,27 +32,7 @@ endforeach()
 add_controller("halfsitpose" "mc_halfsitpose_controller.cpp"
   "mc_halfsitpose_controller.h")
 
-set(fsm_controller_SRC
-  mc_fsm_controller.cpp
-  mc_fsm_state_factory.cpp
-)
-
-set(fsm_controller_HDR
-  ../../include/mc_control/mc_fsm_controller.h
-  ../../include/mc_control/mc_fsm_state_factory.h
-  ../../include/mc_control/mc_fsm_state.h
-)
-
-add_controller("fsm" "${fsm_controller_SRC}" "${fsm_controller_HDR}")
-
-set(AROBASE "@")
-configure_file(etc/FSM.conf.cmake ${CMAKE_CURRENT_BINARY_DIR}/etc/FSM.conf)
-unset(AROBASE)
-
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/etc/FSM.conf
-  DESTINATION ${MC_CONTROLLER_INSTALL_PREFIX}/etc/)
-
-add_subdirectory(fsm_states)
+add_subdirectory(fsm)
 
 if(${PYTHON_BINDING})
   add_subdirectory(python)

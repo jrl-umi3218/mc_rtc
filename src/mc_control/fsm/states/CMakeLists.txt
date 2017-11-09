@@ -1,4 +1,4 @@
-set(FSM_STATES_INSTALL_PREFIX "${MC_CONTROLLER_INSTALL_PREFIX}/fsm_states")
+set(FSM_STATES_INSTALL_PREFIX "${MC_CONTROLLER_INSTALL_PREFIX}/fsm/states")
 
 macro(add_fsm_state state_name state_SRC state_HDR)
   add_library(${state_name} SHARED  ${state_SRC} ${state_HDR})
@@ -7,7 +7,7 @@ macro(add_fsm_state state_name state_SRC state_HDR)
   install(TARGETS ${state_name}
     DESTINATION ${FSM_STATES_INSTALL_PREFIX})
   install(FILES ${state_HDR}
-          DESTINATION ${CMAKE_INSTALL_PREFIX}/include/mc_control/fsm_states)
+          DESTINATION ${CMAKE_INSTALL_PREFIX}/include/mc_control/fsm/states)
 endmacro()
 
 install(DIRECTORY data
@@ -15,7 +15,7 @@ install(DIRECTORY data
   FILES_MATCHING PATTERN "*.json")
 
 macro(add_fsm_state_simple state_name)
-  add_fsm_state(${state_name} ${state_name}.cpp ../../../include/mc_control/fsm_states/${state_name}.h)
+  add_fsm_state(${state_name} ${state_name}.cpp ${PROJECT_SOURCE_DIR}/include/mc_control/fsm/states/${state_name}.h)
 endmacro()
 
 add_fsm_state_simple(Pause)

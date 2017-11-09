@@ -1,4 +1,4 @@
-#include <mc_control/mc_fsm_controller.h>
+#include <mc_control/fsm/Controller.h>
 
 #include <mc_rbdyn/configuration_io.h>
 #include <mc_rbdyn/RobotLoader.h>
@@ -9,11 +9,11 @@ namespace mc_rtc
 {
 
 template<>
-struct ConfigurationLoader<mc_control::FSMContact>
+struct ConfigurationLoader<mc_control::fsm::Contact>
 {
-  static mc_control::FSMContact load(const mc_rtc::Configuration & config)
+  static mc_control::fsm::Contact load(const mc_rtc::Configuration & config)
   {
-    mc_control::FSMContact ret;
+    mc_control::fsm::Contact ret;
     ret.r1 = static_cast<std::string>(config("r1"));
     ret.r1Surface = static_cast<std::string>(config("r1Surface"));
     ret.r2 = static_cast<std::string>(config("r2"));
@@ -27,7 +27,10 @@ struct ConfigurationLoader<mc_control::FSMContact>
 namespace mc_control
 {
 
-FSMContact FSMContact::from_mc_rbdyn(const FSMController & ctl, const mc_rbdyn::Contact & contact)
+namespace fsm
+{
+
+Contact Contact::from_mc_rbdyn(const Controller & ctl, const mc_rbdyn::Contact & contact)
 {
   return {
     ctl.robots().robot(contact.r1Index()).name(),
@@ -37,8 +40,8 @@ FSMContact FSMContact::from_mc_rbdyn(const FSMController & ctl, const mc_rbdyn::
   };
 }
 
-std::pair<bool, FSMController::Transition>
-  FSMController::TransitionMap::transition(const std::string & state,
+std::pair<bool, Controller::Transition>
+  Controller::TransitionMap::transition(const std::string & state,
                                            const std::string & output) const
 {
   if(map_.count({state, output}))
@@ -48,8 +51,8 @@ std::pair<bool, FSMController::Transition>
   return {false, {}};
 }
 
-void FSMController::TransitionMap::init(const FSMStateFactory & factory,
-                                        const mc_rtc::Configuration & config)
+void Controller::TransitionMap::init(const StateFactory & factory,
+                                     const mc_rtc::Configuration & config)
 {
   init_state_ = config("init", std::string{});
   auto transitions = config("transitions", std::vector<std::vector<std::string>>{});
@@ -112,19 +115,19 @@ void FSMController::TransitionMap::init(const FSMStateFactory & factory,
   }
 }
 
-const std::string & FSMController::TransitionMap::initState() const
+const std::string & Controller::TransitionMap::initState() const
 {
   return init_state_;
 }
 
-std::ostream & FSMController::TransitionMap::print(std::ostream & os) const
+std::ostream & Controller::TransitionMap::print(std::ostream & os) const
 {
-  auto type2str = [](const FSMController::Transition::Type & t)
+  auto type2str = [](const Controller::Transition::Type & t)
   {
     switch(t)
     {
 #define MAKE_CASE(v)\
-      case FSMController::Transition::Type::v: return #v;
+      case Controller::Transition::Type::v: return #v;
       MAKE_CASE(StepByStep)
       MAKE_CASE(Auto)
       MAKE_CASE(Strict)
@@ -139,7 +142,7 @@ std::ostream & FSMController::TransitionMap::print(std::ostream & os) const
   return os;
 }
 
-FSMController::FSMController(std::shared_ptr<mc_rbdyn::RobotModule> rm,
+Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
                              double dt,
                              const mc_rtc::Configuration & config)
 : MCController(std::vector<mc_rbdyn::RobotModulePtr>{rm}, dt),
@@ -256,7 +259,7 @@ FSMController::FSMController(std::shared_ptr<mc_rbdyn::RobotModule> rm,
     }
   }
   /** Create contacts */
-  contacts_ = config("contacts", std::set<FSMContact>{});
+  contacts_ = config("contacts", std::set<Contact>{});
   contacts_changed_ = true;
   /** Load more states if they are provided in the configuration */
   if(config.has("states"))
@@ -270,7 +273,7 @@ FSMController::FSMController(std::shared_ptr<mc_rbdyn::RobotModule> rm,
   }
 }
 
-bool FSMController::run()
+bool Controller::run()
 {
   if(contacts_changed_)
   {
@@ -349,7 +352,7 @@ bool FSMController::run()
   return MCController::run();
 }
 
-void FSMController::reset(const ControllerResetData & data)
+void Controller::reset(const ControllerResetData & data)
 {
   MCController::reset(data);
   resetPostures();
@@ -360,7 +363,7 @@ void FSMController::reset(const ControllerResetData & data)
   }
 }
 
-void FSMController::resetPostures()
+void Controller::resetPostures()
 {
   for(auto & pt : posture_tasks_)
   {
@@ -373,7 +376,7 @@ void FSMController::resetPostures()
   }
 }
 
-void FSMController::nextState()
+void Controller::nextState()
 {
   if(next_state_.empty()) { return; }
   LOG_INFO("Starting state " << next_state_)
@@ -389,7 +392,7 @@ void FSMController::nextState()
   next_state_ = "";
 }
 
-bool FSMController::play_next_stance()
+bool Controller::play_next_stance()
 {
   if(!managed_)
   {
@@ -399,7 +402,7 @@ bool FSMController::play_next_stance()
   return false;
 }
 
-bool FSMController::read_msg(std::string & msg)
+bool Controller::read_msg(std::string & msg)
 {
   std::string token;
   std::stringstream ss;
@@ -427,7 +430,7 @@ bool FSMController::read_msg(std::string & msg)
   return MCController::read_msg(msg);
 }
 
-bool FSMController::read_write_msg(std::string & msg,
+bool Controller::read_write_msg(std::string & msg,
                                    std::string & out)
 {
   std::string token;
@@ -452,7 +455,7 @@ bool FSMController::read_write_msg(std::string & msg,
   return MCController::read_write_msg(msg, out);
 }
 
-void FSMController::addCollisions(const std::string & r1,
+void Controller::addCollisions(const std::string & r1,
                                   const std::string & r2,
                                   const std::vector<mc_rbdyn::Collision> & collisions)
 {
@@ -470,7 +473,7 @@ void FSMController::addCollisions(const std::string & r1,
   cc->addCollisions(solver(), collisions);
 }
 
-void FSMController::removeCollisions(const std::string & r1,
+void Controller::removeCollisions(const std::string & r1,
                                      const std::string & r2,
                                      const std::vector<mc_rbdyn::Collision> & collisions)
 {
@@ -482,7 +485,7 @@ void FSMController::removeCollisions(const std::string & r1,
   cc->removeCollisions(solver(), collisions);
 }
 
-void FSMController::removeCollisions(const std::string & r1,
+void Controller::removeCollisions(const std::string & r1,
                                      const std::string & r2)
 {
   if(!collision_constraints_.count({r1, r2}))
@@ -493,17 +496,17 @@ void FSMController::removeCollisions(const std::string & r1,
   cc->reset();
 }
 
-bool FSMController::hasRobot(const std::string & robot) const
+bool Controller::hasRobot(const std::string & robot) const
 {
   return robots_idx_.count(robot) != 0;
 }
 
-mc_rbdyn::Robot & FSMController::robot(const std::string & name)
+mc_rbdyn::Robot & Controller::robot(const std::string & name)
 {
   return solver().robot(robots_idx_.at(name));
 }
 
-std::shared_ptr<mc_tasks::PostureTask> FSMController::getPostureTask(const std::string & robot)
+std::shared_ptr<mc_tasks::PostureTask> Controller::getPostureTask(const std::string & robot)
 {
   if(posture_tasks_.count(robot))
   {
@@ -512,24 +515,24 @@ std::shared_ptr<mc_tasks::PostureTask> FSMController::getPostureTask(const std::
   return nullptr;
 }
 
-void FSMController::addContact(const FSMContact & c)
+void Controller::addContact(const Contact & c)
 {
   bool inserted;
   std::tie(std::ignore, inserted) = contacts_.insert(c);
   contacts_changed_ |= inserted;
 }
 
-void FSMController::removeContact(const FSMContact & c)
+void Controller::removeContact(const Contact & c)
 {
   contacts_changed_ |= contacts_.erase(c);
 }
 
-const std::set<FSMContact> & FSMController::contacts() const
+const std::set<Contact> & Controller::contacts() const
 {
   return contacts_;
 }
 
-bool FSMController::hasContact(const FSMContact & c) const
+bool Controller::hasContact(const Contact & c) const
 {
   for(const auto & co : contacts_)
   {
@@ -538,6 +541,8 @@ bool FSMController::hasContact(const FSMContact & c) const
   return false;
 }
 
-}
+} // namespace fsm
 
-CONTROLLER_CONSTRUCTOR("FSM", mc_control::FSMController)
+} // namespace mc_control
+
+CONTROLLER_CONSTRUCTOR("FSM", mc_control::fsm::Controller)

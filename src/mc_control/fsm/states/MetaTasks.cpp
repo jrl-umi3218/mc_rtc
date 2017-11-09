@@ -1,9 +1,12 @@
-#include <mc_control/fsm_states/MetaTasks.h>
+#include <mc_control/fsm/states/MetaTasks.h>
 
-#include <mc_control/mc_fsm_controller.h>
+#include <mc_control/fsm/Controller.h>
 #include <mc_tasks/MetaTaskLoader.h>
 
 namespace mc_control
+{
+
+namespace fsm
 {
 
 void MetaTasksState::configure(const mc_rtc::Configuration & config)
@@ -29,7 +32,7 @@ void MetaTasksState::configure(const mc_rtc::Configuration & config)
   }
 }
 
-void MetaTasksState::start(FSMController & ctl)
+void MetaTasksState::start(Controller & ctl)
 {
   for(auto & tc : tasks_configs_)
   {
@@ -55,7 +58,7 @@ void MetaTasksState::start(FSMController & ctl)
   }
 }
 
-bool MetaTasksState::run(FSMController&)
+bool MetaTasksState::run(Controller&)
 {
   bool finished = true;
   for(auto & c : criterias_)
@@ -78,7 +81,7 @@ bool MetaTasksState::run(FSMController&)
   return false;
 }
 
-void MetaTasksState::teardown(FSMController & ctl)
+void MetaTasksState::teardown(Controller & ctl)
 {
   for(auto & t : tasks_)
   {
@@ -86,6 +89,8 @@ void MetaTasksState::teardown(FSMController & ctl)
   }
 }
 
-}
+} // namespace fsm
 
-EXPORT_SINGLE_STATE("MetaTasks", mc_control::MetaTasksState, "OK")
+} // namespace mc_control
+
+EXPORT_SINGLE_STATE("MetaTasks", mc_control::fsm::MetaTasksState, "OK")

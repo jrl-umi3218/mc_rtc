@@ -1,8 +1,11 @@
 #pragma once
 
-#include <mc_control/mc_fsm_state.h>
+#include <mc_control/fsm/State.h>
 
 namespace mc_control
+{
+
+namespace fsm
 {
 
 struct AddRemoveContactStateImpl;
@@ -29,7 +32,7 @@ struct AddRemoveContactStateImpl;
  *
  */
 
-struct AddRemoveContactState : mc_control::FSMState
+struct AddRemoveContactState : State
 {
   AddRemoveContactState();
 
@@ -37,13 +40,15 @@ struct AddRemoveContactState : mc_control::FSMState
 
   void configure(const mc_rtc::Configuration & config) override;
 
-  void start(FSMController&) override;
+  void start(Controller&) override;
 
-  bool run(FSMController&) override;
+  bool run(Controller&) override;
 
-  void teardown(FSMController&) override;
+  void teardown(Controller&) override;
 protected:
   std::unique_ptr<AddRemoveContactStateImpl> impl_;
 };
 
-}
+} // namespace fsm
+
+} // namespace mc_control
