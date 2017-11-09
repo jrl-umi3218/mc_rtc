@@ -1,6 +1,7 @@
 set(fsm_controller_SRC
   Controller.cpp
   StateFactory.cpp
+  TransitionMap.cpp
 )
 
 set(fsm_controller_HDR_DIR ${PROJECT_SOURCE_DIR}/include/mc_control/fsm)
@@ -8,6 +9,8 @@ set(fsm_controller_HDR
   ${fsm_controller_HDR_DIR}/Controller.h
   ${fsm_controller_HDR_DIR}/State.h
   ${fsm_controller_HDR_DIR}/StateFactory.h
+  ${fsm_controller_HDR_DIR}/Transition.h
+  ${fsm_controller_HDR_DIR}/TransitionMap.h
 )
 
 add_controller("fsm" "${fsm_controller_SRC}" "${fsm_controller_HDR}")

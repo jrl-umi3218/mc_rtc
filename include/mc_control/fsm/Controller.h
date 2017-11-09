@@ -1,7 +1,7 @@
 #pragma once
 
 #include <mc_control/mc_controller.h>
-#include <mc_control/fsm/StateFactory.h>
+#include <mc_control/fsm/TransitionMap.h>
 
 #include <mc_tasks/CoMTask.h>
 #include <mc_tasks/PostureTask.h>
@@ -57,27 +57,12 @@ struct MC_CONTROL_DLLAPI Contact
  * - self-managed: the FSM takes care of transition, in that case a
  *   transition map must be provided.
  *
- * A transition map is formed by entries of the form ["StateName",
- * "OutputName", "NewStateName", "OptionalTriggerType"], e.g.:
- * - ["InitState", "OK", "GraspBar", "Strict"]
- * - ["GraspBar", "OK", "LiftLeftFoot", "StepByStep"]
- * - ["GraspBar", "NOK", "GraspBar", "Auto"]
- *
- * Valid values for the trigger type are:
- * - "StepByStep": only require user input if running in StepByStep mode
- *   (default)
- * - "Auto": automatic transition no matter what
- * - "Strict": require user input no matter what
- *
- * When such a transition map is provided, the FSM controller will make
- * sure that the map is coherent.
- *
  */
 struct MC_CONTROL_DLLAPI Controller : public MCController
 {
   Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
-                double dt,
-                const mc_rtc::Configuration & config);
+             double dt,
+             const mc_rtc::Configuration & config);
 
   bool run() override;
 
@@ -203,51 +188,6 @@ private:
   /** State output */
   std::string state_output_ = "";
 
-  struct Transition
-  {
-    std::string state;
-    enum struct Type
-    {
-      StepByStep,
-      Auto,
-      Strict
-    };
-    Type type;
-  };
-
-  struct TransitionMap
-  {
-    /** A (state, output) pair is the origin of a transition */
-    using origin_t = std::pair<std::string, std::string>;
-
-    /** Return a transition given a current state and its ouput
-     *
-     * \param state The current state
-     *
-     * \param output The state's output
-     *
-     * \returns A pair made of a bool and a Transition. If the (state,
-     * output) has a registered next state, the bool is true and Transition
-     * returns the corresponding transition. Otherwise, the bool is false
-     * and the Transition has no meaning.
-     *
-     */
-     std::pair<bool, Transition> transition(const std::string & state,
-                                            const std::string & output) const;
-
-    /** Build the map from a Configuration */
-    void init(const StateFactory & factory,
-              const mc_rtc::Configuration & config);
-
-    /** Returns the initial state value */
-    const std::string & initState() const;
-
-    /** Print the map */
-    std::ostream & print(std::ostream & os) const;
-  private:
-    std::string init_state_;
-    std::map<origin_t, Transition> map_;
-  };
   /** Transition map, empty when the FSM is managed */
   TransitionMap transition_map_;
 

@@ -1,0 +1,113 @@
+#include <mc_control/fsm/TransitionMap.h>
+
+namespace mc_control
+{
+
+namespace fsm
+{
+
+std::pair<bool, Transition>
+  TransitionMap::transition(const std::string & state,
+                            const std::string & output) const
+{
+  if(map_.count({state, output}))
+  {
+    return {true, map_.at({state, output})};
+  }
+  return {false, {}};
+}
+
+void TransitionMap::init(const StateFactory & factory,
+                         const mc_rtc::Configuration & config)
+{
+  init_state_ = config("init", std::string{});
+  auto transitions = config("transitions", std::vector<std::vector<std::string>>{});
+  if(!transitions.size())
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "This FSM is not managed but its configuration does not hold a transitions entry or the transitions entry is empty.")
+  }
+  for(const auto & t : transitions)
+  {
+    if(t.size() < 3 || t.size() > 4)
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, "One of the transition entry is not valid")
+    }
+    auto str2type = [](const std::string & in)
+    {
+      if(in == "StepByStep")
+      {
+        return Transition::Type::StepByStep;
+      }
+      else if(in == "Auto")
+      {
+        return Transition::Type::Auto;
+      }
+      else if(in == "Strict")
+      {
+        return Transition::Type::Strict;
+      }
+      else
+      {
+        LOG_WARNING("Transition type (" << in << ") is not valid, defaulting to StepByStep")
+        return Transition::Type::StepByStep;
+      }
+    };
+    const auto & from = t[0];
+    const auto & to = t[2];
+    const auto & by = t[1];
+    auto type = t.size() == 4 ? str2type(t[3]) : Transition::Type::StepByStep;
+    if(!(factory.hasState(from) && factory.isValidOutput(from, by) && factory.hasState(to)))
+    {
+      LOG_ERROR("Invalid transition:")
+      if(!factory.hasState(from))
+      {
+        LOG_ERROR("- origin state (" << from << ") is not loaded")
+      }
+      else if(!factory.isValidOutput(from, by))
+      {
+        LOG_ERROR("- origin state (" << from << ") has no output " << by)
+      }
+      if(!factory.hasState(to))
+      {
+        LOG_ERROR("- destination state (" << to << ") is not loaded")
+      }
+      continue;
+    }
+    if(map_.count({from, by}))
+    {
+      LOG_WARNING("Transition for (" << from << ", " << by << ") is specified more than once")
+    }
+    map_[{from, by}] = {to, type};
+  }
+}
+
+const std::string & TransitionMap::initState() const
+{
+  return init_state_;
+}
+
+std::ostream & TransitionMap::print(std::ostream & os) const
+{
+  auto type2str = [](const Transition::Type & t)
+  {
+    switch(t)
+    {
+#define MAKE_CASE(v)\
+      case Transition::Type::v: return #v;
+      MAKE_CASE(StepByStep)
+      MAKE_CASE(Auto)
+      MAKE_CASE(Strict)
+      default: return "Unknown transition type";
+#undef MAKE_CASE
+    };
+  };
+  for(const auto & t : map_)
+  {
+    os << t.first.first << " -- (" << t.first.second << ") --> " << t.second.state << " [" << type2str(t.second.type) << "]\n";
+  }
+  return os;
+}
+
+} // namespace fsm
+
+} // namespace mc_control

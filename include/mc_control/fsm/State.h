@@ -72,6 +72,12 @@ struct MC_CONTROL_DLLAPI State
   /** Called if the state is interrupted */
   virtual void stop(Controller &) {}
 
+  /** Handle read service call */
+  virtual bool read_msg(std::string &) { return false; }
+
+  /** Handle read/write service call */
+  virtual bool read_write_msg(std::string &, std::string &) { return false; }
+
   /** Returns the output of the state, should only be consulted once run has
    * returned true */
   std::string output() { return output_; }
