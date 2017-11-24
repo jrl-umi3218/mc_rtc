@@ -230,7 +230,7 @@ private:
           tf_caster.sendTransform(msg.tfs);
           for (const auto & wrench : msg.wrenches)
           {
-            const std::string & sensor_name = wrench.header.frame_id;
+            const std::string & sensor_name = wrench.header.frame_id.substr(6); // remove "calib/" prefix
             if (wrenches_pub.count(sensor_name) == 0)
             {
               wrenches_pub.insert({
