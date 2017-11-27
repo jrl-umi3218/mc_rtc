@@ -155,7 +155,7 @@ public:
       const sva::ForceVecd & wrench_sva = fs.wrench();
       geometry_msgs::WrenchStamped wrench_msg;
       wrench_msg.header = msg.header;
-      wrench_msg.header.frame_id = name;
+      wrench_msg.header.frame_id = "calib/" + name;  // published by a static_transform_publisher
       wrench_msg.wrench.force.x = wrench_sva.force().x();
       wrench_msg.wrench.force.y = wrench_sva.force().y();
       wrench_msg.wrench.force.z = wrench_sva.force().z();
@@ -230,7 +230,7 @@ private:
           tf_caster.sendTransform(msg.tfs);
           for (const auto & wrench : msg.wrenches)
           {
-            const std::string & sensor_name = wrench.header.frame_id;
+            const std::string & sensor_name = wrench.header.frame_id.substr(strlen("calib/")); // remove "calib/" prefix
             if (wrenches_pub.count(sensor_name) == 0)
             {
               wrenches_pub.insert({
