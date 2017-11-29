@@ -21,7 +21,7 @@ bool operator==(const Quaterniond & lhs,
 
 }
 
-std::string sampleConfig()
+std::string sampleConfig(bool fromDisk)
 {
   std::string data = R"(
 {
@@ -83,10 +83,10 @@ std::string sampleConfig()
   }
 }
 )";
-  return makeConfigFile(data);
+  return fromDisk ? makeConfigFile(data) : data;
 }
 
-std::string sampleConfig2()
+std::string sampleConfig2(bool fromDisk)
 {
   std::string data = R"(
   {
@@ -94,14 +94,11 @@ std::string sampleConfig2()
     "int": 12
   }
   )";
-  return makeConfigFile(data);
+  return fromDisk ? makeConfigFile(data) : data;
 }
 
-BOOST_AUTO_TEST_CASE(TestConfigurationReading)
+void TestConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2)
 {
-  /*! Check construction from Json::Value */
-  mc_rtc::Configuration config(sampleConfig());
-
   /*! Check that accessing a non-existing entry throws */
   BOOST_CHECK_THROW(config("NONE"), mc_rtc::Configuration::Exception);
 
@@ -566,7 +563,14 @@ BOOST_AUTO_TEST_CASE(TestConfigurationReading)
 
   /* Check load */
   {
-    config.load(sampleConfig2());
+    if(fromDisk2)
+    {
+      config.load(sampleConfig2(true));
+    }
+    else
+    {
+      config.loadData(sampleConfig2(false));
+    }
     int a = config("int");
     BOOST_CHECK_EQUAL(a, 12);
 
@@ -579,6 +583,30 @@ BOOST_AUTO_TEST_CASE(TestConfigurationReading)
     std::vector<std::string> c = config("stringV");
     BOOST_CHECK(c == ref2);
   }
+}
+
+BOOST_AUTO_TEST_CASE(TestConfigurationReadingDiskTwice)
+{
+  mc_rtc::Configuration config(sampleConfig(true));
+  TestConfigurationReading(config, true);
+}
+
+BOOST_AUTO_TEST_CASE(TestConfigurationReadingDiskData)
+{
+  mc_rtc::Configuration config(sampleConfig(true));
+  TestConfigurationReading(config, false);
+}
+
+BOOST_AUTO_TEST_CASE(TestConfigurationReadingDataDisk)
+{
+  auto config = mc_rtc::Configuration::fromData(sampleConfig(false));
+  TestConfigurationReading(config, true);
+}
+
+BOOST_AUTO_TEST_CASE(TestConfigurationReadingDataTwice)
+{
+  auto config = mc_rtc::Configuration::fromData(sampleConfig(false));
+  TestConfigurationReading(config, false);
 }
 
 BOOST_AUTO_TEST_CASE(TestConfigurationWriting)

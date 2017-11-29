@@ -369,6 +369,13 @@ namespace mc_rtc
      */
     Configuration(const char * path);
 
+    /*! \brief Static constructor to load from JSON data
+     *
+     * \param data JSON data to load
+     *
+     */
+    static Configuration fromData(const std::string & data);
+
     /*! \brief Load more data into the configuration
      *
      * For any key existing in both objects:
@@ -392,6 +399,15 @@ namespace mc_rtc
      *
      */
     void load(const mc_rtc::Configuration & config);
+
+    /*! \brief Load data from a JSON string
+     *
+     * Same rules apply as ::load methods
+     *
+     * \param data JSON data to load
+     *
+     */
+    void loadData(const std::string & data);
 
     /*! \brief Save the configuration to a file.
      *

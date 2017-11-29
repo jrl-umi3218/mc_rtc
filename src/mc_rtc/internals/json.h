@@ -32,6 +32,40 @@ namespace mc_rtc
 namespace internal
 {
 
+/*! Load JSON data into the provided rapidjson::Document
+ *
+ * \param data JSON data to load
+ *
+ * \param document Document instance to load the document
+ *
+ * \param path If passed, will be used to provide a useful error message
+ *
+ * \returns True if the document was succesfully loaded, returns false and
+ * display an error message otherwise
+ */
+inline bool loadData(const char * data, rapidjson::Document & document, const std::string & path = "")
+{
+  rapidjson::ParseResult res = document.Parse(data);
+  if(!res)
+  {
+    rapidjson::GetParseErrorFunc GetParseError = rapidjson::GetParseError_En;
+    std::stringstream ss;
+    ss << GetParseError(res.Code()) << std::endl;
+    ss << "Position: " << res.Offset();
+    if(path.size())
+    {
+      LOG_ERROR("Failed to read configuration file: " << path)
+    }
+    else
+    {
+      LOG_ERROR("Failed to read raw json data: " << data)
+    }
+    LOG_WARNING(ss.str())
+    return false;
+  }
+  return true;
+}
+
 /*! Load a JSON document from the provided disk location into the provided
  * rapidjson::Document
  *
@@ -53,18 +87,7 @@ inline bool loadDocument(const std::string & path, rapidjson::Document & documen
   }
   std::stringstream json;
   json << ifs.rdbuf();
-  rapidjson::ParseResult res = document.Parse(json.str().c_str());
-  if(!res)
-  {
-    rapidjson::GetParseErrorFunc GetParseError = rapidjson::GetParseError_En;
-    std::stringstream ss;
-    ss << GetParseError(res.Code()) << std::endl;
-    ss << "Position: " << res.Offset();
-    LOG_ERROR("Failed to read configuration file: " << path)
-    LOG_WARNING(ss.str())
-    return false;
-  }
-  return true;
+  return loadData(json.str().c_str(), document, path);
 }
 
 /*! Save a JSON document to the provided disk location

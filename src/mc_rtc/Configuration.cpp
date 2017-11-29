@@ -407,6 +407,14 @@ Configuration::Configuration(const std::string & path)
   load(path);
 }
 
+Configuration Configuration::fromData(const std::string & data)
+{
+  mc_rtc::Configuration config;
+  rapidjson::Document & target = *(config.v.impl->doc_p);
+  mc_rtc::internal::loadData(data.c_str(), target);
+  return config;
+}
+
 void Configuration::load(const std::string & path)
 {
   rapidjson::Document & target = *(v.impl->doc_p);
@@ -451,6 +459,19 @@ void Configuration::load(const mc_rtc::Configuration & config)
       rapidjson::Value v(m.value, doc.GetAllocator());
       target.AddMember(n, v, doc.GetAllocator());
     }
+  }
+}
+
+void Configuration::loadData(const std::string & data)
+{
+  rapidjson::Document & target = *(v.impl->doc_p);
+  if(target.IsNull())
+  {
+    mc_rtc::internal::loadData(data.c_str(), target);
+  }
+  else
+  {
+    load(Configuration::fromData(data));
   }
 }
 
