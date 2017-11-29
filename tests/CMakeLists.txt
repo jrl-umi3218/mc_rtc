@@ -54,6 +54,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests_config.h.in
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
 
 mc_rtc_test(testConfiguration mc_rtc_utils mc_rbdyn)
+mc_rtc_test(testGUIStateBuilder mc_rtc_gui)
 mc_rtc_test(testJsonIO mc_rtc_utils mc_rbdyn)
 mc_rtc_test(testConstraintSetLoader mc_solver)
 mc_rtc_test(testMetaTaskLoader mc_tasks)
@@ -87,3 +88,10 @@ endif()
 if(NOT DISABLE_ROBOT_TESTS)
   add_subdirectory(robots)
 endif()
+
+######################
+# -- Network test -- #
+######################
+
+add_executable(dummyClient dummyClient.cpp)
+target_link_libraries(dummyClient mc_control_client)

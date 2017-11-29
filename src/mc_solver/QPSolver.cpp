@@ -96,6 +96,10 @@ void QPSolver::addTask(mc_tasks::MetaTask * task)
     {
       task->addToLogger(*logger_);
     }
+    if(gui_)
+    {
+      task->addToGUI(*gui_);
+    }
     LOG_INFO("Added task " << task->name())
   }
 }
@@ -127,6 +131,10 @@ void QPSolver::removeTask(mc_tasks::MetaTask * task)
     if(logger_)
     {
       task->removeFromLogger(*logger_);
+    }
+    if(gui_)
+    {
+      task->removeFromGUI(*gui_);
     }
     LOG_INFO("Removed task " << task->name())
   }
@@ -337,6 +345,25 @@ void QPSolver::logger(std::shared_ptr<mc_rtc::Logger> logger)
     for(auto t : metaTasks)
     {
       t->addToLogger(*logger_);
+    }
+  }
+}
+
+void QPSolver::gui(std::shared_ptr<mc_rtc::gui::StateBuilder> gui)
+{
+  if(gui_)
+  {
+    for(auto t : metaTasks)
+    {
+      t->removeFromGUI(*gui_);
+    }
+  }
+  gui_ = gui;
+  if(gui_)
+  {
+    for(auto t : metaTasks)
+    {
+      t->addToGUI(*gui_);
     }
   }
 }

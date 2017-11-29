@@ -6,6 +6,7 @@
 #include <mc_control/Configuration.h>
 #include <mc_control/generic_gripper.h>
 #include <mc_rtc/log/Logger.h>
+#include <mc_rtc/GUIState.h>
 
 #include <mc_solver/QPSolver.h>
 #include <mc_solver/msg/QPResult.h>
@@ -235,6 +236,8 @@ protected:
   std::shared_ptr<mc_rbdyn::Robots> real_robots;
   /** Logger provided by MCGlobalController */
   std::shared_ptr<mc_rtc::Logger> logger_;
+  /** GUI state builder */
+  std::shared_ptr<mc_rtc::gui::StateBuilder> gui_;
 public:
   /** Controller timestep */
   const double timeStep;

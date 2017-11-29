@@ -4,6 +4,7 @@
 #include <mc_solver/QPSolver.h>
 
 #include <mc_rtc/log/Logger.h>
+#include <mc_rtc/GUIState.h>
 
 #include <mc_tasks/api.h>
 
@@ -169,6 +170,25 @@ protected:
    * The default implementation removes nothing from the log.
    */
   virtual void removeFromLogger(mc_rtc::Logger &) {}
+
+  /** Add elements to the GUI through the helper
+   *
+   * This will be called by the solver when the task is added.
+   *
+   * The default implementation adds the type of the task under the {"Tasks",
+   * name_} category.
+   *
+   */
+  virtual void addToGUI(mc_rtc::gui::StateBuilder &);
+
+  /** Remove elements from the GUI through the helper
+   *
+   * This will be called by the solver when the task is removed.
+   *
+   * The default implementation removes the {"Tasks", name_} category.
+   *
+   */
+  virtual void removeFromGUI(mc_rtc::gui::StateBuilder &);
 
   std::string type_;
   std::string name_;

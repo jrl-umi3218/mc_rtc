@@ -48,6 +48,8 @@ public:
    * \returns The current CoM target
    */
   Eigen::Vector3d com();
+protected:
+  void addToGUI(mc_rtc::gui::StateBuilder &) override;
 private:
   unsigned int robot_index_;
   Eigen::Vector3d cur_com_;

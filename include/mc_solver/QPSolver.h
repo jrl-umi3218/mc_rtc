@@ -22,6 +22,10 @@ namespace mc_tasks
 namespace mc_rtc
 {
   struct Logger;
+  namespace gui
+  {
+    struct StateBuilder;
+  }
 }
 
 namespace mc_solver
@@ -233,6 +237,9 @@ public:
 
   /** Set the logger for this solver instance */
   void logger(std::shared_ptr<mc_rtc::Logger> logger);
+
+  /** Set the GUI helper for this solver instance */
+  void gui(std::shared_ptr<mc_rtc::gui::StateBuilder> gui);
 private:
   std::shared_ptr<mc_rbdyn::Robots> robots_p;
   double timeStep;
@@ -257,6 +264,9 @@ private:
 
   /** Pointer to the Logger */
   std::shared_ptr<mc_rtc::Logger> logger_ = nullptr;
+
+  /** Pointer to the GUI helper */
+  std::shared_ptr<mc_rtc::gui::StateBuilder> gui_ = nullptr;
 public:
   /** \deprecated{Default constructor, not made for general usage} */
   QPSolver() {}

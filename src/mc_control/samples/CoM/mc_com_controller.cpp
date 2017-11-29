@@ -6,6 +6,8 @@
 
 #include <mc_rtc/logging.h>
 
+#include <mc_tasks/PostureTask.h>
+
 namespace mc_control
 {
 
@@ -15,7 +17,21 @@ MCCoMController::MCCoMController(std::shared_ptr<mc_rbdyn::RobotModule> robot_mo
   qpsolver->addConstraintSet(contactConstraint);
   qpsolver->addConstraintSet(dynamicsConstraint);
   qpsolver->addConstraintSet(selfCollisionConstraint);
-  qpsolver->addTask(postureTask.get());
+  auto pt = std::make_shared<mc_tasks::PostureTask>(solver(), 0, 2.0, 1.0);
+  solver().addTask(pt);
+  //qpsolver->addTask(postureTask.get());
+
+  comTask.reset(new mc_tasks::CoMTask(robots(), robots().robotIndex()));
+  postureTask->stiffness(1);
+  postureTask->weight(1);
+  comTask->weight(1000);
+}
+
+void MCCoMController::reset(const ControllerResetData & reset_data)
+{
+  MCController::reset(reset_data);
+  comTask->reset();
+  solver().addTask(comTask);
   if(robot().name() == "hrp2_drc")
   {
     qpsolver->setContacts({
@@ -32,21 +48,9 @@ MCCoMController::MCCoMController(std::shared_ptr<mc_rbdyn::RobotModule> robot_mo
   }
   else
   {
-    LOG_ERROR("MCBody6dController does not support robot " << robot().name())
-    throw("MCBody6dController does not support your robot");
+    LOG_ERROR("MCCoMController does not support robot " << robot().name())
+    throw("MCCoMController does not support your robot");
   }
-
-  comTask.reset(new mc_tasks::CoMTask(robots(), robots().robotIndex()));
-  postureTask->stiffness(1);
-  postureTask->weight(1);
-  comTask->weight(1000);
-}
-
-void MCCoMController::reset(const ControllerResetData & reset_data)
-{
-  MCController::reset(reset_data);
-  comTask->reset();
-  solver().addTask(comTask);
 }
 
 bool MCCoMController::move_com(const Eigen::Vector3d & v)

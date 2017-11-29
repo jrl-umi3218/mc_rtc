@@ -35,4 +35,33 @@ void MetaTask::load(mc_solver::QPSolver & solver,
   }
 }
 
+void MetaTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
+{
+  gui.addElement(
+    mc_rtc::gui::Element<std::string>{
+      {"Tasks", name_, "type"},
+      [this]() { return this->type_; }
+    }
+  );
+  gui.addElement(
+    mc_rtc::gui::Element<Eigen::VectorXd>{
+      {"Tasks", name_, "eval"},
+      [this]() { return this->eval(); }
+    },
+    mc_rtc::gui::Label(true)
+  );
+  gui.addElement(
+    mc_rtc::gui::Element<Eigen::VectorXd>{
+      {"Tasks", name_, "speed"},
+      [this]() { return this->speed(); }
+    },
+    mc_rtc::gui::Label(true)
+  );
+}
+
+void MetaTask::removeFromGUI(mc_rtc::gui::StateBuilder & gui)
+{
+  gui.removeCategory({"Tasks", name_});
+}
+
 }

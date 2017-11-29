@@ -1,14 +1,14 @@
 
 #pragma once
 
-#include <mc_control/mc_controller.h>
-#include <mc_rtc/log/Logger.h>
-
 #include <mc_control/api.h>
-
-#include <mc_rbdyn/RobotModule.h>
+#include <mc_control/mc_controller.h>
+#include <mc_control/ControllerServer.h>
 
 #include <mc_rtc/loader.h>
+#include <mc_rtc/log/Logger.h>
+
+#include <mc_rbdyn/RobotModule.h>
 
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
@@ -465,6 +465,11 @@ private:
     bfs::path log_directory;
     std::string log_template = "mc-control";
 
+    bool enable_gui_server = true;
+    double gui_timestep = 0.05;
+    std::vector<std::string> gui_server_pub_uris {};
+    std::vector<std::string> gui_server_rep_uris {};
+
     Configuration config;
   };
 private:
@@ -477,6 +482,8 @@ private:
   std::map<std::string, std::shared_ptr<mc_control::MCController>> controllers;
 
   std::shared_ptr<mc_rbdyn::Robots> real_robots = nullptr;
+
+  std::unique_ptr<mc_control::ControllerServer> server_ = nullptr;
 
   void publish_robots();
 

@@ -64,6 +64,26 @@ void CoMTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry(name_);
 }
 
+void CoMTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
+{
+  TrajectoryTaskGeneric<tasks::qp::CoMTask>::addToGUI(gui);
+  gui.addElement(
+    mc_rtc::gui::Element<Eigen::Vector3d>{
+      {"Tasks", name_, "com_target"},
+      [this]() { return this->com(); },
+      [this](const Eigen::Vector3d & com) { this->com(com); }
+    },
+    mc_rtc::gui::Point3D{}
+  );
+  gui.addElement(
+    mc_rtc::gui::Element<Eigen::Vector3d>{
+      {"Tasks", name_, "com"},
+      [this]() { return this->com() - eval(); }
+    },
+    mc_rtc::gui::Point3D{}
+  );
+}
+
 }
 
 namespace

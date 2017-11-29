@@ -4,7 +4,8 @@
  * JSON manipulation in mc_rtc */
 
 #define RAPIDJSON_HAS_STDSTRING 1
-#define RAPIDJSON_PARSE_DEFAULT_FLAGS rapidjson::kParseCommentsFlag | rapidjson::kParseTrailingCommasFlag
+#define RAPIDJSON_PARSE_DEFAULT_FLAGS rapidjson::kParseCommentsFlag | rapidjson::kParseTrailingCommasFlag | rapidjson::kParseNanAndInfFlag
+#define RAPIDJSON_WRITE_DEFAULT_FLAGS rapidjson::kWriteNanAndInfFlag
 #define RAPIDJSON_NO_SIZETYPEDEFINE
 namespace rapidjson
 {
@@ -90,17 +91,20 @@ inline bool loadDocument(const std::string & path, rapidjson::Document & documen
   return loadData(json.str().c_str(), document, path);
 }
 
-/*! Save a JSON document to the provided disk location
+/*! Dump a JSON document into a stream
  *
- * \param path Output path
+ * \param os Output stream
  *
- * \param document Document to be saved
+ * \param document Document to be dumped
+ *
+ * \param pretty Pretty output
  *
  */
-inline void saveDocument(const std::string & path, rapidjson::Value & document, bool pretty = false)
+inline void dumpDocument(std::ostream & os,
+                         rapidjson::Value & document,
+                         bool pretty)
 {
-  std::ofstream ofs(path);
-  rapidjson::OStreamWrapper osw(ofs);
+  rapidjson::OStreamWrapper osw(os);
   if(pretty)
   {
     rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
@@ -111,6 +115,33 @@ inline void saveDocument(const std::string & path, rapidjson::Value & document, 
     rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
     document.Accept(writer);
   }
+}
+
+/*! Dump a JSON document and get the string back
+ *
+ * \param document Document to be dumped
+ *
+ * \param pretty Pretty output
+ *
+ */
+inline std::string dumpDocument(rapidjson::Value & document, bool pretty)
+{
+  std::ostringstream os;
+  dumpDocument(os, document, pretty);
+  return os.str();
+}
+
+/*! Save a JSON document to the provided disk location
+ *
+ * \param path Output path
+ *
+ * \param document Document to be saved
+ *
+ */
+inline void saveDocument(const std::string & path, rapidjson::Value & document, bool pretty = false)
+{
+  std::ofstream ofs(path);
+  dumpDocument(ofs, document, pretty);
 }
 
 /*! Create a JSON value from a C++ value

@@ -116,6 +116,8 @@ protected:
    * create the actual tasks objects */
   template<typename ... Args>
   void finalize(Args && ... args);
+
+  void addToGUI(mc_rtc::gui::StateBuilder &) override;
 protected:
   const mc_rbdyn::Robots & robots;
   unsigned int rIndex;

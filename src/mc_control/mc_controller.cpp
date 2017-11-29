@@ -20,7 +20,8 @@ MCController::MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double 
 }
 
 MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robots_modules, double dt)
-: timeStep(dt)
+: gui_(std::make_shared<mc_rtc::gui::StateBuilder>()),
+  timeStep(dt)
 {
   /* Initialize the logger instance */
   logger_.reset(new mc_rtc::Logger(mc_rtc::Logger::Policy::NON_THREADED, "", ""));
@@ -40,6 +41,7 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   }
   qpsolver.reset(new mc_solver::QPSolver(robots, timeStep));
   qpsolver->logger(logger_);
+  qpsolver->gui(gui_);
   }
 
   /* Initialize grippers */

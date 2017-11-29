@@ -352,7 +352,7 @@ Configuration::operator Eigen::VectorXd() const
     }
     return ret;
   }
-  throw Configuration::Exception("Stored Json value is not a Vector6d");
+  throw Configuration::Exception("Stored Json value is not a VectorXd");
 }
 
 Configuration::operator Eigen::Quaterniond() const
@@ -409,9 +409,14 @@ Configuration::Configuration(const std::string & path)
 
 Configuration Configuration::fromData(const std::string & data)
 {
+  return Configuration::fromData(data.c_str());
+}
+
+Configuration Configuration::fromData(const char * data)
+{
   mc_rtc::Configuration config;
   rapidjson::Document & target = *(config.v.impl->doc_p);
-  mc_rtc::internal::loadData(data.c_str(), target);
+  mc_rtc::internal::loadData(data, target);
   return config;
 }
 
@@ -478,6 +483,11 @@ void Configuration::loadData(const std::string & data)
 void Configuration::save(const std::string & path, bool pretty) const
 {
   mc_rtc::internal::saveDocument(path, *v.impl->value(), pretty);
+}
+
+std::string Configuration::dump(bool pretty) const
+{
+  return mc_rtc::internal::dumpDocument(*v.impl->value(), pretty);
 }
 
 template<>

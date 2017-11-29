@@ -376,6 +376,13 @@ namespace mc_rtc
      */
     static Configuration fromData(const std::string & data);
 
+    /*! \brief Static constructor to load from JSON data (C overload)
+     *
+     * \param data JSON data to load
+     *
+     */
+    static Configuration fromData(const char * data);
+
     /*! \brief Load more data into the configuration
      *
      * For any key existing in both objects:
@@ -417,6 +424,13 @@ namespace mc_rtc
      *
      */
     void save(const std::string & path, bool pretty = true) const;
+
+    /*! \brief Dump the configuration into a string.
+     *
+     * \param pretty Writes a human-readable string, defaults to false
+     *
+     */
+    std::string dump(bool pretty = false) const;
 
     /*! \brief Returns a Entry value stored within the
      * configuration

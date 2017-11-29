@@ -99,6 +99,23 @@ endif()
 pkg_config_append_libs(mc_rbdyn)
 pkg_config_append_libs(${GEOS_LIBRARY})
 
+set(mc_rtc_gui_SRC
+  mc_rtc/GUIState.cpp
+)
+set(mc_rtc_gui_SRC ${mc_rtc_gui_SRC} PARENT_SCOPE)
+
+set(mc_rtc_gui_HDR
+  ../include/mc_rtc/GUIState.h
+  ../include/mc_rtc/GUIState.hpp
+  ../include/mc_rtc/gui_api.h
+)
+set(mc_rtc_gui_HDR ${mc_rtc_gui_HDR} PARENT_SCOPE)
+
+add_library(mc_rtc_gui SHARED ${mc_rtc_gui_SRC} ${mc_rtc_gui_HDR})
+set_target_properties(mc_rtc_gui PROPERTIES COMPILE_FLAGS "-DMC_RTC_GUI_EXPORTS")
+target_link_libraries(mc_rtc_gui mc_rbdyn)
+pkg_config_append_libs(mc_rtc_gui)
+
 add_subdirectory(mc_robots)
 
 set(mc_solver_SRC
@@ -134,7 +151,7 @@ add_library(mc_solver SHARED ${mc_solver_SRC} ${mc_solver_HDR})
 set_target_properties(mc_solver PROPERTIES COMPILE_FLAGS "-DMC_SOLVER_EXPORTS")
 pkg_config_use_dependency(mc_solver Tasks)
 pkg_config_append_libs(mc_solver)
-target_link_libraries(mc_solver mc_rbdyn)
+target_link_libraries(mc_solver mc_rbdyn mc_rtc_gui)
 
 set(mc_trajectory_SRC
 mc_trajectory/BSplineTrajectory.cpp
@@ -222,6 +239,7 @@ pkg_config_append_libs(mc_rtc_ros)
 
 set(mc_control_SRC
 mc_control/CompletionCriteria.cpp
+mc_control/ControllerServer.cpp
 mc_control/ForceContactSensor.cpp
 mc_control/SimulationContactSensor.cpp
 mc_control/generic_gripper.cpp
@@ -238,6 +256,7 @@ set(mc_control_HDR
 ../include/mc_control/CompletionCriteria.h
 ../include/mc_control/Configuration.h
 ../include/mc_control/ContactSensor.h
+../include/mc_control/ControllerServer.h
 ../include/mc_control/ForceContactSensor.h
 ../include/mc_control/generic_gripper.h
 ../include/mc_control/mc_controller.h
@@ -256,7 +275,21 @@ endif()
 target_link_libraries(mc_control ${Boost_LIBRARIES})
 pkg_config_use_dependency(mc_control mc_rbdyn_urdf)
 pkg_config_use_dependency(mc_control Tasks)
+pkg_config_use_dependency(mc_control ${NANOMSG_NAME})
 pkg_config_append_libs(mc_control)
+
+set(mc_control_client_SRC
+  mc_control/ControllerClient.cpp
+)
+
+set(mc_control_client_HDR
+  ../include/mc_control/client_api.h
+  ../include/mc_control/ControllerClient.h
+)
+
+add_library(mc_control_client SHARED ${mc_control_client_SRC} ${mc_control_client_HDR})
+set_target_properties(mc_control_client PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_CLIENT_EXPORTS")
+target_link_libraries(mc_control_client mc_control)
 
 if(FLATC)
   set_source_files_properties(../include/mc_rtc/log/serialization/MCLog_generated.h PROPERTIES GENERATED 1)
@@ -268,7 +301,7 @@ endif()
 
 add_subdirectory(mc_control)
 
-set(MC_LIBRARIES mc_rbdyn mc_solver mc_tasks mc_control mc_trajectory mc_rtc_ros mc_rtc_loader mc_rtc_utils)
+set(MC_LIBRARIES mc_rbdyn mc_solver mc_tasks mc_control mc_trajectory mc_rtc_ros mc_rtc_loader mc_rtc_utils mc_rtc_gui mc_control_client)
 foreach(MC_LIB ${MC_LIBRARIES})
   if(GENERATE_COVERAGE)
     target_compile_options(${MC_LIB} PRIVATE "--coverage")

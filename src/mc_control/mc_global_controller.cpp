@@ -71,6 +71,20 @@ MCGlobalController::MCGlobalController(const std::string & conf,
     }
   }
   mc_rtc::ROSBridge::activate_services(*this);
+  if(config.enable_gui_server)
+  {
+    if(config.gui_server_pub_uris.size() == 0)
+    {
+      LOG_WARNING("GUI server is enabled but not configured to bind to anything, acting as if it was disabled.")
+    }
+    else
+    {
+      server_.reset(new mc_control::ControllerServer(config.timestep,
+                                                     config.gui_timestep,
+                                                     config.gui_server_pub_uris,
+                                                     config.gui_server_rep_uris));
+    }
+  }
 }
 
 MCGlobalController::~MCGlobalController()
@@ -340,6 +354,11 @@ bool MCGlobalController::run()
     if(!r) { running = false; }
   }
   publish_robots();
+  if(server_)
+  {
+    server_->handle_requests();
+    server_->publish(*controller_->gui_);
+  }
   return running;
 }
 
