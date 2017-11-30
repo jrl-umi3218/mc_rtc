@@ -844,3 +844,17 @@ BOOST_AUTO_TEST_CASE(TestLoadConfigurationInConfiguration)
   BOOST_REQUIRE(c1("o")("d") == 0.42);
   BOOST_REQUIRE(c1("o")("o") == ref_v);
 }
+
+BOOST_AUTO_TEST_CASE(TestConfigurartionRemove)
+{
+  auto config = mc_rtc::Configuration::fromData(sampleConfig(false));
+  BOOST_CHECK(!config.remove("NONE"));
+  BOOST_CHECK(config.has("v3d"));
+  BOOST_CHECK(config.remove("v3d"));
+  BOOST_CHECK(!config.has("v3d"));
+  BOOST_CHECK(config("dict").has("bool0"));
+  BOOST_CHECK(config("dict").remove("bool0"));
+  BOOST_CHECK(!config("dict").has("bool0"));
+  BOOST_CHECK(config.remove("dict"));
+  BOOST_CHECK(!config.has("dict"));
+}

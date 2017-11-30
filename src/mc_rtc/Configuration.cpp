@@ -642,6 +642,17 @@ void Configuration::push(mc_rtc::Configuration value)
   json.PushBack(value_, allocator);
 }
 
+bool Configuration::remove(const std::string & key)
+{
+  auto & json = *v.impl->value();
+  if(json.HasMember(key.c_str()))
+  {
+    json.RemoveMember(key.c_str());
+    return true;
+  }
+  return false;
+}
+
 ConfigurationArrayIterator Configuration::begin() const
 {
   return ConfigurationArrayIterator(*this);

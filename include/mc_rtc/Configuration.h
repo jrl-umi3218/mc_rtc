@@ -912,6 +912,17 @@ namespace mc_rtc
       }
     }
 
+    /** Remove a given element
+     *
+     *  Has no effect if the element is not present.
+     *
+     *  \param key Element to remove
+     *
+     *  \returns True if the element was removed, false otherwise.
+     *
+     */
+    bool remove(const std::string & key);
+
     ConfigurationArrayIterator begin() const;
 
     ConfigurationArrayIterator end() const;
