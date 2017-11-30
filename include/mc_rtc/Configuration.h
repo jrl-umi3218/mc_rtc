@@ -416,7 +416,7 @@ namespace mc_rtc
      * \param pretty Writes a human-readable file, defaults to true
      *
      */
-    void save(const std::string & path, bool pretty = true);
+    void save(const std::string & path, bool pretty = true) const;
 
     /*! \brief Returns a Entry value stored within the
      * configuration

@@ -475,7 +475,7 @@ void Configuration::loadData(const std::string & data)
   }
 }
 
-void Configuration::save(const std::string & path, bool pretty)
+void Configuration::save(const std::string & path, bool pretty) const
 {
   mc_rtc::internal::saveDocument(path, *v.impl->value(), pretty);
 }
