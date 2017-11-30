@@ -1,3 +1,4 @@
+#pragma once
 /** This file holds all mc_rtc::Configuration based serialization operation for mc_rbdyn objects */
 
 #include <mc_rtc/Configuration.h>

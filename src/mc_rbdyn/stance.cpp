@@ -299,7 +299,7 @@ const Surface& surfaceFromJSON(const mc_rbdyn::Robot & robot, const mc_rtc::Conf
   {
     return robot.surface(conf("name"));
   }
-  LOG_ERROR("Surface stored in JSON " << conf("name") << " does not exist in robot " << robot.name())
+  LOG_ERROR("Surface stored in JSON " << static_cast<std::string>(conf("name")) << " does not exist in robot " << robot.name())
   throw(std::string("invalid json"));
 }
 

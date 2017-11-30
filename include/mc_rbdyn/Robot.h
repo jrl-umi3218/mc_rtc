@@ -8,23 +8,14 @@
 #include <sch/STP-BV/STP_BV.h>
 
 #include <mc_rbdyn/Base.h>
-#include <mc_rbdyn/BodySensor.h>
-#include <mc_rbdyn/Flexibility.h>
-#include <mc_rbdyn/ForceSensor.h>
-#include <mc_rbdyn/Springs.h>
+#include <mc_rbdyn/RobotModule.h>
 #include <mc_rbdyn/Surface.h>
 
 #include <memory>
 
-namespace mc_control
-{
-  struct MCController;
-}
-
 namespace mc_rbdyn
 {
 
-struct RobotModule;
 struct Robots;
 
 struct MC_RBDYN_DLLAPI Robot
