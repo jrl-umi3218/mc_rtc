@@ -378,4 +378,14 @@ namespace mc_robots
     return _stance;
   }
 
+  HRP4VREPRobotModule::HRP4VREPRobotModule()
+  {
+    readUrdf("hrp4_vrep", filteredLinks);
+
+    _springs.springsBodies = { "l_ankle", "r_ankle" }; //TODO: check these are the correct bodies
+    auto fileByBodyName = stdCollisionsFiles(mb);
+    _convexHull = getConvexHull(fileByBodyName);
+    _bounds = nominalBounds(limits);
+    _stance = halfSittingPose(mb);
+  }
 }
