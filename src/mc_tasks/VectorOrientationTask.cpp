@@ -14,6 +14,7 @@ VectorOrientationTask::VectorOrientationTask(const std::string & bodyName, const
   bIndex = robot.bodyIndexByName(bodyName);
 
   finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, bodyVector, targetVector);
+  type_ = "vectorOrientation";
   name_ = "vector_orientation_" + robot.name() + "_" + bodyName;
 }
 

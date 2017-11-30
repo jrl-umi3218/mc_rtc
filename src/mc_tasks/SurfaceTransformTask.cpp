@@ -14,6 +14,8 @@ SurfaceTransformTask::SurfaceTransformTask(const std::string & surfaceName, cons
   std::string bodyName = robot.surface(surfaceName).bodyName();
   sva::PTransformd curPos = robot.surface(surfaceName).X_0_s(robot);
   finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, curPos, robot.surface(surfaceName).X_b_s());
+
+  type_ = "surfaceTransform";
   name_ = "surface_transform_" + robot.name() + "_" + surfaceName;
 }
 

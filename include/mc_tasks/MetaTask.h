@@ -23,6 +23,9 @@ struct MC_TASKS_DLLAPI MetaTask
 {
 friend struct mc_solver::QPSolver;
 public:
+  /** Get the type of the task */
+  const std::string & type() const { return type_; }
+
   /** Set a name for the task
    *
    * This name will be used to identify the task in logs, GUI...
@@ -167,6 +170,7 @@ protected:
    */
   virtual void removeFromLogger(mc_rtc::Logger &) {}
 
+  std::string type_;
   std::string name_;
 };
 

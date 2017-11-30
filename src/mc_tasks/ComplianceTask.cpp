@@ -44,6 +44,7 @@ ComplianceTask::ComplianceTask(const mc_rbdyn::Robots & robots,
   clampTrans_ = clamper(0.01);
   clampRot_ = clamper(0.1);
 
+  type_ = "compliance";
   name_ = "compliance_" + robot_.name() + "_" + body;
 }
 

@@ -25,6 +25,7 @@ EndEffectorTask::EndEffectorTask(const std::string & bodyName, const Eigen::Vect
                                                       robotIndex, stiffness,
                                                       weight));
 
+  type_ = "body6d";
   name_ = "body6d_" + robot.name() + "_" + bodyName;
 }
 

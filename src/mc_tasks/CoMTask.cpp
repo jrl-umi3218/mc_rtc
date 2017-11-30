@@ -16,6 +16,7 @@ CoMTask::CoMTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex,
   cur_com_ = rbd::computeCoM(robot.mb(), robot.mbc());
 
   finalize(robots.mbs(), static_cast<int>(robotIndex), cur_com_);
+  type_ = "com";
   name_ = "com_" + robots.robot(robot_index_).name();
 }
 

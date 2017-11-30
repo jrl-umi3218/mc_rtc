@@ -18,6 +18,7 @@ PositionTask::PositionTask(const std::string & bodyName, const Eigen::Vector3d& 
 
   Eigen::Vector3d curPos = robot.mbc().bodyPosW[bIndex].translation();
   finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, curPos, bodyPoint);
+  type_ = "position";
   name_ = "position_" + robot.name() + "_" + bodyName;
 }
 

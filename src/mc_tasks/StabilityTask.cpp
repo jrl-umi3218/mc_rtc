@@ -22,6 +22,7 @@ StabilityTask::StabilityTask(mc_rbdyn::Robots & robots)
   qObj(robot.mbc().q),
   postureTask(new tasks::qp::PostureTask(robots.mbs(), 0, qObj, 1, 1))
 {
+  type_ = "stability";
   name_ = "stability_" + robot.name();
 }
 

@@ -32,6 +32,7 @@ AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots,
   dofMat(Eigen::MatrixXd::Zero(5,6)), speedMat(Eigen::VectorXd::Zero(5)),
   stiffness_(stiffness), weight_(weight)
 {
+  type_ = std::string(direction > 0 ? "removeContact" : "addContact");
   name_ = std::string(direction > 0 ? "remove" : "add") + "_contact_" + robot.name() + "_" + contact.r1Surface()->name() + "_" + env.name() + "_" + contact.r2Surface()->name();
   for(int i = 0; i < 5; ++i)
   {

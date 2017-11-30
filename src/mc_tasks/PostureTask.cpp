@@ -16,6 +16,7 @@ PostureTask::PostureTask(const mc_solver::QPSolver & solver, unsigned int rIndex
 {
   eval_.setZero();
   speed_.setZero();
+  type_ = "posture";
   name_ = std::string("posture_") + robot_.name();
 }
 

@@ -12,6 +12,7 @@ OrientationTask::OrientationTask(const std::string & bodyName, const mc_rbdyn::R
 
   Eigen::Matrix3d curOri = robot.mbc().bodyPosW[bIndex].rotation();
   finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, curOri);
+  type_ = "orientation";
   name_ = "orientation_" + robot.name() + "_" + bodyName;
 }
 
