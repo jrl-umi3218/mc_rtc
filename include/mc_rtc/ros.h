@@ -72,7 +72,7 @@ struct MC_RTC_ROS_DLLAPI ROSBridge
   /*! \brief Stop ROS */
   static void shutdown();
 private:
-  static std::unique_ptr<ROSBridgeImpl> impl;
+  static ROSBridgeImpl & impl_();
 };
 
 #ifdef MC_RTC_HAS_ROS

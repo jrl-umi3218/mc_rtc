@@ -405,6 +405,7 @@ private:
 
 inline bool ros_init(const std::string & name)
 {
+  if(ros::ok()) { return true; }
   int argc = 0;
   char * argv[] = {0};
   ros::init(argc, argv, name.c_str());
@@ -430,25 +431,32 @@ struct ROSBridgeImpl
   unsigned int publish_rate = 100;
 };
 
-std::unique_ptr<ROSBridgeImpl> ROSBridge::impl = std::unique_ptr<ROSBridgeImpl>(new ROSBridgeImpl());
+ROSBridgeImpl & ROSBridge::impl_()
+{
+  static std::unique_ptr<ROSBridgeImpl> impl{new ROSBridgeImpl()};
+  return *impl;
+}
 
 std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
 {
-  return impl->nh;
+  static auto & impl = impl_();
+  return impl.nh;
 }
 
 void ROSBridge::set_publisher_timestep(double timestep)
 {
-  impl->publish_rate = static_cast<unsigned int>(floor(1/timestep));
+  static auto & impl = impl_();
+  impl.publish_rate = static_cast<unsigned int>(floor(1/timestep));
 }
 
 void ROSBridge::update_robot_publisher(const std::string& publisher, double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::vector<std::string>> & gJ, const std::map<std::string, std::vector<double>> & gQ)
 {
-  if(impl->rpubs.count(publisher) == 0)
+  static auto & impl = impl_();
+  if(impl.rpubs.count(publisher) == 0)
   {
-    impl->rpubs[publisher] = std::make_shared<RobotPublisher>(publisher + "/", impl->publish_rate);
+    impl.rpubs[publisher] = std::make_shared<RobotPublisher>(publisher + "/", impl.publish_rate);
   }
-  impl->rpubs[publisher]->update(dt, robot, gJ, gQ);
+  impl.rpubs[publisher]->update(dt, robot, gJ, gQ);
 }
 
 void ROSBridge::activate_services(mc_control::MCGlobalController& ctl)
@@ -473,15 +481,20 @@ namespace mc_rtc
 
 struct ROSBridgeImpl
 {
-  ROSBridgeImpl() : nh(0) {}
+  ROSBridgeImpl() : nh(nullptr) {}
   std::shared_ptr<ros::NodeHandle> nh;
 };
 
-std::unique_ptr<ROSBridgeImpl> ROSBridge::impl = std::unique_ptr<ROSBridgeImpl>(new ROSBridgeImpl());
+ROSBridgeImpl & ROSBridge::impl_()
+{
+  static std::unique_ptr<ROSBridgeImpl> impl{new ROSBridgeImpl()};
+  return *impl;
+}
 
 std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
 {
-  return impl->nh;
+  static auto & impl = impl_();
+  return impl.nh;
 }
 
 void ROSBridge::set_publisher_timestep(double /*timestep*/)
