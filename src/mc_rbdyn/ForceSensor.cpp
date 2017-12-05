@@ -173,6 +173,11 @@ const sva::PTransformd & ForceSensor::X_fsmodel_fsactual() const
   return calibration_->X_f_ds();
 }
 
+const sva::PTransformd ForceSensor::X_fsactual_parent() const
+{
+  return (X_fsmodel_fsactual() * X_p_f_).inv();
+}
+
 double ForceSensor::mass() const
 {
   return calibration_->mass();
