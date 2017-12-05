@@ -118,10 +118,18 @@ public:
     }
 
     imu.header = msg.header;
-    const auto & gsensor = robot.bodySensor().acceleration();
-    imu.linear_acceleration.x = gsensor.x();
-    imu.linear_acceleration.y = gsensor.y();
-    imu.linear_acceleration.z = gsensor.z();
+    const auto & imu_linear_acceleration = robot.bodySensor().acceleration();
+    imu.linear_acceleration.x = imu_linear_acceleration.x();
+    imu.linear_acceleration.y = imu_linear_acceleration.y();
+    imu.linear_acceleration.z = imu_linear_acceleration.z();
+    const auto & imu_angular_velocity = robot.bodySensor().angularVelocity();
+    imu.angular_velocity.x = imu_angular_velocity.x();
+    imu.angular_velocity.y = imu_angular_velocity.y();
+    imu.angular_velocity.z = imu_angular_velocity.z();
+    const auto &imu_orientation = robot.bodySensor().orientation();
+    imu.orientation.x = imu_orientation.x();
+    imu.orientation.y = imu_orientation.y();
+    imu.orientation.z = imu_orientation.z();
 
     nav_msgs::Odometry odom;
     odom.header = msg.header;
