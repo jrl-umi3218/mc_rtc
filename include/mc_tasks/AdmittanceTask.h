@@ -57,7 +57,8 @@ public:
   /*! \brief Reset the task
    *
    * Set the end effector objective to the current position of the
-   * end-effector.
+   * end-effector, disable force control and reset admittance and target wrench
+   * to zero.
    *
    */
   virtual void reset();
