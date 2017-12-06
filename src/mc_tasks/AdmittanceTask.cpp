@@ -46,9 +46,7 @@ AdmittanceTask::AdmittanceTask(const std::string & surfaceName,
 
 void AdmittanceTask::update()
 {
-  const sva::ForceVecd w_surf = measuredWrench();
-
-  wrenchError_ = w_surf - targetWrench_; // NB: measured - desired
+  wrenchError_ = measuredWrench() - targetWrench_;
   Eigen::Vector3d transVel = admittance_.force().cwiseProduct(wrenchError_.force());
   clampAndWarn(transVel, maxTransVel_, "linear velocity");
   trans_target_delta_ += timestep_ * transVel;
