@@ -212,7 +212,6 @@ private:
   std::shared_ptr<SurfaceTransformTask> surfaceTask_;
   sva::ForceVecd wrenchError_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   sva::PTransformd X_0_target_;
-  sva::PTransformd X_target_delta_;
   sva::ForceVecd targetWrench_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   const mc_rbdyn::Robot & robot_;
   const mc_rbdyn::ForceSensor & sensor_;

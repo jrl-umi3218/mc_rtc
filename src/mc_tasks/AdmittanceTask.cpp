@@ -59,8 +59,8 @@ void AdmittanceTask::update()
   clampAndWarn(rpy_target_delta_, maxRpyPos_, "angular position");
 
   const Eigen::Matrix3d R_target_delta = mc_rbdyn::rpyToMat(rpy_target_delta_);
-  X_target_delta_ = sva::PTransformd(R_target_delta, trans_target_delta_);
-  surfaceTask_->target(X_target_delta_ * X_0_target_);
+  const sva::PTransformd X_target_delta = sva::PTransformd(R_target_delta, trans_target_delta_);
+  surfaceTask_->target(X_target_delta * X_0_target_);
 
   /* Does nothing for now, but is here in case of changes */
   MetaTask::update(*surfaceTask_);
