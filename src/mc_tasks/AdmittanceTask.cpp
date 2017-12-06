@@ -40,7 +40,8 @@ AdmittanceTask::AdmittanceTask(const std::string & robotSurface,
     timestep_(timestep),
     admittance_(Eigen::Vector6d::Zero()),
     trans_target_delta_(Eigen::Vector3d::Zero()),
-    rpy_target_delta_(Eigen::Vector3d::Zero())
+    rpy_target_delta_(Eigen::Vector3d::Zero()),
+    X_fsactual_surf_(surface_.X_b_s() * sensor_.X_fsactual_parent())
 {
   surfaceTask_ = std::make_shared<SurfaceTransformTask>(robotSurface, robots, robotIndex, stiffness, weight);
   X_0_target_ = surfaceTask_->target();
@@ -49,9 +50,7 @@ AdmittanceTask::AdmittanceTask(const std::string & robotSurface,
 void AdmittanceTask::update()
 {
   sva::ForceVecd w_fsactual = sensor_.removeGravity(robot_);
-  const sva::PTransformd & X_parent_surf = surface_.X_b_s();
-  const sva::PTransformd X_fsactual_surf = X_parent_surf * sensor_.X_fsactual_parent();
-  sva::ForceVecd w_surf = X_fsactual_surf.dualMul(w_fsactual);
+  sva::ForceVecd w_surf = X_fsactual_surf_.dualMul(w_fsactual);
 
   wrenchError_ = w_surf - targetWrench_; // NB: measured - desired
   Eigen::Vector3d transVel = admittance_.force().cwiseProduct(wrenchError_.force());
