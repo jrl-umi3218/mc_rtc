@@ -31,28 +31,23 @@ public:
 
   /*! \brief Initialize a new admittance task.
    *
-   * \param robots Robots where the task will be applied.
+   * \param robotSurface Name of the surface frame to control, in which the
+   * desired wrench will also be expressed
    *
-   * \param robotIndex Which robot among the robots.
+   * \param robots Robots where the task will be applied
    *
-   * \param robotSurface Name of the robot surface frame controlled by the
-   * task, in which the desired wrench will also be expressed.
+   * \param robotIndex Which robot among the robots
    *
-   * \param timestep Timestep of the controller.
+   * \param timestep Timestep of the controller
    *
-   * \param forceAdmittance Vector of positive force admittance coefficients.
+   * \param admittance Initial vector of admittance coefficients
    *
-   * \param torqueAdmittance Vector of positive torque admittance coefficients.
+   * \param stiffness Stiffness of the underlying SurfaceTransform task
    *
-   * \param stiffness Stiffness of the underlying SurfaceTransform task.
-   *
-   * \param weight Weight of the underlying SurfaceTransform task.
+   * \param weight Weight of the underlying SurfaceTransform task
    *
    * \throws If the body the task is attempting to control does not have a
-   * sensor attached to it.
-   *
-   * Admittance coefficients are set to zero by default, in which case the task
-   * behaves like a usual SurfaceTransform task.
+   * sensor attached to it
    *
    */
   AdmittanceTask(const std::string & robotSurface,
