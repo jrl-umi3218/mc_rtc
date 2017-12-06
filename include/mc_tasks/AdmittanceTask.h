@@ -215,10 +215,7 @@ private:
   const mc_rbdyn::Robot & robot_;
   const mc_rbdyn::ForceSensor & sensor_;
   double timestep_;
-  double forceThresh_, torqueThresh_;
-  std::pair<double,double> forceGain_, torqueGain_;
   sva::ForceVecd admittance_;
-  // sva::PTransformd X_target_delta_;
   Eigen::Vector3d trans_target_delta_;
   Eigen::Vector3d rpy_target_delta_;
   Eigen::Vector3d maxTransPos_ = Eigen::Vector3d(0.1, 0.1, 0.1);  // [m]
