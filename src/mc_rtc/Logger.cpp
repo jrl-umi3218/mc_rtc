@@ -207,6 +207,8 @@ namespace mc_rtc
       impl_->valid_ = false;
       LOG_ERROR("Failed to open log file " << log_path)
     }
+    // Force rewrite of the log header
+    log_entries_changed_ = true;
   }
 
   void Logger::log()

@@ -580,9 +580,15 @@ bool MCGlobalController::GoToHalfSitPose()
 
 void MCGlobalController::start_log()
 {
+  controller_->logger().start(current_ctrl, controller_->timeStep);
+  setup_log();
+}
+
+void MCGlobalController::setup_log()
+{
+  if(setup_logger_.count(current_ctrl)) { return; }
   // Copy controller pointer to avoid lambda issue
   MCController * controller = controller_;
-  controller->logger().start(current_ctrl, controller_->timeStep);
   controller->logger().addLogEntry("qIn",
               [controller]() -> const std::vector<double>&
               {
@@ -648,6 +654,7 @@ void MCGlobalController::start_log()
               {
                 return controller->robot().bodySensor().acceleration();
               });
+  setup_logger_[current_ctrl] = true;
 }
 
 

@@ -472,6 +472,8 @@ private:
   void publish_robots();
 
   void start_log();
+  void setup_log();
+  std::map<std::string, bool> setup_logger_ = {};
 };
 
 }
