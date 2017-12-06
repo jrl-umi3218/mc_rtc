@@ -132,3 +132,26 @@ double AdmittanceTask::weight() const
 }
 
 } // mc_tasks
+
+
+namespace
+{
+
+static bool registered = mc_tasks::MetaTaskLoader::register_load_function("admittance",
+  [](mc_solver::QPSolver & solver,
+     const mc_rtc::Configuration & config)
+  {
+    Eigen::Matrix6d dof = Eigen::Matrix6d::Identity();
+    config("dof", dof);
+    auto t = std::make_shared<mc_tasks::AdmittanceTask>(config("surface"), solver.robots(), config("robotIndex"), solver.dt(), dof, );
+    if(config.has("stiffness")) { t->stiffness(config("stiffness")); }
+    if(config.has("weight")) { t->weight(config("weight")); }
+    if(config.has("admittance")) { t->admittance(config("admittance")); }
+    if(config.has("pose")) { t->targetPose(config("target")); }
+    if(config.has("wrench")) { t->targetWrench(config("wrench")); }
+    t->load(solver, config);
+    return t;
+  }
+);
+
+}
