@@ -119,6 +119,15 @@ public:
     targetWrench_ = wrench;
   }
 
+  /*! \brief Get the measured wrench in the surface frame
+   *
+   */
+  const sva::ForceVecd measuredWrench() const
+  {
+    sva::ForceVecd w_fsactual = sensor_.removeGravity(robot_);
+    return X_fsactual_surf_.dualMul(w_fsactual);
+  }
+
   /*! \brief Set the maximum translation velocity of the task */
   void maxTransVel(const Eigen::Vector3d & maxTransVel)
   {
