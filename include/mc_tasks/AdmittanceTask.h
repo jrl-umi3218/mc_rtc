@@ -1,6 +1,5 @@
 #pragma once
 
-#include <mc_tasks/MetaTask.h>
 #include <mc_tasks/SurfaceTransformTask.h>
 
 namespace mc_tasks
