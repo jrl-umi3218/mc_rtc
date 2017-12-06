@@ -66,7 +66,7 @@ public:
   /*! \brief Get the admittance coefficients of the task
    *
    */
-  const sva::ForceVecd & admittance()
+  const sva::ForceVecd & admittance() const
   {
     return admittance_;
   }
@@ -84,7 +84,7 @@ public:
   /*! \brief Get target translation and orientation for the position task
    *
    */
-  const sva::PTransformd & targetPose()
+  const sva::PTransformd & targetPose() const
   {
     return X_0_target_;
   }
@@ -102,7 +102,7 @@ public:
   /*! \brief Get the target wrench in the surface frame
    *
    */
-  const sva::ForceVecd & targetWrench()
+  const sva::ForceVecd & targetWrench() const
   {
     return targetWrench_;
   }
