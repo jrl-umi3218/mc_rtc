@@ -172,6 +172,9 @@ public:
     maxRpyPos_ = maxRpyPos;
   }
 
+protected:
+  void update() override;
+
 private:
   const mc_rbdyn::Surface & surface_;
   sva::ForceVecd wrenchError_ = sva::ForceVecd(Eigen::Vector6d::Zero());
@@ -188,8 +191,6 @@ private:
   Eigen::Vector3d maxRpyPos_ = Eigen::Vector3d(0.5, 0.5, 0.5);  // [rad]
   Eigen::Vector3d maxRpyVel_ = Eigen::Vector3d(0.1, 0.1, 0.1);  // [rad] / [s]
   const sva::PTransformd X_fsactual_surf_;
-
-  void update() override;
 };
 
 }
