@@ -69,7 +69,41 @@ public:
     return targetCoP_;
   }
 
+  /*! \brief Compute CoP in surface frame from sensor measurements
+   *
+   */
+  const Eigen::Vector2d & measuredCoP() const
+  {
+    const sva::ForceVecd w_surf = measuredWrench();
+    const double Fz = w_surf.force()(2);
+    if (Fz < 10.)  // [N]
+    {
+      return Eigen::Vector2d::Zero();
+    }
+    const Eigen::Vector3d tau_surf = w_surf.couple();
+    return Eigen::Vector2d(-tau_surf(1) / Fz, +tau_surf(0) / Fz);
+  }
+
+  /*! \brief Set the target force in the surface frame
+   *
+   * \param targetForce 3D vector of target force in the surface frame
+   *
+   */
+  void targetForce(const Eigen::Vector3d & targetForce)
+  {
+    targetForce_ = targetForce;
+  }
+
+  /*! \brief Get target force in the surface frame
+   *
+   */
+  const Eigen::Vector3d & targetForce() const
+  {
+    return targetForce_;
+  }
+
 private:
+  Eigen::Vector3d targetForce_ = Eigen::Vector3d::Zero();
   Eigen::Vector2d targetCoP_ = Eigen::Vector2d::Zero();
 
   void update() override;

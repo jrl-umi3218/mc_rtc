@@ -19,8 +19,7 @@ void CoPTask::update()
 {
   const double Fz = measuredWrench().force()(2);
   const Eigen::Vector3d targetTorque(+targetCoP_(1) * Fz, -targetCoP_(0) * Fz, 0.);
-  const Eigen::Vector3d targetForce(0., 0., Fz);
-  this->targetWrench(sva::ForceVecd(targetTorque, targetForce));
+  this->targetWrench(sva::ForceVecd(targetTorque, targetForce_));
   AdmittanceTask::update();
 }
 

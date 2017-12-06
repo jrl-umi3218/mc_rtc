@@ -72,7 +72,6 @@ void AdmittanceTask::reset()
 
 } // mc_tasks
 
-
 namespace
 {
 
