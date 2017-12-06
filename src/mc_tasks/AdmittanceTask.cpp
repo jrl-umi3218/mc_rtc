@@ -56,12 +56,12 @@ void AdmittanceTask::update()
   wrenchError_ = w_surf - targetWrench_; // NB: measured - desired
   Eigen::Vector3d transVel = admittance_.force().cwiseProduct(wrenchError_.force());
   clampAndWarn(transVel, maxTransVel_, "linear velocity");
-  trans_target_delta_ = trans_target_delta_ + timestep_ * transVel;
+  trans_target_delta_ += timestep_ * transVel;
   clampAndWarn(trans_target_delta_, maxTransPos_, "linear position");
 
   Eigen::Vector3d rpyVel = admittance_.couple().cwiseProduct(wrenchError_.couple());
   clampAndWarn(rpyVel, maxRpyVel_, "angular velocity");
-  rpy_target_delta_ = rpy_target_delta_ + timestep_ * rpyVel;
+  rpy_target_delta_ += timestep_ * rpyVel;
   clampAndWarn(rpy_target_delta_, maxRpyPos_, "angular position");
 
   const Eigen::Matrix3d R_target_delta = mc_rbdyn::rpyToMat(rpy_target_delta_);
