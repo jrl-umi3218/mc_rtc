@@ -7,7 +7,22 @@ namespace mc_tasks
 
 /*! \brief Hybrid position-force control on a contacting end-effector.
  *
- * ...
+ * The AdmittanceTask is by default a SurfaceTransformTask, i.e. pure position
+ * control of a surface frame. Admittance coefficients that map force errors to
+ * displacements (see [1] and [2]) are initially set to zero. 
+ *
+ * When the admittance along one axis (Fx, Fy, Fz, Tx, Ty or Tz) is set to a
+ * non-zero positive value, this axis switches from position to force control.
+ * The goal is then to realize the prescribed target wrench at the surface
+ * frame (bis repetita placent: wrenches are expressed in the surface frame of
+ * the task, not in the sensor frame of the corresponding body).
+ *
+ * See the discussion in [3] for a comparison with the ComplianceTask.
+ *
+ * [1] https://en.wikipedia.org/wiki/Mechanical_impedance
+ * [2] https://en.wikipedia.org/wiki/Impedance_analogy  
+ * [3] https://gite.lirmm.fr/multi-contact/mc_rtc/issues/34
+ *
  */
 struct MC_TASKS_DLLAPI AdmittanceTask: MetaTask
 {
