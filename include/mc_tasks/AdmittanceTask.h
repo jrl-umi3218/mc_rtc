@@ -40,8 +40,6 @@ public:
    *
    * \param timestep Timestep of the controller
    *
-   * \param admittance Initial vector of admittance coefficients
-   *
    * \param stiffness Stiffness of the underlying SurfaceTransform task
    *
    * \param weight Weight of the underlying SurfaceTransform task
@@ -54,7 +52,6 @@ public:
       const mc_rbdyn::Robots & robots,
       unsigned robotIndex,
       double timestep,
-      const sva::ForceVecd & admittance = sva::ForceVecd(Eigen::Vector3d::Zero(), Eigen::Vector3d::Zero()),
       double stiffness = 5.0, double weight = 1000.0);
 
   /*! \brief Reset the task

@@ -31,7 +31,6 @@ AdmittanceTask::AdmittanceTask(const std::string & robotSurface,
       const mc_rbdyn::Robots & robots,
       unsigned int robotIndex,
       double timestep,
-      const sva::ForceVecd & admittance,
       double stiffness, double weight)
   : surface_(robots.robot(robotIndex).surface(robotSurface)),
     wrenchError_(Eigen::Vector6d::Zero()),
@@ -39,7 +38,7 @@ AdmittanceTask::AdmittanceTask(const std::string & robotSurface,
     robot_(robots.robots()[robotIndex]),
     sensor_(robot_.bodyForceSensor(surface_.bodyName())),
     timestep_(timestep),
-    admittance_(admittance),
+    admittance_(Eigen::Vector6d::Zero()),
     trans_target_delta_(Eigen::Vector3d::Zero()),
     rpy_target_delta_(Eigen::Vector3d::Zero())
 {
@@ -97,6 +96,8 @@ void AdmittanceTask::reset()
 {
   surfaceTask_->reset();
   X_0_target_ = surfaceTask_->target();
+  targetWrench_ = sva::ForceVecd(Eigen::Vector6d::Zero());
+  admittance_ = sva::ForceVecd(Eigen::Vector6d::Zero());
 }
 
 void AdmittanceTask::resetJointsSelector(mc_solver::QPSolver & solver)
