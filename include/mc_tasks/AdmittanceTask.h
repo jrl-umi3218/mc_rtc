@@ -162,8 +162,6 @@ public:
   }
 
 private:
-  sva::PTransformd computePose();
-
   const mc_rbdyn::Surface & surface_;
   sva::ForceVecd wrenchError_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   sva::PTransformd X_0_target_;
