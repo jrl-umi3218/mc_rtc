@@ -46,8 +46,7 @@ AdmittanceTask::AdmittanceTask(const std::string & surfaceName,
 
 void AdmittanceTask::update()
 {
-  sva::ForceVecd w_fsactual = sensor_.removeGravity(robot_);
-  sva::ForceVecd w_surf = X_fsactual_surf_.dualMul(w_fsactual);
+  const sva::ForceVecd w_surf = measuredWrench();
 
   wrenchError_ = w_surf - targetWrench_; // NB: measured - desired
   Eigen::Vector3d transVel = admittance_.force().cwiseProduct(wrenchError_.force());

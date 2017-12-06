@@ -56,7 +56,7 @@ public:
    * \param targetCoP 2D vector of CoP coordinates in the surface frame
    *
    */
-  void targetCoP(const Eigen::Vector2d & cop)
+  void targetCoP(const Eigen::Vector2d & targetCoP)
   {
     targetCoP_ = targetCoP;
   }
