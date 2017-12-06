@@ -144,27 +144,27 @@ public:
    * the task (e.g. 3 for a position task)
    *
    */
-  virtual void dimWeight(const Eigen::VectorXd & dimW) override;
+  void dimWeight(const Eigen::VectorXd & dimW) override;
 
   /*! \brief Get the output-dimension-wise weighting vector of the task */
-  virtual Eigen::VectorXd dimWeight() const override;
+  Eigen::VectorXd dimWeight() const override;
 
-  virtual void selectActiveJoints(mc_solver::QPSolver & solver,
-                                  const std::vector<std::string> & activeJointsName) override;
+  void selectActiveJoints(mc_solver::QPSolver & solver,
+                          const std::vector<std::string> & activeJointsName) override;
 
-  virtual void selectUnactiveJoints(mc_solver::QPSolver & solver,
-                                    const std::vector<std::string> & unactiveJointsName) override;
+  void selectUnactiveJoints(mc_solver::QPSolver & solver,
+                            const std::vector<std::string> & unactiveJointsName) override;
 
-  virtual void resetJointsSelector(mc_solver::QPSolver & solver) override;
+  void resetJointsSelector(mc_solver::QPSolver & solver) override;
 
   /*! \brief Returns the task's error */
-  virtual Eigen::VectorXd eval() const override
+  Eigen::VectorXd eval() const override
   {
     return surfaceTask_->eval();
   }
 
   /*! \brief Returns the task's speed */
-  virtual Eigen::VectorXd speed() const override
+  Eigen::VectorXd speed() const override
   {
     return surfaceTask_->speed();
   }
@@ -235,9 +235,9 @@ private:
   Eigen::Vector3d maxRpyPos_ = Eigen::Vector3d(0.5, 0.5, 0.5);  // [rad]
   Eigen::Vector3d maxRpyVel_ = Eigen::Vector3d(0.1, 0.1, 0.1);  // [rad] / [s]
 
-  virtual void addToSolver(mc_solver::QPSolver & solver) override;
-  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
-  virtual void update() override;
+  void addToSolver(mc_solver::QPSolver & solver) override;
+  void removeFromSolver(mc_solver::QPSolver & solver) override;
+  void update() override;
 };
 
 }
