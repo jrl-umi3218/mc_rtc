@@ -24,7 +24,7 @@ namespace mc_tasks
  * [3] https://gite.lirmm.fr/multi-contact/mc_rtc/issues/34
  *
  */
-struct MC_TASKS_DLLAPI AdmittanceTask: MetaTask
+struct MC_TASKS_DLLAPI AdmittanceTask: SurfaceTransformTask
 {
 public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -117,50 +117,6 @@ public:
     targetWrench_ = wrench;
   }
 
-  /*! \brief Set the task stiffness.
-   *
-   * Damping is automatically set to 2 * sqrt(stiffness).
-   *
-   * \param stiffness Task stiffness
-   *
-   */
-  void stiffness(double stiffness);
-
-  /*! \brief Returns the task stiffness */
-  double stiffness() const;
-
-  /*! \brief Set the task weight
-   *
-   * \param w Task weight
-   *
-   */
-  virtual void weight(double w);
-  
-  /*! \brief Returns the task weight */
-  virtual double weight() const;
-
-  void dimWeight(const Eigen::VectorXd & dimW) override;
-
-  Eigen::VectorXd dimWeight() const override;
-
-  void selectActiveJoints(mc_solver::QPSolver & solver,
-                          const std::vector<std::string> & activeJointsName) override;
-
-  void selectUnactiveJoints(mc_solver::QPSolver & solver,
-                            const std::vector<std::string> & unactiveJointsName) override;
-
-  void resetJointsSelector(mc_solver::QPSolver & solver) override;
-
-  Eigen::VectorXd eval() const override
-  {
-    return surfaceTask_->eval();
-  }
-
-  Eigen::VectorXd speed() const override
-  {
-    return surfaceTask_->speed();
-  }
-
   /*! \brief Set the maximum translation velocity of the task */
   void maxTransVel(const Eigen::Vector3d & maxTransVel)
   {
@@ -209,7 +165,6 @@ private:
   sva::PTransformd computePose();
 
   const mc_rbdyn::Surface & surface_;
-  std::shared_ptr<SurfaceTransformTask> surfaceTask_;
   sva::ForceVecd wrenchError_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   sva::PTransformd X_0_target_;
   sva::ForceVecd targetWrench_ = sva::ForceVecd(Eigen::Vector6d::Zero());
@@ -225,8 +180,6 @@ private:
   Eigen::Vector3d maxRpyVel_ = Eigen::Vector3d(0.1, 0.1, 0.1);  // [rad] / [s]
   const sva::PTransformd X_fsactual_surf_;
 
-  void addToSolver(mc_solver::QPSolver & solver) override;
-  void removeFromSolver(mc_solver::QPSolver & solver) override;
   void update() override;
 };
 

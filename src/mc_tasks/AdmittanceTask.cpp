@@ -29,19 +29,19 @@ void clampAndWarn(Eigen::Vector3d & vector, const Eigen::Vector3d & bound, const
 
 }
 
-AdmittanceTask::AdmittanceTask(const std::string & robotSurface,
+AdmittanceTask::AdmittanceTask(const std::string & surfaceName,
       const mc_rbdyn::Robots & robots,
       unsigned int robotIndex,
       double timestep,
       double stiffness, double weight)
-  : surface_(robots.robot(robotIndex).surface(robotSurface)),
+  : SurfaceTransformTask(surfaceName, robots, robotIndex, stiffness, weight), 
+    surface_(robots.robot(robotIndex).surface(surfaceName)),
     robot_(robots.robots()[robotIndex]),
     sensor_(robot_.bodyForceSensor(surface_.bodyName())),
     timestep_(timestep),
     X_fsactual_surf_(surface_.X_b_s() * sensor_.X_fsactual_parent())
 {
-  surfaceTask_ = std::make_shared<SurfaceTransformTask>(robotSurface, robots, robotIndex, stiffness, weight);
-  X_0_target_ = surfaceTask_->target();
+  X_0_target_ = SurfaceTransformTask::target();
 }
 
 void AdmittanceTask::update()
@@ -62,75 +62,15 @@ void AdmittanceTask::update()
 
   const Eigen::Matrix3d R_target_delta = mc_rbdyn::rpyToMat(rpy_target_delta_);
   const sva::PTransformd X_target_delta = sva::PTransformd(R_target_delta, trans_target_delta_);
-  surfaceTask_->target(X_target_delta * X_0_target_);
-
-  /* Does nothing for now, but is here in case of changes */
-  MetaTask::update(*surfaceTask_);
-}
-
-void AdmittanceTask::addToSolver(mc_solver::QPSolver & solver)
-{
-  MetaTask::addToSolver(*surfaceTask_, solver);
-}
-
-void AdmittanceTask::dimWeight(const Eigen::VectorXd & dimW)
-{
-  surfaceTask_->dimWeight(dimW);
-}
-
-Eigen::VectorXd AdmittanceTask::dimWeight() const
-{
-  return surfaceTask_->dimWeight();
-}
-
-void AdmittanceTask::removeFromSolver(mc_solver::QPSolver & solver)
-{
-  MetaTask::removeFromSolver(*surfaceTask_, solver);
+  this->target(X_target_delta * X_0_target_);
 }
 
 void AdmittanceTask::reset()
 {
-  surfaceTask_->reset();
-  X_0_target_ = surfaceTask_->target();
+  SurfaceTransformTask::reset();
+  X_0_target_ = SurfaceTransformTask::target();
   targetWrench_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   admittance_ = sva::ForceVecd(Eigen::Vector6d::Zero());
-}
-
-void AdmittanceTask::resetJointsSelector(mc_solver::QPSolver & solver)
-{
-  surfaceTask_->resetJointsSelector(solver);
-}
-
-void AdmittanceTask::selectActiveJoints(mc_solver::QPSolver & solver,
-    const std::vector<std::string> & activeJointsName)
-{
-  surfaceTask_->selectActiveJoints(solver, activeJointsName);
-}
-
-void AdmittanceTask::selectUnactiveJoints(mc_solver::QPSolver & solver,
-    const std::vector<std::string> & unactiveJointsName)
-{
-  surfaceTask_->selectUnactiveJoints(solver, unactiveJointsName);
-}
-
-void AdmittanceTask::stiffness(double w)
-{
-  surfaceTask_->stiffness(w);
-}
-
-double AdmittanceTask::stiffness() const
-{
-  return surfaceTask_->stiffness();
-}
-
-void AdmittanceTask::weight(double w)
-{
-  surfaceTask_->weight(w);
-}
-
-double AdmittanceTask::weight() const
-{
-  return surfaceTask_->weight();
 }
 
 } // mc_tasks
