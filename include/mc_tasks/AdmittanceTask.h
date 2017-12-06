@@ -138,15 +138,8 @@ public:
   /*! \brief Returns the task weight */
   virtual double weight() const;
 
-  /*! \brief Set the output-dimension-wise weighting vector of the task 
-   * 
-   * \param dimW Vector whose dimension is the number of output coordinates of
-   * the task (e.g. 3 for a position task)
-   *
-   */
   void dimWeight(const Eigen::VectorXd & dimW) override;
 
-  /*! \brief Get the output-dimension-wise weighting vector of the task */
   Eigen::VectorXd dimWeight() const override;
 
   void selectActiveJoints(mc_solver::QPSolver & solver,
@@ -157,13 +150,11 @@ public:
 
   void resetJointsSelector(mc_solver::QPSolver & solver) override;
 
-  /*! \brief Returns the task's error */
   Eigen::VectorXd eval() const override
   {
     return surfaceTask_->eval();
   }
 
-  /*! \brief Returns the task's speed */
   Eigen::VectorXd speed() const override
   {
     return surfaceTask_->speed();

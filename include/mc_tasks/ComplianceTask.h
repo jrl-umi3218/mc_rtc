@@ -174,13 +174,11 @@ public:
 
   void resetJointsSelector(mc_solver::QPSolver & solver) override;
 
-  /*! \brief Returns the task's error */
   Eigen::VectorXd eval() const override
   {
     return wrench_.vector();
   }
 
-  /*! \brief Returns the task's speed */
   Eigen::VectorXd speed() const override
   {
     return robot_.mbc().bodyVelW[robot_.bodyIndexByName(sensor_.parentBody())].vector();
