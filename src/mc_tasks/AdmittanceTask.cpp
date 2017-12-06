@@ -41,11 +41,7 @@ AdmittanceTask::AdmittanceTask(const std::string & robotSurface,
     timestep_(timestep),
     admittance_(admittance),
     trans_target_delta_(Eigen::Vector3d::Zero()),
-    rpy_target_delta_(Eigen::Vector3d::Zero()),
-    maxTransPos_(DEFAULT_MAX_TRANS_POS),
-    maxTransVel_(DEFAULT_MAX_TRANS_VEL),
-    maxRpyPos_(DEFAULT_MAX_RPY_POS),
-    maxRpyVel_(DEFAULT_MAX_RPY_VEL)
+    rpy_target_delta_(Eigen::Vector3d::Zero())
 {
   surfaceTask_ = std::make_shared<SurfaceTransformTask>(robotSurface, robots, robotIndex, stiffness, weight);
   X_0_target_ = surfaceTask_->target();

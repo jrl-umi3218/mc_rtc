@@ -29,12 +29,7 @@ struct MC_TASKS_DLLAPI AdmittanceTask: MetaTask
 public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-  const Eigen::Vector3d DEFAULT_MAX_TRANS_VEL = Eigen::Vector3d(0.1, 0.1, 0.1);  // [m] / [s]
-  const Eigen::Vector3d DEFAULT_MAX_TRANS_POS = Eigen::Vector3d(0.1, 0.1, 0.1);  // [m]
-  const Eigen::Vector3d DEFAULT_MAX_RPY_VEL = Eigen::Vector3d(0.1, 0.1, 0.1);  // [rad] / [s]
-  const Eigen::Vector3d DEFAULT_MAX_RPY_POS = Eigen::Vector3d(0.5, 0.5, 0.5);  // [rad]
-
-  /*! \brief Constructor ...
+  /*! \brief Initialize a new admittance task.
    *
    * \param robots Robots where the task will be applied.
    *
@@ -243,10 +238,10 @@ private:
   // sva::PTransformd X_target_delta_;
   Eigen::Vector3d trans_target_delta_;
   Eigen::Vector3d rpy_target_delta_;
-  Eigen::Vector3d maxTransPos_;
-  Eigen::Vector3d maxTransVel_;
-  Eigen::Vector3d maxRpyPos_;
-  Eigen::Vector3d maxRpyVel_;
+  Eigen::Vector3d maxTransPos_ = Eigen::Vector3d(0.1, 0.1, 0.1);  // [m]
+  Eigen::Vector3d maxTransVel_ = Eigen::Vector3d(0.1, 0.1, 0.1);  // [m] / [s]
+  Eigen::Vector3d maxRpyPos_ = Eigen::Vector3d(0.5, 0.5, 0.5);  // [rad]
+  Eigen::Vector3d maxRpyVel_ = Eigen::Vector3d(0.1, 0.1, 0.1);  // [rad] / [s]
 
   virtual void addToSolver(mc_solver::QPSolver & solver) override;
   virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
