@@ -33,14 +33,9 @@ AdmittanceTask::AdmittanceTask(const std::string & robotSurface,
       double timestep,
       double stiffness, double weight)
   : surface_(robots.robot(robotIndex).surface(robotSurface)),
-    wrenchError_(Eigen::Vector6d::Zero()),
-    targetWrench_(Eigen::Vector6d::Zero()),
     robot_(robots.robots()[robotIndex]),
     sensor_(robot_.bodyForceSensor(surface_.bodyName())),
     timestep_(timestep),
-    admittance_(Eigen::Vector6d::Zero()),
-    trans_target_delta_(Eigen::Vector3d::Zero()),
-    rpy_target_delta_(Eigen::Vector3d::Zero()),
     X_fsactual_surf_(surface_.X_b_s() * sensor_.X_fsactual_parent())
 {
   surfaceTask_ = std::make_shared<SurfaceTransformTask>(robotSurface, robots, robotIndex, stiffness, weight);

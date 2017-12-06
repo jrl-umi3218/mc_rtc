@@ -209,16 +209,16 @@ private:
 
   const mc_rbdyn::Surface & surface_;
   std::shared_ptr<SurfaceTransformTask> surfaceTask_;
-  sva::ForceVecd wrenchError_;
+  sva::ForceVecd wrenchError_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   sva::PTransformd X_0_target_;
   sva::PTransformd X_target_delta_;
-  sva::ForceVecd targetWrench_;
+  sva::ForceVecd targetWrench_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   const mc_rbdyn::Robot & robot_;
   const mc_rbdyn::ForceSensor & sensor_;
   double timestep_;
-  sva::ForceVecd admittance_;
-  Eigen::Vector3d trans_target_delta_;
-  Eigen::Vector3d rpy_target_delta_;
+  sva::ForceVecd admittance_ = sva::ForceVecd(Eigen::Vector6d::Zero());
+  Eigen::Vector3d trans_target_delta_ = Eigen::Vector3d::Zero();
+  Eigen::Vector3d rpy_target_delta_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d maxTransPos_ = Eigen::Vector3d(0.1, 0.1, 0.1);  // [m]
   Eigen::Vector3d maxTransVel_ = Eigen::Vector3d(0.1, 0.1, 0.1);  // [m] / [s]
   Eigen::Vector3d maxRpyPos_ = Eigen::Vector3d(0.5, 0.5, 0.5);  // [rad]
