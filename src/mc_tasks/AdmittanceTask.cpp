@@ -147,7 +147,7 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function("admit
     if(config.has("stiffness")) { t->stiffness(config("stiffness")); }
     if(config.has("weight")) { t->weight(config("weight")); }
     if(config.has("admittance")) { t->admittance(config("admittance")); }
-    if(config.has("pose")) { t->targetPose(config("target")); }
+    if(config.has("pose")) { t->targetPose(config("pose")); }
     if(config.has("wrench")) { t->targetWrench(config("wrench")); }
     t->load(solver, config);
     return t;
