@@ -1,5 +1,7 @@
-#include <mc_tasks/AdmittanceTask.h>
+#include <mc_rbdyn/configuration_io.h>
 #include <mc_rbdyn/rpy_utils.h>
+#include <mc_tasks/AdmittanceTask.h>
+#include <mc_tasks/MetaTaskLoader.h>
 
 namespace mc_tasks
 {
@@ -141,9 +143,7 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function("admit
   [](mc_solver::QPSolver & solver,
      const mc_rtc::Configuration & config)
   {
-    Eigen::Matrix6d dof = Eigen::Matrix6d::Identity();
-    config("dof", dof);
-    auto t = std::make_shared<mc_tasks::AdmittanceTask>(config("surface"), solver.robots(), config("robotIndex"), solver.dt(), dof, );
+    auto t = std::make_shared<mc_tasks::AdmittanceTask>(config("surface"), solver.robots(), config("robotIndex"), solver.dt());
     if(config.has("stiffness")) { t->stiffness(config("stiffness")); }
     if(config.has("weight")) { t->weight(config("weight")); }
     if(config.has("admittance")) { t->admittance(config("admittance")); }
