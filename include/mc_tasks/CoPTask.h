@@ -72,7 +72,7 @@ public:
   /*! \brief Compute CoP in surface frame from sensor measurements
    *
    */
-  const Eigen::Vector2d & measuredCoP() const
+  const Eigen::Vector2d measuredCoP() const
   {
     const sva::ForceVecd w_surf = measuredWrench();
     const double Fz = w_surf.force()(2);
