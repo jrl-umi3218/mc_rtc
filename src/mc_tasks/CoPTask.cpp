@@ -24,7 +24,7 @@ void CoPTask::reset()
 void CoPTask::update()
 {
   const double pressure = measuredWrench().force()(2);
-  if (pressure < MIN_PRESSURE)
+  if (pressure < MIN_PRESSURE && (admittance_.couple()(0) > 1e-6 || admittance_.couple()(1) > 1e-6))
   {
     LOG_WARNING("Pressure on " << surface_.name() << " < " << MIN_PRESSURE << " [N], "
         << "disabling CoP tracking");
