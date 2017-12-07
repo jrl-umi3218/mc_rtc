@@ -15,13 +15,15 @@ namespace mc_tasks
  * non-zero positive value, this axis switches from position to force control.
  * The goal is then to realize the prescribed target wrench at the surface
  * frame (bis repetita placent: wrenches are expressed in the surface frame of
- * the task, not in the sensor frame of the corresponding body).
+ * the task, not in the sensor frame of the corresponding body). The force
+ * control law applied is damping control [3].
  *
- * See the discussion in [3] for a comparison with the ComplianceTask.
+ * See the discussion in [4] for a comparison with the ComplianceTask.
  *
  * [1] https://en.wikipedia.org/wiki/Mechanical_impedance
  * [2] https://en.wikipedia.org/wiki/Impedance_analogy  
- * [3] https://gite.lirmm.fr/multi-contact/mc_rtc/issues/34
+ * [3] https://doi.org/10.1109/IROS.2010.5651082
+ * [4] https://gite.lirmm.fr/multi-contact/mc_rtc/issues/34
  *
  */
 struct MC_TASKS_DLLAPI AdmittanceTask: SurfaceTransformTask
