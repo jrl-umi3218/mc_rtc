@@ -15,6 +15,12 @@ CoPTask::CoPTask(const std::string & surfaceName,
 {
 }
 
+void CoPTask::reset()
+{
+  targetCoP_ = Eigen::Vector2d::Zero();
+  AdmittanceTask::reset();
+}
+
 void CoPTask::update()
 {
   const double Fz = measuredWrench().force()(2);
@@ -23,10 +29,36 @@ void CoPTask::update()
   AdmittanceTask::update();
 }
 
-void CoPTask::reset()
+Eigen::Vector2d CoPTask::measuredCoP() const
 {
-  targetCoP_ = Eigen::Vector2d::Zero();
-  AdmittanceTask::reset();
+  const sva::ForceVecd w_surf = measuredWrench();
+  const double pressure = w_surf.force()(2);
+  if (pressure < MIN_PRESSURE)
+  {
+    return Eigen::Vector2d::Zero();
+  }
+  const Eigen::Vector3d tau_surf = w_surf.couple();
+  return Eigen::Vector2d(-tau_surf(1) / pressure, +tau_surf(0) / pressure);
+}
+
+void CoPTask::targetCoP(const Eigen::Vector2d & targetCoP)
+{
+  targetCoP_ = targetCoP;
+}
+
+const Eigen::Vector2d & CoPTask::targetCoP() const
+{
+  return targetCoP_;
+}
+
+const Eigen::Vector3d & CoPTask::targetForce() const
+{
+  return targetForce_;
+}
+
+void CoPTask::targetForce(const Eigen::Vector3d & targetForce)
+{
+  targetForce_ = targetForce;
 }
 
 } // mc_tasks
