@@ -81,6 +81,7 @@ public:
   const Eigen::Vector3d & targetForce() const;
 
 private:
+  const double MIN_PRESSURE = 10.;  // [N]
   Eigen::Vector3d targetForce_ = Eigen::Vector3d::Zero();
   Eigen::Vector2d targetCoP_ = Eigen::Vector2d::Zero();
 
