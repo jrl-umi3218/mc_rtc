@@ -60,13 +60,18 @@ namespace mc_robots
     std::vector<std::string> filteredLinks;
   };
 
+  struct MC_ROBOTS_DLLAPI HRP4VREPRobotModule : public HRP4WithHandRobotModule
+  {
+  public:
+    HRP4VREPRobotModule();
+  };
 }
 
 extern "C"
 {
   ROBOT_MODULE_API std::vector<std::string> MC_RTC_ROBOT_MODULE()
   {
-    return {"HRP4", "HRP4NoHand"};
+    return {"HRP4", "HRP4NoHand", "HRP4VREP"};
   }
   ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr) { delete ptr; }
   ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string & n)
@@ -78,6 +83,10 @@ extern "C"
     else if(n == "HRP4NoHand")
     {
       return new mc_robots::HRP4NoHandRobotModule();
+    }
+    else if(n == "HRP4VREP")
+    {
+      return new mc_robots::HRP4VREPRobotModule();
     }
     else
     {
