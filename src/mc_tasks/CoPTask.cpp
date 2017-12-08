@@ -68,6 +68,50 @@ void CoPTask::targetForce(const Eigen::Vector3d & targetForce)
   targetForce_ = targetForce;
 }
 
+void CoPTask::addToLogger(mc_rtc::Logger & logger)
+{
+  logger.addLogEntry(name_ + "_admittance",
+                     [this]() -> const sva::ForceVecd &
+                     {
+                     return admittance();
+                     });
+  //logger.addLogEntry(name_ + "_measured_cop",
+  //                   [this]() -> Eigen::Vector2d
+  //                   {
+  //                   return measuredCoP();
+  //                   });
+  logger.addLogEntry(name_ + "_measured_force",
+                     [this]() -> Eigen::Vector3d
+                     {
+                     return measuredWrench().force();
+                     });
+  //logger.addLogEntry(name_ + "_target_cop",
+  //                   [this]() -> const Eigen::Vector2d &
+  //                   {
+  //                   return targetCoP_;
+  //                   });
+  logger.addLogEntry(name_ + "_target_force",
+                     [this]() -> const Eigen::Vector3d &
+                     {
+                     return targetForce_;
+                     });
+  logger.addLogEntry(name_ + "_target_pose",
+                     [this]() -> const sva::PTransformd &
+                     {
+                     return targetPose();
+                     });
+}
+
+void CoPTask::removeFromLogger(mc_rtc::Logger & logger)
+{
+  logger.removeLogEntry(name_ + "_admittance");
+  //logger.removeLogEntry(name_ + "_measured_cop");
+  logger.removeLogEntry(name_ + "_measured_force");
+  //logger.removeLogEntry(name_ + "_target_cop");
+  logger.removeLogEntry(name_ + "_target_force");
+  logger.removeLogEntry(name_ + "_target_pose");
+}
+
 } // mc_tasks
 
 namespace

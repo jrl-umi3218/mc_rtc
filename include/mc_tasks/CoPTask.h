@@ -91,6 +91,8 @@ private:
   Eigen::Vector3d targetForce_ = Eigen::Vector3d::Zero();
   Eigen::Vector2d targetCoP_ = Eigen::Vector2d::Zero();
 
+  void addToLogger(mc_rtc::Logger & logger) override;
+  void removeFromLogger(mc_rtc::Logger & logger) override;
   void update() override;
 };
 
