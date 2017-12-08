@@ -54,7 +54,7 @@ int main()
   test_traits<Eigen::Quaterniond, true>();
   test_traits<sva::PTransformd, true>();
   test_traits<sva::ForceVecd, true>();
-  test_traits<Eigen::Vector2d, false>();
+  test_traits<Eigen::Vector2d, true>();
   test_traits<Eigen::Vector6d, false>();
   test_traits<std::vector<unsigned int>, false>();
   test_traits<float, false>();

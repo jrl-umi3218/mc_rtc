@@ -257,6 +257,7 @@ int main(int argc, char * argv[])
           CASE_ENUM(LogData_DoubleVector);
           CASE_ENUM(LogData_UnsignedInt);
           CASE_ENUM(LogData_String);
+          CASE_ENUM(LogData_Vector2d);
           CASE_ENUM(LogData_Vector3d);
           CASE_ENUM(LogData_Quaterniond);
           CASE_ENUM(LogData_PTransformd);

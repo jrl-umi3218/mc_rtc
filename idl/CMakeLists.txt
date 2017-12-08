@@ -1,5 +1,4 @@
 find_program(FLATC flatc)
-
 if(FLATC)
   set(FBS_IN ${CMAKE_SOURCE_DIR}/idl/MCLog.fbs)
   set(HEADERS_OUT_DIR ${CMAKE_SOURCE_DIR}/include/mc_rtc/log/serialization)
