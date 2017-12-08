@@ -75,21 +75,21 @@ void CoPTask::addToLogger(mc_rtc::Logger & logger)
                      {
                      return admittance();
                      });
-  //logger.addLogEntry(name_ + "_measured_cop",
-  //                   [this]() -> Eigen::Vector2d
-  //                   {
-  //                   return measuredCoP();
-  //                   });
+  logger.addLogEntry(name_ + "_measured_cop",
+                     [this]() -> Eigen::Vector2d
+                     {
+                     return measuredCoP();
+                     });
   logger.addLogEntry(name_ + "_measured_force",
                      [this]() -> Eigen::Vector3d
                      {
                      return measuredWrench().force();
                      });
-  //logger.addLogEntry(name_ + "_target_cop",
-  //                   [this]() -> const Eigen::Vector2d &
-  //                   {
-  //                   return targetCoP_;
-  //                   });
+  logger.addLogEntry(name_ + "_target_cop",
+                     [this]() -> const Eigen::Vector2d &
+                     {
+                     return targetCoP_;
+                     });
   logger.addLogEntry(name_ + "_target_force",
                      [this]() -> const Eigen::Vector3d &
                      {
@@ -105,9 +105,9 @@ void CoPTask::addToLogger(mc_rtc::Logger & logger)
 void CoPTask::removeFromLogger(mc_rtc::Logger & logger)
 {
   logger.removeLogEntry(name_ + "_admittance");
-  //logger.removeLogEntry(name_ + "_measured_cop");
+  logger.removeLogEntry(name_ + "_measured_cop");
   logger.removeLogEntry(name_ + "_measured_force");
-  //logger.removeLogEntry(name_ + "_target_cop");
+  logger.removeLogEntry(name_ + "_target_cop");
   logger.removeLogEntry(name_ + "_target_force");
   logger.removeLogEntry(name_ + "_target_pose");
 }
