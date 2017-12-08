@@ -382,8 +382,8 @@ namespace mc_robots
   {
     readUrdf("hrp4_vrep", filteredLinks);
 
-    assert(_forceSensor[0].name() == "RightFootForceSensor");
-    assert(_forceSensor[1].name() == "LeftFootForceSensor");
+    assert(_forceSensors[0].name() == "RightFootForceSensor");
+    assert(_forceSensors[1].name() == "LeftFootForceSensor");
     _forceSensors[0] = mc_rbdyn::ForceSensor("RightFootForceSensor", "r_ankle", sva::PTransformd(Eigen::Vector3d(0., 0., 0.)));
     _forceSensors[1] = mc_rbdyn::ForceSensor("LeftFootForceSensor", "l_ankle", sva::PTransformd(Eigen::Vector3d(0., 0., 0.)));
 
