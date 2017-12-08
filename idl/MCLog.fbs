@@ -25,6 +25,12 @@ table String
   s:string;
 }
 
+table Vector2d
+{
+  x:double;
+  y:double;
+}
+
 table Vector3d
 {
   x:double;
@@ -58,7 +64,7 @@ table MotionVecd
   linear:Vector3d;
 }
 
-union LogData { Bool, Double, DoubleVector, UnsignedInt, String, Vector3d, Quaterniond, PTransformd, ForceVecd, MotionVecd }
+union LogData { Bool, Double, DoubleVector, UnsignedInt, String, Vector3d, Quaterniond, PTransformd, ForceVecd, MotionVecd, Vector2d }
 
 table Log
 {

@@ -40,6 +40,7 @@ MAKE_RM_F_FB(LogData_Double, std_msgs::Float64);
 MAKE_RM_F_FB(LogData_DoubleVector, std_msgs::Float64MultiArray);
 MAKE_RM_F_FB(LogData_UnsignedInt, std_msgs::UInt64);
 MAKE_RM_F_FB(LogData_String, std_msgs::String);
+MAKE_RM_F_FB(LogData_Vector2d, geometry_msgs::Vector3);
 MAKE_RM_F_FB(LogData_Vector3d, geometry_msgs::Vector3);
 MAKE_RM_F_FB(LogData_Quaterniond, geometry_msgs::Quaternion);
 MAKE_RM_F_FB(LogData_PTransformd, geometry_msgs::Transform);
@@ -113,6 +114,18 @@ FBToROS<LogData_String>::ret_t
   auto fb_data = static_cast<const String *>(data);
   ret_t ret;
   ret.data = fb_data->s()->str();
+  return ret;
+}
+
+template<>
+FBToROS<LogData_Vector2d>::ret_t
+  FBToROS<LogData_Vector2d>::convert(const void * data)
+{
+  auto fb_data = static_cast<const Vector2d *>(data);
+  ret_t ret;
+  ret.x = fb_data->x();
+  ret.y = fb_data->y();
+  ret.z = 0.0;
   return ret;
 }
 
@@ -244,6 +257,7 @@ int main(int argc, char * argv[])
           CASE_ENUM(LogData_DoubleVector);
           CASE_ENUM(LogData_UnsignedInt);
           CASE_ENUM(LogData_String);
+          CASE_ENUM(LogData_Vector2d);
           CASE_ENUM(LogData_Vector3d);
           CASE_ENUM(LogData_Quaterniond);
           CASE_ENUM(LogData_PTransformd);
