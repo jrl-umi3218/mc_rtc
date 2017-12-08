@@ -17,7 +17,7 @@
 #ifndef FLATBUFFERS_H_
 #define FLATBUFFERS_H_
 
-#include "flatbuffers/base.h"
+#include "base.h"
 
 namespace flatbuffers {
 // Wrapper for uoffset_t to allow safe template specialization.

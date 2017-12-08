@@ -44,7 +44,7 @@
   #include <functional>
 #endif
 
-#include "flatbuffers/stl_emulation.h"
+#include "stl_emulation.h"
 
 /// @cond FLATBUFFERS_INTERNAL
 #if __cplusplus <= 199711L && \
