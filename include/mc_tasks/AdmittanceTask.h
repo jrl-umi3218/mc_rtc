@@ -193,8 +193,8 @@ private:
   Eigen::Vector3d maxRpyVel_ = Eigen::Vector3d(0.1, 0.1, 0.1);  // [rad] / [s]
   const sva::PTransformd X_fsactual_surf_;
 
-  virtual void addToLogger(mc_rtc::Logger & logger) override;
-  virtual void removeFromLogger(mc_rtc::Logger & logger) override;
+  void addToLogger(mc_rtc::Logger & logger) override;
+  void removeFromLogger(mc_rtc::Logger & logger) override;
 };
 
 }
