@@ -48,6 +48,7 @@ IMPL_LDH(double, LogData_Double, CreateDouble, d, d);
 IMPL_LDH(std::vector<double>, LogData_DoubleVector, CreateDoubleVectorDirect, v, &v);
 IMPL_LDH(unsigned int, LogData_UnsignedInt, CreateUnsignedInt, i, i);
 IMPL_LDH(std::string, LogData_String, CreateStringDirect, s, s.c_str());
+IMPL_LDH(Eigen::Vector2d, LogData_Vector2d, CreateVector2d, v, v.x(), v.y());
 IMPL_LDH(Eigen::Vector3d, LogData_Vector3d, CreateVector3d, v, v.x(), v.y(), v.z());
 IMPL_LDH(Eigen::Quaterniond, LogData_Quaterniond, CreateQuaterniond, q, q.w(), q.x(), q.y(), q.z());
 
@@ -303,6 +304,23 @@ struct CSVWriterHelper<mc_rtc::log::LogData_String>
       prev_pos = pos + 1;
     }
     os << '"' << safe_s << '"';
+  }
+};
+
+template<>
+struct CSVWriterHelper<mc_rtc::log::LogData_Vector2d>
+{
+  static size_t key_size(const void *) { return 2; }
+  static void write_header(const std::string & key, size_t,
+                    std::ostream & os)
+  {
+    os << key << "_x"
+       << ";" << key << "_y";
+  }
+  static void write_data(const void * data, std::ostream & os)
+  {
+    auto v3d = static_cast<const mc_rtc::log::Vector2d*>(data);
+    os << v3d->x() << ";" << v3d->y();
   }
 };
 
