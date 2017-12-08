@@ -122,7 +122,7 @@ public:
   /*! \brief Get the measured wrench in the surface frame
    *
    */
-  const sva::ForceVecd measuredWrench() const
+  sva::ForceVecd measuredWrench() const
   {
     sva::ForceVecd w_fsactual = sensor_.removeGravity(robot_);
     return X_fsactual_surf_.dualMul(w_fsactual);
