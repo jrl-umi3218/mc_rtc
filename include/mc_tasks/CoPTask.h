@@ -7,7 +7,13 @@ namespace mc_tasks
 
 /*! \brief Track center-of-pressure (CoP) references at contact
  *
- * ...
+ * The CoPTask is basically an AdmittanceTask where contact wrenches are
+ * expressed in terms of center of pressure (a.k.a. ZMP, see e.g. [1]) rather
+ * than torques. This is better-suited to locomotion applications.
+ *
+ * The CoP is well-defined only when the contact pressure is strictly positive.
+ * When there is no contact pressure, the CoPTask will automatically disable
+ * torque tracking in the underlying AdmittanceTask.
  *
  * [1] https://scaron.info/teaching/zero-tilting-moment-point.html
  *
