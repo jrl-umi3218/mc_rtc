@@ -34,7 +34,8 @@ public:
    *
    * @param parentBodyName Name of the sensor's parent body
    *
-   * @param X_p_f Model transformation from the parent body to the sensor itself
+   * @param X_p_f Model transformation from the parent body to the model (not
+   * real) sensor frame
    *
    */
   ForceSensor(const std::string & name,
@@ -103,6 +104,10 @@ public:
    * between the model forceSensor and real one
    */
   const sva::PTransformd & X_fsmodel_fsactual() const;
+
+  /** Return the transform from the parent body to the real force sensor
+   */
+  const sva::PTransformd X_fsactual_parent() const;
 
   /** Return the mass of the sensor */
   double mass() const;

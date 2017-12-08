@@ -162,26 +162,24 @@ public:
   /*! \brief Get the current dof matrix */
   Eigen::Matrix6d dof() { return dof_; }
 
-  virtual void dimWeight(const Eigen::VectorXd & dimW) override;
+  void dimWeight(const Eigen::VectorXd & dimW) override;
 
-  virtual Eigen::VectorXd dimWeight() const override;
+  Eigen::VectorXd dimWeight() const override;
 
-  virtual void selectActiveJoints(mc_solver::QPSolver & solver,
-                                  const std::vector<std::string> & activeJointsName) override;
+  void selectActiveJoints(mc_solver::QPSolver & solver,
+                          const std::vector<std::string> & activeJointsName) override;
 
-  virtual void selectUnactiveJoints(mc_solver::QPSolver & solver,
-                                    const std::vector<std::string> & unactiveJointsName) override;
+  void selectUnactiveJoints(mc_solver::QPSolver & solver,
+                            const std::vector<std::string> & unactiveJointsName) override;
 
-  virtual void resetJointsSelector(mc_solver::QPSolver & solver) override;
+  void resetJointsSelector(mc_solver::QPSolver & solver) override;
 
-  /*! \brief Returns the task's error */
-  virtual Eigen::VectorXd eval() const override
+  Eigen::VectorXd eval() const override
   {
     return wrench_.vector();
   }
 
-  /*! \brief Returns the task's speed */
-  virtual Eigen::VectorXd speed() const override
+  Eigen::VectorXd speed() const override
   {
     return robot_.mbc().bodyVelW[robot_.bodyIndexByName(sensor_.parentBody())].vector();
   }
@@ -202,11 +200,11 @@ private:
   Eigen::Matrix6d dof_;
   std::function<double(double)> clampTrans_, clampRot_;
 
-  virtual void addToSolver(mc_solver::QPSolver & solver) override;
+  void addToSolver(mc_solver::QPSolver & solver) override;
 
-  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
+  void removeFromSolver(mc_solver::QPSolver & solver) override;
 
-  virtual void update() override;
+  void update() override;
 };
 
 }

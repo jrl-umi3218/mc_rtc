@@ -15,7 +15,7 @@ struct MC_TASKS_DLLAPI SurfaceTransformTask : public TrajectoryTaskGeneric<tasks
 public:
   /*! \brief Constructor
    *
-   * \param surfaceName Name of the body to control
+   * \param surfaceName Name of the surface frame to control
    *
    * \param robots Robots controlled by this task
    *
