@@ -70,6 +70,38 @@ void AdmittanceTask::reset()
   admittance_ = sva::ForceVecd(Eigen::Vector6d::Zero());
 }
 
+void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
+{
+  logger.addLogEntry(name_ + "_admittance",
+                     [this]() -> const sva::ForceVecd &
+                     {
+                     return admittance_;
+                     });
+  logger.addLogEntry(name_ + "_measured_wrench",
+                     [this]() -> sva::ForceVecd
+                     {
+                     return measuredWrench();
+                     });
+  logger.addLogEntry(name_ + "_target_pose",
+                     [this]() -> const sva::PTransformd &
+                     {
+                     return X_0_target_;
+                     });
+  logger.addLogEntry(name_ + "_target_wrench",
+                     [this]() -> const sva::ForceVecd &
+                     {
+                     return targetWrench_;
+                     });
+}
+
+void AdmittanceTask::removeFromLogger(mc_rtc::Logger & logger)
+{
+  logger.removeLogEntry(name_ + "_admittance");
+  logger.removeLogEntry(name_ + "_measured_wrench");
+  logger.removeLogEntry(name_ + "_target_pose");
+  logger.removeLogEntry(name_ + "_target_wrench");
+}
+
 } // mc_tasks
 
 namespace
