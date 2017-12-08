@@ -61,6 +61,8 @@ class MCLogTab(QtGui.QWidget):
 
   def setRobotModule(self, rm):
     self.rm = rm
+    if self.rm is None:
+      return
     def setQNames(ySelector):
       qList = ySelector.findItems("q", QtCore.Qt.MatchFlag.MatchStartsWith)
       qList += ySelector.findItems("error", QtCore.Qt.MatchFlag.MatchStartsWith)
@@ -77,6 +79,7 @@ class MCLogTab(QtGui.QWidget):
               except ValueError,IndexError:
                 pass
     setQNames(self.ui.y1Selector)
+    setQNames(self.ui.y2Selector)
 
 
   @QtCore.Slot(str)

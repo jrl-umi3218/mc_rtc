@@ -37,14 +37,15 @@ class MCLogJointDialog(QtGui.QDialog):
     self.setLayout(layout)
     row = 0
     col = 0
-    for i, j in enumerate(rm.ref_joint_order()):
-      cBox = QtGui.QCheckBox(j, self)
-      cBox.stateChanged.connect(partial(self.checkboxChanged, j))
-      layout.addWidget(cBox, row, col)
-      col += 1
-      if col == 4:
-        col = 0
-        row += 1
+    if rm is not None:
+        for i, j in enumerate(rm.ref_joint_order()):
+          cBox = QtGui.QCheckBox(j, self)
+          cBox.stateChanged.connect(partial(self.checkboxChanged, j))
+          layout.addWidget(cBox, row, col)
+          col += 1
+          if col == 4:
+            col = 0
+            row += 1
     row += 1
     col = 0
     okButton = QtGui.QPushButton("Ok", self)
