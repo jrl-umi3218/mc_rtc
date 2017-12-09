@@ -42,6 +42,7 @@ AdmittanceTask::AdmittanceTask(const std::string & surfaceName,
     X_fsactual_surf_(surface_.X_b_s() * sensor_.X_fsactual_parent())
 {
   X_0_target_ = SurfaceTransformTask::target();
+  name_ = "admittance_" + robot_.name() + "_" + surfaceName;
 }
 
 void AdmittanceTask::update()

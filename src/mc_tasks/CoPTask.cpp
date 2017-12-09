@@ -13,6 +13,7 @@ CoPTask::CoPTask(const std::string & surfaceName,
       double stiffness, double weight)
   : AdmittanceTask(surfaceName, robots, robotIndex, timestep, stiffness, weight)
 {
+  name_ = "cop_" + robot_.name() + "_" + surfaceName;
 }
 
 void CoPTask::reset()

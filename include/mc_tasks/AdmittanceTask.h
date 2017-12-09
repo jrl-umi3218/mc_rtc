@@ -175,6 +175,7 @@ public:
 protected:
   const mc_rbdyn::Surface & surface_;
   sva::ForceVecd admittance_ = sva::ForceVecd(Eigen::Vector6d::Zero());
+  const mc_rbdyn::Robot & robot_;
 
   void update() override;
 
@@ -182,7 +183,6 @@ private:
   sva::ForceVecd wrenchError_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   sva::PTransformd X_0_target_;
   sva::ForceVecd targetWrench_ = sva::ForceVecd(Eigen::Vector6d::Zero());
-  const mc_rbdyn::Robot & robot_;
   const mc_rbdyn::ForceSensor & sensor_;
   double timestep_;
   Eigen::Vector3d trans_target_delta_ = Eigen::Vector3d::Zero();
