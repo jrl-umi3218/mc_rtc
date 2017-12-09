@@ -119,6 +119,15 @@ public:
     targetWrench_ = wrench;
   }
 
+  /*! \brief Get the measured wrench in the surface frame
+   *
+   */
+  sva::ForceVecd measuredWrench() const
+  {
+    sva::ForceVecd w_fsactual = sensor_.removeGravity(robot_);
+    return X_fsactual_surf_.dualMul(w_fsactual);
+  }
+
   /*! \brief Set the maximum translation velocity of the task */
   void maxTransVel(const Eigen::Vector3d & maxTransVel)
   {
@@ -163,15 +172,19 @@ public:
     maxRpyPos_ = maxRpyPos;
   }
 
-private:
+protected:
   const mc_rbdyn::Surface & surface_;
+  sva::ForceVecd admittance_ = sva::ForceVecd(Eigen::Vector6d::Zero());
+  const mc_rbdyn::Robot & robot_;
+
+  void update() override;
+
+private:
   sva::ForceVecd wrenchError_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   sva::PTransformd X_0_target_;
   sva::ForceVecd targetWrench_ = sva::ForceVecd(Eigen::Vector6d::Zero());
-  const mc_rbdyn::Robot & robot_;
   const mc_rbdyn::ForceSensor & sensor_;
   double timestep_;
-  sva::ForceVecd admittance_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   Eigen::Vector3d trans_target_delta_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d rpy_target_delta_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d maxTransPos_ = Eigen::Vector3d(0.1, 0.1, 0.1);  // [m]
@@ -180,7 +193,8 @@ private:
   Eigen::Vector3d maxRpyVel_ = Eigen::Vector3d(0.1, 0.1, 0.1);  // [rad] / [s]
   const sva::PTransformd X_fsactual_surf_;
 
-  void update() override;
+  void addToLogger(mc_rtc::Logger & logger) override;
+  void removeFromLogger(mc_rtc::Logger & logger) override;
 };
 
 }

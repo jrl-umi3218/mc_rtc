@@ -51,8 +51,8 @@ public:
 private:
   unsigned int robot_index_;
   Eigen::Vector3d cur_com_;
-  virtual void addToLogger(mc_rtc::Logger & logger) override;
-  virtual void removeFromLogger(mc_rtc::Logger & logger) override;
+  void addToLogger(mc_rtc::Logger & logger) override;
+  void removeFromLogger(mc_rtc::Logger & logger) override;
 };
 
 }

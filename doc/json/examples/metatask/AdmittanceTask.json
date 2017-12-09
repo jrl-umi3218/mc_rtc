@@ -1,0 +1,22 @@
+{
+  "type": "admittance",
+  "robotIndex": 0,
+  "surface": "LeftFootCenter",
+  "pose":
+  {
+    "rotation": [1.0, 0.0, 0.0,
+                 0.0, 1.0, 0.0,
+                 0.0, 0.0, 1.0],
+    "translation": [0.0, 0.0, 0.0]
+  },
+  "wrench":
+  {
+    "couple": [0.0, 0.0, 0.0],
+    "force": [0.0, 0.0, 20.0]
+  },
+  "admittance":
+  {
+    "couple": [0.0, 0.0, 0.0],
+    "force": [0.0, 0.0, 0.0005]
+  }
+}
