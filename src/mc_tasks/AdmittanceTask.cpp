@@ -67,8 +67,10 @@ void AdmittanceTask::reset()
 {
   SurfaceTransformTask::reset();
   X_0_target_ = SurfaceTransformTask::target();
-  targetWrench_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   admittance_ = sva::ForceVecd(Eigen::Vector6d::Zero());
+  rpy_target_delta_ = Eigen::Vector3d::Zero();
+  targetWrench_ = sva::ForceVecd(Eigen::Vector6d::Zero());
+  trans_target_delta_ = Eigen::Vector3d::Zero();
 }
 
 void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
