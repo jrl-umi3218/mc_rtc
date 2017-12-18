@@ -98,6 +98,21 @@ void AdmittanceTask::reset()
   wrenchError_ = sva::ForceVecd(Eigen::Vector6d::Zero());
 }
 
+void AdmittanceTask::resetPoseOffset()
+{
+  for (size_t i = 0; i < 3; i++)
+  {
+    if (admittance_.force()(i) < 1e-10)
+    {
+      trans_target_delta_(i) = 0.;
+    }
+    if (admittance_.couple()(i) < 1e-10)
+    {
+      rpy_target_delta_(i) = 0.;
+    }
+  }
+}
+
 void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
 {
   SurfaceTransformTask::addToLogger(logger);
