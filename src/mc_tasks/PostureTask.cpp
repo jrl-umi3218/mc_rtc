@@ -126,6 +126,12 @@ bool PostureTask::inSolver() const
   return inSolver_;
 }
 
+void PostureTask::jointGains(const mc_solver::QPSolver & solver,
+                             const std::vector<tasks::qp::JointGains> & jgs)
+{
+  pt_.jointsGains(solver.robots().mbs(), jgs);
+}
+
 }
 
 namespace
@@ -140,6 +146,10 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function("postu
     if(config.has("posture"))
     {
       t->posture(config("posture"));
+    }
+    if(config.has("jointGains"))
+    {
+      t->jointGains(solver, config("jointGains"));
     }
     return t;
   });

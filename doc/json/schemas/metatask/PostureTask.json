@@ -10,7 +10,8 @@
     "weight": { "type": "number", "minimum": 0},
     "posture": { "type": "array", "items": { "type": "array", "items": { "type": "number" } } },
     "activeJoints": { "type": "array", "items": { "type": "string" } },
-    "unactiveJoints": { "type": "array", "items": { "type": "string" } }
+    "unactiveJoints": { "type": "array", "items": { "type": "string" } },
+    "jointGains": { "type": "array", "items": { "$ref": "/../../tasks/JointGains.json" } }
   },
   "required": ["type", "robotIndex", "stiffness", "weight"]
 }

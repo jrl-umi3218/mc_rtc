@@ -41,6 +41,10 @@ public:
   /** Get current posture objective */
   std::vector<std::vector<double>> posture() const;
 
+  /** Set joint gains for the posture task */
+  void jointGains(const mc_solver::QPSolver & solver,
+                  const std::vector<tasks::qp::JointGains> & jgs);
+
   /** Set task's stiffness */
   void stiffness(double s);
 
