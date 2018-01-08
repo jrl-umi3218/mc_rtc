@@ -5,7 +5,7 @@
   {
     "type": { "enum": ["compliance"] },
     "name": { "type": "string" },
-    "robotIndex": { "type": "number", "minimum": 0 },
+    "robotIndex": { "type": "integer", "minimum": 0 },
     "body": { "type": "string" },
 
     "wrench": { "$ref": "/../../sva/ForceVecd.json" },
@@ -13,8 +13,8 @@
     "dof": { "$ref": "/../../eigen/Matrix6d.json" },
     "forceThresh": { "type": "number" },
     "torqueThresh": { "type": "number" },
-    "forceGain": { "type": "array", "members": { "type": "number" }, "minItems": 2, "maxItems": 2 },
-    "torqueGain": { "type": "array", "members": { "type": "number" }, "minItems": 2, "maxItems": 2 },
+    "forceGain": { "type": "array", "items": { "type": "number" }, "minItems": 2, "maxItems": 2 },
+    "torqueGain": { "type": "array", "items": { "type": "number" }, "minItems": 2, "maxItems": 2 },
 
 
     "stiffness": { "type": "number", "minimum": 0},

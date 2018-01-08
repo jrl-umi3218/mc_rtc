@@ -4,7 +4,7 @@
   "properties":
   {
     "type": { "enum": ["kinematics"] },
-    "robotIndex": { "type": "number", "minimum": 0 },
+    "robotIndex": { "type": "integer", "minimum": 0 },
     "damper":
     {
       "type": "array",

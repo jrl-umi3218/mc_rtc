@@ -5,7 +5,7 @@
   {
     "type": { "enum": ["relBody6d"] },
     "name": { "type": "string" },
-    "robotIndex": { "type": "number", "minimum": 0 },
+    "robotIndex": { "type": "integer", "minimum": 0 },
     "body": { "type": "string" },
     "relBody": { "type": "string" },
 

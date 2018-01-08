@@ -7,4 +7,8 @@ if(_INSTALL_DOC)
     install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${dir}
             DESTINATION ${JSON_DOC_INSTALL})
   endforeach()
+else()
+  # Install at least the JSON schemas
+  install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/schemas
+    DESTINATION ${JSON_DOC_INSTALL})
 endif()

@@ -5,7 +5,7 @@
   {
     "type": { "enum": ["surfaceTransform"] },
     "name": { "type": "string" },
-    "robotIndex": { "type": "number", "minimum": 0 },
+    "robotIndex": { "type": "integer", "minimum": 0 },
     "surface": { "type": "string" },
 
     "target": { "$ref": "/../../sva/PTransformd.json" },

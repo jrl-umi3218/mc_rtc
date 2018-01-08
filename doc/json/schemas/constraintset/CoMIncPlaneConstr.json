@@ -4,7 +4,7 @@
   "properties":
   {
     "type": { "enum": ["CoMIncPlane"] },
-    "robotIndex": { "type": "number", "minimum": 0 }
+    "robotIndex": { "type": "integer", "minimum": 0 }
   },
   "required": ["type", "robotIndex"]
 }

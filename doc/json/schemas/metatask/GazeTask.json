@@ -5,7 +5,7 @@
   {
     "type": { "enum": ["gaze"] },
     "name": { "type": "string" },
-    "robotIndex": { "type": "number", "minimum": 0 },
+    "robotIndex": { "type": "integer", "minimum": 0 },
     "body": { "type": "string" },
     "X_b_gaze": { "$ref": "/../../sva/PTransformd.json" },
 

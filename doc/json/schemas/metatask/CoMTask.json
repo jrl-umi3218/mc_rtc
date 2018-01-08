@@ -5,7 +5,7 @@
   {
     "type": { "enum": ["com"] },
     "name": { "type": "string" },
-    "robotIndex": { "type": "number", "minimum": 0 },
+    "robotIndex": { "type": "integer", "minimum": 0 },
     "com": { "$ref": "/../../eigen/Vector3d.json" },
     "move_com": { "$ref": "/../../eigen/Vector3d.json" },
     "stiffness": { "type": "number", "minimum": 0},
