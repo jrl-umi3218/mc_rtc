@@ -854,4 +854,25 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Contact>::save(const mc_rbdy
   return config;
 }
 
+tasks::qp::JointGains ConfigurationLoader<tasks::qp::JointGains>::load(const mc_rtc::Configuration & config)
+{
+  if(config.has("damping"))
+  {
+    return tasks::qp::JointGains(config("jointName"), config("stiffness"));
+  }
+  else
+  {
+    return tasks::qp::JointGains(config("jointName"), config("stiffness"), config("damping"));
+  }
+}
+
+mc_rtc::Configuration ConfigurationLoader<tasks::qp::JointGains>::save(const tasks::qp::JointGains & jg)
+{
+  mc_rtc::Configuration config;
+  config.add("jointName", jg.jointName);
+  config.add("stiffness", jg.stiffness);
+  config.add("damping", jg.damping);
+  return config;
+}
+
 }

@@ -4,6 +4,7 @@
 #include <mc_rtc/Configuration.h>
 
 /* Easily serialized/deserialized types */
+#include <Tasks/QPTasks.h>
 #include <mc_rbdyn/Base.h>
 #include <mc_rbdyn/BodySensor.h>
 #include <mc_rbdyn/Collision.h>
@@ -50,6 +51,8 @@ DECLARE_IO(rbd::Joint)
 DECLARE_IO(rbd::Body)
 DECLARE_IO(rbd::MultiBody)
 DECLARE_IO(rbd::MultiBodyConfig)
+
+DECLARE_IO(tasks::qp::JointGains)
 
 DECLARE_IO(mc_rbdyn_urdf::Geometry::Box)
 DECLARE_IO(mc_rbdyn_urdf::Geometry::Cylinder)

@@ -70,6 +70,11 @@ $(document).ready(function()
   ];
   $('#rbd-objects').html(make_list_group('rbd', rbd_objects));
 
+  var tasks_objects = [
+   'JointGains',
+  ];
+  $('#tasks-objects').html(make_list_group('tasks', tasks_objects));
+
   var mc_rbdyn_urdf_objects = [
   'Geometry.Box',
   'Geometry.Cylinder',
