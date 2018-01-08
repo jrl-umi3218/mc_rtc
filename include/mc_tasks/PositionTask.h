@@ -42,6 +42,8 @@ public:
                const mc_rbdyn::Robots & robots, unsigned int robotIndex,
                double stiffness = 2.0, double weight = 500);
 
+  virtual ~PositionTask() = default;
+
   /*! \brief Reset the task
    *
    * Set the task objective to the current body position
@@ -69,6 +71,8 @@ public:
    */
   void bodyPoint(const Eigen::Vector3d & bodyPoint);
 
+
+  void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
 protected:
   std::string bodyName;
   unsigned int bIndex;

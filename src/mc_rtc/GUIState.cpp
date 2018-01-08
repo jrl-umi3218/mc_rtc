@@ -6,12 +6,36 @@ namespace mc_rtc
 namespace gui
 {
 
+Element<void>::Element(const std::vector<std::string> & names, set_fn_t set_fn)
+: set_fn_(set_fn)
+{
+  if(!names.size())
+  {
+    throw std::runtime_error("Cannot add an element without names");
+  }
+  if(names.size() > 1)
+  {
+    categories_.resize(names.size() - 1);
+    for(size_t i = 0; i < names.size() - 1; ++i)
+    {
+      categories_[i] = names[i];
+    }
+  }
+  name_ = names.back();
+}
+
+bool Element<void>::handleRequest(const mc_rtc::Configuration &) const
+{
+  set_fn_();
+  return true;
+}
+
 Label::Label(bool is_vector)
 : is_vector(is_vector)
 {
 }
 
-void Label::addData(mc_rtc::Configuration & out) const
+void Label::addData(mc_rtc::Configuration out) const
 {
   if(is_vector)
   {
@@ -19,14 +43,19 @@ void Label::addData(mc_rtc::Configuration & out) const
   }
 }
 
+Schema::Schema(const std::string & schema_dir)
+: schema_dir_(schema_dir)
+{
+}
+
+void Schema::addData(mc_rtc::Configuration out) const
+{
+  out.add("schema_dir", schema_dir_);
+}
+
 mc_rtc::Configuration State::getStateCategory(const std::vector<std::string> & category)
 {
   return getCategory(state, category);
-}
-
-mc_rtc::Configuration State::getMethodCategory(const std::vector<std::string> & category)
-{
-  return getCategory(methods, category);
 }
 
 mc_rtc::Configuration State::getCategory(mc_rtc::Configuration & config, const std::vector<std::string> & category)
@@ -52,6 +81,23 @@ void StateBuilder::reset()
   state_.state = mc_rtc::Configuration();
 }
 
+namespace
+{
+  // Returns true if cat is a sub-category of base
+  bool is_sub_category(const std::vector<std::string> & cat,
+                       const std::vector<std::string> & base)
+  {
+    bool ret = cat.size() > base.size();
+    size_t i = 0;
+    while(ret && i < base.size())
+    {
+      ret = ret && base[i] == cat[i];
+      ++i;
+    }
+    return ret;
+  }
+}
+
 void StateBuilder::removeCategory(const std::vector<std::string> & category)
 {
   // Don't allow removing the root
@@ -67,19 +113,33 @@ void StateBuilder::removeCategory(const std::vector<std::string> & category)
     elements_.erase(cat);
     if(category.size() > 1)
     {
-      auto out = state_.state(category[0]);
-      for(size_t i = 1; i < category.size() - 1; ++i)
+      if(state_.state.has(category[0]))
       {
-        out = out(category[i]);
+        auto out = state_.state(category[0]);
+        for(size_t i = 1; i < category.size() - 1; ++i)
+        {
+          out = out(category[i]);
+        }
+        out.remove(category.back());
       }
-      out.remove(category.back());
     }
     else
     {
       state_.state.remove(category[0]);
     }
   }
-  state_.methods_changed = true;
+  // Remove sub-categories
+  for(auto it = elements_.begin(); it != elements_.end();)
+  {
+    if(is_sub_category(it->first, category))
+    {
+      it = elements_.erase(it);
+    }
+    else
+    {
+      ++it;
+    }
+  }
 }
 
 void StateBuilder::removeElement(const std::vector<std::string> & names)
@@ -120,7 +180,6 @@ void StateBuilder::removeElement(const std::vector<std::string> & names)
       removeCategory(category);
     }
   }
-  state_.methods_changed = true;
 }
 
 const State & StateBuilder::updateState()
@@ -131,29 +190,6 @@ const State & StateBuilder::updateState()
     for(const auto & e : el.second)
     {
       e.second(cat);
-    }
-  }
-  if(state_.methods_changed)
-  {
-    state_.methods = mc_rtc::Configuration{};
-    for(const auto & m : update_methods_)
-    {
-      auto cat = state_.getMethodCategory(m.first);
-      for(const auto & mm : m.second)
-      {
-        auto out = cat.add(mm.first);
-        mm.second(out);
-      }
-    }
-    state_.methods.add("CHANGED", true);
-    state_.state.add("METHODS", state_.methods);
-    state_.methods_changed = false;
-  }
-  else
-  {
-    if(state_.state.has("METHODS"))
-    {
-      state_.state("METHODS").add("CHANGED", false);
     }
   }
   return state_;

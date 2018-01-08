@@ -98,7 +98,7 @@ void QPSolver::addTask(mc_tasks::MetaTask * task)
     }
     if(gui_)
     {
-      task->addToGUI(*gui_);
+      addTaskToGUI(task);
     }
     LOG_INFO("Added task " << task->name())
   }
@@ -120,14 +120,7 @@ void QPSolver::removeTask(mc_tasks::MetaTask * task)
   auto it = std::find(metaTasks.begin(), metaTasks.end(), task);
   if(it != metaTasks.end())
   {
-    metaTasks.erase(it);
     task->removeFromSolver(*this);
-    shPtrTasksStorage.erase(std::remove_if(
-      shPtrTasksStorage.begin(), shPtrTasksStorage.end(),
-      [task](const std::shared_ptr<void> & p)
-      {
-        return task == p.get();
-      }), shPtrTasksStorage.end());
     if(logger_)
     {
       task->removeFromLogger(*logger_);
@@ -137,6 +130,13 @@ void QPSolver::removeTask(mc_tasks::MetaTask * task)
       task->removeFromGUI(*gui_);
     }
     LOG_INFO("Removed task " << task->name())
+    metaTasks.erase(it);
+    shPtrTasksStorage.erase(std::remove_if(
+      shPtrTasksStorage.begin(), shPtrTasksStorage.end(),
+      [task](const std::shared_ptr<void> & p)
+      {
+        return task == p.get();
+      }), shPtrTasksStorage.end());
   }
 }
 
@@ -363,9 +363,39 @@ void QPSolver::gui(std::shared_ptr<mc_rtc::gui::StateBuilder> gui)
   {
     for(auto t : metaTasks)
     {
-      t->addToGUI(*gui_);
+      addTaskToGUI(t);
     }
+    gui_->addElement(
+      mc_rtc::gui::Element<mc_rtc::Configuration>{
+        {"Contacts", "Add contact"},
+        [this](const mc_rtc::Configuration & data)
+        {
+          std::cout << this << " will add contact " << data("R0") << ", " << data("R1") << std::endl;
+        }
+      },
+      mc_rtc::gui::Form{
+        {"R0", "R1"},
+        mc_rtc::gui::Input<unsigned int>{{"R0"}, 0, robots().size()},
+        mc_rtc::gui::Input<unsigned int>{{"R1"}, 0, robots().size()}
+      }
+    );
   }
+}
+
+void QPSolver::addTaskToGUI(mc_tasks::MetaTask * t)
+{
+  assert(gui_);
+  t->addToGUI(*gui_);
+  gui_->addElement(
+    mc_rtc::gui::Element<void>{
+      {"Tasks", t->name(), "Remove from solver"},
+      [this,t]()
+      {
+        this->removeTask(t);
+      }
+    },
+    mc_rtc::gui::Button{}
+  );
 }
 
 }

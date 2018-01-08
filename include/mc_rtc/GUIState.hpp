@@ -9,19 +9,69 @@ namespace gui
 {
 
 template<typename T>
-Input<T>::Input(T min, T max)
-: has_min_max_(true), min_(min), max_(max)
+Input<T>::Input(std::vector<std::string> labels)
+: labels_(std::move(labels))
 {
 }
 
 template<typename T>
-void Input<T>::addData(mc_rtc::Configuration & out) const
+Input<T>::Input(std::vector<std::string> labels, T min, T max)
+: labels_(std::move(labels)),
+  has_min_max_(true), min_(min), max_(max)
 {
+}
+
+template<typename T>
+void Input<T>::addData(mc_rtc::Configuration out) const
+{
+  // Exclude labels when size == 1
+  if(labels_.size() > 1)
+  {
+    out.add("labels", labels_);
+  }
   if(has_min_max_)
   {
     out.add("min", min_);
     out.add("max", max_);
   }
+}
+
+template<typename T>
+ComboList<T>::ComboList(std::vector<T> values)
+: values_(std::move(values))
+{
+}
+
+template<typename T>
+void ComboList<T>::addData(mc_rtc::Configuration out) const
+{
+  out.add("values", values_);
+}
+
+namespace
+{
+  template<typename T>
+  size_t expand_form(size_t & i, const std::vector<std::string> & labels,
+                     mc_rtc::Configuration & out, const T & el)
+  {
+    assert(i < labels.size());
+    auto elOut = out.add(labels[i++]);
+    elOut.add("type", T::type);
+    el.addData(elOut);
+    return i;
+  }
+}
+
+template<typename ... Args>
+Form::Form(const std::vector<std::string> & labels, Args ... elements)
+{
+  addData = [labels, elements...](mc_rtc::Configuration out)
+  {
+    auto els = out.add("elements");
+    size_t i = 0;
+    using expand = int[];
+    expand { expand_form(i, labels, els, elements)... };
+  };
 }
 
 template<typename T>
@@ -73,11 +123,11 @@ Element<T>::Element(const std::vector<std::string> & names,
 }
 
 template<typename T>
-void Element<T>::sendData(mc_rtc::Configuration & out) const
+void Element<T>::sendData(mc_rtc::Configuration out) const
 {
   if(has_get_fn_)
   {
-    out.add(name_, get_fn_());
+    out.add("data", get_fn_());
   }
 }
 
@@ -86,7 +136,17 @@ bool Element<T>::handleRequest(const mc_rtc::Configuration & in) const
 {
   if(has_set_fn_)
   {
-    set_fn_(in);
+    try
+    {
+      set_fn_(in);
+    }
+    catch(const mc_rtc::Configuration::Exception exc)
+    {
+      LOG_ERROR("Method invokation failed to handle data" << std::endl
+                << in.dump(true))
+      LOG_ERROR(exc.what())
+      return false;
+    }
     return true;
   }
   return false;
@@ -104,47 +164,38 @@ void StateBuilder::addElement(const T & element,
   // inefficient, what we want is to store those in a type-agnostic manner
   // and retrieve them in the other callbacks
 
-  // Set the state part of the element
-  if(element.has_get_fn_)
+  // Initialize category if empty
+  auto & category = elements_[element.categories_];
+  const auto & name = element.name_;
+  category[name] = [element, interaction](mc_rtc::Configuration & out)
   {
-    // Initialize category if empty
-    auto & category = elements_[element.categories_];
-    const auto & name = element.name_;
-    category[name] = [element, interaction](mc_rtc::Configuration & out)
+    auto out_name = out.add(element.name_);
+    if(element.has_get_fn_)
     {
-      element.sendData(out);
-      auto inter = out.add(element.name_ + "_MC_RTC_GUI");
-      inter.add("type", InteractionT::type);
-      interaction.addData(inter);
-    };
-  }
+      element.sendData(out_name);
+    }
+    out_name.add("GUI").add("type", InteractionT::type);
+    interaction.addData(out_name("GUI"));
+    if(element.has_set_fn_)
+    {
+      out_name.add("SET");
+    }
+  };
 
   // Set the methods part of the element
   if(element.has_set_fn_)
   {
-    state_.methods_changed = true;
+    auto & category = methods_[element.categories_];
+    const auto & name = element.name_;
+    category[name] = [element](const mc_rtc::Configuration & in)
     {
-      auto & category = methods_[element.categories_];
-      const auto & name = element.name_;
-      category[name] = [element](const mc_rtc::Configuration & in)
+      if(!in.has("data"))
       {
-        if(in.has("data"))
-        {
-          LOG_ERROR("Attempted to invoke a method without data in the input")
-          return false;
-        }
-        return element.handleRequest(in("data"));
-      };
-    }
-    {
-      auto & category = update_methods_[element.categories_];
-      const auto & name = element.name_;
-      category[name] = [interaction](mc_rtc::Configuration & out)
-      {
-        out.add("type", InteractionT::type);
-        interaction.addData(out);
-      };
-    }
+        LOG_ERROR("Attempted to invoke a method without data in the input")
+        return false;
+      }
+      return element.handleRequest(in("data"));
+    };
   }
 }
 

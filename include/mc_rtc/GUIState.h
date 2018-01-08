@@ -42,7 +42,7 @@ namespace mc_rtc
     inline static constexpr bool is_compatible() { return true; }
 
     /** Add information to the output */
-    inline void addData(mc_rtc::Configuration &) const {}
+    inline void addData(mc_rtc::Configuration) const {}
   };
 
   /** InteractionType with restricted compatibility */
@@ -65,11 +65,9 @@ namespace mc_rtc
 
     Label(bool is_vector = false);
 
-    bool is_numeric;
-    bool is_integer;
     bool is_vector;
 
-    void addData(mc_rtc::Configuration & out) const;
+    void addData(mc_rtc::Configuration out) const;
   };
 
   /** A button */
@@ -78,32 +76,57 @@ namespace mc_rtc
     static constexpr auto type = "Button";
   };
 
-  struct Toggle : public InteractionType 
+  struct Toggle : public InteractionType
   {
     static constexpr auto type = "Toggle";
   };
 
+  /** Input */
   template<typename T>
   struct Input : public InteractionType
   {
     static constexpr auto type = "Input";
-    /** Default constructor, no limit on the input */
-    Input() = default;
+    /** Default constructor, no limit on the input
+     *
+     * \param labels Labels to present the input in the GUI
+     *
+     */
+    Input(std::vector<std::string> labels);
 
     /** Input with limits on the value
+     *
+     * \param labels Labels to present the input in the GUI
      *
      * \param min Minimum value
      *
      * \param max Maximum value
      *
      */
-    Input(T min, T max);
+    Input(std::vector<std::string> labels, T min, T max);
 
-    void addData(mc_rtc::Configuration & out) const;
+    void addData(mc_rtc::Configuration out) const;
   private:
+    std::vector<std::string> labels_;
     bool has_min_max_ = false;
     T min_;
     T max_;
+  };
+
+  /** Allow to choose a value among a pre-defined set */
+  template<typename T>
+  struct ComboList : public InteractionType
+  {
+    static constexpr auto type = "ComboList";
+
+    /** Constructor
+     *
+     * \values List of possible values in this ComboList
+     */
+    ComboList(std::vector<T> values);
+
+    void addData(mc_rtc::Configuration out) const;
+  private:
+    std::vector<T> values_;
   };
 
   struct Point3D : public StrictInteractionType<Eigen::Vector3d>
@@ -119,6 +142,44 @@ namespace mc_rtc
   struct Wrench : public StrictInteractionType<sva::ForceVecd>
   {
     static constexpr auto type = "Wrench";
+  };
+
+  struct MC_RTC_GUI_DLLAPI Schema : public InteractionType
+  {
+    static constexpr auto type = "Schema";
+
+    /** Represent a schema-based input
+     *
+     * \param schema_dir Schema direction relative to mc_rtc schemas installation path
+     *
+     */
+    Schema(const std::string & schema_dir);
+
+    void addData(mc_rtc::Configuration out) const;
+  private:
+    std::string schema_dir_;
+  };
+
+  /** Form-based input, the form is based by a combination of names and
+   *  InteractionType elements */
+  struct MC_RTC_GUI_DLLAPI Form : public InteractionType
+  {
+    static constexpr auto type = "Form";
+
+    /** Build the Form interaction type
+     *
+     * \param labels Labels on the form
+     *
+     * \param elements Elements on the form
+     *
+     * labels size must fix args count
+     *
+     */
+    template<typename ... Args>
+    Form(const std::vector<std::string> & labels, Args ... elements);
+
+    /** Build by the constructor */
+    std::function<void(mc_rtc::Configuration)> addData;
   };
 
   /** Element tag type */
@@ -189,7 +250,7 @@ namespace mc_rtc
     set_fn_t set_fn_ = [](const data_t &){};
 
     /** Put data out */
-    void sendData(mc_rtc::Configuration & out) const;
+    void sendData(mc_rtc::Configuration out) const;
 
     /** Handle request */
     bool handleRequest(const mc_rtc::Configuration & in) const;
@@ -198,14 +259,35 @@ namespace mc_rtc
     bool has_set_fn_ = false;
   };
 
+  /** Specialization of Element for void type (no-parameter callback) */
+  template<>
+  struct MC_RTC_GUI_DLLAPI Element<void> : public ElementBase
+  {
+    friend struct StateBuilder;
+    using data_t = void;
+    using get_fn_t = std::function<void()>;
+    using set_fn_t = std::function<void()>;
+
+    Element(const std::vector<std::string> & names,
+            set_fn_t set_fn);
+  protected:
+    std::vector<std::string> categories_ = {};
+    std::string name_ = "";
+    set_fn_t set_fn_ = [](){};
+
+    inline void sendData(mc_rtc::Configuration) const {}
+
+    bool handleRequest(const mc_rtc::Configuration &) const;
+
+    bool has_get_fn_ = false;
+    bool has_set_fn_ = true;
+  };
+
   /** This structure holds information regarding the current status of the
    * GUI */
   struct MC_RTC_GUI_DLLAPI State
   {
     mc_rtc::Configuration state;
-
-    bool methods_changed = false;
-    mc_rtc::Configuration methods;
 
     /** Returns the provided state category
      *
@@ -215,13 +297,6 @@ namespace mc_rtc
      *
      */
     mc_rtc::Configuration getStateCategory(const std::vector<std::string> & category);
-
-    /** Returns the provided method category
-     *
-     * \see getStateCategory
-     *
-     */
-    mc_rtc::Configuration getMethodCategory(const std::vector<std::string> & category);
   private:
     mc_rtc::Configuration getCategory(mc_rtc::Configuration & config, const std::vector<std::string> & category);
   };
@@ -275,9 +350,6 @@ namespace mc_rtc
     using element_method_t = std::map<std::string, method_cb_t>;
     /** Store calls to process method calls */
     std::map<category_t, element_method_t> methods_;
-
-    /** Store calls to update the methods' state */
-    std::map<category_t, element_t> update_methods_;
 
     State state_;
   };

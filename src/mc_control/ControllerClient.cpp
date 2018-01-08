@@ -6,14 +6,16 @@
 #include <sstream>
 
 #include <nanomsg/nn.h>
+#include <nanomsg/pipeline.h>
 #include <nanomsg/pubsub.h>
-#include <nanomsg/reqrep.h>
 
 namespace mc_control
 {
 
 ControllerClient::ControllerClient(const std::string & sub_conn_uri,
-                                   const std::string & req_conn_uri)
+                                   const std::string & push_conn_uri,
+                                   double timeout)
+: timeout_(timeout)
 {
   auto init_socket = [](int & socket,
                         unsigned int proto,
@@ -41,16 +43,23 @@ ControllerClient::ControllerClient(const std::string & sub_conn_uri,
   {
     LOG_ERROR_AND_THROW(std::runtime_error, "Failed to set subscribe option on SUB socket")
   }
-  init_socket(req_socket_, NN_REQ, req_conn_uri, "REQ socket");
+  init_socket(push_socket_, NN_PUSH, push_conn_uri, "PUSH socket");
 
   sub_th_ = std::thread([this]()
   {
   std::vector<char> buff(65536);
+  auto t_last_received = std::chrono::system_clock::now();
   while(run_)
   {
-    auto recv = nn_recv(sub_socket_, buff.data(), buff.size(), 0);
+    auto recv = nn_recv(sub_socket_, buff.data(), buff.size(), NN_DONTWAIT);
+    auto now = std::chrono::system_clock::now();
     if(recv < 0)
     {
+      if(timeout_ > 0 && now - t_last_received > std::chrono::duration<double>(timeout_))
+      {
+        t_last_received = now;
+        handle_gui_state("{}", 3);
+      }
       auto err = nn_errno();
       if(err != EAGAIN)
       {
@@ -64,8 +73,10 @@ ControllerClient::ControllerClient(const std::string & sub_conn_uri,
     }
     else if(recv > 0)
     {
+      t_last_received = now;
       handle_gui_state(buff.data(), recv);
     }
+    usleep(500);
   }
   });
 }
@@ -78,7 +89,19 @@ ControllerClient::~ControllerClient()
     sub_th_.join();
   }
   nn_shutdown(sub_socket_, 0);
-  nn_shutdown(req_socket_, 0);
+  nn_shutdown(push_socket_, 0);
+}
+
+void ControllerClient::send_request(const std::vector<std::string> & category,
+                                    const std::string & name,
+                                    const mc_rtc::Configuration & data)
+{
+  mc_rtc::Configuration request;
+  request.add("category", category);
+  request.add("name", name);
+  request.add("data", data);
+  std::string out = request.dump();
+  nn_send(push_socket_, out.c_str(), out.size() + 1, NN_DONTWAIT);
 }
 
 }

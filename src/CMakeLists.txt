@@ -268,7 +268,7 @@ set(mc_control_HDR ${mc_control_HDR} PARENT_SCOPE)
 
 add_library(mc_control SHARED ${mc_control_SRC} ${mc_control_HDR})
 set_target_properties(mc_control PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_EXPORTS")
-target_link_libraries(mc_control mc_tasks mc_solver mc_rtc_ros mc_rtc_loader mc_rtc_utils)
+target_link_libraries(mc_control mc_tasks mc_solver mc_rtc_ros mc_rtc_loader mc_rtc_utils mc_rtc_gui)
 if(${HRPSYS_BASE_FOUND})
   target_link_libraries(mc_control hrpIo)
 endif()

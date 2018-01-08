@@ -19,7 +19,7 @@ namespace mc_control
    *
    * - Uses a PUB socket to send the data stream
    *
-   * - Uses a REP socket to handle requests
+   * - Uses a PULL socket to handle requests
    */
   struct MC_CONTROL_CLIENT_DLLAPI ControllerServer
   {
@@ -32,18 +32,18 @@ namespace mc_control
      *
      * \param pub_bind_uri List of URI the PUB socket should bind to
      *
-     * \param rep_bind_uri List of URI the REP socket should bind to
+     * \param pull_bind_uri List of URI the PULL socket should bind to
      *
      * Check nanomsg documentation for supported protocols
      */
     ControllerServer(double dt, double server_dt,
                      const std::vector<std::string> & pub_bind_uri,
-                     const std::vector<std::string> & rep_bind_uri);
+                     const std::vector<std::string> & pull_bind_uri);
 
     ~ControllerServer();
 
     /** Handle requests made by the GUI users */
-    void handle_requests();
+    void handle_requests(mc_rtc::gui::StateBuilder & gui_builder);
 
     /** Publish the current GUI state */
     void publish(mc_rtc::gui::StateBuilder & gui_builder);
@@ -53,7 +53,7 @@ namespace mc_control
     unsigned int rate;
 
     int pub_socket_;
-    int rep_socket_;
+    int pull_socket_;
   };
 
 

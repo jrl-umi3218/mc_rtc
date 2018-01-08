@@ -219,34 +219,34 @@ void TrajectoryTaskGeneric<T>::addToGUI(mc_rtc::gui::StateBuilder & gui)
   MetaTask::addToGUI(gui);
   gui.addElement(
     mc_rtc::gui::Element<double>{
-      {"Tasks", name_, "stiffness"},
+      {"Tasks", name_, "Gains", "stiffness"},
       [this]() { return this->stiffness(); },
       [this](const double & s) { this->setGains(s, this->damping()); }
     },
-    mc_rtc::gui::Input<double>(0, std::numeric_limits<double>::infinity())
+    mc_rtc::gui::Input<double>({}, 0, std::numeric_limits<double>::infinity())
   );
   gui.addElement(
     mc_rtc::gui::Element<double>{
-      {"Tasks", name_, "damping"},
+      {"Tasks", name_, "Gains", "damping"},
       [this]() { return this->damping(); },
       [this](const double & d) { this->setGains(this->stiffness(), d); }
     },
-    mc_rtc::gui::Input<double>(0, std::numeric_limits<double>::infinity())
+    mc_rtc::gui::Input<double>({}, 0, std::numeric_limits<double>::infinity())
   );
   gui.addElement(
     mc_rtc::gui::Element<double>{
-      {"Tasks", name_, "stiffness & damping"},
+      {"Tasks", name_, "Gains", "stiffness & damping"},
       [this](const double & g) { this->stiffness(g); }
     },
-    mc_rtc::gui::Input<double>(0, std::numeric_limits<double>::infinity())
+    mc_rtc::gui::Input<double>({}, 0, std::numeric_limits<double>::infinity())
   );
   gui.addElement(
     mc_rtc::gui::Element<double>{
-      {"Tasks", name_, "weight"},
+      {"Tasks", name_, "Gains", "weight"},
       [this]() { return this->weight(); },
       [this](const double & w) { this->weight(w); }
     },
-    mc_rtc::gui::Input<double>(0, std::numeric_limits<double>::infinity())
+    mc_rtc::gui::Input<double>({}, 0 , std::numeric_limits<double>::infinity())
   );
 }
 

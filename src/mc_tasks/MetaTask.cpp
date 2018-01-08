@@ -38,21 +38,28 @@ void MetaTask::load(mc_solver::QPSolver & solver,
 void MetaTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   gui.addElement(
+    mc_rtc::gui::Element<void>{
+      {"Tasks", name_, "Reset"},
+      [this]() { this->reset(); }
+    },
+    mc_rtc::gui::Button{}
+  );
+  gui.addElement(
     mc_rtc::gui::Element<std::string>{
-      {"Tasks", name_, "type"},
+      {"Tasks", name_, "Details", "type"},
       [this]() { return this->type_; }
     }
   );
   gui.addElement(
     mc_rtc::gui::Element<Eigen::VectorXd>{
-      {"Tasks", name_, "eval"},
+      {"Tasks", name_, "Details", "eval"},
       [this]() { return this->eval(); }
     },
     mc_rtc::gui::Label(true)
   );
   gui.addElement(
     mc_rtc::gui::Element<Eigen::VectorXd>{
-      {"Tasks", name_, "speed"},
+      {"Tasks", name_, "Details", "speed"},
       [this]() { return this->speed(); }
     },
     mc_rtc::gui::Label(true)

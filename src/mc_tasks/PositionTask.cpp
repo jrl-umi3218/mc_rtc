@@ -70,4 +70,24 @@ void PositionTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry(name_);
 }
 
+void PositionTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
+{
+  TrajectoryTaskGeneric<tasks::qp::PositionTask>::addToGUI(gui);
+  gui.addElement(
+      mc_rtc::gui::Element<Eigen::Vector3d>{
+        {"Tasks", name_, "pos_target"},
+        [this](){ return this->position(); },
+        [this](const Eigen::Vector3d & pos) { this->position(pos); }
+      },
+      mc_rtc::gui::Point3D{}
+  );
+  gui.addElement(
+      mc_rtc::gui::Element<Eigen::Vector3d>{
+        {"Tasks", name_, "pos"},
+        [this](){ return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation(); }
+      },
+      mc_rtc::gui::Point3D{}
+  );
+}
+
 }

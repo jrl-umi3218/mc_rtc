@@ -1,15 +1,15 @@
 #include <mc_control/ControllerServer.h>
 
 #include <nanomsg/nn.h>
+#include <nanomsg/pipeline.h>
 #include <nanomsg/pubsub.h>
-#include <nanomsg/reqrep.h>
 
 namespace mc_control
 {
 
 ControllerServer::ControllerServer(double dt, double server_dt,
                                    const std::vector<std::string> & pub_bind_uri,
-                                   const std::vector<std::string> & rep_bind_uri)
+                                   const std::vector<std::string> & pull_bind_uri)
 {
   iter = 0;
   rate = ceil(server_dt / dt);
@@ -33,18 +33,42 @@ ControllerServer::ControllerServer(double dt, double server_dt,
     }
   };
   init_socket(pub_socket_, NN_PUB, pub_bind_uri, "PUB socket");
-  init_socket(rep_socket_, NN_REP, rep_bind_uri, "REP socket");
+  init_socket(pull_socket_, NN_PULL, pull_bind_uri, "PULL socket");
 }
 
 ControllerServer::~ControllerServer()
 {
   nn_shutdown(pub_socket_, 0);
-  nn_shutdown(rep_socket_, 0);
+  nn_shutdown(pull_socket_, 0);
 }
 
-void ControllerServer::handle_requests()
+void ControllerServer::handle_requests(mc_rtc::gui::StateBuilder & gui_builder)
 {
-  /*FIXME Implement */
+  /*FIXME Avoid freeing the message constantly */
+  void * buf = nullptr;
+  int recv = 0;
+  do
+  {
+    recv = nn_recv(pull_socket_, &buf, NN_MSG, NN_DONTWAIT);
+    if(recv < 0)
+    {
+      auto err = nn_errno();
+      if(err != EAGAIN)
+      {
+        LOG_ERROR("ControllerServer failed to receive requested with errno: " << err)
+      }
+    }
+    else
+    {
+      auto config = mc_rtc::Configuration::fromData(static_cast<const char*>(buf));
+      if(!gui_builder.callMethod(config))
+      {
+        LOG_ERROR("Invokation of the following method failed" << std::endl << config.dump(true) << std::endl)
+      }
+      nn_freemsg(buf);
+    }
+  }
+  while(recv > 0);
 }
 
 void ControllerServer::publish(mc_rtc::gui::StateBuilder & gui_builder)

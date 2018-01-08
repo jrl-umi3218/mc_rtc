@@ -356,7 +356,7 @@ bool MCGlobalController::run()
   publish_robots();
   if(server_)
   {
-    server_->handle_requests();
+    server_->handle_requests(*controller_->gui_);
     server_->publish(*controller_->gui_);
   }
   return running;

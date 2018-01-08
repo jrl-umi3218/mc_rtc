@@ -267,6 +267,8 @@ private:
 
   /** Pointer to the GUI helper */
   std::shared_ptr<mc_rtc::gui::StateBuilder> gui_ = nullptr;
+
+  void addTaskToGUI(mc_tasks::MetaTask * task);
 public:
   /** \deprecated{Default constructor, not made for general usage} */
   QPSolver() {}

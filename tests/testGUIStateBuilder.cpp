@@ -23,7 +23,7 @@ BOOST_AUTO_TEST_CASE(TestGUIStateBuilder)
       {"dummy", "provider", "value"},
       [&provider]() { return provider.value; }
    },
-   mc_rtc::gui::Input<double>(0.0, 1.0)
+   mc_rtc::gui::Input<double>({}, 0.0, 1.0)
   );
   {
     const auto & state = builder.updateState().state;

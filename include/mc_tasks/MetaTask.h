@@ -24,6 +24,8 @@ struct MC_TASKS_DLLAPI MetaTask
 {
 friend struct mc_solver::QPSolver;
 public:
+  virtual ~MetaTask() = default;
+
   /** Get the type of the task */
   const std::string & type() const { return type_; }
 

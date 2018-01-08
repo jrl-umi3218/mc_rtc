@@ -1,5 +1,7 @@
 #include <mc_control/mc_controller.h>
 
+#include <mc_tasks/MetaTaskLoader.h>
+
 #include <mc_rbdyn/RobotLoader.h>
 
 #include <mc_rtc/config.h>
@@ -42,6 +44,24 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   qpsolver.reset(new mc_solver::QPSolver(robots, timeStep));
   qpsolver->logger(logger_);
   qpsolver->gui(gui_);
+  gui_->addElement(
+      mc_rtc::gui::Element<mc_rtc::Configuration>{
+        {"General", "Add MetaTask"},
+        [this](const mc_rtc::Configuration & config)
+        {
+          try
+          {
+            auto t = mc_tasks::MetaTaskLoader::load(this->solver(), config);
+            this->solver().addTask(t);
+          }
+          catch(...)
+          {
+            LOG_ERROR("Failed to load MetaTask from request" << std::endl << config.dump(true))
+          }
+        }
+      },
+      mc_rtc::gui::Schema{"metatask"}
+  );
   }
 
   /* Initialize grippers */
