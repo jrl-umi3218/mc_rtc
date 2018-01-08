@@ -91,6 +91,12 @@ namespace fsm
  * - t2 has a completion criteria
  * \endcode
  *
+ * Using the AddContacts and RemoveContacts entries, one can specify that
+ * should be added/removed at the start of the state.
+ *
+ * If RemovePostureTask is set to true, the posture task is removed at the
+ * start of the state.
+ *
  */
 
 struct MetaTasksState : State
@@ -104,6 +110,9 @@ struct MetaTasksState : State
   void teardown(Controller&) override;
 protected:
   std::map<std::string, mc_rtc::Configuration> tasks_configs_;
+  mc_rtc::Configuration add_contacts_config_;
+  mc_rtc::Configuration remove_contacts_config_;
+  bool remove_posture_task_;
   std::vector<mc_tasks::MetaTaskPtr> tasks_;
   std::vector<std::pair<size_t, mc_control::CompletionCriteria>> criterias_;
 };

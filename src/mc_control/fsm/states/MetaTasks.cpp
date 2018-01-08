@@ -18,6 +18,18 @@ void MetaTasksState::configure(const mc_rtc::Configuration & config)
     const auto & tConfig = e.second;
     tasks_configs_[tName].load(tConfig);
   }
+  if(config.has("AddContacts"))
+  {
+    add_contacts_config_ = config("AddContacts");
+  }
+  if(config.has("RemoveContacts"))
+  {
+    remove_contacts_config_ = config("RemoveContacts");
+  }
+  if(config.has("RemovePostureTask"))
+  {
+    remove_posture_task_ = config("RemovePostureTask");
+  }
 }
 
 void MetaTasksState::start(Controller & ctl)
@@ -43,6 +55,20 @@ void MetaTasksState::start(Controller & ctl)
                                 return crit;
                               }());
     }
+  }
+  std::set<Contact> addContacts = add_contacts_config_;
+  for(const auto & c : addContacts)
+  {
+    ctl.addContact(c);
+  }
+  std::set<Contact> removeContacts = remove_contacts_config_;
+  for(const auto & c : removeContacts)
+  {
+    ctl.removeContact(c);
+  }
+  if(remove_posture_task_)
+  {
+    ctl.solver().removeTask(ctl.postureTask);
   }
 }
 
@@ -74,6 +100,10 @@ void MetaTasksState::teardown(Controller & ctl)
   for(auto & t : tasks_)
   {
     ctl.solver().removeTask(t);
+  }
+  if(remove_posture_task_)
+  {
+    ctl.solver().addTask(ctl.postureTask);
   }
 }
 
