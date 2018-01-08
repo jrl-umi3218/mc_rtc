@@ -202,3 +202,14 @@ private:
 } // namespace fsm
 
 } // namespace mc_control
+
+namespace mc_rtc
+{
+
+template<>
+struct ConfigurationLoader<mc_control::fsm::Contact>
+{
+  static mc_control::fsm::Contact load(const mc_rtc::Configuration & config);
+};
+
+}

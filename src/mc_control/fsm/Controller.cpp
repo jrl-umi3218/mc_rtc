@@ -8,19 +8,15 @@
 namespace mc_rtc
 {
 
-template<>
-struct ConfigurationLoader<mc_control::fsm::Contact>
+mc_control::fsm::Contact ConfigurationLoader<mc_control::fsm::Contact>::load(const mc_rtc::Configuration & config)
 {
-  static mc_control::fsm::Contact load(const mc_rtc::Configuration & config)
-  {
-    mc_control::fsm::Contact ret;
-    ret.r1 = static_cast<std::string>(config("r1"));
-    ret.r1Surface = static_cast<std::string>(config("r1Surface"));
-    ret.r2 = static_cast<std::string>(config("r2"));
-    ret.r2Surface = static_cast<std::string>(config("r2Surface"));
-    return ret;
-  }
-};
+  mc_control::fsm::Contact ret;
+  ret.r1 = static_cast<std::string>(config("r1"));
+  ret.r1Surface = static_cast<std::string>(config("r1Surface"));
+  ret.r2 = static_cast<std::string>(config("r2"));
+  ret.r2Surface = static_cast<std::string>(config("r2Surface"));
+  return ret;
+}
 
 }
 
