@@ -56,19 +56,27 @@ void MetaTasksState::start(Controller & ctl)
                               }());
     }
   }
-  std::set<Contact> addContacts = add_contacts_config_;
-  for(const auto & c : addContacts)
+  if(add_contacts_config_.size())
   {
-    ctl.addContact(c);
+    std::set<Contact> addContacts = add_contacts_config_;
+    for(const auto & c : addContacts)
+    {
+      std::cout << "Add contact " << c.r1Surface << "/" << c.r2Surface << std::endl;
+      ctl.addContact(c);
+    }
   }
-  std::set<Contact> removeContacts = remove_contacts_config_;
-  for(const auto & c : removeContacts)
+  if(remove_contacts_config_.size())
   {
-    ctl.removeContact(c);
+    std::set<Contact> removeContacts = remove_contacts_config_;
+    for(const auto & c : removeContacts)
+    {
+      std::cout << "Remove contact " << c.r1Surface << "/" << c.r2Surface << std::endl;
+      ctl.removeContact(c);
+    }
   }
   if(remove_posture_task_)
   {
-    ctl.solver().removeTask(ctl.postureTask);
+    ctl.solver().removeTask(ctl.getPostureTask(ctl.robot().name()));
   }
 }
 
@@ -103,7 +111,7 @@ void MetaTasksState::teardown(Controller & ctl)
   }
   if(remove_posture_task_)
   {
-    ctl.solver().addTask(ctl.postureTask);
+    ctl.solver().addTask(ctl.getPostureTask(ctl.robot().name()));
   }
 }
 
