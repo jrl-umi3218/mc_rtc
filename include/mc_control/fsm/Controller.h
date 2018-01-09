@@ -207,7 +207,7 @@ namespace mc_rtc
 {
 
 template<>
-struct ConfigurationLoader<mc_control::fsm::Contact>
+struct MC_CONTROL_DLLAPI ConfigurationLoader<mc_control::fsm::Contact>
 {
   static mc_control::fsm::Contact load(const mc_rtc::Configuration & config);
 };
