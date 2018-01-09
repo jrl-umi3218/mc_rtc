@@ -132,6 +132,26 @@ void PostureTask::jointGains(const mc_solver::QPSolver & solver,
   pt_.jointsGains(solver.robots().mbs(), jgs);
 }
 
+void PostureTask::target(const std::map<std::string, std::vector<double>> & joints)
+{
+  auto q = posture();
+  for(const auto & j : joints)
+  {
+    if(robot_.hasJoint(j.first))
+    {
+      if(robot_.mb().joint(robot_.jointIndexByName(j.first)).dof() == j.second.size())
+      {
+        q[robot_.jointIndexByName(j.first)] = j.second;
+      }
+      else
+      {
+        LOG_ERROR("PostureTask::target dof missmatch for " << j.first)
+      }
+    }
+  }
+  posture(q);
+}
+
 }
 
 namespace
@@ -150,6 +170,10 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function("postu
     if(config.has("jointGains"))
     {
       t->jointGains(solver, config("jointGains"));
+    }
+    if(config.has("target"))
+    {
+      t->target(config("target"));
     }
     return t;
   });

@@ -45,6 +45,13 @@ public:
   void jointGains(const mc_solver::QPSolver & solver,
                   const std::vector<tasks::qp::JointGains> & jgs);
 
+  /** Set specific joint targets
+   *
+   * \param joints Map of joint's name to joint's configuration
+   *
+   */
+  void target(const std::map<std::string, std::vector<double>> & joints);
+
   /** Set task's stiffness */
   void stiffness(double s);
 
