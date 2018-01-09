@@ -278,9 +278,16 @@ void Controller::nextState()
   {
     solver().removeTask(ct.second);
   }
-  state_ = factory_.create(next_state_,
-                           *this,
-                           config_(next_state_, mc_rtc::Configuration{}));
+  if(config_.has("configs") && config_("configs").has(next_state_))
+  {
+    state_ = factory_.create(next_state_,
+                             *this,
+                             config_("configs")(next_state_));
+  }
+  else
+  {
+    state_ = factory_.create(next_state_, *this);
+  }
   transition_triggered_ = false;
   curr_state_ = next_state_;
   next_state_ = "";

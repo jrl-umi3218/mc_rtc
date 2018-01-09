@@ -214,13 +214,30 @@ StatePtr StateFactory::create(const std::string & state,
                               Controller & ctl,
                               const mc_rtc::Configuration & config)
 {
+  return create(state, ctl, true, config);
+}
+
+StatePtr StateFactory::create(const std::string & state,
+                              Controller & ctl)
+{
+  return create(state, ctl, false);
+}
+
+StatePtr StateFactory::create(const std::string & state,
+                              Controller & ctl,
+                              bool configure,
+                              const mc_rtc::Configuration & config)
+{
   StatePtr ret = create(state);
   if(!ret)
   {
     LOG_ERROR("Creation of " << state << " state failed")
     return nullptr;
   }
-  ret->configure(config);
+  if(configure)
+  {
+    ret->configure(config);
+  }
   ret->start(ctl);
   return ret;
 }

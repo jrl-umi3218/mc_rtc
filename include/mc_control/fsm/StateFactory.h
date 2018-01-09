@@ -77,6 +77,9 @@ struct MC_CONTROL_DLLAPI StateFactory : public mc_rtc::ObjectLoader<State>
                   Controller & ctl,
                   const mc_rtc::Configuration & config);
 
+  /** Creates a state without extra configuration */
+  StatePtr create(const std::string & state, Controller & ctl);
+
   /** Query existence of a state */
   bool hasState(const std::string & state) const;
 
@@ -98,6 +101,9 @@ struct MC_CONTROL_DLLAPI StateFactory : public mc_rtc::ObjectLoader<State>
 private:
   /** Create a state from libraries or factory */
   StatePtr create(const std::string & state);
+  /** Implementation for create */
+  StatePtr create(const std::string & state, Controller & ctl,
+                  bool configure, const mc_rtc::Configuration & config = {});
   /** Update the outputs list */
   void update(const std::string & cn, lt_dlhandle handle);
 private:
