@@ -199,6 +199,12 @@ public:
       tfs.push_back(PT2TF(X_succp_succ*mbc.parentToSon[static_cast<unsigned int>(j)]*X_predp_pred.inv(), tm, prefix + predName, prefix + succName, seq));
     }
 
+    for(const auto & s : robot.surfaces())
+    {
+      const auto & surf = s.second;
+      tfs.push_back(PT2TF(surf->X_b_s(), tm, prefix + surf->bodyName(), prefix + "surfaces/" + surf->name(), seq));
+    }
+
     if(seq % skip == 0)
     {
       if(!msgs.push({msg, tfs, imu, odom, ros_wrenches}))
