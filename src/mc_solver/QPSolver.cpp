@@ -375,8 +375,8 @@ void QPSolver::gui(std::shared_ptr<mc_rtc::gui::StateBuilder> gui)
       },
       mc_rtc::gui::Form{
         {"R0", "R1"},
-        mc_rtc::gui::Input<unsigned int>{{"R0"}, 0, robots().size()},
-        mc_rtc::gui::Input<unsigned int>{{"R1"}, 0, robots().size()}
+        mc_rtc::gui::Input<unsigned int>({"R0"}, 0, robots().size()),
+        mc_rtc::gui::Input<unsigned int>({"R1"}, 0, robots().size())
       }
     );
   }
