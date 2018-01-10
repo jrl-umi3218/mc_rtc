@@ -99,7 +99,7 @@ endif()
 
 set(NANOMSG_NAME nanomsg)
 add_optional_dependency(${NANOMSG_NAME})
-if(NOT ${NANOMSG_NAME}_FOUND)
+if(NOT NANOMSG_FOUND)
   MESSAGE("Failed to find ${NANOMSG_NAME}, trying to find libnanomsg")
   set(NANOMSG_NAME libnanomsg)
   add_required_dependency(${NANOMSG_NAME})
