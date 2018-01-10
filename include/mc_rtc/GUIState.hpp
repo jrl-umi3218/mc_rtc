@@ -50,27 +50,36 @@ void ComboList<T>::addData(mc_rtc::Configuration out) const
 
 namespace
 {
-  template<typename T>
-  size_t expand_form(size_t & i, const std::vector<std::string> & labels,
-                     mc_rtc::Configuration & out, const T & el)
+  template<size_t i, size_t rem, typename ... Args,
+    typename std::enable_if<rem == 0, int>::type = 0>
+  void expand_form(const std::vector<std::string> &,
+                   mc_rtc::Configuration &, const std::tuple<Args...> &)
+  {
+  }
+
+  template<size_t i, size_t rem, typename ... Args,
+    typename std::enable_if<rem != 0, int>::type = 0>
+  void expand_form(const std::vector<std::string> & labels,
+                   mc_rtc::Configuration & out, const std::tuple<Args...> & els)
   {
     assert(i < labels.size());
-    auto elOut = out.add(labels[i++]);
+    using T = typename std::tuple_element<i, std::tuple<Args...>>::type;
+    auto elOut = out.add(labels[i]);
     elOut.add("type", T::type);
-    el.addData(elOut);
-    return i;
+    std::get<i>(els).addData(elOut);
+    expand_form<i+1,rem-1>(labels, out, els);
   }
 }
 
 template<typename ... Args>
-Form::Form(const std::vector<std::string> & labels, Args ... elements)
+Form::Form(const std::vector<std::string> & labels, Args ... elements_)
 {
-  addData = [labels, elements...](mc_rtc::Configuration out)
+  assert(sizeof...(elements_) == labels.size());
+  auto elements = std::make_tuple(elements_...);
+  addData = [labels, elements](mc_rtc::Configuration out)
   {
     auto els = out.add("elements");
-    size_t i = 0;
-    using expand = int[];
-    expand { expand_form(i, labels, els, elements)... };
+    expand_form<0,std::tuple_size<decltype(elements)>::value>(labels, els, elements);
   };
 }
 
