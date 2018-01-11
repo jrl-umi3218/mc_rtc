@@ -101,6 +101,7 @@ void AdmittanceTask::reset()
 void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
 {
   SurfaceTransformTask::addToLogger(logger);
+  logger.removeLogEntry(name_ + "_target_pose");
   logger.addLogEntry(name_ + "_admittance",
                      [this]() -> const sva::ForceVecd &
                      {
