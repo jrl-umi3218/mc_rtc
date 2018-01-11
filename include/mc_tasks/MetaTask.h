@@ -10,6 +10,11 @@
 
 #include <mc_rtc/Configuration.h>
 
+namespace mc_control
+{
+  struct CompletionCriteria;
+}
+
 namespace mc_tasks
 {
 
@@ -23,6 +28,7 @@ MC_TASKS_DLLAPI double extraStiffness(double error, double extraStiffness);
 struct MC_TASKS_DLLAPI MetaTask
 {
 friend struct mc_solver::QPSolver;
+friend struct mc_control::CompletionCriteria;
 public:
   virtual ~MetaTask() = default;
 
@@ -191,6 +197,27 @@ protected:
    *
    */
   virtual void removeFromGUI(mc_rtc::gui::StateBuilder &);
+
+  /** Add additional completion criterias to mc_control::CompletionCriteria
+   * object
+   *
+   * Based on the input data, this should return a function that operates on
+   * the task and return true and complete the output if the criteria has been
+   * reached. In this function parameter, the output string should be completed
+   * by the function and not overwritten. The task passed to this function is
+   * *always* of the MetaTask type you're implementing and thus can be safely
+   * casted.
+   *
+   * The default implementation is a function that returns true whatever
+   * happens.
+   *
+   * \param dt Timestep of the completion criteria
+   *
+   * \param config Configuration for the CompletionCriteria
+   *
+   */
+  virtual std::function<bool(const mc_tasks::MetaTask & task, std::string&)>
+    buildCompletionCriteria(double dt, const mc_rtc::Configuration & config) const;
 
   std::string type_;
   std::string name_;

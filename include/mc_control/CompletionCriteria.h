@@ -51,14 +51,14 @@ struct MC_CONTROL_DLLAPI CompletionCriteria
   /** Given a task returns true if that task fits the completion criteria */
   bool completed(const mc_tasks::MetaTask & task);
 
-  /** Given a Configuration, generate the criteria */
-  void configure(double dt, const mc_rtc::Configuration & config);
+  /** Given a MetaTask and a Configuration, generate the criteria */
+  void configure(const mc_tasks::MetaTask & task, double dt, const mc_rtc::Configuration & config);
 
   /** Returns the criteria that achieved the completion */
   const std::string & output() const;
 private:
   /** Internally used to compose functions */
-  std::function<bool (const mc_tasks::MetaTask&, std::string&)> build(double dt, const mc_rtc::Configuration & config);
+  std::function<bool (const mc_tasks::MetaTask&, std::string&)> build(const mc_tasks::MetaTask & task, double dt, const mc_rtc::Configuration & config);
   /** Programatically constructed based on the configuration values */
   std::function<bool(const mc_tasks::MetaTask&, std::string&)> fn_ = [](const mc_tasks::MetaTask&, std::string&) { return true; };
   /** Output string */

@@ -47,11 +47,12 @@ void MetaTasksState::start(Controller & ctl)
     if(tConfig.has("completion"))
     {
       std::pair<size_t, mc_control::CompletionCriteria> p = {tasks_.size() - 1, {}};
+      auto task = tasks_.back();
       criterias_.emplace_back(tasks_.size() - 1,
-                              [&ctl,&tConfig]()
+                              [&ctl,&tConfig,task]()
                               {
                                 CompletionCriteria crit;
-                                crit.configure(ctl.solver().dt(), tConfig("completion"));
+                                crit.configure(*task, ctl.solver().dt(), tConfig("completion"));
                                 return crit;
                               }());
     }

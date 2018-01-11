@@ -71,4 +71,10 @@ void MetaTask::removeFromGUI(mc_rtc::gui::StateBuilder & gui)
   gui.removeCategory({"Tasks", name_});
 }
 
+std::function<bool(const mc_tasks::MetaTask & task, std::string&)>
+  MetaTask::buildCompletionCriteria(double, const mc_rtc::Configuration &) const
+{
+  return [](const mc_tasks::MetaTask&, std::string&) { return true; };
+}
+
 }

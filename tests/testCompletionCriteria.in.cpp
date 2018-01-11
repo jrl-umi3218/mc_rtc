@@ -28,6 +28,28 @@ struct MockTask : public mc_tasks::CoMTask
   Eigen::VectorXd eval() const override { return eval_; }
   Eigen::VectorXd speed() const override { return speed_; }
 
+  std::function<bool(const mc_tasks::MetaTask & t, std::string & out)>
+    buildCompletionCriteria(double dt, const mc_rtc::Configuration & config) const override
+  {
+    if(config.has("MYCRITERIA"))
+    {
+      Eigen::Vector3d myCrit = config("MYCRITERIA");
+      return [myCrit](const mc_tasks::MetaTask & t, std::string & out)
+      {
+        BOOST_REQUIRE_NO_THROW(dynamic_cast<const MockTask&>(t));
+        const auto & self = static_cast<const MockTask&>(t);
+        const auto & eval_ = self.eval_;
+        if(eval_.x() < myCrit.x() && eval_.y() < myCrit.y() && eval_.z() < myCrit.z())
+        {
+          out += "MYCRITERIA";
+          return true;
+        }
+        return false;
+      };
+    }
+    return MetaTask::buildCompletionCriteria(dt, config);
+  }
+
   Eigen::Vector3d eval_;
   Eigen::Vector3d speed_;
 };
@@ -46,7 +68,7 @@ BOOST_AUTO_TEST_CASE(TestTimeout)
   mc_rtc::Configuration config;
   config.add("timeout", timeout);
   mc_control::CompletionCriteria criteria;
-  criteria.configure(dt, config);
+  criteria.configure(task, dt, config);
   unsigned int ticks = timeout / dt;
   for(size_t i = 0; i < ticks; ++i)
   {
@@ -63,7 +85,7 @@ BOOST_AUTO_TEST_CASE(TestEval)
   mc_rtc::Configuration config;
   config.add("eval", norm);
   mc_control::CompletionCriteria criteria;
-  criteria.configure(dt, config);
+  criteria.configure(task, dt, config);
   task.eval_ = Eigen::Vector3d::UnitZ();
   BOOST_REQUIRE(!criteria.completed(task));
   task.eval_.z() = norm; // task.eval().norm() == 1e-3 == norm
@@ -80,7 +102,7 @@ BOOST_AUTO_TEST_CASE(TestSpeed)
   mc_rtc::Configuration config;
   config.add("speed", norm);
   mc_control::CompletionCriteria criteria;
-  criteria.configure(dt, config);
+  criteria.configure(task, dt, config);
   task.speed_ = Eigen::Vector3d::UnitZ();
   BOOST_REQUIRE(!criteria.completed(task));
   task.speed_.z() = norm; // task.speed().norm() == 1e-3 == norm
@@ -99,7 +121,7 @@ BOOST_AUTO_TEST_CASE(TestEvalAndSpeed)
   AND.push([norm](){ mc_rtc::Configuration c; c.add("eval", norm); return c; }());
   AND.push([norm](){ mc_rtc::Configuration c; c.add("speed", norm); return c; }());
   mc_control::CompletionCriteria criteria;
-  criteria.configure(dt, config);
+  criteria.configure(task, dt, config);
   task.eval_ = Eigen::Vector3d::UnitZ();
   task.speed_ = Eigen::Vector3d::UnitZ();
   BOOST_REQUIRE(!criteria.completed(task));
@@ -122,7 +144,7 @@ BOOST_AUTO_TEST_CASE(TestEvalOrSpeed)
   OR.push([norm](){ mc_rtc::Configuration c; c.add("eval", norm); return c; }());
   OR.push([norm](){ mc_rtc::Configuration c; c.add("speed", norm); return c; }());
   mc_control::CompletionCriteria criteria;
-  criteria.configure(dt, config);
+  criteria.configure(task, dt, config);
   task.eval_ = Eigen::Vector3d::UnitZ();
   task.speed_ = Eigen::Vector3d::UnitZ();
   BOOST_REQUIRE(!criteria.completed(task));
@@ -154,7 +176,7 @@ BOOST_AUTO_TEST_CASE(TestEvalAndSpeedOrTimeout)
           }());
   OR.push([timeout](){ mc_rtc::Configuration c; c.add("timeout", timeout); return c; }());
   mc_control::CompletionCriteria criteria;
-  criteria.configure(dt, config);
+  criteria.configure(task, dt, config);
   // criteria <=> (eval().norm() < norm && speed().norm() < 1e-3) || timeout)
   task.eval_ = Eigen::Vector3d::UnitZ();
   task.speed_ = Eigen::Vector3d::UnitZ();
@@ -175,4 +197,21 @@ BOOST_AUTO_TEST_CASE(TestEvalAndSpeedOrTimeout)
   }
   BOOST_REQUIRE(criteria.completed(task));
   BOOST_REQUIRE(criteria.output() == "timeout");
+}
+
+BOOST_AUTO_TEST_CASE(TestCustomCriteria)
+{
+  MockTask task;
+  Eigen::Vector3d myCrit{1.,2.,3.};
+  mc_rtc::Configuration config;
+  config.add("MYCRITERIA", myCrit);
+  mc_control::CompletionCriteria criteria;
+  criteria.configure(task, dt, config);
+  task.eval_ = Eigen::Vector3d::UnitZ()*4.;
+  BOOST_REQUIRE(!criteria.completed(task));
+  task.eval_ = myCrit;
+  BOOST_REQUIRE(!criteria.completed(task));
+  task.eval_ = myCrit - Eigen::Vector3d::Ones();
+  BOOST_REQUIRE(criteria.completed(task));
+  BOOST_REQUIRE(criteria.output() == "MYCRITERIA");
 }
