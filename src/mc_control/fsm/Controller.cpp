@@ -165,6 +165,31 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
   {
     transition_map_.init(factory_, config);
   }
+  /** GUI information */
+  if(gui_)
+  {
+    gui_->addElement(
+      mc_rtc::gui::Element<std::string>{
+        {"#FSM#", "Current state"},
+        [this]() { return this->curr_state_; }
+      },
+      mc_rtc::gui::Label{}
+    );
+    gui_->addElement(
+      mc_rtc::gui::Element<bool>{
+        {"#FSM#", "Next state ready?"},
+        [this]() { return this->state_ == nullptr; }
+      },
+      mc_rtc::gui::Label{}
+    );
+    gui_->addElement(
+      mc_rtc::gui::Element<void>{
+        {"#FSM#", "Play next stance"},
+        [this]() { this->play_next_stance(); }
+      },
+      mc_rtc::gui::Button{}
+    );
+  }
 }
 
 bool Controller::run()
