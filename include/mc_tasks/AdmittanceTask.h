@@ -198,11 +198,28 @@ protected:
   std::map<char, bool> isClampingAngularVel_ = {{'x', false}, {'y', false}, {'z', false}};
   std::map<char, bool> isClampingLinearVel_ = {{'x', false}, {'y', false}, {'z', false}};
   sva::ForceVecd admittance_ = sva::ForceVecd(Eigen::Vector6d::Zero());
-  sva::ForceVecd targetWrench_;
-  sva::ForceVecd wrenchError_;
+  sva::ForceVecd targetWrench_ = sva::ForceVecd(Eigen::Vector6d::Zero());
+  sva::ForceVecd wrenchError_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   sva::MotionVecd refVelB_;
 
   void update() override;
+
+  /** Add support for the following criterias:
+   *
+   * - wrench: completed when the measuredWrench reaches the given wrench, if
+   *   some values are NaN, this direction is ignored
+   *
+   */
+  std::function<bool(const mc_tasks::MetaTask & task, std::string&)>
+    buildCompletionCriteria(double dt, const mc_rtc::Configuration & config) const override;
+private:
+  sva::PTransformd X_0_target_;
+  Eigen::Vector3d trans_target_delta_ = Eigen::Vector3d::Zero();
+  Eigen::Vector3d rpy_target_delta_ = Eigen::Vector3d::Zero();
+  Eigen::Vector3d maxTransPos_ = Eigen::Vector3d(0.1, 0.1, 0.1);  // [m]
+  Eigen::Vector3d maxTransVel_ = Eigen::Vector3d(0.1, 0.1, 0.1);  // [m] / [s]
+  Eigen::Vector3d maxRpyPos_ = Eigen::Vector3d(0.5, 0.5, 0.5);  // [rad]
+  Eigen::Vector3d maxRpyVel_ = Eigen::Vector3d(0.1, 0.1, 0.1);  // [rad] / [s]
 
   void addToLogger(mc_rtc::Logger & logger) override;
   void removeFromLogger(mc_rtc::Logger & logger) override;

@@ -139,6 +139,39 @@ void AdmittanceTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry(name_ + "_world_measured_wrench");
 }
 
+
+std::function<bool(const mc_tasks::MetaTask&, std::string&)>
+  AdmittanceTask::buildCompletionCriteria(double dt,
+                                          const mc_rtc::Configuration & config) const
+{
+  if(config.has("wrench"))
+  {
+    sva::ForceVecd target_w = config("wrench");
+    Eigen::Vector6d target = target_w.vector();
+    Eigen::Vector6d dof = Eigen::Vector6d::Ones();
+    for(size_t i = 0; i < 6; ++i)
+    {
+      if(std::isnan(target(i)))
+      {
+        dof(i) = 0.;
+        target(i) = 0.;
+      }
+    }
+    return [dof,target](const mc_tasks::MetaTask & t, std::string & out)
+    {
+      const auto & self = static_cast<const mc_tasks::AdmittanceTask&>(t);
+      Eigen::Vector6d w = self.measuredWrench().vector();
+      for(size_t i = 0; i < 6; ++i)
+      {
+        if(dof(i)*w(i) < target(i)) { return false; }
+      }
+      out += "wrench";
+      return true;
+    };
+  }
+  return MetaTask::buildCompletionCriteria(dt, config);
+}
+
 } // mc_tasks
 
 namespace
