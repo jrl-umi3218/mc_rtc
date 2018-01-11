@@ -23,10 +23,16 @@ struct State;
  */
 struct MC_CONTROL_DLLAPI Contact
 {
+  Contact(const std::string & r1, const std::string & r2,
+          const std::string & r1Surface, const std::string & r2Surface,
+          const Eigen::Vector6d & dof = Eigen::Vector6d::Ones())
+  : r1(r1), r2(r2), r1Surface(r1Surface), r2Surface(r2Surface), dof(dof) {}
+
   std::string r1;
   std::string r2;
   std::string r1Surface;
   std::string r2Surface;
+  Eigen::Vector6d dof;
 
   bool operator<(const Contact & rhs) const
   {

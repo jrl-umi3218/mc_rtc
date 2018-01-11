@@ -10,12 +10,11 @@ namespace mc_rtc
 
 mc_control::fsm::Contact ConfigurationLoader<mc_control::fsm::Contact>::load(const mc_rtc::Configuration & config)
 {
-  mc_control::fsm::Contact ret;
-  ret.r1 = static_cast<std::string>(config("r1"));
-  ret.r1Surface = static_cast<std::string>(config("r1Surface"));
-  ret.r2 = static_cast<std::string>(config("r2"));
-  ret.r2Surface = static_cast<std::string>(config("r2Surface"));
-  return ret;
+  return mc_control::fsm::Contact(config("r1"),
+                                  config("r2"),
+                                  config("r1Surface"),
+                                  config("r2Surface"),
+                                  config("dof", Eigen::Vector6d::Ones().eval()));
 }
 
 }
@@ -205,6 +204,7 @@ bool Controller::run()
   if(contacts_changed_)
   {
     std::vector<mc_rbdyn::Contact> contacts;
+    contact_constraint_->contactConstr->resetDofContacts();
     for(const auto & c : contacts_)
     {
       contacts.emplace_back(robots(),
@@ -212,8 +212,11 @@ bool Controller::run()
                             robots_idx_.at(c.r2),
                             c.r1Surface,
                             c.r2Surface);
+      auto cId = contacts.back().contactId(robots());
+      contact_constraint_->contactConstr->addDofContact(cId, c.dof.asDiagonal());
     }
     solver().setContacts(contacts);
+    contact_constraint_->contactConstr->updateDofContacts();
     contacts_changed_ = false;
   }
   if(interrupt_triggered_)

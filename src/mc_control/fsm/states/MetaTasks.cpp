@@ -70,7 +70,7 @@ void MetaTasksState::start(Controller & ctl)
     std::set<Contact> addContacts = add_contacts_config_;
     for(const auto & c : addContacts)
     {
-      std::cout << "Add contact " << c.r1Surface << "/" << c.r2Surface << std::endl;
+      std::cout << "Add contact " << c.r1Surface << "/" << c.r2Surface << " (dof: " << c.dof.transpose() << ")\n";
       ctl.addContact(c);
     }
   }
