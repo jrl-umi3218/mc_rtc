@@ -161,6 +161,9 @@ private:
    * from the start by the controller */
   std::vector<mc_solver::ConstraintSetPtr> constraints_;
 
+  /** Keep track of the contact constraint */
+  std::shared_ptr<mc_solver::ContactConstraint> contact_constraint_;
+
   /** Collision managers for robot-pair (r1, r2), if r1 == r2 this is
    * effectively a self-collision manager */
   std::map<std::pair<std::string, std::string>,

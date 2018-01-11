@@ -97,8 +97,16 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
     for(const auto & cc : config_constraints)
     {
       constraints_.emplace_back(mc_solver::ConstraintSetLoader::load(solver(), cc));
+      if(static_cast<std::string>(cc("type")) == "contact")
+      {
+        contact_constraint_ = std::static_pointer_cast<mc_solver::ContactConstraint>(constraints_.back());
+      }
       /*FIXME Add a name mechanism in ConstraintSet to get information here */
       solver().addConstraintSet(*constraints_.back());
+    }
+    if(!contact_constraint_)
+    {
+      LOG_WARNING("No contact constraint loaded from the FSM configuration")
     }
   }
   /** Load collision managers */
