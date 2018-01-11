@@ -196,6 +196,27 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
       },
       mc_rtc::gui::Button{}
     );
+    gui_->addElement(
+      mc_rtc::gui::Element<std::string>{
+        {"#FSM#", "Contacts"},
+        [this]()
+        {
+          std::string ret;
+          for(const auto & c : contacts_)
+          {
+            std::stringstream ss;
+            ss << c.r1Surface << "/" << c.r2Surface << " | " << c.dof.transpose() << "\n";
+            ret += ss.str();
+          }
+          if(ret.size())
+          {
+            ret.pop_back();
+          }
+          return ret;
+        }
+      },
+      mc_rtc::gui::Label{}
+    );
   }
 }
 
@@ -309,7 +330,7 @@ void Controller::resetPostures()
 void Controller::nextState()
 {
   if(next_state_.empty()) { return; }
-  LOG_INFO("Starting state " << next_state_)
+  LOG_SUCCESS("Starting state " << next_state_)
   for(auto & ct : com_tasks_)
   {
     solver().removeTask(ct.second);
