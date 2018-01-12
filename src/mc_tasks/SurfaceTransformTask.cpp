@@ -57,6 +57,31 @@ void SurfaceTransformTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry(name_ + "_target_pose");
 }
 
+void SurfaceTransformTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
+{
+  TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::addToGUI(gui);
+  gui.addElement(
+    mc_rtc::gui::Element<sva::PTransformd>{
+      {"Tasks", name_, "pos_target"},
+      [this](){ return this->target(); },
+      [this](const sva::PTransformd & pos) { this->target(pos); }
+    },
+    mc_rtc::gui::Transform{}
+  );
+  gui.addElement(
+    mc_rtc::gui::Element<sva::PTransformd>{
+      {"Tasks", name_, "pos"},
+      std::function<sva::PTransformd()>{
+        [this]()
+        {
+          return robots.robot(rIndex).surface(surfaceName).X_0_s(robots.robot(rIndex));
+        }
+      }
+    },
+    mc_rtc::gui::Transform{}
+  );
+}
+
 }
 
 namespace

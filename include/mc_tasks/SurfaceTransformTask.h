@@ -71,6 +71,7 @@ protected:
   /* Don't use parent's refVel() as the velocity frame (spatial or body) is
    * ambiguous. */
   using TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::refVel;
+  void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
 };
 
 }

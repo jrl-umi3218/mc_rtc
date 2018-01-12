@@ -105,6 +105,8 @@ private:
 
   virtual void addToLogger(mc_rtc::Logger & logger) override;
   virtual void removeFromLogger(mc_rtc::Logger & logger) override;
+
+  void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
 };
 
 }
