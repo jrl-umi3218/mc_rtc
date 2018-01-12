@@ -368,9 +368,11 @@ void QPSolver::gui(std::shared_ptr<mc_rtc::gui::StateBuilder> gui)
     gui_->addElement(
       mc_rtc::gui::Element<mc_rtc::Configuration>{
         {"Contacts", "Add contact"},
-        [this](const mc_rtc::Configuration & data)
-        {
-          std::cout << this << " will add contact " << data("R0") << ", " << data("R1") << std::endl;
+        std::function<void(const mc_rtc::Configuration&)>{
+          [this](const mc_rtc::Configuration & data)
+          {
+            std::cout << this << " will add contact " << data("R0") << ", " << data("R1") << std::endl;
+          }
         }
       },
       mc_rtc::gui::Form{

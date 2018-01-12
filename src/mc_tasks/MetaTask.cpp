@@ -10,6 +10,8 @@ double extraStiffness(double error, double extraStiffness)
   return exp(-error)*extraStiffness;
 }
 
+MetaTask::~MetaTask() {}
+
 void MetaTask::load(mc_solver::QPSolver & solver,
                     const mc_rtc::Configuration & config)
 {
@@ -47,20 +49,20 @@ void MetaTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   gui.addElement(
     mc_rtc::gui::Element<std::string>{
       {"Tasks", name_, "Details", "type"},
-      [this]() { return this->type_; }
+      std::function<std::string()>{[this]() { return this->type_; }}
     }
   );
   gui.addElement(
     mc_rtc::gui::Element<Eigen::VectorXd>{
       {"Tasks", name_, "Details", "eval"},
-      [this]() { return this->eval(); }
+      std::function<Eigen::VectorXd()>{[this]() { return this->eval(); }}
     },
     mc_rtc::gui::Label(true)
   );
   gui.addElement(
     mc_rtc::gui::Element<Eigen::VectorXd>{
       {"Tasks", name_, "Details", "speed"},
-      [this]() { return this->speed(); }
+      std::function<Eigen::VectorXd()>{[this]() { return this->speed(); }}
     },
     mc_rtc::gui::Label(true)
   );

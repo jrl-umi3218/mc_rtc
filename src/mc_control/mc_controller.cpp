@@ -47,16 +47,18 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   gui_->addElement(
       mc_rtc::gui::Element<mc_rtc::Configuration>{
         {"General", "Add MetaTask"},
-        [this](const mc_rtc::Configuration & config)
-        {
-          try
+        std::function<void(const mc_rtc::Configuration&)>{
+          [this](const mc_rtc::Configuration & config)
           {
-            auto t = mc_tasks::MetaTaskLoader::load(this->solver(), config);
-            this->solver().addTask(t);
-          }
-          catch(...)
-          {
-            LOG_ERROR("Failed to load MetaTask from request" << std::endl << config.dump(true))
+            try
+            {
+              auto t = mc_tasks::MetaTaskLoader::load(this->solver(), config);
+              this->solver().addTask(t);
+            }
+            catch(...)
+            {
+              LOG_ERROR("Failed to load MetaTask from request" << std::endl << config.dump(true))
+            }
           }
         }
       },

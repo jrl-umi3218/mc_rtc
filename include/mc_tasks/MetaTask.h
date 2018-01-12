@@ -30,7 +30,7 @@ struct MC_TASKS_DLLAPI MetaTask
 friend struct mc_solver::QPSolver;
 friend struct mc_control::CompletionCriteria;
 public:
-  virtual ~MetaTask() = default;
+  virtual ~MetaTask();
 
   /** Get the type of the task */
   const std::string & type() const { return type_; }

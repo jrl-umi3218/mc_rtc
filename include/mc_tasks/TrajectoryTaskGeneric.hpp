@@ -236,7 +236,9 @@ void TrajectoryTaskGeneric<T>::addToGUI(mc_rtc::gui::StateBuilder & gui)
   gui.addElement(
     mc_rtc::gui::Element<double>{
       {"Tasks", name_, "Gains", "stiffness & damping"},
-      [this](const double & g) { this->stiffness(g); }
+      std::function<void(const double&)>{
+        [this](const double & g) { this->stiffness(g); }
+      }
     },
     mc_rtc::gui::Input<double>({}, 0, std::numeric_limits<double>::infinity())
   );

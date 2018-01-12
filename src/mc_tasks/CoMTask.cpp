@@ -78,7 +78,9 @@ void CoMTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   gui.addElement(
     mc_rtc::gui::Element<Eigen::Vector3d>{
       {"Tasks", name_, "com"},
-      [this]() { return (this->com() - eval()).eval(); }
+      std::function<Eigen::Vector3d()>{
+        [this]() { return (this->com() - eval()).eval(); }
+      }
     },
     mc_rtc::gui::Point3D{}
   );

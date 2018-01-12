@@ -84,7 +84,9 @@ void PositionTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   gui.addElement(
       mc_rtc::gui::Element<Eigen::Vector3d>{
         {"Tasks", name_, "pos"},
-        [this](){ return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation(); }
+        std::function<Eigen::Vector3d()>{
+          [this](){ return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation(); }
+        }
       },
       mc_rtc::gui::Point3D{}
   );

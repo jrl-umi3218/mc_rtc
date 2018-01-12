@@ -15,13 +15,17 @@ BOOST_AUTO_TEST_CASE(TestGUIStateBuilder)
   builder.addElement(
    mc_rtc::gui::Element<Eigen::Vector3d>{
       {"dummy", "provider", "point"},
-      [&provider]() { return provider.point; }
+      std::function<Eigen::Vector3d()>{
+        [&provider]() { return provider.point; }
+      }
    }
   );
   builder.addElement(
    mc_rtc::gui::Element<double>{
       {"dummy", "provider", "value"},
-      [&provider]() { return provider.value; }
+      std::function<double()>{
+        [&provider]() { return provider.value; }
+      }
    },
    mc_rtc::gui::Input<double>({}, 0.0, 1.0)
   );
