@@ -134,6 +134,53 @@ void CoPTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry(name_ + "_world_target_cop");
 }
 
+std::function<bool(const mc_tasks::MetaTask&, std::string&)>
+  CoPTask::buildCompletionCriteria(double dt,
+                                   const mc_rtc::Configuration & config) const
+{
+  if(config.has("copError"))
+  {
+    double copError = config("copError");
+    assert(copError >= 0);
+    return [copError](const mc_tasks::MetaTask & t, std::string & out)
+    {
+      const auto & self = static_cast<const CoPTask&>(t);
+      Eigen::Vector2d error = self.measuredCoP() - self.targetCoP();
+      if(error.norm() < copError)
+      {
+        out += "CoP error";
+        return true;
+      }
+      return false;
+    };
+  }
+  if(config.has("force"))
+  {
+    Eigen::Vector3d force = config("force");
+    Eigen::Vector3d dof = Eigen::Vector3d::Ones();
+    for(size_t i = 0; i < 3; ++i)
+    {
+      if(std::isnan(force(i))) { dof(i) = 0.; force(i) = 0.; }
+      else if(force(i) < 0) { dof(i) = -1.; }
+    }
+    return [dof,force](const mc_tasks::MetaTask & t, std::string & out)
+    {
+      const auto & self = static_cast<const CoPTask&>(t);
+      Eigen::Vector3d f = self.measuredWrench().force();
+      for(size_t i = 0; i < 3; ++i)
+      {
+        if(dof(i)*fabs(f(i)) < force(i))
+        {
+          return false;
+        }
+      }
+      out += "force";
+      return true;
+    };
+  }
+  return AdmittanceTask::buildCompletionCriteria(dt, config);
+}
+
 } // mc_tasks
 
 namespace

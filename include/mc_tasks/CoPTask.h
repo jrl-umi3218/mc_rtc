@@ -126,6 +126,15 @@ public:
    */
   void worldTargetCoP(const Eigen::Vector3d & worldCoP);
 
+  /** Add support for the following entries
+   *
+   * - copError Threshold for (targetCoP - measureCoP).norm()
+   * - force Force threshold, similar to wrench for AdmittanceTask
+   *
+   */
+  std::function<bool(const mc_tasks::MetaTask&, std::string&)>
+    buildCompletionCriteria(double dt,
+                            const mc_rtc::Configuration & config) const override;
 private:
   Eigen::Vector2d targetCoP_ = Eigen::Vector2d::Zero();
   Eigen::Vector3d targetForce_ = Eigen::Vector3d::Zero();
