@@ -115,18 +115,19 @@ $(document).ready(function()
   $('#constraintset-objects').html(make_list_group('constraintset', constraintset_objects));
 
   var metatask_objects = [
-  'CoMTask',
-  'PositionTask',
-  'OrientationTask',
-  'EndEffectorTask',
-  'RelativeEndEffectorTask',
-  'ComplianceTask',
-  'AdmittanceTask',
   'AddContactTask',
-  'RemoveContactTask',
+  'AdmittanceTask',
+  'ComplianceTask',
+  'CoMTask',
+  'CoPTask',
+  'EndEffectorTask',
   'GazeTask',
+  'OrientationTask',
   'PBVSTask',
+  'PositionTask',
   'PostureTask',
+  'RelativeEndEffectorTask',
+  'RemoveContactTask',
   'SurfaceTransformTask',
   'VectorOrientationTask',
   ]
