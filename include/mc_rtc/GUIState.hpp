@@ -75,7 +75,7 @@ template<typename ... Args>
 Form::Form(const std::vector<std::string> & labels, Args ... elements_)
 {
   assert(sizeof...(elements_) == labels.size());
-  auto elements = std::make_tuple(elements_...);
+  std::tuple<Args...> elements = std::make_tuple(elements_...);
   addData = [labels, elements](mc_rtc::Configuration out)
   {
     auto els = out.add("elements");
