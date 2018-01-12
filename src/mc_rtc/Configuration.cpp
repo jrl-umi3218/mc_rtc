@@ -63,6 +63,20 @@ struct Configuration::Json::Impl
     rapidjson::Value * v = rapidjson::Pointer(fkey.c_str()).Get(*doc_p);
     return v != nullptr;
   }
+  bool empty() const
+  {
+    assert(is());
+    auto value_ = value();
+    if(value_->IsArray())
+    {
+      return value_->Empty();
+    }
+    else if(value_->IsObject())
+    {
+      return value_->ObjectEmpty();
+    }
+    return true;
+  }
   bool isArray() const
   {
     assert(is());
@@ -169,6 +183,11 @@ bool Configuration::Json::isObject() const
 std::vector<std::string> Configuration::Json::keys() const
 {
   return impl->keys();
+}
+
+bool Configuration::empty() const
+{
+  return v.impl->empty();
 }
 
 size_t Configuration::Json::size() const

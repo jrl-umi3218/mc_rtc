@@ -444,6 +444,9 @@ namespace mc_rtc
      */
     Configuration operator()(const std::string & key) const;
 
+    /*! \brief Returns true if the underlying array or underlying object is empty */
+    bool empty() const;
+
     /*! \brief If the stored value is an array, returns its size, otherwise
      * returns 0
      *
