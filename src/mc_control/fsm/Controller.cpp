@@ -256,10 +256,10 @@ bool Controller::run()
   {
     if(state_->run(*this))
     {
-      LOG_SUCCESS("Completed " << curr_state_ << " (" << state_->output() << ")")
       resetPostures();
       state_output_ =  state_->output();
       state_->teardown(*this);
+      LOG_SUCCESS("Completed " << curr_state_ << " (" << state_->output() << ")")
       if(managed_)
       {
         state_ = nullptr;
@@ -352,7 +352,7 @@ void Controller::nextState()
 
 bool Controller::play_next_stance()
 {
-  if(!managed_)
+  if(!managed_ && !state_)
   {
     transition_triggered_ = true;
     return true;
