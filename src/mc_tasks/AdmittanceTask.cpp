@@ -156,6 +156,10 @@ std::function<bool(const mc_tasks::MetaTask&, std::string&)>
         dof(i) = 0.;
         target(i) = 0.;
       }
+      else if(target(i) < 0)
+      {
+        dof(i) = -1.;
+      }
     }
     return [dof,target](const mc_tasks::MetaTask & t, std::string & out)
     {
@@ -163,7 +167,10 @@ std::function<bool(const mc_tasks::MetaTask&, std::string&)>
       Eigen::Vector6d w = self.measuredWrench().vector();
       for(size_t i = 0; i < 6; ++i)
       {
-        if(dof(i)*fabs(w(i)) < target(i)) { return false; }
+        if(dof(i)*fabs(w(i)) < target(i))
+        {
+          return false;
+        }
       }
       out += "wrench";
       return true;
