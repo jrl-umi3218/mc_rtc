@@ -15,7 +15,7 @@
 #include <mc_solver/DynamicsConstraint.h>
 #include <mc_solver/KinematicsConstraint.h>
 
-#include <Tasks/QPTasks.h>
+#include <mc_tasks/PostureTask.h>
 
 namespace mc_rbdyn
 {
@@ -252,7 +252,7 @@ public:
   /** Self collisions constraint for the main robot */
   mc_solver::CollisionsConstraint selfCollisionConstraint;
   /** Posture task for the main robot */
-  std::shared_ptr<tasks::qp::PostureTask> postureTask;
+  std::shared_ptr<mc_tasks::PostureTask> postureTask;
 };
 
 }

@@ -6,8 +6,6 @@
 
 #include <mc_rtc/logging.h>
 
-#include <mc_tasks/PostureTask.h>
-
 namespace mc_control
 {
 

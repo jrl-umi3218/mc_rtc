@@ -132,6 +132,12 @@ void PostureTask::jointGains(const mc_solver::QPSolver & solver,
   pt_.jointsGains(solver.robots().mbs(), jgs);
 }
 
+void PostureTask::jointStiffness(const mc_solver::QPSolver & solver,
+                                 const std::vector<tasks::qp::JointStiffness> & jss)
+{
+  pt_.jointsStiffness(solver.robots().mbs(), jss);
+}
+
 void PostureTask::target(const std::map<std::string, std::vector<double>> & joints)
 {
   auto q = posture();
@@ -150,6 +156,27 @@ void PostureTask::target(const std::map<std::string, std::vector<double>> & join
     }
   }
   posture(q);
+}
+
+void PostureTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
+{
+  MetaTask::addToGUI(gui);
+  gui.addElement(
+    mc_rtc::gui::Element<double>{
+      {"Tasks", name_, "Gains", "stiffness"},
+      [this]() { return this->stiffness(); },
+      [this](const double & s) { this->stiffness(s); }
+    },
+    mc_rtc::gui::Input<double>({}, 0, std::numeric_limits<double>::infinity())
+  );
+  gui.addElement(
+    mc_rtc::gui::Element<double>{
+      {"Tasks", name_, "Gains", "weight"},
+      [this]() { return this->weight(); },
+      [this](const double & w) { this->weight(w); }
+    },
+    mc_rtc::gui::Input<double>({}, 0 , std::numeric_limits<double>::infinity())
+  );
 }
 
 }

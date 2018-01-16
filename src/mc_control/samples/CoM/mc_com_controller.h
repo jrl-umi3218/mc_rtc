@@ -3,6 +3,7 @@
 #include <mc_control/mc_controller.h>
 
 #include <mc_tasks/CoMTask.h>
+#include <mc_tasks/PostureTask.h>
 
 #include <mc_control/api.h>
 

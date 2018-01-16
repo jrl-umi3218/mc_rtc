@@ -45,6 +45,10 @@ public:
   void jointGains(const mc_solver::QPSolver & solver,
                   const std::vector<tasks::qp::JointGains> & jgs);
 
+  /** Set joint stiffness for the posture task */
+  void jointStiffness(const mc_solver::QPSolver & solver,
+                      const std::vector<tasks::qp::JointStiffness> & jss);
+
   /** Set specific joint targets
    *
    * \param joints Map of joint's name to joint's configuration
@@ -72,6 +76,8 @@ protected:
   void removeFromSolver(mc_solver::QPSolver & solver) override;
 
   void update() override;
+
+  void addToGUI(mc_rtc::gui::StateBuilder &) override;
 private:
   /** True if added to solver */
   bool inSolver_ = false;
