@@ -20,6 +20,11 @@ table UnsignedInt
   i:uint;
 }
 
+table UnsignedLong
+{
+  i:ulong;
+}
+
 table String
 {
   s:string;
@@ -64,7 +69,7 @@ table MotionVecd
   linear:Vector3d;
 }
 
-union LogData { Bool, Double, DoubleVector, UnsignedInt, String, Vector3d, Quaterniond, PTransformd, ForceVecd, MotionVecd, Vector2d }
+union LogData { Bool, Double, DoubleVector, UnsignedInt, UnsignedLong, String, Vector3d, Quaterniond, PTransformd, ForceVecd, MotionVecd, Vector2d }
 
 table Log
 {
