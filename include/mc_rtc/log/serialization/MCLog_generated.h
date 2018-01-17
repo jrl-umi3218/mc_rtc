@@ -60,6 +60,7 @@ inline const char **EnumNamesLogData() {
     "Double",
     "DoubleVector",
     "UnsignedInt",
+    "UnsignedLong",
     "String",
     "Vector3d",
     "Quaterniond",
@@ -96,6 +97,10 @@ template<> struct LogDataTraits<DoubleVector> {
 
 template<> struct LogDataTraits<UnsignedInt> {
   static const LogData enum_value = LogData_UnsignedInt;
+};
+
+template<> struct LogDataTraits<UnsignedLong> {
+  static const LogData enum_value = LogData_UnsignedLong;
 };
 
 template<> struct LogDataTraits<String> {
@@ -823,6 +828,10 @@ inline bool VerifyLogData(flatbuffers::Verifier &verifier, const void *obj, LogD
     }
     case LogData_UnsignedInt: {
       auto ptr = reinterpret_cast<const UnsignedInt *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    case LogData_UnsignedLong: {
+      auto ptr = reinterpret_cast<const UnsignedLong *>(obj);
       return verifier.VerifyTable(ptr);
     }
     case LogData_String: {
