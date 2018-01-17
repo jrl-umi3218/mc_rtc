@@ -76,6 +76,11 @@ void CoPTask::addToLogger(mc_rtc::Logger & logger)
                      {
                      return admittance();
                      });
+  logger.addLogEntry(name_ + "_internal_target_pose",
+                     [this]()
+                     {
+                     return SurfaceTransformTask::target();
+                     });
   logger.addLogEntry(name_ + "_measured_cop",
                      [this]() -> Eigen::Vector2d
                      {
@@ -112,6 +117,7 @@ void CoPTask::addToLogger(mc_rtc::Logger & logger)
 void CoPTask::removeFromLogger(mc_rtc::Logger & logger)
 {
   logger.removeLogEntry(name_ + "_admittance");
+  logger.removeLogEntry(name_ + "_internal_target_pose");
   logger.removeLogEntry(name_ + "_measured_cop");
   logger.removeLogEntry(name_ + "_measured_force");
   logger.removeLogEntry(name_ + "_surface_pose");

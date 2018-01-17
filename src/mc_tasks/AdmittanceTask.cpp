@@ -80,6 +80,11 @@ void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
                      {
                      return admittance_;
                      });
+  logger.addLogEntry(name_ + "_internal_target_pose",
+                     [this]()
+                     {
+                     return SurfaceTransformTask::target();
+                     });
   logger.addLogEntry(name_ + "_measured_wrench",
                      [this]() -> sva::ForceVecd
                      {
@@ -106,6 +111,7 @@ void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
 void AdmittanceTask::removeFromLogger(mc_rtc::Logger & logger)
 {
   logger.removeLogEntry(name_ + "_admittance");
+  logger.removeLogEntry(name_ + "_internal_target_pose");
   logger.removeLogEntry(name_ + "_measured_wrench");
   logger.removeLogEntry(name_ + "_surface_pose");
   logger.removeLogEntry(name_ + "_target_pose");
