@@ -134,7 +134,7 @@ void AdmittanceTask::removeFromLogger(mc_rtc::Logger & logger)
   SurfaceTransformTask::removeFromLogger(logger);
   logger.removeLogEntry(name_ + "_admittance");
   logger.removeLogEntry(name_ + "_measured_wrench");
-  logger.removeLogEntry(name_ + "_ref_vel");
+  logger.removeLogEntry(name_ + "_ref_vel_body");
   logger.removeLogEntry(name_ + "_target_wrench");
   logger.removeLogEntry(name_ + "_world_measured_wrench");
 }
