@@ -85,6 +85,12 @@ void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
                      {
                      return measuredWrench();
                      });
+  logger.addLogEntry(name_ + "_surface_pose",
+                     [this]()
+                     {
+                     const auto & robot = robots.robot();
+                     return robot.surface(surfaceName).X_0_s(robot);
+                     });
   logger.addLogEntry(name_ + "_target_pose",
                      [this]() -> const sva::PTransformd &
                      {
@@ -101,6 +107,7 @@ void AdmittanceTask::removeFromLogger(mc_rtc::Logger & logger)
 {
   logger.removeLogEntry(name_ + "_admittance");
   logger.removeLogEntry(name_ + "_measured_wrench");
+  logger.removeLogEntry(name_ + "_surface_pose");
   logger.removeLogEntry(name_ + "_target_pose");
   logger.removeLogEntry(name_ + "_target_wrench");
 }

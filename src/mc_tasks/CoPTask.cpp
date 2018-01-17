@@ -86,6 +86,12 @@ void CoPTask::addToLogger(mc_rtc::Logger & logger)
                      {
                      return measuredWrench().force();
                      });
+  logger.addLogEntry(name_ + "_surface_pose",
+                     [this]()
+                     {
+                     const auto & robot = robots.robot();
+                     return robot.surface(surfaceName).X_0_s(robot);
+                     });
   logger.addLogEntry(name_ + "_target_cop",
                      [this]() -> const Eigen::Vector2d &
                      {
@@ -108,6 +114,7 @@ void CoPTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry(name_ + "_admittance");
   logger.removeLogEntry(name_ + "_measured_cop");
   logger.removeLogEntry(name_ + "_measured_force");
+  logger.removeLogEntry(name_ + "_surface_pose");
   logger.removeLogEntry(name_ + "_target_cop");
   logger.removeLogEntry(name_ + "_target_force");
   logger.removeLogEntry(name_ + "_target_pose");
