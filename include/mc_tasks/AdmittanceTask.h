@@ -65,6 +65,16 @@ public:
    */
   virtual void reset();
 
+  /*! \brief Reset pose offset in all position-controlled axes
+   *
+   * Position offsets accumulate over force-controlled axes. Therefore, if at
+   * some point the admittance is set back to zero on a force-controlled axis,
+   * the end-effector will stay where it is. Call this function to change this
+   * behavior and make the effector revert to targetPose().
+   *
+   */
+  void resetPoseOffset();
+
   /*! \brief Get the admittance coefficients of the task
    *
    */
