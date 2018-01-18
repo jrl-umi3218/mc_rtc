@@ -80,6 +80,16 @@ public:
    */
   Eigen::Vector2d measuredCoP() const;
 
+  /** Add support for the following entries
+   *
+   * - copError Threshold for (targetCoP - measureCoP).norm()
+   * - force Force threshold, similar to wrench for AdmittanceTask
+   *
+   */
+  std::function<bool(const mc_tasks::MetaTask&, std::string&)>
+    buildCompletionCriteria(double dt,
+                            const mc_rtc::Configuration & config) const override;
+
   /*! \brief Set the target force in the surface frame
    *
    * \param targetForce 3D vector of target force in the surface frame
@@ -126,15 +136,14 @@ public:
    */
   void worldTargetCoP(const Eigen::Vector3d & worldCoP);
 
-  /** Add support for the following entries
-   *
-   * - copError Threshold for (targetCoP - measureCoP).norm()
-   * - force Force threshold, similar to wrench for AdmittanceTask
+  /*! \brief Get the target wrench in the surface frame
    *
    */
-  std::function<bool(const mc_tasks::MetaTask&, std::string&)>
-    buildCompletionCriteria(double dt,
-                            const mc_rtc::Configuration & config) const override;
+  const sva::ForceVecd & targetWrench() const
+  {
+    return AdmittanceTask::targetWrench();
+  }
+
 private:
   Eigen::Vector2d targetCoP_ = Eigen::Vector2d::Zero();
   Eigen::Vector3d targetForce_ = Eigen::Vector3d::Zero();
