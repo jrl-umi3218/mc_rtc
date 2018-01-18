@@ -236,6 +236,7 @@ private:
    *
    */
   using SurfaceTransformTask::target;
+  void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
 };
 
 }
