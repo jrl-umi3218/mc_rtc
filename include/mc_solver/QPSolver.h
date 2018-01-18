@@ -244,6 +244,8 @@ private:
   std::shared_ptr<mc_rbdyn::Robots> robots_p;
   double timeStep;
 
+  /** Holds mc_rbdyn::Contact in the solver */
+  std::vector<mc_rbdyn::Contact> contacts_;
   /** Holds unilateral contacts in the solver */
   std::vector<tasks::qp::UnilateralContact> uniContacts;
   /** Holds bilateral contacts in the solver */

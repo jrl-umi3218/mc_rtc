@@ -161,6 +161,7 @@ Eigen::VectorXd QPSolver::lambdaVec(int cIndex) const
 
 void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
 {
+  contacts_ = contacts;
   uniContacts.clear();
   biContacts.clear();
   qpRes.contacts.clear();
