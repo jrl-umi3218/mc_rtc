@@ -166,6 +166,18 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
   biContacts.clear();
   qpRes.contacts.clear();
 
+  if(gui_)
+  {
+    gui_->removeCategory({"Contacts", "Remove"});
+  }
+  auto allBut = [](const std::vector<mc_rbdyn::Contact> &cs, const mc_rbdyn::Contact & c)
+  {
+    std::vector<mc_rbdyn::Contact> ret = cs;
+    auto it = std::find(ret.begin(), ret.end(), c);
+    ret.erase(it);
+    return ret;
+  };
+
   for(const mc_rbdyn::Contact & c : contacts)
   {
     QPContactPtr qcptr = c.taskContact(*robots_p);
@@ -180,6 +192,19 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
       biContacts.push_back(tasks::qp::BilateralContact(*qcptr.bilateralContact));
       delete qcptr.bilateralContact;
       qcptr.bilateralContact = 0;
+    }
+    if(gui_)
+    {
+      std::string bName = robot(c.r1Index()).name() + "::" + c.r1Surface()->name() + " & "
+                          + robot(c.r2Index()).name() + "::" + c.r2Surface()->name();
+      auto nContacts = allBut(contacts, c);
+      gui_->addElement(
+        mc_rtc::gui::Element<void>{
+          {"Contacts", "Remove", bName},
+          [nContacts,this]() { setContacts(nContacts); }
+        },
+        mc_rtc::gui::Button{}
+      );
     }
   }
 
@@ -368,18 +393,33 @@ void QPSolver::gui(std::shared_ptr<mc_rtc::gui::StateBuilder> gui)
     }
     gui_->addElement(
       mc_rtc::gui::Element<mc_rtc::Configuration>{
-        {"Contacts", "Add contact"},
+        {"Contacts", "Add", "Form"},
         std::function<void(const mc_rtc::Configuration&)>{
           [this](const mc_rtc::Configuration & data)
           {
-            std::cout << this << " will add contact " << data("R0") << ", " << data("R1") << std::endl;
+            try
+            {
+              unsigned int r0Index = data("R0");
+              unsigned int r1Index = data("R1");
+              std::string r0Surface = data("R0 surface");
+              std::string r1Surface = data("R1 surface");
+              contacts_.push_back({robots(), r0Index, r1Index, r0Surface, r1Surface});
+              setContacts(contacts_);
+            }
+            catch(const std::exception & exc)
+            {
+              LOG_ERROR("Failed to add contact based on the provided input: " << exc.what())
+              LOG_WARNING(data.dump(true))
+            }
           }
         }
       },
       mc_rtc::gui::Form{
-        {"R0", "R1"},
+        {"R0", "R1", "R0 surface", "R1 surface"},
         mc_rtc::gui::Input<unsigned int>({"R0"}, 0, robots().size()),
-        mc_rtc::gui::Input<unsigned int>({"R1"}, 0, robots().size())
+        mc_rtc::gui::Input<unsigned int>({"R1"}, 0, robots().size()),
+        mc_rtc::gui::Input<std::string>({"R0 surface"}),
+        mc_rtc::gui::Input<std::string>({"R1 surface"})
       }
     );
   }
