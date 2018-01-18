@@ -53,6 +53,15 @@ void Schema::addData(mc_rtc::Configuration out) const
   out.add("schema_dir", schema_dir_);
 }
 
+void StateBuilder::addButton(const std::vector<std::string> & category,
+                             std::function<void()> cb)
+{
+  addElement(
+    Element<void>{category, cb},
+    Button{}
+  );
+}
+
 mc_rtc::Configuration State::getStateCategory(const std::vector<std::string> & category)
 {
   return getCategory(state, category);

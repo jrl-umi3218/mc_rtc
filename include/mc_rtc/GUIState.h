@@ -309,6 +309,18 @@ namespace mc_rtc
     void addElement(const T & element,
                     const InteractionT & interaction = Label{});
 
+    /** Shortcut to add a Button element */
+    void addButton(const std::vector<std::string> & category,
+                   std::function<void()> cb);
+
+    /** Shortcut to add a Label element */
+    template<typename T>
+    void addLabel(const std::vector<std::string> & category,
+                  std::function<T()> cb, bool is_vector = false)
+    {
+      addElement(Element<T>{ category, cb}, Label{is_vector});
+    }
+
     /** Remove all elements */
     void reset();
 
