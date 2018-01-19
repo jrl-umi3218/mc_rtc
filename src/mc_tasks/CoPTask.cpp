@@ -28,12 +28,13 @@ void CoPTask::update()
   if (pressure < MIN_PRESSURE && (admittance_.couple()(0) > 1e-6 || admittance_.couple()(1) > 1e-6))
   {
     LOG_WARNING("Pressure on " << surface_.name() << " < " << MIN_PRESSURE << " [N], "
-        << "disabling CoP tracking");
-    admittance_.couple()(0) = 0.;
-    admittance_.couple()(1) = 0.;
+        << "skipping CoP target update");
   }
-  const Eigen::Vector3d targetTorque(+targetCoP_(1) * pressure, -targetCoP_(0) * pressure, 0.);
-  this->targetWrench(sva::ForceVecd(targetTorque, targetForce_));
+  else
+  {
+    const Eigen::Vector3d targetTorque(+targetCoP_(1) * pressure, -targetCoP_(0) * pressure, 0.);
+    this->targetWrench(sva::ForceVecd(targetTorque, targetForce_));
+  }
   AdmittanceTask::update();
 }
 
