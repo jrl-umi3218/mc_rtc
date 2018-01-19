@@ -281,6 +281,24 @@ bool MCGlobalController::run()
   if(next_controller_)
   {
     LOG_INFO("Switching controllers")
+    if(controller_)
+    {
+      for(auto & bs : next_controller_->robot().bodySensors())
+      {
+        const auto & current = controller_->robot().bodySensor(bs.name());
+        bs.position(current.position());
+        bs.orientation(current.orientation());
+        bs.linearVelocity(current.linearVelocity());
+        bs.angularVelocity(current.angularVelocity());
+        bs.acceleration(current.acceleration());
+      }
+      next_controller_->robot().encoderValues(controller_->robot().encoderValues());
+      next_controller_->robot().jointTorques(controller_->robot().jointTorques());
+      for(auto & fs : next_controller_->robot().forceSensors())
+      {
+        fs.wrench(controller_->robot().forceSensor(fs.name()).wrench());
+      }
+    }
     if(!running)
     {
       controller_ = next_controller_;
