@@ -60,7 +60,6 @@ inline const char **EnumNamesLogData() {
     "Double",
     "DoubleVector",
     "UnsignedInt",
-    "UnsignedLong",
     "String",
     "Vector3d",
     "Quaterniond",
@@ -97,10 +96,6 @@ template<> struct LogDataTraits<DoubleVector> {
 
 template<> struct LogDataTraits<UnsignedInt> {
   static const LogData enum_value = LogData_UnsignedInt;
-};
-
-template<> struct LogDataTraits<UnsignedLong> {
-  static const LogData enum_value = LogData_UnsignedLong;
 };
 
 template<> struct LogDataTraits<String> {
@@ -158,13 +153,13 @@ struct BoolBuilder {
   void add_b(bool b) {
     fbb_.AddElement<uint8_t>(Bool::VT_B, static_cast<uint8_t>(b), 0);
   }
-  BoolBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+  explicit BoolBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
   BoolBuilder &operator=(const BoolBuilder &);
   flatbuffers::Offset<Bool> Finish() {
-    const auto end = fbb_.EndTable(start_, 1);
+    const auto end = fbb_.EndTable(start_);
     auto o = flatbuffers::Offset<Bool>(end);
     return o;
   }
@@ -198,13 +193,13 @@ struct DoubleBuilder {
   void add_d(double d) {
     fbb_.AddElement<double>(Double::VT_D, d, 0.0);
   }
-  DoubleBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+  explicit DoubleBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
   DoubleBuilder &operator=(const DoubleBuilder &);
   flatbuffers::Offset<Double> Finish() {
-    const auto end = fbb_.EndTable(start_, 1);
+    const auto end = fbb_.EndTable(start_);
     auto o = flatbuffers::Offset<Double>(end);
     return o;
   }
@@ -227,7 +222,7 @@ struct DoubleVector FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, VT_V) &&
+           VerifyOffset(verifier, VT_V) &&
            verifier.Verify(v()) &&
            verifier.EndTable();
   }
@@ -239,13 +234,13 @@ struct DoubleVectorBuilder {
   void add_v(flatbuffers::Offset<flatbuffers::Vector<double>> v) {
     fbb_.AddOffset(DoubleVector::VT_V, v);
   }
-  DoubleVectorBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+  explicit DoubleVectorBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
   DoubleVectorBuilder &operator=(const DoubleVectorBuilder &);
   flatbuffers::Offset<DoubleVector> Finish() {
-    const auto end = fbb_.EndTable(start_, 1);
+    const auto end = fbb_.EndTable(start_);
     auto o = flatbuffers::Offset<DoubleVector>(end);
     return o;
   }
@@ -287,13 +282,13 @@ struct UnsignedIntBuilder {
   void add_i(uint32_t i) {
     fbb_.AddElement<uint32_t>(UnsignedInt::VT_I, i, 0);
   }
-  UnsignedIntBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+  explicit UnsignedIntBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
   UnsignedIntBuilder &operator=(const UnsignedIntBuilder &);
   flatbuffers::Offset<UnsignedInt> Finish() {
-    const auto end = fbb_.EndTable(start_, 1);
+    const auto end = fbb_.EndTable(start_);
     auto o = flatbuffers::Offset<UnsignedInt>(end);
     return o;
   }
@@ -356,7 +351,7 @@ struct String FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, VT_S) &&
+           VerifyOffset(verifier, VT_S) &&
            verifier.Verify(s()) &&
            verifier.EndTable();
   }
@@ -368,13 +363,13 @@ struct StringBuilder {
   void add_s(flatbuffers::Offset<flatbuffers::String> s) {
     fbb_.AddOffset(String::VT_S, s);
   }
-  StringBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+  explicit StringBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
   StringBuilder &operator=(const StringBuilder &);
   flatbuffers::Offset<String> Finish() {
-    const auto end = fbb_.EndTable(start_, 1);
+    const auto end = fbb_.EndTable(start_);
     auto o = flatbuffers::Offset<String>(end);
     return o;
   }
@@ -424,13 +419,13 @@ struct Vector2dBuilder {
   void add_y(double y) {
     fbb_.AddElement<double>(Vector2d::VT_Y, y, 0.0);
   }
-  Vector2dBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+  explicit Vector2dBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
   Vector2dBuilder &operator=(const Vector2dBuilder &);
   flatbuffers::Offset<Vector2d> Finish() {
-    const auto end = fbb_.EndTable(start_, 2);
+    const auto end = fbb_.EndTable(start_);
     auto o = flatbuffers::Offset<Vector2d>(end);
     return o;
   }
@@ -482,13 +477,13 @@ struct Vector3dBuilder {
   void add_z(double z) {
     fbb_.AddElement<double>(Vector3d::VT_Z, z, 0.0);
   }
-  Vector3dBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+  explicit Vector3dBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
   Vector3dBuilder &operator=(const Vector3dBuilder &);
   flatbuffers::Offset<Vector3d> Finish() {
-    const auto end = fbb_.EndTable(start_, 3);
+    const auto end = fbb_.EndTable(start_);
     auto o = flatbuffers::Offset<Vector3d>(end);
     return o;
   }
@@ -550,13 +545,13 @@ struct QuaterniondBuilder {
   void add_z(double z) {
     fbb_.AddElement<double>(Quaterniond::VT_Z, z, 0.0);
   }
-  QuaterniondBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+  explicit QuaterniondBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
   QuaterniondBuilder &operator=(const QuaterniondBuilder &);
   flatbuffers::Offset<Quaterniond> Finish() {
-    const auto end = fbb_.EndTable(start_, 4);
+    const auto end = fbb_.EndTable(start_);
     auto o = flatbuffers::Offset<Quaterniond>(end);
     return o;
   }
@@ -589,9 +584,9 @@ struct PTransformd FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, VT_ORI) &&
+           VerifyOffset(verifier, VT_ORI) &&
            verifier.VerifyTable(ori()) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, VT_POS) &&
+           VerifyOffset(verifier, VT_POS) &&
            verifier.VerifyTable(pos()) &&
            verifier.EndTable();
   }
@@ -606,13 +601,13 @@ struct PTransformdBuilder {
   void add_pos(flatbuffers::Offset<Vector3d> pos) {
     fbb_.AddOffset(PTransformd::VT_POS, pos);
   }
-  PTransformdBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+  explicit PTransformdBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
   PTransformdBuilder &operator=(const PTransformdBuilder &);
   flatbuffers::Offset<PTransformd> Finish() {
-    const auto end = fbb_.EndTable(start_, 2);
+    const auto end = fbb_.EndTable(start_);
     auto o = flatbuffers::Offset<PTransformd>(end);
     return o;
   }
@@ -641,9 +636,9 @@ struct ForceVecd FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, VT_COUPLE) &&
+           VerifyOffset(verifier, VT_COUPLE) &&
            verifier.VerifyTable(couple()) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, VT_FORCE) &&
+           VerifyOffset(verifier, VT_FORCE) &&
            verifier.VerifyTable(force()) &&
            verifier.EndTable();
   }
@@ -658,13 +653,13 @@ struct ForceVecdBuilder {
   void add_force(flatbuffers::Offset<Vector3d> force) {
     fbb_.AddOffset(ForceVecd::VT_FORCE, force);
   }
-  ForceVecdBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+  explicit ForceVecdBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
   ForceVecdBuilder &operator=(const ForceVecdBuilder &);
   flatbuffers::Offset<ForceVecd> Finish() {
-    const auto end = fbb_.EndTable(start_, 2);
+    const auto end = fbb_.EndTable(start_);
     auto o = flatbuffers::Offset<ForceVecd>(end);
     return o;
   }
@@ -693,9 +688,9 @@ struct MotionVecd FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, VT_ANGULAR) &&
+           VerifyOffset(verifier, VT_ANGULAR) &&
            verifier.VerifyTable(angular()) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, VT_LINEAR) &&
+           VerifyOffset(verifier, VT_LINEAR) &&
            verifier.VerifyTable(linear()) &&
            verifier.EndTable();
   }
@@ -710,13 +705,13 @@ struct MotionVecdBuilder {
   void add_linear(flatbuffers::Offset<Vector3d> linear) {
     fbb_.AddOffset(MotionVecd::VT_LINEAR, linear);
   }
-  MotionVecdBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+  explicit MotionVecdBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
   MotionVecdBuilder &operator=(const MotionVecdBuilder &);
   flatbuffers::Offset<MotionVecd> Finish() {
-    const auto end = fbb_.EndTable(start_, 2);
+    const auto end = fbb_.EndTable(start_);
     auto o = flatbuffers::Offset<MotionVecd>(end);
     return o;
   }
@@ -749,12 +744,12 @@ struct Log FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, VT_KEYS) &&
+           VerifyOffset(verifier, VT_KEYS) &&
            verifier.Verify(keys()) &&
            verifier.VerifyVectorOfStrings(keys()) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, VT_VALUES_TYPE) &&
+           VerifyOffset(verifier, VT_VALUES_TYPE) &&
            verifier.Verify(values_type()) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, VT_VALUES) &&
+           VerifyOffset(verifier, VT_VALUES) &&
            verifier.Verify(values()) &&
            VerifyLogDataVector(verifier, values(), values_type()) &&
            verifier.EndTable();
@@ -773,13 +768,13 @@ struct LogBuilder {
   void add_values(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<void>>> values) {
     fbb_.AddOffset(Log::VT_VALUES, values);
   }
-  LogBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+  explicit LogBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
   LogBuilder &operator=(const LogBuilder &);
   flatbuffers::Offset<Log> Finish() {
-    const auto end = fbb_.EndTable(start_, 3);
+    const auto end = fbb_.EndTable(start_);
     auto o = flatbuffers::Offset<Log>(end);
     return o;
   }
@@ -828,10 +823,6 @@ inline bool VerifyLogData(flatbuffers::Verifier &verifier, const void *obj, LogD
     }
     case LogData_UnsignedInt: {
       auto ptr = reinterpret_cast<const UnsignedInt *>(obj);
-      return verifier.VerifyTable(ptr);
-    }
-    case LogData_UnsignedLong: {
-      auto ptr = reinterpret_cast<const UnsignedLong *>(obj);
       return verifier.VerifyTable(ptr);
     }
     case LogData_String: {
