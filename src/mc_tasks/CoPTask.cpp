@@ -72,6 +72,14 @@ sva::PTransformd CoPTask::worldMeasuredCoP() const
   return X_surface_cop * X_0_surface;
 }
 
+sva::PTransformd CoPTask::worldTargetCoP() const
+{
+  const Eigen::Vector2d & cop = targetCoP_;
+  sva::PTransformd X_surface_cop {Eigen::Vector3d{cop.x(), cop.y(), 0}};
+  sva::PTransformd X_0_surface = robot_.surface(surfaceName).X_0_s(robot_);
+  return X_surface_cop * X_0_surface;
+}
+
 void CoPTask::targetCoP(const Eigen::Vector2d & targetCoP)
 {
   targetCoP_ = targetCoP;
@@ -125,6 +133,16 @@ void CoPTask::addToLogger(mc_rtc::Logger & logger)
                      [this]() -> const Eigen::Vector2d &
                      {
                      return targetCoP_;
+                     });
+  logger.addLogEntry(name_ + "_world_measured_cop",
+                     [this]() -> Eigen::Vector3d
+                     {
+                     return worldMeasuredCoP().translation();
+                     });
+  logger.addLogEntry(name_ + "_world_target_cop",
+                     [this]() -> Eigen::Vector3d
+                     {
+                     return worldTargetCoP().translation();
                      });
   logger.addLogEntry(name_ + "_world_measured_cop",
                      [this]() -> Eigen::Vector3d
