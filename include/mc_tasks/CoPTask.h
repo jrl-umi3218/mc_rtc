@@ -90,8 +90,15 @@ public:
     buildCompletionCriteria(double dt,
                             const mc_rtc::Configuration & config) const override;
 
-  /*! \brief Return measuredCoP in world frame */
+  /*! \brief Return measured CoP in world frame 
+   *
+   */
   sva::PTransformd worldMeasuredCoP() const;
+
+  /*! \brief Return target CoP in world frame 
+   *
+   */
+  sva::PTransformd worldTargetCoP() const;
 
   /*! \brief Set the target force in the surface frame
    *

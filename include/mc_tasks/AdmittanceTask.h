@@ -212,6 +212,7 @@ protected:
    */
   std::function<bool(const mc_tasks::MetaTask & task, std::string&)>
     buildCompletionCriteria(double dt, const mc_rtc::Configuration & config) const override;
+
 private:
   sva::PTransformd X_0_target_;
   Eigen::Vector3d trans_target_delta_ = Eigen::Vector3d::Zero();
