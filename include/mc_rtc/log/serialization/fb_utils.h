@@ -47,7 +47,7 @@ IMPL_LDH(bool, LogData_Bool, CreateBool, b, b);
 IMPL_LDH(double, LogData_Double, CreateDouble, d, d);
 IMPL_LDH(std::vector<double>, LogData_DoubleVector, CreateDoubleVectorDirect, v, &v);
 IMPL_LDH(unsigned int, LogData_UnsignedInt, CreateUnsignedInt, i, i);
-IMPL_LDH(unsigned long, LogData_UnsignedLong, CreateUnsignedLong, i, i);
+IMPL_LDH(uint64_t, LogData_UInt64, CreateUInt64, i, i);
 IMPL_LDH(std::string, LogData_String, CreateStringDirect, s, s.c_str());
 IMPL_LDH(Eigen::Vector2d, LogData_Vector2d, CreateVector2d, v, v.x(), v.y());
 IMPL_LDH(Eigen::Vector3d, LogData_Vector3d, CreateVector3d, v, v.x(), v.y(), v.z());
@@ -278,7 +278,7 @@ struct CSVWriterHelper<mc_rtc::log::LogData_UnsignedInt>
 };
 
 template<>
-struct CSVWriterHelper<mc_rtc::log::LogData_UnsignedLong>
+struct CSVWriterHelper<mc_rtc::log::LogData_UInt64>
 {
   static size_t key_size(const void *) { return 1; }
   static void write_header(const std::string & key, size_t,
@@ -288,7 +288,7 @@ struct CSVWriterHelper<mc_rtc::log::LogData_UnsignedLong>
   }
   static void write_data(const void * data, std::ostream & os)
   {
-    auto u = static_cast<const mc_rtc::log::UnsignedLong*>(data);
+    auto u = static_cast<const mc_rtc::log::UInt64*>(data);
     os << u->i();
   }
 };

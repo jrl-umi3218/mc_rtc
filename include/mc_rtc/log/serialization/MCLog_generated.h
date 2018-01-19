@@ -17,7 +17,7 @@ struct DoubleVector;
 
 struct UnsignedInt;
 
-struct UnsignedLong;
+struct UInt64;
 
 struct String;
 
@@ -48,9 +48,9 @@ enum LogData {
   LogData_ForceVecd = 9,
   LogData_MotionVecd = 10,
   LogData_Vector2d = 11,
-  LogData_UnsignedLong = 12,
+  LogData_UInt64 = 12,
   LogData_MIN = LogData_NONE,
-  LogData_MAX = LogData_UnsignedLong
+  LogData_MAX = LogData_UInt64
 };
 
 inline LogData (&EnumValuesLogData())[13] {
@@ -67,7 +67,7 @@ inline LogData (&EnumValuesLogData())[13] {
     LogData_ForceVecd,
     LogData_MotionVecd,
     LogData_Vector2d,
-    LogData_UnsignedLong
+    LogData_UInt64
   };
   return values;
 }
@@ -86,7 +86,7 @@ inline const char **EnumNamesLogData() {
     "ForceVecd",
     "MotionVecd",
     "Vector2d",
-    "UnsignedLong",
+    "UInt64",
     nullptr
   };
   return names;
@@ -145,8 +145,8 @@ template<> struct LogDataTraits<Vector2d> {
   static const LogData enum_value = LogData_Vector2d;
 };
 
-template<> struct LogDataTraits<UnsignedLong> {
-  static const LogData enum_value = LogData_UnsignedLong;
+template<> struct LogDataTraits<UInt64> {
+  static const LogData enum_value = LogData_UInt64;
 };
 
 bool VerifyLogData(flatbuffers::Verifier &verifier, const void *obj, LogData type);
@@ -321,7 +321,7 @@ inline flatbuffers::Offset<UnsignedInt> CreateUnsignedInt(
   return builder_.Finish();
 }
 
-struct UnsignedLong FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+struct UInt64 FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_I = 4
   };
@@ -335,28 +335,28 @@ struct UnsignedLong FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
 };
 
-struct UnsignedLongBuilder {
+struct UInt64Builder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
   void add_i(uint64_t i) {
-    fbb_.AddElement<uint64_t>(UnsignedLong::VT_I, i, 0);
+    fbb_.AddElement<uint64_t>(UInt64::VT_I, i, 0);
   }
-  explicit UnsignedLongBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+  explicit UInt64Builder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
-  UnsignedLongBuilder &operator=(const UnsignedLongBuilder &);
-  flatbuffers::Offset<UnsignedLong> Finish() {
+  UInt64Builder &operator=(const UInt64Builder &);
+  flatbuffers::Offset<UInt64> Finish() {
     const auto end = fbb_.EndTable(start_);
-    auto o = flatbuffers::Offset<UnsignedLong>(end);
+    auto o = flatbuffers::Offset<UInt64>(end);
     return o;
   }
 };
 
-inline flatbuffers::Offset<UnsignedLong> CreateUnsignedLong(
+inline flatbuffers::Offset<UInt64> CreateUInt64(
     flatbuffers::FlatBufferBuilder &_fbb,
     uint64_t i = 0) {
-  UnsignedLongBuilder builder_(_fbb);
+  UInt64Builder builder_(_fbb);
   builder_.add_i(i);
   return builder_.Finish();
 }
@@ -872,8 +872,8 @@ inline bool VerifyLogData(flatbuffers::Verifier &verifier, const void *obj, LogD
       auto ptr = reinterpret_cast<const Vector2d *>(obj);
       return verifier.VerifyTable(ptr);
     }
-    case LogData_UnsignedLong: {
-      auto ptr = reinterpret_cast<const UnsignedLong *>(obj);
+    case LogData_UInt64: {
+      auto ptr = reinterpret_cast<const UInt64 *>(obj);
       return verifier.VerifyTable(ptr);
     }
     default: return false;

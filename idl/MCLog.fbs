@@ -20,7 +20,7 @@ table UnsignedInt
   i:uint;
 }
 
-table UnsignedLong
+table UInt64
 {
   i:ulong;
 }
@@ -73,7 +73,7 @@ table MotionVecd
 // ALWAYS APPEND NEW TYPES AT THE END OF THIS UNION
 // Doing so guarantees that old logs remain readable
 // !!!!! IMPORTANT !!!!!
-union LogData { Bool, Double, DoubleVector, UnsignedInt, String, Vector3d, Quaterniond, PTransformd, ForceVecd, MotionVecd, Vector2d, UnsignedLong }
+union LogData { Bool, Double, DoubleVector, UnsignedInt, String, Vector3d, Quaterniond, PTransformd, ForceVecd, MotionVecd, Vector2d, UInt64 }
 
 table Log
 {
