@@ -175,6 +175,9 @@ public:
    *
    */
   void removeLogEntry(const std::string & name);
+
+  /** Return the time elapsed since the controller start */
+  double t() const;
 private:
   /** Store implementation detail related to the logging policy */
   std::shared_ptr<LoggerImpl> impl_ = nullptr;

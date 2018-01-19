@@ -267,4 +267,9 @@ namespace mc_rtc
       log_vector_entries_size_.erase(name);
     }
   }
+
+  double Logger::t() const
+  {
+    return impl_->log_iter_;
+  }
 }
