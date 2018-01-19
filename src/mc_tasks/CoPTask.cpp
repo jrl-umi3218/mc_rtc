@@ -6,6 +6,11 @@
 namespace mc_tasks
 {
 
+namespace
+{
+  constexpr double EPSILON_PRESSURE = 0.5;  // [N]
+}
+
 CoPTask::CoPTask(const std::string & surfaceName,
       const mc_rbdyn::Robots & robots,
       unsigned int robotIndex,
@@ -25,10 +30,9 @@ void CoPTask::reset()
 void CoPTask::update()
 {
   const double pressure = measuredWrench().force()(2);
-  if (pressure < MIN_PRESSURE && (admittance_.couple()(0) > 1e-6 || admittance_.couple()(1) > 1e-6))
+  if (pressure < EPSILON_PRESSURE && (admittance_.couple()(0) > 1e-6 || admittance_.couple()(1) > 1e-6))
   {
-    LOG_WARNING("Pressure on " << surface_.name() << " < " << MIN_PRESSURE << " [N], "
-        << "disabling CoP tracking");
+    LOG_WARNING("Pressure on " << surface_.name() << " < 0, disabling CoP tracking");
     admittance_.couple()(0) = 0.;
     admittance_.couple()(1) = 0.;
   }
@@ -41,7 +45,7 @@ Eigen::Vector2d CoPTask::measuredCoP() const
 {
   const sva::ForceVecd w_surf = measuredWrench();
   const double pressure = w_surf.force()(2);
-  if (pressure < MIN_PRESSURE)
+  if (pressure < EPSILON_PRESSURE)
   {
     return Eigen::Vector2d::Zero();
   }
