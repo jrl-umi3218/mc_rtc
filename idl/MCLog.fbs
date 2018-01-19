@@ -69,7 +69,11 @@ table MotionVecd
   linear:Vector3d;
 }
 
-union LogData { Bool, Double, DoubleVector, UnsignedInt, UnsignedLong, String, Vector3d, Quaterniond, PTransformd, ForceVecd, MotionVecd, Vector2d }
+// !!!!! IMPORTANT !!!!!
+// ALWAYS APPEND NEW TYPES AT THE END OF THIS UNION
+// Doing so guarantees that old logs remain readable
+// !!!!! IMPORTANT !!!!!
+union LogData { Bool, Double, DoubleVector, UnsignedInt, String, Vector3d, Quaterniond, PTransformd, ForceVecd, MotionVecd, Vector2d, UnsignedLong }
 
 table Log
 {
