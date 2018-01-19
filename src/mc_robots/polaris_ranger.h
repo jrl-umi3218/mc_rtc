@@ -42,8 +42,8 @@ public:
 extern "C"
 {
   ROBOT_MODULE_COMMON("PolarisRanger")
-  mc_rbdyn::RobotModule * create(bool is_interactive)
+  ROBOT_MODULE_API mc_rbdyn::RobotModule * create()
   {
-    return new mc_robots::PolarisRangerRobotModule(is_interactive);
+    return new mc_robots::PolarisRangerRobotModule(true);
   }
 }

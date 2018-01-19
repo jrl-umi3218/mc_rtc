@@ -36,6 +36,10 @@ PolarisRangerRobotModule::PolarisRangerRobotModule(bool is_interactive)
     halfSitting["top_left_frame_joint"] = {};
     readUrdf("polaris_ranger", virtualLinks);
   }
+  auto fileByBodyName = stdCollisionsFiles(mb);
+  _convexHull = getConvexHull(fileByBodyName);
+  _bounds = nominalBounds(limits);
+  _stance = halfSittingPose(mb);
 }
 
 std::map<std::string, std::pair<std::string, std::string> > PolarisRangerRobotModule::getConvexHull(const std::map<std::string, std::pair<std::string, std::string>> & files) const
@@ -57,7 +61,7 @@ void PolarisRangerRobotModule::readUrdf(const std::string & robotName, const std
   {
     std::stringstream urdf;
     urdf << ifs.rdbuf();
-    mc_rbdyn_urdf::URDFParserResult res = mc_rbdyn_urdf::rbdyn_from_urdf(urdf.str(), true, filteredLinks);
+    mc_rbdyn_urdf::URDFParserResult res = mc_rbdyn_urdf::rbdyn_from_urdf(urdf.str(), false, filteredLinks);
     mb = res.mb;
     mbc = res.mbc;
     mbg = res.mbg;
@@ -161,20 +165,16 @@ std::map<std::string, std::pair<std::string, std::string>> PolarisRangerRobotMod
 
 const std::map<std::string, std::pair<std::string, std::string> > & PolarisRangerRobotModule::convexHull() const
 {
-  auto fileByBodyName = stdCollisionsFiles(mb);
-  const_cast<PolarisRangerRobotModule*>(this)->_convexHull = getConvexHull(fileByBodyName);
   return _convexHull;
 }
 
 const std::vector< std::map<std::string, std::vector<double> > > & PolarisRangerRobotModule::bounds() const
 {
-  const_cast<PolarisRangerRobotModule*>(this)->_bounds = nominalBounds(limits);
   return _bounds;
 }
 
 const std::map<std::string, std::vector<double> > & PolarisRangerRobotModule::stance() const
 {
-  const_cast<PolarisRangerRobotModule*>(this)->_stance = halfSittingPose(mb);
   return _stance;
 }
 
