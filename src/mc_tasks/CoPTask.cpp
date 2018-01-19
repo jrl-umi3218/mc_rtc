@@ -8,7 +8,7 @@ namespace mc_tasks
 
 namespace
 {
-  constexpr EPSILON_PRESSURE = 0.5;  // [N]
+  constexpr double EPSILON_PRESSURE = 0.5;  // [N]
 }
 
 CoPTask::CoPTask(const std::string & surfaceName,
