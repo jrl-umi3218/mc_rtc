@@ -213,7 +213,8 @@ Robot& Robots::load(const RobotModule & module, sva::PTransformd * base,
   mbs_.emplace_back(module.mb);
   mbcs_.emplace_back(module.mbc);
   mbgs_.emplace_back(module.mbg);
-  robots_.emplace_back(*this, mbs_.size() - 1, true, base, bName);
+  mc_rbdyn::Robot robot{*this, static_cast<unsigned int>(mbs_.size() - 1), true, base, bName};
+  robots_.emplace_back(std::move(robot));
   updateIndexes();
   return robots_.back();
 }
