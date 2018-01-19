@@ -6,6 +6,7 @@ cimport tasks.qp.c_qp as c_qp
 from mc_rbdyn.c_mc_rbdyn cimport *
 from mc_solver.c_mc_solver cimport *
 cimport mc_rtc.c_mc_rtc as c_mc_rtc
+cimport mc_tasks.c_mc_tasks as c_mc_tasks
 
 from libcpp.map cimport map as cppmap
 from libcpp.pair cimport pair
@@ -41,7 +42,7 @@ cdef extern from "<mc_control/mc_controller.h>" namespace "mc_control":
     DynamicsConstraint dynamicsConstraint
     KinematicsConstraint kinematicsConstraint
     CollisionsConstraint selfCollisionConstraint
-    shared_ptr[c_qp.PostureTask] postureTask
+    shared_ptr[c_mc_tasks.PostureTask] postureTask
     QPSolver & solver()
 
 cdef extern from "<mc_control/mc_python_controller.h>" namespace "mc_control":
