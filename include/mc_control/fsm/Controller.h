@@ -146,6 +146,9 @@ struct MC_CONTROL_DLLAPI Controller : public MCController
 
   /** Check if a contact is already present */
   bool hasContact(const Contact & c) const;
+
+  /** Access contact constraint */
+  mc_solver::ContactConstraint & contactConstraint() { return *contact_constraint_; }
 private:
   /** Reset all posture tasks */
   void resetPostures();
