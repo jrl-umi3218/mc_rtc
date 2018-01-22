@@ -28,21 +28,25 @@ void VectorOrientationTask::bodyVector(const Eigen::Vector3d & vector)
   errorT->bodyVector(vector);
 }
 
-Eigen::Vector3d VectorOrientationTask::bodyVector()
+const Eigen::Vector3d VectorOrientationTask::bodyVector() const
 {
   return errorT->bodyVector();
 }
 
-void VectorOrientationTask::targetVector(const Eigen::Vector3d & vector)
+void VectorOrientationTask::targetVector(const Eigen::Vector3d& ori)
 {
-  errorT->target(vector);
+  errorT->target(ori);
 }
 
-const Eigen::Vector3d & VectorOrientationTask::targetVector() const
+const Eigen::Vector3d VectorOrientationTask::targetVector() const
 {
   return errorT->target();
 }
 
+const Eigen::Vector3d VectorOrientationTask::actual() const
+{
+  return errorT->actual();
+}
 }
 
 namespace

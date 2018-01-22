@@ -187,7 +187,17 @@ mc_tasks/CoPTask.cpp
 mc_tasks/GazeTask.cpp
 mc_tasks/PositionBasedVisServoTask.cpp
 mc_tasks/PostureTask.cpp
+mc_tasks/LookAtTask.cpp
 )
+if(NOT ${DISABLE_ROS})
+  if(${ROSCPP_FOUND})
+    set(mc_tasks_SRC 
+      ${mc_tasks_SRC}
+      mc_tasks/LookAtTFTask.cpp
+      )
+  endif()
+endif()
+
 set(mc_tasks_SRC ${mc_tasks_SRC} PARENT_SCOPE)
 
 set(mc_tasks_HDR
@@ -214,7 +224,16 @@ set(mc_tasks_HDR
 ../include/mc_tasks/GazeTask.h
 ../include/mc_tasks/PositionBasedVisServoTask.h
 ../include/mc_tasks/PostureTask.h
+../include/mc_tasks/LookAtTask.h
 )
+if(NOT ${DISABLE_ROS})
+  if(${ROSCPP_FOUND})
+    set(mc_tasks_SRC 
+      ${mc_tasks_SRC}
+      ../include/mc_tasks/LookAtTFTask.h
+      )
+  endif()
+endif()
 set(mc_tasks_HDR ${mc_tasks_HDR} PARENT_SCOPE)
 
 add_library(mc_tasks SHARED ${mc_tasks_SRC} ${mc_tasks_HDR})
@@ -224,6 +243,9 @@ target_link_libraries(mc_tasks ${Boost_LIBRARIES})
 pkg_config_use_dependency(mc_tasks mc_rbdyn_urdf)
 pkg_config_use_dependency(mc_tasks Tasks)
 pkg_config_append_libs(mc_tasks)
+if(${ROSCPP_FOUND})
+pkg_config_use_dependency(mc_tasks tf2_ros)
+endif()
 
 add_library(mc_rtc_ros SHARED mc_rtc/ros.cpp ../include/mc_rtc/ros.h ../include/mc_rtc/ros_api.h)
 set_target_properties(mc_rtc_ros PROPERTIES COMPILE_FLAGS "-DMC_RTC_ROS_EXPORTS")

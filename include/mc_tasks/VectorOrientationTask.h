@@ -56,7 +56,7 @@ public:
    * \returns The body orientation target in world frame
    *
    */
-  Eigen::Vector3d bodyVector();
+  const Eigen::Vector3d bodyVector() const;
 
   /*! \brief Set world target for the controlled vector
    *
@@ -65,12 +65,19 @@ public:
    */
   void targetVector(const Eigen::Vector3d & vector);
 
-  /*! \brief Get the current target vector in the world frame
-   *
-   * \returns The target vector in the world frame
-   *
-   */
-  const Eigen::Vector3d & targetVector() const;
+  /**
+  * @brief Get the target orientation
+  *
+  * @return The target orientation in world frame
+  */
+  const Eigen::Vector3d targetVector() const;
+
+  /**
+  * @brief Get the current body orientation
+  *
+  * @return The current body orientation vector in world frame
+  */
+  const Eigen::Vector3d actual() const;
 
   /*! \brief Return the controlled body */
   std::string body() { return bodyName; }
