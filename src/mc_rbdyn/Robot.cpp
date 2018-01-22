@@ -816,4 +816,14 @@ void mc_rbdyn::Robot::addSurface(SurfacePtr surface, bool doNotReplace)
 
 #pragma GCC diagnostic pop
 
+double mc_rbdyn::Robot::mass() const
+{
+  double mass = 0.;
+  for(const auto & b : mb().bodies())
+  {
+    mass += b.inertia().mass();
+  }
+  return mass;
+}
+
 }

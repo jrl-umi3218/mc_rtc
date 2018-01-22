@@ -160,6 +160,8 @@ public:
   const std::vector<Flexibility> & flexibility() const;
   std::vector<Flexibility> & flexibility();
 
+  double mass() const;
+
   /** @name Joint sensors
    *
    * These functions give information about joints' status
