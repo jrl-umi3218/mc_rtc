@@ -18,8 +18,6 @@
 namespace mc_rbdyn
 {
 
-struct Robot;
-
 /* TODO Functions are declared const here but most implementations will likely not respect the constness */
 struct MC_RBDYN_DLLAPI RobotModule
 {

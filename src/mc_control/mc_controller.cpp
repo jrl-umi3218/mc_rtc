@@ -31,7 +31,7 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   {
     surfaceDirs.push_back(m->rsdf_dir);
   }
-  auto robots = mc_rbdyn::loadRobots(robots_modules, surfaceDirs);
+  auto robots = mc_rbdyn::loadRobots(robots_modules);
   for(auto & robot: robots->robots())
   {
     robot.mbc().gravity = Eigen::Vector3d(0, 0, 9.81);

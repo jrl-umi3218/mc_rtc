@@ -654,6 +654,15 @@ void MCGlobalController::setup_log()
               {
                 return controller->robot().bodySensor().acceleration();
               });
+  // Log system wall time as nanoseconds since epoch (can be used to manage synchronization with ros)
+  controller->logger().addLogEntry("timeWall",
+              []() -> uint64_t
+              {
+                uint64_t nanoseconds_since_epoch =
+                std::chrono::system_clock::now().time_since_epoch() /
+                std::chrono::nanoseconds(1);
+                return nanoseconds_since_epoch;
+              });
   setup_logger_[current_ctrl] = true;
 }
 

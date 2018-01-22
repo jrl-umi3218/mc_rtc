@@ -4,15 +4,8 @@
 
 #include <mc/rtc/deprecated.hh>
 
-namespace mc_control
-{
-  struct MCController;
-}
-
 namespace mc_rbdyn
 {
-
-struct RobotModule;
 
 struct MC_RBDYN_DLLAPI Robots
 {
