@@ -161,6 +161,9 @@ private:
   /** Map robots' names to index */
   std::map<std::string, size_t> robots_idx_;
 
+  /** Init pose */
+  std::vector<double> init_pos_ = {};
+
   /** If true, transitions are managed by an external tool */
   bool managed_;
   /** If true and the FSM is self-managed, all transitions require a user-input */

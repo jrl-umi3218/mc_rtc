@@ -172,6 +172,17 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
   {
     transition_map_.init(factory_, config);
   }
+  /** Setup initial pos */
+  config("init_pos",  init_pos_);
+  if(init_pos_.size())
+  {
+    if(init_pos_.size() != 7)
+    {
+      LOG_ERROR("Stored init_pos is not of size 7")
+      LOG_WARNING("Using default position")
+      init_pos_.resize(0);
+    }
+  }
   /** GUI information */
   if(gui_)
   {
@@ -307,7 +318,12 @@ bool Controller::run()
 
 void Controller::reset(const ControllerResetData & data)
 {
-  MCController::reset(data);
+  auto q = data.q;
+  if(init_pos_.size())
+  {
+    q[0] = init_pos_;
+  }
+  MCController::reset({q});
   resetPostures();
   if(!managed_)
   {
