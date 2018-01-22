@@ -166,6 +166,9 @@ public:
    */
   void setContacts(const std::vector<mc_rbdyn::Contact> & contacts = {});
 
+  /** Returns the current set of contacts */
+  const std::vector<mc_rbdyn::Contact> & contacts() const;
+
   /** Run one iteration of the QP.
    *
    * If succesful, will update the robots' configurations

@@ -219,6 +219,11 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
   updateConstrSize();
 }
 
+const std::vector<mc_rbdyn::Contact> & QPSolver::contacts() const
+{
+  return contacts_;
+}
+
 bool QPSolver::run()
 {
   bool success = false;
