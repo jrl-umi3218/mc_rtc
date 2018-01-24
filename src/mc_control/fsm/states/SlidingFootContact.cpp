@@ -19,25 +19,48 @@ void SlidingFootContactState::configure(const mc_rtc::Configuration & config)
   config("SlidingForceTarget", slidingForceTarget_);
   config("HandForceTarget", handForceTarget_);
   config("Move", move_);
+  config("TickSupport", tickSupport_);
+  config("TickAdjust", tickAdjust_);
+  config("MoveCoM_Z", move_com_z_);
+  config("RotAngle", rot_angle_);
+  config("CoMOffset", com_offset_);
+  config("CoMOffsetSliding", com_offset_sliding_);
+  config("WaitForSlideTrigger", wait_for_slide_trigger_);
 }
 
 void SlidingFootContactState::start(Controller & ctl)
 {
-  comTask_ = std::make_shared<mc_tasks::CoMTask>(ctl.robots(), 0, 5.0, 1000.0);
+  comTask_ = std::make_shared<mc_tasks::CoMTask>(ctl.robots(), 0, 10.0, 2000.0);
+  comTask_->dimWeight(Eigen::Vector3d{1.0, 1.0, 1.0});
+  comTask_->move_com({0,0,move_com_z_});
   ctl.solver().addTask(comTask_);
-  copSlidingFootTask_ = std::make_shared<mc_tasks::CoPTask>(slidingSurface_, ctl.robots(), 0, ctl.solver().dt(), 5.0, 1000.0);
-  copSupportFootTask_ = std::make_shared<mc_tasks::CoPTask>(supportSurface_, ctl.robots(), 0, ctl.solver().dt(), 5.0, 1000.0);
+  copSlidingFootTask_ = std::make_shared<mc_tasks::CoPTask>(slidingSurface_, ctl.robots(), 0, ctl.solver().dt(), 10.0, 500.0);
+  Eigen::Vector6d slidingDimW;
+  slidingDimW << 4.0, 4.0, 1.0, 1.0, 1.0, 100.0;
+  copSlidingFootTask_->dimWeight(slidingDimW);
+  copSupportFootTask_ = std::make_shared<mc_tasks::CoPTask>(supportSurface_, ctl.robots(), 0, ctl.solver().dt(), 10.0, 2000.0);
+  copSupportFootTask_->admittance({{5e-3,5e-3,0},{0,0,0}});
   if(handSurface_.size())
   {
+    ctl.getPostureTask(ctl.robot().name())->target({{"R_WRIST_R",{-1.4}}});
     copHandTask_ = std::make_shared<mc_tasks::CoPTask>(handSurface_, ctl.robots(), 0, ctl.solver().dt(), 5.0, 1000.0);
-    if(!kinematic_ && handForceTarget_ > 0)
+    if(handForceTarget_ > 0)
     {
       copHandTask_->targetForce({0.,0.,handForceTarget_});
       copHandTask_->admittance({{0.,0.,0.},{0., 0., 1e-4}});
     }
     ctl.solver().addTask(copHandTask_);
   }
+  else
+  {
+    rhRelEf_ = std::make_shared<mc_tasks::RelativeEndEffectorTask>("r_wrist", ctl.robots(), 0, "", 2.0, 100.0);
+    ctl.solver().addTask(rhRelEf_);
+  }
   chestOriTask_ = std::make_shared<mc_tasks::OrientationTask>("torso", ctl.robots(), 0, 2.0, 100.0);
+  chestOriTask_->dimWeight(Eigen::Vector3d{0.,1.,0.});
+  //ctl.solver().addTask(chestOriTask_);
+  lhRelEf_ = std::make_shared<mc_tasks::RelativeEndEffectorTask>("l_wrist", ctl.robots(), 0, "", 2.0, 100.0);
+  ctl.solver().addTask(lhRelEf_);
   /** Initialize force targets */
   for(const auto & b : ctl.robot().mb().bodies())
   {
@@ -59,54 +82,127 @@ void SlidingFootContactState::start(Controller & ctl)
                            {
                            return com_sensor;
                            });
+  if(wait_for_slide_trigger_)
+  {
+    auto gui = ctl.gui();
+    if(!gui) { return; }
+    slide_triggered_ = false;
+    gui->addButton({"#FSM#", "SLIDE!"},
+                   [this]()
+                   {
+                     if(phase_ == Phase::REACH_SUPPORT && !slide_triggered_)
+                     {
+                       slide_triggered_ = true;
+                     }
+                   });
+    gui->addButton({"#FSM#", "Report offset"},
+                   [this]()
+                   {
+                    std::cout << "New offset " << (com_offset_ + comTask_->com() - com_target0).transpose() << std::endl;
+                   });
+  }
 }
 
 bool SlidingFootContactState::run(Controller & ctl)
 {
   controlCoM(ctl);
+  double fZ = 0;
   switch(phase_)
   {
     case Phase::REACH_SUPPORT:
       tick_++;
-      if(tick_ > 300) // FIXME Should be configurable
+      if(tick_ > tickSupport_ && slide_triggered_)
       {
-        phase_ = Phase::ADJUST_SLIDING_FORCE;
-        tick_ = 0;
-        Eigen::Vector6d dof;
-        dof << 1., 1., 1., 1., 1., 0.;
-        ctl.contactConstraint().contactConstr->addDofContact(slidingContactId_, dof.asDiagonal());
-        ctl.contactConstraint().contactConstr->updateDofContacts();
-        ctl.solver().addTask(copSlidingFootTask_);
-        LOG_INFO("SlidingFoot::" << slidingSurface_ << " enable adjust sliding force")
-      }
-      break;
-    case Phase::ADJUST_SLIDING_FORCE:
-      tick_++;
-      controlSlidingForce();
-      if(tick_ > 300) // FIXME Should be configurable
-      {
-        tick_ = 0;
         phase_ = Phase::SLIDE_FOOT;
+        tick_ = 0;
+        if(!kinematic_)
+        {
+          Eigen::Vector6d dof;
+          dof << 1., 1., 1., 1., 1., 0.;
+          copSlidingFootTask_->admittance({{0, 0, 0},{0,0,0}});
+          slidingContactId_ = getContactId(ctl, slidingSurface_);
+          ctl.contactConstraint().contactConstr->removeDofContact(slidingContactId_);
+          auto res = ctl.contactConstraint().contactConstr->addDofContact(slidingContactId_, dof.asDiagonal());
+          if(!res)
+          {
+            LOG_ERROR("Failed to set dof contact for " << slidingSurface_)
+          }
+          //dof << 0., 0., 1., 1., 1., 1.;
+          //auto supportContactId = getContactId(ctl, supportSurface_);
+          //res = ctl.contactConstraint().contactConstr->addDofContact(supportContactId, dof.asDiagonal());
+          //if(!res)
+          //{
+          //  LOG_ERROR("Failed to set dof contact for " << supportSurface_)
+          //}
+          //ctl.solver().addTask(copSupportFootTask_);
+          ctl.contactConstraint().contactConstr->updateDofContacts();
+        }
+        ctl.solver().addTask(copSlidingFootTask_);
         Eigen::Vector6d dof;
-        dof << 1., 1., 1., 0., 0., 0.;
+        dof << 1., 1., 1., 0., 0., 1.;
+        slidingContactId_ = getContactId(ctl, slidingSurface_);
+        if(!kinematic_)
+        {
+          dof(5) = 0.;
+        }
         ctl.contactConstraint().contactConstr->removeDofContact(slidingContactId_);
         ctl.contactConstraint().contactConstr->addDofContact(slidingContactId_, dof.asDiagonal());
         ctl.contactConstraint().contactConstr->updateDofContacts();
         auto t = copSlidingFootTask_->targetPose();
         t.translation().x() += move_.x();
         t.translation().y() += move_.y();
+        com_offset_ = com_offset_sliding_;
         forceDistChanged_ = true;
         copSlidingFootTask_->targetPose(t);
+        comTask_->stiffness(2.0);
+        comTask_->weight(1000.0);
+        //LOG_INFO("SlidingFoot::" << slidingSurface_ << " enable adjust sliding force")
+        LOG_INFO("SlidingFoot::" << slidingSurface_ << " sliding now")
+      }
+      break;
+    case Phase::ADJUST_SLIDING_FORCE:
+      tick_++;
+      controlSlidingForce();
+      fZ = copSlidingFootTask_->measuredWrench().force().z();
+      if( (tick_ > tickAdjust_))// && fZ < slidingForceTarget_) ||
+          //(tick_ > 3*tickAdjust_) )
+      {
+        tick_ = 0;
+        phase_ = Phase::SLIDE_FOOT;
+        Eigen::Vector6d dof;
+        dof << 1., 1., 1., 0., 0., 1.;
+        slidingContactId_ = getContactId(ctl, slidingSurface_);
+        if(!kinematic_)
+        {
+          dof(5) = 0.;
+        }
+        ctl.contactConstraint().contactConstr->removeDofContact(slidingContactId_);
+        ctl.contactConstraint().contactConstr->addDofContact(slidingContactId_, dof.asDiagonal());
+        ctl.contactConstraint().contactConstr->updateDofContacts();
+        auto t = copSlidingFootTask_->targetPose();
+        t.translation().x() += move_.x();
+        t.translation().y() += move_.y();
+        com_offset_ = com_offset_sliding_;
+        forceDistChanged_ = true;
+        copSlidingFootTask_->targetPose(t);
+        comTask_->stiffness(2.0);
+        comTask_->weight(1000.0);
         LOG_INFO("SlidingFoot::" << slidingSurface_ << " move foot (force: " << copSlidingFootTask_->measuredWrench().force().z() << "N, target: " << slidingForceTarget_ << "N)")
       }
       break;
     case Phase::SLIDE_FOOT:
       tick_++;
       controlSlidingForce();
-      if(tick_ > 100 && copSlidingFootTask_->speed().head(5).norm() < 1e-3)
+      if( (tick_ > 500 && copSlidingFootTask_->speed().segment(3,2).norm() < 0.001) ||
+          tick_ > 2000 )
       {
         ctl.solver().removeTask(copSlidingFootTask_);
+        //ctl.solver().removeTask(copSupportFootTask_);
+        com_offset_ = Eigen::Vector3d::Zero();
         resetAndRestoreBalance(ctl);
+        if(tick_ > 2000) { LOG_WARNING("SlidingFoot::" << slidingSurface_ << " timeout") }
+        LOG_ERROR("eval: " << copSlidingFootTask_->eval().segment(3,2).norm() << ", tick: " << tick_)
+        LOG_ERROR("speed: " << copSlidingFootTask_->speed().segment(3,2).norm() << ", tick: " << tick_)
         LOG_INFO("SlidingFoot::" << slidingSurface_ << " restore balance")
         tick_ = 0;
         phase_ = Phase::BALANCE;
@@ -116,10 +212,32 @@ bool SlidingFootContactState::run(Controller & ctl)
       tick_++;
       if(tick_ > 400)
       {
+        phase_ = Phase::REGULATE_FOOT_ORIENTATION;
+        LOG_INFO("Start to regulate sliding foot orientation")
+        tick_ = 0;
+        ctl.solver().addTask(copSlidingFootTask_);
+        if(!kinematic_)
+        {
+          copSlidingFootTask_->admittance({{5e-3,5e-3,0},{0,0,0}});
+        }
+        auto t = copSlidingFootTask_->targetPose();
+        copSlidingFootTask_->targetPose(t);
+        Eigen::Vector6d dof;
+        dof << 0., 0., 1., 1., 1., 1.;
+        slidingContactId_ = getContactId(ctl, slidingSurface_);
+        ctl.contactConstraint().contactConstr->removeDofContact(slidingContactId_);
+        ctl.contactConstraint().contactConstr->addDofContact(slidingContactId_, dof.asDiagonal());
+        ctl.contactConstraint().contactConstr->updateDofContacts();
+      }
+      break;
+    case Phase::REGULATE_FOOT_ORIENTATION:
+      tick_++;
+      if(tick_ > 1000)
+      {
+        ctl.solver().removeTask(copSlidingFootTask_);
         output("OK");
         return true;
       }
-      break;
     default:
       break;
   };
@@ -130,13 +248,30 @@ void SlidingFootContactState::teardown(Controller & ctl)
 {
   ctl.logger().removeLogEntry("Sliding_" + slidingSurface_ + "_com_targetIn");
   ctl.logger().removeLogEntry("Sliding_" + slidingSurface_ + "_com_sensor");
+  if(wait_for_slide_trigger_)
+  {
+    auto gui = ctl.gui();
+    if(gui)
+    {
+      std::cout << "Remove elements?" << std::endl;
+      gui->removeElement({"#FSM#", "SLIDE!"});
+      gui->removeElement({"#FSM#", "Report offset"});
+      std::cout << "OK" << std::endl;
+    }
+  }
   ctl.solver().removeTask(comTask_);
+  //ctl.solver().removeTask(chestOriTask_);
+  if(rhRelEf_)
+  {
+    ctl.solver().removeTask(rhRelEf_);
+  }
+  ctl.solver().removeTask(lhRelEf_);
   if(copHandTask_)
   {
     ctl.solver().removeTask(copHandTask_);
-    ctl.contactConstraint().contactConstr->resetDofContacts();
-    ctl.contactConstraint().contactConstr->updateDofContacts();
   }
+  ctl.contactConstraint().contactConstr->resetDofContacts();
+  ctl.contactConstraint().contactConstr->updateDofContacts();
 }
 
 tasks::qp::ContactId SlidingFootContactState::getContactId(Controller & ctl,
@@ -160,7 +295,11 @@ void SlidingFootContactState::setHandDofContact(Controller & ctl)
     auto cId = getContactId(ctl, handSurface_);
     Eigen::Vector6d dof;
     dof << 1., 1., 1., 1., 0., 1.;
-    ctl.contactConstraint().contactConstr->addDofContact(cId, dof.asDiagonal());
+    auto res = ctl.contactConstraint().contactConstr->addDofContact(cId, dof.asDiagonal());
+    if(!res)
+    {
+      LOG_ERROR("Failed to add dof contact on hand")
+    }
     ctl.contactConstraint().contactConstr->updateDofContacts();
   }
 }
@@ -178,34 +317,41 @@ void SlidingFootContactState::controlCoM(Controller &)
       com_target0.x() += copHandTask_->targetPose().translation().x() * handForceTarget_ / mg_;
       com_target0.y() += copHandTask_->targetPose().translation().y() * handForceTarget_ / mg_;
     }
-    com_target0.z() = comTask_->com().z();
+    com_target0.x() += com_offset_.x();
+    com_target0.y() += com_offset_.y();
+    if(com_init_z_ < 0)
+    {
+      com_init_z_ = comTask_->com().z();
+    }
+    com_target0.z() = com_init_z_ + com_offset_.z();
+    initial_com = comTask_->com();
     comTask_->com(com_target0);
     forceDistChanged_ = false;
   }
-  if(kinematic_) { return; }
-  com_sensor = Eigen::Vector3d::Zero();
-  auto copSupport = copSupportFootTask_->worldMeasuredCoP();
-  auto copSliding = copSlidingFootTask_->worldMeasuredCoP();
-  auto wrenchSupport = copSupportFootTask_->measuredWrench();
-  auto wrenchSliding = copSlidingFootTask_->measuredWrench();
-  com_sensor.x() = copSupport.translation().x() * wrenchSupport.force().z() / mg_ +
-                   copSliding.translation().x() * wrenchSliding.force().z() / mg_;
-  com_sensor.y() = copSupport.translation().y() * wrenchSupport.force().z() / mg_ +
-                   copSliding.translation().y() * wrenchSliding.force().z() / mg_;
-  if(copHandTask_)
-  {
-    auto copH = copHandTask_->worldMeasuredCoP();
-    auto wrenchH = copHandTask_->measuredWrench();
-    com_sensor.x() += copH.translation().x() * wrenchH.force().z() / mg_ -
-                      copH.translation().z() * wrenchH.force().x() / mg_;
-    com_sensor.y() += copH.translation().y() * wrenchH.force().z() / mg_ -
-                      copH.translation().z() * wrenchH.force().y() / mg_;
-  }
-  double alpha = 1e-3;
-  //FIXME Should be current com target?
-  Eigen::Vector3d delta_com = alpha*(com_target0 - com_sensor);
-  delta_com.z() = 0.0;
-  comTask_->move_com(delta_com);
+  //if(kinematic_) { return; }
+  //com_sensor = Eigen::Vector3d::Zero();
+  //auto copSupport = copSupportFootTask_->worldMeasuredCoP();
+  //auto copSliding = copSlidingFootTask_->worldMeasuredCoP();
+  //auto wrenchSupport = copSupportFootTask_->measuredWrench();
+  //auto wrenchSliding = copSlidingFootTask_->measuredWrench();
+  //com_sensor.x() = copSupport.translation().x() * wrenchSupport.force().z() / mg_ +
+  //                 copSliding.translation().x() * wrenchSliding.force().z() / mg_;
+  //com_sensor.y() = copSupport.translation().y() * wrenchSupport.force().z() / mg_ +
+  //                 copSliding.translation().y() * wrenchSliding.force().z() / mg_;
+  //if(copHandTask_)
+  //{
+  //  auto copH = copHandTask_->worldMeasuredCoP();
+  //  auto wrenchH = copHandTask_->measuredWrench();
+  //  com_sensor.x() += copH.translation().x() * wrenchH.force().z() / mg_ -
+  //                    copH.translation().z() * wrenchH.force().x() / mg_;
+  //  com_sensor.y() += copH.translation().y() * wrenchH.force().z() / mg_ -
+  //                    copH.translation().z() * wrenchH.force().y() / mg_;
+  //}
+  //double alpha = 1e-3;
+  ////FIXME Should be current com target?
+  //Eigen::Vector3d delta_com = alpha*(com_target0 - com_sensor);
+  //delta_com.z() = 0.0;
+  //comTask_->move_com(delta_com);
 }
 
 void SlidingFootContactState::controlSlidingForce()
@@ -239,6 +385,7 @@ void SlidingFootContactState::resetAndRestoreBalance(Controller & ctl)
   ctl.robot().forwardKinematics();
   ctl.robot().forwardVelocity();
   ctl.contactConstraint().contactConstr->resetDofContacts();
+  ctl.contactConstraint().contactConstr->updateDofContacts();
   ctl.solver().setContacts(ctl.solver().contacts());
   ctl.getPostureTask(ctl.robot().name())->reset();
   comTask_->reset();
