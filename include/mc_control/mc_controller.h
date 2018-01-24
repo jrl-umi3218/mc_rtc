@@ -208,6 +208,12 @@ public:
   /** Returns mc_rtc::Logger instance */
   mc_rtc::Logger & logger();
 
+  /** Returns mc_rtc::gui::StateBuilder ptr */
+  std::shared_ptr<mc_rtc::gui::StateBuilder> gui()
+  {
+    return gui_;
+  }
+
   /** Returns a list of robots supported by the controller.
    * \return Vector of supported robots designed by name (as returned by
    * RobotModule::name())
