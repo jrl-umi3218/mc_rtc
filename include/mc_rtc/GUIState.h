@@ -287,6 +287,10 @@ namespace mc_rtc
    * GUI */
   struct MC_RTC_GUI_DLLAPI State
   {
+    /** Static data representing data inside the controller */
+    mc_rtc::Configuration data;
+
+    /** Dynamic data representing the state of the GUI */
     mc_rtc::Configuration state;
 
     /** Returns the provided state category
