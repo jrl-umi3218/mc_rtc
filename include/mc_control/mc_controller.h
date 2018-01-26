@@ -209,10 +209,7 @@ public:
   mc_rtc::Logger & logger();
 
   /** Returns mc_rtc::gui::StateBuilder ptr */
-  std::shared_ptr<mc_rtc::gui::StateBuilder> gui()
-  {
-    return gui_;
-  }
+  std::shared_ptr<mc_rtc::gui::StateBuilder> gui() { return gui_; }
 
   /** Returns a list of robots supported by the controller.
    * \return Vector of supported robots designed by name (as returned by
@@ -222,8 +219,6 @@ public:
    * robots are supported.
    */
   virtual std::vector<std::string> supported_robots() const;
-
-  std::shared_ptr<mc_rtc::gui::StateBuilder> gui() { return gui_; }
 protected:
   /** Builds a controller base with an empty environment
    * \param robot Pointer to the main RobotModule
