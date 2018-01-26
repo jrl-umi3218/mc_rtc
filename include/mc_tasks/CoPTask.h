@@ -164,6 +164,8 @@ private:
   void update() override;
 
   using AdmittanceTask::targetWrench;
+
+  bool cop_tracking_disabled_ = false;
 };
 
 }
