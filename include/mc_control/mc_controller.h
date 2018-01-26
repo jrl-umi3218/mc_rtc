@@ -222,6 +222,8 @@ public:
    * robots are supported.
    */
   virtual std::vector<std::string> supported_robots() const;
+
+  std::shared_ptr<mc_rtc::gui::StateBuilder> gui() { return gui_; }
 protected:
   /** Builds a controller base with an empty environment
    * \param robot Pointer to the main RobotModule
