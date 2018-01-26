@@ -84,7 +84,7 @@ public:
       auto p = postureTask->posture();
       p[robot().jointIndexByName("RLEG_JOINT3")][0] = orig_rlj3;
       postureTask->posture(p);
-      postureTask->jointsStiffness(robots().mbs(), {{"RLEG_JOINT3", 1e5}});
+      postureTask->jointStiffness(solver(), {{"RLEG_JOINT3", 1e5}});
     }
     if(nrIter == 4000)
     {
