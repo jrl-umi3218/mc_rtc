@@ -149,6 +149,8 @@ struct MC_CONTROL_DLLAPI Controller : public MCController
 
   /** Access contact constraint */
   mc_solver::ContactConstraint & contactConstraint() { return *contact_constraint_; }
+
+  bool set_joint_pos(const std::string & jname, const double & pos) override;
 private:
   /** Reset all posture tasks */
   void resetPostures();

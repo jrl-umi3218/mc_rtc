@@ -517,6 +517,16 @@ bool Controller::hasContact(const Contact & c) const
   return false;
 }
 
+bool Controller::set_joint_pos(const std::string & jname, const double & pos)
+{
+  if(robot().hasJoint(jname))
+  {
+    getPostureTask(robot().name())->target({{jname,{pos}}});
+    return true;
+  }
+  return false;
+}
+
 } // namespace fsm
 
 } // namespace mc_control
