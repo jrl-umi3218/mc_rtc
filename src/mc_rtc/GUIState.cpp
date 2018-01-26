@@ -157,7 +157,10 @@ void StateBuilder::removeElement(const std::vector<std::string> & names)
   std::vector<std::string> category(names.size() - 1);
   if(names.size() > 1)
   {
-    std::copy(names.begin(), names.end(), category.begin());
+    for(size_t i = 0; i < names.size() - 1; ++i)
+    {
+      category[i] = names[i];
+    }
   }
   auto cat = elements_.find(category);
   if(cat != elements_.end())
