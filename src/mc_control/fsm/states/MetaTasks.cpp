@@ -18,13 +18,21 @@ void MetaTasksState::configure(const mc_rtc::Configuration & config)
     const auto & tConfig = e.second;
     tasks_configs_[tName].load(tConfig);
   }
+  if(config.has("RemoveContacts"))
+  {
+    remove_contacts_config_ = config("RemoveContacts");
+  }
   if(config.has("AddContacts"))
   {
     add_contacts_config_ = config("AddContacts");
   }
-  if(config.has("RemoveContacts"))
+  if(config.has("RemoveContactsAfter"))
   {
-    remove_contacts_config_ = config("RemoveContacts");
+    remove_contacts_after_config_ = config("RemoveContactsAfter");
+  }
+  if(config.has("AddContactsAfter"))
+  {
+    add_contacts_after_config_ = config("AddContactsAfter");
   }
   if(config.has("RemovePostureTask"))
   {
@@ -113,6 +121,24 @@ void MetaTasksState::teardown(Controller & ctl)
   if(remove_posture_task_)
   {
     ctl.solver().addTask(ctl.getPostureTask(ctl.robot().name()));
+  }
+  if(remove_contacts_after_config_.size())
+  {
+    std::set<Contact> removeContacts = remove_contacts_after_config_;
+    for(const auto & c : removeContacts)
+    {
+      std::cout << "Remove contact " << c.r1Surface << "/" << c.r2Surface << std::endl;
+      ctl.removeContact(c);
+    }
+  }
+  if(add_contacts_after_config_.size())
+  {
+    std::set<Contact> addContacts = add_contacts_after_config_;
+    for(const auto & c : addContacts)
+    {
+      std::cout << "Add contact " << c.r1Surface << "/" << c.r2Surface << " (dof: " << c.dof.transpose() << ")\n";
+      ctl.addContact(c);
+    }
   }
 }
 

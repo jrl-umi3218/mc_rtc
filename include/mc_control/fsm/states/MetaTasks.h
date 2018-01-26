@@ -112,6 +112,8 @@ protected:
   std::map<std::string, mc_rtc::Configuration> tasks_configs_;
   mc_rtc::Configuration add_contacts_config_;
   mc_rtc::Configuration remove_contacts_config_;
+  mc_rtc::Configuration add_contacts_after_config_;
+  mc_rtc::Configuration remove_contacts_after_config_;
   bool remove_posture_task_;
   std::vector<mc_tasks::MetaTaskPtr> tasks_;
   std::vector<std::pair<size_t, mc_control::CompletionCriteria>> criterias_;
