@@ -46,6 +46,7 @@ class PlotCanvas(FigureCanvas):
     def __init__(self, parent=None, width=5, height=4, dpi=100):
       self.fig = Figure(figsize=(width, height), dpi=dpi)
       self.axes = self.fig.add_subplot(111)
+      self.axes.autoscale(enable = True, axis = 'both', tight = False)
       self.axes2 = self.axes.twinx()
 
       FigureCanvas.__init__(self, self.fig)
@@ -66,6 +67,8 @@ class PlotCanvas(FigureCanvas):
       dt = data[x][1] - data[x][0]
       [ self.axes.plot(data[x][1:], np.diff(data[y])/dt, label = '{}'.format(y_label), color = color_cycler.next()) for y, y_label in zip(ydiff[0], ydiff_labels[0]) ]
       [ self.axes2.plot(data[x][1:], np.diff(data[y])/dt, label = '{}'.format(y_label), color = color_cycler.next()) for y, y_label in zip(ydiff[1], ydiff_labels[1]) ]
+      if np.all([x*x == np.inf for x in np.nditer(self.axes2.dataLim.get_points())]):
+        self.axes2.plot([0], [self.axes.get_ylim()[0]],visible=False)
       self.axes.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=3, mode="expand", borderaxespad=0.5, fontsize = 10.0)
       self.axes2.legend(bbox_to_anchor=(0., -.1, 1., -1.02), loc=3, ncol=3, mode="expand", borderaxespad=-0.5, fontsize = 10.0)
       self.draw()
