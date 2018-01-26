@@ -26,10 +26,13 @@ void SlidingFootContactState::configure(const mc_rtc::Configuration & config)
   config("CoMOffset", com_offset_);
   config("CoMOffsetSliding", com_offset_sliding_);
   config("WaitForSlideTrigger", wait_for_slide_trigger_);
+  config("Next", next_);
 }
 
 void SlidingFootContactState::start(Controller & ctl)
 {
+  LOG_ERROR("Enter state with CoM offset " << com_offset_.transpose())
+  LOG_ERROR("Enter state with CoM sliding offset " << com_offset_sliding_.transpose())
   comTask_ = std::make_shared<mc_tasks::CoMTask>(ctl.robots(), 0, 10.0, 2000.0);
   comTask_->dimWeight(Eigen::Vector3d{1.0, 1.0, 1.0});
   comTask_->move_com({0,0,move_com_z_});
@@ -43,7 +46,7 @@ void SlidingFootContactState::start(Controller & ctl)
   if(handSurface_.size())
   {
     ctl.getPostureTask(ctl.robot().name())->target({{"R_WRIST_R",{-1.4}}});
-    copHandTask_ = std::make_shared<mc_tasks::CoPTask>(handSurface_, ctl.robots(), 0, ctl.solver().dt(), 5.0, 1000.0);
+    copHandTask_ = std::make_shared<mc_tasks::CoPTask>(handSurface_, ctl.robots(), 0, ctl.solver().dt(), 5.0, 200.0);
     if(handForceTarget_ > 0)
     {
       copHandTask_->targetForce({0.,0.,handForceTarget_});
@@ -92,13 +95,49 @@ void SlidingFootContactState::start(Controller & ctl)
                    {
                      if(phase_ == Phase::REACH_SUPPORT && !slide_triggered_)
                      {
-                       slide_triggered_ = true;
+                       if(next_ == "")
+                       {
+                        LOG_ERROR("SELECT NEXT SLIDING FEET")
+                       }
+                       else
+                       {
+                        slide_triggered_ = true;
+                       }
                      }
                    });
     gui->addButton({"#FSM#", "Report offset"},
                    [this]()
                    {
                     std::cout << "New offset " << (com_offset_ + comTask_->com() - com_target0).transpose() << std::endl;
+                   });
+    gui->addElement(mc_rtc::gui::Element<Eigen::Vector2d>{
+                      {"#FSM#", "Sliding target"},
+                      [this](){ return move_; },
+                      [this](const Eigen::Vector2d & move) { move_ = move; }
+                    },
+                    mc_rtc::gui::Input<Eigen::Vector2d>{{"x", "y"}});
+    gui->addElement(mc_rtc::gui::Element<std::string>{
+                      {"#FSM#", "Next foot"},
+                      [this]() { return next_; },
+                      [this](const std::string & s) { next_ = s; }
+                    },
+                    mc_rtc::gui::ComboList<std::string>{std::vector<std::string>{slidingSurface_, supportSurface_}});
+    gui->addButton({"#FSM#", "Free foot Z"},
+                   [this,&ctl]()
+                   {
+                     Eigen::Vector6d dof;
+                     dof << 1., 1., 1., 1., 1., 0.;
+                     copSlidingFootTask_->admittance({{0, 0, 0},{0,0,1e-4}});
+                     copSlidingFootTask_->targetForce({0.,0.,slidingForceTarget_});
+                     slidingContactId_ = getContactId(ctl, slidingSurface_);
+                     ctl.contactConstraint().contactConstr->removeDofContact(slidingContactId_);
+                     auto res = ctl.contactConstraint().contactConstr->addDofContact(slidingContactId_, dof.asDiagonal());
+                     if(!res)
+                     {
+                       LOG_ERROR("Failed to set dof contact for " << slidingSurface_)
+                     }
+                     ctl.contactConstraint().contactConstr->updateDofContacts();
+                     ctl.solver().addTask(copSlidingFootTask_);
                    });
   }
 }
@@ -115,28 +154,8 @@ bool SlidingFootContactState::run(Controller & ctl)
       {
         phase_ = Phase::SLIDE_FOOT;
         tick_ = 0;
-        if(!kinematic_)
-        {
-          Eigen::Vector6d dof;
-          dof << 1., 1., 1., 1., 1., 0.;
-          copSlidingFootTask_->admittance({{0, 0, 0},{0,0,0}});
-          slidingContactId_ = getContactId(ctl, slidingSurface_);
-          ctl.contactConstraint().contactConstr->removeDofContact(slidingContactId_);
-          auto res = ctl.contactConstraint().contactConstr->addDofContact(slidingContactId_, dof.asDiagonal());
-          if(!res)
-          {
-            LOG_ERROR("Failed to set dof contact for " << slidingSurface_)
-          }
-          //dof << 0., 0., 1., 1., 1., 1.;
-          //auto supportContactId = getContactId(ctl, supportSurface_);
-          //res = ctl.contactConstraint().contactConstr->addDofContact(supportContactId, dof.asDiagonal());
-          //if(!res)
-          //{
-          //  LOG_ERROR("Failed to set dof contact for " << supportSurface_)
-          //}
-          //ctl.solver().addTask(copSupportFootTask_);
-          ctl.contactConstraint().contactConstr->updateDofContacts();
-        }
+        ctl.solver().removeTask(copSlidingFootTask_);
+        copSlidingFootTask_->admittance({{0,0,0},{0,0,0}});
         ctl.solver().addTask(copSlidingFootTask_);
         Eigen::Vector6d dof;
         dof << 1., 1., 1., 0., 0., 1.;
@@ -216,12 +235,7 @@ bool SlidingFootContactState::run(Controller & ctl)
         LOG_INFO("Start to regulate sliding foot orientation")
         tick_ = 0;
         ctl.solver().addTask(copSlidingFootTask_);
-        if(!kinematic_)
-        {
-          copSlidingFootTask_->admittance({{5e-3,5e-3,0},{0,0,0}});
-        }
-        auto t = copSlidingFootTask_->targetPose();
-        copSlidingFootTask_->targetPose(t);
+        copSlidingFootTask_->admittance({{5e-3,5e-3,0},{0,0,0}});
         Eigen::Vector6d dof;
         dof << 0., 0., 1., 1., 1., 1.;
         slidingContactId_ = getContactId(ctl, slidingSurface_);
@@ -235,7 +249,14 @@ bool SlidingFootContactState::run(Controller & ctl)
       if(tick_ > 1000)
       {
         ctl.solver().removeTask(copSlidingFootTask_);
-        output("OK");
+        if(next_ == supportSurface_)
+        {
+          output("OK");
+        }
+        else
+        {
+          output("SAME");
+        }
         return true;
       }
     default:
@@ -256,6 +277,9 @@ void SlidingFootContactState::teardown(Controller & ctl)
       std::cout << "Remove elements?" << std::endl;
       gui->removeElement({"#FSM#", "SLIDE!"});
       gui->removeElement({"#FSM#", "Report offset"});
+      gui->removeElement({"#FSM#", "Sliding target"});
+      gui->removeElement({"#FSM#", "Next foot"});
+      gui->removeElement({"#FSM#", "Free foot Z"});
       std::cout << "OK" << std::endl;
     }
   }
@@ -324,6 +348,7 @@ void SlidingFootContactState::controlCoM(Controller &)
       com_init_z_ = comTask_->com().z();
     }
     com_target0.z() = com_init_z_ + com_offset_.z();
+    LOG_ERROR("Applied CoM offset: " << com_offset_.transpose())
     initial_com = comTask_->com();
     comTask_->com(com_target0);
     forceDistChanged_ = false;
@@ -404,4 +429,4 @@ void SlidingFootContactState::resetAndRestoreBalance(Controller & ctl)
 
 } // namespace mc_control
 
-EXPORT_SINGLE_STATE("SlidingFootContact", mc_control::fsm::SlidingFootContactState, "OK")
+EXPORT_SINGLE_STATE("SlidingFootContact", mc_control::fsm::SlidingFootContactState, "OK", "SAME")

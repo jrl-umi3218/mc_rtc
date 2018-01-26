@@ -46,6 +46,7 @@ protected:
   double rot_angle_ = -2.5*M_PI/180;
   bool wait_for_slide_trigger_ = false;
   bool slide_triggered_ = true;
+  std::string next_ = "";
   /** Implementation */
   std::shared_ptr<mc_tasks::CoMTask> comTask_;
   std::shared_ptr<mc_tasks::CoPTask> copHandTask_;
