@@ -216,6 +216,7 @@ if(${ROSCPP_FOUND})
   pkg_config_use_dependency(mc_rtc_ros nav_msgs)
   pkg_config_use_dependency(mc_rtc_ros sensor_msgs)
   pkg_config_use_dependency(mc_rtc_ros tf2_ros)
+  pkg_config_use_dependency(mc_rtc_ros mc_rtc_msgs)
 endif()
 pkg_config_append_libs(mc_rtc_ros)
 

@@ -70,6 +70,7 @@ MCGlobalController::MCGlobalController(const std::string & conf,
       c.second->logger().setup(config.log_policy, config.log_directory, config.log_template);
     }
   }
+  mc_rtc::ROSBridge::activate_services(*this);
 }
 
 MCGlobalController::~MCGlobalController()

@@ -4,7 +4,6 @@
 
 #include <mc_rtc/logging.h>
 #include <mc_rtc/utils.h>
-
 #include <RBDyn/FK.h>
 
 #ifdef MC_RTC_HAS_ROS
@@ -14,6 +13,15 @@
 #include <sensor_msgs/JointState.h>
 #include <geometry_msgs/WrenchStamped.h>
 #include <tf2_ros/transform_broadcaster.h>
+#include <mc_rtc_msgs/EnableController.h>
+#include <mc_rtc_msgs/close_grippers.h>
+#include <mc_rtc_msgs/open_grippers.h>
+#include <mc_rtc_msgs/set_gripper.h>
+#include <mc_rtc_msgs/set_joint_pos.h>
+#include <mc_rtc_msgs/play_next_stance.h>
+#include <mc_rtc_msgs/send_msg.h>
+#include <mc_rtc_msgs/send_recv_msg.h>
+#include <mc_control/mc_global_controller.h>
 
 #include <thread>
 #endif
@@ -281,6 +289,102 @@ void RobotPublisher::update(double dt, const mc_rbdyn::Robot & robot, const std:
   }
 }
 
+
+struct MCGlobalControllerServicesImpl
+{
+  MCGlobalControllerServicesImpl(std::shared_ptr<ros::NodeHandle> nh, mc_control::MCGlobalController & controller) :
+    controller(controller),
+    nh(nh)
+  {
+    if(nh)
+    {
+      start_services();
+    }
+    else
+    {
+      LOG_WARNING("ROS not available, services will not be enabled")
+    }
+  }
+
+private:
+  void start_services()
+  {
+      LOG_SUCCESS("[MCGlobalControllerServices] Starting ROS services")
+    services.push_back(nh->advertiseService("mc_rtc/enable_controller", &MCGlobalControllerServicesImpl::EnableController_callback, this));
+    services.push_back(nh->advertiseService("mc_rtc/close_grippers", &MCGlobalControllerServicesImpl::close_grippers_callback, this));
+    services.push_back(nh->advertiseService("mc_rtc/open_grippers", &MCGlobalControllerServicesImpl::open_grippers_callback, this));
+    services.push_back(nh->advertiseService("mc_rtc/set_gripper", &MCGlobalControllerServicesImpl::set_gripper_callback, this));
+    services.push_back(nh->advertiseService("mc_rtc/set_joint_pos", &MCGlobalControllerServicesImpl::set_joint_pos_callback, this));
+    services.push_back(nh->advertiseService("mc_rtc/play_next_stance", &MCGlobalControllerServicesImpl::play_next_stance_callback, this));
+    services.push_back(nh->advertiseService("mc_rtc/send_msg", &MCGlobalControllerServicesImpl::send_msg_callback, this));
+    services.push_back(nh->advertiseService("mc_rtc/send_recv_msg", &MCGlobalControllerServicesImpl::send_recv_msg_callback, this));
+  }
+
+  bool EnableController_callback(mc_rtc_msgs::EnableController::Request & req, mc_rtc_msgs::EnableController::Response & resp)
+  {
+    LOG_INFO("[MCGlobalControllerServices] Enable controller " << req.name);
+    resp.success = controller.EnableController(req.name);
+    return true;
+  }
+
+  bool close_grippers_callback(mc_rtc_msgs::close_grippers::Request &, mc_rtc_msgs::close_grippers::Response & resp)
+  {
+    LOG_INFO("[MCGlobalControllerServices] close grippers");
+    controller.setGripperOpenPercent(0.);
+    resp.success = true;
+    return true;
+  }
+
+  bool open_grippers_callback(mc_rtc_msgs::open_grippers::Request &, mc_rtc_msgs::open_grippers::Response & resp)
+  {
+    LOG_INFO("[MCGlobalControllerServices] Open grippers");
+    controller.setGripperOpenPercent(1.);
+    resp.success = true;
+    return true;
+  }
+
+  bool set_gripper_callback(mc_rtc_msgs::set_gripper::Request & req, mc_rtc_msgs::set_gripper::Response & resp)
+  {
+    LOG_INFO("[MCGlobalControllerServices] Set gripper " << req.gname);
+    controller.setGripperTargetQ(req.gname, req.values);
+    resp.success = true;
+    return true;
+  }
+
+  bool set_joint_pos_callback(mc_rtc_msgs::set_joint_pos::Request & req, mc_rtc_msgs::set_joint_pos::Response & resp)
+  {
+    LOG_INFO("[MCGlobalControllerServices] Setting joint pos " << req.jname << " = " << req.q);
+    resp.success = controller.set_joint_pos(req.jname, req.q);
+    return true;
+  }
+
+  bool play_next_stance_callback(mc_rtc_msgs::play_next_stance::Request &, mc_rtc_msgs::play_next_stance::Response & resp)
+  {
+    LOG_INFO("[MCGlobalControllerServices] Playing next stance");
+    resp.success = controller.play_next_stance();
+    return true;
+  }
+
+  bool send_msg_callback(mc_rtc_msgs::send_msg::Request & req, mc_rtc_msgs::send_msg::Response & resp)
+  {
+    LOG_INFO("[MCGlobalControllerServices] Sending message " << req.msg);
+    resp.success = controller.send_msg(req.msg);
+    return true;
+  }
+
+  bool send_recv_msg_callback(mc_rtc_msgs::send_recv_msg::Request & req, mc_rtc_msgs::send_recv_msg::Response & resp)
+  {
+    LOG_INFO("[MCGlobalControllerServices] Sending message " << req.msg);
+    resp.success = controller.send_recv_msg(req.msg, resp.msg);
+    LOG_INFO("Received message: " << resp.msg);
+    return true;
+  }
+
+  mc_control::MCGlobalController & controller;
+  std::shared_ptr<ros::NodeHandle> nh;
+  std::vector<ros::ServiceServer> services;
+};
+
 inline bool ros_init(const std::string & name)
 {
   int argc = 0;
@@ -304,6 +408,7 @@ struct ROSBridgeImpl
   bool ros_is_init;
   std::shared_ptr<ros::NodeHandle> nh;
   std::map<std::string, std::shared_ptr<RobotPublisher>> rpubs;
+  std::unique_ptr<MCGlobalControllerServicesImpl> services;
   unsigned int publish_rate = 100;
 };
 
@@ -326,6 +431,11 @@ void ROSBridge::update_robot_publisher(const std::string& publisher, double dt, 
     impl->rpubs[publisher] = std::make_shared<RobotPublisher>(publisher + "/", impl->publish_rate);
   }
   impl->rpubs[publisher]->update(dt, robot, gJ, gQ);
+}
+
+void ROSBridge::activate_services(mc_control::MCGlobalController& ctl)
+{
+  impl->services.reset(new MCGlobalControllerServicesImpl(impl->nh, ctl));
 }
 
 void ROSBridge::shutdown()
@@ -361,6 +471,10 @@ void ROSBridge::set_publisher_timestep(double /*timestep*/)
 }
 
 void ROSBridge::update_robot_publisher(const std::string&, double, const mc_rbdyn::Robot &, const std::map<std::string, std::vector<std::string>> &, const std::map<std::string, std::vector<double>> &)
+{
+}
+
+void ROSBridge::activate_services(mc_control::MCGlobalController&)
 {
 }
 
