@@ -65,5 +65,11 @@ public:
    *
    */
   void error(const sva::PTransformd& X_t_s);
+
+  void addToLogger(mc_rtc::Logger & logger) override;
+  void removeFromLogger(mc_rtc::Logger & logger) override;
+
+private:
+  sva::PTransformd X_t_s_;
 };
 }

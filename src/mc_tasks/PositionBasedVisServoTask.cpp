@@ -28,12 +28,34 @@ PositionBasedVisServoTask::PositionBasedVisServoTask(const std::string& surfaceN
 
 void PositionBasedVisServoTask::reset()
 {
-    errorT->error(sva::PTransformd::Identity());
+  X_t_s_ = sva::PTransformd::Identity();
+  errorT->error(sva::PTransformd::Identity());
 }
 
 void PositionBasedVisServoTask::error(const sva::PTransformd& X_t_s)
 {
+  X_t_s_ = X_t_s;
   errorT->error(X_t_s);
+}
+
+void PositionBasedVisServoTask::addToLogger(mc_rtc::Logger & logger)
+{
+  logger.addLogEntry(name_ + "_error",
+                     [this]() -> const sva::PTransformd &
+                     {
+                     return X_t_s_;
+                     });
+  logger.addLogEntry(name_ + "_eval_pos",
+                     [this]() -> Eigen::Vector3d
+                     {
+                     return errorT->eval().tail(3);
+                     });
+}
+
+void PositionBasedVisServoTask::removeFromLogger(mc_rtc::Logger & logger)
+{
+  logger.removeLogEntry(name_ + "_error");
+  logger.removeLogEntry(name_ + "_eval_pos");
 }
 
 } // namespace mc_tasks
