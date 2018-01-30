@@ -1,7 +1,8 @@
-#include <mc_tasks/PositionBasedVisServoTask.h>
+#include <Eigen/Geometry>
 
-#include <mc_tasks/MetaTaskLoader.h>
 #include <mc_rbdyn/configuration_io.h>
+#include <mc_tasks/MetaTaskLoader.h>
+#include <mc_tasks/PositionBasedVisServoTask.h>
 
 namespace mc_tasks{
 
@@ -45,17 +46,22 @@ void PositionBasedVisServoTask::addToLogger(mc_rtc::Logger & logger)
                      {
                      return X_t_s_;
                      });
-  logger.addLogEntry(name_ + "_eval_pos",
-                     [this]() -> Eigen::Vector3d
+  logger.addLogEntry(name_ + "_eval",
+                     [this]() -> sva::PTransformd
                      {
-                     return errorT->eval().tail(3);
+                     Eigen::Vector6d eval = errorT->eval();
+                     Eigen::Vector3d angleAxis = eval.head(3);
+                     Eigen::Vector3d axis = angleAxis / angleAxis.norm();
+                     double angle = angleAxis.dot(axis);
+                     Eigen::Quaterniond quat(Eigen::AngleAxisd(angle, axis));
+                     return sva::PTransformd(quat, eval.tail(3));
                      });
 }
 
 void PositionBasedVisServoTask::removeFromLogger(mc_rtc::Logger & logger)
 {
   logger.removeLogEntry(name_ + "_error");
-  logger.removeLogEntry(name_ + "_eval_pos");
+  logger.removeLogEntry(name_ + "_eval");
 }
 
 } // namespace mc_tasks
