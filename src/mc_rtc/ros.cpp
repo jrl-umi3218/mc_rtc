@@ -18,9 +18,11 @@
 #include <mc_rtc_msgs/open_grippers.h>
 #include <mc_rtc_msgs/set_gripper.h>
 #include <mc_rtc_msgs/set_joint_pos.h>
+#include <mc_rtc_msgs/get_joint_pos.h>
 #include <mc_rtc_msgs/play_next_stance.h>
 #include <mc_rtc_msgs/send_msg.h>
 #include <mc_rtc_msgs/send_recv_msg.h>
+#include <mc_rtc_msgs/move_com.h>
 #include <mc_control/mc_global_controller.h>
 
 #include <thread>
@@ -315,9 +317,18 @@ private:
     services.push_back(nh->advertiseService("mc_rtc/open_grippers", &MCGlobalControllerServicesImpl::open_grippers_callback, this));
     services.push_back(nh->advertiseService("mc_rtc/set_gripper", &MCGlobalControllerServicesImpl::set_gripper_callback, this));
     services.push_back(nh->advertiseService("mc_rtc/set_joint_pos", &MCGlobalControllerServicesImpl::set_joint_pos_callback, this));
+    services.push_back(nh->advertiseService("mc_rtc/get_joint_pos", &MCGlobalControllerServicesImpl::get_joint_pos_callback, this));
     services.push_back(nh->advertiseService("mc_rtc/play_next_stance", &MCGlobalControllerServicesImpl::play_next_stance_callback, this));
     services.push_back(nh->advertiseService("mc_rtc/send_msg", &MCGlobalControllerServicesImpl::send_msg_callback, this));
     services.push_back(nh->advertiseService("mc_rtc/send_recv_msg", &MCGlobalControllerServicesImpl::send_recv_msg_callback, this));
+    services.push_back(nh->advertiseService("mc_rtc/move_com", &MCGlobalControllerServicesImpl::move_com_callback, this));
+  }
+
+  bool move_com_callback(mc_rtc_msgs::move_comRequest & req, mc_rtc_msgs::move_comResponse & res)
+  {
+    LOG_INFO("[MCGlobalControllerServices] Moving CoM to (" << req.com[0] << ", " << req.com[1] << ", " << req.com[2] << ")");
+    res.success = controller.move_com({req.com[0], req.com[1], req.com[2]});
+    return res.success;
   }
 
   bool EnableController_callback(mc_rtc_msgs::EnableController::Request & req, mc_rtc_msgs::EnableController::Response & resp)
@@ -356,6 +367,13 @@ private:
     LOG_INFO("[MCGlobalControllerServices] Setting joint pos " << req.jname << " = " << req.q);
     resp.success = controller.set_joint_pos(req.jname, req.q);
     return true;
+  }
+
+  bool get_joint_pos_callback(mc_rtc_msgs::get_joint_posRequest & req, mc_rtc_msgs::get_joint_posResponse & res)
+  {
+    res.success = controller.get_joint_pos(req.jname, res.q);
+    LOG_INFO("[MCGlobalControllerServices] Joint pos " << req.jname << " = " << res.q);
+    return res.success;
   }
 
   bool play_next_stance_callback(mc_rtc_msgs::play_next_stance::Request &, mc_rtc_msgs::play_next_stance::Response & resp)
