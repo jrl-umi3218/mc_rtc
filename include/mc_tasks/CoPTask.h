@@ -86,6 +86,14 @@ public:
    */
   const Eigen::Vector3d & targetForce() const;
 
+  /*! \brief Get the target wrench in the surface frame
+   *
+   */
+  const sva::ForceVecd & targetWrench() const
+  {
+    return AdmittanceTask::targetWrench();
+  }
+
 private:
   Eigen::Vector2d targetCoP_ = Eigen::Vector2d::Zero();
   Eigen::Vector3d targetForce_ = Eigen::Vector3d::Zero();
@@ -93,6 +101,8 @@ private:
   void addToLogger(mc_rtc::Logger & logger) override;
   void removeFromLogger(mc_rtc::Logger & logger) override;
   void update() override;
+
+  using AdmittanceTask::targetWrench;
 };
 
 }

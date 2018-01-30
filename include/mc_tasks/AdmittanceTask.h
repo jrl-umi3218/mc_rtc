@@ -205,6 +205,8 @@ private:
 
   void addToLogger(mc_rtc::Logger & logger) override;
   void removeFromLogger(mc_rtc::Logger & logger) override;
+
+  using SurfaceTransformTask::target;
 };
 
 }

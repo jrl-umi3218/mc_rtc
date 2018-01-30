@@ -24,6 +24,7 @@ CoPTask::CoPTask(const std::string & surfaceName,
 void CoPTask::reset()
 {
   targetCoP_ = Eigen::Vector2d::Zero();
+  targetForce_ = Eigen::Vector3d::Zero();
   AdmittanceTask::reset();
 }
 
