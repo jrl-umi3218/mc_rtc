@@ -309,7 +309,7 @@ struct MCGlobalControllerServicesImpl
 private:
   void start_services()
   {
-      LOG_SUCCESS("[MCGlobalControllerServices] Starting ROS services")
+    LOG_SUCCESS("[MCGlobalControllerServices] Starting ROS services")
     services.push_back(nh->advertiseService("mc_rtc/enable_controller", &MCGlobalControllerServicesImpl::EnableController_callback, this));
     services.push_back(nh->advertiseService("mc_rtc/close_grippers", &MCGlobalControllerServicesImpl::close_grippers_callback, this));
     services.push_back(nh->advertiseService("mc_rtc/open_grippers", &MCGlobalControllerServicesImpl::open_grippers_callback, this));
