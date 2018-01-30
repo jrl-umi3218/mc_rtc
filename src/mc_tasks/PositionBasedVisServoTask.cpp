@@ -29,13 +29,13 @@ PositionBasedVisServoTask::PositionBasedVisServoTask(const std::string& surfaceN
 void PositionBasedVisServoTask::reset()
 {
   X_t_s_ = sva::PTransformd::Identity();
-  errorT->error(sva::PTransformd::Identity());
+  errorT->error(X_t_s_);
 }
 
 void PositionBasedVisServoTask::error(const sva::PTransformd& X_t_s)
 {
   X_t_s_ = X_t_s;
-  errorT->error(X_t_s);
+  errorT->error(X_t_s_);
 }
 
 void PositionBasedVisServoTask::addToLogger(mc_rtc::Logger & logger)
