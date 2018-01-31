@@ -54,56 +54,57 @@ namespace mc_robots
 
     _bodySensors.emplace_back("Accelerometer", "body", sva::PTransformd(Eigen::Vector3d(-0.0325, 0, 0.1095)));
 
-    halfSitting["R_HIP_Y"] = {0.00013135}; // 2.29249e-06
-    halfSitting["R_HIP_R"] = {-0.140044}; // -0.00244423
-    halfSitting["R_HIP_P"] = {-22.1533}; // -0.386647
-    halfSitting["R_KNEE_P"] = {41.1567}; // 0.718321
-    halfSitting["R_ANKLE_P"] = {-18.8833}; // -0.329575
-    halfSitting["R_ANKLE_R"] = {0.169895}; // 0.00296522
-    halfSitting["L_HIP_Y"] = {-0.00255518}; // -4.45964e-05
-    halfSitting["L_HIP_R"] = {1.1399}; // 0.0198949
-    halfSitting["L_HIP_P"] = {-22.0432}; // -0.384727
-    halfSitting["L_KNEE_P"] = {41.0568}; // 0.716576
-    halfSitting["L_ANKLE_P"] = {-18.8932}; // -0.329749
-    halfSitting["L_ANKLE_R"] = {-1.11005}; // -0.019374
-    halfSitting["CHEST_P"] = {8}; // 0.139626
-    halfSitting["CHEST_Y"] = {0}; // 0
-    halfSitting["NECK_Y"] = {0}; // 0
-    halfSitting["NECK_P"] = {0}; // 0
-    halfSitting["R_SHOULDER_P"] = {-3}; // -0.0523599
-    halfSitting["R_SHOULDER_R"] = {-10}; // -0.174533
-    halfSitting["R_SHOULDER_Y"] = {0}; // 0
-    halfSitting["R_ELBOW_P"] = {-30}; // -0.523599
-    halfSitting["R_WRIST_Y"] = {0}; // 0
-    halfSitting["R_WRIST_P"] = {0}; // 0
-    halfSitting["R_WRIST_R"] = {0}; // 0
-    halfSitting["R_HAND_J0"] = {0}; // 0
-    halfSitting["R_HAND_J1"] = {0}; // 0
-    halfSitting["L_SHOULDER_P"] = {-3}; // -0.0523599
-    halfSitting["L_SHOULDER_R"] = {10}; // 0.174533
-    halfSitting["L_SHOULDER_Y"] = {0}; // 0
-    halfSitting["L_ELBOW_P"] = {-30}; // -0.523599
-    halfSitting["L_WRIST_Y"] = {0}; // 0
-    halfSitting["L_WRIST_P"] = {0}; // 0
-    halfSitting["L_WRIST_R"] = {0}; // 0
-    halfSitting["L_HAND_J0"] = {0.}; // 0
-    halfSitting["L_HAND_J1"] = {0.}; // 0
-    halfSitting["R_F22"] = { 0 }; //0
-    halfSitting["R_F23"] = { 0 }; //0
-    halfSitting["R_F32"] = { 0 }; //0
-    halfSitting["R_F33"] = { 0 }; //0
-    halfSitting["R_F42"] = { 0 }; //0
-    halfSitting["R_F43"] = { 0 }; //0
-    halfSitting["R_F52"] = { 0 }; //0
-    halfSitting["R_F53"] = { 0 }; //0
-    halfSitting["L_F22"] = { 0 }; //0
-    halfSitting["L_F23"] = { 0 }; //0
-    halfSitting["L_F32"] = { 0 }; //0
-    halfSitting["L_F33"] = { 0 }; //0
-    halfSitting["L_F42"] = { 0 }; //0
-    halfSitting["L_F43"] = { 0 }; //0
-    halfSitting["L_F52"] = { 0 }; //0
-    halfSitting["L_F53"] = { 0 }; //0
+
+    halfSitting["R_HIP_Y"] = {0};
+    halfSitting["R_HIP_R"] = {-1.15};
+    halfSitting["R_HIP_P"] = {-22};
+    halfSitting["R_KNEE_P"] = {41.2};
+    halfSitting["R_ANKLE_P"] = {-19.20};
+    halfSitting["R_ANKLE_R"] = {1.15};
+    halfSitting["L_HIP_Y"] = {0};
+    halfSitting["L_HIP_R"] = {1.15};
+    halfSitting["L_HIP_P"] = {-22};
+    halfSitting["L_KNEE_P"] = {41.2};
+    halfSitting["L_ANKLE_P"] = {-19.20};
+    halfSitting["L_ANKLE_R"] = {-1.15};
+    halfSitting["CHEST_P"] = {8};
+    halfSitting["CHEST_Y"] = {0};
+    halfSitting["NECK_Y"] = {0};
+    halfSitting["NECK_P"] = {0};
+    halfSitting["R_SHOULDER_P"] = {-3};
+    halfSitting["R_SHOULDER_R"] = {-10};
+    halfSitting["R_SHOULDER_Y"] = {0};
+    halfSitting["R_ELBOW_P"] = {-30};
+    halfSitting["R_WRIST_Y"] = {0};
+    halfSitting["R_WRIST_P"] = {0};
+    halfSitting["R_WRIST_R"] = {0};
+    halfSitting["R_HAND_J0"] = {0};
+    halfSitting["R_HAND_J1"] = {0};
+    halfSitting["L_SHOULDER_P"] = {-3};
+    halfSitting["L_SHOULDER_R"] = {10};
+    halfSitting["L_SHOULDER_Y"] = {0};
+    halfSitting["L_ELBOW_P"] = {-30};
+    halfSitting["L_WRIST_Y"] = {0};
+    halfSitting["L_WRIST_P"] = {0};
+    halfSitting["L_WRIST_R"] = {0};
+    halfSitting["L_HAND_J0"] = {0.};
+    halfSitting["L_HAND_J1"] = {0.};
+    halfSitting["R_F22"] = { 0 };
+    halfSitting["R_F23"] = { 0 };
+    halfSitting["R_F32"] = { 0 };
+    halfSitting["R_F33"] = { 0 };
+    halfSitting["R_F42"] = { 0 };
+    halfSitting["R_F43"] = { 0 };
+    halfSitting["R_F52"] = { 0 };
+    halfSitting["R_F53"] = { 0 };
+    halfSitting["L_F22"] = { 0 };
+    halfSitting["L_F23"] = { 0 };
+    halfSitting["L_F32"] = { 0 };
+    halfSitting["L_F33"] = { 0 };
+    halfSitting["L_F42"] = { 0 };
+    halfSitting["L_F43"] = { 0 };
+    halfSitting["L_F52"] = { 0 };
+    halfSitting["L_F53"] = { 0 };
     /* Virtual joints */
     halfSitting["L_FOOT"] = {};
     halfSitting["R_FOOT"] = {};
@@ -160,7 +161,7 @@ namespace mc_robots
       "L_HAND_J0", "L_HAND_J1"
     };
 
-    _default_attitude = {{0.999995, -0.00259064, 0.00157503, 9.39602e-05, -0.021972, -0.00165977, 0.747187}};
+    _default_attitude = {{1., 0., 0., 0., 0., 0., 0.747187}};
   }
 
   std::map<std::string, std::pair<std::string, std::string> > HRP4CommonRobotModule::getConvexHull(const std::map<std::string, std::pair<std::string, std::string>> & files) const
