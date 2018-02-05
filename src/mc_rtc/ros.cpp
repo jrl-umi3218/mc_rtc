@@ -461,7 +461,8 @@ void ROSBridge::update_robot_publisher(const std::string& publisher, double dt, 
 
 void ROSBridge::activate_services(mc_control::MCGlobalController& ctl)
 {
-  impl->services.reset(new MCGlobalControllerServicesImpl(impl->nh, ctl));
+  static auto& impl = impl_();
+  impl.services.reset(new MCGlobalControllerServicesImpl(impl.nh, ctl));
 }
 
 void ROSBridge::shutdown()
