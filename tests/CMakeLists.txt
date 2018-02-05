@@ -68,7 +68,7 @@ mc_rtc_test(testSimulationContactPair mc_control)
 
 add_subdirectory(fsm_states)
 
-mc_rtc_test(testFSMStateFactory fsm ConfigureState)
+mc_rtc_test(testFSMStateFactory mc_control_fsm ConfigureState)
 
 ######################################
 # -- Controllers and robots tests -- #

@@ -530,5 +530,3 @@ bool Controller::set_joint_pos(const std::string & jname, const double & pos)
 } // namespace fsm
 
 } // namespace mc_control
-
-CONTROLLER_CONSTRUCTOR("FSM", mc_control::fsm::Controller)
