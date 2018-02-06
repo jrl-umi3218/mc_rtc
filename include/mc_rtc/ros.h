@@ -23,6 +23,11 @@ namespace mc_rbdyn
   struct Robot;
 }
 
+namespace mc_control
+{
+  struct MCGlobalController;
+} /* mc_control */
+
 namespace mc_rtc
 {
 
@@ -62,10 +67,12 @@ struct MC_RTC_ROS_DLLAPI ROSBridge
    */
   static void update_robot_publisher(const std::string& publisher, double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::vector<std::string>> & gripperJ, const std::map<std::string, std::vector<double>> & gripperQ);
 
+  static void activate_services(mc_control::MCGlobalController &ctl);
+
   /*! \brief Stop ROS */
   static void shutdown();
 private:
-  static std::unique_ptr<ROSBridgeImpl> impl;
+  static ROSBridgeImpl & impl_();
 };
 
 #ifdef MC_RTC_HAS_ROS

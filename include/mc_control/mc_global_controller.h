@@ -25,6 +25,15 @@ struct MC_CONTROL_DLLAPI MCGlobalController
 {
 private:
   struct GlobalConfiguration;
+
+  /* MCGlobalController is non-copyable */
+  MCGlobalController(const MCGlobalController&) = delete;
+  MCGlobalController& operator=(const MCGlobalController&) = delete;
+
+  /* MCGlobalController is non-movable */
+  MCGlobalController(MCGlobalController&&) = delete;
+  MCGlobalController& operator=(MCGlobalController&&) = delete;
+
 public:
 
   /*! \brief Create the global controller
