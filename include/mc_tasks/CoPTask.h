@@ -92,11 +92,21 @@ public:
 
   /*! \brief Return measured CoP in world frame 
    *
-   * Note: this functions yields the CoP attached to the surface frame of the
-   * robot body. It thus corresponds to the task's internal target(), which
-   * will deviate from targetPose() during admittance control. It takes more
-   * estimation to get the actual world CoP (estimation of the flexibility, of
-   * the base link orientation).
+   * Note: there is an importance choice during the conversion from
+   * force-sensor data to CoP: in what target frame should the CoP be taken?
+   *
+   * There are two options:
+   *
+   * - the surface frame (used by this function): this one corresponds to the
+   *   internal target() of the CoPTask, and also to what you read via
+   *   robot().surface().X_0_s(). However, when admittance control is on, this
+   *   surface moves with the robot, which in turns changes the world CoP, etc.
+   *
+   * - the contact frame: this one needs to be estimated. You can use
+   *   targetPose() as a good initial guess, but there may be some drift over
+   *   time...
+   * 
+   * So, the question is still kind of open ;)
    */
   sva::PTransformd worldMeasuredCoP() const;
 
