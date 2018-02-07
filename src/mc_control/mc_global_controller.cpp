@@ -119,7 +119,10 @@ void MCGlobalController::init(const std::vector<double> & initq, const std::arra
     start_log();
   }
   std::vector<std::vector<double>> q = robot().mbc().q;
-  q[0] = {std::begin(initAttitude), std::end(initAttitude)};
+  if(q[0].size() == 7)
+  {
+    q[0] = {std::begin(initAttitude), std::end(initAttitude)};
+  }
   const auto & rjo = ref_joint_order();
   for(size_t i = 0; i < rjo.size(); ++i)
   {
