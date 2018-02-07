@@ -202,8 +202,6 @@ cdef extern from "<mc_rbdyn/Robot.h>" namespace "mc_rbdyn":
 
     const PTransformd& collisionTransform(const string&)
 
-    void fixSurfaces()
-
     void loadRSDFFromDir(string)
 
     map[string, vector[double]] stance()

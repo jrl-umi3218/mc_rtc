@@ -170,7 +170,14 @@ Robot::Robot(Robots & robots, unsigned int robots_idx, bool loadFiles,
 
   name_ = module_.name;
 
-  bodyTransforms_ = mbg().bodiesBaseTransform(mb().body(0).name());
+  if(base)
+  {
+    bodyTransforms_ = mbg().bodiesBaseTransform(mb().body(0).name(), *base);
+  }
+  else
+  {
+    bodyTransforms_ = mbg().bodiesBaseTransform(mb().body(0).name());
+  }
 
   std::tie(ql_, qu_, vl_, vu_, tl_, tu_) = bounds(mb(), module_.bounds());
 
@@ -188,6 +195,7 @@ Robot::Robot(Robots & robots, unsigned int robots_idx, bool loadFiles,
   {
     collisionTransforms_[p.first] = p.second;
   }
+  fixCollisionTransforms();
 
   if(loadFiles)
   {
@@ -635,6 +643,16 @@ void Robot::fixSurfaces()
   }
 }
 
+void Robot::fixCollisionTransforms()
+{
+  for(auto & ct : collisionTransforms_)
+  {
+    assert(bodyTransforms_.count(ct.first));
+    const auto & trans = bodyTransforms_[ct.first];
+    ct.second = ct.second * trans;
+  }
+}
+
 void Robot::loadRSDFFromDir(const std::string & surfaceDir)
 {
   std::vector<SurfacePtr> surfacesIn = readRSDFFromDir(surfaceDir);
@@ -650,6 +668,7 @@ void Robot::loadRSDFFromDir(const std::string & surfaceDir)
       LOG_WARNING("Loaded surface " << sp->name() << " attached to body " << sp->bodyName() << " from RSDF but the robot " << name() << " has no such body, discard this surface to avoid future problems...")
     }
   }
+  fixSurfaces();
 }
 
 std::map<std::string, std::vector<double>> Robot::stance() const
@@ -735,7 +754,6 @@ void Robot::copy(Robots & robots, unsigned int robots_idx, const Base & base) co
   {
     robot.surfaces_[s.first] = s.second->copy();
   }
-  robot.bodyTransforms_ = robot.mbg().bodiesBaseTransform(base.baseName, base.X_b0_s);
   robot.fixSurfaces();
   for(const auto & cH : convexes_)
   {

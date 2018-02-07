@@ -706,10 +706,6 @@ cdef class Robot(object):
     self.__is_valid()
     return sva.PTransformdFromC(self.impl.collisionTransform(bName), False)
 
-  def fixSurfaces(self):
-    self.__is_valid()
-    self.impl.fixSurfaces()
-
   def loadRSDFFromDir(self, surfaceDir):
     self.__is_valid()
     self.impl.loadRSDFFromDir(surfaceDir)

@@ -267,8 +267,6 @@ public:
 
   const sva::PTransformd & collisionTransform(const std::string& cName) const;
 
-  void fixSurfaces();
-
   void loadRSDFFromDir(const std::string & surfaceDir);
 
   /** Return the robot's default stance (e.g. half-sitting for humanoid) */
@@ -351,6 +349,12 @@ protected:
   void copy(Robots & robots, unsigned int robots_idx, const Base & base) const;
   /** Copy existing Robot */
   void copy(Robots & robots, unsigned int robots_idx) const;
+
+  /** Used to set the surfaces' X_b_s correctly */
+  void fixSurfaces();
+
+  /** Used to set the collision transforms correctly */
+  void fixCollisionTransforms();
 private:
   Robot(const Robot&) = delete;
   Robot& operator=(const Robot&) = delete;
