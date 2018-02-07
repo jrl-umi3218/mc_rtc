@@ -92,6 +92,11 @@ public:
 
   /*! \brief Return measured CoP in world frame 
    *
+   * Note: this functions yields the CoP attached to the surface frame of the
+   * robot body. It thus corresponds to the task's internal target(), which
+   * will deviate from targetPose() during admittance control. It takes more
+   * estimation to get the actual world CoP (estimation of the flexibility, of
+   * the base link orientation).
    */
   sva::PTransformd worldMeasuredCoP() const;
 
