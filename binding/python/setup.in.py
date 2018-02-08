@@ -77,18 +77,6 @@ class pkg_config(object):
 python_libs = []
 python_lib_dirs = []
 python_others = []
-if not win32_build:
-  tokens = subprocess.check_output(['python-config', '--ldflags']).split()
-  tokens = [ token.decode('ascii') for token in tokens ]
-  for token in tokens:
-    flag = token[:2]
-    value = token[2:]
-    if flag == '-l':
-      python_libs.append(value)
-    elif flag == '-L':
-      python_lib_dirs.append(value)
-    elif token[:1] == '-':
-      python_others.append(token)
 
 config = pkg_config()
 
