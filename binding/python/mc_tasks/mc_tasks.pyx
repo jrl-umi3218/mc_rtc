@@ -267,3 +267,9 @@ cdef class PostureTask(MetaTask):
       return self.impl.weight()
     else:
       self.impl.weight(w)
+
+cdef PostureTask PostureTaskFromPtr(c_mc_tasks.PostureTask * p):
+  cdef PostureTask ret = PostureTask(skip_alloc = True)
+  ret.__own_impl = False
+  ret.impl = ret.mt_base = p
+  return ret

@@ -18,6 +18,8 @@ cdef class PostureTask(MetaTask):
   cdef c_mc_tasks.PostureTask * impl
   cdef cppbool __own_impl
 
+cdef PostureTask PostureTaskFromPtr(c_mc_tasks.PostureTask *)
+
 cdef class _CoMTrajectoryTask(MetaTask):
   cdef c_mc_tasks.TrajectoryTaskGeneric[c_qp.CoMTask] * ttg_base
 

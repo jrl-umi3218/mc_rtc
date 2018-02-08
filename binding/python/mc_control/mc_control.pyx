@@ -6,13 +6,12 @@ cimport eigen.eigen as eigen
 
 cimport sva.sva as sva
 
-cimport tasks.qp.c_qp as c_qp
-cimport tasks.qp.qp as qp
-
 cimport mc_rbdyn.c_mc_rbdyn as c_mc_rbdyn
 cimport mc_rbdyn.mc_rbdyn as mc_rbdyn
 
 cimport mc_solver.mc_solver as mc_solver
+
+cimport mc_tasks.mc_tasks as mc_tasks
 
 cimport mc_rtc.mc_rtc as mc_rtc
 
@@ -77,7 +76,7 @@ cdef class MCController(object):
       return mc_solver.CollisionsConstraintFromPtr(&self.base.selfCollisionConstraint)
   property postureTask:
     def __get__(self):
-      return qp.PostureTaskFromPtr(self.base.postureTask.get())
+      return mc_tasks.PostureTaskFromPtr(self.base.postureTask.get())
   property qpsolver:
     def __get__(self):
       return mc_solver.QPSolverFromRef(self.base.solver())
