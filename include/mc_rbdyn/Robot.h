@@ -34,8 +34,14 @@ public:
   Robot(Robot&&) = default;
   Robot& operator=(Robot&&) = default;
 
+  /** Returns the name of the robot */
   std::string name() const;
 
+  /** Set the name of the robot
+   *
+   * \note It is not recommended to call this late in the life cycle of the
+   * Robot object as the change is not communicated in any way.
+   */
   void name(const std::string & n);
 
   /** Retrieve the associated RobotModule */
@@ -106,60 +112,110 @@ public:
   /** @} */
   /* End of Body sensors group */
 
+  /** Returns true if the robot has a joint named \p name */
   bool hasJoint(const std::string & name) const;
 
+  /** Returns true if the robot has a body named \p name */
   bool hasBody(const std::string & name) const;
 
+  /** Returns the joint index of joint named \name
+   *
+   * \throws If the joint does not exist within the robot.
+   */
   unsigned int jointIndexByName(const std::string & name) const;
 
+  /** Returns the body index of joint named \name
+   *
+   * \throws If the body does not exist within the robot.
+   */
   unsigned int bodyIndexByName(const std::string & name) const;
 
+  /** Access MultiBody representation of the robot */
   rbd::MultiBody & mb();
+  /** Access MultiBody representation of the robot (const) */
   const rbd::MultiBody & mb() const;
 
+  /** Access MultiBodyConfig of the robot's mb() */
   rbd::MultiBodyConfig & mbc();
+  /** Access MultiBodyConfig of the robot's mb() (const) */
   const rbd::MultiBodyConfig & mbc() const;
 
+  /** Access MultiBodyGraph that generated the robot's mb() */
   rbd::MultiBodyGraph & mbg();
+  /** Access MultiBodyGraph that generated the robot's mb() (const) */
   const rbd::MultiBodyGraph & mbg() const;
 
+  /** Equivalent to robot.mbc().q (const) */
   const std::vector<std::vector<double>> & q() const;
+  /** Equivalent to robot.mbc().alpha (const) */
   const std::vector<std::vector<double>> & alpha() const;
+  /** Equivalent to robot.mbc().alphaD (const) */
   const std::vector<std::vector<double>> & alphaD() const;
+  /** Equivalent to robot.mbc().jointTorque (const) */
   const std::vector<std::vector<double>> & jointTorque() const;
+  /** Equivalent to robot.mbc().bodyPosW (const) */
   const std::vector<sva::PTransformd> & bodyPosW() const;
+  /** Equivalent to robot.mbc().bodyVelW (const) */
   const std::vector<sva::MotionVecd> & bodyVelW() const;
+  /** Equivalent to robot.mbc().bodyVelB (const) */
   const std::vector<sva::MotionVecd> & bodyVelB() const;
+  /** Equivalent to robot.mbc().bodyAccB (const) */
   const std::vector<sva::MotionVecd> & bodyAccB() const;
+  /** Equivalent to robot.mbc().q */
   std::vector<std::vector<double>> & q();
+  /** Equivalent to robot.mbc().alpha */
   std::vector<std::vector<double>> & alpha();
+  /** Equivalent to robot.mbc().alphaD */
   std::vector<std::vector<double>> & alphaD();
+  /** Equivalent to robot.mbc().jointTorque */
   std::vector<std::vector<double>> & jointTorque();
+  /** Equivalent to robot.mbc().bodyPosW */
   std::vector<sva::PTransformd> & bodyPosW();
+  /** Equivalent to robot.mbc().bodyVelW */
   std::vector<sva::MotionVecd> & bodyVelW();
+  /** Equivalent to robot.mbc().bodyVelB */
   std::vector<sva::MotionVecd> & bodyVelB();
+  /** Equivalent to robot.mbc().bodyAccB */
   std::vector<sva::MotionVecd> & bodyAccB();
 
+  /** Compute and returns the current robot's CoM */
   Eigen::Vector3d com() const;
+  /** Compute and returns the current robot's CoM velocity */
   Eigen::Vector3d comVelocity() const;
+  /** Compute and returns the current robot's CoM acceleration */
   Eigen::Vector3d comAcceleration() const;
 
+  /** Access the robot's angular lower limits (const) */
   const std::vector<std::vector<double>> & ql() const;
+  /** Access the robot's angular upper limits (const) */
   const std::vector<std::vector<double>> & qu() const;
+  /** Access the robot's angular lower velocity limits (const) */
   const std::vector<std::vector<double>> & vl() const;
+  /** Access the robot's angular upper velocity limits (const) */
   const std::vector<std::vector<double>> & vu() const;
+  /** Access the robot's angular lower torque limits (const) */
   const std::vector<std::vector<double>> & tl() const;
+  /** Access the robot's angular upper torque limits (const) */
   const std::vector<std::vector<double>> & tu() const;
+  /** Access the robot's angular lower limits */
   std::vector<std::vector<double>> & ql();
+  /** Access the robot's angular upper limits */
   std::vector<std::vector<double>> & qu();
+  /** Access the robot's angular lower velocity limits */
   std::vector<std::vector<double>> & vl();
+  /** Access the robot's angular upper velocity limits */
   std::vector<std::vector<double>> & vu();
+  /** Access the robot's angular lower torque limits */
   std::vector<std::vector<double>> & tl();
+  /** Access the robot's angular upper torque limits */
   std::vector<std::vector<double>> & tu();
 
+  /** Return the flexibilities of the robot (const) */
   const std::vector<Flexibility> & flexibility() const;
+  /** Return the flexibilities of the robot */
   std::vector<Flexibility> & flexibility();
 
+  /** Compute and returns the mass of the robot */
   double mass() const;
 
   /** @name Joint sensors
@@ -247,9 +303,15 @@ public:
   /** @} */
   /* End of Force sensors group */
 
+  /** Check if a surface \p surface exists
+   *
+   * \returns True if the surface exists, false otherwise
+   */
   bool hasSurface(const std::string & surface) const;
 
+  /** Access a surface by its name \p sName */
   mc_rbdyn::Surface & surface(const std::string & sName);
+  /** Access a surface by its name \p sName (const) */
   const mc_rbdyn::Surface & surface(const std::string & sName) const;
 
   /** Copy an existing surface with a new name */
@@ -258,34 +320,59 @@ public:
   /** Adds a surface with a new name */
   void addSurface(mc_rbdyn::SurfacePtr surface, bool doNotReplace = true);
 
+  /** Returns all available surfaces */
   const std::map<std::string, mc_rbdyn::SurfacePtr> & surfaces() const;
 
+  /** Returns a list of available surfaces */
   std::vector<std::string> availableSurfaces() const;
 
+  /** Access a convex named \p cName
+   *
+   * \returns a pair giving the convex's parent body and the sch::Polyhedron
+   * object
+   */
   convex_pair_t & convex(const std::string & cName);
+  /** Access a convex named \p cName (const) */
   const convex_pair_t & convex(const std::string & cName) const;
 
+  /** Access transformation from body \p bName to original base.
+   *
+   * This can be used to correct transformations that were stored with the
+   * original base. Usually the robot's base is the original base so these
+   * transforms are identity.
+   */
   const sva::PTransformd & bodyTransform(const std::string& bName) const;
 
+  /** Access transformation between the collision mesh and the body */
   const sva::PTransformd & collisionTransform(const std::string& cName) const;
 
+  /** Load surfaces from the directory \p surfaceDir */
   void loadRSDFFromDir(const std::string & surfaceDir);
 
   /** Return the robot's default stance (e.g. half-sitting for humanoid) */
   std::map<std::string, std::vector<double>> stance() const;
 
+  /** Access the robot's index in robots() */
   unsigned int robotIndex() const;
 
+  /** Apply forward kinematics to the robot */
   void forwardKinematics();
+  /** Apply forward kinematics to \p mbc using the robot's mb() */
   void forwardKinematics(rbd::MultiBodyConfig & mbc) const;
 
+  /** Apply forward velocity to the robot */
   void forwardVelocity();
+  /** Apply forward velocity to \p mbc using the robot's mb() */
   void forwardVelocity(rbd::MultiBodyConfig & mbc) const;
 
+  /** Apply forward acceleration to the robot */
   void forwardAcceleration(const sva::MotionVecd & A_0 = sva::MotionVecd(Eigen::Vector6d::Zero()));
+  /** Apply forward acceleration to \p mbc using the robot's mb() */
   void forwardAcceleration(rbd::MultiBodyConfig & mbc, const sva::MotionVecd & A_0 = sva::MotionVecd(Eigen::Vector6d::Zero())) const;
 
+  /** Apply Euler integration to the robot using \p step timestep */
   void eulerIntegration(double step);
+  /** Apply Euler integration to \p mbc using the robot's mb() and \p step timestep */
   void eulerIntegration(rbd::MultiBodyConfig & mbc, double step) const;
 
   /** Return the robot's global pose */
