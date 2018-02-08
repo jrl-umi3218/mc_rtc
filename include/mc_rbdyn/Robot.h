@@ -178,6 +178,30 @@ public:
   /** Equivalent to robot.mbc().bodyAccB */
   std::vector<sva::MotionVecd> & bodyAccB();
 
+  /** Access the position of body \p name in world coordinates
+   *
+   * \throws If the body doest not exist within the robot
+   */
+  const sva::PTransformd & bodyPosW(const std::string & name) const;
+
+  /** Access the velocity of body \p name in world coordinates
+   *
+   * \throws If the body doest not exist within the robot
+   */
+  const sva::MotionVecd & bodyVelW(const std::string & name) const;
+
+  /** Access the velocity of body \p name in body coordinates
+   *
+   * \throws If the body doest not exist within the robot
+   */
+  const sva::MotionVecd & bodyVelB(const std::string & name) const;
+
+  /** Access the acceleration of body \p name in body coordinates
+   *
+   * \throws If the body doest not exist within the robot
+   */
+  const sva::MotionVecd & bodyAccB(const std::string & name) const;
+
   /** Compute and returns the current robot's CoM */
   Eigen::Vector3d com() const;
   /** Compute and returns the current robot's CoM velocity */

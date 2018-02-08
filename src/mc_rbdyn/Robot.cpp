@@ -429,6 +429,26 @@ std::vector<sva::MotionVecd> & Robot::bodyAccB()
   return mbc().bodyAccB;
 }
 
+const sva::PTransformd & Robot::bodyPosW(const std::string & name) const
+{
+  return bodyPosW()[bodyIndexByName(name)];
+}
+
+const sva::MotionVecd & Robot::bodyVelW(const std::string & name) const
+{
+  return bodyVelW()[bodyIndexByName(name)];
+}
+
+const sva::MotionVecd & Robot::bodyVelB(const std::string & name) const
+{
+  return bodyVelB()[bodyIndexByName(name)];
+}
+
+const sva::MotionVecd & Robot::bodyAccB(const std::string & name) const
+{
+  return bodyAccB()[bodyIndexByName(name)];
+}
+
 Eigen::Vector3d Robot::com() const
 {
   return rbd::computeCoM(mb(), mbc());
