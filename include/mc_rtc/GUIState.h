@@ -349,6 +349,9 @@ namespace mc_rtc
     /** Rebuild the state */
     const State & updateState();
 
+    /** Access the static data */
+    mc_rtc::Configuration & data();
+
     /** Call a method
      *
      * Returns false if the call failed

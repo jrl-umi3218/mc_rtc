@@ -64,6 +64,19 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
       },
       mc_rtc::gui::Schema{"metatask"}
   );
+  auto rNames = gui_->data().array("robots");
+  auto bodies = gui_->data().add("bodies");
+  auto surfaces = gui_->data().add("surfaces");
+  for(const auto & r : robots->robots())
+  {
+    rNames.push(r.name());
+    auto bs = bodies.array(r.name());
+    for(const auto & b : r.mb().bodies())
+    {
+      bs.push(b.name());
+    }
+    surfaces.add(r.name(), r.availableSurfaces());
+  }
   }
 
   /* Initialize grippers */

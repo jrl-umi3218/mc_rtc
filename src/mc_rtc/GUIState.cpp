@@ -204,7 +204,14 @@ const State & StateBuilder::updateState()
       e.second(cat);
     }
   }
+  /** FIXME This is a waste to constently send static data */
+  state_.state.add("DATA", state_.data);
   return state_;
+}
+
+mc_rtc::Configuration & StateBuilder::data()
+{
+  return state_.data;
 }
 
 bool StateBuilder::callMethod(const mc_rtc::Configuration & method)
