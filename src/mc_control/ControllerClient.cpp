@@ -9,6 +9,8 @@
 #include <nanomsg/pipeline.h>
 #include <nanomsg/pubsub.h>
 
+#include <unistd.h>
+
 namespace mc_control
 {
 
