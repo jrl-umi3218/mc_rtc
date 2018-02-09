@@ -127,7 +127,14 @@ public:
   void setSensorPositions(mc_rbdyn::Robot & robot,
                           const std::map<std::string, Eigen::Vector3d> & poses);
 
-  /*! \brief A robot's orientation given by a sensor */
+  /*! \brief A robot's orientation given by a sensor
+   *
+   * \note By convention, this rotation should be given from the inertial frame
+   * (i.e. a fixed frame in the real world) to a body frame of the robot. For
+   * instance, on HRP-4 the body sensor orientation goes from the inertial
+   * frame to the "base_link" frame.
+   *
+   */
   void setSensorOrientation(const Eigen::Quaterniond & ori);
 
   /*! \brief Set multiple body sensors' orientation for a given robot */

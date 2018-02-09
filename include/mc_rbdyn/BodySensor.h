@@ -76,7 +76,14 @@ struct BodySensor
     return orientation_;
   }
 
-  /** Set the sensor's orientation reading */
+  /** Set the sensor's orientation reading
+   *
+   * \note By convention, this rotation should be given from the inertial frame
+   * (i.e. a fixed frame in the real world) to a body frame of the robot. For
+   * instance, on HRP-4 the body sensor orientation goes from the inertial
+   * frame to the "base_link" frame.
+   *
+   */
   inline void orientation(const Eigen::Quaterniond & orientation)
   {
     orientation_ = orientation;
