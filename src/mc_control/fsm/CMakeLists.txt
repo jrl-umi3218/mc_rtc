@@ -30,6 +30,7 @@ install(TARGETS mc_control_fsm
 )
 
 add_controller("fsm" "lib.cpp" "")
+target_link_libraries(fsm mc_control_fsm)
 
 set(AROBASE "@")
 configure_file(etc/FSM.conf.cmake ${CMAKE_CURRENT_BINARY_DIR}/etc/FSM.conf)
