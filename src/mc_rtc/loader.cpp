@@ -74,6 +74,10 @@ void Loader::load_libraries(const std::string & class_name,
       /* Attempt to load anything that is not a directory */
       if( (!bfs::is_directory(p)) && (!bfs::is_symlink(p)) )
       {
+        if(verbose)
+        {
+          LOG_INFO("Attempt to open " << p.string());
+        }
         lt_dlhandle h = lt_dlopen(p.string().c_str());
         if(h == nullptr)
         {
@@ -87,6 +91,10 @@ void Loader::load_libraries(const std::string & class_name,
               LOG_WARNING("Failed to load " << p.string() << std::endl << error)
             }
           }
+          if(verbose)
+          {
+            LOG_WARNING("Skipping " << p.string() << std::endl << error)
+          }
           continue;
         }
 #ifndef WIN32
@@ -97,6 +105,10 @@ void Loader::load_libraries(const std::string & class_name,
         #pragma GCC diagnostic pop
         if(LOAD_GLOBAL_FUN != nullptr)
         {
+          if(verbose)
+          {
+            LOG_INFO("Re-open " << p.string() << " in global mode")
+          }
           lt_dlclose(h);
           lt_dladvise advise;
           lt_dladvise_init(&advise);
@@ -124,6 +136,7 @@ void Loader::load_libraries(const std::string & class_name,
           }
           continue;
         }
+        LOG_INFO("Found matching class name symbol " << class_name)
         std::vector<std::string> class_names(CLASS_NAME_FUN());
         for(const auto & cn : class_names)
         {
