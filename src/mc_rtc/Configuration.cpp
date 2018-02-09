@@ -331,7 +331,7 @@ Configuration::operator Eigen::Vector2d() const
   if(v.isArray() && v.size() == 2 && v[0].impl->isNumeric())
   {
     Eigen::Vector2d ret;
-    ret << v[0].impl->asDouble(), v[1].impl->asDouble(), v[2].impl->asDouble();
+    ret << v[0].impl->asDouble(), v[1].impl->asDouble();
     return ret;
   }
   throw Configuration::Exception("Stored Json value is not a Vector2d");
