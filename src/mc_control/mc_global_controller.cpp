@@ -309,7 +309,7 @@ bool MCGlobalController::run()
     }
     else
     {
-      const auto & qt = robot().bodySensor().orientation();
+      const auto & qt = robot().bodySensor().orientation().inverse();
       const auto & t = robot().bodySensor().position();
       real_robot.mbc().q[0] = {
         qt.w(), qt.x(), qt.y(), qt.z(),
