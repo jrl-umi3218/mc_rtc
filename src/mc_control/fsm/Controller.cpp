@@ -209,7 +209,7 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
     );
     gui_->addElement(
       mc_rtc::gui::Element<void>{
-        {"#FSM#", "INTERRUPT"},
+        {"#FSM#", "Interrupt"},
         [this]() { this->interrupt(); }
       },
       mc_rtc::gui::Button{}

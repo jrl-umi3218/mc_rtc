@@ -92,6 +92,14 @@ struct MC_CONTROL_DLLAPI Controller : public MCController
     interrupt_triggered_ = true;
   }
 
+  /** Check whether there is an active state running
+   *
+   */
+  bool isRunning()
+  {
+    return bool(state_);
+  }
+
   /** Resume to a desired state after an interruption
    *
    * \param state State to resume to
