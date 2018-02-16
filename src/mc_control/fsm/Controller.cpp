@@ -386,22 +386,14 @@ bool Controller::read_msg(std::string & msg)
   ss >> token;
   if(token == "interrupt")
   {
-    interrupt_triggered_ = true;
+    interrupt();
     return true;
   }
   if(token == "play")
   {
     std::string state;
     ss >> state;
-    if(!factory_.hasState(state))
-    {
-      LOG_ERROR("Cannot play unloaded state: " << state)
-      return false;
-    }
-    interrupt_triggered_ = true;
-    transition_triggered_ = true;
-    next_state_ = state;
-    return true;
+    return resume(state);
   }
   return MCController::read_msg(msg);
 }
@@ -525,6 +517,19 @@ bool Controller::set_joint_pos(const std::string & jname, const double & pos)
     return true;
   }
   return false;
+}
+
+bool Controller::resume(const std::string & state)
+{
+  if(!factory_.hasState(state))
+  {
+    LOG_ERROR("Cannot play unloaded state: " << state)
+    return false;
+  }
+  interrupt_triggered_ = true;
+  transition_triggered_ = true;
+  next_state_ = state;
+  return true;
 }
 
 } // namespace fsm

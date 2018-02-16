@@ -80,6 +80,27 @@ struct MC_CONTROL_DLLAPI Controller : public MCController
 
   bool read_write_msg(std::string & msg, std::string & out) override;
 
+  /** Remove current state from the FSM
+   *
+   * The controller will then switch to the no-state behavior, which maintains
+   * current contacts, the CoM position, and a posture task set to current
+   * joint values.
+   *
+   */
+  void interrupt()
+  {
+    interrupt_triggered_ = true;
+  }
+
+  /** Resume to a desired state after an interruption
+   *
+   * \param state State to resume to
+   *
+   * \return success False if an error occurred
+   *
+   */
+  bool resume(const std::string & state);
+
   /** Add collisions-pair between two robots
    *
    * If the r1-r2 collision manager does not exist yet, it is created and
