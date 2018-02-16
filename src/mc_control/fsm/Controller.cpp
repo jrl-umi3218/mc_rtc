@@ -521,6 +521,10 @@ bool Controller::set_joint_pos(const std::string & jname, const double & pos)
 
 bool Controller::resume(const std::string & state)
 {
+  if(!interrupt_triggered_)
+  {
+    LOG_WARNING("Resuming to '" + state + "' with no interruption");
+  }
   if(!factory_.hasState(state))
   {
     LOG_ERROR("Cannot play unloaded state: " << state)
