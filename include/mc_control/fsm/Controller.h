@@ -87,7 +87,7 @@ struct MC_CONTROL_DLLAPI Controller : public MCController
    * joint values.
    *
    */
-  void interrupt()
+  virtual void interrupt()
   {
     interrupt_triggered_ = true;
   }
