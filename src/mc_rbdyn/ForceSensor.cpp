@@ -190,4 +190,11 @@ const sva::ForceVecd ForceSensor::removeGravity(const mc_rbdyn::Robot & robot) c
   return w;
 }
 
+sva::ForceVecd ForceSensor::worldWrench(const mc_rbdyn::Robot & robot) const
+{
+  sva::PTransformd X_parent_0 = robot.mbc().bodyPosW[robot.bodyIndexByName(parentBody_)].inv();
+  sva::PTransformd X_fsactual_0 = X_parent_0 * X_fsactual_parent();
+  return X_fsactual_0.dualMul(wrench_);
+}
+
 }

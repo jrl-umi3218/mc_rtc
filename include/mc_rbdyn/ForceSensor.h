@@ -81,6 +81,15 @@ public:
    */
   void wrench(const sva::ForceVecd & wrench);
 
+  /** Return measured wrench in the inertial frame
+   *
+   * @param robot Robot that the sensor belongs to
+   *
+   * @returns w_0 Spatial force vector of measured wrench
+   *
+   */
+  sva::ForceVecd worldWrench(const mc_rbdyn::Robot & robot) const;
+
   /** @name Calibration
    *
    * These functions are related to the sensor's calibration
