@@ -103,6 +103,13 @@ public:
    */
   sva::PTransformd worldTargetCoP() const;
 
+  /*! \brief Set CoP target in world frame
+   *
+   * \param worldCoP New target
+   *
+   */
+  void worldTargetCoP(const Eigen::Vector3d & worldCoP);
+
   /*! \brief Set the target force in the surface frame
    *
    * \param targetForce 3D vector of target force in the surface frame
