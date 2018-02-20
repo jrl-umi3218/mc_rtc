@@ -31,6 +31,8 @@ namespace mc_robots
     virtualLinks.push_back("l_gripper");
     virtualLinks.push_back("r_sole");
     virtualLinks.push_back("l_sole");
+    virtualLinks.push_back("vicon_camera");
+    virtualLinks.push_back("vicon_base");
 
     gripperLinks.push_back("R_HAND_J0_LINK");
     gripperLinks.push_back("R_HAND_J1_LINK");

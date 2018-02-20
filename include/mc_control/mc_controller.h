@@ -66,6 +66,12 @@ public:
    * It is recommended to use it in your override.
    */
   virtual bool run();
+  /**
+   * WARNING EXPERIMENTAL
+   * Runs the QP on real_robot state
+   * ONLY SUPPORTS ONE ROBOT FOR NOW
+   */
+  virtual bool runClosedLoop();
 
   /** Gives access to the result of the QP execution
    * \param t Unused at the moment

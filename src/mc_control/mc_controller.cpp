@@ -126,6 +126,17 @@ bool MCController::run()
   return true;
 }
 
+bool MCController::runClosedLoop()
+{
+  if(!qpsolver->runClosedLoop(real_robots))
+  {
+    LOG_ERROR("QP failed to run()")
+    return false;
+  }
+  qpsolver->fillTorque(dynamicsConstraint);
+  return true;
+}
+
 const mc_solver::QPResultMsg & MCController::send(const double & t)
 {
   return qpsolver->send(t);

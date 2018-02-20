@@ -251,6 +251,39 @@ bool QPSolver::run()
   return success;
 }
 
+bool QPSolver::runClosedLoop(std::shared_ptr<mc_rbdyn::Robots> real_robots)
+{
+  // =============================
+  // 1 - Save old integrator state
+  // =============================
+  std::vector<std::vector<double>> oldQ(robot().mbc().q);
+  std::vector<std::vector<double>> oldQd(robot().mbc().alpha);
+
+  // Set robot state to estimator
+  robot().mbc().q = real_robots->robot().mbc().q;
+  robot().mbc().alpha = real_robots->robot().mbc().alpha;
+
+  // COMPUTE QP on estimated robot
+  for (auto& t : metaTasks)
+  {
+    t->update();
+  }
+  bool success = solver.solveNoMbcUpdate(robots().mbs(), robots().mbcs());
+  solver.updateMbc(robot().mbc(), static_cast<int>(robots().robotIndex()));
+
+  // Apply computed acceleration to integrator state
+  robot().mbc().q = oldQ;
+  robot().mbc().alpha = oldQd;
+
+  // Integrate Qdd on top of integrator state q, qd
+  rbd::eulerIntegration(robot().mb(), robot().mbc(), timeStep);
+  rbd::forwardKinematics(robot().mb(), robot().mbc());
+  rbd::forwardVelocity(robot().mb(), robot().mbc());
+
+  __fillResult();
+  return success;
+}
+
 const QPResultMsg & QPSolver::send(double/*curTime*/)
 {
   return qpRes;

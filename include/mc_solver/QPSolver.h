@@ -176,6 +176,18 @@ public:
    */
   bool run();
 
+  /**
+   * WARNING EXPERIMENTAL
+   *
+   * Runs the QP on an estimated robot state
+   *
+   * @param robot_est
+   *  Estimated robot state. Both mbc().q and mbc().alpha should be defined
+   *
+   * @return True if successful, false otherwise
+   */
+  bool runClosedLoop(std::shared_ptr<mc_rbdyn::Robots> robot_est);
+
   /** Provides the result of run() for robots.robot()
    * \param curTime Unused
    */
