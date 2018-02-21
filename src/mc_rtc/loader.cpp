@@ -136,7 +136,10 @@ void Loader::load_libraries(const std::string & class_name,
           }
           continue;
         }
-        LOG_INFO("Found matching class name symbol " << class_name)
+        if(verbose)
+        {
+          LOG_INFO("Found matching class name symbol " << class_name)
+        }
         std::vector<std::string> class_names(CLASS_NAME_FUN());
         for(const auto & cn : class_names)
         {
