@@ -940,6 +940,12 @@ namespace mc_rtc
      */
     bool remove(const std::string & key);
 
+    /** Returns the keys of the JSON objects
+     *
+     * Returns an empty vector if the underlying JSON object is not an object
+     */
+    std::vector<std::string> keys() const;
+
     ConfigurationArrayIterator begin() const;
 
     ConfigurationArrayIterator end() const;

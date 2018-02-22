@@ -79,23 +79,23 @@ void CoMTask::removeFromLogger(mc_rtc::Logger & logger)
 void CoMTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   TrajectoryTaskGeneric<tasks::qp::CoMTask>::addToGUI(gui);
-  gui.addElement(
-    mc_rtc::gui::Element<Eigen::Vector3d>{
-      {"Tasks", name_, "com_target"},
-      [this]() { return this->com(); },
-      [this](const Eigen::Vector3d & com) { this->com(com); }
-    },
-    mc_rtc::gui::Point3D{}
-  );
-  gui.addElement(
-    mc_rtc::gui::Element<Eigen::Vector3d>{
-      {"Tasks", name_, "com"},
-      std::function<Eigen::Vector3d()>{
-        [this]() { return (this->com() - eval()).eval(); }
-      }
-    },
-    mc_rtc::gui::Point3D{}
-  );
+  //gui.addElement(
+  //  mc_rtc::gui::Element<Eigen::Vector3d>{
+  //    {"Tasks", name_, "com_target"},
+  //    [this]() { return this->com(); },
+  //    [this](const Eigen::Vector3d & com) { this->com(com); }
+  //  },
+  //  mc_rtc::gui::Point3D{}
+  //);
+  //gui.addElement(
+  //  mc_rtc::gui::Element<Eigen::Vector3d>{
+  //    {"Tasks", name_, "com"},
+  //    std::function<Eigen::Vector3d()>{
+  //      [this]() { return (this->com() - eval()).eval(); }
+  //    }
+  //  },
+  //  mc_rtc::gui::Point3D{}
+  //);
 }
 
 }

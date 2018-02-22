@@ -206,42 +206,42 @@ std::function<bool(const mc_tasks::MetaTask&, std::string&)>
 
 void AdmittanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
-  gui.addElement(
-    mc_rtc::gui::Element<sva::PTransformd>{
-      {"Tasks", name_, "pos_target"},
-      [this](){ return this->targetPose(); },
-      [this](const sva::PTransformd & pos) { this->targetPose(pos); }
-    },
-    mc_rtc::gui::Transform{}
-  );
-  gui.addElement(
-    mc_rtc::gui::Element<sva::PTransformd>{
-      {"Tasks", name_, "pos"},
-      std::function<sva::PTransformd()>{
-        [this]()
-        {
-          return robots.robot(rIndex).surface(surfaceName).X_0_s(robots.robot(rIndex));
-        }
-      }
-    },
-    mc_rtc::gui::Transform{}
-  );
-  gui.addElement(
-    mc_rtc::gui::Element<Eigen::Vector6d>{
-      {"Tasks", name_, "admittance"},
-      [this](){ return this->admittance().vector(); },
-      [this](const Eigen::Vector6d & a) { this->admittance({a}); }
-    },
-    mc_rtc::gui::Input<sva::ForceVecd>{ {"cx", "cy", "cz", "fx", "fy" , "fz"} }
-  );
-  gui.addElement(
-    mc_rtc::gui::Element<Eigen::Vector6d>{
-      {"Tasks", name_, "wrench"},
-      [this](){ return this->targetWrench().vector(); },
-      [this](const Eigen::Vector6d & w) { this->targetWrench({w}); }
-    },
-    mc_rtc::gui::Input<sva::ForceVecd>{ {"cx", "cy", "cz", "fx", "fy" , "fz"} }
-  );
+  //gui.addElement(
+  //  mc_rtc::gui::Element<sva::PTransformd>{
+  //    {"Tasks", name_, "pos_target"},
+  //    [this](){ return this->targetPose(); },
+  //    [this](const sva::PTransformd & pos) { this->targetPose(pos); }
+  //  },
+  //  mc_rtc::gui::Transform{}
+  //);
+  //gui.addElement(
+  //  mc_rtc::gui::Element<sva::PTransformd>{
+  //    {"Tasks", name_, "pos"},
+  //    std::function<sva::PTransformd()>{
+  //      [this]()
+  //      {
+  //        return robots.robot(rIndex).surface(surfaceName).X_0_s(robots.robot(rIndex));
+  //      }
+  //    }
+  //  },
+  //  mc_rtc::gui::Transform{}
+  //);
+  //gui.addElement(
+  //  mc_rtc::gui::Element<Eigen::Vector6d>{
+  //    {"Tasks", name_, "admittance"},
+  //    [this](){ return this->admittance().vector(); },
+  //    [this](const Eigen::Vector6d & a) { this->admittance({a}); }
+  //  },
+  //  mc_rtc::gui::Input<sva::ForceVecd>{ {"cx", "cy", "cz", "fx", "fy" , "fz"} }
+  //);
+  //gui.addElement(
+  //  mc_rtc::gui::Element<Eigen::Vector6d>{
+  //    {"Tasks", name_, "wrench"},
+  //    [this](){ return this->targetWrench().vector(); },
+  //    [this](const Eigen::Vector6d & w) { this->targetWrench({w}); }
+  //  },
+  //  mc_rtc::gui::Input<sva::ForceVecd>{ {"cx", "cy", "cz", "fx", "fy" , "fz"} }
+  //);
   // Don't add SurfaceTransformTask as target configuration is different
   TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::addToGUI(gui);
 }

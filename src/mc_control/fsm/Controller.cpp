@@ -186,57 +186,57 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
   /** GUI information */
   if(gui_)
   {
-    gui_->addElement(
-      mc_rtc::gui::Element<std::string>{
-        {"#FSM#", "Current state"},
-        std::function<std::string()>{[this]() { return this->curr_state_; }}
-      },
-      mc_rtc::gui::Label{}
-    );
-    gui_->addElement(
-      mc_rtc::gui::Element<bool>{
-        {"#FSM#", "Next state ready?"},
-        std::function<bool()>{[this]() { return this->state_ == nullptr; }}
-      },
-      mc_rtc::gui::Label{}
-    );
-    gui_->addElement(
-      mc_rtc::gui::Element<void>{
-        {"#FSM#", "Play next stance"},
-        [this]() { this->play_next_stance(); }
-      },
-      mc_rtc::gui::Button{}
-    );
-    gui_->addElement(
-      mc_rtc::gui::Element<void>{
-        {"#FSM#", "Interrupt"},
-        [this]() { this->interrupt(); }
-      },
-      mc_rtc::gui::Button{}
-    );
-    gui_->addElement(
-      mc_rtc::gui::Element<std::string>{
-        {"#FSM#", "Contacts"},
-        std::function<std::string()>{
-          [this]()
-          {
-            std::string ret;
-            for(const auto & c : contacts_)
-            {
-              std::stringstream ss;
-              ss << c.r1Surface << "/" << c.r2Surface << " | " << c.dof.transpose() << "\n";
-              ret += ss.str();
-            }
-            if(ret.size())
-            {
-              ret.pop_back();
-            }
-            return ret;
-          }
-        }
-      },
-      mc_rtc::gui::Label{}
-    );
+    //gui_->addElement(
+    //  mc_rtc::gui::Element<std::string>{
+    //    {"#FSM#", "Current state"},
+    //    std::function<std::string()>{[this]() { return this->curr_state_; }}
+    //  },
+    //  mc_rtc::gui::Label{}
+    //);
+    //gui_->addElement(
+    //  mc_rtc::gui::Element<bool>{
+    //    {"#FSM#", "Next state ready?"},
+    //    std::function<bool()>{[this]() { return this->state_ == nullptr; }}
+    //  },
+    //  mc_rtc::gui::Label{}
+    //);
+    //gui_->addElement(
+    //  mc_rtc::gui::Element<void>{
+    //    {"#FSM#", "Play next stance"},
+    //    [this]() { this->play_next_stance(); }
+    //  },
+    //  mc_rtc::gui::Button{}
+    //);
+    //gui_->addElement(
+    //  mc_rtc::gui::Element<void>{
+    //    {"#FSM#", "Interrupt"},
+    //    [this]() { this->interrupt(); }
+    //  },
+    //  mc_rtc::gui::Button{}
+    //);
+    //gui_->addElement(
+    //  mc_rtc::gui::Element<std::string>{
+    //    {"#FSM#", "Contacts"},
+    //    std::function<std::string()>{
+    //      [this]()
+    //      {
+    //        std::string ret;
+    //        for(const auto & c : contacts_)
+    //        {
+    //          std::stringstream ss;
+    //          ss << c.r1Surface << "/" << c.r2Surface << " | " << c.dof.transpose() << "\n";
+    //          ret += ss.str();
+    //        }
+    //        if(ret.size())
+    //        {
+    //          ret.pop_back();
+    //        }
+    //        return ret;
+    //      }
+    //    }
+    //  },
+    //  mc_rtc::gui::Label{}
+    //);
   }
 }
 

@@ -50,8 +50,8 @@ void MCHalfSitPoseController::reset(const ControllerResetData & reset_data)
   postureTask.get()->stiffness(2.);
   rbd::forwardKinematics(robot().mb(), robot().mbc());
   rbd::forwardVelocity(robot().mb(), robot().mbc());
-  gui_->addButton({"Controller", "Go half-sitting"},
-                  [this]() { postureTask->posture(halfSitPose); });
+  //gui_->addButton({"Controller", "Go half-sitting"},
+  //                [this]() { postureTask->posture(halfSitPose); });
 }
 
 }

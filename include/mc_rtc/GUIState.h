@@ -7,8 +7,8 @@
 namespace mc_rtc
 {
 
-  namespace gui
-  {
+namespace gui
+{
 
   struct MC_RTC_GUI_DLLAPI Color
   {
@@ -21,356 +21,150 @@ namespace mc_rtc
     float a = 1.0;
   };
 
-  struct StateBuilder;
-
-  /** InteractionType base type
-   *
-   * By specifying an InteractionType associated to an Element one can
-   * indicate to the GUI how the element should be displayed. This may
-   * imply a contract on the content of the element.
-   *
-   * For example, a Point3D must contain an Eigen::Vector3d, a Wrench must
-   * contain an sva::ForceVecd but an Input or a Button have no such
-   * limitations.
-   *
-   */
-  struct InteractionType
+  struct MC_RTC_GUI_DLLAPI Element
   {
-    /** Check if that interaction type is compatible with a given input
-     * type */
-    template<typename T>
-    inline static constexpr bool is_compatible() { return true; }
+    Element(const std::string & name);
 
-    /** Add information to the output */
-    inline void addData(mc_rtc::Configuration) const {}
+    const std::string & name() const { return name_; }
+
+    void addData(mc_rtc::Configuration &) {}
+    void addGUI(mc_rtc::Configuration &) {}
+    bool handleRequest(const mc_rtc::Configuration &) { return false; }
+  protected:
+    std::string name_;
   };
 
-  /** InteractionType with restricted compatibility */
-  template<typename T>
-  struct StrictInteractionType : public InteractionType
+  enum class Elements
   {
-    template<typename U,
-      typename std::enable_if<!std::is_same<U, T>::value, int>::type = 0>
-    inline static constexpr bool is_compatible() { return false; }
-
-    template<typename U,
-      typename std::enable_if<std::is_same<U, T>::value, int>::type = 0>
-    inline static constexpr bool is_compatible() { return true; }
+    Label = 0,
+    ArrayLabel,
+    Button,
+    Toggle,
+    StringInput,
+    IntegerInput,
+    NumberInput,
+    ArrayInput,
+    ComboInput,
+    Point3D,
+    Rotation,
+    Transform,
+    Wrench,
+    Schema,
+    Form
   };
 
-  /** A label */
-  struct MC_RTC_GUI_DLLAPI Label : public InteractionType
+  template<typename GetT>
+  struct MC_RTC_GUI_DLLAPI Label : public Element
   {
-    static constexpr auto type = "Label";
+    static constexpr auto type = Elements::Label;
 
-    Label(bool is_vector = false);
+    Label(const std::string & name, GetT get_fn);
 
-    bool is_vector;
-
-    void addData(mc_rtc::Configuration out) const;
+    void addData(mc_rtc::Configuration & data);
+  private:
+    GetT get_fn_;
   };
 
-  /** A button */
-  struct Button : public InteractionType
+  template<typename GetT>
+  Label<GetT> makeLabel(const std::string & name, GetT get_fn)
   {
-    static constexpr auto type = "Button";
-  };
+    return Label<GetT>(name, get_fn);
+  }
 
-  struct Toggle : public InteractionType
+  template<typename GetT>
+  struct MC_RTC_GUI_DLLAPI ArrayLabel : public Label<GetT>
   {
-    static constexpr auto type = "Toggle";
-  };
+    static constexpr auto type = Elements::ArrayLabel;
 
-  /** Input */
-  template<typename T>
-  struct Input : public InteractionType
-  {
-    static constexpr auto type = "Input";
-    /** Default constructor, no limit on the input
-     *
-     * \param labels Labels to present the input in the GUI
-     *
-     */
-    Input(std::vector<std::string> labels);
+    using Label<GetT>::Label;
 
-    /** Input with limits on the value
-     *
-     * \param labels Labels to present the input in the GUI
-     *
-     * \param min Minimum value
-     *
-     * \param max Maximum value
-     *
-     */
-    Input(std::vector<std::string> labels, T min, T max);
+    ArrayLabel(const std::string & name, const std::vector<std::string> & labels, GetT get_fn);
 
-    void addData(mc_rtc::Configuration out) const;
+    void addGUI(mc_rtc::Configuration & gui);
   private:
     std::vector<std::string> labels_;
-    bool has_min_max_ = false;
-    T min_;
-    T max_;
   };
 
-  /** Allow to choose a value among a pre-defined set */
-  template<typename T>
-  struct ComboList : public InteractionType
+  template<typename GetT>
+  ArrayLabel<GetT> makeArrayLabel(const std::string & name, GetT get_fn)
   {
-    static constexpr auto type = "ComboList";
+    return ArrayLabel<GetT>(name, get_fn);
+  }
 
-    /** Constructor
-     *
-     * \values List of possible values in this ComboList
-     */
-    ComboList(std::vector<T> values);
-
-    void addData(mc_rtc::Configuration out) const;
-  private:
-    std::vector<T> values_;
-  };
-
-  struct Point3D : public StrictInteractionType<Eigen::Vector3d>
-  {
-    static constexpr auto type = "Point3D";
-  };
-
-  struct Transform : public StrictInteractionType<sva::PTransformd>
-  {
-    static constexpr auto type = "Transform";
-  };
-
-  struct Wrench : public StrictInteractionType<sva::ForceVecd>
-  {
-    static constexpr auto type = "Wrench";
-  };
-
-  struct MC_RTC_GUI_DLLAPI Schema : public InteractionType
-  {
-    static constexpr auto type = "Schema";
-
-    /** Represent a schema-based input
-     *
-     * \param schema_dir Schema direction relative to mc_rtc schemas installation path
-     *
-     */
-    Schema(const std::string & schema_dir);
-
-    void addData(mc_rtc::Configuration out) const;
-  private:
-    std::string schema_dir_;
-  };
-
-  /** Form-based input, the form is based by a combination of names and
-   *  InteractionType elements */
-  struct MC_RTC_GUI_DLLAPI Form : public InteractionType
-  {
-    static constexpr auto type = "Form";
-
-    /** Build the Form interaction type
-     *
-     * \param labels Labels on the form
-     *
-     * \param elements Elements on the form
-     *
-     * labels size must fix args count
-     *
-     */
-    template<typename ... Args>
-    Form(const std::vector<std::string> & labels, Args ... elements);
-
-    /** Build by the constructor */
-    std::function<void(mc_rtc::Configuration)> addData;
-  };
-
-  /** Element tag type */
-  struct ElementBase {};
-
-  /** Generic structure holding all information for the state builder */
-  template<typename T>
-  struct Element : public ElementBase
-  {
-    friend struct StateBuilder;
-    /** The data type of the element */
-    using data_t = typename std::decay<T>::type;
-    /** The type of a function that can retrieve this element */
-    using get_fn_t = std::function<data_t()>;
-    /** The type of a function that can set this element */
-    using set_fn_t = std::function<void(const data_t&)>;
-
-    /** Simple constructor without setter or getter
-     *
-     * \param names A list of names representing the category/sub-category/name
-     * of the element, this is used to uniquely identify the element. For
-     * example, given a CoMTask one could pass: {"Tasks", "CoM {{robot name}}",
-     * "stiffness"}. It is up to the GUI implementation to use this information
-     * as it sees fit.
-     *
-     */
-    Element(const std::vector<std::string> & names);
-
-    /** Constructor for a read-only element
-     *
-     * \param names See the simple constructor
-     *
-     * \param get_fn Read function
-     *
-     */
-    Element(const std::vector<std::string> & names,
-            get_fn_t get_fn);
-
-    /** Constructor for a write-only element
-     *
-     * \param names See the simple constructor
-     *
-     * \param set_fn Write function
-     *
-     */
-    Element(const std::vector<std::string> & names,
-            set_fn_t set_fn);
-
-    /** Constructor for a read-write element
-     *
-     * \param names See the simple constructor
-     *
-     * \param get_fn Read function
-     *
-     * \param set_fn Write function
-     *
-     */
-    Element(const std::vector<std::string> & names,
-            get_fn_t get_fn, set_fn_t set_fn);
-  protected:
-    /** Internal constructor, used to simplify the writing of other constructors */
-    Element(const std::vector<std::string> & names,
-            get_fn_t * get_fn, set_fn_t * set_fn);
-
-    std::vector<std::string> categories_ = {};
-    std::string name_ = "";
-    get_fn_t get_fn_ = [](){ return data_t{}; };
-    set_fn_t set_fn_ = [](const data_t &){};
-
-    /** Put data out */
-    void sendData(mc_rtc::Configuration out) const;
-
-    /** Handle request */
-    bool handleRequest(const mc_rtc::Configuration & in) const;
-  private:
-    bool has_get_fn_ = false;
-    bool has_set_fn_ = false;
-  };
-
-  /** Specialization of Element for void type (no-parameter callback) */
-  template<>
-  struct MC_RTC_GUI_DLLAPI Element<void> : public ElementBase
-  {
-    friend struct StateBuilder;
-    using data_t = void;
-    using get_fn_t = std::function<void()>;
-    using set_fn_t = std::function<void()>;
-
-    Element(const std::vector<std::string> & names,
-            set_fn_t set_fn);
-  protected:
-    std::vector<std::string> categories_ = {};
-    std::string name_ = "";
-    set_fn_t set_fn_ = [](){};
-
-    inline void sendData(mc_rtc::Configuration) const {}
-
-    bool handleRequest(const mc_rtc::Configuration &) const;
-
-    bool has_get_fn_ = false;
-    bool has_set_fn_ = true;
-  };
-
-  /** This structure holds information regarding the current status of the
-   * GUI */
-  struct MC_RTC_GUI_DLLAPI State
-  {
-    /** Static data representing data inside the controller */
-    mc_rtc::Configuration data;
-
-    /** Dynamic data representing the state of the GUI */
-    mc_rtc::Configuration state;
-
-    /** Returns the provided state category
-     *
-     * If the category does not exist yet, create it
-     *
-     * \param category Category to retrieve
-     *
-     */
-    mc_rtc::Configuration getStateCategory(const std::vector<std::string> & category);
-  private:
-    mc_rtc::Configuration getCategory(mc_rtc::Configuration & config, const std::vector<std::string> & category);
-  };
-
-  /** This structure is used to build a GUI state from the current status
-   * of a variety of objects */
+  /** Used to build a GUI state from multiple objects */
   struct MC_RTC_GUI_DLLAPI StateBuilder
   {
-    template<typename T, typename InteractionT = Label>
-    void addElement(const T & element,
-                    const InteractionT & interaction = Label{});
+    /** Constructor */
+    StateBuilder();
 
-    /** Shortcut to add a Button element */
-    void addButton(const std::vector<std::string> & category,
-                   std::function<void()> cb);
-
-    /** Shortcut to add a Label element */
+    /** Add a given element
+     *
+     * T must derive from Element
+     *
+     * \param category Category of the element
+     * \param element Element added to the GUI
+     */
     template<typename T>
-    void addLabel(const std::vector<std::string> & category,
-                  std::function<T()> cb, bool is_vector = false)
-    {
-      addElement(Element<T>{ category, cb}, Label{is_vector});
-    }
+    void addElement(const std::vector<std::string> & category, T element);
 
     /** Remove all elements */
     void reset();
 
-    /** Remove all elements nested under a given category
-     *
-     *  This has no effect if the category does not exist
-     *
-     * \param category Category of elements to remove
-     *
-     */
+    /** Remove a given category */
     void removeCategory(const std::vector<std::string> & category);
 
-    /** Remove a single element using its unique name
-     *
-     *  This has no effect if the element does not exist
-     *
-     * \param names Names of the element (see Element documentation)
-     *
-     */
-    void removeElement(const std::vector<std::string> & names);
+    /** Remove a single element */
+    void removeElement(const std::vector<std::string> & category, const std::string & name);
 
-    /** Rebuild the state */
-    const State & updateState();
+    /** Update the GUI state */
+    const mc_rtc::Configuration & update();
 
-    /** Access the static data */
-    mc_rtc::Configuration & data();
+    /** Handle a request */
+    bool handleRequest(const std::vector<std::string> & category,
+                       const std::string & name,
+                       const mc_rtc::Configuration & data);
 
-    /** Call a method
-     *
-     * Returns false if the call failed
-     *
-     */
-    bool callMethod(const mc_rtc::Configuration & method);
+    /** Access static data store */
+    mc_rtc::Configuration data();
   private:
-    using element_cb_t = std::function<void(mc_rtc::Configuration&)>;
-    using element_t = std::map<std::string, element_cb_t>;
-    using category_t = std::vector<std::string>;
-    /** Store calls to update the state */
-    std::map<category_t, element_t> elements_;
+    mc_rtc::Configuration state_;
+    struct ElementStore
+    {
+      const Element & operator()() const;
+      Element & operator()();
+      std::function<Element&()> element;
+      void (*addData)(Element &, mc_rtc::Configuration &);
+      void (*addGUI)(Element &, mc_rtc::Configuration &);
+      bool (*handleRequest)(Element &, const mc_rtc::Configuration &);
 
-    using method_cb_t = std::function<bool(const mc_rtc::Configuration&)>;
-    using element_method_t = std::map<std::string, method_cb_t>;
-    /** Store calls to process method calls */
-    std::map<category_t, element_method_t> methods_;
+      template<typename T>
+      ElementStore(T self);
+    };
+    struct Category
+    {
+      std::vector<ElementStore> elements;
+      std::map<std::string, Category> sub;
+    };
+    Category elements_;
 
-    State state_;
+    /** Get a category
+     *
+     * Returns false and parent category if the category does
+     * not exist, true and the request category otherwise
+     *
+     * \p category Requested category
+     *
+     * \p getParent If true returns the parent category,
+     * otherwise returns the category
+     */
+    std::pair<bool, Category&> getCategory(const std::vector<std::string> & category, bool getParent);
+
+    /** Get a category, creates it if does not exist */
+    Category & getCategory(const std::vector<std::string> & category);
+
+    void update(Category & category, mc_rtc::Configuration out);
+
+    std::string cat2str(const std::vector<std::string> & category);
   };
 
 } // namespace gui

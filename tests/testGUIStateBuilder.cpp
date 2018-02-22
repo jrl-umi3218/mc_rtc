@@ -12,25 +12,10 @@ BOOST_AUTO_TEST_CASE(TestGUIStateBuilder)
 {
   DummyProvider provider;
   mc_rtc::gui::StateBuilder builder;
-  builder.addElement(
-   mc_rtc::gui::Element<Eigen::Vector3d>{
-      {"dummy", "provider", "point"},
-      std::function<Eigen::Vector3d()>{
-        [&provider]() { return provider.point; }
-      }
-   }
-  );
-  builder.addElement(
-   mc_rtc::gui::Element<double>{
-      {"dummy", "provider", "value"},
-      std::function<double()>{
-        [&provider]() { return provider.value; }
-      }
-   },
-   mc_rtc::gui::Input<double>({}, 0.0, 1.0)
-  );
+  builder.addElement({"dummy", "provider"}, mc_rtc::gui::makeLabel("value", [&provider]{ return provider.value; }));
+  builder.addElement({"dummy", "provider"}, mc_rtc::gui::makeArrayLabel("point", [&provider]{ return provider.point; }));
   {
-    const auto & state = builder.updateState().state;
+    const auto & state = builder.update();
     BOOST_REQUIRE(state.has("dummy"));
     BOOST_REQUIRE(state("dummy").has("provider"));
     BOOST_REQUIRE(state("dummy")("provider").has("point"));
@@ -43,7 +28,7 @@ BOOST_AUTO_TEST_CASE(TestGUIStateBuilder)
   {
     provider.value = -122.5;
     provider.point = Eigen::Vector3d::Random();
-    const auto & state = builder.updateState().state;
+    const auto & state = builder.update();
     BOOST_REQUIRE(state.has("dummy"));
     BOOST_REQUIRE(state("dummy").has("provider"));
     BOOST_REQUIRE(state("dummy")("provider").has("point"));

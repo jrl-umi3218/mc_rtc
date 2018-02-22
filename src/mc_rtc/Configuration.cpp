@@ -682,6 +682,15 @@ bool Configuration::remove(const std::string & key)
   return false;
 }
 
+std::vector<std::string> Configuration::keys() const
+{
+  if(v.isObject())
+  {
+    return v.keys();
+  }
+  return {};
+}
+
 ConfigurationArrayIterator Configuration::begin() const
 {
   return ConfigurationArrayIterator(*this);

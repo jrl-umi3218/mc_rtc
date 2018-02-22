@@ -198,13 +198,13 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
       std::string bName = robot(c.r1Index()).name() + "::" + c.r1Surface()->name() + " & "
                           + robot(c.r2Index()).name() + "::" + c.r2Surface()->name();
       auto nContacts = allBut(contacts, c);
-      gui_->addElement(
-        mc_rtc::gui::Element<void>{
-          {"Contacts", "Remove", bName},
-          [nContacts,this]() { setContacts(nContacts); }
-        },
-        mc_rtc::gui::Button{}
-      );
+      //gui_->addElement(
+      //  mc_rtc::gui::Element<void>{
+      //    {"Contacts", "Remove", bName},
+      //    [nContacts,this]() { setContacts(nContacts); }
+      //  },
+      //  mc_rtc::gui::Button{}
+      //);
     }
   }
 
@@ -435,37 +435,37 @@ void QPSolver::gui(std::shared_ptr<mc_rtc::gui::StateBuilder> gui)
     {
       addTaskToGUI(t);
     }
-    gui_->addElement(
-      mc_rtc::gui::Element<mc_rtc::Configuration>{
-        {"Contacts", "Add", "Form"},
-        std::function<void(const mc_rtc::Configuration&)>{
-          [this](const mc_rtc::Configuration & data)
-          {
-            try
-            {
-              unsigned int r0Index = data("R0");
-              unsigned int r1Index = data("R1");
-              std::string r0Surface = data("R0 surface");
-              std::string r1Surface = data("R1 surface");
-              contacts_.push_back({robots(), r0Index, r1Index, r0Surface, r1Surface});
-              setContacts(contacts_);
-            }
-            catch(const std::exception & exc)
-            {
-              LOG_ERROR("Failed to add contact based on the provided input: " << exc.what())
-              LOG_WARNING(data.dump(true))
-            }
-          }
-        }
-      },
-      mc_rtc::gui::Form{
-        {"R0", "R1", "R0 surface", "R1 surface"},
-        mc_rtc::gui::Input<unsigned int>({"R0"}, 0, robots().size()),
-        mc_rtc::gui::Input<unsigned int>({"R1"}, 0, robots().size()),
-        mc_rtc::gui::Input<std::string>({"R0 surface"}),
-        mc_rtc::gui::Input<std::string>({"R1 surface"})
-      }
-    );
+    //gui_->addElement(
+    //  mc_rtc::gui::Element<mc_rtc::Configuration>{
+    //    {"Contacts", "Add", "Form"},
+    //    std::function<void(const mc_rtc::Configuration&)>{
+    //      [this](const mc_rtc::Configuration & data)
+    //      {
+    //        try
+    //        {
+    //          unsigned int r0Index = data("R0");
+    //          unsigned int r1Index = data("R1");
+    //          std::string r0Surface = data("R0 surface");
+    //          std::string r1Surface = data("R1 surface");
+    //          contacts_.push_back({robots(), r0Index, r1Index, r0Surface, r1Surface});
+    //          setContacts(contacts_);
+    //        }
+    //        catch(const std::exception & exc)
+    //        {
+    //          LOG_ERROR("Failed to add contact based on the provided input: " << exc.what())
+    //          LOG_WARNING(data.dump(true))
+    //        }
+    //      }
+    //    }
+    //  },
+    //  mc_rtc::gui::Form{
+    //    {"R0", "R1", "R0 surface", "R1 surface"},
+    //    mc_rtc::gui::Input<unsigned int>({"R0"}, 0, robots().size()),
+    //    mc_rtc::gui::Input<unsigned int>({"R1"}, 0, robots().size()),
+    //    mc_rtc::gui::Input<std::string>({"R0 surface"}),
+    //    mc_rtc::gui::Input<std::string>({"R1 surface"})
+    //  }
+    //);
   }
 }
 
@@ -473,16 +473,16 @@ void QPSolver::addTaskToGUI(mc_tasks::MetaTask * t)
 {
   assert(gui_);
   t->addToGUI(*gui_);
-  gui_->addElement(
-    mc_rtc::gui::Element<void>{
-      {"Tasks", t->name(), "Remove from solver"},
-      [this,t]()
-      {
-        this->removeTask(t);
-      }
-    },
-    mc_rtc::gui::Button{}
-  );
+  //gui_->addElement(
+  //  mc_rtc::gui::Element<void>{
+  //    {"Tasks", t->name(), "Remove from solver"},
+  //    [this,t]()
+  //    {
+  //      this->removeTask(t);
+  //    }
+  //  },
+  //  mc_rtc::gui::Button{}
+  //);
 }
 
 }

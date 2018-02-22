@@ -50,17 +50,52 @@ namespace mc_control
 
     /** Set the timeout of the SUB socket */
     double timeout(double t);
-
   protected:
-    /** Overriden in derived class to handle the GUI state provided by the
-     * SUB socket */
-    virtual void handle_gui_state(const char * data, size_t size) = 0;
+    void handle_gui_state(const char * data);
 
+    void handle_category(const std::vector<std::string> & parent, const std::string & category, const mc_rtc::Configuration & data);
+
+    void handle_widget(const std::vector<std::string> & category, const std::string & name, const mc_rtc::Configuration & data);
+
+    /** Should be implemented to create a new category container */
+    virtual void category(const std::vector<std::string> & parent, const std::string & category) = 0;
+
+    /** Should be implemented to create a label for data that can be displayed as string */
+    virtual void label(const std::vector<std::string> & category,
+                       const std::string & label, const std::string &)
+    {
+      default_impl("Label", category, label);
+    }
+
+    /** Should be implemented to create a label for a numeric array
+     *
+     * \p category Category under which the label appears
+     * \p label Name of the data
+     * \p labels Per-dimension label (can be empty)
+     * \p data Data to display
+     */
+    virtual void array_label(const std::vector<std::string> & category,
+                             const std::string & label,
+                             const std::vector<std::string> &,
+                             const Eigen::VectorXd &)
+    {
+      default_impl("ArrayLabel", category, label);
+    }
+
+    /* Network elements */
     bool run_ = true;
     int sub_socket_;
     std::thread sub_th_;
     int push_socket_;
     double timeout_;
+
+    /* Hold data from the server */
+    mc_rtc::Configuration data_;
+  private:
+    /** Default implementations for widgets' creations display a warning message to the user */
+    void default_impl(const std::string & type,
+                      const std::vector<std::string> & category,
+                      const std::string & label);
   };
 
 

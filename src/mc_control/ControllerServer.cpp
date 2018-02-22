@@ -61,7 +61,10 @@ void ControllerServer::handle_requests(mc_rtc::gui::StateBuilder & gui_builder)
     else
     {
       auto config = mc_rtc::Configuration::fromData(static_cast<const char*>(buf));
-      if(!gui_builder.callMethod(config))
+      auto category = config("category", std::vector<std::string>{});
+      auto name = config("name", std::string{});
+      auto data = config("data", mc_rtc::Configuration{});
+      if(!gui_builder.handleRequest(category, name, data))
       {
         LOG_ERROR("Invokation of the following method failed" << std::endl << config.dump(true) << std::endl)
       }
@@ -75,8 +78,8 @@ void ControllerServer::publish(mc_rtc::gui::StateBuilder & gui_builder)
 {
   if(iter++ % rate == 0)
   {
-    const auto & state = gui_builder.updateState();
-    auto data = state.state.dump();
+    const auto & state = gui_builder.update();
+    auto data = state.dump();
     nn_send(pub_socket_, data.c_str(), data.size() + 1, 0);
   }
 }

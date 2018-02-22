@@ -95,3 +95,6 @@ endif()
 
 add_executable(dummyClient dummyClient.cpp)
 target_link_libraries(dummyClient mc_control_client)
+
+add_executable(dummyServer dummyServer.cpp)
+target_link_libraries(dummyServer mc_control)
