@@ -90,26 +90,49 @@ void SlidingFootContactState::start(Controller & ctl)
     auto gui = ctl.gui();
     if(!gui) { return; }
     slide_triggered_ = false;
-    //gui->addButton({"#FSM#", "SLIDE!"},
-    //               [this]()
-    //               {
-    //                 if(phase_ == Phase::REACH_SUPPORT && !slide_triggered_)
-    //                 {
-    //                   if(next_ == "")
-    //                   {
-    //                    LOG_ERROR("SELECT NEXT SLIDING FEET")
-    //                   }
-    //                   else
-    //                   {
-    //                    slide_triggered_ = true;
-    //                   }
-    //                 }
-    //               });
-    //gui->addButton({"#FSM#", "Report offset"},
-    //               [this]()
-    //               {
-    //                std::cout << "New offset " << (com_offset_ + comTask_->com() - com_target0).transpose() << std::endl;
-    //               });
+    gui->addElement({"FSM"},
+                    mc_rtc::gui::Button("Report offset",
+                      [this]()
+                      {
+                        std::cout << "New offset " << (com_offset_ + comTask_->com() - com_target0).transpose() << std::endl;
+                      }
+                    ),
+                    mc_rtc::gui::Button("Free foot Z",
+                      [this,&ctl]()
+                      {
+                        Eigen::Vector6d dof;
+                        dof << 1., 1., 1., 1., 1., 0.;
+                        copSlidingFootTask_->admittance({{0, 0, 0},{0,0,1e-4}});
+                        copSlidingFootTask_->targetForce({0.,0.,slidingForceTarget_});
+                        slidingContactId_ = getContactId(ctl, slidingSurface_);
+                        ctl.contactConstraint().contactConstr->removeDofContact(slidingContactId_);
+                        auto res = ctl.contactConstraint().contactConstr->addDofContact(slidingContactId_, dof.asDiagonal());
+                        if(!res)
+                        {
+                          LOG_ERROR("Failed to set dof contact for " << slidingSurface_)
+                        }
+                        ctl.contactConstraint().contactConstr->updateDofContacts();
+                        ctl.solver().addTask(copSlidingFootTask_);
+                      }
+                    ),
+                    mc_rtc::gui::Button("SLIDE!",
+                      [this]()
+                      {
+                        if(phase_ == Phase::REACH_SUPPORT && !slide_triggered_)
+                        {
+                          if(next_ == "")
+                          {
+                           LOG_ERROR("SELECT NEXT SLIDING FEET")
+                          }
+                          else
+                          {
+                           slide_triggered_ = true;
+                          }
+                        }
+                      }
+                    )
+    );
+
     //gui->addElement(mc_rtc::gui::Element<Eigen::Vector2d>{
     //                  {"#FSM#", "Sliding target"},
     //                  [this](){ return move_; },
@@ -122,23 +145,6 @@ void SlidingFootContactState::start(Controller & ctl)
     //                  [this](const std::string & s) { next_ = s; }
     //                },
     //                mc_rtc::gui::ComboList<std::string>{std::vector<std::string>{slidingSurface_, supportSurface_}});
-    //gui->addButton({"#FSM#", "Free foot Z"},
-    //               [this,&ctl]()
-    //               {
-    //                 Eigen::Vector6d dof;
-    //                 dof << 1., 1., 1., 1., 1., 0.;
-    //                 copSlidingFootTask_->admittance({{0, 0, 0},{0,0,1e-4}});
-    //                 copSlidingFootTask_->targetForce({0.,0.,slidingForceTarget_});
-    //                 slidingContactId_ = getContactId(ctl, slidingSurface_);
-    //                 ctl.contactConstraint().contactConstr->removeDofContact(slidingContactId_);
-    //                 auto res = ctl.contactConstraint().contactConstr->addDofContact(slidingContactId_, dof.asDiagonal());
-    //                 if(!res)
-    //                 {
-    //                   LOG_ERROR("Failed to set dof contact for " << slidingSurface_)
-    //                 }
-    //                 ctl.contactConstraint().contactConstr->updateDofContacts();
-    //                 ctl.solver().addTask(copSlidingFootTask_);
-    //               });
   }
 }
 

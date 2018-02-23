@@ -39,33 +39,14 @@ void MetaTask::load(mc_solver::QPSolver & solver,
 
 void MetaTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
-  //gui.addElement(
-  //  mc_rtc::gui::Element<void>{
-  //    {"Tasks", name_, "Reset"},
-  //    [this]() { this->reset(); }
-  //  },
-  //  mc_rtc::gui::Button{}
-  //);
-  //gui.addElement(
-  //  mc_rtc::gui::Element<std::string>{
-  //    {"Tasks", name_, "Details", "type"},
-  //    std::function<std::string()>{[this]() { return this->type_; }}
-  //  }
-  //);
-  //gui.addElement(
-  //  mc_rtc::gui::Element<Eigen::VectorXd>{
-  //    {"Tasks", name_, "Details", "eval"},
-  //    std::function<Eigen::VectorXd()>{[this]() { return this->eval(); }}
-  //  },
-  //  mc_rtc::gui::Label(true)
-  //);
-  //gui.addElement(
-  //  mc_rtc::gui::Element<Eigen::VectorXd>{
-  //    {"Tasks", name_, "Details", "speed"},
-  //    std::function<Eigen::VectorXd()>{[this]() { return this->speed(); }}
-  //  },
-  //  mc_rtc::gui::Label(true)
-  //);
+  gui.addElement({"Tasks", name_},
+                 mc_rtc::gui::Button("Reset", [this]() { this->reset(); }));
+  gui.addElement({"Tasks", name_, "Details"},
+                 mc_rtc::gui::ArrayLabel("eval", [this]() { return this->eval(); }));
+  gui.addElement({"Tasks", name_, "Details"},
+                 mc_rtc::gui::ArrayLabel("speed", [this]() { return this->speed(); }));
+  gui.addElement({"Tasks", name_, "Details"},
+                 mc_rtc::gui::Label("type", [this]() { return this->type_; }));
 }
 
 void MetaTask::removeFromGUI(mc_rtc::gui::StateBuilder & gui)

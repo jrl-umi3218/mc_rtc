@@ -198,13 +198,8 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
       std::string bName = robot(c.r1Index()).name() + "::" + c.r1Surface()->name() + " & "
                           + robot(c.r2Index()).name() + "::" + c.r2Surface()->name();
       auto nContacts = allBut(contacts, c);
-      //gui_->addElement(
-      //  mc_rtc::gui::Element<void>{
-      //    {"Contacts", "Remove", bName},
-      //    [nContacts,this]() { setContacts(nContacts); }
-      //  },
-      //  mc_rtc::gui::Button{}
-      //);
+      gui_->addElement({"Contacts", "Remove"},
+                       mc_rtc::gui::Button(bName, [nContacts,this]() { setContacts(nContacts); }));
     }
   }
 
@@ -473,16 +468,9 @@ void QPSolver::addTaskToGUI(mc_tasks::MetaTask * t)
 {
   assert(gui_);
   t->addToGUI(*gui_);
-  //gui_->addElement(
-  //  mc_rtc::gui::Element<void>{
-  //    {"Tasks", t->name(), "Remove from solver"},
-  //    [this,t]()
-  //    {
-  //      this->removeTask(t);
-  //    }
-  //  },
-  //  mc_rtc::gui::Button{}
-  //);
+  gui_->addElement({"Tasks", t->name()},
+                   mc_rtc::gui::Button("Remove from solver",
+                     [this,t]() { this->removeTask(t); }));
 }
 
 }
