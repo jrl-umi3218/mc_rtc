@@ -43,10 +43,17 @@ void StateBuilder::removeCategory(const std::vector<std::string> & category)
     LOG_WARNING("Call clear() if this was your intent")
     return;
   }
-  auto cat = getCategory(category, true);
+  std::pair<bool, Category&> cat = getCategory(category, true);
   if(cat.first && cat.second.sub.count(category.back()))
   {
     cat.second.sub.erase(category.back());
+    Configuration s = state_;
+    for(size_t i = 0; i < category.size() - 1; ++i)
+    {
+      if(!s.has(category[i])) { return; }
+      s = s(category[i]);
+    }
+    if(s.has(category.back())) { s.remove(category.back()); }
   }
 }
 
@@ -66,6 +73,13 @@ void StateBuilder::removeElement(const std::vector<std::string> & category, cons
     if(it != cat.elements.end())
     {
       cat.elements.erase(it);
+      auto s = state_;
+      for(const auto & c : category)
+      {
+        if(!s.has(c)) return;
+        s = s(c);
+      }
+      if(s.has(name)) { s.remove(name); }
     }
   }
 }
@@ -125,8 +139,9 @@ bool StateBuilder::handleRequest(const std::vector<std::string> & category,
     LOG_ERROR("No element " << name << " in category " << cat2str(category))
     return false;
   }
-  auto & el = *it;
-  return el.handleRequest(el(), data);
+  ElementStore & el = *it;
+  Element & elem = el();
+  return el.handleRequest(elem, data);
 }
 
 mc_rtc::Configuration StateBuilder::data()
