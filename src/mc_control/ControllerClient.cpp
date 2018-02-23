@@ -149,7 +149,10 @@ void ControllerClient::handle_category(const std::vector<std::string> & parent,
     this->category(parent, category);
   }
   auto next_category = parent;
-  next_category.push_back(category);
+  if(category.size())
+  {
+    next_category.push_back(category);
+  }
   for(const auto & k : data.keys())
   {
     const auto & d = data(k);

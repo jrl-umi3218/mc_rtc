@@ -82,7 +82,11 @@ void StateBuilder::update(Category & category,
   for(auto & e : category.elements)
   {
     auto & element = e();
-    auto c = out.add(element.name());
+    if(!out.has(element.name()))
+    {
+      out.add(element.name());
+    }
+    auto c = out(element.name());
     e.addData(element, c);
     auto g = c.add("GUI");
     e.addGUI(element, g);
@@ -121,7 +125,8 @@ bool StateBuilder::handleRequest(const std::vector<std::string> & category,
     LOG_ERROR("No element " << name << " in category " << cat2str(category))
     return false;
   }
-  return (*it)().handleRequest(data);
+  auto & el = *it;
+  return el.handleRequest(el(), data);
 }
 
 mc_rtc::Configuration StateBuilder::data()
