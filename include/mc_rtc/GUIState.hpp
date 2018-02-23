@@ -35,6 +35,19 @@ void ArrayLabelImpl<GetT>::addGUI(mc_rtc::Configuration & gui)
   if(labels_.size()) { gui.add("labels", labels_); }
 }
 
+template<typename Callback>
+ButtonImpl<Callback>::ButtonImpl(const std::string & name, Callback cb)
+: Element(name), cb_(cb)
+{
+}
+
+template<typename Callback>
+bool ButtonImpl<Callback>::handleRequest(const mc_rtc::Configuration &)
+{
+  cb_();
+  return true;
+}
+
 template<typename T>
 void StateBuilder::addElement(const std::vector<std::string> & category, T element)
 {

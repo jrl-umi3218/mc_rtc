@@ -88,6 +88,13 @@ namespace mc_control
       default_impl("ArrayLabel", category, label);
     }
 
+    /** Should be implemented to create a button */
+    virtual void button(const std::vector<std::string> & category,
+                        const std::string & label)
+    {
+      default_impl("Button", category, label);
+    }
+
     /* Network elements */
     bool run_ = true;
     int sub_socket_;

@@ -97,6 +97,24 @@ namespace gui
     return ArrayLabelImpl<GetT>(name, labels, get_fn);
   }
 
+  template<typename Callback>
+  struct MC_RTC_GUI_DLLAPI ButtonImpl : public Element
+  {
+    static constexpr auto type = Elements::Button;
+
+    ButtonImpl(const std::string & name, Callback cb);
+
+    bool handleRequest(const mc_rtc::Configuration &);
+  private:
+    Callback cb_;
+  };
+
+  template<typename Callback>
+  ButtonImpl<Callback> Button(const std::string & name, Callback cb)
+  {
+    return ButtonImpl<Callback>(name, cb);
+  }
+
   /** Used to build a GUI state from multiple objects */
   struct MC_RTC_GUI_DLLAPI StateBuilder
   {
