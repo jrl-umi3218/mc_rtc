@@ -84,7 +84,8 @@ StateBuilder::ElementStore::ElementStore(T self)
            };
   handleRequest = [](Element & el, const mc_rtc::Configuration & data)
                   {
-                    return static_cast<T&>(el).handleRequest(data);
+                    T el_ = static_cast<T&>(el);
+                    return el_.handleRequest(data);
                   };
 }
 
