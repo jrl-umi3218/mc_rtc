@@ -69,6 +69,15 @@ void StateBuilder::addElement(const std::vector<std::string> & category, T eleme
   cat.elements.emplace_back(element);
 }
 
+template<typename T, typename ... Args>
+void StateBuilder::addElement(const std::vector<std::string> & category,
+                              T element, Args ... args)
+{
+  addElement(category, element);
+  addElement(category, args...);
+}
+
+
 template<typename T>
 StateBuilder::ElementStore::ElementStore(T self)
 {

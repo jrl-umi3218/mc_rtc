@@ -131,6 +131,9 @@ namespace gui
     template<typename T>
     void addElement(const std::vector<std::string> & category, T element);
 
+    template<typename T, typename ... Args>
+    void addElement(const std::vector<std::string> & category, T element, Args ... args);
+
     /** Remove all elements */
     void reset();
 
