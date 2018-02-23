@@ -20,8 +20,8 @@ struct TestServer
 
 TestServer::TestServer()
 {
-  builder.addElement({"dummy", "provider"}, mc_rtc::gui::makeLabel("value", [this]{ return provider.value; }));
-  builder.addElement({"dummy", "provider"}, mc_rtc::gui::makeArrayLabel("point", [this]{ return provider.point; }));
+  builder.addElement({"dummy", "provider"}, mc_rtc::gui::Label("value", [this]{ return provider.value; }));
+  builder.addElement({"dummy", "provider"}, mc_rtc::gui::ArrayLabel("point", [this]{ return provider.point; }));
 }
 
 void TestServer::publish()

@@ -9,28 +9,28 @@ namespace gui
 {
 
 template<typename GetT>
-Label<GetT>::Label(const std::string & name, GetT get_fn)
+LabelImpl<GetT>::LabelImpl(const std::string & name, GetT get_fn)
 : Element(name), get_fn_(get_fn)
 {
 }
 
 template<typename GetT>
-void Label<GetT>::addData(mc_rtc::Configuration & data)
+void LabelImpl<GetT>::addData(mc_rtc::Configuration & data)
 {
   data.add("data", get_fn_());
 }
 
 template<typename GetT>
-ArrayLabel<GetT>::ArrayLabel(const std::string & name,
-                             const std::vector<std::string> & labels,
-                             GetT get_fn)
-: Label<GetT>(name, get_fn),
+ArrayLabelImpl<GetT>::ArrayLabelImpl(const std::string & name,
+                                     const std::vector<std::string> & labels,
+                                     GetT get_fn)
+: LabelImpl<GetT>(name, get_fn),
   labels_(labels)
 {
 }
 
 template<typename GetT>
-void ArrayLabel<GetT>::addGUI(mc_rtc::Configuration & gui)
+void ArrayLabelImpl<GetT>::addGUI(mc_rtc::Configuration & gui)
 {
   if(labels_.size()) { gui.add("labels", labels_); }
 }

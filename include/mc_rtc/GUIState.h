@@ -54,11 +54,11 @@ namespace gui
   };
 
   template<typename GetT>
-  struct MC_RTC_GUI_DLLAPI Label : public Element
+  struct MC_RTC_GUI_DLLAPI LabelImpl : public Element
   {
     static constexpr auto type = Elements::Label;
 
-    Label(const std::string & name, GetT get_fn);
+    LabelImpl(const std::string & name, GetT get_fn);
 
     void addData(mc_rtc::Configuration & data);
   private:
@@ -66,19 +66,19 @@ namespace gui
   };
 
   template<typename GetT>
-  Label<GetT> makeLabel(const std::string & name, GetT get_fn)
+  LabelImpl<GetT> Label(const std::string & name, GetT get_fn)
   {
-    return Label<GetT>(name, get_fn);
+    return LabelImpl<GetT>(name, get_fn);
   }
 
   template<typename GetT>
-  struct MC_RTC_GUI_DLLAPI ArrayLabel : public Label<GetT>
+  struct MC_RTC_GUI_DLLAPI ArrayLabelImpl : public LabelImpl<GetT>
   {
     static constexpr auto type = Elements::ArrayLabel;
 
-    using Label<GetT>::Label;
+    using LabelImpl<GetT>::LabelImpl;
 
-    ArrayLabel(const std::string & name, const std::vector<std::string> & labels, GetT get_fn);
+    ArrayLabelImpl(const std::string & name, const std::vector<std::string> & labels, GetT get_fn);
 
     void addGUI(mc_rtc::Configuration & gui);
   private:
@@ -86,9 +86,15 @@ namespace gui
   };
 
   template<typename GetT>
-  ArrayLabel<GetT> makeArrayLabel(const std::string & name, GetT get_fn)
+  ArrayLabelImpl<GetT> ArrayLabel(const std::string & name, GetT get_fn)
   {
-    return ArrayLabel<GetT>(name, get_fn);
+    return ArrayLabelImpl<GetT>(name, get_fn);
+  }
+
+  template<typename GetT>
+  ArrayLabelImpl<GetT> ArrayLabel(const std::string & name, const std::vector<std::string> & labels, GetT get_fn)
+  {
+    return ArrayLabelImpl<GetT>(name, labels, get_fn);
   }
 
   /** Used to build a GUI state from multiple objects */
