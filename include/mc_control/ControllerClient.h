@@ -57,6 +57,12 @@ namespace mc_control
 
     void handle_widget(const std::vector<std::string> & category, const std::string & name, const mc_rtc::Configuration & data);
 
+    /** Called when a message starts being processed, can be used to lock the GUI */
+    virtual void started() {}
+
+    /** Called when a message has been processed */
+    virtual void stopped() {}
+
     /** Should be implemented to create a new category container */
     virtual void category(const std::vector<std::string> & parent, const std::string & category) = 0;
 

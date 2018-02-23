@@ -125,6 +125,7 @@ void ControllerClient::send_request(const std::vector<std::string> & category,
 
 void ControllerClient::handle_gui_state(const char * data)
 {
+  started();
   auto state = mc_rtc::Configuration::fromData(data);
   if(state.has("DATA"))
   {
@@ -136,6 +137,7 @@ void ControllerClient::handle_gui_state(const char * data)
     data_ = mc_rtc::Configuration{};
   }
   handle_category({}, "", state);
+  stopped();
 }
 
 void ControllerClient::handle_category(const std::vector<std::string> & parent,
