@@ -13,19 +13,21 @@ struct TestServer
 
   void publish();
 
-  mc_control::ControllerServer server {1.0, 1.0, {"ipc:///tmp/mc_rtc_pub.ipc"}, {"ipc:///tmp/mc_rtc_ret.ipc"}};
+  mc_control::ControllerServer server {1.0, 1.0, {"ipc:///tmp/mc_rtc_pub.ipc"}, {"ipc:///tmp/mc_rtc_rep.ipc"}};
   DummyProvider provider;
   mc_rtc::gui::StateBuilder builder;
 };
 
 TestServer::TestServer()
 {
-  builder.addElement({"dummy", "provider"}, mc_rtc::gui::Label("value", [this]{ return provider.value; }));
-  builder.addElement({"dummy", "provider"}, mc_rtc::gui::ArrayLabel("point", [this]{ return provider.point; }));
+  builder.addElement({"dummy", "provider"}, mc_rtc::gui::Label("value", [this](){ return provider.value; }));
+  builder.addElement({"dummy", "provider"}, mc_rtc::gui::ArrayLabel("point", [this](){ return provider.point; }));
+  builder.addElement({"Button example"}, mc_rtc::gui::Button("Push me", [](){ LOG_INFO("Button pushed") }));
 }
 
 void TestServer::publish()
 {
+  server.handle_requests(builder);
   server.publish(builder);
 }
 
@@ -35,7 +37,7 @@ int main()
   while(1)
   {
     server.publish();
-    sleep(1);
+    usleep(50000);
   }
   return 0;
 }
