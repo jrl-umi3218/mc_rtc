@@ -95,6 +95,14 @@ namespace mc_control
       default_impl("Button", category, label);
     }
 
+    /** Should be implemented to create a toggle */
+    virtual void toggle(const std::vector<std::string> & category,
+                        const std::string & label,
+                        bool /*state */)
+    {
+      default_impl("Toggle", category, label);
+    }
+
     /* Network elements */
     bool run_ = true;
     int sub_socket_;

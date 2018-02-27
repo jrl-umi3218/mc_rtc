@@ -192,6 +192,9 @@ void ControllerClient::handle_widget(const std::vector<std::string> & category,
       case Elements::Button:
         button(category, name);
         break;
+      case Elements::Toggle:
+        toggle(category, name, data("data"));
+        break;
       default:
         LOG_ERROR("Type " << static_cast<int>(type) << " is not handlded by this ControllerClient")
         break;

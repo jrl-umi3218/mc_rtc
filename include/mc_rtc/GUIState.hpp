@@ -66,7 +66,7 @@ void ArrayLabelImpl<GetT>::addGUI(mc_rtc::Configuration & gui)
 template<typename GetT, typename Callback>
 ToggleImpl<GetT, Callback>::ToggleImpl(const std::string & name,
                                        GetT get_fn, Callback cb)
-: VoidCallbackElement<Callback, DataElement<GetT>>(name, cb, get_fn)
+: VoidCallbackElement<DataElement<GetT>, Callback>(name, cb, get_fn)
 {
 }
 

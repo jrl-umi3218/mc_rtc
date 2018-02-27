@@ -137,7 +137,7 @@ protected:
   }
 
   template<typename GetT, typename Callback>
-  struct MC_RTC_GUI_DLLAPI ToggleImpl : public VoidCallbackElement<Callback, DataElement<GetT>>
+  struct MC_RTC_GUI_DLLAPI ToggleImpl : public VoidCallbackElement<DataElement<GetT>, Callback>
   {
     static constexpr auto type = Elements::Toggle;
 
