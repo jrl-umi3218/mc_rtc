@@ -64,7 +64,7 @@ void ArrayLabelImpl<GetT>::addGUI(mc_rtc::Configuration & gui)
 }
 
 template<typename GetT, typename Callback>
-ToggleImpl<GetT, Callback>::ToggleImpl(const std::string & name,
+CheckboxImpl<GetT, Callback>::CheckboxImpl(const std::string & name,
                                        GetT get_fn, Callback cb)
 : VoidCallbackElement<DataElement<GetT>, Callback>(name, cb, get_fn)
 {

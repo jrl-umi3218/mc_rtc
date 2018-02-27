@@ -95,12 +95,12 @@ namespace mc_control
       default_impl("Button", category, label);
     }
 
-    /** Should be implemented to create a toggle */
-    virtual void toggle(const std::vector<std::string> & category,
+    /** Should be implemented to create a checkbox */
+    virtual void checkbox(const std::vector<std::string> & category,
                         const std::string & label,
                         bool /*state */)
     {
-      default_impl("Toggle", category, label);
+      default_impl("Checkbox", category, label);
     }
 
     /* Network elements */

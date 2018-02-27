@@ -39,7 +39,7 @@ namespace gui
     Label = 0,
     ArrayLabel,
     Button,
-    Toggle,
+    Checkbox,
     StringInput,
     IntegerInput,
     NumberInput,
@@ -137,19 +137,19 @@ protected:
   }
 
   template<typename GetT, typename Callback>
-  struct MC_RTC_GUI_DLLAPI ToggleImpl : public VoidCallbackElement<DataElement<GetT>, Callback>
+  struct MC_RTC_GUI_DLLAPI CheckboxImpl : public VoidCallbackElement<DataElement<GetT>, Callback>
   {
-    static constexpr auto type = Elements::Toggle;
+    static constexpr auto type = Elements::Checkbox;
 
-    ToggleImpl(const std::string & name,
+    CheckboxImpl(const std::string & name,
                GetT get_fn, Callback cb);
   };
 
   template<typename GetT, typename Callback>
-  ToggleImpl<GetT, Callback> Toggle(const std::string & name,
+  CheckboxImpl<GetT, Callback> Checkbox(const std::string & name,
                                     GetT get_fn, Callback cb)
   {
-    return ToggleImpl<GetT, Callback>(name, get_fn, cb);
+    return CheckboxImpl<GetT, Callback>(name, get_fn, cb);
   }
 
 

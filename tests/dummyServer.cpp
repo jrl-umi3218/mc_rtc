@@ -16,7 +16,7 @@ struct TestServer
   mc_control::ControllerServer server {1.0, 1.0, {"ipc:///tmp/mc_rtc_pub.ipc"}, {"ipc:///tmp/mc_rtc_rep.ipc"}};
   DummyProvider provider;
   mc_rtc::gui::StateBuilder builder;
-  bool toggle_ = true;
+  bool check_ = true;
 };
 
 TestServer::TestServer()
@@ -27,9 +27,9 @@ TestServer::TestServer()
                                                                     [this](){ return provider.point; }));
   builder.addElement({"Button example"}, mc_rtc::gui::Button("Push me",
                                                              [](){ LOG_INFO("Button pushed") }));
-  builder.addElement({"Toggle example"}, mc_rtc::gui::Toggle("Toggle",
-                                                             [this](){ return toggle_;},
-                                                             [this](){ toggle_ = !toggle_; }));
+  builder.addElement({"Checkbox example"}, mc_rtc::gui::Checkbox("Checkbox",
+                                                             [this](){ return check_;},
+                                                             [this](){ check_ = !check_; }));
 }
 
 void TestServer::publish()
