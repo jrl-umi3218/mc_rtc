@@ -23,14 +23,14 @@ namespace gui
 
   struct MC_RTC_GUI_DLLAPI Element
   {
-    Element(const std::string & name);
-
     const std::string & name() const { return name_; }
 
     void addData(mc_rtc::Configuration &) {}
     void addGUI(mc_rtc::Configuration &) {}
     bool handleRequest(const mc_rtc::Configuration &) { return false; }
   protected:
+    Element(const std::string & name);
+
     std::string name_;
   };
 
@@ -54,15 +54,40 @@ namespace gui
   };
 
   template<typename GetT>
-  struct MC_RTC_GUI_DLLAPI LabelImpl : public Element
+  struct MC_RTC_GUI_DLLAPI DataElement : public Element
+  {
+    void addData(mc_rtc::Configuration & data);
+
+    DataElement(const std::string & name, GetT get_fn);
+  private:
+    GetT get_fn_;
+  };
+
+  template<typename ElementT, typename Callback>
+  struct MC_RTC_GUI_DLLAPI CallbackElement : public ElementT
+  {
+    bool handleRequest(const mc_rtc::Configuration &);
+
+    template<typename ... Args>
+    CallbackElement(const std::string & name, Callback cb, Args && ... args);
+protected:
+    Callback cb_;
+  };
+
+  template<typename ElementT, typename Callback>
+  struct MC_RTC_GUI_DLLAPI VoidCallbackElement : public CallbackElement<ElementT, Callback>
+  {
+    bool handleRequest(const mc_rtc::Configuration &);
+
+    using CallbackElement<ElementT, Callback>::CallbackElement;
+  };
+
+  template<typename GetT>
+  struct MC_RTC_GUI_DLLAPI LabelImpl : public DataElement<GetT>
   {
     static constexpr auto type = Elements::Label;
 
     LabelImpl(const std::string & name, GetT get_fn);
-
-    void addData(mc_rtc::Configuration & data);
-  private:
-    GetT get_fn_;
   };
 
   template<typename GetT>
@@ -98,15 +123,11 @@ namespace gui
   }
 
   template<typename Callback>
-  struct MC_RTC_GUI_DLLAPI ButtonImpl : public Element
+  struct MC_RTC_GUI_DLLAPI ButtonImpl : public VoidCallbackElement<Element, Callback>
   {
     static constexpr auto type = Elements::Button;
 
-    ButtonImpl(const std::string & name, Callback cb);
-
-    bool handleRequest(const mc_rtc::Configuration &);
-  private:
-    Callback cb_;
+    using VoidCallbackElement<Element, Callback>::VoidCallbackElement;
   };
 
   template<typename Callback>
@@ -114,6 +135,23 @@ namespace gui
   {
     return ButtonImpl<Callback>(name, cb);
   }
+
+  template<typename GetT, typename Callback>
+  struct MC_RTC_GUI_DLLAPI ToggleImpl : public VoidCallbackElement<Callback, DataElement<GetT>>
+  {
+    static constexpr auto type = Elements::Toggle;
+
+    ToggleImpl(const std::string & name,
+               GetT get_fn, Callback cb);
+  };
+
+  template<typename GetT, typename Callback>
+  ToggleImpl<GetT, Callback> Toggle(const std::string & name,
+                                    GetT get_fn, Callback cb)
+  {
+    return ToggleImpl<GetT, Callback>(name, get_fn, cb);
+  }
+
 
   /** Used to build a GUI state from multiple objects */
   struct MC_RTC_GUI_DLLAPI StateBuilder

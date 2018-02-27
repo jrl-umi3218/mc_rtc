@@ -9,15 +9,43 @@ namespace gui
 {
 
 template<typename GetT>
-LabelImpl<GetT>::LabelImpl(const std::string & name, GetT get_fn)
+DataElement<GetT>::DataElement(const std::string & name, GetT get_fn)
 : Element(name), get_fn_(get_fn)
 {
+  name_ = name;
 }
 
 template<typename GetT>
-void LabelImpl<GetT>::addData(mc_rtc::Configuration & data)
+void DataElement<GetT>::addData(mc_rtc::Configuration & data)
 {
   data.add("data", get_fn_());
+}
+
+template<typename ElementT, typename Callback>
+template<typename ... Args>
+CallbackElement<ElementT, Callback>::CallbackElement(const std::string & name, Callback cb, Args && ... args)
+: ElementT(name, std::forward<Args>(args)...), cb_(cb)
+{
+}
+
+template<typename ElementT, typename Callback>
+bool CallbackElement<ElementT, Callback>::handleRequest(const mc_rtc::Configuration & data)
+{
+  cb_(data);
+  return true;
+}
+
+template<typename ElementT, typename Callback>
+bool VoidCallbackElement<ElementT, Callback>::handleRequest(const mc_rtc::Configuration &)
+{
+  this->cb_();
+  return true;
+}
+
+template<typename GetT>
+LabelImpl<GetT>::LabelImpl(const std::string & name, GetT get_fn)
+: DataElement<GetT>(name, get_fn)
+{
 }
 
 template<typename GetT>
@@ -35,17 +63,11 @@ void ArrayLabelImpl<GetT>::addGUI(mc_rtc::Configuration & gui)
   if(labels_.size()) { gui.add("labels", labels_); }
 }
 
-template<typename Callback>
-ButtonImpl<Callback>::ButtonImpl(const std::string & name, Callback cb)
-: Element(name), cb_(cb)
+template<typename GetT, typename Callback>
+ToggleImpl<GetT, Callback>::ToggleImpl(const std::string & name,
+                                       GetT get_fn, Callback cb)
+: VoidCallbackElement<Callback, DataElement<GetT>>(name, cb, get_fn)
 {
-}
-
-template<typename Callback>
-bool ButtonImpl<Callback>::handleRequest(const mc_rtc::Configuration &)
-{
-  cb_();
-  return true;
 }
 
 template<typename T>
