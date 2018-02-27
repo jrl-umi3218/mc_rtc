@@ -195,6 +195,9 @@ void ControllerClient::handle_widget(const std::vector<std::string> & category,
       case Elements::Checkbox:
         checkbox(category, name, data("data"));
         break;
+      case Elements::StringInput:
+        string_input(category, name, data("data"));
+        break;
       default:
         LOG_ERROR("Type " << static_cast<int>(type) << " is not handlded by this ControllerClient")
         break;

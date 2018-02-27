@@ -103,6 +103,14 @@ namespace mc_control
       default_impl("Checkbox", category, label);
     }
 
+    /** Should be implemented to create a widget able to input strings */
+    virtual void string_input(const std::vector<std::string> & category,
+                              const std::string & label,
+                              const std::string & /*data*/)
+    {
+      default_impl("StringInput", category, label);
+    }
+
     /* Network elements */
     bool run_ = true;
     int sub_socket_;

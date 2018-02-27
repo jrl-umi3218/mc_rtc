@@ -65,8 +65,14 @@ void ArrayLabelImpl<GetT>::addGUI(mc_rtc::Configuration & gui)
 
 template<typename GetT, typename Callback>
 CheckboxImpl<GetT, Callback>::CheckboxImpl(const std::string & name,
-                                       GetT get_fn, Callback cb)
+                                           GetT get_fn, Callback cb)
 : VoidCallbackElement<DataElement<GetT>, Callback>(name, cb, get_fn)
+{
+}
+
+template<typename GetT, typename SetT>
+CommonInputImpl<GetT, SetT>::CommonInputImpl(const std::string & name, GetT get_fn, SetT set_fn)
+: CallbackElement<DataElement<GetT>, SetT>(name, set_fn, get_fn)
 {
 }
 

@@ -17,6 +17,7 @@ struct TestServer
   DummyProvider provider;
   mc_rtc::gui::StateBuilder builder;
   bool check_ = true;
+  std::string string_ = "default";
 };
 
 TestServer::TestServer()
@@ -30,6 +31,9 @@ TestServer::TestServer()
   builder.addElement({"Checkbox example"}, mc_rtc::gui::Checkbox("Checkbox",
                                                              [this](){ return check_;},
                                                              [this](){ check_ = !check_; }));
+  builder.addElement({"StringInput example"}, mc_rtc::gui::StringInput("StringInput",
+                                                             [this](){ return string_;},
+                                                             [this](const std::string & data){ string_ = data; }));
 }
 
 void TestServer::publish()

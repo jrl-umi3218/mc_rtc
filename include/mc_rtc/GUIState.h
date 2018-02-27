@@ -142,7 +142,7 @@ protected:
     static constexpr auto type = Elements::Checkbox;
 
     CheckboxImpl(const std::string & name,
-               GetT get_fn, Callback cb);
+                 GetT get_fn, Callback cb);
   };
 
   template<typename GetT, typename Callback>
@@ -152,6 +152,26 @@ protected:
     return CheckboxImpl<GetT, Callback>(name, get_fn, cb);
   }
 
+  template<typename GetT, typename SetT>
+  struct MC_RTC_GUI_DLLAPI CommonInputImpl : public CallbackElement<DataElement<GetT>, SetT>
+  {
+    CommonInputImpl(const std::string & name, GetT get_fn, SetT set_fn);
+  };
+
+  template<typename GetT, typename SetT>
+  struct MC_RTC_GUI_DLLAPI StringInputImpl : public CommonInputImpl<GetT, SetT>
+  {
+    static constexpr auto type = Elements::StringInput;
+
+    using CommonInputImpl<GetT, SetT>::CommonInputImpl;
+  };
+
+  template<typename GetT, typename SetT>
+  StringInputImpl<GetT, SetT> StringInput(const std::string & name,
+                                          GetT get_fn, SetT set_fn)
+  {
+    return StringInputImpl<GetT, SetT>(name, get_fn, set_fn);
+  };
 
   /** Used to build a GUI state from multiple objects */
   struct MC_RTC_GUI_DLLAPI StateBuilder
