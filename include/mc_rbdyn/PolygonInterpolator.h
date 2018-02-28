@@ -2,9 +2,18 @@
 
 #include <array>
 #include <memory>
-#include <geos/geom/GeometryFactory.h>
+#include <vector>
 
 #include <mc_rbdyn/api.h>
+
+namespace geos
+{
+  namespace geom
+  {
+    class Geometry;
+    class GeometryFactory;
+  }
+}
 
 namespace mc_rbdyn
 {

@@ -1,9 +1,18 @@
 #pragma once
 
 #include <Eigen/Geometry>
-#include <geos/geom/Polygon.h>
 
 #include <mc_rbdyn/api.h>
+
+#include <memory>
+
+namespace geos
+{
+  namespace geom
+  {
+    class Geometry;
+  }
+}
 
 namespace mc_rbdyn
 {

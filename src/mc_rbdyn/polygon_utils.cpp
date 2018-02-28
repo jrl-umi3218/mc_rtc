@@ -2,6 +2,7 @@
 
 #include <mc_rtc/logging.h>
 
+#include <geos/geom/Polygon.h>
 #include <geos/geom/LinearRing.h>
 #include <geos/geom/CoordinateSequence.h>
 

@@ -1,5 +1,6 @@
 #include <mc_rbdyn/PolygonInterpolator.h>
 
+#include <geos/geom/GeometryFactory.h>
 #include <geos/geom/CoordinateSequenceFactory.h>
 #include <geos/geom/CoordinateSequence.h>
 #include <geos/geom/LinearRing.h>
