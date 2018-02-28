@@ -26,6 +26,8 @@ TestServer::TestServer()
                                                                [this](){ return provider.value; }));
   builder.addElement({"dummy", "provider"}, mc_rtc::gui::ArrayLabel("point",
                                                                     [this](){ return provider.point; }));
+  builder.addElement({"dummy", "provider"}, mc_rtc::gui::ArrayLabel("point with labels", {"x", "y", "z"},
+                                                                    [this](){ return provider.point; }));
   builder.addElement({"Button example"}, mc_rtc::gui::Button("Push me",
                                                              [](){ LOG_INFO("Button pushed") }));
   builder.addElement({"Checkbox example"}, mc_rtc::gui::Checkbox("Checkbox",
@@ -33,7 +35,7 @@ TestServer::TestServer()
                                                              [this](){ check_ = !check_; }));
   builder.addElement({"StringInput example"}, mc_rtc::gui::StringInput("StringInput",
                                                              [this](){ return string_;},
-                                                             [this](const std::string & data){ string_ = data; }));
+                                                             [this](const std::string & data){ string_ = data; std::cout << "string_ changed to " << string_ << std::endl; }));
 }
 
 void TestServer::publish()

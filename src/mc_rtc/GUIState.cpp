@@ -141,7 +141,16 @@ bool StateBuilder::handleRequest(const std::vector<std::string> & category,
   }
   ElementStore & el = *it;
   Element & elem = el();
-  return el.handleRequest(elem, data);
+  try
+  {
+    return el.handleRequest(elem, data);
+  }
+  catch(const mc_rtc::Configuration::Exception & exc)
+  {
+    LOG_ERROR("Failed to handle request for " << cat2str(category) << "/" << name << "\n" << exc.what())
+    LOG_WARNING(data.dump(true))
+    return false;
+  }
 }
 
 mc_rtc::Configuration StateBuilder::data()
