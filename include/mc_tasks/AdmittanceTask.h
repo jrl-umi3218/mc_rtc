@@ -197,6 +197,21 @@ public:
     return SurfaceTransformTask::stiffness();
   }
 
+  /*! \brief Enable/disable anti-windup strategy.
+   *
+   * \param Ti Integrator time constant; disables anti-windup when negative.
+   *
+   * Anti-windup is particularly useful when your force targets are
+   * discontinuous (windup accumulates in the integral term during the time it
+   * takes the system to catch up with the new reference). For details, see
+   * Kajita's IROS 2010 paper, or similarly the velocity-form equations from
+   * <http://controlguru.com/integral-reset-windup-jacketing-logic-and-the-velocity-pi-form/>.
+   */
+  void antiWindup(double Ti)
+  {
+    Ti_ = Ti;
+  }
+
 protected:
   Eigen::Vector3d maxAngularVel_ = Eigen::Vector3d(0.1, 0.1, 0.1);  // [rad] / [s]
   Eigen::Vector3d maxLinearVel_ = Eigen::Vector3d(0.1, 0.1, 0.1);  // [m] / [s]
