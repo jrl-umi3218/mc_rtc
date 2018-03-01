@@ -102,13 +102,13 @@ void AdmittanceTask::resetPoseOffset()
 {
   for (int i = 0; i < 3; i++)
   {
-    if (admittance_.force()(i) < 1e-10)
+    if (admittance_.force()[i] < 1e-10)
     {
-      linearOffset_(i) = 0.;
+      linearIntegral_[i] = 0.;
     }
-    if (admittance_.couple()(i) < 1e-10)
+    if (admittance_.couple()[i] < 1e-10)
     {
-      angularOffset_(i) = 0.;
+      angularIntegral_[i] = 0.;
     }
   }
 }
