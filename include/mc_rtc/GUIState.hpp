@@ -76,6 +76,51 @@ CommonInputImpl<GetT, SetT>::CommonInputImpl(const std::string & name, GetT get_
 {
 }
 
+template<typename GetT, typename SetT>
+ArrayInputImpl<GetT, SetT>::ArrayInputImpl(const std::string & name,
+                                           const std::vector<std::string> & labels,
+                                           GetT get_fn, SetT set_fn)
+: ArrayInputImpl(name, get_fn, set_fn)
+{
+  labels_ = labels;
+}
+
+template<typename GetT, typename SetT>
+void ArrayInputImpl<GetT, SetT>::addGUI(mc_rtc::Configuration & out)
+{
+  if(labels_.size()) { out.add("labels", labels_); }
+}
+
+template<typename GetT, typename SetT>
+ComboInputImpl<GetT, SetT>::ComboInputImpl(const std::string & name,
+                                           const std::vector<std::string> & values,
+                                           GetT get_fn, SetT set_fn)
+: CommonInputImpl<GetT, SetT>(name, get_fn, set_fn),
+  values_(values)
+{
+}
+
+template<typename GetT, typename SetT>
+void ComboInputImpl<GetT, SetT>::addGUI(mc_rtc::Configuration & out)
+{
+  out.add("values", values_);
+}
+
+template<typename GetT, typename SetT>
+DataComboInputImpl<GetT, SetT>::DataComboInputImpl(const std::string & name,
+                                           const std::vector<std::string> & values,
+                                           GetT get_fn, SetT set_fn)
+: CommonInputImpl<GetT, SetT>(name, get_fn, set_fn),
+  data_ref_(values)
+{
+}
+
+template<typename GetT, typename SetT>
+void DataComboInputImpl<GetT, SetT>::addGUI(mc_rtc::Configuration & out)
+{
+  out.add("ref", data_ref_);
+}
+
 template<typename T>
 void StateBuilder::addElement(const std::vector<std::string> & category, T element)
 {

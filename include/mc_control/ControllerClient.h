@@ -15,6 +15,15 @@
 namespace mc_control
 {
 
+  /** Used to uniquely identify an element */
+  struct MC_CONTROL_DLLAPI ElementId
+  {
+    /** Category the element belongs to */
+    std::vector<std::string> category;
+    /** Name of the element */
+    std::string name;
+  };
+
   /** Receives data and interact with a ControllerServer
    *
    * - Uses a SUB socket to receive the data stream
@@ -46,7 +55,7 @@ namespace mc_control
     ~ControllerClient();
 
     /** Send a request to the given element in the given category using data */
-    void send_request(const std::vector<std::string> & category, const std::string & element, const mc_rtc::Configuration & data);
+    void send_request(const ElementId & id, const mc_rtc::Configuration & data);
 
     /** Set the timeout of the SUB socket */
     double timeout(double t);
@@ -55,7 +64,7 @@ namespace mc_control
 
     void handle_category(const std::vector<std::string> & parent, const std::string & category, const mc_rtc::Configuration & data);
 
-    void handle_widget(const std::vector<std::string> & category, const std::string & name, const mc_rtc::Configuration & data);
+    void handle_widget(const ElementId & id, const mc_rtc::Configuration & data);
 
     /** Called when a message starts being processed, can be used to lock the GUI */
     virtual void started() {}
@@ -67,10 +76,9 @@ namespace mc_control
     virtual void category(const std::vector<std::string> & parent, const std::string & category) = 0;
 
     /** Should be implemented to create a label for data that can be displayed as string */
-    virtual void label(const std::vector<std::string> & category,
-                       const std::string & label, const std::string &)
+    virtual void label(const ElementId & id, const std::string &)
     {
-      default_impl("Label", category, label);
+      default_impl("Label", id);
     }
 
     /** Should be implemented to create a label for a numeric array
@@ -80,35 +88,70 @@ namespace mc_control
      * \p labels Per-dimension label (can be empty)
      * \p data Data to display
      */
-    virtual void array_label(const std::vector<std::string> & category,
-                             const std::string & label,
+    virtual void array_label(const ElementId & id,
                              const std::vector<std::string> &,
                              const Eigen::VectorXd &)
     {
-      default_impl("ArrayLabel", category, label);
+      default_impl("ArrayLabel", id);
     }
 
     /** Should be implemented to create a button */
-    virtual void button(const std::vector<std::string> & category,
-                        const std::string & label)
+    virtual void button(const ElementId & id)
     {
-      default_impl("Button", category, label);
+      default_impl("Button", id);
     }
 
     /** Should be implemented to create a checkbox */
-    virtual void checkbox(const std::vector<std::string> & category,
-                        const std::string & label,
-                        bool /*state */)
+    virtual void checkbox(const ElementId & id,
+                          bool /*state */)
     {
-      default_impl("Checkbox", category, label);
+      default_impl("Checkbox", id);
     }
 
     /** Should be implemented to create a widget able to input strings */
-    virtual void string_input(const std::vector<std::string> & category,
-                              const std::string & label,
+    virtual void string_input(const ElementId & id,
                               const std::string & /*data*/)
     {
-      default_impl("StringInput", category, label);
+      default_impl("StringInput", id);
+    }
+
+    /** Should be implemented to create a widget able to input integers */
+    virtual void integer_input(const ElementId & id,
+                               int /*data*/)
+    {
+      default_impl("IntegerInput", id);
+    }
+
+    /** Should be implemented to create a widget able to input numbers */
+    virtual void number_input(const ElementId & id,
+                              double /*data*/)
+    {
+      default_impl("NumberInput", id);
+    }
+
+    /** Should be implemented to create a widget able to input array of numbers */
+    virtual void array_input(const ElementId & id,
+                             const std::vector<std::string> & /*labels*/,
+                             const Eigen::VectorXd & /*data*/)
+    {
+      default_impl("ArrayInput", id);
+    }
+
+    /** Should be implemented to create a widget able to select one string among many */
+    virtual void combo_input(const ElementId & id,
+                             const std::vector<std::string> & /*values*/,
+                             const std::string & /*data*/)
+    {
+      default_impl("ComboInput", id);
+    }
+
+    /** Should be implemented to create a widget able to select one string
+     * among entries available in the data part of the GUI message */
+    virtual void data_combo_input(const ElementId & id,
+                                  const std::vector<std::string> & /*data_ref*/,
+                                  const std::string & /*data*/)
+    {
+      default_impl("DataComboInput", id);
     }
 
     /* Network elements */
@@ -122,9 +165,7 @@ namespace mc_control
     mc_rtc::Configuration data_;
   private:
     /** Default implementations for widgets' creations display a warning message to the user */
-    void default_impl(const std::string & type,
-                      const std::vector<std::string> & category,
-                      const std::string & label);
+    void default_impl(const std::string & type, const ElementId & id);
   };
 
 

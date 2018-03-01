@@ -45,6 +45,7 @@ namespace gui
     NumberInput,
     ArrayInput,
     ComboInput,
+    DataComboInput,
     Point3D,
     Rotation,
     Transform,
@@ -158,20 +159,103 @@ protected:
     CommonInputImpl(const std::string & name, GetT get_fn, SetT set_fn);
   };
 
-  template<typename GetT, typename SetT>
-  struct MC_RTC_GUI_DLLAPI StringInputImpl : public CommonInputImpl<GetT, SetT>
-  {
-    static constexpr auto type = Elements::StringInput;
+  #define WRITE_INPUT_IMPL(NAME)\
+  template<typename GetT, typename SetT>\
+  struct MC_RTC_GUI_DLLAPI NAME ## Impl : public CommonInputImpl<GetT, SetT>\
+  {\
+    static constexpr auto type = Elements::NAME ;\
+    using CommonInputImpl<GetT, SetT>::CommonInputImpl;\
+  };\
+  template<typename GetT, typename SetT>\
+  NAME ## Impl<GetT, SetT> NAME (const std::string & name,\
+                                 GetT get_fn, SetT set_fn)\
+  {\
+    return NAME ## Impl<GetT, SetT>(name, get_fn, set_fn);\
+  }
 
+  WRITE_INPUT_IMPL(StringInput)
+  WRITE_INPUT_IMPL(IntegerInput)
+  WRITE_INPUT_IMPL(NumberInput)
+
+  #undef WRITE_INPUT_IMPL
+
+  template<typename GetT, typename SetT>
+  struct MC_RTC_GUI_DLLAPI ArrayInputImpl : public CommonInputImpl<GetT, SetT>
+  {
+    static constexpr auto type = Elements::ArrayInput;
     using CommonInputImpl<GetT, SetT>::CommonInputImpl;
+
+    /** Array input with labels per-dimension */
+    ArrayInputImpl(const std::string & name,
+                   const std::vector<std::string> & labels,
+                   GetT get_fn, SetT set_fn);
+
+    /** Add labels to GUI information */
+    void addGUI(mc_rtc::Configuration &);
+  private:
+    std::vector<std::string> labels_;
   };
 
   template<typename GetT, typename SetT>
-  StringInputImpl<GetT, SetT> StringInput(const std::string & name,
-                                          GetT get_fn, SetT set_fn)
+  ArrayInputImpl<GetT, SetT> ArrayInput(const std::string & name,
+                                        GetT get_fn, SetT set_fn)
   {
-    return StringInputImpl<GetT, SetT>(name, get_fn, set_fn);
+    return ArrayInputImpl<GetT, SetT>(name, get_fn, set_fn);
+  }
+
+  template<typename GetT, typename SetT>
+  ArrayInputImpl<GetT, SetT> ArrayInput(const std::string & name,
+                                        const std::vector<std::string> & labels,
+                                        GetT get_fn, SetT set_fn)
+  {
+    return ArrayInputImpl<GetT, SetT>(name, labels, get_fn, set_fn);
+  }
+
+  template<typename GetT, typename SetT>
+  struct MC_RTC_GUI_DLLAPI ComboInputImpl : public CommonInputImpl<GetT, SetT>
+  {
+    static constexpr auto type = Elements::ComboInput;
+
+    ComboInputImpl(const std::string & name,
+                   const std::vector<std::string> & values,
+                   GetT get_fn, SetT set_fn);
+
+    /** Add valid values to GUI information */
+    void addGUI(mc_rtc::Configuration & gui);
+  private:
+    std::vector<std::string> values_;
   };
+
+  template<typename GetT, typename SetT>
+  ComboInputImpl<GetT, SetT> ComboInput(const std::string & name,
+                                        const std::vector<std::string> & values,
+                                        GetT get_fn, SetT set_fn)
+  {
+    return ComboInputImpl<GetT, SetT>(name, values, get_fn, set_fn);
+  }
+
+  template<typename GetT, typename SetT>
+  struct MC_RTC_GUI_DLLAPI DataComboInputImpl : public CommonInputImpl<GetT, SetT>
+  {
+    static constexpr auto type = Elements::DataComboInput;
+
+    DataComboInputImpl(const std::string & name,
+                       const std::vector<std::string> & data_ref,
+                       GetT get_fn, SetT set_fn);
+
+    /** Add valid values to GUI information */
+    void addGUI(mc_rtc::Configuration & gui);
+  private:
+    std::vector<std::string> data_ref_;
+  };
+
+  template<typename GetT, typename SetT>
+  DataComboInputImpl<GetT, SetT> DataComboInput(const std::string & name,
+                                        const std::vector<std::string> & values,
+                                        GetT get_fn, SetT set_fn)
+  {
+    return DataComboInputImpl<GetT, SetT>(name, values, get_fn, set_fn);
+  }
 
   /** Used to build a GUI state from multiple objects */
   struct MC_RTC_GUI_DLLAPI StateBuilder

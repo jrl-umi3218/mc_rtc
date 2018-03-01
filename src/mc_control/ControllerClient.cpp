@@ -111,13 +111,12 @@ ControllerClient::~ControllerClient()
   nn_shutdown(push_socket_, 0);
 }
 
-void ControllerClient::send_request(const std::vector<std::string> & category,
-                                    const std::string & name,
+void ControllerClient::send_request(const ElementId & id,
                                     const mc_rtc::Configuration & data)
 {
   mc_rtc::Configuration request;
-  request.add("category", category);
-  request.add("name", name);
+  request.add("category", id.category);
+  request.add("name", id.name);
   request.add("data", data);
   std::string out = request.dump();
   nn_send(push_socket_, out.c_str(), out.size() + 1, NN_DONTWAIT);
@@ -158,7 +157,7 @@ void ControllerClient::handle_category(const std::vector<std::string> & parent,
     const auto & d = data(k);
     if(d.has("GUI"))
     {
-      handle_widget(next_category, k, d);
+      handle_widget({next_category, k}, d);
     }
     else
     {
@@ -167,14 +166,13 @@ void ControllerClient::handle_category(const std::vector<std::string> & parent,
   }
 }
 
-void ControllerClient::handle_widget(const std::vector<std::string> & category,
-                                     const std::string & name,
+void ControllerClient::handle_widget(const ElementId & id,
                                      const mc_rtc::Configuration & data)
 {
   auto gui = data("GUI");
   if(!gui.has("type"))
   {
-    LOG_ERROR("GUI entry " << name << " in category " << cat2str(category) << " has no type")
+    LOG_ERROR("GUI entry " << id.name << " in category " << cat2str(id.category) << " has no type")
     return;
   }
   auto type = static_cast<mc_rtc::gui::Elements>(static_cast<int>(gui("type")));
@@ -184,19 +182,34 @@ void ControllerClient::handle_widget(const std::vector<std::string> & category,
     switch(type)
     {
       case Elements::Label:
-        label(category, name, data("data").dump());
+        label(id, data("data").dump());
         break;
       case Elements::ArrayLabel:
-        array_label(category, name, gui("labels", std::vector<std::string>{}), data("data"));
+        array_label(id, gui("labels", std::vector<std::string>{}), data("data"));
         break;
       case Elements::Button:
-        button(category, name);
+        button(id);
         break;
       case Elements::Checkbox:
-        checkbox(category, name, data("data"));
+        checkbox(id, data("data"));
         break;
       case Elements::StringInput:
-        string_input(category, name, data("data"));
+        string_input(id, data("data"));
+        break;
+      case Elements::IntegerInput:
+        integer_input(id, data("data"));
+        break;
+      case Elements::NumberInput:
+        number_input(id, data("data"));
+        break;
+      case Elements::ArrayInput:
+        array_input(id, gui("labels", std::vector<std::string>{}), data("data"));
+        break;
+      case Elements::ComboInput:
+        combo_input(id, gui("values"), data("data"));
+        break;
+      case Elements::DataComboInput:
+        data_combo_input(id, gui("ref"), data("data"));
         break;
       default:
         LOG_ERROR("Type " << static_cast<int>(type) << " is not handlded by this ControllerClient")
@@ -205,17 +218,16 @@ void ControllerClient::handle_widget(const std::vector<std::string> & category,
   }
   catch(const mc_rtc::Configuration::Exception & exc)
   {
-    LOG_ERROR("Deserialization of GUI entry " << name << " in category " << cat2str(category) << " went wrong...")
+    LOG_ERROR("Deserialization of GUI entry " << id.name << " in category " << cat2str(id.category) << " went wrong...")
     LOG_WARNING("Data was: " << std::endl << data.dump(true))
     LOG_WARNING("mc_rtc::Configuration exception was: " << std::endl << exc.what())
   }
 }
 
 void ControllerClient::default_impl(const std::string & type,
-                                    const std::vector<std::string> & category,
-                                    const std::string & label)
+                                    const ElementId & id)
 {
-  LOG_WARNING("This implementation of ControllerClient does not handle " << type << " GUI needed by " << cat2str(category) << "/" << label)
+  LOG_WARNING("This implementation of ControllerClient does not handle " << type << " GUI needed by " << cat2str(id.category) << "/" << id.name)
 }
 
 }
