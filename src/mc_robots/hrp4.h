@@ -71,13 +71,20 @@ struct MC_ROBOTS_DLLAPI HRP4VREPRobotModule : public HRP4WithHandRobotModule
 public:
   HRP4VREPRobotModule(bool fixed);
 };
+
+struct MC_ROBOTS_DLLAPI HRP4FlexRobotModule : public HRP4WithHandRobotModule
+{
+public:
+  HRP4FlexRobotModule(bool fixed);
+};
+
 } // namespace mc_robots
 
 extern "C"
 {
   ROBOT_MODULE_API void MC_RTC_ROBOT_MODULE(std::vector<std::string> & names)
   {
-    names = {"HRP4", "HRP4NoHand", "HRP4VREP", "HRP4Fixed", "HRP4NoHandFixed", "HRP4VREPFixed"};
+    names = {"HRP4", "HRP4NoHand", "HRP4VREP", "HRP4Flex", "HRP4Fixed", "HRP4NoHandFixed", "HRP4VREPFixed", "HRP4FlexFixed"};
   }
   ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr)
   {
@@ -108,6 +115,14 @@ extern "C"
     else if(n == "HRP4VREPFixed")
     {
       return new mc_robots::HRP4VREPRobotModule(true);
+    }
+    else if(n == "HRP4Flex")
+    {
+      return new mc_robots::HRP4FlexRobotModule(false);
+    }
+    else if(n == "HRP4FlexFixed")
+    {
+      return new mc_robots::HRP4FlexRobotModule(true);
     }
     else
     {

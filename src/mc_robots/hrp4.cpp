@@ -385,4 +385,44 @@ HRP4VREPRobotModule::HRP4VREPRobotModule(bool fixed) : HRP4WithHandRobotModule(f
       mc_rbdyn::ForceSensor("LeftFootForceSensor", "l_ankle", sva::PTransformd(Eigen::Vector3d(0., 0., 0.)));
   init();
 }
+
+HRP4FlexRobotModule::HRP4FlexRobotModule(bool fixed)
+: HRP4WithHandRobotModule(fixed)
+{
+  halfSitting["RLEG_BUSH_ROLL"] = { 0. };
+  halfSitting["RLEG_BUSH_PITCH"] = { 0. };
+  halfSitting["RLEG_BUSH_Z"] = { 0. };
+  halfSitting["LLEG_BUSH_ROLL"] = { 0. };
+  halfSitting["LLEG_BUSH_PITCH"] = { 0. };
+  halfSitting["LLEG_BUSH_Z"] = { 0. };
+
+  virtualLinks.push_back("l_ankle_bush_1");
+  virtualLinks.push_back("r_ankle_bush_1");
+  virtualLinks.push_back("l_ankle_bush_2");
+  virtualLinks.push_back("r_ankle_bush_2");
+
+  mc_rbdyn::Flexibility flex;
+  // XXX Spring constants?
+  flex.K = 0.;
+  flex.C = 0.;
+  flex.O = 0.;
+  flex.jointName = "RLEG_BUSH_Z";
+  _flexibility.push_back(flex);
+  flex.jointName = "RLEG_BUSH_PITCH";
+  _flexibility.push_back(flex);
+  flex.jointName = "RLEG_BUSH_ROLL";
+  _flexibility.push_back(flex);
+
+  flex.jointName = "LLEG_BUSH_Z";
+  _flexibility.push_back(flex);
+  flex.jointName = "LLEG_BUSH_ROLL";
+  _flexibility.push_back(flex);
+  flex.jointName = "LLEG_BUSH_PITCH";
+  _flexibility.push_back(flex);
+
+  readUrdf("hrp4_flex", fixed, filteredLinks);
+
+  init();
+}
+
 } // namespace mc_robots
