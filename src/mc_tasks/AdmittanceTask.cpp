@@ -100,15 +100,15 @@ void AdmittanceTask::reset()
 
 void AdmittanceTask::resetPoseOffset()
 {
-  for (size_t i = 0; i < 3; i++)
+  for (int i = 0; i < 3; i++)
   {
     if (admittance_.force()(i) < 1e-10)
     {
-      trans_target_delta_(i) = 0.;
+      linearOffset_(i) = 0.;
     }
     if (admittance_.couple()(i) < 1e-10)
     {
-      rpy_target_delta_(i) = 0.;
+      angularOffset_(i) = 0.;
     }
   }
 }
