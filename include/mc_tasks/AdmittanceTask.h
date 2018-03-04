@@ -90,9 +90,9 @@ public:
    * \param stiffness Task stiffness
    *
    */
-  void setCriticalStiffness(double s)
+  void setCriticalGains(double stiffness)
   {
-    setGains(s, 2 * std::sqrt(s));
+    setGains(stiffness, 2 * std::sqrt(stiffness));
   }
 
   /*! \brief Get the current pose of the robot surface in the inertial frame
@@ -192,7 +192,7 @@ protected:
   void removeFromLogger(mc_rtc::Logger & logger) override;
 
   /** Don't use surface transform's stiffness() as it sets an undesired
-   * critical damping. Use setCriticalStiffness() for this behavior.
+   * critical damping. Use setCriticalGains() for this behavior.
    *
    */
   using SurfaceTransformTask::stiffness;
