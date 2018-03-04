@@ -170,6 +170,12 @@ public:
     maxRpyVel_ = maxRpyVel;
   }
 
+  /*! \brief Get the current task stiffness */
+  double stiffness()
+  {
+    return SurfaceTransformTask::stiffness();
+  }
+
 protected:
   Eigen::Vector3d maxAngularVel_ = Eigen::Vector3d(0.1, 0.1, 0.1);  // [rad] / [s]
   Eigen::Vector3d maxLinearVel_ = Eigen::Vector3d(0.1, 0.1, 0.1);  // [m] / [s]
@@ -191,8 +197,9 @@ protected:
 
   void removeFromLogger(mc_rtc::Logger & logger) override;
 
-  /** Don't use surface transform's stiffness() as it sets an undesired
-   * critical damping. Use setCriticalGains() for this behavior.
+  /** Don't use surface transform's stiffness() setter as it applies critical
+   * damping, which is usually not good for admittance control. Use
+   * setCriticalGains() if you do desire this behavior.
    *
    */
   using SurfaceTransformTask::stiffness;
