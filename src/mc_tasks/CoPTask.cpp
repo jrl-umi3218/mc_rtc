@@ -33,13 +33,23 @@ void CoPTask::update()
   const double pressure = measuredWrench().force()(2);
   if (pressure < MIN_PRESSURE && (admittance_.couple()(0) > 1e-6 || admittance_.couple()(1) > 1e-6))
   {
-    LOG_WARNING("Pressure on " << surface_.name() << " < 0, disabling CoP tracking");
-    admittance_.couple()(0) = 0.;
-    admittance_.couple()(1) = 0.;
+    if (!cop_tracking_disabled_)
+    {
+      LOG_WARNING("Pressure on " << surface_.name() << " < 0, skipping CoP tracking update...");
+      cop_tracking_disabled_ = true;
+    }
   }
-  const Eigen::Vector3d targetTorque(+targetCoP_(1) * pressure, -targetCoP_(0) * pressure, 0.);
-  this->targetWrench(sva::ForceVecd(targetTorque, targetForce_));
-  AdmittanceTask::update();
+  else
+  {
+    if (cop_tracking_disabled_)
+    {
+      LOG_INFO("Pressure is back on " << surface_.name() << ", resuming CoP tracking");
+      cop_tracking_disabled_ = false;
+    }
+    const Eigen::Vector3d targetTorque(+targetCoP_(1) * pressure, -targetCoP_(0) * pressure, 0.);
+    this->targetWrench(sva::ForceVecd(targetTorque, targetForce_));
+    AdmittanceTask::update();
+  }
 }
 
 Eigen::Vector2d CoPTask::measuredCoP() const

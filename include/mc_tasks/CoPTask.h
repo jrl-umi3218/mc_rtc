@@ -55,7 +55,7 @@ public:
    * zero.
    *
    */
-  virtual void reset() override;
+  void reset() override;
 
   /*! \brief Set the target CoP in the surface frame
    *
@@ -129,6 +129,7 @@ public:
 private:
   Eigen::Vector2d targetCoP_ = Eigen::Vector2d::Zero();
   Eigen::Vector3d targetForce_ = Eigen::Vector3d::Zero();
+  bool cop_tracking_disabled_ = false;
 
   void addToLogger(mc_rtc::Logger & logger) override;
   void removeFromLogger(mc_rtc::Logger & logger) override;

@@ -63,7 +63,7 @@ public:
    * to zero.
    *
    */
-  virtual void reset() override;
+  void reset() override;
 
   /*! \brief Get the admittance coefficients of the task
    *
@@ -148,26 +148,37 @@ public:
     return X_fsactual_surf_.dualMul(w_fsactual);
   }
 
-  /*! \brief Set the maximum translation velocity of the task */
-  void maxTransVel(const Eigen::Vector3d & maxTransVel)
+  /*! \brief Get the measured wrench in the world frame
+   *
+   */
+  sva::ForceVecd worldMeasuredWrench() const
   {
-    if ((maxTransVel.array() <= 0.).any())
+    sva::ForceVecd w_fsactual = sensor_.removeGravity(robot_);
+    sva::PTransformd X_0_surf = surface_.X_0_s(robot_);
+    sva::PTransformd X_fsactual_0_ = X_0_surf.inv() * X_fsactual_surf_;
+    return X_fsactual_0_.dualMul(w_fsactual);
+  }
+
+  /*! \brief Set the maximum translation velocity of the task */
+  void maxLinearVel(const Eigen::Vector3d & maxLinearVel)
+  {
+    if ((maxLinearVel.array() <= 0.).any())
     {
-      LOG_ERROR("discarding maxTransVel update as it is not positive");
+      LOG_ERROR("discarding maxLinearVel update as it is not positive");
       return;
     }
-    maxTransVel_ = maxTransVel;
+    maxLinearVel_ = maxLinearVel;
   }
 
   /*! \brief Set the maximum angular velocity of the task */
-  void maxRpyVel(const Eigen::Vector3d & maxRpyVel)
+  void maxAngularVel(const Eigen::Vector3d & maxAngularVel)
   {
-    if ((maxRpyVel.array() <= 0.).any())
+    if ((maxAngularVel.array() <= 0.).any())
     {
-      LOG_ERROR("discarding maxRpyVel update as it is not positive");
+      LOG_ERROR("discarding maxAngularVel update as it is not positive");
       return;
     }
-    maxRpyVel_ = maxRpyVel;
+    maxAngularVel_ = maxAngularVel;
   }
 
   /*! \brief Get the current task stiffness */
@@ -194,7 +205,6 @@ protected:
   void update() override;
 
   void addToLogger(mc_rtc::Logger & logger) override;
-
   void removeFromLogger(mc_rtc::Logger & logger) override;
 
   /** Don't use surface transform's stiffness() setter as it applies critical

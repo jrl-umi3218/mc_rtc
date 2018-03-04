@@ -9,20 +9,48 @@ namespace mc_tasks
 namespace
 {
 
-void clampAndWarn(Eigen::Vector3d & vector, const Eigen::Vector3d & bound, const std::string & label)
+/** Saturate integrator outputs.
+ *
+ * \param taskName Name of caller AdmittanceTask.
+ *
+ * \param vector Integrator output vector.
+ *
+ * \param bound Output (symmetric) bounds.
+ *
+ * \param label Name of output vector.
+ *
+ * \param isClamping Map of booleans describing the clamping state for each
+ * direction in ['x', 'y', 'z'].
+ *
+ */
+void clampAndWarn(const std::string & taskName, Eigen::Vector3d & vector, const Eigen::Vector3d & bound, const std::string & label, std::map<char, bool> & isClamping)
 {
   const char dirName[] = {'x', 'y', 'z'};
   for (unsigned i = 0; i < 3; i++)
   {
+    char dir = dirName[i];
     if (vector(i) < -bound(i))
     {
-      LOG_WARNING("AdmittanceTask: " << label << " hit lower bound along " << dirName[i] << "-coordinate");
       vector(i) = -bound(i);
+      if (!isClamping[dir])
+      {
+        LOG_WARNING(taskName << ": clamping " << dir << " " << label << " to " << -bound(i));
+        isClamping[dir] = true;
+      }
     }
     else if (vector(i) > bound(i))
     {
-      LOG_WARNING("AdmittanceTask: " << label << " hit upper bound along " << dirName[i] << "-coordinate");
       vector(i) = bound(i);
+      if (!isClamping[dir])
+      {
+        LOG_WARNING(taskName << ": clamping " << dir << " " << label << " to " << bound(i));
+        isClamping[dir] = true;
+      }
+    }
+    else if (isClamping[dir])
+    {
+      LOG_WARNING(taskName << ": " << dir << " " << label << " back within range");
+      isClamping[dir] = false;
     }
   }
 }
@@ -102,6 +130,7 @@ void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
 
 void AdmittanceTask::removeFromLogger(mc_rtc::Logger & logger)
 {
+  SurfaceTransformTask::removeFromLogger(logger);
   logger.removeLogEntry(name_ + "_admittance");
   logger.removeLogEntry(name_ + "_measured_wrench");
   logger.removeLogEntry(name_ + "_ref_vel");
