@@ -62,12 +62,18 @@ public:
    * \param targetCoP 2D vector of CoP coordinates in the surface frame
    *
    */
-  void targetCoP(const Eigen::Vector2d & targetCoP);
+  void targetCoP(const Eigen::Vector2d & targetCoP)
+  {
+    targetCoP_ = targetCoP;
+  }
 
   /*! \brief Get target CoP in the surface frame
    *
    */
-  const Eigen::Vector2d & targetCoP() const;
+  const Eigen::Vector2d & targetCoP() const
+  {
+    return targetCoP_;
+  }
 
   /*! \brief Compute CoP in surface frame from sensor measurements
    *
@@ -79,12 +85,18 @@ public:
    * \param targetForce 3D vector of target force in the surface frame
    *
    */
-  void targetForce(const Eigen::Vector3d & targetForce);
+  void targetForce(const Eigen::Vector3d & targetForce)
+  {
+    targetForce_ = targetForce;
+  }
 
   /*! \brief Get target force in the surface frame
    *
    */
-  const Eigen::Vector3d & targetForce() const;
+  const Eigen::Vector3d & targetForce() const
+  {
+    return targetForce_;
+  }
 
   /*! \brief Get the target wrench in the surface frame
    *
@@ -93,6 +105,26 @@ public:
   {
     return AdmittanceTask::targetWrench();
   }
+
+  /*! \brief Return measured CoP in world frame 
+   *
+   * This CoP is consistent with force sensor readings, assuming that the world
+   * pose of the force sensor in the model is accurate.
+   *
+   */
+  sva::PTransformd worldMeasuredCoP() const;
+
+  /*! \brief Return target CoP in world frame 
+   *
+   */
+  sva::PTransformd worldTargetCoP() const;
+
+  /*! \brief Set CoP target in world frame
+   *
+   * \param worldCoP New target
+   *
+   */
+  void worldTargetCoP(const Eigen::Vector3d & worldCoP);
 
 private:
   Eigen::Vector2d targetCoP_ = Eigen::Vector2d::Zero();

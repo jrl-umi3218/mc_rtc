@@ -48,6 +48,21 @@ public:
 
   /*! \brief Retrieve the controlled surface name */
   std::string surface() { return surfaceName; }
+
+  void addToLogger(mc_rtc::Logger & logger) override;
+
+  void removeFromLogger(mc_rtc::Logger & logger) override;
+
+  /*! \brief Set trajectory task's reference velocity from motion vector.
+   *
+   * \param vel Reference velocity.
+   *
+   */
+  void refVel(const sva::MotionVecd & vel)
+  {
+    return TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::refVel(vel.vector());
+  }
+
 protected:
   std::string surfaceName;
 };

@@ -62,6 +62,13 @@ struct TrajectoryTaskGeneric : public MetaTask
    */
   void stiffness(double stiffness);
 
+  /*! \brief Set the task damping, leaving its stiffness unchanged
+   *
+   * \param damping Task stiffness
+   *
+   */
+  void damping(double damping);
+
   /*! \brief Set both stiffness and damping
    *
    * \param stiffness Task stiffness
