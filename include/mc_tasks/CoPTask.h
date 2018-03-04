@@ -90,26 +90,6 @@ public:
     buildCompletionCriteria(double dt,
                             const mc_rtc::Configuration & config) const override;
 
-  /*! \brief Return measured CoP in world frame 
-   *
-   * This CoP is consistent with force sensor readings, assuming that the world
-   * pose of the force sensor in the model is accurate.
-   *
-   */
-  sva::PTransformd worldMeasuredCoP() const;
-
-  /*! \brief Return target CoP in world frame 
-   *
-   */
-  sva::PTransformd worldTargetCoP() const;
-
-  /*! \brief Set CoP target in world frame
-   *
-   * \param worldCoP New target
-   *
-   */
-  void worldTargetCoP(const Eigen::Vector3d & worldCoP);
-
   /*! \brief Set the target force in the surface frame
    *
    * \param targetForce 3D vector of target force in the surface frame
@@ -121,6 +101,33 @@ public:
   }
 
   /*! \brief Get target force in the surface frame
+   *
+   */
+  const Eigen::Vector3d & targetForce() const
+  {
+    return targetForce_;
+  }
+
+  /*! \brief Get the target wrench in the surface frame
+   *
+   */
+  const sva::ForceVecd & targetWrench() const
+  {
+    return AdmittanceTask::targetWrench();
+  }
+
+  /*! \brief Return measured CoP in world frame 
+   *
+   * This CoP is consistent with force sensor readings, assuming that the world
+   * pose of the force sensor in the model is accurate.
+   *
+   */
+  void targetForce(const Eigen::Vector3d & targetForce)
+  {
+    targetForce_ = targetForce;
+  }
+
+  /*! \brief Return target CoP in world frame 
    *
    */
   const Eigen::Vector3d & targetForce() const
@@ -156,13 +163,12 @@ public:
    */
   void worldTargetCoP(const Eigen::Vector3d & worldCoP);
 
-  /*! \brief Get the target wrench in the surface frame
+  /*! \brief Set CoP target in world frame
+   *
+   * \param worldCoP New target
    *
    */
-  const sva::ForceVecd & targetWrench() const
-  {
-    return AdmittanceTask::targetWrench();
-  }
+  void worldTargetCoP(const Eigen::Vector3d & worldCoP);
 
 private:
   Eigen::Vector2d targetCoP_ = Eigen::Vector2d::Zero();

@@ -56,7 +56,7 @@ Eigen::Vector2d CoPTask::measuredCoP() const
 {
   const sva::ForceVecd w_surf = measuredWrench();
   const double pressure = w_surf.force()(2);
-  if (pressure < EPSILON_PRESSURE)
+  if (pressure < MIN_PRESSURE)
   {
     return Eigen::Vector2d::Zero();
   }
