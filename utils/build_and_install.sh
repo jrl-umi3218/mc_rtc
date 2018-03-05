@@ -349,19 +349,22 @@ else
                 -DCMAKE_INSTALL_PREFIX:STRING="'$INSTALL_PREFIX'" \
                 -DMC_ENV_DESCRIPTION_PATH:STRING="'$SOURCE_DIR/mc_rtc_ros_data/mc_env_description'" \
                 ${CMAKE_ROBOT_OPTIONS} \
-                ${CMAKE_ADDITIONAL_OPTIONS}
+                ${CMAKE_ADDITIONAL_OPTIONS} \
+                -DDISABLE_ROS=ON
   else   cmake ../ -DCMAKE_BUILD_TYPE:STRING="'$BUILD_TYPE'" \
                 -DPYTHON_BINDING:BOOL=OFF \
                 -DCMAKE_INSTALL_PREFIX:STRING="'$INSTALL_PREFIX'" \
                 -DMC_ENV_DESCRIPTION_PATH:STRING="'$SOURCE_DIR/mc_rtc_ros_data/mc_env_description'" \
                 ${CMAKE_ROBOT_OPTIONS} \
-                ${CMAKE_ADDITIONAL_OPTIONS}
+                ${CMAKE_ADDITIONAL_OPTIONS} \
+                -DDISABLE_ROS=ON
   fi
   cmake ../ -DCMAKE_BUILD_TYPE:STRING="'$BUILD_TYPE'" \
             -DCMAKE_INSTALL_PREFIX:STRING="'$INSTALL_PREFIX'" \
             -DMC_ENV_DESCRIPTION_PATH:STRING="'$SOURCE_DIR/mc_rtc_ros_data/mc_env_description'" \
             ${CMAKE_ROBOT_OPTIONS} \
-            ${CMAKE_ADDITIONAL_OPTIONS}
+            ${CMAKE_ADDITIONAL_OPTIONS} \
+            -DDISABLE_ROS=ON
 fi
 make -j$BUILD_CORE
 ${SUDO_CMD} make install
