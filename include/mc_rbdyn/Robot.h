@@ -325,6 +325,12 @@ public:
   /** Set the encoder values */
   void encoderValues(const std::vector<double> & encoderValues);
 
+  /** Return the flexibilities values */
+  const std::vector<double> & flexibilityValues() const;
+
+  /** Set the flexibilities values */
+  void flexibilityValues(const std::vector<double> & flexibilityValues);
+
   /** Return the joint torques from sensors */
   const std::vector<double> & jointTorques() const;
 
@@ -526,6 +532,7 @@ private:
   std::vector<double> encoderValues_;
   /** Joint torques provided by the low-level controller */
   std::vector<double> jointTorques_;
+  std::vector<double> flexibilityValues_;
   /** Hold all body sensors */
   BodySensorVector bodySensors_;
   /** Correspondance between body sensor's name and body sensor index*/

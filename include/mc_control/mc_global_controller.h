@@ -160,6 +160,13 @@ public:
    */
   void setEncoderValues(const std::vector<double> & eValues);
 
+  /*! \brief A robot's flexible joints' values provided by an estimator
+   *
+   * \note It is expected that these values follow the order given by
+   * robot.flexibility()
+   */
+  void setFlexibilityValues(const std::vector<double> & fValues);
+
   /*! \brief A robot's actual joints' torques provided by sensors
    *
    * \note It is expected that these values follow the order given by

@@ -231,6 +231,11 @@ void MCGlobalController::setEncoderValues(const std::vector<double> & eValues)
   robot().encoderValues(eValues);
 }
 
+void MCGlobalController::setFlexibilityValues(const std::vector<double> & fValues)
+{
+  robot().flexibilityValues(fValues);
+}
+
 void MCGlobalController::setJointTorques(const std::vector<double> & tValues)
 {
   robot().jointTorques(tValues);
