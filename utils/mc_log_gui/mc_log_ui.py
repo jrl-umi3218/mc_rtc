@@ -4,9 +4,9 @@
 import collections
 import copy
 import csv
+import json
 import numpy as np
 import os
-import pickle
 import re
 import signal
 import sys
@@ -79,10 +79,10 @@ class MCLogUI(QtGui.QMainWindow):
     self.ui.setupUi(self)
 
     self.userPlotList = []
-    self.userPlotFile = os.path.expanduser("~") + "/.config/mc_log_ui/custom_plot.p"
+    self.userPlotFile = os.path.expanduser("~") + "/.config/mc_log_ui/custom_plot.json"
     if os.path.exists(self.userPlotFile):
       with open(self.userPlotFile) as f:
-        self.userPlotList = pickle.load(f)
+        self.userPlotList = json.load(f)
     self.update_userplot_menu()
 
     self.activeRobotAction = None
@@ -110,7 +110,7 @@ class MCLogUI(QtGui.QMainWindow):
     if not os.path.exists(confDir):
       os.makedirs(confDir)
     with open(self.userPlotFile, 'w') as f:
-      pickle.dump(self.userPlotList, f)
+      json.dump(self.userPlotList, f)
     self.update_userplot_menu()
 
   def update_userplot_menu(self):
