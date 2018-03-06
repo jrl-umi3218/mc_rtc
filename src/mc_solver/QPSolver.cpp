@@ -317,6 +317,11 @@ boost::timer::cpu_times QPSolver::solveAndBuildTime()
   return solver.solveAndBuildTime();
 }
 
+const Eigen::VectorXd& QPSolver::result() const
+{
+  return solver.result();
+}
+
 void QPSolver::logger(std::shared_ptr<mc_rtc::Logger> logger)
 {
   if(logger_)
