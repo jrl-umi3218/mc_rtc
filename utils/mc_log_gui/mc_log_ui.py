@@ -82,7 +82,7 @@ class MCLogUI(QtGui.QMainWindow):
     self.userPlotFile = os.path.expanduser("~") + "/.config/mc_log_ui/custom_plot.json"
     if os.path.exists(self.userPlotFile):
       with open(self.userPlotFile) as f:
-        self.userPlotList = json.load(f)
+        self.userPlotList = [UserPlot(*x) for x in json.load(f)]
     self.update_userplot_menu()
 
     self.activeRobotAction = None
