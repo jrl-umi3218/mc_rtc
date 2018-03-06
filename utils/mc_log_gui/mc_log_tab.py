@@ -176,6 +176,19 @@ class MCLogTab(QtGui.QWidget):
     update_y_selector(self.ui.y2Selector, 1)
 
   @staticmethod
+  def UserPlot(parent, p):
+    tab = MCLogTab(parent)
+    tab.x_data = p.x
+    tab.y_data[0] = tab.y_data_labels[0] = p.y1
+    tab.y_data[1] = tab.y_data_labels[1] = p.y2
+    tab.y_diff_data[0] = tab.y_diff_data_labels[0] = p.y1d
+    tab.y_diff_data[1] = tab.y_diff_data_labels[1] = p.y2d
+    tab.setData(parent.data)
+    tab.setRobotModule(parent.rm)
+    tab.update_canvas()
+    return tab
+
+  @staticmethod
   def ForceSensorPlot(parent, fs):
     tab = MCLogTab(parent)
     tab.x_data = 't'

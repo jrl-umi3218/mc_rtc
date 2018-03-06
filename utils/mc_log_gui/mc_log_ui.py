@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import collections
 import copy
 import csv
 import numpy as np
 import os
+import pickle
 import re
 import signal
 import sys
@@ -21,6 +23,8 @@ try:
   import mc_rbdyn
 except ImportError:
   mc_rbdyn = None
+
+UserPlot = collections.namedtuple('UserPlot', ['title', 'x', 'y1', 'y1d', 'y2', 'y2d'])
 
 class MCLogJointDialog(QtGui.QDialog):
   def __init__(self, parent, rm, name, y1_prefix = None, y2_prefix = None, y1_diff_prefix = None, y2_diff_prefix = None):
@@ -74,6 +78,13 @@ class MCLogUI(QtGui.QMainWindow):
 
     self.ui.setupUi(self)
 
+    self.userPlotList = []
+    self.userPlotFile = os.path.expanduser("~") + "/.config/mc_log_ui/custom_plot.p"
+    if os.path.exists(self.userPlotFile):
+      with open(self.userPlotFile) as f:
+        self.userPlotList = pickle.load(f)
+    self.update_userplot_menu()
+
     self.activeRobotAction = None
     self.rm = None
     if mc_rbdyn is not None:
@@ -93,6 +104,70 @@ class MCLogUI(QtGui.QMainWindow):
     self.tab_re = re.compile('^Plot [0-9]+$')
 
     self.data = {}
+
+  def saveUserPlots(self):
+    confDir = os.path.dirname(self.userPlotFile)
+    if not os.path.exists(confDir):
+      os.makedirs(confDir)
+    with open(self.userPlotFile, 'w') as f:
+      pickle.dump(self.userPlotList, f)
+    self.update_userplot_menu()
+
+  def update_userplot_menu(self):
+    self.ui.menuUserPlots.clear()
+    for p in self.userPlotList:
+      act = QtGui.QAction(p.title, self.ui.menuUserPlots)
+      act.triggered.connect(lambda: self.plot_userplot(p))
+      self.ui.menuUserPlots.addAction(act)
+    act = QtGui.QAction("Save current plot", self.ui.menuUserPlots)
+    act.triggered.connect(self.save_userplot)
+    self.ui.menuUserPlots.addAction(act)
+    if len(self.userPlotList):
+      rmUserPlotMenu = QtGui.QMenu("Remove saved plots", self.ui.menuUserPlots)
+      for p in self.userPlotList:
+        act = QtGui.QAction(p.title, self.ui.menuUserPlots)
+        act.triggered.connect(lambda: self.remove_userplot(p))
+        rmUserPlotMenu.addAction(act)
+      self.ui.menuUserPlots.addMenu(rmUserPlotMenu)
+
+  def save_userplot(self):
+    tab = self.ui.tabWidget.currentWidget()
+    valid = any([len(y) for x in [tab.y_data, tab.y_diff_data] for y in x])
+    if not valid:
+      err_diag = QtGui.QMessageBox(self)
+      err_diag.setModal(True)
+      err_diag.setText("Cannot save user plot if nothing is shown")
+      err_diag.exec_()
+      return
+    title, ok = QtGui.QInputDialog.getText(self, "User plot", "Title of your plot:")
+    if ok:
+      self.userPlotList.append(UserPlot(title, tab.x_data, tab.y_data[0], tab.y_diff_data[0], tab.y_data[1], tab.y_diff_data[1]))
+      self.saveUserPlots()
+
+  def plot_userplot(self, p):
+    valid = p.x in self.data.keys() and all([y in self.data.keys() for x in [p.y1, p.y1d, p.y2, p.y2d] for y in x])
+    if not valid:
+      missing_entries = ""
+      if not p.x in self.data.keys():
+        missing_entries += "- {}\n".format(p.x)
+      for x in [p.y1, p.y1d, p.y2, p.y2d]:
+        for y in x:
+          if not y in self.data.keys():
+            missing_entries += "- {}\n".format(y)
+      missing_entries = missing_entries[:-1]
+      err_diag = QtGui.QMessageBox(self)
+      err_diag.setModal(True)
+      err_diag.setText("Plot {} is not valid for this log file, some data is missing\nMissing entries:\n{}".format(p.title, missing_entries))
+      err_diag.exec_()
+      return
+    plotW = MCLogTab.UserPlot(self, p)
+    self.ui.tabWidget.insertTab(self.ui.tabWidget.count() - 1, plotW, p.title)
+    self.ui.tabWidget.setCurrentIndex(self.ui.tabWidget.count() - 2)
+    self.updateClosable()
+
+  def remove_userplot(self, p):
+    self.userPlotList.remove(p)
+    self.saveUserPlots()
 
   def setRobot(self, action):
     try:
