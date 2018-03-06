@@ -117,7 +117,7 @@ class MCLogUI(QtGui.QMainWindow):
     self.ui.menuUserPlots.clear()
     for p in self.userPlotList:
       act = QtGui.QAction(p.title, self.ui.menuUserPlots)
-      act.triggered.connect(lambda: self.plot_userplot(p))
+      act.triggered.connect(lambda plot=p: self.plot_userplot(plot))
       self.ui.menuUserPlots.addAction(act)
     act = QtGui.QAction("Save current plot", self.ui.menuUserPlots)
     act.triggered.connect(self.save_userplot)
@@ -126,7 +126,7 @@ class MCLogUI(QtGui.QMainWindow):
       rmUserPlotMenu = QtGui.QMenu("Remove saved plots", self.ui.menuUserPlots)
       for p in self.userPlotList:
         act = QtGui.QAction(p.title, self.ui.menuUserPlots)
-        act.triggered.connect(lambda: self.remove_userplot(p))
+        act.triggered.connect(lambda plot=p: self.remove_userplot(plot))
         rmUserPlotMenu.addAction(act)
       self.ui.menuUserPlots.addMenu(rmUserPlotMenu)
 
