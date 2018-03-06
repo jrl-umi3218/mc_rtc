@@ -179,6 +179,12 @@ Robot::Robot(Robots & robots, unsigned int robots_idx, bool loadFiles,
     bodyTransforms_ = mbg().bodiesBaseTransform(mb().body(0).name());
   }
 
+  if(module_.bounds().size() != 6)
+  {
+    LOG_ERROR_AND_THROW(std::invalid_argument, "The bounds of robotmodule '"
+      << module_.name << "' have a size of " << module_.bounds().size()
+      << " instead of 6 (ql, qu, vl, vu, tl, tu).")
+  }
   std::tie(ql_, qu_, vl_, vu_, tl_, tu_) = bounds(mb(), module_.bounds());
 
   if(loadFiles)
