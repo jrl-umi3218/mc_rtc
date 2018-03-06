@@ -22,8 +22,13 @@ struct TestServer
   double d_ = 0.;
   Eigen::VectorXd v_ {Eigen::VectorXd::Ones(6)};
   Eigen::Vector3d v3_ {1., 2., 3.};
+  Eigen::Vector3d vInt_ = {0., 0., 0.};
   std::string combo_ = "b";
   std::string data_combo_;
+  sva::PTransformd rotStatic_ {sva::RotZ(-M_PI), Eigen::Vector3d(1., 1., 0.)};
+  sva::PTransformd rotInteractive_ {Eigen::Vector3d{0.,0.,1.}};
+  sva::PTransformd static_ {sva::RotZ(-M_PI), Eigen::Vector3d(1., 0., 0.)};
+  sva::PTransformd interactive_ {Eigen::Vector3d{0.,1.,0.}};
 };
 
 TestServer::TestServer()
@@ -62,6 +67,13 @@ TestServer::TestServer()
   builder.addElement({"DataComboInput"}, mc_rtc::gui::DataComboInput("DataComboInput", {"DataComboInput"},
                                                              [this](){ return data_combo_;},
                                                              [this](const std::string & s){ data_combo_ = s; std::cout << "data_combo_ changed to " << data_combo_ << std::endl; }));
+  builder.addElement({"Point3D"}, mc_rtc::gui::Point3D("ReadOnly", [this](){ return v3_; }));
+  builder.addElement({"Point3D"}, mc_rtc::gui::Point3D("Interactive", [this](){ return vInt_; }, [this](const Eigen::Vector3d & v){ vInt_ = v; }));
+  builder.addElement({"Rotation"}, mc_rtc::gui::Rotation("ReadOnly", [this](){ return rotStatic_; }));
+  builder.addElement({"Rotation"}, mc_rtc::gui::Rotation("Interactive", [this](){ return rotInteractive_; }, [this](const Eigen::Quaterniond & q){ rotInteractive_.rotation() = q; }));
+  builder.addElement({"Transform"}, mc_rtc::gui::Transform("ReadOnly", [this](){ return static_; }));
+  builder.addElement({"Transform"}, mc_rtc::gui::Transform("Interactive", [this](){ return interactive_; }, [this](const sva::PTransformd & p){ interactive_ = p; }));
+  builder.addElement({"Schema"}, mc_rtc::gui::Schema("Add metatask", "metatask", [](const mc_rtc::Configuration & c) { std::cout << "Got schema request:\n" << c.dump(true) << std::endl; }));
 }
 
 void TestServer::publish()

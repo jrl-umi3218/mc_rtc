@@ -106,6 +106,24 @@ void ComboInputImpl<GetT, SetT>::addGUI(mc_rtc::Configuration & out)
   out.add("values", values_);
 }
 
+template<typename GetT>
+void Point3DROImpl<GetT>::addGUI(mc_rtc::Configuration & gui)
+{
+  gui.add("ro", true);
+}
+
+template<typename GetT>
+void RotationROImpl<GetT>::addGUI(mc_rtc::Configuration & gui)
+{
+  gui.add("ro", true);
+}
+
+template<typename GetT>
+void TransformROImpl<GetT>::addGUI(mc_rtc::Configuration & gui)
+{
+  gui.add("ro", true);
+}
+
 template<typename GetT, typename SetT>
 DataComboInputImpl<GetT, SetT>::DataComboInputImpl(const std::string & name,
                                            const std::vector<std::string> & values,
@@ -119,6 +137,21 @@ template<typename GetT, typename SetT>
 void DataComboInputImpl<GetT, SetT>::addGUI(mc_rtc::Configuration & out)
 {
   out.add("ref", data_ref_);
+}
+
+template<typename Callback>
+SchemaImpl<Callback>::SchemaImpl(const std::string & name,
+                                 const std::string & schema,
+                                 Callback cb)
+: CallbackElement<Element,Callback>(name, cb),
+  schema_(schema)
+{
+}
+
+template<typename Callback>
+void SchemaImpl<Callback>::addGUI(mc_rtc::Configuration & gui)
+{
+  gui.add("dir", schema_);
 }
 
 template<typename T>

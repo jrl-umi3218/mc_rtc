@@ -49,7 +49,6 @@ namespace gui
     Point3D,
     Rotation,
     Transform,
-    Wrench,
     Schema,
     Form
   };
@@ -251,10 +250,122 @@ protected:
 
   template<typename GetT, typename SetT>
   DataComboInputImpl<GetT, SetT> DataComboInput(const std::string & name,
-                                        const std::vector<std::string> & values,
-                                        GetT get_fn, SetT set_fn)
+                                                const std::vector<std::string> & values,
+                                                GetT get_fn, SetT set_fn)
   {
     return DataComboInputImpl<GetT, SetT>(name, values, get_fn, set_fn);
+  }
+
+  template<typename GetT>
+  struct MC_RTC_GUI_DLLAPI Point3DROImpl : public DataElement<GetT>
+  {
+    static constexpr auto type = Elements::Point3D;
+
+    using DataElement<GetT>::DataElement;
+
+    /** Add distinguishing elements to GUI information */
+    void addGUI(mc_rtc::Configuration & gui);
+  };
+
+  template<typename GetT, typename SetT>
+  struct MC_RTC_GUI_DLLAPI Point3DImpl : public CommonInputImpl<GetT, SetT>
+  {
+    static constexpr auto type = Elements::Point3D;
+
+    using CommonInputImpl<GetT, SetT>::CommonInputImpl;
+  };
+
+  template<typename GetT>
+  Point3DROImpl<GetT> Point3D(const std::string & name, GetT get_fn)
+  {
+    return Point3DROImpl<GetT>(name, get_fn);
+  }
+
+  template<typename GetT, typename SetT>
+  Point3DImpl<GetT, SetT> Point3D(const std::string & name, GetT get_fn, SetT set_fn)
+  {
+    return Point3DImpl<GetT, SetT>(name, get_fn, set_fn);
+  }
+
+  template<typename GetT>
+  struct MC_RTC_GUI_DLLAPI RotationROImpl : public DataElement<GetT>
+  {
+    static constexpr auto type = Elements::Rotation;
+
+    using DataElement<GetT>::DataElement;
+
+    /** Add distinguishing elements to GUI information */
+    void addGUI(mc_rtc::Configuration & gui);
+  };
+
+  template<typename GetT, typename SetT>
+  struct MC_RTC_GUI_DLLAPI RotationImpl : public CommonInputImpl<GetT, SetT>
+  {
+    static constexpr auto type = Elements::Rotation;
+
+    using CommonInputImpl<GetT, SetT>::CommonInputImpl;
+  };
+
+  template<typename GetT>
+  RotationROImpl<GetT> Rotation(const std::string & name, GetT get_fn)
+  {
+    return RotationROImpl<GetT>(name, get_fn);
+  }
+
+  template<typename GetT, typename SetT>
+  RotationImpl<GetT, SetT> Rotation(const std::string & name, GetT get_fn, SetT set_fn)
+  {
+    return RotationImpl<GetT, SetT>(name, get_fn, set_fn);
+  }
+
+  template<typename GetT>
+  struct MC_RTC_GUI_DLLAPI TransformROImpl : public DataElement<GetT>
+  {
+    static constexpr auto type = Elements::Transform;
+
+    using DataElement<GetT>::DataElement;
+
+    /** Add distinguishing elements to GUI information */
+    void addGUI(mc_rtc::Configuration & gui);
+  };
+
+  template<typename GetT, typename SetT>
+  struct MC_RTC_GUI_DLLAPI TransformImpl : public CommonInputImpl<GetT, SetT>
+  {
+    static constexpr auto type = Elements::Transform;
+
+    using CommonInputImpl<GetT, SetT>::CommonInputImpl;
+  };
+
+  template<typename GetT>
+  TransformROImpl<GetT> Transform(const std::string & name, GetT get_fn)
+  {
+    return TransformROImpl<GetT>(name, get_fn);
+  }
+
+  template<typename GetT, typename SetT>
+  TransformImpl<GetT, SetT> Transform(const std::string & name, GetT get_fn, SetT set_fn)
+  {
+    return TransformImpl<GetT, SetT>(name, get_fn, set_fn);
+  }
+
+  template<typename Callback>
+  struct MC_RTC_GUI_DLLAPI SchemaImpl : public CallbackElement<Element, Callback>
+  {
+    static constexpr auto type = Elements::Schema;
+
+    SchemaImpl(const std::string & name, const std::string & schema, Callback cb);
+
+    void addGUI(mc_rtc::Configuration & gui);
+  private:
+    std::string schema_;
+  };
+
+  template<typename Callback>
+  SchemaImpl<Callback> Schema(const std::string & name, const std::string & schema,
+                              Callback cb)
+  {
+    return SchemaImpl<Callback>(name, schema, cb);
   }
 
   /** Used to build a GUI state from multiple objects */

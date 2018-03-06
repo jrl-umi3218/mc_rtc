@@ -35,8 +35,19 @@ namespace mc_rtc
 
 sva::PTransformd ConfigurationLoader<sva::PTransformd>::load(const mc_rtc::Configuration & config)
 {
-  Eigen::Matrix3d r = config("rotation");
-  return {r, config("translation")};
+  if(config.has("rotation") && config.has("translation"))
+  {
+    Eigen::Matrix3d r = config("rotation");
+    return {r, config("translation")};
+  }
+  else if(config.size() == 7)
+  {
+    return {
+            Eigen::Quaterniond{config[0], config[1], config[2], config[3]}.normalized(),
+            {config[4], config[5], config[6]}
+           };
+  }
+  throw mc_rtc::Configuration::Exception("Not an sva::PTransformd-like object in json representation");
 }
 
 mc_rtc::Configuration ConfigurationLoader<sva::PTransformd>::save(const sva::PTransformd & pt)
