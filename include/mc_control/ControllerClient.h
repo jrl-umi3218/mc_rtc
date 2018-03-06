@@ -60,6 +60,9 @@ namespace mc_control
     /** Set the timeout of the SUB socket */
     double timeout(double t);
   protected:
+    /** Should be called when the client is ready to receive data */
+    void start();
+
     void handle_gui_state(const char * data);
 
     void handle_category(const std::vector<std::string> & parent, const std::string & category, const mc_rtc::Configuration & data);
@@ -154,6 +157,58 @@ namespace mc_control
       default_impl("DataComboInput", id);
     }
 
+    /** Should display a point in 3D environment
+     *
+     * \p requestId should be in requests instead of \p id
+     *
+     * bool \p ro indicates whether this point is interactive or not
+     */
+    virtual void point3d(const ElementId & id,
+                         const ElementId & /*requestId*/,
+                         bool /*ro */,
+                         const Eigen::Vector3d & /*pos*/)
+    {
+      default_impl("Point3D", id);
+    }
+
+    /** Should display a rotation in 3D environment
+     *
+     * \p requestId should be in requests instead of \p id
+     *
+     * bool \p ro indicates whether this point is interactive or not
+     */
+    virtual void rotation(const ElementId & id,
+                          const ElementId & /*requestId*/,
+                          bool /*ro */,
+                          const sva::PTransformd & /*pos*/)
+    {
+      default_impl("Rotation", id);
+    }
+
+    /** Should display a PTransform in 3D environment
+     *
+     * \p requestId should be in requests instead of \p id
+     *
+     * bool \p ro indicates whether this point is interactive or not
+     */
+    virtual void transform(const ElementId & id,
+                           const ElementId & /*requestId*/,
+                           bool /*ro */,
+                           const sva::PTransformd & /*pos*/)
+    {
+      default_impl("Transform", id);
+    }
+
+    /** Should display a form to send schema-based request to the server
+     *
+     * \p schema is the schema directory relative to mc_rtc JSON schema installation
+     */
+    virtual void schema(const ElementId & id,
+                        const std::string & /*schema*/)
+    {
+      default_impl("Schema", id);
+    }
+
     /* Network elements */
     bool run_ = true;
     int sub_socket_;
@@ -166,6 +221,21 @@ namespace mc_control
   private:
     /** Default implementations for widgets' creations display a warning message to the user */
     void default_impl(const std::string & type, const ElementId & id);
+
+    /** Handle details of Point3D elements */
+    void handle_point3d(const ElementId & id,
+                        const mc_rtc::Configuration & gui,
+                        const mc_rtc::Configuration & data);
+
+    /** Handle details of Rotation elements */
+    void handle_rotation(const ElementId & id,
+                         const mc_rtc::Configuration & gui,
+                         const mc_rtc::Configuration & data);
+
+    /** Handle details of Transform elements */
+    void handle_transform(const ElementId & id,
+                          const mc_rtc::Configuration & gui,
+                          const mc_rtc::Configuration & data);
   };
 
 

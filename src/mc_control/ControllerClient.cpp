@@ -63,41 +63,6 @@ ControllerClient::ControllerClient(const std::string & sub_conn_uri,
     LOG_ERROR_AND_THROW(std::runtime_error, "Failed to set subscribe option on SUB socket")
   }
   init_socket(push_socket_, NN_PUSH, push_conn_uri, "PUSH socket");
-
-  sub_th_ = std::thread([this]()
-  {
-  std::vector<char> buff(65536);
-  auto t_last_received = std::chrono::system_clock::now();
-  while(run_)
-  {
-    auto recv = nn_recv(sub_socket_, buff.data(), buff.size(), NN_DONTWAIT);
-    auto now = std::chrono::system_clock::now();
-    if(recv < 0)
-    {
-      if(timeout_ > 0 && now - t_last_received > std::chrono::duration<double>(timeout_))
-      {
-        t_last_received = now;
-        handle_gui_state("{}");
-      }
-      auto err = nn_errno();
-      if(err != EAGAIN)
-      {
-        LOG_ERROR("ControllerClient failed to receive with errno: " << err)
-      }
-    }
-    else if(recv > static_cast<int>(buff.size()))
-    {
-      LOG_WARNING("Receive buffer was too small to receive the latest state message, will resize for next time")
-      buff.resize(2*buff.size());
-    }
-    else if(recv > 0)
-    {
-      t_last_received = now;
-      handle_gui_state(buff.data());
-    }
-    usleep(500);
-  }
-  });
 }
 
 ControllerClient::~ControllerClient()
@@ -109,6 +74,46 @@ ControllerClient::~ControllerClient()
   }
   nn_shutdown(sub_socket_, 0);
   nn_shutdown(push_socket_, 0);
+}
+
+void ControllerClient::start()
+{
+  sub_th_ = std::thread([this]()
+  {
+  std::vector<char> buff(65536);
+  auto t_last_received = std::chrono::system_clock::now();
+  while(run_)
+  {
+    memset(buff.data(), 0, buff.size()*sizeof(char));
+    auto recv = nn_recv(sub_socket_, buff.data(), buff.size(), NN_DONTWAIT);
+    auto now = std::chrono::system_clock::now();
+    if(recv < 0)
+    {
+      if(timeout_ > 0 && now - t_last_received > std::chrono::duration<double>(timeout_))
+      {
+        t_last_received = now;
+        if(run_) { handle_gui_state("{}"); }
+      }
+      auto err = nn_errno();
+      if(err != EAGAIN)
+      {
+        LOG_ERROR("ControllerClient failed to receive with errno: " << err)
+      }
+    }
+    else if(recv > 0)
+    {
+      if(recv > static_cast<int>(buff.size()))
+      {
+        LOG_WARNING("Receive buffer was too small to receive the latest state message, will resize for next time")
+        buff.resize(2*buff.size());
+        continue;
+      }
+      t_last_received = now;
+      if(run_) { handle_gui_state(buff.data()); }
+    }
+    usleep(500);
+  }
+  });
 }
 
 void ControllerClient::send_request(const ElementId & id,
@@ -154,7 +159,7 @@ void ControllerClient::handle_category(const std::vector<std::string> & parent,
   }
   for(const auto & k : data.keys())
   {
-    const auto & d = data(k);
+    auto d = data(k);
     if(d.has("GUI"))
     {
       handle_widget({next_category, k}, d);
@@ -211,6 +216,18 @@ void ControllerClient::handle_widget(const ElementId & id,
       case Elements::DataComboInput:
         data_combo_input(id, gui("ref"), data("data"));
         break;
+      case Elements::Point3D:
+        handle_point3d(id, gui, data);
+        break;
+      case Elements::Rotation:
+        handle_rotation(id, gui, data);
+        break;
+      case Elements::Transform:
+        handle_transform(id, gui, data);
+        break;
+      case Elements::Schema:
+        schema(id, gui("dir"));
+        break;
       default:
         LOG_ERROR("Type " << static_cast<int>(type) << " is not handlded by this ControllerClient")
         break;
@@ -228,6 +245,62 @@ void ControllerClient::default_impl(const std::string & type,
                                     const ElementId & id)
 {
   LOG_WARNING("This implementation of ControllerClient does not handle " << type << " GUI needed by " << cat2str(id.category) << "/" << id.name)
+}
+
+void ControllerClient::handle_point3d(const ElementId & id,
+                                      const mc_rtc::Configuration & gui,
+                                      const mc_rtc::Configuration & data)
+{
+  bool ro = gui("ro", false);
+  Eigen::Vector3d pos = data("data");
+  if(ro)
+  {
+    array_label(id, {"x", "y", "z"}, pos);
+  }
+  else
+  {
+    array_input(id, {"x", "y", "z"}, pos);
+  }
+  point3d({id.category, id.name + "_point3d"}, id, ro, pos);
+}
+
+void ControllerClient::handle_rotation(const ElementId & id,
+                                       const mc_rtc::Configuration & gui,
+                                       const mc_rtc::Configuration & data)
+{
+  bool ro = gui("ro", false);
+  sva::PTransformd pos = data("data");
+  Eigen::Quaterniond q{pos.rotation()};
+  if(ro)
+  {
+    array_label(id, {"w", "x", "y", "z"}, Eigen::Vector4d{q.w(), q.x(), q.y(), q.z()});
+  }
+  else
+  {
+    array_input(id, {"w", "x", "y", "z"}, Eigen::Vector4d{q.w(), q.x(), q.y(), q.z()});
+  }
+  rotation({id.category, id.name + "_rotation"}, id, ro, pos);
+}
+
+void ControllerClient::handle_transform(const ElementId & id,
+                                        const mc_rtc::Configuration & gui,
+                                        const mc_rtc::Configuration & data)
+{
+  bool ro = gui("ro", false);
+  sva::PTransformd pos = data("data");
+  Eigen::Quaterniond q{pos.rotation()};
+  Eigen::Matrix<double, 7, 1> vec;
+  vec << q.w(), q.x(), q.y(), q.z();
+  vec.tail(3) = pos.translation();
+  if(ro)
+  {
+    array_label(id, {"qw", "qx", "qy", "qz", "tx", "ty", "tz"}, vec);
+  }
+  else
+  {
+    array_input(id, {"qw", "qx", "qy", "qz", "tx", "ty", "tz"}, vec);
+  }
+  transform({id.category, id.name + "_transform"}, id, ro, pos);
 }
 
 }
