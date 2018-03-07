@@ -17,6 +17,11 @@ public:
    *
    * \param bodyName Name of the body to control
    *
+   * \param bodyVector Vector to be controlled, expressed in the body frame
+   *
+   * \param targetVector Target for the controlled vector, expressed in the
+   * world frame
+   *
    * \param robots Robots controlled by this task
    *
    * \param robotIndex Index of the robot controlled by this task
@@ -34,26 +39,42 @@ public:
 
   /*! \brief Reset the task
    *
-   * Set the task objective to the current body orientation
+   * Set the task objective (i.e. target vector in the world frame) to the
+   * current body vector
    */
   virtual void reset() override;
 
-  /*! \brief Set the body orientation target
+  /*! \brief Set the body vector to be controlled
    *
-   * \param ori Body orientation in world frame
+   * \param vector Vector to be controlled in the body frame
    *
    */
-  void bodyVector(const Eigen::Vector3d & ori);
+  void bodyVector(const Eigen::Vector3d & vector);
 
-  /*! \brief Get the current body orientation target
+  /*! \brief Get the current controlled vector in the body frame
    *
    * \returns The body orientation target in world frame
    *
    */
   Eigen::Vector3d bodyVector();
 
+  /*! \brief Set world target for the controlled vector
+   *
+   * \param vector Target vector in the world frame
+   *
+   */
+  void targetVector(const Eigen::Vector3d & vector);
+
+  /*! \brief Get the current target vector in the world frame
+   *
+   * \returns The target vector in the world frame
+   *
+   */
+  const Eigen::Vector3d & targetVector() const;
+
   /*! \brief Return the controlled body */
   std::string body() { return bodyName; }
+
 public:
   std::string bodyName;
   unsigned int bIndex;

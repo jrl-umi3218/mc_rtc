@@ -21,14 +21,24 @@ void VectorOrientationTask::reset()
 {
 }
 
-void VectorOrientationTask::bodyVector(const Eigen::Vector3d & ori)
+void VectorOrientationTask::bodyVector(const Eigen::Vector3d & vector)
 {
-  errorT->bodyVector(ori);
+  errorT->bodyVector(vector);
 }
 
 Eigen::Vector3d VectorOrientationTask::bodyVector()
 {
   return errorT->bodyVector();
+}
+
+void VectorOrientationTask::targetVector(const Eigen::Vector3d & vector)
+{
+  errorT->target(vector);
+}
+
+const Eigen::Vector3d & VectorOrientationTask::targetVector() const
+{
+  return errorT->target();
 }
 
 }
