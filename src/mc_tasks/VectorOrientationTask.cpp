@@ -19,6 +19,7 @@ VectorOrientationTask::VectorOrientationTask(const std::string & bodyName, const
 
 void VectorOrientationTask::reset()
 {
+  errorT->target(errorT->actual());
 }
 
 void VectorOrientationTask::bodyVector(const Eigen::Vector3d & vector)
