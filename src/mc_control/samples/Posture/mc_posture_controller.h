@@ -12,6 +12,8 @@ struct MC_CONTROL_DLLAPI MCPostureController : public MCController
 public:
   /* Common stuff */
   MCPostureController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt);
+
+  bool run() override;
 };
 
 }
