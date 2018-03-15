@@ -278,6 +278,10 @@ bool QPSolver::runJointsFeedback()
     {
       prev_encoders_ = robot().encoderValues();
       encoders_alpha_.resize(prev_encoders_.size());
+      if(logger_)
+      {
+        logger_->addLogEntry("alpha_encoder", [this]() -> const std::vector<double>&{ return encoders_alpha_; });
+      }
     }
     for(size_t i = 0; i < encoders.size(); ++i)
     {
@@ -290,7 +294,7 @@ bool QPSolver::runJointsFeedback()
       if(!robot().hasJoint(jN)) { continue; }
       auto jI = robot().jointIndexByName(jN);
       robot().mbc().q[jI][0] = encoders[i];
-      //robot().mbc().alpha[jI][0] = encoders_alpha_[i];
+      robot().mbc().alpha[jI][0] = encoders_alpha_[i];
     }
     robot().forwardKinematics();
     robot().forwardVelocity();
