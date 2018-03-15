@@ -226,6 +226,11 @@ public:
 
   boost::timer::cpu_times solveAndBuildTime();
 
+  /** Return the solvers result vector.
+   * \return The solvers result vector.
+   */
+  const Eigen::VectorXd& result() const;
+
   /** Set the logger for this solver instance */
   void logger(std::shared_ptr<mc_rtc::Logger> logger);
 private:
