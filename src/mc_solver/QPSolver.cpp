@@ -290,7 +290,7 @@ bool QPSolver::runJointsFeedback()
       if(!robot().hasJoint(jN)) { continue; }
       auto jI = robot().jointIndexByName(jN);
       robot().mbc().q[jI][0] = encoders[i];
-      robot().mbc().alpha[jI][0] = encoders_alpha_[i];
+      //robot().mbc().alpha[jI][0] = encoders_alpha_[i];
     }
     robot().forwardKinematics();
     robot().forwardVelocity();
