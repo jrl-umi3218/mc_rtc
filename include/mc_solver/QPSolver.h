@@ -37,7 +37,9 @@ enum class MC_SOLVER_DLLAPI FeedbackType
   /** No feedback, i.e. open-loop control */
   None,
   /** Use encoder values for actuated joints */
-  Joints
+  Joints,
+  /** Joints + encoder velocity obtained from numerical differentiation */
+  JointsWVelocity
 };
 
 /** \class QPSolver
@@ -303,7 +305,7 @@ private:
   bool runOpenLoop();
 
   /** Run with encoders' feedback */
-  bool runJointsFeedback();
+  bool runJointsFeedback(bool wVelocity);
 
   /** Feedback data */
   std::vector<double> prev_encoders_ {};

@@ -228,7 +228,10 @@ bool QPSolver::run(FeedbackType fType)
       success = runOpenLoop();
       break;
     case FeedbackType::Joints:
-      success = runJointsFeedback();
+      success = runJointsFeedback(false);
+      break;
+    case FeedbackType::JointsWVelocity:
+      success = runJointsFeedback(true);
       break;
     default:
       LOG_ERROR("FeedbackType set to unknown value")
@@ -266,7 +269,7 @@ bool QPSolver::runOpenLoop()
   return false;
 }
 
-bool QPSolver::runJointsFeedback()
+bool QPSolver::runJointsFeedback(bool wVelocity)
 {
   control_q_ = robot().mbc().q;
   control_alpha_ = robot().mbc().alpha;
@@ -294,7 +297,10 @@ bool QPSolver::runJointsFeedback()
       if(!robot().hasJoint(jN)) { continue; }
       auto jI = robot().jointIndexByName(jN);
       robot().mbc().q[jI][0] = encoders[i];
-      robot().mbc().alpha[jI][0] = encoders_alpha_[i];
+      if(wVelocity)
+      {
+        robot().mbc().alpha[jI][0] = encoders_alpha_[i];
+      }
     }
     robot().forwardKinematics();
     robot().forwardVelocity();
