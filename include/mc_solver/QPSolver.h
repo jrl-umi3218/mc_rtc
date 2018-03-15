@@ -31,6 +31,15 @@ namespace mc_rtc
 namespace mc_solver
 {
 
+/** Describe the type of feedback used to control the robot */
+enum class MC_SOLVER_DLLAPI FeedbackType
+{
+  /** No feedback, i.e. open-loop control */
+  None,
+  /** Use encoder values for actuated joints */
+  Joints
+};
+
 /** \class QPSolver
  *
  * Wraps a tasks::qp::QPSolver instance
@@ -172,9 +181,12 @@ public:
   /** Run one iteration of the QP.
    *
    * If succesful, will update the robots' configurations
+   *
+   * \param fType Type of feedback used to close the loop on sensory information
+   *
    * \return True if successful, false otherwise.
    */
-  bool run();
+  bool run(FeedbackType fType = FeedbackType::None);
 
   /**
    * WARNING EXPERIMENTAL
@@ -286,6 +298,18 @@ private:
   std::shared_ptr<mc_rtc::gui::StateBuilder> gui_ = nullptr;
 
   void addTaskToGUI(mc_tasks::MetaTask * task);
+
+  /** Run without feedback (open-loop) */
+  bool runOpenLoop();
+
+  /** Run with encoders' feedback */
+  bool runJointsFeedback();
+
+  /** Feedback data */
+  std::vector<double> prev_encoders_ {};
+  std::vector<double> encoders_alpha_ {};
+  std::vector<std::vector<double>> control_q_ {};
+  std::vector<std::vector<double>> control_alpha_ {};
 public:
   /** \deprecated{Default constructor, not made for general usage} */
   QPSolver() {}

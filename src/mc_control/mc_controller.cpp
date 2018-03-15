@@ -120,7 +120,12 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
 
 bool MCController::run()
 {
-  if(!qpsolver->run())
+  return run(mc_solver::FeedbackType::None);
+}
+
+bool MCController::run(mc_solver::FeedbackType fType)
+{
+  if(!qpsolver->run(fType))
   {
     LOG_ERROR("QP failed to run()")
     return false;

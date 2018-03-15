@@ -73,6 +73,14 @@ public:
    */
   virtual bool runClosedLoop();
 
+  /** Can be called in derived class instead of run to use a feedback strategy
+   * different from the default one
+   *
+   * \param fType Type of feedback used in the solver
+   *
+   */
+  bool run(mc_solver::FeedbackType fType);
+
   /** Gives access to the result of the QP execution
    * \param t Unused at the moment
    */

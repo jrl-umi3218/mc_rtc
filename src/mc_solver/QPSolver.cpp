@@ -219,9 +219,30 @@ const std::vector<mc_rbdyn::Contact> & QPSolver::contacts() const
   return contacts_;
 }
 
-bool QPSolver::run()
+bool QPSolver::run(FeedbackType fType)
 {
   bool success = false;
+  switch(fType)
+  {
+    case FeedbackType::None:
+      success = runOpenLoop();
+      break;
+    case FeedbackType::Joints:
+      success = runJointsFeedback();
+      break;
+    default:
+      LOG_ERROR("FeedbackType set to unknown value")
+      break;
+  }
+  if(success)
+  {
+    __fillResult();
+  }
+  return success;
+}
+
+bool QPSolver::runOpenLoop()
+{
   for(auto & t : metaTasks)
   {
     t->update();
@@ -239,11 +260,68 @@ bool QPSolver::run()
         rbd::forwardKinematics(mb, mbc);
         rbd::forwardVelocity(mb, mbc);
       }
-      success = true;
     }
-    __fillResult();
+    return true;
   }
-  return success;
+  return false;
+}
+
+bool QPSolver::runJointsFeedback()
+{
+  control_q_ = robot().mbc().q;
+  control_alpha_ = robot().mbc().alpha;
+  const auto & encoders = robot().encoderValues();
+  if(encoders.size())
+  {
+    //FIXME Not correct for every joint types
+    if(prev_encoders_.size() == 0)
+    {
+      prev_encoders_ = robot().encoderValues();
+      encoders_alpha_.resize(prev_encoders_.size());
+    }
+    for(size_t i = 0; i < encoders.size(); ++i)
+    {
+      encoders_alpha_[i] = (encoders[i] - prev_encoders_[i])/timeStep;
+      prev_encoders_[i] = encoders[i];
+    }
+    for(size_t i = 0; i < robot().refJointOrder().size(); ++i)
+    {
+      const auto & jN = robot().refJointOrder()[i];
+      if(!robot().hasJoint(jN)) { continue; }
+      auto jI = robot().jointIndexByName(jN);
+      robot().mbc().q[jI][0] = encoders[i];
+      robot().mbc().alpha[jI][0] = encoders_alpha_[i];
+    }
+    robot().forwardKinematics();
+    robot().forwardVelocity();
+  }
+  else
+  {
+    LOG_WARNING("Skipped feedback because encoders is empty")
+  }
+  for(auto & t : metaTasks)
+  {
+    t->update();
+  }
+  if(solver.solveNoMbcUpdate(robots_p->mbs(), robots_p->mbcs()))
+  {
+    robot().mbc().q = control_q_;
+    robot().mbc().alpha = control_alpha_;
+    for(size_t i = 0; i < robots_p->mbs().size(); ++i)
+    {
+      rbd::MultiBody & mb = robots_p->mbs()[i];
+      rbd::MultiBodyConfig & mbc = robots_p->mbcs()[i];
+      if(mb.nrDof() > 0)
+      {
+        solver.updateMbc(mbc, static_cast<int>(i));
+        rbd::eulerIntegration(mb, mbc, timeStep);
+        rbd::forwardKinematics(mb, mbc);
+        rbd::forwardVelocity(mb, mbc);
+      }
+    }
+    return true;
+  }
+  return false;
 }
 
 bool QPSolver::runClosedLoop(std::shared_ptr<mc_rbdyn::Robots> real_robots)
