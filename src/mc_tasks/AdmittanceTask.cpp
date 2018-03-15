@@ -121,6 +121,11 @@ void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
                      {
                      return admittance_;
                      });
+  logger.addLogEntry(name_ + "_damping",
+                     [this]()
+                     {
+                     return damping();
+                     });
   logger.addLogEntry(name_ + "_measured_wrench",
                      [this]() -> sva::ForceVecd
                      {
@@ -130,6 +135,11 @@ void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
                      [this]() -> sva::MotionVecd
                      {
                      return refVelB_;
+                     });
+  logger.addLogEntry(name_ + "_stiffness",
+                     [this]()
+                     {
+                     return stiffness();
                      });
   logger.addLogEntry(name_ + "_target_wrench",
                      [this]() -> const sva::ForceVecd &
@@ -147,6 +157,7 @@ void AdmittanceTask::removeFromLogger(mc_rtc::Logger & logger)
 {
   SurfaceTransformTask::removeFromLogger(logger);
   logger.removeLogEntry(name_ + "_admittance");
+  logger.removeLogEntry(name_ + "_damping");
   logger.removeLogEntry(name_ + "_measured_wrench");
   logger.removeLogEntry(name_ + "_ref_vel_body");
   logger.removeLogEntry(name_ + "_target_wrench");

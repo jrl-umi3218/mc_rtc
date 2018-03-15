@@ -46,6 +46,16 @@ Eigen::Vector3d CoMTask::com()
 
 void CoMTask::addToLogger(mc_rtc::Logger & logger)
 {
+  logger.addLogEntry(name_ + "_damping",
+                     [this]()
+                     {
+                     return damping();
+                     });
+  logger.addLogEntry(name_ + "_stiffness",
+                     [this]()
+                     {
+                     return stiffness();
+                     });
   logger.addLogEntry(name_ + "_target",
                      [this]() -> const Eigen::Vector3d &
                      {
@@ -60,6 +70,8 @@ void CoMTask::addToLogger(mc_rtc::Logger & logger)
 
 void CoMTask::removeFromLogger(mc_rtc::Logger & logger)
 {
+  logger.removeLogEntry(name_ + "_damping");
+  logger.removeLogEntry(name_ + "_stiffness");
   logger.removeLogEntry(name_ + "_target");
   logger.removeLogEntry(name_);
 }
