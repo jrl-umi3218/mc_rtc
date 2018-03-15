@@ -35,6 +35,13 @@ TestServer::TestServer()
 {
   auto data = builder.data();
   data.add("DataComboInput", std::vector<std::string>{"Choice A", "Choice B", "Choice C", "Obiwan Kenobi"});
+  data.add("robots", std::vector<std::string>{"Goldorak", "Astro"});
+  auto bodies = data.add("bodies");
+  bodies.add("Goldorak", std::vector<std::string>{"FulguroPoing", "FulguroPied"});
+  bodies.add("Astro", std::vector<std::string>{"Head", "Arm", "Foot"});
+  auto surfaces = data.add("surfaces");
+  surfaces.add("Goldorak", std::vector<std::string>{"Goldo_S1", "Goldo_S2", "Goldo_S3"});
+  surfaces.add("Astro", std::vector<std::string>{"Astro_S1", "Astro_S2", "Astro_S3"});
   builder.addElement({"dummy", "provider"}, mc_rtc::gui::Label("value",
                                                                [this](){ return provider.value; }));
   builder.addElement({"dummy", "provider"}, mc_rtc::gui::ArrayLabel("point",
