@@ -25,7 +25,7 @@ public:
    *
    */
   CoMTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex,
-          double stifness = 5.0, double weight = 100.);
+          double stiffness = 5.0, double weight = 100.);
 
   virtual void reset() override;
 

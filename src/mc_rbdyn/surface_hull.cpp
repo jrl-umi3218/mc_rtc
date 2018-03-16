@@ -74,7 +74,7 @@ sch::S_Object * sch_polyhedron(const std::vector<sva::PTransformd> & points_pt)
   for(const auto & p : points)
   {
     auto v = new sch::S_PolyhedronVertex();
-    v->setCordinates(p.coordinates()[0], p.coordinates()[1], p.coordinates()[2]);
+    v->setCoordinates(p.coordinates()[0], p.coordinates()[1], p.coordinates()[2]);
     v->setNumber(p.id());
     poly_algo.vertexes_.push_back(v);
   }
