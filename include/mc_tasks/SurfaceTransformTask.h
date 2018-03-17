@@ -65,6 +65,16 @@ public:
     return TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::refVel(velB.vector());
   }
 
+  /*! \brief Set trajectory task's reference acceleration from motion vector.
+   *
+   * \param acc Reference acceleration.
+   *
+   */
+  void refAccel(const sva::MotionVecd & accel)
+  {
+    return TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::refAccel(accel.vector());
+  }
+
 protected:
   std::string surfaceName;
 
