@@ -121,6 +121,14 @@ public:
     this->target(X_0_target);
   }
 
+  /*! \brief Transform from current surface pose to target.
+   *
+   */
+  sva::PTransformd poseError()
+  {
+    return targetPose() * surfacePose().inv();
+  }
+
   /*! \brief Get the target wrench in the surface frame
    *
    */
