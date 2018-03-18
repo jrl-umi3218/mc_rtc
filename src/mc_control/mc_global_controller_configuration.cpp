@@ -116,7 +116,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     initial_controller = enabled_controllers[0];
   }
   config("UpdateReal", update_real);
-  config("UpdateRealFromSensor", update_real_from_sensors);
+  config("UpdateRealFromSensors", update_real_from_sensors);
   config("Default", initial_controller);
   config("Timestep", timestep);
   config("PublishControlState", publish_control_state);
