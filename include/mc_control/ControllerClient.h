@@ -57,6 +57,18 @@ namespace mc_control
     /** Send a request to the given element in the given category using data */
     void send_request(const ElementId & id, const mc_rtc::Configuration & data);
 
+    /** Helper for send_request in simple cases */
+    template<typename T>
+    void send_request(const ElementId & id, const T & data)
+    {
+      mc_rtc::Configuration c;
+      c.add("data", data);
+      send_request(id, c("data"));
+    }
+
+    /** Helper for the void case */
+    void send_request(const ElementId & id);
+
     /** Set the timeout of the SUB socket */
     double timeout(double t);
   protected:

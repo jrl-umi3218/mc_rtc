@@ -127,6 +127,11 @@ void ControllerClient::send_request(const ElementId & id,
   nn_send(push_socket_, out.c_str(), out.size() + 1, NN_DONTWAIT);
 }
 
+void ControllerClient::send_request(const ElementId & id)
+{
+  send_request(id, mc_rtc::Configuration{});
+}
+
 void ControllerClient::handle_gui_state(const char * data)
 {
   started();
