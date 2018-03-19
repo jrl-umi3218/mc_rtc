@@ -430,37 +430,37 @@ void QPSolver::gui(std::shared_ptr<mc_rtc::gui::StateBuilder> gui)
     {
       addTaskToGUI(t);
     }
-    //gui_->addElement(
-    //  mc_rtc::gui::Element<mc_rtc::Configuration>{
-    //    {"Contacts", "Add", "Form"},
-    //    std::function<void(const mc_rtc::Configuration&)>{
-    //      [this](const mc_rtc::Configuration & data)
-    //      {
-    //        try
-    //        {
-    //          unsigned int r0Index = data("R0");
-    //          unsigned int r1Index = data("R1");
-    //          std::string r0Surface = data("R0 surface");
-    //          std::string r1Surface = data("R1 surface");
-    //          contacts_.push_back({robots(), r0Index, r1Index, r0Surface, r1Surface});
-    //          setContacts(contacts_);
-    //        }
-    //        catch(const std::exception & exc)
-    //        {
-    //          LOG_ERROR("Failed to add contact based on the provided input: " << exc.what())
-    //          LOG_WARNING(data.dump(true))
-    //        }
-    //      }
-    //    }
-    //  },
-    //  mc_rtc::gui::Form{
-    //    {"R0", "R1", "R0 surface", "R1 surface"},
-    //    mc_rtc::gui::Input<unsigned int>({"R0"}, 0, robots().size()),
-    //    mc_rtc::gui::Input<unsigned int>({"R1"}, 0, robots().size()),
-    //    mc_rtc::gui::Input<std::string>({"R0 surface"}),
-    //    mc_rtc::gui::Input<std::string>({"R1 surface"})
-    //  }
-    //);
+    gui_->addElement(
+      {"Contacts", "Add"},
+      mc_rtc::gui::Form("Add contact",
+                        [this](const mc_rtc::Configuration & data)
+                        {
+                          LOG_INFO("Add contact " << data("R0") << "::" << data("R0 surface") << "/" << data("R1") << "::" << data("R1 surface"))
+                          auto str2idx = [this](const std::string & rName)
+                          {
+                            for(const auto & r : robots())
+                            {
+                              if(r.name() == rName) { return r.robotIndex(); }
+                            }
+                            LOG_ERROR("The robot name you provided does not match any in the solver")
+                            return static_cast<unsigned int>(robots().size());
+                          };
+                          unsigned int r0Index = str2idx(data("R0"));
+                          unsigned int r1Index = str2idx(data("R1"));
+                          std::string r0Surface = data("R0 surface");
+                          std::string r1Surface = data("R1 surface");
+                          if(r0Index < robots().size() && r1Index < robots().size())
+                          {
+                            contacts_.push_back({robots(), r0Index, r1Index, r0Surface, r1Surface});
+                            setContacts(contacts_);
+                          }
+                        },
+                        mc_rtc::gui::FormDataComboInput{"R0", true, {"robots"}},
+                        mc_rtc::gui::FormDataComboInput{"R0 surface", true, {"surfaces", "$R0"}},
+                        mc_rtc::gui::FormDataComboInput{"R1", true, {"robots"}},
+                        mc_rtc::gui::FormDataComboInput{"R1 surface", true, {"surfaces", "$R1"}}
+      )
+    );
   }
 }
 

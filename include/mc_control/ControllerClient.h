@@ -209,6 +209,83 @@ namespace mc_control
       default_impl("Schema", id);
     }
 
+    /** Create a form */
+    virtual void form(const ElementId & id)
+    {
+      default_impl("Form", id);
+    }
+
+    /** A checkbox within a form */
+    virtual void form_checkbox(const ElementId & /*formId*/,
+                               const std::string & /*name*/,
+                               bool /*required*/,
+                               bool /*default*/) {}
+
+    /** An integer input within a form */
+    virtual void form_integer_input(const ElementId & /*formId*/,
+                                    const std::string & /*name*/,
+                                    bool /*required*/,
+                                    int /*default*/) {}
+
+    /** A number input within a form */
+    virtual void form_number_input(const ElementId & /*formId*/,
+                                   const std::string & /*name*/,
+                                   bool /*required*/,
+                                   double /*default*/) {}
+
+    /** A string input within a form */
+    virtual void form_string_input(const ElementId & /*formId*/,
+                                   const std::string & /*name*/,
+                                   bool /*required*/,
+                                   const std::string & /*default*/) {}
+
+    /** An array input within a form */
+    virtual void form_array_input(const ElementId & /*formId*/,
+                                  const std::string & /*name*/,
+                                  bool /*required*/,
+                                  const Eigen::VectorXd & /*default*/,
+                                  bool /*fixed_size*/) {}
+
+    /** A combo input within a form
+     *
+     * \p formId Identifier of the form
+     *
+     * \p name Name of the entry
+     *
+     * \p required If true, it must hold a value when the form is sent
+     *
+     * \p values Possible values
+     *
+     * \p send_index If true, the implementation should send back the index
+     * rather than the value
+     */
+    virtual void form_combo_input(const ElementId & /*formId*/,
+                                  const std::string & /*name*/,
+                                  bool /*required*/,
+                                  const std::vector<std::string> & /*values*/,
+                                  bool /*send_index*/) {}
+
+    /** A data combo input within a form
+     *
+     * \p formId Identifier of the form
+     *
+     * \p name Name of the entry
+     *
+     * \p required If true, it must hold a value when the form is sent
+     *
+     * \p ref Reference to GUI data store, can reference other fields of the
+     * form, e.g. {"$R0", "surfaces"} depends on the value of the R0 entry in
+     * the form
+     *
+     * \p send_index If true, the implementation should send back the index in
+     * the list rather than the value
+     */
+    virtual void form_data_combo_input(const ElementId & /*formId*/,
+                                       const std::string & /*name*/,
+                                       bool /*required*/,
+                                       const std::vector<std::string> & /*ref*/,
+                                       bool /*send_index*/) {}
+
     /* Network elements */
     bool run_ = true;
     int sub_socket_;
@@ -236,6 +313,10 @@ namespace mc_control
     void handle_transform(const ElementId & id,
                           const mc_rtc::Configuration & gui,
                           const mc_rtc::Configuration & data);
+
+    /** Handle details of Form elements */
+    void handle_form(const ElementId & id,
+                     const mc_rtc::Configuration & gui);
   };
 
 

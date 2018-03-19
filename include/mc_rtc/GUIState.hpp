@@ -154,6 +154,52 @@ void SchemaImpl<Callback>::addGUI(mc_rtc::Configuration & gui)
   gui.add("dir", schema_);
 }
 
+template<typename Derived>
+FormInput<Derived>::FormInput(const std::string & name, bool required)
+: name_(name), required_(required)
+{
+}
+
+template<typename Derived>
+void FormInput<Derived>::addGUI(mc_rtc::Configuration & gui)
+{
+  auto el = gui.add(name_);
+  if(required_) { el.add("required", required_); }
+  el.add("type", static_cast<int>(Derived::type));
+  static_cast<Derived*>(this)->addGUI_(el);
+}
+
+namespace
+{
+
+template<typename ... Args>
+void FormImpl_MakeGUIData(mc_rtc::Configuration &)
+{
+}
+
+template<typename Arg0, typename ... Args>
+void FormImpl_MakeGUIData(mc_rtc::Configuration & gui, Arg0 && arg, Args && ... args)
+{
+  arg.addGUI(gui);
+  FormImpl_MakeGUIData(gui, std::forward<Args>(args)...);
+}
+
+}
+
+template<typename Callback>
+template<typename ... Args>
+FormImpl<Callback>::FormImpl(const std::string & name, Callback cb, Args && ... args)
+: CallbackElement<Element, Callback>(name, cb)
+{
+  FormImpl_MakeGUIData(gui_, std::forward<Args>(args)...);
+}
+
+template<typename Callback>
+void FormImpl<Callback>::addGUI(mc_rtc::Configuration & gui)
+{
+  gui.add("form", gui_);
+}
+
 template<typename T>
 void StateBuilder::addElement(const std::vector<std::string> & category, T element)
 {

@@ -42,6 +42,9 @@ TestServer::TestServer()
   auto surfaces = data.add("surfaces");
   surfaces.add("Goldorak", std::vector<std::string>{"Goldo_S1", "Goldo_S2", "Goldo_S3"});
   surfaces.add("Astro", std::vector<std::string>{"Astro_S1", "Astro_S2", "Astro_S3"});
+  auto joints = data.add("joints");
+  joints.add("Goldorak", std::vector<std::string>{"Goldo_J1", "Goldo_J2", "Goldo_J3"});
+  joints.add("Astro", std::vector<std::string>{"Astro_J1", "Astro_J2", "Astro_J3"});
   builder.addElement({"dummy", "provider"}, mc_rtc::gui::Label("value",
                                                                [this](){ return provider.value; }));
   builder.addElement({"dummy", "provider"}, mc_rtc::gui::ArrayLabel("point",
@@ -81,6 +84,26 @@ TestServer::TestServer()
   builder.addElement({"Transform"}, mc_rtc::gui::Transform("ReadOnly", [this](){ return static_; }));
   builder.addElement({"Transform"}, mc_rtc::gui::Transform("Interactive", [this](){ return interactive_; }, [this](const sva::PTransformd & p){ interactive_ = p; }));
   builder.addElement({"Schema"}, mc_rtc::gui::Schema("Add metatask", "metatask", [](const mc_rtc::Configuration & c) { std::cout << "Got schema request:\n" << c.dump(true) << std::endl; }));
+  builder.addElement(
+    {"Contacts", "Add"},
+    mc_rtc::gui::Form("Add contact",
+                      [](const mc_rtc::Configuration & data)
+                      {
+                        LOG_INFO("Add contact " << data("R0") << "::" << data("R0 surface") << "/" << data("R1") << "::" << data("R1 surface"))
+                      },
+                      mc_rtc::gui::FormCheckbox{"Enabled", false, true},
+                      mc_rtc::gui::FormIntegerInput{"INT", false, 42},
+                      mc_rtc::gui::FormNumberInput{"NUMBER", false, 0.42},
+                      mc_rtc::gui::FormStringInput{"STRING", false, "a certain string"},
+                      mc_rtc::gui::FormArrayInput<Eigen::Vector3d>{"ARRAY_FIXED_SIZE", false, {1,2,3}},
+                      mc_rtc::gui::FormArrayInput<std::vector<double>>{"ARRAY_UNBOUNDED", false},
+                      mc_rtc::gui::FormComboInput{"CHOOSE WISELY", false, {"A", "B", "C", "D"}},
+                      mc_rtc::gui::FormDataComboInput{"R0", true, {"robots"}},
+                      mc_rtc::gui::FormDataComboInput{"R0 surface", true, {"surfaces", "$R0"}},
+                      mc_rtc::gui::FormDataComboInput{"R1", true, {"robots"}},
+                      mc_rtc::gui::FormDataComboInput{"R1 surface", true, {"surfaces", "$R1"}}
+    )
+  );
 }
 
 void TestServer::publish()

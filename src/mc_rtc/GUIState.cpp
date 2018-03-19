@@ -11,6 +11,36 @@ Element::Element(const std::string & name)
 {
 }
 
+FormComboInput::FormComboInput(const std::string & name,
+                               bool required,
+                               const std::vector<std::string> & values,
+                               bool send_index)
+: FormInput<FormComboInput>(name, required),
+  values_(values), send_index_(send_index)
+{
+}
+
+void FormComboInput::addGUI_(mc_rtc::Configuration & gui)
+{
+  gui.add("values", values_);
+  if(send_index_) { gui.add("send_index", true); }
+}
+
+FormDataComboInput::FormDataComboInput(const std::string & name,
+                                       bool required,
+                                       const std::vector<std::string> & ref,
+                                       bool send_index)
+: FormInput<FormDataComboInput>(name, required),
+  ref_(ref), send_index_(send_index)
+{
+}
+
+void FormDataComboInput::addGUI_(mc_rtc::Configuration & gui)
+{
+  gui.add("ref", ref_);
+  if(send_index_) { gui.add("send_index", true); }
+}
+
 StateBuilder::StateBuilder()
 {
   reset();

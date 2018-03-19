@@ -368,6 +368,120 @@ protected:
     return SchemaImpl<Callback>(name, schema, cb);
   }
 
+  template<typename Callback>
+  struct MC_RTC_GUI_DLLAPI FormImpl : public CallbackElement<Element, Callback>
+  {
+    static constexpr auto type = Elements::Form;
+
+    template<typename ... Args>
+    FormImpl(const std::string & name, Callback cb, Args && ... args);
+
+    void addGUI(mc_rtc::Configuration & gui);
+  private:
+    mc_rtc::Configuration gui_;
+  };
+
+  template<typename Derived>
+  struct FormInput
+  {
+    void addGUI(mc_rtc::Configuration & gui);
+
+    void addGUI_(mc_rtc::Configuration &) {}
+  protected:
+    FormInput(const std::string & name, bool required);
+
+    std::string name_;
+    bool required_;
+  };
+
+  template<typename T, Elements element>
+  struct MC_RTC_GUI_DLLAPI FormDataInput : public FormInput<FormDataInput<T, element>>
+  {
+    static constexpr auto type = element;
+
+    FormDataInput(const std::string & name, bool required, const T & def)
+    : FormInput<FormDataInput<T, element>>(name, required),
+      def_(def)
+    {
+    }
+
+    FormDataInput(const std::string & name, bool required)
+    : FormInput<FormDataInput<T, element>>(name, required)
+    {
+    }
+
+    void addGUI_(mc_rtc::Configuration & out)
+    {
+      out.add("default", def_);
+    }
+  private:
+    T def_;
+  };
+
+  using FormCheckbox = FormDataInput<bool, Elements::Checkbox>;
+  using FormIntegerInput = FormDataInput<int, Elements::IntegerInput>;
+  using FormNumberInput = FormDataInput<double, Elements::NumberInput>;
+  using FormStringInput = FormDataInput<std::string, Elements::StringInput>;
+
+  template<typename T>
+  struct MC_RTC_GUI_DLLAPI FormArrayInput : public FormInput<FormArrayInput<T>>
+  {
+    static constexpr auto type = Elements::ArrayInput;
+
+    FormArrayInput(const std::string & name, bool required,
+                   const T & def, bool fixed_size = true)
+    : FormInput<FormArrayInput>(name, required),
+      def_(def),
+      fixed_size_(fixed_size)
+    {
+    }
+
+    FormArrayInput(const std::string & name, bool required, bool fixed_size = false)
+    : FormInput<FormArrayInput>(name, required),
+      fixed_size_(fixed_size)
+    {
+    }
+
+    void addGUI_(mc_rtc::Configuration & out)
+    {
+      out.add("fixed_size", fixed_size_);
+      out.add("default", def_);
+    }
+  private:
+    T def_;
+    bool fixed_size_;
+  };
+
+  struct MC_RTC_GUI_DLLAPI FormComboInput : public FormInput<FormComboInput>
+  {
+    static constexpr auto type = Elements::ComboInput;
+
+    FormComboInput(const std::string & name, bool required, const std::vector<std::string> & values, bool send_index = false);
+
+    void addGUI_(mc_rtc::Configuration & gui);
+  private:
+    std::vector<std::string> values_;
+    bool send_index_ = false;
+  };
+
+  struct MC_RTC_GUI_DLLAPI FormDataComboInput : public FormInput<FormDataComboInput>
+  {
+    static constexpr auto type = Elements::DataComboInput;
+
+    FormDataComboInput(const std::string & name, bool required, const std::vector<std::string> & ref, bool send_index = false);
+
+    void addGUI_(mc_rtc::Configuration & gui);
+  private:
+    std::vector<std::string> ref_;
+    bool send_index_;
+  };
+
+  template<typename Callback, typename ... Args>
+  FormImpl<Callback> Form(const std::string & name, Callback cb, Args && ... args)
+  {
+    return FormImpl<Callback>(name, cb, std::forward<Args>(args)...);
+  }
+
   /** Used to build a GUI state from multiple objects */
   struct MC_RTC_GUI_DLLAPI StateBuilder
   {

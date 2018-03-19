@@ -228,6 +228,9 @@ void ControllerClient::handle_widget(const ElementId & id,
       case Elements::Schema:
         schema(id, gui("dir"));
         break;
+      case Elements::Form:
+        handle_form(id, gui("form"));
+        break;
       default:
         LOG_ERROR("Type " << static_cast<int>(type) << " is not handlded by this ControllerClient")
         break;
@@ -301,6 +304,45 @@ void ControllerClient::handle_transform(const ElementId & id,
     array_input(id, {"qw", "qx", "qy", "qz", "tx", "ty", "tz"}, vec);
   }
   transform({id.category, id.name + "_transform"}, id, ro, pos);
+}
+
+void ControllerClient::handle_form(const ElementId & id,
+                                   const mc_rtc::Configuration & gui)
+{
+  form(id);
+  for(const auto & k : gui.keys())
+  {
+    auto el = gui(k);
+    auto type = static_cast<mc_rtc::gui::Elements>(static_cast<int>(el("type")));
+    bool required = el("required", false);
+    using Elements = mc_rtc::gui::Elements;
+    switch(type)
+    {
+      case Elements::Checkbox:
+        form_checkbox(id, k, required, el("default"));
+        break;
+      case Elements::IntegerInput:
+        form_integer_input(id, k, required, el("default"));
+        break;
+      case Elements::NumberInput:
+        form_number_input(id, k, required, el("default"));
+        break;
+      case Elements::StringInput:
+        form_string_input(id, k, required, el("default"));
+        break;
+      case Elements::ArrayInput:
+        form_array_input(id, k, required, el("default"), el("fixed_size"));
+        break;
+      case Elements::ComboInput:
+        form_combo_input(id, k, required, el("values"), el("send_index", false));
+        break;
+      case Elements::DataComboInput:
+        form_data_combo_input(id, k, required, el("ref"), el("send_index", false));
+        break;
+      default:
+        LOG_ERROR("Form cannot handle element of type " << static_cast<int>(type))
+    }
+  }
 }
 
 }
