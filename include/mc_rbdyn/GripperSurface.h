@@ -14,13 +14,13 @@ public:
 
   ~GripperSurface();
 
-  virtual void computePoints() override;
+  void computePoints() override;
 
   void originTransform(const sva::PTransformd & X_s_sp);
 
-  virtual std::shared_ptr<Surface> copy() const override;
+  std::shared_ptr<Surface> copy() const override;
 
-  virtual std::string type() const override;
+  std::string type() const override;
 
   const std::vector<sva::PTransformd> & pointsFromOrigin() const;
 

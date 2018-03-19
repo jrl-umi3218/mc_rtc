@@ -15,7 +15,7 @@ struct MC_RBDYN_DLLAPI PlanarSurface : public Surface
 
   ~PlanarSurface();
 
-  virtual void computePoints() override;
+  void computePoints() override;
 
   void planarTransform(const double & T, const double & B, const double & N_rot);
 
@@ -23,9 +23,9 @@ struct MC_RBDYN_DLLAPI PlanarSurface : public Surface
 
   void planarPoints(const std::vector< std::pair<double, double> > & planarPoints);
 
-  virtual std::shared_ptr<Surface> copy() const override;
+  std::shared_ptr<Surface> copy() const override;
 
-  virtual std::string type() const override;
+  std::string type() const override;
 public:
 private:
   std::unique_ptr<PlanarSurfaceImpl> impl;

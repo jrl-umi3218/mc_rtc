@@ -15,7 +15,7 @@ struct MC_RBDYN_DLLAPI CylindricalSurface : public Surface
 
   ~CylindricalSurface();
 
-  virtual void computePoints() override;
+  void computePoints() override;
 
   const double & radius() const;
 
@@ -23,9 +23,9 @@ struct MC_RBDYN_DLLAPI CylindricalSurface : public Surface
 
   void width(const double & width);
 
-  virtual std::shared_ptr<Surface> copy() const override;
+  std::shared_ptr<Surface> copy() const override;
 
-  virtual std::string type() const override;
+  std::string type() const override;
 private:
   std::unique_ptr<CylindricalSurfaceImpl> impl;
 };
