@@ -89,7 +89,7 @@ TestServer::TestServer()
     mc_rtc::gui::Form("Add contact",
                       [](const mc_rtc::Configuration & data)
                       {
-                        LOG_INFO("Add contact " << data("R0") << "::" << data("R0 surface") << "/" << data("R1") << "::" << data("R1 surface"))
+                        std::cout << "Got data" << std::endl << data.dump(true) << std::endl;
                       },
                       mc_rtc::gui::FormCheckbox{"Enabled", false, true},
                       mc_rtc::gui::FormIntegerInput{"INT", false, 42},
@@ -98,10 +98,10 @@ TestServer::TestServer()
                       mc_rtc::gui::FormArrayInput<Eigen::Vector3d>{"ARRAY_FIXED_SIZE", false, {1,2,3}},
                       mc_rtc::gui::FormArrayInput<std::vector<double>>{"ARRAY_UNBOUNDED", false},
                       mc_rtc::gui::FormComboInput{"CHOOSE WISELY", false, {"A", "B", "C", "D"}},
-                      mc_rtc::gui::FormDataComboInput{"R0", true, {"robots"}},
-                      mc_rtc::gui::FormDataComboInput{"R0 surface", true, {"surfaces", "$R0"}},
-                      mc_rtc::gui::FormDataComboInput{"R1", true, {"robots"}},
-                      mc_rtc::gui::FormDataComboInput{"R1 surface", true, {"surfaces", "$R1"}}
+                      mc_rtc::gui::FormDataComboInput{"R0", false, {"robots"}},
+                      mc_rtc::gui::FormDataComboInput{"R0 surface", false, {"surfaces", "$R0"}},
+                      mc_rtc::gui::FormDataComboInput{"R1", false, {"robots"}},
+                      mc_rtc::gui::FormDataComboInput{"R1 surface", false, {"surfaces", "$R1"}}
     )
   );
 }
