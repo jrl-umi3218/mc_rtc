@@ -46,10 +46,10 @@ TestServer::TestServer()
   joints.add("Goldorak", std::vector<std::string>{"Goldo_J1", "Goldo_J2", "Goldo_J3"});
   joints.add("Astro", std::vector<std::string>{"Astro_J1", "Astro_J2", "Astro_J3"});
   builder.addElement({"dummy", "provider"}, mc_rtc::gui::Label("value",
-                                                               [this](){ return provider.value; }));
-  builder.addElement({"dummy", "provider"}, mc_rtc::gui::ArrayLabel("point",
-                                                                    [this](){ return provider.point; }));
-  builder.addElement({"dummy", "provider"}, mc_rtc::gui::ArrayLabel("point with labels", {"x", "y", "z"},
+                                                               [this](){ return provider.value; }),
+                                            mc_rtc::gui::ArrayLabel("point",
+                                                                    [this](){ return provider.point; }),
+                                            mc_rtc::gui::ArrayLabel("point with labels", {"x", "y", "z"},
                                                                     [this](){ return provider.point; }));
   builder.addElement({"Button example"}, mc_rtc::gui::Button("Push me",
                                                              [](){ LOG_INFO("Button pushed") }));
