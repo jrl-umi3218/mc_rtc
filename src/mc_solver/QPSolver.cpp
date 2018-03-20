@@ -291,6 +291,7 @@ const QPResultMsg & QPSolver::send(double/*curTime*/)
 
 void QPSolver::__fillResult()
 {
+  qpRes.zmps.resize(robots().robots().size());
   qpRes.robots_state.resize(robots().robots().size());
   for(unsigned int i = 0; i < robots().robots().size(); ++i)
   {
