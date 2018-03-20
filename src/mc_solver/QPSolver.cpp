@@ -304,8 +304,13 @@ void QPSolver::__fillResult()
       alphaVec[j.name()] = robot.mbc().alpha[jIndex];
     }
     qpRes.robots_state[i].alphaDVec = solver.alphaDVec(static_cast<int>(i));
+  
+    qpRes.zmps[i].x = robot.zmp().x(); 
+    qpRes.zmps[i].y = robot.zmp().y(); 
+    qpRes.zmps[i].z = robot.zmp().z(); 
   }
   qpRes.lambdaVec = solver.lambdaVec();
+
 }
 
 const mc_rbdyn::Robot & QPSolver::robot() const
