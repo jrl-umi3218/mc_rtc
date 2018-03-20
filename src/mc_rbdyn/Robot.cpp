@@ -250,6 +250,8 @@ Robot::Robot(Robots & robots, unsigned int robots_idx, bool loadFiles,
 
   springs_ = module_.springs();
   flexibility_ = module_.flexibility();
+
+  zmp_ = Eigen::Vector3d::Zero();
 }
 
 std::string Robot::name() const
@@ -844,6 +846,16 @@ double mc_rbdyn::Robot::mass() const
     mass += b.inertia().mass();
   }
   return mass;
+}
+
+void mc_rbdyn::Robot::zmp(const Eigen::Vector3d & zmp)
+{
+  zmp_ = zmp;
+}
+
+const Eigen::Vector3d & mc_rbdyn::Robot::zmp() const
+{
+  return zmp_;
 }
 
 }

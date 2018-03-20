@@ -46,7 +46,7 @@ public:
 
   /** Retrieve the associated RobotModule */
   const RobotModule & module() const;
-
+ 
   /** @name Body sensors
    *
    * These functions are related to force sensors
@@ -239,6 +239,13 @@ public:
   /** Return the flexibilities of the robot */
   std::vector<Flexibility> & flexibility();
 
+
+  /** Set the zmp of the robot */
+  void zmp(const Eigen::Vector3d & zmp);
+
+  /** Returns the zmp of the robot */
+  const Eigen::Vector3d & zmp() const;
+  
   /** Compute and returns the mass of the robot */
   double mass() const;
 
@@ -416,6 +423,7 @@ private:
   Robots * robots_;
   unsigned int robots_idx_;
   std::string name_;
+  Eigen::Vector3d zmp_;
   std::map<std::string, sva::PTransformd> bodyTransforms_;
   std::vector< std::vector<double> > ql_;
   std::vector< std::vector<double> > qu_;
