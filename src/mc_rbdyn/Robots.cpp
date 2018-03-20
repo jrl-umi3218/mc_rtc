@@ -143,6 +143,26 @@ const Robot & Robots::robot(size_t idx) const
   return robots_[idx];
 }
 
+Robot & Robots::robot(const std::string& name)
+{
+  return const_cast<Robot&>(static_cast<const Robots*>(this)->robot(name));
+}
+
+const Robot & Robots::robot(const std::string& name) const
+{
+  auto it = std::find_if(robots_.begin(), robots_.end(),
+                         [&name](const Robot & r){ return r.name() == name; });
+  if(it != robots_.end())
+  {
+    return robot(it->robots_idx_);
+  }
+  else
+  {
+    LOG_ERROR("No robot named " << name);
+    throw("Wrong robot name");
+  }
+}
+
 void Robots::createRobotWithBase(Robots & robots, unsigned int robots_idx, const Base & base, const Eigen::Vector3d & baseAxis)
 {
   createRobotWithBase(robots.robot(robots_idx), base, baseAxis);
