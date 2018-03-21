@@ -37,6 +37,14 @@ void SurfaceTransformTask::target(const sva::PTransformd & pose)
   errorT->target(pose);
 }
 
+void SurfaceTransformTask::targetSurface(const std::string& robotName, const std::string& surfaceName, const sva::PTransformd& offset)
+{
+  const auto& robot = robots.robot(robotName);
+  sva::PTransformd targetSurface = robot.surface(surfaceName).X_0_s(robot);
+  sva::PTransformd targetPos = offset * targetSurface;
+  target(targetPos);
+}
+
 void SurfaceTransformTask::addToLogger(mc_rtc::Logger & logger)
 {
   logger.addLogEntry(name_ + "_surface_pose",
@@ -87,6 +95,24 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function("surfa
     if(config.has("target"))
     {
       t->target(config("target"));
+    }
+    else if(config.has("targetSurface"))
+    {
+      const auto& c = config("targetSurface");
+      sva::PTransformd offset = sva::PTransformd::Identity();
+      if(c.has("offset"))
+      {
+        const auto &o = c("offset");
+        Eigen::Vector3d trans = o("translation");
+        Eigen::Vector3d rpy = o("rotation");
+        using namespace Eigen;
+        Eigen::Matrix3d m;
+        m = AngleAxisd(rpy.x() * M_PI/180., Vector3d::UnitX())
+            * AngleAxisd(rpy.y() * M_PI/180.,  Vector3d::UnitY())
+            * AngleAxisd(rpy.z() * M_PI/180., Vector3d::UnitZ());
+        offset = sva::PTransformd(m.inverse(), trans);
+      }
+      t->targetSurface(c("robotName"), c("surfaceName"), offset);
     }
     t->load(solver, config);
     return t;
