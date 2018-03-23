@@ -6,6 +6,7 @@ from mc_log_tab_ui import Ui_MCLogTab
 
 from functools import partial
 
+import copy
 import re
 
 def get_full_text(item):
@@ -143,30 +144,39 @@ class MCLogTab(QtGui.QWidget):
         assert(not k in tree_view)
         tree_view[k] = []
     def update_y_selector(ySelector, idx):
+      baseRow = 0
       for k, values in sorted(tree_view.items()):
         base = MCLogTreeWidgetItem(ySelector, [k])
+        baseModelIdx = ySelector.model().index(baseRow, 0)
         box = QtGui.QCheckBox(ySelector)
 
         if len(values) == 0:
           if k in self.y_data[idx]:
-            base.setSelected(True)
+            selection = ySelector.selectionModel()
+            selection.select(baseModelIdx, QtGui.QItemSelectionModel.Select)
+            ySelector.setSelectionModel(selection)
         if k in self.y_diff_data[idx]:
           box.setChecked(True)
         box.stateChanged.connect(partial(self.checkboxChanged, base, idx))
         ySelector.setItemWidget(base, 1, box)
 
         needExpand = False
-        for v in values:
+        for row, v in enumerate(values):
           item = MCLogTreeWidgetItem(base, [v])
           if "{}_{}".format(k, v) in self.y_data[idx]:
-            item.setSelected(True)
+            modelIdx = ySelector.model().index(row, 0, baseModelIdx)
+            selection = ySelector.selectionModel()
+            selection.select(modelIdx, QtGui.QItemSelectionModel.Select)
+            ySelector.setSelectionModel(selection)
             needExpand = True
           box = QtGui.QCheckBox(ySelector)
           if "{}_{}".format(k, v) in self.y_diff_data[idx]:
             box.setChecked(True)
+            needExpand = True
           box.stateChanged.connect(partial(self.checkboxChanged, item, idx))
           ySelector.setItemWidget(item, 1, box)
         base.setExpanded(needExpand)
+        baseRow += 1
 
       ySelector.resizeColumnToContents(0)
       cWidth = ySelector.sizeHintForColumn(0)
@@ -179,10 +189,14 @@ class MCLogTab(QtGui.QWidget):
   def UserPlot(parent, p):
     tab = MCLogTab(parent)
     tab.x_data = p.x
-    tab.y_data[0] = tab.y_data_labels[0] = p.y1
-    tab.y_data[1] = tab.y_data_labels[1] = p.y2
-    tab.y_diff_data[0] = tab.y_diff_data_labels[0] = p.y1d
-    tab.y_diff_data[1] = tab.y_diff_data_labels[1] = p.y2d
+    tab.y_data[0] = copy.deepcopy(p.y1)
+    tab.y_data_labels[0] = copy.deepcopy(p.y1)
+    tab.y_data[1] = copy.deepcopy(p.y2)
+    tab.y_data_labels[1] = copy.deepcopy(p.y2)
+    tab.y_diff_data[0] = copy.deepcopy(p.y1d)
+    tab.y_diff_data_labels[0] = [ l + '_dot' for l in tab.y_diff_data[0] ]
+    tab.y_diff_data[1] = copy.deepcopy(p.y2d)
+    tab.y_diff_data_labels[1] = [ l + '_dot' for l in tab.y_diff_data[1] ]
     tab.setData(parent.data)
     tab.setRobotModule(parent.rm)
     tab.update_canvas()
