@@ -115,6 +115,14 @@ void SlidingFootContactState::start(Controller & ctl)
                         ctl.solver().addTask(copSlidingFootTask_);
                       }
                     ),
+                    mc_rtc::gui::ArrayInput("Sliding target",
+                                            {"x", "y"},
+                                            [this]() { return move_; },
+                                            [this](const Eigen::Vector2d & move) { move_ = move; }),
+                    mc_rtc::gui::ComboInput("Next foot",
+                                            {slidingSurface_, supportSurface_},
+                                            [this]() { return next_; },
+                                            [this](const std::string & s) { next_ = s; }),
                     mc_rtc::gui::Button("SLIDE!",
                       [this]()
                       {
@@ -132,19 +140,6 @@ void SlidingFootContactState::start(Controller & ctl)
                       }
                     )
     );
-
-    //gui->addElement(mc_rtc::gui::Element<Eigen::Vector2d>{
-    //                  {"#FSM#", "Sliding target"},
-    //                  [this](){ return move_; },
-    //                  [this](const Eigen::Vector2d & move) { move_ = move; }
-    //                },
-    //                mc_rtc::gui::Input<Eigen::Vector2d>{{"x", "y"}});
-    //gui->addElement(mc_rtc::gui::Element<std::string>{
-    //                  {"#FSM#", "Next foot"},
-    //                  [this]() { return next_; },
-    //                  [this](const std::string & s) { next_ = s; }
-    //                },
-    //                mc_rtc::gui::ComboList<std::string>{std::vector<std::string>{slidingSurface_, supportSurface_}});
   }
 }
 

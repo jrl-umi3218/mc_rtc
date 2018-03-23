@@ -161,22 +161,17 @@ void PostureTask::target(const std::map<std::string, std::vector<double>> & join
 void PostureTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   MetaTask::addToGUI(gui);
-  //gui.addElement(
-  //  mc_rtc::gui::Element<double>{
-  //    {"Tasks", name_, "Gains", "stiffness"},
-  //    [this]() { return this->stiffness(); },
-  //    [this](const double & s) { this->stiffness(s); }
-  //  },
-  //  mc_rtc::gui::Input<double>({}, 0, std::numeric_limits<double>::infinity())
-  //);
-  //gui.addElement(
-  //  mc_rtc::gui::Element<double>{
-  //    {"Tasks", name_, "Gains", "weight"},
-  //    [this]() { return this->weight(); },
-  //    [this](const double & w) { this->weight(w); }
-  //  },
-  //  mc_rtc::gui::Input<double>({}, 0 , std::numeric_limits<double>::infinity())
-  //);
+  gui.addElement(
+    {"Tasks", name_, "Gains"},
+    mc_rtc::gui::NumberInput("stiffness",
+      [this]() { return this->stiffness(); },
+      [this](const double & s) { this->stiffness(s); }
+    ),
+    mc_rtc::gui::NumberInput("weight",
+      [this]() { return this->weight(); },
+      [this](const double & w) { this->weight(w); }
+    )
+  );
 }
 
 }

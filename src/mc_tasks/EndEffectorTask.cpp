@@ -147,26 +147,14 @@ void EndEffectorTask::removeFromLogger(mc_rtc::Logger & logger)
 void EndEffectorTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   MetaTask::addToGUI(gui);
-  //gui.addElement(
-  //  mc_rtc::gui::Element<sva::PTransformd>{
-  //    {"Tasks", name_, "pos_target"},
-  //    [this](){ return this->get_ef_pose(); },
-  //    [this](const sva::PTransformd & pos) { this->set_ef_pose(pos); }
-  //  },
-  //  mc_rtc::gui::Transform{}
-  //);
-  //gui.addElement(
-  //  mc_rtc::gui::Element<sva::PTransformd>{
-  //    {"Tasks", name_, "pos"},
-  //    std::function<sva::PTransformd()>{
-  //      [this]()
-  //      {
-  //        return robots.robot(robotIndex).mbc().bodyPosW[bodyIndex];
-  //      }
-  //    }
-  //  },
-  //  mc_rtc::gui::Transform{}
-  //);
+  gui.addElement(
+    {"Tasks", name_},
+    mc_rtc::gui::Transform("pos_target",
+                           [this]() { return this->get_ef_pose(); },
+                           [this](const sva::PTransformd & pos) { this->set_ef_pose(pos); }),
+    mc_rtc::gui::Transform("pos",
+                           [this]() { return robots.robot(robotIndex).mbc().bodyPosW[bodyIndex]; })
+  );
 }
 
 }
