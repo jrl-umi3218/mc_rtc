@@ -79,7 +79,10 @@ protected:
   {
     bool handleRequest(const mc_rtc::Configuration &);
 
-    using CallbackElement<ElementT, Callback>::CallbackElement;
+    template<typename ... Args>
+    VoidCallbackElement(const std::string & name, Callback cb, Args && ... args)
+    : CallbackElement<ElementT, Callback>(name, cb, std::forward<Args>(args)...)
+    {}
   };
 
   template<typename GetT>
@@ -101,7 +104,8 @@ protected:
   {
     static constexpr auto type = Elements::ArrayLabel;
 
-    using LabelImpl<GetT>::LabelImpl;
+    ArrayLabelImpl(const std::string & name, GetT get_fn)
+    : LabelImpl<GetT>(name, get_fn) {}
 
     ArrayLabelImpl(const std::string & name, const std::vector<std::string> & labels, GetT get_fn);
 
@@ -127,7 +131,10 @@ protected:
   {
     static constexpr auto type = Elements::Button;
 
-    using VoidCallbackElement<Element, Callback>::VoidCallbackElement;
+    template<typename ... Args>
+    ButtonImpl(const std::string & name, Callback cb, Args && ... args)
+    : VoidCallbackElement<Element, Callback>(name, cb, std::forward<Args>(args)...)
+    {}
   };
 
   template<typename Callback>
@@ -163,7 +170,8 @@ protected:
   struct MC_RTC_GUI_DLLAPI NAME ## Impl : public CommonInputImpl<GetT, SetT>\
   {\
     static constexpr auto type = Elements::NAME ;\
-    using CommonInputImpl<GetT, SetT>::CommonInputImpl;\
+    NAME ## Impl(const std::string & name, GetT get_fn, SetT set_fn)\
+    : CommonInputImpl<GetT, SetT>(name, get_fn, set_fn) {}\
   };\
   template<typename GetT, typename SetT>\
   NAME ## Impl<GetT, SetT> NAME (const std::string & name,\
@@ -182,7 +190,8 @@ protected:
   struct MC_RTC_GUI_DLLAPI ArrayInputImpl : public CommonInputImpl<GetT, SetT>
   {
     static constexpr auto type = Elements::ArrayInput;
-    using CommonInputImpl<GetT, SetT>::CommonInputImpl;
+    ArrayInputImpl(const std::string & name, GetT get_fn, SetT set_fn)
+    : CommonInputImpl<GetT, SetT>::CommonInputImpl(name, get_fn, set_fn) {}
 
     /** Array input with labels per-dimension */
     ArrayInputImpl(const std::string & name,
@@ -261,7 +270,8 @@ protected:
   {
     static constexpr auto type = Elements::Point3D;
 
-    using DataElement<GetT>::DataElement;
+    Point3DROImpl(const std::string & name, GetT get_fn)
+    : DataElement<GetT>(name, get_fn) {}
 
     /** Add distinguishing elements to GUI information */
     void addGUI(mc_rtc::Configuration & gui);
@@ -272,7 +282,8 @@ protected:
   {
     static constexpr auto type = Elements::Point3D;
 
-    using CommonInputImpl<GetT, SetT>::CommonInputImpl;
+    Point3DImpl(const std::string & name, GetT get_fn, SetT set_fn)
+    : CommonInputImpl<GetT, SetT>(name, get_fn, set_fn) {}
   };
 
   template<typename GetT>
@@ -292,7 +303,8 @@ protected:
   {
     static constexpr auto type = Elements::Rotation;
 
-    using DataElement<GetT>::DataElement;
+    RotationROImpl(const std::string & name, GetT get_fn)
+    : DataElement<GetT>(name, get_fn) {}
 
     /** Add distinguishing elements to GUI information */
     void addGUI(mc_rtc::Configuration & gui);
@@ -303,7 +315,8 @@ protected:
   {
     static constexpr auto type = Elements::Rotation;
 
-    using CommonInputImpl<GetT, SetT>::CommonInputImpl;
+    RotationImpl(const std::string & name, GetT get_fn, SetT set_fn)
+    : CommonInputImpl<GetT, SetT>(name, get_fn, set_fn) {}
   };
 
   template<typename GetT>
@@ -323,7 +336,8 @@ protected:
   {
     static constexpr auto type = Elements::Transform;
 
-    using DataElement<GetT>::DataElement;
+    TransformROImpl(const std::string & name, GetT get_fn)
+    : DataElement<GetT>(name, get_fn) {}
 
     /** Add distinguishing elements to GUI information */
     void addGUI(mc_rtc::Configuration & gui);
@@ -334,7 +348,8 @@ protected:
   {
     static constexpr auto type = Elements::Transform;
 
-    using CommonInputImpl<GetT, SetT>::CommonInputImpl;
+    TransformImpl(const std::string & name, GetT get_fn, SetT set_fn)
+    : CommonInputImpl<GetT, SetT>(name, get_fn, set_fn) {}
   };
 
   template<typename GetT>
