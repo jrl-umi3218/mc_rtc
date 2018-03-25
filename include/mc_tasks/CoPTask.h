@@ -55,7 +55,7 @@ public:
    * zero.
    *
    */
-  virtual void reset();
+  virtual void reset() override;
 
   /*! \brief Set the target CoP in the surface frame
    *

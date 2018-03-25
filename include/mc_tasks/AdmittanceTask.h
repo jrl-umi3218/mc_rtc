@@ -63,7 +63,7 @@ public:
    * to zero.
    *
    */
-  virtual void reset();
+  virtual void reset() override;
 
   /*! \brief Reset pose offset in all position-controlled axes
    *

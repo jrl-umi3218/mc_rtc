@@ -37,11 +37,11 @@ struct MC_ROBOTS_DLLAPI HRP2DRCRobotModule : public HRP2DRCCommonRobotModule
 public:
   HRP2DRCRobotModule();
 
-  virtual const std::map<std::string, std::pair<std::string, std::string> > & convexHull() const;
+  virtual const std::map<std::string, std::pair<std::string, std::string> > & convexHull() const override;
 
-  virtual const std::vector< std::map<std::string, std::vector<double> > > & bounds() const;
+  virtual const std::vector< std::map<std::string, std::vector<double> > > & bounds() const override;
 
-  virtual const std::map<std::string, std::vector<double> > & stance() const;
+  virtual const std::map<std::string, std::vector<double> > & stance() const override;
 public:
   std::vector<std::string> filteredLinks;
 };
@@ -51,11 +51,11 @@ struct MC_ROBOTS_DLLAPI HRP2DRCGripperRobotModule : public HRP2DRCCommonRobotMod
 public:
   HRP2DRCGripperRobotModule();
 
-  virtual const std::map<std::string, std::pair<std::string, std::string> > & convexHull() const;
+  virtual const std::map<std::string, std::pair<std::string, std::string> > & convexHull() const override;
 
-  virtual const std::vector< std::map<std::string, std::vector<double> > > & bounds() const;
+  virtual const std::vector< std::map<std::string, std::vector<double> > > & bounds() const override;
 
-  virtual const std::map<std::string, std::vector<double> > & stance() const;
+  virtual const std::map<std::string, std::vector<double> > & stance() const override;
 public:
   std::vector<std::string> filteredLinks;
 };

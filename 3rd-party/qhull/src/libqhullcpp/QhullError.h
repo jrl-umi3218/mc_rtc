@@ -48,7 +48,7 @@ public:
     QhullError(int code, const char *fmt, int d, int d2, float f, long long i) : RoadError(code, fmt, d, d2, f, i) {};
     QhullError(int code, const char *fmt, int d, int d2, float f, double e) : RoadError(code, fmt, d, d2, f, e) {};
     QhullError &operator=(const QhullError &other) { this->RoadError::operator=(other); return *this; }
-    ~QhullError() throw() {}
+    virtual ~QhullError() throw() override {}
 
 };//class QhullError
 

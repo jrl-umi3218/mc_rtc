@@ -24,11 +24,11 @@ protected:
 
   std::map<std::string, std::pair<std::string, std::string>> stdCollisionsFiles(const rbd::MultiBody & mb) const;
 
-  const std::map<std::string, std::pair<std::string, std::string> > & convexHull() const;
+  virtual const std::map<std::string, std::pair<std::string, std::string> > & convexHull() const override;
 
-  const std::vector< std::map<std::string, std::vector<double> > >& bounds() const;
+  virtual const std::vector< std::map<std::string, std::vector<double> > >& bounds() const override;
 
-  const std::map<std::string, std::vector<double> > & stance() const;
+  virtual const std::map<std::string, std::vector<double> > & stance() const override;
 public:
   std::vector<std::string> virtualLinks;
   std::vector<std::string> gripperLinks;
