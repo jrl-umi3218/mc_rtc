@@ -130,6 +130,25 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function("cop",
     if(config.has("cop")) { t->targetCoP(config("cop")); }
     if(config.has("force")) { t->targetForce(config("force")); }
     if(config.has("pose")) { t->targetPose(config("pose")); }
+    else if(config.has("targetSurface"))
+    {
+      const auto& c = config("targetSurface");
+      sva::PTransformd offset = sva::PTransformd::Identity();
+      if(c.has("offset"))
+      {
+        const auto &o = c("offset");
+        Eigen::Vector3d trans = o("translation");
+        Eigen::Vector3d rpy = o("rotation");
+        using namespace Eigen;
+        Eigen::Matrix3d m;
+        m = AngleAxisd(rpy.x() * M_PI/180., Vector3d::UnitX())
+            * AngleAxisd(rpy.y() * M_PI/180.,  Vector3d::UnitY())
+            * AngleAxisd(rpy.z() * M_PI/180., Vector3d::UnitZ());
+        offset = sva::PTransformd(m.inverse(), trans);
+      }
+      t->targetSurface(c("robotName"), c("surfaceName"), offset);
+    }
+    if(config.has("weight")) { t->weight(config("weight")); }
     t->load(solver, config);
     return t;
   }
