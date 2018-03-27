@@ -50,6 +50,22 @@ add_custom_target(mc_rtc-python-bindings ALL
 )
 add_dependencies(mc_rtc-python-bindings mc_control)
 
+set(BINDINGS_GENERATED_SOURCES
+  ${CMAKE_CURRENT_SOURCE_DIR}/mc_control/mc_control.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/mc_rbdyn/mc_rbdyn.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/mc_rtc/mc_rtc.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/mc_solver/mc_solver.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/mc_tasks/mc_tasks.cpp
+)
+
+# Force rebuild
+add_custom_target(force-mc-rtc-python-bindings
+  COMMAND ${CMAKE_COMMAND} -E remove -f ${BINDINGS_GENERATED_SOURCES}
+  COMMAND ${CMAKE_MAKE_PROGRAM} mc_rtc-python-bindings
+  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+  COMMENT "Remove Cython generated files"
+)
+
 if(NOT ${DISABLE_TESTS})
   if(NOT DEFINED PYTHON_DEB_ROOT)
     ADD_TEST(NAME PythonBindingsTest
@@ -75,6 +91,11 @@ else()
     COMMAND pip install . ${PIP_EXTRA_OPTIONS}
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     COMMENT "Install mc_rtc Python bindings"
+  )
+  add_custom_target(force-install-mc_rtc-python-bindings
+    COMMAND pip install . ${PIP_EXTRA_OPTIONS} --upgrade
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMENT "Install mc_rtc Python bindings (forced)"
   )
 endif()
 install(CODE "EXECUTE_PROCESS(COMMAND ${CMAKE_MAKE_PROGRAM} install-mc_rtc-python-bindings)")
