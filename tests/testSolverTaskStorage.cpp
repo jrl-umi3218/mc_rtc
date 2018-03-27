@@ -16,7 +16,7 @@ struct CheckCoMTask : public mc_tasks::CoMTask
   : mc_tasks::CoMTask(robots, robotIndex)
   {
   }
-  ~CheckCoMTask() { deleted = true; }
+  virtual ~CheckCoMTask() override { deleted = true; }
   static bool deleted;
 };
 

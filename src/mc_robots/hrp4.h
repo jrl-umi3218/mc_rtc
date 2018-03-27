@@ -37,11 +37,11 @@ namespace mc_robots
   public:
     HRP4NoHandRobotModule();
 
-    virtual const std::map<std::string, std::pair<std::string, std::string> > & convexHull() const;
+    virtual const std::map<std::string, std::pair<std::string, std::string> > & convexHull() const override;
 
-    virtual const std::vector< std::map<std::string, std::vector<double> > > & bounds() const;
+    virtual const std::vector< std::map<std::string, std::vector<double> > > & bounds() const override;
 
-    virtual const std::map<std::string, std::vector<double> > & stance() const;
+    virtual const std::map<std::string, std::vector<double> > & stance() const override;
   public:
     std::vector<std::string> filteredLinks;
   };
@@ -51,11 +51,11 @@ namespace mc_robots
   public:
     HRP4WithHandRobotModule();
 
-    virtual const std::map<std::string, std::pair<std::string, std::string> > & convexHull() const;
+    virtual const std::map<std::string, std::pair<std::string, std::string> > & convexHull() const override;
 
-    virtual const std::vector< std::map<std::string, std::vector<double> > > & bounds() const;
+    virtual const std::vector< std::map<std::string, std::vector<double> > > & bounds() const override;
 
-    virtual const std::map<std::string, std::vector<double> > & stance() const;
+    virtual const std::map<std::string, std::vector<double> > & stance() const override;
   public:
     std::vector<std::string> filteredLinks;
   };
