@@ -231,7 +231,7 @@ protected:
 protected:
   /** QP solver */
   std::shared_ptr<mc_solver::QPSolver> qpsolver;
-  /** Real robots provided by MCGlobalController */
+  /** Real robots provided by MCGlobalController, nullptr until ::reset */
   std::shared_ptr<mc_rbdyn::Robots> real_robots;
   /** Logger provided by MCGlobalController */
   std::shared_ptr<mc_rtc::Logger> logger_;
