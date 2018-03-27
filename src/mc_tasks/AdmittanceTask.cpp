@@ -9,20 +9,48 @@ namespace mc_tasks
 namespace
 {
 
-void clampAndWarn(Eigen::Vector3d & vector, const Eigen::Vector3d & bound, const std::string & label)
+/** Saturate integrator outputs.
+ *
+ * \param taskName Name of caller AdmittanceTask.
+ *
+ * \param vector Integrator output vector.
+ *
+ * \param bound Output (symmetric) bounds.
+ *
+ * \param label Name of output vector.
+ *
+ * \param isClamping Map of booleans describing the clamping state for each
+ * direction in ['x', 'y', 'z'].
+ *
+ */
+void clampAndWarn(const std::string & taskName, Eigen::Vector3d & vector, const Eigen::Vector3d & bound, const std::string & label, std::map<char, bool> & isClamping)
 {
   const char dirName[] = {'x', 'y', 'z'};
   for (unsigned i = 0; i < 3; i++)
   {
+    char dir = dirName[i];
     if (vector(i) < -bound(i))
     {
-      LOG_WARNING("AdmittanceTask: " << label << " hit lower bound along " << dirName[i] << "-coordinate");
       vector(i) = -bound(i);
+      if (!isClamping[dir])
+      {
+        LOG_WARNING(taskName << ": clamping " << dir << " " << label << " to " << -bound(i));
+        isClamping[dir] = true;
+      }
     }
     else if (vector(i) > bound(i))
     {
-      LOG_WARNING("AdmittanceTask: " << label << " hit upper bound along " << dirName[i] << "-coordinate");
       vector(i) = bound(i);
+      if (!isClamping[dir])
+      {
+        LOG_WARNING(taskName << ": clamping " << dir << " " << label << " to " << bound(i));
+        isClamping[dir] = true;
+      }
+    }
+    else if (isClamping[dir])
+    {
+      LOG_WARNING(taskName << ": " << dir << " " << label << " back within range");
+      isClamping[dir] = false;
     }
   }
 }
@@ -35,102 +63,79 @@ AdmittanceTask::AdmittanceTask(const std::string & surfaceName,
       double timestep,
       double stiffness, double weight)
   : SurfaceTransformTask(surfaceName, robots, robotIndex, stiffness, weight), 
-    surface_(robots.robot(robotIndex).surface(surfaceName)),
     robot_(robots.robots()[robotIndex]),
+    surface_(robots.robot(robotIndex).surface(surfaceName)),
     sensor_(robot_.bodyForceSensor(surface_.bodyName())),
-    timestep_(timestep),
-    X_fsactual_surf_(surface_.X_b_s() * sensor_.X_fsactual_parent())
+    X_fsactual_surf_(surface_.X_b_s() * sensor_.X_fsactual_parent()),
+    timestep_(timestep)
 {
-  X_0_target_ = SurfaceTransformTask::target();
   name_ = "admittance_" + robot_.name() + "_" + surfaceName;
 }
 
 void AdmittanceTask::update()
 {
   wrenchError_ = measuredWrench() - targetWrench_;
-  Eigen::Vector3d transVel = admittance_.force().cwiseProduct(wrenchError_.force());
-  clampAndWarn(transVel, maxTransVel_, "linear velocity");
-  trans_target_delta_ += timestep_ * transVel;
-  clampAndWarn(trans_target_delta_, maxTransPos_, "linear position");
 
-  Eigen::Vector3d rpyVel = admittance_.couple().cwiseProduct(wrenchError_.couple());
-  clampAndWarn(rpyVel, maxRpyVel_, "angular velocity");
-  rpy_target_delta_ += timestep_ * rpyVel;
-  clampAndWarn(rpy_target_delta_, maxRpyPos_, "angular position");
+  Eigen::Vector3d linearVel = admittance_.force().cwiseProduct(wrenchError_.force());
+  Eigen::Vector3d angularVel = admittance_.couple().cwiseProduct(wrenchError_.couple());
+  clampAndWarn(name_, linearVel, maxLinearVel_, "linear velocity", isClampingLinearVel_);
+  clampAndWarn(name_, angularVel, maxAngularVel_, "angular velocity", isClampingAngularVel_);
+  refVel_ = sva::MotionVecd(angularVel, linearVel);
 
-  const Eigen::Matrix3d R_target_delta = mc_rbdyn::rpyToMat(rpy_target_delta_);
-  const sva::PTransformd X_target_delta = sva::PTransformd(R_target_delta, trans_target_delta_);
-  this->target(X_target_delta * X_0_target_);
+  // SC: we could do add an anti-windup strategy here, e.g. back-calculation.
+  // Yet, keep in mind that our velocity bounds are artificial. Whenever
+  // possible, the best is to set to gains so that they are not saturated.
+
+  this->refVel(refVel_);
 }
 
 void AdmittanceTask::reset()
 {
   SurfaceTransformTask::reset();
-  X_0_target_ = SurfaceTransformTask::target();
   admittance_ = sva::ForceVecd(Eigen::Vector6d::Zero());
-  rpy_target_delta_ = Eigen::Vector3d::Zero();
   targetWrench_ = sva::ForceVecd(Eigen::Vector6d::Zero());
-  trans_target_delta_ = Eigen::Vector3d::Zero();
-}
-
-void AdmittanceTask::resetPoseOffset()
-{
-  for (size_t i = 0; i < 3; i++)
-  {
-    if (admittance_.force()(i) < 1e-10)
-    {
-      trans_target_delta_(i) = 0.;
-    }
-    if (admittance_.couple()(i) < 1e-10)
-    {
-      rpy_target_delta_(i) = 0.;
-    }
-  }
+  refVel_ = sva::MotionVecd(Eigen::Vector6d::Zero());
+  wrenchError_ = sva::ForceVecd(Eigen::Vector6d::Zero());
 }
 
 void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
 {
+  SurfaceTransformTask::addToLogger(logger);
   logger.addLogEntry(name_ + "_admittance",
                      [this]() -> const sva::ForceVecd &
                      {
                      return admittance_;
-                     });
-  logger.addLogEntry(name_ + "_internal_target_pose",
-                     [this]()
-                     {
-                     return SurfaceTransformTask::target();
                      });
   logger.addLogEntry(name_ + "_measured_wrench",
                      [this]() -> sva::ForceVecd
                      {
                      return measuredWrench();
                      });
-  logger.addLogEntry(name_ + "_surface_pose",
-                     [this]()
+  logger.addLogEntry(name_ + "_ref_vel",
+                     [this]() -> sva::MotionVecd
                      {
-                     const auto & robot = robots.robot();
-                     return robot.surface(surfaceName).X_0_s(robot);
-                     });
-  logger.addLogEntry(name_ + "_target_pose",
-                     [this]() -> const sva::PTransformd &
-                     {
-                     return X_0_target_;
+                     return refVel_;
                      });
   logger.addLogEntry(name_ + "_target_wrench",
                      [this]() -> const sva::ForceVecd &
                      {
                      return targetWrench_;
                      });
+  logger.addLogEntry(name_ + "_world_measured_wrench",
+                     [this]() -> sva::ForceVecd
+                     {
+                     return worldMeasuredWrench();
+                     });
 }
 
 void AdmittanceTask::removeFromLogger(mc_rtc::Logger & logger)
 {
+  SurfaceTransformTask::removeFromLogger(logger);
   logger.removeLogEntry(name_ + "_admittance");
-  logger.removeLogEntry(name_ + "_internal_target_pose");
   logger.removeLogEntry(name_ + "_measured_wrench");
-  logger.removeLogEntry(name_ + "_surface_pose");
-  logger.removeLogEntry(name_ + "_target_pose");
+  logger.removeLogEntry(name_ + "_ref_vel");
   logger.removeLogEntry(name_ + "_target_wrench");
+  logger.removeLogEntry(name_ + "_world_measured_wrench");
 }
 
 } // mc_tasks
@@ -143,10 +148,10 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function("admit
      const mc_rtc::Configuration & config)
   {
     auto t = std::make_shared<mc_tasks::AdmittanceTask>(config("surface"), solver.robots(), config("robotIndex"), solver.dt());
-    if(config.has("stiffness")) { t->stiffness(config("stiffness")); }
-    if(config.has("weight")) { t->weight(config("weight")); }
     if(config.has("admittance")) { t->admittance(config("admittance")); }
+    if(config.has("damping")) { t->damping(config("damping")); }
     if(config.has("pose")) { t->targetPose(config("pose")); }
+    if(config.has("weight")) { t->weight(config("weight")); }
     if(config.has("wrench")) { t->targetWrench(config("wrench")); }
     t->load(solver, config);
     return t;

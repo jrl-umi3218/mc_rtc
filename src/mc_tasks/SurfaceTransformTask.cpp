@@ -34,6 +34,27 @@ void SurfaceTransformTask::target(const sva::PTransformd & pose)
   errorT->target(pose);
 }
 
+void SurfaceTransformTask::addToLogger(mc_rtc::Logger & logger)
+{
+  logger.addLogEntry(name_ + "_surface_pose",
+                     [this]()
+                     {
+                       const auto & robot = robots.robot();
+                       return robot.surface(surfaceName).X_0_s(robot);
+                     });
+  logger.addLogEntry(name_ + "_target_pose",
+                     [this]()
+                     {
+                       return target();
+                     });
+}
+
+void SurfaceTransformTask::removeFromLogger(mc_rtc::Logger & logger)
+{
+  logger.removeLogEntry(name_ + "_surface_pose");
+  logger.removeLogEntry(name_ + "_target_pose");
+}
+
 }
 
 namespace

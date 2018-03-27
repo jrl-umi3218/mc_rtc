@@ -10,10 +10,10 @@ namespace mc_tasks
 template<typename T>
 TrajectoryTaskGeneric<T>::TrajectoryTaskGeneric(const mc_rbdyn::Robots & robots,
                                              unsigned int robotIndex,
-                                             double stifness,
+                                             double stiffness,
                                              double w)
 : robots(robots), rIndex(robotIndex),
-  stiff(stifness), damp(2*std::sqrt(stiff)), wt(w)
+  stiff(stiffness), damp(2*std::sqrt(stiff)), wt(w)
 {
 }
 
@@ -71,6 +71,12 @@ template<typename T>
 void TrajectoryTaskGeneric<T>::stiffness(double s)
 {
   setGains(s, 2*std::sqrt(s));
+}
+
+template<typename T>
+void TrajectoryTaskGeneric<T>::damping(double d)
+{
+  setGains(stiff, d);
 }
 
 template<typename T>
