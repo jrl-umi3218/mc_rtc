@@ -244,7 +244,7 @@ pkg_config_use_dependency(mc_tasks mc_rbdyn_urdf)
 pkg_config_use_dependency(mc_tasks Tasks)
 pkg_config_append_libs(mc_tasks)
 if(${ROSCPP_FOUND})
-pkg_config_use_dependency(mc_tasks tf2_ros)
+  pkg_config_use_dependency(mc_tasks tf2_ros)
 endif()
 
 add_library(mc_rtc_ros SHARED mc_rtc/ros.cpp ../include/mc_rtc/ros.h ../include/mc_rtc/ros_api.h)

@@ -1,5 +1,6 @@
 #include <mc_tasks/LookAtTFTask.h>
 #include <mc_tasks/MetaTaskLoader.h>
+#include <tf2_eigen/tf2_eigen.h>
 
 namespace mc_tasks
 {
@@ -30,6 +31,10 @@ void LookAtTFTask::update()
   geometry_msgs::TransformStamped transformStamped;
   try
   {
+    // lookupTransform(target_frame, source_frame) returns the transformation from target frame to source frame expressed in the
+    // target frame coordinates. We want the same transformation from source
+    // frame to target frame expressed in the source frame coordinates, which is
+    // the inverse calling order for lookupTransform.
     transformStamped =
         tfBuffer.lookupTransform(sourceFrame, targetFrame, ros::Time(0));
   }
@@ -40,8 +45,8 @@ void LookAtTFTask::update()
   }
   Eigen::Vector3d target;
   target << transformStamped.transform.translation.x,
-      transformStamped.transform.translation.y,
-      transformStamped.transform.translation.z;
+            transformStamped.transform.translation.y,
+            transformStamped.transform.translation.z;
 
   LookAtTask::target(target);
 }
@@ -54,7 +59,7 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
     "lookAtTF",
     [](mc_solver::QPSolver& solver, const mc_rtc::Configuration& config) {
       auto t = std::make_shared<mc_tasks::LookAtTFTask>(
-          config("body"), config("bodyVector"), config("sourceFrame"),
+          config("bodyName"), config("bodyVector"), config("sourceFrame"),
           config("targetFrame"), solver.robots(), config("robotIndex"));
       if (config.has("weight"))
       {

@@ -1,6 +1,5 @@
 #include <mc_tasks/LookAtTask.h>
 #include <mc_tasks/MetaTaskLoader.h>
-#include <tf2_eigen/tf2_eigen.h>
 
 namespace mc_tasks
 {
