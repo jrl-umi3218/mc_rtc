@@ -1,0 +1,8 @@
+{
+  "type": "lookAtTF",
+  "robotIndex": 0,
+  "bodyName": "bodyName",
+  "bodyVector": [1, 0, 0],
+  "sourceFrame": "robot_map",
+  "targetFrame": "target_name"
+}

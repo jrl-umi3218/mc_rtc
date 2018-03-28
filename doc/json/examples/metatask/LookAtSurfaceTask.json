@@ -1,0 +1,8 @@
+{
+  "type": "lookAtSurface",
+  "robotIndex": 0,
+  "bodyName": "bodyName",
+  "bodyVector": [1.0, 0.0, 0.0],
+  "surfaceRobotIndex": 0,
+  "surfaceName": "targetSurfaceName"
+}

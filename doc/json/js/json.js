@@ -130,6 +130,9 @@ $(document).ready(function()
   'RemoveContactTask',
   'SurfaceTransformTask',
   'VectorOrientationTask',
+  'LookAtTask',
+  'LookAtSurfaceTask',
+  'LookAtTFTask'
   ]
   $('#metatask-objects').html(make_list_group('metatask', metatask_objects));
 

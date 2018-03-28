@@ -27,10 +27,7 @@ struct MC_TASKS_DLLAPI LookAtTask : public VectorOrientationTask
              unsigned int robotIndex, double stiffness = 2.0,
              double weight = 500);
 
-  /*! \brief Reset the task
-   *
-   * Set the task objective to the current body orientation
-   */
+  /*! \brief Reset the task */
   void reset() override;
 
   /**
