@@ -48,6 +48,13 @@ void LookAtTask::addToLogger(mc_rtc::Logger& logger)
                      [this]() -> Eigen::Vector3d { return eval(); });
 }
 
+void LookAtTask::removeFromLogger(mc_rtc::Logger& logger)
+{
+  logger.removeLogEntry(name_ + "_target");
+  logger.removeLogEntry(name_ + "_current");
+  logger.removeLogEntry(name_ + "_error");
+}
+
 LookAtSurfaceTask::LookAtSurfaceTask(const mc_rbdyn::Robots& robots,
                                      unsigned int robotIndex,
                                      const std::string& bodyName,
