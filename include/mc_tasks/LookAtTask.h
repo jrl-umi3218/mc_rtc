@@ -9,7 +9,6 @@ namespace mc_tasks
  */
 struct MC_TASKS_DLLAPI LookAtTask : public VectorOrientationTask
 {
- public:
   /*! \brief Constructor
    * \param bodyName Name of the body to control
    * \param bodyVector Gaze vector for the body.

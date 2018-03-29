@@ -218,15 +218,17 @@ set(mc_tasks_HDR
 ../include/mc_tasks/LookAtTask.h
 )
 
-if(NOT ${DISABLE_ROS} AND ${ROSCPP_FOUND})
-  set(mc_tasks_SRC
-    ${mc_tasks_SRC}
-    mc_tasks/LookAtTFTask.cpp
-    )
-  set(mc_tasks_HDR
-    ${mc_tasks_HDR}
-    ../include/mc_tasks/LookAtTFTask.h
-    )
+if(NOT ${DISABLE_ROS})
+  if(${ROSCPP_FOUND})
+    set(mc_tasks_SRC
+      ${mc_tasks_SRC}
+      mc_tasks/LookAtTFTask.cpp
+      )
+    set(mc_tasks_HDR
+      ${mc_tasks_HDR}
+      ../include/mc_tasks/LookAtTFTask.h
+      )
+  endif()
 endif()
 
 set(mc_tasks_SRC ${mc_tasks_SRC} PARENT_SCOPE)
@@ -239,19 +241,23 @@ target_link_libraries(mc_tasks ${Boost_LIBRARIES})
 pkg_config_use_dependency(mc_tasks mc_rbdyn_urdf)
 pkg_config_use_dependency(mc_tasks Tasks)
 pkg_config_append_libs(mc_tasks)
-if(NOT ${DISABLE_ROS} AND ${ROSCPP_FOUND})
-  pkg_config_use_dependency(mc_tasks tf2_ros)
+if(NOT ${DISABLE_ROS})
+  if(${ROSCPP_FOUND})
+    pkg_config_use_dependency(mc_tasks tf2_ros)
+  endif()
 endif()
 
 add_library(mc_rtc_ros SHARED mc_rtc/ros.cpp ../include/mc_rtc/ros.h ../include/mc_rtc/ros_api.h)
 set_target_properties(mc_rtc_ros PROPERTIES COMPILE_FLAGS "-DMC_RTC_ROS_EXPORTS")
 target_link_libraries(mc_rtc_ros mc_rbdyn)
-if(NOT ${DISABLE_ROS} AND ${ROSCPP_FOUND})
-  pkg_config_use_dependency(mc_rtc_ros roscpp)
-  pkg_config_use_dependency(mc_rtc_ros nav_msgs)
-  pkg_config_use_dependency(mc_rtc_ros sensor_msgs)
-  pkg_config_use_dependency(mc_rtc_ros tf2_ros)
-  pkg_config_use_dependency(mc_rtc_ros mc_rtc_msgs)
+if(NOT ${DISABLE_ROS})
+  if(${ROSCPP_FOUND})
+    pkg_config_use_dependency(mc_rtc_ros roscpp)
+    pkg_config_use_dependency(mc_rtc_ros nav_msgs)
+    pkg_config_use_dependency(mc_rtc_ros sensor_msgs)
+    pkg_config_use_dependency(mc_rtc_ros tf2_ros)
+    pkg_config_use_dependency(mc_rtc_ros mc_rtc_msgs)
+  endif()
 endif()
 pkg_config_append_libs(mc_rtc_ros)
 
