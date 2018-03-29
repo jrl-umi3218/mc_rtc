@@ -54,34 +54,6 @@ void LookAtTask::removeFromLogger(mc_rtc::Logger& logger)
   logger.removeLogEntry(name_ + "_error");
 }
 
-LookAtSurfaceTask::LookAtSurfaceTask(const mc_rbdyn::Robots& robots,
-                                     unsigned int robotIndex,
-                                     const std::string& bodyName,
-                                     const Eigen::Vector3d& bodyVector,
-                                     unsigned int surfaceRobotIndex,
-                                     const std::string& surfaceName,
-                                     double stiffness, double weight)
-    : LookAtTask(bodyName, bodyVector, bodyVector, robots, robotIndex,
-                 stiffness, weight),
-      sRobotIndex(surfaceRobotIndex),
-      sName(surfaceName)
-{
-  const mc_rbdyn::Robot& robot = robots.robot(rIndex);
-  bIndex = robot.bodyIndexByName(bodyName);
-
-  finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, bodyVector,
-           bodyVector);
-  type_ = "lookAtSurface";
-  name_ =
-      "look_at_surface_" + robot.name() + "_" + bodyName + "_" + surfaceName;
-}
-
-void LookAtSurfaceTask::update()
-{
-  auto& robot = robots.robot(sRobotIndex);
-  LookAtTask::target(robot.surface(sName).X_0_s(robot).translation());
-}
-
 } /* mc_tasks */
 
 namespace
@@ -90,7 +62,7 @@ static bool registered_lookat = mc_tasks::MetaTaskLoader::register_load_function
     "lookAt",
     [](mc_solver::QPSolver& solver, const mc_rtc::Configuration& config) {
       auto t = std::make_shared<mc_tasks::LookAtTask>(
-          config("bodyName"), config("bodyVector"), config("targetPos"),
+          config("body"), config("bodyVector"), config("targetPos"),
           solver.robots(), config("robotIndex"));
       if (config.has("weight"))
       {
@@ -103,24 +75,4 @@ static bool registered_lookat = mc_tasks::MetaTaskLoader::register_load_function
       t->load(solver, config);
       return t;
     });
-
-static bool registered_lookat_surface =
-    mc_tasks::MetaTaskLoader::register_load_function(
-        "lookAtSurface",
-        [](mc_solver::QPSolver& solver, const mc_rtc::Configuration& config) {
-          auto t = std::make_shared<mc_tasks::LookAtSurfaceTask>(
-              solver.robots(), config("robotIndex"), config("bodyName"),
-              config("bodyVector"), config("surfaceRobotIndex"),
-              config("surfaceName"));
-          if (config.has("weight"))
-          {
-            t->weight(config("weight"));
-          }
-          if (config.has("stiffness"))
-          {
-            t->stiffness(config("stiffness"));
-          }
-          t->load(solver, config);
-          return t;
-        });
 }

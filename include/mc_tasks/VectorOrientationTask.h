@@ -12,7 +12,6 @@ namespace mc_tasks
  */
 struct MC_TASKS_DLLAPI VectorOrientationTask : public TrajectoryTaskGeneric<tasks::qp::VectorOrientationTask>
 {
-public:
   /*! \brief Constructor
    *
    * \param bodyName Name of the body to control
@@ -82,7 +81,7 @@ public:
   /*! \brief Return the controlled body */
   std::string body() { return bodyName; }
 
-public:
+protected:
   std::string bodyName;
   unsigned int bIndex;
 };

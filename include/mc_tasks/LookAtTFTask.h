@@ -11,14 +11,6 @@ namespace mc_tasks
  */
 struct MC_TASKS_DLLAPI LookAtTFTask : public LookAtTask
 {
- private:
-  tf2_ros::Buffer tfBuffer;
-  tf2_ros::TransformListener tfListener;
-  std::string sourceFrame;
-  std::string targetFrame;
-  Eigen::Vector3d target_ori;
-
- public:
   /*! \brief Constructor
    *
    * \param bodyName Name of the body to control
@@ -40,6 +32,14 @@ struct MC_TASKS_DLLAPI LookAtTFTask : public LookAtTask
 
   /*! \brief Update the gaze target from TF position */
   void update() override;
+
+ private:
+  tf2_ros::Buffer tfBuffer;
+  tf2_ros::TransformListener tfListener;
+  std::string sourceFrame;
+  std::string targetFrame;
+  Eigen::Vector3d target_ori;
+
 };
 
 } /* mc_tasks */
