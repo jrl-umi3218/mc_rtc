@@ -9,7 +9,7 @@
     "body": { "type": "string" },
     "bodyVector": { "$ref": "/../../eigen/Vector3d.json" },
     "surfaceRobotIndex": { "type": "number", "minimum": 0},
-    "surfaceName": { "type": "string" },
+    "surface": { "type": "string" },
 
     "stiffness": { "type": "number", "minimum": 0},
     "damping": { "type": "number", "minimum": 0},
@@ -18,5 +18,5 @@
     "activeJoints": { "type": "array", "items": { "type": "string" } },
     "unactiveJoints": { "type": "array", "items": { "type": "string" } }
   },
-  "required": ["type", "robotIndex", "body", "bodyVector", "surfaceRobotIndex", "surfaceName" ]
+  "required": ["type", "robotIndex", "body", "bodyVector", "surfaceRobotIndex", "surface" ]
 }

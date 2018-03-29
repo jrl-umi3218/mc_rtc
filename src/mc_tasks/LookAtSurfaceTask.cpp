@@ -44,7 +44,7 @@ static bool registered_lookat_surface =
           auto t = std::make_shared<mc_tasks::LookAtSurfaceTask>(
               solver.robots(), config("robotIndex"), config("body"),
               config("bodyVector"), config("surfaceRobotIndex"),
-              config("surfaceName"));
+              config("surface"));
           if (config.has("weight"))
           {
             t->weight(config("weight"));
