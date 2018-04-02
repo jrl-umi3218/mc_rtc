@@ -85,7 +85,7 @@ void CoMTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                          [this]() { return this->com(); },
                          [this](const Eigen::Vector3d & com) { this->com(com); }),
     mc_rtc::gui::Point3D("com",
-                         [this]() { return this->com(); })
+                         [this]() { return (this->com() - this->eval()).eval(); })
   );
 }
 
