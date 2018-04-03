@@ -1,3 +1,5 @@
+#pragma once
+
 #include <functional>
 
 #include <mc_control/fsm/Controller.h>
