@@ -51,7 +51,20 @@ struct MC_CONTROL_DLLAPI TransitionMap
    std::pair<bool, Transition> transition(const std::string & state,
                                           const std::string & output) const;
 
-  /** Build the map from a Configuration */
+  /** Build the map from a Configuration
+   *
+   * The following entries are expected in config:
+   * - init: initial state for this map (string)
+   * - transitions: list of transitions as described in this documentation
+   *   (array of strings' arrays)
+   *
+   * If init is absent, defaults to the first state in transitions
+   *
+   * \param factory The factory that will provie states
+   *
+   * \param config Holds the JSON representation of this transition map
+   *
+   */
   void init(const StateFactory & factory,
             const mc_rtc::Configuration & config);
 

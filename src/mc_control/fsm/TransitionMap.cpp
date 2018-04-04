@@ -24,8 +24,10 @@ void TransitionMap::init(const StateFactory & factory,
   auto transitions = config("transitions", std::vector<std::vector<std::string>>{});
   if(!transitions.size())
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "This FSM is not managed but its configuration does not hold a transitions entry or the transitions entry is empty.")
+    LOG_ERROR_AND_THROW(std::runtime_error, "Cannot load TransitionMap if the configuration does not hold a transitions entry or the transitions entry is empty.")
   }
+  bool valid_init_state = false;
+  std::string first_valid_state = "";
   for(const auto & t : transitions)
   {
     if(t.size() < 3 || t.size() > 4)
@@ -77,7 +79,21 @@ void TransitionMap::init(const StateFactory & factory,
     {
       LOG_WARNING("Transition for (" << from << ", " << by << ") is specified more than once")
     }
+    if(init_state_ == from) { valid_init_state = true; }
+    if(first_valid_state.size() == 0) { first_valid_state = from; }
     map_[{from, by}] = {to, type};
+  }
+  if(map_.size() == 0)
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "None of the transitions you attempted to load in this TransitionMap are valid.")
+  }
+  if(!valid_init_state)
+  {
+    if(init_state_.size())
+    {
+      LOG_WARNING("The initial state you provided (" << init_state_ << ") is not valid, will replace it with the first valid state in the transitions map: " << first_valid_state)
+    }
+    init_state_ = first_valid_state;
   }
 }
 
