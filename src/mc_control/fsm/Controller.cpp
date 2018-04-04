@@ -80,8 +80,7 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
       {
         LOG_ERROR_AND_THROW(std::runtime_error, "Failed to load " << name << " as specified in configuration");
       }
-      auto & r = robots().load(*rm);
-      r.name(name);
+      auto & r = loadRobot(rm, name);
       robots_idx_[name] = r.robotIndex();
     }
     LOG_INFO("Robots loaded in FSM controller:")
