@@ -239,6 +239,16 @@ protected:
    */
   MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robot_modules, double dt);
 protected:
+  /** Load an additional robot into the controller
+   *
+   * \param rm RobotModule used to load the robot
+   *
+   * \param name Name of the robot
+   *
+   * \returns The loaded robot
+   */
+  mc_rbdyn::Robot & loadRobot(mc_rbdyn::RobotModulePtr rm, const std::string & name);
+protected:
   /** QP solver */
   std::shared_ptr<mc_solver::QPSolver> qpsolver;
   /** Real robots provided by MCGlobalController, nullptr until ::reset */
