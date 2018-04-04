@@ -60,7 +60,7 @@ MCGlobalController::MCGlobalController(const std::string & conf,
   }
   else
   {
-    real_robots->load(*config.main_robot_module, config.main_robot_module->rsdf_dir);
+    real_robots->load(*config.main_robot_module);
   }
   mc_rtc::ROSBridge::set_publisher_timestep(config.publish_timestep);
   if(config.enable_log)
