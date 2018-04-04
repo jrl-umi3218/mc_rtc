@@ -107,8 +107,9 @@ namespace mc_rtc
           {
             std::this_thread::sleep_for(std::chrono::microseconds(500));
           }
+          log_.close();
         }
-        log_.open(path.string());
+        log_.open(path.string(), std::ofstream::binary);
       }
 
       virtual void write(uint8_t * data, int size) final
