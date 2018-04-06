@@ -2,6 +2,7 @@
 
 #include <mc_tasks/MetaTask.h>
 #include <mc_trajectory/BSplineTrajectory.h>
+#include <mc_rtc/GUIState.h>
 
 #include <mc_rbdyn/Robots.h>
 #include <Tasks/QPTasks.h>
@@ -51,7 +52,7 @@ public:
    *
    */
   TrajectoryTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex,
-                 const mc_rbdyn::Surface & surface, const sva::PTransformd & X_0_t,
+                 const std::string& surfaceName, const sva::PTransformd & X_0_t,
                  double duration, double timeStep, double stiffness, double posWeight, double oriWeight,
                  const Eigen::MatrixXd & waypoints = Eigen::MatrixXd(3,0),
                  unsigned int nrWP = 0);
@@ -63,12 +64,28 @@ public:
    */
   bool timeElapsed();
 
-  /*! \brief Returns the current task error
+  /*! \brief Returns the transformError between current robot surface pose and
+   * its final target
    *
-   * \returns The current task error
+   * \returns The error w.r.t the final target
    *
    */
   Eigen::VectorXd eval() const override;
+
+  /**
+   * \brief Returns the trajectory tracking error: transformError between the current robot surface pose
+   * and its next desired pose along the trajectory error
+   *
+   * \return The trajectory tracking error
+   */
+  virtual Eigen::VectorXd evalTracking() const;
+
+  /**
+   * \brief Final task target (trajectory end-point).
+   *
+   * return The target pose
+   */
+  sva::PTransformd target() const;
 
   /*! \brief Returns the current task speed
    *
@@ -93,8 +110,10 @@ public:
   void resetJointsSelector(mc_solver::QPSolver &) override;
 
   void dimWeight(const Eigen::VectorXd &) override;
-
   Eigen::VectorXd dimWeight() const override { return dimWeight_; }
+
+  void addToLogger(mc_rtc::Logger & logger) override;
+  void removeFromLogger(mc_rtc::Logger & logger) override;
 
 private:
   void generateBS();
@@ -104,10 +123,14 @@ private:
   void removeFromSolver(mc_solver::QPSolver & solver) override;
 
   void update() override;
-private:
+
+protected:
+  void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
+
+public:
   const mc_rbdyn::Robots & robots;
   unsigned int rIndex;
-  const mc_rbdyn::Surface & surface;
+  std::string surfaceName;
   sva::PTransformd X_0_t;
   sva::PTransformd X_0_start;
   Eigen::MatrixXd wp;
@@ -119,7 +142,7 @@ private:
   std::shared_ptr<tasks::qp::TrajectoryTask> transTrajTask = nullptr;
   std::shared_ptr<mc_trajectory::BSplineTrajectory> bspline = nullptr;
   bool inSolver = false;
-  double stiffness;
+  double stiffness_;
   Eigen::Vector6d dimWeight_;
 private:
   /* Hide these virtual functions */

@@ -1,0 +1,29 @@
+{
+  "type": "trajectoryTask",
+  "surface": "surfaceName",
+  "robotIndex": 0,
+  "stiffness": 10000.0,
+  "duration": 3.0,
+  "posWeight": 100,
+  "oriWeight": 10000,
+  "timeStep": 0.005,
+  "targetSurface" :
+  {
+    "robotIndex": 1,
+    "surface": "targetSurfaceName",
+    "offset":
+    {
+      "translation": [-0.05, 0.3, 0.03],
+      "rotation": [0.0, 0.0, 140.0]
+    },
+    "waypoints":
+    {
+      // Control points defined wrt the targetSurface frame
+      "controlPoints":
+      [ 
+        [0.2, -0.05, 0.1],
+        [-0.05, 0.3, 0.05]
+      ]
+    }
+  }
+}
