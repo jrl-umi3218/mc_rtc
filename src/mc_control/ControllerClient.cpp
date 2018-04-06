@@ -192,7 +192,7 @@ void ControllerClient::handle_widget(const ElementId & id,
     switch(type)
     {
       case Elements::Label:
-        label(id, data("data").dump());
+        label(id, std::string{data("data", data("data").dump())});
         break;
       case Elements::ArrayLabel:
         array_label(id, gui("labels", std::vector<std::string>{}), data("data"));
