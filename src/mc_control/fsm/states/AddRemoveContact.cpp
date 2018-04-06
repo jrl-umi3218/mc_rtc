@@ -6,6 +6,7 @@
 #include <mc_rbdyn/Contact.h>
 
 #include <mc_tasks/AddRemoveContactTask.h>
+#include <mc_tasks/CoMTask.h>
 #include <mc_tasks/ComplianceTask.h>
 #include <mc_tasks/MetaTaskLoader.h>
 
@@ -127,7 +128,7 @@ template<>
 void AddRemoveContactStateImplHelper<mc_tasks::RemoveContactTask>::make_run_impl(AddRemoveContactStateImpl & impl, Controller & ctl, mc_rbdyn::Contact & contact)
 {
   ctl.removeContact(Contact::from_mc_rbdyn(ctl, contact));
-  double distance_ = impl.config_("distance", 0.1);
+  double distance_ = impl.config_("distance", 0.075);
   auto robotIndex_ = contact.r1Index();
   auto bodyIndex_ = contact.r1Surface()->bodyIndex(ctl.robots().robot(contact.r1Index()));
   auto init_pos_ = ctl.robots().robot(robotIndex_).bodyPosW()[bodyIndex_].translation();

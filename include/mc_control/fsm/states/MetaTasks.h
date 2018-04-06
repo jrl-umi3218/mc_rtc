@@ -117,6 +117,7 @@ protected:
   bool remove_posture_task_;
   std::vector<mc_tasks::MetaTaskPtr> tasks_;
   std::vector<std::pair<size_t, mc_control::CompletionCriteria>> criterias_;
+  bool finished_first_ = false;
 };
 
 } // namespace fsm

@@ -1,9 +1,9 @@
 #pragma once
 
 #include <mc_control/mc_controller.h>
-#include <mc_control/fsm/TransitionMap.h>
+#include <mc_control/fsm/Executor.h>
 
-#include <mc_tasks/CoMTask.h>
+#include <mc_tasks/EndEffectorTask.h>
 #include <mc_tasks/PostureTask.h>
 
 namespace mc_control
@@ -13,7 +13,6 @@ namespace fsm
 {
 
 struct Controller;
-struct State;
 
 /** \class Contact
  *
@@ -66,6 +65,8 @@ struct MC_CONTROL_DLLAPI Contact
  */
 struct MC_CONTROL_DLLAPI Controller : public MCController
 {
+  friend struct Executor;
+
   Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
              double dt,
              const mc_rtc::Configuration & config);
@@ -80,31 +81,26 @@ struct MC_CONTROL_DLLAPI Controller : public MCController
 
   bool read_write_msg(std::string & msg, std::string & out) override;
 
-  /** Remove current state from the FSM
+  /** Stop the current state's execution
    *
-   * The controller will then switch to the no-state behavior, which maintains
-   * current contacts, the CoM position, and a posture task set to current
-   * joint values.
+   * The controller will switch to its idle behaviour which maintains current
+   * contacts, free-flyer position/orientation and posture.
    *
+   * This function is virtual to allow derived implementation to handle
+   * interruptions differently.
    */
-  virtual void interrupt()
-  {
-    interrupt_triggered_ = true;
-  }
+  virtual void interrupt() { executor_.interrupt(); }
 
-  /** Check whether there is an active state running
-   *
-   */
-  bool isRunning()
-  {
-    return bool(state_);
-  }
+  /** Check if current state is running */
+  bool running() { return executor_.running(); }
 
-  /** Resume to a desired state after an interruption
+  /** Resume the FSM execution on a new state
    *
-   * \param state State to resume to
+   * This call is ignored if running() returns true
    *
-   * \return success False if an error occurred
+   * \param state State to start
+   *
+   * \return True if the state was started
    *
    */
   bool resume(const std::string & state);
@@ -180,12 +176,12 @@ struct MC_CONTROL_DLLAPI Controller : public MCController
   mc_solver::ContactConstraint & contactConstraint() { return *contact_constraint_; }
 
   bool set_joint_pos(const std::string & jname, const double & pos) override;
+protected:
+  /** Access the state factory */
+  StateFactory & factory() { return factory_; }
 private:
   /** Reset all posture tasks */
   void resetPostures();
-
-  /** Go to the next state */
-  void nextState();
 private:
   /** Keep track of the configuration of the controller */
   mc_rtc::Configuration config_;
@@ -194,11 +190,6 @@ private:
 
   /** Init pose */
   std::vector<double> init_pos_ = {};
-
-  /** If true, transitions are managed by an external tool */
-  bool managed_;
-  /** If true and the FSM is self-managed, all transitions require a user-input */
-  bool step_by_step_;
 
   /** Holds dynamics, kinematics and contact constraints that are added
    * from the start by the controller */
@@ -216,8 +207,8 @@ private:
    * (i.e. robot.dof() - robot.joint(0).dof() > 0 ) */
   std::map<std::string, std::shared_ptr<mc_tasks::PostureTask>> posture_tasks_;
 
-  /** Creates a CoM task for each robots with a free-flyer base */
-  std::map<std::string, std::shared_ptr<mc_tasks::CoMTask>> com_tasks_;
+  /** Creates a free-flyer end-effector task for each robot with a free flyer */
+  std::map<std::string, std::shared_ptr<mc_tasks::EndEffectorTask>> ff_tasks_;
 
   /** FSM contacts */
   std::set<Contact> contacts_;
@@ -227,22 +218,12 @@ private:
   /** State factory */
   StateFactory factory_;
 
-  /** Current state */
-  std::shared_ptr<State> state_ = nullptr;
-  /** Current state (name) */
-  std::string curr_state_ = "";
-  /** State output */
-  std::string state_output_ = "";
-
-  /** Transition map, empty when the FSM is managed */
-  TransitionMap transition_map_;
-
-  /** If true, the current state is interrupted */
-  bool interrupt_triggered_ = false;
-  /** If true, transition is triggered */
-  bool transition_triggered_ = false;
-  /** Name of the next state */
-  std::string next_state_ = "";
+  /** Behaviour during idle */
+  bool idle_keep_state_ = false;
+  /** True if not idle */
+  bool running_ = false;
+  /** Main executor */
+  Executor executor_;
 };
 
 } // namespace fsm

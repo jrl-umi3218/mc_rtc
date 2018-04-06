@@ -2,7 +2,10 @@
   // If true, the FSM transitions are managed by an external tool
   "Managed": false,
   // If true and the FSM is self-managed, transitions should be triggered
-  "StepByStep": false,
+  "StepByStep": true,
+  // Change idle behaviour, if true the state is kept until transition,
+  // otherwise the FSM holds the last state until transition
+  "IdleKeepState": false,
   // Where to look for state libraries
   "StatesLibraries": ["@MC_CONTROLLER_INSTALL_PREFIX@/fsm/states"],
   // Where to look for state files
@@ -64,7 +67,7 @@
       "stiffness": 1.0,
       "weight": 10.0
     },
-    "com":
+    "ff":
     {
       "stiffness": 2.0,
       "weight": 100.0

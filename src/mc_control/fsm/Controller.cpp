@@ -40,12 +40,11 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
                        const mc_rtc::Configuration & config)
 : MCController(std::vector<mc_rbdyn::RobotModulePtr>{rm}, dt),
   config_(config),
-  managed_(config("Managed", false)),
-  step_by_step_(config("StepByStep", true)),
   factory_(config("StatesLibraries", std::vector<std::string>{}),
            config("StatesFiles", std::vector<std::string>{}),
            config("VerboseStateFactory", false))
 {
+  idle_keep_state_ = config("IdleKeepState", false);
   robots_idx_[robot().name()] = 0;
   /** Load additional robots from the configuration */
   {
@@ -125,7 +124,7 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
     if(robot.mb().nrDof() - robot.mb().joint(0).dof() > 0)
     {
       double stiffness = 1.0;
-      double weight = 1.0;
+      double weight = 10.0;
       if(config.has(robot.name()))
       {
         auto robot_config = config(robot.name());
@@ -142,20 +141,20 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
     }
     if(robot.mb().joint(0).type() == rbd::Joint::Free)
     {
-      double stiffness = 1.0;
-      double weight = 1.0;
+      double stiffness = 2.0;
+      double weight = 100.0;
       if(config.has(robot.name()))
       {
         auto robot_config = config(robot.name());
-        if(robot_config.has("com"))
+        if(robot_config.has("ff"))
         {
-          robot_config("com")("stiffness", stiffness);
-          robot_config("com")("weight", weight);
+          robot_config("ff")("stiffness", stiffness);
+          robot_config("ff")("weight", weight);
         }
       }
-      auto t = std::make_shared<mc_tasks::CoMTask>(solver().robots(), robot.robotIndex(), stiffness, weight);
+      auto t = std::make_shared<mc_tasks::EndEffectorTask>(robot.mb().body(0).name(), solver().robots(), robot.robotIndex(), stiffness, weight);
       t->name("FSM_" + t->name());
-      com_tasks_[robot.name()] = t;
+      ff_tasks_[robot.name()] = t;
     }
   }
   /** Create contacts */
@@ -166,11 +165,8 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
   {
     factory_.load(config("states"));
   }
-  /** Load transition map if necessary */
-  if(!managed_)
-  {
-    transition_map_.init(factory_, config);
-  }
+  /** Setup executor */
+  executor_.init(*this, config_);
   /** Setup initial pos */
   config("init_pos",  init_pos_);
   if(init_pos_.size())
@@ -201,10 +197,10 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
                                         return ret;
                                         }),
                      mc_rtc::gui::Label("Current state",
-                                        [this]() -> const std::string & { return this->curr_state_; }),
+                                        [this]() -> const std::string & { return executor_.state(); }),
                      mc_rtc::gui::Label("Next state ready?",
-                                        [this]() { return this->state_ == nullptr; }),
-                     mc_rtc::gui::Button("Play next stance", [this]() { this->play_next_stance(); }));
+                                        [this]() { return executor_.ready(); }),
+                     mc_rtc::gui::Button("Start next state", [this]() { this->play_next_stance(); }));
   }
 }
 
@@ -228,64 +224,24 @@ bool Controller::run()
     contact_constraint_->contactConstr->updateDofContacts();
     contacts_changed_ = false;
   }
-  if(interrupt_triggered_)
+  executor_.run(*this, idle_keep_state_);
+  if(!executor_.running())
   {
-    interrupt_triggered_ = false;
-    if(state_)
+    if(running_)
     {
-      state_->stop(*this);
-      state_->teardown(*this);
-      LOG_WARNING("Interrupted " << curr_state_)
-      state_ = nullptr;
+      running_ = false;
       resetPostures();
-    }
-  }
-  if(state_)
-  {
-    if(state_->run(*this))
-    {
-      resetPostures();
-      state_output_ =  state_->output();
-      state_->teardown(*this);
-      LOG_SUCCESS("Completed " << curr_state_ << " (" << state_->output() << ")")
-      if(managed_)
-      {
-        state_ = nullptr;
-      }
-      else
-      {
-        auto trans = transition_map_.transition(curr_state_, state_output_);
-        if(trans.first)
-        {
-          next_state_ = trans.second.state;
-          if(trans.second.type == Transition::Type::Auto ||
-             (
-              trans.second.type == Transition::Type::StepByStep &&
-              !step_by_step_
-             )
-            )
-          {
-            nextState();
-          }
-          else
-          {
-            LOG_INFO("Waiting for user confirmation")
-            state_ = nullptr;
-          }
-        }
-        else
-        {
-          LOG_SUCCESS("FSM run completed")
-          state_ = nullptr;
-        }
-      }
     }
   }
   else
   {
-    if(transition_triggered_)
+    if(!running_)
     {
-      nextState();
+      running_ = true;
+      for(const auto & fft : ff_tasks_)
+      {
+        solver().removeTask(fft.second);
+      }
     }
   }
   return MCController::run();
@@ -300,11 +256,6 @@ void Controller::reset(const ControllerResetData & data)
   }
   MCController::reset({q});
   resetPostures();
-  if(!managed_)
-  {
-    next_state_ = transition_map_.initState();
-    nextState();
-  }
 }
 
 void Controller::resetPostures()
@@ -313,44 +264,16 @@ void Controller::resetPostures()
   {
     pt.second->reset();
   }
-  for(auto & ct : com_tasks_)
+  for(auto & fft : ff_tasks_)
   {
-    ct.second->reset();
-    solver().addTask(ct.second);
+    fft.second->reset();
+    solver().addTask(fft.second);
   }
-}
-
-void Controller::nextState()
-{
-  if(next_state_.empty()) { return; }
-  LOG_SUCCESS("Starting state " << next_state_)
-  for(auto & ct : com_tasks_)
-  {
-    solver().removeTask(ct.second);
-  }
-  if(config_.has("configs") && config_("configs").has(next_state_))
-  {
-    state_ = factory_.create(next_state_,
-                             *this,
-                             config_("configs")(next_state_));
-  }
-  else
-  {
-    state_ = factory_.create(next_state_, *this);
-  }
-  transition_triggered_ = false;
-  curr_state_ = next_state_;
-  next_state_ = "";
 }
 
 bool Controller::play_next_stance()
 {
-  if(!managed_ && !state_)
-  {
-    transition_triggered_ = true;
-    return true;
-  }
-  return false;
+  return executor_.next();
 }
 
 bool Controller::read_msg(std::string & msg)
@@ -370,7 +293,7 @@ bool Controller::read_msg(std::string & msg)
     ss >> state;
     return resume(state);
   }
-  return MCController::read_msg(msg);
+  return executor_.read_msg(msg) || MCController::read_msg(msg);
 }
 
 bool Controller::read_write_msg(std::string & msg,
@@ -382,20 +305,25 @@ bool Controller::read_write_msg(std::string & msg,
   ss >> token;
   if(token == "current_state")
   {
-    out = curr_state_;
+    out = executor_.state();
     return true;
   }
   if(token == "output")
   {
-    out = state_output_;
+    out = executor_.output();
     return true;
   }
   if(token == "running")
   {
-    out = state_ ? "1" : "0";
+    out = executor_.running() ? "1" : "0";
     return true;
   }
-  return MCController::read_write_msg(msg, out);
+  if(token == "ready")
+  {
+    out = executor_.ready() ? "1" : "0";
+    return true;
+  }
+  return executor_.read_write_msg(msg, out) || MCController::read_write_msg(msg, out);
 }
 
 void Controller::addCollisions(const std::string & r1,
@@ -496,19 +424,12 @@ bool Controller::set_joint_pos(const std::string & jname, const double & pos)
 
 bool Controller::resume(const std::string & state)
 {
-  if(!interrupt_triggered_)
-  {
-    LOG_WARNING("Resuming to '" + state + "' with no interruption");
-  }
   if(!factory_.hasState(state))
   {
     LOG_ERROR("Cannot play unloaded state: " << state)
     return false;
   }
-  interrupt_triggered_ = true;
-  transition_triggered_ = true;
-  next_state_ = state;
-  return true;
+  return executor_.resume(state);
 }
 
 } // namespace fsm

@@ -100,11 +100,15 @@ bool MetaTasksState::run(Controller&)
   }
   if(finished)
   {
-    for(auto & c : criterias_)
+    if(!finished_first_)
     {
-      auto & crit = c.second;
-      const auto & t = *tasks_[c.first];
-      LOG_INFO("Completed " << t.name() << " (" << crit.output() << ")")
+      finished_first_ = true;
+      for(auto & c : criterias_)
+      {
+        auto & crit = c.second;
+        const auto & t = *tasks_[c.first];
+        LOG_INFO("Completed " << t.name() << " (" << crit.output() << ")")
+      }
     }
     output("OK");
     return true;
