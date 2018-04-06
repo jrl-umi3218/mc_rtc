@@ -80,11 +80,17 @@ struct MC_CONTROL_DLLAPI State
 
   /** Returns the output of the state, should only be consulted once run has
    * returned true */
-  std::string output() { return output_; }
+  const std::string & output() { return output_; }
+
+  /** Returns the name of the state */
+  const std::string & name() { return name_; }
+
+  void name(const std::string & n) { name_ = n; }
 protected:
   /** Output setter for derived classes */
   void output(const std::string & o) { output_ = o; }
 private:
+  std::string name_ = "";
   std::string output_ = "";
 };
 

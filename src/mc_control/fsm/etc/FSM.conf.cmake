@@ -235,21 +235,32 @@
         },
         "Orientation": { "body": "RLEG_LINK5" }
       }
+    },
+    "HalfSitting3": { "base": "HalfSitting2" },
+    "WalkTwoSteps":
+    {
+      "base": "Meta",
+      "Managed": false,
+      "StepByStep": false,
+      "transitions":
+      [
+        ["HalfSitting", "OK", "LeftCoM"],
+        ["HalfSitting2", "OK", "RightCoM"],
+        ["LeftCoM", "OK", "RemoveRFullSole"],
+        ["RemoveRFullSole", "OK", "MoveRFullSole"],
+        ["MoveRFullSole", "OK", "AddRFullSole"],
+        ["AddRFullSole", "OK", "HalfSitting2"],
+        ["RightCoM", "OK", "RemoveLFullSole"],
+        ["RemoveLFullSole", "OK", "MoveLFullSole"],
+        ["MoveLFullSole", "OK", "AddLFullSole"],
+        ["AddLFullSole", "OK", "HalfSitting3"]
+      ]
     }
   },
   // Transitions map
   "transitions":
   [
-    ["Pause", "OK", "HalfSitting", "Strict" ],
-    ["HalfSitting", "OK", "LeftCoM"],
-    ["HalfSitting2", "OK", "RightCoM"],
-    ["LeftCoM", "OK", "RemoveRFullSole"],
-    ["RemoveRFullSole", "OK", "MoveRFullSole"],
-    ["MoveRFullSole", "OK", "AddRFullSole"],
-    ["AddRFullSole", "OK", "HalfSitting2"],
-    ["RightCoM", "OK", "RemoveLFullSole"],
-    ["RemoveLFullSole", "OK", "MoveLFullSole"],
-    ["MoveLFullSole", "OK", "AddLFullSole"],
-    ["AddLFullSole", "OK", "HalfSitting"]
+    ["Pause", "OK", "WalkTwoSteps", "Strict" ],
+    ["WalkTwoSteps", "OK", "WalkTwoSteps", "Strict" ]
   ]
 }

@@ -234,6 +234,7 @@ StatePtr StateFactory::create(const std::string & state,
     LOG_ERROR("Creation of " << state << " state failed")
     return nullptr;
   }
+  ret->name(state);
   if(configure)
   {
     ret->configure(config);
