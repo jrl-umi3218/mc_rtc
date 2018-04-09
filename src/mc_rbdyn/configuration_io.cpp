@@ -869,11 +869,11 @@ tasks::qp::JointGains ConfigurationLoader<tasks::qp::JointGains>::load(const mc_
 {
   if(config.has("damping"))
   {
-    return tasks::qp::JointGains(config("jointName"), config("stiffness"));
+    return tasks::qp::JointGains(config("jointName"), config("stiffness"), config("damping"));
   }
   else
   {
-    return tasks::qp::JointGains(config("jointName"), config("stiffness"), config("damping"));
+    return tasks::qp::JointGains(config("jointName"), config("stiffness"));
   }
 }
 
