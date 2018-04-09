@@ -28,6 +28,8 @@ struct MetaState : State
 
   bool run(Controller&) override;
 
+  void stop(Controller&) override;
+
   void teardown(Controller&) override;
 
   bool read_msg(std::string & msg) override;

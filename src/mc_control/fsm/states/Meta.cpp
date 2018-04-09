@@ -43,7 +43,7 @@ void MetaState::start(Controller & ctl)
 bool MetaState::run(Controller & ctl)
 {
   executor_.run(ctl, true);
-  bool ret = !executor_.running();
+  bool ret = executor_.complete();
   if(ret)
   {
     output(executor_.output());
@@ -51,8 +51,14 @@ bool MetaState::run(Controller & ctl)
   return ret;
 }
 
+void MetaState::stop(Controller & ctl)
+{
+  executor_.stop(ctl);
+}
+
 void MetaState::teardown(Controller & ctl)
 {
+  executor_.teardown(ctl);
   bool sbs = config_("StepByStep");
   auto gui = ctl.gui();
   if(gui)

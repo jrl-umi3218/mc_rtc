@@ -50,11 +50,13 @@ bool Executor::run(Controller & ctl, bool keep_state)
     }
     if(managed_)
     {
+      complete_ = true;
       return complete(ctl, keep_state);
     }
     auto trans = transition_map_.transition(curr_state_,state_output_);
     if(!trans.first) // No more transition, execution complete
     {
+      complete_ = true;
       return complete(ctl, keep_state);
     }
     next_state_ = trans.second.state;
@@ -73,6 +75,23 @@ bool Executor::run(Controller & ctl, bool keep_state)
     next(ctl);
   }
   return ready_;
+}
+
+void Executor::stop(Controller & ctl)
+{
+  if(state_)
+  {
+    state_->stop(ctl);
+  }
+}
+
+void Executor::teardown(Controller & ctl)
+{
+  if(state_)
+  {
+    state_->teardown(ctl);
+    state_ = nullptr;
+  }
 }
 
 bool Executor::complete(Controller & ctl, bool keep_state)
@@ -121,6 +140,7 @@ bool Executor::resume(const std::string & state)
   {
     LOG_WARNING(curr_state_ << " interrupted to  resume " << state)
   }
+  complete_ = false;
   interrupt_triggered_ = true;
   transition_triggered_ = true;
   next_state_ = state;

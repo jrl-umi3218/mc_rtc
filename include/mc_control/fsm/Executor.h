@@ -46,6 +46,20 @@ struct MC_CONTROL_DLLAPI Executor
    */
   bool run(Controller & ctl, bool keep_state);
 
+  /** Stop the current stat eif necessary
+   *
+   * \param ctl Controller using this executor
+   *
+   */
+  void stop(Controller & ctl);
+
+  /** Teardown the current state if necessary
+   *
+   * \param ctl Controller using this executor
+   *
+   */
+  void teardown(Controller & ctl);
+
   /** Trigger an interruption */
   inline void interrupt() { interrupt_triggered_ = true; }
 
@@ -54,6 +68,9 @@ struct MC_CONTROL_DLLAPI Executor
 
   /** Returns true if the executor is ready for next transition */
   inline bool ready() const { return ready_; }
+
+  /** Returns true if the executor reached the end of transition map */
+  inline bool complete() const { return complete_; }
 
   /** Resume execution to a given state
    *
@@ -102,6 +119,8 @@ private:
   bool ready_ = true;
   /** If true, transition has been triggered */
   bool transition_triggered_ = false;
+  /** If true, no more state can be executed by this FSM */
+  bool complete_ = false;
   /** Name of the next state */
   std::string next_state_ = "";
 private:
