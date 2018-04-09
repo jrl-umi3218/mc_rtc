@@ -132,10 +132,24 @@ void AddRemoveContactStateImplHelper<mc_tasks::RemoveContactTask>::make_run_impl
   auto robotIndex_ = contact.r1Index();
   auto bodyIndex_ = contact.r1Surface()->bodyIndex(ctl.robots().robot(contact.r1Index()));
   auto init_pos_ = ctl.robots().robot(robotIndex_).bodyPosW()[bodyIndex_].translation();
-  impl.run_ = [distance_,robotIndex_,bodyIndex_,init_pos_](AddRemoveContactStateImpl &, Controller & ctl)
+  bool reached_ = false;
+  impl.run_ = [distance_,robotIndex_,bodyIndex_,init_pos_,reached_](AddRemoveContactStateImpl & impl, Controller & ctl) mutable
   {
     const auto & pos = ctl.robots().robot(robotIndex_).bodyPosW()[bodyIndex_].translation();
     auto d = (pos - init_pos_).norm();
+    if(d >= distance_)
+    {
+      if(!reached_)
+      {
+        reached_ = true;
+        ctl.solver().removeTask(impl.task_);
+        auto t = std::static_pointer_cast<mc_tasks::RemoveContactTask>(impl.task_);
+        auto w = t->weight();
+        auto s = t->stiffness();
+        impl.task_ = std::make_shared<mc_tasks::EndEffectorTask>(ctl.robots().robot(robotIndex_).mb().body(bodyIndex_).name(), ctl.robots(), robotIndex_, s, w);
+        ctl.solver().addTask(impl.task_);
+      }
+    }
     return d >= distance_;
   };
 }
@@ -147,14 +161,21 @@ void AddRemoveContactStateImplHelper<mc_tasks::AddContactTask>::make_run_impl(Ad
   auto sensor_ = SimulationContactPair(contact.r1Surface(), contact.r2Surface());
   auto robotIndex_ = contact.r1Index();
   auto envIndex_ = contact.r2Index();
-  impl.run_ = [fsm_contact_, sensor_, robotIndex_, envIndex_](AddRemoveContactStateImpl &, Controller & ctl) mutable
+  bool addedContact_ = false;
+  impl.run_ = [fsm_contact_, sensor_, robotIndex_, envIndex_, addedContact_](AddRemoveContactStateImpl & impl, Controller & ctl) mutable
   {
     auto & robot = ctl.robots().robot(robotIndex_);
     auto & env = ctl.robots().robot(envIndex_);
     auto d = sensor_.update(robot, env);
     if(d <= 0)
     {
-      ctl.addContact(fsm_contact_);
+      if(!addedContact_)
+      {
+        addedContact_ = true;
+        ctl.addContact(fsm_contact_);
+        auto t = std::static_pointer_cast<mc_tasks::AddContactTask>(impl.task_);
+        t->speed(0.0);
+      }
       return true;
     }
     return false;

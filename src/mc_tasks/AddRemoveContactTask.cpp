@@ -55,6 +55,7 @@ AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots,
     }
   }
 
+  direction_ = direction;
   this->speed_ = _speed;
   targetSpeed = direction*normal*speed_;
   linVelTask.reset(new tasks::qp::LinVelocityTask(robots.mbs(), 0, robotSurf->bodyName(), targetSpeed, robotSurf->X_b_s().translation())),
@@ -84,7 +85,14 @@ AddRemoveContactTask::AddRemoveContactTask(
 
 void AddRemoveContactTask::direction(double direction)
 {
-  linVelTask->velocity(direction*normal*speed_);
+  direction_ = direction;
+  targetSpeed = direction_*normal*speed_;
+}
+
+void AddRemoveContactTask::speed(double s)
+{
+  speed_ = s;
+  targetSpeed = direction_*normal*speed_;
 }
 
 Eigen::Vector3d AddRemoveContactTask::velError()

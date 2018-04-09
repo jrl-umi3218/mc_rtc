@@ -122,7 +122,7 @@ public:
   /*! \brief Get the desired dislacement speed */
   double speed() { return speed_; }
   /*! \brief Set the desired dislacement speed */
-  void speed(double s) { speed_ = s; }
+  void speed(double s);
 
   /*! \brief Get the task stiffness */
   double stiffness() { return stiffness_; }
@@ -160,6 +160,7 @@ public:
   double stiffness_;
   double weight_;
   double speed_;
+  double direction_;
   Eigen::Vector3d targetSpeed;
   std::shared_ptr<tasks::qp::LinVelocityTask> linVelTask;
   std::shared_ptr<tasks::qp::PIDTask> linVelTaskPid;
