@@ -36,6 +36,9 @@ void MetaState::start(Controller & ctl)
                       mc_rtc::gui::Button(name() + "- next state",
                                           [this](){ executor_.next(); }));
     }
+    gui->addElement({"FSM"},
+                    mc_rtc::gui::Button(name() + "- interrupt",
+                                        [this](){ executor_.interrupt(); }));
   }
   executor_.init(ctl, config_);
 }
@@ -64,6 +67,7 @@ void MetaState::teardown(Controller & ctl)
   if(gui)
   {
     gui->removeElement({"FSM"}, name() + "- current state");
+    gui->removeElement({"FSM"}, name() + "- interrupt");
     if(sbs)
     {
       gui->removeElement({"FSM"}, name() + "- next state ready");
