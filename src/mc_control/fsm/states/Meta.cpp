@@ -21,23 +21,17 @@ void MetaState::start(Controller & ctl)
   {
     config_.add("StepByStep", false);
   }
-  bool sbs = config_("StepByStep");
   auto gui = ctl.gui();
   if(gui)
   {
-    gui->addElement({"FSM"},
-                    mc_rtc::gui::Label(name() + "- current state",
-                                       [this](){ return executor_.state(); }));
-    if(sbs)
-    {
-      gui->addElement({"FSM"},
-                      mc_rtc::gui::Label(name() + "- next state ready",
-                                         [this](){ return executor_.ready(); }),
-                      mc_rtc::gui::Button(name() + "- next state",
-                                          [this](){ executor_.next(); }));
-    }
-    gui->addElement({"FSM"},
-                    mc_rtc::gui::Button(name() + "- interrupt",
+    gui->addElement({"FSM", name()},
+                    mc_rtc::gui::Label("Current state",
+                                       [this](){ return executor_.state(); }),
+                    mc_rtc::gui::Label("Next state ready",
+                                       [this](){ return executor_.ready(); }),
+                    mc_rtc::gui::Button("Next state",
+                                        [this](){ executor_.next(); }),
+                    mc_rtc::gui::Button("Interrupt",
                                         [this](){ executor_.interrupt(); }));
   }
   executor_.init(ctl, config_);
@@ -62,17 +56,10 @@ void MetaState::stop(Controller & ctl)
 void MetaState::teardown(Controller & ctl)
 {
   executor_.teardown(ctl);
-  bool sbs = config_("StepByStep");
   auto gui = ctl.gui();
   if(gui)
   {
-    gui->removeElement({"FSM"}, name() + "- current state");
-    gui->removeElement({"FSM"}, name() + "- interrupt");
-    if(sbs)
-    {
-      gui->removeElement({"FSM"}, name() + "- next state ready");
-      gui->removeElement({"FSM"}, name() + "- next state");
-    }
+    gui->removeCategory({"FSM", name()});
   }
 }
 

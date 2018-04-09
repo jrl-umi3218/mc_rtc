@@ -245,14 +245,14 @@
           "type": "posture",
           "robotIndex": 0,
           "stiffness": 0.0,
-          "weight": 10,
+          "weight": 50,
           "jointGains": [
-            {"jointName": "HEAD_JOINT0", "stiffness": 2.0},
-            {"jointName": "HEAD_JOINT1", "stiffness": 2.0}
+            {"jointName": "HEAD_JOINT0", "stiffness": 5.0},
+            {"jointName": "HEAD_JOINT1", "stiffness": 5.0}
           ],
           "target": { "HEAD_JOINT1": [-0.5] },
           "completion": { "OR": [ { "eval": 1e-3 },
-                                  {"AND": [ { "timeout": 1.0 }, { "speed": 1e-2 } ] } ] }
+                                  {"AND": [ { "timeout": 1.0 }, { "speed": 5e-3 } ] } ] }
         }
       }
     },
@@ -285,6 +285,7 @@
       "StepByStep": false,
       "transitions":
       [
+        ["Pause", "OK", "HalfSitting", "Strict"],
         ["HalfSitting", "OK", "LeftCoM"],
         ["HalfSitting2", "OK", "RightCoM"],
         ["LeftCoM", "OK", "RemoveRFullSole"],
@@ -294,10 +295,11 @@
         ["RightCoM", "OK", "RemoveLFullSole"],
         ["RemoveLFullSole", "OK", "MoveLFullSole"],
         ["MoveLFullSole", "OK", "AddLFullSole"],
-        ["AddLFullSole", "OK", "HalfSitting3"]
+        ["AddLFullSole", "OK", "HalfSitting3"],
+        ["HalfSitting3", "OK", "Pause"]
       ]
     },
-    "HeadTilt":
+    "HeadFSM":
     {
       "base": "Meta",
       "Managed": false,
@@ -305,21 +307,19 @@
       "transitions":
       [
         ["HeadDown", "OK", "HeadUp"],
-        ["HeadUp", "OK", "HeadZero"]
+        ["HeadUp", "OK", "HeadDown"]
       ]
     },
-    "WalkWithHeadTilt":
+    "FullFSM":
     {
       "base": "Parallel",
-      "states": ["HeadTilt", "WalkTwoSteps"]
+      "states": ["HeadFSM", "WalkTwoSteps"]
     }
   },
   // Transitions map
   "transitions":
   [
-    ["Pause", "OK", "WalkWithHeadTilt", "Strict" ],
-    ["WalkWithHeadTilt", "OK", "WalkTwoSteps", "Strict" ],
-    ["WalkTwoSteps", "OK", "WalkWithHeadTilt", "Strict" ]
+    ["Pause", "OK", "FullFSM", "Strict" ]
   ],
   // Initial state
   "init": "Pause"
