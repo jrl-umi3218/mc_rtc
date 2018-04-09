@@ -18,6 +18,8 @@ namespace fsm
  * - transitions: a transition map, similiar to the FSM controller (required if Managed is false)
  * - StepByStep: same as FSM for the internal FSM (default: false)
  *
+ * - configs: can contain additional configuration for the states in the FSM
+ *
  */
 
 struct MetaState : State
