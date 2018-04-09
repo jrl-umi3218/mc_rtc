@@ -105,4 +105,4 @@ bool MetaState::read_msg(std::string & msg)
 
 } // namespace mc_control
 
-EXPORT_SINGLE_STATE("Meta", mc_control::fsm::MetaState, "OK")
+EXPORT_SINGLE_STATE("Meta", mc_control::fsm::MetaState)

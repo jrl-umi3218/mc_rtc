@@ -27,8 +27,8 @@ void StateFactory::load_libraries(const std::vector<std::string> & paths)
 {
   mc_rtc::ObjectLoader<State>::load_libraries(paths,
                                                  [this](const std::string & cn,
-                                                        lt_dlhandle h)
-                                                 { update(cn, h); });
+                                                        lt_dlhandle)
+                                                 { update(cn); });
 }
 
 namespace
@@ -207,7 +207,6 @@ void StateFactory::load(const std::string & name,
     ret->configure(config);
     return ret;
   };
-  outputs_[name] = outputs_[base];
 }
 
 StatePtr StateFactory::create(const std::string & state,
@@ -270,39 +269,8 @@ const std::vector<std::string> & StateFactory::states() const
   return states_;
 }
 
-const std::vector<std::string> & StateFactory::stateOutputs(const std::string & state) const
+void StateFactory::update(const std::string & cn)
 {
-  return outputs_.at(state);
-}
-
-bool StateFactory::isValidOutput(const std::string & state,
-                                 const std::string & output) const
-{
-  return hasState(state) &&
-    std::find(outputs_.at(state).begin(),
-              outputs_.at(state).end(),
-              output) != outputs_.at(state).end();
-}
-
-void StateFactory::update(const std::string & cn, lt_dlhandle handle)
-{
-  void * sym = lt_dlsym(handle, "outputs");
-  if(sym == nullptr)
-  {
-    LOG_ERROR_AND_THROW(mc_rtc::LoaderException,
-                        "Symbol outputs not found in " <<
-                        lt_dlgetinfo(handle)->filename << std::endl <<
-                        lt_dlerror())
-  }
-  #pragma GCC diagnostic push
-  #pragma GCC diagnostic ignored "-Wpedantic"
-  auto outputs_fn = (std::vector<std::string>(*)(const std::string&))(sym);
-  #pragma GCC diagnostic pop
-  outputs_[cn] = outputs_fn(cn);
-  if(outputs_[cn].size() == 0)
-  {
-    LOG_WARNING("No outputs loaded for state " << cn)
-  }
   states_.push_back(cn);
 }
 

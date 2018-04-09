@@ -112,11 +112,10 @@ using StatePtr = std::shared_ptr<State>;
 # endif
 #endif
 
-#define EXPORT_SINGLE_STATE(NAME, TYPE, ...)\
+#define EXPORT_SINGLE_STATE(NAME, TYPE)\
 extern "C"\
 {\
   FSM_STATE_API std::vector<std::string> MC_RTC_FSM_STATE() { return {NAME}; }\
   FSM_STATE_API void destroy(mc_control::fsm::State * ptr) { delete ptr; }\
   FSM_STATE_API mc_control::fsm::State * create(const std::string &) { return new TYPE(); }\
-  FSM_STATE_API std::vector<std::string> outputs(const std::string &) { return {__VA_ARGS__}; }\
 }

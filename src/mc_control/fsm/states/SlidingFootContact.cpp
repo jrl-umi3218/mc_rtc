@@ -430,4 +430,4 @@ void SlidingFootContactState::resetAndRestoreBalance(Controller & ctl)
 
 } // namespace mc_control
 
-EXPORT_SINGLE_STATE("SlidingFootContact", mc_control::fsm::SlidingFootContactState, "OK", "SAME")
+EXPORT_SINGLE_STATE("SlidingFootContact", mc_control::fsm::SlidingFootContactState)

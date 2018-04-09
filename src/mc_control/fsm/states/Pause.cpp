@@ -34,4 +34,4 @@ bool PauseState::run(Controller&)
 
 } // namespace mc_control
 
-EXPORT_SINGLE_STATE("Pause", mc_control::fsm::PauseState, "OK")
+EXPORT_SINGLE_STATE("Pause", mc_control::fsm::PauseState)

@@ -242,4 +242,4 @@ void AddRemoveContactState::teardown(Controller & ctl)
 
 } // namespace mc_control
 
-EXPORT_SINGLE_STATE("AddRemoveContact", mc_control::fsm::AddRemoveContactState, "OK")
+EXPORT_SINGLE_STATE("AddRemoveContact", mc_control::fsm::AddRemoveContactState)

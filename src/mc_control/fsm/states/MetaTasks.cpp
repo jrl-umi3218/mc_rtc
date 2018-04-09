@@ -150,4 +150,4 @@ void MetaTasksState::teardown(Controller & ctl)
 
 } // namespace mc_control
 
-EXPORT_SINGLE_STATE("MetaTasks", mc_control::fsm::MetaTasksState, "OK")
+EXPORT_SINGLE_STATE("MetaTasks", mc_control::fsm::MetaTasksState)

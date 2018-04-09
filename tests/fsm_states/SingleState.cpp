@@ -11,4 +11,4 @@ struct SingleState : public mc_control::fsm::State
   void teardown(mc_control::fsm::Controller &) override {}
 };
 
-EXPORT_SINGLE_STATE("SingleState", SingleState, "OK")
+EXPORT_SINGLE_STATE("SingleState", SingleState)

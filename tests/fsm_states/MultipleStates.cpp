@@ -43,17 +43,4 @@ extern "C"
     }
     return nullptr;
   }
-
-  FSM_STATE_API std::vector<std::string> outputs(const std::string & n)
-  {
-    if(n == "State1")
-    {
-      return {"OK"};
-    }
-    if(n == "State2")
-    {
-      return {"OK", "NOK", "FAILURE"};
-    }
-    return {};
-  }
 }

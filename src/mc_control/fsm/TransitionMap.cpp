@@ -58,16 +58,12 @@ void TransitionMap::init(const StateFactory & factory,
     const auto & to = t[2];
     const auto & by = t[1];
     auto type = t.size() == 4 ? str2type(t[3]) : Transition::Type::StepByStep;
-    if(!(factory.hasState(from) && factory.isValidOutput(from, by) && factory.hasState(to)))
+    if(!(factory.hasState(from) && factory.hasState(to)))
     {
       LOG_ERROR("Invalid transition:")
       if(!factory.hasState(from))
       {
         LOG_ERROR("- origin state (" << from << ") is not loaded")
-      }
-      else if(!factory.isValidOutput(from, by))
-      {
-        LOG_ERROR("- origin state (" << from << ") has no output " << by)
       }
       if(!factory.hasState(to))
       {

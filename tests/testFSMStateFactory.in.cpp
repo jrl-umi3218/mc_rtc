@@ -27,24 +27,18 @@ mc_control::fsm::Controller & get_default_controller()
 }
 
 void check_state(mc_control::fsm::StateFactory & factory,
-                 const std::string & state,
-                 const std::vector<std::string> & outputs)
+                 const std::string & state)
 {
   BOOST_REQUIRE(factory.hasState(state));
-  BOOST_REQUIRE(factory.stateOutputs(state).size() == outputs.size());
-  for(const auto & o : outputs)
-  {
-    BOOST_REQUIRE(factory.isValidOutput(state, o));
-  }
 }
 
 void check_states(mc_control::fsm::StateFactory & factory,
-                  const std::map<std::string, std::vector<std::string>> & states)
+                  const std::vector<std::string> & states)
 {
   BOOST_REQUIRE(factory.states().size() == states.size());
   for(const auto & s : states)
   {
-    check_state(factory, s.first, s.second);
+    check_state(factory, s);
   }
 }
 
@@ -55,10 +49,7 @@ BOOST_AUTO_TEST_CASE(TestSingleStateLoading)
     {},
     false
   };
-  check_states(factory,
-               {
-                {"SingleState", {"OK"}}
-               });
+  check_states(factory, {"SingleState"});
 }
 
 BOOST_AUTO_TEST_CASE(TestJsonInheritanceSingle)
@@ -68,11 +59,7 @@ BOOST_AUTO_TEST_CASE(TestJsonInheritanceSingle)
     {FSM_STATES_JSON_DIR + "SingleState.json"},
     false
   };
-  check_states(factory,
-               {
-                {"SingleState", {"OK"}},
-                {"SingleStateBis", {"OK"}}
-               });
+  check_states(factory, {"SingleState", "SingleStateBis"});
 }
 
 BOOST_AUTO_TEST_CASE(TestJsonInheritanceMultiple)
@@ -84,11 +71,11 @@ BOOST_AUTO_TEST_CASE(TestJsonInheritanceMultiple)
   };
   check_states(factory,
                {
-                {"SingleState", {"OK"}},
-                {"SingleState1", {"OK"}},
-                {"SingleState2", {"OK"}},
-                {"SingleState3", {"OK"}},
-                {"SingleState4", {"OK"}}
+                "SingleState",
+                "SingleState1",
+                "SingleState2",
+                "SingleState3",
+                "SingleState4",
                });
 }
 
@@ -106,11 +93,11 @@ BOOST_AUTO_TEST_CASE(TestJsonInheritanceSplit)
   };
   check_states(factory,
                {
-                {"SingleState", {"OK"}},
-                {"SingleState1", {"OK"}},
-                {"SingleState2", {"OK"}},
-                {"SingleState3", {"OK"}},
-                {"SingleState4", {"OK"}}
+                "SingleState",
+                "SingleState1",
+                "SingleState2",
+                "SingleState3",
+                "SingleState4",
                });
 }
 
@@ -121,11 +108,7 @@ BOOST_AUTO_TEST_CASE(TestMultipleStatesLoading)
     {},
     false
   };
-  check_states(factory,
-               {
-                {"State1", {"OK"}},
-                {"State2", {"OK", "NOK", "FAILURE"}}
-               });
+  check_states(factory, {"State1", "State2"});
 }
 
 BOOST_AUTO_TEST_CASE(TestConfigureState)
@@ -137,10 +120,10 @@ BOOST_AUTO_TEST_CASE(TestConfigureState)
   };
   check_states(factory,
                {
-                {"ConfigureState", {"OK"}},
-                {"ConfigureState2", {"OK"}},
-                {"ConfigureState4", {"OK"}},
-                {"ConfigureState8", {"OK"}}
+                "ConfigureState",
+                "ConfigureState2",
+                "ConfigureState4",
+                "ConfigureState8",
                });
   auto & ctl = get_default_controller();
   auto test_state = [&factory, &ctl](const std::string & name, unsigned int value, const mc_rtc::Configuration & config)

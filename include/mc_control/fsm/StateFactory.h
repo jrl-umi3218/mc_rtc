@@ -21,8 +21,7 @@ struct MC_CONTROL_DLLAPI Controller;
  *
  * Creates State objects based on name and configuration entries.
  *
- * Also maintains a list of available states and outputs provided by said
- * states.
+ * Also maintains a list of available states.
  *
  */
 struct MC_CONTROL_DLLAPI StateFactory : public mc_rtc::ObjectLoader<State>
@@ -85,30 +84,16 @@ struct MC_CONTROL_DLLAPI StateFactory : public mc_rtc::ObjectLoader<State>
 
   /** Returns the list of loaded states */
   const std::vector<std::string> & states() const;
-
-  /** Returns the list of outputs for a given state
-   *
-   * If the state does not exist, an empty list is returned
-   *
-   * Throws if the state does not exist.
-   */
-  const std::vector<std::string> & stateOutputs(const std::string & state) const;
-
-  /** Returns true if the provided output is part of the provided state's
-   * outputs */
-  bool isValidOutput(const std::string & state,
-                     const std::string & output) const;
 private:
   /** Create a state from libraries or factory */
   StatePtr create(const std::string & state);
   /** Implementation for create */
   StatePtr create(const std::string & state, Controller & ctl,
                   bool configure, const mc_rtc::Configuration & config = {});
-  /** Update the outputs list */
-  void update(const std::string & cn, lt_dlhandle handle);
+  /** Callback on state loading */
+  void update(const std::string & cn);
 private:
   std::vector<std::string> states_;
-  std::map<std::string, std::vector<std::string>> outputs_;
   using state_factory_fn = std::function<StatePtr(StateFactory&)>;
   std::map<std::string, state_factory_fn> states_factories_;
 };
