@@ -10,7 +10,7 @@ namespace bfs = boost::filesystem;
 namespace mc_robots
 {
 
-EnvRobotModule::EnvRobotModule(const std::string & env_path, const std::string & env_name)
+EnvRobotModule::EnvRobotModule(const std::string & env_path, const std::string & env_name, bool fixed)
 : RobotModule(env_path, env_name)
 {
   std::ifstream ifs(urdf_path);
@@ -18,7 +18,7 @@ EnvRobotModule::EnvRobotModule(const std::string & env_path, const std::string &
   {
     std::stringstream urdf;
     urdf << ifs.rdbuf();
-    mc_rbdyn_urdf::URDFParserResult res = mc_rbdyn_urdf::rbdyn_from_urdf(urdf.str());
+    mc_rbdyn_urdf::URDFParserResult res = mc_rbdyn_urdf::rbdyn_from_urdf(urdf.str(), fixed);
     mb = res.mb;
     mbc = res.mbc;
     mbg = res.mbg;
