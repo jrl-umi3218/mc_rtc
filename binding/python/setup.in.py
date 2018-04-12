@@ -38,6 +38,8 @@ packages = ['mc_control', 'mc_rbdyn', 'mc_rtc', 'mc_solver', 'mc_tasks']
 this_path  = os.path.dirname(os.path.realpath(__file__))
 for b in packages:
   with open('{}/{}/__init__.py'.format(this_path, b), 'w') as fd:
+    if b == 'mc_rtc':
+      fd.write('import mc_control\n')
     fd.write('from .{} import *\n'.format(b))
 
 src_dir = '@CMAKE_CURRENT_SOURCE_DIR@/../../src/'
