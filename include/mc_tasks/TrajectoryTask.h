@@ -68,14 +68,14 @@ public:
    * \returns The current task error
    *
    */
-  virtual Eigen::VectorXd eval() const override;
+  Eigen::VectorXd eval() const override;
 
   /*! \brief Returns the current task speed
    *
    * \returns The current task speed
    *
    */
-  virtual Eigen::VectorXd speed() const override;
+  Eigen::VectorXd speed() const override;
 
   /*! \brief Get the control points of the trajectory's b-spline
    *
@@ -83,16 +83,30 @@ public:
    *
    */
   std::vector<Eigen::Vector3d> controlPoints();
+
+  void selectActiveJoints(mc_solver::QPSolver &,
+                                  const std::vector<std::string> &) override;
+
+  void selectUnactiveJoints(mc_solver::QPSolver &,
+                                    const std::vector<std::string> &) override;
+
+  void resetJointsSelector(mc_solver::QPSolver &) override;
+
+  void dimWeight(const Eigen::VectorXd &) override;
+
+  Eigen::VectorXd dimWeight() const override { return dimWeight_; }
+
 private:
   void generateBS();
 
-  virtual void addToSolver(mc_solver::QPSolver & solver) override;
+  void addToSolver(mc_solver::QPSolver & solver) override;
 
-  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
+  void removeFromSolver(mc_solver::QPSolver & solver) override;
 
-  virtual void update() override;
-public:
+  void update() override;
+private:
   const mc_rbdyn::Robots & robots;
+  unsigned int rIndex;
   const mc_rbdyn::Surface & surface;
   sva::PTransformd X_0_t;
   sva::PTransformd X_0_start;
@@ -100,24 +114,16 @@ public:
   double duration;
   double timeStep;
   double t;
-  std::shared_ptr<tasks::qp::TransformTask> transTask;
-  std::shared_ptr<tasks::qp::TrajectoryTask> transTrajTask;
-  std::shared_ptr<mc_trajectory::BSplineTrajectory> bspline;
+  std::shared_ptr<tasks::qp::JointsSelector> selectorT = nullptr;
+  std::shared_ptr<tasks::qp::TransformTask> transTask = nullptr;
+  std::shared_ptr<tasks::qp::TrajectoryTask> transTrajTask = nullptr;
+  std::shared_ptr<mc_trajectory::BSplineTrajectory> bspline = nullptr;
+  bool inSolver = false;
+  double stiffness;
+  Eigen::Vector6d dimWeight_;
 private:
   /* Hide these virtual functions */
-  virtual void dimWeight(const Eigen::VectorXd &) override {}
-
-  virtual Eigen::VectorXd dimWeight() const override { return Eigen::VectorXd(); }
-
-  virtual void selectActiveJoints(mc_solver::QPSolver &,
-                                  const std::vector<std::string> &) override {}
-
-  virtual void selectUnactiveJoints(mc_solver::QPSolver &,
-                                    const std::vector<std::string> &) override {}
-
-  virtual void resetJointsSelector(mc_solver::QPSolver &) override {}
-
-  virtual void reset() override {}
+  void reset() override {}
 };
 
 }
