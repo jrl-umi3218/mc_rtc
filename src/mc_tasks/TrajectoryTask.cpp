@@ -9,8 +9,8 @@ namespace mc_tasks
 TrajectoryTask::TrajectoryTask(
     const mc_rbdyn::Robots& robots, unsigned int robotIndex,
     const std::string& surfaceName, const sva::PTransformd& X_0_t,
-    double duration, double timeStep, double stiffness, double posWeight,
-    double oriWeight, const Eigen::MatrixXd& waypoints, unsigned int nrWP)
+    double duration, double timeStep, double stiffness, double posW,
+    double oriW, const Eigen::MatrixXd& waypoints, unsigned int nrWP)
     : robots(robots),
       rIndex(robotIndex),
       surfaceName(surfaceName),
@@ -34,19 +34,67 @@ TrajectoryTask::TrajectoryTask(
   }
 
   transTask.reset(new tasks::qp::TransformTask(robots.mbs(), static_cast<int>(robotIndex), surface.bodyName(), X_0_start, surface.X_b_s()));
-  stiffness_ = stiffness;
   transTrajTask.reset(new tasks::qp::TrajectoryTask(robots.mbs(), static_cast<int>(robotIndex), transTask.get(), stiffness, 2*sqrt(stiffness), 1.0));
-  for(unsigned int i = 0; i < 3; ++i)
-  {
-    dimWeight_(i) = oriWeight;
-  }
+  posWeight(posW);
+  oriWeight(oriW);
+
+  generateBS();
+}
+
+void TrajectoryTask::stiffness(double s)
+{
+  setGains(s, 2*std::sqrt(s));
+}
+
+void TrajectoryTask::damping(double d)
+{
+  setGains(stiffness(), d);
+}
+
+void TrajectoryTask::setGains(double s, double d)
+{
+  transTrajTask->setGains(s, d);
+}
+
+double TrajectoryTask::stiffness() const
+{
+  return transTrajTask->stiffness();
+}
+
+double TrajectoryTask::damping() const
+{
+  return transTrajTask->damping();
+}
+
+
+void TrajectoryTask::posWeight(const double posWeight)
+{
+  auto dimWeight = transTrajTask->dimWeight();
   for(unsigned int i = 3; i < 6; ++i)
   {
     dimWeight_(i) = posWeight;
   }
-  transTrajTask->dimWeight(dimWeight_);
+  transTrajTask->dimWeight(dimWeight);
+}
 
-  generateBS();
+double TrajectoryTask::posWeight() const
+{
+  return transTrajTask->dimWeight()(3);
+}
+
+void TrajectoryTask::oriWeight(const double oriWeight)
+{
+  auto dimWeight = transTrajTask->dimWeight();
+  for(unsigned int i = 0; i < 3; ++i)
+  {
+    dimWeight(i) = oriWeight;
+  }
+  transTrajTask->dimWeight(dimWeight);
+}
+
+double TrajectoryTask::oriWeight() const
+{
+  return transTrajTask->dimWeight()(0);
 }
 
 void TrajectoryTask::addToSolver(mc_solver::QPSolver & solver)
@@ -143,9 +191,12 @@ void TrajectoryTask::selectActiveJoints(mc_solver::QPSolver & solver,
   {
     removeFromSolver(solver);
   }
+  const auto stiff = stiffness();
+  const auto damp = damping();
+  const auto &dimW = dimWeight();
   selectorT = std::make_shared<tasks::qp::JointsSelector>(tasks::qp::JointsSelector::ActiveJoints(robots.mbs(), rIndex, transTask.get(), activeJoints));
-  transTrajTask = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, selectorT.get(), stiffness_, 2*sqrt(stiffness_), 1.0);
-  transTrajTask->dimWeight(dimWeight_);
+  transTrajTask = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, selectorT.get(), stiff, damp, 1.0);
+  transTrajTask->dimWeight(dimW);
   if(putBack)
   {
     addToSolver(solver);
@@ -160,9 +211,12 @@ void TrajectoryTask::selectUnactiveJoints(mc_solver::QPSolver & solver,
   {
     removeFromSolver(solver);
   }
+  const auto stiff = stiffness();
+  const auto damp = damping();
+  const auto &dimW = dimWeight();
   selectorT = std::make_shared<tasks::qp::JointsSelector>(tasks::qp::JointsSelector::UnactiveJoints(robots.mbs(), rIndex, transTask.get(), unactiveJoints));
-  transTrajTask = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, selectorT.get(), stiffness_, 2*sqrt(stiffness_), 1.0);
-  transTrajTask->dimWeight(dimWeight_);
+  transTrajTask = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, selectorT.get(), stiff, damp, 1.0);
+  transTrajTask->dimWeight(dimW);
   if(putBack)
   {
     addToSolver(solver);
@@ -176,9 +230,12 @@ void TrajectoryTask::resetJointsSelector(mc_solver::QPSolver & solver)
   {
     removeFromSolver(solver);
   }
+  const auto stiff = stiffness();
+  const auto damp = damping();
+  const auto &dimW = dimWeight();
   selectorT = nullptr;
-  transTrajTask = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, transTask.get(), stiffness_, 2*sqrt(stiffness_), 1.0);
-  transTrajTask->dimWeight(dimWeight_);
+  transTrajTask = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, transTask.get(), stiff, damp, 1.0);
+  transTrajTask->dimWeight(dimW);
   if(putBack)
   {
     addToSolver(solver);
@@ -191,6 +248,12 @@ void TrajectoryTask::dimWeight(const Eigen::VectorXd & dimW)
   transTrajTask->dimWeight(dimW);
 }
 
+
+void TrajectoryTask::target(const sva::PTransformd& target)
+{
+  X_0_t = target;
+  generateBS();
+}
 
 sva::PTransformd TrajectoryTask::target() const
 {
@@ -228,17 +291,64 @@ void TrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   MetaTask::addToGUI(gui);
   gui.addElement(
-    {"Tasks", name_},
-    mc_rtc::gui::Transform("pos_target",
-                           [this]() { return this->target(); }),
-    mc_rtc::gui::Transform("traj_target",
-                           [this]() { return this->transTask->target(); }),
-    mc_rtc::gui::Transform("pos",
-                           [this]()
-                           {
+      {"Tasks", name_},
+      mc_rtc::gui::Transform("pos_target",
+                             [this]()
+                             {
+                             return this->target();
+                             },
+                             [this](const sva::PTransformd& pos)
+                             {
+                             target(pos);
+                             }
+                            ),
+      mc_rtc::gui::Transform("traj_target",
+                             [this]() { return this->transTask->target(); }),
+      mc_rtc::gui::Transform("pos",
+                             [this]()
+                             {
                              return robots.robot(rIndex).surface(surfaceName).X_0_s(robots.robot(rIndex));
-                           })
+                             })
   );
+
+  gui.addElement(
+      {"Tasks", name_, "Gains"},
+      mc_rtc::gui::NumberInput(
+          "stiffness", [this]() { return this->stiffness(); },
+          [this](const double& s) {
+            this->setGains(s, this->damping());
+          }),
+      mc_rtc::gui::NumberInput(
+          "damping", [this]() { return this->damping(); },
+          [this](const double& d) {
+            this->setGains(this->stiffness(), d);
+          }),
+      mc_rtc::gui::NumberInput(
+          "stiffness & damping",
+          [this]() { return this->stiffness(); },
+          [this](const double& g) { this->stiffness(g); }),
+      mc_rtc::gui::NumberInput("posWeight",
+                               [this]() { return this->posWeight(); },
+                               [this](const double& d) { this->posWeight(d); }),
+      mc_rtc::gui::NumberInput(
+          "oriWeight", [this]() { return this->oriWeight(); },
+          [this](const double& g) { this->oriWeight(g); })
+  );
+
+  // Visual controls for the control points and
+  for (unsigned int i = 0; i < wp.cols(); ++i)
+  {
+    gui.addElement(
+        {"Tasks", name_},
+        mc_rtc::gui::Point3D(
+            "control_point_" + std::to_string(i),
+            [this, i]() { return Eigen::Vector3d(this->wp.col(i)); },
+            [this, i](const Eigen::Vector3d& pos) {
+              wp.col(i) = pos;
+              generateBS();
+            })
+    );
+  }
 }
 
 }

@@ -39,9 +39,9 @@ public:
    *
    * \param stiffness Task stiffness (position and orientation)
    *
-   * \param posWeight Task weight (position)
+   * \param posW Task weight (position)
    *
-   * \param oriWeight Task weight (orientation)
+   * \param oriW Task weight (orientation)
    *
    * \param waypoints Waypoints provided "by-hand". Each (3-rows) column of the
    * matrix will be used as a waypoint
@@ -53,9 +53,64 @@ public:
    */
   TrajectoryTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex,
                  const std::string& surfaceName, const sva::PTransformd & X_0_t,
-                 double duration, double timeStep, double stiffness, double posWeight, double oriWeight,
+                 double duration, double timeStep, double stiffness, double posW, double oriW,
                  const Eigen::MatrixXd & waypoints = Eigen::MatrixXd(3,0),
                  unsigned int nrWP = 0);
+
+  /*! \brief Set the task stiffness/damping
+   *
+   * Damping is automatically set to 2*sqrt(stiffness)
+   *
+   * \param stiffness Task stiffness
+   *
+   */
+  void stiffness(const double stiffness);
+
+  /*! \brief Get the current task stiffness */
+  double stiffness() const;
+
+  /*! \brief Set the task damping, leaving its stiffness unchanged
+   *
+   * \param damping Task stiffness
+   *
+   */
+  void damping(const double damping);
+
+  /*! \brief Get the current task damping */
+  double damping() const;
+
+  /*! \brief Set both stiffness and damping
+   *
+   * \param stiffness Task stiffness
+   *
+   * \param damping Task damping
+   *
+   */
+  void setGains(const double stiffness, const double damping);
+
+  /*! \brief Weight for controlling position/orienation importance
+   *
+   * \param posWeight Task weight (position)
+   */
+  void posWeight(const double posWeight);
+
+  /*! \brief Weight for controlling position/orienation importance
+   *
+   * \return  posWeight Task weight (position)
+   */
+  double posWeight() const;
+
+  /*! \brief Weight for controlling position/orienation importance
+   *
+   * \param oriWeight Task weight (orientation)
+   */
+  void oriWeight(const double oriWeight);
+
+  /*! \brief Weight for controlling position/orienation importance
+   * \return  oriWeight Task weight (orientation)
+   */
+  double oriWeight() const;
+
 
   /*! \brief Whether the trajectory has been fully fed to the task or not
    *
@@ -79,6 +134,14 @@ public:
    * \return The trajectory tracking error
    */
   virtual Eigen::VectorXd evalTracking() const;
+
+  /**
+   * \brief Sets the final trajectory target
+   * Calls generateBS()
+   *
+   * \param target Target pose in world coordinates
+   */
+  void target(const sva::PTransformd& target);
 
   /**
    * \brief Final task target (trajectory end-point).
@@ -116,6 +179,16 @@ public:
   void removeFromLogger(mc_rtc::Logger & logger) override;
 
 private:
+  /**
+   * \brief Generates the BSpline trajectory
+   * The trajectory is defined as follows:
+   * - Starting pose is (by default) the intial surface pose
+   * - Control points are user-specified
+   * - End point is set with target()
+   *
+   * Each update() call will provide a new target along this trajectory
+   * tracked by the appropriate tasks.
+   */
   void generateBS();
 
   void addToSolver(mc_solver::QPSolver & solver) override;
@@ -125,6 +198,13 @@ private:
   void update() override;
 
 protected:
+  /**
+   * \brief Add task controls to the GUI.
+   * Interactive controls for the trajectory waypoints and end-endpoints
+   * automatically call generateBS() to update the curve
+   *
+   * \param gui
+   */
   void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
 
 public:
