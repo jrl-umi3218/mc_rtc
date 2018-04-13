@@ -72,7 +72,7 @@ void TrajectoryTask::posWeight(const double posWeight)
   auto dimWeight = transTrajTask->dimWeight();
   for(unsigned int i = 3; i < 6; ++i)
   {
-    dimWeight_(i) = posWeight;
+    dimWeight(i) = posWeight;
   }
   transTrajTask->dimWeight(dimWeight);
 }
@@ -97,22 +97,71 @@ double TrajectoryTask::oriWeight() const
   return transTrajTask->dimWeight()(0);
 }
 
-void TrajectoryTask::addToSolver(mc_solver::QPSolver & solver)
+void TrajectoryTask::dimWeight(const Eigen::VectorXd & dimW)
 {
-  if(!inSolver)
-  {
-    solver.addTask(transTrajTask.get());
-    inSolver = true;
-  }
+  assert(dimW.size() == 6);
+  transTrajTask->dimWeight(dimW);
 }
 
-void TrajectoryTask::removeFromSolver(mc_solver::QPSolver & solver)
+Eigen::VectorXd TrajectoryTask::dimWeight() const
 {
-  if(inSolver)
+  return transTrajTask->dimWeight();
+}
+
+
+void TrajectoryTask::target(const sva::PTransformd& target)
+{
+  X_0_t = target;
+  generateBS();
+}
+
+sva::PTransformd TrajectoryTask::target() const
+{
+  return X_0_t;
+}
+
+std::vector<Eigen::Vector3d> TrajectoryTask::controlPoints()
+{
+  std::vector<Eigen::Vector3d> res;
+  res.reserve(static_cast<unsigned int>(wp.size()) + 2);
+  res.push_back(X_0_start.translation());
+  for(int i = 0; i < wp.cols(); ++i)
   {
-    solver.removeTask(transTrajTask.get());
-    inSolver = false;
+    Eigen::Vector3d tmp;
+    tmp(0) = wp(0, i);
+    tmp(1) = wp(1, i);
+    tmp(2) = wp(2, i);
+    res.push_back(tmp);
   }
+  res.push_back(X_0_t.translation());
+  return res;
+}
+
+void TrajectoryTask::generateBS()
+{
+  bspline.reset(new mc_trajectory::BSplineTrajectory(controlPoints(), duration));
+}
+
+Eigen::VectorXd TrajectoryTask::eval() const
+{
+  const auto& robot = robots.robot(rIndex);
+  sva::PTransformd X_0_s = robot.surface(surfaceName).X_0_s(robot);
+  return sva::transformError(X_0_s, X_0_t).vector();
+}
+
+Eigen::VectorXd TrajectoryTask::evalTracking() const
+{
+  return transTask->eval();
+}
+
+Eigen::VectorXd TrajectoryTask::speed() const
+{
+  return transTask->speed();
+}
+
+bool TrajectoryTask::timeElapsed()
+{
+  return t >= duration;
 }
 
 void TrajectoryTask::update()
@@ -139,48 +188,23 @@ void TrajectoryTask::update()
   t = std::min(t + timeStep, duration);
 }
 
-bool TrajectoryTask::timeElapsed()
-{
-  return t >= duration;
-}
 
-Eigen::VectorXd TrajectoryTask::eval() const
+void TrajectoryTask::addToSolver(mc_solver::QPSolver & solver)
 {
-  const auto& robot = robots.robot(rIndex);
-  sva::PTransformd X_0_s = robot.surface(surfaceName).X_0_s(robot);
-  return sva::transformError(X_0_s, X_0_t).vector();
-}
-
-Eigen::VectorXd TrajectoryTask::evalTracking() const
-{
-  return transTask->eval();
-}
-
-Eigen::VectorXd TrajectoryTask::speed() const
-{
-  return transTask->speed();
-}
-
-std::vector<Eigen::Vector3d> TrajectoryTask::controlPoints()
-{
-  std::vector<Eigen::Vector3d> res;
-  res.reserve(static_cast<unsigned int>(wp.size()) + 2);
-  res.push_back(X_0_start.translation());
-  for(int i = 0; i < wp.cols(); ++i)
+  if(!inSolver)
   {
-    Eigen::Vector3d tmp;
-    tmp(0) = wp(0, i);
-    tmp(1) = wp(1, i);
-    tmp(2) = wp(2, i);
-    res.push_back(tmp);
+    solver.addTask(transTrajTask.get());
+    inSolver = true;
   }
-  res.push_back(X_0_t.translation());
-  return res;
 }
 
-void TrajectoryTask::generateBS()
+void TrajectoryTask::removeFromSolver(mc_solver::QPSolver & solver)
 {
-  bspline.reset(new mc_trajectory::BSplineTrajectory(controlPoints(), duration));
+  if(inSolver)
+  {
+    solver.removeTask(transTrajTask.get());
+    inSolver = false;
+  }
 }
 
 void TrajectoryTask::selectActiveJoints(mc_solver::QPSolver & solver,
@@ -240,24 +264,6 @@ void TrajectoryTask::resetJointsSelector(mc_solver::QPSolver & solver)
   {
     addToSolver(solver);
   }
-}
-
-void TrajectoryTask::dimWeight(const Eigen::VectorXd & dimW)
-{
-  assert(dimW.size() == 6);
-  transTrajTask->dimWeight(dimW);
-}
-
-
-void TrajectoryTask::target(const sva::PTransformd& target)
-{
-  X_0_t = target;
-  generateBS();
-}
-
-sva::PTransformd TrajectoryTask::target() const
-{
-  return X_0_t;
 }
 
 void TrajectoryTask::addToLogger(mc_rtc::Logger & logger)

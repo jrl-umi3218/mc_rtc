@@ -173,7 +173,7 @@ public:
   void resetJointsSelector(mc_solver::QPSolver &) override;
 
   void dimWeight(const Eigen::VectorXd &) override;
-  Eigen::VectorXd dimWeight() const override { return dimWeight_; }
+  Eigen::VectorXd dimWeight() const override;
 
   void addToLogger(mc_rtc::Logger & logger) override;
   void removeFromLogger(mc_rtc::Logger & logger) override;
@@ -222,8 +222,6 @@ public:
   std::shared_ptr<tasks::qp::TrajectoryTask> transTrajTask = nullptr;
   std::shared_ptr<mc_trajectory::BSplineTrajectory> bspline = nullptr;
   bool inSolver = false;
-  double stiffness_;
-  Eigen::Vector6d dimWeight_;
 private:
   /* Hide these virtual functions */
   void reset() override {}
