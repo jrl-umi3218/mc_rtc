@@ -178,6 +178,9 @@ struct MC_CONTROL_DLLAPI Controller : public MCController
   /** Access the state factory */
   StateFactory & factory() { return factory_; }
 
+  /** Access controller configuration */
+  mc_rtc::Configuration & config() { return config_; }
+
   bool set_joint_pos(const std::string & jname, const double & pos) override;
 private:
   /** Reset all posture tasks */
