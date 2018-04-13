@@ -10,12 +10,16 @@ TrajectoryTask::TrajectoryTask(
     const mc_rbdyn::Robots& robots, unsigned int robotIndex,
     const std::string& surfaceName, const sva::PTransformd& X_0_t,
     double duration, double timeStep, double stiffness, double posW,
-    double oriW, const Eigen::MatrixXd& waypoints, unsigned int nrWP)
+    double oriW, const Eigen::MatrixXd& waypoints,
+    const std::vector<double> oriWpTime, const std::vector<Eigen::Matrix3d>& oriWp,
+    unsigned int nrWP)
     : robots(robots),
       rIndex(robotIndex),
       surfaceName(surfaceName),
       X_0_t(X_0_t),
       wp(waypoints),
+      oriWpTime_(oriWpTime),
+      oriWp_(oriWp),
       duration(duration),
       timeStep(timeStep),
       t(0.)
@@ -25,6 +29,16 @@ TrajectoryTask::TrajectoryTask(
   type_ = "trajectory";
   name_ = "trajectory_" + robot.name() + "_" + surface.name();
   X_0_start = surface.X_0_s(robot);
+
+  // Orientation waypoints
+  X_0_oriStart = X_0_start.rotation();
+  oriTargetWpIndex = 0;
+  oriStartTime = 0;
+  assert(oriWpTime_.size() == oriWp_.size());
+  // Add a virtual waypoint at the end of the trajectory to avoid special-cases
+  // in update()
+  oriWpTime_.push_back(duration);
+  oriWp_.push_back(X_0_t.rotation());
 
   if(nrWP > 0)
   {
@@ -112,6 +126,7 @@ Eigen::VectorXd TrajectoryTask::dimWeight() const
 void TrajectoryTask::target(const sva::PTransformd& target)
 {
   X_0_t = target;
+  oriWp_[oriWp_.size()-1] = X_0_t.rotation();
   generateBS();
 }
 
@@ -170,8 +185,31 @@ void TrajectoryTask::update()
   Eigen::Vector3d & pos = res[0][0];
   Eigen::Vector3d & vel = res[0][1];
   Eigen::Vector3d & acc = res[0][2];
-  sva::PTransformd interp = sva::interpolate(X_0_start, X_0_t, t / duration);
+
+  // Change orientation waypoint
+  if(t == 0 || t > oriStartTime+oriDuration)
+  {
+    const auto oriTargetTime = oriWpTime_[oriTargetWpIndex];
+    oriDuration = oriTargetTime - t;
+    oriStartTime = t;
+
+    // Start from current surface pose
+    const mc_rbdyn::Robot& robot = robots.robot(rIndex);
+    const auto& surface = robot.surface(surfaceName);
+    X_0_oriStart = surface.X_0_s(robot);
+
+    const Eigen::Matrix3d& R_0_oriTarget = oriWp_[oriTargetWpIndex];
+    // Get position along bspline at orientation waypoint time
+    const auto t_0_oriTarget = bspline->splev({oriTargetTime}, 0)[0][0];
+    X_0_oriTarget = sva::PTransformd(R_0_oriTarget, t_0_oriTarget);
+
+    if(t > 0) ++oriTargetWpIndex;
+  }
+  // Interpolate rotation between waypoints
+  sva::PTransformd interp = sva::interpolate(X_0_oriStart, X_0_oriTarget, (t-oriStartTime) / oriDuration);
   sva::PTransformd target(interp.rotation(), pos);
+
+  // Set the trajectory tracking task targets from the trajectory.
   Eigen::VectorXd refVel(6);
   Eigen::VectorXd refAcc(6);
   for(unsigned int i = 0; i < 3; ++i)
@@ -310,6 +348,8 @@ void TrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                             ),
       mc_rtc::gui::Transform("traj_target",
                              [this]() { return this->transTask->target(); }),
+      mc_rtc::gui::Transform("ori_target",
+                             [this]() { return this->X_0_oriTarget; }),
       mc_rtc::gui::Transform("pos",
                              [this]()
                              {
@@ -369,6 +409,8 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
       sva::PTransformd X_0_t;
       unsigned int nrWP = 0;
       Eigen::MatrixXd waypoints;
+      std::vector<double> oriWpTime;
+      std::vector<Eigen::Matrix3d> oriWp;
       const auto robotIndex = config("robotIndex");
 
       if(config.has("nrWP"))
@@ -383,22 +425,29 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
         const auto& surfaceName = c("surface");
         const auto& robot = solver.robot(c("robotIndex"));
 
-        sva::PTransformd offset = sva::PTransformd::Identity();
+        auto targetRelative = [&robot, &surfaceName](const Eigen::Vector3d offset_trans, const Eigen::Vector3d& offset_rpy, const sva::PTransformd X_0_t)
+        {
+          using namespace Eigen;
+          Matrix3d m;
+          m = AngleAxisd(offset_rpy.x() * M_PI / 180., Vector3d::UnitX()) *
+              AngleAxisd(offset_rpy.y() * M_PI / 180., Vector3d::UnitY()) *
+              AngleAxisd(offset_rpy.z() * M_PI / 180., Vector3d::UnitZ());
+          sva::PTransformd offset = sva::PTransformd(m.inverse(), offset_trans);
+          return offset * X_0_t;
+        };
+
+        sva::PTransformd targetSurface = robot.surface(surfaceName).X_0_s(robot);
         if (c.has("offset"))
         {
           const auto& o = c("offset");
           Eigen::Vector3d trans = o("translation");
           Eigen::Vector3d rpy = o("rotation");
-          using namespace Eigen;
-          Eigen::Matrix3d m;
-          m = AngleAxisd(rpy.x() * M_PI / 180., Vector3d::UnitX()) *
-              AngleAxisd(rpy.y() * M_PI / 180., Vector3d::UnitY()) *
-              AngleAxisd(rpy.z() * M_PI / 180., Vector3d::UnitZ());
-          offset = sva::PTransformd(m.inverse(), trans);
+          X_0_t = targetRelative(trans, rpy, targetSurface);
         }
-
-        sva::PTransformd targetSurface = robot.surface(surfaceName).X_0_s(robot);
-        X_0_t = offset * targetSurface;
+        else
+        {
+          X_0_t = targetSurface;
+        }
 
         if (c.has("waypoints"))
         {
@@ -414,26 +463,57 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
             sva::PTransformd X_offset(wp);
             waypoints.block(0, i, 3, 1) = (X_offset * targetSurface).translation();
           }
+
+
+          if(cw.has("oriWaypoints"))
+          {
+            LOG_INFO("has orientation waypoints!");
+            const auto& oc = cw("oriWaypoints");
+            oriWpTime = oc("time");
+            std::vector<Eigen::Vector3d> ori_rpy = oc("rotation");
+            for(const auto & rpy : ori_rpy)
+            {
+              const auto &ori = targetRelative({0,0,0}, rpy, targetSurface);
+              oriWp.push_back(ori.rotation());
+            }
+          }
         }
       }
       else if(config.has("target"))
       { // Absolute target pose
         X_0_t = config("target");
 
-        const auto& c = config("waypoints");
-        // Control points defined in world coordinates
-        const auto& controlPoints = c("controlPoints");
-        nrWP = 0; // No automatic waypoint, provide control points
-        waypoints.resize(3, controlPoints.size());
         if(config.has("waypoints"))
         {
+          const auto& c = config("waypoints");
+          // Control points defined in world coordinates
+          const auto& controlPoints = c("controlPoints");
+          nrWP = 0; // No automatic waypoint, provide control points
+          waypoints.resize(3, controlPoints.size());
           waypoints.resize(3, controlPoints.size());
           for (unsigned int i = 0; i < controlPoints.size(); ++i)
           {
             const Eigen::Vector3d wp = controlPoints[i];
             waypoints.block<3, 1>(0, i) = wp;
           }
+
+          if(c.has("oriWaypoints"))
+          {
+            const auto& oc = c("oriWaypoints");
+            oriWpTime = oc("time");
+            std::vector<Eigen::Vector3d> ori_rpy = oc("rotation");
+            for(const auto & rpy : ori_rpy)
+            {
+              using namespace Eigen;
+              Matrix3d m;
+              m = AngleAxisd(rpy.x() * M_PI / 180., Vector3d::UnitX()) *
+                  AngleAxisd(rpy.y() * M_PI / 180., Vector3d::UnitY()) *
+                  AngleAxisd(rpy.z() * M_PI / 180., Vector3d::UnitZ());
+              oriWp.push_back(m.inverse());
+            }
+          }
         }
+
       }
 
 
@@ -448,6 +528,8 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
           config("posWeight"),
           config("oriWeight"),
           waypoints,
+          oriWpTime,
+          oriWp,
           nrWP
           );
       t->load(solver, config);

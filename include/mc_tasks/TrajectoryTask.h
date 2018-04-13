@@ -46,6 +46,16 @@ public:
    * \param waypoints Waypoints provided "by-hand". Each (3-rows) column of the
    * matrix will be used as a waypoint
    *
+   * \param oriWpTime Time at which each rotation waypoint will be activated.
+   * If left empty, rotation will be interpolated according to the starting and
+   * end pose for the trajectory.
+   * Should have the same size as oriWp
+   *
+   * \param oriWp Rotation matrix (world frame) for each rotation waypoint.
+   * If left empty, rotation will be interpolated according to the starting and
+   * end pose for the trajectory.
+   * Should have the same size as oriWpTime
+   *
    * \param nrWP If this parameter is > 0 then nrWP waypoints are automatically
    * computed to smooth the trajectory. If waypoints were provided and nrWP > 0
    * then the provided waypoints are ignored.
@@ -55,6 +65,7 @@ public:
                  const std::string& surfaceName, const sva::PTransformd & X_0_t,
                  double duration, double timeStep, double stiffness, double posW, double oriW,
                  const Eigen::MatrixXd & waypoints = Eigen::MatrixXd(3,0),
+                 const std::vector<double> oriWpTime = {}, const std::vector<Eigen::Matrix3d>& oriWp = {},
                  unsigned int nrWP = 0);
 
   /*! \brief Set the task stiffness/damping
@@ -187,7 +198,9 @@ private:
    * - End point is set with target()
    *
    * Each update() call will provide a new target along this trajectory
-   * tracked by the appropriate tasks.
+   * tracked by the appropriate tasks. This target is interpolated along a
+   * b-spline trajectory for the translational part. Rotation is interpolated
+   * independently with optional waypoints.
    */
   void generateBS();
 
@@ -214,6 +227,15 @@ public:
   sva::PTransformd X_0_t;
   sva::PTransformd X_0_start;
   Eigen::MatrixXd wp;
+
+  std::vector<double> oriWpTime_;
+  std::vector<Eigen::Matrix3d> oriWp_;
+  sva::PTransformd X_0_oriStart;
+  sva::PTransformd X_0_oriTarget;
+  unsigned int oriTargetWpIndex;
+  double oriStartTime;
+  double oriDuration;
+
   double duration;
   double timeStep;
   double t;
