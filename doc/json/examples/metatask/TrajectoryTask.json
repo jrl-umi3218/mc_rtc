@@ -6,7 +6,6 @@
   "duration": 3.0,
   "posWeight": 100,
   "oriWeight": 10000,
-  "timeStep": 0.005,
   "targetSurface" :
   {
     "robotIndex": 1,

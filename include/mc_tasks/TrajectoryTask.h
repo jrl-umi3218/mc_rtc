@@ -2,7 +2,6 @@
 
 #include <mc_tasks/MetaTask.h>
 #include <mc_trajectory/BSplineTrajectory.h>
-#include <mc_rtc/GUIState.h>
 
 #include <mc_rbdyn/Robots.h>
 #include <Tasks/QPTasks.h>
@@ -15,9 +14,6 @@ namespace mc_tasks
 /*! \brief This task moves a robot's surface from its current position to a target position following a b-spline.
  *
  * Waypoints can be provided or computed automatically
- *
- * \note Does NOT work at the moment
- *
  */
 struct MC_TASKS_DLLAPI TrajectoryTask : public MetaTask
 {
@@ -34,8 +30,6 @@ public:
    * \param X_0_t Target position of the controlled surface (world frame)
    *
    * \param duration Length of the movement
-   *
-   * \param timeStep Timestep of the controller
    *
    * \param stiffness Task stiffness (position and orientation)
    *
@@ -56,17 +50,25 @@ public:
    * end pose for the trajectory.
    * Should have the same size as oriWpTime
    *
-   * \param nrWP If this parameter is > 0 then nrWP waypoints are automatically
-   * computed to smooth the trajectory. If waypoints were provided and nrWP > 0
-   * then the provided waypoints are ignored.
-   *
    */
   TrajectoryTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex,
                  const std::string& surfaceName, const sva::PTransformd & X_0_t,
-                 double duration, double timeStep, double stiffness, double posW, double oriW,
-                 const Eigen::MatrixXd & waypoints = Eigen::MatrixXd(3,0),
-                 const std::vector<double> oriWpTime = {}, const std::vector<Eigen::Matrix3d>& oriWp = {},
-                 unsigned int nrWP = 0);
+                 double duration, double stiffness, double posW, double oriW,
+                 const Eigen::MatrixXd & waypoints,
+                 const std::vector<double> oriWpTime = {}, const std::vector<Eigen::Matrix3d>& oriWp = {});
+
+  /**
+   * \brief Constructor for TrajectoryTask with automatic waypoint generation
+   * (position), and optional waypoints in orientation
+   *
+   * \param nrWP nrWP waypoints are automatically computed to smooth the trajectory.
+   */
+  TrajectoryTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex,
+                 const std::string& surfaceName, const sva::PTransformd & X_0_t,
+                 double duration, double stiffness, double posW, double oriW,
+                 unsigned int nrWP,
+                 const std::vector<double> oriWpTime = {}, const std::vector<Eigen::Matrix3d>& oriWp = {}
+                 );
 
   /*! \brief Set the task stiffness/damping
    *
@@ -75,7 +77,7 @@ public:
    * \param stiffness Task stiffness
    *
    */
-  void stiffness(const double stiffness);
+  void stiffness(double stiffness);
 
   /*! \brief Get the current task stiffness */
   double stiffness() const;
@@ -85,7 +87,7 @@ public:
    * \param damping Task stiffness
    *
    */
-  void damping(const double damping);
+  void damping(double damping);
 
   /*! \brief Get the current task damping */
   double damping() const;
@@ -97,13 +99,13 @@ public:
    * \param damping Task damping
    *
    */
-  void setGains(const double stiffness, const double damping);
+  void setGains(double stiffness, double damping);
 
   /*! \brief Weight for controlling position/orienation importance
    *
    * \param posWeight Task weight (position)
    */
-  void posWeight(const double posWeight);
+  void posWeight(double posWeight);
 
   /*! \brief Weight for controlling position/orienation importance
    *
@@ -115,7 +117,7 @@ public:
    *
    * \param oriWeight Task weight (orientation)
    */
-  void oriWeight(const double oriWeight);
+  void oriWeight(double oriWeight);
 
   /*! \brief Weight for controlling position/orienation importance
    * \return  oriWeight Task weight (orientation)
@@ -159,7 +161,7 @@ public:
    *
    * return The target pose
    */
-  sva::PTransformd target() const;
+  const sva::PTransformd& target() const;
 
   /*! \brief Returns the current task speed
    *
@@ -190,6 +192,15 @@ public:
   void removeFromLogger(mc_rtc::Logger & logger) override;
 
 private:
+  /**
+   * \brief Actual task initialization constructor
+   */
+  void init(unsigned int robotIndex,
+            const std::string& surfaceName, const sva::PTransformd & X_0_t,
+            double duration, double stiffness, double posW, double oriW,
+            const Eigen::MatrixXd & waypoints,
+            const std::vector<double> oriWpTime, const std::vector<Eigen::Matrix3d>& oriWp);
+
   /**
    * \brief Generates the BSpline trajectory
    * The trajectory is defined as follows:
@@ -237,8 +248,8 @@ public:
   double oriDuration;
 
   double duration;
-  double timeStep;
-  double t;
+  double t = 0.;
+  double timeStep = 0;
   std::shared_ptr<tasks::qp::JointsSelector> selectorT = nullptr;
   std::shared_ptr<tasks::qp::TransformTask> transTask = nullptr;
   std::shared_ptr<tasks::qp::TrajectoryTask> transTrajTask = nullptr;

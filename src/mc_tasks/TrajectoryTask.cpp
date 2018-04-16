@@ -6,24 +6,58 @@
 
 namespace mc_tasks
 {
-TrajectoryTask::TrajectoryTask(
-    const mc_rbdyn::Robots& robots, unsigned int robotIndex,
-    const std::string& surfaceName, const sva::PTransformd& X_0_t,
-    double duration, double timeStep, double stiffness, double posW,
-    double oriW, const Eigen::MatrixXd& waypoints,
-    const std::vector<double> oriWpTime, const std::vector<Eigen::Matrix3d>& oriWp,
-    unsigned int nrWP)
-    : robots(robots),
-      rIndex(robotIndex),
-      surfaceName(surfaceName),
-      X_0_t(X_0_t),
-      wp(waypoints),
-      oriWpTime_(oriWpTime),
-      oriWp_(oriWp),
-      duration(duration),
-      timeStep(timeStep),
-      t(0.)
+TrajectoryTask::TrajectoryTask(const mc_rbdyn::Robots& robots,
+                               unsigned int robotIndex,
+                               const std::string& surfaceName,
+                               const sva::PTransformd& X_0_t, double duration,
+                               double stiffness, double posW, double oriW,
+                               const Eigen::MatrixXd& waypoints,
+                               const std::vector<double> oriWpTime,
+                               const std::vector<Eigen::Matrix3d>& oriWp)
+    : robots(robots)
 {
+  init(robotIndex, surfaceName, X_0_t, duration, stiffness, posW, oriW,
+       waypoints, oriWpTime, oriWp);
+}
+
+TrajectoryTask::TrajectoryTask(const mc_rbdyn::Robots& robots,
+                               unsigned int robotIndex,
+                               const std::string& surfaceName,
+                               const sva::PTransformd& X_0_t, double duration,
+                               double stiffness, double posW, double oriW,
+                               unsigned int nrWP,
+                               const std::vector<double> oriWpTime,
+                               const std::vector<Eigen::Matrix3d>& oriWp)
+    : robots(robots)
+{
+  if (nrWP <= 0)
+  {
+    throw std::runtime_error("Invalid trajectory: No waypoints provided and nrWp <= 0");
+  }
+  Eigen::Vector3d start = X_0_start.translation();
+  Eigen::Vector3d end = X_0_t.translation();
+  wp = mc_trajectory::generateInterpolatedWaypoints(start, end, nrWP);
+
+  init(robotIndex, surfaceName, X_0_t, duration, stiffness, posW, oriW, wp,
+       oriWpTime, oriWp);
+}
+
+void TrajectoryTask::init(unsigned int robotIndex,
+                          const std::string& surfaceName,
+                          const sva::PTransformd& X_0_t, double duration,
+                          double stiffness, double posW, double oriW,
+                          const Eigen::MatrixXd& waypoints,
+                          const std::vector<double> oriWpTime,
+                          const std::vector<Eigen::Matrix3d>& oriWp)
+{
+  this->rIndex = robotIndex;
+  this->surfaceName = surfaceName;
+  this->X_0_t = X_0_t;
+  this->duration = duration;
+  this->wp = waypoints;
+  this->oriWpTime_ = oriWpTime;
+  this->oriWp_ = oriWp;
+
   const mc_rbdyn::Robot& robot = robots.robot(robotIndex);
   const auto& surface = robot.surface(surfaceName);
   type_ = "trajectory";
@@ -40,15 +74,12 @@ TrajectoryTask::TrajectoryTask(
   oriWpTime_.push_back(duration);
   oriWp_.push_back(X_0_t.rotation());
 
-  if(nrWP > 0)
-  {
-    Eigen::Vector3d start = X_0_start.translation();
-    Eigen::Vector3d end = X_0_t.translation();
-    wp = mc_trajectory::generateInterpolatedWaypoints(start, end, nrWP);
-  }
-
-  transTask.reset(new tasks::qp::TransformTask(robots.mbs(), static_cast<int>(robotIndex), surface.bodyName(), X_0_start, surface.X_b_s()));
-  transTrajTask.reset(new tasks::qp::TrajectoryTask(robots.mbs(), static_cast<int>(robotIndex), transTask.get(), stiffness, 2*sqrt(stiffness), 1.0));
+  transTask.reset(new tasks::qp::TransformTask(
+      robots.mbs(), static_cast<int>(robotIndex), surface.bodyName(), X_0_start,
+      surface.X_b_s()));
+  transTrajTask.reset(new tasks::qp::TrajectoryTask(
+      robots.mbs(), static_cast<int>(robotIndex), transTask.get(), stiffness,
+      2 * sqrt(stiffness), 1.0));
   posWeight(posW);
   oriWeight(oriW);
 
@@ -84,10 +115,7 @@ double TrajectoryTask::damping() const
 void TrajectoryTask::posWeight(const double posWeight)
 {
   auto dimWeight = transTrajTask->dimWeight();
-  for(unsigned int i = 3; i < 6; ++i)
-  {
-    dimWeight(i) = posWeight;
-  }
+  dimWeight.tail(3).setConstant(posWeight);
   transTrajTask->dimWeight(dimWeight);
 }
 
@@ -99,10 +127,7 @@ double TrajectoryTask::posWeight() const
 void TrajectoryTask::oriWeight(const double oriWeight)
 {
   auto dimWeight = transTrajTask->dimWeight();
-  for(unsigned int i = 0; i < 3; ++i)
-  {
-    dimWeight(i) = oriWeight;
-  }
+  dimWeight.head(3).setConstant(oriWeight);
   transTrajTask->dimWeight(dimWeight);
 }
 
@@ -130,7 +155,7 @@ void TrajectoryTask::target(const sva::PTransformd& target)
   generateBS();
 }
 
-sva::PTransformd TrajectoryTask::target() const
+const sva::PTransformd& TrajectoryTask::target() const
 {
   return X_0_t;
 }
@@ -190,7 +215,8 @@ void TrajectoryTask::update()
   if(t == 0 || t > oriStartTime+oriDuration)
   {
     const auto oriTargetTime = oriWpTime_[oriTargetWpIndex];
-    oriDuration = oriTargetTime - t;
+    // Could be zero if someone puts a waypoint at duration - 1 (that would be strange), use max to be safe
+    oriDuration = std::max(oriTargetTime - t, 1.);
     oriStartTime = t;
 
     // Start from current surface pose
@@ -231,6 +257,7 @@ void TrajectoryTask::addToSolver(mc_solver::QPSolver & solver)
 {
   if(!inSolver)
   {
+    timeStep = solver.dt();
     solver.addTask(transTrajTask.get());
     inSolver = true;
   }
@@ -337,7 +364,7 @@ void TrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   gui.addElement(
       {"Tasks", name_},
       mc_rtc::gui::Transform("pos_target",
-                             [this]()
+                             [this]() -> const sva::PTransformd&
                              {
                              return this->target();
                              },
@@ -402,21 +429,16 @@ void TrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 namespace
 {
 static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
-    "trajectoryTask",
+    "trajectory",
     [](mc_solver::QPSolver& solver, const mc_rtc::Configuration& config)
     {
 
       sva::PTransformd X_0_t;
-      unsigned int nrWP = 0;
       Eigen::MatrixXd waypoints;
       std::vector<double> oriWpTime;
       std::vector<Eigen::Matrix3d> oriWp;
       const auto robotIndex = config("robotIndex");
 
-      if(config.has("nrWP"))
-      {
-        nrWP = config("nrWP");
-      }
 
       if (config.has("targetSurface"))
       { // Target defined from a target surface, with an offset defined
@@ -454,20 +476,17 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
           const auto& cw = c("waypoints");
           // Control points offsets defined wrt to the target surface frame
           const auto& controlPoints = cw("controlPoints");
-
-          nrWP = 0; // No automatic waypoint, provide control points
           waypoints.resize(3, controlPoints.size());
           for (unsigned int i = 0; i < controlPoints.size(); ++i)
           {
             const Eigen::Vector3d wp = controlPoints[i];
             sva::PTransformd X_offset(wp);
-            waypoints.block(0, i, 3, 1) = (X_offset * targetSurface).translation();
+            waypoints.col(i) = (X_offset * targetSurface).translation();
           }
 
 
           if(cw.has("oriWaypoints"))
           {
-            LOG_INFO("has orientation waypoints!");
             const auto& oc = cw("oriWaypoints");
             oriWpTime = oc("time");
             std::vector<Eigen::Vector3d> ori_rpy = oc("rotation");
@@ -488,13 +507,12 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
           const auto& c = config("waypoints");
           // Control points defined in world coordinates
           const auto& controlPoints = c("controlPoints");
-          nrWP = 0; // No automatic waypoint, provide control points
           waypoints.resize(3, controlPoints.size());
           waypoints.resize(3, controlPoints.size());
           for (unsigned int i = 0; i < controlPoints.size(); ++i)
           {
             const Eigen::Vector3d wp = controlPoints[i];
-            waypoints.block<3, 1>(0, i) = wp;
+            waypoints.col(i) = wp;
           }
 
           if(c.has("oriWaypoints"))
@@ -513,26 +531,44 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
             }
           }
         }
-
       }
 
-
-      auto t = std::make_shared<mc_tasks::TrajectoryTask>(
-          solver.robots(),
-          robotIndex,
-          config("surface"),
-          X_0_t,
-          config("duration"),
-          config("timeStep"),
-          config("stiffness"),
-          config("posWeight"),
-          config("oriWeight"),
-          waypoints,
-          oriWpTime,
-          oriWp,
-          nrWP
-          );
+      std::shared_ptr<mc_tasks::TrajectoryTask> t;
+      if(config.has("nrWP"))
+      {
+        unsigned int nrWP = config("nrWP", 0u);
+        t = std::make_shared<mc_tasks::TrajectoryTask>(
+            solver.robots(),
+            robotIndex,
+            config("surface"),
+            X_0_t,
+            config("duration"),
+            config("stiffness"),
+            config("posWeight"),
+            config("oriWeight"),
+            nrWP,
+            oriWpTime,
+            oriWp
+            );
+      }
+      else
+      {
+        t = std::make_shared<mc_tasks::TrajectoryTask>(
+            solver.robots(),
+            robotIndex,
+            config("surface"),
+            X_0_t,
+            config("duration"),
+            config("stiffness"),
+            config("posWeight"),
+            config("oriWeight"),
+            waypoints,
+            oriWpTime,
+            oriWp
+            );
+      }
       t->load(solver, config);
       return t;
-    });
+    }
+);
 }
