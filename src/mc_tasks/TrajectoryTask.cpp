@@ -2,6 +2,7 @@
 #include <mc_tasks/MetaTaskLoader.h>
 
 #include <mc_rbdyn/Surface.h>
+#include <mc_rbdyn/rpy_utils.h>
 #include <mc_trajectory/spline_utils.h>
 
 namespace mc_tasks
@@ -443,12 +444,8 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
 
         auto targetRelative = [&robot, &surfaceName](const Eigen::Vector3d offset_trans, const Eigen::Vector3d& offset_rpy, const sva::PTransformd X_0_t)
         {
-          using namespace Eigen;
-          Matrix3d m;
-          m = AngleAxisd(offset_rpy.x() * M_PI / 180., Vector3d::UnitX()) *
-              AngleAxisd(offset_rpy.y() * M_PI / 180., Vector3d::UnitY()) *
-              AngleAxisd(offset_rpy.z() * M_PI / 180., Vector3d::UnitZ());
-          sva::PTransformd offset = sva::PTransformd(m.inverse(), offset_trans);
+          Eigen::Matrix3d m = mc_rbdyn::rpyToMat(offset_rpy);
+          sva::PTransformd offset = sva::PTransformd(m, offset_trans);
           return offset * X_0_t;
         };
 
@@ -465,11 +462,10 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
           X_0_t = targetSurface;
         }
 
-        if (c.has("waypoints"))
+        if(c.has("controlPoints"))
         {
-          const auto& cw = c("waypoints");
           // Control points offsets defined wrt to the target surface frame
-          const auto& controlPoints = cw("controlPoints");
+          const auto& controlPoints = c("controlPoints");
           waypoints.resize(3, controlPoints.size());
           for (unsigned int i = 0; i < controlPoints.size(); ++i)
           {
@@ -477,17 +473,16 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
             sva::PTransformd X_offset(wp);
             waypoints.col(i) = (X_offset * targetSurface).translation();
           }
+        }
 
-
-          if(cw.has("oriWaypoints"))
+        if(c.has("oriWaypoints"))
+        {
+          std::vector<std::pair<double, Eigen::Vector3d>> oriWaypoints = c("oriWaypoints");
+          for(const auto & wp : oriWaypoints)
           {
-            std::vector<std::pair<double, Eigen::Vector3d>> oriWaypoints = cw("oriWaypoints");
-            for(const auto & wp : oriWaypoints)
-            {
-              const auto& rpy = wp.second;
-              const auto &ori = targetRelative({0,0,0}, rpy, targetSurface);
-              oriWp.push_back(std::make_pair(wp.first, ori.rotation()));
-            }
+            const auto& rpy = wp.second;
+            const auto &ori = targetRelative({0,0,0}, rpy, targetSurface);
+            oriWp.push_back(std::make_pair(wp.first, ori.rotation()));
           }
         }
       }
@@ -495,11 +490,10 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
       { // Absolute target pose
         X_0_t = config("target");
 
-        if(config.has("waypoints"))
+        if(config.has("controlPoints"))
         {
-          const auto& c = config("waypoints");
           // Control points defined in world coordinates
-          const auto& controlPoints = c("controlPoints");
+          const auto& controlPoints = config("controlPoints");
           waypoints.resize(3, controlPoints.size());
           waypoints.resize(3, controlPoints.size());
           for (unsigned int i = 0; i < controlPoints.size(); ++i)
@@ -507,20 +501,16 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
             const Eigen::Vector3d wp = controlPoints[i];
             waypoints.col(i) = wp;
           }
+        }
 
-          if(c.has("oriWaypoints"))
+        if(config.has("oriWaypoints"))
+        {
+          std::vector<std::pair<double, Eigen::Vector3d>> oriWaypoints = config("oriWaypoints");
+          for(const auto & wp : oriWaypoints)
           {
-            std::vector<std::pair<double, Eigen::Vector3d>> oriWaypoints = c("oriWaypoints");
-            for(const auto & wp : oriWaypoints)
-            {
-              const auto& rpy = wp.second;
-              using namespace Eigen;
-              Matrix3d m;
-              m = AngleAxisd(rpy.x() * M_PI / 180., Vector3d::UnitX()) *
-                  AngleAxisd(rpy.y() * M_PI / 180., Vector3d::UnitY()) *
-                  AngleAxisd(rpy.z() * M_PI / 180., Vector3d::UnitZ());
-              oriWp.push_back(std::make_pair(wp.first, m.inverse()));
-            }
+            const auto& rpy = wp.second;
+            Eigen::Matrix3d m = mc_rbdyn::rpyToMat(rpy);
+            oriWp.push_back(std::make_pair(wp.first, m));
           }
         }
       }
