@@ -12,12 +12,11 @@ TrajectoryTask::TrajectoryTask(const mc_rbdyn::Robots& robots,
                                const sva::PTransformd& X_0_t, double duration,
                                double stiffness, double posW, double oriW,
                                const Eigen::MatrixXd& waypoints,
-                               const std::vector<double> oriWpTime,
-                               const std::vector<Eigen::Matrix3d>& oriWp)
+                               const std::vector<std::pair<double, Eigen::Matrix3d>>& oriWp)
     : robots(robots)
 {
   init(robotIndex, surfaceName, X_0_t, duration, stiffness, posW, oriW,
-       waypoints, oriWpTime, oriWp);
+       waypoints, oriWp);
 }
 
 TrajectoryTask::TrajectoryTask(const mc_rbdyn::Robots& robots,
@@ -26,8 +25,7 @@ TrajectoryTask::TrajectoryTask(const mc_rbdyn::Robots& robots,
                                const sva::PTransformd& X_0_t, double duration,
                                double stiffness, double posW, double oriW,
                                unsigned int nrWP,
-                               const std::vector<double> oriWpTime,
-                               const std::vector<Eigen::Matrix3d>& oriWp)
+                               const std::vector<std::pair<double, Eigen::Matrix3d>>& oriWp)
     : robots(robots)
 {
   if (nrWP <= 0)
@@ -39,7 +37,7 @@ TrajectoryTask::TrajectoryTask(const mc_rbdyn::Robots& robots,
   wp = mc_trajectory::generateInterpolatedWaypoints(start, end, nrWP);
 
   init(robotIndex, surfaceName, X_0_t, duration, stiffness, posW, oriW, wp,
-       oriWpTime, oriWp);
+       oriWp);
 }
 
 void TrajectoryTask::init(unsigned int robotIndex,
@@ -47,15 +45,13 @@ void TrajectoryTask::init(unsigned int robotIndex,
                           const sva::PTransformd& X_0_t, double duration,
                           double stiffness, double posW, double oriW,
                           const Eigen::MatrixXd& waypoints,
-                          const std::vector<double> oriWpTime,
-                          const std::vector<Eigen::Matrix3d>& oriWp)
+                          const std::vector<std::pair<double, Eigen::Matrix3d>>& oriWp)
 {
   this->rIndex = robotIndex;
   this->surfaceName = surfaceName;
   this->X_0_t = X_0_t;
   this->duration = duration;
   this->wp = waypoints;
-  this->oriWpTime_ = oriWpTime;
   this->oriWp_ = oriWp;
 
   const mc_rbdyn::Robot& robot = robots.robot(robotIndex);
@@ -68,11 +64,9 @@ void TrajectoryTask::init(unsigned int robotIndex,
   X_0_oriStart = X_0_start.rotation();
   oriTargetWpIndex = 0;
   oriStartTime = 0;
-  assert(oriWpTime_.size() == oriWp_.size());
   // Add a virtual waypoint at the end of the trajectory to avoid special-cases
   // in update()
-  oriWpTime_.push_back(duration);
-  oriWp_.push_back(X_0_t.rotation());
+  oriWp_.push_back(std::make_pair(duration, X_0_t.rotation()));
 
   transTask.reset(new tasks::qp::TransformTask(
       robots.mbs(), static_cast<int>(robotIndex), surface.bodyName(), X_0_start,
@@ -151,7 +145,7 @@ Eigen::VectorXd TrajectoryTask::dimWeight() const
 void TrajectoryTask::target(const sva::PTransformd& target)
 {
   X_0_t = target;
-  oriWp_[oriWp_.size()-1] = X_0_t.rotation();
+  oriWp_[oriWp_.size()-1].second = X_0_t.rotation();
   generateBS();
 }
 
@@ -214,7 +208,8 @@ void TrajectoryTask::update()
   // Change orientation waypoint
   if(t == 0 || t > oriStartTime+oriDuration)
   {
-    const auto oriTargetTime = oriWpTime_[oriTargetWpIndex];
+    const auto & oriWp = oriWp_[oriTargetWpIndex];
+    const auto oriTargetTime = oriWp.first;
     // Could be zero if someone puts a waypoint at duration - 1 (that would be strange), use max to be safe
     oriDuration = std::max(oriTargetTime - t, 1.);
     oriStartTime = t;
@@ -224,7 +219,7 @@ void TrajectoryTask::update()
     const auto& surface = robot.surface(surfaceName);
     X_0_oriStart = surface.X_0_s(robot);
 
-    const Eigen::Matrix3d& R_0_oriTarget = oriWp_[oriTargetWpIndex];
+    const Eigen::Matrix3d& R_0_oriTarget = oriWp.second;
     // Get position along bspline at orientation waypoint time
     const auto t_0_oriTarget = bspline->splev({oriTargetTime}, 0)[0][0];
     X_0_oriTarget = sva::PTransformd(R_0_oriTarget, t_0_oriTarget);
@@ -435,8 +430,7 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
 
       sva::PTransformd X_0_t;
       Eigen::MatrixXd waypoints;
-      std::vector<double> oriWpTime;
-      std::vector<Eigen::Matrix3d> oriWp;
+      std::vector<std::pair<double, Eigen::Matrix3d>> oriWp;
       const auto robotIndex = config("robotIndex");
 
 
@@ -487,13 +481,12 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
 
           if(cw.has("oriWaypoints"))
           {
-            const auto& oc = cw("oriWaypoints");
-            oriWpTime = oc("time");
-            std::vector<Eigen::Vector3d> ori_rpy = oc("rotation");
-            for(const auto & rpy : ori_rpy)
+            std::vector<std::pair<double, Eigen::Vector3d>> oriWaypoints = cw("oriWaypoints");
+            for(const auto & wp : oriWaypoints)
             {
+              const auto& rpy = wp.second;
               const auto &ori = targetRelative({0,0,0}, rpy, targetSurface);
-              oriWp.push_back(ori.rotation());
+              oriWp.push_back(std::make_pair(wp.first, ori.rotation()));
             }
           }
         }
@@ -517,17 +510,16 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
 
           if(c.has("oriWaypoints"))
           {
-            const auto& oc = c("oriWaypoints");
-            oriWpTime = oc("time");
-            std::vector<Eigen::Vector3d> ori_rpy = oc("rotation");
-            for(const auto & rpy : ori_rpy)
+            std::vector<std::pair<double, Eigen::Vector3d>> oriWaypoints = c("oriWaypoints");
+            for(const auto & wp : oriWaypoints)
             {
+              const auto& rpy = wp.second;
               using namespace Eigen;
               Matrix3d m;
               m = AngleAxisd(rpy.x() * M_PI / 180., Vector3d::UnitX()) *
                   AngleAxisd(rpy.y() * M_PI / 180., Vector3d::UnitY()) *
                   AngleAxisd(rpy.z() * M_PI / 180., Vector3d::UnitZ());
-              oriWp.push_back(m.inverse());
+              oriWp.push_back(std::make_pair(wp.first, m.inverse()));
             }
           }
         }
@@ -547,7 +539,6 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
             config("posWeight"),
             config("oriWeight"),
             nrWP,
-            oriWpTime,
             oriWp
             );
       }
@@ -563,7 +554,6 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
             config("posWeight"),
             config("oriWeight"),
             waypoints,
-            oriWpTime,
             oriWp
             );
       }

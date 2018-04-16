@@ -55,7 +55,7 @@ public:
                  const std::string& surfaceName, const sva::PTransformd & X_0_t,
                  double duration, double stiffness, double posW, double oriW,
                  const Eigen::MatrixXd & waypoints,
-                 const std::vector<double> oriWpTime = {}, const std::vector<Eigen::Matrix3d>& oriWp = {});
+                 const std::vector<std::pair<double, Eigen::Matrix3d>>& oriWp = {});
 
   /**
    * \brief Constructor for TrajectoryTask with automatic waypoint generation
@@ -67,8 +67,7 @@ public:
                  const std::string& surfaceName, const sva::PTransformd & X_0_t,
                  double duration, double stiffness, double posW, double oriW,
                  unsigned int nrWP,
-                 const std::vector<double> oriWpTime = {}, const std::vector<Eigen::Matrix3d>& oriWp = {}
-                 );
+                 const std::vector<std::pair<double, Eigen::Matrix3d>>& oriWp = {});
 
   /*! \brief Set the task stiffness/damping
    *
@@ -199,7 +198,7 @@ private:
             const std::string& surfaceName, const sva::PTransformd & X_0_t,
             double duration, double stiffness, double posW, double oriW,
             const Eigen::MatrixXd & waypoints,
-            const std::vector<double> oriWpTime, const std::vector<Eigen::Matrix3d>& oriWp);
+            const std::vector<std::pair<double, Eigen::Matrix3d>>& oriWp);
 
   /**
    * \brief Generates the BSpline trajectory
@@ -239,8 +238,7 @@ public:
   sva::PTransformd X_0_start;
   Eigen::MatrixXd wp;
 
-  std::vector<double> oriWpTime_;
-  std::vector<Eigen::Matrix3d> oriWp_;
+  std::vector<std::pair<double, Eigen::Matrix3d>> oriWp_;
   sva::PTransformd X_0_oriStart;
   sva::PTransformd X_0_oriTarget;
   unsigned int oriTargetWpIndex;
