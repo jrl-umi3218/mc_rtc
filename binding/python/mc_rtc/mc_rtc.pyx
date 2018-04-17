@@ -129,6 +129,8 @@ cdef class Configuration(object):
     cdef c_mc_rtc.Configuration ret
     if t is bool:
       ret = c_mc_rtc.get_as_config[cppbool](value)
+    elif isinstance(t(), numbers.Integral):
+      ret = c_mc_rtc.get_as_config[int](value)
     elif isinstance(t(), numbers.Number):
       ret = c_mc_rtc.get_as_config[double](value)
     elif t is str or t is unicode:
@@ -162,11 +164,18 @@ cdef class Configuration(object):
     if default is None and not isinstance(t, type):
       return self.to(type(t), t)
     assert(default is None or isinstance(default, t))
+    if t is Configuration:
+      return self
     if t is bool:
       if default is not None:
         return c_mc_rtc.get_config_as[cppbool](deref(self.impl), default)
       else:
         return c_mc_rtc.get_config_as[cppbool](deref(self.impl))
+    if isinstance(t(), numbers.Integral):
+      if default is not None:
+        return c_mc_rtc.get_config_as[int](deref(self.impl), default)
+      else:
+        return c_mc_rtc.get_config_as[int](deref(self.impl))
     if isinstance(t(), numbers.Number):
       if default is not None:
         return c_mc_rtc.get_config_as[double](deref(self.impl), default)

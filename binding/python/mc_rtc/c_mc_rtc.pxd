@@ -76,6 +76,7 @@ cdef extern from "mc_rtc_wrapper.hpp":
   function[c_sva.PTransformd] make_pt_log_callback[T,U](T,U)
   function[c_sva.ForceVecd] make_fv_log_callback[T,U](T,U)
   function[string] make_string_log_callback[T,U](T,U)
+
   T get_config_as[T](Configuration&) except +
   T get_config_as[T](Configuration&, const T&) except +
   Configuration get_as_config[T](const T&) except +

@@ -6,6 +6,7 @@ cimport tasks.qp.c_qp as c_qp
 from mc_rbdyn.c_mc_rbdyn cimport *
 from mc_solver.c_mc_solver cimport *
 cimport mc_rtc.c_mc_rtc as c_mc_rtc
+cimport mc_rtc.gui.c_gui as c_mc_rtc_gui
 cimport mc_tasks.c_mc_tasks as c_mc_tasks
 
 from libcpp.map cimport map as cppmap
@@ -35,6 +36,7 @@ cdef extern from "<mc_control/mc_controller.h>" namespace "mc_control":
     cppbool read_write_msg(string, string)
     vector[string] supported_robots()
     c_mc_rtc.Logger & logger()
+    c_mc_rtc_gui.shared_ptr[c_mc_rtc_gui.StateBuilder] gui()
 
     double timeStep
     # FIXME Grippers?

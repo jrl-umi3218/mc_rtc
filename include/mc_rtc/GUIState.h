@@ -28,6 +28,9 @@ namespace gui
     void addData(mc_rtc::Configuration &) {}
     void addGUI(mc_rtc::Configuration &) {}
     bool handleRequest(const mc_rtc::Configuration &) { return false; }
+
+    /** Invalid element, used for Python bindings */
+    Element() {}
   protected:
     Element(const std::string & name);
 
@@ -59,6 +62,9 @@ namespace gui
     void addData(mc_rtc::Configuration & data);
 
     DataElement(const std::string & name, GetT get_fn);
+
+    /** Invalid element */
+    DataElement() {}
   private:
     GetT get_fn_;
   };
@@ -70,6 +76,9 @@ namespace gui
 
     template<typename ... Args>
     CallbackElement(const std::string & name, Callback cb, Args && ... args);
+
+    /** Invalid element */
+    CallbackElement() {}
 protected:
     Callback cb_;
   };
@@ -83,6 +92,9 @@ protected:
     VoidCallbackElement(const std::string & name, Callback cb, Args && ... args)
     : CallbackElement<ElementT, Callback>(name, cb, std::forward<Args>(args)...)
     {}
+
+    /** Invalid element */
+    VoidCallbackElement() {}
   };
 
   template<typename GetT>
@@ -91,6 +103,9 @@ protected:
     static constexpr auto type = Elements::Label;
 
     LabelImpl(const std::string & name, GetT get_fn);
+
+    /** Invalid element */
+    LabelImpl() {}
   };
 
   template<typename GetT>
@@ -108,6 +123,9 @@ protected:
     : LabelImpl<GetT>(name, get_fn) {}
 
     ArrayLabelImpl(const std::string & name, const std::vector<std::string> & labels, GetT get_fn);
+
+    /** Invalid element */
+    ArrayLabelImpl() {}
 
     void addGUI(mc_rtc::Configuration & gui);
   private:
@@ -135,6 +153,9 @@ protected:
     ButtonImpl(const std::string & name, Callback cb, Args && ... args)
     : VoidCallbackElement<Element, Callback>(name, cb, std::forward<Args>(args)...)
     {}
+
+    /** Invalid element */
+    ButtonImpl() {}
   };
 
   template<typename Callback>
@@ -150,6 +171,9 @@ protected:
 
     CheckboxImpl(const std::string & name,
                  GetT get_fn, Callback cb);
+
+    /** Invalid element */
+    CheckboxImpl() {}
   };
 
   template<typename GetT, typename Callback>
@@ -163,6 +187,9 @@ protected:
   struct MC_RTC_GUI_DLLAPI CommonInputImpl : public CallbackElement<DataElement<GetT>, SetT>
   {
     CommonInputImpl(const std::string & name, GetT get_fn, SetT set_fn);
+
+    /** Invalid element */
+    CommonInputImpl() {}
   };
 
   #define WRITE_INPUT_IMPL(NAME)\
@@ -172,6 +199,8 @@ protected:
     static constexpr auto type = Elements::NAME ;\
     NAME ## Impl(const std::string & name, GetT get_fn, SetT set_fn)\
     : CommonInputImpl<GetT, SetT>(name, get_fn, set_fn) {}\
+    /** Invalid element */\
+    NAME ## Impl() {}\
   };\
   template<typename GetT, typename SetT>\
   NAME ## Impl<GetT, SetT> NAME (const std::string & name,\
@@ -200,6 +229,9 @@ protected:
 
     /** Add labels to GUI information */
     void addGUI(mc_rtc::Configuration &);
+
+    /** Invalid element */
+    ArrayInputImpl() {}
   private:
     std::vector<std::string> labels_;
   };
@@ -230,6 +262,9 @@ protected:
 
     /** Add valid values to GUI information */
     void addGUI(mc_rtc::Configuration & gui);
+
+    /** Invalid element */
+    ComboInputImpl() {}
   private:
     std::vector<std::string> values_;
   };
@@ -253,6 +288,9 @@ protected:
 
     /** Add valid values to GUI information */
     void addGUI(mc_rtc::Configuration & gui);
+
+    /** Invalid element */
+    DataComboInputImpl() {}
   private:
     std::vector<std::string> data_ref_;
   };
@@ -275,6 +313,9 @@ protected:
 
     /** Add distinguishing elements to GUI information */
     void addGUI(mc_rtc::Configuration & gui);
+
+    /** Invalid element */
+    Point3DROImpl() {}
   };
 
   template<typename GetT, typename SetT>
@@ -284,6 +325,9 @@ protected:
 
     Point3DImpl(const std::string & name, GetT get_fn, SetT set_fn)
     : CommonInputImpl<GetT, SetT>(name, get_fn, set_fn) {}
+
+    /** Invalid element */
+    Point3DImpl() {}
   };
 
   template<typename GetT>
@@ -308,6 +352,9 @@ protected:
 
     /** Add distinguishing elements to GUI information */
     void addGUI(mc_rtc::Configuration & gui);
+
+    /** Invalid element */
+    RotationROImpl() {}
   };
 
   template<typename GetT, typename SetT>
@@ -317,6 +364,9 @@ protected:
 
     RotationImpl(const std::string & name, GetT get_fn, SetT set_fn)
     : CommonInputImpl<GetT, SetT>(name, get_fn, set_fn) {}
+
+    /** Invalid element */
+    RotationImpl() {}
   };
 
   template<typename GetT>
@@ -341,6 +391,9 @@ protected:
 
     /** Add distinguishing elements to GUI information */
     void addGUI(mc_rtc::Configuration & gui);
+
+    /** Invalid element */
+    TransformROImpl() {}
   };
 
   template<typename GetT, typename SetT>
@@ -350,6 +403,9 @@ protected:
 
     TransformImpl(const std::string & name, GetT get_fn, SetT set_fn)
     : CommonInputImpl<GetT, SetT>(name, get_fn, set_fn) {}
+
+    /** Invalid element */
+    TransformImpl() {}
   };
 
   template<typename GetT>
@@ -392,6 +448,12 @@ protected:
     FormImpl(const std::string & name, Callback cb, Args && ... args);
 
     void addGUI(mc_rtc::Configuration & gui);
+
+    template<typename T>
+    void addElement(T && arg);
+
+    /** Invalid element */
+    FormImpl() {}
   private:
     mc_rtc::Configuration gui_;
   };
@@ -402,6 +464,9 @@ protected:
     void addGUI(mc_rtc::Configuration & gui);
 
     void addGUI_(mc_rtc::Configuration &) {}
+
+    /** Invalid element */
+    FormInput() {}
   protected:
     FormInput(const std::string & name, bool required);
 
@@ -429,6 +494,9 @@ protected:
     {
       out.add("default", def_);
     }
+
+    /** Invalid element */
+    FormDataInput() {}
   private:
     T def_;
   };
@@ -462,6 +530,9 @@ protected:
       out.add("fixed_size", fixed_size_);
       out.add("default", def_);
     }
+
+    /** Invalid element */
+    FormArrayInput() {}
   private:
     T def_;
     bool fixed_size_;
@@ -474,6 +545,9 @@ protected:
     FormComboInput(const std::string & name, bool required, const std::vector<std::string> & values, bool send_index = false);
 
     void addGUI_(mc_rtc::Configuration & gui);
+
+    /** Invalid element */
+    FormComboInput() {}
   private:
     std::vector<std::string> values_;
     bool send_index_ = false;
@@ -486,6 +560,9 @@ protected:
     FormDataComboInput(const std::string & name, bool required, const std::vector<std::string> & ref, bool send_index = false);
 
     void addGUI_(mc_rtc::Configuration & gui);
+
+    /** Invalid element */
+    FormDataComboInput() {}
   private:
     std::vector<std::string> ref_;
     bool send_index_;

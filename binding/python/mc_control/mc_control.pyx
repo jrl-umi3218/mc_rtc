@@ -14,6 +14,7 @@ cimport mc_solver.mc_solver as mc_solver
 cimport mc_tasks.mc_tasks as mc_tasks
 
 cimport mc_rtc.mc_rtc as mc_rtc
+cimport mc_rtc.gui.gui as mc_rtc_gui
 
 from cython.operator cimport preincrement as preinc
 from cython.operator cimport dereference as deref
@@ -59,6 +60,8 @@ cdef class MCController(object):
     return self.base.supported_robots()
   def logger(self):
     return mc_rtc.LoggerFromRef(self.base.logger())
+  def gui(self):
+    return mc_rtc_gui.StateBuilderFromShPtr(self.base.gui())
   property timeStep:
     def __get__(self):
       return self.base.timeStep

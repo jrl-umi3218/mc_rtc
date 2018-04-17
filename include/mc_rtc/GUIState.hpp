@@ -200,6 +200,13 @@ void FormImpl<Callback>::addGUI(mc_rtc::Configuration & gui)
   gui.add("form", gui_);
 }
 
+template<typename Callback>
+template<typename T>
+void FormImpl<Callback>::addElement(T && arg)
+{
+  arg.addGUI(gui_);
+}
+
 template<typename T>
 void StateBuilder::addElement(const std::vector<std::string> & category, T element)
 {
