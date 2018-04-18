@@ -9,6 +9,7 @@
     "surface": { "type": "string" },
 
     "target": { "$ref": "/../../sva/PTransformd.json" },
+    "targetSurface": { "$ref" : "/../../common/targetSurface.json" },
 
     "stiffness": { "type": "number", "minimum": 0},
     "damping": { "type": "number", "minimum": 0},
@@ -17,5 +18,8 @@
     "activeJoints": { "type": "array", "items": { "type": "string" } },
     "unactiveJoints": { "type": "array", "items": { "type": "string" } }
   },
-  "required": ["type", "robotIndex", "surface"]
+  "required": ["type", "robotIndex", "surface"],
+  "oneOf": [ { "required": [ "target" ] },
+             { "required": [ "targetSurface" ] }
+           ]
 }

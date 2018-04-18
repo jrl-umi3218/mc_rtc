@@ -9,4 +9,15 @@
                  0.0, 0.0, 1.0],
     "translation": [0.0, 0.0, 0.0]
   }
+},
+{
+  "type": "surfaceTransform",
+  "robotIndex": 0,
+  "surface": "surfaceName",
+  "targetSurface":
+  {
+    "robotName": "target_robot",
+    "offset_translation": [0.0, 0.0, 0.1],
+    "offset_rotation": [3.14, 0.0, 0.0]
+  }
 }

@@ -1,0 +1,12 @@
+{
+  "title": "targetSurface",
+  "type": "object",
+  "properties":
+  {
+    "robotName" : { "type": "string" },
+    "targetSurface" : { "type": "string" },
+    "offset_translation": { "$ref": "/../../eigen/Vector3d.json" },
+    "offset_rotation": { "$ref": "/../../eigen/Vector3d.json" }
+  },
+  "required": ["robotName", "targetSurface"]
+}

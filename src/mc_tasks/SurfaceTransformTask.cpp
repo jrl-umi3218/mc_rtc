@@ -1,7 +1,7 @@
 #include <mc_tasks/SurfaceTransformTask.h>
 
 #include <mc_tasks/MetaTaskLoader.h>
-#include <mc_rbdyn/configuration_io.h>
+#include <mc_rbdyn/rpy_utils.h>
 
 namespace mc_tasks
 {
@@ -92,27 +92,18 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function("surfa
      const mc_rtc::Configuration & config)
   {
     auto t = std::make_shared<mc_tasks::SurfaceTransformTask>(config("surface"), solver.robots(), config("robotIndex"));
-    if(config.has("target"))
-    {
-      t->target(config("target"));
-    }
-    else if(config.has("targetSurface"))
+
+    if(config.has("targetSurface"))
     {
       const auto& c = config("targetSurface");
-      sva::PTransformd offset = sva::PTransformd::Identity();
-      if(c.has("offset"))
-      {
-        const auto &o = c("offset");
-        Eigen::Vector3d trans = o("translation");
-        Eigen::Vector3d rpy = o("rotation");
-        using namespace Eigen;
-        Eigen::Matrix3d m;
-        m = AngleAxisd(rpy.x() * M_PI/180., Vector3d::UnitX())
-            * AngleAxisd(rpy.y() * M_PI/180.,  Vector3d::UnitY())
-            * AngleAxisd(rpy.z() * M_PI/180., Vector3d::UnitZ());
-        offset = sva::PTransformd(m.inverse(), trans);
-      }
+      Eigen::Vector3d trans = c("offset_translation", Eigen::Vector3d::Zero().eval());
+      Eigen::Vector3d rpy = c("offset_rotation", Eigen::Vector3d::Zero().eval());
+      sva::PTransformd offset(mc_rbdyn::rpyToMat(rpy), trans);
       t->targetSurface(c("robotName"), c("surfaceName"), offset);
+    }
+    else if(config.has("target"))
+    {
+      t->target(config("target"));
     }
     t->load(solver, config);
     return t;
