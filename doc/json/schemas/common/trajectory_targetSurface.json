@@ -1,0 +1,14 @@
+{
+  "title": "targetSurface",
+  "type": "object",
+  "properties":
+  {
+    "robotIndex" : { "type": "integer", "minimum": 0 },
+    "surface" : { "type": "string" },
+    "offset_translation": { "$ref": "/../../eigen/Vector3d.json" },
+    "offset_rotation": { "$ref": "/../../eigen/Vector3d.json" },
+    "controlPoints": { "type": "array", "items": { "type": "array" } },
+    "oriWaypoints": { "type": "array", "items": { "type": "array" } }
+  },
+  "required": ["robotIndex", "targetSurface"]
+}

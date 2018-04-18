@@ -434,33 +434,18 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
       std::vector<std::pair<double, Eigen::Matrix3d>> oriWp;
       const auto robotIndex = config("robotIndex");
 
-
       if (config.has("targetSurface"))
       { // Target defined from a target surface, with an offset defined
         // in the surface coordinates
         const auto& c = config("targetSurface");
-        const auto& surfaceName = c("surface");
+        const auto& targetSurfaceName = c("surface");
         const auto& robot = solver.robot(c("robotIndex"));
 
-        auto targetRelative = [&robot, &surfaceName](const Eigen::Vector3d offset_trans, const Eigen::Vector3d& offset_rpy, const sva::PTransformd X_0_t)
-        {
-          Eigen::Matrix3d m = mc_rbdyn::rpyToMat(offset_rpy);
-          sva::PTransformd offset = sva::PTransformd(m, offset_trans);
-          return offset * X_0_t;
-        };
-
-        sva::PTransformd targetSurface = robot.surface(surfaceName).X_0_s(robot);
-        if (c.has("offset"))
-        {
-          const auto& o = c("offset");
-          Eigen::Vector3d trans = o("translation");
-          Eigen::Vector3d rpy = o("rotation");
-          X_0_t = targetRelative(trans, rpy, targetSurface);
-        }
-        else
-        {
-          X_0_t = targetSurface;
-        }
+        const sva::PTransformd& targetSurface = robot.surface(targetSurfaceName).X_0_s(robot);
+        const Eigen::Vector3d trans = c("offset_translation", Eigen::Vector3d::Zero().eval());
+        const Eigen::Vector3d rpy = c("offset_rotation", Eigen::Vector3d::Zero().eval());
+        sva::PTransformd offset(mc_rbdyn::rpyToMat(rpy), trans);
+        X_0_t = offset * targetSurface;
 
         if(c.has("controlPoints"))
         {
@@ -477,11 +462,11 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
 
         if(c.has("oriWaypoints"))
         {
-          std::vector<std::pair<double, Eigen::Vector3d>> oriWaypoints = c("oriWaypoints");
+          const std::vector<std::pair<double, Eigen::Vector3d>>& oriWaypoints = c("oriWaypoints");
           for(const auto & wp : oriWaypoints)
           {
-            const auto& rpy = wp.second;
-            const auto &ori = targetRelative({0,0,0}, rpy, targetSurface);
+            const sva::PTransformd rpy_offset(mc_rbdyn::rpyToMat(wp.second));
+            const sva::PTransformd ori = rpy_offset * targetSurface;
             oriWp.push_back(std::make_pair(wp.first, ori.rotation()));
           }
         }
@@ -509,8 +494,7 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
           for(const auto & wp : oriWaypoints)
           {
             const auto& rpy = wp.second;
-            Eigen::Matrix3d m = mc_rbdyn::rpyToMat(rpy);
-            oriWp.push_back(std::make_pair(wp.first, m));
+            oriWp.push_back(std::make_pair(wp.first, mc_rbdyn::rpyToMat(rpy)));
           }
         }
       }
