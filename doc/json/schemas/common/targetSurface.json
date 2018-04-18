@@ -4,7 +4,7 @@
   "properties":
   {
     "robotName" : { "type": "string" },
-    "targetSurface" : { "type": "string" },
+    "surface" : { "type": "string" },
     "offset_translation": { "$ref": "/../../eigen/Vector3d.json" },
     "offset_rotation": { "$ref": "/../../eigen/Vector3d.json" }
   },

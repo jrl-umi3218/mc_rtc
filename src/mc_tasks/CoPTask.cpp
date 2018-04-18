@@ -135,7 +135,7 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function("cop",
       Eigen::Vector3d trans = c("offset_translation", Eigen::Vector3d::Zero().eval());
       Eigen::Vector3d rpy = c("offset_rotation", Eigen::Vector3d::Zero().eval());
       sva::PTransformd offset(mc_rbdyn::rpyToMat(rpy), trans);
-      t->targetSurface(c("robotName"), c("surfaceName"), offset);
+      t->targetSurface(c("robotName"), c("surface"), offset);
     }
     else if(config.has("pose")) { t->targetPose(config("pose")); }
     if(config.has("weight")) { t->weight(config("weight")); }
