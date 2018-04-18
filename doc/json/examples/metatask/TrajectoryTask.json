@@ -10,20 +10,18 @@
   {
     "robotIndex": 1,
     "surface": "targetSurfaceName",
-    "offset":
-    {
-      "translation": [-0.05, 0.3, 0.03],
-      "rotation": [0.0, 0.0, 140.0]
-    },
-    "waypoints":
-    {
-      // Control points defined wrt the targetSurface frame
-      "controlPoints":
-      [
-        [0.2, -0.05, 0.1],
-        [-0.05, 0.3, 0.05]
-      ]
-    }
+    "offset_translation": [-0.05, 0.3, 0.03],
+    "offset_rotation": [0.0, 0.0, 140.0],
+    "controlPoints":
+    [
+      [0.2, -0.05, 0.1],
+      [-0.05, 0.3, 0.05]
+    ],
+    "oriWaypoints":
+    [
+      [1.0, [0.0, 0.0, 1.57]],
+      [3.0, [0.0, 0.0, 2.44]]
+    ]
   }
 },
 {
