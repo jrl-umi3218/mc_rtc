@@ -2,7 +2,7 @@
   "type": "admittance",
   "robotIndex": 0,
   "surface": "LeftFootCenter",
-  "pose":
+  "targetPose":
   {
     "rotation": [1.0, 0.0, 0.0,
                  0.0, 1.0, 0.0,
@@ -26,7 +26,7 @@
   "surface": "LeftFootCenter",
   "targetSurface":
   {
-    "robotName": "target_robot",
+    "robotIndex": 1,
     "surface": "target_surface_name",
     "offset_translation": [0.0, 0.0, 0.1],
     "offset_rotation": [3.14, 0.0, 0.0]

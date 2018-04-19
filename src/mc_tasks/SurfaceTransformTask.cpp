@@ -37,9 +37,9 @@ void SurfaceTransformTask::target(const sva::PTransformd & pose)
   errorT->target(pose);
 }
 
-void SurfaceTransformTask::targetSurface(const std::string& robotName, const std::string& surfaceName, const sva::PTransformd& offset)
+void SurfaceTransformTask::targetSurface(unsigned int robotIndex, const std::string& surfaceName, const sva::PTransformd& offset)
 {
-  const auto& robot = robots.robot(robotName);
+  const auto& robot = robots.robot(robotIndex);
   sva::PTransformd targetSurface = robot.surface(surfaceName).X_0_s(robot);
   sva::PTransformd targetPos = offset * targetSurface;
   target(targetPos);
@@ -96,10 +96,10 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function("surfa
     if(config.has("targetSurface"))
     {
       const auto& c = config("targetSurface");
-      Eigen::Vector3d trans = c("offset_translation", Eigen::Vector3d::Zero().eval());
-      Eigen::Vector3d rpy = c("offset_rotation", Eigen::Vector3d::Zero().eval());
-      sva::PTransformd offset(mc_rbdyn::rpyToMat(rpy), trans);
-      t->targetSurface(c("robotName"), c("surface"), offset);
+      t->targetSurface(
+          c("robotIndex"), c("surface"),
+          {config("offset_rotation", Eigen::Matrix3d::Identity().eval()),
+           config("offset_translation", Eigen::Vector3d::Zero().eval())});
     }
     else if(config.has("target"))
     {

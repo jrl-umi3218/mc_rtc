@@ -24,7 +24,7 @@
   "cop": [2.0, 0.0],
   "targetSurface":
   {
-    "robotName": "target_robot",
+    "robotIndex": 1,
     "surface": "target_surface_name",
     "offset_translation": [0.0, 0.0, 0.1],
     "offset_rotation": [3.14, 0.0, 0.0]

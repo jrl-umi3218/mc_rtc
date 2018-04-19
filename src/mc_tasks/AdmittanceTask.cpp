@@ -232,13 +232,12 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function("admit
 
     if(config.has("targetSurface"))
     {
-      const auto& c = config("targetSurface");
-      Eigen::Vector3d trans = c("offset_translation", Eigen::Vector3d::Zero().eval());
-      Eigen::Vector3d rpy = c("offset_rotation", Eigen::Vector3d::Zero().eval());
-      sva::PTransformd offset(mc_rbdyn::rpyToMat(rpy), trans);
-      t->targetSurface(c("robotName"), c("surface"), offset);
+      t->targetSurface(
+          config("robotIndex"), config("surface"),
+          {config("offset_rotation", Eigen::Matrix3d::Identity().eval()),
+           config("offset_translation", Eigen::Vector3d::Zero().eval())});
     }
-    else if(config.has("pose")) { t->targetPose(config("pose")); }
+    else if(config.has("targetPose")) { t->targetPose(config("targetPose")); }
     if(config.has("weight")) { t->weight(config("weight")); }
     if(config.has("wrench")) { t->targetWrench(config("wrench")); }
     t->load(solver, config);

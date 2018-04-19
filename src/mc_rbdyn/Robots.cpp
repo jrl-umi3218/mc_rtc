@@ -154,12 +154,11 @@ const Robot & Robots::robot(const std::string& name) const
                          [&name](const Robot & r){ return r.name() == name; });
   if(it != robots_.end())
   {
-    return robot(it->robots_idx_);
+    return *it;
   }
   else
   {
-    LOG_ERROR("No robot named " << name);
-    throw("Wrong robot name");
+    LOG_ERROR_AND_THROW(std::runtime_error, "No robot named " << name);
   }
 }
 

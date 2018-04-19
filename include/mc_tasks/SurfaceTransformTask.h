@@ -52,14 +52,14 @@ public:
    * @brief Targets a robot surface with an optional offset.
    * The offset is expressed in the target contact frame
    *
-   * @param robotName
-   *  Name of the robot to target (could be the environment)
+   * @param robotIndex
+   *  Index of the robot to target (could be the environment)
    * @param surfaceName
    *  Surface name in the target robot
    * @param offset
    *  offset defined in the target contact frame
    */
-  void targetSurface(const std::string& robotName, const std::string& surfaceName, const sva::PTransformd& offset);
+  void targetSurface(unsigned int robotIndex, const std::string& surfaceName, const sva::PTransformd& offset);
 
   /*! \brief Retrieve the controlled surface name */
   std::string surface() { return surfaceName; }

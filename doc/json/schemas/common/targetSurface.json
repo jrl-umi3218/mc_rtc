@@ -3,10 +3,10 @@
   "type": "object",
   "properties":
   {
-    "robotName" : { "type": "string" },
+    "robotIndex" : { "type": "integer", "minimum": 0 },
     "surface" : { "type": "string" },
     "offset_translation": { "$ref": "/../../eigen/Vector3d.json" },
-    "offset_rotation": { "$ref": "/../../eigen/Vector3d.json" }
+    "offset_rotation": { "$ref": "/../../eigen/Matrix3d.json" }
   },
-  "required": ["robotName", "targetSurface"]
+  "required": ["robotIndex", "targetSurface"]
 }
