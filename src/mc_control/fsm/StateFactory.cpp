@@ -58,7 +58,7 @@ void resolve_pass(StateFactory & factory, std::vector<UDState> & states)
   for(auto it = states.begin(); it != states.end();)
   {
     auto & uds = *it;
-    if(factory.hasState(uds.base))
+    if(factory.hasState(uds.base) || factory.load_with_loader(uds.base))
     {
       factory.load(uds.state, uds.base, uds.config);
       it = states.erase(it);
@@ -109,7 +109,7 @@ void load_ud(StateFactory & factory, const std::map<std::string, mc_rtc::Configu
       LOG_ERROR("Attempted to load state " << s.first << " but no base is specified in the configuration")
       continue;
     }
-    if(factory.hasState(base))
+    if(factory.hasState(base) || factory.load_with_loader(base))
     {
       factory.load(s.first, base, config);
     }
@@ -192,7 +192,7 @@ void StateFactory::load(const std::string & name,
                         const std::string & base,
                         const mc_rtc::Configuration & config)
 {
-  if(!hasState(base))
+  if(!hasState(base) && !load_with_loader(base))
   {
     LOG_ERROR_AND_THROW(std::runtime_error, "Cannot create a state using a base " << base << " that does not exist")
   }
@@ -262,6 +262,28 @@ StatePtr StateFactory::create(const std::string & state)
 bool StateFactory::hasState(const std::string & state) const
 {
   return std::find(states_.begin(), states_.end(), state) != states_.end();
+}
+
+bool StateFactory::load_with_loader(const std::string & state)
+{
+  auto sharp = state.find('#');
+  if(sharp == std::string::npos || sharp == state.size() - 1)
+  {
+    return false;
+  }
+  std::string loader = state.substr(0, sharp);
+  std::string arg = state.substr(sharp + 1);
+  if(!has_object(loader))
+  {
+    LOG_ERROR("Cannot create state " << state << ", loader " << loader << " has not been loaded")
+    return false;
+  }
+  states_.push_back(state);
+  states_factories_[state] = [loader, arg](StateFactory & factory)
+  {
+    return factory.create_object(loader, arg);
+  };
+  return true;
 }
 
 const std::vector<std::string> & StateFactory::states() const

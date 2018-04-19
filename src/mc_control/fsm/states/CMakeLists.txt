@@ -24,3 +24,16 @@ add_fsm_state_simple(AddRemoveContact)
 add_fsm_state_simple(SlidingFootContact)
 add_fsm_state_simple(Meta)
 add_fsm_state_simple(Parallel)
+
+# PythonState
+if(${PYTHON_BINDING})
+  include(${PROJECT_SOURCE_DIR}/cmake/python.cmake)
+  findpython()
+  add_library(PythonState SHARED "PythonState.cpp")
+  set_target_properties(PythonState PROPERTIES PREFIX "")
+  target_include_directories("PythonState" PRIVATE "${PROJECT_SOURCE_DIR}/binding/python" ${PYTHON_INCLUDE_DIRS})
+  target_link_libraries(PythonState mc_control_fsm ${PYTHON_LIBRARIES})
+  add_dependencies(PythonState mc_rtc-python-bindings)
+  install(TARGETS PythonState
+    DESTINATION ${FSM_STATES_INSTALL_PREFIX})
+endif()

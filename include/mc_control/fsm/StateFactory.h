@@ -84,6 +84,9 @@ struct MC_CONTROL_DLLAPI StateFactory : public mc_rtc::ObjectLoader<State>
 
   /** Returns the list of loaded states */
   const std::vector<std::string> & states() const;
+
+  /** Load state using a loader state, returns true if a state was loaded */
+  bool load_with_loader(const std::string & state);
 private:
   /** Create a state from libraries or factory */
   StatePtr create(const std::string & state);

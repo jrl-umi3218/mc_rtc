@@ -41,9 +41,13 @@ for b in packages:
     if b == 'mc_rtc':
       fd.write('import mc_control\n')
       fd.write('from . import gui\n')
+    if b == 'mc_control':
+      fd.write('from . import fsm\n')
     fd.write('from .{} import *\n'.format(b))
   with open('mc_rtc/gui/__init__.py', 'w') as fd:
     fd.write('from .gui import *\n')
+  with open('mc_control/fsm/__init__.py', 'w') as fd:
+    fd.write('from .fsm import *\n')
 
 src_dir = '@CMAKE_CURRENT_SOURCE_DIR@/../../src/'
 src_files = []
@@ -73,7 +77,7 @@ class pkg_config(object):
     self.compile_args = []
     self.include_dirs = [ x for x in '@MC_RTC_INCLUDE_DIRECTORIES@'.split(';') if len(x) ]
     self.library_dirs = [ x for x in '@MC_RTC_LINK_FLAGS@'.split(';') if len(x) ]
-    self.libraries = ['mc_control', 'mc_rbdyn', 'mc_rtc_utils', 'mc_solver', 'mc_tasks', 'mc_rtc_ros', 'mc_rtc_gui']
+    self.libraries = ['mc_control', 'mc_rbdyn', 'mc_rtc_utils', 'mc_solver', 'mc_tasks', 'mc_rtc_ros', 'mc_rtc_gui', 'mc_control_fsm']
     self.libraries += [ os.path.splitext(os.path.basename(b))[0].replace('lib','') for b in '@Boost_LIBRARIES@'.split(';') if len(b) ]
     mc_rtc_location = '@MC_RTC_LOCATION@'
     self.library_dirs.append(os.path.dirname(mc_rtc_location))
@@ -108,6 +112,7 @@ def GenExtension(name, pkg, ):
 
 extensions = [ GenExtension('{}.{}'.format(p, p), config) for p in packages ]
 extensions.append(GenExtension('mc_rtc.gui.gui', config))
+extensions.append(GenExtension('mc_control.fsm.fsm', config))
 
 extensions = [ x for x in extensions if x is not None ]
 
@@ -120,6 +125,8 @@ for p in packages:
     data.append('c_{}.pxd'.format(p))
   if p == 'mc_rtc':
     data += ['gui/__init__.py', 'gui/c_gui.pxd', 'gui/gui.pxd']
+  if p == 'mc_control':
+    data += ['fsm/__init__.py', 'fsm/c_fsm.pxd', 'fsm/fsm.pxd']
   packages_data[p] = data
 
 extensions = cythonize(extensions)

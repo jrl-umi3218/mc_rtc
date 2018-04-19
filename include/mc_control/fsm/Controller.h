@@ -47,6 +47,9 @@ struct MC_CONTROL_DLLAPI Contact
            r1Surface == rhs.r1Surface && r2Surface == rhs.r2Surface;
   }
 
+  /** Default constructor, invalid contact */
+  Contact() = default;
+
   static Contact from_mc_rbdyn(const Controller &, const mc_rbdyn::Contact &);
 };
 

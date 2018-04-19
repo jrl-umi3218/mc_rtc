@@ -15,6 +15,11 @@ set(fsm_controller_HDR
   ${fsm_controller_HDR_DIR}/TransitionMap.h
 )
 
+if(${PYTHON_BINDING})
+  set(fsm_controller_HDR ${fsm_controller_HDR} ${fsm_controller_HDR_DIR}/PythonState.h)
+  set(fsm_controller_SRC ${fsm_controller_SRC} PythonState.cpp)
+endif()
+
 add_library(mc_control_fsm SHARED ${fsm_controller_SRC} ${fsm_controller_HDR})
 set_target_properties(mc_control_fsm PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_EXPORTS")
 target_link_libraries(mc_control_fsm mc_control ${Boost_LIBRARIES})
