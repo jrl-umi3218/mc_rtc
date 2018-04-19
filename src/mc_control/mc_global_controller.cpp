@@ -10,6 +10,8 @@
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
+#include <boost/chrono.hpp>
+
 #include <algorithm>
 #include <cstdlib>
 #include <fstream>
@@ -277,6 +279,14 @@ void MCGlobalController::setActualGripperQ(const std::map<std::string, std::vect
 
 bool MCGlobalController::run()
 {
+  /** Always pick a steady clock */
+  using clock = typename std::conditional<std::chrono::high_resolution_clock::is_steady,
+                                          std::chrono::high_resolution_clock,
+                                          std::chrono::steady_clock>::type;
+  /** Helper to converst Tasks' timer */
+  using boost_ms = boost::chrono::duration<double, boost::milli>;
+  using boost_ns = boost::chrono::duration<double, boost::nano>;
+  auto start_run_t = clock::now();
   /* Check if we need to change the controller this time */
   if(next_controller_)
   {
@@ -364,19 +374,39 @@ bool MCGlobalController::run()
   }
   if(running)
   {
+    auto start_controller_run_t = clock::now();
     bool r = controller_->run();
+    auto end_controller_run_t = clock::now();
     if(config.enable_log)
     {
+      auto start_log_t  = clock::now();
       controller_->logger().log();
+      log_dt = clock::now() - start_log_t;
     }
+    controller_run_dt = end_controller_run_t - start_controller_run_t;
+    solver_build_and_solve_t = boost_ms(boost_ns(controller_->solver().solveAndBuildTime().wall)).count();
+    solver_solve_t = boost_ms(boost_ns(controller_->solver().solveTime().wall)).count();
     if(!r) { running = false; }
   }
+  else
+  {
+    controller_run_dt.zero();
+    solver_build_and_solve_t = 0;
+    solver_solve_t = 0;
+  }
+  auto start_publish_t = clock::now();
   publish_robots();
+  publish_dt = clock::now() - start_publish_t;
   if(server_)
   {
+    auto start_gui_t = clock::now();
     server_->handle_requests(*controller_->gui_);
     server_->publish(*controller_->gui_);
+    gui_dt = clock::now() - start_gui_t;
   }
+  global_run_dt = clock::now() - start_run_t;
+  // Percentage of time spent solving compared to other things
+  framework_cost = 100 * (1 - solver_solve_t / global_run_dt.count());
   return running;
 }
 
@@ -694,6 +724,47 @@ void MCGlobalController::setup_log()
               [controller]() -> const Eigen::Vector3d&
               {
                 return controller->robot().bodySensor().acceleration();
+              });
+  // Performance measures
+  controller->logger().addLogEntry("perf_GlobalRun",
+              [this]()
+              {
+                return global_run_dt.count();
+              });
+  controller->logger().addLogEntry("perf_ControllerRun",
+              [this]()
+              {
+                return controller_run_dt.count();
+              });
+  controller->logger().addLogEntry("perf_SolverBuildAndSolve",
+              [this]()
+              {
+                return solver_build_and_solve_t;
+              });
+  controller->logger().addLogEntry("perf_SolverSolve",
+              [this]()
+              {
+                return solver_solve_t;
+              });
+  controller->logger().addLogEntry("perf_Log",
+              [this]()
+              {
+                return log_dt.count();
+              });
+  controller->logger().addLogEntry("perf_Publish",
+              [this]()
+              {
+                return publish_dt.count();
+              });
+  controller->logger().addLogEntry("perf_Gui",
+              [this]()
+              {
+                return gui_dt.count();
+              });
+  controller->logger().addLogEntry("perf_FrameworkCost",
+              [this]()
+              {
+                return framework_cost;
               });
   // Log system wall time as nanoseconds since epoch (can be used to manage synchronization with ros)
   controller->logger().addLogEntry("timeWall",

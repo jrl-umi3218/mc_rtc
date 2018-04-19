@@ -497,6 +497,17 @@ private:
   void start_log();
   void setup_log();
   std::map<std::string, bool> setup_logger_ = {};
+
+  /** Timers and performance measure */
+  using duration_ms = std::chrono::duration<double, std::milli>;
+  duration_ms global_run_dt {0};
+  duration_ms controller_run_dt {0};
+  duration_ms log_dt {0};
+  duration_ms publish_dt {0};
+  duration_ms gui_dt {0};
+  double solver_build_and_solve_t = 0;
+  double solver_solve_t = 0;
+  double framework_cost = 0;
 };
 
 }
