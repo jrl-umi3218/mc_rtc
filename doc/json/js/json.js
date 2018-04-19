@@ -122,6 +122,9 @@ $(document).ready(function()
   'CoPTask',
   'EndEffectorTask',
   'GazeTask',
+  'LookAtTask',
+  'LookAtSurfaceTask',
+  'LookAtTFTask',
   'OrientationTask',
   'PBVSTask',
   'PositionTask',
@@ -129,10 +132,8 @@ $(document).ready(function()
   'RelativeEndEffectorTask',
   'RemoveContactTask',
   'SurfaceTransformTask',
-  'VectorOrientationTask',
-  'LookAtTask',
-  'LookAtSurfaceTask',
-  'LookAtTFTask'
+  'TrajectoryTask',
+  'VectorOrientationTask'
   ]
   $('#metatask-objects').html(make_list_group('metatask', metatask_objects));
 

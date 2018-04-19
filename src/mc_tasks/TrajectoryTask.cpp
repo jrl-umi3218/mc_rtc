@@ -470,7 +470,7 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
           }
         }
       }
-      else if(config.has("target"))
+      else
       { // Absolute target pose
         X_0_t = config("target");
 
@@ -493,33 +493,33 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
       std::shared_ptr<mc_tasks::TrajectoryTask> t;
       if(config.has("nrWP"))
       {
-        unsigned int nrWP = config("nrWP", 0u);
+        unsigned int nrWP = config("nrWP");
         t = std::make_shared<mc_tasks::TrajectoryTask>(
-            solver.robots(),
-            robotIndex,
-            config("surface"),
-            X_0_t,
-            config("duration"),
-            config("stiffness"),
-            config("posWeight"),
-            config("oriWeight"),
-            nrWP,
-            oriWp
+              solver.robots(),
+              robotIndex,
+              config("surface"),
+              X_0_t,
+              config("duration"),
+              config("stiffness"),
+              config("posWeight"),
+              config("oriWeight"),
+              nrWP,
+              oriWp
             );
       }
       else
       {
         t = std::make_shared<mc_tasks::TrajectoryTask>(
-            solver.robots(),
-            robotIndex,
-            config("surface"),
-            X_0_t,
-            config("duration"),
-            config("stiffness"),
-            config("posWeight"),
-            config("oriWeight"),
-            waypoints,
-            oriWp
+              solver.robots(),
+              robotIndex,
+              config("surface"),
+              X_0_t,
+              config("duration"),
+              config("stiffness"),
+              config("posWeight"),
+              config("oriWeight"),
+              waypoints,
+              oriWp
             );
       }
       t->load(solver, config);
