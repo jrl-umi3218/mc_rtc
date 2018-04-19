@@ -1,6 +1,7 @@
 #include <mc_rtc/Configuration.h>
 
 #include <mc_rtc/logging.h>
+#include <mc_rbdyn/rpy_utils.h>
 
 #include "internals/json.h"
 
@@ -387,17 +388,33 @@ Configuration::operator Eigen::Quaterniond() const
 
 Configuration::operator Eigen::Matrix3d() const
 {
-  if(v.isArray() && v.size() == 9 && v[0].impl->isNumeric())
+  if(v.isArray() && v[0].impl->isNumeric())
   {
-    Eigen::Matrix3d m;
-    for(size_t i = 0; i < 3; ++i)
+    // Matrix representaton
+    if(v.size() == 9)
     {
-      for(size_t j = 0; j < 3; ++j)
+      Eigen::Matrix3d m;
+      for(size_t i = 0; i < 3; ++i)
       {
-        m(i,j) = v[3*i+j].impl->asDouble();
+        for(size_t j = 0; j < 3; ++j)
+        {
+          m(i,j) = v[3*i+j].impl->asDouble();
+        }
       }
+      return m;
     }
-    return m;
+    // RPY representation
+    if(v.size() == 3)
+    {
+      return mc_rbdyn::rpyToMat(v[0].impl->asDouble(), v[1].impl->asDouble(), v[2].impl->asDouble());
+    }
+    // Quaternion representation
+    if(v.size() == 4)
+    {
+      return Eigen::Quaterniond(v[0].impl->asDouble(), v[1].impl->asDouble(),
+                                v[2].impl->asDouble(), v[3].impl->asDouble())
+                               .normalized().toRotationMatrix();
+    }
   }
   throw Configuration::Exception("Stored Json value is not a Matrix3d");
 }
