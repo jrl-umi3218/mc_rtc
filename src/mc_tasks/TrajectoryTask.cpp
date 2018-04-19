@@ -2,7 +2,6 @@
 #include <mc_tasks/MetaTaskLoader.h>
 
 #include <mc_rbdyn/Surface.h>
-#include <mc_rbdyn/rpy_utils.h>
 #include <mc_trajectory/spline_utils.h>
 
 namespace mc_tasks
@@ -443,8 +442,8 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
 
         const sva::PTransformd& targetSurface = robot.surface(targetSurfaceName).X_0_s(robot);
         const Eigen::Vector3d trans = c("offset_translation", Eigen::Vector3d::Zero().eval());
-        const Eigen::Vector3d rpy = c("offset_rotation", Eigen::Vector3d::Zero().eval());
-        sva::PTransformd offset(mc_rbdyn::rpyToMat(rpy), trans);
+        const Eigen::Matrix3d rot = c("offset_rotation", Eigen::Matrix3d::Identity().eval());
+        sva::PTransformd offset(rot, trans);
         X_0_t = offset * targetSurface;
 
         if(c.has("controlPoints"))
@@ -462,11 +461,11 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
 
         if(c.has("oriWaypoints"))
         {
-          const std::vector<std::pair<double, Eigen::Vector3d>>& oriWaypoints = c("oriWaypoints");
+          std::vector<std::pair<double, Eigen::Matrix3d>> oriWaypoints = c("oriWaypoints");
           for(const auto & wp : oriWaypoints)
           {
-            const sva::PTransformd rpy_offset(mc_rbdyn::rpyToMat(wp.second));
-            const sva::PTransformd ori = rpy_offset * targetSurface;
+            const sva::PTransformd offset{wp.second};
+            const sva::PTransformd ori = offset * targetSurface;
             oriWp.push_back(std::make_pair(wp.first, ori.rotation()));
           }
         }
@@ -488,15 +487,7 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
           }
         }
 
-        if(config.has("oriWaypoints"))
-        {
-          std::vector<std::pair<double, Eigen::Vector3d>> oriWaypoints = config("oriWaypoints");
-          for(const auto & wp : oriWaypoints)
-          {
-            const auto& rpy = wp.second;
-            oriWp.push_back(std::make_pair(wp.first, mc_rbdyn::rpyToMat(rpy)));
-          }
-        }
+        oriWp = config("oriWaypoints", std::vector<std::pair<double,Eigen::Matrix3d>>{});
       }
 
       std::shared_ptr<mc_tasks::TrajectoryTask> t;
