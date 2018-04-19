@@ -59,7 +59,7 @@ cdef extern from "<mc_control/fsm/State.h>" namespace "mc_control::fsm":
   cdef cppclass State:
     pass
 
-cdef extern from "<mc_control/fsm/states/PythonState.h>" namespace "mc_control::fsm":
+cdef extern from "<mc_control/fsm/PythonState.h>" namespace "mc_control::fsm":
   cdef cppclass PythonState:
     configure_cb configure_
     run_cb run_
