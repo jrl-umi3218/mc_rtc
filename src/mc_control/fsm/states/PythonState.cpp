@@ -1,4 +1,4 @@
-#include <mc_control/fsm/states/PythonState.h>
+#include <mc_control/fsm/PythonState.h>
 
 extern "C"
 {
