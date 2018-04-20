@@ -65,6 +65,22 @@ struct MC_RTC_ROS_DLLAPI ROSBridge
    * by mc_rtc
    *
    */
+  static void init_robot_publisher(const std::string& publisher, double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::vector<std::string>> & gripperJ, const std::map<std::string, std::vector<double>> & gripperQ);
+
+  /** Update the robot publisher state
+   *
+   * \param publisher Name of the publisher
+   *
+   * \param dt Controller timestep
+   *
+   * \param robot Which robot to publish
+   *
+   * \param gripperJ List of gripper joints managed by mc_rtc
+   *
+   * \param gripperQ Actual gripper values for the gripper joints managed
+   * by mc_rtc
+   *
+   */
   static void update_robot_publisher(const std::string& publisher, double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::vector<std::string>> & gripperJ, const std::map<std::string, std::vector<double>> & gripperQ);
 
   static void activate_services(mc_control::MCGlobalController &ctl);
@@ -101,6 +117,9 @@ public:
 
   /*! \brief Destructor */
   ~RobotPublisher();
+
+  /*! \brief Initialize the publisher */
+  void init(double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::vector<std::string>> & gripperJ, const std::map<std::string, std::vector<double>> & gripperQ);
 
   /*! \brief Update the publisher */
   void update(double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::vector<std::string>> & gripperJ, const std::map<std::string, std::vector<double>> & gripperQ);

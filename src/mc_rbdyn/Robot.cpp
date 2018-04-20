@@ -170,13 +170,12 @@ Robot::Robot(Robots & robots, unsigned int robots_idx, bool loadFiles,
 
   name_ = module_.name;
 
-  if(base)
+  bodyTransforms_.resize(mb().bodies().size());
+  const auto & bbts = base ? mbg().bodiesBaseTransform(mb().body(0).name(), *base) : mbg().bodiesBaseTransform(mb().body(0).name());
+  for(size_t i = 0; i < mb().bodies().size(); ++i)
   {
-    bodyTransforms_ = mbg().bodiesBaseTransform(mb().body(0).name(), *base);
-  }
-  else
-  {
-    bodyTransforms_ = mbg().bodiesBaseTransform(mb().body(0).name());
+    const auto & b = mb().body(i);
+    bodyTransforms_[i] = bbts.at(b.name());
   }
 
   if(module_.bounds().size() != 6)
@@ -644,12 +643,22 @@ const Robot::convex_pair_t & Robot::convex(const std::string & cName) const
 
 const sva::PTransformd & Robot::bodyTransform(const std::string& bName) const
 {
-  if(bodyTransforms_.count(bName) == 0)
+  if(!hasBody(bName))
   {
     LOG_ERROR("No body transform with name " << bName << " found in this robot")
     throw("Body transform does not exist");
   }
-  return bodyTransforms_.at(bName);
+  return bodyTransforms_[bodyIndexByName(bName)];
+}
+
+const sva::PTransformd & Robot::bodyTransform(int bodyIndex) const
+{
+  return bodyTransforms_[bodyIndex];
+}
+
+const std::vector<sva::PTransformd> & Robot::bodyTransforms() const
+{
+  return bodyTransforms_;
 }
 
 const sva::PTransformd & Robot::collisionTransform(const std::string& cName) const
@@ -666,7 +675,7 @@ void Robot::fixSurfaces()
 {
   for(auto & s : surfaces_)
   {
-    const sva::PTransformd & trans = bodyTransforms_[s.second->bodyName()];
+    const sva::PTransformd & trans = bodyTransform(s.second->bodyName());
     s.second->X_b_s(s.second->X_b_s()*trans);
   }
 }
@@ -676,7 +685,7 @@ void Robot::fixCollisionTransforms()
   for(auto & ct : collisionTransforms_)
   {
     assert(bodyTransforms_.count(ct.first));
-    const auto & trans = bodyTransforms_[ct.first];
+    const auto & trans = bodyTransform(ct.first);
     ct.second = ct.second * trans;
   }
 }

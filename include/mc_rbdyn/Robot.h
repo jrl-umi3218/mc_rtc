@@ -374,6 +374,12 @@ public:
    */
   const sva::PTransformd & bodyTransform(const std::string& bName) const;
 
+  /** Access body transform by index */
+  const sva::PTransformd & bodyTransform(int bodyIndex) const;
+
+  /** Access body transform vector */
+  const std::vector<sva::PTransformd> & bodyTransforms() const;
+
   /** Access transformation between the collision mesh and the body */
   const sva::PTransformd & collisionTransform(const std::string& cName) const;
 
@@ -424,7 +430,7 @@ private:
   unsigned int robots_idx_;
   std::string name_;
   Eigen::Vector3d zmp_;
-  std::map<std::string, sva::PTransformd> bodyTransforms_;
+  std::vector<sva::PTransformd> bodyTransforms_;
   std::vector< std::vector<double> > ql_;
   std::vector< std::vector<double> > qu_;
   std::vector< std::vector<double> > vl_;

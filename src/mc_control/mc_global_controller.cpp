@@ -163,6 +163,7 @@ void MCGlobalController::init(const std::vector<double> & initq, const std::arra
     });
   }
   controller_->reset({q});
+  init_publishers();
 }
 
 void MCGlobalController::setSensorPosition(const Eigen::Vector3d & pos)
@@ -331,6 +332,8 @@ bool MCGlobalController::run()
       }
       next_controller_->reset({controller_->robot().mbc().q});
       controller_ = next_controller_;
+      /** Initialize publishers again if the environment changed */
+      init_publishers();
     }
     next_controller_ = 0;
     current_ctrl = next_ctrl;
@@ -613,6 +616,30 @@ bool MCGlobalController::EnableController(const std::string & name)
       LOG_ERROR(name << " controller not enabled.")
     }
     return false;
+  }
+}
+
+void MCGlobalController::init_publishers()
+{
+  // Publish controlled robot
+  if(config.publish_control_state)
+  {
+    mc_rtc::ROSBridge::init_robot_publisher("control", timestep(), robot(), gripperJoints(), gripperQ());
+  }
+  // Publish environment state
+  if(config.publish_env_state)
+  {
+    const auto & robots = controller_->robots();
+    for(size_t i = 1; i < robots.robots().size(); ++i)
+    {
+      mc_rtc::ROSBridge::init_robot_publisher("control/env_" + std::to_string(i), timestep(), robots.robot(i), {}, {});
+    }
+  }
+  // Publish real robot
+  if(config.publish_real_state)
+  {
+    auto& real_robot = real_robots->robot();
+    mc_rtc::ROSBridge::init_robot_publisher("real", timestep(), real_robot, gripperJoints(), gripperQ());
   }
 }
 

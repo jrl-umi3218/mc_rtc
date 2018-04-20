@@ -492,6 +492,8 @@ private:
 
   std::unique_ptr<mc_control::ControllerServer> server_ = nullptr;
 
+  void init_publishers();
+
   void publish_robots();
 
   void start_log();
