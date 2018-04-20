@@ -132,7 +132,11 @@ void StateBuilder::update(Category & category,
     }
     auto c = out(element.name());
     e.addData(element, c);
-    auto g = c.add("GUI");
+    if(!c.has("GUI"))
+    {
+      c.add("GUI");
+    }
+    auto g = c("GUI");
     e.addGUI(element, g);
   }
   for(auto & c : category.sub)
