@@ -408,8 +408,8 @@ bool MCGlobalController::run()
     gui_dt = clock::now() - start_gui_t;
   }
   global_run_dt = clock::now() - start_run_t;
-  // Percentage of time spent not solving the QP
-  framework_cost = 100 * (1 - solver_solve_t / global_run_dt.count());
+  // Percentage of time spent not updating/solving the QP
+  framework_cost = 100 * (1 - solver_build_and_solve_t / global_run_dt.count());
   return running;
 }
 
