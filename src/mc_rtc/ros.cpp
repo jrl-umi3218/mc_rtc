@@ -225,7 +225,7 @@ void RobotPublisherImpl::update(double, const mc_rbdyn::Robot & robot, const std
         mbc.q[jIndex][0] = q;
       }
     }
-    if(gJoints.size() == 0) { continue; } // unlikely
+    if(gJoints.size() == 0 || !robot.hasJoint(gJoints[0])) { continue; } // unlikely
     /** Perform FK starting at the gripper */
     int startIndex = robot.jointIndexByName(gJoints[0]);
     for(int jIndex = startIndex;
