@@ -263,7 +263,7 @@ def test_configuration_writing():
   assert(config_test("quat", eigen.Quaterniond).isApprox(ref_quat))
   assert(config_test("int_v", [int]) == ref_int_v)
   assert(config_test("double_v", [float]) == ref_double_v)
-  assert(config_test("double_v_v", [[0]]) == ref_double_v_v)
+  assert(config_test("double_v_v", [[0.]]) == ref_double_v_v)
   assert(all([(v - ref_v).norm() < 1e-9 for v, ref_v in zip(config_test("v3d_v", [eigen.Vector3d]), ref_v3d_v)]))
   assert(config_test("dict")("int", int) == ref_int)
   assert(config_test("dict2")("double_v", [float]) == ref_double_v)
