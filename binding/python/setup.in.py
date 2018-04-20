@@ -80,7 +80,9 @@ class pkg_config(object):
     self.libraries = ['mc_control', 'mc_rbdyn', 'mc_rtc_utils', 'mc_solver', 'mc_tasks', 'mc_rtc_ros', 'mc_rtc_gui', 'mc_control_fsm']
     self.libraries += [ os.path.splitext(os.path.basename(b))[0].replace('lib','') for b in '@Boost_LIBRARIES@'.split(';') if len(b) ]
     mc_rtc_location = '@MC_RTC_LOCATION@'
+    mc_control_fsm_location = '@MC_CONTROL_FSM_LOCATION@'
     self.library_dirs.append(os.path.dirname(mc_rtc_location))
+    self.library_dirs.append(os.path.dirname(mc_control_fsm_location))
     self.found = True
 
 python_libs = []
