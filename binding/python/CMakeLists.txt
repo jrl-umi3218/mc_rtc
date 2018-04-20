@@ -48,7 +48,7 @@ add_custom_target(mc_rtc-python-bindings ALL
           mc_solver/c_mc_solver.pxd mc_solver/mc_solver.pxd mc_solver/mc_solver.pyx
           mc_tasks/c_mc_tasks.pxd mc_tasks/mc_tasks.pxd mc_tasks/mc_tasks.pyx
 )
-add_dependencies(mc_rtc-python-bindings mc_control)
+add_dependencies(mc_rtc-python-bindings mc_control mc_control_fsm)
 
 set(BINDINGS_GENERATED_SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}/mc_control/mc_control.cpp
