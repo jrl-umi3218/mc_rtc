@@ -16,6 +16,7 @@ namespace rapidjson
 #include "rapidjson/ostreamwrapper.h"
 #include "rapidjson/pointer.h"
 #include "rapidjson/prettywriter.h"
+#include "rapidjson/stringbuffer.h"
 #include "rapidjson/writer.h"
 #include "rapidjson/error/en.h"
 
@@ -93,28 +94,26 @@ inline bool loadDocument(const std::string & path, rapidjson::Document & documen
 
 /*! Dump a JSON document into a stream
  *
- * \param os Output stream
- *
  * \param document Document to be dumped
  *
  * \param pretty Pretty output
  *
  */
-inline void dumpDocument(std::ostream & os,
-                         rapidjson::Value & document,
-                         bool pretty)
+inline std::string dumpDocumentInternal(rapidjson::Value & document,
+                                 bool pretty)
 {
-  rapidjson::OStreamWrapper osw(os);
+  rapidjson::StringBuffer buffer;
   if(pretty)
   {
-    rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+    rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
     document.Accept(writer);
   }
   else
   {
-    rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
+    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
     document.Accept(writer);
   }
+  return {buffer.GetString(), buffer.GetSize()};
 }
 
 /*! Dump a JSON document and get the string back
@@ -126,9 +125,7 @@ inline void dumpDocument(std::ostream & os,
  */
 inline std::string dumpDocument(rapidjson::Value & document, bool pretty)
 {
-  std::ostringstream os;
-  dumpDocument(os, document, pretty);
-  return os.str();
+  return dumpDocumentInternal(document, pretty);
 }
 
 /*! Save a JSON document to the provided disk location
@@ -141,7 +138,7 @@ inline std::string dumpDocument(rapidjson::Value & document, bool pretty)
 inline void saveDocument(const std::string & path, rapidjson::Value & document, bool pretty = false)
 {
   std::ofstream ofs(path);
-  dumpDocument(ofs, document, pretty);
+  ofs << dumpDocument(document, pretty);
 }
 
 /*! Create a JSON value from a C++ value
