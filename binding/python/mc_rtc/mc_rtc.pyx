@@ -121,7 +121,7 @@ cdef class Configuration(object):
       self.impl = NULL
   @staticmethod
   def fromData(data):
-    return ConfigurationFromValue(c_mc_rtc.Configuration.fromData(data))
+    return ConfigurationFromValue(c_mc_rtc.ConfigurationFromData(data))
   # Convert Python object to Configuration
   @staticmethod
   def from_(value):

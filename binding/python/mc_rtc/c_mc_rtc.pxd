@@ -63,9 +63,6 @@ cdef extern from "<mc_rtc/Configuration.h>" namespace "mc_rtc":
 
     cppbool remove(const string&)
 
-    @staticmethod
-    Configuration fromData(const string&)
-
 cdef extern from "mc_rtc_wrapper.hpp":
   cdef cppclass function[T]:
     pass
@@ -80,3 +77,4 @@ cdef extern from "mc_rtc_wrapper.hpp":
   T get_config_as[T](Configuration&) except +
   T get_config_as[T](Configuration&, const T&) except +
   Configuration get_as_config[T](const T&) except +
+  Configuration ConfigurationFromData(const string&)

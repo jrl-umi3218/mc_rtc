@@ -56,3 +56,8 @@ mc_rtc::Configuration get_as_config(const T & v)
   conf.add("v", v);
   return conf("v");
 }
+
+mc_rtc::Configuration ConfigurationFromData(const std::string & data)
+{
+  return mc_rtc::Configuration::fromData(data);
+}
