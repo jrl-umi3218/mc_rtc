@@ -26,6 +26,8 @@ namespace mc_rbdyn
 namespace mc_control
 {
   struct MCGlobalController;
+
+  struct Gripper;
 } /* mc_control */
 
 namespace mc_rtc
@@ -65,7 +67,7 @@ struct MC_RTC_ROS_DLLAPI ROSBridge
    * by mc_rtc
    *
    */
-  static void init_robot_publisher(const std::string& publisher, double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::vector<std::string>> & gripperJ, const std::map<std::string, std::vector<double>> & gripperQ);
+  static void init_robot_publisher(const std::string& publisher, double dt, const mc_rbdyn::Robot & robot);
 
   /** Update the robot publisher state
    *
@@ -75,13 +77,10 @@ struct MC_RTC_ROS_DLLAPI ROSBridge
    *
    * \param robot Which robot to publish
    *
-   * \param gripperJ List of gripper joints managed by mc_rtc
-   *
-   * \param gripperQ Actual gripper values for the gripper joints managed
-   * by mc_rtc
+   * \param grippers List of grippers managed by mc_rtc for this robot
    *
    */
-  static void update_robot_publisher(const std::string& publisher, double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::vector<std::string>> & gripperJ, const std::map<std::string, std::vector<double>> & gripperQ);
+  static void update_robot_publisher(const std::string& publisher, double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::shared_ptr<mc_control::Gripper>> & grippers = {});
 
   static void activate_services(mc_control::MCGlobalController &ctl);
 
@@ -112,17 +111,19 @@ public:
    * \param prefix TF prefix
    *
    * \param rate Publishing rate
+   *
+   * \param dt Control rate
    */
-  RobotPublisher(const std::string & prefix, unsigned int rate);
+  RobotPublisher(const std::string & prefix, double rate, double dt);
 
   /*! \brief Destructor */
   ~RobotPublisher();
 
   /*! \brief Initialize the publisher */
-  void init(double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::vector<std::string>> & gripperJ, const std::map<std::string, std::vector<double>> & gripperQ);
+  void init(const mc_rbdyn::Robot & robot);
 
   /*! \brief Update the publisher */
-  void update(double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::vector<std::string>> & gripperJ, const std::map<std::string, std::vector<double>> & gripperQ);
+  void update(double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::shared_ptr<mc_control::Gripper>> & grippers);
 private:
   std::unique_ptr<RobotPublisherImpl> impl;
 };

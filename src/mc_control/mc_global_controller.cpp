@@ -624,7 +624,7 @@ void MCGlobalController::init_publishers()
   // Publish controlled robot
   if(config.publish_control_state)
   {
-    mc_rtc::ROSBridge::init_robot_publisher("control", timestep(), robot(), gripperJoints(), gripperQ());
+    mc_rtc::ROSBridge::init_robot_publisher("control", timestep(), robot());
   }
   // Publish environment state
   if(config.publish_env_state)
@@ -632,14 +632,14 @@ void MCGlobalController::init_publishers()
     const auto & robots = controller_->robots();
     for(size_t i = 1; i < robots.robots().size(); ++i)
     {
-      mc_rtc::ROSBridge::init_robot_publisher("control/env_" + std::to_string(i), timestep(), robots.robot(i), {}, {});
+      mc_rtc::ROSBridge::init_robot_publisher("control/env_" + std::to_string(i), timestep(), robots.robot(i));
     }
   }
   // Publish real robot
   if(config.publish_real_state)
   {
     auto& real_robot = real_robots->robot();
-    mc_rtc::ROSBridge::init_robot_publisher("real", timestep(), real_robot, gripperJoints(), gripperQ());
+    mc_rtc::ROSBridge::init_robot_publisher("real", timestep(), real_robot);
   }
 }
 
@@ -648,7 +648,7 @@ void MCGlobalController::publish_robots()
   // Publish controlled robot
   if(config.publish_control_state)
   {
-    mc_rtc::ROSBridge::update_robot_publisher("control", timestep(), robot(), gripperJoints(), gripperQ());
+    mc_rtc::ROSBridge::update_robot_publisher("control", timestep(), robot(), controller_->grippers);
   }
   // Publish environment state
   if(config.publish_env_state)
@@ -656,14 +656,14 @@ void MCGlobalController::publish_robots()
     const auto & robots = controller_->robots();
     for(size_t i = 1; i < robots.robots().size(); ++i)
     {
-      mc_rtc::ROSBridge::update_robot_publisher("control/env_" + std::to_string(i), timestep(), robots.robot(i), {}, {});
+      mc_rtc::ROSBridge::update_robot_publisher("control/env_" + std::to_string(i), timestep(), robots.robot(i));
     }
   }
   // Publish real robot
   if(config.publish_real_state)
   {
     auto& real_robot = real_robots->robot();
-    mc_rtc::ROSBridge::update_robot_publisher("real", timestep(), real_robot, gripperJoints(), gripperQ());
+    mc_rtc::ROSBridge::update_robot_publisher("real", timestep(), real_robot, controller_->grippers);
   }
 }
 

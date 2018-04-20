@@ -24,6 +24,7 @@
 #include <mc_rtc_msgs/send_recv_msg.h>
 #include <mc_rtc_msgs/move_com.h>
 #include <mc_control/mc_global_controller.h>
+#include <mc_control/generic_gripper.h>
 
 #include <thread>
 #endif
@@ -81,14 +82,13 @@ inline void update_tf(geometry_msgs::TransformStamped & msg, const sva::PTransfo
 
 struct RobotPublisherImpl
 {
-  RobotPublisherImpl(ros::NodeHandle & nh, const std::string& prefix, unsigned int rate);
+  RobotPublisherImpl(ros::NodeHandle & nh, const std::string& prefix, double rate, double dt);
 
   ~RobotPublisherImpl();
 
-  void init(double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::vector<std::string>> & gJs, const std::map<std::string, std::vector<double>> & gQs);
+  void init(const mc_rbdyn::Robot & robot);
 
-  void update(double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::vector<std::string>> & gJs, const std::map<std::string, std::vector<double>> & gQs);
-
+  void update(double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::shared_ptr<mc_control::Gripper>> & grippers);
 private:
   ros::NodeHandle & nh;
   ros::Publisher j_state_pub;
@@ -122,7 +122,7 @@ private:
   void publishThread();;
 };
 
-RobotPublisherImpl::RobotPublisherImpl(ros::NodeHandle & nh, const std::string& prefix, unsigned int rate)
+RobotPublisherImpl::RobotPublisherImpl(ros::NodeHandle & nh, const std::string& prefix, double rate, double dt)
 : nh(nh),
   j_state_pub(this->nh.advertise<sensor_msgs::JointState>(prefix+"joint_states", 1)),
   imu_pub(this->nh.advertise<sensor_msgs::Imu>(prefix+"imu", 1)),
@@ -130,7 +130,7 @@ RobotPublisherImpl::RobotPublisherImpl(ros::NodeHandle & nh, const std::string& 
   tf_caster(),
   prefix(prefix),
   running(true), seq(0), msgs(),
-  rate(rate),
+  rate(static_cast<unsigned int>(ceil(1/(rate*dt)))),
   th(std::bind(&RobotPublisherImpl::publishThread, this))
 {
 }
@@ -141,7 +141,7 @@ RobotPublisherImpl::~RobotPublisherImpl()
   th.join();
 }
 
-void RobotPublisherImpl::init(double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::vector<std::string>> & gJs, const std::map<std::string, std::vector<double>> & gQs)
+void RobotPublisherImpl::init(const mc_rbdyn::Robot & robot)
 {
   if(&robot == previous_robot) { return; }
   previous_robot = &robot;
@@ -196,12 +196,11 @@ void RobotPublisherImpl::init(double dt, const mc_rbdyn::Robot & robot, const st
   }
 }
 
-void RobotPublisherImpl::update(double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::vector<std::string>> & gJs, const std::map<std::string, std::vector<double>> & gQs)
+void RobotPublisherImpl::update(double, const mc_rbdyn::Robot & robot, const std::map<std::string, std::shared_ptr<mc_control::Gripper>> & grippers)
 {
-  if(&robot != previous_robot) { init(dt, robot, gJs, gQs); }
+  if(&robot != previous_robot) { init(robot); }
 
-  unsigned int skip = static_cast<unsigned int>(ceil(1/(rate*dt)));
-  if(++seq % skip) { return; }
+  if(++seq % rate) { return; }
 
   ros::Time tm = ros::Time::now();
 
@@ -209,11 +208,10 @@ void RobotPublisherImpl::update(double dt, const mc_rbdyn::Robot & robot, const 
   size_t tfs_i = 0;
 
   mbc = robot.mbc();
-  for(const auto & g : gJs)
+  for(const auto & g : grippers)
   {
-    const auto & gName = g.first;
-    const auto & gJoints = g.second;
-    const auto & gQ = gQs.at(gName);
+    const auto & gJoints = g.second->names;
+    const auto & gQ = g.second->q();
     for(size_t i = 0; i < gJoints.size(); ++i)
     {
       const auto & j = gJoints[i];
@@ -334,22 +332,19 @@ void RobotPublisherImpl::update(double dt, const mc_rbdyn::Robot & robot, const 
     tf.header.seq = data.js.header.seq;
   }
 
-  if(seq % skip == 0)
+  if(!msgs.push(data))
   {
-    if(!msgs.push(data))
-    {
-      LOG_ERROR("Full ROS message publishing queue")
-    }
+    LOG_ERROR("Full ROS message publishing queue")
   }
 }
 
-RobotPublisher::RobotPublisher(const std::string & prefix, unsigned int rate)
+RobotPublisher::RobotPublisher(const std::string & prefix, double rate, double dt)
   : impl(nullptr)
 {
   auto nh = ROSBridge::get_node_handle();
   if(nh)
   {
-    impl.reset(new RobotPublisherImpl(*nh, prefix, rate));
+    impl.reset(new RobotPublisherImpl(*nh, prefix, rate, dt));
   }
 }
 
@@ -357,19 +352,19 @@ RobotPublisher::~RobotPublisher()
 {
 }
 
-void RobotPublisher::init(double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::vector<std::string>> & gripperJ, const std::map<std::string, std::vector<double>> & gripperQ)
+void RobotPublisher::init(const mc_rbdyn::Robot & robot)
 {
   if(impl)
   {
-    impl->init(dt, robot, gripperJ, gripperQ);
+    impl->init(robot);
   }
 }
 
-void RobotPublisher::update(double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::vector<std::string>> & gripperJ, const std::map<std::string, std::vector<double>> & gripperQ)
+void RobotPublisher::update(double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::shared_ptr<mc_control::Gripper>> & grippers)
 {
   if(impl)
   {
-    impl->update(dt, robot, gripperJ, gripperQ);
+    impl->update(dt, robot, grippers);
   }
 }
 
@@ -545,7 +540,7 @@ struct ROSBridgeImpl
   std::shared_ptr<ros::NodeHandle> nh;
   std::map<std::string, std::shared_ptr<RobotPublisher>> rpubs;
   std::unique_ptr<MCGlobalControllerServicesImpl> services;
-  unsigned int publish_rate = 100;
+  double publish_rate = 100;
 };
 
 ROSBridgeImpl & ROSBridge::impl_()
@@ -563,28 +558,28 @@ std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
 void ROSBridge::set_publisher_timestep(double timestep)
 {
   static auto & impl = impl_();
-  impl.publish_rate = static_cast<unsigned int>(floor(1/timestep));
+  impl.publish_rate = 1/timestep;
 }
 
-void ROSBridge::init_robot_publisher(const std::string& publisher, double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::vector<std::string>> & gJ, const std::map<std::string, std::vector<double>> & gQ)
+void ROSBridge::init_robot_publisher(const std::string& publisher, double dt, const mc_rbdyn::Robot & robot)
 {
   static auto & impl = impl_();
   if(impl.rpubs.count(publisher) == 0)
   {
-    impl.rpubs[publisher] = std::make_shared<RobotPublisher>(publisher + "/", impl.publish_rate);
+    impl.rpubs[publisher] = std::make_shared<RobotPublisher>(publisher + "/", impl.publish_rate, dt);
   }
-  impl.rpubs[publisher]->init(dt, robot, gJ, gQ);
+  impl.rpubs[publisher]->init(robot);
 }
 
-void ROSBridge::update_robot_publisher(const std::string& publisher, double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::vector<std::string>> & gJ, const std::map<std::string, std::vector<double>> & gQ)
+void ROSBridge::update_robot_publisher(const std::string & publisher, double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::shared_ptr<mc_control::Gripper>> & grippers)
 {
   static auto & impl = impl_();
   if(impl.rpubs.count(publisher) == 0)
   {
-    impl.rpubs[publisher] = std::make_shared<RobotPublisher>(publisher + "/", impl.publish_rate);
-    impl.rpubs[publisher]->init(dt, robot, gJ, gQ);
+    impl.rpubs[publisher] = std::make_shared<RobotPublisher>(publisher + "/", impl.publish_rate, dt);
+    impl.rpubs[publisher]->init(robot);
   }
-  impl.rpubs[publisher]->update(dt, robot, gJ, gQ);
+  impl.rpubs[publisher]->update(dt, robot, grippers);
 }
 
 void ROSBridge::activate_services(mc_control::MCGlobalController& ctl)
@@ -630,7 +625,11 @@ void ROSBridge::set_publisher_timestep(double /*timestep*/)
 {
 }
 
-void ROSBridge::update_robot_publisher(const std::string&, double, const mc_rbdyn::Robot &, const std::map<std::string, std::vector<std::string>> &, const std::map<std::string, std::vector<double>> &)
+void ROSBridge::init_robot_publisher(const std::string&, const mc_rbdyn::Robot&, double dt)
+{
+}
+
+void ROSBridge::update_robot_publisher(const std::string&, double, const mc_rbdyn::Robot &, const std::map<std::string, std::vector<std::string>> &, const std::map<std::string, std::shared_ptr<mc_control::Gripper>> &)
 {
 }
 
