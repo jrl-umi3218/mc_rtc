@@ -213,7 +213,7 @@ void RobotPublisherImpl::update(double, const mc_rbdyn::Robot & robot, const std
   for(const auto & g : grippers)
   {
     const auto & gJoints = g.second->names;
-    const auto & gQ = g.second->q();
+    const auto & gQ = g.second->_q;
     for(size_t i = 0; i < gJoints.size(); ++i)
     {
       const auto & j = gJoints[i];
