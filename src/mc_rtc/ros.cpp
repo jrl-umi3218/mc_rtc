@@ -116,7 +116,8 @@ private:
   bool running;
   uint32_t seq;
   CircularBuffer<RobotStateData, 128> msgs;
-  unsigned int rate;
+  double rate;
+  unsigned int skip;
   std::thread th;
 
   void publishThread();;
@@ -130,7 +131,8 @@ RobotPublisherImpl::RobotPublisherImpl(ros::NodeHandle & nh, const std::string& 
   tf_caster(),
   prefix(prefix),
   running(true), seq(0), msgs(),
-  rate(static_cast<unsigned int>(ceil(1/(rate*dt)))),
+  rate(rate),
+  skip(static_cast<unsigned int>(ceil(1/(rate*dt)))),
   th(std::bind(&RobotPublisherImpl::publishThread, this))
 {
 }
@@ -200,7 +202,7 @@ void RobotPublisherImpl::update(double, const mc_rbdyn::Robot & robot, const std
 {
   if(&robot != previous_robot) { init(robot); }
 
-  if(++seq % rate) { return; }
+  if(++seq % skip) { return; }
 
   ros::Time tm = ros::Time::now();
 
