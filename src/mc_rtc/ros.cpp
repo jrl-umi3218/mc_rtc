@@ -627,11 +627,11 @@ void ROSBridge::set_publisher_timestep(double /*timestep*/)
 {
 }
 
-void ROSBridge::init_robot_publisher(const std::string&, const mc_rbdyn::Robot&, double dt)
+void ROSBridge::init_robot_publisher(const std::string&, double, const mc_rbdyn::Robot&)
 {
 }
 
-void ROSBridge::update_robot_publisher(const std::string&, double, const mc_rbdyn::Robot &, const std::map<std::string, std::vector<std::string>> &, const std::map<std::string, std::shared_ptr<mc_control::Gripper>> &)
+void ROSBridge::update_robot_publisher(const std::string&, double, const mc_rbdyn::Robot &, const std::map<std::string, std::shared_ptr<mc_control::Gripper>> &)
 {
 }
 
