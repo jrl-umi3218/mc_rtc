@@ -167,6 +167,15 @@ public:
     return X_fsactual_0_.dualMul(w_fsactual);
   }
 
+  /*! \brief Get target wrench in the world frame
+   *
+   */
+  sva::ForceVecd worldTargetWrench() const
+  {
+    sva::PTransformd X_surf_0 = surface_.X_0_s(robot_).inv();
+    return X_surf_0.dualMul(targetWrench_);
+  }
+
   /*! \brief Set the maximum translation velocity of the task */
   void maxLinearVel(const Eigen::Vector3d & maxLinearVel)
   {
