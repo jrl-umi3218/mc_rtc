@@ -10,6 +10,7 @@ cimport eigen.c_eigen as c_eigen
 cimport sva.c_sva as c_sva
 
 cimport mc_rbdyn.c_mc_rbdyn as c_mc_rbdyn
+cimport mc_control.c_mc_control as c_mc_control
 
 cdef extern from "<mc_rtc/config.h>" namespace "mc_rtc":
   const char * MC_ENV_DESCRIPTION_PATH
@@ -21,15 +22,19 @@ cdef extern from "<mc_rtc/config.h>" namespace "mc_rtc":
   const char * DATA_PATH
   const char * CONF_PATH
 
+cdef extern from "<memory>" namespace "std" nogil:
+  cdef cppclass shared_ptr[T]:
+    shared_ptr(T*)
+    T* get()
+
 include "mc_rtc_config.pxi"
 IF MC_RTC_HAS_ROS == 1:
   cdef extern from "<mc_rtc/ros.h>" namespace "mc_rtc":
     cdef cppclass RobotPublisher:
-      RobotPublisher(const string& prefix, unsigned int rate)
+      RobotPublisher(const string& prefix, double rate, double dt)
 
       void update(double dt, const c_mc_rbdyn.Robot & robot,
-                  const mapStrVecStr& gripperJ,
-                  const mapStrVecDouble& gripperQ)
+                  const cppmap[string, shared_ptr[c_mc_control.Gripper]]  &)
 
 cdef extern from "<mc_rtc/log/Logger.h>" namespace "mc_rtc":
   cdef cppclass Logger:

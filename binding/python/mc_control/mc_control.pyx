@@ -23,6 +23,24 @@ from libcpp.string cimport string
 from libcpp.vector cimport vector
 from libcpp cimport bool as cppbool
 
+cdef class Gripper(object):
+  def __cinit__(self):
+    self.impl = c_mc_control.GripperPtr(NULL)
+  cdef c_mc_control.Gripper * _impl(self):
+    assert(self.impl.get() != NULL)
+    return self.impl.get()
+  property names:
+    def __get__(self):
+      return self._impl().names
+  property q:
+    def __get__(self):
+      return self._impl()._q
+
+cdef Gripper GripperFromShPtr(c_mc_control.shared_ptr[c_mc_control.Gripper] p):
+  cdef Gripper ret = Gripper()
+  ret.impl = p
+  return ret
+
 cdef class ControllerResetData(object):
   def __cinit__(self):
     pass
@@ -83,6 +101,9 @@ cdef class MCController(object):
   property qpsolver:
     def __get__(self):
       return mc_solver.QPSolverFromRef(self.base.solver())
+  property grippers:
+    def __get__(self):
+      return {g.first: GripperFromShPtr(g.second) for g in self.base.grippers}
 
 cdef MCController MCControllerFromPtr(c_mc_control.MCController * p):
     cdef MCController ret = MCController()

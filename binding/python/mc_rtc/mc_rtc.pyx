@@ -5,6 +5,8 @@ from cython.operator cimport dereference as deref
 cimport mc_rtc.c_mc_rtc as c_mc_rtc
 
 cimport mc_rbdyn.mc_rbdyn as mc_rbdyn
+cimport mc_control.c_mc_control as c_mc_control
+cimport mc_control.mc_control as mc_control
 
 cimport eigen.c_eigen as c_eigen
 cimport eigen.eigen as eigen
@@ -34,21 +36,15 @@ IF MC_RTC_HAS_ROS == 1:
   cdef class RobotPublisher(object):
     cdef c_mc_rtc.RobotPublisher * impl
 
-    def __cinit__(self, prefix, rate):
-      self.impl = new c_mc_rtc.RobotPublisher(prefix, rate)
+    def __cinit__(self, prefix, rate, dt):
+      self.impl = new c_mc_rtc.RobotPublisher(prefix, rate, dt)
 
-    def update(self, dt, mc_rbdyn.Robot robot, gripperJ = {}, gripperQ = {}):
-      cdef c_mc_rtc.mapStrVecStr c_gripperJ
-      cdef c_mc_rtc.mapStrVecDouble c_gripperQ
-
-      # Cython knows how to convert vectors but not maps of vectors
-      for k, v in gripperJ.items():
-        c_gripperJ[k] = v
-
-      for k, v in gripperQ.items():
-        c_gripperQ[k] = v
-
-      self.impl.update(dt, deref(robot.impl), c_gripperJ, c_gripperQ)
+    def update(self, dt, mc_rbdyn.Robot robot, grippersIn):
+      cdef c_mc_control.GripperMap grippers
+      for name, gripper in grippersIn.items():
+        assert(isinstance(gripper, mc_control.Gripper))
+        grippers[name] = (<mc_control.Gripper>gripper).impl
+      self.impl.update(dt, deref(robot.impl), grippers)
 
 cdef c_eigen.Vector3d python_log_v3d(get_fn) with gil:
   cdef eigen.Vector3d ret = get_fn()

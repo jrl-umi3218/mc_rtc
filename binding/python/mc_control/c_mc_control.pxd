@@ -18,7 +18,16 @@ from libcpp cimport bool as cppbool
 
 cdef extern from "<memory>" namespace "std" nogil:
   cdef cppclass shared_ptr[T]:
+    shared_ptr(T*)
     T* get()
+
+cdef extern from "<mc_control/generic_gripper.h>" namespace "mc_control":
+  cdef cppclass Gripper:
+    vector[string] names
+    vector[double] _q
+
+ctypedef shared_ptr[Gripper] GripperPtr
+ctypedef cppmap[string, GripperPtr] GripperMap
 
 cdef extern from "<mc_control/mc_controller.h>" namespace "mc_control":
   cdef cppclass ControllerResetData:
@@ -36,10 +45,10 @@ cdef extern from "<mc_control/mc_controller.h>" namespace "mc_control":
     cppbool read_write_msg(string, string)
     vector[string] supported_robots()
     c_mc_rtc.Logger & logger()
-    c_mc_rtc_gui.shared_ptr[c_mc_rtc_gui.StateBuilder] gui()
+    shared_ptr[c_mc_rtc_gui.StateBuilder] gui()
 
     double timeStep
-    # FIXME Grippers?
+    GripperMap grippers
     ContactConstraint contactConstraint
     DynamicsConstraint dynamicsConstraint
     KinematicsConstraint kinematicsConstraint
