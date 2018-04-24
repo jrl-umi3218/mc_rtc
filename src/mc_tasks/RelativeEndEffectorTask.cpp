@@ -54,6 +54,21 @@ sva::PTransformd RelativeEndEffectorTask::get_ef_pose()
   return curTransform;
 }
 
+void RelativeEndEffectorTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
+{
+  EndEffectorTask::addToGUI(gui);
+  gui.removeElement({"Tasks", name_}, "pos_target");
+  gui.addElement(
+    {"Tasks", name_},
+    mc_rtc::gui::Transform("pos_target",
+                           [this]() { return curTransform * robots.robot(robotIndex).mbc().bodyPosW[relBodyIdx]; },
+                           [this](const sva::PTransformd & X_0_target)
+                           {
+                            set_ef_pose(X_0_target * robots.robot(robotIndex).mbc().bodyPosW[relBodyIdx].inv());
+                           })
+  );
+}
+
 }
 
 namespace
@@ -102,6 +117,7 @@ mc_tasks::MetaTaskPtr load_orientation_task(mc_solver::QPSolver & solver,
 {
   auto t = std::make_shared<mc_tasks::OrientationTask>(config("body"), solver.robots(), config("robotIndex"));
   configure_ori_task(t, solver, config);
+  t->load(solver, config);
   return t;
 }
 
@@ -118,6 +134,7 @@ mc_tasks::MetaTaskPtr load_position_task(mc_solver::QPSolver & solver,
     t = std::make_shared<mc_tasks::PositionTask>(config("body"), solver.robots(), config("robotIndex"));
   }
   configure_pos_task(t, solver, config);
+  t->load(solver, config);
   return t;
 }
 
@@ -135,6 +152,7 @@ mc_tasks::MetaTaskPtr load_ef_task(mc_solver::QPSolver & solver,
   }
   configure_pos_task(t->positionTask, solver, config);
   configure_ori_task(t->orientationTask, solver, config);
+  t->load(solver, config);
   return t;
 }
 
@@ -154,6 +172,7 @@ mc_tasks::MetaTaskPtr load_relef_task(mc_solver::QPSolver & solver,
   configure_ori_task(t->orientationTask, solver, config);
   t->set_ef_pose({t->orientationTask->orientation(),
                   t->positionTask->position()});
+  t->load(solver, config);
   return t;
 }
 

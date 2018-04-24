@@ -59,6 +59,8 @@ public:
   virtual void set_ef_pose(const sva::PTransformd & tf) override;
 
   virtual sva::PTransformd get_ef_pose() override;
+protected:
+  void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
 private:
   unsigned int relBodyIdx;
 

@@ -96,7 +96,7 @@ public:
 
   std::string bodyName;
   sva::PTransformd curTransform;
-private:
+protected:
   virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
 
   virtual void addToSolver(mc_solver::QPSolver & solver) override;
