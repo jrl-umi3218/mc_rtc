@@ -204,6 +204,16 @@ public:
     return SurfaceTransformTask::stiffness();
   }
 
+  /*! \brief Add a feedforward on top of force control. 
+   *
+   * \param vel Feedforward velocity in the world frame.
+   *
+   */
+  void refVel(const sva::MotionVecd & vel)
+  {
+    refVelFeedforward_ = vel;
+  }
+
 protected:
   Eigen::Vector3d maxAngularVel_ = Eigen::Vector3d(0.1, 0.1, 0.1);  // [rad] / [s]
   Eigen::Vector3d maxLinearVel_ = Eigen::Vector3d(0.1, 0.1, 0.1);  // [m] / [s]
@@ -241,6 +251,12 @@ private:
 
   void addToLogger(mc_rtc::Logger & logger) override;
   void removeFromLogger(mc_rtc::Logger & logger) override;
+
+  /** Surface transform's refVel() becomes internal to the task. An additional
+   * velocity offset can be added using refVelOffset().
+   *
+   */
+  using SurfaceTransformTask::refVel;
 
   /** Don't use surface transform's stiffness() setter as it applies critical
    * damping, which is usually not good for admittance control. Use
