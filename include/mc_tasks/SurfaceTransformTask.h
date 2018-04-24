@@ -53,18 +53,24 @@ public:
 
   void removeFromLogger(mc_rtc::Logger & logger) override;
 
-  /*! \brief Set trajectory task's reference velocity from motion vector.
+  /*! \brief Set trajectory task's reference velocity from motion vector in
+   * body coordinates.
    *
-   * \param vel Reference velocity.
+   * \param velB Reference velocity in body coordinates, i.e. velocity of the
+   * surface frame in the surface frame.
    *
    */
-  void refVel(const sva::MotionVecd & vel)
+  void refVelB(const sva::MotionVecd & velB)
   {
-    return TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::refVel(vel.vector());
+    return TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::refVel(velB.vector());
   }
 
 protected:
   std::string surfaceName;
+
+  /* Don't use parent's refVel() as the velocity frame (spatial or body) is
+   * ambiguous. */
+  using TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::refVel;
 };
 
 }

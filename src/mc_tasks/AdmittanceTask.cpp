@@ -80,13 +80,13 @@ void AdmittanceTask::update()
   Eigen::Vector3d angularVel = admittance_.couple().cwiseProduct(wrenchError_.couple());
   clampAndWarn(name_, linearVel, maxLinearVel_, "linear velocity", isClampingLinearVel_);
   clampAndWarn(name_, angularVel, maxAngularVel_, "angular velocity", isClampingAngularVel_);
-  refVel_ = sva::MotionVecd(angularVel, linearVel);
+  refVelB_ = sva::MotionVecd(angularVel, linearVel);
 
   // SC: we could do add an anti-windup strategy here, e.g. back-calculation.
   // Yet, keep in mind that our velocity bounds are artificial. Whenever
   // possible, the best is to set to gains so that they are not saturated.
 
-  this->refVel(refVel_);
+  this->refVelB(refVelB_);
 }
 
 void AdmittanceTask::reset()
@@ -94,7 +94,7 @@ void AdmittanceTask::reset()
   SurfaceTransformTask::reset();
   admittance_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   targetWrench_ = sva::ForceVecd(Eigen::Vector6d::Zero());
-  refVel_ = sva::MotionVecd(Eigen::Vector6d::Zero());
+  refVelB_ = sva::MotionVecd(Eigen::Vector6d::Zero());
   wrenchError_ = sva::ForceVecd(Eigen::Vector6d::Zero());
 }
 
@@ -111,10 +111,10 @@ void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
                      {
                      return measuredWrench();
                      });
-  logger.addLogEntry(name_ + "_ref_vel",
+  logger.addLogEntry(name_ + "_ref_vel_body",
                      [this]() -> sva::MotionVecd
                      {
-                     return refVel_;
+                     return refVelB_;
                      });
   logger.addLogEntry(name_ + "_target_wrench",
                      [this]() -> const sva::ForceVecd &
