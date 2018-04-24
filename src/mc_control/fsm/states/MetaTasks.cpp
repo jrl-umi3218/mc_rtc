@@ -67,7 +67,7 @@ void MetaTasksState::start(Controller & ctl)
   }
   if(remove_contacts_config_.size())
   {
-    std::set<Contact> removeContacts = remove_contacts_config_;
+    ContactSet removeContacts = remove_contacts_config_;
     for(const auto & c : removeContacts)
     {
       std::cout << "Remove contact " << c.r1Surface << "/" << c.r2Surface << std::endl;
@@ -76,7 +76,7 @@ void MetaTasksState::start(Controller & ctl)
   }
   if(add_contacts_config_.size())
   {
-    std::set<Contact> addContacts = add_contacts_config_;
+    ContactSet addContacts = add_contacts_config_;
     for(const auto & c : addContacts)
     {
       std::cout << "Add contact " << c.r1Surface << "/" << c.r2Surface << " (dof: " << c.dof.transpose() << ")\n";
@@ -128,7 +128,7 @@ void MetaTasksState::teardown(Controller & ctl)
   }
   if(remove_contacts_after_config_.size())
   {
-    std::set<Contact> removeContacts = remove_contacts_after_config_;
+    ContactSet removeContacts = remove_contacts_after_config_;
     for(const auto & c : removeContacts)
     {
       std::cout << "Remove contact " << c.r1Surface << "/" << c.r2Surface << std::endl;
@@ -137,7 +137,7 @@ void MetaTasksState::teardown(Controller & ctl)
   }
   if(add_contacts_after_config_.size())
   {
-    std::set<Contact> addContacts = add_contacts_after_config_;
+    ContactSet addContacts = add_contacts_after_config_;
     for(const auto & c : addContacts)
     {
       std::cout << "Add contact " << c.r1Surface << "/" << c.r2Surface << " (dof: " << c.dof.transpose() << ")\n";

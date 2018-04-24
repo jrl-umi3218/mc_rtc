@@ -158,7 +158,7 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
     }
   }
   /** Create contacts */
-  contacts_ = config("contacts", std::set<Contact>{});
+  contacts_ = config("contacts", ContactSet{});
   contacts_changed_ = true;
   /** Load more states if they are provided in the configuration */
   if(config.has("states"))
@@ -398,7 +398,7 @@ void Controller::removeContact(const Contact & c)
   contacts_changed_ |= contacts_.erase(c);
 }
 
-const std::set<Contact> & Controller::contacts() const
+const ContactSet & Controller::contacts() const
 {
   return contacts_;
 }

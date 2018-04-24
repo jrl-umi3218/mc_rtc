@@ -22,6 +22,8 @@ struct Controller;
  */
 struct MC_CONTROL_DLLAPI Contact
 {
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
   Contact(const std::string & r1, const std::string & r2,
           const std::string & r1Surface, const std::string & r2Surface,
           const Eigen::Vector6d & dof = Eigen::Vector6d::Ones())
@@ -52,6 +54,8 @@ struct MC_CONTROL_DLLAPI Contact
 
   static Contact from_mc_rbdyn(const Controller &, const mc_rbdyn::Contact &);
 };
+
+using ContactSet = std::set<Contact, std::less<Contact>, Eigen::aligned_allocator<Contact>>;
 
 /** \class Controller
  *
@@ -170,7 +174,7 @@ struct MC_CONTROL_DLLAPI Controller : public MCController
   void removeContact(const Contact & c);
 
   /** Access the current contacts */
-  const std::set<Contact> & contacts() const;
+  const ContactSet & contacts() const;
 
   /** Check if a contact is already present */
   bool hasContact(const Contact & c) const;
@@ -217,7 +221,7 @@ private:
   std::map<std::string, std::shared_ptr<mc_tasks::EndEffectorTask>> ff_tasks_;
 
   /** FSM contacts */
-  std::set<Contact> contacts_;
+  ContactSet contacts_;
   /** True if contacts were changed in the previous round */
   bool contacts_changed_;
 
