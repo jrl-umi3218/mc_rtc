@@ -96,6 +96,8 @@ void AdmittanceTask::reset()
   targetWrench_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   refVelB_ = sva::MotionVecd(Eigen::Vector6d::Zero());
   wrenchError_ = sva::ForceVecd(Eigen::Vector6d::Zero());
+  feedforwardVelB_ = sva::MotionVecd(Eigen::Vector6d::Zero());
+  refVelB_ = sva::MotionVecd(Eigen::Vector6d::Zero());
 }
 
 void AdmittanceTask::resetPoseOffset()
