@@ -4,7 +4,6 @@ cimport mc_control.c_mc_control as c_mc_control
 cimport mc_solver.c_mc_solver as c_mc_solver
 cimport mc_tasks.c_mc_tasks as c_mc_tasks
 
-from libcpp.set cimport set as cppset
 from libcpp.string cimport string
 from libcpp.vector cimport vector
 from libcpp cimport bool as cppbool
@@ -40,6 +39,17 @@ cdef extern from "<mc_control/fsm/Controller.h>" namespace "mc_control::fsm":
     string r2Surface
     c_eigen.Vector6d dof
 
+  # Actually std::set<Contact, std::less<Contact>, Eigen::aligned_allocator<Contact>> but Cython only know std::set<T>
+  cdef cppclass ContactSet:
+    cppclass iterator:
+      Contact& operator*()
+      iterator operator++()
+      iterator operator--()
+      bint operator==(iterator)
+      bint operator!=(iterator)
+    iterator begin()
+    iterator end()
+
   cdef cppclass Controller(c_mc_control.MCController):
     void addCollisions(const string&, const string&,
                        const vector[c_mc_rbdyn.Collision] &)
@@ -51,7 +61,7 @@ cdef extern from "<mc_control/fsm/Controller.h>" namespace "mc_control::fsm":
     shared_ptr[c_mc_tasks.PostureTask] getPostureTask(const string&)
     void addContact(const Contact&)
     void removeContact(const Contact&)
-    const cppset[Contact] & contacts()
+    const ContactSet & contacts()
     cppbool hasContact(const Contact &)
     c_mc_solver.ContactConstraint & contactConstraint()
 

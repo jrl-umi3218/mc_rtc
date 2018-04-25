@@ -85,7 +85,7 @@ cdef class Controller(MCController):
   def removeContact(self, Contact c):
     self.impl.removeContact(c.impl)
   def contacts(self):
-    cdef cppset[c_fsm.Contact] cs = self.impl.contacts()
+    cdef c_fsm.ContactSet cs = self.impl.contacts()
     return [ContactFromC(c) for c in cs]
   def hasContact(self, Contact c):
     self.impl.hasContact(c.impl)
