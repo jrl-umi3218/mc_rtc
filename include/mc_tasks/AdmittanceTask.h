@@ -206,13 +206,31 @@ public:
 
   /*! \brief Add a feedforward reference body velocity on top of force control. 
    *
-   * \param velB Feedforward body velocity, i.e. velocity of the surface frame
-   * in the surface frame.
+   * \param velB Feedforward body velocity
+   *
+   * That is to say, velB is the velocity of the surface frame expressed in the
+   * surface frame. See e.g. (Murray et al., 1994, CRC Press).
    *
    */
   void refVelB(const sva::MotionVecd & velB)
   {
     feedforwardVelB_ = velB;
+  }
+
+  /*! \brief Add a feedforward reference body velocity on top of force control. 
+   *
+   * \param velW Feedforward body velocity in world coordinates.
+   *
+   * To be precise, velW is the velocity of the surface frame in an inertial
+   * frame located at (1) the surface position but with (2) the orientation of
+   * the world frame. Don't worry to much about it, this is the usual velocity
+   * in world coordinates.
+   *
+   */
+  void refVelW(const sva::MotionVecd & velW)
+  {
+    sva::PTransformd E_0_s(surfacePose().rotation());
+    refVelB(E_0_s * velW);
   }
 
 protected:
