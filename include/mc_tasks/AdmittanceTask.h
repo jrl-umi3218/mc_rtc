@@ -200,7 +200,7 @@ protected:
   sva::ForceVecd admittance_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   sva::ForceVecd targetWrench_;
   sva::ForceVecd wrenchError_;
-  sva::MotionVecd refVel_;
+  sva::MotionVecd refVelB_;
 
   void update() override;
 
