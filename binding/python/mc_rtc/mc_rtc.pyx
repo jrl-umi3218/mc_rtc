@@ -145,6 +145,8 @@ cdef class Configuration(object):
       ret = c_mc_rtc.get_as_config[c_eigen.Matrix3d]((<eigen.Matrix3d>(value)).impl)
     elif t is eigen.Matrix6d:
       ret = c_mc_rtc.get_as_config[c_eigen.Matrix6d]((<eigen.Matrix6d>(value)).impl)
+    elif t is eigen.MatrixXd:
+      ret = c_mc_rtc.get_as_config[c_eigen.MatrixXd]((<eigen.MatrixXd>(value)).impl)
     elif t is sva.PTransformd:
       ret = c_mc_rtc.get_as_config[c_sva.PTransformd](deref((<sva.PTransformd>(value)).impl))
     elif t is list:
@@ -217,6 +219,11 @@ cdef class Configuration(object):
         return eigen.Matrix6dFromC(c_mc_rtc.get_config_as[c_eigen.Matrix6d](deref(self.impl), (<eigen.Matrix6d>(default)).impl))
       else:
         return eigen.Matrix6dFromC(c_mc_rtc.get_config_as[c_eigen.Matrix6d](deref(self.impl)))
+    if t is eigen.MatrixXd:
+      if default is not None:
+        return eigen.MatrixXdFromC(c_mc_rtc.get_config_as[c_eigen.MatrixXd](deref(self.impl), (<eigen.MatrixXd>(default)).impl))
+      else:
+        return eigen.MatrixXdFromC(c_mc_rtc.get_config_as[c_eigen.MatrixXd](deref(self.impl)))
     if t is sva.PTransformd:
       if default is not None:
         return sva.PTransformdFromC(c_mc_rtc.get_config_as[c_sva.PTransformd](deref(self.impl), deref((<sva.PTransformd>(default)).impl)))

@@ -217,6 +217,12 @@ namespace mc_rtc
      */
     operator Eigen::Matrix6d() const;
 
+    /*! \brief Retrieve as a Eigen::MatrixXd instance
+     *
+     * \throws If the underlying value does not hold an array of array of numeric values
+     */
+    operator Eigen::MatrixXd() const;
+
     /*! \brief Retrieve a vector instance
      *
      * \throws If the underlying value does not hold an array or if
@@ -611,6 +617,12 @@ namespace mc_rtc
      */
     void add(const std::string & key, Eigen::Matrix6d value);
 
+    /*! \brief Add an Eigen::MatrixXd element to the Configuration
+     *
+     * \see add(const std::string&, bool)
+     */
+    void add(const std::string & key, Eigen::MatrixXd value);
+
     /*! \brief Add another Configuration to the Configuration
      *
      * \see add(const std::string&, bool)
@@ -714,6 +726,12 @@ namespace mc_rtc
      * \see push(bool);
      */
     void push(Eigen::Matrix6d value);
+
+    /*! \brief Insert a Eigen::MatrixXd element into an array
+     *
+     * \see push(bool);
+     */
+    void push(Eigen::MatrixXd value);
 
     /*! \brief Push a Configuration element into an array
      *
