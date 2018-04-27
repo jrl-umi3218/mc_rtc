@@ -596,6 +596,12 @@ mc_rbdyn::Surface & Robot::surface(const std::string & sName)
 {
   return const_cast<mc_rbdyn::Surface&>(static_cast<const Robot*>(this)->surface(sName));
 }
+
+sva::PTransformd Robot::surfacePose(const std::string & sName) const
+{
+  return surface(sName).X_0_s(*this);
+}
+
 const mc_rbdyn::Surface & Robot::surface(const std::string & sName) const
 {
   if(!hasSurface(sName))

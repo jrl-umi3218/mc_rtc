@@ -345,6 +345,13 @@ public:
   /** Access a surface by its name \p sName (const) */
   const mc_rbdyn::Surface & surface(const std::string & sName) const;
 
+  /** Get the pose of a surface frame with respect to the inertial frame.
+   *
+   * \param sName Name of surface frame.
+   *
+   */
+  sva::PTransformd surfacePose(const std::string & sName) const;
+
   /** Copy an existing surface with a new name */
   mc_rbdyn::Surface & copySurface(const std::string & sName, const std::string & name);
 
