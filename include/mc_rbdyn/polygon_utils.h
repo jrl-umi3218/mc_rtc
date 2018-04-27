@@ -5,6 +5,7 @@
 #include <mc_rbdyn/api.h>
 
 #include <memory>
+#include <vector>
 
 namespace geos
 {
