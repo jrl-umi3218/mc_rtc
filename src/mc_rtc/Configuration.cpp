@@ -15,9 +15,9 @@ struct Configuration::Json::Impl
 {
   Impl()
   : value_(nullptr),
-    doc_p(new rapidjson::Document())
+    doc_p(new RapidJSONDocument())
   {
-    value_ = rapidjson::Pointer("/").Get(*doc_p);
+    value_ = rapidjson::GenericPointer<RapidJSONValue>("/").Get(*doc_p);
     if(!value_)
     {
       value_ = doc_p.get();
@@ -38,7 +38,7 @@ struct Configuration::Json::Impl
     value_ = &(*value_)[key];
   }
 
-  rapidjson::Document::AllocatorType & allocator()
+  RapidJSONDocument::AllocatorType & allocator()
   {
     return doc_p->GetAllocator();
   }
@@ -154,8 +154,8 @@ struct Configuration::Json::Impl
     return ret;
   }
 
-  rapidjson::Value * value_;
-  std::shared_ptr<rapidjson::Document> doc_p;
+  RapidJSONValue * value_;
+  std::shared_ptr<RapidJSONDocument> doc_p;
 };
 
 bool Configuration::Json::isArray() const
@@ -457,14 +457,14 @@ Configuration Configuration::fromData(const std::string & data)
 Configuration Configuration::fromData(const char * data)
 {
   mc_rtc::Configuration config;
-  rapidjson::Document & target = *(config.v.impl->doc_p);
+  RapidJSONDocument & target = *(config.v.impl->doc_p);
   mc_rtc::internal::loadData(data, target);
   return config;
 }
 
 void Configuration::load(const std::string & path)
 {
-  rapidjson::Document & target = *(v.impl->doc_p);
+  RapidJSONDocument & target = *(v.impl->doc_p);
 
   if(target.IsNull())
   {
@@ -478,8 +478,8 @@ void Configuration::load(const std::string & path)
 
 void Configuration::load(const mc_rtc::Configuration & config)
 {
-  rapidjson::Document & doc = *(v.impl->doc_p);
-  rapidjson::Value & target = *(v.impl->value_);
+  RapidJSONDocument & doc = *(v.impl->doc_p);
+  RapidJSONValue & target = *(v.impl->value_);
 
   if(target.IsNull())
   {
@@ -487,7 +487,7 @@ void Configuration::load(const mc_rtc::Configuration & config)
   }
   else
   {
-    rapidjson::Value & v = *(config.v.impl->value_);
+    RapidJSONValue & v = *(config.v.impl->value_);
     for(auto & m : v.GetObject())
     {
       if(target.HasMember(m.name))
@@ -502,8 +502,8 @@ void Configuration::load(const mc_rtc::Configuration & config)
           target.RemoveMember(m.name);
         }
       }
-      rapidjson::Value n(m.name, doc.GetAllocator());
-      rapidjson::Value v(m.value, doc.GetAllocator());
+      RapidJSONValue n(m.name, doc.GetAllocator());
+      RapidJSONValue v(m.value, doc.GetAllocator());
       target.AddMember(n, v, doc.GetAllocator());
     }
   }
@@ -511,7 +511,7 @@ void Configuration::load(const mc_rtc::Configuration & config)
 
 void Configuration::loadData(const std::string & data)
 {
-  rapidjson::Document & target = *(v.impl->doc_p);
+  RapidJSONDocument & target = *(v.impl->doc_p);
   if(target.IsNull())
   {
     mc_rtc::internal::loadData(data.c_str(), target);
@@ -552,23 +552,23 @@ bool Configuration::operator==(const char * rhs) const
 namespace
 {
   template<typename T>
-  void add_impl(const std::string & key, T value, rapidjson::Value & json,
-                rapidjson::Document::AllocatorType & allocator)
+  void add_impl(const std::string & key, T value, RapidJSONValue & json,
+                RapidJSONDocument::AllocatorType & allocator)
   {
-    rapidjson::Value key_(key.c_str(), allocator);
-    rapidjson::Value value_ = mc_rtc::internal::toJSON(value, allocator);
+    RapidJSONValue key_(key.c_str(), allocator);
+    RapidJSONValue value_ = mc_rtc::internal::toJSON(value, allocator);
     if(json.HasMember(key.c_str()))
     {
-      json.RemoveMember(key.c_str());
+      json.EraseMember(key.c_str());
     }
     json.AddMember(key_, value_, allocator);
   }
 
   template<typename T>
-  void push_impl(T value, rapidjson::Value & json,
-                rapidjson::Document::AllocatorType & allocator)
+  void push_impl(T value, RapidJSONValue & json,
+                RapidJSONDocument::AllocatorType & allocator)
   {
-    rapidjson::Value value_ = mc_rtc::internal::toJSON(value, allocator);
+    RapidJSONValue value_ = mc_rtc::internal::toJSON(value, allocator);
     if(! json.IsArray() )
     {
       throw Configuration::Exception("Trying to push data in a non-array value");
@@ -596,8 +596,8 @@ void Configuration::add(const std::string & key, Eigen::MatrixXd value) { add_im
 void Configuration::add(const std::string & key, Configuration value)
 {
   auto & allocator = v.impl->allocator();
-  rapidjson::Value key_(key.c_str(), allocator);
-  rapidjson::Value value_(*value.v.impl->value_, allocator);
+  RapidJSONValue key_(key.c_str(), allocator);
+  RapidJSONValue value_(*value.v.impl->value_, allocator);
   if(has(key))
   {
     v.impl->value_->RemoveMember(key.c_str());
@@ -608,8 +608,8 @@ void Configuration::add(const std::string & key, Configuration value)
 Configuration Configuration::add(const std::string & key)
 {
   auto & allocator = v.impl->allocator();
-  rapidjson::Value key_(key.c_str(), allocator);
-  rapidjson::Value value(rapidjson::kObjectType);
+  RapidJSONValue key_(key.c_str(), allocator);
+  RapidJSONValue value(rapidjson::kObjectType);
   if(has(key))
   {
     v.impl->value_->RemoveMember(key.c_str());
@@ -621,8 +621,8 @@ Configuration Configuration::add(const std::string & key)
 Configuration Configuration::array(const std::string & key, size_t size)
 {
   auto & allocator = v.impl->allocator();
-  rapidjson::Value key_(key.c_str(), allocator);
-  rapidjson::Value value(rapidjson::kArrayType);
+  RapidJSONValue key_(key.c_str(), allocator);
+  RapidJSONValue value(rapidjson::kArrayType);
   if(size) { value.Reserve(size, allocator); }
   if(has(key))
   {
@@ -639,7 +639,7 @@ Configuration Configuration::array(size_t reserve)
     throw(Exception("Cannot store an anonymous array outside of an array"));
   }
   auto & allocator = v.impl->allocator();
-  rapidjson::Value value(rapidjson::kArrayType);
+  RapidJSONValue value(rapidjson::kArrayType);
   value.Reserve(reserve, allocator);
   v.impl->value_->PushBack(value, allocator);
   return (*this)[size() - 1];
@@ -652,7 +652,7 @@ Configuration Configuration::object()
     throw(Exception("Cannot store an anonymous object outside of an array"));
   }
   auto & allocator = v.impl->allocator();
-  rapidjson::Value value(rapidjson::kObjectType);
+  RapidJSONValue value(rapidjson::kObjectType);
   v.impl->value_->PushBack(value, allocator);
   return (*this)[size() - 1];
 }
@@ -680,7 +680,7 @@ void Configuration::push(mc_rtc::Configuration value)
   {
     throw Configuration::Exception("Trying to push data in a non-array value");
   }
-  rapidjson::Value value_(*value.v.impl->value_, allocator);
+  RapidJSONValue value_(*value.v.impl->value_, allocator);
   json.PushBack(value_, allocator);
 }
 
