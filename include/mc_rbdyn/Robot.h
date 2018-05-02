@@ -325,6 +325,12 @@ public:
   /** Set the encoder values */
   void encoderValues(const std::vector<double> & encoderValues);
 
+  /** Return the encoder velocities */
+  const std::vector<double> & encoderVelocities() const;
+
+  /** Set the encoder velocities */
+  void encoderVelocities(const std::vector<double> & encoderVelocities);
+
   /** Return the flexibilities values */
   const std::vector<double> & flexibilityValues() const;
 
@@ -530,6 +536,9 @@ private:
   std::vector<std::string> refJointOrder_;
   /** Encoder values provided by the low-level controller */
   std::vector<double> encoderValues_;
+  /** Encoder velocities provided by the low-level controller or estimated from
+   * encoder values **/
+  std::vector<double> encoderVelocities_;
   /** Joint torques provided by the low-level controller */
   std::vector<double> jointTorques_;
   std::vector<double> flexibilityValues_;

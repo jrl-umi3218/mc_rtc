@@ -577,6 +577,16 @@ void Robot::encoderValues(const std::vector<double> & encoderValues)
   encoderValues_ = encoderValues;
 }
 
+const std::vector<double> & Robot::encoderVelocities() const
+{
+  return encoderVelocities_;
+}
+
+void Robot::encoderVelocities(const std::vector<double> & encoderVelocities)
+{
+  encoderVelocities_ = encoderVelocities;
+}
+
 const std::vector<double> & Robot::flexibilityValues() const
 {
   return flexibilityValues_;

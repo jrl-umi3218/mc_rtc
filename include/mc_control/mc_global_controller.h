@@ -160,6 +160,13 @@ public:
    */
   void setEncoderValues(const std::vector<double> & eValues);
 
+  /*! \brief A robot's actual joints' velocities
+   *
+   * \note It is expected that these values follow the order given by
+   * ref_joint_order
+   */
+  void setEncoderVelocities(const std::vector<double> & eVelocities);
+
   /*! \brief A robot's flexible joints' values provided by an estimator
    *
    * \note It is expected that these values follow the order given by

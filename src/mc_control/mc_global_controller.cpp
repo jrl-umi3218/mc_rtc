@@ -231,6 +231,11 @@ void MCGlobalController::setEncoderValues(const std::vector<double> & eValues)
   robot().encoderValues(eValues);
 }
 
+void MCGlobalController::setEncoderVelocities(const std::vector<double> & eVelocities)
+{
+  robot().encoderVelocities(eVelocities);
+}
+
 void MCGlobalController::setFlexibilityValues(const std::vector<double> & fValues)
 {
   robot().flexibilityValues(fValues);
