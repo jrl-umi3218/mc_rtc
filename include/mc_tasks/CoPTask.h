@@ -108,12 +108,20 @@ public:
     return targetForce_;
   }
 
-  /*! \brief Get the target wrench in the surface frame
+  /*! \brief Get target wrench in the surface frame
    *
    */
   const sva::ForceVecd & targetWrench() const
   {
     return AdmittanceTask::targetWrench();
+  }
+
+  /*! \brief Get target wrench in the world frame
+   *
+   */
+  const sva::ForceVecd & worldTargetWrench() const
+  {
+    return AdmittanceTask::worldTargetWrench();
   }
 
   /*! \brief Return measured CoP in world frame 
