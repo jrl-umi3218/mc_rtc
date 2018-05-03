@@ -47,7 +47,7 @@ void CoPTask::update()
       cop_tracking_disabled_ = false;
     }
     const Eigen::Vector3d targetTorque(+targetCoP_(1) * pressure, -targetCoP_(0) * pressure, 0.);
-    this->targetWrench(sva::ForceVecd(targetTorque, targetForce_));
+    AdmittanceTask::targetWrench(sva::ForceVecd(targetTorque, targetForce_));
     AdmittanceTask::update();
   }
 }

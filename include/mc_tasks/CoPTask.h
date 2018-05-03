@@ -170,6 +170,15 @@ public:
    */
   void worldTargetCoP(const Eigen::Vector3d & worldCoP);
 
+  /*! \brief Set targent wrench to zero.
+   *
+   */
+  void setZeroTargetWrench()
+  {
+    AdmittanceTask::targetWrench(sva::ForceVecd{Eigen::Vector6d::Zero()});
+    targetCoP(Eigen::Vector2d::Zero());
+  }
+
 private:
   Eigen::Vector2d targetCoP_ = Eigen::Vector2d::Zero();
   Eigen::Vector3d targetForce_ = Eigen::Vector3d::Zero();
