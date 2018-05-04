@@ -119,7 +119,7 @@ public:
   /*! \brief Get target wrench in the world frame
    *
    */
-  const sva::ForceVecd & worldTargetWrench() const
+  sva::ForceVecd worldTargetWrench() const
   {
     return AdmittanceTask::worldTargetWrench();
   }
