@@ -240,7 +240,7 @@ Configuration Configuration::operator()(const std::string & key) const
   {
     return Configuration(v[key]);
   }
-  throw Configuration::Exception("No entry named " + key + " in the configuration");
+  LOG_ERROR_AND_THROW(Configuration::Exception, "No entry named " + key + " in the configuration")
 }
 
 size_t Configuration::size() const
@@ -256,7 +256,7 @@ Configuration Configuration::operator[](size_t i) const
 {
   if(i >= size())
   {
-    throw Configuration::Exception("Out-of-bound access for a Configuration element");
+    LOG_ERROR_AND_THROW(Configuration::Exception, "Out-of-bound access for a Configuration element")
   }
   return Configuration(v[i]);
 }
@@ -275,7 +275,7 @@ Configuration::operator bool() const
   {
     return static_cast<bool>(v.impl->asInt());
   }
-  throw Configuration::Exception("Stored Json value is not a bool");
+  LOG_ERROR_AND_THROW(Configuration::Exception, "Stored Json value is not a bool")
 }
 
 Configuration::operator int() const
@@ -284,7 +284,7 @@ Configuration::operator int() const
   {
     return v.impl->asInt();
   }
-  throw Configuration::Exception("Stored Json value is not an int");
+  LOG_ERROR_AND_THROW(Configuration::Exception, "Stored Json value is not an int")
 }
 
 Configuration::operator unsigned int() const
@@ -293,7 +293,7 @@ Configuration::operator unsigned int() const
   {
     return v.impl->asUInt();
   }
-  throw Configuration::Exception("Stored Json value is not an unsigned int");
+  LOG_ERROR_AND_THROW(Configuration::Exception, "Stored Json value is not an unsigned int")
 }
 
 Configuration::operator double() const
@@ -302,7 +302,7 @@ Configuration::operator double() const
   {
     return v.impl->asDouble();
   }
-  throw Configuration::Exception("Stored Json value is not a double");
+  LOG_ERROR_AND_THROW(Configuration::Exception, "Stored Json value is not a double")
 }
 
 Configuration::operator std::string() const
@@ -311,7 +311,7 @@ Configuration::operator std::string() const
   {
     return v.impl->asString();
   }
-  throw Configuration::Exception("Stored Json value is not a string");
+  LOG_ERROR_AND_THROW(Configuration::Exception, "Stored Json value is not a string")
 }
 
 Configuration::operator Eigen::Vector2d() const
@@ -322,7 +322,7 @@ Configuration::operator Eigen::Vector2d() const
     ret << v[0].impl->asDouble(), v[1].impl->asDouble();
     return ret;
   }
-  throw Configuration::Exception("Stored Json value is not a Vector2d");
+  LOG_ERROR_AND_THROW(Configuration::Exception, "Stored Json value is not a Vector2d")
 }
 
 Configuration::operator Eigen::Vector3d() const
@@ -333,7 +333,7 @@ Configuration::operator Eigen::Vector3d() const
     ret << v[0].impl->asDouble(), v[1].impl->asDouble(), v[2].impl->asDouble();
     return ret;
   }
-  throw Configuration::Exception("Stored Json value is not a Vector3d");
+  LOG_ERROR_AND_THROW(Configuration::Exception, "Stored Json value is not a Vector3d")
 }
 
 Configuration::operator Eigen::Vector6d() const
@@ -345,7 +345,7 @@ Configuration::operator Eigen::Vector6d() const
            v[3].impl->asDouble(), v[4].impl->asDouble(), v[5].impl->asDouble();
     return ret;
   }
-  throw Configuration::Exception("Stored Json value is not a Vector6d");
+  LOG_ERROR_AND_THROW(Configuration::Exception, "Stored Json value is not a Vector6d")
 }
 
 Configuration::operator Eigen::VectorXd() const
@@ -359,7 +359,7 @@ Configuration::operator Eigen::VectorXd() const
     }
     return ret;
   }
-  throw Configuration::Exception("Stored Json value is not a VectorXd");
+  LOG_ERROR_AND_THROW(Configuration::Exception, "Stored Json value is not a VectorXd")
 }
 
 Configuration::operator Eigen::Quaterniond() const
@@ -370,7 +370,7 @@ Configuration::operator Eigen::Quaterniond() const
                               v[2].impl->asDouble(), v[3].impl->asDouble())
                              .normalized();
   }
-  throw Configuration::Exception("Stored Json value is not a Quaterniond");
+  LOG_ERROR_AND_THROW(Configuration::Exception, "Stored Json value is not a Quaterniond")
 }
 
 Configuration::operator Eigen::Matrix3d() const
@@ -403,7 +403,7 @@ Configuration::operator Eigen::Matrix3d() const
                                .normalized().toRotationMatrix();
     }
   }
-  throw Configuration::Exception("Stored Json value is not a Matrix3d");
+  LOG_ERROR_AND_THROW(Configuration::Exception, "Stored Json value is not a Matrix3d")
 }
 
 Configuration::operator Eigen::Matrix6d() const
@@ -420,7 +420,7 @@ Configuration::operator Eigen::Matrix6d() const
     }
     return m;
   }
-  throw Configuration::Exception("Stored Json value is not a Matrix6d");
+  LOG_ERROR_AND_THROW(Configuration::Exception, "Stored Json value is not a Matrix6d")
 }
 
 Configuration::operator Eigen::MatrixXd() const
@@ -439,7 +439,7 @@ Configuration::operator Eigen::MatrixXd() const
     }
     return ret;
   }
-  throw Configuration::Exception("Stored Json value is not a MatrixXd");
+  LOG_ERROR_AND_THROW(Configuration::Exception, "Stored Json value is not a MatrixXd")
 }
 
 Configuration::Configuration(const std::string & path)
@@ -571,7 +571,7 @@ namespace
     RapidJSONValue value_ = mc_rtc::internal::toJSON(value, allocator);
     if(! json.IsArray() )
     {
-      throw Configuration::Exception("Trying to push data in a non-array value");
+      LOG_ERROR_AND_THROW(Configuration::Exception, "Trying to push data in a non-array value")
     }
     json.PushBack(value_, allocator);
   }
@@ -636,7 +636,7 @@ Configuration Configuration::array(size_t reserve)
 {
   if(!v.isArray())
   {
-    throw(Exception("Cannot store an anonymous array outside of an array"));
+    LOG_ERROR_AND_THROW(Exception, "Cannot store an anonymous array outside of an array")
   }
   auto & allocator = v.impl->allocator();
   RapidJSONValue value(rapidjson::kArrayType);
@@ -649,7 +649,7 @@ Configuration Configuration::object()
 {
   if(!v.isArray())
   {
-    throw(Exception("Cannot store an anonymous object outside of an array"));
+    LOG_ERROR_AND_THROW(Exception, "Cannot store an anonymous object outside of an array")
   }
   auto & allocator = v.impl->allocator();
   RapidJSONValue value(rapidjson::kObjectType);
@@ -678,7 +678,7 @@ void Configuration::push(mc_rtc::Configuration value)
   auto & json = *v.impl->value_;
   if(! json.IsArray() )
   {
-    throw Configuration::Exception("Trying to push data in a non-array value");
+    LOG_ERROR_AND_THROW(Configuration::Exception, "Trying to push data in a non-array value")
   }
   RapidJSONValue value_(*value.v.impl->value_, allocator);
   json.PushBack(value_, allocator);

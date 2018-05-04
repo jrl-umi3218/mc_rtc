@@ -606,8 +606,7 @@ const mc_rbdyn::Surface & Robot::surface(const std::string & sName) const
 {
   if(!hasSurface(sName))
   {
-    LOG_ERROR("No surface named " << sName << " found in this robot")
-    throw("Surface does not exist");
+    LOG_ERROR_AND_THROW(std::runtime_error, "No surface named " << sName << " found in this robot")
   }
   return *(surfaces_.at(sName));
 }
@@ -636,13 +635,7 @@ const Robot::convex_pair_t & Robot::convex(const std::string & cName) const
 {
   if(convexes_.count(cName) == 0)
   {
-    LOG_ERROR("No convex named " << cName << " found in this robot (" << this->name_ << ")")
-    LOG_WARNING("Convexes available are:")
-    for(const auto & cv : convexes_)
-    {
-      LOG_WARNING(cv.first)
-    }
-    throw("Convex does not exist");
+    LOG_ERROR_AND_THROW(std::runtime_error, "No convex named " << cName << " found in this robot (" << this->name_ << ")")
   }
   return convexes_.at(cName);
 }
@@ -651,8 +644,7 @@ const sva::PTransformd & Robot::bodyTransform(const std::string& bName) const
 {
   if(!hasBody(bName))
   {
-    LOG_ERROR("No body transform with name " << bName << " found in this robot")
-    throw("Body transform does not exist");
+    LOG_ERROR_AND_THROW(std::runtime_error, "No body transform with name " << bName << " found in this robot")
   }
   return bodyTransforms_[bodyIndexByName(bName)];
 }
@@ -671,8 +663,7 @@ const sva::PTransformd & Robot::collisionTransform(const std::string& cName) con
 {
   if(collisionTransforms_.count(cName) == 0)
   {
-    LOG_ERROR("No collision transform with name " << cName << " found in this robot")
-    throw("Collision transform does not exist");
+    LOG_ERROR_AND_THROW(std::runtime_error, "No collision transform with name " << cName << " found in this robot")
   }
   return collisionTransforms_.at(cName);
 }
@@ -826,8 +817,7 @@ mc_rbdyn::Surface & Robot::copySurface(const std::string & sName, const std::str
 {
   if(hasSurface(name))
   {
-    LOG_ERROR(name << " already exists within this robot. Cannot overwrite an existing surface")
-    throw("Target surface already exists");
+    LOG_ERROR_AND_THROW(std::runtime_error, name << " already exists within this robot. Cannot overwrite an existing surface")
   }
   const Surface & surf = surface(sName);
   SurfacePtr nSurf = surf.copy();

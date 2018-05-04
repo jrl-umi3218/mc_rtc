@@ -24,7 +24,7 @@ ContactConstraint::ContactConstraint(double timeStep, ContactType contactType, b
   else
   {
     LOG_ERROR("Trying to create a contact constraint from an unknown contact constraint type")
-    throw(std::string("bad constraint type"));
+    LOG_ERROR_AND_THROW(std::runtime_error, std::string("bad constraint type"))
   }
   if(dynamics)
   {

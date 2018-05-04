@@ -138,8 +138,7 @@ const Robot & Robots::robot(size_t idx) const
 {
   if(idx >= robots_.size())
   {
-    LOG_ERROR("No robot with index " << idx << " (" << robots_.size()  << " robots loaded)")
-    throw("Wrong robot index");
+    LOG_ERROR_AND_THROW(std::runtime_error, "No robot with index " << idx << " (" << robots_.size()  << " robots loaded)")
   }
   return robots_[idx];
 }

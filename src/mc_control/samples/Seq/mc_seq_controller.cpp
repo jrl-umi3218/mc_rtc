@@ -237,14 +237,14 @@ MCSeqControllerConfig::MCSeqControllerConfig(const mc_control::Configuration & c
   if(!conf.has("Seq"))
   {
     LOG_ERROR("No Seq section in configuration file, abort")
-    throw("No Seq section in configuration file");
+    LOG_ERROR_AND_THROW(std::runtime_error, "No Seq section in configuration file")
   }
   auto seq = conf("Seq");
   seq("Simulation", is_simulation);
   if(!seq.has("Env"))
   {
     LOG_ERROR("No Env section in configuration for Seq controller, abort")
-    throw("No Env section in Seq section");
+    LOG_ERROR_AND_THROW(std::runtime_error, "No Env section in Seq section")
   }
   auto env = seq("Env");
   if(env.has("Module"))
@@ -261,7 +261,7 @@ MCSeqControllerConfig::MCSeqControllerConfig(const mc_control::Configuration & c
   else
   {
     LOG_ERROR("No Name or Module value for Env in Seq configuration, abort")
-    throw("No Name or Module value for Env in Seq configuration");
+    LOG_ERROR_AND_THROW(std::runtime_error, "No Name or Module value for Env in Seq configuration")
   }
   if(seq.has("Plan"))
   {
@@ -271,7 +271,7 @@ MCSeqControllerConfig::MCSeqControllerConfig(const mc_control::Configuration & c
   else
   {
     LOG_ERROR("No Plan in Seq configuration")
-    throw("No Plan in Seq configuration");
+    LOG_ERROR_AND_THROW(std::runtime_error, "No Plan in Seq configuration")
   }
   seq("StepByStep", step_by_step);
   seq("UseRealSensors", use_real_sensors);
@@ -781,7 +781,7 @@ void MCSeqController::loadStanceConfigs(const std::string & file)
         sc = gripperMoveConfig;
         break;
       default:
-        throw("!happenning");
+        LOG_ERROR_AND_THROW(std::runtime_error, "!happenning")
         break;
     }
 

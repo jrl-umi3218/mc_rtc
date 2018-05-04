@@ -103,7 +103,7 @@ private:
       }
       catch(const mc_rtc::LoaderException & exc)
       {
-        LOG_ERROR("Failed to initialize RobotLoader")
+        LOG_ERROR("Failed to initialize RobotLoader: " << exc.what())
         throw(exc);
       }
     }

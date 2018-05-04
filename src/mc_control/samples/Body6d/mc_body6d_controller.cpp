@@ -35,7 +35,7 @@ MCBody6dController::MCBody6dController(std::shared_ptr<mc_rbdyn::RobotModule> ro
   else
   {
     LOG_ERROR("MCBody6dController does not support robot " << robot().name())
-    throw("MCBody6dController does not support your robot");
+    LOG_ERROR_AND_THROW(std::runtime_error, "MCBody6dController does not support your robot")
   }
 
   LOG_SUCCESS("MCBody6dController init done")
@@ -50,7 +50,7 @@ MCBody6dController::MCBody6dController(std::shared_ptr<mc_rbdyn::RobotModule> ro
   else
   {
     LOG_ERROR("MCBody6dController does not support robot " << robot().name())
-    throw("MCBody6dController does not support your robot");
+    LOG_ERROR_AND_THROW(std::runtime_error, "MCBody6dController does not support your robot")
   }
   solver().addTask(efTask);
   comTask.reset(new mc_tasks::CoMTask(robots(), robots().robotIndex()));

@@ -47,7 +47,7 @@ sva::PTransformd ConfigurationLoader<sva::PTransformd>::load(const mc_rtc::Confi
             {config[4], config[5], config[6]}
            };
   }
-  throw mc_rtc::Configuration::Exception("Not an sva::PTransformd-like object in json representation");
+  LOG_ERROR_AND_THROW(mc_rtc::Configuration::Exception, "Not an sva::PTransformd-like object in json representation")
 }
 
 mc_rtc::Configuration ConfigurationLoader<sva::PTransformd>::save(const sva::PTransformd & pt)
@@ -91,7 +91,7 @@ rbd::Joint::Type ConfigurationLoader<rbd::Joint::Type>::load(const mc_rtc::Confi
     return rbd::Joint::Type::Fixed;
   }
   LOG_ERROR(type << " was stored as joint type, cannot comprehend that")
-  throw(std::runtime_error("Invalid joint type stored"));
+  LOG_ERROR_AND_THROW(std::runtime_error, "Invalid joint type stored")
 }
 
 mc_rtc::Configuration ConfigurationLoader<rbd::Joint::Type>::save(const rbd::Joint::Type & type)
@@ -123,7 +123,7 @@ case rbd::Joint::Type::Fixed:
   break;
 default:
   LOG_ERROR("Cannot serialize joint type " << type)
-  throw(std::runtime_error("Invalid joint type to ConfigurationLoader<rbd::Joint::Type>::save"));
+  LOG_ERROR_AND_THROW(std::runtime_error, "Invalid joint type to ConfigurationLoader<rbd::Joint::Type>::save")
   }
   config.add("type", typeStr);
   return config;
@@ -190,7 +190,7 @@ std::shared_ptr<mc_rbdyn::Surface> ConfigurationLoader<std::shared_ptr<mc_rbdyn:
     return std::make_shared<mc_rbdyn::GripperSurface>(config("name"), config("bodyName"), config("X_b_s"), config("materialName"), config("pointsFromOrigin"), config("X_b_motor"), config("motorMaxTorque"));
   }
   LOG_ERROR("Unknown surface type stored " << type)
-  throw(std::runtime_error("Invalid surface type stored"));
+  LOG_ERROR_AND_THROW(std::runtime_error, "Invalid surface type stored")
 }
 
 mc_rtc::Configuration ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::save(const std::shared_ptr<mc_rbdyn::Surface> & s)
@@ -222,7 +222,7 @@ mc_rtc::Configuration ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::s
   else
   {
     LOG_ERROR("Cannot serialize Surface of type " << s->type())
-    throw(std::runtime_error("Invalid surface type"));
+    LOG_ERROR_AND_THROW(std::runtime_error, "Invalid surface type")
   }
   return config;
 }
@@ -233,7 +233,7 @@ std::shared_ptr<mc_rbdyn::PlanarSurface> ConfigurationLoader<std::shared_ptr<mc_
   if(type != "planar")
   {
     LOG_ERROR("Tried to deserialize a non-planar surface into a planar surface")
-    throw(std::runtime_error("Wrong surface types"));
+    LOG_ERROR_AND_THROW(std::runtime_error, "Wrong surface types")
   }
   return std::static_pointer_cast<mc_rbdyn::PlanarSurface>(ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::load(config));
 }
@@ -249,7 +249,7 @@ std::shared_ptr<mc_rbdyn::CylindricalSurface> ConfigurationLoader<std::shared_pt
   if(type != "cylindrical")
   {
     LOG_ERROR("Tried to deserialize a non-cylindrical surface into a cylindrical surface")
-    throw(std::runtime_error("Wrong surface types"));
+    LOG_ERROR_AND_THROW(std::runtime_error, "Wrong surface types")
   }
   return std::static_pointer_cast<mc_rbdyn::CylindricalSurface>(ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::load(config));
 }
@@ -265,7 +265,7 @@ std::shared_ptr<mc_rbdyn::GripperSurface> ConfigurationLoader<std::shared_ptr<mc
   if(type != "gripper")
   {
     LOG_ERROR("Tried to deserialize a non-gripper surface into a gripper surface")
-    throw(std::runtime_error("Wrong surface types"));
+    LOG_ERROR_AND_THROW(std::runtime_error, "Wrong surface types")
   }
   return std::static_pointer_cast<mc_rbdyn::GripperSurface>(ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::load(config));
 }

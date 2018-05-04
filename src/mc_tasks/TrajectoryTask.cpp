@@ -30,7 +30,7 @@ TrajectoryTask::TrajectoryTask(const mc_rbdyn::Robots& robots,
 {
   if (nrWP <= 0)
   {
-    throw std::runtime_error("Invalid trajectory: No waypoints provided and nrWp <= 0");
+    LOG_ERROR_AND_THROW(std::runtime_error, "Invalid trajectory: No waypoints provided and nrWp <= 0")
   }
   Eigen::Vector3d start = X_0_start.translation();
   Eigen::Vector3d end = X_0_t.translation();

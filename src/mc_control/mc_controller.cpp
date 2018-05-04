@@ -74,7 +74,7 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   else
   {
     LOG_ERROR("Could not open urdf file " << urdfPath << " for robot " << robots_modules[0]->name << ", cannot initialize grippers")
-    throw("Failed to initialize grippers");
+    LOG_ERROR_AND_THROW(std::runtime_error, "Failed to initialize grippers")
   }
   }
 

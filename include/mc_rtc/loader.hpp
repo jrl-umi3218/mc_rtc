@@ -3,6 +3,8 @@
 #include <mc_rtc/loader.h>
 #include <mc_rtc/loader_sandbox.h>
 
+#include <sstream>
+
 namespace mc_rtc
 {
 
@@ -76,8 +78,7 @@ void ObjectLoader<T>::load_libraries(const std::vector<std::string> & paths,
       void * sym = lt_dlsym(h.second, "destroy");
       if(sym == nullptr)
       {
-        LOG_ERROR("Symbol destroy not found in " << lt_dlgetinfo(h.second)->filename << std::endl << lt_dlerror())
-        throw(LoaderException("Required symbol not found"));
+        LOG_ERROR_AND_THROW(LoaderException, "Symbol destroy not found in " << lt_dlgetinfo(h.second)->filename << std::endl << lt_dlerror())
       }
       deleters_[h.first] = ObjectDeleter(sym);
     }
@@ -108,8 +109,7 @@ std::shared_ptr<T> ObjectLoader<T>::create_object(const std::string & name, Args
 {
   if(!has_object(name))
   {
-    LOG_ERROR("Requested creation of object named " << name << " which has not been loaded")
-    throw(LoaderException("No such object"));
+    LOG_ERROR_AND_THROW(LoaderException, "Requested creation of object named " << name << " which has not been loaded")
   }
   unsigned int args_passed = 1 + sizeof...(Args);
   unsigned int args_required = args_passed;
@@ -129,20 +129,17 @@ std::shared_ptr<T> ObjectLoader<T>::create_object(const std::string & name, Args
   }
   if(args_passed != args_required)
   {
-    LOG_ERROR(args_passed << " arguments passed to create function of " << name << " which expects " << args_required)
-    throw(LoaderException("Missmatch arguments number"));
+    LOG_ERROR_AND_THROW(LoaderException, args_passed << " arguments passed to create function of " << name << " which expects " << args_required)
   }
   void * sym = lt_dlsym(handles_[name], "create");
   if(sym == nullptr)
   {
-    LOG_ERROR("Symbol create not found in " << lt_dlgetinfo(handles_[name])->filename << std::endl << lt_dlerror())
-    throw(LoaderException("create symbol not found"));
+    LOG_ERROR_AND_THROW(LoaderException, "Symbol create not found in " << lt_dlgetinfo(handles_[name])->filename << std::endl << lt_dlerror())
   }
   const char * err = lt_dlerror();
   if(err != nullptr)
   {
-    LOG_ERROR("Failed to resolve create symbol in " << lt_dlgetinfo(handles_[name])->filename << std::endl << err)
-    throw(LoaderException("symbol resolution failed"));
+    LOG_ERROR_AND_THROW(LoaderException, "Failed to resolve create symbol in " << lt_dlgetinfo(handles_[name])->filename << std::endl << err)
   }
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wpedantic"
@@ -159,8 +156,7 @@ std::shared_ptr<T> ObjectLoader<T>::create_object(const std::string & name, Args
   }
   if(ptr == nullptr)
   {
-    LOG_ERROR("Call to create for object " << name << " failed")
-    throw(LoaderException("Create call failed"));
+    LOG_ERROR_AND_THROW(LoaderException, "Call to create for object " << name << " failed")
   }
   return std::shared_ptr<T>(ptr, deleters_[name]);
 }

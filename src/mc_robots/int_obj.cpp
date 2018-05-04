@@ -46,7 +46,7 @@ IntObjRobotModule::IntObjRobotModule(const std::string & env_path, const std::st
   else
   {
     LOG_ERROR("Could not load env model at " << urdf_path)
-    throw("Could not open env model");
+    LOG_ERROR_AND_THROW(std::runtime_error, "Could not open env model")
   }
 }
 

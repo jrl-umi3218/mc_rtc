@@ -57,7 +57,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     catch(const mc_rtc::LoaderException & exc)
     {
       LOG_ERROR("Failed to update robot module path(s)")
-      throw std::runtime_error("Failed to update robot module path(s)");
+      LOG_ERROR_AND_THROW(std::runtime_error, "Failed to update robot module path(s)")
     }
   }
   if(rm)
@@ -77,13 +77,13 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
       catch(const mc_rtc::LoaderException & exc)
       {
         LOG_ERROR("Failed to create " << robot_name << " to use as a main robot")
-        throw std::runtime_error("Failed to create robot");
+        LOG_ERROR_AND_THROW(std::runtime_error, "Failed to create robot")
       }
     }
     else
     {
       LOG_ERROR("Trying to use " << robot_name << " as main robot but this robot cannot be loaded")
-      throw std::runtime_error("Main robot not available");
+      LOG_ERROR_AND_THROW(std::runtime_error, "Main robot not available")
     }
   }
 

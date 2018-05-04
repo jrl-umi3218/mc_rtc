@@ -160,7 +160,7 @@ void HRP2DRCCommonRobotModule::readUrdf(const std::string & robotName, const std
   else
   {
     LOG_ERROR("Could not open HRP2DRC model at " << urdfPath)
-    throw("HRP2DRC model not found");
+    LOG_ERROR_AND_THROW(std::runtime_error, "HRP2DRC model not found")
   }
 }
 

@@ -144,7 +144,7 @@ inline void scWaypointConfFromJSON(StanceConfig::WaypointConf & ret, const mc_rt
     else
     {
       LOG_ERROR("Invalid waypoint type: " << type)
-      throw(std::string("Invalid waypoint type in JSON string"));
+      LOG_ERROR_AND_THROW(std::runtime_error, std::string("Invalid waypoint type in JSON string"))
     }
   }
 }

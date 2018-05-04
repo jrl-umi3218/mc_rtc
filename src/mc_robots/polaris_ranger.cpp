@@ -83,7 +83,7 @@ void PolarisRangerRobotModule::readUrdf(const std::string & robotName, const std
   else
   {
     LOG_ERROR("Could not open PolarisRanger model at " << urdf_path)
-    throw("Failed to open PolarisRanger model");
+    LOG_ERROR_AND_THROW(std::runtime_error, "Failed to open PolarisRanger model")
   }
 }
 

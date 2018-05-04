@@ -37,7 +37,7 @@ MCGlobalController::MCGlobalController(const std::string & conf,
   catch(mc_rtc::LoaderException & exc)
   {
     LOG_ERROR("Failed to initialize controller loader")
-    throw(std::runtime_error("Failed to initialize controller loader"));
+    LOG_ERROR_AND_THROW(std::runtime_error, "Failed to initialize controller loader")
   }
   if(std::find(config.enabled_controllers.begin(), config.enabled_controllers.end(),
             "HalfSitPose") == config.enabled_controllers.end())
@@ -58,7 +58,7 @@ MCGlobalController::MCGlobalController(const std::string & conf,
   if(current_ctrl == "" || controller_ == nullptr)
   {
     LOG_ERROR("No controller selected or selected controller is not enabled, please check your configuration file")
-    throw std::runtime_error("No controller enabled");
+    LOG_ERROR_AND_THROW(std::runtime_error, "No controller enabled")
   }
   else
   {
@@ -559,7 +559,7 @@ bool MCGlobalController::AddController(const std::string & name)
     }
     catch(const mc_rtc::LoaderException & exc)
     {
-      throw std::runtime_error("Failed to create controller");
+      LOG_ERROR_AND_THROW(std::runtime_error, "Failed to create controller")
     }
     return true;
   }

@@ -198,7 +198,7 @@ namespace mc_robots
     else
     {
       LOG_ERROR("Could not open HRP4 model at " << urdfPath)
-      throw("Failed to open HRP4 model");
+      LOG_ERROR_AND_THROW(std::runtime_error, "Failed to open HRP4 model")
     }
   }
 

@@ -19,8 +19,7 @@ bool Loader::init()
     if(err != 0)
     {
       std::string error = lt_dlerror();
-      LOG_ERROR("Failed to initialize ltdl" << std::endl << error)
-      throw(LoaderException(error));
+      LOG_ERROR_AND_THROW(LoaderException, "Failed to initialize ltdl" << std::endl << error)
     }
   }
   ++init_count_;
@@ -36,8 +35,7 @@ bool Loader::close()
     if(err != 0)
     {
       std::string error = lt_dlerror();
-      LOG_ERROR("Failed to close ltdl" << std::endl << error)
-      throw(LoaderException(error));
+      LOG_ERROR_AND_THROW(LoaderException, "Failed to close ltdl" << std::endl << error)
     }
   }
   return true;

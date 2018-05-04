@@ -163,16 +163,12 @@ std::string IdentityContactAction::type()
 
 const Contact & IdentityContactAction::contact() const
 {
-  std::string err = "Tried to access contact on IdentityContactAction";
-  LOG_ERROR(err)
-  throw(err.c_str());
+  LOG_ERROR_AND_THROW(std::runtime_error, "Tried to access contact on IdentityContactAction")
 }
 
 Contact & IdentityContactAction::contact()
 {
-  std::string err = "Tried to access contact on IdentityContactAction";
-  LOG_ERROR(err)
-  throw(err.c_str());
+  LOG_ERROR_AND_THROW(std::runtime_error, "Tried to access contact on IdentityContactAction")
 }
 
 AddContactAction::AddContactAction(const Contact & contact)
@@ -299,8 +295,7 @@ const Surface& surfaceFromJSON(const mc_rbdyn::Robot & robot, const mc_rtc::Conf
   {
     return robot.surface(conf("name"));
   }
-  LOG_ERROR("Surface stored in JSON " << static_cast<std::string>(conf("name")) << " does not exist in robot " << robot.name())
-  throw(std::string("invalid json"));
+  LOG_ERROR_AND_THROW(std::runtime_error, "Surface stored in JSON " << static_cast<std::string>(conf("name")) << " does not exist in robot " << robot.name())
 }
 
 Contact contactFromJSON(const mc_rbdyn::Robots & robots, const mc_rtc::Configuration & conf)
