@@ -316,7 +316,48 @@ Contact contactFromJSON(const mc_rbdyn::Robots & robots, const mc_rtc::Configura
 
 inline void addStanceFromJSON(const mc_rbdyn::Robots & robots, std::vector<Stance> & stances, const mc_rtc::Configuration & conf)
 {
-  std::vector< std::vector<double> > q = conf("q");
+  std::vector< std::vector<double> > stance_q = conf("q");
+  std::vector<std::string> stance_joints =
+  {
+    "Root",
+    "RLEG_JOINT0",
+    "RLEG_JOINT1",
+    "RLEG_JOINT2",
+    "RLEG_JOINT3",
+    "RLEG_JOINT4",
+    "RLEG_JOINT5",
+    "LLEG_JOINT0",
+    "LLEG_JOINT1",
+    "LLEG_JOINT2",
+    "LLEG_JOINT3",
+    "LLEG_JOINT4",
+    "LLEG_JOINT5",
+    "CHEST_JOINT0",
+    "CHEST_JOINT1",
+    "HEAD_JOINT0",
+    "HEAD_JOINT1",
+    "RARM_JOINT0",
+    "RARM_JOINT1",
+    "RARM_JOINT2",
+    "RARM_JOINT3",
+    "RARM_JOINT4",
+    "RARM_JOINT5",
+    "RARM_JOINT6",
+    "LARM_JOINT0",
+    "LARM_JOINT1",
+    "LARM_JOINT2",
+    "LARM_JOINT3",
+    "LARM_JOINT4",
+    "LARM_JOINT5",
+    "LARM_JOINT6"
+  };
+  auto q = robots.robot().q();
+  for(size_t joint_i = 0; joint_i < stance_joints.size(); ++joint_i)
+  {
+    const auto & jn = stance_joints[joint_i];
+    auto jIndex = robots.robot().jointIndexByName(jn);
+    q[jIndex] = stance_q[joint_i];
+  }
   std::vector<Contact> geomContacts;
   for(const auto vc : conf("geomContacts"))
   {

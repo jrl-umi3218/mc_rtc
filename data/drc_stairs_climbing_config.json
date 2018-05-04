@@ -44,7 +44,7 @@
             "posThresh" : 0.03,
             "preContactDist" : 0.05,
             "velThresh" : 0.03,
-            "useComplianceTask" : true,
+            "useComplianceTask" : false,
             "complianceVelThresh" : 0.005,
             "complianceTargetForce" : [ 0, 0, 100]
          },
@@ -368,7 +368,7 @@
         "r2Surface" : "StairStep1",
         "comObj" : {
            "comOffset" : [ 0.05, 0.025, 0.0 ],
-           "comAdjustOffset" : [ 0.025, 0., 0.0 ]
+           "comAdjustOffset" : [ 0.025, 0.0, 0.0 ]
         },
         "contactObj" : {
           "adjustOffset" : [ 0.0, -0.025, 0.0 ],
@@ -405,7 +405,7 @@
         "r1Surface" : "LFrontSole",
         "r2Surface" : "StairStep2",
         "comObj" : {
-           "comOffset" : [ 0.075, 0.0, 0. ],
+           "comOffset" : [ 0.075, 0.0, 0.0 ],
            "comAdjustOffset" : [ 0.075, 0.0, 0.0 ]
         },
         "comTask" : {
@@ -492,7 +492,7 @@
            "posThresh" : 0.03,
            "preContactDist" : 0.1,
            "velThresh" : 0.03,
-           "useComplianceTask" : true,
+           "useComplianceTask" : false,
            "complianceVelThresh" : 0.005,
            "complianceTargetForce" : [ 0, 0, 30]
         },
@@ -527,7 +527,7 @@
          },
          "contactObj" : {
            "preContactDist" : 0,
-           "adjustOffset" : [-0.03, 0., -0.024]
+           "adjustOffset" : [-0.03, 0.0, -0.024]
          },
          "comTask" : {
             "extraStiffness" : 1.0,
@@ -552,7 +552,7 @@
         "r1Surface" : "RFrontSole",
         "r2Surface" : "StairStep2",
         "comObj" : {
-           "comOffset" : [ -0.05, 0., 0.0 ]
+           "comOffset" : [ -0.05, 0.0, 0.0 ]
         }
       }
    ]

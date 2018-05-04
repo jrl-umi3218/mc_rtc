@@ -369,7 +369,7 @@ bool MCSeqController::run()
         samples.next(cur_sample, cur_speed);
         interpol_percent = std::min(cur_sample, max_perc);
         bool done = interpol_percent == max_perc;
-        if(!done && stanceIndex < interpolators.size())
+        if(0 && !done && stanceIndex < interpolators.size())
         {
           auto clamp = [](const double & v) { return std::min(std::max(v, -0.13), 0.13); };
           auto clamp_pos = [](const double & v) { return std::min(std::max(v, 0.), 0.15); };
