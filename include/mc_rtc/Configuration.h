@@ -101,7 +101,11 @@ namespace mc_rtc
        */
       Exception(const std::string & msg);
 
+      ~Exception();
+
       virtual const char * what() const noexcept override;
+
+      void silence() noexcept;
 
       std::string msg;
     };
@@ -488,8 +492,9 @@ namespace mc_rtc
       {
         v = (*this)(key);
       }
-      catch(Exception &)
+      catch(Exception & exc)
       {
+        exc.silence();
       }
     }
 
@@ -510,8 +515,9 @@ namespace mc_rtc
       {
         return (*this)(key);
       }
-      catch(Exception &)
+      catch(Exception & exc)
       {
+        exc.silence();
         return v;
       }
     }
