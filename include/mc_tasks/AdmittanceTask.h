@@ -156,6 +156,14 @@ public:
     return X_fsactual_surf_.dualMul(w_fsactual);
   }
 
+  /*! \brief Get the measured pressure in the surface frame
+   *
+   */
+  double measuredPressure() const
+  {
+    return measuredWrench().force()[2];
+  }
+
   /*! \brief Get the measured wrench in the world frame
    *
    */
