@@ -295,7 +295,7 @@ cdef extern from "<mc_rbdyn/Contact.h>" namespace "mc_rbdyn":
     Contact(const Robots&, string, string)
     Contact(const Robots&, string, string, const PTransformd&)
     Contact(const Robots&, unsigned int, unsigned int, string, string, const
-        PTransformd*, const PTransformd&, int)
+        PTransformd&, const PTransformd&, int)
     Contact(const Contact&)
 
     unsigned int r1Index()

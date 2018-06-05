@@ -48,9 +48,14 @@ public:
   Contact(const mc_rbdyn::Robots & robots, const std::string & robotSurface, const std::string & envSurface);
   Contact(const mc_rbdyn::Robots & robots, const std::string & robotSurface, const std::string & envSurface, const sva::PTransformd & X_es_rs);
   Contact(const mc_rbdyn::Robots & robots, unsigned int r1Index, unsigned int r2Index,
-            const std::string & r1Surface, const std::string & r2Surface,
-            const sva::PTransformd * X_r2s_r1s = nullptr,
-            const sva::PTransformd & Xbs = sva::PTransformd::Identity(), int ambiguityId = -1);
+          const std::string & r1Surface, const std::string & r2Surface, int ambiguityId = -1);
+  Contact(const mc_rbdyn::Robots & robots, unsigned int r1Index, unsigned int r2Index,
+          const std::string & r1Surface, const std::string & r2Surface,
+          const sva::PTransformd & X_r2s_r1s, int ambiguityId = -1);
+  Contact(const mc_rbdyn::Robots & robots, unsigned int r1Index, unsigned int r2Index,
+          const std::string & r1Surface, const std::string & r2Surface,
+          const sva::PTransformd & X_r2s_r1s,
+          const sva::PTransformd & X_b_s, int ambiguityId = -1);
 private:
   Contact(const mc_rbdyn::Robots & robots, const std::string & robotSurface, const std::string & envSurface, const sva::PTransformd & X_es_rs, bool is_fixed);
 public:

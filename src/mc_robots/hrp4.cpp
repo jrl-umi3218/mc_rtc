@@ -18,7 +18,6 @@ namespace mc_robots
     virtualLinks.push_back("base_link");
     virtualLinks.push_back("Accelerometer");
     virtualLinks.push_back("Gyro");
-    virtualLinks.push_back("rgbd_link");
     virtualLinks.push_back("RightFootForceSensor");
     virtualLinks.push_back("LeftFootForceSensor");
     virtualLinks.push_back("LeftHandForceSensor");

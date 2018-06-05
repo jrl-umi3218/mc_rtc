@@ -1,5 +1,7 @@
 #include <mc_rbdyn/configuration_io.h>
 
+#include <mc_rbdyn/Robots.h>
+
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
 
@@ -833,15 +835,14 @@ mc_rbdyn::Contact ConfigurationLoader<mc_rbdyn::Contact>::load(const mc_rtc::Con
   unsigned int r2Index = 1;
   config("r1Index", r1Index);
   config("r2Index", r2Index);
-  sva::PTransformd X_r2s_r1s_real;
-  sva::PTransformd * X_r2s_r1s = nullptr;
+  sva::PTransformd X_r2s_r1s = sva::PTransformd::Identity();
   bool isFixed = config("isFixed");
   if(isFixed)
   {
-    X_r2s_r1s_real = config("X_r2s_r1s");
-    X_r2s_r1s = &X_r2s_r1s_real;
+    X_r2s_r1s = config("X_r2s_r1s");
   }
-  sva::PTransformd X_b_s = sva::PTransformd::Identity();
+  std::string r1Surface = config("r1Surface");
+  sva::PTransformd X_b_s = robots.robot(r1Index).surface(r1Surface).X_b_s();
   config("X_b_s", X_b_s);
   int ambiguityId = -1;
   config("ambiguityId", ambiguityId);

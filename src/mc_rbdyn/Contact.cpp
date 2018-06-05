@@ -113,22 +113,30 @@ Contact::Contact(const mc_rbdyn::Robots & robots, const std::string & robotSurfa
   impl.reset(new ContactImpl{0, 1,
     robots.robot(0).surface(robotSurface).copy(),
     robots.robot(1).surface(envSurface).copy(),
-    X_es_rs, is_fixed, sva::PTransformd::Identity(), -1});
+    X_es_rs, is_fixed, robots.robot(0).surface(robotSurface).X_b_s(), -1});
+}
+
+Contact::Contact(const mc_rbdyn::Robots & robots, unsigned int r1Index, unsigned int r2Index,
+            const std::string & r1Surface, const std::string & r2Surface, int ambiguityId)
+: Contact(robots, r1Index, r2Index, r1Surface, r2Surface, sva::PTransformd::Identity(), robots.robot(r1Index).surface(r1Surface).X_b_s(), ambiguityId)
+{
+}
+
+Contact::Contact(const mc_rbdyn::Robots & robots, unsigned int r1Index, unsigned int r2Index,
+            const std::string & r1Surface, const std::string & r2Surface, const sva::PTransformd & X_r2s_r1s, int ambiguityId)
+: Contact(robots, r1Index, r2Index, r1Surface, r2Surface, X_r2s_r1s, robots.robot(r1Index).surface(r1Surface).X_b_s(), ambiguityId)
+{
 }
 
 Contact::Contact(const mc_rbdyn::Robots & robots, unsigned int r1Index, unsigned int r2Index,
             const std::string & r1Surface, const std::string & r2Surface,
-            const sva::PTransformd * X_r2s_r1s,
-            const sva::PTransformd & Xbs, int ambiguityId)
+            const sva::PTransformd & X_r2s_r1s,
+            const sva::PTransformd & X_b_s, int ambiguityId)
 {
   impl.reset(new ContactImpl{r1Index, r2Index,
     robots.robot(r1Index).surface(r1Surface).copy(),
     robots.robot(r2Index).surface(r2Surface).copy(),
-    sva::PTransformd::Identity(), X_r2s_r1s != nullptr, Xbs, ambiguityId});
-  if(isFixed())
-  {
-    impl->X_r2s_r1s = sva::PTransformd(*X_r2s_r1s);
-  }
+    X_r2s_r1s, true, X_b_s, ambiguityId});
 }
 
 mc_rbdyn::Contact Contact::load(const mc_rbdyn::Robots & robots, const mc_rtc::Configuration & config)
@@ -148,14 +156,26 @@ std::vector<mc_rbdyn::Contact> Contact::loadVector(const mc_rbdyn::Robots & robo
 
 Contact::Contact(const Contact & contact)
 {
-  impl.reset(new ContactImpl(*contact.impl));
+  impl.reset(new ContactImpl({contact.r1Index(), contact.r2Index(),
+    contact.r1Surface()->copy(), contact.r2Surface()->copy(),
+    contact.X_r2s_r1s(), contact.isFixed(),
+    contact.X_b_s(), contact.ambiguityId()}));
+
 }
 
 Contact & Contact::operator=(const Contact & rhs)
 {
   if(this == &rhs) { return *this; }
-  *(this->impl) = *(rhs.impl);
+  this->impl->r1Index = rhs.r1Index();
+  this->impl->r2Index = rhs.r2Index();
+  this->impl->r1Surface = rhs.r1Surface()->copy();
+  this->impl->r2Surface = rhs.r2Surface()->copy();
+  this->impl->X_r2s_r1s = rhs.X_r2s_r1s();
+  this->impl->is_fixed = rhs.isFixed();
+  this->impl->X_b_s = rhs.X_b_s();
+  this->impl->ambiguityId = rhs.ambiguityId();
   return *this;
+
 }
 
 Contact::~Contact()

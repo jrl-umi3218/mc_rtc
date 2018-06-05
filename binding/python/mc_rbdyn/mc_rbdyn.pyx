@@ -943,13 +943,12 @@ cdef class Contact(object):
       self.impl = new c_mc_rbdyn.Contact(deref(robots.impl), robotSurface,
           envSurface, deref(X_es_rs.impl))
   def __full_ctor__(self, Robots robots, r1Index, r2Index, r1Surface, r2Surface,
-      sva.PTransformd X_r2s_r1s = None, sva.PTransformd Xbs =
-      sva.PTransformd.Identity(), ambId = -1):
-    cdef c_sva.PTransformd * _x_r2s_r1s = NULL
-    if not X_r2s_r1s is None:
-      _x_r2s_r1s = X_r2s_r1s.impl
+      sva.PTransformd X_r2s_r1s = sva.PTransformd.Identity(), sva.PTransformd Xbs =
+      None, ambId = -1):
+    if Xbs is None:
+      Xbs = robots.robot(r1Index).surface(r1Surface).X_b_s()
     self.impl = new c_mc_rbdyn.Contact(deref(robots.impl), r1Index, r2Index,
-        r1Surface, r2Surface, _x_r2s_r1s, deref(Xbs.impl), ambId)
+        r1Surface, r2Surface, deref(X_r2s_r1s.impl), deref(Xbs.impl), ambId)
   def __cinit__(self, *args, **kwds):
     if "skip_alloc" in kwds:
       skip_alloc = bool(kwds["skip_alloc"])
