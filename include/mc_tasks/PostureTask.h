@@ -87,6 +87,8 @@ private:
   tasks::qp::PostureTask pt_;
   /** Solver timestep */
   double dt_;
+  /** Store the target posture */
+  std::vector<std::vector<double>> posture_;
   /** Store the previous eval vector */
   Eigen::VectorXd eval_;
   /** Store the task speed */

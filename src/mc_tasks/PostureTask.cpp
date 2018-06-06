@@ -18,11 +18,13 @@ PostureTask::PostureTask(const mc_solver::QPSolver & solver, unsigned int rIndex
   speed_.setZero();
   type_ = "posture";
   name_ = std::string("posture_") + robot_.name();
+  posture_ = pt_.posture();
 }
 
 void PostureTask::reset()
 {
   pt_.posture(robot_.mbc().q);
+  posture_ = pt_.posture();
 }
 
 void PostureTask::selectActiveJoints(mc_solver::QPSolver & solver,
@@ -94,6 +96,7 @@ void PostureTask::update()
 void PostureTask::posture(const std::vector<std::vector<double>> & p)
 {
   pt_.posture(p);
+  posture_ = p;
 }
 
 std::vector<std::vector<double>> PostureTask::posture() const
@@ -172,6 +175,18 @@ void PostureTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
       [this](const double & w) { this->weight(w); }
     )
   );
+  for(const auto & j : robot_.mb().joints())
+  {
+    if(j.dof() != 1) { continue; }
+    auto jIndex = robot_.jointIndexByName(j.name());
+    gui.addElement(
+      {"Tasks", name_, "Target"},
+      mc_rtc::gui::NumberSlider(j.name(),
+        [this,jIndex]() { return this->posture_[jIndex][0]; },
+        [this,jIndex](double v) { this->posture_[jIndex][0] = v; posture(posture_); },
+        robot_.ql()[jIndex][0], robot_.qu()[jIndex][0])
+    );
+  }
 }
 
 }
