@@ -25,7 +25,13 @@ then
 else
    BUILD_CORE=`sysctl -n hw.ncpu`
 fi
-ROS_DISTRO=indigo
+
+if [ `lsb_release -sc` = "trusty" ]
+then
+  ROS_DISTRO=indigo
+else
+  ROS_DISTRO=kinetic
+fi
 
 readonly HELP_STRING="$(basename $0) [OPTIONS] ...
     --help                     (-h)               : print this help
@@ -376,15 +382,18 @@ if $WITH_ROS_SUPPORT
 then
   if $INSTALL_APT_DEPENDENCIES
   then
-    sudo add-apt-repository ppa:keithw/glfw3
-    sudo apt-get update
+    if [ `apt-cache search libglfw3-dev|wc -l` -eq 0 ]
+    then
+      sudo add-apt-repository ppa:keithw/glfw3
+      sudo apt-get update
+    fi
     sudo apt-get install -qq libglfw3-dev
   fi
   CATKIN_DIR=$SOURCE_DIR/catkin_ws
   cd $CATKIN_DIR/src
   if [ ! -d mc_rtc_ros/.git ]
   then
-    git_clone git@gite.lirmm.fr:multi-contact/mc_rtc_ros
+    git_clone -b topic/SN git@gite.lirmm.fr:multi-contact/mc_rtc_ros
   else
     cd mc_rtc_ros
     git_update
