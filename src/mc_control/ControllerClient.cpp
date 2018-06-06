@@ -212,6 +212,9 @@ void ControllerClient::handle_widget(const ElementId & id,
       case Elements::NumberInput:
         number_input(id, data("data"));
         break;
+      case Elements::NumberSlider:
+        number_slider(id, data("data"), gui("min"), gui("max"));
+        break;
       case Elements::ArrayInput:
         array_input(id, gui("labels", std::vector<std::string>{}), data("data"));
         break;

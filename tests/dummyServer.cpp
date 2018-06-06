@@ -20,6 +20,7 @@ struct TestServer
   std::string string_ = "default";
   int int_ = 0;
   double d_ = 0.;
+  double slide_ = 0.;
   Eigen::VectorXd v_ {Eigen::VectorXd::Ones(6)};
   Eigen::Vector3d v3_ {1., 2., 3.};
   Eigen::Vector3d vInt_ = {0., 0., 0.};
@@ -65,6 +66,10 @@ TestServer::TestServer()
   builder.addElement({"NumberInput example"}, mc_rtc::gui::NumberInput("NumberInput",
                                                              [this](){ return d_;},
                                                              [this](double data){ d_ = data; std::cout << "d_ changed to " << d_ << std::endl; }));
+  builder.addElement({"NumberSlider example"}, mc_rtc::gui::NumberSlider("NumberSlider",
+                                                             [this](){ return slide_; },
+                                                             [this](double s) { slide_ = s; std::cout << "slide_ changed to " << slide_ << std::endl; },
+                                                             -100.0, 100.0));
   builder.addElement({"ArrayInput example"}, mc_rtc::gui::ArrayInput("ArrayInput",
                                                              [this](){ return v_;},
                                                              [this](const Eigen::VectorXd & data){ v_ = data; std::cout << "v_ changed to " << v_.transpose() << std::endl; }));

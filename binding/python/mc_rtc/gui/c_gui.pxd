@@ -46,6 +46,10 @@ cdef extern from "<mc_rtc/GUIState.h>" namespace "mc_rtc::gui":
     pass
   cdef NumberInputImpl[GetT, SetT] NumberInput[GetT, SetT](const string&, GetT, SetT)
 
+  cdef cppclass NumberSliderImpl[GetT, SetT](Element):
+    pass
+  cdef NumberSliderImpl[GetT, SetT] NumberSlider[GetT, SetT](const string&, GetT, SetT, double, double)
+
   cdef cppclass ArrayInputImpl[GetT, SetT](Element):
     pass
   cdef ArrayInputImpl[GetT, SetT] ArrayInput[GetT, SetT](const string&, GetT, SetT)

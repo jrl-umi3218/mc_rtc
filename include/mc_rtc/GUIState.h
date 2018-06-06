@@ -46,6 +46,7 @@ namespace gui
     StringInput,
     IntegerInput,
     NumberInput,
+    NumberSlider,
     ArrayInput,
     ComboInput,
     DataComboInput,
@@ -214,6 +215,34 @@ protected:
   WRITE_INPUT_IMPL(NumberInput)
 
   #undef WRITE_INPUT_IMPL
+
+  template<typename GetT, typename SetT>
+  struct MC_RTC_GUI_DLLAPI NumberSliderImpl : public CommonInputImpl<GetT, SetT>
+  {
+    static constexpr auto type = Elements::NumberSlider;
+
+    NumberSliderImpl(const std::string & name, GetT get_fn, SetT set_fn,
+                     double min, double max)
+    : CommonInputImpl<GetT, SetT>(name, get_fn, set_fn),
+      min_(min), max_(max)
+    {}
+
+    NumberSliderImpl() {}
+
+    /** Add min/max to GUI information */
+    void addGUI(mc_rtc::Configuration &);
+  private:
+    double min_;
+    double max_;
+  };
+
+  template<typename GetT, typename SetT>
+  NumberSliderImpl<GetT, SetT>
+    NumberSlider(const std::string & name, GetT get_fn, SetT set_fn,
+                 double min, double max)
+  {
+    return NumberSliderImpl<GetT, SetT>(name, get_fn, set_fn, min, max);
+  }
 
   template<typename GetT, typename SetT>
   struct MC_RTC_GUI_DLLAPI ArrayInputImpl : public CommonInputImpl<GetT, SetT>

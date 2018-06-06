@@ -144,6 +144,12 @@ namespace mc_control
       default_impl("NumberInput", id);
     }
 
+    virtual void number_slider(const ElementId & id,
+                               double /*data*/, double /*min*/, double /*max*/)
+    {
+      default_impl("NumberSlider", id);
+    }
+
     /** Should be implemented to create a widget able to input array of numbers */
     virtual void array_input(const ElementId & id,
                              const std::vector<std::string> & /*labels*/,

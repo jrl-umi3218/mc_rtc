@@ -96,6 +96,16 @@ cdef class NumberInput(Element):
     self.impl = c_gui.NumberInput[c_gui.get_fn, c_gui.set_fn](name, c_gui.make_getter(python_to_conf, get_fn), c_gui.make_setter(conf_to_python, set_fn, float))
     self.base = &self.impl
 
+cdef class NumberSlider(Element):
+  cdef c_gui.NumberSliderImpl[c_gui.get_fn, c_gui.set_fn] impl
+  cdef _get_fn
+  cdef _set_fn
+  def __cinit__(self, name, get_fn, set_fn, min_, max_):
+    self._get_fn = get_fn
+    self._set_fn = set_fn
+    self.impl = c_gui.NumberSlider[c_gui.get_fn, c_gui.set_fn](name, c_gui.make_getter(python_to_conf, get_fn), c_gui.make_setter(conf_to_python, set_fn, float), min_, max_)
+    self.base = &self.impl
+
 cdef class ArrayInput(Element):
   cdef c_gui.ArrayInputImpl[c_gui.get_fn, c_gui.set_fn] impl
   cdef _get_fn
@@ -304,6 +314,8 @@ cdef class StateBuilder(object):
       self.impl.get().addElement[c_gui.IntegerInputImpl[c_gui.get_fn, c_gui.set_fn]](py2cpp(category), (<IntegerInput>element).impl)
     elif t is NumberInput:
       self.impl.get().addElement[c_gui.NumberInputImpl[c_gui.get_fn, c_gui.set_fn]](py2cpp(category), (<NumberInput>element).impl)
+    elif t is NumberSlider:
+      self.impl.get().addElement[c_gui.NumberSliderImpl[c_gui.get_fn, c_gui.set_fn]](py2cpp(category), (<NumberSlider>element).impl)
     elif t is ArrayInput:
       self.impl.get().addElement[c_gui.ArrayInputImpl[c_gui.get_fn, c_gui.set_fn]](py2cpp(category), (<ArrayInput>element).impl)
     elif t is ComboInput:

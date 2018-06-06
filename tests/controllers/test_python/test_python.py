@@ -67,6 +67,8 @@ class TestPythonController(mc_control.MCPythonController):
     self.gui().addElement(["Python"], mc_rtc.gui.StringInput("string input", self.mystring, self.mystring),
                                       mc_rtc.gui.IntegerInput("integer input", self.myint, self.myint),
                                       mc_rtc.gui.NumberInput("number input", self.mynumber, self.mynumber))
+    self.myslider_ = 0.0
+    self.gui().addElement(["Python"], mc_rtc.gui.NumberSlider("number slider", self.myslider, self.myslider, -100.0, 100.0))
     self.myarray_ = [0.,1.,2.,3.]
     self.gui().addElement(["Python"], mc_rtc.gui.ArrayInput("array input", self.myarray, self.myarray))
     self.gui().addElement(["Python"], mc_rtc.gui.ArrayInput("array input with labels", self.myarray, self.myarray, ["w", "x", "y", "z"]))
@@ -115,6 +117,12 @@ class TestPythonController(mc_control.MCPythonController):
     else:
         print "Change mynumber to {}".format(s)
         self.mynumber_ = s
+  def myslider(self, s = None):
+    if s is None:
+        return self.myslider_
+    else:
+        print "Change myslider to {}".format(s)
+        self.myslider_ = s
   def myarray(self, s = None):
     if s is None:
         return self.myarray_

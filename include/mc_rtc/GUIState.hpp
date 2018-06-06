@@ -77,6 +77,13 @@ CommonInputImpl<GetT, SetT>::CommonInputImpl(const std::string & name, GetT get_
 }
 
 template<typename GetT, typename SetT>
+void NumberSliderImpl<GetT, SetT>::addGUI(mc_rtc::Configuration & gui)
+{
+  gui.add("min", min_);
+  gui.add("max", max_);
+}
+
+template<typename GetT, typename SetT>
 ArrayInputImpl<GetT, SetT>::ArrayInputImpl(const std::string & name,
                                            const std::vector<std::string> & labels,
                                            GetT get_fn, SetT set_fn)
