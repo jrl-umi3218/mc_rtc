@@ -179,12 +179,14 @@ void PostureTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   {
     if(j.dof() != 1) { continue; }
     auto jIndex = robot_.jointIndexByName(j.name());
+    bool isContinuous = robot_.ql()[jIndex][0] == -std::numeric_limits<double>::infinity();
     gui.addElement(
       {"Tasks", name_, "Target"},
       mc_rtc::gui::NumberSlider(j.name(),
         [this,jIndex]() { return this->posture_[jIndex][0]; },
         [this,jIndex](double v) { this->posture_[jIndex][0] = v; posture(posture_); },
-        robot_.ql()[jIndex][0], robot_.qu()[jIndex][0])
+        isContinuous ? -M_PI : robot_.ql()[jIndex][0],
+        isContinuous ?  M_PI : robot_.qu()[jIndex][0])
     );
   }
 }
