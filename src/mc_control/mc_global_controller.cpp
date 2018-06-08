@@ -706,6 +706,41 @@ void MCGlobalController::setup_log()
   });
   controller->logger().addLogEntry(
       "accIn", [controller]() -> const Eigen::Vector3d & { return controller->robot().bodySensor().acceleration(); });
+
+  // Log all other body sensors
+  const auto& bodySensors = controller->robot().bodySensors();
+  if(bodySensors.size() > 1)
+  {
+    for (int i = 1; i < bodySensors.size(); ++i) {
+      const auto& name = bodySensors[i].name();
+      controller->logger().addLogEntry(name+"_pIn",
+                                       [controller,name]() -> const Eigen::Vector3d&
+                                       {
+                                       return controller->robot().bodySensor(name).position();
+                                       });
+      controller->logger().addLogEntry(name+"_rpyIn",
+                                       [controller,name]() -> const Eigen::Quaterniond&
+                                       {
+                                       return controller->robot().bodySensor(name).orientation();
+                                       });
+      controller->logger().addLogEntry(name+"_velIn",
+                                       [controller,name]() -> const Eigen::Vector3d&
+                                       {
+                                       return controller->robot().bodySensor(name).linearVelocity();
+                                       });
+      controller->logger().addLogEntry(name+"_rateIn",
+                                       [controller,name]() -> const Eigen::Vector3d&
+                                       {
+                                       return controller->robot().bodySensor(name).angularVelocity();
+                                       });
+      controller->logger().addLogEntry(name+"_accIn",
+                                       [controller,name]() -> const Eigen::Vector3d&
+                                       {
+                                       return controller->robot().bodySensor(name).acceleration();
+                                       });
+    }
+  }
+
   // Performance measures
   controller->logger().addLogEntry("perf_GlobalRun", [this]() { return global_run_dt.count(); });
   controller->logger().addLogEntry("perf_ControllerRun", [this]() { return controller_run_dt.count(); });

@@ -55,6 +55,7 @@ HRP4CommonRobotModule::HRP4CommonRobotModule() : RobotModule(mc_rtc::HRP4_DESCRI
   gripperLinks.push_back("L_F53_LINK");
 
   _bodySensors.emplace_back("Accelerometer", "body", sva::PTransformd(Eigen::Vector3d(-0.0325, 0, 0.1095)));
+  _bodySensors.emplace_back("FloatingBase", "body", sva::PTransformd::Identity());
 
   halfSitting["R_HIP_Y"] = {0};
   halfSitting["R_HIP_R"] = {-1.15};
