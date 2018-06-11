@@ -1,7 +1,14 @@
 add_executable(mc_bin_to_log mc_bin_to_log.cpp)
 target_link_libraries(mc_bin_to_log mc_control)
 pkg_config_use_dependency(mc_bin_to_log Tasks)
+
+set(UTILS_SCRIPT
+  mc_rtc_new_controller
+  mc_rtc_new_fsm_controller
+)
+
 install(TARGETS mc_bin_to_log DESTINATION bin)
+install(PROGRAMS ${UTILS_SCRIPT} DESTINATION bin)
 
 if(${ROSCPP_FOUND})
   add_executable(mc_bin_to_rosbag mc_bin_to_rosbag.cpp)
