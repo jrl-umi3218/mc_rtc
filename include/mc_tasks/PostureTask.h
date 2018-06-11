@@ -89,6 +89,8 @@ private:
   double dt_;
   /** Store the target posture */
   std::vector<std::vector<double>> posture_;
+  /** Store mimic information */
+  std::unordered_map<std::string, std::vector<int>> mimics_;
   /** Store the previous eval vector */
   Eigen::VectorXd eval_;
   /** Store the task speed */
