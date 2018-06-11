@@ -141,6 +141,7 @@ Robot::Robot(Robots & robots, unsigned int robots_idx, bool loadFiles,
     mbc() = rbd::MultiBodyConfig(mb());
   }
 
+  mbc().gravity = Eigen::Vector3d{0, 0, 9.81};
   mbc().zero(mb());
   {
     auto initQ = mbc().q;
