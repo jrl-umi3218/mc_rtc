@@ -4,6 +4,7 @@
 import collections
 import copy
 import csv
+import ctypes
 import json
 import numpy as np
 import os
@@ -25,6 +26,35 @@ except ImportError:
   mc_rbdyn = None
 
 UserPlot = collections.namedtuple('UserPlot', ['title', 'x', 'y1', 'y1d', 'y2', 'y2d'])
+
+def safe_float(v):
+    if len(v):
+        return float(v)
+    else:
+        return None
+
+def read_flat(f):
+    def read_size(fd):
+        return ctypes.c_size_t.from_buffer_copy(fd.read(ctypes.sizeof(ctypes.c_size_t))).value
+    def read_bool(fd):
+        return ctypes.c_bool.from_buffer_copy(fd.read(ctypes.sizeof(ctypes.c_bool))).value
+    def read_string(fd, size):
+        return fd.read(size).decode('ascii')
+    def read_array(fd, size):
+        return np.frombuffer(fd.read(size * ctypes.sizeof(ctypes.c_double)), np.double)
+    def read_string_array(fd, size):
+        [ read_string(fd, read_size(fd)) for i in range(size) ]
+    data = {}
+    with open(f, 'rb') as fd:
+        nrEntries = read_size(fd)
+        for i in range(nrEntries):
+            is_numeric = read_bool(fd)
+            key = read_string(fd, read_size(fd))
+            if is_numeric:
+                data[key] = read_array(fd, read_size(fd))
+            else:
+                data[key] = read_string_array(fd, read_size(fd))
+    return data
 
 class MCLogJointDialog(QtGui.QDialog):
   def __init__(self, parent, rm, name, y1_prefix = None, y2_prefix = None, y1_diff_prefix = None, y2_diff_prefix = None):
@@ -227,21 +257,19 @@ class MCLogUI(QtGui.QMainWindow):
   def load_csv(self, fpath):
     self.data = {}
     if fpath.endswith('.bin'):
-      tmpf = tempfile.mkstemp(suffix = '.log')[1]
-      os.system("mc_bin_to_log {} {}".format(fpath, tmpf))
+      tmpf = tempfile.mkstemp(suffix = '.flat')[1]
+      os.system("mc_bin_to_flat {} {}".format(fpath, tmpf))
       return self.load_csv(tmpf)
+    elif fpath.endswith('.flat'):
+      self.data = read_flat(fpath)
     else:
       with open(fpath) as fd:
         reader = csv.DictReader(fd, delimiter=';')
+        for k in reader.fieldnames:
+          self.data[k] = []
         for row in reader:
           for k in reader.fieldnames:
-            try:
-              value = float(row[k])
-            except ValueError:
-              value = None
-            if not k in self.data:
-              self.data[k] = []
-            self.data[k].append(value)
+            self.data[k].append(safe_float(row[k]))
       for k in self.data:
         self.data[k] = np.array(self.data[k])
     i = 0
