@@ -9,24 +9,11 @@ from functools import partial
 import copy
 import re
 
-def get_full_text(item):
-  if item.childCount():
-    return [ (t,d) for i in range(item.childCount()) for t,d in get_full_text(item.child(i)) ]
-  else:
-    base_text = item.actualText
-    display_text = item.displayText
-    parent = item.parent()
-    while parent is not None:
-      base_text = parent.actualText + "_" + base_text
-      display_text = parent.displayText + "_" + display_text
-      parent = parent.parent()
-    return [ (base_text, display_text) ]
-
 class MCLogTreeWidgetItem(QtGui.QTreeWidgetItem):
-  def __init__(self, parent, values):
-    super(MCLogTreeWidgetItem, self).__init__(parent, values)
-    self._displayText = values[0]
-    self.actualText = values[0]
+  def __init__(self, parent, displayText, actualText):
+    super(MCLogTreeWidgetItem, self).__init__(parent, [displayText])
+    self._displayText = displayText
+    self.actualText = actualText
   @property
   def displayText(self):
     return self._displayText
@@ -35,16 +22,106 @@ class MCLogTreeWidgetItem(QtGui.QTreeWidgetItem):
     self._displayText = value
     self.setText(0, self._displayText)
 
+class TreeView(object):
+  def __init__(self, name = None):
+    self.name = name
+    self.leafs = []
+  def leaf(self, name):
+    for l in self.leafs:
+      if l.name == name:
+        return l
+    self.leafs.append(TreeView(name))
+    return self.leafs[-1]
+  def add(self, key):
+    if len(key) == 0:
+      return
+    self.leaf(key[0]).add(key[1:])
+  def simplify(self):
+    while len(self.leafs) == 1:
+      self.name = self.name + '_' + self.leafs[0].name
+      self.leafs = self.leafs[0].leafs
+    for l in self.leafs:
+      l.simplify()
+  def update_y_selector(self, ySelector, selected_data, parent, baseModelIdx = None, baseName = ""):
+    row = 0
+    needExpand = False
+    for l in self.leafs:
+      fullName = baseName
+      if len(fullName):
+        fullName += "_"
+      fullName += l.name
+      base = MCLogTreeWidgetItem(parent, l.name, fullName)
+      if baseModelIdx is not None:
+        newModelIdx = ySelector.model().index(row, 0, baseModelIdx)
+      else:
+        newModelIdx = ySelector.model().index(row, 0)
+      if fullName in selected_data:
+        selection = ySelector.selectionModel()
+        selection.select(newModelIdx, QtGui.QItemSelectionModel.Select)
+        ySelector.setSelectionModel(selection)
+        needExpand = True
+      if l.update_y_selector(ySelector, selected_data, base, newModelIdx, fullName):
+        base.setExpanded(True)
+      row += 1
+    return needExpand
+  def __print(self, indent):
+    ret = "\n"
+    if self.name is not None:
+      ret = " "*indent + "| " + self.name + '\n'
+    for l in self.leafs:
+      ret += l.__print(indent + 1)
+    return ret
+  def __str__(self):
+    return self.__print(-1)
+
+class FilterRightClick(QtCore.QObject):
+  def __init__(self, parent):
+    super(FilterRightClick, self).__init__(parent)
+
+  def eventFilter(self, obj, event):
+    if event.type() == QtCore.QEvent.MouseButtonPress:
+      if event.button() == QtCore.Qt.RightButton:
+        return True
+    return False
+
+class RemoveSpecialPlotButton(QtGui.QPushButton):
+  def __init__(self, name, logtab, idx, special_id, button_only = False):
+    self.logtab = logtab
+    if idx == 0:
+      self.layout = logtab.ui.y1SelectorLayout
+    else:
+      self.layout = logtab.ui.y2SelectorLayout
+    super(RemoveSpecialPlotButton, self).__init__(u"Remove {} {} plot".format(name, special_id), logtab)
+    self.idx = idx
+    self.layout.addWidget(self)
+    self.clicked.connect(self.on_clicked)
+    self.added = sorted(filter(lambda x: x.startswith(name), self.logtab.data.keys()))
+    self.added_labels = [ "{}_{}".format(l, special_id) for l in self.added]
+    if not button_only:
+        self.logtab.y_diff_data[idx] += self.added
+        self.logtab.y_diff_data_labels[idx] += self.added_labels
+        self.logtab.canvas_need_update.emit()
+  def on_clicked(self):
+    self.logtab.y_diff_data[self.idx] = filter(lambda x: x not in self.added, self.logtab.y_diff_data[self.idx])
+    self.logtab.y_diff_data_labels[self.idx] = filter(lambda x: x not in self.added_labels, self.logtab.y_diff_data_labels[self.idx])
+    self.logtab.canvas_need_update.emit()
+    self.deleteLater()
+
 class MCLogTab(QtGui.QWidget):
+  canvas_need_update = QtCore.Signal()
   def __init__(self, parent = None):
     super(MCLogTab, self).__init__(parent)
     self.ui = Ui_MCLogTab()
     self.ui.setupUi(self)
     def setupSelector(ySelector):
-      ySelector.setHeaderLabels(["Data", "Diff"])
+      ySelector.setHeaderLabels(["Data"])
       ySelector.header().setResizeMode(QtGui.QHeaderView.ResizeMode.Fixed)
+      ySelector.viewport().installEventFilter(FilterRightClick(ySelector))
     setupSelector(self.ui.y1Selector)
     setupSelector(self.ui.y2Selector)
+    self.ui.y1Selector.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+    self.ui.y2Selector.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+    self.canvas_need_update.connect(self.update_canvas)
 
     self.data = None
     self.rm = None
@@ -96,6 +173,14 @@ class MCLogTab(QtGui.QWidget):
   def on_y2Selector_itemClicked(self):
     self.itemSelectionChanged(self.ui.y2Selector, 1)
 
+  @QtCore.Slot(QtCore.QPoint)
+  def on_y1Selector_customContextMenuRequested(self, point):
+    self.showCustomMenu(self.ui.y1Selector, point, 0)
+
+  @QtCore.Slot(QtCore.QPoint)
+  def on_y2Selector_customContextMenuRequested(self, point):
+    self.showCustomMenu(self.ui.y2Selector, point, 1)
+
   def update_canvas(self):
     self.ui.canvas.plot(self.data, self.x_data, self.y_data, self.y_diff_data, self.y_data_labels, self.y_diff_data_labels)
 
@@ -104,21 +189,8 @@ class MCLogTab(QtGui.QWidget):
     self.y_data_labels[idx] = []
     selected = ySelector.selectedItems()
     for item in selected:
-      for t,d in get_full_text(item):
-        self.y_data[idx] += [t.encode(u'ascii')]
-        self.y_data_labels[idx] += [d.encode(u'ascii')]
-    self.update_canvas()
-
-  def checkboxChanged(self, item, idx, state):
-    y_diff_data, y_diff_data_labels = [list(t) for t in zip(*get_full_text(item))]
-    if state:
-      self.y_diff_data[idx] += y_diff_data
-      self.y_diff_data_labels[idx] += [ l + "_dot" for l in y_diff_data_labels ]
-    else:
-      for e in y_diff_data:
-        self.y_diff_data[idx].remove(e)
-      for e in y_diff_data_labels:
-        self.y_diff_data_labels[idx].remove(e + "_dot")
+      self.y_data[idx] += sorted(filter(lambda x: x.startswith(item.actualText), self.data.keys()))
+    self.y_data_labels[idx] = self.y_data[idx]
     self.update_canvas()
 
   def update_x_selector(self):
@@ -131,59 +203,27 @@ class MCLogTab(QtGui.QWidget):
   def update_y_selectors(self):
     self.ui.y1Selector.clear()
     self.ui.y2Selector.clear()
-    tree_view = {}
+    tree_view = TreeView()
     for k in sorted(self.data.keys()):
-      idx = k.rfind('_')
-      if idx != -1 and idx + 1 < len(k):
-        base = k[:idx]
-        leaf = k[idx+1:]
-        if not base in tree_view:
-            tree_view[base] = []
-        tree_view[base] += [leaf]
-      else:
-        assert(not k in tree_view)
-        tree_view[k] = []
-    def update_y_selector(ySelector, idx):
-      baseRow = 0
-      for k, values in sorted(tree_view.items()):
-        base = MCLogTreeWidgetItem(ySelector, [k])
-        baseModelIdx = ySelector.model().index(baseRow, 0)
-        box = QtGui.QCheckBox(ySelector)
-
-        if len(values) == 0:
-          if k in self.y_data[idx]:
-            selection = ySelector.selectionModel()
-            selection.select(baseModelIdx, QtGui.QItemSelectionModel.Select)
-            ySelector.setSelectionModel(selection)
-        if k in self.y_diff_data[idx]:
-          box.setChecked(True)
-        box.stateChanged.connect(partial(self.checkboxChanged, base, idx))
-        ySelector.setItemWidget(base, 1, box)
-
-        needExpand = False
-        for row, v in enumerate(values):
-          item = MCLogTreeWidgetItem(base, [v])
-          if "{}_{}".format(k, v) in self.y_data[idx]:
-            modelIdx = ySelector.model().index(row, 0, baseModelIdx)
-            selection = ySelector.selectionModel()
-            selection.select(modelIdx, QtGui.QItemSelectionModel.Select)
-            ySelector.setSelectionModel(selection)
-            needExpand = True
-          box = QtGui.QCheckBox(ySelector)
-          if "{}_{}".format(k, v) in self.y_diff_data[idx]:
-            box.setChecked(True)
-            needExpand = True
-          box.stateChanged.connect(partial(self.checkboxChanged, item, idx))
-          ySelector.setItemWidget(item, 1, box)
-        base.setExpanded(needExpand)
-        baseRow += 1
-
+      tree_view.add(k.split('_'))
+    tree_view.simplify()
+    def update_y_selector(ySelector, selected_data):
+      tree_view.update_y_selector(ySelector, selected_data, ySelector)
       ySelector.resizeColumnToContents(0)
       cWidth = ySelector.sizeHintForColumn(0)
-      ySelector.setColumnWidth(1, 75)
       ySelector.setMaximumWidth(cWidth + 75)
-    update_y_selector(self.ui.y1Selector, 0)
-    update_y_selector(self.ui.y2Selector, 1)
+    update_y_selector(self.ui.y1Selector, self.y_data[0])
+    update_y_selector(self.ui.y2Selector, self.y_data[1])
+
+  def showCustomMenu(self, ySelector, point, idx):
+    item = ySelector.itemAt(point)
+    if item is None:
+      return
+    menu = QtGui.QMenu(ySelector)
+    action = QtGui.QAction(u"Plot {} diff".format(item.actualText), menu)
+    action.triggered.connect(lambda: RemoveSpecialPlotButton(item.actualText, self, idx, "diff"))
+    menu.addAction(action)
+    menu.exec_(ySelector.viewport().mapToGlobal(point))
 
   @staticmethod
   def UserPlot(parent, p):
@@ -194,12 +234,16 @@ class MCLogTab(QtGui.QWidget):
     tab.y_data[1] = copy.deepcopy(p.y2)
     tab.y_data_labels[1] = copy.deepcopy(p.y2)
     tab.y_diff_data[0] = copy.deepcopy(p.y1d)
-    tab.y_diff_data_labels[0] = [ l + '_dot' for l in tab.y_diff_data[0] ]
+    tab.y_diff_data_labels[0] = [ l + '_diff' for l in tab.y_diff_data[0] ]
     tab.y_diff_data[1] = copy.deepcopy(p.y2d)
-    tab.y_diff_data_labels[1] = [ l + '_dot' for l in tab.y_diff_data[1] ]
+    tab.y_diff_data_labels[1] = [ l + '_diff' for l in tab.y_diff_data[1] ]
     tab.setData(parent.data)
     tab.setRobotModule(parent.rm)
     tab.update_canvas()
+    for yd in tab.y_diff_data[0]:
+      RemoveSpecialPlotButton(yd, tab, 0, "diff", button_only = True)
+    for yd in tab.y_diff_data[1]:
+      RemoveSpecialPlotButton(yd, tab, 1, "diff", button_only = True)
     return tab
 
   @staticmethod

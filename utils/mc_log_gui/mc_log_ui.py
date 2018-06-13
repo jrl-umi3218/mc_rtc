@@ -254,12 +254,12 @@ class MCLogUI(QtGui.QMainWindow):
     if has_closable:
       self.ui.tabWidget.tabBar().tabButton(self.ui.tabWidget.count() - 1, QtGui.QTabBar.RightSide).hide();
 
-  def load_csv(self, fpath):
+  def load_csv(self, fpath, tmp = False):
     self.data = {}
     if fpath.endswith('.bin'):
       tmpf = tempfile.mkstemp(suffix = '.flat')[1]
       os.system("mc_bin_to_flat {} {}".format(fpath, tmpf))
-      return self.load_csv(tmpf)
+      return self.load_csv(tmpf, True)
     elif fpath.endswith('.flat'):
       self.data = read_flat(fpath)
     else:
@@ -277,6 +277,8 @@ class MCLogUI(QtGui.QMainWindow):
       self.data["error_{}".format(i)] = self.data["qOut_{}".format(i)] - self.data["qIn_{}".format(i)]
       i += 1
     self.update_data()
+    if tmp:
+      os.unlink(fpath)
 
   def update_data(self):
     self.update_menu()
