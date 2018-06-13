@@ -390,6 +390,7 @@ inline char * dtoa_milo(double value, char* buffer) {
 	assert(!isnan(value));
 	assert(!isinf(value));
 
+	char * ret = buffer;
 	if (value == 0) {
 		buffer[0] = '0';
 		buffer[1] = '.';
@@ -405,5 +406,5 @@ inline char * dtoa_milo(double value, char* buffer) {
 		Grisu2(value, buffer, &length, &K);
 		Prettify(buffer, length, K);
 	}
-	return buffer;
+	return ret;
 }
