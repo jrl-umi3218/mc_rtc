@@ -8,6 +8,8 @@ import re
 import sys
 
 def new_controller(project_dir, controller_class_name, controller_name, base_class = 'mc_control::MCController', base_use_conf = False, extra_includes = [], extra_libs = '', min_code = True):
+    if not os.path.isabs(project_dir):
+        return new_controller(os.path.abspath(project_dir), controller_class_name, controller_name, base_class, base_use_conf, extra_includes, extra_libs, min_code)
     extra_includes = '\n'.join(['#include <{}>'.format(i) for i in extra_includes])
     if len(extra_libs):
         extra_libs = 'target_link_libraries(${{PROJECT_NAME}} {})'.format(extra_libs)
