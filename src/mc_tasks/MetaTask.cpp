@@ -22,6 +22,7 @@ void MetaTask::load(mc_solver::QPSolver & solver,
     {
       LOG_ERROR_AND_THROW(std::runtime_error, "Stored dimWeight has the wrong dimension (is " << dimW.size() << " should be " << dimWeight().size())
     }
+    dimWeight(dimW);
   }
   if(config.has("activeJoints"))
   {
