@@ -19,7 +19,7 @@
      <item>
       <widget class="QTreeWidget" name="y1Selector">
        <property name="selectionMode">
-        <enum>QAbstractItemView::ExtendedSelection</enum>
+        <enum>QAbstractItemView::MultiSelection</enum>
        </property>
        <property name="selectionBehavior">
         <enum>QAbstractItemView::SelectItems</enum>
@@ -54,7 +54,7 @@
      <item>
       <widget class="QTreeWidget" name="y2Selector">
        <property name="selectionMode">
-        <enum>QAbstractItemView::ExtendedSelection</enum>
+        <enum>QAbstractItemView::MultiSelection</enum>
        </property>
        <property name="columnCount">
         <number>1</number>

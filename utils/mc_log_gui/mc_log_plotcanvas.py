@@ -54,6 +54,7 @@ class ItemSample(pg.GraphicsWidget):
 class HorizontalLegendItem(pg.LegendItem):
   def __init__(self, **kwds):
     super(HorizontalLegendItem, self).__init__(**kwds)
+    self.setLayout(self.layout)
     self.col = 0
     self.row = 0
   def addItem(self, item, name):
@@ -62,13 +63,32 @@ class HorizontalLegendItem(pg.LegendItem):
         sample = item
     else:
         sample = ItemSample(item)
+    self.items.append((sample, label))
+    self.layout.addItem(self.items[-1][0], self.row, self.col)
+    self.layout.addItem(self.items[-1][1], self.row, self.col + 1)
+    self.col += 2
     if self.col % 14 == 0:
       self.col = 0
       self.row += 1
-    self.items.append((sample, label))
-    self.layout.addItem(sample, self.row, self.col)
-    self.layout.addItem(label, self.row, self.col + 1)
-    self.col += 2
+    self.updateSize()
+  def removeItem(self, name):
+    while self.layout.count():
+      self.layout.removeAt(0)
+    for item in self.items:
+      if item[1].text == name:
+        item[0].deleteLater()
+        item[1].deleteLater()
+        self.items.remove(item)
+        break
+    self.col = 0
+    self.row = 0
+    for sample, label in self.items:
+      self.layout.addItem(sample, self.row, self.col)
+      self.layout.addItem(sample, self.row, self.col + 1)
+      self.col += 2
+      if self.col % 14 == 0:
+        self.col = 0
+        self.row += 1
     self.updateSize()
   def updateSize(self):
     size = self.boundingRect()
@@ -80,33 +100,15 @@ class HorizontalLegendItem(pg.LegendItem):
     self.setGeometry(size)
     self.parentItem().setMaximumHeight(self.boundingRect().size().height())
 
-class PlotCanvasWithToolbar(QWidget):
-    def __init__(self, parent=None):
-      QWidget.__init__(self, parent)
-      self.canvas = PlotCanvas(self)
-
-      vbox = QVBoxLayout()
-      vbox.addWidget(self.canvas)
-      self.setLayout(vbox)
-
-    def plot(self, data, x, y, ydiff, y_label, ydiff_label):
-      self.canvas.plot(data, x, y, ydiff, y_label, ydiff_label)
-
-    def clear(self):
-      self.canvas.clear()
-
-    def title(self, title):
-      self.canvas.title(title)
-
-    def y1_label(self, label):
-      self.canvas.set_y1_label(label)
-
-    def y2_label(self, label):
-      self.canvas.set_y2_label(label)
-
-class PlotCanvas(pg.GraphicsLayoutWidget):
+class PlotCanvasWithToolbar(pg.GraphicsLayoutWidget):
     def __init__(self, parent = None):
-      super(PlotCanvas, self).__init__(parent)
+      super(PlotCanvasWithToolbar, self).__init__(parent)
+
+      self.data = None
+      self.computed_data = {}
+      self.axes_plots = {}
+      self.axes2_plots = {}
+
       self.color = 0
 
       self.axes_legend_box = self.addViewBox(col = 0, row = 0, enableMouse = False)
@@ -138,6 +140,9 @@ class PlotCanvas(pg.GraphicsLayoutWidget):
       self.axes.vb.sigResized.connect(self.updateViews)
       self.axes2_item = []
 
+    def setData(self, data):
+      self.data = data
+
     def updateViews(self):
       self.axes2.setGeometry(self.axes.vb.sceneBoundingRect())
       self.axes2.linkedViewChanged(self.axes.vb, self.axes2.XAxis)
@@ -145,45 +150,55 @@ class PlotCanvas(pg.GraphicsLayoutWidget):
     def title(self, title):
       self.axes.setTitle(title)
 
-    def set_y1_label(self, label):
+    def y1_label(self, label):
       self.axes.setLabels(left = label)
 
-    def set_y2_label(self, label):
+    def y2_label(self, label):
       self.axes.setLabels(right = label)
 
-    def next_color(self):
+    def _next_color(self):
       self.color += 1
       return self.color - 1
 
-    def plot(self, data, x, y_, ydiff, y_labels, ydiff_labels):
-      assert(len(y_) == len(y_labels))
-      assert(len(ydiff) == len(ydiff_labels))
-      self.clear_axes()
-      dt = data[x][1] - data[x][0]
+    def _plot(self, axe, legend, x, y, y_label):
+      plt = pg.PlotCurveItem(x, y, name = y_label, pen = self._next_color(), autoDownsample = True)
+      axe.addItem(plt)
+      legend.addItem(plt, y_label)
+      return plt
 
-      for y, y_label in zip(y_[0], y_labels[0]):
-        plt = self.axes.plot(data[x], data[y], name = y_label, pen = self.next_color(), autoDownsample = True)
-        self.axes_legend.addItem(plt, y_label)
-      for y, y_label in zip(ydiff[0], ydiff_labels[0]):
-        plt = self.axes.plot(data[x][1:], np.diff(data[y])/dt, name = y_label, pen = self.next_color(), autoDownsample = True)
-        self.axes_legend.addItem(plt, y_label)
+    def add_plot_left(self, x, y, y_label):
+      self.axes_plots[y_label] = self._plot(self.axes.vb, self.axes_legend, self.data[x], self.data[y], y_label)
 
-      for y, y_label in zip(y_[1], y_labels[1]):
-        plt = pg.PlotCurveItem(data[x], data[y], name = y_label, pen = self.next_color(), autoDownsample = True)
-        self.axes2.addItem(plt)
-        self.axes2_legend.addItem(plt, y_label)
-      for y, y_label in zip(ydiff[1], ydiff_labels[1]):
-        plt = pg.PlotCurveItem(data[x][1:], np.diff(data[y])/dt, name = y_label, pen = self.next_color(), autoDownsample = True)
-        self.axes2.addItem(plt)
-        self.axes2_legend.addItem(plt, y_label)
+    def add_plot_right(self, x, y, y_label):
+      self.axes2_plots[y_label] = self._plot(self.axes2, self.axes2_legend, self.data[x], self.data[y], y_label)
 
-    def clear_axes(self):
+    def _add_diff_plot(self, axes, legend, x, y, y_label):
+      dt = self.data[x][1] - self.data[x][0]
+      return self._plot(axes, legend, self.data[x][1:], np.diff(self.data[y])/dt, y_label)
+
+    def add_diff_plot_left(self, x, y, y_label):
+      self.axes_plots[y_label] = self._add_diff_plot(self.axes.vb, self.axes_legend, x, y, y_label)
+    def add_diff_plot_right(self, x, y, y_label):
+      self.axes2_plots[y_label] = self._add_diff_plot(self.axes2, self.axes2_legend, x, y, y_label)
+
+    def remove_plot_left(self, y_label):
+      self.axes.vb.removeItem(self.axes_plots[y_label])
+      del self.axes_plots[y_label]
+      self.axes_legend.removeItem(y_label)
+    def remove_plot_right(self, y_label):
+      self.axes2.removeItem(self.axes_plot[y_label])
+      del self.axes2_plots[y_label]
+      self.axes2_legend.removeItem(y_label)
+
+    def clear_all(self):
       self.color = 0
+      self.axes_plots = {}
       self.axes_legend.close()
       self.axes_legend = HorizontalLegendItem()
       self.axes_legend.setParentItem(self.axes_legend_box)
       self.axes_legend.anchor((0,0), (0,0))
       self.axes_legend.updateSize()
+      self.axes_plots = {}
       self.axes2_legend.close()
       self.axes2_legend = HorizontalLegendItem()
       self.axes2_legend.setParentItem(self.axes2_legend_box)

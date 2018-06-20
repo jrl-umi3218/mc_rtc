@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mc_log_tab_ui.ui'
 #
-# Created: Tue Jun 12 17:35:24 2018
+# Created: Tue Jun 19 15:19:19 2018
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -18,7 +18,7 @@ class Ui_MCLogTab(object):
         self.y1SelectorLayout = QtGui.QVBoxLayout()
         self.y1SelectorLayout.setObjectName("y1SelectorLayout")
         self.y1Selector = QtGui.QTreeWidget(MCLogTab)
-        self.y1Selector.setSelectionMode(QtGui.QAbstractItemView.ExtendedSelection)
+        self.y1Selector.setSelectionMode(QtGui.QAbstractItemView.MultiSelection)
         self.y1Selector.setSelectionBehavior(QtGui.QAbstractItemView.SelectItems)
         self.y1Selector.setColumnCount(1)
         self.y1Selector.setObjectName("y1Selector")
@@ -38,7 +38,7 @@ class Ui_MCLogTab(object):
         self.y2SelectorLayout = QtGui.QVBoxLayout()
         self.y2SelectorLayout.setObjectName("y2SelectorLayout")
         self.y2Selector = QtGui.QTreeWidget(MCLogTab)
-        self.y2Selector.setSelectionMode(QtGui.QAbstractItemView.ExtendedSelection)
+        self.y2Selector.setSelectionMode(QtGui.QAbstractItemView.MultiSelection)
         self.y2Selector.setColumnCount(1)
         self.y2Selector.setObjectName("y2Selector")
         self.y2Selector.headerItem().setText(0, "1")

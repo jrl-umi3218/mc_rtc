@@ -42,7 +42,7 @@ class TreeView(object):
       self.leafs = self.leafs[0].leafs
     for l in self.leafs:
       l.simplify()
-  def update_y_selector(self, ySelector, selected_data, parent, baseModelIdx = None, baseName = ""):
+  def update_y_selector(self, ySelector, parent, baseModelIdx = None, baseName = ""):
     row = 0
     needExpand = False
     for l in self.leafs:
@@ -55,12 +55,12 @@ class TreeView(object):
         newModelIdx = ySelector.model().index(row, 0, baseModelIdx)
       else:
         newModelIdx = ySelector.model().index(row, 0)
-      if fullName in selected_data:
-        selection = ySelector.selectionModel()
-        selection.select(newModelIdx, QtGui.QItemSelectionModel.Select)
-        ySelector.setSelectionModel(selection)
-        needExpand = True
-      if l.update_y_selector(ySelector, selected_data, base, newModelIdx, fullName):
+      #if fullName in selected_data:
+      #  selection = ySelector.selectionModel()
+      #  selection.select(newModelIdx, QtGui.QItemSelectionModel.Select)
+      #  ySelector.setSelectionModel(selection)
+      #  needExpand = True
+      if l.update_y_selector(ySelector, base, newModelIdx, fullName):
         base.setExpanded(True)
       row += 1
     return needExpand
@@ -85,7 +85,7 @@ class FilterRightClick(QtCore.QObject):
     return False
 
 class RemoveSpecialPlotButton(QtGui.QPushButton):
-  def __init__(self, name, logtab, idx, special_id, button_only = False):
+  def __init__(self, name, logtab, idx, special_id):
     self.logtab = logtab
     if idx == 0:
       self.layout = logtab.ui.y1SelectorLayout
@@ -94,17 +94,39 @@ class RemoveSpecialPlotButton(QtGui.QPushButton):
     super(RemoveSpecialPlotButton, self).__init__(u"Remove {} {} plot".format(name, special_id), logtab)
     self.idx = idx
     self.layout.addWidget(self)
+    self.added = []
+    if idx == 0:
+      self.remove = self.logtab.ui.canvas.remove_plot_left
+    else:
+      self.remove = self.logtab.ui.canvas.remove_plot_right
     self.clicked.connect(self.on_clicked)
-    self.added = sorted(filter(lambda x: x.startswith(name), self.logtab.data.keys()))
-    self.added_labels = [ "{}_{}".format(l, special_id) for l in self.added]
-    if not button_only:
-        self.logtab.y_diff_data[idx] += self.added
-        self.logtab.y_diff_data_labels[idx] += self.added_labels
-        self.logtab.canvas_need_update.emit()
+    if special_id == "diff":
+      self.__add_diff(idx, name)
+    elif special_id == "rpy":
+      self.__add_rpy(idx, name)
+    else:
+      print "Cannot handle this special plot:", special_id
+  def __add_diff(self, idx, name):
+    added = filter(lambda x: re.match("{}($|_.*$)".format(name), x) is not None, self.logtab.data.keys())
+    if idx == 0:
+      add_fn = self.logtab.ui.canvas.add_diff_plot_left
+    else:
+      add_fn = self.logtab.ui.canvas.add_diff_plot_right
+    for a in added:
+      label = "{}_diff".format(a)
+      add_fn(self.logtab.x_data, a, label)
+      self.added.append(label)
+  def __add_rpy(self, idx, name):
+    if idx == 0:
+      add_fn = self.logtab.ui.canvas.add_rpy_plot_left
+    else:
+      add_fn = self.logtab.ui.canvas.add_rpy_plot_right
+    self.added = [ "{}_{}".format(name, s) for s in ["r", "p", "y"] ]
+    add_fn(self.logtab.x_data, name, label)
+
   def on_clicked(self):
-    self.logtab.y_diff_data[self.idx] = filter(lambda x: x not in self.added, self.logtab.y_diff_data[self.idx])
-    self.logtab.y_diff_data_labels[self.idx] = filter(lambda x: x not in self.added_labels, self.logtab.y_diff_data_labels[self.idx])
-    self.logtab.canvas_need_update.emit()
+    for added in self.added:
+      self.remove(added)
     self.deleteLater()
 
 class MCLogTab(QtGui.QWidget):
@@ -121,19 +143,15 @@ class MCLogTab(QtGui.QWidget):
     setupSelector(self.ui.y2Selector)
     self.ui.y1Selector.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
     self.ui.y2Selector.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-    self.canvas_need_update.connect(self.update_canvas)
 
     self.data = None
     self.rm = None
     self.x_data_trigger = False
     self.x_data = 't'
-    self.y_data = [[], []]
-    self.y_data_labels = [[], []]
-    self.y_diff_data = [[], []]
-    self.y_diff_data_labels = [[], []]
 
   def setData(self, data):
     self.data = data
+    self.ui.canvas.setData(data)
     self.update_x_selector()
     self.update_y_selectors()
 
@@ -163,15 +181,16 @@ class MCLogTab(QtGui.QWidget):
   @QtCore.Slot(str)
   def on_xSelector_activated(self, k):
     self.x_data = k
-    self.update_canvas()
+    self.ui.canvas.clear_all()
+    # FIXME SHOULD REPLOT ALL ACCORDING TO NEW X
 
-  @QtCore.Slot()
-  def on_y1Selector_itemClicked(self):
-    self.itemSelectionChanged(self.ui.y1Selector, 0)
+  @QtCore.Slot(QtGui.QTreeWidgetItem, int)
+  def on_y1Selector_itemClicked(self, item, col):
+    self.itemSelectionChanged(self.ui.y1Selector, item, 0)
 
-  @QtCore.Slot()
-  def on_y2Selector_itemClicked(self):
-    self.itemSelectionChanged(self.ui.y2Selector, 1)
+  @QtCore.Slot(QtGui.QTreeWidgetItem, int)
+  def on_y2Selector_itemClicked(self, item, col):
+    self.itemSelectionChanged(self.ui.y2Selector, item, 1)
 
   @QtCore.Slot(QtCore.QPoint)
   def on_y1Selector_customContextMenuRequested(self, point):
@@ -181,17 +200,25 @@ class MCLogTab(QtGui.QWidget):
   def on_y2Selector_customContextMenuRequested(self, point):
     self.showCustomMenu(self.ui.y2Selector, point, 1)
 
-  def update_canvas(self):
-    self.ui.canvas.plot(self.data, self.x_data, self.y_data, self.y_diff_data, self.y_data_labels, self.y_diff_data_labels)
-
-  def itemSelectionChanged(self, ySelector, idx):
-    self.y_data[idx] = []
-    self.y_data_labels[idx] = []
-    selected = ySelector.selectedItems()
-    for item in selected:
-      self.y_data[idx] += sorted(filter(lambda x: x.startswith(item.actualText), self.data.keys()))
-    self.y_data_labels[idx] = self.y_data[idx]
-    self.update_canvas()
+  def itemSelectionChanged(self, ySelector, item, idx):
+    is_selected = any([i.actualText == item.actualText for i in ySelector.selectedItems()])
+    items = sorted(filter(lambda x: re.match("{}($|_.*$)".format(item.actualText), x) is not None, self.data.keys()))
+    if is_selected:
+      # Add items to plot
+      if idx == 0:
+        add_fn = self.ui.canvas.add_plot_left
+      else:
+        add_fn = self.ui.canvas.add_plot_right
+      for i in items:
+        add_fn(self.x_data, i, i)
+    else:
+      # Remove items from plot
+      if idx == 0:
+        remove_fn = self.ui.canvas.remove_plot_left
+      else:
+        remove_fn = self.ui.canvas.remove_plot_right
+      for i in items:
+        remove_fn(i)
 
   def update_x_selector(self):
     self.ui.xSelector.clear()
@@ -207,13 +234,13 @@ class MCLogTab(QtGui.QWidget):
     for k in sorted(self.data.keys()):
       tree_view.add(k.split('_'))
     tree_view.simplify()
-    def update_y_selector(ySelector, selected_data):
-      tree_view.update_y_selector(ySelector, selected_data, ySelector)
+    def update_y_selector(ySelector):
+      tree_view.update_y_selector(ySelector, ySelector)
       ySelector.resizeColumnToContents(0)
       cWidth = ySelector.sizeHintForColumn(0)
       ySelector.setMaximumWidth(cWidth + 75)
-    update_y_selector(self.ui.y1Selector, self.y_data[0])
-    update_y_selector(self.ui.y2Selector, self.y_data[1])
+    update_y_selector(self.ui.y1Selector)
+    update_y_selector(self.ui.y2Selector)
 
   def showCustomMenu(self, ySelector, point, idx):
     item = ySelector.itemAt(point)
@@ -223,43 +250,42 @@ class MCLogTab(QtGui.QWidget):
     action = QtGui.QAction(u"Plot {} diff".format(item.actualText), menu)
     action.triggered.connect(lambda: RemoveSpecialPlotButton(item.actualText, self, idx, "diff"))
     menu.addAction(action)
+    s = re.match('^(.*)_q[wxyz]$', item.actualText)
+    if s is not None:
+      action = QtGui.QAction(u"Plot {} as RPY angles".format(item.actualText), menu)
+      action.triggered.connect(lambda: RemoveSpecialPlotButton(s.group(0), self, idx, "rpy"))
+      menu.addAction(action)
     menu.exec_(ySelector.viewport().mapToGlobal(point))
 
   @staticmethod
   def UserPlot(parent, p):
     tab = MCLogTab(parent)
     tab.x_data = p.x
-    tab.y_data[0] = copy.deepcopy(p.y1)
-    tab.y_data_labels[0] = copy.deepcopy(p.y1)
-    tab.y_data[1] = copy.deepcopy(p.y2)
-    tab.y_data_labels[1] = copy.deepcopy(p.y2)
-    tab.y_diff_data[0] = copy.deepcopy(p.y1d)
-    tab.y_diff_data_labels[0] = [ l + '_diff' for l in tab.y_diff_data[0] ]
-    tab.y_diff_data[1] = copy.deepcopy(p.y2d)
-    tab.y_diff_data_labels[1] = [ l + '_diff' for l in tab.y_diff_data[1] ]
     tab.setData(parent.data)
     tab.setRobotModule(parent.rm)
-    tab.update_canvas()
-    for yd in tab.y_diff_data[0]:
-      RemoveSpecialPlotButton(yd, tab, 0, "diff", button_only = True)
-    for yd in tab.y_diff_data[1]:
-      RemoveSpecialPlotButton(yd, tab, 1, "diff", button_only = True)
+    for y1 in p.y1:
+      tab.ui.canvas.add_plot_left(tab.x_data, y1, y1)
+    for y2 in p.y2:
+      tab.ui.canvas.add_plot_right(tab.x_data, y2, y2)
+    for yd in p.y1d:
+      RemoveSpecialPlotButton(yd, tab, 0, "diff")
+    for yd in p.y2d:
+      RemoveSpecialPlotButton(yd, tab, 1, "diff")
     return tab
 
   @staticmethod
   def ForceSensorPlot(parent, fs):
     tab = MCLogTab(parent)
     tab.x_data = 't'
-    tab.y_data[0] = [ '{}ForceSensor_f{}'.format(fs, ax) for ax in ['x', 'y', 'z' ] ]
-    tab.y_data_labels[0] = tab.y_data[0]
-    tab.y_data[1] = [ '{}ForceSensor_c{}'.format(fs, ax) for ax in ['x', 'y', 'z' ] ]
-    tab.y_data_labels[1] = tab.y_data[1]
     tab.setData(parent.data)
     tab.setRobotModule(parent.rm)
     tab.ui.canvas.title('Force sensor: {}'.format(fs))
     tab.ui.canvas.y1_label('Force')
     tab.ui.canvas.y2_label('Moment')
-    tab.update_canvas()
+    for y in [ '{}ForceSensor_f{}'.format(fs, ax) for ax in ['x', 'y', 'z'] ]:
+      tab.ui.canvas.add_plot_left(tab.x_data, y, y)
+    for y in [ '{}ForceSensor_c{}'.format(fs, ax) for ax in ['x', 'y', 'z'] ]:
+      tab.ui.canvas.add_plot_right(tab.x_data, y, y)
     return tab
 
   @staticmethod
@@ -283,23 +309,35 @@ class MCLogTab(QtGui.QWidget):
     y2_diff_label = prefix_to_label(joints, y2_diff_prefix, True)
     tab = MCLogTab(parent)
     tab.x_data = 't'
+    tab.setData(parent.data)
+    tab.setRobotModule(parent.rm)
     rjo = parent.rm.ref_joint_order()
+    y_data = [[], []]
+    y_data_labels = [[], []]
+    y_diff_data = [[], []]
+    y_diff_data_labels = [[], []]
     for j in joints:
       jIndex = rjo.index(j)
       if y1_prefix:
-        tab.y_data[0] += [ '{}_{}'.format(y1_prefix, jIndex) ]
-        tab.y_data_labels[0] += [ '{}_{}'.format(y1_label, j) ]
+        y_data[0] += [ '{}_{}'.format(y1_prefix, jIndex) ]
+        y_data_labels[0] += [ '{}_{}'.format(y1_label, j) ]
       if y2_prefix:
-        tab.y_data[1] += [ '{}_{}'.format(y2_prefix, jIndex) ]
-        tab.y_data_labels[1] += [ '{}_{}'.format(y2_label, j) ]
+        y_data[1] += [ '{}_{}'.format(y2_prefix, jIndex) ]
+        y_data_labels[1] += [ '{}_{}'.format(y2_label, j) ]
       if y1_diff_prefix:
-        tab.y_diff_data[0] += [ '{}_{}'.format(y1_diff_prefix, jIndex) ]
-        tab.y_diff_data_labels[0] += [ '{}_{}'.format(y1_diff_label, j) ]
+        y_diff_data[0] += [ '{}_{}'.format(y1_diff_prefix, jIndex) ]
+        y_diff_data_labels[0] += [ '{}_{}'.format(y1_diff_label, j) ]
       if y2_diff_prefix:
-        tab.y_diff_data[1] += [ '{}_{}'.format(y2_diff_prefix, jIndex) ]
-        tab.y_diff_data_labels[1] += [ '{}_{}'.format(y2_diff_label, j) ]
-    tab.setData(parent.data)
-    tab.setRobotModule(parent.rm)
+        y_diff_data[1] += [ '{}_{}'.format(y2_diff_prefix, jIndex) ]
+        y_diff_data_labels[1] += [ '{}_{}'.format(y2_diff_label, j) ]
+    for y, y_label in zip(y_data[0], y_data_labels[0]):
+      tab.ui.canvas.add_plot_left(tab.x_data, y, y_label)
+    for y, y_label in zip(y_diff_data[0], y_diff_data_labels[0]):
+      tab.ui.canvas.add_diff_plot_left(tab.x_data, y, y_label)
+    for y, y_label in zip(y_data[1], y_data_labels[1]):
+      tab.ui.canvas.add_plot_right(tab.x_data, y, y_label)
+    for y, y_label in zip(y_diff_data[1], y_diff_data_labels[1]):
+      tab.ui.canvas.add_diff_plot_right(tab.x_data, y, y_label)
     class nonlocal: pass
     nonlocal.title = ''
     def updateTitle(nTitle):
@@ -320,5 +358,4 @@ class MCLogTab(QtGui.QWidget):
       updateTitle(y2_diff_label.title())
       tab.ui.canvas.y2_label(y2_diff_label)
     tab.ui.canvas.title(nonlocal.title)
-    tab.update_canvas()
     return tab
