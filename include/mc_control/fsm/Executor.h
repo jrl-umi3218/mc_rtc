@@ -90,6 +90,9 @@ struct MC_CONTROL_DLLAPI Executor
   /** Returns the latest state's output */
   const std::string & output() const { return state_output_; }
 
+  /** Returns the next state's name */
+  const std::string & next_state() const { return next_state_; }
+
   /** Pass message to current state (read-only) */
   bool read_msg(std::string & msg);
 

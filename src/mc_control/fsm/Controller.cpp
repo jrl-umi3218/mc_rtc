@@ -200,6 +200,8 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
                                         [this]() -> const std::string & { return executor_.state(); }),
                      mc_rtc::gui::Label("Next state ready?",
                                         [this]() { return executor_.ready(); }),
+                     mc_rtc::gui::Label("Next state",
+                                        [this]() -> const std::string & { return executor_.next_state(); }),
                      mc_rtc::gui::Button("Start next state", [this]() { this->play_next_stance(); }));
   }
 }
