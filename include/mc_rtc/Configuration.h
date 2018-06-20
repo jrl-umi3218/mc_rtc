@@ -101,7 +101,7 @@ namespace mc_rtc
        */
       Exception(const std::string & msg);
 
-      ~Exception();
+      ~Exception() noexcept;
 
       virtual const char * what() const noexcept override;
 

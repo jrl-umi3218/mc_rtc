@@ -202,7 +202,7 @@ Configuration::Exception::Exception(const std::string & msg)
 {
 }
 
-Configuration::Exception::~Exception()
+Configuration::Exception::~Exception() noexcept
 {
   if(msg.size())
   {
