@@ -133,6 +133,11 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function("com",
       target /= static_cast<double>(surfaces.size());
       t->com({target.x(), target.y(), com.z()});
     }
+    if(config.has("offset"))
+    {
+      Eigen::Vector3d offset = config("offset", Eigen::Vector3d::Zero().eval());
+      t->com(t->com() + offset);
+    }
     t->load(solver, config);
     return t;
   }
