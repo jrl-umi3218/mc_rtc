@@ -4,14 +4,46 @@ from PySide import QtCore, QtGui
 
 from PySide.QtGui import QWidget, QVBoxLayout
 
-import eigen
-import itertools
+# import eigen
+# import itertools
 import numpy as np
 import pyqtgraph as pg
+
+from math import asin, atan2
 
 ## Switch to using white background and black foreground
 pg.setConfigOption('background', 'w')
 pg.setConfigOption('foreground', 'k')
+
+
+def rpy_from_quat(quat):
+    """
+    Roll-pitch-yaw angles of a quaternion.
+
+    Parameters
+    ----------
+    quat : (4,) array
+        Quaternion in `[w x y z]` format.
+
+    Returns
+    -------
+    rpy : (3,) array
+        Array of roll-pitch-yaw angles, in [rad].
+
+    Notes
+    -----
+    Roll-pitch-yaw are Euler angles corresponding to the sequence (1, 2, 3).
+    """
+    roll = atan2(
+        2 * quat[2] * quat[3] + 2 * quat[0] * quat[1],
+        quat[3] ** 2 - quat[2] ** 2 - quat[1] ** 2 + quat[0] ** 2)
+    pitch = -asin(
+        2 * quat[1] * quat[3] - 2 * quat[0] * quat[2])
+    yaw = atan2(
+        2 * quat[1] * quat[2] + 2 * quat[0] * quat[3],
+        quat[1] ** 2 + quat[0] ** 2 - quat[3] ** 2 - quat[2] ** 2)
+    return [roll, pitch, yaw]
+
 
 # Note: directly taken from pyqtgraph source
 class ItemSample(pg.GraphicsWidget):
@@ -189,8 +221,10 @@ class PlotCanvasWithToolbar(pg.GraphicsLayoutWidget):
       fmt = ""
     keys = [ "{}_{}{}".format(base, fmt, ax) for ax in ["w", "x", "y", "z"] ]
     qw, qx, qy, qz = [ self.data[k] for k in keys ]
-    quats = [ eigen.Quaterniond(w, x, y, z) for w, x, y, z in zip(qw, qx, qy, qz) ]
-    rpys = [ x.toRotationMatrix().eulerAngles(0, 1, 2) for x in quats ]
+    # quats = [ eigen.Quaterniond(w, x, y, z) for w, x, y, z in zip(qw, qx, qy, qz) ]
+    # rpys = [ x.toRotationMatrix().eulerAngles(0, 1, 2) for x in quats ]
+    quats = [ [w, x, y, z] for w, x, y, z in zip(qw, qx, qy, qz) ]
+    rpys = [ rpy_from_quat(x) for x in quats ]
     r = [ rpy[0] for rpy in rpys ]
     p = [ rpy[1] for rpy in rpys ]
     y = [ rpy[2] for rpy in rpys ]
