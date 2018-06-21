@@ -122,7 +122,7 @@ class RemoveSpecialPlotButton(QtGui.QPushButton):
     else:
       add_fn = self.logtab.ui.canvas.add_rpy_plot_right
     self.added = [ "{}_{}".format(name, s) for s in ["r", "p", "y"] ]
-    add_fn(self.logtab.x_data, name, label)
+    add_fn(self.logtab.x_data, name)
 
   def on_clicked(self):
     for added in self.added:
@@ -247,14 +247,24 @@ class MCLogTab(QtGui.QWidget):
     if item is None:
       return
     menu = QtGui.QMenu(ySelector)
-    action = QtGui.QAction(u"Plot {} diff".format(item.actualText), menu)
+    action = QtGui.QAction(u"Plot diff".format(item.actualText), menu)
     action.triggered.connect(lambda: RemoveSpecialPlotButton(item.actualText, self, idx, "diff"))
     menu.addAction(action)
-    s = re.match('^(.*)_q[wxyz]$', item.actualText)
+    s = re.match('^(.*)_q?[wxyz]$', item.actualText)
     if s is not None:
-      action = QtGui.QAction(u"Plot {} as RPY angles".format(item.actualText), menu)
-      action.triggered.connect(lambda: RemoveSpecialPlotButton(s.group(0), self, idx, "rpy"))
+      action = QtGui.QAction(u"Plot as RPY angles".format(item.actualText), menu)
+      action.triggered.connect(lambda: RemoveSpecialPlotButton(s.group(1), self, idx, "rpy"))
       menu.addAction(action)
+    else:
+      quat_childs = filter(lambda x: x is not None, [ re.match('{}((_.+)*)_q?w$'.format(item.actualText), x) for x in self.data.keys() ])
+      for qc in quat_childs:
+        if len(qc.group(1)):
+          action_text = u"Plot {} as RPY angles".format(qc.group(1)[1:])
+        else:
+          action_text = u"Plot as RPY angles"
+        action = QtGui.QAction(action_text, menu)
+        action.triggered.connect(lambda: RemoveSpecialPlotButton(item.actualText + qc.group(1), self, idx, "rpy"))
+        menu.addAction(action)
     menu.exec_(ySelector.viewport().mapToGlobal(point))
 
   @staticmethod

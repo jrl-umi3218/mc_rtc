@@ -4,6 +4,7 @@ from PySide import QtCore, QtGui
 
 from PySide.QtGui import QWidget, QVBoxLayout
 
+import eigen
 import itertools
 import numpy as np
 import pyqtgraph as pg
@@ -101,108 +102,134 @@ class HorizontalLegendItem(pg.LegendItem):
     self.parentItem().setMaximumHeight(self.boundingRect().size().height())
 
 class PlotCanvasWithToolbar(pg.GraphicsLayoutWidget):
-    def __init__(self, parent = None):
-      super(PlotCanvasWithToolbar, self).__init__(parent)
+  def __init__(self, parent = None):
+    super(PlotCanvasWithToolbar, self).__init__(parent)
 
-      self.data = None
-      self.computed_data = {}
-      self.axes_plots = {}
-      self.axes2_plots = {}
+    self.data = None
+    self.computed_data = {}
+    self.axes_plots = {}
+    self.axes2_plots = {}
 
-      self.color = 0
+    self.color = 0
 
-      self.axes_legend_box = self.addViewBox(col = 0, row = 0, enableMouse = False)
-      self.axes_legend_box.setMaximumHeight(0)
-      self.axes_legend = HorizontalLegendItem()
-      self.axes_legend.setParentItem(self.axes_legend_box)
-      self.axes_legend.anchor((0,0), (0,0))
+    self.axes_legend_box = self.addViewBox(col = 0, row = 0, enableMouse = False)
+    self.axes_legend_box.setMaximumHeight(0)
+    self.axes_legend = HorizontalLegendItem()
+    self.axes_legend.setParentItem(self.axes_legend_box)
+    self.axes_legend.anchor((0,0), (0,0))
 
-      self.axes = self.addPlot(col = 0, row = 1)
-      self.axes.vb.setMouseMode(self.axes.vb.RectMode)
-      self.axes.vb.setAutoVisible(y = True)
+    self.axes = self.addPlot(col = 0, row = 1)
+    self.axes.vb.setMouseMode(self.axes.vb.RectMode)
+    self.axes.vb.setAutoVisible(y = True)
 
-      self.axes2_legend_box = self.addViewBox(col = 0, row = 2, enableMouse = False)
-      self.axes2_legend_box.setMaximumHeight(0)
-      self.axes2_legend = HorizontalLegendItem()
-      self.axes2_legend.setParentItem(self.axes2_legend_box)
-      self.axes2_legend.anchor((0,0), (0,0))
+    self.axes2_legend_box = self.addViewBox(col = 0, row = 2, enableMouse = False)
+    self.axes2_legend_box.setMaximumHeight(0)
+    self.axes2_legend = HorizontalLegendItem()
+    self.axes2_legend.setParentItem(self.axes2_legend_box)
+    self.axes2_legend.anchor((0,0), (0,0))
 
-      self.axes2 = pg.ViewBox()
-      self.axes.showAxis('right')
-      self.axes.scene().addItem(self.axes2)
-      self.axes.getAxis('right').linkToView(self.axes2)
-      self.axes2.setXLink(self.axes)
-      self.axes2.setAutoVisible(y = True)
+    self.axes2 = pg.ViewBox()
+    self.axes.showAxis('right')
+    self.axes.scene().addItem(self.axes2)
+    self.axes.getAxis('right').linkToView(self.axes2)
+    self.axes2.setXLink(self.axes)
+    self.axes2.setAutoVisible(y = True)
 
-      self.setSizePolicy(QtGui.QSizePolicy.Expanding,
-                         QtGui.QSizePolicy.Expanding)
-      self.updateViews()
-      self.axes.vb.sigResized.connect(self.updateViews)
-      self.axes2_item = []
+    self.setSizePolicy(QtGui.QSizePolicy.Expanding,
+                       QtGui.QSizePolicy.Expanding)
+    self.updateViews()
+    self.axes.vb.sigResized.connect(self.updateViews)
+    self.axes2_item = []
 
-    def setData(self, data):
-      self.data = data
+  def setData(self, data):
+    self.data = data
 
-    def updateViews(self):
-      self.axes2.setGeometry(self.axes.vb.sceneBoundingRect())
-      self.axes2.linkedViewChanged(self.axes.vb, self.axes2.XAxis)
+  def updateViews(self):
+    self.axes2.setGeometry(self.axes.vb.sceneBoundingRect())
+    self.axes2.linkedViewChanged(self.axes.vb, self.axes2.XAxis)
 
-    def title(self, title):
-      self.axes.setTitle(title)
+  def title(self, title):
+    self.axes.setTitle(title)
 
-    def y1_label(self, label):
-      self.axes.setLabels(left = label)
+  def y1_label(self, label):
+    self.axes.setLabels(left = label)
 
-    def y2_label(self, label):
-      self.axes.setLabels(right = label)
+  def y2_label(self, label):
+    self.axes.setLabels(right = label)
 
-    def _next_color(self):
-      self.color += 1
-      return self.color - 1
+  def _next_color(self):
+    self.color += 1
+    return self.color - 1
 
-    def _plot(self, axe, legend, x, y, y_label):
-      plt = pg.PlotCurveItem(x, y, name = y_label, pen = self._next_color(), autoDownsample = True)
-      axe.addItem(plt)
-      legend.addItem(plt, y_label)
-      return plt
+  def _plot(self, axe, legend, x, y, y_label):
+    plt = pg.PlotCurveItem(x, y, name = y_label, pen = self._next_color(), autoDownsample = True)
+    axe.addItem(plt)
+    legend.addItem(plt, y_label)
+    return plt
 
-    def add_plot_left(self, x, y, y_label):
-      self.axes_plots[y_label] = self._plot(self.axes.vb, self.axes_legend, self.data[x], self.data[y], y_label)
+  def add_plot_left(self, x, y, y_label):
+    self.axes_plots[y_label] = self._plot(self.axes.vb, self.axes_legend, self.data[x], self.data[y], y_label)
 
-    def add_plot_right(self, x, y, y_label):
-      self.axes2_plots[y_label] = self._plot(self.axes2, self.axes2_legend, self.data[x], self.data[y], y_label)
+  def add_plot_right(self, x, y, y_label):
+    self.axes2_plots[y_label] = self._plot(self.axes2, self.axes2_legend, self.data[x], self.data[y], y_label)
 
-    def _add_diff_plot(self, axes, legend, x, y, y_label):
-      dt = self.data[x][1] - self.data[x][0]
-      return self._plot(axes, legend, self.data[x][1:], np.diff(self.data[y])/dt, y_label)
+  def _add_diff_plot(self, axes, legend, x, y, y_label):
+    dt = self.data[x][1] - self.data[x][0]
+    return self._plot(axes, legend, self.data[x][1:], np.diff(self.data[y])/dt, y_label)
 
-    def add_diff_plot_left(self, x, y, y_label):
-      self.axes_plots[y_label] = self._add_diff_plot(self.axes.vb, self.axes_legend, x, y, y_label)
-    def add_diff_plot_right(self, x, y, y_label):
-      self.axes2_plots[y_label] = self._add_diff_plot(self.axes2, self.axes2_legend, x, y, y_label)
+  def add_diff_plot_left(self, x, y, y_label):
+    self.axes_plots[y_label] = self._add_diff_plot(self.axes.vb, self.axes_legend, x, y, y_label)
+  def add_diff_plot_right(self, x, y, y_label):
+    self.axes2_plots[y_label] = self._add_diff_plot(self.axes2, self.axes2_legend, x, y, y_label)
 
-    def remove_plot_left(self, y_label):
-      self.axes.vb.removeItem(self.axes_plots[y_label])
-      del self.axes_plots[y_label]
-      self.axes_legend.removeItem(y_label)
-    def remove_plot_right(self, y_label):
-      self.axes2.removeItem(self.axes_plot[y_label])
-      del self.axes2_plots[y_label]
-      self.axes2_legend.removeItem(y_label)
+  def _add_rpy_plot(self, axes, legend, x_label, base):
+    if "{}_qw".format(base) in self.data.keys():
+      fmt = "q"
+    else:
+      fmt = ""
+    keys = [ "{}_{}{}".format(base, fmt, ax) for ax in ["w", "x", "y", "z"] ]
+    qw, qx, qy, qz = [ self.data[k] for k in keys ]
+    quats = [ eigen.Quaterniond(w, x, y, z) for w, x, y, z in zip(qw, qx, qy, qz) ]
+    rpys = [ x.toRotationMatrix().eulerAngles(0, 1, 2) for x in quats ]
+    r = [ rpy[0] for rpy in rpys ]
+    p = [ rpy[1] for rpy in rpys ]
+    y = [ rpy[2] for rpy in rpys ]
+    return self._plot(axes, legend, self.data[x_label], r, "{}_r".format(base)),\
+           self._plot(axes, legend, self.data[x_label], p, "{}_p".format(base)),\
+           self._plot(axes, legend, self.data[x_label], y, "{}_y".format(base))
 
-    def clear_all(self):
-      self.color = 0
-      self.axes_plots = {}
-      self.axes_legend.close()
-      self.axes_legend = HorizontalLegendItem()
-      self.axes_legend.setParentItem(self.axes_legend_box)
-      self.axes_legend.anchor((0,0), (0,0))
-      self.axes_legend.updateSize()
-      self.axes_plots = {}
-      self.axes2_legend.close()
-      self.axes2_legend = HorizontalLegendItem()
-      self.axes2_legend.setParentItem(self.axes2_legend_box)
-      self.axes2_legend.anchor((0,0), (0,0))
-      self.axes2_legend.updateSize()
-      self.axes.clear()
-      self.axes2.clear()
+  def add_rpy_plot_left(self, x, y):
+    self.axes_plots["{}_r".format(y)],\
+    self.axes_plots["{}_p".format(y)],\
+    self.axes_plots["{}_y".format(y)] = self._add_rpy_plot(self.axes.vb, self.axes_legend, x, y)
+
+  def add_rpy_plot_right(self, x, y):
+    self.axes2_plots["{}_r".format(y)],\
+    self.axes2_plots["{}_p".format(y)],\
+    self.axes2_plots["{}_y".format(y)] = self._add_rpy_plot(self.axes2.vb, self.axes2_legend, x, y)
+
+  def remove_plot_left(self, y_label):
+    self.axes.vb.removeItem(self.axes_plots[y_label])
+    del self.axes_plots[y_label]
+    self.axes_legend.removeItem(y_label)
+  def remove_plot_right(self, y_label):
+    self.axes2.removeItem(self.axes_plot[y_label])
+    del self.axes2_plots[y_label]
+    self.axes2_legend.removeItem(y_label)
+
+  def clear_all(self):
+    self.color = 0
+    self.axes_plots = {}
+    self.axes_legend.close()
+    self.axes_legend = HorizontalLegendItem()
+    self.axes_legend.setParentItem(self.axes_legend_box)
+    self.axes_legend.anchor((0,0), (0,0))
+    self.axes_legend.updateSize()
+    self.axes_plots = {}
+    self.axes2_legend.close()
+    self.axes2_legend = HorizontalLegendItem()
+    self.axes2_legend.setParentItem(self.axes2_legend_box)
+    self.axes2_legend.anchor((0,0), (0,0))
+    self.axes2_legend.updateSize()
+    self.axes.clear()
+    self.axes2.clear()
