@@ -5,6 +5,7 @@
 #include <Tasks/QPTasks.h>
 
 #include <mc_tasks/api.h>
+#include <mc_rtc/logging.h>
 #include <mc_tasks/MetaTask.h>
 
 namespace mc_tasks
@@ -98,11 +99,17 @@ struct TrajectoryTaskGeneric : public MetaTask
 
   virtual Eigen::VectorXd dimWeight() const override;
 
+  virtual void selectActiveJoints(const std::vector<std::string> & activeJointsName);
+
   virtual void selectActiveJoints(mc_solver::QPSolver & solver,
                                   const std::vector<std::string> & activeJointsName) override;
 
+  virtual void selectUnactiveJoints(const std::vector<std::string> & unactiveJointsName);
+
   virtual void selectUnactiveJoints(mc_solver::QPSolver & solver,
                                     const std::vector<std::string> & unactiveJointsName) override;
+
+  virtual void resetJointsSelector();
 
   virtual void resetJointsSelector(mc_solver::QPSolver & solver) override;
 
