@@ -77,6 +77,15 @@ class PlotCanvasWithToolbar(QWidget):
     self.x_data = 't'
 
   def draw(self):
+    def fix_axes_limits(axes, axes2):
+      if np.all([x*x == np.inf for x in np.nditer(axes.dataLim.get_points())]):
+        point = (axes2.dataLim.get_points()[1] + axes2.dataLim.get_points()[0])/2
+        plt, = axes.plot([point[0]], [point[1]], visible = False)
+        plt.remove()
+        del plt
+        axes.relim()
+    fix_axes_limits(self.axes, self.axes2)
+    fix_axes_limits(self.axes2, self.axes)
     self.canvas.draw()
 
   def setData(self, data):
