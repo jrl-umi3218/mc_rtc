@@ -92,8 +92,10 @@ class RemoveSpecialPlotButton(QtGui.QPushButton):
     else:
       self.layout = logtab.ui.y2SelectorLayout
     super(RemoveSpecialPlotButton, self).__init__(u"Remove {} {} plot".format(name, special_id), logtab)
-    self.idx = idx
     self.layout.addWidget(self)
+    self.idx = idx
+    self.name = name
+    self.id = special_id
     self.added = []
     if idx == 0:
       self.remove = self.logtab.ui.canvas.remove_plot_left
@@ -101,14 +103,15 @@ class RemoveSpecialPlotButton(QtGui.QPushButton):
       self.remove = self.logtab.ui.canvas.remove_plot_right
     self.clicked.connect(self.on_clicked)
     if special_id == "diff":
-      self.__add_diff(idx, name)
+      self.__plot = self.__add_diff
     elif special_id == "rpy":
-      self.__add_rpy(idx, name)
+      self.__plot = self.__add_rpy
     else:
       print "Cannot handle this special plot:", special_id
-  def __add_diff(self, idx, name):
-    added = filter(lambda x: re.match("{}($|_.*$)".format(name), x) is not None, self.logtab.data.keys())
-    if idx == 0:
+    self.plot()
+  def __add_diff(self):
+    added = filter(lambda x: re.match("{}($|_.*$)".format(self.name), x) is not None, self.logtab.data.keys())
+    if self.idx == 0:
       add_fn = self.logtab.ui.canvas.add_diff_plot_left
     else:
       add_fn = self.logtab.ui.canvas.add_diff_plot_right
@@ -116,17 +119,21 @@ class RemoveSpecialPlotButton(QtGui.QPushButton):
       label = "{}_diff".format(a)
       add_fn(self.logtab.x_data, a, label)
       self.added.append(label)
-  def __add_rpy(self, idx, name):
-    if idx == 0:
+  def __add_rpy(self):
+    if self.idx == 0:
       add_fn = self.logtab.ui.canvas.add_rpy_plot_left
     else:
       add_fn = self.logtab.ui.canvas.add_rpy_plot_right
-    self.added = [ "{}_{}".format(name, s) for s in ["r", "p", "y"] ]
-    add_fn(self.logtab.x_data, name)
+    self.added = [ "{}_{}".format(self.name, s) for s in ["r", "p", "y"] ]
+    add_fn(self.logtab.x_data, self.name)
+  def plot(self):
+    self.__plot()
+    self.logtab.ui.canvas.draw()
 
   def on_clicked(self):
     for added in self.added:
       self.remove(added)
+    self.logtab.ui.canvas.draw()
     self.deleteLater()
 
 class MCLogTab(QtGui.QWidget):
@@ -148,6 +155,7 @@ class MCLogTab(QtGui.QWidget):
     self.rm = None
     self.x_data_trigger = False
     self.x_data = 't'
+    self.specials = {}
 
   def setData(self, data):
     self.data = data
@@ -219,6 +227,7 @@ class MCLogTab(QtGui.QWidget):
         remove_fn = self.ui.canvas.remove_plot_right
       for i in items:
         remove_fn(i)
+    self.ui.canvas.draw()
 
   def update_x_selector(self):
     self.ui.xSelector.clear()
@@ -281,6 +290,7 @@ class MCLogTab(QtGui.QWidget):
       RemoveSpecialPlotButton(yd, tab, 0, "diff")
     for yd in p.y2d:
       RemoveSpecialPlotButton(yd, tab, 1, "diff")
+    tab.ui.canvas.draw()
     return tab
 
   @staticmethod
@@ -296,6 +306,7 @@ class MCLogTab(QtGui.QWidget):
       tab.ui.canvas.add_plot_left(tab.x_data, y, y)
     for y in [ '{}ForceSensor_c{}'.format(fs, ax) for ax in ['x', 'y', 'z'] ]:
       tab.ui.canvas.add_plot_right(tab.x_data, y, y)
+    tab.ui.canvas.draw()
     return tab
 
   @staticmethod
@@ -368,4 +379,5 @@ class MCLogTab(QtGui.QWidget):
       updateTitle(y2_diff_label.title())
       tab.ui.canvas.y2_label(y2_diff_label)
     tab.ui.canvas.title(nonlocal.title)
+    tab.ui.canvas.draw()
     return tab
