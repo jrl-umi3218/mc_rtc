@@ -17,6 +17,19 @@ std::pair<bool, Transition>
   return {false, {}};
 }
 
+std::vector<std::string> TransitionMap::transitions(const std::string & state) const
+{
+  std::vector<std::string> ret;
+  for(const auto & t : map_)
+  {
+    if(t.first.first == state)
+    {
+      ret.push_back(t.second.state);
+    }
+  }
+  return ret;
+}
+
 void TransitionMap::init(const StateFactory & factory,
                          const mc_rtc::Configuration & config)
 {

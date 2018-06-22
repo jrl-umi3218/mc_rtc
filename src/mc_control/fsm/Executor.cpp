@@ -8,9 +8,10 @@ namespace mc_control
 namespace fsm
 {
 
-void Executor::init(Controller & ctl, const mc_rtc::Configuration & config)
+void Executor::init(Controller & ctl, const mc_rtc::Configuration & config, const std::string & name)
 {
   config_ = config;
+  name_ = name;
   config("Managed", managed_);
   config("StepByStep", step_by_step_);
   if(!managed_)
@@ -18,6 +19,25 @@ void Executor::init(Controller & ctl, const mc_rtc::Configuration & config)
     transition_map_.init(ctl.factory(), config);
     transition_triggered_ = true;
     next_state_ = transition_map_.initState();
+  }
+  auto gui = ctl.gui();
+  if(gui)
+  {
+    std::vector<std::string> category = {"FSM"};
+    if(name.size()) { category.push_back(name); }
+    gui->addElement(category,
+                    mc_rtc::gui::Button("Interrupt",
+                                        [this](){ interrupt(); }),
+                    mc_rtc::gui::Label("Current state",
+                                       [this](){ return state(); }),
+                    mc_rtc::gui::Label("Next state ready",
+                                       [this](){ return ready(); }),
+                    mc_rtc::gui::Button("Start next state",
+                                        [this](){ next(); }),
+                    mc_rtc::gui::Form("Force transition",
+                                      [this](const mc_rtc::Configuration & c) { this->resume(c("State")); },
+                                      mc_rtc::gui::FormDataComboInput("State", true, {"states"}))
+    );
   }
 }
 
@@ -92,6 +112,12 @@ void Executor::teardown(Controller & ctl)
     state_->teardown(ctl);
     state_ = nullptr;
   }
+  if(ctl.gui())
+  {
+    std::vector<std::string> category = {"FSM"};
+    if(name_.size()) { category.push_back(name_); }
+    ctl.gui()->removeCategory(category);
+  }
 }
 
 bool Executor::complete(Controller & ctl, bool keep_state)
@@ -120,7 +146,7 @@ void Executor::next(Controller & ctl)
   if(!ready_ || next_state_.empty()) { return; }
   ready_ = false;
   transition_triggered_ = false;
-  LOG_SUCCESS("Startig state " << next_state_)
+  LOG_SUCCESS("Starting state " << next_state_)
   if(state_) { state_->teardown(ctl); }
   if(config_.has("configs") && config_("configs").has(next_state_))
   {
@@ -129,6 +155,22 @@ void Executor::next(Controller & ctl)
   else
   {
     state_ = ctl.factory().create(next_state_, ctl);
+  }
+  auto gui = ctl.gui();
+  if(gui)
+  {
+    std::vector<std::string> category = {"FSM"};
+    if(name_.size()) { category.push_back(name_); }
+    for(const auto & s : transition_map_.transitions(curr_state_))
+    {
+      gui->removeElement(category, "Force transition to " + s);
+    }
+    for(const auto & s : transition_map_.transitions(next_state_))
+    {
+      gui->addElement(category,
+                      mc_rtc::gui::Button("Force transition to " + s,
+                        [this,s](){ this->resume(s); }));
+    }
   }
   curr_state_ = next_state_;
   next_state_ = "";

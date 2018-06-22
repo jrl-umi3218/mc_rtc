@@ -21,20 +21,7 @@ void MetaState::start(Controller & ctl)
   {
     config_.add("StepByStep", false);
   }
-  auto gui = ctl.gui();
-  if(gui)
-  {
-    gui->addElement({"FSM", name()},
-                    mc_rtc::gui::Label("Current state",
-                                       [this](){ return executor_.state(); }),
-                    mc_rtc::gui::Label("Next state ready",
-                                       [this](){ return executor_.ready(); }),
-                    mc_rtc::gui::Button("Next state",
-                                        [this](){ executor_.next(); }),
-                    mc_rtc::gui::Button("Interrupt",
-                                        [this](){ executor_.interrupt(); }));
-  }
-  executor_.init(ctl, config_);
+  executor_.init(ctl, config_, name());
 }
 
 bool MetaState::run(Controller & ctl)
@@ -56,11 +43,6 @@ void MetaState::stop(Controller & ctl)
 void MetaState::teardown(Controller & ctl)
 {
   executor_.teardown(ctl);
-  auto gui = ctl.gui();
-  if(gui)
-  {
-    gui->removeCategory({"FSM", name()});
-  }
 }
 
 bool MetaState::read_msg(std::string & msg)

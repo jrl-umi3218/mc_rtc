@@ -32,8 +32,10 @@ struct MC_CONTROL_DLLAPI Executor
    *
    * \param config Configuration of thi executor
    *
+   * \param name Name of the executor, empty for the main executor
+   *
    */
-  void init(Controller & ctl, const mc_rtc::Configuration & config);
+  void init(Controller & ctl, const mc_rtc::Configuration & config, const std::string & name = "");
 
   /** Run the current state
    *
@@ -101,6 +103,8 @@ struct MC_CONTROL_DLLAPI Executor
 private:
   /** Configuration passed at construction, can hold specific states' configuration */
   mc_rtc::Configuration config_;
+  /** Name of the executor */
+  std::string name_;
   /** True if managed */
   bool managed_ = false;
   /** If true and not managed, waits for trigger before transitions */

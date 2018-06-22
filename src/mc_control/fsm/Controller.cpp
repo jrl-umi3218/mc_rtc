@@ -181,8 +181,10 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
   /** GUI information */
   if(gui_)
   {
+    auto all_states = factory_.states();
+    std::sort(all_states.begin(), all_states.end());
+    gui_->data().add("states", all_states);
     gui_->addElement({"FSM"},
-                     mc_rtc::gui::Button("Interrupt", [this]() { this->interrupt(); }),
                      mc_rtc::gui::Label("Contacts",
                                         [this]()
                                         {
@@ -195,14 +197,8 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
                                         }
                                         if(ret.size()) { ret.pop_back(); }
                                         return ret;
-                                        }),
-                     mc_rtc::gui::Label("Current state",
-                                        [this]() -> const std::string & { return executor_.state(); }),
-                     mc_rtc::gui::Label("Next state ready?",
-                                        [this]() { return executor_.ready(); }),
-                     mc_rtc::gui::Label("Next state",
-                                        [this]() -> const std::string & { return executor_.next_state(); }),
-                     mc_rtc::gui::Button("Start next state", [this]() { this->play_next_stance(); }));
+                                        })
+    );
   }
 }
 
