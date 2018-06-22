@@ -181,10 +181,14 @@ class PlotCanvasWithToolbar(QWidget):
     display_coord = self.axes2.transData.transform((x,y))
     inv = self.axes.transData.inverted()
     ax_coord = inv.transform(display_coord)
-    if len(self.axes2_plots):
-      return "x: {:.3f}, y1: {:.3f}, y2: {:.3f}".format(x, ax_coord[1], y)
+    if len(self.axes2_plots) and len(self.axes_plots):
+      return "x: {:.3f}    y1: {:.3f}    y2: {:.3f}".format(x, ax_coord[1], y)
+    elif len(self.axes_plots):
+      return "x: {:.3f}    y1: {:.3f}".format(x, ax_coord[1])
+    elif len(self.axes2_plots):
+      return "x: {:.3f}    y2: {:.3f}".format(x, y)
     else:
-      return "x: {:.3f}, y1: {:.3f}".format(x, ax_coord[1])
+      return "x: {:.3f}".format(x)
 
   def clear_all(self):
     self.color = 0
