@@ -32,6 +32,8 @@ void Executor::init(Controller & ctl, const mc_rtc::Configuration & config, cons
                                        [this](){ return state(); }),
                     mc_rtc::gui::Label("Next state ready",
                                        [this](){ return ready(); }),
+                    mc_rtc::gui::Label("Next state",
+                                       [this](){ return next_state(); }),
                     mc_rtc::gui::Button("Start next state",
                                         [this](){ next(); }),
                     mc_rtc::gui::Form("Force transition",
