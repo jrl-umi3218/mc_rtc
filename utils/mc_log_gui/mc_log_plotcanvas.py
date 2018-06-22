@@ -59,9 +59,8 @@ class PlotCanvasWithToolbar(QWidget):
     self.axes2_plots = {}
 
     self.color = 0
-    self.Ncolor = 12
-    self.color_space = np.linspace(0, 1, self.Ncolor)
-    self.cm = matplotlib.cm.Set1
+    self.colors = ['r', 'g', 'b', 'y', 'k', 'c', 'm', 'orange']
+    self.Ncolor = len(self.colors)
 
     self.x_data = 't'
 
@@ -103,7 +102,7 @@ class PlotCanvasWithToolbar(QWidget):
 
   def _next_color(self):
     self.color += 1
-    return self.cm(self.color_space[ (self.color - 1) % self.Ncolor ])
+    return self.colors[ (self.color - 1) % self.Ncolor ]
 
   def _legend_left(self):
     self.axes.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=3, mode="expand", borderaxespad=0.5, fontsize = 10.0)
