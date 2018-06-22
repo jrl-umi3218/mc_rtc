@@ -101,7 +101,8 @@ struct NumericLogLine : public LogLine
 
   void push(double d) override
   {
-    data_.push_back(d);
+    if(fabs(d) < std::numeric_limits<double>::min()) { data_.push_back(0); }
+    else { data_.push_back(d); }
   }
 };
 
