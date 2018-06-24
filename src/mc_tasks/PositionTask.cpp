@@ -25,6 +25,7 @@ PositionTask::PositionTask(const std::string & bodyName, const Eigen::Vector3d& 
 
 void PositionTask::reset()
 {
+  TrajectoryTaskGeneric::reset();
   const auto & robot = robots.robot(rIndex);
   Eigen::Vector3d curPos = robot.mbc().bodyPosW[bIndex].translation();
   errorT->position(curPos);

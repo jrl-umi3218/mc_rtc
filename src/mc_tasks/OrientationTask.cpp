@@ -18,6 +18,7 @@ OrientationTask::OrientationTask(const std::string & bodyName, const mc_rbdyn::R
 
 void OrientationTask::reset()
 {
+  TrajectoryTaskGeneric::reset();
   const auto & robot = robots.robot(rIndex);
   auto curOri = robot.mbc().bodyPosW[bIndex].rotation();
   errorT->orientation(curOri);

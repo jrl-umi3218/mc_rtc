@@ -51,6 +51,14 @@ void TrajectoryTaskGeneric<T>::addToSolver(mc_solver::QPSolver & solver)
 }
 
 template<typename T>
+void TrajectoryTaskGeneric<T>::reset()
+{
+  const Eigen::VectorXd & v = trajectoryT->refVel();
+  refVel(Eigen::VectorXd::Zero(v.size()));
+  refAccel(Eigen::VectorXd::Zero(v.size()));
+}
+
+template<typename T>
 void TrajectoryTaskGeneric<T>::update()
 {
 }

@@ -30,6 +30,7 @@ PositionBasedVisServoTask::PositionBasedVisServoTask(const std::string& surfaceN
 
 void PositionBasedVisServoTask::reset()
 {
+  TrajectoryTaskGeneric::reset();
   X_t_s_ = sva::PTransformd::Identity();
   errorT->error(X_t_s_);
 }

@@ -21,6 +21,7 @@ SurfaceTransformTask::SurfaceTransformTask(const std::string & surfaceName, cons
 
 void SurfaceTransformTask::reset()
 {
+  TrajectoryTaskGeneric::reset();
   const auto & robot = robots.robot(rIndex);
   sva::PTransformd curPos = robot.surface(surfaceName).X_0_s(robot);
   errorT->target(curPos);

@@ -22,6 +22,7 @@ CoMTask::CoMTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex,
 
 void CoMTask::reset()
 {
+  TrajectoryTaskGeneric::reset();
   const mc_rbdyn::Robot & robot = robots.robot(rIndex);
   cur_com_ = rbd::computeCoM(robot.mb(), robot.mbc());
   errorT->com(cur_com_);

@@ -32,7 +32,9 @@ public:
 
   /*! \brief Reset the task
    *
-   * Set the task objective to the current surface
+   * Set the task target to the current surface, and reset its target velocity
+   * and acceleration to zero.
+   *
    */
   virtual void reset() override;
 

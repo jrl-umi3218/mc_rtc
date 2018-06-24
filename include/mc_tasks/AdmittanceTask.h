@@ -280,7 +280,7 @@ private:
   void removeFromLogger(mc_rtc::Logger & logger) override;
 
   /** Surface transform's refVelB() becomes internal to the task. An additional
-   * velocity offset can be added using refVelOffset().
+   * velocity offset can be added using AdmittanceTask::refVelB().
    *
    */
   using SurfaceTransformTask::refVelB;

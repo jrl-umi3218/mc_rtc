@@ -40,6 +40,11 @@ struct TrajectoryTaskGeneric : public MetaTask
 
   virtual ~TrajectoryTaskGeneric();
 
+  /*! \brief Reset task target velocity and acceleration to zero
+   *
+   */
+  virtual void reset() override;
+
   /*! \brief Set the trajectory reference velocity
    *
    * \param vel New reference velocity

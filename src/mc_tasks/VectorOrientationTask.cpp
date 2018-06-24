@@ -20,6 +20,7 @@ VectorOrientationTask::VectorOrientationTask(const std::string & bodyName, const
 
 void VectorOrientationTask::reset()
 {
+  TrajectoryTaskGeneric::reset();
   errorT->target(errorT->actual());
 }
 
