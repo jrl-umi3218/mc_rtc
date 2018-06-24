@@ -133,7 +133,7 @@ void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
                      {
                      return measuredWrench();
                      });
-  logger.addLogEntry(name_ + "_ref_vel_body",
+  logger.addLogEntry(name_ + "_output_body_vel",
                      [this]() -> sva::MotionVecd
                      {
                      return refVelB_;
@@ -142,6 +142,11 @@ void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
                      [this]()
                      {
                      return stiffness();
+                     });
+  logger.addLogEntry(name_ + "_target_body_vel",
+                     [this]() -> sva::MotionVecd
+                     {
+                     return feedforwardVelB_;
                      });
   logger.addLogEntry(name_ + "_target_wrench",
                      [this]() -> const sva::ForceVecd &
