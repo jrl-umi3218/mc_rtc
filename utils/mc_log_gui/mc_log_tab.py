@@ -152,6 +152,8 @@ class MCLogTab(QtGui.QWidget):
     setupSelector(self.ui.y2Selector)
     self.ui.y1Selector.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
     self.ui.y2Selector.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+    self.y1Selected = []
+    self.y2Selected = []
 
     self.data = None
     self.rm = None
@@ -195,11 +197,11 @@ class MCLogTab(QtGui.QWidget):
 
   @QtCore.Slot(QtGui.QTreeWidgetItem, int)
   def on_y1Selector_itemClicked(self, item, col):
-    self.itemSelectionChanged(self.ui.y1Selector, item, 0)
+    self.y1Selected = self.itemSelectionChanged(self.ui.y1Selector, self.y1Selected, 0)
 
   @QtCore.Slot(QtGui.QTreeWidgetItem, int)
   def on_y2Selector_itemClicked(self, item, col):
-    self.itemSelectionChanged(self.ui.y2Selector, item, 1)
+    self.y2Selected = self.itemSelectionChanged(self.ui.y2Selector, self.y2Selected, 1)
 
   @QtCore.Slot(QtCore.QPoint)
   def on_y1Selector_customContextMenuRequested(self, point):
@@ -209,26 +211,27 @@ class MCLogTab(QtGui.QWidget):
   def on_y2Selector_customContextMenuRequested(self, point):
     self.showCustomMenu(self.ui.y2Selector, point, 1)
 
-  def itemSelectionChanged(self, ySelector, item, idx):
-    is_selected = any([i.actualText == item.actualText for i in ySelector.selectedItems()])
-    items = sorted(filter(lambda x: re.match("{}($|_.*$)".format(item.actualText), x) is not None, self.data.keys()))
-    if is_selected:
-      # Add items to plot
-      if idx == 0:
-        add_fn = self.ui.canvas.add_plot_left
-      else:
-        add_fn = self.ui.canvas.add_plot_right
-      for i in items:
-        add_fn(self.x_data, i, i)
+  def itemSelectionChanged(self, ySelector, prevSelected, idx):
+    if idx == 0:
+      add_fn = self.ui.canvas.add_plot_left
     else:
-      # Remove items from plot
-      if idx == 0:
-        remove_fn = self.ui.canvas.remove_plot_left
-      else:
-        remove_fn = self.ui.canvas.remove_plot_right
-      for i in items:
-        remove_fn(i)
+      add_fn = self.ui.canvas.add_plot_right
+    if idx == 0:
+      remove_fn = self.ui.canvas.remove_plot_left
+    else:
+      remove_fn = self.ui.canvas.remove_plot_right
+    selected_items = [i.actualText for i in ySelector.selectedItems()]
+    def is_selected(s, x):
+      return re.match("{}($|_.*$)".format(s), x) is not None
+    selected = sorted(filter(lambda x: any([is_selected(s, x) for s in selected_items]), self.data.keys()))
+    for s in selected:
+      if s not in prevSelected:
+        add_fn(self.x_data, s, s)
+    for s in prevSelected:
+      if s not in selected:
+        remove_fn(s)
     self.ui.canvas.draw()
+    return selected
 
   def update_x_selector(self):
     self.ui.xSelector.clear()
