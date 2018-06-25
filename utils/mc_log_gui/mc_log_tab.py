@@ -109,6 +109,8 @@ class RemoveSpecialPlotButton(QtGui.QPushButton):
     else:
       print "Cannot handle this special plot:", special_id
     self.plot()
+    if len(self.added) == 0:
+      self.deleteLater()
   def __add_diff(self):
     added = filter(lambda x: re.match("{}($|_.*$)".format(self.name), x) is not None, self.logtab.data.keys())
     if self.idx == 0:
@@ -117,15 +119,15 @@ class RemoveSpecialPlotButton(QtGui.QPushButton):
       add_fn = self.logtab.ui.canvas.add_diff_plot_right
     for a in added:
       label = "{}_diff".format(a)
-      add_fn(self.logtab.x_data, a, label)
-      self.added.append(label)
+      if add_fn(self.logtab.x_data, a, label):
+        self.added.append(label)
   def __add_rpy(self):
     if self.idx == 0:
       add_fn = self.logtab.ui.canvas.add_rpy_plot_left
     else:
       add_fn = self.logtab.ui.canvas.add_rpy_plot_right
-    self.added = [ "{}_{}".format(self.name, s) for s in ["r", "p", "y"] ]
-    add_fn(self.logtab.x_data, self.name)
+    if add_fn(self.logtab.x_data, self.name):
+      self.added = [ "{}_{}".format(self.name, s) for s in ["r", "p", "y"] ]
   def plot(self):
     self.__plot()
     self.logtab.ui.canvas.draw()
@@ -155,7 +157,6 @@ class MCLogTab(QtGui.QWidget):
     self.rm = None
     self.x_data_trigger = False
     self.x_data = 't'
-    self.specials = {}
 
   def setData(self, data):
     self.data = data
@@ -256,6 +257,7 @@ class MCLogTab(QtGui.QWidget):
     if item is None:
       return
     menu = QtGui.QMenu(ySelector)
+    addedAction = False
     action = QtGui.QAction(u"Plot diff".format(item.actualText), menu)
     action.triggered.connect(lambda: RemoveSpecialPlotButton(item.actualText, self, idx, "diff"))
     menu.addAction(action)

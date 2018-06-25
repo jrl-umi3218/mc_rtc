@@ -116,19 +116,31 @@ class PlotCanvasWithToolbar(QWidget):
     return plt[0]
 
   def add_plot_left(self, x, y, y_label):
+    if y_label in self.axes_plots:
+      return False
     self.axes_plots[y_label] = self._plot(self.axes, self._legend_left, self.data[x], self.data[y], y_label)
+    return True
 
   def add_plot_right(self, x, y, y_label):
+    if y_label in self.axes2_plots:
+      return False
     self.axes2_plots[y_label] = self._plot(self.axes2, self._legend_right, self.data[x], self.data[y], y_label)
+    return True
 
   def _add_diff_plot(self, axes, legend, x, y, y_label):
     dt = self.data[x][1] - self.data[x][0]
     return self._plot(axes, legend, self.data[x][1:], np.diff(self.data[y])/dt, y_label)
 
   def add_diff_plot_left(self, x, y, y_label):
+    if y_label in self.axes_plots:
+      return False
     self.axes_plots[y_label] = self._add_diff_plot(self.axes, self._legend_left, x, y, y_label)
+    return True
   def add_diff_plot_right(self, x, y, y_label):
+    if y_label in self.axes2_plots:
+      return False
     self.axes2_plots[y_label] = self._add_diff_plot(self.axes2, self._legend_right, x, y, y_label)
+    return True
 
   def _add_rpy_plot(self, axes, legend, x_label, base):
     if "{}_qw".format(base) in self.data.keys():
@@ -146,16 +158,24 @@ class PlotCanvasWithToolbar(QWidget):
            self._plot(axes, legend, self.data[x_label], y, "{}_y".format(base))
 
   def add_rpy_plot_left(self, x, y):
+    if "{}_r".format(y) in self.axes_plots:
+      return False
     self.axes_plots["{}_r".format(y)],\
     self.axes_plots["{}_p".format(y)],\
     self.axes_plots["{}_y".format(y)] = self._add_rpy_plot(self.axes, self._legend_left, x, y)
+    return True
 
   def add_rpy_plot_right(self, x, y):
+    if "{}_r".format(y) in self.axes2_plots:
+      return False
     self.axes2_plots["{}_r".format(y)],\
     self.axes2_plots["{}_p".format(y)],\
     self.axes2_plots["{}_y".format(y)] = self._add_rpy_plot(self.axes2.vb, self._legend_right, x, y)
+    return True
 
   def remove_plot_left(self, y_label):
+    if y_label not in self.axes_plots:
+      return
     self.axes_plots[y_label].remove()
     del self.axes_plots[y_label]
     if len(self.axes_plots):
@@ -167,6 +187,8 @@ class PlotCanvasWithToolbar(QWidget):
       self.color = 0
 
   def remove_plot_right(self, y_label):
+    if y_label not in self.axes2_plots:
+      return
     self.axes2_plots[y_label].remove()
     del self.axes2_plots[y_label]
     if len(self.axes2_plots):
