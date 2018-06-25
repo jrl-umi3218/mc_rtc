@@ -232,4 +232,3 @@ class PlotCanvasWithToolbar(QWidget):
     self.axes2_plots = {}
     self.axes.clear()
     self.axes2.clear()
-    self.canvas.clear()

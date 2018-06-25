@@ -111,6 +111,8 @@ class RemoveSpecialPlotButton(QtGui.QPushButton):
     self.plot()
     if len(self.added) == 0:
       self.deleteLater()
+    else:
+      self.logtab.specials["{}_{}".format(name, special_id)] = self
   def __add_diff(self):
     added = filter(lambda x: re.match("{}($|_.*$)".format(self.name), x) is not None, self.logtab.data.keys())
     if self.idx == 0:
@@ -160,6 +162,8 @@ class MCLogTab(QtGui.QWidget):
     self.x_data_trigger = False
     self.x_data = 't'
 
+    self.specials = {}
+
   def setData(self, data):
     self.data = data
     self.ui.canvas.setData(data)
@@ -193,7 +197,12 @@ class MCLogTab(QtGui.QWidget):
   def on_xSelector_activated(self, k):
     self.x_data = k
     self.ui.canvas.clear_all()
-    # FIXME SHOULD REPLOT ALL ACCORDING TO NEW X
+    self.y1Selected = []
+    self.itemSelectionChanged(self.ui.y1Selector, self.y1Selected, 0)
+    self.y2Selected = []
+    self.itemSelectionChanged(self.ui.y2Selector, self.y2Selected, 1)
+    for _,s in self.specials.iteritems():
+      s.plot()
 
   @QtCore.Slot(QtGui.QTreeWidgetItem, int)
   def on_y1Selector_itemClicked(self, item, col):
