@@ -51,7 +51,9 @@ class PlotCanvasWithToolbar(QWidget):
     self.fig = Figure(figsize=(5, 4), dpi=100)
     self.axes = self.fig.add_subplot(111)
     self.axes.autoscale(enable = True, axis = 'both', tight = False)
+    self.axes.autoscale_view(False,True,True)
     self.axes2 = self.axes.twinx()
+    self.axes2.autoscale_view(False,True,True)
     self.canvas = FigureCanvas(self.fig)
     self.toolbar = NavigationToolbar(self.canvas, self)
     self.axes_format_coord = self.axes.format_coord
@@ -78,14 +80,26 @@ class PlotCanvasWithToolbar(QWidget):
 
   def draw(self):
     def fix_axes_limits(axes, axes2):
-      if np.all([x*x == np.inf for x in np.nditer(axes.dataLim.get_points())]):
-        point = (axes2.dataLim.get_points()[1] + axes2.dataLim.get_points()[0])/2
-        plt, = axes.plot([point[0]], [point[1]], visible = False)
-        plt.remove()
-        del plt
-        axes.relim()
-    fix_axes_limits(self.axes, self.axes2)
-    fix_axes_limits(self.axes2, self.axes)
+      point = (axes2.dataLim.get_points()[1] + axes2.dataLim.get_points()[0])/2
+      plt, = axes.plot([point[0]], [point[1]], visible = False)
+      plt.remove()
+      del plt
+      axes.relim()
+    if len(self.axes_plots) == 0 and len(self.axes2_plots) != 0:
+      fix_axes_limits(self.axes, self.axes2)
+    if len(self.axes2_plots) == 0 and len(self.axes_plots) != 0:
+      fix_axes_limits(self.axes2, self.axes)
+    def set_axes_limits(axes, min_x = float("inf"), max_x = float("-inf")):
+      dataLim = axes.dataLim.get_points()
+      x_range = (dataLim[1][0] - dataLim[0][0])/2
+      y_range = (dataLim[1][1] - dataLim[0][1])/2
+      x_min = min(min_x, dataLim[0][0] - x_range*0.05)
+      x_max = max(max_x, dataLim[1][0] + x_range*0.05)
+      axes.set_xlim([x_min, x_max])
+      axes.set_ylim([dataLim[0][1] - y_range*0.05, dataLim[1][1] + y_range*0.05])
+      return x_min, x_max
+    min_x, max_x = set_axes_limits(self.axes)
+    set_axes_limits(self.axes2, min_x, max_x)
     self.canvas.draw()
 
   def setData(self, data):
