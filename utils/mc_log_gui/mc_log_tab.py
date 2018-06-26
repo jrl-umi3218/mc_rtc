@@ -23,14 +23,17 @@ class MCLogTreeWidgetItem(QtGui.QTreeWidgetItem):
     self.setText(0, self._displayText)
 
 class TreeView(object):
-  def __init__(self, name = None):
+  def __init__(self, name = None, parent = None):
     self.name = name
     self.leafs = []
+    self.parent = parent
+    self.modelIdxs = []
+    self.widgets = []
   def leaf(self, name):
     for l in self.leafs:
       if l.name == name:
         return l
-    self.leafs.append(TreeView(name))
+    self.leafs.append(TreeView(name, self))
     return self.leafs[-1]
   def add(self, key):
     if len(key) == 0:
@@ -40,6 +43,8 @@ class TreeView(object):
     while len(self.leafs) == 1:
       self.name = self.name + '_' + self.leafs[0].name
       self.leafs = self.leafs[0].leafs
+      for l in self.leafs:
+        l.parent = self
     for l in self.leafs:
       l.simplify()
   def update_y_selector(self, ySelector, parent, baseModelIdx = None, baseName = ""):
@@ -50,20 +55,30 @@ class TreeView(object):
       if len(fullName):
         fullName += "_"
       fullName += l.name
-      base = MCLogTreeWidgetItem(parent, l.name, fullName)
+      l.widgets.append(MCLogTreeWidgetItem(parent, l.name, fullName))
       if baseModelIdx is not None:
-        newModelIdx = ySelector.model().index(row, 0, baseModelIdx)
+        l.modelIdxs.append(ySelector.model().index(row, 0, baseModelIdx))
       else:
-        newModelIdx = ySelector.model().index(row, 0)
-      #if fullName in selected_data:
-      #  selection = ySelector.selectionModel()
-      #  selection.select(newModelIdx, QtGui.QItemSelectionModel.Select)
-      #  ySelector.setSelectionModel(selection)
-      #  needExpand = True
-      if l.update_y_selector(ySelector, base, newModelIdx, fullName):
-        base.setExpanded(True)
+        l.modelIdxs.append(ySelector.model().index(row, 0))
+      l.update_y_selector(ySelector, l.widgets[-1], l.modelIdxs[-1], fullName)
       row += 1
-    return needExpand
+  def select(self, name, ySelector, idx, fullName = ""):
+    if name == fullName:
+      selection = ySelector.selectionModel()
+      selection.select(self.modelIdxs[idx], QtGui.QItemSelectionModel.Select)
+      ySelector.setSelectionModel(selection)
+      parent = self.parent
+      while parent is not None and idx < len(parent.widgets):
+        parent.widgets[idx].setExpanded(True)
+        parent = parent.parent
+    else:
+      for l in self.leafs:
+        if len(fullName):
+          fName = fullName + "_" + l.name
+        else:
+          fName = l.name
+        if name.startswith(fName):
+          l.select(name, ySelector, idx, fName)
   def __print(self, indent):
     ret = "\n"
     if self.name is not None:
@@ -97,6 +112,7 @@ class RemoveSpecialPlotButton(QtGui.QPushButton):
     self.name = name
     self.id = special_id
     self.added = []
+    self.tree_view = TreeView()
     if idx == 0:
       self.remove = self.logtab.ui.canvas.remove_plot_left
     else:
@@ -252,12 +268,12 @@ class MCLogTab(QtGui.QWidget):
   def update_y_selectors(self):
     self.ui.y1Selector.clear()
     self.ui.y2Selector.clear()
-    tree_view = TreeView()
+    self.tree_view = TreeView()
     for k in sorted(self.data.keys()):
-      tree_view.add(k.split('_'))
-    tree_view.simplify()
+      self.tree_view.add(k.split('_'))
+    self.tree_view.simplify()
     def update_y_selector(ySelector):
-      tree_view.update_y_selector(ySelector, ySelector)
+      self.tree_view.update_y_selector(ySelector, ySelector)
       ySelector.resizeColumnToContents(0)
       cWidth = ySelector.sizeHintForColumn(0)
       ySelector.setMaximumWidth(cWidth + 75)
@@ -291,15 +307,22 @@ class MCLogTab(QtGui.QWidget):
     menu.exec_(ySelector.viewport().mapToGlobal(point))
 
   @staticmethod
-  def UserPlot(parent, p):
+  def MakePlot(parent, x_data, y1, y2):
     tab = MCLogTab(parent)
-    tab.x_data = p.x
+    tab.x_data = x_data
     tab.setData(parent.data)
     tab.setRobotModule(parent.rm)
-    for y1 in p.y1:
-      tab.ui.canvas.add_plot_left(tab.x_data, y1, y1)
-    for y2 in p.y2:
-      tab.ui.canvas.add_plot_right(tab.x_data, y2, y2)
+    for y in y1:
+      tab.ui.canvas.add_plot_left(tab.x_data, y, y)
+      tab.tree_view.select(y, tab.ui.y1Selector, 0)
+    for y in y2:
+      tab.ui.canvas.add_plot_right(tab.x_data, y, y)
+      tab.tree_view.select(y, tab.ui.y2Selector, 1)
+    return tab
+
+  @staticmethod
+  def UserPlot(parent, p):
+    tab = MCLogTab.MakePlot(parent, p.x, p.y1, p.y2)
     def handle_yd(yds, idx):
       for yd in yds:
         match = re.match("(.*)_(.*)$", yd)
@@ -317,17 +340,10 @@ class MCLogTab(QtGui.QWidget):
 
   @staticmethod
   def ForceSensorPlot(parent, fs):
-    tab = MCLogTab(parent)
-    tab.x_data = 't'
-    tab.setData(parent.data)
-    tab.setRobotModule(parent.rm)
+    tab = MCLogTab.MakePlot(parent, 't', ['{}ForceSensor_f{}'.format(fs, ax) for ax in ['x', 'y', 'z']], ['{}ForceSensor_c{}'.format(fs, ax) for ax in ['x', 'y', 'z']])
     tab.ui.canvas.title('Force sensor: {}'.format(fs))
     tab.ui.canvas.y1_label('Force')
     tab.ui.canvas.y2_label('Moment')
-    for y in [ '{}ForceSensor_f{}'.format(fs, ax) for ax in ['x', 'y', 'z'] ]:
-      tab.ui.canvas.add_plot_left(tab.x_data, y, y)
-    for y in [ '{}ForceSensor_c{}'.format(fs, ax) for ax in ['x', 'y', 'z'] ]:
-      tab.ui.canvas.add_plot_right(tab.x_data, y, y)
     tab.ui.canvas.draw()
     return tab
 
@@ -350,10 +366,6 @@ class MCLogTab(QtGui.QWidget):
     y2_label = prefix_to_label(joints, y2_prefix, False)
     y1_diff_label = prefix_to_label(joints, y1_diff_prefix, True)
     y2_diff_label = prefix_to_label(joints, y2_diff_prefix, True)
-    tab = MCLogTab(parent)
-    tab.x_data = 't'
-    tab.setData(parent.data)
-    tab.setRobotModule(parent.rm)
     rjo = parent.rm.ref_joint_order()
     y_data = [[], []]
     y_data_labels = [[], []]
@@ -373,12 +385,9 @@ class MCLogTab(QtGui.QWidget):
       if y2_diff_prefix:
         y_diff_data[1] += [ '{}_{}'.format(y2_diff_prefix, jIndex) ]
         y_diff_data_labels[1] += [ '{}_{}'.format(y2_diff_label, j) ]
-    for y, y_label in zip(y_data[0], y_data_labels[0]):
-      tab.ui.canvas.add_plot_left(tab.x_data, y, y_label)
+    tab = MCLogTab.MakePlot(parent, 't', y_data[0], y_data[1])
     for y, y_label in zip(y_diff_data[0], y_diff_data_labels[0]):
       tab.ui.canvas.add_diff_plot_left(tab.x_data, y, y_label)
-    for y, y_label in zip(y_data[1], y_data_labels[1]):
-      tab.ui.canvas.add_plot_right(tab.x_data, y, y_label)
     for y, y_label in zip(y_diff_data[1], y_diff_data_labels[1]):
       tab.ui.canvas.add_diff_plot_right(tab.x_data, y, y_label)
     class nonlocal: pass
