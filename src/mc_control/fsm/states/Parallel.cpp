@@ -54,7 +54,7 @@ void ParallelState::teardown(Controller & ctl)
 {
   for(auto & s : states_)
   {
-    s->teardown(ctl);
+    s->teardown_(ctl);
   }
 }
 

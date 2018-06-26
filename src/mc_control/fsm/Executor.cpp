@@ -111,7 +111,7 @@ void Executor::teardown(Controller & ctl)
 {
   if(state_)
   {
-    state_->teardown(ctl);
+    state_->teardown_(ctl);
     state_ = nullptr;
   }
   if(ctl.gui())
@@ -126,7 +126,7 @@ bool Executor::complete(Controller & ctl, bool keep_state)
 {
   if(!keep_state)
   {
-    state_->teardown(ctl);
+    state_->teardown_(ctl);
     state_ = nullptr;
   }
   ready_ = true;
@@ -149,7 +149,7 @@ void Executor::next(Controller & ctl)
   ready_ = false;
   transition_triggered_ = false;
   LOG_SUCCESS("Starting state " << next_state_)
-  if(state_) { state_->teardown(ctl); }
+  if(state_) { state_->teardown_(ctl); }
   if(config_.has("configs") && config_("configs").has(next_state_))
   {
     state_ = ctl.factory().create(next_state_, ctl, config_("configs")(next_state_));

@@ -204,7 +204,7 @@ void StateFactory::load(const std::string & name,
   states_factories_[name] = [config, base](StateFactory & f)
   {
     auto ret = f.create(base);
-    ret->configure(config);
+    ret->configure_(config);
     return ret;
   };
 }
@@ -236,9 +236,9 @@ StatePtr StateFactory::create(const std::string & state,
   ret->name(state);
   if(configure)
   {
-    ret->configure(config);
+    ret->configure_(config);
   }
-  ret->start(ctl);
+  ret->start_(ctl);
   return ret;
 }
 

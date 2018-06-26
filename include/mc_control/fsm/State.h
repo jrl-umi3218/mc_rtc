@@ -49,25 +49,29 @@ struct MC_CONTROL_DLLAPI State
 {
   virtual ~State() {}
 
-  /** Called to configure the state.
+  /** Common implementation, handles the following options:
    *
-   * This might be called multiple times.
-   *
+   * - AddContacts/RemoveContacts: add and remove contacts during the state's
+   *   start
+   * - AddContactsAfter/RemoveContactsAfter: add and remove contacts during the
+   *   state's teardown
+   * - RemovePostureTask: if true, remove the robot posture task at the state's
+   *   start
    */
-  virtual void configure(const mc_rtc::Configuration & config) = 0;
+  void configure_(const mc_rtc::Configuration & config);
 
-  /** Called before the state starts being run
-   *
-   * This will be called only once with the state fully configured.
-   *
+  /** Common implementation, takes care of AddContacts/RemoveContacts and
+   * RemovePostureTask
    */
-  virtual void start(Controller & ctl) = 0;
+  void start_(Controller & ctl);
+
+  /** Common implementation, takes care of AddContactsAfter/RemoveContactsAfter
+   * and RemovePostureTask
+   */
+  void teardown_(Controller & ctl);
 
   /** Called every iteration until it returns true */
   virtual bool run(Controller & ctl) = 0;
-
-  /** Called right before destruction */
-  virtual void teardown(Controller & ctl) = 0;
 
   /** Called if the state is interrupted */
   virtual void stop(Controller &) {}
@@ -89,6 +93,29 @@ struct MC_CONTROL_DLLAPI State
 protected:
   /** Output setter for derived classes */
   void output(const std::string & o) { output_ = o; }
+
+  /** Called to configure the state.
+   *
+   * This might be called multiple times.
+   *
+   */
+  virtual void configure(const mc_rtc::Configuration & config) = 0;
+
+  /** Called before the state starts being run
+   *
+   * This will be called only once with the state fully configured.
+   *
+   */
+  virtual void start(Controller & ctl) = 0;
+
+  /** Called right before destruction */
+  virtual void teardown(Controller & ctl) = 0;
+protected:
+  mc_rtc::Configuration add_contacts_config_;
+  mc_rtc::Configuration remove_contacts_config_;
+  mc_rtc::Configuration add_contacts_after_config_;
+  mc_rtc::Configuration remove_contacts_after_config_;
+  bool remove_posture_task_ = false;
 private:
   std::string name_ = "";
   std::string output_ = "";

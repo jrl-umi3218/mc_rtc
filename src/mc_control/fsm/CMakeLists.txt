@@ -1,6 +1,7 @@
 set(fsm_controller_SRC
   Controller.cpp
   Executor.cpp
+  State.cpp
   StateFactory.cpp
   TransitionMap.cpp
 )
