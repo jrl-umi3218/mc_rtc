@@ -138,6 +138,7 @@ class RemoveSpecialPlotButton(QtGui.QPushButton):
     for added in self.added:
       self.remove(added)
     self.logtab.ui.canvas.draw()
+    del self.logtab.specials["{}_{}".format(self.name, self.id)]
     self.deleteLater()
 
 class MCLogTab(QtGui.QWidget):
@@ -159,7 +160,6 @@ class MCLogTab(QtGui.QWidget):
 
     self.data = None
     self.rm = None
-    self.x_data_trigger = False
     self.x_data = 't'
 
     self.specials = {}
@@ -300,10 +300,18 @@ class MCLogTab(QtGui.QWidget):
       tab.ui.canvas.add_plot_left(tab.x_data, y1, y1)
     for y2 in p.y2:
       tab.ui.canvas.add_plot_right(tab.x_data, y2, y2)
-    for yd in p.y1d:
-      RemoveSpecialPlotButton(yd, tab, 0, "diff")
-    for yd in p.y2d:
-      RemoveSpecialPlotButton(yd, tab, 1, "diff")
+    def handle_yd(yds, idx):
+      for yd in yds:
+        match = re.match("(.*)_(.*)$", yd)
+        if match is None:
+          RemoveSpecialPlotButton(yd, tab, idx, "diff")
+          continue
+        if match.group(2) == "rpy":
+          RemoveSpecialPlotButton(match.group(1), tab, idx, "rpy")
+        else:
+          RemoveSpecialPlotButton(match.group(1), tab, idx, "diff")
+    handle_yd(p.y1d, 0)
+    handle_yd(p.y2d, 1)
     tab.ui.canvas.draw()
     return tab
 

@@ -162,7 +162,8 @@ class MCLogUI(QtGui.QMainWindow):
 
   def save_userplot(self):
     tab = self.ui.tabWidget.currentWidget()
-    valid = any([len(y) for x in [tab.y_data, tab.y_diff_data] for y in x])
+    canvas = tab.ui.canvas
+    valid = len(canvas.axes_plots) != 0 or len(cavas.axes2_plots) != 0
     if not valid:
       err_diag = QtGui.QMessageBox(self)
       err_diag.setModal(True)
@@ -171,11 +172,15 @@ class MCLogUI(QtGui.QMainWindow):
       return
     title, ok = QtGui.QInputDialog.getText(self, "User plot", "Title of your plot:")
     if ok:
-      self.userPlotList.append(UserPlot(title, tab.x_data, tab.y_data[0], tab.y_diff_data[0], tab.y_data[1], tab.y_diff_data[1]))
+      y1 = filter(lambda k: k in self.data.keys(), canvas.axes_plots.keys())
+      y2 = filter(lambda k: k in self.data.keys(), canvas.axes2_plots.keys())
+      y1d = map(lambda sp: "{}_{}".format(sp.name, sp.id), filter(lambda sp: sp.idx == 0, tab.specials.values()))
+      y2d = map(lambda sp: "{}_{}".format(sp.name, sp.id), filter(lambda sp: sp.idx == 1, tab.specials.values()))
+      self.userPlotList.append(UserPlot(title, tab.x_data, y1, y1d, y2, y2d))
       self.saveUserPlots()
 
   def plot_userplot(self, p):
-    valid = p.x in self.data.keys() and all([y in self.data.keys() for x in [p.y1, p.y1d, p.y2, p.y2d] for y in x])
+    valid = p.x in self.data.keys() and all([y in self.data.keys() for x in [p.y1, p.y2] for y in x])
     if not valid:
       missing_entries = ""
       if not p.x in self.data.keys():
