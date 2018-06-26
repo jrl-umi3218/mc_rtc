@@ -387,8 +387,17 @@ std::shared_ptr<mc_tasks::PostureTask> Controller::getPostureTask(const std::str
 void Controller::addContact(const Contact & c)
 {
   bool inserted;
-  std::tie(std::ignore, inserted) = contacts_.insert(c);
+  std::set<Contact>::iterator it;
+  std::tie(it, inserted) = contacts_.insert(c);
   contacts_changed_ |= inserted;
+  if(!inserted)
+  {
+    if(it->dof != c.dof)
+    {
+      it->dof = c.dof;
+      contacts_changed_ = true;
+    }
+  }
 }
 
 void Controller::removeContact(const Contact & c)

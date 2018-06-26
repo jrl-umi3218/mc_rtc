@@ -33,7 +33,7 @@ struct MC_CONTROL_DLLAPI Contact
   std::string r2;
   std::string r1Surface;
   std::string r2Surface;
-  Eigen::Vector6d dof;
+  mutable Eigen::Vector6d dof;
 
   bool operator<(const Contact & rhs) const
   {
