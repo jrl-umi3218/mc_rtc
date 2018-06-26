@@ -229,7 +229,6 @@ bool Controller::run()
   {
     std::vector<mc_rbdyn::Contact> contacts;
     contact_constraint_->contactConstr->resetDofContacts();
-    solver().setContacts(contacts);
     if(gui_)
     {
       gui_->removeCategory({"Contacts", "Remove"});
@@ -251,6 +250,7 @@ bool Controller::run()
                          mc_rtc::gui::Button(bName, [this,&c]() { removeContact(c); }));
       }
     }
+    solver().setContacts(contacts);
     contact_constraint_->contactConstr->updateDofContacts();
     contacts_changed_ = false;
   }
