@@ -199,6 +199,27 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
                                         return ret;
                                         })
     );
+    gui_->removeElement({"Contacts", "Add"}, "Add contact");
+    gui_->addElement(
+      {"Contacts", "Add"},
+      mc_rtc::gui::Form("Add contact",
+                        [this](const mc_rtc::Configuration & data)
+                        {
+                          LOG_INFO("Add contact " << data("R0") << "::" << data("R0 surface") << "/" << data("R1") << "::" << data("R1 surface"))
+                          std::string r0 = data("R0");
+                          std::string r1 = data("R1");
+                          std::string r0Surface = data("R0 surface");
+                          std::string r1Surface = data("R1 surface");
+                          Eigen::Vector6d dof = data("dof", Eigen::Vector6d::Ones().eval());
+                          addContact({r0, r1, r0Surface, r1Surface, dof});
+                        },
+                        mc_rtc::gui::FormDataComboInput{"R0", true, {"robots"}},
+                        mc_rtc::gui::FormDataComboInput{"R0 surface", true, {"surfaces", "$R0"}},
+                        mc_rtc::gui::FormDataComboInput{"R1", true, {"robots"}},
+                        mc_rtc::gui::FormDataComboInput{"R1 surface", true, {"surfaces", "$R1"}},
+                        mc_rtc::gui::FormArrayInput<Eigen::Vector6d>{"dof", false, Eigen::Vector6d::Ones()}
+      )
+    );
   }
 }
 
@@ -208,6 +229,11 @@ bool Controller::run()
   {
     std::vector<mc_rbdyn::Contact> contacts;
     contact_constraint_->contactConstr->resetDofContacts();
+    solver().setContacts(contacts);
+    if(gui_)
+    {
+      gui_->removeCategory({"Contacts", "Remove"});
+    }
     for(const auto & c : contacts_)
     {
       contacts.emplace_back(robots(),
@@ -217,8 +243,14 @@ bool Controller::run()
                             c.r2Surface);
       auto cId = contacts.back().contactId(robots());
       contact_constraint_->contactConstr->addDofContact(cId, c.dof.asDiagonal());
+      if(gui_)
+      {
+        std::string bName = c.r1 + "::" + c.r1Surface + " & "
+                            + c.r2 + "::" + c.r2Surface;
+        gui_->addElement({"Contacts", "Remove"},
+                         mc_rtc::gui::Button(bName, [this,&c]() { removeContact(c); }));
+      }
     }
-    solver().setContacts(contacts);
     contact_constraint_->contactConstr->updateDofContacts();
     contacts_changed_ = false;
   }

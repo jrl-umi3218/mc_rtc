@@ -49,6 +49,11 @@ struct MC_CONTROL_DLLAPI Contact
            r1Surface == rhs.r1Surface && r2Surface == rhs.r2Surface;
   }
 
+  bool operator!=(const Contact & rhs) const
+  {
+    return ! (*this == rhs);
+  }
+
   /** Default constructor, invalid contact */
   Contact() = default;
 
