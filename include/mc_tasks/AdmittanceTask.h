@@ -113,7 +113,7 @@ public:
 
   /*! \brief Set target position and orientation
    *
-   * \param X_0_target Plucker transform from the world frame to the target frame.
+   * \param X_0_target Plucker transform to the target frame.
    *
    */
   void targetPose(const sva::PTransformd & X_0_target)
@@ -164,26 +164,6 @@ public:
     return measuredWrench().force()[2];
   }
 
-  /*! \brief Get the measured wrench in the world frame
-   *
-   */
-  sva::ForceVecd worldMeasuredWrench() const
-  {
-    sva::ForceVecd w_fsactual = sensor_.removeGravity(robot_);
-    sva::PTransformd X_0_surf = surface_.X_0_s(robot_);
-    sva::PTransformd X_fsactual_0_ = X_0_surf.inv() * X_fsactual_surf_;
-    return X_fsactual_0_.dualMul(w_fsactual);
-  }
-
-  /*! \brief Get target wrench in the world frame
-   *
-   */
-  sva::ForceVecd worldTargetWrench() const
-  {
-    sva::PTransformd X_surf_0 = surface_.X_0_s(robot_).inv();
-    return X_surf_0.dualMul(targetWrench_);
-  }
-
   /*! \brief Set the maximum translation velocity of the task */
   void maxLinearVel(const Eigen::Vector3d & maxLinearVel)
   {
@@ -223,22 +203,6 @@ public:
   void refVelB(const sva::MotionVecd & velB)
   {
     feedforwardVelB_ = velB;
-  }
-
-  /*! \brief Add a feedforward reference body velocity on top of force control. 
-   *
-   * \param velW Feedforward body velocity in world coordinates.
-   *
-   * To be precise, velW is the velocity of the surface frame in an inertial
-   * frame located at (1) the surface position but with (2) the orientation of
-   * the world frame. Don't worry to much about it, this is the usual velocity
-   * in world coordinates.
-   *
-   */
-  void refVelW(const sva::MotionVecd & velW)
-  {
-    sva::PTransformd E_0_s(surfacePose().rotation());
-    refVelB(E_0_s * velW);
   }
 
 protected:

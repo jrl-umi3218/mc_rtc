@@ -153,11 +153,6 @@ void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
                      {
                      return targetWrench_;
                      });
-  logger.addLogEntry(name_ + "_world_measured_wrench",
-                     [this]() -> sva::ForceVecd
-                     {
-                     return worldMeasuredWrench();
-                     });
 }
 
 void AdmittanceTask::removeFromLogger(mc_rtc::Logger & logger)
@@ -168,7 +163,6 @@ void AdmittanceTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry(name_ + "_measured_wrench");
   logger.removeLogEntry(name_ + "_ref_vel_body");
   logger.removeLogEntry(name_ + "_target_wrench");
-  logger.removeLogEntry(name_ + "_world_measured_wrench");
 }
 
 

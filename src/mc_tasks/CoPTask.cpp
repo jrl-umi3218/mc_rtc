@@ -181,8 +181,6 @@ void CoPTask::removeFromLogger(mc_rtc::Logger & logger)
   AdmittanceTask::removeFromLogger(logger);
   logger.removeLogEntry(name_ + "_measured_cop");
   logger.removeLogEntry(name_ + "_target_cop");
-  logger.removeLogEntry(name_ + "_world_measured_cop");
-  logger.removeLogEntry(name_ + "_world_target_cop");
 }
 
 std::function<bool(const mc_tasks::MetaTask&, std::string&)>
