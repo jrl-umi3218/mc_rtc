@@ -140,7 +140,7 @@ void QPSolver::removeTask(mc_tasks::MetaTask * task)
   }
 }
 
-std::pair<int, const tasks::qp::BilateralContact&> QPSolver::contactById(const tasks::qp::ContactId & id)
+std::pair<int, const tasks::qp::BilateralContact&> QPSolver::contactById(const tasks::qp::ContactId & id) const
 {
   const std::vector<tasks::qp::BilateralContact> & contacts = solver.data().allContacts();
   for(size_t i = 0; i < contacts.size(); ++i)
@@ -161,7 +161,25 @@ Eigen::VectorXd QPSolver::lambdaVec(int cIndex) const
 
 void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
 {
+  if(logger_)
+  {
+    for(const auto& contact: contacts_)
+    {
+      logger_->removeLogEntry("contact_"+contact.r1Surface()->name()+"_"+contact.r2Surface()->name());
+    }
+  }
   contacts_ = contacts;
+  if(logger_)
+  {
+    for(const auto& contact: contacts_)
+    {
+      logger_->addLogEntry("contact_"+contact.r1Surface()->name()+"_"+contact.r2Surface()->name(),
+                           [this, &contact]() {
+                            return desiredContactForce(contact);
+                           }
+                           );
+    }
+  }
   uniContacts.clear();
   biContacts.clear();
   qpRes.contacts.clear();
@@ -217,6 +235,28 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
 const std::vector<mc_rbdyn::Contact> & QPSolver::contacts() const
 {
   return contacts_;
+}
+
+const sva::ForceVecd QPSolver::desiredContactForce(const mc_rbdyn::Contact& contact) const
+{
+  const auto& cId = contact.contactId(robots());
+  auto qp_contact = contactById(cId);
+  if(qp_contact.first != -1)
+  {
+    const auto & qp_c = qp_contact.second;
+    const auto& lambdaV = lambdaVec(qp_c.contactId.r1Index);
+    if(lambdaV.size() > 0)
+    {
+      const auto& qpWrenchInBodyFrame = qp_c.force(lambdaV, qp_c.r1Points, qp_c.r1Cones);
+      const auto& qpWrenchInSurfaceFrame = contact.r1Surface()->X_b_s().dualMul(qpWrenchInBodyFrame);
+      return qpWrenchInSurfaceFrame;
+    }
+    else
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, "QPSolver - cannot compute desired contact force for surface " <<
+                          contact.r1Surface()->name());
+    }
+  }
 }
 
 bool QPSolver::run(FeedbackType fType)

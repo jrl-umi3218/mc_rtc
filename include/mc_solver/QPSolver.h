@@ -164,7 +164,7 @@ public:
    * \param id The contact id of the contact
    * \return The tasks:qp::BilateralContact entity from the solver if id is valid, otherwise, the first element of the pair is -1 and the reference is invalid
    */
-  std::pair<int, const tasks::qp::BilateralContact&> contactById(const tasks::qp::ContactId & id);
+  std::pair<int, const tasks::qp::BilateralContact&> contactById(const tasks::qp::ContactId & id) const;
 
   /** Gives access to a part to lambdaVec given a contact index
    * \param cIndex The index of the contact
@@ -179,6 +179,13 @@ public:
 
   /** Returns the current set of contacts */
   const std::vector<mc_rbdyn::Contact> & contacts() const;
+
+  /** Desired resultant of contact force in robot surface frame
+   * \param contact Contact for which the force is desired.
+   * This contact must be one of the active contacts in the solver.
+   * \return Contact force in robot surface frame
+   */
+  const sva::ForceVecd desiredContactForce(const mc_rbdyn::Contact& id) const;
 
   /** Run one iteration of the QP.
    *
