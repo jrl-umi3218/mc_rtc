@@ -1,5 +1,5 @@
 {
   "type": "gaze",
   "robotIndex": 0,
-  "surface": "surfaceName"
+  "body": "bodyName"
 }
