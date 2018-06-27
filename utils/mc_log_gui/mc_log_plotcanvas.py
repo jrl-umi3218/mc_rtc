@@ -16,33 +16,20 @@ from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 
 from math import asin, atan2
 
-def rpy_from_quat(quat):
-    """
-    Roll-pitch-yaw angles of a quaternion.
 
-    Parameters
-    ----------
-    quat : (4,) array
-        Quaternion in `[w x y z]` format.
-
-    Returns
-    -------
-    rpy : (3,) array
-        Array of roll-pitch-yaw angles, in [rad].
-
-    Notes
-    -----
-    Roll-pitch-yaw are Euler angles corresponding to the sequence (1, 2, 3).
-    """
-    roll = atan2(
-        2 * quat[2] * quat[3] + 2 * quat[0] * quat[1],
-        quat[3] ** 2 - quat[2] ** 2 - quat[1] ** 2 + quat[0] ** 2)
-    pitch = -asin(
-        2 * quat[1] * quat[3] - 2 * quat[0] * quat[2])
-    yaw = atan2(
-        2 * quat[1] * quat[2] + 2 * quat[0] * quat[3],
-        quat[1] ** 2 + quat[0] ** 2 - quat[3] ** 2 - quat[2] ** 2)
+def rpyFromMat(E):
+    """Same as mc_rbdyn::rpyFromMat."""
+    roll = atan2(E[1][2], E[2][2]);
+    pitch = -asin(E[0][2]);
+    yaw = atan2(E[0][1], E[0][0]);
     return [roll, pitch, yaw]
+
+
+def rpyFromQuat(quat):
+    """Same as mc_rbdyn::rpyFromQuat."""
+    import eigen
+    return rpyFromMat(list(eigen.Quaterniond(*quat).toRotationMatrix()))
+
 
 class PlotCanvasWithToolbar(QWidget):
   def __init__(self, parent = None):
@@ -163,7 +150,7 @@ class PlotCanvasWithToolbar(QWidget):
       fmt = ""
     keys = [ "{}_{}{}".format(base, fmt, ax) for ax in ["w", "x", "y", "z"] ]
     qw, qx, qy, qz = [ self.data[k] for k in keys ]
-    rpys = [ rpy_from_quat([w, x, y, z]) for w, x, y, z in zip(qw, qx, qy, qz) ]
+    rpys = [ rpyFromQuat([w, x, y, z]) for w, x, y, z in zip(qw, qx, qy, qz) ]
     r = [ rpy[0] for rpy in rpys ]
     p = [ rpy[1] for rpy in rpys ]
     y = [ rpy[2] for rpy in rpys ]
