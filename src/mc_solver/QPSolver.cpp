@@ -244,7 +244,7 @@ const sva::ForceVecd QPSolver::desiredContactForce(const mc_rbdyn::Contact& cont
   if(qp_contact.first != -1)
   {
     const auto & qp_c = qp_contact.second;
-    const auto& lambdaV = lambdaVec(qp_c.contactId.r1Index);
+    const auto& lambdaV = lambdaVec(qp_contact.first);
     if(lambdaV.size() > 0)
     {
       const auto& qpWrenchInBodyFrame = qp_c.force(lambdaV, qp_c.r1Points, qp_c.r1Cones);
