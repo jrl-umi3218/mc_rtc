@@ -59,8 +59,11 @@ class PlotCanvasWithToolbar(QWidget):
     self.axes2_plots = {}
 
     self.color = 0
-    self.colors = ['r', 'g', 'b', 'y', 'k', 'c', 'm', 'orange']
-    self.Ncolor = len(self.colors)
+    self.Ncolor = 12
+    # self.colors = ['r', 'g', 'b', 'y', 'k', 'cyan', 'magenta', 'orange']
+    cm = matplotlib.cm.Set1
+    cm2rgb = (np.array(cm(x)[0:3]) for x in np.linspace(0, 1, self.Ncolor))
+    self.colors = ['#%02x%02x%02x' % tuple(255 * rgb) for rgb in cm2rgb]
 
     self.x_data = 't'
 
