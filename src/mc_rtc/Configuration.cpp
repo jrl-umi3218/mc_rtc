@@ -501,23 +501,42 @@ void Configuration::load(const mc_rtc::Configuration & config)
   else
   {
     RapidJSONValue & v = *(config.v.impl->value_);
-    for(auto & m : v.GetObject())
+    if(v.IsObject())
     {
-      if(target.HasMember(m.name))
+      for(auto & m : v.GetObject())
       {
-        if(m.value.IsObject() && target.FindMember(m.name)->value.IsObject())
+        if(target.HasMember(m.name))
         {
-          (*this)(m.name.GetString()).load(config(m.name.GetString()));
-          continue;
+          if(m.value.IsObject() && target.FindMember(m.name)->value.IsObject())
+          {
+            (*this)(m.name.GetString()).load(config(m.name.GetString()));
+            continue;
+          }
+          else
+          {
+            target.RemoveMember(m.name);
+          }
         }
-        else
-        {
-          target.RemoveMember(m.name);
-        }
+        RapidJSONValue n(m.name, doc.GetAllocator());
+        RapidJSONValue v(m.value, doc.GetAllocator());
+        target.AddMember(n, v, doc.GetAllocator());
       }
-      RapidJSONValue n(m.name, doc.GetAllocator());
-      RapidJSONValue v(m.value, doc.GetAllocator());
-      target.AddMember(n, v, doc.GetAllocator());
+    }
+    else if(v.IsArray())
+    {
+      if(!target.IsArray())
+      {
+        target.SetArray();
+      }
+      for(auto & value : v.GetArray())
+      {
+        target.PushBack(value, doc.GetAllocator());
+      }
+    }
+    else
+    {
+      target.SetNull();
+      target.CopyFrom(*(config.v.impl->doc_p), doc.GetAllocator());
     }
   }
 }
