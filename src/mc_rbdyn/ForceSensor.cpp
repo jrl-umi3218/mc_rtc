@@ -102,6 +102,10 @@ namespace detail
         return mass_;
       }
 
+      inline const sva::ForceVecd & offset() const
+      {
+        return offset_;
+      }
     private:
       /** Mass of the link generating the wrench */
       double mass_ = 0.0;
@@ -181,6 +185,11 @@ const sva::PTransformd ForceSensor::X_fsactual_parent() const
 double ForceSensor::mass() const
 {
   return calibration_->mass();
+}
+
+const sva::ForceVecd & ForceSensor::offset() const
+{
+  return calibration_->offset();
 }
 
 const sva::ForceVecd ForceSensor::removeGravity(const mc_rbdyn::Robot & robot) const

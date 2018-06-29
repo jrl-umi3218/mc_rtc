@@ -121,6 +121,9 @@ public:
   /** Return the mass of the sensor */
   double mass() const;
 
+  /** Return the sensor offset */
+  const sva::ForceVecd & offset() const;
+
   /** Return a gravity-free wrench
    *
    * @param robot Robot that the sensor belongs to
