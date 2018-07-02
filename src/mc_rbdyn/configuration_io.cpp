@@ -37,10 +37,10 @@ namespace mc_rtc
 
 sva::PTransformd ConfigurationLoader<sva::PTransformd>::load(const mc_rtc::Configuration & config)
 {
-  if(config.has("rotation") && config.has("translation"))
+  if(config.has("rotation") || config.has("translation"))
   {
-    Eigen::Matrix3d r = config("rotation");
-    return {r, config("translation")};
+    Eigen::Matrix3d r = config("rotation", Eigen::Matrix3d::Identity().eval());
+    return {r, config("translation", Eigen::Vector3d::Zero().eval())};
   }
   else if(config.size() == 7)
   {
