@@ -213,7 +213,7 @@ class MCLogUI(QtGui.QMainWindow):
         assert(isinstance(tab, MCLogTab))
         tab.setRobotModule(self.rm)
     except RuntimeError:
-      QtGui.QMessageBox.warning(self, "Failed to get RobotModule", "Could not retrieve Robot Module: {}{}Check your console for more details".format(action.text(), os.linesep))
+      #QtGui.QMessageBox.warning(self, "Failed to get RobotModule", "Could not retrieve Robot Module: {}{}Check your console for more details".format(action.text(), os.linesep))
       action.setChecked(False)
       self.activeRobotAction.setChecked(True)
       self.rm = None
