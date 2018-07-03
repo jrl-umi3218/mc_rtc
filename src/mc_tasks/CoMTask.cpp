@@ -52,6 +52,11 @@ void CoMTask::addToLogger(mc_rtc::Logger & logger)
                      {
                      return damping();
                      });
+  logger.addLogEntry(name_ + "_pos",
+                     [this]() -> Eigen::Vector3d
+                     {
+                     return cur_com_ - eval();
+                     });
   logger.addLogEntry(name_ + "_refAccel",
                      [this]() -> Eigen::Vector3d
                      {
@@ -72,21 +77,16 @@ void CoMTask::addToLogger(mc_rtc::Logger & logger)
                      {
                      return cur_com_;
                      });
-  logger.addLogEntry(name_,
-                     [this]() -> Eigen::Vector3d
-                     {
-                     return cur_com_ - eval();
-                     });
 }
 
 void CoMTask::removeFromLogger(mc_rtc::Logger & logger)
 {
   logger.removeLogEntry(name_ + "_damping");
-  logger.removeLogEntry(name_ + "_stiffness");
+  logger.removeLogEntry(name_ + "_pos");
   logger.removeLogEntry(name_ + "_refAccel");
   logger.removeLogEntry(name_ + "_refVel");
+  logger.removeLogEntry(name_ + "_stiffness");
   logger.removeLogEntry(name_ + "_target");
-  logger.removeLogEntry(name_);
 }
 
 void CoMTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
