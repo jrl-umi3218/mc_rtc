@@ -130,7 +130,7 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function("com",
       {
         target += robot.surface(s).X_0_s(robot).translation();
       }
-      target /= surfaces.size();
+      target /= static_cast<double>(surfaces.size());
       t->com({target.x(), target.y(), com.z()});
     }
     t->load(solver, config);
