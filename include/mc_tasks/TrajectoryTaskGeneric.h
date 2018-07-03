@@ -134,6 +134,8 @@ protected:
   const mc_rbdyn::Robots & robots;
   unsigned int rIndex;
   std::shared_ptr<T> errorT = nullptr;
+  Eigen::VectorXd refVel_;
+  Eigen::VectorXd refAccel_;
 private:
   double stiff;
   double damp;

@@ -52,6 +52,16 @@ void CoMTask::addToLogger(mc_rtc::Logger & logger)
                      {
                      return damping();
                      });
+  logger.addLogEntry(name_ + "_refAccel",
+                     [this]() -> Eigen::Vector3d
+                     {
+                     return refAccel_.head<3>();
+                     });
+  logger.addLogEntry(name_ + "_refVel",
+                     [this]() -> Eigen::Vector3d
+                     {
+                     return refVel_.head<3>();
+                     });
   logger.addLogEntry(name_ + "_stiffness",
                      [this]()
                      {
@@ -73,6 +83,8 @@ void CoMTask::removeFromLogger(mc_rtc::Logger & logger)
 {
   logger.removeLogEntry(name_ + "_damping");
   logger.removeLogEntry(name_ + "_stiffness");
+  logger.removeLogEntry(name_ + "_refAccel");
+  logger.removeLogEntry(name_ + "_refVel");
   logger.removeLogEntry(name_ + "_target");
   logger.removeLogEntry(name_);
 }

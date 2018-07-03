@@ -67,12 +67,14 @@ template<typename T>
 void TrajectoryTaskGeneric<T>::refVel(const Eigen::VectorXd & vel)
 {
   trajectoryT->refVel(vel);
+  refVel_ = vel;
 }
 
 template<typename T>
 void TrajectoryTaskGeneric<T>::refAccel(const Eigen::VectorXd & accel)
 {
   trajectoryT->refAccel(accel);
+  refAccel_ = accel;
 }
 
 template<typename T>
