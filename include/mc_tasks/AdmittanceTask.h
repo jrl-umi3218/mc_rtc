@@ -186,12 +186,6 @@ public:
     maxAngularVel_ = maxAngularVel;
   }
 
-  /*! \brief Get the current task stiffness */
-  double stiffness()
-  {
-    return SurfaceTransformTask::stiffness();
-  }
-
   /*! \brief Add a feedforward reference body velocity on top of force control. 
    *
    * \param velB Feedforward body velocity
@@ -205,9 +199,21 @@ public:
     feedforwardVelB_ = velB;
   }
 
+  /*! \brief Set dimensional stiffness
+   *
+   * This function leaves damping unchanged.
+   *
+   * \param stiffness Dimensional stiffness as a motion vector
+   *
+   */
+  void stiffness(const sva::MotionVecd & stiffness)
+  {
+    return SurfaceTransformTask::stiffness(stiffness);
+  }
+
 protected:
-  Eigen::Vector3d maxAngularVel_ = Eigen::Vector3d(0.1, 0.1, 0.1);  // [rad] / [s]
-  Eigen::Vector3d maxLinearVel_ = Eigen::Vector3d(0.1, 0.1, 0.1);  // [m] / [s]
+  Eigen::Vector3d maxAngularVel_ = {0.1, 0.1, 0.1};  // [rad] / [s]
+  Eigen::Vector3d maxLinearVel_ = {0.1, 0.1, 0.1};  // [m] / [s]
   const mc_rbdyn::Robot & robot_;
   const mc_rbdyn::Surface & surface_;
   const mc_rbdyn::ForceSensor & sensor_;

@@ -55,6 +55,40 @@ public:
 
   void removeFromLogger(mc_rtc::Logger & logger) override;
 
+  /*! \brief Set dimensional stiffness
+   *
+   * Damping is untouched by this function.
+   *
+   * \param stiffness Dimensional stiffness as a motion vector
+   *
+   */
+  void stiffness(const sva::MotionVecd & stiffness)
+  {
+    return TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::stiffness(stiffness.vector());
+  }
+
+  /*! \brief Get dimensional stiffness as a motion vector */
+  sva::MotionVecd mvStiffness()
+  {
+    return sva::MotionVecd(dimStiffness());
+  }
+
+  /*! \brief Set dimensional damping
+   *
+   * \param damping Dimensional damping as a motion vector
+   *
+   */
+  void damping(const sva::MotionVecd & damping)
+  {
+    return TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::damping(damping.vector());
+  }
+
+  /*! \brief Get dimensional damping as a motion vector */
+  sva::MotionVecd mvDamping()
+  {
+    return sva::MotionVecd(dimDamping());
+  }
+
   /*! \brief Set trajectory task's reference velocity from motion vector in
    * body coordinates.
    *

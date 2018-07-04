@@ -109,6 +109,7 @@ struct TrajectoryTaskGeneric : public MetaTask
    * The caller should be sure that the dimensions of the vectors fit the task dimension.
    *
    * \param stiffness Dimensional stiffness
+   *
    * \param damping Dimensional damping
    *
    */

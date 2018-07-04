@@ -101,7 +101,6 @@ void TrajectoryTaskGeneric<T>::damping(const Eigen::VectorXd & damping)
   setGains(trajectoryT->stiffness(), damping);
 }
 
-
 template<typename T>
 void TrajectoryTaskGeneric<T>::setGains(double s, double d)
 {

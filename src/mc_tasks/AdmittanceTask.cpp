@@ -124,9 +124,9 @@ void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
                      return admittance_;
                      });
   logger.addLogEntry(name_ + "_damping",
-                     [this]()
+                     [this]() -> sva::MotionVecd
                      {
-                     return damping();
+                     return mvDamping();
                      });
   logger.addLogEntry(name_ + "_measured_wrench",
                      [this]() -> sva::ForceVecd
@@ -134,17 +134,17 @@ void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
                      return measuredWrench();
                      });
   logger.addLogEntry(name_ + "_output_body_vel",
-                     [this]() -> sva::MotionVecd
+                     [this]() -> const sva::MotionVecd &
                      {
                      return refVelB_;
                      });
   logger.addLogEntry(name_ + "_stiffness",
-                     [this]()
+                     [this]() -> sva::MotionVecd
                      {
-                     return stiffness();
+                     return mvStiffness();
                      });
   logger.addLogEntry(name_ + "_target_body_vel",
-                     [this]() -> sva::MotionVecd
+                     [this]() -> const sva::MotionVecd &
                      {
                      return feedforwardVelB_;
                      });
@@ -241,19 +241,7 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function("admit
   {
     auto t = std::make_shared<mc_tasks::AdmittanceTask>(config("surface"), solver.robots(), config("robotIndex"), solver.dt());
     if(config.has("admittance")) { t->admittance(config("admittance")); }
-    if(config.has("damping"))
-    {
-      auto d = config("damping");
-      if(d.size())
-      {
-        Eigen::VectorXd dam = d;
-        t->damping(dam);
-      }
-      else
-      {
-        t->damping(static_cast<double>(d));
-      }
-    }
+    if(config.has("damping")) { t->damping(config("damping")); }
     if(config.has("pose")) { t->targetPose(config("pose")); }
     if(config.has("weight")) { t->weight(config("weight")); }
     if(config.has("wrench")) { t->targetWrench(config("wrench")); }
