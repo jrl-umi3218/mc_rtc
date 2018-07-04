@@ -75,7 +75,15 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function("pbvs"
   [](mc_solver::QPSolver & solver,
      const mc_rtc::Configuration & config)
   {
-    auto t = std::make_shared<mc_tasks::PositionBasedVisServoTask>(config("surface"), sva::PTransformd::Identity(), solver.robots(), config("robotIndex"));
+    std::shared_ptr<mc_tasks::PositionBasedVisServoTask> t;
+    if(config.has("surface"))
+    {
+      t = std::make_shared<mc_tasks::PositionBasedVisServoTask>(config("surface"), sva::PTransformd::Identity(), solver.robots(), config("robotIndex"));
+    }
+    else if(config.has("body"))
+    {
+      t = std::make_shared<mc_tasks::PositionBasedVisServoTask>(config("body"), sva::PTransformd::Identity(), config("X_b_s", sva::PTransformd::Identity()), solver.robots(), config("robotIndex"));
+    }
     t->load(solver, config);
     return t;
   }
