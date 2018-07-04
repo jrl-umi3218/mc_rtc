@@ -6,7 +6,7 @@
     "type": { "enum": ["pbvs"] },
     "name": { "type": "string" },
     "robotIndex": { "type": "integer", "minimum": 0 },
-    "body": { "type": "string" },
+    "surface": { "type": "string" },
 
     "stiffness": { "type": "number", "minimum": 0},
     "damping": { "type": "number", "minimum": 0},

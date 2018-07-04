@@ -1,5 +1,5 @@
 {
   "type": "pbvs",
   "robotIndex": 0,
-  "body": "bodyName"
+  "surface": "surfaceName"
 }
