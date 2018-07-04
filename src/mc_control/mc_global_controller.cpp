@@ -541,25 +541,18 @@ bool MCGlobalController::AddController(const std::string & name)
   if(controller_loader->has_object(controller_name))
   {
     LOG_INFO("Create controller " << controller_name)
-    try
+    if(controller_subname != "")
     {
-      if(controller_subname != "")
-      {
-        controllers[name] = controller_loader->create_object(controller_name, controller_subname, config.main_robot_module, config.timestep, config.config);
-      }
-      else
-      {
-        controllers[name] = controller_loader->create_object(name, config.main_robot_module, config.timestep, config.config);
-      }
-      controllers[name]->real_robots = real_robots;
-      if(config.enable_log)
-      {
-        controllers[name]->logger().setup(config.log_policy, config.log_directory, config.log_template);
-      }
+      controllers[name] = controller_loader->create_object(controller_name, controller_subname, config.main_robot_module, config.timestep, config.config);
     }
-    catch(const mc_rtc::LoaderException & exc)
+    else
     {
-      LOG_ERROR_AND_THROW(std::runtime_error, "Failed to create controller")
+      controllers[name] = controller_loader->create_object(name, config.main_robot_module, config.timestep, config.config);
+    }
+    controllers[name]->real_robots = real_robots;
+    if(config.enable_log)
+    {
+      controllers[name]->logger().setup(config.log_policy, config.log_directory, config.log_template);
     }
     return true;
   }

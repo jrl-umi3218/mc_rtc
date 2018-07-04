@@ -147,20 +147,7 @@ T * sandbox_function_call(std::function<T*(const Args & ...)> create_fn, const A
 template<typename T, typename ... Args>
 T * no_sandbox_function_call(std::function<T*(const Args & ...)> create_fn, const Args & ... args)
 {
-  try
-  {
-    return create_fn(args...);
-  }
-  catch(std::exception & exc)
-  {
-    LOG_ERROR("Loaded constructor threw an exception")
-    LOG_WARNING(exc.what())
-  }
-  catch(...)
-  {
-    LOG_ERROR("Loaded constructor threw an exception")
-  }
-  return nullptr;
+  return create_fn(args...);
 }
 
 } // namespace mc_rtc
