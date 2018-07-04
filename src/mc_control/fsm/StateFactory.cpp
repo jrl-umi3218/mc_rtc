@@ -122,15 +122,21 @@ void load_ud(StateFactory & factory, const std::map<std::string, mc_rtc::Configu
 
 void load_file(StateFactory & factory,
                const std::string & file,
-               std::vector<UDState> & ud_states)
+               std::vector<UDState> & ud_states,
+               bool verbose)
 {
+  if(verbose)
+  {
+    LOG_INFO("Load " << file)
+  }
   std::map<std::string, mc_rtc::Configuration> states = mc_rtc::Configuration(file);
   load_ud(factory, states, ud_states);
 }
 
 void load_dir(StateFactory & factory,
               const std::string & dir,
-              std::vector<UDState> & ud_states)
+              std::vector<UDState> & ud_states,
+              bool verbose)
 {
   bfs::directory_iterator dit(dir), endit;
   std::vector<bfs::path> drange;
@@ -139,11 +145,11 @@ void load_dir(StateFactory & factory,
   {
     if(bfs::is_regular_file(p))
     {
-      load_file(factory, p.string(), ud_states);
+      load_file(factory, p.string(), ud_states, verbose);
     }
     else if(bfs::is_directory(p))
     {
-      load_dir(factory, p.string(), ud_states);
+      load_dir(factory, p.string(), ud_states, verbose);
     }
   }
 }
@@ -158,13 +164,13 @@ void StateFactory::load_files(const std::vector<std::string> & files)
     if(bfs::is_directory(f))
     {
       LOG_INFO("Looking for .json state files in " << f)
-      load_dir(*this, f, ud_states);
+      load_dir(*this, f, ud_states, verbose);
     }
     else
     {
       if(bfs::exists(f) && bfs::is_regular_file(f))
       {
-        load_file(*this, f, ud_states);
+        load_file(*this, f, ud_states, verbose);
       }
       else
       {
@@ -199,6 +205,10 @@ void StateFactory::load(const std::string & name,
   if(hasState(name))
   {
     LOG_ERROR_AND_THROW(std::runtime_error, "State " << name << " already exists")
+  }
+  if(verbose)
+  {
+    LOG_INFO("New state from file: " << name << " (base: " << base << ")")
   }
   states_.push_back(name);
   states_factories_[name] = [config, base](StateFactory & f)
@@ -278,6 +288,10 @@ bool StateFactory::load_with_loader(const std::string & state)
     LOG_ERROR("Cannot create state " << state << ", loader " << loader << " has not been loaded")
     return false;
   }
+  if(verbose)
+  {
+    LOG_INFO("New state: " << state << " provided by loader: " << loader)
+  }
   states_.push_back(state);
   states_factories_[state] = [loader, arg](StateFactory & factory)
   {
@@ -293,6 +307,10 @@ const std::vector<std::string> & StateFactory::states() const
 
 void StateFactory::update(const std::string & cn)
 {
+  if(verbose)
+  {
+    LOG_INFO("New state from library: " << cn)
+  }
   states_.push_back(cn);
 }
 
