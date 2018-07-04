@@ -30,14 +30,6 @@ endmacro()
 controller_test_construction_failure(NotAController)
 controller_test_construction_failure(NoDestroyController)
 controller_test_construction_failure(NoCreateController)
-# To run properly these tests require controller creation sandboxing
-# which is only enabled on Linux
-if(UNIX AND NOT APPLE)
-  controller_test_construction_failure(UnresolvedSymbolController)
-  controller_test_construction_failure(SegfaultController)
-  controller_test_construction_failure(FPEController)
-endif()
-controller_test_construction_failure(ThrowingController)
 
 set(LOG_ENABLED "true")
 controller_test_run(TestPostureController 400)
