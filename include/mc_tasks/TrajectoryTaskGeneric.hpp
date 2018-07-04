@@ -84,10 +84,23 @@ void TrajectoryTaskGeneric<T>::stiffness(double s)
 }
 
 template<typename T>
+void TrajectoryTaskGeneric<T>::stiffness(const Eigen::VectorXd & stiffness)
+{
+  setGains(stiffness, trajectoryT->damping());
+}
+
+template<typename T>
 void TrajectoryTaskGeneric<T>::damping(double d)
 {
   setGains(stiff, d);
 }
+
+template<typename T>
+void TrajectoryTaskGeneric<T>::damping(const Eigen::VectorXd & damping)
+{
+  setGains(trajectoryT->stiffness(), damping);
+}
+
 
 template<typename T>
 void TrajectoryTaskGeneric<T>::setGains(double s, double d)
@@ -95,6 +108,13 @@ void TrajectoryTaskGeneric<T>::setGains(double s, double d)
   stiff = s;
   damp = d;
   trajectoryT->setGains(s, d);
+}
+
+template<typename T>
+void TrajectoryTaskGeneric<T>::setGains(const Eigen::VectorXd & stiffness,
+                                        const Eigen::VectorXd & damping)
+{
+  trajectoryT->setGains(stiffness, damping);
 }
 
 template<typename T>
@@ -107,6 +127,18 @@ template<typename T>
 double TrajectoryTaskGeneric<T>::damping() const
 {
   return damp;
+}
+
+template<typename T>
+const Eigen::VectorXd & TrajectoryTaskGeneric<T>::dimStiffness() const
+{
+  return trajectoryT->stiffness();
+}
+
+template<typename T>
+const Eigen::VectorXd & TrajectoryTaskGeneric<T>::dimDamping() const
+{
+  return trajectoryT->damping();
 }
 
 template<typename T>
@@ -241,11 +273,28 @@ void TrajectoryTaskGeneric<T>::load(mc_solver::QPSolver & solver,
   MetaTask::load(solver, config);
   if(config.has("stiffness"))
   {
-    stiffness(config("stiffness"));
+    auto s = config("stifness");
+    if(s.size())
+    {
+      Eigen::VectorXd stiff = s;
+      stiffness(stiff);
+    }
+    else
+    {
+      stiffness(static_cast<double>(s));
+    }
   }
   if(config.has("damping"))
   {
-    setGains(stiffness(), config("damping"));
+    auto d = config("damping");
+    if(d.size())
+    {
+      setGains(dimStiffness(), d);
+    }
+    else
+    {
+      setGains(stiffness(), d);
+    }
   }
   if(config.has("weight"))
   {

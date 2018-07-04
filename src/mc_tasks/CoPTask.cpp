@@ -242,7 +242,19 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function("cop",
     auto t = std::make_shared<mc_tasks::CoPTask>(config("surface"), solver.robots(), config("robotIndex"), solver.dt());
     if(config.has("admittance")) { t->admittance(config("admittance")); }
     if(config.has("cop")) { t->targetCoP(config("cop")); }
-    if(config.has("damping")) { t->damping(config("damping")); }
+    if(config.has("damping"))
+    {
+      auto d = config("damping");
+      if(d.size())
+      {
+        Eigen::VectorXd dam = d;
+        t->damping(dam);
+      }
+      else
+      {
+        t->damping(static_cast<double>(d));
+      }
+    }
     if(config.has("force")) { t->targetForce(config("force")); }
     if(config.has("pose")) { t->targetPose(config("pose")); }
     if(config.has("weight")) { t->weight(config("weight")); }

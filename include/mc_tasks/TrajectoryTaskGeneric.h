@@ -68,12 +68,32 @@ struct TrajectoryTaskGeneric : public MetaTask
    */
   void stiffness(double stiffness);
 
+  /*! \brief Set dimensional stiffness
+   *
+   * The caller should be sure that the dimension of the vector fits the task dimension.
+   *
+   * Damping is untouched by this function.
+   *
+   * \param stiffness Dimensional stiffness
+   *
+   */
+  void stiffness(const Eigen::VectorXd & stiffness);
+
   /*! \brief Set the task damping, leaving its stiffness unchanged
    *
    * \param damping Task stiffness
    *
    */
   void damping(double damping);
+
+  /*! \brief Set dimensional damping
+   *
+   * The caller should be sure that the dimension of the vector fits the task dimension.
+   *
+   * \param damping Dimensional damping
+   *
+   */
+  void damping(const Eigen::VectorXd & damping);
 
   /*! \brief Set both stiffness and damping
    *
@@ -84,11 +104,27 @@ struct TrajectoryTaskGeneric : public MetaTask
    */
   void setGains(double stifness, double damping);
 
+  /*! \brief Set dimensional stiffness and damping
+   *
+   * The caller should be sure that the dimensions of the vectors fit the task dimension.
+   *
+   * \param stiffness Dimensional stiffness
+   * \param damping Dimensional damping
+   *
+   */
+  void setGains(const Eigen::VectorXd & stiffness, const Eigen::VectorXd & damping);
+
   /*! \brief Get the current task stiffness */
   double stiffness() const;
 
   /*! \brief Get the current task damping */
   double damping() const;
+
+  /*! \brief Get the current task dimensional stiffness */
+  const Eigen::VectorXd & dimStiffness() const;
+
+  /*! \brief Get the current task dimensional damping */
+  const Eigen::VectorXd & dimDamping() const;
 
   /*! \brief Set the task weight
    *

@@ -51,7 +51,16 @@ static bool registered_lookat_surface =
           }
           if (config.has("stiffness"))
           {
-            t->stiffness(config("stiffness"));
+            auto s = config("stiffness");
+            if(s.size())
+            {
+              Eigen::VectorXd st = s;
+              t->stiffness(st);
+            }
+            else
+            {
+              t->stiffness(static_cast<double>(s));
+            }
           }
           t->load(solver, config);
           return t;
