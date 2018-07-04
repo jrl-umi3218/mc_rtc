@@ -102,7 +102,7 @@ struct TrajectoryTaskGeneric : public MetaTask
    * \param damping Task damping
    *
    */
-  void setGains(double stifness, double damping);
+  void setGains(double stiffness, double damping);
 
   /*! \brief Set dimensional stiffness and damping
    *

@@ -273,7 +273,7 @@ void TrajectoryTaskGeneric<T>::load(mc_solver::QPSolver & solver,
   MetaTask::load(solver, config);
   if(config.has("stiffness"))
   {
-    auto s = config("stifness");
+    auto s = config("stiffness");
     if(s.size())
     {
       Eigen::VectorXd stiff = s;
