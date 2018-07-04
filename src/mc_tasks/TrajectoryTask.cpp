@@ -53,6 +53,8 @@ void TrajectoryTask::init(unsigned int robotIndex,
   this->duration = duration;
   this->wp = waypoints;
   this->oriWp_ = oriWp;
+  stiffness_ = stiffness;
+  damping_ = 2*sqrt(stiffness_);
 
   const mc_rbdyn::Robot& robot = robots.robot(robotIndex);
   const auto& surface = robot.surface(surfaceName);
@@ -82,11 +84,13 @@ void TrajectoryTask::init(unsigned int robotIndex,
 
 void TrajectoryTask::stiffness(double s)
 {
+  stiffness_ = s;
   setGains(s, 2*std::sqrt(s));
 }
 
 void TrajectoryTask::damping(double d)
 {
+  damping_ = d;
   setGains(stiffness(), d);
 }
 
@@ -97,12 +101,12 @@ void TrajectoryTask::setGains(double s, double d)
 
 double TrajectoryTask::stiffness() const
 {
-  return transTrajTask->stiffness();
+  return stiffness_;
 }
 
 double TrajectoryTask::damping() const
 {
-  return transTrajTask->damping();
+  return damping_;
 }
 
 

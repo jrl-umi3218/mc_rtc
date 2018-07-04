@@ -244,6 +244,8 @@ public:
   unsigned int oriTargetWpIndex;
   double oriStartTime;
   double oriDuration;
+  double stiffness_;
+  double damping_;
 
   double duration;
   double t = 0.;
