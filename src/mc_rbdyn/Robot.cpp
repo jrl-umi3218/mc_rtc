@@ -747,6 +747,7 @@ void mc_rbdyn::Robot::eulerIntegration(double step)
 {
   rbd::eulerIntegration(mb(), mbc(), step);
 }
+
 void mc_rbdyn::Robot::eulerIntegration(rbd::MultiBodyConfig & mbc, double step) const
 {
   rbd::eulerIntegration(mb(), mbc, step);
@@ -779,6 +780,17 @@ void Robot::posW(const sva::PTransformd & pt)
   {
     LOG_ERROR_AND_THROW(std::logic_error, "The root pose can only be changed for robots with a free flyer or a fixed joint as joint(0)");
   }
+}
+
+void Robot::setBaseLinkVelocity(const Eigen::Vector6d & alpha_)
+{
+  alpha()[0][0] = alpha_(0);
+  alpha()[0][1] = alpha_(1);
+  alpha()[0][2] = alpha_(2);
+  alpha()[0][3] = alpha_(3);
+  alpha()[0][4] = alpha_(4);
+  alpha()[0][5] = alpha_(5);
+  forwardVelocity();
 }
 
 void Robot::copy(Robots & robots, unsigned int robots_idx, const Base & base) const

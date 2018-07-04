@@ -432,6 +432,12 @@ public:
    */
   void posW(const sva::PTransformd & pt);
 
+  /** Update the robot's base link velocity.
+   *
+   * \param alpha New base link velocity.
+   */
+  void setBaseLinkVelocity(const Eigen::Vector6d & alpha);
+
 private:
   Robots * robots_;
   unsigned int robots_idx_;
