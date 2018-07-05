@@ -55,6 +55,9 @@ public:
 
   void removeFromLogger(mc_rtc::Logger & logger) override;
 
+  using TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::stiffness;
+  using TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::damping;
+
   /*! \brief Set dimensional stiffness
    *
    * Damping is untouched by this function.
