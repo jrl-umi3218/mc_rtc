@@ -24,7 +24,7 @@ namespace fsm
  *
  */
 
-struct ParallelState : State
+struct MC_CONTROL_DLLAPI ParallelState : State
 {
   void configure(const mc_rtc::Configuration & config) override;
 

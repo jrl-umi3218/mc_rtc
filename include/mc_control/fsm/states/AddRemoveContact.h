@@ -8,7 +8,7 @@ namespace mc_control
 namespace fsm
 {
 
-struct AddRemoveContactStateImpl;
+struct MC_CONTROL_DLLAPI AddRemoveContactStateImpl;
 
 /** Implements a state that is able to remove or add a contact
  *

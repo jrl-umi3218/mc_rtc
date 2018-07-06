@@ -16,7 +16,7 @@ namespace fsm
  * - duration Duration of the pause in seconds (double, defaults: 0)
  *
  */
-struct PauseState : State
+struct MC_CONTROL_DLLAPI PauseState : State
 {
   void configure(const mc_rtc::Configuration & config) override;
 

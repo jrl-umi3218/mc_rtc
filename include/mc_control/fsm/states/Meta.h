@@ -22,7 +22,7 @@ namespace fsm
  *
  */
 
-struct MetaState : State
+struct MC_CONTROL_DLLAPI MetaState : State
 {
   void configure(const mc_rtc::Configuration & config) override;
 

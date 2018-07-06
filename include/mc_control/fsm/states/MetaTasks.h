@@ -99,7 +99,7 @@ namespace fsm
  *
  */
 
-struct MetaTasksState : State
+struct MC_CONTROL_DLLAPI MetaTasksState : State
 {
   void configure(const mc_rtc::Configuration & config) override;
 
