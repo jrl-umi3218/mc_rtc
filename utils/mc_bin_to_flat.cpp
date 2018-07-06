@@ -3,6 +3,7 @@
 #include <mc_rtc/logging.h>
 
 #include <fstream>
+#include <stdexcept>
 #include <unordered_map>
 
 template<bool is_numeric>
