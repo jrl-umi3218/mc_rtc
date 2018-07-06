@@ -72,7 +72,7 @@ struct TrajectoryTaskGeneric : public MetaTask
    *
    * The caller should be sure that the dimension of the vector fits the task dimension.
    *
-   * Damping is untouched by this function.
+   * Damping is automatically set to 2*sqrt(stiffness)
    *
    * \param stiffness Dimensional stiffness
    *

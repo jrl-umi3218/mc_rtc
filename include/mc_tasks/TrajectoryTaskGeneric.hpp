@@ -86,7 +86,7 @@ void TrajectoryTaskGeneric<T>::stiffness(double s)
 template<typename T>
 void TrajectoryTaskGeneric<T>::stiffness(const Eigen::VectorXd & stiffness)
 {
-  setGains(stiffness, trajectoryT->damping());
+  setGains(stiffness, 2*stiffness.cwiseSqrt());
 }
 
 template<typename T>
