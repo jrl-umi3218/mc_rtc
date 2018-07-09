@@ -57,6 +57,19 @@ public:
 
   using TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::stiffness;
   using TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::damping;
+  using TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::setGains;
+
+  /*! \brief Set dimensional stiffness and damping
+   *
+   * \param stiffness Dimensional stiffness
+   *
+   * \param damping Dimensional damping
+   *
+   */
+  void setGains(const sva::MotionVecd & stiffness, const sva::MotionVecd & damping)
+  {
+    return TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::setGains(stiffness.vector(), damping.vector());
+  }
 
   /*! \brief Set dimensional stiffness
    *
