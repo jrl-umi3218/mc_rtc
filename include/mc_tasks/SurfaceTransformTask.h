@@ -60,7 +60,7 @@ public:
 
   /*! \brief Set dimensional stiffness
    *
-   * Damping is untouched by this function.
+   * Damping is automatically set to 2*sqrt(stiffness)
    *
    * \param stiffness Dimensional stiffness as a motion vector
    *
