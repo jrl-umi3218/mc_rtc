@@ -173,7 +173,7 @@ class PlotCanvasWithToolbar(QWidget):
       return False
     self.axes2_plots["{}_r".format(y)],\
     self.axes2_plots["{}_p".format(y)],\
-    self.axes2_plots["{}_y".format(y)] = self._add_rpy_plot(self.axes2.vb, self._legend_right, x, y)
+    self.axes2_plots["{}_y".format(y)] = self._add_rpy_plot(self.axes2, self._legend_right, x, y)
     return True
 
   def remove_plot_left(self, y_label):
