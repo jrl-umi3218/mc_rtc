@@ -28,6 +28,14 @@ void TrajectoryTaskGeneric<T>::finalize(Args && ... args)
 {
   errorT = std::make_shared<T>(args...);
   trajectoryT = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, errorT.get(), stiff, damp, wt);
+  if(refVel_.size() != trajectoryT->refVel().size())
+  {
+    refVel_ = trajectoryT->refVel();
+  }
+  if(refAccel_.size() != trajectoryT->refAccel().size())
+  {
+    refAccel_ = trajectoryT->refAccel();
+  }
 }
 
 template<typename T>
