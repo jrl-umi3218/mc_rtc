@@ -189,6 +189,28 @@ namespace mc_control
       default_impl("Point3D", id);
     }
 
+    /** Should display a trajectory of 3d points in 3D environment
+     *
+     * \p Vector of 3D points
+     */
+    virtual void displayTrajectory(const ElementId & id,
+                                   const ElementId & /*requestId*/,
+                                   const std::vector<Eigen::Vector3d> & /* points */)
+    {
+      default_impl("DisplayPoint3DTrajectory", id);
+    }
+
+    /** Should display a trajectory of transforms in 3D environment
+     *
+     * \p Vector of 3D points
+     */
+    virtual void displayTrajectory(const ElementId & id,
+                                   const ElementId & /*requestId*/,
+                                   const std::vector<sva::PTransformd> & /* points */)
+    {
+      default_impl("DisplayPoseTrajectory", id);
+    }
+
     /** Should display a rotation in 3D environment
      *
      * \p requestId should be in requests instead of \p id
@@ -321,6 +343,17 @@ namespace mc_control
     void handle_point3d(const ElementId & id,
                         const mc_rtc::Configuration & gui,
                         const mc_rtc::Configuration & data);
+
+    /** Handle details of DisplayPoint3DTrajectory elements */
+    void handle_displayPoint3DTrajectory(const ElementId & id,
+                        const mc_rtc::Configuration & gui,
+                        const mc_rtc::Configuration & data);
+
+    /** Handle details of DisplayPoseTrajectory elements */
+    void handle_displayPoseTrajectory(const ElementId & id,
+                        const mc_rtc::Configuration & gui,
+                        const mc_rtc::Configuration & data);
+
 
     /** Handle details of Rotation elements */
     void handle_rotation(const ElementId & id,

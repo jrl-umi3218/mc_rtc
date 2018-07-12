@@ -227,6 +227,12 @@ void ControllerClient::handle_widget(const ElementId & id,
       case Elements::Point3D:
         handle_point3d(id, gui, data);
         break;
+      case Elements::DisplayPoint3DTrajectory:
+        handle_displayPoint3DTrajectory(id, gui, data);
+        break;
+      case Elements::DisplayPoseTrajectory:
+        handle_displayPoseTrajectory(id, gui, data);
+        break;
       case Elements::Rotation:
         handle_rotation(id, gui, data);
         break;
@@ -273,6 +279,22 @@ void ControllerClient::handle_point3d(const ElementId & id,
     array_input(id, {"x", "y", "z"}, pos);
   }
   point3d({id.category, id.name + "_point3d"}, id, ro, pos);
+}
+
+void ControllerClient::handle_displayPoint3DTrajectory(const ElementId & id,
+                                      const mc_rtc::Configuration & /* gui */,
+                                      const mc_rtc::Configuration & data)
+{
+  const std::vector<Eigen::Vector3d>& points = data("data");
+  displayTrajectory({id.category, id.name + "_display_trajectory"}, id, points);
+}
+
+void ControllerClient::handle_displayPoseTrajectory(const ElementId & id,
+                                      const mc_rtc::Configuration & /* gui */,
+                                      const mc_rtc::Configuration & data)
+{
+  const std::vector<sva::PTransformd>& points = data("data");
+  displayTrajectory({id.category, id.name + "_display_trajectory"}, id, points);
 }
 
 void ControllerClient::handle_rotation(const ElementId & id,

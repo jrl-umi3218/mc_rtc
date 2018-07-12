@@ -51,6 +51,8 @@ namespace gui
     ComboInput,
     DataComboInput,
     Point3D,
+    DisplayPoint3DTrajectory,
+    DisplayPoseTrajectory,
     Rotation,
     Transform,
     Schema,
@@ -369,6 +371,40 @@ protected:
   Point3DImpl<GetT, SetT> Point3D(const std::string & name, GetT get_fn, SetT set_fn)
   {
     return Point3DImpl<GetT, SetT>(name, get_fn, set_fn);
+  }
+
+  template<typename GetT>
+  struct MC_RTC_GUI_DLLAPI DisplayPoint3DTrajectoryImpl : public DataElement<GetT>
+  {
+    static constexpr auto type = Elements::DisplayPoint3DTrajectory;
+
+    DisplayPoint3DTrajectoryImpl(const std::string & name, GetT get_fn);
+
+    /** Invalid element */
+    DisplayPoint3DTrajectoryImpl() {}
+  };
+
+  template<typename GetT>
+  DisplayPoint3DTrajectoryImpl<GetT> DisplayPoint3DTrajectory(const std::string & name, GetT get_fn)
+  {
+    return DisplayPoint3DTrajectoryImpl<GetT>(name, get_fn);
+  }
+
+  template<typename GetT>
+  struct MC_RTC_GUI_DLLAPI DisplayPoseTrajectoryImpl : public DataElement<GetT>
+  {
+    static constexpr auto type = Elements::DisplayPoseTrajectory;
+
+    DisplayPoseTrajectoryImpl(const std::string & name, GetT get_fn);
+
+    /** Invalid element */
+    DisplayPoseTrajectoryImpl() {}
+  };
+
+  template<typename GetT>
+  DisplayPoseTrajectoryImpl<GetT> DisplayPoseTrajectory(const std::string & name, GetT get_fn)
+  {
+    return DisplayPoseTrajectoryImpl<GetT>(name, get_fn);
   }
 
   template<typename GetT>

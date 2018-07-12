@@ -120,6 +120,18 @@ void Point3DROImpl<GetT>::addGUI(mc_rtc::Configuration & gui)
 }
 
 template<typename GetT>
+DisplayPoint3DTrajectoryImpl<GetT>::DisplayPoint3DTrajectoryImpl(const std::string & name, GetT get_fn)
+: DataElement<GetT>(name, get_fn)
+{
+}
+
+template<typename GetT>
+DisplayPoseTrajectoryImpl<GetT>::DisplayPoseTrajectoryImpl(const std::string & name, GetT get_fn)
+: DataElement<GetT>(name, get_fn)
+{
+}
+
+template<typename GetT>
 void RotationROImpl<GetT>::addGUI(mc_rtc::Configuration & gui)
 {
   gui.add("ro", true);
