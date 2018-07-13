@@ -228,7 +228,10 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function("admit
   {
     auto t = std::make_shared<mc_tasks::AdmittanceTask>(config("surface"), solver.robots(), config("robotIndex"));
     if(config.has("admittance")) { t->admittance(config("admittance")); }
-    if(config.has("damping")) { t->damping(config("damping")); }
+    if(config.has("damping")) {
+      double d = config("damping");
+      t->damping(d);
+    }
 
     if(config.has("targetSurface"))
     {
