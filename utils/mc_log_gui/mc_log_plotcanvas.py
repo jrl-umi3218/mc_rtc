@@ -161,8 +161,9 @@ class PlotCanvasWithToolbar(QWidget):
            self._plot(axes, legend, self.data[x_label], y, "{}_y".format(base))
 
   def add_rpy_plot_left(self, x, y):
-    if "{}_r".format(y) in self.axes_plots:
-      return False
+    for s in ["r", "p", "y"]:
+        if "{}_{}".format(y, s) in self.axes_plots:
+            return False
     self.axes_plots["{}_r".format(y)],\
     self.axes_plots["{}_p".format(y)],\
     self.axes_plots["{}_y".format(y)] = self._add_rpy_plot(self.axes, self._legend_left, x, y)
@@ -174,6 +175,75 @@ class PlotCanvasWithToolbar(QWidget):
     self.axes2_plots["{}_r".format(y)],\
     self.axes2_plots["{}_p".format(y)],\
     self.axes2_plots["{}_y".format(y)] = self._add_rpy_plot(self.axes2, self._legend_right, x, y)
+    return True
+
+  def _add_roll_plot(self, axes, legend, x_label, base):
+    if "{}_qw".format(base) in self.data.keys():
+      fmt = "q"
+    else:
+      fmt = ""
+    keys = [ "{}_{}{}".format(base, fmt, ax) for ax in ["w", "x", "y", "z"] ]
+    qw, qx, qy, qz = [ self.data[k] for k in keys ]
+    rpys = [ rpyFromQuat([w, x, y, z]) for w, x, y, z in zip(qw, qx, qy, qz) ]
+    r = [ rpy[0] for rpy in rpys ]
+    return self._plot(axes, legend, self.data[x_label], r, "{}_r".format(base))
+
+  def add_roll_plot_left(self, x, y):
+    if "{}_r".format(y) in self.axes_plots:
+      return False
+    self.axes_plots["{}_r".format(y)] = self._add_roll_plot(self.axes, self._legend_left, x, y)
+    return True
+
+  def add_roll_plot_right(self, x, y):
+    if "{}_r".format(y) in self.axes2_plots:
+      return False
+    self.axes2_plots["{}_r".format(y)] = self._add_roll_plot(self.axes2, self._legend_right, x, y)
+    return True
+
+  def _add_pitch_plot(self, axes, legend, x_label, base):
+    if "{}_qw".format(base) in self.data.keys():
+      fmt = "q"
+    else:
+      fmt = ""
+    keys = [ "{}_{}{}".format(base, fmt, ax) for ax in ["w", "x", "y", "z"] ]
+    qw, qx, qy, qz = [ self.data[k] for k in keys ]
+    rpys = [ rpyFromQuat([w, x, y, z]) for w, x, y, z in zip(qw, qx, qy, qz) ]
+    p = [ rpy[1] for rpy in rpys ]
+    return self._plot(axes, legend, self.data[x_label], p, "{}_p".format(base))
+
+  def add_pitch_plot_left(self, x, y):
+    if "{}_p".format(y) in self.axes_plots:
+      return False
+    self.axes_plots["{}_p".format(y)] = self._add_pitch_plot(self.axes, self._legend_left, x, y)
+    return True
+
+  def add_pitch_plot_right(self, x, y):
+    if "{}_p".format(y) in self.axes2_plots:
+      return False
+    self.axes2_plots["{}_p".format(y)] = self._add_pitch_plot(self.axes2, self._legend_right, x, y)
+    return True
+
+  def _add_yaw_plot(self, axes, legend, x_label, base):
+    if "{}_qw".format(base) in self.data.keys():
+      fmt = "q"
+    else:
+      fmt = ""
+    keys = [ "{}_{}{}".format(base, fmt, ax) for ax in ["w", "x", "y", "z"] ]
+    qw, qx, qy, qz = [ self.data[k] for k in keys ]
+    rpys = [ rpyFromQuat([w, x, y, z]) for w, x, y, z in zip(qw, qx, qy, qz) ]
+    y = [ rpy[2] for rpy in rpys ]
+    return self._plot(axes, legend, self.data[x_label], y, "{}_y".format(base))
+
+  def add_yaw_plot_left(self, x, y):
+    if "{}_y".format(y) in self.axes_plots:
+      return False
+    self.axes_plots["{}_y".format(y)] = self._add_yaw_plot(self.axes, self._legend_left, x, y)
+    return True
+
+  def add_yaw_plot_right(self, x, y):
+    if "{}_y".format(y) in self.axes2_plots:
+      return False
+    self.axes2_plots["{}_y".format(y)] = self._add_yaw_plot(self.axes2, self._legend_right, x, y)
     return True
 
   def remove_plot_left(self, y_label):

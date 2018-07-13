@@ -122,6 +122,12 @@ class RemoveSpecialPlotButton(QtGui.QPushButton):
       self.__plot = self.__add_diff
     elif special_id == "rpy":
       self.__plot = self.__add_rpy
+    elif special_id == "r":
+      self.__plot = self.__add_roll
+    elif special_id == "p":
+      self.__plot = self.__add_pitch
+    elif special_id == "y":
+      self.__plot = self.__add_yaw
     else:
       print "Cannot handle this special plot:", special_id
     self.plot()
@@ -146,6 +152,27 @@ class RemoveSpecialPlotButton(QtGui.QPushButton):
       add_fn = self.logtab.ui.canvas.add_rpy_plot_right
     if add_fn(self.logtab.x_data, self.name):
       self.added = [ "{}_{}".format(self.name, s) for s in ["r", "p", "y"] ]
+  def __add_roll(self):
+    if self.idx == 0:
+      add_fn = self.logtab.ui.canvas.add_roll_plot_left
+    else:
+      add_fn = self.logtab.ui.canvas.add_roll_plot_right
+    if add_fn(self.logtab.x_data, self.name):
+      self.added = [ "{}_{}".format(self.name, "r") ]
+  def __add_pitch(self):
+    if self.idx == 0:
+      add_fn = self.logtab.ui.canvas.add_pitch_plot_left
+    else:
+      add_fn = self.logtab.ui.canvas.add_pitch_plot_right
+    if add_fn(self.logtab.x_data, self.name):
+      self.added = [ "{}_{}".format(self.name, "p") ]
+  def __add_yaw(self):
+    if self.idx == 0:
+      add_fn = self.logtab.ui.canvas.add_yaw_plot_left
+    else:
+      add_fn = self.logtab.ui.canvas.add_yaw_plot_right
+    if add_fn(self.logtab.x_data, self.name):
+      self.added = [ "{}_{}".format(self.name, "y") ]
   def plot(self):
     self.__plot()
     self.logtab.ui.canvas.draw()
@@ -291,20 +318,22 @@ class MCLogTab(QtGui.QWidget):
     menu.addAction(action)
     s = re.match('^(.*)_q?[wxyz]$', item.actualText)
     if s is not None:
-      action = QtGui.QAction(u"Plot as RPY angles".format(item.actualText), menu)
-      action.triggered.connect(lambda: RemoveSpecialPlotButton(s.group(1), self, idx, "rpy"))
-      menu.addAction(action)
+      for item_label, axis_label in [("RPY angles", "rpy"), ("ROLL angle", "r"), ("PITCH angle", "p"), ("YAW angle", "y")]:
+        action = QtGui.QAction(u"Plot {}".format(item_label, item.actualText), menu)
+        action.triggered.connect(lambda label=axis_label: RemoveSpecialPlotButton(s.group(1), self, idx, label))
+        menu.addAction(action)
     else:
       quat_childs = filter(lambda x: x is not None, [ re.match('{}((_.+)*)_q?w$'.format(item.actualText), x) for x in self.data.keys() ])
       for qc in quat_childs:
-        if len(qc.group(1)):
-          action_text = u"Plot {} as RPY angles".format(qc.group(1)[1:])
-        else:
-          action_text = u"Plot as RPY angles"
-        action = QtGui.QAction(action_text, menu)
-        plot_name = item.actualText + qc.group(1)
-        action.triggered.connect(lambda name=plot_name: RemoveSpecialPlotButton(name, self, idx, "rpy"))
-        menu.addAction(action)
+        for item_label, axis_label in [("RPY angles", "rpy"), ("ROLL angle", "r"), ("PITCH angle", "p"), ("YAW angle", "y")]:
+          if len(qc.group(1)):
+            action_text = u"Plot {} {}".format(qc.group(1)[1:], item_label)
+          else:
+            action_text = u"Plot {}".format(item_label)
+          action = QtGui.QAction(action_text, menu)
+          plot_name = item.actualText + qc.group(1)
+          action.triggered.connect(lambda name=plot_name, label=axis_label: RemoveSpecialPlotButton(name, self, idx, label))
+          menu.addAction(action)
     menu.exec_(ySelector.viewport().mapToGlobal(point))
 
   @staticmethod
@@ -332,6 +361,12 @@ class MCLogTab(QtGui.QWidget):
           continue
         if match.group(2) == "rpy":
           RemoveSpecialPlotButton(match.group(1), tab, idx, "rpy")
+        elif match.group(2) == "r":
+          RemoveSpecialPlotButton(match.group(1), tab, idx, "r")
+        elif match.group(2) == "p":
+          RemoveSpecialPlotButton(match.group(1), tab, idx, "p")
+        elif match.group(2) == "y":
+          RemoveSpecialPlotButton(match.group(1), tab, idx, "y")
         else:
           RemoveSpecialPlotButton(match.group(1), tab, idx, "diff")
     handle_yd(p.y1d, 0)
