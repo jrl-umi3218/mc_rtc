@@ -70,6 +70,7 @@ AdmittanceTask::AdmittanceTask(const std::string & surfaceName,
     timestep_(timestep)
 {
   name_ = "admittance_" + robot_.name() + "_" + surfaceName;
+  reset();
 }
 
 void AdmittanceTask::update()
