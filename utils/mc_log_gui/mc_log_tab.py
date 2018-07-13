@@ -302,7 +302,8 @@ class MCLogTab(QtGui.QWidget):
         else:
           action_text = u"Plot as RPY angles"
         action = QtGui.QAction(action_text, menu)
-        action.triggered.connect(lambda: RemoveSpecialPlotButton(item.actualText + qc.group(1), self, idx, "rpy"))
+        plot_name = item.actualText + qc.group(1)
+        action.triggered.connect(lambda name=plot_name: RemoveSpecialPlotButton(name, self, idx, "rpy"))
         menu.addAction(action)
     menu.exec_(ySelector.viewport().mapToGlobal(point))
 
