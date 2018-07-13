@@ -120,7 +120,7 @@ private:
   unsigned int skip;
   std::thread th;
 
-  void publishThread();;
+  void publishThread();
 };
 
 RobotPublisherImpl::RobotPublisherImpl(ros::NodeHandle & nh, const std::string& prefix, double rate, double dt)
