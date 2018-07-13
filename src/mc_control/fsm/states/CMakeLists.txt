@@ -18,6 +18,7 @@ macro(add_fsm_state_simple state_name)
   add_fsm_state(${state_name} ${state_name}.cpp ${PROJECT_SOURCE_DIR}/include/mc_control/fsm/states/${state_name}.h)
 endmacro()
 
+add_fsm_state_simple(HalfSitting)
 add_fsm_state_simple(Pause)
 add_fsm_state_simple(MetaTasks)
 add_fsm_state_simple(AddRemoveContact)
