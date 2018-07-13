@@ -500,7 +500,7 @@ void Configuration::load(const mc_rtc::Configuration & config)
   }
   else
   {
-    RapidJSONValue & v = *(config.v.impl->value_);
+    const RapidJSONValue & v = *(config.v.impl->value_);
     if(v.IsObject())
     {
       for(auto & m : v.GetObject())
@@ -530,7 +530,7 @@ void Configuration::load(const mc_rtc::Configuration & config)
       }
       for(auto & value : v.GetArray())
       {
-        target.PushBack(value, doc.GetAllocator());
+        target.PushBack(RapidJSONValue{value, doc.GetAllocator()}.Move(), doc.GetAllocator());
       }
     }
     else
