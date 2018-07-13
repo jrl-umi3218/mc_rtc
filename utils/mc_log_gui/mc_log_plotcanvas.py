@@ -145,38 +145,6 @@ class PlotCanvasWithToolbar(QWidget):
     self.axes2_plots[y_label] = self._add_diff_plot(self.axes2, self._legend_right, x, y, y_label)
     return True
 
-  def _add_rpy_plot(self, axes, legend, x_label, base):
-    if "{}_qw".format(base) in self.data.keys():
-      fmt = "q"
-    else:
-      fmt = ""
-    keys = [ "{}_{}{}".format(base, fmt, ax) for ax in ["w", "x", "y", "z"] ]
-    qw, qx, qy, qz = [ self.data[k] for k in keys ]
-    rpys = [ rpyFromQuat([w, x, y, z]) for w, x, y, z in zip(qw, qx, qy, qz) ]
-    r = [ rpy[0] for rpy in rpys ]
-    p = [ rpy[1] for rpy in rpys ]
-    y = [ rpy[2] for rpy in rpys ]
-    return self._plot(axes, legend, self.data[x_label], r, "{}_r".format(base)),\
-           self._plot(axes, legend, self.data[x_label], p, "{}_p".format(base)),\
-           self._plot(axes, legend, self.data[x_label], y, "{}_y".format(base))
-
-  def add_rpy_plot_left(self, x, y):
-    for s in ["r", "p", "y"]:
-        if "{}_{}".format(y, s) in self.axes_plots:
-            return False
-    self.axes_plots["{}_r".format(y)],\
-    self.axes_plots["{}_p".format(y)],\
-    self.axes_plots["{}_y".format(y)] = self._add_rpy_plot(self.axes, self._legend_left, x, y)
-    return True
-
-  def add_rpy_plot_right(self, x, y):
-    if "{}_r".format(y) in self.axes2_plots:
-      return False
-    self.axes2_plots["{}_r".format(y)],\
-    self.axes2_plots["{}_p".format(y)],\
-    self.axes2_plots["{}_y".format(y)] = self._add_rpy_plot(self.axes2, self._legend_right, x, y)
-    return True
-
   def _add_roll_plot(self, axes, legend, x_label, base):
     if "{}_qw".format(base) in self.data.keys():
       fmt = "q"
@@ -244,6 +212,34 @@ class PlotCanvasWithToolbar(QWidget):
     if "{}_y".format(y) in self.axes2_plots:
       return False
     self.axes2_plots["{}_y".format(y)] = self._add_yaw_plot(self.axes2, self._legend_right, x, y)
+    return True
+
+  def add_rpy_plot_left(self, x, y):
+    has_roll = "{}_r".format(y) in self.axes2_plots
+    has_pitch = "{}_p".format(y) in self.axes2_plots
+    has_yaw = "{}_y".format(y) in self.axes2_plots
+    if has_roll and has_pitch and has_yaw:
+        return False
+    if not has_roll:
+      self.add_roll_plot_left(x, y)
+    if not has_pitch:
+      self.add_pitch_plot_left(x, y)
+    if not has_yaw:
+      self.add_yaw_plot_left(x, y)
+    return True
+
+  def add_rpy_plot_right(self, x, y):
+    has_roll = "{}_r".format(y) in self.axes2_plots
+    has_pitch = "{}_p".format(y) in self.axes2_plots
+    has_yaw = "{}_y".format(y) in self.axes2_plots
+    if has_roll and has_pitch and has_yaw:
+        return False
+    if not has_roll:
+      self.add_roll_plot_right(x, y)
+    if not has_pitch:
+      self.add_pitch_plot_right(x, y)
+    if not has_yaw:
+      self.add_yaw_plot_right(x, y)
     return True
 
   def remove_plot_left(self, y_label):
