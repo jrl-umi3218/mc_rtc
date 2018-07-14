@@ -233,6 +233,9 @@ void ControllerClient::handle_widget(const ElementId & id,
       case Elements::DisplayPoseTrajectory:
         handle_displayPoseTrajectory(id, gui, data);
         break;
+      case Elements::DisplayPolygon:
+        handle_displayPolygon(id, gui, data);
+        break;
       case Elements::Rotation:
         handle_rotation(id, gui, data);
         break;
@@ -295,6 +298,14 @@ void ControllerClient::handle_displayPoseTrajectory(const ElementId & id,
 {
   const std::vector<sva::PTransformd>& points = data("data");
   displayTrajectory({id.category, id.name + "_display_trajectory"}, id, points);
+}
+
+void ControllerClient::handle_displayPolygon(const ElementId & id,
+                                      const mc_rtc::Configuration & /* gui */,
+                                      const mc_rtc::Configuration & data)
+{
+  const std::vector<Eigen::Vector3d>& points = data("data");
+  displayPolygon({id.category, id.name + "_display_polygon"}, id, points);
 }
 
 void ControllerClient::handle_rotation(const ElementId & id,

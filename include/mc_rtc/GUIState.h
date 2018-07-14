@@ -53,6 +53,7 @@ namespace gui
     Point3D,
     DisplayPoint3DTrajectory,
     DisplayPoseTrajectory,
+    DisplayPolygon,
     Rotation,
     Transform,
     Schema,
@@ -405,6 +406,23 @@ protected:
   DisplayPoseTrajectoryImpl<GetT> DisplayPoseTrajectory(const std::string & name, GetT get_fn)
   {
     return DisplayPoseTrajectoryImpl<GetT>(name, get_fn);
+  }
+
+  template<typename GetT>
+  struct MC_RTC_GUI_DLLAPI DisplayPolygonImpl : public DataElement<GetT>
+  {
+    static constexpr auto type = Elements::DisplayPolygon;
+
+    DisplayPolygonImpl(const std::string & name, GetT get_fn);
+
+    /** Invalid element */
+    DisplayPolygonImpl() {}
+  };
+
+  template<typename GetT>
+  DisplayPolygonImpl<GetT> DisplayPolygon(const std::string & name, GetT get_fn)
+  {
+    return DisplayPolygonImpl<GetT>(name, get_fn);
   }
 
   template<typename GetT>

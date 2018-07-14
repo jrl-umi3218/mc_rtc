@@ -211,6 +211,17 @@ namespace mc_control
       default_impl("DisplayPoseTrajectory", id);
     }
 
+    /** Should display a polygon of 3d points in 3D environment
+     *
+     * \p Vector of 3D points
+     */
+    virtual void displayPolygon(const ElementId & id,
+                                const ElementId & /*requestId*/,
+                                const std::vector<Eigen::Vector3d> & /* points */)
+    {
+      default_impl("DisplayPolygon", id);
+    }
+
     /** Should display a rotation in 3D environment
      *
      * \p requestId should be in requests instead of \p id
@@ -353,6 +364,11 @@ namespace mc_control
     void handle_displayPoseTrajectory(const ElementId & id,
                         const mc_rtc::Configuration & gui,
                         const mc_rtc::Configuration & data);
+
+    /** Hand details of DisplayPolygon elemets */
+    void handle_displayPolygon(const ElementId & id,
+                               const mc_rtc::Configuration & gui,
+                               const mc_rtc::Configuration & data);
 
 
     /** Handle details of Rotation elements */
