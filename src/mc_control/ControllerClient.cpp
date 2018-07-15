@@ -304,8 +304,9 @@ void ControllerClient::handle_displayPolygon(const ElementId & id,
                                       const mc_rtc::Configuration & /* gui */,
                                       const mc_rtc::Configuration & data)
 {
-  const std::vector<Eigen::Vector3d>& points = data("data");
-  displayPolygon({id.category, id.name + "_display_polygon"}, id, points);
+  const std::vector<Eigen::Vector3d>& points = data("data")("points");
+  const Eigen::Vector3d& color = data("data")("color");
+  displayPolygon({id.category, id.name + "_display_polygon"}, id, points, color);
 }
 
 void ControllerClient::handle_rotation(const ElementId & id,

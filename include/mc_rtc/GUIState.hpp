@@ -132,9 +132,19 @@ DisplayPoseTrajectoryImpl<GetT>::DisplayPoseTrajectoryImpl(const std::string & n
 }
 
 template<typename GetT>
-DisplayPolygonImpl<GetT>::DisplayPolygonImpl(const std::string & name, GetT get_fn)
-: DataElement<GetT>(name, get_fn)
+DisplayPolygonImpl<GetT>::DisplayPolygonImpl(const std::string & name, GetT get_fn, const Eigen::Vector3d& color)
+: DataElement<GetT>(name, get_fn), color_(color)
 {
+}
+
+template<typename GetT>
+void DisplayPolygonImpl<GetT>::addData(mc_rtc::Configuration& data)
+{
+  mc_rtc::Configuration config;
+  config.add("points", DataElement<GetT>::get_fn_());
+  config.add("color", color_);
+  data.add("data", config );
+  data.dump(true));
 }
 
 template<typename GetT>

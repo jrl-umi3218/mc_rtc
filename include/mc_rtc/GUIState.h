@@ -69,7 +69,7 @@ namespace gui
 
     /** Invalid element */
     DataElement() {}
-  private:
+  protected:
     GetT get_fn_;
   };
 
@@ -413,16 +413,20 @@ protected:
   {
     static constexpr auto type = Elements::DisplayPolygon;
 
-    DisplayPolygonImpl(const std::string & name, GetT get_fn);
+    DisplayPolygonImpl(const std::string & name, GetT get_fn, const Eigen::Vector3d& color);
 
     /** Invalid element */
     DisplayPolygonImpl() {}
+
+    void addData(mc_rtc::Configuration & data);
+   private:
+    Eigen::Vector3d color_;
   };
 
   template<typename GetT>
-  DisplayPolygonImpl<GetT> DisplayPolygon(const std::string & name, GetT get_fn)
+  DisplayPolygonImpl<GetT> DisplayPolygon(const std::string & name, GetT get_fn, const Eigen::Vector3d& color = {0., 1., 0.})
   {
-    return DisplayPolygonImpl<GetT>(name, get_fn);
+    return DisplayPolygonImpl<GetT>(name, get_fn, color);
   }
 
   template<typename GetT>

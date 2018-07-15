@@ -217,7 +217,8 @@ namespace mc_control
      */
     virtual void displayPolygon(const ElementId & id,
                                 const ElementId & /*requestId*/,
-                                const std::vector<Eigen::Vector3d> & /* points */)
+                                const std::vector<Eigen::Vector3d> & /* points */,
+                                const Eigen::Vector3d& /* color */)
     {
       default_impl("DisplayPolygon", id);
     }
