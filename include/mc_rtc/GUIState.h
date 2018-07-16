@@ -3,23 +3,13 @@
 #include <mc_rtc/gui_api.h>
 
 #include <mc_rbdyn/configuration_io.h>
+#include <mc_rtc/GUITypes.h>
 
 namespace mc_rtc
 {
 
 namespace gui
 {
-
-  struct MC_RTC_GUI_DLLAPI Color
-  {
-    Color() {}
-    Color(float r, float g, float b, float a) : r(r), g(g), b(b), a(a) {}
-    Color(float r, float g, float b) : r(r), g(g), b(b) {}
-    float r = 0.0;
-    float g = 0.0;
-    float b = 0.0;
-    float a = 1.0;
-  };
 
   struct MC_RTC_GUI_DLLAPI Element
   {
@@ -54,6 +44,7 @@ namespace gui
     DisplayPoint3DTrajectory,
     DisplayPoseTrajectory,
     DisplayPolygon,
+    DisplayForce,
     Rotation,
     Transform,
     Schema,
@@ -413,20 +404,42 @@ protected:
   {
     static constexpr auto type = Elements::DisplayPolygon;
 
-    DisplayPolygonImpl(const std::string & name, GetT get_fn, const Eigen::Vector3d& color);
+    DisplayPolygonImpl(const std::string & name, GetT get_fn, const Color& color);
 
     /** Invalid element */
     DisplayPolygonImpl() {}
 
     void addData(mc_rtc::Configuration & data);
    private:
-    Eigen::Vector3d color_;
+    Color color_;
   };
 
   template<typename GetT>
-  DisplayPolygonImpl<GetT> DisplayPolygon(const std::string & name, GetT get_fn, const Eigen::Vector3d& color = {0., 1., 0.})
+  DisplayPolygonImpl<GetT> DisplayPolygon(const std::string & name, GetT get_fn, const Color& color = Color{0., 1., 0.})
   {
     return DisplayPolygonImpl<GetT>(name, get_fn, color);
+  }
+
+  template<typename GetForce, typename GetSurface>
+  struct MC_RTC_GUI_DLLAPI DisplayForceImpl : public Element
+  {
+    static constexpr auto type = Elements::DisplayForce;
+
+    DisplayForceImpl(const std::string & name, GetForce get_force_fn, GetSurface get_surface_fn, const Force& forceConfig);
+    /** Invalid element */
+    DisplayForceImpl() {}
+
+    void addData(mc_rtc::Configuration & data);
+   private:
+    Force forceConfig_;
+    GetForce get_force_fn_;
+    GetSurface get_surface_fn_;
+  };
+
+  template<typename GetForce, typename GetSurface>
+  DisplayForceImpl<GetForce, GetSurface> DisplayForce(const std::string & name, GetForce get_force_fn, GetSurface get_surface_fn, const Force& forceConfig = Force{})
+  {
+    return DisplayForceImpl<GetForce, GetSurface>(name, get_force_fn, get_surface_fn, forceConfig);
   }
 
   template<typename GetT>

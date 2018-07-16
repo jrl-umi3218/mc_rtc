@@ -3,6 +3,7 @@
 #include <mc_control/api.h>
 
 #include <mc_rtc/Configuration.h>
+#include <mc_rtc/GUITypes.h>
 
 #include <nanomsg/nn.h>
 #include <nanomsg/pubsub.h>
@@ -218,9 +219,20 @@ namespace mc_control
     virtual void displayPolygon(const ElementId & id,
                                 const ElementId & /*requestId*/,
                                 const std::vector<Eigen::Vector3d> & /* points */,
-                                const Eigen::Vector3d& /* color */)
+                                const mc_rtc::gui::Color& /* color */)
     {
       default_impl("DisplayPolygon", id);
+    }
+
+    /** Should display a force in 3D environment
+     */
+    virtual void displayForce(const ElementId & id,
+                              const ElementId & /*requestId*/,
+                              const sva::ForceVecd & /* force */,
+                              const sva::PTransformd & /* surface */,
+                              const mc_rtc::gui::Force& /* forceConfig */)
+    {
+      default_impl("DisplayForce", id);
     }
 
     /** Should display a rotation in 3D environment
@@ -371,6 +383,10 @@ namespace mc_control
                                const mc_rtc::Configuration & gui,
                                const mc_rtc::Configuration & data);
 
+    /** Hand details of DisplayForce elemets */
+    void handle_displayForce(const ElementId & id,
+                             const mc_rtc::Configuration & gui,
+                             const mc_rtc::Configuration & data);
 
     /** Handle details of Rotation elements */
     void handle_rotation(const ElementId & id,

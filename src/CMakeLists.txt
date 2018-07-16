@@ -107,6 +107,7 @@ set(mc_rtc_gui_SRC ${mc_rtc_gui_SRC} PARENT_SCOPE)
 set(mc_rtc_gui_HDR
   ../include/mc_rtc/GUIState.h
   ../include/mc_rtc/GUIState.hpp
+  ../include/mc_rtc/GUITypes.h
   ../include/mc_rtc/gui_api.h
 )
 set(mc_rtc_gui_HDR ${mc_rtc_gui_HDR} PARENT_SCOPE)

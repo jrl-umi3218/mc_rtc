@@ -132,7 +132,7 @@ DisplayPoseTrajectoryImpl<GetT>::DisplayPoseTrajectoryImpl(const std::string & n
 }
 
 template<typename GetT>
-DisplayPolygonImpl<GetT>::DisplayPolygonImpl(const std::string & name, GetT get_fn, const Eigen::Vector3d& color)
+DisplayPolygonImpl<GetT>::DisplayPolygonImpl(const std::string & name, GetT get_fn, const Color& color)
 : DataElement<GetT>(name, get_fn), color_(color)
 {
 }
@@ -144,7 +144,22 @@ void DisplayPolygonImpl<GetT>::addData(mc_rtc::Configuration& data)
   config.add("points", DataElement<GetT>::get_fn_());
   config.add("color", color_);
   data.add("data", config );
-  data.dump(true));
+}
+
+template<typename GetForce, typename GetSurface>
+DisplayForceImpl<GetForce, GetSurface>::DisplayForceImpl(const std::string & name, GetForce get_force_fn, GetSurface get_surface_fn, const Force& forceConfig)
+: Element(name), forceConfig_(forceConfig), get_force_fn_(get_force_fn), get_surface_fn_(get_surface_fn)
+{
+}
+
+template<typename GetForce, typename GetSurface>
+void DisplayForceImpl<GetForce, GetSurface>::addData(mc_rtc::Configuration& data)
+{
+  mc_rtc::Configuration config;
+  config.add("force", get_force_fn_());
+  config.add("surface", get_surface_fn_());
+  config.add("force_config", forceConfig_);
+  data.add("data", config );
 }
 
 template<typename GetT>
