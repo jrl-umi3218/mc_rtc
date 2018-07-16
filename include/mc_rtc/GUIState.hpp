@@ -162,6 +162,22 @@ void DisplayForceImpl<GetForce, GetSurface>::addData(mc_rtc::Configuration& data
   data.add("data", config );
 }
 
+template<typename GetStart, typename GetEnd>
+DisplayArrowImpl<GetStart, GetEnd>::DisplayArrowImpl(const std::string & name, GetStart get_start_fn, GetEnd get_end_fn, const Arrow& config)
+: Element(name), config_(config), get_start_fn_(get_start_fn), get_end_fn_(get_end_fn)
+{
+}
+
+template<typename GetStart, typename GetEnd>
+void DisplayArrowImpl<GetStart, GetEnd>::addData(mc_rtc::Configuration& data)
+{
+  mc_rtc::Configuration config;
+  config.add("start", get_start_fn_());
+  config.add("end", get_end_fn_());
+  config.add("arrow_config", config_);
+  data.add("data", config);
+}
+
 template<typename GetT>
 void RotationROImpl<GetT>::addGUI(mc_rtc::Configuration & gui)
 {

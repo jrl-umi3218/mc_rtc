@@ -239,6 +239,9 @@ void ControllerClient::handle_widget(const ElementId & id,
       case Elements::DisplayForce:
         handle_displayForce(id, gui, data);
         break;
+      case Elements::DisplayArrow:
+        handle_displayArrow(id, gui, data);
+        break;
       case Elements::Rotation:
         handle_rotation(id, gui, data);
         break;
@@ -321,6 +324,17 @@ void ControllerClient::handle_displayForce(const ElementId & id,
   const sva::PTransformd& surface = d("surface");
   const mc_rtc::gui::Force& forceConfig = d("force_config");
   displayForce({id.category, id.name + "_display_force"}, id, force, surface, forceConfig);
+}
+
+void ControllerClient::handle_displayArrow(const ElementId & id,
+                                           const mc_rtc::Configuration & /* gui */,
+                                           const mc_rtc::Configuration & data)
+{
+  const auto& d = data("data");
+  const Eigen::Vector3d& arrow_start = d("start");
+  const Eigen::Vector3d& arrow_end = d("end");
+  const mc_rtc::gui::Arrow& arrow_config = d("arrow_config");
+  displayArrow({id.category, id.name + "_display_arrow"}, id, arrow_start, arrow_end, arrow_config);
 }
 
 void ControllerClient::handle_rotation(const ElementId & id,

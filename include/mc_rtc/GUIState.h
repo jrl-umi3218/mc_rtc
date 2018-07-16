@@ -45,6 +45,7 @@ namespace gui
     DisplayPoseTrajectory,
     DisplayPolygon,
     DisplayForce,
+    DisplayArrow,
     Rotation,
     Transform,
     Schema,
@@ -440,6 +441,28 @@ protected:
   DisplayForceImpl<GetForce, GetSurface> DisplayForce(const std::string & name, GetForce get_force_fn, GetSurface get_surface_fn, const Force& forceConfig = Force{})
   {
     return DisplayForceImpl<GetForce, GetSurface>(name, get_force_fn, get_surface_fn, forceConfig);
+  }
+
+  template<typename GetStart, typename GetEnd>
+  struct MC_RTC_GUI_DLLAPI DisplayArrowImpl : public Element
+  {
+    static constexpr auto type = Elements::DisplayArrow;
+
+    DisplayArrowImpl(const std::string & name, GetStart get_start_fn, GetEnd get_end_fn, const Arrow& config);
+    /** Invalid element */
+    DisplayArrowImpl() {};
+
+    void addData(mc_rtc::Configuration & data);
+   private:
+    Arrow config_;
+    GetStart get_start_fn_;
+    GetEnd get_end_fn_;
+  };
+
+  template<typename GetStart, typename GetEnd>
+  DisplayArrowImpl<GetStart, GetEnd> DisplayArrow(const std::string & name, GetStart get_start_fn, GetEnd get_end_fn, const Arrow& config = Arrow{})
+  {
+    return DisplayArrowImpl<GetStart, GetEnd>(name, get_start_fn, get_end_fn, config);
   }
 
   template<typename GetT>

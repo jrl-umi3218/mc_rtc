@@ -235,6 +235,17 @@ namespace mc_control
       default_impl("DisplayForce", id);
     }
 
+    /** Should display an arrow in 3D environment
+     */
+    virtual void displayArrow(const ElementId & id,
+                              const ElementId & /*requestId*/,
+                              const Eigen::Vector3d & /* start */,
+                              const Eigen::Vector3d & /* end */,
+                              const mc_rtc::gui::Arrow& /* config */)
+    {
+      default_impl("DisplayArrow", id);
+    }
+
     /** Should display a rotation in 3D environment
      *
      * \p requestId should be in requests instead of \p id
@@ -385,6 +396,11 @@ namespace mc_control
 
     /** Hand details of DisplayForce elemets */
     void handle_displayForce(const ElementId & id,
+                             const mc_rtc::Configuration & gui,
+                             const mc_rtc::Configuration & data);
+
+    /** Hand details of DisplayArrow elemets */
+    void handle_displayArrow(const ElementId & id,
                              const mc_rtc::Configuration & gui,
                              const mc_rtc::Configuration & data);
 

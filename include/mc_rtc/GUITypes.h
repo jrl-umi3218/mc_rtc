@@ -13,7 +13,7 @@ namespace gui
   {
     Color() {}
     Color(double r, double g, double b, double a) : r(r), g(g), b(b), a(a) {}
-    Color(double r, double g, double b) : r(r), g(g), b(b) {}
+    Color(double r, double g, double b) : r(r), g(g), b(b), a(1.) {}
     Color(const mc_rtc::Configuration& config)
     {
       load(config);
@@ -42,20 +42,14 @@ namespace gui
     }
   };
 
-  struct MC_RTC_GUI_DLLAPI Force
+  struct MC_RTC_GUI_DLLAPI Arrow
   {
-    Force() : color(0., 1., 0.)
-    {}
-    Force(const mc_rtc::Configuration& config)
+    Arrow() : color(0., 1., 0.) {}
+    Arrow(const Color& color) : color(color) {}
+    Arrow(const mc_rtc::Configuration& config)
     {
       load(config);
     };
-
-    double arrow_head_diam = 0.015;
-    double arrow_head_len = 0.05;
-    double arrow_shaft_diam = 0.015;
-    double force_scale = 0.0015;
-    Color color;
 
     void load(const mc_rtc::Configuration & config)
     {
@@ -63,7 +57,6 @@ namespace gui
       config("arrow_shaft_diam", arrow_shaft_diam);
       config("arrow_head_diam", arrow_head_diam);
       config("arrow_shaft_diam", arrow_shaft_diam);
-      config("force_scale", force_scale);
     }
 
     operator mc_rtc::Configuration() const
@@ -73,10 +66,42 @@ namespace gui
       config.add("arrow_shaft_diam", arrow_shaft_diam);
       config.add("arrow_head_diam", arrow_head_diam);
       config.add("arrow_shaft_diam", arrow_shaft_diam);
+      return config;
+    }
+
+    double arrow_head_diam = 0.015;
+    double arrow_head_len = 0.05;
+    double arrow_shaft_diam = 0.015;
+    double arrow_scale = 0.0015;
+    Color color;
+  };
+
+  struct Force : public Arrow
+  {
+    Force() : Arrow()
+    {}
+    Force(const mc_rtc::Configuration& config)
+    {
+      load(config);
+    };
+
+    void load(const mc_rtc::Configuration & config)
+    {
+      Arrow::load(config);
+      config("force_scale", force_scale);
+    }
+
+    operator mc_rtc::Configuration() const
+    {
+      auto config = Arrow::operator mc_rtc::Configuration();
       config.add("force_scale", force_scale);
       return config;
     }
+
+    double force_scale = 0.0015;
   };
+
+
 
 } // gui
 } // mc_rtc
