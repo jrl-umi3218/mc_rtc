@@ -78,8 +78,8 @@ namespace gui
 
   struct Force : public Arrow
   {
-    Force() : Arrow()
-    {}
+    Force() : Arrow() {}
+    Force(const Color& color) : Arrow(color) {}
     Force(const mc_rtc::Configuration& config)
     {
       load(config);
