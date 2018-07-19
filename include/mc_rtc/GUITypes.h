@@ -41,11 +41,11 @@ namespace gui
     }
   };
 
-  struct MC_RTC_GUI_DLLAPI Arrow
+  struct MC_RTC_GUI_DLLAPI ArrowConfig
   {
-    Arrow() : color(0., 1., 0.) {}
-    Arrow(const Color& color) : color(color) {}
-    Arrow(const mc_rtc::Configuration& config)
+    ArrowConfig() : color(0., 1., 0.) {}
+    ArrowConfig(const Color& color) : color(color) {}
+    ArrowConfig(const mc_rtc::Configuration& config)
     {
       load(config);
     };
@@ -77,24 +77,24 @@ namespace gui
     Color color;
   };
 
-  struct Force : public Arrow
+  struct ForceConfig : public ArrowConfig
   {
-    Force() : Arrow() {}
-    Force(const Color& color) : Arrow(color) {}
-    Force(const mc_rtc::Configuration& config)
+    ForceConfig() : ArrowConfig() {}
+    ForceConfig(const Color& color) : ArrowConfig(color) {}
+    ForceConfig(const mc_rtc::Configuration& config)
     {
       load(config);
     };
 
     void load(const mc_rtc::Configuration & config)
     {
-      Arrow::load(config);
+      ArrowConfig::load(config);
       config("force_scale", force_scale);
     }
 
     operator mc_rtc::Configuration() const
     {
-      auto config = Arrow::operator mc_rtc::Configuration();
+      auto config = ArrowConfig::operator mc_rtc::Configuration();
       config.add("force_scale", force_scale);
       return config;
     }

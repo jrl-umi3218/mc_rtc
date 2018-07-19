@@ -41,15 +41,15 @@ namespace gui
     ComboInput,
     DataComboInput,
     Point3D,
-    DisplayPoint3DTrajectory,
-    DisplayPoseTrajectory,
+    Point3DTrajectory,
+    PoseTrajectory,
     Rotation,
     Transform,
     Schema,
     Form,
-    DisplayPolygon,
-    DisplayForce,
-    DisplayArrow
+    Polygon,
+    Force,
+    Arrow
   };
 
   template<typename GetT>
@@ -367,48 +367,48 @@ protected:
   }
 
   template<typename GetT>
-  struct MC_RTC_GUI_DLLAPI DisplayPoint3DTrajectoryImpl : public DataElement<GetT>
+  struct MC_RTC_GUI_DLLAPI Point3DTrajectoryImpl : public DataElement<GetT>
   {
-    static constexpr auto type = Elements::DisplayPoint3DTrajectory;
+    static constexpr auto type = Elements::Point3DTrajectory;
 
-    DisplayPoint3DTrajectoryImpl(const std::string & name, GetT get_fn);
+    Point3DTrajectoryImpl(const std::string & name, GetT get_fn);
 
     /** Invalid element */
-    DisplayPoint3DTrajectoryImpl() {}
+    Point3DTrajectoryImpl() {}
   };
 
   template<typename GetT>
-  DisplayPoint3DTrajectoryImpl<GetT> DisplayPoint3DTrajectory(const std::string & name, GetT get_fn)
+  Point3DTrajectoryImpl<GetT> Point3DTrajectory(const std::string & name, GetT get_fn)
   {
-    return DisplayPoint3DTrajectoryImpl<GetT>(name, get_fn);
+    return Point3DTrajectoryImpl<GetT>(name, get_fn);
   }
 
   template<typename GetT>
-  struct MC_RTC_GUI_DLLAPI DisplayPoseTrajectoryImpl : public DataElement<GetT>
+  struct MC_RTC_GUI_DLLAPI PoseTrajectoryImpl : public DataElement<GetT>
   {
-    static constexpr auto type = Elements::DisplayPoseTrajectory;
+    static constexpr auto type = Elements::PoseTrajectory;
 
-    DisplayPoseTrajectoryImpl(const std::string & name, GetT get_fn);
+    PoseTrajectoryImpl(const std::string & name, GetT get_fn);
 
     /** Invalid element */
-    DisplayPoseTrajectoryImpl() {}
+    PoseTrajectoryImpl() {}
   };
 
   template<typename GetT>
-  DisplayPoseTrajectoryImpl<GetT> DisplayPoseTrajectory(const std::string & name, GetT get_fn)
+  PoseTrajectoryImpl<GetT> PoseTrajectory(const std::string & name, GetT get_fn)
   {
-    return DisplayPoseTrajectoryImpl<GetT>(name, get_fn);
+    return PoseTrajectoryImpl<GetT>(name, get_fn);
   }
 
   template<typename GetT>
-  struct MC_RTC_GUI_DLLAPI DisplayPolygonImpl : public DataElement<GetT>
+  struct MC_RTC_GUI_DLLAPI PolygonImpl : public DataElement<GetT>
   {
-    static constexpr auto type = Elements::DisplayPolygon;
+    static constexpr auto type = Elements::Polygon;
 
-    DisplayPolygonImpl(const std::string & name, const Color & color, GetT get_fn);
+    PolygonImpl(const std::string & name, const Color & color, GetT get_fn);
 
     /** Invalid element */
-    DisplayPolygonImpl() {}
+    PolygonImpl() {}
 
     void addGUI(mc_rtc::Configuration & gui);
   private:
@@ -416,75 +416,75 @@ protected:
   };
 
   template<typename GetT>
-  DisplayPolygonImpl<GetT> DisplayPolygon(const std::string & name, GetT get_fn)
+  PolygonImpl<GetT> Polygon(const std::string & name, GetT get_fn)
   {
-    return DisplayPolygonImpl<GetT>(name, Color{0., 1., 0.}, get_fn);
+    return PolygonImpl<GetT>(name, Color{0., 1., 0.}, get_fn);
   }
 
   template<typename GetT>
-  DisplayPolygonImpl<GetT> DisplayPolygon(const std::string & name, const Color & color, GetT get_fn)
+  PolygonImpl<GetT> Polygon(const std::string & name, const Color & color, GetT get_fn)
   {
-    return DisplayPolygonImpl<GetT>(name, color, get_fn);
+    return PolygonImpl<GetT>(name, color, get_fn);
   }
 
   template<typename GetForce, typename GetSurface>
-  struct MC_RTC_GUI_DLLAPI DisplayForceImpl : public Element
+  struct MC_RTC_GUI_DLLAPI ForceImpl : public Element
   {
-    static constexpr auto type = Elements::DisplayForce;
+    static constexpr auto type = Elements::Force;
 
-    DisplayForceImpl(const std::string & name, const Force & config, GetForce get_force_fn, GetSurface get_surface_fn);
+    ForceImpl(const std::string & name, const ForceConfig & config, GetForce get_force_fn, GetSurface get_surface_fn);
     /** Invalid element */
-    DisplayForceImpl() {}
+    ForceImpl() {}
 
     void addData(mc_rtc::Configuration & data);
 
     void addGUI(mc_rtc::Configuration & gui);
    private:
-    Force config_;
+    ForceConfig config_;
     GetForce get_force_fn_;
     GetSurface get_surface_fn_;
   };
 
   template<typename GetForce, typename GetSurface>
-  DisplayForceImpl<GetForce, GetSurface> DisplayForce(const std::string & name, GetForce get_force_fn, GetSurface get_surface_fn)
+  ForceImpl<GetForce, GetSurface> Force(const std::string & name, GetForce get_force_fn, GetSurface get_surface_fn)
   {
-    return DisplayForceImpl<GetForce, GetSurface>(name, Force{}, get_force_fn, get_surface_fn);
+    return ForceImpl<GetForce, GetSurface>(name, ForceConfig{}, get_force_fn, get_surface_fn);
   }
 
   template<typename GetForce, typename GetSurface>
-  DisplayForceImpl<GetForce, GetSurface> DisplayForce(const std::string & name, const Force & config, GetForce get_force_fn, GetSurface get_surface_fn)
+  ForceImpl<GetForce, GetSurface> Force(const std::string & name, const ForceConfig & config, GetForce get_force_fn, GetSurface get_surface_fn)
   {
-    return DisplayForceImpl<GetForce, GetSurface>(name, config, get_force_fn, get_surface_fn);
+    return ForceImpl<GetForce, GetSurface>(name, config, get_force_fn, get_surface_fn);
   }
 
   template<typename GetStart, typename GetEnd>
-  struct MC_RTC_GUI_DLLAPI DisplayArrowImpl : public Element
+  struct MC_RTC_GUI_DLLAPI ArrowImpl : public Element
   {
-    static constexpr auto type = Elements::DisplayArrow;
+    static constexpr auto type = Elements::Arrow;
 
-    DisplayArrowImpl(const std::string & name, const Arrow & config, GetStart get_start_fn, GetEnd get_end_fn);
+    ArrowImpl(const std::string & name, const ArrowConfig & config, GetStart get_start_fn, GetEnd get_end_fn);
     /** Invalid element */
-    DisplayArrowImpl() {};
+    ArrowImpl() {};
 
     void addData(mc_rtc::Configuration & data);
 
     void addGUI(mc_rtc::Configuration & gui);
    private:
-    Arrow config_;
+    ArrowConfig config_;
     GetStart get_start_fn_;
     GetEnd get_end_fn_;
   };
 
   template<typename GetStart, typename GetEnd>
-  DisplayArrowImpl<GetStart, GetEnd> DisplayArrow(const std::string & name, GetStart get_start_fn, GetEnd get_end_fn)
+  ArrowImpl<GetStart, GetEnd> Arrow(const std::string & name, GetStart get_start_fn, GetEnd get_end_fn)
   {
-    return DisplayArrowImpl<GetStart, GetEnd>(name, Arrow{}, get_start_fn, get_end_fn);
+    return ArrowImpl<GetStart, GetEnd>(name, ArrowConfig{}, get_start_fn, get_end_fn);
   }
 
   template<typename GetStart, typename GetEnd>
-  DisplayArrowImpl<GetStart, GetEnd> DisplayArrow(const std::string & name, const Arrow & config, GetStart get_start_fn, GetEnd get_end_fn)
+  ArrowImpl<GetStart, GetEnd> Arrow(const std::string & name, const ArrowConfig & config, GetStart get_start_fn, GetEnd get_end_fn)
   {
-    return DisplayArrowImpl<GetStart, GetEnd>(name, config, get_start_fn, get_end_fn);
+    return ArrowImpl<GetStart, GetEnd>(name, config, get_start_fn, get_end_fn);
   }
 
   template<typename GetT>

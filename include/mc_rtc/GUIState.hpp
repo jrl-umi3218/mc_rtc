@@ -120,63 +120,63 @@ void Point3DROImpl<GetT>::addGUI(mc_rtc::Configuration & gui)
 }
 
 template<typename GetT>
-DisplayPoint3DTrajectoryImpl<GetT>::DisplayPoint3DTrajectoryImpl(const std::string & name, GetT get_fn)
+Point3DTrajectoryImpl<GetT>::Point3DTrajectoryImpl(const std::string & name, GetT get_fn)
 : DataElement<GetT>(name, get_fn)
 {
 }
 
 template<typename GetT>
-DisplayPoseTrajectoryImpl<GetT>::DisplayPoseTrajectoryImpl(const std::string & name, GetT get_fn)
+PoseTrajectoryImpl<GetT>::PoseTrajectoryImpl(const std::string & name, GetT get_fn)
 : DataElement<GetT>(name, get_fn)
 {
 }
 
 template<typename GetT>
-DisplayPolygonImpl<GetT>::DisplayPolygonImpl(const std::string & name, const Color & color, GetT get_fn)
+PolygonImpl<GetT>::PolygonImpl(const std::string & name, const Color & color, GetT get_fn)
 : DataElement<GetT>(name, get_fn), color_(color)
 {
 }
 
 template<typename GetT>
-void DisplayPolygonImpl<GetT>::addGUI(mc_rtc::Configuration & gui)
+void PolygonImpl<GetT>::addGUI(mc_rtc::Configuration & gui)
 {
   gui.add("color", color_);
 }
 
 template<typename GetForce, typename GetSurface>
-DisplayForceImpl<GetForce, GetSurface>::DisplayForceImpl(const std::string & name, const Force & config, GetForce get_force_fn, GetSurface get_surface_fn)
+ForceImpl<GetForce, GetSurface>::ForceImpl(const std::string & name, const ForceConfig & config, GetForce get_force_fn, GetSurface get_surface_fn)
 : Element(name), config_(config), get_force_fn_(get_force_fn), get_surface_fn_(get_surface_fn)
 {
 }
 
 template<typename GetForce, typename GetSurface>
-void DisplayForceImpl<GetForce, GetSurface>::addData(mc_rtc::Configuration& data)
+void ForceImpl<GetForce, GetSurface>::addData(mc_rtc::Configuration& data)
 {
   data.add("force", get_force_fn_());
   data.add("surface", get_surface_fn_());
 }
 
 template<typename GetForce, typename GetSurface>
-void DisplayForceImpl<GetForce, GetSurface>::addGUI(mc_rtc::Configuration & gui)
+void ForceImpl<GetForce, GetSurface>::addGUI(mc_rtc::Configuration & gui)
 {
   gui.add("config", config_);
 }
 
 template<typename GetStart, typename GetEnd>
-DisplayArrowImpl<GetStart, GetEnd>::DisplayArrowImpl(const std::string & name, const Arrow & config, GetStart get_start_fn, GetEnd get_end_fn)
+ArrowImpl<GetStart, GetEnd>::ArrowImpl(const std::string & name, const ArrowConfig & config, GetStart get_start_fn, GetEnd get_end_fn)
 : Element(name), config_(config), get_start_fn_(get_start_fn), get_end_fn_(get_end_fn)
 {
 }
 
 template<typename GetStart, typename GetEnd>
-void DisplayArrowImpl<GetStart, GetEnd>::addData(mc_rtc::Configuration& data)
+void ArrowImpl<GetStart, GetEnd>::addData(mc_rtc::Configuration& data)
 {
   data.add("start", get_start_fn_());
   data.add("end", get_end_fn_());
 }
 
 template<typename GetStart, typename GetEnd>
-void DisplayArrowImpl<GetStart, GetEnd>::addGUI(mc_rtc::Configuration & gui)
+void ArrowImpl<GetStart, GetEnd>::addGUI(mc_rtc::Configuration & gui)
 {
   gui.add("config", config_);
 }

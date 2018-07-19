@@ -194,54 +194,54 @@ namespace mc_control
      *
      * \p Vector of 3D points
      */
-    virtual void displayTrajectory(const ElementId & id,
+    virtual void trajectory(const ElementId & id,
                                    const ElementId & /*requestId*/,
                                    const std::vector<Eigen::Vector3d> & /* points */)
     {
-      default_impl("DisplayPoint3DTrajectory", id);
+      default_impl("Point3DTrajectory", id);
     }
 
     /** Should display a trajectory of transforms in 3D environment
      *
      * \p Vector of 3D points
      */
-    virtual void displayTrajectory(const ElementId & id,
+    virtual void trajectory(const ElementId & id,
                                    const ElementId & /*requestId*/,
                                    const std::vector<sva::PTransformd> & /* points */)
     {
-      default_impl("DisplayPoseTrajectory", id);
+      default_impl("PoseTrajectory", id);
     }
 
     /** Should display a polygon of 3d points in 3D environment
      *
      * \p Vector of 3D points
      */
-    virtual void displayPolygon(const ElementId & id,
+    virtual void polygon(const ElementId & id,
                                 const std::vector<Eigen::Vector3d> & /* points */,
                                 const mc_rtc::gui::Color& /* color */)
     {
-      default_impl("DisplayPolygon", id);
+      default_impl("Polygon", id);
     }
 
     /** Should display a force in 3D environment
      */
-    virtual void displayForce(const ElementId & id,
+    virtual void force(const ElementId & id,
                               const ElementId & /*requestId*/,
                               const sva::ForceVecd & /* force */,
                               const sva::PTransformd & /* surface */,
-                              const mc_rtc::gui::Force& /* forceConfig */)
+                              const mc_rtc::gui::ForceConfig & /* forceConfig */)
     {
-      default_impl("DisplayForce", id);
+      default_impl("Force", id);
     }
 
     /** Should display an arrow in 3D environment
      */
-    virtual void displayArrow(const ElementId & id,
+    virtual void arrow(const ElementId & id,
                               const Eigen::Vector3d & /* start */,
                               const Eigen::Vector3d & /* end */,
-                              const mc_rtc::gui::Arrow& /* config */)
+                              const mc_rtc::gui::ArrowConfig & /* config */)
     {
-      default_impl("DisplayArrow", id);
+      default_impl("Arrow", id);
     }
 
     /** Should display a rotation in 3D environment
@@ -378,27 +378,27 @@ namespace mc_control
                         const mc_rtc::Configuration & data);
 
     /** Handle details of DisplayPoint3DTrajectory elements */
-    void handle_displayPoint3DTrajectory(const ElementId & id,
+    void handle_point3DTrajectory(const ElementId & id,
                         const mc_rtc::Configuration & gui,
                         const mc_rtc::Configuration & data);
 
     /** Handle details of DisplayPoseTrajectory elements */
-    void handle_displayPoseTrajectory(const ElementId & id,
+    void handle_poseTrajectory(const ElementId & id,
                         const mc_rtc::Configuration & gui,
                         const mc_rtc::Configuration & data);
 
     /** Hand details of DisplayPolygon elemets */
-    void handle_displayPolygon(const ElementId & id,
+    void handle_polygon(const ElementId & id,
                                const mc_rtc::Configuration & gui,
                                const mc_rtc::Configuration & data);
 
     /** Hand details of DisplayForce elemets */
-    void handle_displayForce(const ElementId & id,
+    void handle_force(const ElementId & id,
                              const mc_rtc::Configuration & gui,
                              const mc_rtc::Configuration & data);
 
     /** Hand details of DisplayArrow elemets */
-    void handle_displayArrow(const ElementId & id,
+    void handle_arrow(const ElementId & id,
                              const mc_rtc::Configuration & gui,
                              const mc_rtc::Configuration & data);
 

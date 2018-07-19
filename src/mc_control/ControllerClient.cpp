@@ -227,20 +227,20 @@ void ControllerClient::handle_widget(const ElementId & id,
       case Elements::Point3D:
         handle_point3d(id, gui, data);
         break;
-      case Elements::DisplayPoint3DTrajectory:
-        handle_displayPoint3DTrajectory(id, gui, data);
+      case Elements::Point3DTrajectory:
+        handle_point3DTrajectory(id, gui, data);
         break;
-      case Elements::DisplayPoseTrajectory:
-        handle_displayPoseTrajectory(id, gui, data);
+      case Elements::PoseTrajectory:
+        handle_poseTrajectory(id, gui, data);
         break;
-      case Elements::DisplayPolygon:
-        handle_displayPolygon(id, gui, data);
+      case Elements::Polygon:
+        handle_polygon(id, gui, data);
         break;
-      case Elements::DisplayForce:
-        handle_displayForce(id, gui, data);
+      case Elements::Force:
+        handle_force(id, gui, data);
         break;
-      case Elements::DisplayArrow:
-        handle_displayArrow(id, gui, data);
+      case Elements::Arrow:
+        handle_arrow(id, gui, data);
         break;
       case Elements::Rotation:
         handle_rotation(id, gui, data);
@@ -290,50 +290,50 @@ void ControllerClient::handle_point3d(const ElementId & id,
   point3d({id.category, id.name + "_point3d"}, id, ro, pos);
 }
 
-void ControllerClient::handle_displayPoint3DTrajectory(const ElementId & id,
+void ControllerClient::handle_point3DTrajectory(const ElementId & id,
                                       const mc_rtc::Configuration & /* gui */,
                                       const mc_rtc::Configuration & data)
 {
   const std::vector<Eigen::Vector3d>& points = data("data");
-  displayTrajectory({id.category, id.name + "_display_trajectory"}, id, points);
+  trajectory({id.category, id.name + "_trajectory"}, id, points);
 }
 
-void ControllerClient::handle_displayPoseTrajectory(const ElementId & id,
+void ControllerClient::handle_poseTrajectory(const ElementId & id,
                                       const mc_rtc::Configuration & /* gui */,
                                       const mc_rtc::Configuration & data)
 {
   const std::vector<sva::PTransformd>& points = data("data");
-  displayTrajectory({id.category, id.name + "_display_trajectory"}, id, points);
+  trajectory({id.category, id.name + "_trajectory"}, id, points);
 }
 
-void ControllerClient::handle_displayPolygon(const ElementId & id,
+void ControllerClient::handle_polygon(const ElementId & id,
                                       const mc_rtc::Configuration & gui,
                                       const mc_rtc::Configuration & data)
 {
   const std::vector<Eigen::Vector3d>& points = data("data");
   const mc_rtc::gui::Color& color = gui("color");
-  displayPolygon(id, points, color);
+  polygon(id, points, color);
 }
 
-void ControllerClient::handle_displayForce(const ElementId & id,
+void ControllerClient::handle_force(const ElementId & id,
                                            const mc_rtc::Configuration & gui,
                                            const mc_rtc::Configuration & data)
 {
-  const sva::ForceVecd& force = data("force");
+  const sva::ForceVecd& force_ = data("force");
   const sva::PTransformd& surface = data("surface");
-  const mc_rtc::gui::Force& forceConfig = gui("config");
-  array_label(id, {"cx", "cy", "cz", "fx", "fy", "fz"}, force.vector());
-  displayForce({id.category, id.name + "_display_force"}, id, force, surface, forceConfig);
+  const mc_rtc::gui::ForceConfig & forceConfig = gui("config");
+  array_label(id, {"cx", "cy", "cz", "fx", "fy", "fz"}, force_.vector());
+  force({id.category, id.name + "_force"}, id, force_, surface, forceConfig);
 }
 
-void ControllerClient::handle_displayArrow(const ElementId & id,
+void ControllerClient::handle_arrow(const ElementId & id,
                                            const mc_rtc::Configuration & gui,
                                            const mc_rtc::Configuration & data)
 {
   const Eigen::Vector3d& arrow_start = data("start");
   const Eigen::Vector3d& arrow_end = data("end");
-  const mc_rtc::gui::Arrow& arrow_config = gui("config");
-  displayArrow(id, arrow_start, arrow_end, arrow_config);
+  const mc_rtc::gui::ArrowConfig & arrow_config = gui("config");
+  arrow(id, arrow_start, arrow_end, arrow_config);
 }
 
 void ControllerClient::handle_rotation(const ElementId & id,
