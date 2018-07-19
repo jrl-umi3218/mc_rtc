@@ -43,13 +43,13 @@ namespace gui
     Point3D,
     DisplayPoint3DTrajectory,
     DisplayPoseTrajectory,
-    DisplayPolygon,
-    DisplayForce,
-    DisplayArrow,
     Rotation,
     Transform,
     Schema,
-    Form
+    Form,
+    DisplayPolygon,
+    DisplayForce,
+    DisplayArrow
   };
 
   template<typename GetT>
