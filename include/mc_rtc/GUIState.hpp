@@ -163,7 +163,7 @@ void DisplayForceImpl<GetForce, GetSurface>::addGUI(mc_rtc::Configuration & gui)
 }
 
 template<typename GetStart, typename GetEnd>
-DisplayArrowImpl<GetStart, GetEnd>::DisplayArrowImpl(const std::string & name, GetStart get_start_fn, GetEnd get_end_fn, const Arrow& config)
+DisplayArrowImpl<GetStart, GetEnd>::DisplayArrowImpl(const std::string & name, const Arrow & config, GetStart get_start_fn, GetEnd get_end_fn)
 : Element(name), config_(config), get_start_fn_(get_start_fn), get_end_fn_(get_end_fn)
 {
 }
@@ -171,11 +171,14 @@ DisplayArrowImpl<GetStart, GetEnd>::DisplayArrowImpl(const std::string & name, G
 template<typename GetStart, typename GetEnd>
 void DisplayArrowImpl<GetStart, GetEnd>::addData(mc_rtc::Configuration& data)
 {
-  mc_rtc::Configuration config;
-  config.add("start", get_start_fn_());
-  config.add("end", get_end_fn_());
-  config.add("arrow_config", config_);
-  data.add("data", config);
+  data.add("start", get_start_fn_());
+  data.add("end", get_end_fn_());
+}
+
+template<typename GetStart, typename GetEnd>
+void DisplayArrowImpl<GetStart, GetEnd>::addGUI(mc_rtc::Configuration & gui)
+{
+  gui.add("config", config_);
 }
 
 template<typename GetT>

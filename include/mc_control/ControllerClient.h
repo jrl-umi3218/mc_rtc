@@ -237,7 +237,6 @@ namespace mc_control
     /** Should display an arrow in 3D environment
      */
     virtual void displayArrow(const ElementId & id,
-                              const ElementId & /*requestId*/,
                               const Eigen::Vector3d & /* start */,
                               const Eigen::Vector3d & /* end */,
                               const mc_rtc::gui::Arrow& /* config */)

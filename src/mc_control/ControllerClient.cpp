@@ -327,14 +327,13 @@ void ControllerClient::handle_displayForce(const ElementId & id,
 }
 
 void ControllerClient::handle_displayArrow(const ElementId & id,
-                                           const mc_rtc::Configuration & /* gui */,
+                                           const mc_rtc::Configuration & gui,
                                            const mc_rtc::Configuration & data)
 {
-  const auto& d = data("data");
-  const Eigen::Vector3d& arrow_start = d("start");
-  const Eigen::Vector3d& arrow_end = d("end");
-  const mc_rtc::gui::Arrow& arrow_config = d("arrow_config");
-  displayArrow({id.category, id.name + "_display_arrow"}, id, arrow_start, arrow_end, arrow_config);
+  const Eigen::Vector3d& arrow_start = data("start");
+  const Eigen::Vector3d& arrow_end = data("end");
+  const mc_rtc::gui::Arrow& arrow_config = gui("config");
+  displayArrow(id, arrow_start, arrow_end, arrow_config);
 }
 
 void ControllerClient::handle_rotation(const ElementId & id,

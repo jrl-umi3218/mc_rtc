@@ -462,11 +462,13 @@ protected:
   {
     static constexpr auto type = Elements::DisplayArrow;
 
-    DisplayArrowImpl(const std::string & name, GetStart get_start_fn, GetEnd get_end_fn, const Arrow& config);
+    DisplayArrowImpl(const std::string & name, const Arrow & config, GetStart get_start_fn, GetEnd get_end_fn);
     /** Invalid element */
     DisplayArrowImpl() {};
 
     void addData(mc_rtc::Configuration & data);
+
+    void addGUI(mc_rtc::Configuration & gui);
    private:
     Arrow config_;
     GetStart get_start_fn_;
@@ -474,9 +476,15 @@ protected:
   };
 
   template<typename GetStart, typename GetEnd>
-  DisplayArrowImpl<GetStart, GetEnd> DisplayArrow(const std::string & name, GetStart get_start_fn, GetEnd get_end_fn, const Arrow& config = Arrow{})
+  DisplayArrowImpl<GetStart, GetEnd> DisplayArrow(const std::string & name, GetStart get_start_fn, GetEnd get_end_fn)
   {
-    return DisplayArrowImpl<GetStart, GetEnd>(name, get_start_fn, get_end_fn, config);
+    return DisplayArrowImpl<GetStart, GetEnd>(name, Arrow{}, get_start_fn, get_end_fn);
+  }
+
+  template<typename GetStart, typename GetEnd>
+  DisplayArrowImpl<GetStart, GetEnd> DisplayArrow(const std::string & name, const Arrow & config, GetStart get_start_fn, GetEnd get_end_fn)
+  {
+    return DisplayArrowImpl<GetStart, GetEnd>(name, config, get_start_fn, get_end_fn);
   }
 
   template<typename GetT>
