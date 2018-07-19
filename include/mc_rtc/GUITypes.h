@@ -55,7 +55,8 @@ namespace gui
       config("color", color);
       config("arrow_shaft_diam", arrow_shaft_diam);
       config("arrow_head_diam", arrow_head_diam);
-      config("arrow_shaft_diam", arrow_shaft_diam);
+      config("arrow_head_len", arrow_head_len);
+      config("arrow_scale", arrow_scale);
     }
 
     operator mc_rtc::Configuration() const
@@ -64,7 +65,8 @@ namespace gui
       config.add("color", color);
       config.add("arrow_shaft_diam", arrow_shaft_diam);
       config.add("arrow_head_diam", arrow_head_diam);
-      config.add("arrow_shaft_diam", arrow_shaft_diam);
+      config.add("arrow_head_len", arrow_head_len);
+      config.add("arrow_scale", arrow_scale);
       return config;
     }
 
