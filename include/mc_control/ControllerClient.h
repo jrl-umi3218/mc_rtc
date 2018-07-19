@@ -217,7 +217,6 @@ namespace mc_control
      * \p Vector of 3D points
      */
     virtual void displayPolygon(const ElementId & id,
-                                const ElementId & /*requestId*/,
                                 const std::vector<Eigen::Vector3d> & /* points */,
                                 const mc_rtc::gui::Color& /* color */)
     {

@@ -307,12 +307,12 @@ void ControllerClient::handle_displayPoseTrajectory(const ElementId & id,
 }
 
 void ControllerClient::handle_displayPolygon(const ElementId & id,
-                                      const mc_rtc::Configuration & /* gui */,
+                                      const mc_rtc::Configuration & gui,
                                       const mc_rtc::Configuration & data)
 {
-  const std::vector<Eigen::Vector3d>& points = data("data")("points");
-  const mc_rtc::gui::Color& color = data("data")("color");
-  displayPolygon({id.category, id.name + "_display_polygon"}, id, points, color);
+  const std::vector<Eigen::Vector3d>& points = data("data");
+  const mc_rtc::gui::Color& color = gui("color");
+  displayPolygon(id, points, color);
 }
 
 void ControllerClient::handle_displayForce(const ElementId & id,

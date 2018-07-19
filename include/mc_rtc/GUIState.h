@@ -405,20 +405,26 @@ protected:
   {
     static constexpr auto type = Elements::DisplayPolygon;
 
-    DisplayPolygonImpl(const std::string & name, GetT get_fn, const Color& color);
+    DisplayPolygonImpl(const std::string & name, const Color & color, GetT get_fn);
 
     /** Invalid element */
     DisplayPolygonImpl() {}
 
-    void addData(mc_rtc::Configuration & data);
-   private:
+    void addGUI(mc_rtc::Configuration & gui);
+  private:
     Color color_;
   };
 
   template<typename GetT>
-  DisplayPolygonImpl<GetT> DisplayPolygon(const std::string & name, GetT get_fn, const Color& color = Color{0., 1., 0.})
+  DisplayPolygonImpl<GetT> DisplayPolygon(const std::string & name, GetT get_fn)
   {
-    return DisplayPolygonImpl<GetT>(name, get_fn, color);
+    return DisplayPolygonImpl<GetT>(name, Color{0., 1., 0.}, get_fn);
+  }
+
+  template<typename GetT>
+  DisplayPolygonImpl<GetT> DisplayPolygon(const std::string & name, const Color & color, GetT get_fn)
+  {
+    return DisplayPolygonImpl<GetT>(name, color, get_fn);
   }
 
   template<typename GetForce, typename GetSurface>

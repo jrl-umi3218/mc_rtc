@@ -12,8 +12,7 @@ namespace gui
   struct MC_RTC_GUI_DLLAPI Color
   {
     Color() {}
-    Color(double r, double g, double b, double a) : r(r), g(g), b(b), a(a) {}
-    Color(double r, double g, double b) : r(r), g(g), b(b), a(1.) {}
+    Color(double r, double g, double b, double a = 1.0) : r(r), g(g), b(b), a(a) {}
     Color(const mc_rtc::Configuration& config)
     {
       load(config);
