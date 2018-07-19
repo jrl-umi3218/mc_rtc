@@ -215,8 +215,8 @@ namespace mc_control
      * \p Vector of 3D points
      */
     virtual void polygon(const ElementId & id,
-                                const std::vector<Eigen::Vector3d> & /* points */,
-                                const mc_rtc::gui::Color& /* color */)
+                         const std::vector<Eigen::Vector3d> & /* points */,
+                         const mc_rtc::gui::Color& /* color */)
     {
       default_impl("Polygon", id);
     }
@@ -224,10 +224,10 @@ namespace mc_control
     /** Should display a force in 3D environment
      */
     virtual void force(const ElementId & id,
-                              const ElementId & /*requestId*/,
-                              const sva::ForceVecd & /* force */,
-                              const sva::PTransformd & /* surface */,
-                              const mc_rtc::gui::ForceConfig & /* forceConfig */)
+                       const ElementId & /*requestId*/,
+                       const sva::ForceVecd & /* force */,
+                       const sva::PTransformd & /* surface */,
+                       const mc_rtc::gui::ForceConfig & /* forceConfig */)
     {
       default_impl("Force", id);
     }
@@ -235,9 +235,9 @@ namespace mc_control
     /** Should display an arrow in 3D environment
      */
     virtual void arrow(const ElementId & id,
-                              const Eigen::Vector3d & /* start */,
-                              const Eigen::Vector3d & /* end */,
-                              const mc_rtc::gui::ArrowConfig & /* config */)
+                       const Eigen::Vector3d & /* start */,
+                       const Eigen::Vector3d & /* end */,
+                       const mc_rtc::gui::ArrowConfig & /* config */)
     {
       default_impl("Arrow", id);
     }
