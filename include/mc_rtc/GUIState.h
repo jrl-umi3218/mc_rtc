@@ -432,21 +432,29 @@ protected:
   {
     static constexpr auto type = Elements::DisplayForce;
 
-    DisplayForceImpl(const std::string & name, GetForce get_force_fn, GetSurface get_surface_fn, const Force& forceConfig);
+    DisplayForceImpl(const std::string & name, const Force & config, GetForce get_force_fn, GetSurface get_surface_fn);
     /** Invalid element */
     DisplayForceImpl() {}
 
     void addData(mc_rtc::Configuration & data);
+
+    void addGUI(mc_rtc::Configuration & gui);
    private:
-    Force forceConfig_;
+    Force config_;
     GetForce get_force_fn_;
     GetSurface get_surface_fn_;
   };
 
   template<typename GetForce, typename GetSurface>
-  DisplayForceImpl<GetForce, GetSurface> DisplayForce(const std::string & name, GetForce get_force_fn, GetSurface get_surface_fn, const Force& forceConfig = Force{})
+  DisplayForceImpl<GetForce, GetSurface> DisplayForce(const std::string & name, GetForce get_force_fn, GetSurface get_surface_fn)
   {
-    return DisplayForceImpl<GetForce, GetSurface>(name, get_force_fn, get_surface_fn, forceConfig);
+    return DisplayForceImpl<GetForce, GetSurface>(name, Force{}, get_force_fn, get_surface_fn);
+  }
+
+  template<typename GetForce, typename GetSurface>
+  DisplayForceImpl<GetForce, GetSurface> DisplayForce(const std::string & name, const Force & config, GetForce get_force_fn, GetSurface get_surface_fn)
+  {
+    return DisplayForceImpl<GetForce, GetSurface>(name, config, get_force_fn, get_surface_fn);
   }
 
   template<typename GetStart, typename GetEnd>

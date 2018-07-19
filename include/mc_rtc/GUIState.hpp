@@ -144,19 +144,22 @@ void DisplayPolygonImpl<GetT>::addGUI(mc_rtc::Configuration & gui)
 }
 
 template<typename GetForce, typename GetSurface>
-DisplayForceImpl<GetForce, GetSurface>::DisplayForceImpl(const std::string & name, GetForce get_force_fn, GetSurface get_surface_fn, const Force& forceConfig)
-: Element(name), forceConfig_(forceConfig), get_force_fn_(get_force_fn), get_surface_fn_(get_surface_fn)
+DisplayForceImpl<GetForce, GetSurface>::DisplayForceImpl(const std::string & name, const Force & config, GetForce get_force_fn, GetSurface get_surface_fn)
+: Element(name), config_(config), get_force_fn_(get_force_fn), get_surface_fn_(get_surface_fn)
 {
 }
 
 template<typename GetForce, typename GetSurface>
 void DisplayForceImpl<GetForce, GetSurface>::addData(mc_rtc::Configuration& data)
 {
-  mc_rtc::Configuration config;
-  config.add("force", get_force_fn_());
-  config.add("surface", get_surface_fn_());
-  config.add("force_config", forceConfig_);
-  data.add("data", config );
+  data.add("force", get_force_fn_());
+  data.add("surface", get_surface_fn_());
+}
+
+template<typename GetForce, typename GetSurface>
+void DisplayForceImpl<GetForce, GetSurface>::addGUI(mc_rtc::Configuration & gui)
+{
+  gui.add("config", config_);
 }
 
 template<typename GetStart, typename GetEnd>

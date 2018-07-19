@@ -316,13 +316,13 @@ void ControllerClient::handle_displayPolygon(const ElementId & id,
 }
 
 void ControllerClient::handle_displayForce(const ElementId & id,
-                                           const mc_rtc::Configuration & /* gui */,
+                                           const mc_rtc::Configuration & gui,
                                            const mc_rtc::Configuration & data)
 {
-  const auto& d = data("data");
-  const sva::ForceVecd& force = d("force");
-  const sva::PTransformd& surface = d("surface");
-  const mc_rtc::gui::Force& forceConfig = d("force_config");
+  const sva::ForceVecd& force = data("force");
+  const sva::PTransformd& surface = data("surface");
+  const mc_rtc::gui::Force& forceConfig = gui("config");
+  array_label(id, {"cx", "cy", "cz", "fx", "fy", "fz"}, force.vector());
   displayForce({id.category, id.name + "_display_force"}, id, force, surface, forceConfig);
 }
 
