@@ -195,8 +195,7 @@ namespace mc_control
      * \p Vector of 3D points
      */
     virtual void trajectory(const ElementId & id,
-                                   const ElementId & /*requestId*/,
-                                   const std::vector<Eigen::Vector3d> & /* points */)
+                            const std::vector<Eigen::Vector3d> & /* points */)
     {
       default_impl("Point3DTrajectory", id);
     }
@@ -206,8 +205,7 @@ namespace mc_control
      * \p Vector of 3D points
      */
     virtual void trajectory(const ElementId & id,
-                                   const ElementId & /*requestId*/,
-                                   const std::vector<sva::PTransformd> & /* points */)
+                            const std::vector<sva::PTransformd> & /* points */)
     {
       default_impl("PoseTrajectory", id);
     }

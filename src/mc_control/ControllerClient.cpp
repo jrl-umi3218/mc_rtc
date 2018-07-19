@@ -295,7 +295,7 @@ void ControllerClient::handle_point3DTrajectory(const ElementId & id,
                                       const mc_rtc::Configuration & data)
 {
   const std::vector<Eigen::Vector3d>& points = data("data");
-  trajectory({id.category, id.name + "_trajectory"}, id, points);
+  trajectory(id, points);
 }
 
 void ControllerClient::handle_poseTrajectory(const ElementId & id,
@@ -303,7 +303,7 @@ void ControllerClient::handle_poseTrajectory(const ElementId & id,
                                       const mc_rtc::Configuration & data)
 {
   const std::vector<sva::PTransformd>& points = data("data");
-  trajectory({id.category, id.name + "_trajectory"}, id, points);
+  trajectory(id, points);
 }
 
 void ControllerClient::handle_polygon(const ElementId & id,
