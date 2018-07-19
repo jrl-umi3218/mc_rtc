@@ -49,6 +49,10 @@ public:
    *
    */
   Eigen::Matrix3d orientation();
+
+protected:
+  void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
+
 public:
   std::string bodyName;
   unsigned int bIndex;
