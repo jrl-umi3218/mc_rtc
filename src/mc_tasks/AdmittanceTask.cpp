@@ -60,14 +60,12 @@ void clampAndWarn(const std::string & taskName, Eigen::Vector3d & vector, const 
 AdmittanceTask::AdmittanceTask(const std::string & surfaceName,
       const mc_rbdyn::Robots & robots,
       unsigned int robotIndex,
-      double timestep,
       double stiffness, double weight)
   : SurfaceTransformTask(surfaceName, robots, robotIndex, stiffness, weight), 
     robot_(robots.robots()[robotIndex]),
     surface_(robots.robot(robotIndex).surface(surfaceName)),
     sensor_(robot_.bodyForceSensor(surface_.bodyName())),
-    X_fsactual_surf_(surface_.X_b_s() * sensor_.X_fsactual_parent()),
-    timestep_(timestep)
+    X_fsactual_surf_(surface_.X_b_s() * sensor_.X_fsactual_parent())
 {
   name_ = "admittance_" + robot_.name() + "_" + surfaceName;
   reset();
@@ -240,7 +238,7 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function("admit
   [](mc_solver::QPSolver & solver,
      const mc_rtc::Configuration & config)
   {
-    auto t = std::make_shared<mc_tasks::AdmittanceTask>(config("surface"), solver.robots(), config("robotIndex"), solver.dt());
+    auto t = std::make_shared<mc_tasks::AdmittanceTask>(config("surface"), solver.robots(), config("robotIndex"));
     if(config.has("admittance")) { t->admittance(config("admittance")); }
     if(config.has("pose")) { t->targetPose(config("pose")); }
     if(config.has("wrench")) { t->targetWrench(config("wrench")); }

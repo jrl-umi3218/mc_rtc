@@ -37,16 +37,16 @@ void SlidingFootContactState::start(Controller & ctl)
   comTask_->dimWeight(Eigen::Vector3d{1.0, 1.0, 1.0});
   comTask_->move_com({0,0,move_com_z_});
   ctl.solver().addTask(comTask_);
-  copSlidingFootTask_ = std::make_shared<mc_tasks::CoPTask>(slidingSurface_, ctl.robots(), 0, ctl.solver().dt(), 10.0, 500.0);
+  copSlidingFootTask_ = std::make_shared<mc_tasks::CoPTask>(slidingSurface_, ctl.robots(), 0, 10.0, 500.0);
   Eigen::Vector6d slidingDimW;
   slidingDimW << 4.0, 4.0, 1.0, 1.0, 1.0, 100.0;
   copSlidingFootTask_->dimWeight(slidingDimW);
-  copSupportFootTask_ = std::make_shared<mc_tasks::CoPTask>(supportSurface_, ctl.robots(), 0, ctl.solver().dt(), 10.0, 2000.0);
+  copSupportFootTask_ = std::make_shared<mc_tasks::CoPTask>(supportSurface_, ctl.robots(), 0, 10.0, 2000.0);
   copSupportFootTask_->admittance({{5e-3,5e-3,0},{0,0,0}});
   if(handSurface_.size())
   {
     ctl.getPostureTask(ctl.robot().name())->target({{"R_WRIST_R",{-1.4}}});
-    copHandTask_ = std::make_shared<mc_tasks::CoPTask>(handSurface_, ctl.robots(), 0, ctl.solver().dt(), 5.0, 200.0);
+    copHandTask_ = std::make_shared<mc_tasks::CoPTask>(handSurface_, ctl.robots(), 0, 5.0, 200.0);
     if(handForceTarget_ > 0)
     {
       copHandTask_->targetForce({0.,0.,handForceTarget_});

@@ -40,8 +40,6 @@ public:
    *
    * \param robotIndex Which robot among the robots
    *
-   * \param timestep Timestep of the controller
-   *
    * \param stiffness Stiffness of the underlying SurfaceTransform task
    *
    * \param weight Weight of the underlying SurfaceTransform task
@@ -53,7 +51,6 @@ public:
   AdmittanceTask(const std::string & robotSurface,
       const mc_rbdyn::Robots & robots,
       unsigned robotIndex,
-      double timestep,
       double stiffness = 5.0, double weight = 1000.0);
 
   /*! \brief Reset the task
@@ -218,7 +215,6 @@ protected:
   const mc_rbdyn::Surface & surface_;
   const mc_rbdyn::ForceSensor & sensor_;
   const sva::PTransformd X_fsactual_surf_;
-  double timestep_;
   std::map<char, bool> isClampingAngularVel_ = {{'x', false}, {'y', false}, {'z', false}};
   std::map<char, bool> isClampingLinearVel_ = {{'x', false}, {'y', false}, {'z', false}};
   sva::ForceVecd admittance_ = sva::ForceVecd(Eigen::Vector6d::Zero());

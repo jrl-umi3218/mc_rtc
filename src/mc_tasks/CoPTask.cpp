@@ -14,9 +14,8 @@ namespace
 CoPTask::CoPTask(const std::string & surfaceName,
       const mc_rbdyn::Robots & robots,
       unsigned int robotIndex,
-      double timestep,
       double stiffness, double weight)
-  : AdmittanceTask(surfaceName, robots, robotIndex, timestep, stiffness, weight)
+  : AdmittanceTask(surfaceName, robots, robotIndex, stiffness, weight)
 {
   name_ = "cop_" + robot_.name() + "_" + surfaceName;
 }
@@ -223,7 +222,7 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function("cop",
   [](mc_solver::QPSolver & solver,
      const mc_rtc::Configuration & config)
   {
-    auto t = std::make_shared<mc_tasks::CoPTask>(config("surface"), solver.robots(), config("robotIndex"), solver.dt());
+    auto t = std::make_shared<mc_tasks::CoPTask>(config("surface"), solver.robots(), config("robotIndex"));
     if(config.has("admittance")) { t->admittance(config("admittance")); }
     if(config.has("cop")) { t->targetCoP(config("cop")); }
     if(config.has("force")) { t->targetForce(config("force")); }

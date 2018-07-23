@@ -32,8 +32,6 @@ public:
    *
    * \param robotIndex Which robot among the robots
    *
-   * \param timestep Timestep of the controller
-   *
    * \param stiffness Stiffness of the underlying SurfaceTransform task
    *
    * \param weight Weight of the underlying SurfaceTransform task
@@ -45,7 +43,6 @@ public:
   CoPTask(const std::string & robotSurface,
       const mc_rbdyn::Robots & robots,
       unsigned robotIndex,
-      double timestep,
       double stiffness = 5.0, double weight = 1000.0);
 
   /*! \brief Reset the task
