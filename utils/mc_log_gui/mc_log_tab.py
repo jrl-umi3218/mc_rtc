@@ -10,10 +10,11 @@ import copy
 import re
 
 class MCLogTreeWidgetItem(QtGui.QTreeWidgetItem):
-  def __init__(self, parent, displayText, actualText):
+  def __init__(self, parent, displayText, actualText, hasData):
     super(MCLogTreeWidgetItem, self).__init__(parent, [displayText])
     self._displayText = displayText
     self.actualText = actualText
+    self.hasData = hasData
   @property
   def displayText(self):
     return self._displayText
@@ -23,8 +24,16 @@ class MCLogTreeWidgetItem(QtGui.QTreeWidgetItem):
     self.setText(0, self._displayText)
 
 class TreeView(object):
-  def __init__(self, name = None, parent = None):
+  def __init__(self, name = None, parent = None, dataName = None):
     self.name = name
+    if dataName is None:
+      if parent is not None and parent.name is not None:
+        self.dataName = parent.name + "_" + self.name
+      else:
+        self.dataName = self.name
+    else:
+      self.dataName = dataName
+    self.hasData = False
     self.leafs = []
     self.parent = parent
     self.modelIdxs = []
@@ -37,30 +46,28 @@ class TreeView(object):
     return self.leafs[-1]
   def add(self, key):
     if len(key) == 0:
+      self.hasData = True
       return
     self.leaf(key[0]).add(key[1:])
   def simplify(self):
-    while len(self.leafs) == 1:
+    while len(self.leafs) == 1 and not(self.hasData):
       self.name = self.name + '_' + self.leafs[0].name
+      self.dataName = self.leafs[0].dataName
       self.leafs = self.leafs[0].leafs
       for l in self.leafs:
         l.parent = self
     for l in self.leafs:
       l.simplify()
-  def update_y_selector(self, ySelector, parent, baseModelIdx = None, baseName = ""):
+  def update_y_selector(self, ySelector, parent, baseModelIdx = None):
     row = 0
     needExpand = False
     for l in self.leafs:
-      fullName = baseName
-      if len(fullName):
-        fullName += "_"
-      fullName += l.name
-      l.widgets.append(MCLogTreeWidgetItem(parent, l.name, fullName))
+      l.widgets.append(MCLogTreeWidgetItem(parent, l.name, l.dataName, l.hasData))
       if baseModelIdx is not None:
         l.modelIdxs.append(ySelector.model().index(row, 0, baseModelIdx))
       else:
         l.modelIdxs.append(ySelector.model().index(row, 0))
-      l.update_y_selector(ySelector, l.widgets[-1], l.modelIdxs[-1], fullName)
+      l.update_y_selector(ySelector, l.widgets[-1], l.modelIdxs[-1])
       row += 1
   def select(self, name, ySelector, idx, fullName = ""):
     if name == fullName:
@@ -272,9 +279,11 @@ class MCLogTab(QtGui.QWidget):
       remove_fn = self.ui.canvas.remove_plot_left
     else:
       remove_fn = self.ui.canvas.remove_plot_right
-    selected_items = [i.actualText for i in ySelector.selectedItems()]
+    selected_items = [(i.actualText,i.hasData) for i in ySelector.selectedItems()]
     def is_selected(s, x):
-      return re.match("{}($|_.*$)".format(s), x) is not None
+      if s[1]:
+        return x == s[0]
+      return re.match("{}($|_.*$)".format(s[0]), x) is not None
     selected = sorted(filter(lambda x: any([is_selected(s, x) for s in selected_items]), self.data.keys()))
     for s in selected:
       if s not in prevSelected:
