@@ -27,8 +27,8 @@ class TreeView(object):
   def __init__(self, name = None, parent = None, dataName = None):
     self.name = name
     if dataName is None:
-      if parent is not None and parent.name is not None:
-        self.dataName = parent.name + "_" + self.name
+      if parent is not None and parent.dataName is not None:
+        self.dataName = parent.dataName + "_" + self.name
       else:
         self.dataName = self.name
     else:
@@ -53,6 +53,7 @@ class TreeView(object):
     while len(self.leafs) == 1 and not(self.hasData):
       self.name = self.name + '_' + self.leafs[0].name
       self.dataName = self.leafs[0].dataName
+      self.hasData = self.leafs[0].hasData
       self.leafs = self.leafs[0].leafs
       for l in self.leafs:
         l.parent = self
