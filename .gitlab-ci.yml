@@ -87,156 +87,156 @@ build_with_script:
     - GCC
   allow_failure: true
 
-package_trusty_amd64_noros:
-  stage: package
-  before_script:
-    - export ROS_DISTRO=""
-    - export GITE_PACKAGES="$GITE_PACKAGES multi-contact/mc_rtc_ros_data@noros"
-    - git submodule update --quiet --init --recursive
-    - ./.packaging/setup_pbuilder.sh trusty amd64
-    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc.recipe
-    - mkdir -p 3rd-party/ext && git clone https://github.com/nanomsg/nanomsg 3rd-party/ext/nanomsg
-  script:
-    - ./.packaging/build_recipe.sh .mc-rtc.recipe trusty amd64
-  artifacts:
-    name: "mc_rtc_trusty_amd64"
-    paths:
-      - "*.deb"
-    expire_in: '30d'
-  tags:
-    - GCC
-
-package_trusty_amd64_ros:
-  stage: package
-  before_script:
-    - export GITE_PACKAGES="$GITE_PACKAGES multi-contact/mc_rtc_ros_data@withros"
-    - git submodule update --quiet --init --recursive
-    - ./.packaging/setup_pbuilder.sh trusty amd64
-    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc-ros.recipe
-    - mkdir -p 3rd-party/ext && git clone https://github.com/nanomsg/nanomsg 3rd-party/ext/nanomsg
-  script:
-    - ./.packaging/build_recipe.sh .mc-rtc-ros.recipe trusty amd64
-  artifacts:
-    name: "mc_rtc_trusty_amd64"
-    paths:
-      - "*.deb"
-    expire_in: '30d'
-  tags:
-    - GCC
-
-package_trusty_i386_noros:
-  stage: package
-  before_script:
-    - export ROS_DISTRO=""
-    - export GITE_PACKAGES="$GITE_PACKAGES multi-contact/mc_rtc_ros_data@noros"
-    - git submodule update --quiet --init --recursive
-    - ./.packaging/setup_pbuilder.sh trusty i386
-    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc.recipe
-    - mkdir -p 3rd-party/ext && git clone https://github.com/nanomsg/nanomsg 3rd-party/ext/nanomsg
-  script:
-    - ./.packaging/build_recipe.sh .mc-rtc.recipe trusty i386
-  artifacts:
-    name: "mc_rtc_trusty_i386"
-    paths:
-      - "*.deb"
-    expire_in: '30d'
-  tags:
-    - GCC
-
-package_trusty_i386_ros:
-  stage: package
-  before_script:
-    - export GITE_PACKAGES="$GITE_PACKAGES multi-contact/mc_rtc_ros_data@withros"
-    - git submodule update --quiet --init --recursive
-    - ./.packaging/setup_pbuilder.sh trusty i386
-    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc-ros.recipe
-    - mkdir -p 3rd-party/ext && git clone https://github.com/nanomsg/nanomsg 3rd-party/ext/nanomsg
-  script:
-    - ./.packaging/build_recipe.sh .mc-rtc-ros.recipe trusty i386
-  artifacts:
-    name: "mc_rtc_trusty_i386"
-    paths:
-      - "*.deb"
-    expire_in: '30d'
-  tags:
-    - GCC
-
-package_xenial_amd64_noros:
-  stage: package
-  before_script:
-    - export ROS_DISTRO=""
-    - export GITE_PACKAGES="$GITE_PACKAGES multi-contact/mc_rtc_ros_data@noros"
-    - git submodule update --quiet --init --recursive
-    - ./.packaging/setup_pbuilder.sh xenial amd64
-    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc.recipe
-    - mkdir -p 3rd-party/ext && git clone https://github.com/nanomsg/nanomsg 3rd-party/ext/nanomsg
-  script:
-    - ./.packaging/build_recipe.sh .mc-rtc.recipe xenial amd64
-  artifacts:
-    name: "mc_rtc_xenial_amd64"
-    paths:
-      - "*.deb"
-    expire_in: '30d'
-  tags:
-    - GCC
-
-package_xenial_amd64_ros:
-  stage: package
-  before_script:
-    - export ROS_DISTRO="kinetic"
-    - export GITE_PACKAGES="$GITE_PACKAGES multi-contact/mc_rtc_ros_data@withros"
-    - git submodule update --quiet --init --recursive
-    - ./.packaging/setup_pbuilder.sh xenial amd64
-    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc-ros.recipe
-    - mkdir -p 3rd-party/ext && git clone https://github.com/nanomsg/nanomsg 3rd-party/ext/nanomsg
-  script:
-    - ./.packaging/build_recipe.sh .mc-rtc-ros.recipe xenial amd64
-  artifacts:
-    name: "mc_rtc_xenial_amd64"
-    paths:
-      - "*.deb"
-    expire_in: '30d'
-  tags:
-    - GCC
-
-package_xenial_i386_noros:
-  stage: package
-  before_script:
-    - export ROS_DISTRO=""
-    - export GITE_PACKAGES="$GITE_PACKAGES multi-contact/mc_rtc_ros_data@noros"
-    - git submodule update --quiet --init --recursive
-    - ./.packaging/setup_pbuilder.sh xenial i386
-    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc.recipe
-    - mkdir -p 3rd-party/ext && git clone https://github.com/nanomsg/nanomsg 3rd-party/ext/nanomsg
-  script:
-    - ./.packaging/build_recipe.sh .mc-rtc.recipe xenial i386
-  artifacts:
-    name: "mc_rtc_xenial_i386"
-    paths:
-      - "*.deb"
-    expire_in: '30d'
-  tags:
-    - GCC
-
-package_xenial_i386_ros:
-  stage: package
-  before_script:
-    - export ROS_DISTRO="kinetic"
-    - export GITE_PACKAGES="$GITE_PACKAGES multi-contact/mc_rtc_ros_data@withros"
-    - git submodule update --quiet --init --recursive
-    - ./.packaging/setup_pbuilder.sh xenial i386
-    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc-ros.recipe
-    - mkdir -p 3rd-party/ext && git clone https://github.com/nanomsg/nanomsg 3rd-party/ext/nanomsg
-  script:
-    - ./.packaging/build_recipe.sh .mc-rtc-ros.recipe xenial i386
-  artifacts:
-    name: "mc_rtc_xenial_i386"
-    paths:
-      - "*.deb"
-    expire_in: '30d'
-  tags:
-    - GCC
+#package_trusty_amd64_noros:
+#  stage: package
+#  before_script:
+#    - export ROS_DISTRO=""
+#    - export GITE_PACKAGES="$GITE_PACKAGES multi-contact/mc_rtc_ros_data@noros"
+#    - git submodule update --quiet --init --recursive
+#    - ./.packaging/setup_pbuilder.sh trusty amd64
+#    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc.recipe
+#    - mkdir -p 3rd-party/ext && git clone https://github.com/nanomsg/nanomsg 3rd-party/ext/nanomsg
+#  script:
+#    - ./.packaging/build_recipe.sh .mc-rtc.recipe trusty amd64
+#  artifacts:
+#    name: "mc_rtc_trusty_amd64"
+#    paths:
+#      - "*.deb"
+#    expire_in: '30d'
+#  tags:
+#    - GCC
+#
+#package_trusty_amd64_ros:
+#  stage: package
+#  before_script:
+#    - export GITE_PACKAGES="$GITE_PACKAGES multi-contact/mc_rtc_ros_data@withros"
+#    - git submodule update --quiet --init --recursive
+#    - ./.packaging/setup_pbuilder.sh trusty amd64
+#    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc-ros.recipe
+#    - mkdir -p 3rd-party/ext && git clone https://github.com/nanomsg/nanomsg 3rd-party/ext/nanomsg
+#  script:
+#    - ./.packaging/build_recipe.sh .mc-rtc-ros.recipe trusty amd64
+#  artifacts:
+#    name: "mc_rtc_trusty_amd64"
+#    paths:
+#      - "*.deb"
+#    expire_in: '30d'
+#  tags:
+#    - GCC
+#
+#package_trusty_i386_noros:
+#  stage: package
+#  before_script:
+#    - export ROS_DISTRO=""
+#    - export GITE_PACKAGES="$GITE_PACKAGES multi-contact/mc_rtc_ros_data@noros"
+#    - git submodule update --quiet --init --recursive
+#    - ./.packaging/setup_pbuilder.sh trusty i386
+#    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc.recipe
+#    - mkdir -p 3rd-party/ext && git clone https://github.com/nanomsg/nanomsg 3rd-party/ext/nanomsg
+#  script:
+#    - ./.packaging/build_recipe.sh .mc-rtc.recipe trusty i386
+#  artifacts:
+#    name: "mc_rtc_trusty_i386"
+#    paths:
+#      - "*.deb"
+#    expire_in: '30d'
+#  tags:
+#    - GCC
+#
+#package_trusty_i386_ros:
+#  stage: package
+#  before_script:
+#    - export GITE_PACKAGES="$GITE_PACKAGES multi-contact/mc_rtc_ros_data@withros"
+#    - git submodule update --quiet --init --recursive
+#    - ./.packaging/setup_pbuilder.sh trusty i386
+#    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc-ros.recipe
+#    - mkdir -p 3rd-party/ext && git clone https://github.com/nanomsg/nanomsg 3rd-party/ext/nanomsg
+#  script:
+#    - ./.packaging/build_recipe.sh .mc-rtc-ros.recipe trusty i386
+#  artifacts:
+#    name: "mc_rtc_trusty_i386"
+#    paths:
+#      - "*.deb"
+#    expire_in: '30d'
+#  tags:
+#    - GCC
+#
+#package_xenial_amd64_noros:
+#  stage: package
+#  before_script:
+#    - export ROS_DISTRO=""
+#    - export GITE_PACKAGES="$GITE_PACKAGES multi-contact/mc_rtc_ros_data@noros"
+#    - git submodule update --quiet --init --recursive
+#    - ./.packaging/setup_pbuilder.sh xenial amd64
+#    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc.recipe
+#    - mkdir -p 3rd-party/ext && git clone https://github.com/nanomsg/nanomsg 3rd-party/ext/nanomsg
+#  script:
+#    - ./.packaging/build_recipe.sh .mc-rtc.recipe xenial amd64
+#  artifacts:
+#    name: "mc_rtc_xenial_amd64"
+#    paths:
+#      - "*.deb"
+#    expire_in: '30d'
+#  tags:
+#    - GCC
+#
+#package_xenial_amd64_ros:
+#  stage: package
+#  before_script:
+#    - export ROS_DISTRO="kinetic"
+#    - export GITE_PACKAGES="$GITE_PACKAGES multi-contact/mc_rtc_ros_data@withros"
+#    - git submodule update --quiet --init --recursive
+#    - ./.packaging/setup_pbuilder.sh xenial amd64
+#    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc-ros.recipe
+#    - mkdir -p 3rd-party/ext && git clone https://github.com/nanomsg/nanomsg 3rd-party/ext/nanomsg
+#  script:
+#    - ./.packaging/build_recipe.sh .mc-rtc-ros.recipe xenial amd64
+#  artifacts:
+#    name: "mc_rtc_xenial_amd64"
+#    paths:
+#      - "*.deb"
+#    expire_in: '30d'
+#  tags:
+#    - GCC
+#
+#package_xenial_i386_noros:
+#  stage: package
+#  before_script:
+#    - export ROS_DISTRO=""
+#    - export GITE_PACKAGES="$GITE_PACKAGES multi-contact/mc_rtc_ros_data@noros"
+#    - git submodule update --quiet --init --recursive
+#    - ./.packaging/setup_pbuilder.sh xenial i386
+#    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc.recipe
+#    - mkdir -p 3rd-party/ext && git clone https://github.com/nanomsg/nanomsg 3rd-party/ext/nanomsg
+#  script:
+#    - ./.packaging/build_recipe.sh .mc-rtc.recipe xenial i386
+#  artifacts:
+#    name: "mc_rtc_xenial_i386"
+#    paths:
+#      - "*.deb"
+#    expire_in: '30d'
+#  tags:
+#    - GCC
+#
+#package_xenial_i386_ros:
+#  stage: package
+#  before_script:
+#    - export ROS_DISTRO="kinetic"
+#    - export GITE_PACKAGES="$GITE_PACKAGES multi-contact/mc_rtc_ros_data@withros"
+#    - git submodule update --quiet --init --recursive
+#    - ./.packaging/setup_pbuilder.sh xenial i386
+#    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc-ros.recipe
+#    - mkdir -p 3rd-party/ext && git clone https://github.com/nanomsg/nanomsg 3rd-party/ext/nanomsg
+#  script:
+#    - ./.packaging/build_recipe.sh .mc-rtc-ros.recipe xenial i386
+#  artifacts:
+#    name: "mc_rtc_xenial_i386"
+#    paths:
+#      - "*.deb"
+#    expire_in: '30d'
+#  tags:
+#    - GCC
 
 stages:
   - build
-  - package
+#  - package
