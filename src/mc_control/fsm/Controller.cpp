@@ -260,7 +260,7 @@ bool Controller::run()
     if(running_)
     {
       running_ = false;
-      resetPostures();
+      startIdleState();
     }
   }
   else
@@ -268,10 +268,7 @@ bool Controller::run()
     if(!running_)
     {
       running_ = true;
-      for(const auto & fft : ff_tasks_)
-      {
-        solver().removeTask(fft.second);
-      }
+      teardownIdleState();
     }
   }
   return MCController::run();
@@ -285,7 +282,7 @@ void Controller::reset(const ControllerResetData & data)
     q[0] = init_pos_;
   }
   MCController::reset({q});
-  resetPostures();
+  startIdleState();
 }
 
 void Controller::resetPostures()
@@ -294,10 +291,23 @@ void Controller::resetPostures()
   {
     pt.second->reset();
   }
+}
+
+void Controller::startIdleState()
+{
+  resetPostures();
   for(auto & fft : ff_tasks_)
   {
     fft.second->reset();
     solver().addTask(fft.second);
+  }
+}
+
+void Controller::teardownIdleState()
+{
+  for(auto & fft : ff_tasks_)
+  {
+    solver().removeTask(fft.second);
   }
 }
 

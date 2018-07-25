@@ -197,6 +197,12 @@ struct MC_CONTROL_DLLAPI Controller : public MCController
 private:
   /** Reset all posture tasks */
   void resetPostures();
+
+  /** Start the idle state */
+  void startIdleState();
+
+  /** Teardown the idle state */
+  void teardownIdleState();
 private:
   /** Keep track of the configuration of the controller */
   mc_rtc::Configuration config_;
