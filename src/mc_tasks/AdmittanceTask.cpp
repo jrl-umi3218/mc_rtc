@@ -79,13 +79,13 @@ void AdmittanceTask::update()
   Eigen::Vector3d angularVel = admittance_.couple().cwiseProduct(wrenchError_.couple());
   clampAndWarn(name_, linearVel, maxLinearVel_, "linear velocity", isClampingLinearVel_);
   clampAndWarn(name_, angularVel, maxAngularVel_, "angular velocity", isClampingAngularVel_);
-  refVelB_ = sva::MotionVecd(angularVel, linearVel);
+  refVelB_ = feedforwardVelB_ + sva::MotionVecd{angularVel, linearVel};
 
   // SC: we could do add an anti-windup strategy here, e.g. back-calculation.
   // Yet, keep in mind that our velocity bounds are artificial. Whenever
   // possible, the best is to set to gains so that they are not saturated.
 
-  this->refVelB(refVelB_);
+  SurfaceTransformTask::refVelB(refVelB_);
 }
 
 void AdmittanceTask::reset()
@@ -93,25 +93,9 @@ void AdmittanceTask::reset()
   SurfaceTransformTask::reset();
   admittance_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   targetWrench_ = sva::ForceVecd(Eigen::Vector6d::Zero());
-  refVelB_ = sva::MotionVecd(Eigen::Vector6d::Zero());
   wrenchError_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   feedforwardVelB_ = sva::MotionVecd(Eigen::Vector6d::Zero());
   refVelB_ = sva::MotionVecd(Eigen::Vector6d::Zero());
-}
-
-void AdmittanceTask::resetPoseOffset()
-{
-  for (int i = 0; i < 3; i++)
-  {
-    if (admittance_.force()[i] < 1e-10)
-    {
-      linearOffset_[i] = 0.;
-    }
-    if (admittance_.couple()[i] < 1e-10)
-    {
-      angularOffset_[i] = 0.;
-    }
-  }
 }
 
 void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
@@ -160,7 +144,9 @@ void AdmittanceTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry(name_ + "_admittance");
   logger.removeLogEntry(name_ + "_damping");
   logger.removeLogEntry(name_ + "_measured_wrench");
-  logger.removeLogEntry(name_ + "_ref_vel_body");
+  logger.removeLogEntry(name_ + "_output_body_vel");
+  logger.removeLogEntry(name_ + "_stiffness");
+  logger.removeLogEntry(name_ + "_target_body_vel");
   logger.removeLogEntry(name_ + "_target_wrench");
 }
 

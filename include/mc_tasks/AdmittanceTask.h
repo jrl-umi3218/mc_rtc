@@ -220,7 +220,8 @@ protected:
   sva::ForceVecd admittance_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   sva::ForceVecd targetWrench_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   sva::ForceVecd wrenchError_ = sva::ForceVecd(Eigen::Vector6d::Zero());
-  sva::MotionVecd refVelB_;
+  sva::MotionVecd feedforwardVelB_ = sva::MotionVecd(Eigen::Vector6d::Zero());
+  sva::MotionVecd refVelB_ = sva::MotionVecd(Eigen::Vector6d::Zero());
 
   void update() override;
 
@@ -233,15 +234,7 @@ protected:
   std::function<bool(const mc_tasks::MetaTask & task, std::string&)>
     buildCompletionCriteria(double dt, const mc_rtc::Configuration & config) const override;
 
-private:
-  sva::PTransformd X_0_target_;
-  Eigen::Vector3d trans_target_delta_ = Eigen::Vector3d::Zero();
-  Eigen::Vector3d rpy_target_delta_ = Eigen::Vector3d::Zero();
-  Eigen::Vector3d maxTransPos_ = Eigen::Vector3d(0.1, 0.1, 0.1);  // [m]
-  Eigen::Vector3d maxTransVel_ = Eigen::Vector3d(0.1, 0.1, 0.1);  // [m] / [s]
-  Eigen::Vector3d maxRpyPos_ = Eigen::Vector3d(0.5, 0.5, 0.5);  // [rad]
-  Eigen::Vector3d maxRpyVel_ = Eigen::Vector3d(0.1, 0.1, 0.1);  // [rad] / [s]
-
+  void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
   void addToLogger(mc_rtc::Logger & logger) override;
   void removeFromLogger(mc_rtc::Logger & logger) override;
 
@@ -263,7 +256,6 @@ private:
    *
    */
   using SurfaceTransformTask::target;
-  void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
 };
 
 }

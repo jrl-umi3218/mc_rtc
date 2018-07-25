@@ -47,83 +47,6 @@ Eigen::Vector2d CoPTask::measuredCoP() const
   return Eigen::Vector2d(-tau_surf(1) / pressure, +tau_surf(0) / pressure);
 }
 
-sva::PTransformd CoPTask::worldMeasuredCoP() const
-{
-  Eigen::Vector2d cop = measuredCoP();
-  sva::PTransformd X_surface_cop {Eigen::Vector3d{cop.x(), cop.y(), 0}};
-  sva::PTransformd X_0_surface = robot_.surface(surfaceName).X_0_s(robot_);
-  return X_surface_cop * X_0_surface;
-}
-
-sva::PTransformd CoPTask::worldTargetCoP() const
-{
-  const Eigen::Vector2d & cop = targetCoP_;
-  sva::PTransformd X_surface_cop {Eigen::Vector3d{cop.x(), cop.y(), 0}};
-  sva::PTransformd X_0_surface = surfacePose();
-  return X_surface_cop * X_0_surface;
-}
-
-void CoPTask::worldTargetCoP(const Eigen::Vector3d & worldCoP)
-{
-  //
-  // For now I cannot tell which of the two following options is the best:
-  //
-  // (1) sva::PTransformd X_contact_0 = targetPose().inv();
-  // (2) sva::PTransformd X_contact_0 = surfacePose().inv();
-  //
-  // As long as contact is maintained they should perform the same. However,
-  // due to the flexibility it may actually be better to use targetPose() (the
-  // estimated contact frame, after flexibility) rather than surfacePose (the
-  // foot frame below the ankle, before flexibility).
-  //
-  sva::PTransformd X_contact_0 = surfacePose().inv();
-  sva::PTransformd X_0_cop(worldCoP);
-  sva::PTransformd X_contact_cop = X_0_cop * X_contact_0;
-  Eigen::Vector2d contactCoP(X_contact_cop.translation()(0), X_contact_cop.translation()(1));
-  targetCoP(contactCoP);
-}
-
-void CoPTask::targetCoP(const Eigen::Vector2d & targetCoP)
-{
-  targetCoP_ = targetCoP;
-}
-
-const Eigen::Vector2d & CoPTask::targetCoP() const
-{
-  Eigen::Vector2d cop = measuredCoP();
-  sva::PTransformd X_surface_cop {Eigen::Vector3d{cop.x(), cop.y(), 0}};
-  sva::PTransformd X_0_surface = robot_.surface(surfaceName).X_0_s(robot_);
-  return X_surface_cop * X_0_surface;
-}
-
-sva::PTransformd CoPTask::worldTargetCoP() const
-{
-  const Eigen::Vector2d & cop = targetCoP_;
-  sva::PTransformd X_surface_cop {Eigen::Vector3d{cop.x(), cop.y(), 0}};
-  sva::PTransformd X_0_surface = surfacePose();
-  return X_surface_cop * X_0_surface;
-}
-
-void CoPTask::worldTargetCoP(const Eigen::Vector3d & worldCoP)
-{
-  //
-  // For now I cannot tell which of the two following options is the best:
-  //
-  // (1) sva::PTransformd X_contact_0 = targetPose().inv();
-  // (2) sva::PTransformd X_contact_0 = surfacePose().inv();
-  //
-  // As long as contact is maintained they should perform the same. However,
-  // due to the flexibility it may actually be better to use targetPose() (the
-  // estimated contact frame, after flexibility) rather than surfacePose (the
-  // foot frame below the ankle, before flexibility).
-  //
-  sva::PTransformd X_contact_0 = surfacePose().inv();
-  sva::PTransformd X_0_cop(worldCoP);
-  sva::PTransformd X_contact_cop = X_0_cop * X_contact_0;
-  Eigen::Vector2d contactCoP(X_contact_cop.translation()(0), X_contact_cop.translation()(1));
-  targetCoP(contactCoP);
-}
-
 void CoPTask::addToLogger(mc_rtc::Logger & logger)
 {
   AdmittanceTask::addToLogger(logger);
@@ -136,26 +59,6 @@ void CoPTask::addToLogger(mc_rtc::Logger & logger)
                      [this]() -> const Eigen::Vector2d &
                      {
                      return targetCoP_;
-                     });
-  logger.addLogEntry(name_ + "_world_measured_cop",
-                     [this]() -> Eigen::Vector3d
-                     {
-                     return worldMeasuredCoP().translation();
-                     });
-  logger.addLogEntry(name_ + "_world_target_cop",
-                     [this]() -> Eigen::Vector3d
-                     {
-                     return worldTargetCoP().translation();
-                     });
-  logger.addLogEntry(name_ + "_world_measured_cop",
-                     [this]() -> Eigen::Vector3d
-                     {
-                     return worldMeasuredCoP().translation();
-                     });
-  logger.addLogEntry(name_ + "_world_target_cop",
-                     [this]() -> Eigen::Vector3d
-                     {
-                     return worldTargetCoP().translation();
                      });
 }
 

@@ -113,68 +113,6 @@ public:
     return AdmittanceTask::targetWrench();
   }
 
-  /*! \brief Get target wrench in the world frame
-   *
-   */
-  sva::ForceVecd worldTargetWrench() const
-  {
-    return AdmittanceTask::worldTargetWrench();
-  }
-
-  /*! \brief Return measured CoP in world frame 
-   *
-   * This CoP is consistent with force sensor readings, assuming that the world
-   * pose of the force sensor in the model is accurate.
-   *
-   */
-  void targetForce(const Eigen::Vector3d & targetForce)
-  {
-    targetForce_ = targetForce;
-  }
-
-  /*! \brief Return target CoP in world frame 
-   *
-   */
-  const Eigen::Vector3d & targetForce() const
-  {
-    return targetForce_;
-  }
-
-  /*! \brief Get the target wrench in the surface frame
-   *
-   */
-  const sva::ForceVecd & targetWrench() const
-  {
-    return AdmittanceTask::targetWrench();
-  }
-
-  /*! \brief Return measured CoP in world frame 
-   *
-   * This CoP is consistent with force sensor readings, assuming that the world
-   * pose of the force sensor in the model is accurate.
-   *
-   */
-  sva::PTransformd worldMeasuredCoP() const;
-
-  /*! \brief Return target CoP in world frame 
-   *
-   */
-  sva::PTransformd worldTargetCoP() const;
-
-  /*! \brief Set CoP target in world frame
-   *
-   * \param worldCoP New target
-   *
-   */
-  void worldTargetCoP(const Eigen::Vector3d & worldCoP);
-
-  /*! \brief Set CoP target in world frame
-   *
-   * \param worldCoP New target
-   *
-   */
-  void worldTargetCoP(const Eigen::Vector3d & worldCoP);
-
   /*! \brief Set targent wrench to zero.
    *
    */
@@ -193,8 +131,6 @@ private:
   void update() override;
 
   using AdmittanceTask::targetWrench;
-
-  bool cop_tracking_disabled_ = false;
 };
 
 }
