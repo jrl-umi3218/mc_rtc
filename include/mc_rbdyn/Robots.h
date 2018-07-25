@@ -132,6 +132,9 @@ public:
   Robot & robot(size_t idx);
   const Robot & robot(size_t idx) const;
 
+  Robot & robot(const std::string& name);
+  const Robot & robot(const std::string& name) const;
+
   /** @name Iterators
    *
    * These functions provide an iterator interface to Robots

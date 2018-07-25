@@ -61,7 +61,7 @@ AdmittanceTask::AdmittanceTask(const std::string & surfaceName,
       const mc_rbdyn::Robots & robots,
       unsigned int robotIndex,
       double stiffness, double weight)
-  : SurfaceTransformTask(surfaceName, robots, robotIndex, stiffness, weight), 
+  : SurfaceTransformTask(surfaceName, robots, robotIndex, stiffness, weight),
     robot_(robots.robots()[robotIndex]),
     surface_(robots.robot(robotIndex).surface(surfaceName)),
     sensor_(robot_.bodyForceSensor(surface_.bodyName())),
@@ -209,8 +209,10 @@ void AdmittanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
     mc_rtc::gui::ArrayInput("wrench",
                             {"cx", "cy", "cz", "fx", "fy", "fz"},
                             [this]() { return this->targetWrench().vector(); },
-                            [this](const Eigen::Vector6d & a) { this->targetWrench(a); })
-  );
+                            [this](const Eigen::Vector6d & a) { this->targetWrench(a); }),
+    mc_rtc::gui::ArrayLabel("measured_wrench",
+                            {"cx", "cy", "cz", "fx", "fy", "fz"},
+                            [this]() { return this->measuredWrench().vector(); }));
   // Don't add SurfaceTransformTask as target configuration is different
   TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::addToGUI(gui);
 }
@@ -226,7 +228,21 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function("admit
   {
     auto t = std::make_shared<mc_tasks::AdmittanceTask>(config("surface"), solver.robots(), config("robotIndex"));
     if(config.has("admittance")) { t->admittance(config("admittance")); }
-    if(config.has("pose")) { t->targetPose(config("pose")); }
+    if(config.has("damping")) {
+      double d = config("damping");
+      t->damping(d);
+    }
+
+    if(config.has("targetSurface"))
+    {
+      const auto& c = config("targetSurface");
+      t->targetSurface(
+          c("robotIndex"), c("surface"),
+          {c("offset_rotation", Eigen::Matrix3d::Identity().eval()),
+           c("offset_translation", Eigen::Vector3d::Zero().eval())});
+    }
+    else if(config.has("targetPose")) { t->targetPose(config("targetPose")); }
+    if(config.has("weight")) { t->weight(config("weight")); }
     if(config.has("wrench")) { t->targetWrench(config("wrench")); }
     t->load(solver, config);
     return t;

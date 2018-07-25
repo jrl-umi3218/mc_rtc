@@ -129,7 +129,16 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function("cop",
     if(config.has("admittance")) { t->admittance(config("admittance")); }
     if(config.has("cop")) { t->targetCoP(config("cop")); }
     if(config.has("force")) { t->targetForce(config("force")); }
-    if(config.has("pose")) { t->targetPose(config("pose")); }
+    if(config.has("targetSurface"))
+    {
+      const auto& c = config("targetSurface");
+      t->targetSurface(
+          c("robotIndex"), c("surface"),
+          {c("offset_rotation", Eigen::Matrix3d::Identity().eval()),
+           c("offset_translation", Eigen::Vector3d::Zero().eval())});
+    }
+    else if(config.has("targetPose")) { t->targetPose(config("targetPose")); }
+    if(config.has("weight")) { t->weight(config("weight")); }
     t->load(solver, config);
     return t;
   }
