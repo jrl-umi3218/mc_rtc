@@ -219,6 +219,7 @@ public:
    * @throws If no sensor is attached to this surface
    */
   sva::ForceVecd surfaceWrench(const std::string& surfaceName) const;
+
   /**
    * @brief Compute the cop in surface frame
    *
@@ -229,6 +230,16 @@ public:
    * @throws If no sensor is attached to this surface
    */
   Eigen::Vector2d cop(const std::string& surfaceName, double min_pressure=0.5) const;
+  /**
+   * @brief Compute the cop in inertial frame
+   *
+   * @param surfaceName A surface attached to a force sensor
+   *
+   * @return Measured cop in inertial frame
+   *
+   * @throws If no sensor is attached to this surface
+   */
+  Eigen::Vector3d copW(const std::string& surfaceName, double min_pressure=0.5) const;
 
   /** Access the robot's angular lower limits (const) */
   const std::vector<std::vector<double>> & ql() const;

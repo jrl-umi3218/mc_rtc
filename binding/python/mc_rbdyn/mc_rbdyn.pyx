@@ -574,6 +574,10 @@ cdef class Robot(object):
       self.__is_valid()
       return eigen.Vector2dFromC(self.impl.cop(surfaceName, min_pressure))
 
+  def copW(self, Robot robot, string surfaceName, double min_pressure):
+      self.__is_valid()
+      return eigen.Vector3dFromC(self.impl.copW(surfaceName,min_pressure))
+
 
   property mb:
     def __get__(self):

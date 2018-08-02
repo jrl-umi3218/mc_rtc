@@ -478,6 +478,14 @@ Eigen::Vector2d Robot::cop(const std::string& surfaceName, double min_pressure) 
   return fs.cop(*this, surfaceName, min_pressure);
 }
 
+Eigen::Vector3d Robot::copW(const std::string& surfaceName, double min_pressure) const
+{
+  Eigen::Vector3d cop_s;
+  cop_s << cop("LeftFoot", min_pressure), 0.;
+  const sva::PTransformd X_0_s = surface(surfaceName).X_0_s(*this);
+  return X_0_s.translation() + X_0_s.rotation().inverse() * cop_s;
+}
+
 const std::vector<std::vector<double>> & Robot::ql() const
 {
   return ql_;

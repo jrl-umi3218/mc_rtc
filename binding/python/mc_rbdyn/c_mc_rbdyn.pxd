@@ -193,6 +193,7 @@ cdef extern from "<mc_rbdyn/Robot.h>" namespace "mc_rbdyn":
 
     ForceVecd surfaceWrench(string)
     Vector2d cop(string,double)
+    Vector3d copW(string,double)
 
     const vector[Flexibility]& flexibility()
 
