@@ -192,7 +192,7 @@ const sva::ForceVecd & ForceSensor::offset() const
   return calibration_->offset();
 }
 
-const sva::ForceVecd ForceSensor::removeGravity(const mc_rbdyn::Robot & robot) const
+const sva::ForceVecd ForceSensor::wrenchWithoutGravity(const mc_rbdyn::Robot & robot) const
 {
   sva::PTransformd X_0_p = robot.mbc().bodyPosW[robot.bodyIndexByName(parentBody_)];
   auto w = wrench_ - calibration_->wfToSensor(X_0_p, X_p_f_);
@@ -201,9 +201,17 @@ const sva::ForceVecd ForceSensor::removeGravity(const mc_rbdyn::Robot & robot) c
 
 sva::ForceVecd ForceSensor::worldWrench(const mc_rbdyn::Robot & robot) const
 {
+  sva::ForceVecd w_fsactual = wrenchWithoutGravity(robot);
   sva::PTransformd X_parent_0 = robot.mbc().bodyPosW[robot.bodyIndexByName(parentBody_)].inv();
   sva::PTransformd X_fsactual_0 = X_parent_0 * X_fsactual_parent();
-  return X_fsactual_0.dualMul(wrench_);
+  return X_fsactual_0.dualMul(w_fsactual);
+}
+
+sva::ForceVecd ForceSensor::surfaceWrench(const mc_rbdyn::Robot & robot, const std::string& surfaceName) const
+{
+  sva::ForceVecd w_fsactual = wrenchWithoutGravity(robot);
+  sva::PTransformd X_fsactual_surf = robot.surface(surfaceName).X_b_s() * X_fsactual_parent();
+  return X_fsactual_surf.dualMul(w_fsactual);
 }
 
 }

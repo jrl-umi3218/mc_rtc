@@ -95,7 +95,7 @@ void ComplianceTask::update()
 {
   error_ = wrench_;
   /* Get wrench, remove gravity, use dof_ to deactivate some axis */
-  wrench_ = sensor_.removeGravity(robot_);
+  wrench_ = sensor_.wrenchWithoutGravity(robot_);
   wrench_ = sva::ForceVecd(dof_*(wrench_ - obj_).vector());
   errorD_ = (wrench_ - error_)/timestep_;
   efTask_->set_ef_pose(computePose());

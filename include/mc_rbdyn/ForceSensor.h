@@ -81,7 +81,7 @@ public:
    */
   void wrench(const sva::ForceVecd & wrench);
 
-  /** Return measured wrench in the inertial frame
+  /** Return measured gravity-free wrench in the inertial frame
    *
    * @param robot Robot that the sensor belongs to
    *
@@ -89,6 +89,15 @@ public:
    *
    */
   sva::ForceVecd worldWrench(const mc_rbdyn::Robot & robot) const;
+
+  /**
+   * Return measured gravity-free wrench in surface frame
+   *
+   * @param robot Robot that the sensor belongs to
+   *
+   * @return w_s Force vector of measured wrench in surface frame
+   */
+  sva::ForceVecd surfaceWrench(const mc_rbdyn::Robot & robot, const std::string& surfaceName) const;
 
   /** @name Calibration
    *
@@ -131,7 +140,7 @@ public:
    * @returns A gravity-free reading of the wrench
    *
    */
-  const sva::ForceVecd removeGravity(const mc_rbdyn::Robot & robot) const;
+  const sva::ForceVecd wrenchWithoutGravity(const mc_rbdyn::Robot & robot) const;
 
   /** @} */
   /* End of Calibration group */

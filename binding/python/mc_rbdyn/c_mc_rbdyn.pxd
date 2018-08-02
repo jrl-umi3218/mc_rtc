@@ -67,7 +67,9 @@ cdef extern from "<mc_rbdyn/ForceSensor.h>" namespace "mc_rbdyn":
     const PTransformd & X_p_f()
     const ForceVecd & wrench()
     double mass()
-    ForceVecd removeGravity(const Robot &)
+    ForceVecd wrenchWithoutGravity(const Robot &)
+    ForceVecd worldWrench(const Robot &)
+    ForceVecd surfaceWrench(const Robot &, const string&)
 
 cdef extern from "<mc_rbdyn/Springs.h>" namespace "mc_rbdyn":
   cdef cppclass Springs:

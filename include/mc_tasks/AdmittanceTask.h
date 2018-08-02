@@ -149,8 +149,7 @@ public:
    */
   sva::ForceVecd measuredWrench() const
   {
-    sva::ForceVecd w_fsactual = sensor_.removeGravity(robot_);
-    return X_fsactual_surf_.dualMul(w_fsactual);
+    return sensor_.surfaceWrench(robot_, surface_.name());
   }
 
   /*! \brief Get the measured pressure in the surface frame
