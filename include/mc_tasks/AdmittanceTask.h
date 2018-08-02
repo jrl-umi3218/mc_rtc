@@ -213,7 +213,6 @@ protected:
   const mc_rbdyn::Robot & robot_;
   const mc_rbdyn::Surface & surface_;
   const mc_rbdyn::ForceSensor & sensor_;
-  const sva::PTransformd X_fsactual_surf_;
   std::map<char, bool> isClampingAngularVel_ = {{'x', false}, {'y', false}, {'z', false}};
   std::map<char, bool> isClampingLinearVel_ = {{'x', false}, {'y', false}, {'z', false}};
   sva::ForceVecd admittance_ = sva::ForceVecd(Eigen::Vector6d::Zero());
