@@ -209,6 +209,27 @@ public:
   /** Compute and returns the current robot's CoM acceleration */
   Eigen::Vector3d comAcceleration() const;
 
+  /**
+   * @brief Compute the gravity-free wrench in surface frame
+   *
+   * @param surfaceName A surface attached to a force sensor
+   *
+   * @return Measured wrench in surface frame
+   *
+   * @throws If no sensor is attached to this surface
+   */
+  sva::ForceVecd surfaceWrench(const std::string& surfaceName) const;
+  /**
+   * @brief Compute the cop in surface frame
+   *
+   * @param surfaceName A surface attached to a force sensor
+   *
+   * @return Measured cop in surface frame
+   *
+   * @throws If no sensor is attached to this surface
+   */
+  Eigen::Vector2d cop(const std::string& surfaceName, double min_pressure=0.5) const;
+
   /** Access the robot's angular lower limits (const) */
   const std::vector<std::vector<double>> & ql() const;
   /** Access the robot's angular upper limits (const) */

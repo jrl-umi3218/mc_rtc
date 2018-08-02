@@ -95,9 +95,26 @@ public:
    *
    * @param robot Robot that the sensor belongs to
    *
+   * @param surfaceName Name of the surface wrt to which the wrench will be
+   * computed
+   *
    * @return w_s Force vector of measured wrench in surface frame
    */
   sva::ForceVecd surfaceWrench(const mc_rbdyn::Robot & robot, const std::string& surfaceName) const;
+
+
+  /**
+   * Return the CoP in surface frame
+   *
+   * @param robot Robot that the sensor belongs to
+   * @param surfaceName Name of the surface wrt which the CoP will be computed
+   * @param min_pressure Minimum pressure in N (default 0.5N).
+   *
+   * @return
+   *  - CoP if pressure >= min_pressure
+   *  - Zero otherwise
+   */
+  Eigen::Vector2d cop(const mc_rbdyn::Robot & robot, const std::string& surfaceName, const double min_pressure=0.5) const;
 
   /** @name Calibration
    *

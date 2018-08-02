@@ -214,4 +214,16 @@ sva::ForceVecd ForceSensor::surfaceWrench(const mc_rbdyn::Robot & robot, const s
   return X_fsactual_surf.dualMul(w_fsactual);
 }
 
+Eigen::Vector2d ForceSensor::cop(const mc_rbdyn::Robot & robot, const std::string& surfaceName, const double min_pressure) const
+{
+  const sva::ForceVecd w_surf = surfaceWrench(robot, surfaceName);
+  const double pressure = w_surf.force()(2);
+  if (pressure < min_pressure)
+  {
+    return Eigen::Vector2d::Zero();
+  }
+  const Eigen::Vector3d tau_surf = w_surf.couple();
+  return Eigen::Vector2d(-tau_surf(1) / pressure, +tau_surf(0) / pressure);
+}
+
 }

@@ -200,6 +200,8 @@ cdef class ForceSensor(object):
     return sva.ForceVecdFromC(self.impl.worldWrench(deref(robot.impl)))
   def surfaceWrench(self, Robot robot, string surfaceName):
     return sva.ForceVecdFromC(self.impl.surfaceWrench(deref(robot.impl),surfaceName))
+  def cop(self, Robot robot, string surfaceName, double min_pressure):
+    return eigen.Vector2dFromC(self.impl.cop(deref(robot.impl),surfaceName,min_pressure))
 
 cdef ForceSensor ForceSensorFromRef(c_mc_rbdyn.ForceSensor & fs):
     cdef ForceSensor ret = ForceSensor(skip_alloc = True)
@@ -563,6 +565,15 @@ cdef class Robot(object):
   def bodyBodySensor(self, name):
     self.__is_valid()
     return BodySensorFromRef(self.impl.bodyBodySensor(name))
+
+  def surfaceWrench(self, string surfaceName):
+      self.__is_valid()
+      return sva.ForceVecdFromC(self.impl.surfaceWrench(surfaceName))
+
+  def cop(self, string surfaceName, double min_pressure):
+      self.__is_valid()
+      return eigen.Vector2dFromC(self.impl.cop(surfaceName, min_pressure))
+
 
   property mb:
     def __get__(self):

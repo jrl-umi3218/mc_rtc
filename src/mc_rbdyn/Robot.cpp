@@ -464,6 +464,20 @@ Eigen::Vector3d Robot::comAcceleration() const
   return rbd::computeCoMAcceleration(mb(), mbc());
 }
 
+sva::ForceVecd Robot::surfaceWrench(const std::string& surfaceName) const
+{
+  const auto& bodyName = surface(surfaceName).bodyName();
+  const auto& fs = bodyForceSensor(bodyName);
+  return fs.surfaceWrench(*this, surfaceName);
+}
+
+Eigen::Vector2d Robot::cop(const std::string& surfaceName, double min_pressure) const
+{
+  const auto& bodyName = surface(surfaceName).bodyName();
+  const auto& fs = bodyForceSensor(bodyName);
+  return fs.cop(*this, surfaceName, min_pressure);
+}
+
 const std::vector<std::vector<double>> & Robot::ql() const
 {
   return ql_;
