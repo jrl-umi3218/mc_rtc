@@ -85,6 +85,13 @@ struct MC_CONTROL_DLLAPI Controller : public MCController
 
   bool run() override;
 
+  /** Can be called in derived class to run the FSM with a different feedback strategy
+   *
+   * \param fType Type of feedback used in the solver
+   *
+   */
+  bool run(mc_solver::FeedbackType fType);
+
   void reset(const ControllerResetData & data) override;
 
   bool play_next_stance() override;

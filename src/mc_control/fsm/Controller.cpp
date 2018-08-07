@@ -225,6 +225,11 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
 
 bool Controller::run()
 {
+  return run(mc_solver::FeedbackType::None);
+}
+
+bool Controller::run(mc_solver::FeedbackType fType)
+{
   if(contacts_changed_)
   {
     std::vector<mc_rbdyn::Contact> contacts;
@@ -271,7 +276,7 @@ bool Controller::run()
       teardownIdleState();
     }
   }
-  return MCController::run();
+  return MCController::run(fType);
 }
 
 void Controller::reset(const ControllerResetData & data)
