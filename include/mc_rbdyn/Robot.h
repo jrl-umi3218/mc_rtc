@@ -46,7 +46,7 @@ public:
 
   /** Retrieve the associated RobotModule */
   const RobotModule & module() const;
- 
+
   /** @name Body sensors
    *
    * These functions are related to force sensors
@@ -209,8 +209,7 @@ public:
   /** Compute and returns the current robot's CoM acceleration */
   Eigen::Vector3d comAcceleration() const;
 
-  /**
-   * @brief Compute the gravity-free wrench in surface frame
+  /** Compute the gravity-free wrench in surface frame
    *
    * @param surfaceName A surface attached to a force sensor
    *
@@ -218,10 +217,9 @@ public:
    *
    * @throws If no sensor is attached to this surface
    */
-  sva::ForceVecd surfaceWrench(const std::string& surfaceName) const;
+  sva::ForceVecd surfaceWrench(const std::string & surfaceName) const;
 
-  /**
-   * @brief Compute the cop in surface frame
+  /** Compute the cop in surface frame
    *
    * @param surfaceName A surface attached to a force sensor
    *
@@ -229,9 +227,8 @@ public:
    *
    * @throws If no sensor is attached to this surface
    */
-  Eigen::Vector2d cop(const std::string& surfaceName, double min_pressure=0.5) const;
-  /**
-   * @brief Compute the cop in inertial frame
+  Eigen::Vector2d cop(const std::string & surfaceName, double min_pressure=0.5) const;
+  /** Compute the cop in inertial frame
    *
    * @param surfaceName A surface attached to a force sensor
    *
@@ -239,7 +236,22 @@ public:
    *
    * @throws If no sensor is attached to this surface
    */
-  Eigen::Vector3d copW(const std::string& surfaceName, double min_pressure=0.5) const;
+  Eigen::Vector3d copW(const std::string & surfaceName, double min_pressure=0.5) const;
+
+  /** Computes the ZMP from force sensor measurements
+   *
+   * @param sensorsName List of sensor name to consider
+   * @param plane_p A point on the ZMP plane
+   * @param plane_n Normal vector to the ZMP plane
+   * @param forceThreshold Threshold below which the force is ignored
+   *
+   * @return The ZMP measured from force sensors in a desired plane.
+   *
+   * @throws To prevent dividing by zero, throws if the projected force is below 1 Newton.
+   * This is highly unlikely and would indicate linkely indicate that you are computing a ZMP from
+   * invalid forces.
+   */
+  Eigen::Vector3d zmp(const std::vector<std::string> & sensorsName, const Eigen::Vector3d & plane_p, const Eigen::Vector3d & plane_n, double forceThreshold = 5.) const;
 
   /** Access the robot's angular lower limits (const) */
   const std::vector<std::vector<double>> & ql() const;
@@ -272,12 +284,20 @@ public:
   std::vector<Flexibility> & flexibility();
 
 
-  /** Set the zmp of the robot */
-  void zmp(const Eigen::Vector3d & zmp);
+  /** Set the target zmp defined with respect to base-link. This target is intended to be used by an external stabilizer such as Kawada's
+   *
+   * @param zmp Note that usually the ZMP is a 2-vector assuming a perfectly
+   * flat ground. The convention here is that the ground is at (tz=0). Therefore
+   * the target zmp should be defined as (ZMPx, ZMPy, -zbaselink)
+   */
+  void zmpTarget(const Eigen::Vector3d & zmp);
 
-  /** Returns the zmp of the robot */
-  const Eigen::Vector3d & zmp() const;
-  
+  /** Returns the target zmp
+  *
+  * @return Target ZMP. See zmpTarget(Eigen::Vector3d) for details.
+  */
+  const Eigen::Vector3d & zmpTarget() const;
+
   /** Compute and returns the mass of the robot */
   double mass() const;
 

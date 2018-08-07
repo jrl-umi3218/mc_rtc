@@ -429,9 +429,9 @@ void QPSolver::__fillResult()
     }
     qpRes.robots_state[i].alphaDVec = solver.alphaDVec(static_cast<int>(i));
 
-    qpRes.zmps[i].x = robot.zmp().x();
-    qpRes.zmps[i].y = robot.zmp().y();
-    qpRes.zmps[i].z = robot.zmp().z();
+    qpRes.zmps[i].x = robot.zmpTarget().x();
+    qpRes.zmps[i].y = robot.zmpTarget().y();
+    qpRes.zmps[i].z = robot.zmpTarget().z();
   }
   qpRes.lambdaVec = solver.lambdaVec();
 

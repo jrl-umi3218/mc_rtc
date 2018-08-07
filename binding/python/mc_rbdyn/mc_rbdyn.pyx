@@ -198,9 +198,9 @@ cdef class ForceSensor(object):
     return sva.ForceVecdFromC(self.impl.wrenchWithoutGravity(deref(robot.impl)))
   def worldWrench(self, Robot robot):
     return sva.ForceVecdFromC(self.impl.worldWrench(deref(robot.impl)))
-  def surfaceWrench(self, Robot robot, string surfaceName):
+  def surfaceWrench(self, Robot robot, surfaceName):
     return sva.ForceVecdFromC(self.impl.surfaceWrench(deref(robot.impl),surfaceName))
-  def cop(self, Robot robot, string surfaceName, double min_pressure):
+  def cop(self, Robot robot, surfaceName, min_pressure):
     return eigen.Vector2dFromC(self.impl.cop(deref(robot.impl),surfaceName,min_pressure))
 
 cdef ForceSensor ForceSensorFromRef(c_mc_rbdyn.ForceSensor & fs):
@@ -570,13 +570,17 @@ cdef class Robot(object):
       self.__is_valid()
       return sva.ForceVecdFromC(self.impl.surfaceWrench(surfaceName))
 
-  def cop(self, string surfaceName, double min_pressure):
+  def cop(self, surfaceName, min_pressure):
       self.__is_valid()
       return eigen.Vector2dFromC(self.impl.cop(surfaceName, min_pressure))
 
-  def copW(self, Robot robot, string surfaceName, double min_pressure):
+  def copW(self, Robot robot, surfaceName, min_pressure):
       self.__is_valid()
       return eigen.Vector3dFromC(self.impl.copW(surfaceName,min_pressure))
+
+  def zmp(self, sensorsName, eigen.Vector3d plane_p, eigen.Vector3d plane_n, forceThreshold):
+      self.__is_valid()
+      return eigen.Vector3dFromC(self.impl.zmp(sensorsName, plane_p, plane_n, forceThreshold))
 
 
   property mb:

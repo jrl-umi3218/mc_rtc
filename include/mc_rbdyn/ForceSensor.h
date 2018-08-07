@@ -100,7 +100,7 @@ public:
    *
    * @return w_s Force vector of measured wrench in surface frame
    */
-  sva::ForceVecd surfaceWrench(const mc_rbdyn::Robot & robot, const std::string& surfaceName) const;
+  sva::ForceVecd surfaceWrench(const mc_rbdyn::Robot & robot, const std::string & surfaceName) const;
 
 
   /**
@@ -114,7 +114,7 @@ public:
    *  - CoP if pressure >= min_pressure
    *  - Zero otherwise
    */
-  Eigen::Vector2d cop(const mc_rbdyn::Robot & robot, const std::string& surfaceName, const double min_pressure=0.5) const;
+  Eigen::Vector2d cop(const mc_rbdyn::Robot & robot, const std::string & surfaceName, double min_pressure=0.5) const;
 
   /** @name Calibration
    *

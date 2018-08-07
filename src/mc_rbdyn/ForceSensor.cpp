@@ -207,14 +207,14 @@ sva::ForceVecd ForceSensor::worldWrench(const mc_rbdyn::Robot & robot) const
   return X_fsactual_0.dualMul(w_fsactual);
 }
 
-sva::ForceVecd ForceSensor::surfaceWrench(const mc_rbdyn::Robot & robot, const std::string& surfaceName) const
+sva::ForceVecd ForceSensor::surfaceWrench(const mc_rbdyn::Robot & robot, const std::string & surfaceName) const
 {
   sva::ForceVecd w_fsactual = wrenchWithoutGravity(robot);
   sva::PTransformd X_fsactual_surf = robot.surface(surfaceName).X_b_s() * X_fsactual_parent();
   return X_fsactual_surf.dualMul(w_fsactual);
 }
 
-Eigen::Vector2d ForceSensor::cop(const mc_rbdyn::Robot & robot, const std::string& surfaceName, const double min_pressure) const
+Eigen::Vector2d ForceSensor::cop(const mc_rbdyn::Robot & robot, const std::string & surfaceName, double min_pressure) const
 {
   const sva::ForceVecd w_surf = surfaceWrench(robot, surfaceName);
   const double pressure = w_surf.force()(2);
