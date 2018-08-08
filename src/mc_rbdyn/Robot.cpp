@@ -471,14 +471,14 @@ sva::ForceVecd Robot::surfaceWrench(const std::string& surfaceName) const
   return fs.surfaceWrench(*this, surfaceName);
 }
 
-Eigen::Vector2d Robot::cop(const std::string& surfaceName, double min_pressure) const
+Eigen::Vector2d Robot::cop(const std::string & surfaceName, double min_pressure) const
 {
   const auto& bodyName = surface(surfaceName).bodyName();
   const auto& fs = bodyForceSensor(bodyName);
   return fs.cop(*this, surfaceName, min_pressure);
 }
 
-Eigen::Vector3d Robot::copW(const std::string& surfaceName, double min_pressure) const
+Eigen::Vector3d Robot::copW(const std::string & surfaceName, double min_pressure) const
 {
   Eigen::Vector3d cop_s;
   cop_s << cop("LeftFoot", min_pressure), 0.;
@@ -493,15 +493,15 @@ Eigen::Vector3d Robot::zmp(const std::vector<std::string> & sensorsName, const E
   sva::ForceVecd measuredWrench{Eigen::Vector6d::Zero()};
   for (const auto& sensorName : sensorsName)
   {
-    const auto& sensor = forceSensor(sensorName);
+    const auto & sensor = forceSensor(sensorName);
     if (sensor.force().norm() > forceThreshold)
     {
       measuredWrench += sensor.worldWrench(*this);
     }
   }
 
-  const Eigen::Vector3d& force = measuredWrench.force();
-  const Eigen::Vector3d& moment_0 = measuredWrench.couple();
+  const Eigen::Vector3d & force = measuredWrench.force();
+  const Eigen::Vector3d & moment_0 = measuredWrench.couple();
 
   Eigen::Vector3d moment_p = moment_0 - plane_p.cross(force);
   double floorn_dot_force = plane_n.dot(force);

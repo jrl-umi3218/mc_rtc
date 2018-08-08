@@ -227,7 +227,7 @@ public:
    *
    * @throws If no sensor is attached to this surface
    */
-  Eigen::Vector2d cop(const std::string & surfaceName, double min_pressure=0.5) const;
+  Eigen::Vector2d cop(const std::string & surfaceName, double min_pressure = 0.5) const;
   /** Compute the cop in inertial frame
    *
    * @param surfaceName A surface attached to a force sensor
@@ -236,7 +236,7 @@ public:
    *
    * @throws If no sensor is attached to this surface
    */
-  Eigen::Vector3d copW(const std::string & surfaceName, double min_pressure=0.5) const;
+  Eigen::Vector3d copW(const std::string & surfaceName, double min_pressure = 0.5) const;
 
   /** Computes the ZMP from force sensor measurements
    *

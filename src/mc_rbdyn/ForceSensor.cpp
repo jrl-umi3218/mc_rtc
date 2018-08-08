@@ -222,7 +222,7 @@ Eigen::Vector2d ForceSensor::cop(const mc_rbdyn::Robot & robot, const std::strin
   {
     return Eigen::Vector2d::Zero();
   }
-  const Eigen::Vector3d tau_surf = w_surf.couple();
+  const Eigen::Vector3d & tau_surf = w_surf.couple();
   return Eigen::Vector2d(-tau_surf(1) / pressure, +tau_surf(0) / pressure);
 }
 
