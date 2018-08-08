@@ -578,9 +578,9 @@ cdef class Robot(object):
       self.__is_valid()
       return eigen.Vector3dFromC(self.impl.copW(surfaceName,min_pressure))
 
-  def zmp(self, sensorsName, eigen.Vector3d plane_p, eigen.Vector3d plane_n, forceThreshold):
+  def zmp(self, vector[string] sensorsName, eigen.Vector3d plane_p, eigen.Vector3d plane_n, forceThreshold):
       self.__is_valid()
-      return eigen.Vector3dFromC(self.impl.zmp(sensorsName, plane_p, plane_n, forceThreshold))
+      return eigen.Vector3dFromC(self.impl.zmp(sensorsName, plane_p.impl, plane_n.impl, forceThreshold))
 
 
   property mb:
