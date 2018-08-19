@@ -682,7 +682,7 @@ void Robot::fixCollisionTransforms()
 {
   for(auto & ct : collisionTransforms_)
   {
-    assert(bodyTransforms_.count(ct.first));
+    //assert(bodyTransforms_.size(ct.first));
     const auto & trans = bodyTransform(ct.first);
     ct.second = ct.second * trans;
   }
