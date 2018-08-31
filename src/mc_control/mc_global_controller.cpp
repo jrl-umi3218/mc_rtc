@@ -337,31 +337,66 @@ bool MCGlobalController::run()
     }
   }
   const auto & real_q = robot().encoderValues();
+  const auto & real_alpha = robot().encoderVelocities();
   if(config.update_real && real_q.size() > 0)
   {
     auto & real_robot = real_robots->robot();
-    // Update free flyer
+    // Set all joint values and velocities from encoders
+    int i = 0;
+    for(const auto& ref_joint : config.main_robot_module->ref_joint_order())
+    {
+      if(real_robot.hasJoint(ref_joint))
+      {
+        const auto joint_index = real_robot.mb().jointIndexByName(ref_joint);
+        if(!real_q.empty())
+        {
+          real_robot.mbc().q[joint_index][0] = real_q[i];
+        }
+        if(!real_alpha.empty())
+        {
+          real_robot.mbc().alpha[joint_index][0] = real_alpha[i];
+        }
+      }
+      i++;
+    }
+    rbd::forwardKinematics(real_robot.mb(), real_robot.mbc());
+    rbd::forwardVelocity(real_robot.mb(), real_robot.mbc());
 
+    // Update free flyer from control robot
     if(!config.update_real_from_sensors)
     {
       real_robot.mbc().q[0] = robot().mbc().q[0];
     }
     else
-    {
-      const auto & qt = robot().bodySensor().orientation().inverse();
-      const auto & t = robot().bodySensor().position();
-      real_robot.mbc().q[0] = {qt.w(), qt.x(), qt.y(), qt.z(), t.x(), t.y(), t.z()};
-    }
-    // Set all joints to encoder values
-    int i = 0;
-    for(const auto & ref_joint : config.main_robot_module->ref_joint_order())
-    {
-      if(real_robot.hasJoint(ref_joint))
+    { // Update free flyer from body sensor
+      // Note that if the body to which the sensor is attached is not the
+      // floating base, the kinematic transformation between that body and the
+      // floating base is used to obtain the floating base pose.
+      // It is assumed here that the floating base sensor and encoders are
+      // synchronized.
+      const auto & sensor = robot().bodySensor(config.update_real_sensor_name);
+      const auto & fb = robot().mb().body(0).name();
+      sva::PTransformd X_0_s(sensor.orientation(), sensor.position());
+      sva::PTransformd X_b_s = sensor.X_b_s();
+      sva::PTransformd X_fb_b = real_robots->robot().relBodyPosW(sensor.parentBody(), fb);
+      sva::PTransformd X_s_fb = X_fb_b.inv() * X_b_s.inv();
+      sva::PTransformd X_0_fb = X_s_fb * X_0_s;
+
+      Eigen::Quaterniond qt(X_0_fb.rotation().inverse());
+      qt.normalize();
+      Eigen::Vector3d t(X_0_fb.translation());
+      real_robot.mbc().q[0] = {
+        qt.w(), qt.x(), qt.y(), qt.z(),
+        t.x(), t.y(), t.z()
+      };
+
+      sva::MotionVecd sensorVel(sensor.angularVelocity(), sensor.linearVelocity());
+      sva::MotionVecd fbVel = X_s_fb * sensorVel;
+      real_robot.mbc().alpha[0] =
       {
-        const auto joint_index = real_robot.mb().jointIndexByName(ref_joint);
-        real_robot.mbc().q[joint_index][0] = real_q[i];
-      }
-      i++;
+        fbVel.angular().x(), fbVel.angular().y(), fbVel.angular().z(),
+        fbVel.linear().x(), fbVel.linear().y(), fbVel.linear().z()
+      };
     }
     rbd::forwardKinematics(real_robot.mb(), real_robot.mbc());
     rbd::forwardVelocity(real_robot.mb(), real_robot.mbc());

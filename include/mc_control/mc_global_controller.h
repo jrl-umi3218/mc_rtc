@@ -474,6 +474,7 @@ private:
 
     bool update_real = true;
     bool update_real_from_sensors = false;
+    std::string update_real_sensor_name;
 
     bool publish_control_state = true;
     bool publish_env_state = true;

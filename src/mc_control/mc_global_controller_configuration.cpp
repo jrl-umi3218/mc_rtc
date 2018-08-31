@@ -115,6 +115,14 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   }
   config("UpdateReal", update_real);
   config("UpdateRealFromSensors", update_real_from_sensors);
+  if(config.has("UpdateRealSensorName"))
+  {
+    config("UpdateRealSensorName", update_real_sensor_name);
+  }
+  else
+  {
+    update_real_sensor_name = main_robot_module->bodySensors()[0].name();
+  }
   config("Default", initial_controller);
   config("Timestep", timestep);
   config("PublishControlState", publish_control_state);

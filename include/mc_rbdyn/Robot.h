@@ -56,7 +56,7 @@ public:
 
   /** Return the first BodySensor in the robot
    *
-   * If the robot does not have body sensors, it returns a defautl
+   * If the robot does not have body sensors, it returns a default
    * (invalid) one
    *
    */
@@ -180,9 +180,17 @@ public:
 
   /** Access the position of body \p name in world coordinates
    *
-   * \throws If the body doest not exist within the robot
+   * \throws If the body does not exist within the robot
    */
   const sva::PTransformd & bodyPosW(const std::string & name) const;
+
+  /** Relative transformation X_b1_b2 from body b1 to body b2
+   *
+   * \param b1 name of first body
+   * \param b2 name of second body
+   * \throws If b1 or b2 does not exist within the robot
+   */
+  sva::PTransformd relBodyPosW(const std::string & b1, const std::string & b2) const;
 
   /** Access the velocity of body \p name in world coordinates
    *

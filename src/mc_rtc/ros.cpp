@@ -176,8 +176,8 @@ void RobotPublisherImpl::init(const mc_rbdyn::Robot & robot)
     }
   }
 
-  data.odom.header.frame_id = robot.bodySensor().parentBody();
-  data.odom.child_frame_id = "robot_odom";
+  data.odom.header.frame_id = "robot_map";
+  data.odom.child_frame_id = prefix + robot.bodySensor().parentBody();
 
   auto id = sva::PTransformd::Identity();
   data.tfs.push_back(PT2TF(id, tm, "robot_map", prefix + robot.mb().body(0).name(), 0));
