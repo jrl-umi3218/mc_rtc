@@ -190,7 +190,7 @@ public:
    * \param b2 name of second body
    * \throws If b1 or b2 does not exist within the robot
    */
-  sva::PTransformd relBodyPosW(const std::string & b1, const std::string & b2) const;
+  sva::PTransformd X_b1_b2(const std::string & b1, const std::string & b2) const;
 
   /** Access the velocity of body \p name in world coordinates
    *

@@ -422,7 +422,7 @@ const sva::PTransformd & Robot::bodyPosW(const std::string & name) const
   return bodyPosW()[bodyIndexByName(name)];
 }
 
-sva::PTransformd Robot::relBodyPosW(const std::string & b1, const std::string & b2) const
+sva::PTransformd Robot::X_b1_b2(const std::string & b1, const std::string & b2) const
 {
   return bodyPosW()[bodyIndexByName(b2)] * bodyPosW()[bodyIndexByName(b1)].inv();
 }
