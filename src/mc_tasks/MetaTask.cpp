@@ -43,11 +43,16 @@ void MetaTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   gui.addElement({"Tasks", name_},
                  mc_rtc::gui::Button("Reset", [this]() { this->reset(); }));
   gui.addElement({"Tasks", name_, "Details"},
-                 mc_rtc::gui::ArrayLabel("eval", [this]() { return this->eval(); }));
-  gui.addElement({"Tasks", name_, "Details"},
-                 mc_rtc::gui::ArrayLabel("speed", [this]() { return this->speed(); }));
-  gui.addElement({"Tasks", name_, "Details"},
+                 mc_rtc::gui::ArrayLabel("eval", [this]() { return this->eval(); }),
+                 mc_rtc::gui::ArrayLabel("speed", [this]() { return this->speed(); }),
                  mc_rtc::gui::Label("type", [this]() { return this->type_; }));
+  if(dimWeight().size())
+  {
+    gui.addElement({"Tasks", name_, "Gains"},
+                   mc_rtc::gui::ArrayInput("dimWeight",
+                                           [this]() { return this->dimWeight(); },
+                                           [this](const Eigen::VectorXd & v) { this->dimWeight(v); }));
+  }
 }
 
 void MetaTask::removeFromGUI(mc_rtc::gui::StateBuilder & gui)

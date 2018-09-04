@@ -76,9 +76,13 @@ namespace
 
 void configure_pos_task(std::shared_ptr<mc_tasks::PositionTask> & t,
                         mc_solver::QPSolver & solver,
-                        const mc_rtc::Configuration & config)
+                        const mc_rtc::Configuration & config,
+                        bool load_meta)
 {
-  t->load(solver, config);
+  if(load_meta)
+  {
+    t->load(solver, config);
+  }
   if(config.has("position"))
   {
     t->position(config("position"));
@@ -95,9 +99,13 @@ void configure_pos_task(std::shared_ptr<mc_tasks::PositionTask> & t,
 
 void configure_ori_task(std::shared_ptr<mc_tasks::OrientationTask> & t,
                         mc_solver::QPSolver & solver,
-                        const mc_rtc::Configuration & config)
+                        const mc_rtc::Configuration & config,
+                        bool load_meta)
 {
-  t->load(solver, config);
+  if(load_meta)
+  {
+    t->load(solver, config);
+  }
   if(config.has("orientation"))
   {
     t->orientation(config("orientation"));
@@ -116,7 +124,7 @@ mc_tasks::MetaTaskPtr load_orientation_task(mc_solver::QPSolver & solver,
                                             const mc_rtc::Configuration & config)
 {
   auto t = std::make_shared<mc_tasks::OrientationTask>(config("body"), solver.robots(), config("robotIndex"));
-  configure_ori_task(t, solver, config);
+  configure_ori_task(t, solver, config, true);
   t->load(solver, config);
   return t;
 }
@@ -133,7 +141,7 @@ mc_tasks::MetaTaskPtr load_position_task(mc_solver::QPSolver & solver,
   {
     t = std::make_shared<mc_tasks::PositionTask>(config("body"), solver.robots(), config("robotIndex"));
   }
-  configure_pos_task(t, solver, config);
+  configure_pos_task(t, solver, config, true);
   t->load(solver, config);
   return t;
 }
@@ -150,19 +158,8 @@ mc_tasks::MetaTaskPtr load_ef_task(mc_solver::QPSolver & solver,
   {
     t = std::make_shared<mc_tasks::EndEffectorTask>(config("body"), solver.robots(), config("robotIndex"));
   }
-  if(config.has("dimWeight"))
-  {
-    Eigen::VectorXd dimW = config("dimWeight");
-    if(dimW.size() != 6)
-    {
-      LOG_ERROR_AND_THROW(std::runtime_error, "Stored dimWeight has the wrong dimension (is " << dimW.size() << " should be 6")
-    }
-    t->orientationTask->dimWeight(dimW.head(3));
-    t->positionTask->dimWeight(dimW.tail(3));
-    const_cast<mc_rtc::Configuration&>(config).remove("dimWeight");
-  }
-  configure_pos_task(t->positionTask, solver, config);
-  configure_ori_task(t->orientationTask, solver, config);
+  configure_pos_task(t->positionTask, solver, config, false);
+  configure_ori_task(t->orientationTask, solver, config, false);
   t->load(solver, config);
   return t;
 }
@@ -179,19 +176,8 @@ mc_tasks::MetaTaskPtr load_relef_task(mc_solver::QPSolver & solver,
   {
     t = std::make_shared<mc_tasks::RelativeEndEffectorTask>(config("body"), solver.robots(), config("robotIndex"), config("relBody"));
   }
-  if(config.has("dimWeight"))
-  {
-    Eigen::VectorXd dimW = config("dimWeight");
-    if(dimW.size() != 6)
-    {
-      LOG_ERROR_AND_THROW(std::runtime_error, "Stored dimWeight has the wrong dimension (is " << dimW.size() << " should be 6")
-    }
-    t->orientationTask->dimWeight(dimW.head(3));
-    t->positionTask->dimWeight(dimW.tail(3));
-    const_cast<mc_rtc::Configuration&>(config).remove("dimWeight");
-  }
-  configure_pos_task(t->positionTask, solver, config);
-  configure_ori_task(t->orientationTask, solver, config);
+  configure_pos_task(t->positionTask, solver, config, false);
+  configure_ori_task(t->orientationTask, solver, config, false);
   t->set_ef_pose({t->orientationTask->orientation(),
                   t->positionTask->position()});
   t->load(solver, config);
