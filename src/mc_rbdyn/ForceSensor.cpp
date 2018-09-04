@@ -201,29 +201,18 @@ const sva::ForceVecd ForceSensor::wrenchWithoutGravity(const mc_rbdyn::Robot & r
 
 sva::ForceVecd ForceSensor::worldWrench(const mc_rbdyn::Robot & robot) const
 {
-  sva::ForceVecd w_fsactual = wrenchWithoutGravity(robot);
+  sva::ForceVecd w_fsactual = wrench();
   sva::PTransformd X_parent_0 = robot.mbc().bodyPosW[robot.bodyIndexByName(parentBody_)].inv();
   sva::PTransformd X_fsactual_0 = X_parent_0 * X_fsactual_parent();
   return X_fsactual_0.dualMul(w_fsactual);
 }
 
-sva::ForceVecd ForceSensor::surfaceWrench(const mc_rbdyn::Robot & robot, const std::string & surfaceName) const
+sva::ForceVecd ForceSensor::worldWrenchWithoutGravity(const mc_rbdyn::Robot & robot) const
 {
   sva::ForceVecd w_fsactual = wrenchWithoutGravity(robot);
-  sva::PTransformd X_fsactual_surf = robot.surface(surfaceName).X_b_s() * X_fsactual_parent();
-  return X_fsactual_surf.dualMul(w_fsactual);
-}
-
-Eigen::Vector2d ForceSensor::cop(const mc_rbdyn::Robot & robot, const std::string & surfaceName, double min_pressure) const
-{
-  const sva::ForceVecd w_surf = surfaceWrench(robot, surfaceName);
-  const double pressure = w_surf.force()(2);
-  if (pressure < min_pressure)
-  {
-    return Eigen::Vector2d::Zero();
-  }
-  const Eigen::Vector3d & tau_surf = w_surf.couple();
-  return Eigen::Vector2d(-tau_surf(1) / pressure, +tau_surf(0) / pressure);
+  sva::PTransformd X_parent_0 = robot.mbc().bodyPosW[robot.bodyIndexByName(parentBody_)].inv();
+  sva::PTransformd X_fsactual_0 = X_parent_0 * X_fsactual_parent();
+  return X_fsactual_0.dualMul(w_fsactual);
 }
 
 }

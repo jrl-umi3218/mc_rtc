@@ -75,13 +75,22 @@ public:
     return wrench().couple();
   }
 
-  /** Set the current wrench
+  /** Set the current wrench expressed in sensor frame
    *
    * @param wrench New wrench reading
    */
   void wrench(const sva::ForceVecd & wrench);
 
-  /** Return measured gravity-free wrench in the inertial frame
+  /** Return a gravity-free wrench in sensor frame
+   *
+   * @param robot Robot that the sensor belongs to
+   *
+   * @returns A gravity-free reading of the wrench
+   *
+   */
+  const sva::ForceVecd wrenchWithoutGravity(const mc_rbdyn::Robot & robot) const;
+
+  /** Return measured wrench in the inertial frame
    *
    * @param robot Robot that the sensor belongs to
    *
@@ -90,31 +99,14 @@ public:
    */
   sva::ForceVecd worldWrench(const mc_rbdyn::Robot & robot) const;
 
-  /**
-   * Return measured gravity-free wrench in surface frame
+  /** Return measured gravity-free wrench in the inertial frame
    *
    * @param robot Robot that the sensor belongs to
    *
-   * @param surfaceName Name of the surface wrt to which the wrench will be
-   * computed
+   * @returns w_0 Spatial force vector of measured wrench
    *
-   * @return w_s Force vector of measured wrench in surface frame
    */
-  sva::ForceVecd surfaceWrench(const mc_rbdyn::Robot & robot, const std::string & surfaceName) const;
-
-
-  /**
-   * Return the CoP in surface frame
-   *
-   * @param robot Robot that the sensor belongs to
-   * @param surfaceName Name of the surface wrt which the CoP will be computed
-   * @param min_pressure Minimum pressure in N (default 0.5N).
-   *
-   * @return
-   *  - CoP if pressure >= min_pressure
-   *  - Zero otherwise
-   */
-  Eigen::Vector2d cop(const mc_rbdyn::Robot & robot, const std::string & surfaceName, double min_pressure=0.5) const;
+  sva::ForceVecd worldWrenchWithoutGravity(const mc_rbdyn::Robot & robot) const;
 
   /** @name Calibration
    *
@@ -149,15 +141,6 @@ public:
 
   /** Return the sensor offset */
   const sva::ForceVecd & offset() const;
-
-  /** Return a gravity-free wrench
-   *
-   * @param robot Robot that the sensor belongs to
-   *
-   * @returns A gravity-free reading of the wrench
-   *
-   */
-  const sva::ForceVecd wrenchWithoutGravity(const mc_rbdyn::Robot & robot) const;
 
   /** @} */
   /* End of Calibration group */

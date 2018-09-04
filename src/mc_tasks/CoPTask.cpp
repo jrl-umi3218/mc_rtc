@@ -37,7 +37,7 @@ void CoPTask::update()
 
 Eigen::Vector2d CoPTask::measuredCoP() const
 {
-  return sensor_.cop(robot_, surface_.name(), MIN_PRESSURE);
+  return robot_.cop(surface_.name(), MIN_PRESSURE);
 }
 
 void CoPTask::addToLogger(mc_rtc::Logger & logger)

@@ -69,8 +69,7 @@ cdef extern from "<mc_rbdyn/ForceSensor.h>" namespace "mc_rbdyn":
     double mass()
     ForceVecd wrenchWithoutGravity(const Robot &)
     ForceVecd worldWrench(const Robot &)
-    ForceVecd surfaceWrench(const Robot &, const string&)
-    Vector2d cop(const Robot &, const string&, double)
+    ForceVecd worldWrenchWithoutGravity(const Robot &)
 
 cdef extern from "<mc_rbdyn/Springs.h>" namespace "mc_rbdyn":
   cdef cppclass Springs:

@@ -468,20 +468,27 @@ sva::ForceVecd Robot::surfaceWrench(const std::string& surfaceName) const
 {
   const auto& bodyName = surface(surfaceName).bodyName();
   const auto& fs = bodyForceSensor(bodyName);
-  return fs.surfaceWrench(*this, surfaceName);
+  sva::ForceVecd w_fsactual = fs.wrenchWithoutGravity(*this);
+  sva::PTransformd X_fsactual_surf = surface(surfaceName).X_b_s() * fs.X_fsactual_parent();
+  return X_fsactual_surf.dualMul(w_fsactual);
 }
 
 Eigen::Vector2d Robot::cop(const std::string & surfaceName, double min_pressure) const
 {
-  const auto& bodyName = surface(surfaceName).bodyName();
-  const auto& fs = bodyForceSensor(bodyName);
-  return fs.cop(*this, surfaceName, min_pressure);
+  const sva::ForceVecd w_surf = surfaceWrench(surfaceName);
+  const double pressure = w_surf.force()(2);
+  if (pressure < min_pressure)
+  {
+    return Eigen::Vector2d::Zero();
+  }
+  const Eigen::Vector3d & tau_surf = w_surf.couple();
+  return Eigen::Vector2d(-tau_surf(1) / pressure, +tau_surf(0) / pressure);
 }
 
 Eigen::Vector3d Robot::copW(const std::string & surfaceName, double min_pressure) const
 {
   Eigen::Vector3d cop_s;
-  cop_s << cop("LeftFoot", min_pressure), 0.;
+  cop_s << cop(surfaceName, min_pressure), 0.;
   const sva::PTransformd X_0_s = surface(surfaceName).X_0_s(*this);
   return X_0_s.translation() + X_0_s.rotation().inverse() * cop_s;
 }
@@ -489,14 +496,13 @@ Eigen::Vector3d Robot::copW(const std::string & surfaceName, double min_pressure
 
 Eigen::Vector3d Robot::zmp(const std::vector<std::string> & sensorsName, const Eigen::Vector3d & plane_p, const Eigen::Vector3d & plane_n, double forceThreshold) const
 {
-
   sva::ForceVecd measuredWrench{Eigen::Vector6d::Zero()};
   for (const auto& sensorName : sensorsName)
   {
     const auto & sensor = forceSensor(sensorName);
     if (sensor.force().norm() > forceThreshold)
     {
-      measuredWrench += sensor.worldWrench(*this);
+      measuredWrench += sensor.worldWrenchWithoutGravity(*this);
     }
   }
 
