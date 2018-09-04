@@ -150,6 +150,17 @@ mc_tasks::MetaTaskPtr load_ef_task(mc_solver::QPSolver & solver,
   {
     t = std::make_shared<mc_tasks::EndEffectorTask>(config("body"), solver.robots(), config("robotIndex"));
   }
+  if(config.has("dimWeight"))
+  {
+    Eigen::VectorXd dimW = config("dimWeight");
+    if(dimW.size() != 6)
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, "Stored dimWeight has the wrong dimension (is " << dimW.size() << " should be 6")
+    }
+    t->orientationTask->dimWeight(dimW.head(3));
+    t->positionTask->dimWeight(dimW.tail(3));
+    const_cast<mc_rtc::Configuration&>(config).remove("dimWeight");
+  }
   configure_pos_task(t->positionTask, solver, config);
   configure_ori_task(t->orientationTask, solver, config);
   t->load(solver, config);
@@ -167,6 +178,17 @@ mc_tasks::MetaTaskPtr load_relef_task(mc_solver::QPSolver & solver,
   else
   {
     t = std::make_shared<mc_tasks::RelativeEndEffectorTask>(config("body"), solver.robots(), config("robotIndex"), config("relBody"));
+  }
+  if(config.has("dimWeight"))
+  {
+    Eigen::VectorXd dimW = config("dimWeight");
+    if(dimW.size() != 6)
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, "Stored dimWeight has the wrong dimension (is " << dimW.size() << " should be 6")
+    }
+    t->orientationTask->dimWeight(dimW.head(3));
+    t->positionTask->dimWeight(dimW.tail(3));
+    const_cast<mc_rtc::Configuration&>(config).remove("dimWeight");
   }
   configure_pos_task(t->positionTask, solver, config);
   configure_ori_task(t->orientationTask, solver, config);
