@@ -86,6 +86,8 @@ public:
   virtual Eigen::VectorXd eval() const override;
 
   virtual Eigen::VectorXd speed() const override;
+
+  void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) override;
 public:
   const mc_rbdyn::Robots & robots;
   unsigned int robotIndex;

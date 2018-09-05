@@ -124,6 +124,49 @@ Eigen::VectorXd EndEffectorTask::speed() const
   return spd;
 }
 
+void EndEffectorTask::load(mc_solver::QPSolver & solver,
+                           const mc_rtc::Configuration & config)
+{
+  MetaTask::load(solver, config);
+  if(config.has("stiffness"))
+  {
+    auto s = config("stiffness");
+    if(s.size())
+    {
+      Eigen::VectorXd stiff = s;
+      positionTask->stiffness(stiff);
+      orientationTask->stiffness(stiff);
+    }
+    else
+    {
+      double stiff = s;
+      positionTask->stiffness(stiff);
+      orientationTask->stiffness(stiff);
+    }
+  }
+  if(config.has("damping"))
+  {
+    auto d = config("damping");
+    if(d.size())
+    {
+      positionTask->setGains(positionTask->dimStiffness(), d);
+      orientationTask->setGains(orientationTask->dimStiffness(), d);
+    }
+    else
+    {
+      positionTask->setGains(positionTask->stiffness(), d);
+      orientationTask->setGains(orientationTask->stiffness(), d);
+    }
+  }
+  if(config.has("weight"))
+  {
+    double w = config("weight");
+    positionTask->weight(w);
+    orientationTask->weight(w);
+  }
+}
+
+
 void EndEffectorTask::addToLogger(mc_rtc::Logger & logger)
 {
   logger.addLogEntry(name_ + "_target",
