@@ -464,6 +464,62 @@ Eigen::Vector3d Robot::comAcceleration() const
   return rbd::computeCoMAcceleration(mb(), mbc());
 }
 
+sva::ForceVecd Robot::surfaceWrench(const std::string& surfaceName) const
+{
+  const auto& bodyName = surface(surfaceName).bodyName();
+  const auto& fs = bodyForceSensor(bodyName);
+  sva::ForceVecd w_fsactual = fs.wrenchWithoutGravity(*this);
+  sva::PTransformd X_fsactual_surf = surface(surfaceName).X_b_s() * fs.X_fsactual_parent();
+  return X_fsactual_surf.dualMul(w_fsactual);
+}
+
+Eigen::Vector2d Robot::cop(const std::string & surfaceName, double min_pressure) const
+{
+  const sva::ForceVecd w_surf = surfaceWrench(surfaceName);
+  const double pressure = w_surf.force()(2);
+  if (pressure < min_pressure)
+  {
+    return Eigen::Vector2d::Zero();
+  }
+  const Eigen::Vector3d & tau_surf = w_surf.couple();
+  return Eigen::Vector2d(-tau_surf(1) / pressure, +tau_surf(0) / pressure);
+}
+
+Eigen::Vector3d Robot::copW(const std::string & surfaceName, double min_pressure) const
+{
+  Eigen::Vector3d cop_s;
+  cop_s << cop(surfaceName, min_pressure), 0.;
+  const sva::PTransformd X_0_s = surface(surfaceName).X_0_s(*this);
+  return X_0_s.translation() + X_0_s.rotation().inverse() * cop_s;
+}
+
+
+Eigen::Vector3d Robot::zmp(const std::vector<std::string> & sensorsName, const Eigen::Vector3d & plane_p, const Eigen::Vector3d & plane_n, double forceThreshold) const
+{
+  sva::ForceVecd measuredWrench{Eigen::Vector6d::Zero()};
+  for (const auto& sensorName : sensorsName)
+  {
+    const auto & sensor = forceSensor(sensorName);
+    if (sensor.force().norm() > forceThreshold)
+    {
+      measuredWrench += sensor.worldWrenchWithoutGravity(*this);
+    }
+  }
+
+  const Eigen::Vector3d & force = measuredWrench.force();
+  const Eigen::Vector3d & moment_0 = measuredWrench.couple();
+
+  Eigen::Vector3d moment_p = moment_0 - plane_p.cross(force);
+  double floorn_dot_force = plane_n.dot(force);
+  // Prevent potential division by zero
+  if(floorn_dot_force < 1.)
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "ZMP cannot be computed, projected force too small " << floorn_dot_force);
+  }
+  Eigen::Vector3d zmp = plane_p + plane_n.cross(moment_p) / floorn_dot_force;
+  return zmp;
+}
+
 const std::vector<std::vector<double>> & Robot::ql() const
 {
   return ql_;
@@ -866,12 +922,12 @@ double mc_rbdyn::Robot::mass() const
   return mass;
 }
 
-void mc_rbdyn::Robot::zmp(const Eigen::Vector3d & zmp)
+void mc_rbdyn::Robot::zmpTarget(const Eigen::Vector3d & zmp)
 {
   zmp_ = zmp;
 }
 
-const Eigen::Vector3d & mc_rbdyn::Robot::zmp() const
+const Eigen::Vector3d & mc_rbdyn::Robot::zmpTarget() const
 {
   return zmp_;
 }

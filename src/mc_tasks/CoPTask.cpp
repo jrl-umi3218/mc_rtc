@@ -37,14 +37,7 @@ void CoPTask::update()
 
 Eigen::Vector2d CoPTask::measuredCoP() const
 {
-  const sva::ForceVecd w_surf = measuredWrench();
-  const double pressure = w_surf.force()(2);
-  if (pressure < MIN_PRESSURE)
-  {
-    return Eigen::Vector2d::Zero();
-  }
-  const Eigen::Vector3d tau_surf = w_surf.couple();
-  return Eigen::Vector2d(-tau_surf(1) / pressure, +tau_surf(0) / pressure);
+  return robot_.cop(surface_.name(), MIN_PRESSURE);
 }
 
 void CoPTask::addToLogger(mc_rtc::Logger & logger)

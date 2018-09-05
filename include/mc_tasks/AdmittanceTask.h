@@ -9,7 +9,7 @@ namespace mc_tasks
  *
  * The AdmittanceTask is by default a SurfaceTransformTask, i.e. pure position
  * control of a surface frame. Admittance coefficients that map force errors to
- * displacements (see [1] and [2]) are initially set to zero. 
+ * displacements (see [1] and [2]) are initially set to zero.
  *
  * When the admittance along one axis (Fx, Fy, Fz, Tx, Ty or Tz) is set to a
  * non-zero positive value, this axis switches from position to force control.
@@ -21,7 +21,7 @@ namespace mc_tasks
  * See the discussion in [4] for a comparison with the ComplianceTask.
  *
  * [1] https://en.wikipedia.org/wiki/Mechanical_impedance
- * [2] https://en.wikipedia.org/wiki/Impedance_analogy  
+ * [2] https://en.wikipedia.org/wiki/Impedance_analogy
  * [3] https://doi.org/10.1109/IROS.2010.5651082
  * [4] https://gite.lirmm.fr/multi-contact/mc_rtc/issues/34
  *
@@ -149,8 +149,7 @@ public:
    */
   sva::ForceVecd measuredWrench() const
   {
-    sva::ForceVecd w_fsactual = sensor_.removeGravity(robot_);
-    return X_fsactual_surf_.dualMul(w_fsactual);
+    return robot_.surfaceWrench(surface_.name());
   }
 
   /*! \brief Get the measured pressure in the surface frame
@@ -183,7 +182,7 @@ public:
     maxAngularVel_ = maxAngularVel;
   }
 
-  /*! \brief Add a feedforward reference body velocity on top of force control. 
+  /*! \brief Add a feedforward reference body velocity on top of force control.
    *
    * \param velB Feedforward body velocity
    *
@@ -213,8 +212,6 @@ protected:
   Eigen::Vector3d maxLinearVel_ = {0.1, 0.1, 0.1};  // [m] / [s]
   const mc_rbdyn::Robot & robot_;
   const mc_rbdyn::Surface & surface_;
-  const mc_rbdyn::ForceSensor & sensor_;
-  const sva::PTransformd X_fsactual_surf_;
   std::map<char, bool> isClampingAngularVel_ = {{'x', false}, {'y', false}, {'z', false}};
   std::map<char, bool> isClampingLinearVel_ = {{'x', false}, {'y', false}, {'z', false}};
   sva::ForceVecd admittance_ = sva::ForceVecd(Eigen::Vector6d::Zero());
