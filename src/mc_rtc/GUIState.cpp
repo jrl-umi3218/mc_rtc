@@ -74,9 +74,11 @@ void StateBuilder::removeCategory(const std::vector<std::string> & category)
     return;
   }
   std::pair<bool, Category&> cat = getCategory(category, true);
-  if(cat.first && cat.second.sub.count(category.back()))
+  if(cat.first)
   {
-    cat.second.sub.erase(category.back());
+    auto it = cat.second.find(category.back());
+    if(it == cat.second.sub.end()) { return; }
+    cat.second.sub.erase(it);
     Configuration s = state_;
     for(size_t i = 0; i < category.size() - 1; ++i)
     {
@@ -141,11 +143,11 @@ void StateBuilder::update(Category & category,
   }
   for(auto & c : category.sub)
   {
-    if(!out.has(c.first))
+    if(!out.has(c.name))
     {
-      out.add(c.first);
+      out.add(c.name);
     }
-    update(c.second, out(c.first));
+    update(c, out(c.name));
   }
 }
 
@@ -201,8 +203,9 @@ std::pair<bool, StateBuilder::Category&> StateBuilder::getCategory(const std::ve
   {
     const auto & c = category[i];
     Category & cat = cat_;
-    if(!cat.sub.count(c)) { return {false, cat_}; }
-    cat_ = cat.sub[c];
+    auto it = cat.find(c);
+    if(it == cat.sub.end()) { return {false, cat_}; }
+    cat_ = *it;
   }
   return {true, cat_};
 }
@@ -212,7 +215,14 @@ StateBuilder::Category & StateBuilder::getCategory(const std::vector<std::string
   std::reference_wrapper<Category> cat_(elements_);
   for(const auto & c : category)
   {
-    cat_ = cat_.get().sub[c];
+    auto & cat = cat_.get();
+    auto it = cat.find(c);
+    if(it == cat.sub.end())
+    {
+      cat.sub.push_back({c, {}, {}});
+      it = std::prev(cat.sub.end());
+    }
+    cat_ = *it;
   }
   return cat_;
 }
@@ -224,6 +234,15 @@ const Element & StateBuilder::ElementStore::operator()() const
 Element & StateBuilder::ElementStore::operator()()
 {
   return element();
+}
+
+std::vector<StateBuilder::Category>::iterator StateBuilder::Category::find(const std::string & name)
+{
+  for(auto it = sub.begin(); it != sub.end(); ++it)
+  {
+    if(name == it->name) { return it; }
+  }
+  return sub.end();
 }
 
 } // namespace gui

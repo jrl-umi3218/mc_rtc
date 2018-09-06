@@ -773,8 +773,12 @@ protected:
     };
     struct Category
     {
+      std::string name;
       std::vector<ElementStore> elements;
-      std::map<std::string, Category> sub;
+      std::vector<Category> sub;
+      /** If the category has a sub-category of the requested name returns an
+       * iterator to it, otherwise returns end() */
+      std::vector<Category>::iterator find(const std::string & name);
     };
     Category elements_;
 
