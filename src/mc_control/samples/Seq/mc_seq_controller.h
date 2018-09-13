@@ -287,7 +287,7 @@ public:
 
 extern "C"
 {
-  MC_CONTROL_DLLAPI std::vector<std::string> MC_RTC_CONTROLLER();
+  MC_CONTROL_DLLAPI void MC_RTC_CONTROLLER(std::vector<std::string> & names);
   MC_CONTROL_DLLAPI void destroy(mc_control::MCController * ptr);
   MC_CONTROL_DLLAPI mc_control::MCController * create(const std::string &, const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const mc_control::Configuration & conf);
 }

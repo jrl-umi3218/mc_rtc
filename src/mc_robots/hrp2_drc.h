@@ -64,9 +64,9 @@ public:
 
 extern "C"
 {
-  ROBOT_MODULE_API std::vector<std::string> MC_RTC_ROBOT_MODULE()
+  ROBOT_MODULE_API void MC_RTC_ROBOT_MODULE(std::vector<std::string> & names)
   {
-    return {"HRP2DRC", "HRP2DRCNoGripper"};
+    names = {"HRP2DRC", "HRP2DRCNoGripper"};
   }
   ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr) { delete ptr; }
   ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string & n)

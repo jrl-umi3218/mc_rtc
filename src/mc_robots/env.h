@@ -20,7 +20,7 @@ public:
 
 extern "C"
 {
-  ROBOT_MODULE_API std::vector<std::string> MC_RTC_ROBOT_MODULE() { return {"env", "object"}; }
+  ROBOT_MODULE_API void MC_RTC_ROBOT_MODULE(std::vector<std::string> & names) { names = {"env", "object"}; }
   ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr) { delete ptr; }
   ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string & type,
                                                   const std::string & path,

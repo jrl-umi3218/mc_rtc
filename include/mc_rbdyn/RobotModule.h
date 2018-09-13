@@ -180,7 +180,7 @@ RobotModule::bounds_t MC_RBDYN_DLLAPI urdf_limits_to_bounds(const mc_rbdyn_urdf:
  * Constructor should be declared by the user
 */
 #define ROBOT_MODULE_COMMON(NAME)\
-  ROBOT_MODULE_API std::vector<std::string> MC_RTC_ROBOT_MODULE() { return {NAME}; }\
+  ROBOT_MODULE_API void MC_RTC_ROBOT_MODULE(std::vector<std::string> & names) { names = {NAME}; }\
   ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr) { delete ptr; }
 
 /*! ROBOT_MODULE_DEFAULT_CONSTRUCTOR

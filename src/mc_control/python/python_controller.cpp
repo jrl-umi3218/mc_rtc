@@ -11,9 +11,10 @@ extern "C"
 
 extern "C"
 {
-  std::vector<std::string> MC_RTC_CONTROLLER() { return {"PythonController"}; }
+  void MC_RTC_CONTROLLER(std::vector<std::string> & names) { names = {"PythonController"}; }
   void destroy(mc_control::MCController * ptr)
   {
+    //FIXME This is wrong...
     MCControllerObject * obj = static_cast<MCControllerObject*>(obj);
     delete obj;
     auto gstate = PyGILState_Ensure();

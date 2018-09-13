@@ -122,7 +122,7 @@ void Loader::load_libraries(const std::string & class_name,
 #endif
         #pragma GCC diagnostic push
         #pragma GCC diagnostic ignored "-Wpedantic"
-        typedef std::vector<std::string>(*class_name_fun_t)(void);
+        typedef void(*class_name_fun_t)(std::vector<std::string>&);
         class_name_fun_t CLASS_NAME_FUN = (class_name_fun_t)(lt_dlsym(h, class_name.c_str()));
         #pragma GCC diagnostic pop
         if(CLASS_NAME_FUN == nullptr)
@@ -138,7 +138,8 @@ void Loader::load_libraries(const std::string & class_name,
         {
           LOG_INFO("Found matching class name symbol " << class_name)
         }
-        std::vector<std::string> class_names(CLASS_NAME_FUN());
+        std::vector<std::string> class_names;
+        CLASS_NAME_FUN(class_names);
         for(const auto & cn : class_names)
         {
           if(out.count(cn))

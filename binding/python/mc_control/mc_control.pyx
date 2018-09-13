@@ -141,7 +141,7 @@ cdef c_mc_control.PythonRWCallback python_to_read_write_msg_callback(string & ms
 cdef class MCPythonController(MCController):
   def __dealloc__(self):
     del self.impl
-    self.impl = NULL
+    self.impl = self.base = NULL
   def __cinit__(self, robot_modules, double dt):
     cdef mc_rbdyn.RobotModuleVector rmv = mc_rbdyn.RobotModuleVector(robot_modules)
     self.impl = self.base = new c_mc_control.MCPythonController(rmv.v, dt)

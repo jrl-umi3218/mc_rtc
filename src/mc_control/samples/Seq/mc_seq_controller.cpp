@@ -981,9 +981,9 @@ bool SeqStep::eval(MCSeqController &)
 
 }
 
-std::vector<std::string> MC_RTC_CONTROLLER()
+void MC_RTC_CONTROLLER(std::vector<std::string> & names)
 {
-  return {"Seq"};
+  names = {"Seq"};
 }
 
 void destroy(mc_control::MCController * ptr)

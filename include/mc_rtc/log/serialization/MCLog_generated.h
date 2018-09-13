@@ -53,6 +53,25 @@ enum LogData {
   LogData_MAX = LogData_UInt64
 };
 
+inline LogData (&EnumValuesLogData())[13] {
+  static LogData values[] = {
+    LogData_NONE,
+    LogData_Bool,
+    LogData_Double,
+    LogData_DoubleVector,
+    LogData_UnsignedInt,
+    LogData_String,
+    LogData_Vector3d,
+    LogData_Quaterniond,
+    LogData_PTransformd,
+    LogData_ForceVecd,
+    LogData_MotionVecd,
+    LogData_Vector2d,
+    LogData_UInt64
+  };
+  return values;
+}
+
 inline const char **EnumNamesLogData() {
   static const char *names[] = {
     "NONE",
@@ -322,13 +341,13 @@ struct UInt64Builder {
   void add_i(uint64_t i) {
     fbb_.AddElement<uint64_t>(UInt64::VT_I, i, 0);
   }
-  UInt64Builder(flatbuffers::FlatBufferBuilder &_fbb)
+  explicit UInt64Builder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
   UInt64Builder &operator=(const UInt64Builder &);
   flatbuffers::Offset<UInt64> Finish() {
-    const auto end = fbb_.EndTable(start_, 1);
+    const auto end = fbb_.EndTable(start_);
     auto o = flatbuffers::Offset<UInt64>(end);
     return o;
   }
