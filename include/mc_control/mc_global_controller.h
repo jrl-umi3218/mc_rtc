@@ -430,6 +430,13 @@ public:
   bool send_recv_msg(const std::string & msg, std::string & out);
 
   /** @} */
+
+  /*! \brief Get access to the real robots instance.
+   *
+   * This can be accessed by external tools to provide information about other
+   * robots than the main robot.
+   */
+  mc_rbdyn::Robots & realRobots();
 public:
   /*! \brief Returns true if the controller is running
    *

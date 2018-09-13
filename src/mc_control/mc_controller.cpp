@@ -277,4 +277,9 @@ std::vector<std::string> MCController::supported_robots() const
   return {};
 }
 
+const mc_rbdyn::Robots & MCController::realRobots() const
+{
+  return *real_robots;
+}
+
 }

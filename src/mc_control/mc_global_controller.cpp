@@ -798,5 +798,9 @@ void MCGlobalController::setup_log()
   setup_logger_[current_ctrl] = true;
 }
 
+mc_rbdyn::Robots & MCGlobalController::realRobots()
+{
+  return *real_robots;
+}
 
 }
