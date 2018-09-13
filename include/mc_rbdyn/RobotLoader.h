@@ -48,7 +48,7 @@ public:
   static inline void clear()
   {
     std::lock_guard<std::mutex> guard{mtx};
-    init();
+    init(true);
     robot_loader->clear();
   }
 
@@ -93,13 +93,18 @@ public:
     return robot_loader->objects();
   }
 private:
-  static inline void init()
+  static inline void init(bool skip_default_path = false)
   {
     if(!robot_loader)
     {
       try
       {
-        robot_loader.reset(new mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>("MC_RTC_ROBOT_MODULE", {mc_rtc::MC_ROBOTS_INSTALL_PREFIX}, enable_sandbox_, verbose_));
+        std::vector<std::string> default_path = {};
+        if(!skip_default_path)
+        {
+          default_path.push_back(mc_rtc::MC_ROBOTS_INSTALL_PREFIX);
+        }
+        robot_loader.reset(new mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>("MC_RTC_ROBOT_MODULE", default_path, enable_sandbox_, verbose_));
       }
       catch(const mc_rtc::LoaderException & exc)
       {

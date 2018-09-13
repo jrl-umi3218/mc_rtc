@@ -56,7 +56,6 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     }
     catch(const mc_rtc::LoaderException & exc)
     {
-      LOG_ERROR("Failed to update robot module path(s)")
       LOG_ERROR_AND_THROW(std::runtime_error, "Failed to update robot module path(s)")
     }
   }
