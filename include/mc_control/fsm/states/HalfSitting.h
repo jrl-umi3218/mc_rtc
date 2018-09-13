@@ -18,7 +18,7 @@ namespace fsm
  *   After state completion the PostureTask stiffness will be restored to its original
  *   value
  */
-struct MC_CONTROL_DLLAPI HalfSittingState : State
+struct MC_CONTROL_FSM_STATE_DLLAPI HalfSittingState : State
 {
   void configure(const mc_rtc::Configuration & config) override;
 

@@ -2,8 +2,9 @@
 
 #include <mc_rtc/logging.h>
 
-#include <unistd.h>
+#include <chrono>
 #include <iostream>
+#include <thread>
 
 namespace
 {
@@ -39,7 +40,7 @@ void DummyControllerClient::join()
 {
   while(run_)
   {
-    sleep(1);
+    std::this_thread::sleep_for(std::chrono::seconds(1));
   }
 }
 

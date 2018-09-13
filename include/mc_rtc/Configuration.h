@@ -116,7 +116,7 @@ namespace mc_rtc
      *
      * \returns True if key is part of the configuration
      */
-    bool isMember(const std::string & key) const MC_RTC_DEPRECATED;
+    MC_RTC_DEPRECATED bool isMember(const std::string & key) const;
 
     /*! \brief Check if the key is part of the conf
      *

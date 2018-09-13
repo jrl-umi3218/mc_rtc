@@ -8,6 +8,7 @@ set(fsm_controller_SRC
 
 set(fsm_controller_HDR_DIR ${PROJECT_SOURCE_DIR}/include/mc_control/fsm)
 set(fsm_controller_HDR
+  ${fsm_controller_HDR_DIR}/api.h
   ${fsm_controller_HDR_DIR}/Controller.h
   ${fsm_controller_HDR_DIR}/Executor.h
   ${fsm_controller_HDR_DIR}/State.h
@@ -22,7 +23,7 @@ if(${PYTHON_BINDING})
 endif()
 
 add_library(mc_control_fsm SHARED ${fsm_controller_SRC} ${fsm_controller_HDR})
-set_target_properties(mc_control_fsm PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_EXPORTS")
+set_target_properties(mc_control_fsm PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_FSM_EXPORTS")
 target_link_libraries(mc_control_fsm mc_control ${Boost_LIBRARIES})
 pkg_config_use_dependency(mc_control_fsm mc_rbdyn_urdf)
 pkg_config_use_dependency(mc_control_fsm Tasks)

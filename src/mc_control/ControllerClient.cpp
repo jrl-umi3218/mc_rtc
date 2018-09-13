@@ -10,7 +10,8 @@
 #include <nanomsg/pipeline.h>
 #include <nanomsg/pubsub.h>
 
-#include <unistd.h>
+#include <chrono>
+#include <thread>
 
 namespace
 {
@@ -111,7 +112,7 @@ void ControllerClient::start()
       t_last_received = now;
       if(run_) { handle_gui_state(buff.data()); }
     }
-    usleep(500);
+    std::this_thread::sleep_for(std::chrono::microseconds(500));
   }
   });
 }

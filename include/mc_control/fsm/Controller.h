@@ -20,7 +20,7 @@ struct Controller;
  * manipulation in the FSM
  *
  */
-struct MC_CONTROL_DLLAPI Contact
+struct MC_CONTROL_FSM_DLLAPI Contact
 {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
@@ -75,7 +75,7 @@ using ContactSet = std::set<Contact, std::less<Contact>, Eigen::aligned_allocato
  *   transition map must be provided.
  *
  */
-struct MC_CONTROL_DLLAPI Controller : public MCController
+struct MC_CONTROL_FSM_DLLAPI Controller : public MCController
 {
   friend struct Executor;
 
@@ -262,7 +262,7 @@ namespace mc_rtc
 {
 
 template<>
-struct MC_CONTROL_DLLAPI ConfigurationLoader<mc_control::fsm::Contact>
+struct MC_CONTROL_FSM_DLLAPI ConfigurationLoader<mc_control::fsm::Contact>
 {
   static mc_control::fsm::Contact load(const mc_rtc::Configuration & config);
 };

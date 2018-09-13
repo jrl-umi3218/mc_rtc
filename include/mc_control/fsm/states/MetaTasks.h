@@ -72,7 +72,7 @@ namespace fsm
  * # We now have two tasks, and:
  * # - t1's objectiveA is changed to 1.0, objectiveB is the same
  * # - t1 completion criteria is replaced
- * # Third pass
+ * # Third passset_target_properties(mc_control_fsm PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_FSM_EXPORTS")
  * {
  *   "tasks":
  *   {
@@ -99,7 +99,7 @@ namespace fsm
  *
  */
 
-struct MC_CONTROL_DLLAPI MetaTasksState : State
+struct MC_CONTROL_FSM_STATE_DLLAPI MetaTasksState : State
 {
   void configure(const mc_rtc::Configuration & config) override;
 

@@ -53,7 +53,7 @@ namespace gui
   };
 
   template<typename GetT>
-  struct MC_RTC_GUI_DLLAPI DataElement : public Element
+  struct DataElement : public Element
   {
     void addData(mc_rtc::Configuration & data);
 
@@ -66,7 +66,7 @@ namespace gui
   };
 
   template<typename ElementT, typename Callback>
-  struct MC_RTC_GUI_DLLAPI CallbackElement : public ElementT
+  struct CallbackElement : public ElementT
   {
     bool handleRequest(const mc_rtc::Configuration &);
 
@@ -80,7 +80,7 @@ protected:
   };
 
   template<typename ElementT, typename Callback>
-  struct MC_RTC_GUI_DLLAPI VoidCallbackElement : public CallbackElement<ElementT, Callback>
+  struct VoidCallbackElement : public CallbackElement<ElementT, Callback>
   {
     bool handleRequest(const mc_rtc::Configuration &);
 
@@ -94,7 +94,7 @@ protected:
   };
 
   template<typename GetT>
-  struct MC_RTC_GUI_DLLAPI LabelImpl : public DataElement<GetT>
+  struct LabelImpl : public DataElement<GetT>
   {
     static constexpr auto type = Elements::Label;
 
@@ -111,7 +111,7 @@ protected:
   }
 
   template<typename GetT>
-  struct MC_RTC_GUI_DLLAPI ArrayLabelImpl : public LabelImpl<GetT>
+  struct ArrayLabelImpl : public LabelImpl<GetT>
   {
     static constexpr auto type = Elements::ArrayLabel;
 
@@ -141,7 +141,7 @@ protected:
   }
 
   template<typename Callback>
-  struct MC_RTC_GUI_DLLAPI ButtonImpl : public VoidCallbackElement<Element, Callback>
+  struct ButtonImpl : public VoidCallbackElement<Element, Callback>
   {
     static constexpr auto type = Elements::Button;
 
@@ -161,7 +161,7 @@ protected:
   }
 
   template<typename GetT, typename Callback>
-  struct MC_RTC_GUI_DLLAPI CheckboxImpl : public VoidCallbackElement<DataElement<GetT>, Callback>
+  struct CheckboxImpl : public VoidCallbackElement<DataElement<GetT>, Callback>
   {
     static constexpr auto type = Elements::Checkbox;
 
@@ -180,7 +180,7 @@ protected:
   }
 
   template<typename GetT, typename SetT>
-  struct MC_RTC_GUI_DLLAPI CommonInputImpl : public CallbackElement<DataElement<GetT>, SetT>
+  struct CommonInputImpl : public CallbackElement<DataElement<GetT>, SetT>
   {
     CommonInputImpl(const std::string & name, GetT get_fn, SetT set_fn);
 
@@ -190,7 +190,7 @@ protected:
 
   #define WRITE_INPUT_IMPL(NAME)\
   template<typename GetT, typename SetT>\
-  struct MC_RTC_GUI_DLLAPI NAME ## Impl : public CommonInputImpl<GetT, SetT>\
+  struct NAME ## Impl : public CommonInputImpl<GetT, SetT>\
   {\
     static constexpr auto type = Elements::NAME ;\
     NAME ## Impl(const std::string & name, GetT get_fn, SetT set_fn)\
@@ -212,7 +212,7 @@ protected:
   #undef WRITE_INPUT_IMPL
 
   template<typename GetT, typename SetT>
-  struct MC_RTC_GUI_DLLAPI NumberSliderImpl : public CommonInputImpl<GetT, SetT>
+  struct NumberSliderImpl : public CommonInputImpl<GetT, SetT>
   {
     static constexpr auto type = Elements::NumberSlider;
 
@@ -240,7 +240,7 @@ protected:
   }
 
   template<typename GetT, typename SetT>
-  struct MC_RTC_GUI_DLLAPI ArrayInputImpl : public CommonInputImpl<GetT, SetT>
+  struct ArrayInputImpl : public CommonInputImpl<GetT, SetT>
   {
     static constexpr auto type = Elements::ArrayInput;
     ArrayInputImpl(const std::string & name, GetT get_fn, SetT set_fn)
@@ -276,7 +276,7 @@ protected:
   }
 
   template<typename GetT, typename SetT>
-  struct MC_RTC_GUI_DLLAPI ComboInputImpl : public CommonInputImpl<GetT, SetT>
+  struct ComboInputImpl : public CommonInputImpl<GetT, SetT>
   {
     static constexpr auto type = Elements::ComboInput;
 
@@ -302,7 +302,7 @@ protected:
   }
 
   template<typename GetT, typename SetT>
-  struct MC_RTC_GUI_DLLAPI DataComboInputImpl : public CommonInputImpl<GetT, SetT>
+  struct DataComboInputImpl : public CommonInputImpl<GetT, SetT>
   {
     static constexpr auto type = Elements::DataComboInput;
 
@@ -328,7 +328,7 @@ protected:
   }
 
   template<typename GetT>
-  struct MC_RTC_GUI_DLLAPI Point3DROImpl : public DataElement<GetT>
+  struct Point3DROImpl : public DataElement<GetT>
   {
     static constexpr auto type = Elements::Point3D;
 
@@ -343,7 +343,7 @@ protected:
   };
 
   template<typename GetT, typename SetT>
-  struct MC_RTC_GUI_DLLAPI Point3DImpl : public CommonInputImpl<GetT, SetT>
+  struct Point3DImpl : public CommonInputImpl<GetT, SetT>
   {
     static constexpr auto type = Elements::Point3D;
 
@@ -367,7 +367,7 @@ protected:
   }
 
   template<typename GetT>
-  struct MC_RTC_GUI_DLLAPI Point3DTrajectoryImpl : public DataElement<GetT>
+  struct Point3DTrajectoryImpl : public DataElement<GetT>
   {
     static constexpr auto type = Elements::Point3DTrajectory;
 
@@ -384,7 +384,7 @@ protected:
   }
 
   template<typename GetT>
-  struct MC_RTC_GUI_DLLAPI PoseTrajectoryImpl : public DataElement<GetT>
+  struct PoseTrajectoryImpl : public DataElement<GetT>
   {
     static constexpr auto type = Elements::PoseTrajectory;
 
@@ -401,7 +401,7 @@ protected:
   }
 
   template<typename GetT>
-  struct MC_RTC_GUI_DLLAPI PolygonImpl : public DataElement<GetT>
+  struct PolygonImpl : public DataElement<GetT>
   {
     static constexpr auto type = Elements::Polygon;
 
@@ -428,7 +428,7 @@ protected:
   }
 
   template<typename GetForce, typename GetSurface>
-  struct MC_RTC_GUI_DLLAPI ForceImpl : public Element
+  struct ForceImpl : public Element
   {
     static constexpr auto type = Elements::Force;
 
@@ -458,7 +458,7 @@ protected:
   }
 
   template<typename GetStart, typename GetEnd>
-  struct MC_RTC_GUI_DLLAPI ArrowImpl : public Element
+  struct ArrowImpl : public Element
   {
     static constexpr auto type = Elements::Arrow;
 
@@ -488,7 +488,7 @@ protected:
   }
 
   template<typename GetT>
-  struct MC_RTC_GUI_DLLAPI RotationROImpl : public DataElement<GetT>
+  struct RotationROImpl : public DataElement<GetT>
   {
     static constexpr auto type = Elements::Rotation;
 
@@ -503,7 +503,7 @@ protected:
   };
 
   template<typename GetT, typename SetT>
-  struct MC_RTC_GUI_DLLAPI RotationImpl : public CommonInputImpl<GetT, SetT>
+  struct RotationImpl : public CommonInputImpl<GetT, SetT>
   {
     static constexpr auto type = Elements::Rotation;
 
@@ -527,7 +527,7 @@ protected:
   }
 
   template<typename GetT>
-  struct MC_RTC_GUI_DLLAPI TransformROImpl : public DataElement<GetT>
+  struct TransformROImpl : public DataElement<GetT>
   {
     static constexpr auto type = Elements::Transform;
 
@@ -542,7 +542,7 @@ protected:
   };
 
   template<typename GetT, typename SetT>
-  struct MC_RTC_GUI_DLLAPI TransformImpl : public CommonInputImpl<GetT, SetT>
+  struct TransformImpl : public CommonInputImpl<GetT, SetT>
   {
     static constexpr auto type = Elements::Transform;
 
@@ -566,7 +566,7 @@ protected:
   }
 
   template<typename Callback>
-  struct MC_RTC_GUI_DLLAPI SchemaImpl : public CallbackElement<Element, Callback>
+  struct SchemaImpl : public CallbackElement<Element, Callback>
   {
     static constexpr auto type = Elements::Schema;
 
@@ -585,7 +585,7 @@ protected:
   }
 
   template<typename Callback>
-  struct MC_RTC_GUI_DLLAPI FormImpl : public CallbackElement<Element, Callback>
+  struct FormImpl : public CallbackElement<Element, Callback>
   {
     static constexpr auto type = Elements::Form;
 
@@ -620,7 +620,7 @@ protected:
   };
 
   template<typename T, Elements element>
-  struct MC_RTC_GUI_DLLAPI FormDataInput : public FormInput<FormDataInput<T, element>>
+  struct FormDataInput : public FormInput<FormDataInput<T, element>>
   {
     static constexpr auto type = element;
 
@@ -652,7 +652,7 @@ protected:
   using FormStringInput = FormDataInput<std::string, Elements::StringInput>;
 
   template<typename T>
-  struct MC_RTC_GUI_DLLAPI FormArrayInput : public FormInput<FormArrayInput<T>>
+  struct FormArrayInput : public FormInput<FormArrayInput<T>>
   {
     static constexpr auto type = Elements::ArrayInput;
 
@@ -759,7 +759,7 @@ protected:
     mc_rtc::Configuration data();
   private:
     mc_rtc::Configuration state_;
-    struct ElementStore
+    struct MC_RTC_GUI_DLLAPI ElementStore
     {
       const Element & operator()() const;
       Element & operator()();

@@ -15,7 +15,7 @@ namespace mc_control
 namespace fsm
 {
 
-struct MC_CONTROL_DLLAPI Controller;
+struct MC_CONTROL_FSM_DLLAPI Controller;
 
 /** \class StateFactory
  *
@@ -24,7 +24,7 @@ struct MC_CONTROL_DLLAPI Controller;
  * Also maintains a list of available states.
  *
  */
-struct MC_CONTROL_DLLAPI StateFactory : public mc_rtc::ObjectLoader<State>
+struct MC_CONTROL_FSM_DLLAPI StateFactory : public mc_rtc::ObjectLoader<State>
 {
   /** Constructor
    *

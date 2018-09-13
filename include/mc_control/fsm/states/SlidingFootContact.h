@@ -16,7 +16,7 @@ namespace fsm
 
 /** Implements a state that is able to slide a foot contact */
 
-struct MC_CONTROL_DLLAPI SlidingFootContactState : State
+struct MC_CONTROL_FSM_STATE_DLLAPI SlidingFootContactState : State
 {
   virtual ~SlidingFootContactState() = default;
 

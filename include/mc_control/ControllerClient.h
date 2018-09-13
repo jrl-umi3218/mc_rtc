@@ -1,6 +1,6 @@
 #pragma once
 
-#include <mc_control/api.h>
+#include <mc_control/client_api.h>
 
 #include <mc_rtc/Configuration.h>
 #include <mc_rtc/GUITypes.h>
@@ -17,7 +17,7 @@ namespace mc_control
 {
 
   /** Used to uniquely identify an element */
-  struct MC_CONTROL_DLLAPI ElementId
+  struct MC_CONTROL_CLIENT_DLLAPI ElementId
   {
     /** Category the element belongs to */
     std::vector<std::string> category;
@@ -31,7 +31,7 @@ namespace mc_control
    *
    * - Uses a REQ socket to send requests
    */
-  struct MC_CONTROL_DLLAPI ControllerClient
+  struct MC_CONTROL_CLIENT_DLLAPI ControllerClient
   {
 
     /** Constructor
@@ -92,7 +92,7 @@ namespace mc_control
     virtual void category(const std::vector<std::string> & parent, const std::string & category) = 0;
 
     /** Should be implemented to create a label for data that can be displayed as string */
-    virtual void label(const ElementId & id, const std::string &)
+    inline virtual void label(const ElementId & id, const std::string &)
     {
       default_impl("Label", id);
     }
@@ -104,7 +104,7 @@ namespace mc_control
      * \p labels Per-dimension label (can be empty)
      * \p data Data to display
      */
-    virtual void array_label(const ElementId & id,
+    inline virtual void array_label(const ElementId & id,
                              const std::vector<std::string> &,
                              const Eigen::VectorXd &)
     {

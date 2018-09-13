@@ -18,7 +18,7 @@ namespace mc_solver
  * respectively.
  */
 template<typename T>
-struct MC_SOLVER_DLLAPI GenericLoader
+struct GenericLoader
 {
   /** shared_ptr to T */
   using T_ptr = std::shared_ptr<T>;

@@ -1,8 +1,9 @@
 set(FSM_STATES_INSTALL_PREFIX "${MC_CONTROLLER_INSTALL_PREFIX}/fsm/states")
 
 macro(add_fsm_state state_name state_SRC state_HDR)
-  add_library(${state_name} SHARED  ${state_SRC} ${state_HDR})
+  add_library(${state_name} SHARED  ${state_SRC} ${state_HDR} "${PROJECT_SOURCE_DIR}/include/mc_control/fsm/states/api.h")
   set_target_properties(${state_name} PROPERTIES PREFIX "")
+  set_target_properties(${state_name} PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_FSM_STATE_EXPORTS")
   target_link_libraries(${state_name} mc_control_fsm)
   install(TARGETS ${state_name}
     DESTINATION ${FSM_STATES_INSTALL_PREFIX})

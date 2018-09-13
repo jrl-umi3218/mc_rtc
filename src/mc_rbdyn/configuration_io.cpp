@@ -678,8 +678,8 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn_urdf::Visual>::save(const mc_
 
 mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_rtc::Configuration & config)
 {
-  bfs::path path(config("path"));
-  bfs::path urdf_path(config("urdf_path"));
+  bfs::path path((std::string)config("path"));
+  bfs::path urdf_path((std::string)config("urdf_path"));
   if(!urdf_path.is_absolute())
   {
     urdf_path = path / urdf_path;
@@ -719,7 +719,7 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
   /* Default values work fine for those */
   if(config.has("rsdf_dir"))
   {
-    bfs::path rsdf_dir(config("rsdf_dir"));
+    bfs::path rsdf_dir((std::string)config("rsdf_dir"));
     if(!rsdf_dir.is_absolute())
     {
       rsdf_dir = path / rsdf_dir;

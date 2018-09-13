@@ -1,6 +1,9 @@
 #include <mc_rtc/GUIState.h>
 #include <mc_control/ControllerServer.h>
 
+#include <chrono>
+#include <thread>
+
 struct DummyProvider
 {
   double value = 42.0;
@@ -123,7 +126,7 @@ int main()
   while(1)
   {
     server.publish();
-    usleep(50000);
+    std::this_thread::sleep_for(std::chrono::microseconds(50000));
   }
   return 0;
 }

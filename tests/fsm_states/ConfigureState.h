@@ -2,7 +2,7 @@
 
 #include <mc_control/fsm/State.h>
 
-struct MC_CONTROL_DLLAPI ConfigureState : mc_control::fsm::State
+struct ConfigureState : mc_control::fsm::State
 {
   void configure(const mc_rtc::Configuration & config) override;
 

@@ -6,6 +6,7 @@
 #include <mc_rtc/log/Logger.h>
 #include <mc_rtc/GUIState.h>
 
+#include <mc_solver/api.h>
 #include <mc_tasks/api.h>
 
 #include <mc_rtc/Configuration.h>
@@ -18,14 +19,14 @@ namespace mc_control
 namespace mc_tasks
 {
 
-MC_TASKS_DLLAPI double extraStiffness(double error, double extraStiffness);
+MC_SOLVER_DLLAPI double extraStiffness(double error, double extraStiffness);
 
 /*! \brief Represents a generic task
  *
  * A meta task may be composed of several tasks that work together to achieve a
  * given goal
  */
-struct MC_TASKS_DLLAPI MetaTask
+struct MC_SOLVER_DLLAPI MetaTask
 {
 friend struct mc_solver::QPSolver;
 friend struct mc_control::CompletionCriteria;
@@ -45,7 +46,7 @@ public:
   void name(const std::string & name) { name_ = name; }
 
   /** Get the name of the task */
-  const std::string & name() const { return name_; }
+  inline const std::string & name() const { return name_; }
 
   /*! \brief Reset the task */
   virtual void reset() = 0;

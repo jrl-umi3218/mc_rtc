@@ -851,7 +851,7 @@ void Robot::setBaseLinkVelocity(const Eigen::Vector6d & alpha_)
 
 void Robot::copy(Robots & robots, unsigned int robots_idx, const Base & base) const
 {
-  robots.robots_.emplace_back(robots, robots_idx, false, &base.X_0_s, base.baseName);
+  robots.robots_.emplace_back(Robot(robots, robots_idx, false, &base.X_0_s, base.baseName));
   auto & robot = robots.robots_.back();
   for(const auto & s : surfaces_)
   {
@@ -874,7 +874,7 @@ void Robot::copy(Robots & robots, unsigned int robots_idx, const Base & base) co
 
 void Robot::copy(Robots & robots, unsigned int robots_idx) const
 {
-  robots.robots_.emplace_back(robots, robots_idx, false);
+  robots.robots_.emplace_back(Robot(robots, robots_idx, false));
   auto & robot = robots.robots_.back();
   for(const auto & s : surfaces_)
   {

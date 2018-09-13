@@ -127,6 +127,7 @@ mc_solver/ContactConstraint.cpp
 mc_solver/DynamicsConstraint.cpp
 mc_solver/KinematicsConstraint.cpp
 mc_solver/QPSolver.cpp
+mc_tasks/MetaTask.cpp
 )
 set(mc_solver_SRC ${mc_solver_SRC} PARENT_SCOPE)
 
@@ -145,6 +146,7 @@ set(mc_solver_HDR
 ../include/mc_solver/QPSolver.h
 ../include/mc_solver/GenericLoader.h
 ../include/mc_solver/GenericLoader.hpp
+../include/mc_tasks/MetaTask.h
 )
 set(mc_solver_HDR ${mc_solver_HDR} PARENT_SCOPE)
 
@@ -177,7 +179,6 @@ mc_tasks/VectorOrientationTask.cpp
 mc_tasks/EndEffectorTask.cpp
 mc_tasks/RelativeEndEffectorTask.cpp
 mc_tasks/CoMTask.cpp
-mc_tasks/MetaTask.cpp
 mc_tasks/StabilityTask.cpp
 mc_tasks/AddRemoveContactTask.cpp
 mc_tasks/MoveContactTask.cpp
@@ -197,7 +198,6 @@ set(mc_tasks_HDR
 ../include/mc_tasks/api.h
 ../include/mc_tasks/CoMTask.h
 ../include/mc_tasks/EndEffectorTask.h
-../include/mc_tasks/MetaTask.h
 ../include/mc_tasks/MetaTaskLoader.h
 ../include/mc_tasks/MoveContactTask.h
 ../include/mc_tasks/OrientationTask.h
