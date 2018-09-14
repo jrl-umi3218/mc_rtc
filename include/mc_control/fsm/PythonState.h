@@ -9,7 +9,7 @@ namespace fsm
 {
 
 /** Provides an interface for the Python bindings to fill-out */
-struct MC_CONTROL_DLLAPI PythonState : public State
+struct MC_CONTROL_FSM_DLLAPI PythonState : public State
 {
   void configure(const mc_rtc::Configuration & config) override;
 
