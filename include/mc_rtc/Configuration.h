@@ -490,7 +490,7 @@ namespace mc_rtc
     {
       try
       {
-        v = (*this)(key);
+        v = static_cast<T>((*this)(key));
       }
       catch(Exception & exc)
       {

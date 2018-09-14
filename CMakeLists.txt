@@ -29,7 +29,7 @@ endif()
 add_definitions(-std=c++0x)
 add_definitions(-mfpmath=sse -msse2)
 if(WIN32)
-add_definitions("-DNOMINMAX")
+add_definitions("-DNOMINMAX" "-D_ENABLE_EXTENDED_ALIGNED_STORAGE")
 endif()
 
 option(PYTHON_BINDING "Generate python binding." ON)

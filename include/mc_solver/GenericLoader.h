@@ -82,6 +82,7 @@ private:
   static std::shared_ptr<U> cast(const T_ptr & p);
 
   static storage_t & get_fns();
+#endif
 };
 
 }

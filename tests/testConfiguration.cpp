@@ -460,10 +460,10 @@ void TestConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2)
 
     std::pair<double, double> c = {0, 0};
     config("dict")("doubleDoublePair", c);
-    BOOST_CHECK(b == ref);
+    BOOST_CHECK(c == ref);
 
-    BOOST_CHECK_THROW(c = config("quat"), mc_rtc::Configuration::Exception);
-    BOOST_CHECK_THROW(c = config("doubleStringPair"), mc_rtc::Configuration::Exception);
+    BOOST_CHECK_THROW(c = (std::pair<double, double>)config("quat"), mc_rtc::Configuration::Exception);
+    BOOST_CHECK_THROW(c = (std::pair<double, double>)config("doubleStringPair"), mc_rtc::Configuration::Exception);
   }
 
   /* pair<double, string> test */
