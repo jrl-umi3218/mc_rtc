@@ -5,7 +5,7 @@ macro(add_fsm_test_state state_name)
   endif()
   add_library(${state_name} SHARED ${state_SRC})
   set_target_properties(${state_name} PROPERTIES
-    COMPILE_FLAGS "-DMC_CONTROL_EXPORTS"
+    COMPILE_FLAGS "-DMC_CONTROL_FSM_STATE_EXPORTS"
     PREFIX ""
     LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${state_name})
   target_link_libraries(${state_name} fsm)
