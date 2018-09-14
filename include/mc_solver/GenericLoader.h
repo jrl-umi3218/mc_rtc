@@ -16,8 +16,10 @@ namespace mc_solver
  * mc_solver::ConstraintSet you will probably register through
  * mc_tasks::MetaTaskLoader and mc_solver::ConstraintSetLoader
  * respectively.
+ *
+ * The CRTP is used to provide an ODR-resilient storage here.
  */
-template<typename T>
+template<typename Derived, typename T>
 struct GenericLoader
 {
   /** shared_ptr to T */
@@ -26,6 +28,9 @@ struct GenericLoader
   /** A function that is able to load a T object through a solver instance
    * and JSON configuration */
   using load_fun = std::function<T_ptr(mc_solver::QPSolver&, const mc_rtc::Configuration&)>;
+
+  /** Storage type, actual storage location is returned by Derived::storage() */
+  using storage_t = std::map<std::string, load_fun>;
 
   /** Register a new loading function
    *
@@ -76,9 +81,7 @@ private:
   template<typename U>
   static std::shared_ptr<U> cast(const T_ptr & p);
 
-  static std::map<std::string, load_fun> & get_fns();
-
-  static MC_SOLVER_DLLAPI std::unique_ptr<std::map<std::string, load_fun>> fns_ptr;
+  static storage_t & get_fns();
 };
 
 }

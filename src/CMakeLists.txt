@@ -123,6 +123,7 @@ set(mc_solver_SRC
 mc_solver/BoundedSpeedConstr.cpp
 mc_solver/CollisionsConstraint.cpp
 mc_solver/CoMIncPlaneConstr.cpp
+mc_solver/ConstraintSetLoader.cpp
 mc_solver/ContactConstraint.cpp
 mc_solver/DynamicsConstraint.cpp
 mc_solver/KinematicsConstraint.cpp
@@ -191,6 +192,7 @@ mc_tasks/PositionBasedVisServoTask.cpp
 mc_tasks/PostureTask.cpp
 mc_tasks/LookAtTask.cpp
 mc_tasks/LookAtSurfaceTask.cpp
+mc_tasks/MetaTaskLoader.cpp
 )
 
 set(mc_tasks_HDR

@@ -6,5 +6,10 @@
 
 namespace mc_tasks
 {
-  using MetaTaskLoader = mc_solver::GenericLoader<MetaTask>;
+
+  struct MC_TASKS_DLLAPI MetaTaskLoader : public mc_solver::GenericLoader<MetaTaskLoader, MetaTask>
+  {
+    static storage_t & storage();
+  };
+
 }
