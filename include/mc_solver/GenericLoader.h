@@ -78,7 +78,7 @@ private:
 
   static std::map<std::string, load_fun> & get_fns();
 
-  static std::unique_ptr<std::map<std::string, load_fun>> fns_ptr;
+  static MC_SOLVER_DLLAPI std::unique_ptr<std::map<std::string, load_fun>> fns_ptr;
 };
 
 }
