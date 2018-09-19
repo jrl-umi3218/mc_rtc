@@ -14,6 +14,7 @@ readonly SOURCE_DIR=`cd $mc_rtc_dir/../; pwd`
 INSTALL_PREFIX="/usr/local"
 WITH_ROS_SUPPORT="true"
 WITH_PYTHON_SUPPORT="true"
+PYTHON_USER_INSTALL="false"
 WITH_HRP2="true"
 WITH_HRP4="true"
 VREP_PATH=
@@ -40,7 +41,8 @@ readonly HELP_STRING="$(basename $0) [OPTIONS] ...
     --build-core               (-j) N             : number of cores used for building                (default $BUILD_CORE)
     --with-hrp2                                   : enable HRP2 (requires mc-hrp2 group access)      (default $WITH_HRP2)
     --with-hrp4                                   : enable HRP4 (requires mc-hrp4 group access)      (default $WITH_HRP4)
-    --with-python-support           {true, false} : whether to build with python support             (default $WITH_PYTHON_SUPPORT)
+    --with-python-support           {true, false} : whether to build with Python support             (default $WITH_PYTHON_SUPPORT)
+    --python-user-install           {true, false} : whether to install Python bindings with user     (default $PYTHON_USER_INSTALL)
     --with-ros-support              {true, false} : whether to build with ros support                (default $WITH_ROS_SUPPORT)
     --ros-distro                    NAME          : the ros distro to use                            (default $ROS_DISTRO)
     --install-apt-dependencies      {true, false} : whether to install packages                      (default $INSTALL_APT_DEPENDENCIES)
@@ -82,6 +84,12 @@ do
         i=$(($i+1))
         WITH_PYTHON_SUPPORT="${!i}"
         check_true_false --with-python-support "$WITH_PYTHON_SUPPORT"
+        ;;
+
+        --python-user-install)
+        i=$(($i+1))
+        PYTHON_USER_INSTALL="${!i}"
+        check_true_false --python-user-install "$PYTHON_USER_INSTALL"
         ;;
 
       --with-hrp2)
@@ -130,10 +138,23 @@ do
 
     i=$(($i+1))
 done
+if $WITH_PYTHON_SUPPORT
+then
+  WITH_PYTHON_SUPPORT=ON
+else
+  WITH_PYTHON_SUPPORT=OFF
+fi
+if $PYTHON_USER_INSTALL
+then
+  PYTHON_USER_INSTALL=ON
+else
+  PYTHON_USER_INSTALL=OFF
+fi
 #make settings readonly
 readonly INSTALL_PREFIX
 readonly WITH_ROS_SUPPORT
 readonly WITH_PYTHON_SUPPORT
+readonly PYTHON_USER_INSTALL
 readonly BUILD_TYPE
 readonly INSTALL_APT_DEPENDENCIES
 readonly BUILD_CORE
@@ -183,15 +204,19 @@ if [ $KERN = Darwin ]
 then
   export OS=Darwin
   # Install brew on the system
-  if ! command -v brew
+  if $INSTALL_APT_DEPENDENCIES
   then
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    if ! command -v brew
+    then
+      /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    fi
+    brew update
+    brew install coreutils pkg-config gnu-sed wget gcc python cmake doxygen libtool tinyxml2 geos boost eigen || true
+    # eigen3.pc is broken in brew release
+    gsed -i -e's@Cflags: -Iinclude/eigen3@Cflags: -I/usr/local/include/eigen3@' /usr/local/lib/pkgconfig/eigen3.pc
+  else
+    echo "SKIPPING INSTALLATION OF BREW DEPENDENCIES"
   fi
-  brew tap homebrew/science
-  brew update
-  brew install coreutils gnu-sed wget python cmake doxygen jsoncpp qhull tinyxml2 geos boost eigen || true
-  # eigen3.pc is broken in brew release
-  gsed -i -e's@Cflags: -Iinclude/eigen3@Cflags: -I/usr/local/include/eigen3@' /usr/local/lib/pkgconfig/eigen3.pc
 else
   export OS=$(lsb_release -si)
   if [ $OS = Ubuntu ]
@@ -251,15 +276,11 @@ build_git_dependency()
   fi
   mkdir -p $git_dep/build
   cd "$git_dep/build"
-  if $WITH_PYTHON_SUPPORT
-  then cmake .. -DCMAKE_INSTALL_PREFIX:STRING="$INSTALL_PREFIX" \
-          -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
-          ${CMAKE_ADDITIONAL_OPTIONS}
-  else cmake .. -DCMAKE_INSTALL_PREFIX:STRING="$INSTALL_PREFIX" \
-          -DPYTHON_BINDING:BOOL=OFF \
-          -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
-          ${CMAKE_ADDITIONAL_OPTIONS}
-  fi
+  cmake .. -DCMAKE_INSTALL_PREFIX:STRING="$INSTALL_PREFIX" \
+           -DPYTHON_BINDING:BOOL=${WITH_PYTHON_SUPPORT} \
+           -DPYTHON_BINDING_USER_INSTALL:BOOL=${PYTHON_USER_INSTALL} \
+           -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
+           ${CMAKE_ADDITIONAL_OPTIONS}
   make -j${BUILD_CORE}
   ${SUDO_CMD} make install
 }
@@ -268,9 +289,11 @@ build_git_dependency()
 ###############################
 yaml_to_env "GIT_DEPENDENCIES" $gitlab_ci_yml
 # Add some source dependencies
-if $WITH_PYTHON_SUPPORT
-    then GIT_DEPENDENCIES="jrl-umi3218/Eigen3ToPython jrl-umi3218/SpaceVecAlg jrl-umi3218/RBDyn jrl-umi3218/eigen-qld jrl-umi3218/sch-core jrl-umi3218/sch-core-python jrl-umi3218/mc_rbdyn_urdf ${GIT_DEPENDENCIES}"
-    else GIT_DEPENDENCIES="jrl-umi3218/SpaceVecAlg jrl-umi3218/RBDyn jrl-umi3218/eigen-qld jrl-umi3218/sch-core jrl-umi3218/mc_rbdyn_urdf ${GIT_DEPENDENCIES}"
+if [ "x$WITH_PYTHON_SUPPORT" == xON ]
+then
+  GIT_DEPENDENCIES="jrl-umi3218/Eigen3ToPython jrl-umi3218/SpaceVecAlg jrl-umi3218/RBDyn jrl-umi3218/eigen-qld jrl-umi3218/sch-core jrl-umi3218/sch-core-python jrl-umi3218/mc_rbdyn_urdf ${GIT_DEPENDENCIES}"
+else
+  GIT_DEPENDENCIES="jrl-umi3218/SpaceVecAlg jrl-umi3218/RBDyn jrl-umi3218/eigen-qld jrl-umi3218/sch-core jrl-umi3218/mc_rbdyn_urdf ${GIT_DEPENDENCIES}"
 fi
 for package in ${GIT_DEPENDENCIES}; do
   build_git_dependency "$package"
@@ -339,6 +362,8 @@ if $WITH_ROS_SUPPORT
 then
   cmake ../ -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
             -DCMAKE_INSTALL_PREFIX:STRING="$INSTALL_PREFIX" \
+            -DPYTHON_BINDING:BOOL=${WITH_PYTHON_SUPPORT} \
+            -DPYTHON_BINDING_USER_INSTALL:BOOL=${PYTHON_USER_INSTALL} \
             ${CMAKE_ADDITIONAL_OPTIONS}
 else
   CMAKE_ROBOT_OPTIONS=""
@@ -350,23 +375,10 @@ else
   then
     CMAKE_ROBOT_OPTIONS="$CMAKE_ROBOT_OPTIONS -DHRP4_DESCRIPTION_PATH:STRING='${SOURCE_DIR}/hrp4/hrp4_description'"
   fi
-  if $WITH_PYTHON_SUPPORT
-  then   cmake ../ -DCMAKE_BUILD_TYPE:STRING="'$BUILD_TYPE'" \
-                -DCMAKE_INSTALL_PREFIX:STRING="'$INSTALL_PREFIX'" \
-                -DMC_ENV_DESCRIPTION_PATH:STRING="'$SOURCE_DIR/mc_rtc_ros_data/mc_env_description'" \
-                ${CMAKE_ROBOT_OPTIONS} \
-                ${CMAKE_ADDITIONAL_OPTIONS} \
-                -DDISABLE_ROS=ON
-  else   cmake ../ -DCMAKE_BUILD_TYPE:STRING="'$BUILD_TYPE'" \
-                -DPYTHON_BINDING:BOOL=OFF \
-                -DCMAKE_INSTALL_PREFIX:STRING="'$INSTALL_PREFIX'" \
-                -DMC_ENV_DESCRIPTION_PATH:STRING="'$SOURCE_DIR/mc_rtc_ros_data/mc_env_description'" \
-                ${CMAKE_ROBOT_OPTIONS} \
-                ${CMAKE_ADDITIONAL_OPTIONS} \
-                -DDISABLE_ROS=ON
-  fi
   cmake ../ -DCMAKE_BUILD_TYPE:STRING="'$BUILD_TYPE'" \
             -DCMAKE_INSTALL_PREFIX:STRING="'$INSTALL_PREFIX'" \
+            -DPYTHON_BINDING:BOOL=${WITH_PYTHON_SUPPORT} \
+            -DPYTHON_BINDING_USER_INSTALL:BOOL=${PYTHON_USER_INSTALL} \
             -DMC_ENV_DESCRIPTION_PATH:STRING="'$SOURCE_DIR/mc_rtc_ros_data/mc_env_description'" \
             ${CMAKE_ROBOT_OPTIONS} \
             ${CMAKE_ADDITIONAL_OPTIONS} \
