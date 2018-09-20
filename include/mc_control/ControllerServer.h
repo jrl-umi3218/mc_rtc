@@ -21,7 +21,7 @@ namespace mc_control
    *
    * - Uses a PULL socket to handle requests
    */
-  struct MC_CONTROL_CLIENT_DLLAPI ControllerServer
+  struct MC_CONTROL_DLLAPI ControllerServer
   {
 
     /** Constructor

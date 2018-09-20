@@ -147,7 +147,7 @@ std::pair<int, const tasks::qp::BilateralContact&> QPSolver::contactById(const t
   {
     if(id == contacts[i].contactId)
     {
-      return std::pair<int, const tasks::qp::BilateralContact&>(i, contacts[i]);
+      return std::pair<int, const tasks::qp::BilateralContact&>(static_cast<int>(i), contacts[i]);
     }
   }
   // Of course this ref has no value here...
@@ -256,6 +256,10 @@ const sva::ForceVecd QPSolver::desiredContactForce(const mc_rbdyn::Contact& cont
       LOG_ERROR_AND_THROW(std::runtime_error, "QPSolver - cannot compute desired contact force for surface " <<
                           contact.r1Surface()->name());
     }
+  }
+  else
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "QPSolver - cannot handle cases where qp_contact.first != -1");
   }
 }
 

@@ -17,7 +17,7 @@ void PauseState::start(Controller & ctl)
 {
   assert(duration_ >= 0);
   tick_ = 0;
-  goal_ = std::ceil(duration_ / ctl.solver().dt());
+  goal_ = static_cast<unsigned int>(std::ceil(duration_ / ctl.solver().dt()));
 }
 
 bool PauseState::run(Controller&)

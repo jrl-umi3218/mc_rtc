@@ -67,7 +67,7 @@ sch::S_Object * sch_polyhedron(const std::vector<sva::PTransformd> & points_pt)
 
   // Run qhull
   orgQhull::Qhull qhull;
-  qhull.runQhull("", 3, points_pt.size(), points_in.data(), "Qt");
+  qhull.runQhull("", 3, static_cast<int>(points_pt.size()), points_in.data(), "Qt");
 
   auto points = qhull.points();
   poly_algo.vertexes_.reserve(points.size());

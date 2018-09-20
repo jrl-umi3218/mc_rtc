@@ -12,7 +12,7 @@ ControllerServer::ControllerServer(double dt, double server_dt,
                                    const std::vector<std::string> & pull_bind_uri)
 {
   iter = 0;
-  rate = ceil(server_dt / dt);
+  rate = static_cast<unsigned int>(ceil(server_dt / dt));
   auto init_socket = [](int & socket,
                         unsigned int proto,
                         const std::vector<std::string> & uris,

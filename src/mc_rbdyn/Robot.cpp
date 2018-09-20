@@ -175,7 +175,7 @@ Robot::Robot(Robots & robots, unsigned int robots_idx, bool loadFiles,
   const auto & bbts = base ? mbg().bodiesBaseTransform(mb().body(0).name(), *base) : mbg().bodiesBaseTransform(mb().body(0).name());
   for(size_t i = 0; i < mb().bodies().size(); ++i)
   {
-    const auto & b = mb().body(i);
+    const auto & b = mb().body(static_cast<int>(i));
     bodyTransforms_[i] = bbts.at(b.name());
   }
 

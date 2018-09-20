@@ -88,7 +88,7 @@ struct CSVWriterHelper<mc_rtc::log::LogData_DoubleVector>
     for(size_t i = 0; i < v.size(); ++i)
     {
       if(i != 0) { os += ";"; }
-      os += dtoa_milo(v[i], buffer);
+      os += dtoa_milo(v[static_cast<flatbuffers::uoffset_t>(i)], buffer);
     }
 #pragma GCC diagnostic pop
   }

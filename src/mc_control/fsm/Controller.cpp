@@ -241,8 +241,8 @@ bool Controller::run(mc_solver::FeedbackType fType)
     for(const auto & c : contacts_)
     {
       contacts.emplace_back(robots(),
-                            robots_idx_.at(c.r1),
-                            robots_idx_.at(c.r2),
+                            static_cast<unsigned int>(robots_idx_.at(c.r1)),
+                            static_cast<unsigned int>(robots_idx_.at(c.r2)),
                             c.r1Surface,
                             c.r2Surface);
       auto cId = contacts.back().contactId(robots());
@@ -382,7 +382,7 @@ void Controller::addCollisions(const std::string & r1,
       LOG_ERROR("Try to add collision for robot " << r1 << " and " << r2 << " which are not involved in this FSM")
       return;
     }
-    collision_constraints_[{r1, r2}] = std::make_shared<mc_solver::CollisionsConstraint>(robots(), robots_idx_[r1], robots_idx_[r2], solver().dt());
+    collision_constraints_[{r1, r2}] = std::make_shared<mc_solver::CollisionsConstraint>(robots(), static_cast<unsigned int>(robots_idx_[r1]), static_cast<unsigned int>(robots_idx_[r2]), solver().dt());
     solver().addConstraintSet(*collision_constraints_[{r1, r2}]);
   }
   auto & cc = collision_constraints_[{r1, r2}];
@@ -419,7 +419,7 @@ bool Controller::hasRobot(const std::string & robot) const
 
 mc_rbdyn::Robot & Controller::robot(const std::string & name)
 {
-  return solver().robot(robots_idx_.at(name));
+  return solver().robot(static_cast<unsigned int>(robots_idx_.at(name)));
 }
 
 std::shared_ptr<mc_tasks::PostureTask> Controller::getPostureTask(const std::string & robot)
@@ -449,7 +449,7 @@ void Controller::addContact(const Contact & c)
 
 void Controller::removeContact(const Contact & c)
 {
-  contacts_changed_ |= contacts_.erase(c);
+  contacts_changed_ |= static_cast<bool>(contacts_.erase(c));
 }
 
 const ContactSet & Controller::contacts() const

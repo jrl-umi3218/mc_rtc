@@ -190,7 +190,7 @@ std::unordered_map<std::string, std::shared_ptr<LogLine>>
   {
     for(size_t i = 0; i < s; ++i)
     {
-      ret[current_keys[j+i]]->push(v->v()->operator[](i));
+      ret[current_keys[j+i]]->push(v->v()->operator[](static_cast<flatbuffers::uoffset_t>(i)));
     }
   };
   while(ifs)
@@ -209,7 +209,7 @@ std::unordered_map<std::string, std::shared_ptr<LogLine>>
       empty_keys.resize(0);
       data_size.resize(0);
       const auto & keys = *log->keys();
-      for(size_t i = 0; i < keys.size(); ++i)
+      for(flatbuffers::uoffset_t i = 0; i < static_cast<flatbuffers::uoffset_t>(keys.size()); ++i)
       {
         auto k = keys[i];
         auto vt = mc_rtc::log::LogData(values_type[i]);
@@ -280,7 +280,7 @@ std::unordered_map<std::string, std::shared_ptr<LogLine>>
       }
     }
     size_t j = 0;
-    for(size_t i = 0; i < data_size.size(); ++i)
+    for(flatbuffers::uoffset_t i = 0; i < static_cast<flatbuffers::uoffset_t>(data_size.size()); ++i)
     {
       auto vt = values_type[i];
       const void * v = values[i];
