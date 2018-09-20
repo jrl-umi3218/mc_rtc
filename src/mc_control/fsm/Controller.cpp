@@ -205,7 +205,7 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
       mc_rtc::gui::Form("Add contact",
                         [this](const mc_rtc::Configuration & data)
                         {
-                          LOG_INFO("Add contact " << data("R0") << "::" << data("R0 surface") << "/" << data("R1") << "::" << data("R1 surface"))
+                          LOG_INFO("[FSM] Add contact " << data("R0") << "::" << data("R0 surface") << "/" << data("R1") << "::" << data("R1 surface"))
                           std::string r0 = data("R0");
                           std::string r1 = data("R1");
                           std::string r0Surface = data("R0 surface");
@@ -234,10 +234,6 @@ bool Controller::run(mc_solver::FeedbackType fType)
   {
     std::vector<mc_rbdyn::Contact> contacts;
     contact_constraint_->contactConstr->resetDofContacts();
-    if(gui_)
-    {
-      gui_->removeCategory({"Contacts", "Remove"});
-    }
     for(const auto & c : contacts_)
     {
       contacts.emplace_back(robots(),
@@ -247,7 +243,12 @@ bool Controller::run(mc_solver::FeedbackType fType)
                             c.r2Surface);
       auto cId = contacts.back().contactId(robots());
       contact_constraint_->contactConstr->addDofContact(cId, c.dof.asDiagonal());
-      if(gui_)
+    }
+    solver().setContacts(contacts);
+    if(gui_)
+    {
+      gui_->removeCategory({"Contacts", "Remove"});
+      for(const auto & c : contacts_)
       {
         std::string bName = c.r1 + "::" + c.r1Surface + " & "
                             + c.r2 + "::" + c.r2Surface;
@@ -255,7 +256,6 @@ bool Controller::run(mc_solver::FeedbackType fType)
                          mc_rtc::gui::Button(bName, [this,&c]() { removeContact(c); }));
       }
     }
-    solver().setContacts(contacts);
     contact_constraint_->contactConstr->updateDofContacts();
     contacts_changed_ = false;
   }
@@ -450,6 +450,10 @@ void Controller::addContact(const Contact & c)
 void Controller::removeContact(const Contact & c)
 {
   contacts_changed_ |= static_cast<bool>(contacts_.erase(c));
+  if(contacts_changed_)
+  {
+    LOG_INFO("[FSM] Remove contact " << c.r1 << "::" << c.r1Surface << "/" << c.r2 << "::" << c.r2Surface)
+  }
 }
 
 const ContactSet & Controller::contacts() const
