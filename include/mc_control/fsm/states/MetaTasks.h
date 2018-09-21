@@ -72,7 +72,7 @@ namespace fsm
  * # We now have two tasks, and:
  * # - t1's objectiveA is changed to 1.0, objectiveB is the same
  * # - t1 completion criteria is replaced
- * # Third passset_target_properties(mc_control_fsm PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_FSM_EXPORTS")
+ * # Third pass
  * {
  *   "tasks":
  *   {
@@ -90,12 +90,6 @@ namespace fsm
  * - t1 has no more completion criteria
  * - t2 has a completion criteria
  * \endcode
- *
- * Using the AddContacts and RemoveContacts entries, one can specify that
- * should be added/removed at the start of the state.
- *
- * If RemovePostureTask is set to true, the posture task is removed at the
- * start of the state.
  *
  */
 
