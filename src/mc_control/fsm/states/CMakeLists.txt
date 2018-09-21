@@ -20,6 +20,7 @@ macro(add_fsm_state_simple state_name)
 endmacro()
 
 add_fsm_state_simple(HalfSitting)
+add_fsm_state_simple(Grippers)
 add_fsm_state_simple(Pause)
 add_fsm_state_simple(MetaTasks)
 add_fsm_state_simple(AddRemoveContact)
