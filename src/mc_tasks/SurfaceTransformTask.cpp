@@ -105,6 +105,11 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function("surfa
     {
       t->target(config("target"));
     }
+    else if(config.has("move"))
+    {
+      sva::PTransformd move = config("move");
+      t->target(move * t->target());
+    }
     t->load(solver, config);
     return t;
   }

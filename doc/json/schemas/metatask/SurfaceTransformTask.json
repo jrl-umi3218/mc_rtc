@@ -8,6 +8,7 @@
     "robotIndex": { "type": "integer", "minimum": 0 },
     "surface": { "type": "string" },
 
+    "move": { "$ref": "/../../sva/PTransformd.json" },
     "target": { "$ref": "/../../sva/PTransformd.json" },
     "targetSurface": { "$ref" : "/../../common/targetSurface.json" },
 
