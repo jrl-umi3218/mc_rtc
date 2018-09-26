@@ -177,7 +177,7 @@ namespace mc_robots
     return res;
   }
 
-  void HRP4CommonRobotModule::readUrdf(const std::string & robotName, const std::vector<std::string> & filteredLinks)
+  void HRP4CommonRobotModule::readUrdf(const std::string & robotName, bool fixed, const std::vector<std::string> & filteredLinks)
   {
     std::string urdfPath = path + "/urdf/" + robotName + ".urdf";
     std::ifstream ifs(urdfPath);
@@ -185,7 +185,7 @@ namespace mc_robots
     {
       std::stringstream urdf;
       urdf << ifs.rdbuf();
-      mc_rbdyn_urdf::URDFParserResult res = mc_rbdyn_urdf::rbdyn_from_urdf(urdf.str(), false, filteredLinks);
+      mc_rbdyn_urdf::URDFParserResult res = mc_rbdyn_urdf::rbdyn_from_urdf(urdf.str(), fixed, filteredLinks);
       mb = res.mb;
       mbc = res.mbc;
       mbg = res.mbg;
@@ -199,6 +199,15 @@ namespace mc_robots
       LOG_ERROR("Could not open HRP4 model at " << urdfPath)
       LOG_ERROR_AND_THROW(std::runtime_error, "Failed to open HRP4 model")
     }
+  }
+
+  void HRP4CommonRobotModule::init()
+  {
+    _springs.springsBodies = { "l_ankle", "r_ankle" };
+    auto fileByBodyName = stdCollisionsFiles(mb);
+    _convexHull = getConvexHull(fileByBodyName);
+    _bounds = nominalBounds(limits);
+    _stance = halfSittingPose(mb);
   }
 
   std::map<std::string, std::vector<double>> HRP4CommonRobotModule::halfSittingPose(const rbd::MultiBody & mb) const
@@ -325,20 +334,14 @@ namespace mc_robots
     return res;
   }
 
-  HRP4NoHandRobotModule::HRP4NoHandRobotModule()
+  HRP4NoHandRobotModule::HRP4NoHandRobotModule(bool fixed)
   {
     for (const auto & gl : gripperLinks)
     {
       filteredLinks.push_back(gl);
     }
-    readUrdf("hrp4", filteredLinks);
-
-    _springs.springsBodies = { "l_ankle", "r_ankle" }; //TODO: check these are the correct bodies
-
-    auto fileByBodyName = stdCollisionsFiles(mb);
-    _convexHull = getConvexHull(fileByBodyName);
-    _bounds = nominalBounds(limits);
-    _stance = halfSittingPose(mb);
+    readUrdf("hrp4", fixed, filteredLinks);
+    init();
   }
 
   const std::map<std::string, std::pair<std::string, std::string> > & HRP4NoHandRobotModule::convexHull() const
@@ -356,15 +359,10 @@ namespace mc_robots
     return _stance;
   }
 
-  HRP4WithHandRobotModule::HRP4WithHandRobotModule()
+  HRP4WithHandRobotModule::HRP4WithHandRobotModule(bool fixed)
   {
-    readUrdf("hrp4", filteredLinks);
-
-    _springs.springsBodies = { "l_ankle", "r_ankle" }; //TODO: check these are the correct bodies
-    auto fileByBodyName = stdCollisionsFiles(mb);
-    _convexHull = getConvexHull(fileByBodyName);
-    _bounds = nominalBounds(limits);
-    _stance = halfSittingPose(mb);
+    readUrdf("hrp4", fixed, filteredLinks);
+    init();
   }
 
   const std::map<std::string, std::pair<std::string, std::string> > & HRP4WithHandRobotModule::convexHull() const
@@ -382,19 +380,15 @@ namespace mc_robots
     return _stance;
   }
 
-  HRP4VREPRobotModule::HRP4VREPRobotModule()
+  HRP4VREPRobotModule::HRP4VREPRobotModule(bool fixed)
+  : HRP4WithHandRobotModule(fixed)
   {
-    readUrdf("hrp4_vrep", filteredLinks);
+    readUrdf("hrp4_vrep", fixed, filteredLinks);
 
     assert(_forceSensors[0].name() == "RightFootForceSensor");
     assert(_forceSensors[1].name() == "LeftFootForceSensor");
     _forceSensors[0] = mc_rbdyn::ForceSensor("RightFootForceSensor", "r_ankle", sva::PTransformd(Eigen::Vector3d(0., 0., 0.)));
     _forceSensors[1] = mc_rbdyn::ForceSensor("LeftFootForceSensor", "l_ankle", sva::PTransformd(Eigen::Vector3d(0., 0., 0.)));
-
-    _springs.springsBodies = { "l_ankle", "r_ankle" }; //TODO: check these are the correct bodies
-    auto fileByBodyName = stdCollisionsFiles(mb);
-    _convexHull = getConvexHull(fileByBodyName);
-    _bounds = nominalBounds(limits);
-    _stance = halfSittingPose(mb);
+    init();
   }
 }

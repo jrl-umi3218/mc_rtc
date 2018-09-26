@@ -17,7 +17,7 @@ namespace mc_robots
   protected:
     std::map<std::string, std::pair<std::string, std::string> > getConvexHull(const std::map<std::string, std::pair<std::string, std::string>> & files) const;
 
-    void readUrdf(const std::string & robotName, const std::vector<std::string> & filteredLinks);
+    void readUrdf(const std::string & robotName, bool fixed, const std::vector<std::string> & filteredLinks);
 
     std::map<std::string, std::vector<double>> halfSittingPose(const rbd::MultiBody & mb) const;
 
@@ -25,6 +25,7 @@ namespace mc_robots
 
     std::map<std::string, std::pair<std::string, std::string>> stdCollisionsFiles(const rbd::MultiBody & mb) const;
 
+    void init();
   public:
     std::vector<std::string> virtualLinks;
     std::vector<std::string> gripperLinks;
@@ -35,7 +36,7 @@ namespace mc_robots
   struct MC_ROBOTS_DLLAPI HRP4NoHandRobotModule : public HRP4CommonRobotModule
   {
   public:
-    HRP4NoHandRobotModule();
+    HRP4NoHandRobotModule(bool fixed);
 
     virtual const std::map<std::string, std::pair<std::string, std::string> > & convexHull() const override;
 
@@ -49,7 +50,7 @@ namespace mc_robots
   struct MC_ROBOTS_DLLAPI HRP4WithHandRobotModule : public HRP4CommonRobotModule
   {
   public:
-    HRP4WithHandRobotModule();
+    HRP4WithHandRobotModule(bool fixed);
 
     virtual const std::map<std::string, std::pair<std::string, std::string> > & convexHull() const override;
 
@@ -63,7 +64,7 @@ namespace mc_robots
   struct MC_ROBOTS_DLLAPI HRP4VREPRobotModule : public HRP4WithHandRobotModule
   {
   public:
-    HRP4VREPRobotModule();
+    HRP4VREPRobotModule(bool fixed);
   };
 }
 
@@ -71,22 +72,34 @@ extern "C"
 {
   ROBOT_MODULE_API void MC_RTC_ROBOT_MODULE(std::vector<std::string> & names)
   {
-    names = {"HRP4", "HRP4NoHand", "HRP4VREP"};
+    names = {"HRP4", "HRP4NoHand", "HRP4VREP","HRP4Fixed", "HRP4NoHandFixed", "HRP4VREPFixed"};
   }
   ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr) { delete ptr; }
   ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string & n)
   {
     if(n == "HRP4")
     {
-      return new mc_robots::HRP4WithHandRobotModule();
+      return new mc_robots::HRP4WithHandRobotModule(false);
     }
     else if(n == "HRP4NoHand")
     {
-      return new mc_robots::HRP4NoHandRobotModule();
+      return new mc_robots::HRP4NoHandRobotModule(false);
     }
     else if(n == "HRP4VREP")
     {
-      return new mc_robots::HRP4VREPRobotModule();
+      return new mc_robots::HRP4VREPRobotModule(false);
+    }
+    else if(n == "HRP4Fixed")
+    {
+      return new mc_robots::HRP4WithHandRobotModule(true);
+    }
+    else if(n == "HRP4NoHandFixed")
+    {
+      return new mc_robots::HRP4NoHandRobotModule(true);
+    }
+    else if(n == "HRP4VREPFixed")
+    {
+      return new mc_robots::HRP4VREPRobotModule(true);
     }
     else
     {
