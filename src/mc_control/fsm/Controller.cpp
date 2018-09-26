@@ -205,7 +205,6 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
       mc_rtc::gui::Form("Add contact",
                         [this](const mc_rtc::Configuration & data)
                         {
-                          LOG_INFO("[FSM] Add contact " << data("R0") << "::" << data("R0 surface") << "/" << data("R1") << "::" << data("R1 surface"))
                           std::string r0 = data("R0");
                           std::string r1 = data("R1");
                           std::string r0Surface = data("R0 surface");
@@ -441,9 +440,14 @@ void Controller::addContact(const Contact & c)
   {
     if(it->dof != c.dof)
     {
+      LOG_INFO("[FSM] Changed contact DoF " << c.r1 << "::" << c.r1Surface << "/" << c.r2 << "::" << c.r2Surface)
       it->dof = c.dof;
       contacts_changed_ = true;
     }
+  }
+  else
+  {
+    LOG_INFO("[FSM] Add contact " << c.r1 << "::" << c.r1Surface << "/" << c.r2 << "::" << c.r2Surface)
   }
 }
 
