@@ -20,7 +20,7 @@ inline Eigen::Matrix3d rpyToMat(const double & r, const double & p, const double
 {
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wconversion"
-  return sva::RotX(r)*sva::RotY(p)*sva::RotZ(y);
+  return sva::RotX(r) * sva::RotY(p) * sva::RotZ(y);
 #pragma GCC diagnostic pop
 }
 
@@ -99,4 +99,4 @@ inline Eigen::Vector3d rpyFromQuat(const Eigen::Quaterniond & quat)
   return rpyFromMat(quat.toRotationMatrix());
 }
 
-}
+} // namespace mc_rbdyn

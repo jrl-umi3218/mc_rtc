@@ -22,4 +22,4 @@ struct MC_RBDYN_DLLAPI Base
   rbd::Joint::Type baseType;
 };
 
-}
+} // namespace mc_rbdyn

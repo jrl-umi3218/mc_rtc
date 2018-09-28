@@ -1,6 +1,5 @@
-#include <mc_control/fsm/Executor.h>
-
 #include <mc_control/fsm/Controller.h>
+#include <mc_control/fsm/Executor.h>
 
 namespace mc_control
 {
@@ -24,22 +23,18 @@ void Executor::init(Controller & ctl, const mc_rtc::Configuration & config, cons
   if(gui)
   {
     std::vector<std::string> category = {"FSM"};
-    if(name.size()) { category.push_back(name); }
-    gui->addElement(category,
-                    mc_rtc::gui::Button("Interrupt",
-                                        [this](){ interrupt(); }),
-                    mc_rtc::gui::Label("Current state",
-                                       [this](){ return state(); }),
-                    mc_rtc::gui::Label("Next state ready",
-                                       [this](){ return ready(); }),
-                    mc_rtc::gui::Label("Next state",
-                                       [this](){ return next_state(); }),
-                    mc_rtc::gui::Button("Start next state",
-                                        [this](){ next(); }),
+    if(name.size())
+    {
+      category.push_back(name);
+    }
+    gui->addElement(category, mc_rtc::gui::Button("Interrupt", [this]() { interrupt(); }),
+                    mc_rtc::gui::Label("Current state", [this]() { return state(); }),
+                    mc_rtc::gui::Label("Next state ready", [this]() { return ready(); }),
+                    mc_rtc::gui::Label("Next state", [this]() { return next_state(); }),
+                    mc_rtc::gui::Button("Start next state", [this]() { next(); }),
                     mc_rtc::gui::Form("Force transition",
                                       [this](const mc_rtc::Configuration & c) { this->resume(c("State")); },
-                                      mc_rtc::gui::FormDataComboInput("State", true, {"states"}))
-    );
+                                      mc_rtc::gui::FormDataComboInput("State", true, {"states"})));
   }
 }
 
@@ -56,11 +51,11 @@ bool Executor::run(Controller & ctl, bool keep_state)
     }
   }
 
-  //FIXME ready is used to avoid a potential "yoyo" effect here, i.e. if a
-  //state estimated it was completed once, the future estimations don't matter
+  // FIXME ready is used to avoid a potential "yoyo" effect here, i.e. if a
+  // state estimated it was completed once, the future estimations don't matter
   if(state_)
   {
-    if(! (state_->run(ctl) || ready_) )
+    if(!(state_->run(ctl) || ready_))
     {
       return false;
     }
@@ -75,7 +70,7 @@ bool Executor::run(Controller & ctl, bool keep_state)
       complete_ = true;
       return complete(ctl, keep_state);
     }
-    auto trans = transition_map_.transition(curr_state_,state_output_);
+    auto trans = transition_map_.transition(curr_state_, state_output_);
     if(!trans.first) // No more transition, execution complete
     {
       complete_ = true;
@@ -83,9 +78,8 @@ bool Executor::run(Controller & ctl, bool keep_state)
     }
     next_state_ = trans.second.state;
     auto type = trans.second.type;
-    if(type == Transition::Type::Auto ||
-       (type == Transition::Type::StepByStep && !step_by_step_) ||
-       transition_triggered_)
+    if(type == Transition::Type::Auto || (type == Transition::Type::StepByStep && !step_by_step_)
+       || transition_triggered_)
     {
       next(ctl);
       return true;
@@ -117,7 +111,10 @@ void Executor::teardown(Controller & ctl)
   if(ctl.gui())
   {
     std::vector<std::string> category = {"FSM"};
-    if(name_.size()) { category.push_back(name_); }
+    if(name_.size())
+    {
+      category.push_back(name_);
+    }
     ctl.gui()->removeCategory(category);
   }
 }
@@ -145,7 +142,10 @@ bool Executor::next()
 
 void Executor::next(Controller & ctl)
 {
-  if(!ready_ || next_state_.empty()) { return; }
+  if(!ready_ || next_state_.empty())
+  {
+    return;
+  }
   ready_ = false;
   transition_triggered_ = false;
   LOG_SUCCESS("Starting state " << next_state_)
@@ -166,16 +166,17 @@ void Executor::next(Controller & ctl)
   if(gui)
   {
     std::vector<std::string> category = {"FSM"};
-    if(name_.size()) { category.push_back(name_); }
+    if(name_.size())
+    {
+      category.push_back(name_);
+    }
     for(const auto & s : transition_map_.transitions(curr_state_))
     {
       gui->removeElement(category, "Force transition to " + s);
     }
     for(const auto & s : transition_map_.transitions(next_state_))
     {
-      gui->addElement(category,
-                      mc_rtc::gui::Button("Force transition to " + s,
-                        [this,s](){ this->resume(s); }));
+      gui->addElement(category, mc_rtc::gui::Button("Force transition to " + s, [this, s]() { this->resume(s); }));
     }
   }
   curr_state_ = next_state_;

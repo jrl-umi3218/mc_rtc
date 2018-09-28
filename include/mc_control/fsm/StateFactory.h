@@ -1,12 +1,11 @@
 #pragma once
 
-#include <mc_rtc/loader.h>
-
 #include <mc_control/fsm/State.h>
+#include <mc_rtc/loader.h>
 
 namespace mc_rtc
 {
-  struct Configuration;
+struct Configuration;
 }
 
 namespace mc_control
@@ -37,9 +36,7 @@ struct MC_CONTROL_FSM_DLLAPI StateFactory : public mc_rtc::ObjectLoader<State>
    *
    * \bool verbose If true, output some warning information
    */
-  StateFactory(const std::vector<std::string> & paths,
-               const std::vector<std::string> & files,
-               bool verbose);
+  StateFactory(const std::vector<std::string> & paths, const std::vector<std::string> & files, bool verbose);
 
   /** Load more states libraries */
   void load_libraries(const std::vector<std::string> & paths);
@@ -61,9 +58,7 @@ struct MC_CONTROL_FSM_DLLAPI StateFactory : public mc_rtc::ObjectLoader<State>
    * \param config New parameters' values
    *
    */
-  void load(const std::string & name,
-            const std::string & base,
-            const mc_rtc::Configuration & config);
+  void load(const std::string & name, const std::string & base, const mc_rtc::Configuration & config);
 
   /** Creates a state given its name, the owning controller and
    * configuration
@@ -72,9 +67,7 @@ struct MC_CONTROL_FSM_DLLAPI StateFactory : public mc_rtc::ObjectLoader<State>
    * through a state file. Otherwise the returned pointer is nullptr.
    *
    */
-  StatePtr create(const std::string & state,
-                  Controller & ctl,
-                  const mc_rtc::Configuration & config);
+  StatePtr create(const std::string & state, Controller & ctl, const mc_rtc::Configuration & config);
 
   /** Creates a state without extra configuration */
   StatePtr create(const std::string & state, Controller & ctl);
@@ -87,17 +80,21 @@ struct MC_CONTROL_FSM_DLLAPI StateFactory : public mc_rtc::ObjectLoader<State>
 
   /** Load state using a loader state, returns true if a state was loaded */
   bool load_with_loader(const std::string & state);
+
 private:
   /** Create a state from libraries or factory */
   StatePtr create(const std::string & state);
   /** Implementation for create */
-  StatePtr create(const std::string & state, Controller & ctl,
-                  bool configure, const mc_rtc::Configuration & config = {});
+  StatePtr create(const std::string & state,
+                  Controller & ctl,
+                  bool configure,
+                  const mc_rtc::Configuration & config = {});
   /** Callback on state loading */
   void update(const std::string & cn);
+
 private:
   std::vector<std::string> states_;
-  using state_factory_fn = std::function<StatePtr(StateFactory&)>;
+  using state_factory_fn = std::function<StatePtr(StateFactory &)>;
   std::map<std::string, state_factory_fn> states_factories_;
 };
 

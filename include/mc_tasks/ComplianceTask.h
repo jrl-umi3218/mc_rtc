@@ -1,17 +1,17 @@
 #ifndef _H_COMPLIANCETASK_H_
 #define _H_COMPLIANCETASK_H_
 
-#include <mc_tasks/MetaTask.h>
 #include <mc_tasks/EndEffectorTask.h>
+#include <mc_tasks/MetaTask.h>
 
 namespace mc_tasks
 {
 
 namespace
 {
-  static const std::pair<double, double> defaultFGain = {0.02, 0.005};
-  static const std::pair<double, double> defaultTGain = {0.2, 0.05};
-}
+static const std::pair<double, double> defaultFGain = {0.02, 0.005};
+static const std::pair<double, double> defaultTGain = {0.2, 0.05};
+} // namespace
 
 /*! \brief Add a contact in a compliant manner
  *
@@ -21,7 +21,7 @@ namespace
  * This is a force-compliant variant of mc_tasks::AddContactTask that should be
  * used when a force sensor is available.
  */
-struct MC_TASKS_DLLAPI ComplianceTask: MetaTask
+struct MC_TASKS_DLLAPI ComplianceTask : MetaTask
 {
 public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -56,14 +56,16 @@ public:
    *
    */
   ComplianceTask(const mc_rbdyn::Robots & robots,
-        unsigned int robotIndex,
-        const std::string & body,
-        double timestep,
-        const Eigen::Matrix6d& dof = Eigen::Matrix6d::Identity(),
-        double stiffness = 5.0, double weight = 1000.0,
-        double forceThresh = 3., double torqueThresh = 1.,
-        std::pair<double,double> forceGain = defaultFGain,
-        std::pair<double,double> torqueGain = defaultTGain);
+                 unsigned int robotIndex,
+                 const std::string & body,
+                 double timestep,
+                 const Eigen::Matrix6d & dof = Eigen::Matrix6d::Identity(),
+                 double stiffness = 5.0,
+                 double weight = 1000.0,
+                 double forceThresh = 3.,
+                 double torqueThresh = 1.,
+                 std::pair<double, double> forceGain = defaultFGain,
+                 std::pair<double, double> torqueGain = defaultTGain);
 
   /*! \brief Constructor
    *
@@ -92,13 +94,15 @@ public:
    *
    */
   ComplianceTask(const mc_rbdyn::Robots & robots,
-      unsigned int robotIndex,
-      const std::string & body,
-      double timestep,
-      double stiffness = 5.0, double weight = 1000.0,
-      double forceThresh = 3., double torqueThresh = 1.,
-      std::pair<double,double> forceGain = defaultFGain,
-      std::pair<double,double> torqueGain = defaultTGain);
+                 unsigned int robotIndex,
+                 const std::string & body,
+                 double timestep,
+                 double stiffness = 5.0,
+                 double weight = 1000.0,
+                 double forceThresh = 3.,
+                 double torqueThresh = 1.,
+                 std::pair<double, double> forceGain = defaultFGain,
+                 std::pair<double, double> torqueGain = defaultTGain);
 
   /*! \brief Reset the task
    *
@@ -111,13 +115,16 @@ public:
   sva::ForceVecd getFilteredWrench() const;
 
   /*! \brief Modify the target wrench */
-  void setTargetWrench(const sva::ForceVecd& wrench)
+  void setTargetWrench(const sva::ForceVecd & wrench)
   {
     obj_ = wrench;
   }
 
   /*! \brief Get the current target wrench */
-  sva::ForceVecd getTargetWrench() { return obj_; }
+  sva::ForceVecd getTargetWrench()
+  {
+    return obj_;
+  }
 
   /*! \brief Set the task stiffness */
   void stiffness(double s)
@@ -126,7 +133,10 @@ public:
     efTask_->orientationTask->stiffness(s);
   }
   /*! \brief Get the task stiffness */
-  double stiffness() { return efTask_->positionTask->stiffness(); }
+  double stiffness()
+  {
+    return efTask_->positionTask->stiffness();
+  }
 
   /*! \brief Set the task weight */
   void weight(double w)
@@ -135,42 +145,73 @@ public:
     efTask_->orientationTask->weight(w);
   }
   /*! \brief Get the task weight */
-  double weight() { return efTask_->positionTask->weight(); }
+  double weight()
+  {
+    return efTask_->positionTask->weight();
+  }
 
   /*! \brief Set the force threshold */
-  void forceThresh(double t) { forceThresh_ = t; }
+  void forceThresh(double t)
+  {
+    forceThresh_ = t;
+  }
   /*! \brief Get the force threshold */
-  double forceThresh() { return forceThresh_; }
+  double forceThresh()
+  {
+    return forceThresh_;
+  }
 
   /*! \brief Set the torque threshold */
-  void torqueThresh(double t) { torqueThresh_ = t; }
+  void torqueThresh(double t)
+  {
+    torqueThresh_ = t;
+  }
   /*! \brief Get the torque threshold */
-  double torqueThresh() { return torqueThresh_; }
+  double torqueThresh()
+  {
+    return torqueThresh_;
+  }
 
   /*! \brief Set the force gain */
-  void forceGain(std::pair<double, double> t) { forceGain_ = t; }
+  void forceGain(std::pair<double, double> t)
+  {
+    forceGain_ = t;
+  }
   /*! \brief Get the force gain */
-  std::pair<double, double> forceGain() { return forceGain_; }
+  std::pair<double, double> forceGain()
+  {
+    return forceGain_;
+  }
 
   /*! \brief Set the torque gain */
-  void torqueGain(std::pair<double, double> t) { torqueGain_ = t; }
+  void torqueGain(std::pair<double, double> t)
+  {
+    torqueGain_ = t;
+  }
   /*! \brief Get the torque gain */
-  std::pair<double, double> torqueGain() { return torqueGain_; }
+  std::pair<double, double> torqueGain()
+  {
+    return torqueGain_;
+  }
 
   /*! \brief Set the current dof matrix */
-  void dof(const Eigen::Matrix6d & dof) { dof_ = dof; }
+  void dof(const Eigen::Matrix6d & dof)
+  {
+    dof_ = dof;
+  }
   /*! \brief Get the current dof matrix */
-  Eigen::Matrix6d dof() { return dof_; }
+  Eigen::Matrix6d dof()
+  {
+    return dof_;
+  }
 
   void dimWeight(const Eigen::VectorXd & dimW) override;
 
   Eigen::VectorXd dimWeight() const override;
 
-  void selectActiveJoints(mc_solver::QPSolver & solver,
-                          const std::vector<std::string> & activeJointsName) override;
+  void selectActiveJoints(mc_solver::QPSolver & solver, const std::vector<std::string> & activeJointsName) override;
 
-  void selectUnactiveJoints(mc_solver::QPSolver & solver,
-                            const std::vector<std::string> & unactiveJointsName) override;
+  void selectUnactiveJoints(mc_solver::QPSolver & solver, const std::vector<std::string> & unactiveJointsName) override;
 
   void resetJointsSelector(mc_solver::QPSolver & solver) override;
 
@@ -192,11 +233,11 @@ private:
   sva::ForceVecd obj_;
   sva::ForceVecd error_;
   sva::ForceVecd errorD_;
-  const mc_rbdyn::Robot& robot_;
-  const mc_rbdyn::ForceSensor& sensor_;
+  const mc_rbdyn::Robot & robot_;
+  const mc_rbdyn::ForceSensor & sensor_;
   double timestep_;
   double forceThresh_, torqueThresh_;
-  std::pair<double,double> forceGain_, torqueGain_;
+  std::pair<double, double> forceGain_, torqueGain_;
   Eigen::Matrix6d dof_;
   std::function<double(double)> clampTrans_, clampRot_;
 
@@ -207,6 +248,6 @@ private:
   void update() override;
 };
 
-}
+} // namespace mc_tasks
 
 #endif

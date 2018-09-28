@@ -1,12 +1,11 @@
 #pragma once
 
+#include <mc_rbdyn/Robots.h>
 #include <mc_tasks/MetaTask.h>
+#include <mc_tasks/api.h>
 #include <mc_trajectory/BSplineTrajectory.h>
 
-#include <mc_rbdyn/Robots.h>
 #include <Tasks/QPTasks.h>
-
-#include <mc_tasks/api.h>
 
 namespace mc_tasks
 {
@@ -51,11 +50,16 @@ public:
    * Should have the same size as oriWpTime
    *
    */
-  TrajectoryTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex,
-                 const std::string& surfaceName, const sva::PTransformd & X_0_t,
-                 double duration, double stiffness, double posW, double oriW,
+  TrajectoryTask(const mc_rbdyn::Robots & robots,
+                 unsigned int robotIndex,
+                 const std::string & surfaceName,
+                 const sva::PTransformd & X_0_t,
+                 double duration,
+                 double stiffness,
+                 double posW,
+                 double oriW,
                  const Eigen::MatrixXd & waypoints,
-                 const std::vector<std::pair<double, Eigen::Matrix3d>>& oriWp = {});
+                 const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp = {});
 
   /**
    * \brief Constructor for TrajectoryTask with automatic waypoint generation
@@ -63,11 +67,16 @@ public:
    *
    * \param nrWP nrWP waypoints are automatically computed to smooth the trajectory.
    */
-  TrajectoryTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex,
-                 const std::string& surfaceName, const sva::PTransformd & X_0_t,
-                 double duration, double stiffness, double posW, double oriW,
+  TrajectoryTask(const mc_rbdyn::Robots & robots,
+                 unsigned int robotIndex,
+                 const std::string & surfaceName,
+                 const sva::PTransformd & X_0_t,
+                 double duration,
+                 double stiffness,
+                 double posW,
+                 double oriW,
                  unsigned int nrWP,
-                 const std::vector<std::pair<double, Eigen::Matrix3d>>& oriWp = {});
+                 const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp = {});
 
   /*! \brief Set the task stiffness/damping
    *
@@ -123,7 +132,6 @@ public:
    */
   double oriWeight() const;
 
-
   /*! \brief Whether the trajectory has been fully fed to the task or not
    *
    * \returns True if the trajectory has been fully fed.
@@ -153,14 +161,14 @@ public:
    *
    * \param target Target pose in world coordinates
    */
-  void target(const sva::PTransformd& target);
+  void target(const sva::PTransformd & target);
 
   /**
    * \brief Final task target (trajectory end-point).
    *
    * return The target pose
    */
-  const sva::PTransformd& target() const;
+  const sva::PTransformd & target() const;
 
   /*! \brief Returns the current task speed
    *
@@ -176,11 +184,9 @@ public:
    */
   std::vector<Eigen::Vector3d> controlPoints();
 
-  void selectActiveJoints(mc_solver::QPSolver &,
-                                  const std::vector<std::string> &) override;
+  void selectActiveJoints(mc_solver::QPSolver &, const std::vector<std::string> &) override;
 
-  void selectUnactiveJoints(mc_solver::QPSolver &,
-                                    const std::vector<std::string> &) override;
+  void selectUnactiveJoints(mc_solver::QPSolver &, const std::vector<std::string> &) override;
 
   void resetJointsSelector(mc_solver::QPSolver &) override;
 
@@ -195,10 +201,14 @@ private:
    * \brief Actual task initialization constructor
    */
   void init(unsigned int robotIndex,
-            const std::string& surfaceName, const sva::PTransformd & X_0_t,
-            double duration, double stiffness, double posW, double oriW,
+            const std::string & surfaceName,
+            const sva::PTransformd & X_0_t,
+            double duration,
+            double stiffness,
+            double posW,
+            double oriW,
             const Eigen::MatrixXd & waypoints,
-            const std::vector<std::pair<double, Eigen::Matrix3d>>& oriWp);
+            const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp);
 
   /**
    * \brief Generates the BSpline trajectory
@@ -255,9 +265,10 @@ public:
   std::shared_ptr<tasks::qp::TrajectoryTask> transTrajTask = nullptr;
   std::shared_ptr<mc_trajectory::BSplineTrajectory> bspline = nullptr;
   bool inSolver = false;
+
 private:
   /* Hide these virtual functions */
   void reset() override {}
 };
 
-}
+} // namespace mc_tasks

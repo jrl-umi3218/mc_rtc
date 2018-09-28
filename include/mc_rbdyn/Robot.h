@@ -1,17 +1,16 @@
 #pragma once
 
-#include <RBDyn/MultiBody.h>
-#include <RBDyn/MultiBodyConfig.h>
-#include <RBDyn/MultiBodyGraph.h>
-
-#include <sch/S_Polyhedron/S_Polyhedron.h>
-#include <sch/STP-BV/STP_BV.h>
-
 #include <mc_rbdyn/Base.h>
 #include <mc_rbdyn/RobotModule.h>
 #include <mc_rbdyn/Surface.h>
 
+#include <RBDyn/MultiBody.h>
+#include <RBDyn/MultiBodyConfig.h>
+#include <RBDyn/MultiBodyGraph.h>
+
 #include <memory>
+#include <sch/STP-BV/STP_BV.h>
+#include <sch/S_Polyhedron/S_Polyhedron.h>
 
 namespace mc_rbdyn
 {
@@ -22,17 +21,18 @@ struct MC_RBDYN_DLLAPI Robot
 {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
   friend struct Robots;
-  #if defined __GLIBC__
+#if defined __GLIBC__
   friend struct __gnu_cxx::new_allocator<Robot>;
-  #else
+#else
   friend class std::allocator<Robot>;
-  #endif
+#endif
 public:
   typedef std::pair<std::string, std::shared_ptr<sch::S_Polyhedron>> convex_pair_t;
   typedef std::pair<std::string, std::shared_ptr<sch::STP_BV>> stpbv_pair_t;
+
 public:
-  Robot(Robot&&) = default;
-  Robot& operator=(Robot&&) = default;
+  Robot(Robot &&) = default;
+  Robot & operator=(Robot &&) = default;
 
   /** Returns the name of the robot */
   std::string name() const;
@@ -259,7 +259,10 @@ public:
    * This is highly unlikely and would likely indicate indicate that you are computing a ZMP from
    * invalid forces.
    */
-  Eigen::Vector3d zmp(const std::vector<std::string> & sensorsName, const Eigen::Vector3d & plane_p, const Eigen::Vector3d & plane_n, double forceThreshold = 5.) const;
+  Eigen::Vector3d zmp(const std::vector<std::string> & sensorsName,
+                      const Eigen::Vector3d & plane_p,
+                      const Eigen::Vector3d & plane_n,
+                      double forceThreshold = 5.) const;
 
   /** Access the robot's angular lower limits (const) */
   const std::vector<std::vector<double>> & ql() const;
@@ -291,8 +294,8 @@ public:
   /** Return the flexibilities of the robot */
   std::vector<Flexibility> & flexibility();
 
-
-  /** Set the target zmp defined with respect to base-link. This target is intended to be used by an external stabilizer such as Kawada's
+  /** Set the target zmp defined with respect to base-link. This target is intended to be used by an external stabilizer
+   * such as Kawada's
    *
    * @param zmp Note that usually the ZMP is a 2-vector assuming a perfectly
    * flat ground. The convention here is that the ground is at (tz=0). Therefore
@@ -301,9 +304,9 @@ public:
   void zmpTarget(const Eigen::Vector3d & zmp);
 
   /** Returns the target zmp
-  *
-  * @return Target ZMP. See zmpTarget(Eigen::Vector3d) for details.
-  */
+   *
+   * @return Target ZMP. See zmpTarget(Eigen::Vector3d) for details.
+   */
   const Eigen::Vector3d & zmpTarget() const;
 
   /** Compute and returns the mass of the robot */
@@ -439,7 +442,7 @@ public:
    * original base. Usually the robot's base is the original base so these
    * transforms are identity.
    */
-  const sva::PTransformd & bodyTransform(const std::string& bName) const;
+  const sva::PTransformd & bodyTransform(const std::string & bName) const;
 
   /** Access body transform by index */
   const sva::PTransformd & bodyTransform(int bodyIndex) const;
@@ -448,7 +451,7 @@ public:
   const std::vector<sva::PTransformd> & bodyTransforms() const;
 
   /** Access transformation between the collision mesh and the body */
-  const sva::PTransformd & collisionTransform(const std::string& cName) const;
+  const sva::PTransformd & collisionTransform(const std::string & cName) const;
 
   /** Load surfaces from the directory \p surfaceDir */
   void loadRSDFFromDir(const std::string & surfaceDir);
@@ -472,7 +475,8 @@ public:
   /** Apply forward acceleration to the robot */
   void forwardAcceleration(const sva::MotionVecd & A_0 = sva::MotionVecd(Eigen::Vector6d::Zero()));
   /** Apply forward acceleration to \p mbc using the robot's mb() */
-  void forwardAcceleration(rbd::MultiBodyConfig & mbc, const sva::MotionVecd & A_0 = sva::MotionVecd(Eigen::Vector6d::Zero())) const;
+  void forwardAcceleration(rbd::MultiBodyConfig & mbc,
+                           const sva::MotionVecd & A_0 = sva::MotionVecd(Eigen::Vector6d::Zero())) const;
 
   /** Apply Euler integration to the robot using \p step timestep */
   void eulerIntegration(double step);
@@ -504,12 +508,12 @@ private:
   std::string name_;
   Eigen::Vector3d zmp_;
   std::vector<sva::PTransformd> bodyTransforms_;
-  std::vector< std::vector<double> > ql_;
-  std::vector< std::vector<double> > qu_;
-  std::vector< std::vector<double> > vl_;
-  std::vector< std::vector<double> > vu_;
-  std::vector< std::vector<double> > tl_;
-  std::vector< std::vector<double> > tu_;
+  std::vector<std::vector<double>> ql_;
+  std::vector<std::vector<double>> qu_;
+  std::vector<std::vector<double>> vl_;
+  std::vector<std::vector<double>> vu_;
+  std::vector<std::vector<double>> tl_;
+  std::vector<std::vector<double>> tu_;
   std::map<std::string, convex_pair_t> convexes_;
   std::map<std::string, stpbv_pair_t> stpbvs_;
   std::map<std::string, sva::PTransformd> collisionTransforms_;
@@ -529,13 +533,14 @@ private:
   /** Correspondance between bodies' names and attached body sensors */
   std::map<std::string, size_t> bodyBodySensors_;
   Springs springs_;
-  std::vector< std::vector<Eigen::VectorXd> > tlPoly_;
-  std::vector< std::vector<Eigen::VectorXd> > tuPoly_;
+  std::vector<std::vector<Eigen::VectorXd>> tlPoly_;
+  std::vector<std::vector<Eigen::VectorXd>> tuPoly_;
   std::vector<Flexibility> flexibility_;
   /** Correspondance between force sensor's name and force sensor index */
   std::map<std::string, size_t> forceSensorsIndex_;
   /** Correspondance between bodies' names and attached force sensors */
   std::map<std::string, size_t> bodyForceSensors_;
+
 protected:
   /** Invoked by Robots parent instance after mb/mbc/mbg/RobotModule are stored
    *
@@ -543,7 +548,11 @@ protected:
    * loaded. This is used when copying one robot into another.
    *
    */
-  Robot(Robots & robots, unsigned int robots_idx, bool loadFiles, const sva::PTransformd * base = nullptr, const std::string & baseName = "");
+  Robot(Robots & robots,
+        unsigned int robots_idx,
+        bool loadFiles,
+        const sva::PTransformd * base = nullptr,
+        const std::string & baseName = "");
 
   /** Copy existing Robot with a new base */
   void copy(Robots & robots, unsigned int robots_idx, const Base & base) const;
@@ -555,13 +564,14 @@ protected:
 
   /** Used to set the collision transforms correctly */
   void fixCollisionTransforms();
+
 private:
-  Robot(const Robot&) = delete;
-  Robot& operator=(const Robot&) = delete;
+  Robot(const Robot &) = delete;
+  Robot & operator=(const Robot &) = delete;
 };
 
 /*FIXME Not implemetend for now, only used for ATLAS
 void loadPolyTorqueBoundsData(const std::string & file, Robot & robot);
 */
 
-}
+} // namespace mc_rbdyn

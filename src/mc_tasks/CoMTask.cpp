@@ -1,14 +1,11 @@
 #include <mc_tasks/CoMTask.h>
-
 #include <mc_tasks/MetaTaskLoader.h>
 
 namespace mc_tasks
 {
 
-CoMTask::CoMTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex,
-                 double stiffness, double weight)
-: TrajectoryTaskGeneric<tasks::qp::CoMTask>(robots, robotIndex, stiffness, weight),
-  robot_index_(robotIndex),
+CoMTask::CoMTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double stiffness, double weight)
+: TrajectoryTaskGeneric<tasks::qp::CoMTask>(robots, robotIndex, stiffness, weight), robot_index_(robotIndex),
   cur_com_(Eigen::Vector3d::Zero())
 {
   const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
@@ -47,36 +44,12 @@ Eigen::Vector3d CoMTask::com()
 
 void CoMTask::addToLogger(mc_rtc::Logger & logger)
 {
-  logger.addLogEntry(name_ + "_damping",
-                     [this]()
-                     {
-                     return damping();
-                     });
-  logger.addLogEntry(name_ + "_pos",
-                     [this]() -> Eigen::Vector3d
-                     {
-                     return cur_com_ - eval();
-                     });
-  logger.addLogEntry(name_ + "_refAccel",
-                     [this]() -> Eigen::Vector3d
-                     {
-                     return refAccel_.head<3>();
-                     });
-  logger.addLogEntry(name_ + "_refVel",
-                     [this]() -> Eigen::Vector3d
-                     {
-                     return refVel_.head<3>();
-                     });
-  logger.addLogEntry(name_ + "_stiffness",
-                     [this]()
-                     {
-                     return stiffness();
-                     });
-  logger.addLogEntry(name_ + "_target",
-                     [this]() -> const Eigen::Vector3d &
-                     {
-                     return cur_com_;
-                     });
+  logger.addLogEntry(name_ + "_damping", [this]() { return damping(); });
+  logger.addLogEntry(name_ + "_pos", [this]() -> Eigen::Vector3d { return cur_com_ - eval(); });
+  logger.addLogEntry(name_ + "_refAccel", [this]() -> Eigen::Vector3d { return refAccel_.head<3>(); });
+  logger.addLogEntry(name_ + "_refVel", [this]() -> Eigen::Vector3d { return refVel_.head<3>(); });
+  logger.addLogEntry(name_ + "_stiffness", [this]() { return stiffness(); });
+  logger.addLogEntry(name_ + "_target", [this]() -> const Eigen::Vector3d & { return cur_com_; });
 }
 
 void CoMTask::removeFromLogger(mc_rtc::Logger & logger)
@@ -92,55 +65,48 @@ void CoMTask::removeFromLogger(mc_rtc::Logger & logger)
 void CoMTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   TrajectoryTaskGeneric<tasks::qp::CoMTask>::addToGUI(gui);
-  gui.addElement(
-    {"Tasks", name_},
-    mc_rtc::gui::Point3D("com_target",
-                         [this]() { return this->com(); },
-                         [this](const Eigen::Vector3d & com) { this->com(com); }),
-    mc_rtc::gui::Point3D("com",
-                         [this]() { return (this->com() - this->eval()).eval(); })
-  );
+  gui.addElement({"Tasks", name_},
+                 mc_rtc::gui::Point3D("com_target", [this]() { return this->com(); },
+                                      [this](const Eigen::Vector3d & com) { this->com(com); }),
+                 mc_rtc::gui::Point3D("com", [this]() { return (this->com() - this->eval()).eval(); }));
 }
 
-}
+} // namespace mc_tasks
 
 namespace
 {
 
-static bool registered = mc_tasks::MetaTaskLoader::register_load_function("com",
-  [](mc_solver::QPSolver & solver,
-     const mc_rtc::Configuration & config)
-  {
-    auto t = std::make_shared<mc_tasks::CoMTask>(solver.robots(), config("robotIndex"));
-    if(config.has("com"))
-    {
-      t->com(config("com"));
-    }
-    if(config.has("move_com"))
-    {
-      t->move_com(config("move_com"));
-    }
-    if(config.has("above"))
-    {
-      std::vector<std::string> surfaces = config("above");
-      auto com = t->com();
-      Eigen::Vector3d target = Eigen::Vector3d::Zero();
-      auto & robot = solver.robot(config("robotIndex"));
-      for(const auto & s : surfaces)
+static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
+    "com",
+    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
+      auto t = std::make_shared<mc_tasks::CoMTask>(solver.robots(), config("robotIndex"));
+      if(config.has("com"))
       {
-        target += robot.surface(s).X_0_s(robot).translation();
+        t->com(config("com"));
       }
-      target /= static_cast<double>(surfaces.size());
-      t->com({target.x(), target.y(), com.z()});
-    }
-    if(config.has("offset"))
-    {
-      Eigen::Vector3d offset = config("offset", Eigen::Vector3d::Zero().eval());
-      t->com(t->com() + offset);
-    }
-    t->load(solver, config);
-    return t;
-  }
-);
-
+      if(config.has("move_com"))
+      {
+        t->move_com(config("move_com"));
+      }
+      if(config.has("above"))
+      {
+        std::vector<std::string> surfaces = config("above");
+        auto com = t->com();
+        Eigen::Vector3d target = Eigen::Vector3d::Zero();
+        auto & robot = solver.robot(config("robotIndex"));
+        for(const auto & s : surfaces)
+        {
+          target += robot.surface(s).X_0_s(robot).translation();
+        }
+        target /= static_cast<double>(surfaces.size());
+        t->com({target.x(), target.y(), com.z()});
+      }
+      if(config.has("offset"))
+      {
+        Eigen::Vector3d offset = config("offset", Eigen::Vector3d::Zero().eval());
+        t->com(t->com() + offset);
+      }
+      t->load(solver, config);
+      return t;
+    });
 }

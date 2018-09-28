@@ -1,8 +1,8 @@
 #pragma once
 
-#include <SpaceVecAlg/SpaceVecAlg>
-
 #include <mc_rbdyn/api.h>
+
+#include <SpaceVecAlg/SpaceVecAlg>
 
 #include <memory>
 
@@ -13,7 +13,7 @@ struct Robot;
 
 namespace detail
 {
-  struct ForceSensorCalibData;
+struct ForceSensorCalibData;
 }
 
 /** This struct is intended to hold static information about a force sensor
@@ -38,9 +38,7 @@ public:
    * real) sensor frame
    *
    */
-  ForceSensor(const std::string & name,
-              const std::string & parentBodyName,
-              const sva::PTransformd & X_p_f);
+  ForceSensor(const std::string & name, const std::string & parentBodyName, const sva::PTransformd & X_p_f);
 
   /** Destructor */
   ~ForceSensor();
@@ -124,8 +122,7 @@ public:
    * @param gravity Gravity vector, defaults to Z
    *
    */
-  void loadCalibrator(const std::string & calib_file,
-                      const Eigen::Vector3d & gravity = {0., 0., 9.81});
+  void loadCalibrator(const std::string & calib_file, const Eigen::Vector3d & gravity = {0., 0., 9.81});
 
   /** Return the local rotation associated to the sensor, i.e. the error
    * between the model forceSensor and real one
@@ -154,4 +151,4 @@ private:
   std::shared_ptr<detail::ForceSensorCalibData> calibration_;
 };
 
-}
+} // namespace mc_rbdyn

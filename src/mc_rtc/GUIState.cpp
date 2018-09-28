@@ -6,39 +6,40 @@ namespace mc_rtc
 namespace gui
 {
 
-Element::Element(const std::string & name)
-: name_(name)
-{
-}
+Element::Element(const std::string & name) : name_(name) {}
 
 FormComboInput::FormComboInput(const std::string & name,
                                bool required,
                                const std::vector<std::string> & values,
                                bool send_index)
-: FormInput<FormComboInput>(name, required),
-  values_(values), send_index_(send_index)
+: FormInput<FormComboInput>(name, required), values_(values), send_index_(send_index)
 {
 }
 
 void FormComboInput::addGUI_(mc_rtc::Configuration & gui)
 {
   gui.add("values", values_);
-  if(send_index_) { gui.add("send_index", true); }
+  if(send_index_)
+  {
+    gui.add("send_index", true);
+  }
 }
 
 FormDataComboInput::FormDataComboInput(const std::string & name,
                                        bool required,
                                        const std::vector<std::string> & ref,
                                        bool send_index)
-: FormInput<FormDataComboInput>(name, required),
-  ref_(ref), send_index_(send_index)
+: FormInput<FormDataComboInput>(name, required), ref_(ref), send_index_(send_index)
 {
 }
 
 void FormDataComboInput::addGUI_(mc_rtc::Configuration & gui)
 {
   gui.add("ref", ref_);
-  if(send_index_) { gui.add("send_index", true); }
+  if(send_index_)
+  {
+    gui.add("send_index", true);
+  }
 }
 
 StateBuilder::StateBuilder()
@@ -60,7 +61,10 @@ std::string StateBuilder::cat2str(const std::vector<std::string> & cat)
   for(size_t i = 0; i < cat.size(); ++i)
   {
     ret += cat[i];
-    if(i != cat.size() - 1) { ret += "/"; }
+    if(i != cat.size() - 1)
+    {
+      ret += "/";
+    }
   }
   return ret;
 }
@@ -73,19 +77,28 @@ void StateBuilder::removeCategory(const std::vector<std::string> & category)
     LOG_WARNING("Call clear() if this was your intent")
     return;
   }
-  std::pair<bool, Category&> cat = getCategory(category, true);
+  std::pair<bool, Category &> cat = getCategory(category, true);
   if(cat.first)
   {
     auto it = cat.second.find(category.back());
-    if(it == cat.second.sub.end()) { return; }
+    if(it == cat.second.sub.end())
+    {
+      return;
+    }
     cat.second.sub.erase(it);
     Configuration s = state_;
     for(size_t i = 0; i < category.size() - 1; ++i)
     {
-      if(!s.has(category[i])) { return; }
+      if(!s.has(category[i]))
+      {
+        return;
+      }
       s = s(category[i]);
     }
-    if(s.has(category.back())) { s.remove(category.back()); }
+    if(s.has(category.back()))
+    {
+      s.remove(category.back());
+    }
   }
 }
 
@@ -98,10 +111,7 @@ void StateBuilder::removeElement(const std::vector<std::string> & category, cons
   if(found)
   {
     auto it = std::find_if(cat.elements.begin(), cat.elements.end(),
-               [&name](const ElementStore & el)
-               {
-               return el().name() == name;
-               });
+                           [&name](const ElementStore & el) { return el().name() == name; });
     if(it != cat.elements.end())
     {
       cat.elements.erase(it);
@@ -111,7 +121,10 @@ void StateBuilder::removeElement(const std::vector<std::string> & category, cons
         if(!s.has(c)) return;
         s = s(c);
       }
-      if(s.has(name)) { s.remove(name); }
+      if(s.has(name))
+      {
+        s.remove(name);
+      }
     }
   }
 }
@@ -122,8 +135,7 @@ const mc_rtc::Configuration & StateBuilder::update()
   return state_;
 }
 
-void StateBuilder::update(Category & category,
-                          mc_rtc::Configuration out)
+void StateBuilder::update(Category & category, mc_rtc::Configuration out)
 {
   for(auto & e : category.elements)
   {
@@ -164,12 +176,8 @@ bool StateBuilder::handleRequest(const std::vector<std::string> & category,
     return false;
   }
   Category & cat = cat_;
-  auto it = std::find_if(cat.elements.begin(),
-                         cat.elements.end(),
-                         [&name](const ElementStore & el)
-                         {
-                         return el().name() == name;
-                         });
+  auto it = std::find_if(cat.elements.begin(), cat.elements.end(),
+                         [&name](const ElementStore & el) { return el().name() == name; });
   if(it == cat.elements.end())
   {
     LOG_ERROR("No element " << name << " in category " << cat2str(category))
@@ -194,17 +202,25 @@ mc_rtc::Configuration StateBuilder::data()
   return state_("DATA");
 }
 
-std::pair<bool, StateBuilder::Category&> StateBuilder::getCategory(const std::vector<std::string> & category, bool getParent)
+std::pair<bool, StateBuilder::Category &> StateBuilder::getCategory(const std::vector<std::string> & category,
+                                                                    bool getParent)
 {
   std::reference_wrapper<Category> cat_(elements_);
   size_t limit = category.size();
-  if(getParent) { assert(limit > 0); limit -= 1; }
+  if(getParent)
+  {
+    assert(limit > 0);
+    limit -= 1;
+  }
   for(size_t i = 0; i < limit; ++i)
   {
     const auto & c = category[i];
     Category & cat = cat_;
     auto it = cat.find(c);
-    if(it == cat.sub.end()) { return {false, cat_}; }
+    if(it == cat.sub.end())
+    {
+      return {false, cat_};
+    }
     cat_ = *it;
   }
   return {true, cat_};
@@ -240,11 +256,14 @@ std::vector<StateBuilder::Category>::iterator StateBuilder::Category::find(const
 {
   for(auto it = sub.begin(); it != sub.end(); ++it)
   {
-    if(name == it->name) { return it; }
+    if(name == it->name)
+    {
+      return it;
+    }
   }
   return sub.end();
 }
 
 } // namespace gui
 
-} // namepsace mc_rtc
+} // namespace mc_rtc

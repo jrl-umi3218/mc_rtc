@@ -26,9 +26,11 @@ public:
    * \param weight Task weight
    *
    */
-  OrientationTask(const std::string & bodyName, const mc_rbdyn::Robots
-                  & robots, unsigned int robotIndex, double stiffness =
-                  2.0, double weight = 500);
+  OrientationTask(const std::string & bodyName,
+                  const mc_rbdyn::Robots & robots,
+                  unsigned int robotIndex,
+                  double stiffness = 2.0,
+                  double weight = 500);
 
   /*! \brief Reset the task
    *
@@ -60,4 +62,4 @@ public:
   virtual void removeFromLogger(mc_rtc::Logger & logger) override;
 };
 
-}
+} // namespace mc_tasks

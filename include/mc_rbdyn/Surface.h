@@ -1,13 +1,14 @@
 #pragma once
 
-#include <SpaceVecAlg/SpaceVecAlg>
+#include <mc_rbdyn/api.h>
+
 #include <RBDyn/MultiBodyConfig.h>
+
+#include <SpaceVecAlg/SpaceVecAlg>
 
 #include <memory>
 #include <string>
 #include <vector>
-
-#include <mc_rbdyn/api.h>
 
 namespace mc_rbdyn
 {
@@ -19,7 +20,10 @@ struct SurfaceImpl;
 struct MC_RBDYN_DLLAPI Surface
 {
 public:
-  Surface(const std::string & name, const std::string & bodyName, const sva::PTransformd & X_b_s, const std::string & materialName);
+  Surface(const std::string & name,
+          const std::string & bodyName,
+          const sva::PTransformd & X_b_s,
+          const std::string & materialName);
 
   ~Surface();
 
@@ -53,12 +57,14 @@ public:
 
   bool operator==(const Surface & rhs);
   bool operator!=(const Surface & rhs);
+
 protected:
   std::vector<sva::PTransformd> & points();
+
 private:
   std::unique_ptr<SurfaceImpl> impl;
 };
 
 typedef std::shared_ptr<Surface> SurfacePtr;
 
-}
+} // namespace mc_rbdyn

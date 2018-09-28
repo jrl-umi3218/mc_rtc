@@ -9,11 +9,10 @@ namespace mc_tasks
 
 template<typename T>
 TrajectoryTaskGeneric<T>::TrajectoryTaskGeneric(const mc_rbdyn::Robots & robots,
-                                             unsigned int robotIndex,
-                                             double stiffness,
-                                             double w)
-: robots(robots), rIndex(robotIndex),
-  stiff(stiffness), damp(2*std::sqrt(stiff)), wt(w)
+                                                unsigned int robotIndex,
+                                                double stiffness,
+                                                double w)
+: robots(robots), rIndex(robotIndex), stiff(stiffness), damp(2 * std::sqrt(stiff)), wt(w)
 {
 }
 
@@ -23,8 +22,8 @@ TrajectoryTaskGeneric<T>::~TrajectoryTaskGeneric()
 }
 
 template<typename T>
-template<typename ... Args>
-void TrajectoryTaskGeneric<T>::finalize(Args && ... args)
+template<typename... Args>
+void TrajectoryTaskGeneric<T>::finalize(Args &&... args)
 {
   errorT = std::make_shared<T>(args...);
   trajectoryT = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, errorT.get(), stiff, damp, wt);
@@ -88,13 +87,13 @@ void TrajectoryTaskGeneric<T>::refAccel(const Eigen::VectorXd & accel)
 template<typename T>
 void TrajectoryTaskGeneric<T>::stiffness(double s)
 {
-  setGains(s, 2*std::sqrt(s));
+  setGains(s, 2 * std::sqrt(s));
 }
 
 template<typename T>
 void TrajectoryTaskGeneric<T>::stiffness(const Eigen::VectorXd & stiffness)
 {
-  setGains(stiffness, 2*stiffness.cwiseSqrt());
+  setGains(stiffness, 2 * stiffness.cwiseSqrt());
 }
 
 template<typename T>
@@ -118,8 +117,7 @@ void TrajectoryTaskGeneric<T>::setGains(double s, double d)
 }
 
 template<typename T>
-void TrajectoryTaskGeneric<T>::setGains(const Eigen::VectorXd & stiffness,
-                                        const Eigen::VectorXd & damping)
+void TrajectoryTaskGeneric<T>::setGains(const Eigen::VectorXd & stiffness, const Eigen::VectorXd & damping)
 {
   trajectoryT->setGains(stiffness, damping);
 }
@@ -178,9 +176,11 @@ void TrajectoryTaskGeneric<T>::selectActiveJoints(const std::vector<std::string>
 {
   if(inSolver)
   {
-    LOG_WARNING("selectActiveJoints(names) ignored: use selectActiveJoints(solver, names) for a task already added to the solver");
+    LOG_WARNING("selectActiveJoints(names) ignored: use selectActiveJoints(solver, names) for a task already added to "
+                "the solver");
   }
-  selectorT = std::make_shared<tasks::qp::JointsSelector>(tasks::qp::JointsSelector::ActiveJoints(robots.mbs(), rIndex, errorT.get(), activeJointsName));
+  selectorT = std::make_shared<tasks::qp::JointsSelector>(
+      tasks::qp::JointsSelector::ActiveJoints(robots.mbs(), rIndex, errorT.get(), activeJointsName));
   trajectoryT = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, selectorT.get(), stiff, damp, wt);
 }
 
@@ -205,15 +205,17 @@ void TrajectoryTaskGeneric<T>::selectUnactiveJoints(const std::vector<std::strin
 {
   if(inSolver)
   {
-    LOG_WARNING("selectUnactiveJoints(names) ignored: use selectUnactiveJoints(solver, names) for a task already added to the solver");
+    LOG_WARNING("selectUnactiveJoints(names) ignored: use selectUnactiveJoints(solver, names) for a task already added "
+                "to the solver");
   }
-  selectorT = std::make_shared<tasks::qp::JointsSelector>(tasks::qp::JointsSelector::UnactiveJoints(robots.mbs(), rIndex, errorT.get(), unactiveJointsName));
+  selectorT = std::make_shared<tasks::qp::JointsSelector>(
+      tasks::qp::JointsSelector::UnactiveJoints(robots.mbs(), rIndex, errorT.get(), unactiveJointsName));
   trajectoryT = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, selectorT.get(), stiff, damp, wt);
 }
 
 template<typename T>
 void TrajectoryTaskGeneric<T>::selectUnactiveJoints(mc_solver::QPSolver & solver,
-                                                  const std::vector<std::string> & unactiveJointsName)
+                                                    const std::vector<std::string> & unactiveJointsName)
 {
   if(inSolver)
   {
@@ -232,7 +234,8 @@ void TrajectoryTaskGeneric<T>::resetJointsSelector()
 {
   if(inSolver)
   {
-    LOG_WARNING("resetJointsSelector() ignored: use resetJointsSelector(solver) for a task already added to the solver");
+    LOG_WARNING(
+        "resetJointsSelector() ignored: use resetJointsSelector(solver) for a task already added to the solver");
   }
   selectorT = nullptr;
   trajectoryT = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, errorT.get(), stiff, damp, wt);
@@ -274,8 +277,7 @@ Eigen::VectorXd TrajectoryTaskGeneric<T>::speed() const
 }
 
 template<typename T>
-void TrajectoryTaskGeneric<T>::load(mc_solver::QPSolver & solver,
-                                    const mc_rtc::Configuration & config)
+void TrajectoryTaskGeneric<T>::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
   MetaTask::load(solver, config);
   if(config.has("stiffness"))
@@ -313,21 +315,15 @@ template<typename T>
 void TrajectoryTaskGeneric<T>::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   MetaTask::addToGUI(gui);
-  gui.addElement(
-    {"Tasks", name_, "Gains"},
-    mc_rtc::gui::NumberInput("stiffness",
-                             [this]() { return this->stiffness(); },
-                             [this](const double & s) { this->setGains(s, this->damping()); }),
-    mc_rtc::gui::NumberInput("damping",
-                             [this]() { return this->damping(); },
-                             [this](const double & d) { this->setGains(this->stiffness(), d); }),
-    mc_rtc::gui::NumberInput("stiffness & damping",
-                             [this]() { return this->stiffness(); },
-                             [this](const double & g) { this->stiffness(g); }),
-    mc_rtc::gui::NumberInput("weight",
-                             [this]() { return this->weight(); },
-                             [this](const double & w) { this->weight(w); })
-  );
+  gui.addElement({"Tasks", name_, "Gains"},
+                 mc_rtc::gui::NumberInput("stiffness", [this]() { return this->stiffness(); },
+                                          [this](const double & s) { this->setGains(s, this->damping()); }),
+                 mc_rtc::gui::NumberInput("damping", [this]() { return this->damping(); },
+                                          [this](const double & d) { this->setGains(this->stiffness(), d); }),
+                 mc_rtc::gui::NumberInput("stiffness & damping", [this]() { return this->stiffness(); },
+                                          [this](const double & g) { this->stiffness(g); }),
+                 mc_rtc::gui::NumberInput("weight", [this]() { return this->weight(); },
+                                          [this](const double & w) { this->weight(w); }));
 }
 
-}
+} // namespace mc_tasks

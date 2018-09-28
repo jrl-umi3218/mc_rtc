@@ -44,11 +44,12 @@ struct MC_CONTROL_FSM_STATE_DLLAPI Grippers : State
 {
   void configure(const mc_rtc::Configuration & config) override;
 
-  void start(Controller&) override;
+  void start(Controller &) override;
 
-  bool run(Controller&) override;
+  bool run(Controller &) override;
 
-  void teardown(Controller&) override {}
+  void teardown(Controller &) override {}
+
 protected:
   mc_rtc::Configuration config_;
   std::vector<std::string> grippers_;

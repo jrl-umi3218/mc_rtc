@@ -1,10 +1,7 @@
-#include <mc_control/fsm/states/AddRemoveContact.h>
-
-#include <mc_control/fsm/Controller.h>
 #include <mc_control/SimulationContactSensor.h>
-
+#include <mc_control/fsm/Controller.h>
+#include <mc_control/fsm/states/AddRemoveContact.h>
 #include <mc_rbdyn/Contact.h>
-
 #include <mc_tasks/AddRemoveContactTask.h>
 #include <mc_tasks/CoMTask.h>
 #include <mc_tasks/ComplianceTask.h>
@@ -18,9 +15,11 @@ namespace fsm
 
 namespace
 {
-  template<typename T>
-  struct always_false : public std::false_type {};
-}
+template<typename T>
+struct always_false : public std::false_type
+{
+};
+} // namespace
 
 template<typename T>
 struct AddRemoveContactStateImplHelper
@@ -36,20 +35,28 @@ struct AddRemoveContactStateImplHelper
 };
 
 template<>
-void AddRemoveContactStateImplHelper<mc_tasks::RemoveContactTask>::make_run_impl(AddRemoveContactStateImpl & impl, Controller & ctl, mc_rbdyn::Contact & contact);
+void AddRemoveContactStateImplHelper<mc_tasks::RemoveContactTask>::make_run_impl(AddRemoveContactStateImpl & impl,
+                                                                                 Controller & ctl,
+                                                                                 mc_rbdyn::Contact & contact);
 
 template<>
-void AddRemoveContactStateImplHelper<mc_tasks::AddContactTask>::make_run_impl(AddRemoveContactStateImpl & impl, Controller & ctl, mc_rbdyn::Contact & contact);
+void AddRemoveContactStateImplHelper<mc_tasks::AddContactTask>::make_run_impl(AddRemoveContactStateImpl & impl,
+                                                                              Controller & ctl,
+                                                                              mc_rbdyn::Contact & contact);
 
 template<>
-void AddRemoveContactStateImplHelper<mc_tasks::ComplianceTask>::make_run_impl(AddRemoveContactStateImpl & impl, Controller & ctl, mc_rbdyn::Contact & contact);
+void AddRemoveContactStateImplHelper<mc_tasks::ComplianceTask>::make_run_impl(AddRemoveContactStateImpl & impl,
+                                                                              Controller & ctl,
+                                                                              mc_rbdyn::Contact & contact);
 
 struct AddRemoveContactStateImpl
 {
   mc_rtc::Configuration config_;
   std::shared_ptr<mc_tasks::MetaTask> task_;
   std::shared_ptr<mc_tasks::CoMTask> com_task_;
-  std::function<bool(AddRemoveContactStateImpl&, Controller&)> run_ = [](AddRemoveContactStateImpl&, Controller&) { return true; };
+  std::function<bool(AddRemoveContactStateImpl &, Controller &)> run_ = [](AddRemoveContactStateImpl &, Controller &) {
+    return true;
+  };
   void start(Controller & ctl)
   {
     auto contact = mc_rbdyn::Contact::load(ctl.robots(), config_("contact"));
@@ -66,7 +73,9 @@ struct AddRemoveContactStateImpl
       }
       else
       {
-        LOG_ERROR("AddRemoveContactState configured with compliant task but surface " << contact.r1Surface()->name() << " is attached to body " << body << " which does not have a force sensor.")
+        LOG_ERROR("AddRemoveContactState configured with compliant task but surface "
+                  << contact.r1Surface()->name() << " is attached to body " << body
+                  << " which does not have a force sensor.")
         LOG_WARNING("Defaulting to simulated contact sensor")
         config_.add("type", "addContact");
         isCompliant = false;
@@ -84,12 +93,10 @@ struct AddRemoveContactStateImpl
         }
       }
     }
-    bool hasContact = ctl.hasContact({ctl.solver().robot(contact.r1Index()).name(),
-                                     ctl.solver().robot(contact.r2Index()).name(),
-                                     contact.r1Surface()->name(),
-                                     contact.r2Surface()->name()});
-    if( (hasContact && removeContact) ||
-        (!hasContact && !removeContact) )
+    bool hasContact =
+        ctl.hasContact({ctl.solver().robot(contact.r1Index()).name(), ctl.solver().robot(contact.r2Index()).name(),
+                        contact.r1Surface()->name(), contact.r2Surface()->name()});
+    if((hasContact && removeContact) || (!hasContact && !removeContact))
     {
       if(removeContact)
       {
@@ -116,7 +123,9 @@ struct AddRemoveContactStateImpl
 };
 
 template<typename T>
-void AddRemoveContactStateImplHelper<T>::make_run(AddRemoveContactStateImpl & impl, Controller & ctl, mc_rbdyn::Contact & contact)
+void AddRemoveContactStateImplHelper<T>::make_run(AddRemoveContactStateImpl & impl,
+                                                  Controller & ctl,
+                                                  mc_rbdyn::Contact & contact)
 {
   task_ptr t = mc_tasks::MetaTaskLoader::load<task_t>(ctl.solver(), impl.config_);
   impl.task_ = t;
@@ -125,7 +134,9 @@ void AddRemoveContactStateImplHelper<T>::make_run(AddRemoveContactStateImpl & im
 }
 
 template<>
-void AddRemoveContactStateImplHelper<mc_tasks::RemoveContactTask>::make_run_impl(AddRemoveContactStateImpl & impl, Controller & ctl, mc_rbdyn::Contact & contact)
+void AddRemoveContactStateImplHelper<mc_tasks::RemoveContactTask>::make_run_impl(AddRemoveContactStateImpl & impl,
+                                                                                 Controller & ctl,
+                                                                                 mc_rbdyn::Contact & contact)
 {
   ctl.removeContact(Contact::from_mc_rbdyn(ctl, contact));
   double distance_ = impl.config_("distance", 0.075);
@@ -133,8 +144,8 @@ void AddRemoveContactStateImplHelper<mc_tasks::RemoveContactTask>::make_run_impl
   auto bodyIndex_ = contact.r1Surface()->bodyIndex(ctl.robots().robot(contact.r1Index()));
   auto init_pos_ = ctl.robots().robot(robotIndex_).bodyPosW()[bodyIndex_].translation();
   bool reached_ = false;
-  impl.run_ = [distance_,robotIndex_,bodyIndex_,init_pos_,reached_](AddRemoveContactStateImpl & impl, Controller & ctl) mutable
-  {
+  impl.run_ = [distance_, robotIndex_, bodyIndex_, init_pos_, reached_](AddRemoveContactStateImpl & impl,
+                                                                        Controller & ctl) mutable {
     const auto & pos = ctl.robots().robot(robotIndex_).bodyPosW()[bodyIndex_].translation();
     auto d = (pos - init_pos_).norm();
     if(d >= distance_)
@@ -146,7 +157,8 @@ void AddRemoveContactStateImplHelper<mc_tasks::RemoveContactTask>::make_run_impl
         auto t = std::static_pointer_cast<mc_tasks::RemoveContactTask>(impl.task_);
         auto w = t->weight();
         auto s = t->stiffness();
-        impl.task_ = std::make_shared<mc_tasks::EndEffectorTask>(ctl.robots().robot(robotIndex_).mb().body(bodyIndex_).name(), ctl.robots(), robotIndex_, s, w);
+        impl.task_ = std::make_shared<mc_tasks::EndEffectorTask>(
+            ctl.robots().robot(robotIndex_).mb().body(bodyIndex_).name(), ctl.robots(), robotIndex_, s, w);
         ctl.solver().addTask(impl.task_);
       }
     }
@@ -155,15 +167,17 @@ void AddRemoveContactStateImplHelper<mc_tasks::RemoveContactTask>::make_run_impl
 }
 
 template<>
-void AddRemoveContactStateImplHelper<mc_tasks::AddContactTask>::make_run_impl(AddRemoveContactStateImpl & impl, Controller & ctl, mc_rbdyn::Contact & contact)
+void AddRemoveContactStateImplHelper<mc_tasks::AddContactTask>::make_run_impl(AddRemoveContactStateImpl & impl,
+                                                                              Controller & ctl,
+                                                                              mc_rbdyn::Contact & contact)
 {
   auto fsm_contact_ = Contact::from_mc_rbdyn(ctl, contact);
   auto sensor_ = SimulationContactPair(contact.r1Surface(), contact.r2Surface());
   auto robotIndex_ = contact.r1Index();
   auto envIndex_ = contact.r2Index();
   bool addedContact_ = false;
-  impl.run_ = [fsm_contact_, sensor_, robotIndex_, envIndex_, addedContact_](AddRemoveContactStateImpl & impl, Controller & ctl) mutable
-  {
+  impl.run_ = [fsm_contact_, sensor_, robotIndex_, envIndex_, addedContact_](AddRemoveContactStateImpl & impl,
+                                                                             Controller & ctl) mutable {
     auto & robot = ctl.robots().robot(robotIndex_);
     auto & env = ctl.robots().robot(envIndex_);
     auto d = sensor_.update(robot, env);
@@ -183,16 +197,15 @@ void AddRemoveContactStateImplHelper<mc_tasks::AddContactTask>::make_run_impl(Ad
 }
 
 template<>
-void AddRemoveContactStateImplHelper<mc_tasks::ComplianceTask>::make_run_impl(AddRemoveContactStateImpl & impl, Controller & ctl, mc_rbdyn::Contact & contact)
+void AddRemoveContactStateImplHelper<mc_tasks::ComplianceTask>::make_run_impl(AddRemoveContactStateImpl & impl,
+                                                                              Controller & ctl,
+                                                                              mc_rbdyn::Contact & contact)
 {
   auto fsm_contact_ = Contact::from_mc_rbdyn(ctl, contact);
   double vel_thresh_ = impl.config_("velocity", 1e-4);
-  impl.run_ = [fsm_contact_, vel_thresh_](AddRemoveContactStateImpl & impl,
-                                          Controller & ctl)
-  {
+  impl.run_ = [fsm_contact_, vel_thresh_](AddRemoveContactStateImpl & impl, Controller & ctl) {
     auto t = std::static_pointer_cast<mc_tasks::ComplianceTask>(impl.task_);
-    if(t->speed().norm() < vel_thresh_ &&
-       t->eval().norm() < t->getTargetWrench().vector().norm()/2)
+    if(t->speed().norm() < vel_thresh_ && t->eval().norm() < t->getTargetWrench().vector().norm() / 2)
     {
       ctl.addContact(fsm_contact_);
       return true;
@@ -201,11 +214,7 @@ void AddRemoveContactStateImplHelper<mc_tasks::ComplianceTask>::make_run_impl(Ad
   };
 }
 
-
-AddRemoveContactState::AddRemoveContactState()
-: impl_(new AddRemoveContactStateImpl())
-{
-}
+AddRemoveContactState::AddRemoveContactState() : impl_(new AddRemoveContactStateImpl()) {}
 
 AddRemoveContactState::~AddRemoveContactState() {}
 

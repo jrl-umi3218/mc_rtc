@@ -1,22 +1,27 @@
-#include <mc_solver/DynamicsConstraint.h>
-
 #include <mc_solver/ConstraintSetLoader.h>
+#include <mc_solver/DynamicsConstraint.h>
 
 #include <Tasks/Bounds.h>
 
 namespace mc_solver
 {
 
-DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double timeStep, bool infTorque)
-: KinematicsConstraint(robots, robotIndex, timeStep),
-  inSolver_(false)
+DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots,
+                                       unsigned int robotIndex,
+                                       double timeStep,
+                                       bool infTorque)
+: KinematicsConstraint(robots, robotIndex, timeStep), inSolver_(false)
 {
   build_constr(robots, robotIndex, infTorque);
 }
 
-DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double timeStep, const std::array<double, 3> & damper, double velocityPercent, bool infTorque)
-: KinematicsConstraint(robots, robotIndex, timeStep, damper, velocityPercent),
-  inSolver_(false)
+DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots,
+                                       unsigned int robotIndex,
+                                       double timeStep,
+                                       const std::array<double, 3> & damper,
+                                       double velocityPercent,
+                                       bool infTorque)
+: KinematicsConstraint(robots, robotIndex, timeStep, damper, velocityPercent), inSolver_(false)
 {
   build_constr(robots, robotIndex, infTorque);
 }
@@ -24,8 +29,8 @@ DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots, unsigned
 void DynamicsConstraint::build_constr(const mc_rbdyn::Robots & robots, unsigned int robotIndex, bool infTorque)
 {
   const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
-  std::vector< std::vector<double> > tl = robot.tl();
-  std::vector< std::vector<double> > tu = robot.tu();
+  std::vector<std::vector<double>> tl = robot.tl();
+  std::vector<std::vector<double>> tu = robot.tu();
   if(infTorque)
   {
     for(auto & ti : tl)
@@ -88,12 +93,12 @@ void DynamicsConstraint::removeFromSolver(tasks::qp::QPSolver & solver)
 namespace
 {
 
-mc_solver::ConstraintSetPtr load_kin_constr(mc_solver::QPSolver & solver,
-                                               const mc_rtc::Configuration & config)
+mc_solver::ConstraintSetPtr load_kin_constr(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
   if(config.has("damper"))
   {
-    return std::make_shared<mc_solver::KinematicsConstraint>(solver.robots(), config("robotIndex"), solver.dt(), config("damper"), config("velocityPercent", 0.5));
+    return std::make_shared<mc_solver::KinematicsConstraint>(solver.robots(), config("robotIndex"), solver.dt(),
+                                                             config("damper"), config("velocityPercent", 0.5));
   }
   else
   {
@@ -101,21 +106,22 @@ mc_solver::ConstraintSetPtr load_kin_constr(mc_solver::QPSolver & solver,
   }
 }
 
-mc_solver::ConstraintSetPtr load_dyn_constr(mc_solver::QPSolver & solver,
-                                            const mc_rtc::Configuration & config)
+mc_solver::ConstraintSetPtr load_dyn_constr(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
   if(config.has("damper"))
   {
-    return std::make_shared<mc_solver::DynamicsConstraint>(solver.robots(), config("robotIndex"), solver.dt(), config("damper"), config("velocityPercent", 0.5), config("infTorque", false));
+    return std::make_shared<mc_solver::DynamicsConstraint>(solver.robots(), config("robotIndex"), solver.dt(),
+                                                           config("damper"), config("velocityPercent", 0.5),
+                                                           config("infTorque", false));
   }
   else
   {
-    return std::make_shared<mc_solver::DynamicsConstraint>(solver.robots(), config("robotIndex"), solver.dt(), config("infTorque", false));
+    return std::make_shared<mc_solver::DynamicsConstraint>(solver.robots(), config("robotIndex"), solver.dt(),
+                                                           config("infTorque", false));
   }
 }
 
-static bool registered =
-  mc_solver::ConstraintSetLoader::register_load_function("kinematics", &load_kin_constr) &&
-  mc_solver::ConstraintSetLoader::register_load_function("dynamics", &load_dyn_constr);
+static bool registered = mc_solver::ConstraintSetLoader::register_load_function("kinematics", &load_kin_constr)
+                         && mc_solver::ConstraintSetLoader::register_load_function("dynamics", &load_dyn_constr);
 
-}
+} // namespace

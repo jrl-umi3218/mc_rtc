@@ -1,6 +1,5 @@
-#include <mc_control/fsm/states/MetaTasks.h>
-
 #include <mc_control/fsm/Controller.h>
+#include <mc_control/fsm/states/MetaTasks.h>
 #include <mc_tasks/MetaTaskLoader.h>
 
 namespace mc_control
@@ -36,18 +35,16 @@ void MetaTasksState::start(Controller & ctl)
     {
       std::pair<size_t, mc_control::CompletionCriteria> p = {tasks_.size() - 1, {}};
       auto task = tasks_.back();
-      criterias_.emplace_back(tasks_.size() - 1,
-                              [&ctl,&tConfig,task]()
-                              {
-                                CompletionCriteria crit;
-                                crit.configure(*task, ctl.solver().dt(), tConfig("completion"));
-                                return crit;
-                              }());
+      criterias_.emplace_back(tasks_.size() - 1, [&ctl, &tConfig, task]() {
+        CompletionCriteria crit;
+        crit.configure(*task, ctl.solver().dt(), tConfig("completion"));
+        return crit;
+      }());
     }
   }
 }
 
-bool MetaTasksState::run(Controller&)
+bool MetaTasksState::run(Controller &)
 {
   bool finished = true;
   for(auto & c : criterias_)

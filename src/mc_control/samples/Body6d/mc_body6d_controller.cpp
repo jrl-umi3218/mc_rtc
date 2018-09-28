@@ -20,17 +20,13 @@ MCBody6dController::MCBody6dController(std::shared_ptr<mc_rbdyn::RobotModule> ro
   solver().addTask(postureTask.get());
   if(robot().name() == "hrp2_drc")
   {
-    solver().setContacts({
-      mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"),
-      mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")
-    });
+    solver().setContacts(
+        {mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"), mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")});
   }
   else if(robot().name() == "hrp4")
   {
-    solver().setContacts({
-      mc_rbdyn::Contact(robots(), "LeftFoot", "AllGround"),
-      mc_rbdyn::Contact(robots(), "RightFoot", "AllGround")
-    });
+    solver().setContacts(
+        {mc_rbdyn::Contact(robots(), "LeftFoot", "AllGround"), mc_rbdyn::Contact(robots(), "RightFoot", "AllGround")});
   }
   else
   {
@@ -64,7 +60,6 @@ void MCBody6dController::reset(const ControllerResetData & reset_data)
   comTask->reset();
 }
 
-
 bool MCBody6dController::change_ef(const std::string & ef_name)
 {
   if(robot().hasBody(ef_name))
@@ -91,7 +86,7 @@ bool MCBody6dController::translate_ef(const Eigen::Vector3d & t)
 
 bool MCBody6dController::rotate_ef(const Eigen::Matrix3d & m)
 {
-  sva::PTransformd dtr(m, Eigen::Vector3d(0,0,0));
+  sva::PTransformd dtr(m, Eigen::Vector3d(0, 0, 0));
   efTask->add_ef_pose(dtr);
   return true;
 }
@@ -103,4 +98,4 @@ bool MCBody6dController::move_ef(const Eigen::Vector3d & t, const Eigen::Matrix3
   return true;
 }
 
-}
+} // namespace mc_control

@@ -28,17 +28,18 @@ struct MC_CONTROL_FSM_STATE_DLLAPI ParallelState : State
 {
   void configure(const mc_rtc::Configuration & config) override;
 
-  void start(Controller&) override;
+  void start(Controller &) override;
 
-  bool run(Controller&) override;
+  bool run(Controller &) override;
 
-  void stop(Controller&) override;
+  void stop(Controller &) override;
 
-  void teardown(Controller&) override;
+  void teardown(Controller &) override;
 
   bool read_msg(std::string & msg) override;
 
   bool read_write_msg(std::string & msg, std::string & out) override;
+
 protected:
   mc_rtc::Configuration config_;
   std::vector<StatePtr> states_;

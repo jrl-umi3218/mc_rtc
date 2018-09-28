@@ -1,8 +1,7 @@
 #pragma once
 
-#include <mc_control/mc_controller.h>
 #include <mc_control/fsm/Executor.h>
-
+#include <mc_control/mc_controller.h>
 #include <mc_tasks/EndEffectorTask.h>
 #include <mc_tasks/PostureTask.h>
 
@@ -24,10 +23,14 @@ struct MC_CONTROL_FSM_DLLAPI Contact
 {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-  Contact(const std::string & r1, const std::string & r2,
-          const std::string & r1Surface, const std::string & r2Surface,
+  Contact(const std::string & r1,
+          const std::string & r2,
+          const std::string & r1Surface,
+          const std::string & r2Surface,
           const Eigen::Vector6d & dof = Eigen::Vector6d::Ones())
-  : r1(r1), r2(r2), r1Surface(r1Surface), r2Surface(r2Surface), dof(dof) {}
+  : r1(r1), r2(r2), r1Surface(r1Surface), r2Surface(r2Surface), dof(dof)
+  {
+  }
 
   std::string r1;
   std::string r2;
@@ -37,21 +40,19 @@ struct MC_CONTROL_FSM_DLLAPI Contact
 
   bool operator<(const Contact & rhs) const
   {
-    return r1 < rhs.r1 ||
-           ( r1 == rhs.r1 && r1Surface < rhs.r1Surface ) ||
-           ( r1 == rhs.r1 && r1Surface == rhs.r1Surface && r2 < rhs.r2 ) ||
-           ( r1 == rhs.r1 && r1Surface == rhs.r1Surface && r2 == rhs.r2 && r2Surface < rhs.r2Surface );
+    return r1 < rhs.r1 || (r1 == rhs.r1 && r1Surface < rhs.r1Surface)
+           || (r1 == rhs.r1 && r1Surface == rhs.r1Surface && r2 < rhs.r2)
+           || (r1 == rhs.r1 && r1Surface == rhs.r1Surface && r2 == rhs.r2 && r2Surface < rhs.r2Surface);
   }
 
   bool operator==(const Contact & rhs) const
   {
-    return r1 == rhs.r1 && r2 == rhs.r2 &&
-           r1Surface == rhs.r1Surface && r2Surface == rhs.r2Surface;
+    return r1 == rhs.r1 && r2 == rhs.r2 && r1Surface == rhs.r1Surface && r2Surface == rhs.r2Surface;
   }
 
   bool operator!=(const Contact & rhs) const
   {
-    return ! (*this == rhs);
+    return !(*this == rhs);
   }
 
   /** Default constructor, invalid contact */
@@ -79,9 +80,7 @@ struct MC_CONTROL_FSM_DLLAPI Controller : public MCController
 {
   friend struct Executor;
 
-  Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
-             double dt,
-             const mc_rtc::Configuration & config);
+  Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, const mc_rtc::Configuration & config);
 
   bool run() override;
 
@@ -108,10 +107,16 @@ struct MC_CONTROL_FSM_DLLAPI Controller : public MCController
    * This function is virtual to allow derived implementation to handle
    * interruptions differently.
    */
-  virtual void interrupt() { executor_.interrupt(); }
+  virtual void interrupt()
+  {
+    executor_.interrupt();
+  }
 
   /** Check if current state is running */
-  bool running() { return executor_.running(); }
+  bool running()
+  {
+    return executor_.running();
+  }
 
   /** Resume the FSM execution on a new state
    *
@@ -147,8 +152,7 @@ struct MC_CONTROL_FSM_DLLAPI Controller : public MCController
    * If the r1-r2 collision manager does not exist yet, this has no
    * effect.
    */
-  void removeCollisions(const std::string & r1,
-                        const std::string & r2);
+  void removeCollisions(const std::string & r1, const std::string & r2);
 
   /** Returns true if the robot is part of the controller */
   bool hasRobot(const std::string & robot) const;
@@ -192,15 +196,25 @@ struct MC_CONTROL_FSM_DLLAPI Controller : public MCController
   bool hasContact(const Contact & c) const;
 
   /** Access contact constraint */
-  mc_solver::ContactConstraint & contactConstraint() { return *contact_constraint_; }
+  mc_solver::ContactConstraint & contactConstraint()
+  {
+    return *contact_constraint_;
+  }
 
   /** Access the state factory */
-  StateFactory & factory() { return factory_; }
+  StateFactory & factory()
+  {
+    return factory_;
+  }
 
   /** Access controller configuration */
-  mc_rtc::Configuration & config() { return config_; }
+  mc_rtc::Configuration & config()
+  {
+    return config_;
+  }
 
   bool set_joint_pos(const std::string & jname, const double & pos) override;
+
 private:
   /** Reset all posture tasks */
   void resetPostures();
@@ -210,6 +224,7 @@ private:
 
   /** Teardown the idle state */
   void teardownIdleState();
+
 private:
   /** Keep track of the configuration of the controller */
   mc_rtc::Configuration config_;
@@ -228,8 +243,7 @@ private:
 
   /** Collision managers for robot-pair (r1, r2), if r1 == r2 this is
    * effectively a self-collision manager */
-  std::map<std::pair<std::string, std::string>,
-    std::shared_ptr<mc_solver::CollisionsConstraint>> collision_constraints_;
+  std::map<std::pair<std::string, std::string>, std::shared_ptr<mc_solver::CollisionsConstraint>> collision_constraints_;
 
   /** Creates a posture task for each actuated robots
    * (i.e. robot.dof() - robot.joint(0).dof() > 0 ) */
@@ -267,4 +281,4 @@ struct MC_CONTROL_FSM_DLLAPI ConfigurationLoader<mc_control::fsm::Contact>
   static mc_control::fsm::Contact load(const mc_rtc::Configuration & config);
 };
 
-}
+} // namespace mc_rtc

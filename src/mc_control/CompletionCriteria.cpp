@@ -19,16 +19,18 @@ const std::string & CompletionCriteria::output() const
   return output_;
 }
 
-std::function<bool(const mc_tasks::MetaTask&, std::string&)> CompletionCriteria::build(const mc_tasks::MetaTask & task, double dt, const mc_rtc::Configuration & config)
+std::function<bool(const mc_tasks::MetaTask &, std::string &)> CompletionCriteria::build(
+    const mc_tasks::MetaTask & task,
+    double dt,
+    const mc_rtc::Configuration & config)
 {
   if(config.has("timeout"))
   {
     double tick = 0;
     double goal = config("timeout");
     assert(goal > 0);
-    goal = std::ceil(goal/dt);
-    return [tick, goal](const mc_tasks::MetaTask&, std::string & out) mutable
-    {
+    goal = std::ceil(goal / dt);
+    return [tick, goal](const mc_tasks::MetaTask &, std::string & out) mutable {
       if(++tick > goal)
       {
         out += "timeout";
@@ -41,8 +43,7 @@ std::function<bool(const mc_tasks::MetaTask&, std::string&)> CompletionCriteria:
   {
     double norm = config("eval");
     assert(norm > 0);
-    return [norm](const mc_tasks::MetaTask & t, std::string & out)
-    {
+    return [norm](const mc_tasks::MetaTask & t, std::string & out) {
       if(t.eval().norm() < norm)
       {
         out += "eval";
@@ -55,8 +56,7 @@ std::function<bool(const mc_tasks::MetaTask&, std::string&)> CompletionCriteria:
   {
     double norm = config("speed");
     assert(norm > 0);
-    return [norm](const mc_tasks::MetaTask & t, std::string & out)
-    {
+    return [norm](const mc_tasks::MetaTask & t, std::string & out) {
       if(t.speed().norm() < norm)
       {
         out += "speed";
@@ -70,8 +70,7 @@ std::function<bool(const mc_tasks::MetaTask&, std::string&)> CompletionCriteria:
     std::array<mc_rtc::Configuration, 2> conds = config("OR");
     auto lhs = build(task, dt, conds[0]);
     auto rhs = build(task, dt, conds[1]);
-    return [lhs, rhs](const mc_tasks::MetaTask & t, std::string & out)
-    {
+    return [lhs, rhs](const mc_tasks::MetaTask & t, std::string & out) {
       if(lhs(t, out))
       {
         return true;
@@ -88,8 +87,7 @@ std::function<bool(const mc_tasks::MetaTask&, std::string&)> CompletionCriteria:
     std::array<mc_rtc::Configuration, 2> conds = config("AND");
     auto lhs = build(task, dt, conds[0]);
     auto rhs = build(task, dt, conds[1]);
-    return [lhs, rhs](const mc_tasks::MetaTask & t, std::string & out)
-    {
+    return [lhs, rhs](const mc_tasks::MetaTask & t, std::string & out) {
       if(lhs(t, out))
       {
         out += " AND ";
@@ -101,4 +99,4 @@ std::function<bool(const mc_tasks::MetaTask&, std::string&)> CompletionCriteria:
   return task.buildCompletionCriteria(dt, config);
 }
 
-}
+} // namespace mc_control

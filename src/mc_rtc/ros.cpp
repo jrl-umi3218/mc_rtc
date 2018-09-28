@@ -1,32 +1,33 @@
-#include <mc_rtc/ros.h>
-#include <mc_rtc/config.h>
 #include <mc_rbdyn/Robots.h>
-
+#include <mc_rtc/config.h>
 #include <mc_rtc/logging.h>
+#include <mc_rtc/ros.h>
 #include <mc_rtc/utils.h>
+
 #include <RBDyn/FK.h>
 
 #ifdef MC_RTC_HAS_ROS
-#include <ros/ros.h>
-#include <nav_msgs/Odometry.h>
-#include <sensor_msgs/Imu.h>
-#include <sensor_msgs/JointState.h>
-#include <geometry_msgs/WrenchStamped.h>
-#include <tf2_ros/transform_broadcaster.h>
-#include <mc_rtc_msgs/EnableController.h>
-#include <mc_rtc_msgs/close_grippers.h>
-#include <mc_rtc_msgs/open_grippers.h>
-#include <mc_rtc_msgs/set_gripper.h>
-#include <mc_rtc_msgs/set_joint_pos.h>
-#include <mc_rtc_msgs/get_joint_pos.h>
-#include <mc_rtc_msgs/play_next_stance.h>
-#include <mc_rtc_msgs/send_msg.h>
-#include <mc_rtc_msgs/send_recv_msg.h>
-#include <mc_rtc_msgs/move_com.h>
-#include <mc_control/mc_global_controller.h>
-#include <mc_control/generic_gripper.h>
+#  include <mc_control/generic_gripper.h>
+#  include <mc_control/mc_global_controller.h>
 
-#include <thread>
+#  include <geometry_msgs/WrenchStamped.h>
+#  include <mc_rtc_msgs/EnableController.h>
+#  include <mc_rtc_msgs/close_grippers.h>
+#  include <mc_rtc_msgs/get_joint_pos.h>
+#  include <mc_rtc_msgs/move_com.h>
+#  include <mc_rtc_msgs/open_grippers.h>
+#  include <mc_rtc_msgs/play_next_stance.h>
+#  include <mc_rtc_msgs/send_msg.h>
+#  include <mc_rtc_msgs/send_recv_msg.h>
+#  include <mc_rtc_msgs/set_gripper.h>
+#  include <mc_rtc_msgs/set_joint_pos.h>
+#  include <nav_msgs/Odometry.h>
+#  include <ros/ros.h>
+#  include <sensor_msgs/Imu.h>
+#  include <sensor_msgs/JointState.h>
+#  include <tf2_ros/transform_broadcaster.h>
+
+#  include <thread>
 #endif
 
 #ifdef MC_RTC_HAS_ROS
@@ -34,7 +35,11 @@
 namespace mc_rtc
 {
 
-inline geometry_msgs::TransformStamped PT2TF(const sva::PTransformd & X, const ros::Time & tm, const std::string & from, const std::string & to, unsigned int seq)
+inline geometry_msgs::TransformStamped PT2TF(const sva::PTransformd & X,
+                                             const ros::Time & tm,
+                                             const std::string & from,
+                                             const std::string & to,
+                                             unsigned int seq)
 {
   geometry_msgs::TransformStamped msg;
   msg.header.seq = seq;
@@ -71,7 +76,12 @@ inline void update_tf(geometry_msgs::TransformStamped & msg, const sva::PTransfo
   msg.transform.rotation.y = q.y();
   msg.transform.rotation.z = q.z();
 }
-inline void update_tf(geometry_msgs::TransformStamped & msg, const sva::PTransformd & X, const ros::Time & tm, const std::string & from, const std::string & to, unsigned int seq)
+inline void update_tf(geometry_msgs::TransformStamped & msg,
+                      const sva::PTransformd & X,
+                      const ros::Time & tm,
+                      const std::string & from,
+                      const std::string & to,
+                      unsigned int seq)
 {
   update_tf(msg, X);
   msg.header.seq = seq;
@@ -82,13 +92,16 @@ inline void update_tf(geometry_msgs::TransformStamped & msg, const sva::PTransfo
 
 struct RobotPublisherImpl
 {
-  RobotPublisherImpl(ros::NodeHandle & nh, const std::string& prefix, double rate, double dt);
+  RobotPublisherImpl(ros::NodeHandle & nh, const std::string & prefix, double rate, double dt);
 
   ~RobotPublisherImpl();
 
   void init(const mc_rbdyn::Robot & robot);
 
-  void update(double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::shared_ptr<mc_control::Gripper>> & grippers);
+  void update(double dt,
+              const mc_rbdyn::Robot & robot,
+              const std::map<std::string, std::shared_ptr<mc_control::Gripper>> & grippers);
+
 private:
   ros::NodeHandle & nh;
   ros::Publisher j_state_pub;
@@ -123,16 +136,11 @@ private:
   void publishThread();
 };
 
-RobotPublisherImpl::RobotPublisherImpl(ros::NodeHandle & nh, const std::string& prefix, double rate, double dt)
-: nh(nh),
-  j_state_pub(this->nh.advertise<sensor_msgs::JointState>(prefix+"joint_states", 1)),
-  imu_pub(this->nh.advertise<sensor_msgs::Imu>(prefix+"imu", 1)),
-  odom_pub(this->nh.advertise<nav_msgs::Odometry>(prefix+"odom", 1)),
-  tf_caster(),
-  prefix(prefix),
-  running(true), seq(0), msgs(),
-  rate(rate),
-  skip(static_cast<unsigned int>(ceil(1/(rate*dt)))),
+RobotPublisherImpl::RobotPublisherImpl(ros::NodeHandle & nh, const std::string & prefix, double rate, double dt)
+: nh(nh), j_state_pub(this->nh.advertise<sensor_msgs::JointState>(prefix + "joint_states", 1)),
+  imu_pub(this->nh.advertise<sensor_msgs::Imu>(prefix + "imu", 1)),
+  odom_pub(this->nh.advertise<nav_msgs::Odometry>(prefix + "odom", 1)), tf_caster(), prefix(prefix), running(true),
+  seq(0), msgs(), rate(rate), skip(static_cast<unsigned int>(ceil(1 / (rate * dt)))),
   th(std::bind(&RobotPublisherImpl::publishThread, this))
 {
 }
@@ -145,7 +153,10 @@ RobotPublisherImpl::~RobotPublisherImpl()
 
 void RobotPublisherImpl::init(const mc_rbdyn::Robot & robot)
 {
-  if(&robot == previous_robot) { return; }
+  if(&robot == previous_robot)
+  {
+    return;
+  }
   previous_robot = &robot;
 
   // Reset data
@@ -198,11 +209,19 @@ void RobotPublisherImpl::init(const mc_rbdyn::Robot & robot)
   }
 }
 
-void RobotPublisherImpl::update(double, const mc_rbdyn::Robot & robot, const std::map<std::string, std::shared_ptr<mc_control::Gripper>> & grippers)
+void RobotPublisherImpl::update(double,
+                                const mc_rbdyn::Robot & robot,
+                                const std::map<std::string, std::shared_ptr<mc_control::Gripper>> & grippers)
 {
-  if(&robot != previous_robot) { init(robot); }
+  if(&robot != previous_robot)
+  {
+    init(robot);
+  }
 
-  if(++seq % skip) { return; }
+  if(++seq % skip)
+  {
+    return;
+  }
 
   ros::Time tm = ros::Time::now();
 
@@ -217,7 +236,10 @@ void RobotPublisherImpl::update(double, const mc_rbdyn::Robot & robot, const std
     for(size_t i = 0; i < gJoints.size(); ++i)
     {
       const auto & j = gJoints[i];
-      if(!robot.hasJoint(j)) { continue; }
+      if(!robot.hasJoint(j))
+      {
+        continue;
+      }
       const auto & q = gQ[i];
       auto jIndex = robot.jointIndexByName(gJoints[i]);
       if(mbc.q[jIndex].size() > 0)
@@ -225,19 +247,24 @@ void RobotPublisherImpl::update(double, const mc_rbdyn::Robot & robot, const std
         mbc.q[jIndex][0] = q;
       }
     }
-    if(gJoints.size() == 0 || !robot.hasJoint(gJoints[0])) { continue; } // unlikely
+    if(gJoints.size() == 0 || !robot.hasJoint(gJoints[0]))
+    {
+      continue;
+    } // unlikely
     /** Perform FK starting at the gripper */
     int startIndex = robot.jointIndexByName(gJoints[0]);
-    for(int jIndex = startIndex;
-          jIndex < mb.joints().size(); ++jIndex)
+    for(int jIndex = startIndex; jIndex < mb.joints().size(); ++jIndex)
     {
       auto pred = mb.predecessor(jIndex);
-      if(pred < startIndex - 1 || pred > jIndex - 1) { break; }
+      if(pred < startIndex - 1 || pred > jIndex - 1)
+      {
+        break;
+      }
       mbc.jointConfig[jIndex] = mb.joints()[jIndex].pose(mbc.q[jIndex]);
       mbc.parentToSon[jIndex] = mbc.jointConfig[jIndex] * mb.transforms()[jIndex];
       if(pred != -1)
       {
-        mbc.bodyPosW[mb.successor(jIndex)] = mbc.parentToSon[jIndex]*mbc.bodyPosW[pred];
+        mbc.bodyPosW[mb.successor(jIndex)] = mbc.parentToSon[jIndex] * mbc.bodyPosW[pred];
       }
       else
       {
@@ -273,7 +300,7 @@ void RobotPublisherImpl::update(double, const mc_rbdyn::Robot & robot, const std
   data.imu.angular_velocity.x = imu_angular_velocity.x();
   data.imu.angular_velocity.y = imu_angular_velocity.y();
   data.imu.angular_velocity.z = imu_angular_velocity.z();
-  const auto &imu_orientation = robot.bodySensor().orientation();
+  const auto & imu_orientation = robot.bodySensor().orientation();
   data.imu.orientation.x = imu_orientation.x();
   data.imu.orientation.y = imu_orientation.y();
   data.imu.orientation.z = imu_orientation.z();
@@ -318,14 +345,14 @@ void RobotPublisherImpl::update(double, const mc_rbdyn::Robot & robot, const std
     }
   }
 
-  update_tf(data.tfs[tfs_i++], robot.bodyTransform(0)*mbc.parentToSon[0]);
+  update_tf(data.tfs[tfs_i++], robot.bodyTransform(0) * mbc.parentToSon[0]);
   for(int j = 1; j < mb.nrJoints(); ++j)
   {
     const auto & predIndex = mb.predecessor(j);
     const auto & succIndex = mb.successor(j);
     const auto & X_predp_pred = robot.bodyTransform(predIndex);
     const auto & X_succp_succ = robot.bodyTransform(succIndex);
-    update_tf(data.tfs[tfs_i++], X_succp_succ  * mbc.parentToSon[static_cast<size_t>(j)]*X_predp_pred.inv());
+    update_tf(data.tfs[tfs_i++], X_succp_succ * mbc.parentToSon[static_cast<size_t>(j)] * X_predp_pred.inv());
   }
 
   for(auto & tf : data.tfs)
@@ -340,8 +367,7 @@ void RobotPublisherImpl::update(double, const mc_rbdyn::Robot & robot, const std
   }
 }
 
-RobotPublisher::RobotPublisher(const std::string & prefix, double rate, double dt)
-  : impl(nullptr)
+RobotPublisher::RobotPublisher(const std::string & prefix, double rate, double dt) : impl(nullptr)
 {
   auto nh = ROSBridge::get_node_handle();
   if(nh)
@@ -350,9 +376,7 @@ RobotPublisher::RobotPublisher(const std::string & prefix, double rate, double d
   }
 }
 
-RobotPublisher::~RobotPublisher()
-{
-}
+RobotPublisher::~RobotPublisher() {}
 
 void RobotPublisher::init(const mc_rbdyn::Robot & robot)
 {
@@ -362,7 +386,9 @@ void RobotPublisher::init(const mc_rbdyn::Robot & robot)
   }
 }
 
-void RobotPublisher::update(double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::shared_ptr<mc_control::Gripper>> & grippers)
+void RobotPublisher::update(double dt,
+                            const mc_rbdyn::Robot & robot,
+                            const std::map<std::string, std::shared_ptr<mc_control::Gripper>> & grippers)
 {
   if(impl)
   {
@@ -384,14 +410,13 @@ void RobotPublisherImpl::publishThread()
         imu_pub.publish(msg.imu);
         odom_pub.publish(msg.odom);
         tf_caster.sendTransform(msg.tfs);
-        for (const auto & wrench : msg.wrenches)
+        for(const auto & wrench : msg.wrenches)
         {
           const std::string & sensor_name = wrench.header.frame_id.substr(prefix.length());
-          if (wrenches_pub.count(sensor_name) == 0)
+          if(wrenches_pub.count(sensor_name) == 0)
           {
-            wrenches_pub.insert({
-                        sensor_name,
-                        this->nh.advertise<geometry_msgs::WrenchStamped>(prefix + "force/" + sensor_name, 1)});
+            wrenches_pub.insert(
+                {sensor_name, this->nh.advertise<geometry_msgs::WrenchStamped>(prefix + "force/" + sensor_name, 1)});
           }
           wrenches_pub[sensor_name].publish(wrench);
         }
@@ -408,9 +433,8 @@ void RobotPublisherImpl::publishThread()
 
 struct MCGlobalControllerServicesImpl
 {
-  MCGlobalControllerServicesImpl(std::shared_ptr<ros::NodeHandle> nh, mc_control::MCGlobalController & controller) :
-    controller(controller),
-    nh(nh)
+  MCGlobalControllerServicesImpl(std::shared_ptr<ros::NodeHandle> nh, mc_control::MCGlobalController & controller)
+  : controller(controller), nh(nh)
   {
     if(nh)
     {
@@ -426,26 +450,38 @@ private:
   void start_services()
   {
     LOG_SUCCESS("[MCGlobalControllerServices] Starting ROS services")
-    services.push_back(nh->advertiseService("mc_rtc/enable_controller", &MCGlobalControllerServicesImpl::EnableController_callback, this));
-    services.push_back(nh->advertiseService("mc_rtc/close_grippers", &MCGlobalControllerServicesImpl::close_grippers_callback, this));
-    services.push_back(nh->advertiseService("mc_rtc/open_grippers", &MCGlobalControllerServicesImpl::open_grippers_callback, this));
-    services.push_back(nh->advertiseService("mc_rtc/set_gripper", &MCGlobalControllerServicesImpl::set_gripper_callback, this));
-    services.push_back(nh->advertiseService("mc_rtc/set_joint_pos", &MCGlobalControllerServicesImpl::set_joint_pos_callback, this));
-    services.push_back(nh->advertiseService("mc_rtc/get_joint_pos", &MCGlobalControllerServicesImpl::get_joint_pos_callback, this));
-    services.push_back(nh->advertiseService("mc_rtc/play_next_stance", &MCGlobalControllerServicesImpl::play_next_stance_callback, this));
-    services.push_back(nh->advertiseService("mc_rtc/send_msg", &MCGlobalControllerServicesImpl::send_msg_callback, this));
-    services.push_back(nh->advertiseService("mc_rtc/send_recv_msg", &MCGlobalControllerServicesImpl::send_recv_msg_callback, this));
-    services.push_back(nh->advertiseService("mc_rtc/move_com", &MCGlobalControllerServicesImpl::move_com_callback, this));
+    services.push_back(nh->advertiseService("mc_rtc/enable_controller",
+                                            &MCGlobalControllerServicesImpl::EnableController_callback, this));
+    services.push_back(
+        nh->advertiseService("mc_rtc/close_grippers", &MCGlobalControllerServicesImpl::close_grippers_callback, this));
+    services.push_back(
+        nh->advertiseService("mc_rtc/open_grippers", &MCGlobalControllerServicesImpl::open_grippers_callback, this));
+    services.push_back(
+        nh->advertiseService("mc_rtc/set_gripper", &MCGlobalControllerServicesImpl::set_gripper_callback, this));
+    services.push_back(
+        nh->advertiseService("mc_rtc/set_joint_pos", &MCGlobalControllerServicesImpl::set_joint_pos_callback, this));
+    services.push_back(
+        nh->advertiseService("mc_rtc/get_joint_pos", &MCGlobalControllerServicesImpl::get_joint_pos_callback, this));
+    services.push_back(nh->advertiseService("mc_rtc/play_next_stance",
+                                            &MCGlobalControllerServicesImpl::play_next_stance_callback, this));
+    services.push_back(
+        nh->advertiseService("mc_rtc/send_msg", &MCGlobalControllerServicesImpl::send_msg_callback, this));
+    services.push_back(
+        nh->advertiseService("mc_rtc/send_recv_msg", &MCGlobalControllerServicesImpl::send_recv_msg_callback, this));
+    services.push_back(
+        nh->advertiseService("mc_rtc/move_com", &MCGlobalControllerServicesImpl::move_com_callback, this));
   }
 
   bool move_com_callback(mc_rtc_msgs::move_comRequest & req, mc_rtc_msgs::move_comResponse & res)
   {
-    LOG_INFO("[MCGlobalControllerServices] Moving CoM to (" << req.com[0] << ", " << req.com[1] << ", " << req.com[2] << ")");
+    LOG_INFO("[MCGlobalControllerServices] Moving CoM to (" << req.com[0] << ", " << req.com[1] << ", " << req.com[2]
+                                                            << ")");
     res.success = controller.move_com({req.com[0], req.com[1], req.com[2]});
     return res.success;
   }
 
-  bool EnableController_callback(mc_rtc_msgs::EnableController::Request & req, mc_rtc_msgs::EnableController::Response & resp)
+  bool EnableController_callback(mc_rtc_msgs::EnableController::Request & req,
+                                 mc_rtc_msgs::EnableController::Response & resp)
   {
     LOG_INFO("[MCGlobalControllerServices] Enable controller " << req.name);
     resp.success = controller.EnableController(req.name);
@@ -490,7 +526,8 @@ private:
     return res.success;
   }
 
-  bool play_next_stance_callback(mc_rtc_msgs::play_next_stance::Request &, mc_rtc_msgs::play_next_stance::Response & resp)
+  bool play_next_stance_callback(mc_rtc_msgs::play_next_stance::Request &,
+                                 mc_rtc_msgs::play_next_stance::Response & resp)
   {
     LOG_INFO("[MCGlobalControllerServices] Playing next stance");
     resp.success = controller.play_next_stance();
@@ -519,7 +556,10 @@ private:
 
 inline bool ros_init(const std::string & name)
 {
-  if(ros::ok()) { return true; }
+  if(ros::ok())
+  {
+    return true;
+  }
   int argc = 0;
   char * argv[] = {0};
   ros::init(argc, argv, name.c_str());
@@ -533,11 +573,7 @@ inline bool ros_init(const std::string & name)
 
 struct ROSBridgeImpl
 {
-  ROSBridgeImpl()
-  : ros_is_init(ros_init("mc_rtc")),
-    nh(ros_is_init ? new ros::NodeHandle() : 0)
-  {
-  }
+  ROSBridgeImpl() : ros_is_init(ros_init("mc_rtc")), nh(ros_is_init ? new ros::NodeHandle() : 0) {}
   bool ros_is_init;
   std::shared_ptr<ros::NodeHandle> nh;
   std::map<std::string, std::shared_ptr<RobotPublisher>> rpubs;
@@ -560,10 +596,10 @@ std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
 void ROSBridge::set_publisher_timestep(double timestep)
 {
   static auto & impl = impl_();
-  impl.publish_rate = 1/timestep;
+  impl.publish_rate = 1 / timestep;
 }
 
-void ROSBridge::init_robot_publisher(const std::string& publisher, double dt, const mc_rbdyn::Robot & robot)
+void ROSBridge::init_robot_publisher(const std::string & publisher, double dt, const mc_rbdyn::Robot & robot)
 {
   static auto & impl = impl_();
   if(impl.rpubs.count(publisher) == 0)
@@ -573,7 +609,10 @@ void ROSBridge::init_robot_publisher(const std::string& publisher, double dt, co
   impl.rpubs[publisher]->init(robot);
 }
 
-void ROSBridge::update_robot_publisher(const std::string & publisher, double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::shared_ptr<mc_control::Gripper>> & grippers)
+void ROSBridge::update_robot_publisher(const std::string & publisher,
+                                       double dt,
+                                       const mc_rbdyn::Robot & robot,
+                                       const std::map<std::string, std::shared_ptr<mc_control::Gripper>> & grippers)
 {
   static auto & impl = impl_();
   if(impl.rpubs.count(publisher) == 0)
@@ -584,9 +623,9 @@ void ROSBridge::update_robot_publisher(const std::string & publisher, double dt,
   impl.rpubs[publisher]->update(dt, robot, grippers);
 }
 
-void ROSBridge::activate_services(mc_control::MCGlobalController& ctl)
+void ROSBridge::activate_services(mc_control::MCGlobalController & ctl)
 {
-  static auto& impl = impl_();
+  static auto & impl = impl_();
   impl.services.reset(new MCGlobalControllerServicesImpl(impl.nh, ctl));
 }
 
@@ -595,12 +634,14 @@ void ROSBridge::shutdown()
   ros::shutdown();
 }
 
-}
+} // namespace mc_rtc
 #else
 namespace ros
 {
-  class NodeHandle {};
-}
+class NodeHandle
+{
+};
+} // namespace ros
 
 namespace mc_rtc
 {
@@ -623,25 +664,20 @@ std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
   return impl.nh;
 }
 
-void ROSBridge::set_publisher_timestep(double /*timestep*/)
+void ROSBridge::set_publisher_timestep(double /*timestep*/) {}
+
+void ROSBridge::init_robot_publisher(const std::string &, double, const mc_rbdyn::Robot &) {}
+
+void ROSBridge::update_robot_publisher(const std::string &,
+                                       double,
+                                       const mc_rbdyn::Robot &,
+                                       const std::map<std::string, std::shared_ptr<mc_control::Gripper>> &)
 {
 }
 
-void ROSBridge::init_robot_publisher(const std::string&, double, const mc_rbdyn::Robot&)
-{
-}
+void ROSBridge::activate_services(mc_control::MCGlobalController &) {}
 
-void ROSBridge::update_robot_publisher(const std::string&, double, const mc_rbdyn::Robot &, const std::map<std::string, std::shared_ptr<mc_control::Gripper>> &)
-{
-}
+void ROSBridge::shutdown() {}
 
-void ROSBridge::activate_services(mc_control::MCGlobalController&)
-{
-}
-
-void ROSBridge::shutdown()
-{
-}
-
-}
+} // namespace mc_rtc
 #endif

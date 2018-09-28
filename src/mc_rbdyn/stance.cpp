@@ -1,19 +1,15 @@
-#include <mc_rbdyn/stance.h>
-
-#include <mc_rbdyn/PlanarSurface.h>
 #include <mc_rbdyn/CylindricalSurface.h>
 #include <mc_rbdyn/GripperSurface.h>
-
+#include <mc_rbdyn/PlanarSurface.h>
 #include <mc_rbdyn/Robots.h>
-
+#include <mc_rbdyn/stance.h>
 #include <mc_rtc/Configuration.h>
 #include <mc_rtc/logging.h>
 
-#include <RBDyn/FK.h>
 #include <RBDyn/CoM.h>
+#include <RBDyn/FK.h>
 
 #include "../mc_rtc/internals/json.h"
-
 #include <fstream>
 
 namespace mc_rbdyn
@@ -21,55 +17,48 @@ namespace mc_rbdyn
 
 namespace
 {
-  std::vector<PolygonInterpolator::tuple_pair_t> tpvFromJson(const mc_rtc::Configuration & conf)
+std::vector<PolygonInterpolator::tuple_pair_t> tpvFromJson(const mc_rtc::Configuration & conf)
+{
+  std::vector<PolygonInterpolator::tuple_pair_t> tuple_pairs;
+  if(conf.has("tuple_pairs") && conf("tuple_pairs").size())
   {
-    std::vector<PolygonInterpolator::tuple_pair_t> tuple_pairs;
-    if(conf.has("tuple_pairs") && conf("tuple_pairs").size())
+    for(const auto tpv : conf("tuple_pairs"))
     {
-      for(const auto tpv : conf("tuple_pairs"))
+      if(tpv.has("p1") && tpv.has("p2"))
       {
-        if(tpv.has("p1") && tpv.has("p2"))
+        const auto p1 = tpv("p1");
+        const auto p2 = tpv("p2");
+        if(p1.size() == 2 && p2.size() == 2)
         {
-          const auto p1 = tpv("p1");
-          const auto p2 = tpv("p2");
-          if(p1.size() == 2 && p2.size() == 2)
-          {
-            tuple_pairs.push_back({
-              {{p1[0], p1[1]}},
-              {{p2[0], p2[1]}}
-            });
-          }
+          tuple_pairs.push_back({{{p1[0], p1[1]}}, {{p2[0], p2[1]}}});
         }
       }
     }
-    return tuple_pairs;
   }
+  return tuple_pairs;
 }
-
+} // namespace
 
 struct StanceImpl
 {
 public:
-  std::vector< std::vector<double> > q;
-  std::vector< Contact > geomContacts;
-  std::vector< Contact > stabContacts;
+  std::vector<std::vector<double>> q;
+  std::vector<Contact> geomContacts;
+  std::vector<Contact> stabContacts;
 };
 
-Stance::Stance(const std::vector< std::vector<double> > & q, const std::vector<Contact> & geomContacts, const std::vector<Contact> stabContacts)
+Stance::Stance(const std::vector<std::vector<double>> & q,
+               const std::vector<Contact> & geomContacts,
+               const std::vector<Contact> stabContacts)
 : impl(new StanceImpl({q, geomContacts, stabContacts}))
 {
 }
 
-Stance::~Stance()
-{
-}
+Stance::~Stance() {}
 
-Stance::Stance(Stance && rhs)
-: impl(std::move(rhs.impl))
-{
-}
+Stance::Stance(Stance && rhs) : impl(std::move(rhs.impl)) {}
 
-Stance& Stance::operator=(Stance&& rhs)
+Stance & Stance::operator=(Stance && rhs)
 {
   impl = std::move(rhs.impl);
   return *this;
@@ -80,7 +69,7 @@ const std::vector<Contact> & Stance::contacts() const
   return impl->geomContacts;
 }
 
-const std::vector< std::vector<double> > Stance::q() const
+const std::vector<std::vector<double>> Stance::q() const
 {
   return impl->q;
 }
@@ -114,11 +103,17 @@ void Stance::updateContact(const Contact & oldContact, const Contact & newContac
 {
   for(Contact & c : impl->geomContacts)
   {
-    if(c == oldContact) { c = newContact; }
+    if(c == oldContact)
+    {
+      c = newContact;
+    }
   }
   for(Contact & c : impl->stabContacts)
   {
-    if(c == oldContact) { c = newContact; }
+    if(c == oldContact)
+    {
+      c = newContact;
+    }
   }
 }
 
@@ -144,12 +139,10 @@ apply_return_t IdentityContactAction::apply(const Stance & stance)
 {
   contact_vector_pair_t p1(stance.geomContacts(), stance.stabContacts());
   contact_vector_pair_t p2(stance.geomContacts(), stance.stabContacts());
-  return apply_return_t(p1,p2);
+  return apply_return_t(p1, p2);
 }
 
-void IdentityContactAction::update(const Stance &)
-{
-}
+void IdentityContactAction::update(const Stance &) {}
 
 std::string IdentityContactAction::toStr()
 {
@@ -161,15 +154,11 @@ std::string IdentityContactAction::type()
   return "identity";
 }
 
-const Contact & IdentityContactAction::contact() const
-{
-  LOG_ERROR_AND_THROW(std::runtime_error, "Tried to access contact on IdentityContactAction")
-}
+const Contact & IdentityContactAction::contact() const {
+    LOG_ERROR_AND_THROW(std::runtime_error, "Tried to access contact on IdentityContactAction")}
 
-Contact & IdentityContactAction::contact()
-{
-  LOG_ERROR_AND_THROW(std::runtime_error, "Tried to access contact on IdentityContactAction")
-}
+Contact & IdentityContactAction::contact(){
+    LOG_ERROR_AND_THROW(std::runtime_error, "Tried to access contact on IdentityContactAction")}
 
 AddContactAction::AddContactAction(const Contact & contact)
 : _contact(contact)
@@ -184,7 +173,7 @@ apply_return_t AddContactAction::apply(const Stance & stance)
   contact_vector_pair_t p2(p1.first, stance.stabContacts());
   p2.second.push_back(_contact);
 
-  return apply_return_t(p1,p2);
+  return apply_return_t(p1, p2);
 }
 
 void AddContactAction::update(const Stance & stance)
@@ -219,10 +208,7 @@ Contact & AddContactAction::contact()
   return _contact;
 }
 
-RemoveContactAction::RemoveContactAction(const Contact & contact)
-: _contact(contact)
-{
-}
+RemoveContactAction::RemoveContactAction(const Contact & contact) : _contact(contact) {}
 
 apply_return_t RemoveContactAction::apply(const Stance & stance)
 {
@@ -240,7 +226,7 @@ apply_return_t RemoveContactAction::apply(const Stance & stance)
     p2.first.erase(contactit);
   }
 
-  return apply_return_t(p1,p2);
+  return apply_return_t(p1, p2);
 }
 
 void RemoveContactAction::update(const Stance & stance)
@@ -283,19 +269,20 @@ sva::PTransformd svaPTransformdFromJSON(const mc_rtc::Configuration & conf)
   {
     for(int j = 0; j < 3; ++j)
     {
-      rot(i,j) = rotation[3*i+j];
+      rot(i, j) = rotation[3 * i + j];
     }
   }
   return sva::PTransformd(rot, conf("translation"));
 }
 
-const Surface& surfaceFromJSON(const mc_rbdyn::Robot & robot, const mc_rtc::Configuration & conf)
+const Surface & surfaceFromJSON(const mc_rbdyn::Robot & robot, const mc_rtc::Configuration & conf)
 {
   if(robot.hasSurface(conf("name")))
   {
     return robot.surface(conf("name"));
   }
-  LOG_ERROR_AND_THROW(std::runtime_error, "Surface stored in JSON " << static_cast<std::string>(conf("name")) << " does not exist in robot " << robot.name())
+  LOG_ERROR_AND_THROW(std::runtime_error, "Surface stored in JSON " << static_cast<std::string>(conf("name"))
+                                                                    << " does not exist in robot " << robot.name())
 }
 
 Contact contactFromJSON(const mc_rbdyn::Robots & robots, const mc_rtc::Configuration & conf)
@@ -314,43 +301,17 @@ Contact contactFromJSON(const mc_rbdyn::Robots & robots, const mc_rtc::Configura
   }
 }
 
-inline void addStanceFromJSON(const mc_rbdyn::Robots & robots, std::vector<Stance> & stances, const mc_rtc::Configuration & conf)
+inline void addStanceFromJSON(const mc_rbdyn::Robots & robots,
+                              std::vector<Stance> & stances,
+                              const mc_rtc::Configuration & conf)
 {
-  std::vector< std::vector<double> > stance_q = conf("q");
-  std::vector<std::string> stance_joints =
-  {
-    "Root",
-    "RLEG_JOINT0",
-    "RLEG_JOINT1",
-    "RLEG_JOINT2",
-    "RLEG_JOINT3",
-    "RLEG_JOINT4",
-    "RLEG_JOINT5",
-    "LLEG_JOINT0",
-    "LLEG_JOINT1",
-    "LLEG_JOINT2",
-    "LLEG_JOINT3",
-    "LLEG_JOINT4",
-    "LLEG_JOINT5",
-    "CHEST_JOINT0",
-    "CHEST_JOINT1",
-    "HEAD_JOINT0",
-    "HEAD_JOINT1",
-    "RARM_JOINT0",
-    "RARM_JOINT1",
-    "RARM_JOINT2",
-    "RARM_JOINT3",
-    "RARM_JOINT4",
-    "RARM_JOINT5",
-    "RARM_JOINT6",
-    "LARM_JOINT0",
-    "LARM_JOINT1",
-    "LARM_JOINT2",
-    "LARM_JOINT3",
-    "LARM_JOINT4",
-    "LARM_JOINT5",
-    "LARM_JOINT6"
-  };
+  std::vector<std::vector<double>> stance_q = conf("q");
+  std::vector<std::string> stance_joints = {
+      "Root",         "RLEG_JOINT0", "RLEG_JOINT1", "RLEG_JOINT2", "RLEG_JOINT3", "RLEG_JOINT4", "RLEG_JOINT5",
+      "LLEG_JOINT0",  "LLEG_JOINT1", "LLEG_JOINT2", "LLEG_JOINT3", "LLEG_JOINT4", "LLEG_JOINT5", "CHEST_JOINT0",
+      "CHEST_JOINT1", "HEAD_JOINT0", "HEAD_JOINT1", "RARM_JOINT0", "RARM_JOINT1", "RARM_JOINT2", "RARM_JOINT3",
+      "RARM_JOINT4",  "RARM_JOINT5", "RARM_JOINT6", "LARM_JOINT0", "LARM_JOINT1", "LARM_JOINT2", "LARM_JOINT3",
+      "LARM_JOINT4",  "LARM_JOINT5", "LARM_JOINT6"};
   auto q = robots.robot().q();
   for(size_t joint_i = 0; joint_i < stance_joints.size(); ++joint_i)
   {
@@ -393,7 +354,11 @@ std::shared_ptr<StanceAction> stanceActionFromJSON(const mc_rbdyn::Robots & robo
   throw(std::string("Invalid StanceAction saved in JSON"));
 }
 
-void loadStances(const mc_rbdyn::Robots & robots, const std::string & filename, std::vector<Stance> & stances, std::vector< std::shared_ptr<StanceAction> > & actions, std::vector<PolygonInterpolator> & interpolators)
+void loadStances(const mc_rbdyn::Robots & robots,
+                 const std::string & filename,
+                 std::vector<Stance> & stances,
+                 std::vector<std::shared_ptr<StanceAction>> & actions,
+                 std::vector<PolygonInterpolator> & interpolators)
 {
   mc_rtc::Configuration conf(filename);
   for(const auto sv : conf("stances"))
@@ -422,7 +387,7 @@ mc_rtc::Configuration svaPTransformdToJSON(const sva::PTransformd & X)
   {
     for(int j = 0; j < 3; ++j)
     {
-      rotation.push(rot(i,j));
+      rotation.push(rot(i, j));
     }
   }
   conf.add("translation", X.translation());
@@ -437,10 +402,10 @@ mc_rtc::Configuration surfaceToJSON(const std::shared_ptr<Surface> & surface)
   conf.add("bodyName", surface->bodyName());
   conf.add("X_b_s", svaPTransformdToJSON(surface->X_b_s()));
   conf.add("materialName", surface->materialName());
-  if(dynamic_cast<PlanarSurface*>(surface.get()))
+  if(dynamic_cast<PlanarSurface *>(surface.get()))
   {
     mc_rtc::Configuration planarPoints = conf.array("planarPoints");
-    for(const std::pair<double, double> & p : (dynamic_cast<PlanarSurface*>(surface.get()))->planarPoints())
+    for(const std::pair<double, double> & p : (dynamic_cast<PlanarSurface *>(surface.get()))->planarPoints())
     {
       mc_rtc::Configuration pJSON;
       pJSON.add("x", p.first);
@@ -448,15 +413,15 @@ mc_rtc::Configuration surfaceToJSON(const std::shared_ptr<Surface> & surface)
       planarPoints.push(pJSON);
     }
   }
-  else if(dynamic_cast<CylindricalSurface*>(surface.get()))
+  else if(dynamic_cast<CylindricalSurface *>(surface.get()))
   {
-    CylindricalSurface * s = dynamic_cast<CylindricalSurface*>(surface.get());
+    CylindricalSurface * s = dynamic_cast<CylindricalSurface *>(surface.get());
     conf.add("radius", s->radius());
     conf.add("width", s->width());
   }
-  else if(dynamic_cast<GripperSurface*>(surface.get()))
+  else if(dynamic_cast<GripperSurface *>(surface.get()))
   {
-    GripperSurface * s = dynamic_cast<GripperSurface*>(surface.get());
+    GripperSurface * s = dynamic_cast<GripperSurface *>(surface.get());
     auto pfo = conf.array("pointsFromOrigin");
     for(const sva::PTransformd & p : s->pointsFromOrigin())
     {
@@ -498,16 +463,16 @@ mc_rtc::Configuration stanceToJSON(Stance & stance)
 mc_rtc::Configuration stanceActionToJSON(StanceAction & action)
 {
   mc_rtc::Configuration conf;
-  if(dynamic_cast<IdentityContactAction*>(&action))
+  if(dynamic_cast<IdentityContactAction *>(&action))
   {
     conf.add("type", "Identity");
   }
-  else if(dynamic_cast<AddContactAction*>(&action))
+  else if(dynamic_cast<AddContactAction *>(&action))
   {
     conf.add("type", "Add");
     conf.add("contact", contactToJSON(action.contact()));
   }
-  else if(dynamic_cast<RemoveContactAction*>(&action))
+  else if(dynamic_cast<RemoveContactAction *>(&action))
   {
     conf.add("type", "Remove");
     conf.add("contact", contactToJSON(action.contact()));
@@ -515,7 +480,10 @@ mc_rtc::Configuration stanceActionToJSON(StanceAction & action)
   return conf;
 }
 
-void saveStances(const mc_rbdyn::Robots &/*robots*/, const std::string & filename, std::vector<Stance> & stances, std::vector< std::shared_ptr<StanceAction> > & actions)
+void saveStances(const mc_rbdyn::Robots & /*robots*/,
+                 const std::string & filename,
+                 std::vector<Stance> & stances,
+                 std::vector<std::shared_ptr<StanceAction>> & actions)
 {
   for(size_t i = 0; i < std::min(stances.size(), actions.size()); ++i)
   {
@@ -539,7 +507,10 @@ void saveStances(const mc_rbdyn::Robots &/*robots*/, const std::string & filenam
   conf.save(filename);
 }
 
-void pSaveStances(const mc_rbdyn::Robots &/*robots*/, const std::string & filename, std::vector<Stance*> & stances, std::vector< std::shared_ptr<StanceAction> > & actions)
+void pSaveStances(const mc_rbdyn::Robots & /*robots*/,
+                  const std::string & filename,
+                  std::vector<Stance *> & stances,
+                  std::vector<std::shared_ptr<StanceAction>> & actions)
 {
   for(size_t i = 0; i < std::min(stances.size(), actions.size()); ++i)
   {
@@ -563,4 +534,4 @@ void pSaveStances(const mc_rbdyn::Robots &/*robots*/, const std::string & filena
   conf.save(filename);
 }
 
-}
+} // namespace mc_rbdyn

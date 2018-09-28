@@ -29,4 +29,4 @@ bool MCPostureController::run()
   return mc_control::MCController::run(mc_solver::FeedbackType::Joints);
 }
 
-}
+} // namespace mc_control

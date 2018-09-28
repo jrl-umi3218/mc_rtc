@@ -1,7 +1,5 @@
 #include <mc_control/mc_global_controller.h>
-
 #include <mc_rbdyn/RobotLoader.h>
-
 #include <mc_rtc/config.h>
 #include <mc_rtc/logging.h>
 #include <mc_rtc/ros.h>
@@ -22,25 +20,22 @@
 namespace mc_control
 {
 
-MCGlobalController::MCGlobalController(const std::string & conf,
-                                       std::shared_ptr<mc_rbdyn::RobotModule> rm)
-: config(conf, rm),
-  current_ctrl(""), next_ctrl(""),
-  controller_(nullptr),
-  next_controller_(nullptr),
+MCGlobalController::MCGlobalController(const std::string & conf, std::shared_ptr<mc_rbdyn::RobotModule> rm)
+: config(conf, rm), current_ctrl(""), next_ctrl(""), controller_(nullptr), next_controller_(nullptr),
   real_robots(std::make_shared<mc_rbdyn::Robots>())
 {
   try
   {
-    controller_loader.reset(new mc_rtc::ObjectLoader<mc_control::MCController>("MC_RTC_CONTROLLER", config.controller_module_paths, config.use_sandbox, config.verbose_loader));
+    controller_loader.reset(new mc_rtc::ObjectLoader<mc_control::MCController>(
+        "MC_RTC_CONTROLLER", config.controller_module_paths, config.use_sandbox, config.verbose_loader));
   }
   catch(mc_rtc::LoaderException & exc)
   {
     LOG_ERROR("Failed to initialize controller loader")
     LOG_ERROR_AND_THROW(std::runtime_error, "Failed to initialize controller loader")
   }
-  if(std::find(config.enabled_controllers.begin(), config.enabled_controllers.end(),
-            "HalfSitPose") == config.enabled_controllers.end())
+  if(std::find(config.enabled_controllers.begin(), config.enabled_controllers.end(), "HalfSitPose")
+     == config.enabled_controllers.end())
   {
     config.enabled_controllers.push_back("HalfSitPose");
   }
@@ -80,18 +75,14 @@ MCGlobalController::MCGlobalController(const std::string & conf,
     }
     else
     {
-      server_.reset(new mc_control::ControllerServer(config.timestep,
-                                                     config.gui_timestep,
-                                                     config.gui_server_pub_uris,
+      server_.reset(new mc_control::ControllerServer(config.timestep, config.gui_timestep, config.gui_server_pub_uris,
                                                      config.gui_server_rep_uris));
     }
   }
   mc_rtc::ROSBridge::activate_services(*this);
 }
 
-MCGlobalController::~MCGlobalController()
-{
-}
+MCGlobalController::~MCGlobalController() {}
 
 std::shared_ptr<mc_rbdyn::RobotModule> MCGlobalController::get_robot_module()
 {
@@ -150,17 +141,11 @@ void MCGlobalController::init(const std::vector<double> & initq, const std::arra
   }
   if(config.main_robot_module->name == "hrp2_drc")
   {
-    setGripperCurrentQ({
-      {"l_gripper", {initq[31]}},
-      {"r_gripper", {initq[23]}}
-    });
+    setGripperCurrentQ({{"l_gripper", {initq[31]}}, {"r_gripper", {initq[23]}}});
   }
   else if(config.main_robot_module->name == "hrp4")
   {
-    setGripperCurrentQ({
-      {"l_gripper", {initq[32], initq[33]}},
-      {"r_gripper", {initq[23], initq[24]}}
-    });
+    setGripperCurrentQ({{"l_gripper", {initq[32], initq[33]}}, {"r_gripper", {initq[23], initq[24]}}});
   }
   controller_->reset({q});
   init_publishers();
@@ -188,7 +173,7 @@ void MCGlobalController::setSensorOrientation(const Eigen::Quaterniond & ori)
 }
 
 void MCGlobalController::setSensorOrientations(mc_rbdyn::Robot & robot,
-                                            const std::map<std::string, Eigen::Quaterniond> & oris)
+                                               const std::map<std::string, Eigen::Quaterniond> & oris)
 {
   for(const auto & o : oris)
   {
@@ -282,8 +267,7 @@ bool MCGlobalController::run()
 {
   /** Always pick a steady clock */
   using clock = typename std::conditional<std::chrono::high_resolution_clock::is_steady,
-                                          std::chrono::high_resolution_clock,
-                                          std::chrono::steady_clock>::type;
+                                          std::chrono::high_resolution_clock, std::chrono::steady_clock>::type;
   /** Helper to converst Tasks' timer */
   using boost_ms = boost::chrono::duration<double, boost::milli>;
   using boost_ns = boost::chrono::duration<double, boost::nano>;
@@ -326,7 +310,7 @@ bool MCGlobalController::run()
       std::cout << controller_->robot().mbc().q[0][4] << " ";
       std::cout << controller_->robot().mbc().q[0][5] << " ";
       std::cout << controller_->robot().mbc().q[0][6] << std::endl;
-      for(const auto & g: controller_->grippers)
+      for(const auto & g : controller_->grippers)
       {
         next_controller_->grippers[g.first]->setCurrentQ(g.second->curPosition());
       }
@@ -342,10 +326,10 @@ bool MCGlobalController::run()
       start_log();
     }
   }
-  const auto& real_q = robot().encoderValues();
+  const auto & real_q = robot().encoderValues();
   if(config.update_real && real_q.size() > 0)
   {
-    auto& real_robot = real_robots->robot();
+    auto & real_robot = real_robots->robot();
     // Update free flyer
 
     if(!config.update_real_from_sensors)
@@ -356,14 +340,11 @@ bool MCGlobalController::run()
     {
       const auto & qt = robot().bodySensor().orientation().inverse();
       const auto & t = robot().bodySensor().position();
-      real_robot.mbc().q[0] = {
-        qt.w(), qt.x(), qt.y(), qt.z(),
-        t.x(), t.y(), t.z()
-      };
+      real_robot.mbc().q[0] = {qt.w(), qt.x(), qt.y(), qt.z(), t.x(), t.y(), t.z()};
     }
     // Set all joints to encoder values
     int i = 0;
-    for(const auto& ref_joint : config.main_robot_module->ref_joint_order())
+    for(const auto & ref_joint : config.main_robot_module->ref_joint_order())
     {
       if(real_robot.hasJoint(ref_joint))
       {
@@ -382,14 +363,17 @@ bool MCGlobalController::run()
     auto end_controller_run_t = clock::now();
     if(config.enable_log)
     {
-      auto start_log_t  = clock::now();
+      auto start_log_t = clock::now();
       controller_->logger().log();
       log_dt = clock::now() - start_log_t;
     }
     controller_run_dt = end_controller_run_t - start_controller_run_t;
     solver_build_and_solve_t = boost_ms(boost_ns(controller_->solver().solveAndBuildTime().wall)).count();
     solver_solve_t = boost_ms(boost_ns(controller_->solver().solveTime().wall)).count();
-    if(!r) { running = false; }
+    if(!r)
+    {
+      running = false;
+    }
   }
   else
   {
@@ -536,18 +520,20 @@ bool MCGlobalController::AddController(const std::string & name)
   if(sep_pos != std::string::npos)
   {
     controller_name = name.substr(0, sep_pos);
-    controller_subname = name.substr(sep_pos+1);
+    controller_subname = name.substr(sep_pos + 1);
   }
   if(controller_loader->has_object(controller_name))
   {
     LOG_INFO("Create controller " << controller_name)
     if(controller_subname != "")
     {
-      controllers[name] = controller_loader->create_object(controller_name, controller_subname, config.main_robot_module, config.timestep, config.config);
+      controllers[name] = controller_loader->create_object(controller_name, controller_subname,
+                                                           config.main_robot_module, config.timestep, config.config);
     }
     else
     {
-      controllers[name] = controller_loader->create_object(name, config.main_robot_module, config.timestep, config.config);
+      controllers[name] =
+          controller_loader->create_object(name, config.main_robot_module, config.timestep, config.config);
     }
     controllers[name]->real_robots = real_robots;
     if(config.enable_log)
@@ -573,8 +559,7 @@ void MCGlobalController::add_controller_module_paths(const std::vector<std::stri
   controller_loader->load_libraries(paths);
 }
 
-bool MCGlobalController::AddController(const std::string & name,
-                                       std::shared_ptr<mc_control::MCController> controller)
+bool MCGlobalController::AddController(const std::string & name, std::shared_ptr<mc_control::MCController> controller)
 {
   if(controllers.count(name) || !controller)
   {
@@ -631,7 +616,7 @@ void MCGlobalController::init_publishers()
   // Publish real robot
   if(config.publish_real_state)
   {
-    auto& real_robot = real_robots->robot();
+    auto & real_robot = real_robots->robot();
     mc_rtc::ROSBridge::init_robot_publisher("real", timestep(), real_robot);
   }
 }
@@ -655,7 +640,7 @@ void MCGlobalController::publish_robots()
   // Publish real robot
   if(config.publish_real_state)
   {
-    auto& real_robot = real_robots->robot();
+    auto & real_robot = real_robots->robot();
     mc_rtc::ROSBridge::update_robot_publisher("real", timestep(), real_robot, controller_->grippers);
   }
 }
@@ -677,124 +662,65 @@ void MCGlobalController::start_log()
 
 void MCGlobalController::setup_log()
 {
-  if(setup_logger_.count(current_ctrl)) { return; }
+  if(setup_logger_.count(current_ctrl))
+  {
+    return;
+  }
   // Copy controller pointer to avoid lambda issue
   MCController * controller = controller_;
-  controller->logger().addLogEntry("qIn",
-              [controller]() -> const std::vector<double>&
-              {
-                return controller->robot().encoderValues();
-              });
-  controller->logger().addLogEntry("ff",
-              [controller]() -> const sva::PTransformd&
-              {
-                return controller->robot().mbc().bodyPosW[0];
-              });
-  controller->logger().addLogEntry("qOut",
-              [controller]()
-              {
-                const auto & qOut = controller->send(0).robots_state[0].q;
-                const auto & rjo = controller->robot().refJointOrder();
-                std::vector<double> ret(rjo.size(), 0);
-                for(size_t i = 0; i < rjo.size(); ++i)
-                {
-                  const auto & jn = rjo[i];
-                  if(qOut.count(jn))
-                  {
-                    ret[i] = qOut.at(jn)[0];
-                  }
-                }
-                return ret;
-              });
-  controller->logger().addLogEntry("tauIn",
-              [controller]() -> const std::vector<double>&
-              {
-                return controller->robot().jointTorques();
-              });
+  controller->logger().addLogEntry(
+      "qIn", [controller]() -> const std::vector<double> & { return controller->robot().encoderValues(); });
+  controller->logger().addLogEntry(
+      "ff", [controller]() -> const sva::PTransformd & { return controller->robot().mbc().bodyPosW[0]; });
+  controller->logger().addLogEntry("qOut", [controller]() {
+    const auto & qOut = controller->send(0).robots_state[0].q;
+    const auto & rjo = controller->robot().refJointOrder();
+    std::vector<double> ret(rjo.size(), 0);
+    for(size_t i = 0; i < rjo.size(); ++i)
+    {
+      const auto & jn = rjo[i];
+      if(qOut.count(jn))
+      {
+        ret[i] = qOut.at(jn)[0];
+      }
+    }
+    return ret;
+  });
+  controller->logger().addLogEntry(
+      "tauIn", [controller]() -> const std::vector<double> & { return controller->robot().jointTorques(); });
   for(const auto & fs : controller->robot().forceSensors())
   {
     const auto & fs_name = fs.name();
-    controller->logger().addLogEntry(fs.name(),
-                [controller,fs_name]() -> const sva::ForceVecd&
-                {
-                  return controller->robot().forceSensor(fs_name).wrench();
-                });
+    controller->logger().addLogEntry(fs.name(), [controller, fs_name]() -> const sva::ForceVecd & {
+      return controller->robot().forceSensor(fs_name).wrench();
+    });
   }
-  controller->logger().addLogEntry("pIn",
-              [controller]() -> const Eigen::Vector3d&
-              {
-                return controller->robot().bodySensor().position();
-              });
-  controller->logger().addLogEntry("rpyIn",
-              [controller]() -> const Eigen::Quaterniond&
-              {
-                return controller->robot().bodySensor().orientation();
-              });
-  controller->logger().addLogEntry("velIn",
-              [controller]() -> const Eigen::Vector3d&
-              {
-                return controller->robot().bodySensor().linearVelocity();
-              });
-  controller->logger().addLogEntry("rateIn",
-              [controller]() -> const Eigen::Vector3d&
-              {
-                return controller->robot().bodySensor().angularVelocity();
-              });
-  controller->logger().addLogEntry("accIn",
-              [controller]() -> const Eigen::Vector3d&
-              {
-                return controller->robot().bodySensor().acceleration();
-              });
+  controller->logger().addLogEntry(
+      "pIn", [controller]() -> const Eigen::Vector3d & { return controller->robot().bodySensor().position(); });
+  controller->logger().addLogEntry(
+      "rpyIn", [controller]() -> const Eigen::Quaterniond & { return controller->robot().bodySensor().orientation(); });
+  controller->logger().addLogEntry(
+      "velIn", [controller]() -> const Eigen::Vector3d & { return controller->robot().bodySensor().linearVelocity(); });
+  controller->logger().addLogEntry("rateIn", [controller]() -> const Eigen::Vector3d & {
+    return controller->robot().bodySensor().angularVelocity();
+  });
+  controller->logger().addLogEntry(
+      "accIn", [controller]() -> const Eigen::Vector3d & { return controller->robot().bodySensor().acceleration(); });
   // Performance measures
-  controller->logger().addLogEntry("perf_GlobalRun",
-              [this]()
-              {
-                return global_run_dt.count();
-              });
-  controller->logger().addLogEntry("perf_ControllerRun",
-              [this]()
-              {
-                return controller_run_dt.count();
-              });
-  controller->logger().addLogEntry("perf_SolverBuildAndSolve",
-              [this]()
-              {
-                return solver_build_and_solve_t;
-              });
-  controller->logger().addLogEntry("perf_SolverSolve",
-              [this]()
-              {
-                return solver_solve_t;
-              });
-  controller->logger().addLogEntry("perf_Log",
-              [this]()
-              {
-                return log_dt.count();
-              });
-  controller->logger().addLogEntry("perf_Publish",
-              [this]()
-              {
-                return publish_dt.count();
-              });
-  controller->logger().addLogEntry("perf_Gui",
-              [this]()
-              {
-                return gui_dt.count();
-              });
-  controller->logger().addLogEntry("perf_FrameworkCost",
-              [this]()
-              {
-                return framework_cost;
-              });
+  controller->logger().addLogEntry("perf_GlobalRun", [this]() { return global_run_dt.count(); });
+  controller->logger().addLogEntry("perf_ControllerRun", [this]() { return controller_run_dt.count(); });
+  controller->logger().addLogEntry("perf_SolverBuildAndSolve", [this]() { return solver_build_and_solve_t; });
+  controller->logger().addLogEntry("perf_SolverSolve", [this]() { return solver_solve_t; });
+  controller->logger().addLogEntry("perf_Log", [this]() { return log_dt.count(); });
+  controller->logger().addLogEntry("perf_Publish", [this]() { return publish_dt.count(); });
+  controller->logger().addLogEntry("perf_Gui", [this]() { return gui_dt.count(); });
+  controller->logger().addLogEntry("perf_FrameworkCost", [this]() { return framework_cost; });
   // Log system wall time as nanoseconds since epoch (can be used to manage synchronization with ros)
-  controller->logger().addLogEntry("timeWall",
-              []() -> uint64_t
-              {
-                uint64_t nanoseconds_since_epoch =
-                std::chrono::system_clock::now().time_since_epoch() /
-                std::chrono::nanoseconds(1);
-                return nanoseconds_since_epoch;
-              });
+  controller->logger().addLogEntry("timeWall", []() -> uint64_t {
+    uint64_t nanoseconds_since_epoch =
+        std::chrono::system_clock::now().time_since_epoch() / std::chrono::nanoseconds(1);
+    return nanoseconds_since_epoch;
+  });
   setup_logger_[current_ctrl] = true;
 }
 
@@ -803,4 +729,4 @@ mc_rbdyn::Robots & MCGlobalController::realRobots()
   return *real_robots;
 }
 
-}
+} // namespace mc_control

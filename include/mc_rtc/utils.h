@@ -10,14 +10,18 @@ namespace
 /** Simple lock-free thread-safe single-producer single-consumer circular
  * buffer
  *
- * Loosely based off the article: https://www.codeproject.com/Articles/43510/Lock-Free-Single-Producer-Single-Consumer-Circular
+ * Loosely based off the article:
+ * https://www.codeproject.com/Articles/43510/Lock-Free-Single-Producer-Single-Consumer-Circular
  *
  */
 template<typename T, size_t Size>
 struct CircularBuffer
 {
 public:
-  enum { Capacity = Size + 1 };
+  enum
+  {
+    Capacity = Size + 1
+  };
 
   CircularBuffer() : tail_(0), head_(0)
   {
@@ -59,6 +63,7 @@ public:
   {
     return head_ == tail_;
   }
+
 private:
   size_t increment(size_t idx) const
   {
@@ -70,5 +75,4 @@ private:
   std::atomic_size_t head_;
 };
 
-}
-
+} // namespace

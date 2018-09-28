@@ -1,14 +1,13 @@
 #ifdef BOOST_TEST_MAIN
-#undef BOOST_TEST_MAIN
+#  undef BOOST_TEST_MAIN
 #endif
-#include <boost/test/unit_test.hpp>
-
+#include <mc_control/api.h>
 #include <mc_control/mc_controller.h>
+#include <mc_rtc/logging.h>
 #include <mc_tasks/CoMTask.h>
 #include <mc_tasks/PositionTask.h>
-#include <mc_control/api.h>
 
-#include <mc_rtc/logging.h>
+#include <boost/test/unit_test.hpp>
 
 namespace mc_control
 {
@@ -16,8 +15,7 @@ namespace mc_control
 struct MC_CONTROL_DLLAPI TestPositionTaskController : public MCController
 {
 public:
-  TestPositionTaskController(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt)
-  : MCController(rm, dt)
+  TestPositionTaskController(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt) : MCController(rm, dt)
   {
     // Check that the default constructor loads the robot + ground environment
     BOOST_CHECK_EQUAL(robots().robots().size(), 2);
@@ -28,10 +26,8 @@ public:
     postureTask->stiffness(1);
     postureTask->weight(1);
     solver().addTask(postureTask.get());
-    solver().setContacts({
-      mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"),
-      mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")
-    });
+    solver().setContacts(
+        {mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"), mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")});
 
     /* Create and add the position task with the default stiffness/weight */
     posTask = std::make_shared<mc_tasks::PositionTask>("RARM_LINK6", robots(), 0);
@@ -112,11 +108,12 @@ public:
     /* Move the end-effector 10cm forward, 10 cm to the right and 10 cm upward */
     posTask->position(posTask->position() + Eigen::Vector3d(0.3, -0.1, 0.2));
   }
+
 private:
   unsigned int nrIter = 0;
   std::shared_ptr<mc_tasks::PositionTask> posTask = nullptr;
   std::shared_ptr<mc_tasks::CoMTask> comTask = nullptr;
-  std::vector<std::string> active_joints = [](){
+  std::vector<std::string> active_joints = []() {
     std::vector<std::string> ret;
     for(unsigned int i = 0; i < 8; ++i)
     {
@@ -129,6 +126,6 @@ private:
   double orig_raj3 = 0;
 };
 
-}
+} // namespace mc_control
 
 SIMPLE_CONTROLLER_CONSTRUCTOR("TestPositionTaskController", mc_control::TestPositionTaskController)

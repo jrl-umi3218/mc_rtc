@@ -11,7 +11,7 @@ namespace mc_tasks
  */
 struct MC_TASKS_DLLAPI LookAtSurfaceTask : public LookAtTask
 {
- public:
+public:
   /*! \brief Constructor
    *
    * \param bodyName Name of the body to control
@@ -26,21 +26,23 @@ struct MC_TASKS_DLLAPI LookAtSurfaceTask : public LookAtTask
    * \param weight Task weight
    *
    */
-  LookAtSurfaceTask(const mc_rbdyn::Robots& robots, unsigned int robotIndex,
-                    const std::string& bodyName,
-                    const Eigen::Vector3d& bodyVector,
+  LookAtSurfaceTask(const mc_rbdyn::Robots & robots,
+                    unsigned int robotIndex,
+                    const std::string & bodyName,
+                    const Eigen::Vector3d & bodyVector,
                     unsigned int surfaceRobotIndex,
-                    const std::string& surfaceName, double stiffness = 0.5,
+                    const std::string & surfaceName,
+                    double stiffness = 0.5,
                     double weight = 200);
 
   /*! \brief Update the gaze target from TF position */
   void update() override;
 
- private:
+private:
   /*! Index of robot on which the surface target is attached */
   unsigned int sRobotIndex;
   /*! Target surface name */
   std::string sName;
 };
 
-} /* mc_tasks */
+} // namespace mc_tasks

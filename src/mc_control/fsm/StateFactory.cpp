@@ -1,5 +1,4 @@
 #include <mc_control/fsm/StateFactory.h>
-
 #include <mc_rtc/Configuration.h>
 
 #include <boost/filesystem.hpp>
@@ -11,13 +10,8 @@ namespace mc_control
 namespace fsm
 {
 
-StateFactory::StateFactory(const std::vector<std::string> & paths,
-                           const std::vector<std::string> & files,
-                           bool verbose)
-: mc_rtc::ObjectLoader<State>("MC_RTC_FSM_STATE",
-                                 {},
-                                 false,
-                                 verbose)
+StateFactory::StateFactory(const std::vector<std::string> & paths, const std::vector<std::string> & files, bool verbose)
+: mc_rtc::ObjectLoader<State>("MC_RTC_FSM_STATE", {}, false, verbose)
 {
   load_libraries(paths);
   load_files(files);
@@ -25,10 +19,7 @@ StateFactory::StateFactory(const std::vector<std::string> & paths,
 
 void StateFactory::load_libraries(const std::vector<std::string> & paths)
 {
-  mc_rtc::ObjectLoader<State>::load_libraries(paths,
-                                                 [this](const std::string & cn,
-                                                        lt_dlhandle)
-                                                 { update(cn); });
+  mc_rtc::ObjectLoader<State>::load_libraries(paths, [this](const std::string & cn, lt_dlhandle) { update(cn); });
 }
 
 namespace
@@ -98,7 +89,9 @@ void resolve(StateFactory & factory, std::vector<UDState> & states)
 }
 
 /** Build up a list of undefined states */
-void load_ud(StateFactory & factory, const std::map<std::string, mc_rtc::Configuration> & states, std::vector<UDState> & ud_states)
+void load_ud(StateFactory & factory,
+             const std::map<std::string, mc_rtc::Configuration> & states,
+             std::vector<UDState> & ud_states)
 {
   for(const auto & s : states)
   {
@@ -120,10 +113,7 @@ void load_ud(StateFactory & factory, const std::map<std::string, mc_rtc::Configu
   }
 }
 
-void load_file(StateFactory & factory,
-               const std::string & file,
-               std::vector<UDState> & ud_states,
-               bool verbose)
+void load_file(StateFactory & factory, const std::string & file, std::vector<UDState> & ud_states, bool verbose)
 {
   if(verbose)
   {
@@ -133,10 +123,7 @@ void load_file(StateFactory & factory,
   load_ud(factory, states, ud_states);
 }
 
-void load_dir(StateFactory & factory,
-              const std::string & dir,
-              std::vector<UDState> & ud_states,
-              bool verbose)
+void load_dir(StateFactory & factory, const std::string & dir, std::vector<UDState> & ud_states, bool verbose)
 {
   bfs::directory_iterator dit(dir), endit;
   std::vector<bfs::path> drange;
@@ -154,7 +141,7 @@ void load_dir(StateFactory & factory,
   }
 }
 
-}
+} // namespace
 
 void StateFactory::load_files(const std::vector<std::string> & files)
 {
@@ -194,9 +181,7 @@ void StateFactory::load(const std::map<std::string, mc_rtc::Configuration> & sta
   }
 }
 
-void StateFactory::load(const std::string & name,
-                        const std::string & base,
-                        const mc_rtc::Configuration & config)
+void StateFactory::load(const std::string & name, const std::string & base, const mc_rtc::Configuration & config)
 {
   if(!hasState(base) && !load_with_loader(base))
   {
@@ -211,23 +196,19 @@ void StateFactory::load(const std::string & name,
     LOG_INFO("New state from file: " << name << " (base: " << base << ")")
   }
   states_.push_back(name);
-  states_factories_[name] = [config, base](StateFactory & f)
-  {
+  states_factories_[name] = [config, base](StateFactory & f) {
     auto ret = f.create(base);
     ret->configure_(config);
     return ret;
   };
 }
 
-StatePtr StateFactory::create(const std::string & state,
-                              Controller & ctl,
-                              const mc_rtc::Configuration & config)
+StatePtr StateFactory::create(const std::string & state, Controller & ctl, const mc_rtc::Configuration & config)
 {
   return create(state, ctl, true, config);
 }
 
-StatePtr StateFactory::create(const std::string & state,
-                              Controller & ctl)
+StatePtr StateFactory::create(const std::string & state, Controller & ctl)
 {
   return create(state, ctl, false);
 }
@@ -293,10 +274,7 @@ bool StateFactory::load_with_loader(const std::string & state)
     LOG_INFO("New state: " << state << " provided by loader: " << loader)
   }
   states_.push_back(state);
-  states_factories_[state] = [loader, arg](StateFactory & factory)
-  {
-    return factory.create_object(loader, arg);
-  };
+  states_factories_[state] = [loader, arg](StateFactory & factory) { return factory.create_object(loader, arg); };
   return true;
 }
 

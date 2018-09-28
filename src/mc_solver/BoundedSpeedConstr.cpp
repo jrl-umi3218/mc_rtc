@@ -1,15 +1,12 @@
-#include <mc_solver/BoundedSpeedConstr.h>
-
-#include <mc_solver/ConstraintSetLoader.h>
-
 #include <mc_rtc/logging.h>
+#include <mc_solver/BoundedSpeedConstr.h>
+#include <mc_solver/ConstraintSetLoader.h>
 
 namespace mc_solver
 {
 
 BoundedSpeedConstr::BoundedSpeedConstr(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double dt)
-: constr(new tasks::qp::BoundedSpeedConstr(robots.mbs(), robotIndex, dt)),
-  robotIndex(robotIndex)
+: constr(new tasks::qp::BoundedSpeedConstr(robots.mbs(), robotIndex, dt)), robotIndex(robotIndex)
 {
 }
 
@@ -28,12 +25,21 @@ size_t BoundedSpeedConstr::nrBoundedSpeeds() const
   return constr->nrBoundedSpeeds();
 }
 
-void BoundedSpeedConstr::addBoundedSpeed(QPSolver & solver, const std::string & bodyName, const Eigen::Vector3d & bodyPoint, const Eigen::MatrixXd & dof, const Eigen::VectorXd & speed)
+void BoundedSpeedConstr::addBoundedSpeed(QPSolver & solver,
+                                         const std::string & bodyName,
+                                         const Eigen::Vector3d & bodyPoint,
+                                         const Eigen::MatrixXd & dof,
+                                         const Eigen::VectorXd & speed)
 {
   addBoundedSpeed(solver, bodyName, bodyPoint, dof, speed, speed);
 }
 
-void BoundedSpeedConstr::addBoundedSpeed(QPSolver & solver, const std::string & bodyName, const Eigen::Vector3d & bodyPoint, const Eigen::MatrixXd & dof, const Eigen::VectorXd & lowerSpeed, const Eigen::VectorXd & upperSpeed)
+void BoundedSpeedConstr::addBoundedSpeed(QPSolver & solver,
+                                         const std::string & bodyName,
+                                         const Eigen::Vector3d & bodyPoint,
+                                         const Eigen::MatrixXd & dof,
+                                         const Eigen::VectorXd & lowerSpeed,
+                                         const Eigen::VectorXd & upperSpeed)
 {
   int index = solver.robots().robot(robotIndex).bodyIndexByName(bodyName);
   if(index >= 0)
@@ -44,7 +50,8 @@ void BoundedSpeedConstr::addBoundedSpeed(QPSolver & solver, const std::string & 
   }
   else
   {
-    LOG_ERROR("Could not add bounded speed constraint for body " << bodyName << " since it does not exist in robot " << solver.robots().robot(robotIndex).name())
+    LOG_ERROR("Could not add bounded speed constraint for body " << bodyName << " since it does not exist in robot "
+                                                                 << solver.robots().robot(robotIndex).name())
   }
 }
 
@@ -60,7 +67,8 @@ bool BoundedSpeedConstr::removeBoundedSpeed(QPSolver & solver, const std::string
   }
   else
   {
-    LOG_ERROR("Could not remove bounded speed constraint for body " << bodyName << " since it does not exist in robot " << solver.robots().robot(robotIndex).name())
+    LOG_ERROR("Could not remove bounded speed constraint for body " << bodyName << " since it does not exist in robot "
+                                                                    << solver.robots().robot(robotIndex).name())
   }
   return r;
 }
@@ -72,40 +80,37 @@ void BoundedSpeedConstr::reset(QPSolver & solver)
   solver.updateConstrSize();
 }
 
-}
+} // namespace mc_solver
 
 namespace
 {
 
-static bool registered = mc_solver::ConstraintSetLoader::register_load_function("boundedSpeed",
-  [](mc_solver::QPSolver & solver,
-     const mc_rtc::Configuration & config)
-  {
-    auto ret = std::make_shared<mc_solver::BoundedSpeedConstr>(solver.robots(), config("robotIndex"), solver.dt());
-    if(config.has("constraints"))
-    {
-      for(const auto & c : config("constraints"))
+static bool registered = mc_solver::ConstraintSetLoader::register_load_function(
+    "boundedSpeed",
+    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
+      auto ret = std::make_shared<mc_solver::BoundedSpeedConstr>(solver.robots(), config("robotIndex"), solver.dt());
+      if(config.has("constraints"))
       {
-        std::string bName = c("body");
-        Eigen::Vector3d bPoint = c("bodyPoint", Eigen::Vector3d::Zero().eval());
-        Eigen::Matrix6d dof = c("dof", Eigen::Matrix6d::Identity().eval());
-        if(c.has("speed"))
+        for(const auto & c : config("constraints"))
         {
-          ret->addBoundedSpeed(solver, bName, bPoint, dof, c("speed"));
-        }
-        else if(c.has("lowerSpeed"))
-        {
-          assert(c.has("upperSpeed"));
-          ret->addBoundedSpeed(solver, bName, bPoint, dof, c("lowerSpeed"), c("upperSpeed"));
-        }
-        else
-        {
-          LOG_ERROR("No speed or lowerSpeed/upperSpeed entry for bounded speed constraint on " << bName)
+          std::string bName = c("body");
+          Eigen::Vector3d bPoint = c("bodyPoint", Eigen::Vector3d::Zero().eval());
+          Eigen::Matrix6d dof = c("dof", Eigen::Matrix6d::Identity().eval());
+          if(c.has("speed"))
+          {
+            ret->addBoundedSpeed(solver, bName, bPoint, dof, c("speed"));
+          }
+          else if(c.has("lowerSpeed"))
+          {
+            assert(c.has("upperSpeed"));
+            ret->addBoundedSpeed(solver, bName, bPoint, dof, c("lowerSpeed"), c("upperSpeed"));
+          }
+          else
+          {
+            LOG_ERROR("No speed or lowerSpeed/upperSpeed entry for bounded speed constraint on " << bName)
+          }
         }
       }
-    }
-    return ret;
-  }
-);
-
+      return ret;
+    });
 }

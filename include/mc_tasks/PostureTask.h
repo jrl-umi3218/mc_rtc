@@ -21,13 +21,14 @@ public:
 
   /** Does not make much sense for PostureTask, prefer selectActiveJoints
    * or selectUnactiveJoints */
-  Eigen::VectorXd dimWeight() const override { return Eigen::VectorXd::Zero(0); }
+  Eigen::VectorXd dimWeight() const override
+  {
+    return Eigen::VectorXd::Zero(0);
+  }
 
-  void selectActiveJoints(mc_solver::QPSolver & solver,
-                          const std::vector<std::string> & activeJointsName) override;
+  void selectActiveJoints(mc_solver::QPSolver & solver, const std::vector<std::string> & activeJointsName) override;
 
-  void selectUnactiveJoints(mc_solver::QPSolver & solver,
-                            const std::vector<std::string> & unactiveJointsName) override;
+  void selectUnactiveJoints(mc_solver::QPSolver & solver, const std::vector<std::string> & unactiveJointsName) override;
 
   void resetJointsSelector(mc_solver::QPSolver & solver) override;
 
@@ -42,12 +43,10 @@ public:
   std::vector<std::vector<double>> posture() const;
 
   /** Set joint gains for the posture task */
-  void jointGains(const mc_solver::QPSolver & solver,
-                  const std::vector<tasks::qp::JointGains> & jgs);
+  void jointGains(const mc_solver::QPSolver & solver, const std::vector<tasks::qp::JointGains> & jgs);
 
   /** Set joint stiffness for the posture task */
-  void jointStiffness(const mc_solver::QPSolver & solver,
-                      const std::vector<tasks::qp::JointStiffness> & jss);
+  void jointStiffness(const mc_solver::QPSolver & solver, const std::vector<tasks::qp::JointStiffness> & jss);
 
   /** Set specific joint targets
    *
@@ -70,6 +69,7 @@ public:
 
   /** True if the task is in the solver */
   bool inSolver() const;
+
 protected:
   void addToSolver(mc_solver::QPSolver & solver) override;
 
@@ -78,6 +78,7 @@ protected:
   void update() override;
 
   void addToGUI(mc_rtc::gui::StateBuilder &) override;
+
 private:
   /** True if added to solver */
   bool inSolver_ = false;
@@ -97,4 +98,4 @@ private:
   Eigen::VectorXd speed_;
 };
 
-}
+} // namespace mc_tasks

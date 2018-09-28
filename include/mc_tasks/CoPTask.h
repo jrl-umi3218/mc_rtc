@@ -18,7 +18,7 @@ namespace mc_tasks
  * [1] https://scaron.info/teaching/zero-tilting-moment-point.html
  *
  */
-struct MC_TASKS_DLLAPI CoPTask: AdmittanceTask
+struct MC_TASKS_DLLAPI CoPTask : AdmittanceTask
 {
 public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -41,9 +41,10 @@ public:
    *
    */
   CoPTask(const std::string & robotSurface,
-      const mc_rbdyn::Robots & robots,
-      unsigned robotIndex,
-      double stiffness = 5.0, double weight = 1000.0);
+          const mc_rbdyn::Robots & robots,
+          unsigned robotIndex,
+          double stiffness = 5.0,
+          double weight = 1000.0);
 
   /*! \brief Reset the task
    *
@@ -83,9 +84,9 @@ public:
    * - force Force threshold, similar to wrench for AdmittanceTask
    *
    */
-  std::function<bool(const mc_tasks::MetaTask&, std::string&)>
-    buildCompletionCriteria(double dt,
-                            const mc_rtc::Configuration & config) const override;
+  std::function<bool(const mc_tasks::MetaTask &, std::string &)> buildCompletionCriteria(
+      double dt,
+      const mc_rtc::Configuration & config) const override;
 
   /*! \brief Set the target force in the surface frame
    *
@@ -133,4 +134,4 @@ private:
   using AdmittanceTask::targetWrench;
 };
 
-}
+} // namespace mc_tasks

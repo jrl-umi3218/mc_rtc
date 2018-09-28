@@ -1,5 +1,4 @@
 #include <mc_control/mc_global_controller.h>
-
 #include <mc_rbdyn/RobotLoader.h>
 
 /* Implementation file for mc_control::MCGlobalController::Configuration */
@@ -124,7 +123,8 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   config("PublishTimestep", publish_timestep);
   if(publish_timestep < timestep)
   {
-    LOG_WARNING("Your ROS publication timestep is lower than your control timestep, your publication timestep will be effectively set to the control timestep")
+    LOG_WARNING("Your ROS publication timestep is lower than your control timestep, your publication timestep will be "
+                "effectively set to the control timestep")
   }
   config("Log", enable_log);
   {
@@ -167,24 +167,20 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
       gui_server_pub_uris.push_back("ipc://" + socket + "_pub.ipc");
       gui_server_rep_uris.push_back("ipc://" + socket + "_rep.ipc");
     }
-    auto handle_section = [this,&gui_config](const std::string & section,
-                                 const std::string & protocol,
-                                 const std::string & default_host,
-                                 const std::pair<unsigned int, unsigned int> & default_ports,
-                                 const std::vector<unsigned int> & used_ports)
-      -> std::vector<unsigned int>
-    {
+    auto handle_section =
+        [this, &gui_config](const std::string & section, const std::string & protocol, const std::string & default_host,
+                            const std::pair<unsigned int, unsigned int> & default_ports,
+                            const std::vector<unsigned int> & used_ports) -> std::vector<unsigned int> {
       if(gui_config.has(section))
       {
         auto prot_config = gui_config(section);
         auto host = prot_config("Host", default_host);
         auto ports = prot_config("Ports", default_ports);
-        auto check_port = [&protocol, &used_ports](unsigned int port)
-        {
-          if(std::find(used_ports.begin(), used_ports.end(), port) !=
-             used_ports.end())
+        auto check_port = [&protocol, &used_ports](unsigned int port) {
+          if(std::find(used_ports.begin(), used_ports.end(), port) != used_ports.end())
           {
-            LOG_ERROR("Port " << port << " configured for protocol " << protocol << " is alread used by another protocol. Expect things to go badly.")
+            LOG_ERROR("Port " << port << " configured for protocol " << protocol
+                              << " is alread used by another protocol. Expect things to go badly.")
           }
         };
         check_port(ports.first);
@@ -263,4 +259,4 @@ bool MCGlobalController::GlobalConfiguration::enabled(const std::string & ctrl)
   return std::find(enabled_controllers.begin(), enabled_controllers.end(), ctrl) != enabled_controllers.end();
 }
 
-}
+} // namespace mc_control

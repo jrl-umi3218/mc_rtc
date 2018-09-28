@@ -30,11 +30,13 @@ struct MC_TASKS_DLLAPI VectorOrientationTask : public TrajectoryTaskGeneric<task
    * \param weight Task weight
    *
    */
-  VectorOrientationTask(const std::string & bodyName, const Eigen::Vector3d& bodyVector,
-                        const Eigen::Vector3d& targetVector,
+  VectorOrientationTask(const std::string & bodyName,
+                        const Eigen::Vector3d & bodyVector,
+                        const Eigen::Vector3d & targetVector,
                         const mc_rbdyn::Robots & robots,
                         unsigned int robotIndex,
-                        double stiffness = 2.0, double weight = 500);
+                        double stiffness = 2.0,
+                        double weight = 500);
 
   /*! \brief Reset the task
    *
@@ -65,25 +67,28 @@ struct MC_TASKS_DLLAPI VectorOrientationTask : public TrajectoryTaskGeneric<task
   void targetVector(const Eigen::Vector3d & vector);
 
   /**
-  * @brief Get the target orientation
-  *
-  * @return The target orientation in world frame
-  */
+   * @brief Get the target orientation
+   *
+   * @return The target orientation in world frame
+   */
   Eigen::Vector3d targetVector() const;
 
   /**
-  * @brief Get the current body orientation
-  *
-  * @return The current body orientation vector in world frame
-  */
+   * @brief Get the current body orientation
+   *
+   * @return The current body orientation vector in world frame
+   */
   Eigen::Vector3d actual() const;
 
   /*! \brief Return the controlled body */
-  std::string body() { return bodyName; }
+  std::string body()
+  {
+    return bodyName;
+  }
 
 protected:
   std::string bodyName;
   unsigned int bIndex;
 };
 
-}
+} // namespace mc_tasks

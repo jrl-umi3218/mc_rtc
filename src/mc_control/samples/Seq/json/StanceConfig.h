@@ -4,7 +4,6 @@
  * StanceConfig objects */
 
 #include <mc_rbdyn/StanceConfig.h>
-
 #include <mc_rtc/Configuration.h>
 #include <mc_rtc/logging.h>
 
@@ -21,7 +20,7 @@ inline void scCoMTaskFromJSON(StanceConfig::CoMTask & ret, const mc_rtc::Configu
   v("targetSpeed", ret.targetSpeed);
 }
 
-inline mc_rtc::Configuration scCoMTaskToJSON(const StanceConfig::CoMTask& ct)
+inline mc_rtc::Configuration scCoMTaskToJSON(const StanceConfig::CoMTask & ct)
 {
   mc_rtc::Configuration conf;
   conf.add("stiffness", ct.stiffness);
@@ -71,7 +70,7 @@ inline void scPositionFromJSON(StanceConfig::Position & ret, const mc_rtc::Confi
   v("targetSpeed", ret.targetSpeed);
 }
 
-inline mc_rtc::Configuration scPositionToJSON(const StanceConfig::Position& ct)
+inline mc_rtc::Configuration scPositionToJSON(const StanceConfig::Position & ct)
 {
   mc_rtc::Configuration conf;
   conf.add("stiffness", ct.stiffness);
@@ -88,7 +87,7 @@ inline void scOrientationFromJSON(StanceConfig::Orientation & ret, const mc_rtc:
   v("weight", ret.weight);
 }
 
-inline mc_rtc::Configuration scOrientationToJSON(const StanceConfig::Orientation& ct)
+inline mc_rtc::Configuration scOrientationToJSON(const StanceConfig::Orientation & ct)
 {
   mc_rtc::Configuration conf;
   conf.add("stiffness", ct.stiffness);
@@ -104,7 +103,7 @@ inline void scLinVelFromJSON(StanceConfig::LinVel & ret, const mc_rtc::Configura
   v("speed", ret.speed);
 }
 
-inline mc_rtc::Configuration scLinVelToJSON(const StanceConfig::LinVel& ct)
+inline mc_rtc::Configuration scLinVelToJSON(const StanceConfig::LinVel & ct)
 {
   mc_rtc::Configuration conf;
   conf.add("stiffness", ct.stiffness);
@@ -157,8 +156,8 @@ inline mc_rtc::Configuration scWaypointConfToJSON(const StanceConfig::WaypointCo
   /* First check if it is an hardcoded pos */
   sva::PTransformd start = sva::PTransformd::Identity();
   Eigen::Vector3d N = Eigen::Vector3d::Zero();
-  sva::PTransformd pt1 = sva::PTransformd(Eigen::Vector3d(1,1,1));
-  sva::PTransformd pt2 = sva::PTransformd(Eigen::Vector3d(2,2,2));
+  sva::PTransformd pt1 = sva::PTransformd(Eigen::Vector3d(1, 1, 1));
+  sva::PTransformd pt2 = sva::PTransformd(Eigen::Vector3d(2, 2, 2));
   Eigen::Vector3d pos1 = wpc.pos(start, pt1, N);
   Eigen::Vector3d pos2 = wpc.pos(start, pt2, N);
   if(pos1 == pos2)
@@ -209,7 +208,7 @@ inline void scContactTaskFromJSON(StanceConfig::ContactTask & ct, const mc_rtc::
   }
   if(v.has("orientation"))
   {
-     scOrientationFromJSON(ct.orientation, v("orientation"));
+    scOrientationFromJSON(ct.orientation, v("orientation"));
   }
   if(v.has("linVel"))
   {
@@ -315,7 +314,7 @@ inline void scCollisionsFromJSON(StanceConfig::Collisions & cs, const mc_rtc::Co
     for(size_t i = 0; i < rEnvCF.size(); ++i)
     {
       auto f = rEnvCF[i];
-      std::pair<std::string, std::string> key(f("surf1"),f("surf2"));
+      std::pair<std::string, std::string> key(f("surf1"), f("surf2"));
       if(cs.robotEnvContactFilter.count(key) == 0)
       {
         cs.robotEnvContactFilter[key] = {};
@@ -324,7 +323,8 @@ inline void scCollisionsFromJSON(StanceConfig::Collisions & cs, const mc_rtc::Co
       for(size_t i = 0; i < filtereds.size(); ++i)
       {
         auto filtered = filtereds[i];
-        cs.robotEnvContactFilter[key].push_back(std::pair<std::string, std::string>(filtered("body1"), filtered("body2")));
+        cs.robotEnvContactFilter[key].push_back(
+            std::pair<std::string, std::string>(filtered("body1"), filtered("body2")));
       }
     }
   }
@@ -402,4 +402,4 @@ inline mc_rtc::Configuration StanceConfigToJSON(const StanceConfig & sc)
   return conf;
 }
 
-}
+} // namespace mc_rbdyn

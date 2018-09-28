@@ -1,19 +1,16 @@
-#include <boost/test/unit_test.hpp>
-#include <boost/mpl/list.hpp>
-
+#include <mc_rbdyn/configuration_io.h>
 #include <mc_rtc/Configuration.h>
 
-#include <mc_rbdyn/configuration_io.h>
+#include <boost/mpl/list.hpp>
+#include <boost/test/unit_test.hpp>
 
+#include "utils.h"
 #include <fstream>
 #include <iostream>
 #include <random>
 
-#include "utils.h"
-
 template<typename T, typename A>
-bool compare_vectors(const std::vector<T, A> & lhs,
-                     const std::vector<T, A> & rhs)
+bool compare_vectors(const std::vector<T, A> & lhs, const std::vector<T, A> & rhs)
 {
   if(lhs.size() != rhs.size())
   {
@@ -37,7 +34,10 @@ bool compare_vector_maps(const std::map<std::string, std::vector<T>> & lhs,
   {
     if(rhs.count(el.first))
     {
-      if(!compare_vectors(el.second, rhs.at(el.first))) { return false; }
+      if(!compare_vectors(el.second, rhs.at(el.first)))
+      {
+        return false;
+      }
     }
     else
     {
@@ -69,10 +69,8 @@ mc_rbdyn::Base make_ref()
 
 bool operator==(const mc_rbdyn::Base & lhs, const mc_rbdyn::Base & rhs)
 {
-  return lhs.baseName == rhs.baseName &&
-         lhs.X_0_s == rhs.X_0_s &&
-         lhs.X_b0_s == rhs.X_b0_s &&
-         lhs.baseType == rhs.baseType;
+  return lhs.baseName == rhs.baseName && lhs.X_0_s == rhs.X_0_s && lhs.X_b0_s == rhs.X_b0_s
+         && lhs.baseType == rhs.baseType;
 }
 
 template<>
@@ -86,12 +84,10 @@ namespace mc_rbdyn
 
 bool operator==(const mc_rbdyn::BodySensor & lhs, const mc_rbdyn::BodySensor & rhs)
 {
-  return lhs.name() == rhs.name() &&
-         lhs.parentBody() == rhs.parentBody() &&
-         lhs.X_b_s() == rhs.X_b_s();
+  return lhs.name() == rhs.name() && lhs.parentBody() == rhs.parentBody() && lhs.X_b_s() == rhs.X_b_s();
 }
 
-}
+} // namespace mc_rbdyn
 
 template<>
 mc_rbdyn::Collision make_ref()
@@ -102,64 +98,58 @@ mc_rbdyn::Collision make_ref()
 template<>
 std::shared_ptr<mc_rbdyn::PlanarSurface> make_ref()
 {
-  std::vector<std::pair<double, double>> pPoints = { {0.1, 2.3}, {4.5, 6.7}, {8.9, 0.1} };
+  std::vector<std::pair<double, double>> pPoints = {{0.1, 2.3}, {4.5, 6.7}, {8.9, 0.1}};
   return std::make_shared<mc_rbdyn::PlanarSurface>("planarSurfaceName", "bodyName", random_pt(), "material", pPoints);
 }
 
 /* Note: mc_rbdyn already defines comparison between two surfaces but it checks very superficially */
-bool operator==(const std::shared_ptr<mc_rbdyn::PlanarSurface> & lhs_p, const std::shared_ptr<mc_rbdyn::PlanarSurface> & rhs_p)
+bool operator==(const std::shared_ptr<mc_rbdyn::PlanarSurface> & lhs_p,
+                const std::shared_ptr<mc_rbdyn::PlanarSurface> & rhs_p)
 {
   assert(lhs_p);
   assert(rhs_p);
   const auto & lhs = *lhs_p;
   const auto & rhs = *rhs_p;
-  return lhs.name() == rhs.name() &&
-         lhs.bodyName() == rhs.bodyName() &&
-         lhs.X_b_s() == rhs.X_b_s() &&
-         lhs.materialName() == rhs.materialName() &&
-         lhs.planarPoints() == rhs.planarPoints();
+  return lhs.name() == rhs.name() && lhs.bodyName() == rhs.bodyName() && lhs.X_b_s() == rhs.X_b_s()
+         && lhs.materialName() == rhs.materialName() && lhs.planarPoints() == rhs.planarPoints();
 }
 
 template<>
 std::shared_ptr<mc_rbdyn::CylindricalSurface> make_ref()
 {
-  return std::make_shared<mc_rbdyn::CylindricalSurface>("planarSurfaceName", "bodyName", random_pt(), "material", 0.42, 1.42);
+  return std::make_shared<mc_rbdyn::CylindricalSurface>("planarSurfaceName", "bodyName", random_pt(), "material", 0.42,
+                                                        1.42);
 }
 
-bool operator==(const std::shared_ptr<mc_rbdyn::CylindricalSurface> & lhs_p, const std::shared_ptr<mc_rbdyn::CylindricalSurface> & rhs_p)
+bool operator==(const std::shared_ptr<mc_rbdyn::CylindricalSurface> & lhs_p,
+                const std::shared_ptr<mc_rbdyn::CylindricalSurface> & rhs_p)
 {
   assert(lhs_p);
   assert(rhs_p);
   const auto & lhs = *lhs_p;
   const auto & rhs = *rhs_p;
-  return lhs.name() == rhs.name() &&
-         lhs.bodyName() == rhs.bodyName() &&
-         lhs.X_b_s() == rhs.X_b_s() &&
-         lhs.materialName() == rhs.materialName() &&
-         lhs.radius() == rhs.radius() &&
-         lhs.width() == rhs.width();
+  return lhs.name() == rhs.name() && lhs.bodyName() == rhs.bodyName() && lhs.X_b_s() == rhs.X_b_s()
+         && lhs.materialName() == rhs.materialName() && lhs.radius() == rhs.radius() && lhs.width() == rhs.width();
 }
 
 template<>
 std::shared_ptr<mc_rbdyn::GripperSurface> make_ref()
 {
-  std::vector<sva::PTransformd> pFo = { random_pt(), random_pt(), random_pt() };
-  return std::make_shared<mc_rbdyn::GripperSurface>("planarSurfaceName", "bodyName", random_pt(), "material", pFo, random_pt(), 1.42);
+  std::vector<sva::PTransformd> pFo = {random_pt(), random_pt(), random_pt()};
+  return std::make_shared<mc_rbdyn::GripperSurface>("planarSurfaceName", "bodyName", random_pt(), "material", pFo,
+                                                    random_pt(), 1.42);
 }
 
-bool operator==(const std::shared_ptr<mc_rbdyn::GripperSurface> & lhs_p, const std::shared_ptr<mc_rbdyn::GripperSurface> & rhs_p)
+bool operator==(const std::shared_ptr<mc_rbdyn::GripperSurface> & lhs_p,
+                const std::shared_ptr<mc_rbdyn::GripperSurface> & rhs_p)
 {
   assert(lhs_p);
   assert(rhs_p);
   const auto & lhs = *lhs_p;
   const auto & rhs = *rhs_p;
-  return lhs.name() == rhs.name() &&
-         lhs.bodyName() == rhs.bodyName() &&
-         lhs.X_b_s() == rhs.X_b_s() &&
-         lhs.materialName() == rhs.materialName() &&
-         lhs.pointsFromOrigin() == rhs.pointsFromOrigin() &&
-         lhs.X_b_motor() == rhs.X_b_motor() &&
-         lhs.motorMaxTorque() == rhs.motorMaxTorque();
+  return lhs.name() == rhs.name() && lhs.bodyName() == rhs.bodyName() && lhs.X_b_s() == rhs.X_b_s()
+         && lhs.materialName() == rhs.materialName() && lhs.pointsFromOrigin() == rhs.pointsFromOrigin()
+         && lhs.X_b_motor() == rhs.X_b_motor() && lhs.motorMaxTorque() == rhs.motorMaxTorque();
 }
 
 template<>
@@ -188,18 +178,18 @@ bool operator==(const std::shared_ptr<mc_rbdyn::Surface> & lhs, const std::share
     auto type = lhs->type();
     if(type == "planar")
     {
-      return std::static_pointer_cast<mc_rbdyn::PlanarSurface>(lhs) ==
-             std::static_pointer_cast<mc_rbdyn::PlanarSurface>(rhs);
+      return std::static_pointer_cast<mc_rbdyn::PlanarSurface>(lhs)
+             == std::static_pointer_cast<mc_rbdyn::PlanarSurface>(rhs);
     }
     else if(type == "cylindrical")
     {
-      return std::static_pointer_cast<mc_rbdyn::CylindricalSurface>(lhs) ==
-             std::static_pointer_cast<mc_rbdyn::CylindricalSurface>(rhs);
+      return std::static_pointer_cast<mc_rbdyn::CylindricalSurface>(lhs)
+             == std::static_pointer_cast<mc_rbdyn::CylindricalSurface>(rhs);
     }
     else if(type == "gripper")
     {
-      return std::static_pointer_cast<mc_rbdyn::GripperSurface>(lhs) ==
-             std::static_pointer_cast<mc_rbdyn::GripperSurface>(rhs);
+      return std::static_pointer_cast<mc_rbdyn::GripperSurface>(lhs)
+             == std::static_pointer_cast<mc_rbdyn::GripperSurface>(rhs);
     }
   }
   return false;
@@ -213,14 +203,11 @@ mc_rbdyn::Flexibility make_ref()
 
 namespace mc_rbdyn
 {
-  bool operator==(const mc_rbdyn::Flexibility & lhs, const mc_rbdyn::Flexibility & rhs)
-  {
-    return lhs.jointName == rhs.jointName &&
-           lhs.K == rhs.K &&
-           lhs.C == rhs.C &&
-           lhs.O == rhs.O;
-  }
+bool operator==(const mc_rbdyn::Flexibility & lhs, const mc_rbdyn::Flexibility & rhs)
+{
+  return lhs.jointName == rhs.jointName && lhs.K == rhs.K && lhs.C == rhs.C && lhs.O == rhs.O;
 }
+} // namespace mc_rbdyn
 
 template<>
 mc_rbdyn::ForceSensor make_ref()
@@ -230,13 +217,11 @@ mc_rbdyn::ForceSensor make_ref()
 
 namespace mc_rbdyn
 {
-  bool operator==(const mc_rbdyn::ForceSensor & lhs, const mc_rbdyn::ForceSensor & rhs)
-  {
-    return lhs.name() == rhs.name() &&
-           lhs.parentBody() == rhs.parentBody() &&
-           lhs.X_p_f() == rhs.X_p_f();
-  }
+bool operator==(const mc_rbdyn::ForceSensor & lhs, const mc_rbdyn::ForceSensor & rhs)
+{
+  return lhs.name() == rhs.name() && lhs.parentBody() == rhs.parentBody() && lhs.X_p_f() == rhs.X_p_f();
 }
+} // namespace mc_rbdyn
 
 template<>
 mc_rbdyn::Plane make_ref()
@@ -246,25 +231,17 @@ mc_rbdyn::Plane make_ref()
 
 namespace mc_rbdyn
 {
-  bool operator==(const mc_rbdyn::Plane & lhs,
-                  const mc_rbdyn::Plane & rhs)
-  {
-    return lhs.normal == rhs.normal &&
-      lhs.offset == rhs.offset;
-  }
+bool operator==(const mc_rbdyn::Plane & lhs, const mc_rbdyn::Plane & rhs)
+{
+  return lhs.normal == rhs.normal && lhs.offset == rhs.offset;
 }
+} // namespace mc_rbdyn
 
 template<>
 mc_rbdyn::PolygonInterpolator make_ref()
 {
-  auto random_tuple = []()
-  {
-    return std::array<double, 2>{{rnd(), rnd()}};
-  };
-  auto random_tuple_pair = [&random_tuple]()
-  {
-    return std::make_pair(random_tuple(), random_tuple());
-  };
+  auto random_tuple = []() { return std::array<double, 2>{{rnd(), rnd()}}; };
+  auto random_tuple_pair = [&random_tuple]() { return std::make_pair(random_tuple(), random_tuple()); };
   size_t size = random_size();
   std::vector<mc_rbdyn::PolygonInterpolator::tuple_pair_t> vec(size);
   for(size_t i = 0; i < size; ++i)
@@ -291,9 +268,8 @@ mc_rbdyn::Springs make_ref()
 
 bool operator==(const mc_rbdyn::Springs & lhs, const mc_rbdyn::Springs & rhs)
 {
-  return lhs.springsBodies == rhs.springsBodies &&
-         lhs.afterSpringsBodies == rhs.afterSpringsBodies &&
-         lhs.springsJoints == rhs.springsJoints;
+  return lhs.springsBodies == rhs.springsBodies && lhs.afterSpringsBodies == rhs.afterSpringsBodies
+         && lhs.springsJoints == rhs.springsJoints;
 }
 
 template<>
@@ -309,104 +285,79 @@ mc_rbdyn::RobotModule make_ref()
 namespace mc_rbdyn_urdf
 {
 
-bool operator==(const mc_rbdyn_urdf::Geometry::Box & lhs,
-                const mc_rbdyn_urdf::Geometry::Box & rhs)
+bool operator==(const mc_rbdyn_urdf::Geometry::Box & lhs, const mc_rbdyn_urdf::Geometry::Box & rhs)
 {
   return lhs.size == rhs.size;
 }
 
-bool operator==(const mc_rbdyn_urdf::Geometry::Cylinder & lhs,
-                const mc_rbdyn_urdf::Geometry::Cylinder & rhs)
+bool operator==(const mc_rbdyn_urdf::Geometry::Cylinder & lhs, const mc_rbdyn_urdf::Geometry::Cylinder & rhs)
 {
-  return lhs.radius == rhs.radius &&
-         lhs.length == rhs.length;
+  return lhs.radius == rhs.radius && lhs.length == rhs.length;
 }
 
-bool operator==(const mc_rbdyn_urdf::Geometry::Sphere & lhs,
-                const mc_rbdyn_urdf::Geometry::Sphere & rhs)
+bool operator==(const mc_rbdyn_urdf::Geometry::Sphere & lhs, const mc_rbdyn_urdf::Geometry::Sphere & rhs)
 {
   return lhs.radius == rhs.radius;
 }
 
-bool operator==(const mc_rbdyn_urdf::Geometry::Mesh & lhs,
-                const mc_rbdyn_urdf::Geometry::Mesh & rhs)
+bool operator==(const mc_rbdyn_urdf::Geometry::Mesh & lhs, const mc_rbdyn_urdf::Geometry::Mesh & rhs)
 {
-  return lhs.filename == rhs.filename &&
-         lhs.scale == rhs.scale;
+  return lhs.filename == rhs.filename && lhs.scale == rhs.scale;
 }
 
-bool operator==(const mc_rbdyn_urdf::Geometry & lhs,
-                const mc_rbdyn_urdf::Geometry & rhs)
+bool operator==(const mc_rbdyn_urdf::Geometry & lhs, const mc_rbdyn_urdf::Geometry & rhs)
 {
   bool ret = lhs.type == rhs.type;
   if(ret)
   {
     switch(lhs.type)
     {
-        case mc_rbdyn_urdf::Geometry::Type::BOX:
-          return boost::get<mc_rbdyn_urdf::Geometry::Box>(lhs.data) ==
-                 boost::get<mc_rbdyn_urdf::Geometry::Box>(rhs.data);
-        case mc_rbdyn_urdf::Geometry::Type::CYLINDER:
-          return boost::get<mc_rbdyn_urdf::Geometry::Cylinder>(lhs.data) ==
-                 boost::get<mc_rbdyn_urdf::Geometry::Cylinder>(rhs.data);
-        case mc_rbdyn_urdf::Geometry::Type::SPHERE:
-          return boost::get<mc_rbdyn_urdf::Geometry::Sphere>(lhs.data) ==
-                 boost::get<mc_rbdyn_urdf::Geometry::Sphere>(rhs.data);
-        case mc_rbdyn_urdf::Geometry::Type::MESH:
-          return boost::get<mc_rbdyn_urdf::Geometry::Mesh>(lhs.data) ==
-                 boost::get<mc_rbdyn_urdf::Geometry::Mesh>(rhs.data);
-        default:
-          break;
+      case mc_rbdyn_urdf::Geometry::Type::BOX:
+        return boost::get<mc_rbdyn_urdf::Geometry::Box>(lhs.data) == boost::get<mc_rbdyn_urdf::Geometry::Box>(rhs.data);
+      case mc_rbdyn_urdf::Geometry::Type::CYLINDER:
+        return boost::get<mc_rbdyn_urdf::Geometry::Cylinder>(lhs.data)
+               == boost::get<mc_rbdyn_urdf::Geometry::Cylinder>(rhs.data);
+      case mc_rbdyn_urdf::Geometry::Type::SPHERE:
+        return boost::get<mc_rbdyn_urdf::Geometry::Sphere>(lhs.data)
+               == boost::get<mc_rbdyn_urdf::Geometry::Sphere>(rhs.data);
+      case mc_rbdyn_urdf::Geometry::Type::MESH:
+        return boost::get<mc_rbdyn_urdf::Geometry::Mesh>(lhs.data)
+               == boost::get<mc_rbdyn_urdf::Geometry::Mesh>(rhs.data);
+      default:
+        break;
     }
   }
   return ret;
 }
 
-bool operator==(const mc_rbdyn_urdf::Visual & lhs,
-                const mc_rbdyn_urdf::Visual & rhs)
+bool operator==(const mc_rbdyn_urdf::Visual & lhs, const mc_rbdyn_urdf::Visual & rhs)
 {
-  return lhs.name == rhs.name &&
-         lhs.origin == rhs.origin &&
-         lhs.geometry == rhs.geometry;
+  return lhs.name == rhs.name && lhs.origin == rhs.origin && lhs.geometry == rhs.geometry;
 }
 
-}
+} // namespace mc_rbdyn_urdf
 
 namespace mc_rbdyn
 {
 
-bool operator==(const mc_rbdyn::RobotModule::Gripper & lhs,
-                const mc_rbdyn::RobotModule::Gripper & rhs)
+bool operator==(const mc_rbdyn::RobotModule::Gripper & lhs, const mc_rbdyn::RobotModule::Gripper & rhs)
 {
-  return lhs.name == rhs.name &&
-         lhs.joints == rhs.joints &&
-         lhs.reverse_limits == rhs.reverse_limits;
+  return lhs.name == rhs.name && lhs.joints == rhs.joints && lhs.reverse_limits == rhs.reverse_limits;
 }
 
-}
+} // namespace mc_rbdyn
 
 bool operator==(const mc_rbdyn::RobotModule & lhs, const mc_rbdyn::RobotModule & rhs)
 {
-  return lhs.path == rhs.path &&
-         lhs.name == rhs.name &&
-         lhs.urdf_path == rhs.urdf_path &&
-         lhs.rsdf_dir == rhs.rsdf_dir &&
-         lhs.calib_dir == rhs.calib_dir &&
-         lhs._bounds == rhs._bounds &&
-         lhs._stance == rhs._stance &&
-         lhs._convexHull == rhs._convexHull &&
-         lhs._stpbvHull == rhs._stpbvHull &&
-         compare_vector_maps(lhs._visual, rhs._visual) &&
-         lhs._collisionTransforms == rhs._collisionTransforms &&
-         compare_vectors(lhs._flexibility, rhs._flexibility) &&
-         compare_vectors(lhs._forceSensors, rhs._forceSensors) &&
-         compare_vectors(lhs._bodySensors, rhs._bodySensors) &&
-         lhs._springs == rhs._springs &&
-         lhs._minimalSelfCollisions == rhs._minimalSelfCollisions &&
-         lhs._commonSelfCollisions == rhs._commonSelfCollisions &&
-         compare_vectors(lhs._grippers, rhs._grippers) &&
-         lhs._ref_joint_order == rhs._ref_joint_order &&
-         lhs._default_attitude == rhs._default_attitude;
+  return lhs.path == rhs.path && lhs.name == rhs.name && lhs.urdf_path == rhs.urdf_path && lhs.rsdf_dir == rhs.rsdf_dir
+         && lhs.calib_dir == rhs.calib_dir && lhs._bounds == rhs._bounds && lhs._stance == rhs._stance
+         && lhs._convexHull == rhs._convexHull && lhs._stpbvHull == rhs._stpbvHull
+         && compare_vector_maps(lhs._visual, rhs._visual) && lhs._collisionTransforms == rhs._collisionTransforms
+         && compare_vectors(lhs._flexibility, rhs._flexibility) && compare_vectors(lhs._forceSensors, rhs._forceSensors)
+         && compare_vectors(lhs._bodySensors, rhs._bodySensors) && lhs._springs == rhs._springs
+         && lhs._minimalSelfCollisions == rhs._minimalSelfCollisions
+         && lhs._commonSelfCollisions == rhs._commonSelfCollisions && compare_vectors(lhs._grippers, rhs._grippers)
+         && lhs._ref_joint_order == rhs._ref_joint_order && lhs._default_attitude == rhs._default_attitude;
 }
 
 typedef boost::mpl::list<mc_rbdyn::Base,
@@ -421,10 +372,10 @@ typedef boost::mpl::list<mc_rbdyn::Base,
                          mc_rbdyn::Plane,
                          mc_rbdyn::PolygonInterpolator,
                          mc_rbdyn::Springs,
-                         mc_rbdyn::RobotModule> test_types;
+                         mc_rbdyn::RobotModule>
+    test_types;
 
-template<typename T,
-         typename std::enable_if<std::is_default_constructible<T>::value, int>::type = 0>
+template<typename T, typename std::enable_if<std::is_default_constructible<T>::value, int>::type = 0>
 void test_config_array_helper(mc_rtc::Configuration & config, int)
 {
   std::array<T, 3> ref_a = {make_ref<T>(), make_ref<T>(), make_ref<T>()};
@@ -463,8 +414,10 @@ struct AllocatorHelper<mc_rbdyn::BodySensor>
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(TestJsonIO, T, test_types)
 {
-  static_assert(mc_rtc::internal::has_configuration_load_object<T>::value, "No Configuration load function for this type");
-  static_assert(mc_rtc::internal::has_configuration_save_object<T>::value, "No Configuration save function for this type");
+  static_assert(mc_rtc::internal::has_configuration_load_object<T>::value,
+                "No Configuration load function for this type");
+  static_assert(mc_rtc::internal::has_configuration_save_object<T>::value,
+                "No Configuration save function for this type");
   BOOST_CHECK(mc_rtc::internal::has_configuration_load_object<T>::value);
   BOOST_CHECK(mc_rtc::internal::has_configuration_save_object<T>::value);
 
@@ -498,7 +451,7 @@ BOOST_AUTO_TEST_CASE(TestRobotModuleAltSave)
   auto rm = make_ref<mc_rbdyn::RobotModule>();
   mc_rtc::Configuration config;
   config.add("rm", rm, false);
-  std::vector<mc_rbdyn::RobotModule> rmV = {rm, rm ,rm};
+  std::vector<mc_rbdyn::RobotModule> rmV = {rm, rm, rm};
   config.add("rmV", rmV, false, std::vector<std::string>{}, true);
   std::array<mc_rbdyn::RobotModule, 2> rmA = {{rm, rm}};
   config.add("rmA", rmA, false, std::vector<std::string>{"RARM_LINK6", "LARM_LINK6"});

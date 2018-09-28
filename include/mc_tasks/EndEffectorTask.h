@@ -1,7 +1,7 @@
 #pragma once
 
-#include <mc_tasks/PositionTask.h>
 #include <mc_tasks/OrientationTask.h>
+#include <mc_tasks/PositionTask.h>
 
 namespace mc_tasks
 {
@@ -29,8 +29,10 @@ public:
    *
    */
   EndEffectorTask(const std::string & bodyName,
-                  const mc_rbdyn::Robots & robots, unsigned int robotIndex,
-                  double stiffness = 2.0, double weight = 1000.0);
+                  const mc_rbdyn::Robots & robots,
+                  unsigned int robotIndex,
+                  double stiffness = 2.0,
+                  double weight = 1000.0);
 
   /*! \brief Constructor with bodyPoint
    *
@@ -41,8 +43,10 @@ public:
    */
   EndEffectorTask(const std::string & bodyName,
                   const Eigen::Vector3d & bodyPoint,
-                  const mc_rbdyn::Robots & robots, unsigned int robotIndex,
-                  double stiffness = 2.0, double weight = 1000.0);
+                  const mc_rbdyn::Robots & robots,
+                  unsigned int robotIndex,
+                  double stiffness = 2.0,
+                  double weight = 1000.0);
 
   /*! \brief Reset the task
    *
@@ -88,6 +92,7 @@ public:
   virtual Eigen::VectorXd speed() const override;
 
   void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) override;
+
 public:
   const mc_rbdyn::Robots & robots;
   unsigned int robotIndex;
@@ -98,6 +103,7 @@ public:
 
   std::string bodyName;
   sva::PTransformd curTransform;
+
 protected:
   virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
 
@@ -111,4 +117,4 @@ protected:
   void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
 };
 
-}
+} // namespace mc_tasks

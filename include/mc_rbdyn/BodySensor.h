@@ -17,10 +17,7 @@ struct BodySensor
 {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
   /** Default constructor, does not represent a valid body sensor */
-  BodySensor()
-  : BodySensor("", "", sva::PTransformd::Identity())
-  {
-  }
+  BodySensor() : BodySensor("", "", sva::PTransformd::Identity()) {}
 
   /** Constructor
    *
@@ -31,12 +28,8 @@ struct BodySensor
    * @param X_b_s Transformation from the parent body to the sensor
    *
    */
-  BodySensor(const std::string & name,
-             const std::string & bodyName,
-             const sva::PTransformd & X_b_s)
-  : name_(name),
-    bodyName_(bodyName),
-    X_b_s_(X_b_s)
+  BodySensor(const std::string & name, const std::string & bodyName, const sva::PTransformd & X_b_s)
+  : name_(name), bodyName_(bodyName), X_b_s_(X_b_s)
   {
   }
 
@@ -124,6 +117,7 @@ struct BodySensor
   {
     acceleration_ = acceleration;
   }
+
 private:
   std::string name_;
   std::string bodyName_;
@@ -137,4 +131,4 @@ private:
 
 typedef std::vector<BodySensor, Eigen::aligned_allocator<BodySensor>> BodySensorVector;
 
-}
+} // namespace mc_rbdyn

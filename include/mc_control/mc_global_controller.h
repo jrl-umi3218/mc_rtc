@@ -1,14 +1,12 @@
 
 #pragma once
 
+#include <mc_control/ControllerServer.h>
 #include <mc_control/api.h>
 #include <mc_control/mc_controller.h>
-#include <mc_control/ControllerServer.h>
-
+#include <mc_rbdyn/RobotModule.h>
 #include <mc_rtc/loader.h>
 #include <mc_rtc/log/Logger.h>
-
-#include <mc_rbdyn/RobotModule.h>
 
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
@@ -27,15 +25,14 @@ private:
   struct GlobalConfiguration;
 
   /* MCGlobalController is non-copyable */
-  MCGlobalController(const MCGlobalController&) = delete;
-  MCGlobalController& operator=(const MCGlobalController&) = delete;
+  MCGlobalController(const MCGlobalController &) = delete;
+  MCGlobalController & operator=(const MCGlobalController &) = delete;
 
   /* MCGlobalController is non-movable */
-  MCGlobalController(MCGlobalController&&) = delete;
-  MCGlobalController& operator=(MCGlobalController&&) = delete;
+  MCGlobalController(MCGlobalController &&) = delete;
+  MCGlobalController & operator=(MCGlobalController &&) = delete;
 
 public:
-
   /*! \brief Create the global controller
    *
    * The global controller is in charge of handling incoming data
@@ -68,8 +65,7 @@ public:
    * \param conf Additional configuration to load
    *
    */
-  MCGlobalController(const std::string & conf = "",
-                     std::shared_ptr<mc_rbdyn::RobotModule> rm = nullptr);
+  MCGlobalController(const std::string & conf = "", std::shared_ptr<mc_rbdyn::RobotModule> rm = nullptr);
 
   /*! \brief Destructor */
   virtual ~MCGlobalController();
@@ -124,8 +120,7 @@ public:
   void setSensorPosition(const Eigen::Vector3d & pos);
 
   /*! \brief Set multiple body sensors' position for a given robot */
-  void setSensorPositions(mc_rbdyn::Robot & robot,
-                          const std::map<std::string, Eigen::Vector3d> & poses);
+  void setSensorPositions(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Vector3d> & poses);
 
   /*! \brief A robot's orientation given by a sensor
    *
@@ -138,29 +133,25 @@ public:
   void setSensorOrientation(const Eigen::Quaterniond & ori);
 
   /*! \brief Set multiple body sensors' orientation for a given robot */
-  void setSensorOrientations(mc_rbdyn::Robot & robot,
-                             const std::map<std::string, Eigen::Quaterniond> & oris);
+  void setSensorOrientations(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Quaterniond> & oris);
 
   /*! \brief A robot's linear velocity given by a sensor */
-  void setSensorLinearVelocity(const Eigen::Vector3d& vel);
+  void setSensorLinearVelocity(const Eigen::Vector3d & vel);
 
   /*! \brief Set multiple body sensor's linear velocities for a given robot */
-  void setSensorLinearVelocities(mc_rbdyn::Robot & robot,
-                                 const std::map<std::string, Eigen::Vector3d> & linearVels);
+  void setSensorLinearVelocities(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Vector3d> & linearVels);
 
   /*! \brief A robot's angular velocity given by a sensor */
-  void setSensorAngularVelocity(const Eigen::Vector3d& vel);
+  void setSensorAngularVelocity(const Eigen::Vector3d & vel);
 
   /*! \brief Set multiple body sensor's angular velocities for a given robot */
-  void setSensorAngularVelocities(mc_rbdyn::Robot & robot,
-                                  const std::map<std::string, Eigen::Vector3d> & angularVels);
+  void setSensorAngularVelocities(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Vector3d> & angularVels);
 
   /*! \brief A robot's acceleration given by a sensor */
-  void setSensorAcceleration(const Eigen::Vector3d& acc);
+  void setSensorAcceleration(const Eigen::Vector3d & acc);
 
   /*! \brief Set multiple body sensors' acceleration for a given robot */
-  void setSensorAccelerations(mc_rbdyn::Robot & robot,
-                              const std::map<std::string, Eigen::Vector3d> & accels);
+  void setSensorAccelerations(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Vector3d> & accels);
 
   /*! \brief A robot's actual joints' values provided by encoders
    *
@@ -437,6 +428,7 @@ public:
    * robots than the main robot.
    */
   mc_rbdyn::Robots & realRobots();
+
 public:
   /*! \brief Returns true if the controller is running
    *
@@ -445,12 +437,12 @@ public:
    *
    */
   bool running;
+
 private:
   /*! \brief Store the controller configuration */
   struct GlobalConfiguration
   {
-    GlobalConfiguration(const std::string & conf,
-                        std::shared_ptr<mc_rbdyn::RobotModule> rm);
+    GlobalConfiguration(const std::string & conf, std::shared_ptr<mc_rbdyn::RobotModule> rm);
 
     inline bool enabled(const std::string & ctrl);
 
@@ -481,11 +473,12 @@ private:
 
     bool enable_gui_server = true;
     double gui_timestep = 0.05;
-    std::vector<std::string> gui_server_pub_uris {};
-    std::vector<std::string> gui_server_rep_uris {};
+    std::vector<std::string> gui_server_pub_uris{};
+    std::vector<std::string> gui_server_rep_uris{};
 
     Configuration config;
   };
+
 private:
   GlobalConfiguration config;
   std::string current_ctrl = "";
@@ -509,14 +502,14 @@ private:
 
   /** Timers and performance measure */
   using duration_ms = std::chrono::duration<double, std::milli>;
-  duration_ms global_run_dt {0};
-  duration_ms controller_run_dt {0};
-  duration_ms log_dt {0};
-  duration_ms publish_dt {0};
-  duration_ms gui_dt {0};
+  duration_ms global_run_dt{0};
+  duration_ms controller_run_dt{0};
+  duration_ms log_dt{0};
+  duration_ms publish_dt{0};
+  duration_ms gui_dt{0};
   double solver_build_and_solve_t = 0;
   double solver_solve_t = 0;
   double framework_cost = 0;
 };
 
-}
+} // namespace mc_control

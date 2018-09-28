@@ -1,8 +1,8 @@
 #pragma once
 
+#include <Eigen/Core>
 #include <map>
 #include <vector>
-#include <Eigen/Core>
 
 namespace mc_solver
 {
@@ -14,4 +14,4 @@ struct RobotMsg
   Eigen::VectorXd alphaDVec;
 };
 
-}
+} // namespace mc_solver

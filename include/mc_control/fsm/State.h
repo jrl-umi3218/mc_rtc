@@ -2,7 +2,6 @@
 
 #include <mc_control/fsm/api.h>
 #include <mc_control/fsm/states/api.h>
-
 #include <mc_rtc/Configuration.h>
 
 namespace mc_control
@@ -78,22 +77,41 @@ struct MC_CONTROL_FSM_DLLAPI State
   virtual void stop(Controller &) {}
 
   /** Handle read service call */
-  virtual bool read_msg(std::string &) { return false; }
+  virtual bool read_msg(std::string &)
+  {
+    return false;
+  }
 
   /** Handle read/write service call */
-  virtual bool read_write_msg(std::string &, std::string &) { return false; }
+  virtual bool read_write_msg(std::string &, std::string &)
+  {
+    return false;
+  }
 
   /** Returns the output of the state, should only be consulted once run has
    * returned true */
-  const std::string & output() { return output_; }
+  const std::string & output()
+  {
+    return output_;
+  }
 
   /** Returns the name of the state */
-  const std::string & name() { return name_; }
+  const std::string & name()
+  {
+    return name_;
+  }
 
-  void name(const std::string & n) { name_ = n; }
+  void name(const std::string & n)
+  {
+    name_ = n;
+  }
+
 protected:
   /** Output setter for derived classes */
-  void output(const std::string & o) { output_ = o; }
+  void output(const std::string & o)
+  {
+    output_ = o;
+  }
 
   /** Called to configure the state.
    *
@@ -111,12 +129,14 @@ protected:
 
   /** Called right before destruction */
   virtual void teardown(Controller & ctl) = 0;
+
 protected:
   mc_rtc::Configuration add_contacts_config_;
   mc_rtc::Configuration remove_contacts_config_;
   mc_rtc::Configuration add_contacts_after_config_;
   mc_rtc::Configuration remove_contacts_after_config_;
   bool remove_posture_task_ = false;
+
 private:
   std::string name_ = "";
   std::string output_ = "";
@@ -131,19 +151,28 @@ using StatePtr = std::shared_ptr<State>;
 /* The following macros are used to simplify the required symbol exports */
 
 #ifdef WIN32
-#define FSM_STATE_API __declspec(dllexport)
+#  define FSM_STATE_API __declspec(dllexport)
 #else
-# if __GNUC__ >= 4
-#   define FSM_STATE_API __attribute__ ((visibility("default")))
-# else
-#   define FSM_STATE_API
-# endif
+#  if __GNUC__ >= 4
+#    define FSM_STATE_API __attribute__((visibility("default")))
+#  else
+#    define FSM_STATE_API
+#  endif
 #endif
 
-#define EXPORT_SINGLE_STATE(NAME, TYPE)\
-extern "C"\
-{\
-  FSM_STATE_API void MC_RTC_FSM_STATE(std::vector<std::string> & names) { names = {NAME}; }\
-  FSM_STATE_API void destroy(mc_control::fsm::State * ptr) { delete ptr; }\
-  FSM_STATE_API mc_control::fsm::State * create(const std::string &) { return new TYPE(); }\
-}
+#define EXPORT_SINGLE_STATE(NAME, TYPE)                                   \
+  extern "C"                                                              \
+  {                                                                       \
+    FSM_STATE_API void MC_RTC_FSM_STATE(std::vector<std::string> & names) \
+    {                                                                     \
+      names = {NAME};                                                     \
+    }                                                                     \
+    FSM_STATE_API void destroy(mc_control::fsm::State * ptr)              \
+    {                                                                     \
+      delete ptr;                                                         \
+    }                                                                     \
+    FSM_STATE_API mc_control::fsm::State * create(const std::string &)    \
+    {                                                                     \
+      return new TYPE();                                                  \
+    }                                                                     \
+  }

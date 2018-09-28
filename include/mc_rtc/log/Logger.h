@@ -1,7 +1,6 @@
 #pragma once
 
 #include <mc_rtc/log/serialization/fb_utils.h>
-
 #include <mc_rtc/logging.h>
 #include <mc_rtc/utils_api.h>
 
@@ -27,9 +26,9 @@ struct MC_RTC_UTILS_DLLAPI Logger
 {
 public:
   /** A function that fills LogData vectors */
-  typedef std::function<void(flatbuffers::FlatBufferBuilder&,
-                             std::vector<uint8_t>&,
-                             std::vector<flatbuffers::Offset<void>>&)> serialize_fn;
+  typedef std::function<
+      void(flatbuffers::FlatBufferBuilder &, std::vector<uint8_t> &, std::vector<flatbuffers::Offset<void>> &)>
+      serialize_fn;
   /*! \brief Defines available policies for the logger */
   enum struct Policy
   {
@@ -50,6 +49,7 @@ public:
      */
     THREADED = 1
   };
+
 public:
   /*! \brief Constructor
    *
@@ -109,17 +109,15 @@ public:
                    typename std::enable_if<mc_rtc::log::callback_is_serializable<T>::value>::type * = 0)
   {
     using ret_t = decltype(get_fn());
-    using base_t =  typename std::decay<ret_t>::type;
+    using base_t = typename std::decay<ret_t>::type;
     if(log_entries_.count(name))
     {
       LOG_ERROR("Already logging an entry named " << name)
       return;
     }
     log_entries_changed_ = true;
-    log_entries_[name] = [this, get_fn](flatbuffers::FlatBufferBuilder & builder,
-                                        std::vector<uint8_t> & types,
-                                        std::vector<flatbuffers::Offset<void>> & values)
-    {
+    log_entries_[name] = [this, get_fn](flatbuffers::FlatBufferBuilder & builder, std::vector<uint8_t> & types,
+                                        std::vector<flatbuffers::Offset<void>> & values) {
       mc_rtc::log::AddLogData<base_t>(builder, types, values, get_fn());
     };
   }
@@ -150,10 +148,8 @@ public:
     }
     log_entries_changed_ = true;
     log_vector_entries_size_[name] = 0;
-    log_entries_[name] = [this, name, get_fn](flatbuffers::FlatBufferBuilder & builder,
-                                        std::vector<uint8_t> & types,
-                                        std::vector<flatbuffers::Offset<void>> & values)
-    {
+    log_entries_[name] = [this, name, get_fn](flatbuffers::FlatBufferBuilder & builder, std::vector<uint8_t> & types,
+                                              std::vector<flatbuffers::Offset<void>> & values) {
       const std::vector<value_t> & v = get_fn();
       if(v.size() != this->log_vector_entries_size_[name])
       {
@@ -178,6 +174,7 @@ public:
 
   /** Return the time elapsed since the controller start */
   double t() const;
+
 private:
   /** Store implementation detail related to the logging policy */
   std::shared_ptr<LoggerImpl> impl_ = nullptr;
@@ -189,4 +186,4 @@ private:
   std::map<std::string, size_t> log_vector_entries_size_ = {};
 };
 
-}
+} // namespace mc_rtc

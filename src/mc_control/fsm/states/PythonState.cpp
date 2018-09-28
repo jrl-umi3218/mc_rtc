@@ -1,5 +1,7 @@
 #include <mc_control/fsm/PythonState.h>
 
+// clang-format off
+
 extern "C"
 {
 #include "Python.h"
@@ -11,12 +13,17 @@ extern "C"
 
 #include <stddef.h> // offsetof
 
-FSM_STATE_API void MC_RTC_FSM_STATE(std::vector<std::string> & names) { names = {"Python"}; }
+FSM_STATE_API void MC_RTC_FSM_STATE(std::vector<std::string> & names)
+{
+  names = {"Python"};
+}
+
 FSM_STATE_API void destroy(mc_control::fsm::State * ptr)
 {
   auto gstate = PyGILState_Ensure();
   Py_Finalize();
 }
+
 FSM_STATE_API void LOAD_GLOBAL() {}
 
 FSM_STATE_API mc_control::fsm::State * create(const std::string &, const std::string & module)
@@ -47,8 +54,10 @@ FSM_STATE_API mc_control::fsm::State * create(const std::string &, const std::st
   PyErr_Print();
 
   PyGILState_Release(gstate);
-  auto res = reinterpret_cast<PythonStateObject*>(s_obj);
+  auto res = reinterpret_cast<PythonStateObject *>(s_obj);
   return res->impl;
 }
 
 }
+
+// clang-format on

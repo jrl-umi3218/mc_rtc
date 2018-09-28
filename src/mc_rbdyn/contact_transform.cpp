@@ -1,6 +1,5 @@
-#include <mc_rbdyn/contact_transform.h>
-
 #include <mc_rbdyn/Surface.h>
+#include <mc_rbdyn/contact_transform.h>
 
 namespace mc_rbdyn
 {
@@ -33,7 +32,7 @@ void planarParam(const sva::PTransformd & X_es_rs, double & T, double & B, doubl
   B = BEnv.dot(X_es_rs.translation());
 
   double normalizedTeTr = std::min(std::max(TEnv.dot(TRob), -1.0), 1.0);
-  N_rot = acos(normalizedTeTr)*sgn(TRob.dot(BEnv));
+  N_rot = acos(normalizedTeTr) * sgn(TRob.dot(BEnv));
 }
 
 void cylindricalParam(const sva::PTransformd & X_es_rs, double & T, double & T_rot)
@@ -47,10 +46,12 @@ void cylindricalParam(const sva::PTransformd & X_es_rs, double & T, double & T_r
   T = TEnv.dot(X_es_rs.translation());
 
   double normalizedBeBr = std::min(std::max(BEnv.dot(BRob), -1.0), 1.0);
-  T_rot = -1*acos(normalizedBeBr)*sgn(NRob.dot(BEnv));
+  T_rot = -1 * acos(normalizedBeBr) * sgn(NRob.dot(BEnv));
 }
 
-MC_RBDYN_DLLAPI std::vector<double> jointParam(const Surface & r1Surface, const Surface & r2Surface, const sva::PTransformd & X_es_rs)
+MC_RBDYN_DLLAPI std::vector<double> jointParam(const Surface & r1Surface,
+                                               const Surface & r2Surface,
+                                               const sva::PTransformd & X_es_rs)
 {
   if(r1Surface.type() == "planar" && r2Surface.type() == "planar")
   {
@@ -58,11 +59,10 @@ MC_RBDYN_DLLAPI std::vector<double> jointParam(const Surface & r1Surface, const 
     planarParam(X_es_rs, T, B, N_rot);
     auto rz = sva::RotZ(N_rot);
     Eigen::Vector3d trans(T, B, 0);
-    auto transJoint = rz*trans;
+    auto transJoint = rz * trans;
     return {N_rot, transJoint.x(), transJoint.y()};
   }
-  else if( (r1Surface.type() == "planar" || r1Surface.type() == "gripper")
-           && r2Surface.type() == "cylindrical")
+  else if((r1Surface.type() == "planar" || r1Surface.type() == "gripper") && r2Surface.type() == "cylindrical")
   {
     double T, T_rot;
     cylindricalParam(X_es_rs, T, T_rot);
@@ -71,4 +71,4 @@ MC_RBDYN_DLLAPI std::vector<double> jointParam(const Surface & r1Surface, const 
   return {};
 }
 
-}
+} // namespace mc_rbdyn

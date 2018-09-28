@@ -1,10 +1,9 @@
 #pragma once
 
-#include <mc_solver/ConstraintSet.h>
-
 #include <mc_rbdyn/Collision.h>
 #include <mc_rbdyn/Contact.h>
 #include <mc_rbdyn/Robots.h>
+#include <mc_solver/ConstraintSet.h>
 
 #include <Tasks/QPConstr.h>
 
@@ -25,6 +24,7 @@ struct MC_SOLVER_DLLAPI CollisionsConstraint : public ConstraintSet
 public:
   /** Default value of damping offset */
   constexpr static double defaultDampingOffset = 0.1;
+
 public:
   /** Constructor
    *
@@ -79,6 +79,7 @@ public:
 
   /** Implementation of mc_solver::ConstraintSet::removeFromSolver */
   virtual void removeFromSolver(tasks::qp::QPSolver & solver) override;
+
 public:
   /** The actual collision constraint object */
   std::shared_ptr<tasks::qp::CollisionConstr> collConstr;
@@ -88,14 +89,16 @@ public:
   unsigned int r2Index;
   /** Curent set of collisions */
   std::vector<mc_rbdyn::Collision> cols;
+
 private:
   /* Internal sauce to manage collisions */
   int collId;
-  std::map<std::string, std::pair<unsigned int, mc_rbdyn::Collision> > collIdDict;
+  std::map<std::string, std::pair<unsigned int, mc_rbdyn::Collision>> collIdDict;
   std::string __keyByNames(const std::string & name1, const std::string & name2);
   int __createCollId(const mc_rbdyn::Collision & col);
   std::pair<int, mc_rbdyn::Collision> __popCollId(const std::string & name1, const std::string & name2);
   void __addCollision(const mc_rbdyn::Robots & robots, const mc_rbdyn::Collision & col);
+
 public:
   /** \deprecated{Default constructor, not made for general usage} */
   CollisionsConstraint() {}
@@ -166,8 +169,9 @@ public:
    * \param contacts Set of contacts affecting the robot
    * \param cols Set of collision to add
    */
-  void setEnvCollisions(QPSolver & solver, const std::vector<mc_rbdyn::Contact> & contacts,
-                                                         const std::vector<mc_rbdyn::Collision> & cols);
+  void setEnvCollisions(QPSolver & solver,
+                        const std::vector<mc_rbdyn::Contact> & contacts,
+                        const std::vector<mc_rbdyn::Collision> & cols);
 
   /** Based on the existing set of (robot, robot) collisions, a set of contact
    * concerning the robot and a set of collisions:
@@ -178,22 +182,25 @@ public:
    * \param contacts Set of contacts affecting the robot
    * \param cols Set of collision to add
    */
-  void setSelfCollisions(QPSolver & solver, const std::vector<mc_rbdyn::Contact> & contacts,
-                                                         const std::vector<mc_rbdyn::Collision> & cols);
+  void setSelfCollisions(QPSolver & solver,
+                         const std::vector<mc_rbdyn::Contact> & contacts,
+                         const std::vector<mc_rbdyn::Collision> & cols);
 
   /** Implementation of mc_solver::ConstraintSet::addToSolver */
   virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) override;
 
   /** Implementation of mc_solver::ConstraintSet::removeFromSolver */
   virtual void removeFromSolver(tasks::qp::QPSolver & solver) override;
+
 public:
   /** (robot, robot) collision constraint */
   CollisionsConstraint selfCollConstrMng;
   /** (robot, env) collision constraint */
   CollisionsConstraint envCollConstrMng;
+
 private:
-  std::set<std::string> __bodiesFromContacts(const mc_rbdyn::Robot & robot, const std::vector<mc_rbdyn::Contact> & contacts);
+  std::set<std::string> __bodiesFromContacts(const mc_rbdyn::Robot & robot,
+                                             const std::vector<mc_rbdyn::Contact> & contacts);
 };
 
-
-}  // namespace mc_solver
+} // namespace mc_solver

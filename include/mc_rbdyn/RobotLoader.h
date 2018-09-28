@@ -2,21 +2,20 @@
 
 /*! Interface used to load robots */
 
-#include <memory>
-#include <mutex>
-
-#include <mc_rbdyn/api.h>
 #include <mc_rbdyn/RobotModule.h>
-
+#include <mc_rbdyn/api.h>
 #include <mc_rtc/config.h>
 #include <mc_rtc/loader.h>
+
+#include <memory>
+#include <mutex>
 
 namespace mc_rbdyn
 {
 
 /*! \class RobotLoader
  * \brief Load RobotModule instances from shared libraries
-*/
+ */
 struct MC_RBDYN_DLLAPI RobotLoader
 {
 public:
@@ -24,10 +23,11 @@ public:
    * \param name The module name
    * \param args The arguments provided to the module creation function
    * \note
-   * It is the responsability of the caller to make sure that the signature of the module creation fits that declared by the module
-  */
-  template<typename ... Args>
-  static std::shared_ptr<mc_rbdyn::RobotModule> get_robot_module(const std::string & name, const Args & ... args)
+   * It is the responsability of the caller to make sure that the signature of the module creation fits that declared by
+   * the module
+   */
+  template<typename... Args>
+  static std::shared_ptr<mc_rbdyn::RobotModule> get_robot_module(const std::string & name, const Args &... args)
   {
     std::lock_guard<std::mutex> guard{mtx};
     init();
@@ -36,7 +36,7 @@ public:
 
   /** Add additional directories to the robot module path
    * \param paths Directories to be added to the module path
-  */
+   */
   static inline void update_robot_module_path(const std::vector<std::string> & paths)
   {
     std::lock_guard<std::mutex> guard{mtx};
@@ -92,6 +92,7 @@ public:
     init();
     return robot_loader->objects();
   }
+
 private:
   static inline void init(bool skip_default_path = false)
   {
@@ -104,7 +105,8 @@ private:
         {
           default_path.push_back(mc_rtc::MC_ROBOTS_INSTALL_PREFIX);
         }
-        robot_loader.reset(new mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>("MC_RTC_ROBOT_MODULE", default_path, enable_sandbox_, verbose_));
+        robot_loader.reset(new mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>("MC_RTC_ROBOT_MODULE", default_path,
+                                                                           enable_sandbox_, verbose_));
       }
       catch(const mc_rtc::LoaderException & exc)
       {

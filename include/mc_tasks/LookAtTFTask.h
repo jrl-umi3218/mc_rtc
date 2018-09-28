@@ -1,6 +1,7 @@
 #pragma once
 
 #include <mc_tasks/LookAtTask.h>
+
 #include <tf2_ros/buffer.h>
 #include <tf2_ros/transform_listener.h>
 
@@ -25,21 +26,24 @@ struct MC_TASKS_DLLAPI LookAtTFTask : public LookAtTask
    * \param weight Task weight
    *
    */
-  LookAtTFTask(const std::string& bodyName, const Eigen::Vector3d& bodyVector,
-               const std::string& sourceFrame, const std::string& targetFrame,
-               const mc_rbdyn::Robots& robots, unsigned int robotIndex,
-               double stiffness = 0.5, double weight = 200);
+  LookAtTFTask(const std::string & bodyName,
+               const Eigen::Vector3d & bodyVector,
+               const std::string & sourceFrame,
+               const std::string & targetFrame,
+               const mc_rbdyn::Robots & robots,
+               unsigned int robotIndex,
+               double stiffness = 0.5,
+               double weight = 200);
 
   /*! \brief Update the gaze target from TF position */
   void update() override;
 
- private:
+private:
   tf2_ros::Buffer tfBuffer;
   tf2_ros::TransformListener tfListener;
   std::string sourceFrame;
   std::string targetFrame;
   Eigen::Vector3d target_ori;
-
 };
 
-} /* mc_tasks */
+} // namespace mc_tasks

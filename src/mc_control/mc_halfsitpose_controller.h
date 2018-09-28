@@ -1,8 +1,8 @@
 #pragma once
 
+#include <mc_control/api.h>
 #include <mc_control/mc_controller.h>
 
-#include <mc_control/api.h>
 #include <vector>
 
 namespace mc_control
@@ -18,9 +18,8 @@ public:
 
 private:
   std::vector<std::vector<double>> halfSitPose;
-
 };
 
-}
+} // namespace mc_control
 
 SIMPLE_CONTROLLER_CONSTRUCTOR("HalfSitPose", mc_control::MCHalfSitPoseController)

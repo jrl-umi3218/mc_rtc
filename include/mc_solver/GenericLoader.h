@@ -1,9 +1,8 @@
 #pragma once
 
-#include <mc_solver/QPSolver.h>
-
 #include <mc_rtc/Configuration.h>
 #include <mc_rtc/logging.h>
+#include <mc_solver/QPSolver.h>
 
 namespace mc_solver
 {
@@ -27,7 +26,7 @@ struct GenericLoader
 
   /** A function that is able to load a T object through a solver instance
    * and JSON configuration */
-  using load_fun = std::function<T_ptr(mc_solver::QPSolver&, const mc_rtc::Configuration&)>;
+  using load_fun = std::function<T_ptr(mc_solver::QPSolver &, const mc_rtc::Configuration &)>;
 
   /** Storage type, actual storage location is returned by Derived::storage() */
   using storage_t = std::map<std::string, load_fun>;
@@ -50,8 +49,7 @@ struct GenericLoader
    * \throws If the file does not exist or the loaded JSON object does not
    * represent a known object
    */
-  static T_ptr load(mc_solver::QPSolver & solver,
-                    const std::string & file);
+  static T_ptr load(mc_solver::QPSolver & solver, const std::string & file);
 
   /** Load an object from an mc_rtc::Configuration object
    *
@@ -61,22 +59,18 @@ struct GenericLoader
    *
    * \throws If the loaded JSON object does not represent a known object
    */
-  static T_ptr load(mc_solver::QPSolver & solver,
-                    const mc_rtc::Configuration & config);
+  static T_ptr load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config);
 
   /** Retrieve a more precise object's type from a file */
   template<typename U,
-    typename std::enable_if<(!std::is_same<U, T>::value) &&
-                            std::is_base_of<T, U>::value, int>::type = 0>
-  static std::shared_ptr<U> load(mc_solver::QPSolver & solver,
-                                 const std::string & file);
+           typename std::enable_if<(!std::is_same<U, T>::value) && std::is_base_of<T, U>::value, int>::type = 0>
+  static std::shared_ptr<U> load(mc_solver::QPSolver & solver, const std::string & file);
 
   /** Retrieve a more precise object's type from a Configuration entry */
   template<typename U,
-    typename std::enable_if<(!std::is_same<U, T>::value) &&
-                            std::is_base_of<T, U>::value, int>::type = 0>
-  static std::shared_ptr<U> load(mc_solver::QPSolver & solver,
-                                 const mc_rtc::Configuration & config);
+           typename std::enable_if<(!std::is_same<U, T>::value) && std::is_base_of<T, U>::value, int>::type = 0>
+  static std::shared_ptr<U> load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config);
+
 private:
   template<typename U>
   static std::shared_ptr<U> cast(const T_ptr & p);
@@ -84,6 +78,6 @@ private:
   static storage_t & get_fns();
 };
 
-}
+} // namespace mc_solver
 
 #include "GenericLoader.hpp"

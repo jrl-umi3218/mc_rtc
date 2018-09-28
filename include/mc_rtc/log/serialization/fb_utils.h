@@ -1,8 +1,8 @@
 #pragma once
 
-#include "MCLog_generated.h"
-
 #include <SpaceVecAlg/SpaceVecAlg>
+
+#include "MCLog_generated.h"
 
 namespace mc_rtc
 {
@@ -21,8 +21,7 @@ struct LogDataHelper
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wreturn-type"
   /** Convert the C++ object to an anonymous flatbuffer object */
-  static flatbuffers::Offset<void> serialize(flatbuffers::FlatBufferBuilder &,
-                                             const T &)
+  static flatbuffers::Offset<void> serialize(flatbuffers::FlatBufferBuilder &, const T &)
   {
     static_assert(sizeof(T) == 0, "This type is not handled by the logger interface");
   }
@@ -31,17 +30,16 @@ struct LogDataHelper
 
 /** This macro allows to define implementations for LogDataHelper in
  * simple cases */
-#define IMPL_LDH(TYPE, LD_TYPE, S_FN, ARG_NAME, ...)\
-template<>\
-struct LogDataHelper<TYPE>\
-{\
-  static constexpr mc_rtc::log::LogData value_type = mc_rtc::log::LD_TYPE;\
-  static flatbuffers::Offset<void> serialize(flatbuffers::FlatBufferBuilder & builder,\
-                                             const TYPE & ARG_NAME)\
-  {\
-    return mc_rtc::log::S_FN(builder, __VA_ARGS__).Union();\
-  }\
-}
+#define IMPL_LDH(TYPE, LD_TYPE, S_FN, ARG_NAME, ...)                                                            \
+  template<>                                                                                                    \
+  struct LogDataHelper<TYPE>                                                                                    \
+  {                                                                                                             \
+    static constexpr mc_rtc::log::LogData value_type = mc_rtc::log::LD_TYPE;                                    \
+    static flatbuffers::Offset<void> serialize(flatbuffers::FlatBufferBuilder & builder, const TYPE & ARG_NAME) \
+    {                                                                                                           \
+      return mc_rtc::log::S_FN(builder, __VA_ARGS__).Union();                                                   \
+    }                                                                                                           \
+  }
 
 IMPL_LDH(bool, LogData_Bool, CreateBool, b, b);
 IMPL_LDH(double, LogData_Double, CreateDouble, d, d);
@@ -60,8 +58,7 @@ struct LogDataHelper<sva::PTransformd>
 {
   static constexpr mc_rtc::log::LogData value_type = mc_rtc::log::LogData_PTransformd;
 
-  static flatbuffers::Offset<void> serialize(flatbuffers::FlatBufferBuilder & builder,
-                                             const sva::PTransformd & pt)
+  static flatbuffers::Offset<void> serialize(flatbuffers::FlatBufferBuilder & builder, const sva::PTransformd & pt)
   {
     auto q = Eigen::Quaterniond(pt.rotation());
     auto fb_q = mc_rtc::log::CreateQuaterniond(builder, q.w(), q.x(), q.y(), q.z());
@@ -76,8 +73,7 @@ struct LogDataHelper<sva::ForceVecd>
 {
   static constexpr mc_rtc::log::LogData value_type = mc_rtc::log::LogData_ForceVecd;
 
-  static flatbuffers::Offset<void> serialize(flatbuffers::FlatBufferBuilder & builder,
-                                             const sva::ForceVecd & fv)
+  static flatbuffers::Offset<void> serialize(flatbuffers::FlatBufferBuilder & builder, const sva::ForceVecd & fv)
   {
     const auto & couple = fv.couple();
     auto fb_couple = mc_rtc::log::CreateVector3d(builder, couple.x(), couple.y(), couple.z());
@@ -92,8 +88,7 @@ struct LogDataHelper<sva::MotionVecd>
 {
   static constexpr mc_rtc::log::LogData value_type = mc_rtc::log::LogData_MotionVecd;
 
-  static flatbuffers::Offset<void> serialize(flatbuffers::FlatBufferBuilder & builder,
-                                             const sva::MotionVecd & mv)
+  static flatbuffers::Offset<void> serialize(flatbuffers::FlatBufferBuilder & builder, const sva::MotionVecd & mv)
   {
     const auto & angular = mv.angular();
     auto fb_angular = mc_rtc::log::CreateVector3d(builder, angular.x(), angular.y(), angular.z());
@@ -147,10 +142,9 @@ struct callback_returns_crv
 {
   using ret_type = typename std::result_of<T()>::type;
   using base_type = typename std::decay<ret_type>::type;
-  static constexpr bool value = ! is_serializable<base_type>::value &&
-                                is_vector<base_type>::value &&
-                                std::is_reference<ret_type>::value &&
-                                std::is_const<typename std::remove_reference<ret_type>::type>::value;
+  static constexpr bool value = !is_serializable<base_type>::value && is_vector<base_type>::value
+                                && std::is_reference<ret_type>::value
+                                && std::is_const<typename std::remove_reference<ret_type>::type>::value;
 };
 
 /** Type-traits for callables that returns a const reference to a vector of a

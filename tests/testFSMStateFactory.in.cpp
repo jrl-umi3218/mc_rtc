@@ -1,9 +1,8 @@
-#include <boost/test/unit_test.hpp>
-
+#include <mc_control/fsm/Controller.h>
+#include <mc_control/fsm/StateFactory.h>
 #include <mc_rbdyn/RobotLoader.h>
 
-#include <mc_control/fsm/StateFactory.h>
-#include <mc_control/fsm/Controller.h>
+#include <boost/test/unit_test.hpp>
 
 #include "@CMAKE_CURRENT_SOURCE_DIR@/fsm_states/ConfigureState.h"
 
@@ -26,14 +25,12 @@ mc_control::fsm::Controller & get_default_controller()
   return *ctl_ptr;
 }
 
-void check_state(mc_control::fsm::StateFactory & factory,
-                 const std::string & state)
+void check_state(mc_control::fsm::StateFactory & factory, const std::string & state)
 {
   BOOST_REQUIRE(factory.hasState(state));
 }
 
-void check_states(mc_control::fsm::StateFactory & factory,
-                  const std::vector<std::string> & states)
+void check_states(mc_control::fsm::StateFactory & factory, const std::vector<std::string> & states)
 {
   BOOST_REQUIRE(factory.states().size() == states.size());
   for(const auto & s : states)
@@ -44,90 +41,65 @@ void check_states(mc_control::fsm::StateFactory & factory,
 
 BOOST_AUTO_TEST_CASE(TestSingleStateLoading)
 {
-  mc_control::fsm::StateFactory factory {
-    {FSM_STATES_DIR + "SingleState"},
-    {},
-    false
-  };
+  mc_control::fsm::StateFactory factory{{FSM_STATES_DIR + "SingleState"}, {}, false};
   check_states(factory, {"SingleState"});
 }
 
 BOOST_AUTO_TEST_CASE(TestJsonInheritanceSingle)
 {
-  mc_control::fsm::StateFactory factory {
-    {FSM_STATES_DIR + "SingleState"},
-    {FSM_STATES_JSON_DIR + "SingleState.json"},
-    false
-  };
+  mc_control::fsm::StateFactory factory{
+      {FSM_STATES_DIR + "SingleState"}, {FSM_STATES_JSON_DIR + "SingleState.json"}, false};
   check_states(factory, {"SingleState", "SingleStateBis"});
 }
 
 BOOST_AUTO_TEST_CASE(TestJsonInheritanceMultiple)
 {
-  mc_control::fsm::StateFactory factory {
-    {FSM_STATES_DIR + "SingleState"},
-    {FSM_STATES_JSON_DIR + "SingleStateMulti.json"},
-    false
-  };
-  check_states(factory,
-               {
-                "SingleState",
-                "SingleState1",
-                "SingleState2",
-                "SingleState3",
-                "SingleState4",
-               });
+  mc_control::fsm::StateFactory factory{
+      {FSM_STATES_DIR + "SingleState"}, {FSM_STATES_JSON_DIR + "SingleStateMulti.json"}, false};
+  check_states(factory, {
+                            "SingleState",
+                            "SingleState1",
+                            "SingleState2",
+                            "SingleState3",
+                            "SingleState4",
+                        });
 }
 
 BOOST_AUTO_TEST_CASE(TestJsonInheritanceSplit)
 {
-  mc_control::fsm::StateFactory factory {
-    {FSM_STATES_DIR + "SingleState"},
-    {
-      FSM_STATES_JSON_DIR + "SingleState1.json",
-      FSM_STATES_JSON_DIR + "SingleState2.json",
-      FSM_STATES_JSON_DIR + "SingleState3.json",
-      FSM_STATES_JSON_DIR + "SingleState4.json"
-    },
-    false
-  };
-  check_states(factory,
-               {
-                "SingleState",
-                "SingleState1",
-                "SingleState2",
-                "SingleState3",
-                "SingleState4",
-               });
+  mc_control::fsm::StateFactory factory{
+      {FSM_STATES_DIR + "SingleState"},
+      {FSM_STATES_JSON_DIR + "SingleState1.json", FSM_STATES_JSON_DIR + "SingleState2.json",
+       FSM_STATES_JSON_DIR + "SingleState3.json", FSM_STATES_JSON_DIR + "SingleState4.json"},
+      false};
+  check_states(factory, {
+                            "SingleState",
+                            "SingleState1",
+                            "SingleState2",
+                            "SingleState3",
+                            "SingleState4",
+                        });
 }
 
 BOOST_AUTO_TEST_CASE(TestMultipleStatesLoading)
 {
-  mc_control::fsm::StateFactory factory {
-    {FSM_STATES_DIR + "MultipleStates"},
-    {},
-    false
-  };
+  mc_control::fsm::StateFactory factory{{FSM_STATES_DIR + "MultipleStates"}, {}, false};
   check_states(factory, {"State1", "State2"});
 }
 
 BOOST_AUTO_TEST_CASE(TestConfigureState)
 {
-  mc_control::fsm::StateFactory factory {
-    {FSM_STATES_DIR + "ConfigureState"},
-    {FSM_STATES_JSON_DIR + "ConfigureState.json"},
-    false
-  };
-  check_states(factory,
-               {
-                "ConfigureState",
-                "ConfigureState2",
-                "ConfigureState4",
-                "ConfigureState8",
-               });
+  mc_control::fsm::StateFactory factory{
+      {FSM_STATES_DIR + "ConfigureState"}, {FSM_STATES_JSON_DIR + "ConfigureState.json"}, false};
+  check_states(factory, {
+                            "ConfigureState",
+                            "ConfigureState2",
+                            "ConfigureState4",
+                            "ConfigureState8",
+                        });
   auto & ctl = get_default_controller();
-  auto test_state = [&factory, &ctl](const std::string & name, unsigned int value, const mc_rtc::Configuration & config)
-  {
+  auto test_state = [&factory, &ctl](const std::string & name, unsigned int value,
+                                     const mc_rtc::Configuration & config) {
     auto state_base = factory.create(name, ctl, config);
     auto state = std::dynamic_pointer_cast<ConfigureState>(state_base);
     BOOST_REQUIRE(state != nullptr);

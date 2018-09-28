@@ -1,8 +1,7 @@
 #pragma once
 
-#include <mc_control/fsm/State.h>
-
 #include <mc_control/CompletionCriteria.h>
+#include <mc_control/fsm/State.h>
 #include <mc_tasks/MetaTask.h>
 
 namespace mc_control
@@ -97,11 +96,12 @@ struct MC_CONTROL_FSM_STATE_DLLAPI MetaTasksState : State
 {
   void configure(const mc_rtc::Configuration & config) override;
 
-  void start(Controller&) override;
+  void start(Controller &) override;
 
-  bool run(Controller&) override;
+  bool run(Controller &) override;
 
-  void teardown(Controller&) override;
+  void teardown(Controller &) override;
+
 protected:
   std::map<std::string, mc_rtc::Configuration> tasks_configs_;
   std::vector<mc_tasks::MetaTaskPtr> tasks_;

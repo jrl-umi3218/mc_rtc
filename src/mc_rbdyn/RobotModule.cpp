@@ -19,8 +19,7 @@ RobotModule::RobotModule(const std::string & name, const mc_rbdyn_urdf::URDFPars
 
 void RobotModule::boundsFromURDF(const mc_rbdyn_urdf::Limits & limits)
 {
-  auto neg_bound = [](const std::map<std::string, std::vector<double>> & v)
-  {
+  auto neg_bound = [](const std::map<std::string, std::vector<double>> & v) {
     std::map<std::string, std::vector<double>> res;
     for(const auto & vi : v)
     {
@@ -33,12 +32,7 @@ void RobotModule::boundsFromURDF(const mc_rbdyn_urdf::Limits & limits)
     return res;
   };
   _bounds = {
-    limits.lower,
-    limits.upper,
-    neg_bound(limits.velocity),
-    limits.velocity,
-    neg_bound(limits.torque),
-    limits.torque,
+      limits.lower, limits.upper, neg_bound(limits.velocity), limits.velocity, neg_bound(limits.torque), limits.torque,
   };
 }
 
@@ -71,8 +65,7 @@ RobotModule::bounds_t urdf_limits_to_bounds(const mc_rbdyn_urdf::Limits & limits
   ret.reserve(6);
   ret.push_back(limits.lower);
   ret.push_back(limits.upper);
-  auto convert = [](const std::map<std::string, std::vector<double>> & l)
-  {
+  auto convert = [](const std::map<std::string, std::vector<double>> & l) {
     auto ret = l;
     for(auto & el : ret)
     {
@@ -90,4 +83,4 @@ RobotModule::bounds_t urdf_limits_to_bounds(const mc_rbdyn_urdf::Limits & limits
   return ret;
 }
 
-}
+} // namespace mc_rbdyn

@@ -1,20 +1,18 @@
 #ifndef _H_MOVECONTACTTASK_H_
 #define _H_MOVECONTACTTASK_H_
 
-#include <mc_tasks/MetaTask.h>
-#include <mc_tasks/SmoothTask.h>
-
 #include <mc_rbdyn/Robots.h>
 #include <mc_rbdyn/StanceConfig.h>
+#include <mc_tasks/MetaTask.h>
+#include <mc_tasks/SmoothTask.h>
+#include <mc_tasks/api.h>
 
 #include <Tasks/QPConstr.h>
 #include <Tasks/QPTasks.h>
 
-#include <mc_tasks/api.h>
-
 namespace mc_rbdyn
 {
-  struct Contact;
+struct Contact;
 }
 
 namespace mc_tasks
@@ -38,7 +36,6 @@ namespace mc_tasks
 struct MC_TASKS_DLLAPI MoveContactTask : public MetaTask
 {
 public:
-
   /*! \brief Constructor using mc_rbdyn::StanceConfig for configuration
    *
    * \param robots Robots involved in the task
@@ -53,8 +50,10 @@ public:
    * \param positionWStartPercent Initial percentage of the task's final weight
    *
    */
-  MoveContactTask(mc_rbdyn::Robots & robots, mc_rbdyn::Robot & robot,
-                  mc_rbdyn::Robot & env, mc_rbdyn::Contact & contact,
+  MoveContactTask(mc_rbdyn::Robots & robots,
+                  mc_rbdyn::Robot & robot,
+                  mc_rbdyn::Robot & env,
+                  mc_rbdyn::Contact & contact,
                   mc_rbdyn::StanceConfig & config,
                   double positionWStartPercent = 0);
 
@@ -90,10 +89,15 @@ public:
    * \param positionWStartPercent Initial percentage of the task's final weight
    *
    */
-  MoveContactTask(mc_rbdyn::Robots & robots, mc_rbdyn::Robot & robot,
-                  mc_rbdyn::Robot & env, mc_rbdyn::Contact & contact,
-                  double posStiffness, double extraPosStiffness, double posWeight,
-                  double oriStiffness, double oriWeight,
+  MoveContactTask(mc_rbdyn::Robots & robots,
+                  mc_rbdyn::Robot & robot,
+                  mc_rbdyn::Robot & env,
+                  mc_rbdyn::Contact & contact,
+                  double posStiffness,
+                  double extraPosStiffness,
+                  double posWeight,
+                  double oriStiffness,
+                  double oriWeight,
                   double preContactDist,
                   mc_rbdyn::WaypointFunction waypointPos = mc_rbdyn::percentWaypoint(0.75, 0.75, 0.75, 0.25),
                   const Eigen::Vector3d & adjustOffset = Eigen::Vector3d::Zero(),
@@ -129,8 +133,10 @@ public:
    *
    */
   void toWaypoint(double posStiffness,
-                  double extraPosStiffness, double posWeight,
-                  double oriStiffness, double oriWeight,
+                  double extraPosStiffness,
+                  double posWeight,
+                  double oriStiffness,
+                  double oriWeight,
                   double positionSmoothPercent);
 
   /*! \brief Change the task objective to a waypoint determined by configuration
@@ -168,9 +174,11 @@ public:
    *
    */
   void toPreEnv(double posStiffness,
-                  double extraPosStiffness, double posWeight,
-                  double oriStiffness, double oriWeight,
-                  double positionSmoothPercent);
+                double extraPosStiffness,
+                double posWeight,
+                double oriStiffness,
+                double oriWeight,
+                double positionSmoothPercent);
 
   /*! \brief Change the task objective to a point above the environment target
    *
@@ -237,24 +245,28 @@ public:
 
   virtual Eigen::VectorXd dimWeight() const override;
 
-  virtual void selectActiveJoints(mc_solver::QPSolver & solver,
-                                  const std::vector<std::string> & aJN) override;
+  virtual void selectActiveJoints(mc_solver::QPSolver & solver, const std::vector<std::string> & aJN) override;
 
-  virtual void selectUnactiveJoints(mc_solver::QPSolver & solver,
-                                    const std::vector<std::string> &uJN) override;
+  virtual void selectUnactiveJoints(mc_solver::QPSolver & solver, const std::vector<std::string> & uJN) override;
 
   virtual void resetJointsSelector(mc_solver::QPSolver & solver) override;
 
   virtual Eigen::VectorXd eval() const override;
 
   virtual Eigen::VectorXd speed() const override;
+
 private:
-  void target(const Eigen::Vector3d & pos, const Eigen::Matrix3d & ori,
-              double posStiffness, double extraPosStiffness, double posWeight,
-              double oriStiffness, double oriWeight,
+  void target(const Eigen::Vector3d & pos,
+              const Eigen::Matrix3d & ori,
+              double posStiffness,
+              double extraPosStiffness,
+              double posWeight,
+              double oriStiffness,
+              double oriWeight,
               double positionSmoothPercent);
 
   virtual void reset() override {}
+
 public:
   bool inSolver = false;
   mc_rbdyn::Robots & robots;
@@ -286,6 +298,7 @@ public:
   std::shared_ptr<tasks::qp::JointsSelector> orientationJSTask = nullptr;
   std::shared_ptr<tasks::qp::SetPointTask> orientationTaskSp = nullptr;
   bool useSmoothTask;
+
 private:
   virtual void addToSolver(mc_solver::QPSolver & solver) override;
 
@@ -294,6 +307,6 @@ private:
   virtual void update() override;
 };
 
-}
+} // namespace mc_tasks
 
 #endif

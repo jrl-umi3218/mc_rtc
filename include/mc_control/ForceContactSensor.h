@@ -2,9 +2,9 @@
 #define _H_FORCECONTACTSENSOR_H_
 
 #include <mc_control/ContactSensor.h>
-#include <boost/circular_buffer.hpp>
-
 #include <mc_control/api.h>
+
+#include <boost/circular_buffer.hpp>
 
 namespace mc_control
 {
@@ -30,12 +30,14 @@ public:
     Backward = 3,
     WindowSize = 100
   };
+
 public:
   ForceSensor(const mc_rbdyn::Robot & robot, const std::string & sensorName, const Threshold & thresh);
 
   void computeOffset();
 
   void update(const Eigen::Vector3d & force);
+
 public:
   SensorConfig activated;
   Threshold thresh;
@@ -55,10 +57,11 @@ public:
   virtual void resetOffset() override;
 
   virtual std::vector<std::string> update(MCController & ctl) override;
+
 public:
   std::vector<ForceSensor> sensors;
 };
 
-}
+} // namespace mc_control
 
 #endif

@@ -6,7 +6,10 @@ struct State1 : public mc_control::fsm::State
 
   void start(mc_control::fsm::Controller &) override {}
 
-  bool run(mc_control::fsm::Controller &) override { return false; }
+  bool run(mc_control::fsm::Controller &) override
+  {
+    return false;
+  }
 
   void teardown(mc_control::fsm::Controller &) override {}
 };
@@ -17,7 +20,10 @@ struct State2 : public mc_control::fsm::State
 
   void start(mc_control::fsm::Controller &) override {}
 
-  bool run(mc_control::fsm::Controller &) override { return false; }
+  bool run(mc_control::fsm::Controller &) override
+  {
+    return false;
+  }
 
   void teardown(mc_control::fsm::Controller &) override {}
 };
@@ -29,7 +35,10 @@ extern "C"
     names = {"State1", "State2"};
   }
 
-  FSM_STATE_API void destroy(mc_control::fsm::State * ptr) { delete ptr; }
+  FSM_STATE_API void destroy(mc_control::fsm::State * ptr)
+  {
+    delete ptr;
+  }
 
   FSM_STATE_API mc_control::fsm::State * create(const std::string & n)
   {

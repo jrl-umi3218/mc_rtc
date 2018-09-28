@@ -7,17 +7,15 @@
 namespace mc_control
 {
 
-ControllerServer::ControllerServer(double dt, double server_dt,
+ControllerServer::ControllerServer(double dt,
+                                   double server_dt,
                                    const std::vector<std::string> & pub_bind_uri,
                                    const std::vector<std::string> & pull_bind_uri)
 {
   iter = 0;
   rate = static_cast<unsigned int>(ceil(server_dt / dt));
-  auto init_socket = [](int & socket,
-                        unsigned int proto,
-                        const std::vector<std::string> & uris,
-                        const std::string & name)
-  {
+  auto init_socket = [](int & socket, unsigned int proto, const std::vector<std::string> & uris,
+                        const std::string & name) {
     socket = nn_socket(AF_SP, proto);
     if(socket < 0)
     {
@@ -60,7 +58,7 @@ void ControllerServer::handle_requests(mc_rtc::gui::StateBuilder & gui_builder)
     }
     else
     {
-      auto config = mc_rtc::Configuration::fromData(static_cast<const char*>(buf));
+      auto config = mc_rtc::Configuration::fromData(static_cast<const char *>(buf));
       auto category = config("category", std::vector<std::string>{});
       auto name = config("name", std::string{});
       auto data = config("data", mc_rtc::Configuration{});
@@ -70,8 +68,7 @@ void ControllerServer::handle_requests(mc_rtc::gui::StateBuilder & gui_builder)
       }
       nn_freemsg(buf);
     }
-  }
-  while(recv > 0);
+  } while(recv > 0);
 }
 
 void ControllerServer::publish(mc_rtc::gui::StateBuilder & gui_builder)
@@ -84,4 +81,4 @@ void ControllerServer::publish(mc_rtc::gui::StateBuilder & gui_builder)
   }
 }
 
-}
+} // namespace mc_control

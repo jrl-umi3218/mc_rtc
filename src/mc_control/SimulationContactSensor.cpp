@@ -1,16 +1,15 @@
 #include <mc_control/SimulationContactSensor.h>
-
 #include <mc_rbdyn/SCHAddon.h>
 #include <mc_rbdyn/Surface.h>
 
 namespace mc_control
 {
 
-SimulationContactPair::SimulationContactPair(const std::shared_ptr<mc_rbdyn::Surface> & robotSurface, const std::shared_ptr<mc_rbdyn::Surface> & envSurface)
+SimulationContactPair::SimulationContactPair(const std::shared_ptr<mc_rbdyn::Surface> & robotSurface,
+                                             const std::shared_ptr<mc_rbdyn::Surface> & envSurface)
 : robotSurface(robotSurface), envSurface(envSurface),
   robotSch(mc_rbdyn::surface_to_sch(*(robotSurface.get()), 0.005, 8)),
-  envSch(mc_rbdyn::surface_to_sch(*(envSurface.get()), -0.001, 8)),
-  pair(robotSch.get(), envSch.get())
+  envSch(mc_rbdyn::surface_to_sch(*(envSurface.get()), -0.001, 8)), pair(robotSch.get(), envSch.get())
 {
 }
 
@@ -21,7 +20,9 @@ double SimulationContactPair::update(const mc_rbdyn::Robot & robot, const mc_rbd
   return pair.getDistance();
 }
 
-void SimulationContactPair::updateSCH(sch::S_Object * obj, const mc_rbdyn::Robot & robot, const std::shared_ptr<mc_rbdyn::Surface> & robotSurface)
+void SimulationContactPair::updateSCH(sch::S_Object * obj,
+                                      const mc_rbdyn::Robot & robot,
+                                      const std::shared_ptr<mc_rbdyn::Surface> & robotSurface)
 {
   sch::mc_rbdyn::transform(*obj, robot.mbc().bodyPosW[robot.bodyIndexByName(robotSurface->bodyName())]);
 }
@@ -68,4 +69,4 @@ std::vector<std::string> SimulationContactSensor::update(MCController & ctl)
   return res;
 }
 
-}
+} // namespace mc_control

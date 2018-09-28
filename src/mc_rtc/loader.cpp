@@ -7,7 +7,7 @@ namespace bfs = boost::filesystem;
 namespace mc_rtc
 {
 
-Loader::callback_t Loader::default_cb  = [](const std::string&, lt_dlhandle){};
+Loader::callback_t Loader::default_cb = [](const std::string &, lt_dlhandle) {};
 
 unsigned int Loader::init_count_ = 0;
 
@@ -43,7 +43,8 @@ bool Loader::close()
 
 void Loader::load_libraries(const std::string & class_name,
                             const std::vector<std::string> & paths,
-                            Loader::handle_map_t & out, bool verbose,
+                            Loader::handle_map_t & out,
+                            bool verbose,
                             Loader::callback_t cb)
 {
   for(const auto & path : paths)
@@ -60,17 +61,13 @@ void Loader::load_libraries(const std::string & class_name,
     std::vector<bfs::path> drange;
     std::copy(dit, endit, std::back_inserter(drange));
     // Sort by newest file
-    std::sort(drange.begin(), drange.end(),
-              [](const bfs::path & p1, const bfs::path & p2)
-              {
-                return bfs::last_write_time(p1) >
-                       bfs::last_write_time(p2);
-              }
-             );
+    std::sort(drange.begin(), drange.end(), [](const bfs::path & p1, const bfs::path & p2) {
+      return bfs::last_write_time(p1) > bfs::last_write_time(p2);
+    });
     for(const auto & p : drange)
     {
       /* Attempt to load anything that is not a directory */
-      if( (!bfs::is_directory(p)) && (!bfs::is_symlink(p)) )
+      if((!bfs::is_directory(p)) && (!bfs::is_symlink(p)))
       {
         if(verbose)
         {
@@ -96,11 +93,11 @@ void Loader::load_libraries(const std::string & class_name,
           continue;
         }
 #ifndef WIN32
-        #pragma GCC diagnostic push
-        #pragma GCC diagnostic ignored "-Wpedantic"
-        typedef void(*load_global_fun_t)(void);
+#  pragma GCC diagnostic push
+#  pragma GCC diagnostic ignored "-Wpedantic"
+        typedef void (*load_global_fun_t)(void);
         load_global_fun_t LOAD_GLOBAL_FUN = (load_global_fun_t)(lt_dlsym(h, "LOAD_GLOBAL"));
-        #pragma GCC diagnostic pop
+#  pragma GCC diagnostic pop
         if(LOAD_GLOBAL_FUN != nullptr)
         {
           if(verbose)
@@ -120,11 +117,11 @@ void Loader::load_libraries(const std::string & class_name,
           lt_dlerror();
         }
 #endif
-        #pragma GCC diagnostic push
-        #pragma GCC diagnostic ignored "-Wpedantic"
-        typedef void(*class_name_fun_t)(std::vector<std::string>&);
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wpedantic"
+        typedef void (*class_name_fun_t)(std::vector<std::string> &);
         class_name_fun_t CLASS_NAME_FUN = (class_name_fun_t)(lt_dlsym(h, class_name.c_str()));
-        #pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
         if(CLASS_NAME_FUN == nullptr)
         {
           const char * error = lt_dlerror();
@@ -151,7 +148,9 @@ void Loader::load_libraries(const std::string & class_name,
             {
               if(verbose)
               {
-                LOG_WARNING("Multiple files export the same name " << cn << " (new declaration in " << p.string() << ", previous declaration in " << lt_dlgetinfo(out[cn])->filename << ")")
+                LOG_WARNING("Multiple files export the same name " << cn << " (new declaration in " << p.string()
+                                                                   << ", previous declaration in "
+                                                                   << lt_dlgetinfo(out[cn])->filename << ")")
               }
               continue;
             }

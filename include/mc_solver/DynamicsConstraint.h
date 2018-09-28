@@ -37,7 +37,12 @@ public:
    * \param velocityPercent Maximum joint velocity percentage, 0.5 is advised
    * \param infTorque If true, ignore the torque limits set in the robot model
    */
-  DynamicsConstraint(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double timeStep, const std::array<double, 3> & damper, double velocityPercent = 1.0, bool infTorque = false);
+  DynamicsConstraint(const mc_rbdyn::Robots & robots,
+                     unsigned int robotIndex,
+                     double timeStep,
+                     const std::array<double, 3> & damper,
+                     double velocityPercent = 1.0,
+                     bool infTorque = false);
 
   /** Implementation of mc_solver::ConstraintSet::addToSolver */
   virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) override;
@@ -45,7 +50,11 @@ public:
   /** Implementation of mc_solver::ConstraintSet::removeFromSolver */
   virtual void removeFromSolver(tasks::qp::QPSolver & solver) override;
 
-  bool inSolver() const { return inSolver_; }
+  bool inSolver() const
+  {
+    return inSolver_;
+  }
+
 public:
   /** Motion constraint: if the robot contains flexibilites, it will take them
    * into account, else will be a classical one **/
@@ -55,6 +64,7 @@ public:
   /** \deprecated{Default constructor, not made for general usage}
    */
   DynamicsConstraint() {}
+
 private:
   /** Private function to build the proper MotionConstr */
   void build_constr(const mc_rbdyn::Robots & robots, unsigned int robotIndex, bool infTorque);

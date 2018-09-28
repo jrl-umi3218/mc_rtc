@@ -4,30 +4,31 @@
  * JSON manipulation in mc_rtc */
 
 #define RAPIDJSON_HAS_STDSTRING 1
-#define RAPIDJSON_PARSE_DEFAULT_FLAGS rapidjson::kParseCommentsFlag | rapidjson::kParseTrailingCommasFlag | rapidjson::kParseNanAndInfFlag
+#define RAPIDJSON_PARSE_DEFAULT_FLAGS \
+  rapidjson::kParseCommentsFlag | rapidjson::kParseTrailingCommasFlag | rapidjson::kParseNanAndInfFlag
 #define RAPIDJSON_WRITE_DEFAULT_FLAGS rapidjson::kWriteNanAndInfFlag
 #define RAPIDJSON_NO_SIZETYPEDEFINE
 namespace rapidjson
 {
-    typedef size_t SizeType;
+typedef size_t SizeType;
 }
 
 #include "rapidjson/document.h"
+#include "rapidjson/error/en.h"
 #include "rapidjson/ostreamwrapper.h"
 #include "rapidjson/pointer.h"
 #include "rapidjson/prettywriter.h"
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/writer.h"
-#include "rapidjson/error/en.h"
 
 using RapidJSONDocument = rapidjson::GenericDocument<rapidjson::UTF8<>, rapidjson::CrtAllocator>;
 using RapidJSONValue = rapidjson::GenericValue<rapidjson::UTF8<>, rapidjson::CrtAllocator>;
 
 #include <mc_rtc/logging.h>
 
-#include <Eigen/Geometry>
 #include <SpaceVecAlg/EigenTypedef.h>
 
+#include <Eigen/Geometry>
 #include <fstream>
 #include <sstream>
 
@@ -102,8 +103,7 @@ inline bool loadDocument(const std::string & path, RapidJSONDocument & document)
  * \param pretty Pretty output
  *
  */
-inline std::string dumpDocumentInternal(RapidJSONValue & document,
-                                 bool pretty)
+inline std::string dumpDocumentInternal(RapidJSONValue & document, bool pretty)
 {
   rapidjson::StringBuffer buffer;
   if(pretty)
@@ -233,7 +233,7 @@ inline RapidJSONValue toJSON(Eigen::Matrix3d value, RapidJSONDocument::Allocator
   {
     for(size_t j = 0; j < 3; ++j)
     {
-      ret.PushBack(value(i,j), allocator);
+      ret.PushBack(value(i, j), allocator);
     }
   }
   return ret;
@@ -248,7 +248,7 @@ inline RapidJSONValue toJSON(Eigen::Matrix6d value, RapidJSONDocument::Allocator
   {
     for(size_t j = 0; j < 6; ++j)
     {
-      ret.PushBack(value(i,j), allocator);
+      ret.PushBack(value(i, j), allocator);
     }
   }
   return ret;
@@ -265,7 +265,7 @@ inline RapidJSONValue toJSON(Eigen::MatrixXd value, RapidJSONDocument::Allocator
     row.Reserve(value.cols(), allocator);
     for(int j = 0; j < value.cols(); ++j)
     {
-      row.PushBack(value(i,j), allocator);
+      row.PushBack(value(i, j), allocator);
     }
     ret.PushBack(row, allocator);
   }

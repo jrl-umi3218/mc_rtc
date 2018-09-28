@@ -1,19 +1,17 @@
 #pragma once
 
-#include <cmath>
-#include <mc_solver/QPSolver.h>
-
-#include <mc_rtc/log/Logger.h>
+#include <mc_rtc/Configuration.h>
 #include <mc_rtc/GUIState.h>
-
+#include <mc_rtc/log/Logger.h>
+#include <mc_solver/QPSolver.h>
 #include <mc_solver/api.h>
 #include <mc_tasks/api.h>
 
-#include <mc_rtc/Configuration.h>
+#include <cmath>
 
 namespace mc_control
 {
-  struct CompletionCriteria;
+struct CompletionCriteria;
 }
 
 namespace mc_tasks
@@ -28,13 +26,17 @@ MC_SOLVER_DLLAPI double extraStiffness(double error, double extraStiffness);
  */
 struct MC_SOLVER_DLLAPI MetaTask
 {
-friend struct mc_solver::QPSolver;
-friend struct mc_control::CompletionCriteria;
+  friend struct mc_solver::QPSolver;
+  friend struct mc_control::CompletionCriteria;
+
 public:
   virtual ~MetaTask();
 
   /** Get the type of the task */
-  const std::string & type() const { return type_; }
+  const std::string & type() const
+  {
+    return type_;
+  }
 
   /** Set a name for the task
    *
@@ -43,10 +45,16 @@ public:
    * The name should be set before being added to the solver.
    *
    */
-  void name(const std::string & name) { name_ = name; }
+  void name(const std::string & name)
+  {
+    name_ = name;
+  }
 
   /** Get the name of the task */
-  inline const std::string & name() const { return name_; }
+  inline const std::string & name() const
+  {
+    return name_;
+  }
 
   /*! \brief Reset the task */
   virtual void reset() = 0;
@@ -77,8 +85,7 @@ public:
    * \param activeJointsName Active joints in the task
    *
    */
-  virtual void selectActiveJoints(mc_solver::QPSolver & solver,
-                                  const std::vector<std::string> & activeJointsName) = 0;
+  virtual void selectActiveJoints(mc_solver::QPSolver & solver, const std::vector<std::string> & activeJointsName) = 0;
 
   /*! \brief Setup an unactive joints selector
    *
@@ -119,6 +126,7 @@ public:
 
   /*! \brief Load parameters from a Configuration object */
   virtual void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config);
+
 protected:
   /*! \brief Add the task to a solver
    *
@@ -217,8 +225,9 @@ protected:
    * \param config Configuration for the CompletionCriteria
    *
    */
-  virtual std::function<bool(const mc_tasks::MetaTask & task, std::string&)>
-    buildCompletionCriteria(double dt, const mc_rtc::Configuration & config) const;
+  virtual std::function<bool(const mc_tasks::MetaTask & task, std::string &)> buildCompletionCriteria(
+      double dt,
+      const mc_rtc::Configuration & config) const;
 
   std::string type_;
   std::string name_;
@@ -226,4 +235,4 @@ protected:
 
 using MetaTaskPtr = std::shared_ptr<MetaTask>;
 
-}
+} // namespace mc_tasks

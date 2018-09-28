@@ -1,25 +1,25 @@
 #include "mc_egress_controller.h"
 
+#include <mc_rbdyn/RobotLoader.h>
+#include <mc_rbdyn/Surface.h>
 #include <mc_rtc/logging.h>
 
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
-#include <mc_rbdyn/RobotLoader.h>
-#include <mc_rbdyn/Surface.h>
-
 #include "mc_egress_phases.cpp"
-
 #include <array>
 
 namespace mc_control
 {
 
 MCEgressController::MCEgressController(std::shared_ptr<mc_rbdyn::RobotModule> robot_module, double dt)
-: MCController({robot_module, mc_rbdyn::RobotLoader::get_robot_module("env", std::string(mc_rtc::HRP2_DRC_DESCRIPTION_PATH), std::string("polaris_ranger"))}, dt),
-  collsConstraint(robots(), 0, 1, timeStep),
-  phase(START), phaseExec(new EgressStartPhase)
-  //phase(ROTATEBODY), phaseExec(new EgressRotateBodyPhase)
+: MCController({robot_module, mc_rbdyn::RobotLoader::get_robot_module("env",
+                                                                      std::string(mc_rtc::HRP2_DRC_DESCRIPTION_PATH),
+                                                                      std::string("polaris_ranger"))},
+               dt),
+  collsConstraint(robots(), 0, 1, timeStep), phase(START), phaseExec(new EgressStartPhase)
+// phase(ROTATEBODY), phaseExec(new EgressRotateBodyPhase)
 {
   /* Recreate the kinematics/dynamics constraints to lower the damper offset */
   std::array<double, 3> damper = {{0.1, 0.01, 0.00}};
@@ -28,17 +28,15 @@ MCEgressController::MCEgressController(std::shared_ptr<mc_rbdyn::RobotModule> ro
   dynamicsConstraint = mc_solver::DynamicsConstraint(robots(), 0, timeStep, damper, 0.5);
 
   qpsolver->addConstraintSet(contactConstraint);
-  //qpsolver->addConstraintSet(dynamicsConstraint);
+  // qpsolver->addConstraintSet(dynamicsConstraint);
   qpsolver->addConstraintSet(kinematicsConstraint);
   qpsolver->addConstraintSet(selfCollisionConstraint);
   qpsolver->addConstraintSet(collsConstraint);
   qpsolver->addTask(postureTask.get());
 
-  qpsolver->setContacts({
-    mc_rbdyn::Contact(robots(), "Butthock", "left_seat"),
-    mc_rbdyn::Contact(robots(), "LFullSole", "exit_platform"),
-    mc_rbdyn::Contact(robots(), "RightGripper", "bar_wheel")
-  });
+  qpsolver->setContacts({mc_rbdyn::Contact(robots(), "Butthock", "left_seat"),
+                         mc_rbdyn::Contact(robots(), "LFullSole", "exit_platform"),
+                         mc_rbdyn::Contact(robots(), "RightGripper", "bar_wheel")});
 
   comTask.reset(new mc_tasks::CoMTask(robots(), robots().robotIndex()));
   solver().addTask(comTask);
@@ -54,38 +52,35 @@ void MCEgressController::reset(const ControllerResetData & reset_data)
 {
   MCController::reset(reset_data);
   resetBasePose();
-  qpsolver->setContacts({
-    mc_rbdyn::Contact(robots(), "Butthock", "left_seat"),
-    mc_rbdyn::Contact(robots(), "LFullSole", "exit_platform"),
-    mc_rbdyn::Contact(robots(), "RightGripper", "bar_wheel")
-  });
+  qpsolver->setContacts({mc_rbdyn::Contact(robots(), "Butthock", "left_seat"),
+                         mc_rbdyn::Contact(robots(), "LFullSole", "exit_platform"),
+                         mc_rbdyn::Contact(robots(), "RightGripper", "bar_wheel")});
   efTask->reset();
   comTask->reset();
 }
 
 void MCEgressController::resetBasePose()
 {
-  mc_rbdyn::Robot& polaris = robots().robot(1);
-  //Reset freeflyer, compute its position frow wheel and re-set it
+  mc_rbdyn::Robot & polaris = robots().robot(1);
+  // Reset freeflyer, compute its position frow wheel and re-set it
   robot().mbc().q[0] = {1., 0., 0., 0., 0., 0., 0.};
   rbd::forwardKinematics(robot().mb(), robot().mbc());
   rbd::forwardVelocity(robot().mb(), robot().mbc());
 
-  //unsigned int steer_i = polaris.bodyIndexByName("steering_wheel");
-  //sva::PTransformd X_0_w = polaris.mbc().bodyPosW[steer_i];
-  //const auto & gripperSurface = robot().surface("RightGripper");
-  //sva::PTransformd X_0_s = gripperSurface.X_0_s(robot(), robot().mbc());
-  //sva::PTransformd graspOffset(sva::RotX(-M_PI/2), Eigen::Vector3d(0., 0., 0.));
-  //sva::PTransformd X_0_base = X_0_s.inv()*(graspOffset*X_0_w);
-  //sva::PTransformd X_0_base = X_0_s.inv()*X_0_w;
+  // unsigned int steer_i = polaris.bodyIndexByName("steering_wheel");
+  // sva::PTransformd X_0_w = polaris.mbc().bodyPosW[steer_i];
+  // const auto & gripperSurface = robot().surface("RightGripper");
+  // sva::PTransformd X_0_s = gripperSurface.X_0_s(robot(), robot().mbc());
+  // sva::PTransformd graspOffset(sva::RotX(-M_PI/2), Eigen::Vector3d(0., 0., 0.));
+  // sva::PTransformd X_0_base = X_0_s.inv()*(graspOffset*X_0_w);
+  // sva::PTransformd X_0_base = X_0_s.inv()*X_0_w;
   sva::PTransformd X_0_w = polaris.surface("exit_platform").X_0_s(polaris);
   sva::PTransformd X_0_s = robot().surface("LFullSole").X_0_s(robot());
-  sva::PTransformd X_0_base = X_0_s.inv()*X_0_w;
+  sva::PTransformd X_0_base = X_0_s.inv() * X_0_w;
 
   const auto quat = Eigen::Quaterniond(X_0_base.rotation()).inverse();
   const Eigen::Vector3d trans(X_0_base.translation());
-  std::vector<double> baseQ = {quat.w(), quat.x(), quat.y(), quat.z(),
-                               trans.x(), trans.y(), trans.z()};
+  std::vector<double> baseQ = {quat.w(), quat.x(), quat.y(), quat.z(), trans.x(), trans.y(), trans.z()};
 
   robot().mbc().q[0] = baseQ;
   rbd::forwardKinematics(robot().mb(), robot().mbc());
@@ -127,7 +122,7 @@ bool MCEgressController::move_ef(const Eigen::Vector3d & v, const Eigen::Matrix3
 {
   sva::PTransformd cur_pos = efTask->get_ef_pose();
   sva::PTransformd dtr(m, v);
-  efTask->set_ef_pose(dtr*cur_pos);
+  efTask->set_ef_pose(dtr * cur_pos);
   return true;
 }
 
@@ -185,4 +180,4 @@ std::vector<std::string> MCEgressController::supported_robots() const
   return {"hrp2_drc"};
 }
 
-}
+} // namespace mc_control

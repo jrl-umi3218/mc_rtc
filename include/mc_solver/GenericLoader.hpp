@@ -8,17 +8,15 @@ namespace mc_solver
 {
 
 template<typename Derived, typename T>
-typename GenericLoader<Derived, T>::T_ptr
-  GenericLoader<Derived, T>::load(mc_solver::QPSolver & solver,
-                                  const std::string & file)
+typename GenericLoader<Derived, T>::T_ptr GenericLoader<Derived, T>::load(mc_solver::QPSolver & solver,
+                                                                          const std::string & file)
 {
   return load(solver, mc_rtc::Configuration(file));
 }
 
 template<typename Derived, typename T>
-typename GenericLoader<Derived, T>::T_ptr
-  GenericLoader<Derived, T>::load(mc_solver::QPSolver & solver,
-                                  const mc_rtc::Configuration & config)
+typename GenericLoader<Derived, T>::T_ptr GenericLoader<Derived, T>::load(mc_solver::QPSolver & solver,
+                                                                          const mc_rtc::Configuration & config)
 {
   static auto & fns = get_fns();
   if(config.has("type"))
@@ -34,21 +32,15 @@ typename GenericLoader<Derived, T>::T_ptr
 }
 
 template<typename Derived, typename T>
-template<typename U,
-  typename std::enable_if<(!std::is_same<U, T>::value) &&
-                          std::is_base_of<T, U>::value, int>::type>
-std::shared_ptr<U> GenericLoader<Derived, T>::load(mc_solver::QPSolver & solver,
-                                                   const std::string & file)
+template<typename U, typename std::enable_if<(!std::is_same<U, T>::value) && std::is_base_of<T, U>::value, int>::type>
+std::shared_ptr<U> GenericLoader<Derived, T>::load(mc_solver::QPSolver & solver, const std::string & file)
 {
   return cast<U>(load(solver, file));
 }
 
 template<typename Derived, typename T>
-template<typename U,
-  typename std::enable_if<(!std::is_same<U, T>::value) &&
-                          std::is_base_of<T, U>::value, int>::type>
-std::shared_ptr<U> GenericLoader<Derived, T>::load(mc_solver::QPSolver & solver,
-                                                   const mc_rtc::Configuration & config)
+template<typename U, typename std::enable_if<(!std::is_same<U, T>::value) && std::is_base_of<T, U>::value, int>::type>
+std::shared_ptr<U> GenericLoader<Derived, T>::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
   return cast<U>(load(solver, config));
 }
@@ -72,8 +64,7 @@ std::shared_ptr<U> GenericLoader<Derived, T>::cast(const GenericLoader<Derived, 
 }
 
 template<typename Derived, typename T>
-bool GenericLoader<Derived, T>::register_load_function(const std::string & type,
-                                                       load_fun fn)
+bool GenericLoader<Derived, T>::register_load_function(const std::string & type, load_fun fn)
 {
   static auto & fns = get_fns();
   if(fns.count(type) == 0)
@@ -85,4 +76,4 @@ bool GenericLoader<Derived, T>::register_load_function(const std::string & type,
   return false;
 }
 
-}
+} // namespace mc_solver

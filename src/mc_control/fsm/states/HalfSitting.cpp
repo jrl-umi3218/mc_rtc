@@ -1,6 +1,5 @@
-#include <mc_control/fsm/states/HalfSitting.h>
-
 #include <mc_control/fsm/Controller.h>
+#include <mc_control/fsm/states/HalfSitting.h>
 
 namespace mc_control
 {
@@ -8,7 +7,7 @@ namespace mc_control
 namespace fsm
 {
 
-void HalfSittingState::configure(const mc_rtc::Configuration &config)
+void HalfSittingState::configure(const mc_rtc::Configuration & config)
 {
   has_stiffness_ = config.has("stiffness");
   if(has_stiffness_)
@@ -42,7 +41,7 @@ void HalfSittingState::start(Controller & ctl)
   }
 }
 
-bool HalfSittingState::run(Controller& ctl)
+bool HalfSittingState::run(Controller & ctl)
 {
   auto postureTask = ctl.getPostureTask(ctl.robot().name());
   if(postureTask->eval().norm() < eval_threshold_)

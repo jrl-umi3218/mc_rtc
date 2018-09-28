@@ -9,4 +9,4 @@ ConstraintSetLoader::storage_t & ConstraintSetLoader::storage()
   return storage_;
 }
 
-}
+} // namespace mc_solver

@@ -9,8 +9,7 @@ namespace gui
 {
 
 template<typename GetT>
-DataElement<GetT>::DataElement(const std::string & name, GetT get_fn)
-: Element(name), get_fn_(get_fn)
+DataElement<GetT>::DataElement(const std::string & name, GetT get_fn) : Element(name), get_fn_(get_fn)
 {
   name_ = name;
 }
@@ -22,8 +21,8 @@ void DataElement<GetT>::addData(mc_rtc::Configuration & data)
 }
 
 template<typename ElementT, typename Callback>
-template<typename ... Args>
-CallbackElement<ElementT, Callback>::CallbackElement(const std::string & name, Callback cb, Args && ... args)
+template<typename... Args>
+CallbackElement<ElementT, Callback>::CallbackElement(const std::string & name, Callback cb, Args &&... args)
 : ElementT(name, std::forward<Args>(args)...), cb_(cb)
 {
 }
@@ -43,29 +42,27 @@ bool VoidCallbackElement<ElementT, Callback>::handleRequest(const mc_rtc::Config
 }
 
 template<typename GetT>
-LabelImpl<GetT>::LabelImpl(const std::string & name, GetT get_fn)
-: DataElement<GetT>(name, get_fn)
+LabelImpl<GetT>::LabelImpl(const std::string & name, GetT get_fn) : DataElement<GetT>(name, get_fn)
 {
 }
 
 template<typename GetT>
-ArrayLabelImpl<GetT>::ArrayLabelImpl(const std::string & name,
-                                     const std::vector<std::string> & labels,
-                                     GetT get_fn)
-: LabelImpl<GetT>(name, get_fn),
-  labels_(labels)
+ArrayLabelImpl<GetT>::ArrayLabelImpl(const std::string & name, const std::vector<std::string> & labels, GetT get_fn)
+: LabelImpl<GetT>(name, get_fn), labels_(labels)
 {
 }
 
 template<typename GetT>
 void ArrayLabelImpl<GetT>::addGUI(mc_rtc::Configuration & gui)
 {
-  if(labels_.size()) { gui.add("labels", labels_); }
+  if(labels_.size())
+  {
+    gui.add("labels", labels_);
+  }
 }
 
 template<typename GetT, typename Callback>
-CheckboxImpl<GetT, Callback>::CheckboxImpl(const std::string & name,
-                                           GetT get_fn, Callback cb)
+CheckboxImpl<GetT, Callback>::CheckboxImpl(const std::string & name, GetT get_fn, Callback cb)
 : VoidCallbackElement<DataElement<GetT>, Callback>(name, cb, get_fn)
 {
 }
@@ -86,7 +83,8 @@ void NumberSliderImpl<GetT, SetT>::addGUI(mc_rtc::Configuration & gui)
 template<typename GetT, typename SetT>
 ArrayInputImpl<GetT, SetT>::ArrayInputImpl(const std::string & name,
                                            const std::vector<std::string> & labels,
-                                           GetT get_fn, SetT set_fn)
+                                           GetT get_fn,
+                                           SetT set_fn)
 : ArrayInputImpl(name, get_fn, set_fn)
 {
   labels_ = labels;
@@ -95,15 +93,18 @@ ArrayInputImpl<GetT, SetT>::ArrayInputImpl(const std::string & name,
 template<typename GetT, typename SetT>
 void ArrayInputImpl<GetT, SetT>::addGUI(mc_rtc::Configuration & out)
 {
-  if(labels_.size()) { out.add("labels", labels_); }
+  if(labels_.size())
+  {
+    out.add("labels", labels_);
+  }
 }
 
 template<typename GetT, typename SetT>
 ComboInputImpl<GetT, SetT>::ComboInputImpl(const std::string & name,
                                            const std::vector<std::string> & values,
-                                           GetT get_fn, SetT set_fn)
-: CommonInputImpl<GetT, SetT>(name, get_fn, set_fn),
-  values_(values)
+                                           GetT get_fn,
+                                           SetT set_fn)
+: CommonInputImpl<GetT, SetT>(name, get_fn, set_fn), values_(values)
 {
 }
 
@@ -126,8 +127,7 @@ Point3DTrajectoryImpl<GetT>::Point3DTrajectoryImpl(const std::string & name, Get
 }
 
 template<typename GetT>
-PoseTrajectoryImpl<GetT>::PoseTrajectoryImpl(const std::string & name, GetT get_fn)
-: DataElement<GetT>(name, get_fn)
+PoseTrajectoryImpl<GetT>::PoseTrajectoryImpl(const std::string & name, GetT get_fn) : DataElement<GetT>(name, get_fn)
 {
 }
 
@@ -144,13 +144,16 @@ void PolygonImpl<GetT>::addGUI(mc_rtc::Configuration & gui)
 }
 
 template<typename GetForce, typename GetSurface>
-ForceImpl<GetForce, GetSurface>::ForceImpl(const std::string & name, const ForceConfig & config, GetForce get_force_fn, GetSurface get_surface_fn)
+ForceImpl<GetForce, GetSurface>::ForceImpl(const std::string & name,
+                                           const ForceConfig & config,
+                                           GetForce get_force_fn,
+                                           GetSurface get_surface_fn)
 : Element(name), config_(config), get_force_fn_(get_force_fn), get_surface_fn_(get_surface_fn)
 {
 }
 
 template<typename GetForce, typename GetSurface>
-void ForceImpl<GetForce, GetSurface>::addData(mc_rtc::Configuration& data)
+void ForceImpl<GetForce, GetSurface>::addData(mc_rtc::Configuration & data)
 {
   data.add("force", get_force_fn_());
   data.add("surface", get_surface_fn_());
@@ -163,13 +166,16 @@ void ForceImpl<GetForce, GetSurface>::addGUI(mc_rtc::Configuration & gui)
 }
 
 template<typename GetStart, typename GetEnd>
-ArrowImpl<GetStart, GetEnd>::ArrowImpl(const std::string & name, const ArrowConfig & config, GetStart get_start_fn, GetEnd get_end_fn)
+ArrowImpl<GetStart, GetEnd>::ArrowImpl(const std::string & name,
+                                       const ArrowConfig & config,
+                                       GetStart get_start_fn,
+                                       GetEnd get_end_fn)
 : Element(name), config_(config), get_start_fn_(get_start_fn), get_end_fn_(get_end_fn)
 {
 }
 
 template<typename GetStart, typename GetEnd>
-void ArrowImpl<GetStart, GetEnd>::addData(mc_rtc::Configuration& data)
+void ArrowImpl<GetStart, GetEnd>::addData(mc_rtc::Configuration & data)
 {
   data.add("start", get_start_fn_());
   data.add("end", get_end_fn_());
@@ -195,10 +201,10 @@ void TransformROImpl<GetT>::addGUI(mc_rtc::Configuration & gui)
 
 template<typename GetT, typename SetT>
 DataComboInputImpl<GetT, SetT>::DataComboInputImpl(const std::string & name,
-                                           const std::vector<std::string> & values,
-                                           GetT get_fn, SetT set_fn)
-: CommonInputImpl<GetT, SetT>(name, get_fn, set_fn),
-  data_ref_(values)
+                                                   const std::vector<std::string> & values,
+                                                   GetT get_fn,
+                                                   SetT set_fn)
+: CommonInputImpl<GetT, SetT>(name, get_fn, set_fn), data_ref_(values)
 {
 }
 
@@ -209,11 +215,8 @@ void DataComboInputImpl<GetT, SetT>::addGUI(mc_rtc::Configuration & out)
 }
 
 template<typename Callback>
-SchemaImpl<Callback>::SchemaImpl(const std::string & name,
-                                 const std::string & schema,
-                                 Callback cb)
-: CallbackElement<Element,Callback>(name, cb),
-  schema_(schema)
+SchemaImpl<Callback>::SchemaImpl(const std::string & name, const std::string & schema, Callback cb)
+: CallbackElement<Element, Callback>(name, cb), schema_(schema)
 {
 }
 
@@ -224,8 +227,7 @@ void SchemaImpl<Callback>::addGUI(mc_rtc::Configuration & gui)
 }
 
 template<typename Derived>
-FormInput<Derived>::FormInput(const std::string & name, bool required)
-: name_(name), required_(required)
+FormInput<Derived>::FormInput(const std::string & name, bool required) : name_(name), required_(required)
 {
 }
 
@@ -233,31 +235,34 @@ template<typename Derived>
 void FormInput<Derived>::addGUI(mc_rtc::Configuration & gui)
 {
   auto el = gui.add(name_);
-  if(required_) { el.add("required", required_); }
+  if(required_)
+  {
+    el.add("required", required_);
+  }
   el.add("type", static_cast<int>(Derived::type));
-  static_cast<Derived*>(this)->addGUI_(el);
+  static_cast<Derived *>(this)->addGUI_(el);
 }
 
 namespace
 {
 
-template<typename ... Args>
+template<typename... Args>
 void FormImpl_MakeGUIData(mc_rtc::Configuration &)
 {
 }
 
-template<typename Arg0, typename ... Args>
-void FormImpl_MakeGUIData(mc_rtc::Configuration & gui, Arg0 && arg, Args && ... args)
+template<typename Arg0, typename... Args>
+void FormImpl_MakeGUIData(mc_rtc::Configuration & gui, Arg0 && arg, Args &&... args)
 {
   arg.addGUI(gui);
   FormImpl_MakeGUIData(gui, std::forward<Args>(args)...);
 }
 
-}
+} // namespace
 
 template<typename Callback>
-template<typename ... Args>
-FormImpl<Callback>::FormImpl(const std::string & name, Callback cb, Args && ... args)
+template<typename... Args>
+FormImpl<Callback>::FormImpl(const std::string & name, Callback cb, Args &&... args)
 : CallbackElement<Element, Callback>(name, cb)
 {
   FormImpl_MakeGUIData(gui_, std::forward<Args>(args)...);
@@ -279,15 +284,10 @@ void FormImpl<Callback>::addElement(T && arg)
 template<typename T>
 void StateBuilder::addElement(const std::vector<std::string> & category, T element)
 {
-  static_assert(std::is_base_of<Element, T>::value,
-                "You can only add elements that derive from the Element class");
+  static_assert(std::is_base_of<Element, T>::value, "You can only add elements that derive from the Element class");
   Category & cat = getCategory(category);
-  auto it = std::find_if(cat.elements.begin(),
-                         cat.elements.end(),
-                         [&element](const ElementStore & el)
-                         {
-                         return el().name() == element.name();
-                         });
+  auto it = std::find_if(cat.elements.begin(), cat.elements.end(),
+                         [&element](const ElementStore & el) { return el().name() == element.name(); });
   if(it != cat.elements.end())
   {
     LOG_ERROR("An element named " << element.name() << " already exists in " << cat2str(category))
@@ -297,35 +297,28 @@ void StateBuilder::addElement(const std::vector<std::string> & category, T eleme
   cat.elements.emplace_back(element);
 }
 
-template<typename T, typename ... Args>
-void StateBuilder::addElement(const std::vector<std::string> & category,
-                              T element, Args ... args)
+template<typename T, typename... Args>
+void StateBuilder::addElement(const std::vector<std::string> & category, T element, Args... args)
 {
   addElement(category, element);
   addElement(category, args...);
 }
 
-
 template<typename T>
 StateBuilder::ElementStore::ElementStore(T self)
 {
   element = [self]() mutable -> Element & { return self; };
-  addData = [](Element & el, mc_rtc::Configuration & out)
-            {
-              static_cast<T&>(el).addData(out);
-            };
-  addGUI = [](Element & el, mc_rtc::Configuration & out)
-           {
-             out.add("type", static_cast<int>(T::type));
-             static_cast<T&>(el).addGUI(out);
-           };
-  handleRequest = [](Element & el, const mc_rtc::Configuration & data)
-                  {
-                    T el_ = static_cast<T&>(el);
-                    return el_.handleRequest(data);
-                  };
+  addData = [](Element & el, mc_rtc::Configuration & out) { static_cast<T &>(el).addData(out); };
+  addGUI = [](Element & el, mc_rtc::Configuration & out) {
+    out.add("type", static_cast<int>(T::type));
+    static_cast<T &>(el).addGUI(out);
+  };
+  handleRequest = [](Element & el, const mc_rtc::Configuration & data) {
+    T el_ = static_cast<T &>(el);
+    return el_.handleRequest(data);
+  };
 }
 
 } // namespace gui
 
-} // namepsace mc_rtc
+} // namespace mc_rtc

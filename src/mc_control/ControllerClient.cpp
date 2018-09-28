@@ -1,16 +1,14 @@
 #include <mc_control/ControllerClient.h>
-
 #include <mc_rtc/GUIState.h>
 #include <mc_rtc/logging.h>
-
-#include <stdexcept>
-#include <sstream>
 
 #include <nanomsg/nn.h>
 #include <nanomsg/pipeline.h>
 #include <nanomsg/pubsub.h>
 
 #include <chrono>
+#include <sstream>
+#include <stdexcept>
 #include <thread>
 
 namespace
@@ -22,26 +20,23 @@ std::string cat2str(const std::vector<std::string> & cat)
   for(size_t i = 0; i < cat.size(); ++i)
   {
     ret += cat[i];
-    if(i != cat.size() - 1) { ret += "/"; }
+    if(i != cat.size() - 1)
+    {
+      ret += "/";
+    }
   }
   return ret;
 }
 
-}
+} // namespace
 
 namespace mc_control
 {
 
-ControllerClient::ControllerClient(const std::string & sub_conn_uri,
-                                   const std::string & push_conn_uri,
-                                   double timeout)
+ControllerClient::ControllerClient(const std::string & sub_conn_uri, const std::string & push_conn_uri, double timeout)
 : timeout_(timeout)
 {
-  auto init_socket = [](int & socket,
-                        unsigned int proto,
-                        const std::string & uri,
-                        const std::string & name)
-  {
+  auto init_socket = [](int & socket, unsigned int proto, const std::string & uri, const std::string & name) {
     socket = nn_socket(AF_SP, proto);
     if(socket < 0)
     {
@@ -79,46 +74,50 @@ ControllerClient::~ControllerClient()
 
 void ControllerClient::start()
 {
-  sub_th_ = std::thread([this]()
-  {
-  std::vector<char> buff(65536);
-  auto t_last_received = std::chrono::system_clock::now();
-  while(run_)
-  {
-    memset(buff.data(), 0, buff.size()*sizeof(char));
-    auto recv = nn_recv(sub_socket_, buff.data(), buff.size(), NN_DONTWAIT);
-    auto now = std::chrono::system_clock::now();
-    if(recv < 0)
+  sub_th_ = std::thread([this]() {
+    std::vector<char> buff(65536);
+    auto t_last_received = std::chrono::system_clock::now();
+    while(run_)
     {
-      if(timeout_ > 0 && now - t_last_received > std::chrono::duration<double>(timeout_))
+      memset(buff.data(), 0, buff.size() * sizeof(char));
+      auto recv = nn_recv(sub_socket_, buff.data(), buff.size(), NN_DONTWAIT);
+      auto now = std::chrono::system_clock::now();
+      if(recv < 0)
       {
+        if(timeout_ > 0 && now - t_last_received > std::chrono::duration<double>(timeout_))
+        {
+          t_last_received = now;
+          if(run_)
+          {
+            handle_gui_state("{}");
+          }
+        }
+        auto err = nn_errno();
+        if(err != EAGAIN)
+        {
+          LOG_ERROR("ControllerClient failed to receive with errno: " << err)
+        }
+      }
+      else if(recv > 0)
+      {
+        if(recv > static_cast<int>(buff.size()))
+        {
+          LOG_WARNING("Receive buffer was too small to receive the latest state message, will resize for next time")
+          buff.resize(2 * buff.size());
+          continue;
+        }
         t_last_received = now;
-        if(run_) { handle_gui_state("{}"); }
+        if(run_)
+        {
+          handle_gui_state(buff.data());
+        }
       }
-      auto err = nn_errno();
-      if(err != EAGAIN)
-      {
-        LOG_ERROR("ControllerClient failed to receive with errno: " << err)
-      }
+      std::this_thread::sleep_for(std::chrono::microseconds(500));
     }
-    else if(recv > 0)
-    {
-      if(recv > static_cast<int>(buff.size()))
-      {
-        LOG_WARNING("Receive buffer was too small to receive the latest state message, will resize for next time")
-        buff.resize(2*buff.size());
-        continue;
-      }
-      t_last_received = now;
-      if(run_) { handle_gui_state(buff.data()); }
-    }
-    std::this_thread::sleep_for(std::chrono::microseconds(500));
-  }
   });
 }
 
-void ControllerClient::send_request(const ElementId & id,
-                                    const mc_rtc::Configuration & data)
+void ControllerClient::send_request(const ElementId & id, const mc_rtc::Configuration & data)
 {
   mc_rtc::Configuration request;
   request.add("category", id.category);
@@ -177,8 +176,7 @@ void ControllerClient::handle_category(const std::vector<std::string> & parent,
   }
 }
 
-void ControllerClient::handle_widget(const ElementId & id,
-                                     const mc_rtc::Configuration & data)
+void ControllerClient::handle_widget(const ElementId & id, const mc_rtc::Configuration & data)
 {
   auto gui = data("GUI");
   if(!gui.has("type"))
@@ -268,10 +266,10 @@ void ControllerClient::handle_widget(const ElementId & id,
   }
 }
 
-void ControllerClient::default_impl(const std::string & type,
-                                    const ElementId & id)
+void ControllerClient::default_impl(const std::string & type, const ElementId & id)
 {
-  LOG_WARNING("This implementation of ControllerClient does not handle " << type << " GUI needed by " << cat2str(id.category) << "/" << id.name)
+  LOG_WARNING("This implementation of ControllerClient does not handle " << type << " GUI needed by "
+                                                                         << cat2str(id.category) << "/" << id.name)
 }
 
 void ControllerClient::handle_point3d(const ElementId & id,
@@ -292,18 +290,18 @@ void ControllerClient::handle_point3d(const ElementId & id,
 }
 
 void ControllerClient::handle_point3DTrajectory(const ElementId & id,
-                                      const mc_rtc::Configuration & /* gui */,
-                                      const mc_rtc::Configuration & data)
+                                                const mc_rtc::Configuration & /* gui */,
+                                                const mc_rtc::Configuration & data)
 {
-  const std::vector<Eigen::Vector3d>& points = data("data");
+  const std::vector<Eigen::Vector3d> & points = data("data");
   trajectory(id, points);
 }
 
 void ControllerClient::handle_poseTrajectory(const ElementId & id,
-                                      const mc_rtc::Configuration & /* gui */,
-                                      const mc_rtc::Configuration & data)
+                                             const mc_rtc::Configuration & /* gui */,
+                                             const mc_rtc::Configuration & data)
 {
-  const std::vector<sva::PTransformd>& points = data("data");
+  const std::vector<sva::PTransformd> & points = data("data");
   trajectory(id, points);
 }
 
@@ -311,28 +309,28 @@ void ControllerClient::handle_polygon(const ElementId & id,
                                       const mc_rtc::Configuration & gui,
                                       const mc_rtc::Configuration & data)
 {
-  const std::vector<Eigen::Vector3d>& points = data("data");
-  const mc_rtc::gui::Color& color = gui("color");
+  const std::vector<Eigen::Vector3d> & points = data("data");
+  const mc_rtc::gui::Color & color = gui("color");
   polygon(id, points, color);
 }
 
 void ControllerClient::handle_force(const ElementId & id,
-                                           const mc_rtc::Configuration & gui,
-                                           const mc_rtc::Configuration & data)
+                                    const mc_rtc::Configuration & gui,
+                                    const mc_rtc::Configuration & data)
 {
-  const sva::ForceVecd& force_ = data("force");
-  const sva::PTransformd& surface = data("surface");
+  const sva::ForceVecd & force_ = data("force");
+  const sva::PTransformd & surface = data("surface");
   const mc_rtc::gui::ForceConfig & forceConfig = gui("config");
   array_label(id, {"cx", "cy", "cz", "fx", "fy", "fz"}, force_.vector());
   force({id.category, id.name + "_force"}, id, force_, surface, forceConfig);
 }
 
 void ControllerClient::handle_arrow(const ElementId & id,
-                                           const mc_rtc::Configuration & gui,
-                                           const mc_rtc::Configuration & data)
+                                    const mc_rtc::Configuration & gui,
+                                    const mc_rtc::Configuration & data)
 {
-  const Eigen::Vector3d& arrow_start = data("start");
-  const Eigen::Vector3d& arrow_end = data("end");
+  const Eigen::Vector3d & arrow_start = data("start");
+  const Eigen::Vector3d & arrow_end = data("end");
   const mc_rtc::gui::ArrowConfig & arrow_config = gui("config");
   arrow(id, arrow_start, arrow_end, arrow_config);
 }
@@ -376,8 +374,7 @@ void ControllerClient::handle_transform(const ElementId & id,
   transform({id.category, id.name + "_transform"}, id, ro, pos);
 }
 
-void ControllerClient::handle_form(const ElementId & id,
-                                   const mc_rtc::Configuration & gui)
+void ControllerClient::handle_form(const ElementId & id, const mc_rtc::Configuration & gui)
 {
   form(id);
   for(const auto & k : gui.keys())
@@ -415,4 +412,4 @@ void ControllerClient::handle_form(const ElementId & id,
   }
 }
 
-}
+} // namespace mc_control

@@ -1,8 +1,7 @@
 #pragma once
 
-#include <mc_control/mc_controller.h>
-
 #include <mc_control/api.h>
+#include <mc_control/mc_controller.h>
 
 namespace mc_control
 {
@@ -16,6 +15,6 @@ public:
   bool run() override;
 };
 
-}
+} // namespace mc_control
 
 SIMPLE_CONTROLLER_CONSTRUCTOR("Posture", mc_control::MCPostureController)

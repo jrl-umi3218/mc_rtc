@@ -1,22 +1,20 @@
 #pragma once
 
+#include <mc_control/ContactSensor.h>
+#include <mc_control/api.h>
 #include <mc_control/mc_controller.h>
-
-#include <mc_rbdyn/stance.h>
 #include <mc_rbdyn/polygon_utils.h>
-#include <mc_tasks/StabilityTask.h>
-#include <mc_tasks/AddRemoveContactTask.h>
-#include <mc_tasks/MoveContactTask.h>
-#include <mc_tasks/ComplianceTask.h>
+#include <mc_rbdyn/stance.h>
 #include <mc_solver/BoundedSpeedConstr.h>
 #include <mc_solver/CoMIncPlaneConstr.h>
+#include <mc_tasks/AddRemoveContactTask.h>
+#include <mc_tasks/ComplianceTask.h>
+#include <mc_tasks/MoveContactTask.h>
+#include <mc_tasks/StabilityTask.h>
+
 #include <Tasks/QPConstr.h>
 
-#include <mc_control/ContactSensor.h>
-
 #include <boost/timer/timer.hpp>
-
-#include <mc_control/api.h>
 
 namespace mc_control
 {
@@ -26,10 +24,15 @@ struct MC_CONTROL_DLLAPI ActiGripper
 public:
   ActiGripper();
 
-  ActiGripper(const std::string& wrenchName, double actiForce, double stopForce,
-              double actiTorque, double stopTorque,
-              tasks::qp::ContactId contactId, sva::PTransformd & X_0_s,
-              double maxDist, double maxRot,
+  ActiGripper(const std::string & wrenchName,
+              double actiForce,
+              double stopForce,
+              double actiTorque,
+              double stopTorque,
+              tasks::qp::ContactId contactId,
+              sva::PTransformd & X_0_s,
+              double maxDist,
+              double maxRot,
               const std::shared_ptr<tasks::qp::PositionTask> & positionTask,
               const std::shared_ptr<tasks::qp::SetPointTask> & positionTaskSp,
               const std::shared_ptr<tasks::qp::OrientationTask> & orientationTask,
@@ -43,13 +46,12 @@ public:
    * or deactivating. If the error is too big, an emergency stop should be
    * triggered on the FSM side.
    * @return bool: true if update is successful, false if the error is too big.
-  **/
- bool update(const mc_rbdyn::Robot & robot,
-      tasks::qp::ContactConstr* contactConstr);
+   **/
+  bool update(const mc_rbdyn::Robot & robot, tasks::qp::ContactConstr * contactConstr);
 
 protected:
- bool updateForce(double forceNorm, tasks::qp::ContactConstr* contactConstr);
- bool updateTorque(double torqueNorm, tasks::qp::ContactConstr* contactConstr);
+  bool updateForce(double forceNorm, tasks::qp::ContactConstr * contactConstr);
+  bool updateTorque(double torqueNorm, tasks::qp::ContactConstr * contactConstr);
 
 public:
   std::string wrenchName;
@@ -76,10 +78,13 @@ public:
 struct MC_CONTROL_DLLAPI CollisionPair
 {
 public:
-  CollisionPair(const mc_rbdyn::Robot & r1, const mc_rbdyn::Robot & r2,
-                const std::string & r1bodyName, const std::string & r2bodyName);
+  CollisionPair(const mc_rbdyn::Robot & r1,
+                const mc_rbdyn::Robot & r2,
+                const std::string & r1bodyName,
+                const std::string & r2bodyName);
 
   double distance(const mc_rbdyn::Robot & r1, const mc_rbdyn::Robot & r2);
+
 public:
   unsigned int r1BodyIndex;
   unsigned int r2BodyIndex;
@@ -88,13 +93,15 @@ public:
   sva::PTransformd X_b1_h1;
   sva::PTransformd X_b2_h2;
   std::shared_ptr<sch::CD_Pair> pair;
+
 private:
   void setTransform(const mc_rbdyn::Robot & r1, const mc_rbdyn::Robot & r2);
 };
 
 struct SeqAction;
 
-MC_CONTROL_DLLAPI std::vector<mc_rbdyn::Collision> confToColl(const std::vector<mc_rbdyn::StanceConfig::BodiesCollisionConf> & conf);
+MC_CONTROL_DLLAPI std::vector<mc_rbdyn::Collision> confToColl(
+    const std::vector<mc_rbdyn::StanceConfig::BodiesCollisionConf> & conf);
 
 struct MC_CONTROL_DLLAPI MCSeqTimeLog
 {
@@ -106,6 +113,7 @@ public:
   void report();
 
   void report(const std::string & file);
+
 private:
   void report(std::ostream & os);
   double timeStep;
@@ -132,8 +140,8 @@ struct MC_CONTROL_DLLAPI MCSeqController : public MCController
 public:
   MCSeqController(std::shared_ptr<mc_rbdyn::RobotModule> robot_module, double dt, const MCSeqControllerConfig & config);
 
-  MCSeqController(const MCSeqController&) = delete;
-  MCSeqController& operator=(const MCSeqController&) = delete;
+  MCSeqController(const MCSeqController &) = delete;
+  MCSeqController & operator=(const MCSeqController &) = delete;
 
   virtual bool run() override;
 
@@ -163,20 +171,23 @@ public:
 
   mc_rbdyn::StanceAction & targetAction();
 
-  std::vector<std::string> bodiesFromContacts(const mc_rbdyn::Robot & robot, const std::vector<mc_rbdyn::Contact> & robotContacts);
+  std::vector<std::string> bodiesFromContacts(const mc_rbdyn::Robot & robot,
+                                              const std::vector<mc_rbdyn::Contact> & robotContacts);
 
-  std::vector< std::pair<std::string, std::string> > collisionsContactFilterList(const mc_rbdyn::Contact & contact, const mc_rbdyn::StanceConfig & conf);
+  std::vector<std::pair<std::string, std::string>> collisionsContactFilterList(const mc_rbdyn::Contact & contact,
+                                                                               const mc_rbdyn::StanceConfig & conf);
 
   bool setCollisionsContactFilter(const mc_rbdyn::Contact & contact, const mc_rbdyn::StanceConfig & conf);
 
   bool inContact(const std::string & sname);
 
-  void removeMetaTask(mc_tasks::MetaTask* mt);
+  void removeMetaTask(mc_tasks::MetaTask * mt);
   /* Services */
   virtual bool play_next_stance() override;
   virtual bool set_joint_pos(const std::string & jname, const double & pos) override;
   /* Configuration */
   void loadStanceConfigs(const std::string & file);
+
 public:
   /* For logging */
   uint64_t nrIter;
@@ -192,11 +203,11 @@ public:
   std::vector<mc_rbdyn::StanceConfig> configs;
   std::vector<mc_rbdyn::PolygonInterpolator> interpolators;
   double interpol_percent;
-  std::vector< std::shared_ptr<mc_rbdyn::StanceAction> > actions;
-  std::vector< std::shared_ptr<SeqAction> > seq_actions;
-  std::vector<mc_tasks::MetaTask*> metaTasks;
+  std::vector<std::shared_ptr<mc_rbdyn::StanceAction>> actions;
+  std::vector<std::shared_ptr<SeqAction>> seq_actions;
+  std::vector<mc_tasks::MetaTask *> metaTasks;
   std::map<std::string, ActiGripper> actiGrippers;
-  std::vector< std::shared_ptr<CollisionPair> > distPairs;
+  std::vector<std::shared_ptr<CollisionPair>> distPairs;
   Eigen::Vector3d contactPos;
   mc_rbdyn::Contact * currentContact;
   mc_rbdyn::Contact * targetContact;
@@ -242,7 +253,7 @@ public:
   std::shared_ptr<tasks::qp::PIDTask> adjustPositionTaskPid;
   std::shared_ptr<tasks::qp::PIDTask> adjustOrientationTaskPid;
   std::shared_ptr<mc_tasks::ComplianceTask> complianceTask;
-  std::vector< std::shared_ptr<tasks::qp::GripperTorqueTask> > gripperTorqueTasks;
+  std::vector<std::shared_ptr<tasks::qp::GripperTorqueTask>> gripperTorqueTasks;
   mc_solver::CoMIncPlaneConstr comIncPlaneConstr;
   bool startPolygonInterpolator = false;
   double max_perc;
@@ -252,7 +263,9 @@ public:
   boost::timer::cpu_timer timer;
 };
 
-MC_CONTROL_DLLAPI std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * curAction, mc_rbdyn::StanceAction * targetAction, mc_rbdyn::StanceAction * targetTargetAction);
+MC_CONTROL_DLLAPI std::shared_ptr<SeqAction> seqActionFromStanceAction(mc_rbdyn::StanceAction * curAction,
+                                                                       mc_rbdyn::StanceAction * targetAction,
+                                                                       mc_rbdyn::StanceAction * targetTargetAction);
 
 struct SeqStep;
 
@@ -265,16 +278,18 @@ public:
     ContactMove = 2,
     GripperMove = 3
   };
+
 public:
   SeqAction();
 
   virtual bool execute(MCSeqController & controller);
 
   SeqActionType type() const;
+
 public:
   SeqActionType _type;
   unsigned int currentStep;
-  std::vector< std::shared_ptr<SeqStep> > steps;
+  std::vector<std::shared_ptr<SeqStep>> steps;
 };
 
 struct MC_CONTROL_DLLAPI SeqStep
@@ -283,11 +298,14 @@ public:
   virtual bool eval(MCSeqController & controller);
 };
 
-}
+} // namespace mc_control
 
 extern "C"
 {
   MC_CONTROL_DLLAPI void MC_RTC_CONTROLLER(std::vector<std::string> & names);
   MC_CONTROL_DLLAPI void destroy(mc_control::MCController * ptr);
-  MC_CONTROL_DLLAPI mc_control::MCController * create(const std::string &, const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const mc_control::Configuration & conf);
+  MC_CONTROL_DLLAPI mc_control::MCController * create(const std::string &,
+                                                      const std::shared_ptr<mc_rbdyn::RobotModule> & robot,
+                                                      const double & dt,
+                                                      const mc_control::Configuration & conf);
 }

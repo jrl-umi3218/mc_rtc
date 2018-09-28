@@ -40,11 +40,12 @@ struct AddRemoveContactState : State
 
   void configure(const mc_rtc::Configuration & config) override;
 
-  void start(Controller&) override;
+  void start(Controller &) override;
 
-  bool run(Controller&) override;
+  bool run(Controller &) override;
 
-  void teardown(Controller&) override;
+  void teardown(Controller &) override;
+
 protected:
   std::unique_ptr<AddRemoveContactStateImpl> impl_;
 };

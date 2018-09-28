@@ -1,16 +1,16 @@
 #include "MCSeqPublisher.h"
 
-#include <geos/geom/Polygon.h>
-#include <geos/geom/LinearRing.h>
 #include <geos/geom/CoordinateSequence.h>
+#include <geos/geom/LinearRing.h>
+#include <geos/geom/Polygon.h>
 
 #ifdef MC_RTC_HAS_ROS
-#include <ros/ros.h>
-#include <geometry_msgs/PolygonStamped.h>
-#include <geometry_msgs/TransformStamped.h>
-#include <tf2_ros/transform_broadcaster.h>
-#include <tf2_ros/transform_listener.h>
-#include <visualization_msgs/Marker.h>
+#  include <geometry_msgs/PolygonStamped.h>
+#  include <geometry_msgs/TransformStamped.h>
+#  include <ros/ros.h>
+#  include <tf2_ros/transform_broadcaster.h>
+#  include <tf2_ros/transform_listener.h>
+#  include <visualization_msgs/Marker.h>
 #endif
 
 #include <array>
@@ -20,12 +20,9 @@ namespace mc_control
 {
 
 MCSeqPublisher::MCSeqPublisher(const mc_rbdyn::Robots & robots)
-: robots(robots),
-  nh(mc_rtc::ROSBridge::get_node_handle()),
-  pub_thread(std::bind(&MCSeqPublisher::publication_thread, this)),
-  com(Eigen::Vector3d::Zero()), poly(),
-  X_waypoint(sva::PTransformd::Identity()), contacts(),
-  slam_contact(""), X_slam_contact(sva::PTransformd::Identity()),
+: robots(robots), nh(mc_rtc::ROSBridge::get_node_handle()),
+  pub_thread(std::bind(&MCSeqPublisher::publication_thread, this)), com(Eigen::Vector3d::Zero()), poly(),
+  X_waypoint(sva::PTransformd::Identity()), contacts(), slam_contact(""), X_slam_contact(sva::PTransformd::Identity()),
   running(true)
 {
 }
@@ -111,7 +108,7 @@ inline visualization_msgs::Marker com_marker(const Eigen::Vector3d & com, const 
   msg.pose.orientation.z = 0.0;
   msg.pose.position.x = com.x();
   msg.pose.position.y = com.y();
-  msg.pose.position.z = 0;//com.z();
+  msg.pose.position.z = 0; // com.z();
   msg.scale.x = 0.05;
   msg.scale.y = 0.05;
   msg.scale.z = 0.05;
@@ -123,7 +120,8 @@ inline visualization_msgs::Marker com_marker(const Eigen::Vector3d & com, const 
   return msg;
 }
 
-inline geometry_msgs::PolygonStamped poly_msg(const std::vector<Eigen::Vector3d> & poly, const std_msgs::Header & header)
+inline geometry_msgs::PolygonStamped poly_msg(const std::vector<Eigen::Vector3d> & poly,
+                                              const std_msgs::Header & header)
 {
   geometry_msgs::PolygonStamped msg;
   msg.header = header;
@@ -139,7 +137,10 @@ inline geometry_msgs::PolygonStamped poly_msg(const std::vector<Eigen::Vector3d>
   return msg;
 }
 
-inline geometry_msgs::TransformStamped PT2TF(const sva::PTransformd & X, const ros::Time & tm, const std::string & from, const std::string & to)
+inline geometry_msgs::TransformStamped PT2TF(const sva::PTransformd & X,
+                                             const ros::Time & tm,
+                                             const std::string & from,
+                                             const std::string & to)
 {
   geometry_msgs::TransformStamped msg;
   msg.header.stamp = tm;
@@ -163,18 +164,17 @@ inline geometry_msgs::TransformStamped PT2TF(const sva::PTransformd & X, const r
 
 inline void TF2PT(const geometry_msgs::TransformStamped & tf, sva::PTransformd & X)
 {
-  X = sva::PTransformd(Eigen::Quaterniond(
-                                          tf.transform.rotation.w,
-                                          tf.transform.rotation.x,
-                                          tf.transform.rotation.y,
-                                          tf.transform.rotation.z).inverse(),
-                       Eigen::Vector3d(
-                                       tf.transform.translation.x,
-                                       tf.transform.translation.y,
-                                       tf.transform.translation.z));
+  X = sva::PTransformd(
+      Eigen::Quaterniond(tf.transform.rotation.w, tf.transform.rotation.x, tf.transform.rotation.y,
+                         tf.transform.rotation.z)
+          .inverse(),
+      Eigen::Vector3d(tf.transform.translation.x, tf.transform.translation.y, tf.transform.translation.z));
 }
 
-inline visualization_msgs::Marker marker(const std::string & name, const sva::PTransformd & X, const std_msgs::Header & header, std::array<float, 4> rgba)
+inline visualization_msgs::Marker marker(const std::string & name,
+                                         const sva::PTransformd & X,
+                                         const std_msgs::Header & header,
+                                         std::array<float, 4> rgba)
 {
   visualization_msgs::Marker msg;
   msg.header = header;
@@ -202,7 +202,10 @@ inline visualization_msgs::Marker marker(const std::string & name, const sva::PT
   return msg;
 }
 
-inline visualization_msgs::Marker contact_marker(const mc_rbdyn::Robots & robots, const mc_rbdyn::Contact & contact, const std_msgs::Header & header, std::vector<geometry_msgs::TransformStamped> & tfs)
+inline visualization_msgs::Marker contact_marker(const mc_rbdyn::Robots & robots,
+                                                 const mc_rbdyn::Contact & contact,
+                                                 const std_msgs::Header & header,
+                                                 std::vector<geometry_msgs::TransformStamped> & tfs)
 {
   auto X_0_c = contact.X_0_r1s(robots);
   std::array<float, 4> rgba = {0.0, 1.0, 0.0, 1.0};
@@ -267,9 +270,7 @@ void MCSeqPublisher::publication_thread()
   }
 }
 #else
-void MCSeqPublisher::publication_thread()
-{
-}
+void MCSeqPublisher::publication_thread() {}
 #endif
 
-}
+} // namespace mc_control

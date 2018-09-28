@@ -26,7 +26,7 @@ namespace mc_tasks
  * [4] https://gite.lirmm.fr/multi-contact/mc_rtc/issues/34
  *
  */
-struct MC_TASKS_DLLAPI AdmittanceTask: SurfaceTransformTask
+struct MC_TASKS_DLLAPI AdmittanceTask : SurfaceTransformTask
 {
 public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -49,9 +49,10 @@ public:
    *
    */
   AdmittanceTask(const std::string & robotSurface,
-      const mc_rbdyn::Robots & robots,
-      unsigned robotIndex,
-      double stiffness = 5.0, double weight = 1000.0);
+                 const mc_rbdyn::Robots & robots,
+                 unsigned robotIndex,
+                 double stiffness = 5.0,
+                 double weight = 1000.0);
 
   /*! \brief Reset the task
    *
@@ -139,7 +140,7 @@ public:
    * \param wrench Target wrench in the surface frame
    *
    */
-  void targetWrench(const sva::ForceVecd& wrench)
+  void targetWrench(const sva::ForceVecd & wrench)
   {
     targetWrench_ = wrench;
   }
@@ -163,7 +164,7 @@ public:
   /*! \brief Set the maximum translation velocity of the task */
   void maxLinearVel(const Eigen::Vector3d & maxLinearVel)
   {
-    if ((maxLinearVel.array() <= 0.).any())
+    if((maxLinearVel.array() <= 0.).any())
     {
       LOG_ERROR("discarding maxLinearVel update as it is not positive");
       return;
@@ -174,7 +175,7 @@ public:
   /*! \brief Set the maximum angular velocity of the task */
   void maxAngularVel(const Eigen::Vector3d & maxAngularVel)
   {
-    if ((maxAngularVel.array() <= 0.).any())
+    if((maxAngularVel.array() <= 0.).any())
     {
       LOG_ERROR("discarding maxAngularVel update as it is not positive");
       return;
@@ -208,8 +209,8 @@ public:
   }
 
 protected:
-  Eigen::Vector3d maxAngularVel_ = {0.1, 0.1, 0.1};  // [rad] / [s]
-  Eigen::Vector3d maxLinearVel_ = {0.1, 0.1, 0.1};  // [m] / [s]
+  Eigen::Vector3d maxAngularVel_ = {0.1, 0.1, 0.1}; // [rad] / [s]
+  Eigen::Vector3d maxLinearVel_ = {0.1, 0.1, 0.1}; // [m] / [s]
   const mc_rbdyn::Robot & robot_;
   const mc_rbdyn::Surface & surface_;
   std::map<char, bool> isClampingAngularVel_ = {{'x', false}, {'y', false}, {'z', false}};
@@ -228,8 +229,9 @@ protected:
    *   some values are NaN, this direction is ignored
    *
    */
-  std::function<bool(const mc_tasks::MetaTask & task, std::string&)>
-    buildCompletionCriteria(double dt, const mc_rtc::Configuration & config) const override;
+  std::function<bool(const mc_tasks::MetaTask & task, std::string &)> buildCompletionCriteria(
+      double dt,
+      const mc_rtc::Configuration & config) const override;
 
   void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
   void addToLogger(mc_rtc::Logger & logger) override;
@@ -255,4 +257,4 @@ protected:
   using SurfaceTransformTask::target;
 };
 
-}
+} // namespace mc_tasks

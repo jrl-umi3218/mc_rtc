@@ -63,16 +63,28 @@ struct MC_CONTROL_FSM_DLLAPI Executor
   void teardown(Controller & ctl);
 
   /** Trigger an interruption */
-  inline void interrupt() { interrupt_triggered_ = true; }
+  inline void interrupt()
+  {
+    interrupt_triggered_ = true;
+  }
 
   /** Returns true if the state is active */
-  inline bool running() const { return state_ != nullptr; }
+  inline bool running() const
+  {
+    return state_ != nullptr;
+  }
 
   /** Returns true if the executor is ready for next transition */
-  inline bool ready() const { return ready_; }
+  inline bool ready() const
+  {
+    return ready_;
+  }
 
   /** Returns true if the executor reached the end of transition map */
-  inline bool complete() const { return complete_; }
+  inline bool complete() const
+  {
+    return complete_;
+  }
 
   /** Resume execution to a given state
    *
@@ -87,19 +99,29 @@ struct MC_CONTROL_FSM_DLLAPI Executor
   bool next();
 
   /** Returns the current state's name */
-  const std::string & state() const { return curr_state_; }
+  const std::string & state() const
+  {
+    return curr_state_;
+  }
 
   /** Returns the latest state's output */
-  const std::string & output() const { return state_output_; }
+  const std::string & output() const
+  {
+    return state_output_;
+  }
 
   /** Returns the next state's name */
-  const std::string & next_state() const { return next_state_; }
+  const std::string & next_state() const
+  {
+    return next_state_;
+  }
 
   /** Pass message to current state (read-only) */
   bool read_msg(std::string & msg);
 
   /** Pass message to current state (read-write) */
   bool read_write_msg(std::string & msg, std::string & out);
+
 private:
   /** Configuration passed at construction, can hold specific states' configuration */
   mc_rtc::Configuration config_;
@@ -130,6 +152,7 @@ private:
   bool complete_ = false;
   /** Name of the next state */
   std::string next_state_ = "";
+
 private:
   /** Complete execution */
   bool complete(Controller & ctl, bool keep_state);

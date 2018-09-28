@@ -1,10 +1,9 @@
 #include "mc_text_controller.h"
 
 #include <mc_rbdyn/configuration_io.h>
+#include <mc_rtc/logging.h>
 #include <mc_solver/ConstraintSetLoader.h>
 #include <mc_tasks/MetaTaskLoader.h>
-
-#include <mc_rtc/logging.h>
 
 namespace mc_control
 {
@@ -51,4 +50,4 @@ void MCTextController::reset(const mc_control::ControllerResetData & data)
   solver().setContacts(contacts);
 }
 
-}
+} // namespace mc_control
