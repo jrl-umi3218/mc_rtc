@@ -422,6 +422,11 @@ const sva::PTransformd & Robot::bodyPosW(const std::string & name) const
   return bodyPosW()[bodyIndexByName(name)];
 }
 
+sva::PTransformd Robot::X_b1_b2(const std::string & b1, const std::string & b2) const
+{
+  return bodyPosW()[bodyIndexByName(b2)] * bodyPosW()[bodyIndexByName(b1)].inv();
+}
+
 const sva::MotionVecd & Robot::bodyVelW(const std::string & name) const
 {
   return bodyVelW()[bodyIndexByName(name)];
@@ -575,6 +580,26 @@ const std::vector<double> & Robot::encoderValues() const
 void Robot::encoderValues(const std::vector<double> & encoderValues)
 {
   encoderValues_ = encoderValues;
+}
+
+const std::vector<double> & Robot::encoderVelocities() const
+{
+  return encoderVelocities_;
+}
+
+void Robot::encoderVelocities(const std::vector<double> & encoderVelocities)
+{
+  encoderVelocities_ = encoderVelocities;
+}
+
+const std::vector<double> & Robot::flexibilityValues() const
+{
+  return flexibilityValues_;
+}
+
+void Robot::flexibilityValues(const std::vector<double> & flexibilityValues)
+{
+  flexibilityValues_ = flexibilityValues;
 }
 
 const std::vector<double> & Robot::jointTorques() const

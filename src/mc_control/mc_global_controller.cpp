@@ -231,6 +231,16 @@ void MCGlobalController::setEncoderValues(const std::vector<double> & eValues)
   robot().encoderValues(eValues);
 }
 
+void MCGlobalController::setEncoderVelocities(const std::vector<double> & eVelocities)
+{
+  robot().encoderVelocities(eVelocities);
+}
+
+void MCGlobalController::setFlexibilityValues(const std::vector<double> & fValues)
+{
+  robot().flexibilityValues(fValues);
+}
+
 void MCGlobalController::setJointTorques(const std::vector<double> & tValues)
 {
   robot().jointTorques(tValues);
@@ -327,31 +337,61 @@ bool MCGlobalController::run()
     }
   }
   const auto & real_q = robot().encoderValues();
+  const auto & real_alpha = robot().encoderVelocities();
   if(config.update_real && real_q.size() > 0)
   {
     auto & real_robot = real_robots->robot();
-    // Update free flyer
-
-    if(!config.update_real_from_sensors)
-    {
-      real_robot.mbc().q[0] = robot().mbc().q[0];
-    }
-    else
-    {
-      const auto & qt = robot().bodySensor().orientation().inverse();
-      const auto & t = robot().bodySensor().position();
-      real_robot.mbc().q[0] = {qt.w(), qt.x(), qt.y(), qt.z(), t.x(), t.y(), t.z()};
-    }
-    // Set all joints to encoder values
+    // Set all joint values and velocities from encoders
     int i = 0;
     for(const auto & ref_joint : config.main_robot_module->ref_joint_order())
     {
       if(real_robot.hasJoint(ref_joint))
       {
         const auto joint_index = real_robot.mb().jointIndexByName(ref_joint);
-        real_robot.mbc().q[joint_index][0] = real_q[i];
+        if(!real_q.empty())
+        {
+          real_robot.mbc().q[joint_index][0] = real_q[i];
+        }
+        if(!real_alpha.empty())
+        {
+          real_robot.mbc().alpha[joint_index][0] = real_alpha[i];
+        }
       }
       i++;
+    }
+    rbd::forwardKinematics(real_robot.mb(), real_robot.mbc());
+    rbd::forwardVelocity(real_robot.mb(), real_robot.mbc());
+
+    // Update free flyer from control robot
+    if(!config.update_real_from_sensors)
+    {
+      real_robot.mbc().q[0] = robot().mbc().q[0];
+    }
+    else
+    { // Update free flyer from body sensor
+      // Note that if the body to which the sensor is attached is not the
+      // floating base, the kinematic transformation between that body and the
+      // floating base is used to obtain the floating base pose.
+      // It is assumed here that the floating base sensor and encoders are
+      // synchronized.
+      const auto & sensor = robot().bodySensor(config.update_real_sensor_name);
+      const auto & fb = robot().mb().body(0).name();
+      sva::PTransformd X_0_s(sensor.orientation(), sensor.position());
+      const auto & X_s_b = sensor.X_b_s().inv();
+      sva::PTransformd X_b_fb = real_robots->robot().X_b1_b2(sensor.parentBody(), fb);
+      sva::PTransformd X_s_fb = X_b_fb * X_s_b;
+      sva::PTransformd X_0_fb = X_s_fb * X_0_s;
+
+      Eigen::Matrix3d R_0_fb = X_0_fb.rotation().inverse();
+      Eigen::Quaterniond qt(R_0_fb);
+      qt.normalize();
+      Eigen::Vector3d t(X_0_fb.translation());
+      real_robot.mbc().q[0] = {qt.w(), qt.x(), qt.y(), qt.z(), t.x(), t.y(), t.z()};
+
+      sva::MotionVecd sensorVel(sensor.angularVelocity(), sensor.linearVelocity());
+      sva::MotionVecd fbVel = X_s_fb * sensorVel;
+      real_robot.mbc().alpha[0] = {fbVel.angular().x(), fbVel.angular().y(), fbVel.angular().z(),
+                                   fbVel.linear().x(),  fbVel.linear().y(),  fbVel.linear().z()};
     }
     rbd::forwardKinematics(real_robot.mb(), real_robot.mbc());
     rbd::forwardVelocity(real_robot.mb(), real_robot.mbc());
@@ -706,6 +746,29 @@ void MCGlobalController::setup_log()
   });
   controller->logger().addLogEntry(
       "accIn", [controller]() -> const Eigen::Vector3d & { return controller->robot().bodySensor().acceleration(); });
+
+  // Log all other body sensors
+  const auto & bodySensors = controller->robot().bodySensors();
+  for(int i = 1; i < bodySensors.size(); ++i)
+  {
+    const auto & name = bodySensors[i].name();
+    controller->logger().addLogEntry(name + "_pIn", [controller, name]() -> const Eigen::Vector3d & {
+      return controller->robot().bodySensor(name).position();
+    });
+    controller->logger().addLogEntry(name + "_rpyIn", [controller, name]() -> const Eigen::Quaterniond & {
+      return controller->robot().bodySensor(name).orientation();
+    });
+    controller->logger().addLogEntry(name + "_velIn", [controller, name]() -> const Eigen::Vector3d & {
+      return controller->robot().bodySensor(name).linearVelocity();
+    });
+    controller->logger().addLogEntry(name + "_rateIn", [controller, name]() -> const Eigen::Vector3d & {
+      return controller->robot().bodySensor(name).angularVelocity();
+    });
+    controller->logger().addLogEntry(name + "_accIn", [controller, name]() -> const Eigen::Vector3d & {
+      return controller->robot().bodySensor(name).acceleration();
+    });
+  }
+
   // Performance measures
   controller->logger().addLogEntry("perf_GlobalRun", [this]() { return global_run_dt.count(); });
   controller->logger().addLogEntry("perf_ControllerRun", [this]() { return controller_run_dt.count(); });

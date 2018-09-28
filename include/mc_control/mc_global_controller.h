@@ -160,6 +160,20 @@ public:
    */
   void setEncoderValues(const std::vector<double> & eValues);
 
+  /*! \brief A robot's actual joints' velocities
+   *
+   * \note It is expected that these values follow the order given by
+   * ref_joint_order
+   */
+  void setEncoderVelocities(const std::vector<double> & eVelocities);
+
+  /*! \brief A robot's flexible joints' values provided by an estimator
+   *
+   * \note It is expected that these values follow the order given by
+   * robot.flexibility()
+   */
+  void setFlexibilityValues(const std::vector<double> & fValues);
+
   /*! \brief A robot's actual joints' torques provided by sensors
    *
    * \note It is expected that these values follow the order given by
@@ -460,6 +474,7 @@ private:
 
     bool update_real = true;
     bool update_real_from_sensors = false;
+    std::string update_real_sensor_name;
 
     bool publish_control_state = true;
     bool publish_env_state = true;

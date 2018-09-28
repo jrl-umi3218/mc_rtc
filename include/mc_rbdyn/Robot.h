@@ -56,7 +56,7 @@ public:
 
   /** Return the first BodySensor in the robot
    *
-   * If the robot does not have body sensors, it returns a defautl
+   * If the robot does not have body sensors, it returns a default
    * (invalid) one
    *
    */
@@ -180,9 +180,17 @@ public:
 
   /** Access the position of body \p name in world coordinates
    *
-   * \throws If the body doest not exist within the robot
+   * \throws If the body does not exist within the robot
    */
   const sva::PTransformd & bodyPosW(const std::string & name) const;
+
+  /** Relative transformation X_b1_b2 from body b1 to body b2
+   *
+   * \param b1 name of first body
+   * \param b2 name of second body
+   * \throws If b1 or b2 does not exist within the robot
+   */
+  sva::PTransformd X_b1_b2(const std::string & b1, const std::string & b2) const;
 
   /** Access the velocity of body \p name in world coordinates
    *
@@ -324,6 +332,18 @@ public:
 
   /** Set the encoder values */
   void encoderValues(const std::vector<double> & encoderValues);
+
+  /** Return the encoder velocities */
+  const std::vector<double> & encoderVelocities() const;
+
+  /** Set the encoder velocities */
+  void encoderVelocities(const std::vector<double> & encoderVelocities);
+
+  /** Return the flexibilities values */
+  const std::vector<double> & flexibilityValues() const;
+
+  /** Set the flexibilities values */
+  void flexibilityValues(const std::vector<double> & flexibilityValues);
 
   /** Return the joint torques from sensors */
   const std::vector<double> & jointTorques() const;
@@ -524,8 +544,12 @@ private:
   std::vector<std::string> refJointOrder_;
   /** Encoder values provided by the low-level controller */
   std::vector<double> encoderValues_;
+  /** Encoder velocities provided by the low-level controller or estimated from
+   * encoder values **/
+  std::vector<double> encoderVelocities_;
   /** Joint torques provided by the low-level controller */
   std::vector<double> jointTorques_;
+  std::vector<double> flexibilityValues_;
   /** Hold all body sensors */
   BodySensorVector bodySensors_;
   /** Correspondance between body sensor's name and body sensor index*/
