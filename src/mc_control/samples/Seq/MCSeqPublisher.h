@@ -1,19 +1,16 @@
 #pragma once
 
+#include <mc_control/api.h>
+#include <mc_rbdyn/Contact.h>
+#include <mc_rbdyn/Robots.h>
 #include <mc_rtc/config.h>
 #include <mc_rtc/ros.h>
 
-#include <mc_rbdyn/Robots.h>
-#include <mc_rbdyn/Contact.h>
-
-#include <Eigen/Geometry>
-
 #include <geos/geom/Geometry.h>
 
+#include <Eigen/Geometry>
 #include <queue>
 #include <thread>
-
-#include <mc_control/api.h>
 
 namespace mc_control
 {
@@ -35,6 +32,7 @@ public:
 
   /* Return the slam position of the contact being added */
   sva::PTransformd get_slam_contact();
+
 private:
   const mc_rbdyn::Robots & robots;
   std::shared_ptr<ros::NodeHandle> nh;
@@ -50,4 +48,4 @@ private:
   void publication_thread();
 };
 
-}
+} // namespace mc_control

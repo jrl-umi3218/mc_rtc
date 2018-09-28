@@ -1,12 +1,10 @@
 #pragma once
 
-#include <mc_control/mc_controller.h>
-
-#include <mc_tasks/CoMTask.h>
-#include <mc_tasks/OrientationTask.h>
-#include <mc_tasks/EndEffectorTask.h>
-
 #include <mc_control/api.h>
+#include <mc_control/mc_controller.h>
+#include <mc_tasks/CoMTask.h>
+#include <mc_tasks/EndEffectorTask.h>
+#include <mc_tasks/OrientationTask.h>
 
 namespace mc_control
 {
@@ -28,6 +26,7 @@ public:
     CORRECTBODY,
     STANDUP
   };
+
 public:
   MCEgressController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt);
 
@@ -44,17 +43,19 @@ public:
   virtual bool play_next_stance() override;
 
   virtual std::vector<std::string> supported_robots() const override;
+
 public:
   mc_solver::CollisionsConstraint collsConstraint;
   std::shared_ptr<mc_tasks::CoMTask> comTask;
   std::shared_ptr<mc_tasks::OrientationTask> oriTask;
   std::shared_ptr<mc_tasks::EndEffectorTask> efTask;
+
 private:
   void resetBasePose();
   EgressPhase phase;
   std::shared_ptr<EgressPhaseExecution> phaseExec;
 };
 
-}
+} // namespace mc_control
 
 SIMPLE_CONTROLLER_CONSTRUCTOR("Egress", mc_control::MCEgressController)

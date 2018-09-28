@@ -1,18 +1,14 @@
 #include <mc_control/ForceContactSensor.h>
-
 #include <mc_rbdyn/Surface.h>
 
 namespace mc_control
 {
 
-Threshold::Threshold(double t, unsigned int i)
-: thresh(t), iter(i)
-{
-}
+Threshold::Threshold(double t, unsigned int i) : thresh(t), iter(i) {}
 
 ForceSensor::ForceSensor(const mc_rbdyn::Robot & robot, const std::string & sensorName, const Threshold & thresh)
-: activated(Unactivated), thresh(thresh), activatedIter(0), direction(Unactivated),
-  lastValues(WindowSize), offset(0), name(sensorName), surfacesName(0)
+: activated(Unactivated), thresh(thresh), activatedIter(0), direction(Unactivated), lastValues(WindowSize), offset(0),
+  name(sensorName), surfacesName(0)
 {
   std::string parent = robot.forceSensor(sensorName).parentBody();
   for(const auto & p : robot.surfaces())
@@ -87,7 +83,7 @@ std::vector<std::string> ForceContactSensor::update(MCController & ctl)
 {
   std::vector<std::string> res;
 
-  for(auto& sensor: sensors)
+  for(auto & sensor : sensors)
   {
     if(ctl.robot().hasForceSensor(sensor.name))
     {
@@ -114,4 +110,4 @@ std::vector<std::string> ForceContactSensor::update(MCController & ctl)
   return res;
 }
 
-}
+} // namespace mc_control

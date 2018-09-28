@@ -3,24 +3,25 @@
 
 /* This struct holds the configuration for stances in a seq plan */
 
-#include <Eigen/Core>
+#include <mc_rbdyn/api.h>
+
 #include <SpaceVecAlg/SpaceVecAlg>
+
+#include <Eigen/Core>
 #include <functional>
 #include <map>
 #include <vector>
 
-#include <mc_rbdyn/api.h>
-
 namespace mc_rbdyn
 {
 
-typedef std::function<Eigen::Vector3d (const sva::PTransformd&, const sva::PTransformd&, const Eigen::Vector3d&)> WaypointFunction;
+typedef std::function<Eigen::Vector3d(const sva::PTransformd &, const sva::PTransformd &, const Eigen::Vector3d &)>
+    WaypointFunction;
 
 MC_RBDYN_DLLAPI WaypointFunction
-percentWaypoint(double x, double y, double z, double nOff, double xOff = 0, double yOff = 0, double zOff = 0);
+    percentWaypoint(double x, double y, double z, double nOff, double xOff = 0, double yOff = 0, double zOff = 0);
 
-MC_RBDYN_DLLAPI WaypointFunction
-hardCodedPos(double x, double y, double z);
+MC_RBDYN_DLLAPI WaypointFunction hardCodedPos(double x, double y, double z);
 
 struct MC_RBDYN_DLLAPI StanceConfig
 {
@@ -111,10 +112,13 @@ public:
   {
     std::vector<BodiesCollisionConf> autoc;
     std::vector<BodiesCollisionConf> robotEnv;
-    std::map< std::pair<std::string, std::string>, std::vector< std::pair<std::string, std::string> > > robotEnvContactFilter;
+    std::map<std::pair<std::string, std::string>, std::vector<std::pair<std::string, std::string>>>
+        robotEnvContactFilter;
   };
+
 public:
   StanceConfig();
+
 public:
   CoMTask comTask;
   CoMObj comObj;
@@ -124,6 +128,6 @@ public:
   Collisions collisions;
 };
 
-}
+} // namespace mc_rbdyn
 
 #endif

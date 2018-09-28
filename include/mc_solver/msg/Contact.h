@@ -1,10 +1,10 @@
 #pragma once
 
+#include <SpaceVecAlg/SpaceVecAlg>
+
 #include <cstdint>
 #include <string>
 #include <vector>
-
-#include <SpaceVecAlg/SpaceVecAlg>
 
 namespace mc_solver
 {
@@ -23,4 +23,4 @@ struct ContactMsg
   double mu;
 };
 
-}
+} // namespace mc_solver

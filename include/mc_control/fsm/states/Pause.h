@@ -20,11 +20,12 @@ struct MC_CONTROL_FSM_STATE_DLLAPI PauseState : State
 {
   void configure(const mc_rtc::Configuration & config) override;
 
-  void start(Controller&) override;
+  void start(Controller &) override;
 
-  bool run(Controller&) override;
+  bool run(Controller &) override;
 
-  void teardown(Controller&) override {}
+  void teardown(Controller &) override {}
+
 protected:
   double duration_ = 0.0;
   unsigned int tick_;

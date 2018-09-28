@@ -26,15 +26,16 @@ struct MC_CONTROL_FSM_STATE_DLLAPI MetaState : State
 {
   void configure(const mc_rtc::Configuration & config) override;
 
-  void start(Controller&) override;
+  void start(Controller &) override;
 
-  bool run(Controller&) override;
+  bool run(Controller &) override;
 
-  void stop(Controller&) override;
+  void stop(Controller &) override;
 
-  void teardown(Controller&) override;
+  void teardown(Controller &) override;
 
   bool read_msg(std::string & msg) override;
+
 protected:
   mc_rtc::Configuration config_;
   Executor executor_;

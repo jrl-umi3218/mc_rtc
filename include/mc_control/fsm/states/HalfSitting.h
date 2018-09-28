@@ -22,12 +22,13 @@ struct MC_CONTROL_FSM_STATE_DLLAPI HalfSittingState : State
 {
   void configure(const mc_rtc::Configuration & config) override;
 
-  void start(Controller&) override;
+  void start(Controller &) override;
 
-  bool run(Controller&) override;
+  bool run(Controller &) override;
 
-  void teardown(Controller&) override {}
- protected:
+  void teardown(Controller &) override {}
+
+protected:
   bool has_stiffness_;
   double stiffness_;
   double eval_threshold_;

@@ -2,9 +2,9 @@
 
 #include <mc_rtc/logging.h>
 
-#include <fstream>
-
 #include <boost/filesystem.hpp>
+
+#include <fstream>
 namespace bfs = boost::filesystem;
 
 namespace mc_robots
@@ -50,4 +50,4 @@ EnvRobotModule::EnvRobotModule(const std::string & env_path, const std::string &
   }
 }
 
-}
+} // namespace mc_robots

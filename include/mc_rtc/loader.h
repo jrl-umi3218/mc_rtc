@@ -7,16 +7,15 @@
  * functionnalities in a convenient fashion for usage in both mc_robots and
  * mc_control The assumption is that at least the CLASS_NAME symbol is exported
  * in the libraries that should be loaded through this interface
-*/
+ */
 
 #include <mc_rtc/loader_api.h>
 #include <mc_rtc/logging.h>
 
 #include <boost/noncopyable.hpp>
 
-#include <ltdl.h>
-
 #include <functional>
+#include <ltdl.h>
 #include <map>
 #include <memory>
 #include <string>
@@ -25,40 +24,48 @@
 namespace mc_rtc
 {
 
-template<typename T> struct ObjectLoader;
+template<typename T>
+struct ObjectLoader;
 
 /*! \class LoaderException
  * \brief Exception thrown by loader interface
-*/
+ */
 struct MC_RTC_LOADER_DLLAPI LoaderException : public std::exception
 {
 public:
   LoaderException(const std::string & what) : what_(what) {}
 
-  virtual const char * what() const noexcept override { return what_.c_str(); }
+  virtual const char * what() const noexcept override
+  {
+    return what_.c_str();
+  }
+
 private:
   std::string what_;
 };
 
 /*! \class Loader
  * \brief General wrapper for ltdl functionnalities
-*/
+ */
 struct MC_RTC_LOADER_DLLAPI Loader
 {
-template<typename T> friend struct ObjectLoader;
-typedef std::map<std::string, lt_dlhandle> handle_map_t;
-typedef std::function<void(const std::string&, lt_dlhandle)> callback_t;
+  template<typename T>
+  friend struct ObjectLoader;
+  typedef std::map<std::string, lt_dlhandle> handle_map_t;
+  typedef std::function<void(const std::string &, lt_dlhandle)> callback_t;
+
 public:
   static callback_t default_cb;
+
 protected:
   /*! \brief Initialize ltdl
    * \throws LoaderException if ltdl fails to init
-  */
+   */
   static bool init();
 
   /*! \brief Close ltdl. Does nothing until the last call
    * \throws LoaderException on failure
-  */
+   */
   static bool close();
 
   /*! \brief Provide libraries handles for the libraries in paths
@@ -76,18 +83,20 @@ protected:
    * \param cb User-provided callback when a new class is discovered
    *
    * \anchor loader_load_libraries_doc
-  */
+   */
   static void load_libraries(const std::string & class_name,
                              const std::vector<std::string> & paths,
-                             handle_map_t & out, bool verbose,
+                             handle_map_t & out,
+                             bool verbose,
                              callback_t cb);
+
 private:
   static unsigned int init_count_;
 };
 
 /*! \class ObjectLoader
  * \brief ltdl wrapper for factory-like classes
-*/
+ */
 template<typename T>
 struct ObjectLoader : public boost::noncopyable
 {
@@ -106,21 +115,25 @@ public:
    *
    * \param cb Function called when a new object is loaded
    *
-  */
-  ObjectLoader(const std::string & class_name, const std::vector<std::string> & paths, bool enable_sandbox, bool verbose, Loader::callback_t cb = Loader::default_cb);
+   */
+  ObjectLoader(const std::string & class_name,
+               const std::vector<std::string> & paths,
+               bool enable_sandbox,
+               bool verbose,
+               Loader::callback_t cb = Loader::default_cb);
 
   /** Destructor */
   ~ObjectLoader();
 
   /** Returns true if the loader has the name object
    * \param name Name to be tested
-  */
+   */
   bool has_object(const std::string & name) const;
 
   /** Returns true if the loader has the name object and the symbol symbol in this library
    * \param name Name to be tested
    * \param symbol Symbol to be tested
-  */
+   */
   bool has_symbol(const std::string & name, const std::string & symbol) const;
 
   /** Returns the list of available objects
@@ -131,9 +144,8 @@ public:
   /** Load libraries from the paths provided
    * \param paths directories searched for libraries
    * \param verbose If true, output some warning information
-  */
-  void load_libraries(const std::vector<std::string> & paths,
-                      Loader::callback_t cb = Loader::default_cb);
+   */
+  void load_libraries(const std::vector<std::string> & paths, Loader::callback_t cb = Loader::default_cb);
 
   /** Remove all loaded libraries */
   void clear();
@@ -158,9 +170,10 @@ public:
    * \param Args argument required by the constructor
    * \return a shared pointer properly equipped to destroy the pointer
    * \throws LoaderException throw if the name does not exist or if symbol resolution fails
-  */
+   */
   template<typename... Args>
-  std::shared_ptr<T> create_object(const std::string & name, Args & ... args);
+  std::shared_ptr<T> create_object(const std::string & name, Args &... args);
+
 protected:
   std::string class_name;
   bool enable_sandbox;
@@ -171,7 +184,7 @@ protected:
     ObjectDeleter() {}
     ObjectDeleter(void * sym);
     void operator()(T * ptr);
-    std::function<void(T*)> delete_fn_;
+    std::function<void(T *)> delete_fn_;
   };
   std::map<std::string, ObjectDeleter> deleters_;
 };

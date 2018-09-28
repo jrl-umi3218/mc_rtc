@@ -31,6 +31,6 @@ void PythonState::stop(Controller & ctl)
   stop_(ctl);
 }
 
-}
+} // namespace fsm
 
-}
+} // namespace mc_control

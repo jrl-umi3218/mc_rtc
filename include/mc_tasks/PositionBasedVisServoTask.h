@@ -3,7 +3,7 @@
 
 namespace mc_tasks
 {
-/*! \brief Servo an end-effector depending on position error 
+/*! \brief Servo an end-effector depending on position error
  *
  * This task is thin wrapper around the appropriate tasks in Tasks.
  *
@@ -28,10 +28,13 @@ public:
    * \param weight Task weight
    *
    */
-  PositionBasedVisServoTask(const std::string& bodyName,
-    const sva::PTransformd& X_t_s, const sva::PTransformd& X_b_s,
-    const mc_rbdyn::Robots & robots, unsigned int robotIndex,
-    double stiffness = 2.0, double weight = 500);
+  PositionBasedVisServoTask(const std::string & bodyName,
+                            const sva::PTransformd & X_t_s,
+                            const sva::PTransformd & X_b_s,
+                            const mc_rbdyn::Robots & robots,
+                            unsigned int robotIndex,
+                            double stiffness = 2.0,
+                            double weight = 500);
 
   /*! \brief Constructor (from mc_rbdyn::Surface information)
    *
@@ -49,9 +52,11 @@ public:
    *
    */
   PositionBasedVisServoTask(const std::string & surfaceName,
-    const sva::PTransformd& X_t_s,
-    const mc_rbdyn::Robots & robots, unsigned int robotIndex,
-    double stiffness = 2.0, double weight = 500);
+                            const sva::PTransformd & X_t_s,
+                            const mc_rbdyn::Robots & robots,
+                            unsigned int robotIndex,
+                            double stiffness = 2.0,
+                            double weight = 500);
 
   /*! \brief Reset the task
    *
@@ -64,7 +69,7 @@ public:
    * \param sva::PTransformd Desired configuration in camera frame
    *
    */
-  void error(const sva::PTransformd& X_t_s);
+  void error(const sva::PTransformd & X_t_s);
 
   void addToLogger(mc_rtc::Logger & logger) override;
   void removeFromLogger(mc_rtc::Logger & logger) override;
@@ -72,4 +77,4 @@ public:
 private:
   sva::PTransformd X_t_s_;
 };
-}
+} // namespace mc_tasks

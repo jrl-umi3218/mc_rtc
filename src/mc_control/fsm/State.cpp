@@ -1,6 +1,5 @@
-#include <mc_control/fsm/State.h>
-
 #include <mc_control/fsm/Controller.h>
+#include <mc_control/fsm/State.h>
 
 namespace mc_control
 {
@@ -84,6 +83,6 @@ void State::teardown_(Controller & ctl)
   teardown(ctl);
 }
 
-}  // namespace fsm
+} // namespace fsm
 
-}  // namespace mc_control
+} // namespace mc_control

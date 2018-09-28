@@ -18,6 +18,14 @@ before_script:
   - git submodule update --quiet --init --recursive
   - ./.jrl-ci/dependencies/eigen-3.2
 
+clang-format:
+  stage: clang-format
+  before_script: []
+  script:
+    - ./.clang-format-check.sh
+  tags:
+    - clang-format
+
 build_debian:
   stage: build
   script:
@@ -256,5 +264,6 @@ build_with_script:
 #    - GCC
 
 stages:
+  - clang-format
   - build
 #  - package

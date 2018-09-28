@@ -1,7 +1,6 @@
 #include <mc_control/fsm/Controller.h>
-
-#include <mc_rbdyn/configuration_io.h>
 #include <mc_rbdyn/RobotLoader.h>
+#include <mc_rbdyn/configuration_io.h>
 #include <mc_solver/ConstraintSetLoader.h>
 #include <mc_tasks/MetaTaskLoader.h>
 
@@ -10,14 +9,11 @@ namespace mc_rtc
 
 mc_control::fsm::Contact ConfigurationLoader<mc_control::fsm::Contact>::load(const mc_rtc::Configuration & config)
 {
-  return mc_control::fsm::Contact(config("r1"),
-                                  config("r2"),
-                                  config("r1Surface"),
-                                  config("r2Surface"),
+  return mc_control::fsm::Contact(config("r1"), config("r2"), config("r1Surface"), config("r2Surface"),
                                   config("dof", Eigen::Vector6d::Ones().eval()));
 }
 
-}
+} // namespace mc_rtc
 
 namespace mc_control
 {
@@ -27,19 +23,12 @@ namespace fsm
 
 Contact Contact::from_mc_rbdyn(const Controller & ctl, const mc_rbdyn::Contact & contact)
 {
-  return {
-    ctl.robots().robot(contact.r1Index()).name(),
-    ctl.robots().robot(contact.r2Index()).name(),
-    contact.r1Surface()->name(),
-    contact.r2Surface()->name()
-  };
+  return {ctl.robots().robot(contact.r1Index()).name(), ctl.robots().robot(contact.r2Index()).name(),
+          contact.r1Surface()->name(), contact.r2Surface()->name()};
 }
 
-Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
-                       double dt,
-                       const mc_rtc::Configuration & config)
-: MCController(std::vector<mc_rbdyn::RobotModulePtr>{rm}, dt),
-  config_(config),
+Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, const mc_rtc::Configuration & config)
+: MCController(std::vector<mc_rbdyn::RobotModulePtr>{rm}, dt), config_(config),
   factory_(config("StatesLibraries", std::vector<std::string>{}),
            config("StatesFiles", std::vector<std::string>{}),
            config("VerboseStateFactory", false))
@@ -73,7 +62,8 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
       }
       else
       {
-        LOG_ERROR_AND_THROW(std::runtime_error, "FSM controller only handles robot modules that require two parameters at most")
+        LOG_ERROR_AND_THROW(std::runtime_error,
+                            "FSM controller only handles robot modules that require two parameters at most")
       }
       if(!rm)
       {
@@ -152,7 +142,8 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
           robot_config("ff")("weight", weight);
         }
       }
-      auto t = std::make_shared<mc_tasks::EndEffectorTask>(robot.mb().body(0).name(), solver().robots(), robot.robotIndex(), stiffness, weight);
+      auto t = std::make_shared<mc_tasks::EndEffectorTask>(robot.mb().body(0).name(), solver().robots(),
+                                                           robot.robotIndex(), stiffness, weight);
       t->name("FSM_" + t->name());
       ff_tasks_[robot.name()] = t;
     }
@@ -168,7 +159,7 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
   /** Setup executor */
   executor_.init(*this, config_);
   /** Setup initial pos */
-  config("init_pos",  init_pos_);
+  config("init_pos", init_pos_);
   if(init_pos_.size())
   {
     if(init_pos_.size() != 7)
@@ -184,41 +175,37 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm,
     auto all_states = factory_.states();
     std::sort(all_states.begin(), all_states.end());
     gui_->data().add("states", all_states);
-    gui_->addElement({"FSM"},
-                     mc_rtc::gui::Label("Contacts",
-                                        [this]()
-                                        {
-                                        std::string ret;
-                                        for(const auto & c : contacts_)
-                                        {
-                                          std::stringstream ss;
-                                          ss << c.r1Surface << "/" << c.r2Surface << " | " << c.dof.transpose() << "\n";
-                                          ret += ss.str();
-                                        }
-                                        if(ret.size()) { ret.pop_back(); }
-                                        return ret;
-                                        })
-    );
+    gui_->addElement({"FSM"}, mc_rtc::gui::Label("Contacts", [this]() {
+                       std::string ret;
+                       for(const auto & c : contacts_)
+                       {
+                         std::stringstream ss;
+                         ss << c.r1Surface << "/" << c.r2Surface << " | " << c.dof.transpose() << "\n";
+                         ret += ss.str();
+                       }
+                       if(ret.size())
+                       {
+                         ret.pop_back();
+                       }
+                       return ret;
+                     }));
     gui_->removeElement({"Contacts", "Add"}, "Add contact");
     gui_->addElement(
-      {"Contacts", "Add"},
-      mc_rtc::gui::Form("Add contact",
-                        [this](const mc_rtc::Configuration & data)
-                        {
-                          std::string r0 = data("R0");
-                          std::string r1 = data("R1");
-                          std::string r0Surface = data("R0 surface");
-                          std::string r1Surface = data("R1 surface");
-                          Eigen::Vector6d dof = data("dof", Eigen::Vector6d::Ones().eval());
-                          addContact({r0, r1, r0Surface, r1Surface, dof});
-                        },
-                        mc_rtc::gui::FormDataComboInput{"R0", true, {"robots"}},
-                        mc_rtc::gui::FormDataComboInput{"R0 surface", true, {"surfaces", "$R0"}},
-                        mc_rtc::gui::FormDataComboInput{"R1", true, {"robots"}},
-                        mc_rtc::gui::FormDataComboInput{"R1 surface", true, {"surfaces", "$R1"}},
-                        mc_rtc::gui::FormArrayInput<Eigen::Vector6d>{"dof", false, Eigen::Vector6d::Ones()}
-      )
-    );
+        {"Contacts", "Add"},
+        mc_rtc::gui::Form("Add contact",
+                          [this](const mc_rtc::Configuration & data) {
+                            std::string r0 = data("R0");
+                            std::string r1 = data("R1");
+                            std::string r0Surface = data("R0 surface");
+                            std::string r1Surface = data("R1 surface");
+                            Eigen::Vector6d dof = data("dof", Eigen::Vector6d::Ones().eval());
+                            addContact({r0, r1, r0Surface, r1Surface, dof});
+                          },
+                          mc_rtc::gui::FormDataComboInput{"R0", true, {"robots"}},
+                          mc_rtc::gui::FormDataComboInput{"R0 surface", true, {"surfaces", "$R0"}},
+                          mc_rtc::gui::FormDataComboInput{"R1", true, {"robots"}},
+                          mc_rtc::gui::FormDataComboInput{"R1 surface", true, {"surfaces", "$R1"}},
+                          mc_rtc::gui::FormArrayInput<Eigen::Vector6d>{"dof", false, Eigen::Vector6d::Ones()}));
   }
 }
 
@@ -235,11 +222,8 @@ bool Controller::run(mc_solver::FeedbackType fType)
     contact_constraint_->contactConstr->resetDofContacts();
     for(const auto & c : contacts_)
     {
-      contacts.emplace_back(robots(),
-                            static_cast<unsigned int>(robots_idx_.at(c.r1)),
-                            static_cast<unsigned int>(robots_idx_.at(c.r2)),
-                            c.r1Surface,
-                            c.r2Surface);
+      contacts.emplace_back(robots(), static_cast<unsigned int>(robots_idx_.at(c.r1)),
+                            static_cast<unsigned int>(robots_idx_.at(c.r2)), c.r1Surface, c.r2Surface);
       auto cId = contacts.back().contactId(robots());
       contact_constraint_->contactConstr->addDofContact(cId, c.dof.asDiagonal());
     }
@@ -249,10 +233,8 @@ bool Controller::run(mc_solver::FeedbackType fType)
       gui_->removeCategory({"Contacts", "Remove"});
       for(const auto & c : contacts_)
       {
-        std::string bName = c.r1 + "::" + c.r1Surface + " & "
-                            + c.r2 + "::" + c.r2Surface;
-        gui_->addElement({"Contacts", "Remove"},
-                         mc_rtc::gui::Button(bName, [this,&c]() { removeContact(c); }));
+        std::string bName = c.r1 + "::" + c.r1Surface + " & " + c.r2 + "::" + c.r2Surface;
+        gui_->addElement({"Contacts", "Remove"}, mc_rtc::gui::Button(bName, [this, &c]() { removeContact(c); }));
       }
     }
     contact_constraint_->contactConstr->updateDofContacts();
@@ -340,8 +322,7 @@ bool Controller::read_msg(std::string & msg)
   return executor_.read_msg(msg) || MCController::read_msg(msg);
 }
 
-bool Controller::read_write_msg(std::string & msg,
-                                   std::string & out)
+bool Controller::read_write_msg(std::string & msg, std::string & out)
 {
   std::string token;
   std::stringstream ss;
@@ -371,17 +352,19 @@ bool Controller::read_write_msg(std::string & msg,
 }
 
 void Controller::addCollisions(const std::string & r1,
-                                  const std::string & r2,
-                                  const std::vector<mc_rbdyn::Collision> & collisions)
+                               const std::string & r2,
+                               const std::vector<mc_rbdyn::Collision> & collisions)
 {
-  if(!collision_constraints_.count({r1,r2}))
+  if(!collision_constraints_.count({r1, r2}))
   {
     if(robots_idx_.count(r1) * robots_idx_.count(r2) == 0)
     {
       LOG_ERROR("Try to add collision for robot " << r1 << " and " << r2 << " which are not involved in this FSM")
       return;
     }
-    collision_constraints_[{r1, r2}] = std::make_shared<mc_solver::CollisionsConstraint>(robots(), static_cast<unsigned int>(robots_idx_[r1]), static_cast<unsigned int>(robots_idx_[r2]), solver().dt());
+    collision_constraints_[{r1, r2}] =
+        std::make_shared<mc_solver::CollisionsConstraint>(robots(), static_cast<unsigned int>(robots_idx_[r1]),
+                                                          static_cast<unsigned int>(robots_idx_[r2]), solver().dt());
     solver().addConstraintSet(*collision_constraints_[{r1, r2}]);
   }
   auto & cc = collision_constraints_[{r1, r2}];
@@ -389,8 +372,8 @@ void Controller::addCollisions(const std::string & r1,
 }
 
 void Controller::removeCollisions(const std::string & r1,
-                                     const std::string & r2,
-                                     const std::vector<mc_rbdyn::Collision> & collisions)
+                                  const std::string & r2,
+                                  const std::vector<mc_rbdyn::Collision> & collisions)
 {
   if(!collision_constraints_.count({r1, r2}))
   {
@@ -400,8 +383,7 @@ void Controller::removeCollisions(const std::string & r1,
   cc->removeCollisions(solver(), collisions);
 }
 
-void Controller::removeCollisions(const std::string & r1,
-                                     const std::string & r2)
+void Controller::removeCollisions(const std::string & r1, const std::string & r2)
 {
   if(!collision_constraints_.count({r1, r2}))
   {
@@ -469,7 +451,10 @@ bool Controller::hasContact(const Contact & c) const
 {
   for(const auto & co : contacts_)
   {
-    if(co == c) { return true; }
+    if(co == c)
+    {
+      return true;
+    }
   }
   return false;
 }
@@ -478,7 +463,7 @@ bool Controller::set_joint_pos(const std::string & jname, const double & pos)
 {
   if(robot().hasJoint(jname))
   {
-    getPostureTask(robot().name())->target({{jname,{pos}}});
+    getPostureTask(robot().name())->target({{jname, {pos}}});
     return true;
   }
   return false;

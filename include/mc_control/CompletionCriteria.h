@@ -1,7 +1,7 @@
 #pragma once
 
-#include <mc_tasks/MetaTask.h>
 #include <mc_control/api.h>
+#include <mc_tasks/MetaTask.h>
 
 namespace mc_control
 {
@@ -56,13 +56,18 @@ struct MC_CONTROL_DLLAPI CompletionCriteria
 
   /** Returns the criteria that achieved the completion */
   const std::string & output() const;
+
 private:
   /** Internally used to compose functions */
-  std::function<bool (const mc_tasks::MetaTask&, std::string&)> build(const mc_tasks::MetaTask & task, double dt, const mc_rtc::Configuration & config);
+  std::function<bool(const mc_tasks::MetaTask &, std::string &)> build(const mc_tasks::MetaTask & task,
+                                                                       double dt,
+                                                                       const mc_rtc::Configuration & config);
   /** Programatically constructed based on the configuration values */
-  std::function<bool(const mc_tasks::MetaTask&, std::string&)> fn_ = [](const mc_tasks::MetaTask&, std::string&) { return true; };
+  std::function<bool(const mc_tasks::MetaTask &, std::string &)> fn_ = [](const mc_tasks::MetaTask &, std::string &) {
+    return true;
+  };
   /** Output string */
   std::string output_;
 };
 
-}
+} // namespace mc_control

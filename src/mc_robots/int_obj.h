@@ -1,9 +1,9 @@
 #pragma once
 
 #include <mc_rbdyn/RobotModule.h>
-#include <mc_rbdyn_urdf/urdf.h>
-
 #include <mc_rtc/config.h>
+
+#include <mc_rbdyn_urdf/urdf.h>
 
 #include "api.h"
 
@@ -16,12 +16,12 @@ public:
   IntObjRobotModule(const std::string & env_path, const std::string & env_name);
 };
 
-}
+} // namespace mc_robots
 
 extern "C"
 {
   ROBOT_MODULE_COMMON("int_obj")
-  ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string&,
+  ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string &,
                                                   const std::string & path,
                                                   const std::string & name)
   {

@@ -1,6 +1,5 @@
-#include <mc_control/fsm/states/Pause.h>
-
 #include <mc_control/fsm/Controller.h>
+#include <mc_control/fsm/states/Pause.h>
 
 namespace mc_control
 {
@@ -20,7 +19,7 @@ void PauseState::start(Controller & ctl)
   goal_ = static_cast<unsigned int>(std::ceil(duration_ / ctl.solver().dt()));
 }
 
-bool PauseState::run(Controller&)
+bool PauseState::run(Controller &)
 {
   if(++tick_ > goal_)
   {

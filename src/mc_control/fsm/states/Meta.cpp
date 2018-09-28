@@ -1,8 +1,7 @@
 #pragma once
 
-#include <mc_control/fsm/states/Meta.h>
-
 #include <mc_control/fsm/Controller.h>
+#include <mc_control/fsm/states/Meta.h>
 
 namespace mc_control
 {

@@ -1,13 +1,12 @@
 #ifdef BOOST_TEST_MAIN
-#undef BOOST_TEST_MAIN
+#  undef BOOST_TEST_MAIN
 #endif
-#include <boost/test/unit_test.hpp>
-
-#include <mc_control/mc_controller.h>
-#include <mc_tasks/CoMTask.h>
 #include <mc_control/api.h>
-
+#include <mc_control/mc_controller.h>
 #include <mc_rtc/logging.h>
+#include <mc_tasks/CoMTask.h>
+
+#include <boost/test/unit_test.hpp>
 
 namespace mc_control
 {
@@ -15,8 +14,7 @@ namespace mc_control
 struct MC_CONTROL_DLLAPI TestCoMTaskController : public MCController
 {
 public:
-  TestCoMTaskController(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt)
-  : MCController(rm, dt)
+  TestCoMTaskController(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt) : MCController(rm, dt)
   {
     // Check that the default constructor loads the robot + ground environment
     BOOST_CHECK_EQUAL(robots().robots().size(), 2);
@@ -27,10 +25,8 @@ public:
     postureTask->stiffness(1);
     postureTask->weight(1);
     solver().addTask(postureTask.get());
-    solver().setContacts({
-      mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"),
-      mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")
-    });
+    solver().setContacts(
+        {mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"), mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")});
 
     /* Create and add the CoM task with the default stiffness/weight */
     comTask = std::make_shared<mc_tasks::CoMTask>(robots(), 0);
@@ -106,23 +102,24 @@ public:
     /* Lower the CoM */
     comTask->com(comTask->com() + Eigen::Vector3d(0., 0., -0.05));
   }
+
 private:
   unsigned int nrIter = 0;
   std::shared_ptr<mc_tasks::CoMTask> comTask = nullptr;
-  std::vector<std::string> active_joints = [](){
+  std::vector<std::string> active_joints = []() {
     std::vector<std::string> ret;
     ret.push_back("Root");
     for(unsigned int i = 0; i < 6; ++i)
     {
       {
-      std::stringstream ss;
-      ss << "RLEG_JOINT" << i;
-      ret.push_back(ss.str());
+        std::stringstream ss;
+        ss << "RLEG_JOINT" << i;
+        ret.push_back(ss.str());
       }
       {
-      std::stringstream ss;
-      ss << "LLEG_JOINT" << i;
-      ret.push_back(ss.str());
+        std::stringstream ss;
+        ss << "LLEG_JOINT" << i;
+        ret.push_back(ss.str());
       }
     }
     return ret;
@@ -130,6 +127,6 @@ private:
   double orig_rlj3 = 0;
 };
 
-}
+} // namespace mc_control
 
 SIMPLE_CONTROLLER_CONSTRUCTOR("TestCoMTaskController", mc_control::TestCoMTaskController)

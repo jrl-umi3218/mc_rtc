@@ -1,21 +1,17 @@
-#include <mc_rtc/Configuration.h>
-
-#include <mc_rtc/logging.h>
 #include <mc_rbdyn/rpy_utils.h>
+#include <mc_rtc/Configuration.h>
+#include <mc_rtc/logging.h>
 
 #include "internals/json.h"
-
-#include <stdexcept>
 #include <fstream>
+#include <stdexcept>
 
 namespace mc_rtc
 {
 
 struct Configuration::Json::Impl
 {
-  Impl()
-  : value_(nullptr),
-    doc_p(new RapidJSONDocument())
+  Impl() : value_(nullptr), doc_p(new RapidJSONDocument())
   {
     value_ = rapidjson::GenericPointer<RapidJSONValue>("/").Get(*doc_p);
     if(!value_)
@@ -24,16 +20,12 @@ struct Configuration::Json::Impl
     }
   }
 
-  Impl(const Impl & other, size_t idx)
-  : value_(other.value_),
-    doc_p(other.doc_p)
+  Impl(const Impl & other, size_t idx) : value_(other.value_), doc_p(other.doc_p)
   {
     value_ = &(*value_)[idx];
   }
 
-  Impl(const Impl & other, const std::string & key)
-  : value_(other.value_),
-    doc_p(other.doc_p)
+  Impl(const Impl & other, const std::string & key) : value_(other.value_), doc_p(other.doc_p)
   {
     value_ = &(*value_)[key];
   }
@@ -145,9 +137,7 @@ struct Configuration::Json::Impl
   {
     assert(isObject());
     std::vector<std::string> ret;
-    for(auto it = value_->MemberBegin();
-        it != value_->MemberEnd();
-        ++it)
+    for(auto it = value_->MemberBegin(); it != value_->MemberEnd(); ++it)
     {
       ret.push_back(it->name.GetString());
     }
@@ -197,10 +187,7 @@ Configuration::Json Configuration::Json::operator[](const std::string & key) con
   return ret;
 }
 
-Configuration::Exception::Exception(const std::string & msg)
-: msg(msg)
-{
-}
+Configuration::Exception::Exception(const std::string & msg) : msg(msg) {}
 
 Configuration::Exception::~Exception() noexcept
 {
@@ -220,22 +207,15 @@ void Configuration::Exception::silence() noexcept
   msg.resize(0);
 }
 
-Configuration::Configuration()
-: v()
+Configuration::Configuration() : v()
 {
   v.impl.reset(new Json::Impl());
   v.impl->doc_p->SetObject();
 }
 
-Configuration::Configuration(const Json & v)
-: v(v)
-{
-}
+Configuration::Configuration(const Json & v) : v(v) {}
 
-Configuration::Configuration(const char * path)
-: Configuration(std::string(path))
-{
-}
+Configuration::Configuration(const char * path) : Configuration(std::string(path)) {}
 
 bool Configuration::isMember(const std::string & key) const
 {
@@ -354,8 +334,8 @@ Configuration::operator Eigen::Vector6d() const
   if(v.isArray() && v.size() == 6 && v[0].impl->isNumeric())
   {
     Eigen::Vector6d ret;
-    ret << v[0].impl->asDouble(), v[1].impl->asDouble(), v[2].impl->asDouble(),
-           v[3].impl->asDouble(), v[4].impl->asDouble(), v[5].impl->asDouble();
+    ret << v[0].impl->asDouble(), v[1].impl->asDouble(), v[2].impl->asDouble(), v[3].impl->asDouble(),
+        v[4].impl->asDouble(), v[5].impl->asDouble();
     return ret;
   }
   throw Exception("Stored Json value is not a Vector6d");
@@ -379,9 +359,9 @@ Configuration::operator Eigen::Quaterniond() const
 {
   if(v.isArray() && v.size() == 4 && v[0].impl->isNumeric())
   {
-    return Eigen::Quaterniond(v[0].impl->asDouble(), v[1].impl->asDouble(),
-                              v[2].impl->asDouble(), v[3].impl->asDouble())
-                             .normalized();
+    return Eigen::Quaterniond(v[0].impl->asDouble(), v[1].impl->asDouble(), v[2].impl->asDouble(),
+                              v[3].impl->asDouble())
+        .normalized();
   }
   throw Exception("Stored Json value is not a Quaterniond");
 }
@@ -398,7 +378,7 @@ Configuration::operator Eigen::Matrix3d() const
       {
         for(size_t j = 0; j < 3; ++j)
         {
-          m(i,j) = v[3*i+j].impl->asDouble();
+          m(i, j) = v[3 * i + j].impl->asDouble();
         }
       }
       return m;
@@ -411,9 +391,10 @@ Configuration::operator Eigen::Matrix3d() const
     // Quaternion representation
     if(v.size() == 4)
     {
-      return Eigen::Quaterniond(v[0].impl->asDouble(), v[1].impl->asDouble(),
-                                v[2].impl->asDouble(), v[3].impl->asDouble())
-                               .normalized().toRotationMatrix();
+      return Eigen::Quaterniond(v[0].impl->asDouble(), v[1].impl->asDouble(), v[2].impl->asDouble(),
+                                v[3].impl->asDouble())
+          .normalized()
+          .toRotationMatrix();
     }
   }
   throw Exception("Stored Json value is not a Matrix3d");
@@ -428,7 +409,7 @@ Configuration::operator Eigen::Matrix6d() const
     {
       for(size_t j = 0; j < 6; ++j)
       {
-        m(i,j) = v[6*i+j].impl->asDouble();
+        m(i, j) = v[6 * i + j].impl->asDouble();
       }
     }
     return m;
@@ -455,8 +436,7 @@ Configuration::operator Eigen::MatrixXd() const
   throw Exception("Stored Json value is not a MatrixXd");
 }
 
-Configuration::Configuration(const std::string & path)
-: v()
+Configuration::Configuration(const std::string & path) : v()
 {
   v.impl.reset(new Json::Impl());
   load(path);
@@ -584,32 +564,31 @@ bool Configuration::operator==(const char * rhs) const
 
 namespace
 {
-  template<typename T>
-  void add_impl(const std::string & key, T value, RapidJSONValue & json,
-                RapidJSONDocument::AllocatorType & allocator)
+template<typename T>
+void add_impl(const std::string & key, T value, RapidJSONValue & json, RapidJSONDocument::AllocatorType & allocator)
+{
+  RapidJSONValue key_(key.c_str(), allocator);
+  RapidJSONValue value_ = mc_rtc::internal::toJSON(value, allocator);
+  if(json.HasMember(key.c_str()))
   {
-    RapidJSONValue key_(key.c_str(), allocator);
-    RapidJSONValue value_ = mc_rtc::internal::toJSON(value, allocator);
-    if(json.HasMember(key.c_str()))
-    {
-      json.EraseMember(key.c_str());
-    }
-    json.AddMember(key_, value_, allocator);
+    json.EraseMember(key.c_str());
   }
-
-  template<typename T>
-  void push_impl(T value, RapidJSONValue & json,
-                RapidJSONDocument::AllocatorType & allocator)
-  {
-    RapidJSONValue value_ = mc_rtc::internal::toJSON(value, allocator);
-    if(! json.IsArray() )
-    {
-      throw Configuration::Exception("Trying to push data in a non-array value");
-    }
-    json.PushBack(value_, allocator);
-  }
+  json.AddMember(key_, value_, allocator);
 }
 
+template<typename T>
+void push_impl(T value, RapidJSONValue & json, RapidJSONDocument::AllocatorType & allocator)
+{
+  RapidJSONValue value_ = mc_rtc::internal::toJSON(value, allocator);
+  if(!json.IsArray())
+  {
+    throw Configuration::Exception("Trying to push data in a non-array value");
+  }
+  json.PushBack(value_, allocator);
+}
+} // namespace
+
+// clang-format off
 void Configuration::add(const std::string & key, bool value) { add_impl(key, value, *v.impl->value_, v.impl->allocator()); }
 void Configuration::add(const std::string & key, int value) { add_impl(key, value, *v.impl->value_, v.impl->allocator()); }
 void Configuration::add(const std::string & key, unsigned int value) { add_impl(key, value, *v.impl->value_, v.impl->allocator()); }
@@ -624,7 +603,7 @@ void Configuration::add(const std::string & key, Eigen::Quaterniond value) { add
 void Configuration::add(const std::string & key, Eigen::Matrix3d value) { add_impl(key, value, *v.impl->value_, v.impl->allocator()); }
 void Configuration::add(const std::string & key, Eigen::Matrix6d value) { add_impl(key, value, *v.impl->value_, v.impl->allocator()); }
 void Configuration::add(const std::string & key, Eigen::MatrixXd value) { add_impl(key, value, *v.impl->value_, v.impl->allocator()); }
-
+// clang-format on
 
 void Configuration::add(const std::string & key, Configuration value)
 {
@@ -656,7 +635,10 @@ Configuration Configuration::array(const std::string & key, size_t size)
   auto & allocator = v.impl->allocator();
   RapidJSONValue key_(key.c_str(), allocator);
   RapidJSONValue value(rapidjson::kArrayType);
-  if(size) { value.Reserve(size, allocator); }
+  if(size)
+  {
+    value.Reserve(size, allocator);
+  }
   if(has(key))
   {
     v.impl->value_->RemoveMember(key.c_str());
@@ -690,6 +672,7 @@ Configuration Configuration::object()
   return (*this)[size() - 1];
 }
 
+// clang-format off
 void Configuration::push(bool value) { push_impl(value, *v.impl->value_, v.impl->allocator()); }
 void Configuration::push(int value) { push_impl(value, *v.impl->value_, v.impl->allocator()); }
 void Configuration::push(unsigned int value) { push_impl(value, *v.impl->value_, v.impl->allocator()); }
@@ -704,12 +687,13 @@ void Configuration::push(Eigen::Quaterniond value) { push_impl(value, *v.impl->v
 void Configuration::push(Eigen::Matrix3d value) { push_impl(value, *v.impl->value_, v.impl->allocator()); }
 void Configuration::push(Eigen::Matrix6d value) { push_impl(value, *v.impl->value_, v.impl->allocator()); }
 void Configuration::push(Eigen::MatrixXd value) { push_impl(value, *v.impl->value_, v.impl->allocator()); }
+// clang-format on
 
 void Configuration::push(mc_rtc::Configuration value)
 {
   auto & allocator = v.impl->allocator();
   auto & json = *v.impl->value_;
-  if(! json.IsArray() )
+  if(!json.IsArray())
   {
     throw Exception("Trying to push data in a non-array value");
   }
@@ -749,10 +733,7 @@ ConfigurationArrayIterator Configuration::end() const
   return ret;
 }
 
-ConfigurationArrayIterator::ConfigurationArrayIterator(const Configuration & conf)
-  : i(0), conf(conf)
-{
-}
+ConfigurationArrayIterator::ConfigurationArrayIterator(const Configuration & conf) : i(0), conf(conf) {}
 
 bool ConfigurationArrayIterator::operator!=(const ConfigurationArrayIterator & rhs) const
 {
@@ -775,7 +756,7 @@ const Configuration ConfigurationArrayIterator::operator*() const
   return conf[i];
 }
 
-}
+} // namespace mc_rtc
 
 std::ostream & operator<<(std::ostream & os, const mc_rtc::Configuration & c)
 {

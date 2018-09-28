@@ -1,6 +1,6 @@
-#include <boost/test/unit_test.hpp>
-
 #include <mc_control/mc_global_controller.h>
+
+#include <boost/test/unit_test.hpp>
 
 #include <stdlib.h>
 

@@ -4,14 +4,13 @@
 
 #include <SpaceVecAlg/SpaceVecAlg>
 
+#include "tests_config.h"
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <random>
 #include <stdexcept>
 #include <string>
-
-#include "tests_config.h"
 
 bool configureRobotLoader()
 {
@@ -23,15 +22,21 @@ bool configureRobotLoader()
 /** This file contains various functions that are useful in unit tests */
 
 #ifdef WIN32
-#include <Windows.h>
+#  include <Windows.h>
 /** WIN32 port of mkstemp */
 inline int mkstemp(char * out)
 {
   char tmp_dir[MAX_PATH + 1];
   GetTempPath(MAX_PATH + 1, tmp_dir);
   int ret = GetTempFileName(tmp_dir, "mkstemp", 0, out);
-  if (ret == 0) { return -1; }
-  else { return 0; }
+  if(ret == 0)
+  {
+    return -1;
+  }
+  else
+  {
+    return 0;
+  }
 }
 #endif
 
@@ -65,7 +70,7 @@ std::string makeConfigFile(const std::string & data)
 sva::PTransformd random_pt()
 {
   Eigen::Vector3d t = Eigen::Vector3d::Random();
-  Eigen::Quaterniond q {Eigen::Vector4d::Random()};
+  Eigen::Quaterniond q{Eigen::Vector4d::Random()};
   q.normalize();
   return {q, t};
 }

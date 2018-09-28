@@ -26,10 +26,11 @@ public:
    * \param weight Task weight
    *
    */
-  PositionTask(const std::string & bodyName, const mc_rbdyn::Robots & robots,
-               unsigned int robotIndex, double stiffness = 2.0,
+  PositionTask(const std::string & bodyName,
+               const mc_rbdyn::Robots & robots,
+               unsigned int robotIndex,
+               double stiffness = 2.0,
                double weight = 500);
-
 
   /*! \brief Constructor
    *
@@ -38,9 +39,12 @@ public:
    * \param bodyPoint Point on the body being controlled, in body coordinates
    *
    */
-  PositionTask(const std::string & bodyName, const Eigen::Vector3d& bodyPoint,
-               const mc_rbdyn::Robots & robots, unsigned int robotIndex,
-               double stiffness = 2.0, double weight = 500);
+  PositionTask(const std::string & bodyName,
+               const Eigen::Vector3d & bodyPoint,
+               const mc_rbdyn::Robots & robots,
+               unsigned int robotIndex,
+               double stiffness = 2.0,
+               double weight = 500);
 
   virtual ~PositionTask() = default;
 
@@ -71,8 +75,8 @@ public:
    */
   void bodyPoint(const Eigen::Vector3d & bodyPoint);
 
-
   void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
+
 protected:
   std::string bodyName;
   unsigned int bIndex;
@@ -80,4 +84,4 @@ protected:
   virtual void removeFromLogger(mc_rtc::Logger & logger) override;
 };
 
-}
+} // namespace mc_tasks

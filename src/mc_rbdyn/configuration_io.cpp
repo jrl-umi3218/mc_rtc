@@ -1,36 +1,35 @@
-#include <mc_rbdyn/configuration_io.h>
-
 #include <mc_rbdyn/Robots.h>
+#include <mc_rbdyn/configuration_io.h>
 
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
 
 namespace
 {
-  // Return relative path to go to "to" from "from"
-  bfs::path relative(bfs::path to, bfs::path from)
+// Return relative path to go to "to" from "from"
+bfs::path relative(bfs::path to, bfs::path from)
+{
+  bfs::path::const_iterator fromIter = from.begin();
+  bfs::path::const_iterator toIter = to.begin();
+  while(fromIter != from.end() && toIter != to.end() && (*toIter) == (*fromIter))
   {
-    bfs::path::const_iterator fromIter = from.begin();
-    bfs::path::const_iterator toIter = to.begin();
-    while (fromIter != from.end() && toIter != to.end() && (*toIter) == (*fromIter))
-    {
-       ++toIter;
-       ++fromIter;
-    }
-    bfs::path relPath;
-    while (fromIter != from.end() && *fromIter != bfs::path("."))
-    {
-       relPath /= "..";
-       ++fromIter;
-    }
-    while (toIter != to.end())
-    {
-       relPath /= *toIter;
-       ++toIter;
-    }
-    return relPath;
+    ++toIter;
+    ++fromIter;
   }
+  bfs::path relPath;
+  while(fromIter != from.end() && *fromIter != bfs::path("."))
+  {
+    relPath /= "..";
+    ++fromIter;
+  }
+  while(toIter != to.end())
+  {
+    relPath /= *toIter;
+    ++toIter;
+  }
+  return relPath;
 }
+} // namespace
 
 namespace mc_rtc
 {
@@ -44,10 +43,8 @@ sva::PTransformd ConfigurationLoader<sva::PTransformd>::load(const mc_rtc::Confi
   }
   else if(config.size() == 7)
   {
-    return {
-            Eigen::Quaterniond{config[0], config[1], config[2], config[3]}.normalized(),
-            {config[4], config[5], config[6]}
-           };
+    return {Eigen::Quaterniond{config[0], config[1], config[2], config[3]}.normalized(),
+            {config[4], config[5], config[6]}};
   }
   LOG_ERROR_AND_THROW(mc_rtc::Configuration::Exception, "Not an sva::PTransformd-like object in json representation")
 }
@@ -102,30 +99,30 @@ mc_rtc::Configuration ConfigurationLoader<rbd::Joint::Type>::save(const rbd::Joi
   std::string typeStr = "";
   switch(type)
   {
-case rbd::Joint::Type::Rev:
-  typeStr = "rev";
-  break;
-case rbd::Joint::Type::Prism:
-  typeStr = "prism";
-  break;
-case rbd::Joint::Type::Spherical:
-  typeStr = "spherical";
-  break;
-case rbd::Joint::Type::Planar:
-  typeStr = "planar";
-  break;
-case rbd::Joint::Type::Cylindrical:
-  typeStr = "cylindrical";
-  break;
-case rbd::Joint::Type::Free:
-  typeStr = "free";
-  break;
-case rbd::Joint::Type::Fixed:
-  typeStr = "fixed";
-  break;
-default:
-  LOG_ERROR("Cannot serialize joint type " << type)
-  LOG_ERROR_AND_THROW(std::runtime_error, "Invalid joint type to ConfigurationLoader<rbd::Joint::Type>::save")
+    case rbd::Joint::Type::Rev:
+      typeStr = "rev";
+      break;
+    case rbd::Joint::Type::Prism:
+      typeStr = "prism";
+      break;
+    case rbd::Joint::Type::Spherical:
+      typeStr = "spherical";
+      break;
+    case rbd::Joint::Type::Planar:
+      typeStr = "planar";
+      break;
+    case rbd::Joint::Type::Cylindrical:
+      typeStr = "cylindrical";
+      break;
+    case rbd::Joint::Type::Free:
+      typeStr = "free";
+      break;
+    case rbd::Joint::Type::Fixed:
+      typeStr = "fixed";
+      break;
+    default:
+      LOG_ERROR("Cannot serialize joint type " << type)
+      LOG_ERROR_AND_THROW(std::runtime_error, "Invalid joint type to ConfigurationLoader<rbd::Joint::Type>::save")
   }
   config.add("type", typeStr);
   return config;
@@ -176,26 +173,32 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Collision>::save(const mc_rb
   return config;
 }
 
-std::shared_ptr<mc_rbdyn::Surface> ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::load(const mc_rtc::Configuration & config)
+std::shared_ptr<mc_rbdyn::Surface> ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::load(
+    const mc_rtc::Configuration & config)
 {
   std::string type = config("type");
   if(type == "planar")
   {
-    return std::make_shared<mc_rbdyn::PlanarSurface>(config("name"), config("bodyName"), config("X_b_s"), config("materialName"), config("planarPoints"));
+    return std::make_shared<mc_rbdyn::PlanarSurface>(config("name"), config("bodyName"), config("X_b_s"),
+                                                     config("materialName"), config("planarPoints"));
   }
   else if(type == "cylindrical")
   {
-    return std::make_shared<mc_rbdyn::CylindricalSurface>(config("name"), config("bodyName"), config("X_b_s"), config("materialName"), config("radius"), config("width"));
+    return std::make_shared<mc_rbdyn::CylindricalSurface>(config("name"), config("bodyName"), config("X_b_s"),
+                                                          config("materialName"), config("radius"), config("width"));
   }
   else if(type == "gripper")
   {
-    return std::make_shared<mc_rbdyn::GripperSurface>(config("name"), config("bodyName"), config("X_b_s"), config("materialName"), config("pointsFromOrigin"), config("X_b_motor"), config("motorMaxTorque"));
+    return std::make_shared<mc_rbdyn::GripperSurface>(config("name"), config("bodyName"), config("X_b_s"),
+                                                      config("materialName"), config("pointsFromOrigin"),
+                                                      config("X_b_motor"), config("motorMaxTorque"));
   }
   LOG_ERROR("Unknown surface type stored " << type)
   LOG_ERROR_AND_THROW(std::runtime_error, "Invalid surface type stored")
 }
 
-mc_rtc::Configuration ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::save(const std::shared_ptr<mc_rbdyn::Surface> & s)
+mc_rtc::Configuration ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::save(
+    const std::shared_ptr<mc_rbdyn::Surface> & s)
 {
   mc_rtc::Configuration config;
   config.add("type", s->type());
@@ -205,18 +208,18 @@ mc_rtc::Configuration ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::s
   config.add("materialName", s->materialName());
   if(s->type() == "planar")
   {
-    auto ps = static_cast<mc_rbdyn::PlanarSurface*>(s.get());
+    auto ps = static_cast<mc_rbdyn::PlanarSurface *>(s.get());
     config.add("planarPoints", ps->planarPoints());
   }
   else if(s->type() == "cylindrical")
   {
-    auto cs = static_cast<mc_rbdyn::CylindricalSurface*>(s.get());
+    auto cs = static_cast<mc_rbdyn::CylindricalSurface *>(s.get());
     config.add("radius", cs->radius());
     config.add("width", cs->width());
   }
   else if(s->type() == "gripper")
   {
-    auto gs = static_cast<mc_rbdyn::GripperSurface*>(s.get());
+    auto gs = static_cast<mc_rbdyn::GripperSurface *>(s.get());
     config.add("pointsFromOrigin", gs->pointsFromOrigin());
     config.add("X_b_motor", gs->X_b_motor());
     config.add("motorMaxTorque", gs->motorMaxTorque());
@@ -229,7 +232,8 @@ mc_rtc::Configuration ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::s
   return config;
 }
 
-std::shared_ptr<mc_rbdyn::PlanarSurface> ConfigurationLoader<std::shared_ptr<mc_rbdyn::PlanarSurface>>::load(const mc_rtc::Configuration & config)
+std::shared_ptr<mc_rbdyn::PlanarSurface> ConfigurationLoader<std::shared_ptr<mc_rbdyn::PlanarSurface>>::load(
+    const mc_rtc::Configuration & config)
 {
   std::string type = config("type");
   if(type != "planar")
@@ -237,15 +241,18 @@ std::shared_ptr<mc_rbdyn::PlanarSurface> ConfigurationLoader<std::shared_ptr<mc_
     LOG_ERROR("Tried to deserialize a non-planar surface into a planar surface")
     LOG_ERROR_AND_THROW(std::runtime_error, "Wrong surface types")
   }
-  return std::static_pointer_cast<mc_rbdyn::PlanarSurface>(ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::load(config));
+  return std::static_pointer_cast<mc_rbdyn::PlanarSurface>(
+      ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::load(config));
 }
 
-mc_rtc::Configuration ConfigurationLoader<std::shared_ptr<mc_rbdyn::PlanarSurface>>::save(const std::shared_ptr<mc_rbdyn::PlanarSurface> & s)
+mc_rtc::Configuration ConfigurationLoader<std::shared_ptr<mc_rbdyn::PlanarSurface>>::save(
+    const std::shared_ptr<mc_rbdyn::PlanarSurface> & s)
 {
   return ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::save(s);
 }
 
-std::shared_ptr<mc_rbdyn::CylindricalSurface> ConfigurationLoader<std::shared_ptr<mc_rbdyn::CylindricalSurface>>::load(const mc_rtc::Configuration & config)
+std::shared_ptr<mc_rbdyn::CylindricalSurface> ConfigurationLoader<std::shared_ptr<mc_rbdyn::CylindricalSurface>>::load(
+    const mc_rtc::Configuration & config)
 {
   std::string type = config("type");
   if(type != "cylindrical")
@@ -253,15 +260,18 @@ std::shared_ptr<mc_rbdyn::CylindricalSurface> ConfigurationLoader<std::shared_pt
     LOG_ERROR("Tried to deserialize a non-cylindrical surface into a cylindrical surface")
     LOG_ERROR_AND_THROW(std::runtime_error, "Wrong surface types")
   }
-  return std::static_pointer_cast<mc_rbdyn::CylindricalSurface>(ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::load(config));
+  return std::static_pointer_cast<mc_rbdyn::CylindricalSurface>(
+      ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::load(config));
 }
 
-mc_rtc::Configuration ConfigurationLoader<std::shared_ptr<mc_rbdyn::CylindricalSurface>>::save(const std::shared_ptr<mc_rbdyn::CylindricalSurface> & s)
+mc_rtc::Configuration ConfigurationLoader<std::shared_ptr<mc_rbdyn::CylindricalSurface>>::save(
+    const std::shared_ptr<mc_rbdyn::CylindricalSurface> & s)
 {
   return ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::save(s);
 }
 
-std::shared_ptr<mc_rbdyn::GripperSurface> ConfigurationLoader<std::shared_ptr<mc_rbdyn::GripperSurface>>::load(const mc_rtc::Configuration & config)
+std::shared_ptr<mc_rbdyn::GripperSurface> ConfigurationLoader<std::shared_ptr<mc_rbdyn::GripperSurface>>::load(
+    const mc_rtc::Configuration & config)
 {
   std::string type = config("type");
   if(type != "gripper")
@@ -269,10 +279,12 @@ std::shared_ptr<mc_rbdyn::GripperSurface> ConfigurationLoader<std::shared_ptr<mc
     LOG_ERROR("Tried to deserialize a non-gripper surface into a gripper surface")
     LOG_ERROR_AND_THROW(std::runtime_error, "Wrong surface types")
   }
-  return std::static_pointer_cast<mc_rbdyn::GripperSurface>(ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::load(config));
+  return std::static_pointer_cast<mc_rbdyn::GripperSurface>(
+      ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::load(config));
 }
 
-mc_rtc::Configuration ConfigurationLoader<std::shared_ptr<mc_rbdyn::GripperSurface>>::save(const std::shared_ptr<mc_rbdyn::GripperSurface> & s)
+mc_rtc::Configuration ConfigurationLoader<std::shared_ptr<mc_rbdyn::GripperSurface>>::save(
+    const std::shared_ptr<mc_rbdyn::GripperSurface> & s)
 {
   return ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::save(s);
 }
@@ -308,7 +320,7 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::ForceSensor>::save(const mc_
 
 mc_rbdyn::Plane ConfigurationLoader<mc_rbdyn::Plane>::load(const mc_rtc::Configuration & config)
 {
-  return mc_rbdyn::Plane { config("normal"), config("offset") };
+  return mc_rbdyn::Plane{config("normal"), config("offset")};
 }
 
 mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Plane>::save(const mc_rbdyn::Plane & pl)
@@ -319,7 +331,8 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Plane>::save(const mc_rbdyn:
   return config;
 }
 
-mc_rbdyn::PolygonInterpolator ConfigurationLoader<mc_rbdyn::PolygonInterpolator>::load(const mc_rtc::Configuration & config)
+mc_rbdyn::PolygonInterpolator ConfigurationLoader<mc_rbdyn::PolygonInterpolator>::load(
+    const mc_rtc::Configuration & config)
 {
   std::vector<mc_rbdyn::PolygonInterpolator::tuple_pair_t> vec = config("tuple_pairs");
   return mc_rbdyn::PolygonInterpolator(vec);
@@ -380,7 +393,7 @@ mc_rtc::Configuration ConfigurationLoader<rbd::Body>::save(const rbd::Body & bod
 
 rbd::Joint ConfigurationLoader<rbd::Joint>::load(const mc_rtc::Configuration & config)
 {
-  rbd::Joint j {config("type"), config("axis"), config("forward"), config("name")};
+  rbd::Joint j{config("type"), config("axis"), config("forward"), config("name")};
   bool isMimic = config("isMimic");
   if(isMimic)
   {
@@ -398,10 +411,10 @@ mc_rtc::Configuration ConfigurationLoader<rbd::Joint>::save(const rbd::Joint & j
   {
     case rbd::Joint::Rev:
     case rbd::Joint::Cylindrical:
-      axis = j.direction()*j.motionSubspace().col(0).head<3>();
+      axis = j.direction() * j.motionSubspace().col(0).head<3>();
       break;
     case rbd::Joint::Prism:
-      axis = j.direction()*j.motionSubspace().col(0).tail<3>();
+      axis = j.direction() * j.motionSubspace().col(0).tail<3>();
       break;
     default:
       break;
@@ -421,7 +434,8 @@ mc_rtc::Configuration ConfigurationLoader<rbd::Joint>::save(const rbd::Joint & j
 
 rbd::MultiBody ConfigurationLoader<rbd::MultiBody>::load(const mc_rtc::Configuration & config)
 {
-  return {config("bodies"), config("joints"), config("preds"), config("succs"), config("parents"), config("transforms")};
+  return {config("bodies"), config("joints"),  config("preds"),
+          config("succs"),  config("parents"), config("transforms")};
 }
 
 mc_rtc::Configuration ConfigurationLoader<rbd::MultiBody>::save(const rbd::MultiBody & mb)
@@ -462,34 +476,38 @@ mc_rtc::Configuration ConfigurationLoader<sva::MotionVecd>::save(const sva::Moti
   return config;
 }
 
-Eigen::Matrix<double, 6, Eigen::Dynamic> ConfigurationLoader<Eigen::Matrix<double, 6, Eigen::Dynamic>>::load(const mc_rtc::Configuration & config)
+Eigen::Matrix<double, 6, Eigen::Dynamic> ConfigurationLoader<Eigen::Matrix<double, 6, Eigen::Dynamic>>::load(
+    const mc_rtc::Configuration & config)
 {
   Eigen::Matrix<double, 6, Eigen::Dynamic> m(6, static_cast<int>(config("cols")));
   auto data = config("data");
-  if(static_cast<Eigen::DenseIndex>(data.size()) != 6*m.cols())
+  if(static_cast<Eigen::DenseIndex>(data.size()) != 6 * m.cols())
   {
-    LOG_ERROR_AND_THROW(mc_rtc::Configuration::Exception, "Stored data size (" << data.size() << ") is different from the expected size (" << 6*m.cols())
+    LOG_ERROR_AND_THROW(mc_rtc::Configuration::Exception,
+                        "Stored data size (" << data.size() << ") is different from the expected size ("
+                                             << 6 * m.cols())
   }
   for(Eigen::DenseIndex i = 0; i < 6; ++i)
   {
     for(Eigen::DenseIndex j = 0; j < m.cols(); ++j)
     {
-      m(i,j) = data[m.cols()*i + j];
+      m(i, j) = data[m.cols() * i + j];
     }
   }
   return m;
 }
 
-mc_rtc::Configuration ConfigurationLoader<Eigen::Matrix<double, 6, Eigen::Dynamic>>::save(const Eigen::Matrix<double, 6, Eigen::Dynamic> & m)
+mc_rtc::Configuration ConfigurationLoader<Eigen::Matrix<double, 6, Eigen::Dynamic>>::save(
+    const Eigen::Matrix<double, 6, Eigen::Dynamic> & m)
 {
   mc_rtc::Configuration config;
   config.add("cols", static_cast<int>(m.cols()));
-  auto data = config.array("data", 6*m.cols());
+  auto data = config.array("data", 6 * m.cols());
   for(Eigen::DenseIndex i = 0; i < 6; ++i)
   {
     for(Eigen::DenseIndex j = 0; j < m.cols(); ++j)
     {
-      data.push(m(i,j));
+      data.push(m(i, j));
     }
   }
   return config;
@@ -535,12 +553,14 @@ mc_rtc::Configuration ConfigurationLoader<rbd::MultiBodyConfig>::save(const rbd:
   return config;
 }
 
-mc_rbdyn::RobotModule::Gripper ConfigurationLoader<mc_rbdyn::RobotModule::Gripper>::load(const mc_rtc::Configuration & config)
+mc_rbdyn::RobotModule::Gripper ConfigurationLoader<mc_rbdyn::RobotModule::Gripper>::load(
+    const mc_rtc::Configuration & config)
 {
   return {config("name"), config("joints"), config("reverse_limits")};
 }
 
-mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule::Gripper>::save(const mc_rbdyn::RobotModule::Gripper & rmg)
+mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule::Gripper>::save(
+    const mc_rbdyn::RobotModule::Gripper & rmg)
 {
   mc_rtc::Configuration config;
   config.add("name", rmg.name);
@@ -549,7 +569,8 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule::Gripper>::save(
   return config;
 }
 
-mc_rbdyn_urdf::Geometry::Box ConfigurationLoader<mc_rbdyn_urdf::Geometry::Box>::load(const mc_rtc::Configuration & config)
+mc_rbdyn_urdf::Geometry::Box ConfigurationLoader<mc_rbdyn_urdf::Geometry::Box>::load(
+    const mc_rtc::Configuration & config)
 {
   mc_rbdyn_urdf::Geometry::Box b;
   b.size = config("size");
@@ -563,7 +584,8 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn_urdf::Geometry::Box>::save(co
   return config;
 }
 
-mc_rbdyn_urdf::Geometry::Cylinder ConfigurationLoader<mc_rbdyn_urdf::Geometry::Cylinder>::load(const mc_rtc::Configuration & config)
+mc_rbdyn_urdf::Geometry::Cylinder ConfigurationLoader<mc_rbdyn_urdf::Geometry::Cylinder>::load(
+    const mc_rtc::Configuration & config)
 {
   mc_rbdyn_urdf::Geometry::Cylinder c;
   c.radius = config("radius");
@@ -571,7 +593,8 @@ mc_rbdyn_urdf::Geometry::Cylinder ConfigurationLoader<mc_rbdyn_urdf::Geometry::C
   return c;
 }
 
-mc_rtc::Configuration ConfigurationLoader<mc_rbdyn_urdf::Geometry::Cylinder>::save(const mc_rbdyn_urdf::Geometry::Cylinder & c)
+mc_rtc::Configuration ConfigurationLoader<mc_rbdyn_urdf::Geometry::Cylinder>::save(
+    const mc_rbdyn_urdf::Geometry::Cylinder & c)
 {
   mc_rtc::Configuration config;
   config.add("radius", c.radius);
@@ -579,21 +602,24 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn_urdf::Geometry::Cylinder>::sa
   return config;
 }
 
-mc_rbdyn_urdf::Geometry::Sphere ConfigurationLoader<mc_rbdyn_urdf::Geometry::Sphere>::load(const mc_rtc::Configuration & config)
+mc_rbdyn_urdf::Geometry::Sphere ConfigurationLoader<mc_rbdyn_urdf::Geometry::Sphere>::load(
+    const mc_rtc::Configuration & config)
 {
   mc_rbdyn_urdf::Geometry::Sphere s;
   s.radius = config("radius");
   return s;
 }
 
-mc_rtc::Configuration ConfigurationLoader<mc_rbdyn_urdf::Geometry::Sphere>::save(const mc_rbdyn_urdf::Geometry::Sphere & s)
+mc_rtc::Configuration ConfigurationLoader<mc_rbdyn_urdf::Geometry::Sphere>::save(
+    const mc_rbdyn_urdf::Geometry::Sphere & s)
 {
   mc_rtc::Configuration config;
   config.add("radius", s.radius);
   return config;
 }
 
-mc_rbdyn_urdf::Geometry::Mesh ConfigurationLoader<mc_rbdyn_urdf::Geometry::Mesh>::load(const mc_rtc::Configuration & config)
+mc_rbdyn_urdf::Geometry::Mesh ConfigurationLoader<mc_rbdyn_urdf::Geometry::Mesh>::load(
+    const mc_rtc::Configuration & config)
 {
   mc_rbdyn_urdf::Geometry::Mesh m;
   m.filename = static_cast<std::string>(config("filename"));
@@ -829,7 +855,8 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModulePtr>::save(const 
   return ConfigurationLoader<mc_rbdyn::RobotModule>::save(*rm, save_mbc, filteredLinks, fixed);
 }
 
-mc_rbdyn::Contact ConfigurationLoader<mc_rbdyn::Contact>::load(const mc_rtc::Configuration & config, const mc_rbdyn::Robots & robots)
+mc_rbdyn::Contact ConfigurationLoader<mc_rbdyn::Contact>::load(const mc_rtc::Configuration & config,
+                                                               const mc_rbdyn::Robots & robots)
 {
   unsigned int r1Index = 0;
   unsigned int r2Index = 1;
@@ -846,7 +873,8 @@ mc_rbdyn::Contact ConfigurationLoader<mc_rbdyn::Contact>::load(const mc_rtc::Con
   config("X_b_s", X_b_s);
   int ambiguityId = -1;
   config("ambiguityId", ambiguityId);
-  return mc_rbdyn::Contact(robots, r1Index, r2Index, config("r1Surface"), config("r2Surface"), X_r2s_r1s, X_b_s, ambiguityId);
+  return mc_rbdyn::Contact(robots, r1Index, r2Index, config("r1Surface"), config("r2Surface"), X_r2s_r1s, X_b_s,
+                           ambiguityId);
 }
 
 mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Contact>::save(const mc_rbdyn::Contact & c)
@@ -887,4 +915,4 @@ mc_rtc::Configuration ConfigurationLoader<tasks::qp::JointGains>::save(const tas
   return config;
 }
 
-}
+} // namespace mc_rtc

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <mc_control/fsm/State.h>
-
 #include <mc_tasks/CoMTask.h>
 #include <mc_tasks/CoPTask.h>
 #include <mc_tasks/OrientationTask.h>
@@ -22,11 +21,12 @@ struct MC_CONTROL_FSM_STATE_DLLAPI SlidingFootContactState : State
 
   void configure(const mc_rtc::Configuration & config) override;
 
-  void start(Controller&) override;
+  void start(Controller &) override;
 
-  bool run(Controller&) override;
+  bool run(Controller &) override;
 
-  void teardown(Controller&) override;
+  void teardown(Controller &) override;
+
 protected:
   /** Configuration */
   bool kinematic_ = false;
@@ -43,7 +43,7 @@ protected:
   Eigen::Vector3d com_offset_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d com_offset_sliding_ = Eigen::Vector3d::Zero();
   double move_com_z_ = 0;
-  double rot_angle_ = -2.5*M_PI/180;
+  double rot_angle_ = -2.5 * M_PI / 180;
   bool wait_for_slide_trigger_ = false;
   bool slide_triggered_ = true;
   std::string next_ = "";
@@ -72,6 +72,7 @@ protected:
   Eigen::Vector3d initial_com = Eigen::Vector3d::Zero();
   Eigen::Vector3d com_target0 = Eigen::Vector3d::Zero();
   Eigen::Vector3d com_sensor = Eigen::Vector3d::Zero();
+
 protected:
   tasks::qp::ContactId getContactId(Controller & ctl, const std::string & s);
   void setHandDofContact(Controller & ctl);

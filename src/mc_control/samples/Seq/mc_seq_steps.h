@@ -1,18 +1,18 @@
 #ifndef _H_MCSEQSTEPS_H_
 #define _H_MCSEQSTEPS_H_
 
-#include "mc_seq_controller.h"
-
 #include <mc_control/api.h>
+
+#include "mc_seq_controller.h"
 
 namespace mc_control
 {
 
-#define CREATE_STRUCT(sName)\
-struct MC_CONTROL_DLLAPI sName : public SeqStep\
-{\
-  virtual bool eval(MCSeqController & controller) override;\
-};
+#define CREATE_STRUCT(sName)                                  \
+  struct MC_CONTROL_DLLAPI sName : public SeqStep             \
+  {                                                           \
+    virtual bool eval(MCSeqController & controller) override; \
+  };
 
 CREATE_STRUCT(enter_initT)
 CREATE_STRUCT(live_initT)
@@ -63,6 +63,6 @@ CREATE_STRUCT(live_contactGripperT)
 
 #undef CREATE_STRUCT
 
-}
+} // namespace mc_control
 
 #endif

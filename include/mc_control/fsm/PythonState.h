@@ -21,13 +21,13 @@ struct MC_CONTROL_FSM_DLLAPI PythonState : public State
 
   void stop(Controller & ctl) override;
 
-  std::function<void(const mc_rtc::Configuration &)> configure_ = [](const mc_rtc::Configuration&) {};
-  std::function<void(Controller&)> start_ = [](Controller&) {};
-  std::function<bool(Controller&)> run_ = [](Controller&) { return false; };
-  std::function<void(Controller&)> teardown_ = [](Controller&) {};
-  std::function<void(Controller&)> stop_ = [](Controller&) {};
+  std::function<void(const mc_rtc::Configuration &)> configure_ = [](const mc_rtc::Configuration &) {};
+  std::function<void(Controller &)> start_ = [](Controller &) {};
+  std::function<bool(Controller &)> run_ = [](Controller &) { return false; };
+  std::function<void(Controller &)> teardown_ = [](Controller &) {};
+  std::function<void(Controller &)> stop_ = [](Controller &) {};
 };
 
-}
+} // namespace fsm
 
-}
+} // namespace mc_control

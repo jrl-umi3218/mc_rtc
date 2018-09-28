@@ -1,6 +1,5 @@
-#include <mc_control/fsm/states/Grippers.h>
-
 #include <mc_control/fsm/Controller.h>
+#include <mc_control/fsm/states/Grippers.h>
 
 namespace mc_control
 {
@@ -38,7 +37,9 @@ void Grippers::start(Controller & ctl)
         std::vector<double> target = grippers(g)("target");
         if(gripper->curPosition().size() != target.size())
         {
-          LOG_WARNING("[FSM::" << name() << "] Provided target for " << g << " does not have the correct size (expected: " << gripper->curPosition().size() << ", got: " << target.size() << ")")
+          LOG_WARNING("[FSM::" << name() << "] Provided target for " << g
+                               << " does not have the correct size (expected: " << gripper->curPosition().size()
+                               << ", got: " << target.size() << ")")
           continue;
         }
         gripper->setTargetQ(target);
@@ -55,10 +56,7 @@ void Grippers::start(Controller & ctl)
 bool Grippers::run(Controller & ctl)
 {
   if(std::all_of(grippers_.begin(), grippers_.end(),
-                 [&ctl](const std::string & g)
-                 {
-                   return ctl.grippers[g]->targetQ == nullptr;
-                 }))
+                 [&ctl](const std::string & g) { return ctl.grippers[g]->targetQ == nullptr; }))
   {
     output("OK");
     return true;

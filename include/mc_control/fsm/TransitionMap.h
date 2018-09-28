@@ -1,8 +1,8 @@
 #pragma once
 
-#include <mc_control/fsm/api.h>
 #include <mc_control/fsm/StateFactory.h>
 #include <mc_control/fsm/Transition.h>
+#include <mc_control/fsm/api.h>
 
 #include <map>
 #include <string>
@@ -49,8 +49,7 @@ struct MC_CONTROL_FSM_DLLAPI TransitionMap
    * and the Transition has no meaning.
    *
    */
-   std::pair<bool, Transition> transition(const std::string & state,
-                                          const std::string & output) const;
+  std::pair<bool, Transition> transition(const std::string & state, const std::string & output) const;
 
   /** For a given state, gives all possible next states */
   std::vector<std::string> transitions(const std::string & state) const;
@@ -69,14 +68,14 @@ struct MC_CONTROL_FSM_DLLAPI TransitionMap
    * \param config Holds the JSON representation of this transition map
    *
    */
-  void init(const StateFactory & factory,
-            const mc_rtc::Configuration & config);
+  void init(const StateFactory & factory, const mc_rtc::Configuration & config);
 
   /** Returns the initial state value */
   const std::string & initState() const;
 
   /** Print the map */
   std::ostream & print(std::ostream & os) const;
+
 private:
   std::string init_state_;
   std::map<origin_t, Transition> map_;

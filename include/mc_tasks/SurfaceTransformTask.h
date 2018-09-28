@@ -26,9 +26,11 @@ public:
    * \param weight Task weight
    *
    */
-  SurfaceTransformTask(const std::string & surfaceName, const mc_rbdyn::Robots
-                  & robots, unsigned int robotIndex, double stiffness =
-                  2.0, double weight = 500);
+  SurfaceTransformTask(const std::string & surfaceName,
+                       const mc_rbdyn::Robots & robots,
+                       unsigned int robotIndex,
+                       double stiffness = 2.0,
+                       double weight = 500);
 
   /*! \brief Reset the task
    *
@@ -59,10 +61,13 @@ public:
    * @param offset
    *  offset defined in the target contact frame
    */
-  void targetSurface(unsigned int robotIndex, const std::string& surfaceName, const sva::PTransformd& offset);
+  void targetSurface(unsigned int robotIndex, const std::string & surfaceName, const sva::PTransformd & offset);
 
   /*! \brief Retrieve the controlled surface name */
-  std::string surface() { return surfaceName; }
+  std::string surface()
+  {
+    return surfaceName;
+  }
 
   void addToLogger(mc_rtc::Logger & logger) override;
 
@@ -150,4 +155,4 @@ protected:
   using TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::refVel;
 };
 
-}
+} // namespace mc_tasks

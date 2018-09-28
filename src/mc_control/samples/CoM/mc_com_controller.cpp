@@ -1,12 +1,11 @@
 #include "mc_com_controller.h"
-#include <RBDyn/FK.h>
-#include <RBDyn/FV.h>
 
 #include <mc_rbdyn/Surface.h>
-
+#include <mc_rtc/logging.h>
 #include <mc_tasks/SurfaceTransformTask.h>
 
-#include <mc_rtc/logging.h>
+#include <RBDyn/FK.h>
+#include <RBDyn/FV.h>
 
 namespace mc_control
 {
@@ -32,16 +31,14 @@ void MCCoMController::reset(const ControllerResetData & reset_data)
   solver().addTask(comTask);
   if(robot().name() == "hrp2_drc")
   {
-    qpsolver->setContacts({
-      mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"),
-      mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")
-    });
+    qpsolver->setContacts(
+        {mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"), mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")});
   }
   else if(robot().name() == "hrp4")
   {
     qpsolver->setContacts({
-      mc_rbdyn::Contact(robots(), "LeftFoot", "AllGround"),
-      mc_rbdyn::Contact(robots(), "RightFoot", "AllGround"),
+        mc_rbdyn::Contact(robots(), "LeftFoot", "AllGround"),
+        mc_rbdyn::Contact(robots(), "RightFoot", "AllGround"),
     });
   }
   else
@@ -57,4 +54,4 @@ bool MCCoMController::move_com(const Eigen::Vector3d & v)
   return true;
 }
 
-}
+} // namespace mc_control

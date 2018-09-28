@@ -9,4 +9,4 @@ MetaTaskLoader::storage_t & MetaTaskLoader::storage()
   return storage_;
 }
 
-}
+} // namespace mc_tasks

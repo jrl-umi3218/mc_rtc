@@ -1,18 +1,29 @@
-#include <mc_tasks/RelativeEndEffectorTask.h>
-
 #include <mc_tasks/MetaTaskLoader.h>
+#include <mc_tasks/RelativeEndEffectorTask.h>
 
 namespace mc_tasks
 {
 
-RelativeEndEffectorTask::RelativeEndEffectorTask(const std::string & bodyName, const mc_rbdyn::Robots & robots, unsigned int robotIndex, const std::string & relBodyName, double stiffness, double weight)
+RelativeEndEffectorTask::RelativeEndEffectorTask(const std::string & bodyName,
+                                                 const mc_rbdyn::Robots & robots,
+                                                 unsigned int robotIndex,
+                                                 const std::string & relBodyName,
+                                                 double stiffness,
+                                                 double weight)
 : RelativeEndEffectorTask(bodyName, Eigen::Vector3d::Zero(), robots, robotIndex, relBodyName, stiffness, weight)
 {
 }
 
-RelativeEndEffectorTask::RelativeEndEffectorTask(const std::string & bodyName, const Eigen::Vector3d & bodyPoint, const mc_rbdyn::Robots & robots, unsigned int robotIndex, const std::string & relBodyName, double stiffness, double weight)
+RelativeEndEffectorTask::RelativeEndEffectorTask(const std::string & bodyName,
+                                                 const Eigen::Vector3d & bodyPoint,
+                                                 const mc_rbdyn::Robots & robots,
+                                                 unsigned int robotIndex,
+                                                 const std::string & relBodyName,
+                                                 double stiffness,
+                                                 double weight)
 : EndEffectorTask(bodyName, bodyPoint, robots, robotIndex, stiffness, weight),
-  relBodyIdx(robots.robot().bodyIndexByName(relBodyName.size()?relBodyName:robots.robot(robotIndex).mb().body(0).name()))
+  relBodyIdx(
+      robots.robot().bodyIndexByName(relBodyName.size() ? relBodyName : robots.robot(robotIndex).mb().body(0).name()))
 {
   reset();
   const auto & robot = robots.robot(robotIndex);
@@ -31,7 +42,7 @@ void RelativeEndEffectorTask::reset()
 
 void RelativeEndEffectorTask::add_ef_pose(const sva::PTransformd & dtr)
 {
-  auto new_rot = curTransform.rotation()*dtr.rotation();
+  auto new_rot = curTransform.rotation() * dtr.rotation();
   Eigen::Vector3d new_t = curTransform.translation() + dtr.translation();
   curTransform = sva::PTransformd(new_rot, new_t);
 }
@@ -59,17 +70,15 @@ void RelativeEndEffectorTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   EndEffectorTask::addToGUI(gui);
   gui.removeElement({"Tasks", name_}, "pos_target");
   gui.addElement(
-    {"Tasks", name_},
-    mc_rtc::gui::Transform("pos_target",
-                           [this]() { return curTransform * robots.robot(robotIndex).mbc().bodyPosW[relBodyIdx]; },
-                           [this](const sva::PTransformd & X_0_target)
-                           {
-                            set_ef_pose(X_0_target * robots.robot(robotIndex).mbc().bodyPosW[relBodyIdx].inv());
-                           })
-  );
+      {"Tasks", name_},
+      mc_rtc::gui::Transform("pos_target",
+                             [this]() { return curTransform * robots.robot(robotIndex).mbc().bodyPosW[relBodyIdx]; },
+                             [this](const sva::PTransformd & X_0_target) {
+                               set_ef_pose(X_0_target * robots.robot(robotIndex).mbc().bodyPosW[relBodyIdx].inv());
+                             }));
 }
 
-}
+} // namespace mc_tasks
 
 namespace
 {
@@ -120,8 +129,7 @@ void configure_ori_task(std::shared_ptr<mc_tasks::OrientationTask> & t,
   }
 }
 
-mc_tasks::MetaTaskPtr load_orientation_task(mc_solver::QPSolver & solver,
-                                            const mc_rtc::Configuration & config)
+mc_tasks::MetaTaskPtr load_orientation_task(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
   auto t = std::make_shared<mc_tasks::OrientationTask>(config("body"), solver.robots(), config("robotIndex"));
   configure_ori_task(t, solver, config, true);
@@ -129,13 +137,13 @@ mc_tasks::MetaTaskPtr load_orientation_task(mc_solver::QPSolver & solver,
   return t;
 }
 
-mc_tasks::MetaTaskPtr load_position_task(mc_solver::QPSolver & solver,
-                                            const mc_rtc::Configuration & config)
+mc_tasks::MetaTaskPtr load_position_task(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
   std::shared_ptr<mc_tasks::PositionTask> t = nullptr;
   if(config.has("bodyPoint"))
   {
-    t = std::make_shared<mc_tasks::PositionTask>(config("body"), config("bodyPoint"), solver.robots(), config("robotIndex"));
+    t = std::make_shared<mc_tasks::PositionTask>(config("body"), config("bodyPoint"), solver.robots(),
+                                                 config("robotIndex"));
   }
   else
   {
@@ -146,13 +154,13 @@ mc_tasks::MetaTaskPtr load_position_task(mc_solver::QPSolver & solver,
   return t;
 }
 
-mc_tasks::MetaTaskPtr load_ef_task(mc_solver::QPSolver & solver,
-                                            const mc_rtc::Configuration & config)
+mc_tasks::MetaTaskPtr load_ef_task(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
   std::shared_ptr<mc_tasks::EndEffectorTask> t = nullptr;
   if(config.has("bodyPoint"))
   {
-    t = std::make_shared<mc_tasks::EndEffectorTask>(config("body"), config("bodyPoint"), solver.robots(), config("robotIndex"));
+    t = std::make_shared<mc_tasks::EndEffectorTask>(config("body"), config("bodyPoint"), solver.robots(),
+                                                    config("robotIndex"));
   }
   else
   {
@@ -164,30 +172,29 @@ mc_tasks::MetaTaskPtr load_ef_task(mc_solver::QPSolver & solver,
   return t;
 }
 
-mc_tasks::MetaTaskPtr load_relef_task(mc_solver::QPSolver & solver,
-                                            const mc_rtc::Configuration & config)
+mc_tasks::MetaTaskPtr load_relef_task(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
   std::shared_ptr<mc_tasks::RelativeEndEffectorTask> t = nullptr;
   if(config.has("bodyPoint"))
   {
-    t = std::make_shared<mc_tasks::RelativeEndEffectorTask>(config("body"), config("bodyPoint"), solver.robots(), config("robotIndex"), config("relBody"));
+    t = std::make_shared<mc_tasks::RelativeEndEffectorTask>(config("body"), config("bodyPoint"), solver.robots(),
+                                                            config("robotIndex"), config("relBody"));
   }
   else
   {
-    t = std::make_shared<mc_tasks::RelativeEndEffectorTask>(config("body"), solver.robots(), config("robotIndex"), config("relBody"));
+    t = std::make_shared<mc_tasks::RelativeEndEffectorTask>(config("body"), solver.robots(), config("robotIndex"),
+                                                            config("relBody"));
   }
   configure_pos_task(t->positionTask, solver, config, false);
   configure_ori_task(t->orientationTask, solver, config, false);
-  t->set_ef_pose({t->orientationTask->orientation(),
-                  t->positionTask->position()});
+  t->set_ef_pose({t->orientationTask->orientation(), t->positionTask->position()});
   t->load(solver, config);
   return t;
 }
 
-static bool registered =
-  mc_tasks::MetaTaskLoader::register_load_function("orientation", &load_orientation_task) &&
-  mc_tasks::MetaTaskLoader::register_load_function("position", &load_position_task) &&
-  mc_tasks::MetaTaskLoader::register_load_function("body6d", &load_ef_task) &&
-  mc_tasks::MetaTaskLoader::register_load_function("relBody6d", &load_relef_task);
+static bool registered = mc_tasks::MetaTaskLoader::register_load_function("orientation", &load_orientation_task)
+                         && mc_tasks::MetaTaskLoader::register_load_function("position", &load_position_task)
+                         && mc_tasks::MetaTaskLoader::register_load_function("body6d", &load_ef_task)
+                         && mc_tasks::MetaTaskLoader::register_load_function("relBody6d", &load_relef_task);
 
-}
+} // namespace

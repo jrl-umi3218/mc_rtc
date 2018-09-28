@@ -1,6 +1,5 @@
-#include <mc_control/fsm/states/Parallel.h>
-
 #include <mc_control/fsm/Controller.h>
+#include <mc_control/fsm/states/Parallel.h>
 
 namespace mc_control
 {
@@ -62,7 +61,10 @@ bool ParallelState::read_msg(std::string & msg)
 {
   for(auto & s : states_)
   {
-    if(s->read_msg(msg)) { return true; }
+    if(s->read_msg(msg))
+    {
+      return true;
+    }
   }
   return false;
 }
@@ -71,13 +73,16 @@ bool ParallelState::read_write_msg(std::string & msg, std::string & out)
 {
   for(auto & s : states_)
   {
-    if(s->read_write_msg(msg, out)) { return true; }
+    if(s->read_write_msg(msg, out))
+    {
+      return true;
+    }
   }
   return false;
 }
 
-}
+} // namespace fsm
 
-}
+} // namespace mc_control
 
 EXPORT_SINGLE_STATE("Parallel", mc_control::fsm::ParallelState)

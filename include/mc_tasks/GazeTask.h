@@ -33,10 +33,13 @@ public:
    *
    */
   GazeTask(const std::string & bodyName,
-            const Eigen::Vector2d & point2d,
-            double depthEstimate, const sva::PTransformd & X_b_gaze,
-            const mc_rbdyn::Robots & robots, unsigned int robotIndex,
-            double stiffness = 2.0, double weight = 500);
+           const Eigen::Vector2d & point2d,
+           double depthEstimate,
+           const sva::PTransformd & X_b_gaze,
+           const mc_rbdyn::Robots & robots,
+           unsigned int robotIndex,
+           double stiffness = 2.0,
+           double weight = 500);
 
   /*! \brief Constructor
    *
@@ -56,10 +59,12 @@ public:
    *
    */
   GazeTask(const std::string & bodyName,
-            const Eigen::Vector3d & point3d,
-            const sva::PTransformd & X_b_gaze,
-            const mc_rbdyn::Robots & robots, unsigned int robotIndex,
-            double stiffness = 2.0, double weight = 500);
+           const Eigen::Vector3d & point3d,
+           const sva::PTransformd & X_b_gaze,
+           const mc_rbdyn::Robots & robots,
+           unsigned int robotIndex,
+           double stiffness = 2.0,
+           double weight = 500);
 
   /*! \brief Reset the task
    *
@@ -86,4 +91,4 @@ public:
   void error(const Eigen::Vector3d & point3d, const Eigen::Vector2d & point2d_ref = Eigen::Vector2d::Zero());
 };
 
-}
+} // namespace mc_tasks

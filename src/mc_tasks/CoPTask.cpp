@@ -8,14 +8,15 @@ namespace mc_tasks
 
 namespace
 {
-  constexpr double MIN_PRESSURE = 0.5;  // [N]
+constexpr double MIN_PRESSURE = 0.5; // [N]
 }
 
 CoPTask::CoPTask(const std::string & surfaceName,
-      const mc_rbdyn::Robots & robots,
-      unsigned int robotIndex,
-      double stiffness, double weight)
-  : AdmittanceTask(surfaceName, robots, robotIndex, stiffness, weight)
+                 const mc_rbdyn::Robots & robots,
+                 unsigned int robotIndex,
+                 double stiffness,
+                 double weight)
+: AdmittanceTask(surfaceName, robots, robotIndex, stiffness, weight)
 {
   name_ = "cop_" + robot_.name() + "_" + surfaceName;
 }
@@ -43,16 +44,8 @@ Eigen::Vector2d CoPTask::measuredCoP() const
 void CoPTask::addToLogger(mc_rtc::Logger & logger)
 {
   AdmittanceTask::addToLogger(logger);
-  logger.addLogEntry(name_ + "_measured_cop",
-                     [this]() -> Eigen::Vector2d
-                     {
-                     return measuredCoP();
-                     });
-  logger.addLogEntry(name_ + "_target_cop",
-                     [this]() -> const Eigen::Vector2d &
-                     {
-                     return targetCoP_;
-                     });
+  logger.addLogEntry(name_ + "_measured_cop", [this]() -> Eigen::Vector2d { return measuredCoP(); });
+  logger.addLogEntry(name_ + "_target_cop", [this]() -> const Eigen::Vector2d & { return targetCoP_; });
 }
 
 void CoPTask::removeFromLogger(mc_rtc::Logger & logger)
@@ -62,17 +55,16 @@ void CoPTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry(name_ + "_target_cop");
 }
 
-std::function<bool(const mc_tasks::MetaTask&, std::string&)>
-  CoPTask::buildCompletionCriteria(double dt,
-                                   const mc_rtc::Configuration & config) const
+std::function<bool(const mc_tasks::MetaTask &, std::string &)> CoPTask::buildCompletionCriteria(
+    double dt,
+    const mc_rtc::Configuration & config) const
 {
   if(config.has("copError"))
   {
     double copError = config("copError");
     assert(copError >= 0);
-    return [copError](const mc_tasks::MetaTask & t, std::string & out)
-    {
-      const auto & self = static_cast<const CoPTask&>(t);
+    return [copError](const mc_tasks::MetaTask & t, std::string & out) {
+      const auto & self = static_cast<const CoPTask &>(t);
       Eigen::Vector2d error = self.measuredCoP() - self.targetCoP();
       if(error.norm() < copError)
       {
@@ -88,16 +80,22 @@ std::function<bool(const mc_tasks::MetaTask&, std::string&)>
     Eigen::Vector3d dof = Eigen::Vector3d::Ones();
     for(size_t i = 0; i < 3; ++i)
     {
-      if(std::isnan(force(i))) { dof(i) = 0.; force(i) = 0.; }
-      else if(force(i) < 0) { dof(i) = -1.; }
+      if(std::isnan(force(i)))
+      {
+        dof(i) = 0.;
+        force(i) = 0.;
+      }
+      else if(force(i) < 0)
+      {
+        dof(i) = -1.;
+      }
     }
-    return [dof,force](const mc_tasks::MetaTask & t, std::string & out)
-    {
-      const auto & self = static_cast<const CoPTask&>(t);
+    return [dof, force](const mc_tasks::MetaTask & t, std::string & out) {
+      const auto & self = static_cast<const CoPTask &>(t);
       Eigen::Vector3d f = self.measuredWrench().force();
       for(size_t i = 0; i < 3; ++i)
       {
-        if(dof(i)*fabs(f(i)) < force(i))
+        if(dof(i) * fabs(f(i)) < force(i))
         {
           return false;
         }
@@ -109,32 +107,43 @@ std::function<bool(const mc_tasks::MetaTask&, std::string&)>
   return AdmittanceTask::buildCompletionCriteria(dt, config);
 }
 
-} // mc_tasks
+} // namespace mc_tasks
 
 namespace
 {
 
-static bool registered = mc_tasks::MetaTaskLoader::register_load_function("cop",
-  [](mc_solver::QPSolver & solver,
-     const mc_rtc::Configuration & config)
-  {
-    auto t = std::make_shared<mc_tasks::CoPTask>(config("surface"), solver.robots(), config("robotIndex"));
-    if(config.has("admittance")) { t->admittance(config("admittance")); }
-    if(config.has("cop")) { t->targetCoP(config("cop")); }
-    if(config.has("force")) { t->targetForce(config("force")); }
-    if(config.has("targetSurface"))
-    {
-      const auto& c = config("targetSurface");
-      t->targetSurface(
-          c("robotIndex"), c("surface"),
-          {c("offset_rotation", Eigen::Matrix3d::Identity().eval()),
-           c("offset_translation", Eigen::Vector3d::Zero().eval())});
-    }
-    else if(config.has("targetPose")) { t->targetPose(config("targetPose")); }
-    if(config.has("weight")) { t->weight(config("weight")); }
-    t->load(solver, config);
-    return t;
-  }
-);
-
+static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
+    "cop",
+    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
+      auto t = std::make_shared<mc_tasks::CoPTask>(config("surface"), solver.robots(), config("robotIndex"));
+      if(config.has("admittance"))
+      {
+        t->admittance(config("admittance"));
+      }
+      if(config.has("cop"))
+      {
+        t->targetCoP(config("cop"));
+      }
+      if(config.has("force"))
+      {
+        t->targetForce(config("force"));
+      }
+      if(config.has("targetSurface"))
+      {
+        const auto & c = config("targetSurface");
+        t->targetSurface(c("robotIndex"), c("surface"),
+                         {c("offset_rotation", Eigen::Matrix3d::Identity().eval()),
+                          c("offset_translation", Eigen::Vector3d::Zero().eval())});
+      }
+      else if(config.has("targetPose"))
+      {
+        t->targetPose(config("targetPose"));
+      }
+      if(config.has("weight"))
+      {
+        t->weight(config("weight"));
+      }
+      t->load(solver, config);
+      return t;
+    });
 }

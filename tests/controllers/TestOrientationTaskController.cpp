@@ -1,14 +1,13 @@
 #ifdef BOOST_TEST_MAIN
-#undef BOOST_TEST_MAIN
+#  undef BOOST_TEST_MAIN
 #endif
-#include <boost/test/unit_test.hpp>
-
+#include <mc_control/api.h>
 #include <mc_control/mc_controller.h>
+#include <mc_rtc/logging.h>
 #include <mc_tasks/CoMTask.h>
 #include <mc_tasks/OrientationTask.h>
-#include <mc_control/api.h>
 
-#include <mc_rtc/logging.h>
+#include <boost/test/unit_test.hpp>
 
 namespace mc_control
 {
@@ -16,8 +15,7 @@ namespace mc_control
 struct MC_CONTROL_DLLAPI TestOrientationTaskController : public MCController
 {
 public:
-  TestOrientationTaskController(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt)
-  : MCController(rm, dt)
+  TestOrientationTaskController(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt) : MCController(rm, dt)
   {
     // Check that the default constructor loads the robot + ground environment
     BOOST_CHECK_EQUAL(robots().robots().size(), 2);
@@ -28,10 +26,8 @@ public:
     postureTask->stiffness(1);
     postureTask->weight(1);
     solver().addTask(postureTask.get());
-    solver().setContacts({
-      mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"),
-      mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")
-    });
+    solver().setContacts(
+        {mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"), mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")});
 
     /* Create and add the position task with the default stiffness/weight */
     oriTask = std::make_shared<mc_tasks::OrientationTask>("RARM_LINK6", robots(), 0);
@@ -56,12 +52,12 @@ public:
 
       /* Apply dimWeight to ignore rotation around z */
       oriTask->dimWeight(Eigen::Vector3d(1., 1., 0.));
-      oriTask->orientation(oriTask->orientation()*sva::RotZ<double>(-M_PI/2));
+      oriTask->orientation(oriTask->orientation() * sva::RotZ<double>(-M_PI / 2));
     }
     if(nrIter == 3000)
     {
       /* At this point the task error on z should be significant */
-      BOOST_CHECK(fabs(oriTask->eval().z() - M_PI/2) > 0.1);
+      BOOST_CHECK(fabs(oriTask->eval().z() - M_PI / 2) > 0.1);
       /* But the task speed on z should be small */
       BOOST_CHECK_SMALL(fabs(oriTask->speed().z()), 1e-2);
 
@@ -70,7 +66,7 @@ public:
       oriTask->reset();
       oriTask->dimWeight(Eigen::Vector3d(1., 1., 1.));
       oriTask->selectActiveJoints(solver(), active_joints);
-      oriTask->orientation(oriTask->orientation()*sva::RotZ<double>(-M_PI/2));
+      oriTask->orientation(oriTask->orientation() * sva::RotZ<double>(-M_PI / 2));
     }
     if(nrIter == 4500)
     {
@@ -82,7 +78,7 @@ public:
       oriTask->reset();
       oriTask->selectUnactiveJoints(solver(), {"RARM_JOINT3"});
       orig_raj3 = robot().mbc().q[robot().jointIndexByName("RARM_JOINT3")][0];
-      oriTask->orientation(oriTask->orientation()*sva::RotZ<double>(M_PI/2));
+      oriTask->orientation(oriTask->orientation() * sva::RotZ<double>(M_PI / 2));
 
       /* Also reset the joint target in posture task */
       auto p = postureTask->posture();
@@ -110,13 +106,14 @@ public:
     oriTask->reset();
     comTask->reset();
     /* Align the wrist X axis with gravity */
-    oriTask->orientation(sva::RotY(-M_PI/2));
+    oriTask->orientation(sva::RotY(-M_PI / 2));
   }
+
 private:
   unsigned int nrIter = 0;
   std::shared_ptr<mc_tasks::OrientationTask> oriTask = nullptr;
   std::shared_ptr<mc_tasks::CoMTask> comTask = nullptr;
-  std::vector<std::string> active_joints = [](){
+  std::vector<std::string> active_joints = []() {
     std::vector<std::string> ret;
     for(unsigned int i = 0; i < 8; ++i)
     {
@@ -129,6 +126,6 @@ private:
   double orig_raj3 = 0;
 };
 
-}
+} // namespace mc_control
 
 SIMPLE_CONTROLLER_CONSTRUCTOR("TestOrientationTaskController", mc_control::TestOrientationTaskController)

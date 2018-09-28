@@ -21,9 +21,12 @@ struct MC_TASKS_DLLAPI LookAtTask : public VectorOrientationTask
    * \param weight Task weight
    *
    */
-  LookAtTask(const std::string& bodyName, const Eigen::Vector3d& bodyVector,
-             const Eigen::Vector3d& targetPos, const mc_rbdyn::Robots& robots,
-             unsigned int robotIndex, double stiffness = 2.0,
+  LookAtTask(const std::string & bodyName,
+             const Eigen::Vector3d & bodyVector,
+             const Eigen::Vector3d & targetPos,
+             const mc_rbdyn::Robots & robots,
+             unsigned int robotIndex,
+             double stiffness = 2.0,
              double weight = 500);
 
   /*! \brief Reset the task */
@@ -34,7 +37,7 @@ struct MC_TASKS_DLLAPI LookAtTask : public VectorOrientationTask
    *
    * \param pos Target position in world frame
    */
-  void target(const Eigen::Vector3d& pos);
+  void target(const Eigen::Vector3d & pos);
   /**
    * @brief Gets the target frame position
    * See targetVector() to obtain the gaze vector
@@ -43,13 +46,13 @@ struct MC_TASKS_DLLAPI LookAtTask : public VectorOrientationTask
    */
   Eigen::Vector3d target() const;
 
- private:
-  void addToLogger(mc_rtc::Logger& logger) override;
-  void removeFromLogger(mc_rtc::Logger& logger) override;
+private:
+  void addToLogger(mc_rtc::Logger & logger) override;
+  void removeFromLogger(mc_rtc::Logger & logger) override;
 
- private:
+private:
   /*! Target position in world frame */
   Eigen::Vector3d target_pos_;
 };
 
-}
+} // namespace mc_tasks

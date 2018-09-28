@@ -1,13 +1,12 @@
 #pragma once
 
 #include <mc_control/mc_controller.h>
-
-#include <mc_tasks/RelativeEndEffectorTask.h>
 #include <mc_tasks/CoMTask.h>
+#include <mc_tasks/RelativeEndEffectorTask.h>
 
 namespace tf2_ros
 {
-  class TransformBroadcaster;
+class TransformBroadcaster;
 }
 
 #include <mc_control/api.h>
@@ -27,6 +26,7 @@ public:
   virtual bool read_msg(std::string & msg) override;
 
   virtual bool read_write_msg(std::string & msg, std::string & out) override;
+
 private:
   std::shared_ptr<mc_tasks::RelativeEndEffectorTask> lh2Task;
   std::shared_ptr<mc_tasks::RelativeEndEffectorTask> rh2Task;
@@ -36,6 +36,6 @@ private:
   unsigned int seq;
 };
 
-}
+} // namespace mc_control
 
 SIMPLE_CONTROLLER_CONSTRUCTOR("BCISelfInteract", mc_control::MCBCISelfInteractController)

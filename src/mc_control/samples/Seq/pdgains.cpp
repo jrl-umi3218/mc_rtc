@@ -1,8 +1,8 @@
+#include <mc_rtc/config.h>
+
 #include <string>
 #include <unordered_map>
 #include <vector>
-
-#include <mc_rtc/config.h>
 
 namespace pdgains
 {
@@ -15,60 +15,37 @@ inline bool setPGains(const std::vector<int> & joints, const std::vector<double>
 inline bool setPGains(const std::vector<std::string> & jnames, const std::vector<double> & pgains);
 inline bool setDGains(const std::vector<int> & joints, const std::vector<double> & dgains);
 inline bool setDGains(const std::vector<std::string> & jnames, const std::vector<double> & dgains);
-inline bool setPDGains(const std::vector<int> & joints, const std::vector<double> & pgains, const std::vector<double> & dgains);
-inline bool setPDGains(const std::vector<std::string> & jnames, const std::vector<double> & pgains, const std::vector<double> & dgains);
+inline bool setPDGains(const std::vector<int> & joints,
+                       const std::vector<double> & pgains,
+                       const std::vector<double> & dgains);
+inline bool setPDGains(const std::vector<std::string> & jnames,
+                       const std::vector<double> & pgains,
+                       const std::vector<double> & dgains);
 inline bool setPDGains(const std::vector<double> & pgains, const std::vector<double> & dgains);
-inline bool getPGain(int joint, double &pgain);
+inline bool getPGain(int joint, double & pgain);
 inline bool getPGain(const std::string & jname, double & pgain);
-inline bool getPGains(std::vector<double> &pgains);
-inline bool getDGain(int joint, double &dgain);
+inline bool getPGains(std::vector<double> & pgains);
+inline bool getDGain(int joint, double & dgain);
 inline bool getDGain(const std::string & jname, double & dgain);
-inline bool getDGains(std::vector<double> &dgains);
+inline bool getDGains(std::vector<double> & dgains);
 
-}
+} // namespace pdgains
 
 #ifdef MC_RTC_HAS_HRPSYS_BASE
-#include <hrpsys/io/iob.h>
+#  include <hrpsys/io/iob.h>
 #endif
 
 #ifdef MC_RTC_HAS_HRPSYS_BASE
 namespace hrp2
 {
-  static const std::unordered_map<std::string, int> joints =
-  {
-    {"RLEG_JOINT0",0},
-    {"RLEG_JOINT1",1},
-    {"RLEG_JOINT2",2},
-    {"RLEG_JOINT3",3},
-    {"RLEG_JOINT4",4},
-    {"RLEG_JOINT5",5},
-    {"LLEG_JOINT0",6},
-    {"LLEG_JOINT1",7},
-    {"LLEG_JOINT2",8},
-    {"LLEG_JOINT3",9},
-    {"LLEG_JOINT4",10},
-    {"LLEG_JOINT5",11},
-    {"CHEST_JOINT0",12},
-    {"CHEST_JOINT1",13},
-    {"HEAD_JOINT0",14},
-    {"HEAD_JOINT1",15},
-    {"RARM_JOINT0",16},
-    {"RARM_JOINT1",17},
-    {"RARM_JOINT2",18},
-    {"RARM_JOINT3",19},
-    {"RARM_JOINT4",20},
-    {"RARM_JOINT5",21},
-    {"RARM_JOINT6",22},
-    {"RARM_JOINT7",23},
-    {"LARM_JOINT0",24},
-    {"LARM_JOINT1",25},
-    {"LARM_JOINT2",26},
-    {"LARM_JOINT3",27},
-    {"LARM_JOINT4",28},
-    {"LARM_JOINT5",29},
-    {"LARM_JOINT6",30},
-    {"LARM_JOINT7",31}
-  };
+static const std::unordered_map<std::string, int> joints = {
+    {"RLEG_JOINT0", 0},  {"RLEG_JOINT1", 1},  {"RLEG_JOINT2", 2},   {"RLEG_JOINT3", 3},   {"RLEG_JOINT4", 4},
+    {"RLEG_JOINT5", 5},  {"LLEG_JOINT0", 6},  {"LLEG_JOINT1", 7},   {"LLEG_JOINT2", 8},   {"LLEG_JOINT3", 9},
+    {"LLEG_JOINT4", 10}, {"LLEG_JOINT5", 11}, {"CHEST_JOINT0", 12}, {"CHEST_JOINT1", 13}, {"HEAD_JOINT0", 14},
+    {"HEAD_JOINT1", 15}, {"RARM_JOINT0", 16}, {"RARM_JOINT1", 17},  {"RARM_JOINT2", 18},  {"RARM_JOINT3", 19},
+    {"RARM_JOINT4", 20}, {"RARM_JOINT5", 21}, {"RARM_JOINT6", 22},  {"RARM_JOINT7", 23},  {"LARM_JOINT0", 24},
+    {"LARM_JOINT1", 25}, {"LARM_JOINT2", 26}, {"LARM_JOINT3", 27},  {"LARM_JOINT4", 28},  {"LARM_JOINT5", 29},
+    {"LARM_JOINT6", 30}, {"LARM_JOINT7", 31}};
 }
 
 namespace pdgains
@@ -108,7 +85,10 @@ inline bool setDGain(const std::string & jname, double dgain)
 
 inline bool setPGains(const std::vector<int> & joints, const std::vector<double> & pgains)
 {
-  if(joints.size() != pgains.size()) { return false; }
+  if(joints.size() != pgains.size())
+  {
+    return false;
+  }
   bool b = false;
   if(open_iob())
   {
@@ -133,7 +113,10 @@ inline bool setPGains(const std::vector<std::string> & jnames, const std::vector
 
 inline bool setDGains(const std::vector<int> & joints, const std::vector<double> & dgains)
 {
-  if(joints.size() != dgains.size()) { return false; }
+  if(joints.size() != dgains.size())
+  {
+    return false;
+  }
   bool b = false;
   if(open_iob())
   {
@@ -156,9 +139,14 @@ inline bool setDGains(const std::vector<std::string> & jnames, const std::vector
   return setDGains(joints, dgains);
 }
 
-inline bool setPDGains(const std::vector<int> & joints, const std::vector<double> & pgains, const std::vector<double> & dgains)
+inline bool setPDGains(const std::vector<int> & joints,
+                       const std::vector<double> & pgains,
+                       const std::vector<double> & dgains)
 {
-  if(joints.size() != pgains.size() || joints.size() != dgains.size()) { return false; }
+  if(joints.size() != pgains.size() || joints.size() != dgains.size())
+  {
+    return false;
+  }
   bool b = false;
   if(open_iob())
   {
@@ -172,7 +160,9 @@ inline bool setPDGains(const std::vector<int> & joints, const std::vector<double
   return b;
 }
 
-inline bool setPDGains(const std::vector<std::string> & jnames, const std::vector<double> & pgains, const std::vector<double> & dgains)
+inline bool setPDGains(const std::vector<std::string> & jnames,
+                       const std::vector<double> & pgains,
+                       const std::vector<double> & dgains)
 {
   std::vector<int> joints;
   for(const auto & jn : jnames)
@@ -184,7 +174,10 @@ inline bool setPDGains(const std::vector<std::string> & jnames, const std::vecto
 
 inline bool setPDGains(const std::vector<double> & pgains, const std::vector<double> & dgains)
 {
-  if(pgains.size() != dgains.size()) { return false; }
+  if(pgains.size() != dgains.size())
+  {
+    return false;
+  }
   bool b = false;
   if(open_iob())
   {
@@ -198,7 +191,7 @@ inline bool setPDGains(const std::vector<double> & pgains, const std::vector<dou
   return b;
 }
 
-inline bool getPGain(int joint, double &pgain)
+inline bool getPGain(int joint, double & pgain)
 {
   bool b = false;
   if(open_iob())
@@ -214,7 +207,7 @@ inline bool getPGain(const std::string & jname, double & pgain)
   return getPGain(hrp2::joints.at(jname), pgain);
 }
 
-inline bool getPGains(std::vector<double> &pgains)
+inline bool getPGains(std::vector<double> & pgains)
 {
   bool b = false;
   if(open_iob())
@@ -228,7 +221,7 @@ inline bool getPGains(std::vector<double> &pgains)
   return b;
 }
 
-inline bool getDGain(int joint, double &dgain)
+inline bool getDGain(int joint, double & dgain)
 {
   bool b = false;
   if(open_iob())
@@ -244,7 +237,7 @@ inline bool getDGain(const std::string & jname, double & dgain)
   return getDGain(hrp2::joints.at(jname), dgain);
 }
 
-inline bool getDGains(std::vector<double> &dgains)
+inline bool getDGains(std::vector<double> & dgains)
 {
   bool b = false;
   if(open_iob())
@@ -263,22 +256,77 @@ inline bool getDGains(std::vector<double> &dgains)
 
 namespace pdgains
 {
-inline bool setPGain(int /*joint*/, double /*pgain*/) { return true; }
-inline bool setPGain(const std::string & /*jname*/, double /*pgain*/) { return true; }
-inline bool setDGain(int /*joint*/, double /*dgain*/) { return true; }
-inline bool setDGain(const std::string & /*jname*/, double /*dgain*/) { return true; }
-inline bool setPGains(const std::vector<int> & /*joints*/, const std::vector<double> & /*pgains*/) { return true; }
-inline bool setPGains(const std::vector<std::string> & /*jnames*/, const std::vector<double> & /*pgains*/) { return true; }
-inline bool setDGains(const std::vector<int> & /*joints*/, const std::vector<double> & /*dgains*/) { return true; }
-inline bool setDGains(const std::vector<std::string> & /*jnames*/, const std::vector<double> & /*dgains*/) { return true; }
-inline bool setPDGains(const std::vector<int> & /*joints*/, const std::vector<double> & /*pgains*/, const std::vector<double> & /*dgains*/) { return true; }
-inline bool setPDGains(const std::vector<std::string> & /*jnames*/, const std::vector<double> & /*pgains*/, const std::vector<double> & /*dgains*/) { return true; }
-inline bool setPDGains(const std::vector<double> & /*pgains*/, const std::vector<double> & /*dgains*/) { return true; }
-inline bool getPGain(int /*joint*/, double &/*pgain*/) { return true; }
-inline bool getPGain(const std::string & /*jname*/, double & /*pgain*/) { return true; }
-inline bool getPGains(std::vector<double> &/*pgains*/) { return true; }
-inline bool getDGain(int /*joint*/, double &/*dgain*/) { return true; }
-inline bool getDGain(const std::string & /*jname*/, double & /*dgain*/) { return true; }
-inline bool getDGains(std::vector<double> &/*dgains*/) { return true; }
+inline bool setPGain(int /*joint*/, double /*pgain*/)
+{
+  return true;
+}
+inline bool setPGain(const std::string & /*jname*/, double /*pgain*/)
+{
+  return true;
+}
+inline bool setDGain(int /*joint*/, double /*dgain*/)
+{
+  return true;
+}
+inline bool setDGain(const std::string & /*jname*/, double /*dgain*/)
+{
+  return true;
+}
+inline bool setPGains(const std::vector<int> & /*joints*/, const std::vector<double> & /*pgains*/)
+{
+  return true;
+}
+inline bool setPGains(const std::vector<std::string> & /*jnames*/, const std::vector<double> & /*pgains*/)
+{
+  return true;
+}
+inline bool setDGains(const std::vector<int> & /*joints*/, const std::vector<double> & /*dgains*/)
+{
+  return true;
+}
+inline bool setDGains(const std::vector<std::string> & /*jnames*/, const std::vector<double> & /*dgains*/)
+{
+  return true;
+}
+inline bool setPDGains(const std::vector<int> & /*joints*/,
+                       const std::vector<double> & /*pgains*/,
+                       const std::vector<double> & /*dgains*/)
+{
+  return true;
+}
+inline bool setPDGains(const std::vector<std::string> & /*jnames*/,
+                       const std::vector<double> & /*pgains*/,
+                       const std::vector<double> & /*dgains*/)
+{
+  return true;
+}
+inline bool setPDGains(const std::vector<double> & /*pgains*/, const std::vector<double> & /*dgains*/)
+{
+  return true;
+}
+inline bool getPGain(int /*joint*/, double & /*pgain*/)
+{
+  return true;
+}
+inline bool getPGain(const std::string & /*jname*/, double & /*pgain*/)
+{
+  return true;
+}
+inline bool getPGains(std::vector<double> & /*pgains*/)
+{
+  return true;
+}
+inline bool getDGain(int /*joint*/, double & /*dgain*/)
+{
+  return true;
+}
+inline bool getDGain(const std::string & /*jname*/, double & /*dgain*/)
+{
+  return true;
+}
+inline bool getDGains(std::vector<double> & /*dgains*/)
+{
+  return true;
+}
 } // namespace pdgains
 #endif // MC_RTC_HAS_HRPSYS_BASE

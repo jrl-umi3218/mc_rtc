@@ -27,6 +27,7 @@ public:
     /** Position constraint */
     Position = 2
   };
+
 public:
   /** Constructor
    * \param timeStep Ignored if contactType is Acceleration
@@ -36,19 +37,21 @@ public:
    * tasks::qp::PositiveLambda constraint in addition to the
    * tasks::qp::ContactConstr
    */
-  ContactConstraint(double timeStep, ContactType contactType= Velocity, bool dynamics = true);
+  ContactConstraint(double timeStep, ContactType contactType = Velocity, bool dynamics = true);
 
   /** Implementation of mc_solver::ConstraintSet::addToSolver */
   virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) override;
 
   /** Implementation of mc_solver::ConstraintSet::removeFromSolver */
   virtual void removeFromSolver(tasks::qp::QPSolver & solver) override;
+
 public:
   /** Holds the proper type of ContactConstr based on constructor input, always
    * holds a valid pointer */
   std::shared_ptr<tasks::qp::ContactConstr> contactConstr;
   /** May be a null-ptr */
   std::shared_ptr<tasks::qp::PositiveLambda> posLambdaConstr;
+
 public:
   /** \deprecated{Default constructor, not made for general usage}
    */

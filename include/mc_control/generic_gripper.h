@@ -1,12 +1,11 @@
 #pragma once
 
+#include <mc_control/api.h>
+#include <mc_rbdyn/Robots.h>
+
 #include <map>
 #include <string>
 #include <vector>
-
-#include <mc_rbdyn/Robots.h>
-
-#include <mc_control/api.h>
 
 namespace mc_control
 {
@@ -55,9 +54,12 @@ public:
    * \param timeStep Controller timestep
    * \param reverseLimits If set to true, then the gripper is considered "open" when the joints' values are minimal
    */
-  Gripper(const mc_rbdyn::Robot & robot, const std::vector<std::string> & jointNames,
+  Gripper(const mc_rbdyn::Robot & robot,
+          const std::vector<std::string> & jointNames,
           const std::string & robot_urdf,
-          const std::vector<double> & currentQ, double timeStep, bool reverseLimits = false);
+          const std::vector<double> & currentQ,
+          double timeStep,
+          bool reverseLimits = false);
 
   /*! \brief Set the current configuration of the active joints involved in the gripper
    * \param curentQ Current values of the active joints involved in the gripper
@@ -88,6 +90,7 @@ public:
    * \param q Encoder value of the gripper's active joints
    */
   void setActualQ(const std::vector<double> & q);
+
 public:
   /*! Gripper name */
   std::string name;
@@ -110,7 +113,7 @@ public:
   /*! Active joints */
   std::vector<size_t> active_idx;
   /*! Mimic multiplier, first element is the joint to mimic, second is the multiplier */
-  std::vector< std::pair<size_t, double> > mult;
+  std::vector<std::pair<size_t, double>> mult;
   /*! Full joints' values */
   std::vector<double> _q;
 

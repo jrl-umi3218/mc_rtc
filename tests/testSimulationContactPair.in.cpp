@@ -1,10 +1,9 @@
-#include <boost/test/unit_test.hpp>
-
 #include <mc_control/SimulationContactSensor.h>
-
-#include <mc_rtc/config.h>
-#include <mc_rbdyn/Robots.h>
 #include <mc_rbdyn/RobotLoader.h>
+#include <mc_rbdyn/Robots.h>
+#include <mc_rtc/config.h>
+
+#include <boost/test/unit_test.hpp>
 
 mc_rbdyn::Robots & get_robots()
 {
@@ -16,7 +15,8 @@ mc_rbdyn::Robots & get_robots()
   mc_rbdyn::RobotLoader::clear();
   mc_rbdyn::RobotLoader::update_robot_module_path({"@CMAKE_CURRENT_BINARY_DIR@/../src/mc_robots"});
   auto rm = mc_rbdyn::RobotLoader::get_robot_module("HRP2DRC");
-  auto env = mc_rbdyn::RobotLoader::get_robot_module("env", std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH), std::string("ground"));
+  auto env = mc_rbdyn::RobotLoader::get_robot_module("env", std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH),
+                                                     std::string("ground"));
   robots_ptr = mc_rbdyn::loadRobots({rm, env});
   return *robots_ptr;
 }
@@ -27,8 +27,7 @@ BOOST_AUTO_TEST_CASE(TestSimulationContactPair)
   auto & robot = robots.robot();
   auto & env = robots.env();
 
-  mc_control::SimulationContactPair pair(robot.surfaces().at("LFullSole"),
-                                         env.surfaces().at("AllGround"));
+  mc_control::SimulationContactPair pair(robot.surfaces().at("LFullSole"), env.surfaces().at("AllGround"));
 
   // In its default configuration the robot's foot should be at the ground
   // level

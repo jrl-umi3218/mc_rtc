@@ -1,12 +1,12 @@
 #pragma once
 
 #include <mc_rbdyn/Robots.h>
-#include <mc_solver/QPSolver.h>
-#include <Tasks/QPTasks.h>
-
-#include <mc_tasks/api.h>
 #include <mc_rtc/logging.h>
+#include <mc_solver/QPSolver.h>
 #include <mc_tasks/MetaTask.h>
+#include <mc_tasks/api.h>
+
+#include <Tasks/QPTasks.h>
 
 namespace mc_tasks
 {
@@ -35,8 +35,7 @@ struct TrajectoryTaskGeneric : public MetaTask
    * \param weight Weight of the task
    *
    */
-  TrajectoryTaskGeneric(const mc_rbdyn::Robots & robots, unsigned int robotIndex,
-                        double stiffness, double weight);
+  TrajectoryTaskGeneric(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double stiffness, double weight);
 
   virtual ~TrajectoryTaskGeneric();
 
@@ -160,19 +159,22 @@ struct TrajectoryTaskGeneric : public MetaTask
   virtual Eigen::VectorXd speed() const override;
 
   void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) override;
+
 protected:
   /*! This function should be called to finalize the task creation, it will
    * create the actual tasks objects */
-  template<typename ... Args>
-  void finalize(Args && ... args);
+  template<typename... Args>
+  void finalize(Args &&... args);
 
   void addToGUI(mc_rtc::gui::StateBuilder &) override;
+
 protected:
   const mc_rbdyn::Robots & robots;
   unsigned int rIndex;
   std::shared_ptr<T> errorT = nullptr;
   Eigen::VectorXd refVel_;
   Eigen::VectorXd refAccel_;
+
 private:
   double stiff;
   double damp;
@@ -188,6 +190,6 @@ private:
   virtual void update() override;
 };
 
-}
+} // namespace mc_tasks
 
 #include <mc_tasks/TrajectoryTaskGeneric.hpp>

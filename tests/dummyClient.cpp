@@ -1,5 +1,4 @@
 #include <mc_control/ControllerClient.h>
-
 #include <mc_rtc/logging.h>
 
 #include <chrono>
@@ -15,12 +14,15 @@ std::string cat2str(const std::vector<std::string> & cat)
   for(size_t i = 0; i < cat.size(); ++i)
   {
     ret += cat[i];
-    if(i != cat.size() - 1) { ret += "/"; }
+    if(i != cat.size() - 1)
+    {
+      ret += "/";
+    }
   }
   return ret;
 }
 
-}
+} // namespace
 
 struct DummyControllerClient : public mc_control::ControllerClient
 {
@@ -44,8 +46,7 @@ void DummyControllerClient::join()
   }
 }
 
-void DummyControllerClient::category(const std::vector<std::string> & category,
-                                     const std::string & name)
+void DummyControllerClient::category(const std::vector<std::string> & category, const std::string & name)
 {
   LOG_INFO("Create new category " << name << " in " << cat2str(category))
 }

@@ -1,6 +1,6 @@
-#include <boost/test/unit_test.hpp>
-
 #include <mc_rtc/GUIState.h>
+
+#include <boost/test/unit_test.hpp>
 
 struct DummyProvider
 {
@@ -12,8 +12,8 @@ BOOST_AUTO_TEST_CASE(TestGUIStateBuilder)
 {
   DummyProvider provider;
   mc_rtc::gui::StateBuilder builder;
-  builder.addElement({"dummy", "provider"}, mc_rtc::gui::Label("value", [&provider]{ return provider.value; }));
-  builder.addElement({"dummy", "provider"}, mc_rtc::gui::ArrayLabel("point", [&provider]{ return provider.point; }));
+  builder.addElement({"dummy", "provider"}, mc_rtc::gui::Label("value", [&provider] { return provider.value; }));
+  builder.addElement({"dummy", "provider"}, mc_rtc::gui::ArrayLabel("point", [&provider] { return provider.point; }));
   {
     const auto & state = builder.update();
     BOOST_REQUIRE(state.has("dummy"));

@@ -12,4 +12,4 @@ struct ZMP
   double z;
 };
 
-}
+} // namespace mc_solver
