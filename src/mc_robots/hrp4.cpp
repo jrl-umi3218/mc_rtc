@@ -386,15 +386,14 @@ HRP4VREPRobotModule::HRP4VREPRobotModule(bool fixed) : HRP4WithHandRobotModule(f
   init();
 }
 
-HRP4FlexRobotModule::HRP4FlexRobotModule(bool fixed)
-: HRP4WithHandRobotModule(fixed)
+HRP4FlexRobotModule::HRP4FlexRobotModule(bool fixed) : HRP4WithHandRobotModule(fixed)
 {
-  halfSitting["RLEG_BUSH_ROLL"] = { 0. };
-  halfSitting["RLEG_BUSH_PITCH"] = { 0. };
-  halfSitting["RLEG_BUSH_Z"] = { 0. };
-  halfSitting["LLEG_BUSH_ROLL"] = { 0. };
-  halfSitting["LLEG_BUSH_PITCH"] = { 0. };
-  halfSitting["LLEG_BUSH_Z"] = { 0. };
+  halfSitting["RLEG_BUSH_ROLL"] = {0.};
+  halfSitting["RLEG_BUSH_PITCH"] = {0.};
+  halfSitting["RLEG_BUSH_Z"] = {0.};
+  halfSitting["LLEG_BUSH_ROLL"] = {0.};
+  halfSitting["LLEG_BUSH_PITCH"] = {0.};
+  halfSitting["LLEG_BUSH_Z"] = {0.};
 
   virtualLinks.push_back("l_ankle_bush_1");
   virtualLinks.push_back("r_ankle_bush_1");

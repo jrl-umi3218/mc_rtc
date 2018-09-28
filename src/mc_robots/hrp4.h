@@ -84,7 +84,8 @@ extern "C"
 {
   ROBOT_MODULE_API void MC_RTC_ROBOT_MODULE(std::vector<std::string> & names)
   {
-    names = {"HRP4", "HRP4NoHand", "HRP4VREP", "HRP4Flex", "HRP4Fixed", "HRP4NoHandFixed", "HRP4VREPFixed", "HRP4FlexFixed"};
+    names = {"HRP4",      "HRP4NoHand",      "HRP4VREP",      "HRP4Flex",
+             "HRP4Fixed", "HRP4NoHandFixed", "HRP4VREPFixed", "HRP4FlexFixed"};
   }
   ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr)
   {

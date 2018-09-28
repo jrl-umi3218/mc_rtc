@@ -343,7 +343,7 @@ bool MCGlobalController::run()
     auto & real_robot = real_robots->robot();
     // Set all joint values and velocities from encoders
     int i = 0;
-    for(const auto& ref_joint : config.main_robot_module->ref_joint_order())
+    for(const auto & ref_joint : config.main_robot_module->ref_joint_order())
     {
       if(real_robot.hasJoint(ref_joint))
       {
@@ -377,7 +377,7 @@ bool MCGlobalController::run()
       const auto & sensor = robot().bodySensor(config.update_real_sensor_name);
       const auto & fb = robot().mb().body(0).name();
       sva::PTransformd X_0_s(sensor.orientation(), sensor.position());
-      const auto& X_s_b = sensor.X_b_s().inv();
+      const auto & X_s_b = sensor.X_b_s().inv();
       sva::PTransformd X_b_fb = real_robots->robot().X_b1_b2(sensor.parentBody(), fb);
       sva::PTransformd X_s_fb = X_b_fb * X_s_b;
       sva::PTransformd X_0_fb = X_s_fb * X_0_s;
@@ -386,18 +386,12 @@ bool MCGlobalController::run()
       Eigen::Quaterniond qt(R_0_fb);
       qt.normalize();
       Eigen::Vector3d t(X_0_fb.translation());
-      real_robot.mbc().q[0] = {
-        qt.w(), qt.x(), qt.y(), qt.z(),
-        t.x(), t.y(), t.z()
-      };
+      real_robot.mbc().q[0] = {qt.w(), qt.x(), qt.y(), qt.z(), t.x(), t.y(), t.z()};
 
       sva::MotionVecd sensorVel(sensor.angularVelocity(), sensor.linearVelocity());
       sva::MotionVecd fbVel = X_s_fb * sensorVel;
-      real_robot.mbc().alpha[0] =
-      {
-        fbVel.angular().x(), fbVel.angular().y(), fbVel.angular().z(),
-        fbVel.linear().x(), fbVel.linear().y(), fbVel.linear().z()
-      };
+      real_robot.mbc().alpha[0] = {fbVel.angular().x(), fbVel.angular().y(), fbVel.angular().z(),
+                                   fbVel.linear().x(),  fbVel.linear().y(),  fbVel.linear().z()};
     }
     rbd::forwardKinematics(real_robot.mb(), real_robot.mbc());
     rbd::forwardVelocity(real_robot.mb(), real_robot.mbc());
@@ -754,34 +748,25 @@ void MCGlobalController::setup_log()
       "accIn", [controller]() -> const Eigen::Vector3d & { return controller->robot().bodySensor().acceleration(); });
 
   // Log all other body sensors
-  const auto& bodySensors = controller->robot().bodySensors();
-  for (int i = 1; i < bodySensors.size(); ++i) {
-    const auto& name = bodySensors[i].name();
-    controller->logger().addLogEntry(name+"_pIn",
-                                     [controller,name]() -> const Eigen::Vector3d&
-                                     {
-                                     return controller->robot().bodySensor(name).position();
-                                     });
-    controller->logger().addLogEntry(name+"_rpyIn",
-                                     [controller,name]() -> const Eigen::Quaterniond&
-                                     {
-                                     return controller->robot().bodySensor(name).orientation();
-                                     });
-    controller->logger().addLogEntry(name+"_velIn",
-                                     [controller,name]() -> const Eigen::Vector3d&
-                                     {
-                                     return controller->robot().bodySensor(name).linearVelocity();
-                                     });
-    controller->logger().addLogEntry(name+"_rateIn",
-                                     [controller,name]() -> const Eigen::Vector3d&
-                                     {
-                                     return controller->robot().bodySensor(name).angularVelocity();
-                                     });
-    controller->logger().addLogEntry(name+"_accIn",
-                                     [controller,name]() -> const Eigen::Vector3d&
-                                     {
-                                     return controller->robot().bodySensor(name).acceleration();
-                                     });
+  const auto & bodySensors = controller->robot().bodySensors();
+  for(int i = 1; i < bodySensors.size(); ++i)
+  {
+    const auto & name = bodySensors[i].name();
+    controller->logger().addLogEntry(name + "_pIn", [controller, name]() -> const Eigen::Vector3d & {
+      return controller->robot().bodySensor(name).position();
+    });
+    controller->logger().addLogEntry(name + "_rpyIn", [controller, name]() -> const Eigen::Quaterniond & {
+      return controller->robot().bodySensor(name).orientation();
+    });
+    controller->logger().addLogEntry(name + "_velIn", [controller, name]() -> const Eigen::Vector3d & {
+      return controller->robot().bodySensor(name).linearVelocity();
+    });
+    controller->logger().addLogEntry(name + "_rateIn", [controller, name]() -> const Eigen::Vector3d & {
+      return controller->robot().bodySensor(name).angularVelocity();
+    });
+    controller->logger().addLogEntry(name + "_accIn", [controller, name]() -> const Eigen::Vector3d & {
+      return controller->robot().bodySensor(name).acceleration();
+    });
   }
 
   // Performance measures
