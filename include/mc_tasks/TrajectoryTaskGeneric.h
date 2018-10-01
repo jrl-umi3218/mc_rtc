@@ -176,12 +176,12 @@ protected:
   Eigen::VectorXd refAccel_;
 
 private:
-  double stiff;
-  double damp;
-  double wt;
-  bool inSolver = false;
-  std::shared_ptr<tasks::qp::JointsSelector> selectorT = nullptr;
-  std::shared_ptr<tasks::qp::TrajectoryTask> trajectoryT = nullptr;
+  Eigen::VectorXd stiffness_;
+  Eigen::VectorXd damping_;
+  double weight_;
+  bool inSolver_ = false;
+  std::shared_ptr<tasks::qp::JointsSelector> selectorT_ = nullptr;
+  std::shared_ptr<tasks::qp::TrajectoryTask> trajectoryT_ = nullptr;
 
   virtual void addToSolver(mc_solver::QPSolver & solver) override;
 
