@@ -98,6 +98,18 @@ struct LogDataHelper<sva::MotionVecd>
   }
 };
 
+template<>
+struct LogDataHelper<Eigen::VectorXd>
+{
+  static constexpr mc_rtc::log::LogData value_type = mc_rtc::log::LogData_DoubleVector;
+
+  static flatbuffers::Offset<void> serialize(flatbuffers::FlatBufferBuilder & builder, const Eigen::VectorXd & v)
+  {
+    auto fb_v = builder.CreateVector<double>(v.data(), v.size());
+    return mc_rtc::log::CreateDoubleVector(builder, fb_v).Union();
+  }
+};
+
 /** Type-traits for serializable types
  *
  * value is true if T is serializable
