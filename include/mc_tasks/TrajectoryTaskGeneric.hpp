@@ -12,7 +12,8 @@ TrajectoryTaskGeneric<T>::TrajectoryTaskGeneric(const mc_rbdyn::Robots & robots,
                                                 unsigned int robotIndex,
                                                 double stiffness,
                                                 double w)
-: robots(robots), rIndex(robotIndex), stiffness_(Eigen::VectorXd::Constant(1, stiffness)), damping_(Eigen::VectorXd::Constant(1, 2 * std::sqrt(stiffness))), weight_(w)
+: robots(robots), rIndex(robotIndex), stiffness_(Eigen::VectorXd::Constant(1, stiffness)),
+  damping_(Eigen::VectorXd::Constant(1, 2 * std::sqrt(stiffness))), weight_(w)
 {
 }
 
@@ -26,7 +27,8 @@ template<typename... Args>
 void TrajectoryTaskGeneric<T>::finalize(Args &&... args)
 {
   errorT = std::make_shared<T>(args...);
-  trajectoryT_ = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, errorT.get(), stiffness_(0), damping_(0), weight_);
+  trajectoryT_ = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, errorT.get(), stiffness_(0),
+                                                             damping_(0), weight_);
   stiffness_ = trajectoryT_->stiffness();
   damping_ = trajectoryT_->damping();
   if(refVel_.size() != trajectoryT_->refVel().size())
@@ -186,7 +188,7 @@ void TrajectoryTaskGeneric<T>::selectActiveJoints(const std::vector<std::string>
   }
   selectorT_ = std::make_shared<tasks::qp::JointsSelector>(
       tasks::qp::JointsSelector::ActiveJoints(robots.mbs(), rIndex, errorT.get(), activeJointsName));
-  trajectoryT_ = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, selectorT_.get(),1, 2, weight_);
+  trajectoryT_ = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, selectorT_.get(), 1, 2, weight_);
   trajectoryT_->setGains(stiffness_, damping_);
 }
 
@@ -332,13 +334,14 @@ void TrajectoryTaskGeneric<T>::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                           [this](const double & g) { this->stiffness(g); }),
                  mc_rtc::gui::NumberInput("weight", [this]() { return this->weight(); },
                                           [this](const double & w) { this->weight(w); }));
-  gui.addElement({"Tasks", name_, "Gains", "Dimensional"},
-                 mc_rtc::gui::ArrayInput("stiffness", [this]() { return this->dimStiffness(); },
-                                         [this](const Eigen::VectorXd & v) { this->setGains(v, this->dimDamping()); }),
-                 mc_rtc::gui::ArrayInput("damping", [this]() { return this->dimDamping(); },
-                                         [this](const Eigen::VectorXd & v) { this->setGains(this->dimStiffness(), v); }),
-                 mc_rtc::gui::ArrayInput("stiffness & damping", [this]() { return this->dimStiffness(); },
-                                         [this](const Eigen::VectorXd & v) { this->stiffness(v); }));
+  gui.addElement(
+      {"Tasks", name_, "Gains", "Dimensional"},
+      mc_rtc::gui::ArrayInput("stiffness", [this]() { return this->dimStiffness(); },
+                              [this](const Eigen::VectorXd & v) { this->setGains(v, this->dimDamping()); }),
+      mc_rtc::gui::ArrayInput("damping", [this]() { return this->dimDamping(); },
+                              [this](const Eigen::VectorXd & v) { this->setGains(this->dimStiffness(), v); }),
+      mc_rtc::gui::ArrayInput("stiffness & damping", [this]() { return this->dimStiffness(); },
+                              [this](const Eigen::VectorXd & v) { this->stiffness(v); }));
 }
 
 template<typename T>

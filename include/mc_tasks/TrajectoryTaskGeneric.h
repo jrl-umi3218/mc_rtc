@@ -172,6 +172,7 @@ protected:
   void addToLogger(mc_rtc::Logger & logger) override;
 
   void removeFromLogger(mc_rtc::Logger & logger) override;
+
 protected:
   const mc_rbdyn::Robots & robots;
   unsigned int rIndex;
