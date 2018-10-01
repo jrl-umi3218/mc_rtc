@@ -19,6 +19,7 @@ namespace mc_tasks
 template<typename T>
 struct TrajectoryTaskGeneric : public MetaTask
 {
+  using TrajectoryBase = TrajectoryTaskGeneric<T>;
 
   /*! \brief Constructor (auto damping)
    *
@@ -168,6 +169,10 @@ protected:
 
   void addToGUI(mc_rtc::gui::StateBuilder &) override;
 
+  void addToLogger(mc_rtc::Logger & logger) override;
+
+  void removeFromLogger(mc_rtc::Logger & logger) override;
+
 protected:
   const mc_rbdyn::Robots & robots;
   unsigned int rIndex;
@@ -176,12 +181,12 @@ protected:
   Eigen::VectorXd refAccel_;
 
 private:
-  double stiff;
-  double damp;
-  double wt;
-  bool inSolver = false;
-  std::shared_ptr<tasks::qp::JointsSelector> selectorT = nullptr;
-  std::shared_ptr<tasks::qp::TrajectoryTask> trajectoryT = nullptr;
+  Eigen::VectorXd stiffness_;
+  Eigen::VectorXd damping_;
+  double weight_;
+  bool inSolver_ = false;
+  std::shared_ptr<tasks::qp::JointsSelector> selectorT_ = nullptr;
+  std::shared_ptr<tasks::qp::TrajectoryTask> trajectoryT_ = nullptr;
 
   virtual void addToSolver(mc_solver::QPSolver & solver) override;
 

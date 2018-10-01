@@ -52,6 +52,7 @@ void PositionBasedVisServoTask::error(const sva::PTransformd & X_t_s)
 
 void PositionBasedVisServoTask::addToLogger(mc_rtc::Logger & logger)
 {
+  TrajectoryBase::addToLogger(logger);
   logger.addLogEntry(name_ + "_error", [this]() -> const sva::PTransformd & { return X_t_s_; });
   logger.addLogEntry(name_ + "_eval", [this]() -> sva::PTransformd {
     Eigen::Vector6d eval = errorT->eval();
@@ -65,6 +66,7 @@ void PositionBasedVisServoTask::addToLogger(mc_rtc::Logger & logger)
 
 void PositionBasedVisServoTask::removeFromLogger(mc_rtc::Logger & logger)
 {
+  TrajectoryBase::removeFromLogger(logger);
   logger.removeLogEntry(name_ + "_error");
   logger.removeLogEntry(name_ + "_eval");
 }

@@ -40,6 +40,7 @@ Eigen::Vector3d LookAtTask::target() const
 }
 void LookAtTask::addToLogger(mc_rtc::Logger & logger)
 {
+  TrajectoryBase::addToLogger(logger);
   logger.addLogEntry(name_ + "_target",
                      [this]() -> const Eigen::Vector3d { return VectorOrientationTask::targetVector(); });
   logger.addLogEntry(name_ + "_current", [this]() -> Eigen::Vector3d { return VectorOrientationTask::actual(); });
@@ -48,6 +49,7 @@ void LookAtTask::addToLogger(mc_rtc::Logger & logger)
 
 void LookAtTask::removeFromLogger(mc_rtc::Logger & logger)
 {
+  TrajectoryBase::removeFromLogger(logger);
   logger.removeLogEntry(name_ + "_target");
   logger.removeLogEntry(name_ + "_current");
   logger.removeLogEntry(name_ + "_error");

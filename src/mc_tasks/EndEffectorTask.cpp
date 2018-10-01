@@ -31,6 +31,8 @@ EndEffectorTask::EndEffectorTask(const std::string & bodyName,
 
   type_ = "body6d";
   name_ = "body6d_" + robot.name() + "_" + bodyName;
+  positionTask->name(name_ + "_position");
+  orientationTask->name(name_ + "_orientation");
 }
 
 void EndEffectorTask::reset()
@@ -171,6 +173,8 @@ void EndEffectorTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configura
 
 void EndEffectorTask::addToLogger(mc_rtc::Logger & logger)
 {
+  positionTask->addToLogger(logger);
+  orientationTask->addToLogger(logger);
   logger.addLogEntry(name_ + "_target", [this]() -> const sva::PTransformd & { return curTransform; });
   logger.addLogEntry(
       name_, [this]() -> const sva::PTransformd & { return robots.robot(robotIndex).mbc().bodyPosW[bodyIndex]; });
@@ -178,6 +182,8 @@ void EndEffectorTask::addToLogger(mc_rtc::Logger & logger)
 
 void EndEffectorTask::removeFromLogger(mc_rtc::Logger & logger)
 {
+  positionTask->removeFromLogger(logger);
+  orientationTask->removeFromLogger(logger);
   logger.removeLogEntry(name_ + "_target");
   logger.removeLogEntry(name_);
 }

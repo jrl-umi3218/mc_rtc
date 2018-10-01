@@ -12,7 +12,8 @@ TrajectoryTaskGeneric<T>::TrajectoryTaskGeneric(const mc_rbdyn::Robots & robots,
                                                 unsigned int robotIndex,
                                                 double stiffness,
                                                 double w)
-: robots(robots), rIndex(robotIndex), stiff(stiffness), damp(2 * std::sqrt(stiff)), wt(w)
+: robots(robots), rIndex(robotIndex), stiffness_(Eigen::VectorXd::Constant(1, stiffness)),
+  damping_(Eigen::VectorXd::Constant(1, 2 * std::sqrt(stiffness))), weight_(w)
 {
 }
 
@@ -26,41 +27,44 @@ template<typename... Args>
 void TrajectoryTaskGeneric<T>::finalize(Args &&... args)
 {
   errorT = std::make_shared<T>(args...);
-  trajectoryT = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, errorT.get(), stiff, damp, wt);
-  if(refVel_.size() != trajectoryT->refVel().size())
+  trajectoryT_ = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, errorT.get(), stiffness_(0),
+                                                             damping_(0), weight_);
+  stiffness_ = trajectoryT_->stiffness();
+  damping_ = trajectoryT_->damping();
+  if(refVel_.size() != trajectoryT_->refVel().size())
   {
-    refVel_ = trajectoryT->refVel();
+    refVel_ = trajectoryT_->refVel();
   }
-  if(refAccel_.size() != trajectoryT->refAccel().size())
+  if(refAccel_.size() != trajectoryT_->refAccel().size())
   {
-    refAccel_ = trajectoryT->refAccel();
+    refAccel_ = trajectoryT_->refAccel();
   }
 }
 
 template<typename T>
 void TrajectoryTaskGeneric<T>::removeFromSolver(mc_solver::QPSolver & solver)
 {
-  if(inSolver)
+  if(inSolver_)
   {
-    solver.removeTask(trajectoryT.get());
-    inSolver = false;
+    solver.removeTask(trajectoryT_.get());
+    inSolver_ = false;
   }
 }
 
 template<typename T>
 void TrajectoryTaskGeneric<T>::addToSolver(mc_solver::QPSolver & solver)
 {
-  if(!inSolver)
+  if(!inSolver_)
   {
-    solver.addTask(trajectoryT.get());
-    inSolver = true;
+    solver.addTask(trajectoryT_.get());
+    inSolver_ = true;
   }
 }
 
 template<typename T>
 void TrajectoryTaskGeneric<T>::reset()
 {
-  const Eigen::VectorXd & v = trajectoryT->refVel();
+  const Eigen::VectorXd & v = trajectoryT_->refVel();
   refVel(Eigen::VectorXd::Zero(v.size()));
   refAccel(Eigen::VectorXd::Zero(v.size()));
 }
@@ -73,14 +77,14 @@ void TrajectoryTaskGeneric<T>::update()
 template<typename T>
 void TrajectoryTaskGeneric<T>::refVel(const Eigen::VectorXd & vel)
 {
-  trajectoryT->refVel(vel);
+  trajectoryT_->refVel(vel);
   refVel_ = vel;
 }
 
 template<typename T>
 void TrajectoryTaskGeneric<T>::refAccel(const Eigen::VectorXd & accel)
 {
-  trajectoryT->refAccel(accel);
+  trajectoryT_->refAccel(accel);
   refAccel_ = accel;
 }
 
@@ -99,96 +103,100 @@ void TrajectoryTaskGeneric<T>::stiffness(const Eigen::VectorXd & stiffness)
 template<typename T>
 void TrajectoryTaskGeneric<T>::damping(double d)
 {
-  setGains(stiff, d);
+  damping_.setConstant(d);
+  trajectoryT_->setGains(stiffness_, damping_);
 }
 
 template<typename T>
 void TrajectoryTaskGeneric<T>::damping(const Eigen::VectorXd & damping)
 {
-  setGains(trajectoryT->stiffness(), damping);
+  setGains(trajectoryT_->stiffness(), damping);
 }
 
 template<typename T>
 void TrajectoryTaskGeneric<T>::setGains(double s, double d)
 {
-  stiff = s;
-  damp = d;
-  trajectoryT->setGains(s, d);
+  stiffness_.setConstant(s);
+  damping_.setConstant(d);
+  trajectoryT_->setGains(stiffness_, damping_);
 }
 
 template<typename T>
 void TrajectoryTaskGeneric<T>::setGains(const Eigen::VectorXd & stiffness, const Eigen::VectorXd & damping)
 {
-  trajectoryT->setGains(stiffness, damping);
+  stiffness_ = stiffness;
+  damping_ = damping;
+  trajectoryT_->setGains(stiffness, damping);
 }
 
 template<typename T>
 double TrajectoryTaskGeneric<T>::stiffness() const
 {
-  return stiff;
+  return stiffness_(0);
 }
 
 template<typename T>
 double TrajectoryTaskGeneric<T>::damping() const
 {
-  return damp;
+  return damping_(0);
 }
 
 template<typename T>
 const Eigen::VectorXd & TrajectoryTaskGeneric<T>::dimStiffness() const
 {
-  return trajectoryT->stiffness();
+  return stiffness_;
 }
 
 template<typename T>
 const Eigen::VectorXd & TrajectoryTaskGeneric<T>::dimDamping() const
 {
-  return trajectoryT->damping();
+  return damping_;
 }
 
 template<typename T>
 void TrajectoryTaskGeneric<T>::weight(double w)
 {
-  wt = w;
-  trajectoryT->weight(w);
+  weight_ = w;
+  trajectoryT_->weight(w);
 }
 
 template<typename T>
 double TrajectoryTaskGeneric<T>::weight() const
 {
-  return wt;
+  return weight_;
 }
 
 template<typename T>
 void TrajectoryTaskGeneric<T>::dimWeight(const Eigen::VectorXd & w)
 {
-  trajectoryT->dimWeight(w);
+  trajectoryT_->dimWeight(w);
 }
 
 template<typename T>
 Eigen::VectorXd TrajectoryTaskGeneric<T>::dimWeight() const
 {
-  return trajectoryT->dimWeight();
+  return trajectoryT_->dimWeight();
 }
 
 template<typename T>
 void TrajectoryTaskGeneric<T>::selectActiveJoints(const std::vector<std::string> & activeJointsName)
 {
-  if(inSolver)
+  if(inSolver_)
   {
     LOG_WARNING("selectActiveJoints(names) ignored: use selectActiveJoints(solver, names) for a task already added to "
                 "the solver");
   }
-  selectorT = std::make_shared<tasks::qp::JointsSelector>(
+  selectorT_ = std::make_shared<tasks::qp::JointsSelector>(
       tasks::qp::JointsSelector::ActiveJoints(robots.mbs(), rIndex, errorT.get(), activeJointsName));
-  trajectoryT = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, selectorT.get(), stiff, damp, wt);
+  trajectoryT_ = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, selectorT_.get(), 1, 2, weight_);
+  trajectoryT_->setGains(stiffness_, damping_);
 }
 
 template<typename T>
 void TrajectoryTaskGeneric<T>::selectActiveJoints(mc_solver::QPSolver & solver,
                                                   const std::vector<std::string> & activeJointsName)
 {
-  if(inSolver)
+  if(inSolver_)
   {
     removeFromSolver(solver);
     selectActiveJoints(activeJointsName);
@@ -203,21 +211,22 @@ void TrajectoryTaskGeneric<T>::selectActiveJoints(mc_solver::QPSolver & solver,
 template<typename T>
 void TrajectoryTaskGeneric<T>::selectUnactiveJoints(const std::vector<std::string> & unactiveJointsName)
 {
-  if(inSolver)
+  if(inSolver_)
   {
     LOG_WARNING("selectUnactiveJoints(names) ignored: use selectUnactiveJoints(solver, names) for a task already added "
                 "to the solver");
   }
-  selectorT = std::make_shared<tasks::qp::JointsSelector>(
+  selectorT_ = std::make_shared<tasks::qp::JointsSelector>(
       tasks::qp::JointsSelector::UnactiveJoints(robots.mbs(), rIndex, errorT.get(), unactiveJointsName));
-  trajectoryT = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, selectorT.get(), stiff, damp, wt);
+  trajectoryT_ = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, selectorT_.get(), 1, 2, weight_);
+  trajectoryT_->setGains(stiffness_, damping_);
 }
 
 template<typename T>
 void TrajectoryTaskGeneric<T>::selectUnactiveJoints(mc_solver::QPSolver & solver,
                                                     const std::vector<std::string> & unactiveJointsName)
 {
-  if(inSolver)
+  if(inSolver_)
   {
     removeFromSolver(solver);
     selectUnactiveJoints(unactiveJointsName);
@@ -232,19 +241,20 @@ void TrajectoryTaskGeneric<T>::selectUnactiveJoints(mc_solver::QPSolver & solver
 template<typename T>
 void TrajectoryTaskGeneric<T>::resetJointsSelector()
 {
-  if(inSolver)
+  if(inSolver_)
   {
     LOG_WARNING(
         "resetJointsSelector() ignored: use resetJointsSelector(solver) for a task already added to the solver");
   }
-  selectorT = nullptr;
-  trajectoryT = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, errorT.get(), stiff, damp, wt);
+  selectorT_ = nullptr;
+  trajectoryT_ = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, errorT.get(), 1, 2, weight_);
+  trajectoryT_->setGains(stiffness_, damping_);
 }
 
 template<typename T>
 void TrajectoryTaskGeneric<T>::resetJointsSelector(mc_solver::QPSolver & solver)
 {
-  if(inSolver)
+  if(inSolver_)
   {
     removeFromSolver(solver);
     resetJointsSelector();
@@ -259,9 +269,9 @@ void TrajectoryTaskGeneric<T>::resetJointsSelector(mc_solver::QPSolver & solver)
 template<typename T>
 Eigen::VectorXd TrajectoryTaskGeneric<T>::eval() const
 {
-  if(selectorT)
+  if(selectorT_)
   {
-    return selectorT->eval();
+    return selectorT_->eval();
   }
   return errorT->eval();
 }
@@ -269,9 +279,9 @@ Eigen::VectorXd TrajectoryTaskGeneric<T>::eval() const
 template<typename T>
 Eigen::VectorXd TrajectoryTaskGeneric<T>::speed() const
 {
-  if(selectorT)
+  if(selectorT_)
   {
-    return selectorT->speed();
+    return selectorT_->speed();
   }
   return errorT->speed();
 }
@@ -324,6 +334,36 @@ void TrajectoryTaskGeneric<T>::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                           [this](const double & g) { this->stiffness(g); }),
                  mc_rtc::gui::NumberInput("weight", [this]() { return this->weight(); },
                                           [this](const double & w) { this->weight(w); }));
+  gui.addElement(
+      {"Tasks", name_, "Gains", "Dimensional"},
+      mc_rtc::gui::ArrayInput("stiffness", [this]() { return this->dimStiffness(); },
+                              [this](const Eigen::VectorXd & v) { this->setGains(v, this->dimDamping()); }),
+      mc_rtc::gui::ArrayInput("damping", [this]() { return this->dimDamping(); },
+                              [this](const Eigen::VectorXd & v) { this->setGains(this->dimStiffness(), v); }),
+      mc_rtc::gui::ArrayInput("stiffness & damping", [this]() { return this->dimStiffness(); },
+                              [this](const Eigen::VectorXd & v) { this->stiffness(v); }));
+}
+
+template<typename T>
+void TrajectoryTaskGeneric<T>::addToLogger(mc_rtc::Logger & logger)
+{
+  logger.addLogEntry(name_ + "_damping", [this]() { return damping_(0); });
+  logger.addLogEntry(name_ + "_stiffness", [this]() { return stiffness_(0); });
+  logger.addLogEntry(name_ + "_dimDamping", [this]() -> const Eigen::VectorXd & { return damping_; });
+  logger.addLogEntry(name_ + "_dimStiffness", [this]() -> const Eigen::VectorXd & { return stiffness_; });
+  logger.addLogEntry(name_ + "_refVel", [this]() { return refVel_; });
+  logger.addLogEntry(name_ + "_refAccel", [this]() { return refAccel_; });
+}
+
+template<typename T>
+void TrajectoryTaskGeneric<T>::removeFromLogger(mc_rtc::Logger & logger)
+{
+  logger.removeLogEntry(name_ + "_damping");
+  logger.removeLogEntry(name_ + "_stiffness");
+  logger.removeLogEntry(name_ + "_dimDamping");
+  logger.removeLogEntry(name_ + "_dimStiffness");
+  logger.removeLogEntry(name_ + "_refVel");
+  logger.removeLogEntry(name_ + "_refAccel");
 }
 
 } // namespace mc_tasks
