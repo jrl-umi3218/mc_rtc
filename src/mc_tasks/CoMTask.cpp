@@ -44,21 +44,15 @@ Eigen::Vector3d CoMTask::com()
 
 void CoMTask::addToLogger(mc_rtc::Logger & logger)
 {
-  logger.addLogEntry(name_ + "_damping", [this]() { return damping(); });
+  TrajectoryBase::addToLogger(logger);
   logger.addLogEntry(name_ + "_pos", [this]() -> Eigen::Vector3d { return cur_com_ - eval(); });
-  logger.addLogEntry(name_ + "_refAccel", [this]() -> Eigen::Vector3d { return refAccel_.head<3>(); });
-  logger.addLogEntry(name_ + "_refVel", [this]() -> Eigen::Vector3d { return refVel_.head<3>(); });
-  logger.addLogEntry(name_ + "_stiffness", [this]() { return stiffness(); });
   logger.addLogEntry(name_ + "_target", [this]() -> const Eigen::Vector3d & { return cur_com_; });
 }
 
 void CoMTask::removeFromLogger(mc_rtc::Logger & logger)
 {
-  logger.removeLogEntry(name_ + "_damping");
+  TrajectoryBase::removeFromLogger(logger);
   logger.removeLogEntry(name_ + "_pos");
-  logger.removeLogEntry(name_ + "_refAccel");
-  logger.removeLogEntry(name_ + "_refVel");
-  logger.removeLogEntry(name_ + "_stiffness");
   logger.removeLogEntry(name_ + "_target");
 }
 

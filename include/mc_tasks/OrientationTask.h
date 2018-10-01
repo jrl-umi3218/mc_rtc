@@ -13,6 +13,8 @@ namespace mc_tasks
 struct MC_TASKS_DLLAPI OrientationTask : public TrajectoryTaskGeneric<tasks::qp::OrientationTask>
 {
 public:
+  friend struct EndEffectorTask;
+
   /*! \brief Constructor
    *
    * \param bodyName Name of the body to control

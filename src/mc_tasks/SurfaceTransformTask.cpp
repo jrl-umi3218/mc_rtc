@@ -52,6 +52,7 @@ void SurfaceTransformTask::targetSurface(unsigned int robotIndex,
 
 void SurfaceTransformTask::addToLogger(mc_rtc::Logger & logger)
 {
+  TrajectoryBase::addToLogger(logger);
   logger.addLogEntry(name_ + "_surface_pose", [this]() {
     const auto & robot = robots.robot();
     return robot.surface(surfaceName).X_0_s(robot);
@@ -61,6 +62,7 @@ void SurfaceTransformTask::addToLogger(mc_rtc::Logger & logger)
 
 void SurfaceTransformTask::removeFromLogger(mc_rtc::Logger & logger)
 {
+  TrajectoryBase::removeFromLogger(logger);
   logger.removeLogEntry(name_ + "_surface_pose");
   logger.removeLogEntry(name_ + "_target_pose");
 }

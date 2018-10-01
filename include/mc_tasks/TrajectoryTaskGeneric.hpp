@@ -334,4 +334,26 @@ void TrajectoryTaskGeneric<T>::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                           [this](const double & w) { this->weight(w); }));
 }
 
+template<typename T>
+void TrajectoryTaskGeneric<T>::addToLogger(mc_rtc::Logger & logger)
+{
+  logger.addLogEntry(name_ + "_damping", [this]() { return damping_(0); });
+  logger.addLogEntry(name_ + "_stiffness", [this]() { return stiffness_(0); });
+  logger.addLogEntry(name_ + "_dimDamping", [this]() -> const Eigen::VectorXd & { return damping_; });
+  logger.addLogEntry(name_ + "_dimStiffness", [this]() -> const Eigen::VectorXd & { return stiffness_; });
+  logger.addLogEntry(name_ + "_refVel", [this]() { return refVel_; });
+  logger.addLogEntry(name_ + "_refAccel", [this]() { return refAccel_; });
+}
+
+template<typename T>
+void TrajectoryTaskGeneric<T>::removeFromLogger(mc_rtc::Logger & logger)
+{
+  logger.removeLogEntry(name_ + "_damping");
+  logger.removeLogEntry(name_ + "_stiffness");
+  logger.removeLogEntry(name_ + "_dimDamping");
+  logger.removeLogEntry(name_ + "_dimStiffness");
+  logger.removeLogEntry(name_ + "_refVel");
+  logger.removeLogEntry(name_ + "_refAccel");
+}
+
 } // namespace mc_tasks
