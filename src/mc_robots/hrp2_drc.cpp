@@ -108,8 +108,8 @@ HRP2DRCCommonRobotModule::HRP2DRCCommonRobotModule()
                             mc_rbdyn::Collision("LARM_LINK5", "CHEST_LINK0", 0.05, 0.01, 0.),
                             mc_rbdyn::Collision("LARM_LINK4", "CHEST_LINK1", 0.05, 0.01, 0.),
                             mc_rbdyn::Collision("LARM_LINK5", "CHEST_LINK1", 0.05, 0.01, 0.),
-                            mc_rbdyn::Collision("rwrist_closed", "RLEG_LINK2", 0.05, 0.01, 0.),
-                            mc_rbdyn::Collision("lwrist_closed", "LLEG_LINK2", 0.05, 0.01, 0.)};
+                            mc_rbdyn::Collision("RARM_LINK6", "RLEG_LINK2", 0.05, 0.01, 0.),
+                            mc_rbdyn::Collision("LARM_LINK6", "LLEG_LINK2", 0.05, 0.01, 0.)};
 
   _commonSelfCollisions = _minimalSelfCollisions;
 
