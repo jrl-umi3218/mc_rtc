@@ -33,6 +33,7 @@ if(GENERATE_COVERAGE)
 endif()
 set_target_properties(mc_control_fsm PROPERTIES SOVERSION 0 VERSION 0.1.0)
 install(TARGETS mc_control_fsm
+  EXPORT "${TARGETS_EXPORT_NAME}"
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib

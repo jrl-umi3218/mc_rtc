@@ -212,3 +212,9 @@ install(
 
 setup_project_finalize()
 setup_project_package_finalize()
+
+# Extra macros for mc_rtc
+configure_file(src/mc_rtcMacros.in.cmake "${CMAKE_CURRENT_BINARY_DIR}/generated/mc_rtcMacros.cmake" @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/generated/mc_rtcMacros.cmake"
+        DESTINATION "${CONFIG_INSTALL_DIR}")
+file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/generated/mc_rtcConfig.cmake" "include(\"\${CMAKE_CURRENT_LIST_DIR}/mc_rtcMacros.cmake\")\n")
