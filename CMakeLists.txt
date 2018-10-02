@@ -6,6 +6,7 @@ include(cmake/base.cmake)
 include(cmake/eigen.cmake)
 include(cmake/pkg-config.cmake)
 include(cmake/msvc-specific.cmake)
+include(cmake/version-script.cmake)
 
 set(PROJECT_NAME mc_rtc)
 set(PROJECT_DESCRIPTION mc_rtc)

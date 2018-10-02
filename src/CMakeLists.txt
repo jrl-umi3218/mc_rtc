@@ -335,6 +335,7 @@ foreach(MC_LIB ${MC_LIBRARIES})
     set_target_properties(${MC_LIB} PROPERTIES LINK_FLAGS "--coverage")
   endif()
   set_target_properties(${MC_LIB} PROPERTIES SOVERSION 0 VERSION 0.1.0)
+  add_version_script(${MC_LIB} "${CMAKE_CURRENT_SOURCE_DIR}/version-script.lds")
 endforeach()
 
 install(TARGETS ${MC_LIBRARIES}
