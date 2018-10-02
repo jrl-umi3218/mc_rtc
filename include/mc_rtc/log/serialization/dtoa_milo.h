@@ -7,7 +7,7 @@
 
 #pragma once
 #include <assert.h>
-#include <math.h>
+#include <cmath>
 #include <string.h>
 
 #if defined(_MSC_VER)
