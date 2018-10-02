@@ -61,8 +61,12 @@
 # $DateTime: 2016/01/18 19:29:17 $$Author: bbarber $
 
 cmake_minimum_required(VERSION 2.6)
-cmake_policy(SET CMP0063 OLD)
-cmake_policy(SET CMP0048 NEW)
+if(POLICY CMP0063)
+  cmake_policy(SET CMP0063 OLD)
+endif()
+if(POLICY CMP0048)
+  cmake_policy(SET CMP0048 NEW)
+endif()
 project(qhull)
 remove_definitions(-std=c++0x)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)

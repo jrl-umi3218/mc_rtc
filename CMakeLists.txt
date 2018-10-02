@@ -1,7 +1,7 @@
-#FIXME very crude initial cmake
-
 cmake_minimum_required(VERSION 2.8)
-cmake_policy(SET CMP0063 NEW)
+if(POLICY CMP0063)
+  cmake_policy(SET CMP0063 NEW)
+endif()
 
 include(cmake/base.cmake)
 include(cmake/eigen.cmake)
