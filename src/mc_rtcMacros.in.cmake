@@ -9,6 +9,9 @@ macro(add_controller controller_name controller_SRC controller_HDR)
   add_library(${controller_name} SHARED ${controller_SRC} ${controller_HDR})
 
   set_target_properties(${controller_name} PROPERTIES PREFIX "")
+  if(DEFINED CATKIN_DEVEL_PREFIX)
+    set_target_properties(${state_name} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CATKIN_DEVEL_PREFIX}/lib/mc_controller")
+  endif()
 
   target_link_libraries(${controller_name} PUBLIC mc_rtc::mc_control)
 
