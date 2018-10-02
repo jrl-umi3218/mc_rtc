@@ -4,7 +4,7 @@ set(USE_SANDBOX "true")
 
 macro(controller_test_common NAME)
   add_library(${NAME} SHARED ${NAME}.cpp)
-  target_link_libraries(${NAME} ${Boost_LIBRARIES} mc_control)
+  target_link_libraries(${NAME} PUBLIC ${Boost_LIBRARIES} mc_control)
   pkg_config_use_dependency(${NAME} Tasks)
   set_target_properties(${NAME} PROPERTIES
     COMPILE_FLAGS "-DMC_CONTROL_EXPORTS"
@@ -47,7 +47,7 @@ if(UNIX)
 
   # Test controller switch and threaded log policy
   add_library(TestPostureController2 SHARED TestPostureController2.cpp)
-  target_link_libraries(TestPostureController2 ${Boost_LIBRARIES} mc_control)
+  target_link_libraries(TestPostureController2 PUBLIC ${Boost_LIBRARIES} mc_control)
   set_target_properties(TestPostureController2 PROPERTIES
     COMPILE_FLAGS "-DMC_CONTROL_EXPORTS"
     PREFIX ""

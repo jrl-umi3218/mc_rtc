@@ -1,6 +1,7 @@
 #FIXME very crude initial cmake
 
 cmake_minimum_required(VERSION 2.8)
+cmake_policy(SET CMP0063 NEW)
 
 include(cmake/base.cmake)
 include(cmake/eigen.cmake)
@@ -12,9 +13,11 @@ set(PROJECT_NAME mc_rtc)
 set(PROJECT_DESCRIPTION mc_rtc)
 set(PROJECT_URL https://rob-dev.lirmm.fr/multi-contact/mc_rtc)
 set(PROJECT_DEBUG_POSTFIX "_d")
+set(PROJECT_USE_KEYWORD_LINK_LIBRARIES TRUE)
 
 set(CXX_DISABLE_WERROR 1)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_CXX_STANDARD 11)
 
 set(DOXYGEN_USE_MATHJAX "YES")
 setup_project()
@@ -62,8 +65,6 @@ add_required_dependency("mc_rbdyn_urdf" "mc_rbdyn_urdf_d")
 # At this point, this dependency is used to get access to PD gains setting on HRP robots
 add_optional_dependency(hrpsys-base)
 if(${HRPSYS_BASE_FOUND})
-  include_directories(${HRPSYS_BASE_INCLUDE_DIRS})
-  link_directories(${HRPSYS_BASE_LIBRARY_DIRS})
   set(DEFINE_HAS_HRPSYS_BASE_MACRO "#define MC_RTC_HAS_HRPSYS_BASE 1")
 else()
   set(DEFINE_HAS_HRPSYS_BASE_MACRO "")
@@ -210,3 +211,4 @@ install(
   DESTINATION ${MC_CONTROLLER_INSTALL_PREFIX}/etc/)
 
 setup_project_finalize()
+setup_project_package_finalize()

@@ -6,7 +6,7 @@ endif()
 
 add_library(mc_rtc_loader SHARED mc_rtc/loader.cpp ../include/mc_rtc/loader.h ../include/mc_rtc/loader_api.h)
 set_target_properties(mc_rtc_loader PROPERTIES COMPILE_FLAGS "-DMC_RTC_LOADER_EXPORTS")
-target_link_libraries(mc_rtc_loader ${Boost_LIBRARIES} ltdl)
+target_link_libraries(mc_rtc_loader PUBLIC ${Boost_LIBRARIES} ltdl)
 pkg_config_append_libs(mc_rtc_loader)
 
 set(mc_rtc_utils_SRC
@@ -26,7 +26,7 @@ set(mc_rtc_utils_HDR ${mc_rtc_utils_HDR} PARENT_SCOPE)
 
 add_library(mc_rtc_utils SHARED ${mc_rtc_utils_SRC} ${mc_rtc_utils_HDR})
 set_target_properties(mc_rtc_utils PROPERTIES COMPILE_FLAGS "-DMC_RTC_UTILS_EXPORTS")
-target_link_libraries(mc_rtc_utils ${Boost_LIBRARIES})
+target_link_libraries(mc_rtc_utils PUBLIC ${Boost_LIBRARIES})
 pkg_config_append_libs(mc_rtc_utils)
 
 set(mc_rbdyn_SRC
@@ -88,11 +88,11 @@ add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC} ${mc_rbdyn_HDR})
 set_target_properties(mc_rbdyn PROPERTIES COMPILE_FLAGS "-DMC_RBDYN_EXPORTS")
 pkg_config_use_dependency(mc_rbdyn mc_rbdyn_urdf)
 pkg_config_use_dependency(mc_rbdyn Tasks)
-target_link_libraries(mc_rbdyn ${Boost_LIBRARIES} ${GEOS_LIBRARY} mc_rtc_loader mc_rtc_utils)
+target_link_libraries(mc_rbdyn PUBLIC ${Boost_LIBRARIES} ${GEOS_LIBRARY} mc_rtc_loader mc_rtc_utils)
 # qhull
 target_include_directories(mc_rbdyn SYSTEM PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../3rd-party/qhull/src")
-target_link_libraries(mc_rbdyn qhullcpp)
-target_link_libraries(mc_rbdyn qhullstatic_r)
+target_link_libraries(mc_rbdyn PRIVATE qhullcpp)
+target_link_libraries(mc_rbdyn PRIVATE qhullstatic_r)
 if(NOT WIN32)
   pkg_config_append_libs(${Boost_LIBRARIES})
 endif()
@@ -114,7 +114,7 @@ set(mc_rtc_gui_HDR ${mc_rtc_gui_HDR} PARENT_SCOPE)
 
 add_library(mc_rtc_gui SHARED ${mc_rtc_gui_SRC} ${mc_rtc_gui_HDR})
 set_target_properties(mc_rtc_gui PROPERTIES COMPILE_FLAGS "-DMC_RTC_GUI_EXPORTS")
-target_link_libraries(mc_rtc_gui mc_rbdyn)
+target_link_libraries(mc_rtc_gui PUBLIC mc_rbdyn)
 pkg_config_append_libs(mc_rtc_gui)
 
 add_subdirectory(mc_robots)
@@ -155,7 +155,7 @@ add_library(mc_solver SHARED ${mc_solver_SRC} ${mc_solver_HDR})
 set_target_properties(mc_solver PROPERTIES COMPILE_FLAGS "-DMC_SOLVER_EXPORTS")
 pkg_config_use_dependency(mc_solver Tasks)
 pkg_config_append_libs(mc_solver)
-target_link_libraries(mc_solver mc_rbdyn mc_rtc_gui)
+target_link_libraries(mc_solver PUBLIC mc_rbdyn mc_rtc_gui)
 
 set(mc_trajectory_SRC
 mc_trajectory/BSplineTrajectory.cpp
@@ -239,8 +239,8 @@ set(mc_tasks_HDR ${mc_tasks_HDR} PARENT_SCOPE)
 
 add_library(mc_tasks SHARED ${mc_tasks_SRC} ${mc_tasks_HDR})
 set_target_properties(mc_tasks PROPERTIES COMPILE_FLAGS "-DMC_TASKS_EXPORTS")
-target_link_libraries(mc_tasks mc_solver mc_rbdyn mc_trajectory mc_rtc_utils)
-target_link_libraries(mc_tasks ${Boost_LIBRARIES})
+target_link_libraries(mc_tasks PUBLIC mc_solver mc_rbdyn mc_trajectory mc_rtc_utils)
+target_link_libraries(mc_tasks PUBLIC ${Boost_LIBRARIES})
 pkg_config_use_dependency(mc_tasks mc_rbdyn_urdf)
 pkg_config_use_dependency(mc_tasks Tasks)
 pkg_config_append_libs(mc_tasks)
@@ -252,7 +252,7 @@ endif()
 
 add_library(mc_rtc_ros SHARED mc_rtc/ros.cpp ../include/mc_rtc/ros.h ../include/mc_rtc/ros_api.h)
 set_target_properties(mc_rtc_ros PROPERTIES COMPILE_FLAGS "-DMC_RTC_ROS_EXPORTS")
-target_link_libraries(mc_rtc_ros mc_rbdyn)
+target_link_libraries(mc_rtc_ros PUBLIC mc_rbdyn)
 if(NOT ${DISABLE_ROS})
   if(${ROSCPP_FOUND})
     pkg_config_use_dependency(mc_rtc_ros roscpp)
@@ -295,11 +295,11 @@ set(mc_control_HDR ${mc_control_HDR} PARENT_SCOPE)
 
 add_library(mc_control SHARED ${mc_control_SRC} ${mc_control_HDR})
 set_target_properties(mc_control PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_EXPORTS")
-target_link_libraries(mc_control mc_tasks mc_solver mc_rtc_ros mc_rtc_loader mc_rtc_utils mc_rtc_gui)
+target_link_libraries(mc_control PUBLIC mc_tasks mc_solver mc_rtc_ros mc_rtc_loader mc_rtc_utils mc_rtc_gui)
 if(${HRPSYS_BASE_FOUND})
-  target_link_libraries(mc_control hrpIo)
+  target_link_libraries(mc_control PUBLIC hrpIo)
 endif()
-target_link_libraries(mc_control ${Boost_LIBRARIES})
+target_link_libraries(mc_control PUBLIC ${Boost_LIBRARIES})
 pkg_config_use_dependency(mc_control mc_rbdyn_urdf)
 pkg_config_use_dependency(mc_control Tasks)
 pkg_config_use_dependency(mc_control ${NANOMSG_NAME})
@@ -316,7 +316,7 @@ set(mc_control_client_HDR
 
 add_library(mc_control_client SHARED ${mc_control_client_SRC} ${mc_control_client_HDR})
 set_target_properties(mc_control_client PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_CLIENT_EXPORTS")
-target_link_libraries(mc_control_client mc_control)
+target_link_libraries(mc_control_client PUBLIC mc_control)
 
 if(FLATC)
   set_source_files_properties(../include/mc_rtc/log/serialization/MCLog_generated.h PROPERTIES GENERATED 1)
@@ -330,6 +330,11 @@ add_subdirectory(mc_control)
 
 set(MC_LIBRARIES mc_rbdyn mc_solver mc_tasks mc_control mc_trajectory mc_rtc_ros mc_rtc_loader mc_rtc_utils mc_rtc_gui mc_control_client)
 foreach(MC_LIB ${MC_LIBRARIES})
+  if(DEFINED Eigen_INCLUDE_DIR)
+    target_include_directories(${MC_LIB} SYSTEM INTERFACE "${Eigen_INCLUDE_DIR}")
+  else()
+    target_include_directories(${MC_LIB} SYSTEM INTERFACE "${_Eigen_INCLUDE_DIRS}")
+  endif()
   if(GENERATE_COVERAGE)
     target_compile_options(${MC_LIB} PRIVATE "--coverage")
     set_target_properties(${MC_LIB} PROPERTIES LINK_FLAGS "--coverage")
@@ -339,6 +344,7 @@ foreach(MC_LIB ${MC_LIBRARIES})
 endforeach()
 
 install(TARGETS ${MC_LIBRARIES}
+  EXPORT "${TARGETS_EXPORT_NAME}"
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib

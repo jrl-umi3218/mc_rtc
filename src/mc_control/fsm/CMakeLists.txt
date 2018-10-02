@@ -24,7 +24,7 @@ endif()
 
 add_library(mc_control_fsm SHARED ${fsm_controller_SRC} ${fsm_controller_HDR})
 set_target_properties(mc_control_fsm PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_FSM_EXPORTS")
-target_link_libraries(mc_control_fsm mc_control ${Boost_LIBRARIES})
+target_link_libraries(mc_control_fsm PUBLIC mc_control ${Boost_LIBRARIES})
 pkg_config_use_dependency(mc_control_fsm mc_rbdyn_urdf)
 pkg_config_use_dependency(mc_control_fsm Tasks)
 if(GENERATE_COVERAGE)
@@ -39,7 +39,7 @@ install(TARGETS mc_control_fsm
 )
 
 add_controller("fsm" "lib.cpp" "")
-target_link_libraries(fsm mc_control_fsm)
+target_link_libraries(fsm PUBLIC mc_control_fsm)
 
 set(AROBASE "@")
 configure_file(etc/FSM.conf.cmake ${CMAKE_CURRENT_BINARY_DIR}/etc/FSM.conf)

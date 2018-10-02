@@ -60,8 +60,10 @@
 # $Id: //main/2015/qhull/CMakeLists.txt#8 $$Change: 2066 $
 # $DateTime: 2016/01/18 19:29:17 $$Author: bbarber $
 
-project(qhull)
 cmake_minimum_required(VERSION 2.6)
+cmake_policy(SET CMP0063 OLD)
+cmake_policy(SET CMP0048 NEW)
+project(qhull)
 remove_definitions(-std=c++0x)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 

@@ -2,10 +2,10 @@ macro(add_controller controller_name controller_SRC controller_HDR)
   add_library(${controller_name} SHARED ${controller_SRC} ${controller_HDR})
   set_target_properties(${controller_name} PROPERTIES COMPILE_FLAGS
     "-DMC_CONTROL_EXPORTS" PREFIX "")
-  target_link_libraries(${controller_name} mc_control)
+  target_link_libraries(${controller_name} PUBLIC mc_control)
   pkg_config_use_dependency(${controller_name} mc_rbdyn_urdf)
   pkg_config_use_dependency(${controller_name} Tasks)
-  target_link_libraries(${controller_name} ${Boost_LIBRARIES})
+  target_link_libraries(${controller_name} PUBLIC ${Boost_LIBRARIES})
   install(TARGETS ${controller_name} DESTINATION
     ${MC_CONTROLLER_INSTALL_PREFIX})
 endmacro()

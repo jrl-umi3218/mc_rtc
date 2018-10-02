@@ -4,7 +4,7 @@ macro(add_fsm_state state_name state_SRC state_HDR)
   add_library(${state_name} SHARED  ${state_SRC} ${state_HDR} "${PROJECT_SOURCE_DIR}/include/mc_control/fsm/states/api.h")
   set_target_properties(${state_name} PROPERTIES PREFIX "")
   set_target_properties(${state_name} PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_FSM_STATE_EXPORTS")
-  target_link_libraries(${state_name} mc_control_fsm)
+  target_link_libraries(${state_name} PUBLIC mc_control_fsm)
   install(TARGETS ${state_name}
     DESTINATION ${FSM_STATES_INSTALL_PREFIX})
   install(FILES ${state_HDR}
@@ -35,7 +35,7 @@ if(${PYTHON_BINDING})
   add_library(PythonState SHARED "PythonState.cpp")
   set_target_properties(PythonState PROPERTIES PREFIX "")
   target_include_directories("PythonState" PRIVATE "${PROJECT_SOURCE_DIR}/binding/python" ${PYTHON_INCLUDE_DIRS})
-  target_link_libraries(PythonState mc_control_fsm ${PYTHON_LIBRARIES})
+  target_link_libraries(PythonState PUBLIC mc_control_fsm ${PYTHON_LIBRARIES})
   add_dependencies(PythonState mc_rtc-python-bindings)
   install(TARGETS PythonState
     DESTINATION ${FSM_STATES_INSTALL_PREFIX})

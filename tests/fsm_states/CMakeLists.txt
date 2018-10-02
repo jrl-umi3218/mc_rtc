@@ -8,7 +8,7 @@ macro(add_fsm_test_state state_name)
     COMPILE_FLAGS "-DMC_CONTROL_FSM_STATE_EXPORTS"
     PREFIX ""
     LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${state_name})
-  target_link_libraries(${state_name} fsm)
+  target_link_libraries(${state_name} PUBLIC fsm)
 endmacro()
 
 add_fsm_test_state(SingleState)

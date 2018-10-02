@@ -14,7 +14,7 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 ############################
 
 add_executable(LoggerTraits LoggerTraits.cpp)
-target_link_libraries(LoggerTraits mc_control)
+target_link_libraries(LoggerTraits PUBLIC mc_control)
 
 #################################
 #      -- Utility tests --      #
@@ -22,12 +22,12 @@ target_link_libraries(LoggerTraits mc_control)
 #################################
 
 add_executable(testBSplineTrajectory testBSplineTrajectory.cpp)
-target_link_libraries(testBSplineTrajectory mc_trajectory)
+target_link_libraries(testBSplineTrajectory PUBLIC mc_trajectory)
 
 add_executable(testQuadraticGenerator testQuadraticGenerator.cpp)
 pkg_config_use_dependency(testQuadraticGenerator Tasks)
 pkg_config_use_dependency(testQuadraticGenerator mc_rbdyn_urdf)
-target_link_libraries(testQuadraticGenerator mc_rbdyn)
+target_link_libraries(testQuadraticGenerator PUBLIC mc_rbdyn)
 
 #################################
 # -- Framework utility tests -- #
@@ -43,7 +43,7 @@ MACRO(mc_rtc_test NAME)
   else()
     message(FATAL_ERROR "Cannot add mc_rtc_test: neither ${NAME}.cpp nor ${NAME}.in.cpp exists in ${CMAKE_CURRENT_SOURCE_DIR}")
   endif()
-  target_link_libraries(${NAME} ${Boost_LIBRARIES} ${ARGN})
+  target_link_libraries(${NAME} PUBLIC ${Boost_LIBRARIES} ${ARGN})
   add_test(${NAME} ${NAME})
   # Adding a project configuration file (for MSVC only)
   generate_msvc_dot_user_file(${NAME})
@@ -76,7 +76,7 @@ mc_rtc_test(testFSMStateFactory mc_control_fsm ConfigureState)
 
 add_executable(test_controller_ticker test_controller_ticker.cpp)
 pkg_config_use_dependency(test_controller_ticker mc_rbdyn_urdf)
-target_link_libraries(test_controller_ticker ${Boost_LIBRARIES} mc_control)
+target_link_libraries(test_controller_ticker PUBLIC ${Boost_LIBRARIES} mc_control)
 pkg_config_use_dependency(test_controller_ticker Tasks)
 # Adding a project configuration file (for MSVC only)
 generate_msvc_dot_user_file(test_controller_ticker)
@@ -94,7 +94,7 @@ endif()
 ######################
 
 add_executable(dummyClient dummyClient.cpp)
-target_link_libraries(dummyClient mc_control_client)
+target_link_libraries(dummyClient PUBLIC mc_control_client)
 
 add_executable(dummyServer dummyServer.cpp)
-target_link_libraries(dummyServer mc_control)
+target_link_libraries(dummyServer PUBLIC mc_control)
