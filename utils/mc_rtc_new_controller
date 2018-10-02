@@ -7,14 +7,14 @@ import os
 import re
 import sys
 
-def new_controller(project_dir, controller_class_name, controller_name, base_class = 'mc_control::MCController', base_use_conf = False, extra_includes = [], extra_libs = '', min_code = True):
+def new_controller(project_dir, controller_class_name, controller_name, base_class = 'mc_control::MCController', base_use_conf = False, extra_includes = [], extra_libs = '', min_code = True, configure_conf = False, controller_constructor = True):
     if not os.path.isabs(project_dir):
-        return new_controller(os.path.abspath(project_dir), controller_class_name, controller_name, base_class, base_use_conf, extra_includes, extra_libs, min_code)
+        return new_controller(os.path.abspath(project_dir), controller_class_name, controller_name, base_class, base_use_conf, extra_includes, extra_libs, min_code, configure_conf, controller_constructor)
     extra_includes = '\n'.join(['#include <{}>'.format(i) for i in extra_includes])
     if len(extra_libs):
-        extra_libs = 'target_link_libraries(${{PROJECT_NAME}} {})'.format(extra_libs)
+        extra_libs = 'target_link_libraries(${{PROJECT_NAME}} PUBLIC {})'.format(extra_libs)
     if controller_name is None:
-        return new_controller(project_dir, controller_class_name, controller_class_name, base_class, base_use_conf, extra_includes, extra_libs, min_code)
+        return new_controller(project_dir, controller_class_name, controller_class_name, base_class, base_use_conf, extra_includes, extra_libs, min_code, configure_conf, controller_constructor)
     if os.path.exists(project_dir):
         print "{} already exists, aborting project creation".format(project_dir)
         sys.exit(1)
@@ -23,36 +23,34 @@ def new_controller(project_dir, controller_class_name, controller_name, base_cla
         sys.exit(1)
     os.makedirs(project_dir)
     repo = git.Repo.init(project_dir)
-    repo.create_submodule('cmake', 'cmake', url = 'https://github.com/jrl-umi3218/jrl-cmakemodules')
     os.makedirs(project_dir + '/src')
     os.makedirs(project_dir + '/etc')
     with open(project_dir + '/CMakeLists.txt', 'w') as fd:
+        if configure_conf:
+            configure_config = """set(AROBASE "@")
+configure_file(etc/{controller_name}.in.conf "${{CMAKE_CURRENT_BINARY_DIR}}/etc/{controller_name}.conf")
+install(FILES "${{CMAKE_CURRENT_BINARY_DIR}}/etc/{controller_name}.conf" DESTINATION "${{MC_CONTROLLER_INSTALL_PREFIX}}/etc")
+""".format(controller_name = controller_name)
+        else:
+            configure_config = """install(FILES etc/{controller_name}.conf DESTINATION "${{MC_CONTROLLER_INSTALL_PREFIX}}/etc")
+""".format(controller_name = controller_name)
         fd.write("""cmake_minimum_required(VERSION 2.8)
 
 set(CXX_DISABLE_WERROR 1)
-include(cmake/base.cmake)
-include(cmake/boost.cmake)
+set(CMAKE_CXX_STANDARD 11)
 
 set(PROJECT_NAME {controller_class_name})
 set(PROJECT_DESCRIPTION "{controller_name}")
 set(PROJECT_URL "")
 
-setup_project()
+project(${{PROJECT_NAME}} CXX)
 
-# Enable C++11
-if(NOT WIN32)
-  add_definitions(-std=c++0x)
-endif()
-
-# Use jrl-cmakemoduels to get mc_rtc depency
-set(PKG_CONFIG_ADDITIONAL_VARIABLES "${{PKG_CONFIG_ADDITIONAL_VARIABLES}} libdir prefix")
-add_required_dependency(mc_rtc)
+find_package(mc_rtc REQUIRED)
 
 add_subdirectory(src)
 
-install(FILES etc/{controller_name}.conf DESTINATION "${{MC_RTC_LIBDIR}}/mc_controller/etc")
-
-setup_project_finalize()""".format(controller_name = controller_name, controller_class_name = controller_class_name))
+{configure_config}
+""".format(controller_name = controller_name, controller_class_name = controller_class_name, configure_config = configure_config))
     with open(project_dir + '/src/CMakeLists.txt', 'w') as fd:
         fd.write("""set(controller_SRC
   {controller_class_name}.cpp
@@ -62,11 +60,9 @@ set(controller_HDR
   {controller_class_name}.h
 )
 
-add_library(${{PROJECT_NAME}} SHARED ${{controller_SRC}} ${{controller_HDR}})
-set_target_properties(${{PROJECT_NAME}} PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_EXPORTS" PREFIX "")
-pkg_config_use_dependency(${{PROJECT_NAME}} mc_rtc)
+add_controller(${{PROJECT_NAME}} ${{controller_SRC}} ${{controller_HDR}})
 {extra_libs}
-install(TARGETS ${{PROJECT_NAME}} DESTINATION ${{MC_RTC_LIBDIR}}/mc_controller)""".format(controller_class_name = controller_class_name, extra_libs = extra_libs))
+""".format(controller_class_name = controller_class_name, extra_libs = extra_libs))
     with open(project_dir + '/src/' + controller_class_name + '.h', 'w') as fd:
         fd.write("""#pragma once
 
@@ -98,6 +94,10 @@ private:
 """
         else:
             min_code = ""
+        if controller_constructor:
+            controller_constructor = """CONTROLLER_CONSTRUCTOR("{controller_name}", {controller_class_name})""".format(controller_name = controller_name, controller_class_name = controller_class_name)
+        else:
+            controller_constructor = ""
         fd.write("""#include "{controller_class_name}.h"
 
 {controller_class_name}::{controller_class_name}(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration & config)
@@ -117,8 +117,8 @@ void {controller_class_name}::reset(const mc_control::ControllerResetData & rese
   {base_class}::reset(reset_data);
 }}
 
-CONTROLLER_CONSTRUCTOR("{controller_name}", {controller_class_name})
-""".format(controller_class_name = controller_class_name, controller_name = controller_name, base_class = base_class, base_init = base_init, min_code = min_code))
+{controller_constructor}
+""".format(controller_class_name = controller_class_name, controller_name = controller_name, base_class = base_class, base_init = base_init, min_code = min_code, controller_constructor = controller_constructor))
     with open(project_dir + '/etc/' + controller_name + '.conf', 'w') as fd:
         fd.write("{\n}")
     repo.index.add([s.format(controller_class_name) for s in ['CMakeLists.txt', 'src/CMakeLists.txt', 'etc/' + controller_name + '.conf', 'src/{}.h', 'src/{}.cpp']])

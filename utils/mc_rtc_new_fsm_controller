@@ -13,8 +13,8 @@ def new_fsm_controller(project_dir, controller_class_name, controller_name):
         return new_fsm_controller(os.path.abspath(project_dir), controller_class_name, controller_name)
     if controller_name is None:
         return new_fsm_controller(project_dir, controller_class_name, controller_class_name)
-    repo = new_controller(project_dir, controller_class_name, controller_name, base_class = 'mc_control::fsm::Controller', base_use_conf = True, extra_includes = ['mc_control/fsm/Controller.h'], extra_libs = 'mc_control_fsm', min_code = False)
-    with open(project_dir + '/etc/{}.conf'.format(controller_name), 'w') as fd:
+    repo = new_controller(project_dir, controller_class_name, controller_name, base_class = 'mc_control::fsm::Controller', base_use_conf = True, extra_includes = ['mc_control/fsm/Controller.h'], extra_libs = 'mc_rtc::mc_control_fsm', min_code = False, configure_conf = True, controller_constructor = False)
+    with open(project_dir + '/etc/{}.in.conf'.format(controller_name), 'w') as fd:
         fd.write("""{{
   // If true, the FSM transitions are managed by an external tool
   "Managed": false,
@@ -24,9 +24,9 @@ def new_fsm_controller(project_dir, controller_class_name, controller_name):
   // otherwise the FSM holds the last state until transition
   "IdleKeepState": false,
   // Where to look for state libraries
-  "StatesLibraries": ["/usr/local/lib/mc_controller/{controller_name}/states"],
+  "StatesLibraries": ["@MC_STATES_DEFAULT_INSTALL_PREFIX@","@MC_STATES_INSTALL_PREFIX@"],
   // Where to look for state files
-  "StatesFiles": ["/usr/local/lib/mc_controller/{controller_name}/states/data"],
+  "StatesFiles": ["@MC_STATES_DEFAULT_INSTALL_PREFIX@/data","@MC_STATES_INSTALL_PREFIX@/data"],
   // If true, state factory will be more verbose
   "VerboseStateFactory": false,
   // Additional robots to load
@@ -35,7 +35,7 @@ def new_fsm_controller(project_dir, controller_class_name, controller_name):
     "ground":
     {{
       "module": "env",
-      "params": ["@MC_ENV_DESCRIPTION@", "ground"]
+      "params": ["@AROBASE@MC_ENV_DESCRIPTION@AROBASE@", "ground"]
     }}
   }},
   // General constraints, always on
@@ -102,29 +102,37 @@ def new_fsm_controller(project_dir, controller_class_name, controller_name):
   // Initial state
   "init": "{controller_name}_Initial"
 }}""".format(controller_name = controller_name, controller_class_name = controller_class_name))
+    with open(project_dir + '/src/CMakeLists.txt', 'w') as fd:
+        fd.write("""set(controller_SRC
+  {controller_class_name}.cpp
+)
 
+set(controller_HDR
+  {controller_class_name}.h
+)
+
+add_library(${{PROJECT_NAME}} SHARED ${{controller_SRC}} ${{controller_HDR}})
+target_link_libraries(${{PROJECT_NAME}} PUBLIC mc_rtc::mc_control_fsm)
+install(TARGETS ${{PROJECT_NAME}} DESTINATION "${{MC_RTC_LIBDIR}}")
+
+add_controller(${{PROJECT_NAME}}_controller lib.cpp "")
+set_target_properties(${{PROJECT_NAME}}_controller PROPERTIES OUTPUT_NAME "${{PROJECT_NAME}}")
+target_link_libraries(${{PROJECT_NAME}}_controller PUBLIC ${{PROJECT_NAME}})
+""".format(controller_class_name = controller_class_name))
+    with open(project_dir + '/src/lib.cpp', 'w') as fd:
+        fd.write("""#include "{controller_class_name}.h"
+
+CONTROLLER_CONSTRUCTOR("{controller_name}", {controller_class_name})
+""".format(controller_name = controller_name, controller_class_name = controller_class_name))
     os.makedirs(project_dir + '/src/states/data')
     with open(project_dir + '/src/CMakeLists.txt', 'a') as fd:
         fd.write('\nadd_subdirectory(states)')
     with open(project_dir + '/src/states/data/states.json', 'w') as fd:
         fd.write('{\n}')
     with open(project_dir + '/src/states/CMakeLists.txt', 'w') as fd:
-        fd.write("""set(FSM_STATES_INSTALL_PREFIX "${{MC_RTC_LIBDIR}}/mc_controller/{controller_name}/states")
+        fd.write("""add_fsm_state_simple({controller_name}_Initial)
 
-install(DIRECTORY data DESTINATION ${{FSM_STATES_INSTALL_PREFIX}} FILES_MATCHING PATTERN "*.json")
-
-macro(add_fsm_state state_name state_SRC state_HDR)
-  add_library(${{state_name}} SHARED  ${{state_SRC}} ${{state_HDR}})
-  set_target_properties(${{state_name}} PROPERTIES PREFIX "")
-  target_link_libraries(${{state_name}} ${{PROJECT_NAME}})
-  install(TARGETS ${{state_name}} DESTINATION ${{FSM_STATES_INSTALL_PREFIX}})
-endmacro()
-
-macro(add_fsm_state_simple state_name)
-  add_fsm_state(${{state_name}} ${{state_name}}.cpp ${{state_name}}.h)
-endmacro()
-
-add_fsm_state_simple({controller_name}_Initial)
+add_fsm_data_directory(data)
 """.format(controller_name = controller_name))
     with open(project_dir + '/src/states/{}_Initial.h'.format(controller_name), 'w') as fd:
         fd.write("""#pragma once
