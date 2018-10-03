@@ -27,6 +27,9 @@ set(mc_rtc_utils_HDR ${mc_rtc_utils_HDR} PARENT_SCOPE)
 add_library(mc_rtc_utils SHARED ${mc_rtc_utils_SRC} ${mc_rtc_utils_HDR})
 set_target_properties(mc_rtc_utils PROPERTIES COMPILE_FLAGS "-DMC_RTC_UTILS_EXPORTS")
 target_link_libraries(mc_rtc_utils PUBLIC ${Boost_LIBRARIES})
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+  target_link_libraries(mc_rtc_utils PUBLIC atomic)
+endif()
 pkg_config_append_libs(mc_rtc_utils)
 
 set(mc_rbdyn_SRC
@@ -252,7 +255,7 @@ endif()
 
 add_library(mc_rtc_ros SHARED mc_rtc/ros.cpp ../include/mc_rtc/ros.h ../include/mc_rtc/ros_api.h)
 set_target_properties(mc_rtc_ros PROPERTIES COMPILE_FLAGS "-DMC_RTC_ROS_EXPORTS")
-target_link_libraries(mc_rtc_ros PUBLIC mc_rbdyn atomic)
+target_link_libraries(mc_rtc_ros PUBLIC mc_rbdyn)
 if(NOT ${DISABLE_ROS})
   if(${ROSCPP_FOUND})
     pkg_config_use_dependency(mc_rtc_ros roscpp)
