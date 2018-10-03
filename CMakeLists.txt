@@ -39,7 +39,12 @@ else()
 endif()
 
 option(PYTHON_BINDING "Generate python binding." ON)
-option(PYTHON_BINDING_USER_INSTALL "Install the Python bindings in user space" OFF)
+if(WIN32)
+  set(PYTHON_BINDING_USER_INSTALL_DEFAULT ON)
+else()
+  set(PYTHON_BINDING_USER_INSTALL_DEFAULT OFF)
+endif()
+option(PYTHON_BINDING_USER_INSTALL "Install the Python bindings in user space" ${PYTHON_BINDING_USER_INSTALL_DEFAULT})
 
 option(BUILD_CONTROLLER_SAMPLES "Build sample controllers in the project" ON)
 option(DISABLE_TESTS "Disable unit tests" OFF)
@@ -48,7 +53,7 @@ option(DISABLE_ROBOT_TESTS "Disable RobotModule unit tests" OFF)
 
 option(BUILD_BENCHMARKS "Build benchmarks" OFF)
 
-option(DISABLE_ROS "Do not build with ros support (even if ros was found)" OFF)
+option(DISABLE_ROS "Do not build with ROS support (even if ROS was found)" OFF)
 
 SEARCH_FOR_EIGEN()
 

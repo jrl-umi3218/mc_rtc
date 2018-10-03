@@ -34,7 +34,7 @@ if(${PYTHON_BINDING})
   findpython()
   add_library(PythonState SHARED "PythonState.cpp")
   set_target_properties(PythonState PROPERTIES PREFIX "")
-  target_include_directories("PythonState" PRIVATE "${PROJECT_SOURCE_DIR}/binding/python" ${PYTHON_INCLUDE_DIRS})
+  target_include_directories("PythonState" PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/../../../../binding/python/$<CONFIGURATION>" ${PYTHON_INCLUDE_DIRS})
   target_link_libraries(PythonState PUBLIC mc_control_fsm ${PYTHON_LIBRARIES})
   add_dependencies(PythonState mc_rtc-python-bindings)
   install(TARGETS PythonState
