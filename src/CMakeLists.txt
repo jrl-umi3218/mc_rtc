@@ -252,7 +252,7 @@ endif()
 
 add_library(mc_rtc_ros SHARED mc_rtc/ros.cpp ../include/mc_rtc/ros.h ../include/mc_rtc/ros_api.h)
 set_target_properties(mc_rtc_ros PROPERTIES COMPILE_FLAGS "-DMC_RTC_ROS_EXPORTS")
-target_link_libraries(mc_rtc_ros PUBLIC mc_rbdyn)
+target_link_libraries(mc_rtc_ros PUBLIC mc_rbdyn atomic)
 if(NOT ${DISABLE_ROS})
   if(${ROSCPP_FOUND})
     pkg_config_use_dependency(mc_rtc_ros roscpp)
