@@ -232,16 +232,31 @@ class MCLogTab(QtGui.QWidget):
       qList = ySelector.findItems("q", QtCore.Qt.MatchFlag.MatchStartsWith)
       qList += ySelector.findItems("error", QtCore.Qt.MatchFlag.MatchStartsWith)
       qList += ySelector.findItems("tau", QtCore.Qt.MatchFlag.MatchStartsWith)
-      for qIn in qList:
-        cCount = qIn.childCount()
-        for i in range(cCount):
-          c = qIn.child(i)
-          if c.originalText.isdigit():
-            jIndex = int(c.originalText)
-            if jIndex < len(self.rm.ref_joint_order()):
-              c.displayText = self.rm.ref_joint_order()[jIndex]
+      def update_child_display(items):
+        for itm in items:
+          cCount = itm.childCount()
+          if cCount == 0:
+            if itm.originalText.isdigit():
+              jIndex = int(itm.originalText)
+              if jIndex < len(self.rm.ref_joint_order()):
+                itm.displayText = self.rm.ref_joint_order()[jIndex]
+          else:
+            update_child_display([itm.child(i) for i in range(cCount)])
+      update_child_display(qList)
     setQNames(self.ui.y1Selector)
     setQNames(self.ui.y2Selector)
+    bounds = self.rm.bounds()
+    if self.data is None:
+      return
+    for i, jn in enumerate(self.rm.ref_joint_order()):
+      if "qIn_limits_lower_{}".format(i) in self.data:
+        self.data["qIn_limits_lower_{}".format(i)].fill(bounds[0][jn][0])
+        self.data["qIn_limits_upper_{}".format(i)].fill(bounds[1][jn][0])
+        self.data["qOut_limits_lower_{}".format(i)].fill(bounds[0][jn][0])
+        self.data["qOut_limits_upper_{}".format(i)].fill(bounds[1][jn][0])
+      if "tauIn_limits_lower_{}".format(i) in self.data:
+        self.data["tauIn_limits_lower_{}".format(i)].fill(bounds[4][jn][0])
+        self.data["tauIn_limits_upper_{}".format(i)].fill(bounds[5][jn][0])
 
 
   @QtCore.Slot(str)
