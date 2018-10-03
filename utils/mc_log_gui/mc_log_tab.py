@@ -13,6 +13,7 @@ class MCLogTreeWidgetItem(QtGui.QTreeWidgetItem):
   def __init__(self, parent, displayText, actualText, hasData):
     super(MCLogTreeWidgetItem, self).__init__(parent, [displayText])
     self._displayText = displayText
+    self.originalText = displayText
     self.actualText = actualText
     self.hasData = hasData
   @property
@@ -62,6 +63,8 @@ class TreeView(object):
   def update_y_selector(self, ySelector, parent, baseModelIdx = None):
     row = 0
     needExpand = False
+    if all([l.name.isdigit() for l in self.leafs]):
+      self.leafs.sort(lambda l,r: cmp(int(l.name), int(r.name)))
     for l in self.leafs:
       l.widgets.append(MCLogTreeWidgetItem(parent, l.name, l.dataName, l.hasData))
       if baseModelIdx is not None:
@@ -228,18 +231,15 @@ class MCLogTab(QtGui.QWidget):
     def setQNames(ySelector):
       qList = ySelector.findItems("q", QtCore.Qt.MatchFlag.MatchStartsWith)
       qList += ySelector.findItems("error", QtCore.Qt.MatchFlag.MatchStartsWith)
+      qList += ySelector.findItems("tau", QtCore.Qt.MatchFlag.MatchStartsWith)
       for qIn in qList:
         cCount = qIn.childCount()
         for i in range(cCount):
           c = qIn.child(i)
-          if c.actualText.isdigit():
-            jIndex = int(c.actualText)
-            if jIndex < self.rm.mb.nrJoints():
-              try:
-                jName = self.rm.mb.joint(jIndex + 1).name()
-                c.displayText = self.rm.ref_joint_order()[self.rm.ref_joint_order().index(jName)]
-              except ValueError,IndexError:
-                pass
+          if c.originalText.isdigit():
+            jIndex = int(c.originalText)
+            if jIndex < len(self.rm.ref_joint_order()):
+              c.displayText = self.rm.ref_joint_order()[jIndex]
     setQNames(self.ui.y1Selector)
     setQNames(self.ui.y2Selector)
 
@@ -286,9 +286,15 @@ class MCLogTab(QtGui.QWidget):
         return x == s[0]
       return re.match("{}($|_.*$)".format(s[0]), x) is not None
     selected = sorted(filter(lambda x: any([is_selected(s, x) for s in selected_items]), self.data.keys()))
-    for s in selected:
+    def find_item(s):
+      for itm in [it.value() for it in QtGui.QTreeWidgetItemIterator(ySelector)]:
+        if itm.actualText == s:
+          return itm
+      return None
+    legends = [itm.actualText.replace(itm.originalText, itm.displayText) for itm in [ find_item(s) for s in selected ] ]
+    for s,l in zip(selected, legends):
       if s not in prevSelected:
-        add_fn(self.x_data, s, s)
+        add_fn(self.x_data, s, l)
     for s in prevSelected:
       if s not in selected:
         remove_fn(s)
@@ -347,16 +353,20 @@ class MCLogTab(QtGui.QWidget):
     menu.exec_(ySelector.viewport().mapToGlobal(point))
 
   @staticmethod
-  def MakePlot(parent, x_data, y1, y2):
+  def MakePlot(parent, x_data, y1, y2, y1_label = None, y2_label = None):
+    if y1_label is None:
+      return MakePlot(parent, x_data, y1, y2, y1, y2_label)
+    if y2_label is None:
+      return MakePlot(parent, x_data, y1, y2, y1_label, y2_label)
     tab = MCLogTab(parent)
     tab.x_data = x_data
     tab.setData(parent.data)
     tab.setRobotModule(parent.rm)
-    for y in y1:
-      tab.ui.canvas.add_plot_left(tab.x_data, y, y)
+    for y,yl in zip(y1, y1_label):
+      tab.ui.canvas.add_plot_left(tab.x_data, y, yl)
       tab.tree_view.select(y, tab.ui.y1Selector, 0)
-    for y in y2:
-      tab.ui.canvas.add_plot_right(tab.x_data, y, y)
+    for y,yl in zip(y2, y2_label):
+      tab.ui.canvas.add_plot_right(tab.x_data, y, yl)
       tab.tree_view.select(y, tab.ui.y2Selector, 1)
     return tab
 
@@ -431,7 +441,7 @@ class MCLogTab(QtGui.QWidget):
       if y2_diff_prefix:
         y_diff_data[1] += [ '{}_{}'.format(y2_diff_prefix, jIndex) ]
         y_diff_data_labels[1] += [ '{}_{}'.format(y2_diff_label, j) ]
-    tab = MCLogTab.MakePlot(parent, 't', y_data[0], y_data[1])
+    tab = MCLogTab.MakePlot(parent, 't', y_data[0], y_data[1], y_data_labels[0], y_data_labels[1])
     for y, y_label in zip(y_diff_data[0], y_diff_data_labels[0]):
       tab.ui.canvas.add_diff_plot_left(tab.x_data, y, y_label)
     for y, y_label in zip(y_diff_data[1], y_diff_data_labels[1]):
