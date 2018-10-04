@@ -97,6 +97,8 @@ class MCLogJointDialog(QtGui.QDialog):
     self.selectAllBox = QtGui.QCheckBox("Select all", self)
     self.selectAllBox.stateChanged.connect(self.selectAllBoxChanged)
     optionsLayout.addWidget(self.selectAllBox)
+    self.onePlotPerJointBox = QtGui.QCheckBox("One plot per joint", self)
+    optionsLayout.addWidget(self.onePlotPerJointBox)
     layout.addWidget(optionsBox)
 
     confirmLayout = QtGui.QHBoxLayout()
@@ -110,7 +112,10 @@ class MCLogJointDialog(QtGui.QDialog):
 
   def okButton(self):
     if len(self.joints):
-      self.parent().plot_joint_data(self.name, self.joints, self.y1_prefix, self.y2_prefix, self.y1_diff_prefix, self.y2_diff_prefix)
+      if self.onePlotPerJointBox.isChecked():
+        [ self.parent().plot_joint_data(self.name + ": {}".format(j), [j], self.y1_prefix, self.y2_prefix, self.y1_diff_prefix, self.y2_diff_prefix) for j in self.joints ]
+      else:
+        self.parent().plot_joint_data(self.name, self.joints, self.y1_prefix, self.y2_prefix, self.y1_diff_prefix, self.y2_diff_prefix)
     self.accept()
 
   def checkboxChanged(self, item, state):
