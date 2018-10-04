@@ -67,27 +67,46 @@ class MCLogJointDialog(QtGui.QDialog):
     self.y2_prefix = y2_prefix
     self.y1_diff_prefix = y1_diff_prefix
     self.y2_diff_prefix = y2_diff_prefix
-    layout = QtGui.QGridLayout(self)
-    self.setLayout(layout)
+    layout = QtGui.QVBoxLayout(self)
+
+    jointsBox = QtGui.QGroupBox("Joints", self)
+    grid = QtGui.QGridLayout(jointsBox)
+    margins = grid.contentsMargins()
+    margins.setTop(20)
+    grid.setContentsMargins(margins)
+    self.jointsCBox = []
     row = 0
     col = 0
     if rm is not None:
         for i, j in enumerate(rm.ref_joint_order()):
           cBox = QtGui.QCheckBox(j, self)
           cBox.stateChanged.connect(partial(self.checkboxChanged, j))
-          layout.addWidget(cBox, row, col)
+          grid.addWidget(cBox, row, col)
+          self.jointsCBox.append(cBox)
           col += 1
           if col == 4:
             col = 0
             row += 1
-    row += 1
-    col = 0
+    layout.addWidget(jointsBox)
+
+    optionsBox = QtGui.QGroupBox("Options", self)
+    optionsLayout = QtGui.QHBoxLayout(optionsBox)
+    margins = optionsLayout.contentsMargins()
+    margins.setTop(20)
+    optionsLayout.setContentsMargins(margins)
+    self.selectAllBox = QtGui.QCheckBox("Select all", self)
+    self.selectAllBox.stateChanged.connect(self.selectAllBoxChanged)
+    optionsLayout.addWidget(self.selectAllBox)
+    layout.addWidget(optionsBox)
+
+    confirmLayout = QtGui.QHBoxLayout()
     okButton = QtGui.QPushButton("Ok", self)
-    layout.addWidget(okButton, row, col, 1, 2)
+    confirmLayout.addWidget(okButton)
     okButton.clicked.connect(self.okButton)
     cancelButton = QtGui.QPushButton("Cancel", self)
-    layout.addWidget(cancelButton, row, col + 2, 1, 2)
+    confirmLayout.addWidget(cancelButton)
     cancelButton.clicked.connect(self.reject)
+    layout.addLayout(confirmLayout)
 
   def okButton(self):
     if len(self.joints):
@@ -99,6 +118,14 @@ class MCLogJointDialog(QtGui.QDialog):
       self.joints.append(item)
     else:
       self.joints.remove(item)
+
+  def selectAllBoxChanged(self, state):
+    for cBox in self.jointsCBox:
+      cBox.setChecked(state)
+    if state:
+      self.selectAllBox.setText("Select none")
+    else:
+      self.selectAllBox.setText("Select all")
 
 class MCLogUI(QtGui.QMainWindow):
   def __init__(self, parent = None):
