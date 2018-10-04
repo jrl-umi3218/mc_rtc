@@ -419,7 +419,7 @@ class MCLogTab(QtGui.QWidget):
     return tab
 
   @staticmethod
-  def JointPlot(parent, joints, y1_prefix, y2_prefix, y1_diff_prefix, y2_diff_prefix):
+  def JointPlot(parent, joints, y1_prefix, y2_prefix, y1_diff_prefix, y2_diff_prefix, plot_limits = False):
     def prefix_to_label(joints, prefix, diff):
       suffix = ''
       if diff:
@@ -447,9 +447,19 @@ class MCLogTab(QtGui.QWidget):
       if y1_prefix:
         y_data[0] += [ '{}_{}'.format(y1_prefix, jIndex) ]
         y_data_labels[0] += [ '{}_{}'.format(y1_label, j) ]
+        if y1_prefix != "error" and plot_limits:
+          y_data[0] += [ '{}_limits_lower_{}'.format(y1_prefix, jIndex) ]
+          y_data_labels[0] += [ '{}_limits_lower_{}'.format(y1_label, j) ]
+          y_data[0] += [ '{}_limits_upper_{}'.format(y1_prefix, jIndex) ]
+          y_data_labels[0] += [ '{}_limits_upper_{}'.format(y1_label, j) ]
       if y2_prefix:
         y_data[1] += [ '{}_{}'.format(y2_prefix, jIndex) ]
         y_data_labels[1] += [ '{}_{}'.format(y2_label, j) ]
+        if y2_prefix != "error" and plot_limits:
+          y_data[1] += [ '{}_limits_lower_{}'.format(y2_prefix, jIndex) ]
+          y_data_labels[1] += [ '{}_limits_lower_{}'.format(y2_label, j) ]
+          y_data[1] += [ '{}_limits_upper_{}'.format(y2_prefix, jIndex) ]
+          y_data_labels[1] += [ '{}_limits_upper_{}'.format(y2_label, j) ]
       if y1_diff_prefix:
         y_diff_data[0] += [ '{}_{}'.format(y1_diff_prefix, jIndex) ]
         y_diff_data_labels[0] += [ '{}_{}'.format(y1_diff_label, j) ]

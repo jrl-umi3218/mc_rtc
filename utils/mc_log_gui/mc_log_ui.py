@@ -99,6 +99,8 @@ class MCLogJointDialog(QtGui.QDialog):
     optionsLayout.addWidget(self.selectAllBox)
     self.onePlotPerJointBox = QtGui.QCheckBox("One plot per joint", self)
     optionsLayout.addWidget(self.onePlotPerJointBox)
+    self.plotLimits = QtGui.QCheckBox("Plot limits", self)
+    optionsLayout.addWidget(self.plotLimits)
     layout.addWidget(optionsBox)
 
     confirmLayout = QtGui.QHBoxLayout()
@@ -112,10 +114,11 @@ class MCLogJointDialog(QtGui.QDialog):
 
   def okButton(self):
     if len(self.joints):
+      plotLimits = self.plotLimits.isChecked()
       if self.onePlotPerJointBox.isChecked():
-        [ self.parent().plot_joint_data(self.name + ": {}".format(j), [j], self.y1_prefix, self.y2_prefix, self.y1_diff_prefix, self.y2_diff_prefix) for j in self.joints ]
+        [ self.parent().plot_joint_data(self.name + ": {}".format(j), [j], self.y1_prefix, self.y2_prefix, self.y1_diff_prefix, self.y2_diff_prefix, plotLimits) for j in self.joints ]
       else:
-        self.parent().plot_joint_data(self.name, self.joints, self.y1_prefix, self.y2_prefix, self.y1_diff_prefix, self.y2_diff_prefix)
+        self.parent().plot_joint_data(self.name, self.joints, self.y1_prefix, self.y2_prefix, self.y1_diff_prefix, self.y2_diff_prefix, plotLimits)
     self.accept()
 
   def checkboxChanged(self, item, state):
@@ -375,8 +378,8 @@ class MCLogUI(QtGui.QMainWindow):
     self.updateClosable()
 
   def plot_joint_data(self, name, joints, y1_prefix = None, y2_prefix = None,
-                                    y1_diff_prefix = None, y2_diff_prefix = None):
-    plotW = MCLogTab.JointPlot(self, joints, y1_prefix, y2_prefix, y1_diff_prefix, y2_diff_prefix)
+                                    y1_diff_prefix = None, y2_diff_prefix = None, plot_limits = False):
+    plotW = MCLogTab.JointPlot(self, joints, y1_prefix, y2_prefix, y1_diff_prefix, y2_diff_prefix, plot_limits)
     self.ui.tabWidget.insertTab(self.ui.tabWidget.count() - 1, plotW, name)
     self.ui.tabWidget.setCurrentIndex(self.ui.tabWidget.count() - 2)
     self.updateClosable()
