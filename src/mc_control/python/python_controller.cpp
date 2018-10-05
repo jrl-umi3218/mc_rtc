@@ -18,9 +18,9 @@ extern "C"
   }
   void destroy(mc_control::MCController * ptr)
   {
-    // FIXME This is wrong...
-    MCControllerObject * obj = static_cast<MCControllerObject *>(obj);
-    delete obj;
+    // The Python object should be garbage collected, so we only take care of
+    // the C++ memory we allocated
+    delete ptr;
     auto gstate = PyGILState_Ensure();
     Py_Finalize();
   }
