@@ -4,39 +4,38 @@
 #include <mc_rtc/ros.h>
 
 #ifdef MC_RTC_HAS_ROS
-#include <ros/ros.h>
-#include <tf2_ros/transform_broadcaster.h>
+#  include <ros/ros.h>
+#  include <tf2_ros/transform_broadcaster.h>
 #endif
 
 namespace
 {
-  inline std::stringstream& operator>>(std::stringstream & ss, Eigen::Matrix3d & m)
+inline std::stringstream & operator>>(std::stringstream & ss, Eigen::Matrix3d & m)
+{
+  for(int i = 0; i < 3; ++i)
   {
-    for(int i = 0; i < 3; ++i)
+    for(int j = 0; j < 3; ++j)
     {
-      for(int j = 0; j < 3; ++j)
-      {
-        ss >> m(i,j);
-      }
+      ss >> m(i, j);
     }
-    return ss;
   }
-  inline std::stringstream& operator>>(std::stringstream & ss, Eigen::Vector3d & v)
-  {
-    for(int i = 0; i < 3; ++i)
-    {
-      ss >> v(i);
-    }
-    return ss;
-  }
+  return ss;
 }
+inline std::stringstream & operator>>(std::stringstream & ss, Eigen::Vector3d & v)
+{
+  for(int i = 0; i < 3; ++i)
+  {
+    ss >> v(i);
+  }
+  return ss;
+}
+} // namespace
 
 namespace mc_control
 {
 
 MCBCISelfInteractController::MCBCISelfInteractController(std::shared_ptr<mc_rbdyn::RobotModule> robot_module, double dt)
-: MCController(robot_module, dt),
-  tf_caster(0), seq(0)
+: MCController(robot_module, dt), tf_caster(0), seq(0)
 {
   qpsolver->addConstraintSet(contactConstraint);
   qpsolver->addConstraintSet(dynamicsConstraint);
@@ -44,35 +43,33 @@ MCBCISelfInteractController::MCBCISelfInteractController(std::shared_ptr<mc_rbdy
   {
     /* Set more restrictive auto collision constraints */
     selfCollisionConstraint.reset();
-    selfCollisionConstraint.addCollisions(solver(), {
-      mc_rbdyn::Collision("LARM_LINK3", "BODY", 0.1, 0.05, 0.),
-      mc_rbdyn::Collision("LARM_LINK4", "BODY", 0.1, 0.05, 0.),
-      mc_rbdyn::Collision("LARM_LINK5", "BODY", 0.1, 0.05, 0.),
-      mc_rbdyn::Collision("RARM_LINK3", "BODY", 0.1, 0.05, 0.),
-      mc_rbdyn::Collision("RARM_LINK4", "BODY", 0.1, 0.05, 0.),
-      mc_rbdyn::Collision("RARM_LINK5", "BODY", 0.1, 0.05, 0.),
-      mc_rbdyn::Collision("RARM_LINK3", "CHEST_LINK0", 0.1, 0.05, 0.),
-      mc_rbdyn::Collision("RARM_LINK4", "CHEST_LINK0", 0.1, 0.05, 0.),
-      mc_rbdyn::Collision("RARM_LINK5", "CHEST_LINK0", 0.1, 0.05, 0.),
-      mc_rbdyn::Collision("RARM_LINK4", "CHEST_LINK1", 0.1, 0.05, 0.),
-      mc_rbdyn::Collision("RARM_LINK5", "CHEST_LINK1", 0.1, 0.05, 0.),
-      mc_rbdyn::Collision("LARM_LINK3", "CHEST_LINK0", 0.1, 0.05, 0.),
-      mc_rbdyn::Collision("LARM_LINK4", "CHEST_LINK0", 0.1, 0.05, 0.),
-      mc_rbdyn::Collision("LARM_LINK5", "CHEST_LINK0", 0.1, 0.05, 0.),
-      mc_rbdyn::Collision("LARM_LINK4", "CHEST_LINK1", 0.1, 0.05, 0.),
-      mc_rbdyn::Collision("LARM_LINK5", "CHEST_LINK1", 0.1, 0.05, 0.)
-    });
+    selfCollisionConstraint.addCollisions(solver(), {mc_rbdyn::Collision("LARM_LINK3", "BODY", 0.1, 0.05, 0.),
+                                                     mc_rbdyn::Collision("LARM_LINK4", "BODY", 0.1, 0.05, 0.),
+                                                     mc_rbdyn::Collision("LARM_LINK5", "BODY", 0.1, 0.05, 0.),
+                                                     mc_rbdyn::Collision("RARM_LINK3", "BODY", 0.1, 0.05, 0.),
+                                                     mc_rbdyn::Collision("RARM_LINK4", "BODY", 0.1, 0.05, 0.),
+                                                     mc_rbdyn::Collision("RARM_LINK5", "BODY", 0.1, 0.05, 0.),
+                                                     mc_rbdyn::Collision("RARM_LINK3", "CHEST_LINK0", 0.1, 0.05, 0.),
+                                                     mc_rbdyn::Collision("RARM_LINK4", "CHEST_LINK0", 0.1, 0.05, 0.),
+                                                     mc_rbdyn::Collision("RARM_LINK5", "CHEST_LINK0", 0.1, 0.05, 0.),
+                                                     mc_rbdyn::Collision("RARM_LINK4", "CHEST_LINK1", 0.1, 0.05, 0.),
+                                                     mc_rbdyn::Collision("RARM_LINK5", "CHEST_LINK1", 0.1, 0.05, 0.),
+                                                     mc_rbdyn::Collision("LARM_LINK3", "CHEST_LINK0", 0.1, 0.05, 0.),
+                                                     mc_rbdyn::Collision("LARM_LINK4", "CHEST_LINK0", 0.1, 0.05, 0.),
+                                                     mc_rbdyn::Collision("LARM_LINK5", "CHEST_LINK0", 0.1, 0.05, 0.),
+                                                     mc_rbdyn::Collision("LARM_LINK4", "CHEST_LINK1", 0.1, 0.05, 0.),
+                                                     mc_rbdyn::Collision("LARM_LINK5", "CHEST_LINK1", 0.1, 0.05, 0.)});
   }
   qpsolver->addConstraintSet(selfCollisionConstraint);
   qpsolver->addTask(postureTask.get());
-  qpsolver->setContacts({
-    mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"),
-    mc_rbdyn::Contact(robots(), "RFullSole", "AllGround"),
-    mc_rbdyn::Contact(robots(), "Butthock", "AllGround")
-  });
+  qpsolver->setContacts({mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"),
+                         mc_rbdyn::Contact(robots(), "RFullSole", "AllGround"),
+                         mc_rbdyn::Contact(robots(), "Butthock", "AllGround")});
 
-  lh2Task.reset(new mc_tasks::RelativeEndEffectorTask("LARM_LINK6", robots(), robots().robotIndex(), "", 2.0, 100000.0));
-  rh2Task.reset(new mc_tasks::RelativeEndEffectorTask("RARM_LINK6", robots(), robots().robotIndex(), "", 2.0, 100000.0));
+  lh2Task.reset(
+      new mc_tasks::RelativeEndEffectorTask("LARM_LINK6", robots(), robots().robotIndex(), "", 2.0, 100000.0));
+  rh2Task.reset(
+      new mc_tasks::RelativeEndEffectorTask("RARM_LINK6", robots(), robots().robotIndex(), "", 2.0, 100000.0));
   chestTask.reset(new mc_tasks::EndEffectorTask("CHEST_LINK1", robots(), robots().robotIndex(), 1.0, 1e6));
   solver().addTask(lh2Task);
   solver().addTask(rh2Task);
@@ -91,11 +88,9 @@ MCBCISelfInteractController::MCBCISelfInteractController(std::shared_ptr<mc_rbdy
 void MCBCISelfInteractController::reset(const ControllerResetData & reset_data)
 {
   MCController::reset(reset_data);
-  qpsolver->setContacts({
-    mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"),
-    mc_rbdyn::Contact(robots(), "RFullSole", "AllGround"),
-    mc_rbdyn::Contact(robots(), "Butthock", "AllGround")
-  });
+  qpsolver->setContacts({mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"),
+                         mc_rbdyn::Contact(robots(), "RFullSole", "AllGround"),
+                         mc_rbdyn::Contact(robots(), "Butthock", "AllGround")});
   lh2Task->reset();
   rh2Task->reset();
   chestTask->reset();
@@ -107,7 +102,7 @@ bool MCBCISelfInteractController::run()
   bool ret = MCController::run();
   if(ret)
   {
-    #ifdef MC_RTC_HAS_ROS
+#ifdef MC_RTC_HAS_ROS
     if(tf_caster)
     {
       geometry_msgs::TransformStamped msg;
@@ -150,7 +145,7 @@ bool MCBCISelfInteractController::run()
       msg.transform.rotation.z = q.z();
       tf_caster->sendTransform(msg);
     }
-    #endif
+#endif
   }
   return ret;
 }
@@ -189,18 +184,18 @@ bool MCBCISelfInteractController::read_msg(std::string & msg)
   else if(token == "GoToWalkPose")
   {
     {
-    Eigen::Matrix3d rot;
-    rot << 0.824835, 0.241845, -0.511037, -0.330366, 0.939693, -0.0885213, 0.458809, 0.241845, 0.854988;
-    Eigen::Vector3d t;
-    t << -0.0060278, 0.379162, 0.0743646;
-    lh2Task->set_ef_pose(sva::PTransformd(rot.inverse(), t));
+      Eigen::Matrix3d rot;
+      rot << 0.824835, 0.241845, -0.511037, -0.330366, 0.939693, -0.0885213, 0.458809, 0.241845, 0.854988;
+      Eigen::Vector3d t;
+      t << -0.0060278, 0.379162, 0.0743646;
+      lh2Task->set_ef_pose(sva::PTransformd(rot.inverse(), t));
     }
     {
-    Eigen::Matrix3d rot;
-    rot << 0.824835, -0.241845, -0.511037, 0.330366, 0.939693, 0.0885213, 0.458809, -0.241845, 0.854988;
-    Eigen::Vector3d t;
-    t << -0.0060278, -0.379162, 0.0743646;
-    rh2Task->set_ef_pose(sva::PTransformd(rot.inverse(), t));
+      Eigen::Matrix3d rot;
+      rot << 0.824835, -0.241845, -0.511037, 0.330366, 0.939693, 0.0885213, 0.458809, -0.241845, 0.854988;
+      Eigen::Vector3d t;
+      t << -0.0060278, -0.379162, 0.0743646;
+      rh2Task->set_ef_pose(sva::PTransformd(rot.inverse(), t));
     }
   }
   else if(token == "GoToInitialRubberPose")
@@ -239,7 +234,8 @@ bool MCBCISelfInteractController::read_msg(std::string & msg)
   }
   else if(token == "SetPanTilt")
   {
-    double pan = 0; double tilt = 0;
+    double pan = 0;
+    double tilt = 0;
     ss >> pan >> tilt;
     set_joint_pos("HEAD_JOINT0", pan);
     set_joint_pos("HEAD_JOINT1", tilt);
@@ -293,7 +289,7 @@ bool MCBCISelfInteractController::read_write_msg(std::string & msg, std::string 
     {
       for(int j = 0; j < 3; ++j)
       {
-        out_m(i,j) = ori(i,j);
+        out_m(i, j) = ori(i, j);
       }
       out_m(i, 3) = out_X.translation()(i);
     }
@@ -309,4 +305,4 @@ bool MCBCISelfInteractController::read_write_msg(std::string & msg, std::string 
   return true;
 }
 
-}
+} // namespace mc_control

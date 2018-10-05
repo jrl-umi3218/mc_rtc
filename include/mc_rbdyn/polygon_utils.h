@@ -1,19 +1,28 @@
 #pragma once
 
-#include <Eigen/Geometry>
-#include <geos/geom/Polygon.h>
-
 #include <mc_rbdyn/api.h>
+
+#include <Eigen/Geometry>
+#include <memory>
+#include <vector>
+
+namespace geos
+{
+namespace geom
+{
+class Geometry;
+}
+} // namespace geos
 
 namespace mc_rbdyn
 {
 
 struct MC_RBDYN_DLLAPI QuadraticGenerator
 {
-  QuadraticGenerator(double start, double end, unsigned int nrSteps,
-                      unsigned int proportion=4);
+  QuadraticGenerator(double start, double end, unsigned int nrSteps, unsigned int proportion = 4);
 
   void next(double & percentOut, double & speedOut);
+
 private:
   double start;
   double end;
@@ -37,4 +46,4 @@ MC_RBDYN_DLLAPI std::vector<Plane> planes_from_polygon(const std::shared_ptr<geo
 
 MC_RBDYN_DLLAPI std::vector<Eigen::Vector3d> points_from_polygon(std::shared_ptr<geos::geom::Geometry> geometry);
 
-}
+} // namespace mc_rbdyn

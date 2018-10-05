@@ -22,6 +22,7 @@ public:
   typedef std::function<void(const objT &)> obj_set_fn;
   /*! \brief A function to get the objective of a task */
   typedef std::function<const objT(void)> obj_get_fn;
+
 public:
   /*! \brief Constructor
    *
@@ -41,9 +42,13 @@ public:
    * instantaneous, 0 stop the smooth task process)
    *
    */
-  SmoothTask(w_set_fn w_set, w_get_fn w_get,
-             obj_set_fn obj_set, obj_get_fn obj_get,
-             double weight, const objT & obj, double percent);
+  SmoothTask(w_set_fn w_set,
+             w_get_fn w_get,
+             obj_set_fn obj_set,
+             obj_get_fn obj_get,
+             double weight,
+             const objT & obj,
+             double percent);
 
   /*! \brief Update the task
    *
@@ -64,6 +69,7 @@ public:
    *
    */
   void reset(double weight, const objT & obj, double percent);
+
 public:
   w_set_fn w_set;
   w_get_fn w_get;
@@ -81,9 +87,13 @@ public:
 };
 
 template<typename objT>
-SmoothTask<objT>::SmoothTask(w_set_fn w_set, w_get_fn w_get,
-                       obj_set_fn obj_set, obj_get_fn obj_get,
-                       double weight, const objT & obj, double percent)
+SmoothTask<objT>::SmoothTask(w_set_fn w_set,
+                             w_get_fn w_get,
+                             obj_set_fn obj_set,
+                             obj_get_fn obj_get,
+                             double weight,
+                             const objT & obj,
+                             double percent)
 : w_set(w_set), w_get(w_get), obj_set(obj_set), obj_get(obj_get)
 {
   reset(weight, obj, percent);
@@ -95,10 +105,10 @@ void SmoothTask<objT>::reset(double weight, const objT & obj, double percent)
   this->weight = weight;
   this->obj = obj;
 
-  stepW = (weight - w_get())*percent;
-  stepO = (obj - obj_get())*percent;
+  stepW = (weight - w_get()) * percent;
+  stepO = (obj - obj_get()) * percent;
 
-  nrIter = static_cast<unsigned int>(ceil(1/percent));
+  nrIter = static_cast<unsigned int>(ceil(1 / percent));
   iter = 0;
 }
 
@@ -118,4 +128,4 @@ void SmoothTask<objT>::update()
   }
 }
 
-}
+} // namespace mc_tasks

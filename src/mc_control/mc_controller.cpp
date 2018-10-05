@@ -1,9 +1,8 @@
 #include <mc_control/mc_controller.h>
-
 #include <mc_rbdyn/RobotLoader.h>
-
 #include <mc_rtc/config.h>
 #include <mc_rtc/logging.h>
+#include <mc_tasks/MetaTaskLoader.h>
 
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
@@ -15,52 +14,63 @@ namespace mc_control
 {
 
 MCController::MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt)
-: MCController({robot, mc_rbdyn::RobotLoader::get_robot_module("env", std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH), std::string("ground"))}, dt)
+: MCController({robot, mc_rbdyn::RobotLoader::get_robot_module("env",
+                                                               std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH),
+                                                               std::string("ground"))},
+               dt)
 {
 }
 
 MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robots_modules, double dt)
-: timeStep(dt)
+: qpsolver(std::make_shared<mc_solver::QPSolver>(dt)),
+  logger_(std::make_shared<mc_rtc::Logger>(mc_rtc::Logger::Policy::NON_THREADED, "", "")),
+  gui_(std::make_shared<mc_rtc::gui::StateBuilder>()), timeStep(dt)
 {
-  /* Initialize the logger instance */
-  logger_.reset(new mc_rtc::Logger(mc_rtc::Logger::Policy::NON_THREADED, "", ""));
-  /* Load the bots and initialize QP solver instance */
-  {
-  std::vector<std::string> surfaceDirs;
-  for(const auto & m : robots_modules)
-  {
-    surfaceDirs.push_back(m->rsdf_dir);
-  }
-  auto robots = mc_rbdyn::loadRobots(robots_modules);
-  for(auto & robot: robots->robots())
-  {
-    robot.mbc().gravity = Eigen::Vector3d(0, 0, 9.81);
-    rbd::forwardKinematics(robot.mb(), robot.mbc());
-    rbd::forwardVelocity(robot.mb(), robot.mbc());
-  }
-  qpsolver.reset(new mc_solver::QPSolver(robots, timeStep));
+  /* Load robots */
   qpsolver->logger(logger_);
+  qpsolver->gui(gui_);
+  for(auto rm : robots_modules)
+  {
+    loadRobot(rm, rm->name);
+  }
+  if(gui_)
+  {
+    gui_->addElement({"General"},
+                     mc_rtc::gui::Schema("Add MetaTask", "metatask", [this](const mc_rtc::Configuration & config) {
+                       try
+                       {
+                         auto t = mc_tasks::MetaTaskLoader::load(this->solver(), config);
+                         this->solver().addTask(t);
+                       }
+                       catch(...)
+                       {
+                         LOG_ERROR("Failed to load MetaTask from request\n" << config.dump(true))
+                       }
+                     }));
   }
 
   /* Initialize grippers */
   {
-  std::string urdfPath = robots_modules[0]->urdf_path;
-  std::ifstream ifs(urdfPath);
-  if(ifs.is_open())
-  {
-    std::stringstream urdf;
-    urdf << ifs.rdbuf();
-    auto urdfRobot = mc_rbdyn::loadRobotFromUrdf("temp_robot", urdf.str());
-    for(const auto & gripper : robots_modules[0]->grippers())
+    std::string urdfPath = robots_modules[0]->urdf_path;
+    std::ifstream ifs(urdfPath);
+    if(ifs.is_open())
     {
-      grippers[gripper.name] = std::make_shared<mc_control::Gripper>(urdfRobot->robot(), gripper.joints, urdf.str(), std::vector<double>(gripper.joints.size(), 0.0), timeStep, gripper.reverse_limits);
+      std::stringstream urdf;
+      urdf << ifs.rdbuf();
+      auto urdfRobot = mc_rbdyn::loadRobotFromUrdf("temp_robot", urdf.str());
+      for(const auto & gripper : robots_modules[0]->grippers())
+      {
+        grippers[gripper.name] = std::make_shared<mc_control::Gripper>(urdfRobot->robot(), gripper.joints, urdf.str(),
+                                                                       std::vector<double>(gripper.joints.size(), 0.0),
+                                                                       timeStep, gripper.reverse_limits);
+      }
     }
-  }
-  else
-  {
-    LOG_ERROR("Could not open urdf file " << urdfPath << " for robot " << robots_modules[0]->name << ", cannot initialize grippers")
-    throw("Failed to initialize grippers");
-  }
+    else
+    {
+      LOG_ERROR("Could not open urdf file " << urdfPath << " for robot " << robots_modules[0]->name
+                                            << ", cannot initialize grippers")
+      LOG_ERROR_AND_THROW(std::runtime_error, "Failed to initialize grippers")
+    }
   }
 
   /* Initialize constraints and tasks */
@@ -70,17 +80,65 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   kinematicsConstraint = mc_solver::KinematicsConstraint(robots(), 0, timeStep, damper, 0.5);
   selfCollisionConstraint = mc_solver::CollisionsConstraint(robots(), 0, 0, timeStep);
   selfCollisionConstraint.addCollisions(solver(), robots_modules[0]->minimalSelfCollisions());
-  postureTask.reset(new tasks::qp::PostureTask(robots().mbs(), 0, robot().mbc().q, 10, 5));
+  postureTask = std::make_shared<mc_tasks::PostureTask>(solver(), 0, 10.0, 5.0);
   LOG_INFO("MCController(base) ready")
 }
 
-MCController::~MCController()
+MCController::~MCController() {}
+
+mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std::string & name)
 {
+  assert(rm);
+  auto & r = robots().load(*rm);
+  r.name(name);
+  r.mbc().gravity = Eigen::Vector3d{0, 0, 9.81};
+  r.forwardKinematics();
+  r.forwardVelocity();
+  if(gui_)
+  {
+    auto data = gui_->data();
+    if(!data.has("robots"))
+    {
+      data.array("robots");
+    }
+    if(!data.has("bodies"))
+    {
+      data.add("bodies");
+    }
+    if(!data.has("surfaces"))
+    {
+      data.add("surfaces");
+    }
+    data("robots").push(r.name());
+    auto bs = data("bodies").array(r.name());
+    for(const auto & b : r.mb().bodies())
+    {
+      bs.push(b.name());
+    }
+    data("surfaces").add(r.name(), r.availableSurfaces());
+  }
+  return r;
 }
 
 bool MCController::run()
 {
-  if(!qpsolver->run())
+  return run(mc_solver::FeedbackType::None);
+}
+
+bool MCController::run(mc_solver::FeedbackType fType)
+{
+  if(!qpsolver->run(fType))
+  {
+    LOG_ERROR("QP failed to run()")
+    return false;
+  }
+  qpsolver->fillTorque(dynamicsConstraint);
+  return true;
+}
+
+bool MCController::runClosedLoop()
+{
+  if(!qpsolver->runClosedLoop(real_robots))
   {
     LOG_ERROR("QP failed to run()")
     return false;
@@ -221,4 +279,9 @@ std::vector<std::string> MCController::supported_robots() const
   return {};
 }
 
+const mc_rbdyn::Robots & MCController::realRobots() const
+{
+  return *real_robots;
 }
+
+} // namespace mc_control

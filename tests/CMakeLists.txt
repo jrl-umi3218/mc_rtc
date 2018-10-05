@@ -14,7 +14,7 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 ############################
 
 add_executable(LoggerTraits LoggerTraits.cpp)
-target_link_libraries(LoggerTraits mc_control)
+target_link_libraries(LoggerTraits PUBLIC mc_control)
 
 #################################
 #      -- Utility tests --      #
@@ -22,12 +22,12 @@ target_link_libraries(LoggerTraits mc_control)
 #################################
 
 add_executable(testBSplineTrajectory testBSplineTrajectory.cpp)
-target_link_libraries(testBSplineTrajectory mc_trajectory)
+target_link_libraries(testBSplineTrajectory PUBLIC mc_trajectory)
 
 add_executable(testQuadraticGenerator testQuadraticGenerator.cpp)
 pkg_config_use_dependency(testQuadraticGenerator Tasks)
 pkg_config_use_dependency(testQuadraticGenerator mc_rbdyn_urdf)
-target_link_libraries(testQuadraticGenerator mc_rbdyn)
+target_link_libraries(testQuadraticGenerator PUBLIC mc_rbdyn)
 
 #################################
 # -- Framework utility tests -- #
@@ -43,7 +43,7 @@ MACRO(mc_rtc_test NAME)
   else()
     message(FATAL_ERROR "Cannot add mc_rtc_test: neither ${NAME}.cpp nor ${NAME}.in.cpp exists in ${CMAKE_CURRENT_SOURCE_DIR}")
   endif()
-  target_link_libraries(${NAME} ${Boost_LIBRARIES} ${ARGN})
+  target_link_libraries(${NAME} PUBLIC ${Boost_LIBRARIES} ${ARGN})
   add_test(${NAME} ${NAME})
   # Adding a project configuration file (for MSVC only)
   generate_msvc_dot_user_file(${NAME})
@@ -54,6 +54,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests_config.h.in
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
 
 mc_rtc_test(testConfiguration mc_rtc_utils mc_rbdyn)
+mc_rtc_test(testGUIStateBuilder mc_rtc_gui)
 mc_rtc_test(testJsonIO mc_rtc_utils mc_rbdyn)
 mc_rtc_test(testConstraintSetLoader mc_solver)
 mc_rtc_test(testMetaTaskLoader mc_tasks)
@@ -61,13 +62,21 @@ mc_rtc_test(testSolverTaskStorage mc_tasks)
 mc_rtc_test(testCompletionCriteria mc_control)
 mc_rtc_test(testSimulationContactPair mc_control)
 
+###########################
+# -- FSM related tests -- #
+###########################
+
+add_subdirectory(fsm_states)
+
+mc_rtc_test(testFSMStateFactory mc_control_fsm ConfigureState)
+
 ######################################
 # -- Controllers and robots tests -- #
 ######################################
 
 add_executable(test_controller_ticker test_controller_ticker.cpp)
 pkg_config_use_dependency(test_controller_ticker mc_rbdyn_urdf)
-target_link_libraries(test_controller_ticker ${Boost_LIBRARIES} mc_control)
+target_link_libraries(test_controller_ticker PUBLIC ${Boost_LIBRARIES} mc_control)
 pkg_config_use_dependency(test_controller_ticker Tasks)
 # Adding a project configuration file (for MSVC only)
 generate_msvc_dot_user_file(test_controller_ticker)
@@ -79,3 +88,13 @@ endif()
 if(NOT DISABLE_ROBOT_TESTS)
   add_subdirectory(robots)
 endif()
+
+######################
+# -- Network test -- #
+######################
+
+add_executable(dummyClient dummyClient.cpp)
+target_link_libraries(dummyClient PUBLIC mc_control_client)
+
+add_executable(dummyServer dummyServer.cpp)
+target_link_libraries(dummyServer PUBLIC mc_control)

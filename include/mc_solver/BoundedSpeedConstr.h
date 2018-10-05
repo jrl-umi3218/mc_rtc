@@ -1,7 +1,7 @@
 #pragma once
 
-#include <mc_solver/api.h>
 #include <mc_solver/QPSolver.h>
+#include <mc_solver/api.h>
 
 #include <Tasks/QPConstr.h>
 
@@ -20,18 +20,28 @@ public:
 
   virtual void removeFromSolver(tasks::qp::QPSolver & solver) override;
 
-  void addBoundedSpeed(QPSolver & solver, const std::string & bodyName, const Eigen::Vector3d & bodyPoint, const Eigen::MatrixXd & dof, const Eigen::VectorXd & speed);
+  void addBoundedSpeed(QPSolver & solver,
+                       const std::string & bodyName,
+                       const Eigen::Vector3d & bodyPoint,
+                       const Eigen::MatrixXd & dof,
+                       const Eigen::VectorXd & speed);
 
-  void addBoundedSpeed(QPSolver & solver, const std::string & bodyName, const Eigen::Vector3d & bodyPoint, const Eigen::MatrixXd & dof, const Eigen::VectorXd & lowerSpeed, const Eigen::VectorXd & upperSpeed);
+  void addBoundedSpeed(QPSolver & solver,
+                       const std::string & bodyName,
+                       const Eigen::Vector3d & bodyPoint,
+                       const Eigen::MatrixXd & dof,
+                       const Eigen::VectorXd & lowerSpeed,
+                       const Eigen::VectorXd & upperSpeed);
 
   bool removeBoundedSpeed(QPSolver & solver, const std::string & bodyName);
 
   size_t nrBoundedSpeeds() const;
 
   void reset(QPSolver & solver);
+
 private:
   std::shared_ptr<tasks::qp::BoundedSpeedConstr> constr;
   unsigned int robotIndex;
 };
 
-}
+} // namespace mc_solver

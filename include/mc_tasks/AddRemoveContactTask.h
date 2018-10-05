@@ -1,20 +1,17 @@
 #ifndef _H_ADDREMOVECONTACTTASK_H_
 #define _H_ADDREMOVECONTACTTASK_H_
 
-#include <mc_tasks/MetaTask.h>
-
 #include <mc_rbdyn/Robots.h>
 #include <mc_rbdyn/StanceConfig.h>
-
 #include <mc_solver/BoundedSpeedConstr.h>
+#include <mc_tasks/MetaTask.h>
+#include <mc_tasks/api.h>
 
 #include <Tasks/QPTasks.h>
 
-#include <mc_tasks/api.h>
-
 namespace mc_rbdyn
 {
-  struct Contact;
+struct Contact;
 }
 
 namespace mc_tasks
@@ -53,10 +50,11 @@ public:
    * direction
    */
   AddRemoveContactTask(mc_rbdyn::Robots & robots,
-                       std::shared_ptr<mc_solver::BoundedSpeedConstr>
-                       constSpeedConstr, mc_rbdyn::Contact & contact,
-                       double direction, const mc_rbdyn::StanceConfig &
-                       config, Eigen::Vector3d * userT_0_s = nullptr);
+                       std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr,
+                       mc_rbdyn::Contact & contact,
+                       double direction,
+                       const mc_rbdyn::StanceConfig & config,
+                       Eigen::Vector3d * userT_0_s = nullptr);
 
   /*! \brief General constructor
    *
@@ -82,15 +80,18 @@ public:
    * direction
    */
   AddRemoveContactTask(mc_rbdyn::Robots & robots,
-                       std::shared_ptr<mc_solver::BoundedSpeedConstr>
-                       constSpeedConstr, mc_rbdyn::Contact & contact,
-                       double direction, double speed,
-                       double stiffness, double weight,
+                       std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr,
+                       mc_rbdyn::Contact & contact,
+                       double direction,
+                       double speed,
+                       double stiffness,
+                       double weight,
                        Eigen::Vector3d * userT_0_s = nullptr);
 
   /*! \brief General constructor with self-managed bounded speed constraint
    *
-   * Constructs an AddRemoveContactTask using information passed by the programmer. No mc_solver::BoundedSpeedConstr has to be passed. Instead the constraint is created and managed by the task.
+   * Constructs an AddRemoveContactTask using information passed by the programmer. No mc_solver::BoundedSpeedConstr has
+   * to be passed. Instead the constraint is created and managed by the task.
    *
    * \param solver Solver where the task will be used
    *
@@ -108,8 +109,10 @@ public:
    */
   AddRemoveContactTask(mc_solver::QPSolver & solver,
                        mc_rbdyn::Contact & contact,
-                       double direction, double speed,
-                       double stiffness, double weight,
+                       double direction,
+                       double speed,
+                       double stiffness,
+                       double weight,
                        Eigen::Vector3d * userT_0_s = nullptr);
 
   /*! \brief Set the displacement direction
@@ -120,14 +123,23 @@ public:
   void direction(double direction);
 
   /*! \brief Get the desired dislacement speed */
-  double speed() { return speed_; }
+  double speed()
+  {
+    return speed_;
+  }
   /*! \brief Set the desired dislacement speed */
-  void speed(double s) { speed_ = s; }
+  void speed(double s);
 
   /*! \brief Get the task stiffness */
-  double stiffness() { return stiffness_; }
+  double stiffness()
+  {
+    return stiffness_;
+  }
   /*! \brief Get the task weight */
-  double weight() { return weight_; }
+  double weight()
+  {
+    return weight_;
+  }
 
   /*! \brief Get the velocity error
    *
@@ -141,6 +153,7 @@ public:
   virtual Eigen::VectorXd eval() const override;
 
   virtual Eigen::VectorXd speed() const override;
+
 public:
   mc_rbdyn::Robots & robots;
   mc_rbdyn::Robot & robot;
@@ -160,21 +173,22 @@ public:
   double stiffness_;
   double weight_;
   double speed_;
+  double direction_;
   Eigen::Vector3d targetSpeed;
   std::shared_ptr<tasks::qp::LinVelocityTask> linVelTask;
   std::shared_ptr<tasks::qp::PIDTask> linVelTaskPid;
   double targetVelWeight;
+
 private:
   /* Hide these virtual functions */
-  virtual void selectActiveJoints(mc_solver::QPSolver &,
-                                  const std::vector<std::string> &) override {}
+  virtual void selectActiveJoints(mc_solver::QPSolver &, const std::vector<std::string> &) override {}
 
-  virtual void selectUnactiveJoints(mc_solver::QPSolver &,
-                                    const std::vector<std::string> &) override {}
+  virtual void selectUnactiveJoints(mc_solver::QPSolver &, const std::vector<std::string> &) override {}
 
   virtual void resetJointsSelector(mc_solver::QPSolver &) override {}
 
   virtual void reset() override {}
+
 private:
   virtual void addToSolver(mc_solver::QPSolver & solver) override;
 
@@ -184,7 +198,6 @@ private:
 
   bool manageConstraint = false;
 };
-
 
 /*! \brief Add a contact
  *
@@ -197,22 +210,26 @@ struct MC_TASKS_DLLAPI AddContactTask : public AddRemoveContactTask
 public:
   /*! \brief Constructor (mc_rbdyn::StanceConfig variant) */
   AddContactTask(mc_rbdyn::Robots & robots,
-                 std::shared_ptr<mc_solver::BoundedSpeedConstr>
-                 constSpeedConstr, mc_rbdyn::Contact & contact, const
-                 mc_rbdyn::StanceConfig & config, Eigen::Vector3d *
-                 userT_0_s = nullptr);
+                 std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr,
+                 mc_rbdyn::Contact & contact,
+                 const mc_rbdyn::StanceConfig & config,
+                 Eigen::Vector3d * userT_0_s = nullptr);
 
   /*! \brief Constructor */
   AddContactTask(mc_rbdyn::Robots & robots,
                  std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr,
                  mc_rbdyn::Contact & contact,
-                 double speed, double stiffness, double weight,
+                 double speed,
+                 double stiffness,
+                 double weight,
                  Eigen::Vector3d * userT_0_s = nullptr);
 
   /*! \brief Constructor (self-managed speed constraint) */
   AddContactTask(mc_solver::QPSolver & solver,
                  mc_rbdyn::Contact & contact,
-                 double speed, double stiffness, double weight,
+                 double speed,
+                 double stiffness,
+                 double weight,
                  Eigen::Vector3d * userT_0_s = nullptr);
 };
 
@@ -227,25 +244,29 @@ struct MC_TASKS_DLLAPI RemoveContactTask : public AddRemoveContactTask
 public:
   /*! \brief Constructor (mc_rbdyn::StanceConfig variant) */
   RemoveContactTask(mc_rbdyn::Robots & robots,
-                    std::shared_ptr<mc_solver::BoundedSpeedConstr>
-                    constSpeedConstr, mc_rbdyn::Contact & contact,
+                    std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr,
+                    mc_rbdyn::Contact & contact,
                     const mc_rbdyn::StanceConfig & config,
                     Eigen::Vector3d * userT_0_s = nullptr);
 
   /*! \brief Constructor */
   RemoveContactTask(mc_rbdyn::Robots & robots,
-                 std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr,
-                 mc_rbdyn::Contact & contact,
-                 double speed, double stiffness, double weight,
-                 Eigen::Vector3d * userT_0_s = nullptr);
+                    std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr,
+                    mc_rbdyn::Contact & contact,
+                    double speed,
+                    double stiffness,
+                    double weight,
+                    Eigen::Vector3d * userT_0_s = nullptr);
 
   /*! \brief Constructor (self-managed speed constraint) */
   RemoveContactTask(mc_solver::QPSolver & solver,
                     mc_rbdyn::Contact & contact,
-                    double speed, double stiffness, double weight,
+                    double speed,
+                    double stiffness,
+                    double weight,
                     Eigen::Vector3d * userT_0_s = nullptr);
 };
 
-}
+} // namespace mc_tasks
 
 #endif

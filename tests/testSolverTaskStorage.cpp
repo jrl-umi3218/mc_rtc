@@ -1,9 +1,9 @@
-#include <boost/test/unit_test.hpp>
-
 #include <mc_rbdyn/RobotLoader.h>
 #include <mc_rbdyn/Robots.h>
 #include <mc_solver/QPSolver.h>
 #include <mc_tasks/CoMTask.h>
+
+#include <boost/test/unit_test.hpp>
 
 #include "tests_config.h"
 
@@ -12,11 +12,11 @@
 /** Normal CoMTask with static boolean to check the object is deleted */
 struct CheckCoMTask : public mc_tasks::CoMTask
 {
-  CheckCoMTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex)
-  : mc_tasks::CoMTask(robots, robotIndex)
+  CheckCoMTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex) : mc_tasks::CoMTask(robots, robotIndex) {}
+  virtual ~CheckCoMTask() override
   {
+    deleted = true;
   }
-  virtual ~CheckCoMTask() override { deleted = true; }
   static bool deleted;
 };
 

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <mc_tasks/EndEffectorTask.h>
-
 #include <mc_tasks/api.h>
 
 namespace mc_tasks
@@ -37,7 +36,8 @@ public:
                           const mc_rbdyn::Robots & robots,
                           unsigned int robotIndex,
                           const std::string & relBodyName = "",
-                          double stiffness = 10.0, double weight = 1000.0);
+                          double stiffness = 10.0,
+                          double weight = 1000.0);
   /*! \brief Constructor with bodyPoint
    *
    * \param bodyPoint Point to be controlled in body coordinates
@@ -50,7 +50,8 @@ public:
                           const mc_rbdyn::Robots & robots,
                           unsigned int robotIndex,
                           const std::string & relBodyName,
-                          double stiffness = 10.0, double weight = 1000.0);
+                          double stiffness = 10.0,
+                          double weight = 1000.0);
 
   virtual void reset() override;
 
@@ -59,10 +60,14 @@ public:
   virtual void set_ef_pose(const sva::PTransformd & tf) override;
 
   virtual sva::PTransformd get_ef_pose() override;
+
+protected:
+  void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
+
 private:
   unsigned int relBodyIdx;
 
   virtual void update() override;
 };
 
-}
+} // namespace mc_tasks

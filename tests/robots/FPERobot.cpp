@@ -4,19 +4,20 @@
 
 struct FPERobot : public mc_rbdyn::RobotModule
 {
-  FPERobot()
-  : RobotModule(std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH),
-                std::string("ground"))
+  FPERobot() : RobotModule(std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH), std::string("ground"))
   {
     int a = 0;
-    b = 42/a;
+    b = 42 / a;
   }
   int b;
 };
 
 extern "C"
 {
-  ROBOT_MODULE_API std::vector<std::string> MC_RTC_ROBOT_MODULE() { return {"FPERobot"}; }
+  ROBOT_MODULE_API void MC_RTC_ROBOT_MODULE(std::vector<std::string> & names)
+  {
+    names = {"FPERobot"};
+  }
   ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr)
   {
     delete ptr;

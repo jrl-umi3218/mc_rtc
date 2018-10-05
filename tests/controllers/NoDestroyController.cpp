@@ -3,5 +3,8 @@
 
 extern "C"
 {
-  CONTROLLER_MODULE_API std::vector<std::string> MC_RTC_CONTROLLER() { return {"NoCreateController"}; }
+  CONTROLLER_MODULE_API void MC_RTC_CONTROLLER(std::vector<std::string> & names)
+  {
+    names = {"NoCreateController"};
+  }
 }

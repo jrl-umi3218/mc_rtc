@@ -4,5 +4,5 @@
 
 namespace mc_control
 {
-  using Configuration = mc_rtc::Configuration;
+using Configuration = mc_rtc::Configuration;
 }

@@ -5,13 +5,21 @@
   {
     "type": { "enum": ["cop"] },
     "name": { "type": "string" },
-    "robotIndex": { "type": "number", "minimum": 0 },
+    "robotIndex": { "type": "integer", "minimum": 0 },
     "surface": { "type": "string" },
 
     "admittance": { "$ref": "/../../sva/ForceVecd.json" },
     "cop": { "$ref": "/../../eigen/Vector2d.json" },
     "force": { "$ref": "/../../eigen/Vector3d.json" },
-    "pose": { "$ref": "/../../sva/PTransformd.json" },
+    "targetPose":
+    {
+      "description": "Ignored if targetSurface is specified",
+      "$ref": "/../../sva/PTransformd.json"
+    },
+    "targetSurface":
+    {
+      "$ref" : "/../../common/targetSurface.json"
+    },
 
     "stiffness": { "type": "number", "minimum": 0},
     "damping": { "type": "number", "minimum": 0},

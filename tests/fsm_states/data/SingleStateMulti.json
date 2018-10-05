@@ -1,0 +1,38 @@
+{
+  // Multiple states definition which require multiple passes to get right
+  "SingleState1":
+  {
+    "base": "SingleState"
+  },
+  "SingleState2":
+  {
+    "base": "SingleState3"
+  },
+  "SingleState3":
+  {
+    "base": "SingleState4"
+  },
+  "SingleState4":
+  {
+    "base": "SingleState1"
+  },
+  // Base does not exist, ignored
+  "SingleState5":
+  {
+    "base": "NotAState"
+  },
+  // Cycle A based on B, B based on A
+  "SingleState6":
+  {
+    "base": "SingleState7"
+  },
+  "SingleState7":
+  {
+    "base": "SingleState6"
+  },
+  // Simplest cycle A based on A
+  "SingleState8":
+  {
+    "base": "SingleState8"
+  }
+}

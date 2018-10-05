@@ -1,17 +1,15 @@
 #include <mc_rbdyn/PolygonInterpolator.h>
 
-#include <geos/geom/CoordinateSequenceFactory.h>
 #include <geos/geom/CoordinateSequence.h>
+#include <geos/geom/CoordinateSequenceFactory.h>
+#include <geos/geom/GeometryFactory.h>
 #include <geos/geom/LinearRing.h>
 #include <geos/geom/Polygon.h>
 
 namespace mc_rbdyn
 {
 
-PolygonInterpolator::GeometryDeleter::GeometryDeleter(const geos::geom::GeometryFactory & factory)
-: factory(factory)
-{
-}
+PolygonInterpolator::GeometryDeleter::GeometryDeleter(const geos::geom::GeometryFactory & factory) : factory(factory) {}
 
 void PolygonInterpolator::GeometryDeleter::operator()(geos::geom::Geometry * ptr)
 {
@@ -23,15 +21,13 @@ PolygonInterpolator::PolygonInterpolator(const std::vector<tuple_pair_t> & tpv)
 {
   for(size_t i = 0; i < tuple_pairs_.size(); ++i)
   {
-    const tuple_pair_t & prev = (i == 0 ? tuple_pairs_.back() : tuple_pairs_[i-1]);
+    const tuple_pair_t & prev = (i == 0 ? tuple_pairs_.back() : tuple_pairs_[i - 1]);
     const tuple_t & prev_1 = prev.first;
     const tuple_t & prev_2 = prev.second;
     const tuple_t & point_1 = tuple_pairs_[i].first;
     const tuple_t & point_2 = tuple_pairs_[i].second;
-    midpoints.push_back({
-      {{ (point_1[0] + prev_1[0])/2, (point_1[1] + prev_1[1])/2 }},
-      {{ (point_2[0] + prev_2[0])/2, (point_2[1] + prev_2[1])/2 }}
-      });
+    midpoints.push_back({{{(point_1[0] + prev_1[0]) / 2, (point_1[1] + prev_1[1]) / 2}},
+                         {{(point_2[0] + prev_2[0]) / 2, (point_2[1] + prev_2[1]) / 2}}});
   }
 }
 
@@ -46,8 +42,8 @@ std::shared_ptr<geos::geom::Geometry> PolygonInterpolator::fast_interpolate(doub
   geos::geom::CoordinateSequence * seq = geom_factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0), 0);
   for(const auto & p : tuple_pairs_)
   {
-    seq->add(geos::geom::Coordinate(static_cast<float>(p.first[0]*(1-perc) + p.second[0]*perc),
-                                    static_cast<float>(p.first[1]*(1-perc) + p.second[1]*perc)));
+    seq->add(geos::geom::Coordinate(static_cast<float>(p.first[0] * (1 - perc) + p.second[0] * perc),
+                                    static_cast<float>(p.first[1] * (1 - perc) + p.second[1] * perc)));
   }
   seq->add(seq->getAt(0));
   geos::geom::LinearRing * shell = geom_factory.createLinearRing(seq);
@@ -62,10 +58,7 @@ std::vector<PolygonInterpolator::tuple_t> PolygonInterpolator::midpoint_derivati
   std::vector<tuple_t> res;
   for(const auto & p : midpoints)
   {
-    res.push_back(
-      {{(p.second[0] - p.first[0])/epsilon_derivative,
-      (p.second[1] - p.first[1])/epsilon_derivative}}
-    );
+    res.push_back({{(p.second[0] - p.first[0]) / epsilon_derivative, (p.second[1] - p.first[1]) / epsilon_derivative}});
   }
   return res;
 }
@@ -73,11 +66,13 @@ std::vector<PolygonInterpolator::tuple_t> PolygonInterpolator::midpoint_derivati
 std::vector<PolygonInterpolator::tuple_t> PolygonInterpolator::normal_derivative(double epsilon_derivative)
 {
   std::vector<tuple_t> res;
-  geos::geom::CoordinateSequence * seq_s = geom_factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0), 2);
-  geos::geom::CoordinateSequence * seq_d = geom_factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0), 2);
+  geos::geom::CoordinateSequence * seq_s =
+      geom_factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0), 2);
+  geos::geom::CoordinateSequence * seq_d =
+      geom_factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0), 2);
   for(const auto & p : tuple_pairs_)
   {
-    seq_s->add(geos::geom::Coordinate(static_cast<float>(p.first[0]),  static_cast<float>(p.first[1])));
+    seq_s->add(geos::geom::Coordinate(static_cast<float>(p.first[0]), static_cast<float>(p.first[1])));
     seq_d->add(geos::geom::Coordinate(static_cast<float>(p.second[0]), static_cast<float>(p.second[1])));
   }
   seq_s->add(seq_s->getAt(0));
@@ -86,19 +81,18 @@ std::vector<PolygonInterpolator::tuple_t> PolygonInterpolator::normal_derivative
   geos::geom::LinearRing * shell_d = geom_factory.createLinearRing(seq_d);
   geos::geom::Polygon * poly_s = geom_factory.createPolygon(shell_s, 0);
   geos::geom::Polygon * poly_d = geom_factory.createPolygon(shell_d, 0);
-  auto normals = [](geos::geom::Polygon * poly)
-  {
+  auto normals = [](geos::geom::Polygon * poly) {
     std::vector<tuple_t> _res;
     const geos::geom::CoordinateSequence * seq = poly->getExteriorRing()->getCoordinates();
     for(size_t i = 0; i < seq->size() - 1; ++i)
     {
       const geos::geom::Coordinate & p = seq->getAt(i);
       const geos::geom::Coordinate & prev = seq->getAt(i == 0 ? seq->size() - 1 : i - 1);
-      tuple_t normal {{p.y - prev.y, -(p.x - prev.x)}};
-      double norm = normal[0]*normal[0] + normal[1]*normal[1];
+      tuple_t normal{{p.y - prev.y, -(p.x - prev.x)}};
+      double norm = normal[0] * normal[0] + normal[1] * normal[1];
       if(norm > 0)
       {
-        _res.push_back({{normal[0]/norm, normal[1]/norm}});
+        _res.push_back({{normal[0] / norm, normal[1] / norm}});
       }
       else
       {
@@ -115,14 +109,12 @@ std::vector<PolygonInterpolator::tuple_t> PolygonInterpolator::normal_derivative
   {
     if(n_strt[i][0] == 0 && n_strt[i][1] == 0 && n_dest[i][0] == 0 && n_dest[i][1] == 0)
     {
-      res.push_back({{0.,0.}});
+      res.push_back({{0., 0.}});
     }
     else
     {
-      res.push_back({{
-        (n_dest[i][0] - n_strt[i][0])/epsilon_derivative,
-        (n_dest[i][1] - n_strt[i][1])/epsilon_derivative
-      }});
+      res.push_back(
+          {{(n_dest[i][0] - n_strt[i][0]) / epsilon_derivative, (n_dest[i][1] - n_strt[i][1]) / epsilon_derivative}});
     }
   }
   return res;
@@ -133,4 +125,4 @@ const std::vector<PolygonInterpolator::tuple_pair_t> & PolygonInterpolator::tupl
   return tuple_pairs_;
 }
 
-}
+} // namespace mc_rbdyn

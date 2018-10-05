@@ -5,10 +5,12 @@
   {
     "type": { "enum": ["surfaceTransform"] },
     "name": { "type": "string" },
-    "robotIndex": { "type": "number", "minimum": 0 },
+    "robotIndex": { "type": "integer", "minimum": 0 },
     "surface": { "type": "string" },
 
+    "move": { "$ref": "/../../sva/PTransformd.json" },
     "target": { "$ref": "/../../sva/PTransformd.json" },
+    "targetSurface": { "$ref" : "/../../common/targetSurface.json" },
 
     "stiffness": { "type": "number", "minimum": 0},
     "damping": { "type": "number", "minimum": 0},

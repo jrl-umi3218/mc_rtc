@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'mc_log_main_ui.ui'
 #
-# Created: Fri Jun 16 10:16:24 2017
-#      by: pyside-uic 0.2.15 running on PySide 1.2.1
+# Created: Tue Mar  6 20:41:47 2018
+#      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -34,12 +34,14 @@ class Ui_MainWindow(object):
         self.gridLayout_2.addWidget(self.tabWidget, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 27))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 40))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtGui.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
         self.menuCommonPlots = QtGui.QMenu(self.menubar)
         self.menuCommonPlots.setObjectName("menuCommonPlots")
+        self.menuUserPlots = QtGui.QMenu(self.menubar)
+        self.menuUserPlots.setObjectName("menuUserPlots")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtGui.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -52,6 +54,7 @@ class Ui_MainWindow(object):
         self.menuFile.addAction(self.actionExit)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuCommonPlots.menuAction())
+        self.menubar.addAction(self.menuUserPlots.menuAction())
 
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
@@ -63,6 +66,7 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QtGui.QApplication.translate("MainWindow", "+", None, QtGui.QApplication.UnicodeUTF8))
         self.menuFile.setTitle(QtGui.QApplication.translate("MainWindow", "File", None, QtGui.QApplication.UnicodeUTF8))
         self.menuCommonPlots.setTitle(QtGui.QApplication.translate("MainWindow", "Common plots", None, QtGui.QApplication.UnicodeUTF8))
+        self.menuUserPlots.setTitle(QtGui.QApplication.translate("MainWindow", "User plots", None, QtGui.QApplication.UnicodeUTF8))
         self.actionLoad.setText(QtGui.QApplication.translate("MainWindow", "Load...", None, QtGui.QApplication.UnicodeUTF8))
         self.actionExit.setText(QtGui.QApplication.translate("MainWindow", "Exit", None, QtGui.QApplication.UnicodeUTF8))
 

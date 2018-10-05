@@ -5,7 +5,7 @@
   {
     "type": { "enum": ["orientation"] },
     "name": { "type": "string" },
-    "robotIndex": { "type": "number", "minimum": 0 },
+    "robotIndex": { "type": "integer", "minimum": 0 },
     "body": { "type": "string" },
 
     "orientation": { "$ref": "/../../eigen/Matrix3d.json" },

@@ -2,6 +2,12 @@ cimport c_mc_control
 
 from libcpp cimport bool as cppbool
 
+cdef class Gripper(object):
+  cdef c_mc_control.GripperPtr impl
+  cdef c_mc_control.Gripper * _impl(self)
+
+cdef Gripper GripperFromShPtr(c_mc_control.shared_ptr[c_mc_control.Gripper])
+
 cdef class ControllerResetData(object):
   cdef c_mc_control.ControllerResetData * impl
 

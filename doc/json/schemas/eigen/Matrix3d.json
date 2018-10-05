@@ -1,6 +1,6 @@
 {
   "title": "Eigen::Matrix3d",
-  "description": "Stored in row-major order.",
+  "description": "Stored in row-major order.\nAlso accepts arrays of size 3 (RPY) and 4 (Quaternion).",
   "type": "array",
   "items":
   {

@@ -1,11 +1,11 @@
 #ifndef _H_CONTACTTRANSFORM_H_
 #define _H_CONTACTTRANSFORM_H_
 
-#include <vector>
+#include <mc_rbdyn/api.h>
 
 #include <SpaceVecAlg/SpaceVecAlg>
 
-#include <mc_rbdyn/api.h>
+#include <vector>
 
 namespace mc_rbdyn
 {
@@ -20,8 +20,10 @@ MC_RBDYN_DLLAPI void planarParam(const sva::PTransformd & X_es_rs, double & T, d
 
 MC_RBDYN_DLLAPI void cylindricalParam(const sva::PTransformd & X_es_rs, double & T, double & T_rot);
 
-MC_RBDYN_DLLAPI std::vector<double> jointParam(const Surface & r1Surface, const Surface & r2Surface, const sva::PTransformd & X_es_rs);
+MC_RBDYN_DLLAPI std::vector<double> jointParam(const Surface & r1Surface,
+                                               const Surface & r2Surface,
+                                               const sva::PTransformd & X_es_rs);
 
-}
+} // namespace mc_rbdyn
 
 #endif

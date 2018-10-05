@@ -5,10 +5,11 @@
   {
     "type": { "enum": ["admittance"] },
     "name": { "type": "string" },
-    "robotIndex": { "type": "number", "minimum": 0 },
+    "robotIndex": { "type": "integer", "minimum": 0 },
     "surface": { "type": "string" },
 
     "pose": { "$ref": "/../../sva/PTransformd.json" },
+    "targetSurface": { "$ref" : "/../../common/targetSurface.json" },
     "wrench": { "$ref": "/../../sva/ForceVecd.json" },
     "admittance": { "$ref": "/../../sva/ForceVecd.json" },
 

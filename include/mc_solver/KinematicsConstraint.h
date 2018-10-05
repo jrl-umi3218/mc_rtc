@@ -1,8 +1,7 @@
 #pragma once
 
-#include <mc_solver/ConstraintSet.h>
-
 #include <mc_rbdyn/Robots.h>
+#include <mc_solver/ConstraintSet.h>
 
 #include <Tasks/QPConstr.h>
 
@@ -36,22 +35,27 @@ public:
    * offset}
    * \param velocityPercent Maximum joint velocity percentage, 0.5 is advised
    */
-  KinematicsConstraint(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double timeStep, const std::array<double, 3> & damper, double velocityPercent = 1.0);
+  KinematicsConstraint(const mc_rbdyn::Robots & robots,
+                       unsigned int robotIndex,
+                       double timeStep,
+                       const std::array<double, 3> & damper,
+                       double velocityPercent = 1.0);
 
   /** Implementation of mc_solver::ConstraintSet::addToSolver */
   virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) override;
 
   /** Implementation of mc_solver::ConstraintSet::removeFromSolver */
   virtual void removeFromSolver(tasks::qp::QPSolver & solver) override;
+
 public:
   /** Holds JointLimitsConstr, can be null depending on construction */
   std::shared_ptr<tasks::qp::JointLimitsConstr> jointLimitsConstr;
   /** Holds DamperJointLimitsConstr, can be null depending on construction */
   std::shared_ptr<tasks::qp::DamperJointLimitsConstr> damperJointLimitsConstr;
+
 public:
   /** \deprecated{Default constructor, not made for general usage} */
   KinematicsConstraint() {}
 };
-
 
 } // namespace mc_solver

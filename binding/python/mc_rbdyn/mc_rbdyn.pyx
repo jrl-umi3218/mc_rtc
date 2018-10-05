@@ -194,8 +194,12 @@ cdef class ForceSensor(object):
     return sva.ForceVecdFromC(self.impl.wrench(), copy = False)
   def mass(self):
     return self.impl.mass()
-  def removeGravity(self, Robot robot):
-    return sva.ForceVecdFromC(self.impl.removeGravity(deref(robot.impl)))
+  def wrenchWithoutGravity(self, Robot robot):
+    return sva.ForceVecdFromC(self.impl.wrenchWithoutGravity(deref(robot.impl)))
+  def worldWrench(self, Robot robot):
+    return sva.ForceVecdFromC(self.impl.worldWrench(deref(robot.impl)))
+  def worldWrenchWithoutGravity(self, Robot robot):
+    return sva.ForceVecdFromC(self.impl.worldWrenchWithoutGravity(deref(robot.impl)))
 
 cdef ForceSensor ForceSensorFromRef(c_mc_rbdyn.ForceSensor & fs):
     cdef ForceSensor ret = ForceSensor(skip_alloc = True)
@@ -559,6 +563,23 @@ cdef class Robot(object):
   def bodyBodySensor(self, name):
     self.__is_valid()
     return BodySensorFromRef(self.impl.bodyBodySensor(name))
+
+  def surfaceWrench(self, string surfaceName):
+      self.__is_valid()
+      return sva.ForceVecdFromC(self.impl.surfaceWrench(surfaceName))
+
+  def cop(self, surfaceName, min_pressure):
+      self.__is_valid()
+      return eigen.Vector2dFromC(self.impl.cop(surfaceName, min_pressure))
+
+  def copW(self, Robot robot, surfaceName, min_pressure):
+      self.__is_valid()
+      return eigen.Vector3dFromC(self.impl.copW(surfaceName,min_pressure))
+
+  def zmp(self, vector[string] sensorsName, eigen.Vector3d plane_p, eigen.Vector3d plane_n, forceThreshold):
+      self.__is_valid()
+      return eigen.Vector3dFromC(self.impl.zmp(sensorsName, plane_p.impl, plane_n.impl, forceThreshold))
+
 
   property mb:
     def __get__(self):
@@ -943,13 +964,12 @@ cdef class Contact(object):
       self.impl = new c_mc_rbdyn.Contact(deref(robots.impl), robotSurface,
           envSurface, deref(X_es_rs.impl))
   def __full_ctor__(self, Robots robots, r1Index, r2Index, r1Surface, r2Surface,
-      sva.PTransformd X_r2s_r1s = None, sva.PTransformd Xbs =
-      sva.PTransformd.Identity(), ambId = -1):
-    cdef c_sva.PTransformd * _x_r2s_r1s = NULL
-    if not X_r2s_r1s is None:
-      _x_r2s_r1s = X_r2s_r1s.impl
+      sva.PTransformd X_r2s_r1s = sva.PTransformd.Identity(), sva.PTransformd Xbs =
+      None, ambId = -1):
+    if Xbs is None:
+      Xbs = robots.robot(r1Index).surface(r1Surface).X_b_s()
     self.impl = new c_mc_rbdyn.Contact(deref(robots.impl), r1Index, r2Index,
-        r1Surface, r2Surface, _x_r2s_r1s, deref(Xbs.impl), ambId)
+        r1Surface, r2Surface, deref(X_r2s_r1s.impl), deref(Xbs.impl), ambId)
   def __cinit__(self, *args, **kwds):
     if "skip_alloc" in kwds:
       skip_alloc = bool(kwds["skip_alloc"])

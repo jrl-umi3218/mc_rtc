@@ -14,6 +14,12 @@ cdef extern from "<memory>" namespace "std" nogil:
 cdef class MetaTask(object):
   cdef c_mc_tasks.MetaTask * mt_base
 
+cdef class PostureTask(MetaTask):
+  cdef c_mc_tasks.PostureTask * impl
+  cdef cppbool __own_impl
+
+cdef PostureTask PostureTaskFromPtr(c_mc_tasks.PostureTask *)
+
 cdef class _CoMTrajectoryTask(MetaTask):
   cdef c_mc_tasks.TrajectoryTaskGeneric[c_qp.CoMTask] * ttg_base
 
@@ -66,6 +72,7 @@ ctypedef fused AnyTTG:
 #Note : In recent versions of Cython, fused types can be fused and thus
 # AnyTask can simply be the fusion of AnyTTG and other tasks
 ctypedef fused AnyTask:
+  PostureTask
   CoMTask
   PositionTask
   OrientationTask

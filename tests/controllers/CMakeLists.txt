@@ -4,7 +4,7 @@ set(USE_SANDBOX "true")
 
 macro(controller_test_common NAME)
   add_library(${NAME} SHARED ${NAME}.cpp)
-  target_link_libraries(${NAME} ${Boost_LIBRARIES} mc_control)
+  target_link_libraries(${NAME} PUBLIC ${Boost_LIBRARIES} mc_control)
   pkg_config_use_dependency(${NAME} Tasks)
   set_target_properties(${NAME} PROPERTIES
     COMPILE_FLAGS "-DMC_CONTROL_EXPORTS"
@@ -30,14 +30,6 @@ endmacro()
 controller_test_construction_failure(NotAController)
 controller_test_construction_failure(NoDestroyController)
 controller_test_construction_failure(NoCreateController)
-# To run properly these tests require controller creation sandboxing
-# which is only enabled on Linux
-if(UNIX AND NOT APPLE)
-  controller_test_construction_failure(UnresolvedSymbolController)
-  controller_test_construction_failure(SegfaultController)
-  controller_test_construction_failure(FPEController)
-endif()
-controller_test_construction_failure(ThrowingController)
 
 set(LOG_ENABLED "true")
 controller_test_run(TestPostureController 400)
@@ -55,7 +47,7 @@ if(UNIX)
 
   # Test controller switch and threaded log policy
   add_library(TestPostureController2 SHARED TestPostureController2.cpp)
-  target_link_libraries(TestPostureController2 ${Boost_LIBRARIES} mc_control)
+  target_link_libraries(TestPostureController2 PUBLIC ${Boost_LIBRARIES} mc_control)
   set_target_properties(TestPostureController2 PROPERTIES
     COMPILE_FLAGS "-DMC_CONTROL_EXPORTS"
     PREFIX ""
@@ -80,6 +72,6 @@ if(NOT DEFINED PYTHON_DEB_ROOT AND ${PYTHON_BINDING})
   set(USE_SANDBOX "false")
   set(TEST_CONTROLLER_NAME "PythonController#test_python.TestPythonController")
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/mc_rtc.conf.in ${CMAKE_CURRENT_BINARY_DIR}/TestPythonController/mc_rtc-TestPythonController.conf)
-  add_test(NAME "TestPythonController" COMMAND test_controller_ticker --run_test=RUN TestPythonController/mc_rtc-TestPythonController.conf 400 "" "${CMAKE_CURRENT_SOURCE_DIR}/test_python")
+  add_test(NAME "TestPythonController" COMMAND test_controller_ticker --run_test=RUN ${CMAKE_CURRENT_BINARY_DIR}/TestPythonController/mc_rtc-TestPythonController.conf 400 "" "${CMAKE_CURRENT_SOURCE_DIR}/test_python")
   add_test(TestPythonControllerLog ${CMAKE_CURRENT_SOURCE_DIR}/check_log.py "${TEST_CONTROLLER_NAME}" 400 "${UTILS_BIN_DIR}")
 endif()

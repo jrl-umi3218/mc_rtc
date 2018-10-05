@@ -36,12 +36,17 @@ PolarisRangerRobotModule::PolarisRangerRobotModule(bool is_interactive)
     halfSitting["top_left_frame_joint"] = {};
     readUrdf("polaris_ranger", virtualLinks);
   }
+  auto fileByBodyName = stdCollisionsFiles(mb);
+  _convexHull = getConvexHull(fileByBodyName);
+  _bounds = nominalBounds(limits);
+  _stance = halfSittingPose(mb);
 }
 
-std::map<std::string, std::pair<std::string, std::string> > PolarisRangerRobotModule::getConvexHull(const std::map<std::string, std::pair<std::string, std::string>> & files) const
+std::map<std::string, std::pair<std::string, std::string>> PolarisRangerRobotModule::getConvexHull(
+    const std::map<std::string, std::pair<std::string, std::string>> & files) const
 {
   std::string convexPath = path + "/convex/polaris_ranger/";
-  std::map<std::string, std::pair<std::string, std::string> > res;
+  std::map<std::string, std::pair<std::string, std::string>> res;
   for(const auto & f : files)
   {
     res[f.first] = std::pair<std::string, std::string>(f.second.first, convexPath + f.second.second + "-ch.txt");
@@ -57,7 +62,7 @@ void PolarisRangerRobotModule::readUrdf(const std::string & robotName, const std
   {
     std::stringstream urdf;
     urdf << ifs.rdbuf();
-    mc_rbdyn_urdf::URDFParserResult res = mc_rbdyn_urdf::rbdyn_from_urdf(urdf.str(), true, filteredLinks);
+    mc_rbdyn_urdf::URDFParserResult res = mc_rbdyn_urdf::rbdyn_from_urdf(urdf.str(), false, filteredLinks);
     mb = res.mb;
     mbc = res.mbc;
     mbg = res.mbg;
@@ -79,7 +84,7 @@ void PolarisRangerRobotModule::readUrdf(const std::string & robotName, const std
   else
   {
     LOG_ERROR("Could not open PolarisRanger model at " << urdf_path)
-    throw("Failed to open PolarisRanger model");
+    LOG_ERROR_AND_THROW(std::runtime_error, "Failed to open PolarisRanger model")
   }
 }
 
@@ -93,16 +98,17 @@ std::map<std::string, std::vector<double>> PolarisRangerRobotModule::halfSitting
       res[j.name()] = halfSitting.at(j.name());
       for(auto & ji : res[j.name()])
       {
-        ji = M_PI*ji/180;
+        ji = M_PI * ji / 180;
       }
     }
   }
   return res;
 }
 
-std::vector< std::map<std::string, std::vector<double> > > PolarisRangerRobotModule::nominalBounds(const mc_rbdyn_urdf::Limits & limits) const
+std::vector<std::map<std::string, std::vector<double>>> PolarisRangerRobotModule::nominalBounds(
+    const mc_rbdyn_urdf::Limits & limits) const
 {
-  std::vector< std::map<std::string, std::vector<double> > > res(0);
+  std::vector<std::map<std::string, std::vector<double>>> res(0);
   res.push_back(limits.lower);
   res.push_back(limits.upper);
   {
@@ -132,7 +138,8 @@ std::vector< std::map<std::string, std::vector<double> > > PolarisRangerRobotMod
   return res;
 }
 
-std::map<std::string, std::pair<std::string, std::string>> PolarisRangerRobotModule::stdCollisionsFiles(const rbd::MultiBody &/*mb*/) const
+std::map<std::string, std::pair<std::string, std::string>> PolarisRangerRobotModule::stdCollisionsFiles(
+    const rbd::MultiBody & /*mb*/) const
 {
   std::map<std::string, std::pair<std::string, std::string>> res;
 
@@ -159,23 +166,19 @@ std::map<std::string, std::pair<std::string, std::string>> PolarisRangerRobotMod
   return res;
 }
 
-const std::map<std::string, std::pair<std::string, std::string> > & PolarisRangerRobotModule::convexHull() const
+const std::map<std::string, std::pair<std::string, std::string>> & PolarisRangerRobotModule::convexHull() const
 {
-  auto fileByBodyName = stdCollisionsFiles(mb);
-  const_cast<PolarisRangerRobotModule*>(this)->_convexHull = getConvexHull(fileByBodyName);
   return _convexHull;
 }
 
-const std::vector< std::map<std::string, std::vector<double> > > & PolarisRangerRobotModule::bounds() const
+const std::vector<std::map<std::string, std::vector<double>>> & PolarisRangerRobotModule::bounds() const
 {
-  const_cast<PolarisRangerRobotModule*>(this)->_bounds = nominalBounds(limits);
   return _bounds;
 }
 
-const std::map<std::string, std::vector<double> > & PolarisRangerRobotModule::stance() const
+const std::map<std::string, std::vector<double>> & PolarisRangerRobotModule::stance() const
 {
-  const_cast<PolarisRangerRobotModule*>(this)->_stance = halfSittingPose(mb);
   return _stance;
 }
 
-}
+} // namespace mc_robots

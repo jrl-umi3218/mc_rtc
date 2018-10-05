@@ -12,7 +12,6 @@ namespace mc_tasks
  */
 struct MC_TASKS_DLLAPI VectorOrientationTask : public TrajectoryTaskGeneric<tasks::qp::VectorOrientationTask>
 {
-public:
   /*! \brief Constructor
    *
    * \param bodyName Name of the body to control
@@ -31,11 +30,13 @@ public:
    * \param weight Task weight
    *
    */
-  VectorOrientationTask(const std::string & bodyName, const Eigen::Vector3d& bodyVector,
-                        const Eigen::Vector3d& targetVector,
+  VectorOrientationTask(const std::string & bodyName,
+                        const Eigen::Vector3d & bodyVector,
+                        const Eigen::Vector3d & targetVector,
                         const mc_rbdyn::Robots & robots,
                         unsigned int robotIndex,
-                        double stiffness = 2.0, double weight = 500);
+                        double stiffness = 2.0,
+                        double weight = 500);
 
   /*! \brief Reset the task
    *
@@ -56,7 +57,7 @@ public:
    * \returns The body orientation target in world frame
    *
    */
-  Eigen::Vector3d bodyVector();
+  Eigen::Vector3d bodyVector() const;
 
   /*! \brief Set world target for the controlled vector
    *
@@ -65,19 +66,29 @@ public:
    */
   void targetVector(const Eigen::Vector3d & vector);
 
-  /*! \brief Get the current target vector in the world frame
+  /**
+   * @brief Get the target orientation
    *
-   * \returns The target vector in the world frame
-   *
+   * @return The target orientation in world frame
    */
-  const Eigen::Vector3d & targetVector() const;
+  Eigen::Vector3d targetVector() const;
+
+  /**
+   * @brief Get the current body orientation
+   *
+   * @return The current body orientation vector in world frame
+   */
+  Eigen::Vector3d actual() const;
 
   /*! \brief Return the controlled body */
-  std::string body() { return bodyName; }
+  std::string body()
+  {
+    return bodyName;
+  }
 
-public:
+protected:
   std::string bodyName;
   unsigned int bIndex;
 };
 
-}
+} // namespace mc_tasks

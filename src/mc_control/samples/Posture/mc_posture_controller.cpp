@@ -20,7 +20,13 @@ MCPostureController::MCPostureController(std::shared_ptr<mc_rbdyn::RobotModule> 
   qpsolver->addTask(postureTask.get());
   qpsolver->setContacts({});
 
+  postureTask->stiffness(1.0);
   LOG_SUCCESS("MCPostureController init done " << this)
 }
 
+bool MCPostureController::run()
+{
+  return mc_control::MCController::run(mc_solver::FeedbackType::Joints);
 }
+
+} // namespace mc_control

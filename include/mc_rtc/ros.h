@@ -1,32 +1,32 @@
 #pragma once
 
+#include <mc_rtc/config.h>
+#include <mc_rtc/ros_api.h>
+
+#include <SpaceVecAlg/SpaceVecAlg>
+
+#include <Eigen/Geometry>
 #include <map>
 #include <memory>
 #include <string>
 #include <vector>
 
-#include <Eigen/Geometry>
-
-#include <mc_rtc/config.h>
-
-#include <mc_rtc/ros_api.h>
-
-#include <SpaceVecAlg/SpaceVecAlg>
-
 namespace ros
 {
-  class NodeHandle;
+class NodeHandle;
 }
 
 namespace mc_rbdyn
 {
-  struct Robot;
+struct Robot;
 }
 
 namespace mc_control
 {
-  struct MCGlobalController;
-} /* mc_control */
+struct MCGlobalController;
+
+struct Gripper;
+} // namespace mc_control
 
 namespace mc_rtc
 {
@@ -65,12 +65,29 @@ struct MC_RTC_ROS_DLLAPI ROSBridge
    * by mc_rtc
    *
    */
-  static void update_robot_publisher(const std::string& publisher, double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::vector<std::string>> & gripperJ, const std::map<std::string, std::vector<double>> & gripperQ);
+  static void init_robot_publisher(const std::string & publisher, double dt, const mc_rbdyn::Robot & robot);
 
-  static void activate_services(mc_control::MCGlobalController &ctl);
+  /** Update the robot publisher state
+   *
+   * \param publisher Name of the publisher
+   *
+   * \param dt Controller timestep
+   *
+   * \param robot Which robot to publish
+   *
+   * \param grippers List of grippers managed by mc_rtc for this robot
+   *
+   */
+  static void update_robot_publisher(const std::string & publisher,
+                                     double dt,
+                                     const mc_rbdyn::Robot & robot,
+                                     const std::map<std::string, std::shared_ptr<mc_control::Gripper>> & grippers = {});
+
+  static void activate_services(mc_control::MCGlobalController & ctl);
 
   /*! \brief Stop ROS */
   static void shutdown();
+
 private:
   static ROSBridgeImpl & impl_();
 };
@@ -96,18 +113,26 @@ public:
    * \param prefix TF prefix
    *
    * \param rate Publishing rate
+   *
+   * \param dt Control rate
    */
-  RobotPublisher(const std::string & prefix, unsigned int rate);
+  RobotPublisher(const std::string & prefix, double rate, double dt);
 
   /*! \brief Destructor */
   ~RobotPublisher();
 
+  /*! \brief Initialize the publisher */
+  void init(const mc_rbdyn::Robot & robot);
+
   /*! \brief Update the publisher */
-  void update(double dt, const mc_rbdyn::Robot & robot, const std::map<std::string, std::vector<std::string>> & gripperJ, const std::map<std::string, std::vector<double>> & gripperQ);
+  void update(double dt,
+              const mc_rbdyn::Robot & robot,
+              const std::map<std::string, std::shared_ptr<mc_control::Gripper>> & grippers);
+
 private:
   std::unique_ptr<RobotPublisherImpl> impl;
 };
 
 #endif
 
-}
+} // namespace mc_rtc

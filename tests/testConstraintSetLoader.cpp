@@ -1,41 +1,45 @@
-#include <boost/test/unit_test.hpp>
-#include <boost/mpl/list.hpp>
-
-#include <mc_solver/ConstraintSetLoader.h>
-
+#include <mc_rbdyn/RobotLoader.h>
+#include <mc_rbdyn/configuration_io.h>
 #include <mc_solver/BoundedSpeedConstr.h>
-#include <mc_solver/CollisionsConstraint.h>
 #include <mc_solver/CoMIncPlaneConstr.h>
+#include <mc_solver/CollisionsConstraint.h>
+#include <mc_solver/ConstraintSetLoader.h>
 #include <mc_solver/ContactConstraint.h>
 #include <mc_solver/DynamicsConstraint.h>
 
-#include <mc_rbdyn/RobotLoader.h>
-#include <mc_rbdyn/configuration_io.h>
+#include <boost/mpl/list.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "utils.h"
 
 static bool configured = configureRobotLoader();
 /* Create Robots with one robot and an environment for the purpose of the test */
 static auto rm = mc_rbdyn::RobotLoader::get_robot_module("HRP2DRC");
-static auto em = mc_rbdyn::RobotLoader::get_robot_module("env",
-                                                  std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH),
-                                                  std::string("ground"));
+static auto em =
+    mc_rbdyn::RobotLoader::get_robot_module("env", std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH), std::string("ground"));
 static auto robots = mc_rbdyn::loadRobotAndEnv(*rm, *em);
 static mc_solver::QPSolver solver(robots, 0.005);
 
 template<typename T>
-struct fail : public std::false_type {};
+struct fail : public std::false_type
+{
+};
 
 template<typename T>
 struct ConstraintTester
 {
   static_assert(fail<T>::value, "This should be specialized");
-  mc_solver::ConstraintSetPtr make_ref() { return nullptr; }
+  mc_solver::ConstraintSetPtr make_ref()
+  {
+    return nullptr;
+  }
 
-  std::string json() { return ""; }
+  std::string json()
+  {
+    return "";
+  }
 
-  void check(const mc_solver::ConstraintSetPtr & /*ref*/,
-             const mc_solver::ConstraintSetPtr & /*loaded*/) {}
+  void check(const mc_solver::ConstraintSetPtr & /*ref*/, const mc_solver::ConstraintSetPtr & /*loaded*/) {}
 };
 
 template<>
@@ -45,7 +49,10 @@ struct ConstraintTester<mc_solver::BoundedSpeedConstr>
   {
     for(size_t i = 0; i < 3; ++i)
     {
-      if(lS(i) > 0) { lS(i) = -lS(i); }
+      if(lS(i) > 0)
+      {
+        lS(i) = -lS(i);
+      }
       uS(i) = -lS(i);
     }
   }
@@ -88,8 +95,7 @@ struct ConstraintTester<mc_solver::BoundedSpeedConstr>
     return ret;
   }
 
-  void check(const mc_solver::ConstraintSetPtr & ref_p,
-             const mc_solver::ConstraintSetPtr & loaded_p)
+  void check(const mc_solver::ConstraintSetPtr & ref_p, const mc_solver::ConstraintSetPtr & loaded_p)
   {
     auto ref = std::dynamic_pointer_cast<mc_solver::BoundedSpeedConstr>(ref_p);
     auto loaded = std::dynamic_pointer_cast<mc_solver::BoundedSpeedConstr>(loaded_p);
@@ -132,8 +138,7 @@ struct ConstraintTester<mc_solver::CollisionsConstraint>
     return ret;
   }
 
-  void check(const mc_solver::ConstraintSetPtr & ref_p,
-             const mc_solver::ConstraintSetPtr & loaded_p)
+  void check(const mc_solver::ConstraintSetPtr & ref_p, const mc_solver::ConstraintSetPtr & loaded_p)
   {
     auto ref = std::dynamic_pointer_cast<mc_solver::CollisionsConstraint>(ref_p);
     auto loaded = std::dynamic_pointer_cast<mc_solver::CollisionsConstraint>(loaded_p);
@@ -163,8 +168,7 @@ struct ConstraintTester<mc_solver::CoMIncPlaneConstr>
     return ret;
   }
 
-  void check(const mc_solver::ConstraintSetPtr & ref_p,
-             const mc_solver::ConstraintSetPtr & loaded_p)
+  void check(const mc_solver::ConstraintSetPtr & ref_p, const mc_solver::ConstraintSetPtr & loaded_p)
   {
     auto ref = std::dynamic_pointer_cast<mc_solver::CoMIncPlaneConstr>(ref_p);
     auto loaded = std::dynamic_pointer_cast<mc_solver::CoMIncPlaneConstr>(loaded_p);
@@ -192,8 +196,7 @@ struct ConstraintTester<mc_solver::ContactConstraint>
     return ret;
   }
 
-  void check(const mc_solver::ConstraintSetPtr & ref_p,
-             const mc_solver::ConstraintSetPtr & loaded_p)
+  void check(const mc_solver::ConstraintSetPtr & ref_p, const mc_solver::ConstraintSetPtr & loaded_p)
   {
     auto ref = std::dynamic_pointer_cast<mc_solver::ContactConstraint>(ref_p);
     auto loaded = std::dynamic_pointer_cast<mc_solver::ContactConstraint>(loaded_p);
@@ -222,8 +225,7 @@ struct ConstraintTester<mc_solver::KinematicsConstraint>
     return ret;
   }
 
-  void check(const mc_solver::ConstraintSetPtr & ref_p,
-             const mc_solver::ConstraintSetPtr & loaded_p)
+  void check(const mc_solver::ConstraintSetPtr & ref_p, const mc_solver::ConstraintSetPtr & loaded_p)
   {
     auto ref = std::dynamic_pointer_cast<mc_solver::KinematicsConstraint>(ref_p);
     auto loaded = std::dynamic_pointer_cast<mc_solver::KinematicsConstraint>(loaded_p);
@@ -253,8 +255,7 @@ struct ConstraintTester<mc_solver::DynamicsConstraint>
     return ret;
   }
 
-  void check(const mc_solver::ConstraintSetPtr & ref_p,
-             const mc_solver::ConstraintSetPtr & loaded_p)
+  void check(const mc_solver::ConstraintSetPtr & ref_p, const mc_solver::ConstraintSetPtr & loaded_p)
   {
     auto ref = std::dynamic_pointer_cast<mc_solver::DynamicsConstraint>(ref_p);
     auto loaded = std::dynamic_pointer_cast<mc_solver::DynamicsConstraint>(loaded_p);
@@ -263,14 +264,13 @@ struct ConstraintTester<mc_solver::DynamicsConstraint>
   }
 };
 
-typedef boost::mpl::list<
-          mc_solver::BoundedSpeedConstr,
-          mc_solver::CollisionsConstraint,
-          mc_solver::CoMIncPlaneConstr,
-          mc_solver::ContactConstraint,
-          mc_solver::KinematicsConstraint,
-          mc_solver::DynamicsConstraint
-          > test_types;
+typedef boost::mpl::list<mc_solver::BoundedSpeedConstr,
+                         mc_solver::CollisionsConstraint,
+                         mc_solver::CoMIncPlaneConstr,
+                         mc_solver::ContactConstraint,
+                         mc_solver::KinematicsConstraint,
+                         mc_solver::DynamicsConstraint>
+    test_types;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(TestConstraintSetLoader, T, test_types)
 {

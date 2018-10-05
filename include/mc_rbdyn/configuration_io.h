@@ -9,10 +9,12 @@
 #include <mc_rbdyn/Collision.h>
 #include <mc_rbdyn/Flexibility.h>
 #include <mc_rbdyn/ForceSensor.h>
-#include <mc_rbdyn/polygon_utils.h>
 #include <mc_rbdyn/PolygonInterpolator.h>
-#include <mc_rbdyn/Springs.h>
 #include <mc_rbdyn/RobotModule.h>
+#include <mc_rbdyn/Springs.h>
+#include <mc_rbdyn/polygon_utils.h>
+
+#include <Tasks/QPTasks.h>
 
 /* Serialized/deserialized from/to shared pointers */
 #include <mc_rbdyn/CylindricalSurface.h>
@@ -21,7 +23,6 @@
 
 /* Require a Robots instance to be deserialized */
 #include <mc_rbdyn/Contact.h>
-
 #include <mc_rtc/logging.h>
 
 #include <fstream>
@@ -30,12 +31,12 @@ namespace mc_rtc
 {
 
 /* This temporary macro makes the file much easier to skim through */
-#define DECLARE_IO(...)\
-  template<> \
-  struct MC_RBDYN_DLLAPI ConfigurationLoader<__VA_ARGS__>\
-  {\
-    static __VA_ARGS__ load(const mc_rtc::Configuration &);\
-    static mc_rtc::Configuration save(const __VA_ARGS__ &);\
+#define DECLARE_IO(...)                                     \
+  template<>                                                \
+  struct MC_RBDYN_DLLAPI ConfigurationLoader<__VA_ARGS__>   \
+  {                                                         \
+    static __VA_ARGS__ load(const mc_rtc::Configuration &); \
+    static mc_rtc::Configuration save(const __VA_ARGS__ &); \
   };
 
 DECLARE_IO(Eigen::Matrix<double, 6, Eigen::Dynamic>)
@@ -50,6 +51,8 @@ DECLARE_IO(rbd::Joint)
 DECLARE_IO(rbd::Body)
 DECLARE_IO(rbd::MultiBody)
 DECLARE_IO(rbd::MultiBodyConfig)
+
+DECLARE_IO(tasks::qp::JointGains)
 
 DECLARE_IO(mc_rbdyn_urdf::Geometry::Box)
 DECLARE_IO(mc_rbdyn_urdf::Geometry::Cylinder)
@@ -101,4 +104,4 @@ struct MC_RBDYN_DLLAPI ConfigurationLoader<mc_rbdyn::Contact>
   static mc_rtc::Configuration save(const mc_rbdyn::Contact &);
 };
 
-}
+} // namespace mc_rtc

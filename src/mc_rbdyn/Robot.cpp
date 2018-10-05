@@ -1,20 +1,18 @@
-#include <RBDyn/CoM.h>
-#include <RBDyn/FK.h>
-#include <RBDyn/FV.h>
-#include <RBDyn/FA.h>
-#include <RBDyn/EulerIntegration.h>
-
 #include <mc_rbdyn/Robot.h>
-
 #include <mc_rbdyn/RobotModule.h>
 #include <mc_rbdyn/Robots.h>
+#include <mc_rbdyn/SCHAddon.h>
 #include <mc_rbdyn/Surface.h>
 #include <mc_rbdyn/surface_utils.h>
-#include <mc_rbdyn/SCHAddon.h>
+#include <mc_rtc/logging.h>
 
 #include <mc_rbdyn_urdf/urdf.h>
 
-#include <mc_rtc/logging.h>
+#include <RBDyn/CoM.h>
+#include <RBDyn/EulerIntegration.h>
+#include <RBDyn/FA.h>
+#include <RBDyn/FK.h>
+#include <RBDyn/FV.h>
 
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
@@ -25,9 +23,7 @@ namespace
 {
 
 using bound_t = std::vector<std::vector<double>>;
-using bounds_t = std::tuple<bound_t, bound_t,
-                            bound_t, bound_t,
-                            bound_t, bound_t>;
+using bounds_t = std::tuple<bound_t, bound_t, bound_t, bound_t, bound_t, bound_t>;
 using rm_bounds_t = mc_rbdyn::RobotModule::bounds_t;
 using rm_bound_t = rm_bounds_t::value_type;
 
@@ -39,55 +35,40 @@ using rm_bound_t = rm_bounds_t::value_type;
  */
 bounds_t bounds(const rbd::MultiBody & mb, const rm_bounds_t & bounds)
 {
-  using jt_method = int(rbd::Joint::*)() const;
-  auto fill_bound = [&mb](const std::string & name,
-                          const rm_bound_t & bound_in,
-                          jt_method def_size,
-                          double def_value,
-                          double ff_def_value)
-  {
+  using jt_method = int (rbd::Joint::*)() const;
+  auto fill_bound = [&mb](const std::string & name, const rm_bound_t & bound_in, jt_method def_size, double def_value,
+                          double ff_def_value) {
     bound_t res;
     res.reserve(mb.nrJoints());
     for(const auto & j : mb.joints())
     {
-      res.emplace_back(((j).*(def_size))(),
-                       j.type() == rbd::Joint::Free ? ff_def_value : def_value);
+      res.emplace_back(((j).*(def_size))(), j.type() == rbd::Joint::Free ? ff_def_value : def_value);
       if(bound_in.count(j.name()))
       {
         const auto & b_ref = bound_in.at(j.name());
         auto & b = res.back();
         if(b_ref.size() != b.size())
         {
-          LOG_ERROR_AND_THROW(std::runtime_error,
-                              name
-                              << " provided bound size (" << b_ref.size() << ")"
-                              << " different from expected size (" << b.size() << ")")
+          LOG_ERROR_AND_THROW(std::runtime_error, name << " provided bound size (" << b_ref.size() << ")"
+                                                       << " different from expected size (" << b.size() << ")")
         }
         res.back() = bound_in.at(j.name());
       }
     }
     return res;
   };
-  return std::make_tuple(
-    fill_bound("lower position", bounds.at(0),
-               &rbd::Joint::params, -INFINITY, -INFINITY),
-    fill_bound("upper position", bounds.at(1),
-               &rbd::Joint::params, INFINITY, INFINITY),
-    fill_bound("lower velocity", bounds.at(2),
-               &rbd::Joint::dof, -INFINITY, -INFINITY),
-    fill_bound("upper velocity", bounds.at(3),
-               &rbd::Joint::dof, INFINITY, INFINITY),
-    fill_bound("lower torque", bounds.at(4),
-               &rbd::Joint::dof, -INFINITY, 0),
-    fill_bound("upper torque", bounds.at(5),
-               &rbd::Joint::dof, INFINITY, 0)
-    );
+  return std::make_tuple(fill_bound("lower position", bounds.at(0), &rbd::Joint::params, -INFINITY, -INFINITY),
+                         fill_bound("upper position", bounds.at(1), &rbd::Joint::params, INFINITY, INFINITY),
+                         fill_bound("lower velocity", bounds.at(2), &rbd::Joint::dof, -INFINITY, -INFINITY),
+                         fill_bound("upper velocity", bounds.at(3), &rbd::Joint::dof, INFINITY, INFINITY),
+                         fill_bound("lower torque", bounds.at(4), &rbd::Joint::dof, -INFINITY, 0),
+                         fill_bound("upper torque", bounds.at(5), &rbd::Joint::dof, INFINITY, 0));
 }
 
 template<typename schT, typename mapT>
 void loadSCH(const mc_rbdyn::Robot & robot,
              const std::map<std::string, std::pair<std::string, std::string>> & urls,
-             schT*(*sch_load_fn)(const std::string &),
+             schT * (*sch_load_fn)(const std::string &),
              mapT & data_)
 {
   for(const auto & cH : urls)
@@ -105,8 +86,7 @@ void loadSCH(const mc_rbdyn::Robot & robot,
 }
 
 template<typename mapT>
-void fixSCH(const mc_rbdyn::Robot & robot,
-            mapT & data_)
+void fixSCH(const mc_rbdyn::Robot & robot, mapT & data_)
 {
   for(const auto & d : data_)
   {
@@ -114,7 +94,7 @@ void fixSCH(const mc_rbdyn::Robot & robot,
   }
 }
 
-}
+} // namespace
 
 namespace mc_rbdyn
 {
@@ -124,13 +104,15 @@ namespace mc_rbdyn
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 #ifdef __clang__
-#pragma clang diagnostic ignored "-Wshorten-64-to-32"
+#  pragma clang diagnostic ignored "-Wshorten-64-to-32"
 #endif
 
-Robot::Robot(Robots & robots, unsigned int robots_idx, bool loadFiles,
-             const sva::PTransformd * base, const std::string & bName)
-: robots_(&robots),
-  robots_idx_(robots_idx)
+Robot::Robot(Robots & robots,
+             unsigned int robots_idx,
+             bool loadFiles,
+             const sva::PTransformd * base,
+             const std::string & bName)
+: robots_(&robots), robots_idx_(robots_idx)
 {
   const auto & module_ = module();
 
@@ -141,6 +123,7 @@ Robot::Robot(Robots & robots, unsigned int robots_idx, bool loadFiles,
     mbc() = rbd::MultiBodyConfig(mb());
   }
 
+  mbc().gravity = Eigen::Vector3d{0, 0, 9.81};
   mbc().zero(mb());
   {
     auto initQ = mbc().q;
@@ -153,8 +136,10 @@ Robot::Robot(Robots & robots, unsigned int robots_idx, bool loadFiles,
         const auto & jQ = stance.at(j.name());
         if(initQ[i].size() != jQ.size())
         {
-          LOG_ERROR_AND_THROW(std::runtime_error, "Missmatch between RobotModule stance for joint " << j.name() << std::endl
-                              << "Stance provides " << jQ.size() << " values but should be " << initQ[i].size())
+          LOG_ERROR_AND_THROW(std::runtime_error, "Missmatch between RobotModule stance for joint "
+                                                      << j.name() << std::endl
+                                                      << "Stance provides " << jQ.size() << " values but should be "
+                                                      << initQ[i].size())
         }
         initQ[i] = jQ;
       }
@@ -170,20 +155,20 @@ Robot::Robot(Robots & robots, unsigned int robots_idx, bool loadFiles,
 
   name_ = module_.name;
 
-  if(base)
+  bodyTransforms_.resize(mb().bodies().size());
+  const auto & bbts =
+      base ? mbg().bodiesBaseTransform(mb().body(0).name(), *base) : mbg().bodiesBaseTransform(mb().body(0).name());
+  for(size_t i = 0; i < mb().bodies().size(); ++i)
   {
-    bodyTransforms_ = mbg().bodiesBaseTransform(mb().body(0).name(), *base);
-  }
-  else
-  {
-    bodyTransforms_ = mbg().bodiesBaseTransform(mb().body(0).name());
+    const auto & b = mb().body(static_cast<int>(i));
+    bodyTransforms_[i] = bbts.at(b.name());
   }
 
   if(module_.bounds().size() != 6)
   {
     LOG_ERROR_AND_THROW(std::invalid_argument, "The bounds of robotmodule '"
-      << module_.name << "' have a size of " << module_.bounds().size()
-      << " instead of 6 (ql, qu, vl, vu, tl, tu).")
+                                                   << module_.name << "' have a size of " << module_.bounds().size()
+                                                   << " instead of 6 (ql, qu, vl, vu, tl, tu).")
   }
   std::tie(ql_, qu_, vl_, vu_, tl_, tu_) = bounds(mb(), module_.bounds());
 
@@ -211,7 +196,8 @@ Robot::Robot(Robots & robots, unsigned int robots_idx, bool loadFiles,
     }
     else if(module_.rsdf_dir.size())
     {
-      LOG_ERROR("RSDF directory (" << module_.rsdf_dir << ") specified by RobotModule for " << module_.name << " does not exist")
+      LOG_ERROR("RSDF directory (" << module_.rsdf_dir << ") specified by RobotModule for " << module_.name
+                                   << " does not exist")
     }
   }
 
@@ -250,6 +236,8 @@ Robot::Robot(Robots & robots, unsigned int robots_idx, bool loadFiles,
 
   springs_ = module_.springs();
   flexibility_ = module_.flexibility();
+
+  zmp_ = Eigen::Vector3d::Zero();
 }
 
 std::string Robot::name() const
@@ -289,7 +277,7 @@ bool Robot::bodyHasBodySensor(const std::string & body) const
 
 BodySensor & Robot::bodySensor(const std::string & name)
 {
-  return const_cast<BodySensor&>(static_cast<const Robot*>(this)->bodySensor(name));
+  return const_cast<BodySensor &>(static_cast<const Robot *>(this)->bodySensor(name));
 }
 
 const BodySensor & Robot::bodySensor(const std::string & name) const
@@ -299,7 +287,7 @@ const BodySensor & Robot::bodySensor(const std::string & name) const
 
 BodySensor & Robot::bodyBodySensor(const std::string & body)
 {
-  return const_cast<BodySensor&>(static_cast<const Robot*>(this)->bodyBodySensor(body));
+  return const_cast<BodySensor &>(static_cast<const Robot *>(this)->bodyBodySensor(body));
 }
 
 const BodySensor & Robot::bodyBodySensor(const std::string & body) const
@@ -398,7 +386,7 @@ const std::vector<sva::MotionVecd> & Robot::bodyAccB() const
 }
 std::vector<std::vector<double>> & Robot::q()
 {
-    return mbc().q;
+  return mbc().q;
 }
 std::vector<std::vector<double>> & Robot::alpha()
 {
@@ -429,6 +417,31 @@ std::vector<sva::MotionVecd> & Robot::bodyAccB()
   return mbc().bodyAccB;
 }
 
+const sva::PTransformd & Robot::bodyPosW(const std::string & name) const
+{
+  return bodyPosW()[bodyIndexByName(name)];
+}
+
+sva::PTransformd Robot::X_b1_b2(const std::string & b1, const std::string & b2) const
+{
+  return bodyPosW()[bodyIndexByName(b2)] * bodyPosW()[bodyIndexByName(b1)].inv();
+}
+
+const sva::MotionVecd & Robot::bodyVelW(const std::string & name) const
+{
+  return bodyVelW()[bodyIndexByName(name)];
+}
+
+const sva::MotionVecd & Robot::bodyVelB(const std::string & name) const
+{
+  return bodyVelB()[bodyIndexByName(name)];
+}
+
+const sva::MotionVecd & Robot::bodyAccB(const std::string & name) const
+{
+  return bodyAccB()[bodyIndexByName(name)];
+}
+
 Eigen::Vector3d Robot::com() const
 {
   return rbd::computeCoM(mb(), mbc());
@@ -440,6 +453,64 @@ Eigen::Vector3d Robot::comVelocity() const
 Eigen::Vector3d Robot::comAcceleration() const
 {
   return rbd::computeCoMAcceleration(mb(), mbc());
+}
+
+sva::ForceVecd Robot::surfaceWrench(const std::string & surfaceName) const
+{
+  const auto & bodyName = surface(surfaceName).bodyName();
+  const auto & fs = bodyForceSensor(bodyName);
+  sva::ForceVecd w_fsactual = fs.wrenchWithoutGravity(*this);
+  sva::PTransformd X_fsactual_surf = surface(surfaceName).X_b_s() * fs.X_fsactual_parent();
+  return X_fsactual_surf.dualMul(w_fsactual);
+}
+
+Eigen::Vector2d Robot::cop(const std::string & surfaceName, double min_pressure) const
+{
+  const sva::ForceVecd w_surf = surfaceWrench(surfaceName);
+  const double pressure = w_surf.force()(2);
+  if(pressure < min_pressure)
+  {
+    return Eigen::Vector2d::Zero();
+  }
+  const Eigen::Vector3d & tau_surf = w_surf.couple();
+  return Eigen::Vector2d(-tau_surf(1) / pressure, +tau_surf(0) / pressure);
+}
+
+Eigen::Vector3d Robot::copW(const std::string & surfaceName, double min_pressure) const
+{
+  Eigen::Vector3d cop_s;
+  cop_s << cop(surfaceName, min_pressure), 0.;
+  const sva::PTransformd X_0_s = surface(surfaceName).X_0_s(*this);
+  return X_0_s.translation() + X_0_s.rotation().inverse() * cop_s;
+}
+
+Eigen::Vector3d Robot::zmp(const std::vector<std::string> & sensorsName,
+                           const Eigen::Vector3d & plane_p,
+                           const Eigen::Vector3d & plane_n,
+                           double forceThreshold) const
+{
+  sva::ForceVecd measuredWrench{Eigen::Vector6d::Zero()};
+  for(const auto & sensorName : sensorsName)
+  {
+    const auto & sensor = forceSensor(sensorName);
+    if(sensor.force().norm() > forceThreshold)
+    {
+      measuredWrench += sensor.worldWrenchWithoutGravity(*this);
+    }
+  }
+
+  const Eigen::Vector3d & force = measuredWrench.force();
+  const Eigen::Vector3d & moment_0 = measuredWrench.couple();
+
+  Eigen::Vector3d moment_p = moment_0 - plane_p.cross(force);
+  double floorn_dot_force = plane_n.dot(force);
+  // Prevent potential division by zero
+  if(floorn_dot_force < 1.)
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "ZMP cannot be computed, projected force too small " << floorn_dot_force);
+  }
+  Eigen::Vector3d zmp = plane_p + plane_n.cross(moment_p) / floorn_dot_force;
+  return zmp;
 }
 
 const std::vector<std::vector<double>> & Robot::ql() const
@@ -511,6 +582,26 @@ void Robot::encoderValues(const std::vector<double> & encoderValues)
   encoderValues_ = encoderValues;
 }
 
+const std::vector<double> & Robot::encoderVelocities() const
+{
+  return encoderVelocities_;
+}
+
+void Robot::encoderVelocities(const std::vector<double> & encoderVelocities)
+{
+  encoderVelocities_ = encoderVelocities;
+}
+
+const std::vector<double> & Robot::flexibilityValues() const
+{
+  return flexibilityValues_;
+}
+
+void Robot::flexibilityValues(const std::vector<double> & flexibilityValues)
+{
+  flexibilityValues_ = flexibilityValues;
+}
+
 const std::vector<double> & Robot::jointTorques() const
 {
   return jointTorques_;
@@ -538,7 +629,7 @@ bool Robot::bodyHasForceSensor(const std::string & body) const
 
 ForceSensor & Robot::forceSensor(const std::string & name)
 {
-  return const_cast<ForceSensor&>(static_cast<const Robot*>(this)->forceSensor(name));
+  return const_cast<ForceSensor &>(static_cast<const Robot *>(this)->forceSensor(name));
 }
 
 const ForceSensor & Robot::forceSensor(const std::string & name) const
@@ -548,7 +639,7 @@ const ForceSensor & Robot::forceSensor(const std::string & name) const
 
 ForceSensor & Robot::bodyForceSensor(const std::string & body)
 {
-  return const_cast<ForceSensor&>(static_cast<const Robot*>(this)->bodyForceSensor(body));
+  return const_cast<ForceSensor &>(static_cast<const Robot *>(this)->bodyForceSensor(body));
 }
 
 const ForceSensor & Robot::bodyForceSensor(const std::string & body) const
@@ -573,14 +664,19 @@ const std::vector<ForceSensor> & Robot::forceSensors() const
 
 mc_rbdyn::Surface & Robot::surface(const std::string & sName)
 {
-  return const_cast<mc_rbdyn::Surface&>(static_cast<const Robot*>(this)->surface(sName));
+  return const_cast<mc_rbdyn::Surface &>(static_cast<const Robot *>(this)->surface(sName));
 }
+
+sva::PTransformd Robot::surfacePose(const std::string & sName) const
+{
+  return surface(sName).X_0_s(*this);
+}
+
 const mc_rbdyn::Surface & Robot::surface(const std::string & sName) const
 {
   if(!hasSurface(sName))
   {
-    LOG_ERROR("No surface named " << sName << " found in this robot")
-    throw("Surface does not exist");
+    LOG_ERROR_AND_THROW(std::runtime_error, "No surface named " << sName << " found in this robot")
   }
   return *(surfaces_.at(sName));
 }
@@ -603,39 +699,42 @@ std::vector<std::string> Robot::availableSurfaces() const
 
 Robot::convex_pair_t & Robot::convex(const std::string & cName)
 {
-  return const_cast<Robot::convex_pair_t &>(static_cast<const Robot*>(this)->convex(cName));
+  return const_cast<Robot::convex_pair_t &>(static_cast<const Robot *>(this)->convex(cName));
 }
 const Robot::convex_pair_t & Robot::convex(const std::string & cName) const
 {
   if(convexes_.count(cName) == 0)
   {
-    LOG_ERROR("No convex named " << cName << " found in this robot (" << this->name_ << ")")
-    LOG_WARNING("Convexes available are:")
-    for(const auto & cv : convexes_)
-    {
-      LOG_WARNING(cv.first)
-    }
-    throw("Convex does not exist");
+    LOG_ERROR_AND_THROW(std::runtime_error,
+                        "No convex named " << cName << " found in this robot (" << this->name_ << ")")
   }
   return convexes_.at(cName);
 }
 
-const sva::PTransformd & Robot::bodyTransform(const std::string& bName) const
+const sva::PTransformd & Robot::bodyTransform(const std::string & bName) const
 {
-  if(bodyTransforms_.count(bName) == 0)
+  if(!hasBody(bName))
   {
-    LOG_ERROR("No body transform with name " << bName << " found in this robot")
-    throw("Body transform does not exist");
+    LOG_ERROR_AND_THROW(std::runtime_error, "No body transform with name " << bName << " found in this robot")
   }
-  return bodyTransforms_.at(bName);
+  return bodyTransforms_[bodyIndexByName(bName)];
 }
 
-const sva::PTransformd & Robot::collisionTransform(const std::string& cName) const
+const sva::PTransformd & Robot::bodyTransform(int bodyIndex) const
+{
+  return bodyTransforms_[bodyIndex];
+}
+
+const std::vector<sva::PTransformd> & Robot::bodyTransforms() const
+{
+  return bodyTransforms_;
+}
+
+const sva::PTransformd & Robot::collisionTransform(const std::string & cName) const
 {
   if(collisionTransforms_.count(cName) == 0)
   {
-    LOG_ERROR("No collision transform with name " << cName << " found in this robot")
-    throw("Collision transform does not exist");
+    LOG_ERROR_AND_THROW(std::runtime_error, "No collision transform with name " << cName << " found in this robot")
   }
   return collisionTransforms_.at(cName);
 }
@@ -644,8 +743,8 @@ void Robot::fixSurfaces()
 {
   for(auto & s : surfaces_)
   {
-    const sva::PTransformd & trans = bodyTransforms_[s.second->bodyName()];
-    s.second->X_b_s(s.second->X_b_s()*trans);
+    const sva::PTransformd & trans = bodyTransform(s.second->bodyName());
+    s.second->X_b_s(s.second->X_b_s() * trans);
   }
 }
 
@@ -653,8 +752,8 @@ void Robot::fixCollisionTransforms()
 {
   for(auto & ct : collisionTransforms_)
   {
-    assert(bodyTransforms_.count(ct.first));
-    const auto & trans = bodyTransforms_[ct.first];
+    // assert(bodyTransforms_.size(ct.first));
+    const auto & trans = bodyTransform(ct.first);
     ct.second = ct.second * trans;
   }
 }
@@ -671,7 +770,9 @@ void Robot::loadRSDFFromDir(const std::string & surfaceDir)
     }
     else
     {
-      LOG_WARNING("Loaded surface " << sp->name() << " attached to body " << sp->bodyName() << " from RSDF but the robot " << name() << " has no such body, discard this surface to avoid future problems...")
+      LOG_WARNING("Loaded surface " << sp->name() << " attached to body " << sp->bodyName()
+                                    << " from RSDF but the robot " << name()
+                                    << " has no such body, discard this surface to avoid future problems...")
     }
   }
   fixSurfaces();
@@ -689,7 +790,7 @@ unsigned int mc_rbdyn::Robot::robotIndex() const
 
 void Robot::forwardKinematics()
 {
-    rbd::forwardKinematics(mb(), mbc());
+  rbd::forwardKinematics(mb(), mbc());
 }
 void Robot::forwardKinematics(rbd::MultiBodyConfig & mbc) const
 {
@@ -718,6 +819,7 @@ void mc_rbdyn::Robot::eulerIntegration(double step)
 {
   rbd::eulerIntegration(mb(), mbc(), step);
 }
+
 void mc_rbdyn::Robot::eulerIntegration(rbd::MultiBodyConfig & mbc, double step) const
 {
   rbd::eulerIntegration(mb(), mbc, step);
@@ -732,14 +834,12 @@ void Robot::posW(const sva::PTransformd & pt)
 {
   if(mb().joint(0).type() == rbd::Joint::Type::Free)
   {
-    const sva::Quaterniond rotation{ pt.rotation().transpose() };
-    q()[0] = {
-      rotation.w(), rotation.x(), rotation.y(), rotation.z(),
-      pt.translation().x(), pt.translation().y(), pt.translation().z()
-    };
+    const sva::Quaterniond rotation{pt.rotation().transpose()};
+    q()[0] = {rotation.w(),         rotation.x(),         rotation.y(),        rotation.z(),
+              pt.translation().x(), pt.translation().y(), pt.translation().z()};
     forwardKinematics();
   }
-  else if (mb().joint(0).type() == rbd::Joint::Type::Fixed)
+  else if(mb().joint(0).type() == rbd::Joint::Type::Fixed)
   {
     mb().transform(0, pt);
     forwardKinematics();
@@ -748,13 +848,25 @@ void Robot::posW(const sva::PTransformd & pt)
   }
   else
   {
-    LOG_ERROR_AND_THROW(std::logic_error, "The root pose can only be changed for robots with a free flyer or a fixed joint as joint(0)");
+    LOG_ERROR_AND_THROW(std::logic_error,
+                        "The root pose can only be changed for robots with a free flyer or a fixed joint as joint(0)");
   }
+}
+
+void Robot::setBaseLinkVelocity(const Eigen::Vector6d & alpha_)
+{
+  alpha()[0][0] = alpha_(0);
+  alpha()[0][1] = alpha_(1);
+  alpha()[0][2] = alpha_(2);
+  alpha()[0][3] = alpha_(3);
+  alpha()[0][4] = alpha_(4);
+  alpha()[0][5] = alpha_(5);
+  forwardVelocity();
 }
 
 void Robot::copy(Robots & robots, unsigned int robots_idx, const Base & base) const
 {
-  robots.robots_.emplace_back(robots, robots_idx, false, &base.X_0_s, base.baseName);
+  robots.robots_.emplace_back(Robot(robots, robots_idx, false, &base.X_0_s, base.baseName));
   auto & robot = robots.robots_.back();
   for(const auto & s : surfaces_)
   {
@@ -763,21 +875,19 @@ void Robot::copy(Robots & robots, unsigned int robots_idx, const Base & base) co
   robot.fixSurfaces();
   for(const auto & cH : convexes_)
   {
-    robot.convexes_[cH.first] = {cH.second.first,
-      std::make_shared<sch::S_Polyhedron>(*cH.second.second)};
+    robot.convexes_[cH.first] = {cH.second.first, std::make_shared<sch::S_Polyhedron>(*cH.second.second)};
   }
   fixSCH(robot, robot.convexes_);
   for(const auto & stpbv : stpbvs_)
   {
-    robot.stpbvs_[stpbv.first] = {stpbv.second.first,
-      std::make_shared<sch::STP_BV>(*stpbv.second.second)};
+    robot.stpbvs_[stpbv.first] = {stpbv.second.first, std::make_shared<sch::STP_BV>(*stpbv.second.second)};
   }
   fixSCH(robot, robot.stpbvs_);
 }
 
 void Robot::copy(Robots & robots, unsigned int robots_idx) const
 {
-  robots.robots_.emplace_back(robots, robots_idx, false);
+  robots.robots_.emplace_back(Robot(robots, robots_idx, false));
   auto & robot = robots.robots_.back();
   for(const auto & s : surfaces_)
   {
@@ -789,8 +899,8 @@ mc_rbdyn::Surface & Robot::copySurface(const std::string & sName, const std::str
 {
   if(hasSurface(name))
   {
-    LOG_ERROR(name << " already exists within this robot. Cannot overwrite an existing surface")
-    throw("Target surface already exists");
+    LOG_ERROR_AND_THROW(std::runtime_error,
+                        name << " already exists within this robot. Cannot overwrite an existing surface")
   }
   const Surface & surf = surface(sName);
   SurfacePtr nSurf = surf.copy();
@@ -801,19 +911,40 @@ mc_rbdyn::Surface & Robot::copySurface(const std::string & sName, const std::str
 
 void mc_rbdyn::Robot::addSurface(SurfacePtr surface, bool doNotReplace)
 {
-    if(!hasBody(surface->bodyName()))
-    {
-      LOG_WARNING("Surface " << surface->name() << " attached to body " << surface->bodyName() << " but the robot " << name() << " has no such body.")
-      return;
-    }
-    if(hasSurface(surface->name()) && doNotReplace)
-    {
-      LOG_WARNING("Surface " << surface->name() << " already exists for the robot " << name() << ".")
-      return;
-    }
-    surfaces_[surface->name()] = std::move(surface);
+  if(!hasBody(surface->bodyName()))
+  {
+    LOG_WARNING("Surface " << surface->name() << " attached to body " << surface->bodyName() << " but the robot "
+                           << name() << " has no such body.")
+    return;
+  }
+  if(hasSurface(surface->name()) && doNotReplace)
+  {
+    LOG_WARNING("Surface " << surface->name() << " already exists for the robot " << name() << ".")
+    return;
+  }
+  surfaces_[surface->name()] = std::move(surface);
 }
 
 #pragma GCC diagnostic pop
 
+double mc_rbdyn::Robot::mass() const
+{
+  double mass = 0.;
+  for(const auto & b : mb().bodies())
+  {
+    mass += b.inertia().mass();
+  }
+  return mass;
 }
+
+void mc_rbdyn::Robot::zmpTarget(const Eigen::Vector3d & zmp)
+{
+  zmp_ = zmp;
+}
+
+const Eigen::Vector3d & mc_rbdyn::Robot::zmpTarget() const
+{
+  return zmp_;
+}
+
+} // namespace mc_rbdyn

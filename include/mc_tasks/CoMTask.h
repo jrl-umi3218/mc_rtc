@@ -24,8 +24,7 @@ public:
    * \param weight Task weight
    *
    */
-  CoMTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex,
-          double stifness = 5.0, double weight = 100.);
+  CoMTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double stiffness = 5.0, double weight = 100.);
 
   virtual void reset() override;
 
@@ -48,6 +47,10 @@ public:
    * \returns The current CoM target
    */
   Eigen::Vector3d com();
+
+protected:
+  void addToGUI(mc_rtc::gui::StateBuilder &) override;
+
 private:
   unsigned int robot_index_;
   Eigen::Vector3d cur_com_;
@@ -55,4 +58,4 @@ private:
   void removeFromLogger(mc_rtc::Logger & logger) override;
 };
 
-}
+} // namespace mc_tasks

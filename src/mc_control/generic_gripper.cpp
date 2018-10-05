@@ -1,5 +1,4 @@
 #include <mc_control/generic_gripper.h>
-
 #include <mc_rtc/logging.h>
 
 #include <cmath>
@@ -73,17 +72,23 @@ std::vector<std::string> gripperJoints(const std::vector<std::string> & jointNam
   return res;
 }
 
-}
+} // namespace
 
-Gripper::Gripper(const mc_rbdyn::Robot & robot, const std::vector<std::string> & jointNames, const std::string & robot_urdf,
-                 const std::vector<double> & currentQ, double timeStep, bool reverseLimits)
-: overCommandLimitIter(0), overCommandLimitIterN(5),
-  actualQ(currentQ), actualCommandDiffTrigger(8*M_PI/180) /* 8 degress of difference */
+Gripper::Gripper(const mc_rbdyn::Robot & robot,
+                 const std::vector<std::string> & jointNames,
+                 const std::string & robot_urdf,
+                 const std::vector<double> & currentQ,
+                 double timeStep,
+                 bool reverseLimits)
+: overCommandLimitIter(0), overCommandLimitIterN(5), actualQ(currentQ),
+  actualCommandDiffTrigger(8 * M_PI / 180) /* 8 degress of difference */
 {
   auto mimicDict = readMimic(robot_urdf);
   names = gripperJoints(jointNames, mimicDict);
   active_joints = jointNames;
-  active_idx.resize(0); mult.resize(0); _q.resize(0);
+  active_idx.resize(0);
+  mult.resize(0);
+  _q.resize(0);
   unsigned int j = 0;
   for(size_t i = 0; i < names.size(); ++i)
   {
@@ -101,7 +106,7 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot, const std::vector<std::string> &
         closeP.push_back(robot.qu()[jointIndex][0]);
         openP.push_back(robot.ql()[jointIndex][0]);
       }
-      vmax.push_back(std::min(std::abs(robot.vl()[jointIndex][0]), robot.vu()[jointIndex][0])/10);
+      vmax.push_back(std::min(std::abs(robot.vl()[jointIndex][0]), robot.vu()[jointIndex][0]) / 10);
       active_idx.push_back(i);
       _q.push_back(currentQ[j]);
       ++j;
@@ -132,7 +137,7 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot, const std::vector<std::string> &
   }
   for(size_t i = 0; i < mult.size(); ++i)
   {
-    _q[i] = _q[mult[i].first]*mult[i].second;
+    _q[i] = _q[mult[i].first] * mult[i].second;
   }
 
   percentOpen.resize(currentQ.size());
@@ -149,7 +154,7 @@ void Gripper::setCurrentQ(const std::vector<double> & currentQ)
 {
   for(size_t i = 0; i < percentOpen.size(); ++i)
   {
-    percentOpen[i] = (currentQ[i] - closeP[i])/(openP[i] - closeP[i]);
+    percentOpen[i] = (currentQ[i] - closeP[i]) / (openP[i] - closeP[i]);
   }
 }
 
@@ -165,7 +170,7 @@ void Gripper::setTargetOpening(double targetOpening)
   std::vector<double> targetQin(cur.size());
   for(size_t i = 0; i < targetQin.size(); ++i)
   {
-    targetQin[i] = cur[i] + (targetOpening - percentOpen[i])*(openP[i] - closeP[i]);
+    targetQin[i] = cur[i] + (targetOpening - percentOpen[i]) * (openP[i] - closeP[i]);
   }
   setTargetQ(targetQin);
 }
@@ -175,7 +180,7 @@ std::vector<double> Gripper::curPosition() const
   std::vector<double> res(percentOpen.size());
   for(size_t i = 0; i < res.size(); ++i)
   {
-    res[i] = closeP[i] + (openP[i] - closeP[i])*percentOpen[i];
+    res[i] = closeP[i] + (openP[i] - closeP[i]) * percentOpen[i];
   }
   return res;
 }
@@ -184,7 +189,7 @@ void Gripper::setActualQ(const std::vector<double> & q)
 {
   actualQ = q;
   auto currentQ = curPosition();
-  for(size_t i = 0; i< actualQ.size(); ++i)
+  for(size_t i = 0; i < actualQ.size(); ++i)
   {
     if(std::abs(actualQ[i] - currentQ[i]) > actualCommandDiffTrigger)
     {
@@ -193,7 +198,7 @@ void Gripper::setActualQ(const std::vector<double> & q)
       {
         LOG_WARNING("Gripper safety triggered on " << names[active_idx[i]])
         overCommandLimit[i] = true;
-        actualQ[i] = actualQ[i] - 2*M_PI/180;
+        actualQ[i] = actualQ[i] - 2 * M_PI / 180;
         setTargetQ(actualQ);
       }
     }
@@ -218,11 +223,11 @@ const std::vector<double> & Gripper::q()
       {
         if(targetQIn[i] > cur[i])
         {
-          percentOpen[i] += std::min(vmax[i]*timeStep, targetQIn[i] - cur[i])/(openP[i] - closeP[i]);
+          percentOpen[i] += std::min(vmax[i] * timeStep, targetQIn[i] - cur[i]) / (openP[i] - closeP[i]);
         }
         else
         {
-          percentOpen[i] += std::max(-vmax[i]*timeStep, targetQIn[i] - cur[i])/(openP[i] - closeP[i]);
+          percentOpen[i] += std::max(-vmax[i] * timeStep, targetQIn[i] - cur[i]) / (openP[i] - closeP[i]);
         }
       }
       reached = reached && i_reached;
@@ -239,9 +244,9 @@ const std::vector<double> & Gripper::q()
   }
   for(size_t i = 0; i < _q.size(); ++i)
   {
-    _q[i] = mult[i].second*_q[mult[i].first];
+    _q[i] = mult[i].second * _q[mult[i].first];
   }
   return _q;
 }
 
-}
+} // namespace mc_control

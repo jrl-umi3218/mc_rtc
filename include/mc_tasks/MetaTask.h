@@ -1,28 +1,43 @@
 #pragma once
 
-#include <cmath>
-#include <mc_solver/QPSolver.h>
-
+#include <mc_rtc/Configuration.h>
+#include <mc_rtc/GUIState.h>
 #include <mc_rtc/log/Logger.h>
-
+#include <mc_solver/QPSolver.h>
+#include <mc_solver/api.h>
 #include <mc_tasks/api.h>
 
-#include <mc_rtc/Configuration.h>
+#include <cmath>
+
+namespace mc_control
+{
+struct CompletionCriteria;
+}
 
 namespace mc_tasks
 {
 
-MC_TASKS_DLLAPI double extraStiffness(double error, double extraStiffness);
+MC_SOLVER_DLLAPI double extraStiffness(double error, double extraStiffness);
 
 /*! \brief Represents a generic task
  *
  * A meta task may be composed of several tasks that work together to achieve a
  * given goal
  */
-struct MC_TASKS_DLLAPI MetaTask
+struct MC_SOLVER_DLLAPI MetaTask
 {
-friend struct mc_solver::QPSolver;
+  friend struct mc_solver::QPSolver;
+  friend struct mc_control::CompletionCriteria;
+
 public:
+  virtual ~MetaTask();
+
+  /** Get the type of the task */
+  const std::string & type() const
+  {
+    return type_;
+  }
+
   /** Set a name for the task
    *
    * This name will be used to identify the task in logs, GUI...
@@ -30,10 +45,16 @@ public:
    * The name should be set before being added to the solver.
    *
    */
-  void name(const std::string & name) { name_ = name; }
+  void name(const std::string & name)
+  {
+    name_ = name;
+  }
 
   /** Get the name of the task */
-  const std::string & name() const { return name_; }
+  inline const std::string & name() const
+  {
+    return name_;
+  }
 
   /*! \brief Reset the task */
   virtual void reset() = 0;
@@ -64,8 +85,7 @@ public:
    * \param activeJointsName Active joints in the task
    *
    */
-  virtual void selectActiveJoints(mc_solver::QPSolver & solver,
-                                  const std::vector<std::string> & activeJointsName) = 0;
+  virtual void selectActiveJoints(mc_solver::QPSolver & solver, const std::vector<std::string> & activeJointsName) = 0;
 
   /*! \brief Setup an unactive joints selector
    *
@@ -106,6 +126,7 @@ public:
 
   /*! \brief Load parameters from a Configuration object */
   virtual void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config);
+
 protected:
   /*! \brief Add the task to a solver
    *
@@ -167,9 +188,51 @@ protected:
    */
   virtual void removeFromLogger(mc_rtc::Logger &) {}
 
+  /** Add elements to the GUI through the helper
+   *
+   * This will be called by the solver when the task is added.
+   *
+   * The default implementation adds the type of the task under the {"Tasks",
+   * name_} category.
+   *
+   */
+  virtual void addToGUI(mc_rtc::gui::StateBuilder &);
+
+  /** Remove elements from the GUI through the helper
+   *
+   * This will be called by the solver when the task is removed.
+   *
+   * The default implementation removes the {"Tasks", name_} category.
+   *
+   */
+  virtual void removeFromGUI(mc_rtc::gui::StateBuilder &);
+
+  /** Add additional completion criterias to mc_control::CompletionCriteria
+   * object
+   *
+   * Based on the input data, this should return a function that operates on
+   * the task and return true and complete the output if the criteria has been
+   * reached. In this function parameter, the output string should be completed
+   * by the function and not overwritten. The task passed to this function is
+   * *always* of the MetaTask type you're implementing and thus can be safely
+   * casted.
+   *
+   * The default implementation is a function that returns true whatever
+   * happens.
+   *
+   * \param dt Timestep of the completion criteria
+   *
+   * \param config Configuration for the CompletionCriteria
+   *
+   */
+  virtual std::function<bool(const mc_tasks::MetaTask & task, std::string &)> buildCompletionCriteria(
+      double dt,
+      const mc_rtc::Configuration & config) const;
+
+  std::string type_;
   std::string name_;
 };
 
 using MetaTaskPtr = std::shared_ptr<MetaTask>;
 
-}
+} // namespace mc_tasks

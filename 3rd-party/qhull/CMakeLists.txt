@@ -60,8 +60,14 @@
 # $Id: //main/2015/qhull/CMakeLists.txt#8 $$Change: 2066 $
 # $DateTime: 2016/01/18 19:29:17 $$Author: bbarber $
 
-project(qhull)
 cmake_minimum_required(VERSION 2.6)
+if(POLICY CMP0063)
+  cmake_policy(SET CMP0063 OLD)
+endif()
+if(POLICY CMP0048)
+  cmake_policy(SET CMP0048 NEW)
+endif()
+project(qhull)
 remove_definitions(-std=c++0x)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
@@ -332,21 +338,12 @@ set(
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-if(CMAKE_BUILD_TYPE MATCHES "[dD]ebug")
-    set(qhull_CPP qhullcpp_d)
-    set(qhull_SHARED qhull_d) 
-    set(qhull_SHAREDP qhull_pd)
-    set(qhull_SHAREDR qhull_rd)
-    set(qhull_STATIC qhullstatic_d)
-    set(qhull_STATICR qhullstatic_rd)
-else()
-    set(qhull_CPP qhullcpp)
-    set(qhull_SHARED libqhull)  # Temporarily avoid name conflict with qhull executable
-    set(qhull_SHAREDP qhull_p)
-    set(qhull_SHAREDR qhull_r)
-    set(qhull_STATIC qhullstatic)
-    set(qhull_STATICR qhullstatic_r)
-endif()
+set(qhull_CPP qhullcpp)
+set(qhull_SHARED libqhull)  # Temporarily avoid name conflict with qhull executable
+set(qhull_SHAREDP qhull_p)
+set(qhull_SHAREDR qhull_r)
+set(qhull_STATIC qhullstatic)
+set(qhull_STATICR qhullstatic_r)
 
 
 

@@ -1,7 +1,5 @@
 #include <mc_control/mc_global_controller.h>
-
 #include <mc_rbdyn/RobotLoader.h>
-
 #include <mc_rtc/config.h>
 #include <mc_rtc/logging.h>
 #include <mc_rtc/ros.h>
@@ -9,6 +7,8 @@
 #include <RBDyn/EulerIntegration.h>
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
+
+#include <boost/chrono.hpp>
 
 #include <algorithm>
 #include <cstdlib>
@@ -20,25 +20,22 @@
 namespace mc_control
 {
 
-MCGlobalController::MCGlobalController(const std::string & conf,
-                                       std::shared_ptr<mc_rbdyn::RobotModule> rm)
-: config(conf, rm),
-  current_ctrl(""), next_ctrl(""),
-  controller_(nullptr),
-  next_controller_(nullptr),
+MCGlobalController::MCGlobalController(const std::string & conf, std::shared_ptr<mc_rbdyn::RobotModule> rm)
+: config(conf, rm), current_ctrl(""), next_ctrl(""), controller_(nullptr), next_controller_(nullptr),
   real_robots(std::make_shared<mc_rbdyn::Robots>())
 {
   try
   {
-    controller_loader.reset(new mc_rtc::ObjectLoader<mc_control::MCController>("MC_RTC_CONTROLLER", config.controller_module_paths, config.use_sandbox, config.verbose_loader));
+    controller_loader.reset(new mc_rtc::ObjectLoader<mc_control::MCController>(
+        "MC_RTC_CONTROLLER", config.controller_module_paths, config.use_sandbox, config.verbose_loader));
   }
   catch(mc_rtc::LoaderException & exc)
   {
     LOG_ERROR("Failed to initialize controller loader")
-    throw(std::runtime_error("Failed to initialize controller loader"));
+    LOG_ERROR_AND_THROW(std::runtime_error, "Failed to initialize controller loader")
   }
-  if(std::find(config.enabled_controllers.begin(), config.enabled_controllers.end(),
-            "HalfSitPose") == config.enabled_controllers.end())
+  if(std::find(config.enabled_controllers.begin(), config.enabled_controllers.end(), "HalfSitPose")
+     == config.enabled_controllers.end())
   {
     config.enabled_controllers.push_back("HalfSitPose");
   }
@@ -56,11 +53,11 @@ MCGlobalController::MCGlobalController(const std::string & conf,
   if(current_ctrl == "" || controller_ == nullptr)
   {
     LOG_ERROR("No controller selected or selected controller is not enabled, please check your configuration file")
-    throw std::runtime_error("No controller enabled");
+    LOG_ERROR_AND_THROW(std::runtime_error, "No controller enabled")
   }
   else
   {
-    real_robots->load(*config.main_robot_module, config.main_robot_module->rsdf_dir);
+    real_robots->load(*config.main_robot_module);
   }
   mc_rtc::ROSBridge::set_publisher_timestep(config.publish_timestep);
   if(config.enable_log)
@@ -70,12 +67,22 @@ MCGlobalController::MCGlobalController(const std::string & conf,
       c.second->logger().setup(config.log_policy, config.log_directory, config.log_template);
     }
   }
+  if(config.enable_gui_server)
+  {
+    if(config.gui_server_pub_uris.size() == 0)
+    {
+      LOG_WARNING("GUI server is enabled but not configured to bind to anything, acting as if it was disabled.")
+    }
+    else
+    {
+      server_.reset(new mc_control::ControllerServer(config.timestep, config.gui_timestep, config.gui_server_pub_uris,
+                                                     config.gui_server_rep_uris));
+    }
+  }
   mc_rtc::ROSBridge::activate_services(*this);
 }
 
-MCGlobalController::~MCGlobalController()
-{
-}
+MCGlobalController::~MCGlobalController() {}
 
 std::shared_ptr<mc_rbdyn::RobotModule> MCGlobalController::get_robot_module()
 {
@@ -134,19 +141,14 @@ void MCGlobalController::init(const std::vector<double> & initq, const std::arra
   }
   if(config.main_robot_module->name == "hrp2_drc")
   {
-    setGripperCurrentQ({
-      {"l_gripper", {initq[31]}},
-      {"r_gripper", {initq[23]}}
-    });
+    setGripperCurrentQ({{"l_gripper", {initq[31]}}, {"r_gripper", {initq[23]}}});
   }
   else if(config.main_robot_module->name == "hrp4")
   {
-    setGripperCurrentQ({
-      {"l_gripper", {initq[32], initq[33]}},
-      {"r_gripper", {initq[23], initq[24]}}
-    });
+    setGripperCurrentQ({{"l_gripper", {initq[32], initq[33]}}, {"r_gripper", {initq[23], initq[24]}}});
   }
   controller_->reset({q});
+  init_publishers();
 }
 
 void MCGlobalController::setSensorPosition(const Eigen::Vector3d & pos)
@@ -171,7 +173,7 @@ void MCGlobalController::setSensorOrientation(const Eigen::Quaterniond & ori)
 }
 
 void MCGlobalController::setSensorOrientations(mc_rbdyn::Robot & robot,
-                                            const std::map<std::string, Eigen::Quaterniond> & oris)
+                                               const std::map<std::string, Eigen::Quaterniond> & oris)
 {
   for(const auto & o : oris)
   {
@@ -229,6 +231,16 @@ void MCGlobalController::setEncoderValues(const std::vector<double> & eValues)
   robot().encoderValues(eValues);
 }
 
+void MCGlobalController::setEncoderVelocities(const std::vector<double> & eVelocities)
+{
+  robot().encoderVelocities(eVelocities);
+}
+
+void MCGlobalController::setFlexibilityValues(const std::vector<double> & fValues)
+{
+  robot().flexibilityValues(fValues);
+}
+
 void MCGlobalController::setJointTorques(const std::vector<double> & tValues)
 {
   robot().jointTorques(tValues);
@@ -263,10 +275,35 @@ void MCGlobalController::setActualGripperQ(const std::map<std::string, std::vect
 
 bool MCGlobalController::run()
 {
+  /** Always pick a steady clock */
+  using clock = typename std::conditional<std::chrono::high_resolution_clock::is_steady,
+                                          std::chrono::high_resolution_clock, std::chrono::steady_clock>::type;
+  /** Helper to converst Tasks' timer */
+  using boost_ms = boost::chrono::duration<double, boost::milli>;
+  using boost_ns = boost::chrono::duration<double, boost::nano>;
+  auto start_run_t = clock::now();
   /* Check if we need to change the controller this time */
   if(next_controller_)
   {
     LOG_INFO("Switching controllers")
+    if(controller_)
+    {
+      for(auto & bs : next_controller_->robot().bodySensors())
+      {
+        const auto & current = controller_->robot().bodySensor(bs.name());
+        bs.position(current.position());
+        bs.orientation(current.orientation());
+        bs.linearVelocity(current.linearVelocity());
+        bs.angularVelocity(current.angularVelocity());
+        bs.acceleration(current.acceleration());
+      }
+      next_controller_->robot().encoderValues(controller_->robot().encoderValues());
+      next_controller_->robot().jointTorques(controller_->robot().jointTorques());
+      for(auto & fs : next_controller_->robot().forceSensors())
+      {
+        fs.wrench(controller_->robot().forceSensor(fs.name()).wrench());
+      }
+    }
     if(!running)
     {
       controller_ = next_controller_;
@@ -283,12 +320,14 @@ bool MCGlobalController::run()
       std::cout << controller_->robot().mbc().q[0][4] << " ";
       std::cout << controller_->robot().mbc().q[0][5] << " ";
       std::cout << controller_->robot().mbc().q[0][6] << std::endl;
-      for(const auto & g: controller_->grippers)
+      for(const auto & g : controller_->grippers)
       {
         next_controller_->grippers[g.first]->setCurrentQ(g.second->curPosition());
       }
       next_controller_->reset({controller_->robot().mbc().q});
       controller_ = next_controller_;
+      /** Initialize publishers again if the environment changed */
+      init_publishers();
     }
     next_controller_ = 0;
     current_ctrl = next_ctrl;
@@ -297,49 +336,104 @@ bool MCGlobalController::run()
       start_log();
     }
   }
-  const auto& real_q = robot().encoderValues();
+  const auto & real_q = robot().encoderValues();
+  const auto & real_alpha = robot().encoderVelocities();
   if(config.update_real && real_q.size() > 0)
   {
-    auto& real_robot = real_robots->robot();
-    // Update free flyer
+    auto & real_robot = real_robots->robot();
+    // Set all joint values and velocities from encoders
+    int i = 0;
+    for(const auto & ref_joint : config.main_robot_module->ref_joint_order())
+    {
+      if(real_robot.hasJoint(ref_joint))
+      {
+        const auto joint_index = real_robot.mb().jointIndexByName(ref_joint);
+        if(!real_q.empty())
+        {
+          real_robot.mbc().q[joint_index][0] = real_q[i];
+        }
+        if(!real_alpha.empty())
+        {
+          real_robot.mbc().alpha[joint_index][0] = real_alpha[i];
+        }
+      }
+      i++;
+    }
+    rbd::forwardKinematics(real_robot.mb(), real_robot.mbc());
+    rbd::forwardVelocity(real_robot.mb(), real_robot.mbc());
 
+    // Update free flyer from control robot
     if(!config.update_real_from_sensors)
     {
       real_robot.mbc().q[0] = robot().mbc().q[0];
     }
     else
-    {
-      const auto & qt = robot().bodySensor().orientation().inverse();
-      const auto & t = robot().bodySensor().position();
-      real_robot.mbc().q[0] = {
-        qt.w(), qt.x(), qt.y(), qt.z(),
-        t.x(), t.y(), t.z()
-      };
-    }
-    // Set all joints to encoder values
-    int i = 0;
-    for(const auto& ref_joint : config.main_robot_module->ref_joint_order())
-    {
-      if(real_robot.hasJoint(ref_joint))
-      {
-        const auto joint_index = real_robot.mb().jointIndexByName(ref_joint);
-        real_robot.mbc().q[joint_index][0] = real_q[i];
-      }
-      i++;
+    { // Update free flyer from body sensor
+      // Note that if the body to which the sensor is attached is not the
+      // floating base, the kinematic transformation between that body and the
+      // floating base is used to obtain the floating base pose.
+      // It is assumed here that the floating base sensor and encoders are
+      // synchronized.
+      const auto & sensor = robot().bodySensor(config.update_real_sensor_name);
+      const auto & fb = robot().mb().body(0).name();
+      sva::PTransformd X_0_s(sensor.orientation(), sensor.position());
+      const auto & X_s_b = sensor.X_b_s().inv();
+      sva::PTransformd X_b_fb = real_robots->robot().X_b1_b2(sensor.parentBody(), fb);
+      sva::PTransformd X_s_fb = X_b_fb * X_s_b;
+      sva::PTransformd X_0_fb = X_s_fb * X_0_s;
+
+      Eigen::Matrix3d R_0_fb = X_0_fb.rotation().inverse();
+      Eigen::Quaterniond qt(R_0_fb);
+      qt.normalize();
+      Eigen::Vector3d t(X_0_fb.translation());
+      real_robot.mbc().q[0] = {qt.w(), qt.x(), qt.y(), qt.z(), t.x(), t.y(), t.z()};
+
+      sva::MotionVecd sensorVel(sensor.angularVelocity(), sensor.linearVelocity());
+      sva::MotionVecd fbVel = X_s_fb * sensorVel;
+      real_robot.mbc().alpha[0] = {fbVel.angular().x(), fbVel.angular().y(), fbVel.angular().z(),
+                                   fbVel.linear().x(),  fbVel.linear().y(),  fbVel.linear().z()};
     }
     rbd::forwardKinematics(real_robot.mb(), real_robot.mbc());
     rbd::forwardVelocity(real_robot.mb(), real_robot.mbc());
   }
   if(running)
   {
+    auto start_controller_run_t = clock::now();
     bool r = controller_->run();
+    auto end_controller_run_t = clock::now();
     if(config.enable_log)
     {
+      auto start_log_t = clock::now();
       controller_->logger().log();
+      log_dt = clock::now() - start_log_t;
     }
-    if(!r) { running = false; }
+    controller_run_dt = end_controller_run_t - start_controller_run_t;
+    solver_build_and_solve_t = boost_ms(boost_ns(controller_->solver().solveAndBuildTime().wall)).count();
+    solver_solve_t = boost_ms(boost_ns(controller_->solver().solveTime().wall)).count();
+    if(!r)
+    {
+      running = false;
+    }
   }
+  else
+  {
+    controller_run_dt.zero();
+    solver_build_and_solve_t = 0;
+    solver_solve_t = 0;
+  }
+  auto start_publish_t = clock::now();
   publish_robots();
+  publish_dt = clock::now() - start_publish_t;
+  if(server_)
+  {
+    auto start_gui_t = clock::now();
+    server_->handle_requests(*controller_->gui_);
+    server_->publish(*controller_->gui_);
+    gui_dt = clock::now() - start_gui_t;
+  }
+  global_run_dt = clock::now() - start_run_t;
+  // Percentage of time spent not updating/solving the QP
+  framework_cost = 100 * (1 - solver_build_and_solve_t / global_run_dt.count());
   return running;
 }
 
@@ -466,30 +560,25 @@ bool MCGlobalController::AddController(const std::string & name)
   if(sep_pos != std::string::npos)
   {
     controller_name = name.substr(0, sep_pos);
-    controller_subname = name.substr(sep_pos+1);
+    controller_subname = name.substr(sep_pos + 1);
   }
   if(controller_loader->has_object(controller_name))
   {
     LOG_INFO("Create controller " << controller_name)
-    try
+    if(controller_subname != "")
     {
-      if(controller_subname != "")
-      {
-        controllers[name] = controller_loader->create_object(controller_name, controller_subname, config.main_robot_module, config.timestep, config.config);
-      }
-      else
-      {
-        controllers[name] = controller_loader->create_object(name, config.main_robot_module, config.timestep, config.config);
-      }
-      controllers[name]->real_robots = real_robots;
-      if(config.enable_log)
-      {
-        controllers[name]->logger().setup(config.log_policy, config.log_directory, config.log_template);
-      }
+      controllers[name] = controller_loader->create_object(controller_name, controller_subname,
+                                                           config.main_robot_module, config.timestep, config.config);
     }
-    catch(const mc_rtc::LoaderException & exc)
+    else
     {
-      throw std::runtime_error("Failed to create controller");
+      controllers[name] =
+          controller_loader->create_object(name, config.main_robot_module, config.timestep, config.config);
+    }
+    controllers[name]->real_robots = real_robots;
+    if(config.enable_log)
+    {
+      controllers[name]->logger().setup(config.log_policy, config.log_directory, config.log_template);
     }
     return true;
   }
@@ -510,8 +599,7 @@ void MCGlobalController::add_controller_module_paths(const std::vector<std::stri
   controller_loader->load_libraries(paths);
 }
 
-bool MCGlobalController::AddController(const std::string & name,
-                                       std::shared_ptr<mc_control::MCController> controller)
+bool MCGlobalController::AddController(const std::string & name, std::shared_ptr<mc_control::MCController> controller)
 {
   if(controllers.count(name) || !controller)
   {
@@ -549,12 +637,12 @@ bool MCGlobalController::EnableController(const std::string & name)
   }
 }
 
-void MCGlobalController::publish_robots()
+void MCGlobalController::init_publishers()
 {
   // Publish controlled robot
   if(config.publish_control_state)
   {
-    mc_rtc::ROSBridge::update_robot_publisher("control", timestep(), robot(), gripperJoints(), gripperQ());
+    mc_rtc::ROSBridge::init_robot_publisher("control", timestep(), robot());
   }
   // Publish environment state
   if(config.publish_env_state)
@@ -562,14 +650,38 @@ void MCGlobalController::publish_robots()
     const auto & robots = controller_->robots();
     for(size_t i = 1; i < robots.robots().size(); ++i)
     {
-      mc_rtc::ROSBridge::update_robot_publisher("control/env_" + std::to_string(i), timestep(), robots.robot(i), {}, {});
+      mc_rtc::ROSBridge::init_robot_publisher("control/env_" + std::to_string(i), timestep(), robots.robot(i));
     }
   }
   // Publish real robot
   if(config.publish_real_state)
   {
-    auto& real_robot = real_robots->robot();
-    mc_rtc::ROSBridge::update_robot_publisher("real", timestep(), real_robot, gripperJoints(), gripperQ());
+    auto & real_robot = real_robots->robot();
+    mc_rtc::ROSBridge::init_robot_publisher("real", timestep(), real_robot);
+  }
+}
+
+void MCGlobalController::publish_robots()
+{
+  // Publish controlled robot
+  if(config.publish_control_state)
+  {
+    mc_rtc::ROSBridge::update_robot_publisher("control", timestep(), robot(), controller_->grippers);
+  }
+  // Publish environment state
+  if(config.publish_env_state)
+  {
+    const auto & robots = controller_->robots();
+    for(size_t i = 1; i < robots.robots().size(); ++i)
+    {
+      mc_rtc::ROSBridge::update_robot_publisher("control/env_" + std::to_string(i), timestep(), robots.robot(i));
+    }
+  }
+  // Publish real robot
+  if(config.publish_real_state)
+  {
+    auto & real_robot = real_robots->robot();
+    mc_rtc::ROSBridge::update_robot_publisher("real", timestep(), real_robot, controller_->grippers);
   }
 }
 
@@ -590,85 +702,94 @@ void MCGlobalController::start_log()
 
 void MCGlobalController::setup_log()
 {
-  if(setup_logger_.count(current_ctrl)) { return; }
+  if(setup_logger_.count(current_ctrl))
+  {
+    return;
+  }
   // Copy controller pointer to avoid lambda issue
   MCController * controller = controller_;
-  controller->logger().addLogEntry("qIn",
-              [controller]() -> const std::vector<double>&
-              {
-                return controller->robot().encoderValues();
-              });
-  controller->logger().addLogEntry("ff",
-              [controller]() -> const sva::PTransformd&
-              {
-                return controller->robot().mbc().bodyPosW[0];
-              });
-  controller->logger().addLogEntry("qOut",
-              [controller]()
-              {
-                const auto & qOut = controller->send(0).robots_state[0].q;
-                const auto & rjo = controller->robot().refJointOrder();
-                std::vector<double> ret(rjo.size(), 0);
-                for(size_t i = 0; i < rjo.size(); ++i)
-                {
-                  const auto & jn = rjo[i];
-                  if(qOut.count(jn))
-                  {
-                    ret[i] = qOut.at(jn)[0];
-                  }
-                }
-                return ret;
-              });
-  controller->logger().addLogEntry("tauIn",
-              [controller]() -> const std::vector<double>&
-              {
-                return controller->robot().jointTorques();
-              });
+  controller->logger().addLogEntry(
+      "qIn", [controller]() -> const std::vector<double> & { return controller->robot().encoderValues(); });
+  controller->logger().addLogEntry(
+      "ff", [controller]() -> const sva::PTransformd & { return controller->robot().mbc().bodyPosW[0]; });
+  controller->logger().addLogEntry("qOut", [controller]() {
+    const auto & qOut = controller->send(0).robots_state[0].q;
+    const auto & rjo = controller->robot().refJointOrder();
+    std::vector<double> ret(rjo.size(), 0);
+    for(size_t i = 0; i < rjo.size(); ++i)
+    {
+      const auto & jn = rjo[i];
+      if(qOut.count(jn))
+      {
+        ret[i] = qOut.at(jn)[0];
+      }
+    }
+    return ret;
+  });
+  controller->logger().addLogEntry(
+      "tauIn", [controller]() -> const std::vector<double> & { return controller->robot().jointTorques(); });
   for(const auto & fs : controller->robot().forceSensors())
   {
     const auto & fs_name = fs.name();
-    controller->logger().addLogEntry(fs.name(),
-                [controller,fs_name]() -> const sva::ForceVecd&
-                {
-                  return controller->robot().forceSensor(fs_name).wrench();
-                });
+    controller->logger().addLogEntry(fs.name(), [controller, fs_name]() -> const sva::ForceVecd & {
+      return controller->robot().forceSensor(fs_name).wrench();
+    });
   }
-  controller->logger().addLogEntry("pIn",
-              [controller]() -> const Eigen::Vector3d&
-              {
-                return controller->robot().bodySensor().position();
-              });
-  controller->logger().addLogEntry("rpyIn",
-              [controller]() -> const Eigen::Quaterniond&
-              {
-                return controller->robot().bodySensor().orientation();
-              });
-  controller->logger().addLogEntry("velIn",
-              [controller]() -> const Eigen::Vector3d&
-              {
-                return controller->robot().bodySensor().linearVelocity();
-              });
-  controller->logger().addLogEntry("rateIn",
-              [controller]() -> const Eigen::Vector3d&
-              {
-                return controller->robot().bodySensor().angularVelocity();
-              });
-  controller->logger().addLogEntry("accIn",
-              [controller]() -> const Eigen::Vector3d&
-              {
-                return controller->robot().bodySensor().acceleration();
-              });
+  controller->logger().addLogEntry(
+      "pIn", [controller]() -> const Eigen::Vector3d & { return controller->robot().bodySensor().position(); });
+  controller->logger().addLogEntry(
+      "rpyIn", [controller]() -> const Eigen::Quaterniond & { return controller->robot().bodySensor().orientation(); });
+  controller->logger().addLogEntry(
+      "velIn", [controller]() -> const Eigen::Vector3d & { return controller->robot().bodySensor().linearVelocity(); });
+  controller->logger().addLogEntry("rateIn", [controller]() -> const Eigen::Vector3d & {
+    return controller->robot().bodySensor().angularVelocity();
+  });
+  controller->logger().addLogEntry(
+      "accIn", [controller]() -> const Eigen::Vector3d & { return controller->robot().bodySensor().acceleration(); });
+
+  // Log all other body sensors
+  const auto & bodySensors = controller->robot().bodySensors();
+  for(int i = 1; i < bodySensors.size(); ++i)
+  {
+    const auto & name = bodySensors[i].name();
+    controller->logger().addLogEntry(name + "_pIn", [controller, name]() -> const Eigen::Vector3d & {
+      return controller->robot().bodySensor(name).position();
+    });
+    controller->logger().addLogEntry(name + "_rpyIn", [controller, name]() -> const Eigen::Quaterniond & {
+      return controller->robot().bodySensor(name).orientation();
+    });
+    controller->logger().addLogEntry(name + "_velIn", [controller, name]() -> const Eigen::Vector3d & {
+      return controller->robot().bodySensor(name).linearVelocity();
+    });
+    controller->logger().addLogEntry(name + "_rateIn", [controller, name]() -> const Eigen::Vector3d & {
+      return controller->robot().bodySensor(name).angularVelocity();
+    });
+    controller->logger().addLogEntry(name + "_accIn", [controller, name]() -> const Eigen::Vector3d & {
+      return controller->robot().bodySensor(name).acceleration();
+    });
+  }
+
+  // Performance measures
+  controller->logger().addLogEntry("perf_GlobalRun", [this]() { return global_run_dt.count(); });
+  controller->logger().addLogEntry("perf_ControllerRun", [this]() { return controller_run_dt.count(); });
+  controller->logger().addLogEntry("perf_SolverBuildAndSolve", [this]() { return solver_build_and_solve_t; });
+  controller->logger().addLogEntry("perf_SolverSolve", [this]() { return solver_solve_t; });
+  controller->logger().addLogEntry("perf_Log", [this]() { return log_dt.count(); });
+  controller->logger().addLogEntry("perf_Publish", [this]() { return publish_dt.count(); });
+  controller->logger().addLogEntry("perf_Gui", [this]() { return gui_dt.count(); });
+  controller->logger().addLogEntry("perf_FrameworkCost", [this]() { return framework_cost; });
   // Log system wall time as nanoseconds since epoch (can be used to manage synchronization with ros)
-  controller->logger().addLogEntry("timeWall",
-              []() -> uint64_t
-              {
-                uint64_t nanoseconds_since_epoch =
-                std::chrono::system_clock::now().time_since_epoch() /
-                std::chrono::nanoseconds(1);
-                return nanoseconds_since_epoch;
-              });
+  controller->logger().addLogEntry("timeWall", []() -> uint64_t {
+    uint64_t nanoseconds_since_epoch =
+        std::chrono::system_clock::now().time_since_epoch() / std::chrono::nanoseconds(1);
+    return nanoseconds_since_epoch;
+  });
   setup_logger_[current_ctrl] = true;
 }
 
-
+mc_rbdyn::Robots & MCGlobalController::realRobots()
+{
+  return *real_robots;
 }
+
+} // namespace mc_control

@@ -2,9 +2,9 @@
 
 #include <mc_rtc/logging.h>
 
-#include <fstream>
-
 #include <boost/filesystem.hpp>
+
+#include <fstream>
 namespace bfs = boost::filesystem;
 
 namespace mc_robots
@@ -46,8 +46,8 @@ EnvRobotModule::EnvRobotModule(const std::string & env_path, const std::string &
   else
   {
     LOG_ERROR("Could not load env model at " << urdf_path)
-    throw("Could not open env model");
+    LOG_ERROR_AND_THROW(std::runtime_error, "Could not open env model")
   }
 }
 
-}
+} // namespace mc_robots

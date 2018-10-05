@@ -6,15 +6,15 @@ cimport eigen.eigen as eigen
 
 cimport sva.sva as sva
 
-cimport tasks.qp.c_qp as c_qp
-cimport tasks.qp.qp as qp
-
 cimport mc_rbdyn.c_mc_rbdyn as c_mc_rbdyn
 cimport mc_rbdyn.mc_rbdyn as mc_rbdyn
 
 cimport mc_solver.mc_solver as mc_solver
 
+cimport mc_tasks.mc_tasks as mc_tasks
+
 cimport mc_rtc.mc_rtc as mc_rtc
+cimport mc_rtc.gui.gui as mc_rtc_gui
 
 from cython.operator cimport preincrement as preinc
 from cython.operator cimport dereference as deref
@@ -22,6 +22,24 @@ from libcpp.map cimport map as cppmap
 from libcpp.string cimport string
 from libcpp.vector cimport vector
 from libcpp cimport bool as cppbool
+
+cdef class Gripper(object):
+  def __cinit__(self):
+    self.impl = c_mc_control.GripperPtr(NULL)
+  cdef c_mc_control.Gripper * _impl(self):
+    assert(self.impl.get() != NULL)
+    return self.impl.get()
+  property names:
+    def __get__(self):
+      return self._impl().names
+  property q:
+    def __get__(self):
+      return self._impl()._q
+
+cdef Gripper GripperFromShPtr(c_mc_control.shared_ptr[c_mc_control.Gripper] p):
+  cdef Gripper ret = Gripper()
+  ret.impl = p
+  return ret
 
 cdef class ControllerResetData(object):
   def __cinit__(self):
@@ -60,6 +78,8 @@ cdef class MCController(object):
     return self.base.supported_robots()
   def logger(self):
     return mc_rtc.LoggerFromRef(self.base.logger())
+  def gui(self):
+    return mc_rtc_gui.StateBuilderFromShPtr(self.base.gui())
   property timeStep:
     def __get__(self):
       return self.base.timeStep
@@ -77,10 +97,13 @@ cdef class MCController(object):
       return mc_solver.CollisionsConstraintFromPtr(&self.base.selfCollisionConstraint)
   property postureTask:
     def __get__(self):
-      return qp.PostureTaskFromPtr(self.base.postureTask.get())
+      return mc_tasks.PostureTaskFromPtr(self.base.postureTask.get())
   property qpsolver:
     def __get__(self):
       return mc_solver.QPSolverFromRef(self.base.solver())
+  property grippers:
+    def __get__(self):
+      return {g.first: GripperFromShPtr(g.second) for g in self.base.grippers}
 
 cdef MCController MCControllerFromPtr(c_mc_control.MCController * p):
     cdef MCController ret = MCController()
@@ -118,7 +141,7 @@ cdef c_mc_control.PythonRWCallback python_to_read_write_msg_callback(string & ms
 cdef class MCPythonController(MCController):
   def __dealloc__(self):
     del self.impl
-    self.impl = NULL
+    self.impl = self.base = NULL
   def __cinit__(self, robot_modules, double dt):
     cdef mc_rbdyn.RobotModuleVector rmv = mc_rbdyn.RobotModuleVector(robot_modules)
     self.impl = self.base = new c_mc_control.MCPythonController(rmv.v, dt)

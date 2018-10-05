@@ -1,10 +1,19 @@
 #pragma once
 
+#include <mc_rbdyn/api.h>
+
 #include <array>
 #include <memory>
-#include <geos/geom/GeometryFactory.h>
+#include <vector>
 
-#include <mc_rbdyn/api.h>
+namespace geos
+{
+namespace geom
+{
+class Geometry;
+class GeometryFactory;
+} // namespace geom
+} // namespace geos
 
 namespace mc_rbdyn
 {
@@ -14,6 +23,7 @@ struct MC_RBDYN_DLLAPI PolygonInterpolator
 public:
   typedef std::array<double, 2> tuple_t;
   typedef std::pair<tuple_t, tuple_t> tuple_pair_t;
+
 private:
   struct GeometryDeleter
   {
@@ -21,9 +31,11 @@ private:
     GeometryDeleter(const geos::geom::GeometryFactory & factory);
 
     void operator()(geos::geom::Geometry * ptr);
+
   private:
-      const geos::geom::GeometryFactory & factory;
+    const geos::geom::GeometryFactory & factory;
   };
+
 public:
   PolygonInterpolator(const std::vector<tuple_pair_t> & tpv);
 
@@ -34,6 +46,7 @@ public:
   std::vector<tuple_t> normal_derivative(double epsilon_derivative);
 
   const std::vector<tuple_pair_t> & tuple_pairs() const;
+
 private:
   const geos::geom::GeometryFactory & geom_factory;
   GeometryDeleter geom_deleter;
@@ -41,4 +54,4 @@ private:
   std::vector<tuple_pair_t> midpoints;
 };
 
-}
+} // namespace mc_rbdyn

@@ -1,6 +1,6 @@
 macro(robot_test_common NAME)
   add_library(${NAME} SHARED ${NAME}.cpp)
-  target_link_libraries(${NAME} ${Boost_LIBRARIES} mc_rbdyn)
+  target_link_libraries(${NAME} PUBLIC ${Boost_LIBRARIES} mc_rbdyn)
   set_target_properties(${NAME} PROPERTIES
     COMPILE_FLAGS "-DMC_ROBOTS_EXPORTS"
     PREFIX ""
@@ -25,6 +25,8 @@ robot_test_construction_failure(NoCreateRobot)
 if(UNIX AND NOT APPLE)
   robot_test_construction_failure(UnresolvedSymbolRobot)
   robot_test_construction_failure(SegfaultRobot)
-  robot_test_construction_failure(FPERobot)
+  if(NOT "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    robot_test_construction_failure(FPERobot)
+  endif()
 endif()
 robot_test_construction_failure(ThrowingRobot)

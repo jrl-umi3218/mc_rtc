@@ -1,19 +1,23 @@
-#FIXME very crude initial cmake
-
 cmake_minimum_required(VERSION 2.8)
+if(POLICY CMP0063)
+  cmake_policy(SET CMP0063 NEW)
+endif()
 
 include(cmake/base.cmake)
 include(cmake/eigen.cmake)
 include(cmake/pkg-config.cmake)
 include(cmake/msvc-specific.cmake)
+include(cmake/version-script.cmake)
 
 set(PROJECT_NAME mc_rtc)
 set(PROJECT_DESCRIPTION mc_rtc)
 set(PROJECT_URL https://rob-dev.lirmm.fr/multi-contact/mc_rtc)
 set(PROJECT_DEBUG_POSTFIX "_d")
+set(PROJECT_USE_KEYWORD_LINK_LIBRARIES TRUE)
 
 set(CXX_DISABLE_WERROR 1)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_CXX_STANDARD 11)
 
 set(DOXYGEN_USE_MATHJAX "YES")
 setup_project()
@@ -26,14 +30,21 @@ if("${CMAKE_CXX_FLAGS}" MATCHES "--coverage")
   string(REPLACE "--coverage" "" CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS}")
 endif()
 
-add_definitions(-std=c++0x)
-add_definitions(-mfpmath=sse -msse2)
 if(WIN32)
-add_definitions("-DNOMINMAX")
+  add_definitions("-DNOMINMAX" "-D_ENABLE_EXTENDED_ALIGNED_STORAGE")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4068")
+else()
+  add_definitions(-std=c++0x)
+  add_definitions(-mfpmath=sse -msse2)
 endif()
 
 option(PYTHON_BINDING "Generate python binding." ON)
-option(PYTHON_BINDING_USER_INSTALL "Install the Python bindings in user space" OFF)
+if(WIN32)
+  set(PYTHON_BINDING_USER_INSTALL_DEFAULT ON)
+else()
+  set(PYTHON_BINDING_USER_INSTALL_DEFAULT OFF)
+endif()
+option(PYTHON_BINDING_USER_INSTALL "Install the Python bindings in user space" ${PYTHON_BINDING_USER_INSTALL_DEFAULT})
 
 option(BUILD_CONTROLLER_SAMPLES "Build sample controllers in the project" ON)
 option(DISABLE_TESTS "Disable unit tests" OFF)
@@ -42,7 +53,7 @@ option(DISABLE_ROBOT_TESTS "Disable RobotModule unit tests" OFF)
 
 option(BUILD_BENCHMARKS "Build benchmarks" OFF)
 
-option(DISABLE_ROS "Do not build with ros support (even if ros was found)" OFF)
+option(DISABLE_ROS "Do not build with ROS support (even if ROS was found)" OFF)
 
 SEARCH_FOR_EIGEN()
 
@@ -59,8 +70,6 @@ add_required_dependency("mc_rbdyn_urdf" "mc_rbdyn_urdf_d")
 # At this point, this dependency is used to get access to PD gains setting on HRP robots
 add_optional_dependency(hrpsys-base)
 if(${HRPSYS_BASE_FOUND})
-  include_directories(${HRPSYS_BASE_INCLUDE_DIRS})
-  link_directories(${HRPSYS_BASE_LIBRARY_DIRS})
   set(DEFINE_HAS_HRPSYS_BASE_MACRO "#define MC_RTC_HAS_HRPSYS_BASE 1")
 else()
   set(DEFINE_HAS_HRPSYS_BASE_MACRO "")
@@ -95,6 +104,14 @@ else()
   else()
     message(SEND_ERROR "Could not find geos-config, missing dependency")
   endif()
+endif()
+
+set(NANOMSG_NAME nanomsg)
+add_optional_dependency(${NANOMSG_NAME})
+if(NOT NANOMSG_FOUND)
+  MESSAGE("Failed to find ${NANOMSG_NAME}, trying to find libnanomsg")
+  set(NANOMSG_NAME libnanomsg)
+  add_required_dependency(${NANOMSG_NAME})
 endif()
 
 macro(find_description_package desc_pkg)
@@ -199,3 +216,10 @@ install(
   DESTINATION ${MC_CONTROLLER_INSTALL_PREFIX}/etc/)
 
 setup_project_finalize()
+setup_project_package_finalize()
+
+# Extra macros for mc_rtc
+configure_file(src/mc_rtcMacros.in.cmake "${CMAKE_CURRENT_BINARY_DIR}/generated/mc_rtcMacros.cmake" @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/generated/mc_rtcMacros.cmake"
+        DESTINATION "${CONFIG_INSTALL_DIR}")
+file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/generated/mc_rtcConfig.cmake" "include(\"\${CMAKE_CURRENT_LIST_DIR}/mc_rtcMacros.cmake\")\n")

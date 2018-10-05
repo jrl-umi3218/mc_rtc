@@ -10,13 +10,14 @@ namespace mc_rbdyn
 struct MC_RBDYN_DLLAPI Robots
 {
   friend struct Robot;
+
 public:
   /** @name Iterators
-  *
-  * These functions provide an iterator interface to Robots
-  *
-  * @{
-  */
+   *
+   * These functions provide an iterator interface to Robots
+   *
+   * @{
+   */
   typedef typename std::vector<mc_rbdyn::Robot>::iterator iterator;
   typedef typename std::vector<mc_rbdyn::Robot>::const_iterator const_iterator;
   typedef typename std::vector<mc_rbdyn::Robot>::reverse_iterator reverse_iterator;
@@ -68,8 +69,7 @@ public:
    *
    * \returns a reference to the robot that was just loaded
    */
-  Robot & load(const RobotModule & module, sva::PTransformd * base = nullptr,
-               const std::string& bName = "");
+  Robot & load(const RobotModule & module, sva::PTransformd * base = nullptr, const std::string & bName = "");
 
   /** Load a robot and an environment from RobotModule instances with an optional base
    *
@@ -82,8 +82,10 @@ public:
    * \param bName If empty, use the "normal" base, otherwise use body bName as base
    *
    */
-  void load(const RobotModule & module, const RobotModule & envModule,
-            sva::PTransformd * base = nullptr, const std::string & bName = "");
+  void load(const RobotModule & module,
+            const RobotModule & envModule,
+            sva::PTransformd * base = nullptr,
+            const std::string & bName = "");
 
   /** Load multiple robots from as many RobotModule instances
    *
@@ -92,13 +94,24 @@ public:
    */
   void load(const std::vector<std::shared_ptr<RobotModule>> & modules);
 
-  Robot & loadFromUrdf(const std::string & name, const std::string & urdf, bool withVirtualLinks = true, const std::vector<std::string> & filteredLinks = {}, bool fixed = false, sva::PTransformd * base = nullptr, const std::string& baseName = "");
+  Robot & loadFromUrdf(const std::string & name,
+                       const std::string & urdf,
+                       bool withVirtualLinks = true,
+                       const std::vector<std::string> & filteredLinks = {},
+                       bool fixed = false,
+                       sva::PTransformd * base = nullptr,
+                       const std::string & baseName = "");
 
   void robotCopy(const Robot & robot);
 
-  void createRobotWithBase(Robots & robots, unsigned int robots_idx, const Base & base, const Eigen::Vector3d & baseAxis = Eigen::Vector3d::UnitZ());
+  void createRobotWithBase(Robots & robots,
+                           unsigned int robots_idx,
+                           const Base & base,
+                           const Eigen::Vector3d & baseAxis = Eigen::Vector3d::UnitZ());
 
-  void createRobotWithBase(Robot & robot, const Base & base, const Eigen::Vector3d & baseAxis = Eigen::Vector3d::UnitZ());
+  void createRobotWithBase(Robot & robot,
+                           const Base & base,
+                           const Eigen::Vector3d & baseAxis = Eigen::Vector3d::UnitZ());
 
   void removeRobot(const std::string & name);
 
@@ -110,11 +123,20 @@ public:
    *
    * @{
    */
-  Robot & load(const RobotModule & module, const std::string & surfaceDir, sva::PTransformd * base = nullptr, const std::string& bName = "") MC_RTC_DEPRECATED;
+  MC_RTC_DEPRECATED Robot & load(const RobotModule & module,
+                                 const std::string & surfaceDir,
+                                 sva::PTransformd * base = nullptr,
+                                 const std::string & bName = "");
 
-  void load(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir, sva::PTransformd * base = nullptr, const std::string& baseName = "") MC_RTC_DEPRECATED;
+  MC_RTC_DEPRECATED void load(const RobotModule & module,
+                              const std::string & surfaceDir,
+                              const RobotModule & envModule,
+                              const std::string & envSurfaceDir,
+                              sva::PTransformd * base = nullptr,
+                              const std::string & baseName = "");
 
-  void load(const std::vector<std::shared_ptr<RobotModule>> & modules, const std::vector<std::string> & surfaceDirs) MC_RTC_DEPRECATED;
+  MC_RTC_DEPRECATED void load(const std::vector<std::shared_ptr<RobotModule>> & modules,
+                              const std::vector<std::string> & surfaceDirs);
   /** @} */
   /* End of deprecated loading functions */
 
@@ -131,6 +153,9 @@ public:
 
   Robot & robot(size_t idx);
   const Robot & robot(size_t idx) const;
+
+  Robot & robot(const std::string & name);
+  const Robot & robot(const std::string & name) const;
 
   /** @name Iterators
    *
@@ -182,18 +207,39 @@ protected:
 };
 
 /* Static pendant of the loader functions to create Robots directly */
-MC_RBDYN_DLLAPI std::shared_ptr<Robots> loadRobot(const RobotModule & module, sva::PTransformd * base = nullptr, const std::string& baseName = "");
+MC_RBDYN_DLLAPI std::shared_ptr<Robots> loadRobot(const RobotModule & module,
+                                                  sva::PTransformd * base = nullptr,
+                                                  const std::string & baseName = "");
 
-MC_RBDYN_DLLAPI std::shared_ptr<Robots> loadRobot(const RobotModule & module, const std::string & surfaceDir, sva::PTransformd * base = nullptr, const std::string& baseName = "") MC_RTC_DEPRECATED;
+MC_RBDYN_DLLAPI MC_RTC_DEPRECATED std::shared_ptr<Robots> loadRobot(const RobotModule & module,
+                                                                    const std::string & surfaceDir,
+                                                                    sva::PTransformd * base = nullptr,
+                                                                    const std::string & baseName = "");
 
 MC_RBDYN_DLLAPI std::shared_ptr<Robots> loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules);
 
-MC_RBDYN_DLLAPI std::shared_ptr<Robots> loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules, const std::vector<std::string> & surfaceDirs) MC_RTC_DEPRECATED;
+MC_RBDYN_DLLAPI MC_RTC_DEPRECATED std::shared_ptr<Robots> loadRobots(
+    const std::vector<std::shared_ptr<RobotModule>> & modules,
+    const std::vector<std::string> & surfaceDirs);
 
-MC_RBDYN_DLLAPI std::shared_ptr<Robots> loadRobotAndEnv(const RobotModule & module, const RobotModule & envModule, sva::PTransformd * base = nullptr, const std::string& baseName = "");
+MC_RBDYN_DLLAPI std::shared_ptr<Robots> loadRobotAndEnv(const RobotModule & module,
+                                                        const RobotModule & envModule,
+                                                        sva::PTransformd * base = nullptr,
+                                                        const std::string & baseName = "");
 
-MC_RBDYN_DLLAPI std::shared_ptr<Robots> loadRobotAndEnv(const RobotModule & module, const std::string & surfaceDir, const RobotModule & envModule, const std::string & envSurfaceDir, sva::PTransformd * base = nullptr, const std::string& baseName = "") MC_RTC_DEPRECATED;
+MC_RBDYN_DLLAPI MC_RTC_DEPRECATED std::shared_ptr<Robots> loadRobotAndEnv(const RobotModule & module,
+                                                                          const std::string & surfaceDir,
+                                                                          const RobotModule & envModule,
+                                                                          const std::string & envSurfaceDir,
+                                                                          sva::PTransformd * base = nullptr,
+                                                                          const std::string & baseName = "");
 
-MC_RBDYN_DLLAPI std::shared_ptr<Robots> loadRobotFromUrdf(const std::string & name, const std::string & urdf, bool withVirtualLinks = true, const std::vector<std::string> & filteredLinks = {}, bool fixed = false, sva::PTransformd * base = nullptr, const std::string& baseName = "");
+MC_RBDYN_DLLAPI std::shared_ptr<Robots> loadRobotFromUrdf(const std::string & name,
+                                                          const std::string & urdf,
+                                                          bool withVirtualLinks = true,
+                                                          const std::vector<std::string> & filteredLinks = {},
+                                                          bool fixed = false,
+                                                          sva::PTransformd * base = nullptr,
+                                                          const std::string & baseName = "");
 
-}
+} // namespace mc_rbdyn

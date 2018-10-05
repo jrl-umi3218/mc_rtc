@@ -1,4 +1,4 @@
-#include <mc_rtc/log/serialization/fb_utils.h>
+#include <mc_rtc/log/serialization/fb_csv_utils.h>
 
 #include <mc_rtc/logging.h>
 
@@ -19,7 +19,7 @@ struct LogEntry
       const auto & keys = *entry->keys();
       const auto & values_type = *entry->values_type();
       const auto & values = *entry->values();
-      for(size_t i = 0; i < keys.size(); ++i)
+      for(flatbuffers::uoffset_t i = 0; i < static_cast<flatbuffers::uoffset_t>(keys.size()); ++i)
       {
         auto k = keys[i];
         auto vt = mc_rtc::log::LogData(values_type[i]);
@@ -58,6 +58,11 @@ struct Log
   Log(const std::string & name)
   {
     std::ifstream ifs(name, std::ifstream::binary);
+    if(!ifs.is_open())
+    {
+      LOG_ERROR(name << " could not be opened")
+      std::exit(1);
+    }
     while(ifs)
     {
       int size = 0;
@@ -103,6 +108,7 @@ struct Log
 
   void write_header(std::ostream & os)
   {
+    std::string buffer;
     bool start = true;
     for(const auto & k : keys)
     {
@@ -114,10 +120,10 @@ struct Log
         continue;
       }
       if(start) { start = false; }
-      else { os << ";"; }
+      else { buffer += ";"; }
 #define CASE_ENUM(VALUE)\
   case VALUE:\
-    mc_rtc::log::CSVWriterHelper<VALUE>::write_header(key, size, os);\
+    mc_rtc::log::CSVWriterHelper<VALUE>::write_header(key, size, buffer);\
     break;
         switch(vt)
         {
@@ -138,11 +144,13 @@ struct Log
         };
 #undef CASE_ENUM
     }
-    os << std::endl;
+    buffer += '\n';
+    os << buffer;
   }
 
   void write_entry(LogEntry & entry, std::ostream & os, std::vector<typed_key> & current_keys)
   {
+    std::string buffer;
     auto entry_keys = entry.keys();
     if(entry_keys.size())
     {
@@ -169,14 +177,14 @@ struct Log
         continue;
       }
       if(start) { start = false; }
-      else { os << ";"; }
+      else { buffer += ";"; }
       size_t idx = get_key_index(key);
       if(idx != current_keys.size())
       {
-        const void * value = values[idx];
+        const void * value = values[static_cast<flatbuffers::uoffset_t>(idx)];
 #define CASE_ENUM(VALUE)\
   case VALUE:\
-    mc_rtc::log::CSVWriterHelper<VALUE>::write_data(value, os);\
+    mc_rtc::log::CSVWriterHelper<VALUE>::write_data(value, buffer);\
     break;
         switch(vt)
         {
@@ -201,11 +209,12 @@ struct Log
       {
         for(size_t i = 1; i < size; ++i)
         {
-          os << ";";
+          buffer += ";";
         }
       }
     }
-    os << std::endl;
+    buffer += '\n';
+    os << buffer;
   }
 
   void convert(const std::string & out)

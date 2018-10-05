@@ -1,5 +1,4 @@
 #include <mc_control/mc_global_controller.h>
-
 #include <mc_rtc/ros.h>
 
 #include <RBDyn/FK.h>
@@ -59,7 +58,7 @@ bool MCGlobalController::rotate_ef(const Eigen::Matrix3d & m)
 {
   if(controller_)
   {
-    return controller_->move_ef(Eigen::Vector3d(0,0,0), m);
+    return controller_->move_ef(Eigen::Vector3d(0, 0, 0), m);
   }
   else
   {
@@ -119,7 +118,7 @@ bool MCGlobalController::send_msg(const std::string & msg)
 {
   if(controller_)
   {
-    return controller_->read_msg(const_cast<std::string&>(msg));
+    return controller_->read_msg(const_cast<std::string &>(msg));
   }
   return false;
 }
@@ -128,9 +127,9 @@ bool MCGlobalController::send_recv_msg(const std::string & msg, std::string & ou
 {
   if(controller_)
   {
-    return controller_->read_write_msg(const_cast<std::string&>(msg), out);
+    return controller_->read_write_msg(const_cast<std::string &>(msg), out);
   }
   return false;
 }
 
-}
+} // namespace mc_control

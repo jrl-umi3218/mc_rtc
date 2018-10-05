@@ -31,6 +31,20 @@ cdef extern from "<mc_tasks/MetaTask.h>" namespace "mc_tasks":
     c_eigen.VectorXd eval()
     c_eigen.VectorXd speed()
 
+cdef extern from "<mc_tasks/PostureTask.h>" namespace "mc_tasks":
+  cdef cppclass PostureTask(MetaTask):
+    PostureTask(const c_mc_solver.QPSolver&,
+                unsigned int, double, double)
+    void posture(const vector[vector[double]] &)
+    vector[vector[double]] posture()
+    void jointGains(const c_mc_solver.QPSolver &, const vector[c_qp.JointGains])
+    void jointStiffness(const c_mc_solver.QPSolver &, const vector[c_qp.JointStiffness])
+    void target(const cppmap[string, vector[double]] &)
+    void stiffness(double)
+    double stiffness()
+    void weight(double)
+    double weight()
+
 cdef extern from "<mc_tasks/TrajectoryTaskGeneric.h>" namespace "mc_tasks":
   cdef cppclass TrajectoryTaskGeneric[T](MetaTask):
     void refVel(const c_eigen.VectorXd &)

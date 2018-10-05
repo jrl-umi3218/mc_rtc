@@ -9,7 +9,9 @@ namespace mc_robots
 {
 
 PolarisRangerEgressRobotModule::PolarisRangerEgressRobotModule()
-: RobotModule(mc_rtc::HRP2_DRC_DESCRIPTION_PATH, "polaris_ranger", std::string(mc_rtc::HRP2_DRC_DESCRIPTION_PATH) + "/urdf/polaris_ranger_egress.urdf")
+: RobotModule(mc_rtc::HRP2_DRC_DESCRIPTION_PATH,
+              "polaris_ranger",
+              std::string(mc_rtc::HRP2_DRC_DESCRIPTION_PATH) + "/urdf/polaris_ranger_egress.urdf")
 {
   halfSitting["POLARIS"] = {};
   halfSitting["front_left_steering_joint"] = {};
@@ -29,10 +31,11 @@ PolarisRangerEgressRobotModule::PolarisRangerEgressRobotModule()
   readUrdf(virtualLinks);
 }
 
-std::map<std::string, std::pair<std::string, std::string> > PolarisRangerEgressRobotModule::getConvexHull(const std::map<std::string, std::pair<std::string, std::string>> & files) const
+std::map<std::string, std::pair<std::string, std::string>> PolarisRangerEgressRobotModule::getConvexHull(
+    const std::map<std::string, std::pair<std::string, std::string>> & files) const
 {
   std::string convexPath = path + "/convex/polaris_ranger/";
-  std::map<std::string, std::pair<std::string, std::string> > res;
+  std::map<std::string, std::pair<std::string, std::string>> res;
   for(const auto & f : files)
   {
     res[f.first] = std::pair<std::string, std::string>(f.second.first, convexPath + f.second.second + "-ch.txt");
@@ -69,11 +72,12 @@ void PolarisRangerEgressRobotModule::readUrdf(const std::vector<std::string> & f
   else
   {
     LOG_ERROR("Could not open PolarisRanger model at " << urdf_path)
-    throw("Failed to open PolarisRanger model");
+    LOG_ERROR_AND_THROW(std::runtime_error, "Failed to open PolarisRanger model")
   }
 }
 
-std::map<std::string, std::vector<double>> PolarisRangerEgressRobotModule::halfSittingPose(const rbd::MultiBody & mb) const
+std::map<std::string, std::vector<double>> PolarisRangerEgressRobotModule::halfSittingPose(
+    const rbd::MultiBody & mb) const
 {
   std::map<std::string, std::vector<double>> res;
   for(const auto & j : mb.joints())
@@ -83,16 +87,17 @@ std::map<std::string, std::vector<double>> PolarisRangerEgressRobotModule::halfS
       res[j.name()] = halfSitting.at(j.name());
       for(auto & ji : res[j.name()])
       {
-        ji = M_PI*ji/180;
+        ji = M_PI * ji / 180;
       }
     }
   }
   return res;
 }
 
-std::vector< std::map<std::string, std::vector<double> > > PolarisRangerEgressRobotModule::nominalBounds(const mc_rbdyn_urdf::Limits & limits) const
+std::vector<std::map<std::string, std::vector<double>>> PolarisRangerEgressRobotModule::nominalBounds(
+    const mc_rbdyn_urdf::Limits & limits) const
 {
-  std::vector< std::map<std::string, std::vector<double> > > res(0);
+  std::vector<std::map<std::string, std::vector<double>>> res(0);
   res.push_back(limits.lower);
   res.push_back(limits.upper);
   {
@@ -122,7 +127,8 @@ std::vector< std::map<std::string, std::vector<double> > > PolarisRangerEgressRo
   return res;
 }
 
-std::map<std::string, std::pair<std::string, std::string>> PolarisRangerEgressRobotModule::stdCollisionsFiles(const rbd::MultiBody &/*mb*/) const
+std::map<std::string, std::pair<std::string, std::string>> PolarisRangerEgressRobotModule::stdCollisionsFiles(
+    const rbd::MultiBody & /*mb*/) const
 {
   std::map<std::string, std::pair<std::string, std::string>> res;
 
@@ -148,23 +154,23 @@ std::map<std::string, std::pair<std::string, std::string>> PolarisRangerEgressRo
   return res;
 }
 
-const std::map<std::string, std::pair<std::string, std::string> > & PolarisRangerEgressRobotModule::convexHull() const
+const std::map<std::string, std::pair<std::string, std::string>> & PolarisRangerEgressRobotModule::convexHull() const
 {
   auto fileByBodyName = stdCollisionsFiles(mb);
-  const_cast<PolarisRangerEgressRobotModule*>(this)->_convexHull = getConvexHull(fileByBodyName);
+  const_cast<PolarisRangerEgressRobotModule *>(this)->_convexHull = getConvexHull(fileByBodyName);
   return _convexHull;
 }
 
-const std::vector< std::map<std::string, std::vector<double> > > & PolarisRangerEgressRobotModule::bounds() const
+const std::vector<std::map<std::string, std::vector<double>>> & PolarisRangerEgressRobotModule::bounds() const
 {
-  const_cast<PolarisRangerEgressRobotModule*>(this)->_bounds = nominalBounds(limits);
+  const_cast<PolarisRangerEgressRobotModule *>(this)->_bounds = nominalBounds(limits);
   return _bounds;
 }
 
-const std::map<std::string, std::vector<double> > & PolarisRangerEgressRobotModule::stance() const
+const std::map<std::string, std::vector<double>> & PolarisRangerEgressRobotModule::stance() const
 {
-  const_cast<PolarisRangerEgressRobotModule*>(this)->_stance = halfSittingPose(mb);
+  const_cast<PolarisRangerEgressRobotModule *>(this)->_stance = halfSittingPose(mb);
   return _stance;
 }
 
-}
+} // namespace mc_robots

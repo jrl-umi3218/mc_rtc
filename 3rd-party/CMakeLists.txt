@@ -26,3 +26,10 @@ endif()
 pkg_config_append_libs(ltdl)
 
 add_subdirectory(qhull)
+
+file(GLOB EXT_3RD_PARTIES RELATIVE ext "ext/*")
+foreach(3rdparty ${EXT_3RD_PARTY})
+  if(EXISTS ext/${3rdparty}/CMakeLists.txt)
+    add_subdirectory(ext/${3rdparty})
+  endif()
+endforeach()

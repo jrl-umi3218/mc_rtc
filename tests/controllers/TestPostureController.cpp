@@ -1,12 +1,11 @@
 #ifdef BOOST_TEST_MAIN
-#undef BOOST_TEST_MAIN
+#  undef BOOST_TEST_MAIN
 #endif
-#include <boost/test/unit_test.hpp>
-
-#include <mc_control/mc_controller.h>
 #include <mc_control/api.h>
-
+#include <mc_control/mc_controller.h>
 #include <mc_rtc/logging.h>
+
+#include <boost/test/unit_test.hpp>
 
 namespace mc_control
 {
@@ -14,8 +13,7 @@ namespace mc_control
 struct MC_CONTROL_DLLAPI TestPostureController : public MCController
 {
 public:
-  TestPostureController(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt)
-  : MCController(rm, dt)
+  TestPostureController(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt) : MCController(rm, dt)
   {
     // Check that the default constructor loads the robot + ground environment
     BOOST_CHECK_EQUAL(robots().robots().size(), 2);
@@ -47,12 +45,13 @@ public:
     MCController::reset(reset_data);
     set_joint_pos(robot().mb().joint(head_joint_index).name(), head_joint_target);
   }
+
 private:
   unsigned int nrIter = 0;
   unsigned int head_joint_index;
   double head_joint_target;
 };
 
-}
+} // namespace mc_control
 
 SIMPLE_CONTROLLER_CONSTRUCTOR("TestPostureController", mc_control::TestPostureController)

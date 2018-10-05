@@ -17,7 +17,8 @@ bool Collision::operator!=(const Collision & rhs) const
 
 std::ostream & operator<<(std::ostream & os, const Collision & col)
 {
-  os << "Collision: " << col.body1 << "/" << col.body2 << " { " << col.iDist << ", " << col.sDist << ", " << col.damping << "}";
+  os << "Collision: " << col.body1 << "/" << col.body2 << " { " << col.iDist << ", " << col.sDist << ", " << col.damping
+     << "}";
   return os;
 }
 

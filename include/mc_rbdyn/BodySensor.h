@@ -17,10 +17,7 @@ struct BodySensor
 {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
   /** Default constructor, does not represent a valid body sensor */
-  BodySensor()
-  : BodySensor("", "", sva::PTransformd::Identity())
-  {
-  }
+  BodySensor() : BodySensor("", "", sva::PTransformd::Identity()) {}
 
   /** Constructor
    *
@@ -31,12 +28,8 @@ struct BodySensor
    * @param X_b_s Transformation from the parent body to the sensor
    *
    */
-  BodySensor(const std::string & name,
-             const std::string & bodyName,
-             const sva::PTransformd & X_b_s)
-  : name_(name),
-    bodyName_(bodyName),
-    X_b_s_(X_b_s)
+  BodySensor(const std::string & name, const std::string & bodyName, const sva::PTransformd & X_b_s)
+  : name_(name), bodyName_(bodyName), X_b_s_(X_b_s)
   {
   }
 
@@ -76,7 +69,14 @@ struct BodySensor
     return orientation_;
   }
 
-  /** Set the sensor's orientation reading */
+  /** Set the sensor's orientation reading
+   *
+   * \note By convention, this rotation should be given from the inertial frame
+   * (i.e. a fixed frame in the real world) to a body frame of the robot. For
+   * instance, on HRP-4 the body sensor orientation goes from the inertial
+   * frame to the "base_link" frame.
+   *
+   */
   inline void orientation(const Eigen::Quaterniond & orientation)
   {
     orientation_ = orientation;
@@ -117,6 +117,7 @@ struct BodySensor
   {
     acceleration_ = acceleration;
   }
+
 private:
   std::string name_;
   std::string bodyName_;
@@ -130,4 +131,4 @@ private:
 
 typedef std::vector<BodySensor, Eigen::aligned_allocator<BodySensor>> BodySensorVector;
 
-}
+} // namespace mc_rbdyn

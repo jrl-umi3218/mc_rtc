@@ -70,6 +70,11 @@ $(document).ready(function()
   ];
   $('#rbd-objects').html(make_list_group('rbd', rbd_objects));
 
+  var tasks_objects = [
+   'JointGains',
+  ];
+  $('#tasks-objects').html(make_list_group('tasks', tasks_objects));
+
   var mc_rbdyn_urdf_objects = [
   'Geometry.Box',
   'Geometry.Cylinder',
@@ -110,20 +115,25 @@ $(document).ready(function()
   $('#constraintset-objects').html(make_list_group('constraintset', constraintset_objects));
 
   var metatask_objects = [
-  'CoMTask',
-  'PositionTask',
-  'OrientationTask',
-  'EndEffectorTask',
-  'RelativeEndEffectorTask',
-  'ComplianceTask',
-  'AdmittanceTask',
   'AddContactTask',
-  'RemoveContactTask',
+  'AdmittanceTask',
+  'ComplianceTask',
+  'CoMTask',
+  'CoPTask',
+  'EndEffectorTask',
   'GazeTask',
+  'LookAtTask',
+  'LookAtSurfaceTask',
+  'LookAtTFTask',
+  'OrientationTask',
   'PBVSTask',
+  'PositionTask',
   'PostureTask',
+  'RelativeEndEffectorTask',
+  'RemoveContactTask',
   'SurfaceTransformTask',
-  'VectorOrientationTask',
+  'TrajectoryTask',
+  'VectorOrientationTask'
   ]
   $('#metatask-objects').html(make_list_group('metatask', metatask_objects));
 

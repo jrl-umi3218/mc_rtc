@@ -1,24 +1,21 @@
 #pragma once
 
-#include <mc_rbdyn/Robots.h>
-
-
 #include <mc_control/Configuration.h>
 #include <mc_control/generic_gripper.h>
+#include <mc_rbdyn/Robots.h>
+#include <mc_rtc/GUIState.h>
 #include <mc_rtc/log/Logger.h>
-
-#include <mc_solver/QPSolver.h>
-#include <mc_solver/msg/QPResult.h>
 #include <mc_solver/CollisionsConstraint.h>
 #include <mc_solver/ContactConstraint.h>
 #include <mc_solver/DynamicsConstraint.h>
 #include <mc_solver/KinematicsConstraint.h>
-
-#include <Tasks/QPTasks.h>
+#include <mc_solver/QPSolver.h>
+#include <mc_solver/msg/QPResult.h>
+#include <mc_tasks/PostureTask.h>
 
 namespace mc_rbdyn
 {
-  struct Contact;
+struct Contact;
 }
 
 #include <mc_control/api.h>
@@ -35,7 +32,7 @@ namespace mc_control
 struct MC_CONTROL_DLLAPI ControllerResetData
 {
   /** Contains free flyer + joints state information */
-  const std::vector< std::vector<double> > & q;
+  const std::vector<std::vector<double>> & q;
 };
 
 struct MCGlobalController;
@@ -50,6 +47,7 @@ struct MC_CONTROL_DLLAPI MCController
 {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
   friend struct MCGlobalController;
+
 public:
   virtual ~MCController();
   /** This function is called at each time step of the process driving the robot
@@ -65,6 +63,20 @@ public:
    * It is recommended to use it in your override.
    */
   virtual bool run();
+  /**
+   * WARNING EXPERIMENTAL
+   * Runs the QP on real_robot state
+   * ONLY SUPPORTS ONE ROBOT FOR NOW
+   */
+  virtual bool runClosedLoop();
+
+  /** Can be called in derived class instead of run to use a feedback strategy
+   * different from the default one
+   *
+   * \param fType Type of feedback used in the solver
+   *
+   */
+  bool run(mc_solver::FeedbackType fType);
 
   /** Gives access to the result of the QP execution
    * \param t Unused at the moment
@@ -207,6 +219,15 @@ public:
   /** Returns mc_rtc::Logger instance */
   mc_rtc::Logger & logger();
 
+  /** Returns mc_rtc::gui::StateBuilder ptr */
+  std::shared_ptr<mc_rtc::gui::StateBuilder> gui()
+  {
+    return gui_;
+  }
+
+  /** Access real robots data */
+  const mc_rbdyn::Robots & realRobots() const;
+
   /** Returns a list of robots supported by the controller.
    * \return Vector of supported robots designed by name (as returned by
    * RobotModule::name())
@@ -215,6 +236,7 @@ public:
    * robots are supported.
    */
   virtual std::vector<std::string> supported_robots() const;
+
 protected:
   /** Builds a controller base with an empty environment
    * \param robot Pointer to the main RobotModule
@@ -228,6 +250,18 @@ protected:
    * \param dt Timestep of the controller
    */
   MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robot_modules, double dt);
+
+protected:
+  /** Load an additional robot into the controller
+   *
+   * \param rm RobotModule used to load the robot
+   *
+   * \param name Name of the robot
+   *
+   * \returns The loaded robot
+   */
+  mc_rbdyn::Robot & loadRobot(mc_rbdyn::RobotModulePtr rm, const std::string & name);
+
 protected:
   /** QP solver */
   std::shared_ptr<mc_solver::QPSolver> qpsolver;
@@ -235,6 +269,9 @@ protected:
   std::shared_ptr<mc_rbdyn::Robots> real_robots;
   /** Logger provided by MCGlobalController */
   std::shared_ptr<mc_rtc::Logger> logger_;
+  /** GUI state builder */
+  std::shared_ptr<mc_rtc::gui::StateBuilder> gui_;
+
 public:
   /** Controller timestep */
   const double timeStep;
@@ -249,35 +286,59 @@ public:
   /** Self collisions constraint for the main robot */
   mc_solver::CollisionsConstraint selfCollisionConstraint;
   /** Posture task for the main robot */
-  std::shared_ptr<tasks::qp::PostureTask> postureTask;
+  std::shared_ptr<mc_tasks::PostureTask> postureTask;
 };
 
-}
+} // namespace mc_control
 
 #ifdef WIN32
-#define CONTROLLER_MODULE_API __declspec(dllexport)
+#  define CONTROLLER_MODULE_API __declspec(dllexport)
 #else
-# if __GNUC__ >= 4
-#   define CONTROLLER_MODULE_API __attribute__ ((visibility("default")))
-# else
-#   define CONTROLLER_MODULE_API
-# endif
+#  if __GNUC__ >= 4
+#    define CONTROLLER_MODULE_API __attribute__((visibility("default")))
+#  else
+#    define CONTROLLER_MODULE_API
+#  endif
 #endif
 
 /** Provides a handle to construct the controller with Json config */
-#define CONTROLLER_CONSTRUCTOR(NAME, TYPE)\
-extern "C"\
-{\
-  CONTROLLER_MODULE_API std::vector<std::string> MC_RTC_CONTROLLER() { return {NAME}; }\
-  CONTROLLER_MODULE_API void destroy(mc_control::MCController * ptr) { delete ptr; }\
-  CONTROLLER_MODULE_API mc_control::MCController * create(const std::string &, const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const mc_control::Configuration & conf) { return new TYPE(robot, dt, conf); }\
-}
+#define CONTROLLER_CONSTRUCTOR(NAME, TYPE)                                                                        \
+  extern "C"                                                                                                      \
+  {                                                                                                               \
+    CONTROLLER_MODULE_API void MC_RTC_CONTROLLER(std::vector<std::string> & names)                                \
+    {                                                                                                             \
+      names = {NAME};                                                                                             \
+    }                                                                                                             \
+    CONTROLLER_MODULE_API void destroy(mc_control::MCController * ptr)                                            \
+    {                                                                                                             \
+      delete ptr;                                                                                                 \
+    }                                                                                                             \
+    CONTROLLER_MODULE_API mc_control::MCController * create(const std::string &,                                  \
+                                                            const std::shared_ptr<mc_rbdyn::RobotModule> & robot, \
+                                                            const double & dt,                                    \
+                                                            const mc_control::Configuration & conf)               \
+    {                                                                                                             \
+      return new TYPE(robot, dt, conf);                                                                           \
+    }                                                                                                             \
+  }
 
 /** Provides a handle to construct a generic controller */
-#define SIMPLE_CONTROLLER_CONSTRUCTOR(NAME, TYPE)\
-extern "C"\
-{\
-  CONTROLLER_MODULE_API std::vector<std::string> MC_RTC_CONTROLLER() { return {NAME}; }\
-  CONTROLLER_MODULE_API void destroy(mc_control::MCController * ptr) { delete ptr; }\
-  CONTROLLER_MODULE_API mc_control::MCController * create(const std::string&, const std::shared_ptr<mc_rbdyn::RobotModule> & robot, const double & dt, const mc_control::Configuration &) { return new TYPE(robot, dt); }\
-}
+#define SIMPLE_CONTROLLER_CONSTRUCTOR(NAME, TYPE)                                                                 \
+  extern "C"                                                                                                      \
+  {                                                                                                               \
+    CONTROLLER_MODULE_API void MC_RTC_CONTROLLER(std::vector<std::string> & names)                                \
+    {                                                                                                             \
+      names = {NAME};                                                                                             \
+    }                                                                                                             \
+    CONTROLLER_MODULE_API void destroy(mc_control::MCController * ptr)                                            \
+    {                                                                                                             \
+      delete ptr;                                                                                                 \
+    }                                                                                                             \
+    CONTROLLER_MODULE_API mc_control::MCController * create(const std::string &,                                  \
+                                                            const std::shared_ptr<mc_rbdyn::RobotModule> & robot, \
+                                                            const double & dt,                                    \
+                                                            const mc_control::Configuration &)                    \
+    {                                                                                                             \
+      return new TYPE(robot, dt);                                                                                 \
+    }                                                                                                             \
+  }

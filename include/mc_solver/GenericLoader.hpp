@@ -7,18 +7,16 @@
 namespace mc_solver
 {
 
-template<typename T>
-typename GenericLoader<T>::T_ptr GenericLoader<T>::load(
-                                 mc_solver::QPSolver & solver,
-                                 const std::string & file)
+template<typename Derived, typename T>
+typename GenericLoader<Derived, T>::T_ptr GenericLoader<Derived, T>::load(mc_solver::QPSolver & solver,
+                                                                          const std::string & file)
 {
   return load(solver, mc_rtc::Configuration(file));
 }
 
-template<typename T>
-typename GenericLoader<T>::T_ptr GenericLoader<T>::load(
-                                 mc_solver::QPSolver & solver,
-                                 const mc_rtc::Configuration & config)
+template<typename Derived, typename T>
+typename GenericLoader<Derived, T>::T_ptr GenericLoader<Derived, T>::load(mc_solver::QPSolver & solver,
+                                                                          const mc_rtc::Configuration & config)
 {
   static auto & fns = get_fns();
   if(config.has("type"))
@@ -33,42 +31,29 @@ typename GenericLoader<T>::T_ptr GenericLoader<T>::load(
   LOG_ERROR_AND_THROW(std::runtime_error, "Attempted to load an object without a type property")
 }
 
-template<typename T>
-template<typename U,
-  typename std::enable_if<(!std::is_same<U, T>::value) &&
-                          std::is_base_of<T, U>::value, int>::type>
-std::shared_ptr<U> GenericLoader<T>::load(mc_solver::QPSolver & solver,
-                                          const std::string & file)
+template<typename Derived, typename T>
+template<typename U, typename std::enable_if<(!std::is_same<U, T>::value) && std::is_base_of<T, U>::value, int>::type>
+std::shared_ptr<U> GenericLoader<Derived, T>::load(mc_solver::QPSolver & solver, const std::string & file)
 {
   return cast<U>(load(solver, file));
 }
 
-template<typename T>
-template<typename U,
-  typename std::enable_if<(!std::is_same<U, T>::value) &&
-                          std::is_base_of<T, U>::value, int>::type>
-std::shared_ptr<U> GenericLoader<T>::load(mc_solver::QPSolver & solver,
-                                          const mc_rtc::Configuration & config)
+template<typename Derived, typename T>
+template<typename U, typename std::enable_if<(!std::is_same<U, T>::value) && std::is_base_of<T, U>::value, int>::type>
+std::shared_ptr<U> GenericLoader<Derived, T>::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
   return cast<U>(load(solver, config));
 }
 
-template<typename T>
-std::unique_ptr<std::map<std::string, typename GenericLoader<T>::load_fun>> GenericLoader<T>::fns_ptr;
-
-template<typename T>
-std::map<std::string, typename GenericLoader<T>::load_fun> & GenericLoader<T>::get_fns()
+template<typename Derived, typename T>
+std::map<std::string, typename GenericLoader<Derived, T>::load_fun> & GenericLoader<Derived, T>::get_fns()
 {
-  if(!fns_ptr)
-  {
-    fns_ptr = std::unique_ptr<std::map<std::string, load_fun>>(new std::map<std::string, load_fun>());
-  }
-  return *fns_ptr;
+  return Derived::storage();
 }
 
-template<typename T>
+template<typename Derived, typename T>
 template<typename U>
-std::shared_ptr<U> GenericLoader<T>::cast(const GenericLoader<T>::T_ptr & mt)
+std::shared_ptr<U> GenericLoader<Derived, T>::cast(const GenericLoader<Derived, T>::T_ptr & mt)
 {
   auto ret = std::dynamic_pointer_cast<U>(mt);
   if(!ret)
@@ -78,9 +63,8 @@ std::shared_ptr<U> GenericLoader<T>::cast(const GenericLoader<T>::T_ptr & mt)
   return ret;
 }
 
-template<typename T>
-bool GenericLoader<T>::register_load_function(const std::string & type,
-                                              load_fun fn)
+template<typename Derived, typename T>
+bool GenericLoader<Derived, T>::register_load_function(const std::string & type, load_fun fn)
 {
   static auto & fns = get_fns();
   if(fns.count(type) == 0)
@@ -92,4 +76,4 @@ bool GenericLoader<T>::register_load_function(const std::string & type,
   return false;
 }
 
-}
+} // namespace mc_solver

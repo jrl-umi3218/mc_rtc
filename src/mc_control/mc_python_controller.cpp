@@ -8,7 +8,7 @@ MCPythonController::MCPythonController(const std::vector<std::shared_ptr<mc_rbdy
 {
 }
 
-void MCPythonController::reset(const ControllerResetData& reset_data)
+void MCPythonController::reset(const ControllerResetData & reset_data)
 {
   MCController::reset(reset_data);
   if(reset_callback)
@@ -50,4 +50,4 @@ bool MCPythonController::read_write_msg(std::string & msg, std::string & out)
   return false;
 }
 
-}
+} // namespace mc_control

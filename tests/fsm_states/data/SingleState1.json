@@ -1,0 +1,7 @@
+{
+  // Multiple states definition which require multiple passes to get right
+  "SingleState1":
+  {
+    "base": "SingleState"
+  }
+}

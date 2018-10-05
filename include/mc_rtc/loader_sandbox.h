@@ -5,30 +5,30 @@
 #include <functional>
 
 #ifdef __linux__
-#include <unistd.h>
-#include <sched.h>
-#include <setjmp.h>
-#include <signal.h>
+#  include <sched.h>
+#  include <setjmp.h>
+#  include <signal.h>
+#  include <unistd.h>
 
 namespace
 {
-  jmp_buf jmp;
+jmp_buf jmp;
 
-  void signal_handler(int signal)
+void signal_handler(int signal)
+{
+  if(signal == SIGSEGV || signal == SIGFPE || signal == SIGILL)
   {
-    if(signal == SIGSEGV || signal == SIGFPE || signal == SIGILL)
+    /*! Avoid jumping back a second time */
+    static bool dead = false;
+    if(!dead)
     {
-      /*! Avoid jumping back a second time */
-      static bool dead = false;
-      if(!dead)
-      {
-        dead = true;
-        longjmp(jmp, signal);
-      }
+      dead = true;
+      longjmp(jmp, signal);
     }
-    _exit(0);
   }
+  _exit(0);
 }
+} // namespace
 
 #endif
 
@@ -47,7 +47,7 @@ namespace mc_rtc
 template<typename T>
 struct LoaderSandboxData
 {
-  std::function<T*(void)> fn;
+  std::function<T *(void)> fn;
   T * ret = nullptr;
   bool complete = false;
 };
@@ -56,7 +56,7 @@ struct LoaderSandboxData
 template<typename T>
 int sandbox(void * args)
 {
-  LoaderSandboxData<T> & data = *(static_cast<LoaderSandboxData<T>*>(args));
+  LoaderSandboxData<T> & data = *(static_cast<LoaderSandboxData<T> *>(args));
   try
   {
     signal(SIGSEGV, signal_handler);
@@ -94,7 +94,6 @@ int sandbox(void * args)
 }
 #endif
 
-
 /*! \brief Calls a function without sandboxing
  *
  * Only catches exceptions
@@ -104,8 +103,8 @@ int sandbox(void * args)
  * \tparam Args Arguments passed to the creation function
  *
  */
-template<typename T, typename ... Args>
-T * no_sandbox_function_call(std::function<T*(const Args & ...)> create_fn, const Args & ... args);
+template<typename T, typename... Args>
+T * no_sandbox_function_call(std::function<T *(const Args &...)> create_fn, const Args &... args);
 
 /*! \brief Calls a function in a sandbox
  *
@@ -119,17 +118,16 @@ T * no_sandbox_function_call(std::function<T*(const Args & ...)> create_fn, cons
  * \tparam Args Arguments passed to the creation function
  *
  */
-template<typename T, typename ... Args>
-T * sandbox_function_call(std::function<T*(const Args & ...)> create_fn, const Args & ... args)
+template<typename T, typename... Args>
+T * sandbox_function_call(std::function<T *(const Args &...)> create_fn, const Args &... args)
 {
 #ifdef __linux__
   LoaderSandboxData<T> data;
   data.fn = std::bind(create_fn, args...);
-  unsigned int stack_size = 65536*100;
-  char * stack = static_cast<char*>(malloc(stack_size*sizeof(char)));
-  clone(sandbox<T>, static_cast<void*>(stack + stack_size),
-        CLONE_FILES|CLONE_FS|CLONE_IO|CLONE_VM|CLONE_VFORK,
-        static_cast<void*>(&data));
+  unsigned int stack_size = 65536 * 100;
+  char * stack = static_cast<char *>(malloc(stack_size * sizeof(char)));
+  clone(sandbox<T>, static_cast<void *>(stack + stack_size), CLONE_FILES | CLONE_FS | CLONE_IO | CLONE_VM | CLONE_VFORK,
+        static_cast<void *>(&data));
   if(data.complete)
   {
     return data.ret;
@@ -144,23 +142,10 @@ T * sandbox_function_call(std::function<T*(const Args & ...)> create_fn, const A
 #endif
 }
 
-template<typename T, typename ... Args>
-T * no_sandbox_function_call(std::function<T*(const Args & ...)> create_fn, const Args & ... args)
+template<typename T, typename... Args>
+T * no_sandbox_function_call(std::function<T *(const Args &...)> create_fn, const Args &... args)
 {
-  try
-  {
-    return create_fn(args...);
-  }
-  catch(std::exception & exc)
-  {
-    LOG_ERROR("Loaded constructor threw an exception")
-    LOG_WARNING(exc.what())
-  }
-  catch(...)
-  {
-    LOG_ERROR("Loaded constructor threw an exception")
-  }
-  return nullptr;
+  return create_fn(args...);
 }
 
 } // namespace mc_rtc

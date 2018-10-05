@@ -63,7 +63,6 @@ include "position_trajectory_task.pxi"
 include "orientation_trajectory_task.pxi"
 include "vector_orientation_trajectory_task.pxi"
 
-
 def genericTTGNull(AnyTTG self):
   self.impl = self.ttg_base = self.mt_base = NULL
 
@@ -231,3 +230,46 @@ cdef class ComplianceTask(MetaTask):
       self.impl.setTargetWrench(deref((<sva.ForceVecd>(wrench)).impl))
     else:
       self.setTargetWrench(sva.ForceVecd(wrench))
+
+cdef class PostureTask(MetaTask):
+  def __dealloc__(self):
+    if self.__own_impl:
+      del self.impl
+  def __ctor__(self, mc_solver.QPSolver solver, rIndex, stiffness, weight):
+    self.__own_impl = True
+    self.impl = self.mt_base = new c_mc_tasks.PostureTask(deref(solver.impl), rIndex, stiffness, weight)
+  def __cinit__(self, *args, **kwargs):
+    genericInit[PostureTask](self, 4, 'PostureTask', *args, **kwargs)
+  def posture(self, target = None):
+    assert(self.impl)
+    if target is None:
+      return self.impl.posture()
+    else:
+      self.impl.posture(target)
+  def jointGains(self, mc_solver.QPSolver solver, jgs):
+    assert(self.impl)
+    self.impl.jointGains(deref(solver.impl), qp.JointGainsVector(jgs).v)
+  def jointStiffness(self, mc_solver.QPSolver solver, jss):
+    assert(self.impl)
+    self.impl.jointStiffness(deref(solver.impl), qp.JointStiffnessVector(jss).v)
+  def target(self, in_):
+    assert(self.impl)
+    self.impl.target(in_)
+  def stiffness(self, s = None):
+    assert(self.impl)
+    if s is None:
+      return self.impl.stiffness()
+    else:
+      self.impl.stiffness(s)
+  def weight(self, w = None):
+    assert(self.impl)
+    if w is None:
+      return self.impl.weight()
+    else:
+      self.impl.weight(w)
+
+cdef PostureTask PostureTaskFromPtr(c_mc_tasks.PostureTask * p):
+  cdef PostureTask ret = PostureTask(skip_alloc = True)
+  ret.__own_impl = False
+  ret.impl = ret.mt_base = p
+  return ret

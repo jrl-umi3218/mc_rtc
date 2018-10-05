@@ -13,6 +13,8 @@ namespace mc_tasks
 struct MC_TASKS_DLLAPI OrientationTask : public TrajectoryTaskGeneric<tasks::qp::OrientationTask>
 {
 public:
+  friend struct EndEffectorTask;
+
   /*! \brief Constructor
    *
    * \param bodyName Name of the body to control
@@ -26,9 +28,11 @@ public:
    * \param weight Task weight
    *
    */
-  OrientationTask(const std::string & bodyName, const mc_rbdyn::Robots
-                  & robots, unsigned int robotIndex, double stiffness =
-                  2.0, double weight = 500);
+  OrientationTask(const std::string & bodyName,
+                  const mc_rbdyn::Robots & robots,
+                  unsigned int robotIndex,
+                  double stiffness = 2.0,
+                  double weight = 500);
 
   /*! \brief Reset the task
    *
@@ -49,6 +53,10 @@ public:
    *
    */
   Eigen::Matrix3d orientation();
+
+protected:
+  void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
+
 public:
   std::string bodyName;
   unsigned int bIndex;
@@ -56,4 +64,4 @@ public:
   virtual void removeFromLogger(mc_rtc::Logger & logger) override;
 };
 
-}
+} // namespace mc_tasks

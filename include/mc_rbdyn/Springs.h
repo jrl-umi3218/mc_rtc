@@ -16,7 +16,7 @@ struct MC_RBDYN_DLLAPI Springs
   /** Bodies that come after the bodies that have springs attached to them */
   std::vector<std::string> afterSpringsBodies = {};
   /** Joints forming the springs */
-  std::vector< std::vector<std::string> > springsJoints = {};
+  std::vector<std::vector<std::string>> springsJoints = {};
 };
 
-}
+} // namespace mc_rbdyn

@@ -1,5 +1,4 @@
 #include <mc_solver/CoMIncPlaneConstr.h>
-
 #include <mc_solver/ConstraintSetLoader.h>
 
 namespace mc_solver
@@ -20,8 +19,14 @@ void CoMIncPlaneConstr::removeFromSolver(tasks::qp::QPSolver & solver)
   constr->removeFromSolver(solver);
 }
 
-void CoMIncPlaneConstr::set_planes(QPSolver & solver, const std::vector<mc_rbdyn::Plane> & planes, const std::vector<Eigen::Vector3d> & speeds, const std::vector<Eigen::Vector3d> & normalsDots,
-    double iDist, double sDist, double damping, double dampingOff)
+void CoMIncPlaneConstr::set_planes(QPSolver & solver,
+                                   const std::vector<mc_rbdyn::Plane> & planes,
+                                   const std::vector<Eigen::Vector3d> & speeds,
+                                   const std::vector<Eigen::Vector3d> & normalsDots,
+                                   double iDist,
+                                   double sDist,
+                                   double damping,
+                                   double dampingOff)
 {
   constr->reset();
   if(speeds.size() != 0 && normalsDots.size() == speeds.size() && planes.size() == speeds.size())
@@ -30,16 +35,17 @@ void CoMIncPlaneConstr::set_planes(QPSolver & solver, const std::vector<mc_rbdyn
     {
       if(planes[i].normal.norm() > 0.5)
       {
-        constr->addPlane(static_cast<int>(i), planes[i].normal, planes[i].offset, iDist, sDist, damping, speeds[i], normalsDots[i], dampingOff);
+        constr->addPlane(static_cast<int>(i), planes[i].normal, planes[i].offset, iDist, sDist, damping, speeds[i],
+                         normalsDots[i], dampingOff);
       }
     }
   }
   else
   {
-    if(speeds.size() != 0 && (normalsDots.size() != speeds.size()
-                               || planes.size() != speeds.size()))
+    if(speeds.size() != 0 && (normalsDots.size() != speeds.size() || planes.size() != speeds.size()))
     {
-      //LOG_WARNING("set_planes: speeds size > 0 but different from normalsDots or planes, acting as if speeds were not provided")
+      // LOG_WARNING("set_planes: speeds size > 0 but different from normalsDots or planes, acting as if speeds were not
+      // provided")
     }
     for(size_t i = 0; i < planes.size(); ++i)
     {
@@ -58,13 +64,10 @@ void CoMIncPlaneConstr::set_planes(QPSolver & solver, const std::vector<mc_rbdyn
 namespace
 {
 
-static bool registered = mc_solver::ConstraintSetLoader::register_load_function("CoMIncPlane",
-  [](mc_solver::QPSolver & solver,
-     const mc_rtc::Configuration & config)
-  {
-    auto ret = std::make_shared<mc_solver::CoMIncPlaneConstr>(solver.robots(), config("robotIndex"), solver.dt());
-    return ret;
-  }
-);
-
+static bool registered = mc_solver::ConstraintSetLoader::register_load_function(
+    "CoMIncPlane",
+    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
+      auto ret = std::make_shared<mc_solver::CoMIncPlaneConstr>(solver.robots(), config("robotIndex"), solver.dt());
+      return ret;
+    });
 }

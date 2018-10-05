@@ -13,22 +13,19 @@
   <property name="windowTitle">
    <string>MCLogTab</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_2">
-   <item row="0" column="0">
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="1">
-      <widget class="PlotCanvasWithToolbar" name="canvas" native="true"/>
-     </item>
-     <item row="0" column="0">
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <layout class="QVBoxLayout" name="y1SelectorLayout">
+     <item>
       <widget class="QTreeWidget" name="y1Selector">
        <property name="selectionMode">
-        <enum>QAbstractItemView::ExtendedSelection</enum>
+        <enum>QAbstractItemView::MultiSelection</enum>
        </property>
        <property name="selectionBehavior">
         <enum>QAbstractItemView::SelectItems</enum>
        </property>
        <property name="columnCount">
-        <number>2</number>
+        <number>1</number>
        </property>
        <attribute name="headerVisible">
         <bool>true</bool>
@@ -38,20 +35,29 @@
          <string notr="true">1</string>
         </property>
        </column>
-       <column>
-        <property name="text">
-         <string notr="true">2</string>
-        </property>
-       </column>
       </widget>
      </item>
-     <item row="0" column="2">
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="PlotCanvasWithToolbar" name="canvas" native="true"/>
+     </item>
+     <item>
+      <widget class="QComboBox" name="xSelector"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="y2SelectorLayout">
+     <item>
       <widget class="QTreeWidget" name="y2Selector">
        <property name="selectionMode">
-        <enum>QAbstractItemView::ExtendedSelection</enum>
+        <enum>QAbstractItemView::MultiSelection</enum>
        </property>
        <property name="columnCount">
-        <number>2</number>
+        <number>1</number>
        </property>
        <attribute name="headerVisible">
         <bool>true</bool>
@@ -61,15 +67,7 @@
          <string notr="true">1</string>
         </property>
        </column>
-       <column>
-        <property name="text">
-         <string notr="true">2</string>
-        </property>
-       </column>
       </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QComboBox" name="xSelector"/>
      </item>
     </layout>
    </item>

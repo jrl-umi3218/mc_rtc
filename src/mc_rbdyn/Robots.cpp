@@ -1,8 +1,6 @@
-#include <mc_rbdyn/Robots.h>
-
 #include <mc_rbdyn/RobotModule.h>
+#include <mc_rbdyn/Robots.h>
 #include <mc_rbdyn/SCHAddon.h>
-
 #include <mc_rtc/logging.h>
 
 #include <RBDyn/FK.h>
@@ -12,26 +10,28 @@ namespace bfs = boost::filesystem;
 
 namespace
 {
-  template<typename sch_T>
-  void applyTransformToSchById(const rbd::MultiBody & mb, const rbd::MultiBodyConfig & mbc, std::map<std::string, std::pair<std::string, std::shared_ptr<sch_T> > > & schByName)
+template<typename sch_T>
+void applyTransformToSchById(const rbd::MultiBody & mb,
+                             const rbd::MultiBodyConfig & mbc,
+                             std::map<std::string, std::pair<std::string, std::shared_ptr<sch_T>>> & schByName)
+{
+  for(auto & p : schByName)
   {
-    for(auto & p : schByName)
-    {
-      unsigned int index = static_cast<unsigned int>(mb.bodyIndexByName(p.second.first));
-      sch::mc_rbdyn::transform(*(p.second.second.get()), mbc.bodyPosW[index]);
-    }
+    unsigned int index = static_cast<unsigned int>(mb.bodyIndexByName(p.second.first));
+    sch::mc_rbdyn::transform(*(p.second.second.get()), mbc.bodyPosW[index]);
   }
-
-  template<typename X, typename Y>
-  inline void update(std::map<X,Y> & oldData, const std::map<X,Y> & nData)
-  {
-    for(const auto & p : nData)
-    {
-      oldData[p.first] = p.second;
-    }
-  }
-
 }
+
+template<typename X, typename Y>
+inline void update(std::map<X, Y> & oldData, const std::map<X, Y> & nData)
+{
+  for(const auto & p : nData)
+  {
+    oldData[p.first] = p.second;
+  }
+}
+
+} // namespace
 
 namespace mc_rbdyn
 {
@@ -39,17 +39,14 @@ namespace mc_rbdyn
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 #ifdef __clang__
-#pragma clang diagnostic ignored "-Wshorten-64-to-32"
+#  pragma clang diagnostic ignored "-Wshorten-64-to-32"
 #endif
 
-Robots::Robots()
-: robots_(), mbs_(), mbcs_(), robotIndex_(0), envIndex_(0)
-{
-}
+Robots::Robots() : robots_(), mbs_(), mbcs_(), robotIndex_(0), envIndex_(0) {}
 
 Robots::Robots(const Robots & rhs)
-: robot_modules_(rhs.robot_modules_), robots_(), mbs_(rhs.mbs_),
-  mbcs_(rhs.mbcs_), mbgs_(rhs.mbgs_), robotIndex_(rhs.robotIndex_), envIndex_(rhs.envIndex_)
+: robot_modules_(rhs.robot_modules_), robots_(), mbs_(rhs.mbs_), mbcs_(rhs.mbcs_), mbgs_(rhs.mbgs_),
+  robotIndex_(rhs.robotIndex_), envIndex_(rhs.envIndex_)
 {
   for(unsigned int i = 0; i < rhs.robots_.size(); ++i)
   {
@@ -60,7 +57,10 @@ Robots::Robots(const Robots & rhs)
 
 Robots & Robots::operator=(const Robots & rhs)
 {
-  if(&rhs == this) { return *this; }
+  if(&rhs == this)
+  {
+    return *this;
+  }
   robots_.clear();
   robot_modules_ = rhs.robot_modules_;
   mbs_ = rhs.mbs_;
@@ -132,19 +132,40 @@ const Robot & Robots::env() const
 
 Robot & Robots::robot(size_t idx)
 {
-  return const_cast<Robot&>(static_cast<const Robots*>(this)->robot(idx));
+  return const_cast<Robot &>(static_cast<const Robots *>(this)->robot(idx));
 }
 const Robot & Robots::robot(size_t idx) const
 {
   if(idx >= robots_.size())
   {
-    LOG_ERROR("No robot with index " << idx << " (" << robots_.size()  << " robots loaded)")
-    throw("Wrong robot index");
+    LOG_ERROR_AND_THROW(std::runtime_error,
+                        "No robot with index " << idx << " (" << robots_.size() << " robots loaded)")
   }
   return robots_[idx];
 }
 
-void Robots::createRobotWithBase(Robots & robots, unsigned int robots_idx, const Base & base, const Eigen::Vector3d & baseAxis)
+Robot & Robots::robot(const std::string & name)
+{
+  return const_cast<Robot &>(static_cast<const Robots *>(this)->robot(name));
+}
+
+const Robot & Robots::robot(const std::string & name) const
+{
+  auto it = std::find_if(robots_.begin(), robots_.end(), [&name](const Robot & r) { return r.name() == name; });
+  if(it != robots_.end())
+  {
+    return *it;
+  }
+  else
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "No robot named " << name);
+  }
+}
+
+void Robots::createRobotWithBase(Robots & robots,
+                                 unsigned int robots_idx,
+                                 const Base & base,
+                                 const Eigen::Vector3d & baseAxis)
 {
   createRobotWithBase(robots.robot(robots_idx), base, baseAxis);
 }
@@ -160,8 +181,7 @@ void Robots::createRobotWithBase(Robot & robot, const Base & base, const Eigen::
 
 void Robots::removeRobot(const std::string & name)
 {
-  auto it = std::find_if(robots_.begin(), robots_.end(),
-                         [&name](const Robot & r){ return r.name() == name; });
+  auto it = std::find_if(robots_.begin(), robots_.end(), [&name](const Robot & r) { return r.name() == name; });
   if(it != robots_.end())
   {
     removeRobot(it->robots_idx_);
@@ -200,20 +220,22 @@ void Robots::robotCopy(const Robot & robot)
   robot.copy(*this, static_cast<unsigned int>(this->mbs_.size()) - 1);
 }
 
-Robot& Robots::load(const RobotModule & module, const std::string &,
-                    sva::PTransformd * base, const std::string& bName)
+Robot & Robots::load(const RobotModule & module,
+                     const std::string &,
+                     sva::PTransformd * base,
+                     const std::string & bName)
 {
   return load(module, base, bName);
 }
 
-Robot& Robots::load(const RobotModule & module, sva::PTransformd * base,
-                    const std::string& bName)
+Robot & Robots::load(const RobotModule & module, sva::PTransformd * base, const std::string & bName)
 {
   robot_modules_.emplace_back(module);
   mbs_.emplace_back(module.mb);
   mbcs_.emplace_back(module.mbc);
   mbgs_.emplace_back(module.mbg);
-  robots_.emplace_back(*this, mbs_.size() - 1, true, base, bName);
+  mc_rbdyn::Robot robot{*this, static_cast<unsigned int>(mbs_.size() - 1), true, base, bName};
+  robots_.emplace_back(std::move(robot));
   updateIndexes();
   return robots_.back();
 }
@@ -222,35 +244,54 @@ Robot& Robots::load(const RobotModule & module, sva::PTransformd * base,
 {
 }*/
 
-std::shared_ptr<Robots> loadRobot(const RobotModule & module, const std::string &, sva::PTransformd * base, const std::string& baseName)
+std::shared_ptr<Robots> loadRobot(const RobotModule & module,
+                                  const std::string &,
+                                  sva::PTransformd * base,
+                                  const std::string & baseName)
 {
   return loadRobot(module, base, baseName);
 }
 
-std::shared_ptr<Robots> loadRobot(const RobotModule & module, sva::PTransformd * base, const std::string& baseName)
+std::shared_ptr<Robots> loadRobot(const RobotModule & module, sva::PTransformd * base, const std::string & baseName)
 {
   auto robots = std::make_shared<Robots>();
   robots->load(module, base, baseName);
   return robots;
 }
 
-void Robots::load(const RobotModule & module, const std::string &, const RobotModule & envModule, const std::string &, sva::PTransformd * base, const std::string& baseName)
+void Robots::load(const RobotModule & module,
+                  const std::string &,
+                  const RobotModule & envModule,
+                  const std::string &,
+                  sva::PTransformd * base,
+                  const std::string & baseName)
 {
   load(module, envModule, base, baseName);
 }
 
-void Robots::load(const RobotModule & module, const RobotModule & envModule, sva::PTransformd * base, const std::string& baseName)
+void Robots::load(const RobotModule & module,
+                  const RobotModule & envModule,
+                  sva::PTransformd * base,
+                  const std::string & baseName)
 {
   load(module, base, baseName);
   load(envModule);
 }
 
-std::shared_ptr<Robots> loadRobotAndEnv(const RobotModule & module, const std::string &, const RobotModule & envModule, const std::string &, sva::PTransformd * base, const std::string& baseName)
+std::shared_ptr<Robots> loadRobotAndEnv(const RobotModule & module,
+                                        const std::string &,
+                                        const RobotModule & envModule,
+                                        const std::string &,
+                                        sva::PTransformd * base,
+                                        const std::string & baseName)
 {
   return loadRobotAndEnv(module, envModule, base, baseName);
 }
 
-std::shared_ptr<Robots> loadRobotAndEnv(const RobotModule & module, const RobotModule & envModule, sva::PTransformd * base, const std::string& baseName)
+std::shared_ptr<Robots> loadRobotAndEnv(const RobotModule & module,
+                                        const RobotModule & envModule,
+                                        sva::PTransformd * base,
+                                        const std::string & baseName)
 {
   auto robots = std::make_shared<Robots>();
   robots->load(module, envModule, base, baseName);
@@ -270,7 +311,8 @@ void Robots::load(const std::vector<std::shared_ptr<RobotModule>> & modules)
   }
 }
 
-std::shared_ptr<Robots> loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules, const std::vector<std::string> &)
+std::shared_ptr<Robots> loadRobots(const std::vector<std::shared_ptr<RobotModule>> & modules,
+                                   const std::vector<std::string> &)
 {
   return loadRobots(modules);
 }
@@ -282,16 +324,29 @@ std::shared_ptr<Robots> loadRobots(const std::vector<std::shared_ptr<RobotModule
   return robots;
 }
 
-Robot& Robots::loadFromUrdf(const std::string & name, const std::string & urdf, bool withVirtualLinks, const std::vector<std::string> & filteredLinks, bool fixed, sva::PTransformd * base, const std::string& baseName)
+Robot & Robots::loadFromUrdf(const std::string & name,
+                             const std::string & urdf,
+                             bool withVirtualLinks,
+                             const std::vector<std::string> & filteredLinks,
+                             bool fixed,
+                             sva::PTransformd * base,
+                             const std::string & baseName)
 {
-  mc_rbdyn_urdf::URDFParserResult res = mc_rbdyn_urdf::rbdyn_from_urdf(urdf, fixed, filteredLinks, true, "", withVirtualLinks);
+  mc_rbdyn_urdf::URDFParserResult res =
+      mc_rbdyn_urdf::rbdyn_from_urdf(urdf, fixed, filteredLinks, true, "", withVirtualLinks);
 
   mc_rbdyn::RobotModule module(name, res);
 
   return load(module, base, baseName);
 }
 
-std::shared_ptr<Robots> loadRobotFromUrdf(const std::string & name, const std::string & urdf, bool withVirtualLinks, const std::vector<std::string> & filteredLinks, bool fixed, sva::PTransformd * base, const std::string& baseName)
+std::shared_ptr<Robots> loadRobotFromUrdf(const std::string & name,
+                                          const std::string & urdf,
+                                          bool withVirtualLinks,
+                                          const std::vector<std::string> & filteredLinks,
+                                          bool fixed,
+                                          sva::PTransformd * base,
+                                          const std::string & baseName)
 {
   auto robots = std::make_shared<Robots>();
   robots->loadFromUrdf(name, urdf, withVirtualLinks, filteredLinks, fixed, base, baseName);
@@ -313,9 +368,9 @@ void Robots::updateIndexes()
   envIndex_ = static_cast<unsigned int>(robots_.size()) - 1;
   for(size_t i = robots_.size(); i > 0; --i)
   {
-    if(robots_[i-1].mb().nrDof() == 0)
+    if(robots_[i - 1].mb().nrDof() == 0)
     {
-      envIndex_ = static_cast<unsigned int>(i)-1;
+      envIndex_ = static_cast<unsigned int>(i) - 1;
       break;
     }
   }
@@ -402,4 +457,4 @@ const RobotModule & Robots::robotModule(size_t idx) const
 
 #pragma GCC diagnostic pop
 
-}
+} // namespace mc_rbdyn

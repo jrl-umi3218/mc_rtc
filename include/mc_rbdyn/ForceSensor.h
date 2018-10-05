@@ -1,8 +1,8 @@
 #pragma once
 
-#include <SpaceVecAlg/SpaceVecAlg>
-
 #include <mc_rbdyn/api.h>
+
+#include <SpaceVecAlg/SpaceVecAlg>
 
 #include <memory>
 
@@ -13,7 +13,7 @@ struct Robot;
 
 namespace detail
 {
-  struct ForceSensorCalibData;
+struct ForceSensorCalibData;
 }
 
 /** This struct is intended to hold static information about a force sensor
@@ -38,9 +38,7 @@ public:
    * real) sensor frame
    *
    */
-  ForceSensor(const std::string & name,
-              const std::string & parentBodyName,
-              const sva::PTransformd & X_p_f);
+  ForceSensor(const std::string & name, const std::string & parentBodyName, const sva::PTransformd & X_p_f);
 
   /** Destructor */
   ~ForceSensor();
@@ -75,11 +73,38 @@ public:
     return wrench().couple();
   }
 
-  /** Set the current wrench
+  /** Set the current wrench expressed in sensor frame
    *
    * @param wrench New wrench reading
    */
   void wrench(const sva::ForceVecd & wrench);
+
+  /** Return a gravity-free wrench in sensor frame
+   *
+   * @param robot Robot that the sensor belongs to
+   *
+   * @returns A gravity-free reading of the wrench
+   *
+   */
+  const sva::ForceVecd wrenchWithoutGravity(const mc_rbdyn::Robot & robot) const;
+
+  /** Return measured wrench in the inertial frame
+   *
+   * @param robot Robot that the sensor belongs to
+   *
+   * @returns w_0 Spatial force vector of measured wrench
+   *
+   */
+  sva::ForceVecd worldWrench(const mc_rbdyn::Robot & robot) const;
+
+  /** Return measured gravity-free wrench in the inertial frame
+   *
+   * @param robot Robot that the sensor belongs to
+   *
+   * @returns w_0 Spatial force vector of measured wrench
+   *
+   */
+  sva::ForceVecd worldWrenchWithoutGravity(const mc_rbdyn::Robot & robot) const;
 
   /** @name Calibration
    *
@@ -97,8 +122,7 @@ public:
    * @param gravity Gravity vector, defaults to Z
    *
    */
-  void loadCalibrator(const std::string & calib_file,
-                      const Eigen::Vector3d & gravity = {0., 0., 9.81});
+  void loadCalibrator(const std::string & calib_file, const Eigen::Vector3d & gravity = {0., 0., 9.81});
 
   /** Return the local rotation associated to the sensor, i.e. the error
    * between the model forceSensor and real one
@@ -112,14 +136,8 @@ public:
   /** Return the mass of the sensor */
   double mass() const;
 
-  /** Return a gravity-free wrench
-   *
-   * @param robot Robot that the sensor belongs to
-   *
-   * @returns A gravity-free reading of the wrench
-   *
-   */
-  const sva::ForceVecd removeGravity(const mc_rbdyn::Robot & robot) const;
+  /** Return the sensor offset */
+  const sva::ForceVecd & offset() const;
 
   /** @} */
   /* End of Calibration group */
@@ -133,4 +151,4 @@ private:
   std::shared_ptr<detail::ForceSensorCalibData> calibration_;
 };
 
-}
+} // namespace mc_rbdyn

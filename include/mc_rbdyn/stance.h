@@ -14,17 +14,19 @@ struct StanceImpl;
 struct MC_RBDYN_DLLAPI Stance
 {
 public:
-  Stance(const std::vector< std::vector<double> > & q, const std::vector<Contact> & geomContacts, const std::vector<Contact> stabContacts);
+  Stance(const std::vector<std::vector<double>> & q,
+         const std::vector<Contact> & geomContacts,
+         const std::vector<Contact> stabContacts);
 
   ~Stance();
 
   /* Allow move operations to work on Stance vectors */
   Stance(Stance &&);
-  Stance& operator=(Stance&&);
+  Stance & operator=(Stance &&);
 
   const std::vector<Contact> & contacts() const;
 
-  const std::vector< std::vector<double> > q() const;
+  const std::vector<std::vector<double>> q() const;
 
   void q(const std::vector<std::vector<double>> & q_in);
 
@@ -41,12 +43,13 @@ public:
   Eigen::Vector3d com(const Robot & robot) const;
 
   std::vector<std::string> robotSurfacesInContact();
+
 public:
   std::unique_ptr<StanceImpl> impl;
 };
 
-typedef std::pair<std::vector<Contact>, std::vector<Contact> > contact_vector_pair_t;
-typedef std::pair< contact_vector_pair_t, contact_vector_pair_t > apply_return_t;
+typedef std::pair<std::vector<Contact>, std::vector<Contact>> contact_vector_pair_t;
+typedef std::pair<contact_vector_pair_t, contact_vector_pair_t> apply_return_t;
 
 struct MC_RBDYN_DLLAPI StanceAction
 {
@@ -97,6 +100,7 @@ public:
   virtual const Contact & contact() const override;
 
   virtual Contact & contact() override;
+
 private:
   Contact _contact;
 };
@@ -117,17 +121,28 @@ public:
   virtual const Contact & contact() const override;
 
   virtual Contact & contact() override;
+
 private:
   Contact _contact;
 };
 
-MC_RBDYN_DLLAPI void loadStances(const mc_rbdyn::Robots & robots, const std::string & filename, std::vector<Stance> & stances, std::vector< std::shared_ptr<StanceAction> > & actions, std::vector<PolygonInterpolator> & interpolators);
+MC_RBDYN_DLLAPI void loadStances(const mc_rbdyn::Robots & robots,
+                                 const std::string & filename,
+                                 std::vector<Stance> & stances,
+                                 std::vector<std::shared_ptr<StanceAction>> & actions,
+                                 std::vector<PolygonInterpolator> & interpolators);
 
-MC_RBDYN_DLLAPI void saveStances(const mc_rbdyn::Robots & robots, const std::string & filename, std::vector<Stance> & stances, std::vector< std::shared_ptr<StanceAction> > & actions);
+MC_RBDYN_DLLAPI void saveStances(const mc_rbdyn::Robots & robots,
+                                 const std::string & filename,
+                                 std::vector<Stance> & stances,
+                                 std::vector<std::shared_ptr<StanceAction>> & actions);
 
 /* For pyhon bindings */
-MC_RBDYN_DLLAPI void pSaveStances(const mc_rbdyn::Robots & robots, const std::string & filename, std::vector<Stance*> & stances, std::vector<std::shared_ptr<StanceAction>> & actions);
+MC_RBDYN_DLLAPI void pSaveStances(const mc_rbdyn::Robots & robots,
+                                  const std::string & filename,
+                                  std::vector<Stance *> & stances,
+                                  std::vector<std::shared_ptr<StanceAction>> & actions);
 
-}
+} // namespace mc_rbdyn
 
 #endif

@@ -27,7 +27,6 @@ public:
    */
   virtual void addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver) = 0;
 
-
   /** This function is called by mc_solver::QPSolver when
    * mc_solver::QPSolver::removeConstraintSet is called, typically it would
    * call:
@@ -40,7 +39,7 @@ public:
 
   /** Virtual destructor
    */
-  virtual ~ConstraintSet () {}
+  virtual ~ConstraintSet() {}
 };
 
 using ConstraintSetPtr = std::shared_ptr<ConstraintSet>;

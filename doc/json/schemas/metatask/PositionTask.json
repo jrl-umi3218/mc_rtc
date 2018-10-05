@@ -5,7 +5,7 @@
   {
     "type": { "enum": ["position"] },
     "name": { "type": "string" },
-    "robotIndex": { "type": "number", "minimum": 0 },
+    "robotIndex": { "type": "integer", "minimum": 0 },
     "body": { "type": "string" },
 
     "position": { "$ref": "/../../eigen/Vector3d.json" },

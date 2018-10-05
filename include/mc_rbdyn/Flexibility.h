@@ -30,4 +30,4 @@ public:
   double O;
 };
 
-}
+} // namespace mc_rbdyn
