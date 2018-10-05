@@ -170,6 +170,12 @@ class MCLogUI(QtGui.QMainWindow):
 
     self.data = {}
 
+    self.addApplicationShortcut(QtCore.Qt.CTRL + QtCore.Qt.Key_O, self.shortcutOpenFile)
+    self.addApplicationShortcut(QtCore.Qt.CTRL + QtCore.Qt.Key_W, self.shortcutCloseTab)
+    self.addApplicationShortcut(QtCore.Qt.CTRL + QtCore.Qt.Key_PageDown, self.shortcutNextTab)
+    self.addApplicationShortcut(QtCore.Qt.CTRL + QtCore.Qt.Key_PageUp, self.shortcutPreviousTab)
+    self.addApplicationShortcut(QtCore.Qt.CTRL + QtCore.Qt.Key_T, self.shortcutNewTab)
+
   def saveUserPlots(self):
     confDir = os.path.dirname(self.userPlotFile)
     if not os.path.exists(confDir):
@@ -177,6 +183,12 @@ class MCLogUI(QtGui.QMainWindow):
     with open(self.userPlotFile, 'w') as f:
       json.dump(self.userPlotList, f)
     self.update_userplot_menu()
+
+  def addApplicationShortcut(self, key, callback):
+    shortcut = QtGui.QShortcut(self)
+    shortcut.setKey(key)
+    shortcut.setContext(QtCore.Qt.ShortcutContext.ApplicationShortcut)
+    shortcut.activated.connect(lambda: callback())
 
   def update_userplot_menu(self):
     self.ui.menuUserPlots.clear()
@@ -293,6 +305,24 @@ class MCLogUI(QtGui.QMainWindow):
     self.ui.tabWidget.setTabsClosable(has_closable)
     if has_closable:
       self.ui.tabWidget.tabBar().tabButton(self.ui.tabWidget.count() - 1, QtGui.QTabBar.RightSide).hide();
+
+  def shortcutOpenFile(self):
+    self.ui.actionLoad.triggered.emit()
+
+  def shortcutCloseTab(self):
+    if self.ui.tabWidget.tabsClosable():
+      self.ui.tabWidget.tabCloseRequested.emit(self.ui.tabWidget.currentIndex())
+
+  def shortcutPreviousTab(self):
+    if self.ui.tabWidget.currentIndex() > 0:
+      self.ui.tabWidget.setCurrentIndex(self.ui.tabWidget.currentIndex() - 1)
+
+  def shortcutNextTab(self):
+    if self.ui.tabWidget.currentIndex() < self.ui.tabWidget.count() - 2:
+      self.ui.tabWidget.setCurrentIndex(self.ui.tabWidget.currentIndex() + 1)
+
+  def shortcutNewTab(self):
+    self.ui.tabWidget.setCurrentIndex(self.ui.tabWidget.count() - 1)
 
   def load_csv(self, fpath, tmp = False):
     self.data = {}
