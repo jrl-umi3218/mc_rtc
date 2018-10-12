@@ -1,0 +1,20 @@
+- name: "HRP-2-Kai"
+  icon: "hrp2.png"
+  pkg:
+    desc: "https://gite.lirmm.fr/mc-hrp2/hrp2_drc"
+    module: "https://gite.lirmm.fr/mc-hrp2/mc-hrp2"
+- name: "HRP-4-LIRMM"
+  icon: "hrp4.png"
+  pkg:
+    desc: "https://gite.lirmm.fr/mc-hrp4/hrp4"
+    module: "https://gite.lirmm.fr/mc-hrp4/mc-hrp4"
+- name: "HRP-4J"
+  icon: "hrp4.png"
+  pkg:
+    desc: "https://gite.lirmm.fr/mc-hrp4/hrp4j_description"
+    module: "https://gite.lirmm.fr/mc-hrp4/mc_hrp4j"
+- name: "Nao"
+  icon: "nao.jpg"
+  pkg:
+    desc: "https://gite.lirmm.fr/atanguy/nao_description"
+    module: "https://gite.lirmm.fr/atanguy/mc_nao"

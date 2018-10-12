@@ -1,0 +1,34 @@
+body
+{
+  background: #f8f9fa;
+}
+
+.showcase
+{
+  background: #777777;
+  padding-top: 25px;
+  margin-bottom: 25px;
+}
+
+.showcase h2
+{
+  color: white;
+  text-align: center;
+}
+
+.carousel-caption {
+  padding-top: 40px;
+  position: relative;
+  left: auto;
+  right: auto;
+}
+
+.features
+{
+  margin-top: 20px;
+}
+
+.features h5
+{
+  font-weight: bold;
+}

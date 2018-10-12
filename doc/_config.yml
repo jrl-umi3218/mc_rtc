@@ -1,0 +1,8 @@
+name: CNRS-AIST JRL
+# Note: GitHub only supports pygments, while rouge is the default highlighter.
+# Thus, we comment it and simply rely on the default highlighter.
+# highlighter: pygments
+plugins:
+    - jekyll-octicons
+    - jekyll-sitemap
+exclude: ['Gemfile', 'Gemfile.lock', 'LICENSE', 'README.md']

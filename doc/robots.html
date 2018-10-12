@@ -1,0 +1,43 @@
+---
+layout: default
+title: Robots
+---
+
+<div class="row">
+
+<div class="col-12 offset-lg-2 col-lg-8">
+
+<h1>Robots</h1>
+
+<p>This page lists the robots that are currently available to be used in mc_rtc as well as a link to the relevant repository for the robot description package and the robot module package. In some cases you may need to request access to it.</p>
+
+</div>
+
+<div class="offset-1 col-10 offset-lg-3 col-lg-6">
+
+{% for bot in site.data.robots %}
+<div class="media features">
+  <img class="mr-3 rounded-circle" src="/assets/robots/{{bot.icon}}" alt="{{bot.name}}" width="75" height="75"/>
+  <div class="media-body">
+    <h5 class="mt-0">{{bot.name}}</h5>
+    <dl class="row">
+      <dt class="offset-1 col-3">Description package</dt>
+      <dd class="col-8"><a href="{{bot.pkg.desc}}" target="blank_">{% octicon globe %} {{bot.pkg.desc}}</a></dd>
+      <dt class="offset-1 col-3">Module package</dt>
+      <dd class="col-8"><a href="{{bot.pkg.module}}" target="blank_">{% octicon globe %} {{bot.pkg.module}}</a></dd>
+    </dl>
+  </div>
+</div>
+{% endfor %}
+
+</div>
+
+<div class="col-12 offset-lg-2 col-lg-8">
+
+<h3>Add your own robot</h3>
+
+<p>All you need is an URDF file. Check-out this <a href="/tutorials/Add_your_robot.html">tutorial</a> to get started.</p>
+
+</div>
+
+</div>
