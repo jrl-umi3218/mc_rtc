@@ -370,9 +370,9 @@ class MCLogTab(QtGui.QWidget):
   @staticmethod
   def MakePlot(parent, x_data, y1, y2, y1_label = None, y2_label = None):
     if y1_label is None:
-      return MakePlot(parent, x_data, y1, y2, y1, y2_label)
+      return MCLogTab.MakePlot(parent, x_data, y1, y2, y1, y2_label)
     if y2_label is None:
-      return MakePlot(parent, x_data, y1, y2, y1_label, y2_label)
+      return MCLogTab.MakePlot(parent, x_data, y1, y2, y1_label, y2)
     tab = MCLogTab(parent)
     tab.x_data = x_data
     tab.setData(parent.data)
