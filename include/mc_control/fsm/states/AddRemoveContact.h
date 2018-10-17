@@ -30,6 +30,12 @@ struct MC_CONTROL_FSM_STATE_DLLAPI AddRemoveContactStateImpl;
  * If you use a compliance task to remove a contact that has no force sensor
  * attached the state will automatically fallback to using an AddContactTask.
  *
+ * This state also employs a CoM task to keep the robot balanced during the
+ * removal/adding operation. The task can be configured using a "com" entry,
+ * two values can be specified:
+ * - weight (def: 100): the weight of the CoM task
+ * - stiffness (def: 2): the stiffness of the CoM task
+ *
  */
 
 struct AddRemoveContactState : State

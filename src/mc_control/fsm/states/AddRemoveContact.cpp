@@ -61,6 +61,16 @@ struct AddRemoveContactStateImpl
   {
     auto contact = mc_rbdyn::Contact::load(ctl.robots(), config_("contact"));
     com_task_ = std::make_shared<mc_tasks::CoMTask>(ctl.robots(), contact.r1Index());
+    if(config_.has("com"))
+    {
+      auto com_c = config_("com");
+      if(com_c.has("weight")) { com_task_->weight(com_c("weight")); }
+      if(com_c.has("stiffness"))
+      {
+        double s = com_c("stiffness");
+        com_task_->stiffness(s);
+      }
+    }
     std::string type = config_("type");
     bool removeContact = (type == "removeContact");
     bool isCompliant = (type == "compliance");
