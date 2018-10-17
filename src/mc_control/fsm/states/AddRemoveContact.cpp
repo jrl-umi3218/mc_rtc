@@ -69,6 +69,7 @@ struct AddRemoveContactStateImpl
       std::string body = contact.r1Surface()->bodyName();
       if(ctl.solver().robot(contact.r1Index()).bodyHasForceSensor(body))
       {
+        config_.add("robotIndex", contact.r1Index());
         config_.add("body", body);
       }
       else
