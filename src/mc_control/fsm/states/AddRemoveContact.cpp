@@ -64,7 +64,10 @@ struct AddRemoveContactStateImpl
     if(config_.has("com"))
     {
       auto com_c = config_("com");
-      if(com_c.has("weight")) { com_task_->weight(com_c("weight")); }
+      if(com_c.has("weight"))
+      {
+        com_task_->weight(com_c("weight"));
+      }
       if(com_c.has("stiffness"))
       {
         double s = com_c("stiffness");
