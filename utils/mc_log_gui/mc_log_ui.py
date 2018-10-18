@@ -135,6 +135,76 @@ class MCLogJointDialog(QtGui.QDialog):
     else:
       self.selectAllBox.setText("Select all")
 
+class DumpSeqPlayDialog(QtGui.QDialog):
+  def __init__(self, parent):
+    super(DumpSeqPlayDialog, self).__init__(parent)
+    self.setWindowTitle("Dump qIn to seqplay")
+    self.setModal(True)
+
+    layout = QtGui.QGridLayout(self)
+    row = 0
+
+    row += 1
+    layout.addWidget(QtGui.QLabel("Timestep"), row, 0)
+    self.timestepLineEdit = QtGui.QLineEdit("0.005")
+    validator = QtGui.QDoubleValidator()
+    validator.setBottom(1e-6)
+    self.timestepLineEdit.setValidator(validator)
+    layout.addWidget(self.timestepLineEdit, row, 1)
+
+    row += 1
+    layout.addWidget(QtGui.QLabel("Time scale"), row, 0)
+    self.timeScaleSpinBox = QtGui.QSpinBox()
+    self.timeScaleSpinBox.setMinimum(1)
+    self.timeScaleSpinBox.setPrefix("x")
+    layout.addWidget(self.timeScaleSpinBox, row, 1)
+
+    row += 1
+    filedialogButton = QtGui.QPushButton("Browse...")
+    filedialogButton.clicked.connect(self.filedialogButton)
+    layout.addWidget(filedialogButton, row, 0)
+    self.fileLineEdit = QtGui.QLineEdit("out.pos")
+    layout.addWidget(self.fileLineEdit)
+
+    row += 1
+    okButton = QtGui.QPushButton("Ok", self)
+    okButton.clicked.connect(self.okButton)
+    layout.addWidget(okButton, row, 0)
+    cancelButton = QtGui.QPushButton("Cancel", self)
+    cancelButton.clicked.connect(self.reject)
+    layout.addWidget(cancelButton, row, 1)
+
+  def okButton(self):
+    fout = self.fileLineEdit.text()
+    tScale = self.timeScaleSpinBox.value()
+    dt = float(self.timestepLineEdit.text())
+    rm = self.parent().rm
+    data = self.parent().data
+    if os.path.exists(fout):
+      overwrite = QtGui.QMessageBox.question(self, "Overwrite existing file", "{} already exists, do you want to overwrite it?".format(fout), QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+      if overwrite == QtGui.QMessageBox.No:
+        return
+    with open(fout, 'w') as fd:
+      rjo_range = range(len(rm.ref_joint_order()))
+      i_range = range(len(data['t']))
+      t = 0
+      for i in i_range:
+        q = np.array([data['qIn_{}'.format(jIdx)][i] for jIdx in rjo_range])
+        if i == i_range[-1]:
+          next_q = q
+        else:
+          next_q = np.array([data['qIn_{}'.format(jIdx)][i+1] for jIdx in rjo_range])
+        for j in range(tScale):
+          qOut = map(str, q + j/float(tScale) * (next_q - q))
+          fd.write("{} {}\n".format(t, " ".join(qOut)))
+          t += dt
+    self.accept()
+
+  def filedialogButton(self):
+    fpath = QtGui.QFileDialog.getSaveFileName(self, "Output file")[0]
+    if len(fpath):
+      self.fileLineEdit.setText(fpath)
+
 class MCLogUI(QtGui.QMainWindow):
   def __init__(self, parent = None):
     super(MCLogUI, self).__init__(parent)
@@ -142,6 +212,10 @@ class MCLogUI(QtGui.QMainWindow):
     self.ui = Ui_MainWindow()
 
     self.ui.setupUi(self)
+
+    self.tab_re = re.compile('^Plot [0-9]+$')
+
+    self.data = {}
 
     self.userPlotList = []
     self.userPlotFile = os.path.expanduser("~") + "/.config/mc_log_ui/custom_plot.json"
@@ -166,9 +240,11 @@ class MCLogUI(QtGui.QMainWindow):
       self.connect(rGroup, QtCore.SIGNAL("triggered(QAction *)"), self.setRobot)
       self.ui.menubar.addMenu(rMenu)
 
-    self.tab_re = re.compile('^Plot [0-9]+$')
-
-    self.data = {}
+    self.toolsMenu = QtGui.QMenu("Tools", self.ui.menubar)
+    act = QtGui.QAction("Dump qIn to seqplay", self.toolsMenu)
+    act.triggered.connect(DumpSeqPlayDialog(self).exec_)
+    self.toolsMenu.addAction(act)
+    self.ui.menubar.addMenu(self.toolsMenu)
 
     self.addApplicationShortcut(QtCore.Qt.CTRL + QtCore.Qt.Key_O, self.shortcutOpenFile)
     self.addApplicationShortcut(QtCore.Qt.CTRL + QtCore.Qt.Key_W, self.shortcutCloseTab)
