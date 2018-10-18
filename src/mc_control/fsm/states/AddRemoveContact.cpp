@@ -192,6 +192,10 @@ void AddRemoveContactStateImplHelper<mc_tasks::AddContactTask>::make_run_impl(Ad
   bool addedContact_ = false;
   impl.run_ = [fsm_contact_, sensor_, robotIndex_, envIndex_, addedContact_](AddRemoveContactStateImpl & impl,
                                                                              Controller & ctl) mutable {
+    if(addedContact_)
+    {
+      return true;
+    }
     auto & robot = ctl.robots().robot(robotIndex_);
     auto & env = ctl.robots().robot(envIndex_);
     auto d = sensor_.update(robot, env);
