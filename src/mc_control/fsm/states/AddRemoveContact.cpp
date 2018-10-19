@@ -185,14 +185,13 @@ void AddRemoveContactStateImplHelper<mc_tasks::AddContactTask>::make_run_impl(Ad
                                                                               Controller & ctl,
                                                                               mc_rbdyn::Contact & contact)
 {
-  auto fsm_contact_ = Contact::from_mc_rbdyn(ctl, contact);
+  auto fsm_contact_ = new Contact(Contact::from_mc_rbdyn(ctl, contact));
   auto sensor_ = SimulationContactPair(contact.r1Surface(), contact.r2Surface());
   auto robotIndex_ = contact.r1Index();
   auto envIndex_ = contact.r2Index();
-  bool addedContact_ = false;
-  impl.run_ = [fsm_contact_, sensor_, robotIndex_, envIndex_, addedContact_](AddRemoveContactStateImpl & impl,
-                                                                             Controller & ctl) mutable {
-    if(addedContact_)
+  impl.run_ = [fsm_contact_, sensor_, robotIndex_, envIndex_](AddRemoveContactStateImpl & impl,
+                                                              Controller & ctl) mutable {
+    if(!fsm_contact_)
     {
       return true;
     }
@@ -201,12 +200,13 @@ void AddRemoveContactStateImplHelper<mc_tasks::AddContactTask>::make_run_impl(Ad
     auto d = sensor_.update(robot, env);
     if(d <= 0)
     {
-      if(!addedContact_)
+      if(fsm_contact_)
       {
-        addedContact_ = true;
-        ctl.addContact(fsm_contact_);
+        ctl.addContact(*fsm_contact_);
         auto t = std::static_pointer_cast<mc_tasks::AddContactTask>(impl.task_);
         t->speed(0.0);
+        delete fsm_contact_;
+        fsm_contact_ = nullptr;
       }
       return true;
     }
@@ -219,13 +219,15 @@ void AddRemoveContactStateImplHelper<mc_tasks::ComplianceTask>::make_run_impl(Ad
                                                                               Controller & ctl,
                                                                               mc_rbdyn::Contact & contact)
 {
-  auto fsm_contact_ = Contact::from_mc_rbdyn(ctl, contact);
+  auto fsm_contact_ = new Contact(Contact::from_mc_rbdyn(ctl, contact));
   double vel_thresh_ = impl.config_("velocity", 1e-4);
-  impl.run_ = [fsm_contact_, vel_thresh_](AddRemoveContactStateImpl & impl, Controller & ctl) {
+  impl.run_ = [fsm_contact_, vel_thresh_](AddRemoveContactStateImpl & impl, Controller & ctl) mutable {
     auto t = std::static_pointer_cast<mc_tasks::ComplianceTask>(impl.task_);
-    if(t->speed().norm() < vel_thresh_ && t->eval().norm() < t->getTargetWrench().vector().norm() / 2)
+    if(t->speed().norm() < vel_thresh_ && t->eval().norm() < t->getTargetWrench().vector().norm() / 2 && fsm_contact_)
     {
-      ctl.addContact(fsm_contact_);
+      ctl.addContact(*fsm_contact_);
+      delete fsm_contact_;
+      fsm_contact_ = nullptr;
       return true;
     }
     return false;
