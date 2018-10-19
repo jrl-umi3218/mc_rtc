@@ -106,7 +106,7 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
         closeP.push_back(robot.qu()[jointIndex][0]);
         openP.push_back(robot.ql()[jointIndex][0]);
       }
-      vmax.push_back(std::min(std::abs(robot.vl()[jointIndex][0]), robot.vu()[jointIndex][0]) / 2);
+      vmax.push_back(std::min(std::abs(robot.vl()[jointIndex][0]), robot.vu()[jointIndex][0]) / 4);
       active_idx.push_back(i);
       _q.push_back(currentQ[j]);
       ++j;
