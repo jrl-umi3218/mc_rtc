@@ -73,6 +73,10 @@ struct AddRemoveContactStateImpl
         double s = com_c("stiffness");
         com_task_->stiffness(s);
       }
+      if(com_c.has("com"))
+      {
+        com_task_->com(com_c("com"));
+      }
     }
     std::string type = config_("type");
     bool removeContact = (type == "removeContact");
@@ -189,8 +193,11 @@ void AddRemoveContactStateImplHelper<mc_tasks::AddContactTask>::make_run_impl(Ad
   auto sensor_ = SimulationContactPair(contact.r1Surface(), contact.r2Surface());
   auto robotIndex_ = contact.r1Index();
   auto envIndex_ = contact.r2Index();
-  impl.run_ = [fsm_contact_, sensor_, robotIndex_, envIndex_](AddRemoveContactStateImpl & impl,
-                                                              Controller & ctl) mutable {
+  auto forceThreshold_ = impl.config_("forceThreshold", std::numeric_limits<double>::infinity());
+  bool hasForceSensor_ = ctl.robot().bodyHasForceSensor(contact.r1Surface()->bodyName());
+  auto forceSensorName_ = hasForceSensor_ ? ctl.robot().bodyForceSensor(contact.r1Surface()->bodyName()).name() : "";
+  impl.run_ = [fsm_contact_, sensor_, robotIndex_, envIndex_, hasForceSensor_, forceThreshold_,
+               forceSensorName_](AddRemoveContactStateImpl & impl, Controller & ctl) mutable {
     if(!fsm_contact_)
     {
       return true;
@@ -198,7 +205,7 @@ void AddRemoveContactStateImplHelper<mc_tasks::AddContactTask>::make_run_impl(Ad
     auto & robot = ctl.robots().robot(robotIndex_);
     auto & env = ctl.robots().robot(envIndex_);
     auto d = sensor_.update(robot, env);
-    if(d <= 0)
+    if(d <= 0 || (hasForceSensor_ && ctl.robot().forceSensor(forceSensorName_).force().z() > forceThreshold_))
     {
       if(fsm_contact_)
       {

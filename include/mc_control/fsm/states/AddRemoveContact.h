@@ -16,6 +16,11 @@ struct MC_CONTROL_FSM_STATE_DLLAPI AddRemoveContactStateImpl;
  * - type (req.): one of ["addContact", "removeContact", "compliance"]
  * - contact (req.): contact to be removed or added
  *
+ * Add contact options:
+ * - forceThreshold (def: infinity): if the body attempting the contact has a force
+ *   sensor attached, monitor this sensor normal force to stop the motion
+ *   before geometric contact
+ *
  * Remove contact options:
  * - distance (def: 0.1): when the contact body has moved this distance away
  *   from the contact, the state is finished
