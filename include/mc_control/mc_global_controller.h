@@ -470,6 +470,7 @@ private:
     std::vector<std::string> controller_module_paths = {};
     std::vector<std::string> enabled_controllers = {};
     std::string initial_controller = "";
+    std::unordered_map<std::string, mc_rtc::Configuration> controllers_configs;
     double timestep = 0.002;
 
     bool update_real = true;

@@ -243,11 +243,13 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   // Load controller-specific configuration
   for(const auto & c : enabled_controllers)
   {
+    mc_rtc::Configuration conf;
+    conf.load(config);
     bfs::path global = bfs::path(mc_rtc::MC_CONTROLLER_INSTALL_PREFIX) / "/etc" / (c + ".conf");
     if(bfs::exists(global))
     {
       LOG_INFO("Loading additional controller configuration" << global)
-      config.load(global.string());
+      conf.load(global.string());
     }
 #ifndef WIN32
     bfs::path local = bfs::path(std::getenv("HOME")) / ".config/mc_rtc/controllers" / (c + ".conf");
@@ -257,8 +259,9 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     if(bfs::exists(local))
     {
       LOG_INFO("Loading additional controller configuration" << local)
-      config.load(local.string());
+      conf.load(local.string());
     }
+    controllers_configs[c] = conf;
   }
 }
 

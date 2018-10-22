@@ -567,13 +567,14 @@ bool MCGlobalController::AddController(const std::string & name)
     LOG_INFO("Create controller " << controller_name)
     if(controller_subname != "")
     {
-      controllers[name] = controller_loader->create_object(controller_name, controller_subname,
-                                                           config.main_robot_module, config.timestep, config.config);
+      controllers[name] =
+          controller_loader->create_object(controller_name, controller_subname, config.main_robot_module,
+                                           config.timestep, config.controllers_configs[name]);
     }
     else
     {
-      controllers[name] =
-          controller_loader->create_object(name, config.main_robot_module, config.timestep, config.config);
+      controllers[name] = controller_loader->create_object(name, config.main_robot_module, config.timestep,
+                                                           config.controllers_configs[name]);
     }
     controllers[name]->real_robots = real_robots;
     if(config.enable_log)
