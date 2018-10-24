@@ -40,6 +40,8 @@ public:
    *
    * \param robotIndex Which robot among the robots
    *
+   * \param timestep Solver's timestep
+   *
    * \param stiffness Stiffness of the underlying SurfaceTransform task
    *
    * \param weight Weight of the underlying SurfaceTransform task
@@ -51,6 +53,7 @@ public:
   AdmittanceTask(const std::string & robotSurface,
                  const mc_rbdyn::Robots & robots,
                  unsigned robotIndex,
+                 double timestep,
                  double stiffness = 5.0,
                  double weight = 1000.0);
 
@@ -79,18 +82,6 @@ public:
   void admittance(const sva::ForceVecd & admittance)
   {
     admittance_ = admittance;
-  }
-
-  /*! \brief Set the task stiffness and damping
-   *
-   * Damping is set to the critical value of 2 * sqrt(stiffness).
-   *
-   * \param stiffness Task stiffness
-   *
-   */
-  void setCriticalGains(double stiffness)
-  {
-    setGains(stiffness, 2 * std::sqrt(stiffness));
   }
 
   /*! \brief Get the current pose of the robot surface in the inertial frame
@@ -153,14 +144,6 @@ public:
     return robots_.robot(rIndex_).surfaceWrench(surface_.name());
   }
 
-  /*! \brief Get the measured pressure in the surface frame
-   *
-   */
-  double measuredPressure() const
-  {
-    return measuredWrench().force()[2];
-  }
-
   /*! \brief Set the maximum translation velocity of the task */
   void maxLinearVel(const Eigen::Vector3d & maxLinearVel)
   {
@@ -191,21 +174,9 @@ public:
    * surface frame. See e.g. (Murray et al., 1994, CRC Press).
    *
    */
-  void refVelB(const sva::MotionVecd & velB)
+  void feedForwardVel(const sva::MotionVecd & feedForwardVel)
   {
-    feedforwardVelB_ = velB;
-  }
-
-  /*! \brief Set dimensional stiffness
-   *
-   * This function leaves damping unchanged.
-   *
-   * \param stiffness Dimensional stiffness as a motion vector
-   *
-   */
-  void stiffness(const sva::MotionVecd & stiffness)
-  {
-    return SurfaceTransformTask::stiffness(stiffness);
+    feedforwardVelB_ = feedForwardVel;
   }
 
 protected:
@@ -220,6 +191,8 @@ protected:
   sva::ForceVecd targetWrench_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   sva::ForceVecd wrenchError_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   sva::MotionVecd feedforwardVelB_ = sva::MotionVecd(Eigen::Vector6d::Zero());
+  sva::MotionVecd refVelB_ = sva::MotionVecd(Eigen::Vector6d::Zero());
+  double timestep_;
 
   void update() override;
 
@@ -242,13 +215,6 @@ protected:
    *
    */
   using SurfaceTransformTask::refVelB;
-
-  /** Don't use surface transform's stiffness() setter as it applies critical
-   * damping, which is usually not good for admittance control. Use
-   * setCriticalGains() if you do desire this behavior.
-   *
-   */
-  using SurfaceTransformTask::stiffness;
 
   /** Surface transform's target becomes internal to the task. Its setter is
    * now targetPose().

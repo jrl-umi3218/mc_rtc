@@ -64,6 +64,7 @@ void clampAndWarn(const std::string & taskName,
 AdmittanceTask::AdmittanceTask(const std::string & surfaceName,
                                const mc_rbdyn::Robots & robots,
                                unsigned int robotIndex,
+                               double timestep,
                                double stiffness,
                                double weight)
 : SurfaceTransformTask(surfaceName, robots, robotIndex, stiffness, weight), robots_(robots), rIndex_(robotIndex),
@@ -75,15 +76,34 @@ AdmittanceTask::AdmittanceTask(const std::string & surfaceName,
 
 void AdmittanceTask::update()
 {
+  // Compute wrench error
   wrenchError_ = measuredWrench() - targetWrench_;
 
+  // Compute linear and angular velocity based on wrench error and admittance 
   Eigen::Vector3d linearVel = admittance_.force().cwiseProduct(wrenchError_.force());
   Eigen::Vector3d angularVel = admittance_.couple().cwiseProduct(wrenchError_.couple());
+  
+  // Clamp both values in order to have a 'security'
   clampAndWarn(name_, linearVel, maxLinearVel_, "linear velocity", isClampingLinearVel_);
   clampAndWarn(name_, angularVel, maxAngularVel_, "angular velocity", isClampingAngularVel_);
+  
+  // Filter (Is the filtering part really necessary?)
+  refVelB_ = 0.8 * refVelB_ + 0.2 * sva::MotionVecd(linearVel, angularVel);
+  
+  // Compute position and rotation delta
+  sva::PTransformd delta(mc_rbdyn::rpyToMat(timestep_ * refVelB_.angular()), timestep_ * refVelB_.linear());
 
-  sva::MotionVecd velB = feedforwardVelB_ + sva::MotionVecd{angularVel, linearVel};
-  SurfaceTransformTask::refVelB(velB);
+  // Apply feed forward term
+  refVelB_ += feedforwardVelB_;
+ 
+  // Acceleration
+  SurfaceTransformTask::refAccel((refVelB_ - SurfaceTransformTask::refVelB()) / timestep_);
+
+  // Velocity
+  SurfaceTransformTask::refVelB(refVelB_);
+  
+  // Position
+  target(delta * target());
 }
 
 void AdmittanceTask::reset()
@@ -178,7 +198,7 @@ namespace
 static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
     "admittance",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      auto t = std::make_shared<mc_tasks::AdmittanceTask>(config("surface"), solver.robots(), config("robotIndex"));
+      auto t = std::make_shared<mc_tasks::AdmittanceTask>(config("surface"), solver.robots(), config("robotIndex"), config("timestep"));
       if(config.has("admittance"))
       {
         t->admittance(config("admittance"));
