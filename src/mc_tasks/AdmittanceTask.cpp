@@ -64,7 +64,6 @@ void clampAndWarn(const std::string & taskName,
 AdmittanceTask::AdmittanceTask(const std::string & surfaceName,
                                const mc_rbdyn::Robots & robots,
                                unsigned int robotIndex,
-                               double timestep,
                                double stiffness,
                                double weight)
 : SurfaceTransformTask(surfaceName, robots, robotIndex, stiffness, weight), robots_(robots), rIndex_(robotIndex),
@@ -198,7 +197,7 @@ namespace
 static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
     "admittance",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      auto t = std::make_shared<mc_tasks::AdmittanceTask>(config("surface"), solver.robots(), config("robotIndex"), config("timestep"));
+      auto t = std::make_shared<mc_tasks::AdmittanceTask>(config("surface"), solver.robots(), config("robotIndex"));
       if(config.has("admittance"))
       {
         t->admittance(config("admittance"));

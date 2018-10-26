@@ -58,6 +58,7 @@ void TrajectoryTaskGeneric<T>::addToSolver(mc_solver::QPSolver & solver)
   {
     solver.addTask(trajectoryT_.get());
     inSolver_ = true;
+    timestep_ = solver.dt();
   }
 }
 
@@ -82,7 +83,7 @@ void TrajectoryTaskGeneric<T>::refVel(const Eigen::VectorXd & vel)
 }
 
 template<typename T>
-Eigen::VectorXd TrajectoryTaskGeneric<T>::refVel() const
+const Eigen::VectorXd & TrajectoryTaskGeneric<T>::refVel() const
 {
     return trajectoryT_->refVel();
 }
@@ -95,7 +96,7 @@ void TrajectoryTaskGeneric<T>::refAccel(const Eigen::VectorXd & accel)
 }
 
 template<typename T>
-Eigen::VectorXd TrajectoryTaskGeneric<T>::refAccel() const
+const Eigen::VectorXd & TrajectoryTaskGeneric<T>::refAccel() const
 {
     return trajectoryT_->refAccel();
 }

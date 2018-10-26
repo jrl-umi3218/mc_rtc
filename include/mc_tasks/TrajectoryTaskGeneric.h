@@ -55,7 +55,7 @@ struct TrajectoryTaskGeneric : public MetaTask
   /*! \brief Get the trajectory reference velocity 
    *
    */
-  Eigen::VectorXd refVel() const;
+  const Eigen::VectorXd & refVel() const;
   
   /*! \brief Set the trajectory reference acceleration
    *
@@ -68,7 +68,7 @@ struct TrajectoryTaskGeneric : public MetaTask
   /*! \brief Get the trajectory reference acceleration
    *
    */
-  Eigen::VectorXd refAccel() const;
+  const Eigen::VectorXd & refAccel() const;
 
   /*! \brief Set the task stiffness/damping
    *
@@ -200,6 +200,7 @@ protected:
   std::shared_ptr<T> errorT = nullptr;
   Eigen::VectorXd refVel_;
   Eigen::VectorXd refAccel_;
+  double timestep_;
 
 private:
   Eigen::VectorXd stiffness_;

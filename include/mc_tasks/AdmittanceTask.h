@@ -40,8 +40,6 @@ public:
    *
    * \param robotIndex Which robot among the robots
    *
-   * \param timestep Solver's timestep
-   *
    * \param stiffness Stiffness of the underlying SurfaceTransform task
    *
    * \param weight Weight of the underlying SurfaceTransform task
@@ -53,7 +51,6 @@ public:
   AdmittanceTask(const std::string & robotSurface,
                  const mc_rbdyn::Robots & robots,
                  unsigned robotIndex,
-                 double timestep,
                  double stiffness = 5.0,
                  double weight = 1000.0);
 
@@ -192,7 +189,6 @@ protected:
   sva::ForceVecd wrenchError_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   sva::MotionVecd feedforwardVelB_ = sva::MotionVecd(Eigen::Vector6d::Zero());
   sva::MotionVecd refVelB_ = sva::MotionVecd(Eigen::Vector6d::Zero());
-  double timestep_;
 
   void update() override;
 
