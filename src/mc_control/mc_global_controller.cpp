@@ -324,7 +324,16 @@ bool MCGlobalController::run()
       {
         next_controller_->grippers[g.first]->setCurrentQ(g.second->curPosition());
       }
-      next_controller_->reset({controller_->robot().mbc().q});
+      if(config.update_real && robot().encoderValues().size())
+      {
+        auto q = real_robots->robot().mbc().q;
+        q[0] = controller_->robot().mbc().q[0];
+        next_controller_->reset({q});
+      }
+      else
+      {
+        next_controller_->reset({controller_->robot().mbc().q});
+      }
       controller_ = next_controller_;
       /** Initialize publishers again if the environment changed */
       init_publishers();
