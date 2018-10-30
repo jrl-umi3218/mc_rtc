@@ -5,6 +5,9 @@
 namespace mc_tasks
 {
 
+namespace force
+{
+
 /*! \brief Track center-of-pressure (CoP) references at contact
  *
  * The CoPTask is basically an AdmittanceTask where contact wrenches are
@@ -155,5 +158,7 @@ private:
 
   using AdmittanceTask::targetWrench;
 };
+
+} // namespace force
 
 } // namespace mc_tasks
