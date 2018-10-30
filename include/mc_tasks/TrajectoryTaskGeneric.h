@@ -200,17 +200,17 @@ protected:
   std::shared_ptr<T> errorT = nullptr;
   Eigen::VectorXd refVel_;
   Eigen::VectorXd refAccel_;
-  double timestep_;
+  bool inSolver_ = false;
+  std::shared_ptr<tasks::qp::TrajectoryTask> trajectoryT_ = nullptr;
+
+protected:
+  virtual void addToSolver(mc_solver::QPSolver & solver) override;
 
 private:
   Eigen::VectorXd stiffness_;
   Eigen::VectorXd damping_;
   double weight_;
-  bool inSolver_ = false;
   std::shared_ptr<tasks::qp::JointsSelector> selectorT_ = nullptr;
-  std::shared_ptr<tasks::qp::TrajectoryTask> trajectoryT_ = nullptr;
-
-  virtual void addToSolver(mc_solver::QPSolver & solver) override;
 
   virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
 

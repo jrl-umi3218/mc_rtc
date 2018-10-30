@@ -228,8 +228,6 @@ private:
    */
   void generateBS();
 
-  void addToSolver(mc_solver::QPSolver & solver) override;
-
   void removeFromSolver(mc_solver::QPSolver & solver) override;
 
   void update() override;
@@ -243,6 +241,8 @@ protected:
    * \param gui
    */
   void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
+
+  void addToSolver(mc_solver::QPSolver & solver) override;
 
 public:
   const mc_rbdyn::Robots & robots;

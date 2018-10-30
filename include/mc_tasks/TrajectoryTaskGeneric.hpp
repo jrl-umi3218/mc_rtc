@@ -58,7 +58,6 @@ void TrajectoryTaskGeneric<T>::addToSolver(mc_solver::QPSolver & solver)
   {
     solver.addTask(trajectoryT_.get());
     inSolver_ = true;
-    timestep_ = solver.dt();
   }
 }
 
