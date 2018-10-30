@@ -134,12 +134,12 @@ AddRemoveContactTaskTester(mc_tasks::AddContactTask, "addContact")
     AddRemoveContactTaskTester(mc_tasks::RemoveContactTask, "removeContact")
 
         template<>
-        struct TaskTester<mc_tasks::ComplianceTask>
+        struct TaskTester<mc_tasks::force::ComplianceTask>
 {
   mc_tasks::MetaTaskPtr make_ref()
   {
-    auto t = std::shared_ptr<mc_tasks::ComplianceTask>(
-        new mc_tasks::ComplianceTask(*robots, 0, "R_WRIST_Y_S", solver.dt(), dof, stiffness, weight, forceThresh,
+    auto t = std::shared_ptr<mc_tasks::force::ComplianceTask>(
+        new mc_tasks::force::ComplianceTask(*robots, 0, "RARM_LINK6", solver.dt(), dof, stiffness, weight, forceThresh,
                                      torqueThresh, forceGain, torqueGain));
     t->setTargetWrench(wrench);
     return t;
@@ -166,8 +166,8 @@ AddRemoveContactTaskTester(mc_tasks::AddContactTask, "addContact")
 
   void check(const mc_tasks::MetaTaskPtr & ref_p, const mc_tasks::MetaTaskPtr & loaded_p)
   {
-    auto ref = std::dynamic_pointer_cast<mc_tasks::ComplianceTask>(ref_p);
-    auto loaded = std::dynamic_pointer_cast<mc_tasks::ComplianceTask>(loaded_p);
+    auto ref = std::dynamic_pointer_cast<mc_tasks::force::ComplianceTask>(ref_p);
+    auto loaded = std::dynamic_pointer_cast<mc_tasks::force::ComplianceTask>(loaded_p);
     BOOST_REQUIRE(ref);
     BOOST_REQUIRE(loaded);
     BOOST_CHECK(ref->dof().isApprox(loaded->dof(), 1e-6));
@@ -529,7 +529,7 @@ struct TaskTester<mc_tasks::VectorOrientationTask>
 typedef boost::mpl::list<mc_tasks::CoMTask,
                          mc_tasks::AddContactTask,
                          mc_tasks::RemoveContactTask,
-                         mc_tasks::ComplianceTask,
+                         mc_tasks::force::ComplianceTask,
                          mc_tasks::OrientationTask,
                          mc_tasks::PositionTask,
                          mc_tasks::EndEffectorTask,

@@ -1,10 +1,12 @@
-#ifndef _H_COMPLIANCETASK_H_
-#define _H_COMPLIANCETASK_H_
+#pragma once
 
 #include <mc_tasks/EndEffectorTask.h>
 #include <mc_tasks/MetaTask.h>
 
 namespace mc_tasks
+{
+
+namespace force
 {
 
 namespace
@@ -21,7 +23,7 @@ static const std::pair<double, double> defaultTGain = {0.2, 0.05};
  * This is a force-compliant variant of mc_tasks::AddContactTask that should be
  * used when a force sensor is available.
  */
-struct MC_TASKS_DLLAPI ComplianceTask : MetaTask
+struct MC_TASKS_DLLAPI ComplianceTask : MetaTask 
 {
 public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -253,6 +255,7 @@ private:
   void update() override;
 };
 
+} // namespace force
+
 } // namespace mc_tasks
 
-#endif

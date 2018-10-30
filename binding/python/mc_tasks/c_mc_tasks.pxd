@@ -102,7 +102,7 @@ cdef extern from "<mc_tasks/RelativeEndEffectorTask.h>" namespace "mc_tasks":
     RelativeEndEffectorTask(const string &, const c_mc_rbdyn.Robots &,
                     unsigned int, const string &, double, double)
 
-cdef extern from "<mc_tasks/ComplianceTask.h>" namespace "mc_tasks":
+cdef extern from "<mc_tasks/ComplianceTask.h>" namespace "mc_tasks::force":
   pair[double, double] defaultFGain
   pair[double, double] defaultTGain
 

@@ -45,7 +45,7 @@ void AddRemoveContactStateImplHelper<mc_tasks::AddContactTask>::make_run_impl(Ad
                                                                               mc_rbdyn::Contact & contact);
 
 template<>
-void AddRemoveContactStateImplHelper<mc_tasks::ComplianceTask>::make_run_impl(AddRemoveContactStateImpl & impl,
+void AddRemoveContactStateImplHelper<mc_tasks::force::ComplianceTask>::make_run_impl(AddRemoveContactStateImpl & impl,
                                                                               Controller & ctl,
                                                                               mc_rbdyn::Contact & contact);
 
@@ -124,7 +124,7 @@ struct AddRemoveContactStateImpl
       {
         if(isCompliant)
         {
-          AddRemoveContactStateImplHelper<mc_tasks::ComplianceTask>::make_run(*this, ctl, contact);
+          AddRemoveContactStateImplHelper<mc_tasks::force::ComplianceTask>::make_run(*this, ctl, contact);
         }
         else
         {
@@ -240,14 +240,14 @@ void AddRemoveContactStateImplHelper<mc_tasks::AddContactTask>::make_run_impl(Ad
 }
 
 template<>
-void AddRemoveContactStateImplHelper<mc_tasks::ComplianceTask>::make_run_impl(AddRemoveContactStateImpl & impl,
+void AddRemoveContactStateImplHelper<mc_tasks::force::ComplianceTask>::make_run_impl(AddRemoveContactStateImpl & impl,
                                                                               Controller & ctl,
                                                                               mc_rbdyn::Contact & contact)
 {
   auto fsm_contact_ = new Contact(Contact::from_mc_rbdyn(ctl, contact));
   double vel_thresh_ = impl.config_("velocity", 1e-4);
   impl.run_ = [fsm_contact_, vel_thresh_](AddRemoveContactStateImpl & impl, Controller & ctl) mutable {
-    auto t = std::static_pointer_cast<mc_tasks::ComplianceTask>(impl.task_);
+    auto t = std::static_pointer_cast<mc_tasks::force::ComplianceTask>(impl.task_);
     if(t->speed().norm() < vel_thresh_ && t->eval().norm() < t->getTargetWrench().vector().norm() / 2 && fsm_contact_)
     {
       ctl.addContact(*fsm_contact_);
