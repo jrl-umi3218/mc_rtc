@@ -301,6 +301,20 @@ protected:
     default_impl("Transform", id);
   }
 
+  /** Should display X,Y,theta in a 3D environment
+   *
+   * \p requestId should be in requests instead of \p id
+   *
+   * bool \p ro indicates whether this point is interactive or not
+   */
+  virtual void xytheta(const ElementId & id,
+                       const ElementId & /*requestId*/,
+                       bool /*ro */,
+                       const Eigen::Vector3d & /*xytheta*/)
+  {
+    default_impl("XYTheta", id);
+  }
+
   /** Should display a form to send schema-based request to the server
    *
    * \p schema is the schema directory relative to mc_rtc JSON schema installation
@@ -435,6 +449,9 @@ private:
 
   /** Handle details of Transform elements */
   void handle_transform(const ElementId & id, const mc_rtc::Configuration & gui, const mc_rtc::Configuration & data);
+
+  /** Handle details of XYTheta elements */
+  void handle_xytheta(const ElementId & id, const mc_rtc::Configuration & gui, const mc_rtc::Configuration & data);
 
   /** Handle details of Form elements */
   void handle_form(const ElementId & id, const mc_rtc::Configuration & gui);

@@ -274,6 +274,9 @@ void ControllerClient::handle_widget(const ElementId & id, const mc_rtc::Configu
       case Elements::Form:
         handle_form(id, gui("form"));
         break;
+      case Elements::XYTheta:
+        handle_xytheta(id, gui, data);
+        break;
       default:
         LOG_ERROR("Type " << static_cast<int>(type) << " is not handlded by this ControllerClient")
         break;
@@ -441,6 +444,25 @@ void ControllerClient::handle_transform(const ElementId & id,
     array_input(id, {"qw", "qx", "qy", "qz", "tx", "ty", "tz"}, vec);
   }
   transform({id.category, id.name + "_transform"}, id, ro, pos);
+}
+
+void ControllerClient::handle_xytheta(const ElementId & id,
+                                      const mc_rtc::Configuration & gui,
+                                      const mc_rtc::Configuration & data)
+{
+  bool ro = gui("ro", false);
+  Eigen::Vector3d vec = data("data");
+  const std::vector<std::string> & label = {"X", "Y", "Theta"};
+
+  if(ro)
+  {
+    array_label(id, label, vec);
+  }
+  else
+  {
+    array_input(id, label, vec);
+  }
+  xytheta({id.category, id.name + "_xytheta"}, id, ro, vec);
 }
 
 void ControllerClient::handle_form(const ElementId & id, const mc_rtc::Configuration & gui)
