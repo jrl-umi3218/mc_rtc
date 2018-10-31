@@ -33,7 +33,7 @@ struct TestServer
   sva::PTransformd rotInteractive_{Eigen::Vector3d{0., 0., 1.}};
   sva::PTransformd static_{sva::RotZ(-M_PI), Eigen::Vector3d(1., 0., 0.)};
   sva::PTransformd interactive_{Eigen::Vector3d{0., 1., 0.}};
-  Eigen::Vector3d xytheta_{1., 1., M_PI / 3};
+  Eigen::Vector3d xytheta_{0., 2., M_PI / 3};
 };
 
 TestServer::TestServer()
