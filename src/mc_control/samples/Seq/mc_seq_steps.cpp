@@ -947,7 +947,7 @@ bool enter_adjustGripperP::eval(MCSeqController & ctl)
   ctl.solver().addTask(ctl.adjustPositionTaskPid.get());
 
   Eigen::Vector3d oriModelError = sva::rotationError(
-      ctl.robot().mbc().bodyPosW[ctl.moveContactTask->robotBodyIndex].rotation(), ctl.moveContactTask->targetOri, 1e-7);
+      ctl.robot().mbc().bodyPosW[ctl.moveContactTask->robotBodyIndex].rotation(), ctl.moveContactTask->targetOri);
   Eigen::Vector3d oriModelVel = M_0_s.angular();
   ctl.adjustOrientationTaskPid->error(oriModelError);
   ctl.adjustOrientationTaskPid->errorI(Eigen::Vector3d(0, 0, 0));
@@ -984,7 +984,7 @@ bool live_adjustGripperT::eval(MCSeqController & ctl)
   Eigen::VectorXd velModel = M_0_s.linear();
   Eigen::Vector3d error = ctl.moveContactTask->preTargetPos - X_0_s.translation();
 
-  Eigen::Vector3d oriModelError = sva::rotationError(X_0_b.rotation(), ctl.moveContactTask->targetOri, 1e-7);
+  Eigen::Vector3d oriModelError = sva::rotationError(X_0_b.rotation(), ctl.moveContactTask->targetOri);
   Eigen::Vector3d oriModelVel = M_0_s.angular();
 
   if(ctl.isAdjust)
