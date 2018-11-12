@@ -102,7 +102,15 @@ void configure_pos_task(std::shared_ptr<mc_tasks::PositionTask> & t,
   }
   if(config.has("positionStiffness"))
   {
-    t->stiffness(static_cast<double>(config("positionStiffness")));
+    if(config("positionStiffness").size())
+    {
+      Eigen::Vector3d dimStiffness = config("positionStiffness");
+      t->stiffness(dimStiffness);
+    }
+    else
+    {
+      t->stiffness(static_cast<double>(config("positionStiffness")));
+    }
   }
 }
 
@@ -125,7 +133,15 @@ void configure_ori_task(std::shared_ptr<mc_tasks::OrientationTask> & t,
   }
   if(config.has("orientationStiffness"))
   {
-    t->stiffness(static_cast<double>(config("orientationStiffness")));
+    if(config("orientationStiffness").size())
+    {
+      Eigen::Vector3d dimStiffness = config("orientationStiffness");
+      t->stiffness(dimStiffness);
+    }
+    else
+    {
+      t->stiffness(static_cast<double>(config("orientationStiffness")));
+    }
   }
 }
 
