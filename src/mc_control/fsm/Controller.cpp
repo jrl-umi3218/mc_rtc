@@ -368,6 +368,11 @@ void Controller::addCollisions(const std::string & r1,
     solver().addConstraintSet(*collision_constraints_[{r1, r2}]);
   }
   auto & cc = collision_constraints_[{r1, r2}];
+  LOG_INFO("[FSM] Add collisions " << r1 << "/" << r2)
+  for(const auto & c : collisions)
+  {
+    LOG_INFO("[FSM] - " << r1 << "::" << c.body1 << "/" << r2 << "::" << c.body2)
+  }
   cc->addCollisions(solver(), collisions);
 }
 
@@ -380,6 +385,11 @@ void Controller::removeCollisions(const std::string & r1,
     return;
   }
   auto & cc = collision_constraints_[{r1, r2}];
+  LOG_INFO("[FSM] Remove collisions " << r1 << "/" << r2)
+  for(const auto & c : collisions)
+  {
+    LOG_INFO("[FSM] - " << r1 << "::" << c.body1 << "/" << r2 << "::" << c.body2)
+  }
   cc->removeCollisions(solver(), collisions);
 }
 
@@ -390,6 +400,7 @@ void Controller::removeCollisions(const std::string & r1, const std::string & r2
     return;
   }
   auto & cc = collision_constraints_[{r1, r2}];
+  LOG_INFO("[FSM] Remove all collisions " << r1 << "/" << r2)
   cc->reset();
 }
 

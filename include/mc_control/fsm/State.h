@@ -54,20 +54,19 @@ struct MC_CONTROL_FSM_DLLAPI State
    * - AddContacts/RemoveContacts: add and remove contacts during the state's
    *   start
    * - AddContactsAfter/RemoveContactsAfter: add and remove contacts during the
+   * - AddCollisions/RemoveCollisions: add and remove collisions during the state's
+   *   start
+   * - AddCollisionsAfter/RemoveCollisionsAfter: add and remove collisions during the
    *   state's teardown
    * - RemovePostureTask: if true, remove the robot posture task at the state's
    *   start
    */
   void configure_(const mc_rtc::Configuration & config);
 
-  /** Common implementation, takes care of AddContacts/RemoveContacts and
-   * RemovePostureTask
-   */
+  /** Common implementation, takes care of common options */
   void start_(Controller & ctl);
 
-  /** Common implementation, takes care of AddContactsAfter/RemoveContactsAfter
-   * and RemovePostureTask
-   */
+  /** Common implementation, takes care of common options */
   void teardown_(Controller & ctl);
 
   /** Called every iteration until it returns true */
@@ -135,6 +134,10 @@ protected:
   mc_rtc::Configuration remove_contacts_config_;
   mc_rtc::Configuration add_contacts_after_config_;
   mc_rtc::Configuration remove_contacts_after_config_;
+  mc_rtc::Configuration add_collisions_config_;
+  mc_rtc::Configuration remove_collisions_config_;
+  mc_rtc::Configuration add_collisions_after_config_;
+  mc_rtc::Configuration remove_collisions_after_config_;
   bool remove_posture_task_ = false;
 
 private:

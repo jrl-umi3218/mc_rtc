@@ -25,6 +25,22 @@ void State::configure_(const mc_rtc::Configuration & config)
   {
     add_contacts_after_config_.load(config("AddContactsAfter"));
   }
+  if(config.has("RemoveCollisions"))
+  {
+    remove_collisions_config_.load(config("RemoveCollisions"));
+  }
+  if(config.has("AddCollisions"))
+  {
+    add_collisions_config_.load(config("AddCollisions"));
+  }
+  if(config.has("RemoveCollisionsAfter"))
+  {
+    remove_collisions_after_config_.load(config("RemoveCollisionsAfter"));
+  }
+  if(config.has("AddCollisionsAfter"))
+  {
+    add_collisions_after_config_.load(config("AddCollisionsAfter"));
+  }
   config("RemovePostureTask", remove_posture_task_);
   configure(config);
 }
@@ -47,6 +63,41 @@ void State::start_(Controller & ctl)
     {
       std::cout << "Add contact " << c.r1Surface << "/" << c.r2Surface << " (dof: " << c.dof.transpose() << ")\n";
       ctl.addContact(c);
+    }
+  }
+  if(remove_collisions_config_.size())
+  {
+    for(const auto & c : remove_collisions_config_)
+    {
+      std::string r1 = c("r1");
+      std::string r2 = r1;
+      if(c.has("r2"))
+      {
+        r2 = static_cast<std::string>(c("r2"));
+      }
+      if(c.has("collisions"))
+      {
+        std::vector<mc_rbdyn::Collision> collisions = c("collisions");
+        ctl.removeCollisions(r1, r2, collisions);
+      }
+      else
+      {
+        ctl.removeCollisions(r1, r2);
+      }
+    }
+  }
+  if(add_collisions_config_.size())
+  {
+    for(const auto & c : add_collisions_config_)
+    {
+      std::string r1 = c("r1");
+      std::string r2 = r1;
+      if(c.has("r2"))
+      {
+        r2 = static_cast<std::string>(c("r2"));
+      }
+      std::vector<mc_rbdyn::Collision> collisions = c("collisions");
+      ctl.addCollisions(r1, r2, collisions);
     }
   }
   if(remove_posture_task_)
@@ -78,6 +129,41 @@ void State::teardown_(Controller & ctl)
     {
       std::cout << "Add contact " << c.r1Surface << "/" << c.r2Surface << " (dof: " << c.dof.transpose() << ")\n";
       ctl.addContact(c);
+    }
+  }
+  if(remove_collisions_after_config_.size())
+  {
+    for(const auto & c : remove_collisions_after_config_)
+    {
+      std::string r1 = c("r1");
+      std::string r2 = r1;
+      if(c.has("r2"))
+      {
+        r2 = static_cast<std::string>(c("r2"));
+      }
+      if(c.has("collisions"))
+      {
+        std::vector<mc_rbdyn::Collision> collisions = c("collisions");
+        ctl.removeCollisions(r1, r2, collisions);
+      }
+      else
+      {
+        ctl.removeCollisions(r1, r2);
+      }
+    }
+  }
+  if(add_collisions_after_config_.size())
+  {
+    for(const auto & c : add_collisions_after_config_)
+    {
+      std::string r1 = c("r1");
+      std::string r2 = r1;
+      if(c.has("r2"))
+      {
+        r2 = static_cast<std::string>(c("r2"));
+      }
+      std::vector<mc_rbdyn::Collision> collisions = c("collisions");
+      ctl.addCollisions(r1, r2, collisions);
     }
   }
   teardown(ctl);
