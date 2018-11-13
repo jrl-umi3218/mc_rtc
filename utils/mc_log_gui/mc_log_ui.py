@@ -39,11 +39,13 @@ def read_flat(f):
     def read_bool(fd):
         return ctypes.c_bool.from_buffer_copy(fd.read(ctypes.sizeof(ctypes.c_bool))).value
     def read_string(fd, size):
+        if size == 0:
+            return None
         return fd.read(size).decode('ascii')
     def read_array(fd, size):
         return np.frombuffer(fd.read(size * ctypes.sizeof(ctypes.c_double)), np.double)
     def read_string_array(fd, size):
-        [ read_string(fd, read_size(fd)) for i in range(size) ]
+        return [ read_string(fd, read_size(fd)) for i in range(size) ]
     data = {}
     with open(f, 'rb') as fd:
         nrEntries = read_size(fd)
@@ -53,7 +55,15 @@ def read_flat(f):
             if is_numeric:
                 data[key] = read_array(fd, read_size(fd))
             else:
-                data[key] = read_string_array(fd, read_size(fd))
+                entries = read_string_array(fd, read_size(fd))
+                entries_to_int = {None: None}
+                i = 0
+                for v in entries:
+                    if v in entries_to_int:
+                        continue
+                    entries_to_int[v] = i
+                    i += 1
+                data[key] = [ entries_to_int[v] for v in entries ]
     return data
 
 class MCLogJointDialog(QtGui.QDialog):
