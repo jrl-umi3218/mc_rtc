@@ -209,6 +209,14 @@ void AddRemoveContactStateImplHelper<mc_tasks::AddContactTask>::make_run_impl(Ad
     {
       if(fsm_contact_)
       {
+        if(d <= 0)
+        {
+          LOG_INFO("Geometric contact detected")
+        }
+        else
+        {
+          LOG_INFO("Force contact detected")
+        }
         ctl.addContact(*fsm_contact_);
         auto t = std::static_pointer_cast<mc_tasks::AddContactTask>(impl.task_);
         t->speed(0.0);
