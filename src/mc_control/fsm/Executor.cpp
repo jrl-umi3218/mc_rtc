@@ -36,6 +36,16 @@ void Executor::init(Controller & ctl, const mc_rtc::Configuration & config, cons
                                       [this](const mc_rtc::Configuration & c) { this->resume(c("State")); },
                                       mc_rtc::gui::FormDataComboInput("State", true, {"states"})));
   }
+  std::string log_entry = "Executor";
+  if(name_.size())
+  {
+    log_entry += "_" + name_;
+  }
+  else
+  {
+    log_entry += "_Main";
+  }
+  ctl.logger().addLogEntry(log_entry, [this]() { return curr_state_; });
 }
 
 bool Executor::run(Controller & ctl, bool keep_state)
@@ -117,6 +127,16 @@ void Executor::teardown(Controller & ctl)
     }
     ctl.gui()->removeCategory(category);
   }
+  std::string log_entry = "Executor";
+  if(name_.size())
+  {
+    log_entry += "_" + name_;
+  }
+  else
+  {
+    log_entry += "_Main";
+  }
+  ctl.logger().removeLogEntry(log_entry);
 }
 
 bool Executor::complete(Controller & ctl, bool keep_state)
