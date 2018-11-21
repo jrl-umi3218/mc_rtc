@@ -64,25 +64,68 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   }
   else
   {
-    std::string robot_name = "HRP2DRC";
-    config("MainRobot", robot_name);
-    if(mc_rbdyn::RobotLoader::has_robot(robot_name))
+    if(!config.has("MainRobot") || config("MainRobot").size() == 0)
     {
-      try
+      std::string robot_name = config("MainRobot", std::string{"HRP2DRC"});
+      if(mc_rbdyn::RobotLoader::has_robot(robot_name))
       {
-        main_robot_module = mc_rbdyn::RobotLoader::get_robot_module(robot_name);
+        try
+        {
+          main_robot_module = mc_rbdyn::RobotLoader::get_robot_module(robot_name);
+        }
+        catch(const mc_rtc::LoaderException & exc)
+        {
+          LOG_ERROR("Failed to create " << robot_name << " to use as a main robot")
+          LOG_ERROR_AND_THROW(std::runtime_error, "Failed to create robot")
+        }
       }
-      catch(const mc_rtc::LoaderException & exc)
+      else
       {
-        LOG_ERROR("Failed to create " << robot_name << " to use as a main robot")
-        LOG_ERROR_AND_THROW(std::runtime_error, "Failed to create robot")
+        LOG_ERROR("Trying to use " << robot_name << " as main robot but this robot cannot be loaded")
+        LOG_ERROR_AND_THROW(std::runtime_error, "Main robot not available")
       }
     }
     else
     {
-      LOG_ERROR("Trying to use " << robot_name << " as main robot but this robot cannot be loaded")
-      LOG_ERROR_AND_THROW(std::runtime_error, "Main robot not available")
+      std::vector<std::string> params = config("MainRobot");
+      if(mc_rbdyn::RobotLoader::has_robot(params[0]))
+      {
+        try
+        {
+          if(params.size() == 1)
+          {
+            main_robot_module = mc_rbdyn::RobotLoader::get_robot_module(params[0]);
+          }
+          else if(params.size() == 2)
+          {
+            main_robot_module = mc_rbdyn::RobotLoader::get_robot_module(params[0], params[1]);
+          }
+          else if(params.size() == 3)
+          {
+            main_robot_module = mc_rbdyn::RobotLoader::get_robot_module(params[0], params[1], params[2]);
+          }
+          else
+          {
+            throw mc_rtc::LoaderException("Too many parameters given to MainRobot");
+          }
+        }
+        catch(const mc_rtc::LoaderException &)
+        {
+          LOG_ERROR("Failed to create main robot using parameters " << config("MainRobot").dump())
+          LOG_ERROR_AND_THROW(std::runtime_error, "Failed to create robot")
+        }
+      }
+      else
+      {
+        LOG_ERROR("Trying to use " << params[0] << " as main robot but this robot cannot be loaded")
+        LOG_ERROR_AND_THROW(std::runtime_error, "Main robot not available")
+      }
     }
+  }
+  main_robot_module->expand_stance();
+  if(main_robot_module->ref_joint_order().size() == 0)
+  {
+    main_robot_module->make_default_ref_joint_order();
   }
 
   controller_module_paths.resize(0);
@@ -121,7 +164,10 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   }
   else
   {
-    update_real_sensor_name = main_robot_module->bodySensors()[0].name();
+    if(main_robot_module->bodySensors().size())
+    {
+      update_real_sensor_name = main_robot_module->bodySensors()[0].name();
+    }
   }
   config("Default", initial_controller);
   config("Timestep", timestep);
