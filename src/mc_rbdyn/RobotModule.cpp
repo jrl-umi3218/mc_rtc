@@ -52,7 +52,7 @@ void RobotModule::make_default_ref_joint_order()
   _ref_joint_order.resize(0);
   for(const auto & j : mb.joints())
   {
-    if(j.dof() >= 1 && j.type() == rbd::Joint::Free)
+    if(j.dof() >= 1 && j.type() != rbd::Joint::Free)
     {
       _ref_joint_order.push_back(j.name());
     }
