@@ -131,6 +131,16 @@ struct AddRemoveContactStateImpl
           AddRemoveContactStateImplHelper<mc_tasks::AddContactTask>::make_run(*this, ctl, contact);
         }
       }
+      std::string name = contact.r1Surface()->name() + "_" + contact.r2Surface()->name() + "_com";
+      if(removeContact)
+      {
+        name = "RemoveContact_" + name;
+      }
+      else
+      {
+        name = "AddContact_" + name;
+      }
+      com_task_->name(name);
       ctl.solver().addTask(com_task_);
     }
     else
