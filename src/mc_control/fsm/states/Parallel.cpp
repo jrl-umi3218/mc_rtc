@@ -54,11 +54,20 @@ void ParallelState::start(Controller & ctl)
   {
     LOG_ERROR_AND_THROW(std::runtime_error, "ParallelState requires at least one state to run")
   }
+  for(const auto & s : states)
+  {
+    if(!ctl.factory().hasState(s))
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, name() + ": " + s + " is not available")
+    }
+  }
   auto states_config = config_("configs", mc_rtc::Configuration{});
   auto delays = config_("delays", mc_rtc::Configuration{});
   for(auto & s : states)
   {
-    states_.emplace_back(ctl, s, delays(s, 0.0), states_config(s, mc_rtc::Configuration{}));
+    double delay = delays(s, 0.0);
+    auto cfg = states_config(s, mc_rtc::Configuration{});
+    states_.emplace_back(ctl, s, delay, cfg);
   }
 }
 
