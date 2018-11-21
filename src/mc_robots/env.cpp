@@ -42,6 +42,8 @@ EnvRobotModule::EnvRobotModule(const std::string & env_path, const std::string &
         }
       }
     }
+    expand_stance();
+    make_default_ref_joint_order();
   }
   else
   {
