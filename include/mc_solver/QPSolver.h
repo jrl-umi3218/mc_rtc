@@ -29,6 +29,10 @@ struct StateBuilder;
 namespace mc_solver
 {
 
+#pragma GCC diagnostic push
+// Work around GCC bug see: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=43407
+#pragma GCC diagnostic ignored "-Wattributes"
+
 /** Describe the type of feedback used to control the robot */
 enum class MC_SOLVER_DLLAPI FeedbackType
 {
@@ -39,6 +43,8 @@ enum class MC_SOLVER_DLLAPI FeedbackType
   /** Joints + encoder velocity obtained from numerical differentiation */
   JointsWVelocity
 };
+
+#pragma GCC diagnostic pop
 
 /** \class QPSolver
  *
