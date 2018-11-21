@@ -169,44 +169,6 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, con
       init_pos_.resize(0);
     }
   }
-  /** GUI information */
-  if(gui_)
-  {
-    auto all_states = factory_.states();
-    std::sort(all_states.begin(), all_states.end());
-    gui_->data().add("states", all_states);
-    gui_->addElement({"FSM"}, mc_rtc::gui::Label("Contacts", [this]() {
-                       std::string ret;
-                       for(const auto & c : contacts_)
-                       {
-                         std::stringstream ss;
-                         ss << c.r1Surface << "/" << c.r2Surface << " | " << c.dof.transpose() << "\n";
-                         ret += ss.str();
-                       }
-                       if(ret.size())
-                       {
-                         ret.pop_back();
-                       }
-                       return ret;
-                     }));
-    gui_->removeElement({"Contacts", "Add"}, "Add contact");
-    gui_->addElement(
-        {"Contacts", "Add"},
-        mc_rtc::gui::Form("Add contact",
-                          [this](const mc_rtc::Configuration & data) {
-                            std::string r0 = data("R0");
-                            std::string r1 = data("R1");
-                            std::string r0Surface = data("R0 surface");
-                            std::string r1Surface = data("R1 surface");
-                            Eigen::Vector6d dof = data("dof", Eigen::Vector6d::Ones().eval());
-                            addContact({r0, r1, r0Surface, r1Surface, dof});
-                          },
-                          mc_rtc::gui::FormDataComboInput{"R0", true, {"robots"}},
-                          mc_rtc::gui::FormDataComboInput{"R0 surface", true, {"surfaces", "$R0"}},
-                          mc_rtc::gui::FormDataComboInput{"R1", true, {"robots"}},
-                          mc_rtc::gui::FormDataComboInput{"R1 surface", true, {"surfaces", "$R1"}},
-                          mc_rtc::gui::FormArrayInput<Eigen::Vector6d>{"dof", false, Eigen::Vector6d::Ones()}));
-  }
 }
 
 bool Controller::run()
@@ -268,6 +230,44 @@ void Controller::reset(const ControllerResetData & data)
     q[0] = init_pos_;
   }
   MCController::reset({q});
+  /** GUI information */
+  if(gui_)
+  {
+    auto all_states = factory_.states();
+    std::sort(all_states.begin(), all_states.end());
+    gui_->data().add("states", all_states);
+    gui_->addElement({"FSM"}, mc_rtc::gui::Label("Contacts", [this]() {
+                       std::string ret;
+                       for(const auto & c : contacts_)
+                       {
+                         std::stringstream ss;
+                         ss << c.r1Surface << "/" << c.r2Surface << " | " << c.dof.transpose() << "\n";
+                         ret += ss.str();
+                       }
+                       if(ret.size())
+                       {
+                         ret.pop_back();
+                       }
+                       return ret;
+                     }));
+    gui_->removeElement({"Contacts", "Add"}, "Add contact");
+    gui_->addElement(
+        {"Contacts", "Add"},
+        mc_rtc::gui::Form("Add contact",
+                          [this](const mc_rtc::Configuration & data) {
+                            std::string r0 = data("R0");
+                            std::string r1 = data("R1");
+                            std::string r0Surface = data("R0 surface");
+                            std::string r1Surface = data("R1 surface");
+                            Eigen::Vector6d dof = data("dof", Eigen::Vector6d::Ones().eval());
+                            addContact({r0, r1, r0Surface, r1Surface, dof});
+                          },
+                          mc_rtc::gui::FormDataComboInput{"R0", true, {"robots"}},
+                          mc_rtc::gui::FormDataComboInput{"R0 surface", true, {"surfaces", "$R0"}},
+                          mc_rtc::gui::FormDataComboInput{"R1", true, {"robots"}},
+                          mc_rtc::gui::FormDataComboInput{"R1 surface", true, {"surfaces", "$R1"}},
+                          mc_rtc::gui::FormArrayInput<Eigen::Vector6d>{"dof", false, Eigen::Vector6d::Ones()}));
+  }
   startIdleState();
 }
 
