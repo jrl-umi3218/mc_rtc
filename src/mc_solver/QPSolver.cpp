@@ -9,9 +9,9 @@
 #include <Tasks/Bounds.h>
 
 #include <RBDyn/EulerIntegration.h>
+#include <RBDyn/FA.h>
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
-#include <RBDyn/FA.h>
 
 namespace
 {
