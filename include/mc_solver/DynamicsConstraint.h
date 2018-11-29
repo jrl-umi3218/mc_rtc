@@ -55,6 +55,11 @@ public:
     return inSolver_;
   }
 
+  unsigned int robotIndex() const
+  {
+    return robotIndex_;
+  }
+
 public:
   /** Motion constraint: if the robot contains flexibilites, it will take them
    * into account, else will be a classical one **/
@@ -70,6 +75,8 @@ private:
   void build_constr(const mc_rbdyn::Robots & robots, unsigned int robotIndex, bool infTorque);
   /** Boolean: is this constraint inserted in the solver? */
   bool inSolver_;
+  /** Robot index for the constraint */
+  unsigned int robotIndex_;
 };
 
 } // namespace mc_solver

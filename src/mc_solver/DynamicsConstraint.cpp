@@ -10,7 +10,7 @@ DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots,
                                        unsigned int robotIndex,
                                        double timeStep,
                                        bool infTorque)
-: KinematicsConstraint(robots, robotIndex, timeStep), inSolver_(false)
+: KinematicsConstraint(robots, robotIndex, timeStep), inSolver_(false), robotIndex_(robotIndex)
 {
   build_constr(robots, robotIndex, infTorque);
 }
@@ -21,7 +21,7 @@ DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots,
                                        const std::array<double, 3> & damper,
                                        double velocityPercent,
                                        bool infTorque)
-: KinematicsConstraint(robots, robotIndex, timeStep, damper, velocityPercent), inSolver_(false)
+: KinematicsConstraint(robots, robotIndex, timeStep, damper, velocityPercent), inSolver_(false), robotIndex_(robotIndex)
 {
   build_constr(robots, robotIndex, infTorque);
 }

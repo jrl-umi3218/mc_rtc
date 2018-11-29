@@ -328,10 +328,10 @@ private:
   bool runJointsFeedback(bool wVelocity);
 
   /** Feedback data */
-  std::vector<double> prev_encoders_{};
-  std::vector<double> encoders_alpha_{};
-  std::vector<std::vector<double>> control_q_{};
-  std::vector<std::vector<double>> control_alpha_{};
+  std::vector<std::vector<double>> prev_encoders_{};
+  std::vector<std::vector<double>> encoders_alpha_{};
+  std::vector<std::vector<std::vector<double>>> control_q_{};
+  std::vector<std::vector<std::vector<double>>> control_alpha_{};
 
 public:
   /** \deprecated{Default constructor, not made for general usage} */

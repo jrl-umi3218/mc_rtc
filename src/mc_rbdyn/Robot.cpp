@@ -50,7 +50,8 @@ bounds_t bounds(const rbd::MultiBody & mb, const rm_bounds_t & bounds)
         if(b_ref.size() != b.size())
         {
           LOG_ERROR_AND_THROW(std::runtime_error, name << " provided bound size (" << b_ref.size() << ")"
-                                                       << " different from expected size (" << b.size() << ")")
+                                                       << " different from expected size (" << b.size() << ")"
+                                                       << " for joint " << j.name())
         }
         res.back() = bound_in.at(j.name());
       }
