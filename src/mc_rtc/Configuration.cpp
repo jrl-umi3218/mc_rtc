@@ -42,7 +42,8 @@ struct Configuration::Json::Impl
 
   bool has(const std::string & key) const
   {
-    return value_->HasMember(key);
+    assert(is());
+    return value_->IsObject() && value_->HasMember(key);
   }
   bool empty() const
   {
