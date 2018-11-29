@@ -19,7 +19,6 @@ HRP2DRCCommonRobotModule::HRP2DRCCommonRobotModule()
   virtualLinks.push_back("base_link");
   virtualLinks.push_back("l_gripper");
   virtualLinks.push_back("r_gripper");
-  virtualLinks.push_back("xtion_link");
   virtualLinks.push_back("LeftHandForceSensor");
   virtualLinks.push_back("RightHandForceSensor");
   virtualLinks.push_back("LeftFootForceSensor");
@@ -231,8 +230,11 @@ std::map<std::string, std::pair<std::string, std::string>> HRP2DRCCommonRobotMod
   {
     res[b.name()] = std::pair<std::string, std::string>(b.name(), b.name());
   }
-  res["RARM_LINK7"] = std::pair<std::string, std::string>("RARM_LINK7", "RARM_DRC_LINK7");
-  res["LARM_LINK7"] = std::pair<std::string, std::string>("LARM_LINK7", "LARM_DRC_LINK7");
+  if(mb.bodyIndexByName().count("RARM_LINK7"))
+  {
+    res["RARM_LINK7"] = std::pair<std::string, std::string>("RARM_LINK7", "RARM_DRC_LINK7");
+    res["LARM_LINK7"] = std::pair<std::string, std::string>("LARM_LINK7", "LARM_DRC_LINK7");
+  }
   res["RARM_LINK6_sub1"] = std::pair<std::string, std::string>("RARM_LINK6", "RARM_LINK6_lower");
   res["LARM_LINK6_sub1"] = std::pair<std::string, std::string>("LARM_LINK6", "LARM_LINK6_lower");
   res["RARM_LINK6"] = std::pair<std::string, std::string>("RARM_LINK6", "r_wrist_closed");
