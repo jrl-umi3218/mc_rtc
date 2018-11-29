@@ -11,6 +11,8 @@ endmacro()
 add_robot(env)
 add_robot(int_obj)
 add_robot(json)
+add_robot(jvrc-1)
+set_target_properties(jvrc-1 PROPERTIES COMPILE_FLAGS "-DJVRC_DESCRIPTION_PATH=\"${MC_ENV_DESCRIPTION_PATH}/../jvrc_description\"")
 
 if(${HRP4_DESCRIPTION_FOUND})
   add_robot(hrp4)
