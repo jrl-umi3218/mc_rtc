@@ -230,6 +230,7 @@ class MCLogTab(QtGui.QWidget):
       return
     def setQNames(ySelector):
       qList = ySelector.findItems("q", QtCore.Qt.MatchFlag.MatchStartsWith)
+      qList += ySelector.findItems("alpha", QtCore.Qt.MatchFlag.MatchStartsWith)
       qList += ySelector.findItems("error", QtCore.Qt.MatchFlag.MatchStartsWith)
       qList += ySelector.findItems("tau", QtCore.Qt.MatchFlag.MatchStartsWith)
       def update_child_display(items):
