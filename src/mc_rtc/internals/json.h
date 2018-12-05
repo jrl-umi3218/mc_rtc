@@ -13,6 +13,10 @@ namespace rapidjson
 typedef size_t SizeType;
 }
 
+#include <mc_rtc/logging.h>
+
+#include <SpaceVecAlg/EigenTypedef.h>
+
 #include "rapidjson/document.h"
 #include "rapidjson/error/en.h"
 #include "rapidjson/ostreamwrapper.h"
@@ -20,14 +24,6 @@ typedef size_t SizeType;
 #include "rapidjson/prettywriter.h"
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/writer.h"
-
-using RapidJSONDocument = rapidjson::GenericDocument<rapidjson::UTF8<>, rapidjson::CrtAllocator>;
-using RapidJSONValue = rapidjson::GenericValue<rapidjson::UTF8<>, rapidjson::CrtAllocator>;
-
-#include <mc_rtc/logging.h>
-
-#include <SpaceVecAlg/EigenTypedef.h>
-
 #include <Eigen/Geometry>
 #include <fstream>
 #include <sstream>
@@ -37,6 +33,9 @@ namespace mc_rtc
 
 namespace internal
 {
+
+using RapidJSONDocument = rapidjson::GenericDocument<rapidjson::UTF8<>, rapidjson::CrtAllocator>;
+using RapidJSONValue = rapidjson::GenericValue<rapidjson::UTF8<>, rapidjson::CrtAllocator>;
 
 /*! Load JSON data into the provided rapidjson::Document
  *

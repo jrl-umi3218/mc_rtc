@@ -985,14 +985,16 @@ private:
    */
   struct MC_RTC_UTILS_DLLAPI Json
   {
-    struct Impl;
     bool isArray() const;
     size_t size() const;
     Json operator[](size_t idx) const;
     bool isObject() const;
     std::vector<std::string> keys() const;
     Json operator[](const std::string & key) const;
-    std::shared_ptr<Impl> impl;
+    bool isNumeric() const;
+    double asDouble() const;
+    void * value_;
+    std::shared_ptr<void> doc_;
   };
   Json v;
   Configuration(const Json & v);
