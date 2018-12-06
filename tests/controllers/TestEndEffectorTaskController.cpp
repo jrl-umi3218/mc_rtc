@@ -119,15 +119,8 @@ private:
   unsigned int nrIter = 0;
   std::shared_ptr<mc_tasks::EndEffectorTask> efTask = nullptr;
   std::shared_ptr<mc_tasks::CoMTask> comTask = nullptr;
-  std::vector<std::string> active_joints = {
-    "R_SHOULDER_P",
-    "R_SHOULDER_R",
-    "R_SHOULDER_Y",
-    "R_ELBOW_P",
-    "R_ELBOW_Y",
-    "R_WRIST_R",
-    "R_WRIST_Y"
-  };
+  std::vector<std::string> active_joints = {"R_SHOULDER_P", "R_SHOULDER_R", "R_SHOULDER_Y", "R_ELBOW_P",
+                                            "R_ELBOW_Y",    "R_WRIST_R",    "R_WRIST_Y"};
   double orig_rep = 0;
 };
 

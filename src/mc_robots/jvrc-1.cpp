@@ -60,23 +60,15 @@ JVRC1RobotModule::JVRC1RobotModule() : RobotModule(std::string(JVRC_VAL_VAL(JVRC
       _stance[rjo[i]] = {default_q[i]};
     }
     _default_attitude = {{1., 0., 0., 0., 0., 0., 0.8275}};
-    _forceSensors.push_back(
-        mc_rbdyn::ForceSensor("RightFootForceSensor", "R_ANKLE_P_S", sva::PTransformd::Identity()));
-    _forceSensors.push_back(
-        mc_rbdyn::ForceSensor("LeftFootForceSensor", "L_ANKLE_P_S", sva::PTransformd::Identity()));
-    _forceSensors.push_back(
-        mc_rbdyn::ForceSensor("RightHandForceSensor", "R_WRIST_Y_S", sva::PTransformd::Identity()));
-    _forceSensors.push_back(
-        mc_rbdyn::ForceSensor("LeftHandForceSensor", "L_WRIST_Y_S", sva::PTransformd::Identity()));
+    _forceSensors.push_back(mc_rbdyn::ForceSensor("RightFootForceSensor", "R_ANKLE_P_S", sva::PTransformd::Identity()));
+    _forceSensors.push_back(mc_rbdyn::ForceSensor("LeftFootForceSensor", "L_ANKLE_P_S", sva::PTransformd::Identity()));
+    _forceSensors.push_back(mc_rbdyn::ForceSensor("RightHandForceSensor", "R_WRIST_Y_S", sva::PTransformd::Identity()));
+    _forceSensors.push_back(mc_rbdyn::ForceSensor("LeftHandForceSensor", "L_WRIST_Y_S", sva::PTransformd::Identity()));
 
     _minimalSelfCollisions = {
-      {"WAIST_R_S", "L_SHOULDER_Y_S", 0.02, 0.001, 0.},
-      {"WAIST_R_S", "R_SHOULDER_Y_S", 0.02, 0.001, 0.},
-      {"PELVIS_S", "R_ELBOW_P_S", 0.05, 0.001, 0.},
-      {"PELVIS_S", "L_ELBOW_P_S", 0.05, 0.001, 0.},
-      {"R_WRIST_Y_S", "R_HIP_Y_S", 0.05, 0.025, 0.},
-      {"L_WRIST_Y_S", "L_HIP_Y_S", 0.05, 0.025, 0.}
-    };
+        {"WAIST_R_S", "L_SHOULDER_Y_S", 0.02, 0.001, 0.}, {"WAIST_R_S", "R_SHOULDER_Y_S", 0.02, 0.001, 0.},
+        {"PELVIS_S", "R_ELBOW_P_S", 0.05, 0.001, 0.},     {"PELVIS_S", "L_ELBOW_P_S", 0.05, 0.001, 0.},
+        {"R_WRIST_Y_S", "R_HIP_Y_S", 0.05, 0.025, 0.},    {"L_WRIST_Y_S", "L_HIP_Y_S", 0.05, 0.025, 0.}};
     _commonSelfCollisions = _minimalSelfCollisions;
   }
   else

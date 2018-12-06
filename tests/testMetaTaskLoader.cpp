@@ -125,7 +125,7 @@ struct TaskTester<mc_tasks::CoMTask>
       BOOST_CHECK(ref->targetTf == loaded->targetTf);                                       \
     }                                                                                       \
                                                                                             \
-    mc_rbdyn::Contact contact = mc_rbdyn::Contact(*robots, "LeftFoot", "AllGround");       \
+    mc_rbdyn::Contact contact = mc_rbdyn::Contact(*robots, "LeftFoot", "AllGround");        \
     double speed = fabs(rnd());                                                             \
     double stiffness = fabs(rnd());                                                         \
     double weight = fabs(rnd());                                                            \
@@ -322,8 +322,8 @@ struct TaskTester<mc_tasks::RelativeEndEffectorTask>
 {
   mc_tasks::MetaTaskPtr make_ref()
   {
-    auto t =
-        std::make_shared<mc_tasks::RelativeEndEffectorTask>("R_WRIST_Y_S", *robots, 0, "L_WRIST_Y_S", stiffness, weight);
+    auto t = std::make_shared<mc_tasks::RelativeEndEffectorTask>("R_WRIST_Y_S", *robots, 0, "L_WRIST_Y_S", stiffness,
+                                                                 weight);
     t->set_ef_pose({ori, pos});
     return t;
   }

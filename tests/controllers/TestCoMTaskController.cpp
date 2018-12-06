@@ -105,21 +105,9 @@ public:
 private:
   unsigned int nrIter = 0;
   std::shared_ptr<mc_tasks::CoMTask> comTask = nullptr;
-  std::vector<std::string> active_joints = {
-    "Root",
-    "R_HIP_P",
-    "R_HIP_R",
-    "R_HIP_Y",
-    "R_KNEE",
-    "R_ANKLE_R",
-    "R_ANKLE_P",
-    "L_HIP_P",
-    "L_HIP_R",
-    "L_HIP_Y",
-    "L_KNEE",
-    "L_ANKLE_R",
-    "L_ANKLE_P"
-  };
+  std::vector<std::string> active_joints = {"Root",      "R_HIP_P",   "R_HIP_R",  "R_HIP_Y", "R_KNEE",
+                                            "R_ANKLE_R", "R_ANKLE_P", "L_HIP_P",  "L_HIP_R", "L_HIP_Y",
+                                            "L_KNEE",    "L_ANKLE_R", "L_ANKLE_P"};
   double orig_rkj = 0;
 };
 
