@@ -41,10 +41,7 @@ namespace mc_rtc
 
 DECLARE_IO(Eigen::Matrix<double, 6, Eigen::Dynamic>)
 
-DECLARE_IO(sva::PTransformd)
 DECLARE_IO(sva::RBInertiad)
-DECLARE_IO(sva::ForceVecd)
-DECLARE_IO(sva::MotionVecd)
 
 DECLARE_IO(rbd::Joint::Type)
 DECLARE_IO(rbd::Joint)

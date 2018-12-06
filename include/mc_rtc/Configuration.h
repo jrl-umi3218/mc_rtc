@@ -232,6 +232,24 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    */
   operator Eigen::MatrixXd() const;
 
+  /*! \brief Retrieve as an sva::PTransformd
+   *
+   * \throws If the underlying value is not an object with rotation and/or translation members
+   */
+  operator sva::PTransformd() const;
+
+  /*! \brief Retrieve as an sva::ForceVecd
+   *
+   * \throws If the underlying value is not an object with couple and force members
+   */
+  operator sva::ForceVecd() const;
+
+  /*! \brief Retrieve as an sva::MotionVecd
+   *
+   * \throws If the underlying value is not an object with angular and linear members
+   */
+  operator sva::MotionVecd() const;
+
   /*! \brief Retrieve a vector instance
    *
    * \throws If the underlying value does not hold an array or if
@@ -633,6 +651,24 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    */
   void add(const std::string & key, const Eigen::MatrixXd & value);
 
+  /*! \brief Add an sva::PTransformd element to the Configuration
+   *
+   * \see add(const std::string&, bool)
+   */
+  void add(const std::string & key, const sva::PTransformd & value);
+
+  /*! \brief Add an sva::ForceVecd element to the Configuration
+   *
+   * \see add(const std::string&, bool)
+   */
+  void add(const std::string & key, const sva::ForceVecd & value);
+
+  /*! \brief Add an sva::MotionVecd element to the Configuration
+   *
+   * \see add(const std::string&, bool)
+   */
+  void add(const std::string & key, const sva::MotionVecd & value);
+
   /*! \brief Add another Configuration to the Configuration
    *
    * \see add(const std::string&, bool)
@@ -742,6 +778,24 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    * \see push(bool);
    */
   void push(const Eigen::MatrixXd & value);
+
+  /*! \brief Insert an sva::PTransformd element into an array
+   *
+   * \see push(bool)
+   */
+  void push(const sva::PTransformd & value);
+
+  /*! \brief Insert an sva::ForceVecd element into an array
+   *
+   * \see push(bool)
+   */
+  void push(const sva::ForceVecd & value);
+
+  /*! \brief Insert an sva::MotionVecd element into an array
+   *
+   * \see push(bool)
+   */
+  void push(const sva::MotionVecd & value);
 
   /*! \brief Push a Configuration element into an array
    *

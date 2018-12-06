@@ -34,29 +34,6 @@ bfs::path relative(bfs::path to, bfs::path from)
 namespace mc_rtc
 {
 
-sva::PTransformd ConfigurationLoader<sva::PTransformd>::load(const mc_rtc::Configuration & config)
-{
-  if(config.has("rotation") || config.has("translation"))
-  {
-    Eigen::Matrix3d r = config("rotation", Eigen::Matrix3d::Identity().eval());
-    return {r, config("translation", Eigen::Vector3d::Zero().eval())};
-  }
-  else if(config.size() == 7)
-  {
-    return {Eigen::Quaterniond{config[0], config[1], config[2], config[3]}.normalized(),
-            {config[4], config[5], config[6]}};
-  }
-  LOG_ERROR_AND_THROW(mc_rtc::Configuration::Exception, "Not an sva::PTransformd-like object in json representation")
-}
-
-mc_rtc::Configuration ConfigurationLoader<sva::PTransformd>::save(const sva::PTransformd & pt)
-{
-  mc_rtc::Configuration config;
-  config.add("translation", pt.translation());
-  config.add("rotation", pt.rotation());
-  return config;
-}
-
 rbd::Joint::Type ConfigurationLoader<rbd::Joint::Type>::load(const mc_rtc::Configuration & config)
 {
   std::string type = "";
@@ -447,32 +424,6 @@ mc_rtc::Configuration ConfigurationLoader<rbd::MultiBody>::save(const rbd::Multi
   config.add("succs", mb.successors());
   config.add("parents", mb.parents());
   config.add("transforms", mb.transforms());
-  return config;
-}
-
-sva::ForceVecd ConfigurationLoader<sva::ForceVecd>::load(const mc_rtc::Configuration & config)
-{
-  return {config("couple"), config("force")};
-}
-
-mc_rtc::Configuration ConfigurationLoader<sva::ForceVecd>::save(const sva::ForceVecd & fv)
-{
-  mc_rtc::Configuration config;
-  config.add("couple", fv.couple());
-  config.add("force", fv.force());
-  return config;
-}
-
-sva::MotionVecd ConfigurationLoader<sva::MotionVecd>::load(const mc_rtc::Configuration & config)
-{
-  return {config("angular"), config("linear")};
-}
-
-mc_rtc::Configuration ConfigurationLoader<sva::MotionVecd>::save(const sva::MotionVecd & mv)
-{
-  mc_rtc::Configuration config;
-  config.add("angular", mv.angular());
-  config.add("linear", mv.linear());
   return config;
 }
 

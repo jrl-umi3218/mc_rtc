@@ -15,7 +15,7 @@ typedef size_t SizeType;
 
 #include <mc_rtc/logging.h>
 
-#include <SpaceVecAlg/EigenTypedef.h>
+#include <SpaceVecAlg/SpaceVecAlg>
 
 #include "rapidjson/document.h"
 #include "rapidjson/error/en.h"
@@ -268,6 +268,33 @@ inline RapidJSONValue toJSON(const Eigen::MatrixXd & value, RapidJSONDocument::A
     }
     ret.PushBack(row, allocator);
   }
+  return ret;
+}
+
+template<>
+inline RapidJSONValue toJSON(const sva::PTransformd & pt, RapidJSONDocument::AllocatorType & allocator)
+{
+  RapidJSONValue ret(rapidjson::kObjectType);
+  ret.AddMember("translation", toJSON(pt.translation(), allocator), allocator);
+  ret.AddMember("rotation", toJSON(pt.rotation(), allocator), allocator);
+  return ret;
+}
+
+template<>
+inline RapidJSONValue toJSON(const sva::ForceVecd & fv, RapidJSONDocument::AllocatorType & allocator)
+{
+  RapidJSONValue ret(rapidjson::kObjectType);
+  ret.AddMember("couple", toJSON(fv.couple(), allocator), allocator);
+  ret.AddMember("force", toJSON(fv.force(), allocator), allocator);
+  return ret;
+}
+
+template<>
+inline RapidJSONValue toJSON(const sva::MotionVecd & mv, RapidJSONDocument::AllocatorType & allocator)
+{
+  RapidJSONValue ret(rapidjson::kObjectType);
+  ret.AddMember("angular", toJSON(mv.angular(), allocator), allocator);
+  ret.AddMember("linear", toJSON(mv.linear(), allocator), allocator);
   return ret;
 }
 

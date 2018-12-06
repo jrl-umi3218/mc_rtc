@@ -346,6 +346,50 @@ Configuration::operator Eigen::MatrixXd() const
   throw Exception("Stored Json value is not a MatrixXd");
 }
 
+Configuration::operator sva::PTransformd() const
+{
+  if(has("rotation"))
+  {
+    Eigen::Matrix3d r = (*this)("rotation");
+    if(has("translation"))
+    {
+      Eigen::Vector3d t = (*this)("translation");
+      return {r, t};
+    }
+    return {r};
+  }
+  else if(has("translation"))
+  {
+    Eigen::Vector3d t = (*this)("translation");
+    return {t};
+  }
+  else if(size() == 7)
+  {
+    auto & config = *this;
+    return {Eigen::Quaterniond{config[0], config[1], config[2], config[3]}.normalized(),
+            {config[4], config[5], config[6]}};
+  }
+  throw Exception("Stored Json value is not a PTransformd");
+}
+
+Configuration::operator sva::ForceVecd() const
+{
+  if(has("couple") && has("force"))
+  {
+    return {(*this)("couple"), (*this)("force")};
+  }
+  throw Exception("Stored Json value is not a ForceVecd");
+}
+
+Configuration::operator sva::MotionVecd() const
+{
+  if(has("angular") && has("linear"))
+  {
+    return {(*this)("angular"), (*this)("linear")};
+  }
+  throw Exception("Stored Json value is not a MotionVecd");
+}
+
 Configuration::Configuration(const std::string & path) : Configuration()
 {
   auto doc = std::static_pointer_cast<internal::RapidJSONDocument>(v.doc_);
@@ -524,6 +568,9 @@ void Configuration::add(const std::string & key, const Eigen::Quaterniond & valu
 void Configuration::add(const std::string & key, const Eigen::Matrix3d & value) { add_impl(key, value, v.value_, v.doc_.get()); }
 void Configuration::add(const std::string & key, const Eigen::Matrix6d & value) { add_impl(key, value, v.value_, v.doc_.get()); }
 void Configuration::add(const std::string & key, const Eigen::MatrixXd & value) { add_impl(key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, const sva::PTransformd & value) { add_impl(key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, const sva::ForceVecd & value) { add_impl(key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, const sva::MotionVecd & value) { add_impl(key, value, v.value_, v.doc_.get()); }
 // clang-format on
 
 void Configuration::add(const std::string & key, const Configuration & value)
@@ -618,6 +665,9 @@ void Configuration::push(const Eigen::Quaterniond & value) { push_impl(value, v.
 void Configuration::push(const Eigen::Matrix3d & value) { push_impl(value, v.value_, v.doc_.get()); }
 void Configuration::push(const Eigen::Matrix6d & value) { push_impl(value, v.value_, v.doc_.get()); }
 void Configuration::push(const Eigen::MatrixXd & value) { push_impl(value, v.value_, v.doc_.get()); }
+void Configuration::push(const sva::PTransformd & value) { push_impl(value, v.value_, v.doc_.get()); }
+void Configuration::push(const sva::ForceVecd & value) { push_impl(value, v.value_, v.doc_.get()); }
+void Configuration::push(const sva::MotionVecd & value) { push_impl(value, v.value_, v.doc_.get()); }
 // clang-format on
 
 void Configuration::push(const mc_rtc::Configuration & value)
