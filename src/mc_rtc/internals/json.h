@@ -151,13 +151,13 @@ inline void saveDocument(const std::string & path, RapidJSONValue & document, bo
  *
  */
 template<typename T>
-inline RapidJSONValue toJSON(T value, RapidJSONDocument::AllocatorType &)
+inline RapidJSONValue toJSON(const T & value, RapidJSONDocument::AllocatorType &)
 {
   return RapidJSONValue(value);
 }
 
 template<>
-inline RapidJSONValue toJSON(std::string value, RapidJSONDocument::AllocatorType & allocator)
+inline RapidJSONValue toJSON(const std::string & value, RapidJSONDocument::AllocatorType & allocator)
 {
   RapidJSONValue ret;
   ret.SetString(value.c_str(), value.size(), allocator);
@@ -165,7 +165,7 @@ inline RapidJSONValue toJSON(std::string value, RapidJSONDocument::AllocatorType
 }
 
 template<>
-inline RapidJSONValue toJSON(Eigen::Vector2d value, RapidJSONDocument::AllocatorType & allocator)
+inline RapidJSONValue toJSON(const Eigen::Vector2d & value, RapidJSONDocument::AllocatorType & allocator)
 {
   RapidJSONValue ret(rapidjson::kArrayType);
   ret.Reserve(2, allocator);
@@ -175,7 +175,7 @@ inline RapidJSONValue toJSON(Eigen::Vector2d value, RapidJSONDocument::Allocator
 }
 
 template<>
-inline RapidJSONValue toJSON(Eigen::Vector3d value, RapidJSONDocument::AllocatorType & allocator)
+inline RapidJSONValue toJSON(const Eigen::Vector3d & value, RapidJSONDocument::AllocatorType & allocator)
 {
   RapidJSONValue ret(rapidjson::kArrayType);
   ret.Reserve(3, allocator);
@@ -186,7 +186,7 @@ inline RapidJSONValue toJSON(Eigen::Vector3d value, RapidJSONDocument::Allocator
 }
 
 template<>
-inline RapidJSONValue toJSON(Eigen::Vector6d value, RapidJSONDocument::AllocatorType & allocator)
+inline RapidJSONValue toJSON(const Eigen::Vector6d & value, RapidJSONDocument::AllocatorType & allocator)
 {
   RapidJSONValue ret(rapidjson::kArrayType);
   ret.Reserve(6, allocator);
@@ -200,7 +200,7 @@ inline RapidJSONValue toJSON(Eigen::Vector6d value, RapidJSONDocument::Allocator
 }
 
 template<>
-inline RapidJSONValue toJSON(Eigen::VectorXd value, RapidJSONDocument::AllocatorType & allocator)
+inline RapidJSONValue toJSON(const Eigen::VectorXd & value, RapidJSONDocument::AllocatorType & allocator)
 {
   RapidJSONValue ret(rapidjson::kArrayType);
   ret.Reserve(value.size(), allocator);
@@ -212,7 +212,7 @@ inline RapidJSONValue toJSON(Eigen::VectorXd value, RapidJSONDocument::Allocator
 }
 
 template<>
-inline RapidJSONValue toJSON(Eigen::Quaterniond value, RapidJSONDocument::AllocatorType & allocator)
+inline RapidJSONValue toJSON(const Eigen::Quaterniond & value, RapidJSONDocument::AllocatorType & allocator)
 {
   RapidJSONValue ret(rapidjson::kArrayType);
   ret.Reserve(4, allocator);
@@ -224,7 +224,7 @@ inline RapidJSONValue toJSON(Eigen::Quaterniond value, RapidJSONDocument::Alloca
 }
 
 template<>
-inline RapidJSONValue toJSON(Eigen::Matrix3d value, RapidJSONDocument::AllocatorType & allocator)
+inline RapidJSONValue toJSON(const Eigen::Matrix3d & value, RapidJSONDocument::AllocatorType & allocator)
 {
   RapidJSONValue ret(rapidjson::kArrayType);
   ret.Reserve(9, allocator);
@@ -239,7 +239,7 @@ inline RapidJSONValue toJSON(Eigen::Matrix3d value, RapidJSONDocument::Allocator
 }
 
 template<>
-inline RapidJSONValue toJSON(Eigen::Matrix6d value, RapidJSONDocument::AllocatorType & allocator)
+inline RapidJSONValue toJSON(const Eigen::Matrix6d & value, RapidJSONDocument::AllocatorType & allocator)
 {
   RapidJSONValue ret(rapidjson::kArrayType);
   ret.Reserve(36, allocator);
@@ -254,7 +254,7 @@ inline RapidJSONValue toJSON(Eigen::Matrix6d value, RapidJSONDocument::Allocator
 }
 
 template<>
-inline RapidJSONValue toJSON(Eigen::MatrixXd value, RapidJSONDocument::AllocatorType & allocator)
+inline RapidJSONValue toJSON(const Eigen::MatrixXd & value, RapidJSONDocument::AllocatorType & allocator)
 {
   RapidJSONValue ret(rapidjson::kArrayType);
   ret.Reserve(value.rows(), allocator);

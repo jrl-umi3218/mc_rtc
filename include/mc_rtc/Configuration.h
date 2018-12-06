@@ -576,7 +576,7 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    *
    * \see add(const std::string&, bool)
    */
-  void add(const std::string & key, std::string value);
+  void add(const std::string & key, const std::string & value);
 
   /*! \brief Add a const char* element to the Configuration,
    * Behaves like std::string
@@ -589,55 +589,55 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    *
    * \see add(const std::string&, bool)
    */
-  void add(const std::string & key, Eigen::Vector2d value);
+  void add(const std::string & key, const Eigen::Vector2d & value);
 
   /*! \brief Add a Eigen::Vector3d element to the Configuration
    *
    * \see add(const std::string&, bool)
    */
-  void add(const std::string & key, Eigen::Vector3d value);
+  void add(const std::string & key, const Eigen::Vector3d & value);
 
   /*! \brief Add a Eigen::Vector6d element to the Configuration
    *
    * \see add(const std::string&, bool)
    */
-  void add(const std::string & key, Eigen::Vector6d value);
+  void add(const std::string & key, const Eigen::Vector6d & value);
 
   /*! \brief Add a Eigen::VectorXd element to the Configuration
    *
    * \see add(const std::string&, bool)
    */
-  void add(const std::string & key, Eigen::VectorXd value);
+  void add(const std::string & key, const Eigen::VectorXd & value);
 
   /*! \brief Add a Eigen::Quaterniond element to the Configuration
    *
    * \see add(const std::string&, bool)
    */
-  void add(const std::string & key, Eigen::Quaterniond value);
+  void add(const std::string & key, const Eigen::Quaterniond & value);
 
   /*! \brief Add a Eigen::Matrix3d element to the Configuration
    *
    * \see add(const std::string&, bool)
    */
-  void add(const std::string & key, Eigen::Matrix3d value);
+  void add(const std::string & key, const Eigen::Matrix3d & value);
 
   /*! \brief Add a Eigen::Matrix6d element to the Configuration
    *
    * \see add(const std::string&, bool)
    */
-  void add(const std::string & key, Eigen::Matrix6d value);
+  void add(const std::string & key, const Eigen::Matrix6d & value);
 
   /*! \brief Add an Eigen::MatrixXd element to the Configuration
    *
    * \see add(const std::string&, bool)
    */
-  void add(const std::string & key, Eigen::MatrixXd value);
+  void add(const std::string & key, const Eigen::MatrixXd & value);
 
   /*! \brief Add another Configuration to the Configuration
    *
    * \see add(const std::string&, bool)
    */
-  void add(const std::string & key, Configuration value);
+  void add(const std::string & key, const Configuration & value);
 
   /*! \brief Create an empty object in the Configuration
    *
@@ -687,7 +687,7 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    *
    * \see push(bool);
    */
-  void push(std::string value);
+  void push(const std::string & value);
 
   /*! \brief Insert a const char * element into an array
    * Behaves like push(std::string)
@@ -699,55 +699,55 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    *
    * \see push(bool);
    */
-  void push(Eigen::Vector2d value);
+  void push(const Eigen::Vector2d & value);
 
   /*! \brief Insert a Eigen::Vector3d element into an array
    *
    * \see push(bool);
    */
-  void push(Eigen::Vector3d value);
+  void push(const Eigen::Vector3d & value);
 
   /*! \brief Insert a Eigen::Vector6d element into an array
    *
    * \see push(bool);
    */
-  void push(Eigen::Vector6d value);
+  void push(const Eigen::Vector6d & value);
 
   /*! \brief Insert a Eigen::VectorXd element into an array
    *
    * \see push(bool);
    */
-  void push(Eigen::VectorXd value);
+  void push(const Eigen::VectorXd & value);
 
   /*! \brief Insert a Eigen::Quaterniond element into an array
    *
    * \see push(bool);
    */
-  void push(Eigen::Quaterniond value);
+  void push(const Eigen::Quaterniond & value);
 
   /*! \brief Insert a Eigen::Matrix3d element into an array
    *
    * \see push(bool);
    */
-  void push(Eigen::Matrix3d value);
+  void push(const Eigen::Matrix3d & value);
 
   /*! \brief Insert a Eigen::Matrix6d element into an array
    *
    * \see push(bool);
    */
-  void push(Eigen::Matrix6d value);
+  void push(const Eigen::Matrix6d & value);
 
   /*! \brief Insert a Eigen::MatrixXd element into an array
    *
    * \see push(bool);
    */
-  void push(Eigen::MatrixXd value);
+  void push(const Eigen::MatrixXd & value);
 
   /*! \brief Push a Configuration element into an array
    *
    * \see push(bool);
    */
-  void push(Configuration value);
+  void push(const Configuration & value);
 
   /*! \brief User-defined conversion
    *

@@ -514,19 +514,19 @@ void Configuration::add(const std::string & key, bool value) { add_impl(key, val
 void Configuration::add(const std::string & key, int value) { add_impl(key, value, v.value_, v.doc_.get()); }
 void Configuration::add(const std::string & key, unsigned int value) { add_impl(key, value, v.value_, v.doc_.get()); }
 void Configuration::add(const std::string & key, double value) { add_impl(key, value, v.value_, v.doc_.get()); }
-void Configuration::add(const std::string & key, std::string value) { add_impl(key, value, v.value_, v.doc_.get()); }
 void Configuration::add(const std::string & key, const char * value) { add(key, std::string(value)); }
-void Configuration::add(const std::string & key, Eigen::Vector2d value) { add_impl(key, value, v.value_, v.doc_.get()); }
-void Configuration::add(const std::string & key, Eigen::Vector3d value) { add_impl(key, value, v.value_, v.doc_.get()); }
-void Configuration::add(const std::string & key, Eigen::Vector6d value) { add_impl(key, value, v.value_, v.doc_.get()); }
-void Configuration::add(const std::string & key, Eigen::VectorXd value) { add_impl(key, value, v.value_, v.doc_.get()); }
-void Configuration::add(const std::string & key, Eigen::Quaterniond value) { add_impl(key, value, v.value_, v.doc_.get()); }
-void Configuration::add(const std::string & key, Eigen::Matrix3d value) { add_impl(key, value, v.value_, v.doc_.get()); }
-void Configuration::add(const std::string & key, Eigen::Matrix6d value) { add_impl(key, value, v.value_, v.doc_.get()); }
-void Configuration::add(const std::string & key, Eigen::MatrixXd value) { add_impl(key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, const std::string & value) { add_impl(key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, const Eigen::Vector2d & value) { add_impl(key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, const Eigen::Vector3d & value) { add_impl(key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, const Eigen::Vector6d & value) { add_impl(key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, const Eigen::VectorXd & value) { add_impl(key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, const Eigen::Quaterniond & value) { add_impl(key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, const Eigen::Matrix3d & value) { add_impl(key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, const Eigen::Matrix6d & value) { add_impl(key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, const Eigen::MatrixXd & value) { add_impl(key, value, v.value_, v.doc_.get()); }
 // clang-format on
 
-void Configuration::add(const std::string & key, Configuration value)
+void Configuration::add(const std::string & key, const Configuration & value)
 {
   auto & doc = *static_cast<internal::RapidJSONDocument *>(v.doc_.get());
   auto & allocator = doc.GetAllocator();
@@ -608,19 +608,19 @@ void Configuration::push(bool value) { push_impl(value, v.value_, v.doc_.get());
 void Configuration::push(int value) { push_impl(value, v.value_, v.doc_.get()); }
 void Configuration::push(unsigned int value) { push_impl(value, v.value_, v.doc_.get()); }
 void Configuration::push(double value) { push_impl(value, v.value_, v.doc_.get()); }
-void Configuration::push(std::string value) { push_impl(value, v.value_, v.doc_.get()); }
 void Configuration::push(const char * value) { push(std::string(value)); }
-void Configuration::push(Eigen::Vector2d value) { push_impl(value, v.value_, v.doc_.get()); }
-void Configuration::push(Eigen::Vector3d value) { push_impl(value, v.value_, v.doc_.get()); }
-void Configuration::push(Eigen::Vector6d value) { push_impl(value, v.value_, v.doc_.get()); }
-void Configuration::push(Eigen::VectorXd value) { push_impl(value, v.value_, v.doc_.get()); }
-void Configuration::push(Eigen::Quaterniond value) { push_impl(value, v.value_, v.doc_.get()); }
-void Configuration::push(Eigen::Matrix3d value) { push_impl(value, v.value_, v.doc_.get()); }
-void Configuration::push(Eigen::Matrix6d value) { push_impl(value, v.value_, v.doc_.get()); }
-void Configuration::push(Eigen::MatrixXd value) { push_impl(value, v.value_, v.doc_.get()); }
+void Configuration::push(const std::string & value) { push_impl(value, v.value_, v.doc_.get()); }
+void Configuration::push(const Eigen::Vector2d & value) { push_impl(value, v.value_, v.doc_.get()); }
+void Configuration::push(const Eigen::Vector3d & value) { push_impl(value, v.value_, v.doc_.get()); }
+void Configuration::push(const Eigen::Vector6d & value) { push_impl(value, v.value_, v.doc_.get()); }
+void Configuration::push(const Eigen::VectorXd & value) { push_impl(value, v.value_, v.doc_.get()); }
+void Configuration::push(const Eigen::Quaterniond & value) { push_impl(value, v.value_, v.doc_.get()); }
+void Configuration::push(const Eigen::Matrix3d & value) { push_impl(value, v.value_, v.doc_.get()); }
+void Configuration::push(const Eigen::Matrix6d & value) { push_impl(value, v.value_, v.doc_.get()); }
+void Configuration::push(const Eigen::MatrixXd & value) { push_impl(value, v.value_, v.doc_.get()); }
 // clang-format on
 
-void Configuration::push(mc_rtc::Configuration value)
+void Configuration::push(const mc_rtc::Configuration & value)
 {
   auto & doc = *static_cast<internal::RapidJSONDocument *>(v.doc_.get());
   auto & allocator = doc.GetAllocator();
