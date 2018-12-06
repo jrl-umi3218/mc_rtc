@@ -60,6 +60,8 @@ set(BINDINGS_GENERATED_SOURCES
   ${SETUP_LOCATION}/mc_rtc/mc_rtc.cpp
   ${SETUP_LOCATION}/mc_solver/mc_solver.cpp
   ${SETUP_LOCATION}/mc_tasks/mc_tasks.cpp
+  ${SETUP_LOCATION}/mc_rtc/gui/gui.cpp
+  ${SETUP_LOCATION}/mc_control/fsm/fsm.cpp
 )
 
 # Force rebuild
