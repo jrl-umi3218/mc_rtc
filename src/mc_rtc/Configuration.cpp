@@ -529,13 +529,17 @@ void add_impl(const std::string & key, T value, void * json_p, void * doc_p)
   auto & json = *static_cast<internal::RapidJSONValue *>(json_p);
   auto & doc = *static_cast<internal::RapidJSONDocument *>(doc_p);
   auto & allocator = doc.GetAllocator();
-  internal::RapidJSONValue key_(key.c_str(), allocator);
   internal::RapidJSONValue value_ = mc_rtc::internal::toJSON(value, allocator);
-  if(json.HasMember(key.c_str()))
+  auto member = json.FindMember(key.c_str());
+  if(member == json.MemberEnd())
   {
-    json.EraseMember(key.c_str());
+    internal::RapidJSONValue key_(key.c_str(), allocator);
+    json.AddMember(key_, value_, allocator);
   }
-  json.AddMember(key_, value_, allocator);
+  else
+  {
+    member->value = value_;
+  }
 }
 
 template<typename T>
