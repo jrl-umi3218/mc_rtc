@@ -18,15 +18,16 @@ public:
   {
     // Check that the default constructor loads the robot + ground environment
     BOOST_CHECK_EQUAL(robots().robots().size(), 2);
-    // Check that HRP2-DRC was loaded
-    BOOST_CHECK_EQUAL(robot().name(), "hrp2_drc");
+    // Check that JVRC-1 was loaded
+    BOOST_CHECK_EQUAL(robot().name(), "jvrc-1");
     qpsolver->addConstraintSet(contactConstraint);
     qpsolver->addConstraintSet(kinematicsConstraint);
+    postureTask->stiffness(20);
     qpsolver->addTask(postureTask.get());
     qpsolver->setContacts({});
-    BOOST_CHECK(robot().hasJoint("HEAD_JOINT1"));
-    BOOST_CHECK_NO_THROW(head_joint_index = robot().jointIndexByName("HEAD_JOINT1"));
-    head_joint_target = std::min(std::abs(robot().ql()[head_joint_index][0]), robot().qu()[head_joint_index][0]) - 0.05;
+    BOOST_CHECK(robot().hasJoint("NECK_P"));
+    BOOST_CHECK_NO_THROW(head_joint_index = robot().jointIndexByName("NECK_P"));
+    head_joint_target = std::min(std::abs(robot().ql()[head_joint_index][0]), robot().qu()[head_joint_index][0]) - 0.1;
     LOG_SUCCESS("Created TestPostureController")
   }
 

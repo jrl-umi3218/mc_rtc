@@ -18,7 +18,7 @@ mc_control::fsm::Controller & get_default_controller()
   }
   mc_rbdyn::RobotLoader::clear();
   mc_rbdyn::RobotLoader::update_robot_module_path({"@CMAKE_CURRENT_BINARY_DIR@/../src/mc_robots"});
-  auto rm = mc_rbdyn::RobotLoader::get_robot_module("HRP2DRC");
+  auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC-1");
   mc_rtc::Configuration config;
   config.add("Managed", true);
   ctl_ptr = std::make_shared<mc_control::fsm::Controller>(rm, 0.005, config);

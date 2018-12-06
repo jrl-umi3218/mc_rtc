@@ -15,7 +15,7 @@ mc_rbdyn::Robots & get_robots()
   }
   mc_rbdyn::RobotLoader::clear();
   mc_rbdyn::RobotLoader::update_robot_module_path({"@CMAKE_CURRENT_BINARY_DIR@/../src/mc_robots"});
-  auto rm = mc_rbdyn::RobotLoader::get_robot_module("HRP2DRC");
+  auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC-1");
   robots_ptr = mc_rbdyn::loadRobot(*rm);
   return *robots_ptr;
 }

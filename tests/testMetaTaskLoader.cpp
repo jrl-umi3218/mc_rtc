@@ -17,7 +17,7 @@
 
 static bool configured = configureRobotLoader();
 /* Create Robots with one robot and an environment for the purpose of the test */
-static auto rm = mc_rbdyn::RobotLoader::get_robot_module("HRP2DRC");
+static auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC-1");
 static auto em =
     mc_rbdyn::RobotLoader::get_robot_module("env", std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH), std::string("ground"));
 static auto robots = mc_rbdyn::loadRobotAndEnv(*rm, *em);
@@ -125,7 +125,7 @@ struct TaskTester<mc_tasks::CoMTask>
       BOOST_CHECK(ref->targetTf == loaded->targetTf);                                       \
     }                                                                                       \
                                                                                             \
-    mc_rbdyn::Contact contact = mc_rbdyn::Contact(*robots, "LFullSole", "AllGround");       \
+    mc_rbdyn::Contact contact = mc_rbdyn::Contact(*robots, "LeftFoot", "AllGround");       \
     double speed = fabs(rnd());                                                             \
     double stiffness = fabs(rnd());                                                         \
     double weight = fabs(rnd());                                                            \
@@ -139,7 +139,7 @@ AddRemoveContactTaskTester(mc_tasks::AddContactTask, "addContact")
   mc_tasks::MetaTaskPtr make_ref()
   {
     auto t = std::shared_ptr<mc_tasks::ComplianceTask>(
-        new mc_tasks::ComplianceTask(*robots, 0, "RARM_LINK6", solver.dt(), dof, stiffness, weight, forceThresh,
+        new mc_tasks::ComplianceTask(*robots, 0, "R_WRIST_Y_S", solver.dt(), dof, stiffness, weight, forceThresh,
                                      torqueThresh, forceGain, torqueGain));
     t->setTargetWrench(wrench);
     return t;
@@ -150,7 +150,7 @@ AddRemoveContactTaskTester(mc_tasks::AddContactTask, "addContact")
     mc_rtc::Configuration config;
     config.add("type", "compliance");
     config.add("robotIndex", 0);
-    config.add("body", "RARM_LINK6");
+    config.add("body", "R_WRIST_Y_S");
     config.add("dof", dof);
     config.add("stiffness", stiffness);
     config.add("weight", weight);
@@ -197,7 +197,7 @@ struct TaskTester<mc_tasks::OrientationTask>
 {
   mc_tasks::MetaTaskPtr make_ref()
   {
-    auto t = std::make_shared<mc_tasks::OrientationTask>("RARM_LINK6", *robots, 0, stiffness, weight);
+    auto t = std::make_shared<mc_tasks::OrientationTask>("R_WRIST_Y_S", *robots, 0, stiffness, weight);
     t->orientation(ori);
     return t;
   }
@@ -207,7 +207,7 @@ struct TaskTester<mc_tasks::OrientationTask>
     mc_rtc::Configuration config;
     config.add("type", "orientation");
     config.add("robotIndex", 0);
-    config.add("body", "RARM_LINK6");
+    config.add("body", "R_WRIST_Y_S");
     config.add("stiffness", stiffness);
     config.add("weight", weight);
     config.add("orientation", ori);
@@ -237,7 +237,7 @@ struct TaskTester<mc_tasks::PositionTask>
 {
   mc_tasks::MetaTaskPtr make_ref()
   {
-    auto t = std::make_shared<mc_tasks::PositionTask>("RARM_LINK6", *robots, 0, stiffness, weight);
+    auto t = std::make_shared<mc_tasks::PositionTask>("R_WRIST_Y_S", *robots, 0, stiffness, weight);
     t->position(pos);
     return t;
   }
@@ -247,7 +247,7 @@ struct TaskTester<mc_tasks::PositionTask>
     mc_rtc::Configuration config;
     config.add("type", "position");
     config.add("robotIndex", 0);
-    config.add("body", "RARM_LINK6");
+    config.add("body", "R_WRIST_Y_S");
     config.add("stiffness", stiffness);
     config.add("weight", weight);
     config.add("position", pos);
@@ -277,7 +277,7 @@ struct TaskTester<mc_tasks::EndEffectorTask>
 {
   mc_tasks::MetaTaskPtr make_ref()
   {
-    auto t = std::make_shared<mc_tasks::EndEffectorTask>("RARM_LINK6", *robots, 0, stiffness, weight);
+    auto t = std::make_shared<mc_tasks::EndEffectorTask>("R_WRIST_Y_S", *robots, 0, stiffness, weight);
     t->set_ef_pose({ori, pos});
     return t;
   }
@@ -287,7 +287,7 @@ struct TaskTester<mc_tasks::EndEffectorTask>
     mc_rtc::Configuration config;
     config.add("type", "body6d");
     config.add("robotIndex", 0);
-    config.add("body", "RARM_LINK6");
+    config.add("body", "R_WRIST_Y_S");
     config.add("stiffness", stiffness);
     config.add("weight", weight);
     config.add("position", pos);
@@ -323,7 +323,7 @@ struct TaskTester<mc_tasks::RelativeEndEffectorTask>
   mc_tasks::MetaTaskPtr make_ref()
   {
     auto t =
-        std::make_shared<mc_tasks::RelativeEndEffectorTask>("RARM_LINK6", *robots, 0, "LARM_LINK6", stiffness, weight);
+        std::make_shared<mc_tasks::RelativeEndEffectorTask>("R_WRIST_Y_S", *robots, 0, "L_WRIST_Y_S", stiffness, weight);
     t->set_ef_pose({ori, pos});
     return t;
   }
@@ -333,8 +333,8 @@ struct TaskTester<mc_tasks::RelativeEndEffectorTask>
     mc_rtc::Configuration config;
     config.add("type", "relBody6d");
     config.add("robotIndex", 0);
-    config.add("body", "RARM_LINK6");
-    config.add("relBody", "LARM_LINK6");
+    config.add("body", "R_WRIST_Y_S");
+    config.add("relBody", "L_WRIST_Y_S");
     config.add("stiffness", stiffness);
     config.add("weight", weight);
     config.add("position", pos);
@@ -369,7 +369,7 @@ struct TaskTester<mc_tasks::GazeTask>
 {
   mc_tasks::MetaTaskPtr make_ref()
   {
-    auto ret = std::make_shared<mc_tasks::GazeTask>("HEAD_LINK1", Eigen::Vector3d::Zero(), X_b_gaze, *robots, 0,
+    auto ret = std::make_shared<mc_tasks::GazeTask>("NECK_P_S", Eigen::Vector3d::Zero(), X_b_gaze, *robots, 0,
                                                     stiffness, weight);
     return ret;
   }
@@ -379,7 +379,7 @@ struct TaskTester<mc_tasks::GazeTask>
     mc_rtc::Configuration config;
     config.add("type", "gaze");
     config.add("robotIndex", 0);
-    config.add("body", "HEAD_LINK1");
+    config.add("body", "NECK_P_S");
     config.add("stiffness", stiffness);
     config.add("weight", weight);
     config.add("X_b_gaze", X_b_gaze);
@@ -408,7 +408,7 @@ struct TaskTester<mc_tasks::PositionBasedVisServoTask>
 {
   mc_tasks::MetaTaskPtr make_ref()
   {
-    auto ret = std::make_shared<mc_tasks::PositionBasedVisServoTask>("HEAD_LINK1", sva::PTransformd::Identity(), X_b_s,
+    auto ret = std::make_shared<mc_tasks::PositionBasedVisServoTask>("NECK_P_S", sva::PTransformd::Identity(), X_b_s,
                                                                      *robots, 0, stiffness, weight);
     return ret;
   }
@@ -418,7 +418,7 @@ struct TaskTester<mc_tasks::PositionBasedVisServoTask>
     mc_rtc::Configuration config;
     config.add("type", "pbvs");
     config.add("robotIndex", 0);
-    config.add("surface", "LFullSole");
+    config.add("surface", "LeftFoot");
     config.add("stiffness", stiffness);
     config.add("weight", weight);
     auto ret = getTmpFile();
@@ -446,7 +446,7 @@ struct TaskTester<mc_tasks::SurfaceTransformTask>
 {
   mc_tasks::MetaTaskPtr make_ref()
   {
-    auto ret = std::make_shared<mc_tasks::SurfaceTransformTask>("LFullSole", *robots, 0, stiffness, weight);
+    auto ret = std::make_shared<mc_tasks::SurfaceTransformTask>("LeftFoot", *robots, 0, stiffness, weight);
     ret->target(target);
     return ret;
   }
@@ -459,7 +459,7 @@ struct TaskTester<mc_tasks::SurfaceTransformTask>
     config.add("stiffness", stiffness);
     config.add("weight", weight);
     config.add("target", target);
-    config.add("surface", "LFullSole");
+    config.add("surface", "LeftFoot");
     auto ret = getTmpFile();
     config.save(ret);
     return ret;
@@ -488,7 +488,7 @@ struct TaskTester<mc_tasks::VectorOrientationTask>
 {
   mc_tasks::MetaTaskPtr make_ref()
   {
-    auto ret = std::make_shared<mc_tasks::VectorOrientationTask>("RARM_LINK6", bodyVector, targetVector, *robots, 0,
+    auto ret = std::make_shared<mc_tasks::VectorOrientationTask>("R_WRIST_Y_S", bodyVector, targetVector, *robots, 0,
                                                                  stiffness, weight);
     return ret;
   }
@@ -497,7 +497,7 @@ struct TaskTester<mc_tasks::VectorOrientationTask>
   {
     mc_rtc::Configuration config;
     config.add("type", "vectorOrientation");
-    config.add("body", "RARM_LINK6");
+    config.add("body", "R_WRIST_Y_S");
     config.add("bodyVector", bodyVector);
     config.add("targetVector", targetVector);
     config.add("robotIndex", 0);

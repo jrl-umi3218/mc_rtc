@@ -18,18 +18,19 @@ public:
   {
     // Check that the default constructor loads the robot + ground environment
     BOOST_CHECK_EQUAL(robots().robots().size(), 2);
-    // Check that HRP2-DRC was loaded
-    BOOST_CHECK_EQUAL(robot().name(), "hrp2_drc");
+    // Check that JVRC-1 was loaded
+    BOOST_CHECK_EQUAL(robot().name(), "jvrc-1");
     solver().addConstraintSet(contactConstraint);
     solver().addConstraintSet(dynamicsConstraint);
     postureTask->stiffness(1);
     postureTask->weight(1);
     solver().addTask(postureTask.get());
     solver().setContacts(
-        {mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"), mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")});
+        {mc_rbdyn::Contact(robots(), "LeftFoot", "AllGround"), mc_rbdyn::Contact(robots(), "RightFoot", "AllGround")});
 
     /* Create and add the CoM task with the default stiffness/weight */
     comTask = std::make_shared<mc_tasks::CoMTask>(robots(), 0);
+    comTask->stiffness(10);
     solver().addTask(comTask);
 
     LOG_SUCCESS("Created TestCoMTaskController")
@@ -70,17 +71,15 @@ public:
       BOOST_CHECK_SMALL(comTask->eval().norm(), 2e-2);
       BOOST_CHECK_SMALL(comTask->speed().norm(), 1e-2);
 
-      /* Lower the CoM, forbid RLJ3 movement in all tasks */
+      /* Lower the CoM, forbid right knee movement in all tasks */
       comTask->reset();
-      comTask->selectUnactiveJoints(solver(), {"RLEG_JOINT3"});
-      orig_rlj3 = robot().mbc().q[robot().jointIndexByName("RLEG_JOINT3")][0];
+      comTask->selectUnactiveJoints(solver(), {"R_KNEE"});
+      orig_rkj = robot().mbc().q[robot().jointIndexByName("R_KNEE")][0];
       comTask->com(comTask->com() + Eigen::Vector3d(0., 0., -0.05));
 
       /* Also reset the joint target in posture task */
-      auto p = postureTask->posture();
-      p[robot().jointIndexByName("RLEG_JOINT3")][0] = orig_rlj3;
-      postureTask->posture(p);
-      postureTask->jointStiffness(solver(), {{"RLEG_JOINT3", 1e5}});
+      postureTask->reset();
+      postureTask->jointStiffness(solver(), {{"R_KNEE", 1e5}});
     }
     if(nrIter == 4000)
     {
@@ -89,8 +88,8 @@ public:
 
       /* And that RLEG_JOINT3 didn't move. Note that the error is not so
        * small because of other tasks' interaction */
-      double current_rlj3 = robot().mbc().q[robot().jointIndexByName("RLEG_JOINT3")][0];
-      BOOST_CHECK_SMALL(fabs(orig_rlj3 - current_rlj3), 1e-2);
+      double current_rkj = robot().mbc().q[robot().jointIndexByName("R_KNEE")][0];
+      BOOST_CHECK_SMALL(fabs(orig_rkj - current_rkj), 1e-2);
     }
     return ret;
   }
@@ -106,25 +105,22 @@ public:
 private:
   unsigned int nrIter = 0;
   std::shared_ptr<mc_tasks::CoMTask> comTask = nullptr;
-  std::vector<std::string> active_joints = []() {
-    std::vector<std::string> ret;
-    ret.push_back("Root");
-    for(unsigned int i = 0; i < 6; ++i)
-    {
-      {
-        std::stringstream ss;
-        ss << "RLEG_JOINT" << i;
-        ret.push_back(ss.str());
-      }
-      {
-        std::stringstream ss;
-        ss << "LLEG_JOINT" << i;
-        ret.push_back(ss.str());
-      }
-    }
-    return ret;
-  }();
-  double orig_rlj3 = 0;
+  std::vector<std::string> active_joints = {
+    "Root",
+    "R_HIP_P",
+    "R_HIP_R",
+    "R_HIP_Y",
+    "R_KNEE",
+    "R_ANKLE_R",
+    "R_ANKLE_P",
+    "L_HIP_P",
+    "L_HIP_R",
+    "L_HIP_Y",
+    "L_KNEE",
+    "L_ANKLE_R",
+    "L_ANKLE_P"
+  };
+  double orig_rkj = 0;
 };
 
 } // namespace mc_control

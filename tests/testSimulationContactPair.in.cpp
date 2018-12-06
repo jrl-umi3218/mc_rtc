@@ -14,7 +14,7 @@ mc_rbdyn::Robots & get_robots()
   }
   mc_rbdyn::RobotLoader::clear();
   mc_rbdyn::RobotLoader::update_robot_module_path({"@CMAKE_CURRENT_BINARY_DIR@/../src/mc_robots"});
-  auto rm = mc_rbdyn::RobotLoader::get_robot_module("HRP2DRC");
+  auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC-1");
   auto env = mc_rbdyn::RobotLoader::get_robot_module("env", std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH),
                                                      std::string("ground"));
   robots_ptr = mc_rbdyn::loadRobots({rm, env});
@@ -27,7 +27,7 @@ BOOST_AUTO_TEST_CASE(TestSimulationContactPair)
   auto & robot = robots.robot();
   auto & env = robots.env();
 
-  mc_control::SimulationContactPair pair(robot.surfaces().at("LFullSole"), env.surfaces().at("AllGround"));
+  mc_control::SimulationContactPair pair(robot.surfaces().at("LeftFoot"), env.surfaces().at("AllGround"));
 
   // In its default configuration the robot's foot should be at the ground
   // level

@@ -19,18 +19,19 @@ public:
   {
     // Check that the default constructor loads the robot + ground environment
     BOOST_CHECK_EQUAL(robots().robots().size(), 2);
-    // Check that HRP2-DRC was loaded
-    BOOST_CHECK_EQUAL(robot().name(), "hrp2_drc");
+    // Check that JVRC-1 was loaded
+    BOOST_CHECK_EQUAL(robot().name(), "jvrc-1");
     solver().addConstraintSet(contactConstraint);
     solver().addConstraintSet(dynamicsConstraint);
     postureTask->stiffness(1);
     postureTask->weight(1);
     solver().addTask(postureTask.get());
     solver().setContacts(
-        {mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"), mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")});
+        {mc_rbdyn::Contact(robots(), "LeftFoot", "AllGround"), mc_rbdyn::Contact(robots(), "RightFoot", "AllGround")});
 
     /* Create and add the position task with the default stiffness/weight */
-    posTask = std::make_shared<mc_tasks::PositionTask>("RARM_LINK6", robots(), 0);
+    posTask = std::make_shared<mc_tasks::PositionTask>("R_WRIST_Y_S", robots(), 0);
+    posTask->stiffness(10);
     solver().addTask(posTask);
 
     comTask = std::make_shared<mc_tasks::CoMTask>(robots(), 0);
@@ -74,15 +75,17 @@ public:
       BOOST_CHECK_SMALL(posTask->eval().norm(), 1e-2);
       BOOST_CHECK_SMALL(posTask->speed().norm(), 1e-2);
 
-      /* Now move the hand down again, forbid RAJ3 movement in all tasks */
+      /* Now move the hand down again, forbid rep movement in all tasks */
       posTask->reset();
-      posTask->selectUnactiveJoints(solver(), {"RARM_JOINT3"});
-      orig_raj3 = robot().mbc().q[robot().jointIndexByName("RARM_JOINT3")][0];
+      posTask->selectUnactiveJoints(solver(), {"R_ELBOW_P"});
+      orig_rep = robot().mbc().q[robot().jointIndexByName("R_ELBOW_P")][0];
       posTask->position(posTask->position() + Eigen::Vector3d(0, 0, -0.15));
+
+      comTask->selectUnactiveJoints(solver(), {"R_ELBOW_P"});
 
       /* Also reset the joint target in posture task */
       auto p = postureTask->posture();
-      p[robot().jointIndexByName("RARM_JOINT3")][0] = orig_raj3;
+      p[robot().jointIndexByName("R_ELBOW_P")][0] = orig_rep;
       postureTask->posture(p);
     }
     if(nrIter == 4999)
@@ -91,10 +94,10 @@ public:
       BOOST_CHECK_SMALL(posTask->eval().norm(), 1e-2);
       BOOST_CHECK_SMALL(posTask->speed().norm(), 1e-2);
 
-      /* And that RARM_JOINT3 didn't move. Note that the error is not so
+      /* And that R_ELBOW_P didn't move. Note that the error is not so
        * small because of other tasks' interaction */
-      double current_raj3 = robot().mbc().q[robot().jointIndexByName("RARM_JOINT3")][0];
-      BOOST_CHECK_SMALL(fabs(orig_raj3 - current_raj3), 1e-2);
+      double current_rep = robot().mbc().q[robot().jointIndexByName("R_ELBOW_P")][0];
+      BOOST_CHECK_SMALL(fabs(orig_rep - current_rep), 1e-2);
     }
     return ret;
   }
@@ -113,17 +116,16 @@ private:
   unsigned int nrIter = 0;
   std::shared_ptr<mc_tasks::PositionTask> posTask = nullptr;
   std::shared_ptr<mc_tasks::CoMTask> comTask = nullptr;
-  std::vector<std::string> active_joints = []() {
-    std::vector<std::string> ret;
-    for(unsigned int i = 0; i < 8; ++i)
-    {
-      std::stringstream ss;
-      ss << "RARM_JOINT" << i;
-      ret.push_back(ss.str());
-    }
-    return ret;
-  }();
-  double orig_raj3 = 0;
+  std::vector<std::string> active_joints = {
+    "R_SHOULDER_P",
+    "R_SHOULDER_R",
+    "R_SHOULDER_Y",
+    "R_ELBOW_P",
+    "R_ELBOW_Y",
+    "R_WRIST_R",
+    "R_WRIST_Y"
+  };
+  double orig_rep = 0;
 };
 
 } // namespace mc_control

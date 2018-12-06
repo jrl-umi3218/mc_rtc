@@ -14,7 +14,7 @@
 
 static bool configured = configureRobotLoader();
 /* Create Robots with one robot and an environment for the purpose of the test */
-static auto rm = mc_rbdyn::RobotLoader::get_robot_module("HRP2DRC");
+static auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC-1");
 static auto em =
     mc_rbdyn::RobotLoader::get_robot_module("env", std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH), std::string("ground"));
 static auto robots = mc_rbdyn::loadRobotAndEnv(*rm, *em);
@@ -60,8 +60,8 @@ struct ConstraintTester<mc_solver::BoundedSpeedConstr>
   mc_solver::ConstraintSetPtr make_ref()
   {
     auto ret = std::make_shared<mc_solver::BoundedSpeedConstr>(*robots, 0, solver.dt());
-    ret->addBoundedSpeed(solver, "RARM_LINK6", Eigen::Vector3d::Zero(), Eigen::Matrix6d::Identity(), s);
-    ret->addBoundedSpeed(solver, "LARM_LINK6", Eigen::Vector3d::Zero(), Eigen::Matrix6d::Identity(), lS, uS);
+    ret->addBoundedSpeed(solver, "R_WRIST_Y_S", Eigen::Vector3d::Zero(), Eigen::Matrix6d::Identity(), s);
+    ret->addBoundedSpeed(solver, "L_WRIST_Y_S", Eigen::Vector3d::Zero(), Eigen::Matrix6d::Identity(), lS, uS);
     return ret;
   }
 
@@ -73,13 +73,13 @@ struct ConstraintTester<mc_solver::BoundedSpeedConstr>
     auto cs = config.array("constraints");
     {
       mc_rtc::Configuration c;
-      c.add("body", "RARM_LINK6");
+      c.add("body", "R_WRIST_Y_S");
       c.add("speed", s);
       cs.push(c);
     }
     {
       mc_rtc::Configuration c;
-      c.add("body", "LARM_LINK6");
+      c.add("body", "L_WRIST_Y_S");
       c.add("lowerSpeed", lS);
       c.add("upperSpeed", lS);
       cs.push(c);
@@ -87,7 +87,7 @@ struct ConstraintTester<mc_solver::BoundedSpeedConstr>
     {
       // No speed entry so shouldn't matter
       mc_rtc::Configuration c;
-      c.add("body", "RARM_LINK6");
+      c.add("body", "R_WRIST_Y_S");
       cs.push(c);
     }
     auto ret = getTmpFile();
@@ -102,8 +102,8 @@ struct ConstraintTester<mc_solver::BoundedSpeedConstr>
     BOOST_REQUIRE(ref);
     BOOST_REQUIRE(loaded);
     BOOST_CHECK(ref->nrBoundedSpeeds() == loaded->nrBoundedSpeeds());
-    BOOST_CHECK(loaded->removeBoundedSpeed(solver, "RARM_LINK6"));
-    BOOST_CHECK(loaded->removeBoundedSpeed(solver, "LARM_LINK6"));
+    BOOST_CHECK(loaded->removeBoundedSpeed(solver, "R_WRIST_Y_S"));
+    BOOST_CHECK(loaded->removeBoundedSpeed(solver, "L_WRIST_Y_S"));
   }
 
   Eigen::Vector3d s = Eigen::Vector3d::Random();
