@@ -60,6 +60,14 @@ JVRC1RobotModule::JVRC1RobotModule() : RobotModule(std::string(JVRC_VAL_VAL(JVRC
       _stance[rjo[i]] = {default_q[i]};
     }
     _default_attitude = {{1., 0., 0., 0., 0., 0., 0.8275}};
+    _forceSensors.push_back(
+        mc_rbdyn::ForceSensor("RightFootForceSensor", "R_ANKLE_P_S", sva::PTransformd::Identity()));
+    _forceSensors.push_back(
+        mc_rbdyn::ForceSensor("LeftFootForceSensor", "L_ANKLE_P_S", sva::PTransformd::Identity()));
+    _forceSensors.push_back(
+        mc_rbdyn::ForceSensor("RightHandForceSensor", "R_WRIST_Y_S", sva::PTransformd::Identity()));
+    _forceSensors.push_back(
+        mc_rbdyn::ForceSensor("LeftHandForceSensor", "L_WRIST_Y_S", sva::PTransformd::Identity()));
   }
   else
   {
