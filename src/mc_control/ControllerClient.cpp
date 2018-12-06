@@ -361,8 +361,7 @@ void ControllerClient::handle_transform(const ElementId & id,
   sva::PTransformd pos = data("data");
   Eigen::Quaterniond q{pos.rotation()};
   Eigen::Matrix<double, 7, 1> vec;
-  vec << q.w(), q.x(), q.y(), q.z();
-  vec.tail(3) = pos.translation();
+  vec << q.w(), q.x(), q.y(), q.z(), pos.translation();
   if(ro)
   {
     array_label(id, {"qw", "qx", "qy", "qz", "tx", "ty", "tz"}, vec);
