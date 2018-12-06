@@ -59,7 +59,7 @@ JVRC1RobotModule::JVRC1RobotModule() : RobotModule(std::string(JVRC_VAL_VAL(JVRC
     {
       _stance[rjo[i]] = {default_q[i]};
     }
-    _default_attitude = {{1., 0., 0., 0., 0., 0., 0.854}};
+    _default_attitude = {{1., 0., 0., 0., 0., 0., 0.8275}};
   }
   else
   {
