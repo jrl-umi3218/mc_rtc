@@ -383,9 +383,29 @@ struct Point3DTrajectoryImpl : public DataElement<GetT>
 };
 
 template<typename GetT>
+struct Point3DTrajectoryWithStyleImpl : public Point3DTrajectoryImpl<GetT>
+{
+  Point3DTrajectoryWithStyleImpl(const std::string & name, const LineConfig & config, GetT get_fn);
+
+  /** Invalid element */
+  Point3DTrajectoryWithStyleImpl() {}
+
+  void addGUI(mc_rtc::Configuration & gui);
+
+private:
+  LineConfig config_;
+};
+
+template<typename GetT>
 Point3DTrajectoryImpl<GetT> Point3DTrajectory(const std::string & name, GetT get_fn)
 {
   return Point3DTrajectoryImpl<GetT>(name, get_fn);
+}
+
+template<typename GetT>
+Point3DTrajectoryWithStyleImpl<GetT> Point3DTrajectory(const std::string & name, const LineConfig & config, GetT get_fn)
+{
+  return Point3DTrajectoryWithStyleImpl<GetT>(name, config, get_fn);
 }
 
 template<typename GetT>
@@ -400,9 +420,29 @@ struct PoseTrajectoryImpl : public DataElement<GetT>
 };
 
 template<typename GetT>
+struct PoseTrajectoryWithStyleImpl : public PoseTrajectoryImpl<GetT>
+{
+  PoseTrajectoryWithStyleImpl(const std::string & name, const LineConfig & config, GetT get_fn);
+
+  /** Invalid element */
+  PoseTrajectoryWithStyleImpl() {}
+
+  void addGUI(mc_rtc::Configuration & gui);
+
+private:
+  LineConfig config_;
+};
+
+template<typename GetT>
 PoseTrajectoryImpl<GetT> PoseTrajectory(const std::string & name, GetT get_fn)
 {
   return PoseTrajectoryImpl<GetT>(name, get_fn);
+}
+
+template<typename GetT>
+PoseTrajectoryWithStyleImpl<GetT> PoseTrajectory(const std::string & name, const LineConfig & config, GetT get_fn)
+{
+  return PoseTrajectoryWithStyleImpl<GetT>(name, config, get_fn);
 }
 
 template<typename GetT>

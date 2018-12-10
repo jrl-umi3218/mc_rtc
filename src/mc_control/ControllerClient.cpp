@@ -290,19 +290,19 @@ void ControllerClient::handle_point3d(const ElementId & id,
 }
 
 void ControllerClient::handle_point3DTrajectory(const ElementId & id,
-                                                const mc_rtc::Configuration & /* gui */,
+                                                const mc_rtc::Configuration & gui,
                                                 const mc_rtc::Configuration & data)
 {
   const std::vector<Eigen::Vector3d> & points = data("data");
-  trajectory(id, points);
+  trajectory(id, points, mc_rtc::gui::LineConfig(gui));
 }
 
 void ControllerClient::handle_poseTrajectory(const ElementId & id,
-                                             const mc_rtc::Configuration & /* gui */,
+                                             const mc_rtc::Configuration & gui,
                                              const mc_rtc::Configuration & data)
 {
   const std::vector<sva::PTransformd> & points = data("data");
-  trajectory(id, points);
+  trajectory(id, points, mc_rtc::gui::LineConfig(gui));
 }
 
 void ControllerClient::handle_polygon(const ElementId & id,

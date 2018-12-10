@@ -187,7 +187,9 @@ protected:
    *
    * \p Vector of 3D points
    */
-  virtual void trajectory(const ElementId & id, const std::vector<Eigen::Vector3d> & /* points */)
+  virtual void trajectory(const ElementId & id,
+                          const std::vector<Eigen::Vector3d> & /* points */,
+                          const mc_rtc::gui::LineConfig & /* config */)
   {
     default_impl("Point3DTrajectory", id);
   }
@@ -196,7 +198,9 @@ protected:
    *
    * \p Vector of 3D points
    */
-  virtual void trajectory(const ElementId & id, const std::vector<sva::PTransformd> & /* points */)
+  virtual void trajectory(const ElementId & id,
+                          const std::vector<sva::PTransformd> & /* points */,
+                          const mc_rtc::gui::LineConfig & /* config */)
   {
     default_impl("PoseTrajectory", id);
   }

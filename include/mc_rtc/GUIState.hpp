@@ -127,8 +127,36 @@ Point3DTrajectoryImpl<GetT>::Point3DTrajectoryImpl(const std::string & name, Get
 }
 
 template<typename GetT>
+Point3DTrajectoryWithStyleImpl<GetT>::Point3DTrajectoryWithStyleImpl(const std::string & name,
+                                                                     const LineConfig & config,
+                                                                     GetT get_fn)
+: Point3DTrajectoryImpl<GetT>(name, get_fn), config_(config)
+{
+}
+
+template<typename GetT>
+void Point3DTrajectoryWithStyleImpl<GetT>::addGUI(mc_rtc::Configuration & gui)
+{
+  config_.save(gui);
+}
+
+template<typename GetT>
 PoseTrajectoryImpl<GetT>::PoseTrajectoryImpl(const std::string & name, GetT get_fn) : DataElement<GetT>(name, get_fn)
 {
+}
+
+template<typename GetT>
+PoseTrajectoryWithStyleImpl<GetT>::PoseTrajectoryWithStyleImpl(const std::string & name,
+                                                               const LineConfig & config,
+                                                               GetT get_fn)
+: PoseTrajectoryImpl<GetT>(name, get_fn), config_(config)
+{
+}
+
+template<typename GetT>
+void PoseTrajectoryWithStyleImpl<GetT>::addGUI(mc_rtc::Configuration & gui)
+{
+  config_.save(gui);
 }
 
 template<typename GetT>

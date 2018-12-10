@@ -2,6 +2,7 @@
 
 #include <mc_rtc/Configuration.h>
 #include <mc_rtc/gui_api.h>
+#include <mc_rtc/logging.h>
 
 namespace mc_rtc
 {
@@ -24,10 +25,10 @@ struct MC_RTC_GUI_DLLAPI Color
 
   void load(const mc_rtc::Configuration & config)
   {
-    r = config("r");
-    g = config("g");
-    b = config("b");
-    a = config("a");
+    config("r", r);
+    config("g", g);
+    config("b", b);
+    config("a", a);
   }
 
   operator mc_rtc::Configuration() const
@@ -38,6 +39,71 @@ struct MC_RTC_GUI_DLLAPI Color
     config.add("b", b);
     config.add("a", a);
     return config;
+  }
+};
+
+enum class LineStyle
+{
+  Solid,
+  Dotted
+};
+
+struct MC_RTC_GUI_DLLAPI LineConfig
+{
+  Color color = {1, 0, 0};
+  double width = 0.01;
+  LineStyle style = LineStyle::Solid;
+
+  LineConfig() {}
+  LineConfig(const Color & color, double width = 0.1, const LineStyle & style = LineStyle::Solid)
+  : color(color), width(width), style(style)
+  {
+  }
+  LineConfig(const mc_rtc::Configuration & config)
+  {
+    load(config);
+  }
+
+  void load(const mc_rtc::Configuration & config)
+  {
+    config("color", color);
+    config("width", width);
+    std::string styleStr = config("style", std::string("solid"));
+    if(styleStr == "solid")
+    {
+      style = LineStyle::Solid;
+    }
+    else if(styleStr == "dotted")
+    {
+      style = LineStyle::Dotted;
+    }
+    else
+    {
+      LOG_WARNING("Unknown line style (" << styleStr << "), defaulting to solid")
+      style = LineStyle::Solid;
+    }
+  }
+
+  void save(mc_rtc::Configuration & out) const
+  {
+    out.add("color", color);
+    out.add("width", width);
+    switch(style)
+    {
+      case LineStyle::Dotted:
+        out.add("style", "dotted");
+        break;
+      default:
+        out.add("style", "solid");
+        break;
+    }
+  }
+
+  operator mc_rtc::Configuration() const
+  {
+    mc_rtc::Configuration out;
+    save(out);
+    return out;
   }
 };
 
