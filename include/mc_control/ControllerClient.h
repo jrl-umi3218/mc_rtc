@@ -382,12 +382,15 @@ private:
   /** Handle details of Point3D elements */
   void handle_point3d(const ElementId & id, const mc_rtc::Configuration & gui, const mc_rtc::Configuration & data);
 
-  /** Handle details of DisplayPoint3DTrajectory elements */
+  /** Handle Trajectory and dispatch to 3D or Pose case */
+  void handle_trajectory(const ElementId & id, const mc_rtc::Configuration & gui, const mc_rtc::Configuration & data);
+
+  /** Handle details of Trajectory elements for 3D points */
   void handle_point3DTrajectory(const ElementId & id,
                                 const mc_rtc::Configuration & gui,
                                 const mc_rtc::Configuration & data);
 
-  /** Handle details of DisplayPoseTrajectory elements */
+  /** Handle details of Trajectory for Pose elements */
   void handle_poseTrajectory(const ElementId & id,
                              const mc_rtc::Configuration & gui,
                              const mc_rtc::Configuration & data);

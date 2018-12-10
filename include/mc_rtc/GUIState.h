@@ -47,8 +47,7 @@ enum class Elements
   ComboInput,
   DataComboInput,
   Point3D,
-  Point3DTrajectory,
-  PoseTrajectory,
+  Trajectory,
   Rotation,
   Transform,
   Schema,
@@ -372,23 +371,23 @@ Point3DImpl<GetT, SetT> Point3D(const std::string & name, GetT get_fn, SetT set_
 }
 
 template<typename GetT>
-struct Point3DTrajectoryImpl : public DataElement<GetT>
+struct TrajectoryImpl : public DataElement<GetT>
 {
-  static constexpr auto type = Elements::Point3DTrajectory;
+  static constexpr auto type = Elements::Trajectory;
 
-  Point3DTrajectoryImpl(const std::string & name, GetT get_fn);
+  TrajectoryImpl(const std::string & name, GetT get_fn);
 
   /** Invalid element */
-  Point3DTrajectoryImpl() {}
+  TrajectoryImpl() {}
 };
 
 template<typename GetT>
-struct Point3DTrajectoryWithStyleImpl : public Point3DTrajectoryImpl<GetT>
+struct TrajectoryWithStyleImpl : public TrajectoryImpl<GetT>
 {
-  Point3DTrajectoryWithStyleImpl(const std::string & name, const LineConfig & config, GetT get_fn);
+  TrajectoryWithStyleImpl(const std::string & name, const LineConfig & config, GetT get_fn);
 
   /** Invalid element */
-  Point3DTrajectoryWithStyleImpl() {}
+  TrajectoryWithStyleImpl() {}
 
   void addGUI(mc_rtc::Configuration & gui);
 
@@ -397,52 +396,15 @@ private:
 };
 
 template<typename GetT>
-Point3DTrajectoryImpl<GetT> Point3DTrajectory(const std::string & name, GetT get_fn)
+TrajectoryImpl<GetT> Trajectory(const std::string & name, GetT get_fn)
 {
-  return Point3DTrajectoryImpl<GetT>(name, get_fn);
+  return TrajectoryImpl<GetT>(name, get_fn);
 }
 
 template<typename GetT>
-Point3DTrajectoryWithStyleImpl<GetT> Point3DTrajectory(const std::string & name, const LineConfig & config, GetT get_fn)
+TrajectoryWithStyleImpl<GetT> Trajectory(const std::string & name, const LineConfig & config, GetT get_fn)
 {
-  return Point3DTrajectoryWithStyleImpl<GetT>(name, config, get_fn);
-}
-
-template<typename GetT>
-struct PoseTrajectoryImpl : public DataElement<GetT>
-{
-  static constexpr auto type = Elements::PoseTrajectory;
-
-  PoseTrajectoryImpl(const std::string & name, GetT get_fn);
-
-  /** Invalid element */
-  PoseTrajectoryImpl() {}
-};
-
-template<typename GetT>
-struct PoseTrajectoryWithStyleImpl : public PoseTrajectoryImpl<GetT>
-{
-  PoseTrajectoryWithStyleImpl(const std::string & name, const LineConfig & config, GetT get_fn);
-
-  /** Invalid element */
-  PoseTrajectoryWithStyleImpl() {}
-
-  void addGUI(mc_rtc::Configuration & gui);
-
-private:
-  LineConfig config_;
-};
-
-template<typename GetT>
-PoseTrajectoryImpl<GetT> PoseTrajectory(const std::string & name, GetT get_fn)
-{
-  return PoseTrajectoryImpl<GetT>(name, get_fn);
-}
-
-template<typename GetT>
-PoseTrajectoryWithStyleImpl<GetT> PoseTrajectory(const std::string & name, const LineConfig & config, GetT get_fn)
-{
-  return PoseTrajectoryWithStyleImpl<GetT>(name, config, get_fn);
+  return TrajectoryWithStyleImpl<GetT>(name, config, get_fn);
 }
 
 template<typename GetT>

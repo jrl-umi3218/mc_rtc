@@ -226,11 +226,8 @@ void ControllerClient::handle_widget(const ElementId & id, const mc_rtc::Configu
       case Elements::Point3D:
         handle_point3d(id, gui, data);
         break;
-      case Elements::Point3DTrajectory:
-        handle_point3DTrajectory(id, gui, data);
-        break;
-      case Elements::PoseTrajectory:
-        handle_poseTrajectory(id, gui, data);
+      case Elements::Trajectory:
+        handle_trajectory(id, gui, data);
         break;
       case Elements::Polygon:
         handle_polygon(id, gui, data);
@@ -287,6 +284,30 @@ void ControllerClient::handle_point3d(const ElementId & id,
     array_input(id, {"x", "y", "z"}, pos);
   }
   point3d({id.category, id.name + "_point3d"}, id, ro, pos);
+}
+
+void ControllerClient::handle_trajectory(const ElementId & id,
+                                         const mc_rtc::Configuration & gui,
+                                         const mc_rtc::Configuration & data)
+{
+  bool isPose = false;
+  try
+  {
+    sva::PTransformd pos = data("data")[0];
+    isPose = true || pos.translation().norm(); // silence warning about pos
+  }
+  catch(mc_rtc::Configuration::Exception & exc)
+  {
+    exc.silence();
+  }
+  if(isPose)
+  {
+    handle_poseTrajectory(id, gui, data);
+  }
+  else
+  {
+    handle_point3DTrajectory(id, gui, data);
+  }
 }
 
 void ControllerClient::handle_point3DTrajectory(const ElementId & id,

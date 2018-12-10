@@ -55,7 +55,7 @@ struct MC_RTC_GUI_DLLAPI LineConfig
   LineStyle style = LineStyle::Solid;
 
   LineConfig() {}
-  LineConfig(const Color & color, double width = 0.1, const LineStyle & style = LineStyle::Solid)
+  LineConfig(const Color & color, double width = 0.01, const LineStyle & style = LineStyle::Solid)
   : color(color), width(width), style(style)
   {
   }
