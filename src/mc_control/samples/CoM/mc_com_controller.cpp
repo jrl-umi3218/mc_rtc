@@ -34,7 +34,7 @@ void MCCoMController::reset(const ControllerResetData & reset_data)
     qpsolver->setContacts(
         {mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"), mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")});
   }
-  else if(robot().name() == "hrp4")
+  else if(robot().name() == "hrp4" || robot().name() == "jvrc-1")
   {
     qpsolver->setContacts({
         mc_rbdyn::Contact(robots(), "LeftFoot", "AllGround"),
