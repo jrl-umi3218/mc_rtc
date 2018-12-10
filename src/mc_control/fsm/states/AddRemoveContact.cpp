@@ -1,4 +1,4 @@
-#include <mc_control/SimulationContactSensor.h>
+#include <mc_control/SimulationContactPair.h>
 #include <mc_control/fsm/Controller.h>
 #include <mc_control/fsm/states/AddRemoveContact.h>
 #include <mc_rbdyn/Contact.h>

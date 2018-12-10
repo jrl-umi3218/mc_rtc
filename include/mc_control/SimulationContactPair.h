@@ -1,11 +1,12 @@
-#ifndef _H_SIMULATIONCONTACTSENSOR_H_
-#define _H_SIMULATIONCONTACTSENSOR_H_
+#ifndef _H_SIMULATIONCONTACTPAIR_H_
+#define _H_SIMULATIONCONTACTPAIR_H_
 
-#include <mc_control/ContactSensor.h>
 #include <mc_control/api.h>
+#include <mc_rbdyn/Robot.h>
 #include <mc_rbdyn/SCHAddon.h>
-#include <mc_rbdyn/stance.h>
 #include <mc_rbdyn/surface_hull.h>
+
+#include <memory>
 
 namespace mc_control
 {
@@ -29,17 +30,6 @@ private:
   void updateSCH(sch::S_Object * obj,
                  const mc_rbdyn::Robot & robot,
                  const std::shared_ptr<mc_rbdyn::Surface> & robotSurface);
-};
-
-struct MC_CONTROL_DLLAPI SimulationContactSensor : public ContactSensor
-{
-public:
-  SimulationContactSensor(const std::vector<mc_rbdyn::Stance> & stances);
-
-  virtual std::vector<std::string> update(MCController & ctl) override;
-
-public:
-  std::vector<SimulationContactPair> surfacePairs;
 };
 
 } // namespace mc_control

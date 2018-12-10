@@ -4,9 +4,8 @@
 #include <mc_rbdyn/Collision.h>
 #include <mc_rbdyn/RobotLoader.h>
 #include <mc_rbdyn/Contact.h>
-#include <mc_rbdyn/stance.h>
 #include <mc_rbdyn/RobotModule.h>
-#include <mc_rbdyn/StanceConfig.h>
+#include <mc_rbdyn/PolygonInterpolator.h>
 
 #include <memory>
 #include <sstream>
@@ -83,51 +82,6 @@ std::vector<Contact>& const_cast_contact_vector(const std::vector<Contact>& rhs)
 void contact_vector_set_item(std::vector<Contact> & v, unsigned int idx, const Contact & c)
 {
   v[idx] = c;
-}
-
-Stance& const_cast_stance(const Stance& rhs)
-{
-  return const_cast<Stance&>(rhs);
-}
-
-IdentityContactAction * dynamic_cast_ica(StanceAction * p)
-{
-  return dynamic_cast<IdentityContactAction*>(p);
-}
-
-AddContactAction * dynamic_cast_aca(StanceAction * p)
-{
-  return dynamic_cast<AddContactAction*>(p);
-}
-
-RemoveContactAction * dynamic_cast_rca(StanceAction * p)
-{
-  return dynamic_cast<RemoveContactAction*>(p);
-}
-
-std::shared_ptr<StanceAction> sa_fake_shared(StanceAction * p)
-{
-  return std::shared_ptr<StanceAction>(p, NoOpDeleter<StanceAction>());
-}
-
-typedef Stance* StanceRawPtr;
-
-void scbc_vector_set_item(std::vector<StanceConfig::BodiesCollisionConf>&v, unsigned int idx, StanceConfig::BodiesCollisionConf&c)
-{
-  v[idx] = c;
-}
-
-typedef Eigen::Vector3d (*pos_callback_t)(const sva::PTransformd&, const sva::PTransformd&, const Eigen::Vector3d&);
-typedef Eigen::Vector3d (*user_pos_callback_t)(const sva::PTransformd&, const sva::PTransformd&, const Eigen::Vector3d&, void*);
-
-Eigen::Vector3d call_pos(StanceConfig::WaypointConf & wpc, const sva::PTransformd&start, const sva::PTransformd&end, const Eigen::Vector3d&N)
-{
-  return wpc.pos(start, end, N);
-}
-
-void set_pos(StanceConfig::WaypointConf & wpc, user_pos_callback_t fn, void * data)
-{
-  wpc.pos = std::bind(fn, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, data);
 }
 
 std::shared_ptr<Robots> robots_fake_shared(Robots * p)

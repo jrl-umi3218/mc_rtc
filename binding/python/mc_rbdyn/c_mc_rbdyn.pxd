@@ -346,46 +346,6 @@ cdef extern from "<mc_rbdyn/Contact.h>" namespace "mc_rbdyn":
   cdef double ContactdefaultFriction "mc_rbdyn::Contact::defaultFriction"
   cdef double ContactnrBilatPoints "mc_rbdyn::Contact::nrBilatPoints"
 
-cdef extern from "<mc_rbdyn/stance.h>" namespace "mc_rbdyn":
-  cdef cppclass Stance:
-    Stance(const vector[vector[double]] q, const vector[Contact] & geomContacts,
-        const vector[Contact] & stabContacts)
-    const vector[Contact]& contacts()
-    const vector[vector[double]]& q()
-    void q(const vector[vector[double]]&)
-    const vector[Contact]& geomContacts()
-    void geomContacts(const vector[Contact]&)
-    const vector[Contact]& stabContacts()
-    void stabContacts(const vector[Contact]&)
-    void updateContact(const Contact&, const Contact&)
-    Vector3d com(const Robot&)
-    vector[string] robotSurfacesInContact()
-
-  ctypedef pair[vector[Contact], vector[Contact]] contact_vector_pair_t
-  ctypedef pair[contact_vector_pair_t, contact_vector_pair_t] apply_return_t
-
-  cdef cppclass StanceAction:
-    apply_return_t apply(const Stance&)
-    void update(const Stance&)
-    string toStr()
-    string type()
-    const Contact& contact()
-
-  cdef cppclass IdentityContactAction(StanceAction):
-    IdentityContactAction()
-    IdentityContactAction(const IdentityContactAction&)
-
-  cdef cppclass AddContactAction(StanceAction):
-    AddContactAction(const Contact&)
-    AddContactAction(const AddContactAction&)
-
-  cdef cppclass RemoveContactAction(StanceAction):
-    RemoveContactAction(const Contact&)
-    RemoveContactAction(const RemoveContactAction&)
-
-cdef extern from "mc_rbdyn_wrapper.hpp" namespace "mc_rbdyn":
-  ctypedef Stance* StanceRawPtr
-
 cdef extern from "<geos/geom/Geometry.h>" namespace "geos::geom":
   cdef cppclass Geometry:
       pass
@@ -398,96 +358,6 @@ cdef extern from "<mc_rbdyn/PolygonInterpolator.h>" namespace "mc_rbdyn":
 
 cdef extern from "<mc_rbdyn/polygon_utils.h>" namespace "mc_rbdyn":
   cdef vector[Vector3d] points_from_polygon(shared_ptr[Geometry])
-
-cdef extern from "<mc_rbdyn/stance.h>" namespace "mc_rbdyn":
-  cdef void loadStances(const Robots&, string, vector[Stance]&,
-      vector[shared_ptr[StanceAction]]&, vector[PolygonInterpolator]&)
-  cdef void pSaveStances(const Robots&, string, vector[StanceRawPtr]&,
-      vector[shared_ptr[StanceAction]]&)
-
-cdef extern from "mc_rbdyn_wrapper.hpp" namespace "mc_rbdyn":
-  ctypedef Vector3d(*pos_callback_t)(const PTransformd&, const PTransformd&, const Vector3d&)
-  ctypedef Vector3d(*user_pos_callback_t)(const PTransformd&, const PTransformd&, const Vector3d&, void*)
-
-cdef extern from "<mc_rbdyn/StanceConfig.h>" namespace "mc_rbdyn":
-  cdef cppclass StanceConfigCoMTask "mc_rbdyn::StanceConfig::CoMTask":
-    double stiffness
-    double extraStiffness
-    double weight
-    double targetSpeed
-
-  cdef cppclass StanceConfigCoMObj "mc_rbdyn::StanceConfig::CoMObj":
-    double posThresh
-    double velThresh
-    Vector3d comOffset
-    double timeout
-
-  cdef cppclass StanceConfigPostureTask "mc_rbdyn::StanceConfig::PostureTask":
-    double stiffness
-    double weight
-
-  cdef cppclass StanceConfigPosition "mc_rbdyn::StanceConfig::Position":
-    double stiffness
-    double extraStiffness
-    double weight
-    double targetSpeed
-
-  cdef cppclass StanceConfigOrientation "mc_rbdyn::StanceConfig::Orientation":
-    double stiffness
-    double weight
-    double finalWeight
-
-  cdef cppclass StanceConfigLinVel "mc_rbdyn::StanceConfig::LinVel":
-    double stiffness
-    double weight
-    double speed
-
-  cdef cppclass StanceConfigWaypointConf "mc_rbdyn::StanceConfig::WaypointConf":
-    cppbool skip
-    double thresh
-    # pos is not directly exposed
-    #std::function<Eigen::Vector3d(const PTransformd&, const PTransformd&, const Vector3d&) pos
-
-  cdef cppclass StanceConfigCollisionConf "mc_rbdyn::StanceConfig::CollisionConf":
-    double iDist
-    double sDist
-    double damping
-
-  cdef cppclass StanceConfigContactTask "mc_rbdyn::StanceConfig::ContactTask":
-    StanceConfigPosition position
-    StanceConfigOrientation orientation
-    StanceConfigLinVel linVel
-    StanceConfigWaypointConf waypointConf
-    StanceConfigCollisionConf collisionConf
-
-  cdef cppclass StanceConfigContactObj "mc_rbdyn::StanceConfig::ContactObj":
-    double posThresh
-    double velThresh
-    double adjustPosThresh
-    double adjustVelThresh
-    double adjustOriThresh
-    Vector3d adjustOffset
-    Vector3d adjustOriTBNWeight
-    double preContactDist
-    double gripperMoveAwayDist
-
-  cdef cppclass StanceConfigBodiesCollisionConf "mc_rbdyn::StanceConfig::BodiesCollisionConf":
-    string body1
-    string body2
-    StanceConfigCollisionConf collisionConf
-
-  cdef cppclass StanceConfigCollisions "mc_rbdyn::StanceConfig::Collisions":
-    vector[StanceConfigBodiesCollisionConf] autoc
-    vector[StanceConfigBodiesCollisionConf] robotEnv
-    map[pair[string,string], vector[pair[string,string]]] robotEnvContactFilter
-
-  cdef cppclass StanceConfig:
-    StanceConfigCoMTask comTask
-    StanceConfigCoMObj comObj
-    StanceConfigPostureTask postureTask
-    StanceConfigContactTask contactTask
-    StanceConfigContactObj contactObj
-    StanceConfigCollisions collisions
 
 cdef extern from "<mc_rbdyn/contact_transform.h>" namespace "mc_rbdyn":
   PTransformd planar(const double&, const double&, const double&)
@@ -513,14 +383,6 @@ cdef extern from "mc_rbdyn_wrapper.hpp" namespace "mc_rbdyn":
   Contact& const_cast_contact(const Contact&)
   vector[Contact]& const_cast_contact_vector(const vector[Contact]&)
   void contact_vector_set_item(vector[Contact]&, unsigned int, const Contact&)
-  Stance& const_cast_stance(const Stance&)
-  IdentityContactAction* dynamic_cast_ica(StanceAction *)
-  AddContactAction* dynamic_cast_aca(StanceAction *)
-  RemoveContactAction* dynamic_cast_rca(StanceAction *)
-  shared_ptr[StanceAction] sa_fake_shared(StanceAction *)
-  void scbc_vector_set_item(vector[StanceConfigBodiesCollisionConf]&, unsigned int, StanceConfigBodiesCollisionConf&)
-  Vector3d call_pos(StanceConfigWaypointConf&, const PTransformd&, const PTransformd&, const Vector3d&)
-  void set_pos(StanceConfigWaypointConf&, user_pos_callback_t, void*)
   shared_ptr[Robots] robots_fake_shared(Robots*)
   PolygonInterpolator * polygonInterpolatorFromTuplePairs(const vector[pair[pair[double, double], pair[double, double]]]&)
   #FIXME Work-around lack of array support

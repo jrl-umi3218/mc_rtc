@@ -1,4 +1,4 @@
-#include <mc_control/SimulationContactSensor.h>
+#include <mc_control/SimulationContactPair.h>
 #include <mc_rbdyn/RobotLoader.h>
 #include <mc_rbdyn/Robots.h>
 #include <mc_rtc/config.h>

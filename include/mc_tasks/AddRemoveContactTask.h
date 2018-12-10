@@ -2,7 +2,6 @@
 #define _H_ADDREMOVECONTACTTASK_H_
 
 #include <mc_rbdyn/Robots.h>
-#include <mc_rbdyn/StanceConfig.h>
 #include <mc_solver/BoundedSpeedConstr.h>
 #include <mc_tasks/MetaTask.h>
 #include <mc_tasks/api.h>
@@ -29,33 +28,6 @@ namespace mc_tasks
 struct MC_TASKS_DLLAPI AddRemoveContactTask : public MetaTask
 {
 public:
-  /*! \brief Constructor based on mc_rbdyn::StanceConfig
-   *
-   * Constructs an AddRemoveContactTask using information stored in a
-   * mc_rbdyn::StanceConfig value and other elements
-   *
-   * \param robots Robots involved in the task
-   *
-   * \param constSpeedConstr Used by the solver to constraint the
-   * surface movement
-   *
-   * \param contact Contact that will be added/removed
-   *
-   * \param direction Direction of displacement
-   *
-   * \param config Use config.contactTask.linVel for configuration
-   * purposes
-   *
-   * \param userT_0_s If provided, overrides the chosen normal
-   * direction
-   */
-  AddRemoveContactTask(mc_rbdyn::Robots & robots,
-                       std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr,
-                       mc_rbdyn::Contact & contact,
-                       double direction,
-                       const mc_rbdyn::StanceConfig & config,
-                       Eigen::Vector3d * userT_0_s = nullptr);
-
   /*! \brief General constructor
    *
    * Constructs an AddRemoveContactTask using information passed by the
@@ -181,9 +153,9 @@ public:
 
 private:
   /* Hide these virtual functions */
-  virtual void selectActiveJoints(mc_solver::QPSolver &, const std::vector<std::string> &) override {}
+  void selectActiveJoints(mc_solver::QPSolver &, const std::vector<std::string> &) override {}
 
-  virtual void selectUnactiveJoints(mc_solver::QPSolver &, const std::vector<std::string> &) override {}
+  void selectUnactiveJoints(mc_solver::QPSolver &, const std::vector<std::string> &) override {}
 
   virtual void resetJointsSelector(mc_solver::QPSolver &) override {}
 
@@ -208,13 +180,6 @@ private:
 struct MC_TASKS_DLLAPI AddContactTask : public AddRemoveContactTask
 {
 public:
-  /*! \brief Constructor (mc_rbdyn::StanceConfig variant) */
-  AddContactTask(mc_rbdyn::Robots & robots,
-                 std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr,
-                 mc_rbdyn::Contact & contact,
-                 const mc_rbdyn::StanceConfig & config,
-                 Eigen::Vector3d * userT_0_s = nullptr);
-
   /*! \brief Constructor */
   AddContactTask(mc_rbdyn::Robots & robots,
                  std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr,
@@ -242,13 +207,6 @@ public:
 struct MC_TASKS_DLLAPI RemoveContactTask : public AddRemoveContactTask
 {
 public:
-  /*! \brief Constructor (mc_rbdyn::StanceConfig variant) */
-  RemoveContactTask(mc_rbdyn::Robots & robots,
-                    std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr,
-                    mc_rbdyn::Contact & contact,
-                    const mc_rbdyn::StanceConfig & config,
-                    Eigen::Vector3d * userT_0_s = nullptr);
-
   /*! \brief Constructor */
   RemoveContactTask(mc_rbdyn::Robots & robots,
                     std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr,

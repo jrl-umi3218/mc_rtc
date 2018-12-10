@@ -44,9 +44,6 @@ mc_rbdyn/surface_hull.cpp
 mc_rbdyn/Contact.cpp
 mc_rbdyn/Robot.cpp
 mc_rbdyn/Robots.cpp
-mc_rbdyn/stance.cpp
-mc_rbdyn/stance.cpp
-mc_rbdyn/StanceConfig.cpp
 mc_rbdyn/PolygonInterpolator.cpp
 mc_rbdyn/polygon_utils.cpp
 mc_rbdyn/RobotLoader.cpp
@@ -71,8 +68,6 @@ set(mc_rbdyn_HDR
 ../include/mc_rbdyn/RobotLoader.h
 ../include/mc_rbdyn/RobotModule.h
 ../include/mc_rbdyn/SCHAddon.h
-../include/mc_rbdyn/stance.h
-../include/mc_rbdyn/StanceConfig.h
 ../include/mc_rbdyn/Surface.h
 ../include/mc_rbdyn/rpy_utils.h
 ../include/mc_rbdyn/surface_hull.h
@@ -183,9 +178,7 @@ mc_tasks/VectorOrientationTask.cpp
 mc_tasks/EndEffectorTask.cpp
 mc_tasks/RelativeEndEffectorTask.cpp
 mc_tasks/CoMTask.cpp
-mc_tasks/StabilityTask.cpp
 mc_tasks/AddRemoveContactTask.cpp
-mc_tasks/MoveContactTask.cpp
 mc_tasks/TrajectoryTask.cpp
 mc_tasks/ComplianceTask.cpp
 mc_tasks/AdmittanceTask.cpp
@@ -204,14 +197,12 @@ set(mc_tasks_HDR
 ../include/mc_tasks/CoMTask.h
 ../include/mc_tasks/EndEffectorTask.h
 ../include/mc_tasks/MetaTaskLoader.h
-../include/mc_tasks/MoveContactTask.h
 ../include/mc_tasks/OrientationTask.h
 ../include/mc_tasks/VectorOrientationTask.h
 ../include/mc_tasks/PositionTask.h
 ../include/mc_tasks/SurfaceTransformTask.h
 ../include/mc_tasks/RelativeEndEffectorTask.h
 ../include/mc_tasks/SmoothTask.h
-../include/mc_tasks/StabilityTask.h
 ../include/mc_tasks/TrajectoryTask.h
 ../include/mc_tasks/TrajectoryTaskGeneric.h
 ../include/mc_tasks/TrajectoryTaskGeneric.hpp
@@ -270,8 +261,7 @@ pkg_config_append_libs(mc_rtc_ros)
 set(mc_control_SRC
 mc_control/CompletionCriteria.cpp
 mc_control/ControllerServer.cpp
-mc_control/ForceContactSensor.cpp
-mc_control/SimulationContactSensor.cpp
+mc_control/SimulationContactPair.cpp
 mc_control/generic_gripper.cpp
 mc_control/mc_controller.cpp
 mc_control/mc_python_controller.cpp
@@ -285,13 +275,11 @@ set(mc_control_HDR
 ../include/mc_control/api.h
 ../include/mc_control/CompletionCriteria.h
 ../include/mc_control/Configuration.h
-../include/mc_control/ContactSensor.h
 ../include/mc_control/ControllerServer.h
-../include/mc_control/ForceContactSensor.h
 ../include/mc_control/generic_gripper.h
 ../include/mc_control/mc_controller.h
 ../include/mc_control/mc_python_controller.h
-../include/mc_control/SimulationContactSensor.h
+../include/mc_control/SimulationContactPair.h
 ../include/mc_control/mc_global_controller.h
 )
 set(mc_control_HDR ${mc_control_HDR} PARENT_SCOPE)

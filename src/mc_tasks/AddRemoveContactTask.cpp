@@ -12,23 +12,6 @@ AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots,
                                            std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr,
                                            mc_rbdyn::Contact & contact,
                                            double direction,
-                                           const mc_rbdyn::StanceConfig & config,
-                                           Eigen::Vector3d * userT_0_s)
-: AddRemoveContactTask(robots,
-                       constSpeedConstr,
-                       contact,
-                       direction,
-                       config.contactTask.linVel.speed,
-                       config.contactTask.linVel.stiffness,
-                       config.contactTask.linVel.weight,
-                       userT_0_s)
-{
-}
-
-AddRemoveContactTask::AddRemoveContactTask(mc_rbdyn::Robots & robots,
-                                           std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr,
-                                           mc_rbdyn::Contact & contact,
-                                           double direction,
                                            double _speed,
                                            double stiffness,
                                            double weight,
@@ -159,15 +142,6 @@ Eigen::VectorXd AddRemoveContactTask::speed() const
 AddContactTask::AddContactTask(mc_rbdyn::Robots & robots,
                                std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr,
                                mc_rbdyn::Contact & contact,
-                               const mc_rbdyn::StanceConfig & config,
-                               Eigen::Vector3d * userT_0_s)
-: AddRemoveContactTask(robots, constSpeedConstr, contact, -1.0, config, userT_0_s)
-{
-}
-
-AddContactTask::AddContactTask(mc_rbdyn::Robots & robots,
-                               std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr,
-                               mc_rbdyn::Contact & contact,
                                double speed,
                                double stiffness,
                                double weight,
@@ -183,15 +157,6 @@ AddContactTask::AddContactTask(mc_solver::QPSolver & solver,
                                double weight,
                                Eigen::Vector3d * userT_0_s)
 : AddRemoveContactTask(solver, contact, -1.0, speed, stiffness, weight, userT_0_s)
-{
-}
-
-RemoveContactTask::RemoveContactTask(mc_rbdyn::Robots & robots,
-                                     std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr,
-                                     mc_rbdyn::Contact & contact,
-                                     const mc_rbdyn::StanceConfig & config,
-                                     Eigen::Vector3d * userT_0_s)
-: AddRemoveContactTask(robots, constSpeedConstr, contact, 1.0, config, userT_0_s)
 {
 }
 
