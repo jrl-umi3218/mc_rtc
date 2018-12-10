@@ -288,42 +288,47 @@ void ControllerClient::handle_point3d(const ElementId & id,
 
 void ControllerClient::handle_trajectory(const ElementId & id,
                                          const mc_rtc::Configuration & gui,
-                                         const mc_rtc::Configuration & data)
+                                         const mc_rtc::Configuration & data_)
 {
-  bool isPose = false;
-  try
+  const auto & data = data_("data");
+  mc_rtc::gui::LineConfig config(gui);
+  if(data.size())
   {
-    sva::PTransformd pos = data("data")[0];
-    isPose = true || pos.translation().norm(); // silence warning about pos
-  }
-  catch(mc_rtc::Configuration::Exception & exc)
-  {
-    exc.silence();
-  }
-  if(isPose)
-  {
-    handle_poseTrajectory(id, gui, data);
+    try
+    {
+      const std::vector<sva::PTransformd> & points = data;
+      trajectory(id, points, config);
+    }
+    catch(mc_rtc::Configuration::Exception & exc)
+    {
+      exc.silence();
+      try
+      {
+        const std::vector<Eigen::Vector3d> & points = data;
+        trajectory(id, points, config);
+      }
+      catch(mc_rtc::Configuration::Exception & exc)
+      {
+        exc.silence();
+        if(!gui.has("style"))
+        {
+          config.style = mc_rtc::gui::LineStyle::Dotted;
+        }
+        Eigen::Vector3d p = data;
+        trajectory(id, p, config);
+      }
+    }
   }
   else
   {
-    handle_point3DTrajectory(id, gui, data);
+    /** Default to dotted for real-time trajectories */
+    if(!gui.has("style"))
+    {
+      config.style = mc_rtc::gui::LineStyle::Dotted;
+    }
+    sva::PTransformd pos = data;
+    trajectory(id, pos, config);
   }
-}
-
-void ControllerClient::handle_point3DTrajectory(const ElementId & id,
-                                                const mc_rtc::Configuration & gui,
-                                                const mc_rtc::Configuration & data)
-{
-  const std::vector<Eigen::Vector3d> & points = data("data");
-  trajectory(id, points, mc_rtc::gui::LineConfig(gui));
-}
-
-void ControllerClient::handle_poseTrajectory(const ElementId & id,
-                                             const mc_rtc::Configuration & gui,
-                                             const mc_rtc::Configuration & data)
-{
-  const std::vector<sva::PTransformd> & points = data("data");
-  trajectory(id, points, mc_rtc::gui::LineConfig(gui));
 }
 
 void ControllerClient::handle_polygon(const ElementId & id,

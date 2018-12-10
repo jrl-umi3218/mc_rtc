@@ -185,7 +185,7 @@ protected:
 
   /** Should display a trajectory of 3d points in 3D environment
    *
-   * \p Vector of 3D points
+   * \p points Vector of 3D points
    */
   virtual void trajectory(const ElementId & id,
                           const std::vector<Eigen::Vector3d> & /* points */,
@@ -196,13 +196,35 @@ protected:
 
   /** Should display a trajectory of transforms in 3D environment
    *
-   * \p Vector of 3D points
+   * \p points Vector of poses
    */
   virtual void trajectory(const ElementId & id,
                           const std::vector<sva::PTransformd> & /* points */,
                           const mc_rtc::gui::LineConfig & /* config */)
   {
     default_impl("PoseTrajectory", id);
+  }
+
+  /** Should display a trajectory of points, points are added one by one by the server
+   *
+   * \p point New point added to the trajectory
+   */
+  virtual void trajectory(const ElementId & id,
+                          const Eigen::Vector3d & /* point */,
+                          const mc_rtc::gui::LineConfig & /* config */)
+  {
+    default_impl("Point3DRealTimeTrajectory", id);
+  }
+
+  /** Should display a trajectory of points, points are added one by one by the server
+   *
+   * \p point New point added to the trajectory
+   */
+  virtual void trajectory(const ElementId & id,
+                          const sva::PTransformd & /* point */,
+                          const mc_rtc::gui::LineConfig & /* config */)
+  {
+    default_impl("PoseRealTimeTrajectory", id);
   }
 
   /** Should display a polygon of 3d points in 3D environment
@@ -384,16 +406,6 @@ private:
 
   /** Handle Trajectory and dispatch to 3D or Pose case */
   void handle_trajectory(const ElementId & id, const mc_rtc::Configuration & gui, const mc_rtc::Configuration & data);
-
-  /** Handle details of Trajectory elements for 3D points */
-  void handle_point3DTrajectory(const ElementId & id,
-                                const mc_rtc::Configuration & gui,
-                                const mc_rtc::Configuration & data);
-
-  /** Handle details of Trajectory for Pose elements */
-  void handle_poseTrajectory(const ElementId & id,
-                             const mc_rtc::Configuration & gui,
-                             const mc_rtc::Configuration & data);
 
   /** Hand details of DisplayPolygon elemets */
   void handle_polygon(const ElementId & id, const mc_rtc::Configuration & gui, const mc_rtc::Configuration & data);
