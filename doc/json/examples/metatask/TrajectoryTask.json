@@ -6,6 +6,7 @@
   "duration": 3.0,
   "posWeight": 100,
   "oriWeight": 10000,
+  "displaySamples" : 10,
   "targetSurface" :
   {
     "robotIndex": 1,
@@ -32,6 +33,7 @@
   "duration": 3.0,
   "posWeight": 100,
   "oriWeight": 10000,
+  "displaySamples" : 20,
   "target":
   {
     "rotation": [1.0, 0.0, 0.0,

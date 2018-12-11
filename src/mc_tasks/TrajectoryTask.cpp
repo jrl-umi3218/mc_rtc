@@ -208,6 +208,16 @@ bool TrajectoryTask::timeElapsed()
   return t >= duration;
 }
 
+void TrajectoryTask::displaySamples(unsigned s)
+{
+  samples_ = s;
+}
+
+unsigned TrajectoryTask::displaySamples() const
+{
+  return samples_;
+}
+
 void TrajectoryTask::update()
 {
   auto res = bspline->splev({t}, 2);
@@ -390,6 +400,9 @@ void TrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                                             generateBS();
                                                           }));
   }
+
+  gui.addElement({"Tasks", name_}, mc_rtc::gui::Trajectory("trajectory_" + name_,
+                                                           [this]() { return bspline->sampleTrajectory(samples_); }));
 }
 
 } // namespace mc_tasks
@@ -476,6 +489,8 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
                                                        config("oriWeight"), waypoints, oriWp);
       }
       t->load(solver, config);
+      const auto displaySamples = config("displaySamples", t->displaySamples());
+      t->displaySamples(displaySamples);
       return t;
     });
 }

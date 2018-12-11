@@ -47,7 +47,8 @@
       "type": "integer",
       "description": "Compute nrWp waypoints automatically",
       "minimum": 0
-    }
+    },
+    "displaySamples" : { "type": "number", "minimum": 0 }
   },
   "required": ["type", "robotIndex", "surface"]
 }

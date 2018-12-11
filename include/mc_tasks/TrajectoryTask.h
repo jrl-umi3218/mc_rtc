@@ -188,6 +188,17 @@ public:
    */
   std::vector<Eigen::Vector3d> controlPoints();
 
+  /**
+   * \brief Number of points to sample on the spline for the gui display
+   * \param s number of samples
+   */
+  void displaySamples(unsigned s);
+  /**
+   * \brief Number of samples for displaying the spline
+   * \return number of samples
+   */
+  unsigned displaySamples() const;
+
   void selectActiveJoints(mc_solver::QPSolver &,
                           const std::vector<std::string> &,
                           const std::map<std::string, std::vector<std::array<int, 2>>> & activeDofs = {}) override;
@@ -268,6 +279,7 @@ public:
   double duration;
   double t = 0.;
   double timeStep = 0;
+  unsigned samples_ = 10;
   std::shared_ptr<tasks::qp::JointsSelector> selectorT = nullptr;
   std::shared_ptr<tasks::qp::TransformTask> transTask = nullptr;
   std::shared_ptr<tasks::qp::TrajectoryTask> transTrajTask = nullptr;
