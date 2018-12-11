@@ -183,7 +183,8 @@ std::vector<Eigen::Vector3d> TrajectoryTask::controlPoints()
 
 void TrajectoryTask::generateBS()
 {
-  bspline.reset(new mc_trajectory::BSplineTrajectory(controlPoints(), duration));
+  // bspline.reset(new mc_trajectory::BSplineTrajectory(controlPoints(), duration));
+  bspline.reset(new mc_trajectory::BSplineConstrainedTrajectory(controlPoints(), duration));
 }
 
 Eigen::VectorXd TrajectoryTask::eval() const
