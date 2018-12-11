@@ -139,7 +139,7 @@ AddRemoveContactTaskTester(mc_tasks::AddContactTask, "addContact")
   mc_tasks::MetaTaskPtr make_ref()
   {
     auto t = std::shared_ptr<mc_tasks::force::ComplianceTask>(
-        new mc_tasks::force::ComplianceTask(*robots, 0, "RARM_LINK6", solver.dt(), dof, stiffness, weight, forceThresh,
+        new mc_tasks::force::ComplianceTask(*robots, 0, "R_WRIST_Y_S", solver.dt(), dof, stiffness, weight, forceThresh,
                                             torqueThresh, forceGain, torqueGain));
     t->setTargetWrench(wrench);
     return t;
