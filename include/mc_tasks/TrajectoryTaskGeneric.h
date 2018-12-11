@@ -52,19 +52,18 @@ struct TrajectoryTaskGeneric : public MetaTask
    */
   void refVel(const Eigen::VectorXd & vel);
 
-  /*! \brief Get the trajectory reference velocity 
+  /*! \brief Get the trajectory reference velocity
    *
    */
   const Eigen::VectorXd & refVel() const;
-  
+
   /*! \brief Set the trajectory reference acceleration
    *
    * \param accel New reference acceleration
    *
    */
   void refAccel(const Eigen::VectorXd & accel);
-  
-  
+
   /*! \brief Get the trajectory reference acceleration
    *
    */

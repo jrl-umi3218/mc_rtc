@@ -140,7 +140,7 @@ public:
   {
     return sva::MotionVecd(TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::refVel());
   }
-  
+
   /*! \brief Set trajectory task's reference acceleration from motion vector.
    *
    * \param acc Reference acceleration.

@@ -10,10 +10,10 @@ namespace force
 {
 
 DampingTask::DampingTask(const std::string & surfaceName,
-                               const mc_rbdyn::Robots & robots,
-                               unsigned int robotIndex,
-                               double stiffness,
-                               double weight)
+                         const mc_rbdyn::Robots & robots,
+                         unsigned int robotIndex,
+                         double stiffness,
+                         double weight)
 : AdmittanceTask(surfaceName, robots, robotIndex, stiffness, weight)
 {
   name_ = "damping_" + robot_.name() + "_" + surfaceName;
@@ -81,4 +81,3 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
       return t;
     });
 }
-

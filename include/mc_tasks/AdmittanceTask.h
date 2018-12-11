@@ -63,7 +63,6 @@ void clampAndWarn(const std::string & taskName,
 
 } // namespace
 
-
 /*! \brief Hybrid position-force control on a contacting end-effector.
  *
  * The AdmittanceTask is by default a SurfaceTransformTask, i.e. pure position
@@ -265,11 +264,11 @@ protected:
   void addToLogger(mc_rtc::Logger & logger) override;
   void removeFromLogger(mc_rtc::Logger & logger) override;
 
-  /** Surface transform's refVelB() becomes internal to the task. 
+  /** Surface transform's refVelB() becomes internal to the task.
    */
   using SurfaceTransformTask::refVelB;
 
-  /** Surface transform's refAccel() becomes internal to the task. 
+  /** Surface transform's refAccel() becomes internal to the task.
    */
   using SurfaceTransformTask::refAccel;
 
@@ -288,7 +287,7 @@ protected:
       solver.addTask(trajectoryT_.get());
       inSolver_ = true;
       timestep_ = solver.dt();
-    }  
+    }
   }
 };
 

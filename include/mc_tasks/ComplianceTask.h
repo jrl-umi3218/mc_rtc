@@ -23,7 +23,7 @@ static const std::pair<double, double> defaultTGain = {0.2, 0.05};
  * This is a force-compliant variant of mc_tasks::AddContactTask that should be
  * used when a force sensor is available.
  */
-struct MC_TASKS_DLLAPI ComplianceTask : MetaTask 
+struct MC_TASKS_DLLAPI ComplianceTask : MetaTask
 {
 public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -258,4 +258,3 @@ private:
 } // namespace force
 
 } // namespace mc_tasks
-

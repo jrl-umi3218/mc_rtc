@@ -46,8 +46,8 @@ void AddRemoveContactStateImplHelper<mc_tasks::AddContactTask>::make_run_impl(Ad
 
 template<>
 void AddRemoveContactStateImplHelper<mc_tasks::force::ComplianceTask>::make_run_impl(AddRemoveContactStateImpl & impl,
-                                                                              Controller & ctl,
-                                                                              mc_rbdyn::Contact & contact);
+                                                                                     Controller & ctl,
+                                                                                     mc_rbdyn::Contact & contact);
 
 struct AddRemoveContactStateImpl
 {
@@ -241,8 +241,8 @@ void AddRemoveContactStateImplHelper<mc_tasks::AddContactTask>::make_run_impl(Ad
 
 template<>
 void AddRemoveContactStateImplHelper<mc_tasks::force::ComplianceTask>::make_run_impl(AddRemoveContactStateImpl & impl,
-                                                                              Controller & ctl,
-                                                                              mc_rbdyn::Contact & contact)
+                                                                                     Controller & ctl,
+                                                                                     mc_rbdyn::Contact & contact)
 {
   auto fsm_contact_ = new Contact(Contact::from_mc_rbdyn(ctl, contact));
   double vel_thresh_ = impl.config_("velocity", 1e-4);

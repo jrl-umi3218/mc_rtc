@@ -29,7 +29,7 @@ namespace force
  * [4] https://gite.lirmm.fr/multi-contact/mc_rtc/issues/34
  *
  */
-struct MC_TASKS_DLLAPI DampingTask : AdmittanceTask 
+struct MC_TASKS_DLLAPI DampingTask : AdmittanceTask
 {
 public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -52,18 +52,15 @@ public:
    *
    */
   DampingTask(const std::string & robotSurface,
-                 const mc_rbdyn::Robots & robots,
-                 unsigned robotIndex,
-                 double stiffness = 5.0,
-                 double weight = 1000.0);
+              const mc_rbdyn::Robots & robots,
+              unsigned robotIndex,
+              double stiffness = 5.0,
+              double weight = 1000.0);
 
 protected:
-
   void update() override;
-
 };
 
 } // namespace force
 
 } // namespace mc_tasks
-
