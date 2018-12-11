@@ -1,12 +1,12 @@
-#include <mc_trajectory/BSplineConstrainedTrajectory.h>
 #include <mc_rtc/logging.h>
+#include <mc_trajectory/BSplineConstrainedTrajectory.h>
 
 namespace mc_trajectory
 {
 
 BSplineConstrainedTrajectory::BSplineConstrainedTrajectory(const std::vector<point_t> & controlPoints,
-                                     double duration,
-                                     unsigned int order)
+                                                           double duration,
+                                                           unsigned int order)
 : duration(duration), p(order), spline(controlPoints.begin(), controlPoints.end(), duration)
 {
 }
@@ -19,7 +19,8 @@ std::vector<std::vector<point_t>> BSplineConstrainedTrajectory::splev(const std:
   {
     std::vector<Eigen::Vector3d> pts;
     pts.reserve(der + 1);
-    for (std::size_t order = 0; order <= der; ++order) {
+    for(std::size_t order = 0; order <= der; ++order)
+    {
       pts.push_back(spline.derivate(ti, order));
     }
     res.push_back(pts);

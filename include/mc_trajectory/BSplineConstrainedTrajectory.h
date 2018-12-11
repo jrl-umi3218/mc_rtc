@@ -1,6 +1,7 @@
 #pragma once
 
 #include <mc_trajectory/api.h>
+
 #include <spline/bezier_curve.h>
 
 namespace mc_trajectory
@@ -14,7 +15,8 @@ struct MC_TRAJECTORY_DLLAPI BSplineConstrainedTrajectory
 {
 public:
   BSplineConstrainedTrajectory(const std::vector<point_t> & controlPoints, double duration, unsigned int order = 4);
-  // BSplineConstrainedTrajectory(const std::vector<Eigen::Vector3d> & controlPoints, const std::vector<Eigen::Vector3d> & derivatives, const std::vector<unsigned> & derivativeIndices, double duration, unsigned int order = 4);
+  // BSplineConstrainedTrajectory(const std::vector<Eigen::Vector3d> & controlPoints, const std::vector<Eigen::Vector3d>
+  // & derivatives, const std::vector<unsigned> & derivativeIndices, double duration, unsigned int order = 4);
 
   std::vector<std::vector<Eigen::Vector3d>> splev(const std::vector<double> & t, unsigned int der = 0);
   std::vector<Eigen::Vector3d> sampleTrajectory(unsigned samples);
