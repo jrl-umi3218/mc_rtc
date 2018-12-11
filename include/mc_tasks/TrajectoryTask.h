@@ -280,7 +280,7 @@ public:
   double duration;
   double t = 0.;
   double timeStep = 0;
-  unsigned samples_ = 10;
+  unsigned samples_ = 20;
   std::shared_ptr<tasks::qp::JointsSelector> selectorT = nullptr;
   std::shared_ptr<tasks::qp::TransformTask> transTask = nullptr;
   std::shared_ptr<tasks::qp::TrajectoryTask> transTrajTask = nullptr;

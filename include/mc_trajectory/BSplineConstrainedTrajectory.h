@@ -17,6 +17,7 @@ public:
   // BSplineConstrainedTrajectory(const std::vector<Eigen::Vector3d> & controlPoints, const std::vector<Eigen::Vector3d> & derivatives, const std::vector<unsigned> & derivativeIndices, double duration, unsigned int order = 4);
 
   std::vector<std::vector<Eigen::Vector3d>> splev(const std::vector<double> & t, unsigned int der = 0);
+  std::vector<Eigen::Vector3d> sampleTrajectory(unsigned samples);
 
 private:
   double duration;

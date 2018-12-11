@@ -80,7 +80,6 @@ std::vector<Eigen::Vector3d> BSplineTrajectory::sampleTrajectory(unsigned sample
   for(unsigned i = 0; i < samples; ++i)
   {
     auto time = duration * i / (samples - 1);
-    LOG_INFO("time: " << time << ", / duration " << duration);
     auto res = splev({time}, 0);
     Eigen::Vector3d & pos = res[0][0];
     traj[i] = pos;

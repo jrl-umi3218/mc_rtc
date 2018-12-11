@@ -27,4 +27,19 @@ std::vector<std::vector<point_t>> BSplineConstrainedTrajectory::splev(const std:
   return res;
 }
 
+std::vector<Eigen::Vector3d> BSplineConstrainedTrajectory::sampleTrajectory(unsigned samples)
+{
+  std::vector<Eigen::Vector3d> traj;
+  traj.resize(samples);
+  // Evaluate trajectory for display
+  for(unsigned i = 0; i < samples; ++i)
+  {
+    auto time = duration * i / (samples - 1);
+    auto res = splev({time}, 0);
+    Eigen::Vector3d & pos = res[0][0];
+    traj[i] = pos;
+  }
+  return traj;
+}
+
 } // namespace mc_trajectory
