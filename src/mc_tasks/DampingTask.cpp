@@ -45,7 +45,7 @@ namespace
 {
 
 static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
-    "admittance",
+    "damping",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
       auto t = std::make_shared<mc_tasks::force::DampingTask>(config("surface"), solver.robots(), config("robotIndex"));
       if(config.has("admittance"))
