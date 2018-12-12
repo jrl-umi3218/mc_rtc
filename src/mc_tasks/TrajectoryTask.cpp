@@ -184,7 +184,19 @@ std::vector<Eigen::Vector3d> TrajectoryTask::controlPoints()
 void TrajectoryTask::generateBS()
 {
   // bspline.reset(new mc_trajectory::BSplineTrajectory(controlPoints(), duration));
-  bspline.reset(new mc_trajectory::BSplineConstrainedTrajectory(controlPoints(), duration));
+  // bspline.reset(new mc_trajectory::BSplineConstrainedTrajectory(controlPoints(), duration));
+  mc_trajectory::ExactCubicTrajectory::T_Waypoint waypoints;
+  int i = 0;
+  const auto & cps = controlPoints();
+  for(const auto & cp : cps)
+  {
+    double step = duration / (cps.size() - 1);
+    double t = i * step;
+    LOG_INFO("adding waypoint at time " << t);
+    waypoints.push_back(std::make_pair(t, cp));
+    ++i;
+  }
+  bspline.reset(new mc_trajectory::ExactCubicTrajectory(waypoints, duration));
 }
 
 Eigen::VectorXd TrajectoryTask::eval() const

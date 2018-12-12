@@ -9,6 +9,7 @@
 #include <mc_tasks/api.h>
 #include <mc_trajectory/BSplineConstrainedTrajectory.h>
 #include <mc_trajectory/BSplineTrajectory.h>
+#include <mc_trajectory/ExactCubicTrajectory.h>
 
 #include <Tasks/QPTasks.h>
 
@@ -285,7 +286,8 @@ public:
   std::shared_ptr<tasks::qp::TransformTask> transTask = nullptr;
   std::shared_ptr<tasks::qp::TrajectoryTask> transTrajTask = nullptr;
   // std::shared_ptr<mc_trajectory::BSplineTrajectory> bspline = nullptr;
-  std::shared_ptr<mc_trajectory::BSplineConstrainedTrajectory> bspline = nullptr;
+  // std::shared_ptr<mc_trajectory::BSplineConstrainedTrajectory> bspline = nullptr;
+  std::shared_ptr<mc_trajectory::ExactCubicTrajectory> bspline = nullptr;
   bool inSolver = false;
 
 private:
