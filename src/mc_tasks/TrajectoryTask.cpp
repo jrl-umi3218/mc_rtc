@@ -358,6 +358,22 @@ void TrajectoryTask::addToLogger(mc_rtc::Logger & logger)
   });
   logger.addLogEntry(name_ + "_target_trajectory_pose", [this]() { return this->transTask->target(); });
   logger.addLogEntry(name_ + "_target_pose", [this]() { return this->X_0_t; });
+  logger.addLogEntry(name_ + "_target_vel", [this]() {
+    const auto & refVel = this->transTrajTask->refVel();
+    return sva::MotionVecd(refVel.head<3>(), refVel.tail<3>());
+  });
+  logger.addLogEntry(name_ + "_target_acc", [this]() {
+    const auto & refAcc = this->transTrajTask->refAccel();
+    return sva::MotionVecd(refAcc.head<3>(), refAcc.tail<3>());
+  });
+  logger.addLogEntry(name_ + "_speed", [this]() {
+    const auto & speed = this->speed();
+    return sva::MotionVecd(speed.head<3>(), speed.tail<3>());
+  });
+  logger.addLogEntry(name_ + "_normalAcc", [this]() {
+    const auto & speed = this->transTask->normalAcc();
+    return sva::MotionVecd(speed.head<3>(), speed.tail<3>());
+  });
 }
 
 void TrajectoryTask::removeFromLogger(mc_rtc::Logger & logger)
