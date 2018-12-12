@@ -8,9 +8,6 @@ namespace mc_tasks
 namespace force
 {
 
-namespace
-{
-
 /** Saturate integrator outputs.
  *
  * \param taskName Name of caller AdmittanceTask.
@@ -25,7 +22,7 @@ namespace
  * direction in ['x', 'y', 'z'].
  *
  */
-void clampAndWarn(const std::string & taskName,
+inline void clampAndWarn(const std::string & taskName,
                   Eigen::Vector3d & vector,
                   const Eigen::Vector3d & bound,
                   const std::string & label,
@@ -60,8 +57,6 @@ void clampAndWarn(const std::string & taskName,
     }
   }
 }
-
-} // namespace
 
 /*! \brief Hybrid position-force control on a contacting end-effector.
  *
