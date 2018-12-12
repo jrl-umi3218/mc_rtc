@@ -58,6 +58,8 @@ for b in packages:
       fd.write('from . import gui\n')
     if b == 'mc_control':
       fd.write('from . import fsm\n')
+    if b == 'mc_tasks':
+      fd.write('from . import force\n')
     fd.write('from .{} import *\n'.format(b))
 
 exists_or_create(this_path + '/mc_rtc/gui/')
@@ -66,6 +68,9 @@ with open('mc_rtc/gui/__init__.py', 'w') as fd:
 exists_or_create(this_path + '/mc_control/fsm/')
 with open('mc_control/fsm/__init__.py', 'w') as fd:
   fd.write('from .fsm import *\n')
+exists_or_create(this_path + '/mc_tasks/force/')
+with open('mc_tasks/force/__init__.py', 'w') as fd:
+  fd.write('from .force import *\n')
 exists_or_create(this_path + '/tests/')
 
 glob_base = '@CMAKE_CURRENT_SOURCE_DIR@/'
@@ -142,6 +147,7 @@ def GenExtension(name, pkg, ):
 extensions = [ GenExtension('{}.{}'.format(p, p), config) for p in packages ]
 extensions.append(GenExtension('mc_rtc.gui.gui', config))
 extensions.append(GenExtension('mc_control.fsm.fsm', config))
+extensions.append(GenExtension('mc_tasks.force.force', config))
 
 extensions = [ x for x in extensions if x is not None ]
 
@@ -156,6 +162,8 @@ for p in packages:
     data += ['gui/__init__.py', 'gui/c_gui.pxd', 'gui/gui.pxd']
   if p == 'mc_control':
     data += ['fsm/__init__.py', 'fsm/c_fsm.pxd', 'fsm/fsm.pxd']
+  if p == 'mc_tasks':
+    data += ['force/__init__.py', 'force/c_force.pxd', 'force/force.pxd']
   packages_data[p] = data
 
 extensions = cythonize(extensions)

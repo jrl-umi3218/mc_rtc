@@ -210,27 +210,6 @@ cdef class RelativeEndEffectorTask(EndEffectorTask):
   def __cinit__(self, *args, **kwargs):
     genericInit[RelativeEndEffectorTask](self, 3, 'RelativeEndEffectorTask', *args, **kwargs)
 
-cdef class ComplianceTask(MetaTask):
-  defaultFGain = c_mc_tasks.defaultFGain
-  defaultTGain = c_mc_tasks.defaultTGain
-  def __dealloc__(self):
-    if self.__own_impl:
-      del self.impl
-  def __ctor__(self, mc_rbdyn.Robots robots, robotIndex, body,
-                     timestep, stiffness = 5.0, weight = 1000.0,
-                     forceThresh = 3., torqueThresh = 1.,
-                     forceGain = defaultFGain, torqueGain = defaultTGain):
-    self.__own_impl = True
-    self.impl = self.mt_base = new c_mc_tasks.ComplianceTask(deref(robots.impl), robotIndex, body, timestep, stiffness, weight, forceThresh, torqueThresh, forceGain, torqueGain)
-  def __cinit__(self, *args, **kwargs):
-    genericInit[ComplianceTask](self, 4, 'ComplianceTask', *args, **kwargs)
-
-  def setTargetWrench(self, wrench):
-    if isinstance(wrench, sva.ForceVecd):
-      self.impl.setTargetWrench(deref((<sva.ForceVecd>(wrench)).impl))
-    else:
-      self.setTargetWrench(sva.ForceVecd(wrench))
-
 cdef class PostureTask(MetaTask):
   def __dealloc__(self):
     if self.__own_impl:

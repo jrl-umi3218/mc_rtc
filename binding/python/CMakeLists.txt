@@ -41,27 +41,34 @@ add_custom_target(mc_rtc-python-bindings ALL
   COMMENT "Generating local mc_rtc Python bindings"
   DEPENDS include/mc_control_wrapper.hpp include/mc_rbdyn_wrapper.hpp include/mc_solver_wrapper.hpp
           mc_control/c_mc_control.pxd mc_control/mc_control.pxd mc_control/mc_control.pyx
+          mc_control/fsm/c_fsm.pxd mc_control/fsm/fsm.pxd mc_control/fsm/fsm.pyx
           mc_rbdyn/c_mc_rbdyn.pxd mc_rbdyn/mc_rbdyn.pxd mc_rbdyn/mc_rbdyn.pyx
           mc_rtc/c_mc_rtc.pxd mc_rtc/mc_rtc.pyx
+          mc_rtc/gui/c_gui.pxd mc_rtc/gui/gui.pxd mc_rtc/gui/gui.pyx
           mc_solver/c_mc_solver.pxd mc_solver/mc_solver.pxd mc_solver/mc_solver.pyx
           mc_tasks/c_mc_tasks.pxd mc_tasks/mc_tasks.pxd mc_tasks/mc_tasks.pyx
+          mc_tasks/force/c_force.pxd mc_tasks/force/force.pxd mc_tasks/force/force.pyx
   SOURCES include/mc_control_wrapper.hpp include/mc_rbdyn_wrapper.hpp include/mc_solver_wrapper.hpp
           mc_control/c_mc_control.pxd mc_control/mc_control.pxd mc_control/mc_control.pyx
+          mc_control/fsm/c_fsm.pxd mc_control/fsm/fsm.pxd mc_control/fsm/fsm.pyx
           mc_rbdyn/c_mc_rbdyn.pxd mc_rbdyn/mc_rbdyn.pxd mc_rbdyn/mc_rbdyn.pyx
           mc_rtc/c_mc_rtc.pxd mc_rtc/mc_rtc.pyx
+          mc_rtc/gui/c_gui.pxd mc_rtc/gui/gui.pxd mc_rtc/gui/gui.pyx
           mc_solver/c_mc_solver.pxd mc_solver/mc_solver.pxd mc_solver/mc_solver.pyx
           mc_tasks/c_mc_tasks.pxd mc_tasks/mc_tasks.pxd mc_tasks/mc_tasks.pyx
+          mc_tasks/force/c_force.pxd mc_tasks/force/force.pxd mc_tasks/force/force.pyx
 )
 add_dependencies(mc_rtc-python-bindings mc_control mc_control_fsm)
 
 set(BINDINGS_GENERATED_SOURCES
   ${SETUP_LOCATION}/mc_control/mc_control.cpp
+  ${SETUP_LOCATION}/mc_control/fsm/fsm.cpp
   ${SETUP_LOCATION}/mc_rbdyn/mc_rbdyn.cpp
   ${SETUP_LOCATION}/mc_rtc/mc_rtc.cpp
+  ${SETUP_LOCATION}/mc_rtc/gui/gui.cpp
   ${SETUP_LOCATION}/mc_solver/mc_solver.cpp
   ${SETUP_LOCATION}/mc_tasks/mc_tasks.cpp
-  ${SETUP_LOCATION}/mc_rtc/gui/gui.cpp
-  ${SETUP_LOCATION}/mc_control/fsm/fsm.cpp
+  ${SETUP_LOCATION}/mc_tasks/force/force.cpp
 )
 
 # Force rebuild

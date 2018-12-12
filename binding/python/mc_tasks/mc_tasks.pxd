@@ -59,10 +59,6 @@ cdef class EndEffectorTask(MetaTask):
 cdef class RelativeEndEffectorTask(EndEffectorTask):
   pass
 
-cdef class ComplianceTask(MetaTask):
-  cdef c_mc_tasks.ComplianceTask * impl
-  cdef cppbool __own_impl
-
 ctypedef fused AnyTTG:
   CoMTask
   PositionTask
@@ -79,4 +75,3 @@ ctypedef fused AnyTask:
   VectorOrientationTask
   EndEffectorTask
   RelativeEndEffectorTask
-  ComplianceTask
