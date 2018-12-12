@@ -101,3 +101,10 @@ cdef extern from "<mc_tasks/RelativeEndEffectorTask.h>" namespace "mc_tasks":
   cdef cppclass RelativeEndEffectorTask(EndEffectorTask):
     RelativeEndEffectorTask(const string &, const c_mc_rbdyn.Robots &,
                     unsigned int, const string &, double, double)
+
+cdef extern from "<mc_tasks/SurfaceTransformTask.h>" namespace "mc_tasks":
+  cdef cppclass SurfaceTransformTask(TrajectoryTaskGeneric[c_qp.SurfaceTransformTask]):
+    SurfaceTransformTask(const string &, const c_mc_rbdyn.Robots &,
+                         unsigned int, double, double)
+    c_sva.PTransformd target()
+    void target(const c_sva.PTransformd &)

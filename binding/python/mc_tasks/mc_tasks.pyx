@@ -171,6 +171,25 @@ cdef class VectorOrientationTask(_VectorOrientationTrajectoryTask):
     else:
       self.impl.bodyVector(ori.impl)
 
+cdef class SurfaceTransformTask(_SurfaceTransformTask):
+  def __dealloc__(self):
+    if self.__own_impl:
+      del self.impl
+  def __ctor__(self, surfaceName, mc_rbdyn.Robots robots,
+          robotIndex, stiffness = 2.0, weight = 500.0):
+    self.__own_impl = True
+    self.impl = self.ttg_base = self.mt_base = new c_mc_tasks.SurfaceTransformTask(surfaceName, deref(robots.impl), robotIndex, stiffness, weight)
+  def __cinit__(self, *args, **kwargs):
+    genericInit[SurfaceTransformTask](self, 3, 'SurfaceTransformTask', *args, **kwargs)
+  def target(self, pos = None):
+    if pos is None:
+      return sva.PTransformdFromC(self.impl.target())
+    else:
+      if isinstance(pos, sva.PTransformd):
+        self.impl.target(deref((<sva.PTransformd>pos).impl))
+      else:
+        self.target(sva.PTransformd(pos))
+
 cdef class EndEffectorTask(MetaTask):
   def __dealloc__(self):
     if self.__own_impl and type(self) is EndEffectorTask:
