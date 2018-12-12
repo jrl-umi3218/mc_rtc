@@ -10,7 +10,7 @@ class TestMCTasks():
   @classmethod
   def setup_class(self):
     self.robots = mc_rbdyn.Robots()
-    self.rm = mc_rbdyn.get_robot_module("HRP2DRC")
+    self.rm = mc_rbdyn.get_robot_module("JVRC-1")
     self.robots.load(self.rm)
 
   @classmethod
@@ -28,9 +28,9 @@ class TestMCTasks():
     assert(comTask1.weight() == comTask3.weight())
 
   def test_posTask(self):
-    posTask1 = mc_tasks.PositionTask("RARM_LINK6", self.robots, 0)
-    posTask2 = mc_tasks.PositionTask("RARM_LINK6", self.robots, 0, 2.0, 500)
-    posTask3 = mc_tasks.PositionTask("RARM_LINK6", self.robots, 0, weight=500.0, stiffness=2.0)
+    posTask1 = mc_tasks.PositionTask("r_wrist", self.robots, 0)
+    posTask2 = mc_tasks.PositionTask("r_wrist", self.robots, 0, 2.0, 500)
+    posTask3 = mc_tasks.PositionTask("r_wrist", self.robots, 0, weight=500.0, stiffness=2.0)
 
     assert(posTask1.stiffness() == posTask2.stiffness())
     assert(posTask1.stiffness() == posTask3.stiffness())
@@ -38,9 +38,9 @@ class TestMCTasks():
     assert(posTask1.weight() == posTask3.weight())
 
   def test_oriTask(self):
-    oriTask1 = mc_tasks.OrientationTask("RARM_LINK6", self.robots, 0)
-    oriTask2 = mc_tasks.OrientationTask("RARM_LINK6", self.robots, 0, 2.0, 500)
-    oriTask3 = mc_tasks.OrientationTask("RARM_LINK6", self.robots, 0, weight=500.0, stiffness=2.0)
+    oriTask1 = mc_tasks.OrientationTask("r_wrist", self.robots, 0)
+    oriTask2 = mc_tasks.OrientationTask("r_wrist", self.robots, 0, 2.0, 500)
+    oriTask3 = mc_tasks.OrientationTask("r_wrist", self.robots, 0, weight=500.0, stiffness=2.0)
 
     assert(oriTask1.stiffness() == oriTask2.stiffness())
     assert(oriTask1.stiffness() == oriTask3.stiffness())
@@ -48,9 +48,9 @@ class TestMCTasks():
     assert(oriTask1.weight() == oriTask3.weight())
 
   def test_vecOriTask(self):
-    vecTask1 = mc_tasks.VectorOrientationTask("RARM_LINK6", e.Vector3d(0., 0., 1.), e.Vector3d(1., 0., 0.), self.robots, 0)
-    vecTask2 = mc_tasks.VectorOrientationTask("RARM_LINK6", e.Vector3d(0., 0., 1.), e.Vector3d(1., 0., 0.), self.robots, 0, 2.0, 500)
-    vecTask3 = mc_tasks.VectorOrientationTask("RARM_LINK6", e.Vector3d(0., 0., 1.), e.Vector3d(1., 0., 0.), self.robots, 0, weight=500.0, stiffness=2.0)
+    vecTask1 = mc_tasks.VectorOrientationTask("r_wrist", e.Vector3d(0., 0., 1.), e.Vector3d(1., 0., 0.), self.robots, 0)
+    vecTask2 = mc_tasks.VectorOrientationTask("r_wrist", e.Vector3d(0., 0., 1.), e.Vector3d(1., 0., 0.), self.robots, 0, 2.0, 500)
+    vecTask3 = mc_tasks.VectorOrientationTask("r_wrist", e.Vector3d(0., 0., 1.), e.Vector3d(1., 0., 0.), self.robots, 0, weight=500.0, stiffness=2.0)
 
     assert(vecTask1.stiffness() == vecTask2.stiffness())
     assert(vecTask1.stiffness() == vecTask3.stiffness())
@@ -58,9 +58,9 @@ class TestMCTasks():
     assert(vecTask1.weight() == vecTask3.weight())
 
   def test_EFTask(self):
-    efTask1 = mc_tasks.EndEffectorTask("RARM_LINK6", self.robots, 0)
-    efTask2 = mc_tasks.EndEffectorTask("RARM_LINK6", self.robots, 0, 2.0, 1000)
-    efTask3 = mc_tasks.EndEffectorTask("RARM_LINK6", self.robots, 0, weight=1000.0, stiffness=2.0)
+    efTask1 = mc_tasks.EndEffectorTask("r_wrist", self.robots, 0)
+    efTask2 = mc_tasks.EndEffectorTask("r_wrist", self.robots, 0, 2.0, 1000)
+    efTask3 = mc_tasks.EndEffectorTask("r_wrist", self.robots, 0, weight=1000.0, stiffness=2.0)
 
     assert(efTask1.positionTask.stiffness() == efTask2.positionTask.stiffness())
     assert(efTask1.positionTask.stiffness() == efTask3.positionTask.stiffness())
@@ -72,9 +72,9 @@ class TestMCTasks():
     assert(efTask1.orientationTask.weight() == efTask3.orientationTask.weight())
 
   def test_RelEFTask(self):
-    relEfTask1 = mc_tasks.RelativeEndEffectorTask("RARM_LINK6", self.robots, 0)
-    relEfTask2 = mc_tasks.RelativeEndEffectorTask("RARM_LINK6", self.robots, 0, "", 2.0, 1000)
-    relEfTask3 = mc_tasks.RelativeEndEffectorTask("RARM_LINK6", self.robots, 0, weight=1000.0, stiffness=2.0, relBodyName="")
+    relEfTask1 = mc_tasks.RelativeEndEffectorTask("r_wrist", self.robots, 0)
+    relEfTask2 = mc_tasks.RelativeEndEffectorTask("r_wrist", self.robots, 0, "", 2.0, 1000)
+    relEfTask3 = mc_tasks.RelativeEndEffectorTask("r_wrist", self.robots, 0, weight=1000.0, stiffness=2.0, relBodyName="")
 
     assert(relEfTask1.positionTask.stiffness() == relEfTask2.positionTask.stiffness())
     assert(relEfTask1.positionTask.stiffness() == relEfTask3.positionTask.stiffness())
@@ -86,6 +86,14 @@ class TestMCTasks():
     assert(relEfTask1.orientationTask.weight() == relEfTask3.orientationTask.weight())
 
   def test_complianceTask(self):
-    compTask1 = mc_tasks.force.ComplianceTask(self.robots, 0, "RARM_LINK6", 0.005)
-    compTask2 = mc_tasks.force.ComplianceTask(self.robots, 0, "RARM_LINK6", 0.005, 2.0, 1000, 3., 1., mc_tasks.force.ComplianceTask.defaultFGain, mc_tasks.force.ComplianceTask.defaultTGain)
-    compTask3 = mc_tasks.force.ComplianceTask(self.robots, 0, "RARM_LINK6", 0.005, weight=1000.0, stiffness=2.0, forceGain = mc_tasks.force.ComplianceTask.defaultFGain, torqueThresh = 1., torqueGain = mc_tasks.force.ComplianceTask.defaultTGain, forceThresh = 3.)
+    compTask1 = mc_tasks.force.ComplianceTask(self.robots, 0, "r_wrist", 0.005)
+    compTask2 = mc_tasks.force.ComplianceTask(self.robots, 0, "r_wrist", 0.005, 2.0, 1000, 3., 1., mc_tasks.force.ComplianceTask.defaultFGain, mc_tasks.force.ComplianceTask.defaultTGain)
+    compTask3 = mc_tasks.force.ComplianceTask(self.robots, 0, "r_wrist", 0.005, weight=1000.0, stiffness=2.0, forceGain = mc_tasks.force.ComplianceTask.defaultFGain, torqueThresh = 1., torqueGain = mc_tasks.force.ComplianceTask.defaultTGain, forceThresh = 3.)
+
+  def test_surfaceTransformTask(self):
+    surfaceTask1 = mc_tasks.SurfaceTransformTask("LeftFoot", self.robots, 0)
+    surfaceTask2 = mc_tasks.SurfaceTransformTask("LeftFoot", self.robots, 0, 5.0, 1000.0)
+
+  def test_admittanceTask(self):
+    admTask1 = mc_tasks.force.AdmittanceTask("LeftFoot", self.robots, 0)
+    admTask2 = mc_tasks.force.AdmittanceTask("LeftFoot", self.robots, 0, 5.0, 1000.0)
