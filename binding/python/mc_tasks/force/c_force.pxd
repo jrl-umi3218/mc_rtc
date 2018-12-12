@@ -13,6 +13,17 @@ from libcpp.string cimport string
 from libcpp.vector cimport vector
 from libcpp cimport bool as cppbool
 
+cdef extern from "<mc_tasks/AdmittanceTask.h>" namespace "mc_tasks::force":
+  cdef cppclass AdmittanceTask(c_mc_tasks.SurfaceTransformTask):
+    AdmittanceTask(const string &,
+                   const c_mc_rbdyn.Robots &,
+                   unsigned int, double, double)
+    c_sva.PTransformd targetPose()
+    void targetPose(const c_sva.PTransformd &)
+    void targetWrench(const c_sva.ForceVecd &)
+    const c_sva.ForceVecd & targetWrench()
+
+
 cdef extern from "<mc_tasks/ComplianceTask.h>" namespace "mc_tasks::force":
   pair[double, double] defaultFGain
   pair[double, double] defaultTGain

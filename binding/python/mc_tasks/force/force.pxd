@@ -1,7 +1,10 @@
 cimport mc_tasks.force.c_force as c_force
-from mc_tasks.mc_tasks cimport MetaTask
+from mc_tasks.mc_tasks cimport MetaTask, SurfaceTransformTask
 
 from libcpp cimport bool as cppbool
+
+cdef class AdmittanceTask(SurfaceTransformTask):
+  cdef c_force.AdmittanceTask * adm_impl
 
 cdef class ComplianceTask(MetaTask):
   cdef c_force.ComplianceTask * impl
