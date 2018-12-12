@@ -62,7 +62,6 @@ void TrajectoryTask::init(unsigned int robotIndex,
   this->X_0_t = X_0_t;
   this->duration = duration;
   this->wp = waypoints;
-  this->oriWp_ = oriWp;
   stiffness_ = stiffness;
   damping_ = 2 * sqrt(stiffness_);
 
@@ -72,13 +71,15 @@ void TrajectoryTask::init(unsigned int robotIndex,
   name_ = "trajectory_" + robot.name() + "_" + surface.name();
   X_0_start = surface.X_0_s(robot);
 
-  // Orientation waypoints
-  X_0_oriStart = X_0_start.rotation();
-  oriTargetWpIndex = 0;
-  oriStartTime = 0;
-  // Add a virtual waypoint at the end of the trajectory to avoid special-cases
-  // in update()
+  // Orientation waypoints (start + waypoints + target)
+  X_0_oriTarget = X_0_start.rotation();
+  oriWp_.push_back(std::make_pair(0., X_0_start.rotation()));
+  for(const auto & wp : oriWp)
+  {
+    oriWp_.push_back(wp);
+  }
   oriWp_.push_back(std::make_pair(duration, X_0_t.rotation()));
+  orientation_spline.reset(new mc_trajectory::InterpolatedRotation(oriWp_));
 
   transTask.reset(new tasks::qp::TransformTask(robots.mbs(), static_cast<int>(robotIndex), surface.bodyName(),
                                                X_0_start, surface.X_b_s()));
@@ -192,11 +193,11 @@ void TrajectoryTask::generateBS()
   {
     double step = duration / (cps.size() - 1);
     double t = i * step;
-    LOG_INFO("adding waypoint at time " << t);
     waypoints.push_back(std::make_pair(t, cp));
     ++i;
   }
-  bspline.reset(new mc_trajectory::ExactCubicTrajectory(waypoints, duration));
+  bspline.reset(new mc_trajectory::ExactCubicTrajectory(waypoints, Eigen::Vector3d::Zero(), Eigen::Vector3d::Zero(),
+                                                        Eigen::Vector3d::Zero(), Eigen::Vector3d::Zero()));
 }
 
 Eigen::VectorXd TrajectoryTask::eval() const
@@ -233,35 +234,15 @@ unsigned TrajectoryTask::displaySamples() const
 
 void TrajectoryTask::update()
 {
+  // Interpolate position
   auto res = bspline->splev({t}, 2);
   Eigen::Vector3d & pos = res[0][0];
   Eigen::Vector3d & vel = res[0][1];
   Eigen::Vector3d & acc = res[0][2];
 
-  // Change orientation waypoint
-  if(t == 0 || t > oriStartTime + oriDuration)
-  {
-    const auto & oriWp = oriWp_[oriTargetWpIndex];
-    const auto oriTargetTime = oriWp.first;
-    // Could be zero if someone puts a waypoint at duration - 1 (that would be strange), use max to be safe
-    oriDuration = std::max(oriTargetTime - t, 1.);
-    oriStartTime = t;
-
-    // Start from current surface pose
-    const mc_rbdyn::Robot & robot = robots.robot(rIndex);
-    const auto & surface = robot.surface(surfaceName);
-    X_0_oriStart = surface.X_0_s(robot);
-
-    const Eigen::Matrix3d & R_0_oriTarget = oriWp.second;
-    // Get position along bspline at orientation waypoint time
-    const auto t_0_oriTarget = bspline->splev({oriTargetTime}, 0)[0][0];
-    X_0_oriTarget = sva::PTransformd(R_0_oriTarget, t_0_oriTarget);
-
-    if(t > 0) ++oriTargetWpIndex;
-  }
-  // Interpolate rotation between waypoints
-  sva::PTransformd interp = sva::interpolate(X_0_oriStart, X_0_oriTarget, (t - oriStartTime) / oriDuration);
-  sva::PTransformd target(interp.rotation(), pos);
+  // Interpolate orientation
+  Eigen::Matrix3d ori_target = orientation_spline->eval(t);
+  sva::PTransformd target(ori_target, pos);
 
   // Set the trajectory tracking task targets from the trajectory.
   Eigen::VectorXd refVel(6);

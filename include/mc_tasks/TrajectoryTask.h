@@ -10,6 +10,7 @@
 #include <mc_trajectory/BSplineConstrainedTrajectory.h>
 #include <mc_trajectory/BSplineTrajectory.h>
 #include <mc_trajectory/ExactCubicTrajectory.h>
+#include <mc_trajectory/InterpolatedTrajectory.h>
 
 #include <Tasks/QPTasks.h>
 
@@ -270,11 +271,7 @@ public:
   Eigen::MatrixXd wp;
 
   std::vector<std::pair<double, Eigen::Matrix3d>> oriWp_;
-  sva::PTransformd X_0_oriStart;
   sva::PTransformd X_0_oriTarget;
-  unsigned int oriTargetWpIndex;
-  double oriStartTime;
-  double oriDuration;
   double stiffness_;
   double damping_;
 
@@ -288,6 +285,7 @@ public:
   // std::shared_ptr<mc_trajectory::BSplineTrajectory> bspline = nullptr;
   // std::shared_ptr<mc_trajectory::BSplineConstrainedTrajectory> bspline = nullptr;
   std::shared_ptr<mc_trajectory::ExactCubicTrajectory> bspline = nullptr;
+  std::shared_ptr<mc_trajectory::InterpolatedRotation> orientation_spline = nullptr;
   bool inSolver = false;
 
 private:

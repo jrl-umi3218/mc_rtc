@@ -185,6 +185,7 @@ set(mc_trajectory_SRC
 mc_trajectory/BSplineTrajectory.cpp
 mc_trajectory/BSplineConstrainedTrajectory.cpp
 mc_trajectory/ExactCubicTrajectory.cpp
+mc_trajectory/InterpolatedTrajectory.cpp
 mc_trajectory/spline_utils.cpp
 )
 
@@ -193,6 +194,7 @@ set(mc_trajectory_HDR
 ../include/mc_trajectory/BSplineTrajectory.h
 ../include/mc_trajectory/BSplineConstrainedTrajectory.h
 ../include/mc_trajectory/ExactCubicTrajectory.h
+../include/mc_trajectory/InterpolatedTrajectory.h
 ../include/mc_trajectory/spline_utils.h
 )
 

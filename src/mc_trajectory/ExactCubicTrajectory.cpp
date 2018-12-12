@@ -11,23 +11,23 @@ using T_Waypoint = ExactCubicTrajectory::T_Waypoint;
 using spline_deriv_constraint_t = ExactCubicTrajectory::spline_deriv_constraint_t;
 using spline_constraints_t = ExactCubicTrajectory::spline_constraints_t;
 
-ExactCubicTrajectory::ExactCubicTrajectory(const T_Waypoint & waypoints, double duration, unsigned int order)
-: duration(duration), p(order)
+ExactCubicTrajectory::ExactCubicTrajectory(const T_Waypoint & waypoints,
+                                           const point_t & init_vel,
+                                           const point_t & init_acc,
+                                           const point_t & end_vel,
+                                           const point_t & end_acc)
 {
-  LOG_INFO("ExactCubicTrajectory");
   spline_constraints_t constraints;
-  constraints.init_vel = point_t(0., 0., 0.); // point_t(-1,-2,-3);
-  constraints.init_acc = point_t(0., 0., 0.); // point_t(-4,-4,-6);
-  constraints.end_vel = point_t(0., 0., .1);
-  constraints.end_acc = point_t(0., 0., 0.);
+  constraints.init_vel = init_vel;
+  constraints.init_acc = init_acc;
+  constraints.end_vel = end_vel;
+  constraints.end_acc = end_acc;
 
   spline = std::make_shared<spline_deriv_constraint_t>(waypoints.begin(), waypoints.end(), constraints);
-  LOG_INFO("spline created");
 }
 
 std::vector<std::vector<point_t>> ExactCubicTrajectory::splev(const std::vector<double> & t, unsigned int der)
 {
-  LOG_INFO("splev at t=" << t[0]);
   std::vector<std::vector<point_t>> res(0);
   res.reserve(t.size());
   for(const auto & ti : t)
@@ -40,7 +40,6 @@ std::vector<std::vector<point_t>> ExactCubicTrajectory::splev(const std::vector<
     }
     res.push_back(pts);
   }
-  LOG_INFO("splev success");
   return res;
 }
 
@@ -51,7 +50,7 @@ std::vector<Eigen::Vector3d> ExactCubicTrajectory::sampleTrajectory(unsigned sam
   // Evaluate trajectory for display
   for(unsigned i = 0; i < samples; ++i)
   {
-    auto time = duration * i / (samples - 1);
+    auto time = spline->min() + (spline->max() - spline->min()) * i / (samples - 1);
     auto res = splev({time}, 0);
     Eigen::Vector3d & pos = res[0][0];
     traj[i] = pos;
