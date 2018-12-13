@@ -132,6 +132,7 @@ void ExactCubicTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 
 void ExactCubicTrajectoryTask::removeFromGUI(mc_rtc::gui::StateBuilder & gui)
 {
+  TrajectoryTask::removeFromGUI(gui);
   gui.removeCategory({"Tasks", name_, "Orientation Control Points"});
   gui.removeCategory({"Tasks", name_, "Position Control Points"});
 }

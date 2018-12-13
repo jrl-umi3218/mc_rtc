@@ -125,6 +125,7 @@ void BSplineTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 
 void BSplineTrajectoryTask::removeFromGUI(mc_rtc::gui::StateBuilder & gui)
 {
+  TrajectoryTask::removeFromGUI(gui);
   gui.removeCategory({"Tasks", name_, "Orientation Control Points"});
   gui.removeCategory({"Tasks", name_, "Position Control Points"});
 }

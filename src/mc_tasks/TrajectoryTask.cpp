@@ -307,6 +307,10 @@ void TrajectoryTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry(name_ + "_surface_pose");
   logger.removeLogEntry(name_ + "_target_trajectory_pose");
   logger.removeLogEntry(name_ + "_target_pose");
+  logger.removeLogEntry(name_ + "_target_vel");
+  logger.removeLogEntry(name_ + "_target_acc");
+  logger.removeLogEntry(name_ + "_speed");
+  logger.removeLogEntry(name_ + "_normalAcc");
 }
 
 void TrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
@@ -325,82 +329,10 @@ void TrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                           [this](const double & g) { this->oriWeight(g); }));
 }
 
+void TrajectoryTask::removeFromGUI(mc_rtc::gui::StateBuilder & gui)
+{
+  MetaTask::removeFromGUI(gui);
+  gui.removeCategory({"Tasks", name_, "Gains"});
+}
+
 } // namespace mc_tasks
-
-// namespace
-// {
-// static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
-//     "trajectory",
-//     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-//       sva::PTransformd X_0_t;
-//       Eigen::MatrixXd waypoints;
-//       std::vector<std::pair<double, Eigen::Matrix3d>> oriWp;
-//       const auto robotIndex = config("robotIndex");
-
-//       if(config.has("targetSurface"))
-//       { // Target defined from a target surface, with an offset defined
-//         // in the surface coordinates
-//         const auto & c = config("targetSurface");
-//         const auto & targetSurfaceName = c("surface");
-//         const auto & robot = solver.robot(c("robotIndex"));
-
-//         const sva::PTransformd & targetSurface = robot.surface(targetSurfaceName).X_0_s(robot);
-//         const Eigen::Vector3d trans = c("offset_translation", Eigen::Vector3d::Zero().eval());
-//         const Eigen::Matrix3d rot = c("offset_rotation", Eigen::Matrix3d::Identity().eval());
-//         sva::PTransformd offset(rot, trans);
-//         X_0_t = offset * targetSurface;
-
-//         if(c.has("controlPoints"))
-//         {
-//           // Control points offsets defined wrt to the target surface frame
-//           const auto & controlPoints = c("controlPoints");
-//           waypoints.resize(3, controlPoints.size());
-//           for(unsigned int i = 0; i < controlPoints.size(); ++i)
-//           {
-//             const Eigen::Vector3d wp = controlPoints[i];
-//             sva::PTransformd X_offset(wp);
-//             waypoints.col(i) = (X_offset * targetSurface).translation();
-//           }
-//         }
-
-//         if(c.has("oriWaypoints"))
-//         {
-//           std::vector<std::pair<double, Eigen::Matrix3d>> oriWaypoints = c("oriWaypoints");
-//           for(const auto & wp : oriWaypoints)
-//           {
-//             const sva::PTransformd offset{wp.second};
-//             const sva::PTransformd ori = offset * targetSurface;
-//             oriWp.push_back(std::make_pair(wp.first, ori.rotation()));
-//           }
-//         }
-//       }
-//       else
-//       { // Absolute target pose
-//         X_0_t = config("target");
-
-//         if(config.has("controlPoints"))
-//         {
-//           // Control points defined in world coordinates
-//           const auto & controlPoints = config("controlPoints");
-//           waypoints.resize(3, controlPoints.size());
-//           waypoints.resize(3, controlPoints.size());
-//           for(unsigned int i = 0; i < controlPoints.size(); ++i)
-//           {
-//             const Eigen::Vector3d wp = controlPoints[i];
-//             waypoints.col(i) = wp;
-//           }
-//         }
-
-//         oriWp = config("oriWaypoints", std::vector<std::pair<double, Eigen::Matrix3d>>{});
-//       }
-
-//       std::shared_ptr<mc_tasks::TrajectoryTask> t = std::make_shared<mc_tasks::TrajectoryTask>(solver.robots(),
-//       robotIndex, config("surface"), X_0_t,
-//                                                        config("duration"), config("stiffness"), config("posWeight"),
-//                                                        config("oriWeight"), waypoints, oriWp);
-//       t->load(solver, config);
-//       const auto displaySamples = config("displaySamples", t->displaySamples());
-//       t->displaySamples(displaySamples);
-//       return t;
-//     });
-// }
