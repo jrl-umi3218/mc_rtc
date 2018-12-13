@@ -10,9 +10,18 @@ namespace mc_trajectory
 BSplineTrajectory::BSplineTrajectory(const std::vector<Eigen::Vector3d> & controlPoints,
                                      double duration,
                                      unsigned int order)
-: duration(duration), p(order), P(3, 0), knot(0, 1), spline(knot, P)
+: duration(duration), order(order), p(order), P(3, 0), knot(0, 1), spline(knot, P)
 {
-  P.resize(3, 2 * (static_cast<int>(order) - 2) + static_cast<int>(controlPoints.size()));
+  this->controlPoints(controlPoints);
+}
+
+void BSplineTrajectory::controlPoints(const std::vector<Eigen::Vector3d> & controlPoints)
+{
+  controlPoints_ = controlPoints;
+  if(P.cols() != controlPoints.size())
+  {
+    P.resize(3, 2 * (static_cast<int>(order) - 2) + static_cast<int>(controlPoints.size()));
+  }
   for(unsigned int i = 0; i < order - 2; ++i)
   {
     P(0, i) = controlPoints[0](0);
@@ -85,6 +94,11 @@ std::vector<Eigen::Vector3d> BSplineTrajectory::sampleTrajectory(unsigned sample
     traj[i] = pos;
   }
   return traj;
+}
+
+const std::vector<Eigen::Vector3d> & BSplineTrajectory::controlPoints()
+{
+  return controlPoints_;
 }
 
 } // namespace mc_trajectory

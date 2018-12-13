@@ -12,56 +12,16 @@ namespace mc_tasks
 TrajectoryTask::TrajectoryTask(const mc_rbdyn::Robots & robots,
                                unsigned int robotIndex,
                                const std::string & surfaceName,
-                               const sva::PTransformd & X_0_t,
                                double duration,
                                double stiffness,
                                double posW,
-                               double oriW,
-                               const Eigen::MatrixXd & waypoints,
-                               const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
+                               double oriW)
 : robots(robots)
-{
-  init(robotIndex, surfaceName, X_0_t, duration, stiffness, posW, oriW, waypoints, oriWp);
-}
-
-TrajectoryTask::TrajectoryTask(const mc_rbdyn::Robots & robots,
-                               unsigned int robotIndex,
-                               const std::string & surfaceName,
-                               const sva::PTransformd & X_0_t,
-                               double duration,
-                               double stiffness,
-                               double posW,
-                               double oriW,
-                               unsigned int nrWP,
-                               const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
-: robots(robots)
-{
-  if(nrWP <= 0)
-  {
-    LOG_ERROR_AND_THROW(std::runtime_error, "Invalid trajectory: No waypoints provided and nrWp <= 0")
-  }
-  Eigen::Vector3d start = X_0_start.translation();
-  Eigen::Vector3d end = X_0_t.translation();
-  wp = mc_trajectory::generateInterpolatedWaypoints(start, end, nrWP);
-
-  init(robotIndex, surfaceName, X_0_t, duration, stiffness, posW, oriW, wp, oriWp);
-}
-
-void TrajectoryTask::init(unsigned int robotIndex,
-                          const std::string & surfaceName,
-                          const sva::PTransformd & X_0_t,
-                          double duration,
-                          double stiffness,
-                          double posW,
-                          double oriW,
-                          const Eigen::MatrixXd & waypoints,
-                          const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
 {
   this->rIndex = robotIndex;
   this->surfaceName = surfaceName;
   this->X_0_t = X_0_t;
   this->duration = duration;
-  this->wp = waypoints;
   stiffness_ = stiffness;
   damping_ = 2 * sqrt(stiffness_);
 
@@ -71,24 +31,12 @@ void TrajectoryTask::init(unsigned int robotIndex,
   name_ = "trajectory_" + robot.name() + "_" + surface.name();
   X_0_start = surface.X_0_s(robot);
 
-  // Orientation waypoints (start + waypoints + target)
-  X_0_oriTarget = X_0_start.rotation();
-  oriWp_.push_back(std::make_pair(0., X_0_start.rotation()));
-  for(const auto & wp : oriWp)
-  {
-    oriWp_.push_back(wp);
-  }
-  oriWp_.push_back(std::make_pair(duration, X_0_t.rotation()));
-  orientation_spline.reset(new mc_trajectory::InterpolatedRotation(oriWp_));
-
   transTask.reset(new tasks::qp::TransformTask(robots.mbs(), static_cast<int>(robotIndex), surface.bodyName(),
                                                X_0_start, surface.X_b_s()));
   transTrajTask.reset(new tasks::qp::TrajectoryTask(robots.mbs(), static_cast<int>(robotIndex), transTask.get(),
                                                     stiffness, 2 * sqrt(stiffness), 1.0));
   posWeight(posW);
   oriWeight(oriW);
-
-  generateBS();
 }
 
 void TrajectoryTask::stiffness(double s)
@@ -156,8 +104,6 @@ Eigen::VectorXd TrajectoryTask::dimWeight() const
 void TrajectoryTask::target(const sva::PTransformd & target)
 {
   X_0_t = target;
-  oriWp_[oriWp_.size() - 1].second = X_0_t.rotation();
-  generateBS();
 }
 
 const sva::PTransformd & TrajectoryTask::target() const
@@ -165,40 +111,23 @@ const sva::PTransformd & TrajectoryTask::target() const
   return X_0_t;
 }
 
-std::vector<Eigen::Vector3d> TrajectoryTask::controlPoints()
-{
-  std::vector<Eigen::Vector3d> res;
-  res.reserve(static_cast<unsigned int>(wp.size()) + 2);
-  res.push_back(X_0_start.translation());
-  for(int i = 0; i < wp.cols(); ++i)
-  {
-    Eigen::Vector3d tmp;
-    tmp(0) = wp(0, i);
-    tmp(1) = wp(1, i);
-    tmp(2) = wp(2, i);
-    res.push_back(tmp);
-  }
-  res.push_back(X_0_t.translation());
-  return res;
-}
-
-void TrajectoryTask::generateBS()
-{
-  // bspline.reset(new mc_trajectory::BSplineTrajectory(controlPoints(), duration));
-  // bspline.reset(new mc_trajectory::BSplineConstrainedTrajectory(controlPoints(), duration));
-  mc_trajectory::ExactCubicTrajectory::T_Waypoint waypoints;
-  int i = 0;
-  const auto & cps = controlPoints();
-  for(const auto & cp : cps)
-  {
-    double step = duration / (cps.size() - 1);
-    double t = i * step;
-    waypoints.push_back(std::make_pair(t, cp));
-    ++i;
-  }
-  bspline.reset(new mc_trajectory::ExactCubicTrajectory(waypoints, Eigen::Vector3d::Zero(), Eigen::Vector3d::Zero(),
-                                                        Eigen::Vector3d::Zero(), Eigen::Vector3d::Zero()));
-}
+// void TrajectoryTask::generateBS()
+// {
+//   // bspline.reset(new mc_trajectory::BSplineTrajectory(controlPoints(), duration));
+//   // bspline.reset(new mc_trajectory::BSplineConstrainedTrajectory(controlPoints(), duration));
+//   mc_trajectory::ExactCubicTrajectory::T_Waypoint waypoints;
+//   int i = 0;
+//   const auto & cps = controlPoints();
+//   for(const auto & cp : cps)
+//   {
+//     double step = duration / (cps.size() - 1);
+//     double t = i * step;
+//     waypoints.push_back(std::make_pair(t, cp));
+//     ++i;
+//   }
+//   bspline.reset(new mc_trajectory::ExactCubicTrajectory(waypoints, Eigen::Vector3d::Zero(), Eigen::Vector3d::Zero(),
+//                                                         Eigen::Vector3d::Zero(), Eigen::Vector3d::Zero()));
+// }
 
 Eigen::VectorXd TrajectoryTask::eval() const
 {
@@ -232,32 +161,36 @@ unsigned TrajectoryTask::displaySamples() const
   return samples_;
 }
 
+void TrajectoryTask::refVel(const Eigen::VectorXd & vel)
+{
+  transTrajTask->refVel(vel);
+}
+
+const Eigen::VectorXd & TrajectoryTask::refVel() const
+{
+  return transTrajTask->refVel();
+}
+
+void TrajectoryTask::refAcc(const Eigen::VectorXd & acc)
+{
+  transTrajTask->refAccel(acc);
+}
+
+const Eigen::VectorXd & TrajectoryTask::refAcc() const
+{
+  return transTrajTask->refAccel();
+}
+void TrajectoryTask::refTarget(const sva::PTransformd & target)
+{
+  transTask->target(target);
+}
+const sva::PTransformd & TrajectoryTask::refTarget() const
+{
+  return transTask->target();
+}
+
 void TrajectoryTask::update()
 {
-  // Interpolate position
-  auto res = bspline->splev({t}, 2);
-  Eigen::Vector3d & pos = res[0][0];
-  Eigen::Vector3d & vel = res[0][1];
-  Eigen::Vector3d & acc = res[0][2];
-
-  // Interpolate orientation
-  Eigen::Matrix3d ori_target = orientation_spline->eval(t);
-  sva::PTransformd target(ori_target, pos);
-
-  // Set the trajectory tracking task targets from the trajectory.
-  Eigen::VectorXd refVel(6);
-  Eigen::VectorXd refAcc(6);
-  for(unsigned int i = 0; i < 3; ++i)
-  {
-    refVel(i) = 0;
-    refAcc(i) = 0;
-    refVel(i + 3) = vel(i);
-    refAcc(i + 3) = acc(i);
-  }
-  transTask->target(target);
-  transTrajTask->refVel(refVel);
-  transTrajTask->refAccel(refAcc);
-
   t = std::min(t + timeStep, duration);
 }
 
@@ -379,15 +312,6 @@ void TrajectoryTask::removeFromLogger(mc_rtc::Logger & logger)
 void TrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   MetaTask::addToGUI(gui);
-  gui.addElement({"Tasks", name_},
-                 mc_rtc::gui::Transform("pos_target", [this]() -> const sva::PTransformd & { return this->target(); },
-                                        [this](const sva::PTransformd & pos) { target(pos); }),
-                 mc_rtc::gui::Transform("traj_target", [this]() { return this->transTask->target(); }),
-                 mc_rtc::gui::Transform("ori_target", [this]() { return this->X_0_oriTarget; }),
-                 mc_rtc::gui::Transform("pos", [this]() {
-                   return robots.robot(rIndex).surface(surfaceName).X_0_s(robots.robot(rIndex));
-                 }));
-
   gui.addElement({"Tasks", name_, "Gains"},
                  mc_rtc::gui::NumberInput("stiffness", [this]() { return this->stiffness(); },
                                           [this](const double & s) { this->setGains(s, this->damping()); }),
@@ -399,108 +323,84 @@ void TrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                           [this](const double & d) { this->posWeight(d); }),
                  mc_rtc::gui::NumberInput("oriWeight", [this]() { return this->oriWeight(); },
                                           [this](const double & g) { this->oriWeight(g); }));
-
-  // Visual controls for the control points and
-  for(unsigned int i = 0; i < wp.cols(); ++i)
-  {
-    gui.addElement({"Tasks", name_}, mc_rtc::gui::Point3D("control_point_" + std::to_string(i),
-                                                          [this, i]() { return Eigen::Vector3d(this->wp.col(i)); },
-                                                          [this, i](const Eigen::Vector3d & pos) {
-                                                            wp.col(i) = pos;
-                                                            generateBS();
-                                                          }));
-  }
-
-  gui.addElement({"Tasks", name_}, mc_rtc::gui::Trajectory("trajectory_" + name_,
-                                                           [this]() { return bspline->sampleTrajectory(samples_); }));
 }
 
 } // namespace mc_tasks
 
-namespace
-{
-static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
-    "trajectory",
-    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      sva::PTransformd X_0_t;
-      Eigen::MatrixXd waypoints;
-      std::vector<std::pair<double, Eigen::Matrix3d>> oriWp;
-      const auto robotIndex = config("robotIndex");
+// namespace
+// {
+// static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
+//     "trajectory",
+//     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
+//       sva::PTransformd X_0_t;
+//       Eigen::MatrixXd waypoints;
+//       std::vector<std::pair<double, Eigen::Matrix3d>> oriWp;
+//       const auto robotIndex = config("robotIndex");
 
-      if(config.has("targetSurface"))
-      { // Target defined from a target surface, with an offset defined
-        // in the surface coordinates
-        const auto & c = config("targetSurface");
-        const auto & targetSurfaceName = c("surface");
-        const auto & robot = solver.robot(c("robotIndex"));
+//       if(config.has("targetSurface"))
+//       { // Target defined from a target surface, with an offset defined
+//         // in the surface coordinates
+//         const auto & c = config("targetSurface");
+//         const auto & targetSurfaceName = c("surface");
+//         const auto & robot = solver.robot(c("robotIndex"));
 
-        const sva::PTransformd & targetSurface = robot.surface(targetSurfaceName).X_0_s(robot);
-        const Eigen::Vector3d trans = c("offset_translation", Eigen::Vector3d::Zero().eval());
-        const Eigen::Matrix3d rot = c("offset_rotation", Eigen::Matrix3d::Identity().eval());
-        sva::PTransformd offset(rot, trans);
-        X_0_t = offset * targetSurface;
+//         const sva::PTransformd & targetSurface = robot.surface(targetSurfaceName).X_0_s(robot);
+//         const Eigen::Vector3d trans = c("offset_translation", Eigen::Vector3d::Zero().eval());
+//         const Eigen::Matrix3d rot = c("offset_rotation", Eigen::Matrix3d::Identity().eval());
+//         sva::PTransformd offset(rot, trans);
+//         X_0_t = offset * targetSurface;
 
-        if(c.has("controlPoints"))
-        {
-          // Control points offsets defined wrt to the target surface frame
-          const auto & controlPoints = c("controlPoints");
-          waypoints.resize(3, static_cast<int>(controlPoints.size()));
-          for(unsigned int i = 0; i < controlPoints.size(); ++i)
-          {
-            const Eigen::Vector3d wp = controlPoints[i];
-            sva::PTransformd X_offset(wp);
-            waypoints.col(i) = (X_offset * targetSurface).translation();
-          }
-        }
+//         if(c.has("controlPoints"))
+//         {
+//           // Control points offsets defined wrt to the target surface frame
+//           const auto & controlPoints = c("controlPoints");
+//           waypoints.resize(3, controlPoints.size());
+//           for(unsigned int i = 0; i < controlPoints.size(); ++i)
+//           {
+//             const Eigen::Vector3d wp = controlPoints[i];
+//             sva::PTransformd X_offset(wp);
+//             waypoints.col(i) = (X_offset * targetSurface).translation();
+//           }
+//         }
 
-        if(c.has("oriWaypoints"))
-        {
-          std::vector<std::pair<double, Eigen::Matrix3d>> oriWaypoints = c("oriWaypoints");
-          for(const auto & wp : oriWaypoints)
-          {
-            const sva::PTransformd offset{wp.second};
-            const sva::PTransformd ori = offset * targetSurface;
-            oriWp.push_back(std::make_pair(wp.first, ori.rotation()));
-          }
-        }
-      }
-      else
-      { // Absolute target pose
-        X_0_t = config("target");
+//         if(c.has("oriWaypoints"))
+//         {
+//           std::vector<std::pair<double, Eigen::Matrix3d>> oriWaypoints = c("oriWaypoints");
+//           for(const auto & wp : oriWaypoints)
+//           {
+//             const sva::PTransformd offset{wp.second};
+//             const sva::PTransformd ori = offset * targetSurface;
+//             oriWp.push_back(std::make_pair(wp.first, ori.rotation()));
+//           }
+//         }
+//       }
+//       else
+//       { // Absolute target pose
+//         X_0_t = config("target");
 
-        if(config.has("controlPoints"))
-        {
-          // Control points defined in world coordinates
-          const auto & controlPoints = config("controlPoints");
-          waypoints.resize(3, static_cast<int>(controlPoints.size()));
-          waypoints.resize(3, static_cast<int>(controlPoints.size()));
-          for(unsigned int i = 0; i < controlPoints.size(); ++i)
-          {
-            const Eigen::Vector3d wp = controlPoints[i];
-            waypoints.col(i) = wp;
-          }
-        }
+//         if(config.has("controlPoints"))
+//         {
+//           // Control points defined in world coordinates
+//           const auto & controlPoints = config("controlPoints");
+//           waypoints.resize(3, controlPoints.size());
+//           waypoints.resize(3, controlPoints.size());
+//           for(unsigned int i = 0; i < controlPoints.size(); ++i)
+//           {
+//             const Eigen::Vector3d wp = controlPoints[i];
+//             waypoints.col(i) = wp;
+//           }
+//         }
 
-        oriWp = config("oriWaypoints", std::vector<std::pair<double, Eigen::Matrix3d>>{});
-      }
+//         oriWp = config("oriWaypoints", std::vector<std::pair<double, Eigen::Matrix3d>>{});
+//       }
 
-      std::shared_ptr<mc_tasks::TrajectoryTask> t;
-      if(config.has("nrWP"))
-      {
-        unsigned int nrWP = config("nrWP");
-        t = std::make_shared<mc_tasks::TrajectoryTask>(solver.robots(), robotIndex, config("surface"), X_0_t,
-                                                       config("duration"), config("stiffness"), config("posWeight"),
-                                                       config("oriWeight"), nrWP, oriWp);
-      }
-      else
-      {
-        t = std::make_shared<mc_tasks::TrajectoryTask>(solver.robots(), robotIndex, config("surface"), X_0_t,
-                                                       config("duration"), config("stiffness"), config("posWeight"),
-                                                       config("oriWeight"), waypoints, oriWp);
-      }
-      t->load(solver, config);
-      const auto displaySamples = config("displaySamples", t->displaySamples());
-      t->displaySamples(displaySamples);
-      return t;
-    });
-}
+//       std::shared_ptr<mc_tasks::TrajectoryTask> t = std::make_shared<mc_tasks::TrajectoryTask>(solver.robots(),
+//       robotIndex, config("surface"), X_0_t,
+//                                                        config("duration"), config("stiffness"), config("posWeight"),
+//                                                        config("oriWeight"), waypoints, oriWp);
+//       t->load(solver, config);
+//       const auto displaySamples = config("displaySamples", t->displaySamples());
+//       t->displaySamples(displaySamples);
+//       return t;
+//     });
+// }

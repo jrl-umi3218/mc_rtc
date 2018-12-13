@@ -214,6 +214,7 @@ mc_tasks/RelativeEndEffectorTask.cpp
 mc_tasks/CoMTask.cpp
 mc_tasks/AddRemoveContactTask.cpp
 mc_tasks/TrajectoryTask.cpp
+mc_tasks/BSplineTrajectoryTask.cpp
 mc_tasks/ComplianceTask.cpp
 mc_tasks/AdmittanceTask.cpp
 mc_tasks/DampingTask.cpp
@@ -239,6 +240,7 @@ set(mc_tasks_HDR
 ../include/mc_tasks/RelativeEndEffectorTask.h
 ../include/mc_tasks/SmoothTask.h
 ../include/mc_tasks/TrajectoryTask.h
+../include/mc_tasks/BSplineTrajectoryTask.h
 ../include/mc_tasks/TrajectoryTaskGeneric.h
 ../include/mc_tasks/TrajectoryTaskGeneric.hpp
 ../include/mc_tasks/ComplianceTask.h

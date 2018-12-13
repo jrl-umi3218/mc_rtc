@@ -33,8 +33,6 @@ public:
    * \param surface Surface controlled by the task, should belong to the
    * controlled robot
    *
-   * \param X_0_t Target position of the controlled surface (world frame)
-   *
    * \param duration Length of the movement
    *
    * \param stiffness Task stiffness (position and orientation)
@@ -43,47 +41,14 @@ public:
    *
    * \param oriW Task weight (orientation)
    *
-   * \param waypoints Waypoints provided "by-hand". Each (3-rows) column of the
-   * matrix will be used as a waypoint
-   *
-   * \param oriWpTime Time at which each rotation waypoint will be activated.
-   * If left empty, rotation will be interpolated according to the starting and
-   * end pose for the trajectory.
-   * Should have the same size as oriWp
-   *
-   * \param oriWp Rotation matrix (world frame) for each rotation waypoint.
-   * If left empty, rotation will be interpolated according to the starting and
-   * end pose for the trajectory.
-   * Should have the same size as oriWpTime
-   *
    */
   TrajectoryTask(const mc_rbdyn::Robots & robots,
                  unsigned int robotIndex,
                  const std::string & surfaceName,
-                 const sva::PTransformd & X_0_t,
                  double duration,
                  double stiffness,
                  double posW,
-                 double oriW,
-                 const Eigen::MatrixXd & waypoints,
-                 const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp = {});
-
-  /**
-   * \brief Constructor for TrajectoryTask with automatic waypoint generation
-   * (position), and optional waypoints in orientation
-   *
-   * \param nrWP nrWP waypoints are automatically computed to smooth the trajectory.
-   */
-  TrajectoryTask(const mc_rbdyn::Robots & robots,
-                 unsigned int robotIndex,
-                 const std::string & surfaceName,
-                 const sva::PTransformd & X_0_t,
-                 double duration,
-                 double stiffness,
-                 double posW,
-                 double oriW,
-                 unsigned int nrWP,
-                 const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp = {});
+                 double oriW);
 
   /*! \brief Set the task stiffness/damping
    *
@@ -162,27 +127,24 @@ public:
    */
   virtual Eigen::VectorXd evalTracking() const;
 
-  /**
-   * \brief Sets the final trajectory target
-   * Calls generateBS()
-   *
-   * \param target Target pose in world coordinates
-   */
-  void target(const sva::PTransformd & target);
-
-  /**
-   * \brief Final task target (trajectory end-point).
-   *
-   * return The target pose
-   */
-  const sva::PTransformd & target() const;
-
   /*! \brief Returns the current task speed
    *
    * \returns The current task speed
    *
    */
   Eigen::VectorXd speed() const override;
+
+  void target(const sva::PTransformd & target);
+  const sva::PTransformd & target() const;
+
+  void refVel(const Eigen::VectorXd & vel);
+  const Eigen::VectorXd & refVel() const;
+
+  void refAcc(const Eigen::VectorXd & acc);
+  const Eigen::VectorXd & refAcc() const;
+
+  void refTarget(const sva::PTransformd & target);
+  const sva::PTransformd & refTarget() const;
 
   /*! \brief Get the control points of the trajectory's b-spline
    *
@@ -218,39 +180,11 @@ public:
   void addToLogger(mc_rtc::Logger & logger) override;
   void removeFromLogger(mc_rtc::Logger & logger) override;
 
-private:
-  /**
-   * \brief Actual task initialization constructor
-   */
-  void init(unsigned int robotIndex,
-            const std::string & surfaceName,
-            const sva::PTransformd & X_0_t,
-            double duration,
-            double stiffness,
-            double posW,
-            double oriW,
-            const Eigen::MatrixXd & waypoints,
-            const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp);
-
-  /**
-   * \brief Generates the BSpline trajectory
-   * The trajectory is defined as follows:
-   * - Starting pose is (by default) the intial surface pose
-   * - Control points are user-specified
-   * - End point is set with target()
-   *
-   * Each update() call will provide a new target along this trajectory
-   * tracked by the appropriate tasks. This target is interpolated along a
-   * b-spline trajectory for the translational part. Rotation is interpolated
-   * independently with optional waypoints.
-   */
-  void generateBS();
-
+protected:
   void removeFromSolver(mc_solver::QPSolver & solver) override;
 
   void update() override;
 
-protected:
   /**
    * \brief Add task controls to the GUI.
    * Interactive controls for the trajectory waypoints and end-endpoints
@@ -268,10 +202,7 @@ public:
   std::string surfaceName;
   sva::PTransformd X_0_t;
   sva::PTransformd X_0_start;
-  Eigen::MatrixXd wp;
 
-  std::vector<std::pair<double, Eigen::Matrix3d>> oriWp_;
-  sva::PTransformd X_0_oriTarget;
   double stiffness_;
   double damping_;
 
@@ -282,10 +213,6 @@ public:
   std::shared_ptr<tasks::qp::JointsSelector> selectorT = nullptr;
   std::shared_ptr<tasks::qp::TransformTask> transTask = nullptr;
   std::shared_ptr<tasks::qp::TrajectoryTask> transTrajTask = nullptr;
-  // std::shared_ptr<mc_trajectory::BSplineTrajectory> bspline = nullptr;
-  // std::shared_ptr<mc_trajectory::BSplineConstrainedTrajectory> bspline = nullptr;
-  std::shared_ptr<mc_trajectory::ExactCubicTrajectory> bspline = nullptr;
-  std::shared_ptr<mc_trajectory::InterpolatedRotation> orientation_spline = nullptr;
   bool inSolver = false;
 
 private:

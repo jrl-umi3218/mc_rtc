@@ -1,14 +1,14 @@
 #pragma once
 
 #include <mc_trajectory/api.h>
+
+#include <memory>
 #include <spline/exact_cubic.h>
 #include <spline/spline_deriv_constraint.h>
 #include <vector>
-#include <memory>
 
 namespace mc_trajectory
 {
-
 
 struct MC_TRAJECTORY_DLLAPI ExactCubicTrajectory
 {
