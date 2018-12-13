@@ -84,8 +84,12 @@ public:
    *
    * \param activeJointsName Active joints in the task
    *
+   * \param activeDofs Allow to select only part of the dofs of a joint
+   *
    */
-  virtual void selectActiveJoints(mc_solver::QPSolver & solver, const std::vector<std::string> & activeJointsName) = 0;
+  virtual void selectActiveJoints(mc_solver::QPSolver & solver,
+                                  const std::vector<std::string> & activeJointsName,
+                                  const std::map<std::string, std::vector<std::array<int, 2>>> & activeDofs = {}) = 0;
 
   /*! \brief Setup an unactive joints selector
    *
@@ -99,9 +103,13 @@ public:
    *
    * \param unactiveJointsName Active joints in the task
    *
+   * \param unactiveDofs Allow to select only part of the dofs of a joint
+   *
    */
-  virtual void selectUnactiveJoints(mc_solver::QPSolver & solver,
-                                    const std::vector<std::string> & unactiveJointsName) = 0;
+  virtual void selectUnactiveJoints(
+      mc_solver::QPSolver & solver,
+      const std::vector<std::string> & unactiveJointsName,
+      const std::map<std::string, std::vector<std::array<int, 2>>> & unactiveDofs = {}) = 0;
 
   /*! \brief Reset active joints selection
    *

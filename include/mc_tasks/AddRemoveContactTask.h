@@ -153,9 +153,17 @@ public:
 
 private:
   /* Hide these virtual functions */
-  void selectActiveJoints(mc_solver::QPSolver &, const std::vector<std::string> &) override {}
+  void selectActiveJoints(mc_solver::QPSolver &,
+                          const std::vector<std::string> &,
+                          const std::map<std::string, std::vector<std::array<int, 2>>> & = {}) override
+  {
+  }
 
-  void selectUnactiveJoints(mc_solver::QPSolver &, const std::vector<std::string> &) override {}
+  void selectUnactiveJoints(mc_solver::QPSolver &,
+                            const std::vector<std::string> &,
+                            const std::map<std::string, std::vector<std::array<int, 2>>> & = {}) override
+  {
+  }
 
   virtual void resetJointsSelector(mc_solver::QPSolver &) override {}
 

@@ -179,7 +179,9 @@ Eigen::VectorXd TrajectoryTaskGeneric<T>::dimWeight() const
 }
 
 template<typename T>
-void TrajectoryTaskGeneric<T>::selectActiveJoints(const std::vector<std::string> & activeJointsName)
+void TrajectoryTaskGeneric<T>::selectActiveJoints(
+    const std::vector<std::string> & activeJointsName,
+    const std::map<std::string, std::vector<std::array<int, 2>>> & activeDofs)
 {
   if(inSolver_)
   {
@@ -187,29 +189,33 @@ void TrajectoryTaskGeneric<T>::selectActiveJoints(const std::vector<std::string>
                 "the solver");
   }
   selectorT_ = std::make_shared<tasks::qp::JointsSelector>(
-      tasks::qp::JointsSelector::ActiveJoints(robots.mbs(), rIndex, errorT.get(), activeJointsName));
+      tasks::qp::JointsSelector::ActiveJoints(robots.mbs(), rIndex, errorT.get(), activeJointsName, activeDofs));
   trajectoryT_ = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, selectorT_.get(), 1, 2, weight_);
   trajectoryT_->setGains(stiffness_, damping_);
 }
 
 template<typename T>
-void TrajectoryTaskGeneric<T>::selectActiveJoints(mc_solver::QPSolver & solver,
-                                                  const std::vector<std::string> & activeJointsName)
+void TrajectoryTaskGeneric<T>::selectActiveJoints(
+    mc_solver::QPSolver & solver,
+    const std::vector<std::string> & activeJointsName,
+    const std::map<std::string, std::vector<std::array<int, 2>>> & activeDofs)
 {
   if(inSolver_)
   {
     removeFromSolver(solver);
-    selectActiveJoints(activeJointsName);
+    selectActiveJoints(activeJointsName, activeDofs);
     addToSolver(solver);
   }
   else
   {
-    selectActiveJoints(activeJointsName);
+    selectActiveJoints(activeJointsName, activeDofs);
   }
 }
 
 template<typename T>
-void TrajectoryTaskGeneric<T>::selectUnactiveJoints(const std::vector<std::string> & unactiveJointsName)
+void TrajectoryTaskGeneric<T>::selectUnactiveJoints(
+    const std::vector<std::string> & unactiveJointsName,
+    const std::map<std::string, std::vector<std::array<int, 2>>> & unactiveDofs)
 {
   if(inSolver_)
   {
@@ -217,24 +223,26 @@ void TrajectoryTaskGeneric<T>::selectUnactiveJoints(const std::vector<std::strin
                 "to the solver");
   }
   selectorT_ = std::make_shared<tasks::qp::JointsSelector>(
-      tasks::qp::JointsSelector::UnactiveJoints(robots.mbs(), rIndex, errorT.get(), unactiveJointsName));
+      tasks::qp::JointsSelector::UnactiveJoints(robots.mbs(), rIndex, errorT.get(), unactiveJointsName, unactiveDofs));
   trajectoryT_ = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, selectorT_.get(), 1, 2, weight_);
   trajectoryT_->setGains(stiffness_, damping_);
 }
 
 template<typename T>
-void TrajectoryTaskGeneric<T>::selectUnactiveJoints(mc_solver::QPSolver & solver,
-                                                    const std::vector<std::string> & unactiveJointsName)
+void TrajectoryTaskGeneric<T>::selectUnactiveJoints(
+    mc_solver::QPSolver & solver,
+    const std::vector<std::string> & unactiveJointsName,
+    const std::map<std::string, std::vector<std::array<int, 2>>> & unactiveDofs)
 {
   if(inSolver_)
   {
     removeFromSolver(solver);
-    selectUnactiveJoints(unactiveJointsName);
+    selectUnactiveJoints(unactiveJointsName, unactiveDofs);
     addToSolver(solver);
   }
   else
   {
-    selectUnactiveJoints(unactiveJointsName);
+    selectUnactiveJoints(unactiveJointsName, unactiveDofs);
   }
 }
 

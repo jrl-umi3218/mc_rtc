@@ -97,17 +97,19 @@ Eigen::VectorXd EndEffectorTask::dimWeight() const
 }
 
 void EndEffectorTask::selectActiveJoints(mc_solver::QPSolver & solver,
-                                         const std::vector<std::string> & activeJointsName)
+                                         const std::vector<std::string> & activeJointsName,
+                                         const std::map<std::string, std::vector<std::array<int, 2>>> & activeDofs)
 {
-  positionTask->selectActiveJoints(solver, activeJointsName);
-  orientationTask->selectActiveJoints(solver, activeJointsName);
+  positionTask->selectActiveJoints(solver, activeJointsName, activeDofs);
+  orientationTask->selectActiveJoints(solver, activeJointsName, activeDofs);
 }
 
 void EndEffectorTask::selectUnactiveJoints(mc_solver::QPSolver & solver,
-                                           const std::vector<std::string> & unactiveJointsName)
+                                           const std::vector<std::string> & unactiveJointsName,
+                                           const std::map<std::string, std::vector<std::array<int, 2>>> & unactiveDofs)
 {
-  positionTask->selectUnactiveJoints(solver, unactiveJointsName);
-  orientationTask->selectUnactiveJoints(solver, unactiveJointsName);
+  positionTask->selectUnactiveJoints(solver, unactiveJointsName, unactiveDofs);
+  orientationTask->selectUnactiveJoints(solver, unactiveJointsName, unactiveDofs);
 }
 
 void EndEffectorTask::resetJointsSelector(mc_solver::QPSolver & solver)

@@ -141,15 +141,21 @@ struct TrajectoryTaskGeneric : public MetaTask
 
   virtual Eigen::VectorXd dimWeight() const override;
 
-  virtual void selectActiveJoints(const std::vector<std::string> & activeJointsName);
+  virtual void selectActiveJoints(const std::vector<std::string> & activeJointsName,
+                                  const std::map<std::string, std::vector<std::array<int, 2>>> & activeDofs = {});
 
-  virtual void selectActiveJoints(mc_solver::QPSolver & solver,
-                                  const std::vector<std::string> & activeJointsName) override;
+  virtual void selectActiveJoints(
+      mc_solver::QPSolver & solver,
+      const std::vector<std::string> & activeJointsName,
+      const std::map<std::string, std::vector<std::array<int, 2>>> & activeDofs = {}) override;
 
-  virtual void selectUnactiveJoints(const std::vector<std::string> & unactiveJointsName);
+  virtual void selectUnactiveJoints(const std::vector<std::string> & unactiveJointsName,
+                                    const std::map<std::string, std::vector<std::array<int, 2>>> & unactiveDofs = {});
 
-  virtual void selectUnactiveJoints(mc_solver::QPSolver & solver,
-                                    const std::vector<std::string> & unactiveJointsName) override;
+  virtual void selectUnactiveJoints(
+      mc_solver::QPSolver & solver,
+      const std::vector<std::string> & unactiveJointsName,
+      const std::map<std::string, std::vector<std::array<int, 2>>> & unactiveDofs = {}) override;
 
   virtual void resetJointsSelector();
 

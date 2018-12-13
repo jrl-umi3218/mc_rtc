@@ -128,15 +128,18 @@ Eigen::VectorXd ComplianceTask::dimWeight() const
   return efTask_->dimWeight();
 }
 
-void ComplianceTask::selectActiveJoints(mc_solver::QPSolver & solver, const std::vector<std::string> & activeJointsName)
+void ComplianceTask::selectActiveJoints(mc_solver::QPSolver & solver,
+                                        const std::vector<std::string> & activeJointsName,
+                                        const std::map<std::string, std::vector<std::array<int, 2>>> & activeDofs)
 {
-  efTask_->selectActiveJoints(solver, activeJointsName);
+  efTask_->selectActiveJoints(solver, activeJointsName, activeDofs);
 }
 
 void ComplianceTask::selectUnactiveJoints(mc_solver::QPSolver & solver,
-                                          const std::vector<std::string> & unactiveJointsName)
+                                          const std::vector<std::string> & unactiveJointsName,
+                                          const std::map<std::string, std::vector<std::array<int, 2>>> & unactiveDofs)
 {
-  efTask_->selectUnactiveJoints(solver, unactiveJointsName);
+  efTask_->selectUnactiveJoints(solver, unactiveJointsName, unactiveDofs);
 }
 
 void ComplianceTask::resetJointsSelector(mc_solver::QPSolver & solver)

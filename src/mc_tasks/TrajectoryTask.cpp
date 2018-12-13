@@ -272,7 +272,9 @@ void TrajectoryTask::removeFromSolver(mc_solver::QPSolver & solver)
   }
 }
 
-void TrajectoryTask::selectActiveJoints(mc_solver::QPSolver & solver, const std::vector<std::string> & activeJoints)
+void TrajectoryTask::selectActiveJoints(mc_solver::QPSolver & solver,
+                                        const std::vector<std::string> & activeJoints,
+                                        const std::map<std::string, std::vector<std::array<int, 2>>> & activeDofs)
 {
   bool putBack = inSolver;
   if(putBack)
@@ -283,7 +285,7 @@ void TrajectoryTask::selectActiveJoints(mc_solver::QPSolver & solver, const std:
   const auto damp = damping();
   const auto & dimW = dimWeight();
   selectorT = std::make_shared<tasks::qp::JointsSelector>(
-      tasks::qp::JointsSelector::ActiveJoints(robots.mbs(), rIndex, transTask.get(), activeJoints));
+      tasks::qp::JointsSelector::ActiveJoints(robots.mbs(), rIndex, transTask.get(), activeJoints, activeDofs));
   transTrajTask = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, selectorT.get(), stiff, damp, 1.0);
   transTrajTask->dimWeight(dimW);
   if(putBack)
@@ -292,7 +294,9 @@ void TrajectoryTask::selectActiveJoints(mc_solver::QPSolver & solver, const std:
   }
 }
 
-void TrajectoryTask::selectUnactiveJoints(mc_solver::QPSolver & solver, const std::vector<std::string> & unactiveJoints)
+void TrajectoryTask::selectUnactiveJoints(mc_solver::QPSolver & solver,
+                                          const std::vector<std::string> & unactiveJoints,
+                                          const std::map<std::string, std::vector<std::array<int, 2>>> & unactiveDofs)
 {
   bool putBack = inSolver;
   if(putBack)
@@ -303,7 +307,7 @@ void TrajectoryTask::selectUnactiveJoints(mc_solver::QPSolver & solver, const st
   const auto damp = damping();
   const auto & dimW = dimWeight();
   selectorT = std::make_shared<tasks::qp::JointsSelector>(
-      tasks::qp::JointsSelector::UnactiveJoints(robots.mbs(), rIndex, transTask.get(), unactiveJoints));
+      tasks::qp::JointsSelector::UnactiveJoints(robots.mbs(), rIndex, transTask.get(), unactiveJoints, unactiveDofs));
   transTrajTask = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, selectorT.get(), stiff, damp, 1.0);
   transTrajTask->dimWeight(dimW);
   if(putBack)

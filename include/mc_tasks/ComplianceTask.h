@@ -209,9 +209,13 @@ public:
 
   Eigen::VectorXd dimWeight() const override;
 
-  void selectActiveJoints(mc_solver::QPSolver & solver, const std::vector<std::string> & activeJointsName) override;
+  void selectActiveJoints(mc_solver::QPSolver & solver,
+                          const std::vector<std::string> & activeJointsName,
+                          const std::map<std::string, std::vector<std::array<int, 2>>> & activeDofs = {}) override;
 
-  void selectUnactiveJoints(mc_solver::QPSolver & solver, const std::vector<std::string> & unactiveJointsName) override;
+  void selectUnactiveJoints(mc_solver::QPSolver & solver,
+                            const std::vector<std::string> & unactiveJointsName,
+                            const std::map<std::string, std::vector<std::array<int, 2>>> & unactiveDofs = {}) override;
 
   void resetJointsSelector(mc_solver::QPSolver & solver) override;
 
