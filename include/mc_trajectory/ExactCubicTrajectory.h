@@ -27,11 +27,16 @@ public:
                        const point_t & end_vel,
                        const point_t & end_acc);
 
+  void waypoints(const T_Waypoint & waypoints);
+  const T_Waypoint & waypoints() const;
+
   std::vector<std::vector<Eigen::Vector3d>> splev(const std::vector<double> & t, unsigned int der = 0);
   std::vector<Eigen::Vector3d> sampleTrajectory(unsigned samples);
 
 private:
-  std::shared_ptr<spline_deriv_constraint_t> spline;
+  std::shared_ptr<spline_deriv_constraint_t> spline_;
+  T_Waypoint waypoints_;
+  spline_constraints_t constraints_;
 };
 
 } // namespace mc_trajectory

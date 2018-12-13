@@ -9,7 +9,6 @@
 #include <mc_tasks/api.h>
 #include <mc_trajectory/BSplineConstrainedTrajectory.h>
 #include <mc_trajectory/BSplineTrajectory.h>
-#include <mc_trajectory/ExactCubicTrajectory.h>
 #include <mc_trajectory/InterpolatedTrajectory.h>
 
 #include <Tasks/QPTasks.h>

@@ -1,45 +1,53 @@
-#include <mc_tasks/BSplineTrajectoryTask.h>
+#include <mc_tasks/ExactCubicTrajectoryTask.h>
 #include <mc_tasks/MetaTaskLoader.h>
 
 namespace mc_tasks
 {
 
-BSplineTrajectoryTask::BSplineTrajectoryTask(const mc_rbdyn::Robots & robots,
-                                             unsigned int robotIndex,
-                                             const std::string & surfaceName,
-                                             double duration,
-                                             double stiffness,
-                                             double posW,
-                                             double oriW,
-                                             const sva::PTransformd & target,
-                                             const std::vector<Eigen::Vector3d> & posWp,
-                                             const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
+ExactCubicTrajectoryTask::ExactCubicTrajectoryTask(const mc_rbdyn::Robots & robots,
+                                                   unsigned int robotIndex,
+                                                   const std::string & surfaceName,
+                                                   double duration,
+                                                   double stiffness,
+                                                   double posW,
+                                                   double oriW,
+                                                   const sva::PTransformd & target,
+                                                   const std::vector<std::pair<double, Eigen::Vector3d>> & posWp,
+                                                   const Eigen::Vector3d & init_vel,
+                                                   const Eigen::Vector3d & init_acc,
+                                                   const Eigen::Vector3d & end_vel,
+                                                   const Eigen::Vector3d & end_acc,
+                                                   const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
 : TrajectoryTask(robots, robotIndex, surfaceName, duration, stiffness, posW, oriW)
 {
   const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
-  type_ = "bspline_trajectory";
-  name_ = "bspline_trajectory_" + robot.name() + "_" + surfaceName;
+  type_ = "exact_cubic_trajectory";
+  name_ = "exact_cubic_trajectory_" + robot.name() + "_" + surfaceName;
   this->target(target);
-  posWaypoints(posWp);
+  posWaypoints(posWp, init_vel, init_acc, end_vel, end_acc);
   oriWaypoints(oriWp);
 }
 
-void BSplineTrajectoryTask::posWaypoints(const std::vector<Eigen::Vector3d> & posWp)
+void ExactCubicTrajectoryTask::posWaypoints(const std::vector<std::pair<double, Eigen::Vector3d>> & posWp,
+                                            const Eigen::Vector3d & init_vel,
+                                            const Eigen::Vector3d & init_acc,
+                                            const Eigen::Vector3d & end_vel,
+                                            const Eigen::Vector3d & end_acc)
 {
-  std::vector<Eigen::Vector3d> waypoints;
+  std::vector<std::pair<double, Eigen::Vector3d>> waypoints;
   waypoints.reserve(posWp.size() + 2);
   const auto & robot = robots.robot(rIndex);
   const auto & X_0_s = robot.surface(surfaceName).X_0_s(robot);
-  waypoints.push_back(X_0_s.translation());
+  waypoints.push_back(std::make_pair(0., X_0_s.translation()));
   for(const auto & wp : posWp)
   {
     waypoints.push_back(wp);
   }
-  waypoints.push_back(X_0_t.translation());
-  bspline.reset(new mc_trajectory::BSplineTrajectory(waypoints, duration));
+  waypoints.push_back(std::make_pair(duration, X_0_t.translation()));
+  bspline.reset(new mc_trajectory::ExactCubicTrajectory(waypoints, init_vel, init_acc, end_vel, end_acc));
 }
 
-void BSplineTrajectoryTask::oriWaypoints(const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
+void ExactCubicTrajectoryTask::oriWaypoints(const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
 {
   const auto & robot = robots.robot(rIndex);
   const auto & X_0_s = robot.surface(surfaceName).X_0_s(robot);
@@ -52,7 +60,7 @@ void BSplineTrajectoryTask::oriWaypoints(const std::vector<std::pair<double, Eig
   orientation_spline.reset(new mc_trajectory::InterpolatedRotation(oriWp_));
 }
 
-void BSplineTrajectoryTask::update()
+void ExactCubicTrajectoryTask::update()
 {
   // Interpolate position
   auto res = bspline->splev({t}, 2);
@@ -78,7 +86,7 @@ void BSplineTrajectoryTask::update()
   TrajectoryTask::update();
 }
 
-void BSplineTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
+void ExactCubicTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   TrajectoryTask::addToGUI(gui);
   gui.addElement({"Tasks", name_}, mc_rtc::gui::Transform("pos", [this]() {
@@ -86,17 +94,16 @@ void BSplineTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                  }));
 
   // Visual controls for the control points and
-  LOG_INFO("size: " << bspline->controlPoints().size());
-  for(unsigned int i = 0; i < bspline->controlPoints().size(); ++i)
+  for(unsigned int i = 0; i < bspline->waypoints().size(); ++i)
   {
     gui.addElement({"Tasks", name_, "Position Control Points"},
                    mc_rtc::gui::Point3D("control_point_pos_" + std::to_string(i),
-                                        [this, i]() { return bspline->controlPoints()[i]; },
+                                        [this, i]() { return bspline->waypoints()[i].second; },
                                         [this, i](const Eigen::Vector3d & pos) {
                                           // XXX inefficient
-                                          auto waypoints = bspline->controlPoints();
-                                          waypoints[i] = pos;
-                                          bspline->controlPoints(waypoints);
+                                          auto waypoints = bspline->waypoints();
+                                          waypoints[i].second = pos;
+                                          bspline->waypoints(waypoints);
                                         }));
   }
 
@@ -123,7 +130,7 @@ void BSplineTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                                            [this]() { return bspline->sampleTrajectory(samples_); }));
 }
 
-void BSplineTrajectoryTask::removeFromGUI(mc_rtc::gui::StateBuilder & gui)
+void ExactCubicTrajectoryTask::removeFromGUI(mc_rtc::gui::StateBuilder & gui)
 {
   gui.removeCategory({"Tasks", name_, "Orientation Control Points"});
   gui.removeCategory({"Tasks", name_, "Position Control Points"});
@@ -134,10 +141,10 @@ void BSplineTrajectoryTask::removeFromGUI(mc_rtc::gui::StateBuilder & gui)
 namespace
 {
 static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
-    "bspline_trajectory",
+    "exact_cubic_trajectory",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
       sva::PTransformd X_0_t;
-      std::vector<Eigen::Vector3d> waypoints;
+      std::vector<std::pair<double, Eigen::Vector3d>> waypoints;
       std::vector<std::pair<double, Eigen::Matrix3d>> oriWp;
       const auto robotIndex = config("robotIndex");
 
@@ -157,13 +164,14 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
         if(c.has("controlPoints"))
         {
           // Control points offsets defined wrt to the target surface frame
-          const auto & controlPoints = c("controlPoints");
+          std::vector<std::pair<double, Eigen::Vector3d>> controlPoints = c("controlPoints");
           waypoints.resize(controlPoints.size());
           for(unsigned int i = 0; i < controlPoints.size(); ++i)
           {
-            const Eigen::Vector3d wp = controlPoints[i];
+            const Eigen::Vector3d wp = controlPoints[i].second;
             sva::PTransformd X_offset(wp);
-            waypoints[i] = (X_offset * targetSurface).translation();
+            waypoints[i].first = controlPoints[i].first;
+            waypoints[i].second = (X_offset * targetSurface).translation();
           }
         }
 
@@ -185,21 +193,22 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
         if(config.has("controlPoints"))
         {
           // Control points defined in world coordinates
-          const auto & controlPoints = config("controlPoints");
+          std::vector<std::pair<double, Eigen::Vector3d>> controlPoints = config("controlPoints");
           waypoints.resize(controlPoints.size());
           for(unsigned int i = 0; i < controlPoints.size(); ++i)
           {
-            const Eigen::Vector3d wp = controlPoints[i];
-            waypoints[i] = wp;
+            waypoints[i] = controlPoints[i];
           }
         }
 
         oriWp = config("oriWaypoints", std::vector<std::pair<double, Eigen::Matrix3d>>{});
       }
 
-      std::shared_ptr<mc_tasks::BSplineTrajectoryTask> t = std::make_shared<mc_tasks::BSplineTrajectoryTask>(
+      std::shared_ptr<mc_tasks::ExactCubicTrajectoryTask> t = std::make_shared<mc_tasks::ExactCubicTrajectoryTask>(
           solver.robots(), robotIndex, config("surface"), config("duration"), config("stiffness"), config("posWeight"),
-          config("oriWeight"), X_0_t, waypoints, oriWp);
+          config("oriWeight"), X_0_t, waypoints, config("init_vel", Eigen::Vector3d::Zero().eval()),
+          config("init_acc", Eigen::Vector3d::Zero().eval()), config("end_vel", Eigen::Vector3d::Zero().eval()),
+          config("end_acc", Eigen::Vector3d::Zero().eval()), oriWp);
       t->load(solver, config);
       const auto displaySamples = config("displaySamples", t->displaySamples());
       t->displaySamples(displaySamples);
