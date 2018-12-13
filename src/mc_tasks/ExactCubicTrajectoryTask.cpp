@@ -106,6 +106,27 @@ void ExactCubicTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                           bspline->waypoints(waypoints);
                                         }));
   }
+  gui.addElement({"Tasks", name_, "Velocity Constraints"},
+                 mc_rtc::gui::Arrow("InitVelocity", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 1., 0.)),
+                                                   [this]() -> Eigen::Vector3d
+                                                   {
+                                                    return X_0_start.translation();
+                                                   },
+                                                   [this]() -> Eigen::Vector3d
+                                                   {
+                                                    return X_0_start.translation() +  bspline->init_vel();
+                                                   }
+                                                   ),
+                 mc_rtc::gui::Arrow("EndVelocity", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 1., 0.)),
+                                                   [this]() -> Eigen::Vector3d
+                                                   {
+                                                    return target().translation();
+                                                   },
+                                                   [this]() -> Eigen::Vector3d
+                                                   {
+                                                    return target().translation() +  bspline->end_vel();
+                                                   }
+                                                   ));
 
   // XXX different style for rotation element
   for(unsigned i = 1; i < orientation_spline->waypoints().size(); ++i)
