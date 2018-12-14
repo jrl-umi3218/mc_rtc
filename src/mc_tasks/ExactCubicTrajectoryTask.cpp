@@ -169,6 +169,7 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
       std::vector<std::pair<double, Eigen::Vector3d>> waypoints;
       std::vector<std::pair<double, Eigen::Matrix3d>> oriWp;
       const auto robotIndex = config("robotIndex");
+      Eigen::Vector3d init_vel, end_vel, init_acc, end_acc;
 
       if(config.has("targetSurface"))
       { // Target defined from a target surface, with an offset defined
@@ -207,6 +208,10 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
             oriWp.push_back(std::make_pair(wp.first, ori.rotation()));
           }
         }
+        init_vel = targetSurface.rotation().inverse() * c("init_vel", Eigen::Vector3d::Zero().eval());
+        init_acc = targetSurface.rotation().inverse() * c("init_acc", Eigen::Vector3d::Zero().eval());
+        end_vel = targetSurface.rotation().inverse() * c("end_vel", Eigen::Vector3d::Zero().eval());
+        end_acc = targetSurface.rotation().inverse() * c("end_acc", Eigen::Vector3d::Zero().eval());
       }
       else
       { // Absolute target pose
@@ -222,15 +227,16 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
             waypoints[i] = controlPoints[i];
           }
         }
-
+        init_vel = config("init_vel", Eigen::Vector3d::Zero().eval());
+        init_acc = config("init_acc", Eigen::Vector3d::Zero().eval());
+        end_vel = config("end_vel", Eigen::Vector3d::Zero().eval());
+        end_acc = config("end_acc", Eigen::Vector3d::Zero().eval());
         oriWp = config("oriWaypoints", std::vector<std::pair<double, Eigen::Matrix3d>>{});
       }
 
       std::shared_ptr<mc_tasks::ExactCubicTrajectoryTask> t = std::make_shared<mc_tasks::ExactCubicTrajectoryTask>(
           solver.robots(), robotIndex, config("surface"), config("duration"), config("stiffness"), config("posWeight"),
-          config("oriWeight"), X_0_t, waypoints, config("init_vel", Eigen::Vector3d::Zero().eval()),
-          config("init_acc", Eigen::Vector3d::Zero().eval()), config("end_vel", Eigen::Vector3d::Zero().eval()),
-          config("end_acc", Eigen::Vector3d::Zero().eval()), oriWp);
+          config("oriWeight"), X_0_t, waypoints, init_vel, init_acc, end_vel, end_acc, oriWp);
       t->load(solver, config);
       const auto displaySamples = config("displaySamples", t->displaySamples());
       t->displaySamples(displaySamples);
