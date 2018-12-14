@@ -58,7 +58,7 @@ void SurfaceTransformTask::addToLogger(mc_rtc::Logger & logger)
 {
   TrajectoryBase::addToLogger(logger);
   logger.addLogEntry(name_ + "_surface_pose", [this]() {
-    const auto & robot = robots.robot();
+    const auto & robot = robots.robot(rIndex);
     return robot.surface(surfaceName).X_0_s(robot);
   });
   logger.addLogEntry(name_ + "_target_pose", [this]() { return target(); });
