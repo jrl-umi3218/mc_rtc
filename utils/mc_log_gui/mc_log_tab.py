@@ -384,6 +384,8 @@ class MCLogTab(QtGui.QWidget):
     for y,yl in zip(y2, y2_label):
       tab.ui.canvas.add_plot_right(tab.x_data, y, yl)
       tab.tree_view.select(y, tab.ui.y2Selector, 1)
+    tab.y1Selected = y1
+    tab.y2Selected = y2
     return tab
 
   @staticmethod
