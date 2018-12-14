@@ -3,6 +3,7 @@
 from PySide import QtCore, QtGui
 
 from mc_log_tab_ui import Ui_MCLogTab
+from mc_log_types import GridStyle
 
 from functools import partial
 
@@ -201,6 +202,9 @@ class MCLogTab(QtGui.QWidget):
     super(MCLogTab, self).__init__(parent)
     self.ui = Ui_MCLogTab()
     self.ui.setupUi(self)
+    if parent is not None:
+      self.ui.canvas.grid = parent.gridStyles['left']
+      self.ui.canvas.grid2 = parent.gridStyles['right']
     def setupSelector(ySelector):
       ySelector.setHeaderLabels(["Data"])
       ySelector.header().setResizeMode(QtGui.QHeaderView.ResizeMode.Fixed)
@@ -223,6 +227,10 @@ class MCLogTab(QtGui.QWidget):
     self.ui.canvas.setData(data)
     self.update_x_selector()
     self.update_y_selectors()
+
+  def setGridStyles(self, gridStyles):
+    self.ui.canvas.grid = copy.deepcopy(gridStyles['left'])
+    self.ui.canvas.grid2 = copy.deepcopy(gridStyles['right'])
 
   def setRobotModule(self, rm):
     self.rm = rm
@@ -409,6 +417,8 @@ class MCLogTab(QtGui.QWidget):
           RemoveSpecialPlotButton(match.group(1), tab, idx, "diff")
     handle_yd(p.y1d, 0)
     handle_yd(p.y2d, 1)
+    tab.ui.canvas.grid = GridStyle(**p.grid1)
+    tab.ui.canvas.grid2 = GridStyle(**p.grid2)
     tab.ui.canvas.draw()
     return tab
 

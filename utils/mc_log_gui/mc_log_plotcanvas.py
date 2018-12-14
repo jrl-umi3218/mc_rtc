@@ -16,6 +16,8 @@ from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 
 from math import asin, atan2
 
+from mc_log_types import GridStyle
+
 
 def rpyFromMat(E):
     """Same as mc_rbdyn::rpyFromMat."""
@@ -29,7 +31,6 @@ def rpyFromQuat(quat):
     """Same as mc_rbdyn::rpyFromQuat."""
     import eigen
     return rpyFromMat(list(eigen.Quaterniond(*quat).toRotationMatrix()))
-
 
 class PlotCanvasWithToolbar(QWidget):
   def __init__(self, parent = None):
@@ -47,6 +48,9 @@ class PlotCanvasWithToolbar(QWidget):
     self.axes2_format_coord = self.axes2.format_coord
     self.axes.format_coord = self.format_coord
     self.axes2.format_coord = self.format_coord
+
+    self.grid = GridStyle()
+    self.grid2 = GridStyle()
 
     vbox = QVBoxLayout(self)
     vbox.addWidget(self.canvas)
@@ -66,6 +70,16 @@ class PlotCanvasWithToolbar(QWidget):
     self.colors = ['#%02x%02x%02x' % tuple(255 * rgb) for rgb in cm2rgb]
 
     self.x_data = 't'
+
+  def _drawGrid(self):
+    def draw(axes, style):
+      axes.grid(color = style.color, linestyle = style.linestyle, linewidth = style.linewidth, visible = style.visible)
+      axes.set_axisbelow(True)
+    if len(self.axes_plots) > 0:
+      draw(self.axes, self.grid)
+    if len(self.axes2_plots) > 0:
+      draw(self.axes2, self.grid2)
+
 
   def draw(self):
     def fix_axes_limits(axes, axes2):
@@ -89,6 +103,7 @@ class PlotCanvasWithToolbar(QWidget):
       return x_min, x_max
     min_x, max_x = set_axes_limits(self.axes)
     set_axes_limits(self.axes2, min_x, max_x)
+    self._drawGrid()
     self.canvas.draw()
 
   def setData(self, data):

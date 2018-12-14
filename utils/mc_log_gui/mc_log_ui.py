@@ -19,13 +19,14 @@ from PySide import QtCore, QtGui
 
 from mc_log_main_ui import Ui_MainWindow
 from mc_log_tab import MCLogTab
+from mc_log_types import GridStyle
 
 try:
   import mc_rbdyn
 except ImportError:
   mc_rbdyn = None
 
-UserPlot = collections.namedtuple('UserPlot', ['title', 'x', 'y1', 'y1d', 'y2', 'y2d'])
+UserPlot = collections.namedtuple('UserPlot', ['title', 'x', 'y1', 'y1d', 'y2', 'y2d', 'grid1', 'grid2'])
 
 def safe_float(v):
     if len(v):
@@ -65,6 +66,70 @@ def read_flat(f):
                     i += 1
                 data[key] = [ entries_to_int[v] for v in entries ]
     return data
+
+class GridStyleDialog(QtGui.QDialog):
+  def __init__(self, parent, name, canvas, style):
+    super(GridStyleDialog, self).__init__(parent)
+
+    self.name = name
+    self.canvas = canvas
+    self.style = style
+
+    self.setWindowTitle('Edit {} grid style'.format(name))
+    self.setModal(True)
+
+    layout = QtGui.QFormLayout(self)
+
+    self.enabled = QtGui.QCheckBox()
+    self.enabled.setChecked(style.visible)
+    layout.addRow("Visible", self.enabled)
+
+    self.linestyle = QtGui.QComboBox()
+    styles = ['-', ':', '--', '-.']
+    for s in styles:
+      self.linestyle.addItem(s)
+    self.linestyle.setCurrentIndex(styles.index(style.linestyle))
+    layout.addRow("Style", self.linestyle)
+
+    self.linewidth = QtGui.QLineEdit(str(style.linewidth))
+    self.linewidth.setValidator(QtGui.QDoubleValidator(0.01, 1e6, 2))
+    layout.addRow("Width", self.linewidth)
+
+    self.color = QtGui.QColor(style.color)
+    self.colorButton = QtGui.QPushButton("#")
+    self.colorButton.setStyleSheet("background-color: {}; color: {}".format(self.style.color, self.style.color))
+    self.colorButton.released.connect(self.selectColor)
+    layout.addRow("Color", self.colorButton)
+
+    self.save = QtGui.QCheckBox()
+    layout.addRow("Save as default", self.save)
+
+    confirmLayout = QtGui.QHBoxLayout()
+    okButton = QtGui.QPushButton("Ok", self)
+    confirmLayout.addWidget(okButton)
+    okButton.clicked.connect(self.accept)
+    cancelButton = QtGui.QPushButton("Cancel", self)
+    confirmLayout.addWidget(cancelButton)
+    cancelButton.clicked.connect(self.reject)
+    layout.addRow(confirmLayout)
+
+  def selectColor(self):
+    color = QtGui.QColorDialog.getColor(self.color)
+    if color.isValid():
+      self.color = color
+      self.colorButton.setStyleSheet("background-color: {}; color: {}".format(self.color.name(), self.color.name()))
+
+  def accept(self):
+    self.style.visible = self.enabled.isChecked()
+    self.style.linestyle = self.linestyle.currentText()
+    self.style.linewidth = float(self.linewidth.text())
+    self.style.color = self.color.name()
+    self.canvas.draw()
+    if self.save.isChecked():
+      self.parent().gridStyles[self.name] = self.style
+      with open(self.parent().gridStyleFile, 'w') as f:
+        json.dump(self.parent().gridStyles, f, default = lambda o: o.__dict__)
+    super(GridStyleDialog, self).accept()
 
 class MCLogJointDialog(QtGui.QDialog):
   def __init__(self, parent, rm, name, y1_prefix = None, y2_prefix = None, y1_diff_prefix = None, y2_diff_prefix = None):
@@ -227,6 +292,16 @@ class MCLogUI(QtGui.QMainWindow):
 
     self.data = {}
 
+    self.gridStyles = {'left': GridStyle(), 'right': GridStyle(linestyle = ':') }
+    self.gridStyleFile = os.path.expanduser("~") + "/.config/mc_log_ui/grid_style.json"
+    if os.path.exists(self.gridStyleFile):
+      with open(self.gridStyleFile) as f:
+        data = json.load(f)
+        for k in self.gridStyles.keys():
+          if k in data:
+            self.gridStyles[k] = GridStyle(**data[k])
+    UserPlot.__new__.__defaults__ = (self.gridStyles['left'], self.gridStyles['right'])
+
     self.userPlotList = []
     self.userPlotFile = os.path.expanduser("~") + "/.config/mc_log_ui/custom_plot.json"
     if os.path.exists(self.userPlotFile):
@@ -250,6 +325,23 @@ class MCLogUI(QtGui.QMainWindow):
       self.connect(rGroup, QtCore.SIGNAL("triggered(QAction *)"), self.setRobot)
       self.ui.menubar.addMenu(rMenu)
 
+    self.styleMenu = QtGui.QMenu("Style", self.ui.menubar)
+
+    # Grid style menu
+    self.gridStyleMenu = QtGui.QMenu("Grid", self.styleMenu)
+    self.gridDisplayActionGroup = QtGui.QActionGroup(self.gridStyleMenu)
+    self.gridDisplayActionGroup.setExclusive(True)
+    self.leftGridAction = QtGui.QAction("Left", self.gridDisplayActionGroup)
+    self.leftGridAction.triggered.connect(lambda: GridStyleDialog(self, "left", self.getCanvas(), self.getCanvas().grid).exec_())
+    self.gridDisplayActionGroup.addAction(self.leftGridAction)
+    self.rightGridAction = QtGui.QAction("Right", self.gridDisplayActionGroup)
+    self.rightGridAction.triggered.connect(lambda: GridStyleDialog(self, "right", self.getCanvas(), self.getCanvas().grid2).exec_())
+    self.gridDisplayActionGroup.addAction(self.rightGridAction)
+    self.gridStyleMenu.addActions(self.gridDisplayActionGroup.actions())
+    self.styleMenu.addMenu(self.gridStyleMenu)
+
+    self.ui.menubar.addMenu(self.styleMenu)
+
     self.toolsMenu = QtGui.QMenu("Tools", self.ui.menubar)
     act = QtGui.QAction("Dump qIn to seqplay", self.toolsMenu)
     act.triggered.connect(DumpSeqPlayDialog(self).exec_)
@@ -267,7 +359,7 @@ class MCLogUI(QtGui.QMainWindow):
     if not os.path.exists(confDir):
       os.makedirs(confDir)
     with open(self.userPlotFile, 'w') as f:
-      json.dump(self.userPlotList, f)
+        json.dump(self.userPlotList, f, default = lambda o: o.__dict__)
     self.update_userplot_menu()
 
   def addApplicationShortcut(self, key, callback):
@@ -309,7 +401,7 @@ class MCLogUI(QtGui.QMainWindow):
       y2 = filter(lambda k: k in self.data.keys(), canvas.axes2_plots.keys())
       y1d = map(lambda sp: "{}_{}".format(sp.name, sp.id), filter(lambda sp: sp.idx == 0, tab.specials.values()))
       y2d = map(lambda sp: "{}_{}".format(sp.name, sp.id), filter(lambda sp: sp.idx == 1, tab.specials.values()))
-      self.userPlotList.append(UserPlot(title, tab.x_data, y1, y1d, y2, y2d))
+      self.userPlotList.append(UserPlot(title, tab.x_data, y1, y1d, y2, y2d, self.getCanvas().grid, self.getCanvas().grid2))
       self.saveUserPlots()
 
   def plot_userplot(self, p):
@@ -351,6 +443,9 @@ class MCLogUI(QtGui.QMainWindow):
       self.activeRobotAction.setChecked(True)
       self.rm = None
 
+  def getCanvas(self):
+    return self.ui.tabWidget.currentWidget().ui.canvas
+
   @QtCore.Slot()
   def on_actionLoad_triggered(self):
     fpath = QtGui.QFileDialog.getOpenFileName(self, "Log file")[0]
@@ -364,8 +459,9 @@ class MCLogUI(QtGui.QMainWindow):
   @QtCore.Slot(int)
   def on_tabWidget_currentChanged(self, idx):
     if idx == self.ui.tabWidget.count() - 1:
-      plotW = MCLogTab()
+      plotW = MCLogTab(self)
       plotW.setData(self.data)
+      plotW.setGridStyles(self.gridStyles)
       plotW.setRobotModule(self.rm)
       j = 1
       for i in range(self.ui.tabWidget.count() -1):
@@ -451,6 +547,7 @@ class MCLogUI(QtGui.QMainWindow):
       tab = self.ui.tabWidget.widget(i)
       assert(isinstance(tab, MCLogTab))
       tab.setData(self.data)
+      tab.setGridStyles(self.gridStyles)
       tab.setRobotModule(self.rm)
 
   def update_menu(self):
