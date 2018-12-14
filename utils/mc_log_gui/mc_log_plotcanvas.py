@@ -121,13 +121,13 @@ class PlotCanvasWithToolbar(QWidget):
   def add_plot_left(self, x, y, y_label):
     if y_label in self.axes_plots:
       return False
-    self.axes_plots[y_label] = self._plot(self.axes, self._legend_left, self.data[x], self.data[y], y_label)
+    self.axes_plots[y] = self._plot(self.axes, self._legend_left, self.data[x], self.data[y], y_label)
     return True
 
   def add_plot_right(self, x, y, y_label):
     if y_label in self.axes2_plots:
       return False
-    self.axes2_plots[y_label] = self._plot(self.axes2, self._legend_right, self.data[x], self.data[y], y_label)
+    self.axes2_plots[y] = self._plot(self.axes2, self._legend_right, self.data[x], self.data[y], y_label)
     return True
 
   def _add_diff_plot(self, axes, legend, x, y, y_label):
@@ -137,12 +137,12 @@ class PlotCanvasWithToolbar(QWidget):
   def add_diff_plot_left(self, x, y, y_label):
     if y_label in self.axes_plots:
       return False
-    self.axes_plots[y_label] = self._add_diff_plot(self.axes, self._legend_left, x, y, y_label)
+    self.axes_plots[y] = self._add_diff_plot(self.axes, self._legend_left, x, y, y_label)
     return True
   def add_diff_plot_right(self, x, y, y_label):
     if y_label in self.axes2_plots:
       return False
-    self.axes2_plots[y_label] = self._add_diff_plot(self.axes2, self._legend_right, x, y, y_label)
+    self.axes2_plots[y] = self._add_diff_plot(self.axes2, self._legend_right, x, y, y_label)
     return True
 
   def _add_roll_plot(self, axes, legend, x_label, base):
