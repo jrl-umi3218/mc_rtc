@@ -174,18 +174,18 @@ class PlotCanvasWithToolbar(QWidget):
     qw, qx, qy, qz = [ self.data[k] for k in keys ]
     rpys = [ rpyFromQuat([w, x, y, z]) for w, x, y, z in zip(qw, qx, qy, qz) ]
     r = [ rpy[0] for rpy in rpys ]
-    return self._plot(axes, legend, self.data[x_label], r, "{}_r".format(base))
+    return self._plot(axes, legend, self.data[x_label], r, "{}_roll".format(base))
 
   def add_roll_plot_left(self, x, y):
-    if "{}_r".format(y) in self.axes_plots:
+    if "{}_roll".format(y) in self.axes_plots:
       return False
-    self.axes_plots["{}_r".format(y)] = self._add_roll_plot(self.axes, self._legend_left, x, y)
+    self.axes_plots["{}_roll".format(y)] = self._add_roll_plot(self.axes, self._legend_left, x, y)
     return True
 
   def add_roll_plot_right(self, x, y):
-    if "{}_r".format(y) in self.axes2_plots:
+    if "{}_roll".format(y) in self.axes2_plots:
       return False
-    self.axes2_plots["{}_r".format(y)] = self._add_roll_plot(self.axes2, self._legend_right, x, y)
+    self.axes2_plots["{}_roll".format(y)] = self._add_roll_plot(self.axes2, self._legend_right, x, y)
     return True
 
   def _add_pitch_plot(self, axes, legend, x_label, base):
@@ -197,18 +197,18 @@ class PlotCanvasWithToolbar(QWidget):
     qw, qx, qy, qz = [ self.data[k] for k in keys ]
     rpys = [ rpyFromQuat([w, x, y, z]) for w, x, y, z in zip(qw, qx, qy, qz) ]
     p = [ rpy[1] for rpy in rpys ]
-    return self._plot(axes, legend, self.data[x_label], p, "{}_p".format(base))
+    return self._plot(axes, legend, self.data[x_label], p, "{}_pitch".format(base))
 
   def add_pitch_plot_left(self, x, y):
-    if "{}_p".format(y) in self.axes_plots:
+    if "{}_pitch".format(y) in self.axes_plots:
       return False
-    self.axes_plots["{}_p".format(y)] = self._add_pitch_plot(self.axes, self._legend_left, x, y)
+    self.axes_plots["{}_pitch".format(y)] = self._add_pitch_plot(self.axes, self._legend_left, x, y)
     return True
 
   def add_pitch_plot_right(self, x, y):
-    if "{}_p".format(y) in self.axes2_plots:
+    if "{}_pitch".format(y) in self.axes2_plots:
       return False
-    self.axes2_plots["{}_p".format(y)] = self._add_pitch_plot(self.axes2, self._legend_right, x, y)
+    self.axes2_plots["{}_pitch".format(y)] = self._add_pitch_plot(self.axes2, self._legend_right, x, y)
     return True
 
   def _add_yaw_plot(self, axes, legend, x_label, base):
@@ -220,24 +220,24 @@ class PlotCanvasWithToolbar(QWidget):
     qw, qx, qy, qz = [ self.data[k] for k in keys ]
     rpys = [ rpyFromQuat([w, x, y, z]) for w, x, y, z in zip(qw, qx, qy, qz) ]
     y = [ rpy[2] for rpy in rpys ]
-    return self._plot(axes, legend, self.data[x_label], y, "{}_y".format(base))
+    return self._plot(axes, legend, self.data[x_label], y, "{}_yaw".format(base))
 
   def add_yaw_plot_left(self, x, y):
-    if "{}_y".format(y) in self.axes_plots:
+    if "{}_yaw".format(y) in self.axes_plots:
       return False
-    self.axes_plots["{}_y".format(y)] = self._add_yaw_plot(self.axes, self._legend_left, x, y)
+    self.axes_plots["{}_yaw".format(y)] = self._add_yaw_plot(self.axes, self._legend_left, x, y)
     return True
 
   def add_yaw_plot_right(self, x, y):
-    if "{}_y".format(y) in self.axes2_plots:
+    if "{}_yaw".format(y) in self.axes2_plots:
       return False
-    self.axes2_plots["{}_y".format(y)] = self._add_yaw_plot(self.axes2, self._legend_right, x, y)
+    self.axes2_plots["{}_yaw".format(y)] = self._add_yaw_plot(self.axes2, self._legend_right, x, y)
     return True
 
   def add_rpy_plot_left(self, x, y):
-    has_roll = "{}_r".format(y) in self.axes2_plots
-    has_pitch = "{}_p".format(y) in self.axes2_plots
-    has_yaw = "{}_y".format(y) in self.axes2_plots
+    has_roll = "{}_roll".format(y) in self.axes2_plots
+    has_pitch = "{}_pitch".format(y) in self.axes2_plots
+    has_yaw = "{}_yaw".format(y) in self.axes2_plots
     if has_roll and has_pitch and has_yaw:
         return False
     if not has_roll:
@@ -249,9 +249,9 @@ class PlotCanvasWithToolbar(QWidget):
     return True
 
   def add_rpy_plot_right(self, x, y):
-    has_roll = "{}_r".format(y) in self.axes2_plots
-    has_pitch = "{}_p".format(y) in self.axes2_plots
-    has_yaw = "{}_y".format(y) in self.axes2_plots
+    has_roll = "{}_roll".format(y) in self.axes2_plots
+    has_pitch = "{}_pitch".format(y) in self.axes2_plots
+    has_yaw = "{}_yaw".format(y) in self.axes2_plots
     if has_roll and has_pitch and has_yaw:
         return False
     if not has_roll:
