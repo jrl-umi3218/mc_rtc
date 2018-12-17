@@ -19,14 +19,14 @@ from PySide import QtCore, QtGui
 
 from mc_log_main_ui import Ui_MainWindow
 from mc_log_tab import MCLogTab
-from mc_log_types import GridStyle
+from mc_log_types import LineStyle
 
 try:
   import mc_rbdyn
 except ImportError:
   mc_rbdyn = None
 
-UserPlot = collections.namedtuple('UserPlot', ['title', 'x', 'y1', 'y1d', 'y2', 'y2d', 'grid1', 'grid2'])
+UserPlot = collections.namedtuple('UserPlot', ['title', 'x', 'y1', 'y1d', 'y2', 'y2d', 'grid1', 'grid2', 'style', 'style2'])
 
 def safe_float(v):
     if len(v):
@@ -67,9 +67,9 @@ def read_flat(f):
                 data[key] = [ entries_to_int[v] for v in entries ]
     return data
 
-class GridStyleDialog(QtGui.QDialog):
+class CommonStyleDialog(QtGui.QDialog):
   def __init__(self, parent, name, canvas, style):
-    super(GridStyleDialog, self).__init__(parent)
+    super(CommonStyleDialog, self).__init__(parent)
 
     self.name = name
     self.canvas = canvas
@@ -78,31 +78,24 @@ class GridStyleDialog(QtGui.QDialog):
     self.setWindowTitle('Edit {} grid style'.format(name))
     self.setModal(True)
 
-    layout = QtGui.QFormLayout(self)
-
-    self.enabled = QtGui.QCheckBox()
-    self.enabled.setChecked(style.visible)
-    layout.addRow("Visible", self.enabled)
+    self.layout = QtGui.QFormLayout(self)
 
     self.linestyle = QtGui.QComboBox()
     styles = ['-', ':', '--', '-.']
     for s in styles:
       self.linestyle.addItem(s)
     self.linestyle.setCurrentIndex(styles.index(style.linestyle))
-    layout.addRow("Style", self.linestyle)
+    self.layout.addRow("Style", self.linestyle)
 
     self.linewidth = QtGui.QLineEdit(str(style.linewidth))
     self.linewidth.setValidator(QtGui.QDoubleValidator(0.01, 1e6, 2))
-    layout.addRow("Width", self.linewidth)
+    self.layout.addRow("Width", self.linewidth)
 
     self.color = QtGui.QColor(style.color)
     self.colorButton = QtGui.QPushButton("#")
     self.colorButton.setStyleSheet("background-color: {}; color: {}".format(self.style.color, self.style.color))
     self.colorButton.released.connect(self.selectColor)
-    layout.addRow("Color", self.colorButton)
-
-    self.save = QtGui.QCheckBox()
-    layout.addRow("Save as default", self.save)
+    self.layout.addRow("Color", self.colorButton)
 
     confirmLayout = QtGui.QHBoxLayout()
     okButton = QtGui.QPushButton("Ok", self)
@@ -111,7 +104,7 @@ class GridStyleDialog(QtGui.QDialog):
     cancelButton = QtGui.QPushButton("Cancel", self)
     confirmLayout.addWidget(cancelButton)
     cancelButton.clicked.connect(self.reject)
-    layout.addRow(confirmLayout)
+    self.layout.addRow(confirmLayout)
 
   def selectColor(self):
     color = QtGui.QColorDialog.getColor(self.color)
@@ -120,16 +113,40 @@ class GridStyleDialog(QtGui.QDialog):
       self.colorButton.setStyleSheet("background-color: {}; color: {}".format(self.color.name(), self.color.name()))
 
   def accept(self):
-    self.style.visible = self.enabled.isChecked()
+    super(CommonStyleDialog, self).accept()
     self.style.linestyle = self.linestyle.currentText()
     self.style.linewidth = float(self.linewidth.text())
     self.style.color = self.color.name()
+
+class GridStyleDialog(CommonStyleDialog):
+  def __init__(self, parent, name, canvas, style):
+    super(GridStyleDialog, self).__init__(parent, name, canvas, style)
+
+    self.enabled = QtGui.QCheckBox()
+    self.enabled.setChecked(style.visible)
+    self.layout.insertRow(0, "Visible", self.enabled)
+
+    self.save = QtGui.QCheckBox()
+    self.layout.insertRow(self.layout.rowCount() - 2, "Save as default", self.save)
+
+  def accept(self):
+    super(GridStyleDialog, self).accept()
+    self.style.visible = self.enabled.isChecked()
     self.canvas.draw()
     if self.save.isChecked():
       self.parent().gridStyles[self.name] = self.style
       with open(self.parent().gridStyleFile, 'w') as f:
         json.dump(self.parent().gridStyles, f, default = lambda o: o.__dict__)
-    super(GridStyleDialog, self).accept()
+
+class LineStyleDialog(CommonStyleDialog):
+  def __init__(self, parent, name, canvas, style, set_style_fn):
+    super(LineStyleDialog, self).__init__(parent, name, canvas, style)
+    self.set_style = set_style_fn
+
+  def accept(self):
+    super(LineStyleDialog, self).accept()
+    self.set_style(self.name, self.style)
+    self.canvas.draw()
 
 class MCLogJointDialog(QtGui.QDialog):
   def __init__(self, parent, rm, name, y1_prefix = None, y2_prefix = None, y1_diff_prefix = None, y2_diff_prefix = None):
@@ -292,21 +309,26 @@ class MCLogUI(QtGui.QMainWindow):
 
     self.data = {}
 
-    self.gridStyles = {'left': GridStyle(), 'right': GridStyle(linestyle = ':') }
+    self.gridStyles = {'left': LineStyle(), 'right': LineStyle(linestyle = ':') }
     self.gridStyleFile = os.path.expanduser("~") + "/.config/mc_log_ui/grid_style.json"
     if os.path.exists(self.gridStyleFile):
       with open(self.gridStyleFile) as f:
         data = json.load(f)
         for k in self.gridStyles.keys():
           if k in data:
-            self.gridStyles[k] = GridStyle(**data[k])
-    UserPlot.__new__.__defaults__ = (self.gridStyles['left'], self.gridStyles['right'])
+            self.gridStyles[k] = LineStyle(**data[k])
+    UserPlot.__new__.__defaults__ = (self.gridStyles['left'], self.gridStyles['right'], {}, {})
 
     self.userPlotList = []
     self.userPlotFile = os.path.expanduser("~") + "/.config/mc_log_ui/custom_plot.json"
     if os.path.exists(self.userPlotFile):
       with open(self.userPlotFile) as f:
         self.userPlotList = [UserPlot(*x) for x in json.load(f)]
+        for plt in self.userPlotList:
+          for y in plt.style:
+            plt.style[y] = LineStyle(**plt.style[y])
+          for y in plt.style2:
+            plt.style2[y] = LineStyle(**plt.style2[y])
     self.update_userplot_menu()
 
     self.activeRobotAction = None
@@ -326,6 +348,27 @@ class MCLogUI(QtGui.QMainWindow):
       self.ui.menubar.addMenu(rMenu)
 
     self.styleMenu = QtGui.QMenu("Style", self.ui.menubar)
+
+    # Line style menu
+    self.lineStyleMenu = QtGui.QMenu("Graph", self.styleMenu)
+    def fillLineStyleMenu(self):
+      self.lineStyleMenu.clear()
+      canvas = self.getCanvas()
+      def makePlotMenu(self, name, plots, style_fn):
+        if not len(plots):
+          return
+        menu = QtGui.QMenu(name, self.lineStyleMenu)
+        group = QtGui.QActionGroup(act)
+        for y in plots:
+          action = QtGui.QAction(y, group)
+          action.triggered.connect(lambda yin=y: LineStyleDialog(self, yin, self.getCanvas(), style_fn(yin), style_fn).exec_())
+          group.addAction(action)
+        menu.addActions(group.actions())
+        self.lineStyleMenu.addMenu(menu)
+      makePlotMenu(self, "Left", canvas.axes_plots.keys(), canvas.style_left)
+      makePlotMenu(self, "Right", canvas.axes2_plots.keys(), canvas.style_right)
+    self.lineStyleMenu.aboutToShow.connect(lambda: fillLineStyleMenu(self))
+    self.styleMenu.addMenu(self.lineStyleMenu)
 
     # Grid style menu
     self.gridStyleMenu = QtGui.QMenu("Grid", self.styleMenu)
@@ -359,7 +402,7 @@ class MCLogUI(QtGui.QMainWindow):
     if not os.path.exists(confDir):
       os.makedirs(confDir)
     with open(self.userPlotFile, 'w') as f:
-        json.dump(self.userPlotList, f, default = lambda o: o.__dict__)
+        json.dump(self.userPlotList, f, default = lambda o: o.__dict__, indent = 2, separators = (',', ': '))
     self.update_userplot_menu()
 
   def addApplicationShortcut(self, key, callback):
@@ -395,13 +438,25 @@ class MCLogUI(QtGui.QMainWindow):
       err_diag.setText("Cannot save user plot if nothing is shown")
       err_diag.exec_()
       return
-    title, ok = QtGui.QInputDialog.getText(self, "User plot", "Title of your plot:")
+    defaultTitle = self.ui.tabWidget.tabText(self.ui.tabWidget.currentIndex())
+    if defaultTitle.startswith("Plot"):
+      defaultTitle = ""
+    title, ok = QtGui.QInputDialog.getText(self, "User plot", "Title of your plot:", text = defaultTitle)
     if ok:
       y1 = filter(lambda k: k in self.data.keys(), canvas.axes_plots.keys())
       y2 = filter(lambda k: k in self.data.keys(), canvas.axes2_plots.keys())
       y1d = map(lambda sp: "{}_{}".format(sp.name, sp.id), filter(lambda sp: sp.idx == 0, tab.specials.values()))
       y2d = map(lambda sp: "{}_{}".format(sp.name, sp.id), filter(lambda sp: sp.idx == 1, tab.specials.values()))
-      self.userPlotList.append(UserPlot(title, tab.x_data, y1, y1d, y2, y2d, self.getCanvas().grid, self.getCanvas().grid2))
+      style = { y: canvas.style_left(y) for y in canvas.axes_plots.keys() }
+      style2 = { y: canvas.style_right(y) for y in canvas.axes2_plots.keys() }
+      found = False
+      for i in range(len(self.userPlotList)):
+        if self.userPlotList[i].title == title:
+          self.userPlotList[i] = UserPlot(title, tab.x_data, y1, y1d, y2, y2d, self.getCanvas().grid, self.getCanvas().grid2, style, style2)
+          found = True
+          break
+      if not found:
+        self.userPlotList.append(UserPlot(title, tab.x_data, y1, y1d, y2, y2d, self.getCanvas().grid, self.getCanvas().grid2, style, style2) )
       self.saveUserPlots()
 
   def plot_userplot(self, p):
@@ -425,8 +480,11 @@ class MCLogUI(QtGui.QMainWindow):
     self.ui.tabWidget.setCurrentIndex(self.ui.tabWidget.count() - 2)
     self.updateClosable()
 
-  def remove_userplot(self, p):
-    self.userPlotList.remove(p)
+  def remove_userplot(self, p_in):
+    for p in self.userPlotList:
+      if p.title == p_in.title:
+        self.userPlotList.remove(p)
+        break
     self.saveUserPlots()
 
   def setRobot(self, action):
@@ -570,7 +628,7 @@ class MCLogUI(QtGui.QMainWindow):
     menuEntries = [ (n, y1, y2, y1d, y2d) for n, y1, y2, y1d, y2d in menuEntries if all([validEntry(y) for y in [y1, y2, y1d, y2d]]) ]
     for n, y1, y2, y1d, y2d in menuEntries:
       act = QtGui.QAction(n, self.ui.menuCommonPlots)
-      act.triggered.connect(MCLogJointDialog(self, self.rm, n, y1, y2, y1d, y2d).exec_)
+      act.triggered.connect(lambda: MCLogJointDialog(self, self.rm, n, y1, y2, y1d, y2d).exec_())
       self.ui.menuCommonPlots.addAction(act)
     fSensors = set()
     for k in self.data:

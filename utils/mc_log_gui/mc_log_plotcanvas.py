@@ -16,7 +16,7 @@ from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 
 from math import asin, atan2
 
-from mc_log_types import GridStyle
+from mc_log_types import LineStyle
 
 
 def rpyFromMat(E):
@@ -49,8 +49,8 @@ class PlotCanvasWithToolbar(QWidget):
     self.axes.format_coord = self.format_coord
     self.axes2.format_coord = self.format_coord
 
-    self.grid = GridStyle()
-    self.grid2 = GridStyle()
+    self.grid = LineStyle()
+    self.grid2 = LineStyle()
 
     vbox = QVBoxLayout(self)
     vbox.addWidget(self.canvas)
@@ -103,6 +103,8 @@ class PlotCanvasWithToolbar(QWidget):
       return x_min, x_max
     min_x, max_x = set_axes_limits(self.axes)
     set_axes_limits(self.axes2, min_x, max_x)
+    self._legend_left()
+    self._legend_right()
     self._drawGrid()
     self.canvas.draw()
 
@@ -128,21 +130,24 @@ class PlotCanvasWithToolbar(QWidget):
   def _legend_right(self):
     self.axes2.legend(bbox_to_anchor=(0., -.1, 1., -1.02), loc=3, ncol=3, mode="expand", borderaxespad=-0.5, fontsize = 10.0)
 
-  def _plot(self, axe, update_legend_fn, x, y, y_label):
-    plt = axe.plot(x, y, label = y_label, color = self._next_color())
+  def _plot(self, axe, update_legend_fn, x, y, y_label, style = None):
+    if style is None:
+      plt = axe.plot(x, y, label = y_label, color = self._next_color())
+    else:
+      plt = axe.plot(x, y, label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)
     update_legend_fn()
     return plt[0]
 
-  def add_plot_left(self, x, y, y_label):
+  def add_plot_left(self, x, y, y_label, style = None):
     if y_label in self.axes_plots:
       return False
-    self.axes_plots[y] = self._plot(self.axes, self._legend_left, self.data[x], self.data[y], y_label)
+    self.axes_plots[y] = self._plot(self.axes, self._legend_left, self.data[x], self.data[y], y_label, style)
     return True
 
-  def add_plot_right(self, x, y, y_label):
+  def add_plot_right(self, x, y, y_label, style):
     if y_label in self.axes2_plots:
       return False
-    self.axes2_plots[y] = self._plot(self.axes2, self._legend_right, self.data[x], self.data[y], y_label)
+    self.axes2_plots[y] = self._plot(self.axes2, self._legend_right, self.data[x], self.data[y], y_label, style)
     return True
 
   def _add_diff_plot(self, axes, legend, x, y, y_label):
@@ -152,12 +157,12 @@ class PlotCanvasWithToolbar(QWidget):
   def add_diff_plot_left(self, x, y, y_label):
     if y_label in self.axes_plots:
       return False
-    self.axes_plots[y] = self._add_diff_plot(self.axes, self._legend_left, x, y, y_label)
+    self.axes_plots[y_label] = self._add_diff_plot(self.axes, self._legend_left, x, y, y_label)
     return True
   def add_diff_plot_right(self, x, y, y_label):
     if y_label in self.axes2_plots:
       return False
-    self.axes2_plots[y] = self._add_diff_plot(self.axes2, self._legend_right, x, y, y_label)
+    self.axes2_plots[y_label] = self._add_diff_plot(self.axes2, self._legend_right, x, y, y_label)
     return True
 
   def _add_roll_plot(self, axes, legend, x_label, base):
@@ -302,3 +307,20 @@ class PlotCanvasWithToolbar(QWidget):
     self.axes2_plots = {}
     self.axes.clear()
     self.axes2.clear()
+
+  def _style(self, plots, y, styleIn = None):
+    if not y in plots:
+      raise KeyError("No plot named {}".format(y))
+    plt = plots[y]
+    if styleIn is None:
+      return LineStyle(plt.get_color(), plt.get_linestyle(), plt.get_linewidth())
+    else:
+      plt.set_color(styleIn.color)
+      plt.set_linestyle(styleIn.linestyle)
+      plt.set_linewidth(styleIn.linewidth)
+
+  def style_left(self, y, styleIn = None):
+    return self._style(self.axes_plots, y, styleIn)
+
+  def style_right(self, y, styleIn = None):
+    return self._style(self.axes2_plots, y, styleIn)

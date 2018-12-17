@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-class GridStyle(object):
+class LineStyle(object):
   def __init__(self, color = 'black', linestyle = '--', linewidth = 0.5, visible = False):
     self.color = color
     self.linestyle = linestyle

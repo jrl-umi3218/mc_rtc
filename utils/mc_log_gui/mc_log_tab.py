@@ -3,7 +3,7 @@
 from PySide import QtCore, QtGui
 
 from mc_log_tab_ui import Ui_MCLogTab
-from mc_log_types import GridStyle
+from mc_log_types import LineStyle
 
 from functools import partial
 
@@ -417,8 +417,18 @@ class MCLogTab(QtGui.QWidget):
           RemoveSpecialPlotButton(match.group(1), tab, idx, "diff")
     handle_yd(p.y1d, 0)
     handle_yd(p.y2d, 1)
-    tab.ui.canvas.grid = GridStyle(**p.grid1)
-    tab.ui.canvas.grid2 = GridStyle(**p.grid2)
+    if not isinstance(p.grid1, LineStyle):
+      tab.ui.canvas.grid = LineStyle(**p.grid1)
+    else:
+      tab.ui.canvas.grid = p.grid1
+    if not isinstance(p.grid2, LineStyle):
+      tab.ui.canvas.grid2 = LineStyle(**p.grid2)
+    else:
+      tab.ui.canvas.grid2 = p.grid2
+    for y,s in p.style.iteritems():
+      tab.ui.canvas.style_left(y, s)
+    for y,s in p.style2.iteritems():
+      tab.ui.canvas.style_right(y, s)
     tab.ui.canvas.draw()
     return tab
 
