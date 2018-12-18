@@ -14,6 +14,7 @@ from matplotlib.figure import Figure
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas,\
                                                NavigationToolbar2QT as NavigationToolbar
 
+from collections import OrderedDict
 from math import asin, atan2
 
 from mc_log_types import LineStyle
@@ -59,8 +60,8 @@ class PlotCanvasWithToolbar(QWidget):
 
     self.data = None
     self.computed_data = {}
-    self.axes_plots = {}
-    self.axes2_plots = {}
+    self.axes_plots = OrderedDict()
+    self.axes2_plots = OrderedDict()
 
     self.color = 0
     self.Ncolor = 12
