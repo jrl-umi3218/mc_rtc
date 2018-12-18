@@ -5,6 +5,14 @@ from PySide import QtCore, QtGui
 class MCLogTabBar(QtGui.QTabBar):
   def __init__(self, parent = None):
     super(MCLogTabBar, self).__init__(parent)
+  def mouseReleaseEvent(self, event):
+    if event.button() == QtCore.Qt.MiddleButton and self.parent().tabsClosable():
+      pos = event.pos()
+      for i in range(self.count() - 1):
+        if self.tabRect(i).contains(pos):
+          self.parent().tabCloseRequested.emit(i)
+          return
+    super(MCLogTabBar, self).mouseReleaseEvent(event)
   def mouseDoubleClickEvent(self, event):
     if event.button() == QtCore.Qt.LeftButton:
       name = QtGui.QInputDialog.getText(self,

@@ -631,7 +631,8 @@ class MCLogUI(QtGui.QMainWindow):
 
   @QtCore.Slot(int)
   def on_tabWidget_tabCloseRequested(self, idx):
-    self.ui.tabWidget.setCurrentIndex(abs(idx - 1))
+    if self.ui.tabWidget.currentIndex() == idx:
+      self.ui.tabWidget.setCurrentIndex(abs(idx - 1))
     self.ui.tabWidget.removeTab(idx)
     j = 1
     for i in range(self.ui.tabWidget.count() - 1):
