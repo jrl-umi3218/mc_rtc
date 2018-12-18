@@ -237,6 +237,89 @@ class MCLogJointDialog(QtGui.QDialog):
     else:
       self.selectAllBox.setText("Select all")
 
+class AllLineStyleDialog(QtGui.QDialog):
+  def __init__(self, parent, name, canvas, plots, style_fn):
+    super(AllLineStyleDialog, self).__init__(parent)
+
+    self.name = name
+    self.canvas = canvas
+    self.plots = plots
+    self.style = style_fn
+
+    self.setWindowTitle('Edit {} graph line style'.format(name))
+    self.setModal(True)
+
+    self.layout = QtGui.QGridLayout(self)
+
+    row = 0
+    [ self.layout.addWidget(QtGui.QLabel(txt), row, i) for i,txt in enumerate(["Label", "Style", "Width", "Color"]) ]
+    row += 1
+
+    self.plotWidgets = {}
+
+    def makeLineStyleComboBox(style):
+      ret = QtGui.QComboBox()
+      [ret.addItem(s) for s in ['-', ':', '--', '-.']]
+      ret.setCurrentIndex(['-', ':', '--', '-.'].index(style.linestyle))
+      return ret
+
+    def makeLineWidthEdit(style):
+      ret = QtGui.QLineEdit(str(style.linewidth))
+      ret.setValidator(QtGui.QDoubleValidator(0.01, 1e6, 2))
+      return ret
+
+    def makeColorButton(self, style):
+      ret = QtGui.QPushButton("#")
+      ret.color = QtGui.QColor(style.color)
+      ret.setStyleSheet("background-color: {color}; color: {color}".format(color = style.color))
+      ret.released.connect(lambda bt=ret: self.selectColor(bt))
+      return ret
+
+    def add_plot(self, plot, style):
+      self.plotWidgets[plot] = [
+        QtGui.QLineEdit(style.label),
+        makeLineStyleComboBox(style),
+        makeLineWidthEdit(style),
+        makeColorButton(self, style)
+      ]
+      [ self.layout.addWidget(w, row, i) for i,w in enumerate(self.plotWidgets[plot]) ]
+
+    for p in self.plots:
+      add_plot(self, p, self.style(p))
+      row += 1
+
+    hlayout = QtGui.QHBoxLayout()
+    okButton = QtGui.QPushButton("Ok", self)
+    okButton.clicked.connect(self.accept)
+    cancelButton = QtGui.QPushButton("Cancel", self)
+    cancelButton.clicked.connect(self.reject)
+    applyButton = QtGui.QPushButton("Apply", self)
+    applyButton.clicked.connect(self.apply)
+    hlayout.addWidget(okButton)
+    hlayout.addWidget(cancelButton)
+    hlayout.addWidget(applyButton)
+    self.layout.addLayout(hlayout, row, 1, 1, 3)
+
+  def selectColor(self, button):
+    color = QtGui.QColorDialog.getColor(button.color)
+    if color.isValid():
+      button.color = color
+      button.setStyleSheet("background-color: {color}; color: {color}".format(color = color.name()))
+
+  def apply(self):
+    for y,widgets in self.plotWidgets.iteritems():
+      label = widgets[0].text()
+      linestyle = widgets[1].currentText()
+      linewidth = float(widgets[2].text())
+      color = widgets[3].color.name()
+      st = LineStyle(label = label, linestyle = linestyle, linewidth = linewidth, color = color)
+      self.style(y, st)
+    self.canvas.draw()
+
+  def accept(self):
+    super(AllLineStyleDialog, self).accept()
+    self.apply()
+
 class DumpSeqPlayDialog(QtGui.QDialog):
   def __init__(self, parent):
     super(DumpSeqPlayDialog, self).__init__(parent)
@@ -369,6 +452,12 @@ class MCLogUI(QtGui.QMainWindow):
           return
         menu = QtGui.QMenu(name, self.lineStyleMenu)
         group = QtGui.QActionGroup(act)
+        action = QtGui.QAction("All", group)
+        action.triggered.connect(lambda: AllLineStyleDialog(self, name, self.getCanvas(), plots, style_fn).exec_())
+        group.addAction(action)
+        sep = QtGui.QAction(group)
+        sep.setSeparator(True)
+        group.addAction(sep)
         for y in plots:
           style = style_fn(y)
           action = QtGui.QAction(style.label, group)
