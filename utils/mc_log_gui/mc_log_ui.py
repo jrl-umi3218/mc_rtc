@@ -19,14 +19,14 @@ from PySide import QtCore, QtGui
 
 from mc_log_main_ui import Ui_MainWindow
 from mc_log_tab import MCLogTab
-from mc_log_types import LineStyle
+from mc_log_types import LineStyle, TextWithFontSize, GraphLabels
 
 try:
   import mc_rbdyn
 except ImportError:
   mc_rbdyn = None
 
-UserPlot = collections.namedtuple('UserPlot', ['title', 'x', 'y1', 'y1d', 'y2', 'y2d', 'grid1', 'grid2', 'style', 'style2'])
+UserPlot = collections.namedtuple('UserPlot', ['title', 'x', 'y1', 'y1d', 'y2', 'y2d', 'grid1', 'grid2', 'style', 'style2', 'graph_labels'])
 
 def safe_float(v):
     if len(v):
@@ -390,6 +390,79 @@ class DumpSeqPlayDialog(QtGui.QDialog):
     if len(fpath):
       self.fileLineEdit.setText(fpath)
 
+class LabelsTitleEditDialog(QtGui.QDialog):
+  def __init__(self, parent, canvas):
+    super(LabelsTitleEditDialog, self).__init__(parent)
+
+    self.canvas = canvas
+
+    self.setWindowTitle('Edit graph title')
+    self.setModal(True)
+
+    self.layout = QtGui.QGridLayout(self)
+
+    row = 0
+
+    self.titleEdit = QtGui.QLineEdit(canvas.title())
+    self.titleFontsizeEdit = QtGui.QLineEdit(str(canvas.title_fontsize()))
+    self.titleFontsizeEdit.setValidator(QtGui.QDoubleValidator(1, 1e6, 1))
+    self.layout.addWidget(QtGui.QLabel("Title"), row, 0)
+    self.layout.addWidget(self.titleEdit, row, 1)
+    self.layout.addWidget(self.titleFontsizeEdit, row, 2)
+    row += 1
+
+
+    self.xLabelEdit = QtGui.QLineEdit(canvas.x_label())
+    self.xLabelFontsizeEdit = QtGui.QLineEdit(str(canvas.x_label_fontsize()))
+    self.xLabelFontsizeEdit.setValidator(QtGui.QDoubleValidator(1, 1e6, 1))
+    self.layout.addWidget(QtGui.QLabel("X label"), row, 0)
+    self.layout.addWidget(self.xLabelEdit, row, 1)
+    self.layout.addWidget(self.xLabelFontsizeEdit, row, 2)
+    row += 1
+
+    self.y1LabelEdit = QtGui.QLineEdit(canvas.y1_label())
+    self.y1LabelFontsizeEdit = QtGui.QLineEdit(str(canvas.y1_label_fontsize()))
+    self.y1LabelFontsizeEdit.setValidator(QtGui.QDoubleValidator(1, 1e6, 1))
+    self.layout.addWidget(QtGui.QLabel("Y1 label"), row, 0)
+    self.layout.addWidget(self.y1LabelEdit, row, 1)
+    self.layout.addWidget(self.y1LabelFontsizeEdit, row, 2)
+    row += 1
+
+    self.y2LabelEdit = QtGui.QLineEdit(canvas.y2_label())
+    self.y2LabelFontsizeEdit = QtGui.QLineEdit(str(canvas.y2_label_fontsize()))
+    self.y2LabelFontsizeEdit.setValidator(QtGui.QDoubleValidator(1, 1e6, 1))
+    self.layout.addWidget(QtGui.QLabel("Y2 label"), row, 0)
+    self.layout.addWidget(self.y2LabelEdit, row, 1)
+    self.layout.addWidget(self.y2LabelFontsizeEdit, row, 2)
+    row += 1
+
+    hlayout = QtGui.QHBoxLayout()
+    Ok = QtGui.QPushButton("Ok")
+    Ok.clicked.connect(self.accept)
+    hlayout.addWidget(Ok)
+    Cancel = QtGui.QPushButton("Cancel")
+    Cancel.clicked.connect(self.reject)
+    hlayout.addWidget(Cancel)
+    Apply = QtGui.QPushButton("Apply")
+    Apply.clicked.connect(self.apply)
+    hlayout.addWidget(Apply)
+    self.layout.addLayout(hlayout, row, 0, 1, 3)
+
+  def apply(self):
+    self.canvas.title(self.titleEdit.text())
+    self.canvas.title_fontsize(float(self.titleFontsizeEdit.text()))
+    self.canvas.x_label(self.xLabelEdit.text())
+    self.canvas.x_label_fontsize(self.xLabelFontsizeEdit.text())
+    self.canvas.y1_label(self.y1LabelEdit.text())
+    self.canvas.y1_label_fontsize(self.y1LabelFontsizeEdit.text())
+    self.canvas.y2_label(self.y2LabelEdit.text())
+    self.canvas.y2_label_fontsize(self.y2LabelFontsizeEdit.text())
+    self.canvas.draw()
+
+  def accept(self):
+    super(LabelsTitleEditDialog, self).accept()
+    self.apply()
+
 class MCLogUI(QtGui.QMainWindow):
   def __init__(self, parent = None):
     super(MCLogUI, self).__init__(parent)
@@ -410,18 +483,22 @@ class MCLogUI(QtGui.QMainWindow):
         for k in self.gridStyles.keys():
           if k in data:
             self.gridStyles[k] = LineStyle(**data[k])
-    UserPlot.__new__.__defaults__ = (self.gridStyles['left'], self.gridStyles['right'], {}, {})
+    UserPlot.__new__.__defaults__ = (self.gridStyles['left'], self.gridStyles['right'], {}, {}, GraphLabels())
 
     self.userPlotList = []
     self.userPlotFile = os.path.expanduser("~") + "/.config/mc_log_ui/custom_plot.json"
     if os.path.exists(self.userPlotFile):
       with open(self.userPlotFile) as f:
         self.userPlotList = [UserPlot(*x) for x in json.load(f)]
-        for plt in self.userPlotList:
+        for i,plt in enumerate(self.userPlotList):
           for y in plt.style:
             plt.style[y] = LineStyle(**plt.style[y])
           for y in plt.style2:
             plt.style2[y] = LineStyle(**plt.style2[y])
+          if not isinstance(plt.graph_labels, GraphLabels):
+            for key, value in plt.graph_labels.iteritems():
+              plt.graph_labels[key] = TextWithFontSize(**plt.graph_labels[key])
+            self.userPlotList[i] = plt._replace(graph_labels = GraphLabels(**plt.graph_labels))
     self.update_userplot_menu()
 
     self.activeRobotAction = None
@@ -483,6 +560,11 @@ class MCLogUI(QtGui.QMainWindow):
     self.gridStyleMenu.addActions(self.gridDisplayActionGroup.actions())
     self.styleMenu.addMenu(self.gridStyleMenu)
 
+    # Labels
+    self.titleAction = QtGui.QAction("Labels/Title", self.styleMenu)
+    self.titleAction.triggered.connect(lambda: LabelsTitleEditDialog(self, self.getCanvas()).exec_())
+    self.styleMenu.addAction(self.titleAction)
+
     self.ui.menubar.addMenu(self.styleMenu)
 
     self.toolsMenu = QtGui.QMenu("Tools", self.ui.menubar)
@@ -531,7 +613,7 @@ class MCLogUI(QtGui.QMainWindow):
   def save_userplot(self):
     tab = self.ui.tabWidget.currentWidget()
     canvas = tab.ui.canvas
-    valid = len(canvas.axes_plots) != 0 or len(cavas.axes2_plots) != 0
+    valid = len(canvas.axes_plots) != 0 or len(canvas.axes2_plots) != 0
     if not valid:
       err_diag = QtGui.QMessageBox(self)
       err_diag.setModal(True)
@@ -550,13 +632,14 @@ class MCLogUI(QtGui.QMainWindow):
       style = { y: canvas.style_left(y) for y in canvas.axes_plots.keys() }
       style2 = { y: canvas.style_right(y) for y in canvas.axes2_plots.keys() }
       found = False
+      up = UserPlot(title, tab.x_data, y1, y1d, y2, y2d, self.getCanvas().grid, self.getCanvas().grid2, style, style2, GraphLabels(title = TextWithFontSize(canvas.title(), canvas.title_fontsize()), x_label = TextWithFontSize(canvas.x_label(), canvas.x_label_fontsize()), y1_label = TextWithFontSize(canvas.y1_label(), canvas.y1_label_fontsize()), y2_label = TextWithFontSize(canvas.y2_label(), canvas.y2_label_fontsize())))
       for i in range(len(self.userPlotList)):
         if self.userPlotList[i].title == title:
-          self.userPlotList[i] = UserPlot(title, tab.x_data, y1, y1d, y2, y2d, self.getCanvas().grid, self.getCanvas().grid2, style, style2)
+          self.userPlotList[i] = up
           found = True
           break
       if not found:
-        self.userPlotList.append(UserPlot(title, tab.x_data, y1, y1d, y2, y2d, self.getCanvas().grid, self.getCanvas().grid2, style, style2) )
+        self.userPlotList.append(up)
       self.saveUserPlots()
 
   def plot_userplot(self, p):

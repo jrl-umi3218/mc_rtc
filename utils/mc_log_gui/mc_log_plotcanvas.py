@@ -5,8 +5,9 @@ from PySide import QtCore, QtGui
 from PySide.QtGui import QWidget, QVBoxLayout
 
 import copy
-import numpy as np
+import math
 import matplotlib
+import numpy as np
 matplotlib.use('Qt4Agg')
 matplotlib.rcParams['backend.qt4'] = 'PySide'
 
@@ -52,6 +53,10 @@ class PlotCanvasWithToolbar(QWidget):
 
     self.grid = LineStyle()
     self.grid2 = LineStyle()
+
+    self._x_label_fontsize = 10
+    self._y1_label_fontsize = 10
+    self._y2_label_fontsize = 10
 
     vbox = QVBoxLayout(self)
     vbox.addWidget(self.canvas)
@@ -107,19 +112,73 @@ class PlotCanvasWithToolbar(QWidget):
     self._legend_left()
     self._legend_right()
     self._drawGrid()
+    top_offset = 0.875
+    top_legend_rows = math.ceil(len(self.axes_plots.keys()) / 3.)
+    if top_legend_rows > 3:
+      top_offset = top_offset - 0.02 * (top_legend_rows - 3)
+    bottom_offset = 0.1
+    if len(self.x_label()) and len(self.axes2_plots.keys()):
+      bottom_offset = 0.15
+    bottom_legend_rows = math.ceil(len(self.axes2_plots.keys()) / 3.)
+    if bottom_legend_rows > 3:
+      bottom_offset = bottom_offset + 0.02 * (bottom_legend_rows - 3)
+    self.fig.subplots_adjust(top = top_offset, bottom = bottom_offset)
     self.canvas.draw()
 
   def setData(self, data):
     self.data = data
 
-  def title(self, title):
-    self.fig.suptitle(title)
+  def title(self, title = None):
+    if title is None:
+      if self.fig._suptitle is None:
+        return ""
+      return self.fig._suptitle.get_text()
+    else:
+      self.fig.suptitle(title)
 
-  def y1_label(self, label):
+  def title_fontsize(self, fontsize = None):
+    if fontsize is None:
+      if self.fig._suptitle is None:
+        return 12
+      return self.fig._suptitle.get_fontsize()
+    else:
+      self.fig.suptitle(self.title(), fontsize = fontsize)
+
+  def x_label(self, label = None):
+    if label is None:
+      return self.axes.get_xlabel()
+    self.axes.set_xlabel(label)
+
+  def x_label_fontsize(self, fontsize = None):
+    if fontsize is None:
+      return self._x_label_fontsize
+    else:
+      self._x_label_fontsize = fontsize
+      self.axes.set_xlabel(self.x_label(), fontsize = self._x_label_fontsize)
+
+  def y1_label(self, label = None):
+    if label is None:
+      return self.axes.get_ylabel()
     self.axes.set_ylabel(label)
 
-  def y2_label(self, label):
+  def y1_label_fontsize(self, fontsize = None):
+    if fontsize is None:
+      return self._y1_label_fontsize
+    else:
+      self._y1_label_fontsize = fontsize
+      self.axes.set_ylabel(self.y1_label(), fontsize = self._y1_label_fontsize)
+
+  def y2_label(self, label = None):
+    if label is None:
+      return self.axes2.get_ylabel()
     self.axes2.set_ylabel(label)
+
+  def y2_label_fontsize(self, fontsize = None):
+    if fontsize is None:
+      return self._y2_label_fontsize
+    else:
+      self._y2_label_fontsize = fontsize
+      self.axes2.set_ylabel(self.y2_label(), fontsize = self._y2_label_fontsize)
 
   def _next_color(self):
     self.color += 1
@@ -129,7 +188,10 @@ class PlotCanvasWithToolbar(QWidget):
     self.axes.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=3, mode="expand", borderaxespad=0.5, fontsize = 10.0)
 
   def _legend_right(self):
-    self.axes2.legend(bbox_to_anchor=(0., -.1, 1., -1.02), loc=3, ncol=3, mode="expand", borderaxespad=-0.5, fontsize = 10.0)
+    top_anchor = -0.125
+    if len(self.x_label()):
+      top_anchor = -0.175
+    self.axes2.legend(bbox_to_anchor=(0., top_anchor, 1., .102), loc=2, ncol=3, mode="expand", borderaxespad=0.5, fontsize = 10.0)
 
   def _plot(self, axe, update_legend_fn, x, y, y_label, style = None):
     if style is None:
@@ -145,7 +207,7 @@ class PlotCanvasWithToolbar(QWidget):
     self.axes_plots[y] = self._plot(self.axes, self._legend_left, self.data[x], self.data[y], y_label, style)
     return True
 
-  def add_plot_right(self, x, y, y_label, style):
+  def add_plot_right(self, x, y, y_label, style = None):
     if y_label in self.axes2_plots:
       return False
     self.axes2_plots[y] = self._plot(self.axes2, self._legend_right, self.data[x], self.data[y], y_label, style)

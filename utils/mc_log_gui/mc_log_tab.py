@@ -399,6 +399,14 @@ class MCLogTab(QtGui.QWidget):
   @staticmethod
   def UserPlot(parent, p):
     tab = MCLogTab.MakePlot(parent, p.x, p.y1, p.y2)
+    def set_label(label_fn, label_size_fn, label):
+      if len(label.text):
+        label_fn(label.text)
+        label_size_fn(label.fontsize)
+    set_label(tab.ui.canvas.title, tab.ui.canvas.title_fontsize, p.graph_labels.title)
+    set_label(tab.ui.canvas.x_label, tab.ui.canvas.x_label_fontsize, p.graph_labels.x_label)
+    set_label(tab.ui.canvas.y1_label, tab.ui.canvas.y1_label_fontsize, p.graph_labels.y1_label)
+    set_label(tab.ui.canvas.y2_label, tab.ui.canvas.y2_label_fontsize, p.graph_labels.y2_label)
     def handle_yd(yds, idx):
       for yd in yds:
         match = re.match("(.*)_(.*)$", yd)
