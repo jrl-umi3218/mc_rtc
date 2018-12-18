@@ -578,6 +578,7 @@ class MCLogUI(QtGui.QMainWindow):
     self.addApplicationShortcut(QtCore.Qt.CTRL + QtCore.Qt.Key_PageDown, self.shortcutNextTab)
     self.addApplicationShortcut(QtCore.Qt.CTRL + QtCore.Qt.Key_PageUp, self.shortcutPreviousTab)
     self.addApplicationShortcut(QtCore.Qt.CTRL + QtCore.Qt.Key_T, self.shortcutNewTab)
+    self.addApplicationShortcut(QtCore.Qt.CTRL + QtCore.Qt.Key_S, self.save_userplot)
 
   def saveUserPlots(self):
     confDir = os.path.dirname(self.userPlotFile)
