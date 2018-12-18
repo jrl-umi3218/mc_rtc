@@ -101,6 +101,9 @@ class CommonStyleDialog(QtGui.QDialog):
     okButton = QtGui.QPushButton("Ok", self)
     confirmLayout.addWidget(okButton)
     okButton.clicked.connect(self.accept)
+    applyButton = QtGui.QPushButton("Apply", self)
+    confirmLayout.addWidget(applyButton)
+    applyButton.clicked.connect(self.apply)
     cancelButton = QtGui.QPushButton("Cancel", self)
     confirmLayout.addWidget(cancelButton)
     cancelButton.clicked.connect(self.reject)
@@ -112,11 +115,14 @@ class CommonStyleDialog(QtGui.QDialog):
       self.color = color
       self.colorButton.setStyleSheet("background-color: {}; color: {}".format(self.color.name(), self.color.name()))
 
-  def accept(self):
-    super(CommonStyleDialog, self).accept()
+  def apply(self):
     self.style.linestyle = self.linestyle.currentText()
     self.style.linewidth = float(self.linewidth.text())
     self.style.color = self.color.name()
+
+  def accept(self):
+    super(CommonStyleDialog, self).accept()
+    self.apply()
 
 class GridStyleDialog(CommonStyleDialog):
   def __init__(self, parent, name, canvas, style):
@@ -129,8 +135,8 @@ class GridStyleDialog(CommonStyleDialog):
     self.save = QtGui.QCheckBox()
     self.layout.insertRow(self.layout.rowCount() - 2, "Save as default", self.save)
 
-  def accept(self):
-    super(GridStyleDialog, self).accept()
+  def apply(self):
+    super(GridStyleDialog, self).apply()
     self.style.visible = self.enabled.isChecked()
     self.canvas.draw()
     if self.save.isChecked():
@@ -143,8 +149,12 @@ class LineStyleDialog(CommonStyleDialog):
     super(LineStyleDialog, self).__init__(parent, name, canvas, style)
     self.set_style = set_style_fn
 
-  def accept(self):
-    super(LineStyleDialog, self).accept()
+    self.labelInput = QtGui.QLineEdit(style.label)
+    self.layout.insertRow(0, "Label", self.labelInput)
+
+  def apply(self):
+    super(LineStyleDialog, self).apply()
+    self.style.label = self.labelInput.text()
     self.set_style(self.name, self.style)
     self.canvas.draw()
 
@@ -360,8 +370,9 @@ class MCLogUI(QtGui.QMainWindow):
         menu = QtGui.QMenu(name, self.lineStyleMenu)
         group = QtGui.QActionGroup(act)
         for y in plots:
-          action = QtGui.QAction(y, group)
-          action.triggered.connect(lambda yin=y: LineStyleDialog(self, yin, self.getCanvas(), style_fn(yin), style_fn).exec_())
+          style = style_fn(y)
+          action = QtGui.QAction(style.label, group)
+          action.triggered.connect(lambda yin=y,stylein=style: LineStyleDialog(self, yin, self.getCanvas(), stylein, style_fn).exec_())
           group.addAction(action)
         menu.addActions(group.actions())
         self.lineStyleMenu.addMenu(menu)

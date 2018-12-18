@@ -314,11 +314,13 @@ class PlotCanvasWithToolbar(QWidget):
       raise KeyError("No plot named {}".format(y))
     plt = plots[y]
     if styleIn is None:
-      return LineStyle(plt.get_color(), plt.get_linestyle(), plt.get_linewidth())
+      return LineStyle(plt.get_color(), plt.get_linestyle(), plt.get_linewidth(), label = plt.get_label())
     else:
       plt.set_color(styleIn.color)
       plt.set_linestyle(styleIn.linestyle)
       plt.set_linewidth(styleIn.linewidth)
+      if len(styleIn.label):
+        plt.set_label(styleIn.label)
 
   def style_left(self, y, styleIn = None):
     return self._style(self.axes_plots, y, styleIn)
