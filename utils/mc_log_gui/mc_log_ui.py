@@ -813,7 +813,7 @@ class MCLogUI(QtGui.QMainWindow):
     menuEntries = [ (n, y1, y2, y1d, y2d) for n, y1, y2, y1d, y2d in menuEntries if all([validEntry(y) for y in [y1, y2, y1d, y2d]]) ]
     for n, y1, y2, y1d, y2d in menuEntries:
       act = QtGui.QAction(n, self.ui.menuCommonPlots)
-      act.triggered.connect(lambda: MCLogJointDialog(self, self.rm, n, y1, y2, y1d, y2d).exec_())
+      act.triggered.connect(lambda n_=n,y1_=y1,y2_=y2,y1d_=y1d,y2d_=y2: MCLogJointDialog(self, self.rm, n_, y1_, y2_, y1d_, y2d_).exec_())
       self.ui.menuCommonPlots.addAction(act)
     fSensors = set()
     for k in self.data:
