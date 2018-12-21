@@ -317,6 +317,14 @@ void Controller::resetPostures()
 void Controller::startIdleState()
 {
   resetPostures();
+  // Save posture weights
+  saved_posture_weights_.clear();
+  for(auto & pt : posture_tasks_)
+  {
+    saved_posture_weights_[pt.first] = pt.second->weight();
+    // Set high weight to prevent the robot from changing configuration
+    pt.second->weight(10000);
+  }
   for(auto & fft : ff_tasks_)
   {
     fft.second->reset();
@@ -326,6 +334,12 @@ void Controller::startIdleState()
 
 void Controller::teardownIdleState()
 {
+  // Reset default posture weights
+  for(auto & pt : posture_tasks_)
+  {
+    pt.second->weight(saved_posture_weights_[pt.first]);
+  }
+
   for(auto & fft : ff_tasks_)
   {
     solver().removeTask(fft.second);
