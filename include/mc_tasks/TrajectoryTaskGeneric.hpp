@@ -295,6 +295,26 @@ Eigen::VectorXd TrajectoryTaskGeneric<T>::speed() const
 }
 
 template<typename T>
+const Eigen::VectorXd & TrajectoryTaskGeneric<T>::normalAcc() const
+{
+  if(selectorT_)
+  {
+    return selectorT_->normalAcc();
+  }
+  return errorT->normalAcc();
+}
+
+template<typename T>
+const Eigen::MatrixXd & TrajectoryTaskGeneric<T>::jac() const
+{
+  if(selectorT_)
+  {
+    return selectorT_->jac();
+  }
+  return errorT->jac();
+}
+
+template<typename T>
 void TrajectoryTaskGeneric<T>::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
   MetaTask::load(solver, config);

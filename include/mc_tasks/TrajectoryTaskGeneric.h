@@ -165,6 +165,10 @@ struct TrajectoryTaskGeneric : public MetaTask
 
   virtual Eigen::VectorXd speed() const override;
 
+  const Eigen::VectorXd & normalAcc() const;
+
+  const Eigen::MatrixXd & jac() const;
+
   void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) override;
 
 protected:
