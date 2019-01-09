@@ -10,6 +10,7 @@ import matplotlib
 import numpy as np
 matplotlib.use('Qt4Agg')
 matplotlib.rcParams['backend.qt4'] = 'PySide'
+import matplotlib.pyplot
 
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas,\
@@ -34,18 +35,14 @@ def rpyFromQuat(quat):
     import eigen
     return rpyFromMat(list(eigen.Quaterniond(*quat).toRotationMatrix()))
 
-class PlotCanvasWithToolbar(QWidget):
-  def __init__(self, parent = None):
-    super(PlotCanvasWithToolbar, self).__init__(parent)
-
-    self.fig = Figure(figsize=(5, 4), dpi=100)
+class PlotFigure(object):
+  def __init__(self):
+    self.fig = matplotlib.pyplot.figure(figsize=(5, 4), dpi=100)
     self.axes = self.fig.add_subplot(111)
     self.axes.autoscale(enable = True, axis = 'both', tight = False)
     self.axes.autoscale_view(False,True,True)
     self.axes2 = self.axes.twinx()
     self.axes2.autoscale_view(False,True,True)
-    self.canvas = FigureCanvas(self.fig)
-    self.toolbar = NavigationToolbar(self.canvas, self)
     self.axes_format_coord = self.axes.format_coord
     self.axes2_format_coord = self.axes2.format_coord
     self.axes.format_coord = self.format_coord
@@ -57,11 +54,6 @@ class PlotCanvasWithToolbar(QWidget):
     self._x_label_fontsize = 10
     self._y1_label_fontsize = 10
     self._y2_label_fontsize = 10
-
-    vbox = QVBoxLayout(self)
-    vbox.addWidget(self.canvas)
-    vbox.addWidget(self.toolbar)
-    self.setLayout(vbox)
 
     self.data = None
     self.computed_data = {}
@@ -79,13 +71,12 @@ class PlotCanvasWithToolbar(QWidget):
 
   def _drawGrid(self):
     def draw(axes, style):
-      axes.grid(color = style.color, linestyle = style.linestyle, linewidth = style.linewidth, visible = style.visible)
+      axes.grid(color = style.color, linestyle = style.linestyle, linewidth = style.linewidth, visible = style.visible, which = 'both')
       axes.set_axisbelow(True)
     if len(self.axes_plots) > 0:
       draw(self.axes, self.grid)
     if len(self.axes2_plots) > 0:
       draw(self.axes2, self.grid2)
-
 
   def draw(self):
     def fix_axes_limits(axes, axes2):
@@ -112,21 +103,21 @@ class PlotCanvasWithToolbar(QWidget):
     self._legend_left()
     self._legend_right()
     self._drawGrid()
-    top_offset = 0.875
+    top_offset = 0.9
     top_legend_rows = math.ceil(len(self.axes_plots.keys()) / 3.)
     if top_legend_rows > 3:
-      top_offset = top_offset - 0.02 * (top_legend_rows - 3)
+      top_offset = top_offset - 0.015 * (top_legend_rows - 3)
     bottom_offset = 0.1
-    if len(self.x_label()) and len(self.axes2_plots.keys()):
-      bottom_offset = 0.15
     bottom_legend_rows = math.ceil(len(self.axes2_plots.keys()) / 3.)
     if bottom_legend_rows > 3:
-      bottom_offset = bottom_offset + 0.02 * (bottom_legend_rows - 3)
+      bottom_offset = bottom_offset + 0.015 * (bottom_legend_rows - 3)
     self.fig.subplots_adjust(top = top_offset, bottom = bottom_offset)
-    self.canvas.draw()
 
   def setData(self, data):
     self.data = data
+
+  def show(self):
+    self.fig.show()
 
   def title(self, title = None):
     if title is None:
@@ -389,3 +380,20 @@ class PlotCanvasWithToolbar(QWidget):
 
   def style_right(self, y, styleIn = None):
     return self._style(self.axes2_plots, y, styleIn)
+
+class PlotCanvasWithToolbar(PlotFigure, QWidget):
+  def __init__(self, parent = None):
+    PlotFigure.__init__(self)
+    QWidget.__init__(self, parent)
+
+    self.canvas = FigureCanvas(self.fig)
+    self.toolbar = NavigationToolbar(self.canvas, self)
+
+    vbox = QVBoxLayout(self)
+    vbox.addWidget(self.canvas)
+    vbox.addWidget(self.toolbar)
+    self.setLayout(vbox)
+
+  def draw(self):
+    PlotFigure.draw(self)
+    self.canvas.draw()

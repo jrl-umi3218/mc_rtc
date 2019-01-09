@@ -4,6 +4,7 @@ from PySide import QtCore, QtGui
 
 from mc_log_tab_ui import Ui_MCLogTab
 from mc_log_types import LineStyle
+from mc_log_plotcanvas import PlotFigure
 
 from functools import partial
 
@@ -111,25 +112,17 @@ class FilterRightClick(QtCore.QObject):
         return True
     return False
 
-class RemoveSpecialPlotButton(QtGui.QPushButton):
-  def __init__(self, name, logtab, idx, special_id):
-    self.logtab = logtab
-    if idx == 0:
-      self.layout = logtab.ui.y1SelectorLayout
-    else:
-      self.layout = logtab.ui.y2SelectorLayout
-    super(RemoveSpecialPlotButton, self).__init__(u"Remove {} {} plot".format(name, special_id), logtab)
-    self.layout.addWidget(self)
+class SpecialPlot(object):
+  def __init__(self, name, figure, idx, special_id):
+    self.figure = figure
     self.idx = idx
     self.name = name
     self.id = special_id
     self.added = []
-    self.tree_view = TreeView()
     if idx == 0:
-      self.remove = self.logtab.ui.canvas.remove_plot_left
+      self.remove = self.figure.remove_plot_left
     else:
-      self.remove = self.logtab.ui.canvas.remove_plot_right
-    self.clicked.connect(self.on_clicked)
+      self.remove = self.figure.remove_plot_right
     if special_id == "diff":
       self.__plot = self.__add_diff
     elif special_id == "rpy":
@@ -143,52 +136,65 @@ class RemoveSpecialPlotButton(QtGui.QPushButton):
     else:
       print "Cannot handle this special plot:", special_id
     self.plot()
+  def __add_diff(self):
+    added = filter(lambda x: re.match("{}($|_.*$)".format(self.name), x) is not None, self.figure.data.keys())
+    if self.idx == 0:
+      add_fn = self.figure.add_diff_plot_left
+    else:
+      add_fn = self.figure.add_diff_plot_right
+    for a in added:
+      label = "{}_diff".format(a)
+      if add_fn(self.figure.x_data, a, label):
+        self.added.append(label)
+  def __add_rpy(self):
+    if self.idx == 0:
+      add_fn = self.figure.add_rpy_plot_left
+    else:
+      add_fn = self.figure.add_rpy_plot_right
+    if add_fn(self.figure.x_data, self.name):
+      self.added = [ "{}_{}".format(self.name, s) for s in ["roll", "pitch", "yaw"] ]
+  def __add_roll(self):
+    if self.idx == 0:
+      add_fn = self.figure.add_roll_plot_left
+    else:
+      add_fn = self.figure.add_roll_plot_right
+    if add_fn(self.figure.x_data, self.name):
+      self.added = [ "{}_{}".format(self.name, "roll") ]
+  def __add_pitch(self):
+    if self.idx == 0:
+      add_fn = self.figure.add_pitch_plot_left
+    else:
+      add_fn = self.figure.add_pitch_plot_right
+    if add_fn(self.figure.x_data, self.name):
+      self.added = [ "{}_{}".format(self.name, "pitch") ]
+  def __add_yaw(self):
+    if self.idx == 0:
+      add_fn = self.figure.add_yaw_plot_left
+    else:
+      add_fn = self.figure.add_yaw_plot_right
+    if add_fn(self.figure.x_data, self.name):
+      self.added = [ "{}_{}".format(self.name, "yaw") ]
+  def plot(self):
+    self.__plot()
+
+class RemoveSpecialPlotButton(SpecialPlot, QtGui.QPushButton):
+  def __init__(self, name, logtab, idx, special_id):
+    self.logtab = logtab
+    SpecialPlot.__init__(self, name, logtab.ui.canvas, idx, special_id)
+    QtGui.QPushButton.__init__(self, u"Remove {} {} plot".format(name, special_id), logtab)
+    self.clicked.connect(self.on_clicked)
+    if idx == 0:
+      self.layout = logtab.ui.y1SelectorLayout
+    else:
+      self.layout = logtab.ui.y2SelectorLayout
+    self.layout.addWidget(self)
     if len(self.added) == 0:
       self.deleteLater()
     else:
       self.logtab.specials["{}_{}".format(name, special_id)] = self
-  def __add_diff(self):
-    added = filter(lambda x: re.match("{}($|_.*$)".format(self.name), x) is not None, self.logtab.data.keys())
-    if self.idx == 0:
-      add_fn = self.logtab.ui.canvas.add_diff_plot_left
-    else:
-      add_fn = self.logtab.ui.canvas.add_diff_plot_right
-    for a in added:
-      label = "{}_diff".format(a)
-      if add_fn(self.logtab.x_data, a, label):
-        self.added.append(label)
-  def __add_rpy(self):
-    if self.idx == 0:
-      add_fn = self.logtab.ui.canvas.add_rpy_plot_left
-    else:
-      add_fn = self.logtab.ui.canvas.add_rpy_plot_right
-    if add_fn(self.logtab.x_data, self.name):
-      self.added = [ "{}_{}".format(self.name, s) for s in ["r", "p", "y"] ]
-  def __add_roll(self):
-    if self.idx == 0:
-      add_fn = self.logtab.ui.canvas.add_roll_plot_left
-    else:
-      add_fn = self.logtab.ui.canvas.add_roll_plot_right
-    if add_fn(self.logtab.x_data, self.name):
-      self.added = [ "{}_{}".format(self.name, "r") ]
-  def __add_pitch(self):
-    if self.idx == 0:
-      add_fn = self.logtab.ui.canvas.add_pitch_plot_left
-    else:
-      add_fn = self.logtab.ui.canvas.add_pitch_plot_right
-    if add_fn(self.logtab.x_data, self.name):
-      self.added = [ "{}_{}".format(self.name, "p") ]
-  def __add_yaw(self):
-    if self.idx == 0:
-      add_fn = self.logtab.ui.canvas.add_yaw_plot_left
-    else:
-      add_fn = self.logtab.ui.canvas.add_yaw_plot_right
-    if add_fn(self.logtab.x_data, self.name):
-      self.added = [ "{}_{}".format(self.name, "y") ]
   def plot(self):
-    self.__plot()
+    SpecialPlot.plot(self)
     self.logtab.ui.canvas.draw()
-
   def on_clicked(self):
     for added in self.added:
       self.remove(added)
@@ -377,6 +383,21 @@ class MCLogTab(QtGui.QWidget):
     menu.exec_(ySelector.viewport().mapToGlobal(point))
 
   @staticmethod
+  def MakeFigure(data, x, y1, y2, y1_label = None, y2_label = None, figure = None):
+    if y1_label is None:
+      return MCLogTab.MakeFigure(data, x, y1, y2, y1, y2_label, figure)
+    if y2_label is None:
+      return MCLogTab.MakeFigure(data, x, y1, y2, y1_label, y2, figure)
+    if figure is None:
+      return MCLogTab.MakeFigure(data, x, y1, y2, y1_label, y2_label, PlotFigure())
+    figure.setData(data)
+    for y,yl in zip(y1, y1_label):
+      figure.add_plot_left(x, y, yl)
+    for y,yl in zip(y2, y2_label):
+      figure.add_plot_right(x, y, yl)
+    return figure
+
+  @staticmethod
   def MakePlot(parent, x_data, y1, y2, y1_label = None, y2_label = None):
     if y1_label is None:
       return MCLogTab.MakePlot(parent, x_data, y1, y2, y1, y2_label)
@@ -387,56 +408,57 @@ class MCLogTab(QtGui.QWidget):
     tab.setData(parent.data)
     tab.setRobotModule(parent.rm)
     for y,yl in zip(y1, y1_label):
-      tab.ui.canvas.add_plot_left(tab.x_data, y, yl)
       tab.tree_view.select(y, tab.ui.y1Selector, 0)
     for y,yl in zip(y2, y2_label):
-      tab.ui.canvas.add_plot_right(tab.x_data, y, yl)
       tab.tree_view.select(y, tab.ui.y2Selector, 1)
     tab.y1Selected = y1
     tab.y2Selected = y2
+    MCLogTab.MakeFigure(parent.data, x_data, y1, y2, y1_label, y2_label, tab.ui.canvas)
     return tab
 
   @staticmethod
-  def UserPlot(parent, p):
-    tab = MCLogTab.MakePlot(parent, p.x, p.y1, p.y2)
+  def UserFigure(data, p, figure = None, special = None):
+    if figure is None:
+      return MCLogTab.UserFigure(data, p, MCLogTab.MakeFigure(data, p.x, p.y1, p.y2), special)
+    if special is None:
+      return MCLogTab.UserFigure(data, p, figure, lambda y, idx, id_: UserPlot(y, figure, idx, id_))
     def set_label(label_fn, label_size_fn, label):
       if len(label.text):
         label_fn(label.text)
         label_size_fn(label.fontsize)
-    set_label(tab.ui.canvas.title, tab.ui.canvas.title_fontsize, p.graph_labels.title)
-    set_label(tab.ui.canvas.x_label, tab.ui.canvas.x_label_fontsize, p.graph_labels.x_label)
-    set_label(tab.ui.canvas.y1_label, tab.ui.canvas.y1_label_fontsize, p.graph_labels.y1_label)
-    set_label(tab.ui.canvas.y2_label, tab.ui.canvas.y2_label_fontsize, p.graph_labels.y2_label)
+    set_label(figure.title, figure.title_fontsize, p.graph_labels.title)
+    set_label(figure.x_label, figure.x_label_fontsize, p.graph_labels.x_label)
+    set_label(figure.y1_label, figure.y1_label_fontsize, p.graph_labels.y1_label)
+    set_label(figure.y2_label, figure.y2_label_fontsize, p.graph_labels.y2_label)
     def handle_yd(yds, idx):
       for yd in yds:
         match = re.match("(.*)_(.*)$", yd)
         if match is None:
-          RemoveSpecialPlotButton(yd, tab, idx, "diff")
-          continue
-        if match.group(2) == "rpy":
-          RemoveSpecialPlotButton(match.group(1), tab, idx, "rpy")
-        elif match.group(2) == "r":
-          RemoveSpecialPlotButton(match.group(1), tab, idx, "r")
-        elif match.group(2) == "p":
-          RemoveSpecialPlotButton(match.group(1), tab, idx, "p")
-        elif match.group(2) == "y":
-          RemoveSpecialPlotButton(match.group(1), tab, idx, "y")
+          special(yd, idx, "diff")
+        elif match.group(2) in ["rpy", "r", "p", "y"]:
+          special(match.group(1), idx, match.group(2))
         else:
-          RemoveSpecialPlotButton(match.group(1), tab, idx, "diff")
+          special(match.group(1), idx, "diff")
     handle_yd(p.y1d, 0)
     handle_yd(p.y2d, 1)
     if not isinstance(p.grid1, LineStyle):
-      tab.ui.canvas.grid = LineStyle(**p.grid1)
+      figure.grid = LineStyle(**p.grid1)
     else:
-      tab.ui.canvas.grid = p.grid1
+      figure.grid = p.grid1
     if not isinstance(p.grid2, LineStyle):
-      tab.ui.canvas.grid2 = LineStyle(**p.grid2)
+      figure.grid2 = LineStyle(**p.grid2)
     else:
-      tab.ui.canvas.grid2 = p.grid2
+      figure.grid2 = p.grid2
     for y,s in p.style.iteritems():
-      tab.ui.canvas.style_left(y, s)
+      figure.style_left(y, s)
     for y,s in p.style2.iteritems():
-      tab.ui.canvas.style_right(y, s)
+      figure.style_right(y, s)
+    return figure
+
+  @staticmethod
+  def UserPlot(parent, p):
+    tab = MCLogTab.MakePlot(parent, p.x, p.y1, p.y2)
+    MCLogTab.UserFigure(parent.data, p, tab.ui.canvas, lambda y, idx, id_: RemoveSpecialPlotButton(y, tab, idx, id_))
     tab.ui.canvas.draw()
     return tab
 

@@ -34,7 +34,7 @@ def safe_float(v):
     else:
         return None
 
-def read_flat(f):
+def read_flat(f, tmp = False):
     def read_size(fd):
         return ctypes.c_size_t.from_buffer_copy(fd.read(ctypes.sizeof(ctypes.c_size_t))).value
     def read_bool(fd):
@@ -65,7 +65,51 @@ def read_flat(f):
                     entries_to_int[v] = i
                     i += 1
                 data[key] = [ entries_to_int[v] for v in entries ]
+    if tmp:
+      os.unlink(f)
     return data
+
+def read_csv(fpath, tmp = False):
+  data = {}
+  with open(fpath) as fd:
+    reader = csv.DictReader(fd, delimiter=';')
+    for k in reader.fieldnames:
+      data[k] = []
+    for row in reader:
+      for k in reader.fieldnames:
+        data[k].append(safe_float(row[k]))
+  for k in self.data:
+    data[k] = np.array(data[k])
+  if tmp:
+    os.unlink(fpath)
+  return data
+
+def read_log(fpath, tmp = False):
+  if fpath.endswith('.bin'):
+    tmpf = tempfile.mkstemp(suffix = '.flat')[1]
+    os.system("mc_bin_to_flat {} {}".format(fpath, tmpf))
+    return read_log(tmpf, True)
+  elif fpath.endswith('.flat'):
+    return read_flat(fpath, tmp)
+  else:
+    return read_csv(fpath, tmp)
+
+def load_UserPlots(fpath):
+    if not os.path.exists(fpath):
+      return []
+    userPlotList = []
+    with open(fpath) as f:
+      userPlotList = [UserPlot(*x) for x in json.load(f)]
+      for i,plt in enumerate(userPlotList):
+        for y in plt.style:
+          plt.style[y] = LineStyle(**plt.style[y])
+        for y in plt.style2:
+          plt.style2[y] = LineStyle(**plt.style2[y])
+        if not isinstance(plt.graph_labels, GraphLabels):
+          for key, value in plt.graph_labels.iteritems():
+            plt.graph_labels[key] = TextWithFontSize(**plt.graph_labels[key])
+          userPlotList[i] = plt._replace(graph_labels = GraphLabels(**plt.graph_labels))
+    return userPlotList
 
 class CommonStyleDialog(QtGui.QDialog):
   def __init__(self, parent, name, canvas, style):
@@ -485,20 +529,8 @@ class MCLogUI(QtGui.QMainWindow):
             self.gridStyles[k] = LineStyle(**data[k])
     UserPlot.__new__.__defaults__ = (self.gridStyles['left'], self.gridStyles['right'], {}, {}, GraphLabels())
 
-    self.userPlotList = []
     self.userPlotFile = os.path.expanduser("~") + "/.config/mc_log_ui/custom_plot.json"
-    if os.path.exists(self.userPlotFile):
-      with open(self.userPlotFile) as f:
-        self.userPlotList = [UserPlot(*x) for x in json.load(f)]
-        for i,plt in enumerate(self.userPlotList):
-          for y in plt.style:
-            plt.style[y] = LineStyle(**plt.style[y])
-          for y in plt.style2:
-            plt.style2[y] = LineStyle(**plt.style2[y])
-          if not isinstance(plt.graph_labels, GraphLabels):
-            for key, value in plt.graph_labels.iteritems():
-              plt.graph_labels[key] = TextWithFontSize(**plt.graph_labels[key])
-            self.userPlotList[i] = plt._replace(graph_labels = GraphLabels(**plt.graph_labels))
+    self.userPlotList = load_UserPlots(self.userPlotFile)
     self.update_userplot_menu()
 
     self.activeRobotAction = None
@@ -749,24 +781,8 @@ class MCLogUI(QtGui.QMainWindow):
   def shortcutNewTab(self):
     self.ui.tabWidget.setCurrentIndex(self.ui.tabWidget.count() - 1)
 
-  def load_csv(self, fpath, tmp = False):
-    self.data = {}
-    if fpath.endswith('.bin'):
-      tmpf = tempfile.mkstemp(suffix = '.flat')[1]
-      os.system("mc_bin_to_flat {} {}".format(fpath, tmpf))
-      return self.load_csv(tmpf, True)
-    elif fpath.endswith('.flat'):
-      self.data = read_flat(fpath)
-    else:
-      with open(fpath) as fd:
-        reader = csv.DictReader(fd, delimiter=';')
-        for k in reader.fieldnames:
-          self.data[k] = []
-        for row in reader:
-          for k in reader.fieldnames:
-            self.data[k].append(safe_float(row[k]))
-      for k in self.data:
-        self.data[k] = np.array(self.data[k])
+  def load_csv(self, fpath):
+    self.data = read_log(fpath)
     i = 0
     while "qIn_{}".format(i) in self.data and "qOut_{}".format(i) in self.data:
       self.data["error_{}".format(i)] = self.data["qOut_{}".format(i)] - self.data["qIn_{}".format(i)]
@@ -780,9 +796,9 @@ class MCLogUI(QtGui.QMainWindow):
       self.data["tauIn_limits_lower_{}".format(i)] = np.full_like(self.data["tauIn_{}".format(i)], 0)
       self.data["tauIn_limits_upper_{}".format(i)] = np.full_like(self.data["tauIn_{}".format(i)], 0)
       i += 1
+    if 'perf_SolverBuildAndSolve' in self.data and 'perf_SolverSolve' in self.data:
+      self.data['perf_SolverBuild'] = self.data['perf_SolverBuildAndSolve'] - self.data['perf_SolverSolve']
     self.update_data()
-    if tmp:
-      os.unlink(fpath)
 
   def update_data(self):
     self.update_menu()
