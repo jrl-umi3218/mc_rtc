@@ -6,3 +6,4 @@ CMakeLists.txt.user*
 build/
 *.bin
 *.pos
+utils/mc_log_gui/*.png

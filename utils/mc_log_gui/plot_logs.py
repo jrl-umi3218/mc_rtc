@@ -9,6 +9,8 @@ from mc_log_tab import MCLogTab
 from mc_log_types import LineStyle, GraphLabels
 UserPlot.__new__.__defaults__ = (LineStyle(), LineStyle(), {}, {}, GraphLabels())
 
+import matplotlib.pyplot as plt
+
 def usage():
     print "{} [log] [plots] [format=png]".format(sys.argv[0])
     sys.exit(1)
@@ -25,3 +27,4 @@ if __name__ == "__main__":
         figure = MCLogTab.UserFigure(data, plot)
         figure.fig.set_size_inches(30, 20)
         figure.fig.savefig("{}.{}".format(plot.title, format_))
+        plt.close(figure.fig)
