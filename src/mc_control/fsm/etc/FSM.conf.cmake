@@ -117,7 +117,7 @@
         }
       }
     },
-    "HalfSitting":
+    "GoHalfSitting":
     {
       "base": "MiddleCoM",
       "tasks":
@@ -132,7 +132,7 @@
         }
       }
     },
-    "HalfSitting2": { "base": "HalfSitting" },
+    "GoHalfSitting2": { "base": "GoHalfSitting" },
     "LeftCoM":
     {
       "base": "CoM",
@@ -234,7 +234,7 @@
         "Orientation": { "body": "RLEG_LINK5" }
       }
     },
-    "HalfSitting3": { "base": "HalfSitting2" },
+    "GoHalfSitting3": { "base": "GoHalfSitting2" },
     "HeadUp":
     {
       "base": "MetaTasks",
@@ -285,18 +285,18 @@
       "StepByStep": false,
       "transitions":
       [
-        ["Pause", "OK", "HalfSitting", "Strict"],
-        ["HalfSitting", "OK", "LeftCoM"],
-        ["HalfSitting2", "OK", "RightCoM"],
+        ["Pause", "OK", "GoHalfSitting", "Strict"],
+        ["GoHalfSitting", "OK", "LeftCoM"],
+        ["GoHalfSitting2", "OK", "RightCoM"],
         ["LeftCoM", "OK", "RemoveRFullSole"],
         ["RemoveRFullSole", "OK", "MoveRFullSole"],
         ["MoveRFullSole", "OK", "AddRFullSole"],
-        ["AddRFullSole", "OK", "HalfSitting2"],
+        ["AddRFullSole", "OK", "GoHalfSitting2"],
         ["RightCoM", "OK", "RemoveLFullSole"],
         ["RemoveLFullSole", "OK", "MoveLFullSole"],
         ["MoveLFullSole", "OK", "AddLFullSole"],
-        ["AddLFullSole", "OK", "HalfSitting3"],
-        ["HalfSitting3", "OK", "Pause"]
+        ["AddLFullSole", "OK", "GoHalfSitting3"],
+        ["GoHalfSitting3", "OK", "Pause"]
       ]
     },
     "HeadFSM":

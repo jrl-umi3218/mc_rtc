@@ -9,16 +9,12 @@ namespace fsm
 
 void HalfSittingState::configure(const mc_rtc::Configuration & config)
 {
-  has_stiffness_ = config.has("stiffness");
-  if(has_stiffness_)
+  if(config.has("stiffness"))
   {
-    config("stiffness", stiffness_);
+    has_stiffness_ = true;
+    stiffness_ = config("stiffness");
   }
-
-  if(config.has("eval"))
-  {
-    eval_threshold_ = config("eval");
-  }
+  config("eval", eval_threshold_);
 }
 
 void HalfSittingState::start(Controller & ctl)
@@ -32,13 +28,15 @@ void HalfSittingState::start(Controller & ctl)
   /* Set the halfSitPose in posture Task */
   const auto & halfSit = ctl.robot().module().stance();
   const auto & ref_joint_order = ctl.robot().refJointOrder();
+  auto posture = postureTask->posture();
   for(unsigned int i = 0; i < ref_joint_order.size(); ++i)
   {
     if(ctl.robot().hasJoint(ref_joint_order[i]))
     {
-      postureTask->posture()[ctl.robot().jointIndexByName(ref_joint_order[i])] = halfSit.at(ref_joint_order[i]);
+      posture[ctl.robot().jointIndexByName(ref_joint_order[i])] = halfSit.at(ref_joint_order[i]);
     }
   }
+  postureTask->posture(posture);
 }
 
 bool HalfSittingState::run(Controller & ctl)
