@@ -83,10 +83,6 @@ void AdmittanceTask::update()
   clampAndWarn(name_, angularVel, maxAngularVel_, "angular velocity", isClampingAngularVel_);
   refVelB_ = feedforwardVelB_ + sva::MotionVecd{angularVel, linearVel};
 
-  // SC: we could do add an anti-windup strategy here, e.g. back-calculation.
-  // Yet, keep in mind that our velocity bounds are artificial. Whenever
-  // possible, the best is to set to gains so that they are not saturated.
-
   SurfaceTransformTask::refVelB(refVelB_);
 }
 
