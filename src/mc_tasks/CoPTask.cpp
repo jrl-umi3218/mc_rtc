@@ -6,11 +6,6 @@
 namespace mc_tasks
 {
 
-namespace
-{
-constexpr double MIN_PRESSURE = 0.5; // [N]
-}
-
 CoPTask::CoPTask(const std::string & surfaceName,
                  const mc_rbdyn::Robots & robots,
                  unsigned int robotIndex,
@@ -34,11 +29,6 @@ void CoPTask::update()
   Eigen::Vector3d targetTorque = {+targetCoP_.y() * pressure, -targetCoP_.x() * pressure, 0.};
   AdmittanceTask::targetWrench({targetTorque, targetForce_});
   AdmittanceTask::update();
-}
-
-Eigen::Vector2d CoPTask::measuredCoP() const
-{
-  return robot_.cop(surface_.name(), MIN_PRESSURE);
 }
 
 void CoPTask::addToLogger(mc_rtc::Logger & logger)
@@ -78,7 +68,7 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> CoPTask::buildCom
   {
     Eigen::Vector3d force = config("force");
     Eigen::Vector3d dof = Eigen::Vector3d::Ones();
-    for(size_t i = 0; i < 3; ++i)
+    for(int i = 0; i < 3; ++i)
     {
       if(std::isnan(force(i)))
       {
@@ -93,7 +83,7 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> CoPTask::buildCom
     return [dof, force](const mc_tasks::MetaTask & t, std::string & out) {
       const auto & self = static_cast<const CoPTask &>(t);
       Eigen::Vector3d f = self.measuredWrench().force();
-      for(size_t i = 0; i < 3; ++i)
+      for(int i = 0; i < 3; ++i)
       {
         if(dof(i) * fabs(f(i)) < force(i))
         {

@@ -55,29 +55,6 @@ public:
    */
   void reset() override;
 
-  /*! \brief Set the target CoP in the surface frame
-   *
-   * \param targetCoP 2D vector of CoP coordinates in the surface frame
-   *
-   */
-  void targetCoP(const Eigen::Vector2d & targetCoP)
-  {
-    targetCoP_ = targetCoP;
-  }
-
-  /*! \brief Get target CoP in the surface frame
-   *
-   */
-  const Eigen::Vector2d & targetCoP() const
-  {
-    return targetCoP_;
-  }
-
-  /*! \brief Compute CoP in surface frame from sensor measurements
-   *
-   */
-  Eigen::Vector2d measuredCoP() const;
-
   /** Add support for the following entries
    *
    * - copError Threshold for (targetCoP - measureCoP).norm()
@@ -88,14 +65,39 @@ public:
       double dt,
       const mc_rtc::Configuration & config) const override;
 
-  /*! \brief Set the target force in the surface frame
-   *
-   * \param targetForce 3D vector of target force in the surface frame
+  /*! \brief Measured CoP in surface frame.
    *
    */
-  void targetForce(const Eigen::Vector3d & targetForce)
+  Eigen::Vector2d measuredCoP() const
   {
-    targetForce_ = targetForce;
+    return robot_.cop(surface_.name());
+  }
+
+  /*! \brief Set targent wrench to zero.
+   *
+   */
+  void setZeroTargetWrench()
+  {
+    AdmittanceTask::targetWrench(sva::ForceVecd{Eigen::Vector6d::Zero()});
+    targetCoP(Eigen::Vector2d::Zero());
+  }
+
+  /*! \brief Get target CoP in the surface frame
+   *
+   */
+  const Eigen::Vector2d & targetCoP() const
+  {
+    return targetCoP_;
+  }
+
+  /*! \brief Set target CoP in the surface frame.
+   *
+   * \param targetCoP 2D vector of CoP coordinates in the surface frame
+   *
+   */
+  void targetCoP(const Eigen::Vector2d & targetCoP)
+  {
+    targetCoP_ = targetCoP;
   }
 
   /*! \brief Get target force in the surface frame
@@ -106,21 +108,22 @@ public:
     return targetForce_;
   }
 
+  /*! \brief Set target force in the surface frame
+   *
+   * \param targetForce 3D vector of target force in the surface frame
+   *
+   */
+  void targetForce(const Eigen::Vector3d & targetForce)
+  {
+    targetForce_ = targetForce;
+  }
+
   /*! \brief Get target wrench in the surface frame
    *
    */
   const sva::ForceVecd & targetWrench() const
   {
     return AdmittanceTask::targetWrench();
-  }
-
-  /*! \brief Set targent wrench to zero.
-   *
-   */
-  void setZeroTargetWrench()
-  {
-    AdmittanceTask::targetWrench(sva::ForceVecd{Eigen::Vector6d::Zero()});
-    targetCoP(Eigen::Vector2d::Zero());
   }
 
 private:
