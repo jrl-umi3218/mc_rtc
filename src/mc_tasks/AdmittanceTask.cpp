@@ -125,7 +125,7 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> AdmittanceTask::b
     sva::ForceVecd target_w = config("wrench");
     Eigen::Vector6d target = target_w.vector();
     Eigen::Vector6d dof = Eigen::Vector6d::Ones();
-    for(size_t i = 0; i < 6; ++i)
+    for(int i = 0; i < 6; ++i)
     {
       if(std::isnan(target(i)))
       {
@@ -140,7 +140,7 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> AdmittanceTask::b
     return [dof, target](const mc_tasks::MetaTask & t, std::string & out) {
       const auto & self = static_cast<const mc_tasks::AdmittanceTask &>(t);
       Eigen::Vector6d w = self.measuredWrench().vector();
-      for(size_t i = 0; i < 6; ++i)
+      for(int i = 0; i < 6; ++i)
       {
         if(dof(i) * fabs(w(i)) < target(i))
         {
