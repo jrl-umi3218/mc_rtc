@@ -81,19 +81,18 @@ void AdmittanceTask::update()
   Eigen::Vector3d angularVel = admittance_.couple().cwiseProduct(wrenchError_.couple());
   clampAndWarn(name_, linearVel, maxLinearVel_, "linear velocity", isClampingLinearVel_);
   clampAndWarn(name_, angularVel, maxAngularVel_, "angular velocity", isClampingAngularVel_);
-  refVelB_ = feedforwardVelB_ + sva::MotionVecd{angularVel, linearVel};
 
-  SurfaceTransformTask::refVelB(refVelB_);
+  sva::MotionVecd velB = feedforwardVelB_ + sva::MotionVecd{angularVel, linearVel};
+  SurfaceTransformTask::refVelB(velB);
 }
 
 void AdmittanceTask::reset()
 {
   SurfaceTransformTask::reset();
   admittance_ = sva::ForceVecd(Eigen::Vector6d::Zero());
+  feedforwardVelB_ = sva::MotionVecd(Eigen::Vector6d::Zero());
   targetWrench_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   wrenchError_ = sva::ForceVecd(Eigen::Vector6d::Zero());
-  feedforwardVelB_ = sva::MotionVecd(Eigen::Vector6d::Zero());
-  refVelB_ = sva::MotionVecd(Eigen::Vector6d::Zero());
 }
 
 void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
@@ -101,7 +100,6 @@ void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
   SurfaceTransformTask::addToLogger(logger);
   logger.addLogEntry(name_ + "_admittance", [this]() -> const sva::ForceVecd & { return admittance_; });
   logger.addLogEntry(name_ + "_measured_wrench", [this]() -> sva::ForceVecd { return measuredWrench(); });
-  logger.addLogEntry(name_ + "_output_body_vel", [this]() -> const sva::MotionVecd & { return refVelB_; });
   logger.addLogEntry(name_ + "_target_body_vel", [this]() -> const sva::MotionVecd & { return feedforwardVelB_; });
   logger.addLogEntry(name_ + "_target_wrench", [this]() -> const sva::ForceVecd & { return targetWrench_; });
 }
@@ -111,7 +109,6 @@ void AdmittanceTask::removeFromLogger(mc_rtc::Logger & logger)
   SurfaceTransformTask::removeFromLogger(logger);
   logger.removeLogEntry(name_ + "_admittance");
   logger.removeLogEntry(name_ + "_measured_wrench");
-  logger.removeLogEntry(name_ + "_output_body_vel");
   logger.removeLogEntry(name_ + "_target_body_vel");
   logger.removeLogEntry(name_ + "_target_wrench");
 }

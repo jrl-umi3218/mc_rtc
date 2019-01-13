@@ -219,7 +219,6 @@ protected:
   sva::ForceVecd targetWrench_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   sva::ForceVecd wrenchError_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   sva::MotionVecd feedforwardVelB_ = sva::MotionVecd(Eigen::Vector6d::Zero());
-  sva::MotionVecd refVelB_ = sva::MotionVecd(Eigen::Vector6d::Zero());
 
   void update() override;
 
