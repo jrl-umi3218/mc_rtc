@@ -34,15 +34,19 @@ void CoPTask::update()
 void CoPTask::addToLogger(mc_rtc::Logger & logger)
 {
   AdmittanceTask::addToLogger(logger);
-  logger.addLogEntry(name_ + "_measured_cop", [this]() -> Eigen::Vector2d { return measuredCoP(); });
-  logger.addLogEntry(name_ + "_target_cop", [this]() -> const Eigen::Vector2d & { return targetCoP_; });
+  logger.addLogEntry(name_ + "_measured_cop", [this]() { return measuredCoP(); });
+  logger.addLogEntry(name_ + "_measured_copW", [this]() { return measuredCoPW(); });
+  logger.addLogEntry(name_ + "_target_cop", [this]() { return targetCoP_; });
+  logger.addLogEntry(name_ + "_target_copW", [this]() { return targetCoPW(); });
 }
 
 void CoPTask::removeFromLogger(mc_rtc::Logger & logger)
 {
   AdmittanceTask::removeFromLogger(logger);
   logger.removeLogEntry(name_ + "_measured_cop");
+  logger.removeLogEntry(name_ + "_measured_copW");
   logger.removeLogEntry(name_ + "_target_cop");
+  logger.removeLogEntry(name_ + "_target_copW");
 }
 
 std::function<bool(const mc_tasks::MetaTask &, std::string &)> CoPTask::buildCompletionCriteria(
