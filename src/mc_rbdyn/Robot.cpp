@@ -481,8 +481,8 @@ Eigen::Vector3d Robot::copW(const std::string & surfaceName, double min_pressure
 {
   Eigen::Vector3d cop_s;
   cop_s << cop(surfaceName, min_pressure), 0.;
-  const sva::PTransformd X_0_s = surface(surfaceName).X_0_s(*this);
-  return X_0_s.translation() + X_0_s.rotation().inverse() * cop_s;
+  const sva::PTransformd X_0_s = surfacePose(surfaceName);
+  return X_0_s.translation() + X_0_s.rotation().transpose() * cop_s;
 }
 
 Eigen::Vector3d Robot::zmp(const std::vector<std::string> & sensorsName,
