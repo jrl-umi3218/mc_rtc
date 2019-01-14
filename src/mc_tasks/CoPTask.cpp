@@ -6,11 +6,6 @@
 namespace mc_tasks
 {
 
-namespace
-{
-constexpr double MIN_PRESSURE = 0.5; // [N]
-}
-
 CoPTask::CoPTask(const std::string & surfaceName,
                  const mc_rbdyn::Robots & robots,
                  unsigned int robotIndex,
@@ -36,23 +31,22 @@ void CoPTask::update()
   AdmittanceTask::update();
 }
 
-Eigen::Vector2d CoPTask::measuredCoP() const
-{
-  return robot_.cop(surface_.name(), MIN_PRESSURE);
-}
-
 void CoPTask::addToLogger(mc_rtc::Logger & logger)
 {
   AdmittanceTask::addToLogger(logger);
-  logger.addLogEntry(name_ + "_measured_cop", [this]() -> Eigen::Vector2d { return measuredCoP(); });
-  logger.addLogEntry(name_ + "_target_cop", [this]() -> const Eigen::Vector2d & { return targetCoP_; });
+  logger.addLogEntry(name_ + "_measured_cop", [this]() { return measuredCoP(); });
+  logger.addLogEntry(name_ + "_measured_copW", [this]() { return measuredCoPW(); });
+  logger.addLogEntry(name_ + "_target_cop", [this]() { return targetCoP_; });
+  logger.addLogEntry(name_ + "_target_copW", [this]() { return targetCoPW(); });
 }
 
 void CoPTask::removeFromLogger(mc_rtc::Logger & logger)
 {
   AdmittanceTask::removeFromLogger(logger);
   logger.removeLogEntry(name_ + "_measured_cop");
+  logger.removeLogEntry(name_ + "_measured_copW");
   logger.removeLogEntry(name_ + "_target_cop");
+  logger.removeLogEntry(name_ + "_target_copW");
 }
 
 std::function<bool(const mc_tasks::MetaTask &, std::string &)> CoPTask::buildCompletionCriteria(
@@ -78,7 +72,7 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> CoPTask::buildCom
   {
     Eigen::Vector3d force = config("force");
     Eigen::Vector3d dof = Eigen::Vector3d::Ones();
-    for(size_t i = 0; i < 3; ++i)
+    for(int i = 0; i < 3; ++i)
     {
       if(std::isnan(force(i)))
       {
@@ -93,7 +87,7 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> CoPTask::buildCom
     return [dof, force](const mc_tasks::MetaTask & t, std::string & out) {
       const auto & self = static_cast<const CoPTask &>(t);
       Eigen::Vector3d f = self.measuredWrench().force();
-      for(size_t i = 0; i < 3; ++i)
+      for(int i = 0; i < 3; ++i)
       {
         if(dof(i) * fabs(f(i)) < force(i))
         {
