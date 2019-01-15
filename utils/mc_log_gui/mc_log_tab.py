@@ -224,6 +224,7 @@ class MCLogTab(QtGui.QWidget):
 
     self.data = None
     self.rm = None
+    self.ui.canvas.x_data = 't'
     self.x_data = 't'
 
     self.specials = {}
@@ -278,6 +279,7 @@ class MCLogTab(QtGui.QWidget):
   def on_xSelector_activated(self, k):
     self.x_data = k
     self.ui.canvas.clear_all()
+    self.ui.canvas.x_data = k
     self.y1Selected = []
     self.itemSelectionChanged(self.ui.y1Selector, self.y1Selected, 0)
     self.y2Selected = []
@@ -414,6 +416,7 @@ class MCLogTab(QtGui.QWidget):
     tab.y1Selected = y1
     tab.y2Selected = y2
     MCLogTab.MakeFigure(parent.data, x_data, y1, y2, y1_label, y2_label, tab.ui.canvas)
+    tab.ui.canvas.x_data = x_data
     return tab
 
   @staticmethod
