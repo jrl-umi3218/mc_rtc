@@ -698,6 +698,11 @@ std::vector<std::string> Robot::availableSurfaces() const
   return ret;
 }
 
+bool Robot::hasConvex(const std::string & name) const
+{
+  return convexes_.count(name);
+}
+
 Robot::convex_pair_t & Robot::convex(const std::string & cName)
 {
   return const_cast<Robot::convex_pair_t &>(static_cast<const Robot *>(this)->convex(cName));
@@ -710,6 +715,20 @@ const Robot::convex_pair_t & Robot::convex(const std::string & cName) const
                         "No convex named " << cName << " found in this robot (" << this->name_ << ")")
   }
   return convexes_.at(cName);
+}
+
+void Robot::convex(const std::string & cName,
+                   const std::string & body,
+                   Robot::S_PolyhedronPtr convex,
+                   const sva::PTransformd & X_b_c)
+{
+  if(convexes_.count(cName))
+  {
+    LOG_ERROR("Attempted to add a convex named " << cName << " that already exists in " << name())
+    return;
+  }
+  convexes_[cName] = {body, convex};
+  collisionTransforms_[cName] = X_b_c;
 }
 
 const sva::PTransformd & Robot::bodyTransform(const std::string & bName) const

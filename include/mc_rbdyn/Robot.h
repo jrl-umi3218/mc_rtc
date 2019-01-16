@@ -27,8 +27,10 @@ struct MC_RBDYN_DLLAPI Robot
   friend class std::allocator<Robot>;
 #endif
 public:
-  typedef std::pair<std::string, std::shared_ptr<sch::S_Polyhedron>> convex_pair_t;
-  typedef std::pair<std::string, std::shared_ptr<sch::STP_BV>> stpbv_pair_t;
+  using S_PolyhedronPtr = std::shared_ptr<sch::S_Polyhedron>;
+  typedef std::pair<std::string, S_PolyhedronPtr> convex_pair_t;
+  using STP_BVPtr = std::shared_ptr<sch::STP_BV>;
+  typedef std::pair<std::string, STP_BVPtr> stpbv_pair_t;
 
 public:
   Robot(Robot &&) = default;
@@ -447,6 +449,12 @@ public:
   /** Returns a list of available surfaces */
   std::vector<std::string> availableSurfaces() const;
 
+  /** Check if a convex \p name exists
+   *
+   * \returns True if the convex exists, false otherwise
+   */
+  bool hasConvex(const std::string & name) const;
+
   /** Access a convex named \p cName
    *
    * \returns a pair giving the convex's parent body and the sch::Polyhedron
@@ -455,6 +463,24 @@ public:
   convex_pair_t & convex(const std::string & cName);
   /** Access a convex named \p cName (const) */
   const convex_pair_t & convex(const std::string & cName) const;
+
+  /** Add a convex online
+   *
+   * This has no effect if \p name is already a convex of the robot
+   *
+   * \param name Name of the convex
+   *
+   * \param body Name of the convex's parent body
+   *
+   * \param convex sch::Polyhedron object representing the convex
+   *
+   * \param X_b_c Transformation fro the convex's parent body to the convex
+   *
+   */
+  void convex(const std::string & name,
+              const std::string & body,
+              S_PolyhedronPtr convex,
+              const sva::PTransformd & X_b_c = sva::PTransformd::Identity());
 
   /** Access transformation from body \p bName to original base.
    *
