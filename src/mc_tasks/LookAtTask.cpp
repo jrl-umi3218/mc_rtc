@@ -15,7 +15,8 @@ LookAtTask::LookAtTask(const std::string & bodyName,
   const mc_rbdyn::Robot & robot = robots.robot(rIndex);
   bIndex = robot.bodyIndexByName(bodyName);
 
-  finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, bodyVector, targetPos);
+  finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, bodyVector, Eigen::Vector3d{1.,0.,0.});
+  LookAtTask::target(targetPos);
   type_ = "lookAt";
   name_ = "look_at_" + robot.name() + "_" + bodyName;
 }
@@ -53,6 +54,43 @@ void LookAtTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry(name_ + "_target");
   logger.removeLogEntry(name_ + "_current");
   logger.removeLogEntry(name_ + "_error");
+}
+
+
+void LookAtTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
+{
+  VectorOrientationTask::addToGUI(gui);
+  gui.addElement({"Tasks", name_},
+                 mc_rtc::gui::Point3D("target_point",
+                                      [this]()
+                                      {
+                                        return this->target();
+                                      },
+                                      [this](const Eigen::Vector3d& pos)
+                                      {
+                                        this->target(pos);
+                                      }),
+                 mc_rtc::gui::Arrow("robot_vector",
+                                    mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(1., 0., 0.)),
+                                    [this]() -> Eigen::Vector3d
+                                    {
+                                      return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation();
+                                    },
+                                    [this]() -> Eigen::Vector3d
+                                    {
+                                      return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation() + .25 * targetVector();
+                                    }),
+                 mc_rtc::gui::Arrow("target_vector",
+                                    mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 1., 0.)),
+                                    [this]() -> Eigen::Vector3d
+                                    {
+                                      return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation();
+                                    },
+                                    [this]() -> Eigen::Vector3d
+                                    {
+                                      return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation() + .25 * bodyVector();
+                                    })
+                 );
 }
 
 } // namespace mc_tasks
