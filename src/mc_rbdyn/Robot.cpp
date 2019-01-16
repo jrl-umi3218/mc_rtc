@@ -87,11 +87,19 @@ void loadSCH(const mc_rbdyn::Robot & robot,
 }
 
 template<typename mapT>
-void fixSCH(const mc_rbdyn::Robot & robot, mapT & data_)
+void fixSCH(const mc_rbdyn::Robot & robot, mapT & data_, const std::map<std::string, sva::PTransformd> & tfs)
 {
   for(const auto & d : data_)
   {
-    sch::mc_rbdyn::transform(*d.second.second, robot.bodyPosW()[robot.bodyIndexByName(d.second.first)]);
+    const auto & pos = robot.bodyPosW(d.second.first);
+    if(tfs.count(d.first))
+    {
+      sch::mc_rbdyn::transform(*d.second.second, tfs.at(d.first) * pos);
+    }
+    else
+    {
+      sch::mc_rbdyn::transform(*d.second.second, pos);
+    }
   }
 }
 
@@ -728,6 +736,7 @@ void Robot::addConvex(const std::string & cName,
   }
   convexes_[cName] = {body, convex};
   collisionTransforms_[cName] = X_b_c;
+  sch::mc_rbdyn::transform(*convex, X_b_c * bodyPosW(body));
 }
 
 const sva::PTransformd & Robot::bodyTransform(const std::string & bName) const
@@ -862,7 +871,7 @@ void Robot::posW(const sva::PTransformd & pt)
   {
     mb().transform(0, pt);
     forwardKinematics();
-    fixSCH(*this, this->convexes_);
+    fixSCH(*this, this->convexes_, this->collisionTransforms_);
   }
   else
   {
@@ -905,7 +914,7 @@ void Robot::copy(Robots & robots, unsigned int robots_idx, const Base & base) co
                   << cH.first << " as it's not an sch::S_Polyhedron object, send complaint to mc_rtc maintainers...")
     }
   }
-  fixSCH(robot, robot.convexes_);
+  fixSCH(robot, robot.convexes_, robot.collisionTransforms_);
 }
 
 void Robot::copy(Robots & robots, unsigned int robots_idx) const
