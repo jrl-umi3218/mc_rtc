@@ -474,10 +474,10 @@ public:
    * \param X_b_c Transformation fro the convex's parent body to the convex
    *
    */
-  void convex(const std::string & name,
-              const std::string & body,
-              S_ObjectPtr convex,
-              const sva::PTransformd & X_b_c = sva::PTransformd::Identity());
+  void addConvex(const std::string & name,
+                 const std::string & body,
+                 S_ObjectPtr convex,
+                 const sva::PTransformd & X_b_c = sva::PTransformd::Identity());
 
   /** Access transformation from body \p bName to original base.
    *

@@ -716,10 +716,10 @@ const Robot::convex_pair_t & Robot::convex(const std::string & cName) const
   return convexes_.at(cName);
 }
 
-void Robot::convex(const std::string & cName,
-                   const std::string & body,
-                   Robot::S_ObjectPtr convex,
-                   const sva::PTransformd & X_b_c)
+void Robot::addConvex(const std::string & cName,
+                      const std::string & body,
+                      Robot::S_ObjectPtr convex,
+                      const sva::PTransformd & X_b_c)
 {
   if(convexes_.count(cName))
   {
