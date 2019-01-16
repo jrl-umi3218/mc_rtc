@@ -203,7 +203,7 @@ cdef extern from "<mc_rbdyn/Robot.h>" namespace "mc_rbdyn":
     const map[string, shared_ptr[Surface]]& surfaces()
     vector[string] availableSurfaces()
 
-    const pair[string, shared_ptr[sch.S_Polyhedron]]& convex(string)
+    const pair[string, shared_ptr[sch.S_Object]]& convex(string)
 
     const PTransformd& bodyTransform(const string&)
 

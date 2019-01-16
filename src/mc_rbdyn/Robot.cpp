@@ -176,7 +176,6 @@ Robot::Robot(Robots & robots,
   if(loadFiles)
   {
     loadSCH(*this, module_.convexHull(), &sch::mc_rbdyn::Polyhedron, convexes_);
-    loadSCH(*this, module_.stpbvHull(), &sch::mc_rbdyn::STPBV, stpbvs_);
   }
 
   for(const auto & b : mb().bodies())
@@ -719,7 +718,7 @@ const Robot::convex_pair_t & Robot::convex(const std::string & cName) const
 
 void Robot::convex(const std::string & cName,
                    const std::string & body,
-                   Robot::S_PolyhedronPtr convex,
+                   Robot::S_ObjectPtr convex,
                    const sva::PTransformd & X_b_c)
 {
   if(convexes_.count(cName))
@@ -864,7 +863,6 @@ void Robot::posW(const sva::PTransformd & pt)
     mb().transform(0, pt);
     forwardKinematics();
     fixSCH(*this, this->convexes_);
-    fixSCH(*this, this->stpbvs_);
   }
   else
   {
@@ -895,14 +893,19 @@ void Robot::copy(Robots & robots, unsigned int robots_idx, const Base & base) co
   robot.fixSurfaces();
   for(const auto & cH : convexes_)
   {
-    robot.convexes_[cH.first] = {cH.second.first, std::make_shared<sch::S_Polyhedron>(*cH.second.second)};
+    // FIXME Should implement sch::S_Object::clone in sch-core but this should be good enough for now
+    sch::S_Polyhedron * poly = dynamic_cast<sch::S_Polyhedron *>(cH.second.second.get());
+    if(poly)
+    {
+      robot.convexes_[cH.first] = {cH.second.first, std::make_shared<sch::S_Polyhedron>(*poly)};
+    }
+    else
+    {
+      LOG_WARNING("Could not copy the convex "
+                  << cH.first << " as it's not an sch::S_Polyhedron object, send complaint to mc_rtc maintainers...")
+    }
   }
   fixSCH(robot, robot.convexes_);
-  for(const auto & stpbv : stpbvs_)
-  {
-    robot.stpbvs_[stpbv.first] = {stpbv.second.first, std::make_shared<sch::STP_BV>(*stpbv.second.second)};
-  }
-  fixSCH(robot, robot.stpbvs_);
 }
 
 void Robot::copy(Robots & robots, unsigned int robots_idx) const

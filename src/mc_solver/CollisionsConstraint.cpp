@@ -79,10 +79,9 @@ void CollisionsConstraint::__addCollision(const mc_rbdyn::Robots & robots, const
   const sva::PTransformd & X_b2_c = r2.collisionTransform(body2.first);
   int collId = __createCollId(col);
   cols.push_back(col);
-  collConstr->addCollision(robots.mbs(), collId, static_cast<int>(r1Index), body1.first,
-                           const_cast<sch::S_Polyhedron *>(body1.second.get()), X_b1_c, static_cast<int>(r2Index),
-                           body2.first, const_cast<sch::S_Polyhedron *>(body2.second.get()), X_b2_c, col.iDist,
-                           col.sDist, col.damping, defaultDampingOffset);
+  collConstr->addCollision(robots.mbs(), collId, static_cast<int>(r1Index), body1.first, body1.second.get(), X_b1_c,
+                           static_cast<int>(r2Index), body2.first, body2.second.get(), X_b2_c, col.iDist, col.sDist,
+                           col.damping, defaultDampingOffset);
 }
 
 void CollisionsConstraint::addCollision(QPSolver & solver, const mc_rbdyn::Collision & col)
