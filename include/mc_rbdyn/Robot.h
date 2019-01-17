@@ -479,6 +479,18 @@ public:
                  S_ObjectPtr convex,
                  const sva::PTransformd & X_b_c = sva::PTransformd::Identity());
 
+  /** Remove a given convex
+   *
+   * Using this function while the given convex is involved in a collision is
+   * *not* safe and will very likely result in a crash.
+   *
+   * This has no effect if \p name is not a convex of the robot.
+   *
+   * \param name Name of the convex
+   *
+   */
+  void removeConvex(const std::string & name);
+
   /** Access transformation from body \p bName to original base.
    *
    * This can be used to correct transformations that were stored with the

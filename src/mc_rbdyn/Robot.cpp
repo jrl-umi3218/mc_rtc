@@ -739,6 +739,15 @@ void Robot::addConvex(const std::string & cName,
   sch::mc_rbdyn::transform(*convex, X_b_c * bodyPosW(body));
 }
 
+void Robot::removeConvex(const std::string & cName)
+{
+  if(convexes_.count(cName))
+  {
+    convexes_.erase(cName);
+    collisionTransforms_.erase(cName);
+  }
+}
+
 const sva::PTransformd & Robot::bodyTransform(const std::string & bName) const
 {
   if(!hasBody(bName))
