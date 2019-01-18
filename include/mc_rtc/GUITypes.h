@@ -123,6 +123,8 @@ struct MC_RTC_GUI_DLLAPI ArrowConfig
     config("arrow_head_diam", arrow_head_diam);
     config("arrow_head_len", arrow_head_len);
     config("arrow_scale", arrow_scale);
+    config("arrow_start_point_scale", arrow_start_point_scale);
+    config("arrow_end_point_scale", arrow_end_point_scale);
   }
 
   operator mc_rtc::Configuration() const
@@ -133,6 +135,8 @@ struct MC_RTC_GUI_DLLAPI ArrowConfig
     config.add("arrow_head_diam", arrow_head_diam);
     config.add("arrow_head_len", arrow_head_len);
     config.add("arrow_scale", arrow_scale);
+    config.add("arrow_start_point_scale", arrow_start_point_scale);
+    config.add("arrow_end_point_scale", arrow_end_point_scale);
     return config;
   }
 
@@ -140,6 +144,8 @@ struct MC_RTC_GUI_DLLAPI ArrowConfig
   double arrow_head_len = 0.05;
   double arrow_shaft_diam = 0.015;
   double arrow_scale = 0.0015;
+  double arrow_start_point_scale = 0.02;
+  double arrow_end_point_scale = 0.02;
   Color color;
 };
 
