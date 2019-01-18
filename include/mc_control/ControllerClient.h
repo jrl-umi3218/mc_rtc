@@ -238,6 +238,13 @@ protected:
     default_impl("Polygon", id);
   }
 
+  virtual void polygon(const ElementId & id,
+                       const std::vector<std::vector<Eigen::Vector3d>> & /* points */,
+                       const mc_rtc::gui::Color & /* color */)
+  {
+    default_impl("PolygonArray", id);
+  }
+
   /** Should display a force in 3D environment
    */
   virtual void force(const ElementId & id,

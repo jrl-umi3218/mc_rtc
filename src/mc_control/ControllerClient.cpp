@@ -335,9 +335,28 @@ void ControllerClient::handle_polygon(const ElementId & id,
                                       const mc_rtc::Configuration & gui,
                                       const mc_rtc::Configuration & data)
 {
-  const std::vector<Eigen::Vector3d> & points = data("data");
   const mc_rtc::gui::Color & color = gui("color");
-  polygon(id, points, color);
+  try
+  {
+    const std::vector<std::vector<Eigen::Vector3d>> & points = data("data");
+    polygon(id, points, color);
+  }
+  catch(mc_rtc::Configuration::Exception & exc)
+  {
+    exc.silence();
+    try
+    {
+      const std::vector<Eigen::Vector3d> & points = data("data");
+      polygon(id, points, color);
+    }
+    catch(mc_rtc::Configuration::Exception & exc)
+    {
+      exc.silence();
+      LOG_ERROR("Could not deserialize polygon, supported data is vector<vector<Eigen::Vector3d>> or "
+                "vector<Eigen::Vector3d>");
+      LOG_ERROR(exc.what());
+    }
+  }
 }
 
 void ControllerClient::handle_force(const ElementId & id,
