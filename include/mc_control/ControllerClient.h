@@ -178,19 +178,10 @@ protected:
   virtual void point3d(const ElementId & id,
                        const ElementId & /*requestId*/,
                        bool /*ro */,
-                       const Eigen::Vector3d & /*pos*/)
+                       const Eigen::Vector3d & /*pos*/,
+                       const mc_rtc::gui::PointConfig & /* config */)
   {
     default_impl("Point3D", id);
-  }
-
-  /** Should display a visualization point in 3D environment
-   */
-  virtual void point(const ElementId & id,
-                     const ElementId & /*requestId*/,
-                     const Eigen::Vector3d & /*pos*/,
-                     const mc_rtc::gui::PointConfig & /* config */)
-  {
-    default_impl("Point", id);
   }
 
   /** Should display a trajectory of 3d points in 3D environment
@@ -237,17 +228,10 @@ protected:
     default_impl("PoseRealTimeTrajectory", id);
   }
 
-  /** Should display a polygon of 3d points in 3D environment
+  /** Should display a list of polygons of 3d points in 3D environment
    *
    * \p Vector of 3D points
    */
-  virtual void polygon(const ElementId & id,
-                       const std::vector<Eigen::Vector3d> & /* points */,
-                       const mc_rtc::gui::Color & /* color */)
-  {
-    default_impl("Polygon", id);
-  }
-
   virtual void polygon(const ElementId & id,
                        const std::vector<std::vector<Eigen::Vector3d>> & /* points */,
                        const mc_rtc::gui::Color & /* color */)
@@ -420,9 +404,6 @@ private:
 
   /** Handle details of Point3D elements */
   void handle_point3d(const ElementId & id, const mc_rtc::Configuration & gui, const mc_rtc::Configuration & data);
-
-  /** Handle details of Point elements */
-  void handle_point(const ElementId & id, const mc_rtc::Configuration & gui, const mc_rtc::Configuration & data);
 
   /** Handle Trajectory and dispatch to 3D or Pose case */
   void handle_trajectory(const ElementId & id, const mc_rtc::Configuration & gui, const mc_rtc::Configuration & data);

@@ -119,33 +119,33 @@ struct MC_RTC_GUI_DLLAPI ArrowConfig
   void load(const mc_rtc::Configuration & config)
   {
     config("color", color);
-    config("arrow_shaft_diam", arrow_shaft_diam);
-    config("arrow_head_diam", arrow_head_diam);
-    config("arrow_head_len", arrow_head_len);
-    config("arrow_scale", arrow_scale);
-    config("arrow_start_point_scale", arrow_start_point_scale);
-    config("arrow_end_point_scale", arrow_end_point_scale);
+    config("shaft_diam", shaft_diam);
+    config("head_diam", head_diam);
+    config("head_len", head_len);
+    config("scale", scale);
+    config("start_point_scale", start_point_scale);
+    config("end_point_scale", end_point_scale);
   }
 
   operator mc_rtc::Configuration() const
   {
     mc_rtc::Configuration config;
     config.add("color", color);
-    config.add("arrow_shaft_diam", arrow_shaft_diam);
-    config.add("arrow_head_diam", arrow_head_diam);
-    config.add("arrow_head_len", arrow_head_len);
-    config.add("arrow_scale", arrow_scale);
-    config.add("arrow_start_point_scale", arrow_start_point_scale);
-    config.add("arrow_end_point_scale", arrow_end_point_scale);
+    config.add("shaft_diam", shaft_diam);
+    config.add("head_diam", head_diam);
+    config.add("head_len", head_len);
+    config.add("scale", scale);
+    config.add("start_point_scale", start_point_scale);
+    config.add("end_point_scale", end_point_scale);
     return config;
   }
 
-  double arrow_head_diam = 0.015;
-  double arrow_head_len = 0.05;
-  double arrow_shaft_diam = 0.015;
-  double arrow_scale = 0.0015;
-  double arrow_start_point_scale = 0.02;
-  double arrow_end_point_scale = 0.02;
+  double head_diam = 0.015;
+  double head_len = 0.05;
+  double shaft_diam = 0.015;
+  double scale = 0.0015;
+  double start_point_scale = 0.0;
+  double end_point_scale = 0.0;
   Color color;
 };
 

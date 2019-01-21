@@ -226,9 +226,6 @@ void ControllerClient::handle_widget(const ElementId & id, const mc_rtc::Configu
       case Elements::Point3D:
         handle_point3d(id, gui, data);
         break;
-      case Elements::Point:
-        handle_point(id, gui, data);
-        break;
       case Elements::Trajectory:
         handle_trajectory(id, gui, data);
         break;
@@ -278,6 +275,7 @@ void ControllerClient::handle_point3d(const ElementId & id,
 {
   bool ro = gui("ro", false);
   Eigen::Vector3d pos = data("data");
+  const mc_rtc::gui::PointConfig & config = gui("config");
   if(ro)
   {
     array_label(id, {"x", "y", "z"}, pos);
@@ -286,17 +284,7 @@ void ControllerClient::handle_point3d(const ElementId & id,
   {
     array_input(id, {"x", "y", "z"}, pos);
   }
-  point3d({id.category, id.name + "_point3d"}, id, ro, pos);
-}
-
-void ControllerClient::handle_point(const ElementId & id,
-                                    const mc_rtc::Configuration & gui,
-                                    const mc_rtc::Configuration & data)
-{
-  Eigen::Vector3d pos = data("data");
-  mc_rtc::gui::PointConfig config(gui("config"));
-  array_label(id, {"x", "y", "z"}, pos);
-  point({id.category, id.name + "_point"}, id, pos, config);
+  point3d({id.category, id.name + "_point3d"}, id, ro, pos, config);
 }
 
 void ControllerClient::handle_trajectory(const ElementId & id,
@@ -359,15 +347,15 @@ void ControllerClient::handle_polygon(const ElementId & id,
     exc.silence();
     try
     {
-      const std::vector<Eigen::Vector3d> & points = data("data");
-      polygon(id, points, color);
+      const std::vector<std::vector<Eigen::Vector3d>> p = {data("data")};
+      polygon(id, p, color);
     }
     catch(mc_rtc::Configuration::Exception & exc)
     {
-      exc.silence();
       LOG_ERROR("Could not deserialize polygon, supported data is vector<vector<Eigen::Vector3d>> or "
                 "vector<Eigen::Vector3d>");
       LOG_ERROR(exc.what());
+      exc.silence();
     }
   }
 }

@@ -54,8 +54,7 @@ enum class Elements
   Form,
   Polygon,
   Force,
-  Arrow,
-  Point
+  Arrow
 };
 
 template<typename GetT>
@@ -339,13 +338,16 @@ struct Point3DROImpl : public DataElement<GetT>
 {
   static constexpr auto type = Elements::Point3D;
 
-  Point3DROImpl(const std::string & name, GetT get_fn) : DataElement<GetT>(name, get_fn) {}
+  Point3DROImpl(const std::string & name, const PointConfig & config, GetT get_fn);
 
   /** Add distinguishing elements to GUI information */
   void addGUI(mc_rtc::Configuration & gui);
 
   /** Invalid element */
   Point3DROImpl() {}
+
+private:
+  PointConfig config_;
 };
 
 template<typename GetT, typename SetT>
@@ -353,22 +355,40 @@ struct Point3DImpl : public CommonInputImpl<GetT, SetT>
 {
   static constexpr auto type = Elements::Point3D;
 
-  Point3DImpl(const std::string & name, GetT get_fn, SetT set_fn) : CommonInputImpl<GetT, SetT>(name, get_fn, set_fn) {}
+  Point3DImpl(const std::string & name, const PointConfig & config, GetT get_fn, SetT set_fn);
 
   /** Invalid element */
   Point3DImpl() {}
+
+  /** Add distinguishing elements to GUI information */
+  void addGUI(mc_rtc::Configuration & gui);
+
+private:
+  PointConfig config_;
 };
 
 template<typename GetT>
 Point3DROImpl<GetT> Point3D(const std::string & name, GetT get_fn)
 {
-  return Point3DROImpl<GetT>(name, get_fn);
+  return Point3DROImpl<GetT>(name, PointConfig{}, get_fn);
 }
 
 template<typename GetT, typename SetT>
 Point3DImpl<GetT, SetT> Point3D(const std::string & name, GetT get_fn, SetT set_fn)
 {
-  return Point3DImpl<GetT, SetT>(name, get_fn, set_fn);
+  return Point3DImpl<GetT, SetT>(name, PointConfig{}, get_fn, set_fn);
+}
+
+template<typename GetT>
+Point3DROImpl<GetT> Point3D(const std::string & name, const PointConfig & config, GetT get_fn)
+{
+  return Point3DROImpl<GetT>(name, config, get_fn);
+}
+
+template<typename GetT, typename SetT>
+Point3DImpl<GetT, SetT> Point3D(const std::string & name, const PointConfig & config, GetT get_fn, SetT set_fn)
+{
+  return Point3DImpl<GetT, SetT>(name, config, get_fn, set_fn);
 }
 
 template<typename GetT>
@@ -502,38 +522,6 @@ ArrowImpl<GetStart, GetEnd> Arrow(const std::string & name,
                                   GetEnd get_end_fn)
 {
   return ArrowImpl<GetStart, GetEnd>(name, config, get_start_fn, get_end_fn);
-}
-
-template<typename Callback>
-struct PointImpl : public DataElement<Callback>
-{
-  static constexpr auto type = Elements::Point;
-
-  template<typename... Args>
-  PointImpl(const std::string & name, const PointConfig & config, Callback cb, Args &&... args)
-  : DataElement<Callback>(name, cb, std::forward<Args>(args)...), config_(config)
-  {
-  }
-
-  /** Invalid element */
-  PointImpl() {}
-
-  void addGUI(mc_rtc::Configuration & gui);
-
-private:
-  PointConfig config_;
-};
-
-template<typename Callback>
-PointImpl<Callback> Point(const std::string & name, Callback cb)
-{
-  return PointImpl<Callback>(name, PointConfig{}, cb);
-}
-
-template<typename Callback>
-PointImpl<Callback> Point(const std::string & name, const PointConfig & config, Callback cb)
-{
-  return PointImpl<Callback>(name, config, cb);
 }
 
 template<typename GetT>
