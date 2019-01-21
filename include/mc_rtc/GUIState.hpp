@@ -193,6 +193,12 @@ void ArrowImpl<GetStart, GetEnd>::addGUI(mc_rtc::Configuration & gui)
   gui.add("config", config_);
 }
 
+template<typename Callback>
+void PointImpl<Callback>::addGUI(mc_rtc::Configuration & gui)
+{
+  gui.add("config", config_);
+}
+
 template<typename GetT>
 void RotationROImpl<GetT>::addGUI(mc_rtc::Configuration & gui)
 {

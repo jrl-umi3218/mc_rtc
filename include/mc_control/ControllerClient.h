@@ -169,7 +169,7 @@ protected:
     default_impl("DataComboInput", id);
   }
 
-  /** Should display a point in 3D environment
+  /** Should display an interactive point in 3D environment
    *
    * \p requestId should be in requests instead of \p id
    *
@@ -181,6 +181,16 @@ protected:
                        const Eigen::Vector3d & /*pos*/)
   {
     default_impl("Point3D", id);
+  }
+
+  /** Should display a visualization point in 3D environment
+   */
+  virtual void point(const ElementId & id,
+                     const ElementId & /*requestId*/,
+                     const Eigen::Vector3d & /*pos*/,
+                     const mc_rtc::gui::PointConfig & /* config */)
+  {
+    default_impl("Point", id);
   }
 
   /** Should display a trajectory of 3d points in 3D environment
@@ -410,6 +420,9 @@ private:
 
   /** Handle details of Point3D elements */
   void handle_point3d(const ElementId & id, const mc_rtc::Configuration & gui, const mc_rtc::Configuration & data);
+
+  /** Handle details of Point elements */
+  void handle_point(const ElementId & id, const mc_rtc::Configuration & gui, const mc_rtc::Configuration & data);
 
   /** Handle Trajectory and dispatch to 3D or Pose case */
   void handle_trajectory(const ElementId & id, const mc_rtc::Configuration & gui, const mc_rtc::Configuration & data);

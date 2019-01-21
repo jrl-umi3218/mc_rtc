@@ -18,7 +18,7 @@ struct MC_RTC_GUI_DLLAPI Color
   {
     load(config);
   }
-  double r = 0.0;
+  double r = 1.0;
   double g = 0.0;
   double b = 0.0;
   double a = 1.0;
@@ -172,6 +172,33 @@ struct ForceConfig : public ArrowConfig
   }
 
   double force_scale = 0.0015;
+};
+
+struct PointConfig
+{
+  PointConfig() {}
+  PointConfig(const Color & color, double scale = 0.02) : color(color), scale(scale) {}
+  PointConfig(const mc_rtc::Configuration & config)
+  {
+    load(config);
+  }
+
+  void load(const mc_rtc::Configuration & config)
+  {
+    config("color", color);
+    config("scale", scale);
+  }
+
+  operator mc_rtc::Configuration() const
+  {
+    mc_rtc::Configuration config;
+    config.add("scale", scale);
+    config.add("color", color);
+    return config;
+  }
+
+  Color color;
+  double scale;
 };
 
 } // namespace gui

@@ -54,7 +54,8 @@ enum class Elements
   Form,
   Polygon,
   Force,
-  Arrow
+  Arrow,
+  Point
 };
 
 template<typename GetT>
@@ -501,6 +502,38 @@ ArrowImpl<GetStart, GetEnd> Arrow(const std::string & name,
                                   GetEnd get_end_fn)
 {
   return ArrowImpl<GetStart, GetEnd>(name, config, get_start_fn, get_end_fn);
+}
+
+template<typename Callback>
+struct PointImpl : public DataElement<Callback>
+{
+  static constexpr auto type = Elements::Point;
+
+  template<typename... Args>
+  PointImpl(const std::string & name, const PointConfig & config, Callback cb, Args &&... args)
+  : DataElement<Callback>(name, cb, std::forward<Args>(args)...), config_(config)
+  {
+  }
+
+  /** Invalid element */
+  PointImpl() {}
+
+  void addGUI(mc_rtc::Configuration & gui);
+
+private:
+  PointConfig config_;
+};
+
+template<typename Callback>
+PointImpl<Callback> Point(const std::string & name, Callback cb)
+{
+  return PointImpl<Callback>(name, PointConfig{}, cb);
+}
+
+template<typename Callback>
+PointImpl<Callback> Point(const std::string & name, const PointConfig & config, Callback cb)
+{
+  return PointImpl<Callback>(name, config, cb);
 }
 
 template<typename GetT>
