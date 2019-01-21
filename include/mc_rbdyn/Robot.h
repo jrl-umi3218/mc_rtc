@@ -9,8 +9,7 @@
 #include <RBDyn/MultiBodyGraph.h>
 
 #include <memory>
-#include <sch/STP-BV/STP_BV.h>
-#include <sch/S_Polyhedron/S_Polyhedron.h>
+#include <sch/S_Object/S_Object.h>
 
 namespace mc_rbdyn
 {
@@ -27,8 +26,8 @@ struct MC_RBDYN_DLLAPI Robot
   friend class std::allocator<Robot>;
 #endif
 public:
-  typedef std::pair<std::string, std::shared_ptr<sch::S_Polyhedron>> convex_pair_t;
-  typedef std::pair<std::string, std::shared_ptr<sch::STP_BV>> stpbv_pair_t;
+  using S_ObjectPtr = std::shared_ptr<sch::S_Object>;
+  using convex_pair_t = std::pair<std::string, S_ObjectPtr>;
 
 public:
   Robot(Robot &&) = default;
@@ -447,14 +446,50 @@ public:
   /** Returns a list of available surfaces */
   std::vector<std::string> availableSurfaces() const;
 
+  /** Check if a convex \p name exists
+   *
+   * \returns True if the convex exists, false otherwise
+   */
+  bool hasConvex(const std::string & name) const;
+
   /** Access a convex named \p cName
    *
-   * \returns a pair giving the convex's parent body and the sch::Polyhedron
+   * \returns a pair giving the convex's parent body and the sch::Object
    * object
    */
   convex_pair_t & convex(const std::string & cName);
   /** Access a convex named \p cName (const) */
   const convex_pair_t & convex(const std::string & cName) const;
+
+  /** Add a convex online
+   *
+   * This has no effect if \p name is already a convex of the robot
+   *
+   * \param name Name of the convex
+   *
+   * \param body Name of the convex's parent body
+   *
+   * \param convex sch::Object object representing the convex
+   *
+   * \param X_b_c Transformation fro the convex's parent body to the convex
+   *
+   */
+  void addConvex(const std::string & name,
+                 const std::string & body,
+                 S_ObjectPtr convex,
+                 const sva::PTransformd & X_b_c = sva::PTransformd::Identity());
+
+  /** Remove a given convex
+   *
+   * Using this function while the given convex is involved in a collision is
+   * *not* safe and will very likely result in a crash.
+   *
+   * This has no effect if \p name is not a convex of the robot.
+   *
+   * \param name Name of the convex
+   *
+   */
+  void removeConvex(const std::string & name);
 
   /** Access transformation from body \p bName to original base.
    *
@@ -535,7 +570,6 @@ private:
   std::vector<std::vector<double>> tl_;
   std::vector<std::vector<double>> tu_;
   std::map<std::string, convex_pair_t> convexes_;
-  std::map<std::string, stpbv_pair_t> stpbvs_;
   std::map<std::string, sva::PTransformd> collisionTransforms_;
   std::map<std::string, mc_rbdyn::SurfacePtr> surfaces_;
   std::vector<ForceSensor> forceSensors_;

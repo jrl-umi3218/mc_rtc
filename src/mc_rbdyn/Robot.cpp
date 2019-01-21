@@ -87,11 +87,19 @@ void loadSCH(const mc_rbdyn::Robot & robot,
 }
 
 template<typename mapT>
-void fixSCH(const mc_rbdyn::Robot & robot, mapT & data_)
+void fixSCH(const mc_rbdyn::Robot & robot, mapT & data_, const std::map<std::string, sva::PTransformd> & tfs)
 {
   for(const auto & d : data_)
   {
-    sch::mc_rbdyn::transform(*d.second.second, robot.bodyPosW()[robot.bodyIndexByName(d.second.first)]);
+    const auto & pos = robot.bodyPosW(d.second.first);
+    if(tfs.count(d.first))
+    {
+      sch::mc_rbdyn::transform(*d.second.second, tfs.at(d.first) * pos);
+    }
+    else
+    {
+      sch::mc_rbdyn::transform(*d.second.second, pos);
+    }
   }
 }
 
@@ -176,7 +184,6 @@ Robot::Robot(Robots & robots,
   if(loadFiles)
   {
     loadSCH(*this, module_.convexHull(), &sch::mc_rbdyn::Polyhedron, convexes_);
-    loadSCH(*this, module_.stpbvHull(), &sch::mc_rbdyn::STPBV, stpbvs_);
   }
 
   for(const auto & b : mb().bodies())
@@ -698,6 +705,11 @@ std::vector<std::string> Robot::availableSurfaces() const
   return ret;
 }
 
+bool Robot::hasConvex(const std::string & name) const
+{
+  return convexes_.count(name);
+}
+
 Robot::convex_pair_t & Robot::convex(const std::string & cName)
 {
   return const_cast<Robot::convex_pair_t &>(static_cast<const Robot *>(this)->convex(cName));
@@ -710,6 +722,30 @@ const Robot::convex_pair_t & Robot::convex(const std::string & cName) const
                         "No convex named " << cName << " found in this robot (" << this->name_ << ")")
   }
   return convexes_.at(cName);
+}
+
+void Robot::addConvex(const std::string & cName,
+                      const std::string & body,
+                      Robot::S_ObjectPtr convex,
+                      const sva::PTransformd & X_b_c)
+{
+  if(convexes_.count(cName))
+  {
+    LOG_ERROR("Attempted to add a convex named " << cName << " that already exists in " << name())
+    return;
+  }
+  convexes_[cName] = {body, convex};
+  collisionTransforms_[cName] = X_b_c;
+  sch::mc_rbdyn::transform(*convex, X_b_c * bodyPosW(body));
+}
+
+void Robot::removeConvex(const std::string & cName)
+{
+  if(convexes_.count(cName))
+  {
+    convexes_.erase(cName);
+    collisionTransforms_.erase(cName);
+  }
 }
 
 const sva::PTransformd & Robot::bodyTransform(const std::string & bName) const
@@ -844,8 +880,7 @@ void Robot::posW(const sva::PTransformd & pt)
   {
     mb().transform(0, pt);
     forwardKinematics();
-    fixSCH(*this, this->convexes_);
-    fixSCH(*this, this->stpbvs_);
+    fixSCH(*this, this->convexes_, this->collisionTransforms_);
   }
   else
   {
@@ -876,14 +911,19 @@ void Robot::copy(Robots & robots, unsigned int robots_idx, const Base & base) co
   robot.fixSurfaces();
   for(const auto & cH : convexes_)
   {
-    robot.convexes_[cH.first] = {cH.second.first, std::make_shared<sch::S_Polyhedron>(*cH.second.second)};
+    // FIXME Should implement sch::S_Object::clone in sch-core but this should be good enough for now
+    sch::S_Polyhedron * poly = dynamic_cast<sch::S_Polyhedron *>(cH.second.second.get());
+    if(poly)
+    {
+      robot.convexes_[cH.first] = {cH.second.first, std::make_shared<sch::S_Polyhedron>(*poly)};
+    }
+    else
+    {
+      LOG_WARNING("Could not copy the convex "
+                  << cH.first << " as it's not an sch::S_Polyhedron object, send complaint to mc_rtc maintainers...")
+    }
   }
-  fixSCH(robot, robot.convexes_);
-  for(const auto & stpbv : stpbvs_)
-  {
-    robot.stpbvs_[stpbv.first] = {stpbv.second.first, std::make_shared<sch::STP_BV>(*stpbv.second.second)};
-  }
-  fixSCH(robot, robot.stpbvs_);
+  fixSCH(robot, robot.convexes_, robot.collisionTransforms_);
 }
 
 void Robot::copy(Robots & robots, unsigned int robots_idx) const

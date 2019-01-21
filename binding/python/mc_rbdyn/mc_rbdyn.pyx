@@ -717,7 +717,7 @@ cdef class Robot(object):
 
   def convex(self, name):
     self.__is_valid()
-    return (self.impl.convex(name).first,sch.S_PolyhedronFromPtr(self.impl.convex(name).second))
+    return (self.impl.convex(name).first,sch.S_ObjectFromPtr(self.impl.convex(name).second.get()))
 
   def bodyTransform(self, bName):
     self.__is_valid()
