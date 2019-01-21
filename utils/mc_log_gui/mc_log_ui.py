@@ -611,6 +611,7 @@ class MCLogUI(QtGui.QMainWindow):
     self.addApplicationShortcut(QtCore.Qt.CTRL + QtCore.Qt.Key_PageUp, self.shortcutPreviousTab)
     self.addApplicationShortcut(QtCore.Qt.CTRL + QtCore.Qt.Key_T, self.shortcutNewTab)
     self.addApplicationShortcut(QtCore.Qt.CTRL + QtCore.Qt.Key_S, self.save_userplot)
+    self.addApplicationShortcut(QtCore.Qt.CTRL + QtCore.Qt.Key_A, self.shortcutAxesDialog)
 
   def saveUserPlots(self):
     confDir = os.path.dirname(self.userPlotFile)
@@ -780,6 +781,9 @@ class MCLogUI(QtGui.QMainWindow):
 
   def shortcutNewTab(self):
     self.ui.tabWidget.setCurrentIndex(self.ui.tabWidget.count() - 1)
+
+  def shortcutAxesDialog(self):
+    self.ui.tabWidget.currentWidget().ui.canvas.axesDialog()
 
   def load_csv(self, fpath):
     self.data = read_log(fpath)

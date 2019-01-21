@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mc_log_tab_ui.ui'
 #
-# Created: Tue Jun 19 15:19:19 2018
+# Created: Mon Jan 21 11:04:23 2019
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -31,9 +31,17 @@ class Ui_MCLogTab(object):
         self.canvas = PlotCanvasWithToolbar(MCLogTab)
         self.canvas.setObjectName("canvas")
         self.verticalLayout.addWidget(self.canvas)
+        self.selectorLayout = QtGui.QHBoxLayout()
+        self.selectorLayout.setObjectName("selectorLayout")
         self.xSelector = QtGui.QComboBox(MCLogTab)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.xSelector.sizePolicy().hasHeightForWidth())
+        self.xSelector.setSizePolicy(sizePolicy)
         self.xSelector.setObjectName("xSelector")
-        self.verticalLayout.addWidget(self.xSelector)
+        self.selectorLayout.addWidget(self.xSelector)
+        self.verticalLayout.addLayout(self.selectorLayout)
         self.horizontalLayout.addLayout(self.verticalLayout)
         self.y2SelectorLayout = QtGui.QVBoxLayout()
         self.y2SelectorLayout.setObjectName("y2SelectorLayout")
