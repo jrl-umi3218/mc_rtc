@@ -115,9 +115,28 @@ void ComboInputImpl<GetT, SetT>::addGUI(mc_rtc::Configuration & out)
 }
 
 template<typename GetT>
+Point3DROImpl<GetT>::Point3DROImpl(const std::string & name, const PointConfig & config, GetT get_fn)
+: DataElement<GetT>(name, get_fn), config_(config)
+{
+}
+
+template<typename GetT>
 void Point3DROImpl<GetT>::addGUI(mc_rtc::Configuration & gui)
 {
   gui.add("ro", true);
+  gui.add("config", config_);
+}
+
+template<typename GetT, typename SetT>
+Point3DImpl<GetT, SetT>::Point3DImpl(const std::string & name, const PointConfig & config, GetT get_fn, SetT set_fn)
+: CommonInputImpl<GetT, SetT>(name, get_fn, set_fn), config_(config)
+{
+}
+
+template<typename GetT, typename SetT>
+void Point3DImpl<GetT, SetT>::addGUI(mc_rtc::Configuration & gui)
+{
+  gui.add("config", config_);
 }
 
 template<typename GetT>

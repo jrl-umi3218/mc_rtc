@@ -169,7 +169,7 @@ protected:
     default_impl("DataComboInput", id);
   }
 
-  /** Should display a point in 3D environment
+  /** Should display an interactive point in 3D environment
    *
    * \p requestId should be in requests instead of \p id
    *
@@ -178,7 +178,8 @@ protected:
   virtual void point3d(const ElementId & id,
                        const ElementId & /*requestId*/,
                        bool /*ro */,
-                       const Eigen::Vector3d & /*pos*/)
+                       const Eigen::Vector3d & /*pos*/,
+                       const mc_rtc::gui::PointConfig & /* config */)
   {
     default_impl("Point3D", id);
   }
@@ -227,15 +228,15 @@ protected:
     default_impl("PoseRealTimeTrajectory", id);
   }
 
-  /** Should display a polygon of 3d points in 3D environment
+  /** Should display a list of polygons of 3d points in 3D environment
    *
    * \p Vector of 3D points
    */
   virtual void polygon(const ElementId & id,
-                       const std::vector<Eigen::Vector3d> & /* points */,
+                       const std::vector<std::vector<Eigen::Vector3d>> & /* points */,
                        const mc_rtc::gui::Color & /* color */)
   {
-    default_impl("Polygon", id);
+    default_impl("PolygonArray", id);
   }
 
   /** Should display a force in 3D environment
