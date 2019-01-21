@@ -1,4 +1,5 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 from PySide import QtCore, QtGui
 
@@ -78,7 +79,7 @@ class PlotFigure(object):
     if len(self.axes2_plots) > 0:
       draw(self.axes2, self.grid2)
 
-  def draw(self):
+  def draw(self, y1_limits = None, y2_limits = None):
     def fix_axes_limits(axes, axes2):
       point = (axes2.dataLim.get_points()[1] + axes2.dataLim.get_points()[0])/2
       plt, = axes.plot([point[0]], [point[1]], visible = False)
@@ -89,17 +90,20 @@ class PlotFigure(object):
       fix_axes_limits(self.axes, self.axes2)
     if len(self.axes2_plots) == 0 and len(self.axes_plots) != 0:
       fix_axes_limits(self.axes2, self.axes)
-    def set_axes_limits(axes, min_x = float("inf"), max_x = float("-inf")):
+    def set_axes_limits(axes, min_x = float("inf"), max_x = float("-inf"), ylim = None):
       dataLim = axes.dataLim.get_points()
       x_range = (dataLim[1][0] - dataLim[0][0])/2
       y_range = (dataLim[1][1] - dataLim[0][1])/2
       x_min = min(min_x, dataLim[0][0] - x_range*0.05)
       x_max = max(max_x, dataLim[1][0] + x_range*0.05)
       axes.set_xlim([x_min, x_max])
-      axes.set_ylim([dataLim[0][1] - y_range*0.05, dataLim[1][1] + y_range*0.05])
+      if ylim is None:
+        axes.set_ylim([dataLim[0][1] - y_range*0.05, dataLim[1][1] + y_range*0.05])
+      else:
+        axes.set_ylim(ylim)
       return x_min, x_max
-    min_x, max_x = set_axes_limits(self.axes)
-    set_axes_limits(self.axes2, min_x, max_x)
+    min_x, max_x = set_axes_limits(self.axes, ylim = y1_limits)
+    set_axes_limits(self.axes2, min_x, max_x, ylim = y2_limits)
     self._legend_left()
     self._legend_right()
     self._drawGrid()
@@ -381,12 +385,75 @@ class PlotFigure(object):
   def style_right(self, y, styleIn = None):
     return self._style(self.axes2_plots, y, styleIn)
 
+class SimpleAxesDialog(QtGui.QDialog):
+  def __init__(self, parent):
+    QtGui.QDialog.__init__(self, parent)
+    self.setWindowTitle('Edit axes limits')
+    self.setModal(True)
+    self.layout = QtGui.QGridLayout(self)
+    self.layout.addWidget(QtGui.QLabel("Min"), 0, 1)
+    self.layout.addWidget(QtGui.QLabel("Max"), 0, 2)
+    self.layout.addWidget(QtGui.QLabel("Y1"), 1, 0)
+    y1_limits = parent.y1_limits
+    if y1_limits is None:
+      y1_limits = parent.axes.get_ylim()
+    self.y1_min = QtGui.QLineEdit(str(y1_limits[0]))
+    self.y1_min.setValidator(QtGui.QDoubleValidator())
+    self.layout.addWidget(self.y1_min, 1, 1)
+    self.y1_max = QtGui.QLineEdit(str(y1_limits[1]))
+    self.y1_max.setValidator(QtGui.QDoubleValidator())
+    self.y1_init = [float(self.y1_min.text()), float(self.y1_max.text())]
+    self.layout.addWidget(self.y1_max, 1, 2)
+    self.layout.addWidget(QtGui.QLabel("Y2"), 2, 0)
+    y2_limits = parent.y2_limits
+    if y2_limits is None:
+      y2_limits = parent.axes2.get_ylim()
+    self.y2_min = QtGui.QLineEdit(str(y2_limits[0]))
+    self.y2_min.setValidator(QtGui.QDoubleValidator())
+    self.layout.addWidget(self.y2_min, 2, 1)
+    self.y2_max = QtGui.QLineEdit(str(y2_limits[1]))
+    self.y2_max.setValidator(QtGui.QDoubleValidator())
+    self.y2_init = [float(self.y2_min.text()), float(self.y2_max.text())]
+    self.layout.addWidget(self.y2_max, 2, 2)
+
+    confirmLayout = QtGui.QHBoxLayout()
+    okButton = QtGui.QPushButton("Ok", self)
+    confirmLayout.addWidget(okButton)
+    okButton.clicked.connect(self.accept)
+    applyButton = QtGui.QPushButton("Apply", self)
+    confirmLayout.addWidget(applyButton)
+    applyButton.clicked.connect(self.apply)
+    cancelButton = QtGui.QPushButton("Cancel", self)
+    confirmLayout.addWidget(cancelButton)
+    cancelButton.clicked.connect(self.reject)
+    self.layout.addLayout(confirmLayout, 3, 0, 1, 3)
+
+  def apply(self):
+    changed = False
+    y1_limits = [float(self.y1_min.text()), float(self.y1_max.text())]
+    if y1_limits != self.y1_init:
+      changed = True
+      self.parent().y1_locked.setChecked(True)
+      self.parent().y1_limits = y1_limits
+    y2_limits = [float(self.y2_min.text()), float(self.y2_max.text())]
+    if y2_limits != self.y2_init:
+      changed = True
+      self.parent().y2_locked.setChecked(True)
+      self.parent().y2_limits = y2_limits
+    if changed:
+      self.parent().draw()
+
+  def accept(self):
+    QtGui.QDialog.accept(self)
+    self.apply()
+
 class PlotCanvasWithToolbar(PlotFigure, QWidget):
   def __init__(self, parent = None):
     PlotFigure.__init__(self)
     QWidget.__init__(self, parent)
 
     self.canvas = FigureCanvas(self.fig)
+    self.canvas.mpl_connect('draw_event', self.on_draw)
     self.toolbar = NavigationToolbar(self.canvas, self)
 
     vbox = QVBoxLayout(self)
@@ -394,6 +461,46 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     vbox.addWidget(self.toolbar)
     self.setLayout(vbox)
 
+  def setupLockButtons(self, layout):
+    self.y1_locked = QtGui.QPushButton(u"🔒 Y1", self)
+    self.y1_locked.setCheckable(True)
+    layout.addWidget(self.y1_locked)
+    self.y1_locked.toggled.connect(self.y1_locked_changed)
+    self.y1_limits = None
+
+    self.y2_locked = QtGui.QPushButton(u"🔒 Y2", self)
+    self.y2_locked.setCheckable(True)
+    layout.addWidget(self.y2_locked)
+    self.y2_locked.toggled.connect(self.y2_locked_changed)
+    self.y2_limits = None
+
+  def axesDialog(self):
+    SimpleAxesDialog(self).exec_()
+
+  def on_draw(self, event):
+    if self.y1_limits is not None:
+      self.y1_limits = self.axes.get_ylim()
+    if self.y2_limits is not None:
+      self.y2_limits = self.axes2.get_ylim()
+
   def draw(self):
-    PlotFigure.draw(self)
+    PlotFigure.draw(self, self.y1_limits, self.y2_limits)
     self.canvas.draw()
+
+  def _y_lock_changed(self, name, cbox, axes):
+    if cbox.isChecked():
+      cbox.setText(u"🔓 {}".format(name))
+      return axes.get_ylim()
+    else:
+      cbox.setText(u"🔒{}".format(name))
+      return None
+
+  def y1_locked_changed(self, status):
+    self.y1_limits = self._y_lock_changed("Y1", self.y1_locked, self.axes)
+    if self.y1_limits is None:
+      self.draw()
+
+  def y2_locked_changed(self, status):
+    self.y2_limits = self._y_lock_changed("Y2", self.y2_locked, self.axes2)
+    if self.y2_limits is None:
+      self.draw()
