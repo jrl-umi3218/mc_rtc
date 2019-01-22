@@ -33,35 +33,50 @@ std::string cat2str(const std::vector<std::string> & cat)
 namespace mc_control
 {
 
+namespace
+{
+
+void init_socket(int & socket, unsigned int proto, const std::string & uri, const std::string & name)
+{
+  socket = nn_socket(AF_SP, proto);
+  if(socket < 0)
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "Failed to initialize " << name)
+  }
+  int ret = nn_connect(socket, uri.c_str());
+  if(ret < 0)
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "Failed to connect " << name << " to uri: " << uri)
+  }
+  else
+  {
+    LOG_INFO("Connected " << name << " to " << uri)
+  }
+  if(proto == NN_SUB)
+  {
+    int err = nn_setsockopt(socket, NN_SUB, NN_SUB_SUBSCRIBE, "", 0);
+    if(err < 0)
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, "Failed to set subscribe option on SUB socket")
+    }
+  }
+};
+
+} // namespace
+
 ControllerClient::ControllerClient(const std::string & sub_conn_uri, const std::string & push_conn_uri, double timeout)
 : timeout_(timeout)
 {
-  auto init_socket = [](int & socket, unsigned int proto, const std::string & uri, const std::string & name) {
-    socket = nn_socket(AF_SP, proto);
-    if(socket < 0)
-    {
-      LOG_ERROR_AND_THROW(std::runtime_error, "Failed to initialize " << name)
-    }
-    int ret = nn_connect(socket, uri.c_str());
-    if(ret < 0)
-    {
-      LOG_ERROR_AND_THROW(std::runtime_error, "Failed to connect " << name << " to uri: " << uri)
-    }
-    else
-    {
-      LOG_INFO("Connected " << name << " to " << uri)
-    }
-  };
   init_socket(sub_socket_, NN_SUB, sub_conn_uri, "SUB socket");
-  int err = nn_setsockopt(sub_socket_, NN_SUB, NN_SUB_SUBSCRIBE, "", 0);
-  if(err < 0)
-  {
-    LOG_ERROR_AND_THROW(std::runtime_error, "Failed to set subscribe option on SUB socket")
-  }
   init_socket(push_socket_, NN_PUSH, push_conn_uri, "PUSH socket");
 }
 
 ControllerClient::~ControllerClient()
+{
+  stop();
+}
+
+void ControllerClient::stop()
 {
   run_ = false;
   if(sub_th_.joinable())
@@ -72,8 +87,17 @@ ControllerClient::~ControllerClient()
   nn_shutdown(push_socket_, 0);
 }
 
+void ControllerClient::reconnect(const std::string & sub_conn_uri, const std::string & push_conn_uri)
+{
+  stop();
+  init_socket(sub_socket_, NN_SUB, sub_conn_uri, "SUB socket");
+  init_socket(push_socket_, NN_PUSH, push_conn_uri, "PUSH socket");
+  start();
+}
+
 void ControllerClient::start()
 {
+  run_ = true;
   sub_th_ = std::thread([this]() {
     std::vector<char> buff(65536);
     auto t_last_received = std::chrono::system_clock::now();

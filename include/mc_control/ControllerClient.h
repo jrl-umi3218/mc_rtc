@@ -74,6 +74,19 @@ protected:
   /** Should be called when the client is ready to receive data */
   void start();
 
+  /** Connect/Reconnect the client and start receiving data asap
+   *
+   * \param sub_conn_uri URI the SUB socket should connect to
+   *
+   * \param push_conn_uri URI the PUSH socket should connect to
+   *
+   * Check nanomsg documentation for supported protocols
+   */
+  void reconnect(const std::string & sub_conn_uri, const std::string & push_conn_uri);
+
+  /** Kill the connection and data flow */
+  void stop();
+
   void handle_gui_state(const char * data);
 
   void handle_category(const std::vector<std::string> & parent,
