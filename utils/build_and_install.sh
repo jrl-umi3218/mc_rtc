@@ -405,7 +405,7 @@ then
   cd $CATKIN_DIR/src
   if [ ! -d mc_rtc_ros/.git ]
   then
-    git_clone -b topic/SN git@gite.lirmm.fr:multi-contact/mc_rtc_ros
+    git_clone git@gite.lirmm.fr:multi-contact/mc_rtc_ros
   else
     cd mc_rtc_ros
     git_update
