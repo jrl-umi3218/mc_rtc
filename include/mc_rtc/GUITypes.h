@@ -198,7 +198,7 @@ struct PointConfig
   }
 
   Color color;
-  double scale;
+  double scale = 0.02;
 };
 
 } // namespace gui
