@@ -35,7 +35,7 @@ void AdmittanceTask::update()
   clampAndWarn(name_, angularVel, maxAngularVel_, "angular velocity", isClampingAngularVel_);
 
   // Filter
-  refVelB_ = 0.8 * refVelB_ + 0.2 * sva::MotionVecd(linearVel, angularVel);
+  refVelB_ = 0.8 * refVelB_ + 0.2 * sva::MotionVecd(angularVel, linearVel);
 
   // Compute position and rotation delta
   sva::PTransformd delta(mc_rbdyn::rpyToMat(timestep_ * refVelB_.angular()), timestep_ * refVelB_.linear());

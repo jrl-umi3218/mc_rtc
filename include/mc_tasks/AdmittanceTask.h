@@ -263,10 +263,6 @@ protected:
    */
   using SurfaceTransformTask::refVelB;
 
-  /** Surface transform's refAccel() becomes internal to the task.
-   */
-  using SurfaceTransformTask::refAccel;
-
   /** Surface transform's target becomes internal to the task. Its setter is
    * now targetPose().
    *

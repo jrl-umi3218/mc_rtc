@@ -1,6 +1,6 @@
 #pragma once
 
-#include <mc_tasks/AdmittanceTask.h>
+#include <mc_tasks/DampingTask.h>
 
 namespace mc_tasks
 {
@@ -21,7 +21,7 @@ namespace force
  * [1] https://scaron.info/teaching/zero-tilting-moment-point.html
  *
  */
-struct MC_TASKS_DLLAPI CoPTask : AdmittanceTask
+struct MC_TASKS_DLLAPI CoPTask : DampingTask 
 {
 public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
