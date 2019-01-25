@@ -60,7 +60,7 @@ void init_socket(int & socket, unsigned int proto, const std::string & uri, cons
       LOG_ERROR_AND_THROW(std::runtime_error, "Failed to set subscribe option on SUB socket")
     }
   }
-};
+}
 
 } // namespace
 
