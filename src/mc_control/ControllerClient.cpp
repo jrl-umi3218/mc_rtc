@@ -432,30 +432,38 @@ void ControllerClient::handle_transform(const ElementId & id,
 {
   bool ro = gui("ro", false);
 
-  auto publish_transform = [this, &id](const sva::PTransformd & pos, bool ro, unsigned index) {
+  auto publish_transform = [this](const sva::PTransformd & pos, const ElementId & id, bool ro) {
     Eigen::Quaterniond q{pos.rotation()};
     Eigen::Matrix<double, 7, 1> vec;
     vec << q.w(), q.x(), q.y(), q.z(), pos.translation();
-    ElementId idn;
-    idn.category = id.category;
-    idn.name = id.name + "_" + std::to_string(index);
     if(ro)
     {
-      array_label(idn, {"qw", "qx", "qy", "qz", "tx", "ty", "tz"}, vec);
+      array_label(id, {"qw", "qx", "qy", "qz", "tx", "ty", "tz"}, vec);
     }
     else
     {
-      array_input(idn, {"qw", "qx", "qy", "qz", "tx", "ty", "tz"}, vec);
+      array_input(id, {"qw", "qx", "qy", "qz", "tx", "ty", "tz"}, vec);
     }
-    transform({idn.category, idn.name + "_transform"}, idn, ro, pos);
+    transform({id.category, id.name + "_transform"}, id, ro, pos);
   };
 
   try
   {
-    const std::vector<sva::PTransformd> & transforms = data("data");
-    for(unsigned i = 0; i < transforms.size(); ++i)
+    if(ro)
     {
-      publish_transform(transforms[i], ro, i);
+      const std::vector<sva::PTransformd> & transforms = data("data");
+      for(unsigned i = 0; i < transforms.size(); ++i)
+      {
+        ElementId idn;
+        idn.category = id.category;
+        idn.name = id.name + "_" + std::to_string(i);
+        publish_transform(transforms[i], idn, ro);
+      }
+    }
+    else
+    {
+      LOG_ERROR("Error while handling Transform element " << id.name
+                                                          << " : transform arrays only supported in read-only");
     }
   }
   catch(mc_rtc::Configuration::Exception & exc)
@@ -464,7 +472,7 @@ void ControllerClient::handle_transform(const ElementId & id,
     try
     {
       const sva::PTransformd & transform = data("data");
-      publish_transform(transform, ro, 0);
+      publish_transform(transform, id, ro);
     }
     catch(mc_rtc::Configuration::Exception & exc)
     {
