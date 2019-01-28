@@ -34,6 +34,9 @@ struct TestServer
   sva::PTransformd static_{sva::RotZ(-M_PI), Eigen::Vector3d(1., 0., 0.)};
   sva::PTransformd interactive_{Eigen::Vector3d{0., 1., 0.}};
   Eigen::Vector3d xytheta_{0., 2., M_PI / 3};
+  std::vector<sva::PTransformd> transforms_ = {sva::PTransformd(Eigen::Vector3d{0.5, 0.5, 0.5}),
+                                               sva::PTransformd(Eigen::Vector3d{1, 1, 1}),
+                                               sva::PTransformd(Eigen::Vector3d{1.5, 1.5, 1.5})};
 };
 
 TestServer::TestServer()
@@ -116,6 +119,7 @@ TestServer::TestServer()
   builder.addElement({"Transform"}, mc_rtc::gui::Transform("ReadOnly", [this]() { return static_; }));
   builder.addElement({"Transform"}, mc_rtc::gui::Transform("Interactive", [this]() { return interactive_; },
                                                            [this](const sva::PTransformd & p) { interactive_ = p; }));
+  builder.addElement({"Transform"}, mc_rtc::gui::Transform("ReadOnlyArray", [this]() { return transforms_; }));
   builder.addElement({"Schema"}, mc_rtc::gui::Schema("Add metatask", "metatask", [](const mc_rtc::Configuration & c) {
                        std::cout << "Got schema request:\n" << c.dump(true) << std::endl;
                      }));

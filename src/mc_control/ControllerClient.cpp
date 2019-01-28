@@ -431,19 +431,48 @@ void ControllerClient::handle_transform(const ElementId & id,
                                         const mc_rtc::Configuration & data)
 {
   bool ro = gui("ro", false);
-  sva::PTransformd pos = data("data");
-  Eigen::Quaterniond q{pos.rotation()};
-  Eigen::Matrix<double, 7, 1> vec;
-  vec << q.w(), q.x(), q.y(), q.z(), pos.translation();
-  if(ro)
+
+  auto publish_transform = [this, &id](const sva::PTransformd & pos, bool ro, unsigned index) {
+    Eigen::Quaterniond q{pos.rotation()};
+    Eigen::Matrix<double, 7, 1> vec;
+    vec << q.w(), q.x(), q.y(), q.z(), pos.translation();
+    ElementId idn;
+    idn.category = id.category;
+    idn.name = id.name + "_" + std::to_string(index);
+    if(ro)
+    {
+      array_label(idn, {"qw", "qx", "qy", "qz", "tx", "ty", "tz"}, vec);
+    }
+    else
+    {
+      array_input(idn, {"qw", "qx", "qy", "qz", "tx", "ty", "tz"}, vec);
+    }
+    transform({idn.category, idn.name + "_transform"}, idn, ro, pos);
+  };
+
+  try
   {
-    array_label(id, {"qw", "qx", "qy", "qz", "tx", "ty", "tz"}, vec);
+    const std::vector<sva::PTransformd> & transforms = data("data");
+    for(unsigned i = 0; i < transforms.size(); ++i)
+    {
+      publish_transform(transforms[i], ro, i);
+    }
   }
-  else
+  catch(mc_rtc::Configuration::Exception & exc)
   {
-    array_input(id, {"qw", "qx", "qy", "qz", "tx", "ty", "tz"}, vec);
+    exc.silence();
+    try
+    {
+      const sva::PTransformd & transform = data("data");
+      publish_transform(transform, ro, 0);
+    }
+    catch(mc_rtc::Configuration::Exception & exc)
+    {
+      exc.silence();
+      LOG_ERROR("Could not deserialize transform "
+                << id.name << ", value is neither an sva::PTransform nor an std::vector<sva::PTransformd>");
+    }
   }
-  transform({id.category, id.name + "_transform"}, id, ro, pos);
 }
 
 void ControllerClient::handle_xytheta(const ElementId & id,
