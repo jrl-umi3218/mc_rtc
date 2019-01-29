@@ -78,7 +78,7 @@ def read_csv(fpath, tmp = False):
     for row in reader:
       for k in reader.fieldnames:
         data[k].append(safe_float(row[k]))
-  for k in self.data:
+  for k in data:
     data[k] = np.array(data[k])
   if tmp:
     os.unlink(fpath)
@@ -367,7 +367,7 @@ class AllLineStyleDialog(QtGui.QDialog):
 class DumpSeqPlayDialog(QtGui.QDialog):
   def __init__(self, parent):
     super(DumpSeqPlayDialog, self).__init__(parent)
-    self.setWindowTitle("Dump qIn to seqplay")
+    self.setWindowTitle("Dump qOut to seqplay")
     self.setModal(True)
 
     layout = QtGui.QGridLayout(self)
@@ -418,11 +418,11 @@ class DumpSeqPlayDialog(QtGui.QDialog):
       i_range = range(len(data['t']))
       t = 0
       for i in i_range:
-        q = np.array([data['qIn_{}'.format(jIdx)][i] for jIdx in rjo_range])
+        q = np.array([data['qOut_{}'.format(jIdx)][i] for jIdx in rjo_range])
         if i == i_range[-1]:
           next_q = q
         else:
-          next_q = np.array([data['qIn_{}'.format(jIdx)][i+1] for jIdx in rjo_range])
+          next_q = np.array([data['qOut_{}'.format(jIdx)][i+1] for jIdx in rjo_range])
         for j in range(tScale):
           qOut = map(str, q + j/float(tScale) * (next_q - q))
           fd.write("{} {}\n".format(t, " ".join(qOut)))
@@ -600,7 +600,7 @@ class MCLogUI(QtGui.QMainWindow):
     self.ui.menubar.addMenu(self.styleMenu)
 
     self.toolsMenu = QtGui.QMenu("Tools", self.ui.menubar)
-    act = QtGui.QAction("Dump qIn to seqplay", self.toolsMenu)
+    act = QtGui.QAction("Dump qOut to seqplay", self.toolsMenu)
     act.triggered.connect(DumpSeqPlayDialog(self).exec_)
     self.toolsMenu.addAction(act)
     self.ui.menubar.addMenu(self.toolsMenu)
