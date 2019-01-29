@@ -529,6 +529,7 @@ class MCLogUI(QtGui.QMainWindow):
             self.gridStyles[k] = LineStyle(**data[k])
     UserPlot.__new__.__defaults__ = (self.gridStyles['left'], self.gridStyles['right'], {}, {}, GraphLabels())
 
+    self.robotFile = os.path.expanduser("~") + "/.config/mc_log_ui/robot"
     self.userPlotFile = os.path.expanduser("~") + "/.config/mc_log_ui/custom_plot.json"
     self.userPlotList = load_UserPlots(self.userPlotFile)
     self.update_userplot_menu()
@@ -543,9 +544,15 @@ class MCLogUI(QtGui.QMainWindow):
         rAct.setCheckable(True)
         rGroup.addAction(rAct)
       rMenu.addActions(rGroup.actions())
-      rGroup.actions()[0].setChecked(True)
-      self.activeRobotAction = rGroup.actions()[0]
-      self.setRobot(rGroup.actions()[0])
+      defaultBot = self.getDefaultRobot()
+      if defaultBot in mc_rbdyn.RobotLoader.available_robots():
+        actionIndex = mc_rbdyn.RobotLoader.available_robots().index(defaultBot)
+        defaultBot = rGroup.actions()[actionIndex]
+      else:
+        defaultBot = rGroup.actions()[0]
+      self.activeRobotAction = defaultBot
+      self.activeRobotAction.setChecked(True)
+      self.setRobot(self.activeRobotAction)
       self.connect(rGroup, QtCore.SIGNAL("triggered(QAction *)"), self.setRobot)
       self.ui.menubar.addMenu(rMenu)
 
@@ -620,6 +627,19 @@ class MCLogUI(QtGui.QMainWindow):
     with open(self.userPlotFile, 'w') as f:
         json.dump(self.userPlotList, f, default = lambda o: o.__dict__, indent = 2, separators = (',', ': '))
     self.update_userplot_menu()
+
+  def saveDefaultRobot(self, name):
+    confDir = os.path.dirname(self.robotFile)
+    if not os.path.exists(confDir):
+      os.makedirs(confDir)
+    with open(self.robotFile, 'w') as f:
+      f.write("{}".format(name))
+
+  def getDefaultRobot(self):
+    if os.path.exists(self.robotFile):
+      return open(self.robotFile).read().strip()
+    else:
+      return ""
 
   def addApplicationShortcut(self, key, callback):
     shortcut = QtGui.QShortcut(self)
@@ -712,6 +732,7 @@ class MCLogUI(QtGui.QMainWindow):
         tab = self.ui.tabWidget.widget(i)
         assert(isinstance(tab, MCLogTab))
         tab.setRobotModule(self.rm)
+      self.saveDefaultRobot(action.text())
     except RuntimeError:
       #QtGui.QMessageBox.warning(self, "Failed to get RobotModule", "Could not retrieve Robot Module: {}{}Check your console for more details".format(action.text(), os.linesep))
       action.setChecked(False)
