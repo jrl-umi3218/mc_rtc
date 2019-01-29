@@ -449,9 +449,9 @@ void ControllerClient::handle_transform(const ElementId & id,
 
   try
   {
+    const std::vector<sva::PTransformd> & transforms = data("data");
     if(ro)
     {
-      const std::vector<sva::PTransformd> & transforms = data("data");
       for(unsigned i = 0; i < transforms.size(); ++i)
       {
         ElementId idn;
