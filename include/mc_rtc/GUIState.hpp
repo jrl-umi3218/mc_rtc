@@ -224,6 +224,18 @@ void TransformROImpl<GetT>::addGUI(mc_rtc::Configuration & gui)
   gui.add("ro", true);
 }
 
+template<typename GetT>
+void XYThetaROImpl<GetT>::addGUI(mc_rtc::Configuration & gui)
+{
+  gui.add("ro", true);
+}
+
+template<typename GetT, typename SetT>
+void XYThetaImpl<GetT, SetT>::addGUI(mc_rtc::Configuration & gui)
+{
+  gui.add("ro", false);
+}
+
 template<typename GetT, typename SetT>
 DataComboInputImpl<GetT, SetT>::DataComboInputImpl(const std::string & name,
                                                    const std::vector<std::string> & values,

@@ -54,7 +54,8 @@ enum class Elements
   Form,
   Polygon,
   Force,
-  Arrow
+  Arrow,
+  XYTheta
 };
 
 template<typename GetT>
@@ -600,6 +601,46 @@ template<typename GetT, typename SetT>
 TransformImpl<GetT, SetT> Transform(const std::string & name, GetT get_fn, SetT set_fn)
 {
   return TransformImpl<GetT, SetT>(name, get_fn, set_fn);
+}
+
+template<typename GetT>
+struct XYThetaROImpl : public DataElement<GetT>
+{
+  static constexpr auto type = Elements::XYTheta;
+
+  XYThetaROImpl(const std::string & name, GetT get_fn) : DataElement<GetT>(name, get_fn) {}
+
+  /** Add distinguishing elements to GUI information */
+  void addGUI(mc_rtc::Configuration & gui);
+
+  /** Invalid element */
+  XYThetaROImpl() {}
+};
+
+template<typename GetT, typename SetT>
+struct XYThetaImpl : public CommonInputImpl<GetT, SetT>
+{
+  static constexpr auto type = Elements::XYTheta;
+
+  XYThetaImpl(const std::string & name, GetT get_fn, SetT set_fn) : CommonInputImpl<GetT, SetT>(name, get_fn, set_fn) {}
+
+  /** Invalid element */
+  XYThetaImpl() {}
+
+  /** Add distinguishing elements to GUI information */
+  void addGUI(mc_rtc::Configuration & gui);
+};
+
+template<typename GetT>
+XYThetaROImpl<GetT> XYTheta(const std::string & name, GetT get_fn)
+{
+  return XYThetaROImpl<GetT>(name, get_fn);
+}
+
+template<typename GetT, typename SetT>
+XYThetaImpl<GetT, SetT> XYTheta(const std::string & name, GetT get_fn, SetT set_fn)
+{
+  return XYThetaImpl<GetT, SetT>(name, get_fn, set_fn);
 }
 
 template<typename Callback>

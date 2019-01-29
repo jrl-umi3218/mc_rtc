@@ -60,7 +60,7 @@ void init_socket(int & socket, unsigned int proto, const std::string & uri, cons
       LOG_ERROR_AND_THROW(std::runtime_error, "Failed to set subscribe option on SUB socket")
     }
   }
-};
+}
 
 } // namespace
 
@@ -274,6 +274,9 @@ void ControllerClient::handle_widget(const ElementId & id, const mc_rtc::Configu
       case Elements::Form:
         handle_form(id, gui("form"));
         break;
+      case Elements::XYTheta:
+        handle_xytheta(id, gui, data);
+        break;
       default:
         LOG_ERROR("Type " << static_cast<int>(type) << " is not handlded by this ControllerClient")
         break;
@@ -428,19 +431,75 @@ void ControllerClient::handle_transform(const ElementId & id,
                                         const mc_rtc::Configuration & data)
 {
   bool ro = gui("ro", false);
-  sva::PTransformd pos = data("data");
-  Eigen::Quaterniond q{pos.rotation()};
-  Eigen::Matrix<double, 7, 1> vec;
-  vec << q.w(), q.x(), q.y(), q.z(), pos.translation();
+
+  auto publish_transform = [this](const sva::PTransformd & pos, const ElementId & id, bool ro) {
+    Eigen::Quaterniond q{pos.rotation()};
+    Eigen::Matrix<double, 7, 1> vec;
+    vec << q.w(), q.x(), q.y(), q.z(), pos.translation();
+    if(ro)
+    {
+      array_label(id, {"qw", "qx", "qy", "qz", "tx", "ty", "tz"}, vec);
+    }
+    else
+    {
+      array_input(id, {"qw", "qx", "qy", "qz", "tx", "ty", "tz"}, vec);
+    }
+    transform({id.category, id.name + "_transform"}, id, ro, pos);
+  };
+
+  try
+  {
+    if(ro)
+    {
+      const std::vector<sva::PTransformd> & transforms = data("data");
+      for(unsigned i = 0; i < transforms.size(); ++i)
+      {
+        ElementId idn;
+        idn.category = id.category;
+        idn.name = id.name + "_" + std::to_string(i);
+        publish_transform(transforms[i], idn, ro);
+      }
+    }
+    else
+    {
+      LOG_ERROR("Error while handling Transform element " << id.name
+                                                          << " : transform arrays only supported in read-only");
+    }
+  }
+  catch(mc_rtc::Configuration::Exception & exc)
+  {
+    exc.silence();
+    try
+    {
+      const sva::PTransformd & transform = data("data");
+      publish_transform(transform, id, ro);
+    }
+    catch(mc_rtc::Configuration::Exception & exc)
+    {
+      exc.silence();
+      LOG_ERROR("Could not deserialize transform "
+                << id.name << ", value is neither an sva::PTransform nor an std::vector<sva::PTransformd>");
+    }
+  }
+}
+
+void ControllerClient::handle_xytheta(const ElementId & id,
+                                      const mc_rtc::Configuration & gui,
+                                      const mc_rtc::Configuration & data)
+{
+  bool ro = gui("ro", false);
+  Eigen::Vector3d vec = data("data");
+  const std::vector<std::string> & label = {"X", "Y", "Theta"};
+
   if(ro)
   {
-    array_label(id, {"qw", "qx", "qy", "qz", "tx", "ty", "tz"}, vec);
+    array_label(id, label, vec);
   }
   else
   {
-    array_input(id, {"qw", "qx", "qy", "qz", "tx", "ty", "tz"}, vec);
+    array_input(id, label, vec);
   }
-  transform({id.category, id.name + "_transform"}, id, ro, pos);
+  xytheta({id.category, id.name + "_xytheta"}, id, ro, vec);
 }
 
 void ControllerClient::handle_form(const ElementId & id, const mc_rtc::Configuration & gui)
