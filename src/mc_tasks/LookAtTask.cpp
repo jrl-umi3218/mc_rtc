@@ -56,8 +56,14 @@ void LookAtTask::removeFromLogger(mc_rtc::Logger & logger)
 void LookAtTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   VectorOrientationTask::addToGUI(gui);
-  gui.addElement({"Tasks", name_}, mc_rtc::gui::Point3D("target_point", [this]() { return this->target(); },
-                                                        [this](const Eigen::Vector3d & pos) { this->target(pos); }));
+
+  gui.addElement({"Tasks", name_},
+                 mc_rtc::gui::Point3D("Target Point", [this]() { return this->target(); },
+                                      [this](const Eigen::Vector3d & pos) { this->target(pos); }),
+                 mc_rtc::gui::Arrow(
+                     "Target", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(1., 0., 0.)),
+                     [this]() -> Eigen::Vector3d { return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation(); },
+                     [this]() -> Eigen::Vector3d { return this->target(); }));
 }
 
 } // namespace mc_tasks
