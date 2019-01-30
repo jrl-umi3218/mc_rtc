@@ -11,7 +11,7 @@ LookAtTFTask::LookAtTFTask(const std::string & bodyName,
                            unsigned int robotIndex,
                            double stiffness,
                            double weight)
-: LookAtTask(bodyName, bodyVector, bodyVector, robots, robotIndex, stiffness, weight), tfListener(tfBuffer),
+: LookAtTask(bodyName, bodyVector, robots, robotIndex, stiffness, weight), tfListener(tfBuffer),
   sourceFrame(sourceFrame), targetFrame(targetFrame)
 {
   const mc_rbdyn::Robot & robot = robots.robot(rIndex);

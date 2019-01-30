@@ -12,7 +12,7 @@ namespace mc_tasks
  */
 struct MC_TASKS_DLLAPI VectorOrientationTask : public TrajectoryTaskGeneric<tasks::qp::VectorOrientationTask>
 {
-  /*! \brief Constructor
+  /*! \brief Constructor with user-specified target
    *
    * \param bodyName Name of the body to control
    *
@@ -33,6 +33,14 @@ struct MC_TASKS_DLLAPI VectorOrientationTask : public TrajectoryTaskGeneric<task
   VectorOrientationTask(const std::string & bodyName,
                         const Eigen::Vector3d & bodyVector,
                         const Eigen::Vector3d & targetVector,
+                        const mc_rbdyn::Robots & robots,
+                        unsigned int robotIndex,
+                        double stiffness = 2.0,
+                        double weight = 500);
+
+  /*! \brief Constructor with default target */
+  VectorOrientationTask(const std::string & bodyName,
+                        const Eigen::Vector3d & bodyVector,
                         const mc_rbdyn::Robots & robots,
                         unsigned int robotIndex,
                         double stiffness = 2.0,
@@ -85,6 +93,12 @@ struct MC_TASKS_DLLAPI VectorOrientationTask : public TrajectoryTaskGeneric<task
   {
     return bodyName;
   }
+
+protected:
+  void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
+
+private:
+  void init();
 
 protected:
   std::string bodyName;

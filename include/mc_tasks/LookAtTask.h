@@ -14,7 +14,6 @@ struct MC_TASKS_DLLAPI LookAtTask : public VectorOrientationTask
    * \param bodyVector Gaze vector for the body.
         For instance [1., 0, 0] will try to align the x axis of the body with
    the target direction.
-   * \param targetPos Position of target frame to look towards in world frame
    * \param robots Robots controlled by this task
    * \param robotIndex Index of the robot controlled by this task
    * \param stiffness Task stiffness
@@ -23,7 +22,6 @@ struct MC_TASKS_DLLAPI LookAtTask : public VectorOrientationTask
    */
   LookAtTask(const std::string & bodyName,
              const Eigen::Vector3d & bodyVector,
-             const Eigen::Vector3d & targetPos,
              const mc_rbdyn::Robots & robots,
              unsigned int robotIndex,
              double stiffness = 2.0,

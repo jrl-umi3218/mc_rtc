@@ -14,10 +14,32 @@ VectorOrientationTask::VectorOrientationTask(const std::string & bodyName,
 : TrajectoryTaskGeneric<tasks::qp::VectorOrientationTask>(robots, robotIndex, stiffness, weight), bodyName(bodyName),
   bIndex(0)
 {
+  init();
+  finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, bodyVector, targetVector);
+}
+
+VectorOrientationTask::VectorOrientationTask(const std::string & bodyName,
+                                             const Eigen::Vector3d & bodyVector,
+                                             const mc_rbdyn::Robots & robots,
+                                             unsigned int robotIndex,
+                                             double stiffness,
+                                             double weight)
+: TrajectoryTaskGeneric<tasks::qp::VectorOrientationTask>(robots, robotIndex, stiffness, weight), bodyName(bodyName),
+  bIndex(0)
+{
+  init();
+
+  const auto & robot = robots.robot();
+  Eigen::Matrix3d E_0_b = robot.mbc().bodyPosW[bIndex].rotation().transpose();
+  Eigen::Vector3d actualVector = E_0_b * bodyVector;
+
+  finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, bodyVector, actualVector);
+}
+
+void VectorOrientationTask::init()
+{
   const mc_rbdyn::Robot & robot = robots.robot(rIndex);
   bIndex = robot.bodyIndexByName(bodyName);
-
-  finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, bodyVector, targetVector);
   type_ = "vectorOrientation";
   name_ = "vector_orientation_" + robot.name() + "_" + bodyName;
 }
@@ -52,6 +74,23 @@ Eigen::Vector3d VectorOrientationTask::actual() const
 {
   return errorT->actual();
 }
+
+void VectorOrientationTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
+{
+  gui.addElement({"Tasks", name_},
+                 mc_rtc::gui::Arrow(
+                     "robot_vector", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 0., 1.)),
+                     [this]() -> Eigen::Vector3d { return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation(); },
+                     [this]() -> Eigen::Vector3d {
+                       return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation() + .25 * actual();
+                     }),
+                 mc_rtc::gui::Arrow(
+                     "target_vector", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(1., 0., 0.)),
+                     [this]() -> Eigen::Vector3d { return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation(); },
+                     [this]() -> Eigen::Vector3d {
+                       return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation() + .25 * targetVector();
+                     }));
+}
 } // namespace mc_tasks
 
 namespace
@@ -60,9 +99,13 @@ namespace
 static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
     "vectorOrientation",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      auto t = std::make_shared<mc_tasks::VectorOrientationTask>(
-          config("body"), config("bodyVector"), config("targetVector"), solver.robots(), config("robotIndex"));
+      auto t = std::make_shared<mc_tasks::VectorOrientationTask>(config("body"), config("bodyVector"), solver.robots(),
+                                                                 config("robotIndex"));
       t->load(solver, config);
+      if(config.has("targetVector"))
+      {
+        t->targetVector(config("targetVector"));
+      }
       return t;
     });
 }
