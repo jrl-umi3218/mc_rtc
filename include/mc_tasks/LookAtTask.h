@@ -9,17 +9,27 @@ namespace mc_tasks
  */
 struct MC_TASKS_DLLAPI LookAtTask : public VectorOrientationTask
 {
-  /*! \brief Constructor
+  /*! \brief Constructor with user-specified target initialization
    * \param bodyName Name of the body to control
    * \param bodyVector Gaze vector for the body.
         For instance [1., 0, 0] will try to align the x axis of the body with
    the target direction.
+   * \param targetPos Position of target frome to look towards in world frame
    * \param robots Robots controlled by this task
    * \param robotIndex Index of the robot controlled by this task
    * \param stiffness Task stiffness
    * \param weight Task weight
    *
    */
+  LookAtTask(const std::string & bodyName,
+             const Eigen::Vector3d & bodyVector,
+             const Eigen::Vector3d & targetPos,
+             const mc_rbdyn::Robots & robots,
+             unsigned int robotIndex,
+             double stiffness = 2.0,
+             double weight = 500);
+
+  /*! \brief Constructor with default target initialization */
   LookAtTask(const std::string & bodyName,
              const Eigen::Vector3d & bodyVector,
              const mc_rbdyn::Robots & robots,
@@ -45,6 +55,7 @@ struct MC_TASKS_DLLAPI LookAtTask : public VectorOrientationTask
   Eigen::Vector3d target() const;
 
 private:
+  void init();
   void addToLogger(mc_rtc::Logger & logger) override;
   void removeFromLogger(mc_rtc::Logger & logger) override;
   void addToGUI(mc_rtc::gui::StateBuilder & gui) override;

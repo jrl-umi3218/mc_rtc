@@ -11,6 +11,24 @@ LookAtTask::LookAtTask(const std::string & bodyName,
                        double weight)
 : VectorOrientationTask(bodyName, bodyVector, robots, robotIndex, stiffness, weight)
 {
+  init();
+}
+
+LookAtTask::LookAtTask(const std::string & bodyName,
+                       const Eigen::Vector3d & bodyVector,
+                       const Eigen::Vector3d & bodyPos,
+                       const mc_rbdyn::Robots & robots,
+                       unsigned int robotIndex,
+                       double stiffness,
+                       double weight)
+: VectorOrientationTask(bodyName, bodyVector, robots, robotIndex, stiffness, weight)
+{
+  init();
+  target(bodyPos);
+}
+
+void LookAtTask::init()
+{
   const mc_rbdyn::Robot & robot = robots.robot(rIndex);
   bIndex = robot.bodyIndexByName(bodyName);
   type_ = "lookAt";
