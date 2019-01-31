@@ -9,7 +9,7 @@ namespace mc_tasks
  */
 struct MC_TASKS_DLLAPI LookAtTask : public VectorOrientationTask
 {
-  /*! \brief Constructor
+  /*! \brief Constructor with user-specified target initialization
    * \param bodyName Name of the body to control
    * \param bodyVector Gaze vector for the body.
         For instance [1., 0, 0] will try to align the x axis of the body with
@@ -24,6 +24,14 @@ struct MC_TASKS_DLLAPI LookAtTask : public VectorOrientationTask
   LookAtTask(const std::string & bodyName,
              const Eigen::Vector3d & bodyVector,
              const Eigen::Vector3d & targetPos,
+             const mc_rbdyn::Robots & robots,
+             unsigned int robotIndex,
+             double stiffness = 2.0,
+             double weight = 500);
+
+  /*! \brief Constructor with default target initialization */
+  LookAtTask(const std::string & bodyName,
+             const Eigen::Vector3d & bodyVector,
              const mc_rbdyn::Robots & robots,
              unsigned int robotIndex,
              double stiffness = 2.0,
@@ -49,6 +57,7 @@ struct MC_TASKS_DLLAPI LookAtTask : public VectorOrientationTask
 private:
   void addToLogger(mc_rtc::Logger & logger) override;
   void removeFromLogger(mc_rtc::Logger & logger) override;
+  void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
 
 private:
   /*! Target position in world frame */

@@ -12,7 +12,7 @@ LookAtSurfaceTask::LookAtSurfaceTask(const mc_rbdyn::Robots & robots,
                                      const std::string & surfaceName,
                                      double stiffness,
                                      double weight)
-: LookAtTask(bodyName, bodyVector, bodyVector, robots, robotIndex, stiffness, weight), sRobotIndex(surfaceRobotIndex),
+: LookAtTask(bodyName, bodyVector, robots, robotIndex, stiffness, weight), sRobotIndex(surfaceRobotIndex),
   sName(surfaceName)
 {
   const mc_rbdyn::Robot & robot = robots.robot(rIndex);

@@ -5,25 +5,36 @@ namespace mc_tasks
 {
 LookAtTask::LookAtTask(const std::string & bodyName,
                        const Eigen::Vector3d & bodyVector,
+                       const mc_rbdyn::Robots & robots,
+                       unsigned int robotIndex,
+                       double stiffness,
+                       double weight)
+: LookAtTask(bodyName, bodyVector, bodyVector, robots, robotIndex, stiffness, weight)
+{
+  reset();
+}
+
+LookAtTask::LookAtTask(const std::string & bodyName,
+                       const Eigen::Vector3d & bodyVector,
                        const Eigen::Vector3d & targetPos,
                        const mc_rbdyn::Robots & robots,
                        unsigned int robotIndex,
                        double stiffness,
                        double weight)
-: VectorOrientationTask(bodyName, bodyVector, bodyVector, robots, robotIndex, stiffness, weight)
+: VectorOrientationTask(bodyName, bodyVector, robots, robotIndex, stiffness, weight)
 {
   const mc_rbdyn::Robot & robot = robots.robot(rIndex);
   bIndex = robot.bodyIndexByName(bodyName);
-
-  finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, bodyVector, targetPos);
   type_ = "lookAt";
   name_ = "look_at_" + robot.name() + "_" + bodyName;
+  target(targetPos);
 }
 
 void LookAtTask::reset()
 {
   VectorOrientationTask::reset();
-  target_pos_ = Eigen::Vector3d::Zero();
+  const auto & robot = robots.robot(rIndex);
+  target_pos_ = robot.bodyPosW()[bIndex].translation() + actual();
 }
 
 void LookAtTask::target(const Eigen::Vector3d & pos)
@@ -42,8 +53,9 @@ void LookAtTask::addToLogger(mc_rtc::Logger & logger)
 {
   TrajectoryBase::addToLogger(logger);
   logger.addLogEntry(name_ + "_target",
-                     [this]() -> const Eigen::Vector3d { return VectorOrientationTask::targetVector(); });
-  logger.addLogEntry(name_ + "_current", [this]() -> Eigen::Vector3d { return VectorOrientationTask::actual(); });
+                     [this]() -> const Eigen::Vector3d & { return VectorOrientationTask::targetVector(); });
+  logger.addLogEntry(name_ + "_current",
+                     [this]() -> const Eigen::Vector3d & { return VectorOrientationTask::actual(); });
   logger.addLogEntry(name_ + "_error", [this]() -> Eigen::Vector3d { return eval(); });
 }
 
@@ -55,6 +67,14 @@ void LookAtTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry(name_ + "_error");
 }
 
+void LookAtTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
+{
+  VectorOrientationTask::addToGUI(gui);
+
+  gui.addElement({"Tasks", name_}, mc_rtc::gui::Point3D("Target Point", [this]() { return this->target(); },
+                                                        [this](const Eigen::Vector3d & pos) { this->target(pos); }));
+}
+
 } // namespace mc_tasks
 
 namespace
@@ -62,8 +82,8 @@ namespace
 static bool registered_lookat = mc_tasks::MetaTaskLoader::register_load_function(
     "lookAt",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      auto t = std::make_shared<mc_tasks::LookAtTask>(config("body"), config("bodyVector"), config("targetPos"),
-                                                      solver.robots(), config("robotIndex"));
+      auto t = std::make_shared<mc_tasks::LookAtTask>(config("body"), config("bodyVector"), solver.robots(),
+                                                      config("robotIndex"));
       if(config.has("weight"))
       {
         t->weight(config("weight"));
@@ -82,6 +102,10 @@ static bool registered_lookat = mc_tasks::MetaTaskLoader::register_load_function
         }
       }
       t->load(solver, config);
+      if(config.has("targetPos"))
+      {
+        t->target(config("targetPos"));
+      }
       return t;
     });
 }
