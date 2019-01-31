@@ -69,6 +69,7 @@ const Eigen::Vector3d & VectorOrientationTask::actual() const
 
 void VectorOrientationTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
+  TrajectoryTaskGeneric<tasks::qp::VectorOrientationTask>::addToGUI(gui);
   gui.addElement(
       {"Tasks", name_},
       mc_rtc::gui::ArrayInput("Target Direction", {"x", "y", "z"}, [this]() { return targetVector(); },
