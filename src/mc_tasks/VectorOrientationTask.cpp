@@ -72,7 +72,7 @@ void VectorOrientationTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   gui.addElement(
       {"Tasks", name_},
       mc_rtc::gui::ArrayInput("Target Direction", {"x", "y", "z"}, [this]() { return targetVector(); },
-                              [this](const Eigen::VectorXd & target) { targetVector(target); }),
+                              [this](const Eigen::Vector3d & target) { targetVector(target); }),
       mc_rtc::gui::Arrow(
           "Actual", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 0., 1.)),
           [this]() -> const Eigen::Vector3d & { return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation(); },
