@@ -65,7 +65,7 @@ struct MC_TASKS_DLLAPI VectorOrientationTask : public TrajectoryTaskGeneric<task
    * \returns The body orientation target in world frame
    *
    */
-  Eigen::Vector3d bodyVector() const;
+  const Eigen::Vector3d & bodyVector() const;
 
   /*! \brief Set world target for the controlled vector
    *
@@ -79,14 +79,14 @@ struct MC_TASKS_DLLAPI VectorOrientationTask : public TrajectoryTaskGeneric<task
    *
    * @return The target orientation in world frame
    */
-  Eigen::Vector3d targetVector() const;
+  const Eigen::Vector3d & targetVector() const;
 
   /**
    * @brief Get the current body orientation
    *
    * @return The current body orientation vector in world frame
    */
-  Eigen::Vector3d actual() const;
+  const Eigen::Vector3d & actual() const;
 
   /*! \brief Return the controlled body */
   std::string body()
@@ -96,9 +96,6 @@ struct MC_TASKS_DLLAPI VectorOrientationTask : public TrajectoryTaskGeneric<task
 
 protected:
   void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
-
-private:
-  void init();
 
 protected:
   std::string bodyName;

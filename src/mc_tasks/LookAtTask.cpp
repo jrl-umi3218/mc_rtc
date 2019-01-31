@@ -9,10 +9,9 @@ LookAtTask::LookAtTask(const std::string & bodyName,
                        unsigned int robotIndex,
                        double stiffness,
                        double weight)
-: VectorOrientationTask(bodyName, bodyVector, robots, robotIndex, stiffness, weight)
+: LookAtTask(bodyName, bodyVector, bodyVector, robots, robotIndex, stiffness, weight)
 {
-  init();
-  target(robots.robot().bodyPosW()[bIndex].translation() + 1. * actual());
+  reset();
 }
 
 LookAtTask::LookAtTask(const std::string & bodyName,
@@ -24,23 +23,18 @@ LookAtTask::LookAtTask(const std::string & bodyName,
                        double weight)
 : VectorOrientationTask(bodyName, bodyVector, robots, robotIndex, stiffness, weight)
 {
-  init();
-  target(targetPos);
-}
-
-void LookAtTask::init()
-{
   const mc_rbdyn::Robot & robot = robots.robot(rIndex);
   bIndex = robot.bodyIndexByName(bodyName);
   type_ = "lookAt";
   name_ = "look_at_" + robot.name() + "_" + bodyName;
+  target(targetPos);
 }
 
 void LookAtTask::reset()
 {
   VectorOrientationTask::reset();
   const auto & robot = robots.robot(rIndex);
-  target_pos_ = robot.bodyPosW()[bIndex].translation() + targetVector();
+  target_pos_ = robot.bodyPosW()[bIndex].translation() + actual();
 }
 
 void LookAtTask::target(const Eigen::Vector3d & pos)
@@ -59,8 +53,9 @@ void LookAtTask::addToLogger(mc_rtc::Logger & logger)
 {
   TrajectoryBase::addToLogger(logger);
   logger.addLogEntry(name_ + "_target",
-                     [this]() -> const Eigen::Vector3d { return VectorOrientationTask::targetVector(); });
-  logger.addLogEntry(name_ + "_current", [this]() -> Eigen::Vector3d { return VectorOrientationTask::actual(); });
+                     [this]() -> const Eigen::Vector3d & { return VectorOrientationTask::targetVector(); });
+  logger.addLogEntry(name_ + "_current",
+                     [this]() -> const Eigen::Vector3d & { return VectorOrientationTask::actual(); });
   logger.addLogEntry(name_ + "_error", [this]() -> Eigen::Vector3d { return eval(); });
 }
 

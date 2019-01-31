@@ -14,8 +14,11 @@ VectorOrientationTask::VectorOrientationTask(const std::string & bodyName,
 : TrajectoryTaskGeneric<tasks::qp::VectorOrientationTask>(robots, robotIndex, stiffness, weight), bodyName(bodyName),
   bIndex(0)
 {
-  init();
   finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, bodyVector, targetVector);
+  const mc_rbdyn::Robot & robot = robots.robot(rIndex);
+  bIndex = robot.bodyIndexByName(bodyName);
+  type_ = "vectorOrientation";
+  name_ = "vector_orientation_" + robot.name() + "_" + bodyName;
 }
 
 VectorOrientationTask::VectorOrientationTask(const std::string & bodyName,
@@ -24,30 +27,19 @@ VectorOrientationTask::VectorOrientationTask(const std::string & bodyName,
                                              unsigned int robotIndex,
                                              double stiffness,
                                              double weight)
-: TrajectoryTaskGeneric<tasks::qp::VectorOrientationTask>(robots, robotIndex, stiffness, weight), bodyName(bodyName),
-  bIndex(0)
+: VectorOrientationTask(bodyName, bodyVector, bodyVector, robots, robotIndex, stiffness, weight)
 {
-  init();
-
-  const auto & robot = robots.robot();
-  Eigen::Matrix3d E_0_b = robot.mbc().bodyPosW[bIndex].rotation().transpose();
-  Eigen::Vector3d actualVector = E_0_b * bodyVector;
-
-  finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, bodyVector, actualVector);
-}
-
-void VectorOrientationTask::init()
-{
-  const mc_rbdyn::Robot & robot = robots.robot(rIndex);
-  bIndex = robot.bodyIndexByName(bodyName);
-  type_ = "vectorOrientation";
-  name_ = "vector_orientation_" + robot.name() + "_" + bodyName;
+  reset();
 }
 
 void VectorOrientationTask::reset()
 {
   TrajectoryTaskGeneric::reset();
-  errorT->target(errorT->actual());
+  // Should be errorT->actual(), but it is not computed until the first call to
+  // errorT::update()
+  Eigen::Matrix3d E_0_b = robots.robot().bodyPosW()[bIndex].rotation().transpose();
+  Eigen::Vector3d actualVector = E_0_b * this->bodyVector();
+  this->targetVector(actualVector);
 }
 
 void VectorOrientationTask::bodyVector(const Eigen::Vector3d & vector)
@@ -55,7 +47,7 @@ void VectorOrientationTask::bodyVector(const Eigen::Vector3d & vector)
   errorT->bodyVector(vector);
 }
 
-Eigen::Vector3d VectorOrientationTask::bodyVector() const
+const Eigen::Vector3d & VectorOrientationTask::bodyVector() const
 {
   return errorT->bodyVector();
 }
@@ -65,43 +57,43 @@ void VectorOrientationTask::targetVector(const Eigen::Vector3d & ori)
   errorT->target(ori.normalized());
 }
 
-Eigen::Vector3d VectorOrientationTask::targetVector() const
+const Eigen::Vector3d & VectorOrientationTask::targetVector() const
 {
   return errorT->target();
 }
 
-Eigen::Vector3d VectorOrientationTask::actual() const
+const Eigen::Vector3d & VectorOrientationTask::actual() const
 {
   return errorT->actual();
 }
 
 void VectorOrientationTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
-  gui.addElement({"Tasks", name_},
-                 mc_rtc::gui::ArrayInput("Target Direction", {"x", "y", "z"}, [this]() { return targetVector(); },
-                                         [this](const Eigen::VectorXd & target) { targetVector(target); }),
-                 mc_rtc::gui::Arrow(
-                     "Actual", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 0., 1.)),
-                     [this]() -> Eigen::Vector3d { return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation(); },
-                     [this]() -> Eigen::Vector3d {
-                       return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation() + .25 * actual();
-                     }),
-                 mc_rtc::gui::Arrow(
-                     "Target", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(1., 0., 0.)),
-                     [this]() -> Eigen::Vector3d { return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation(); },
-                     [this]() -> Eigen::Vector3d {
-                       return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation() + .25 * targetVector();
-                     }),
-                 mc_rtc::gui::Point3D("Arrow end point",
-                                      [this]() -> Eigen::Vector3d {
-                                        return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation()
-                                               + .25 * targetVector();
-                                      },
-                                      [this](const Eigen::Vector3d & point) {
-                                        Eigen::Vector3d direction =
-                                            point - robots.robot(rIndex).mbc().bodyPosW[bIndex].translation();
-                                        targetVector(direction);
-                                      }));
+  gui.addElement(
+      {"Tasks", name_},
+      mc_rtc::gui::ArrayInput("Target Direction", {"x", "y", "z"}, [this]() { return targetVector(); },
+                              [this](const Eigen::VectorXd & target) { targetVector(target); }),
+      mc_rtc::gui::Arrow(
+          "Actual", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 0., 1.)),
+          [this]() -> const Eigen::Vector3d & { return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation(); },
+          [this]() -> Eigen::Vector3d {
+            return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation() + .25 * actual();
+          }),
+      mc_rtc::gui::Arrow(
+          "Target", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(1., 0., 0.)),
+          [this]() -> const Eigen::Vector3d & { return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation(); },
+          [this]() -> Eigen::Vector3d {
+            return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation() + .25 * targetVector();
+          }),
+      mc_rtc::gui::Point3D("Arrow end point",
+                           [this]() -> Eigen::Vector3d {
+                             return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation() + .25 * targetVector();
+                           },
+                           [this](const Eigen::Vector3d & point) {
+                             Eigen::Vector3d direction =
+                                 point - robots.robot(rIndex).mbc().bodyPosW[bIndex].translation();
+                             targetVector(direction);
+                           }));
 }
 } // namespace mc_tasks
 
