@@ -89,8 +89,8 @@ HRP4CommonRobotModule::HRP4CommonRobotModule() : RobotModule(mc_rtc::HRP4_DESCRI
   halfSitting["L_WRIST_Y"] = {0};
   halfSitting["L_WRIST_P"] = {0};
   halfSitting["L_WRIST_R"] = {0};
-  halfSitting["L_HAND_J0"] = {0.};
-  halfSitting["L_HAND_J1"] = {0.};
+  halfSitting["L_HAND_J0"] = {0};
+  halfSitting["L_HAND_J1"] = {0};
   halfSitting["R_F22"] = {0};
   halfSitting["R_F23"] = {0};
   halfSitting["R_F32"] = {0};
@@ -175,8 +175,8 @@ void HRP4CommonRobotModule::readUrdf(const std::string & robotName,
                                      bool fixed,
                                      const std::vector<std::string> & filteredLinks)
 {
-  std::string urdfPath = path + "/urdf/" + robotName + ".urdf";
-  std::ifstream ifs(urdfPath);
+  urdf_path = path + "/urdf/" + robotName + ".urdf";
+  std::ifstream ifs(urdf_path);
   if(ifs.is_open())
   {
     std::stringstream urdf;
@@ -192,7 +192,7 @@ void HRP4CommonRobotModule::readUrdf(const std::string & robotName,
   }
   else
   {
-    LOG_ERROR("Could not open HRP4 model at " << urdfPath)
+    LOG_ERROR("Could not open HRP4 model at " << urdf_path)
     LOG_ERROR_AND_THROW(std::runtime_error, "Failed to open HRP4 model")
   }
 }
@@ -329,53 +329,19 @@ std::map<std::string, std::pair<std::string, std::string>> HRP4CommonRobotModule
 
 HRP4NoHandRobotModule::HRP4NoHandRobotModule(bool fixed)
 {
-  for(const auto & gl : gripperLinks)
-  {
-    filteredLinks.push_back(gl);
-  }
-  readUrdf("hrp4", fixed, filteredLinks);
+  readUrdf("hrp4", fixed, gripperLinks);
   init();
-}
-
-const std::map<std::string, std::pair<std::string, std::string>> & HRP4NoHandRobotModule::convexHull() const
-{
-  return _convexHull;
-}
-
-const std::vector<std::map<std::string, std::vector<double>>> & HRP4NoHandRobotModule::bounds() const
-{
-  return _bounds;
-}
-
-const std::map<std::string, std::vector<double>> & HRP4NoHandRobotModule::stance() const
-{
-  return _stance;
 }
 
 HRP4WithHandRobotModule::HRP4WithHandRobotModule(bool fixed)
 {
-  readUrdf("hrp4", fixed, filteredLinks);
+  readUrdf("hrp4", fixed, {});
   init();
-}
-
-const std::map<std::string, std::pair<std::string, std::string>> & HRP4WithHandRobotModule::convexHull() const
-{
-  return _convexHull;
-}
-
-const std::vector<std::map<std::string, std::vector<double>>> & HRP4WithHandRobotModule::bounds() const
-{
-  return _bounds;
-}
-
-const std::map<std::string, std::vector<double>> & HRP4WithHandRobotModule::stance() const
-{
-  return _stance;
 }
 
 HRP4VREPRobotModule::HRP4VREPRobotModule(bool fixed) : HRP4WithHandRobotModule(fixed)
 {
-  readUrdf("hrp4_vrep", fixed, filteredLinks);
+  readUrdf("hrp4_vrep", fixed, {});
 
   assert(_forceSensors[0].name() == "RightFootForceSensor");
   assert(_forceSensors[1].name() == "LeftFootForceSensor");
@@ -419,8 +385,16 @@ HRP4FlexRobotModule::HRP4FlexRobotModule(bool fixed) : HRP4WithHandRobotModule(f
   flex.jointName = "LLEG_BUSH_PITCH";
   _flexibility.push_back(flex);
 
-  readUrdf("hrp4_flex", fixed, filteredLinks);
+  readUrdf("hrp4_flex", fixed, {});
 
+  init();
+}
+
+HRP4ComanoidRobotModule::HRP4ComanoidRobotModule()
+{
+  readUrdf("hrp4_gripper", false, {});
+  halfSitting["L_HAND_J0"] = {0.005};
+  halfSitting["L_HAND_J1"] = {0.005};
   init();
 }
 

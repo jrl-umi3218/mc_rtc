@@ -40,30 +40,12 @@ struct MC_ROBOTS_DLLAPI HRP4NoHandRobotModule : public HRP4CommonRobotModule
 {
 public:
   HRP4NoHandRobotModule(bool fixed);
-
-  virtual const std::map<std::string, std::pair<std::string, std::string>> & convexHull() const override;
-
-  virtual const std::vector<std::map<std::string, std::vector<double>>> & bounds() const override;
-
-  virtual const std::map<std::string, std::vector<double>> & stance() const override;
-
-public:
-  std::vector<std::string> filteredLinks;
 };
 
 struct MC_ROBOTS_DLLAPI HRP4WithHandRobotModule : public HRP4CommonRobotModule
 {
 public:
   HRP4WithHandRobotModule(bool fixed);
-
-  virtual const std::map<std::string, std::pair<std::string, std::string>> & convexHull() const override;
-
-  virtual const std::vector<std::map<std::string, std::vector<double>>> & bounds() const override;
-
-  virtual const std::map<std::string, std::vector<double>> & stance() const override;
-
-public:
-  std::vector<std::string> filteredLinks;
 };
 
 struct MC_ROBOTS_DLLAPI HRP4VREPRobotModule : public HRP4WithHandRobotModule
@@ -78,14 +60,20 @@ public:
   HRP4FlexRobotModule(bool fixed);
 };
 
+struct MC_ROBOTS_DLLAPI HRP4ComanoidRobotModule : public HRP4CommonRobotModule
+{
+public:
+  HRP4ComanoidRobotModule();
+};
+
 } // namespace mc_robots
 
 extern "C"
 {
   ROBOT_MODULE_API void MC_RTC_ROBOT_MODULE(std::vector<std::string> & names)
   {
-    names = {"HRP4",      "HRP4NoHand",      "HRP4VREP",      "HRP4Flex",
-             "HRP4Fixed", "HRP4NoHandFixed", "HRP4VREPFixed", "HRP4FlexFixed"};
+    names = {"HRP4",          "HRP4NoHand",    "HRP4VREP",    "HRP4Flex", "HRP4Fixed", "HRP4NoHandFixed",
+             "HRP4VREPFixed", "HRP4FlexFixed", "HRP4Comanoid"};
   }
   ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr)
   {
@@ -124,6 +112,10 @@ extern "C"
     else if(n == "HRP4FlexFixed")
     {
       return new mc_robots::HRP4FlexRobotModule(true);
+    }
+    else if(n == "HRP4Comanoid")
+    {
+      return new mc_robots::HRP4ComanoidRobotModule();
     }
     else
     {
