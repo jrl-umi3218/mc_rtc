@@ -34,13 +34,17 @@ struct TestServer
   sva::PTransformd static_{sva::RotZ(-M_PI), Eigen::Vector3d(1., 0., 0.)};
   sva::PTransformd interactive_{Eigen::Vector3d{0., 1., 0.}};
   Eigen::Vector3d xytheta_{0., 2., M_PI / 3};
+  Eigen::VectorXd xythetaz_;
   std::vector<sva::PTransformd> transforms_ = {sva::PTransformd(Eigen::Vector3d{0.5, 0.5, 0.5}),
                                                sva::PTransformd(Eigen::Vector3d{1, 1, 1}),
                                                sva::PTransformd(Eigen::Vector3d{1.5, 1.5, 1.5})};
 };
 
-TestServer::TestServer()
+TestServer::TestServer() : xythetaz_(4)
 {
+  xythetaz_ << 1., 2., M_PI / 5, 1;
+  ;
+
   auto data = builder.data();
   data.add("DataComboInput", std::vector<std::string>{"Choice A", "Choice B", "Choice C", "Obiwan Kenobi"});
   data.add("robots", std::vector<std::string>{"Goldorak", "Astro"});
@@ -140,8 +144,11 @@ TestServer::TestServer()
                         mc_rtc::gui::FormDataComboInput{"R0 surface", false, {"surfaces", "$R0"}},
                         mc_rtc::gui::FormDataComboInput{"R1", false, {"robots"}},
                         mc_rtc::gui::FormDataComboInput{"R1 surface", false, {"surfaces", "$R1"}}));
-  builder.addElement({"XYTheta"}, mc_rtc::gui::XYTheta("XYTheta", [this]() { return xytheta_; },
-                                                       [this](const Eigen::Vector3d & vec) { xytheta_ = vec; }));
+  builder.addElement({"XYTheta"},
+                     mc_rtc::gui::XYTheta("XYTheta", [this]() { return xytheta_; },
+                                          [this](const Eigen::VectorXd & vec) { xytheta_ = vec.head<3>(); }),
+                     mc_rtc::gui::XYTheta("XYThetaAltitude", [this]() { return xythetaz_; },
+                                          [this](const Eigen::VectorXd & vec) { xythetaz_ = vec; }));
 }
 
 void TestServer::publish()
