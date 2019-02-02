@@ -487,10 +487,22 @@ void ControllerClient::handle_xytheta(const ElementId & id,
                                       const mc_rtc::Configuration & gui,
                                       const mc_rtc::Configuration & data)
 {
-  bool ro = gui("ro", false);
-  Eigen::Vector3d vec = data("data");
-  const std::vector<std::string> & label = {"X", "Y", "Theta"};
+  Eigen::VectorXd vec = data("data");
+  if(vec.size() < 3)
+  {
+    LOG_ERROR("Could not deserialize xytheta element. Expected VectorXd of size 3 or 4 (x, y, theta, [altitude])");
+    return;
+  }
 
+  Eigen::Vector3d xythetaVec = vec.head<3>();
+  double altitude = 0;
+  if(vec.size() == 4)
+  {
+    altitude = vec(3);
+  }
+
+  const std::vector<std::string> & label = {"X", "Y", "Theta"};
+  bool ro = gui("ro", false);
   if(ro)
   {
     array_label(id, label, vec);
@@ -499,7 +511,7 @@ void ControllerClient::handle_xytheta(const ElementId & id,
   {
     array_input(id, label, vec);
   }
-  xytheta({id.category, id.name + "_xytheta"}, id, ro, vec);
+  xytheta({id.category, id.name + "_xytheta"}, id, ro, xythetaVec, altitude);
 }
 
 void ControllerClient::handle_form(const ElementId & id, const mc_rtc::Configuration & gui)

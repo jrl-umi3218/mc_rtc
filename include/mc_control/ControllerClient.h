@@ -310,7 +310,8 @@ protected:
   virtual void xytheta(const ElementId & id,
                        const ElementId & /*requestId*/,
                        bool /*ro */,
-                       const Eigen::Vector3d & /*xytheta*/)
+                       const Eigen::Vector3d & /*xytheta*/,
+                       double /* altitude */)
   {
     default_impl("XYTheta", id);
   }
