@@ -86,6 +86,14 @@ public:
    */
   const std::vector<double> & q();
 
+  /*! \brief Get the current opening percentage
+   *
+   * \note Returns an average of the current opening percentage of each joint
+   *
+   * \return Current opening percentage
+   */
+  double opening() const;
+
   /*! \brief Set the encoder-based values of the gripper's active joints
    * \param q Encoder value of the gripper's active joints
    */

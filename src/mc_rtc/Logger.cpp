@@ -142,7 +142,7 @@ void Logger::setup(const Policy & policy, const bfs::path & directory, const std
   };
 }
 
-void Logger::start(const std::string & ctl_name, double timestep)
+void Logger::start(const std::string & ctl_name, double timestep, bool resume)
 {
   auto get_log_path = [this, &ctl_name]() {
     std::stringstream ss;
@@ -194,7 +194,10 @@ void Logger::start(const std::string & ctl_name, double timestep)
         return impl_->log_iter_ - timestep;
       });
     }
-    impl_->log_iter_ = 0;
+    if(!resume)
+    {
+      impl_->log_iter_ = 0;
+    }
     impl_->valid_ = true;
   }
   else

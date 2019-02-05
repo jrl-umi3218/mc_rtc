@@ -436,6 +436,15 @@ public:
 
   /** @} */
 
+  /*! \brief Create a new log file for the current controller
+   *
+   * The purpose is to split the log file for long-running controller,
+   * therefore this does not restart the timer of the controller so multiple
+   * log files could be stitched together.
+   *
+   */
+  void refreshLog();
+
   /*! \brief Get access to the real robots instance.
    *
    * This can be accessed by external tools to provide information about other
@@ -511,6 +520,8 @@ private:
   void init_publishers();
 
   void publish_robots();
+
+  void initGUI();
 
   void start_log();
   void setup_log();
