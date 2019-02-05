@@ -149,6 +149,7 @@ void MCGlobalController::init(const std::vector<double> & initq, const std::arra
   }
   controller_->reset({q});
   init_publishers();
+  initGUI();
 }
 
 void MCGlobalController::setSensorPosition(const Eigen::Vector3d & pos)
@@ -344,6 +345,7 @@ bool MCGlobalController::run()
     {
       start_log();
     }
+    initGUI();
   }
   const auto & real_q = robot().encoderValues();
   const auto & real_alpha = robot().encoderVelocities();
