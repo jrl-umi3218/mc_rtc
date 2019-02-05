@@ -710,6 +710,12 @@ void MCGlobalController::start_log()
   setup_log();
 }
 
+void MCGlobalController::refreshLog()
+{
+  controller_->logger().start(current_ctrl, controller_->timeStep, true);
+  setup_log();
+}
+
 void MCGlobalController::setup_log()
 {
   if(setup_logger_.count(current_ctrl))

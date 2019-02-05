@@ -76,14 +76,17 @@ public:
 
   /*! \brief Start logging
    *
-   * Print the file header to the log. This should be called at
-   * initialization or when a controller switch occurs
+   * Print the file header to the log. This should be called at initialization
+   * or when a controller switch occurs
    *
    * \param ctl_name Name of the running controller
    *
    * \param timestep Time increment for the log time entry
+   *
+   * \param resume If true, start the time entry at the current value,
+   * otherwise, start at 0
    */
-  void start(const std::string & ctl_name, double timestep);
+  void start(const std::string & ctl_name, double timestep, bool resume = false);
 
   /*! \brief Log controller's data
    *
