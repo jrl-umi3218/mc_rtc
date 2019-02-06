@@ -62,6 +62,9 @@ TestServer::TestServer() : xythetaz_(4)
       mc_rtc::gui::ArrayLabel("point", [this]() { return provider.point; }),
       mc_rtc::gui::ArrayLabel("point with labels", {"x", "y", "z"}, [this]() { return provider.point; }));
   builder.addElement({"Button example"}, mc_rtc::gui::Button("Push me", []() { LOG_INFO("Button pushed") }));
+  builder.addElement({"Stacked buttons"}, mc_rtc::gui::ElementsStacking::Horizontal,
+                     mc_rtc::gui::Button("Foo", []() { LOG_INFO("Foo pushed") }),
+                     mc_rtc::gui::Button("Bar", []() { LOG_INFO("Bar pushed") }));
   builder.addElement({"Checkbox example"},
                      mc_rtc::gui::Checkbox("Checkbox", [this]() { return check_; }, [this]() { check_ = !check_; }));
   builder.addElement({"StringInput example"}, mc_rtc::gui::StringInput("StringInput", [this]() { return string_; },

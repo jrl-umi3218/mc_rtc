@@ -17,6 +17,21 @@ struct MC_RTC_GUI_DLLAPI Element
     return name_;
   }
 
+  /** Access the stack id of an element
+   *
+   * Elements that should be displayed on the same line share the same id
+   */
+  int id() const
+  {
+    return id_;
+  }
+
+  /** Set the stack id of an element */
+  void id(int idIn)
+  {
+    id_ = idIn;
+  }
+
   void addData(mc_rtc::Configuration &) {}
   void addGUI(mc_rtc::Configuration &) {}
   bool handleRequest(const mc_rtc::Configuration &)
@@ -31,6 +46,8 @@ protected:
   Element(const std::string & name);
 
   std::string name_;
+
+  int id_;
 };
 
 enum class Elements
@@ -56,6 +73,12 @@ enum class Elements
   Force,
   Arrow,
   XYTheta
+};
+
+enum class ElementsStacking
+{
+  Vertical = 0,
+  Horizontal
 };
 
 template<typename GetT>
@@ -820,6 +843,12 @@ struct MC_RTC_GUI_DLLAPI StateBuilder
   template<typename T, typename... Args>
   void addElement(const std::vector<std::string> & category, T element, Args... args);
 
+  template<typename T>
+  void addElement(const std::vector<std::string> & category, ElementsStacking stacking, T element);
+
+  template<typename T, typename... Args>
+  void addElement(const std::vector<std::string> & category, ElementsStacking stacking, T element, Args... args);
+
   /** Remove all elements */
   void reset();
 
@@ -841,7 +870,11 @@ struct MC_RTC_GUI_DLLAPI StateBuilder
   mc_rtc::Configuration data();
 
 private:
+  template<typename T>
+  void addElementImpl(const std::vector<std::string> & category, ElementsStacking stacking, T element);
+
   mc_rtc::Configuration state_;
+  struct Category;
   struct MC_RTC_GUI_DLLAPI ElementStore
   {
     const Element & operator()() const;
@@ -852,7 +885,7 @@ private:
     bool (*handleRequest)(Element &, const mc_rtc::Configuration &);
 
     template<typename T>
-    ElementStore(T self);
+    ElementStore(T self, const Category & category, ElementsStacking stacking);
   };
   struct Category
   {
@@ -862,6 +895,8 @@ private:
     /** If the category has a sub-category of the requested name returns an
      * iterator to it, otherwise returns end() */
     std::vector<Category>::iterator find(const std::string & name);
+    /** For each category, keeps track of the line id for next elements added */
+    int id;
   };
   Category elements_;
 

@@ -191,7 +191,8 @@ void ControllerClient::handle_category(const std::vector<std::string> & parent,
     auto d = data(k);
     if(d.has("GUI"))
     {
-      handle_widget({next_category, k}, d);
+      int sid = d("GUI")("sid", -1);
+      handle_widget({next_category, k, sid}, d);
     }
     else
     {
@@ -311,7 +312,7 @@ void ControllerClient::handle_point3d(const ElementId & id,
   {
     array_input(id, {"x", "y", "z"}, pos);
   }
-  point3d({id.category, id.name + "_point3d"}, id, ro, pos, config);
+  point3d({id.category, id.name + "_point3d", id.sid}, id, ro, pos, config);
 }
 
 void ControllerClient::handle_trajectory(const ElementId & id,
@@ -395,7 +396,7 @@ void ControllerClient::handle_force(const ElementId & id,
   const sva::PTransformd & surface = data("surface");
   const mc_rtc::gui::ForceConfig & forceConfig = gui("config");
   array_label(id, {"cx", "cy", "cz", "fx", "fy", "fz"}, force_.vector());
-  force({id.category, id.name + "_force"}, id, force_, surface, forceConfig);
+  force({id.category, id.name + "_force", id.sid}, id, force_, surface, forceConfig);
 }
 
 void ControllerClient::handle_arrow(const ElementId & id,
@@ -423,7 +424,7 @@ void ControllerClient::handle_rotation(const ElementId & id,
   {
     array_input(id, {"w", "x", "y", "z"}, Eigen::Vector4d{q.w(), q.x(), q.y(), q.z()});
   }
-  rotation({id.category, id.name + "_rotation"}, id, ro, pos);
+  rotation({id.category, id.name + "_rotation", id.sid}, id, ro, pos);
 }
 
 void ControllerClient::handle_transform(const ElementId & id,
@@ -444,7 +445,7 @@ void ControllerClient::handle_transform(const ElementId & id,
     {
       array_input(id, {"qw", "qx", "qy", "qz", "tx", "ty", "tz"}, vec);
     }
-    transform({id.category, id.name + "_transform"}, id, ro, pos);
+    transform({id.category, id.name + "_transform", id.sid}, id, ro, pos);
   };
 
   try
@@ -454,9 +455,7 @@ void ControllerClient::handle_transform(const ElementId & id,
     {
       for(unsigned i = 0; i < transforms.size(); ++i)
       {
-        ElementId idn;
-        idn.category = id.category;
-        idn.name = id.name + "_" + std::to_string(i);
+        ElementId idn{id.category, id.name + "_" + std::to_string(i), id.sid};
         publish_transform(transforms[i], idn, ro);
       }
     }
@@ -511,7 +510,7 @@ void ControllerClient::handle_xytheta(const ElementId & id,
   {
     array_input(id, label, vec);
   }
-  xytheta({id.category, id.name + "_xytheta"}, id, ro, xythetaVec, altitude);
+  xytheta({id.category, id.name + "_xytheta", id.sid}, id, ro, xythetaVec, altitude);
 }
 
 void ControllerClient::handle_form(const ElementId & id, const mc_rtc::Configuration & gui)
