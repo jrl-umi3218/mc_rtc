@@ -2,6 +2,7 @@
 #include <mc_rtc/logging.h>
 
 #include <cmath>
+#include <numeric>
 #include <tinyxml2.h>
 
 namespace mc_control
