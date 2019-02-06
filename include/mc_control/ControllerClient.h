@@ -18,10 +18,25 @@ namespace mc_control
 /** Used to uniquely identify an element */
 struct MC_CONTROL_CLIENT_DLLAPI ElementId
 {
+  ElementId() = default;
+  ElementId(const ElementId &) = default;
+  ElementId(ElementId &&) = default;
+  ElementId & operator=(const ElementId &) = default;
+  ElementId & operator=(ElementId &&) = default;
+
+  ElementId(const std::vector<std::string> & category, const std::string & name, int sid)
+  : category(category), name(name), sid(sid)
+  {
+  }
+
+  ElementId(const std::vector<std::string> & category, const std::string & name) : ElementId(category, name, -1) {}
+
   /** Category the element belongs to */
-  std::vector<std::string> category;
+  std::vector<std::string> category = {};
   /** Name of the element */
-  std::string name;
+  std::string name = {};
+  /** Stack id, the elements that share the same stack id should be displayed on the same line */
+  int sid = -1;
 };
 
 /** Receives data and interact with a ControllerServer

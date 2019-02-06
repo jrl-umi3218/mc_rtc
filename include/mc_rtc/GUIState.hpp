@@ -321,6 +321,18 @@ void FormImpl<Callback>::addElement(T && arg)
 template<typename T>
 void StateBuilder::addElement(const std::vector<std::string> & category, T element)
 {
+  addElement(category, ElementsStacking::Vertical, element);
+}
+
+template<typename T>
+void StateBuilder::addElement(const std::vector<std::string> & category, ElementsStacking stacking, T element)
+{
+  addElementImpl(category, stacking, element);
+}
+
+template<typename T>
+void StateBuilder::addElementImpl(const std::vector<std::string> & category, ElementsStacking stacking, T element)
+{
   static_assert(std::is_base_of<Element, T>::value, "You can only add elements that derive from the Element class");
   Category & cat = getCategory(category);
   auto it = std::find_if(cat.elements.begin(), cat.elements.end(),
@@ -331,25 +343,55 @@ void StateBuilder::addElement(const std::vector<std::string> & category, T eleme
     LOG_WARNING("Discarding request to add this element")
     return;
   }
-  cat.elements.emplace_back(element);
+  cat.elements.emplace_back(element, cat, stacking);
+  if(stacking == ElementsStacking::Vertical)
+  {
+    cat.id += 1;
+  }
 }
 
 template<typename T, typename... Args>
 void StateBuilder::addElement(const std::vector<std::string> & category, T element, Args... args)
 {
-  addElement(category, element);
-  addElement(category, args...);
+  addElement(category, ElementsStacking::Vertical, element, args...);
+}
+
+template<typename T, typename... Args>
+void StateBuilder::addElement(const std::vector<std::string> & category,
+                              ElementsStacking stacking,
+                              T element,
+                              Args... args)
+{
+  addElementImpl(category, stacking, element);
+  addElement(category, stacking, args...);
+  if(sizeof...(args) == 1 && stacking == ElementsStacking::Horizontal)
+  {
+    Category & cat = getCategory(category);
+    cat.id += 1;
+  }
 }
 
 template<typename T>
-StateBuilder::ElementStore::ElementStore(T self)
+StateBuilder::ElementStore::ElementStore(T self, const Category & category, ElementsStacking stacking)
 {
+  self.id(category.id);
   element = [self]() mutable -> Element & { return self; };
   addData = [](Element & el, mc_rtc::Configuration & out) { static_cast<T &>(el).addData(out); };
-  addGUI = [](Element & el, mc_rtc::Configuration & out) {
-    out.add("type", static_cast<int>(T::type));
-    static_cast<T &>(el).addGUI(out);
-  };
+  if(stacking == ElementsStacking::Vertical)
+  {
+    addGUI = [](Element & el, mc_rtc::Configuration & out) {
+      out.add("type", static_cast<int>(T::type));
+      static_cast<T &>(el).addGUI(out);
+    };
+  }
+  else
+  {
+    addGUI = [](Element & el, mc_rtc::Configuration & out) {
+      out.add("type", static_cast<int>(T::type));
+      out.add("sid", static_cast<int>(el.id()));
+      static_cast<T &>(el).addGUI(out);
+    };
+  }
   handleRequest = [](Element & el, const mc_rtc::Configuration & data) {
     T el_ = static_cast<T &>(el);
     return el_.handleRequest(data);

@@ -235,7 +235,7 @@ StateBuilder::Category & StateBuilder::getCategory(const std::vector<std::string
     auto it = cat.find(c);
     if(it == cat.sub.end())
     {
-      cat.sub.push_back({c, {}, {}});
+      cat.sub.push_back({c, {}, {}, 0});
       it = std::prev(cat.sub.end());
     }
     cat_ = *it;
