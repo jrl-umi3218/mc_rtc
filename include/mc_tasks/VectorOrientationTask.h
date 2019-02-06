@@ -96,6 +96,8 @@ struct MC_TASKS_DLLAPI VectorOrientationTask : public TrajectoryTaskGeneric<task
 
 protected:
   void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
+  void addToLogger(mc_rtc::Logger & logger) override;
+  void removeFromLogger(mc_rtc::Logger & logger) override;
 
 protected:
   std::string bodyName;

@@ -51,20 +51,19 @@ Eigen::Vector3d LookAtTask::target() const
 }
 void LookAtTask::addToLogger(mc_rtc::Logger & logger)
 {
-  TrajectoryBase::addToLogger(logger);
-  logger.addLogEntry(name_ + "_target",
-                     [this]() -> const Eigen::Vector3d & { return VectorOrientationTask::targetVector(); });
-  logger.addLogEntry(name_ + "_current",
-                     [this]() -> const Eigen::Vector3d & { return VectorOrientationTask::actual(); });
-  logger.addLogEntry(name_ + "_error", [this]() -> Eigen::Vector3d { return eval(); });
+  VectorOrientationTask::addToLogger(logger);
+  logger.addLogEntry(name_ + "_target_pos", [this]() -> const Eigen::Vector3d { return target(); });
+  logger.addLogEntry(name_ + "_current_pos", [this]() -> const Eigen::Vector3d & {
+    return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation();
+    ;
+  });
 }
 
 void LookAtTask::removeFromLogger(mc_rtc::Logger & logger)
 {
-  TrajectoryBase::removeFromLogger(logger);
-  logger.removeLogEntry(name_ + "_target");
-  logger.removeLogEntry(name_ + "_current");
-  logger.removeLogEntry(name_ + "_error");
+  VectorOrientationTask::removeFromLogger(logger);
+  logger.removeLogEntry(name_ + "_target_pos");
+  logger.removeLogEntry(name_ + "_current_pos");
 }
 
 void LookAtTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
