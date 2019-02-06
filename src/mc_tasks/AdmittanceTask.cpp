@@ -66,10 +66,10 @@ AdmittanceTask::AdmittanceTask(const std::string & surfaceName,
                                unsigned int robotIndex,
                                double stiffness,
                                double weight)
-: SurfaceTransformTask(surfaceName, robots, robotIndex, stiffness, weight), robot_(robots.robots()[robotIndex]),
+: SurfaceTransformTask(surfaceName, robots, robotIndex, stiffness, weight), robots_(robots), rIndex_(robotIndex),
   surface_(robots.robot(robotIndex).surface(surfaceName))
 {
-  name_ = "admittance_" + robot_.name() + "_" + surfaceName;
+  name_ = "admittance_" + robots_.robot(rIndex_).name() + "_" + surfaceName;
   reset();
 }
 
