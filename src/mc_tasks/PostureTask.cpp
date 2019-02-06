@@ -5,26 +5,27 @@ namespace mc_tasks
 {
 
 PostureTask::PostureTask(const mc_solver::QPSolver & solver, unsigned int rIndex, double stiffness, double weight)
-: robot_(solver.robots().robot(rIndex)), pt_(solver.robots().mbs(), rIndex, robot_.mbc().q, stiffness, weight),
-  dt_(solver.dt()), eval_(pt_.eval()), speed_(pt_.eval())
+: robots_(solver.robots()), rIndex_(rIndex),
+  pt_(solver.robots().mbs(), rIndex_, robots_.robot(rIndex_).mbc().q, stiffness, weight), dt_(solver.dt()),
+  eval_(pt_.eval()), speed_(pt_.eval())
 {
   eval_.setZero();
   speed_.setZero();
   type_ = "posture";
-  name_ = std::string("posture_") + robot_.name();
+  name_ = std::string("posture_") + robots_.robot(rIndex_).name();
   posture_ = pt_.posture();
-  for(const auto & j : robot_.mb().joints())
+  for(const auto & j : robots_.robot(rIndex_).mb().joints())
   {
     if(j.isMimic())
     {
-      mimics_[j.mimicName()].push_back(robot_.jointIndexByName(j.name()));
+      mimics_[j.mimicName()].push_back(robots_.robot(rIndex_).jointIndexByName(j.name()));
     }
   }
 }
 
 void PostureTask::reset()
 {
-  pt_.posture(robot_.mbc().q);
+  pt_.posture(robots_.robot(rIndex_).mbc().q);
   posture_ = pt_.posture();
 }
 
@@ -33,7 +34,7 @@ void PostureTask::selectActiveJoints(mc_solver::QPSolver & solver,
                                      const std::map<std::string, std::vector<std::array<int, 2>>> &)
 {
   std::vector<std::string> unactiveJoints = {};
-  for(const auto & j : robot_.mb().joints())
+  for(const auto & j : robots_.robot(rIndex_).mb().joints())
   {
     if(j.dof() && std::find(activeJointsName.begin(), activeJointsName.end(), j.name()) == activeJointsName.end())
     {
@@ -145,11 +146,11 @@ void PostureTask::target(const std::map<std::string, std::vector<double>> & join
   auto q = posture();
   for(const auto & j : joints)
   {
-    if(robot_.hasJoint(j.first))
+    if(robots_.robot(rIndex_).hasJoint(j.first))
     {
-      if(robot_.mb().joint(robot_.jointIndexByName(j.first)).dof() == j.second.size())
+      if(robots_.robot(rIndex_).mb().joint(robots_.robot(rIndex_).jointIndexByName(j.first)).dof() == j.second.size())
       {
-        q[robot_.jointIndexByName(j.first)] = j.second;
+        q[robots_.robot(rIndex_).jointIndexByName(j.first)] = j.second;
       }
       else
       {
@@ -168,30 +169,31 @@ void PostureTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                           [this](const double & s) { this->stiffness(s); }),
                  mc_rtc::gui::NumberInput("weight", [this]() { return this->weight(); },
                                           [this](const double & w) { this->weight(w); }));
-  for(const auto & j : robot_.mb().joints())
+  for(const auto & j : robots_.robot(rIndex_).mb().joints())
   {
     if(j.dof() != 1 || j.isMimic())
     {
       continue;
     }
-    auto jIndex = robot_.jointIndexByName(j.name());
-    bool isContinuous = robot_.ql()[jIndex][0] == -std::numeric_limits<double>::infinity();
-    gui.addElement({"Tasks", name_, "Target"},
-                   mc_rtc::gui::NumberSlider(
-                       j.name(), [this, jIndex]() { return this->posture_[jIndex][0]; },
-                       [this, jIndex](double v) {
-                         this->posture_[jIndex][0] = v;
-                         if(mimics_.count(robot_.mb().joint(jIndex).name()))
-                         {
-                           for(auto ji : mimics_.at(robot_.mb().joint(jIndex).name()))
-                           {
-                             const auto & mimic = robot_.mb().joint(ji);
-                             this->posture_[ji][0] = mimic.mimicMultiplier() * v + mimic.mimicOffset();
-                           }
-                         }
-                         posture(posture_);
-                       },
-                       isContinuous ? -M_PI : robot_.ql()[jIndex][0], isContinuous ? M_PI : robot_.qu()[jIndex][0]));
+    auto jIndex = robots_.robot(rIndex_).jointIndexByName(j.name());
+    bool isContinuous = robots_.robot(rIndex_).ql()[jIndex][0] == -std::numeric_limits<double>::infinity();
+    gui.addElement(
+        {"Tasks", name_, "Target"},
+        mc_rtc::gui::NumberSlider(j.name(), [this, jIndex]() { return this->posture_[jIndex][0]; },
+                                  [this, jIndex](double v) {
+                                    this->posture_[jIndex][0] = v;
+                                    if(mimics_.count(robots_.robot(rIndex_).mb().joint(jIndex).name()))
+                                    {
+                                      for(auto ji : mimics_.at(robots_.robot(rIndex_).mb().joint(jIndex).name()))
+                                      {
+                                        const auto & mimic = robots_.robot(rIndex_).mb().joint(ji);
+                                        this->posture_[ji][0] = mimic.mimicMultiplier() * v + mimic.mimicOffset();
+                                      }
+                                    }
+                                    posture(posture_);
+                                  },
+                                  isContinuous ? -M_PI : robots_.robot(rIndex_).ql()[jIndex][0],
+                                  isContinuous ? M_PI : robots_.robot(rIndex_).qu()[jIndex][0]));
   }
 }
 
