@@ -70,7 +70,7 @@ public:
    */
   Eigen::Vector2d measuredCoP() const
   {
-    return robot_.cop(surface_.name());
+    return robots_.robot(rIndex_).cop(surface_.name());
   }
 
   /*! \brief Measured CoP in world frame.
@@ -78,7 +78,7 @@ public:
    */
   Eigen::Vector3d measuredCoPW() const
   {
-    return robot_.copW(surface_.name());
+    return robots_.robot(rIndex_).copW(surface_.name());
   }
 
   /*! \brief Set targent wrench to zero.
@@ -105,7 +105,7 @@ public:
   {
     Eigen::Vector3d cop_s;
     cop_s << targetCoP_, 0.;
-    sva::PTransformd X_0_s = robot_.surfacePose(surface_.name());
+    sva::PTransformd X_0_s = robots_.robot(rIndex_).surfacePose(surface_.name());
     return X_0_s.translation() + X_0_s.rotation().transpose() * cop_s;
   }
 
