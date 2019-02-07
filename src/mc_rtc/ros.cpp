@@ -562,7 +562,7 @@ inline bool ros_init(const std::string & name)
   }
   int argc = 0;
   char * argv[] = {0};
-  ros::init(argc, argv, name.c_str());
+  ros::init(argc, argv, name.c_str(), ros::init_options::NoSigintHandler);
   if(!ros::master::check())
   {
     LOG_WARNING("ROS master is not available, continue without ROS functionalities")
