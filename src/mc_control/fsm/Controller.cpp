@@ -178,6 +178,13 @@ bool Controller::run()
 
 bool Controller::run(mc_solver::FeedbackType fType)
 {
+  if(robots().size() != robots_idx_.size())
+  {
+    for(const auto & r : robots())
+    {
+      robots_idx_[r.name()] = r.robotIndex();
+    }
+  }
   if(contacts_changed_)
   {
     std::vector<mc_rbdyn::Contact> contacts;
