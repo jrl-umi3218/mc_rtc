@@ -226,7 +226,7 @@ public:
 
   Eigen::VectorXd speed() const override
   {
-    return robot_.mbc().bodyVelW[robot_.bodyIndexByName(sensor_.parentBody())].vector();
+    return robots_.robot(rIndex_).mbc().bodyVelW[robots_.robot(rIndex_).bodyIndexByName(sensor_.parentBody())].vector();
   }
 
 private:
@@ -237,7 +237,8 @@ private:
   sva::ForceVecd obj_;
   sva::ForceVecd error_;
   sva::ForceVecd errorD_;
-  const mc_rbdyn::Robot & robot_;
+  const mc_rbdyn::Robots & robots_;
+  unsigned int rIndex_;
   const mc_rbdyn::ForceSensor & sensor_;
   double timestep_;
   double forceThresh_, torqueThresh_;

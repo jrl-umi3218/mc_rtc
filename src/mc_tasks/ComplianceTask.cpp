@@ -29,16 +29,16 @@ ComplianceTask::ComplianceTask(const mc_rbdyn::Robots & robots,
                                std::pair<double, double> forceGain,
                                std::pair<double, double> torqueGain)
 : wrench_(Eigen::Vector6d::Zero()), obj_(Eigen::Vector6d::Zero()), error_(Eigen::Vector6d::Zero()),
-  errorD_(Eigen::Vector6d::Zero()), robot_(robots.robots()[robotIndex]), sensor_(robot_.bodyForceSensor(body)),
-  timestep_(timestep), forceThresh_(forceThresh), torqueThresh_(torqueThresh), forceGain_(forceGain),
-  torqueGain_(torqueGain), dof_(dof)
+  errorD_(Eigen::Vector6d::Zero()), robots_(robots), rIndex_(robotIndex),
+  sensor_(robots_.robot(rIndex_).bodyForceSensor(body)), timestep_(timestep), forceThresh_(forceThresh),
+  torqueThresh_(torqueThresh), forceGain_(forceGain), torqueGain_(torqueGain), dof_(dof)
 {
   efTask_ = std::make_shared<EndEffectorTask>(body, robots, robotIndex, stiffness, weight);
   clampTrans_ = clamper(0.01);
   clampRot_ = clamper(0.1);
 
   type_ = "compliance";
-  name_ = "compliance_" + robot_.name() + "_" + body;
+  name_ = "compliance_" + robots_.robot(rIndex_).name() + "_" + body;
 }
 
 ComplianceTask::ComplianceTask(const mc_rbdyn::Robots & robots,
@@ -90,7 +90,8 @@ sva::PTransformd ComplianceTask::computePose()
     rot = mc_rbdyn::rpyToMat(rpy);
   }
   const auto & X_p_f = sensor_.X_p_f();
-  const auto & X_0_p = robot_.mbc().bodyPosW[robot_.bodyIndexByName(sensor_.parentBody())];
+  const auto & X_0_p =
+      robots_.robot(rIndex_).mbc().bodyPosW[robots_.robot(rIndex_).bodyIndexByName(sensor_.parentBody())];
   sva::PTransformd move(rot, trans);
   const auto & X_f_ds = sensor_.X_fsmodel_fsactual();
   return ((X_f_ds * X_p_f).inv() * move * (X_f_ds * X_p_f)) * X_0_p;
@@ -100,7 +101,7 @@ void ComplianceTask::update()
 {
   error_ = wrench_;
   /* Get wrench, remove gravity, use dof_ to deactivate some axis */
-  wrench_ = sensor_.wrenchWithoutGravity(robot_);
+  wrench_ = sensor_.wrenchWithoutGravity(robots_.robot(rIndex_));
   wrench_ = sva::ForceVecd(dof_ * (wrench_ - obj_).vector());
   errorD_ = (wrench_ - error_) / timestep_;
   efTask_->set_ef_pose(computePose());

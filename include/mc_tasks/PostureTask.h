@@ -87,7 +87,8 @@ private:
   /** True if added to solver */
   bool inSolver_ = false;
   /** Robot handled by the task */
-  const mc_rbdyn::Robot & robot_;
+  const mc_rbdyn::Robots & robots_;
+  unsigned int rIndex_;
   /** Actual task */
   tasks::qp::PostureTask pt_;
   /** Solver timestep */

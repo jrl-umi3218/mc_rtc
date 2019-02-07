@@ -98,7 +98,7 @@ public:
    */
   sva::PTransformd surfacePose() const
   {
-    return robot_.surface(surfaceName).X_0_s(robot_);
+    return robots_.robot(rIndex_).surface(surfaceName).X_0_s(robots_.robot(rIndex_));
   }
 
   /*! \brief Get the target pose for the position task
@@ -150,7 +150,7 @@ public:
    */
   sva::ForceVecd measuredWrench() const
   {
-    return robot_.surfaceWrench(surface_.name());
+    return robots_.robot(rIndex_).surfaceWrench(surface_.name());
   }
 
   /*! \brief Get the measured pressure in the surface frame
@@ -211,7 +211,8 @@ public:
 protected:
   Eigen::Vector3d maxAngularVel_ = {0.1, 0.1, 0.1}; // [rad] / [s]
   Eigen::Vector3d maxLinearVel_ = {0.1, 0.1, 0.1}; // [m] / [s]
-  const mc_rbdyn::Robot & robot_;
+  const mc_rbdyn::Robots & robots_;
+  unsigned int rIndex_;
   const mc_rbdyn::Surface & surface_;
   std::map<char, bool> isClampingAngularVel_ = {{'x', false}, {'y', false}, {'z', false}};
   std::map<char, bool> isClampingLinearVel_ = {{'x', false}, {'y', false}, {'z', false}};
