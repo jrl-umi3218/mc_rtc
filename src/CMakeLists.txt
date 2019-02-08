@@ -12,11 +12,13 @@ pkg_config_append_libs(mc_rtc_loader)
 set(mc_rtc_utils_SRC
   mc_rtc/Configuration.cpp
   mc_rtc/Logger.cpp
+  mc_rtc/FlatLog.cpp
 )
 set(mc_rtc_utils_SRC ${mc_rtc_utils_SRC} PARENT_SCOPE)
 
 set(mc_rtc_utils_HDR
   ../include/mc_rtc/Configuration.h
+  ../include/mc_rtc/log/FlatLog.h
   ../include/mc_rtc/log/Logger.h
   ../include/mc_rtc/log/serialization/MCLog_generated.h
   ../include/mc_rtc/utils.h
