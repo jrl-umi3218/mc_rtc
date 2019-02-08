@@ -7,7 +7,10 @@ namespace mc_control
 namespace fsm
 {
 
-void Executor::init(Controller & ctl, const mc_rtc::Configuration & config, const std::string & name)
+void Executor::init(Controller & ctl,
+                    const mc_rtc::Configuration & config,
+                    const std::string & name,
+                    const std::vector<std::string> & category)
 {
   config_ = config;
   name_ = name;
@@ -22,12 +25,19 @@ void Executor::init(Controller & ctl, const mc_rtc::Configuration & config, cons
   auto gui = ctl.gui();
   if(gui)
   {
-    std::vector<std::string> category = {"FSM"};
-    if(name.size())
+    if(category.size())
     {
-      category.push_back(name);
+      category_ = category;
     }
-    gui->addElement(category, mc_rtc::gui::Button("Interrupt", [this]() { interrupt(); }),
+    else
+    {
+      category_ = {"FSM"};
+      if(name.size())
+      {
+        category_.push_back(name);
+      }
+    }
+    gui->addElement(category_, mc_rtc::gui::Button("Interrupt", [this]() { interrupt(); }),
                     mc_rtc::gui::Label("Current state", [this]() { return state(); }),
                     mc_rtc::gui::Label("Next state ready", [this]() { return ready(); }),
                     mc_rtc::gui::Label("Next state", [this]() { return next_state(); }),
@@ -120,12 +130,7 @@ void Executor::teardown(Controller & ctl)
   }
   if(ctl.gui())
   {
-    std::vector<std::string> category = {"FSM"};
-    if(name_.size())
-    {
-      category.push_back(name_);
-    }
-    ctl.gui()->removeCategory(category);
+    ctl.gui()->removeCategory(category_);
   }
   std::string log_entry = "Executor";
   if(name_.size())
@@ -185,18 +190,13 @@ void Executor::next(Controller & ctl)
   auto gui = ctl.gui();
   if(gui)
   {
-    std::vector<std::string> category = {"FSM"};
-    if(name_.size())
-    {
-      category.push_back(name_);
-    }
     for(const auto & s : transition_map_.transitions(curr_state_))
     {
-      gui->removeElement(category, "Force transition to " + s);
+      gui->removeElement(category_, "Force transition to " + s);
     }
     for(const auto & s : transition_map_.transitions(next_state_))
     {
-      gui->addElement(category, mc_rtc::gui::Button("Force transition to " + s, [this, s]() { this->resume(s); }));
+      gui->addElement(category_, mc_rtc::gui::Button("Force transition to " + s, [this, s]() { this->resume(s); }));
     }
   }
   curr_state_ = next_state_;

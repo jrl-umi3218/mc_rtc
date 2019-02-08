@@ -15,9 +15,9 @@ namespace fsm
  * Configuration entries:
  *
  * - Managed: if true, does not handle transitions
- * - transitions: a transition map, similiar to the FSM controller (required if Managed is false)
  * - StepByStep: same as FSM for the internal FSM (default: false)
- *
+ * - transitions: a transition map, similiar to the FSM controller (required if Managed is false)
+ * - category: an arrray of strings, dictates where the executor adds elements into the GUI
  * - configs: can contain additional configuration for the states in the FSM
  *
  */

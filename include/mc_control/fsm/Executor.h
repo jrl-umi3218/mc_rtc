@@ -30,12 +30,19 @@ struct MC_CONTROL_FSM_DLLAPI Executor
    *
    * \param ctl Controller using this executor
    *
-   * \param config Configuration of thi executor
+   * \param config Configuration of the executor
    *
    * \param name Name of the executor, empty for the main executor
    *
+   * \param category Categry under which the executor will appear in the GUI,
+   * defaults to {"FSM"} for the main executor and {"FSM", name} for other
+   * executors
+   *
    */
-  void init(Controller & ctl, const mc_rtc::Configuration & config, const std::string & name = "");
+  void init(Controller & ctl,
+            const mc_rtc::Configuration & config,
+            const std::string & name = "",
+            const std::vector<std::string> & category = {});
 
   /** Run the current state
    *
@@ -127,6 +134,8 @@ private:
   mc_rtc::Configuration config_;
   /** Name of the executor */
   std::string name_;
+  /** Category under which the executor controls should appear in the GUI */
+  std::vector<std::string> category_;
   /** True if managed */
   bool managed_ = false;
   /** If true and not managed, waits for trigger before transitions */
