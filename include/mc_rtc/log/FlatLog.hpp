@@ -42,7 +42,7 @@ IMPL_RECORD_CAST(uint64_t, UInt64)
 } // namespace details
 
 template<typename T>
-std::vector<T const *> FlatLog::get(const std::string & entry) const
+std::vector<T const *> FlatLog::getRaw(const std::string & entry) const
 {
   if(!has(entry))
   {
@@ -55,6 +55,73 @@ std::vector<T const *> FlatLog::get(const std::string & entry) const
   for(const auto & r : data)
   {
     ret.push_back(details::record_cast<T>(r));
+  }
+  return ret;
+}
+
+template<typename T>
+std::vector<T> FlatLog::get(const std::string & entry, const T & def) const
+{
+  if(!has(entry))
+  {
+    LOG_ERROR("No entry named " << entry << " in the loaded log")
+    return {};
+  }
+  const auto & data = data_.at(entry);
+  std::vector<T> ret(data.size(), def);
+  for(size_t i = 0; i < data.size(); ++i)
+  {
+    const auto & r = data[i];
+    auto ptr = details::record_cast<T>(r);
+    if(ptr)
+    {
+      ret[i] = *ptr;
+    }
+  }
+  return ret;
+}
+
+template<typename T>
+std::vector<T> FlatLog::get(const std::string & entry) const
+{
+  if(!has(entry))
+  {
+    LOG_ERROR("No entry named " << entry << " in the loaded log")
+    return {};
+  }
+  const auto & data = data_.at(entry);
+  std::vector<T> ret;
+  size_t start_i = 0;
+  while(start_i < data.size())
+  {
+    const auto & r = data[start_i];
+    if(details::record_cast<T>(r))
+    {
+      break;
+    }
+    start_i++;
+  }
+  if(start_i == data.size())
+  {
+    LOG_ERROR(entry << " was not logged as the requested data type")
+    return ret;
+  }
+  auto def = std::cref(*details::record_cast<T>(data[start_i]));
+  ret.resize(start_i, def);
+  ret.reserve(data.size());
+  for(size_t i = start_i; i < data.size(); ++i)
+  {
+    const auto & r = data[i];
+    auto ptr = details::record_cast<T>(r);
+    if(ptr)
+    {
+      ret.push_back(*ptr);
+      def = *ptr;
+    }
+    else
+    {
+      ret.push_back(def);
+    }
   }
   return ret;
 }

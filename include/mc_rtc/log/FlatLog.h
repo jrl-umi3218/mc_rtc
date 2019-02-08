@@ -35,10 +35,42 @@ struct MC_RTC_UTILS_DLLAPI FlatLog
   /** Returns true if the log has the provided entry */
   bool has(const std::string & entry) const;
 
-  /** Get a typed record entry, the vector has the full size of the log with
-   * null pointer when data was not recorded at a given point in the log */
+  /** Get a type record entry
+   *
+   * Get null pointer entry when the record data type does not match the
+   * requested data type
+   *
+   * \param entry Entry to get
+   *
+   */
   template<typename T>
-  std::vector<T const *> get(const std::string & entry) const;
+  std::vector<T const *> getRaw(const std::string & entry) const;
+
+  /** Get a typed record entry
+   *
+   * Get a default value when the record data type does not match the requested
+   * data type
+   *
+   * \param entry Entry to get
+   *
+   * \param def Default value when the record data does not match requested
+   * data
+   *
+   */
+  template<typename T>
+  std::vector<T> get(const std::string & entry, const T & def) const;
+
+  /** Get a typed record entry
+   *
+   * When the record data type does not match the requested data type, the
+   * vector is automatically filled up with the last (or first if relevant)
+   * recorded data
+   *
+   * \param entry Entry to get
+   *
+   */
+  template<typename T>
+  std::vector<T> get(const std::string & entry) const;
 
   struct record
   {
