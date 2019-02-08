@@ -331,7 +331,10 @@ void StateBuilder::addElement(const std::vector<std::string> & category, Element
 }
 
 template<typename T>
-void StateBuilder::addElementImpl(const std::vector<std::string> & category, ElementsStacking stacking, T element)
+void StateBuilder::addElementImpl(const std::vector<std::string> & category,
+                                  ElementsStacking stacking,
+                                  T element,
+                                  size_t rem)
 {
   static_assert(std::is_base_of<Element, T>::value, "You can only add elements that derive from the Element class");
   Category & cat = getCategory(category);
@@ -344,7 +347,7 @@ void StateBuilder::addElementImpl(const std::vector<std::string> & category, Ele
     return;
   }
   cat.elements.emplace_back(element, cat, stacking);
-  if(stacking == ElementsStacking::Vertical)
+  if(rem == 0)
   {
     cat.id += 1;
   }
@@ -362,13 +365,9 @@ void StateBuilder::addElement(const std::vector<std::string> & category,
                               T element,
                               Args... args)
 {
-  addElementImpl(category, stacking, element);
+  size_t rem = stacking == ElementsStacking::Vertical ? 0 : sizeof...(args) - 1;
+  addElementImpl(category, stacking, element, rem);
   addElement(category, stacking, args...);
-  if(sizeof...(args) == 1 && stacking == ElementsStacking::Horizontal)
-  {
-    Category & cat = getCategory(category);
-    cat.id += 1;
-  }
 }
 
 template<typename T>

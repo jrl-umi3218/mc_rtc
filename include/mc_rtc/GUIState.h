@@ -871,7 +871,7 @@ struct MC_RTC_GUI_DLLAPI StateBuilder
 
 private:
   template<typename T>
-  void addElementImpl(const std::vector<std::string> & category, ElementsStacking stacking, T element);
+  void addElementImpl(const std::vector<std::string> & category, ElementsStacking stacking, T element, size_t rem = 0);
 
   mc_rtc::Configuration state_;
   struct Category;
