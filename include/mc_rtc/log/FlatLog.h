@@ -35,6 +35,9 @@ struct MC_RTC_UTILS_DLLAPI FlatLog
   /** Returns true if the log has the provided entry */
   bool has(const std::string & entry) const;
 
+  /** Returns available types for an entry */
+  std::set<LogData> types(const std::string & entry) const;
+
   /** Get a type record entry
    *
    * Get null pointer entry when the record data type does not match the

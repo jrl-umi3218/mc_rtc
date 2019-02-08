@@ -214,6 +214,24 @@ bool FlatLog::has(const std::string & entry) const
   return data_.count(entry) != 0;
 }
 
+std::set<LogData> FlatLog::types(const std::string & entry) const
+{
+  if(!has(entry))
+  {
+    LOG_ERROR("No entry named " << entry << " in the loaded log")
+    return {};
+  }
+  std::set<LogData> ret;
+  for(const auto & r : data_.at(entry))
+  {
+    if(r.type != mc_rtc::log::LogData_NONE)
+    {
+      ret.insert(r.type);
+    }
+  }
+  return ret;
+}
+
 } // namespace log
 
 } // namespace mc_rtc
