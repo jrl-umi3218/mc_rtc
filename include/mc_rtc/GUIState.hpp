@@ -365,7 +365,7 @@ void StateBuilder::addElement(const std::vector<std::string> & category,
                               T element,
                               Args... args)
 {
-  size_t rem = stacking == ElementsStacking::Vertical ? 0 : sizeof...(args) - 1;
+  size_t rem = stacking == ElementsStacking::Vertical ? 0 : sizeof...(args);
   addElementImpl(category, stacking, element, rem);
   addElement(category, stacking, args...);
 }
