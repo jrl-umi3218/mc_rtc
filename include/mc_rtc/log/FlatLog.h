@@ -75,6 +75,21 @@ struct MC_RTC_UTILS_DLLAPI FlatLog
   template<typename T>
   std::vector<T> get(const std::string & entry) const;
 
+  /** Get a typed record entry at a given index
+   *
+   * When the record datat type does not match the requested data type, returns the default value provided.
+   *
+   * \param entry Entry to get
+   *
+   * \param i Index to get
+   *
+   * \param def Default value when the record data does not match requested
+   * data
+   *
+   */
+  template<typename T>
+  T get(const std::string & entry, size_t i, const T & def) const;
+
   struct record
   {
     using unique_void_ptr = std::unique_ptr<void, void (*)(void const *)>;

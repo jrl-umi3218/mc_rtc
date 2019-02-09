@@ -126,6 +126,31 @@ std::vector<T> FlatLog::get(const std::string & entry) const
   return ret;
 }
 
+template<typename T>
+T FlatLog::get(const std::string & entry, size_t i, const T & def) const
+{
+  if(!has(entry))
+  {
+    LOG_ERROR("No entry named " << entry << " in the loaded log")
+    return def;
+  }
+  const auto & data = data_.at(entry);
+  if(i >= data.size())
+  {
+    LOG_ERROR("Requested data out of available range")
+    return def;
+  }
+  auto ptr = details::record_cast<T>(data[i]);
+  if(ptr)
+  {
+    return *ptr;
+  }
+  else
+  {
+    return def;
+  }
+}
+
 } // namespace log
 
 } // namespace mc_rtc
