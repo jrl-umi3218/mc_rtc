@@ -199,6 +199,11 @@ void FlatLog::append(const std::string & f)
   }
 }
 
+size_t FlatLog::size() const
+{
+  return data_.size() == 0 ? 0 : data_.begin()->second.size();
+}
+
 std::set<std::string> FlatLog::entries() const
 {
   std::set<std::string> ret;

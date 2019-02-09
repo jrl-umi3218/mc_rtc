@@ -29,6 +29,9 @@ struct MC_RTC_UTILS_DLLAPI FlatLog
   /** Append a file into the flat log, the resulting content is the concatenation of the two logs*/
   void append(const std::string & fpath);
 
+  /** Returns the size of the log */
+  size_t size() const;
+
   /** Returns a sorted list of entries in the log */
   std::set<std::string> entries() const;
 
