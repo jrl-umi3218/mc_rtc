@@ -137,7 +137,7 @@ T FlatLog::get(const std::string & entry, size_t i, const T & def) const
   const auto & data = data_.at(entry);
   if(i >= data.size())
   {
-    LOG_ERROR("Requested data out of available range")
+    LOG_ERROR("Requested data (" << entry << ") out of available range (" << i << ", available: " << data.size() << ")")
     return def;
   }
   auto ptr = details::record_cast<T>(data[i]);
