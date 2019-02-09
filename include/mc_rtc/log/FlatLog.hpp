@@ -21,7 +21,7 @@ T const * record_cast(const FlatLog::record &)
 
 #define IMPL_RECORD_CAST(CPPT, ENUM)                                                                  \
   template<>                                                                                          \
-  CPPT const * record_cast(const FlatLog::record & r)                                                 \
+  inline CPPT const * record_cast(const FlatLog::record & r)                                          \
   {                                                                                                   \
     return r.type == mc_rtc::log::LogData_##ENUM ? static_cast<CPPT const *>(r.data.get()) : nullptr; \
   }
