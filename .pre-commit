@@ -1,0 +1,27 @@
+#!/bin/bash
+
+readonly mc_rtc_dir=`cd $(dirname $0)/../..; pwd`
+cd $mc_rtc_dir
+
+source .clang-format-common.sh
+
+out=0
+tmpfile=$(mktemp /tmp/clang-format-check.XXXXXX)
+for f in `git diff --cached --name-only --diff-filter=ACM`; do
+  case "$f" in
+    *.cpp | *.h | *.hpp)
+      $clang_format -style=file $f > $tmpfile
+      if ! [[ -z `diff $tmpfile $f` ]]; then
+        echo "Wrong formatting in $f"
+        out=1
+      fi
+      ;;
+    *)
+      ;;
+  esac
+done
+rm -f $tmpfile
+if [[ $out -eq 1 ]]; then
+  echo "Run ./.clang-format-fix.sh to fix issues"
+fi
+exit $out
