@@ -105,6 +105,19 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
         sva::PTransformd move = config("move");
         t->target(move * t->target());
       }
+      else if(config.has("relative"))
+      {
+        const auto & robot = solver.robot(config("robotIndex"));
+        std::string s1 = config("relative")("s1");
+        std::string s2 = config("relative")("s2");
+        sva::PTransformd target = config("relative")("target");
+        auto X_0_s1 = robot.surfacePose(s1);
+        auto X_0_s2 = robot.surfacePose(s2);
+        auto X_s1_s2 = X_0_s2 * X_0_s1.inv();
+        X_s1_s2.translation() = X_s1_s2.translation() / 2;
+        auto X_0_relative = X_s1_s2 * X_0_s1;
+        t->target(target * X_0_relative);
+      }
       t->load(solver, config);
       return t;
     });
