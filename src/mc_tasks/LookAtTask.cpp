@@ -105,6 +105,10 @@ static bool registered_lookat = mc_tasks::MetaTaskLoader::register_load_function
       {
         t->target(config("targetPos"));
       }
+      if(config.has("targetVector"))
+      {
+        t->targetVector(config("targetVector"));
+      }
       return t;
     });
 }
