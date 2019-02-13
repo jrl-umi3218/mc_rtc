@@ -43,6 +43,7 @@ public:
 
   /*! \brief Set the offset relative to the surface */
   void offset(const sva::PTransformd & off);
+
 private:
   /*! Index of robot on which the surface target is attached */
   unsigned int sRobotIndex;

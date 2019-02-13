@@ -13,8 +13,7 @@ LookAtSurfaceTask::LookAtSurfaceTask(const mc_rbdyn::Robots & robots,
                                      double stiffness,
                                      double weight)
 : LookAtTask(bodyName, bodyVector, robots, robotIndex, stiffness, weight), sRobotIndex(surfaceRobotIndex),
-  sName(surfaceName),
-  offset_(sva::PTransformd::Identity())
+  sName(surfaceName), offset_(sva::PTransformd::Identity())
 {
   const mc_rbdyn::Robot & robot = robots.robot(rIndex);
   bIndex = robot.bodyIndexByName(bodyName);
