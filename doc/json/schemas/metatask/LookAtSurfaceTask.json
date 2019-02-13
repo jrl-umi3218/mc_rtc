@@ -10,7 +10,7 @@
     "bodyVector": { "$ref": "/../../eigen/Vector3d.json" },
     "surfaceRobotIndex": { "type": "number", "minimum": 0},
     "surface": { "type": "string" },
-
+    "offset": { "$ref": "/../../sva/PTransformd.json" },
     "stiffness": { "type": "number", "minimum": 0},
     "damping": { "type": "number", "minimum": 0},
     "weight": { "type": "number", "minimum": 0},

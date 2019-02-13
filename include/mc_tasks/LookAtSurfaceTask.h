@@ -38,11 +38,18 @@ public:
   /*! \brief Update the gaze target from TF position */
   void update() override;
 
+  /*! \brief Access offset relative to the surface */
+  const sva::PTransformd & offset() const;
+
+  /*! \brief Set the offset relative to the surface */
+  void offset(const sva::PTransformd & off);
 private:
   /*! Index of robot on which the surface target is attached */
   unsigned int sRobotIndex;
   /*! Target surface name */
   std::string sName;
+  /*! Offset to the surface in surface frame */
+  sva::PTransformd offset_;
 };
 
 } // namespace mc_tasks

@@ -13,7 +13,8 @@ LookAtSurfaceTask::LookAtSurfaceTask(const mc_rbdyn::Robots & robots,
                                      double stiffness,
                                      double weight)
 : LookAtTask(bodyName, bodyVector, robots, robotIndex, stiffness, weight), sRobotIndex(surfaceRobotIndex),
-  sName(surfaceName)
+  sName(surfaceName),
+  offset_(sva::PTransformd::Identity())
 {
   const mc_rbdyn::Robot & robot = robots.robot(rIndex);
   bIndex = robot.bodyIndexByName(bodyName);
@@ -26,7 +27,17 @@ LookAtSurfaceTask::LookAtSurfaceTask(const mc_rbdyn::Robots & robots,
 void LookAtSurfaceTask::update()
 {
   auto & robot = robots.robot(sRobotIndex);
-  LookAtTask::target(robot.surface(sName).X_0_s(robot).translation());
+  LookAtTask::target((offset_ * robot.surfacePose(sName)).translation());
+}
+
+const sva::PTransformd & LookAtSurfaceTask::offset() const
+{
+  return offset_;
+}
+
+void LookAtSurfaceTask::offset(const sva::PTransformd & off)
+{
+  offset_ = off;
 }
 
 } // namespace mc_tasks
@@ -56,6 +67,10 @@ static bool registered_lookat_surface = mc_tasks::MetaTaskLoader::register_load_
         {
           t->stiffness(static_cast<double>(s));
         }
+      }
+      if(config.has("offset"))
+      {
+        t->offset(config("offset"));
       }
       t->load(solver, config);
       return t;
