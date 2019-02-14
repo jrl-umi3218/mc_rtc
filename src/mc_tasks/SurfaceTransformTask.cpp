@@ -105,6 +105,11 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
         sva::PTransformd move = config("move");
         t->target(move * t->target());
       }
+      else if(config.has("moveWorld"))
+      {
+        sva::PTransformd move = config("moveWorld");
+        t->target(t->target() * move);
+      }
       else if(config.has("relative"))
       {
         const auto & robot = solver.robot(config("robotIndex"));
