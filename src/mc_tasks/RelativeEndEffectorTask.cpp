@@ -96,6 +96,19 @@ void configure_pos_task(std::shared_ptr<mc_tasks::PositionTask> & t,
   {
     t->position(config("position"));
   }
+  if(config.has("relative") && config("relative").has("position"))
+  {
+    const auto & robot = solver.robot(config("robotIndex"));
+    std::string s1 = config("relative")("s1");
+    std::string s2 = config("relative")("s2");
+    Eigen::Vector3d position = config("relative")("position");
+    auto X_0_s1 = robot.surfacePose(s1);
+    auto X_0_s2 = robot.surfacePose(s2);
+    auto X_s1_s2 = X_0_s2 * X_0_s1.inv();
+    X_s1_s2.translation() = X_s1_s2.translation() / 2;
+    auto X_0_relative = X_s1_s2 * X_0_s1;
+    t->position((sva::PTransformd(position) * X_0_relative).translation());
+  }
   if(config.has("positionWeight"))
   {
     t->weight(config("positionWeight"));
@@ -126,6 +139,19 @@ void configure_ori_task(std::shared_ptr<mc_tasks::OrientationTask> & t,
   if(config.has("orientation"))
   {
     t->orientation(config("orientation"));
+  }
+  if(config.has("relative") && config("relative").has("orientation"))
+  {
+    const auto & robot = solver.robot(config("robotIndex"));
+    std::string s1 = config("relative")("s1");
+    std::string s2 = config("relative")("s2");
+    Eigen::Matrix3d orientation = config("relative")("orientation");
+    auto X_0_s1 = robot.surfacePose(s1);
+    auto X_0_s2 = robot.surfacePose(s2);
+    auto X_s1_s2 = X_0_s2 * X_0_s1.inv();
+    X_s1_s2.translation() = X_s1_s2.translation() / 2;
+    auto X_0_relative = X_s1_s2 * X_0_s1;
+    t->orientation((sva::PTransformd(orientation) * X_0_relative).rotation());
   }
   if(config.has("orientationWeight"))
   {

@@ -393,8 +393,8 @@ HRP4FlexRobotModule::HRP4FlexRobotModule(bool fixed) : HRP4WithHandRobotModule(f
 HRP4ComanoidRobotModule::HRP4ComanoidRobotModule()
 {
   readUrdf("hrp4_gripper", false, {});
-  halfSitting["L_HAND_J0"] = {0.005};
-  halfSitting["L_HAND_J1"] = {0.005};
+  halfSitting["L_HAND_J0"] = {0.45};
+  halfSitting["L_HAND_J1"] = {0.45};
   init();
 }
 
