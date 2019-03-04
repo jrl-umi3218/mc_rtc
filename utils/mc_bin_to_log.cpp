@@ -1,9 +1,7 @@
 #include <mc_rtc/log/serialization/fb_csv_utils.h>
-
 #include <mc_rtc/logging.h>
 
 #include <fstream>
-
 
 typedef std::tuple<std::string, mc_rtc::log::LogData, size_t> typed_key;
 
@@ -24,9 +22,9 @@ struct LogEntry
         auto k = keys[i];
         auto vt = mc_rtc::log::LogData(values_type[i]);
         size_t size = 0;
-#define CASE_ENUM(VALUE)\
-  case VALUE:\
-    size = mc_rtc::log::CSVWriterHelper<VALUE>::key_size(values[i]);\
+#define CASE_ENUM(VALUE)                                             \
+  case VALUE:                                                        \
+    size = mc_rtc::log::CSVWriterHelper<VALUE>::key_size(values[i]); \
     break;
         switch(vt)
         {
@@ -66,7 +64,7 @@ struct Log
     while(ifs)
     {
       int size = 0;
-      ifs.read((char*)(&size), sizeof(int));
+      ifs.read((char *)(&size), sizeof(int));
       if(ifs)
       {
         char * data = new char[size];
@@ -83,16 +81,15 @@ struct Log
           {
             const std::string & k = std::get<0>(nk);
             auto it = std::find_if(keys.begin(), keys.end(),
-                                   [&k](std::vector<typed_key>::value_type & kit){
-                                   return std::get<0>(kit) == k;
-                                   });
+                                   [&k](std::vector<typed_key>::value_type & kit) { return std::get<0>(kit) == k; });
             if(it != keys.end())
             {
               size_t n_size = std::get<2>(nk);
               size_t size = std::get<2>(*it);
               if(n_size != size)
               {
-                LOG_ERROR("Key " << k << " was first seen with size " << size << " but was found again with size " << n_size)
+                LOG_ERROR("Key " << k << " was first seen with size " << size << " but was found again with size "
+                                 << n_size)
                 LOG_ERROR("The resulting CSV will be malformed")
               }
             }
@@ -119,29 +116,35 @@ struct Log
       {
         continue;
       }
-      if(start) { start = false; }
-      else { buffer += ";"; }
-#define CASE_ENUM(VALUE)\
-  case VALUE:\
-    mc_rtc::log::CSVWriterHelper<VALUE>::write_header(key, size, buffer);\
+      if(start)
+      {
+        start = false;
+      }
+      else
+      {
+        buffer += ";";
+      }
+#define CASE_ENUM(VALUE)                                                  \
+  case VALUE:                                                             \
+    mc_rtc::log::CSVWriterHelper<VALUE>::write_header(key, size, buffer); \
     break;
-        switch(vt)
-        {
-          CASE_ENUM(mc_rtc::log::LogData_Bool)
-          CASE_ENUM(mc_rtc::log::LogData_Double)
-          CASE_ENUM(mc_rtc::log::LogData_DoubleVector)
-          CASE_ENUM(mc_rtc::log::LogData_UnsignedInt)
-          CASE_ENUM(mc_rtc::log::LogData_UInt64)
-          CASE_ENUM(mc_rtc::log::LogData_String)
-          CASE_ENUM(mc_rtc::log::LogData_Vector2d)
-          CASE_ENUM(mc_rtc::log::LogData_Vector3d)
-          CASE_ENUM(mc_rtc::log::LogData_Quaterniond)
-          CASE_ENUM(mc_rtc::log::LogData_PTransformd)
-          CASE_ENUM(mc_rtc::log::LogData_ForceVecd)
-          CASE_ENUM(mc_rtc::log::LogData_MotionVecd)
-          default:
-            break;
-        };
+      switch(vt)
+      {
+        CASE_ENUM(mc_rtc::log::LogData_Bool)
+        CASE_ENUM(mc_rtc::log::LogData_Double)
+        CASE_ENUM(mc_rtc::log::LogData_DoubleVector)
+        CASE_ENUM(mc_rtc::log::LogData_UnsignedInt)
+        CASE_ENUM(mc_rtc::log::LogData_UInt64)
+        CASE_ENUM(mc_rtc::log::LogData_String)
+        CASE_ENUM(mc_rtc::log::LogData_Vector2d)
+        CASE_ENUM(mc_rtc::log::LogData_Vector3d)
+        CASE_ENUM(mc_rtc::log::LogData_Quaterniond)
+        CASE_ENUM(mc_rtc::log::LogData_PTransformd)
+        CASE_ENUM(mc_rtc::log::LogData_ForceVecd)
+        CASE_ENUM(mc_rtc::log::LogData_MotionVecd)
+        default:
+          break;
+      };
 #undef CASE_ENUM
     }
     buffer += '\n';
@@ -158,12 +161,14 @@ struct Log
     }
     bool start = true;
     const auto & values = *entry.entry->values();
-    auto get_key_index = [&current_keys](const std::string & k)
-    {
+    auto get_key_index = [&current_keys](const std::string & k) {
       for(size_t i = 0; i < current_keys.size(); ++i)
       {
         const std::string & kn = std::get<0>(current_keys[i]);
-        if(kn == k) { return i; }
+        if(kn == k)
+        {
+          return i;
+        }
       }
       return current_keys.size();
     };
@@ -176,15 +181,21 @@ struct Log
       {
         continue;
       }
-      if(start) { start = false; }
-      else { buffer += ";"; }
+      if(start)
+      {
+        start = false;
+      }
+      else
+      {
+        buffer += ";";
+      }
       size_t idx = get_key_index(key);
       if(idx != current_keys.size())
       {
         const void * value = values[static_cast<flatbuffers::uoffset_t>(idx)];
-#define CASE_ENUM(VALUE)\
-  case VALUE:\
-    mc_rtc::log::CSVWriterHelper<VALUE>::write_data(value, buffer);\
+#define CASE_ENUM(VALUE)                                            \
+  case VALUE:                                                       \
+    mc_rtc::log::CSVWriterHelper<VALUE>::write_data(value, buffer); \
     break;
         switch(vt)
         {

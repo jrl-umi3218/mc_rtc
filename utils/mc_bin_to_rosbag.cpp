@@ -1,22 +1,19 @@
 #include <mc_rtc/log/serialization/MCLog_generated.h>
-
 #include <mc_rtc/logging.h>
-
-#include <rosbag/bag.h>
-
-#include <std_msgs/Bool.h>
-#include <std_msgs/Float64.h>
-#include <std_msgs/Float64MultiArray.h>
-#include <std_msgs/String.h>
-#include <std_msgs/UInt64.h>
 
 #include <geometry_msgs/Quaternion.h>
 #include <geometry_msgs/Transform.h>
 #include <geometry_msgs/Twist.h>
 #include <geometry_msgs/Vector3.h>
 #include <geometry_msgs/Wrench.h>
+#include <std_msgs/Bool.h>
+#include <std_msgs/Float64.h>
+#include <std_msgs/Float64MultiArray.h>
+#include <std_msgs/String.h>
+#include <std_msgs/UInt64.h>
 
 #include <fstream>
+#include <rosbag/bag.h>
 #include <string>
 #include <vector>
 
@@ -29,11 +26,11 @@ using namespace mc_rtc::log;
 template<mc_rtc::log::LogData T>
 struct ROSMessageFromFBUnion;
 
-#define MAKE_RM_F_FB(FB_T, RM_T)\
-  template<>\
-  struct ROSMessageFromFBUnion<FB_T>\
-  {\
-    typedef RM_T message_t;\
+#define MAKE_RM_F_FB(FB_T, RM_T)     \
+  template<>                         \
+  struct ROSMessageFromFBUnion<FB_T> \
+  {                                  \
+    typedef RM_T message_t;          \
   }
 MAKE_RM_F_FB(LogData_Bool, std_msgs::Bool);
 MAKE_RM_F_FB(LogData_Double, std_msgs::Float64);
@@ -56,8 +53,7 @@ struct FBToROS
 };
 
 template<>
-FBToROS<LogData_Bool>::ret_t
-  FBToROS<LogData_Bool>::convert(const void * data)
+FBToROS<LogData_Bool>::ret_t FBToROS<LogData_Bool>::convert(const void * data)
 {
   auto fb_data = static_cast<const Bool *>(data);
   ret_t ret;
@@ -66,8 +62,7 @@ FBToROS<LogData_Bool>::ret_t
 }
 
 template<>
-FBToROS<LogData_Double>::ret_t
-  FBToROS<LogData_Double>::convert(const void * data)
+FBToROS<LogData_Double>::ret_t FBToROS<LogData_Double>::convert(const void * data)
 {
   auto fb_data = static_cast<const Double *>(data);
   ret_t ret;
@@ -76,8 +71,7 @@ FBToROS<LogData_Double>::ret_t
 }
 
 template<>
-FBToROS<LogData_DoubleVector>::ret_t
-  FBToROS<LogData_DoubleVector>::convert(const void * data)
+FBToROS<LogData_DoubleVector>::ret_t FBToROS<LogData_DoubleVector>::convert(const void * data)
 {
   auto fb_data = static_cast<const DoubleVector *>(data);
   size_t fb_size = fb_data->v()->size();
@@ -98,8 +92,7 @@ FBToROS<LogData_DoubleVector>::ret_t
 }
 
 template<>
-FBToROS<LogData_UnsignedInt>::ret_t
-  FBToROS<LogData_UnsignedInt>::convert(const void * data)
+FBToROS<LogData_UnsignedInt>::ret_t FBToROS<LogData_UnsignedInt>::convert(const void * data)
 {
   auto fb_data = static_cast<const UnsignedInt *>(data);
   ret_t ret;
@@ -108,8 +101,7 @@ FBToROS<LogData_UnsignedInt>::ret_t
 }
 
 template<>
-FBToROS<LogData_String>::ret_t
-  FBToROS<LogData_String>::convert(const void * data)
+FBToROS<LogData_String>::ret_t FBToROS<LogData_String>::convert(const void * data)
 {
   auto fb_data = static_cast<const String *>(data);
   ret_t ret;
@@ -118,8 +110,7 @@ FBToROS<LogData_String>::ret_t
 }
 
 template<>
-FBToROS<LogData_Vector2d>::ret_t
-  FBToROS<LogData_Vector2d>::convert(const void * data)
+FBToROS<LogData_Vector2d>::ret_t FBToROS<LogData_Vector2d>::convert(const void * data)
 {
   auto fb_data = static_cast<const Vector2d *>(data);
   ret_t ret;
@@ -130,8 +121,7 @@ FBToROS<LogData_Vector2d>::ret_t
 }
 
 template<>
-FBToROS<LogData_Vector3d>::ret_t
-  FBToROS<LogData_Vector3d>::convert(const void * data)
+FBToROS<LogData_Vector3d>::ret_t FBToROS<LogData_Vector3d>::convert(const void * data)
 {
   auto fb_data = static_cast<const Vector3d *>(data);
   ret_t ret;
@@ -142,8 +132,7 @@ FBToROS<LogData_Vector3d>::ret_t
 }
 
 template<>
-FBToROS<LogData_Quaterniond>::ret_t
-  FBToROS<LogData_Quaterniond>::convert(const void * data)
+FBToROS<LogData_Quaterniond>::ret_t FBToROS<LogData_Quaterniond>::convert(const void * data)
 {
   auto fb_data = static_cast<const Quaterniond *>(data);
   ret_t ret;
@@ -155,8 +144,7 @@ FBToROS<LogData_Quaterniond>::ret_t
 }
 
 template<>
-FBToROS<LogData_PTransformd>::ret_t
-  FBToROS<LogData_PTransformd>::convert(const void * data)
+FBToROS<LogData_PTransformd>::ret_t FBToROS<LogData_PTransformd>::convert(const void * data)
 {
   auto fb_data = static_cast<const PTransformd *>(data);
   ret_t ret;
@@ -171,8 +159,7 @@ FBToROS<LogData_PTransformd>::ret_t
 }
 
 template<>
-FBToROS<LogData_ForceVecd>::ret_t
-  FBToROS<LogData_ForceVecd>::convert(const void * data)
+FBToROS<LogData_ForceVecd>::ret_t FBToROS<LogData_ForceVecd>::convert(const void * data)
 {
   auto fb_data = static_cast<const ForceVecd *>(data);
   ret_t ret;
@@ -186,8 +173,7 @@ FBToROS<LogData_ForceVecd>::ret_t
 }
 
 template<>
-FBToROS<LogData_MotionVecd>::ret_t
-  FBToROS<LogData_MotionVecd>::convert(const void * data)
+FBToROS<LogData_MotionVecd>::ret_t FBToROS<LogData_MotionVecd>::convert(const void * data)
 {
   auto fb_data = static_cast<const MotionVecd *>(data);
   ret_t ret;
@@ -227,7 +213,7 @@ int main(int argc, char * argv[])
   while(ifs)
   {
     int size = 0;
-    ifs.read((char*)(&size), sizeof(int));
+    ifs.read((char *)(&size), sizeof(int));
     if(ifs)
     {
       char * data = new char[size];
@@ -251,7 +237,10 @@ int main(int argc, char * argv[])
         const void * fb_data = values[i];
         switch(type)
         {
-#define CASE_ENUM(T) case T: bag.write(topic, now, FBToROS<T>::convert(fb_data)); break
+#define CASE_ENUM(T)                                     \
+  case T:                                                \
+    bag.write(topic, now, FBToROS<T>::convert(fb_data)); \
+    break
           CASE_ENUM(LogData_Bool);
           CASE_ENUM(LogData_Double);
           CASE_ENUM(LogData_DoubleVector);

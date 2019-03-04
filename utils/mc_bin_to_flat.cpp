@@ -14,24 +14,24 @@ namespace utils
 
 bool isValid(const mc_rtc::log::LogData & type)
 {
-    switch(type)
-    {
-      case mc_rtc::log::LogData_Bool:
-      case mc_rtc::log::LogData_Double:
-      case mc_rtc::log::LogData_UnsignedInt:
-      case mc_rtc::log::LogData_UInt64:
-      case mc_rtc::log::LogData_String:
-      case mc_rtc::log::LogData_Quaterniond:
-      case mc_rtc::log::LogData_Vector3d:
-      case mc_rtc::log::LogData_Vector2d:
-      case mc_rtc::log::LogData_PTransformd:
-      case mc_rtc::log::LogData_ForceVecd:
-      case mc_rtc::log::LogData_MotionVecd:
-      case mc_rtc::log::LogData_DoubleVector:
-        return true;
-      default:
-        return false;
-    }
+  switch(type)
+  {
+    case mc_rtc::log::LogData_Bool:
+    case mc_rtc::log::LogData_Double:
+    case mc_rtc::log::LogData_UnsignedInt:
+    case mc_rtc::log::LogData_UInt64:
+    case mc_rtc::log::LogData_String:
+    case mc_rtc::log::LogData_Quaterniond:
+    case mc_rtc::log::LogData_Vector3d:
+    case mc_rtc::log::LogData_Vector2d:
+    case mc_rtc::log::LogData_PTransformd:
+    case mc_rtc::log::LogData_ForceVecd:
+    case mc_rtc::log::LogData_MotionVecd:
+    case mc_rtc::log::LogData_DoubleVector:
+      return true;
+    default:
+      return false;
+  }
 }
 
 std::map<std::string, mc_rtc::log::LogData> entries(const mc_rtc::log::FlatLog & log)
@@ -324,12 +324,15 @@ template<>
 void write<std::vector<double>>(const mc_rtc::log::FlatLog & log, const std::string & entry, std::ostream & os)
 {
   auto data = log.getRaw<mc_rtc::log::DoubleVector>(entry);
-  std::vector<double> vec {};
+  std::vector<double> vec{};
   size_t maxS = 0;
   for(size_t i = 0; i < data.size(); ++i)
   {
     auto * v = data[i];
-    if(v) { maxS = std::max<size_t>(maxS, v->v()->size()); }
+    if(v)
+    {
+      maxS = std::max<size_t>(maxS, v->v()->size());
+    }
   }
   vec.resize(maxS * data.size());
   for(size_t i = 0; i < data.size(); ++i)
@@ -342,21 +345,21 @@ void write<std::vector<double>>(const mc_rtc::log::FlatLog & log, const std::str
       const double * vData = v->v()->data();
       for(size_t j = 0; j < vSize; ++j)
       {
-        vec[j*data.size() + i] = vData[j];
+        vec[j * data.size() + i] = vData[j];
       }
     }
     for(size_t j = vSize; j < maxS; ++j)
     {
-      vec[j*data.size() + i] = nan;
+      vec[j * data.size() + i] = nan;
     }
   }
   for(size_t i = 0; i < maxS; ++i)
   {
-    write(entry + "_" + std::to_string(i), &vec[i*data.size()], data.size(), os);
+    write(entry + "_" + std::to_string(i), &vec[i * data.size()], data.size(), os);
   }
 }
 
-}
+} // namespace utils
 
 int main(int argc, char * argv[])
 {
