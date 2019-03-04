@@ -23,107 +23,6 @@ void FlatLog::load(const std::string & fpath)
   append(fpath);
 }
 
-namespace
-{
-
-template<typename T>
-void void_deleter(void const * ptr)
-{
-  delete static_cast<T const *>(ptr);
-}
-
-#define trivial_convert(ENUM, CPPT, MEMBER)                                             \
-  FlatLog::record::unique_void_ptr convert(const mc_rtc::log::ENUM * v)                 \
-  {                                                                                     \
-    return FlatLog::record::unique_void_ptr(new CPPT(v->MEMBER()), void_deleter<CPPT>); \
-  }
-trivial_convert(Bool, bool, b);
-trivial_convert(Double, double, d);
-trivial_convert(UnsignedInt, unsigned int, i);
-trivial_convert(UInt64, uint64_t, i);
-trivial_convert(String, std::string, s()->str);
-#undef trivial_convert
-
-FlatLog::record::unique_void_ptr convert(const mc_rtc::log::Vector2d * v)
-{
-  return FlatLog::record::unique_void_ptr(new Eigen::Vector2d(v->x(), v->y()), void_deleter<Eigen::Vector2d>);
-}
-
-FlatLog::record::unique_void_ptr convert(const mc_rtc::log::Vector3d * v)
-{
-  return FlatLog::record::unique_void_ptr(new Eigen::Vector3d(v->x(), v->y(), v->z()), void_deleter<Eigen::Vector3d>);
-}
-
-FlatLog::record::unique_void_ptr convert(const mc_rtc::log::Quaterniond * v)
-{
-  return FlatLog::record::unique_void_ptr(new Eigen::Quaterniond(v->w(), v->x(), v->y(), v->z()),
-                                          void_deleter<Eigen::Quaterniond>);
-}
-
-FlatLog::record::unique_void_ptr convert(const mc_rtc::log::PTransformd * pt)
-{
-  return FlatLog::record::unique_void_ptr(
-      new sva::PTransformd(Eigen::Quaterniond{pt->ori()->w(), pt->ori()->x(), pt->ori()->y(), pt->ori()->z()},
-                           {pt->pos()->x(), pt->pos()->y(), pt->pos()->z()}),
-      void_deleter<sva::PTransformd>);
-}
-
-FlatLog::record::unique_void_ptr convert(const mc_rtc::log::ForceVecd * fv)
-{
-  return FlatLog::record::unique_void_ptr(new sva::ForceVecd({fv->couple()->x(), fv->couple()->y(), fv->couple()->z()},
-                                                             {fv->force()->x(), fv->force()->y(), fv->force()->z()}),
-                                          void_deleter<sva::ForceVecd>);
-}
-
-FlatLog::record::unique_void_ptr convert(const mc_rtc::log::MotionVecd * mv)
-{
-  return FlatLog::record::unique_void_ptr(
-      new sva::ForceVecd({mv->angular()->x(), mv->angular()->y(), mv->angular()->z()},
-                         {mv->linear()->x(), mv->linear()->y(), mv->linear()->z()}),
-      void_deleter<sva::MotionVecd>);
-}
-
-FlatLog::record::unique_void_ptr convert(const mc_rtc::log::DoubleVector * v)
-{
-  auto * ret = new std::vector<double>(v->v()->size());
-  for(size_t i = 0; i < ret->size(); ++i)
-  {
-    (*ret)[i] = v->v()->operator[](static_cast<flatbuffers::uoffset_t>(i));
-  }
-  return FlatLog::record::unique_void_ptr(ret, void_deleter<std::vector<double>>);
-}
-
-FlatLog::record::unique_void_ptr convert(LogData t, const void * v)
-{
-  switch(t)
-  {
-#define IMPL_CASE(ENUM)                                        \
-  case mc_rtc::log::LogData_##ENUM:                            \
-    return convert(static_cast<const mc_rtc::log::ENUM *>(v)); \
-    break;
-    IMPL_CASE(Bool)
-    IMPL_CASE(Double)
-    IMPL_CASE(DoubleVector)
-    IMPL_CASE(UnsignedInt)
-    IMPL_CASE(UInt64)
-    IMPL_CASE(String)
-    IMPL_CASE(Vector2d)
-    IMPL_CASE(Vector3d)
-    IMPL_CASE(Quaterniond)
-    IMPL_CASE(PTransformd)
-    IMPL_CASE(ForceVecd)
-    IMPL_CASE(MotionVecd)
-#undef IMPL_CASE
-    default:
-      break;
-  };
-  return FlatLog::record::unique_void_ptr(nullptr, void_deleter<double>);
-}
-
-} // namespace
-
-FlatLog::record::record() : type(LogData_NONE), data(nullptr, void_deleter<double>) {}
-
 void FlatLog::append(const std::string & f)
 {
   auto fpath = bfs::path(f);
@@ -138,70 +37,87 @@ void FlatLog::append(const std::string & f)
     LOG_ERROR("Failed to open " << f)
     return;
   }
-  auto allKeys = entries();
-  std::vector<std::string> currentKeys = {};
-  std::set<std::string> missingKeys = {};
+  std::vector<size_t> currentIndexes = {};
+  std::vector<size_t> missingIndexes = {};
   size_t size = 0;
-  if(allKeys.size())
+  if(data_.size())
   {
-    size = data_[*allKeys.begin()].size();
+    size = data_[0].records.size();
   }
-  std::vector<char> buffer;
   while(ifs)
   {
     int entrySize = 0;
     ifs.read((char *)&entrySize, sizeof(int));
     if(!ifs)
     {
-      size -= 1;
+      if(size != 0)
+      {
+        size -= 1;
+      }
       break;
     }
-    if(buffer.size() < static_cast<size_t>(entrySize))
+    buffers_.emplace_back(new char[entrySize]);
+    char * buffer = buffers_.back().get();
+    ifs.read(buffer, entrySize);
+    if(!ifs)
     {
-      buffer.resize(entrySize);
+      if(size != 0)
+      {
+        size -= 1;
+      }
+      break;
     }
-    ifs.read(buffer.data(), entrySize);
-    auto * log = mc_rtc::log::GetLog(buffer.data());
+    auto * log = mc_rtc::log::GetLog(buffer);
     if(log->keys() && log->keys()->size())
     {
-      for(const auto & k : missingKeys)
+      for(const auto & k : missingIndexes)
       {
-        data_[k].resize(size);
+        data_[k].records.resize(size);
       }
-      currentKeys.clear();
+      currentIndexes.clear();
       const auto & keys = *log->keys();
       for(const auto & k_ffb : keys)
       {
         const auto & k = k_ffb->str();
-        currentKeys.push_back(k);
-        allKeys.insert(k);
-        data_[k].resize(size);
+        currentIndexes.push_back(index(k, size));
       }
-      missingKeys.clear();
-      std::set<std::string> sortedKeys(currentKeys.begin(), currentKeys.end());
-      std::set_difference(allKeys.begin(), allKeys.end(), sortedKeys.begin(), sortedKeys.end(),
-                          std::inserter(missingKeys, missingKeys.begin()));
+      missingIndexes.clear();
+      {
+        size_t i = 0;
+        for(size_t j = 0; j < currentIndexes.size(); ++j)
+        {
+          while(i < currentIndexes[j])
+          {
+            missingIndexes.push_back(i);
+            i++;
+          }
+        }
+        for(size_t i = currentIndexes.back(); i < data_.size(); ++i)
+        {
+          missingIndexes.push_back(i);
+        }
+      }
     }
     const auto & values = *log->values();
     const auto & values_type = *log->values_type();
     for(flatbuffers::uoffset_t i = 0; i < values_type.size(); ++i)
     {
-      const auto & k = currentKeys[i];
+      auto & records = data_[currentIndexes[i]].records;
       auto vt = mc_rtc::log::LogData(values_type[i]);
       const void * v = values[i];
-      data_[k].push_back({vt, convert(vt, v)});
+      records.emplace_back(vt, v);
     }
     size += 1;
   }
-  for(const auto & k : missingKeys)
+  for(const auto & k : missingIndexes)
   {
-    data_[k].resize(size);
+    data_[k].records.resize(size);
   }
 }
 
 size_t FlatLog::size() const
 {
-  return data_.size() == 0 ? 0 : data_.begin()->second.size();
+  return data_.size() == 0 ? 0 : data_[0].records.size();
 }
 
 std::set<std::string> FlatLog::entries() const
@@ -209,14 +125,15 @@ std::set<std::string> FlatLog::entries() const
   std::set<std::string> ret;
   for(const auto & e : data_)
   {
-    ret.insert(e.first);
+    ret.insert(e.name);
   }
   return ret;
 }
 
 bool FlatLog::has(const std::string & entry) const
 {
-  return data_.count(entry) != 0;
+  return std::find_if(data_.begin(), data_.end(), [&entry](const FlatLog::entry & e) { return e.name == entry; })
+         != data_.end();
 }
 
 std::set<LogData> FlatLog::types(const std::string & entry) const
@@ -227,14 +144,56 @@ std::set<LogData> FlatLog::types(const std::string & entry) const
     return {};
   }
   std::set<LogData> ret;
-  for(const auto & r : data_.at(entry))
+  for(const auto & r : at(entry))
+  {
+    ret.insert(r.type);
+  }
+  ret.erase(mc_rtc::log::LogData_NONE);
+  return ret;
+}
+
+LogData FlatLog::type(const std::string & entry) const
+{
+  if(!has(entry))
+  {
+    LOG_ERROR("No entry named " << entry << " in the loaded log")
+    return {};
+  }
+  for(const auto & r : at(entry))
   {
     if(r.type != mc_rtc::log::LogData_NONE)
     {
-      ret.insert(r.type);
+      return r.type;
     }
   }
-  return ret;
+  return mc_rtc::log::LogData_NONE;
+}
+
+const std::vector<FlatLog::record> & FlatLog::at(const std::string & entry) const
+{
+  for(const auto & d : data_)
+  {
+    if(d.name == entry)
+    {
+      return d.records;
+    }
+  }
+  throw(std::runtime_error("No such entry"));
+}
+
+size_t FlatLog::index(const std::string & entry, size_t size)
+{
+  for(size_t i = 0; i < data_.size(); ++i)
+  {
+    auto & e = data_[i];
+    if(e.name == entry)
+    {
+      e.records.resize(size);
+      return i;
+    }
+  }
+  data_.push_back({entry, std::vector<FlatLog::record>{size}});
+  return data_.size() - 1;
 }
 
 } // namespace log

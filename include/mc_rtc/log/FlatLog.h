@@ -41,7 +41,10 @@ struct MC_RTC_UTILS_DLLAPI FlatLog
   /** Returns available types for an entry */
   std::set<LogData> types(const std::string & entry) const;
 
-  /** Get a type record entry
+  /** Get the first non None type for an entry */
+  LogData type(const std::string & entry) const;
+
+  /** Get a type record entry. The returned type is a flatbuffer type
    *
    * Get null pointer entry when the record data type does not match the
    * requested data type
@@ -50,7 +53,7 @@ struct MC_RTC_UTILS_DLLAPI FlatLog
    *
    */
   template<typename T>
-  std::vector<T const *> getRaw(const std::string & entry) const;
+  std::vector<const T *> getRaw(const std::string & entry) const;
 
   /** Get a typed record entry
    *
@@ -95,15 +98,26 @@ struct MC_RTC_UTILS_DLLAPI FlatLog
 
   struct record
   {
-    using unique_void_ptr = std::unique_ptr<void, void (*)(void const *)>;
-    record();
-    record(LogData t, unique_void_ptr && d) : type(t), data(std::move(d)) {}
+    record() = default;
+    record(LogData t, const void * d) : type(t), data(d) {}
     LogData type = LogData_NONE;
-    unique_void_ptr data;
+    const void * data = nullptr;
+  };
+  struct entry
+  {
+    std::string name;
+    std::vector<record> records;
   };
 
 private:
-  std::unordered_map<std::string, std::vector<record>> data_;
+  std::vector<std::unique_ptr<char[]>> buffers_;
+  std::vector<entry> data_;
+
+  /** Retrieve records for a given entry */
+  const std::vector<record> & at(const std::string & entry) const;
+
+  /** Retrieve the index of a given entry, creates the entry if it doesn't exist */
+  size_t index(const std::string & entry, size_t size);
 };
 
 } // namespace log
