@@ -4,6 +4,7 @@ cimport mc_control.c_mc_control as c_mc_control
 
 cimport eigen.eigen as eigen
 
+cimport sva.c_sva as c_sva
 cimport sva.sva as sva
 
 cimport mc_rbdyn.c_mc_rbdyn as c_mc_rbdyn
@@ -165,3 +166,76 @@ cdef class MCPythonController(MCController):
       c_mc_control.set_read_write_msg_callback(deref(self.impl), &python_to_read_write_msg_callback, <void*>(self))
     except AttributeError:
       pass
+
+cdef class MCGlobalController(object):
+  def __dealloc__(self):
+    del self.impl
+    self.impl = NULL
+  def __cinit_simple__(self):
+    self.impl = new c_mc_control.MCGlobalController()
+  def __cinit_conf__(self, conf):
+    self.impl = new c_mc_control.MCGlobalController(conf)
+  def __cinit_full__(self, conf, mc_rbdyn.RobotModule rm):
+    self.impl = new c_mc_control.MCGlobalController(conf, rm.impl)
+  def __cinit__(self, *args):
+    if len(args) == 0:
+      self.__cinit_simple__()
+    elif len(args) == 1:
+      self.__cinit_conf__(args[0])
+    elif len(args) == 2:
+      self.__cinit_full__(args[0], args[1])
+    else:
+      raise TypeError("Wrong arguments passed to MCGlobalController ctor")
+  def init(self, q, pos = None):
+    cdef c_mc_control.array7d p = c_mc_control.array7d()
+    if pos is None:
+      self.impl.init(q)
+    else:
+      assert(len(pos) == 7)
+      for i,pi in enumerate(pos):
+        p[i] = pos[i]
+      self.impl.init(q, p)
+  def setSensorPosition(self, eigen.Vector3d p):
+    self.impl.setSensorPosition(p.impl)
+  def setSensorOrientation(self, eigen.Quaterniond q):
+    self.impl.setSensorOrientation(q.impl)
+  def setSensorLinearVelocity(self, eigen.Vector3d lv):
+    self.impl.setSensorLinearVelocity(lv.impl)
+  def setSensorAngularVelocity(self, eigen.Vector3d av):
+    self.impl.setSensorAngularVelocity(av.impl)
+  def setSensorAcceleration(self, eigen.Vector3d a):
+    self.impl.setSensorAcceleration(a.impl)
+  def setEncoderValues(self, q):
+    self.impl.setEncoderValues(q)
+  def setEncoderVelocities(self, alpha):
+    self.impl.setEncoderVelocities(alpha)
+  def setFlexibilityValues(self, flex):
+    self.impl.setFlexibilityValues(flex)
+  def setJointTorques(self, tau):
+    self.impl.setJointTorques(tau)
+  def setWrenches(self, wrenchesIn):
+    cdef cppmap[string, c_sva.ForceVecd] wrenches = cppmap[string, c_sva.ForceVecd]()
+    for sensor,w in wrenchesIn.iteritems():
+      if not isinstance(w, sva.ForceVecd):
+        w = sva.ForceVecd(w)
+      wrenches[sensor] = deref((<sva.ForceVecd>(w)).impl)
+    self.impl.setWrenches(wrenches)
+  def setActualGripperQ(self, gripperQ):
+    self.impl.setActualGripperQ(gripperQ)
+
+  def run(self):
+    return self.impl.run()
+
+  def timestep(self):
+    return self.impl.timestep()
+  def controller(self):
+    return MCControllerFromPtr(&(self.impl.controller()))
+  def ref_joint_order(self):
+    return self.impl.ref_joint_order()
+  def robot(self):
+    return mc_rbdyn.RobotFromC(self.impl.robot())
+  property running:
+    def __get__(self):
+      return self.impl.running
+    def __set__(self, b):
+      self.impl.running = b

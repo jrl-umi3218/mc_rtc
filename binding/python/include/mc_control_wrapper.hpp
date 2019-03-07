@@ -7,6 +7,8 @@
 #include <memory>
 #include <sstream>
 
+using array7d = std::array<double, 7>;
+
 namespace mc_control
 {
 
