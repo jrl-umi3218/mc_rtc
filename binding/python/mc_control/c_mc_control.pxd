@@ -64,6 +64,45 @@ cdef extern from "<mc_control/mc_python_controller.h>" namespace "mc_control":
   cdef cppclass MCPythonController(MCController):
     MCPythonController(const vector[RobotModulePtr]&, double)
 
+cdef extern from "<array>" namespace "std" nogil:
+  cdef cppclass array[T, N]:
+    array() except +
+    T& operator[](size_t)
+
+cdef extern from *:
+  ctypedef int seven "7"
+  ctypedef array[double, seven] array7d
+
+
+cdef extern from "<mc_control/mc_global_controller.h>" namespace "mc_control":
+  cdef cppclass MCGlobalController:
+    MCGlobalController()
+    MCGlobalController(string)
+    MCGlobalController(string, RobotModulePtr)
+
+    void init(vector[double])
+    void init(vector[double], array7d)
+
+    void setSensorPosition(Vector3d)
+    void setSensorOrientation(Quaterniond)
+    void setSensorLinearVelocity(Vector3d)
+    void setSensorAngularVelocity(Vector3d)
+    void setSensorAcceleration(Vector3d)
+    void setEncoderValues(vector[double])
+    void setEncoderVelocities(vector[double])
+    void setFlexibilityValues(vector[double])
+    void setJointTorques(vector[double])
+    void setWrenches(cppmap[string, ForceVecd])
+    void setActualGripperQ(cppmap[string, vector[double]])
+
+    cppbool run()
+
+    double timestep()
+    MCController& controller()
+    vector[string] ref_joint_order()
+    Robot& robot()
+
+    cppbool running
 
 cdef extern from "mc_control_wrapper.hpp" namespace "mc_control":
   ControllerResetData & const_cast_crd(const ControllerResetData&)

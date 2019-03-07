@@ -23,3 +23,6 @@ cdef class PythonRWCallback(object):
 
 cdef public api class MCPythonController(MCController)[object MCPythonControllerObject, type MCPythonControllerType]:
   cdef c_mc_control.MCPythonController * impl
+
+cdef class MCGlobalController(object):
+  cdef c_mc_control.MCGlobalController * impl
