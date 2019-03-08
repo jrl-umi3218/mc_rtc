@@ -5,6 +5,7 @@
 
 #include <SpaceVecAlg/SpaceVecAlg>
 
+#include <stdexcept>
 #include <string>
 #include <unordered_map>
 
