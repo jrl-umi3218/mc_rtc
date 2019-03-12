@@ -50,10 +50,6 @@ void FlatLog::append(const std::string & f)
     ifs.read((char *)&entrySize, sizeof(int));
     if(!ifs)
     {
-      if(size != 0)
-      {
-        size -= 1;
-      }
       break;
     }
     buffers_.emplace_back(new char[entrySize]);
@@ -61,10 +57,6 @@ void FlatLog::append(const std::string & f)
     ifs.read(buffer, entrySize);
     if(!ifs)
     {
-      if(size != 0)
-      {
-        size -= 1;
-      }
       break;
     }
     auto * log = mc_rtc::log::GetLog(buffer);
