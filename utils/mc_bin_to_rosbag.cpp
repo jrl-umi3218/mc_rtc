@@ -186,30 +186,13 @@ FBToROS<LogData_MotionVecd>::ret_t FBToROS<LogData_MotionVecd>::convert(const vo
   return ret;
 }
 
-void usage(char * p)
+void mc_bin_to_rosbag(const std::string & in, const std::string & out, double dt)
 {
-  LOG_ERROR("Usage: " << p << " [bin] [bag] (dt=0.005)")
-}
-
-int main(int argc, char * argv[])
-{
-  if(argc < 3)
-  {
-    usage(argv[0]);
-    return 1;
-  }
-  double dt = 0.005;
-  if(argc > 3)
-  {
-    std::stringstream ss;
-    ss << argv[3];
-    ss >> dt;
-  }
   ros::Time::init();
   auto now = ros::Time::now();
-  rosbag::Bag bag(argv[2], rosbag::bagmode::Write);
+  rosbag::Bag bag(out, rosbag::bagmode::Write);
   std::vector<std::string> topics;
-  std::ifstream ifs(argv[1], std::ifstream::binary);
+  std::ifstream ifs(in, std::ifstream::binary);
   while(ifs)
   {
     int size = 0;

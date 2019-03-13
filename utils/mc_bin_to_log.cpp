@@ -249,19 +249,8 @@ struct Log
   std::vector<typed_key> keys;
 };
 
-void usage(const char * bin)
+void mc_bin_to_log(const std::string & in, const std::string & out)
 {
-  LOG_ERROR("Usage: " << bin << " [bin] [log]")
-}
-
-int main(int argc, char * argv[])
-{
-  if(argc != 3)
-  {
-    usage(argv[0]);
-    return 1;
-  }
-  Log log(argv[1]);
-  log.convert(argv[2]);
-  return 0;
+  Log log(in);
+  log.convert(out);
 }

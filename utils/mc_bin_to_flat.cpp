@@ -4,11 +4,6 @@
 #include <map>
 #include <type_traits>
 
-void usage(const char * bin)
-{
-  LOG_ERROR("Usage: " << bin << " [bin] [flat]")
-}
-
 namespace utils
 {
 
@@ -361,16 +356,11 @@ void write<std::vector<double>>(const mc_rtc::log::FlatLog & log, const std::str
 
 } // namespace utils
 
-int main(int argc, char * argv[])
+void mc_bin_to_flat(const std::string & in, const std::string & out)
 {
-  if(argc != 3)
-  {
-    usage(argv[0]);
-    return 1;
-  }
-  mc_rtc::log::FlatLog log(argv[1]);
+  mc_rtc::log::FlatLog log(in);
   auto entries = utils::entries(log);
-  std::ofstream ofs(argv[2], std::ofstream::binary);
+  std::ofstream ofs(out, std::ofstream::binary);
   utils::write(utils::nEntries(log, entries), ofs);
   for(const auto & e : entries)
   {
@@ -412,5 +402,4 @@ int main(int argc, char * argv[])
         break;
     }
   }
-  return 0;
 }
