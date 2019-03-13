@@ -124,7 +124,7 @@ void write(const std::string & entry, const double * data, size_t size, std::ost
 {
   write(entry, true, os);
   write(size, os);
-  os.write((char *)data, size * sizeof(double));
+  os.write((const char *)data, size * sizeof(double));
 }
 
 void write(const std::string & entry, const std::vector<double> & data, std::ostream & os)

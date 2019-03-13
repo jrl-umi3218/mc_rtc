@@ -78,11 +78,15 @@ T convert(const LogT *)
     return v->MEMBER();                                                                                      \
   }
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wpedantic"
+#pragma GCC diagnostic ignored "-Wconversion"
 trivial_convert(Bool, bool, b);
 trivial_convert(Double, double, d);
 trivial_convert(UnsignedInt, unsigned int, i);
 trivial_convert(UInt64, uint64_t, i);
 trivial_convert(String, std::string, s()->str);
+#pragma GCC diagnostic pop
 
 #undef trivial_convert
 
