@@ -161,23 +161,75 @@ int show(int argc, char * argv[])
     return 1;
   }
   std::string in = vm["in"].as<std::string>();
-  mc_rtc::log::FlatLog log(in);
-  auto entries = log.entries();
-  std::cout << in << " summary\n";
-  std::cout << "Entries: " << entries.size() << "\n";
-  if(log.has("t"))
+  bfs::path in_p(in);
+  if(!bfs::exists(in_p) || !bfs::is_regular_file(in_p))
   {
-    double start_t = log.get<double>("t", 0, 0);
-    double end_t = log.get<double>("t", log.size() - 1, 0);
+    std::cerr << in << " does not exist or is not a file, aborting...\n";
+    return 1;
+  }
+  std::ifstream ifs(in, std::ifstream::binary);
+  std::vector<char> buffer(1024);
+  std::set<std::pair<std::string, mc_rtc::log::LogData>> keys;
+  double start_t = 0;
+  double end_t = 0;
+  size_t n = 0;
+  bool has_t = false;
+  flatbuffers::uoffset_t t_index = 0;
+  while(ifs)
+  {
+    int entrySize = 0;
+    ifs.read((char *)&entrySize, sizeof(int));
+    if(!ifs)
+    {
+      break;
+    }
+    while(buffer.size() < static_cast<size_t>(entrySize))
+    {
+      buffer.resize(2 * buffer.size());
+    }
+    ifs.read(buffer.data(), entrySize);
+    if(!ifs)
+    {
+      break;
+    }
+    auto log = mc_rtc::log::GetLog(buffer.data());
+    if(log->keys() && log->keys()->size())
+    {
+      has_t = false;
+      const auto & ks = *log->keys();
+      for(flatbuffers::uoffset_t i = 0; i < ks.size(); ++i)
+      {
+        if(ks[i]->size() == 1 && strncmp(ks[i]->c_str(), "t", 1) == 0)
+        {
+          has_t = true;
+          t_index = i;
+        }
+        keys.insert(std::make_pair(ks[i]->str(), mc_rtc::log::LogData((*log->values_type())[i])));
+      }
+    }
+    if(has_t && n == 0)
+    {
+      start_t = static_cast<const mc_rtc::log::Double *>((*log->values())[t_index])->d();
+    }
+    else
+    {
+      end_t = static_cast<const mc_rtc::log::Double *>((*log->values())[t_index])->d();
+    }
+    n++;
+  }
+  std::cout << in << " summary\n";
+  std::cout << "Entries: " << keys.size() << "\n";
+  if(start_t != end_t)
+  {
     std::cout << "Start time: " << start_t << "s\n";
     std::cout << "End time: " << end_t << "s\n";
     std::cout << "Duration: " << (end_t - start_t) << "s\n";
   }
-  std::cout << "Entry size: " << log.size() << "\n";
+  std::cout << "Entry size: " << n << "\n";
   std::cout << "Available entries:\n";
-  for(const auto & e : entries)
+  for(const auto & e : keys)
   {
-    std::cout << "- " << e << " (" << mc_rtc::log::EnumNameLogData(log.type(e)) << ")\n";
+    std::cout << "- " << e.first << " (" << mc_rtc::log::EnumNameLogData(e.second) << ")\n";
   }
   return 0;
 }
