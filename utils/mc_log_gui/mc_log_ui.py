@@ -821,6 +821,10 @@ class MCLogUI(QtGui.QMainWindow):
       self.data["tauIn_limits_lower_{}".format(i)] = np.full_like(self.data["tauIn_{}".format(i)], 0)
       self.data["tauIn_limits_upper_{}".format(i)] = np.full_like(self.data["tauIn_{}".format(i)], 0)
       i += 1
+    while "tauOut_{}".format(i) in self.data:
+      self.data["tauOut_limits_lower_{}".format(i)] = np.full_like(self.data["tauOut_{}".format(i)], 0)
+      self.data["tauOut_limits_upper_{}".format(i)] = np.full_like(self.data["tauOut_{}".format(i)], 0)
+      i += 1
     if 'perf_SolverBuildAndSolve' in self.data and 'perf_SolverSolve' in self.data:
       self.data['perf_SolverBuild'] = self.data['perf_SolverBuildAndSolve'] - self.data['perf_SolverSolve']
     self.update_data()
@@ -840,7 +844,8 @@ class MCLogUI(QtGui.QMainWindow):
         ("Encoders", "qIn", None, None, None),
         ("Commands", "qOut", None, None, None),
         ("Error", "error", None, None, None),
-        ("Torques", "tauIn", None, None, None),
+        ("Sensor torques", "tauIn", None, None, None),
+        ("Command torques", "tauOut", None, None, None),
         ("Encoders/Commands", "qIn", "qOut", None, None),
         ("Error/Torque", "error", "tauIn", None, None),
         ("Encoders velocity", None, None, "qIn", None),
