@@ -274,6 +274,9 @@ class MCLogTab(QtGui.QWidget):
       if "tauIn_limits_lower_{}".format(i) in self.data:
         self.data["tauIn_limits_lower_{}".format(i)].fill(bounds[4][jn][0])
         self.data["tauIn_limits_upper_{}".format(i)].fill(bounds[5][jn][0])
+      if "tauOut_limits_lower_{}".format(i) in self.data:
+        self.data["tauOut_limits_lower_{}".format(i)].fill(bounds[4][jn][0])
+        self.data["tauOut_limits_upper_{}".format(i)].fill(bounds[5][jn][0])
 
 
   @QtCore.Slot(str)
