@@ -55,6 +55,13 @@ class PlotFigure(object):
     self._x_label_fontsize = 10
     self._y1_label_fontsize = 10
     self._y2_label_fontsize = 10
+    self._labelpad = 10
+    self._tick_labelsize = 10
+    self._legend_fontsize = 10
+    self._top_offset = 0.9
+    self._bottom_offset = 0.1
+    self._y1_legend_ncol = 3
+    self._y2_legend_ncol = 3
 
     self.data = None
     self.computed_data = {}
@@ -79,7 +86,7 @@ class PlotFigure(object):
     if len(self.axes2_plots) > 0:
       draw(self.axes2, self.grid2)
 
-  def draw(self, y1_limits = None, y2_limits = None):
+  def draw(self, x_limits = None, y1_limits = None, y2_limits = None):
     def fix_axes_limits(axes, axes2):
       point = (axes2.dataLim.get_points()[1] + axes2.dataLim.get_points()[0])/2
       plt, = axes.plot([point[0]], [point[1]], visible = False)
@@ -90,28 +97,32 @@ class PlotFigure(object):
       fix_axes_limits(self.axes, self.axes2)
     if len(self.axes2_plots) == 0 and len(self.axes_plots) != 0:
       fix_axes_limits(self.axes2, self.axes)
-    def set_axes_limits(axes, min_x = float("inf"), max_x = float("-inf"), ylim = None):
+    def set_axes_limits(axes, xlim = None, ylim = None):
       dataLim = axes.dataLim.get_points()
       x_range = (dataLim[1][0] - dataLim[0][0])/2
       y_range = (dataLim[1][1] - dataLim[0][1])/2
-      x_min = min(min_x, dataLim[0][0] - x_range*0.05)
-      x_max = max(max_x, dataLim[1][0] + x_range*0.05)
+      if xlim is None:
+        x_min = dataLim[0][0] - x_range*0.05
+        x_max = dataLim[1][0] + x_range*0.05
+      else:
+        x_min = xlim[0]
+        x_max = xlim[1]
       axes.set_xlim([x_min, x_max])
       if ylim is None:
         axes.set_ylim([dataLim[0][1] - y_range*0.05, dataLim[1][1] + y_range*0.05])
       else:
         axes.set_ylim(ylim)
       return x_min, x_max
-    min_x, max_x = set_axes_limits(self.axes, ylim = y1_limits)
-    set_axes_limits(self.axes2, min_x, max_x, ylim = y2_limits)
+    x_limits = set_axes_limits(self.axes, xlim = x_limits, ylim = y1_limits)
+    set_axes_limits(self.axes2, xlim = x_limits, ylim = y2_limits)
     self._legend_left()
     self._legend_right()
     self._drawGrid()
-    top_offset = 0.9
+    top_offset = self._top_offset
     top_legend_rows = math.ceil(len(self.axes_plots.keys()) / 3.)
     if top_legend_rows > 3:
       top_offset = top_offset - 0.015 * (top_legend_rows - 3)
-    bottom_offset = 0.1
+    bottom_offset = self._bottom_offset
     bottom_legend_rows = math.ceil(len(self.axes2_plots.keys()) / 3.)
     if bottom_legend_rows > 3:
       bottom_offset = bottom_offset + 0.015 * (bottom_legend_rows - 3)
@@ -122,6 +133,18 @@ class PlotFigure(object):
 
   def show(self):
     self.fig.show()
+
+  def top_offset(self, off = None):
+    if off is None:
+      return self._top_offset
+    else:
+      self._top_offset = off
+
+  def bottom_offset(self, off = None):
+    if off is None:
+      return self._bottom_offset
+    else:
+      self._bottom_offset = off
 
   def title(self, title = None):
     if title is None:
@@ -139,54 +162,106 @@ class PlotFigure(object):
     else:
       self.fig.suptitle(self.title(), fontsize = fontsize)
 
+  def tick_fontsize(self, size = None):
+    if size is None:
+      return self._tick_labelsize
+    else:
+      self._tick_labelsize = size
+      self.axes.tick_params(labelsize = self._tick_labelsize)
+      self.axes2.tick_params(labelsize = self._tick_labelsize)
+
+  def labelpad(self, pad = None):
+    if pad is None:
+      return self._labelpad
+    else:
+      self._labelpad = pad
+      self._x_label()
+      self._y1_label()
+      self._y2_label()
+
+  def _x_label(self, label = None):
+    if label is None:
+      label = self.x_label()
+    self.axes.set_xlabel(label, fontsize = self._x_label_fontsize, labelpad = self._labelpad)
+
+  def _y1_label(self, label = None):
+    if label is None:
+      label = self.y1_label()
+    self.axes.set_ylabel(label, fontsize = self._y1_label_fontsize, labelpad = self._labelpad)
+
+  def _y2_label(self, label = None):
+    if label is None:
+      label = self.y2_label()
+    self.axes2.set_ylabel(label, fontsize = self._y2_label_fontsize, labelpad = self._labelpad)
+
   def x_label(self, label = None):
     if label is None:
       return self.axes.get_xlabel()
-    self.axes.set_xlabel(label)
+    self._x_label(label)
 
   def x_label_fontsize(self, fontsize = None):
     if fontsize is None:
       return self._x_label_fontsize
     else:
       self._x_label_fontsize = fontsize
-      self.axes.set_xlabel(self.x_label(), fontsize = self._x_label_fontsize)
+      self._x_label()
 
   def y1_label(self, label = None):
     if label is None:
       return self.axes.get_ylabel()
-    self.axes.set_ylabel(label)
+    self._y1_label(label)
 
   def y1_label_fontsize(self, fontsize = None):
     if fontsize is None:
       return self._y1_label_fontsize
     else:
       self._y1_label_fontsize = fontsize
-      self.axes.set_ylabel(self.y1_label(), fontsize = self._y1_label_fontsize)
+      self._y1_label()
 
   def y2_label(self, label = None):
     if label is None:
       return self.axes2.get_ylabel()
-    self.axes2.set_ylabel(label)
+    self._y2_label(label)
 
   def y2_label_fontsize(self, fontsize = None):
     if fontsize is None:
       return self._y2_label_fontsize
     else:
       self._y2_label_fontsize = fontsize
-      self.axes2.set_ylabel(self.y2_label(), fontsize = self._y2_label_fontsize)
+      self._y2_label()
 
   def _next_color(self):
     self.color += 1
     return self.colors[ (self.color - 1) % self.Ncolor ]
 
+  def legend_fontsize(self, size = None):
+    if size is None:
+      return self._legend_fontsize
+    else:
+      self._legend_fontsize = size
+      self._legend_left()
+      self._legend_right()
+
+  def y1_legend_ncol(self, n = None):
+    if n is None:
+      return self._y1_legend_ncol
+    self._y1_legend_ncol = n
+    self._legend_left()
+
+  def y2_legend_ncol(self, n = None):
+    if n is None:
+      return self._y2_legend_ncol
+    self._y2_legend_ncol = n
+    self._legend_right()
+
   def _legend_left(self):
-    self.axes.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=3, mode="expand", borderaxespad=0.5, fontsize = 10.0)
+    self.axes.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=self._y1_legend_ncol, mode="expand", borderaxespad=0.5, fontsize = self._legend_fontsize)
 
   def _legend_right(self):
     top_anchor = -0.125
     if len(self.x_label()):
       top_anchor = -0.175
-    self.axes2.legend(bbox_to_anchor=(0., top_anchor, 1., .102), loc=2, ncol=3, mode="expand", borderaxespad=0.5, fontsize = 10.0)
+    self.axes2.legend(bbox_to_anchor=(0., top_anchor, 1., .102), loc=2, ncol=self._y2_legend_ncol, mode="expand", borderaxespad=0.5, fontsize = self._legend_fontsize)
 
   def _plot(self, axe, update_legend_fn, x, y, y_label, style = None):
     if style is None:
@@ -393,28 +468,42 @@ class SimpleAxesDialog(QtGui.QDialog):
     self.layout = QtGui.QGridLayout(self)
     self.layout.addWidget(QtGui.QLabel("Min"), 0, 1)
     self.layout.addWidget(QtGui.QLabel("Max"), 0, 2)
-    self.layout.addWidget(QtGui.QLabel("Y1"), 1, 0)
+
+    self.layout.addWidget(QtGui.QLabel("X"), 1, 0)
+    x_limits = parent.x_limits
+    if x_limits is None:
+      x_limits = parent.axes.get_xlim()
+    self.x_min = QtGui.QLineEdit(str(x_limits[0]))
+    self.x_min.setValidator(QtGui.QDoubleValidator())
+    self.layout.addWidget(self.x_min, 1, 1)
+    self.x_max = QtGui.QLineEdit(str(x_limits[1]))
+    self.x_max.setValidator(QtGui.QDoubleValidator())
+    self.x_init = [float(self.x_min.text()), float(self.x_max.text())]
+    self.layout.addWidget(self.x_max, 1, 2)
+
+    self.layout.addWidget(QtGui.QLabel("Y1"), 2, 0)
     y1_limits = parent.y1_limits
     if y1_limits is None:
       y1_limits = parent.axes.get_ylim()
     self.y1_min = QtGui.QLineEdit(str(y1_limits[0]))
     self.y1_min.setValidator(QtGui.QDoubleValidator())
-    self.layout.addWidget(self.y1_min, 1, 1)
+    self.layout.addWidget(self.y1_min, 2, 1)
     self.y1_max = QtGui.QLineEdit(str(y1_limits[1]))
     self.y1_max.setValidator(QtGui.QDoubleValidator())
     self.y1_init = [float(self.y1_min.text()), float(self.y1_max.text())]
-    self.layout.addWidget(self.y1_max, 1, 2)
-    self.layout.addWidget(QtGui.QLabel("Y2"), 2, 0)
+    self.layout.addWidget(self.y1_max, 2, 2)
+
+    self.layout.addWidget(QtGui.QLabel("Y2"), 3, 0)
     y2_limits = parent.y2_limits
     if y2_limits is None:
       y2_limits = parent.axes2.get_ylim()
     self.y2_min = QtGui.QLineEdit(str(y2_limits[0]))
     self.y2_min.setValidator(QtGui.QDoubleValidator())
-    self.layout.addWidget(self.y2_min, 2, 1)
+    self.layout.addWidget(self.y2_min, 3, 1)
     self.y2_max = QtGui.QLineEdit(str(y2_limits[1]))
     self.y2_max.setValidator(QtGui.QDoubleValidator())
     self.y2_init = [float(self.y2_min.text()), float(self.y2_max.text())]
-    self.layout.addWidget(self.y2_max, 2, 2)
+    self.layout.addWidget(self.y2_max, 3, 2)
 
     confirmLayout = QtGui.QHBoxLayout()
     okButton = QtGui.QPushButton("Ok", self)
@@ -426,10 +515,15 @@ class SimpleAxesDialog(QtGui.QDialog):
     cancelButton = QtGui.QPushButton("Cancel", self)
     confirmLayout.addWidget(cancelButton)
     cancelButton.clicked.connect(self.reject)
-    self.layout.addLayout(confirmLayout, 3, 0, 1, 3)
+    self.layout.addLayout(confirmLayout, 4, 0, 1, 3)
 
   def apply(self):
     changed = False
+    x_limits = [float(self.x_min.text()), float(self.x_max.text())]
+    if x_limits != self.x_init:
+      changed = True
+      self.parent().x_locked.setChecked(True)
+      self.parent().x_limits = x_limits
     y1_limits = [float(self.y1_min.text()), float(self.y1_max.text())]
     if y1_limits != self.y1_init:
       changed = True
@@ -462,6 +556,12 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     self.setLayout(vbox)
 
   def setupLockButtons(self, layout):
+    self.x_locked = QtGui.QPushButton(u"🔒X", self)
+    self.x_locked.setCheckable(True)
+    layout.addWidget(self.x_locked)
+    self.x_locked.toggled.connect(self.x_locked_changed)
+    self.x_limits = None
+
     self.y1_locked = QtGui.QPushButton(u"🔒 Y1", self)
     self.y1_locked.setCheckable(True)
     layout.addWidget(self.y1_locked)
@@ -478,29 +578,36 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     SimpleAxesDialog(self).exec_()
 
   def on_draw(self, event):
+    if self.x_limits is not None:
+      self.x_limits = self.axes.get_xlim()
     if self.y1_limits is not None:
       self.y1_limits = self.axes.get_ylim()
     if self.y2_limits is not None:
       self.y2_limits = self.axes2.get_ylim()
 
   def draw(self):
-    PlotFigure.draw(self, self.y1_limits, self.y2_limits)
+    PlotFigure.draw(self, self.x_limits, self.y1_limits, self.y2_limits)
     self.canvas.draw()
 
-  def _y_lock_changed(self, name, cbox, axes):
+  def _y_lock_changed(self, name, cbox, get_lim):
     if cbox.isChecked():
       cbox.setText(u"🔓 {}".format(name))
-      return axes.get_ylim()
+      return get_lim()
     else:
       cbox.setText(u"🔒{}".format(name))
       return None
 
+  def x_locked_changed(self, status):
+    self.x_limits = self._y_lock_changed("X", self.x_locked, self.axes.get_xlim)
+    if self.x_limits is None:
+      self.draw()
+
   def y1_locked_changed(self, status):
-    self.y1_limits = self._y_lock_changed("Y1", self.y1_locked, self.axes)
+    self.y1_limits = self._y_lock_changed("Y1", self.y1_locked, self.axes.get_ylim)
     if self.y1_limits is None:
       self.draw()
 
   def y2_locked_changed(self, status):
-    self.y2_limits = self._y_lock_changed("Y2", self.y2_locked, self.axes2)
+    self.y2_limits = self._y_lock_changed("Y2", self.y2_locked, self.axes2.get_ylim)
     if self.y2_limits is None:
       self.draw()

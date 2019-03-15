@@ -460,6 +460,8 @@ class MCLogTab(QtGui.QWidget):
       figure.style_left(y, s)
     for y,s in p.style2.iteritems():
       figure.style_right(y, s)
+    for param, value in p.extra.iteritems():
+      getattr(figure, param)(value)
     return figure
 
   @staticmethod

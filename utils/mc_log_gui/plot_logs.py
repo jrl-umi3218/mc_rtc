@@ -10,6 +10,7 @@ from mc_log_types import LineStyle, GraphLabels
 UserPlot.__new__.__defaults__ = (LineStyle(), LineStyle(), {}, {}, GraphLabels())
 
 import matplotlib.pyplot as plt
+plt.rcParams['svg.fonttype'] = 'none'
 
 def usage():
     print "{} [log] [plots] [format=png]".format(sys.argv[0])
