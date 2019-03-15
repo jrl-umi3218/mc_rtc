@@ -55,6 +55,13 @@ class PlotFigure(object):
     self._x_label_fontsize = 10
     self._y1_label_fontsize = 10
     self._y2_label_fontsize = 10
+    self._labelpad = 10
+    self._tick_labelsize = 10
+    self._legend_fontsize = 10
+    self._top_offset = 0.9
+    self._bottom_offset = 0.1
+    self._y1_legend_ncol = 3
+    self._y2_legend_ncol = 3
 
     self.data = None
     self.computed_data = {}
@@ -107,11 +114,11 @@ class PlotFigure(object):
     self._legend_left()
     self._legend_right()
     self._drawGrid()
-    top_offset = 0.9
+    top_offset = self._top_offset
     top_legend_rows = math.ceil(len(self.axes_plots.keys()) / 3.)
     if top_legend_rows > 3:
       top_offset = top_offset - 0.015 * (top_legend_rows - 3)
-    bottom_offset = 0.1
+    bottom_offset = self._bottom_offset
     bottom_legend_rows = math.ceil(len(self.axes2_plots.keys()) / 3.)
     if bottom_legend_rows > 3:
       bottom_offset = bottom_offset + 0.015 * (bottom_legend_rows - 3)
@@ -122,6 +129,18 @@ class PlotFigure(object):
 
   def show(self):
     self.fig.show()
+
+  def top_offset(self, off = None):
+    if off is None:
+      return self._top_offset
+    else:
+      self._top_offset = off
+
+  def bottom_offset(self, off = None):
+    if off is None:
+      return self._bottom_offset
+    else:
+      self._bottom_offset = off
 
   def title(self, title = None):
     if title is None:
@@ -139,54 +158,106 @@ class PlotFigure(object):
     else:
       self.fig.suptitle(self.title(), fontsize = fontsize)
 
+  def tick_fontsize(self, size = None):
+    if size is None:
+      return self._tick_labelsize
+    else:
+      self._tick_labelsize = size
+      self.axes.tick_params(labelsize = self._tick_labelsize)
+      self.axes2.tick_params(labelsize = self._tick_labelsize)
+
+  def labelpad(self, pad = None):
+    if pad is None:
+      return self._labelpad
+    else:
+      self._labelpad = pad
+      self._x_label()
+      self._y1_label()
+      self._y2_label()
+
+  def _x_label(self, label = None):
+    if label is None:
+      label = self.x_label()
+    self.axes.set_xlabel(label, fontsize = self._x_label_fontsize, labelpad = self._labelpad)
+
+  def _y1_label(self, label = None):
+    if label is None:
+      label = self.y1_label()
+    self.axes.set_ylabel(label, fontsize = self._y1_label_fontsize, labelpad = self._labelpad)
+
+  def _y2_label(self, label = None):
+    if label is None:
+      label = self.y2_label()
+    self.axes2.set_ylabel(label, fontsize = self._y2_label_fontsize, labelpad = self._labelpad)
+
   def x_label(self, label = None):
     if label is None:
       return self.axes.get_xlabel()
-    self.axes.set_xlabel(label)
+    self._x_label(label)
 
   def x_label_fontsize(self, fontsize = None):
     if fontsize is None:
       return self._x_label_fontsize
     else:
       self._x_label_fontsize = fontsize
-      self.axes.set_xlabel(self.x_label(), fontsize = self._x_label_fontsize)
+      self._x_label()
 
   def y1_label(self, label = None):
     if label is None:
       return self.axes.get_ylabel()
-    self.axes.set_ylabel(label)
+    self._y1_label(label)
 
   def y1_label_fontsize(self, fontsize = None):
     if fontsize is None:
       return self._y1_label_fontsize
     else:
       self._y1_label_fontsize = fontsize
-      self.axes.set_ylabel(self.y1_label(), fontsize = self._y1_label_fontsize)
+      self._y1_label()
 
   def y2_label(self, label = None):
     if label is None:
       return self.axes2.get_ylabel()
-    self.axes2.set_ylabel(label)
+    self._y2_label(label)
 
   def y2_label_fontsize(self, fontsize = None):
     if fontsize is None:
       return self._y2_label_fontsize
     else:
       self._y2_label_fontsize = fontsize
-      self.axes2.set_ylabel(self.y2_label(), fontsize = self._y2_label_fontsize)
+      self._y2_label()
 
   def _next_color(self):
     self.color += 1
     return self.colors[ (self.color - 1) % self.Ncolor ]
 
+  def legend_fontsize(self, size = None):
+    if size is None:
+      return self._legend_fontsize
+    else:
+      self._legend_fontsize = size
+      self._legend_left()
+      self._legend_right()
+
+  def y1_legend_ncol(self, n = None):
+    if n is None:
+      return self._y1_legend_ncol
+    self._y1_legend_ncol = n
+    self._legend_left()
+
+  def y2_legend_ncol(self, n = None):
+    if n is None:
+      return self._y2_legend_ncol
+    self._y2_legend_ncol = n
+    self._legend_right()
+
   def _legend_left(self):
-    self.axes.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=3, mode="expand", borderaxespad=0.5, fontsize = 10.0)
+    self.axes.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=self._y1_legend_ncol, mode="expand", borderaxespad=0.5, fontsize = self._legend_fontsize)
 
   def _legend_right(self):
     top_anchor = -0.125
     if len(self.x_label()):
       top_anchor = -0.175
-    self.axes2.legend(bbox_to_anchor=(0., top_anchor, 1., .102), loc=2, ncol=3, mode="expand", borderaxespad=0.5, fontsize = 10.0)
+    self.axes2.legend(bbox_to_anchor=(0., top_anchor, 1., .102), loc=2, ncol=self._y2_legend_ncol, mode="expand", borderaxespad=0.5, fontsize = self._legend_fontsize)
 
   def _plot(self, axe, update_legend_fn, x, y, y_label, style = None):
     if style is None:

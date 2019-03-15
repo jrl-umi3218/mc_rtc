@@ -26,7 +26,7 @@ try:
 except ImportError:
   mc_rbdyn = None
 
-UserPlot = collections.namedtuple('UserPlot', ['title', 'x', 'y1', 'y1d', 'y2', 'y2d', 'grid1', 'grid2', 'style', 'style2', 'graph_labels'])
+UserPlot = collections.namedtuple('UserPlot', ['title', 'x', 'y1', 'y1d', 'y2', 'y2d', 'grid1', 'grid2', 'style', 'style2', 'graph_labels', 'extra'])
 
 def safe_float(v):
     if len(v):
@@ -480,6 +480,48 @@ class LabelsTitleEditDialog(QtGui.QDialog):
     self.layout.addWidget(self.y2LabelFontsizeEdit, row, 2)
     row += 1
 
+    self.extraLayout = QtGui.QGridLayout()
+    extraRow = 0
+
+    self.extraLayout.addWidget(QtGui.QLabel("Tick size"), extraRow, 0)
+    self.extraLayout.addWidget(QtGui.QLabel("Label padding"), extraRow, 1)
+    self.extraLayout.addWidget(QtGui.QLabel("Top offset"), extraRow, 2)
+    self.extraLayout.addWidget(QtGui.QLabel("Bottom offset"), extraRow, 3)
+    extraRow += 1
+
+    self.tickSizeEdit = QtGui.QLineEdit(str(canvas.tick_fontsize()))
+    self.tickSizeEdit.setValidator(QtGui.QDoubleValidator(1, 1e6, 1))
+    self.labelPaddingEdit = QtGui.QLineEdit(str(canvas.labelpad()))
+    self.labelPaddingEdit.setValidator(QtGui.QDoubleValidator(1, 1e6, 1))
+    self.topOffsetEdit = QtGui.QLineEdit(str(canvas.top_offset()))
+    self.topOffsetEdit.setValidator(QtGui.QDoubleValidator(0, 1, 3))
+    self.bottomOffsetEdit = QtGui.QLineEdit(str(canvas.bottom_offset()))
+    self.bottomOffsetEdit.setValidator(QtGui.QDoubleValidator(0, 1, 3))
+    self.extraLayout.addWidget(self.tickSizeEdit, extraRow, 0)
+    self.extraLayout.addWidget(self.labelPaddingEdit, extraRow, 1)
+    self.extraLayout.addWidget(self.topOffsetEdit, extraRow, 2)
+    self.extraLayout.addWidget(self.bottomOffsetEdit, extraRow, 3)
+    extraRow += 1
+
+    self.extraLayout.addWidget(QtGui.QLabel("Legend size"), extraRow, 0)
+    self.extraLayout.addWidget(QtGui.QLabel("Legend Y1 columns"), extraRow, 1, 1, 2)
+    self.extraLayout.addWidget(QtGui.QLabel("Legend Y2 columns"), extraRow, 3, 1, 2)
+    extraRow += 1
+
+    self.legendSizeEdit = QtGui.QLineEdit(str(canvas.legend_fontsize()))
+    self.legendSizeEdit.setValidator(QtGui.QDoubleValidator(1, 1e6, 1))
+    self.y1LegendNColEdit = QtGui.QLineEdit(str(canvas.y1_legend_ncol()))
+    self.y1LegendNColEdit.setValidator(QtGui.QIntValidator(1, 100))
+    self.y2LegendNColEdit = QtGui.QLineEdit(str(canvas.y2_legend_ncol()))
+    self.y2LegendNColEdit.setValidator(QtGui.QIntValidator(1, 100))
+    self.extraLayout.addWidget(self.legendSizeEdit, extraRow, 0)
+    self.extraLayout.addWidget(self.y1LegendNColEdit, extraRow, 1, 1, 2)
+    self.extraLayout.addWidget(self.y2LegendNColEdit, extraRow, 3, 1, 2)
+    extraRow += 1
+
+    self.layout.addLayout(self.extraLayout, row, 0, extraRow, 3)
+    row += extraRow
+
     hlayout = QtGui.QHBoxLayout()
     Ok = QtGui.QPushButton("Ok")
     Ok.clicked.connect(self.accept)
@@ -501,6 +543,13 @@ class LabelsTitleEditDialog(QtGui.QDialog):
     self.canvas.y1_label_fontsize(self.y1LabelFontsizeEdit.text())
     self.canvas.y2_label(self.y2LabelEdit.text())
     self.canvas.y2_label_fontsize(self.y2LabelFontsizeEdit.text())
+    self.canvas.tick_fontsize(float(self.tickSizeEdit.text()))
+    self.canvas.legend_fontsize(float(self.legendSizeEdit.text()))
+    self.canvas.labelpad(float(self.labelPaddingEdit.text()))
+    self.canvas.top_offset(float(self.topOffsetEdit.text()))
+    self.canvas.bottom_offset(float(self.bottomOffsetEdit.text()))
+    self.canvas.y1_legend_ncol(int(self.y1LegendNColEdit.text()))
+    self.canvas.y2_legend_ncol(int(self.y2LegendNColEdit.text()))
     self.canvas.draw()
 
   def accept(self):
@@ -527,7 +576,7 @@ class MCLogUI(QtGui.QMainWindow):
         for k in self.gridStyles.keys():
           if k in data:
             self.gridStyles[k] = LineStyle(**data[k])
-    UserPlot.__new__.__defaults__ = (self.gridStyles['left'], self.gridStyles['right'], {}, {}, GraphLabels())
+    UserPlot.__new__.__defaults__ = (self.gridStyles['left'], self.gridStyles['right'], {}, {}, GraphLabels(), {})
 
     self.robotFile = os.path.expanduser("~") + "/.config/mc_log_ui/robot"
     self.userPlotFile = os.path.expanduser("~") + "/.config/mc_log_ui/custom_plot.json"
@@ -600,7 +649,7 @@ class MCLogUI(QtGui.QMainWindow):
     self.styleMenu.addMenu(self.gridStyleMenu)
 
     # Labels
-    self.titleAction = QtGui.QAction("Labels/Title", self.styleMenu)
+    self.titleAction = QtGui.QAction("Labels/Title/Fonts", self.styleMenu)
     self.titleAction.triggered.connect(lambda: LabelsTitleEditDialog(self, self.getCanvas()).exec_())
     self.styleMenu.addAction(self.titleAction)
 
@@ -686,7 +735,8 @@ class MCLogUI(QtGui.QMainWindow):
       style = { y: canvas.style_left(y) for y in canvas.axes_plots.keys() }
       style2 = { y: canvas.style_right(y) for y in canvas.axes2_plots.keys() }
       found = False
-      up = UserPlot(title, tab.x_data, y1, y1d, y2, y2d, self.getCanvas().grid, self.getCanvas().grid2, style, style2, GraphLabels(title = TextWithFontSize(canvas.title(), canvas.title_fontsize()), x_label = TextWithFontSize(canvas.x_label(), canvas.x_label_fontsize()), y1_label = TextWithFontSize(canvas.y1_label(), canvas.y1_label_fontsize()), y2_label = TextWithFontSize(canvas.y2_label(), canvas.y2_label_fontsize())))
+      extra = { p: getattr(self.getCanvas(), p)() for p in ["tick_fontsize", "legend_fontsize", "labelpad", "top_offset", "bottom_offset", "y1_legend_ncol", "y2_legend_ncol"] }
+      up = UserPlot(title, tab.x_data, y1, y1d, y2, y2d, self.getCanvas().grid, self.getCanvas().grid2, style, style2, GraphLabels(title = TextWithFontSize(canvas.title(), canvas.title_fontsize()), x_label = TextWithFontSize(canvas.x_label(), canvas.x_label_fontsize()), y1_label = TextWithFontSize(canvas.y1_label(), canvas.y1_label_fontsize()), y2_label = TextWithFontSize(canvas.y2_label(), canvas.y2_label_fontsize())), extra)
       for i in range(len(self.userPlotList)):
         if self.userPlotList[i].title == title:
           self.userPlotList[i] = up
