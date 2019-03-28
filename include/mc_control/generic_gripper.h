@@ -1,6 +1,7 @@
 #pragma once
 
 #include <mc_control/api.h>
+#include <mc_rbdyn/Mimic.h>
 #include <mc_rbdyn/Robots.h>
 
 #include <map>
@@ -9,26 +10,6 @@
 
 namespace mc_control
 {
-
-/*! \brief Stores mimic joint information */
-struct MC_CONTROL_DLLAPI Mimic
-{
-public:
-  /*! Which joint this joint mimics */
-  std::string joint;
-  /*! Mimic multiplier (usually -1/+1) */
-  double multiplier;
-  /*! Mimic offset */
-  double offset;
-};
-
-/*! \brief A collection of mimic joints
- *
- * Keys are mimic joints' names
- *
- * Values are mimic joint information
- */
-typedef std::map<std::string, Mimic> mimic_d_t;
 
 /*! \brief A robot's gripper reprensentation
  *
@@ -57,6 +38,24 @@ public:
   Gripper(const mc_rbdyn::Robot & robot,
           const std::vector<std::string> & jointNames,
           const std::string & robot_urdf,
+          const std::vector<double> & currentQ,
+          double timeStep,
+          bool reverseLimits = false);
+
+  /*! \brief Constructor
+   *
+   * This constructor does not use information from the URDF file
+   *
+   * \param robot Robot, must have the active joints of the gripper to work properly
+   * \param jointNames Name of the active joints involved in the gripper
+   * \param mimics Mimic joints for the gripper
+   * \param currentQ Current values of the active joints
+   * \param timeStep Controller timestep
+   * \param reverseLimits If true, the gripper is considered "open" when the joints values are minimal
+   */
+  Gripper(const mc_rbdyn::Robot & robot,
+          const std::vector<std::string> & jointNames,
+          const std::vector<mc_rbdyn::Mimic> & mimics,
           const std::vector<double> & currentQ,
           double timeStep,
           bool reverseLimits = false);
@@ -107,6 +106,8 @@ public:
   /*! Name of active joints involved in the gripper */
   std::vector<std::string> active_joints;
 
+  /*! True if the gripper is reversed */
+  bool reversed;
   /*! Lower limits of active joints in the gripper (closed-gripper values) */
   std::vector<double> closeP;
   /*! Upper limits of active joints in the gripper (open-gripper values) */
@@ -118,10 +119,10 @@ public:
   /*! Current opening percentage */
   std::vector<double> percentOpen;
 
-  /*! Active joints */
-  std::vector<size_t> active_idx;
   /*! Mimic multiplier, first element is the joint to mimic, second is the multiplier */
   std::vector<std::pair<size_t, double>> mult;
+  /*! Mimic offsets */
+  std::vector<double> offset;
   /*! Full joints' values */
   std::vector<double> _q;
 

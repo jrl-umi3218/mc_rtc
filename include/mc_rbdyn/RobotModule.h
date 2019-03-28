@@ -4,6 +4,7 @@
 #include <mc_rbdyn/Collision.h>
 #include <mc_rbdyn/Flexibility.h>
 #include <mc_rbdyn/ForceSensor.h>
+#include <mc_rbdyn/Mimic.h>
 #include <mc_rbdyn/Springs.h>
 #include <mc_rbdyn/api.h>
 
@@ -135,6 +136,15 @@ struct MC_RBDYN_DLLAPI RobotModule
     return _grippers;
   }
 
+  /** Return a map of mimics joints associated to a gripper.
+   *
+   * If this is empty, the mimics are deduced from the URDF.
+   */
+  virtual const std::map<std::string, std::vector<Mimic>> & gripperMimics() const
+  {
+    return _gripperMimics;
+  }
+
   /** Return the reference (native controller) joint order of the robot */
   virtual const std::vector<std::string> & ref_joint_order() const
   {
@@ -190,6 +200,7 @@ struct MC_RBDYN_DLLAPI RobotModule
   std::vector<mc_rbdyn::Collision> _minimalSelfCollisions;
   std::vector<mc_rbdyn::Collision> _commonSelfCollisions;
   std::vector<Gripper> _grippers;
+  std::map<std::string, std::vector<Mimic>> _gripperMimics;
   std::vector<std::string> _ref_joint_order;
   std::array<double, 7> _default_attitude = {{1., 0., 0., 0., 0., 0., 0.}};
 };

@@ -50,6 +50,21 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   }
 
   /* Initialize grippers */
+  const auto & mimics = robots_modules[0]->gripperMimics();
+  if(mimics.size())
+  {
+    for(const auto & gripper : robots_modules[0]->grippers())
+    {
+      if(!mimics.count(gripper.name))
+      {
+        LOG_ERROR_AND_THROW(std::runtime_error, "Mimics information not specified for gripper: " << gripper.name)
+      }
+      grippers[gripper.name] = std::make_shared<mc_control::Gripper>(robot(), gripper.joints, mimics.at(gripper.name),
+                                                                     std::vector<double>(gripper.joints.size(), 0.0),
+                                                                     timeStep, gripper.reverse_limits);
+    }
+  }
+  else
   {
     std::string urdfPath = robots_modules[0]->urdf_path;
     std::ifstream ifs(urdfPath);

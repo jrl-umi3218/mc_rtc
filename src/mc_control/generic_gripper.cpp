@@ -12,9 +12,9 @@ namespace
 {
 
 /* Returns the mimic joints stored in the URDF model */
-mimic_d_t readMimic(const std::string & urdf)
+std::vector<mc_rbdyn::Mimic> readMimic(const std::string & urdf)
 {
-  mimic_d_t res;
+  std::vector<mc_rbdyn::Mimic> res;
 
   tinyxml2::XMLDocument doc;
   doc.Parse(urdf.c_str());
@@ -45,7 +45,7 @@ mimic_d_t readMimic(const std::string & urdf)
         double o = 0;
         mimicDom->QueryDoubleAttribute("offset", &o);
 
-        res[jointName] = {j, m, o};
+        res.push_back({jointName, j, m, o});
       }
     }
   }
@@ -54,18 +54,18 @@ mimic_d_t readMimic(const std::string & urdf)
 }
 
 /* Returns all joints associated to a gripper's active joints */
-std::vector<std::string> gripperJoints(const std::vector<std::string> & jointNames, const mimic_d_t & mimicDict)
+std::vector<mc_rbdyn::Mimic> gripperMimics(const std::vector<std::string> & jointNames,
+                                           const std::vector<mc_rbdyn::Mimic> & mimics)
 {
-  std::vector<std::string> res;
+  std::vector<mc_rbdyn::Mimic> res;
 
   for(const auto & gripperName : jointNames)
   {
-    res.push_back(gripperName);
-    for(const auto & m : mimicDict)
+    for(const auto & m : mimics)
     {
-      if(m.second.joint == gripperName)
+      if(m.joint == gripperName)
       {
-        res.push_back(m.first);
+        res.push_back(m);
       }
     }
   }
@@ -81,20 +81,26 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
                  const std::vector<double> & currentQ,
                  double timeStep,
                  bool reverseLimits)
+: Gripper(robot, jointNames, gripperMimics(jointNames, readMimic(robot_urdf)), currentQ, timeStep, reverseLimits)
+{
+}
+
+Gripper::Gripper(const mc_rbdyn::Robot & robot,
+                 const std::vector<std::string> & jointNames,
+                 const std::vector<mc_rbdyn::Mimic> & mimics,
+                 const std::vector<double> & currentQ,
+                 double timeStep,
+                 bool reverseLimits)
 : overCommandLimitIter(0), overCommandLimitIterN(5), actualQ(currentQ),
   actualCommandDiffTrigger(8 * M_PI / 180) /* 8 degress of difference */
 {
-  auto mimicDict = readMimic(robot_urdf);
-  names = gripperJoints(jointNames, mimicDict);
   active_joints = jointNames;
-  active_idx.resize(0);
   mult.resize(0);
   _q.resize(0);
-  unsigned int j = 0;
-  for(size_t i = 0; i < names.size(); ++i)
+  for(size_t i = 0; i < jointNames.size(); ++i)
   {
-    const auto & name = names[i];
-    if(robot.hasJoint(name) && mimicDict.count(name) == 0)
+    const auto & name = jointNames[i];
+    if(robot.hasJoint(name))
     {
       unsigned int jointIndex = robot.jointIndexByName(name);
       if(!reverseLimits)
@@ -108,37 +114,37 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
         openP.push_back(robot.ql()[jointIndex][0]);
       }
       vmax.push_back(std::min(std::abs(robot.vl()[jointIndex][0]), robot.vu()[jointIndex][0]) / 4);
-      active_idx.push_back(i);
-      _q.push_back(currentQ[j]);
-      ++j;
+      _q.push_back(currentQ[i]);
     }
     else
     {
+      LOG_ERROR("Gripper active joint " << name << " is not part of the loaded robot, limits are unknown")
+      closeP.push_back(-0.01);
+      openP.push_back(0.01);
+      vmax.push_back(0);
       _q.push_back(0);
     }
+    mult.push_back({i, 1.0});
+    offset.push_back(0.0);
   }
-  for(size_t i = 0; i < _q.size(); ++i)
-  {
-    auto it = std::find(active_idx.begin(), active_idx.end(), i);
-    if(it == active_idx.end())
+  names = jointNames;
+  auto getActiveIdx = [this](const std::string & joint) {
+    for(size_t i = 0; i < active_joints.size(); ++i)
     {
-      for(size_t j = 0; j < active_joints.size(); ++j)
+      if(active_joints[i] == joint)
       {
-        if(active_joints[j] == mimicDict.at(names[i]).joint)
-        {
-          mult.push_back({j, mimicDict[names[i]].multiplier});
-          break;
-        }
+        return i;
       }
     }
-    else
-    {
-      mult.push_back({i, 1.0});
-    }
-  }
-  for(size_t i = 0; i < mult.size(); ++i)
+    LOG_ERROR_AND_THROW(std::runtime_error, "Trying to mimic non existant joint: " << joint)
+  };
+  for(const auto & m : mimics)
   {
-    _q[i] = _q[mult[i].first] * mult[i].second;
+    names.push_back(m.name);
+    auto jIndex = getActiveIdx(m.joint);
+    _q.push_back(m.multiplier * _q[jIndex] + m.offset);
+    mult.push_back({jIndex, m.multiplier});
+    offset.push_back(m.offset);
   }
 
   percentOpen.resize(currentQ.size());
@@ -148,7 +154,9 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
   this->timeStep = timeStep;
 
   targetQIn = {};
-  targetQ = 0;
+  targetQ = nullptr;
+
+  reversed = reverseLimits;
 }
 
 void Gripper::setCurrentQ(const std::vector<double> & currentQ)
@@ -197,9 +205,16 @@ void Gripper::setActualQ(const std::vector<double> & q)
       overCommandLimitIter[i]++;
       if(overCommandLimitIter[i] == overCommandLimitIterN)
       {
-        LOG_WARNING("Gripper safety triggered on " << names[active_idx[i]])
+        LOG_WARNING("Gripper safety triggered on " << names[i])
         overCommandLimit[i] = true;
-        actualQ[i] = actualQ[i] - 2 * M_PI / 180;
+        if(reversed)
+        {
+          actualQ[i] = actualQ[i] + 2 * M_PI / 180;
+        }
+        else
+        {
+          actualQ[i] = actualQ[i] - 2 * M_PI / 180;
+        }
         setTargetQ(actualQ);
       }
     }
@@ -239,13 +254,13 @@ const std::vector<double> & Gripper::q()
     }
   }
   auto cur = curPosition();
-  for(size_t i = 0; i < active_idx.size(); ++i)
+  for(size_t i = 0; i < active_joints.size(); ++i)
   {
-    _q[active_idx[i]] = cur[i];
+    _q[i] = cur[i];
   }
-  for(size_t i = 0; i < _q.size(); ++i)
+  for(size_t i = active_joints.size(); i < names.size(); ++i)
   {
-    _q[i] = mult[i].second * _q[mult[i].first];
+    _q[i] = mult[i].second * _q[mult[i].first] + offset[i];
   }
   return _q;
 }

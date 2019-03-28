@@ -398,7 +398,7 @@ HRP4ComanoidRobotModule::HRP4ComanoidRobotModule()
   static constexpr double L_HAND_J0_range_q = 750 * M_PI / 180;
   static constexpr double L_HAND_J0_range_cm = 0.05;
   static constexpr double L_HAND_J0_offset = -L_HAND_J0_range_q;
-  static constexpr double L_HAND_J0_cm0 = 0.45;
+  static constexpr double L_HAND_J0_cm0 = 0.045;
   static constexpr double L_HAND_J0_q0 = L_HAND_J0_cm0 * L_HAND_J0_range_q / L_HAND_J0_range_cm + L_HAND_J0_offset;
   halfSitting["L_HAND_J0"] = {L_HAND_J0_q0};
   halfSitting["L_HAND_J0_PRISM"] = {L_HAND_J0_cm0};

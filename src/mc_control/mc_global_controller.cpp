@@ -513,7 +513,7 @@ void MCGlobalController::setGripperTargetQ(const std::string & name, const std::
 {
   if(controller_->grippers.count(name))
   {
-    if(controller_->grippers[name]->active_idx.size() == q.size())
+    if(controller_->grippers[name]->active_joints.size() == q.size())
     {
       controller_->grippers[name]->setTargetQ(q);
     }
