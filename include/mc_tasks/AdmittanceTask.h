@@ -23,10 +23,10 @@ namespace force
  *
  */
 inline void clampAndWarn(const std::string & taskName,
-                  Eigen::Vector3d & vector,
-                  const Eigen::Vector3d & bound,
-                  const std::string & label,
-                  std::map<char, bool> & isClamping)
+                         Eigen::Vector3d & vector,
+                         const Eigen::Vector3d & bound,
+                         const std::string & label,
+                         std::map<char, bool> & isClamping)
 {
   const char dirName[] = {'x', 'y', 'z'};
   for(unsigned i = 0; i < 3; i++)

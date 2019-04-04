@@ -21,7 +21,7 @@ namespace force
  * [1] https://scaron.info/teaching/zero-tilting-moment-point.html
  *
  */
-struct MC_TASKS_DLLAPI CoPTask : DampingTask 
+struct MC_TASKS_DLLAPI CoPTask : DampingTask
 {
 public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW

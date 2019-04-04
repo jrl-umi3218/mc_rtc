@@ -71,12 +71,10 @@ JVRC1RobotModule::JVRC1RobotModule() : RobotModule(std::string(JVRC_VAL_VAL(JVRC
         {"R_WRIST_Y_S", "R_HIP_Y_S", 0.05, 0.025, 0.},    {"L_WRIST_Y_S", "L_HIP_Y_S", 0.05, 0.025, 0.}};
     _commonSelfCollisions = _minimalSelfCollisions;
 
-    _forceSensors =  {
-      {"RightFootForceSensor", "r_ankle", sva::PTransformd::Identity()},
-      {"LeftFootForceSensor", "l_ankle", sva::PTransformd::Identity()},
-      {"RightHandForceSensor", "r_wrist", sva::PTransformd::Identity()},
-      {"LeftHandForceSensor", "l_wrist", sva::PTransformd::Identity()}
-    };
+    _forceSensors = {{"RightFootForceSensor", "r_ankle", sva::PTransformd::Identity()},
+                     {"LeftFootForceSensor", "l_ankle", sva::PTransformd::Identity()},
+                     {"RightHandForceSensor", "r_wrist", sva::PTransformd::Identity()},
+                     {"LeftHandForceSensor", "l_wrist", sva::PTransformd::Identity()}};
   }
   else
   {
