@@ -8,5 +8,9 @@ cdef class AdmittanceTask(SurfaceTransformTask):
 
 cdef class ComplianceTask(MetaTask):
   cdef c_force.ComplianceTask * impl
-  cdef cppbool __own_impl
 
+cdef class DampingTask(AdmittanceTask):
+  cdef c_force.DampingTask * damping_impl
+
+cdef class CoPTask(DampingTask):
+  cdef c_force.CoPTask * cop_impl

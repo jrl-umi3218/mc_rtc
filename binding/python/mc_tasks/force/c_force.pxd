@@ -34,3 +34,23 @@ cdef extern from "<mc_tasks/ComplianceTask.h>" namespace "mc_tasks::force":
                    double, double, double, double, double,
                    pair[double, double], pair[double, double])
     void setTargetWrench(const c_sva.ForceVecd&)
+
+cdef extern from "<mc_tasks/DampingTask.h>" namespace "mc_tasks::force":
+  cdef cppclass DampingTask(AdmittanceTask):
+    DampingTask(const string &,
+                const c_mc_rbdyn.Robots &, unsigned int,
+                double, double)
+
+cdef extern from "<mc_tasks/CoPTask.h>" namespace "mc_tasks::force":
+  cdef cppclass CoPTask(DampingTask):
+    CoPTask(const string &,
+            const c_mc_rbdyn.Robots &, unsigned int,
+            double, double)
+    c_eigen.Vector2d measuredCoP()
+    c_eigen.Vector3d measuredCoPW()
+    void setZeroTargetWrench()
+    c_eigen.Vector2d targetCoP()
+    c_eigen.Vector3d targetCoPW()
+    void targetCoP(const c_eigen.Vector2d &)
+    c_eigen.Vector3d targetForce()
+    void targetForce(const c_eigen.Vector3d &)
