@@ -16,7 +16,7 @@ DampingTask::DampingTask(const std::string & surfaceName,
                          double weight)
 : AdmittanceTask(surfaceName, robots, robotIndex, stiffness, weight)
 {
-  name_ = "damping_" + robot_.name() + "_" + surfaceName;
+  name_ = "damping_" + robots_.robot(robotIndex).name() + "_" + surfaceName;
   reset();
 }
 

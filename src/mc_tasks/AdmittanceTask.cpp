@@ -137,6 +137,12 @@ void AdmittanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::addToGUI(gui);
 }
 
+void AdmittanceTask::addToSolver(mc_solver::QPSolver & solver)
+{
+  timestep_ = solver.dt();
+  SurfaceTransformTask::addToSolver(solver);
+}
+
 } // namespace force
 
 } // namespace mc_tasks

@@ -234,6 +234,7 @@ protected:
   Eigen::Vector3d maxLinearVel_ = {0.1, 0.1, 0.1}; // [m] / [s]
   const mc_rbdyn::Robots & robots_;
   unsigned int rIndex_;
+  double timestep_;
   const mc_rbdyn::Surface & surface_;
   std::map<char, bool> isClampingAngularVel_ = {{'x', false}, {'y', false}, {'z', false}};
   std::map<char, bool> isClampingLinearVel_ = {{'x', false}, {'y', false}, {'z', false}};
@@ -271,15 +272,7 @@ protected:
 
   /** Override addToSolver in order to get the timestep's solver automatically
    */
-  virtual void addToSolver(mc_solver::QPSolver & solver) override
-  {
-    if(!inSolver_)
-    {
-      solver.addTask(trajectoryT_.get());
-      inSolver_ = true;
-      timestep_ = solver.dt();
-    }
-  }
+  void addToSolver(mc_solver::QPSolver & solver) override;
 };
 
 } // namespace force
