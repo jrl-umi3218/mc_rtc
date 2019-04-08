@@ -15,6 +15,7 @@ from libcpp cimport bool as cppbool
 
 cdef extern from "<mc_tasks/AdmittanceTask.h>" namespace "mc_tasks::force":
   cdef cppclass AdmittanceTask(c_mc_tasks.SurfaceTransformTask):
+    AdmittanceTask() # Does not exist but fix an error on Cython 0.2
     AdmittanceTask(const string &,
                    const c_mc_rbdyn.Robots &,
                    unsigned int, double, double)
@@ -37,6 +38,7 @@ cdef extern from "<mc_tasks/ComplianceTask.h>" namespace "mc_tasks::force":
 
 cdef extern from "<mc_tasks/DampingTask.h>" namespace "mc_tasks::force":
   cdef cppclass DampingTask(AdmittanceTask):
+    DampingTask() # Does not exist but fix an error on Cython 0.2
     DampingTask(const string &,
                 const c_mc_rbdyn.Robots &, unsigned int,
                 double, double)
