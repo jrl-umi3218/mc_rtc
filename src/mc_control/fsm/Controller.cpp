@@ -243,6 +243,7 @@ void Controller::reset(const ControllerResetData & data)
     auto all_states = factory_.states();
     std::sort(all_states.begin(), all_states.end());
     gui_->data().add("states", all_states);
+    gui_->removeElement({"FSM"}, "Contacts");
     gui_->addElement({"FSM"}, mc_rtc::gui::Label("Contacts", [this]() {
                        std::string ret;
                        for(const auto & c : contacts_)
