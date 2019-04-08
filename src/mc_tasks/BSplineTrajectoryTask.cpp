@@ -1,5 +1,7 @@
 #include <mc_tasks/BSplineTrajectoryTask.h>
 #include <mc_tasks/MetaTaskLoader.h>
+#include <mc_trajectory/BSplineTrajectory.h>
+#include <mc_trajectory/InterpolatedTrajectory.h>
 
 namespace mc_tasks
 {

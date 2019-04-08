@@ -3,8 +3,8 @@
 #include <mc_trajectory/api.h>
 
 #include <memory>
-#include <spline/exact_cubic.h>
-#include <spline/spline_deriv_constraint.h>
+#include <hpp/spline/exact_cubic.h>
+#include <hpp/spline/spline_deriv_constraint.h>
 #include <vector>
 
 namespace mc_trajectory

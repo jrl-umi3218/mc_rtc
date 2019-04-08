@@ -1,6 +1,12 @@
 #pragma once
 #include <mc_tasks/TrajectoryTask.h>
 
+namespace mc_trajectory
+{
+  struct BSplineTrajectory;
+  struct InterpolatedRotation;
+}
+
 namespace mc_tasks
 {
 

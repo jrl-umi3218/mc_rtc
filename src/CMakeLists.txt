@@ -183,8 +183,6 @@ install_mc_rtc_lib(mc_solver)
 
 set(mc_trajectory_SRC
 mc_trajectory/BSplineTrajectory.cpp
-mc_trajectory/BSplineConstrainedTrajectory.cpp
-mc_trajectory/ExactCubicTrajectory.cpp
 mc_trajectory/InterpolatedTrajectory.cpp
 mc_trajectory/spline_utils.cpp
 )
@@ -192,16 +190,24 @@ mc_trajectory/spline_utils.cpp
 set(mc_trajectory_HDR
 ../include/mc_trajectory/api.h
 ../include/mc_trajectory/BSplineTrajectory.h
-../include/mc_trajectory/BSplineConstrainedTrajectory.h
-../include/mc_trajectory/ExactCubicTrajectory.h
 ../include/mc_trajectory/InterpolatedTrajectory.h
 ../include/mc_trajectory/spline_utils.h
 )
+
+if(${HPP_SPLINE_FOUND})
+  list(APPEND mc_trajectory_SRC
+    mc_trajectory/ExactCubicTrajectory.cpp
+    mc_trajectory/BSplineConstrainedTrajectory.cpp)
+  list(APPEND mc_trajectory_HDR
+    ../include/mc_trajectory/BSplineConstrainedTrajectory.h
+    ../include/mc_trajectory/ExactCubicTrajectory.h)
+endif()
 
 add_library(mc_trajectory SHARED ${mc_trajectory_SRC} ${mc_trajectory_HDR})
 set_target_properties(mc_trajectory PROPERTIES COMPILE_FLAGS "-DMC_TRAJECTORY_EXPORTS")
 target_link_libraries(mc_trajectory PUBLIC SpaceVecAlg::SpaceVecAlg)
 target_link_libraries(mc_trajectory PUBLIC spline)
+target_link_libraries(mc_trajectory hpp-spline)
 install_mc_rtc_lib(mc_trajectory)
 
 set(mc_tasks_SRC
@@ -215,7 +221,6 @@ mc_tasks/CoMTask.cpp
 mc_tasks/AddRemoveContactTask.cpp
 mc_tasks/TrajectoryTask.cpp
 mc_tasks/BSplineTrajectoryTask.cpp
-mc_tasks/ExactCubicTrajectoryTask.cpp
 mc_tasks/ComplianceTask.cpp
 mc_tasks/AdmittanceTask.cpp
 mc_tasks/DampingTask.cpp
@@ -227,6 +232,10 @@ mc_tasks/LookAtTask.cpp
 mc_tasks/LookAtSurfaceTask.cpp
 mc_tasks/MetaTaskLoader.cpp
 )
+if(${HPP_SPLINE_FOUND})
+  list(APPEND mc_trajectory_SRC
+    mc_tasks/ExactCubicTrajectoryTask.cpp)
+endif()
 
 set(mc_tasks_HDR
 ../include/mc_tasks/AddRemoveContactTask.h

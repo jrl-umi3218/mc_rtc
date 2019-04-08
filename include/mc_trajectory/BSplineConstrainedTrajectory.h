@@ -2,7 +2,7 @@
 
 #include <mc_trajectory/api.h>
 
-#include <spline/bezier_curve.h>
+#include <hpp/spline/bezier_curve.h>
 
 namespace mc_trajectory
 {

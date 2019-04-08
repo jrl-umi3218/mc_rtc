@@ -53,6 +53,7 @@ option(DISABLE_ROS "Do not build with ROS support (even if ROS was found)" OFF)
 add_project_dependency(Boost REQUIRED COMPONENTS filesystem timer)
 add_project_dependency(Tasks REQUIRED)
 add_project_dependency(mc_rbdyn_urdf REQUIRED)
+# https://github.com/humanoid-path-planner/hpp-spline
 add_project_dependency(hpp-spline REQUIRED)
 
 

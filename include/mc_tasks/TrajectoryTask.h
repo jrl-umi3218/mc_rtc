@@ -7,9 +7,6 @@
 #include <mc_rbdyn/Robots.h>
 #include <mc_tasks/MetaTask.h>
 #include <mc_tasks/api.h>
-#include <mc_trajectory/BSplineConstrainedTrajectory.h>
-#include <mc_trajectory/BSplineTrajectory.h>
-#include <mc_trajectory/InterpolatedTrajectory.h>
 
 #include <Tasks/QPTasks.h>
 
