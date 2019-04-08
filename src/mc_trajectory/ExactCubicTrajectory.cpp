@@ -35,19 +35,19 @@ const T_Waypoint & ExactCubicTrajectory::waypoints() const
   return waypoints_;
 }
 
-const point_t& ExactCubicTrajectory::init_vel() const
+const point_t & ExactCubicTrajectory::init_vel() const
 {
   return constraints_.init_vel;
 }
-const point_t& ExactCubicTrajectory::init_acc() const
+const point_t & ExactCubicTrajectory::init_acc() const
 {
   return constraints_.init_acc;
 }
-const point_t& ExactCubicTrajectory::end_vel() const
+const point_t & ExactCubicTrajectory::end_vel() const
 {
   return constraints_.end_vel;
 }
-const point_t& ExactCubicTrajectory::end_acc() const
+const point_t & ExactCubicTrajectory::end_acc() const
 {
   constraints_.end_acc;
 }

@@ -3,9 +3,9 @@
 
 namespace mc_trajectory
 {
-  struct BSplineTrajectory;
-  struct InterpolatedRotation;
-}
+struct BSplineTrajectory;
+struct InterpolatedRotation;
+} // namespace mc_trajectory
 
 namespace mc_tasks
 {
