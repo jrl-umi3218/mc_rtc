@@ -86,9 +86,9 @@ class TestMCTasks():
     assert(relEfTask1.orientationTask.weight() == relEfTask3.orientationTask.weight())
 
   def test_complianceTask(self):
-    compTask1 = mc_tasks.force.ComplianceTask(self.robots, 0, "r_wrist", 0.005)
-    compTask2 = mc_tasks.force.ComplianceTask(self.robots, 0, "r_wrist", 0.005, 2.0, 1000, 3., 1., mc_tasks.force.ComplianceTask.defaultFGain, mc_tasks.force.ComplianceTask.defaultTGain)
-    compTask3 = mc_tasks.force.ComplianceTask(self.robots, 0, "r_wrist", 0.005, weight=1000.0, stiffness=2.0, forceGain = mc_tasks.force.ComplianceTask.defaultFGain, torqueThresh = 1., torqueGain = mc_tasks.force.ComplianceTask.defaultTGain, forceThresh = 3.)
+    compTask1 = mc_tasks.force.ComplianceTask(self.robots, 0, "R_WRIST_Y_S", 0.005)
+    compTask2 = mc_tasks.force.ComplianceTask(self.robots, 0, "R_WRIST_Y_S", 0.005, 2.0, 1000, 3., 1., mc_tasks.force.ComplianceTask.defaultFGain, mc_tasks.force.ComplianceTask.defaultTGain)
+    compTask3 = mc_tasks.force.ComplianceTask(self.robots, 0, "R_WRIST_Y_S", 0.005, weight=1000.0, stiffness=2.0, forceGain = mc_tasks.force.ComplianceTask.defaultFGain, torqueThresh = 1., torqueGain = mc_tasks.force.ComplianceTask.defaultTGain, forceThresh = 3.)
 
   def test_surfaceTransformTask(self):
     surfaceTask1 = mc_tasks.SurfaceTransformTask("LeftFoot", self.robots, 0)
