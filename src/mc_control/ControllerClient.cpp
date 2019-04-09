@@ -169,13 +169,14 @@ void ControllerClient::handle_gui_state(const char * data)
   {
     data_ = mc_rtc::Configuration{};
   }
-  handle_category({}, "", state);
+  handle_category({}, "", state("STATE", mc_rtc::Configuration{}), state("GUI", mc_rtc::Configuration{}));
   stopped();
 }
 
 void ControllerClient::handle_category(const std::vector<std::string> & parent,
                                        const std::string & category,
-                                       const mc_rtc::Configuration & data)
+                                       const mc_rtc::Configuration & data,
+                                       const mc_rtc::Configuration & gui)
 {
   if(category.size())
   {
@@ -188,28 +189,32 @@ void ControllerClient::handle_category(const std::vector<std::string> & parent,
   }
   for(const auto & k : data.keys())
   {
-    auto d = data(k);
-    if(d.has("GUI"))
+    if(k == "_sub")
     {
-      int sid = d("GUI")("sid", -1);
-      handle_widget({next_category, k, sid}, d);
+      auto subs = data(k);
+      for(const auto & s : subs.keys())
+      {
+        handle_category(next_category, s, subs(s), gui("_sub")(s));
+      }
     }
     else
     {
-      handle_category(next_category, k, d);
+      int sid = gui(k)("sid", -1);
+      handle_widget({next_category, k, sid}, data(k), gui(k));
     }
   }
 }
 
-void ControllerClient::handle_widget(const ElementId & id, const mc_rtc::Configuration & data)
+void ControllerClient::handle_widget(const ElementId & id,
+                                     const mc_rtc::Configuration & data,
+                                     const mc_rtc::Configuration & gui)
 {
-  auto gui = data("GUI");
-  if(!gui.has("type"))
+  if(!gui.has("_type"))
   {
     LOG_ERROR("GUI entry " << id.name << " in category " << cat2str(id.category) << " has no type")
     return;
   }
-  auto type = static_cast<mc_rtc::gui::Elements>(static_cast<int>(gui("type")));
+  auto type = static_cast<mc_rtc::gui::Elements>(static_cast<int>(gui("_type")));
   try
   {
     using Elements = mc_rtc::gui::Elements;
@@ -519,7 +524,7 @@ void ControllerClient::handle_form(const ElementId & id, const mc_rtc::Configura
   for(const auto & k : gui.keys())
   {
     auto el = gui(k);
-    auto type = static_cast<mc_rtc::gui::Elements>(static_cast<int>(el("type")));
+    auto type = static_cast<mc_rtc::gui::Elements>(static_cast<int>(el("_type")));
     bool required = el("required", false);
     using Elements = mc_rtc::gui::Elements;
     switch(type)

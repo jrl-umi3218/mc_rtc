@@ -231,12 +231,6 @@ void XYThetaROImpl<GetT>::addGUI(mc_rtc::Configuration & gui)
 }
 
 template<typename GetT, typename SetT>
-void XYThetaImpl<GetT, SetT>::addGUI(mc_rtc::Configuration & gui)
-{
-  gui.add("ro", false);
-}
-
-template<typename GetT, typename SetT>
 DataComboInputImpl<GetT, SetT>::DataComboInputImpl(const std::string & name,
                                                    const std::vector<std::string> & values,
                                                    GetT get_fn,
@@ -276,7 +270,7 @@ void FormInput<Derived>::addGUI(mc_rtc::Configuration & gui)
   {
     el.add("required", required_);
   }
-  el.add("type", static_cast<int>(Derived::type));
+  el.add("_type", static_cast<int>(Derived::type));
   static_cast<Derived *>(this)->addGUI_(el);
 }
 
@@ -347,6 +341,7 @@ void StateBuilder::addElementImpl(const std::vector<std::string> & category,
     return;
   }
   cat.elements.emplace_back(element, cat, stacking);
+  updateGUI(category, cat.elements.back());
   if(rem == 0)
   {
     cat.id += 1;
@@ -379,14 +374,14 @@ StateBuilder::ElementStore::ElementStore(T self, const Category & category, Elem
   if(stacking == ElementsStacking::Vertical)
   {
     addGUI = [](Element & el, mc_rtc::Configuration & out) {
-      out.add("type", static_cast<int>(T::type));
+      out.add("_type", static_cast<int>(T::type));
       static_cast<T &>(el).addGUI(out);
     };
   }
   else
   {
     addGUI = [](Element & el, mc_rtc::Configuration & out) {
-      out.add("type", static_cast<int>(T::type));
+      out.add("_type", static_cast<int>(T::type));
       out.add("sid", static_cast<int>(el.id()));
       static_cast<T &>(el).addGUI(out);
     };
