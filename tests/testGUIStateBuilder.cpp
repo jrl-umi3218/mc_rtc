@@ -16,26 +16,32 @@ BOOST_AUTO_TEST_CASE(TestGUIStateBuilder)
   builder.addElement({"dummy", "provider"}, mc_rtc::gui::ArrayLabel("point", [&provider] { return provider.point; }));
   {
     const auto & state = builder.update();
-    BOOST_REQUIRE(state.has("dummy"));
-    BOOST_REQUIRE(state("dummy").has("provider"));
-    BOOST_REQUIRE(state("dummy")("provider").has("point"));
-    BOOST_REQUIRE(state("dummy")("provider")("point").has("data"));
-    BOOST_REQUIRE(state("dummy")("provider")("point")("data") == provider.point);
-    BOOST_REQUIRE(state("dummy")("provider").has("value"));
-    BOOST_REQUIRE(state("dummy")("provider")("value").has("data"));
-    BOOST_REQUIRE(state("dummy")("provider")("value")("data") == provider.value);
+    BOOST_REQUIRE(state.has("STATE"));
+    BOOST_REQUIRE(state("STATE").has("_sub"));
+    BOOST_REQUIRE(state("STATE")("_sub").has("dummy"));
+    BOOST_REQUIRE(state("STATE")("_sub")("dummy").has("_sub"));
+    BOOST_REQUIRE(state("STATE")("_sub")("dummy")("_sub").has("provider"));
+    BOOST_REQUIRE(state("STATE")("_sub")("dummy")("_sub")("provider").has("point"));
+    BOOST_REQUIRE(state("STATE")("_sub")("dummy")("_sub")("provider")("point").has("data"));
+    BOOST_REQUIRE(state("STATE")("_sub")("dummy")("_sub")("provider")("point")("data") == provider.point);
+    BOOST_REQUIRE(state("STATE")("_sub")("dummy")("_sub")("provider").has("value"));
+    BOOST_REQUIRE(state("STATE")("_sub")("dummy")("_sub")("provider")("value").has("data"));
+    BOOST_REQUIRE(state("STATE")("_sub")("dummy")("_sub")("provider")("value")("data") == provider.value);
   }
   {
     provider.value = -122.5;
     provider.point = Eigen::Vector3d::Random();
     const auto & state = builder.update();
-    BOOST_REQUIRE(state.has("dummy"));
-    BOOST_REQUIRE(state("dummy").has("provider"));
-    BOOST_REQUIRE(state("dummy")("provider").has("point"));
-    BOOST_REQUIRE(state("dummy")("provider")("point").has("data"));
-    BOOST_REQUIRE(state("dummy")("provider")("point")("data") == provider.point);
-    BOOST_REQUIRE(state("dummy")("provider").has("value"));
-    BOOST_REQUIRE(state("dummy")("provider")("value").has("data"));
-    BOOST_REQUIRE(state("dummy")("provider")("value")("data") == provider.value);
+    BOOST_REQUIRE(state.has("STATE"));
+    BOOST_REQUIRE(state("STATE").has("_sub"));
+    BOOST_REQUIRE(state("STATE")("_sub").has("dummy"));
+    BOOST_REQUIRE(state("STATE")("_sub")("dummy").has("_sub"));
+    BOOST_REQUIRE(state("STATE")("_sub")("dummy")("_sub").has("provider"));
+    BOOST_REQUIRE(state("STATE")("_sub")("dummy")("_sub")("provider").has("point"));
+    BOOST_REQUIRE(state("STATE")("_sub")("dummy")("_sub")("provider")("point").has("data"));
+    BOOST_REQUIRE(state("STATE")("_sub")("dummy")("_sub")("provider")("point")("data") == provider.point);
+    BOOST_REQUIRE(state("STATE")("_sub")("dummy")("_sub")("provider").has("value"));
+    BOOST_REQUIRE(state("STATE")("_sub")("dummy")("_sub")("provider")("value").has("data"));
+    BOOST_REQUIRE(state("STATE")("_sub")("dummy")("_sub")("provider")("value")("data") == provider.value);
   }
 }
