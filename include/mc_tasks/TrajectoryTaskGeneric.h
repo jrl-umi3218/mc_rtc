@@ -52,12 +52,22 @@ struct TrajectoryTaskGeneric : public MetaTask
    */
   void refVel(const Eigen::VectorXd & vel);
 
+  /*! \brief Get the trajectory reference velocity
+   *
+   */
+  const Eigen::VectorXd & refVel() const;
+
   /*! \brief Set the trajectory reference acceleration
    *
    * \param accel New reference acceleration
    *
    */
   void refAccel(const Eigen::VectorXd & accel);
+
+  /*! \brief Get the trajectory reference acceleration
+   *
+   */
+  const Eigen::VectorXd & refAccel() const;
 
   /*! \brief Set the task stiffness/damping
    *
@@ -189,16 +199,17 @@ protected:
   std::shared_ptr<T> errorT = nullptr;
   Eigen::VectorXd refVel_;
   Eigen::VectorXd refAccel_;
+  bool inSolver_ = false;
+  std::shared_ptr<tasks::qp::TrajectoryTask> trajectoryT_ = nullptr;
+
+protected:
+  virtual void addToSolver(mc_solver::QPSolver & solver) override;
 
 private:
   Eigen::VectorXd stiffness_;
   Eigen::VectorXd damping_;
   double weight_;
-  bool inSolver_ = false;
   std::shared_ptr<tasks::qp::JointsSelector> selectorT_ = nullptr;
-  std::shared_ptr<tasks::qp::TrajectoryTask> trajectoryT_ = nullptr;
-
-  virtual void addToSolver(mc_solver::QPSolver & solver) override;
 
   virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
 

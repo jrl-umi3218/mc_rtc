@@ -102,13 +102,10 @@ cdef extern from "<mc_tasks/RelativeEndEffectorTask.h>" namespace "mc_tasks":
     RelativeEndEffectorTask(const string &, const c_mc_rbdyn.Robots &,
                     unsigned int, const string &, double, double)
 
-cdef extern from "<mc_tasks/ComplianceTask.h>" namespace "mc_tasks":
-  pair[double, double] defaultFGain
-  pair[double, double] defaultTGain
-
-  cdef cppclass ComplianceTask(MetaTask):
-    ComplianceTask(const c_mc_rbdyn.Robots &,
-                   unsigned int, const string &,
-                   double, double, double, double, double,
-                   pair[double, double], pair[double, double])
-    void setTargetWrench(const c_sva.ForceVecd&)
+cdef extern from "<mc_tasks/SurfaceTransformTask.h>" namespace "mc_tasks":
+  cdef cppclass SurfaceTransformTask(TrajectoryTaskGeneric[c_qp.SurfaceTransformTask]):
+    SurfaceTransformTask() # This does not exist but silence a compilation error on Cython 0.2
+    SurfaceTransformTask(const string &, const c_mc_rbdyn.Robots &,
+                         unsigned int, double, double)
+    c_sva.PTransformd target()
+    void target(const c_sva.PTransformd &)

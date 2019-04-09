@@ -6,12 +6,20 @@
 namespace mc_tasks
 {
 
+namespace force
+{
+
+namespace
+{
+constexpr double MIN_PRESSURE = 0.5; // [N]
+}
+
 CoPTask::CoPTask(const std::string & surfaceName,
                  const mc_rbdyn::Robots & robots,
                  unsigned int robotIndex,
                  double stiffness,
                  double weight)
-: AdmittanceTask(surfaceName, robots, robotIndex, stiffness, weight)
+: DampingTask(surfaceName, robots, robotIndex, stiffness, weight)
 {
   name_ = "cop_" + robots_.robot(rIndex_).name() + "_" + surfaceName;
 }
@@ -20,29 +28,27 @@ void CoPTask::reset()
 {
   targetCoP_ = Eigen::Vector2d::Zero();
   targetForce_ = Eigen::Vector3d::Zero();
-  AdmittanceTask::reset();
+  DampingTask::reset();
 }
 
 void CoPTask::update()
 {
   double pressure = std::max(0., measuredWrench().force().z());
   Eigen::Vector3d targetTorque = {+targetCoP_.y() * pressure, -targetCoP_.x() * pressure, 0.};
-  AdmittanceTask::targetWrench({targetTorque, targetForce_});
-  AdmittanceTask::update();
+  DampingTask::targetWrench({targetTorque, targetForce_});
+  DampingTask::update();
 }
 
 void CoPTask::addToLogger(mc_rtc::Logger & logger)
 {
-  AdmittanceTask::addToLogger(logger);
-  logger.addLogEntry(name_ + "_measured_cop", [this]() { return measuredCoP(); });
-  logger.addLogEntry(name_ + "_measured_copW", [this]() { return measuredCoPW(); });
-  logger.addLogEntry(name_ + "_target_cop", [this]() { return targetCoP_; });
-  logger.addLogEntry(name_ + "_target_copW", [this]() { return targetCoPW(); });
+  DampingTask::addToLogger(logger);
+  logger.addLogEntry(name_ + "_measured_cop", [this]() -> Eigen::Vector2d { return measuredCoP(); });
+  logger.addLogEntry(name_ + "_target_cop", [this]() -> const Eigen::Vector2d & { return targetCoP_; });
 }
 
 void CoPTask::removeFromLogger(mc_rtc::Logger & logger)
 {
-  AdmittanceTask::removeFromLogger(logger);
+  DampingTask::removeFromLogger(logger);
   logger.removeLogEntry(name_ + "_measured_cop");
   logger.removeLogEntry(name_ + "_measured_copW");
   logger.removeLogEntry(name_ + "_target_cop");
@@ -98,8 +104,10 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> CoPTask::buildCom
       return true;
     };
   }
-  return AdmittanceTask::buildCompletionCriteria(dt, config);
+  return DampingTask::buildCompletionCriteria(dt, config);
 }
+
+} // namespace force
 
 } // namespace mc_tasks
 
@@ -109,7 +117,7 @@ namespace
 static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
     "cop",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      auto t = std::make_shared<mc_tasks::CoPTask>(config("surface"), solver.robots(), config("robotIndex"));
+      auto t = std::make_shared<mc_tasks::force::CoPTask>(config("surface"), solver.robots(), config("robotIndex"));
       if(config.has("admittance"))
       {
         t->admittance(config("admittance"));

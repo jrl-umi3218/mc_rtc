@@ -6,60 +6,8 @@
 namespace mc_tasks
 {
 
-namespace
+namespace force
 {
-
-/** Saturate integrator outputs.
- *
- * \param taskName Name of caller AdmittanceTask.
- *
- * \param vector Integrator output vector.
- *
- * \param bound Output (symmetric) bounds.
- *
- * \param label Name of output vector.
- *
- * \param isClamping Map of booleans describing the clamping state for each
- * direction in ['x', 'y', 'z'].
- *
- */
-void clampAndWarn(const std::string & taskName,
-                  Eigen::Vector3d & vector,
-                  const Eigen::Vector3d & bound,
-                  const std::string & label,
-                  std::map<char, bool> & isClamping)
-{
-  const char dirName[] = {'x', 'y', 'z'};
-  for(unsigned i = 0; i < 3; i++)
-  {
-    char dir = dirName[i];
-    if(vector(i) < -bound(i))
-    {
-      vector(i) = -bound(i);
-      if(!isClamping[dir])
-      {
-        LOG_WARNING(taskName << ": clamping " << dir << " " << label << " to " << -bound(i));
-        isClamping[dir] = true;
-      }
-    }
-    else if(vector(i) > bound(i))
-    {
-      vector(i) = bound(i);
-      if(!isClamping[dir])
-      {
-        LOG_WARNING(taskName << ": clamping " << dir << " " << label << " to " << bound(i));
-        isClamping[dir] = true;
-      }
-    }
-    else if(isClamping[dir])
-    {
-      LOG_WARNING(taskName << ": " << dir << " " << label << " back within range");
-      isClamping[dir] = false;
-    }
-  }
-}
-
-} // namespace
 
 AdmittanceTask::AdmittanceTask(const std::string & surfaceName,
                                const mc_rbdyn::Robots & robots,
@@ -75,15 +23,34 @@ AdmittanceTask::AdmittanceTask(const std::string & surfaceName,
 
 void AdmittanceTask::update()
 {
+  // Compute wrench error
   wrenchError_ = measuredWrench() - targetWrench_;
 
+  // Compute linear and angular velocity based on wrench error and admittance
   Eigen::Vector3d linearVel = admittance_.force().cwiseProduct(wrenchError_.force());
   Eigen::Vector3d angularVel = admittance_.couple().cwiseProduct(wrenchError_.couple());
+
+  // Clamp both values in order to have a 'security'
   clampAndWarn(name_, linearVel, maxLinearVel_, "linear velocity", isClampingLinearVel_);
   clampAndWarn(name_, angularVel, maxAngularVel_, "angular velocity", isClampingAngularVel_);
 
-  sva::MotionVecd velB = feedforwardVelB_ + sva::MotionVecd{angularVel, linearVel};
-  SurfaceTransformTask::refVelB(velB);
+  // Filter
+  refVelB_ = 0.8 * refVelB_ + 0.2 * sva::MotionVecd(angularVel, linearVel);
+
+  // Compute position and rotation delta
+  sva::PTransformd delta(mc_rbdyn::rpyToMat(timestep_ * refVelB_.angular()), timestep_ * refVelB_.linear());
+
+  // Apply feed forward term
+  refVelB_ += feedforwardVelB_;
+
+  // Acceleration
+  SurfaceTransformTask::refAccel((refVelB_ - SurfaceTransformTask::refVelB()) / timestep_);
+
+  // Velocity
+  SurfaceTransformTask::refVelB(refVelB_);
+
+  // Position
+  target(delta * target());
 }
 
 void AdmittanceTask::reset()
@@ -135,7 +102,7 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> AdmittanceTask::b
       }
     }
     return [dof, target](const mc_tasks::MetaTask & t, std::string & out) {
-      const auto & self = static_cast<const mc_tasks::AdmittanceTask &>(t);
+      const auto & self = static_cast<const mc_tasks::force::AdmittanceTask &>(t);
       Eigen::Vector6d w = self.measuredWrench().vector();
       for(int i = 0; i < 6; ++i)
       {
@@ -170,6 +137,14 @@ void AdmittanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::addToGUI(gui);
 }
 
+void AdmittanceTask::addToSolver(mc_solver::QPSolver & solver)
+{
+  timestep_ = solver.dt();
+  SurfaceTransformTask::addToSolver(solver);
+}
+
+} // namespace force
+
 } // namespace mc_tasks
 
 namespace
@@ -178,7 +153,8 @@ namespace
 static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
     "admittance",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      auto t = std::make_shared<mc_tasks::AdmittanceTask>(config("surface"), solver.robots(), config("robotIndex"));
+      auto t =
+          std::make_shared<mc_tasks::force::AdmittanceTask>(config("surface"), solver.robots(), config("robotIndex"));
       if(config.has("admittance"))
       {
         t->admittance(config("admittance"));

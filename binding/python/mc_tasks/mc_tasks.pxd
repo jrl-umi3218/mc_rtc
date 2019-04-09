@@ -32,6 +32,9 @@ cdef class _OrientationTrajectoryTask(MetaTask):
 cdef class _VectorOrientationTrajectoryTask(MetaTask):
   cdef c_mc_tasks.TrajectoryTaskGeneric[c_qp.VectorOrientationTask] * ttg_base
 
+cdef class _SurfaceTransformTask(MetaTask):
+  cdef c_mc_tasks.TrajectoryTaskGeneric[c_qp.SurfaceTransformTask] * ttg_base
+
 cdef class CoMTask(_CoMTrajectoryTask):
   cdef c_mc_tasks.CoMTask * impl
   cdef cppbool __own_impl
@@ -59,8 +62,8 @@ cdef class EndEffectorTask(MetaTask):
 cdef class RelativeEndEffectorTask(EndEffectorTask):
   pass
 
-cdef class ComplianceTask(MetaTask):
-  cdef c_mc_tasks.ComplianceTask * impl
+cdef class SurfaceTransformTask(_SurfaceTransformTask):
+  cdef c_mc_tasks.SurfaceTransformTask * impl
   cdef cppbool __own_impl
 
 ctypedef fused AnyTTG:
@@ -68,6 +71,7 @@ ctypedef fused AnyTTG:
   PositionTask
   OrientationTask
   VectorOrientationTask
+  SurfaceTransformTask
 
 #Note : In recent versions of Cython, fused types can be fused and thus
 # AnyTask can simply be the fusion of AnyTTG and other tasks
@@ -77,6 +81,6 @@ ctypedef fused AnyTask:
   PositionTask
   OrientationTask
   VectorOrientationTask
+  SurfaceTransformTask
   EndEffectorTask
   RelativeEndEffectorTask
-  ComplianceTask

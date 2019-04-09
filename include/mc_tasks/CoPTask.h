@@ -1,8 +1,11 @@
 #pragma once
 
-#include <mc_tasks/AdmittanceTask.h>
+#include <mc_tasks/DampingTask.h>
 
 namespace mc_tasks
+{
+
+namespace force
 {
 
 /*! \brief Track center-of-pressure (CoP) references at contact
@@ -18,7 +21,7 @@ namespace mc_tasks
  * [1] https://scaron.info/teaching/zero-tilting-moment-point.html
  *
  */
-struct MC_TASKS_DLLAPI CoPTask : AdmittanceTask
+struct MC_TASKS_DLLAPI CoPTask : DampingTask
 {
 public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -137,14 +140,6 @@ public:
     targetForce_ = targetForce;
   }
 
-  /*! \brief Get target wrench in the surface frame
-   *
-   */
-  const sva::ForceVecd & targetWrench() const
-  {
-    return AdmittanceTask::targetWrench();
-  }
-
 private:
   Eigen::Vector2d targetCoP_ = Eigen::Vector2d::Zero();
   Eigen::Vector3d targetForce_ = Eigen::Vector3d::Zero();
@@ -155,5 +150,7 @@ private:
 
   using AdmittanceTask::targetWrench;
 };
+
+} // namespace force
 
 } // namespace mc_tasks

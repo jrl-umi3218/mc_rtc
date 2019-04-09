@@ -5,6 +5,59 @@
 namespace mc_tasks
 {
 
+namespace force
+{
+
+/** Saturate integrator outputs.
+ *
+ * \param taskName Name of caller AdmittanceTask.
+ *
+ * \param vector Integrator output vector.
+ *
+ * \param bound Output (symmetric) bounds.
+ *
+ * \param label Name of output vector.
+ *
+ * \param isClamping Map of booleans describing the clamping state for each
+ * direction in ['x', 'y', 'z'].
+ *
+ */
+inline void clampAndWarn(const std::string & taskName,
+                         Eigen::Vector3d & vector,
+                         const Eigen::Vector3d & bound,
+                         const std::string & label,
+                         std::map<char, bool> & isClamping)
+{
+  const char dirName[] = {'x', 'y', 'z'};
+  for(unsigned i = 0; i < 3; i++)
+  {
+    char dir = dirName[i];
+    if(vector(i) < -bound(i))
+    {
+      vector(i) = -bound(i);
+      if(!isClamping[dir])
+      {
+        LOG_WARNING(taskName << ": clamping " << dir << " " << label << " to " << -bound(i));
+        isClamping[dir] = true;
+      }
+    }
+    else if(vector(i) > bound(i))
+    {
+      vector(i) = bound(i);
+      if(!isClamping[dir])
+      {
+        LOG_WARNING(taskName << ": clamping " << dir << " " << label << " to " << bound(i));
+        isClamping[dir] = true;
+      }
+    }
+    else if(isClamping[dir])
+    {
+      LOG_WARNING(taskName << ": " << dir << " " << label << " back within range");
+      isClamping[dir] = false;
+    }
+  }
+}
+
 /*! \brief Hybrid position-force control on a contacting end-effector.
  *
  * The AdmittanceTask is by default a SurfaceTransformTask, i.e. pure position
@@ -81,18 +134,6 @@ public:
     admittance_ = admittance;
   }
 
-  /*! \brief Set the task stiffness and damping
-   *
-   * Damping is set to the critical value of 2 * sqrt(stiffness).
-   *
-   * \param stiffness Task stiffness
-   *
-   */
-  void setCriticalGains(double stiffness)
-  {
-    setGains(stiffness, 2 * std::sqrt(stiffness));
-  }
-
   /*! \brief Get the current pose of the robot surface in the inertial frame
    *
    */
@@ -153,14 +194,6 @@ public:
     return robots_.robot(rIndex_).surfaceWrench(surface_.name());
   }
 
-  /*! \brief Get the measured pressure in the surface frame
-   *
-   */
-  double measuredPressure() const
-  {
-    return measuredWrench().force()[2];
-  }
-
   /*! \brief Set the maximum translation velocity of the task */
   void maxLinearVel(const Eigen::Vector3d & maxLinearVel)
   {
@@ -191,21 +224,9 @@ public:
    * surface frame. See e.g. (Murray et al., 1994, CRC Press).
    *
    */
-  void refVelB(const sva::MotionVecd & velB)
+  void feedForwardVel(const sva::MotionVecd & feedForwardVel)
   {
-    feedforwardVelB_ = velB;
-  }
-
-  /*! \brief Set dimensional stiffness
-   *
-   * This function leaves damping unchanged.
-   *
-   * \param stiffness Dimensional stiffness as a motion vector
-   *
-   */
-  void stiffness(const sva::MotionVecd & stiffness)
-  {
-    return SurfaceTransformTask::stiffness(stiffness);
+    feedforwardVelB_ = feedForwardVel;
   }
 
 protected:
@@ -213,6 +234,7 @@ protected:
   Eigen::Vector3d maxLinearVel_ = {0.1, 0.1, 0.1}; // [m] / [s]
   const mc_rbdyn::Robots & robots_;
   unsigned int rIndex_;
+  double timestep_;
   const mc_rbdyn::Surface & surface_;
   std::map<char, bool> isClampingAngularVel_ = {{'x', false}, {'y', false}, {'z', false}};
   std::map<char, bool> isClampingLinearVel_ = {{'x', false}, {'y', false}, {'z', false}};
@@ -220,6 +242,7 @@ protected:
   sva::ForceVecd targetWrench_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   sva::ForceVecd wrenchError_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   sva::MotionVecd feedforwardVelB_ = sva::MotionVecd(Eigen::Vector6d::Zero());
+  sva::MotionVecd refVelB_ = sva::MotionVecd(Eigen::Vector6d::Zero());
 
   void update() override;
 
@@ -237,24 +260,21 @@ protected:
   void addToLogger(mc_rtc::Logger & logger) override;
   void removeFromLogger(mc_rtc::Logger & logger) override;
 
-  /** Surface transform's refVelB() becomes internal to the task. An additional
-   * velocity offset can be added using AdmittanceTask::refVelB().
-   *
+  /** Surface transform's refVelB() becomes internal to the task.
    */
   using SurfaceTransformTask::refVelB;
-
-  /** Don't use surface transform's stiffness() setter as it applies critical
-   * damping, which is usually not good for admittance control. Use
-   * setCriticalGains() if you do desire this behavior.
-   *
-   */
-  using SurfaceTransformTask::stiffness;
 
   /** Surface transform's target becomes internal to the task. Its setter is
    * now targetPose().
    *
    */
   using SurfaceTransformTask::target;
+
+  /** Override addToSolver in order to get the timestep's solver automatically
+   */
+  void addToSolver(mc_solver::QPSolver & solver) override;
 };
+
+} // namespace force
 
 } // namespace mc_tasks

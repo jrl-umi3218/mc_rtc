@@ -184,6 +184,7 @@ mc_tasks/AddRemoveContactTask.cpp
 mc_tasks/TrajectoryTask.cpp
 mc_tasks/ComplianceTask.cpp
 mc_tasks/AdmittanceTask.cpp
+mc_tasks/DampingTask.cpp
 mc_tasks/CoPTask.cpp
 mc_tasks/GazeTask.cpp
 mc_tasks/PositionBasedVisServoTask.cpp
@@ -210,6 +211,7 @@ set(mc_tasks_HDR
 ../include/mc_tasks/TrajectoryTaskGeneric.hpp
 ../include/mc_tasks/ComplianceTask.h
 ../include/mc_tasks/AdmittanceTask.h
+../include/mc_tasks/DampingTask.h
 ../include/mc_tasks/CoPTask.h
 ../include/mc_tasks/GazeTask.h
 ../include/mc_tasks/PositionBasedVisServoTask.h
