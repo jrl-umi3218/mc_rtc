@@ -96,7 +96,7 @@ void ExactCubicTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                  }));
 
   // Visual controls for the control points and
-  for(unsigned int i = 0; i < bspline->waypoints().size(); ++i)
+  for(unsigned int i = 0; i < bspline->waypoints().size() - 1; ++i)
   {
     gui.addElement({"Tasks", name_, "Position Control Points"},
                    mc_rtc::gui::Point3D("control_point_pos_" + std::to_string(i),
@@ -108,17 +108,27 @@ void ExactCubicTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                           bspline->waypoints(waypoints);
                                         }));
   }
+  gui.addElement({"Tasks", name_, "Target"}, mc_rtc::gui::Transform("target", [this]() { return target(); },
+                                                                    [this](const sva::PTransformd & t) {
+                                                                      target(t);
+                                                                      // XXX inefficient
+                                                                      auto waypoints = bspline->waypoints();
+                                                                      waypoints.back().second = t.translation();
+                                                                      bspline->waypoints(waypoints);
+                                                                      orientation_spline->waypoints().back().second =
+                                                                          t.rotation();
+                                                                    }));
   gui.addElement(
       {"Tasks", name_, "Velocity Constraints"},
-      mc_rtc::gui::Arrow("InitVelocity", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 1., 0.)),
+      mc_rtc::gui::Arrow("InitVelocity", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 1., 1.)),
                          [this]() -> Eigen::Vector3d { return X_0_start.translation(); },
                          [this]() -> Eigen::Vector3d { return X_0_start.translation() + bspline->init_vel(); }),
-      mc_rtc::gui::Arrow("EndVelocity", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 1., 0.)),
+      mc_rtc::gui::Arrow("EndVelocity", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 1., 1.)),
                          [this]() -> Eigen::Vector3d { return target().translation(); },
                          [this]() -> Eigen::Vector3d { return target().translation() + bspline->end_vel(); }));
 
   // XXX different style for rotation element
-  for(unsigned i = 1; i < orientation_spline->waypoints().size(); ++i)
+  for(unsigned i = 1; i < orientation_spline->waypoints().size() - 1; ++i)
   {
     gui.addElement({"Tasks", name_, "Orientation Control Points"},
                    mc_rtc::gui::Rotation("control_point_ori_" + std::to_string(i),

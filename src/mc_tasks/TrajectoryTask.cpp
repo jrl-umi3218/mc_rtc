@@ -111,24 +111,6 @@ const sva::PTransformd & TrajectoryTask::target() const
   return X_0_t;
 }
 
-// void TrajectoryTask::generateBS()
-// {
-//   // bspline.reset(new mc_trajectory::BSplineTrajectory(controlPoints(), duration));
-//   // bspline.reset(new mc_trajectory::BSplineConstrainedTrajectory(controlPoints(), duration));
-//   mc_trajectory::ExactCubicTrajectory::T_Waypoint waypoints;
-//   int i = 0;
-//   const auto & cps = controlPoints();
-//   for(const auto & cp : cps)
-//   {
-//     double step = duration / (cps.size() - 1);
-//     double t = i * step;
-//     waypoints.push_back(std::make_pair(t, cp));
-//     ++i;
-//   }
-//   bspline.reset(new mc_trajectory::ExactCubicTrajectory(waypoints, Eigen::Vector3d::Zero(), Eigen::Vector3d::Zero(),
-//                                                         Eigen::Vector3d::Zero(), Eigen::Vector3d::Zero()));
-// }
-
 Eigen::VectorXd TrajectoryTask::eval() const
 {
   const auto & robot = robots.robot(rIndex);
