@@ -233,7 +233,7 @@ mc_tasks/LookAtSurfaceTask.cpp
 mc_tasks/MetaTaskLoader.cpp
 )
 if(${HPP_SPLINE_FOUND})
-  list(APPEND mc_trajectory_SRC
+  list(APPEND mc_tasks_SRC
     mc_tasks/ExactCubicTrajectoryTask.cpp)
 endif()
 
@@ -263,6 +263,10 @@ set(mc_tasks_HDR
 ../include/mc_tasks/PostureTask.h
 ../include/mc_tasks/LookAtTask.h
 )
+if(${HPP_SPLINE_FOUND})
+  list(APPEND mc_tasks_HDR
+    ../include/mc_tasks/ExactCubicTrajectoryTask.h)
+endif()
 
 if(NOT ${DISABLE_ROS})
   if(${ROSCPP_FOUND})

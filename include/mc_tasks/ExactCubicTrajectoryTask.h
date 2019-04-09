@@ -1,6 +1,11 @@
 #pragma once
 #include <mc_tasks/TrajectoryTask.h>
-#include <mc_trajectory/ExactCubicTrajectory.h>
+
+namespace mc_trajectory
+{
+struct ExactCubicTrajectory;
+struct InterpolatedRotation;
+} // namespace mc_trajectory
 
 namespace mc_tasks
 {
