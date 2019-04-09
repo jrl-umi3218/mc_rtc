@@ -88,18 +88,25 @@ void StateBuilder::removeCategory(const std::vector<std::string> & category)
       return;
     }
     cat.second.sub.erase(it);
-    Configuration s = state_;
+    auto s = state_("STATE");
+    auto g = state_("GUI");
     for(size_t i = 0; i < category.size() - 1; ++i)
     {
-      if(!s.has(category[i]))
-      {
-        return;
-      }
-      s = s(category[i]);
+      const auto & c = category[i];
+      if(!s.has("_sub") || !s("_sub").has(c)) return;
+      s = s("_sub")(c);
+      g = g("_sub")(c);
     }
-    if(s.has(category.back()))
+    if(!s.has("_sub") || !s("_sub").has(category.back()))
     {
-      s.remove(category.back());
+      return;
+    }
+    s("_sub").remove(category.back());
+    g("_sub").remove(category.back());
+    if(s("_sub").empty())
+    {
+      s.remove("_sub");
+      g.remove("_sub");
     }
   }
 }
@@ -121,7 +128,7 @@ void StateBuilder::removeElement(const std::vector<std::string> & category, cons
       auto g = state_("GUI");
       for(const auto & c : category)
       {
-        if(!s.has(c)) return;
+        if(!s.has("_sub") || !s("_sub").has(c)) return;
         s = s("_sub")(c);
         g = g("_sub")(c);
       }
