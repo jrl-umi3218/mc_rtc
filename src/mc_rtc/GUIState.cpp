@@ -52,7 +52,9 @@ void StateBuilder::reset()
   elements_.elements.clear();
   elements_.sub.clear();
   state_ = mc_rtc::Configuration{};
-  state_.add("DATA");
+  state_.add("DATA"); // static Data of the GUI
+  state_.add("GUI"); // GUI description of the GUI
+  state_.add("STATE"); // State data of the GUI
 }
 
 std::string StateBuilder::cat2str(const std::vector<std::string> & cat)
@@ -86,18 +88,25 @@ void StateBuilder::removeCategory(const std::vector<std::string> & category)
       return;
     }
     cat.second.sub.erase(it);
-    Configuration s = state_;
+    auto s = state_("STATE");
+    auto g = state_("GUI");
     for(size_t i = 0; i < category.size() - 1; ++i)
     {
-      if(!s.has(category[i]))
-      {
-        return;
-      }
-      s = s(category[i]);
+      const auto & c = category[i];
+      if(!s.has("_sub") || !s("_sub").has(c)) return;
+      s = s("_sub")(c);
+      g = g("_sub")(c);
     }
-    if(s.has(category.back()))
+    if(!s.has("_sub") || !s("_sub").has(category.back()))
     {
-      s.remove(category.back());
+      return;
+    }
+    s("_sub").remove(category.back());
+    g("_sub").remove(category.back());
+    if(s("_sub").empty())
+    {
+      s.remove("_sub");
+      g.remove("_sub");
     }
   }
 }
@@ -115,15 +124,40 @@ void StateBuilder::removeElement(const std::vector<std::string> & category, cons
     if(it != cat.elements.end())
     {
       cat.elements.erase(it);
-      auto s = state_;
+      auto s = state_("STATE");
+      auto g = state_("GUI");
       for(const auto & c : category)
       {
-        if(!s.has(c)) return;
-        s = s(c);
+        if(!s.has("_sub") || !s("_sub").has(c)) return;
+        s = s("_sub")(c);
+        g = g("_sub")(c);
       }
       if(s.has(name))
       {
-        s.remove(name);
+        auto g_details = g(name);
+        if(!g_details.has("_sub"))
+        {
+          s.remove(name);
+          g.remove(name);
+          return;
+        }
+        auto g_keys = g_details.keys();
+        for(const auto & k : g_keys)
+        {
+          if(k != "_sub")
+          {
+            g_details.remove(k);
+          }
+        }
+        auto s_details = s(name);
+        auto s_keys = s_details.keys();
+        for(const auto & k : s_keys)
+        {
+          if(k != "_sub")
+          {
+            s_details.remove(k);
+          }
+        }
       }
     }
   }
@@ -131,7 +165,7 @@ void StateBuilder::removeElement(const std::vector<std::string> & category, cons
 
 const mc_rtc::Configuration & StateBuilder::update()
 {
-  update(elements_, state_);
+  update(elements_, state_("STATE"));
   return state_;
 }
 
@@ -146,13 +180,16 @@ void StateBuilder::update(Category & category, mc_rtc::Configuration out)
     }
     auto c = out(element.name());
     e.addData(element, c);
-    if(!c.has("GUI"))
-    {
-      c.add("GUI");
-    }
-    auto g = c("GUI");
-    e.addGUI(element, g);
   }
+  if(!category.sub.size())
+  {
+    return;
+  }
+  if(!out.has("_sub"))
+  {
+    out.add("_sub");
+  }
+  out = out("_sub");
   for(auto & c : category.sub)
   {
     if(!out.has(c.name))
@@ -262,6 +299,31 @@ std::vector<StateBuilder::Category>::iterator StateBuilder::Category::find(const
     }
   }
   return sub.end();
+}
+
+void StateBuilder::updateGUI(const std::vector<std::string> & category, StateBuilder::ElementStore & el)
+{
+  auto gui = state_("GUI");
+  for(const auto & c : category)
+  {
+    if(!gui.has("_sub"))
+    {
+      gui.add("_sub");
+    }
+    gui = gui("_sub");
+    if(!gui.has(c))
+    {
+      gui.add(c);
+    }
+    gui = gui(c);
+  }
+  auto & element = el();
+  if(!gui.has(element.name()))
+  {
+    gui.add(element.name());
+  }
+  gui = gui(element.name());
+  el.addGUI(element, gui);
 }
 
 } // namespace gui

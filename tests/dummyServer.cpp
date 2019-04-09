@@ -57,6 +57,10 @@ TestServer::TestServer() : xythetaz_(4)
   auto joints = data.add("joints");
   joints.add("Goldorak", std::vector<std::string>{"Goldo_J1", "Goldo_J2", "Goldo_J3"});
   joints.add("Astro", std::vector<std::string>{"Astro_J1", "Astro_J2", "Astro_J3"});
+  builder.addElement({}, mc_rtc::gui::Label("Test", []() { return 2; }));
+  builder.addElement({"Test"}, mc_rtc::gui::Button("Test", []() { std::cout << "Test::Test clicked!\n"; }));
+  builder.addElement({"Test", "data"},
+                     mc_rtc::gui::Button("Test", []() { std::cout << "Test::Test::Test clicked!\n"; }));
   builder.addElement(
       {"dummy", "provider"}, mc_rtc::gui::Label("value", [this]() { return provider.value; }),
       mc_rtc::gui::ArrayLabel("point", [this]() { return provider.point; }),
