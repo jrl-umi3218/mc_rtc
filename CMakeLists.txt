@@ -65,6 +65,9 @@ find_package(mc_rtc_3rd_party_nanomsg REQUIRED)
 # qhull (build re-entrant static version)
 add_subdirectory(3rd-party/qhull)
 
+# mpack (build static version)
+add_subdirectory(3rd-party/mpack)
+
 # RapidJSON
 # The code was copied from the 1.1.0 release tarball for RapidJSON
 # https://github.com/miloyip/rapidjson

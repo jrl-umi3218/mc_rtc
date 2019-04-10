@@ -21,6 +21,7 @@ typedef size_t SizeType;
 
 #include <SpaceVecAlg/SpaceVecAlg>
 
+#include "mpack.h"
 #include "rapidjson/document.h"
 #include "rapidjson/error/en.h"
 #include "rapidjson/ostreamwrapper.h"
@@ -132,6 +133,148 @@ inline std::string dumpDocumentInternal(RapidJSONValue & document, bool pretty)
 inline std::string dumpDocument(RapidJSONValue & document, bool pretty)
 {
   return dumpDocumentInternal(document, pretty);
+}
+
+/** Taken from mpack.c @ version 1.10 */
+static void mpack_growable_writer_flush(mpack_writer_t * writer, const char * data, size_t count)
+{
+
+  // This is an intrusive flush function which modifies the writer's buffer
+  // in response to a flush instead of emptying it in order to add more
+  // capacity for data. This removes the need to copy data from a fixed buffer
+  // into a growable one, improving performance.
+  //
+  // There are three ways flush can be called:
+  //   - flushing the buffer during writing (used is zero, count is all data, data is buffer)
+  //   - flushing extra data during writing (used is all flushed data, count is extra data, data is not buffer)
+  //   - flushing during teardown (used and count are both all flushed data, data is buffer)
+  //
+  // In the first two cases, we grow the buffer by at least double, enough
+  // to ensure that new data will fit. We ignore the teardown flush.
+
+  if(data == writer->buffer)
+  {
+
+    // teardown, do nothing
+    if(mpack_writer_buffer_used(writer) == count) return;
+
+    // otherwise leave the data in the buffer and just grow
+    writer->current = writer->buffer + count;
+    count = 0;
+  }
+
+  size_t used = mpack_writer_buffer_used(writer);
+  size_t size = mpack_writer_buffer_size(writer);
+
+  mpack_log("flush size %i used %i data %p buffer %p\n", (int)count, (int)used, data, writer->buffer);
+
+  mpack_assert(data == writer->buffer || used + count > size,
+               "extra flush for %i but there is %i space left in the buffer! (%i/%i)", (int)count,
+               (int)mpack_writer_buffer_left(writer), (int)used, (int)size);
+
+  // grow to fit the data
+  // TODO: this really needs to correctly test for overflow
+  size_t new_size = size * 2;
+  while(new_size < used + count) new_size *= 2;
+
+  mpack_log("flush growing buffer size from %i to %i\n", (int)size, (int)new_size);
+
+  // grow the buffer
+  char * new_buffer = (char *)mpack_realloc(writer->buffer, used, new_size);
+  if(new_buffer == NULL)
+  {
+    mpack_writer_flag_error(writer, mpack_error_memory);
+    return;
+  }
+  writer->current = new_buffer + used;
+  writer->buffer = new_buffer;
+  writer->end = writer->buffer + new_size;
+
+  // append the extra data
+  if(count > 0)
+  {
+    mpack_memcpy(writer->current, data, count);
+    writer->current += count;
+  }
+
+  mpack_log("new buffer %p, used %i\n", new_buffer, (int)mpack_writer_buffer_used(writer));
+}
+
+inline static void toMessagePackImpl(mpack_writer_t * writer, const RapidJSONValue & value)
+{
+  switch(value.GetType())
+  {
+    case rapidjson::kNullType:
+      mpack_write_nil(writer);
+      break;
+    case rapidjson::kFalseType:
+    case rapidjson::kTrueType:
+      mpack_write_bool(writer, value.GetBool());
+      break;
+    case rapidjson::kObjectType:
+      mpack_start_map(writer, value.MemberCount());
+      for(auto it = value.MemberBegin(); it != value.MemberEnd(); ++it)
+      {
+        mpack_write_cstr(writer, it->name.GetString());
+        toMessagePackImpl(writer, it->value);
+      }
+      mpack_finish_map(writer);
+      break;
+    case rapidjson::kArrayType:
+      mpack_start_array(writer, value.Size());
+      for(auto it = value.Begin(); it != value.End(); ++it)
+      {
+        toMessagePackImpl(writer, *it);
+      }
+      mpack_finish_array(writer);
+      break;
+    case rapidjson::kStringType:
+      mpack_write_cstr(writer, value.GetString());
+      break;
+    case rapidjson::kNumberType:
+      if(value.IsInt())
+      {
+        mpack_write_i32(writer, value.GetInt());
+      }
+      else if(value.IsUint())
+      {
+        mpack_write_u32(writer, value.GetUint());
+      }
+      else if(value.IsInt64())
+      {
+        mpack_write_i64(writer, value.GetInt64());
+      }
+      else if(value.IsUint64())
+      {
+        mpack_write_u64(writer, value.GetUint64());
+      }
+      else // Assume double
+      {
+        mpack_write_double(writer, value.GetDouble());
+      }
+      break;
+  }
+}
+
+inline void toMessagePack(const RapidJSONValue & document, char ** data, size_t * size)
+{
+  mpack_writer_t writer;
+  if(*data == nullptr)
+  {
+    *data = static_cast<char *>(malloc(MPACK_BUFFER_SIZE));
+    *size = MPACK_BUFFER_SIZE;
+  }
+  mpack_writer_init(&writer, *data, *size);
+  mpack_writer_set_flush(&writer, mpack_growable_writer_flush);
+
+  toMessagePackImpl(&writer, document);
+
+  if(mpack_writer_destroy(&writer) != mpack_ok)
+  {
+    LOG_ERROR("Failed to convert to MessagePack")
+  }
+  *data = writer.buffer;
+  *size = mpack_writer_buffer_size(&writer);
 }
 
 /*! Save a JSON document to the provided disk location

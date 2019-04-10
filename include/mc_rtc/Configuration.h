@@ -465,6 +465,17 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    */
   std::string dump(bool pretty = false) const;
 
+  /*! \brief Convert to MessagePack
+   *
+   * \param data Where to place allocated data, the same pointer can be reused
+   * between consecutive calls. Can be null initially. Otherwise, it must have
+   * been obtained by malloc and not new.
+   *
+   * \param size Will hold the size of the MessagePack
+   *
+   */
+  void toMessagePack(char ** data, size_t * size) const;
+
   /*! \brief Returns a Entry value stored within the
    * configuration
    *

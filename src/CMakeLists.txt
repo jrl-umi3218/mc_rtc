@@ -50,7 +50,7 @@ set(mc_rtc_utils_HDR
 
 add_library(mc_rtc_utils SHARED ${mc_rtc_utils_SRC} ${mc_rtc_utils_HDR})
 set_target_properties(mc_rtc_utils PROPERTIES COMPILE_FLAGS "-DMC_RTC_UTILS_EXPORTS")
-target_link_libraries(mc_rtc_utils PUBLIC SpaceVecAlg::SpaceVecAlg Boost::filesystem Boost::disable_autolinking PRIVATE mc_rtc_3rd_party::RapidJSON)
+target_link_libraries(mc_rtc_utils PUBLIC SpaceVecAlg::SpaceVecAlg Boost::filesystem Boost::disable_autolinking PRIVATE mc_rtc_3rd_party::RapidJSON PRIVATE mpack)
 install_mc_rtc_lib(mc_rtc_utils)
 
 set(mc_rbdyn_SRC
