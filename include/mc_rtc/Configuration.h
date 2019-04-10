@@ -857,6 +857,18 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    */
   void push(const Configuration & value);
 
+  /*! \brief Push an empty array
+   *
+   * \see push(bool);
+   */
+  Configuration array(size_t reserve = 0);
+
+  /*! \brief Push an empty object
+   *
+   * \see push(bool);
+   */
+  Configuration object();
+
   /*! \brief User-defined conversion
    *
    * Requires the existence of:
@@ -1080,11 +1092,6 @@ struct MC_RTC_UTILS_DLLAPI Configuration
   ConfigurationArrayIterator end() const;
 
 private:
-  /*! \brief Create an empty array */
-  Configuration array(size_t reserve);
-  /*! \brief Create an empty object */
-  Configuration object();
-
   /*! \brief Implementation details
    *
    * This structure is meant to hide the JSON library used by mc_rtc
