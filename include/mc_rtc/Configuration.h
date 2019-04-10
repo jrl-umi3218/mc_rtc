@@ -433,6 +433,15 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    */
   static Configuration fromData(const char * data);
 
+  /*! \brief Static constructor to load from MessagePack data
+   *
+   * \param data MessagePack data to load
+   *
+   * \param size Size of data
+   *
+   */
+  static Configuration fromMessagePack(const char * data, size_t size);
+
   /*! \brief Load more data into the configuration
    *
    * For any key existing in both objects:

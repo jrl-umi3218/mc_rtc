@@ -436,6 +436,13 @@ Configuration Configuration::fromData(const char * data)
   return config;
 }
 
+Configuration Configuration::fromMessagePack(const char * data, size_t size)
+{
+  mc_rtc::Configuration config;
+  mc_rtc::internal::fromMessagePack(config, data, size);
+  return config;
+}
+
 void Configuration::load(const std::string & path)
 {
   auto & target = *std::static_pointer_cast<internal::RapidJSONDocument>(v.doc_);

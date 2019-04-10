@@ -17,6 +17,7 @@ namespace rapidjson
 typedef size_t SizeType;
 }
 
+#include <mc_rtc/Configuration.h>
 #include <mc_rtc/logging.h>
 
 #include <SpaceVecAlg/SpaceVecAlg>
@@ -275,6 +276,129 @@ inline size_t toMessagePack(const RapidJSONValue & document, std::vector<char> &
     LOG_ERROR("Failed to convert to MessagePack")
   }
   return mpack_writer_buffer_used(&writer);
+}
+
+namespace
+{
+
+void fromMessagePackArray(mc_rtc::Configuration config, mpack_node_t node);
+
+void fromMessagePackMap(mc_rtc::Configuration config, mpack_node_t node);
+
+std::string toString(mpack_node_t node)
+{
+  return {mpack_node_str(node), mpack_node_strlen(node)};
+}
+
+/** Add data into a map */
+void fromMessagePack(mc_rtc::Configuration config, const std::string & key, mpack_node_t node)
+{
+  switch(mpack_node_type(node))
+  {
+    case mpack_type_missing:
+    case mpack_type_nil:
+      break;
+    case mpack_type_bool:
+      config.add(key, mpack_node_bool(node));
+      break;
+    case mpack_type_int:
+      config.add(key, mpack_node_i64(node));
+      break;
+    case mpack_type_uint:
+      config.add(key, mpack_node_u64(node));
+      break;
+    case mpack_type_float:
+      config.add(key, mpack_node_float(node));
+      break;
+    case mpack_type_double:
+      config.add(key, mpack_node_double(node));
+      break;
+    case mpack_type_str:
+      config.add(key, toString(node));
+      break;
+    case mpack_type_array:
+      fromMessagePackArray(config.array(key, mpack_node_array_length(node)), node);
+      break;
+    case mpack_type_map:
+      fromMessagePackMap(config.add(key), node);
+      break;
+    default:
+      LOG_ERROR_AND_THROW(std::runtime_error, "Unsupported type in MessagePack")
+  }
+}
+
+/** Add data into an array */
+void fromMessagePack(mc_rtc::Configuration config, mpack_node_t node)
+{
+  switch(mpack_node_type(node))
+  {
+    case mpack_type_missing:
+    case mpack_type_nil:
+      break;
+    case mpack_type_bool:
+      config.push(mpack_node_bool(node));
+      break;
+    case mpack_type_int:
+      config.push(mpack_node_i64(node));
+      break;
+    case mpack_type_uint:
+      config.push(mpack_node_u64(node));
+      break;
+    case mpack_type_float:
+      config.push(mpack_node_float(node));
+      break;
+    case mpack_type_double:
+      config.push(mpack_node_double(node));
+      break;
+    case mpack_type_str:
+      config.push(toString(node));
+      break;
+    case mpack_type_array:
+      fromMessagePackArray(config.array(mpack_node_array_length(node)), node);
+      break;
+    case mpack_type_map:
+      fromMessagePackMap(config.object(), node);
+      break;
+    default:
+      LOG_ERROR_AND_THROW(std::runtime_error, "Unsupported type in MessagePack")
+  }
+}
+
+void fromMessagePackArray(mc_rtc::Configuration config, mpack_node_t node)
+{
+  for(size_t i = 0; i < mpack_node_array_length(node); ++i)
+  {
+    fromMessagePack(config, mpack_node_array_at(node, i));
+  }
+}
+
+void fromMessagePackMap(mc_rtc::Configuration config, mpack_node_t node)
+{
+  for(size_t i = 0; i < mpack_node_map_count(node); ++i)
+  {
+    fromMessagePack(config, toString(mpack_node_map_key_at(node, i)), mpack_node_map_value_at(node, i));
+  }
+}
+
+} // namespace
+
+inline void fromMessagePack(mc_rtc::Configuration & config, const char * data, size_t size)
+{
+  mpack_tree_t tree;
+  mpack_tree_init_data(&tree, data, size);
+  mpack_tree_parse(&tree);
+  if(mpack_tree_error(&tree) != mpack_ok)
+  {
+    LOG_ERROR("Failed to parse MessagePack data")
+    return;
+  }
+  auto root = mpack_tree_root(&tree);
+  if(mpack_node_type(root) != mpack_type_map)
+  {
+    LOG_ERROR("Cannot convert from MessagePack if the root type is not a map")
+    return;
+  }
+  fromMessagePackMap(config, root);
 }
 
 /*! Save a JSON document to the provided disk location
