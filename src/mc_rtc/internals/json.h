@@ -135,10 +135,10 @@ inline std::string dumpDocument(RapidJSONValue & document, bool pretty)
   return dumpDocumentInternal(document, pretty);
 }
 
-/** Taken from mpack.c @ version 1.10 */
-static void mpack_growable_writer_flush(mpack_writer_t * writer, const char * data, size_t count)
+/** Inspired by mpack.c @ version 1.0 */
+static void mpack_std_vector_writer_flush(mpack_writer_t * writer, const char * data, size_t count)
 {
-
+  auto & buffer = *static_cast<std::vector<char> *>(writer->context);
   // This is an intrusive flush function which modifies the writer's buffer
   // in response to a flush instead of emptying it in order to add more
   // capacity for data. This removes the need to copy data from a fixed buffer
@@ -180,7 +180,8 @@ static void mpack_growable_writer_flush(mpack_writer_t * writer, const char * da
   mpack_log("flush growing buffer size from %i to %i\n", (int)size, (int)new_size);
 
   // grow the buffer
-  char * new_buffer = (char *)mpack_realloc(writer->buffer, used, new_size);
+  buffer.resize(new_size);
+  char * new_buffer = buffer.data();
   if(new_buffer == NULL)
   {
     mpack_writer_flag_error(writer, mpack_error_memory);
@@ -256,16 +257,16 @@ inline static void toMessagePackImpl(mpack_writer_t * writer, const RapidJSONVal
   }
 }
 
-inline void toMessagePack(const RapidJSONValue & document, char ** data, size_t * size)
+inline size_t toMessagePack(const RapidJSONValue & document, std::vector<char> & data)
 {
   mpack_writer_t writer;
-  if(*data == nullptr)
+  if(data.size() == 0)
   {
-    *data = static_cast<char *>(malloc(MPACK_BUFFER_SIZE));
-    *size = MPACK_BUFFER_SIZE;
+    data.resize(MPACK_BUFFER_SIZE);
   }
-  mpack_writer_init(&writer, *data, *size);
-  mpack_writer_set_flush(&writer, mpack_growable_writer_flush);
+  mpack_writer_init(&writer, data.data(), data.size());
+  mpack_writer_set_context(&writer, &data);
+  mpack_writer_set_flush(&writer, mpack_std_vector_writer_flush);
 
   toMessagePackImpl(&writer, document);
 
@@ -273,8 +274,7 @@ inline void toMessagePack(const RapidJSONValue & document, char ** data, size_t 
   {
     LOG_ERROR("Failed to convert to MessagePack")
   }
-  *data = writer.buffer;
-  *size = mpack_writer_buffer_size(&writer);
+  return mpack_writer_buffer_used(&writer);
 }
 
 /*! Save a JSON document to the provided disk location

@@ -507,10 +507,10 @@ std::string Configuration::dump(bool pretty) const
   return mc_rtc::internal::dumpDocument(value, pretty);
 }
 
-void Configuration::toMessagePack(char ** data, size_t * size) const
+size_t Configuration::toMessagePack(std::vector<char> & data) const
 {
   auto & value = *static_cast<internal::RapidJSONValue *>(v.value_);
-  mc_rtc::internal::toMessagePack(value, data, size);
+  return mc_rtc::internal::toMessagePack(value, data);
 }
 
 template<>

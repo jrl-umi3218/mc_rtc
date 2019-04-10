@@ -467,14 +467,12 @@ struct MC_RTC_UTILS_DLLAPI Configuration
 
   /*! \brief Convert to MessagePack
    *
-   * \param data Where to place allocated data, the same pointer can be reused
-   * between consecutive calls. Can be null initially. Otherwise, it must have
-   * been obtained by malloc and not new.
+   * \param data Will hold the message data
    *
-   * \param size Will hold the size of the MessagePack
+   * \returns The size of the message, not that data.size() might be different so you shouldn't use that
    *
    */
-  void toMessagePack(char ** data, size_t * size) const;
+  size_t toMessagePack(std::vector<char> & data) const;
 
   /*! \brief Returns a Entry value stored within the
    * configuration
