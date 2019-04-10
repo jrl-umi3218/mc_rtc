@@ -158,6 +158,23 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    */
   operator unsigned int() const;
 
+  /*! \brief Cast to int64_t
+   *
+   * Strictly for int64_t-typed entries
+   *
+   * \throws If the underlying value does not hold an int64_t
+   */
+  operator int64_t() const;
+
+  /*! \brief Cast to uint64_t
+   *
+   * Int entries that are strictly positive will be treated as
+   * uint64_t entries
+   *
+   * \throws If the underlying value does not hold an uint64_t
+   */
+  operator uint64_t() const;
+
   /*! \brief Cast to double
    *
    * Will actually convert any numeric entry into a double
@@ -597,6 +614,18 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    */
   void add(const std::string & key, unsigned int value);
 
+  /*! \brief Add a int64_t element to the Configuration
+   *
+   * \see add(const std::string&, bool)
+   */
+  void add(const std::string & key, int64_t value);
+
+  /*! \brief Add a uint64_t element to the Configuration
+   *
+   * \see add(const std::string&, bool)
+   */
+  void add(const std::string & key, uint64_t value);
+
   /*! \brief Add a double element to the Configuration
    *
    * \see add(const std::string&, bool)
@@ -725,6 +754,18 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    * \see push(bool);
    */
   void push(unsigned int value);
+
+  /*! \brief Insert a int64_t element int64_to an array
+   *
+   * \see push(bool);
+   */
+  void push(int64_t value);
+
+  /*! \brief Insert a uint64_t element into an array
+   *
+   * \see push(bool);
+   */
+  void push(uint64_t value);
 
   /*! \brief Insert a double element into an array
    *

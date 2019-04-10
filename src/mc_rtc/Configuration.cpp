@@ -203,6 +203,28 @@ Configuration::operator unsigned int() const
   throw Exception("Stored Json value is not an unsigned int");
 }
 
+Configuration::operator int64_t() const
+{
+  assert(v.value_);
+  auto value = static_cast<const internal::RapidJSONValue *>(v.value_);
+  if(value->IsInt64())
+  {
+    return value->GetInt64();
+  }
+  throw Exception("Stored Json value is not an int64_t");
+}
+
+Configuration::operator uint64_t() const
+{
+  assert(v.value_);
+  auto value = static_cast<const internal::RapidJSONValue *>(v.value_);
+  if(value->IsUint64() || (value->IsInt64() && value->GetInt64() >= 0))
+  {
+    return value->GetUint64();
+  }
+  throw Exception("Stored Json value is not an uint64_t");
+}
+
 Configuration::operator double() const
 {
   assert(v.value_);
@@ -571,6 +593,8 @@ void push_impl(T value, void * json_p, void * doc_p)
 void Configuration::add(const std::string & key, bool value) { add_impl(key, value, v.value_, v.doc_.get()); }
 void Configuration::add(const std::string & key, int value) { add_impl(key, value, v.value_, v.doc_.get()); }
 void Configuration::add(const std::string & key, unsigned int value) { add_impl(key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, int64_t value) { add_impl(key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, uint64_t value) { add_impl(key, value, v.value_, v.doc_.get()); }
 void Configuration::add(const std::string & key, double value) { add_impl(key, value, v.value_, v.doc_.get()); }
 void Configuration::add(const std::string & key, const char * value) { add(key, std::string(value)); }
 void Configuration::add(const std::string & key, const std::string & value) { add_impl(key, value, v.value_, v.doc_.get()); }
@@ -668,6 +692,8 @@ Configuration Configuration::object()
 void Configuration::push(bool value) { push_impl(value, v.value_, v.doc_.get()); }
 void Configuration::push(int value) { push_impl(value, v.value_, v.doc_.get()); }
 void Configuration::push(unsigned int value) { push_impl(value, v.value_, v.doc_.get()); }
+void Configuration::push(int64_t value) { push_impl(value, v.value_, v.doc_.get()); }
+void Configuration::push(uint64_t value) { push_impl(value, v.value_, v.doc_.get()); }
 void Configuration::push(double value) { push_impl(value, v.value_, v.doc_.get()); }
 void Configuration::push(const char * value) { push(std::string(value)); }
 void Configuration::push(const std::string & value) { push_impl(value, v.value_, v.doc_.get()); }
