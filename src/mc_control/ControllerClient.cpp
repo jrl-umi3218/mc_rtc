@@ -117,7 +117,7 @@ void ControllerClient::start()
           t_last_received = now;
           if(run_)
           {
-            handle_gui_state("{}");
+            handle_gui_state(mc_rtc::Configuration{});
           }
         }
         auto err = nn_errno();
@@ -137,7 +137,7 @@ void ControllerClient::start()
         t_last_received = now;
         if(run_)
         {
-          handle_gui_state(buff.data());
+          handle_gui_state(mc_rtc::Configuration::fromMessagePack(buff.data(), recv));
         }
       }
       std::this_thread::sleep_for(std::chrono::microseconds(500));
@@ -160,10 +160,9 @@ void ControllerClient::send_request(const ElementId & id)
   send_request(id, mc_rtc::Configuration{});
 }
 
-void ControllerClient::handle_gui_state(const char * data)
+void ControllerClient::handle_gui_state(mc_rtc::Configuration state)
 {
   started();
-  auto state = mc_rtc::Configuration::fromData(data);
   if(state.has("DATA"))
   {
     data_.load(state("DATA"));

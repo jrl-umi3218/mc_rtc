@@ -106,7 +106,7 @@ protected:
   /** Kill the connection and data flow */
   void stop();
 
-  void handle_gui_state(const char * data);
+  void handle_gui_state(mc_rtc::Configuration state);
 
   void handle_category(const std::vector<std::string> & parent,
                        const std::string & category,
