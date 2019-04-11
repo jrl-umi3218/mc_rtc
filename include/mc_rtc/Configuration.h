@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <mc_rtc/utils_api.h>
+#include <mc_rtc/MessagePackBuilder.h>
 
 #include <SpaceVecAlg/SpaceVecAlg>
 
@@ -499,6 +499,15 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    *
    */
   size_t toMessagePack(std::vector<char> & data) const;
+
+  /*! \brief Append to an existing MessagePackBuilder
+   *
+   * The whole configuration will be stored in the MessagePack being built
+   *
+   * \param builder MessagePackBuilder instance
+   *
+   */
+  void toMessagePack(MessagePackBuilder & builder) const;
 
   /*! \brief Returns a Entry value stored within the
    * configuration

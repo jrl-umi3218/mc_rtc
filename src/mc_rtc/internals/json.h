@@ -136,146 +136,60 @@ inline std::string dumpDocument(RapidJSONValue & document, bool pretty)
   return dumpDocumentInternal(document, pretty);
 }
 
-/** Inspired by mpack.c @ version 1.0 */
-static void mpack_std_vector_writer_flush(mpack_writer_t * writer, const char * data, size_t count)
-{
-  auto & buffer = *static_cast<std::vector<char> *>(writer->context);
-  // This is an intrusive flush function which modifies the writer's buffer
-  // in response to a flush instead of emptying it in order to add more
-  // capacity for data. This removes the need to copy data from a fixed buffer
-  // into a growable one, improving performance.
-  //
-  // There are three ways flush can be called:
-  //   - flushing the buffer during writing (used is zero, count is all data, data is buffer)
-  //   - flushing extra data during writing (used is all flushed data, count is extra data, data is not buffer)
-  //   - flushing during teardown (used and count are both all flushed data, data is buffer)
-  //
-  // In the first two cases, we grow the buffer by at least double, enough
-  // to ensure that new data will fit. We ignore the teardown flush.
-
-  if(data == writer->buffer)
-  {
-
-    // teardown, do nothing
-    if(mpack_writer_buffer_used(writer) == count) return;
-
-    // otherwise leave the data in the buffer and just grow
-    writer->current = writer->buffer + count;
-    count = 0;
-  }
-
-  size_t used = mpack_writer_buffer_used(writer);
-  size_t size = mpack_writer_buffer_size(writer);
-
-  mpack_log("flush size %i used %i data %p buffer %p\n", (int)count, (int)used, data, writer->buffer);
-
-  mpack_assert(data == writer->buffer || used + count > size,
-               "extra flush for %i but there is %i space left in the buffer! (%i/%i)", (int)count,
-               (int)mpack_writer_buffer_left(writer), (int)used, (int)size);
-
-  // grow to fit the data
-  // TODO: this really needs to correctly test for overflow
-  size_t new_size = size * 2;
-  while(new_size < used + count) new_size *= 2;
-
-  mpack_log("flush growing buffer size from %i to %i\n", (int)size, (int)new_size);
-
-  // grow the buffer
-  buffer.resize(new_size);
-  char * new_buffer = buffer.data();
-  if(new_buffer == NULL)
-  {
-    mpack_writer_flag_error(writer, mpack_error_memory);
-    return;
-  }
-  writer->current = new_buffer + used;
-  writer->buffer = new_buffer;
-  writer->end = writer->buffer + new_size;
-
-  // append the extra data
-  if(count > 0)
-  {
-    mpack_memcpy(writer->current, data, count);
-    writer->current += count;
-  }
-
-  mpack_log("new buffer %p, used %i\n", new_buffer, (int)mpack_writer_buffer_used(writer));
-}
-
-inline static void toMessagePackImpl(mpack_writer_t * writer, const RapidJSONValue & value)
+inline static void toMessagePack(const RapidJSONValue & value, MessagePackBuilder & builder)
 {
   switch(value.GetType())
   {
     case rapidjson::kNullType:
-      mpack_write_nil(writer);
+      builder.write();
       break;
     case rapidjson::kFalseType:
     case rapidjson::kTrueType:
-      mpack_write_bool(writer, value.GetBool());
+      builder.write(value.GetBool());
       break;
     case rapidjson::kObjectType:
-      mpack_start_map(writer, value.MemberCount());
+      builder.start_map(value.MemberCount());
       for(auto it = value.MemberBegin(); it != value.MemberEnd(); ++it)
       {
-        mpack_write_cstr(writer, it->name.GetString());
-        toMessagePackImpl(writer, it->value);
+        builder.write(it->name.GetString(), it->name.GetStringLength());
+        toMessagePack(it->value, builder);
       }
-      mpack_finish_map(writer);
+      builder.finish_map();
       break;
     case rapidjson::kArrayType:
-      mpack_start_array(writer, value.Size());
+      builder.start_array(value.Size());
       for(auto it = value.Begin(); it != value.End(); ++it)
       {
-        toMessagePackImpl(writer, *it);
+        toMessagePack(*it, builder);
       }
-      mpack_finish_array(writer);
+      builder.finish_array();
       break;
     case rapidjson::kStringType:
-      mpack_write_cstr(writer, value.GetString());
+      builder.write(value.GetString(), value.GetStringLength());
       break;
     case rapidjson::kNumberType:
       if(value.IsInt())
       {
-        mpack_write_i32(writer, value.GetInt());
+        builder.write(value.GetInt());
       }
       else if(value.IsUint())
       {
-        mpack_write_u32(writer, value.GetUint());
+        builder.write(value.GetUint());
       }
       else if(value.IsInt64())
       {
-        mpack_write_i64(writer, value.GetInt64());
+        builder.write(value.GetInt64());
       }
       else if(value.IsUint64())
       {
-        mpack_write_u64(writer, value.GetUint64());
+        builder.write(value.GetUint64());
       }
       else // Assume double
       {
-        mpack_write_double(writer, value.GetDouble());
+        builder.write(value.GetDouble());
       }
       break;
   }
-}
-
-inline size_t toMessagePack(const RapidJSONValue & document, std::vector<char> & data)
-{
-  mpack_writer_t writer;
-  if(data.size() == 0)
-  {
-    data.resize(MPACK_BUFFER_SIZE);
-  }
-  mpack_writer_init(&writer, data.data(), data.size());
-  mpack_writer_set_context(&writer, &data);
-  mpack_writer_set_flush(&writer, mpack_std_vector_writer_flush);
-
-  toMessagePackImpl(&writer, document);
-
-  if(mpack_writer_destroy(&writer) != mpack_ok)
-  {
-    LOG_ERROR("Failed to convert to MessagePack")
-  }
-  return mpack_writer_buffer_used(&writer);
 }
 
 namespace
