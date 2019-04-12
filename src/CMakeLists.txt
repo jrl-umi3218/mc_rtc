@@ -118,6 +118,7 @@ set(mc_rtc_gui_SRC
 )
 
 set(mc_rtc_gui_HDR
+  ../include/mc_rtc/GUIDetails.h
   ../include/mc_rtc/GUIState.h
   ../include/mc_rtc/GUIState.hpp
   ../include/mc_rtc/GUITypes.h

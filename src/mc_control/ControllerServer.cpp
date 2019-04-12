@@ -79,8 +79,7 @@ void ControllerServer::publish(mc_rtc::gui::StateBuilder & gui_builder)
 {
   if(iter_++ % rate_ == 0)
   {
-    const auto & state = gui_builder.update();
-    auto s = state.toMessagePack(buffer_);
+    auto s = gui_builder.update(buffer_);
     nn_send(pub_socket_, buffer_.data(), s, 0);
   }
 }

@@ -18,34 +18,9 @@ BOOST_AUTO_TEST_CASE(TestGUIStateBuilder)
   mc_rtc::gui::StateBuilder builder;
   builder.addElement({"dummy", "provider"}, mc_rtc::gui::Label("value", [&provider] { return provider.value; }));
   builder.addElement({"dummy", "provider"}, mc_rtc::gui::ArrayLabel("point", [&provider] { return provider.point; }));
-  {
-    const auto & state = builder.update();
-    BOOST_REQUIRE(state.has("STATE"));
-    BOOST_REQUIRE(state("STATE").has("_sub"));
-    BOOST_REQUIRE(state("STATE")("_sub").has("dummy"));
-    BOOST_REQUIRE(state("STATE")("_sub")("dummy").has("_sub"));
-    BOOST_REQUIRE(state("STATE")("_sub")("dummy")("_sub").has("provider"));
-    BOOST_REQUIRE(state("STATE")("_sub")("dummy")("_sub")("provider").has("point"));
-    BOOST_REQUIRE(state("STATE")("_sub")("dummy")("_sub")("provider")("point").has("data"));
-    BOOST_REQUIRE(state("STATE")("_sub")("dummy")("_sub")("provider")("point")("data") == provider.point);
-    BOOST_REQUIRE(state("STATE")("_sub")("dummy")("_sub")("provider").has("value"));
-    BOOST_REQUIRE(state("STATE")("_sub")("dummy")("_sub")("provider")("value").has("data"));
-    BOOST_REQUIRE(state("STATE")("_sub")("dummy")("_sub")("provider")("value")("data") == provider.value);
-  }
-  {
-    provider.value = -122.5;
-    provider.point = Eigen::Vector3d::Random();
-    const auto & state = builder.update();
-    BOOST_REQUIRE(state.has("STATE"));
-    BOOST_REQUIRE(state("STATE").has("_sub"));
-    BOOST_REQUIRE(state("STATE")("_sub").has("dummy"));
-    BOOST_REQUIRE(state("STATE")("_sub")("dummy").has("_sub"));
-    BOOST_REQUIRE(state("STATE")("_sub")("dummy")("_sub").has("provider"));
-    BOOST_REQUIRE(state("STATE")("_sub")("dummy")("_sub")("provider").has("point"));
-    BOOST_REQUIRE(state("STATE")("_sub")("dummy")("_sub")("provider")("point").has("data"));
-    BOOST_REQUIRE(state("STATE")("_sub")("dummy")("_sub")("provider")("point")("data") == provider.point);
-    BOOST_REQUIRE(state("STATE")("_sub")("dummy")("_sub")("provider").has("value"));
-    BOOST_REQUIRE(state("STATE")("_sub")("dummy")("_sub")("provider")("value").has("data"));
-    BOOST_REQUIRE(state("STATE")("_sub")("dummy")("_sub")("provider")("value")("data") == provider.value);
-  }
+  std::vector<char> buffer;
+  auto s = builder.update(buffer);
+  std::cout << "state size " << s << "\n";
+  auto state = mc_rtc::Configuration::fromMessagePack(buffer.data(), s);
+  std::cout << state.dump(true) << "\n";
 }

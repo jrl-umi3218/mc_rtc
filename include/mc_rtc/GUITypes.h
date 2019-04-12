@@ -35,14 +35,17 @@ struct MC_RTC_GUI_DLLAPI Color
     config("a", a);
   }
 
-  operator mc_rtc::Configuration() const
+  static constexpr size_t write_size()
   {
-    mc_rtc::Configuration config;
-    config.add("r", r);
-    config.add("g", g);
-    config.add("b", b);
-    config.add("a", a);
-    return config;
+    return 4;
+  }
+
+  void write(mc_rtc::MessagePackBuilder & builder) const
+  {
+    builder.write(r);
+    builder.write(g);
+    builder.write(b);
+    builder.write(a);
   }
 };
 
@@ -88,26 +91,16 @@ struct MC_RTC_GUI_DLLAPI LineConfig
     }
   }
 
-  void save(mc_rtc::Configuration & out) const
+  static constexpr size_t write_size()
   {
-    out.add("color", color);
-    out.add("width", width);
-    switch(style)
-    {
-      case LineStyle::Dotted:
-        out.add("style", "dotted");
-        break;
-      default:
-        out.add("style", "solid");
-        break;
-    }
+    return Color::write_size() + 2;
   }
 
-  operator mc_rtc::Configuration() const
+  void write(mc_rtc::MessagePackBuilder & out) const
   {
-    mc_rtc::Configuration out;
-    save(out);
-    return out;
+    color.write(out);
+    out.write(width);
+    out.write(static_cast<typename std::underlying_type<LineStyle>::type>(style));
   }
 };
 
@@ -131,17 +124,21 @@ struct MC_RTC_GUI_DLLAPI ArrowConfig
     config("end_point_scale", end_point_scale);
   }
 
-  operator mc_rtc::Configuration() const
+  static constexpr size_t write_size()
   {
-    mc_rtc::Configuration config;
-    config.add("color", color);
-    config.add("shaft_diam", shaft_diam);
-    config.add("head_diam", head_diam);
-    config.add("head_len", head_len);
-    config.add("scale", scale);
-    config.add("start_point_scale", start_point_scale);
-    config.add("end_point_scale", end_point_scale);
-    return config;
+    return Color::write_size() + 7;
+  }
+
+  void write(mc_rtc::MessagePackBuilder & out) const
+  {
+    color.write(out);
+    out.write(shaft_diam);
+    out.write(shaft_diam);
+    out.write(head_diam);
+    out.write(head_len);
+    out.write(scale);
+    out.write(start_point_scale);
+    out.write(end_point_scale);
   }
 
   double head_diam = 0.015;
@@ -168,11 +165,15 @@ struct ForceConfig : public ArrowConfig
     config("force_scale", force_scale);
   }
 
-  operator mc_rtc::Configuration() const
+  static constexpr size_t write_size()
   {
-    auto config = ArrowConfig::operator mc_rtc::Configuration();
-    config.add("force_scale", force_scale);
-    return config;
+    return ArrowConfig::write_size() + 1;
+  }
+
+  void write(mc_rtc::MessagePackBuilder & out) const
+  {
+    ArrowConfig::write(out);
+    out.write(force_scale);
   }
 
   double force_scale = 0.0015;
@@ -193,12 +194,15 @@ struct PointConfig
     config("scale", scale);
   }
 
-  operator mc_rtc::Configuration() const
+  static constexpr size_t write_size()
   {
-    mc_rtc::Configuration config;
-    config.add("scale", scale);
-    config.add("color", color);
-    return config;
+    return Color::write_size() + 1;
+  }
+
+  void write(mc_rtc::MessagePackBuilder & out) const
+  {
+    color.write(out);
+    out.write(scale);
   }
 
   Color color;
