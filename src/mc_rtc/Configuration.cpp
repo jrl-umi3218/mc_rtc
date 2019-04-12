@@ -436,6 +436,14 @@ Configuration Configuration::fromData(const char * data)
   return config;
 }
 
+Configuration Configuration::rootArray()
+{
+  mc_rtc::Configuration config;
+  auto & target = *std::static_pointer_cast<internal::RapidJSONDocument>(config.v.doc_);
+  target.SetArray();
+  return config;
+}
+
 Configuration Configuration::fromMessagePack(const char * data, size_t size)
 {
   mc_rtc::Configuration config;

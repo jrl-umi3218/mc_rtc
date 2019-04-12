@@ -419,6 +419,12 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    */
   Configuration(const char * path);
 
+  /*! \brief Returns a Configuration with an array as root entry
+   *
+   * This is not valid standard JSON
+   */
+  static Configuration rootArray();
+
   /*! \brief Static constructor to load from JSON data
    *
    * \param data JSON data to load
