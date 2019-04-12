@@ -158,7 +158,7 @@ namespace
 template<typename T>
 inline void write_vector(mpack_writer_t * writer, const T & v)
 {
-  for(size_t i = 0; i < v.size(); ++i)
+  for(Eigen::Index i = 0; i < v.size(); ++i)
   {
     mpack_write_double(writer, v(i));
   }
@@ -167,9 +167,9 @@ inline void write_vector(mpack_writer_t * writer, const T & v)
 template<typename T>
 inline void write_matrix(mpack_writer_t * writer, const T & m)
 {
-  for(size_t i = 0; i < m.rows(); ++i)
+  for(Eigen::Index i = 0; i < m.rows(); ++i)
   {
-    for(size_t j = 0; j < m.cols(); ++j)
+    for(Eigen::Index j = 0; j < m.cols(); ++j)
     {
       mpack_write_double(writer, m(i, j));
     }
