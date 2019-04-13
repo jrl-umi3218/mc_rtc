@@ -232,6 +232,15 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
   /** Finished serializing a map */
   void finish_map();
 
+  /** Write an existing object into the object being constructed
+   *
+   * \param data Data written into the object
+   *
+   * \param size Size of the data
+   *
+   */
+  void write_object(const char * data, size_t s);
+
   /** Finish building the message
    *
    * Afterwards, data cannot be appended to the builder

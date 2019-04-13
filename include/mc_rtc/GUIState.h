@@ -1663,6 +1663,12 @@ private:
 
   /** Holds static data for the GUI */
   mc_rtc::Configuration data_;
+  /** True if data binary form needs to be generated again */
+  bool update_data_ = true;
+  /** Holds data's binary form */
+  std::vector<char> data_buffer_;
+  /** Holds data's binary size */
+  size_t data_buffer_size_ = 0;
   struct Category;
   struct MC_RTC_GUI_DLLAPI ElementStore
   {

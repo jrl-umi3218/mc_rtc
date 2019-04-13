@@ -79,7 +79,12 @@ size_t StateBuilder::update(std::vector<char> & buffer)
   mc_rtc::MessagePackBuilder builder(buffer);
   builder.start_array(3);
   builder.write(PROTOCOL_VERSION);
-  data_.toMessagePack(builder);
+  if(update_data_)
+  {
+    data_buffer_size_ = data_.toMessagePack(data_buffer_);
+    update_data_ = false;
+  }
+  builder.write_object(data_buffer_.data(), data_buffer_size_);
   update(builder, elements_);
   builder.finish_array();
   return builder.finish();
@@ -138,6 +143,7 @@ bool StateBuilder::handleRequest(const std::vector<std::string> & category,
 
 mc_rtc::Configuration StateBuilder::data()
 {
+  update_data_ = true;
   return data_;
 }
 

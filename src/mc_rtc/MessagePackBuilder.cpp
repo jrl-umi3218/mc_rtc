@@ -261,6 +261,11 @@ void MessagePackBuilder::finish_map()
   mpack_finish_map(impl_.get());
 }
 
+void MessagePackBuilder::write_object(const char * data, size_t s)
+{
+  mpack_write_object_bytes(impl_.get(), data, s);
+}
+
 size_t MessagePackBuilder::finish()
 {
   if(mpack_writer_destroy(impl_.get()) != mpack_ok)
