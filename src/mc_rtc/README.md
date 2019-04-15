@@ -52,6 +52,3 @@ Where `FormWiget` is:
 ```
 "FormWidgetName", FormWidgetType, FormWidgetRequired, (FormWidgetData)
 ```
-
-##FIXME Widget can be pre-serialized as a binary blob
-##FIXME Same goes for the static data until it changed

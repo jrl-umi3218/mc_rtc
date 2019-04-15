@@ -1354,6 +1354,9 @@ struct FormImpl : public CallbackElement<Element, Callback>
   FormImpl(const std::string & name, Callback cb, Args &&... args)
   : CallbackElement<Element, Callback>(name, cb), elements_(std::forward<Args>(args)...)
   {
+    mc_rtc::MessagePackBuilder builder(data_);
+    write_elements(builder);
+    data_.resize(builder.finish());
   }
 
   static constexpr size_t write_size()
@@ -1364,7 +1367,7 @@ struct FormImpl : public CallbackElement<Element, Callback>
   void write(mc_rtc::MessagePackBuilder & builder)
   {
     CallbackElement<Element, Callback>::write(builder);
-    write_elements(builder);
+    builder.write_object(data_.data(), data_.size());
   }
 
   /** Invalid element */
@@ -1398,6 +1401,8 @@ private:
   {
     std::get<i>(elements_).write(builder);
   }
+
+  std::vector<char> data_;
 };
 
 template<typename Derived, Elements element>
