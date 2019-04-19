@@ -395,6 +395,13 @@ Configuration::operator sva::PTransformd() const
     return {Eigen::Quaterniond{config[0], config[1], config[2], config[3]}.normalized(),
             {config[4], config[5], config[6]}};
   }
+  else if(size() == 12)
+  {
+    auto & config = *this;
+    Eigen::Matrix3d rot;
+    rot << config[0], config[1], config[2], config[3], config[4], config[5], config[6], config[7], config[8];
+    return {rot, {config[9], config[10], config[11]}};
+  }
   throw Exception("Stored Json value is not a PTransformd");
 }
 
@@ -404,6 +411,11 @@ Configuration::operator sva::ForceVecd() const
   {
     return {(*this)("couple"), (*this)("force")};
   }
+  else if(size() == 6)
+  {
+    auto & config = *this;
+    return {{config[0], config[1], config[2]}, {config[3], config[4], config[5]}};
+  }
   throw Exception("Stored Json value is not a ForceVecd");
 }
 
@@ -412,6 +424,11 @@ Configuration::operator sva::MotionVecd() const
   if(has("angular") && has("linear"))
   {
     return {(*this)("angular"), (*this)("linear")};
+  }
+  else if(size() == 6)
+  {
+    auto & config = *this;
+    return {{config[0], config[1], config[2]}, {config[3], config[4], config[5]}};
   }
   throw Exception("Stored Json value is not a MotionVecd");
 }
