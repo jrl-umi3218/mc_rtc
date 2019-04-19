@@ -3,6 +3,13 @@
 
 #include "mpack.h"
 
+#if not EIGEN_VERSION_AT_LEAST(3, 2, 90)
+namespace Eigen
+{
+using Index = Eigen::DenseIndex;
+}
+#endif
+
 namespace mc_rtc
 {
 
