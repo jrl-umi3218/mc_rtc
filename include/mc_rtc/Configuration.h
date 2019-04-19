@@ -638,6 +638,15 @@ struct MC_RTC_UTILS_DLLAPI Configuration
     return lhs == rhs;
   }
 
+  /*! \brief Add a null element to the configuration
+   *
+   * Overrides the existing value if it holds one for the given key
+   *
+   * \param key Key of the element
+   *
+   */
+  void add_null(const std::string & key);
+
   /*! \brief Add a bool element to the Configuration
    *
    * Overrides the existing value if it holds one for the given key.
@@ -780,6 +789,12 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    * \param size Size that is reserved for the array
    */
   Configuration array(const std::string & key, size_t size = 0);
+
+  /*! \brief Insert a null value into an array
+   *
+   * \throws If the underlying Json value is not an array.
+   */
+  void push_null();
 
   /*! \brief Insert a bool element into an array
    *

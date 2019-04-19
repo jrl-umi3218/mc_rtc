@@ -611,6 +611,39 @@ void push_impl(T value, void * json_p, void * doc_p)
 }
 } // namespace
 
+void Configuration::add_null(const std::string & key)
+{
+  auto & json = *static_cast<internal::RapidJSONValue *>(v.value_);
+  auto & doc = *static_cast<internal::RapidJSONDocument *>(v.doc_.get());
+  auto & allocator = doc.GetAllocator();
+  internal::RapidJSONValue value_;
+  value_.SetNull();
+  auto member = json.FindMember(key.c_str());
+  if(member == json.MemberEnd())
+  {
+    internal::RapidJSONValue key_(key.c_str(), allocator);
+    json.AddMember(key_, value_, allocator);
+  }
+  else
+  {
+    member->value = value_;
+  }
+}
+
+void Configuration::push_null()
+{
+  auto & json = *static_cast<internal::RapidJSONValue *>(v.value_);
+  auto & doc = *static_cast<internal::RapidJSONDocument *>(v.doc_.get());
+  auto & allocator = doc.GetAllocator();
+  internal::RapidJSONValue value_;
+  value_.SetNull();
+  if(!json.IsArray())
+  {
+    throw Configuration::Exception("Trying to push data in a non-array value");
+  }
+  json.PushBack(value_, allocator);
+}
+
 // clang-format off
 void Configuration::add(const std::string & key, bool value) { add_impl(key, value, v.value_, v.doc_.get()); }
 void Configuration::add(const std::string & key, int value) { add_impl(key, value, v.value_, v.doc_.get()); }
