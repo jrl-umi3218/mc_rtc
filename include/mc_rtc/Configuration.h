@@ -547,6 +547,28 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    */
   Configuration operator[](size_t i) const;
 
+  /*! \brief Retrieve a given value from a JSON array
+   *
+   * Returns the default value if the index is too high or if the underlying value does not match the requested type.
+   *
+   * \param i Index to retrieve
+   *
+   * \param v The default value
+   */
+  template<typename T>
+  T at(size_t i, const T & v) const
+  {
+    try
+    {
+      return (*this)[i];
+    }
+    catch(Exception & exc)
+    {
+      exc.silence();
+      return v;
+    }
+  }
+
   /*! \brief Retrieve and store a given value stored within the
    * configuration
    *
