@@ -210,7 +210,9 @@ void fromMessagePack(mc_rtc::Configuration config, const std::string & key, mpac
   switch(mpack_node_type(node))
   {
     case mpack_type_missing:
+      break;
     case mpack_type_nil:
+      config.add_null(key);
       break;
     case mpack_type_bool:
       config.add(key, mpack_node_bool(node));
@@ -247,7 +249,9 @@ void fromMessagePack(mc_rtc::Configuration config, mpack_node_t node)
   switch(mpack_node_type(node))
   {
     case mpack_type_missing:
+      break;
     case mpack_type_nil:
+      config.push_null();
       break;
     case mpack_type_bool:
       config.push(mpack_node_bool(node));

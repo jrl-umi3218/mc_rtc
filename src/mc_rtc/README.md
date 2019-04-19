@@ -44,11 +44,11 @@ The interpretation of widgets binary data is performed in [src/mc\_control/Contr
 For a `Form`, `WidgetData` is:
 
 ```
-FormWidget1, ..., FormWidgetN
+[ FormWidget1, ..., FormWidgetN ]
 ```
 
 Where `FormWiget` is:
 
 ```
-"FormWidgetName", FormWidgetType, FormWidgetRequired, (FormWidgetData)
+[ "FormWidgetName", FormWidgetType, FormWidgetRequired, (FormWidgetData) ]
 ```

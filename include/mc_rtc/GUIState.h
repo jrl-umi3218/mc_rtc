@@ -644,11 +644,12 @@ struct Point3DImpl : public CommonInputImpl<GetT, SetT>
 
   static constexpr size_t write_size()
   {
-    return ComboInputImpl<GetT, SetT>::write_size() + 1;
+    return CommonInputImpl<GetT, SetT>::write_size() + 1;
   }
 
   void write(mc_rtc::MessagePackBuilder & builder)
   {
+    CommonInputImpl<GetT, SetT>::write(builder);
     builder.write(false); // Not read-only
   }
 };
@@ -687,7 +688,7 @@ struct Point3DWithConfigImpl : public Point3DImpl<GetT, SetT>
 
   void write(mc_rtc::MessagePackBuilder & builder)
   {
-    builder.write(false); // Not read-only
+    Point3DImpl<GetT, SetT>::write(builder);
     config_.write(builder);
   }
 
@@ -743,8 +744,6 @@ struct TrajectoryImpl : public DataElement<GetT>
                   "std::vector of either types");
   }
 
-  void addGUI(mc_rtc::MessagePackBuilder & gui);
-
   /** Invalid element */
   TrajectoryImpl() {}
 };
@@ -776,6 +775,7 @@ struct TrajectoryWithStyleImpl : public TrajectoryImpl<GetT>
 
   void write(mc_rtc::MessagePackBuilder & builder)
   {
+    TrajectoryImpl<GetT>::write(builder);
     config_.write(builder);
   }
 
@@ -1355,13 +1355,16 @@ struct FormImpl : public CallbackElement<Element, Callback>
   : CallbackElement<Element, Callback>(name, cb), elements_(std::forward<Args>(args)...)
   {
     mc_rtc::MessagePackBuilder builder(data_);
+    builder.start_array(sizeof...(Args));
     write_elements(builder);
+    builder.finish_array();
     data_.resize(builder.finish());
+    mc_rtc::Configuration ref = mc_rtc::Configuration::fromMessagePack(data_.data(), data_.size());
   }
 
   static constexpr size_t write_size()
   {
-    return CallbackElement<Element, Callback>::write_size() + compute_write_size<Args...>();
+    return CallbackElement<Element, Callback>::write_size() + 1;
   }
 
   void write(mc_rtc::MessagePackBuilder & builder)
@@ -1376,30 +1379,27 @@ struct FormImpl : public CallbackElement<Element, Callback>
 private:
   std::tuple<Args...> elements_;
 
-  template<typename Arg, typename... Others, typename std::enable_if<sizeof...(Others) == 0, int>::type = 0>
-  static constexpr size_t compute_write_size()
-  {
-    return Arg::write_size();
-  }
-
-  template<typename Arg, typename... Others, typename std::enable_if<sizeof...(Others) >= 1, int>::type = 0>
-  static constexpr size_t compute_write_size()
-  {
-    return Arg::write_size() + compute_write_size<Others...>();
-  }
-
   template<size_t i = 0,
            typename std::enable_if<i<sizeof...(Args) - 1, int>::type = 0> void write_elements(
                mc_rtc::MessagePackBuilder & builder)
   {
-    std::get<i>(elements_).write(builder);
+    write_element<i>(builder);
     write_elements<i + 1>(builder);
   }
 
   template<size_t i = 0, typename std::enable_if<i == sizeof...(Args) - 1, int>::type = 0>
   void write_elements(mc_rtc::MessagePackBuilder & builder)
   {
-    std::get<i>(elements_).write(builder);
+    write_element<i>(builder);
+  }
+
+  template<size_t i>
+  void write_element(mc_rtc::MessagePackBuilder & builder)
+  {
+    auto & element = std::get<i>(elements_);
+    builder.start_array(element.write_size());
+    element.write(builder);
+    builder.finish_array();
   }
 
   std::vector<char> data_;
@@ -1412,7 +1412,7 @@ struct FormElement
 
   static constexpr size_t write_size()
   {
-    return 3 + Derived::write_size();
+    return 3 + Derived::write_size_();
   }
 
   void write(mc_rtc::MessagePackBuilder & builder)
@@ -1420,7 +1420,7 @@ struct FormElement
     builder.write(name_);
     builder.write(static_cast<typename std::underlying_type<Elements>::type>(type));
     builder.write(required_);
-    Derived::write(builder);
+    static_cast<Derived &>(*this).write_(builder);
   }
 
   /** Invalid element */
@@ -1443,12 +1443,12 @@ struct FormDataInput : public FormElement<FormDataInput<T, element>, element>
 
   FormDataInput(const std::string & name, bool required) : FormDataInput<T, element>(name, required, {}) {}
 
-  static constexpr size_t write_size()
+  static constexpr size_t write_size_()
   {
     return 1;
   }
 
-  void write(mc_rtc::MessagePackBuilder & builder)
+  void write_(mc_rtc::MessagePackBuilder & builder)
   {
     builder.write(def_);
   }
@@ -1478,15 +1478,15 @@ struct FormArrayInput : public FormElement<FormArrayInput<T>, Elements::ArrayInp
   {
   }
 
-  static constexpr size_t write_size()
+  static constexpr size_t write_size_()
   {
     return 2;
   }
 
-  void write(mc_rtc::MessagePackBuilder & builder)
+  void write_(mc_rtc::MessagePackBuilder & builder)
   {
-    builder.write(fixed_size_);
     builder.write(def_);
+    builder.write(fixed_size_);
   }
 
   /** Invalid element */
@@ -1507,12 +1507,12 @@ struct MC_RTC_GUI_DLLAPI FormComboInput : public FormElement<FormComboInput, Ele
   {
   }
 
-  static constexpr size_t write_size()
+  static constexpr size_t write_size_()
   {
     return 2;
   }
 
-  inline void write(mc_rtc::MessagePackBuilder & builder)
+  inline void write_(mc_rtc::MessagePackBuilder & builder)
   {
     builder.write(values_);
     builder.write(send_index_);
@@ -1538,12 +1538,12 @@ struct MC_RTC_GUI_DLLAPI FormDataComboInput : public FormElement<FormDataComboIn
   {
   }
 
-  static constexpr size_t write_size()
+  static constexpr size_t write_size_()
   {
     return 2;
   }
 
-  inline void write(mc_rtc::MessagePackBuilder & builder)
+  inline void write_(mc_rtc::MessagePackBuilder & builder)
   {
     builder.write(ref_);
     builder.write(send_index_);
