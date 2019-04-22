@@ -3,6 +3,7 @@
 #include <mc_rtc/log/FlatLog.h>
 #include <mc_rtc/logging.h>
 
+#include <array>
 #include <iomanip>
 #include <iostream>
 
@@ -171,8 +172,8 @@ int main(int argc, char * argv[])
   {
     key = argv[2];
   }
-  PerfTable vt(
-      {PrettyColumn{""}, PrettyColumn{"Average"}, PrettyColumn{"StdEv"}, PrettyColumn{"Min"}, PrettyColumn{"Max"}});
+  PerfTable vt(std::array<PrettyColumn, 5>{PrettyColumn{""}, PrettyColumn{"Average"}, PrettyColumn{"StdEv"},
+                                           PrettyColumn{"Min"}, PrettyColumn{"Max"}});
   mc_rtc::log::FlatLog log(file);
   auto range = getRange(log, key);
   auto keys = log.entries();
