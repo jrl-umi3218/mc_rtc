@@ -37,7 +37,7 @@ struct CheckReturnType
 template<typename GetT, typename T>
 struct CheckReturnType<GetT, T>
 {
-  static constexpr bool value = std::is_same<ReturnTypeT<GetT>, typename std::decay<T>::type>::value;
+  static constexpr bool value = std::is_convertible<ReturnTypeT<GetT>, typename std::decay<T>::type>::value;
 };
 
 template<typename GetT, typename T, typename... Args>
