@@ -17,6 +17,8 @@
 namespace mc_rtc
 {
 
+struct Configuration;
+
 struct MessagePackBuilderImpl;
 
 /** Helper class to build a MessagePack message
@@ -140,6 +142,12 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
    * Serialized as an array of size 6 (Angular + Linear)
    */
   void write(const sva::MotionVecd & mv);
+
+  /** Write an mc_rtc::Configuration
+   *
+   * Serialied as the JSON data it holds
+   */
+  void write(const mc_rtc::Configuration & config);
 
   /** @} */
   /* End Add data to the MessagePack section (advanced) */

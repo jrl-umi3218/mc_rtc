@@ -1,3 +1,4 @@
+#include <mc_rtc/Configuration.h>
 #include <mc_rtc/MessagePackBuilder.h>
 #include <mc_rtc/logging.h>
 
@@ -246,6 +247,11 @@ void MessagePackBuilder::write(const sva::ForceVecd & fv)
 void MessagePackBuilder::write(const sva::MotionVecd & mv)
 {
   write(mv.vector());
+}
+
+void MessagePackBuilder::write(const mc_rtc::Configuration & config)
+{
+  config.toMessagePack(*this);
 }
 
 void MessagePackBuilder::start_array(size_t s)
