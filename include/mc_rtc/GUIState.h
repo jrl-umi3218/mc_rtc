@@ -1346,20 +1346,31 @@ SchemaImpl<Callback> Schema(const std::string & name, const std::string & schema
  * \tparam Callback Will be called when the form is completed on client side
  *
  */
-template<typename Callback, typename... Args>
+template<typename Callback>
 struct FormImpl : public CallbackElement<Element, Callback>
 {
   static constexpr auto type = Elements::Form;
 
-  FormImpl(const std::string & name, Callback cb, Args &&... args)
-  : CallbackElement<Element, Callback>(name, cb), elements_(std::forward<Args>(args)...)
+  template<typename... Args>
+  FormImpl(const std::string & name, Callback cb, Args &&... args) : CallbackElement<Element, Callback>(name, cb)
   {
     mc_rtc::MessagePackBuilder builder(data_);
-    builder.start_array(sizeof...(Args));
-    write_elements(builder);
+    count_ = sizeof...(Args);
+    write_elements(builder, std::forward<Args>(args)...);
+    data_size_ = builder.finish();
+  }
+
+  template<typename T>
+  void addElement(T && element)
+  {
+    count_ += 1;
+    std::vector<char> data = data_;
+    mc_rtc::MessagePackBuilder builder(data_);
+    builder.write_object(data.data(), data_size_);
+    builder.start_array(element.write_size());
+    element.write(builder);
     builder.finish_array();
-    data_.resize(builder.finish());
-    mc_rtc::Configuration ref = mc_rtc::Configuration::fromMessagePack(data_.data(), data_.size());
+    data_size_ = builder.finish();
   }
 
   static constexpr size_t write_size()
@@ -1370,39 +1381,32 @@ struct FormImpl : public CallbackElement<Element, Callback>
   void write(mc_rtc::MessagePackBuilder & builder)
   {
     CallbackElement<Element, Callback>::write(builder);
-    builder.write_object(data_.data(), data_.size());
+    builder.start_array(count_);
+    builder.write_object(data_.data(), data_size_);
+    builder.finish_array();
   }
 
   /** Invalid element */
   FormImpl() {}
 
 private:
-  std::tuple<Args...> elements_;
-
-  template<size_t i = 0,
-           typename std::enable_if<i<sizeof...(Args) - 1, int>::type = 0> void write_elements(
-               mc_rtc::MessagePackBuilder & builder)
+  template<typename... Args>
+  void write_elements(mc_rtc::MessagePackBuilder &, Args &&...)
   {
-    write_element<i>(builder);
-    write_elements<i + 1>(builder);
   }
 
-  template<size_t i = 0, typename std::enable_if<i == sizeof...(Args) - 1, int>::type = 0>
-  void write_elements(mc_rtc::MessagePackBuilder & builder)
+  template<typename Arg, typename... Args>
+  void write_elements(mc_rtc::MessagePackBuilder & builder, Arg && element, Args &&... args)
   {
-    write_element<i>(builder);
-  }
-
-  template<size_t i>
-  void write_element(mc_rtc::MessagePackBuilder & builder)
-  {
-    auto & element = std::get<i>(elements_);
     builder.start_array(element.write_size());
     element.write(builder);
     builder.finish_array();
+    write_elements(builder, std::forward<Args>(args)...);
   }
 
+  size_t count_;
   std::vector<char> data_;
+  size_t data_size_;
 };
 
 template<typename Derived, Elements element>
@@ -1559,10 +1563,9 @@ private:
 
 /** Helper to create a Form element */
 template<typename Callback, typename... Args>
-FormImpl<Callback, Args...> Form(const std::string & name, Callback cb, Args &&... args)
+FormImpl<Callback> Form(const std::string & name, Callback cb, Args &&... args)
 {
-  static_assert(sizeof...(Args) >= 1, "You should use a Button instead of a Form with 0 elements");
-  return FormImpl<Callback, Args...>(name, cb, std::forward<Args>(args)...);
+  return FormImpl<Callback>(name, cb, std::forward<Args>(args)...);
 }
 
 /** Used to build a GUI state from multiple objects */
