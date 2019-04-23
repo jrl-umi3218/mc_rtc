@@ -92,7 +92,7 @@ StateBuilder::ElementStore::ElementStore(T self, const Category & category, Elem
     };
   }
   handleRequest = [](Element & el, const mc_rtc::Configuration & data) {
-    T el_ = static_cast<T &>(el);
+    T & el_ = static_cast<T &>(el);
     return el_.handleRequest(data);
   };
 }
