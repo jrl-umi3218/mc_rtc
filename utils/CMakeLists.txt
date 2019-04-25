@@ -30,7 +30,7 @@ if(${ROSCPP_FOUND})
   list(APPEND mc_bin_utils_SRC mc_bin_to_rosbag.cpp)
 endif()
 add_mc_rtc_utils(mc_bin_utils ${mc_bin_utils_SRC})
-target_link_libraries(mc_bin_utils PUBLIC Boost::program_options Boost::disable_autolinking)
+target_link_libraries(mc_bin_utils PUBLIC Boost::program_options Boost::disable_autolinking PRIVATE mpack)
 
 set(UTILS_SCRIPT
   mc_rtc_new_controller

@@ -110,7 +110,7 @@ std::pair<size_t, size_t> getRange(const mc_rtc::log::FlatLog & log, const std::
   }
   size_t start = 0;
   size_t end = 0;
-  auto t = log.getRaw<mc_rtc::log::Double>(key);
+  auto t = log.getRaw<double>(key);
   while(t[start] == nullptr)
   {
     start++;

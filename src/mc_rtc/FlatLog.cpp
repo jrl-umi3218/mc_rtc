@@ -3,11 +3,11 @@
  */
 
 #include <mc_rtc/log/FlatLog.h>
-#include <mc_rtc/logging.h>
 
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
 
+#include "internals/LogEntry.h"
 #include <fstream>
 
 namespace mc_rtc
@@ -15,6 +15,8 @@ namespace mc_rtc
 
 namespace log
 {
+
+FlatLog::record::record() : type(), data(nullptr, internal::void_deleter<int>) {}
 
 FlatLog::FlatLog(const std::string & fpath)
 {
@@ -48,33 +50,38 @@ void FlatLog::append(const std::string & f)
   {
     size = data_[0].records.size();
   }
+  std::vector<char> buffer(1024);
   while(ifs)
   {
-    int entrySize = 0;
-    ifs.read((char *)&entrySize, sizeof(int));
+    size_t entrySize = 0;
+    ifs.read((char *)&entrySize, sizeof(size_t));
     if(!ifs)
     {
       break;
     }
-    buffers_.emplace_back(new char[entrySize]);
-    char * buffer = buffers_.back().get();
-    ifs.read(buffer, entrySize);
+    while(buffer.size() < entrySize)
+    {
+      buffer.resize(2 * buffer.size());
+    }
+    ifs.read(buffer.data(), entrySize);
     if(!ifs)
     {
       break;
     }
-    auto * log = mc_rtc::log::GetLog(buffer);
-    if(log->keys() && log->keys()->size())
+    internal::LogEntry log(buffer, entrySize);
+    if(!log.valid())
+    {
+      return;
+    }
+    if(log.keys().size())
     {
       for(const auto & k : missingIndexes)
       {
         data_[k].records.resize(size);
       }
       currentIndexes.clear();
-      const auto & keys = *log->keys();
-      for(const auto & k_ffb : keys)
+      for(const auto & k : log.keys())
       {
-        const auto & k = k_ffb->str();
         currentIndexes.push_back(index(k, size));
       }
       missingIndexes.clear();
@@ -94,14 +101,11 @@ void FlatLog::append(const std::string & f)
         }
       }
     }
-    const auto & values = *log->values();
-    const auto & values_type = *log->values_type();
-    for(flatbuffers::uoffset_t i = 0; i < values_type.size(); ++i)
+    auto & recordsIn = log.records();
+    for(size_t i = 0; i < recordsIn.size(); ++i)
     {
       auto & records = data_[currentIndexes[i]].records;
-      auto vt = mc_rtc::log::LogData(values_type[i]);
-      const void * v = values[i];
-      records.emplace_back(vt, v);
+      records.push_back(std::move(recordsIn[i]));
     }
     size += 1;
   }
@@ -132,23 +136,23 @@ bool FlatLog::has(const std::string & entry) const
          != data_.end();
 }
 
-std::set<LogData> FlatLog::types(const std::string & entry) const
+std::set<RecordType> FlatLog::types(const std::string & entry) const
 {
   if(!has(entry))
   {
     LOG_ERROR("No entry named " << entry << " in the loaded log")
     return {};
   }
-  std::set<LogData> ret;
+  std::set<RecordType> ret;
   for(const auto & r : at(entry))
   {
     ret.insert(r.type);
   }
-  ret.erase(mc_rtc::log::LogData_NONE);
+  ret.erase(RecordType{});
   return ret;
 }
 
-LogData FlatLog::type(const std::string & entry) const
+RecordType FlatLog::type(const std::string & entry) const
 {
   if(!has(entry))
   {
@@ -157,12 +161,12 @@ LogData FlatLog::type(const std::string & entry) const
   }
   for(const auto & r : at(entry))
   {
-    if(r.type != mc_rtc::log::LogData_NONE)
+    if(r.type.type != mc_rtc::log::LogType::None)
     {
       return r.type;
     }
   }
-  return mc_rtc::log::LogData_NONE;
+  return {};
 }
 
 const std::vector<FlatLog::record> & FlatLog::at(const std::string & entry) const

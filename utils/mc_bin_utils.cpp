@@ -26,6 +26,8 @@ namespace po = boost::program_options;
 #  include "mc_bin_to_rosbag.h"
 #endif
 
+#include "../src/mc_rtc/internals/LogEntry.h"
+
 void usage()
 {
   std::cout << "mc_bin_utils is a command-line tool to work with mc_rtc bin logs\n\n";
@@ -36,87 +38,6 @@ void usage()
   std::cout << "    convert   Convert binary logs to various formats\n";
   std::cout << "\nUse mc_bin_utils <command> --help for usage of each command\n";
 }
-
-namespace
-{
-
-/** Copy Flatbuffer Table data into another table */
-template<typename T>
-void copy(const void * dataOut, const void * dataIn, flatbuffers::voffset_t offset)
-{
-  auto out = static_cast<const flatbuffers::Table *>(dataOut)->GetAddressOf(offset);
-  auto in = static_cast<const flatbuffers::Table *>(dataIn)->GetAddressOf(offset);
-  if(in && out)
-  {
-    memcpy(const_cast<uint8_t *>(out), in, sizeof(T));
-  }
-  else if(out)
-  {
-    memset(const_cast<uint8_t *>(out), 0, sizeof(T));
-  }
-  /** Nothing can be done when in has data but out hadn't */
-}
-
-template<>
-void copy<mc_rtc::log::Vector3d>(const void * out, const void * in, flatbuffers::voffset_t)
-{
-  copy<double>(out, in, mc_rtc::log::Vector3d::VT_X);
-  copy<double>(out, in, mc_rtc::log::Vector3d::VT_Y);
-  copy<double>(out, in, mc_rtc::log::Vector3d::VT_Z);
-}
-
-template<>
-void copy<mc_rtc::log::Quaterniond>(const void * out, const void * in, flatbuffers::voffset_t)
-{
-  copy<double>(out, in, mc_rtc::log::Quaterniond::VT_W);
-  copy<double>(out, in, mc_rtc::log::Quaterniond::VT_X);
-  copy<double>(out, in, mc_rtc::log::Quaterniond::VT_Y);
-  copy<double>(out, in, mc_rtc::log::Quaterniond::VT_Z);
-}
-
-template<>
-void copy<mc_rtc::log::PTransformd>(const void * dataOut, const void * dataIn, flatbuffers::voffset_t)
-{
-  auto ptOut = static_cast<const mc_rtc::log::PTransformd *>(dataOut);
-  auto ptIn = static_cast<const mc_rtc::log::PTransformd *>(dataIn);
-  copy<mc_rtc::log::Quaterniond>(ptOut->ori(), ptIn->ori(), 0);
-  copy<mc_rtc::log::Vector3d>(ptOut->pos(), ptIn->pos(), 0);
-}
-
-template<>
-void copy<mc_rtc::log::ForceVecd>(const void * dataOut, const void * dataIn, flatbuffers::voffset_t)
-{
-  auto fvOut = static_cast<const mc_rtc::log::ForceVecd *>(dataOut);
-  auto fvIn = static_cast<const mc_rtc::log::ForceVecd *>(dataIn);
-  copy<mc_rtc::log::Vector3d>(fvOut->couple(), fvIn->couple(), 0);
-  copy<mc_rtc::log::Vector3d>(fvOut->force(), fvIn->force(), 0);
-}
-
-template<>
-void copy<mc_rtc::log::MotionVecd>(const void * dataOut, const void * dataIn, flatbuffers::voffset_t)
-{
-  auto mvOut = static_cast<const mc_rtc::log::MotionVecd *>(dataOut);
-  auto mvIn = static_cast<const mc_rtc::log::MotionVecd *>(dataIn);
-  copy<mc_rtc::log::Vector3d>(mvOut->angular(), mvIn->angular(), 0);
-  copy<mc_rtc::log::Vector3d>(mvOut->linear(), mvIn->linear(), 0);
-}
-
-void copy_vector(const void * out, const void * in)
-{
-  auto * vOutTable = static_cast<const mc_rtc::log::DoubleVector *>(out);
-  auto * vOut = const_cast<flatbuffers::Vector<double> *>(vOutTable->v());
-  auto * vIn = static_cast<const mc_rtc::log::DoubleVector *>(in)->v();
-  if(vIn->size() < vOut->size())
-  {
-    memcpy(vOut->Data(), vIn->Data(), vIn->size() * sizeof(double));
-  }
-  else
-  {
-    memcpy(vOut->Data(), vIn->Data(), vOut->size() * sizeof(double));
-  }
-}
-
-} // namespace
 
 void fill_options(int argc,
                   char * argv[],
@@ -173,16 +94,16 @@ int show(int argc, char * argv[])
   }
   std::ifstream ifs(in, std::ifstream::binary);
   std::vector<char> buffer(1024);
-  std::set<std::pair<std::string, mc_rtc::log::LogData>> keys;
+  std::set<std::pair<std::string, mc_rtc::log::RecordType>> keys;
   double start_t = 0;
   double end_t = 0;
   size_t n = 0;
   bool has_t = false;
-  flatbuffers::uoffset_t t_index = 0;
+  size_t t_index = 0;
   while(ifs)
   {
-    int entrySize = 0;
-    ifs.read((char *)&entrySize, sizeof(int));
+    size_t entrySize = 0;
+    ifs.read((char *)&entrySize, sizeof(size_t));
     if(!ifs)
     {
       break;
@@ -196,28 +117,32 @@ int show(int argc, char * argv[])
     {
       break;
     }
-    auto log = mc_rtc::log::GetLog(buffer.data());
-    if(log->keys() && log->keys()->size())
+    mc_rtc::log::internal::LogEntry log(buffer, entrySize, false);
+    if(!log.valid())
+    {
+      return 1;
+    }
+    if(log.keys().size())
     {
       has_t = false;
-      const auto & ks = *log->keys();
-      for(flatbuffers::uoffset_t i = 0; i < ks.size(); ++i)
+      for(size_t i = 0; i < log.keys().size(); ++i)
       {
-        if(ks[i]->size() == 1 && strncmp(ks[i]->c_str(), "t", 1) == 0)
+        const auto & k = log.keys()[i];
+        if(k == "t")
         {
           has_t = true;
           t_index = i;
         }
-        keys.insert(std::make_pair(ks[i]->str(), mc_rtc::log::LogData((*log->values_type())[i])));
+        keys.insert(std::make_pair(log.keys()[i], log.records()[i].type));
       }
     }
     if(has_t && n == 0)
     {
-      start_t = static_cast<const mc_rtc::log::Double *>((*log->values())[t_index])->d();
+      start_t = log.getTime(t_index);
     }
     else
     {
-      end_t = static_cast<const mc_rtc::log::Double *>((*log->values())[t_index])->d();
+      end_t = log.getTime(t_index);
     }
     n++;
   }
@@ -233,7 +158,7 @@ int show(int argc, char * argv[])
   std::cout << "Available entries:\n";
   for(const auto & e : keys)
   {
-    std::cout << "- " << e.first << " (" << mc_rtc::log::EnumNameLogData(e.second) << ")\n";
+    std::cout << "- " << e.first << " (" << mc_rtc::log::LogTypeName(e.second.type) << ")\n";
   }
   return 0;
 }
@@ -275,8 +200,7 @@ int split(int argc, char * argv[])
   auto width = static_cast<int>(std::to_string(parts).size());
   std::ifstream ifs(in, std::ifstream::binary);
   std::vector<char> buffer(1024);
-  std::vector<char> bufferWithKeys;
-  const mc_rtc::log::Log * logWithKeys = nullptr;
+  std::vector<std::string> keys;
   auto split_file = [&](unsigned int n, size_t desired_size) {
     std::stringstream ss;
     ss << out << "_" << std::setfill('0') << std::setw(static_cast<int>(width)) << (n + 1) << ".bin";
@@ -305,79 +229,25 @@ int split(int argc, char * argv[])
         break;
       }
       /** Update current keys */
-      auto log = mc_rtc::log::GetLog(buffer.data());
-      bool has_keys = log->keys() && log->keys()->size();
-      if(has_keys)
+      auto log = mc_rtc::log::internal::LogEntry(buffer, entrySize, false);
+      if(log.keys().size())
       {
-        bufferWithKeys = buffer;
-        bufferWithKeys.resize(entrySize);
-        logWithKeys = mc_rtc::log::GetLog(bufferWithKeys.data());
+        keys = log.keys();
       }
       else if(written == 0)
       {
-        entrySize = static_cast<int>(bufferWithKeys.size());
-        const auto & valueTypes = *logWithKeys->values_type();
-        const auto & out = *logWithKeys->values();
-        const auto & in = *log->values();
-        const auto & inTypes = *log->values_type();
-        for(flatbuffers::uoffset_t i = 0; i < log->values()->size(); ++i)
-        {
-          if(inTypes[i] != valueTypes[i])
-          {
-            LOG_ERROR_AND_THROW(std::runtime_error, "Expected matching log types")
-          }
-          switch(valueTypes[i])
-          {
-            case mc_rtc::log::LogData_Bool:
-              copy<bool>(out[i], in[i], mc_rtc::log::Bool::VT_B);
-              break;
-            case mc_rtc::log::LogData_Double:
-              copy<double>(out[i], in[i], mc_rtc::log::Double::VT_D);
-              break;
-            case mc_rtc::log::LogData_DoubleVector:
-              copy_vector(out[i], in[i]);
-              break;
-            case mc_rtc::log::LogData_UnsignedInt:
-              copy<uint32_t>(out[i], in[i], mc_rtc::log::UnsignedInt::VT_I);
-              break;
-            case mc_rtc::log::LogData_UInt64:
-              copy<uint64_t>(out[i], in[i], mc_rtc::log::UInt64::VT_I);
-              break;
-            case mc_rtc::log::LogData_String:
-              /* Skip this case as we can't resize the string in out */
-              break;
-            case mc_rtc::log::LogData_Vector2d:
-              copy<double>(out[i], in[i], mc_rtc::log::Vector2d::VT_X);
-              copy<double>(out[i], in[i], mc_rtc::log::Vector2d::VT_Y);
-              break;
-            case mc_rtc::log::LogData_Vector3d:
-              copy<mc_rtc::log::Vector3d>(out[i], in[i], 0);
-              break;
-            case mc_rtc::log::LogData_Quaterniond:
-              copy<mc_rtc::log::Quaterniond>(out[i], in[i], 0);
-              break;
-            case mc_rtc::log::LogData_PTransformd:
-              copy<mc_rtc::log::PTransformd>(out[i], in[i], 0);
-              break;
-            case mc_rtc::log::LogData_ForceVecd:
-              copy<mc_rtc::log::ForceVecd>(out[i], in[i], 0);
-              break;
-            case mc_rtc::log::LogData_MotionVecd:
-              copy<mc_rtc::log::MotionVecd>(out[i], in[i], 0);
-              break;
-            default:
-              LOG_ERROR_AND_THROW(std::runtime_error, "Attempted to split a log wih unknown data type")
-              break;
-          };
-        }
-        ofs.write((char *)(&entrySize), sizeof(int));
-        ofs.write(bufferWithKeys.data(), entrySize);
-        written += sizeof(int) + entrySize;
+        std::vector<char> data;
+        mc_rtc::MessagePackBuilder builder(data);
+        log.copy(builder, keys);
+        size_t s = builder.finish();
+        ofs.write((char *)(&s), sizeof(size_t));
+        ofs.write(data.data(), s);
+        written += sizeof(size_t) + s;
         continue;
       }
-      ofs.write((char *)(&entrySize), sizeof(int));
+      ofs.write((char *)(&entrySize), sizeof(size_t));
       ofs.write(buffer.data(), entrySize);
-      written += sizeof(int) + entrySize;
+      written += sizeof(size_t) + entrySize;
     }
     return true;
   };
@@ -453,8 +323,8 @@ int extract(int argc, char * argv[])
   bool key_present = false;
   while(ifs)
   {
-    int entrySize = 0;
-    ifs.read((char *)&entrySize, sizeof(int));
+    size_t entrySize = 0;
+    ifs.read((char *)&entrySize, sizeof(size_t));
     if(!ifs)
     {
       break;
@@ -468,13 +338,13 @@ int extract(int argc, char * argv[])
     {
       break;
     }
-    auto log = mc_rtc::log::GetLog(buffer.data());
-    if(log->keys() && log->keys()->size())
+    auto log = mc_rtc::log::internal::LogEntry(buffer, entrySize);
+    if(log.keys().size())
     {
       bool key_was_present = key_present;
-      key_present = std::find_if(log->keys()->begin(), log->keys()->end(),
-                                 [&key](const flatbuffers::String * k) { return k->str() == key; })
-                    != log->keys()->end();
+      key_present =
+          std::find_if(log.keys().begin(), log.keys().end(), [&key](const std::string & k) { return k == key; })
+          != log.keys().end();
       if(key_present && !key_was_present)
       {
         ofs.open(out_name(n));
@@ -487,7 +357,7 @@ int extract(int argc, char * argv[])
     }
     if(key_present)
     {
-      ofs.write((char *)&entrySize, sizeof(int));
+      ofs.write((char *)&entrySize, sizeof(size_t));
       ofs.write(buffer.data(), entrySize);
     }
   }
