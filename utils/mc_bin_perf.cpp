@@ -64,7 +64,6 @@ struct PrettyTable
   template<typename Stream>
   void print(Stream & os)
   {
-    std::ios_base::fmtflags f(std::cout.flags());
     auto s = size();
     os << std::string(s, '-') << "\n";
     os << '|';
