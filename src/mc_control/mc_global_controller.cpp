@@ -757,19 +757,31 @@ void MCGlobalController::setup_log()
       "qIn", [controller]() -> const std::vector<double> & { return controller->robot().encoderValues(); });
   controller->logger().addLogEntry(
       "ff", [controller]() -> const sva::PTransformd & { return controller->robot().mbc().bodyPosW[0]; });
-  controller->logger().addLogEntry("qOut", [controller]() {
-    const auto & qOut = controller->send(0).robots_state[0].q;
-    const auto & rjo = controller->robot().refJointOrder();
-    std::vector<double> ret(rjo.size(), 0);
-    for(size_t i = 0; i < rjo.size(); ++i)
+  // Convert reference order to mbc.q, -1 if the joint does not exist
+  std::vector<int> refToQ;
+  for(const auto & j : controller->robot().refJointOrder())
+  {
+    if(controller->robot().hasJoint(j))
     {
-      const auto & jn = rjo[i];
-      if(qOut.count(jn))
+      auto jIndex = controller->robot().jointIndexByName(j);
+      if(controller->robot().mb().joint(jIndex).dof() == 1)
       {
-        ret[i] = qOut.at(jn)[0];
+        refToQ.push_back(controller->robot().jointIndexByName(j));
+        continue;
       }
     }
-    return ret;
+    refToQ.push_back(-1);
+  }
+  std::vector<double> qOut(refToQ.size(), 0);
+  controller->logger().addLogEntry("qOut", [controller, refToQ, qOut]() mutable -> const std::vector<double> & {
+    for(size_t i = 0; i < qOut.size(); ++i)
+    {
+      if(refToQ[i] != -1)
+      {
+        qOut[i] = controller->robot().mbc().q[refToQ[i]][0];
+      }
+    }
+    return qOut;
   });
   controller->logger().addLogEntry(
       "tauIn", [controller]() -> const std::vector<double> & { return controller->robot().jointTorques(); });
