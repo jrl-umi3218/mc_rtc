@@ -173,6 +173,27 @@ TestServer::TestServer() : xythetaz_(4)
                                                    []() { return sva::PTransformd::Identity(); }));
   builder.addElement({"Arrow"}, mc_rtc::gui::Arrow("Arrow", []() { return Eigen::Vector3d(0, 0, 0); },
                                                    []() { return Eigen::Vector3d(1, 0, 0); }));
+  builder.addElement({"GUI Markers"},
+                     mc_rtc::gui::Arrow("Arrow",
+                                        []()
+                                        {
+                                         return Eigen::Vector3d{2,2,0};
+                                        },
+                                        []()
+                                        {
+                                         return Eigen::Vector3d{2.5,2.5,0.5};
+                                        }),
+                     mc_rtc::gui::Force("Force",
+                                        mc_rtc::gui::ForceConfig(mc_rtc::gui::Color(1.,0.,0.)),
+                                        []()
+                                        {
+                                         return sva::ForceVecd(Eigen::Vector3d{0., 0., 0.}, Eigen::Vector3d{10., 0., 100.});
+                                        },
+                                        []()
+                                        {
+                                         return sva::PTransformd{Eigen::Vector3d{2,2,0}};
+                                        })
+                     );
 }
 
 void TestServer::publish()

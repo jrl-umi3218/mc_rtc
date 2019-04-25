@@ -276,7 +276,7 @@ protected:
   virtual void force(const ElementId & id,
                      const ElementId & /*requestId*/,
                      const sva::ForceVecd & /* force */,
-                     const sva::PTransformd & /* surface */,
+                     const sva::PTransformd & /* application point for the force */,
                      const mc_rtc::gui::ForceConfig & /* forceConfig */)
   {
     default_impl("Force", id);
