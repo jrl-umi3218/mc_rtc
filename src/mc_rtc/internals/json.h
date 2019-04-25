@@ -323,8 +323,8 @@ inline void fromMessagePack(mc_rtc::Configuration & config, const char * data, s
   else
   {
     LOG_ERROR("Cannot convert from MessagePack if the root type is not a map or an array")
-    return;
   }
+  mpack_tree_destroy(&tree);
 }
 
 /*! Save a JSON document to the provided disk location
