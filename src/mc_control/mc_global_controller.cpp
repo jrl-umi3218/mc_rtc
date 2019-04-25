@@ -471,7 +471,7 @@ bool MCGlobalController::run()
   }
   global_run_dt = clock::now() - start_run_t;
   // Percentage of time spent not updating/solving the QP
-  framework_cost = 100 * (1 - solver_build_and_solve_t / global_run_dt.count());
+  framework_cost = 100 * (1 - controller_run_dt.count() / global_run_dt.count());
   return running;
 }
 
