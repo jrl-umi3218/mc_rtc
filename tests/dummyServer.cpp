@@ -34,8 +34,8 @@ struct TestServer
   double d_ = 0.;
   double slide_ = 0.;
   Eigen::VectorXd v_{Eigen::VectorXd::Ones(6)};
-  Eigen::Vector3d v3_{1., 2., 3.};
-  Eigen::Vector3d vInt_ = {0., 0., 0.};
+  Eigen::Vector3d v3_{-1., -1., 1.};
+  Eigen::Vector3d vInt_ = {0.2, 0.2, 0.};
   std::string combo_ = "b";
   std::string data_combo_;
   sva::PTransformd rotStatic_{sva::RotZ(-M_PI), Eigen::Vector3d(1., 1., 0.)};
@@ -151,12 +151,27 @@ TestServer::TestServer() : xythetaz_(4)
                         mc_rtc::gui::FormDataComboInput{"R0 surface", false, {"surfaces", "$R0"}},
                         mc_rtc::gui::FormDataComboInput{"R1", false, {"robots"}},
                         mc_rtc::gui::FormDataComboInput{"R1 surface", false, {"surfaces", "$R1"}}));
-  builder.addElement({"GUI Markers"},
+  builder.addElement({"GUI Markers", "Transforms"},
+                    mc_rtc::gui::Transform("ReadOnly", [this]() { return static_; }),
+                    mc_rtc::gui::Transform("Interactive", [this]() { return interactive_; },
+                                           [this](const sva::PTransformd & p) { interactive_ = p; }),
                      mc_rtc::gui::XYTheta("XYTheta",
                                           [this]() { return xytheta_; },
                                           [this](const Eigen::VectorXd & vec) { xytheta_ = vec.head<3>(); }),
                      mc_rtc::gui::XYTheta("XYThetaAltitude", [this]() { return xythetaz_; },
                                           [this](const Eigen::VectorXd & vec) { xythetaz_ = vec; }),
+                    mc_rtc::gui::Rotation("ReadOnly", [this]() { return rotStatic_; }),
+                    mc_rtc::gui::Rotation("Interactive", [this]() { return rotInteractive_; },
+                                          [this](const Eigen::Quaterniond & q) { rotInteractive_.rotation() = q; })
+                    );
+
+  builder.addElement({"GUI Markers", "Point3D"},
+                    mc_rtc::gui::Point3D("ReadOnly", [this]() { return v3_; }),
+                    mc_rtc::gui::Point3D("Interactive", [this]() { return vInt_; },
+                                         [this](const Eigen::Vector3d & v) { vInt_ = v; })
+                    );
+
+  builder.addElement({"GUI Markers", "Arrows"},
                      mc_rtc::gui::Arrow("Arrow",
                                         []()
                                         {
