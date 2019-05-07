@@ -57,10 +57,8 @@ public:
     }
     if(nrIter == 2999)
     {
-      /* At this point the task error on z should be significant */
-      BOOST_CHECK(fabs(posTask->eval().z()) > 90);
-      /* But the task speed on z should be small */
-      BOOST_CHECK_SMALL(fabs(posTask->speed().z()), 1e-3);
+      BOOST_CHECK_SMALL(posTask->eval().norm(), 1e-2);
+      BOOST_CHECK_SMALL(posTask->speed().norm(), 1e-3);
 
       /* Reset the task and ask to raise the hand by 15 cm using only the
        * right arm joints */

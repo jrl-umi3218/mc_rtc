@@ -54,10 +54,8 @@ public:
     }
     if(nrIter == 2000)
     {
-      /* At this point the task error on z should be significant */
-      BOOST_CHECK(fabs(comTask->eval().z()) > 99.99);
-      /* But the task speed on z should be small */
-      BOOST_CHECK_SMALL(fabs(comTask->speed().z()), 1e-2);
+      BOOST_CHECK_SMALL(comTask->eval().norm(), 1e-2);
+      BOOST_CHECK_SMALL(comTask->speed().norm(), 1e-3);
 
       /* Raise the CoM again, using only the leg joints */
       comTask->reset();

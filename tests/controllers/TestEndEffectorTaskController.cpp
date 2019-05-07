@@ -31,6 +31,8 @@ public:
 
     /* Create and add the position task with the default stiffness/weight */
     efTask = std::make_shared<mc_tasks::EndEffectorTask>("R_WRIST_Y_S", robots(), 0);
+    efTask->positionTask->stiffness(5);
+    efTask->orientationTask->stiffness(5);
     solver().addTask(efTask);
 
     comTask = std::make_shared<mc_tasks::CoMTask>(robots(), 0);
@@ -59,10 +61,8 @@ public:
     }
     if(nrIter == 2000)
     {
-      /* At this point the task error on z should be significant */
-      BOOST_CHECK(fabs(efTask->eval()(5)) > 99.99);
-      /* But the task speed on z should be small */
-      BOOST_CHECK_SMALL(fabs(efTask->speed().z()), 1e-3);
+      BOOST_CHECK_SMALL(efTask->eval().norm(), 1e-2);
+      BOOST_CHECK_SMALL(efTask->speed().norm(), 1e-3);
 
       /* Reset the task and ask to raise the hand by 15 cm using only the
        * right arm joints */
