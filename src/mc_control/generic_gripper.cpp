@@ -82,7 +82,7 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
                  double timeStep,
                  bool reverseLimits)
 : overCommandLimitIter(0), overCommandLimitIterN(5), actualQ(currentQ),
-  actualCommandDiffTrigger(0.0004) /* 8 degress of difference */
+  actualCommandDiffTrigger(8 * M_PI / 180) /* 8 degress of difference */
 {
   auto mimicDict = readMimic(robot_urdf);
   names = gripperJoints(jointNames, mimicDict);
@@ -199,7 +199,7 @@ void Gripper::setActualQ(const std::vector<double> & q)
       {
         LOG_WARNING("Gripper safety triggered on " << names[active_idx[i]])
         overCommandLimit[i] = true;
-        actualQ[i] = actualQ[i]; // +  0.002;
+        actualQ[i] = actualQ[i] - 2 * M_PI / 180;
         setTargetQ(actualQ);
       }
     }
