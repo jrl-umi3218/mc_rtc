@@ -216,7 +216,7 @@ public:
     maxAngularVel_ = maxAngularVel;
   }
 
-  /*! \brief Add a feedforward reference body velocity on top of force control.
+  /*! \brief Set the reference body velocity.
    *
    * \param velB Feedforward body velocity
    *
@@ -224,8 +224,12 @@ public:
    * expressed in the surface frame itself. See e.g. (Murray et al., 1994, CRC
    * Press).
    *
+   * \note The refVelB body velocity ultimately set as task target to the QP is
+   * the sum of this feedforward velocity and a feedback term for force
+   * control.
+   *
    */
-  void feedforwardVelB(const sva::MotionVecd & velB)
+  void refVelB(const sva::MotionVecd & velB)
   {
     feedforwardVelB_ = velB;
   }
