@@ -220,11 +220,12 @@ public:
    *
    * \param velB Feedforward body velocity
    *
-   * That is to say, velB is the velocity of the surface frame expressed in the
-   * surface frame. See e.g. (Murray et al., 1994, CRC Press).
+   * Body velocity means that velB is the velocity of the surface frame
+   * expressed in the surface frame itself. See e.g. (Murray et al., 1994, CRC
+   * Press).
    *
    */
-  void feedforwardVel(const sva::MotionVecd & velB)
+  void feedforwardVelB(const sva::MotionVecd & velB)
   {
     feedforwardVelB_ = velB;
   }
@@ -261,6 +262,7 @@ protected:
   void removeFromLogger(mc_rtc::Logger & logger) override;
 
   /** Surface transform's refVelB() becomes internal to the task.
+   *
    */
   using SurfaceTransformTask::refVelB;
 
@@ -271,6 +273,7 @@ protected:
   using SurfaceTransformTask::target;
 
   /** Override addToSolver in order to get the timestep's solver automatically
+   *
    */
   void addToSolver(mc_solver::QPSolver & solver) override;
 };
