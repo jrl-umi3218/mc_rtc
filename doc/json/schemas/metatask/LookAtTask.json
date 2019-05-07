@@ -10,7 +10,11 @@
     "bodyVector": { "$ref": "/../../eigen/Vector3d.json" },
     "targetPos": { "$ref": "/../../eigen/Vector3d.json" },
     "targetVector": { "$ref": "/../../eigen/Vector3d.json" },
-
+    "relativeVector":
+    {
+      "description": "Specify a target vector relative to the current orientation of the robot in the world",
+      "$ref": "/../../eigen/Vector3d.json"
+    },
     "stiffness": { "type": "number", "minimum": 0},
     "damping": { "type": "number", "minimum": 0},
     "weight": { "type": "number", "minimum": 0},
