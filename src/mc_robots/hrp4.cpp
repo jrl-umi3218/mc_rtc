@@ -392,10 +392,19 @@ HRP4FlexRobotModule::HRP4FlexRobotModule(bool fixed) : HRP4WithHandRobotModule(f
 
 HRP4ComanoidRobotModule::HRP4ComanoidRobotModule()
 {
-  readUrdf("hrp4_gripper", false, {});
-  halfSitting["L_HAND_J0"] = {0.45};
-  halfSitting["L_HAND_J1"] = {0.45};
+  virtualLinks.push_back("L_HAND_J0_VIRTUAL");
+  _grippers = {{"l_gripper", {"L_HAND_J0"}, true}, {"r_gripper", {"R_HAND_J0", "R_HAND_J1"}, true}};
+  readUrdf("hrp4_comanoid", false, {});
+  static constexpr double L_HAND_J0_range_q = 750 * M_PI / 180;
+  static constexpr double L_HAND_J0_range_cm = 0.05;
+  static constexpr double L_HAND_J0_offset = -L_HAND_J0_range_q;
+  static constexpr double L_HAND_J0_cm0 = 0.45;
+  static constexpr double L_HAND_J0_q0 = L_HAND_J0_cm0 * L_HAND_J0_range_q / L_HAND_J0_range_cm + L_HAND_J0_offset;
+  halfSitting["L_HAND_J0"] = {L_HAND_J0_q0};
+  halfSitting["L_HAND_J0_PRISM"] = {L_HAND_J0_cm0};
+  halfSitting["L_HAND_J1"] = {L_HAND_J0_cm0};
   init();
+  _convexHull["L_WRIST_Y_LINK"] = {"L_WRIST_Y_LINK", path + "/convex/gripper/L_WRIST_Y-ch.txt"};
 }
 
 } // namespace mc_robots
