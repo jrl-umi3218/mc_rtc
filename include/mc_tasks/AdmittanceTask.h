@@ -224,9 +224,9 @@ public:
    * surface frame. See e.g. (Murray et al., 1994, CRC Press).
    *
    */
-  void feedForwardVel(const sva::MotionVecd & feedForwardVel)
+  void feedforwardVel(const sva::MotionVecd & velB)
   {
-    feedforwardVelB_ = feedForwardVel;
+    feedforwardVelB_ = velB;
   }
 
 protected:
