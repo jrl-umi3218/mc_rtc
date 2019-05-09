@@ -140,6 +140,14 @@ public:
     targetForce_ = targetForce;
   }
 
+  /*! \brief Get target wrench in the surface frame
+   *
+   */
+  const sva::ForceVecd & targetWrench() const
+  {
+    return AdmittanceTask::targetWrench();
+  }
+
 private:
   Eigen::Vector2d targetCoP_ = Eigen::Vector2d::Zero();
   Eigen::Vector3d targetForce_ = Eigen::Vector3d::Zero();
