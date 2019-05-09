@@ -134,7 +134,7 @@ struct DataFromNode<Eigen::Vector3d>
 {
   static bool convert(mpack_node_t node, Eigen::Vector3d & v)
   {
-    if(mpack_node_type(node) != mpack_type_array || mpack_node_array_length(node) != 2)
+    if(mpack_node_type(node) != mpack_type_array || mpack_node_array_length(node) != 3)
     {
       return false;
     }
