@@ -94,7 +94,7 @@ struct MC_RTC_UTILS_DLLAPI FlatLog
 
   /** Get a typed record entry at a given index
    *
-   * When the record datat type does not match the requested data type, returns the default value provided.
+   * When the record type does not match the requested data type, returns the default value provided.
    *
    * \param entry Entry to get
    *
@@ -106,6 +106,18 @@ struct MC_RTC_UTILS_DLLAPI FlatLog
    */
   template<typename T>
   T get(const std::string & entry, size_t i, const T & def) const;
+
+  /** Get a typed raw entry at a given index
+   *
+   * Returns nullptr when the requested type does not match the record type
+   *
+   * \param entry Entry to get
+   *
+   * \param i Index to get
+   *
+   */
+  template<typename T>
+  const T * getRaw(const std::string & entry, size_t i) const;
 
   struct record
   {

@@ -123,20 +123,29 @@ std::vector<T> FlatLog::get(const std::string & entry) const
 template<typename T>
 T FlatLog::get(const std::string & entry, size_t i, const T & def) const
 {
+  const T * data = getRaw<T>(entry, i);
+  if(data)
+  {
+    return *data;
+  }
+  return def;
+}
+
+template<typename T>
+const T * FlatLog::getRaw(const std::string & entry, size_t i) const
+{
   if(!has(entry))
   {
     LOG_ERROR("No entry named " << entry << " in the loaded log")
-    return def;
+    return nullptr;
   }
   const auto & data = at(entry);
   if(i >= data.size())
   {
     LOG_ERROR("Requested data (" << entry << ") out of available range (" << i << ", available: " << data.size() << ")")
-    return def;
+    return nullptr;
   }
-  T out = def;
-  details::convert<T>(data[i], out);
-  return out;
+  return details::record_cast<T>(data[i]);
 }
 
 } // namespace log
