@@ -144,7 +144,7 @@ void MessagePackBuilder::write(float f)
 }
 void MessagePackBuilder::write(double d)
 {
-  mpack_write_float(impl_.get(), d);
+  mpack_write_double(impl_.get(), d);
 }
 void MessagePackBuilder::write(const std::string & s)
 {

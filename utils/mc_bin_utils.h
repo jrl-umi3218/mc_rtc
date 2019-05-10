@@ -72,13 +72,12 @@ size_t entrySize(const mc_rtc::log::FlatLog & log, const std::string & entry, co
       return 1;
     case mc_rtc::log::LogType::Quaterniond:
       return 4;
-      break;
     case mc_rtc::log::LogType::Vector2d:
       return 2;
     case mc_rtc::log::LogType::Vector3d:
       return 3;
     case mc_rtc::log::LogType::Vector6d:
-      return 3;
+      return 6;
     case mc_rtc::log::LogType::VectorXd:
       return VectorXdEntrySize(log, entry);
     case mc_rtc::log::LogType::PTransformd:
