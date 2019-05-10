@@ -7,7 +7,7 @@
 namespace utils
 {
 
-std::map<std::string, mc_rtc::log::LogType> entries(const mc_rtc::log::FlatLog & log)
+inline std::map<std::string, mc_rtc::log::LogType> entries(const mc_rtc::log::FlatLog & log)
 {
   std::map<std::string, mc_rtc::log::LogType> ret;
   for(const auto & e : log.entries())
@@ -25,7 +25,7 @@ std::map<std::string, mc_rtc::log::LogType> entries(const mc_rtc::log::FlatLog &
   return ret;
 }
 
-size_t VectorXdEntrySize(const mc_rtc::log::FlatLog & log, const std::string & entry)
+inline size_t VectorXdEntrySize(const mc_rtc::log::FlatLog & log, const std::string & entry)
 {
   size_t s = 0;
   auto data = log.getRaw<Eigen::VectorXd>(entry);
@@ -39,7 +39,7 @@ size_t VectorXdEntrySize(const mc_rtc::log::FlatLog & log, const std::string & e
   return s;
 }
 
-size_t VectorEntrySize(const mc_rtc::log::FlatLog & log, const std::string & entry)
+inline size_t VectorEntrySize(const mc_rtc::log::FlatLog & log, const std::string & entry)
 {
   size_t s = 0;
   auto data = log.getRaw<std::vector<double>>(entry);
@@ -53,7 +53,7 @@ size_t VectorEntrySize(const mc_rtc::log::FlatLog & log, const std::string & ent
   return s;
 }
 
-size_t entrySize(const mc_rtc::log::FlatLog & log, const std::string & entry, const mc_rtc::log::LogType & t)
+inline size_t entrySize(const mc_rtc::log::FlatLog & log, const std::string & entry, const mc_rtc::log::LogType & t)
 {
   switch(t)
   {
