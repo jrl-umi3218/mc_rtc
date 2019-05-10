@@ -115,7 +115,6 @@ endif(MSVC)
 
 add_subdirectory(CMakeModules)
 add_subdirectory(doc)
-add_subdirectory(idl)
 add_subdirectory(src)
 if(NOT ${DISABLE_TESTS})
   add_subdirectory(tests)

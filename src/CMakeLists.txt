@@ -45,7 +45,6 @@ set(mc_rtc_utils_HDR
   ../include/mc_rtc/MessagePackBuilder.h
   ../include/mc_rtc/log/FlatLog.h
   ../include/mc_rtc/log/Logger.h
-  ../include/mc_rtc/log/serialization/MCLog_generated.h
   ../include/mc_rtc/utils.h
   ../include/mc_rtc/utils_api.h
 )
@@ -310,13 +309,5 @@ add_library(mc_control_client SHARED ${mc_control_client_SRC} ${mc_control_clien
 set_target_properties(mc_control_client PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_CLIENT_EXPORTS")
 target_link_libraries(mc_control_client PUBLIC mc_control)
 install_mc_rtc_lib(mc_control_client)
-
-if(FLATC)
-  set_source_files_properties(../include/mc_rtc/log/serialization/MCLog_generated.h PROPERTIES GENERATED 1)
-  add_dependencies(mc_rtc_utils generate_mc_log_code)
-  add_dependencies(mc_solver generate_mc_log_code)
-  add_dependencies(mc_tasks generate_mc_log_code)
-  add_dependencies(mc_control generate_mc_log_code)
-endif()
 
 add_subdirectory(mc_control)
