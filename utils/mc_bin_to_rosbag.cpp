@@ -2,7 +2,6 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <mc_rtc/log/serialization/MCLog_generated.h>
 #include <mc_rtc/logging.h>
 
 #include <geometry_msgs/Quaternion.h>
@@ -11,240 +10,312 @@
 #include <geometry_msgs/Vector3.h>
 #include <geometry_msgs/Wrench.h>
 #include <std_msgs/Bool.h>
+#include <std_msgs/Float32.h>
 #include <std_msgs/Float64.h>
 #include <std_msgs/Float64MultiArray.h>
+#include <std_msgs/Int16.h>
+#include <std_msgs/Int32.h>
+#include <std_msgs/Int64.h>
+#include <std_msgs/Int8.h>
 #include <std_msgs/String.h>
+#include <std_msgs/UInt16.h>
+#include <std_msgs/UInt32.h>
 #include <std_msgs/UInt64.h>
+#include <std_msgs/UInt8.h>
 
+#include "mc_bin_utils.h"
 #include <fstream>
 #include <rosbag/bag.h>
 #include <string>
 #include <vector>
 
-using namespace mc_rtc::log;
-
-/** Convert flatbuffer union type to message type.
- *
- * The default template is declared but not defined.
- */
-template<mc_rtc::log::LogData T>
-struct ROSMessageFromFBUnion;
-
-#define MAKE_RM_F_FB(FB_T, RM_T)     \
-  template<>                         \
-  struct ROSMessageFromFBUnion<FB_T> \
-  {                                  \
-    typedef RM_T message_t;          \
-  }
-MAKE_RM_F_FB(LogData_Bool, std_msgs::Bool);
-MAKE_RM_F_FB(LogData_Double, std_msgs::Float64);
-MAKE_RM_F_FB(LogData_DoubleVector, std_msgs::Float64MultiArray);
-MAKE_RM_F_FB(LogData_UnsignedInt, std_msgs::UInt64);
-MAKE_RM_F_FB(LogData_String, std_msgs::String);
-MAKE_RM_F_FB(LogData_Vector2d, geometry_msgs::Vector3);
-MAKE_RM_F_FB(LogData_Vector3d, geometry_msgs::Vector3);
-MAKE_RM_F_FB(LogData_Quaterniond, geometry_msgs::Quaternion);
-MAKE_RM_F_FB(LogData_PTransformd, geometry_msgs::Transform);
-MAKE_RM_F_FB(LogData_ForceVecd, geometry_msgs::Wrench);
-MAKE_RM_F_FB(LogData_MotionVecd, geometry_msgs::Twist);
-#undef MAKE_RM_F_FB
-
-template<mc_rtc::log::LogData T>
-struct FBToROS
+template<typename T>
+struct DataToROS
 {
-  using ret_t = typename ROSMessageFromFBUnion<T>::message_t;
-  static ret_t convert(const void *);
+  using ret_t = void;
+
+  static ret_t convert(const T &)
+  {
+    static_assert(sizeof(T) == 0, "This should be specialized");
+  }
+};
+
+#define SIMPLE_CONVERT(CPPT, ROSMSGT)       \
+  template<>                                \
+  struct DataToROS<CPPT>                    \
+  {                                         \
+    using ret_t = ROSMSGT;                  \
+    static ret_t convert(const CPPT & data) \
+    {                                       \
+      ret_t msg;                            \
+      msg.data = data;                      \
+      return msg;                           \
+    }                                       \
+  }
+
+SIMPLE_CONVERT(bool, std_msgs::Bool);
+SIMPLE_CONVERT(int8_t, std_msgs::Int8);
+SIMPLE_CONVERT(int16_t, std_msgs::Int16);
+SIMPLE_CONVERT(int32_t, std_msgs::Int32);
+SIMPLE_CONVERT(int64_t, std_msgs::Int64);
+SIMPLE_CONVERT(uint8_t, std_msgs::UInt8);
+SIMPLE_CONVERT(uint16_t, std_msgs::UInt16);
+SIMPLE_CONVERT(uint32_t, std_msgs::UInt32);
+SIMPLE_CONVERT(uint64_t, std_msgs::UInt64);
+SIMPLE_CONVERT(float, std_msgs::Float32);
+SIMPLE_CONVERT(double, std_msgs::Float64);
+SIMPLE_CONVERT(std::string, std_msgs::String);
+
+#undef SIMPLE_CONVERT
+
+template<>
+struct DataToROS<std::vector<double>>
+{
+  using ret_t = std_msgs::Float64MultiArray;
+
+  static ret_t convert(const std::vector<double> & data)
+  {
+    ret_t msg;
+    msg.layout.dim.resize(1);
+    msg.layout.dim[0].label = "data";
+    msg.layout.dim[0].size = data.size();
+    msg.layout.dim[0].stride = data.size();
+    msg.data = data;
+    return msg;
+  }
 };
 
 template<>
-FBToROS<LogData_Bool>::ret_t FBToROS<LogData_Bool>::convert(const void * data)
+struct DataToROS<Eigen::Vector6d>
 {
-  auto fb_data = static_cast<const Bool *>(data);
-  ret_t ret;
-  ret.data = fb_data->b();
-  return ret;
-}
+  using ret_t = std_msgs::Float64MultiArray;
 
-template<>
-FBToROS<LogData_Double>::ret_t FBToROS<LogData_Double>::convert(const void * data)
-{
-  auto fb_data = static_cast<const Double *>(data);
-  ret_t ret;
-  ret.data = fb_data->d();
-  return ret;
-}
-
-template<>
-FBToROS<LogData_DoubleVector>::ret_t FBToROS<LogData_DoubleVector>::convert(const void * data)
-{
-  auto fb_data = static_cast<const DoubleVector *>(data);
-  size_t fb_size = fb_data->v()->size();
-  ret_t ret;
-  ret.layout.dim.resize(1);
-  ret.layout.dim[0].label = "data";
-  ret.layout.dim[0].size = fb_size;
-  ret.layout.dim[0].stride = fb_size;
-  if(fb_size)
+  static ret_t convert(const Eigen::Vector6d & data)
   {
-    const auto & fb_v = *fb_data->v();
-    for(size_t i = 0; i < fb_size; ++i)
+    ret_t msg;
+    msg.layout.dim.resize(1);
+    msg.layout.dim[0].label = "data";
+    msg.layout.dim[0].size = 6;
+    msg.layout.dim[0].stride = 6;
+    for(int i = 0; i < 6; ++i)
     {
-      ret.data.push_back(fb_v[i]);
+      msg.data.push_back(data(i));
     }
+    return msg;
   }
-  return ret;
-}
+};
 
 template<>
-FBToROS<LogData_UnsignedInt>::ret_t FBToROS<LogData_UnsignedInt>::convert(const void * data)
+struct DataToROS<Eigen::VectorXd>
 {
-  auto fb_data = static_cast<const UnsignedInt *>(data);
-  ret_t ret;
-  ret.data = fb_data->i();
-  return ret;
-}
+  using ret_t = std_msgs::Float64MultiArray;
+
+  static ret_t convert(const Eigen::VectorXd & data)
+  {
+    ret_t msg;
+    msg.layout.dim.resize(1);
+    msg.layout.dim[0].label = "data";
+    msg.layout.dim[0].size = data.size();
+    msg.layout.dim[0].stride = data.size();
+    for(int i = 0; i < data.size(); ++i)
+    {
+      msg.data.push_back(data(i));
+    }
+    return msg;
+  }
+};
 
 template<>
-FBToROS<LogData_String>::ret_t FBToROS<LogData_String>::convert(const void * data)
+struct DataToROS<Eigen::Vector2d>
 {
-  auto fb_data = static_cast<const String *>(data);
-  ret_t ret;
-  ret.data = fb_data->s()->str();
-  return ret;
-}
+  using ret_t = geometry_msgs::Vector3;
+
+  static ret_t convert(const Eigen::Vector2d & data)
+  {
+    ret_t msg;
+    msg.x = data.x();
+    msg.y = data.y();
+    msg.z = 0;
+    return msg;
+  }
+};
 
 template<>
-FBToROS<LogData_Vector2d>::ret_t FBToROS<LogData_Vector2d>::convert(const void * data)
+struct DataToROS<Eigen::Vector3d>
 {
-  auto fb_data = static_cast<const Vector2d *>(data);
-  ret_t ret;
-  ret.x = fb_data->x();
-  ret.y = fb_data->y();
-  ret.z = 0.0;
-  return ret;
-}
+  using ret_t = geometry_msgs::Vector3;
+
+  static ret_t convert(const Eigen::Vector3d & data)
+  {
+    ret_t msg;
+    msg.x = data.x();
+    msg.y = data.y();
+    msg.z = data.z();
+    return msg;
+  }
+};
 
 template<>
-FBToROS<LogData_Vector3d>::ret_t FBToROS<LogData_Vector3d>::convert(const void * data)
+struct DataToROS<Eigen::Quaterniond>
 {
-  auto fb_data = static_cast<const Vector3d *>(data);
-  ret_t ret;
-  ret.x = fb_data->x();
-  ret.y = fb_data->y();
-  ret.z = fb_data->z();
-  return ret;
-}
+  using ret_t = geometry_msgs::Quaternion;
+
+  static ret_t convert(const Eigen::Quaterniond & data)
+  {
+    ret_t msg;
+    msg.w = data.w();
+    msg.x = data.x();
+    msg.y = data.y();
+    msg.z = data.z();
+    return msg;
+  }
+};
 
 template<>
-FBToROS<LogData_Quaterniond>::ret_t FBToROS<LogData_Quaterniond>::convert(const void * data)
+struct DataToROS<sva::PTransformd>
 {
-  auto fb_data = static_cast<const Quaterniond *>(data);
-  ret_t ret;
-  ret.w = fb_data->w();
-  ret.x = fb_data->x();
-  ret.y = fb_data->y();
-  ret.z = fb_data->z();
-  return ret;
-}
+  using ret_t = geometry_msgs::Transform;
+
+  static ret_t convert(const sva::PTransformd & pt)
+  {
+    ret_t msg;
+    msg.rotation = DataToROS<Eigen::Quaterniond>::convert(Eigen::Quaterniond(pt.rotation()));
+    msg.translation = DataToROS<Eigen::Vector3d>::convert(pt.translation());
+    return msg;
+  }
+};
 
 template<>
-FBToROS<LogData_PTransformd>::ret_t FBToROS<LogData_PTransformd>::convert(const void * data)
+struct DataToROS<sva::ForceVecd>
 {
-  auto fb_data = static_cast<const PTransformd *>(data);
-  ret_t ret;
-  ret.rotation.w = fb_data->ori()->w();
-  ret.rotation.x = fb_data->ori()->x();
-  ret.rotation.y = fb_data->ori()->y();
-  ret.rotation.z = fb_data->ori()->z();
-  ret.translation.x = fb_data->pos()->x();
-  ret.translation.y = fb_data->pos()->y();
-  ret.translation.z = fb_data->pos()->z();
-  return ret;
-}
+  using ret_t = geometry_msgs::Wrench;
+
+  static ret_t convert(const sva::ForceVecd & fv)
+  {
+    ret_t msg;
+    msg.torque = DataToROS<Eigen::Vector3d>::convert(fv.couple());
+    msg.force = DataToROS<Eigen::Vector3d>::convert(fv.force());
+    return msg;
+  }
+};
 
 template<>
-FBToROS<LogData_ForceVecd>::ret_t FBToROS<LogData_ForceVecd>::convert(const void * data)
+struct DataToROS<sva::MotionVecd>
 {
-  auto fb_data = static_cast<const ForceVecd *>(data);
-  ret_t ret;
-  ret.force.x = fb_data->force()->x();
-  ret.force.y = fb_data->force()->y();
-  ret.force.z = fb_data->force()->z();
-  ret.torque.x = fb_data->couple()->x();
-  ret.torque.y = fb_data->couple()->y();
-  ret.torque.z = fb_data->couple()->z();
-  return ret;
+  using ret_t = geometry_msgs::Twist;
+
+  static ret_t convert(const sva::MotionVecd & mv)
+  {
+    ret_t msg;
+    msg.angular = DataToROS<Eigen::Vector3d>::convert(mv.angular());
+    msg.linear = DataToROS<Eigen::Vector3d>::convert(mv.linear());
+    return msg;
+  }
+};
+
+template<typename T>
+void write(rosbag::Bag & bag,
+           const ros::Time & now,
+           const mc_rtc::log::FlatLog & log,
+           const std::string & entry,
+           size_t idx)
+{
+  const T * data = log.getRaw<T>(entry, idx);
+  if(data)
+  {
+    bag.write(entry, now, DataToROS<T>::convert(*data));
+  }
 }
 
-template<>
-FBToROS<LogData_MotionVecd>::ret_t FBToROS<LogData_MotionVecd>::convert(const void * data)
+void write(rosbag::Bag & bag,
+           const ros::Time & now,
+           const mc_rtc::log::FlatLog & log,
+           const std::string & entry,
+           mc_rtc::log::LogType type,
+           size_t idx)
 {
-  auto fb_data = static_cast<const MotionVecd *>(data);
-  ret_t ret;
-  ret.linear.x = fb_data->linear()->x();
-  ret.linear.y = fb_data->linear()->y();
-  ret.linear.z = fb_data->linear()->z();
-  ret.angular.x = fb_data->angular()->x();
-  ret.angular.y = fb_data->angular()->y();
-  ret.angular.z = fb_data->angular()->z();
-  return ret;
+  switch(type)
+  {
+    case mc_rtc::log::LogType::Bool:
+      write<bool>(bag, now, log, entry, idx);
+      break;
+    case mc_rtc::log::LogType::Int8_t:
+      write<int8_t>(bag, now, log, entry, idx);
+      break;
+    case mc_rtc::log::LogType::Int16_t:
+      write<int16_t>(bag, now, log, entry, idx);
+      break;
+    case mc_rtc::log::LogType::Int32_t:
+      write<int32_t>(bag, now, log, entry, idx);
+      break;
+    case mc_rtc::log::LogType::Int64_t:
+      write<int64_t>(bag, now, log, entry, idx);
+      break;
+    case mc_rtc::log::LogType::Uint8_t:
+      write<uint8_t>(bag, now, log, entry, idx);
+      break;
+    case mc_rtc::log::LogType::Uint16_t:
+      write<uint16_t>(bag, now, log, entry, idx);
+      break;
+    case mc_rtc::log::LogType::Uint32_t:
+      write<uint32_t>(bag, now, log, entry, idx);
+      break;
+    case mc_rtc::log::LogType::Uint64_t:
+      write<uint64_t>(bag, now, log, entry, idx);
+      break;
+    case mc_rtc::log::LogType::Float:
+      write<float>(bag, now, log, entry, idx);
+      break;
+    case mc_rtc::log::LogType::Double:
+      write<double>(bag, now, log, entry, idx);
+      break;
+    case mc_rtc::log::LogType::String:
+      write<std::string>(bag, now, log, entry, idx);
+      break;
+    case mc_rtc::log::LogType::Quaterniond:
+      write<Eigen::Quaterniond>(bag, now, log, entry, idx);
+      break;
+    case mc_rtc::log::LogType::Vector2d:
+      write<Eigen::Vector2d>(bag, now, log, entry, idx);
+      break;
+    case mc_rtc::log::LogType::Vector3d:
+      write<Eigen::Vector3d>(bag, now, log, entry, idx);
+      break;
+    case mc_rtc::log::LogType::Vector6d:
+      write<Eigen::Vector6d>(bag, now, log, entry, idx);
+      break;
+    case mc_rtc::log::LogType::VectorXd:
+      write<Eigen::VectorXd>(bag, now, log, entry, idx);
+      break;
+    case mc_rtc::log::LogType::PTransformd:
+      write<sva::PTransformd>(bag, now, log, entry, idx);
+      break;
+    case mc_rtc::log::LogType::ForceVecd:
+      write<sva::ForceVecd>(bag, now, log, entry, idx);
+      break;
+    case mc_rtc::log::LogType::MotionVecd:
+      write<sva::MotionVecd>(bag, now, log, entry, idx);
+      break;
+    case mc_rtc::log::LogType::VectorDouble:
+      write<std::vector<double>>(bag, now, log, entry, idx);
+      break;
+    case mc_rtc::log::LogType::None:
+      break;
+  }
 }
 
 void mc_bin_to_rosbag(const std::string & in, const std::string & out, double dt)
 {
+  mc_rtc::log::FlatLog log(in);
+  auto entries = utils::entries(log);
   ros::Time::init();
   auto now = ros::Time::now();
   rosbag::Bag bag(out, rosbag::bagmode::Write);
-  std::vector<std::string> topics;
-  std::ifstream ifs(in, std::ifstream::binary);
-  while(ifs)
+  for(size_t i = 0; i < log.size(); ++i)
   {
-    int size = 0;
-    ifs.read((char *)(&size), sizeof(int));
-    if(ifs)
+    for(const auto & e : entries)
     {
-      char * data = new char[size];
-      ifs.read(data, size);
-      auto log = mc_rtc::log::GetLog(data);
-      if(log->keys())
-      {
-        topics.clear();
-        const auto & nkeys = *log->keys();
-        for(auto k : nkeys)
-        {
-          topics.push_back(k->str());
-        }
-      }
-      const auto & values_type = *log->values_type();
-      const auto & values = *log->values();
-      for(size_t i = 0; i < topics.size(); ++i)
-      {
-        const auto & topic = topics[i];
-        LogData type = LogData(values_type[i]);
-        const void * fb_data = values[i];
-        switch(type)
-        {
-#define CASE_ENUM(T)                                     \
-  case T:                                                \
-    bag.write(topic, now, FBToROS<T>::convert(fb_data)); \
-    break
-          CASE_ENUM(LogData_Bool);
-          CASE_ENUM(LogData_Double);
-          CASE_ENUM(LogData_DoubleVector);
-          CASE_ENUM(LogData_UnsignedInt);
-          CASE_ENUM(LogData_String);
-          CASE_ENUM(LogData_Vector2d);
-          CASE_ENUM(LogData_Vector3d);
-          CASE_ENUM(LogData_Quaterniond);
-          CASE_ENUM(LogData_PTransformd);
-          CASE_ENUM(LogData_ForceVecd);
-          CASE_ENUM(LogData_MotionVecd);
-          default:
-            break;
-#undef CASE_ENUM
-        };
-      }
-      delete[] data;
+      write(bag, now, log, e.first, e.second, i);
     }
     now += ros::Duration(dt);
   }
