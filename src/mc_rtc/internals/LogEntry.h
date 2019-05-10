@@ -32,16 +32,9 @@ inline LogType logTypeFromNode(mpack_node_t node)
   return LogType(mpack_node_i32(node));
 }
 
-inline RecordType recordTypeFromNode(mpack_node_t node)
+inline LogType logTypeFromNode(mpack_node_t node, size_t idx)
 {
-  RecordType ret;
-  ret.type = logTypeFromNode(mpack_node_array_at(node, 0));
-  size_t s = mpack_node_array_length(node);
-  for(size_t i = 1; i < s - 1; ++i)
-  {
-    ret.vectorType.push_back(logTypeFromNode(mpack_node_array_at(node, i)));
-  }
-  return ret;
+  return logTypeFromNode(mpack_node_array_at(node, idx));
 }
 
 template<typename T>
@@ -243,39 +236,19 @@ struct DataFromNode<sva::MotionVecd>
   }
 };
 
-template<typename T, typename A>
-struct DataFromNode<std::vector<T, A>>
-{
-  static bool convert(mpack_node_t node, std::vector<T, A> & out)
-  {
-    if(mpack_node_type(node) != mpack_type_array)
-    {
-      return false;
-    }
-    out.resize(mpack_node_array_length(node));
-    for(size_t i = 0; i < out.size(); ++i)
-    {
-      DataFromNode<T>::convert(mpack_node_array_at(node, i), out[i]);
-    }
-    return true;
-  }
-};
-
 template<typename A>
-struct DataFromNode<std::vector<bool, A>>
+struct DataFromNode<std::vector<double, A>>
 {
-  static bool convert(mpack_node_t node, std::vector<bool, A> & out)
+  static bool convert(mpack_node_t node, std::vector<double, A> & out)
   {
     if(mpack_node_type(node) != mpack_type_array)
     {
       return false;
     }
     out.resize(mpack_node_array_length(node));
-    bool b;
     for(size_t i = 0; i < out.size(); ++i)
     {
-      DataFromNode<bool>::convert(mpack_node_array_at(node, i), b);
-      out[i] = b;
+      out[i] = node_at(node, i);
     }
     return true;
   }
@@ -295,114 +268,9 @@ struct PointerFromNode
   }
 };
 
-FlatLog::record::unique_void_ptr vectorVectorDataFromNode(const RecordType & type, mpack_node_t node)
+FlatLog::record::unique_void_ptr dataFromNode(const LogType & type, mpack_node_t node)
 {
-  switch(type.vectorType[1])
-  {
-    case LogType::Bool:
-      return PointerFromNode<std::vector<std::vector<bool>>>::convert(node);
-    case LogType::Int8_t:
-      return PointerFromNode<std::vector<std::vector<int8_t>>>::convert(node);
-    case LogType::Int16_t:
-      return PointerFromNode<std::vector<std::vector<int16_t>>>::convert(node);
-    case LogType::Int32_t:
-      return PointerFromNode<std::vector<std::vector<int32_t>>>::convert(node);
-    case LogType::Int64_t:
-      return PointerFromNode<std::vector<std::vector<int64_t>>>::convert(node);
-    case LogType::Uint8_t:
-      return PointerFromNode<std::vector<std::vector<uint8_t>>>::convert(node);
-    case LogType::Uint16_t:
-      return PointerFromNode<std::vector<std::vector<uint16_t>>>::convert(node);
-    case LogType::Uint32_t:
-      return PointerFromNode<std::vector<std::vector<uint32_t>>>::convert(node);
-    case LogType::Uint64_t:
-      return PointerFromNode<std::vector<std::vector<uint64_t>>>::convert(node);
-    case LogType::Float:
-      return PointerFromNode<std::vector<std::vector<float>>>::convert(node);
-    case LogType::Double:
-      return PointerFromNode<std::vector<std::vector<double>>>::convert(node);
-    case LogType::String:
-      return PointerFromNode<std::vector<std::vector<std::string>>>::convert(node);
-    case LogType::Vector2d:
-      return PointerFromNode<std::vector<std::vector<Eigen::Vector2d>>>::convert(node);
-    case LogType::Vector3d:
-      return PointerFromNode<std::vector<std::vector<Eigen::Vector3d>>>::convert(node);
-    case LogType::Vector6d:
-      return PointerFromNode<std::vector<std::vector<Eigen::Vector6d>>>::convert(node);
-    case LogType::VectorXd:
-      return PointerFromNode<std::vector<std::vector<Eigen::VectorXd>>>::convert(node);
-    case LogType::Quaterniond:
-      return PointerFromNode<std::vector<std::vector<Eigen::Quaterniond>>>::convert(node);
-    case LogType::PTransformd:
-      return PointerFromNode<std::vector<std::vector<sva::PTransformd>>>::convert(node);
-    case LogType::ForceVecd:
-      return PointerFromNode<std::vector<std::vector<sva::ForceVecd>>>::convert(node);
-    case LogType::MotionVecd:
-      return PointerFromNode<std::vector<std::vector<sva::MotionVecd>>>::convert(node);
-    case LogType::Vector:
-      LOG_ERROR("Logged a deep nested vector type, ask for a patch!")
-      return {nullptr, void_deleter<int>};
-    case LogType::None:
-    default:
-      return {nullptr, void_deleter<int>};
-  }
-}
-
-FlatLog::record::unique_void_ptr vectorDataFromNode(const RecordType & type, mpack_node_t node)
-{
-  switch(type.vectorType[0])
-  {
-    case LogType::Bool:
-      return PointerFromNode<std::vector<bool>>::convert(node);
-    case LogType::Int8_t:
-      return PointerFromNode<std::vector<int8_t>>::convert(node);
-    case LogType::Int16_t:
-      return PointerFromNode<std::vector<int16_t>>::convert(node);
-    case LogType::Int32_t:
-      return PointerFromNode<std::vector<int32_t>>::convert(node);
-    case LogType::Int64_t:
-      return PointerFromNode<std::vector<int64_t>>::convert(node);
-    case LogType::Uint8_t:
-      return PointerFromNode<std::vector<uint8_t>>::convert(node);
-    case LogType::Uint16_t:
-      return PointerFromNode<std::vector<uint16_t>>::convert(node);
-    case LogType::Uint32_t:
-      return PointerFromNode<std::vector<uint32_t>>::convert(node);
-    case LogType::Uint64_t:
-      return PointerFromNode<std::vector<uint64_t>>::convert(node);
-    case LogType::Float:
-      return PointerFromNode<std::vector<float>>::convert(node);
-    case LogType::Double:
-      return PointerFromNode<std::vector<double>>::convert(node);
-    case LogType::String:
-      return PointerFromNode<std::vector<std::string>>::convert(node);
-    case LogType::Vector2d:
-      return PointerFromNode<std::vector<Eigen::Vector2d>>::convert(node);
-    case LogType::Vector3d:
-      return PointerFromNode<std::vector<Eigen::Vector3d>>::convert(node);
-    case LogType::Vector6d:
-      return PointerFromNode<std::vector<Eigen::Vector6d>>::convert(node);
-    case LogType::VectorXd:
-      return PointerFromNode<std::vector<Eigen::VectorXd>>::convert(node);
-    case LogType::Quaterniond:
-      return PointerFromNode<std::vector<Eigen::Quaterniond>>::convert(node);
-    case LogType::PTransformd:
-      return PointerFromNode<std::vector<sva::PTransformd>>::convert(node);
-    case LogType::ForceVecd:
-      return PointerFromNode<std::vector<sva::ForceVecd>>::convert(node);
-    case LogType::MotionVecd:
-      return PointerFromNode<std::vector<sva::MotionVecd>>::convert(node);
-    case LogType::Vector:
-      return vectorVectorDataFromNode(type, node);
-    case LogType::None:
-    default:
-      return {nullptr, void_deleter<int>};
-  }
-}
-
-FlatLog::record::unique_void_ptr dataFromNode(const RecordType & type, mpack_node_t node)
-{
-  switch(type.type)
+  switch(type)
   {
     case LogType::Bool:
       return PointerFromNode<bool>::convert(node);
@@ -444,25 +312,25 @@ FlatLog::record::unique_void_ptr dataFromNode(const RecordType & type, mpack_nod
       return PointerFromNode<sva::ForceVecd>::convert(node);
     case LogType::MotionVecd:
       return PointerFromNode<sva::MotionVecd>::convert(node);
-    case LogType::Vector:
-      return vectorDataFromNode(type, node);
+    case LogType::VectorDouble:
+      return PointerFromNode<std::vector<double>>::convert(node);
     case LogType::None:
     default:
       return {nullptr, void_deleter<int>};
   }
 }
 
-inline FlatLog::record recordFromNode(mpack_node_t node, bool extract_data)
+inline FlatLog::record recordFromNode(mpack_node_t node, bool extract_data, size_t idx)
 {
   if(mpack_node_type(node) != mpack_type_array || mpack_node_array_length(node) == 1)
   {
     LOG_ERROR("Failed to read record from MessagePack node")
     return {};
   }
-  auto type = recordTypeFromNode(node);
+  auto type = logTypeFromNode(node, idx);
   if(extract_data)
   {
-    auto data = mpack_node_array_at(node, mpack_node_array_length(node) - 1);
+    auto data = mpack_node_array_at(node, idx + 1);
     return {type, dataFromNode(type, data)};
   }
   else
@@ -523,9 +391,9 @@ struct LogEntry : mpack_tree_t
       return;
     }
     size_t s = mpack_node_array_length(records);
-    for(size_t i = 0; i < s; ++i)
+    for(size_t i = 0; i < s / 2; ++i)
     {
-      records_.push_back(recordFromNode(mpack_node_array_at(records, i), extract_data));
+      records_.push_back(recordFromNode(records, extract_data, 2 * i));
     }
   }
 

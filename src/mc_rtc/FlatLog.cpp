@@ -136,23 +136,23 @@ bool FlatLog::has(const std::string & entry) const
          != data_.end();
 }
 
-std::set<RecordType> FlatLog::types(const std::string & entry) const
+std::set<LogType> FlatLog::types(const std::string & entry) const
 {
   if(!has(entry))
   {
     LOG_ERROR("No entry named " << entry << " in the loaded log")
     return {};
   }
-  std::set<RecordType> ret;
+  std::set<LogType> ret;
   for(const auto & r : at(entry))
   {
     ret.insert(r.type);
   }
-  ret.erase(RecordType{});
+  ret.erase(mc_rtc::log::LogType::None);
   return ret;
 }
 
-RecordType FlatLog::type(const std::string & entry) const
+LogType FlatLog::type(const std::string & entry) const
 {
   if(!has(entry))
   {
@@ -161,12 +161,12 @@ RecordType FlatLog::type(const std::string & entry) const
   }
   for(const auto & r : at(entry))
   {
-    if(r.type.type != mc_rtc::log::LogType::None)
+    if(r.type != mc_rtc::log::LogType::None)
     {
       return r.type;
     }
   }
-  return {};
+  return mc_rtc::log::LogType::None;
 }
 
 const std::vector<FlatLog::record> & FlatLog::at(const std::string & entry) const

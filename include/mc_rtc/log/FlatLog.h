@@ -19,20 +19,6 @@ namespace mc_rtc
 namespace log
 {
 
-/** Holds type information about a record */
-struct MC_RTC_UTILS_DLLAPI RecordType
-{
-  /** Type of the record, None if no data was recorded */
-  LogType type = LogType::None;
-  /** Holds sub-types for an std::vector entry */
-  std::vector<LogType> vectorType = {};
-};
-
-inline bool operator<(const RecordType & lhs, const RecordType & rhs)
-{
-  return lhs.type < rhs.type || (lhs.type == rhs.type && lhs.vectorType < rhs.vectorType);
-}
-
 /** From an on-disk binary log recorded by mc_rtc, return a flat structure */
 struct MC_RTC_UTILS_DLLAPI FlatLog
 {
@@ -64,10 +50,10 @@ struct MC_RTC_UTILS_DLLAPI FlatLog
   bool has(const std::string & entry) const;
 
   /** Returns available types for an entry */
-  std::set<RecordType> types(const std::string & entry) const;
+  std::set<LogType> types(const std::string & entry) const;
 
   /** Get the first non None type for an entry */
-  RecordType type(const std::string & entry) const;
+  LogType type(const std::string & entry) const;
 
   /** Get a type record entry.
    *
@@ -125,12 +111,12 @@ struct MC_RTC_UTILS_DLLAPI FlatLog
   {
     using unique_void_ptr = std::unique_ptr<void, void (*)(void const *)>;
     record();
-    record(RecordType t, unique_void_ptr && d) : type(t), data(std::move(d)) {}
+    record(LogType t, unique_void_ptr && d) : type(t), data(std::move(d)) {}
     record(const record &) = delete;
     record & operator=(const record &) = delete;
     record(record &&) = default;
     record & operator=(record &&) = default;
-    RecordType type = {};
+    LogType type = mc_rtc::log::LogType::None;
     unique_void_ptr data;
   };
   struct entry

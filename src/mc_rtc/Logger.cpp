@@ -231,7 +231,7 @@ void Logger::log()
   {
     builder.write();
   }
-  builder.start_array(log_entries_.size());
+  builder.start_array(2 * log_entries_.size());
   for(auto & e : log_entries_)
   {
     e.second(builder);

@@ -2,8 +2,7 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <mc_rtc/log/FlatLog.h>
-
+#include "mc_bin_utils.h"
 #include <fstream>
 #include <map>
 #include <type_traits>
@@ -11,137 +10,12 @@
 namespace utils
 {
 
-bool isValid(const mc_rtc::log::LogType & type)
-{
-  switch(type)
-  {
-    case mc_rtc::log::LogType::Bool:
-    case mc_rtc::log::LogType::Int8_t:
-    case mc_rtc::log::LogType::Int16_t:
-    case mc_rtc::log::LogType::Int32_t:
-    case mc_rtc::log::LogType::Int64_t:
-    case mc_rtc::log::LogType::Uint8_t:
-    case mc_rtc::log::LogType::Uint16_t:
-    case mc_rtc::log::LogType::Uint32_t:
-    case mc_rtc::log::LogType::Uint64_t:
-    case mc_rtc::log::LogType::Float:
-    case mc_rtc::log::LogType::Double:
-    case mc_rtc::log::LogType::String:
-    case mc_rtc::log::LogType::Vector2d:
-    case mc_rtc::log::LogType::Vector3d:
-    case mc_rtc::log::LogType::Vector6d:
-    case mc_rtc::log::LogType::VectorXd:
-    case mc_rtc::log::LogType::Quaterniond:
-    case mc_rtc::log::LogType::PTransformd:
-    case mc_rtc::log::LogType::ForceVecd:
-    case mc_rtc::log::LogType::MotionVecd:
-      return true;
-    case mc_rtc::log::LogType::Vector:
-    default:
-      return false;
-  }
-}
-
-bool isValid(const mc_rtc::log::RecordType & type)
-{
-  return isValid(type.type)
-         || (type.type == mc_rtc::log::LogType::Vector && type.vectorType.size() == 1 && isValid(type.vectorType[0]));
-}
-
-std::map<std::string, mc_rtc::log::RecordType> entries(const mc_rtc::log::FlatLog & log)
-{
-  std::map<std::string, mc_rtc::log::RecordType> ret;
-  for(const auto & e : log.entries())
-  {
-    auto t = log.type(e);
-    if(isValid(t))
-    {
-      ret[e] = t;
-    }
-    else
-    {
-      LOG_WARNING(e << " cannot be converted into a flat log")
-    }
-  }
-  return ret;
-}
-
-size_t vectorEntrySize(const mc_rtc::log::FlatLog & log, const std::string & entry)
-{
-  size_t s = 0;
-  auto data = log.getRaw<std::vector<double>>(entry);
-  for(const auto & v : data)
-  {
-    if(v)
-    {
-      s = std::max<size_t>(s, v->size());
-    }
-  }
-  return s;
-}
-
-size_t VectorXdEntrySize(const mc_rtc::log::FlatLog & log, const std::string & entry)
-{
-  size_t s = 0;
-  auto data = log.getRaw<Eigen::VectorXd>(entry);
-  for(const auto & v : data)
-  {
-    if(v)
-    {
-      s = std::max<size_t>(s, v->size());
-    }
-  }
-  return s;
-}
-
-size_t nEntries(const mc_rtc::log::FlatLog & log, const std::map<std::string, mc_rtc::log::RecordType> & entries)
+size_t nEntries(const mc_rtc::log::FlatLog & log, const std::map<std::string, mc_rtc::log::LogType> & entries)
 {
   size_t s = 0;
   for(const auto & e : entries)
   {
-    const auto & entry = e.first;
-    const auto & type = e.second;
-    switch(type.type)
-    {
-      case mc_rtc::log::LogType::Bool:
-      case mc_rtc::log::LogType::Int8_t:
-      case mc_rtc::log::LogType::Int16_t:
-      case mc_rtc::log::LogType::Int32_t:
-      case mc_rtc::log::LogType::Int64_t:
-      case mc_rtc::log::LogType::Uint8_t:
-      case mc_rtc::log::LogType::Uint16_t:
-      case mc_rtc::log::LogType::Uint32_t:
-      case mc_rtc::log::LogType::Uint64_t:
-      case mc_rtc::log::LogType::Float:
-      case mc_rtc::log::LogType::Double:
-      case mc_rtc::log::LogType::String:
-        s += 1;
-        break;
-      case mc_rtc::log::LogType::Quaterniond:
-        s += 4;
-        break;
-      case mc_rtc::log::LogType::Vector2d:
-        s += 2;
-        break;
-      case mc_rtc::log::LogType::Vector3d:
-        s += 3;
-        break;
-      case mc_rtc::log::LogType::VectorXd:
-        s += VectorXdEntrySize(log, entry);
-        break;
-      case mc_rtc::log::LogType::PTransformd:
-        s += 7;
-        break;
-      case mc_rtc::log::LogType::ForceVecd:
-      case mc_rtc::log::LogType::MotionVecd:
-        s += 6;
-        break;
-      case mc_rtc::log::LogType::Vector:
-        s += vectorEntrySize(log, entry);
-        break;
-      default:
-        break;
-    }
+    s += entrySize(log, e.first, e.second);
   }
   return s;
 }
@@ -481,7 +355,7 @@ void mc_bin_to_flat(const std::string & in, const std::string & out)
   {
     const auto & entry = e.first;
     const auto & type = e.second;
-    switch(type.type)
+    switch(type)
     {
       case mc_rtc::log::LogType::Bool:
       case mc_rtc::log::LogType::Int8_t:
@@ -523,12 +397,9 @@ void mc_bin_to_flat(const std::string & in, const std::string & out)
       case mc_rtc::log::LogType::MotionVecd:
         utils::write<sva::MotionVecd>(log, entry, ofs);
         break;
-      case mc_rtc::log::LogType::Vector:
-        if(utils::isValid(type))
-        {
-          utils::write<std::vector<double>>(log, entry, ofs);
-          break;
-        }
+      case mc_rtc::log::LogType::VectorDouble:
+        utils::write<std::vector<double>>(log, entry, ofs);
+        break;
       default:
         LOG_ERROR("Cannot convert " << entry << " into the flat format")
         break;

@@ -32,15 +32,15 @@ enum class LogType
   PTransformd,
   ForceVecd,
   MotionVecd,
-  Vector
+  VectorDouble
 };
 
 inline const char ** LogTypeNames()
 {
-  static const char * names[] = {"None",        "Bool",      "Int8_t",     "Int16_t",  "Int32_t",  "Int64_t",
-                                 "Uint8_t",     "Uint16_t",  "Uint32_t",   "Uint64_t", "Float",    "Double",
-                                 "String",      "Vector2d",  "Vector3d",   "Vector6d", "VectorXd", "Quaterniond",
-                                 "PTransformd", "ForceVecd", "MotionVecd", "Vector",   nullptr};
+  static const char * names[] = {"None",        "Bool",      "Int8_t",     "Int16_t",      "Int32_t",  "Int64_t",
+                                 "Uint8_t",     "Uint16_t",  "Uint32_t",   "Uint64_t",     "Float",    "Double",
+                                 "String",      "Vector2d",  "Vector3d",   "Vector6d",     "VectorXd", "Quaterniond",
+                                 "PTransformd", "ForceVecd", "MotionVecd", "VectorDouble", nullptr};
   return names;
 }
 
@@ -87,10 +87,10 @@ IMPL_MAPPING(sva::MotionVecd, MotionVecd);
 
 #undef IMPL_MAPPING
 
-template<typename T, typename A>
-struct GetLogType<std::vector<T, A>>
+template<typename A>
+struct GetLogType<std::vector<double, A>>
 {
-  static constexpr mc_rtc::log::LogType type = mc_rtc::log::LogType::Vector;
+  static constexpr mc_rtc::log::LogType type = mc_rtc::log::LogType::VectorDouble;
 };
 
 /** True if the given type is serializable in the log */
@@ -98,12 +98,6 @@ template<typename T>
 struct is_serializable
 {
   static constexpr bool value = GetLogType<T>::type != mc_rtc::log::LogType::None;
-};
-
-template<typename T, typename A>
-struct is_serializable<std::vector<T, A>>
-{
-  static constexpr bool value = is_serializable<T>::value;
 };
 
 /** Type-traits for callables that returns a serializable type
@@ -119,43 +113,14 @@ struct callback_is_serializable
   static constexpr bool value = is_serializable<base_type>::value;
 };
 
-/** For a given type, writes the header */
-template<typename T>
-struct LogHeaderWriter
-{
-  /** How many elements this writes */
-  static constexpr size_t size = 2;
-
-  /** Writes the header */
-  static void write(mc_rtc::MessagePackBuilder & builder)
-  {
-    builder.write(static_cast<typename std::underlying_type<LogType>::type>(GetLogType<T>::type));
-  }
-};
-
-/** Specialized LogHeaderWriter for std::vector<T, A> */
-template<typename T, typename A>
-struct LogHeaderWriter<std::vector<T, A>>
-{
-  static constexpr size_t size = 1 + LogHeaderWriter<T>::size;
-
-  static void write(mc_rtc::MessagePackBuilder & builder)
-  {
-    builder.write(static_cast<typename std::underlying_type<LogType>::type>(LogType::Vector));
-    LogHeaderWriter<T>::write(builder);
-  }
-};
-
 /** For a given type, writes to the log */
 template<typename T>
 struct LogWriter
 {
   static void write(const T & data, mc_rtc::MessagePackBuilder & builder)
   {
-    builder.start_array(LogHeaderWriter<T>::size);
-    LogHeaderWriter<T>::write(builder);
+    builder.write(static_cast<typename std::underlying_type<LogType>::type>(GetLogType<T>::type));
     builder.write(data);
-    builder.finish_array();
   }
 };
 

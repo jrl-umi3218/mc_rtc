@@ -18,42 +18,18 @@ namespace details
 {
 
 template<typename T>
-struct CheckRecordType
+struct CheckLogType
 {
   static bool check(const LogType & t)
   {
     return t == mc_rtc::log::GetLogType<T>::type;
-  }
-
-  static bool check(const RecordType & r)
-  {
-    return check(r.type);
-  }
-
-  static bool check(const RecordType & r, size_t idx)
-  {
-    return idx < r.vectorType.size() && check(r.vectorType[idx]);
-  }
-};
-
-template<typename T, typename A>
-struct CheckRecordType<std::vector<T, A>>
-{
-  static bool check(const RecordType & r)
-  {
-    return r.type == LogType::Vector && CheckRecordType<T>::check(r, 0);
-  }
-
-  static bool check(const RecordType & r, size_t idx)
-  {
-    return idx < r.vectorType.size() && r.vectorType[idx] == LogType::Vector && CheckRecordType<T>::check(r, idx + 1);
   }
 };
 
 template<typename T>
 const T * record_cast(const FlatLog::record & r)
 {
-  if(CheckRecordType<T>::check(r.type))
+  if(CheckLogType<T>::check(r.type))
   {
     return static_cast<const T *>(r.data.get());
   }

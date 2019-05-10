@@ -94,7 +94,7 @@ int show(int argc, char * argv[])
   }
   std::ifstream ifs(in, std::ifstream::binary);
   std::vector<char> buffer(1024);
-  std::set<std::pair<std::string, mc_rtc::log::RecordType>> keys;
+  std::set<std::pair<std::string, mc_rtc::log::LogType>> keys;
   double start_t = 0;
   double end_t = 0;
   size_t n = 0;
@@ -158,7 +158,7 @@ int show(int argc, char * argv[])
   std::cout << "Available entries:\n";
   for(const auto & e : keys)
   {
-    std::cout << "- " << e.first << " (" << mc_rtc::log::LogTypeName(e.second.type) << ")\n";
+    std::cout << "- " << e.first << " (" << mc_rtc::log::LogTypeName(e.second) << ")\n";
   }
   return 0;
 }
