@@ -31,6 +31,13 @@ struct LoggerImpl
   double log_iter_ = 0;
   bool valid_ = true;
   std::ofstream log_;
+
+protected:
+  inline void fwrite(char * data, size_t size)
+  {
+    log_.write((char *)&size, sizeof(size_t));
+    log_.write(data, size);
+  }
 };
 
 namespace
@@ -52,8 +59,7 @@ struct LoggerNonThreadedPolicyImpl : public LoggerImpl
   {
     if(valid_)
     {
-      log_.write((char *)&size, sizeof(int));
-      log_.write(data, size);
+      fwrite(data, size);
     }
   }
 };
@@ -90,8 +96,7 @@ struct LoggerThreadedPolicyImpl : public LoggerImpl
     {
       char * data = pop_.first;
       size_t size = pop_.second;
-      log_.write((char *)&size, sizeof(size_t));
-      log_.write((char *)data, size);
+      fwrite(data, size);
       delete[] data;
       return false;
     }
