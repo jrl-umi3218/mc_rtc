@@ -10,6 +10,8 @@ readonly mc_rtc_dir=`cd $(dirname $0)/..; pwd`
 
 readonly SOURCE_DIR=`cd $mc_rtc_dir/../; pwd`
 
+readonly PYTHON_VERSION=`python -c 'import sys; print("{}.{}".format(sys.version_info.major, sys.version_info.minor))'`
+
 #default settings
 INSTALL_PREFIX="/usr/local"
 WITH_ROS_SUPPORT="true"
@@ -30,8 +32,11 @@ fi
 if [ `lsb_release -sc` = "trusty" ]
 then
   ROS_DISTRO=indigo
-else
+elif [ `lsb_release -sc` = "xenial" ]
+then
   ROS_DISTRO=kinetic
+else
+  ROS_DISTRO=melodic
 fi
 
 readonly HELP_STRING="$(basename $0) [OPTIONS] ...
@@ -174,6 +179,10 @@ alias git_update="git pull && git submodule update"
 
 SUDO_CMD='sudo -E'
 PIP_USER=
+if [ ! -d $INSTALL_PREFIX ]
+then
+  mkdir -p $INSTALL_PREFIX
+fi
 if [ -w $INSTALL_PREFIX ]
 then
   SUDO_CMD=
@@ -186,7 +195,7 @@ export PATH=$INSTALL_PREFIX/bin:$PATH
 export LD_LIBRARY_PATH=$INSTALL_PREFIX/lib:$LD_LIBRARY_PATH
 export DYLD_LIBRARY_PATH=$INSTALL_PREFIX/lib:$DYLD_LIBRARY_PATH
 export PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH
-export PYTHONPATH=$INSTALL_PREFIX/lib/python2.7/site-packages:$PYTHONPATH
+export PYTHONPATH=$INSTALL_PREFIX/lib/python$PYTHON_VERSION/site-packages:$PYTHONPATH
 
 yaml_to_env()
 {
@@ -223,7 +232,7 @@ else
   then
     yaml_to_env "APT_DEPENDENCIES" $gitlab_ci_yml
     APT_DEPENDENCIES=`echo $APT_DEPENDENCIES|sed -e's/libspacevecalg-dev//'|sed -e's/librbdyn-dev//'|sed -e's/libeigen-qld-dev//'|sed -e's/libsch-core-dev//'|sed -e's/libtasks-qld-dev//'|sed -e's/libmc-rbdyn-urdf-dev//'|sed -e's/python-tasks//'|sed -e's/python-mc-rbdyn-urdf//'`
-    APT_DEPENDENCIES="cmake build-essential gfortran doxygen libeigen3-dev python-pip $APT_DEPENDENCIES"
+    APT_DEPENDENCIES="cmake build-essential gfortran doxygen libeigen3-dev python-pip python3-pip wget $APT_DEPENDENCIES"
     if $INSTALL_APT_DEPENDENCIES
     then
         sudo apt-get update
@@ -512,14 +521,14 @@ then
   export PATH=$INSTALL_PREFIX/bin:\$PATH
   export DYLD_LIBRARY_PATH=$INSTALL_PREFIX/lib:\$DYLD_LIBRARY_PATH
   export PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig:\$PKG_CONFIG_PATH
-  export PYTHONPATH=$INSTALL_PREFIX/lib/python2.7/site-packages:\$PYTHONPATH
+  export PYTHONPATH=$INSTALL_PREFIX/lib/python$PYTHON_VERSION/site-packages:\$PYTHONPATH
   """
 else
   echo """
   export PATH=$INSTALL_PREFIX/bin:\$PATH
   export LD_LIBRARY_PATH=$INSTALL_PREFIX/lib:\$LD_LIBRARY_PATH
   export PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig:\$PKG_CONFIG_PATH
-  export PYTHONPATH=$INSTALL_PREFIX/lib/python2.7/site-packages:\$PYTHONPATH
+  export PYTHONPATH=$INSTALL_PREFIX/lib/python$PYTHON_VERSION/site-packages:\$PYTHONPATH
   """
   if $WITH_ROS_SUPPORT
   then
