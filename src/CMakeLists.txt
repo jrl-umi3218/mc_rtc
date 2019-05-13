@@ -185,6 +185,8 @@ set(mc_trajectory_SRC
 mc_trajectory/BSplineTrajectory.cpp
 mc_trajectory/InterpolatedTrajectory.cpp
 mc_trajectory/spline_utils.cpp
+mc_trajectory/ExactCubicTrajectory.cpp
+mc_trajectory/BSplineConstrainedTrajectory.cpp
 )
 
 set(mc_trajectory_HDR
@@ -192,16 +194,9 @@ set(mc_trajectory_HDR
 ../include/mc_trajectory/BSplineTrajectory.h
 ../include/mc_trajectory/InterpolatedTrajectory.h
 ../include/mc_trajectory/spline_utils.h
+../include/mc_trajectory/BSplineConstrainedTrajectory.h
+../include/mc_trajectory/ExactCubicTrajectory.h
 )
-
-if(${HPP_SPLINE_FOUND})
-  list(APPEND mc_trajectory_SRC
-    mc_trajectory/ExactCubicTrajectory.cpp
-    mc_trajectory/BSplineConstrainedTrajectory.cpp)
-  list(APPEND mc_trajectory_HDR
-    ../include/mc_trajectory/BSplineConstrainedTrajectory.h
-    ../include/mc_trajectory/ExactCubicTrajectory.h)
-endif()
 
 add_library(mc_trajectory SHARED ${mc_trajectory_SRC} ${mc_trajectory_HDR})
 set_target_properties(mc_trajectory PROPERTIES COMPILE_FLAGS "-DMC_TRAJECTORY_EXPORTS")
@@ -231,11 +226,8 @@ mc_tasks/PostureTask.cpp
 mc_tasks/LookAtTask.cpp
 mc_tasks/LookAtSurfaceTask.cpp
 mc_tasks/MetaTaskLoader.cpp
+mc_tasks/ExactCubicTrajectoryTask.cpp
 )
-if(${HPP_SPLINE_FOUND})
-  list(APPEND mc_tasks_SRC
-    mc_tasks/ExactCubicTrajectoryTask.cpp)
-endif()
 
 set(mc_tasks_HDR
 ../include/mc_tasks/AddRemoveContactTask.h
@@ -262,11 +254,8 @@ set(mc_tasks_HDR
 ../include/mc_tasks/PositionBasedVisServoTask.h
 ../include/mc_tasks/PostureTask.h
 ../include/mc_tasks/LookAtTask.h
+../include/mc_tasks/ExactCubicTrajectoryTask.h
 )
-if(${HPP_SPLINE_FOUND})
-  list(APPEND mc_tasks_HDR
-    ../include/mc_tasks/ExactCubicTrajectoryTask.h)
-endif()
 
 if(NOT ${DISABLE_ROS})
   if(${ROSCPP_FOUND})
