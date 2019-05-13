@@ -393,7 +393,7 @@ HRP4FlexRobotModule::HRP4FlexRobotModule(bool fixed) : HRP4WithHandRobotModule(f
 HRP4ComanoidRobotModule::HRP4ComanoidRobotModule()
 {
   virtualLinks.push_back("L_HAND_J0_VIRTUAL");
-  _grippers = {{"l_gripper", {"L_HAND_J0"}, true}, {"r_gripper", {"R_HAND_J0", "R_HAND_J1"}, true}};
+  _grippers = {{"l_gripper", {"L_HAND_J0"}, false}, {"r_gripper", {"R_HAND_J0", "R_HAND_J1"}, true}};
   readUrdf("hrp4_comanoid", false, {});
   static constexpr double L_HAND_J0_range_q = 750 * M_PI / 180;
   static constexpr double L_HAND_J0_range_cm = 0.05;
