@@ -7,14 +7,14 @@
 namespace mc_trajectory
 {
 
-BSplineConstrainedTrajectory::BSplineConstrainedTrajectory(const std::vector<point_t> & controlPoints,
+BSplineTrajectory::BSplineTrajectory(const std::vector<point_t> & controlPoints,
                                                            double duration,
                                                            unsigned int order)
 : duration(duration), p(order), spline(controlPoints.begin(), controlPoints.end(), duration)
 {
 }
 
-std::vector<std::vector<point_t>> BSplineConstrainedTrajectory::splev(const std::vector<double> & t, unsigned int der)
+std::vector<std::vector<point_t>> BSplineTrajectory::splev(const std::vector<double> & t, unsigned int der)
 {
   std::vector<std::vector<point_t>> res(0);
   res.reserve(t.size());
@@ -31,7 +31,7 @@ std::vector<std::vector<point_t>> BSplineConstrainedTrajectory::splev(const std:
   return res;
 }
 
-std::vector<Eigen::Vector3d> BSplineConstrainedTrajectory::sampleTrajectory(unsigned samples)
+std::vector<Eigen::Vector3d> BSplineTrajectory::sampleTrajectory(unsigned samples)
 {
   std::vector<Eigen::Vector3d> traj;
   traj.resize(samples);
@@ -44,6 +44,16 @@ std::vector<Eigen::Vector3d> BSplineConstrainedTrajectory::sampleTrajectory(unsi
     traj[i] = pos;
   }
   return traj;
+}
+
+void BSplineTrajectory::controlPoints(const t_point_t& waypoints)
+{
+  spline = bezier_curve_t(waypoints.begin(), waypoints.end(), duration);
+}
+
+const t_point_t& BSplineTrajectory::controlPoints() const
+{
+  return spline.waypoints();
 }
 
 } // namespace mc_trajectory
