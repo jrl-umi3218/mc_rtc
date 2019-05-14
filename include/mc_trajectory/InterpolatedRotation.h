@@ -21,8 +21,6 @@ public:
   std::vector<std::pair<double, Eigen::Matrix3d>> & waypoints();
   void waypoints(const std::vector<std::pair<double, Eigen::Matrix3d>> & waypoints);
 
-  void addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string>& category);
-
 protected:
   std::vector<double> time_;
   std::vector<std::pair<double, Eigen::Matrix3d>> waypoints_;

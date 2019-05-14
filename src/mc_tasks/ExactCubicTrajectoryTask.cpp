@@ -1,7 +1,7 @@
 #include <mc_tasks/ExactCubicTrajectoryTask.h>
 #include <mc_tasks/MetaTaskLoader.h>
 #include <mc_trajectory/ExactCubicTrajectory.h>
-#include <mc_trajectory/InterpolatedTrajectory.h>
+#include <mc_trajectory/InterpolatedRotation.h>
 
 namespace mc_tasks
 {

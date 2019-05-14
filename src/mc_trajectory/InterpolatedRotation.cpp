@@ -1,4 +1,4 @@
-#include <mc_trajectory/InterpolatedTrajectory.h>
+#include <mc_trajectory/InterpolatedRotation.h>
 
 namespace mc_trajectory
 {
