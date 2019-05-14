@@ -311,10 +311,4 @@ void TrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                           [this](const double & g) { this->oriWeight(g); }));
 }
 
-void TrajectoryTask::removeFromGUI(mc_rtc::gui::StateBuilder & gui)
-{
-  MetaTask::removeFromGUI(gui);
-  gui.removeCategory({"Tasks", name_, "Gains"});
-}
-
 } // namespace mc_tasks

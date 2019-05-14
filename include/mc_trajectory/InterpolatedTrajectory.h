@@ -1,5 +1,6 @@
 #pragma once
 #include <mc_trajectory/api.h>
+#include <mc_rtc/GUIState.h>
 
 #include <Eigen/Geometry>
 #include <utility>
@@ -19,6 +20,8 @@ public:
 
   std::vector<std::pair<double, Eigen::Matrix3d>> & waypoints();
   void waypoints(const std::vector<std::pair<double, Eigen::Matrix3d>> & waypoints);
+
+  void addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string>& category);
 
 protected:
   std::vector<double> time_;

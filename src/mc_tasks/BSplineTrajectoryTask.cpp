@@ -87,22 +87,10 @@ void BSplineTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                    return robots.robot(rIndex).surface(surfaceName).X_0_s(robots.robot(rIndex));
                  }));
 
-  // Visual controls for the control points and
-  LOG_INFO("size: " << bspline->controlPoints().size());
-  for(unsigned int i = 0; i < bspline->controlPoints().size(); ++i)
-  {
-    gui.addElement({"Tasks", name_, "Position Control Points"},
-                   mc_rtc::gui::Point3D("control_point_pos_" + std::to_string(i),
-                                        [this, i]() { return bspline->controlPoints()[i]; },
-                                        [this, i](const Eigen::Vector3d & pos) {
-                                          // XXX inefficient
-                                          auto waypoints = bspline->controlPoints();
-                                          waypoints[i] = pos;
-                                          bspline->controlPoints(waypoints);
-                                        }));
-  }
+	bspline->addToGUI(gui, {"Tasks", name_, "Position Control Points"});
 
-  // XXX different style for rotation element
+  // XXX would be nice to implement a different style for rotation element, currently this is quite confusing
+  // to see which is an orientation and which is a bspline control point.
   for(unsigned i = 1; i < orientation_spline->waypoints().size(); ++i)
   {
     gui.addElement({"Tasks", name_, "Orientation Control Points"},
@@ -121,8 +109,6 @@ void BSplineTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                          }));
   }
 
-  gui.addElement({"Tasks", name_}, mc_rtc::gui::Trajectory("trajectory_" + name_,
-                                                           [this]() { return bspline->sampleTrajectory(samples_); }));
 }
 
 void BSplineTrajectoryTask::removeFromGUI(mc_rtc::gui::StateBuilder & gui)

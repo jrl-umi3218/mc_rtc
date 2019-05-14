@@ -7,6 +7,7 @@
 
 #include <mc_trajectory/api.h>
 #include <hpp/spline/bezier_curve.h>
+#include <mc_rtc/GUIState.h>
 #include <vector>
 
 namespace mc_trajectory
@@ -28,10 +29,15 @@ public:
   void controlPoints(const t_point_t& waypoints);
   const t_point_t& controlPoints() const;
 
+  void addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string>& category);
+
 private:
   double duration;
   unsigned int p;
   bezier_curve_t spline;
+  bool needsUpdate_ = false;
+  size_t samplingPoints_ = 10;
+  std::vector<point_t> samples_;
 };
 
 } // namespace mc_trajectory

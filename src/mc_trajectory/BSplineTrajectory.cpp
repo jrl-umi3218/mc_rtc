@@ -56,4 +56,35 @@ const t_point_t& BSplineTrajectory::controlPoints() const
   return spline.waypoints();
 }
 
+
+void BSplineTrajectory::addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string>& category)
+{
+  // Visual controls for the control points and
+  for(unsigned int i = 0; i < this->controlPoints().size(); ++i)
+  {
+    gui.addElement(category,
+                   mc_rtc::gui::Point3D("control_point_pos_" + std::to_string(i),
+                                        [this, i]() { return this->controlPoints()[i]; },
+                                        [this, i](const Eigen::Vector3d & pos) {
+                                          auto waypoints = this->controlPoints();
+                                          waypoints[i] = pos;
+                                          this->controlPoints(waypoints);
+                                          this->needsUpdate_ = true;
+                                        }));
+
+  }
+
+  samples_ = this->sampleTrajectory(samplingPoints_);
+  gui.addElement(category, mc_rtc::gui::Trajectory("trajectory",
+                [this]() {
+                    if(this->needsUpdate_)
+                    {
+                      samples_ = this->sampleTrajectory(samplingPoints_);
+                      needsUpdate_ = false;
+                    }
+                    return samples_;
+                }));
+}
+
+
 } // namespace mc_trajectory

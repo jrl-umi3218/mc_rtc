@@ -189,8 +189,6 @@ protected:
    * \param gui
    */
   void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
-  void removeFromGUI(mc_rtc::gui::StateBuilder & gui) override;
-
   void addToSolver(mc_solver::QPSolver & solver) override;
 
 public:
