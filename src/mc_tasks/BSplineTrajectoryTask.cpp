@@ -87,7 +87,7 @@ void BSplineTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                    return robots.robot(rIndex).surface(surfaceName).X_0_s(robots.robot(rIndex));
                  }));
 
-	bspline->addToGUI(gui, {"Tasks", name_, "Position Control Points"});
+  bspline->addToGUI(gui, {"Tasks", name_, "Position Control Points"});
 
   // XXX would be nice to implement a different style for rotation element, currently this is quite confusing
   // to see which is an orientation and which is a bspline control point.
@@ -108,7 +108,6 @@ void BSplineTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                            wp.second = ori.toRotationMatrix();
                                          }));
   }
-
 }
 
 void BSplineTrajectoryTask::removeFromGUI(mc_rtc::gui::StateBuilder & gui)

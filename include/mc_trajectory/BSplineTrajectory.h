@@ -5,9 +5,10 @@
 #ifndef _H_BSPLINETRAJECTORY_H_
 #define _H_BSPLINETRAJECTORY_H_
 
-#include <mc_trajectory/api.h>
-#include <hpp/spline/bezier_curve.h>
 #include <mc_rtc/GUIState.h>
+#include <mc_trajectory/api.h>
+
+#include <hpp/spline/bezier_curve.h>
 #include <vector>
 
 namespace mc_trajectory
@@ -26,10 +27,10 @@ public:
   std::vector<std::vector<Eigen::Vector3d>> splev(const std::vector<double> & t, unsigned int der = 0);
   std::vector<Eigen::Vector3d> sampleTrajectory(unsigned samples);
 
-  void controlPoints(const t_point_t& waypoints);
-  const t_point_t& controlPoints() const;
+  void controlPoints(const t_point_t & waypoints);
+  const t_point_t & controlPoints() const;
 
-  void addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string>& category);
+  void addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string> & category);
 
 private:
   double duration;

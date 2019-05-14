@@ -1,6 +1,6 @@
 #pragma once
-#include <mc_trajectory/api.h>
 #include <mc_rtc/GUIState.h>
+#include <mc_trajectory/api.h>
 
 #include <Eigen/Geometry>
 #include <utility>
