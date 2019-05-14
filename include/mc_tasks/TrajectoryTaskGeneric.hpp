@@ -291,9 +291,9 @@ Eigen::VectorXd TrajectoryTaskGeneric<T>::eval() const
 {
   if(selectorT_)
   {
-    return selectorT_->eval();
+    return selectorT_->eval().cwiseProduct(trajectoryT_->dimWeight());
   }
-  return errorT->eval();
+  return errorT->eval().cwiseProduct(trajectoryT_->dimWeight());
 }
 
 template<typename T>
@@ -301,9 +301,9 @@ Eigen::VectorXd TrajectoryTaskGeneric<T>::speed() const
 {
   if(selectorT_)
   {
-    return selectorT_->speed();
+    return selectorT_->speed().cwiseProduct(trajectoryT_->dimWeight());
   }
-  return errorT->speed();
+  return errorT->speed().cwiseProduct(trajectoryT_->dimWeight());
 }
 
 template<typename T>
