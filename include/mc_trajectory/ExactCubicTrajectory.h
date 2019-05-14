@@ -10,25 +10,25 @@
 namespace mc_trajectory
 {
 
+using point_t = Eigen::Vector3d;
+using exact_cubic_t = spline::exact_cubic<double, double, 3, false, point_t>;
+using waypoint_t = std::pair<double, point_t>;
+using spline_deriv_constraint_t = spline::spline_deriv_constraint<double, double, 3, false, point_t>;
+using spline_constraints_t = spline_deriv_constraint_t::spline_constraints;
+
 struct MC_TRAJECTORY_DLLAPI ExactCubicTrajectory
 {
 public:
-  using point_t = Eigen::Vector3d;
-  using exact_cubic_t = spline::exact_cubic<double, double, 3, true, point_t>;
-  using Waypoint = std::pair<double, point_t>;
-  using T_Waypoint = std::vector<Waypoint>;
-  using spline_deriv_constraint_t = spline::spline_deriv_constraint<double, double, 3, true, point_t>;
-  using spline_constraints_t = spline_deriv_constraint_t::spline_constraints;
 
 public:
-  ExactCubicTrajectory(const T_Waypoint & waypoints,
+  ExactCubicTrajectory(const std::vector<waypoint_t> & waypoints,
                        const point_t & init_vel,
                        const point_t & init_acc,
                        const point_t & end_vel,
                        const point_t & end_acc);
 
-  void waypoints(const T_Waypoint & waypoints);
-  const T_Waypoint & waypoints() const;
+  void waypoints(const std::vector<waypoint_t> & waypoints);
+  const std::vector<waypoint_t> & waypoints() const;
   const point_t & init_vel() const;
   const point_t & init_acc() const;
   const point_t & end_vel() const;
@@ -39,7 +39,7 @@ public:
 
 private:
   std::shared_ptr<spline_deriv_constraint_t> spline_;
-  T_Waypoint waypoints_;
+  std::vector<waypoint_t> waypoints_;
   spline_constraints_t constraints_;
 };
 

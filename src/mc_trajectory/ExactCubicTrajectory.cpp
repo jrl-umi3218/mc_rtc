@@ -4,14 +4,7 @@
 namespace mc_trajectory
 {
 
-using point_t = ExactCubicTrajectory::point_t;
-using exact_cubic_t = ExactCubicTrajectory::exact_cubic_t;
-using Waypoint = ExactCubicTrajectory::Waypoint;
-using T_Waypoint = ExactCubicTrajectory::T_Waypoint;
-using spline_deriv_constraint_t = ExactCubicTrajectory::spline_deriv_constraint_t;
-using spline_constraints_t = ExactCubicTrajectory::spline_constraints_t;
-
-ExactCubicTrajectory::ExactCubicTrajectory(const T_Waypoint & waypoints,
+ExactCubicTrajectory::ExactCubicTrajectory(const std::vector<waypoint_t> & waypoints,
                                            const point_t & init_vel,
                                            const point_t & init_acc,
                                            const point_t & end_vel,
@@ -24,13 +17,13 @@ ExactCubicTrajectory::ExactCubicTrajectory(const T_Waypoint & waypoints,
   this->waypoints(waypoints);
 }
 
-void ExactCubicTrajectory::waypoints(const T_Waypoint & waypoints)
+void ExactCubicTrajectory::waypoints(const std::vector<waypoint_t> & waypoints)
 {
   waypoints_ = waypoints;
   spline_ = std::make_shared<spline_deriv_constraint_t>(waypoints_.begin(), waypoints_.end(), constraints_);
 }
 
-const T_Waypoint & ExactCubicTrajectory::waypoints() const
+const std::vector<waypoint_t> & ExactCubicTrajectory::waypoints() const
 {
   return waypoints_;
 }
