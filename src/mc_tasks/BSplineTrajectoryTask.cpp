@@ -1,6 +1,6 @@
 #include <mc_tasks/BSplineTrajectoryTask.h>
 #include <mc_tasks/MetaTaskLoader.h>
-#include <mc_trajectory/BSplineTrajectory.h>
+#include <mc_trajectory/BSpline.h>
 #include <mc_trajectory/InterpolatedRotation.h>
 
 namespace mc_tasks
@@ -38,7 +38,7 @@ void BSplineTrajectoryTask::posWaypoints(const std::vector<Eigen::Vector3d> & po
     waypoints.push_back(wp);
   }
   waypoints.push_back(X_0_t.translation());
-  bspline.reset(new mc_trajectory::BSplineTrajectory(waypoints, duration));
+  bspline.reset(new mc_trajectory::BSpline(waypoints, duration));
 }
 
 void BSplineTrajectoryTask::oriWaypoints(const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)

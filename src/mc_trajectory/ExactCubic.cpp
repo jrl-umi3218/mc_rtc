@@ -1,14 +1,14 @@
 #include <mc_rtc/logging.h>
-#include <mc_trajectory/ExactCubicTrajectory.h>
+#include <mc_trajectory/ExactCubic.h>
 
 namespace mc_trajectory
 {
 
-ExactCubicTrajectory::ExactCubicTrajectory(const std::vector<waypoint_t> & waypoints,
-                                           const point_t & init_vel,
-                                           const point_t & init_acc,
-                                           const point_t & end_vel,
-                                           const point_t & end_acc)
+ExactCubic::ExactCubic(const std::vector<waypoint_t> & waypoints,
+                       const point_t & init_vel,
+                       const point_t & init_acc,
+                       const point_t & end_vel,
+                       const point_t & end_acc)
 {
   constraints_.init_vel = init_vel;
   constraints_.init_acc = init_acc;
@@ -17,35 +17,35 @@ ExactCubicTrajectory::ExactCubicTrajectory(const std::vector<waypoint_t> & waypo
   this->waypoints(waypoints);
 }
 
-void ExactCubicTrajectory::waypoints(const std::vector<waypoint_t> & waypoints)
+void ExactCubic::waypoints(const std::vector<waypoint_t> & waypoints)
 {
   waypoints_ = waypoints;
   spline_ = std::make_shared<spline_deriv_constraint_t>(waypoints_.begin(), waypoints_.end(), constraints_);
 }
 
-const std::vector<waypoint_t> & ExactCubicTrajectory::waypoints() const
+const std::vector<waypoint_t> & ExactCubic::waypoints() const
 {
   return waypoints_;
 }
 
-const point_t & ExactCubicTrajectory::init_vel() const
+const point_t & ExactCubic::init_vel() const
 {
   return constraints_.init_vel;
 }
-const point_t & ExactCubicTrajectory::init_acc() const
+const point_t & ExactCubic::init_acc() const
 {
   return constraints_.init_acc;
 }
-const point_t & ExactCubicTrajectory::end_vel() const
+const point_t & ExactCubic::end_vel() const
 {
   return constraints_.end_vel;
 }
-const point_t & ExactCubicTrajectory::end_acc() const
+const point_t & ExactCubic::end_acc() const
 {
   return constraints_.end_acc;
 }
 
-std::vector<std::vector<point_t>> ExactCubicTrajectory::splev(const std::vector<double> & t, unsigned int der)
+std::vector<std::vector<point_t>> ExactCubic::splev(const std::vector<double> & t, unsigned int der)
 {
   std::vector<std::vector<point_t>> res(0);
   res.reserve(t.size());
@@ -62,7 +62,7 @@ std::vector<std::vector<point_t>> ExactCubicTrajectory::splev(const std::vector<
   return res;
 }
 
-std::vector<Eigen::Vector3d> ExactCubicTrajectory::sampleTrajectory(unsigned samples)
+std::vector<Eigen::Vector3d> ExactCubic::sampleTrajectory(unsigned samples)
 {
   std::vector<Eigen::Vector3d> traj;
   traj.resize(samples);
@@ -77,7 +77,7 @@ std::vector<Eigen::Vector3d> ExactCubicTrajectory::sampleTrajectory(unsigned sam
   return traj;
 }
 
-void ExactCubicTrajectory::addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string> & category)
+void ExactCubic::addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string> & category)
 {
   // Visual controls for the control points
   for(unsigned int i = 0; i < waypoints_.size() - 1; ++i)

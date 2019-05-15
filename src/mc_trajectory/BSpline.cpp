@@ -2,17 +2,17 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <mc_trajectory/BSplineTrajectory.h>
+#include <mc_trajectory/BSpline.h>
 
 namespace mc_trajectory
 {
 
-BSplineTrajectory::BSplineTrajectory(const std::vector<point_t> & controlPoints, double duration, unsigned int order)
+BSpline::BSpline(const std::vector<point_t> & controlPoints, double duration, unsigned int order)
 : duration(duration), p(order), spline(controlPoints.begin(), controlPoints.end(), duration)
 {
 }
 
-std::vector<std::vector<point_t>> BSplineTrajectory::splev(const std::vector<double> & t, unsigned int der)
+std::vector<std::vector<point_t>> BSpline::splev(const std::vector<double> & t, unsigned int der)
 {
   std::vector<std::vector<point_t>> res(0);
   res.reserve(t.size());
@@ -29,7 +29,7 @@ std::vector<std::vector<point_t>> BSplineTrajectory::splev(const std::vector<dou
   return res;
 }
 
-std::vector<Eigen::Vector3d> BSplineTrajectory::sampleTrajectory(unsigned samples)
+std::vector<Eigen::Vector3d> BSpline::sampleTrajectory(unsigned samples)
 {
   std::vector<Eigen::Vector3d> traj;
   traj.resize(samples);
@@ -44,17 +44,17 @@ std::vector<Eigen::Vector3d> BSplineTrajectory::sampleTrajectory(unsigned sample
   return traj;
 }
 
-void BSplineTrajectory::controlPoints(const t_point_t & waypoints)
+void BSpline::controlPoints(const t_point_t & waypoints)
 {
   spline = bezier_curve_t(waypoints.begin(), waypoints.end(), duration);
 }
 
-const t_point_t & BSplineTrajectory::controlPoints() const
+const t_point_t & BSpline::controlPoints() const
 {
   return spline.waypoints();
 }
 
-void BSplineTrajectory::addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string> & category)
+void BSpline::addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string> & category)
 {
   // Visual controls for the control points and
   for(unsigned int i = 0; i < this->controlPoints().size(); ++i)

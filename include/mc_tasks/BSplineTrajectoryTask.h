@@ -3,7 +3,7 @@
 
 namespace mc_trajectory
 {
-struct BSplineTrajectory;
+struct BSpline;
 struct InterpolatedRotation;
 } // namespace mc_trajectory
 
@@ -67,7 +67,7 @@ protected:
   void removeFromGUI(mc_rtc::gui::StateBuilder &) override;
 
 protected:
-  std::shared_ptr<mc_trajectory::BSplineTrajectory> bspline = nullptr;
+  std::shared_ptr<mc_trajectory::BSpline> bspline = nullptr;
   std::shared_ptr<mc_trajectory::InterpolatedRotation> orientation_spline = nullptr;
   std::vector<std::pair<double, Eigen::Matrix3d>> oriWp_;
 };

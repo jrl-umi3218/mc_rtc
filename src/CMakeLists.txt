@@ -182,18 +182,18 @@ target_link_libraries(mc_solver PUBLIC mc_rbdyn mc_rtc_gui)
 install_mc_rtc_lib(mc_solver)
 
 set(mc_trajectory_SRC
-mc_trajectory/BSplineTrajectory.cpp
+mc_trajectory/BSpline.cpp
 mc_trajectory/InterpolatedRotation.cpp
 mc_trajectory/spline_utils.cpp
-mc_trajectory/ExactCubicTrajectory.cpp
+mc_trajectory/ExactCubic.cpp
 )
 
 set(mc_trajectory_HDR
 ../include/mc_trajectory/api.h
-../include/mc_trajectory/BSplineTrajectory.h
+../include/mc_trajectory/BSpline.h
 ../include/mc_trajectory/InterpolatedRotation.h
 ../include/mc_trajectory/spline_utils.h
-../include/mc_trajectory/ExactCubicTrajectory.h
+../include/mc_trajectory/ExactCubic.h
 )
 
 add_library(mc_trajectory SHARED ${mc_trajectory_SRC} ${mc_trajectory_HDR})

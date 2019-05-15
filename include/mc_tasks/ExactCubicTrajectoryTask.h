@@ -3,7 +3,7 @@
 
 namespace mc_trajectory
 {
-struct ExactCubicTrajectory;
+struct ExactCubic;
 struct InterpolatedRotation;
 } // namespace mc_trajectory
 
@@ -85,7 +85,7 @@ protected:
   void removeFromGUI(mc_rtc::gui::StateBuilder &) override;
 
 protected:
-  std::shared_ptr<mc_trajectory::ExactCubicTrajectory> bspline = nullptr;
+  std::shared_ptr<mc_trajectory::ExactCubic> bspline = nullptr;
   std::shared_ptr<mc_trajectory::InterpolatedRotation> orientation_spline = nullptr;
   std::vector<std::pair<double, Eigen::Matrix3d>> oriWp_;
 };

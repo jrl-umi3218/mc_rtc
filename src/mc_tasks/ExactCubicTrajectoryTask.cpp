@@ -1,6 +1,6 @@
 #include <mc_tasks/ExactCubicTrajectoryTask.h>
 #include <mc_tasks/MetaTaskLoader.h>
-#include <mc_trajectory/ExactCubicTrajectory.h>
+#include <mc_trajectory/ExactCubic.h>
 #include <mc_trajectory/InterpolatedRotation.h>
 
 namespace mc_tasks
@@ -46,7 +46,7 @@ void ExactCubicTrajectoryTask::posWaypoints(const std::vector<std::pair<double, 
     waypoints.push_back(wp);
   }
   waypoints.push_back(std::make_pair(duration, X_0_t.translation()));
-  bspline.reset(new mc_trajectory::ExactCubicTrajectory(waypoints, init_vel, init_acc, end_vel, end_acc));
+  bspline.reset(new mc_trajectory::ExactCubic(waypoints, init_vel, init_acc, end_vel, end_acc));
 }
 
 void ExactCubicTrajectoryTask::oriWaypoints(const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)

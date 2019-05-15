@@ -17,15 +17,15 @@ using waypoint_t = std::pair<double, point_t>;
 using spline_deriv_constraint_t = spline::spline_deriv_constraint<double, double, 3, false, point_t>;
 using spline_constraints_t = spline_deriv_constraint_t::spline_constraints;
 
-struct MC_TRAJECTORY_DLLAPI ExactCubicTrajectory
+struct MC_TRAJECTORY_DLLAPI ExactCubic
 {
 public:
 public:
-  ExactCubicTrajectory(const std::vector<waypoint_t> & waypoints,
-                       const point_t & init_vel,
-                       const point_t & init_acc,
-                       const point_t & end_vel,
-                       const point_t & end_acc);
+  ExactCubic(const std::vector<waypoint_t> & waypoints,
+             const point_t & init_vel,
+             const point_t & init_acc,
+             const point_t & end_vel,
+             const point_t & end_acc);
 
   void waypoints(const std::vector<waypoint_t> & waypoints);
   const std::vector<waypoint_t> & waypoints() const;

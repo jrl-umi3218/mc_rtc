@@ -19,10 +19,10 @@ using time_t = double;
 using bezier_curve_t = spline::bezier_curve<time_t, double, 3, false, point_t>;
 using t_point_t = bezier_curve_t::t_point_t;
 
-struct MC_TRAJECTORY_DLLAPI BSplineTrajectory
+struct MC_TRAJECTORY_DLLAPI BSpline
 {
 public:
-  BSplineTrajectory(const std::vector<point_t> & controlPoints, double duration, unsigned int order = 4);
+  BSpline(const std::vector<point_t> & controlPoints, double duration, unsigned int order = 4);
 
   std::vector<std::vector<Eigen::Vector3d>> splev(const std::vector<double> & t, unsigned int der = 0);
   std::vector<Eigen::Vector3d> sampleTrajectory(unsigned samples);
