@@ -91,23 +91,8 @@ void ExactCubicTrajectoryTask::update()
 void ExactCubicTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   TrajectoryTask::addToGUI(gui);
-  gui.addElement({"Tasks", name_}, mc_rtc::gui::Transform("pos", [this]() {
-                   return robots.robot(rIndex).surface(surfaceName).X_0_s(robots.robot(rIndex));
-                 }));
+  bspline->addToGUI(gui, {"Tasks", name_});
 
-  // Visual controls for the control points and
-  for(unsigned int i = 0; i < bspline->waypoints().size() - 1; ++i)
-  {
-    gui.addElement({"Tasks", name_, "Position Control Points"},
-                   mc_rtc::gui::Point3D("control_point_pos_" + std::to_string(i),
-                                        [this, i]() { return bspline->waypoints()[i].second; },
-                                        [this, i](const Eigen::Vector3d & pos) {
-                                          // XXX inefficient
-                                          auto waypoints = bspline->waypoints();
-                                          waypoints[i].second = pos;
-                                          bspline->waypoints(waypoints);
-                                        }));
-  }
   gui.addElement({"Tasks", name_, "Target"}, mc_rtc::gui::Transform("target", [this]() { return target(); },
                                                                     [this](const sva::PTransformd & t) {
                                                                       target(t);
@@ -145,9 +130,6 @@ void ExactCubicTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                            wp.second = ori.toRotationMatrix();
                                          }));
   }
-
-  gui.addElement({"Tasks", name_}, mc_rtc::gui::Trajectory("trajectory_" + name_,
-                                                           [this]() { return bspline->sampleTrajectory(samples_); }));
 }
 
 void ExactCubicTrajectoryTask::removeFromGUI(mc_rtc::gui::StateBuilder & gui)

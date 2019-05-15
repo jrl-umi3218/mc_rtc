@@ -1,5 +1,6 @@
 #pragma once
 
+#include <mc_rtc/GUIState.h>
 #include <mc_trajectory/api.h>
 
 #include <hpp/spline/exact_cubic.h>
@@ -36,10 +37,16 @@ public:
   std::vector<std::vector<Eigen::Vector3d>> splev(const std::vector<double> & t, unsigned int der = 0);
   std::vector<Eigen::Vector3d> sampleTrajectory(unsigned samples);
 
+  void addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string> & category);
+
 private:
   std::shared_ptr<spline_deriv_constraint_t> spline_;
   std::vector<waypoint_t> waypoints_;
   spline_constraints_t constraints_;
+
+  bool needsUpdate_ = false;
+  size_t samplingPoints_ = 10;
+  std::vector<Eigen::Vector3d> samples_;
 };
 
 } // namespace mc_trajectory

@@ -42,7 +42,7 @@ const point_t & ExactCubicTrajectory::end_vel() const
 }
 const point_t & ExactCubicTrajectory::end_acc() const
 {
-  constraints_.end_acc;
+  return constraints_.end_acc;
 }
 
 std::vector<std::vector<point_t>> ExactCubicTrajectory::splev(const std::vector<double> & t, unsigned int der)
@@ -75,6 +75,31 @@ std::vector<Eigen::Vector3d> ExactCubicTrajectory::sampleTrajectory(unsigned sam
     traj[i] = pos;
   }
   return traj;
+}
+
+void ExactCubicTrajectory::addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string> & category)
+{
+  // Visual controls for the control points
+  for(unsigned int i = 0; i < waypoints_.size() - 1; ++i)
+  {
+    gui.addElement(category, mc_rtc::gui::Point3D("control_point_pos_" + std::to_string(i),
+                                                  [this, i]() { return waypoints_[i].second; },
+                                                  [this, i](const Eigen::Vector3d & pos) {
+                                                    waypoints_[i].second = pos;
+                                                    waypoints(waypoints_);
+                                                    needsUpdate_ = true;
+                                                  }));
+  }
+
+  samples_ = sampleTrajectory(samplingPoints_);
+  gui.addElement(category, mc_rtc::gui::Trajectory("trajectory", [this]() {
+                   if(this->needsUpdate_)
+                   {
+                     samples_ = this->sampleTrajectory(samplingPoints_);
+                     needsUpdate_ = false;
+                   }
+                   return samples_;
+                 }));
 }
 
 } // namespace mc_trajectory
