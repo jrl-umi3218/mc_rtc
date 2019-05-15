@@ -19,7 +19,6 @@ using spline_constraints_t = spline_deriv_constraint_t::spline_constraints;
 struct MC_TRAJECTORY_DLLAPI ExactCubicTrajectory
 {
 public:
-
 public:
   ExactCubicTrajectory(const std::vector<waypoint_t> & waypoints,
                        const point_t & init_vel,
