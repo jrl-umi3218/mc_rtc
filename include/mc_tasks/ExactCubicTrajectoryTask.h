@@ -31,12 +31,13 @@ public:
    * @param oriW Task weight (orientation), see TrajectoryTask
    * @param target Final world pose to reach
    * @param posWp Waypoints in position specified as pairs of [time, position]
-   * @param init_vel Initial velocity of the curve
-   * @param init_acc Initial acceleration of the curve
-   * @param end_vel Final velocity of the curve
-   * @param enc_acc Final acceleration of the curve
+   * @param init_vel Initial velocity of the curve (default: Zero)
+   * @param init_acc Initial acceleration of the curve (default: Zero)
+   * @param end_vel Final velocity of the curve (default: Zero)
+   * @param enc_acc Final acceleration of the curve (default: Zero)
    * @param oriWp Waypoints in orientation, specified as pairs of [time,
-   * orientation]. Orientation is interpolated in between waypoints.
+   * orientation]. Orientation is interpolated in between waypoints. (default :
+   * none)
    */
   ExactCubicTrajectoryTask(const mc_rbdyn::Robots & robots,
                            unsigned int robotIndex,
@@ -47,11 +48,11 @@ public:
                            double oriW,
                            const sva::PTransformd & target,
                            const std::vector<std::pair<double, Eigen::Vector3d>> & posWp,
-                           const Eigen::Vector3d & init_vel,
-                           const Eigen::Vector3d & init_acc,
-                           const Eigen::Vector3d & end_vel,
-                           const Eigen::Vector3d & end_acc,
-                           const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp);
+                           const Eigen::Vector3d & init_vel = Eigen::Vector3d::Zero(),
+                           const Eigen::Vector3d & init_acc = Eigen::Vector3d::Zero(),
+                           const Eigen::Vector3d & end_vel = Eigen::Vector3d::Zero(),
+                           const Eigen::Vector3d & end_acc = Eigen::Vector3d::Zero(),
+                           const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp = {});
 
   void update() override;
 
@@ -61,16 +62,16 @@ private:
    * waypoints. Initial and final velocities and accelerations can be specified.
    *
    * @param posWp Waypoints in position, specified as pairs of [time, position]
-   * @param init_vel Initial velocity of the curve
-   * @param init_acc Initial acceleration of the curve
-   * @param end_vel Final velocity of the curve
-   * @param end_acc Final acceleration of the curve
+   * @param init_vel Initial velocity of the curve (default: Zero)
+   * @param init_acc Initial acceleration of the curve (default: Zero)
+   * @param end_vel Final velocity of the curve (default: Zero)
+   * @param end_acc Final acceleration of the curve (default: Zero)
    */
   void posWaypoints(const std::vector<std::pair<double, Eigen::Vector3d>> & posWp,
-                    const Eigen::Vector3d & init_vel,
-                    const Eigen::Vector3d & init_acc,
-                    const Eigen::Vector3d & end_vel,
-                    const Eigen::Vector3d & end_acc);
+                    const Eigen::Vector3d & init_vel = Eigen::Vector3d::Zero(),
+                    const Eigen::Vector3d & init_acc = Eigen::Vector3d::Zero(),
+                    const Eigen::Vector3d & end_vel = Eigen::Vector3d::Zero(),
+                    const Eigen::Vector3d & end_acc = Eigen::Vector3d::Zero());
   /**
    * @brief Waypoints in orientation. The orientation will be interpolated in
    * between waypoints.

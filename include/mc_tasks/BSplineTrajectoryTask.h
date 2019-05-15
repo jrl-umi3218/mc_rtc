@@ -41,7 +41,7 @@ public:
                         double oriW,
                         const sva::PTransformd & target,
                         const std::vector<Eigen::Vector3d> & posWp,
-                        const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp);
+                        const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp = {});
 
   void update() override;
 
