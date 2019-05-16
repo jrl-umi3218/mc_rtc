@@ -2,8 +2,7 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <mc_trajectory/BSplineTrajectory.h>
-
+#include <mc_trajectory/BSpline.h>
 #include <iostream>
 
 int main()
@@ -12,7 +11,7 @@ int main()
   cps.push_back(Eigen::Vector3d(-0.45, -0.34, 0.54));
   cps.push_back(Eigen::Vector3d(0.4, -0.34, 0.54));
   cps.push_back(Eigen::Vector3d(0.45, -0.34, 0.54));
-  mc_trajectory::BSplineTrajectory spline(cps, 20.0);
+  mc_trajectory::BSpline spline(cps, 20.0);
   for(double t = 0; t < 20.01; t += 1.0)
   {
     // auto res = spline.spline(t/20.0);
