@@ -213,10 +213,14 @@ void AddRemoveContactStateImplHelper<mc_tasks::AddContactTask>::make_run_impl(Ad
   auto robotIndex_ = contact.r1Index();
   auto envIndex_ = contact.r2Index();
   auto forceThreshold_ = impl.config_("forceThreshold", std::numeric_limits<double>::infinity());
+  bool forceOnly_ = impl.config_("forceOnly", false);
+  size_t forceThresholdIter_ = impl.config_("forceThresholdIter", 3);
   bool hasForceSensor_ = ctl.robot().bodyHasForceSensor(contact.r1Surface()->bodyName());
   auto forceSensorName_ = hasForceSensor_ ? ctl.robot().bodyForceSensor(contact.r1Surface()->bodyName()).name() : "";
-  impl.run_ = [fsm_contact_, sensor_, robotIndex_, envIndex_, hasForceSensor_, forceThreshold_,
-               forceSensorName_](AddRemoveContactStateImpl & impl, Controller & ctl) mutable {
+  size_t forceIter_ = 0;
+  impl.run_ = [fsm_contact_, sensor_, robotIndex_, envIndex_, hasForceSensor_, forceThreshold_, forceSensorName_,
+               forceOnly_, forceThresholdIter_,
+               forceIter_](AddRemoveContactStateImpl & impl, Controller & ctl) mutable {
     if(!fsm_contact_)
     {
       return true;
@@ -224,7 +228,15 @@ void AddRemoveContactStateImplHelper<mc_tasks::AddContactTask>::make_run_impl(Ad
     auto & robot = ctl.robots().robot(robotIndex_);
     auto & env = ctl.robots().robot(envIndex_);
     auto d = sensor_.update(robot, env);
-    if(d <= 0 || (hasForceSensor_ && ctl.robot().forceSensor(forceSensorName_).force().z() > forceThreshold_))
+    if(hasForceSensor_ && ctl.robot().forceSensor(forceSensorName_).force().z() > forceThreshold_)
+    {
+      forceIter_++;
+    }
+    else
+    {
+      forceIter_ = 0;
+    }
+    if((!forceOnly_ && d <= 0) || forceIter_ > forceThresholdIter_)
     {
       if(fsm_contact_)
       {
