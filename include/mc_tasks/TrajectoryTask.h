@@ -133,14 +133,44 @@ public:
   void target(const sva::PTransformd & target);
   const sva::PTransformd & target() const;
 
+  /**
+   * \brief Tracks a reference world velocity
+   *
+   * \param vel Desired velocity of the trajectory (world)
+   */
   void refVel(const Eigen::VectorXd & vel);
+  /**
+   * @brief Returns the trajectory desired velocity
+   *
+   * @return Desired velocity (world)
+   */
   const Eigen::VectorXd & refVel() const;
 
+  /**
+   * \brief Tracks a reference world acceleration
+   *
+   * @param acc Desired acceleration of the trajectory (world)
+   */
   void refAcc(const Eigen::VectorXd & acc);
+  /**
+   * \brief Returns the trajectory desired acceleration
+   *
+   * \return Desired acceleration (world)
+   */
   const Eigen::VectorXd & refAcc() const;
 
-  void refTarget(const sva::PTransformd & target);
-  const sva::PTransformd & refTarget() const;
+  /**
+   * \brief Tracks a reference world pose
+   *
+   * \param pose Desired position (world)
+   */
+  void refPose(const sva::PTransformd & pose);
+  /**
+   * \brief Returns the trajectory reference world pose
+   *
+   * \return Desired pose (world)
+   */
+  const sva::PTransformd & refPose() const;
 
   /*! \brief Get the control points of the trajectory's b-spline
    *

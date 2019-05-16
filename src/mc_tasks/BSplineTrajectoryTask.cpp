@@ -75,7 +75,7 @@ void BSplineTrajectoryTask::update()
   refAcc.tail<3>() = acc;
   this->refVel(refVel);
   this->refAcc(refAcc);
-  this->refTarget(target);
+  this->refPose(target);
 
   TrajectoryTask::update();
 }

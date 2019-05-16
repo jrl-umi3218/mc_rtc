@@ -162,11 +162,11 @@ const Eigen::VectorXd & TrajectoryTask::refAcc() const
 {
   return transTrajTask->refAccel();
 }
-void TrajectoryTask::refTarget(const sva::PTransformd & target)
+void TrajectoryTask::refPose(const sva::PTransformd & target)
 {
   transTask->target(target);
 }
-const sva::PTransformd & TrajectoryTask::refTarget() const
+const sva::PTransformd & TrajectoryTask::refPose() const
 {
   return transTask->target();
 }
