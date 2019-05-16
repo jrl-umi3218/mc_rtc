@@ -81,6 +81,11 @@ struct AddRemoveContactStateImpl
       {
         com_task_->com(com_c("com"));
       }
+      if(com_c.has("offset"))
+      {
+        Eigen::Vector3d offset = com_c("offset");
+        com_task_->com(com_task_->com() + offset);
+      }
     }
     std::string type = config_("type");
     bool removeContact = (type == "removeContact");
