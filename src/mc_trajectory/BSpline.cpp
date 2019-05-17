@@ -54,6 +54,21 @@ const t_point_t & BSpline::controlPoints() const
   return spline.waypoints();
 }
 
+
+void BSpline::samplingPoints(const unsigned s)
+{
+  if(s != samplingPoints_)
+  {
+    needsUpdate_ = true;
+  }
+  samplingPoints_ = s;
+}
+
+const unsigned BSpline::samplingPoints() const
+{
+  return samplingPoints_;
+}
+
 void BSpline::addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string> & category)
 {
   // Visual controls for the control points and

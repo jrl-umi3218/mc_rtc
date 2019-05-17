@@ -64,6 +64,8 @@ void ExactCubicTrajectoryTask::oriWaypoints(const std::vector<std::pair<double, 
 
 void ExactCubicTrajectoryTask::update()
 {
+  bspline->samplingPoints(samples_);
+
   // Interpolate position
   auto res = bspline->splev({t}, 2);
   Eigen::Vector3d & pos = res[0][0];

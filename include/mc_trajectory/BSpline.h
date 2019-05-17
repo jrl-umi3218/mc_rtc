@@ -30,6 +30,9 @@ public:
   void controlPoints(const t_point_t & waypoints);
   const t_point_t & controlPoints() const;
 
+  void samplingPoints(const unsigned s);
+  const unsigned samplingPoints() const;
+
   void addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string> & category);
 
 private:
