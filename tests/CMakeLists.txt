@@ -12,6 +12,10 @@ add_executable(LoggerTraits LoggerTraits.cpp)
 set_target_properties(LoggerTraits PROPERTIES FOLDER tests/compilation)
 target_link_libraries(LoggerTraits PUBLIC mc_control)
 
+add_executable(testConstraintImplementation testConstraintImplementation.cpp)
+set_target_properties(testConstraintImplementation PROPERTIES FOLDER tests/compilation)
+target_link_libraries(testConstraintImplementation PUBLIC mc_solver)
+
 #################################
 #      -- Utility tests --      #
 # -- FIXME not actuals tests -- #
