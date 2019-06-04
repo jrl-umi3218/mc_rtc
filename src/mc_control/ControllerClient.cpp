@@ -421,7 +421,7 @@ void ControllerClient::handle_arrow(const ElementId & id, const mc_rtc::Configur
   {
     arrow_config.load(data[6]);
   }
-  arrow({id.category, id.name + "_arrow", id.sid}, id, arrow_start, arrow_end, arrow_config, ro);
+  arrow({id.category, id.name, id.sid}, id, arrow_start, arrow_end, arrow_config, ro);
 }
 
 void ControllerClient::handle_rotation(const ElementId & id, const mc_rtc::Configuration & data)
