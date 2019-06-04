@@ -152,56 +152,39 @@ TestServer::TestServer() : xythetaz_(4)
                         mc_rtc::gui::FormDataComboInput{"R1", false, {"robots"}},
                         mc_rtc::gui::FormDataComboInput{"R1 surface", false, {"surfaces", "$R1"}}));
   builder.addElement({"GUI Markers", "Transforms"},
-                    mc_rtc::gui::Transform("ReadOnly", [this]() { return static_; }),
-                    mc_rtc::gui::Transform("Interactive", [this]() { return interactive_; },
-                                           [this](const sva::PTransformd & p) { interactive_ = p; }),
-                     mc_rtc::gui::XYTheta("XYTheta",
-                                          [this]() { return xytheta_; },
+                     mc_rtc::gui::Transform("ReadOnly Transform", [this]() { return static_; }),
+                     mc_rtc::gui::Transform("Interactive Transform", [this]() { return interactive_; },
+                                            [this](const sva::PTransformd & p) { interactive_ = p; }),
+                     mc_rtc::gui::XYTheta("XYTheta", [this]() { return xytheta_; },
                                           [this](const Eigen::VectorXd & vec) { xytheta_ = vec.head<3>(); }),
                      mc_rtc::gui::XYTheta("XYThetaAltitude", [this]() { return xythetaz_; },
                                           [this](const Eigen::VectorXd & vec) { xythetaz_ = vec; }),
-                    mc_rtc::gui::Rotation("ReadOnly", [this]() { return rotStatic_; }),
-                    mc_rtc::gui::Rotation("Interactive", [this]() { return rotInteractive_; },
-                                          [this](const Eigen::Quaterniond & q) { rotInteractive_.rotation() = q; })
-                    );
+                     mc_rtc::gui::Rotation("ReadOnly Rotation", [this]() { return rotStatic_; }),
+                     mc_rtc::gui::Rotation("Interactive Rotation", [this]() { return rotInteractive_; },
+                                           [this](const Eigen::Quaterniond & q) { rotInteractive_.rotation() = q; }));
 
-  builder.addElement({"GUI Markers", "Point3D"},
-                    mc_rtc::gui::Point3D("ReadOnly", [this]() { return v3_; }),
-                    mc_rtc::gui::Point3D("Interactive", [this]() { return vInt_; },
-                                         [this](const Eigen::Vector3d & v) { vInt_ = v; })
-                    );
+  builder.addElement(
+      {"GUI Markers", "Point3D"},
+      mc_rtc::gui::Point3D("ReadOnly", mc_rtc::gui::PointConfig({1., 0., 0.}, 0.08), [this]() { return v3_; }),
+      mc_rtc::gui::Point3D("Interactive", mc_rtc::gui::PointConfig({0., 1., 0.}, 0.08), [this]() { return vInt_; },
+                           [this](const Eigen::Vector3d & v) { vInt_ = v; }));
 
-  builder.addElement({"GUI Markers", "Arrows"},
-                     mc_rtc::gui::Arrow("Arrow",
-                                        []()
-                                        {
-                                         return Eigen::Vector3d{2,2,0};
-                                        },
-                                        []()
-                                        {
-                                         return Eigen::Vector3d{2.5,2.5,0.5};
-                                        }),
-                     mc_rtc::gui::Force("Force",
-                                        mc_rtc::gui::ForceConfig(mc_rtc::gui::Color(1.,0.,0.)),
-                                        []()
-                                        {
-                                         return sva::ForceVecd(Eigen::Vector3d{0., 0., 0.}, Eigen::Vector3d{10., 0., 100.});
-                                        },
-                                        []()
-                                        {
-                                         return sva::PTransformd{Eigen::Vector3d{2,2,0}};
-                                        }),
-                    mc_rtc::gui::Point3D("ReadOnly", [this]() { return v3_; }),
-                    mc_rtc::gui::Point3D("Interactive", [this]() { return vInt_; },
-                                         [this](const Eigen::Vector3d & v) { vInt_ = v; }),
-                    mc_rtc::gui::Rotation("ReadOnly", [this]() { return rotStatic_; }),
-                    mc_rtc::gui::Rotation("Interactive", [this]() { return rotInteractive_; },
-                                          [this](const Eigen::Quaterniond & q) { rotInteractive_.rotation() = q; }),
-                    mc_rtc::gui::Transform("ReadOnly", [this]() { return static_; }),
-                    mc_rtc::gui::Transform("Interactive", [this]() { return interactive_; },
-                                           [this](const sva::PTransformd & p) { interactive_ = p; }),
-                    mc_rtc::gui::Polygon("Polygon", [this]() -> const std::vector<Eigen::Vector3d> & { return polygon_; })
-                    );
+  builder.addElement(
+      {"GUI Markers", "Arrows"},
+      mc_rtc::gui::Arrow("Arrow",
+                         []() {
+                           return Eigen::Vector3d{2, 2, 0};
+                         },
+                         []() {
+                           return Eigen::Vector3d{2.5, 2.5, 0.5};
+                         }),
+      mc_rtc::gui::Force("Force", mc_rtc::gui::ForceConfig(mc_rtc::gui::Color(1., 0., 0.)),
+                         []() {
+                           return sva::ForceVecd(Eigen::Vector3d{0., 0., 0.}, Eigen::Vector3d{10., 0., 100.});
+                         },
+                         []() {
+                           return sva::PTransformd{Eigen::Vector3d{2, 2, 0}};
+                         }));
 }
 
 void TestServer::publish()
