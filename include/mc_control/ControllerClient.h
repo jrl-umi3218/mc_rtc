@@ -285,9 +285,11 @@ protected:
   /** Should display an arrow in 3D environment
    */
   virtual void arrow(const ElementId & id,
+                     const ElementId & /* requestId */,
                      const Eigen::Vector3d & /* start */,
                      const Eigen::Vector3d & /* end */,
-                     const mc_rtc::gui::ArrowConfig & /* config */)
+                     const mc_rtc::gui::ArrowConfig & /* config */,
+                     bool /* ro */)
   {
     default_impl("Arrow", id);
   }

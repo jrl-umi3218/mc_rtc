@@ -415,12 +415,13 @@ void ControllerClient::handle_arrow(const ElementId & id, const mc_rtc::Configur
 {
   const Eigen::Vector3d & arrow_start = data[3];
   const Eigen::Vector3d & arrow_end = data[4];
+  bool ro = data[5];
   mc_rtc::gui::ArrowConfig arrow_config;
-  if(data.size() > 5)
+  if(data.size() > 6)
   {
-    arrow_config.load(data[5]);
+    arrow_config.load(data[6]);
   }
-  arrow(id, arrow_start, arrow_end, arrow_config);
+  arrow({id.category, id.name + "_arrow", id.sid}, id, arrow_start, arrow_end, arrow_config, ro);
 }
 
 void ControllerClient::handle_rotation(const ElementId & id, const mc_rtc::Configuration & data)

@@ -46,6 +46,8 @@ struct TestServer
   Eigen::VectorXd xythetaz_;
   std::vector<Eigen::Vector3d> polygon_;
   sva::ForceVecd force_{{0, 0, 0}, {0, 0, 100}};
+  Eigen::Vector3d arrow_start_{0.5, 0.5, 0.};
+  Eigen::Vector3d arrow_end_{0.5, 0.5, -0.5};
 };
 
 TestServer::TestServer() : xythetaz_(4)
@@ -169,15 +171,21 @@ TestServer::TestServer() : xythetaz_(4)
       mc_rtc::gui::Point3D("Interactive", mc_rtc::gui::PointConfig({0., 1., 0.}, 0.08), [this]() { return vInt_; },
                            [this](const Eigen::Vector3d & v) { vInt_ = v; }));
 
+  mc_rtc::gui::ArrowConfig arrow_config({1., 0., 0.});
+  arrow_config.start_point_scale = 0.02;
+  arrow_config.end_point_scale = 0.02;
   builder.addElement(
       {"GUI Markers", "Arrows"},
-      mc_rtc::gui::Arrow("Arrow",
+      mc_rtc::gui::Arrow("ArrowRO", arrow_config,
                          []() {
                            return Eigen::Vector3d{2, 2, 0};
                          },
                          []() {
                            return Eigen::Vector3d{2.5, 2.5, 0.5};
                          }),
+      mc_rtc::gui::Arrow("Arrow", arrow_config, [this]() { return arrow_start_; },
+                         [this](const Eigen::Vector3d & start) { arrow_start_ = start; },
+                         [this]() { return arrow_end_; }, [this](const Eigen::Vector3d & end) { arrow_end_ = end; }),
       mc_rtc::gui::Force("Force", mc_rtc::gui::ForceConfig(mc_rtc::gui::Color(1., 0., 0.)),
                          []() {
                            return sva::ForceVecd(Eigen::Vector3d{0., 0., 0.}, Eigen::Vector3d{10., 0., 100.});
