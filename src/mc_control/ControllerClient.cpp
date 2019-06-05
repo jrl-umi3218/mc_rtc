@@ -421,7 +421,18 @@ void ControllerClient::handle_arrow(const ElementId & id, const mc_rtc::Configur
   {
     arrow_config.load(data[6]);
   }
-  arrow({id.category, id.name, id.sid}, id, arrow_start, arrow_end, arrow_config, ro);
+  Eigen::Vector6d arrow_data;
+  arrow_data.head<3>() = arrow_start;
+  arrow_data.tail<3>() = arrow_end;
+  if(ro)
+  {
+    array_label(id, {"tx_0", "ty_0", "tz_0", "tx_1", "ty_1", "tz_1"}, arrow_data);
+  }
+  else
+  {
+    array_input(id, {"tx_0", "ty_0", "tz_0", "tx_1", "ty_1", "tz_1"}, arrow_data);
+  }
+  arrow({id.category, id.name + "_arrow", id.sid}, id, arrow_start, arrow_end, arrow_config, ro);
 }
 
 void ControllerClient::handle_rotation(const ElementId & id, const mc_rtc::Configuration & data)
