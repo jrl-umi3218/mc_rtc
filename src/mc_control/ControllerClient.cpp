@@ -402,13 +402,21 @@ void ControllerClient::handle_force(const ElementId & id, const mc_rtc::Configur
 {
   const sva::ForceVecd & force_ = data[3];
   const sva::PTransformd & surface = data[4];
+  bool ro = data[5];
   mc_rtc::gui::ForceConfig forceConfig;
-  if(data.size() > 5)
+  if(data.size() > 6)
   {
-    forceConfig.load(data[5]);
+    forceConfig.load(data[6]);
   }
-  array_label(id, {"cx", "cy", "cz", "fx", "fy", "fz"}, force_.vector());
-  force({id.category, id.name + "_force", id.sid}, id, force_, surface, forceConfig);
+  if(ro)
+  {
+    array_label(id, {"cx", "cy", "cz", "fx", "fy", "fz"}, force_.vector());
+  }
+  else
+  {
+    array_input(id, {"cx", "cy", "cz", "fx", "fy", "fz"}, force_.vector());
+  }
+  force({id.category, id.name + "_arrow", id.sid}, id, force_, surface, forceConfig, ro);
 }
 
 void ControllerClient::handle_arrow(const ElementId & id, const mc_rtc::Configuration & data)

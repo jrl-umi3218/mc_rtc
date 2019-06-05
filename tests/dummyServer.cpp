@@ -45,9 +45,9 @@ struct TestServer
   Eigen::Vector3d xytheta_{0., 2., M_PI / 3};
   Eigen::VectorXd xythetaz_;
   std::vector<Eigen::Vector3d> polygon_;
-  sva::ForceVecd force_{{0, 0, 0}, {0, 0, 100}};
   Eigen::Vector3d arrow_start_{0.5, 0.5, 0.};
-  Eigen::Vector3d arrow_end_{0.5, 0.5, -0.5};
+  Eigen::Vector3d arrow_end_{0.5, 1., -0.5};
+  sva::ForceVecd force_{{0., 0., 0.}, {-50., 50., 100.}};
 };
 
 TestServer::TestServer() : xythetaz_(4)
@@ -186,10 +186,15 @@ TestServer::TestServer() : xythetaz_(4)
       mc_rtc::gui::Arrow("Arrow", arrow_config, [this]() { return arrow_start_; },
                          [this](const Eigen::Vector3d & start) { arrow_start_ = start; },
                          [this]() { return arrow_end_; }, [this](const Eigen::Vector3d & end) { arrow_end_ = end; }),
-      mc_rtc::gui::Force("Force", mc_rtc::gui::ForceConfig(mc_rtc::gui::Color(1., 0., 0.)),
+      mc_rtc::gui::Force("ForceRO", mc_rtc::gui::ForceConfig(mc_rtc::gui::Color(1., 0., 0.)),
                          []() {
                            return sva::ForceVecd(Eigen::Vector3d{0., 0., 0.}, Eigen::Vector3d{10., 0., 100.});
                          },
+                         []() {
+                           return sva::PTransformd{Eigen::Vector3d{2, 2, 0}};
+                         }),
+      mc_rtc::gui::Force("Force", mc_rtc::gui::ForceConfig(mc_rtc::gui::Color(0., 1., 0.)), [this]() { return force_; },
+                         [this](const sva::ForceVecd & force) { force_ = force; },
                          []() {
                            return sva::PTransformd{Eigen::Vector3d{2, 2, 0}};
                          }));

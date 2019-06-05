@@ -277,7 +277,8 @@ protected:
                      const ElementId & /*requestId*/,
                      const sva::ForceVecd & /* force */,
                      const sva::PTransformd & /* application point for the force */,
-                     const mc_rtc::gui::ForceConfig & /* forceConfig */)
+                     const mc_rtc::gui::ForceConfig & /* forceConfig */,
+                     bool /* ro */)
   {
     default_impl("Force", id);
   }

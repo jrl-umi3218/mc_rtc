@@ -778,11 +778,11 @@ PolygonImpl<GetT> Polygon(const std::string & name, const Color & color, GetT ge
  * \tparam GetSurface Should return an sva::PTransformd where the force will be displayed
  */
 template<typename GetForce, typename GetSurface>
-struct ForceImpl : public Element
+struct ForceROImpl : public Element
 {
   static constexpr auto type = Elements::Force;
 
-  ForceImpl(const std::string & name, const ForceConfig & config, GetForce get_force_fn, GetSurface get_surface_fn)
+  ForceROImpl(const std::string & name, const ForceConfig & config, GetForce get_force_fn, GetSurface get_surface_fn)
   : Element(name), get_force_fn_(get_force_fn), get_surface_fn_(get_surface_fn), config_(config)
   {
     static_assert(details::CheckReturnType<GetForce, sva::ForceVecd>::value,
@@ -801,6 +801,7 @@ struct ForceImpl : public Element
     Element::write(builder);
     builder.write(get_force_fn_());
     builder.write(get_surface_fn_());
+    builder.write(true); // read-only
     config_.write(builder);
   }
 
@@ -810,21 +811,67 @@ private:
   ForceConfig config_;
 };
 
+template<typename GetForce, typename GetSurface, typename SetForce>
+struct ForceImpl : public ForceROImpl<GetForce, GetSurface>
+{
+  static constexpr auto type = Elements::Force;
+  using ForceRO = ForceROImpl<GetForce, GetSurface>;
+
+  ForceImpl(const std::string & name,
+            const ForceConfig & config,
+            GetForce get_force_fn,
+            SetForce set_force_fn,
+            GetSurface get_surface_fn)
+  : ForceRO(name, config, get_force_fn, get_surface_fn), set_force_fn_(set_force_fn)
+  {
+  }
+
+  bool handleRequest(const mc_rtc::Configuration & data)
+  {
+    set_force_fn_(data);
+    return true;
+  }
+
+private:
+  SetForce set_force_fn_;
+};
+
 /** Helper function to get a ForceImpl */
 template<typename GetForce, typename GetSurface>
-ForceImpl<GetForce, GetSurface> Force(const std::string & name, GetForce get_force_fn, GetSurface get_surface_fn)
+ForceROImpl<GetForce, GetSurface> Force(const std::string & name, GetForce get_force_fn, GetSurface get_surface_fn)
 {
-  return ForceImpl<GetForce, GetSurface>(name, {}, get_force_fn, get_surface_fn);
+  return ForceROImpl<GetForce, GetSurface>(name, {}, get_force_fn, get_surface_fn);
 }
 
 /** Helper function to get a ForceImpl */
 template<typename GetForce, typename GetSurface>
-ForceImpl<GetForce, GetSurface> Force(const std::string & name,
-                                      const ForceConfig & config,
-                                      GetForce get_force_fn,
-                                      GetSurface get_surface_fn)
+ForceROImpl<GetForce, GetSurface> Force(const std::string & name,
+                                        const ForceConfig & config,
+                                        GetForce get_force_fn,
+                                        GetSurface get_surface_fn)
 {
-  return ForceImpl<GetForce, GetSurface>(name, config, get_force_fn, get_surface_fn);
+  return ForceROImpl<GetForce, GetSurface>(name, config, get_force_fn, get_surface_fn);
+}
+
+/** Helper function to get a ForceImpl */
+template<typename GetForce, typename GetSurface, typename SetForce>
+ForceImpl<GetForce, GetSurface, SetForce> Force(const std::string & name,
+                                                GetForce get_force_fn,
+                                                SetForce set_force_fn,
+                                                GetSurface get_surface_fn)
+{
+  return ForceImpl<GetForce, GetSurface, SetForce>(name, ForceConfig{}, get_force_fn, set_force_fn, get_surface_fn);
+}
+
+/** Helper function to get a ForceImpl */
+template<typename GetForce, typename GetSurface, typename SetForce>
+ForceImpl<GetForce, GetSurface, SetForce> Force(const std::string & name,
+                                                const ForceConfig & config,
+                                                GetForce get_force_fn,
+                                                SetForce set_force_fn,
+                                                GetSurface get_surface_fn)
+{
+  return ForceImpl<GetForce, GetSurface, SetForce>(name, config, get_force_fn, set_force_fn, get_surface_fn);
 }
 
 /** Arrow should display an arrow from the point at the start to the point at the end
