@@ -1,5 +1,5 @@
 #pragma once
-#include <mc_tasks/TrajectoryTask.h>
+#include <mc_tasks/SplineTrajectoryTask.h>
 
 namespace mc_trajectory
 {
@@ -10,7 +10,7 @@ struct InterpolatedRotation;
 namespace mc_tasks
 {
 
-struct MC_TASKS_DLLAPI ExactCubicTrajectoryTask : public TrajectoryTask
+struct MC_TASKS_DLLAPI ExactCubicTrajectoryTask : public SplineTrajectoryTask<ExactCubicTrajectoryTask>
 {
 public:
   /**
@@ -54,7 +54,17 @@ public:
                            const Eigen::Vector3d & end_acc = Eigen::Vector3d::Zero(),
                            const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp = {});
 
-  void update() override;
+  const mc_trajectory::ExactCubic & spline() const
+  {
+    return *bspline.get();
+  };
+  mc_trajectory::ExactCubic & spline()
+  {
+    return *bspline.get();
+  };
+
+  void addToGUI(mc_rtc::gui::StateBuilder & gui);
+  void removeFromGUI(mc_rtc::gui::StateBuilder &);
 
 private:
   /**
@@ -72,23 +82,9 @@ private:
                     const Eigen::Vector3d & init_acc = Eigen::Vector3d::Zero(),
                     const Eigen::Vector3d & end_vel = Eigen::Vector3d::Zero(),
                     const Eigen::Vector3d & end_acc = Eigen::Vector3d::Zero());
-  /**
-   * @brief Waypoints in orientation. The orientation will be interpolated in
-   * between waypoints.
-   *
-   * @param oriWp Waypoints in orientation specified as pairs of
-   * [time, orientation]
-   */
-  void oriWaypoints(const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp);
-
-protected:
-  void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
-  void removeFromGUI(mc_rtc::gui::StateBuilder &) override;
 
 protected:
   std::shared_ptr<mc_trajectory::ExactCubic> bspline = nullptr;
-  std::shared_ptr<mc_trajectory::InterpolatedRotation> orientation_spline = nullptr;
-  std::vector<std::pair<double, Eigen::Matrix3d>> oriWp_;
 };
 
 } // namespace mc_tasks

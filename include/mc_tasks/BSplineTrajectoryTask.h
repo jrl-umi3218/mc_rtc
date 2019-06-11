@@ -1,5 +1,5 @@
 #pragma once
-#include <mc_tasks/TrajectoryTask.h>
+#include <mc_tasks/SplineTrajectoryTask.h>
 
 namespace mc_trajectory
 {
@@ -10,7 +10,7 @@ struct InterpolatedRotation;
 namespace mc_tasks
 {
 
-struct MC_TASKS_DLLAPI BSplineTrajectoryTask : public TrajectoryTask
+struct MC_TASKS_DLLAPI BSplineTrajectoryTask : public SplineTrajectoryTask<BSplineTrajectoryTask>
 {
 public:
   /**
@@ -43,7 +43,16 @@ public:
                         const std::vector<Eigen::Vector3d> & posWp,
                         const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp = {});
 
-  void update() override;
+  const mc_trajectory::BSpline & spline() const
+  {
+    return *bspline.get();
+  };
+  mc_trajectory::BSpline & spline()
+  {
+    return *bspline.get();
+  };
+  void addToGUI(mc_rtc::gui::StateBuilder & gui);
+  void removeFromGUI(mc_rtc::gui::StateBuilder &);
 
 private:
   /**
@@ -52,24 +61,9 @@ private:
    * @param posWp Vector of position control points for the bezier curve
    */
   void posWaypoints(const std::vector<Eigen::Vector3d> & posWp);
-  /**
-   * @brief Orienation waypoints. The task will attempt to reach the desired
-   * orientation at the specified time. Rotations are interpolated in-between
-   * waypoints.
-   *
-   * @param oriWp Waypoints in orientation specified as pairs of
-   * [time, orientation]
-   */
-  void oriWaypoints(const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp);
-
-protected:
-  void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
-  void removeFromGUI(mc_rtc::gui::StateBuilder &) override;
 
 protected:
   std::shared_ptr<mc_trajectory::BSpline> bspline = nullptr;
-  std::shared_ptr<mc_trajectory::InterpolatedRotation> orientation_spline = nullptr;
-  std::vector<std::pair<double, Eigen::Matrix3d>> oriWp_;
 };
 
 } // namespace mc_tasks

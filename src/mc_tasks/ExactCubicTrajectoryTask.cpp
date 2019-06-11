@@ -20,7 +20,15 @@ ExactCubicTrajectoryTask::ExactCubicTrajectoryTask(const mc_rbdyn::Robots & robo
                                                    const Eigen::Vector3d & end_vel,
                                                    const Eigen::Vector3d & end_acc,
                                                    const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
-: TrajectoryTask(robots, robotIndex, surfaceName, duration, stiffness, posW, oriW)
+: SplineTrajectoryTask<ExactCubicTrajectoryTask>(robots,
+                                                 robotIndex,
+                                                 surfaceName,
+                                                 duration,
+                                                 stiffness,
+                                                 posW,
+                                                 oriW,
+                                                 target,
+                                                 oriWp)
 {
   const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
   type_ = "exact_cubic_trajectory";
@@ -49,50 +57,8 @@ void ExactCubicTrajectoryTask::posWaypoints(const std::vector<std::pair<double, 
   bspline.reset(new mc_trajectory::ExactCubic(waypoints, init_vel, init_acc, end_vel, end_acc));
 }
 
-void ExactCubicTrajectoryTask::oriWaypoints(const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
-{
-  const auto & robot = robots.robot(rIndex);
-  const auto & X_0_s = robot.surface(surfaceName).X_0_s(robot);
-  oriWp_.push_back(std::make_pair(0., X_0_s.rotation()));
-  for(const auto & wp : oriWp)
-  {
-    oriWp_.push_back(wp);
-  }
-  oriWp_.push_back(std::make_pair(duration, X_0_t.rotation()));
-  orientation_spline.reset(new mc_trajectory::InterpolatedRotation(oriWp_));
-}
-
-void ExactCubicTrajectoryTask::update()
-{
-  bspline->samplingPoints(samples_);
-
-  // Interpolate position
-  auto res = bspline->splev({t}, 2);
-  Eigen::Vector3d & pos = res[0][0];
-  Eigen::Vector3d & vel = res[0][1];
-  Eigen::Vector3d & acc = res[0][2];
-
-  // Interpolate orientation
-  Eigen::Matrix3d ori_target = orientation_spline->eval(t);
-  sva::PTransformd target(ori_target, pos);
-
-  // Set the trajectory tracking task targets from the trajectory.
-  Eigen::VectorXd refVel(6);
-  Eigen::VectorXd refAcc(6);
-  refVel.head<3>() = Eigen::Vector3d::Zero();
-  refVel.tail<3>() = vel;
-  refAcc.head<3>() = Eigen::Vector3d::Zero();
-  refAcc.tail<3>() = acc;
-  this->refVel(refVel);
-  this->refAccel(refAcc);
-  this->refPose(target);
-
-  TrajectoryTask::update();
-}
-
 void ExactCubicTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
-  TrajectoryTask::addToGUI(gui);
   bspline->addToGUI(gui, {"Tasks", name_});
 
   gui.addElement({"Tasks", name_, "Target"}, mc_rtc::gui::Transform("target", [this]() { return target(); },
@@ -113,25 +79,6 @@ void ExactCubicTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
       mc_rtc::gui::Arrow("Final", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 1., 1.)),
                          [this]() -> Eigen::Vector3d { return target().translation(); },
                          [this]() -> Eigen::Vector3d { return target().translation() + bspline->end_vel(); }));
-
-  // XXX different style for rotation element
-  for(unsigned i = 1; i < orientation_spline->waypoints().size() - 1; ++i)
-  {
-    gui.addElement({"Tasks", name_, "Orientation Control Points"},
-                   mc_rtc::gui::Rotation("control_point_ori_" + std::to_string(i),
-                                         [this, i]() {
-                                           const auto & wp = orientation_spline->waypoints()[i];
-
-                                           // Get position of orientation waypoint along the spline
-                                           const auto & res = bspline->splev({wp.first}, 2);
-                                           const Eigen::Vector3d pos = res[0][0];
-                                           return sva::PTransformd(wp.second, pos);
-                                         },
-                                         [this, i](const Eigen::Quaterniond & ori) {
-                                           auto & wp = orientation_spline->waypoints()[i];
-                                           wp.second = ori.toRotationMatrix();
-                                         }));
-  }
 }
 
 void ExactCubicTrajectoryTask::removeFromGUI(mc_rtc::gui::StateBuilder & gui)
