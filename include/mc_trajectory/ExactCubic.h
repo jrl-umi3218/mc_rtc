@@ -40,7 +40,6 @@ public:
   void samplingPoints(const unsigned s);
   const unsigned samplingPoints() const;
 
-
   void addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string> & category);
 
 private:

@@ -45,7 +45,6 @@ const point_t & ExactCubic::end_acc() const
   return constraints_.end_acc;
 }
 
-
 void ExactCubic::samplingPoints(const unsigned s)
 {
   if(s != samplingPoints_)
@@ -59,7 +58,6 @@ const unsigned ExactCubic::samplingPoints() const
 {
   return samplingPoints_;
 }
-
 
 std::vector<std::vector<point_t>> ExactCubic::splev(const std::vector<double> & t, unsigned int der)
 {

@@ -6,6 +6,7 @@
 
 #include <mc_rbdyn/Robots.h>
 #include <mc_tasks/MetaTask.h>
+#include <mc_tasks/TrajectoryTaskGeneric.h>
 #include <mc_tasks/api.h>
 
 #include <Tasks/QPTasks.h>
@@ -17,7 +18,7 @@ namespace mc_tasks
  *
  * Waypoints can be provided or computed automatically
  */
-struct MC_TASKS_DLLAPI TrajectoryTask : public MetaTask
+struct MC_TASKS_DLLAPI TrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformTask>
 {
 public:
   /*! \brief Constructor
@@ -45,37 +46,6 @@ public:
                  double stiffness,
                  double posW,
                  double oriW);
-
-  /*! \brief Set the task stiffness/damping
-   *
-   * Damping is automatically set to 2*sqrt(stiffness)
-   *
-   * \param stiffness Task stiffness
-   *
-   */
-  void stiffness(double stiffness);
-
-  /*! \brief Get the current task stiffness */
-  double stiffness() const;
-
-  /*! \brief Set the task damping, leaving its stiffness unchanged
-   *
-   * \param damping Task stiffness
-   *
-   */
-  void damping(double damping);
-
-  /*! \brief Get the current task damping */
-  double damping() const;
-
-  /*! \brief Set both stiffness and damping
-   *
-   * \param stiffness Task stiffness
-   *
-   * \param damping Task damping
-   *
-   */
-  void setGains(double stiffness, double damping);
 
   /*! \brief Weight for controlling position/orienation importance
    *
@@ -123,41 +93,8 @@ public:
    */
   virtual Eigen::VectorXd evalTracking() const;
 
-  /*! \brief Returns the current task speed
-   *
-   * \returns The current task speed
-   *
-   */
-  Eigen::VectorXd speed() const override;
-
   void target(const sva::PTransformd & target);
   const sva::PTransformd & target() const;
-
-  /**
-   * \brief Tracks a reference world velocity
-   *
-   * \param vel Desired velocity of the trajectory (world)
-   */
-  void refVel(const Eigen::VectorXd & vel);
-  /**
-   * @brief Returns the trajectory desired velocity
-   *
-   * @return Desired velocity (world)
-   */
-  const Eigen::VectorXd & refVel() const;
-
-  /**
-   * \brief Tracks a reference world acceleration
-   *
-   * @param acc Desired acceleration of the trajectory (world)
-   */
-  void refAcc(const Eigen::VectorXd & acc);
-  /**
-   * \brief Returns the trajectory desired acceleration
-   *
-   * \return Desired acceleration (world)
-   */
-  const Eigen::VectorXd & refAcc() const;
 
   /**
    * \brief Tracks a reference world pose
@@ -190,25 +127,10 @@ public:
    */
   unsigned displaySamples() const;
 
-  void selectActiveJoints(mc_solver::QPSolver &,
-                          const std::vector<std::string> &,
-                          const std::map<std::string, std::vector<std::array<int, 2>>> & activeDofs = {}) override;
-
-  void selectUnactiveJoints(mc_solver::QPSolver &,
-                            const std::vector<std::string> &,
-                            const std::map<std::string, std::vector<std::array<int, 2>>> & unactiveDofs = {}) override;
-
-  void resetJointsSelector(mc_solver::QPSolver &) override;
-
-  void dimWeight(const Eigen::VectorXd &) override;
-  Eigen::VectorXd dimWeight() const override;
-
   void addToLogger(mc_rtc::Logger & logger) override;
   void removeFromLogger(mc_rtc::Logger & logger) override;
 
 protected:
-  void removeFromSolver(mc_solver::QPSolver & solver) override;
-
   void update() override;
 
   /**
@@ -222,22 +144,15 @@ protected:
   void addToSolver(mc_solver::QPSolver & solver) override;
 
 public:
-  const mc_rbdyn::Robots & robots;
   unsigned int rIndex;
   std::string surfaceName;
   sva::PTransformd X_0_t;
   sva::PTransformd X_0_start;
 
-  double stiffness_;
-  double damping_;
-
   double duration;
   double t = 0.;
   double timeStep = 0;
   unsigned samples_ = 20;
-  std::shared_ptr<tasks::qp::JointsSelector> selectorT = nullptr;
-  std::shared_ptr<tasks::qp::TransformTask> transTask = nullptr;
-  std::shared_ptr<tasks::qp::TrajectoryTask> transTrajTask = nullptr;
   bool inSolver = false;
 
 private:

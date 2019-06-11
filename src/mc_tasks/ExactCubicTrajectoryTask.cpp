@@ -84,7 +84,7 @@ void ExactCubicTrajectoryTask::update()
   refAcc.head<3>() = Eigen::Vector3d::Zero();
   refAcc.tail<3>() = acc;
   this->refVel(refVel);
-  this->refAcc(refAcc);
+  this->refAccel(refAcc);
   this->refPose(target);
 
   TrajectoryTask::update();

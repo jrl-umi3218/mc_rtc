@@ -54,7 +54,6 @@ const t_point_t & BSpline::controlPoints() const
   return spline.waypoints();
 }
 
-
 void BSpline::samplingPoints(const unsigned s)
 {
   if(s != samplingPoints_)
