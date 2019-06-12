@@ -85,6 +85,7 @@ private:
 
 protected:
   std::shared_ptr<mc_trajectory::ExactCubic> bspline = nullptr;
+  sva::PTransformd initialPose_;
 };
 
 } // namespace mc_tasks

@@ -8,8 +8,8 @@ namespace mc_tasks
 
 BSplineTrajectoryTask::BSplineTrajectoryTask(const mc_rbdyn::Robots & robots,
                                              unsigned int robotIndex,
-                                             const std::string & surfaceName,
-                                             double duration,
+                                             const std::string & surfaceName_,
+                                             double duration_,
                                              double stiffness,
                                              double posW,
                                              double oriW,
@@ -18,8 +18,8 @@ BSplineTrajectoryTask::BSplineTrajectoryTask(const mc_rbdyn::Robots & robots,
                                              const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
 : SplineTrajectoryTask<BSplineTrajectoryTask>(robots,
                                               robotIndex,
-                                              surfaceName,
-                                              duration,
+                                              surfaceName_,
+                                              duration_,
                                               stiffness,
                                               posW,
                                               oriW,
@@ -28,7 +28,7 @@ BSplineTrajectoryTask::BSplineTrajectoryTask(const mc_rbdyn::Robots & robots,
 {
   const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
   type_ = "bspline_trajectory";
-  name_ = "bspline_trajectory_" + robot.name() + "_" + surfaceName;
+  name_ = "bspline_trajectory_" + robot.name() + "_" + surfaceName_;
   this->target(target);
   posWaypoints(posWp);
   oriWaypoints(oriWp);
@@ -39,14 +39,14 @@ void BSplineTrajectoryTask::posWaypoints(const std::vector<Eigen::Vector3d> & po
   std::vector<Eigen::Vector3d> waypoints;
   waypoints.reserve(posWp.size() + 2);
   const auto & robot = robots.robot(rIndex);
-  const auto & X_0_s = robot.surface(surfaceName).X_0_s(robot);
+  const auto & X_0_s = robot.surface(surfaceName_).X_0_s(robot);
   waypoints.push_back(X_0_s.translation());
   for(const auto & wp : posWp)
   {
     waypoints.push_back(wp);
   }
-  waypoints.push_back(X_0_t.translation());
-  bspline.reset(new mc_trajectory::BSpline(waypoints, duration));
+  waypoints.push_back(finalTarget_.translation());
+  bspline.reset(new mc_trajectory::BSpline(waypoints, duration_));
 }
 
 void BSplineTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
@@ -66,7 +66,7 @@ namespace
 static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
     "bspline_trajectory",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      sva::PTransformd X_0_t;
+      sva::PTransformd finalTarget_;
       std::vector<Eigen::Vector3d> waypoints;
       std::vector<std::pair<double, Eigen::Matrix3d>> oriWp;
       const auto robotIndex = config("robotIndex");
@@ -82,7 +82,7 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
         const Eigen::Vector3d trans = c("offset_translation", Eigen::Vector3d::Zero().eval());
         const Eigen::Matrix3d rot = c("offset_rotation", Eigen::Matrix3d::Identity().eval());
         sva::PTransformd offset(rot, trans);
-        X_0_t = offset * targetSurface;
+        finalTarget_ = offset * targetSurface;
 
         if(c.has("controlPoints"))
         {
@@ -110,7 +110,7 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
       }
       else
       { // Absolute target pose
-        X_0_t = config("target");
+        finalTarget_ = config("target");
 
         if(config.has("controlPoints"))
         {
@@ -129,7 +129,7 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
 
       std::shared_ptr<mc_tasks::BSplineTrajectoryTask> t = std::make_shared<mc_tasks::BSplineTrajectoryTask>(
           solver.robots(), robotIndex, config("surface"), config("duration"), config("stiffness"), config("posWeight"),
-          config("oriWeight"), X_0_t, waypoints, oriWp);
+          config("oriWeight"), finalTarget_, waypoints, oriWp);
       t->load(solver, config);
       const auto displaySamples = config("displaySamples", t->displaySamples());
       t->displaySamples(displaySamples);

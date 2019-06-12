@@ -212,7 +212,6 @@ mc_tasks/EndEffectorTask.cpp
 mc_tasks/RelativeEndEffectorTask.cpp
 mc_tasks/CoMTask.cpp
 mc_tasks/AddRemoveContactTask.cpp
-mc_tasks/TrajectoryTask.cpp
 mc_tasks/BSplineTrajectoryTask.cpp
 mc_tasks/ExactCubicTrajectoryTask.cpp
 mc_tasks/ComplianceTask.cpp
@@ -239,7 +238,6 @@ set(mc_tasks_HDR
 ../include/mc_tasks/SurfaceTransformTask.h
 ../include/mc_tasks/RelativeEndEffectorTask.h
 ../include/mc_tasks/SmoothTask.h
-../include/mc_tasks/TrajectoryTask.h
 ../include/mc_tasks/SplineTrajectoryTask.h
 ../include/mc_tasks/BSplineTrajectoryTask.h
 ../include/mc_tasks/ExactCubicTrajectoryTask.h

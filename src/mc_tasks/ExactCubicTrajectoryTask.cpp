@@ -8,8 +8,8 @@ namespace mc_tasks
 
 ExactCubicTrajectoryTask::ExactCubicTrajectoryTask(const mc_rbdyn::Robots & robots,
                                                    unsigned int robotIndex,
-                                                   const std::string & surfaceName,
-                                                   double duration,
+                                                   const std::string & surfaceName_,
+                                                   double duration_,
                                                    double stiffness,
                                                    double posW,
                                                    double oriW,
@@ -22,8 +22,8 @@ ExactCubicTrajectoryTask::ExactCubicTrajectoryTask(const mc_rbdyn::Robots & robo
                                                    const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
 : SplineTrajectoryTask<ExactCubicTrajectoryTask>(robots,
                                                  robotIndex,
-                                                 surfaceName,
-                                                 duration,
+                                                 surfaceName_,
+                                                 duration_,
                                                  stiffness,
                                                  posW,
                                                  oriW,
@@ -32,10 +32,11 @@ ExactCubicTrajectoryTask::ExactCubicTrajectoryTask(const mc_rbdyn::Robots & robo
 {
   const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
   type_ = "exact_cubic_trajectory";
-  name_ = "exact_cubic_trajectory_" + robot.name() + "_" + surfaceName;
+  name_ = "exact_cubic_trajectory_" + robot.name() + "_" + surfaceName_;
   this->target(target);
   posWaypoints(posWp, init_vel, init_acc, end_vel, end_acc);
   oriWaypoints(oriWp);
+  initialPose_ = robot.surface(surfaceName_).X_0_s(robot);
 }
 
 void ExactCubicTrajectoryTask::posWaypoints(const std::vector<std::pair<double, Eigen::Vector3d>> & posWp,
@@ -47,13 +48,13 @@ void ExactCubicTrajectoryTask::posWaypoints(const std::vector<std::pair<double, 
   std::vector<std::pair<double, Eigen::Vector3d>> waypoints;
   waypoints.reserve(posWp.size() + 2);
   const auto & robot = robots.robot(rIndex);
-  const auto & X_0_s = robot.surface(surfaceName).X_0_s(robot);
+  const auto & X_0_s = robot.surface(surfaceName_).X_0_s(robot);
   waypoints.push_back(std::make_pair(0., X_0_s.translation()));
   for(const auto & wp : posWp)
   {
     waypoints.push_back(wp);
   }
-  waypoints.push_back(std::make_pair(duration, X_0_t.translation()));
+  waypoints.push_back(std::make_pair(duration_, finalTarget_.translation()));
   bspline.reset(new mc_trajectory::ExactCubic(waypoints, init_vel, init_acc, end_vel, end_acc));
 }
 
@@ -68,14 +69,14 @@ void ExactCubicTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                                                       auto waypoints = bspline->waypoints();
                                                                       waypoints.back().second = t.translation();
                                                                       bspline->waypoints(waypoints);
-                                                                      orientation_spline->waypoints().back().second =
+                                                                      oriSpline_->waypoints().back().second =
                                                                           t.rotation();
                                                                     }));
   gui.addElement(
       {"Tasks", name_, "Velocity Constraints"},
       mc_rtc::gui::Arrow("Initial", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 1., 1.)),
-                         [this]() -> Eigen::Vector3d { return X_0_start.translation(); },
-                         [this]() -> Eigen::Vector3d { return X_0_start.translation() + bspline->init_vel(); }),
+                         [this]() -> Eigen::Vector3d { return initialPose_.translation(); },
+                         [this]() -> Eigen::Vector3d { return initialPose_.translation() + bspline->init_vel(); }),
       mc_rtc::gui::Arrow("Final", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 1., 1.)),
                          [this]() -> Eigen::Vector3d { return target().translation(); },
                          [this]() -> Eigen::Vector3d { return target().translation() + bspline->end_vel(); }));
@@ -95,7 +96,7 @@ namespace
 static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
     "exact_cubic_trajectory",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      sva::PTransformd X_0_t;
+      sva::PTransformd finalTarget_;
       std::vector<std::pair<double, Eigen::Vector3d>> waypoints;
       std::vector<std::pair<double, Eigen::Matrix3d>> oriWp;
       const auto robotIndex = config("robotIndex");
@@ -112,7 +113,7 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
         const Eigen::Vector3d trans = c("offset_translation", Eigen::Vector3d::Zero().eval());
         const Eigen::Matrix3d rot = c("offset_rotation", Eigen::Matrix3d::Identity().eval());
         sva::PTransformd offset(rot, trans);
-        X_0_t = offset * targetSurface;
+        finalTarget_ = offset * targetSurface;
 
         if(c.has("controlPoints"))
         {
@@ -145,7 +146,7 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
       }
       else
       { // Absolute target pose
-        X_0_t = config("target");
+        finalTarget_ = config("target");
 
         if(config.has("controlPoints"))
         {
@@ -166,7 +167,7 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
 
       std::shared_ptr<mc_tasks::ExactCubicTrajectoryTask> t = std::make_shared<mc_tasks::ExactCubicTrajectoryTask>(
           solver.robots(), robotIndex, config("surface"), config("duration"), config("stiffness"), config("posWeight"),
-          config("oriWeight"), X_0_t, waypoints, init_vel, init_acc, end_vel, end_acc, oriWp);
+          config("oriWeight"), finalTarget_, waypoints, init_vel, init_acc, end_vel, end_acc, oriWp);
       t->load(solver, config);
       const auto displaySamples = config("displaySamples", t->displaySamples());
       t->displaySamples(displaySamples);
