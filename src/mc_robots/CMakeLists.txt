@@ -4,10 +4,11 @@
 
 macro(add_robot robot_base)
   set(robot_SRC ${robot_base}.cpp)
-  set(robot_HDR api.h ${robot_base}.h)
+  set(robot_HDR ../../include/mc_robots/api.h ${robot_base}.h)
   add_library(${robot_base} SHARED ${robot_SRC} ${robot_HDR})
   set_target_properties(${robot_base} PROPERTIES COMPILE_FLAGS "-DMC_ROBOTS_EXPORTS" PREFIX "")
   target_link_libraries(${robot_base} PUBLIC mc_rbdyn)
+  target_include_directories(${robot_base} PRIVATE "../../include/mc_robots")
   install(TARGETS ${robot_base} DESTINATION ${MC_ROBOTS_INSTALL_PREFIX})
 endmacro()
 
@@ -24,13 +25,3 @@ endif()
 get_filename_component(JVRC_DESCRIPTION_PATH "${JVRC_DESCRIPTION_PATH}" ABSOLUTE)
 message("-- jvrc_description: ${JVRC_DESCRIPTION_PATH}")
 set_target_properties(jvrc-1 PROPERTIES COMPILE_FLAGS "-DJVRC_DESCRIPTION_PATH=\"${JVRC_DESCRIPTION_PATH}\"")
-
-if(${HRP4_DESCRIPTION_FOUND})
-  add_robot(hrp4)
-endif()
-
-if(${HRP2_DRC_DESCRIPTION_FOUND})
-  add_robot(hrp2_drc)
-  add_robot(polaris_ranger)
-  add_robot(polaris_ranger_egress)
-endif()

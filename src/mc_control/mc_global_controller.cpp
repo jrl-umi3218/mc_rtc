@@ -144,14 +144,30 @@ void MCGlobalController::init(const std::vector<double> & initq, const std::arra
       q[robot().jointIndexByName(jn)][0] = initq[i];
     }
   }
-  if(config.main_robot_module->name == "hrp2_drc")
+  auto refJointIndex = [&rjo](const std::string & name) {
+    for(size_t i = 0; i < rjo.size(); ++i)
+    {
+      if(name == rjo[i])
+      {
+        return static_cast<int>(i);
+      }
+    }
+    return -1;
+  };
+  std::map<std::string, std::vector<double>> gripperInit;
+  for(const auto & g_p : controller().grippers)
   {
-    setGripperCurrentQ({{"l_gripper", {initq[31]}}, {"r_gripper", {initq[23]}}});
+    const auto & gName = g_p.first;
+    const auto & g = *g_p.second;
+    gripperInit[gName] = {};
+    auto & gQ = gripperInit[gName];
+    for(const auto & j : g.active_joints)
+    {
+      auto jIndex = refJointIndex(j);
+      gQ.push_back(jIndex != -1 ? initq[jIndex] : 0);
+    }
   }
-  else if(config.main_robot_module->name == "hrp4")
-  {
-    setGripperCurrentQ({{"l_gripper", {initq[32], initq[33]}}, {"r_gripper", {initq[23], initq[24]}}});
-  }
+  setGripperCurrentQ(gripperInit);
   controller_->reset({q});
   init_publishers();
   initGUI();

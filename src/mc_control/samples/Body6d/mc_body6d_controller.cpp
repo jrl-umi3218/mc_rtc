@@ -22,12 +22,12 @@ MCBody6dController::MCBody6dController(std::shared_ptr<mc_rbdyn::RobotModule> ro
   solver().addConstraintSet(dynamicsConstraint);
   solver().addConstraintSet(selfCollisionConstraint);
   solver().addTask(postureTask.get());
-  if(robot().name() == "hrp2_drc")
+  if(robot().hasSurface("LFullSole") && robot().hasSurface("RFullSole"))
   {
     solver().setContacts(
         {mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"), mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")});
   }
-  else if(robot().name() == "hrp4" || robot().name() == "jvrc-1")
+  else if(robot().hasSurface("LeftFoot") && robot().hasSurface("RightFoot"))
   {
     solver().setContacts(
         {mc_rbdyn::Contact(robots(), "LeftFoot", "AllGround"), mc_rbdyn::Contact(robots(), "RightFoot", "AllGround")});
@@ -39,11 +39,11 @@ MCBody6dController::MCBody6dController(std::shared_ptr<mc_rbdyn::RobotModule> ro
   }
 
   LOG_SUCCESS("MCBody6dController init done")
-  if(robot().name() == "hrp2_drc")
+  if(robot().hasBody("RARM_LINK7"))
   {
     efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK7", robots(), robots().robotIndex(), 2.0, 1e5));
   }
-  else if(robot().name() == "hrp4" || robot().name() == "jvrc-1")
+  else if(robot().hasBody("r_wrist"))
   {
     efTask.reset(new mc_tasks::EndEffectorTask("r_wrist", robots(), robots().robotIndex(), 2.0, 1e5));
   }

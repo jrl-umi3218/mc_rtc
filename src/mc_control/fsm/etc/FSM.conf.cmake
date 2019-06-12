@@ -47,20 +47,20 @@
   "contacts":
   [
     {
-      "r1": "hrp2_drc",
+      "r1": "jvrc-1",
       "r2": "ground",
-      "r1Surface": "LFullSole",
+      "r1Surface": "LeftFoot",
       "r2Surface": "AllGround"
     },
     {
-      "r1": "hrp2_drc",
+      "r1": "jvrc-1",
       "r2": "ground",
-      "r1Surface": "RFullSole",
+      "r1Surface": "RightFoot",
       "r2Surface": "AllGround"
     }
   ],
   // Some options for a specific robot
-  "hrp2_drc":
+  "jvrc-1":
   {
     "posture":
     {

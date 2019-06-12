@@ -110,8 +110,6 @@ macro(find_description_package desc_pkg)
 endmacro()
 
 find_description_package(mc_env_description)
-find_description_package(hrp2_drc_description)
-find_description_package(hrp4_description)
 
 set(MC_ROBOTS_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/lib/mc_robots)
 set(MC_CONTROLLER_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/lib/mc_controller)
@@ -155,16 +153,11 @@ install(
     etc/mc_rtc.conf
   DESTINATION etc
 )
-install(
-  FILES
-    etc/Seq.conf
-  DESTINATION ${MC_CONTROLLER_INSTALL_PREFIX}/etc/)
 
 setup_project_finalize()
 setup_project_package_finalize()
 
 # Extra macros for mc_rtc
-configure_file(src/mc_rtcMacros.in.cmake "${CMAKE_CURRENT_BINARY_DIR}/generated/mc_rtcMacros.cmake" @ONLY)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/generated/mc_rtcMacros.cmake"
+install(FILES "src/mc_rtcMacros.cmake"
         DESTINATION "${CONFIG_INSTALL_DIR}")
 file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/generated/mc_rtcConfig.cmake" "include(\"\${CMAKE_CURRENT_LIST_DIR}/mc_rtcMacros.cmake\")\n")
