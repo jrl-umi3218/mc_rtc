@@ -60,6 +60,21 @@ void SplineTrajectoryTask<Derived>::update()
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::oriWaypoints(const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
 {
+  // Check that times are provided in correct order and that timepoint <
+  // duration
+  if(!oriWp.empty())
+  {
+    double prevTime = oriWp.front().first;
+    for(unsigned i = 0; i < oriWp.size(); ++i)
+    {
+      const double timepoint = oriWp[i].first;
+      if(timepoint < prevTime || timepoint > duration_)
+        LOG_ERROR_AND_THROW(std::runtime_error, name_ << " : Invalid orientation waypoints, check that the times are "
+                                                         "provided in the correct order and that timepoint < duration");
+      prevTime = timepoint;
+    }
+  }
+
   const auto & robot = robots.robot(rIndex_);
   const auto & X_0_s = robot.surface(surfaceName_).X_0_s(robot);
   oriWp_.push_back(std::make_pair(0., X_0_s.rotation()));
