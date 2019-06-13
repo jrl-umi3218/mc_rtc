@@ -11,15 +11,15 @@
 namespace mc_trajectory
 {
 
-using point_t = Eigen::Vector3d;
-using exact_cubic_t = spline::exact_cubic<double, double, 3, false, point_t>;
-using waypoint_t = std::pair<double, point_t>;
-using spline_deriv_constraint_t = spline::spline_deriv_constraint<double, double, 3, false, point_t>;
-using spline_constraints_t = spline_deriv_constraint_t::spline_constraints;
-
 struct MC_TRAJECTORY_DLLAPI ExactCubic
 {
 public:
+  using point_t = Eigen::Vector3d;
+  using exact_cubic_t = spline::exact_cubic<double, double, 3, false, point_t>;
+  using waypoint_t = std::pair<double, point_t>;
+  using spline_deriv_constraint_t = spline::spline_deriv_constraint<double, double, 3, false, point_t>;
+  using spline_constraints_t = spline_deriv_constraint_t::spline_constraints;
+
 public:
   ExactCubic(const std::vector<waypoint_t> & waypoints,
              const point_t & init_vel,
@@ -29,6 +29,10 @@ public:
 
   void waypoints(const std::vector<waypoint_t> & waypoints);
   const std::vector<waypoint_t> & waypoints() const;
+
+  void target(const point_t & target);
+  const point_t & target() const;
+
   const point_t & init_vel() const;
   const point_t & init_acc() const;
   const point_t & end_vel() const;
@@ -38,12 +42,12 @@ public:
   std::vector<Eigen::Vector3d> sampleTrajectory(unsigned samples);
 
   void samplingPoints(const unsigned s);
-  const unsigned samplingPoints() const;
+  unsigned samplingPoints() const;
 
   void addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string> & category);
 
 private:
-  std::shared_ptr<spline_deriv_constraint_t> spline_;
+  std::unique_ptr<spline_deriv_constraint_t> spline_;
   std::vector<waypoint_t> waypoints_;
   spline_constraints_t constraints_;
 

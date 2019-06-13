@@ -6,13 +6,17 @@
 
 namespace mc_trajectory
 {
+using point_t = BSpline::point_t;
+using t_point_t = BSpline::t_point_t;
+using bezier_curve_t = BSpline::bezier_curve_t;
 
-BSpline::BSpline(const std::vector<point_t> & controlPoints, double duration, unsigned int order)
-: duration(duration), p(order), spline(controlPoints.begin(), controlPoints.end(), duration)
+BSpline::BSpline(const t_point_t & controlPoints, double duration, unsigned int order)
+: duration(duration), p(order), controlPoints_(controlPoints)
 {
+  spline.reset(new bezier_curve_t(controlPoints.begin(), controlPoints.end(), duration));
 }
 
-std::vector<std::vector<point_t>> BSpline::splev(const std::vector<double> & t, unsigned int der)
+std::vector<std::vector<Eigen::Vector3d>> BSpline::splev(const std::vector<double> & t, unsigned int der)
 {
   std::vector<std::vector<point_t>> res(0);
   res.reserve(t.size());
@@ -22,7 +26,7 @@ std::vector<std::vector<point_t>> BSpline::splev(const std::vector<double> & t, 
     pts.reserve(der + 1);
     for(std::size_t order = 0; order <= der; ++order)
     {
-      pts.push_back(spline.derivate(ti, order));
+      pts.push_back(spline->derivate(ti, order));
     }
     res.push_back(pts);
   }
@@ -46,12 +50,24 @@ std::vector<Eigen::Vector3d> BSpline::sampleTrajectory(unsigned samples)
 
 void BSpline::controlPoints(const t_point_t & waypoints)
 {
-  spline = bezier_curve_t(waypoints.begin(), waypoints.end(), duration);
+  spline.reset(new bezier_curve_t(waypoints.begin(), waypoints.end(), duration));
+  needsUpdate_ = true;
+}
+
+void BSpline::target(const point_t & target)
+{
+  controlPoints_.back() = target;
+  this->controlPoints(controlPoints_);
+}
+
+const point_t & BSpline::target() const
+{
+  return controlPoints_.back();
 }
 
 const t_point_t & BSpline::controlPoints() const
 {
-  return spline.waypoints();
+  return controlPoints_;
 }
 
 void BSpline::samplingPoints(const unsigned s)
@@ -63,7 +79,7 @@ void BSpline::samplingPoints(const unsigned s)
   samplingPoints_ = s;
 }
 
-const unsigned BSpline::samplingPoints() const
+unsigned BSpline::samplingPoints() const
 {
   return samplingPoints_;
 }
@@ -71,15 +87,13 @@ const unsigned BSpline::samplingPoints() const
 void BSpline::addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string> & category)
 {
   // Visual controls for the control points and
-  for(unsigned int i = 0; i < this->controlPoints().size(); ++i)
+  for(unsigned int i = 0; i < this->controlPoints().size() - 1; ++i)
   {
     gui.addElement(category, mc_rtc::gui::Point3D("control_point_pos_" + std::to_string(i),
-                                                  [this, i]() { return this->controlPoints()[i]; },
+                                                  [this, i]() { return controlPoints_[i]; },
                                                   [this, i](const Eigen::Vector3d & pos) {
-                                                    auto waypoints = this->controlPoints();
-                                                    waypoints[i] = pos;
-                                                    this->controlPoints(waypoints);
-                                                    this->needsUpdate_ = true;
+                                                    controlPoints_[i] = pos;
+                                                    this->controlPoints(controlPoints_);
                                                   }));
   }
 

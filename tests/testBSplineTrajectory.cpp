@@ -7,7 +7,8 @@
 
 int main()
 {
-  std::vector<Eigen::Vector3d> cps;
+  using t_point_t = mc_trajectory::BSpline::t_point_t;
+  t_point_t cps;
   cps.push_back(Eigen::Vector3d(-0.45, -0.34, 0.54));
   cps.push_back(Eigen::Vector3d(0.4, -0.34, 0.54));
   cps.push_back(Eigen::Vector3d(0.45, -0.34, 0.54));

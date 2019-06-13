@@ -12,7 +12,6 @@ SplineTrajectoryTask<Derived>::SplineTrajectoryTask(const mc_rbdyn::Robots & rob
                                                     double stiffness,
                                                     double posW,
                                                     double oriW,
-                                                    const sva::PTransformd & target,
                                                     const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
 : TrajectoryTaskGeneric<tasks::qp::TransformTask>(robots, robotIndex, stiffness, posW), rIndex_(robotIndex),
   surfaceName_(surfaceName_), duration_(duration_)
@@ -32,7 +31,6 @@ template<typename Derived>
 void SplineTrajectoryTask<Derived>::update()
 {
   auto & spline = static_cast<Derived &>(*this).spline();
-  // spline.splev + orientation update
   spline.samplingPoints(samples_);
 
   // Interpolate position
@@ -74,15 +72,6 @@ void SplineTrajectoryTask<Derived>::oriWaypoints(const std::vector<std::pair<dou
 }
 
 template<typename Derived>
-void SplineTrajectoryTask<Derived>::removeFromGUI(mc_rtc::gui::StateBuilder & gui)
-{
-  auto & derived = static_cast<Derived &>(*this);
-  TrajectoryTask::removeFromGUI(gui);
-  gui.removeCategory({"Tasks", name_, "Orientation Control Points"});
-  derived.removeFromGUI(gui);
-}
-
-template<typename Derived>
 void SplineTrajectoryTask<Derived>::posWeight(const double posWeight)
 {
   auto dimWeight = trajectoryT_->dimWeight();
@@ -114,6 +103,10 @@ template<typename Derived>
 void SplineTrajectoryTask<Derived>::target(const sva::PTransformd & target)
 {
   finalTarget_ = target;
+  auto & derived = static_cast<Derived &>(*this);
+  derived.target(target);
+  std::cout << "updating orientation waypoint" << std::endl;
+  oriSpline_->waypoints().back().second = target.rotation();
 }
 
 template<typename Derived>
@@ -197,10 +190,7 @@ void SplineTrajectoryTask<Derived>::removeFromLogger(mc_rtc::Logger & logger)
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
-  MetaTask::addToGUI(gui);
-
-  auto & derived = static_cast<Derived &>(*this);
-
+  LOG_INFO("SplineTrajectoryTask::addToGUI");
   TrajectoryTask::addToGUI(gui);
 
   gui.addElement({"Tasks", name_, "Gains"},
@@ -214,9 +204,8 @@ void SplineTrajectoryTask<Derived>::addToGUI(mc_rtc::gui::StateBuilder & gui)
                    return robots.robot(rIndex_).surface(surfaceName_).X_0_s(robots.robot(rIndex_));
                  }));
 
-  // XXX would be nice to implement a different style for rotation element, currently this is quite confusing
-  // to see which is an orientation and which is a bspline control point.
-  for(unsigned i = 1; i < oriSpline_->waypoints().size(); ++i)
+  // Target is handled independently
+  for(unsigned i = 1; i < oriSpline_->waypoints().size() - 1; ++i)
   {
     gui.addElement({"Tasks", name_, "Orientation Control Points"},
                    mc_rtc::gui::Rotation("control_point_ori_" + std::to_string(i),
@@ -233,7 +222,10 @@ void SplineTrajectoryTask<Derived>::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                            wp.second = ori.toRotationMatrix();
                                          }));
   }
-  derived.addToGUI(gui);
+
+  gui.addElement({"Tasks", name_, "Target"},
+                 mc_rtc::gui::Transform("control_target", [this]() { return finalTarget_; },
+                                        [this](const sva::PTransformd & t) { this->target(t); }));
 }
 
 } // namespace mc_tasks

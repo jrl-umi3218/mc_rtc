@@ -16,27 +16,18 @@ BSplineTrajectoryTask::BSplineTrajectoryTask(const mc_rbdyn::Robots & robots,
                                              const sva::PTransformd & target,
                                              const std::vector<Eigen::Vector3d> & posWp,
                                              const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
-: SplineTrajectoryTask<BSplineTrajectoryTask>(robots,
-                                              robotIndex,
-                                              surfaceName_,
-                                              duration_,
-                                              stiffness,
-                                              posW,
-                                              oriW,
-                                              target,
-                                              oriWp)
+: SplineTrajectoryTask<BSplineTrajectoryTask>(robots, robotIndex, surfaceName_, duration_, stiffness, posW, oriW, oriWp)
 {
   const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
   type_ = "bspline_trajectory";
   name_ = "bspline_trajectory_" + robot.name() + "_" + surfaceName_;
-  this->target(target);
   posWaypoints(posWp);
-  oriWaypoints(oriWp);
+  SplineTrajectoryBase::target(target);
 }
 
 void BSplineTrajectoryTask::posWaypoints(const std::vector<Eigen::Vector3d> & posWp)
 {
-  std::vector<Eigen::Vector3d> waypoints;
+  mc_trajectory::BSpline::t_point_t waypoints;
   waypoints.reserve(posWp.size() + 2);
   const auto & robot = robots.robot(rIndex);
   const auto & X_0_s = robot.surface(surfaceName_).X_0_s(robot);
@@ -49,14 +40,15 @@ void BSplineTrajectoryTask::posWaypoints(const std::vector<Eigen::Vector3d> & po
   bspline.reset(new mc_trajectory::BSpline(waypoints, duration_));
 }
 
-void BSplineTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
+void BSplineTrajectoryTask::target(const sva::PTransformd & target)
 {
-  bspline->addToGUI(gui, {"Tasks", name_, "Position Control Points"});
+  bspline->target(target.translation());
 }
 
-void BSplineTrajectoryTask::removeFromGUI(mc_rtc::gui::StateBuilder & gui)
+void BSplineTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
-  gui.removeCategory({"Tasks", name_, "Position Control Points"});
+  SplineTrajectoryBase::addToGUI(gui);
+  bspline->addToGUI(gui, {"Tasks", name_, "Position Control Points"});
 }
 
 } // namespace mc_tasks

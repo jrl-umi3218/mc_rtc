@@ -3,6 +3,11 @@
 
 namespace mc_trajectory
 {
+using point_t = ExactCubic::point_t;
+using exact_cubic_t = ExactCubic::exact_cubic_t;
+using waypoint_t = ExactCubic::waypoint_t;
+using spline_deriv_constraint_t = ExactCubic::spline_deriv_constraint_t;
+using spline_constraints_t = ExactCubic::spline_constraints_t;
 
 ExactCubic::ExactCubic(const std::vector<waypoint_t> & waypoints,
                        const point_t & init_vel,
@@ -20,12 +25,24 @@ ExactCubic::ExactCubic(const std::vector<waypoint_t> & waypoints,
 void ExactCubic::waypoints(const std::vector<waypoint_t> & waypoints)
 {
   waypoints_ = waypoints;
-  spline_ = std::make_shared<spline_deriv_constraint_t>(waypoints_.begin(), waypoints_.end(), constraints_);
+  spline_.reset(new spline_deriv_constraint_t(waypoints_.begin(), waypoints_.end(), constraints_));
+  needsUpdate_ = true;
 }
 
 const std::vector<waypoint_t> & ExactCubic::waypoints() const
 {
   return waypoints_;
+}
+
+void ExactCubic::target(const point_t & target)
+{
+  waypoints_.back().second = target;
+  waypoints(waypoints_);
+}
+
+const point_t & ExactCubic::target() const
+{
+  return waypoints_.back().second;
 }
 
 const point_t & ExactCubic::init_vel() const
@@ -54,7 +71,7 @@ void ExactCubic::samplingPoints(const unsigned s)
   samplingPoints_ = s;
 }
 
-const unsigned ExactCubic::samplingPoints() const
+unsigned ExactCubic::samplingPoints() const
 {
   return samplingPoints_;
 }

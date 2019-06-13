@@ -21,7 +21,6 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformT
    * \param stiffness Task stiffness (position and orientation)
    * \param posW Task weight (position)
    * \param oriW Task weight (orientation)
-   * \param target Target world pose for the trajectory
    * \param oriWp Optional orientation waypoints
    */
   SplineTrajectoryTask(const mc_rbdyn::Robots & robots,
@@ -31,7 +30,6 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformT
                        double stiffness,
                        double posW,
                        double oriW,
-                       const sva::PTransformd & target,
                        const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp = {});
 
   void oriWaypoints(const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp);
@@ -122,7 +120,6 @@ protected:
    * automatically updates the curve
    */
   void addToGUI(mc_rtc::gui::StateBuilder & gui);
-  void removeFromGUI(mc_rtc::gui::StateBuilder & gui);
 
   /*! \brief Add the task to a solver
    * \param solver Solver where to add the task

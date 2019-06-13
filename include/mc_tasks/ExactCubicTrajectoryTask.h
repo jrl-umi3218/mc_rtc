@@ -13,6 +13,9 @@ namespace mc_tasks
 struct MC_TASKS_DLLAPI ExactCubicTrajectoryTask : public SplineTrajectoryTask<ExactCubicTrajectoryTask>
 {
 public:
+  using SplineTrajectoryBase = SplineTrajectoryTask<ExactCubicTrajectoryTask>;
+
+public:
   /**
    * @brief Trajectory following an exact cubic spline with given initial and
    * final acceleration/velocity. The curve will pass exactly through the
@@ -62,6 +65,8 @@ public:
   {
     return *bspline.get();
   };
+
+  void target(const sva::PTransformd & target);
 
   void addToGUI(mc_rtc::gui::StateBuilder & gui);
   void removeFromGUI(mc_rtc::gui::StateBuilder &);

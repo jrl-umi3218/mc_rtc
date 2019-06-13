@@ -51,8 +51,10 @@ public:
   {
     return *bspline.get();
   };
+
+  void target(const sva::PTransformd & target);
+
   void addToGUI(mc_rtc::gui::StateBuilder & gui);
-  void removeFromGUI(mc_rtc::gui::StateBuilder &);
 
 private:
   /**
@@ -63,7 +65,7 @@ private:
   void posWaypoints(const std::vector<Eigen::Vector3d> & posWp);
 
 protected:
-  std::shared_ptr<mc_trajectory::BSpline> bspline = nullptr;
+  std::unique_ptr<mc_trajectory::BSpline> bspline = nullptr;
 };
 
 } // namespace mc_tasks
