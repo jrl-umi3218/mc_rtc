@@ -4,6 +4,8 @@
 
 #include <mc_trajectory/BSpline.h>
 
+#include <sstream>
+
 namespace mc_trajectory
 {
 using point_t = BSpline::point_t;
@@ -86,19 +88,9 @@ unsigned BSpline::samplingPoints() const
 
 void BSpline::addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string> & category)
 {
-  // Visual controls for the control points and
-  for(unsigned int i = 0; i < this->controlPoints().size() - 1; ++i)
-  {
-    gui.addElement(category, mc_rtc::gui::Point3D("control_point_pos_" + std::to_string(i),
-                                                  [this, i]() { return controlPoints_[i]; },
-                                                  [this, i](const Eigen::Vector3d & pos) {
-                                                    controlPoints_[i] = pos;
-                                                    this->controlPoints(controlPoints_);
-                                                  }));
-  }
-
+  // Display trajectory
   samples_ = this->sampleTrajectory(samplingPoints_);
-  gui.addElement(category, mc_rtc::gui::Trajectory("trajectory", [this]() {
+  gui.addElement(category, mc_rtc::gui::Trajectory("Trajectory", [this]() {
                    if(this->needsUpdate_)
                    {
                      samples_ = this->sampleTrajectory(samplingPoints_);
@@ -106,6 +98,19 @@ void BSpline::addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::s
                    }
                    return samples_;
                  }));
+
+  // Interactive control points
+  std::vector<std::string> waypointCategory = category;
+  waypointCategory.push_back("Position Control Points");
+  for(unsigned int i = 0; i < this->controlPoints().size() - 1; ++i)
+  {
+    gui.addElement(waypointCategory,
+                   mc_rtc::gui::Point3D("Waypoint " + std::to_string(i), [this, i]() { return controlPoints_[i]; },
+                                        [this, i](const Eigen::Vector3d & pos) {
+                                          controlPoints_[i] = pos;
+                                          this->controlPoints(controlPoints_);
+                                        }));
+  }
 }
 
 } // namespace mc_trajectory

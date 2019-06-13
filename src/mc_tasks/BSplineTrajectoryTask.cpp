@@ -48,7 +48,7 @@ void BSplineTrajectoryTask::target(const sva::PTransformd & target)
 void BSplineTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   SplineTrajectoryBase::addToGUI(gui);
-  bspline->addToGUI(gui, {"Tasks", name_, "Position Control Points"});
+  bspline->addToGUI(gui, {"Tasks", name_});
 }
 
 } // namespace mc_tasks

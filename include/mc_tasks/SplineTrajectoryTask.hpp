@@ -105,7 +105,6 @@ void SplineTrajectoryTask<Derived>::target(const sva::PTransformd & target)
   finalTarget_ = target;
   auto & derived = static_cast<Derived &>(*this);
   derived.target(target);
-  std::cout << "updating orientation waypoint" << std::endl;
   oriSpline_->waypoints().back().second = target.rotation();
 }
 
@@ -200,15 +199,18 @@ void SplineTrajectoryTask<Derived>::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                           [this](const double & g) { this->oriWeight(g); }));
 
   auto & spline = static_cast<Derived &>(*this).spline();
-  gui.addElement({"Tasks", name_}, mc_rtc::gui::Transform("pos", [this]() {
+  gui.addElement({"Tasks", name_}, mc_rtc::gui::Transform("Surface pose", [this]() {
                    return robots.robot(rIndex_).surface(surfaceName_).X_0_s(robots.robot(rIndex_));
                  }));
+
+  gui.addElement({"Tasks", name_}, mc_rtc::gui::Transform("Target", [this]() { return finalTarget_; },
+                                                          [this](const sva::PTransformd & t) { this->target(t); }));
 
   // Target is handled independently
   for(unsigned i = 1; i < oriSpline_->waypoints().size() - 1; ++i)
   {
-    gui.addElement({"Tasks", name_, "Orientation Control Points"},
-                   mc_rtc::gui::Rotation("control_point_ori_" + std::to_string(i),
+    gui.addElement({"Tasks", name_, "Orientation Waypoint"},
+                   mc_rtc::gui::Rotation("Waypoint " + std::to_string(i),
                                          [this, i, &spline]() {
                                            const auto & wp = oriSpline_->waypoints()[i];
 
@@ -222,10 +224,6 @@ void SplineTrajectoryTask<Derived>::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                            wp.second = ori.toRotationMatrix();
                                          }));
   }
-
-  gui.addElement({"Tasks", name_, "Target"},
-                 mc_rtc::gui::Transform("control_target", [this]() { return finalTarget_; },
-                                        [this](const sva::PTransformd & t) { this->target(t); }));
 }
 
 } // namespace mc_tasks

@@ -9,6 +9,15 @@ using waypoint_t = ExactCubic::waypoint_t;
 using spline_deriv_constraint_t = ExactCubic::spline_deriv_constraint_t;
 using spline_constraints_t = ExactCubic::spline_constraints_t;
 
+template<typename T>
+std::string to_string_with_precision(const T a_value, const int n = 2)
+{
+  std::ostringstream out;
+  out.precision(n);
+  out << std::fixed << a_value;
+  return out.str();
+}
+
 ExactCubic::ExactCubic(const std::vector<waypoint_t> & waypoints,
                        const point_t & init_vel,
                        const point_t & init_acc,
@@ -110,20 +119,8 @@ std::vector<Eigen::Vector3d> ExactCubic::sampleTrajectory(unsigned samples)
 
 void ExactCubic::addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string> & category)
 {
-  // Visual controls for the control points
-  for(unsigned int i = 0; i < waypoints_.size() - 1; ++i)
-  {
-    gui.addElement(category, mc_rtc::gui::Point3D("control_point_pos_" + std::to_string(i),
-                                                  [this, i]() { return waypoints_[i].second; },
-                                                  [this, i](const Eigen::Vector3d & pos) {
-                                                    waypoints_[i].second = pos;
-                                                    waypoints(waypoints_);
-                                                    needsUpdate_ = true;
-                                                  }));
-  }
-
   samples_ = sampleTrajectory(samplingPoints_);
-  gui.addElement(category, mc_rtc::gui::Trajectory("trajectory", [this]() {
+  gui.addElement(category, mc_rtc::gui::Trajectory("Trajectory", [this]() {
                    if(this->needsUpdate_)
                    {
                      samples_ = this->sampleTrajectory(samplingPoints_);
@@ -131,6 +128,21 @@ void ExactCubic::addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std
                    }
                    return samples_;
                  }));
+
+  // Interactive control points
+  std::vector<std::string> waypointCategory = category;
+  waypointCategory.push_back("Position Control Points");
+  for(unsigned int i = 0; i < waypoints_.size() - 1; ++i)
+  {
+    gui.addElement(waypointCategory,
+                   mc_rtc::gui::Point3D("Waypoint [t=" + to_string_with_precision(waypoints_[i].first) + "s]",
+                                        [this, i]() { return waypoints_[i].second; },
+                                        [this, i](const Eigen::Vector3d & pos) {
+                                          waypoints_[i].second = pos;
+                                          waypoints(waypoints_);
+                                          needsUpdate_ = true;
+                                        }));
+  }
 }
 
 } // namespace mc_trajectory

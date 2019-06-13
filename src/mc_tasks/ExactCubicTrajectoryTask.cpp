@@ -5,7 +5,6 @@
 
 namespace mc_tasks
 {
-
 ExactCubicTrajectoryTask::ExactCubicTrajectoryTask(const mc_rbdyn::Robots & robots,
                                                    unsigned int robotIndex,
                                                    const std::string & surfaceName_,
