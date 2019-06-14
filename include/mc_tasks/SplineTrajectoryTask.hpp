@@ -196,13 +196,6 @@ void SplineTrajectoryTask<Derived>::addToLogger(mc_rtc::Logger & logger)
 }
 
 template<typename Derived>
-void SplineTrajectoryTask<Derived>::removeFromLogger(mc_rtc::Logger & logger)
-{
-  logger.removeLogEntry(name_ + "_target_pose");
-  logger.removeLogEntry(name_ + "_speed");
-}
-
-template<typename Derived>
 void SplineTrajectoryTask<Derived>::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   TrajectoryTask::addToGUI(gui);

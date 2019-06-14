@@ -66,6 +66,14 @@ void ExactCubicTrajectoryTask::posWaypoints(const std::vector<std::pair<double, 
   bspline.waypoints(waypoints);
 }
 
+void ExactCubicTrajectoryTask::constraints(const Eigen::Vector3d & init_vel,
+                                           const Eigen::Vector3d & init_acc,
+                                           const Eigen::Vector3d & end_vel,
+                                           const Eigen::Vector3d & end_acc)
+{
+  bspline.constraints(init_vel, init_acc, end_vel, end_acc);
+}
+
 void ExactCubicTrajectoryTask::target(const sva::PTransformd & target)
 {
   bspline.target(target.translation());
@@ -92,12 +100,6 @@ void ExactCubicTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
           "Final", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 1., 1.)),
           [this]() -> Eigen::Vector3d { return SplineTrajectoryBase::target().translation(); },
           [this]() -> Eigen::Vector3d { return SplineTrajectoryBase::target().translation() + bspline.end_vel(); }));
-}
-
-void ExactCubicTrajectoryTask::removeFromGUI(mc_rtc::gui::StateBuilder & gui)
-{
-  gui.removeCategory({"Tasks", name_, "Orientation Control Points"});
-  gui.removeCategory({"Tasks", name_, "Position Control Points"});
 }
 
 } // namespace mc_tasks

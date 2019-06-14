@@ -38,7 +38,7 @@ void BSplineTrajectoryTask::posWaypoints(const std::vector<Eigen::Vector3d> & po
     waypoints.push_back(wp);
   }
   waypoints.push_back(finalTarget_.translation());
-  bspline.controlPoints(waypoints);
+  bspline.waypoints(waypoints);
 }
 
 void BSplineTrajectoryTask::target(const sva::PTransformd & target)

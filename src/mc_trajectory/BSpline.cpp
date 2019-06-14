@@ -12,10 +12,10 @@ using point_t = BSpline::point_t;
 using t_point_t = BSpline::t_point_t;
 using bezier_curve_t = BSpline::bezier_curve_t;
 
-BSpline::BSpline(const t_point_t & controlPoints, double duration, unsigned int order)
-: duration(duration), p(order), controlPoints_(controlPoints)
+BSpline::BSpline(const t_point_t & waypoints, double duration, unsigned int order)
+: duration(duration), p(order), waypoints_(waypoints)
 {
-  spline.reset(new bezier_curve_t(controlPoints.begin(), controlPoints.end(), duration));
+  spline.reset(new bezier_curve_t(waypoints.begin(), waypoints.end(), duration));
 }
 
 BSpline::BSpline(double duration, unsigned int order) : duration(duration), p(order) {}
@@ -24,7 +24,7 @@ void BSpline::update()
 {
   if(needsUpdate_)
   {
-    spline.reset(new bezier_curve_t(controlPoints_.begin(), controlPoints_.end(), duration));
+    spline.reset(new bezier_curve_t(waypoints_.begin(), waypoints_.end(), duration));
     samples_ = this->sampleTrajectory(samplingPoints_);
     needsUpdate_ = false;
   }
@@ -65,30 +65,30 @@ std::vector<Eigen::Vector3d> BSpline::sampleTrajectory(unsigned samples)
   return traj;
 }
 
-void BSpline::controlPoints(const t_point_t & waypoints)
+void BSpline::waypoints(const t_point_t & waypoints)
 {
   if(waypoints.size() < 2)
   {
     LOG_ERROR_AND_THROW(std::runtime_error, "There should be at least two waypoints");
   }
-  controlPoints_ = waypoints;
+  waypoints_ = waypoints;
   needsUpdate_ = true;
 }
 
 void BSpline::target(const point_t & target)
 {
-  controlPoints_.back() = target;
+  waypoints_.back() = target;
   needsUpdate_ = true;
 }
 
 const point_t & BSpline::target() const
 {
-  return controlPoints_.back();
+  return waypoints_.back();
 }
 
-const t_point_t & BSpline::controlPoints() const
+const t_point_t & BSpline::waypoints() const
 {
-  return controlPoints_;
+  return waypoints_;
 }
 
 void BSpline::samplingPoints(const unsigned s)
@@ -117,14 +117,14 @@ void BSpline::addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::s
   // Interactive control points
   std::vector<std::string> waypointCategory = category;
   waypointCategory.push_back("Position Control Points");
-  for(unsigned int i = 0; i < this->controlPoints().size() - 1; ++i)
+  for(unsigned int i = 0; i < this->waypoints().size() - 1; ++i)
   {
     gui.addElement(waypointCategory,
                    mc_rtc::gui::Point3D("Waypoint " + std::to_string(i),
-                                        [this, i]() -> const Eigen::Vector3d & { return controlPoints_[i]; },
+                                        [this, i]() -> const Eigen::Vector3d & { return waypoints_[i]; },
                                         [this, i](const Eigen::Vector3d & pos) {
-                                          controlPoints_[i] = pos;
-                                          this->controlPoints(controlPoints_);
+                                          waypoints_[i] = pos;
+                                          this->waypoints(waypoints_);
                                         }));
   }
 }
