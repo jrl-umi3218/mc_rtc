@@ -1,11 +1,6 @@
 #pragma once
 #include <mc_tasks/SplineTrajectoryTask.h>
-
-namespace mc_trajectory
-{
-struct BSpline;
-struct InterpolatedRotation;
-} // namespace mc_trajectory
+#include <mc_trajectory/BSpline.h>
 
 namespace mc_tasks
 {
@@ -45,11 +40,11 @@ public:
 
   const mc_trajectory::BSpline & spline() const
   {
-    return *bspline.get();
+    return bspline;
   };
   mc_trajectory::BSpline & spline()
   {
-    return *bspline.get();
+    return bspline;
   };
 
   void target(const sva::PTransformd & target);
@@ -66,7 +61,7 @@ private:
   void posWaypoints(const std::vector<Eigen::Vector3d> & posWp);
 
 protected:
-  std::unique_ptr<mc_trajectory::BSpline> bspline = nullptr;
+  mc_trajectory::BSpline bspline;
 };
 
 } // namespace mc_tasks

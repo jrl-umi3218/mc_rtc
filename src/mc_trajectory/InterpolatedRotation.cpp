@@ -5,12 +5,11 @@ namespace mc_trajectory
 
 using waypoint_t = InterpolatedRotation::waypoint_t;
 
-InterpolatedRotation::InterpolatedRotation(const std::vector<std::pair<double, Eigen::Matrix3d>> & waypoints)
-: waypoints_(waypoints)
-{
-}
+InterpolatedRotation::InterpolatedRotation(const std::vector<waypoint_t> & waypoints) : waypoints_(waypoints) {}
 
-void InterpolatedRotation::waypoints(const std::vector<std::pair<double, Eigen::Matrix3d>> & waypoints)
+InterpolatedRotation::InterpolatedRotation() {}
+
+void InterpolatedRotation::waypoints(const std::vector<waypoint_t> & waypoints)
 {
   if(waypoints.size() < 2)
   {
@@ -55,6 +54,10 @@ const Eigen::Matrix3d & InterpolatedRotation::target() const
 
 Eigen::Matrix3d InterpolatedRotation::eval(double t)
 {
+  if(waypoints_.size() < 2)
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "There should be at least two orientation waypoints!");
+  }
   // Find waypoint following the current time t
   unsigned i = 1;
   for(; i < waypoints_.size(); ++i)
@@ -62,7 +65,7 @@ Eigen::Matrix3d InterpolatedRotation::eval(double t)
     if(t - waypoints_[i].first <= 0) break;
   }
   unsigned end = std::min(static_cast<unsigned>(waypoints_.size() - 1), i);
-  unsigned start = std::max(0u, i - 1);
+  unsigned start = i - 1;
 
   double ts = waypoints_[start].first;
   double te = waypoints_[end].first;

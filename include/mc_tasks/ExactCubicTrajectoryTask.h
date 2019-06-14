@@ -1,11 +1,6 @@
 #pragma once
 #include <mc_tasks/SplineTrajectoryTask.h>
-
-namespace mc_trajectory
-{
-struct ExactCubic;
-struct InterpolatedRotation;
-} // namespace mc_trajectory
+#include <mc_trajectory/ExactCubic.h>
 
 namespace mc_tasks
 {
@@ -59,11 +54,11 @@ public:
 
   const mc_trajectory::ExactCubic & spline() const
   {
-    return *bspline.get();
+    return bspline;
   };
   mc_trajectory::ExactCubic & spline()
   {
-    return *bspline.get();
+    return bspline;
   };
 
   void target(const sva::PTransformd & target);
@@ -76,21 +71,11 @@ private:
   /**
    * @brief Waypoints in position. The curve will pass exactly through these
    * waypoints. Initial and final velocities and accelerations can be specified.
-   *
-   * @param posWp Waypoints in position, specified as pairs of [time, position]
-   * @param init_vel Initial velocity of the curve (default: Zero)
-   * @param init_acc Initial acceleration of the curve (default: Zero)
-   * @param end_vel Final velocity of the curve (default: Zero)
-   * @param end_acc Final acceleration of the curve (default: Zero)
    */
-  void posWaypoints(const std::vector<std::pair<double, Eigen::Vector3d>> & posWp,
-                    const Eigen::Vector3d & init_vel = Eigen::Vector3d::Zero(),
-                    const Eigen::Vector3d & init_acc = Eigen::Vector3d::Zero(),
-                    const Eigen::Vector3d & end_vel = Eigen::Vector3d::Zero(),
-                    const Eigen::Vector3d & end_acc = Eigen::Vector3d::Zero());
+  void posWaypoints(const std::vector<std::pair<double, Eigen::Vector3d>> & posWp);
 
 protected:
-  std::shared_ptr<mc_trajectory::ExactCubic> bspline = nullptr;
+  mc_trajectory::ExactCubic bspline;
   sva::PTransformd initialPose_;
 };
 

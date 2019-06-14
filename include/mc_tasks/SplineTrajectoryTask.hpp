@@ -32,6 +32,7 @@ void SplineTrajectoryTask<Derived>::update()
 {
   auto & spline = static_cast<Derived &>(*this).spline();
   spline.samplingPoints(samples_);
+  spline.update();
 
   // Interpolate position
   auto res = spline.splev(currTime_, 2);
@@ -40,7 +41,7 @@ void SplineTrajectoryTask<Derived>::update()
   Eigen::Vector3d & acc = res[2];
 
   // Interpolate orientation
-  Eigen::Matrix3d ori_target = oriSpline_->eval(currTime_);
+  Eigen::Matrix3d ori_target = oriSpline_.eval(currTime_);
   sva::PTransformd target(ori_target, pos);
 
   // Set the trajectory tracking task targets from the trajectory.
@@ -83,7 +84,7 @@ void SplineTrajectoryTask<Derived>::oriWaypoints(const std::vector<std::pair<dou
     oriWp_.push_back(wp);
   }
   oriWp_.push_back(std::make_pair(duration_, finalTarget_.rotation()));
-  oriSpline_.reset(new mc_trajectory::InterpolatedRotation(oriWp_));
+  oriSpline_.waypoints(oriWp_);
 }
 
 template<typename Derived>
@@ -119,14 +120,14 @@ void SplineTrajectoryTask<Derived>::target(const sva::PTransformd & target)
 {
   auto & derived = static_cast<Derived &>(*this);
   derived.target(target);
-  oriSpline_->target(target.rotation());
+  oriSpline_.target(target.rotation());
 }
 
 template<typename Derived>
 const sva::PTransformd SplineTrajectoryTask<Derived>::target() const
 {
   const auto & derived = static_cast<const Derived &>(*this);
-  return sva::PTransformd(oriSpline_->target(), derived.target());
+  return sva::PTransformd(oriSpline_.target(), derived.target());
 }
 
 template<typename Derived>
@@ -204,7 +205,6 @@ void SplineTrajectoryTask<Derived>::removeFromLogger(mc_rtc::Logger & logger)
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
-  LOG_INFO("SplineTrajectoryTask::addToGUI");
   TrajectoryTask::addToGUI(gui);
 
   gui.addElement({"Tasks", name_, "Gains"},
@@ -225,18 +225,17 @@ void SplineTrajectoryTask<Derived>::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                                          }));
 
   // Target rotation is handled independently
-  for(unsigned i = 1; i < oriSpline_->waypoints().size() - 1; ++i)
+  for(unsigned i = 1; i < oriSpline_.waypoints().size() - 1; ++i)
   {
     gui.addElement({"Tasks", name_, "Orientation Waypoint"},
                    mc_rtc::gui::Rotation(
                        "Waypoint " + std::to_string(i),
                        [this, i, &spline]() {
-                         const auto & wp = oriSpline_->waypoint(i);
                          // Get position of orientation waypoint along the spline
-                         const auto & pos = spline.splev(wp.first, 2)[0];
-                         return sva::PTransformd(wp.second, pos);
+                         const auto & wp = oriSpline_.waypoint(i);
+                         return sva::PTransformd(wp.second, spline.splev(wp.first, 0)[0]);
                        },
-                       [this, i](const Eigen::Quaterniond & ori) { oriSpline_->waypoint(i, ori.toRotationMatrix()); }));
+                       [this, i](const Eigen::Quaterniond & ori) { oriSpline_.waypoint(i, ori.toRotationMatrix()); }));
   }
 }
 

@@ -8,15 +8,16 @@ namespace mc_tasks
 
 BSplineTrajectoryTask::BSplineTrajectoryTask(const mc_rbdyn::Robots & robots,
                                              unsigned int robotIndex,
-                                             const std::string & surfaceName_,
-                                             double duration_,
+                                             const std::string & surfaceName,
+                                             double duration,
                                              double stiffness,
                                              double posW,
                                              double oriW,
                                              const sva::PTransformd & target,
                                              const std::vector<Eigen::Vector3d> & posWp,
                                              const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
-: SplineTrajectoryTask<BSplineTrajectoryTask>(robots, robotIndex, surfaceName_, duration_, stiffness, posW, oriW, oriWp)
+: SplineTrajectoryTask<BSplineTrajectoryTask>(robots, robotIndex, surfaceName, duration, stiffness, posW, oriW, oriWp),
+  bspline(duration)
 {
   const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
   type_ = "bspline_trajectory";
@@ -37,23 +38,23 @@ void BSplineTrajectoryTask::posWaypoints(const std::vector<Eigen::Vector3d> & po
     waypoints.push_back(wp);
   }
   waypoints.push_back(finalTarget_.translation());
-  bspline.reset(new mc_trajectory::BSpline(waypoints, duration_));
+  bspline.controlPoints(waypoints);
 }
 
 void BSplineTrajectoryTask::target(const sva::PTransformd & target)
 {
-  bspline->target(target.translation());
+  bspline.target(target.translation());
 }
 
 Eigen::Vector3d BSplineTrajectoryTask::target() const
 {
-  return bspline->target();
+  return bspline.target();
 }
 
 void BSplineTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   SplineTrajectoryBase::addToGUI(gui);
-  bspline->addToGUI(gui, {"Tasks", name_});
+  bspline.addToGUI(gui, {"Tasks", name_});
 }
 
 } // namespace mc_tasks

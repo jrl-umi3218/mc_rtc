@@ -21,7 +21,10 @@ struct MC_TRAJECTORY_DLLAPI BSpline
   using t_point_t = bezier_curve_t::t_point_t;
 
 public:
+  BSpline(double duration, unsigned int order = 4);
   BSpline(const t_point_t & controlPoints, double duration, unsigned int order = 4);
+
+  void update();
 
   std::vector<Eigen::Vector3d> splev(double t, unsigned int der = 0);
   std::vector<Eigen::Vector3d> sampleTrajectory(unsigned samples);
@@ -40,9 +43,9 @@ public:
 private:
   double duration;
   unsigned int p;
-  std::unique_ptr<bezier_curve_t> spline;
+  std::unique_ptr<bezier_curve_t> spline = nullptr;
   bool needsUpdate_ = false;
-  size_t samplingPoints_ = 10;
+  unsigned samplingPoints_ = 10;
   std::vector<point_t> samples_;
   t_point_t controlPoints_;
 };

@@ -133,7 +133,7 @@ protected:
   void update() override;
 
 protected:
-  std::shared_ptr<mc_trajectory::InterpolatedRotation> oriSpline_;
+  mc_trajectory::InterpolatedRotation oriSpline_;
   std::vector<std::pair<double, Eigen::Matrix3d>> oriWp_;
 
 protected:

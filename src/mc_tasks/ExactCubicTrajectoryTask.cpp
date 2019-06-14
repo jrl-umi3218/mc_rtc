@@ -31,16 +31,13 @@ ExactCubicTrajectoryTask::ExactCubicTrajectoryTask(const mc_rbdyn::Robots & robo
   const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
   type_ = "exact_cubic_trajectory";
   name_ = "exact_cubic_trajectory_" + robot.name() + "_" + surfaceName_;
-  posWaypoints(posWp, init_vel, init_acc, end_vel, end_acc);
+  bspline.constraints(init_vel, init_acc, end_vel, end_acc);
+  posWaypoints(posWp);
   SplineTrajectoryBase::target(target);
   initialPose_ = robot.surface(surfaceName_).X_0_s(robot);
 }
 
-void ExactCubicTrajectoryTask::posWaypoints(const std::vector<std::pair<double, Eigen::Vector3d>> & posWp,
-                                            const Eigen::Vector3d & init_vel,
-                                            const Eigen::Vector3d & init_acc,
-                                            const Eigen::Vector3d & end_vel,
-                                            const Eigen::Vector3d & end_acc)
+void ExactCubicTrajectoryTask::posWaypoints(const std::vector<std::pair<double, Eigen::Vector3d>> & posWp)
 {
   std::vector<std::pair<double, Eigen::Vector3d>> waypoints;
   waypoints.reserve(posWp.size() + 2);
@@ -52,18 +49,17 @@ void ExactCubicTrajectoryTask::posWaypoints(const std::vector<std::pair<double, 
     waypoints.push_back(wp);
   }
   waypoints.push_back(std::make_pair(duration_, finalTarget_.translation()));
-  bspline.reset(new mc_trajectory::ExactCubic(waypoints, init_vel, init_acc, end_vel, end_acc));
+  bspline.waypoints(waypoints);
 }
 
 void ExactCubicTrajectoryTask::target(const sva::PTransformd & target)
 {
-  std::cout << "ExactCubicTrajectoryTask target: " << target.translation() << std::endl;
-  bspline->target(target.translation());
+  bspline.target(target.translation());
 }
 
 Eigen::Vector3d ExactCubicTrajectoryTask::target() const
 {
-  return bspline->target();
+  return bspline.target();
 }
 
 void ExactCubicTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
@@ -71,17 +67,17 @@ void ExactCubicTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   SplineTrajectoryBase::addToGUI(gui);
 
   LOG_INFO("ExactCubicTrajectoryTask::addToGUI");
-  bspline->addToGUI(gui, {"Tasks", name_});
+  bspline.addToGUI(gui, {"Tasks", name_});
 
   gui.addElement(
       {"Tasks", name_, "Velocity Constraints"},
       mc_rtc::gui::Arrow("Initial", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 1., 1.)),
                          [this]() -> Eigen::Vector3d { return initialPose_.translation(); },
-                         [this]() -> Eigen::Vector3d { return initialPose_.translation() + bspline->init_vel(); }),
+                         [this]() -> Eigen::Vector3d { return initialPose_.translation() + bspline.init_vel(); }),
       mc_rtc::gui::Arrow(
           "Final", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 1., 1.)),
           [this]() -> Eigen::Vector3d { return SplineTrajectoryBase::target().translation(); },
-          [this]() -> Eigen::Vector3d { return SplineTrajectoryBase::target().translation() + bspline->end_vel(); }));
+          [this]() -> Eigen::Vector3d { return SplineTrajectoryBase::target().translation() + bspline.end_vel(); }));
 }
 
 void ExactCubicTrajectoryTask::removeFromGUI(mc_rtc::gui::StateBuilder & gui)

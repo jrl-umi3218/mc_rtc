@@ -18,8 +18,24 @@ BSpline::BSpline(const t_point_t & controlPoints, double duration, unsigned int 
   spline.reset(new bezier_curve_t(controlPoints.begin(), controlPoints.end(), duration));
 }
 
+BSpline::BSpline(double duration, unsigned int order) : duration(duration), p(order) {}
+
+void BSpline::update()
+{
+  if(needsUpdate_)
+  {
+    spline.reset(new bezier_curve_t(controlPoints_.begin(), controlPoints_.end(), duration));
+    samples_ = this->sampleTrajectory(samplingPoints_);
+    needsUpdate_ = false;
+  }
+}
+
 std::vector<Eigen::Vector3d> BSpline::splev(double t, unsigned int der)
 {
+  if(spline == nullptr)
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "Invalide BSpline: there should be at least two waypoints");
+  }
   std::vector<Eigen::Vector3d> pts;
   pts.reserve(der + 1);
   for(std::size_t order = 0; order <= der; ++order)
@@ -31,6 +47,11 @@ std::vector<Eigen::Vector3d> BSpline::splev(double t, unsigned int der)
 
 std::vector<Eigen::Vector3d> BSpline::sampleTrajectory(unsigned samples)
 {
+  if(samples < 1)
+  {
+    LOG_ERROR("There should be at least 1 sample");
+    return {};
+  }
   std::vector<Eigen::Vector3d> traj;
   traj.resize(samples);
   // Evaluate trajectory for display
@@ -46,14 +67,18 @@ std::vector<Eigen::Vector3d> BSpline::sampleTrajectory(unsigned samples)
 
 void BSpline::controlPoints(const t_point_t & waypoints)
 {
-  spline.reset(new bezier_curve_t(waypoints.begin(), waypoints.end(), duration));
+  if(waypoints.size() < 2)
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "There should be at least two waypoints");
+  }
+  controlPoints_ = waypoints;
   needsUpdate_ = true;
 }
 
 void BSpline::target(const point_t & target)
 {
   controlPoints_.back() = target;
-  this->controlPoints(controlPoints_);
+  needsUpdate_ = true;
 }
 
 const point_t & BSpline::target() const
@@ -82,19 +107,12 @@ unsigned BSpline::samplingPoints() const
 
 void BSpline::addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string> & category)
 {
-  gui.addElement(category, mc_rtc::gui::Point3D("Target Position", [this]() { return target(); },
-                                                [this](const Eigen::Vector3d & pos) { target(pos); }));
+  gui.addElement(category,
+                 mc_rtc::gui::Point3D("Target Position", [this]() -> const Eigen::Vector3d & { return target(); },
+                                      [this](const Eigen::Vector3d & pos) { target(pos); }));
 
   // Display trajectory
-  samples_ = this->sampleTrajectory(samplingPoints_);
-  gui.addElement(category, mc_rtc::gui::Trajectory("Trajectory", [this]() {
-                   if(this->needsUpdate_)
-                   {
-                     samples_ = this->sampleTrajectory(samplingPoints_);
-                     needsUpdate_ = false;
-                   }
-                   return samples_;
-                 }));
+  gui.addElement(category, mc_rtc::gui::Trajectory("Trajectory", [this]() { return samples_; }));
 
   // Interactive control points
   std::vector<std::string> waypointCategory = category;
@@ -102,7 +120,8 @@ void BSpline::addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::s
   for(unsigned int i = 0; i < this->controlPoints().size() - 1; ++i)
   {
     gui.addElement(waypointCategory,
-                   mc_rtc::gui::Point3D("Waypoint " + std::to_string(i), [this, i]() { return controlPoints_[i]; },
+                   mc_rtc::gui::Point3D("Waypoint " + std::to_string(i),
+                                        [this, i]() -> const Eigen::Vector3d & { return controlPoints_[i]; },
                                         [this, i](const Eigen::Vector3d & pos) {
                                           controlPoints_[i] = pos;
                                           this->controlPoints(controlPoints_);

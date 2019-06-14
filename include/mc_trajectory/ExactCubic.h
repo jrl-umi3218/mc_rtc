@@ -21,13 +21,31 @@ public:
   using spline_constraints_t = spline_deriv_constraint_t::spline_constraints;
 
 public:
+  ExactCubic(const point_t & init_vel = {},
+             const point_t & init_acc = {},
+             const point_t & end_vel = {},
+             const point_t & end_acc = {});
   ExactCubic(const std::vector<waypoint_t> & waypoints,
-             const point_t & init_vel,
-             const point_t & init_acc,
-             const point_t & end_vel,
-             const point_t & end_acc);
+             const point_t & init_vel = {},
+             const point_t & init_acc = {},
+             const point_t & end_vel = {},
+             const point_t & end_acc = {});
+
+  void update();
 
   void waypoints(const std::vector<waypoint_t> & waypoints);
+
+  /*
+   * @param posWp Waypoints in position, specified as pairs of [time, position]
+   * @param init_vel Initial velocity of the curve (default: Zero)
+   * @param init_acc Initial acceleration of the curve (default: Zero)
+   * @param end_vel Final velocity of the curve (default: Zero)
+   * @param end_acc Final acceleration of the curve (default: Zero)
+   */
+  void constraints(const point_t & init_vel = {},
+                   const point_t & init_acc = {},
+                   const point_t & end_vel = {},
+                   const point_t & end_acc = {});
   void waypoint(size_t idx, const point_t & waypoint);
   void waypoint(size_t idx, const double t);
   const waypoint_t & waypoint(size_t idx) const;
@@ -56,7 +74,7 @@ private:
   spline_constraints_t constraints_;
 
   bool needsUpdate_ = false;
-  size_t samplingPoints_ = 10;
+  unsigned samplingPoints_ = 10;
   std::vector<Eigen::Vector3d> samples_;
 };
 
