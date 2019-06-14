@@ -28,6 +28,10 @@ public:
              const point_t & end_acc);
 
   void waypoints(const std::vector<waypoint_t> & waypoints);
+  void waypoint(size_t idx, const point_t & waypoint);
+  void waypoint(size_t idx, const double t);
+  const waypoint_t & waypoint(size_t idx) const;
+  double waypointTime(size_t idx) const;
   const std::vector<waypoint_t> & waypoints() const;
 
   void target(const point_t & target);

@@ -38,9 +38,47 @@ void ExactCubic::waypoints(const std::vector<waypoint_t> & waypoints)
   needsUpdate_ = true;
 }
 
+void ExactCubic::waypoint(size_t idx, const point_t & waypoint)
+{
+  if(idx >= waypoints_.size())
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "Cannot modify waypoint with index " << idx);
+  }
+  waypoints_[idx].second = waypoint;
+  waypoints(waypoints_);
+}
+
+void ExactCubic::waypoint(size_t idx, double t)
+{
+  if(idx >= waypoints_.size())
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "Cannot modify waypoint with index " << idx);
+  }
+  waypoints_[idx].first = t;
+  waypoints(waypoints_);
+}
+
+double ExactCubic::waypointTime(size_t idx) const
+{
+  if(idx >= waypoints_.size())
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "No waypoint with index " << idx);
+  }
+  return waypoints_[idx].first;
+}
+
 const std::vector<waypoint_t> & ExactCubic::waypoints() const
 {
   return waypoints_;
+}
+
+const waypoint_t & ExactCubic::waypoint(size_t idx) const
+{
+  if(idx >= waypoints_.size())
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "No waypoint with index " << idx);
+  }
+  return waypoints_[idx];
 }
 
 void ExactCubic::target(const point_t & target)
@@ -119,6 +157,9 @@ std::vector<Eigen::Vector3d> ExactCubic::sampleTrajectory(unsigned samples)
 
 void ExactCubic::addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string> & category)
 {
+  gui.addElement(category, mc_rtc::gui::Point3D("Target Position", [this]() { return target(); },
+                                                [this](const Eigen::Vector3d & pos) { target(pos); }));
+
   samples_ = sampleTrajectory(samplingPoints_);
   gui.addElement(category, mc_rtc::gui::Trajectory("Trajectory", [this]() {
                    if(this->needsUpdate_)
@@ -129,19 +170,16 @@ void ExactCubic::addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std
                    return samples_;
                  }));
 
-  // Interactive control points
+  // Interactive control points (target is handled independently)
   std::vector<std::string> waypointCategory = category;
   waypointCategory.push_back("Position Control Points");
   for(unsigned int i = 0; i < waypoints_.size() - 1; ++i)
   {
     gui.addElement(waypointCategory,
-                   mc_rtc::gui::Point3D("Waypoint [t=" + to_string_with_precision(waypoints_[i].first) + "s]",
-                                        [this, i]() { return waypoints_[i].second; },
-                                        [this, i](const Eigen::Vector3d & pos) {
-                                          waypoints_[i].second = pos;
-                                          waypoints(waypoints_);
-                                          needsUpdate_ = true;
-                                        }));
+                   mc_rtc::gui::Point3D("Waypoint " + std::to_string(i), [this, i]() { return waypoint(i).second; },
+                                        [this, i](const Eigen::Vector3d & pos) { waypoint(i, pos); }),
+                   mc_rtc::gui::NumberInput("Time " + std::to_string(i), [this, i]() { return waypointTime(i); },
+                                            [this, i](double t) { waypoint(i, t); }));
   }
 }
 

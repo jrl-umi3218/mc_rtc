@@ -117,16 +117,16 @@ double SplineTrajectoryTask<Derived>::oriWeight() const
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::target(const sva::PTransformd & target)
 {
-  finalTarget_ = target;
   auto & derived = static_cast<Derived &>(*this);
   derived.target(target);
-  oriSpline_->waypoints().back().second = target.rotation();
+  oriSpline_->target(target.rotation());
 }
 
 template<typename Derived>
-const sva::PTransformd & SplineTrajectoryTask<Derived>::target() const
+const sva::PTransformd SplineTrajectoryTask<Derived>::target() const
 {
-  return finalTarget_;
+  const auto & derived = static_cast<const Derived &>(*this);
+  return sva::PTransformd(oriSpline_->target(), derived.target());
 }
 
 template<typename Derived>
@@ -134,7 +134,7 @@ Eigen::VectorXd SplineTrajectoryTask<Derived>::eval() const
 {
   const auto & robot = robots.robot(rIndex_);
   sva::PTransformd X_0_s = robot.surface(surfaceName_).X_0_s(robot);
-  return sva::transformError(X_0_s, finalTarget_).vector();
+  return sva::transformError(X_0_s, target()).vector();
 }
 
 template<typename Derived>
@@ -190,7 +190,7 @@ void SplineTrajectoryTask<Derived>::addToLogger(mc_rtc::Logger & logger)
     const auto & robot = robots.robot(rIndex_);
     return robot.surface(surfaceName_).X_0_s(robot);
   });
-  logger.addLogEntry(name_ + "_target_pose", [this]() { return this->finalTarget_; });
+  logger.addLogEntry(name_ + "_target_pose", [this]() { return this->target(); });
   logger.addLogEntry(name_ + "_speed", [this]() { return sva::MotionVecd(this->speed()); });
 }
 
@@ -218,10 +218,13 @@ void SplineTrajectoryTask<Derived>::addToGUI(mc_rtc::gui::StateBuilder & gui)
                    return robots.robot(rIndex_).surface(surfaceName_).X_0_s(robots.robot(rIndex_));
                  }));
 
-  gui.addElement({"Tasks", name_}, mc_rtc::gui::Transform("Target", [this]() { return finalTarget_; },
-                                                          [this](const sva::PTransformd & t) { this->target(t); }));
+  gui.addElement({"Tasks", name_}, mc_rtc::gui::Rotation("Target Rotation", [this]() { return target(); },
+                                                         [this](const Eigen::Quaterniond & ori) {
+                                                           sva::PTransformd X_0_t(ori, this->target().translation());
+                                                           this->target(X_0_t);
+                                                         }));
 
-  // Target is handled independently
+  // Target rotation is handled independently
   for(unsigned i = 1; i < oriSpline_->waypoints().size() - 1; ++i)
   {
     gui.addElement({"Tasks", name_, "Orientation Waypoint"},

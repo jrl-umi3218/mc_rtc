@@ -15,7 +15,22 @@ std::vector<std::pair<double, Eigen::Matrix3d>> & InterpolatedRotation::waypoint
 
 void InterpolatedRotation::waypoints(const std::vector<std::pair<double, Eigen::Matrix3d>> & waypoints)
 {
+  if(waypoints.size() < 2)
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error,
+                        "There should be at least two orientation waypoints for the start and final orientations");
+  }
   waypoints_ = waypoints;
+}
+
+void InterpolatedRotation::target(const Eigen::Matrix3d & ori)
+{
+  waypoints_.back().second = ori;
+}
+
+const Eigen::Matrix3d & InterpolatedRotation::target() const
+{
+  return waypoints_.back().second;
 }
 
 Eigen::Matrix3d InterpolatedRotation::eval(double t)

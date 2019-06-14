@@ -80,7 +80,7 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformT
 
   // FIXME
   void target(const sva::PTransformd & target);
-  const sva::PTransformd & target() const;
+  const sva::PTransformd target() const;
 
   /**
    * \brief Tracks a reference world pose

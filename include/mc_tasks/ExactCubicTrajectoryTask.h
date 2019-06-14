@@ -67,6 +67,7 @@ public:
   };
 
   void target(const sva::PTransformd & target);
+  Eigen::Vector3d target() const;
 
   void addToGUI(mc_rtc::gui::StateBuilder & gui);
   void removeFromGUI(mc_rtc::gui::StateBuilder &);

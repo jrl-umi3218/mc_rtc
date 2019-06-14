@@ -45,6 +45,11 @@ void BSplineTrajectoryTask::target(const sva::PTransformd & target)
   bspline->target(target.translation());
 }
 
+Eigen::Vector3d BSplineTrajectoryTask::target() const
+{
+  return bspline->target();
+}
+
 void BSplineTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   SplineTrajectoryBase::addToGUI(gui);
@@ -71,8 +76,8 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
         const auto & robot = solver.robot(c("robotIndex"));
 
         const sva::PTransformd & targetSurface = robot.surface(targetSurfaceName).X_0_s(robot);
-        const Eigen::Vector3d trans = c("offset_translation", Eigen::Vector3d::Zero().eval());
-        const Eigen::Matrix3d rot = c("offset_rotation", Eigen::Matrix3d::Identity().eval());
+        const Eigen::Vector3d trans = c("translation", Eigen::Vector3d::Zero().eval());
+        const Eigen::Matrix3d rot = c("rotation", Eigen::Matrix3d::Identity().eval());
         sva::PTransformd offset(rot, trans);
         finalTarget_ = offset * targetSurface;
 

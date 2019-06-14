@@ -20,6 +20,8 @@ public:
 
   std::vector<std::pair<double, Eigen::Matrix3d>> & waypoints();
   void waypoints(const std::vector<std::pair<double, Eigen::Matrix3d>> & waypoints);
+  void target(const Eigen::Matrix3d & ori);
+  const Eigen::Matrix3d & target() const;
 
 protected:
   std::vector<double> time_;

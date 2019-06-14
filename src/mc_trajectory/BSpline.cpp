@@ -88,6 +88,9 @@ unsigned BSpline::samplingPoints() const
 
 void BSpline::addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string> & category)
 {
+  gui.addElement(category, mc_rtc::gui::Point3D("Target Position", [this]() { return target(); },
+                                                [this](const Eigen::Vector3d & pos) { target(pos); }));
+
   // Display trajectory
   samples_ = this->sampleTrajectory(samplingPoints_);
   gui.addElement(category, mc_rtc::gui::Trajectory("Trajectory", [this]() {
