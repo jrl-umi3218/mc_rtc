@@ -61,27 +61,27 @@ void SplineTrajectoryTask<Derived>::update()
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::oriWaypoints(const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
 {
-  // Check that times are provided in correct order and that timepoint <
-  // duration
-  if(!oriWp.empty())
-  {
-    double prevTime = oriWp.front().first;
-    for(unsigned i = 0; i < oriWp.size(); ++i)
-    {
-      const double timepoint = oriWp[i].first;
-      if(timepoint < prevTime || timepoint > duration_)
-        LOG_ERROR_AND_THROW(std::runtime_error, name_ << " : Invalid orientation waypoints, check that the times are "
-                                                         "provided in the correct order and that timepoint < duration");
-      prevTime = timepoint;
-    }
-  }
 
   const auto & robot = robots.robot(rIndex_);
   const auto & X_0_s = robot.surface(surfaceName_).X_0_s(robot);
   oriWp_.push_back(std::make_pair(0., X_0_s.rotation()));
+  double prevTime = 0;
   for(const auto & wp : oriWp)
   {
-    oriWp_.push_back(wp);
+    double timepoint = wp.first;
+    // Check that times are provided in correct order and that timepoint < duration
+    if(timepoint >= prevTime && timepoint <= duration_)
+    {
+      oriWp_.push_back(wp);
+    }
+    else
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, name_ << " : Invalid waypoints, please check that they are provided in "
+                                                       "the correct order and that timepoint < duration (curr="
+                                                    << timepoint << ", prev=" << prevTime
+                                                    << ", duration: " << duration_);
+    }
+    prevTime = timepoint;
   }
   oriWp_.push_back(std::make_pair(duration_, finalTarget_.rotation()));
   oriSpline_.waypoints(oriWp_);

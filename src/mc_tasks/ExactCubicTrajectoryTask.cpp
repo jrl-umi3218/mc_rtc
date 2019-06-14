@@ -44,9 +44,23 @@ void ExactCubicTrajectoryTask::posWaypoints(const std::vector<std::pair<double, 
   const auto & robot = robots.robot(rIndex);
   const auto & X_0_s = robot.surface(surfaceName_).X_0_s(robot);
   waypoints.push_back(std::make_pair(0., X_0_s.translation()));
+  double prevTime = 0;
   for(const auto & wp : posWp)
   {
-    waypoints.push_back(wp);
+    double timepoint = wp.first;
+    // Check that times are provided in correct order and that timepoint < duration
+    if(timepoint >= prevTime && timepoint <= duration_)
+    {
+      waypoints.push_back(wp);
+    }
+    else
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, name_ << " : Invalid waypoints, please check that they are provided in "
+                                                       "the correct order and that timepoint < duration (curr="
+                                                    << timepoint << ", prev=" << prevTime
+                                                    << ", duration: " << duration_);
+    }
+    prevTime = wp.first;
   }
   waypoints.push_back(std::make_pair(duration_, finalTarget_.translation()));
   bspline.waypoints(waypoints);
