@@ -117,6 +117,8 @@ $(document).ready(function()
   var metatask_objects = [
   'AddContactTask',
   'AdmittanceTask',
+  'BSplineTrajectoryTask',
+  'ExactCubicTrajectoryTask',
   'ComplianceTask',
   'CoMTask',
   'CoPTask',
