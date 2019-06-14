@@ -130,9 +130,7 @@ LT_BEGIN_C_DECLS
 #  if defined(__WINDOWS__) || defined(__CYGWIN__)
 #    ifdef DLL_EXPORT		/* defined by libtool (if required) */
 #      define LT_SCOPE	__declspec(dllexport)
-#    endif
-#    ifdef LIBLTDL_DLL_IMPORT	/* define if linking with this dll */
-       /* note: cygwin/mingw compilers can rely instead on auto-import */
+#    else
 #      define LT_SCOPE	extern __declspec(dllimport)
 #    endif
 #  endif

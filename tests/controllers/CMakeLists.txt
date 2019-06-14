@@ -4,8 +4,7 @@ set(USE_SANDBOX "true")
 
 macro(controller_test_common NAME)
   add_library(${NAME} SHARED ${NAME}.cpp)
-  target_link_libraries(${NAME} PUBLIC ${Boost_LIBRARIES} mc_control)
-  pkg_config_use_dependency(${NAME} Tasks)
+  target_link_libraries(${NAME} PUBLIC mc_control)
   set_target_properties(${NAME} PROPERTIES
     COMPILE_FLAGS "-DMC_CONTROL_EXPORTS"
     PREFIX ""
@@ -68,7 +67,7 @@ controller_test_run(TestOrientationTaskController 6001)
 controller_test_run(TestEndEffectorTaskController 4001)
 
 # Test Python bindings
-if(NOT DEFINED PYTHON_DEB_ROOT AND ${PYTHON_BINDING})
+if(${PYTHON_BINDING})
   set(USE_SANDBOX "false")
   set(TEST_CONTROLLER_NAME "PythonController#test_python.TestPythonController")
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/mc_rtc.conf.in ${CMAKE_CURRENT_BINARY_DIR}/TestPythonController/mc_rtc-TestPythonController.conf)

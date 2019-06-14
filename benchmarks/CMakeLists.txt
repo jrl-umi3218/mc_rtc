@@ -11,7 +11,6 @@ macro(mc_rtc_benchmark NAME)
     message(FATAL_ERROR "Cannot add mc_rtc_test: neither ${NAME}.cpp nor ${NAME}.in.cpp exists in ${CMAKE_CURRENT_SOURCE_DIR}")
   endif()
   target_link_libraries(${NAME} benchmark ${ARGN})
-  pkg_config_use_dependency(${NAME} Tasks)
   generate_msvc_dot_user_file(${NAME})
 endmacro()
 

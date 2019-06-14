@@ -4,20 +4,20 @@ if(POLICY CMP0063)
 endif()
 
 include(cmake/base.cmake)
-include(cmake/eigen.cmake)
-include(cmake/pkg-config.cmake)
+include(cmake/cython/cython.cmake)
 include(cmake/msvc-specific.cmake)
 include(cmake/version-script.cmake)
 
 set(PROJECT_NAME mc_rtc)
 set(PROJECT_DESCRIPTION mc_rtc)
-set(PROJECT_URL https://rob-dev.lirmm.fr/multi-contact/mc_rtc)
+set(PROJECT_URL https://gite.lirmm.fr/multi-contact/mc_rtc)
 set(PROJECT_DEBUG_POSTFIX "_d")
 set(PROJECT_USE_KEYWORD_LINK_LIBRARIES TRUE)
 
 set(CXX_DISABLE_WERROR 1)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_CXX_STANDARD 11)
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 set(DOXYGEN_USE_MATHJAX "YES")
 setup_project()
@@ -34,17 +34,8 @@ if(WIN32)
   add_definitions("-DNOMINMAX" "-D_ENABLE_EXTENDED_ALIGNED_STORAGE")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4068")
 else()
-  add_definitions(-std=c++0x)
   add_definitions(-mfpmath=sse -msse2)
 endif()
-
-option(PYTHON_BINDING "Generate python binding." ON)
-if(WIN32)
-  set(PYTHON_BINDING_USER_INSTALL_DEFAULT ON)
-else()
-  set(PYTHON_BINDING_USER_INSTALL_DEFAULT OFF)
-endif()
-option(PYTHON_BINDING_USER_INSTALL "Install the Python bindings in user space" ${PYTHON_BINDING_USER_INSTALL_DEFAULT})
 
 option(BUILD_CONTROLLER_SAMPLES "Build sample controllers in the project" ON)
 option(DISABLE_TESTS "Disable unit tests" OFF)
@@ -55,63 +46,38 @@ option(BUILD_BENCHMARKS "Build benchmarks" OFF)
 
 option(DISABLE_ROS "Do not build with ROS support (even if ROS was found)" OFF)
 
-SEARCH_FOR_EIGEN()
+add_project_dependency(Boost REQUIRED COMPONENTS filesystem timer)
+add_project_dependency(Tasks REQUIRED)
+add_project_dependency(mc_rbdyn_urdf REQUIRED)
 
-if(WIN32)
-  # TODO: ask explicitly the user for the value of PKG_CONFIG_INCLUDE_DIR
-  set( ENV{PKG_CONFIG_PATH} "$ENV{PKG_CONFIG_PATH};${PKG_CONFIG_INCLUDE_DIR}" )
-endif()
 
-find_package(Boost REQUIRED COMPONENTS system filesystem thread date_time timer regex)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
 
-add_required_dependency("Tasks" "Tasks_d")
-add_required_dependency("mc_rbdyn_urdf" "mc_rbdyn_urdf_d")
+# LTDL (defines target: mc_rtc_3rd_party::ltdl)
+add_subdirectory(3rd-party/ltdl)
 
-# At this point, this dependency is used to get access to PD gains setting on HRP robots
-add_optional_dependency(hrpsys-base)
-if(${HRPSYS_BASE_FOUND})
-  set(DEFINE_HAS_HRPSYS_BASE_MACRO "#define MC_RTC_HAS_HRPSYS_BASE 1")
-else()
-  set(DEFINE_HAS_HRPSYS_BASE_MACRO "")
-endif()
+# GEOS (defines/imports target: GEOS::geos)
+find_package(mc_rtc_3rd_party_geos REQUIRED)
 
-# Find GEOS flags using geos-config
-find_program(GEOS_CONFIG geos-config
-  /usr/local/bin
-  /usr/bin
-  ${CMAKE_INSTALL_PREFIX}/bin
+# nanomsg (defines/imports target: nanomsg)
+find_package(mc_rtc_3rd_party_nanomsg REQUIRED)
+
+# qhull (build re-entrant static version)
+add_subdirectory(3rd-party/qhull)
+
+# RapidJSON
+# The code was copied from the 1.1.0 release tarball for RapidJSON
+# https://github.com/miloyip/rapidjson
+add_library(mc_rtc_3rd_party::RapidJSON INTERFACE IMPORTED)
+set_target_properties(mc_rtc_3rd_party::RapidJSON PROPERTIES
+  INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR}/3rd-party/RapidJSON
 )
-if(GEOS_CONFIG)
-  exec_program(${GEOS_CONFIG}
-    ARGS --prefix
-    OUTPUT_VARIABLE GEOS_PREFIX)
-  set(GEOS_INCLUDE_DIR ${GEOS_PREFIX}/include)
-  set(GEOS_LIBRARY_DIR ${GEOS_PREFIX}/lib)
-  set(GEOS_LIBRARY geos)
-  include_directories(${GEOS_INCLUDE_DIR})
-  link_directories(${GEOS_LIBRARY_DIR})
-else()
-  if(WIN32)
-    if(NOT DEFINED GEOS_PREFIX)
-      message(WARNING "GEOS_PREFIX not defined, assuming it is equal to CMAKE_INSTALL_PREFIX")
-      set(GEOS_PREFIX ${CMAKE_INSTALL_PREFIX})
-    endif()
-    set(GEOS_INCLUDE_DIR ${GEOS_PREFIX}/include)
-    set(GEOS_LIBRARY_DIR ${GEOS_PREFIX}/lib)
-    set(GEOS_LIBRARY geos)
-    include_directories(${GEOS_INCLUDE_DIR})
-    link_directories(${GEOS_LIBRARY_DIR})
-  else()
-    message(SEND_ERROR "Could not find geos-config, missing dependency")
-  endif()
-endif()
 
-set(NANOMSG_NAME nanomsg)
-add_optional_dependency(${NANOMSG_NAME})
-if(NOT NANOMSG_FOUND)
-  MESSAGE("Failed to find ${NANOMSG_NAME}, trying to find libnanomsg")
-  set(NANOMSG_NAME libnanomsg)
-  add_required_dependency(${NANOMSG_NAME})
+# ROS (defines target: mc_rtc_3rd_party::ROS)
+if(NOT ${DISABLE_ROS})
+  find_package(mc_rtc_3rd_party_ros REQUIRED)
+else()
+  set(ROSCPP_FOUND False)
 endif()
 
 macro(find_description_package desc_pkg)
@@ -139,22 +105,6 @@ endmacro()
 find_description_package(mc_env_description)
 find_description_package(hrp2_drc_description)
 find_description_package(hrp4_description)
-if(NOT ${DISABLE_ROS})
-  add_optional_dependency(roscpp)
-  if(${ROSCPP_FOUND})
-    set(DEFINE_HAS_ROS_MACRO "#define MC_RTC_HAS_ROS 1")
-    add_required_dependency(nav_msgs)
-    add_required_dependency(sensor_msgs)
-    add_required_dependency(tf2_ros)
-    add_required_dependency(rosbag)
-    add_required_dependency(mc_rtc_msgs)
-  else()
-    set(DEFINE_HAS_ROS_MACRO "")
-  endif()
-else()
-  message(STATUS "Ros support is disabled (even if ros is available)")
-  set(DEFINE_HAS_ROS_MACRO "")
-endif()
 
 set(MC_ROBOTS_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/lib/mc_robots)
 set(MC_CONTROLLER_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/lib/mc_controller)
@@ -167,19 +117,7 @@ if(MSVC)
   set(CMAKE_MSVCIDE_RUN_PATH "\$(SolutionDir)/src/\$(Configuration)")
 endif(MSVC)
 
-if(WIN32)
-  include_directories(3rd-party/ltdl)
-endif()
-
-###################
-# -- RapidJSON -- #
-###################
-
-# The code was copied from the 1.1.0 release tarball for RapidJSON
-# https://github.com/miloyip/rapidjson
-include_directories(3rd-party/RapidJSON)
-
-add_subdirectory(3rd-party)
+add_subdirectory(CMakeModules)
 add_subdirectory(doc)
 add_subdirectory(idl)
 add_subdirectory(src)
