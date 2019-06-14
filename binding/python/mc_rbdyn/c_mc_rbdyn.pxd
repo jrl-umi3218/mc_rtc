@@ -374,6 +374,8 @@ cdef extern from "mc_rbdyn_wrapper.hpp" namespace "mc_rbdyn":
   RobotModulePtr get_robot_module_str "mc_rbdyn::get_robot_module"(const string&, const string&) except +
   RobotModulePtr get_robot_module(const string&, const string&, const string&) except +
   #XXX
+  void update_robot_module_path(const vector[string] &)
+  void clear_robot_module_path()
   vector[string] available_robots()
   Robots& const_cast_robots(const Robots&)
   Robot& const_cast_robot(const Robot&)

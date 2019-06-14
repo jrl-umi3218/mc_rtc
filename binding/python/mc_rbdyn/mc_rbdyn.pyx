@@ -425,6 +425,12 @@ class RobotLoader(object):
   @staticmethod
   def available_robots():
     return c_mc_rbdyn.available_robots()
+  @staticmethod
+  def clear():
+    c_mc_rbdyn.clear_robot_module_path()
+  @staticmethod
+  def update_robot_module_path(paths):
+    c_mc_rbdyn.update_robot_module_path(paths)
 
 def get_robot_module(string name, *args):
   if len(args) == 0:

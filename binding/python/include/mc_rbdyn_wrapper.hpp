@@ -44,6 +44,16 @@ std::vector<std::string> available_robots()
   return RobotLoader::available_robots();
 }
 
+void update_robot_module_path(const std::vector<std::string> & paths)
+{
+  RobotLoader::update_robot_module_path(paths);
+}
+
+void clear_robot_module_path()
+{
+  RobotLoader::clear();
+}
+
 Robots& const_cast_robots(const Robots& rhs)
 {
   return const_cast<Robots&>(rhs);

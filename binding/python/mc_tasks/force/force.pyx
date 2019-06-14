@@ -31,8 +31,8 @@ cdef class AdmittanceTask(SurfaceTransformTask):
     if skip_alloc:
       if len(args) + len(kwargs) > 0:
         raise TypeError("Cannot pass skip_alloc = True and other arguments to AdmittanceTask ctor")
-        self.__own_impl = False
-        self.adm_impl = self.impl = self.ttg_base = self.mt_base = NULL
+      self.__own_impl = False
+      self.adm_impl = self.impl = self.ttg_base = self.mt_base = NULL
     elif len(args) >= 3:
       self.__ctor__(*args, **kwargs)
     else:
@@ -70,8 +70,8 @@ cdef class ComplianceTask(MetaTask):
     if skip_alloc:
       if len(args) + len(kwargs) > 0:
         raise TypeError("Cannot pass skip_alloc = True and other arguments to ComplianceTask ctor")
-        self.__own_impl = False
-        self.impl = self.mt_base = NULL
+      self.__own_impl = False
+      self.impl = self.mt_base = NULL
     elif len(args) >= 4:
       self.__ctor__(*args, **kwargs)
     else:
@@ -96,8 +96,8 @@ cdef class DampingTask(AdmittanceTask):
     if skip_alloc:
       if len(args) + len(kwargs) > 0:
         raise TypeError("Cannot pass skip_alloc = True and other arguments to DampingTask ctor")
-        self.__own_impl = False
-        self.damping_impl = self.adm_impl = self.impl = self.ttg_base = self.mt_base = NULL
+      self.__own_impl = False
+      self.damping_impl = self.adm_impl = self.impl = self.ttg_base = self.mt_base = NULL
     elif len(args) >= 3:
       self.__ctor__(*args, **kwargs)
     else:
@@ -116,8 +116,8 @@ cdef class CoPTask(DampingTask):
     if skip_alloc:
       if len(args) + len(kwargs) > 0:
         raise TypeError("Cannot pass skip_alloc = True and other arguments to CoPTask ctor")
-        self.__own_impl = False
-        self.cop_impl = self.damping_impl = self.adm_impl = self.impl = self.ttg_base = self.mt_base = NULL
+      self.__own_impl = False
+      self.cop_impl = self.damping_impl = self.adm_impl = self.impl = self.ttg_base = self.mt_base = NULL
     elif len(args) >= 3:
       self.__ctor__(*args, **kwargs)
     else:
