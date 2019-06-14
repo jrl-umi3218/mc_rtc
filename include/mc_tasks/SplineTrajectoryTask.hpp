@@ -34,10 +34,10 @@ void SplineTrajectoryTask<Derived>::update()
   spline.samplingPoints(samples_);
 
   // Interpolate position
-  auto res = spline.splev({currTime_}, 2);
-  Eigen::Vector3d & pos = res[0][0];
-  Eigen::Vector3d & vel = res[0][1];
-  Eigen::Vector3d & acc = res[0][2];
+  auto res = spline.splev(currTime_, 2);
+  Eigen::Vector3d & pos = res[0];
+  Eigen::Vector3d & vel = res[1];
+  Eigen::Vector3d & acc = res[2];
 
   // Interpolate orientation
   Eigen::Matrix3d ori_target = oriSpline_->eval(currTime_);
@@ -228,19 +228,15 @@ void SplineTrajectoryTask<Derived>::addToGUI(mc_rtc::gui::StateBuilder & gui)
   for(unsigned i = 1; i < oriSpline_->waypoints().size() - 1; ++i)
   {
     gui.addElement({"Tasks", name_, "Orientation Waypoint"},
-                   mc_rtc::gui::Rotation("Waypoint " + std::to_string(i),
-                                         [this, i, &spline]() {
-                                           const auto & wp = oriSpline_->waypoints()[i];
-
-                                           // Get position of orientation waypoint along the spline
-                                           const auto & res = spline.splev({wp.first}, 2);
-                                           const Eigen::Vector3d pos = res[0][0];
-                                           return sva::PTransformd(wp.second, pos);
-                                         },
-                                         [this, i](const Eigen::Quaterniond & ori) {
-                                           auto & wp = oriSpline_->waypoints()[i];
-                                           wp.second = ori.toRotationMatrix();
-                                         }));
+                   mc_rtc::gui::Rotation(
+                       "Waypoint " + std::to_string(i),
+                       [this, i, &spline]() {
+                         const auto & wp = oriSpline_->waypoint(i);
+                         // Get position of orientation waypoint along the spline
+                         const auto & pos = spline.splev(wp.first, 2)[0];
+                         return sva::PTransformd(wp.second, pos);
+                       },
+                       [this, i](const Eigen::Quaterniond & ori) { oriSpline_->waypoint(i, ori.toRotationMatrix()); }));
   }
 }
 

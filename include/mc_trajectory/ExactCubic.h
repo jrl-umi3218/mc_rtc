@@ -42,7 +42,7 @@ public:
   const point_t & end_vel() const;
   const point_t & end_acc() const;
 
-  std::vector<std::vector<Eigen::Vector3d>> splev(const std::vector<double> & t, unsigned int der = 0);
+  std::vector<Eigen::Vector3d> splev(double t, unsigned int der = 0);
   std::vector<Eigen::Vector3d> sampleTrajectory(unsigned samples);
 
   void samplingPoints(const unsigned s);

@@ -14,12 +14,18 @@ namespace mc_trajectory
  */
 struct MC_TRAJECTORY_DLLAPI InterpolatedRotation
 {
+  using waypoint_t = std::pair<double, Eigen::Matrix3d>;
+
 public:
   InterpolatedRotation(const std::vector<std::pair<double, Eigen::Matrix3d>> & waypoints);
   Eigen::Matrix3d eval(double t);
 
-  std::vector<std::pair<double, Eigen::Matrix3d>> & waypoints();
   void waypoints(const std::vector<std::pair<double, Eigen::Matrix3d>> & waypoints);
+  std::vector<waypoint_t> & waypoints();
+
+  void waypoint(size_t idx, const Eigen::Matrix3d & ori);
+  const waypoint_t & waypoint(size_t idx) const;
+
   void target(const Eigen::Matrix3d & ori);
   const Eigen::Matrix3d & target() const;
 

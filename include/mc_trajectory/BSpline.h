@@ -23,7 +23,7 @@ struct MC_TRAJECTORY_DLLAPI BSpline
 public:
   BSpline(const t_point_t & controlPoints, double duration, unsigned int order = 4);
 
-  std::vector<std::vector<Eigen::Vector3d>> splev(const std::vector<double> & t, unsigned int der = 0);
+  std::vector<Eigen::Vector3d> splev(double t, unsigned int der = 0);
   std::vector<Eigen::Vector3d> sampleTrajectory(unsigned samples);
 
   void controlPoints(const t_point_t & waypoints);

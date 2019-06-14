@@ -123,21 +123,15 @@ unsigned ExactCubic::samplingPoints() const
   return samplingPoints_;
 }
 
-std::vector<std::vector<point_t>> ExactCubic::splev(const std::vector<double> & t, unsigned int der)
+std::vector<point_t> ExactCubic::splev(double t, unsigned int der)
 {
-  std::vector<std::vector<point_t>> res(0);
-  res.reserve(t.size());
-  for(const auto & ti : t)
+  std::vector<Eigen::Vector3d> pts;
+  pts.reserve(der + 1);
+  for(std::size_t order = 0; order <= der; ++order)
   {
-    std::vector<Eigen::Vector3d> pts;
-    pts.reserve(der + 1);
-    for(std::size_t order = 0; order <= der; ++order)
-    {
-      pts.push_back(spline_->derivate(ti, order));
-    }
-    res.push_back(pts);
+    pts.push_back(spline_->derivate(t, order));
   }
-  return res;
+  return pts;
 }
 
 std::vector<Eigen::Vector3d> ExactCubic::sampleTrajectory(unsigned samples)
@@ -149,7 +143,7 @@ std::vector<Eigen::Vector3d> ExactCubic::sampleTrajectory(unsigned samples)
   {
     auto time = spline_->min() + (spline_->max() - spline_->min()) * i / (samples - 1);
     auto res = splev({time}, 0);
-    Eigen::Vector3d & pos = res[0][0];
+    Eigen::Vector3d & pos = res[0];
     traj[i] = pos;
   }
   return traj;

@@ -3,14 +3,11 @@
 namespace mc_trajectory
 {
 
+using waypoint_t = InterpolatedRotation::waypoint_t;
+
 InterpolatedRotation::InterpolatedRotation(const std::vector<std::pair<double, Eigen::Matrix3d>> & waypoints)
 : waypoints_(waypoints)
 {
-}
-
-std::vector<std::pair<double, Eigen::Matrix3d>> & InterpolatedRotation::waypoints()
-{
-  return waypoints_;
 }
 
 void InterpolatedRotation::waypoints(const std::vector<std::pair<double, Eigen::Matrix3d>> & waypoints)
@@ -21,6 +18,29 @@ void InterpolatedRotation::waypoints(const std::vector<std::pair<double, Eigen::
                         "There should be at least two orientation waypoints for the start and final orientations");
   }
   waypoints_ = waypoints;
+}
+
+std::vector<waypoint_t> & InterpolatedRotation::waypoints()
+{
+  return waypoints_;
+}
+
+void InterpolatedRotation::waypoint(size_t idx, const Eigen::Matrix3d & ori)
+{
+  if(idx >= waypoints_.size())
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "No waypoint with index " << idx);
+  }
+  waypoints_[idx].second = ori;
+}
+
+const waypoint_t & InterpolatedRotation::waypoint(size_t idx) const
+{
+  if(idx >= waypoints_.size())
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "No waypoint with index " << idx);
+  }
+  return waypoints_[idx];
 }
 
 void InterpolatedRotation::target(const Eigen::Matrix3d & ori)
