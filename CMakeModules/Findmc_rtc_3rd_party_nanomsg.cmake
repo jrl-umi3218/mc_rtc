@@ -12,7 +12,7 @@
 #
 
 find_package(nanomsg QUIET)
-if(NOT ${nanomsg_FOUND} OR NOT TARGET )
+if(NOT ${nanomsg_FOUND} OR NOT TARGET nanomsg)
   pkg_search_module(NANOMSG nanomsg libnanomsg)
   if(NOT ${NANOMSG_FOUND})
     message(FATAL_ERROR "Could not find the nanomsg package using CMake package or pkg-config")
