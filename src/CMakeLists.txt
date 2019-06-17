@@ -1,7 +1,9 @@
+set(MC_RTC_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../include")
+
 set(VERSION_SCRIPT_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/version-script.lds")
 macro(install_mc_rtc_lib MC_LIB)
   set_target_properties(${MC_LIB} PROPERTIES FOLDER ${MC_LIB})
-  target_include_directories(${MC_LIB} INTERFACE $<INSTALL_INTERFACE:include>)
+  target_include_directories(${MC_LIB} INTERFACE $<INSTALL_INTERFACE:include> $<BUILD_INTERFACE:${MC_RTC_INCLUDE_DIR}>)
   if(GENERATE_COVERAGE)
     target_compile_options(${MC_LIB} PRIVATE "--coverage")
     set_target_properties(${MC_LIB} PROPERTIES LINK_FLAGS "--coverage")
