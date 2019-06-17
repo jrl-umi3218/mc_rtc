@@ -35,6 +35,7 @@ build_debian:
     - wget --quiet https://cmake.org/files/v3.5/cmake-3.5.2-Linux-i386.sh && chmod +x cmake-3.5.2-Linux-i386.sh && ./cmake-3.5.2-Linux-i386.sh --prefix=/usr --skip-license
     - pip install --upgrade cython numpy coverage nose
     - ./.jrl-ci/dependencies/eigen-3.3
+    - rm -rf $HOME/.cmake/packages/Eigen3/
     - export APT_DEPENDENCIES="cython python-pip python-coverage python-numpy python-nose libtinyxml2-dev libboost-all-dev libgeos++-dev libgeos-dev qhull-bin libqhull-dev libltdl-dev"
     - export GIT_DEPENDENCIES="jrl-umi3218/Eigen3ToPython jrl-umi3218/SpaceVecAlg jrl-umi3218/eigen-qld git@gite.lirmm.fr:multi-contact/eigen-lssol.git jrl-umi3218/sch-core jrl-umi3218/sch-core-python jrl-umi3218/RBDyn jrl-umi3218/Tasks jrl-umi3218/mc_rbdyn_urdf nanomsg/nanomsg"
     - export MASTER_PPA=""
