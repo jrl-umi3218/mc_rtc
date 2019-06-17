@@ -242,7 +242,7 @@ set_target_properties(mc_rtc_ros PROPERTIES COMPILE_FLAGS "-DMC_RTC_ROS_EXPORTS"
 target_link_libraries(mc_rtc_ros PUBLIC mc_rbdyn)
 if(NOT ${DISABLE_ROS})
   if(${ROSCPP_FOUND})
-    target_link_libraries(mc_rtc_ros PUBLIC mc_rtc_3rd_party::ROS)
+    target_link_libraries(mc_rtc_ros PUBLIC mc_rtc_3rd_party::ROS nanomsg)
   endif()
 endif()
 install_mc_rtc_lib(mc_rtc_ros)
