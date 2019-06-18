@@ -68,12 +68,18 @@ cdef class MCController(object):
   def robots(self):
     return mc_rbdyn.RobotsFromRawPtr(&(self.base.robots()))
   def set_joint_pos(self, jname, pos):
+    if isinstance(jname, unicode):
+      jname = jname.encode(u'ascii')
     return self.base.set_joint_pos(jname, pos)
   def play_next_stance(self):
     return self.base.play_next_stance()
   def read_msg(self, msg):
+    if isinstance(msg, unicode):
+      msg = msg.encode(u'ascii')
     return self.base.read_msg(msg)
   def read_write_msg(self, msg, out):
+    if isinstance(msg, unicode):
+      msg = msg.encode(u'ascii')
     return self.base.read_write_msg(msg, out)
   def supported_robots(self):
     return self.base.supported_robots()
@@ -174,8 +180,12 @@ cdef class MCGlobalController(object):
   def __cinit_simple__(self):
     self.impl = new c_mc_control.MCGlobalController()
   def __cinit_conf__(self, conf):
+    if isinstance(conf, unicode):
+      conf = conf.encode(u'ascii')
     self.impl = new c_mc_control.MCGlobalController(conf)
   def __cinit_full__(self, conf, mc_rbdyn.RobotModule rm):
+    if isinstance(conf, unicode):
+      conf = conf.encode(u'ascii')
     self.impl = new c_mc_control.MCGlobalController(conf, rm.impl)
   def __cinit__(self, *args):
     if len(args) == 0:

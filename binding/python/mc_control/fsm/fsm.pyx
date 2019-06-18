@@ -19,7 +19,15 @@ from libcpp.string cimport string
 from libcpp.vector cimport vector
 
 cdef class Contact(object):
-  def __ctor__(self, string r1, string r2, string r1Surface, string r2Surface, eigen.Vector6d dof = None):
+  def __ctor__(self, r1, r2, r1Surface, r2Surface, eigen.Vector6d dof = None):
+    if isinstance(r1, unicode):
+      r1 = r1.encode(u'ascii')
+    if isinstance(r1Surface, unicode):
+      r1Surface = r1Surface.encode(u'ascii')
+    if isinstance(r2, unicode):
+      r2 = r2.encode(u'ascii')
+    if isinstance(r2Surface, unicode):
+      r2Surface = r2Surface.encode(u'ascii')
     if dof is None:
       self.impl = c_fsm.Contact(r1, r2, r1Surface, r2Surface)
     else:
@@ -31,17 +39,30 @@ cdef class Contact(object):
     def __get__(self):
       return self.impl.r1
     def __set__(self, r1):
+      if isinstance(r1, unicode):
+        r1 = r1.encode(u'ascii')
       self.impl.r1 = r1
   property r1Surface:
     def __get__(self):
       return self.impl.r1Surface
     def __set__(self, r1Surface):
+      if isinstance(r1Surface, unicode):
+        r1Surface = r1Surface.encode(u'ascii')
       self.impl.r1Surface = r1Surface
   property r2:
     def __get__(self):
       return self.impl.r2
     def __set__(self, r2):
+      if isinstance(r2, unicode):
+        r2 = r2.encode(u'ascii')
       self.impl.r2 = r2
+  property r2Surface:
+    def __get__(self):
+      return self.impl.r2Surface
+    def __set__(self, r2Surface):
+      if isinstance(r2Surface, unicode):
+        r2Surface = r2Surface.encode(u'ascii')
+      self.impl.r2Surface = r2Surface
   property dof:
     def __get__(self):
       return eigen.Vector6dFromC(self.impl.dof)
@@ -62,11 +83,19 @@ cdef class Controller(MCController):
   def addCollisions(self, r1, r2, collisions):
     assert(all([isinstance(col, mc_rbdyn.Collision) for col in collisions]))
     cdef vector[c_mc_rbdyn.Collision] cols
+    if isinstance(r1, unicode):
+      r1 = r1.encode(u'ascii')
+    if isinstance(r2, unicode):
+      r2 = r2.encode(u'ascii')
     for col in collisions:
       cols.push_back((<mc_rbdyn.Collision>col).impl)
     self.impl.addCollisions(r1, r2, cols)
   def removeCollisions(self, r1, r2, collisions = None):
     cdef vector[c_mc_rbdyn.Collision] cols
+    if isinstance(r1, unicode):
+      r1 = r1.encode(u'ascii')
+    if isinstance(r2, unicode):
+      r2 = r2.encode(u'ascii')
     if collisions is None:
       self.impl.removeCollisions(r1, r2)
     else:
@@ -74,8 +103,12 @@ cdef class Controller(MCController):
         cols.push_back((<mc_rbdyn.Collision>col).impl)
       self.impl.removeCollisions(r1, r2, cols)
   def hasRobot(self, name):
+    if isinstance(name, unicode):
+      name = name.encode(u'ascii')
     return self.impl.hasRobot(name)
   def robot(self, name = None):
+    if isinstance(name, unicode):
+      name = name.encode(u'ascii')
     if name is None:
       return MCController.robot(self)
     else:

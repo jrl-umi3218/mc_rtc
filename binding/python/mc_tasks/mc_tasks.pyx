@@ -56,6 +56,8 @@ cdef class MetaTask(object):
       return self.mt_base.name()
     def __set__(self, value):
       assert(self.mt_base)
+      if isinstance(value, unicode):
+        value = value.encode(u'ascii')
       self.mt_base.name(value)
 
 include "com_trajectory_task.pxi"
@@ -112,6 +114,8 @@ cdef class PositionTask(_PositionTrajectoryTask):
       del self.impl
   def __ctor__(self, bodyName, mc_rbdyn.Robots robots,
                 robotIndex, stiffness = 2.0, weight = 500.0):
+    if isinstance(bodyName, unicode):
+      bodyName = bodyName.encode(u'ascii')
     self.__own_impl = True
     self.impl = self.ttg_base = self.mt_base = new c_mc_tasks.PositionTask(bodyName, deref(robots.impl), robotIndex, stiffness, weight)
 
@@ -136,6 +140,8 @@ cdef class OrientationTask(_OrientationTrajectoryTask):
       del self.impl
   def __ctor__(self, bodyName, mc_rbdyn.Robots robots,
                 robotIndex, stiffness = 2.0, weight = 500.0):
+    if isinstance(bodyName, unicode):
+      bodyName = bodyName.encode(u'ascii')
     self.__own_impl = True
     self.impl = self.ttg_base = self.mt_base = new c_mc_tasks.OrientationTask(bodyName, deref(robots.impl), robotIndex, stiffness, weight)
   def __cinit__(self, *args, **kwargs):
@@ -159,6 +165,8 @@ cdef class VectorOrientationTask(_VectorOrientationTrajectoryTask):
   def __ctor__(self, bodyName, eigen.Vector3d bodyVector,
                eigen.Vector3d targetVector, mc_rbdyn.Robots robots,
                 robotIndex, stiffness = 2.0, weight = 500.0):
+    if isinstance(bodyName, unicode):
+      bodyName = bodyName.encode(u'ascii')
     self.__own_impl = True
     self.impl = self.ttg_base = self.mt_base = new c_mc_tasks.VectorOrientationTask(bodyName, bodyVector.impl, targetVector.impl, deref(robots.impl), robotIndex, stiffness, weight)
   def __cinit__(self, *args, **kwargs):
@@ -177,6 +185,8 @@ cdef class SurfaceTransformTask(_SurfaceTransformTask):
       del self.impl
   def __ctor__(self, surfaceName, mc_rbdyn.Robots robots,
           robotIndex, stiffness = 2.0, weight = 500.0):
+    if isinstance(surfaceName, unicode):
+      surfaceName = surfaceName.encode(u'ascii')
     self.__own_impl = True
     self.impl = self.ttg_base = self.mt_base = new c_mc_tasks.SurfaceTransformTask(surfaceName, deref(robots.impl), robotIndex, stiffness, weight)
   def __cinit__(self, *args, **kwargs):
@@ -196,6 +206,8 @@ cdef class EndEffectorTask(MetaTask):
       del self.impl
   def __ctor__(self, bodyName, mc_rbdyn.Robots robots,
                 robotIndex, stiffness = 2.0, weight = 1000.0):
+    if isinstance(bodyName, unicode):
+      bodyName = bodyName.encode(u'ascii')
     self.__own_impl = True
     self.impl = self.mt_base = new c_mc_tasks.EndEffectorTask(bodyName, deref(robots.impl), robotIndex, stiffness, weight)
   def __cinit__(self, *args, **kwargs):
@@ -224,6 +236,10 @@ cdef class RelativeEndEffectorTask(EndEffectorTask):
       del self.impl
   def __ctor__(self, bodyName, mc_rbdyn.Robots robots,
                 robotIndex, relBodyName = "", stiffness = 2.0, weight = 1000.0):
+    if isinstance(bodyName, unicode):
+      bodyName = bodyName.encode(u'ascii')
+    if isinstance(relBodyName, unicode):
+      relBodyName = relBodyName.encode(u'ascii')
     self.__own_impl = True
     self.impl = self.mt_base = new c_mc_tasks.RelativeEndEffectorTask(bodyName, deref(robots.impl), robotIndex, relBodyName, stiffness, weight)
   def __cinit__(self, *args, **kwargs):

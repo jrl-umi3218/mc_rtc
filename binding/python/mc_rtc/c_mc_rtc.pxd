@@ -40,6 +40,7 @@ cdef extern from "<mc_rtc/log/Logger.h>" namespace "mc_rtc":
   cdef cppclass Logger:
     # Simplified from C++
     void addLogEntry[T](const string&, T get_fn)
+    void removeLogEntry(const string&)
 
 cdef extern from "<mc_rtc/Configuration.h>" namespace "mc_rtc":
   cdef cppclass Configuration:

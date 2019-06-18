@@ -10,7 +10,7 @@ from nose.tools import *
 
 def makeConfigFile(data):
   f = tempfile.NamedTemporaryFile(delete = False)
-  f.write(data)
+  f.write(data.encode(u'ascii'))
   f.close()
   return f.name
 
@@ -107,7 +107,10 @@ def test_configuration_reading(config, fromDisk2):
   assert(config("dict")("double", float) == 42.5)
 
   assert(config("string", str) == "sometext")
-  assert(config("string", unicode) == "sometext")
+  try:
+    assert(config("string", unicode) == "sometext")
+  except NameError:
+    pass
   assert(config("string", "") == "sometext")
   assert(config("string", u"") == "sometext")
   assert(config("NONE", "another") == "another")

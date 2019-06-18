@@ -103,59 +103,59 @@ class TestPythonController(mc_control.MCPythonController):
     if s is None:
         return self.mystring_
     else:
-        print "Change mystring to {}".format(s)
+        print("Change mystring to {}".format(s))
         self.mystring_ = s
   def myint(self, s = None):
     if s is None:
         return self.myint_
     else:
-        print "Change myint to {}".format(s)
+        print("Change myint to {}".format(s))
         self.myint_ = s
   def mynumber(self, s = None):
     if s is None:
         return self.mynumber_
     else:
-        print "Change mynumber to {}".format(s)
+        print("Change mynumber to {}".format(s))
         self.mynumber_ = s
   def myslider(self, s = None):
     if s is None:
         return self.myslider_
     else:
-        print "Change myslider to {}".format(s)
+        print("Change myslider to {}".format(s))
         self.myslider_ = s
   def myarray(self, s = None):
     if s is None:
         return self.myarray_
     else:
-        print "Change myarray to {}".format(s)
+        print("Change myarray to {}".format(s))
         self.myarray_ = s
   def mycombo(self, s = None):
     if s is None:
         return self.mycombo_
     else:
-        print "Change mycombo to {}".format(s)
+        print("Change mycombo to {}".format(s))
         self.mycombo_ = s
   def mydatacombo(self, s = None):
     if s is None:
         return self.mydatacombo_
     else:
-        print "Change mydatacombo to {}".format(s)
+        print("Change mydatacombo to {}".format(s))
         self.mydatacombo_ = s
   def mypoint3dro(self, s = None):
     if s is None:
         return self.mypoint3dro_
     else:
-        print "Change mypoint3dro to {}".format(s)
+        print("Change mypoint3dro to {}".format(s))
         self.mypoint3dro_ = s
   def mypoint3d(self, s = None):
     if s is None:
         return self.mypoint3d_
     else:
-        print "Change mypoint3d to {}".format(s)
+        print("Change mypoint3d to {}".format(s))
         self.mypoint3d_ = s
   def check(self):
     self.check_ = not self.check_
-    print "Change check to {}".format(self.check_)
+    print("Change check to {}".format(self.check_))
   @staticmethod
   def create(robot, dt):
     env = mc_rbdyn.get_robot_module("env", mc_rtc.MC_ENV_DESCRIPTION_PATH, "ground")
