@@ -24,6 +24,7 @@ find_library(LTDL_LIBRARY
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(LTDL DEFAULT_MSG LTDL_LIBRARY LTDL_INCLUDE_DIR)
 mark_as_advanced(LTDL_INCLUDE_DIR LTDL_LIBRARY)
+set(LTDL mc_rtc_3rd_party::ltdl)
 if(LTDL_FOUND)
   add_library(${LTDL} INTERFACE IMPORTED GLOBAL)
   set_target_properties(${LTDL} PROPERTIES
