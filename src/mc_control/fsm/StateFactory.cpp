@@ -19,7 +19,8 @@ StateFactory::StateFactory(const std::vector<std::string> & paths, const std::ve
 
 void StateFactory::load_libraries(const std::vector<std::string> & paths)
 {
-  mc_rtc::ObjectLoader<State>::load_libraries(paths, [this](const std::string & cn, lt_dlhandle) { update(cn); });
+  mc_rtc::ObjectLoader<State>::load_libraries(paths,
+                                              [this](const std::string & cn, mc_rtc::LTDLHandle &) { update(cn); });
 }
 
 namespace

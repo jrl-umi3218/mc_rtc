@@ -44,6 +44,73 @@ private:
   std::string what_;
 };
 
+/*! \class LTDLHandle
+ *
+ * \brief Wrapper around lt_dlhandle
+ *
+ * On creation it will load the library to check:
+ * - if a provided symbol is defined in the library
+ * - if it should be loaded globally
+ *
+ * After that the library will be closed and opened when symbols are requested by the user
+ */
+struct MC_RTC_LOADER_DLLAPI LTDLHandle
+{
+  /** Create the handle wrapper
+   *
+   * \param class_name Symbol that should be checked for
+   *
+   * \param path Path to the library
+   *
+   * \param verbose If true, output debug information
+   */
+  LTDLHandle(const std::string & class_name, const std::string & path, bool verbose);
+
+  ~LTDLHandle();
+
+  LTDLHandle(const LTDLHandle &) = delete;
+  LTDLHandle & operator=(const LTDLHandle &) = delete;
+
+  /** Get a symbol, returns nullptr if the symbol is not found
+   *
+   * \param name Name of the symbol to get
+   */
+  template<typename SymT>
+  SymT get_symbol(const std::string & name);
+
+  /** True if the library is valid */
+  inline bool valid() const
+  {
+    return valid_;
+  }
+
+  /** Returns a list of available classes provided by this library */
+  inline const std::vector<std::string> & classes() const
+  {
+    return classes_;
+  }
+
+  /** Access the path to the library */
+  inline const std::string & path() const
+  {
+    return path_;
+  }
+
+private:
+  std::string path_;
+  bool verbose_;
+  lt_dlhandle handle_;
+  bool valid_ = false;
+  bool global_ = false;
+  bool open_ = false;
+  std::vector<std::string> classes_;
+
+  bool open();
+  void close();
+};
+
+using LTDLHandlePtr = std::shared_ptr<LTDLHandle>;
+
 /*! \class Loader
  * \brief General wrapper for ltdl functionnalities
  */
@@ -51,8 +118,8 @@ struct MC_RTC_LOADER_DLLAPI Loader
 {
   template<typename T>
   friend struct ObjectLoader;
-  typedef std::map<std::string, lt_dlhandle> handle_map_t;
-  typedef std::function<void(const std::string &, lt_dlhandle)> callback_t;
+  typedef std::map<std::string, LTDLHandlePtr> handle_map_t;
+  typedef std::function<void(const std::string &, LTDLHandle &)> callback_t;
 
 public:
   static callback_t default_cb;
@@ -130,12 +197,6 @@ public:
    */
   bool has_object(const std::string & name) const;
 
-  /** Returns true if the loader has the name object and the symbol symbol in this library
-   * \param name Name to be tested
-   * \param symbol Symbol to be tested
-   */
-  bool has_symbol(const std::string & name, const std::string & symbol) const;
-
   /** Returns the list of available objects
    * \return A list of available objects
    */
@@ -172,7 +233,7 @@ public:
    * \throws LoaderException throw if the name does not exist or if symbol resolution fails
    */
   template<typename... Args>
-  std::shared_ptr<T> create_object(const std::string & name, Args &... args);
+  std::shared_ptr<T> create_object(const std::string & name, Args... args);
 
 protected:
   std::string class_name;
@@ -182,9 +243,11 @@ protected:
   struct ObjectDeleter
   {
     ObjectDeleter() {}
-    ObjectDeleter(void * sym);
+    ObjectDeleter(void (*fn)(T *));
     void operator()(T * ptr);
-    std::function<void(T *)> delete_fn_;
+
+  private:
+    void (*delete_fn_)(T *) = nullptr;
   };
   std::map<std::string, ObjectDeleter> deleters_;
 };
