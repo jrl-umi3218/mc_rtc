@@ -88,6 +88,7 @@ set(mc_rbdyn_HDR
 ../include/mc_rbdyn/surface_hull.h
 ../include/mc_rbdyn/surface_utils.h
 ../include/mc_rbdyn/Collision.h
+../include/mc_rbdyn/CompoundJointConstraintDescription.h
 ../include/mc_rbdyn/ForceSensor.h
 ../include/mc_rbdyn/Flexibility.h
 ../include/mc_rbdyn/Springs.h
@@ -126,6 +127,7 @@ set(mc_solver_SRC
 mc_solver/BoundedSpeedConstr.cpp
 mc_solver/CollisionsConstraint.cpp
 mc_solver/CoMIncPlaneConstr.cpp
+mc_solver/CompoundJointConstraint.cpp
 mc_solver/ConstraintSetLoader.cpp
 mc_solver/ContactConstraint.cpp
 mc_solver/DynamicsConstraint.cpp
@@ -142,6 +144,7 @@ set(mc_solver_HDR
 ../include/mc_solver/BoundedSpeedConstr.h
 ../include/mc_solver/CollisionsConstraint.h
 ../include/mc_solver/CoMIncPlaneConstr.h
+../include/mc_solver/CompoundJointConstraint.h
 ../include/mc_solver/ConstraintSet.h
 ../include/mc_solver/ContactConstraint.h
 ../include/mc_solver/DynamicsConstraint.h
