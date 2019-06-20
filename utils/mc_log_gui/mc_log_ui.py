@@ -106,7 +106,7 @@ def load_UserPlots(fpath):
         for y in plt.style2:
           plt.style2[y] = LineStyle(**plt.style2[y])
         if not isinstance(plt.graph_labels, GraphLabels):
-          for key, value in plt.graph_labels.iteritems():
+          for key, value in plt.graph_labels.items():
             plt.graph_labels[key] = TextWithFontSize(**plt.graph_labels[key])
           userPlotList[i] = plt._replace(graph_labels = GraphLabels(**plt.graph_labels))
     return userPlotList
@@ -688,7 +688,7 @@ class MCLogUI(QtGui.QMainWindow):
     if os.path.exists(self.robotFile):
       return open(self.robotFile).read().strip()
     else:
-      return ""
+      return u""
 
   def addApplicationShortcut(self, key, callback):
     shortcut = QtGui.QShortcut(self)
