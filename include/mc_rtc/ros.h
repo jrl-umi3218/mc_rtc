@@ -83,8 +83,6 @@ struct MC_RTC_ROS_DLLAPI ROSBridge
                                      const mc_rbdyn::Robot & robot,
                                      const std::map<std::string, std::shared_ptr<mc_control::Gripper>> & grippers = {});
 
-  static void activate_services(mc_control::MCGlobalController & ctl);
-
   /*! \brief Stop ROS */
   static void shutdown();
 

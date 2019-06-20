@@ -260,6 +260,8 @@ mc_control/mc_global_controller.cpp
 mc_control/mc_global_controller_configuration.cpp
 mc_control/mc_global_controller_gui.cpp
 mc_control/mc_global_controller_services.cpp
+mc_control/mc_global_controller_ros_services.h
+mc_control/mc_global_controller_ros_services.cpp
 )
 
 set(mc_control_HDR
