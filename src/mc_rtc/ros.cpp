@@ -534,8 +534,6 @@ void ROSBridge::update_robot_publisher(const std::string &,
 {
 }
 
-void ROSBridge::activate_services(mc_control::MCGlobalController &) {}
-
 void ROSBridge::shutdown() {}
 
 } // namespace mc_rtc

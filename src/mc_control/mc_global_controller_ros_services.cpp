@@ -37,6 +37,7 @@ void ROSServicesImpl::start_services()
 #endif
 }
 
+#ifdef MC_RTC_HAS_ROS
 bool ROSServicesImpl::move_com_callback(mc_rtc_msgs::move_comRequest & req, mc_rtc_msgs::move_comResponse & res)
 {
   LOG_INFO("[MCGlobalControllerServices] Moving CoM to (" << req.com[0] << ", " << req.com[1] << ", " << req.com[2]
@@ -119,5 +120,6 @@ bool ROSServicesImpl::send_recv_msg_callback(mc_rtc_msgs::send_recv_msg::Request
   LOG_INFO("Received message: " << resp.msg);
   return true;
 }
+#endif // MC_RTC_HAS_ROS
 
 } // namespace mc_control
