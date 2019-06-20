@@ -298,7 +298,8 @@ cdef class RobotModule(object):
 
   def bounds(self):
     assert(self.impl.get())
-    return deref(self.impl).bounds()
+    cdef vector[cppmap[string, vector[double]]] bounds = deref(self.impl).bounds()
+    return [{k.decode(): v for k,v in i.items()} for i in bounds]
   def stance(self):
     assert(self.impl.get())
     return deref(self.impl).stance()
@@ -365,7 +366,8 @@ cdef class RobotModule(object):
     return ret
   def ref_joint_order(self):
     assert(self.impl.get())
-    return deref(self.impl).ref_joint_order()
+    cdef vector[string] joints = deref(self.impl).ref_joint_order()
+    return [ j.decode('ascii') for j in joints ]
   def default_attitude(self):
     assert(self.impl.get())
     return c_mc_rbdyn.robotModuleDefaultAttitude(self.impl)
@@ -453,7 +455,8 @@ class RobotLoader(object):
     return RobotModuleFromC(rm)
   @staticmethod
   def available_robots():
-    return c_mc_rbdyn.available_robots()
+    cdef vector[string] bots = c_mc_rbdyn.available_robots();
+    return [ b.decode('ascii') for b in bots ]
   @staticmethod
   def clear():
     c_mc_rbdyn.clear_robot_module_path()
