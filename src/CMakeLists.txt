@@ -190,6 +190,8 @@ mc_trajectory/ExactCubic.cpp
 
 set(mc_trajectory_HDR
 ../include/mc_trajectory/api.h
+../include/mc_trajectory/Spline.h
+../include/mc_trajectory/Spline.hpp
 ../include/mc_trajectory/BSpline.h
 ../include/mc_trajectory/InterpolatedRotation.h
 ../include/mc_trajectory/spline_utils.h
@@ -239,6 +241,7 @@ set(mc_tasks_HDR
 ../include/mc_tasks/RelativeEndEffectorTask.h
 ../include/mc_tasks/SmoothTask.h
 ../include/mc_tasks/SplineTrajectoryTask.h
+../include/mc_tasks/SplineTrajectoryTask.hpp
 ../include/mc_tasks/BSplineTrajectoryTask.h
 ../include/mc_tasks/ExactCubicTrajectoryTask.h
 ../include/mc_tasks/TrajectoryTaskGeneric.h

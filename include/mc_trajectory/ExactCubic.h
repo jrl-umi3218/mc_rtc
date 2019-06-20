@@ -1,6 +1,7 @@
 #pragma once
 
 #include <mc_rtc/GUIState.h>
+#include <mc_trajectory/Spline.h>
 #include <mc_trajectory/api.h>
 
 #include <hpp/spline/exact_cubic.h>
@@ -15,7 +16,7 @@ namespace mc_trajectory
  * through waypoints in position, while respecting optional constraints on its
  * initial and final velocity and acceleration.
  */
-struct MC_TRAJECTORY_DLLAPI ExactCubic
+struct MC_TRAJECTORY_DLLAPI ExactCubic : public Spline<Eigen::Vector3d, std::vector<std::pair<double, Eigen::Vector3d>>>
 {
 public:
   using point_t = Eigen::Vector3d;
@@ -50,14 +51,7 @@ public:
    * parameters were modified (waypoints, target, constraints), or the sampling size has
    * changed.
    */
-  void update();
-
-  /*! \brief Sets the curve waypoints.
-   * This will trigger recomputation of the curve at the next update() call.
-   *
-   * \param waypoints Waypoints as pairs of [time, position]
-   */
-  void waypoints(const std::vector<waypoint_t> & waypoints);
+  void update() override;
 
   /*! \brief Updates the position of an existing waypoint
    *
@@ -87,11 +81,6 @@ public:
    * \returns Waypoint time
    */
   double waypointTime(size_t idx) const;
-  /*! \brief Gets all waypoints (including start and target)
-   *
-   * \returns All of the curve waypoints
-   */
-  const std::vector<waypoint_t> & waypoints() const;
 
   /*! \brief Defines the initial/final velocity and acceleration constraints for
    * the curve.
@@ -105,30 +94,6 @@ public:
                    const point_t & init_acc,
                    const point_t & end_vel,
                    const point_t & end_acc);
-
-  /*! \brief Starting point for the bezier curve at time t=0
-   *
-   * @param pos starting position
-   */
-  void start(const point_t & start);
-  /*! \brief Starting point at time t=0
-   *
-   * \returns starting point
-   */
-  const point_t & start() const;
-
-  /*! \brief Sets the curve target.
-   * Internally, the target is defined as a waypoint at t=curve duration
-   *
-   * @param target final target for the curve
-   */
-  void target(const point_t & target);
-
-  /*! \brief Gets the curve target position
-   *
-   * \returns The curve target position
-   */
-  const point_t & target() const;
 
   /*! \brief Gets the curve's initial velocity
    *
@@ -169,20 +134,6 @@ public:
    */
   std::vector<Eigen::Vector3d> sampleTrajectory(unsigned samples);
 
-  /*! \brief Number of sampling points for the trajectory visualization
-   *
-   * @param s Number of sampling points.
-   * If the number of samples is different from the one previously specified,
-   * this will trigger a curve recomputation.
-   */
-  void samplingPoints(const unsigned s);
-
-  /*! \brief Gets number of samples
-   *
-   * \returns number of samples
-   */
-  unsigned samplingPoints() const;
-
   /*! \brief Add GUI elements to control the curve's waypoints and targets
    *
    * @param gui GUI to which the task should be added
@@ -191,17 +142,8 @@ public:
   void addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string> & category);
 
 private:
-  double duration_;
-  point_t start_;
-  point_t target_;
-  std::vector<waypoint_t> waypoints_;
   spline_constraints_t constraints_;
-
   std::unique_ptr<spline_deriv_constraint_t> spline_ = nullptr;
-
-  bool needsUpdate_ = false;
-  unsigned samplingPoints_ = 10;
-  std::vector<Eigen::Vector3d> samples_;
 };
 
 } // namespace mc_trajectory

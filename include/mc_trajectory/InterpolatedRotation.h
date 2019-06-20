@@ -1,5 +1,6 @@
 #pragma once
 #include <mc_rtc/GUIState.h>
+#include <mc_trajectory/Spline.h>
 #include <mc_trajectory/api.h>
 
 #include <Eigen/Geometry>
@@ -13,6 +14,7 @@ namespace mc_trajectory
  * \brief Describes a trajectory with smoothly interpolate rotation between waypoints
  */
 struct MC_TRAJECTORY_DLLAPI InterpolatedRotation
+: Spline<Eigen::Matrix3d, std::vector<std::pair<double, Eigen::Matrix3d>>>
 {
   using waypoint_t = std::pair<double, Eigen::Matrix3d>;
 
@@ -30,6 +32,9 @@ public:
                        const Eigen::Matrix3d & start,
                        const Eigen::Matrix3d & target,
                        const std::vector<waypoint_t> & waypoints = {});
+
+  void update() override;
+
   /*! \brief Evaluate the orientation at time t
    *
    * \param t Time at which the curve should be evaluated
@@ -37,20 +42,6 @@ public:
    * \returns Interpolated orientation at time t
    */
   Eigen::Matrix3d eval(double t);
-
-  /*! \brief Defines waypoints in orientation
-   *
-   * @param waypoints Waypoints specified as pairs of [time, orientation].
-   * Shouldn't include starting and target orienation (use start() and target() instead).
-   * Time should be 0<time<duration.
-   */
-  void waypoints(const std::vector<waypoint_t> & waypoints);
-  /*! \brief Returns orientation waypoints
-   *
-   * \returns Orientation waypoints.
-   * Doesn't include starting and target orienation (use start() and target() instead).
-   */
-  std::vector<waypoint_t> & waypoints();
 
   /*! \brief Modifies an existing waypoint
    *
@@ -66,34 +57,7 @@ public:
    */
   const waypoint_t & waypoint(size_t idx) const;
 
-  /*! \brief Sets the orientation at time t=0
-   *
-   * \param ori Desired orientation
-   */
-  void start(const Eigen::Matrix3d & ori);
-  /*! \brief Orientation at time t=0
-   *
-   * \returns Orientation at t=0
-   */
-  const Eigen::Matrix3d & start() const;
-
-  /*! \brief Target orientation at time t=duration
-   *
-   * \param ori Final target orientation
-   */
-  void target(const Eigen::Matrix3d & ori);
-  /*! \brief  Target orientation at time t=duration
-   *
-   * \returns Final target orientation
-   */
-  const Eigen::Matrix3d & target() const;
-
 protected:
-  double duration_;
-  Eigen::Matrix3d start_;
-  Eigen::Matrix3d target_;
-  std::vector<std::pair<double, Eigen::Matrix3d>> waypoints_;
-  bool needsUpdate_ = false;
   std::vector<waypoint_t> all_waypoints_;
 };
 

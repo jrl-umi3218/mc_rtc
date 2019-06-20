@@ -170,14 +170,12 @@ protected:
   void update() override;
 
 protected:
+  unsigned int rIndex_;
+  std::string surfaceName_;
+  double duration_;
   mc_trajectory::InterpolatedRotation oriSpline_;
   std::vector<std::pair<double, Eigen::Matrix3d>> oriWp_;
 
-protected:
-  unsigned int rIndex_;
-  std::string surfaceName_;
-
-  double duration_;
   double currTime_ = 0.;
   double timeStep_ = 0;
   unsigned samples_ = 20;

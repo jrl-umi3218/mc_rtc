@@ -8,15 +8,15 @@ template<typename Derived>
 SplineTrajectoryTask<Derived>::SplineTrajectoryTask(const mc_rbdyn::Robots & robots,
                                                     unsigned int robotIndex,
                                                     const std::string & surfaceName_,
-                                                    double duration_,
+                                                    double duration,
                                                     double stiffness,
                                                     double posW,
                                                     double oriW,
                                                     const Eigen::Matrix3d & target,
                                                     const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
 : TrajectoryTaskGeneric<tasks::qp::TransformTask>(robots, robotIndex, stiffness, posW), rIndex_(robotIndex),
-  surfaceName_(surfaceName_), duration_(duration_),
-  oriSpline_(duration_, robots.robot().surface(surfaceName_).X_0_s(robots.robot()).rotation(), target, oriWp)
+  surfaceName_(surfaceName_), duration_(duration),
+  oriSpline_(duration, robots.robot().surface(surfaceName_).X_0_s(robots.robot()).rotation(), target, oriWp)
 {
   const auto & robot = robots.robot(robotIndex);
   const auto & surface = robot.surface(surfaceName_);

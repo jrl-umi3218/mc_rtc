@@ -17,7 +17,7 @@ ExactCubic::ExactCubic(double duration,
                        const point_t & init_acc,
                        const point_t & end_vel,
                        const point_t & end_acc)
-: duration_(duration), start_(start), target_(target), waypoints_(waypoints), needsUpdate_(true)
+: Spline<point_t, std::vector<waypoint_t>>(duration, start, target, waypoints)
 {
   this->constraints(init_vel, init_acc, end_vel, end_acc);
   this->update();
@@ -39,12 +39,6 @@ void ExactCubic::update()
     samples_ = this->sampleTrajectory(samplingPoints_);
     needsUpdate_ = false;
   }
-}
-
-void ExactCubic::waypoints(const std::vector<waypoint_t> & waypoints)
-{
-  waypoints_ = waypoints;
-  needsUpdate_ = true;
 }
 
 void ExactCubic::waypoint(size_t idx, const point_t & waypoint)
@@ -76,11 +70,6 @@ double ExactCubic::waypointTime(size_t idx) const
   return waypoints_[idx].first;
 }
 
-const std::vector<waypoint_t> & ExactCubic::waypoints() const
-{
-  return waypoints_;
-}
-
 const waypoint_t & ExactCubic::waypoint(size_t idx) const
 {
   if(idx >= waypoints_.size())
@@ -102,28 +91,6 @@ void ExactCubic::constraints(const point_t & init_vel,
   needsUpdate_ = true;
 }
 
-void ExactCubic::start(const point_t & start)
-{
-  start_ = start;
-  needsUpdate_ = true;
-}
-
-const point_t & ExactCubic::start() const
-{
-  return start_;
-}
-
-void ExactCubic::target(const point_t & target)
-{
-  target_ = target;
-  needsUpdate_ = true;
-}
-
-const point_t & ExactCubic::target() const
-{
-  return target_;
-}
-
 const point_t & ExactCubic::init_vel() const
 {
   return constraints_.init_vel;
@@ -141,20 +108,6 @@ const point_t & ExactCubic::end_acc() const
   return constraints_.end_acc;
 }
 
-void ExactCubic::samplingPoints(const unsigned s)
-{
-  if(s != samplingPoints_)
-  {
-    needsUpdate_ = true;
-  }
-  samplingPoints_ = s;
-}
-
-unsigned ExactCubic::samplingPoints() const
-{
-  return samplingPoints_;
-}
-
 std::vector<point_t> ExactCubic::splev(double t, unsigned int der)
 {
   std::vector<Eigen::Vector3d> pts;
@@ -168,17 +121,17 @@ std::vector<point_t> ExactCubic::splev(double t, unsigned int der)
 
 std::vector<Eigen::Vector3d> ExactCubic::sampleTrajectory(unsigned samples)
 {
-  if(samples < 1)
+  if(samplingPoints_ < 1)
   {
     LOG_ERROR("There should be at least 1 sample");
     return {};
   }
   std::vector<Eigen::Vector3d> traj;
-  traj.resize(samples);
+  traj.resize(samplingPoints_);
   // Evaluate trajectory for display
-  for(unsigned i = 0; i < samples; ++i)
+  for(unsigned i = 0; i < samplingPoints_; ++i)
   {
-    auto time = spline_->min() + (spline_->max() - spline_->min()) * i / (samples - 1);
+    auto time = spline_->min() + (spline_->max() - spline_->min()) * i / (samplingPoints_ - 1);
     auto res = splev(time, 0);
     traj[i] = res[0];
   }

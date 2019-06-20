@@ -9,20 +9,11 @@ InterpolatedRotation::InterpolatedRotation(double duration,
                                            const Eigen::Matrix3d & start,
                                            const Eigen::Matrix3d & target,
                                            const std::vector<waypoint_t> & waypoints)
-: duration_(duration), start_(start), target_(target), waypoints_(waypoints), needsUpdate_(true)
+: Spline<Eigen::Matrix3d, std::vector<std::pair<double, Eigen::Matrix3d>>>(duration, start, target, waypoints)
 {
 }
 
-void InterpolatedRotation::waypoints(const std::vector<waypoint_t> & waypoints)
-{
-  waypoints_ = waypoints;
-  needsUpdate_ = true;
-}
-
-std::vector<waypoint_t> & InterpolatedRotation::waypoints()
-{
-  return waypoints_;
-}
+void InterpolatedRotation::update() {}
 
 void InterpolatedRotation::waypoint(size_t idx, const Eigen::Matrix3d & ori)
 {
@@ -41,28 +32,6 @@ const waypoint_t & InterpolatedRotation::waypoint(size_t idx) const
     LOG_ERROR_AND_THROW(std::runtime_error, "No waypoint with index " << idx);
   }
   return waypoints_[idx];
-}
-
-void InterpolatedRotation::start(const Eigen::Matrix3d & ori)
-{
-  start_ = ori;
-  needsUpdate_ = true;
-}
-
-const Eigen::Matrix3d & InterpolatedRotation::start() const
-{
-  return start_;
-}
-
-void InterpolatedRotation::target(const Eigen::Matrix3d & ori)
-{
-  target_ = ori;
-  needsUpdate_ = true;
-}
-
-const Eigen::Matrix3d & InterpolatedRotation::target() const
-{
-  return target_;
 }
 
 Eigen::Matrix3d InterpolatedRotation::eval(double t)
