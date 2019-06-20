@@ -18,22 +18,19 @@ struct MC_TRAJECTORY_DLLAPI BSpline
 {
   using point_t = Eigen::Vector3d;
   using bezier_curve_t = spline::bezier_curve<double, double, 3, false, point_t>;
-  using t_point_t = bezier_curve_t::t_point_t;
+  using waypoints_t = bezier_curve_t::t_point_t;
 
 public:
   /*! \brief Creates a curve with given waypoints (should includes starting and
    * target position)
    *
    * \param duration duration of the curve
-   * \param order curve order
+   * \param start starting position at time t=0
+   * \param target target position at time t=duration
+   * \param waypoints control points for the bezier curve (excluding start and
+   * target points)
    */
-  BSpline(const t_point_t & waypoints, double duration, unsigned int order = 4);
-  /*! \brief Creates an empty curve. Call waypoints() to construct a valid curve
-   *
-   * \param duration duration of the curve
-   * \param order curve order
-   */
-  BSpline(double duration, unsigned int order = 4);
+  BSpline(double duration, const point_t & start, const point_t & target, const waypoints_t & waypoints = {});
 
   /*! \brief Triggers recreation of the curve. Will only occur if the curve
    * parameters were modified (waypoints, target), or the sampling size has
@@ -59,17 +56,29 @@ public:
    */
   std::vector<Eigen::Vector3d> sampleTrajectory(unsigned samples);
 
-  /*! \brief Sets the curve waypoints.
+  /*! \brief Sets the curve waypoints (not including start and end point)
    * This will trigger recomputation of the curve at the next update() call.
    *
    * \param waypoints Position of all waypoints
    */
-  void waypoints(const t_point_t & waypoints);
-  /*! \brief Gets all waypoints (including start and target)
+  void waypoints(const waypoints_t & waypoints);
+  /*! \brief Gets all waypoints (not including start and target)
    *
    * \returns All of the curve waypoints
    */
-  const t_point_t & waypoints() const;
+  const waypoints_t & waypoints() const;
+
+  /*! \brief Starting point for the bezier curve at time t=0
+   *
+   * @param pos starting position
+   */
+  void start(const point_t & pos);
+
+  /*! \brief Starting point at time t=0
+   *
+   * \returns starting point
+   */
+  const point_t & start() const;
 
   /*! \brief Sets the curve target.
    * Internally, the target is defined as a waypoint at t=curve duration
@@ -106,13 +115,14 @@ public:
   void addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string> & category);
 
 private:
-  double duration;
-  unsigned int p;
+  double duration_;
   std::unique_ptr<bezier_curve_t> spline = nullptr;
   bool needsUpdate_ = false;
   unsigned samplingPoints_ = 10;
   std::vector<point_t> samples_;
-  t_point_t waypoints_;
+  waypoints_t waypoints_;
+  point_t start_;
+  point_t target_;
 };
 
 } // namespace mc_trajectory

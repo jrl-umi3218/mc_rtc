@@ -9,29 +9,33 @@ using waypoint_t = ExactCubic::waypoint_t;
 using spline_deriv_constraint_t = ExactCubic::spline_deriv_constraint_t;
 using spline_constraints_t = ExactCubic::spline_constraints_t;
 
-ExactCubic::ExactCubic(const point_t & init_vel,
-                       const point_t & init_acc,
-                       const point_t & end_vel,
-                       const point_t & end_acc)
-{
-  constraints(init_vel, init_acc, end_vel, end_acc);
-}
-
-ExactCubic::ExactCubic(const std::vector<waypoint_t> & waypoints,
+ExactCubic::ExactCubic(double duration,
+                       const point_t & start,
+                       const point_t & target,
+                       const std::vector<waypoint_t> & waypoints,
                        const point_t & init_vel,
                        const point_t & init_acc,
                        const point_t & end_vel,
                        const point_t & end_acc)
+: duration_(duration), start_(start), target_(target), waypoints_(waypoints), needsUpdate_(true)
 {
-  constraints(init_vel, init_acc, end_vel, end_acc);
-  this->waypoints(waypoints);
+  this->constraints(init_vel, init_acc, end_vel, end_acc);
+  this->update();
 }
 
 void ExactCubic::update()
 {
   if(needsUpdate_)
   {
-    spline_.reset(new spline_deriv_constraint_t(waypoints_.begin(), waypoints_.end(), constraints_));
+    std::vector<waypoint_t> waypoints;
+    waypoints.reserve(waypoints_.size() + 2);
+    waypoints.push_back(std::make_pair(0., start_));
+    for(const auto & wp : waypoints_)
+    {
+      waypoints.push_back(wp);
+    }
+    waypoints.push_back(std::make_pair(duration_, target_));
+    spline_.reset(new spline_deriv_constraint_t(waypoints.begin(), waypoints.end(), constraints_));
     samples_ = this->sampleTrajectory(samplingPoints_);
     needsUpdate_ = false;
   }
@@ -39,10 +43,6 @@ void ExactCubic::update()
 
 void ExactCubic::waypoints(const std::vector<waypoint_t> & waypoints)
 {
-  if(waypoints.size() < 2)
-  {
-    LOG_ERROR_AND_THROW(std::runtime_error, "ExactCubic splines should have at least 2 waypoints");
-  }
   waypoints_ = waypoints;
   needsUpdate_ = true;
 }
@@ -102,15 +102,26 @@ void ExactCubic::constraints(const point_t & init_vel,
   needsUpdate_ = true;
 }
 
+void ExactCubic::start(const point_t & start)
+{
+  start_ = start;
+  needsUpdate_ = true;
+}
+
+const point_t & ExactCubic::start() const
+{
+  return start_;
+}
+
 void ExactCubic::target(const point_t & target)
 {
-  waypoints_.back().second = target;
+  target_ = target;
   needsUpdate_ = true;
 }
 
 const point_t & ExactCubic::target() const
 {
-  return waypoints_.back().second;
+  return target_;
 }
 
 const point_t & ExactCubic::init_vel() const
@@ -185,7 +196,7 @@ void ExactCubic::addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std
   // Interactive control points (target is handled independently)
   std::vector<std::string> waypointCategory = category;
   waypointCategory.push_back("Position Control Points");
-  for(unsigned int i = 0; i < waypoints_.size() - 1; ++i)
+  for(unsigned int i = 0; i < waypoints_.size(); ++i)
   {
     gui.addElement(waypointCategory,
                    mc_rtc::gui::Point3D("Waypoint " + std::to_string(i),

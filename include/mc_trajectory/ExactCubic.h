@@ -19,33 +19,28 @@ struct MC_TRAJECTORY_DLLAPI ExactCubic
 {
 public:
   using point_t = Eigen::Vector3d;
-  using exact_cubic_t = spline::exact_cubic<double, double, 3, false, point_t>;
   using waypoint_t = std::pair<double, point_t>;
+  using exact_cubic_t = spline::exact_cubic<double, double, 3, false, point_t>;
   using spline_deriv_constraint_t = spline::spline_deriv_constraint<double, double, 3, false, point_t>;
   using spline_constraints_t = spline_deriv_constraint_t::spline_constraints;
 
 public:
-  /* \brief Construct an empty curve with optional initial/final constraints. Call
-   * waypoints() to construct a valid curve.
-   *
-   * \param init_vel Initial velocity
-   * \param init_acc Initial acceleration
-   * \param end_vel Final velocity
-   * \param end_acc Final acceleration
-   */
-  ExactCubic(const point_t & init_vel = {},
-             const point_t & init_acc = {},
-             const point_t & end_vel = {},
-             const point_t & end_acc = {});
-  /* \brief Construct a curve passing through the specified waypoints with optional initial/final constraints.
+  /* \brief Construct a curve passing through the specified optional waypoints
+   * with optional initial/final constraints.
    * There should be at least two waypoints (initial and final position).
    *
+   * \param duration Duration of the curve
+   * \param start Starting position at time t=0
+   * \param target Target position at time t=duration
    * \param init_vel Initial velocity
    * \param init_acc Initial acceleration
    * \param end_vel Final velocity
    * \param end_acc Final acceleration
    */
-  ExactCubic(const std::vector<waypoint_t> & waypoints,
+  ExactCubic(double duration,
+             const point_t & start,
+             const point_t & target,
+             const std::vector<waypoint_t> & waypoints = {},
              const point_t & init_vel = {},
              const point_t & init_acc = {},
              const point_t & end_vel = {},
@@ -110,6 +105,17 @@ public:
                    const point_t & init_acc,
                    const point_t & end_vel,
                    const point_t & end_acc);
+
+  /*! \brief Starting point for the bezier curve at time t=0
+   *
+   * @param pos starting position
+   */
+  void start(const point_t & start);
+  /*! \brief Starting point at time t=0
+   *
+   * \returns starting point
+   */
+  const point_t & start() const;
 
   /*! \brief Sets the curve target.
    * Internally, the target is defined as a waypoint at t=curve duration
@@ -185,9 +191,13 @@ public:
   void addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string> & category);
 
 private:
-  std::unique_ptr<spline_deriv_constraint_t> spline_;
+  double duration_;
+  point_t start_;
+  point_t target_;
   std::vector<waypoint_t> waypoints_;
   spline_constraints_t constraints_;
+
+  std::unique_ptr<spline_deriv_constraint_t> spline_ = nullptr;
 
   bool needsUpdate_ = false;
   unsigned samplingPoints_ = 10;

@@ -12,11 +12,13 @@ SplineTrajectoryTask<Derived>::SplineTrajectoryTask(const mc_rbdyn::Robots & rob
                                                     double stiffness,
                                                     double posW,
                                                     double oriW,
+                                                    const Eigen::Matrix3d & target,
                                                     const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
 : TrajectoryTaskGeneric<tasks::qp::TransformTask>(robots, robotIndex, stiffness, posW), rIndex_(robotIndex),
-  surfaceName_(surfaceName_), duration_(duration_)
+  surfaceName_(surfaceName_), duration_(duration_),
+  oriSpline_(duration_, robots.robot().surface(surfaceName_).X_0_s(robots.robot()).rotation(), target, oriWp)
 {
-  const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
+  const auto & robot = robots.robot(robotIndex);
   const auto & surface = robot.surface(surfaceName_);
   type_ = "trajectory";
   name_ = "trajectory_" + robot.name() + "_" + surface.name();
@@ -24,7 +26,6 @@ SplineTrajectoryTask<Derived>::SplineTrajectoryTask(const mc_rbdyn::Robots & rob
   finalize(robots.mbs(), static_cast<int>(robotIndex), surface.bodyName(), surface.X_0_s(robot), surface.X_b_s());
   posWeight(posW);
   oriWeight(oriW);
-  oriWaypoints(oriWp);
 }
 
 template<typename Derived>
@@ -61,30 +62,7 @@ void SplineTrajectoryTask<Derived>::update()
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::oriWaypoints(const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
 {
-
-  const auto & robot = robots.robot(rIndex_);
-  const auto & X_0_s = robot.surface(surfaceName_).X_0_s(robot);
-  oriWp_.push_back(std::make_pair(0., X_0_s.rotation()));
-  double prevTime = 0;
-  for(const auto & wp : oriWp)
-  {
-    double timepoint = wp.first;
-    // Check that times are provided in correct order and that timepoint < duration
-    if(timepoint >= prevTime && timepoint <= duration_)
-    {
-      oriWp_.push_back(wp);
-    }
-    else
-    {
-      LOG_ERROR_AND_THROW(std::runtime_error, name_ << " : Invalid waypoints, please check that they are provided in "
-                                                       "the correct order and that timepoint < duration (curr="
-                                                    << timepoint << ", prev=" << prevTime
-                                                    << ", duration: " << duration_);
-    }
-    prevTime = timepoint;
-  }
-  oriWp_.push_back(std::make_pair(duration_, finalTarget_.rotation()));
-  oriSpline_.waypoints(oriWp_);
+  oriSpline_.waypoints(oriWp);
 }
 
 template<typename Derived>
@@ -218,7 +196,7 @@ void SplineTrajectoryTask<Derived>::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                                          }));
 
   // Target rotation is handled independently
-  for(unsigned i = 1; i < oriSpline_.waypoints().size() - 1; ++i)
+  for(unsigned i = 0; i < oriSpline_.waypoints().size(); ++i)
   {
     gui.addElement({"Tasks", name_, "Orientation Waypoint"},
                    mc_rtc::gui::Rotation(

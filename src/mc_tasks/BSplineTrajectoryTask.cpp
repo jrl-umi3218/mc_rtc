@@ -6,6 +6,8 @@
 namespace mc_tasks
 {
 
+using BSpline = mc_trajectory::BSpline;
+
 BSplineTrajectoryTask::BSplineTrajectoryTask(const mc_rbdyn::Robots & robots,
                                              unsigned int robotIndex,
                                              const std::string & surfaceName,
@@ -14,31 +16,30 @@ BSplineTrajectoryTask::BSplineTrajectoryTask(const mc_rbdyn::Robots & robots,
                                              double posW,
                                              double oriW,
                                              const sva::PTransformd & target,
-                                             const std::vector<Eigen::Vector3d> & posWp,
+                                             const BSpline::waypoints_t & posWp,
                                              const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
-: SplineTrajectoryTask<BSplineTrajectoryTask>(robots, robotIndex, surfaceName, duration, stiffness, posW, oriW, oriWp),
-  bspline(duration)
+: SplineTrajectoryTask<BSplineTrajectoryTask>(robots,
+                                              robotIndex,
+                                              surfaceName,
+                                              duration,
+                                              stiffness,
+                                              posW,
+                                              oriW,
+                                              target.rotation(),
+                                              oriWp),
+  bspline(duration,
+          robots.robot().surface(surfaceName_).X_0_s(robots.robot()).translation(),
+          target.translation(),
+          posWp)
 {
-  const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
+  const auto & robot = robots.robot(robotIndex);
   type_ = "bspline_trajectory";
   name_ = "bspline_trajectory_" + robot.name() + "_" + surfaceName_;
-  posWaypoints(posWp);
-  SplineTrajectoryBase::target(target);
 }
 
-void BSplineTrajectoryTask::posWaypoints(const std::vector<Eigen::Vector3d> & posWp)
+void BSplineTrajectoryTask::posWaypoints(const BSpline::waypoints_t & posWp)
 {
-  mc_trajectory::BSpline::t_point_t waypoints;
-  waypoints.reserve(posWp.size() + 2);
-  const auto & robot = robots.robot(rIndex);
-  const auto & X_0_s = robot.surface(surfaceName_).X_0_s(robot);
-  waypoints.push_back(X_0_s.translation());
-  for(const auto & wp : posWp)
-  {
-    waypoints.push_back(wp);
-  }
-  waypoints.push_back(finalTarget_.translation());
-  bspline.waypoints(waypoints);
+  bspline.waypoints(posWp);
 }
 
 void BSplineTrajectoryTask::target(const sva::PTransformd & target)
@@ -65,7 +66,7 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
     "bspline_trajectory",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
       sva::PTransformd finalTarget_;
-      std::vector<Eigen::Vector3d> waypoints;
+      mc_tasks::BSplineTrajectoryTask::waypoints_t waypoints;
       std::vector<std::pair<double, Eigen::Matrix3d>> oriWp;
       const auto robotIndex = config("robotIndex");
 

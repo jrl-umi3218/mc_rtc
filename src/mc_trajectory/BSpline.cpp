@@ -9,22 +9,32 @@
 namespace mc_trajectory
 {
 using point_t = BSpline::point_t;
-using t_point_t = BSpline::t_point_t;
+using waypoints_t = BSpline::waypoints_t;
 using bezier_curve_t = BSpline::bezier_curve_t;
 
-BSpline::BSpline(const t_point_t & waypoints, double duration, unsigned int order)
-: duration(duration), p(order), waypoints_(waypoints)
+BSpline::BSpline(double duration, const point_t & start, const point_t & target, const waypoints_t & waypoints)
+: duration_(duration), waypoints_(waypoints)
 {
-  spline.reset(new bezier_curve_t(waypoints.begin(), waypoints.end(), duration));
+  this->start(start);
+  this->target(target);
+  this->waypoints(waypoints);
+  this->update();
 }
-
-BSpline::BSpline(double duration, unsigned int order) : duration(duration), p(order) {}
 
 void BSpline::update()
 {
   if(needsUpdate_)
   {
-    spline.reset(new bezier_curve_t(waypoints_.begin(), waypoints_.end(), duration));
+    // Waypoints including start and target position
+    std::vector<point_t> waypoints;
+    waypoints.reserve(waypoints_.size() + 2);
+    waypoints.push_back(start_);
+    for(const auto & wp : waypoints_)
+    {
+      waypoints.push_back(wp);
+    }
+    waypoints.push_back(target_);
+    spline.reset(new bezier_curve_t(waypoints.begin(), waypoints.end(), duration_));
     samples_ = this->sampleTrajectory(samplingPoints_);
     needsUpdate_ = false;
   }
@@ -57,7 +67,7 @@ std::vector<Eigen::Vector3d> BSpline::sampleTrajectory(unsigned samples)
   // Evaluate trajectory for display
   for(unsigned i = 0; i < samples; ++i)
   {
-    auto time = duration * i / (samples - 1);
+    auto time = duration_ * i / (samples - 1);
     auto res = splev(time, 0);
     Eigen::Vector3d & pos = res[0];
     traj[i] = pos;
@@ -65,30 +75,37 @@ std::vector<Eigen::Vector3d> BSpline::sampleTrajectory(unsigned samples)
   return traj;
 }
 
-void BSpline::waypoints(const t_point_t & waypoints)
+void BSpline::waypoints(const waypoints_t & waypoints)
 {
-  if(waypoints.size() < 2)
-  {
-    LOG_ERROR_AND_THROW(std::runtime_error, "There should be at least two waypoints");
-  }
   waypoints_ = waypoints;
   needsUpdate_ = true;
 }
 
+const waypoints_t & BSpline::waypoints() const
+{
+  return waypoints_;
+}
+
+void BSpline::start(const point_t & pos)
+{
+  start_ = pos;
+  needsUpdate_ = true;
+}
+
+const point_t & BSpline::start() const
+{
+  return start_;
+}
+
 void BSpline::target(const point_t & target)
 {
-  waypoints_.back() = target;
+  target_ = target;
   needsUpdate_ = true;
 }
 
 const point_t & BSpline::target() const
 {
-  return waypoints_.back();
-}
-
-const t_point_t & BSpline::waypoints() const
-{
-  return waypoints_;
+  return target_;
 }
 
 void BSpline::samplingPoints(const unsigned s)
@@ -117,7 +134,7 @@ void BSpline::addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::s
   // Interactive control points
   std::vector<std::string> waypointCategory = category;
   waypointCategory.push_back("Position Control Points");
-  for(unsigned int i = 0; i < this->waypoints().size() - 1; ++i)
+  for(unsigned int i = 0; i < this->waypoints().size(); ++i)
   {
     gui.addElement(waypointCategory,
                    mc_rtc::gui::Point3D("Waypoint " + std::to_string(i),

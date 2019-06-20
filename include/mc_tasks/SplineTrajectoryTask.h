@@ -51,6 +51,7 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformT
                        double stiffness,
                        double posW,
                        double oriW,
+                       const Eigen::Matrix3d & target,
                        const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp = {});
 
   /** \brief Sets the orientation waypoints
@@ -175,8 +176,6 @@ protected:
 protected:
   unsigned int rIndex_;
   std::string surfaceName_;
-  sva::PTransformd initialPose_;
-  sva::PTransformd finalTarget_;
 
   double duration_;
   double currTime_ = 0.;

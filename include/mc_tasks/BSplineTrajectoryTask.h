@@ -15,6 +15,9 @@ namespace mc_tasks
 struct MC_TASKS_DLLAPI BSplineTrajectoryTask : public SplineTrajectoryTask<BSplineTrajectoryTask>
 {
 public:
+  using waypoints_t = mc_trajectory::BSpline::waypoints_t;
+
+public:
   /**
    * \brief Creates a trajectory that follows a bspline curve
    *
@@ -42,7 +45,7 @@ public:
                         double posW,
                         double oriW,
                         const sva::PTransformd & target,
-                        const std::vector<Eigen::Vector3d> & posWp,
+                        const waypoints_t & posWp = {},
                         const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp = {});
 
   /*! \brief const accessor to the underlying spline (used by SplineTrajectoryTask)
@@ -79,10 +82,10 @@ public:
 
   /** \brief Control points for the bezier curve (position)
    *
-   * \param posWp Vector of position control points for the bezier curve. Should
-   * not include the starting and target position.
+   * \param posWp Vector of position control points for the bezier curve.
+   * Shouldn't include the starting and target position (use target() instead).
    */
-  void posWaypoints(const std::vector<Eigen::Vector3d> & posWp);
+  void posWaypoints(const waypoints_t & posWp);
 
 protected:
   mc_trajectory::BSpline bspline;

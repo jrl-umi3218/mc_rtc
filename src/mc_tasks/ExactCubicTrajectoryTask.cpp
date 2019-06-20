@@ -7,8 +7,8 @@ namespace mc_tasks
 {
 ExactCubicTrajectoryTask::ExactCubicTrajectoryTask(const mc_rbdyn::Robots & robots,
                                                    unsigned int robotIndex,
-                                                   const std::string & surfaceName_,
-                                                   double duration_,
+                                                   const std::string & surfaceName,
+                                                   double duration,
                                                    double stiffness,
                                                    double posW,
                                                    double oriW,
@@ -21,49 +21,32 @@ ExactCubicTrajectoryTask::ExactCubicTrajectoryTask(const mc_rbdyn::Robots & robo
                                                    const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
 : SplineTrajectoryTask<ExactCubicTrajectoryTask>(robots,
                                                  robotIndex,
-                                                 surfaceName_,
-                                                 duration_,
+                                                 surfaceName,
+                                                 duration,
                                                  stiffness,
                                                  posW,
                                                  oriW,
-                                                 oriWp)
+                                                 target.rotation(),
+                                                 oriWp),
+  bspline(duration,
+          robots.robot().surface(surfaceName).X_0_s(robots.robot()).translation(),
+          target.translation(),
+          posWp,
+          init_vel,
+          init_acc,
+          end_vel,
+          end_acc)
 {
   const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
   type_ = "exact_cubic_trajectory";
   name_ = "exact_cubic_trajectory_" + robot.name() + "_" + surfaceName_;
   bspline.constraints(init_vel, init_acc, end_vel, end_acc);
-  posWaypoints(posWp);
-  SplineTrajectoryBase::target(target);
   initialPose_ = robot.surface(surfaceName_).X_0_s(robot);
 }
 
 void ExactCubicTrajectoryTask::posWaypoints(const std::vector<std::pair<double, Eigen::Vector3d>> & posWp)
 {
-  std::vector<std::pair<double, Eigen::Vector3d>> waypoints;
-  waypoints.reserve(posWp.size() + 2);
-  const auto & robot = robots.robot(rIndex);
-  const auto & X_0_s = robot.surface(surfaceName_).X_0_s(robot);
-  waypoints.push_back(std::make_pair(0., X_0_s.translation()));
-  double prevTime = 0;
-  for(const auto & wp : posWp)
-  {
-    double timepoint = wp.first;
-    // Check that times are provided in correct order and that timepoint < duration
-    if(timepoint >= prevTime && timepoint <= duration_)
-    {
-      waypoints.push_back(wp);
-    }
-    else
-    {
-      LOG_ERROR_AND_THROW(std::runtime_error, name_ << " : Invalid waypoints, please check that they are provided in "
-                                                       "the correct order and that timepoint < duration (curr="
-                                                    << timepoint << ", prev=" << prevTime
-                                                    << ", duration: " << duration_);
-    }
-    prevTime = wp.first;
-  }
-  waypoints.push_back(std::make_pair(duration_, finalTarget_.translation()));
-  bspline.waypoints(waypoints);
+  bspline.waypoints(posWp);
 }
 
 void ExactCubicTrajectoryTask::constraints(const Eigen::Vector3d & init_vel,

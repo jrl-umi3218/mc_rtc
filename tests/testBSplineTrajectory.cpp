@@ -7,12 +7,12 @@
 
 int main()
 {
-  using t_point_t = mc_trajectory::BSpline::t_point_t;
-  t_point_t cps;
-  cps.push_back(Eigen::Vector3d(-0.45, -0.34, 0.54));
+  using waypoints_t = mc_trajectory::BSpline::waypoints_t;
+  Eigen::Vector3d start{-0.45, -0.34, 0.54};
+  Eigen::Vector3d target{0.45, -0.34, 0.54};
+  waypoints_t cps;
   cps.push_back(Eigen::Vector3d(0.4, -0.34, 0.54));
-  cps.push_back(Eigen::Vector3d(0.45, -0.34, 0.54));
-  mc_trajectory::BSpline spline(cps, 20.0);
+  mc_trajectory::BSpline spline(20.0, start, target, cps);
   for(double t = 0; t < 20.01; t += 1.0)
   {
     // auto res = spline.spline(t/20.0);

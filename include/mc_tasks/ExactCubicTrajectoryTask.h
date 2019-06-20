@@ -54,7 +54,7 @@ public:
                            double posW,
                            double oriW,
                            const sva::PTransformd & target,
-                           const std::vector<std::pair<double, Eigen::Vector3d>> & posWp,
+                           const std::vector<std::pair<double, Eigen::Vector3d>> & posWp = {},
                            const Eigen::Vector3d & init_vel = Eigen::Vector3d::Zero(),
                            const Eigen::Vector3d & init_acc = Eigen::Vector3d::Zero(),
                            const Eigen::Vector3d & end_vel = Eigen::Vector3d::Zero(),
