@@ -54,7 +54,7 @@ add_project_dependency(Boost REQUIRED COMPONENTS filesystem timer)
 add_project_dependency(Tasks REQUIRED)
 add_project_dependency(mc_rbdyn_urdf REQUIRED)
 # https://github.com/humanoid-path-planner/hpp-spline
-add_project_dependency(hpp-spline REQUIRED)
+add_required_dependency(hpp-spline)
 
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
