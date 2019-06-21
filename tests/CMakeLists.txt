@@ -1,13 +1,7 @@
 find_package(Boost REQUIRED COMPONENTS unit_test_framework timer)
-include_directories(${Boost_INCLUDE_DIRS})
-add_definitions(-DBOOST_TEST_DYN_LINK -DBOOST_TEST_MAIN)
-if(WIN32)
-  add_definitions( -DBOOST_ALL_DYN_LINK )
-endif()
 
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/tests_config.h.cmake.in"
                "${CMAKE_CURRENT_BINARY_DIR}/tests_config.h")
-include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 ############################
 # -- Compile-time tests -- #
@@ -25,13 +19,14 @@ add_executable(testBSplineTrajectory testBSplineTrajectory.cpp)
 target_link_libraries(testBSplineTrajectory PUBLIC mc_trajectory)
 
 add_executable(testQuadraticGenerator testQuadraticGenerator.cpp)
-pkg_config_use_dependency(testQuadraticGenerator Tasks)
-pkg_config_use_dependency(testQuadraticGenerator mc_rbdyn_urdf)
 target_link_libraries(testQuadraticGenerator PUBLIC mc_rbdyn)
 
 #################################
 # -- Framework utility tests -- #
 #################################
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests_config.h.in
+               ${CMAKE_CURRENT_BINARY_DIR}/include/tests_config.h)
 
 MACRO(mc_rtc_test NAME)
   if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${NAME}.cpp)
@@ -43,15 +38,13 @@ MACRO(mc_rtc_test NAME)
   else()
     message(FATAL_ERROR "Cannot add mc_rtc_test: neither ${NAME}.cpp nor ${NAME}.in.cpp exists in ${CMAKE_CURRENT_SOURCE_DIR}")
   endif()
-  target_link_libraries(${NAME} PUBLIC ${Boost_LIBRARIES} ${ARGN})
+  target_link_libraries(${NAME} PUBLIC Boost::unit_test_framework Boost::disable_autolinking ${ARGN})
+  target_compile_definitions(${NAME} PRIVATE -DBOOST_TEST_DYN_LINK -DBOOST_TEST_MAIN)
+  target_include_directories(${NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/include)
   add_test(${NAME} ${NAME})
   # Adding a project configuration file (for MSVC only)
   generate_msvc_dot_user_file(${NAME})
 ENDMACRO()
-
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests_config.h.in
-               ${CMAKE_CURRENT_BINARY_DIR}/include/tests_config.h)
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
 
 mc_rtc_test(testConfiguration mc_rtc_utils mc_rbdyn)
 mc_rtc_test(testGUIStateBuilder mc_rtc_gui)
@@ -75,9 +68,8 @@ mc_rtc_test(testFSMStateFactory mc_control_fsm ConfigureState)
 ######################################
 
 add_executable(test_controller_ticker test_controller_ticker.cpp)
-pkg_config_use_dependency(test_controller_ticker mc_rbdyn_urdf)
-target_link_libraries(test_controller_ticker PUBLIC ${Boost_LIBRARIES} mc_control)
-pkg_config_use_dependency(test_controller_ticker Tasks)
+target_link_libraries(test_controller_ticker PUBLIC mc_control Boost::unit_test_framework Boost::disable_autolinking)
+target_compile_definitions(test_controller_ticker PRIVATE -DBOOST_TEST_DYN_LINK -DBOOST_TEST_MAIN)
 # Adding a project configuration file (for MSVC only)
 generate_msvc_dot_user_file(test_controller_ticker)
 

@@ -2,7 +2,7 @@
 
 from PySide import QtCore, QtGui
 
-from mc_log_tab_ui import Ui_MCLogTab
+import ui
 from mc_log_types import LineStyle
 from mc_log_plotcanvas import PlotFigure
 
@@ -66,7 +66,7 @@ class TreeView(object):
     row = 0
     needExpand = False
     if all([l.name.isdigit() for l in self.leafs]):
-      self.leafs.sort(lambda l,r: cmp(int(l.name), int(r.name)))
+      self.leafs.sort(key = lambda x: x.name)
     for l in self.leafs:
       l.widgets.append(MCLogTreeWidgetItem(parent, l.name, l.dataName, l.hasData))
       if baseModelIdx is not None:
@@ -134,7 +134,7 @@ class SpecialPlot(object):
     elif special_id == "y":
       self.__plot = self.__add_yaw
     else:
-      print "Cannot handle this special plot:", special_id
+      print("Cannot handle this special plot: {}".format(special_id))
     self.plot()
   def __add_diff(self):
     added = filter(lambda x: re.match("{}($|_.*$)".format(self.name), x) is not None, self.figure.data.keys())
@@ -206,7 +206,7 @@ class MCLogTab(QtGui.QWidget):
   canvas_need_update = QtCore.Signal()
   def __init__(self, parent = None):
     super(MCLogTab, self).__init__(parent)
-    self.ui = Ui_MCLogTab()
+    self.ui = ui.MCLogTab()
     self.ui.setupUi(self)
     self.ui.canvas.setupLockButtons(self.ui.selectorLayout)
     if parent is not None:
@@ -533,25 +533,25 @@ class MCLogTab(QtGui.QWidget):
       tab.ui.canvas.add_diff_plot_left(tab.x_data, y, y_label)
     for y, y_label in zip(y_diff_data[1], y_diff_data_labels[1]):
       tab.ui.canvas.add_diff_plot_right(tab.x_data, y, y_label)
-    class nonlocal: pass
-    nonlocal.title = ''
-    def updateTitle(nTitle):
-      if len(nonlocal.title):
-        nonlocal.title += ' / '
+    title = ''
+    def updateTitle(title, nTitle):
+      if len(title):
+        title += ' / '
       nTitle = nTitle.replace('_', ' ')
-      nonlocal.title += nTitle
+      title += nTitle
+      return title
     if y1_label:
-      updateTitle(y1_label.title())
+      title = updateTitle(title, y1_label.title())
       tab.ui.canvas.y1_label(y1_label)
     if y2_label:
-      updateTitle(y2_label.title())
+      title = updateTitle(title, y2_label.title())
       tab.ui.canvas.y2_label(y2_label)
     if y1_diff_label:
-      updateTitle(y1_diff_label.title())
+      title = updateTitle(title, y1_diff_label.title())
       tab.ui.canvas.y1_label(y1_diff_label)
     if y2_diff_label:
-      updateTitle(y2_diff_label.title())
+      title = updateTitle(title, y2_diff_label.title())
       tab.ui.canvas.y2_label(y2_diff_label)
-    tab.ui.canvas.title(nonlocal.title)
+    tab.ui.canvas.title(title)
     tab.ui.canvas.draw()
     return tab

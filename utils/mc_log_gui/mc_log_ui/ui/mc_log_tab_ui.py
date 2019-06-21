@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mc_log_tab_ui.ui'
 #
-# Created: Mon Jan 21 11:04:23 2019
+# Created: Fri Jun 21 10:19:11 2019
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -60,4 +60,4 @@ class Ui_MCLogTab(object):
     def retranslateUi(self, MCLogTab):
         MCLogTab.setWindowTitle(QtGui.QApplication.translate("MCLogTab", "MCLogTab", None, QtGui.QApplication.UnicodeUTF8))
 
-from mc_log_plotcanvas import PlotCanvasWithToolbar
+from mc_log_ui.mc_log_plotcanvas import PlotCanvasWithToolbar

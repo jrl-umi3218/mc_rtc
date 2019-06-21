@@ -14,7 +14,7 @@ extern "C"
 {
   void MC_RTC_CONTROLLER(std::vector<std::string> & names)
   {
-    names = {"PythonController"};
+    names = {"@PYTHON_NAME@"};
   }
   void destroy(mc_control::MCController * ptr)
   {

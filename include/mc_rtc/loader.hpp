@@ -8,19 +8,37 @@
 namespace mc_rtc
 {
 
-template<typename T>
-ObjectLoader<T>::ObjectDeleter::ObjectDeleter(void * sym)
+template<typename SymT>
+SymT LTDLHandle::get_symbol(const std::string & name)
 {
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wpedantic"
-  delete_fn_ = (void (*)(T *))(sym);
-#pragma GCC diagnostic pop
+  if(!open())
+  {
+    return nullptr;
+  }
+  SymT ret = (SymT)(lt_dlsym(handle_, name.c_str()));
+  if(ret == nullptr)
+  {
+    const char * error = lt_dlerror();
+    if(verbose_)
+    {
+      LOG_WARNING("Could not get symbol " << name << " in library " << path_ << "\n" << error)
+    }
+  }
+  return ret;
+}
+
+template<typename T>
+ObjectLoader<T>::ObjectDeleter::ObjectDeleter(void (*fn)(T *)) : delete_fn_(fn)
+{
 }
 
 template<typename T>
 void ObjectLoader<T>::ObjectDeleter::operator()(T * ptr)
 {
-  delete_fn_(ptr);
+  if(delete_fn_)
+  {
+    delete_fn_(ptr);
+  }
 }
 
 template<typename T>
@@ -38,10 +56,6 @@ ObjectLoader<T>::ObjectLoader(const std::string & class_name,
 template<typename T>
 ObjectLoader<T>::~ObjectLoader()
 {
-  for(const auto & h : handles_)
-  {
-    lt_dlclose(h.second);
-  }
   Loader::close();
 }
 
@@ -49,12 +63,6 @@ template<typename T>
 bool ObjectLoader<T>::has_object(const std::string & object) const
 {
   return handles_.count(object) != 0;
-}
-
-template<typename T>
-bool ObjectLoader<T>::has_symbol(const std::string & object, const std::string & symbol) const
-{
-  return has_object(object) && lt_dlsym(handles_.at(object), symbol.c_str()) != nullptr;
 }
 
 template<typename T>
@@ -72,20 +80,6 @@ template<typename T>
 void ObjectLoader<T>::load_libraries(const std::vector<std::string> & paths, Loader::callback_t cb)
 {
   Loader::load_libraries(class_name, paths, handles_, verbose, cb);
-  for(const auto & h : handles_)
-  {
-    if(deleters_.count(h.first) == 0)
-    {
-      void * sym = lt_dlsym(h.second, "destroy");
-      if(sym == nullptr)
-      {
-        LOG_ERROR_AND_THROW(LoaderException, "Symbol destroy not found in " << lt_dlgetinfo(h.second)->filename
-                                                                            << std::endl
-                                                                            << lt_dlerror())
-      }
-      deleters_[h.first] = ObjectDeleter(sym);
-    }
-  }
 }
 
 template<typename T>
@@ -108,7 +102,7 @@ void ObjectLoader<T>::set_verbosity(bool verbose)
 
 template<typename T>
 template<typename... Args>
-std::shared_ptr<T> ObjectLoader<T>::create_object(const std::string & name, Args &... args)
+std::shared_ptr<T> ObjectLoader<T>::create_object(const std::string & name, Args... args)
 {
   if(!has_object(name))
   {
@@ -116,56 +110,44 @@ std::shared_ptr<T> ObjectLoader<T>::create_object(const std::string & name, Args
   }
   unsigned int args_passed = 1 + sizeof...(Args);
   unsigned int args_required = args_passed;
-  void * args_required_sym = lt_dlsym(handles_[name], "create_args_required");
-  if(args_required_sym)
+  auto create_args_required = handles_[name]->template get_symbol<unsigned int (*)()>("create_args_required");
+  if(create_args_required != nullptr)
   {
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wpedantic"
-    auto create_args_required = (unsigned int (*)())(args_required_sym);
-#pragma GCC diagnostic pop
     args_required = create_args_required();
-  }
-  else
-  {
-    /* Discard error message */
-    lt_dlerror();
   }
   if(args_passed != args_required)
   {
     LOG_ERROR_AND_THROW(LoaderException, args_passed << " arguments passed to create function of " << name
                                                      << " which expects " << args_required)
   }
-  void * sym = lt_dlsym(handles_[name], "create");
-  if(sym == nullptr)
+  auto create_fn =
+      handles_[name]->template get_symbol<T * (*)(const std::string &, const typename std::decay<Args>::type &...)>(
+          "create");
+  if(create_fn == nullptr)
   {
-    LOG_ERROR_AND_THROW(LoaderException, "Symbol create not found in " << lt_dlgetinfo(handles_[name])->filename
-                                                                       << std::endl
-                                                                       << lt_dlerror())
+    LOG_ERROR_AND_THROW(LoaderException, "Failed to resolve create symbol in " << handles_[name]->path() << "\n")
   }
-  const char * err = lt_dlerror();
-  if(err != nullptr)
-  {
-    LOG_ERROR_AND_THROW(LoaderException, "Failed to resolve create symbol in " << lt_dlgetinfo(handles_[name])->filename
-                                                                               << std::endl
-                                                                               << err)
-  }
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wpedantic"
-  std::function<T *(const std::string &, const Args &...)> create_fn =
-      (T * (*)(const std::string &, const Args &...))(sym);
-#pragma GCC diagnostic pop
   T * ptr = nullptr;
   if(enable_sandbox)
   {
-    ptr = sandbox_function_call(create_fn, name, args...);
+    ptr = sandbox_function_call<T>(create_fn, name, args...);
   }
   else
   {
-    ptr = no_sandbox_function_call(create_fn, name, args...);
+    ptr = no_sandbox_function_call<T>(create_fn, name, args...);
   }
   if(ptr == nullptr)
   {
     LOG_ERROR_AND_THROW(LoaderException, "Call to create for object " << name << " failed")
+  }
+  if(!deleters_.count(name))
+  {
+    auto delete_fn = handles_[name]->template get_symbol<void (*)(T *)>("destroy");
+    if(delete_fn == nullptr)
+    {
+      LOG_ERROR_AND_THROW(LoaderException, "Symbol destroy not found in " << handles_[name]->path() << "\n")
+    }
+    deleters_[name] = ObjectDeleter(delete_fn);
   }
   return std::shared_ptr<T>(ptr, deleters_[name]);
 }

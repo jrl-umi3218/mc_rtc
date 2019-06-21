@@ -1,1 +1,1 @@
-from test_python import TestPythonController
+from .test_python import TestPythonController

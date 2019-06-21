@@ -25,14 +25,16 @@ cdef class AdmittanceTask(SurfaceTransformTask):
       self.adm_impl = self.impl = self.ttg_base = self.mt_base = NULL
   def __ctor__(self, surfaceName, mc_rbdyn.Robots robots, robotIndex,
                stiffness = 5.0, weight = 1000.0):
+    if isinstance(surfaceName, unicode):
+      surfaceName = surfaceName.encode(u'ascii')
     self.__own_impl = True
     self.adm_impl = self.impl = self.ttg_base = self.mt_base = new c_force.AdmittanceTask(surfaceName, deref(robots.impl), robotIndex, stiffness, weight)
   def __cinit__(self, *args, skip_alloc = False, **kwargs):
     if skip_alloc:
       if len(args) + len(kwargs) > 0:
         raise TypeError("Cannot pass skip_alloc = True and other arguments to AdmittanceTask ctor")
-        self.__own_impl = False
-        self.adm_impl = self.impl = self.ttg_base = self.mt_base = NULL
+      self.__own_impl = False
+      self.adm_impl = self.impl = self.ttg_base = self.mt_base = NULL
     elif len(args) >= 3:
       self.__ctor__(*args, **kwargs)
     else:
@@ -64,14 +66,16 @@ cdef class ComplianceTask(MetaTask):
                      timestep, stiffness = 5.0, weight = 1000.0,
                      forceThresh = 3., torqueThresh = 1.,
                      forceGain = defaultFGain, torqueGain = defaultTGain):
+    if isinstance(body, unicode):
+      body = body.encode(u'ascii')
     self.__own_impl = True
     self.impl = self.mt_base = new c_force.ComplianceTask(deref(robots.impl), robotIndex, body, timestep, stiffness, weight, forceThresh, torqueThresh, forceGain, torqueGain)
   def __cinit__(self, *args, skip_alloc = False, **kwargs):
     if skip_alloc:
       if len(args) + len(kwargs) > 0:
         raise TypeError("Cannot pass skip_alloc = True and other arguments to ComplianceTask ctor")
-        self.__own_impl = False
-        self.impl = self.mt_base = NULL
+      self.__own_impl = False
+      self.impl = self.mt_base = NULL
     elif len(args) >= 4:
       self.__ctor__(*args, **kwargs)
     else:
@@ -90,14 +94,16 @@ cdef class DampingTask(AdmittanceTask):
       self.damping_impl = self.adm_impl = self.impl = self.ttg_base = self.mt_base = NULL
   def __ctor__(self, surfaceName, mc_rbdyn.Robots robots, robotIndex,
                stiffness = 5.0, weight = 1000.0):
+    if isinstance(surfaceName, unicode):
+      surfaceName = surfaceName.encode(u'ascii')
     self.__own_impl = True
     self.damping_impl = self.adm_impl = self.impl = self.ttg_base = self.mt_base = new c_force.DampingTask(surfaceName, deref(robots.impl), robotIndex, stiffness, weight)
   def __cinit__(self, *args, skip_alloc = False, **kwargs):
     if skip_alloc:
       if len(args) + len(kwargs) > 0:
         raise TypeError("Cannot pass skip_alloc = True and other arguments to DampingTask ctor")
-        self.__own_impl = False
-        self.damping_impl = self.adm_impl = self.impl = self.ttg_base = self.mt_base = NULL
+      self.__own_impl = False
+      self.damping_impl = self.adm_impl = self.impl = self.ttg_base = self.mt_base = NULL
     elif len(args) >= 3:
       self.__ctor__(*args, **kwargs)
     else:
@@ -110,14 +116,16 @@ cdef class CoPTask(DampingTask):
       self.cop_impl = self.damping_impl = self.adm_impl = self.impl = self.ttg_base = self.mt_base = NULL
   def __ctor__(self, surfaceName, mc_rbdyn.Robots robots, robotIndex,
                stiffness = 5.0, weight = 1000.0):
+    if isinstance(surfaceName, unicode):
+      surfaceName = surfaceName.encode(u'ascii')
     self.__own_impl = True
     self.cop_impl = self.damping_impl = self.adm_impl = self.impl = self.ttg_base = self.mt_base = new c_force.CoPTask(surfaceName, deref(robots.impl), robotIndex, stiffness, weight)
   def __cinit__(self, *args, skip_alloc = False, **kwargs):
     if skip_alloc:
       if len(args) + len(kwargs) > 0:
         raise TypeError("Cannot pass skip_alloc = True and other arguments to CoPTask ctor")
-        self.__own_impl = False
-        self.cop_impl = self.damping_impl = self.adm_impl = self.impl = self.ttg_base = self.mt_base = NULL
+      self.__own_impl = False
+      self.cop_impl = self.damping_impl = self.adm_impl = self.impl = self.ttg_base = self.mt_base = NULL
     elif len(args) >= 3:
       self.__ctor__(*args, **kwargs)
     else:

@@ -37,6 +37,8 @@ IF MC_RTC_HAS_ROS == 1:
     cdef c_mc_rtc.RobotPublisher * impl
 
     def __cinit__(self, prefix, rate, dt):
+      if isinstance(prefix, unicode):
+        prefix = prefix.encode(u'ascii')
       self.impl = new c_mc_rtc.RobotPublisher(prefix, rate, dt)
 
     def update(self, dt, mc_rbdyn.Robot robot, grippersIn):
@@ -69,13 +71,18 @@ cdef c_sva.ForceVecd python_log_fv(get_fn) with gil:
   return c_sva.ForceVecd(deref(ret.impl))
 
 cdef string python_log_string(get_fn) with gil:
-  return get_fn()
+  ret = get_fn()
+  if isinstance(ret, unicode):
+    ret = ret.encode(u'ascii')
+  return ret
 
 cdef class Logger(object):
   CALLBACKS = []
   def __cinit__(self):
     self.impl = NULL
   def addLogEntry(self, name, get_fn):
+    if isinstance(name, unicode):
+      name = name.encode(u'ascii')
     Logger.CALLBACKS.append(get_fn)
     ret = get_fn()
     if isinstance(ret, eigen.Vector3d):
@@ -94,6 +101,10 @@ cdef class Logger(object):
       self.impl.addLogEntry[c_mc_rtc.function[string]](name, c_mc_rtc.make_string_log_callback(python_log_string, get_fn))
     else:
       raise TypeError("Cannot convert a callback returning " + str(type(ret)))
+  def removeLogEntry(self, name):
+    if isinstance(name, unicode):
+      name = name.encode(u'ascii')
+    self.impl.removeLogEntry(name)
 
 cdef Logger LoggerFromRef(c_mc_rtc.Logger & logger):
   cdef Logger ret = Logger()
@@ -111,12 +122,17 @@ cdef class Configuration(object):
         self.impl = new c_mc_rtc.Configuration()
       else:
         assert(len(args) == 1)
-        self.impl = new c_mc_rtc.Configuration(<string>(args[0]))
+        path = args[0]
+        if isinstance(path, unicode):
+          path = path.encode(u'ascii')
+        self.impl = new c_mc_rtc.Configuration(<string>(path))
     else:
       self.__own_impl = False
       self.impl = NULL
   @staticmethod
   def fromData(data):
+    if isinstance(data, unicode):
+      data = data.encode(u'ascii')
     return ConfigurationFromValue(c_mc_rtc.ConfigurationFromData(data))
   # Convert Python object to Configuration
   @staticmethod
@@ -130,6 +146,7 @@ cdef class Configuration(object):
     elif isinstance(t(), numbers.Number):
       ret = c_mc_rtc.get_as_config[double](value)
     elif t is str or t is unicode:
+      value = value.encode(u'ascii')
       ret = c_mc_rtc.get_as_config[string](value)
     elif t is eigen.Vector2d:
       ret = c_mc_rtc.get_as_config[c_eigen.Vector2d]((<eigen.Vector2d>(value)).impl)
@@ -181,9 +198,10 @@ cdef class Configuration(object):
         return c_mc_rtc.get_config_as[double](deref(self.impl))
     if t is str or t is unicode:
       if default is not None:
-        return c_mc_rtc.get_config_as[string](deref(self.impl), default)
+        default = default.encode(u'ascii')
+        return c_mc_rtc.get_config_as[string](deref(self.impl), default).decode(u'ascii')
       else:
-        return c_mc_rtc.get_config_as[string](deref(self.impl))
+        return c_mc_rtc.get_config_as[string](deref(self.impl)).decode(u'ascii')
     if t is eigen.Vector2d:
       if default is not None:
         return eigen.Vector2dFromC(c_mc_rtc.get_config_as[c_eigen.Vector2d](deref(self.impl), (<eigen.Vector2d>(default)).impl))
@@ -236,14 +254,22 @@ cdef class Configuration(object):
     if isinstance(other, Configuration):
       self.impl.load(deref((<Configuration>(other)).impl))
     else:
+      if isinstance(other, unicode):
+        other = other.encode(u'ascii')
       self.impl.load(<string>(other))
   def loadData(self, data):
+    if isinstance(data, unicode):
+      data = data.encode(u'ascii')
     self.impl.loadData(data)
   def save(self, path, pretty = True):
+    if isinstance(path, unicode):
+      path = path.encode(u'ascii')
     self.impl.save(path, pretty)
   def dump(self, pretty = False):
     return self.impl.dump(pretty)
   def has(self, key):
+    if isinstance(key, unicode):
+      key = key.encode(u'ascii')
     return self.impl.has(key)
   def empty(self):
     return self.impl.empty()
@@ -252,18 +278,26 @@ cdef class Configuration(object):
   def size(self):
     return self.impl.size()
   def add(self, key, value = None):
+    if isinstance(key, unicode):
+      key = key.encode(u'ascii')
     if value is None:
       return ConfigurationFromValue(self.impl.add(key))
     else:
       self.impl.add(key, deref((<Configuration>(Configuration.from_(value))).impl))
   def array(self, key, size = 0):
+    if isinstance(key, unicode):
+      key = key.encode(u'ascii')
     return ConfigurationFromValue(self.impl.array(key, size))
   def push(self, value = None):
     self.impl.push(deref((<Configuration>(Configuration.from_(value))).impl))
   def remove(self, k):
+    if isinstance(k, unicode):
+      k = k.encode(u'ascii')
     return self.impl.remove(k)
   # Special methods
   def __call__(self, key, t = None):
+    if isinstance(key, unicode):
+      key = key.encode(u'ascii')
     if t is None:
       return ConfigurationFromValue(deref(self.impl)(key))
     default = None

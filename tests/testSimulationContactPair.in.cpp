@@ -39,5 +39,5 @@ BOOST_AUTO_TEST_CASE(TestSimulationContactPair)
   // ~1 mm below the ground
   robot.mbc().q[0].back() -= 1.0 + 1e-3;
   robot.forwardKinematics();
-  BOOST_REQUIRE(pair.update(robot, env) < 0);
+  BOOST_REQUIRE(pair.update(robot, env) <= 0);
 }

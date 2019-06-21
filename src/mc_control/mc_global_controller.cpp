@@ -10,6 +10,7 @@
 
 #include <boost/chrono.hpp>
 
+#include "mc_global_controller_ros_services.h"
 #include <algorithm>
 #include <cstdlib>
 #include <fstream>
@@ -79,7 +80,7 @@ MCGlobalController::MCGlobalController(const std::string & conf, std::shared_ptr
                                                      config.gui_server_rep_uris));
     }
   }
-  mc_rtc::ROSBridge::activate_services(*this);
+  ros_services_.reset(new ROSServicesImpl(mc_rtc::ROSBridge::get_node_handle(), *this));
 }
 
 MCGlobalController::~MCGlobalController() {}

@@ -89,13 +89,13 @@
   <customwidget>
    <class>MCLogTab</class>
    <extends>QWidget</extends>
-   <header>mc_log_tab</header>
+   <header>mc_log_ui/mc_log_tab</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>MCLogTabWidget</class>
    <extends>QTabWidget</extends>
-   <header>mc_log_tab_widget</header>
+   <header>mc_log_ui/mc_log_tab_widget</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

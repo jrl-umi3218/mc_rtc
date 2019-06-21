@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mc_log_main_ui.ui'
 #
-# Created: Tue Mar  6 20:41:47 2018
+# Created: Fri Jun 21 10:18:16 2019
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -70,5 +70,5 @@ class Ui_MainWindow(object):
         self.actionLoad.setText(QtGui.QApplication.translate("MainWindow", "Load...", None, QtGui.QApplication.UnicodeUTF8))
         self.actionExit.setText(QtGui.QApplication.translate("MainWindow", "Exit", None, QtGui.QApplication.UnicodeUTF8))
 
-from mc_log_tab import MCLogTab
-from mc_log_tab_widget import MCLogTabWidget
+from mc_log_ui.mc_log_tab import MCLogTab
+from mc_log_ui.mc_log_tab_widget import MCLogTabWidget

@@ -42,7 +42,13 @@ cdef class Collision(object):
     elif len(args) == 0:
       self.impl = c_mc_rbdyn.Collision()
     elif len(args) == 5:
-      self.impl = c_mc_rbdyn.Collision(args[0], args[1], args[2], args[3],
+      body1 = args[0]
+      if isinstance(body1, unicode):
+        body1 = body1.encode(u'ascii')
+      body2 = args[1]
+      if isinstance(body2, unicode):
+        body2 = body2.encode(u'ascii')
+      self.impl = c_mc_rbdyn.Collision(body1, body2, args[2], args[3],
           args[4])
     else:
       raise TypeError("Invalid arguments passed to Collision ctor")
@@ -54,11 +60,15 @@ cdef class Collision(object):
     def __get__(self):
       return self.impl.body1
     def __set__(self, value):
+      if isinstance(value, unicode):
+        value = value.encode(u'ascii')
       self.impl.body1 = value
   property body2:
     def __get__(self):
       return self.impl.body2
     def __set__(self, value):
+      if isinstance(value, unicode):
+        value = value.encode(u'ascii')
       self.impl.body2 = value
   property iDist:
     def __get__(self):
@@ -107,6 +117,8 @@ cdef class Flexibility(object):
     def __get__(self):
       return self.impl.jointName
     def __set__(self, value):
+      if isinstance(value, unicode):
+        value = value.encode(u'ascii')
       self.impl.jointName = value
   property K:
     def __get__(self):
@@ -170,7 +182,11 @@ cdef class ForceSensor(object):
   def __dealloc__(self):
     if self.__own_impl:
       del self.impl
-  def __ctor__(self, string sn, string bn, sva.PTransformd X_p_f):
+  def __ctor__(self, sn, bn, sva.PTransformd X_p_f):
+    if isinstance(sn, unicode):
+      sn = sn.encode(u'ascii')
+    if isinstance(bn, unicode):
+      bn = bn.encode(u'ascii')
     self.impl = new c_mc_rbdyn.ForceSensor(sn, bn, deref(X_p_f.impl))
   def __cinit__(self, *args, skip_alloc = False):
     self.__own_impl = not skip_alloc
@@ -256,6 +272,8 @@ cdef class Base(object):
     def __get__(self):
       return self.impl.baseName
     def __set__(self, value):
+      if isinstance(value, unicode):
+        value = value.encode(u'ascii')
       self.impl.baseName = value
   property X_0_s:
     def __get__(self):
@@ -280,7 +298,8 @@ cdef class RobotModule(object):
 
   def bounds(self):
     assert(self.impl.get())
-    return deref(self.impl).bounds()
+    bounds = list(deref(self.impl).bounds())
+    return [{k.decode(): v for k,v in i.items()} for i in bounds]
   def stance(self):
     assert(self.impl.get())
     return deref(self.impl).stance()
@@ -347,7 +366,8 @@ cdef class RobotModule(object):
     return ret
   def ref_joint_order(self):
     assert(self.impl.get())
-    return deref(self.impl).ref_joint_order()
+    cdef vector[string] joints = deref(self.impl).ref_joint_order()
+    return [ j.decode('ascii') for j in joints ]
   def default_attitude(self):
     assert(self.impl.get())
     return c_mc_rbdyn.robotModuleDefaultAttitude(self.impl)
@@ -411,33 +431,45 @@ cdef class RobotModuleVector(object):
 
 class RobotLoader(object):
   @staticmethod
-  def get_robot_module(string name, *args):
+  def get_robot_module(name, *args):
     cdef shared_ptr[c_mc_rbdyn.RobotModule] rm
+    if isinstance(name, unicode):
+      name = name.encode(u'ascii')
     if len(args) == 0:
       rm = c_mc_rbdyn.get_robot_module(name)
     elif len(args) == 1:
-      rm = c_mc_rbdyn.get_robot_module(name, args[0])
+      arg0 = args[0]
+      if isinstance(arg0, unicode):
+        arg0 = arg0.encode(u'ascii')
+      rm = c_mc_rbdyn.get_robot_module(name, arg0)
     elif len(args) == 2:
-      rm = c_mc_rbdyn.get_robot_module(name, args[0], args[1])
+      arg0 = args[0]
+      if isinstance(arg0, unicode):
+        arg0 = arg0.encode(u'ascii')
+      arg1 = args[1]
+      if isinstance(arg1, unicode):
+        arg1 = arg1.encode(u'ascii')
+      rm = c_mc_rbdyn.get_robot_module(name, arg0, arg1)
     else:
       raise TypeError("Wrong arguments passed to get_robot_module")
     return RobotModuleFromC(rm)
   @staticmethod
   def available_robots():
-    return c_mc_rbdyn.available_robots()
+    cdef vector[string] bots
+    bots = c_mc_rbdyn.available_robots()
+    return [ b.decode('ascii') for b in bots ]
+  @staticmethod
+  def clear():
+    c_mc_rbdyn.clear_robot_module_path()
+  @staticmethod
+  def update_robot_module_path(paths):
+    paths = [ p.encode(u'ascii') for p in paths ]
+    c_mc_rbdyn.update_robot_module_path(paths)
 
-def get_robot_module(string name, *args):
-  if len(args) == 0:
-    return RobotModuleFromC(c_mc_rbdyn.get_robot_module(name))
-  elif len(args) == 1:
-    if isinstance(args[0], bool):
-      return RobotModuleFromC(c_mc_rbdyn.get_robot_module(name, args[0]))
-    else:
-      return RobotModuleFromC(c_mc_rbdyn.get_robot_module_str(name, args[0]))
-  elif len(args) == 2:
-    return RobotModuleFromC(c_mc_rbdyn.get_robot_module(name, args[0], args[1]))
-  else:
-    raise TypeError("Wrong arguments passed to get_robot_module")
+def get_robot_module(name, *args):
+  if isinstance(name, unicode):
+    name = name.encode(u'ascii')
+  return RobotLoader.get_robot_module(name, *args)
 
 cdef class Robots(object):
   def __copyctor__(self, Robots other):
@@ -471,6 +503,8 @@ cdef class Robots(object):
       else:
         deprecated()
         return self.load(module, *args[1:])
+    if isinstance(bName, unicode):
+      bName = bName.encode(u'ascii')
     return RobotFromC(deref(self.impl).load(deref(module.impl), b, bName))
 
   def mbs(self):
@@ -517,33 +551,51 @@ cdef class Robot(object):
     return self.impl.name()
   def hasJoint(self, name):
     self.__is_valid()
+    if isinstance(name, unicode):
+      name = name.encode(u'ascii')
     return self.impl.hasJoint(name)
   def hasBody(self, name):
     self.__is_valid()
+    if isinstance(name, unicode):
+      name = name.encode(u'ascii')
     return self.impl.hasBody(name)
   def jointIndexByName(self, name):
     self.__is_valid()
+    if isinstance(name, unicode):
+      name = name.encode(u'ascii')
     return self.impl.jointIndexByName(name)
   def bodyIndexByName(self, name):
     self.__is_valid()
+    if isinstance(name, unicode):
+      name = name.encode(u'ascii')
     return self.impl.bodyIndexByName(name)
 
   def forceSensor(self, name):
     self.__is_valid()
+    if isinstance(name, unicode):
+      name = name.encode(u'ascii')
     return ForceSensorFromRef(self.impl.forceSensor(name))
   def hasForceSensor(self, name):
     self.__is_valid()
+    if isinstance(name, unicode):
+      name = name.encode(u'ascii')
     return self.impl.hasForceSensor(name)
   def bodyForceSensor(self, name):
     self.__is_valid()
+    if isinstance(name, unicode):
+      name = name.encode(u'ascii')
     return ForceSensorFromRef(self.impl.bodyForceSensor(name))
   def bodyHasForceSensor(self, name):
     self.__is_valid()
+    if isinstance(name, unicode):
+      name = name.encode(u'ascii')
     return self.impl.bodyHasForceSensor(name)
 
   def bodySensor(self, name = None):
     self.__is_valid()
     if name is None:
+      if isinstance(name, unicode):
+        name = name.encode(u'ascii')
       return BodySensorFromRef(self.impl.bodySensor())
     else:
       return BodySensorFromRef(self.impl.bodySensor(name))
@@ -556,16 +608,22 @@ cdef class Robot(object):
     return ret
   def hasBodySensor(self, name):
     self.__is_valid()
+    if isinstance(name, unicode):
+      name = name.encode(u'ascii')
     return self.impl.hasBodySensor(name)
   def bodyHasBodySensor(self, name):
     self.__is_valid()
+    if isinstance(name, unicode):
+      name = name.encode(u'ascii')
     return self.impl.bodyHasBodySensor(name)
   def bodyBodySensor(self, name):
     self.__is_valid()
     return BodySensorFromRef(self.impl.bodyBodySensor(name))
 
-  def surfaceWrench(self, string surfaceName):
+  def surfaceWrench(self, surfaceName):
       self.__is_valid()
+      if isinstance(surfaceName, unicode):
+        surfaceName = surfaceName.encode(u'ascii')
       return sva.ForceVecdFromC(self.impl.surfaceWrench(surfaceName))
 
   def cop(self, surfaceName, min_pressure):
@@ -700,9 +758,13 @@ cdef class Robot(object):
 
   def hasSurface(self, name):
     self.__is_valid()
+    if isinstance(name, unicode):
+      name = name.encode(u'ascii')
     return self.impl.hasSurface(name)
   def surface(self, name):
     self.__is_valid()
+    if isinstance(name, unicode):
+      name = name.encode(u'ascii')
     return SurfaceFromC(self.impl.surface(name))
   def surfaces(self):
     self.__is_valid()
@@ -713,22 +775,34 @@ cdef class Robot(object):
     return ret
   def copySurface(self, sName, name):
     self.__is_valid()
+    if isinstance(sName, unicode):
+      sName = sName.encode(u'ascii')
+    if isinstance(name, unicode):
+      name = name.encode(u'ascii')
     return SurfaceFromC(self.impl.copySurface(sName, name))
 
   def convex(self, name):
     self.__is_valid()
+    if isinstance(name, unicode):
+      name = name.encode(u'ascii')
     return (self.impl.convex(name).first,sch.S_ObjectFromPtr(self.impl.convex(name).second.get()))
 
   def bodyTransform(self, bName):
     self.__is_valid()
+    if isinstance(bName, unicode):
+      bName = bName.encode(u'ascii')
     return sva.PTransformdFromC(self.impl.bodyTransform(bName), False)
 
   def collisionTransform(self, bName):
     self.__is_valid()
+    if isinstance(bName, unicode):
+      bName = bName.encode(u'ascii')
     return sva.PTransformdFromC(self.impl.collisionTransform(bName), False)
 
   def loadRSDFFromDir(self, surfaceDir):
     self.__is_valid()
+    if isinstance(surfaceDir, unicode):
+      surfaceDir = surfaceDir.encode(u'ascii')
     self.impl.loadRSDFFromDir(surfaceDir)
 
   def stance(self):
@@ -941,6 +1015,8 @@ cdef CylindricalSurface CylindricalSurfaceFromPtr(c_mc_rbdyn.CylindricalSurface 
 
 def readRSDFFromDir(dirname):
   cdef vector[shared_ptr[c_mc_rbdyn.Surface]] surfs = c_mc_rbdyn.readRSDFFromDir(dirname)
+  if isinstance(dirname, unicode):
+    dirname = dirname.encode(u'ascii')
   ret = []
   for surf in surfs:
     ret.append(SurfaceFromPtr(surf, keep_ptr = True))
@@ -957,6 +1033,10 @@ cdef class Contact(object):
     self.impl = new c_mc_rbdyn.Contact(deref(other.impl))
   def __robotspt_ctor__(self, Robots robots, robotSurface, envSurface,
       sva.PTransformd X_es_rs = None):
+    if isinstance(robotSurface, unicode):
+      robotSurface = robotSurface.encode(u'ascii')
+    if isinstance(envSurface, unicode):
+      envSurface = envSurface.encode(u'ascii')
     if X_es_rs is None:
       self.impl = new c_mc_rbdyn.Contact(deref(robots.impl), robotSurface,
           envSurface)
@@ -966,6 +1046,10 @@ cdef class Contact(object):
   def __full_ctor__(self, Robots robots, r1Index, r2Index, r1Surface, r2Surface,
       sva.PTransformd X_r2s_r1s = sva.PTransformd.Identity(), sva.PTransformd Xbs =
       None, ambId = -1):
+    if isinstance(r1Surface, unicode):
+      r1Surface = r1Surface.encode(u'ascii')
+    if isinstance(r2Surface, unicode):
+      r2Surface = r2Surface.encode(u'ascii')
     if Xbs is None:
       Xbs = robots.robot(r1Index).surface(r1Surface).X_b_s()
     self.impl = new c_mc_rbdyn.Contact(deref(robots.impl), r1Index, r2Index,
@@ -1120,8 +1204,12 @@ cdef class ContactVector(object):
     else:
       if idx == -1:
         idx = self.v.size() - 1
+      if idx >= self.v.size():
+        raise IndexError
       return ContactFromC(self.v.at(idx), copy = False)
   def __setitem__(self, idx, Contact v):
+    if idx >= self.v.size():
+      raise IndexError
     c_mc_rbdyn.contact_vector_set_item(deref(self.v), idx, deref(v.impl))
   def __add__(ContactVector self, other):
     cdef ContactVector ret = ContactVector(self)
@@ -1170,7 +1258,10 @@ cdef class PolygonInterpolator(object):
     else:
       self.__own_impl = True
       assert(len(args) == 1)
-      data = json.load(args[0])
+      data_path = args[0]
+      if isinstance(data_path, unicode):
+        data_path = data_path.encode(u'ascii')
+      data = json.load(data_path)
       tuple_pairs = []
       for p in data["tuple_pairs"]:
         p1 = map(float, p["p1"])
@@ -1195,6 +1286,8 @@ def loadRobot(RobotModule module, *args):#sva.PTransformd base = None, bName = "
     else:
       deprecated()
       return loadRobot(module, *args[1:])
+  if isinstance(bName, unicode):
+    bName = bName.encode(u'ascii')
   return RobotsFromPtr(c_mc_rbdyn.loadRobot(deref(module.impl.get()), b, bName))
 
 def loadRobots(robot_modules, robot_surface_dirs = None):
@@ -1211,6 +1304,10 @@ def loadRobotAndEnv(RobotModule module, RobotModule envModule,
 
 def loadRobotFromUrdf(name, urdf, withVirtualLinks = True, filteredLinks = [],
     fixed = False, sva.PTransformd base = None, bName = ""):
+  if isinstance(name, unicode):
+    name = name.encode(u'ascii')
+  if isinstance(urdf, unicode):
+    urdf = urdf.encode(u'ascii')
   if base is None:
     base = sva.PTransformd(skip_alloc = True)
   robots = RobotsFromPtr(c_mc_rbdyn.loadRobotFromUrdf(name, urdf, withVirtualLinks,

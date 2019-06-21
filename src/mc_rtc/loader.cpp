@@ -7,7 +7,80 @@ namespace bfs = boost::filesystem;
 namespace mc_rtc
 {
 
-Loader::callback_t Loader::default_cb = [](const std::string &, lt_dlhandle) {};
+LTDLHandle::~LTDLHandle()
+{
+  close();
+}
+
+LTDLHandle::LTDLHandle(const std::string & class_name, const std::string & path, bool verbose)
+: path_(path), verbose_(verbose)
+{
+  auto get_classes = get_symbol<void (*)(std::vector<std::string> &)>(class_name);
+  valid_ = get_classes != nullptr;
+  if(valid_)
+  {
+    if(verbose_)
+    {
+      LOG_INFO("Found matching class name symbol " << class_name)
+    }
+    get_classes(classes_);
+  }
+  if(valid_)
+  {
+    global_ = get_symbol<void (*)()>("LOAD_GLOBAL") != nullptr;
+  }
+  close();
+}
+
+bool LTDLHandle::open()
+{
+  if(open_)
+  {
+    return true;
+  }
+  if(verbose_)
+  {
+    LOG_INFO("Attempt to open " << path_)
+  }
+  if(global_)
+  {
+    if(verbose_)
+    {
+      LOG_INFO("Opening " << path_ << " in global mode")
+    }
+    lt_dladvise advise;
+    lt_dladvise_init(&advise);
+    lt_dladvise_global(&advise);
+    handle_ = lt_dlopenadvise(path_.c_str(), advise);
+    lt_dladvise_destroy(&advise);
+  }
+  else
+  {
+    handle_ = lt_dlopen(path_.c_str());
+  }
+  open_ = handle_ != nullptr;
+  if(!open_)
+  {
+    const char * error = lt_dlerror();
+    /* Discard the "file not found" error as it only indicates that we tried to load something other than a library */
+    if(strcmp(error, "file not found") != 0)
+    {
+      LOG_WARNING("Failed to load " << path_ << "\n" << error)
+    }
+  }
+  return open_;
+}
+
+void LTDLHandle::close()
+{
+  if(open_)
+  {
+    open_ = false;
+    lt_dlclose(handle_);
+  }
+}
+
+Loader::callback_t Loader::default_cb = [](const std::string &, LTDLHandle &) {};
 
 unsigned int Loader::init_count_ = 0;
 
@@ -69,94 +142,27 @@ void Loader::load_libraries(const std::string & class_name,
       /* Attempt to load anything that is not a directory */
       if((!bfs::is_directory(p)) && (!bfs::is_symlink(p)))
       {
-        if(verbose)
-        {
-          LOG_INFO("Attempt to open " << p.string());
-        }
-        lt_dlhandle h = lt_dlopen(p.string().c_str());
-        if(h == nullptr)
-        {
-          /* Discard the "file not found" error as it only indicates that we
-           * tried to load something other than a library */
-          const char * error = lt_dlerror();
-          if(strcmp(error, "file not found") != 0)
-          {
-            if(verbose)
-            {
-              LOG_WARNING("Failed to load " << p.string() << std::endl << error)
-            }
-          }
-          if(verbose)
-          {
-            LOG_WARNING("Skipping " << p.string() << std::endl << error)
-          }
-          continue;
-        }
-#ifndef WIN32
-#  pragma GCC diagnostic push
-#  pragma GCC diagnostic ignored "-Wpedantic"
-        typedef void (*load_global_fun_t)(void);
-        load_global_fun_t LOAD_GLOBAL_FUN = (load_global_fun_t)(lt_dlsym(h, "LOAD_GLOBAL"));
-#  pragma GCC diagnostic pop
-        if(LOAD_GLOBAL_FUN != nullptr)
-        {
-          if(verbose)
-          {
-            LOG_INFO("Re-open " << p.string() << " in global mode")
-          }
-          lt_dlclose(h);
-          lt_dladvise advise;
-          lt_dladvise_init(&advise);
-          lt_dladvise_global(&advise);
-          h = lt_dlopenadvise(p.string().c_str(), advise);
-          lt_dladvise_destroy(&advise);
-        }
-        else
-        {
-          /* Discard error message */
-          lt_dlerror();
-        }
-#endif
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wpedantic"
-        typedef void (*class_name_fun_t)(std::vector<std::string> &);
-        class_name_fun_t CLASS_NAME_FUN = (class_name_fun_t)(lt_dlsym(h, class_name.c_str()));
-#pragma GCC diagnostic pop
-        if(CLASS_NAME_FUN == nullptr)
-        {
-          const char * error = lt_dlerror();
-          if(verbose)
-          {
-            LOG_WARNING("No symbol " << class_name << " in library " << p.string() << std::endl << error)
-          }
-          continue;
-        }
-        if(verbose)
-        {
-          LOG_INFO("Found matching class name symbol " << class_name)
-        }
-        std::vector<std::string> class_names;
-        CLASS_NAME_FUN(class_names);
-        for(const auto & cn : class_names)
+        auto handle = std::make_shared<LTDLHandle>(class_name, p.string(), verbose);
+        for(const auto & cn : handle->classes())
         {
           if(out.count(cn))
           {
             /* We get the first library that declared this class name and only
              * emit an exception if this is declared in a different file */
-            bfs::path orig_p(lt_dlgetinfo(out[cn])->filename);
+            bfs::path orig_p(out[cn]->path());
             if(orig_p != p)
             {
               if(verbose)
               {
                 LOG_WARNING("Multiple files export the same name " << cn << " (new declaration in " << p.string()
-                                                                   << ", previous declaration in "
-                                                                   << lt_dlgetinfo(out[cn])->filename << ")")
+                                                                   << ", previous declaration in " << out[cn]->path()
+                                                                   << ")")
               }
               continue;
             }
           }
-          out[cn] = h;
-          cb(cn, h);
+          out[cn] = handle;
+          cb(cn, *handle);
         }
       }
     }
