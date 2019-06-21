@@ -101,20 +101,22 @@ class PlotFigure(object):
       dataLim = axes.dataLim.get_points()
       x_range = (dataLim[1][0] - dataLim[0][0])/2
       y_range = (dataLim[1][1] - dataLim[0][1])/2
-      if xlim is None:
-        x_min = dataLim[0][0] - x_range*0.05
-        x_max = dataLim[1][0] + x_range*0.05
-      else:
-        x_min = xlim[0]
-        x_max = xlim[1]
+      x_min = dataLim[0][0] - x_range*0.05
+      x_max = dataLim[1][0] + x_range*0.05
+      if xlim is not None:
+        x_min = min(x_min, xlim[0])
+        x_max = max(x_max, xlim[1])
       axes.set_xlim([x_min, x_max])
       if ylim is None:
         axes.set_ylim([dataLim[0][1] - y_range*0.05, dataLim[1][1] + y_range*0.05])
       else:
         axes.set_ylim(ylim)
       return x_min, x_max
-    x_limits = set_axes_limits(self.axes, xlim = x_limits, ylim = y1_limits)
-    set_axes_limits(self.axes2, xlim = x_limits, ylim = y2_limits)
+    if len(self.axes_plots):
+      x_limits = set_axes_limits(self.axes, xlim = x_limits, ylim = y1_limits)
+    if len(self.axes2_plots):
+      x_limits = set_axes_limits(self.axes2, xlim = x_limits, ylim = y2_limits)
+      self.axes.set_xlim(x_limits)
     self._legend_left()
     self._legend_right()
     self._drawGrid()
