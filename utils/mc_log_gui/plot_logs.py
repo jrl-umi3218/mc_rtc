@@ -4,9 +4,7 @@
 import json
 import sys
 
-from mc_log_ui import read_log, UserPlot, load_UserPlots
-from mc_log_tab import MCLogTab
-from mc_log_types import LineStyle, GraphLabels
+from mc_log_ui import *
 UserPlot.__new__.__defaults__ = (LineStyle(), LineStyle(), {}, {}, GraphLabels())
 
 import matplotlib.pyplot as plt

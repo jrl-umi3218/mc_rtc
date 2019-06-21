@@ -31,3 +31,4 @@ set(UTILS_SCRIPT
 )
 install(PROGRAMS ${UTILS_SCRIPT} DESTINATION bin)
 
+add_subdirectory(mc_log_gui)

@@ -88,7 +88,7 @@
   <customwidget>
    <class>PlotCanvasWithToolbar</class>
    <extends>QWidget</extends>
-   <header>mc_log_plotcanvas</header>
+   <header>mc_log_ui/mc_log_plotcanvas</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

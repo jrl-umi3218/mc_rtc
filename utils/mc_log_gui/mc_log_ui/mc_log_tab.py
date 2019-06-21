@@ -2,7 +2,7 @@
 
 from PySide import QtCore, QtGui
 
-from mc_log_tab_ui import Ui_MCLogTab
+import ui
 from mc_log_types import LineStyle
 from mc_log_plotcanvas import PlotFigure
 
@@ -206,7 +206,7 @@ class MCLogTab(QtGui.QWidget):
   canvas_need_update = QtCore.Signal()
   def __init__(self, parent = None):
     super(MCLogTab, self).__init__(parent)
-    self.ui = Ui_MCLogTab()
+    self.ui = ui.MCLogTab()
     self.ui.setupUi(self)
     self.ui.canvas.setupLockButtons(self.ui.selectorLayout)
     if parent is not None:
