@@ -257,13 +257,15 @@ class PlotFigure(object):
     self._legend_right()
 
   def _legend_left(self):
-    self.axes.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=self._y1_legend_ncol, mode="expand", borderaxespad=0.5, fontsize = self._legend_fontsize)
+    if len(self.axes_plots):
+      self.axes.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=self._y1_legend_ncol, mode="expand", borderaxespad=0.5, fontsize = self._legend_fontsize)
 
   def _legend_right(self):
     top_anchor = -0.125
     if len(self.x_label()):
       top_anchor = -0.175
-    self.axes2.legend(bbox_to_anchor=(0., top_anchor, 1., .102), loc=2, ncol=self._y2_legend_ncol, mode="expand", borderaxespad=0.5, fontsize = self._legend_fontsize)
+    if len(self.axes2_plots):
+      self.axes2.legend(bbox_to_anchor=(0., top_anchor, 1., .102), loc=2, ncol=self._y2_legend_ncol, mode="expand", borderaxespad=0.5, fontsize = self._legend_fontsize)
 
   def _plot(self, axe, update_legend_fn, x, y, y_label, style = None):
     if style is None:
