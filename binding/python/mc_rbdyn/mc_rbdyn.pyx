@@ -298,7 +298,7 @@ cdef class RobotModule(object):
 
   def bounds(self):
     assert(self.impl.get())
-    cdef vector[cppmap[string, vector[double]]] bounds = deref(self.impl).bounds()
+    bounds = list(deref(self.impl).bounds())
     return [{k.decode(): v for k,v in i.items()} for i in bounds]
   def stance(self):
     assert(self.impl.get())
@@ -455,7 +455,8 @@ class RobotLoader(object):
     return RobotModuleFromC(rm)
   @staticmethod
   def available_robots():
-    cdef vector[string] bots = c_mc_rbdyn.available_robots();
+    cdef vector[string] bots
+    bots = c_mc_rbdyn.available_robots()
     return [ b.decode('ascii') for b in bots ]
   @staticmethod
   def clear():
