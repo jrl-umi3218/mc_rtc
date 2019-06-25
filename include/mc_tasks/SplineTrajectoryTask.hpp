@@ -7,25 +7,43 @@ namespace mc_tasks
 template<typename Derived>
 SplineTrajectoryTask<Derived>::SplineTrajectoryTask(const mc_rbdyn::Robots & robots,
                                                     unsigned int robotIndex,
-                                                    const std::string & surfaceName_,
+                                                    const std::string & surfaceName,
                                                     double duration,
                                                     double stiffness,
-                                                    double posW,
-                                                    double oriW,
+                                                    double weight,
                                                     const Eigen::Matrix3d & target,
                                                     const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
-: TrajectoryTaskGeneric<tasks::qp::TransformTask>(robots, robotIndex, stiffness, posW), rIndex_(robotIndex),
-  surfaceName_(surfaceName_), duration_(duration),
-  oriSpline_(duration, robots.robot().surface(surfaceName_).X_0_s(robots.robot()).rotation(), target, oriWp)
+: TrajectoryTaskGeneric<tasks::qp::TransformTask>(robots, robotIndex, stiffness, weight), rIndex_(robotIndex),
+  surfaceName_(surfaceName), duration_(duration),
+  oriSpline_(duration, robots.robot().surface(surfaceName).X_0_s(robots.robot()).rotation(), target, oriWp)
 {
   const auto & robot = robots.robot(robotIndex);
-  const auto & surface = robot.surface(surfaceName_);
+  const auto & surface = robot.surface(surfaceName);
   type_ = "trajectory";
   name_ = "trajectory_" + robot.name() + "_" + surface.name();
 
   finalize(robots.mbs(), static_cast<int>(robotIndex), surface.bodyName(), surface.X_0_s(robot), surface.X_b_s());
-  posWeight(posW);
-  oriWeight(oriW);
+}
+
+template<typename Derived>
+std::function<bool(const mc_tasks::MetaTask &, std::string &)> SplineTrajectoryTask<Derived>::buildCompletionCriteria(
+    double dt,
+    const mc_rtc::Configuration & config) const
+{
+
+  if(config.has("timeElapsed"))
+  {
+    bool useDuration = config("timeElapsed");
+    if(useDuration)
+    {
+      return [useDuration](const mc_tasks::MetaTask & t, std::string & out) {
+        const auto & self = static_cast<const SplineTrajectoryBase &>(t);
+        out += "duration";
+        return self.timeElapsed();
+      };
+    }
+  }
+  return TrajectoryBase::buildCompletionCriteria(dt, config);
 }
 
 template<typename Derived>
@@ -66,31 +84,19 @@ void SplineTrajectoryTask<Derived>::oriWaypoints(const std::vector<std::pair<dou
 }
 
 template<typename Derived>
-void SplineTrajectoryTask<Derived>::posWeight(const double posWeight)
+void SplineTrajectoryTask<Derived>::dimWeight(const Eigen::VectorXd & dimW)
 {
-  auto dimWeight = trajectoryT_->dimWeight();
-  dimWeight.tail(3).setConstant(posWeight);
-  trajectoryT_->dimWeight(dimWeight);
+  if(dimW.size() != 6)
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "SplineTrajectoryTask dimWeight should be a Vector6d!");
+  }
+  TrajectoryBase::dimWeight(dimW);
 }
 
 template<typename Derived>
-double SplineTrajectoryTask<Derived>::posWeight() const
+Eigen::VectorXd SplineTrajectoryTask<Derived>::dimWeight() const
 {
-  return trajectoryT_->dimWeight()(3);
-}
-
-template<typename Derived>
-void SplineTrajectoryTask<Derived>::oriWeight(const double oriWeight)
-{
-  auto dimWeight = trajectoryT_->dimWeight();
-  dimWeight.head(3).setConstant(oriWeight);
-  trajectoryT_->dimWeight(dimWeight);
-}
-
-template<typename Derived>
-double SplineTrajectoryTask<Derived>::oriWeight() const
-{
-  return trajectoryT_->dimWeight()(0);
+  return TrajectoryBase::dimWeight();
 }
 
 template<typename Derived>
@@ -123,7 +129,7 @@ Eigen::VectorXd SplineTrajectoryTask<Derived>::evalTracking() const
 }
 
 template<typename Derived>
-bool SplineTrajectoryTask<Derived>::timeElapsed()
+bool SplineTrajectoryTask<Derived>::timeElapsed() const
 {
   return currTime_ >= duration_;
 }
@@ -165,24 +171,30 @@ void SplineTrajectoryTask<Derived>::addToSolver(mc_solver::QPSolver & solver)
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::addToLogger(mc_rtc::Logger & logger)
 {
-  logger.addLogEntry(name_ + "_surface_pose", [this]() {
+  TrajectoryBase::addToLogger(logger);
+  logger.addLogEntry(name_ + "_surfacePose", [this]() {
     const auto & robot = robots.robot(rIndex_);
-    return robot.surface(surfaceName_).X_0_s(robot);
+    return robot.surfacePose(surfaceName_);
   });
-  logger.addLogEntry(name_ + "_target_pose", [this]() { return this->target(); });
-  logger.addLogEntry(name_ + "_speed", [this]() { return sva::MotionVecd(this->speed()); });
+  logger.addLogEntry(name_ + "_targetPose", [this]() { return this->target(); });
+  logger.addLogEntry(name_ + "_refPose", [this]() { return this->refPose(); });
+  logger.addLogEntry(name_ + "_speed", [this]() -> const Eigen::VectorXd { return this->speed(); });
+}
+
+template<typename Derived>
+void SplineTrajectoryTask<Derived>::removeFromLogger(mc_rtc::Logger & logger)
+{
+  TrajectoryBase::removeFromLogger(logger);
+  logger.removeLogEntry(name_ + "_surfacePose");
+  logger.removeLogEntry(name_ + "_targetPose");
+  logger.removeLogEntry(name_ + "_refPose");
+  logger.removeLogEntry(name_ + "_speed");
 }
 
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   TrajectoryTask::addToGUI(gui);
-
-  gui.addElement({"Tasks", name_, "Gains"},
-                 mc_rtc::gui::NumberInput("posWeight", [this]() { return this->posWeight(); },
-                                          [this](const double & d) { this->posWeight(d); }),
-                 mc_rtc::gui::NumberInput("oriWeight", [this]() { return this->oriWeight(); },
-                                          [this](const double & g) { this->oriWeight(g); }));
 
   auto & spline = static_cast<Derived &>(*this).spline();
   gui.addElement({"Tasks", name_}, mc_rtc::gui::Transform("Surface pose", [this]() {

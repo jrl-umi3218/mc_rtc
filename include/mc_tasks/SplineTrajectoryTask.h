@@ -37,8 +37,8 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformT
    *
    * \param robots Robots controlled by the task
    * \param robotIndex Which robot is controlled
-   * \param surface Surface controlled by the task (should belong to the controlled robot)
-   * \param duration_ Length of the movement
+   * \param surfaceName Surface controlled by the task (should belong to the controlled robot)
+   * \param duration Length of the movement
    * \param stiffness Task stiffness (position and orientation)
    * \param posW Task weight (position)
    * \param oriW Task weight (orientation)
@@ -46,13 +46,21 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformT
    */
   SplineTrajectoryTask(const mc_rbdyn::Robots & robots,
                        unsigned int robotIndex,
-                       const std::string & surfaceName_,
-                       double duration_,
+                       const std::string & surfaceName,
+                       double duration,
                        double stiffness,
-                       double posW,
-                       double oriW,
+                       double weight,
                        const Eigen::Matrix3d & target,
                        const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp = {});
+
+  /** Add support for the following entries
+   *
+   * - timeElapsed When true, the task will stop when the trajectory duration is
+   *   reached
+   */
+  std::function<bool(const mc_tasks::MetaTask &, std::string &)> buildCompletionCriteria(
+      double dt,
+      const mc_rtc::Configuration & config) const override;
 
   /** \brief Sets the orientation waypoints
    *
@@ -60,34 +68,26 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformT
    */
   void oriWaypoints(const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp);
 
-  /*! \brief Weight for controlling position/orientation importance
+  /*! \brief Sets the dimensional weights (controls the importance of
+   * orientation/translation).
    *
-   * \param posWeight Task weight (position)
-   */
-  void posWeight(double posWeight);
-
-  /*! \brief Weight for controlling position/orientation importance
+   * \throw if dimW is not a Vector6d
    *
-   * \return posWeight Task weight (position)
+   * \param dimW Weights expressed as a Vector6d [wx, wy, wz, tx, ty, tz]
    */
-  double posWeight() const;
+  void dimWeight(const Eigen::VectorXd & dimW) override;
 
-  /*! \brief Weight for controlling position/orientation importance
+  /*! \brief Gets the dimensional weights (orientation/translation)
    *
-   * \param oriWeight Task weight (orientation)
+   * \returns Dimensional weights expressed as a Vector6d [wx, wy, wz, tx, ty, tz]
    */
-  void oriWeight(double oriWeight);
-
-  /*! \brief Weight for controlling position/orientation importance
-   * \return  oriWeight Task weight (orientation)
-   */
-  double oriWeight() const;
+  Eigen::VectorXd dimWeight() const override;
 
   /*! \brief Whether the trajectory has finished
    *
    * \returns True if the trajectory has finished
    */
-  bool timeElapsed();
+  bool timeElapsed() const;
 
   /*! \brief Returns the transformError between current robot surface pose and
    * its final target
@@ -164,6 +164,8 @@ protected:
    * @param logger
    */
   void addToLogger(mc_rtc::Logger & logger) override;
+
+  void removeFromLogger(mc_rtc::Logger & logger) override;
 
   /*! \brief Update trajectory target
    */

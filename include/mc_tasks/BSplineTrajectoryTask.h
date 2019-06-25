@@ -29,8 +29,7 @@ public:
    * \urface position to the curve's final point)
    * \param stiffness Stiffness of the underlying TrajectoryTask (position and
    * \rientation)
-   * \param posW Task weight (position)
-   * \param oriW Task weight (orientation)
+   * \param weight Task weight
    * \param target Final world pose to reach
    * \param posWp Waypoints in position
    * \param oriWp Waypoints in orientation specified as pairs of (time,
@@ -42,8 +41,7 @@ public:
                         const std::string & surfaceName,
                         double duration,
                         double stiffness,
-                        double posW,
-                        double oriW,
+                        double weight,
                         const sva::PTransformd & target,
                         const waypoints_t & posWp = {},
                         const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp = {});

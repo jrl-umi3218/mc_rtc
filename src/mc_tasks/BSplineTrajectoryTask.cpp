@@ -13,8 +13,7 @@ BSplineTrajectoryTask::BSplineTrajectoryTask(const mc_rbdyn::Robots & robots,
                                              const std::string & surfaceName,
                                              double duration,
                                              double stiffness,
-                                             double posW,
-                                             double oriW,
+                                             double weight,
                                              const sva::PTransformd & target,
                                              const BSpline::waypoints_t & posWp,
                                              const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
@@ -23,8 +22,7 @@ BSplineTrajectoryTask::BSplineTrajectoryTask(const mc_rbdyn::Robots & robots,
                                               surfaceName,
                                               duration,
                                               stiffness,
-                                              posW,
-                                              oriW,
+                                              weight,
                                               target.rotation(),
                                               oriWp),
   bspline(duration,
@@ -127,8 +125,8 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
       }
 
       std::shared_ptr<mc_tasks::BSplineTrajectoryTask> t = std::make_shared<mc_tasks::BSplineTrajectoryTask>(
-          solver.robots(), robotIndex, config("surface"), config("duration"), config("stiffness"), config("posWeight"),
-          config("oriWeight"), finalTarget_, waypoints, oriWp);
+          solver.robots(), robotIndex, config("surface"), config("duration"), config("stiffness"), config("weight"),
+          finalTarget_, waypoints, oriWp);
       t->load(solver, config);
       const auto displaySamples = config("displaySamples", t->displaySamples());
       t->displaySamples(displaySamples);

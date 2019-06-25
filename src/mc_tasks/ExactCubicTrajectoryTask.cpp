@@ -10,8 +10,7 @@ ExactCubicTrajectoryTask::ExactCubicTrajectoryTask(const mc_rbdyn::Robots & robo
                                                    const std::string & surfaceName,
                                                    double duration,
                                                    double stiffness,
-                                                   double posW,
-                                                   double oriW,
+                                                   double weight,
                                                    const sva::PTransformd & target,
                                                    const std::vector<std::pair<double, Eigen::Vector3d>> & posWp,
                                                    const Eigen::Vector3d & init_vel,
@@ -24,8 +23,7 @@ ExactCubicTrajectoryTask::ExactCubicTrajectoryTask(const mc_rbdyn::Robots & robo
                                                  surfaceName,
                                                  duration,
                                                  stiffness,
-                                                 posW,
-                                                 oriW,
+                                                 weight,
                                                  target.rotation(),
                                                  oriWp),
   bspline(duration,
@@ -71,7 +69,6 @@ void ExactCubicTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   SplineTrajectoryBase::addToGUI(gui);
 
-  LOG_INFO("ExactCubicTrajectoryTask::addToGUI");
   bspline.addToGUI(gui, {"Tasks", name_});
 
   gui.addElement(
@@ -162,8 +159,8 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
       }
 
       std::shared_ptr<mc_tasks::ExactCubicTrajectoryTask> t = std::make_shared<mc_tasks::ExactCubicTrajectoryTask>(
-          solver.robots(), robotIndex, config("surface"), config("duration"), config("stiffness"), config("posWeight"),
-          config("oriWeight"), finalTarget_, waypoints, init_vel, init_acc, end_vel, end_acc, oriWp);
+          solver.robots(), robotIndex, config("surface"), config("duration"), config("stiffness"), config("weight"),
+          finalTarget_, waypoints, init_vel, init_acc, end_vel, end_acc, oriWp);
       t->load(solver, config);
       const auto displaySamples = config("displaySamples", t->displaySamples());
       t->displaySamples(displaySamples);

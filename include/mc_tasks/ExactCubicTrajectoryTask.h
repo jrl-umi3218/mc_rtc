@@ -33,9 +33,8 @@ public:
    * \ontrolled robot
    * \param duration Duration of motion (eg time it takes to go from the current
    * \urface position to the curve's final point)
-   * \param stiffness Task stiffness (position and orientation), see TrajectoryTask
-   * \param posW Task weight (position), see TrajectoryTask
-   * \param oriW Task weight (orientation), see TrajectoryTask
+   * \param stiffness Task stiffness
+   * \param weight Task weight
    * \param target Final world pose to reach
    * \param posWp Waypoints in position specified as pairs of [time, position]
    * \param init_vel Initial velocity of the curve (default: Zero)
@@ -51,8 +50,7 @@ public:
                            const std::string & surfaceName,
                            double duration,
                            double stiffness,
-                           double posW,
-                           double oriW,
+                           double weight,
                            const sva::PTransformd & target,
                            const std::vector<std::pair<double, Eigen::Vector3d>> & posWp = {},
                            const Eigen::Vector3d & init_vel = Eigen::Vector3d::Zero(),

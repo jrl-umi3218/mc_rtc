@@ -10,8 +10,8 @@
     "surface": { "type": "string" },
     "stiffness": { "type": "number", "minimum": 0 },
     "duration": { "type": "number", "minimum": 0 },
-    "posWeight": { "type": "number", "minimum": 0 },
-    "oriWeight": { "type": "number", "minimum": 0 },
+    "weight": { "type": "number", "minimum": 0 },
+    "dimWeight": { "$ref": "/../../eigen/Vector6d.json" },
     "displaySamples": { "type": "number", "minimum": 1 },
 
     "targetSurface": 
