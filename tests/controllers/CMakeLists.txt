@@ -1,3 +1,7 @@
+#
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+#
+
 set(LOG_ENABLED "false")
 set(LOG_POLICY "non-threaded")
 set(USE_SANDBOX "true")

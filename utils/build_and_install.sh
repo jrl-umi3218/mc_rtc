@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+#
+
 shopt -s expand_aliases
 
 ##########################

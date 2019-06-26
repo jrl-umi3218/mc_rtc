@@ -1,3 +1,7 @@
+#
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+#
+
 cimport mc_tasks.force.c_force as c_force
 from mc_tasks.mc_tasks cimport MetaTask, SurfaceTransformTask
 

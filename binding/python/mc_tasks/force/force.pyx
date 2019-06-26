@@ -1,5 +1,9 @@
 # distutils: language = c++
 
+#
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+#
+
 cimport mc_tasks.force.c_force as c_force
 
 cimport mc_rbdyn.mc_rbdyn as mc_rbdyn

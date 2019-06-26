@@ -1,3 +1,7 @@
+/*
+ * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ */
+
 #include <mc_control/mc_global_controller.h>
 
 /** This file implements GUI elements related to the global controller instance

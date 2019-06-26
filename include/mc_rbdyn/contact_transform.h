@@ -1,3 +1,7 @@
+/*
+ * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ */
+
 #ifndef _H_CONTACTTRANSFORM_H_
 #define _H_CONTACTTRANSFORM_H_
 

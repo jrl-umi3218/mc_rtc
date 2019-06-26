@@ -1,3 +1,7 @@
+/*
+ * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ */
+
 #include "hrp2_drc.h"
 
 #include <mc_rtc/config.h>

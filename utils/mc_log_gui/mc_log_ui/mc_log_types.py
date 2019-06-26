@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+#
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+#
+
 class LineStyle(object):
   def __init__(self, color = 'black', linestyle = '--', linewidth = 0.5, visible = False, label = ""):
     self.color = color

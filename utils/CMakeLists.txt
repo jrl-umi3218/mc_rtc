@@ -1,3 +1,7 @@
+#
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+#
+
 find_package(Boost REQUIRED COMPONENTS program_options timer)
 
 add_executable(mc_bin_to_log mc_bin_to_log.cpp mc_bin_to_log_main.cpp)

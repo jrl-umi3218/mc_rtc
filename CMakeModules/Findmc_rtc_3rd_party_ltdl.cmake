@@ -1,5 +1,5 @@
 #
-# Copyright 2012-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
 # Try to find the ltdl library

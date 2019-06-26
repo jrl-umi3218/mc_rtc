@@ -1,3 +1,7 @@
+#
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+#
+
 set(MODULE_FILES
   Findmc_rtc_3rd_party_geos.cmake
   Findmc_rtc_3rd_party_nanomsg.cmake

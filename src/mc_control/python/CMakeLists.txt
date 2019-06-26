@@ -1,3 +1,7 @@
+#
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+#
+
 get_cython_libraries(mc_rtc cython_libs)
 get_python_names(python_names)
 

@@ -1,3 +1,7 @@
+/*
+ * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ */
+
 /*! Only implements the MC_RTC_CONTROLLER function */
 #include <mc_control/mc_controller.h>
 

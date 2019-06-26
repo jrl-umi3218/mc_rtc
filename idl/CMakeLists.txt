@@ -1,3 +1,7 @@
+#
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+#
+
 find_program(FLATC flatc)
 if(FLATC)
   set(FBS_IN ${CMAKE_SOURCE_DIR}/idl/MCLog.fbs)

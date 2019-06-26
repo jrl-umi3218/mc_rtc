@@ -1,8 +1,12 @@
-#include "benchmark/benchmark.h"
+/*
+ * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ */
 
 #include <mc_control/CompletionCriteria.h>
 #include <mc_rbdyn/RobotLoader.h>
 #include <mc_tasks/CoMTask.h>
+
+#include "benchmark/benchmark.h"
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wpedantic"
@@ -28,8 +32,14 @@ struct MockTask : public mc_tasks::CoMTask
 {
   MockTask() : mc_tasks::CoMTask(get_robots(), 0) {}
 
-  Eigen::VectorXd eval() const override { return eval_; }
-  Eigen::VectorXd speed() const override { return speed_; }
+  Eigen::VectorXd eval() const override
+  {
+    return eval_;
+  }
+  Eigen::VectorXd speed() const override
+  {
+    return speed_;
+  }
 
   Eigen::Vector3d eval_ = Eigen::Vector3d::UnitZ();
   Eigen::Vector3d speed_ = Eigen::Vector3d::UnitZ();
@@ -109,14 +119,26 @@ static void BM_EvalAndSpeedOrTimeout(benchmark::State & state)
   double timeout = 5.0;
   mc_rtc::Configuration config;
   auto OR = config.array("OR", 2);
-  OR.push([norm](){
-          mc_rtc::Configuration c;
-          auto AND = c.array("AND", 2);
-          AND.push([norm](){ mc_rtc::Configuration c; c.add("eval", norm); return c; }());
-          AND.push([norm](){ mc_rtc::Configuration c; c.add("speed", norm); return c; }());
-          return c;
-          }());
-  OR.push([timeout](){ mc_rtc::Configuration c; c.add("timeout", timeout); return c; }());
+  OR.push([norm]() {
+    mc_rtc::Configuration c;
+    auto AND = c.array("AND", 2);
+    AND.push([norm]() {
+      mc_rtc::Configuration c;
+      c.add("eval", norm);
+      return c;
+    }());
+    AND.push([norm]() {
+      mc_rtc::Configuration c;
+      c.add("speed", norm);
+      return c;
+    }());
+    return c;
+  }());
+  OR.push([timeout]() {
+    mc_rtc::Configuration c;
+    c.add("timeout", timeout);
+    return c;
+  }());
   mc_control::CompletionCriteria criteria;
   criteria.configure(dt, config);
   while(state.KeepRunning())
@@ -147,14 +169,26 @@ static void BM_EvalAndSpeedOrTimeoutConfigure(benchmark::State & state)
   double timeout = 5.0;
   mc_rtc::Configuration config;
   auto OR = config.array("OR", 2);
-  OR.push([norm](){
-          mc_rtc::Configuration c;
-          auto AND = c.array("AND", 2);
-          AND.push([norm](){ mc_rtc::Configuration c; c.add("eval", norm); return c; }());
-          AND.push([norm](){ mc_rtc::Configuration c; c.add("speed", norm); return c; }());
-          return c;
-          }());
-  OR.push([timeout](){ mc_rtc::Configuration c; c.add("timeout", timeout); return c; }());
+  OR.push([norm]() {
+    mc_rtc::Configuration c;
+    auto AND = c.array("AND", 2);
+    AND.push([norm]() {
+      mc_rtc::Configuration c;
+      c.add("eval", norm);
+      return c;
+    }());
+    AND.push([norm]() {
+      mc_rtc::Configuration c;
+      c.add("speed", norm);
+      return c;
+    }());
+    return c;
+  }());
+  OR.push([timeout]() {
+    mc_rtc::Configuration c;
+    c.add("timeout", timeout);
+    return c;
+  }());
   mc_control::CompletionCriteria criteria;
   while(state.KeepRunning())
   {

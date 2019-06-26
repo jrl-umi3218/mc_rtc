@@ -1,5 +1,9 @@
 #!/usr/bin/env python2
 
+#
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+#
+
 import os
 import subprocess
 import sys

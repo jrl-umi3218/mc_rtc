@@ -1,5 +1,9 @@
 # distutils: language = c++
 
+#
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+#
+
 cimport c_gui
 
 cimport mc_rtc.mc_rtc as mc_rtc

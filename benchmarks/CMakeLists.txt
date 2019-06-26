@@ -1,3 +1,7 @@
+#
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+#
+
 find_package(benchmark REQUIRED)
 
 macro(mc_rtc_benchmark NAME)

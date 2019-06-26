@@ -1,3 +1,7 @@
+#
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+#
+
 find_package(Boost REQUIRED COMPONENTS unit_test_framework timer)
 
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/tests_config.h.cmake.in"

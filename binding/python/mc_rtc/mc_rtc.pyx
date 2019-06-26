@@ -1,5 +1,9 @@
 # distutils: language = c++
 
+#
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+#
+
 from cython.operator cimport dereference as deref
 
 cimport mc_rtc.c_mc_rtc as c_mc_rtc

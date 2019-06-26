@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+#
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+#
+
 from PySide import QtCore, QtGui
 
 import ui

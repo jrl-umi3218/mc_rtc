@@ -1,5 +1,9 @@
 # distutils: language = c++
 
+#
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+#
+
 cimport c_fsm
 
 cimport eigen.eigen as eigen
