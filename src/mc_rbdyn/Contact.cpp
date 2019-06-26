@@ -1,3 +1,7 @@
+/*
+ * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ */
+
 #include <mc_rbdyn/Contact.h>
 #include <mc_rbdyn/PlanarSurface.h>
 #include <mc_rbdyn/Robots.h>

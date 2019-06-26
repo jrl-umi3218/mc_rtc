@@ -1,3 +1,7 @@
+/*
+ * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ */
+
 #ifndef _H_SPLINEUTILS_H_
 #define _H_SPLINEUTILS_H_
 

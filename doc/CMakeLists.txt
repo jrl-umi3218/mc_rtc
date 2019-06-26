@@ -1,3 +1,7 @@
+#
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+#
+
 if(_INSTALL_DOC)
   install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/index.html
                 ${CMAKE_CURRENT_SOURCE_DIR}/robots.txt

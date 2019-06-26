@@ -1,3 +1,7 @@
+#
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+#
+
 macro(add_controller controller_name controller_SRC controller_HDR)
   add_library(${controller_name} SHARED ${controller_SRC} ${controller_HDR})
   set_target_properties(${controller_name} PROPERTIES COMPILE_FLAGS

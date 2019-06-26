@@ -1,3 +1,7 @@
+/*
+ * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ */
+
 /*! This library voluntarily contains unresolved symbols */
 #include <mc_rbdyn/RobotModule.h>
 

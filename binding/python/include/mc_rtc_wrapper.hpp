@@ -1,12 +1,16 @@
+/*
+ * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ */
+
 #pragma once
 
-#include <functional>
+#include <mc_rbdyn/configuration_io.h>
+#include <mc_rtc/Configuration.h>
 
-#include <Eigen/Core>
 #include <SpaceVecAlg/SpaceVecAlg>
 
-#include <mc_rtc/Configuration.h>
-#include <mc_rbdyn/configuration_io.h>
+#include <Eigen/Core>
+#include <functional>
 
 template<typename T>
 using function = std::function<T()>;
@@ -14,14 +18,14 @@ using function = std::function<T()>;
 template<typename retT, typename T, typename U>
 std::function<retT()> make_log_callback(T fn, U arg)
 {
-  return [fn, arg]{ return fn(arg); };
+  return [fn, arg] { return fn(arg); };
 };
 
-#define MAKE_LOG_HELPER(NAME, TYPE)\
-  template<typename T, typename U>\
-  std::function<TYPE()> NAME(T fn, U arg)\
-  {\
-    return make_log_callback<TYPE>(fn ,arg);\
+#define MAKE_LOG_HELPER(NAME, TYPE)          \
+  template<typename T, typename U>           \
+  std::function<TYPE()> NAME(T fn, U arg)    \
+  {                                          \
+    return make_log_callback<TYPE>(fn, arg); \
   }
 MAKE_LOG_HELPER(make_v3d_log_callback, Eigen::Vector3d)
 MAKE_LOG_HELPER(make_double_log_callback, double)
@@ -45,7 +49,7 @@ T get_config_as(mc_rtc::Configuration & config, const T & def)
   {
     return get_config_as<T>(config);
   }
-  catch(const mc_rtc::Configuration::Exception&)
+  catch(const mc_rtc::Configuration::Exception &)
   {
     return def;
   }

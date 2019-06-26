@@ -1,3 +1,7 @@
+#
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+#
+
 # On WIN32 platform, compile and install our own libltdl
 if(WIN32)
   set(LTDL mc_rtc_3rd_party::ltdl)

@@ -1,5 +1,9 @@
 # distutils: language = c++
 
+#
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+#
+
 cimport mc_tasks.c_mc_tasks as c_mc_tasks
 
 cimport eigen.c_eigen as c_eigen

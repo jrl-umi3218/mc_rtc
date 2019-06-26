@@ -1,3 +1,7 @@
+#
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+#
+
 cimport eigen.c_eigen as c_eigen
 cimport sva.c_sva as c_sva
 cimport rbdyn.c_rbdyn as c_rbdyn

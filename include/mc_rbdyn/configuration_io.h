@@ -1,3 +1,7 @@
+/*
+ * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ */
+
 #pragma once
 /** This file holds all mc_rtc::Configuration based serialization operation for mc_rbdyn objects */
 

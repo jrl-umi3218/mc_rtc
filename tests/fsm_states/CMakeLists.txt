@@ -1,3 +1,7 @@
+#
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+#
+
 macro(add_fsm_test_state state_name)
   set(state_SRC ${state_name}.cpp)
   if(EXISTS ${state_name}.h)

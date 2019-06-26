@@ -1,7 +1,11 @@
-#include "benchmark/benchmark.h"
+/*
+ * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ */
 
 #include <mc_rbdyn/RobotLoader.h>
 #include <mc_rbdyn/Robots.h>
+
+#include "benchmark/benchmark.h"
 
 static void BM_RobotModuleLoading(benchmark::State & state)
 {

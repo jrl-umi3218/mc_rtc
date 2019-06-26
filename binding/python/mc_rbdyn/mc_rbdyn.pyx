@@ -1,5 +1,9 @@
 # distutils: language = c++
 
+#
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+#
+
 cimport mc_rbdyn.c_mc_rbdyn as c_mc_rbdyn
 
 cimport eigen.c_eigen as c_eigen

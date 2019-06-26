@@ -1,3 +1,7 @@
+/*
+ * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ */
+
 #include <mc_rtc/Configuration.h>
 
 #include <boost/test/unit_test.hpp>

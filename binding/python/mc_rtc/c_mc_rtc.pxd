@@ -1,3 +1,7 @@
+#
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+#
+
 from libcpp.string cimport string
 from libcpp.vector cimport vector
 from libcpp.map cimport map as cppmap  # Careful map is a python built-in

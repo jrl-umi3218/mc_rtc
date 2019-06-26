@@ -1,3 +1,7 @@
+#
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+#
+
 macro(add_robot robot_base)
   set(robot_SRC ${robot_base}.cpp)
   set(robot_HDR api.h ${robot_base}.h)

@@ -1,3 +1,7 @@
+#
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+#
+
 macro(robot_test_common NAME)
   add_library(${NAME} SHARED ${NAME}.cpp)
   target_link_libraries(${NAME} PUBLIC mc_rbdyn)

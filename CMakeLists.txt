@@ -1,3 +1,7 @@
+#
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+#
+
 cmake_minimum_required(VERSION 3.1)
 if(POLICY CMP0063)
   cmake_policy(SET CMP0063 NEW)

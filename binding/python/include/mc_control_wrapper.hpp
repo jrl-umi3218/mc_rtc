@@ -1,8 +1,12 @@
+/*
+ * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ */
+
 #pragma once
 
-#include <Eigen/Core>
 #include <mc_control/mc_python_controller.h>
 
+#include <Eigen/Core>
 #include <functional>
 #include <memory>
 #include <sstream>
@@ -12,15 +16,15 @@ using array7d = std::array<double, 7>;
 namespace mc_control
 {
 
-ControllerResetData& const_cast_crd(const ControllerResetData & in)
+ControllerResetData & const_cast_crd(const ControllerResetData & in)
 {
-  return const_cast<ControllerResetData&>(in);
+  return const_cast<ControllerResetData &>(in);
 }
 
-typedef bool (*run_callback_t)(void*);
-typedef void (*reset_callback_t)(const ControllerResetData&, void*);
-typedef bool (*read_msg_callback_t)(std::string&, void*);
-typedef PythonRWCallback (*read_write_msg_callback_t)(std::string&, void*);
+typedef bool (*run_callback_t)(void *);
+typedef void (*reset_callback_t)(const ControllerResetData &, void *);
+typedef bool (*read_msg_callback_t)(std::string &, void *);
+typedef PythonRWCallback (*read_write_msg_callback_t)(std::string &, void *);
 
 void set_run_callback(MCPythonController & ctl, run_callback_t fn, void * data)
 {
@@ -42,4 +46,4 @@ void set_read_write_msg_callback(MCPythonController & ctl, read_write_msg_callba
   ctl.read_write_msg_callback = std::bind(fn, std::placeholders::_1, data);
 }
 
-}
+} // namespace mc_control

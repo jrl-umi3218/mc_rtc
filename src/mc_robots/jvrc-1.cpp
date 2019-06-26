@@ -1,3 +1,7 @@
+/*
+ * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ */
+
 #ifndef JVRC_DESCRIPTION_PATH
 #  error "JVRC_DESCRIPTION_PATH must be defined to build this RobotModule"
 #endif

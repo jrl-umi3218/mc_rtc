@@ -1,21 +1,6 @@
-# Copyright 2012-2017 CNRS-UM LIRMM, CNRS-AIST JRL
 #
-# This file is part of mc_rtc.
+# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
 #
-# mc_rtc is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# mc_rtc is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Lesser General Public License for more details.
-#
-# You should have received a copy of the GNU Lesser General Public License
-# along with mc_rtc.  If not, see <http://www.gnu.org/licenses/>.
-
-
 
 if(${ROSCPP_FOUND})
   set(DEFINE_HAS_ROS_PYTHON_MACRO "DEF MC_RTC_HAS_ROS = 1")
