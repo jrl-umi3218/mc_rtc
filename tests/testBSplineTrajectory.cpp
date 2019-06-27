@@ -3,6 +3,7 @@
  */
 
 #include <mc_trajectory/BSpline.h>
+
 #include <iostream>
 
 int main()

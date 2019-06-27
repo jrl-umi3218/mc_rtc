@@ -2,8 +2,7 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#ifndef _H_BSPLINETRAJECTORY_H_
-#define _H_BSPLINETRAJECTORY_H_
+#pragma once
 
 #include <mc_rtc/GUIState.h>
 #include <mc_trajectory/Spline.h>
@@ -71,5 +70,3 @@ private:
 };
 
 } // namespace mc_trajectory
-
-#endif
