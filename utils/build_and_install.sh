@@ -312,6 +312,7 @@ else
   GIT_DEPENDENCIES="jrl-umi3218/SpaceVecAlg jrl-umi3218/RBDyn jrl-umi3218/eigen-qld jrl-umi3218/sch-core jrl-umi3218/mc_rbdyn_urdf ${GIT_DEPENDENCIES}"
 fi
 if $WITH_ROS
+then
   ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data#master"
   if $WITH_HRP2
   then
