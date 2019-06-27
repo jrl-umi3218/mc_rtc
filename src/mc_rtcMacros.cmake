@@ -1,9 +1,9 @@
 # -- Library install directory --
-set(MC_RTC_LIBDIR "@CMAKE_INSTALL_PREFIX@/lib")
+set(MC_RTC_LIBDIR "${PACKAGE_PREFIX_DIR}/lib")
 
 # -- Controllers --
 
-set(MC_CONTROLLER_INSTALL_PREFIX "@CMAKE_INSTALL_PREFIX@/lib/mc_controller")
+set(MC_CONTROLLER_INSTALL_PREFIX "${MC_RTC_LIBDIR}/mc_controller")
 
 macro(add_controller controller_name controller_SRC controller_HDR)
   add_library(${controller_name} SHARED ${controller_SRC} ${controller_HDR})
@@ -20,7 +20,7 @@ endmacro()
 
 # -- Robots --
 
-set(MC_ROBOTS_INSTALL_PREFIX "@CMAKE_INSTALL_PREFIX@/lib/mc_robots")
+set(MC_ROBOTS_INSTALL_PREFIX "${MC_RTC_LIBDIR}/mc_robots")
 
 macro(add_robot robot_name robot_SRC robot_HDR)
   add_library(${robot_name} SHARED ${robot_SRC} ${robot_HDR})
@@ -29,7 +29,7 @@ macro(add_robot robot_name robot_SRC robot_HDR)
 
   target_link_libraries(${robot_name} PUBLIC mc_rtc::mc_rbdyn)
 
-  install(TARGETS ${robot_base} DESTINATION "${MC_ROBOTS_INSTALL_PREFIX}")
+  install(TARGETS ${robot_name} DESTINATION "${MC_ROBOTS_INSTALL_PREFIX}")
 endmacro()
 
 macro(add_robot_simple robot_name)

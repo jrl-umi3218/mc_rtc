@@ -70,7 +70,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   {
     if(!config.has("MainRobot") || config("MainRobot").size() == 0)
     {
-      std::string robot_name = config("MainRobot", std::string{"HRP2DRC"});
+      std::string robot_name = config("MainRobot", std::string{"JVRC-1"});
       if(mc_rbdyn::RobotLoader::has_robot(robot_name))
       {
         try
