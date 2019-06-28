@@ -20,6 +20,63 @@
 #include <fstream>
 #include <iomanip>
 
+namespace
+{
+
+using gripper_it_t = std::map<std::string, std::shared_ptr<mc_control::Gripper>>::const_iterator;
+
+/** Helper to build the qOut logging */
+void addQOutLogEntry(std::function<void(std::vector<double> &)> callback,
+                     mc_rtc::Logger & logger,
+                     gripper_it_t it,
+                     gripper_it_t end,
+                     const std::vector<std::string> & refJointOrder)
+{
+  if(it == end)
+  {
+    std::vector<double> qOut(refJointOrder.size(), 0);
+    auto cb = [callback, qOut]() mutable -> const std::vector<double> & {
+      callback(qOut);
+      return qOut;
+    };
+    logger.addLogEntry("qOut", cb);
+  }
+  else
+  {
+    auto rjoIndex = [&refJointOrder](const std::string & name) {
+      for(size_t j = 0; j < refJointOrder.size(); ++j)
+      {
+        if(name == refJointOrder[j])
+        {
+          return static_cast<int>(j);
+        }
+      }
+      return -1;
+    };
+    const auto & gripper = it->second;
+    std::vector<int> gripperToRef;
+    for(size_t i = 0; i < gripper->names.size(); ++i)
+    {
+      gripperToRef.push_back(rjoIndex(gripper->names[i]));
+    }
+    auto cb = [callback, gripperToRef, gripper](std::vector<double> & qOut) {
+      callback(qOut);
+      const auto & q = gripper->_q;
+      for(size_t i = 0; i < gripperToRef.size(); ++i)
+      {
+        if(gripperToRef[i] != -1)
+        {
+          qOut[gripperToRef[i]] = q[i];
+        }
+      }
+    };
+    it++;
+    addQOutLogEntry(cb, logger, it, end, refJointOrder);
+  }
+}
+
+} // namespace
+
 /* Note all service calls except for controller switches are implemented in mc_global_controller_services.cpp */
 
 namespace mc_control
@@ -772,8 +829,7 @@ void MCGlobalController::setup_log()
     }
     refToQ.push_back(-1);
   }
-  std::vector<double> qOut(refToQ.size(), 0);
-  controller->logger().addLogEntry("qOut", [controller, refToQ, qOut]() mutable -> const std::vector<double> & {
+  auto qOutCb = [controller, refToQ](std::vector<double> & qOut) {
     for(size_t i = 0; i < qOut.size(); ++i)
     {
       if(refToQ[i] != -1)
@@ -782,7 +838,9 @@ void MCGlobalController::setup_log()
       }
     }
     return qOut;
-  });
+  };
+  addQOutLogEntry(qOutCb, controller->logger(), controller->grippers.cbegin(), controller->grippers.cend(),
+                  controller->robot().refJointOrder());
   controller->logger().addLogEntry(
       "tauIn", [controller]() -> const std::vector<double> & { return controller->robot().jointTorques(); });
   for(const auto & fs : controller->robot().forceSensors())
