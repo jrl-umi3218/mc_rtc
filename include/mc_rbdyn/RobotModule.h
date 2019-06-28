@@ -6,6 +6,7 @@
 
 #include <mc_rbdyn/BodySensor.h>
 #include <mc_rbdyn/Collision.h>
+#include <mc_rbdyn/CompoundJointConstraintDescription.h>
 #include <mc_rbdyn/Flexibility.h>
 #include <mc_rbdyn/ForceSensor.h>
 #include <mc_rbdyn/Mimic.h>
@@ -183,6 +184,11 @@ struct MC_RBDYN_DLLAPI RobotModule
   /** Make a valid ref_joint_order */
   void make_default_ref_joint_order();
 
+  inline const std::vector<CompoundJointConstraintDescription> & compoundJoints() const
+  {
+    return _compoundJoints;
+  }
+
   std::string path;
   std::string name;
   std::string urdf_path;
@@ -207,6 +213,7 @@ struct MC_RBDYN_DLLAPI RobotModule
   std::map<std::string, std::vector<Mimic>> _gripperMimics;
   std::vector<std::string> _ref_joint_order;
   std::array<double, 7> _default_attitude = {{1., 0., 0., 0., 0., 0., 0.}};
+  std::vector<CompoundJointConstraintDescription> _compoundJoints;
 };
 
 typedef std::shared_ptr<RobotModule> RobotModulePtr;
