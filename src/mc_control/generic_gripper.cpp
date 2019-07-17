@@ -280,4 +280,18 @@ double Gripper::opening() const
   return std::accumulate(percentOpen.begin(), percentOpen.end(), 0.0) / static_cast<double>(percentOpen.size());
 }
 
+bool Gripper::complete() const
+{
+  bool res = (targetQ == nullptr);
+  if(!res)
+  {
+    res = true;
+    for(size_t i = 0; i < actualQ.size(); ++i)
+    {
+      res = res && overCommandLimit[i];
+    }
+  }
+  return res;
+}
+
 } // namespace mc_control

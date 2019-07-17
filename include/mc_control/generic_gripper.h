@@ -102,6 +102,12 @@ public:
    */
   void setActualQ(const std::vector<double> & q);
 
+  /*! \brief Allows to check if the desired motion is finish or encounter an
+   * obstacle
+   * \return True if no motion, False if is moving
+   */
+  bool complete() const;
+
 public:
   /*! Gripper name */
   std::string name;
