@@ -53,6 +53,6 @@ endif()
 
 install(
   EXPORT mc_rtc_fsm_states
-  NAMESPACE mc_rtc::fsm::states
+  NAMESPACE mc_rtc::fsm::states::
   DESTINATION "${CONFIG_INSTALL_DIR}"
 )
