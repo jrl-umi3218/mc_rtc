@@ -212,7 +212,7 @@ bool Controller::run(mc_solver::FeedbackType fType)
       robots_idx_[r.name()] = r.robotIndex();
     }
   }
-  if(contacts_changed_)
+  if(contacts_changed_ && contact_constraint_)
   {
     std::vector<mc_rbdyn::Contact> contacts;
     contact_constraint_->contactConstr->resetDofContacts();
