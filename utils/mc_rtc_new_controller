@@ -38,7 +38,7 @@ install(FILES "${{CMAKE_CURRENT_BINARY_DIR}}/etc/{controller_name}.conf" DESTINA
         else:
             configure_config = """install(FILES etc/{controller_name}.conf DESTINATION "${{MC_CONTROLLER_INSTALL_PREFIX}}/etc")
 """.format(controller_name = controller_name)
-        fd.write("""cmake_minimum_required(VERSION 2.8)
+        fd.write("""cmake_minimum_required(VERSION 3.1)
 
 set(CXX_DISABLE_WERROR 1)
 set(CMAKE_CXX_STANDARD 11)
