@@ -19,7 +19,10 @@ SplineTrajectoryTask<Derived>::SplineTrajectoryTask(const mc_rbdyn::Robots & rob
                                                     const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
 : TrajectoryTaskGeneric<tasks::qp::TransformTask>(robots, robotIndex, stiffness, weight), rIndex_(robotIndex),
   surfaceName_(surfaceName), duration_(duration),
-  oriSpline_(duration, robots.robot().surface(surfaceName).X_0_s(robots.robot()).rotation(), target, oriWp)
+  oriSpline_(duration,
+             robots.robot(robotIndex).surface(surfaceName).X_0_s(robots.robot(robotIndex)).rotation(),
+             target,
+             oriWp)
 {
   const auto & robot = robots.robot(robotIndex);
   const auto & surface = robot.surface(surfaceName);

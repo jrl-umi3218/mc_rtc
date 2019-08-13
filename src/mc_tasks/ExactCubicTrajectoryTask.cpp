@@ -31,7 +31,7 @@ ExactCubicTrajectoryTask::ExactCubicTrajectoryTask(const mc_rbdyn::Robots & robo
                                                  target.rotation(),
                                                  oriWp),
   bspline(duration,
-          robots.robot().surface(surfaceName).X_0_s(robots.robot()).translation(),
+          robots.robot(robotIndex).surface(surfaceName).X_0_s(robots.robot(robotIndex)).translation(),
           target.translation(),
           posWp,
           init_vel,

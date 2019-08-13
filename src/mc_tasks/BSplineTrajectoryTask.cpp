@@ -30,7 +30,7 @@ BSplineTrajectoryTask::BSplineTrajectoryTask(const mc_rbdyn::Robots & robots,
                                               target.rotation(),
                                               oriWp),
   bspline(duration,
-          robots.robot().surface(surfaceName_).X_0_s(robots.robot()).translation(),
+          robots.robot(robotIndex).surface(surfaceName_).X_0_s(robots.robot(robotIndex)).translation(),
           target.translation(),
           posWp)
 {
