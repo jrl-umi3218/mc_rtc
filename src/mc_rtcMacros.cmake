@@ -84,3 +84,25 @@ endmacro()
 macro(add_fsm_data_directory directory)
   install(DIRECTORY ${directory} DESTINATION "${MC_STATES_INSTALL_PREFIX}" FILES_MATCHING PATTERN "*.json")
 endmacro()
+
+macro(find_description_package desc_pkg)
+  string(TOUPPER "${desc_pkg}" "DESC_PKG")
+  if(NOT DEFINED ${DESC_PKG}_PATH)
+    execute_process(
+      COMMAND "${PKG_CONFIG_EXECUTABLE}"
+      "--variable=datadir" "${desc_pkg}"
+      RESULT_VARIABLE "${DESC_PKG}_RESULT"
+      OUTPUT_VARIABLE "${DESC_PKG}_PATH"
+      ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
+    if(${${DESC_PKG}_RESULT})
+      set(${DESC_PKG}_FOUND False)
+      message(WARNING "${DESC_PKG}_PATH is not defined and pkg-config failed to find ${desc_pkg}, the related robots' modules will not work properly. Check your system configuration or define ${DESC_PKG} to fix this issue.")
+    else()
+      message(STATUS "Found ${desc_pkg}: ${${DESC_PKG}_PATH}")
+      set(${DESC_PKG}_FOUND True)
+    endif()
+  else()
+    set(${DESC_PKG}_FOUND True)
+    message(STATUS "Found ${desc_pkg}: ${${DESC_PKG}_PATH}")
+  endif()
+endmacro()
