@@ -8,12 +8,9 @@
 
 namespace mc_trajectory
 {
-using point_t = BSpline::point_t;
-using waypoints_t = BSpline::waypoints_t;
-using bezier_curve_t = BSpline::bezier_curve_t;
 
-BSpline::BSpline(double duration, const point_t & start, const point_t & target, const waypoints_t & waypoints)
-: Spline<point_t, waypoints_t>(duration, start, target, waypoints)
+BSpline::BSpline(double duration, const Eigen::Vector3d & start, const Eigen::Vector3d & target, const std::vector<Eigen::Vector3d> & waypoints)
+: Spline<Eigen::Vector3d, std::vector<Eigen::Vector3d>>(duration, start, target, waypoints)
 {
   update();
 }
@@ -23,7 +20,7 @@ void BSpline::update()
   if(needsUpdate_)
   {
     // Waypoints including start and target position
-    std::vector<point_t> waypoints;
+    std::vector<Eigen::Vector3d> waypoints;
     waypoints.reserve(waypoints_.size() + 2);
     waypoints.push_back(start_);
     for(const auto & wp : waypoints_)
@@ -31,7 +28,7 @@ void BSpline::update()
       waypoints.push_back(wp);
     }
     waypoints.push_back(target_);
-    spline.reset(new bezier_curve_t(waypoints.begin(), waypoints.end(), duration_));
+    spline.reset(new BSpline::bezier_curve_t(waypoints.begin(), waypoints.end(), duration_));
     samples_ = this->sampleTrajectory();
     needsUpdate_ = false;
   }

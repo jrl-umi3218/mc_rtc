@@ -19,7 +19,7 @@ BSplineTrajectoryTask::BSplineTrajectoryTask(const mc_rbdyn::Robots & robots,
                                              double stiffness,
                                              double weight,
                                              const sva::PTransformd & target,
-                                             const BSpline::waypoints_t & posWp,
+                                             const waypoints_t & posWp,
                                              const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
 : SplineTrajectoryTask<BSplineTrajectoryTask>(robots,
                                               robotIndex,

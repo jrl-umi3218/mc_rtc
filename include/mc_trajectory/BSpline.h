@@ -14,13 +14,11 @@
 namespace mc_trajectory
 {
 
-using bezier_curve_t = spline::bezier_curve<double, double, 3, false, Eigen::Vector3d>;
-
-struct MC_TRAJECTORY_DLLAPI BSpline : public Spline<Eigen::Vector3d, bezier_curve_t::t_point_t>
+struct MC_TRAJECTORY_DLLAPI BSpline : public Spline<Eigen::Vector3d, std::vector<Eigen::Vector3d>>
 {
-  using point_t = Eigen::Vector3d;
-  using bezier_curve_t = spline::bezier_curve<double, double, 3, false, point_t>;
-  using waypoints_t = bezier_curve_t::t_point_t;
+  using bezier_curve_t = spline::bezier_curve<double, double, 3, false, Eigen::Vector3d>;
+  //using waypoints_t = bezier_curve_t::t_Eigen::Vector3d;
+  using waypoints_t = std::vector<Eigen::Vector3d>;
 
 public:
   /*! \brief Creates a curve with given waypoints (should includes starting and
@@ -32,7 +30,7 @@ public:
    * \param waypoints control points for the bezier curve (excluding start and
    * target points)
    */
-  BSpline(double duration, const point_t & start, const point_t & target, const waypoints_t & waypoints = {});
+  BSpline(double duration, const Eigen::Vector3d & start, const Eigen::Vector3d & target, const waypoints_t & waypoints = {});
 
   /*! \brief Triggers recreation of the curve. Will only occur if the curve
    * parameters were modified (waypoints, target), or the sampling size has
