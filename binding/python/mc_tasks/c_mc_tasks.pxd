@@ -123,8 +123,8 @@ cdef extern from "<mc_tasks/SplineTrajectoryTask.h>" namespace "mc_tasks":
     void oriWaypoints(const vector[pair[double,c_eigen.Matrix3d]] &)
     cppbool timeElapsed() const
     c_eigen.VectorXd evalTracking() const
-    void target(const c_sva.PTransformd &)
-    const c_sva.PTransformd target()
+    c_sva.PTransformd target() const
+    void target(c_sva.PTransformd &)
     void refPose(const c_sva.PTransformd&)
     const c_sva.PTransformd & refPose() const
     void displaySamples(unsigned int)

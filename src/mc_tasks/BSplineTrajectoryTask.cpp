@@ -44,9 +44,9 @@ void BSplineTrajectoryTask::posWaypoints(const BSpline::waypoints_t & posWp)
   bspline.waypoints(posWp);
 }
 
-void BSplineTrajectoryTask::target(const sva::PTransformd & target)
+void BSplineTrajectoryTask::target(const Eigen::Vector3d & target)
 {
-  bspline.target(target.translation());
+  bspline.target(target);
 }
 
 Eigen::Vector3d BSplineTrajectoryTask::target() const

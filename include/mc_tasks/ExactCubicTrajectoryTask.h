@@ -84,7 +84,7 @@ public:
   /*! \brief Sets the curve target pose
    * \param target Target pose for the curve
    */
-  void target(const sva::PTransformd & target);
+  void target(const Eigen::Vector3d & target);
   /*! \brief Gets the target position of the curve
    *
    * \returns target position

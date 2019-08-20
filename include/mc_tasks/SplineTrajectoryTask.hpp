@@ -110,7 +110,7 @@ template<typename Derived>
 void SplineTrajectoryTask<Derived>::target(const sva::PTransformd & target)
 {
   auto & derived = static_cast<Derived &>(*this);
-  derived.target(target);
+  derived.target(target.translation());
   oriSpline_.target(target.rotation());
 }
 

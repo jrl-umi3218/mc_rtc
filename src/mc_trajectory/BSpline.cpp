@@ -9,7 +9,10 @@
 namespace mc_trajectory
 {
 
-BSpline::BSpline(double duration, const Eigen::Vector3d & start, const Eigen::Vector3d & target, const std::vector<Eigen::Vector3d> & waypoints)
+BSpline::BSpline(double duration,
+                 const Eigen::Vector3d & start,
+                 const Eigen::Vector3d & target,
+                 const std::vector<Eigen::Vector3d> & waypoints)
 : Spline<Eigen::Vector3d, std::vector<Eigen::Vector3d>>(duration, start, target, waypoints)
 {
   update();

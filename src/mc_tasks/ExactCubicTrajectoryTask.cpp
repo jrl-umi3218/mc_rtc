@@ -59,9 +59,9 @@ void ExactCubicTrajectoryTask::constraints(const Eigen::Vector3d & init_vel,
   bspline.constraints(init_vel, init_acc, end_vel, end_acc);
 }
 
-void ExactCubicTrajectoryTask::target(const sva::PTransformd & target)
+void ExactCubicTrajectoryTask::target(const Eigen::Vector3d & target)
 {
-  bspline.target(target.translation());
+  bspline.target(target);
 }
 
 Eigen::Vector3d ExactCubicTrajectoryTask::target() const

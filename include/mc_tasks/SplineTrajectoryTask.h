@@ -121,19 +121,6 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformT
    */
   const sva::PTransformd target() const;
 
-  /**
-   * \brief Tracks a reference world pose
-   *
-   * \param pose Desired position (world)
-   */
-  void refPose(const sva::PTransformd & pose);
-  /**
-   * \brief Returns the trajectory reference world pose
-   *
-   * \return Desired pose (world)
-   */
-  const sva::PTransformd & refPose() const;
-
   /*! \brief Get the control points of the trajectory's b-spline
    *
    * \returns The list of control points in the spline
@@ -152,6 +139,24 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformT
   unsigned displaySamples() const;
 
 protected:
+  /**
+   * \brief Tracks a reference world pose
+   *
+   * \param pose Desired position (world)
+   */
+  void refPose(const sva::PTransformd & pose);
+  /**
+   * \brief Returns the trajectory reference world pose
+   *
+   * \return Desired pose (world)
+   */
+  const sva::PTransformd & refPose() const;
+
+  /* Hide parent's refVel and refAccel implementation as the Spline tasks
+   * are overriding these at every iteration according to the underlying curve */
+  using TrajectoryTaskGeneric<tasks::qp::TransformTask>::refVel;
+  using TrajectoryTaskGeneric<tasks::qp::TransformTask>::refAccel;
+
   /*! \brief Add task controls to the GUI.
    * Interactive controls for the trajectory waypoints and end-endpoints
    * automatically updates the curve

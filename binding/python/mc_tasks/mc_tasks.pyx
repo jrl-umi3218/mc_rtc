@@ -219,17 +219,6 @@ cdef class VectorPairDoubleMatrix3d(object):
       for p in args[0]:
         self.impl.push_back(PairDoubleMatrix3d(p).impl)
 
-cdef class SplineTrajectoryTask(_SplineTrajectoryTask):
-  def refPose(self, pos = None):
-    assert(self.impl)
-    if pos is None:
-      return sva.PTransformdFromC(self.impl.refPose())
-    else:
-      self.impl.refPose(deref((<sva.PTransformd>pos).impl))
-  def evalTracking(self):
-      assert(self.impl)
-      return eigen.VectorXdFromC(self.impl.evalTracking())
-
 cdef class BSplineTrajectoryTask(_SplineTrajectoryTask):
   def __ctor__(self, mc_rbdyn.Robots robots, robotIndex,
           surfaceName, duration, stiffness, weight, sva.PTransformd target, posWp, oriWp):
@@ -247,6 +236,17 @@ cdef class BSplineTrajectoryTask(_SplineTrajectoryTask):
   def oriWaypoints(self, oriWp):
     assert(self.impl)
     self.impl.oriWaypoints(VectorPairDoubleMatrix3d(oriWp).impl)
+  def target(self, pos = None):
+    if pos is None:
+      return sva.PTransformdFromC((<c_mc_tasks.SplineTrajectoryTask[c_mc_tasks.BSplineTrajectoryTask]*>self.impl).target())
+    else:
+      if isinstance(pos, sva.PTransformd):
+        (<c_mc_tasks.SplineTrajectoryTask[c_mc_tasks.BSplineTrajectoryTask]*>self.impl).target(deref((<sva.PTransformd>pos).impl))
+      else:
+        self.target(sva.PTransformd(pos))
+  def evalTracking(self):
+    assert(self.impl)
+    return eigen.VectorXdFromC(self.impl.evalTracking())
 
 cdef class EndEffectorTask(MetaTask):
   def __dealloc__(self):
