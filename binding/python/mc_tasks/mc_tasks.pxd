@@ -46,6 +46,10 @@ cdef class BSplineTrajectoryTask(_SplineTrajectoryTask):
   cdef c_mc_tasks.BSplineTrajectoryTask * impl
   cdef cppbool __own_impl
 
+cdef class ExactCubicTrajectoryTask(_SplineTrajectoryTask):
+  cdef c_mc_tasks.ExactCubicTrajectoryTask * impl
+  cdef cppbool __own_impl
+
 cdef class _TransformTask(MetaTask):
   cdef c_mc_tasks.TrajectoryTaskGeneric[c_qp.TransformTask] * ttg_base
 
@@ -99,3 +103,4 @@ ctypedef fused AnyTask:
   EndEffectorTask
   RelativeEndEffectorTask
   BSplineTrajectoryTask
+  ExactCubicTrajectoryTask

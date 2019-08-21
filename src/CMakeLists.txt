@@ -185,7 +185,7 @@ set(mc_trajectory_SRC
 mc_trajectory/BSpline.cpp
 mc_trajectory/InterpolatedRotation.cpp
 mc_trajectory/spline_utils.cpp
-# mc_trajectory/ExactCubic.cpp
+mc_trajectory/ExactCubic.cpp
 )
 
 set(mc_trajectory_HDR
@@ -195,7 +195,7 @@ set(mc_trajectory_HDR
 ../include/mc_trajectory/BSpline.h
 ../include/mc_trajectory/InterpolatedRotation.h
 ../include/mc_trajectory/spline_utils.h
-# ../include/mc_trajectory/ExactCubic.h
+../include/mc_trajectory/ExactCubic.h
 )
 
 add_library(mc_trajectory SHARED ${mc_trajectory_SRC} ${mc_trajectory_HDR})
@@ -213,7 +213,7 @@ mc_tasks/RelativeEndEffectorTask.cpp
 mc_tasks/CoMTask.cpp
 mc_tasks/AddRemoveContactTask.cpp
 mc_tasks/BSplineTrajectoryTask.cpp
-# mc_tasks/ExactCubicTrajectoryTask.cpp
+mc_tasks/ExactCubicTrajectoryTask.cpp
 mc_tasks/ComplianceTask.cpp
 mc_tasks/AdmittanceTask.cpp
 mc_tasks/DampingTask.cpp

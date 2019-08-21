@@ -117,7 +117,7 @@ cdef extern from "<mc_tasks/SurfaceTransformTask.h>" namespace "mc_tasks":
 cdef extern from "<mc_tasks/SplineTrajectoryTask.h>" namespace "mc_tasks":
   cdef cppclass SplineTrajectoryTask[T](TrajectoryTaskGeneric[c_qp.TransformTask]):
     SplineTrajectoryTask(const c_mc_rbdyn.Robots&,
-            unsigned int, const string &, double, double, double, 
+            unsigned int, const string &, double, double, double,
             const c_eigen.Matrix3d &,
             const vector[pair[double,c_eigen.Matrix3d]] &)
     void oriWaypoints(const vector[pair[double,c_eigen.Matrix3d]] &)
@@ -133,12 +133,31 @@ cdef extern from "<mc_tasks/SplineTrajectoryTask.h>" namespace "mc_tasks":
 cdef extern from "<mc_tasks/BSplineTrajectoryTask.h>" namespace "mc_tasks":
   cdef cppclass BSplineTrajectoryTask(SplineTrajectoryTask[BSplineTrajectoryTask]):
     BSplineTrajectoryTask(const c_mc_rbdyn.Robots&,
-            unsigned int, const string &, double, double, double, 
+            unsigned int, const string &, double, double, double,
             const c_sva.PTransformd &)
     BSplineTrajectoryTask(const c_mc_rbdyn.Robots&,
-            unsigned int, const string &, double, double, double, 
+            unsigned int, const string &, double, double, double,
             const c_sva.PTransformd &,
             const vector[c_eigen.Vector3d] &,
             const vector[pair[double,c_eigen.Matrix3d]] &)
     void posWaypoints(const vector[c_eigen.Vector3d] &)
 
+cdef extern from "<mc_tasks/ExactCubicTrajectoryTask.h>" namespace "mc_tasks":
+  cdef cppclass ExactCubicTrajectoryTask(SplineTrajectoryTask[ExactCubicTrajectoryTask]):
+    ExactCubicTrajectoryTask(const c_mc_rbdyn.Robots&,
+            unsigned int, const string &, double, double, double,
+            const c_sva.PTransformd &)
+    ExactCubicTrajectoryTask(const c_mc_rbdyn.Robots&,
+            unsigned int, const string &, double, double, double,
+            const c_sva.PTransformd &,
+            const vector[pair[double,c_eigen.Vector3d]] &,
+            const c_eigen.Vector3d &,
+            const c_eigen.Vector3d &,
+            const c_eigen.Vector3d &,
+            const c_eigen.Vector3d &,
+            const vector[pair[double,c_eigen.Matrix3d]] &)
+    void posWaypoints(const vector[pair[double,c_eigen.Vector3d]] &)
+    void constraints(const c_eigen.Vector3d &,
+            const c_eigen.Vector3d &,
+            const c_eigen.Vector3d &,
+            const c_eigen.Vector3d &)
