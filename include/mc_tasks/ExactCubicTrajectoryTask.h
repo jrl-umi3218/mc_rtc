@@ -21,6 +21,8 @@ namespace mc_tasks
  */
 struct MC_TASKS_DLLAPI ExactCubicTrajectoryTask : public SplineTrajectoryTask<ExactCubicTrajectoryTask>
 {
+  friend class SplineTrajectoryTask<ExactCubicTrajectoryTask>;
+
 public:
   using SplineTrajectoryBase = SplineTrajectoryTask<ExactCubicTrajectoryTask>;
 
@@ -81,16 +83,6 @@ public:
     return bspline;
   };
 
-  /*! \brief Sets the curve target pose
-   * \param target Target pose for the curve
-   */
-  void target(const Eigen::Vector3d & target);
-  /*! \brief Gets the target position of the curve
-   *
-   * \returns target position
-   */
-  Eigen::Vector3d target() const;
-
   /*! \brief Add interactive GUI elements to control the curve waypoints
    */
   void addToGUI(mc_rtc::gui::StateBuilder & gui);
@@ -111,6 +103,17 @@ public:
                    const Eigen::Vector3d & init_acc,
                    const Eigen::Vector3d & end_vel,
                    const Eigen::Vector3d & end_acc);
+
+protected:
+  /*! \brief Sets the curve target pose
+   * \param target Target pose for the curve
+   */
+  void target(const Eigen::Vector3d & target);
+  /*! \brief Gets the target position of the curve
+   *
+   * \returns target position
+   */
+  Eigen::Vector3d target() const;
 
 protected:
   mc_trajectory::ExactCubic bspline;

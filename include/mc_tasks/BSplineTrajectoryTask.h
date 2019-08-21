@@ -19,6 +19,8 @@ namespace mc_tasks
  */
 struct MC_TASKS_DLLAPI BSplineTrajectoryTask : public SplineTrajectoryTask<BSplineTrajectoryTask>
 {
+  friend class SplineTrajectoryTask<BSplineTrajectoryTask>;
+
 public:
   using waypoints_t = mc_trajectory::BSpline::waypoints_t;
 
@@ -68,17 +70,6 @@ public:
     return bspline;
   };
 
-  /*! \brief Sets the curve target pose
-   * \param target Target pose for the curve
-   */
-  void target(const Eigen::Vector3d & target);
-  /*!
-   * \brief Gets the target position of the curve
-   *
-   * \returns target position
-   */
-  Eigen::Vector3d target() const;
-
   /*! \brief Add interactive GUI elements to control the curve waypoints
    */
   void addToGUI(mc_rtc::gui::StateBuilder & gui);
@@ -89,6 +80,18 @@ public:
    * Shouldn't include the starting and target position (use target() instead).
    */
   void posWaypoints(const waypoints_t & posWp);
+
+protected:
+  /*! \brief Sets the curve target pose
+   * \param target Target pose for the curve
+   */
+  void target(const Eigen::Vector3d & target);
+  /*!
+   * \brief Gets the target position of the curve
+   *
+   * \returns target position
+   */
+  Eigen::Vector3d target() const;
 
 protected:
   mc_trajectory::BSpline bspline;
