@@ -467,6 +467,14 @@ Eigen::Vector3d Robot::comAcceleration() const
   return rbd::computeCoMAcceleration(mb(), mbc());
 }
 
+sva::ForceVecd Robot::bodyWrench(const std::string & bodyName) const
+{
+  const auto & fs = bodyForceSensor(bodyName);
+  sva::ForceVecd w_fsactual = fs.wrenchWithoutGravity(*this);
+  sva::PTransformd X_fsactual_surf = fs.X_fsactual_parent();
+  return X_fsactual_surf.dualMul(w_fsactual);
+}
+
 sva::ForceVecd Robot::surfaceWrench(const std::string & surfaceName) const
 {
   const auto & bodyName = surface(surfaceName).bodyName();

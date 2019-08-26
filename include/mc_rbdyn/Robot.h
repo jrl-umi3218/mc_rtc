@@ -230,6 +230,16 @@ public:
    */
   sva::ForceVecd surfaceWrench(const std::string & surfaceName) const;
 
+  /** Compute the gravity-free wrench in body frame
+   *
+   * @param bodyName A body attached to a force sensor
+   *
+   * @return Measured wrench in body frame
+   *
+   * @throws If no sensor is attached to this surface
+   */
+  sva::ForceVecd bodyWrench(const std::string & bodyName) const;
+
   /** Compute the cop in surface frame computed from gravity-free force
    * measurements
    *
