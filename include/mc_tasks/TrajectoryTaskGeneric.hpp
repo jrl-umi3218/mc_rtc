@@ -423,4 +423,12 @@ void TrajectoryTaskGeneric<T>::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry(name_ + "_refAccel");
 }
 
+template<typename T>
+std::function<bool(const mc_tasks::MetaTask & task, std::string &)> TrajectoryTaskGeneric<T>::buildCompletionCriteria(
+    double dt,
+    const mc_rtc::Configuration & config) const
+{
+  return MetaTask::buildCompletionCriteria(dt, config);
+}
+
 } // namespace mc_tasks

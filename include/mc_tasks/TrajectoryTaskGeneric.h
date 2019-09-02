@@ -197,6 +197,10 @@ protected:
 
   void removeFromLogger(mc_rtc::Logger & logger) override;
 
+  std::function<bool(const mc_tasks::MetaTask & task, std::string &)> buildCompletionCriteria(
+      double dt,
+      const mc_rtc::Configuration & config) const override;
+
 protected:
   const mc_rbdyn::Robots & robots;
   unsigned int rIndex;
