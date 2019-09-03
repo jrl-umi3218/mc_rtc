@@ -363,12 +363,25 @@ void TrajectoryTaskGeneric<T>::load(mc_solver::QPSolver & solver, const mc_rtc::
   {
     weight(config("weight"));
   }
+  if(config.has("refVel"))
+  {
+    refVel(config("refVel"));
+  }
+  if(config.has("refAccel"))
+  {
+    refAccel(config("refAccel"));
+  }
 }
 
 template<typename T>
 void TrajectoryTaskGeneric<T>::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   MetaTask::addToGUI(gui);
+  gui.addElement({"Tasks", name_},
+                 mc_rtc::gui::ArrayInput("refVel", [this]() { return this->refVel(); },
+                                         [this](const Eigen::VectorXd & v) { this->refVel(v); }),
+                 mc_rtc::gui::ArrayInput("refAccel", [this]() { return this->refAccel(); },
+                                         [this](const Eigen::VectorXd & v) { this->refAccel(v); }));
   gui.addElement({"Tasks", name_, "Gains"},
                  mc_rtc::gui::NumberInput("stiffness", [this]() { return this->stiffness(); },
                                           [this](const double & s) { this->setGains(s, this->damping()); }),
