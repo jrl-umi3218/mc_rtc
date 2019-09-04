@@ -87,26 +87,20 @@ else()
   set(ROSCPP_FOUND False)
 endif()
 
-macro(find_description_package desc_pkg)
-  string(TOUPPER "${desc_pkg}" "DESC_PKG")
-  if(NOT DEFINED ${DESC_PKG}_PATH)
-    execute_process(
-      COMMAND "${PKG_CONFIG_EXECUTABLE}"
-      "--variable=datadir" "${desc_pkg}"
-      RESULT_VARIABLE "${DESC_PKG}_RESULT"
-      OUTPUT_VARIABLE "${DESC_PKG}_PATH"
-      ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
-    if(${${DESC_PKG}_RESULT})
-      set(${DESC_PKG}_FOUND False)
-      message(WARNING "${DESC_PKG}_PATH is not defined and pkg-config failed to find ${desc_pkg}, the related robots' modules will not work properly. Check your system configuration or define ${DESC_PKG} to fix this issue.")
+macro(find_description_package PACKAGE)
+  set(PACKAGE_PATH_VAR "${PACKAGE}_PATH")
+  string(TOUPPER "${PACKAGE_PATH_VAR}" PACKAGE_PATH_VAR)
+  find_package(${PACKAGE} REQUIRED)
+  if("${${PACKAGE}_INSTALL_PREFIX}" STREQUAL "")
+    if("${${PACKAGE}_SOURCE_PREFIX}" STREQUAL "")
+      message(FATAL_ERROR "Your ${PACKAGE} does not define where to find the data, please update.")
     else()
-      message(STATUS "${desc_pkg}: ${${DESC_PKG}_PATH}")
-      set(${DESC_PKG}_FOUND True)
+      set(${PACKAGE_PATH_VAR} "${${PACKAGE}_SOURCE_PREFIX}")
     endif()
   else()
-    set(${DESC_PKG}_FOUND True)
-    message(STATUS "${desc_pkg}: ${${DESC_PKG}_PATH}")
+    set(${PACKAGE_PATH_VAR} "${${PACKAGE}_INSTALL_PREFIX}")
   endif()
+  message("-- Found ${PACKAGE}: ${${PACKAGE_PATH_VAR}}")
 endmacro()
 
 find_description_package(mc_env_description)
