@@ -46,6 +46,7 @@ bool LTDLHandle::open()
   {
     LOG_INFO("Attempt to open " << path_)
   }
+#ifndef WIN32
   if(global_)
   {
     if(verbose_)
@@ -62,6 +63,9 @@ bool LTDLHandle::open()
   {
     handle_ = lt_dlopen(path_.c_str());
   }
+#else
+  handle_ = lt_dlopen(path_.c_str());
+#endif
   open_ = handle_ != nullptr;
   if(!open_)
   {
