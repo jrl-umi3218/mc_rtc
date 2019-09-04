@@ -9,7 +9,8 @@ if(WIN32)
   add_library(${LTDL} SHARED ltdl.c ltdl.h)
   # Generally import ltdl symbols
   target_compile_definitions(${LTDL} PRIVATE -DDLL_EXPORT -DHAVE_STDLIB_H=1 -DHAVE_ERRNO_H=1 -DHAVE_MEMORY_H=1 -DHAVE_CTYPE_H=1 -DHAVE_STRING_H=1 -DHAVE_STDIO_H=1 -DHAVE_ASSERT_H=1 -D__WINDOWS__ -D__WIN32__)
-  install(FILES ltdl/ltdl.h DESTINATION ${CMAKE_INSTALL_PREFIX}/include)
+  target_include_directories(${LTDL} INTERFACE $<INSTALL_INTERFACE:include> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
+  install(FILES ltdl.h DESTINATION ${CMAKE_INSTALL_PREFIX}/include/)
   install(TARGETS ${LTDL}
           EXPORT "${TARGETS_EXPORT_NAME}"
           RUNTIME DESTINATION bin
