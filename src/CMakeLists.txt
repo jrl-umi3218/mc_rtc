@@ -24,7 +24,7 @@ endmacro()
 
 add_library(mc_rtc_loader SHARED mc_rtc/loader.cpp ../include/mc_rtc/loader.h ../include/mc_rtc/loader_api.h)
 set_target_properties(mc_rtc_loader PROPERTIES COMPILE_FLAGS "-DMC_RTC_LOADER_EXPORTS")
-target_link_libraries(mc_rtc_loader PUBLIC Boost::filesystem Boost::disable_autolinking mc_rtc_3rd_party::ltdl)
+target_link_libraries(mc_rtc_loader PUBLIC Boost::filesystem Boost::disable_autolinking ${LTDL})
 install_mc_rtc_lib(mc_rtc_loader)
 
 set(mc_rtc_utils_SRC
