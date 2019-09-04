@@ -1,3 +1,5 @@
+get_filename_component(PACKAGE_PREFIX_DIR "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
+
 # -- Library install directory --
 set(MC_RTC_LIBDIR "${PACKAGE_PREFIX_DIR}/lib")
 
