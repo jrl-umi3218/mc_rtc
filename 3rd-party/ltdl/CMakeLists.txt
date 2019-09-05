@@ -7,6 +7,7 @@ if(WIN32)
   set(LTDL ltdl PARENT_SCOPE)
   set(LTDL ltdl)
   add_library(${LTDL} SHARED ltdl.c ltdl.h)
+  set_target_properties(${LTDL} PROPERTIES FOLDER 3rd-party)
   # Generally import ltdl symbols
   target_compile_definitions(${LTDL} PRIVATE -DDLL_EXPORT -DHAVE_STDLIB_H=1 -DHAVE_ERRNO_H=1 -DHAVE_MEMORY_H=1 -DHAVE_CTYPE_H=1 -DHAVE_STRING_H=1 -DHAVE_STDIO_H=1 -DHAVE_ASSERT_H=1 -D__WINDOWS__ -D__WIN32__)
   target_include_directories(${LTDL} INTERFACE $<INSTALL_INTERFACE:include> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)

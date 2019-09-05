@@ -8,7 +8,7 @@ set(USE_SANDBOX "true")
 
 macro(controller_test_common NAME)
   add_library(${NAME} SHARED ${NAME}.cpp)
-  target_link_libraries(${NAME} PUBLIC mc_control)
+  target_link_libraries(${NAME} PUBLIC mc_control Boost::unit_test_framework)
   set_target_properties(${NAME} PROPERTIES
     COMPILE_FLAGS "-DMC_CONTROL_EXPORTS"
     PREFIX ""
@@ -22,11 +22,13 @@ endmacro()
 
 macro(controller_test_construction_failure NAME)
   controller_test_common(${NAME})
+  set_target_properties(${NAME} PROPERTIES FOLDER tests/controllers/failure)
   add_test(NAME ${NAME} COMMAND test_controller_ticker --run_test=CONSTRUCTION_FAILURE ${NAME}/mc_rtc-${NAME}.conf)
 endmacro()
 
 macro(controller_test_run NAME NRITER)
   controller_test_common(${NAME})
+  set_target_properties(${NAME} PROPERTIES FOLDER tests/controllers/run)
   add_test(NAME ${NAME} COMMAND test_controller_ticker --run_test=RUN ${NAME}/mc_rtc-${NAME}.conf ${NRITER})
 endmacro()
 
@@ -50,6 +52,7 @@ if(UNIX)
 
   # Test controller switch and threaded log policy
   add_library(TestPostureController2 SHARED TestPostureController2.cpp)
+  set_target_properties(TestPostureController2 PROPERTIES FOLDER tests/controllers/run)
   target_link_libraries(TestPostureController2 PUBLIC ${Boost_LIBRARIES} mc_control)
   set_target_properties(TestPostureController2 PROPERTIES
     COMPILE_FLAGS "-DMC_CONTROL_EXPORTS"

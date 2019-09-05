@@ -12,6 +12,7 @@ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/tests_config.h.cmake.in"
 ############################
 
 add_executable(LoggerTraits LoggerTraits.cpp)
+set_target_properties(LoggerTraits PROPERTIES FOLDER tests/compilation)
 target_link_libraries(LoggerTraits PUBLIC mc_control)
 
 #################################
@@ -20,9 +21,11 @@ target_link_libraries(LoggerTraits PUBLIC mc_control)
 #################################
 
 add_executable(testBSplineTrajectory testBSplineTrajectory.cpp)
+set_target_properties(testBSplineTrajectory PROPERTIES FOLDER tests/utility)
 target_link_libraries(testBSplineTrajectory PUBLIC mc_trajectory)
 
 add_executable(testQuadraticGenerator testQuadraticGenerator.cpp)
+set_target_properties(testQuadraticGenerator PROPERTIES FOLDER tests/utility)
 target_link_libraries(testQuadraticGenerator PUBLIC mc_rbdyn)
 
 #################################
@@ -45,6 +48,7 @@ MACRO(mc_rtc_test NAME)
   target_link_libraries(${NAME} PUBLIC Boost::unit_test_framework Boost::disable_autolinking ${ARGN})
   target_compile_definitions(${NAME} PRIVATE -DBOOST_TEST_DYN_LINK -DBOOST_TEST_MAIN)
   target_include_directories(${NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/include)
+  set_target_properties(${NAME} PROPERTIES FOLDER tests/framework)
   add_test(${NAME} ${NAME})
   # Adding a project configuration file (for MSVC only)
   generate_msvc_dot_user_file(${NAME})
@@ -72,6 +76,7 @@ mc_rtc_test(testFSMStateFactory mc_control_fsm ConfigureState)
 ######################################
 
 add_executable(test_controller_ticker test_controller_ticker.cpp)
+set_target_properties(test_controller_ticker PROPERTIES FOLDER tests/ticker)
 target_link_libraries(test_controller_ticker PUBLIC mc_control Boost::unit_test_framework Boost::disable_autolinking)
 target_compile_definitions(test_controller_ticker PRIVATE -DBOOST_TEST_DYN_LINK -DBOOST_TEST_MAIN)
 # Adding a project configuration file (for MSVC only)
@@ -90,7 +95,9 @@ endif()
 ######################
 
 add_executable(dummyClient dummyClient.cpp)
+set_target_properties(dummyClient PROPERTIES FOLDER tests/GUI)
 target_link_libraries(dummyClient PUBLIC mc_control_client)
 
 add_executable(dummyServer dummyServer.cpp)
+set_target_properties(dummyServer PROPERTIES FOLDER tests/GUI)
 target_link_libraries(dummyServer PUBLIC mc_control)
