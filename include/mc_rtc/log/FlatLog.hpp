@@ -70,6 +70,9 @@ namespace details
 template<typename T, typename LogT>
 T convert(const LogT *)
 {
+#ifndef __PRETTY_FUNCTION__
+#  define __PRETTY_FUNCTION__ ""
+#endif
   LOG_ERROR_AND_THROW(std::runtime_error,
                       "This should never be called " << __FILE__ << " " << __LINE__ << " " << __PRETTY_FUNCTION__)
   return T{};

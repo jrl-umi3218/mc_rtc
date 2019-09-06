@@ -5,6 +5,11 @@
 #include <mc_tasks/MetaTaskLoader.h>
 #include <mc_tasks/PostureTask.h>
 
+#ifndef M_PI
+#  include <boost/math/constants/constants.hpp>
+#  define M_PI boost::math::constants::pi<double>()
+#endif
+
 namespace mc_tasks
 {
 
