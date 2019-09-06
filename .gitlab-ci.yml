@@ -2,17 +2,10 @@ variables:
   CI_TOOL: gitlab-ci
   APT_DEPENDENCIES: "cython python-pip python-coverage python-numpy python-nose libtinyxml2-dev libboost-all-dev libjsoncpp-dev libgeos++-dev libgeos-dev qhull-bin libqhull-dev libltdl-dev libtasks-qld-dev libmc-rbdyn-urdf-dev python-tasks python-mc-rbdyn-urdf"
   GIT_DEPENDENCIES: "git@gite.lirmm.fr:multi-contact/eigen-lssol.git jrl-umi3218/Tasks nanomsg/nanomsg"
-  GITE_PACKAGES: "multi-contact/eigen-lssol multi-contact/tasks-packaging#topic/CIPackaging multi-contact/mc_env_description#karim_drc mc-hrp2/hrp2_drc mc-hrp4/hrp4#noxacro"
+  GITE_PACKAGES: "multi-contact/eigen-lssol multi-contact/tasks-packaging#topic/CIPackaging multi-contact/mc_env_description#karim_drc"
   MASTER_PPA: "v-launchpad-jochen-sprickerhof-de/pcl hrg/daily"
   ROS_DISTRO: "indigo"
   CMAKE_ADDITIONAL_OPTIONS: "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
-
-# Secured variable are stored in the project
-# See: http://doc.gitlab.com/ci/variables/README.html
-
-# Notifications (email/chatroom) are also handled by gitlab directly
-
-# FIXME This version does not search for mc-env-description and hrp2_drc_description
 
 before_script:
   - git submodule update --quiet --init --recursive
@@ -39,7 +32,7 @@ build_debian:
     - export APT_DEPENDENCIES="cython python-pip python-coverage python-numpy python-nose libtinyxml2-dev libboost-all-dev libgeos++-dev libgeos-dev qhull-bin libqhull-dev libltdl-dev"
     - export GIT_DEPENDENCIES="jrl-umi3218/Eigen3ToPython jrl-umi3218/SpaceVecAlg jrl-umi3218/eigen-qld git@gite.lirmm.fr:multi-contact/eigen-lssol.git jrl-umi3218/sch-core jrl-umi3218/sch-core-python jrl-umi3218/RBDyn jrl-umi3218/Tasks jrl-umi3218/mc_rbdyn_urdf nanomsg/nanomsg"
     - export MASTER_PPA=""
-    - export ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data git@gite.lirmm.fr:mc-hrp2/hrp2_drc#master git@gite.lirmm.fr:mc-hrp4/hrp4#master"
+    - export ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data"
     - mkdir -p /tmp/_ci/catkin_dep_ws/src
     - ./.jrl-ci/run before_install
     - ./.jrl-ci/run build
@@ -66,7 +59,7 @@ build_gcc_ros:
     - export MASTER_PPA=""
     - export APT_DEPENDENCIES="ros-indigo-common-msgs ros-indigo-tf2-ros ros-indigo-xacro ros-indigo-rviz-animated-view-controller"
     - export GIT_DEPENDENCIES=""
-    - export ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data git@gite.lirmm.fr:mc-hrp2/hrp2_drc#master git@gite.lirmm.fr:mc-hrp4/hrp4#master"
+    - export ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data"
     - ./.jrl-ci/run before_install
     - ./.jrl-ci/run build
     - ./.jrl-ci/run after_success
@@ -84,7 +77,7 @@ build_gcc_ros_debug:
     - export MASTER_PPA=""
     - export APT_DEPENDENCIES="ros-indigo-common-msgs ros-indigo-tf2-ros ros-indigo-xacro ros-indigo-rviz-animated-view-controller"
     - export GIT_DEPENDENCIES=""
-    - export ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data git@gite.lirmm.fr:mc-hrp2/hrp2_drc#master git@gite.lirmm.fr:mc-hrp4/hrp4#master"
+    - export ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data"
     - ./.jrl-ci/run before_install
     - ./.jrl-ci/run build
     - ./.jrl-ci/run after_success
@@ -99,7 +92,7 @@ build_clang_ros:
     - export MASTER_PPA=""
     - export APT_DEPENDENCIES="ros-indigo-common-msgs ros-indigo-tf2-ros ros-indigo-xacro ros-indigo-rviz-animated-view-controller"
     - export GIT_DEPENDENCIES=""
-    - export ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data git@gite.lirmm.fr:mc-hrp2/hrp2_drc#master git@gite.lirmm.fr:mc-hrp4/hrp4#master"
+    - export ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data"
     - ./.jrl-ci/run before_install
     - ./.jrl-ci/run build
     - ./.jrl-ci/run after_success
