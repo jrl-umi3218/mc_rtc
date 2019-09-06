@@ -1,10 +1,8 @@
 #pragma once
 
-#include <string>
-
-#include "@CMAKE_CURRENT_SOURCE_DIR@/utils.h"
-
 #include "@CMAKE_CURRENT_SOURCE_DIR@/fsm_states/ConfigureState.h"
+#include "@CMAKE_CURRENT_SOURCE_DIR@/utils.h"
+#include <string>
 
 const std::string FSM_STATES_JSON_DIR = "@CMAKE_CURRENT_SOURCE_DIR@/fsm_states/data/";
 
