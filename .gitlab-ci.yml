@@ -51,13 +51,8 @@ build_gcc_noros:
   stage: build
   script:
     - export ROS_DISTRO=""
+    - export GIT_DEPENDENCIES="$GIT_DEPENDENCIES git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data"
     - ./.jrl-ci/run before_install
-    - pushd .
-    - cd /tmp && git clone --recursive git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data
-    - cd /tmp && git clone -b master --recursive git@gite.lirmm.fr:mc-hrp2/hrp2_drc
-    - cd /tmp && git clone -b master --recursive git@gite.lirmm.fr:mc-hrp4/hrp4
-    - export CMAKE_ADDITIONAL_OPTIONS="-DHRP2_DRC_DESCRIPTION_PATH=/tmp/hrp2_drc/hrp2_drc_description -DHRP4_DESCRIPTION_PATH=/tmp/hrp4/hrp4_description -DMC_ENV_DESCRIPTION_PATH=/tmp/mc_rtc_ros_data/mc_env_description ${CMAKE_ADDITIONAL_OPTIONS}"
-    - popd
     - ./.jrl-ci/run build
     - ./.jrl-ci/run after_success
   tags:
