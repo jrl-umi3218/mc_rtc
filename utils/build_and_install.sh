@@ -22,6 +22,9 @@ WITH_ROS_SUPPORT="true"
 WITH_VREP_SUPPORT="true"
 WITH_PYTHON_SUPPORT="true"
 PYTHON_USER_INSTALL="false"
+PYTHON_FORCE_PYTHON2="false"
+PYTHON_FORCE_PYTHON3="false"
+PYTHON_BUILD_PYTHON2_AND_PYTHON3="false"
 WITH_HRP2="false"
 WITH_HRP4="false"
 WITH_VREP="true"
@@ -54,6 +57,9 @@ readonly HELP_STRING="$(basename $0) [OPTIONS] ...
     --with-hrp4                                   : enable HRP4 (requires mc-hrp4 group access)      (default $WITH_HRP4)
     --with-python-support           {true, false} : whether to build with Python support             (default $WITH_PYTHON_SUPPORT)
     --python-user-install           {true, false} : whether to install Python bindings with user     (default $PYTHON_USER_INSTALL)
+    --python-force-python2          {true, false} : whether to enforce the use of Python 2           (default $PYTHON_FORCE_PYTHON2)
+    --python-force-python3          {true, false} : whether to enforce the use of Python 3           (default $PYTHON_FORCE_PYTHON3)
+    --python-build-2-and-3          {true, false} : whether to build both Python 2 and Python 3      (default $PYTHON_BUILD_PYTHON2_AND_PYTHON3)
     --with-ros-support              {true, false} : whether to build with ROS support                (default $WITH_ROS_SUPPORT)
     --with-vrep-support             {true, false} : whether to build with VREP support               (default $WITH_VREP_SUPPORT)
     --ros-distro                    NAME          : the ros distro to use                            (default $ROS_DISTRO)
@@ -108,6 +114,24 @@ do
         i=$(($i+1))
         PYTHON_USER_INSTALL="${!i}"
         check_true_false --python-user-install "$PYTHON_USER_INSTALL"
+        ;;
+
+        --python-force-python2)
+        i=$(($i+1))
+        PYTHON_FORCE_PYTHON2="${!i}"
+        check_true_false --python-force-python2 "$PYTHON_FORCE_PYTHON2"
+        ;;
+
+        --python-force-python3)
+        i=$(($i+1))
+        PYTHON_FORCE_PYTHON3="${!i}"
+        check_true_false --python-force-python3 "$PYTHON_FORCE_PYTHON3"
+        ;;
+
+        --python-build-2-and-3)
+        i=$(($i+1))
+        PYTHON_BUILD_PYTHON2_AND_PYTHON3="${!i}"
+        check_true_false --python-build-2-and-3 "$PYTHON_BUILD_PYTHON2_AND_PYTHON3"
         ;;
 
         --with-hrp2)
@@ -168,6 +192,24 @@ then
 else
   PYTHON_USER_INSTALL=OFF
 fi
+if $PYTHON_FORCE_PYTHON2
+then
+  PYTHON_FORCE_PYTHON2=ON
+else
+  PYTHON_FORCE_PYTHON2=OFF
+fi
+if $PYTHON_FORCE_PYTHON3
+then
+  PYTHON_FORCE_PYTHON3=ON
+else
+  PYTHON_FORCE_PYTHON3=OFF
+fi
+if $PYTHON_BUILD_PYTHON2_AND_PYTHON3
+then
+  PYTHON_BUILD_PYTHON2_AND_PYTHON3=ON
+else
+  PYTHON_BUILD_PYTHON2_AND_PYTHON3=OFF
+fi
 #make settings readonly
 readonly INSTALL_PREFIX
 readonly WITH_ROS_SUPPORT
@@ -175,13 +217,16 @@ readonly WITH_VREP_SUPPORT
 readonly WITH_PYTHON_SUPPORT
 readonly WITH_PYTHON_SUPPORT
 readonly PYTHON_USER_INSTALL
+readonly PYTHON_FORCE_PYTHON2
+readonly PYTHON_FORCE_PYTHON3
+readonly PYTHON_BUILD_PYTHON2_AND_PYTHON3
 readonly BUILD_TYPE
 readonly INSTALL_APT_DEPENDENCIES
 readonly BUILD_CORE
 
 readonly ROS_APT_DEPENDENCIES="ros-${ROS_DISTRO}-common-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-rviz"
 
-alias git_clone="git clone --quiet --recursive"
+alias git_clone="git clone --recursive"
 alias git_update="git pull && git submodule update"
 
 SUDO_CMD='sudo -E'
@@ -239,11 +284,11 @@ else
   then
     yaml_to_env "APT_DEPENDENCIES" $gitlab_ci_yml
     APT_DEPENDENCIES=`echo $APT_DEPENDENCIES|sed -e's/libspacevecalg-dev//'|sed -e's/librbdyn-dev//'|sed -e's/libeigen-qld-dev//'|sed -e's/libsch-core-dev//'|sed -e's/libtasks-qld-dev//'|sed -e's/libmc-rbdyn-urdf-dev//'|sed -e's/python-tasks//'|sed -e's/python-mc-rbdyn-urdf//'`
-    APT_DEPENDENCIES="cmake build-essential gfortran doxygen libeigen3-dev python-pip python3-pip wget $APT_DEPENDENCIES"
+    APT_DEPENDENCIES="cmake build-essential gfortran doxygen libeigen3-dev python-pip python3-pip wget cython3 python3-numpy python3-nose python3-coverage $APT_DEPENDENCIES"
     if $INSTALL_APT_DEPENDENCIES
     then
         sudo apt-get update
-        sudo apt-get install -qq ${APT_DEPENDENCIES}
+        sudo apt-get -y install ${APT_DEPENDENCIES}
     else
         echo "SKIPPING INSTALLATION OF APT_DEPENDENCIES ($APT_DEPENDENCIES)"
     fi
@@ -295,10 +340,14 @@ build_git_dependency()
   cmake .. -DCMAKE_INSTALL_PREFIX:STRING="$INSTALL_PREFIX" \
            -DPYTHON_BINDING:BOOL=${WITH_PYTHON_SUPPORT} \
            -DPYTHON_BINDING_USER_INSTALL:BOOL=${PYTHON_USER_INSTALL} \
+           -DPYTHON_BINDING_FORCE_PYTHON2:BOOL=${PYTHON_FORCE_PYTHON2} \
+           -DPYTHON_BINDING_FORCE_PYTHON3:BOOL=${PYTHON_FORCE_PYTHON3} \
+           -DPYTHON_BINDING_BUILD_PYTHON2_AND_PYTHON3:BOOL=${PYTHON_BUILD_PYTHON2_AND_PYTHON3} \
            -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
            ${CMAKE_ADDITIONAL_OPTIONS}
-  make -j${BUILD_CORE}
-  ${SUDO_CMD} make install
+  make -j${BUILD_CORE} || exit 1
+  make test || exit 1
+  ${SUDO_CMD} make install || exit 1
 }
 ###############################
 ##  --  GIT dependencies  --  #
@@ -342,7 +391,7 @@ then
       sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu `lsb_release -c -s` main" > /etc/apt/sources.list.d/ros-latest.list'
       wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
       sudo apt-get update
-      sudo apt-get install -qq ros-${ROS_DISTRO}-ros-base ros-${ROS_DISTRO}-rosdoc-lite python-catkin-lint ${ROS_APT_DEPENDENCIES}
+      sudo apt-get install -y ros-${ROS_DISTRO}-ros-base ros-${ROS_DISTRO}-rosdoc-lite python-catkin-lint ${ROS_APT_DEPENDENCIES}
     else
       echo "Please install ROS and the required dependencies (${ROS_APT_DEPENDENCIES}) before continuing your installation or disable ROS support"
       exit 1
@@ -406,7 +455,7 @@ then
       sudo add-apt-repository ppa:keithw/glfw3
       sudo apt-get update
     fi
-    sudo apt-get install -qq libglfw3-dev
+    sudo apt-get install -y libglfw3-dev
   fi
   CATKIN_DIR=$SOURCE_DIR/catkin_ws
   cd $CATKIN_DIR/src
