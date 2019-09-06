@@ -12,8 +12,10 @@ macro(add_fsm_test_state state_name)
   set_target_properties(${state_name} PROPERTIES
     COMPILE_FLAGS "-DMC_CONTROL_FSM_STATE_EXPORTS"
     PREFIX ""
-    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${state_name})
-  target_link_libraries(${state_name} PUBLIC fsm)
+    ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${state_name}
+    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${state_name}
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${state_name})
+  target_link_libraries(${state_name} PUBLIC mc_control_fsm)
 endmacro()
 
 add_fsm_test_state(SingleState)

@@ -9,6 +9,8 @@
 
 #include <boost/test/unit_test.hpp>
 
+#include "utils.h"
+
 mc_rbdyn::Robots & get_robots()
 {
   static std::shared_ptr<mc_rbdyn::Robots> robots_ptr = nullptr;
@@ -16,8 +18,7 @@ mc_rbdyn::Robots & get_robots()
   {
     return *robots_ptr;
   }
-  mc_rbdyn::RobotLoader::clear();
-  mc_rbdyn::RobotLoader::update_robot_module_path({"@CMAKE_CURRENT_BINARY_DIR@/../src/mc_robots"});
+  configureRobotLoader();
   auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC-1");
   auto env = mc_rbdyn::RobotLoader::get_robot_module("env", std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH),
                                                      std::string("ground"));

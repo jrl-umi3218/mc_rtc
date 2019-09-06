@@ -8,10 +8,7 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include "@CMAKE_CURRENT_SOURCE_DIR@/fsm_states/ConfigureState.h"
-
-const std::string FSM_STATES_DIR = "@CMAKE_CURRENT_BINARY_DIR@/fsm_states/";
-const std::string FSM_STATES_JSON_DIR = "@CMAKE_CURRENT_SOURCE_DIR@/fsm_states/data/";
+#include "testFSMStateFactoryConfig.h"
 
 mc_control::fsm::Controller & get_default_controller()
 {
@@ -20,8 +17,7 @@ mc_control::fsm::Controller & get_default_controller()
   {
     return *ctl_ptr;
   }
-  mc_rbdyn::RobotLoader::clear();
-  mc_rbdyn::RobotLoader::update_robot_module_path({"@CMAKE_CURRENT_BINARY_DIR@/../src/mc_robots"});
+  configureRobotLoader();
   auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC-1");
   mc_rtc::Configuration config;
   config.add("Managed", true);
@@ -45,21 +41,19 @@ void check_states(mc_control::fsm::StateFactory & factory, const std::vector<std
 
 BOOST_AUTO_TEST_CASE(TestSingleStateLoading)
 {
-  mc_control::fsm::StateFactory factory{{FSM_STATES_DIR + "SingleState"}, {}, false};
+  mc_control::fsm::StateFactory factory{{SingleState_DIR}, {}, false};
   check_states(factory, {"SingleState"});
 }
 
 BOOST_AUTO_TEST_CASE(TestJsonInheritanceSingle)
 {
-  mc_control::fsm::StateFactory factory{
-      {FSM_STATES_DIR + "SingleState"}, {FSM_STATES_JSON_DIR + "SingleState.json"}, false};
+  mc_control::fsm::StateFactory factory{{SingleState_DIR}, {FSM_STATES_JSON_DIR + "SingleState.json"}, false};
   check_states(factory, {"SingleState", "SingleStateBis"});
 }
 
 BOOST_AUTO_TEST_CASE(TestJsonInheritanceMultiple)
 {
-  mc_control::fsm::StateFactory factory{
-      {FSM_STATES_DIR + "SingleState"}, {FSM_STATES_JSON_DIR + "SingleStateMulti.json"}, false};
+  mc_control::fsm::StateFactory factory{{SingleState_DIR}, {FSM_STATES_JSON_DIR + "SingleStateMulti.json"}, false};
   check_states(factory, {
                             "SingleState",
                             "SingleState1",
@@ -72,7 +66,7 @@ BOOST_AUTO_TEST_CASE(TestJsonInheritanceMultiple)
 BOOST_AUTO_TEST_CASE(TestJsonInheritanceSplit)
 {
   mc_control::fsm::StateFactory factory{
-      {FSM_STATES_DIR + "SingleState"},
+      {SingleState_DIR},
       {FSM_STATES_JSON_DIR + "SingleState1.json", FSM_STATES_JSON_DIR + "SingleState2.json",
        FSM_STATES_JSON_DIR + "SingleState3.json", FSM_STATES_JSON_DIR + "SingleState4.json"},
       false};
@@ -87,14 +81,13 @@ BOOST_AUTO_TEST_CASE(TestJsonInheritanceSplit)
 
 BOOST_AUTO_TEST_CASE(TestMultipleStatesLoading)
 {
-  mc_control::fsm::StateFactory factory{{FSM_STATES_DIR + "MultipleStates"}, {}, false};
+  mc_control::fsm::StateFactory factory{{MultipleStates_DIR}, {}, false};
   check_states(factory, {"State1", "State2"});
 }
 
 BOOST_AUTO_TEST_CASE(TestConfigureState)
 {
-  mc_control::fsm::StateFactory factory{
-      {FSM_STATES_DIR + "ConfigureState"}, {FSM_STATES_JSON_DIR + "ConfigureState.json"}, false};
+  mc_control::fsm::StateFactory factory{{ConfigureState_DIR}, {FSM_STATES_JSON_DIR + "ConfigureState.json"}, false};
   check_states(factory, {
                             "ConfigureState",
                             "ConfigureState2",

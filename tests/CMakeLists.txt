@@ -4,9 +4,6 @@
 
 find_package(Boost REQUIRED COMPONENTS unit_test_framework timer)
 
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/tests_config.h.cmake.in"
-               "${CMAKE_CURRENT_BINARY_DIR}/tests_config.h")
-
 ############################
 # -- Compile-time tests -- #
 ############################
@@ -32,22 +29,30 @@ target_link_libraries(testQuadraticGenerator PUBLIC mc_rbdyn)
 # -- Framework utility tests -- #
 #################################
 
+set(ROBOTS_BUILD_DIR src/mc_robots)
+if(NOT DEFINED CMAKE_BUILD_TYPE)
+  set(ROBOTS_BUILD_DIR "${ROBOTS_BUILD_DIR}/$<CONFIGURATION>")
+endif()
+set(CONFIG_HEADER_INCLUDE_DIR "${CMAKE_CURRENT_BINARY_DIR}/include/$<CONFIGURATION>")
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests_config.h.in
-               ${CMAKE_CURRENT_BINARY_DIR}/include/tests_config.h)
+               ${CMAKE_CURRENT_BINARY_DIR}/tests_config.cmake.h)
+file(GENERATE
+     OUTPUT "${CONFIG_HEADER_INCLUDE_DIR}/tests_config.h"
+     INPUT  "${CMAKE_CURRENT_BINARY_DIR}/tests_config.cmake.h")
 
 MACRO(mc_rtc_test NAME)
   if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${NAME}.cpp)
     add_executable(${NAME} ${NAME}.cpp)
   elseif(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${NAME}.in.cpp)
     configure_file(${CMAKE_CURRENT_SOURCE_DIR}/${NAME}.in.cpp
-      ${CMAKE_CURRENT_BINARY_DIR}/${NAME}.cpp)
+                   ${CMAKE_CURRENT_BINARY_DIR}/${NAME}.cpp)
     add_executable(${NAME} ${CMAKE_CURRENT_BINARY_DIR}/${NAME}.cpp)
   else()
     message(FATAL_ERROR "Cannot add mc_rtc_test: neither ${NAME}.cpp nor ${NAME}.in.cpp exists in ${CMAKE_CURRENT_SOURCE_DIR}")
   endif()
   target_link_libraries(${NAME} PUBLIC Boost::unit_test_framework Boost::disable_autolinking ${ARGN})
   target_compile_definitions(${NAME} PRIVATE -DBOOST_TEST_DYN_LINK -DBOOST_TEST_MAIN)
-  target_include_directories(${NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/include)
+  target_include_directories(${NAME} PRIVATE ${CONFIG_HEADER_INCLUDE_DIR})
   set_target_properties(${NAME} PROPERTIES FOLDER tests/framework)
   add_test(${NAME} ${NAME})
   # Adding a project configuration file (for MSVC only)
@@ -70,6 +75,11 @@ mc_rtc_test(testSimulationContactPair mc_control)
 add_subdirectory(fsm_states)
 
 mc_rtc_test(testFSMStateFactory mc_control_fsm ConfigureState)
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/testFSMStateFactoryConfig.in.h"
+               "${CMAKE_CURRENT_BINARY_DIR}/testFSMStateFactoryConfig.cmake.h")
+file(GENERATE
+     OUTPUT "${CONFIG_HEADER_INCLUDE_DIR}/testFSMStateFactoryConfig.h"
+     INPUT  "${CMAKE_CURRENT_BINARY_DIR}/testFSMStateFactoryConfig.cmake.h")
 
 ######################################
 # -- Controllers and robots tests -- #
