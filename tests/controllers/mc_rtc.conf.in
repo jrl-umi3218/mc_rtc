@@ -13,11 +13,10 @@
 
   "Log" : @LOG_ENABLED@,
   "LogPolicy" : "@LOG_POLICY@",
-  "LogDirectory" : "/tmp",
   "LogTemplate" : "mc-rtc-test",
 
   "ClearControllerModulePath" : true,
-  "ControllerModulePaths" : ["@CMAKE_BINARY_DIR@/src/mc_control", "@CMAKE_BINARY_DIR@/src/mc_control/python", "@CMAKE_BINARY_DIR@/tests/controllers/@TEST_CONTROLLER_NAME@"],
+  "ControllerModulePaths" : ["@PYTHON_CONTROLLER_PATH@", "@TEST_CONTROLLER_PATH@"],
   "ClearRobotModulePath" : true,
-  "RobotModulePath" : "@CMAKE_BINARY_DIR@/src/mc_robots"
+  "RobotModulePath" : "@ROBOT_MODULE_PATH@"
 }
