@@ -28,12 +28,22 @@ BOOST_AUTO_TEST_CASE(RUN)
   std::string pythonPath = argc > 4 ? argv[4] : "";
   if(pythonPath != "")
   {
-    std::string PYTHONPATH = std::string(getenv("PYTHONPATH"));
+    const char * PPATH = getenv("PYTHONPATH");
+    std::string PYTHONPATH = ".";
+    if(PPATH)
+    {
+      PYTHONPATH = std::string(PPATH);
+    }
     std::stringstream ss;
     ss << "PYTHONPATH=" << PYTHONPATH;
-    if(PYTHONPATH.size() && PYTHONPATH[PYTHONPATH.size() - 1] != ':')
+#ifdef WIN32
+    char PATH_SEP = ';';
+#else
+    char PATH_SEP = ':';
+#endif
+    if(PYTHONPATH.size() && PYTHONPATH[PYTHONPATH.size() - 1] != PATH_SEP)
     {
-      ss << ":";
+      ss << PATH_SEP;
     }
     ss << pythonPath;
     char * new_PYTHONPATH = new char[ss.str().size() + 1];
