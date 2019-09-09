@@ -8,8 +8,25 @@ else()
   set(DEFINE_HAS_ROS_PYTHON_MACRO "DEF MC_RTC_HAS_ROS = 0")
 endif()
 
+set(BINDINGS_LIBRARIES
+  mc_control_fsm
+  mc_control
+  mc_rbdyn
+  mc_rtc_loader
+  mc_rtc_utils
+  mc_rtc_gui
+  mc_solver
+  mc_tasks
+  mc_trajectory
+  mc_rtc_ros
+  mc_control_client
+)
+if(WIN32)
+  list(APPEND BINDINGS_LIBRARIES ltdl RBDyn::RBDyn Tasks::Tasks)
+endif()
+
 add_cython_bindings(mc_rtc
-  TARGETS mc_control_fsm mc_control mc_rbdyn mc_rtc_loader mc_rtc_utils mc_rtc_gui mc_solver mc_tasks mc_trajectory mc_rtc_ros mc_control_client
+  TARGETS ${BINDINGS_LIBRARIES}
   VERSION 1.0.0
   MODULES mc_control.mc_control
           mc_control.fsm.fsm
