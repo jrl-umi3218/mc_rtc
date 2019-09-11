@@ -21,11 +21,17 @@ BOOST_AUTO_TEST_CASE(RUN)
 {
   auto argc = boost::unit_test::framework::master_test_suite().argc;
   auto argv = boost::unit_test::framework::master_test_suite().argv;
-  BOOST_CHECK(argc >= 3);
-  std::string conf = argv[1];
-  unsigned int nrIter = std::atoi(argv[2]);
-  std::string nextController = argc > 3 ? argv[3] : "";
-  std::string pythonPath = argc > 4 ? argv[4] : "";
+  // In older versions of Boost, -- is not filtered out from argv
+  int argi = 1;
+  if(std::string(argv[1]) == "--")
+  {
+    argi = 2;
+  }
+  BOOST_CHECK(argc >= argi + 2);
+  std::string conf = argv[argi];
+  unsigned int nrIter = std::atoi(argv[argi + 1]);
+  std::string nextController = argc > argi + 2 ? argv[argi + 2] : "";
+  std::string pythonPath = argc > argi + 3 ? argv[argi + 3] : "";
   if(pythonPath != "")
   {
     const char * PPATH = getenv("PYTHONPATH");

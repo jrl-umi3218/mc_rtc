@@ -73,7 +73,7 @@ if(UNIX)
   # Test threaded log policy
   set(LOG_POLICY "threaded")
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/mc_rtc.conf.in ${CMAKE_CURRENT_BINARY_DIR}/TestPostureController/mc_rtc-TestPostureController-threaded-log.conf)
-  add_test(NAME TestPostureControllerThreadedLogging COMMAND test_controller_ticker --run_test=RUN TestPostureController/mc_rtc-TestPostureController-threaded-log.conf 1500)
+  add_test(NAME TestPostureControllerThreadedLogging COMMAND test_controller_ticker --run_test=RUN -- TestPostureController/mc_rtc-TestPostureController-threaded-log.conf 1500)
   add_test(TestPostureControllerThreadedLog ${CMAKE_CURRENT_SOURCE_DIR}/check_log.py "TestPostureController" 1500 "${UTILS_BIN_DIR}")
 
   # Test controller switch and threaded log policy
@@ -87,7 +87,7 @@ if(UNIX)
     )
   set(TEST_CONTROLLER_NAME "TestPostureController\", \"TestPostureController2")
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/mc_rtc.conf.in ${CMAKE_CURRENT_BINARY_DIR}/TestPostureController/mc_rtc-TestPostureController2.conf)
-  add_test(NAME TestPostureController2 COMMAND test_controller_ticker --run_test=RUN TestPostureController/mc_rtc-TestPostureController2.conf 1200 TestPostureController2)
+  add_test(NAME TestPostureController2 COMMAND test_controller_ticker --run_test=RUN -- TestPostureController/mc_rtc-TestPostureController2.conf 1200 TestPostureController2)
   add_test(TestPostureControllerControllerSwitchThreadedLog ${CMAKE_CURRENT_SOURCE_DIR}/check_log.py "TestPostureController" 1200 "${UTILS_BIN_DIR}")
   add_test(TestPostureController2ControllerSwitchThreadedLog ${CMAKE_CURRENT_SOURCE_DIR}/check_log.py "TestPostureController2" 1200 "${UTILS_BIN_DIR}")
 endif()
