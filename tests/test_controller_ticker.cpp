@@ -12,8 +12,14 @@ BOOST_AUTO_TEST_CASE(CONSTRUCTION_FAILURE)
 {
   auto argc = boost::unit_test::framework::master_test_suite().argc;
   auto argv = boost::unit_test::framework::master_test_suite().argv;
-  BOOST_CHECK_EQUAL(argc, 2);
-  std::string conf = argv[1];
+  // In older versions of Boost, -- is not filtered out from argv
+  int argi = 1;
+  if(std::string(argv[1]) == "--")
+  {
+    argi = 2;
+  }
+  BOOST_CHECK_EQUAL(argc, argi + 1);
+  std::string conf = argv[argi];
   BOOST_CHECK_THROW(mc_control::MCGlobalController controller(conf), std::exception);
 }
 
