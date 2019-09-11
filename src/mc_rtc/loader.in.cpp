@@ -2,6 +2,12 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
+/* !!! WARNING !!!
+ * loader.cpp is a generated file
+ * if you wish to change this file, edit:
+ * @CMAKE_CURRENT_SOURCE_DIR@/mc_rtc/loader.in.cpp
+ */
+
 #include <mc_rtc/loader.h>
 
 #include <boost/filesystem.hpp>
@@ -46,6 +52,7 @@ bool LTDLHandle::open()
   {
     LOG_INFO("Attempt to open " << path_)
   }
+#ifndef WIN32
   if(global_)
   {
     if(verbose_)
@@ -62,6 +69,9 @@ bool LTDLHandle::open()
   {
     handle_ = lt_dlopen(path_.c_str());
   }
+#else
+  handle_ = lt_dlopen(path_.c_str());
+#endif
   open_ = handle_ != nullptr;
   if(!open_)
   {
@@ -143,8 +153,8 @@ void Loader::load_libraries(const std::string & class_name,
     });
     for(const auto & p : drange)
     {
-      /* Attempt to load anything that is not a directory */
-      if((!bfs::is_directory(p)) && (!bfs::is_symlink(p)))
+      /* Attempt to load all dynamics libraries in the directory */
+      if((!bfs::is_directory(p)) && (!bfs::is_symlink(p)) && bfs::extension(p) == "@CMAKE_SHARED_LIBRARY_SUFFIX@")
       {
         auto handle = std::make_shared<LTDLHandle>(class_name, p.string(), verbose);
         for(const auto & cn : handle->classes())

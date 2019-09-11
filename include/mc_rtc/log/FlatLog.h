@@ -28,6 +28,12 @@ struct MC_RTC_UTILS_DLLAPI FlatLog
   /** Load a file into the log */
   FlatLog(const std::string & fpath);
 
+  /** Delete copy constructor */
+  FlatLog(const FlatLog &) = delete;
+
+  /** Delete copy assignment */
+  FlatLog & operator=(const FlatLog &) = delete;
+
   /** Load a file into the log, erase the current content of the flat log */
   void load(const std::string & fpath);
 

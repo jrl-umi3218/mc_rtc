@@ -8,6 +8,8 @@
 
 #include <boost/test/unit_test.hpp>
 
+#include "utils.h"
+
 const double dt = 0.005;
 
 mc_rbdyn::Robots & get_robots()
@@ -17,8 +19,7 @@ mc_rbdyn::Robots & get_robots()
   {
     return *robots_ptr;
   }
-  mc_rbdyn::RobotLoader::clear();
-  mc_rbdyn::RobotLoader::update_robot_module_path({"@CMAKE_CURRENT_BINARY_DIR@/../src/mc_robots"});
+  configureRobotLoader();
   auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC-1");
   robots_ptr = mc_rbdyn::loadRobot(*rm);
   return *robots_ptr;

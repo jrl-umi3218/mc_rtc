@@ -344,6 +344,7 @@ build_git_dependency()
            -DPYTHON_BINDING_FORCE_PYTHON3:BOOL=${PYTHON_FORCE_PYTHON3} \
            -DPYTHON_BINDING_BUILD_PYTHON2_AND_PYTHON3:BOOL=${PYTHON_BUILD_PYTHON2_AND_PYTHON3} \
            -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
+           -DVREP_PATH:STRING="$VREP_PATH" \
            ${CMAKE_ADDITIONAL_OPTIONS}
   make -j${BUILD_CORE} || exit 1
   make test || exit 1
@@ -527,7 +528,6 @@ then
   fi
   [ ! -e "$SOURCE_DIR/vrep" ] && ln -s "$VREP_PATH" "$SOURCE_DIR/vrep"
 
-  export CMAKE_ADDITIONAL_OPTIONS="${CMAKE_ADDITIONAL_OPTIONS} -DVREP_PATH:STRING=\"${VREP_PATH}\""
   build_git_dependency git@gite.lirmm.fr:vrep-utils/vrep-api-wrapper
   build_git_dependency git@gite.lirmm.fr:multi-contact/mc_vrep
 

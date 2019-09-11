@@ -146,7 +146,7 @@ T * sandbox_function_call(FunT create_fn, const Args &... args)
   }
 #else
   /* TODO Port to MacOS/WIN32 (good luck) */
-  return no_sandbox_function_call(create_fn, args...);
+  return no_sandbox_function_call<T>(create_fn, args...);
 #endif
 }
 

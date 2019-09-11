@@ -32,6 +32,7 @@ target_link_libraries(mc_control_fsm PUBLIC mc_control)
 install_mc_rtc_lib(mc_control_fsm)
 
 add_controller("fsm" "lib.cpp" "")
+set_target_properties("fsm" PROPERTIES FOLDER controllers/fsm)
 target_link_libraries(fsm PUBLIC mc_control_fsm)
 
 set(AROBASE "@")

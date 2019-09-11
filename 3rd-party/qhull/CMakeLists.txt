@@ -352,10 +352,12 @@ set(qhull_STATICR qhullstatic_r)
 # ---------------------------------------
 
 add_library(${qhull_STATIC} STATIC ${libqhull_SOURCES})
+set_target_properties(${qhull_STATIC} PROPERTIES FOLDER 3rd-party)
 set_target_properties(${qhull_STATIC} PROPERTIES
     VERSION ${qhull_VERSION})
 
 add_library(${qhull_STATICR} STATIC ${libqhullr_SOURCES})
+set_target_properties(${qhull_STATICR} PROPERTIES FOLDER 3rd-party)
 set_target_properties(${qhull_STATICR} PROPERTIES
     VERSION ${qhull_VERSION})
 
@@ -370,6 +372,7 @@ endif(UNIX)
 # ---------------------------------------
 
 add_library(${qhull_CPP} STATIC ${libqhullcpp_SOURCES})
+set_target_properties(${qhull_CPP} PROPERTIES FOLDER 3rd-party)
 set_target_properties(${qhull_CPP} PROPERTIES
     VERSION ${qhull_VERSION})
 

@@ -6,4 +6,4 @@
 
 #include <string>
 
-static const std::string ROBOTS_BUILD_DIR = "@CMAKE_BINARY_DIR@/src/mc_robots";
+static const std::string ROBOTS_BUILD_DIR = "@CMAKE_BINARY_DIR@/@ROBOTS_BUILD_DIR@";

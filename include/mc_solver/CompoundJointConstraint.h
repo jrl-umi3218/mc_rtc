@@ -19,24 +19,25 @@ namespace details
  * This constraint is given a set of CompoundJointConstraint for a given robot
  * and will enforce them
  */
-struct MC_SOLVER_DLLAPI CompoundJointConstraint : public tasks::qp::ConstraintFunction<tasks::qp::Inequality>
+struct CompoundJointConstraint : public tasks::qp::ConstraintFunction<tasks::qp::Inequality>
 {
-  CompoundJointConstraint(const mc_rbdyn::Robots & robots,
-                          unsigned int rIndex,
-                          double dt,
-                          const std::vector<CompoundJointConstraintDescription> & desc = {});
+  MC_SOLVER_DLLAPI CompoundJointConstraint(const mc_rbdyn::Robots & robots,
+                                           unsigned int rIndex,
+                                           double dt,
+                                           const std::vector<CompoundJointConstraintDescription> & desc = {});
 
-  ~CompoundJointConstraint() override;
+  MC_SOLVER_DLLAPI ~CompoundJointConstraint() override;
 
-  void addConstraint(const mc_rbdyn::Robots & robots,
-                     unsigned int rIndex,
-                     const CompoundJointConstraintDescription & desc);
+  MC_SOLVER_DLLAPI void addConstraint(const mc_rbdyn::Robots & robots,
+                                      unsigned int rIndex,
+                                      const CompoundJointConstraintDescription & desc);
 
-  void updateNrVars(const std::vector<rbd::MultiBody> & mbs, const tasks::qp::SolverData & data) override;
+  MC_SOLVER_DLLAPI void updateNrVars(const std::vector<rbd::MultiBody> & mbs,
+                                     const tasks::qp::SolverData & data) override;
 
-  void update(const std::vector<rbd::MultiBody> & mbs,
-              const std::vector<rbd::MultiBodyConfig> & mbcs,
-              const tasks::qp::SolverData & data) override;
+  MC_SOLVER_DLLAPI void update(const std::vector<rbd::MultiBody> & mbs,
+                               const std::vector<rbd::MultiBodyConfig> & mbcs,
+                               const tasks::qp::SolverData & data) override;
 
   inline const Eigen::MatrixXd & AInEq() const override
   {

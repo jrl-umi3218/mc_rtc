@@ -18,6 +18,11 @@
 #include "libqhullcpp/QhullPoints.h"
 #include "libqhullcpp/QhullVertexSet.h"
 
+#ifndef M_PI
+#  include <boost/math/constants/constants.hpp>
+#  define M_PI boost::math::constants::pi<double>()
+#endif
+
 #ifdef WIN32
 #  include <Windows.h>
 

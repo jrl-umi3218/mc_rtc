@@ -5,8 +5,10 @@
 #include <mc_rbdyn/configuration_io.h>
 #include <mc_rtc/Configuration.h>
 
+#include <boost/filesystem.hpp>
 #include <boost/mpl/list.hpp>
 #include <boost/test/unit_test.hpp>
+namespace bfs = boost::filesystem;
 
 #include "utils.h"
 #include <fstream>
@@ -351,15 +353,39 @@ bool operator==(const mc_rbdyn::RobotModule::Gripper & lhs, const mc_rbdyn::Robo
 
 } // namespace mc_rbdyn
 
+bool compareHulls(const std::map<std::string, std::pair<std::string, std::string>> & lhs,
+                  const std::map<std::string, std::pair<std::string, std::string>> & rhs)
+{
+  for(const auto & itm : lhs)
+  {
+    const auto & name = itm.first;
+    const auto & body = itm.second.first;
+    const auto & path = bfs::path(itm.second.second);
+    if(!rhs.count(name))
+    {
+      return false;
+    }
+    const auto & ritm = rhs.at(name);
+    const auto & rbody = ritm.first;
+    const auto & rpath = bfs::path(ritm.second);
+    if(rbody != body || path != rpath)
+    {
+      return false;
+    }
+  }
+  return true;
+}
+
 bool operator==(const mc_rbdyn::RobotModule & lhs, const mc_rbdyn::RobotModule & rhs)
 {
-  return lhs.path == rhs.path && lhs.name == rhs.name && lhs.urdf_path == rhs.urdf_path && lhs.rsdf_dir == rhs.rsdf_dir
-         && lhs.calib_dir == rhs.calib_dir && lhs._bounds == rhs._bounds && lhs._stance == rhs._stance
-         && lhs._convexHull == rhs._convexHull && lhs._stpbvHull == rhs._stpbvHull
-         && compare_vector_maps(lhs._visual, rhs._visual) && lhs._collisionTransforms == rhs._collisionTransforms
-         && compare_vectors(lhs._flexibility, rhs._flexibility) && compare_vectors(lhs._forceSensors, rhs._forceSensors)
-         && compare_vectors(lhs._bodySensors, rhs._bodySensors) && lhs._springs == rhs._springs
-         && lhs._minimalSelfCollisions == rhs._minimalSelfCollisions
+  return bfs::path(lhs.path) == bfs::path(rhs.path) && lhs.name == rhs.name
+         && bfs::path(lhs.urdf_path) == bfs::path(rhs.urdf_path) && bfs::path(lhs.rsdf_dir) == bfs::path(rhs.rsdf_dir)
+         && bfs::path(lhs.calib_dir) == bfs::path(rhs.calib_dir) && lhs._bounds == rhs._bounds
+         && lhs._stance == rhs._stance && compareHulls(lhs._convexHull, rhs._convexHull)
+         && compareHulls(lhs._stpbvHull, rhs._stpbvHull) && compare_vector_maps(lhs._visual, rhs._visual)
+         && lhs._collisionTransforms == rhs._collisionTransforms && compare_vectors(lhs._flexibility, rhs._flexibility)
+         && compare_vectors(lhs._forceSensors, rhs._forceSensors) && compare_vectors(lhs._bodySensors, rhs._bodySensors)
+         && lhs._springs == rhs._springs && lhs._minimalSelfCollisions == rhs._minimalSelfCollisions
          && lhs._commonSelfCollisions == rhs._commonSelfCollisions && compare_vectors(lhs._grippers, rhs._grippers)
          && lhs._ref_joint_order == rhs._ref_joint_order && lhs._default_attitude == rhs._default_attitude;
 }

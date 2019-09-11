@@ -12,8 +12,14 @@ BOOST_AUTO_TEST_CASE(CONSTRUCTION_FAILURE)
 {
   auto argc = boost::unit_test::framework::master_test_suite().argc;
   auto argv = boost::unit_test::framework::master_test_suite().argv;
-  BOOST_CHECK_EQUAL(argc, 2);
-  std::string conf = argv[1];
+  // In older versions of Boost, -- is not filtered out from argv
+  int argi = 1;
+  if(std::string(argv[1]) == "--")
+  {
+    argi = 2;
+  }
+  BOOST_CHECK_EQUAL(argc, argi + 1);
+  std::string conf = argv[argi];
   BOOST_CHECK_THROW(mc_control::MCGlobalController controller(conf), std::exception);
 }
 
@@ -21,19 +27,35 @@ BOOST_AUTO_TEST_CASE(RUN)
 {
   auto argc = boost::unit_test::framework::master_test_suite().argc;
   auto argv = boost::unit_test::framework::master_test_suite().argv;
-  BOOST_CHECK(argc >= 3);
-  std::string conf = argv[1];
-  unsigned int nrIter = std::atoi(argv[2]);
-  std::string nextController = argc > 3 ? argv[3] : "";
-  std::string pythonPath = argc > 4 ? argv[4] : "";
+  // In older versions of Boost, -- is not filtered out from argv
+  int argi = 1;
+  if(std::string(argv[1]) == "--")
+  {
+    argi = 2;
+  }
+  BOOST_CHECK(argc >= argi + 2);
+  std::string conf = argv[argi];
+  unsigned int nrIter = std::atoi(argv[argi + 1]);
+  std::string nextController = argc > argi + 2 ? argv[argi + 2] : "";
+  std::string pythonPath = argc > argi + 3 ? argv[argi + 3] : "";
   if(pythonPath != "")
   {
-    std::string PYTHONPATH = std::string(getenv("PYTHONPATH"));
+    const char * PPATH = getenv("PYTHONPATH");
+    std::string PYTHONPATH = ".";
+    if(PPATH)
+    {
+      PYTHONPATH = std::string(PPATH);
+    }
     std::stringstream ss;
     ss << "PYTHONPATH=" << PYTHONPATH;
-    if(PYTHONPATH.size() && PYTHONPATH[PYTHONPATH.size() - 1] != ':')
+#ifdef WIN32
+    char PATH_SEP = ';';
+#else
+    char PATH_SEP = ':';
+#endif
+    if(PYTHONPATH.size() && PYTHONPATH[PYTHONPATH.size() - 1] != PATH_SEP)
     {
-      ss << ":";
+      ss << PATH_SEP;
     }
     ss << pythonPath;
     char * new_PYTHONPATH = new char[ss.str().size() + 1];

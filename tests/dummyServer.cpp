@@ -8,6 +8,11 @@
 #include <chrono>
 #include <thread>
 
+#ifndef M_PI
+#  include <boost/math/constants/constants.hpp>
+#  define M_PI boost::math::constants::pi<double>()
+#endif
+
 struct DummyProvider
 {
   double value = 42.0;

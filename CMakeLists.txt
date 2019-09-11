@@ -37,13 +37,6 @@ if("${CMAKE_CXX_FLAGS}" MATCHES "--coverage")
   string(REPLACE "--coverage" "" CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS}")
 endif()
 
-if(WIN32)
-  add_definitions("-DNOMINMAX" "-D_ENABLE_EXTENDED_ALIGNED_STORAGE")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4068")
-else()
-  add_definitions(-mfpmath=sse -msse2)
-endif()
-
 option(BUILD_CONTROLLER_SAMPLES "Build sample controllers in the project" ON)
 option(DISABLE_TESTS "Disable unit tests" OFF)
 option(DISABLE_CONTROLLER_TESTS "Disable controller unit tests" OFF)
@@ -87,26 +80,20 @@ else()
   set(ROSCPP_FOUND False)
 endif()
 
-macro(find_description_package desc_pkg)
-  string(TOUPPER "${desc_pkg}" "DESC_PKG")
-  if(NOT DEFINED ${DESC_PKG}_PATH)
-    execute_process(
-      COMMAND "${PKG_CONFIG_EXECUTABLE}"
-      "--variable=datadir" "${desc_pkg}"
-      RESULT_VARIABLE "${DESC_PKG}_RESULT"
-      OUTPUT_VARIABLE "${DESC_PKG}_PATH"
-      ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
-    if(${${DESC_PKG}_RESULT})
-      set(${DESC_PKG}_FOUND False)
-      message(WARNING "${DESC_PKG}_PATH is not defined and pkg-config failed to find ${desc_pkg}, the related robots' modules will not work properly. Check your system configuration or define ${DESC_PKG} to fix this issue.")
+macro(find_description_package PACKAGE)
+  set(PACKAGE_PATH_VAR "${PACKAGE}_PATH")
+  string(TOUPPER "${PACKAGE_PATH_VAR}" PACKAGE_PATH_VAR)
+  find_package(${PACKAGE} REQUIRED)
+  if("${${PACKAGE}_INSTALL_PREFIX}" STREQUAL "")
+    if("${${PACKAGE}_SOURCE_PREFIX}" STREQUAL "")
+      message(FATAL_ERROR "Your ${PACKAGE} does not define where to find the data, please update.")
     else()
-      message(STATUS "${desc_pkg}: ${${DESC_PKG}_PATH}")
-      set(${DESC_PKG}_FOUND True)
+      set(${PACKAGE_PATH_VAR} "${${PACKAGE}_SOURCE_PREFIX}")
     endif()
   else()
-    set(${DESC_PKG}_FOUND True)
-    message(STATUS "${desc_pkg}: ${${DESC_PKG}_PATH}")
+    set(${PACKAGE_PATH_VAR} "${${PACKAGE}_INSTALL_PREFIX}")
   endif()
+  message("-- Found ${PACKAGE}: ${${PACKAGE_PATH_VAR}}")
 endmacro()
 
 find_description_package(mc_env_description)
@@ -119,7 +106,7 @@ configure_file(${PROJECT_SOURCE_DIR}/include/mc_rtc/config.h.cmake.in ${CMAKE_CU
 # For MSVC, set local environment variable to enable finding the built dll
 # of the main library when launching ctest with RUN_TESTS
 if(MSVC)
-  set(CMAKE_MSVCIDE_RUN_PATH "\$(SolutionDir)/src/\$(Configuration)")
+  set(CMAKE_MSVCIDE_RUN_PATH "\$(SolutionDir)/3rd-party/ltdl/\$(Configuration);\$(SolutionDir)/src/\$(Configuration);\$(SolutionDir)/src/mc_control/fsm/\$(Configuration)")
 endif(MSVC)
 
 add_subdirectory(CMakeModules)
