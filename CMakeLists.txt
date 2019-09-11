@@ -37,13 +37,6 @@ if("${CMAKE_CXX_FLAGS}" MATCHES "--coverage")
   string(REPLACE "--coverage" "" CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS}")
 endif()
 
-if(WIN32)
-  add_definitions("-DNOMINMAX" "-D_ENABLE_EXTENDED_ALIGNED_STORAGE")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4068")
-else()
-  add_definitions(-mfpmath=sse -msse2)
-endif()
-
 option(BUILD_CONTROLLER_SAMPLES "Build sample controllers in the project" ON)
 option(DISABLE_TESTS "Disable unit tests" OFF)
 option(DISABLE_CONTROLLER_TESTS "Disable controller unit tests" OFF)
