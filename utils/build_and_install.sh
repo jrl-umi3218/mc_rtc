@@ -320,7 +320,7 @@ git_dependency_parsing()
   git_dep=`basename $git_dep`
 }
 
-build_git_dependency()
+build_git_dependency_configure_and_build()
 {
   git_dependency_parsing $1
   echo "--> Compiling $git_dep (branch $git_dep_branch)"
@@ -347,7 +347,18 @@ build_git_dependency()
            -DVREP_PATH:STRING="$VREP_PATH" \
            ${CMAKE_ADDITIONAL_OPTIONS}
   make -j${BUILD_CORE} || exit 1
+}
+
+build_git_dependency()
+{
+  build_git_dependency_configure_and_build $1
   make test || exit 1
+  ${SUDO_CMD} make install || exit 1
+}
+
+build_git_dependency_no_test()
+{
+  build_git_dependency_configure_and_build $1
   ${SUDO_CMD} make install || exit 1
 }
 ###############################
@@ -529,7 +540,7 @@ then
   [ ! -e "$SOURCE_DIR/vrep" ] && ln -s "$VREP_PATH" "$SOURCE_DIR/vrep"
 
   build_git_dependency git@gite.lirmm.fr:vrep-utils/vrep-api-wrapper
-  build_git_dependency git@gite.lirmm.fr:multi-contact/mc_vrep
+  build_git_dependency_no_test git@gite.lirmm.fr:multi-contact/mc_vrep
 
   cd $SOURCE_DIR
   if $WITH_HRP4
