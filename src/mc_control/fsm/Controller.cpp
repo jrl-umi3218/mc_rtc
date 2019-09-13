@@ -488,7 +488,7 @@ void Controller::addContact(const Contact & c)
   {
     if(it->dof != c.dof)
     {
-      LOG_INFO("[FSM] Changed contact DoF " << c.r1 << "::" << c.r1Surface << "/" << c.r2 << "::" << c.r2Surface)
+      LOG_INFO("[FSM] Changed contact DoF " << c.r1 << "::" << c.r1Surface << "/" << c.r2 << "::" << c.r2Surface << " to " << c.dof.transpose())
       it->dof = c.dof;
       contacts_changed_ = true;
     }
