@@ -180,6 +180,18 @@ public:
     return targetWrench_;
   }
 
+  /*! \brief Set the target wrench in world frame.
+   * This function will convert the world wrench to surface frame, and call
+   * targetWrench()
+   *
+   * \param wrench Target wrench in world frame
+   */
+  void targetWrenchW(const sva::ForceVecd & wrenchW)
+  {
+    const auto & X_0_rh = robots_.robot(rIndex_).surface(surface_.name()).X_0_s(robots_.robot(rIndex_));
+    targetWrench(X_0_rh.dualMul(wrenchW));
+  }
+
   /*! \brief Set the target wrench in the surface frame
    *
    * \param wrench Target wrench in the surface frame

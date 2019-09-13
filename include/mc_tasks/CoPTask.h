@@ -144,6 +144,12 @@ public:
     targetForce_ = targetForce;
   }
 
+  void targetForceW(const Eigen::Vector3d & targetForceW)
+  {
+    const auto & X_0_rh = robots_.robot(rIndex_).surface(surface_.name()).X_0_s(robots_.robot(rIndex_));
+    targetForce_ = X_0_rh.dualMul(sva::ForceVecd(Eigen::Vector3d::Zero(), targetForceW)).force();
+  }
+
   /*! \brief Get target wrench in the surface frame
    *
    */
@@ -158,9 +164,11 @@ private:
 
   void addToLogger(mc_rtc::Logger & logger) override;
   void removeFromLogger(mc_rtc::Logger & logger) override;
+  void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
   void update() override;
 
   using AdmittanceTask::targetWrench;
+  using AdmittanceTask::targetWrenchW;
 };
 
 } // namespace force

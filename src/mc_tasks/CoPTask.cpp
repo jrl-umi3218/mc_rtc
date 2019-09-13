@@ -59,6 +59,15 @@ void CoPTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry(name_ + "_target_copW");
 }
 
+void CoPTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
+{
+  gui.addElement({"Tasks", name_}, mc_rtc::gui::ArrayLabel("cop_measured", [this]() { return this->measuredCoP(); }),
+                 mc_rtc::gui::ArrayInput("cop_target", [this]() { return this->targetCoP(); },
+                                         [this](const Eigen::Vector2d & cop) { this->targetCoP(cop); }));
+  // Don't add SurfaceTransformTask as target configuration is different
+  DampingTask::addToGUI(gui);
+}
+
 std::function<bool(const mc_tasks::MetaTask &, std::string &)> CoPTask::buildCompletionCriteria(
     double dt,
     const mc_rtc::Configuration & config) const
