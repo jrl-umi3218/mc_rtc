@@ -259,6 +259,22 @@ if(NOT ${DISABLE_ROS})
 endif()
 install_mc_rtc_lib(mc_tasks)
 
+
+set(mc_observers_SRC
+mc_observers/FloatingBaseObserver.cpp
+)
+
+set(mc_observers_HDR
+../include/mc_observers/api.h
+../include/mc_observers/FloatingBaseObserver.h
+)
+
+add_library(mc_observers SHARED ${mc_observers_SRC} ${mc_observers_HDR})
+set_target_properties(mc_observers PROPERTIES COMPILE_FLAGS "-DMC_OBSERVERS_EXPORTS")
+target_link_libraries(mc_observers PUBLIC mc_rbdyn mc_rtc_utils)
+install_mc_rtc_lib(mc_observers)
+
+
 add_library(mc_rtc_ros SHARED mc_rtc/ros.cpp ../include/mc_rtc/ros.h ../include/mc_rtc/ros_api.h)
 set_target_properties(mc_rtc_ros PROPERTIES COMPILE_FLAGS "-DMC_RTC_ROS_EXPORTS")
 target_link_libraries(mc_rtc_ros PUBLIC mc_rbdyn)
