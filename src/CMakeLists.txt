@@ -261,12 +261,16 @@ install_mc_rtc_lib(mc_tasks)
 
 
 set(mc_observers_SRC
-mc_observers/FloatingBaseObserver.cpp
+mc_observers/FloatingBasePosObserver.cpp
+mc_observers/FloatingBasePosVelObserver.cpp
 )
 
 set(mc_observers_HDR
 ../include/mc_observers/api.h
-../include/mc_observers/FloatingBaseObserver.h
+../include/mc_observers/FloatingBasePosObserver.h
+../include/mc_observers/FloatingBasePosVelObserver.h
+../include/mc_observers/LowPassVelocityFilter.h
+../include/mc_observers/LowPassFiniteDifferencesVelocityFilter.h
 )
 
 add_library(mc_observers SHARED ${mc_observers_SRC} ${mc_observers_HDR})

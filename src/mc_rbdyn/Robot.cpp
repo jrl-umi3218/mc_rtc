@@ -893,15 +893,20 @@ void Robot::posW(const sva::PTransformd & pt)
   }
 }
 
-void Robot::setBaseLinkVelocity(const Eigen::Vector6d & alpha_)
+void Robot::velW(const sva::MotionVecd & vel)
 {
-  alpha()[0][0] = alpha_(0);
-  alpha()[0][1] = alpha_(1);
-  alpha()[0][2] = alpha_(2);
-  alpha()[0][3] = alpha_(3);
-  alpha()[0][4] = alpha_(4);
-  alpha()[0][5] = alpha_(5);
+  alpha()[0][0] = vel.angular().x();
+  alpha()[0][1] = vel.angular().y();
+  alpha()[0][2] = vel.angular().z();
+  alpha()[0][3] = vel.linear().x();
+  alpha()[0][4] = vel.linear().x();
+  alpha()[0][5] = vel.linear().x();
   forwardVelocity();
+}
+
+const sva::MotionVecd & Robot::velW() const
+{
+  return bodyVelW().at(0);
 }
 
 void Robot::copy(Robots & robots, unsigned int robots_idx, const Base & base) const

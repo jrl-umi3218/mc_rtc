@@ -559,7 +559,10 @@ public:
    *
    * \param alpha New base link velocity.
    */
-  void setBaseLinkVelocity(const Eigen::Vector6d & alpha);
+  void velW(const sva::MotionVecd & alpha);
+
+  /** Return the robot's global velocity */
+  const sva::MotionVecd & velW() const;
 
 private:
   Robots * robots_;
