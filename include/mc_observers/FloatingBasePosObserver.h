@@ -86,7 +86,7 @@ struct MC_OBSERVERS_DLLAPI FloatingBasePosObserver
   /** Get floating-base pose in the world frame.
    *
    */
-  sva::PTransformd posW()
+  sva::PTransformd posW() const
   {
     return {orientation_, position_};
   }

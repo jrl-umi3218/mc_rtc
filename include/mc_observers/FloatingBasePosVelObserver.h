@@ -6,10 +6,12 @@ namespace mc_observers
 struct MC_OBSERVERS_DLLAPI FloatingBasePosVelObserver : public FloatingBasePosObserver
 {
   FloatingBasePosVelObserver(const mc_rbdyn::Robot & controlRobot, double dt);
-  void reset(const sva::PTransformd & X_0_fb, const sva::MotionVecd & velW);
+  void reset(const mc_rbdyn::Robot & realRobot, const sva::PTransformd & X_0_fb, const sva::MotionVecd & velW);
   void run(const mc_rbdyn::Robot & realRobot_);
   void updateRobot(mc_rbdyn::Robot & robot);
   void updateBodySensor(mc_rbdyn::Robot & robot, const std::string & sensorName = "FloatingBase");
+
+  const sva::MotionVecd & velW() const;
 
 private:
   /** Controller timestep */

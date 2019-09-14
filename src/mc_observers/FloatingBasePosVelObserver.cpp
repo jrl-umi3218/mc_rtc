@@ -7,10 +7,11 @@ FloatingBasePosVelObserver::FloatingBasePosVelObserver(const mc_rbdyn::Robot & c
 {
 }
 
-void FloatingBasePosVelObserver::reset(const sva::PTransformd & X_0_fb, const sva::MotionVecd & velW)
+void FloatingBasePosVelObserver::reset(const mc_rbdyn::Robot & realRobot, const sva::PTransformd & X_0_fb, const sva::MotionVecd & velW)
 {
   FloatingBasePosObserver::reset(X_0_fb);
-  posWPrev_ = X_0_fb;
+  FloatingBasePosObserver::run(realRobot);
+  posWPrev_ = FloatingBasePosObserver::posW();;
   velW_ = velW;
   velFilter_.reset(velW);
 }
@@ -19,9 +20,10 @@ void FloatingBasePosVelObserver::run(const mc_rbdyn::Robot & realRobot)
 {
   FloatingBasePosObserver::run(realRobot);
   const sva::PTransformd posW = FloatingBasePosObserver::posW();
-  sva::MotionVecd err = sva::transformError(posWPrev_, posW);
-  velFilter_.update(err);
+  sva::MotionVecd errVel = sva::transformError(posWPrev_, posW) / dt_;
+  velFilter_.update(errVel);
   velW_ = velFilter_.vel();
+  posWPrev_ = posW;
 }
 
 void FloatingBasePosVelObserver::updateRobot(mc_rbdyn::Robot & robot)
@@ -36,6 +38,11 @@ void FloatingBasePosVelObserver::updateBodySensor(mc_rbdyn::Robot & realRobot, c
   auto & sensor = realRobot.bodySensor(sensorName);
   sensor.linearVelocity(velW_.linear());
   sensor.angularVelocity(velW_.angular());
+}
+
+const sva::MotionVecd & FloatingBasePosVelObserver::velW() const
+{
+  return velW_;
 }
 
 } // namespace mc_observers
