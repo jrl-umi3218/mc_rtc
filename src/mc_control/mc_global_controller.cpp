@@ -884,6 +884,17 @@ void MCGlobalController::setup_log()
     });
   }
 
+  if(config.log_real)
+  {
+    controller->logger().addLogEntry(
+        "realRobot_ff", [controller]() -> const sva::PTransformd & { return controller->realRobots().robot().mbc().bodyPosW[0]; });
+    controller->logger().addLogEntry(
+        "realRobot_q", [controller]() -> const std::vector<double> & { return controller->robot().encoderValues(); });
+    controller->logger().addLogEntry(
+      "realRobot_alpha", [controller]() -> const std::vector<double> & { return controller->robot().encoderVelocities(); });
+
+  }
+
   // Performance measures
   controller->logger().addLogEntry("perf_GlobalRun", [this]() { return global_run_dt.count(); });
   controller->logger().addLogEntry("perf_ControllerRun", [this]() { return controller_run_dt.count(); });

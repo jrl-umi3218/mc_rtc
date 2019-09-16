@@ -173,6 +173,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
       update_real_sensor_name = main_robot_module->bodySensors()[0].name();
     }
   }
+  config("LogReal", log_real);
   config("Default", initial_controller);
   config("Timestep", timestep);
   config("PublishControlState", publish_control_state);
