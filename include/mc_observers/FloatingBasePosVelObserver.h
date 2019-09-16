@@ -6,7 +6,28 @@ namespace mc_observers
 struct MC_OBSERVERS_DLLAPI FloatingBasePosVelObserver : public FloatingBasePosObserver
 {
   FloatingBasePosVelObserver(const mc_rbdyn::Robot & controlRobot, double dt);
-  void reset(const mc_rbdyn::Robot & realRobot, const sva::PTransformd & X_0_fb, const sva::MotionVecd & velW);
+
+  /*!
+   * @brief  Resets the estimator from given robot state
+   * Calls FLoatingBasePosObserver::reset(realRobot) to estimate the
+   * floating base position, and initializes the velocity filter with robot's
+   * floatingbase velocity realRobot.velW()
+   *
+   * @param realRobot Robot state from which the observer is to be initialized.
+   * @param velW Initial velocity
+   */
+  void reset(const mc_rbdyn::Robot & realRobot);
+
+  /*!
+   * @brief  Resets the estimator from given robot state
+   * First calls FLoatingBasePosObserver::reset(realRobot) to estimate the
+   * floating base position, and initializes the velocity filter with the given
+   * initial velocity
+   *
+   * @param realRobot Robot state from which the observer is to be initialized.
+   * @param velW Initial velocity
+   */
+  void reset(const mc_rbdyn::Robot & realRobot, const sva::MotionVecd & velW);
   void run(const mc_rbdyn::Robot & realRobot_);
   void updateRobot(mc_rbdyn::Robot & robot);
   void updateBodySensor(mc_rbdyn::Robot & robot, const std::string & sensorName = "FloatingBase");

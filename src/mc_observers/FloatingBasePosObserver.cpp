@@ -24,12 +24,17 @@
 
 namespace mc_observers
 {
-FloatingBasePosObserver::FloatingBasePosObserver(const mc_rbdyn::Robot & controlRobot) : controlRobot_(controlRobot) {}
-
-void FloatingBasePosObserver::reset(const sva::PTransformd & X_0_fb)
+FloatingBasePosObserver::FloatingBasePosObserver(const mc_rbdyn::Robot & controlRobot) :
+    controlRobot_(controlRobot),
+    orientation_(Eigen::Matrix3d::Identity()),
+    position_(Eigen::Vector3d::Zero()),
+    leftFootRatio_(0.5)
 {
-  orientation_ = X_0_fb.rotation();
-  position_ = X_0_fb.translation();
+}
+
+void FloatingBasePosObserver::reset(const mc_rbdyn::Robot & realRobot)
+{
+  run(realRobot);
 }
 
 void FloatingBasePosObserver::run(const mc_rbdyn::Robot & realRobot)

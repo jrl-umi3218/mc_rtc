@@ -52,10 +52,10 @@ struct MC_OBSERVERS_DLLAPI FloatingBasePosObserver
 
   /** Reset floating base estimate.
    *
-   * \param X_0_fb New floating-base transform.
+   * \param robot Robot from which the initial pose is to be estimated
    *
    */
-  void reset(const sva::PTransformd & X_0_fb);
+  void reset(const mc_rbdyn::Robot & robot);
 
   /** Update floating-base transform of real robot.
    *
@@ -110,9 +110,9 @@ private:
   void estimatePosition(const mc_rbdyn::Robot & realRobot);
 
 private:
+  const mc_rbdyn::Robot & controlRobot_; /**< Control robot state */
   Eigen::Matrix3d orientation_; /**< Rotation from world to floating-base frame */
   Eigen::Vector3d position_; /**< Translation of floating-base in world frame */
-  const mc_rbdyn::Robot & controlRobot_; /**< Control robot state */
   double leftFootRatio_; /**< Fraction of total weight sustained by the left foot */
 };
 } // namespace mc_observers

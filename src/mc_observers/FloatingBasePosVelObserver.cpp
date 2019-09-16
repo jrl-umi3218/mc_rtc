@@ -7,11 +7,15 @@ FloatingBasePosVelObserver::FloatingBasePosVelObserver(const mc_rbdyn::Robot & c
 {
 }
 
-void FloatingBasePosVelObserver::reset(const mc_rbdyn::Robot & realRobot, const sva::PTransformd & X_0_fb, const sva::MotionVecd & velW)
+void FloatingBasePosVelObserver::reset(const mc_rbdyn::Robot & realRobot)
 {
-  FloatingBasePosObserver::reset(X_0_fb);
-  FloatingBasePosObserver::run(realRobot);
-  posWPrev_ = FloatingBasePosObserver::posW();;
+  reset(realRobot, realRobot.velW());
+}
+
+void FloatingBasePosVelObserver::reset(const mc_rbdyn::Robot & realRobot, const sva::MotionVecd & velW)
+{
+  FloatingBasePosObserver::reset(realRobot);
+  posWPrev_ = FloatingBasePosObserver::posW();
   velW_ = velW;
   velFilter_.reset(velW);
 }
