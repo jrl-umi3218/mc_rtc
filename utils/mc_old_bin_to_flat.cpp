@@ -1,6 +1,7 @@
 #include <mc_rtc/logging.h>
 
 #include "mc_bin_flatbuffers/MCLog_generated.h"
+#include <cmath>
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
@@ -73,7 +74,7 @@ struct NumericLogLine : public LogLine
     return true;
   }
 
-  NumericLogLine(const std::string & k, size_t s) : key_(k), data_(s, NAN) {}
+  NumericLogLine(const std::string & k, size_t s) : key_(k), data_(s, std::numeric_limits<double>::quiet_NaN()) {}
 
   void write(std::ofstream & os) const override
   {
@@ -99,12 +100,12 @@ struct NumericLogLine : public LogLine
 
   void push() override
   {
-    data_.push_back(NAN);
+    data_.push_back(std::numeric_limits<double>::quiet_NaN());
   }
 
   void push(double d) override
   {
-    if(fabs(d) < std::numeric_limits<double>::min())
+    if(std::fabs(d) < std::numeric_limits<double>::min())
     {
       data_.push_back(0);
     }
