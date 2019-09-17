@@ -1137,9 +1137,9 @@ RotationImpl<GetT, SetT> Rotation(const std::string & name, GetT get_fn, SetT se
 
 /** Transform display a widget that shows a 6D frame
  *
- * This rotation is not editable.
+ * This transformation is not editable.
  *
- * This will also create a quaternion ArrayLabel with labels {"qw", "qx", "qy",
+ * This will also create an ArrayLabel with labels {"qw", "qx", "qy",
  * "qz", "tx", "ty", "tz"}
  *
  * \tparam GetT Must return an sva::PTransformd
@@ -1173,9 +1173,9 @@ struct TransformROImpl : public DataElement<GetT>
 
 /** Transform display a widget that shows a 6D frame
  *
- * This rotation is editable.
+ * This transformation is editable.
  *
- * This will also create a quaternion ArrayInput with labels {"qw", "qx", "qy",
+ * This will also create an ArrayInput with labels {"qw", "qx", "qy",
  * "qz", "tx", "ty", "tz"}
  *
  * \tparam GetT Must return an sva::PTransformd

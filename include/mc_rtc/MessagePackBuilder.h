@@ -83,7 +83,7 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
    *
    * These functions serialize common types used throughout mc_rtc. This does
    * not use MessagePack extension mechanism. Instead, this serializes to
-   * simple primitives, if type retrieval is desired, one should impement a
+   * simple primitives, if type retrieval is desired, one should implement a
    * specific mechanism.
    *
    * @{

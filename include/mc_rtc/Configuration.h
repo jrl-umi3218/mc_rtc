@@ -501,7 +501,7 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    *
    * \param data Will hold the message data
    *
-   * \returns The size of the message, not that data.size() might be different so you shouldn't use that
+   * \returns The size of the message, this is different from data.size()
    *
    */
   size_t toMessagePack(std::vector<char> & data) const;
