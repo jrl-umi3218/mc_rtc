@@ -11,8 +11,8 @@
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
 
-#include <unordered_map>
 #include <memory>
+#include <unordered_map>
 
 namespace mc_rtc
 {
