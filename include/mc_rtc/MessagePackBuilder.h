@@ -8,7 +8,6 @@
 #include <array>
 #include <exception>
 #include <map>
-#include <mc/rtc/deprecated.hh>
 #include <memory>
 #include <set>
 #include <string>

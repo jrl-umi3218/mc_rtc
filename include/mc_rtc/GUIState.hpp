@@ -68,6 +68,7 @@ template<typename T>
 StateBuilder::ElementStore::ElementStore(T self, const Category & category, ElementsStacking stacking)
 {
   self.id(category.id);
+  //FIXME In C++14 we could have T && self and move it into the lambda
   element = [self]() mutable -> Element & { return self; };
   if(stacking == ElementsStacking::Vertical)
   {
