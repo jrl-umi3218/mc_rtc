@@ -486,6 +486,10 @@ public:
     std::vector<std::string> robot_module_paths = {};
     std::shared_ptr<mc_rbdyn::RobotModule> main_robot_module;
 
+    std::vector<std::string> observers_module_paths = {};
+    std::vector<std::string> enabled_observers = {};
+    std::unordered_map<std::string, mc_rtc::Configuration> observers_configs;
+
     std::vector<std::string> controller_module_paths = {};
     std::vector<std::string> enabled_controllers = {};
     std::string initial_controller = "";
@@ -525,6 +529,8 @@ private:
   MCController * next_controller_ = nullptr;
   std::unique_ptr<mc_rtc::ObjectLoader<MCController>> controller_loader;
   std::map<std::string, std::shared_ptr<mc_control::MCController>> controllers;
+
+  std::map<std::string, std::shared_ptr<mc_observers::Observer>> observers;
 
   std::shared_ptr<mc_rbdyn::Robots> real_robots = nullptr;
 

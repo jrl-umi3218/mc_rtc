@@ -1,11 +1,22 @@
-#include <mc_observers/FloatingBasePosObserver.h>
+/*
+ * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ *
+ * This file is heavily inspired by Stéphane Caron's lipm_walking_controller
+ * https://github.com/stephane-caron/lipm_walking_controller
+ */
+
+#pragma once
+
+#include <mc_observers/api.h>
 #include <mc_observers/LowPassVelocityFilter.h>
+#include "FloatingBasePosObserver.h"
 
 namespace mc_observers
 {
-struct MC_OBSERVERS_DLLAPI FloatingBasePosVelObserver : public FloatingBasePosObserver
+struct MC_OBSERVER_DLLAPI FloatingBasePosVelObserver : public FloatingBasePosObserver
 {
-  FloatingBasePosVelObserver(const mc_rbdyn::Robot & controlRobot, double dt);
+  FloatingBasePosVelObserver(const std::string& name, double dt, const mc_rtc::Configuration & config = {});
+  ~FloatingBasePosVelObserver() override;
 
   /*!
    * @brief  Resets the estimator from given robot state
@@ -16,7 +27,7 @@ struct MC_OBSERVERS_DLLAPI FloatingBasePosVelObserver : public FloatingBasePosOb
    * @param realRobot Robot state from which the observer is to be initialized.
    * @param velW Initial velocity
    */
-  void reset(const mc_rbdyn::Robot & realRobot);
+  void reset(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & realRobot) override;
 
   /*!
    * @brief  Resets the estimator from given robot state
@@ -27,16 +38,19 @@ struct MC_OBSERVERS_DLLAPI FloatingBasePosVelObserver : public FloatingBasePosOb
    * @param realRobot Robot state from which the observer is to be initialized.
    * @param velW Initial velocity
    */
-  void reset(const mc_rbdyn::Robot & realRobot, const sva::MotionVecd & velW);
-  void run(const mc_rbdyn::Robot & realRobot_);
-  void updateRobot(mc_rbdyn::Robot & robot);
+  void reset(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & realRobot, const sva::MotionVecd & velW);
+  bool run(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & realRobot) override;
+  void updateRobot(mc_rbdyn::Robot & robot) override;
   void updateBodySensor(mc_rbdyn::Robot & robot, const std::string & sensorName = "FloatingBase");
 
   const sva::MotionVecd & velW() const;
 
+  void addToLogger(mc_rtc::Logger &) override;
+  void removeFromLogger(mc_rtc::Logger &) override;
+  void addToGUI(mc_rtc::gui::StateBuilder &) override;
+  void removeFromGUI(mc_rtc::gui::StateBuilder &) override;
+
 private:
-  /** Controller timestep */
-  double dt_;
   /** Previous estimated position.
    * Used to compute finite differences estimation of the velocity */
   sva::PTransformd posWPrev_;

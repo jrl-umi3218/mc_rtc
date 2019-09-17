@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <mc_observers/ObserverLoader.h>
 #include <mc_control/Configuration.h>
 #include <mc_control/generic_gripper.h>
 #include <mc_rbdyn/Robots.h>
@@ -67,6 +68,9 @@ public:
    * It is recommended to use it in your override.
    */
   virtual bool run();
+
+  virtual bool runObserver();
+
   /**
    * WARNING EXPERIMENTAL
    * Runs the QP on real_robot state
@@ -271,6 +275,9 @@ protected:
   std::shared_ptr<mc_solver::QPSolver> qpsolver;
   /** Real robots provided by MCGlobalController, nullptr until ::reset */
   std::shared_ptr<mc_rbdyn::Robots> real_robots;
+  /** Observers provided by MCGlobalController */
+  std::map<std::string, std::shared_ptr<mc_observers::Observer>> observers;
+  std::vector<std::string> updateObservers;
   /** Logger provided by MCGlobalController */
   std::shared_ptr<mc_rtc::Logger> logger_;
   /** GUI state builder */

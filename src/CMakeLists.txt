@@ -92,7 +92,6 @@ set(mc_rbdyn_HDR
 ../include/mc_rbdyn/PolygonInterpolator.h
 ../include/mc_rbdyn/Robot.h
 ../include/mc_rbdyn/Robots.h
-../include/mc_rbdyn/RobotLoader.h
 ../include/mc_rbdyn/RobotModule.h
 ../include/mc_rbdyn/SCHAddon.h
 ../include/mc_rbdyn/Surface.h
@@ -135,6 +134,7 @@ target_link_libraries(mc_rtc_gui PUBLIC mc_rbdyn)
 install_mc_rtc_lib(mc_rtc_gui)
 
 add_subdirectory(mc_robots)
+add_subdirectory(mc_observers)
 
 set(mc_solver_SRC
 mc_solver/BoundedSpeedConstr.cpp
@@ -261,21 +261,21 @@ install_mc_rtc_lib(mc_tasks)
 
 
 set(mc_observers_SRC
-mc_observers/FloatingBasePosObserver.cpp
-mc_observers/FloatingBasePosVelObserver.cpp
+mc_observers/ObserverLoader.cpp
+mc_observers/Observer.cpp
 )
 
 set(mc_observers_HDR
 ../include/mc_observers/api.h
-../include/mc_observers/FloatingBasePosObserver.h
-../include/mc_observers/FloatingBasePosVelObserver.h
+../include/mc_observers/ObserverLoader.h
+../include/mc_observers/Observer.h
 ../include/mc_observers/LowPassVelocityFilter.h
 ../include/mc_observers/LowPassFiniteDifferencesVelocityFilter.h
 )
 
 add_library(mc_observers SHARED ${mc_observers_SRC} ${mc_observers_HDR})
 set_target_properties(mc_observers PROPERTIES COMPILE_FLAGS "-DMC_OBSERVERS_EXPORTS")
-target_link_libraries(mc_observers PUBLIC mc_rbdyn mc_rtc_utils)
+target_link_libraries(mc_observers PUBLIC mc_rbdyn mc_rtc_gui)
 install_mc_rtc_lib(mc_observers)
 
 
@@ -318,7 +318,7 @@ set(mc_control_HDR
 
 add_library(mc_control SHARED ${mc_control_SRC} ${mc_control_HDR})
 set_target_properties(mc_control PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_EXPORTS")
-target_link_libraries(mc_control PUBLIC mc_tasks mc_solver mc_rtc_ros mc_rtc_loader mc_rtc_utils mc_rtc_gui nanomsg)
+target_link_libraries(mc_control PUBLIC mc_tasks mc_solver mc_rtc_ros mc_rtc_loader mc_observers mc_rtc_utils mc_rtc_gui nanomsg)
 install_mc_rtc_lib(mc_control)
 
 set(mc_control_client_SRC

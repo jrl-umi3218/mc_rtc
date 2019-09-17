@@ -4,6 +4,7 @@
 
 #include <mc_control/mc_global_controller.h>
 #include <mc_rbdyn/RobotLoader.h>
+#include <mc_observers/ObserverLoader.h>
 
 /* Implementation file for mc_control::MCGlobalController::Configuration */
 
@@ -130,6 +131,43 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   if(main_robot_module->ref_joint_order().size() == 0)
   {
     main_robot_module->make_default_ref_joint_order();
+  }
+
+
+
+  ///////////////
+  // OBSERVERS
+  ///////////////
+  mc_observers::ObserverLoader::enable_sandboxing(use_sandbox);
+  mc_observers::ObserverLoader::set_verbosity(verbose_loader);
+  config("ObserversModulePaths", observers_module_paths);
+  if(observers_module_paths.size())
+  {
+    try
+    {
+      mc_observers::ObserverLoader::update_module_path(observers_module_paths);
+    }
+    catch(const mc_rtc::LoaderException & exc)
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, "Failed to update observer module path(s)")
+    }
+  }
+  config("EnabledObservers", enabled_observers);
+
+  if(config.has("Observers"))
+  {
+    const auto & oc = config("Observers");
+    for(const auto & observerName : enabled_observers)
+    {
+      if(oc.has(observerName))
+      {
+        observers_configs[observerName] = oc(observerName);
+      }
+      else
+      {
+        observers_configs[observerName] = {};
+      }
+    }
   }
 
   controller_module_paths.resize(0);

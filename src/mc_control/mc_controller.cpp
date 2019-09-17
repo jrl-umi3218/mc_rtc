@@ -37,6 +37,7 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   {
     loadRobot(rm, rm->name);
   }
+
   if(gui_)
   {
     gui_->addElement({"Global", "Add task"},
@@ -139,8 +140,34 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
   return r;
 }
 
+bool MCController::runObserver()
+{
+  for(const auto& observer : observers)
+  {
+    LOG_INFO("Running observer " << observer.first);
+    bool r = observer.second->run(robot(), real_robots->robot());
+    if(!r)
+    {
+      LOG_ERROR("Observer " << observer.second->name() << " failed to run");
+      return false;
+    }
+    real_robots->robot().forwardKinematics();
+    real_robots->robot().forwardVelocity();
+  }
+
+  for(const auto& observerName : updateObservers)
+  {
+    LOG_INFO("Updating real robot from observer " << observerName);
+    observers[observerName]->updateRobot(real_robots->robot());
+  }
+
+  LOG_SUCCESS("Observers ran");
+  return true;
+}
+
 bool MCController::run()
 {
+  LOG_INFO("running QP");
   return run(mc_solver::FeedbackType::None);
 }
 
@@ -178,6 +205,17 @@ void MCController::reset(const ControllerResetData & reset_data)
   postureTask->posture(reset_data.q);
   rbd::forwardKinematics(robot().mb(), robot().mbc());
   rbd::forwardVelocity(robot().mb(), robot().mbc());
+
+  for(const auto& observer : observers)
+  {
+    LOG_INFO("Resetting observer " << observer.first);
+    observer.second->reset(robot(), real_robots->robot());
+    observer.second->addToLogger(logger());
+    if(gui_)
+    {
+      observer.second->addToGUI(*gui_);
+    }
+  }
 }
 
 const mc_rbdyn::Robot & MCController::robot() const

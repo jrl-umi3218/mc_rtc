@@ -19,32 +19,40 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-#include <mc_observers/FloatingBasePosObserver.h>
 #include <mc_rbdyn/rpy_utils.h>
+#include "FloatingBasePosObserver.h"
 
 namespace mc_observers
 {
-FloatingBasePosObserver::FloatingBasePosObserver(const mc_rbdyn::Robot & controlRobot) :
-    controlRobot_(controlRobot),
+FloatingBasePosObserver::FloatingBasePosObserver(const std::string& name, double dt, const mc_rtc::Configuration & config) :
+    Observer(name, dt),
     orientation_(Eigen::Matrix3d::Identity()),
     position_(Eigen::Vector3d::Zero()),
     leftFootRatio_(0.5)
 {
+  LOG_SUCCESS("FloatingBasePosObserver created")
 }
 
-void FloatingBasePosObserver::reset(const mc_rbdyn::Robot & realRobot)
+FloatingBasePosObserver::~FloatingBasePosObserver()
 {
-  run(realRobot);
 }
 
-void FloatingBasePosObserver::run(const mc_rbdyn::Robot & realRobot)
+void FloatingBasePosObserver::reset(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & realRobot)
 {
-  estimateOrientation(realRobot);
-  estimatePosition(realRobot);
+  run(controlRobot, realRobot);
+  LOG_SUCCESS("FloatingBasePosObserver reset");
 }
 
-void FloatingBasePosObserver::estimateOrientation(const mc_rbdyn::Robot & realRobot)
+bool FloatingBasePosObserver::run(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & realRobot)
 {
+  estimateOrientation(controlRobot, realRobot);
+  estimatePosition(realRobot, realRobot);
+  return true;
+}
+
+void FloatingBasePosObserver::estimateOrientation(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & realRobot)
+{
+  LOG_INFO("controlRobot? " << controlRobot.name());
   // Prefixes:
   // c for control-robot model
   // r for real-robot model
@@ -53,16 +61,16 @@ void FloatingBasePosObserver::estimateOrientation(const mc_rbdyn::Robot & realRo
   sva::PTransformd X_0_rIMU = realRobot.bodyPosW(realRobot.bodySensor().parentBody());
   sva::PTransformd X_rIMU_rBase = X_0_rBase * X_0_rIMU.inv();
   Eigen::Matrix3d E_0_mIMU = realRobot.bodySensor().orientation().toRotationMatrix();
-  Eigen::Matrix3d E_0_cBase = controlRobot_.posW().rotation();
+  Eigen::Matrix3d E_0_cBase = controlRobot.posW().rotation();
   Eigen::Matrix3d E_0_mBase = X_rIMU_rBase.rotation() * E_0_mIMU;
   Eigen::Vector3d cRPY = mc_rbdyn::rpyFromMat(E_0_cBase);
   Eigen::Vector3d mRPY = mc_rbdyn::rpyFromMat(E_0_mBase);
   orientation_ = mc_rbdyn::rpyToMat(mRPY(0), mRPY(1), cRPY(2));
 }
 
-void FloatingBasePosObserver::estimatePosition(const mc_rbdyn::Robot & realRobot)
+void FloatingBasePosObserver::estimatePosition(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & realRobot)
 {
-  sva::PTransformd X_0_c = getAnchorFrame(controlRobot_);
+  sva::PTransformd X_0_c = getAnchorFrame(controlRobot);
   sva::PTransformd X_0_s = getAnchorFrame(realRobot);
   const sva::PTransformd & X_0_real = realRobot.posW();
   sva::PTransformd X_real_s = X_0_s * X_0_real.inv();
@@ -89,4 +97,26 @@ void FloatingBasePosObserver::updateBodySensor(mc_rbdyn::Robot & realRobot, cons
   sensor.position(position_);
   sensor.orientation(Eigen::Quaterniond(orientation_));
 }
+
+void FloatingBasePosObserver::addToLogger(mc_rtc::Logger &logger)
+{
+  logger.addLogEntry("observer_"+name()+"_posW",
+                     [this]()
+                     {
+                       return posW();
+                     });
+}
+void FloatingBasePosObserver::removeFromLogger(mc_rtc::Logger &logger)
+{
+  logger.removeLogEntry("observer_"+name()+"_posW");
+}
+void FloatingBasePosObserver::addToGUI(mc_rtc::gui::StateBuilder &gui)
+{
+}
+void FloatingBasePosObserver::removeFromGUI(mc_rtc::gui::StateBuilder &gui)
+{
+}
+
 } // namespace mc_observers
+
+EXPORT_OBSERVER_MODULE("FloatingBasePos", mc_observers::FloatingBasePosObserver)

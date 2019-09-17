@@ -1,27 +1,14 @@
-/* Copyright 2018-2019 CNRS-UM LIRMM
+/*
+ * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  *
- * \author Stéphane Caron
- *
- * This file is part of lipm_walking_controller.
- *
- * lipm_walking_controller is free software: you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 3 of the License,
- * or (at your option) any later version.
- *
- * lipm_walking_controller is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser
- * General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with lipm_walking_controller. If not, see
- * <http://www.gnu.org/licenses/>.
+ * This file is heavily inspired by Stéphane Caron's lipm_walking_controller
+ * https://github.com/stephane-caron/lipm_walking_controller
  */
 
 #pragma once
 
 #include <mc_observers/api.h>
+#include <mc_observers/Observer.h>
 #include <mc_rbdyn/Robot.h>
 
 #include <SpaceVecAlg/SpaceVecAlg>
@@ -34,14 +21,15 @@ namespace mc_observers
  * technical details on the derivation of this simple estimator.
  *
  */
-struct MC_OBSERVERS_DLLAPI FloatingBasePosObserver
+struct MC_OBSERVER_DLLAPI FloatingBasePosObserver : public Observer
 {
   /** Initialize floating base observer.
    *
    * \param controlRobot Robot reference.
    *
    */
-  FloatingBasePosObserver(const mc_rbdyn::Robot & controlRobot);
+  FloatingBasePosObserver(const std::string& name, double dt, const mc_rtc::Configuration & config = {});
+  ~FloatingBasePosObserver() override;
 
   /** Get anchor frame of a robot for a given contact state.
    *
@@ -55,21 +43,21 @@ struct MC_OBSERVERS_DLLAPI FloatingBasePosObserver
    * \param robot Robot from which the initial pose is to be estimated
    *
    */
-  void reset(const mc_rbdyn::Robot & robot);
+  void reset(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & robot) override;
 
   /** Update floating-base transform of real robot.
    *
    * \param realRobot Measured robot state, to be updated.
    *
    */
-  void run(const mc_rbdyn::Robot & realRobot);
+  bool run(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & realRobot) override;
 
   /** Write observed floating-base transform to the robot's configuration.
    *
    * \param robot Robot state to write to.
    *
    */
-  void updateRobot(mc_rbdyn::Robot & robot);
+  void updateRobot(mc_rbdyn::Robot & robot) override;
 
   void updateBodySensor(mc_rbdyn::Robot & robot, const std::string & sensorName = "FloatingBase");
 
@@ -91,13 +79,18 @@ struct MC_OBSERVERS_DLLAPI FloatingBasePosObserver
     return {orientation_, position_};
   }
 
+  void addToLogger(mc_rtc::Logger &) override;
+  void removeFromLogger(mc_rtc::Logger &) override;
+  void addToGUI(mc_rtc::gui::StateBuilder &) override;
+  void removeFromGUI(mc_rtc::gui::StateBuilder &) override;
+
 private:
   /** Update floating-base orientation based on new observed gravity vector.
    *
    * \param realRobot Measured robot state.
    *
    */
-  void estimateOrientation(const mc_rbdyn::Robot & realRobot);
+  void estimateOrientation(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & realRobot);
 
   /* Update floating-base position.
    *
@@ -107,12 +100,12 @@ private:
    * coincides with the control anchor frame.
    *
    */
-  void estimatePosition(const mc_rbdyn::Robot & realRobot);
+  void estimatePosition(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & realRobot);
 
 private:
-  const mc_rbdyn::Robot & controlRobot_; /**< Control robot state */
   Eigen::Matrix3d orientation_; /**< Rotation from world to floating-base frame */
   Eigen::Vector3d position_; /**< Translation of floating-base in world frame */
   double leftFootRatio_; /**< Fraction of total weight sustained by the left foot */
 };
+
 } // namespace mc_observers
