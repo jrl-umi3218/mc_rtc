@@ -144,7 +144,7 @@ private:
   /** Set to true when log entries are added or removed */
   bool log_entries_changed_ = false;
   /** Contains all the log entries callback */
-  std::unordered_map<std::string, serialize_fn> log_entries_ = {};
+  std::unordered_map<std::string, serialize_fn> log_entries_;
 };
 
 } // namespace mc_rtc
