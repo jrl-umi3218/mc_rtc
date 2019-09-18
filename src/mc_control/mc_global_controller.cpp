@@ -92,10 +92,12 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
   real_robots(std::make_shared<mc_rbdyn::Robots>())
 {
   // Loading observer modules
-  for (const auto & observerName : config.enabled_observers) {
+  for(const auto & observerName : config.enabled_observers)
+  {
     if(mc_observers::ObserverLoader::has_observer(observerName))
     {
-      observers[observerName] = mc_observers::ObserverLoader::get_observer(observerName, config.timestep, config.observers_configs[observerName]);
+      observers[observerName] = mc_observers::ObserverLoader::get_observer(observerName, config.timestep,
+                                                                           config.observers_configs[observerName]);
     }
     else
     {
@@ -631,7 +633,7 @@ bool MCGlobalController::AddController(const std::string & name)
       const auto & cc = config.controllers_configs[name];
       if(cc.has("UseObservers"))
       {
-        for (const auto & observerName : cc("UseObservers"))
+        for(const auto & observerName : cc("UseObservers"))
         {
           if(observers.count(observerName) > 0)
           {
@@ -639,7 +641,9 @@ bool MCGlobalController::AddController(const std::string & name)
           }
           else
           {
-            LOG_ERROR("Controller " << controller_name << " requested observer " << observerName << " but this observer is not available. Check your EnabledObservers configuration");
+            LOG_ERROR(
+                "Controller " << controller_name << " requested observer " << observerName
+                              << " but this observer is not available. Check your EnabledObservers configuration");
           }
         }
       }
@@ -658,7 +662,10 @@ bool MCGlobalController::AddController(const std::string & name)
           }
           else
           {
-            LOG_ERROR("Controller " << controller_name << " requested updating real robot from observer " << observerName << " but this observer is not active for this controller. Check your controller's EnabledObservers configuration");
+            LOG_ERROR("Controller " << controller_name << " requested updating real robot from observer "
+                                    << observerName
+                                    << " but this observer is not active for this controller. Check your controller's "
+                                       "EnabledObservers configuration");
           }
         }
       }
@@ -873,13 +880,14 @@ void MCGlobalController::setup_log()
 
   if(config.log_real)
   {
-    controller->logger().addLogEntry(
-        "realRobot_ff", [controller]() -> const sva::PTransformd & { return controller->realRobots().robot().mbc().bodyPosW[0]; });
+    controller->logger().addLogEntry("realRobot_ff", [controller]() -> const sva::PTransformd & {
+      return controller->realRobots().robot().mbc().bodyPosW[0];
+    });
     controller->logger().addLogEntry(
         "realRobot_q", [controller]() -> const std::vector<double> & { return controller->robot().encoderValues(); });
-    controller->logger().addLogEntry(
-      "realRobot_alpha", [controller]() -> const std::vector<double> & { return controller->robot().encoderVelocities(); });
-
+    controller->logger().addLogEntry("realRobot_alpha", [controller]() -> const std::vector<double> & {
+      return controller->robot().encoderVelocities();
+    });
   }
 
   // Performance measures

@@ -2,8 +2,8 @@
 
 namespace mc_observers
 {
-BodySensorObserver::BodySensorObserver(const std::string& name, double dt, const mc_rtc::Configuration & config) :
-    Observer(name, dt, config)
+BodySensorObserver::BodySensorObserver(const std::string & name, double dt, const mc_rtc::Configuration & config)
+: Observer(name, dt, config)
 {
   LOG_INFO("BodySensorObserver config: \n" << config.dump(true));
   updateFbFromSensor_ = config("UpdateFloatingBaseFromSensor", true);
@@ -17,10 +17,10 @@ BodySensorObserver::BodySensorObserver(const std::string& name, double dt, const
 
 void BodySensorObserver::reset(const mc_rbdyn::Robot & realRobot)
 {
-    const auto & bs = robot().bodySensor(fbSensorName_);
-    posW_ = {bs.orientation(), bs.position()};
-    velW_ = {bs.angularVelocity(), bs.linearVelocity()};
-    LOG_INFO("[reset] BodySensorObserver bodysensor pos: " << bs.position());
+  const auto & bs = robot().bodySensor(fbSensorName_);
+  posW_ = {bs.orientation(), bs.position()};
+  velW_ = {bs.angularVelocity(), bs.linearVelocity()};
+  LOG_INFO("[reset] BodySensorObserver bodysensor pos: " << bs.position());
 }
 
 bool BodySensorObserver::run(const mc_rbdyn::Robot & realRobot)
@@ -47,8 +47,8 @@ void BodySensorObserver::updateRobot(mc_rbdyn::Robot & realRobot)
     realRobot.velW(velW_);
   }
 
-  const auto& q = robot().encoderValues();
-  const auto& alpha = robot().encoderVelocities();
+  const auto & q = robot().encoderValues();
+  const auto & alpha = robot().encoderVelocities();
   if(q.size() == robot().refJointOrder().size())
   {
     // Set all joint values and velocities from encoders
@@ -87,46 +87,38 @@ void BodySensorObserver::updateRobot(mc_rbdyn::Robot & realRobot)
   }
 }
 
-void BodySensorObserver::addToLogger(mc_rtc::Logger &logger)
+void BodySensorObserver::addToLogger(mc_rtc::Logger & logger)
 {
   Observer::addToLogger(logger);
-  logger.addLogEntry("observer_"+name()+"_"+fbSensorName_+"Sensor_posW",
-                     [this]()
-                     {
-                       const auto & bs = robot().bodySensor(fbSensorName_);
-                       return sva::PTransformd(bs.orientation(), bs.position());
-                     });
-  logger.addLogEntry("observer_"+name()+"_"+fbSensorName_+"Sensor_velW",
-                     [this]()
-                     {
-                       const auto & bs = robot().bodySensor(fbSensorName_);
-                       return sva::MotionVecd(bs.angularVelocity(), bs.linearVelocity());
-                     });
+  logger.addLogEntry("observer_" + name() + "_" + fbSensorName_ + "Sensor_posW", [this]() {
+    const auto & bs = robot().bodySensor(fbSensorName_);
+    return sva::PTransformd(bs.orientation(), bs.position());
+  });
+  logger.addLogEntry("observer_" + name() + "_" + fbSensorName_ + "Sensor_velW", [this]() {
+    const auto & bs = robot().bodySensor(fbSensorName_);
+    return sva::MotionVecd(bs.angularVelocity(), bs.linearVelocity());
+  });
 }
-void BodySensorObserver::removeFromLogger(mc_rtc::Logger &logger)
+void BodySensorObserver::removeFromLogger(mc_rtc::Logger & logger)
 {
   Observer::removeFromLogger(logger);
-  logger.removeLogEntry("observer_"+name()+"_"+fbSensorName_+"Sensor_posW");
-  logger.removeLogEntry("observer_"+name()+"_"+fbSensorName_+"Sensor_velW");
+  logger.removeLogEntry("observer_" + name() + "_" + fbSensorName_ + "Sensor_posW");
+  logger.removeLogEntry("observer_" + name() + "_" + fbSensorName_ + "Sensor_velW");
 }
 
-void BodySensorObserver::addToGUI(mc_rtc::gui::StateBuilder &gui)
+void BodySensorObserver::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   gui.addElement({"Observers", name()},
-                 mc_rtc::gui::Arrow("Velocity",
-                                    mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color{1.,0.,0.}),
-                                    [this]()
-                                    {
+                 mc_rtc::gui::Arrow("Velocity", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color{1., 0., 0.}),
+                                    [this]() {
                                       const auto & bs = robot().bodySensor(fbSensorName_);
                                       return bs.position();
                                     },
-                                    [this]() -> Eigen::Vector3d
-                                    {
+                                    [this]() -> Eigen::Vector3d {
                                       const auto & bs = robot().bodySensor(fbSensorName_);
                                       Eigen::Vector3d end = bs.position() + bs.linearVelocity();
                                       return end;
-                                    })
-                );
+                                    }));
 }
 
 } // namespace mc_observers

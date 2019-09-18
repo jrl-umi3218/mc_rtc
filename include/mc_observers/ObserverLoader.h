@@ -110,7 +110,7 @@ private:
           default_path.push_back(mc_rtc::MC_OBSERVERS_INSTALL_PREFIX);
         }
         observer_loader.reset(new mc_rtc::ObjectLoader<mc_observers::Observer>("MC_RTC_OBSERVER_MODULE", default_path,
-                                                                           enable_sandbox_, verbose_));
+                                                                               enable_sandbox_, verbose_));
       }
       catch(const mc_rtc::LoaderException & exc)
       {

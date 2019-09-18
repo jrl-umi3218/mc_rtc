@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include <mc_observers/ObserverLoader.h>
 #include <mc_control/Configuration.h>
 #include <mc_control/generic_gripper.h>
+#include <mc_observers/ObserverLoader.h>
 #include <mc_rbdyn/Robots.h>
 #include <mc_rtc/GUIState.h>
 #include <mc_rtc/log/Logger.h>

@@ -142,7 +142,7 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
 
 bool MCController::runObserver()
 {
-  for(const auto& observer : observers)
+  for(const auto & observer : observers)
   {
     LOG_INFO("Running observer " << observer.first);
     bool r = observer.second->run(real_robots->robot());
@@ -153,7 +153,7 @@ bool MCController::runObserver()
     }
   }
 
-  for(const auto& observerName : updateObservers)
+  for(const auto & observerName : updateObservers)
   {
     LOG_INFO("Updating real robot from observer " << observerName);
     observers[observerName]->updateRobot(real_robots->robot());
@@ -206,7 +206,7 @@ void MCController::reset(const ControllerResetData & reset_data)
   rbd::forwardKinematics(robot().mb(), robot().mbc());
   rbd::forwardVelocity(robot().mb(), robot().mbc());
 
-  for(const auto& observer : observers)
+  for(const auto & observer : observers)
   {
     LOG_INFO("Resetting observer " << observer.first);
     observer.second->reset(real_robots->robot());

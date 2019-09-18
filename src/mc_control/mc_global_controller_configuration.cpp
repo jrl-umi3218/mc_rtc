@@ -3,8 +3,8 @@
  */
 
 #include <mc_control/mc_global_controller.h>
-#include <mc_rbdyn/RobotLoader.h>
 #include <mc_observers/ObserverLoader.h>
+#include <mc_rbdyn/RobotLoader.h>
 
 /* Implementation file for mc_control::MCGlobalController::Configuration */
 
@@ -132,8 +132,6 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   {
     main_robot_module->make_default_ref_joint_order();
   }
-
-
 
   ///////////////
   // OBSERVERS

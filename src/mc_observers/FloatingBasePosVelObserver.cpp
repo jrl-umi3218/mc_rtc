@@ -2,15 +2,15 @@
 
 namespace mc_observers
 {
-FloatingBasePosVelObserver::FloatingBasePosVelObserver(const std::string & name, double dt, const mc_rtc::Configuration & config)
+FloatingBasePosVelObserver::FloatingBasePosVelObserver(const std::string & name,
+                                                       double dt,
+                                                       const mc_rtc::Configuration & config)
 : FloatingBasePosObserver(name, dt, config), velFilter_(dt, /* cutoff period = */ 0.01)
 {
   LOG_SUCCESS("FloatingBasePosVelObserver created with dt " << FloatingBasePosObserver::dt());
 }
 
-FloatingBasePosVelObserver::~FloatingBasePosVelObserver()
-{
-}
+FloatingBasePosVelObserver::~FloatingBasePosVelObserver() {}
 
 void FloatingBasePosVelObserver::reset(const mc_rbdyn::Robot & realRobot)
 {
@@ -56,39 +56,28 @@ const sva::MotionVecd & FloatingBasePosVelObserver::velW() const
   return velW_;
 }
 
-void FloatingBasePosVelObserver::addToLogger(mc_rtc::Logger &logger)
+void FloatingBasePosVelObserver::addToLogger(mc_rtc::Logger & logger)
 {
   FloatingBasePosObserver::addToLogger(logger);
-  logger.addLogEntry("observer_"+name()+"_velW",
-                     [this]()
-                     {
-                       return velW_;
-                     });
+  logger.addLogEntry("observer_" + name() + "_velW", [this]() { return velW_; });
 }
-void FloatingBasePosVelObserver::removeFromLogger(mc_rtc::Logger &logger)
+void FloatingBasePosVelObserver::removeFromLogger(mc_rtc::Logger & logger)
 {
   FloatingBasePosObserver::removeFromLogger(logger);
-  logger.removeLogEntry("observer_"+name()+"_velW");
+  logger.removeLogEntry("observer_" + name() + "_velW");
 }
-void FloatingBasePosVelObserver::addToGUI(mc_rtc::gui::StateBuilder &gui)
+void FloatingBasePosVelObserver::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   FloatingBasePosObserver::addToGUI(gui);
-  gui.addElement({"Observers", name()},
-                 mc_rtc::gui::Arrow("Velocity",
-                                    [this]()
-                                    {
-                                      return posW().translation();
-                                    },
-                                    [this]() -> Eigen::Vector3d
-                                    {
-                                      const Eigen::Vector3d p = posW().translation();
-                                      LOG_INFO("p: " << p.transpose());
-                                      Eigen::Vector3d end = p + velW().linear();
-                                      return end;
-                                    })
-                 );
+  gui.addElement({"Observers", name()}, mc_rtc::gui::Arrow("Velocity", [this]() { return posW().translation(); },
+                                                           [this]() -> Eigen::Vector3d {
+                                                             const Eigen::Vector3d p = posW().translation();
+                                                             LOG_INFO("p: " << p.transpose());
+                                                             Eigen::Vector3d end = p + velW().linear();
+                                                             return end;
+                                                           }));
 }
-void FloatingBasePosVelObserver::removeFromGUI(mc_rtc::gui::StateBuilder &gui)
+void FloatingBasePosVelObserver::removeFromGUI(mc_rtc::gui::StateBuilder & gui)
 {
   FloatingBasePosObserver::removeFromGUI(gui);
   gui.removeCategory({"Observers", name()});

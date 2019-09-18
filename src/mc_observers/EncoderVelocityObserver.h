@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include <mc_observers/api.h>
 #include <mc_observers/Observer.h>
+#include <mc_observers/api.h>
 #include <mc_rbdyn/Robot.h>
 
 namespace mc_observers
@@ -26,7 +26,7 @@ struct MC_OBSERVER_DLLAPI EncoderVelocityObserver : public Observer
    * \param controlRobot Robot reference.
    *
    */
-  EncoderVelocityObserver(const std::string& name, double dt, const mc_rtc::Configuration & config = {});
+  EncoderVelocityObserver(const std::string & name, double dt, const mc_rtc::Configuration & config = {});
 
   /** Reset floating base estimate.
    *

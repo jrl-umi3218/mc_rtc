@@ -7,15 +7,16 @@
 
 #pragma once
 
-#include <mc_observers/api.h>
 #include <mc_observers/LowPassVelocityFilter.h>
+#include <mc_observers/api.h>
+
 #include "FloatingBasePosObserver.h"
 
 namespace mc_observers
 {
 struct MC_OBSERVER_DLLAPI FloatingBasePosVelObserver : public FloatingBasePosObserver
 {
-  FloatingBasePosVelObserver(const std::string& name, double dt, const mc_rtc::Configuration & config = {});
+  FloatingBasePosVelObserver(const std::string & name, double dt, const mc_rtc::Configuration & config = {});
   ~FloatingBasePosVelObserver() override;
 
   /*!

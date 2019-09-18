@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <mc_observers/api.h>
 #include <mc_observers/Observer.h>
+#include <mc_observers/api.h>
 #include <mc_rbdyn/Robot.h>
 
 #include <SpaceVecAlg/SpaceVecAlg>
@@ -20,7 +20,7 @@ namespace mc_observers
  */
 struct MC_OBSERVER_DLLAPI BodySensorObserver : public Observer
 {
-  BodySensorObserver(const std::string& name, double dt, const mc_rtc::Configuration & config = {});
+  BodySensorObserver(const std::string & name, double dt, const mc_rtc::Configuration & config = {});
   void reset(const mc_rbdyn::Robot & robot) override;
   bool run(const mc_rbdyn::Robot & robot) override;
   void updateRobot(mc_rbdyn::Robot & robot) override;
@@ -29,7 +29,7 @@ struct MC_OBSERVER_DLLAPI BodySensorObserver : public Observer
   void removeFromLogger(mc_rtc::Logger &) override;
   void addToGUI(mc_rtc::gui::StateBuilder &) override;
 
- protected:
+protected:
   bool updateFbFromSensor_;
   std::string fbSensorName_;
   bool updateFbFromControl_;

@@ -2,14 +2,9 @@
 
 namespace mc_observers
 {
-Observer::Observer(const std::string & name, double dt, const mc_rtc::Configuration & config)
-    : name_(name), dt_(dt)
-{
-}
+Observer::Observer(const std::string & name, double dt, const mc_rtc::Configuration & config) : name_(name), dt_(dt) {}
 
-Observer::~Observer()
-{
-}
+Observer::~Observer() {}
 
 const mc_rbdyn::Robots & Observer::robots() const
 {
@@ -33,9 +28,9 @@ double Observer::dt() const
   return dt_;
 }
 
-void Observer::removeFromGUI(mc_rtc::gui::StateBuilder &gui)
+void Observer::removeFromGUI(mc_rtc::gui::StateBuilder & gui)
 {
   gui.removeCategory({"Observers", name()});
 }
 
-} /* mc_observers */
+} // namespace mc_observers

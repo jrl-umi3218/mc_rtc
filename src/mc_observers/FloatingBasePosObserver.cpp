@@ -19,21 +19,19 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-#include <mc_rbdyn/rpy_utils.h>
 #include "FloatingBasePosObserver.h"
+
+#include <mc_rbdyn/rpy_utils.h>
 
 namespace mc_observers
 {
-FloatingBasePosObserver::FloatingBasePosObserver(const std::string& name, double dt, const mc_rtc::Configuration & config) :
-    Observer(name, dt),
-    orientation_(Eigen::Matrix3d::Identity()),
-    position_(Eigen::Vector3d::Zero()),
-    leftFootRatio_(0.5)
-{
-  LOG_SUCCESS("FloatingBasePosObserver created")
-}
+FloatingBasePosObserver::FloatingBasePosObserver(const std::string & name,
+                                                 double dt,
+                                                 const mc_rtc::Configuration & config)
+: Observer(name, dt), orientation_(Eigen::Matrix3d::Identity()), position_(Eigen::Vector3d::Zero()),
+  leftFootRatio_(0.5){LOG_SUCCESS("FloatingBasePosObserver created")}
 
-FloatingBasePosObserver::~FloatingBasePosObserver()
+  FloatingBasePosObserver::~FloatingBasePosObserver()
 {
 }
 
@@ -98,24 +96,16 @@ void FloatingBasePosObserver::updateBodySensor(mc_rbdyn::Robot & realRobot, cons
   sensor.orientation(Eigen::Quaterniond(orientation_));
 }
 
-void FloatingBasePosObserver::addToLogger(mc_rtc::Logger &logger)
+void FloatingBasePosObserver::addToLogger(mc_rtc::Logger & logger)
 {
-  logger.addLogEntry("observer_"+name()+"_posW",
-                     [this]()
-                     {
-                       return posW();
-                     });
+  logger.addLogEntry("observer_" + name() + "_posW", [this]() { return posW(); });
 }
-void FloatingBasePosObserver::removeFromLogger(mc_rtc::Logger &logger)
+void FloatingBasePosObserver::removeFromLogger(mc_rtc::Logger & logger)
 {
-  logger.removeLogEntry("observer_"+name()+"_posW");
+  logger.removeLogEntry("observer_" + name() + "_posW");
 }
-void FloatingBasePosObserver::addToGUI(mc_rtc::gui::StateBuilder &gui)
-{
-}
-void FloatingBasePosObserver::removeFromGUI(mc_rtc::gui::StateBuilder &gui)
-{
-}
+void FloatingBasePosObserver::addToGUI(mc_rtc::gui::StateBuilder & gui) {}
+void FloatingBasePosObserver::removeFromGUI(mc_rtc::gui::StateBuilder & gui) {}
 
 } // namespace mc_observers
 

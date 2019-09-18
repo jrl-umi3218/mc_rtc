@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include <mc_observers/api.h>
 #include <mc_observers/Observer.h>
+#include <mc_observers/api.h>
 #include <mc_rbdyn/Robot.h>
 
 #include <SpaceVecAlg/SpaceVecAlg>
@@ -28,7 +28,7 @@ struct MC_OBSERVER_DLLAPI FloatingBasePosObserver : public Observer
    * \param controlRobot Robot reference.
    *
    */
-  FloatingBasePosObserver(const std::string& name, double dt, const mc_rtc::Configuration & config = {});
+  FloatingBasePosObserver(const std::string & name, double dt, const mc_rtc::Configuration & config = {});
   ~FloatingBasePosObserver() override;
 
   /** Get anchor frame of a robot for a given contact state.

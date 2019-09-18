@@ -13,8 +13,8 @@
 
 namespace mc_control
 {
-  struct MCGlobalController;
-} /* mc_control */
+struct MCGlobalController;
+} // namespace mc_control
 
 namespace mc_observers
 {
@@ -24,8 +24,8 @@ struct MC_OBSERVER_DLLAPI Observer
   /** For realRobots_ pointer management **/
   friend struct mc_control::MCGlobalController;
 
- public:
-  Observer(const std::string& name, double dt, const mc_rtc::Configuration & config = {});
+public:
+  Observer(const std::string & name, double dt, const mc_rtc::Configuration & config = {});
   virtual ~Observer();
   virtual const std::string & name() const;
   double dt() const;
@@ -51,29 +51,27 @@ struct MC_OBSERVER_DLLAPI Observer
    */
   virtual void updateRobot(mc_rbdyn::Robot & realRobot) = 0;
 
-  virtual void setContacts(const std::vector<std::string> & /* contactFrames */) {};
+  virtual void setContacts(const std::vector<std::string> & /* contactFrames */){};
 
   virtual void addToLogger(mc_rtc::Logger &) {}
   virtual void removeFromLogger(mc_rtc::Logger &) {}
   virtual void addToGUI(mc_rtc::gui::StateBuilder &) {}
   virtual void removeFromGUI(mc_rtc::gui::StateBuilder &);
 
- protected:
+protected:
   const mc_rbdyn::Robots & robots() const;
   const mc_rbdyn::Robot & robot() const;
 
- protected:
+protected:
   std::string name_;
   double dt_;
 
- private:
+private:
   /** Control robot pointer provided by MCGlobalController **/
   mc_rbdyn::Robots * robots_;
-
 };
 
 } // namespace mc_observers
-
 
 /* Set of macros to assist with the writing of an Observer */
 
@@ -87,44 +85,48 @@ struct MC_OBSERVER_DLLAPI Observer
 #  endif
 #endif
 
-#define EXPORT_OBSERVER_MODULE(NAME, TYPE)                                   \
-  extern "C"                                                              \
-  {                                                                       \
-    OBSERVER_MODULE_API void MC_RTC_OBSERVER_MODULE(std::vector<std::string> & names) \
-    {                                                                     \
-      names = {NAME};                                                     \
-    }                                                                     \
-    OBSERVER_MODULE_API void destroy(mc_observers::Observer * ptr)              \
-    {                                                                     \
-      delete ptr;                                                         \
-    }                                                                     \
-    OBSERVER_MODULE_API unsigned int create_args_required()              \
-    {                                                                    \
-      return 3;                                                          \
-    }                                                                    \
-    OBSERVER_MODULE_API mc_observers::Observer * create(const std::string & name, const double & dt, const mc_rtc::Configuration & config)    \
-    {                                                                     \
-      return new TYPE(name, dt, config);                                          \
-    }                                                                     \
+#define EXPORT_OBSERVER_MODULE(NAME, TYPE)                                                    \
+  extern "C"                                                                                  \
+  {                                                                                           \
+    OBSERVER_MODULE_API void MC_RTC_OBSERVER_MODULE(std::vector<std::string> & names)         \
+    {                                                                                         \
+      names = {NAME};                                                                         \
+    }                                                                                         \
+    OBSERVER_MODULE_API void destroy(mc_observers::Observer * ptr)                            \
+    {                                                                                         \
+      delete ptr;                                                                             \
+    }                                                                                         \
+    OBSERVER_MODULE_API unsigned int create_args_required()                                   \
+    {                                                                                         \
+      return 3;                                                                               \
+    }                                                                                         \
+    OBSERVER_MODULE_API mc_observers::Observer * create(const std::string & name,             \
+                                                        const double & dt,                    \
+                                                        const mc_rtc::Configuration & config) \
+    {                                                                                         \
+      return new TYPE(name, dt, config);                                                      \
+    }                                                                                         \
   }
 
-#define EXPORT_OBSERVER_MODULE_SIMPLE(NAME, TYPE)                                   \
-  extern "C"                                                              \
-  {                                                                       \
-    OBSERVER_MODULE_API void MC_RTC_OBSERVER_MODULE(std::vector<std::string> & names) \
-    {                                                                     \
-      names = {NAME};                                                     \
-    }                                                                     \
-    OBSERVER_MODULE_API void destroy(mc_observers::Observer * ptr)              \
-    {                                                                     \
-      delete ptr;                                                         \
-    }                                                                     \
-    OBSERVER_MODULE_API unsigned int create_args_required()              \
-    {                                                                    \
-      return 2;                                                          \
-    }                                                                    \
-    OBSERVER_MODULE_API mc_observers::Observer * create(const std::string & name, const double & dt, const mc_rtc::Configuration & config)    \
-    {                                                                     \
-      return new TYPE(name, dt);                                          \
-    }                                                                     \
+#define EXPORT_OBSERVER_MODULE_SIMPLE(NAME, TYPE)                                             \
+  extern "C"                                                                                  \
+  {                                                                                           \
+    OBSERVER_MODULE_API void MC_RTC_OBSERVER_MODULE(std::vector<std::string> & names)         \
+    {                                                                                         \
+      names = {NAME};                                                                         \
+    }                                                                                         \
+    OBSERVER_MODULE_API void destroy(mc_observers::Observer * ptr)                            \
+    {                                                                                         \
+      delete ptr;                                                                             \
+    }                                                                                         \
+    OBSERVER_MODULE_API unsigned int create_args_required()                                   \
+    {                                                                                         \
+      return 2;                                                                               \
+    }                                                                                         \
+    OBSERVER_MODULE_API mc_observers::Observer * create(const std::string & name,             \
+                                                        const double & dt,                    \
+                                                        const mc_rtc::Configuration & config) \
+    {                                                                                         \
+      return new TYPE(name, dt);                                                              \
+    }                                                                                         \
   }

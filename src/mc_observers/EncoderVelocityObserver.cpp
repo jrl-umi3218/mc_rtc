@@ -19,13 +19,16 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-#include <mc_rbdyn/rpy_utils.h>
 #include "EncoderVelocityObserver.h"
+
+#include <mc_rbdyn/rpy_utils.h>
 
 namespace mc_observers
 {
-EncoderVelocityObserver::EncoderVelocityObserver(const std::string& name, double dt, const mc_rtc::Configuration & config) :
-    Observer(name, dt, config)
+EncoderVelocityObserver::EncoderVelocityObserver(const std::string & name,
+                                                 double dt,
+                                                 const mc_rtc::Configuration & config)
+: Observer(name, dt, config)
 {
   LOG_SUCCESS("EncoderVelocityObserver created")
 }
@@ -40,22 +43,12 @@ bool EncoderVelocityObserver::run(const mc_rbdyn::Robot & controlRobot, const mc
   return true;
 }
 
-void EncoderVelocityObserver::updateRobot(mc_rbdyn::Robot & realRobot)
-{
-}
+void EncoderVelocityObserver::updateRobot(mc_rbdyn::Robot & realRobot) {}
 
-void EncoderVelocityObserver::addToLogger(mc_rtc::Logger &logger)
-{
-}
-void EncoderVelocityObserver::removeFromLogger(mc_rtc::Logger &logger)
-{
-}
-void EncoderVelocityObserver::addToGUI(mc_rtc::gui::StateBuilder &gui)
-{
-}
-void EncoderVelocityObserver::removeFromGUI(mc_rtc::gui::StateBuilder &gui)
-{
-}
+void EncoderVelocityObserver::addToLogger(mc_rtc::Logger & logger) {}
+void EncoderVelocityObserver::removeFromLogger(mc_rtc::Logger & logger) {}
+void EncoderVelocityObserver::addToGUI(mc_rtc::gui::StateBuilder & gui) {}
+void EncoderVelocityObserver::removeFromGUI(mc_rtc::gui::StateBuilder & gui) {}
 
 } // namespace mc_observers
 
