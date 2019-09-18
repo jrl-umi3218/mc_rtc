@@ -37,22 +37,22 @@ FloatingBasePosObserver::~FloatingBasePosObserver()
 {
 }
 
-void FloatingBasePosObserver::reset(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & realRobot)
+void FloatingBasePosObserver::reset(const mc_rbdyn::Robot & realRobot)
 {
-  run(controlRobot, realRobot);
+  run(realRobot);
   LOG_SUCCESS("FloatingBasePosObserver reset");
 }
 
-bool FloatingBasePosObserver::run(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & realRobot)
+bool FloatingBasePosObserver::run(const mc_rbdyn::Robot & realRobot)
 {
-  estimateOrientation(controlRobot, realRobot);
-  estimatePosition(realRobot, realRobot);
+  estimateOrientation(realRobot);
+  estimatePosition(realRobot);
   return true;
 }
 
-void FloatingBasePosObserver::estimateOrientation(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & realRobot)
+void FloatingBasePosObserver::estimateOrientation(const mc_rbdyn::Robot & realRobot)
 {
-  LOG_INFO("controlRobot? " << controlRobot.name());
+  LOG_INFO("robot()? " << robot().name());
   // Prefixes:
   // c for control-robot model
   // r for real-robot model
@@ -60,17 +60,17 @@ void FloatingBasePosObserver::estimateOrientation(const mc_rbdyn::Robot & contro
   sva::PTransformd X_0_rBase = realRobot.posW();
   sva::PTransformd X_0_rIMU = realRobot.bodyPosW(realRobot.bodySensor().parentBody());
   sva::PTransformd X_rIMU_rBase = X_0_rBase * X_0_rIMU.inv();
-  Eigen::Matrix3d E_0_mIMU = realRobot.bodySensor().orientation().toRotationMatrix();
-  Eigen::Matrix3d E_0_cBase = controlRobot.posW().rotation();
+  Eigen::Matrix3d E_0_mIMU = robot().bodySensor().orientation().toRotationMatrix();
+  Eigen::Matrix3d E_0_cBase = robot().posW().rotation();
   Eigen::Matrix3d E_0_mBase = X_rIMU_rBase.rotation() * E_0_mIMU;
   Eigen::Vector3d cRPY = mc_rbdyn::rpyFromMat(E_0_cBase);
   Eigen::Vector3d mRPY = mc_rbdyn::rpyFromMat(E_0_mBase);
   orientation_ = mc_rbdyn::rpyToMat(mRPY(0), mRPY(1), cRPY(2));
 }
 
-void FloatingBasePosObserver::estimatePosition(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & realRobot)
+void FloatingBasePosObserver::estimatePosition(const mc_rbdyn::Robot & realRobot)
 {
-  sva::PTransformd X_0_c = getAnchorFrame(controlRobot);
+  sva::PTransformd X_0_c = getAnchorFrame(robot());
   sva::PTransformd X_0_s = getAnchorFrame(realRobot);
   const sva::PTransformd & X_0_real = realRobot.posW();
   sva::PTransformd X_real_s = X_0_s * X_0_real.inv();

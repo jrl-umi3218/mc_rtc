@@ -21,8 +21,8 @@ namespace mc_observers
 struct MC_OBSERVER_DLLAPI BodySensorObserver : public Observer
 {
   BodySensorObserver(const std::string& name, double dt, const mc_rtc::Configuration & config = {});
-  void reset(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & robot) override;
-  bool run(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & robot) override;
+  void reset(const mc_rbdyn::Robot & robot) override;
+  bool run(const mc_rbdyn::Robot & robot) override;
   void updateRobot(mc_rbdyn::Robot & robot) override;
 
   void addToLogger(mc_rtc::Logger &) override;
@@ -30,10 +30,13 @@ struct MC_OBSERVER_DLLAPI BodySensorObserver : public Observer
   void addToGUI(mc_rtc::gui::StateBuilder &) override;
 
  protected:
-  bool updateFb_;
+  bool updateFbFromSensor_;
   std::string fbSensorName_;
-  bool updateEncoderPos_;
-  bool updateEncoderVel_;
+  bool updateFbFromControl_;
+  bool updateEncoderPosFromControl_;
+  bool updateEncoderVelFromControl_;
+  bool updateEncoderPosFromSensor_;
+  bool updateEncoderVelFromSensor_;
   sva::PTransformd posW_;
   sva::MotionVecd velW_;
 };

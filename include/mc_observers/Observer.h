@@ -11,11 +11,19 @@
 #include <mc_rtc/GUIState.h>
 #include <mc_rtc/log/Logger.h>
 
+namespace mc_control
+{
+  struct MCGlobalController;
+} /* mc_control */
+
 namespace mc_observers
 {
 
 struct MC_OBSERVER_DLLAPI Observer
 {
+  /** For realRobots_ pointer management **/
+  friend struct mc_control::MCGlobalController;
+
  public:
   Observer(const std::string& name, double dt, const mc_rtc::Configuration & config = {});
   virtual ~Observer();
@@ -27,30 +35,41 @@ struct MC_OBSERVER_DLLAPI Observer
    * \param robot Robot from which the initial pose is to be estimated
    *
    */
-  virtual void reset(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & robot) = 0;
+  virtual void reset(const mc_rbdyn::Robot & robot) = 0;
 
   /** Update floating-base transform of real robot.
    *
    * \param realRobot Measured robot state, to be updated.
    *
    */
-  virtual bool run(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & realRobot) = 0;
+  virtual bool run(const mc_rbdyn::Robot & realRobot) = 0;
 
   /** Write observed floating-base transform to the robot's configuration.
    *
    * \param robot Robot state to write to.
    *
    */
-  virtual void updateRobot(mc_rbdyn::Robot & robot) = 0;
+  virtual void updateRobot(mc_rbdyn::Robot & realRobot) = 0;
+
+  virtual void setContacts(const std::vector<std::string> & /* contactFrames */) {};
 
   virtual void addToLogger(mc_rtc::Logger &) {}
   virtual void removeFromLogger(mc_rtc::Logger &) {}
   virtual void addToGUI(mc_rtc::gui::StateBuilder &) {}
   virtual void removeFromGUI(mc_rtc::gui::StateBuilder &);
 
- private:
+ protected:
+  const mc_rbdyn::Robots & robots() const;
+  const mc_rbdyn::Robot & robot() const;
+
+ protected:
   std::string name_;
   double dt_;
+
+ private:
+  /** Control robot pointer provided by MCGlobalController **/
+  mc_rbdyn::Robots * robots_;
+
 };
 
 } // namespace mc_observers

@@ -27,7 +27,7 @@ struct MC_OBSERVER_DLLAPI FloatingBasePosVelObserver : public FloatingBasePosObs
    * @param realRobot Robot state from which the observer is to be initialized.
    * @param velW Initial velocity
    */
-  void reset(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & realRobot) override;
+  void reset(const mc_rbdyn::Robot & realRobot) override;
 
   /*!
    * @brief  Resets the estimator from given robot state
@@ -38,10 +38,10 @@ struct MC_OBSERVER_DLLAPI FloatingBasePosVelObserver : public FloatingBasePosObs
    * @param realRobot Robot state from which the observer is to be initialized.
    * @param velW Initial velocity
    */
-  void reset(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & realRobot, const sva::MotionVecd & velW);
-  bool run(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & realRobot) override;
-  void updateRobot(mc_rbdyn::Robot & robot) override;
-  void updateBodySensor(mc_rbdyn::Robot & robot, const std::string & sensorName = "FloatingBase");
+  void reset(const mc_rbdyn::Robot & realRobot, const sva::MotionVecd & velW);
+  bool run(const mc_rbdyn::Robot & realRobot) override;
+  void updateRobot(mc_rbdyn::Robot & realRobot) override;
+  void updateBodySensor(mc_rbdyn::Robot & realRobot, const std::string & sensorName = "FloatingBase");
 
   const sva::MotionVecd & velW() const;
 

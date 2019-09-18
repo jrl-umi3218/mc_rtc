@@ -16,5 +16,5 @@ add_observer(FloatingBasePosVelObserver)
 ## But this hack works fine
 target_link_libraries(FloatingBasePosVelObserver PUBLIC ${MC_OBSERVERS_INSTALL_PREFIX}/FloatingBasePosObserver.so)
 set_target_properties(FloatingBasePosVelObserver PROPERTIES INSTALL_RPATH_USE_LINK_PATH TRUE)
-add_observer(EncoderVelocityObserver)
 add_observer(BodySensorObserver)
+# add_observer(EncoderVelocityObserver)

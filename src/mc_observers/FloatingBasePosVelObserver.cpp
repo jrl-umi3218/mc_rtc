@@ -12,22 +12,22 @@ FloatingBasePosVelObserver::~FloatingBasePosVelObserver()
 {
 }
 
-void FloatingBasePosVelObserver::reset(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & realRobot)
+void FloatingBasePosVelObserver::reset(const mc_rbdyn::Robot & realRobot)
 {
-  reset(controlRobot, realRobot, realRobot.velW());
+  reset(realRobot, realRobot.velW());
 }
 
-void FloatingBasePosVelObserver::reset(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & realRobot, const sva::MotionVecd & velW)
+void FloatingBasePosVelObserver::reset(const mc_rbdyn::Robot & realRobot, const sva::MotionVecd & velW)
 {
-  FloatingBasePosObserver::reset(controlRobot, realRobot);
+  FloatingBasePosObserver::reset(realRobot);
   posWPrev_ = FloatingBasePosObserver::posW();
   velW_ = velW;
   velFilter_.reset(velW);
 }
 
-bool FloatingBasePosVelObserver::run(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & realRobot)
+bool FloatingBasePosVelObserver::run(const mc_rbdyn::Robot & realRobot)
 {
-  FloatingBasePosObserver::run(controlRobot, realRobot);
+  FloatingBasePosObserver::run(realRobot);
   const sva::PTransformd posW = FloatingBasePosObserver::posW();
   LOG_INFO("dt: " << dt());
   sva::MotionVecd errVel = sva::transformError(posWPrev_, posW) / dt();
@@ -37,10 +37,10 @@ bool FloatingBasePosVelObserver::run(const mc_rbdyn::Robot & controlRobot, const
   return true;
 }
 
-void FloatingBasePosVelObserver::updateRobot(mc_rbdyn::Robot & robot)
+void FloatingBasePosVelObserver::updateRobot(mc_rbdyn::Robot & realRobot)
 {
-  FloatingBasePosObserver::updateRobot(robot);
-  robot.velW(velW_);
+  FloatingBasePosObserver::updateRobot(realRobot);
+  realRobot.velW(velW_);
 }
 
 void FloatingBasePosVelObserver::updateBodySensor(mc_rbdyn::Robot & realRobot, const std::string & sensorName)
@@ -81,7 +81,7 @@ void FloatingBasePosVelObserver::addToGUI(mc_rtc::gui::StateBuilder &gui)
                                     },
                                     [this]() -> Eigen::Vector3d
                                     {
-                                      const auto & p = posW().translation();
+                                      const Eigen::Vector3d p = posW().translation();
                                       LOG_INFO("p: " << p.transpose());
                                       Eigen::Vector3d end = p + velW().linear();
                                       return end;

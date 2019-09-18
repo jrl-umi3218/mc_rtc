@@ -11,6 +11,18 @@ Observer::~Observer()
 {
 }
 
+const mc_rbdyn::Robots & Observer::robots() const
+{
+  assert(robots_);
+  return *robots_;
+}
+
+const mc_rbdyn::Robot & Observer::robot() const
+{
+  assert(robots_);
+  return robots_->robot();
+}
+
 const std::string & Observer::name() const
 {
   return name_;

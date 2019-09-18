@@ -43,21 +43,21 @@ struct MC_OBSERVER_DLLAPI FloatingBasePosObserver : public Observer
    * \param robot Robot from which the initial pose is to be estimated
    *
    */
-  void reset(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & robot) override;
+  void reset(const mc_rbdyn::Robot & robot) override;
 
   /** Update floating-base transform of real robot.
    *
    * \param realRobot Measured robot state, to be updated.
    *
    */
-  bool run(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & realRobot) override;
+  bool run(const mc_rbdyn::Robot & realRobot) override;
 
   /** Write observed floating-base transform to the robot's configuration.
    *
    * \param robot Robot state to write to.
    *
    */
-  void updateRobot(mc_rbdyn::Robot & robot) override;
+  void updateRobot(mc_rbdyn::Robot & realRobot) override;
 
   void updateBodySensor(mc_rbdyn::Robot & robot, const std::string & sensorName = "FloatingBase");
 
@@ -90,7 +90,7 @@ private:
    * \param realRobot Measured robot state.
    *
    */
-  void estimateOrientation(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & realRobot);
+  void estimateOrientation(const mc_rbdyn::Robot & realRobot);
 
   /* Update floating-base position.
    *
@@ -100,7 +100,7 @@ private:
    * coincides with the control anchor frame.
    *
    */
-  void estimatePosition(const mc_rbdyn::Robot & controlRobot, const mc_rbdyn::Robot & realRobot);
+  void estimatePosition(const mc_rbdyn::Robot & realRobot);
 
 private:
   Eigen::Matrix3d orientation_; /**< Rotation from world to floating-base frame */

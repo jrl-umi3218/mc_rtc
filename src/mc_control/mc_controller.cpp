@@ -145,14 +145,12 @@ bool MCController::runObserver()
   for(const auto& observer : observers)
   {
     LOG_INFO("Running observer " << observer.first);
-    bool r = observer.second->run(robot(), real_robots->robot());
+    bool r = observer.second->run(real_robots->robot());
     if(!r)
     {
       LOG_ERROR("Observer " << observer.second->name() << " failed to run");
       return false;
     }
-    real_robots->robot().forwardKinematics();
-    real_robots->robot().forwardVelocity();
   }
 
   for(const auto& observerName : updateObservers)
@@ -160,6 +158,8 @@ bool MCController::runObserver()
     LOG_INFO("Updating real robot from observer " << observerName);
     observers[observerName]->updateRobot(real_robots->robot());
   }
+  real_robots->robot().forwardKinematics();
+  real_robots->robot().forwardVelocity();
 
   LOG_SUCCESS("Observers ran");
   return true;
@@ -209,7 +209,7 @@ void MCController::reset(const ControllerResetData & reset_data)
   for(const auto& observer : observers)
   {
     LOG_INFO("Resetting observer " << observer.first);
-    observer.second->reset(robot(), real_robots->robot());
+    observer.second->reset(real_robots->robot());
     observer.second->addToLogger(logger());
     if(gui_)
     {
