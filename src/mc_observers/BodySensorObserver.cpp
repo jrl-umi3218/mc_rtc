@@ -9,10 +9,6 @@ BodySensorObserver::BodySensorObserver(const std::string & name, double dt, cons
   updateFbFromSensor_ = config("UpdateFloatingBaseFromSensor", true);
   updateFbFromControl_ = config("UpdateFloatingBaseFromControl", false);
   fbSensorName_ = config("FloatingBaseSensor", std::string("FloatingBase"));
-  updateEncoderPosFromSensor_ = config("UpdateEncoderPositionFromSensor", true);
-  updateEncoderVelFromSensor_ = config("UpdateEncoderVelocityFromSensor", true);
-  updateEncoderPosFromControl_ = config("UpdateEncoderPositionFromControl", false);
-  updateEncoderVelFromControl_ = config("UpdateEncoderVelocityFromControl", false);
 }
 
 void BodySensorObserver::reset(const mc_rbdyn::Robot & realRobot)
@@ -32,9 +28,22 @@ bool BodySensorObserver::run(const mc_rbdyn::Robot & realRobot)
   }
   if(updateFbFromSensor_)
   {
-    const auto & bs = robot().bodySensor(fbSensorName_);
-    posW_ = {bs.orientation(), bs.position()};
-    velW_ = {bs.angularVelocity(), bs.linearVelocity()};
+    // Update free flyer from body sensor
+    // Note that if the body to which the sensor is attached is not the
+    // floating base, the kinematic transformation between that body and the
+    // floating base is used to obtain the floating base pose.
+    // It is assumed here that the floating base sensor and encoders are
+    // synchronized.
+    const auto & sensor = robot().bodySensor(fbSensorName_);
+    const auto & fb = robot().mb().body(0).name();
+    sva::PTransformd X_0_s(sensor.orientation(), sensor.position());
+    const auto & X_s_b = sensor.X_b_s().inv();
+    sva::PTransformd X_b_fb = realRobot.X_b1_b2(sensor.parentBody(), fb);
+    sva::PTransformd X_s_fb = X_b_fb * X_s_b;
+    posW_ = X_s_fb * X_0_s;
+
+    sva::MotionVecd sensorVel(sensor.angularVelocity(), sensor.linearVelocity());
+    velW_ = X_s_fb * sensorVel;
   }
   return true;
 }
@@ -45,45 +54,8 @@ void BodySensorObserver::updateRobot(mc_rbdyn::Robot & realRobot)
   {
     realRobot.posW(posW_);
     realRobot.velW(velW_);
-  }
-
-  const auto & q = robot().encoderValues();
-  const auto & alpha = robot().encoderVelocities();
-  if(q.size() == robot().refJointOrder().size())
-  {
-    // Set all joint values and velocities from encoders
-    unsigned i = 0;
-    for(const auto & ref_joint : realRobot.refJointOrder())
-    {
-      if(robot().hasJoint(ref_joint))
-      {
-        const auto joint_index = static_cast<size_t>(robot().mb().jointIndexByName(ref_joint));
-        if(updateEncoderPosFromControl_)
-        {
-          realRobot.mbc().q[joint_index][0] = robot().mbc().q[joint_index][0];
-        }
-        if(updateEncoderPosFromSensor_)
-        {
-          if(!q.empty())
-          {
-            realRobot.mbc().q[joint_index][0] = q[i];
-          }
-        }
-
-        if(updateEncoderPosFromControl_)
-        {
-          realRobot.mbc().alpha[joint_index][0] = robot().mbc().alpha[joint_index][0];
-        }
-        if(updateEncoderVelFromSensor_)
-        {
-          if(!alpha.empty())
-          {
-            realRobot.mbc().alpha[joint_index][0] = alpha[i];
-          }
-        }
-      }
-      i++;
-    }
+    realRobot.forwardKinematics();
+    realRobot.forwardVelocity();
   }
 }
 

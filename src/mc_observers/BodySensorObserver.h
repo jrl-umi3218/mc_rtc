@@ -30,13 +30,9 @@ struct MC_OBSERVER_DLLAPI BodySensorObserver : public Observer
   void addToGUI(mc_rtc::gui::StateBuilder &) override;
 
 protected:
-  bool updateFbFromSensor_;
   std::string fbSensorName_;
+  bool updateFbFromSensor_;
   bool updateFbFromControl_;
-  bool updateEncoderPosFromControl_;
-  bool updateEncoderVelFromControl_;
-  bool updateEncoderPosFromSensor_;
-  bool updateEncoderVelFromSensor_;
   sva::PTransformd posW_;
   sva::MotionVecd velW_;
 };
