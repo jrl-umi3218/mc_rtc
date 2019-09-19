@@ -9,13 +9,8 @@ macro(add_observer observer_base)
 endmacro()
 
 add_observer(EncoderObserver)
+add_observer(BodySensorObserver)
 add_observer(FloatingBasePosObserver)
 add_observer(FloatingBasePosVelObserver)
-### FIXME @gergondet
-## Should be the correct way, but does not work
-# target_link_libraries(FloatingBasePosVelObserver PUBLIC FloatingBasePosObserver)
-## But this hack works fine
-target_link_libraries(FloatingBasePosVelObserver PUBLIC ${MC_OBSERVERS_INSTALL_PREFIX}/FloatingBasePosObserver.so)
-set_target_properties(FloatingBasePosVelObserver PROPERTIES INSTALL_RPATH_USE_LINK_PATH TRUE)
-add_observer(BodySensorObserver)
-# add_observer(EncoderVelocityObserver)
+target_link_libraries(FloatingBasePosVelObserver PUBLIC FloatingBasePosObserver)
+set_target_properties(FloatingBasePosVelObserver PROPERTIES INSTALL_RPATH ${MC_OBSERVERS_INSTALL_PREFIX})
