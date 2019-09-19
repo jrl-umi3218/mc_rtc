@@ -140,7 +140,7 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
   return r;
 }
 
-bool MCController::runObserver()
+bool MCController::runObservers()
 {
   for(const auto & observerName : observersOrder)
   {

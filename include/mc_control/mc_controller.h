@@ -69,7 +69,7 @@ public:
    */
   virtual bool run();
 
-  virtual bool runObserver();
+  virtual bool runObservers();
 
   /**
    * WARNING EXPERIMENTAL

@@ -446,7 +446,7 @@ bool MCGlobalController::run()
   if(running)
   {
     auto start_controller_run_t = clock::now();
-    bool r = controller_->runObserver() && controller_->run();
+    bool r = controller_->runObservers() && controller_->run();
     auto end_controller_run_t = clock::now();
     if(config.enable_log)
     {
