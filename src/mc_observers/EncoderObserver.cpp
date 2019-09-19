@@ -28,27 +28,60 @@ namespace mc_observers
 EncoderObserver::EncoderObserver(const std::string & name, double dt, const mc_rtc::Configuration & config)
 : Observer(name, dt, config)
 {
-  posFromSensor_ = config("PositionFromSensor", true);
-  posFromControl_ = config("PositionFromControl", false);
+  const std::string & position = config("UpdatePosition", std::string("estimator"));
+  if(position == "control")
+  {
+    posUpdate_ = Update::Control;
+  }
+  else if(position == "estimator")
+  {
+    posUpdate_ = Update::Estimator;
+  }
+  else if(position == "none")
+  {
+    posUpdate_ = Update::None;
+  }
+  else
+  {
+    posUpdate_ = Update::None;
+    LOG_WARNING("[EncoderObserver] Invalid configuration value for UpdatePosition, running without update of joint "
+                "position. (Valid values are [control, sensor, none])");
+  }
 
-  velFromSensor_ = config("VelocityFromSensor", true);
-  velFromEstimation_ = config("VelocityFromEstimation", false);
-  velFromControl_ = config("VelocityFromControl", false);
+  const std::string & velocity = config("UpdateVelocity", std::string());
+  if(velocity == "control")
+  {
+    velUpdate_ = Update::Control;
+  }
+  else if(velocity == "estimator")
+  {
+    velUpdate_ = Update::Estimator;
+  }
+  else if(velocity == "none")
+  {
+    velUpdate_ = Update::None;
+  }
+  else
+  {
+    LOG_WARNING("[EncoderObserver] Invalid configuration value for UpdatePosition, running without update of joint "
+                "position. (Valid values are [control, sensor, none])");
+    velUpdate_ = Update::None;
+  }
 
-  logEstimation_ = config("LogEstimation", false);
+  logEstimation_ = config("Log", false);
 
   LOG_SUCCESS("EncoderObserver created")
 }
 
 void EncoderObserver::reset(const mc_rbdyn::Robot & realRobot)
 {
-  LOG_SUCCESS("EncoderObserver reset");
   const auto & enc = robot().encoderValues();
-  if(enc.empty())
+  if(enc.empty() && (posUpdate_ == Update::Estimator || velUpdate_ == Update::Estimator))
   {
-    LOG_WARNING("[EncoderObserver] Trying to reset observer from a robot with no encoder values available");
+    LOG_ERROR_AND_THROW(std::runtime_error, "[EncoderObserver] requires the robot to have encoder measurements")
   }
-  else
+
+  if(!enc.empty())
   {
     prevEncoders_ = enc;
     encodersVelocity_.resize(enc.size());
@@ -61,10 +94,7 @@ void EncoderObserver::reset(const mc_rbdyn::Robot & realRobot)
 
 bool EncoderObserver::run(const mc_rbdyn::Robot & realRobot)
 {
-  // TODO Estimate encoder velocity
-
   const auto & enc = robot().encoderValues();
-  if(enc.empty()) return false;
   for(unsigned i = 0; i < enc.size(); ++i)
   {
     encodersVelocity_[i] = (enc[i] - prevEncoders_[i]) / dt();
@@ -87,45 +117,34 @@ void EncoderObserver::updateRobot(mc_rbdyn::Robot & realRobot)
       if(robot().hasJoint(ref_joint))
       {
         const auto joint_index = static_cast<size_t>(robot().mb().jointIndexByName(ref_joint));
-        if(posFromControl_)
+        // Update position
+        if(posUpdate_ == Update::Control)
         {
           realRobot.mbc().q[joint_index][0] = robot().mbc().q[joint_index][0];
         }
-        if(posFromSensor_)
+        else if(posUpdate_ == Update::Estimator)
         {
-          if(!q.empty())
-          {
-            realRobot.mbc().q[joint_index][0] = q[i];
-          }
+          realRobot.mbc().q[joint_index][0] = q[i];
         }
 
-        if(velFromControl_)
+        // Update velocity
+        if(velUpdate_ == Update::Control)
         {
           realRobot.mbc().alpha[joint_index][0] = robot().mbc().alpha[joint_index][0];
         }
-        if(velFromSensor_)
+        else if(velUpdate_ == Update::Estimator)
         {
-          if(!alpha.empty())
-          {
-            realRobot.mbc().alpha[joint_index][0] = alpha[i];
-          }
-        }
-        if(velFromEstimation_)
-        {
-          if(!encodersVelocity_.empty())
-          {
-            realRobot.mbc().alpha[joint_index][0] = encodersVelocity_[i];
-          }
+          realRobot.mbc().alpha[joint_index][0] = encodersVelocity_[i];
         }
       }
       i++;
     }
   }
-  if(posFromSensor_ || posFromControl_)
+  if(posUpdate_ != Update::None)
   {
     realRobot.forwardKinematics();
   }
-  if(velFromControl_ || velFromSensor_ || velFromEstimation_)
+  if(velUpdate_ != Update::None)
   {
     realRobot.forwardVelocity();
   }

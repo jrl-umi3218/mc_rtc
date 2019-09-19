@@ -55,6 +55,16 @@ struct MC_OBSERVER_DLLAPI EncoderObserver : public Observer
   void removeFromGUI(mc_rtc::gui::StateBuilder &) override;
 
 protected:
+  enum class Update
+  {
+    Control,
+    Estimator,
+    None
+  };
+
+  Update posUpdate_ = Update::None;
+  Update velUpdate_ = Update::None;
+
   bool posFromControl_;
   bool posFromSensor_;
 
