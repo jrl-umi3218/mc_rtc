@@ -87,6 +87,7 @@ sva::PTransformd FloatingBasePosObserver::getAnchorFrame(const mc_rbdyn::Robot &
 void FloatingBasePosObserver::updateRobot(mc_rbdyn::Robot & realRobot)
 {
   realRobot.posW(sva::PTransformd{orientation_, position_});
+  realRobot.forwardKinematics();
 }
 
 void FloatingBasePosObserver::updateBodySensor(mc_rbdyn::Robot & realRobot, const std::string & sensorName)

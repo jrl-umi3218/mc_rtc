@@ -41,6 +41,7 @@ void FloatingBasePosVelObserver::updateRobot(mc_rbdyn::Robot & realRobot)
 {
   FloatingBasePosObserver::updateRobot(realRobot);
   realRobot.velW(velW_);
+  realRobot.forwardVelocity();
 }
 
 void FloatingBasePosVelObserver::updateBodySensor(mc_rbdyn::Robot & realRobot, const std::string & sensorName)
