@@ -637,6 +637,7 @@ bool MCGlobalController::AddController(const std::string & name)
         {
           if(observers.count(observerName) > 0)
           {
+            controllers[name]->observersOrder.push_back(observerName);
             controllers[name]->observers[observerName] = observers[observerName];
           }
           else

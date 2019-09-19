@@ -142,24 +142,22 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
 
 bool MCController::runObserver()
 {
-  for(const auto & observer : observers)
+  for(const auto & observerName : observersOrder)
   {
-    LOG_INFO("Running observer " << observer.first);
-    bool r = observer.second->run(real_robots->robot());
+    LOG_INFO("[Observers] Running observer " << observerName);
+    auto observer = observers[observerName];
+    bool r = observer->run(real_robots->robot());
     if(!r)
     {
-      LOG_ERROR("Observer " << observer.second->name() << " failed to run");
+      LOG_ERROR("Observer " << observerName << " failed to run");
       return false;
     }
+    if(std::find(updateObservers.begin(), updateObservers.end(), observerName) != updateObservers.end())
+    {
+      LOG_INFO("[Observers] Updating real robot from observer " << observerName);
+      observer->updateRobot(real_robots->robot());
+    }
   }
-
-  for(const auto & observerName : updateObservers)
-  {
-    LOG_INFO("Updating real robot from observer " << observerName);
-    observers[observerName]->updateRobot(real_robots->robot());
-  }
-  real_robots->robot().forwardKinematics();
-  real_robots->robot().forwardVelocity();
 
   LOG_SUCCESS("Observers ran");
   return true;
