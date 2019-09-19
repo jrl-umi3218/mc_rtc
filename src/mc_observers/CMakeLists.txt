@@ -8,6 +8,7 @@ macro(add_observer observer_base)
   install(TARGETS ${observer_base} DESTINATION ${MC_OBSERVERS_INSTALL_PREFIX})
 endmacro()
 
+add_observer(EncoderObserver)
 add_observer(FloatingBasePosObserver)
 add_observer(FloatingBasePosVelObserver)
 ### FIXME @gergondet

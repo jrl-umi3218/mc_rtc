@@ -61,6 +61,11 @@ protected:
   bool velFromControl_;
   bool velFromSensor_;
   bool velFromEstimation_;
+
+  bool logEstimation_;
+
+  std::vector<double> prevEncoders_;
+  std::vector<double> encodersVelocity_;
 };
 
 } // namespace mc_observers

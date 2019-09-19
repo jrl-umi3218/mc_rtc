@@ -25,9 +25,7 @@
 
 namespace mc_observers
 {
-EncoderObserver::EncoderObserver(const std::string & name,
-                                                 double dt,
-                                                 const mc_rtc::Configuration & config)
+EncoderObserver::EncoderObserver(const std::string & name, double dt, const mc_rtc::Configuration & config)
 : Observer(name, dt, config)
 {
   posFromSensor_ = config("PositionFromSensor", true);
@@ -37,17 +35,41 @@ EncoderObserver::EncoderObserver(const std::string & name,
   velFromEstimation_ = config("VelocityFromEstimation", false);
   velFromControl_ = config("VelocityFromControl", false);
 
+  logEstimation_ = config("LogEstimation", false);
+
   LOG_SUCCESS("EncoderObserver created")
 }
 
 void EncoderObserver::reset(const mc_rbdyn::Robot & realRobot)
 {
   LOG_SUCCESS("EncoderObserver reset");
+  const auto & enc = robot().encoderValues();
+  if(enc.empty())
+  {
+    LOG_WARNING("[EncoderObserver] Trying to reset observer from a robot with no encoder values available");
+  }
+  else
+  {
+    prevEncoders_ = enc;
+    encodersVelocity_.resize(enc.size());
+    for(unsigned i = 0; i < enc.size(); ++i)
+    {
+      encodersVelocity_[i] = 0;
+    }
+  }
 }
 
 bool EncoderObserver::run(const mc_rbdyn::Robot & realRobot)
 {
   // TODO Estimate encoder velocity
+
+  const auto & enc = robot().encoderValues();
+  if(enc.empty()) return false;
+  for(unsigned i = 0; i < enc.size(); ++i)
+  {
+    encodersVelocity_[i] = (enc[i] - prevEncoders_[i]) / dt();
+    prevEncoders_[i] = enc[i];
+  }
   return true;
 }
 
@@ -55,6 +77,7 @@ void EncoderObserver::updateRobot(mc_rbdyn::Robot & realRobot)
 {
   const auto & q = robot().encoderValues();
   const auto & alpha = robot().encoderVelocities();
+
   if(q.size() == robot().refJointOrder().size())
   {
     // Set all joint values and velocities from encoders
@@ -76,7 +99,7 @@ void EncoderObserver::updateRobot(mc_rbdyn::Robot & realRobot)
           }
         }
 
-        if(posFromControl_)
+        if(velFromControl_)
         {
           realRobot.mbc().alpha[joint_index][0] = robot().mbc().alpha[joint_index][0];
         }
@@ -87,14 +110,41 @@ void EncoderObserver::updateRobot(mc_rbdyn::Robot & realRobot)
             realRobot.mbc().alpha[joint_index][0] = alpha[i];
           }
         }
+        if(velFromEstimation_)
+        {
+          if(!encodersVelocity_.empty())
+          {
+            realRobot.mbc().alpha[joint_index][0] = encodersVelocity_[i];
+          }
+        }
       }
       i++;
     }
   }
+  if(posFromSensor_ || posFromControl_)
+  {
+    realRobot.forwardKinematics();
+  }
+  if(velFromControl_ || velFromSensor_ || velFromEstimation_)
+  {
+    realRobot.forwardVelocity();
+  }
 }
 
-void EncoderObserver::addToLogger(mc_rtc::Logger & logger) {}
-void EncoderObserver::removeFromLogger(mc_rtc::Logger & logger) {}
+void EncoderObserver::addToLogger(mc_rtc::Logger & logger)
+{
+  if(logEstimation_)
+  {
+    logger.addLogEntry("observer_" + name() + "_alpha", [this]() { return encodersVelocity_; });
+  }
+}
+void EncoderObserver::removeFromLogger(mc_rtc::Logger & logger)
+{
+  if(logEstimation_)
+  {
+    logger.removeLogEntry("observer_" + name() + "_alpha");
+  }
+}
 void EncoderObserver::addToGUI(mc_rtc::gui::StateBuilder & gui) {}
 void EncoderObserver::removeFromGUI(mc_rtc::gui::StateBuilder & gui) {}
 
