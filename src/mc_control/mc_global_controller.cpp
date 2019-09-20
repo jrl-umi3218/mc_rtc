@@ -362,6 +362,8 @@ void MCGlobalController::setWrenches(unsigned int robotIndex, const std::map<std
   for(const auto & w : wrenches)
   {
     robot.forceSensor(w.first).wrench(w.second);
+    controller_->real_robots->robot(robotIndex).forceSensor(w.first).wrench(w.second);
+    ;
   }
 }
 
