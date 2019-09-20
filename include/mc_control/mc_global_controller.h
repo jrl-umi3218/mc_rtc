@@ -488,6 +488,7 @@ public:
 
     std::vector<std::string> observers_module_paths = {};
     std::vector<std::string> enabled_observers = {};
+    std::vector<std::string> update_observers = {};
     std::unordered_map<std::string, mc_rtc::Configuration> observers_configs;
 
     std::vector<std::string> controller_module_paths = {};

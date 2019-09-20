@@ -151,6 +151,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     }
   }
   config("EnabledObservers", enabled_observers);
+  config("UpdateObservers", update_observers);
 
   if(config.has("Observers"))
   {

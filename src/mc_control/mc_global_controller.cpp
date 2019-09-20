@@ -631,6 +631,10 @@ bool MCGlobalController::AddController(const std::string & name)
     // Controller-specific configuration
     {
       const auto & cc = config.controllers_configs[name];
+      // Set default list for updating observers. Can be overridden by
+      // controller-specific configuration
+      controllers[name]->observersOrder = config.enabled_observers;
+      controllers[name]->updateObservers = config.update_observers;
       if(cc.has("UseObservers"))
       {
         for(const auto & observerName : cc("UseObservers"))

@@ -63,8 +63,8 @@ EncoderObserver::EncoderObserver(const std::string & name, double dt, const mc_r
   }
   else
   {
-    LOG_WARNING("[EncoderObserver] Invalid configuration value for UpdatePosition, running without update of joint "
-                "position. (Valid values are [control, sensor, none])");
+    LOG_WARNING("[EncoderObserver] Invalid configuration value for UpdateVelocity, running without update of joint "
+                "velocity. (Valid values are [control, sensor, none])");
     velUpdate_ = Update::None;
   }
 
