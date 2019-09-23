@@ -11,6 +11,7 @@
 
 #include <mc_rtc/config.h>
 #include <mc_rtc/log/FlatLog.h>
+#include <mc_rtc/log/Logger.h>
 
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
@@ -72,6 +73,13 @@ void fill_options(int argc,
   po::store(po::command_line_parser(argc, argv).options(desc).positional(pos).allow_unregistered().run(), vm);
 }
 
+// Given a bin file check that it has the correct magic number
+bool check_bin(std::ifstream & ifs, std::vector<char> & buffer)
+{
+  ifs.read(buffer.data(), sizeof(mc_rtc::Logger::magic));
+  return memcmp(buffer.data(), &mc_rtc::Logger::magic, sizeof(mc_rtc::Logger::magic)) == 0;
+}
+
 int show(int argc, char * argv[])
 {
   po::variables_map vm;
@@ -94,6 +102,11 @@ int show(int argc, char * argv[])
   }
   std::ifstream ifs(in, std::ifstream::binary);
   std::vector<char> buffer(1024);
+  if(!check_bin(ifs, buffer))
+  {
+    std::cerr << in << " does not appear to be a valid bin file, aborting...\n";
+    return 1;
+  }
   std::set<std::pair<std::string, mc_rtc::log::LogType>> keys;
   double start_t = 0;
   double end_t = 0;
@@ -200,6 +213,11 @@ int split(int argc, char * argv[])
   auto width = static_cast<int>(std::to_string(parts).size());
   std::ifstream ifs(in, std::ifstream::binary);
   std::vector<char> buffer(1024);
+  if(!check_bin(ifs, buffer))
+  {
+    std::cerr << in << " does not appear to be a valid bin file, aborting...\n";
+    return 1;
+  }
   std::vector<std::string> keys;
   auto split_file = [&](unsigned int n, size_t desired_size) {
     std::stringstream ss;
@@ -210,6 +228,7 @@ int split(int argc, char * argv[])
       LOG_ERROR("Failed to open " << ss.str() << " for writing")
       return false;
     }
+    ofs.write((const char *)&mc_rtc::Logger::magic, sizeof(mc_rtc::Logger::magic));
     size_t written = 0;
     while(ifs && written < desired_size)
     {
@@ -284,6 +303,12 @@ int extract(int argc, char * argv[])
     return 1;
   }
   std::ifstream ifs(in, std::ifstream::binary);
+  std::vector<char> buffer(1024);
+  if(!check_bin(ifs, buffer))
+  {
+    std::cerr << in << " does not appear to be a valid bin file, aborting...\n";
+    return 1;
+  }
   size_t width = 0;
   size_t n = 0;
   auto rename_all = [&out](size_t prev_w, size_t w) {
@@ -318,7 +343,6 @@ int extract(int argc, char * argv[])
     ss << out << "_" << std::setfill('0') << std::setw(static_cast<int>(width)) << (i + 1) << ".bin";
     return ss.str();
   };
-  std::vector<char> buffer(1024);
   std::ofstream ofs;
   bool key_present = false;
   while(ifs)
@@ -348,6 +372,7 @@ int extract(int argc, char * argv[])
       if(key_present && !key_was_present)
       {
         ofs.open(out_name(n));
+        ofs.write((const char *)&mc_rtc::Logger::magic, sizeof(mc_rtc::Logger::magic));
         n++;
       }
       if(key_was_present && !key_present)

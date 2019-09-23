@@ -3,6 +3,7 @@
  */
 
 #include <mc_rtc/log/FlatLog.h>
+#include <mc_rtc/log/Logger.h>
 
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
@@ -51,6 +52,12 @@ void FlatLog::append(const std::string & f)
     size = data_[0].records.size();
   }
   std::vector<char> buffer(1024);
+  ifs.read(buffer.data(), sizeof(mc_rtc::Logger::magic));
+  if(memcmp(buffer.data(), &mc_rtc::Logger::magic, sizeof(mc_rtc::Logger::magic)) != 0)
+  {
+    LOG_ERROR("Log " << f << " is not a valid mc_rtc binary log")
+    return;
+  }
   while(ifs)
   {
     size_t entrySize = 0;

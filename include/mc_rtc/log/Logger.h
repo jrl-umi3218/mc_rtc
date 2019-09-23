@@ -29,6 +29,8 @@ struct LoggerImpl;
 struct MC_RTC_UTILS_DLLAPI Logger
 {
 public:
+  /** Magic number used to identify binary logs */
+  static const uint8_t magic[4];
   /** A function that fills LogData vectors */
   typedef std::function<void(mc_rtc::MessagePackBuilder &)> serialize_fn;
   /*! \brief Defines available policies for the logger */

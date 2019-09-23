@@ -12,6 +12,9 @@
 
 namespace mc_rtc
 {
+
+const uint8_t Logger::magic[4] = {0x41, 0x4e, 0x4e, 0x45};
+
 struct LoggerImpl
 {
   LoggerImpl(const bfs::path & directory, const std::string & tmpl)
@@ -38,6 +41,13 @@ protected:
     log_.write((char *)&size, sizeof(size_t));
     log_.write(data, size);
   }
+
+  // Open file and write magic number to it right away
+  void open(const std::string & path)
+  {
+    log_.open(path, std::ofstream::binary);
+    log_.write((const char *)&Logger::magic, sizeof(Logger::magic));
+  }
 };
 
 namespace
@@ -52,7 +62,7 @@ struct LoggerNonThreadedPolicyImpl : public LoggerImpl
     {
       log_.close();
     }
-    log_.open(path.string(), std::ofstream::binary);
+    open(path.string());
   }
 
   virtual void write(char * data, size_t size) final
@@ -114,7 +124,7 @@ struct LoggerThreadedPolicyImpl : public LoggerImpl
       }
       log_.close();
     }
-    log_.open(path.string(), std::ofstream::binary);
+    open(path.string());
   }
 
   virtual void write(char * data, size_t size) final

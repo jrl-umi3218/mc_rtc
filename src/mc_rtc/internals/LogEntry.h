@@ -434,7 +434,7 @@ struct LogEntry : mpack_tree_t
   double getTime(size_t idx)
   {
     auto values = mpack_node_array_at(root_, 1);
-    return mpack_node_double(mpack_node_array_at(values, 2*idx + 1));
+    return mpack_node_double(mpack_node_array_at(values, 2 * idx + 1));
   }
 
   /** Rebuild this log entry with new keys */
