@@ -186,23 +186,33 @@ void PostureTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
     }
     auto jIndex = robots_.robot(rIndex_).jointIndexByName(j.name());
     bool isContinuous = robots_.robot(rIndex_).ql()[jIndex][0] == -std::numeric_limits<double>::infinity();
-    gui.addElement(
-        {"Tasks", name_, "Target"},
-        mc_rtc::gui::NumberSlider(j.name(), [this, jIndex]() { return this->posture_[jIndex][0]; },
-                                  [this, jIndex](double v) {
-                                    this->posture_[jIndex][0] = v;
-                                    if(mimics_.count(robots_.robot(rIndex_).mb().joint(jIndex).name()))
-                                    {
-                                      for(auto ji : mimics_.at(robots_.robot(rIndex_).mb().joint(jIndex).name()))
-                                      {
-                                        const auto & mimic = robots_.robot(rIndex_).mb().joint(ji);
-                                        this->posture_[ji][0] = mimic.mimicMultiplier() * v + mimic.mimicOffset();
-                                      }
-                                    }
-                                    posture(posture_);
-                                  },
-                                  isContinuous ? -M_PI : robots_.robot(rIndex_).ql()[jIndex][0],
-                                  isContinuous ? M_PI : robots_.robot(rIndex_).qu()[jIndex][0]));
+    auto updatePosture = [this](unsigned int jIndex, double v) {
+      this->posture_[jIndex][0] = v;
+      const auto & jName = robots_.robot(rIndex_).mb().joint(jIndex).name();
+      if(mimics_.count(jName))
+      {
+        for(auto ji : mimics_.at(jName))
+        {
+          const auto & mimic = robots_.robot(rIndex_).mb().joint(ji);
+          this->posture_[ji][0] = mimic.mimicMultiplier() * v + mimic.mimicOffset();
+        }
+      }
+      posture(posture_);
+    };
+    if(isContinuous)
+    {
+      gui.addElement({"Tasks", name_, "Target"},
+                     mc_rtc::gui::NumberInput(j.name(), [this, jIndex]() { return this->posture_[jIndex][0]; },
+                                              [this, jIndex, updatePosture](double v) { updatePosture(jIndex, v); }));
+    }
+    else
+    {
+      gui.addElement({"Tasks", name_, "Target"},
+                     mc_rtc::gui::NumberSlider(j.name(), [this, jIndex]() { return this->posture_[jIndex][0]; },
+                                               [this, jIndex, updatePosture](double v) { updatePosture(jIndex, v); },
+                                               robots_.robot(rIndex_).ql()[jIndex][0],
+                                               robots_.robot(rIndex_).qu()[jIndex][0]));
+    }
   }
 }
 
