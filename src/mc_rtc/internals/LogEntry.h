@@ -355,6 +355,14 @@ struct LogEntry : mpack_tree_t
     if(mpack_node_type(root_) != mpack_type_array || mpack_node_array_length(root_) != 2)
     {
       LOG_ERROR("MessagePack stored data does not appear to be an array of size 2")
+      if(mpack_node_type(root_) != mpack_type_array)
+      {
+        LOG_WARNING("Not an array")
+      }
+      else
+      {
+        LOG_WARNING("Array of size: " << mpack_node_array_length(root_))
+      }
       valid_ = false;
       return;
     }
@@ -426,7 +434,7 @@ struct LogEntry : mpack_tree_t
   double getTime(size_t idx)
   {
     auto values = mpack_node_array_at(root_, 1);
-    return mpack_node_double(mpack_node_array_at(values, idx));
+    return mpack_node_double(mpack_node_array_at(values, 2*idx + 1));
   }
 
   /** Rebuild this log entry with new keys */
@@ -434,14 +442,7 @@ struct LogEntry : mpack_tree_t
   {
     builder.start_array(2);
     builder.write(keys);
-    auto records = mpack_node_array_at(root_, 1);
-    size_t s = mpack_node_array_length(records);
-    builder.start_array(s);
-    for(size_t i = 0; i < s; ++i)
-    {
-      copy(builder, mpack_node_array_at(records, i));
-    }
-    builder.finish_array();
+    copy(builder, mpack_node_array_at(root_, 1));
     builder.finish_array();
   }
 
@@ -496,12 +497,12 @@ private:
     builder.start_array(s);
     static_assert(std::is_same<int32_t, std::underlying_type<LogType>::type>::value,
                   "LogType should be an int32_t like thing");
-    for(size_t i = 0; i < s - 1; ++i)
+    for(size_t i = 0; i < s; i += 2)
     {
       assert(mpack_node_type(mpack_node_array_at(value, i)) == mpack_type_int);
       builder.write(mpack_node_i32(mpack_node_array_at(value, i)));
+      copy_data(builder, mpack_node_array_at(value, i + 1));
     }
-    copy_data(builder, mpack_node_array_at(value, s - 1));
     builder.finish_array();
   }
 };

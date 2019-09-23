@@ -213,8 +213,8 @@ int split(int argc, char * argv[])
     size_t written = 0;
     while(ifs && written < desired_size)
     {
-      int entrySize = 0;
-      ifs.read((char *)&entrySize, sizeof(int));
+      size_t entrySize = 0;
+      ifs.read((char *)&entrySize, sizeof(size_t));
       if(!ifs)
       {
         break;
