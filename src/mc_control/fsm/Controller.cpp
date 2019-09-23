@@ -79,7 +79,7 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, con
       if(cr.second.has("init_pos"))
       {
         sva::PTransformd init_pos = cr.second("init_pos", sva::PTransformd::Identity());
-        Eigen::Quaterniond init_q(init_pos.rotation().inverse());
+        Eigen::Quaterniond init_q(init_pos.rotation().inverse().eval());
         Eigen::Vector3d init_t = init_pos.translation();
         auto & q0 = r.mbc().q[0];
         q0[0] = init_q.w();
@@ -181,7 +181,7 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, con
   if(config.has("init_pos"))
   {
     sva::PTransformd init_pos = config("init_pos");
-    Eigen::Quaterniond init_q(init_pos.rotation().inverse());
+    Eigen::Quaterniond init_q(init_pos.rotation().inverse().eval());
     Eigen::Vector3d init_t = init_pos.translation();
     init_pos_.resize(7);
     init_pos_[0] = init_q.w();
