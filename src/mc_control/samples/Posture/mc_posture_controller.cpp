@@ -26,12 +26,6 @@ MCPostureController::MCPostureController(std::shared_ptr<mc_rbdyn::RobotModule> 
 
   postureTask->stiffness(1.0);
   LOG_SUCCESS("MCPostureController init done " << this)
-  gui()->addElement({"Grippers"}, mc_rtc::gui::Form("GO",
-                                                    [this](const mc_rtc::Configuration & form) {
-                                                      double opening = form("Opening");
-                                                      grippers.at("l_gripper")->setTargetOpening(opening);
-                                                    },
-                                                    mc_rtc::gui::FormNumberInput("Opening", true, 0.2)));
 }
 
 bool MCPostureController::run()
