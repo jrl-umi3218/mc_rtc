@@ -27,9 +27,10 @@ struct ROSServicesImpl;
 
 struct MC_CONTROL_DLLAPI MCGlobalController
 {
-private:
+public:
   struct GlobalConfiguration;
 
+private:
   /* MCGlobalController is non-copyable */
   MCGlobalController(const MCGlobalController &) = delete;
   MCGlobalController & operator=(const MCGlobalController &) = delete;
@@ -72,6 +73,9 @@ public:
    *
    */
   MCGlobalController(const std::string & conf = "", std::shared_ptr<mc_rbdyn::RobotModule> rm = nullptr);
+
+  /*! \brief Create the global controller with an existing GlobalConfiguration instance */
+  MCGlobalController(const GlobalConfiguration & conf);
 
   /*! \brief Destructor */
   virtual ~MCGlobalController();
@@ -467,7 +471,7 @@ public:
    */
   bool running;
 
-private:
+public:
   /*! \brief Store the controller configuration */
   struct GlobalConfiguration
   {
@@ -508,6 +512,8 @@ private:
     std::vector<std::string> gui_server_rep_uris{};
 
     Configuration config;
+
+    void load_controllers_configs();
   };
 
 private:

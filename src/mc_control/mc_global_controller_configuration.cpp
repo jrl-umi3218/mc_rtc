@@ -290,6 +290,10 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   {
     initial_controller = enabled_controllers[0];
   }
+}
+
+void MCGlobalController::GlobalConfiguration::load_controllers_configs()
+{
   // Load controller-specific configuration
   for(const auto & c : enabled_controllers)
   {

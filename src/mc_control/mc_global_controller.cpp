@@ -26,9 +26,15 @@ namespace mc_control
 {
 
 MCGlobalController::MCGlobalController(const std::string & conf, std::shared_ptr<mc_rbdyn::RobotModule> rm)
-: config(conf, rm), current_ctrl(""), next_ctrl(""), controller_(nullptr), next_controller_(nullptr),
+: MCGlobalController(GlobalConfiguration(conf, rm))
+{
+}
+
+MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
+: config(conf), current_ctrl(""), next_ctrl(""), controller_(nullptr), next_controller_(nullptr),
   real_robots(std::make_shared<mc_rbdyn::Robots>())
 {
+  config.load_controllers_configs();
   try
   {
     controller_loader.reset(new mc_rtc::ObjectLoader<mc_control::MCController>(
