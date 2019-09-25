@@ -91,7 +91,7 @@ int show(int argc, char * argv[])
   {
     std::cout << "Usage: mc_bin_utils show [in]\n\n";
     std::cout << tool << "\n";
-    return 1;
+    return !vm.count("help");
   }
   std::string in = vm["in"].as<std::string>();
   bfs::path in_p(in);
@@ -187,7 +187,7 @@ int split(int argc, char * argv[])
   {
     std::cout << "Usage: mc_bin_utils split [in] [out] [parts]\n\n";
     std::cout << tool << "\n";
-    return 1;
+    return !vm.count("help");
   }
   auto in = vm["in"].as<std::string>();
   auto out = vm["out"].as<std::string>();
@@ -291,7 +291,7 @@ int extract(int argc, char * argv[])
   {
     std::cout << "Usage: mc_bin_utils extract [in] [out] [key]\n\n";
     std::cout << tool << "\n";
-    return 1;
+    return !vm.count("help");
   }
   auto in = vm["in"].as<std::string>();
   auto out = vm["out"].as<std::string>();
@@ -407,7 +407,7 @@ int convert(int argc, char * argv[])
   {
     std::cout << "Usage: mc_bin_utils convert [in] [out] ([format] [dt])\n\n";
     std::cout << tool << "\n";
-    return 1;
+    return !vm.count("help");
   }
   auto in = vm["in"].as<std::string>();
   auto out = vm["out"].as<std::string>();
@@ -507,7 +507,7 @@ int main(int argc, char * argv[])
   po::variables_map vm;
   fill_options(argc, argv, vm, {}, {});
 
-  if(vm.count("help") || !vm.count("tool"))
+  if(!vm.count("tool"))
   {
     usage();
     return 0;
