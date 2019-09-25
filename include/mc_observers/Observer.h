@@ -30,21 +30,23 @@ public:
   virtual const std::string & name() const;
   double dt() const;
 
-  /*! \brief Reset floating base estimate.
+  /*! \brief Reset estimator.
    *
-   * \param robot Robot from which the initial pose is to be estimated
+   * \param robot real robot from which to reset (provided by the previous
+   * estimator in the pipeline)
    *
    */
-  virtual void reset(const mc_rbdyn::Robot & robot) = 0;
+  virtual void reset(const mc_rbdyn::Robot & realRobot) = 0;
 
-  /*! \brief Update floating-base transform of real robot.
+  /*! \brief Compute observer state
    *
-   * \param realRobot Measured robot state, to be updated.
+   * \param realRobot Measured robot state (provided by the previous estimator
+   * in the pipeline)
    *
    */
   virtual bool run(const mc_rbdyn::Robot & realRobot) = 0;
 
-  /*! \brief Write observed floating-base transform to the robot's configuration.
+  /*! \brief Update the real robot state from the observed state
    *
    * \param robot Robot state to write to.
    *
