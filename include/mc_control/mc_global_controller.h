@@ -497,9 +497,6 @@ public:
     std::unordered_map<std::string, mc_rtc::Configuration> controllers_configs;
     double timestep = 0.002;
 
-    bool update_real = true;
-    bool update_real_from_sensors = false;
-    std::string update_real_sensor_name;
     bool log_real = false;
 
     bool publish_control_state = true;

@@ -19,38 +19,35 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-#include "FloatingBasePosObserver.h"
+#include "KinematicInertialPoseObserver.h"
 
 #include <mc_rbdyn/rpy_utils.h>
 
 namespace mc_observers
 {
-FloatingBasePosObserver::FloatingBasePosObserver(const std::string & name,
-                                                 double dt,
-                                                 const mc_rtc::Configuration & config)
-: Observer(name, dt), orientation_(Eigen::Matrix3d::Identity()), position_(Eigen::Vector3d::Zero()),
-  leftFootRatio_(0.5){LOG_SUCCESS("FloatingBasePosObserver created")}
-
-  FloatingBasePosObserver::~FloatingBasePosObserver()
+KinematicInertialPoseObserver::KinematicInertialPoseObserver(const std::string & name,
+                                                             double dt,
+                                                             const mc_rtc::Configuration & config)
+: Observer(name, dt), orientation_(Eigen::Matrix3d::Identity()), position_(Eigen::Vector3d::Zero()), leftFootRatio_(0.5)
 {
+  LOG_SUCCESS("KinematicInertialPoseObserver created")
 }
 
-void FloatingBasePosObserver::reset(const mc_rbdyn::Robot & realRobot)
+void KinematicInertialPoseObserver::reset(const mc_rbdyn::Robot & realRobot)
 {
   run(realRobot);
-  LOG_SUCCESS("FloatingBasePosObserver reset");
+  LOG_SUCCESS("KinematicInertialPoseObserver reset");
 }
 
-bool FloatingBasePosObserver::run(const mc_rbdyn::Robot & realRobot)
+bool KinematicInertialPoseObserver::run(const mc_rbdyn::Robot & realRobot)
 {
   estimateOrientation(realRobot);
   estimatePosition(realRobot);
   return true;
 }
 
-void FloatingBasePosObserver::estimateOrientation(const mc_rbdyn::Robot & realRobot)
+void KinematicInertialPoseObserver::estimateOrientation(const mc_rbdyn::Robot & realRobot)
 {
-  LOG_INFO("robot()? " << robot().name());
   // Prefixes:
   // c for control-robot model
   // r for real-robot model
@@ -66,7 +63,7 @@ void FloatingBasePosObserver::estimateOrientation(const mc_rbdyn::Robot & realRo
   orientation_ = mc_rbdyn::rpyToMat(mRPY(0), mRPY(1), cRPY(2));
 }
 
-void FloatingBasePosObserver::estimatePosition(const mc_rbdyn::Robot & realRobot)
+void KinematicInertialPoseObserver::estimatePosition(const mc_rbdyn::Robot & realRobot)
 {
   sva::PTransformd X_0_c = getAnchorFrame(robot());
   sva::PTransformd X_0_s = getAnchorFrame(realRobot);
@@ -77,37 +74,27 @@ void FloatingBasePosObserver::estimatePosition(const mc_rbdyn::Robot & realRobot
   position_ = r_c_0 - orientation_.transpose() * r_s_real;
 }
 
-sva::PTransformd FloatingBasePosObserver::getAnchorFrame(const mc_rbdyn::Robot & robot)
+sva::PTransformd KinematicInertialPoseObserver::getAnchorFrame(const mc_rbdyn::Robot & robot)
 {
   sva::PTransformd X_0_l = robot.surface("LeftFoot").X_0_s(robot);
   sva::PTransformd X_0_r = robot.surface("RightFoot").X_0_s(robot);
   return sva::interpolate(X_0_r, X_0_l, leftFootRatio_);
 }
 
-void FloatingBasePosObserver::updateRobot(mc_rbdyn::Robot & realRobot)
+void KinematicInertialPoseObserver::updateRobot(mc_rbdyn::Robot & realRobot)
 {
   realRobot.posW(sva::PTransformd{orientation_, position_});
-  realRobot.forwardKinematics();
 }
 
-void FloatingBasePosObserver::updateBodySensor(mc_rbdyn::Robot & realRobot, const std::string & sensorName)
-{
-  auto & sensor = realRobot.bodySensor(sensorName);
-  sensor.position(position_);
-  sensor.orientation(Eigen::Quaterniond(orientation_));
-}
-
-void FloatingBasePosObserver::addToLogger(mc_rtc::Logger & logger)
+void KinematicInertialPoseObserver::addToLogger(mc_rtc::Logger & logger)
 {
   logger.addLogEntry("observer_" + name() + "_posW", [this]() { return posW(); });
 }
-void FloatingBasePosObserver::removeFromLogger(mc_rtc::Logger & logger)
+void KinematicInertialPoseObserver::removeFromLogger(mc_rtc::Logger & logger)
 {
   logger.removeLogEntry("observer_" + name() + "_posW");
 }
-void FloatingBasePosObserver::addToGUI(mc_rtc::gui::StateBuilder & gui) {}
-void FloatingBasePosObserver::removeFromGUI(mc_rtc::gui::StateBuilder & gui) {}
 
 } // namespace mc_observers
 
-EXPORT_OBSERVER_MODULE("FloatingBasePos", mc_observers::FloatingBasePosObserver)
+EXPORT_OBSERVER_MODULE("KinematicInertialPose", mc_observers::KinematicInertialPoseObserver)

@@ -437,6 +437,11 @@ bool MCGlobalController::run()
     // Update observers robots
     for(auto & observer : observers)
     {
+      observer.second->removeFromLogger(controller_->logger());
+      if(controller_->gui())
+      {
+        observer.second->removeFromGUI(*controller_->gui());
+      }
       observer.second->robots_ = &controller_->robots();
     }
     if(config.enable_log)
@@ -637,9 +642,9 @@ bool MCGlobalController::AddController(const std::string & name)
       // controller-specific configuration
       controllers[name]->observersOrder = config.enabled_observers;
       controllers[name]->updateObservers = config.update_observers;
-      if(cc.has("UseObservers"))
+      if(cc.has("EnabledObservers"))
       {
-        for(const auto & observerName : cc("UseObservers"))
+        for(const auto & observerName : cc("EnabledObservers"))
         {
           if(observers.count(observerName) > 0)
           {
@@ -659,9 +664,9 @@ bool MCGlobalController::AddController(const std::string & name)
         // Enable all observers by default
         controllers[name]->observers = observers;
       }
-      if(cc.has("UpdateRealFromObservers"))
+      if(cc.has("UpdateObservers"))
       {
-        for(const auto & observerName : cc("UpdateRealFromObservers"))
+        for(const auto & observerName : cc("UpdateObservers"))
         {
           if(controllers[name]->observers.count(observerName) > 0)
           {

@@ -144,7 +144,6 @@ bool MCController::runObservers()
 {
   for(const auto & observerName : observersOrder)
   {
-    LOG_INFO("[Observers] Running observer " << observerName);
     auto observer = observers[observerName];
     bool r = observer->run(real_robots->robot());
     if(!r)
@@ -154,12 +153,9 @@ bool MCController::runObservers()
     }
     if(std::find(updateObservers.begin(), updateObservers.end(), observerName) != updateObservers.end())
     {
-      LOG_INFO("[Observers] Updating real robot from observer " << observerName);
       observer->updateRobot(real_robots->robot());
     }
   }
-
-  LOG_SUCCESS("Observers ran");
   return true;
 }
 
@@ -206,8 +202,14 @@ void MCController::reset(const ControllerResetData & reset_data)
 
   for(const auto & observer : observers)
   {
-    LOG_INFO("Resetting observer " << observer.first);
+    const auto & observerName = observer.first;
     observer.second->reset(real_robots->robot());
+    LOG_INFO("[Observers] Resetting observer " << observerName);
+    if(std::find(updateObservers.begin(), updateObservers.end(), observerName) != updateObservers.end())
+    {
+      LOG_INFO("[Observers] Will update real robot from observer " << observerName);
+      observer.second->updateRobot(real_robots->robot());
+    }
     observer.second->addToLogger(logger());
     if(gui_)
     {

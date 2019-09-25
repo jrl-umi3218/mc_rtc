@@ -69,6 +69,35 @@ public:
    */
   virtual bool run();
 
+  /** This function is called before the run() funciton at each time step of the process
+   * driving the robot (i.e. simulation or robot's controller). The default
+   * behaviour is to call the run() function of each loaded observer and update
+   * the realRobot instance from the desired list of estimators.
+   *
+   * This is meant to run in real-time hence some precaution should apply (e.g.
+   * no i/o blocking calls, no thread instantiation and such)
+   *
+   * \note Some estimators are likely to require extra information (such as
+   * contact location for the KinematicInertial-observers) etc. To provide it,
+   * override this method in your controller, call your observer-specific code,
+   * then, if the default behaviour suits you, call the default MCController::runObservers().
+   *
+   * Example
+   * \code{.cpp}
+   * MyController::runObservers()
+   * {
+   *   // The kinematic inertial observer requires an anchor frame on the floor,
+   *   somewhere in-between the robot feet. For a walking controller, it is
+   *   advised to smoothly change the anchor frame in-between the feet, to avoid
+   *   state jumps when switching to the next single-support phase.
+   *   auto observer = static_pointer_cast<KinematicInertialObserver>(observers["KinematicInertial"]));
+   *   observer->leftFootRatio(percentageOfDoubleSupportTime);
+   *   MCController::runObservers();
+   * }
+   * \endcode
+   *
+   * @returns true if all observers ran as expected, false otherwise
+   */
   virtual bool runObservers();
 
   /**

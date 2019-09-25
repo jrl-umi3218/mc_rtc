@@ -875,7 +875,8 @@ void Robot::posW(const sva::PTransformd & pt)
 {
   if(mb().joint(0).type() == rbd::Joint::Type::Free)
   {
-    const sva::Quaterniond rotation{pt.rotation().transpose()};
+    sva::Quaterniond rotation{pt.rotation().transpose()};
+    rotation.normalize();
     q()[0] = {rotation.w(),         rotation.x(),         rotation.y(),        rotation.z(),
               pt.translation().x(), pt.translation().y(), pt.translation().z()};
     forwardKinematics();

@@ -30,36 +30,56 @@ public:
   virtual const std::string & name() const;
   double dt() const;
 
-  /** Reset floating base estimate.
+  /*! \brief Reset floating base estimate.
    *
    * \param robot Robot from which the initial pose is to be estimated
    *
    */
   virtual void reset(const mc_rbdyn::Robot & robot) = 0;
 
-  /** Update floating-base transform of real robot.
+  /*! \brief Update floating-base transform of real robot.
    *
    * \param realRobot Measured robot state, to be updated.
    *
    */
   virtual bool run(const mc_rbdyn::Robot & realRobot) = 0;
 
-  /** Write observed floating-base transform to the robot's configuration.
+  /*! \brief Write observed floating-base transform to the robot's configuration.
    *
    * \param robot Robot state to write to.
    *
    */
   virtual void updateRobot(mc_rbdyn::Robot & realRobot) = 0;
 
-  virtual void setContacts(const std::vector<std::string> & /* contactFrames */){};
-
+  /*! \brief Add observer to the logger.
+   *
+   * Default implementation does nothing, each observer implementation is
+   * responsible for logging its own data by overriding this function
+   */
   virtual void addToLogger(mc_rtc::Logger &) {}
+  /*! \brief Remove observer from logger
+   *
+   * Default implementation does nothing, each observer implementation is
+   * responsible for removing all logs entry that it added.
+   */
   virtual void removeFromLogger(mc_rtc::Logger &) {}
+  /*! \brief Add observer information the GUI.
+   *
+   * Default implementation does nothing, each observer implementation is
+   * responsible for adding its own elements to the GUI. Default observers will
+   * be shown under the tab "Observers->observer name".
+   */
   virtual void addToGUI(mc_rtc::gui::StateBuilder &) {}
+  /*! \brief Remove observer from gui
+   *
+   * Default implementation removes the category Observers->observer name
+   */
   virtual void removeFromGUI(mc_rtc::gui::StateBuilder &);
 
 protected:
+  /*! \brief const accessor to the control robots */
   const mc_rbdyn::Robots & robots() const;
+  /*! \brief const accessor to the main control robot */
   const mc_rbdyn::Robot & robot() const;
 
 protected:
@@ -67,7 +87,8 @@ protected:
   double dt_;
 
 private:
-  /** Control robot pointer provided by MCGlobalController **/
+  /*! Control robot pointer provided by MCGlobalController.
+   * Should not be accessed directly, except by MCGlobalController. Use robots() and robot() accessors instead. **/
   mc_rbdyn::Robots * robots_;
 };
 

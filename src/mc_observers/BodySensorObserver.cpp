@@ -5,28 +5,30 @@ namespace mc_observers
 BodySensorObserver::BodySensorObserver(const std::string & name, double dt, const mc_rtc::Configuration & config)
 : Observer(name, dt, config)
 {
-  LOG_INFO("BodySensorObserver config: \n" << config.dump(true));
-  updateFbFromSensor_ = config("UpdateFloatingBaseFromSensor", true);
-  updateFbFromControl_ = config("UpdateFloatingBaseFromControl", false);
+  if(config.has("UpdateFrom"))
+  {
+    if(config("UpdateFrom") == "estimator")
+    {
+      updateFrom_ = Update::Estimator;
+    }
+    else
+    {
+      updateFrom_ = Update::Control;
+    }
+  }
+
   fbSensorName_ = config("FloatingBaseSensor", std::string("FloatingBase"));
+  LOG_SUCCESS("BodySensorObserver created");
 }
 
 void BodySensorObserver::reset(const mc_rbdyn::Robot & realRobot)
 {
-  const auto & bs = robot().bodySensor(fbSensorName_);
-  posW_ = {bs.orientation(), bs.position()};
-  velW_ = {bs.angularVelocity(), bs.linearVelocity()};
-  LOG_INFO("[reset] BodySensorObserver bodysensor pos: " << bs.position());
+  run(realRobot);
 }
 
 bool BodySensorObserver::run(const mc_rbdyn::Robot & realRobot)
 {
-  if(updateFbFromControl_)
-  {
-    posW_ = robot().posW();
-    velW_ = robot().velW();
-  }
-  if(updateFbFromSensor_)
+  if(updateFrom_ == Update::Estimator)
   {
     // Update free flyer from body sensor
     // Note that if the body to which the sensor is attached is not the
@@ -35,9 +37,9 @@ bool BodySensorObserver::run(const mc_rbdyn::Robot & realRobot)
     // It is assumed here that the floating base sensor and encoders are
     // synchronized.
     const auto & sensor = robot().bodySensor(fbSensorName_);
-    const auto & fb = robot().mb().body(0).name();
+    const auto & fb = realRobot.mb().body(0).name();
     sva::PTransformd X_0_s(sensor.orientation(), sensor.position());
-    const auto & X_s_b = sensor.X_b_s().inv();
+    const auto X_s_b = sensor.X_b_s().inv();
     sva::PTransformd X_b_fb = realRobot.X_b1_b2(sensor.parentBody(), fb);
     sva::PTransformd X_s_fb = X_b_fb * X_s_b;
     posW_ = X_s_fb * X_0_s;
@@ -45,18 +47,18 @@ bool BodySensorObserver::run(const mc_rbdyn::Robot & realRobot)
     sva::MotionVecd sensorVel(sensor.angularVelocity(), sensor.linearVelocity());
     velW_ = X_s_fb * sensorVel;
   }
+  else /* if(updateFrom_ == Update::Control) */
+  {
+    posW_ = robot().posW();
+    velW_ = robot().velW();
+  }
   return true;
 }
 
 void BodySensorObserver::updateRobot(mc_rbdyn::Robot & realRobot)
 {
-  if(updateFbFromControl_ || updateFbFromSensor_)
-  {
-    realRobot.posW(posW_);
-    realRobot.velW(velW_);
-    realRobot.forwardKinematics();
-    realRobot.forwardVelocity();
-  }
+  realRobot.posW(posW_);
+  realRobot.velW(velW_);
 }
 
 void BodySensorObserver::addToLogger(mc_rtc::Logger & logger)

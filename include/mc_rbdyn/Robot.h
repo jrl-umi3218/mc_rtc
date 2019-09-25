@@ -552,12 +552,16 @@ public:
    * @param pt The new global pose
    *
    * @throws If joint(0) is neither free flyer nor fixed
+   *
+   * @note This function takes care of calling rbd::forwardKinematics
    */
   void posW(const sva::PTransformd & pt);
 
   /** Update the robot's base link velocity.
    *
    * \param alpha New base link velocity.
+   *
+   * @note This function takes care of calling rbd::forwardVelocity
    */
   void velW(const sva::MotionVecd & alpha);
 
