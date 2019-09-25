@@ -1,8 +1,5 @@
 /*
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
- *
- * This file is heavily inspired by Stéphane Caron's lipm_walking_controller
- * https://github.com/stephane-caron/lipm_walking_controller
  */
 
 #pragma once
