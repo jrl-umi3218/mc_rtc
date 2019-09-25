@@ -145,6 +145,12 @@ private:
 
   /** Retrieve the index of a given entry, creates the entry if it doesn't exist */
   size_t index(const std::string & entry, size_t size);
+
+  /** Append a flat file to the log, all entries will be either double or strings */
+  void appendFlat(const std::string & fpath);
+
+  /** Append a binary file to the log */
+  void appendBin(const std::string & fpath);
 };
 
 } // namespace log

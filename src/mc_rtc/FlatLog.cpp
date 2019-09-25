@@ -33,6 +33,19 @@ void FlatLog::load(const std::string & fpath)
 void FlatLog::append(const std::string & f)
 {
   auto fpath = bfs::path(f);
+  if(fpath.extension() == ".flat")
+  {
+    appendFlat(f);
+  }
+  else
+  {
+    appendBin(f);
+  }
+}
+
+void FlatLog::appendBin(const std::string & f)
+{
+  auto fpath = bfs::path(f);
   if(!bfs::exists(f) || !bfs::is_regular(f))
   {
     LOG_ERROR("Could not open log " << f)
@@ -119,6 +132,79 @@ void FlatLog::append(const std::string & f)
   for(const auto & k : missingIndexes)
   {
     data_[k].records.resize(size);
+  }
+}
+
+void FlatLog::appendFlat(const std::string & f)
+{
+  auto fpath = bfs::path(f);
+  if(!bfs::exists(f) || !bfs::is_regular(f))
+  {
+    LOG_ERROR("Could not open log " << f)
+    return;
+  }
+  std::ifstream ifs(f, std::ifstream::binary);
+  if(!ifs.is_open())
+  {
+    LOG_ERROR("Failed to open " << f)
+    return;
+  }
+  size_t size = 0;
+  if(data_.size())
+  {
+    size = data_[0].records.size();
+  }
+  size_t nEntries = 0;
+  ifs.read((char *)&nEntries, sizeof(size_t));
+  size_t nsize = 0;
+  for(size_t i = 0; i < nEntries; ++i)
+  {
+    bool is_numeric = false;
+    ifs.read((char *)&is_numeric, sizeof(bool));
+    size_t sz = 0;
+    ifs.read((char *)&sz, sizeof(size_t));
+    std::string key(sz, '0');
+    ifs.read(&key[0], sz * sizeof(char));
+    auto idx = index(key, size);
+    ifs.read((char *)&sz, sizeof(size_t));
+    auto & entries = data_[idx].records;
+    for(size_t i = 0; i < sz; ++i)
+    {
+      if(is_numeric)
+      {
+        double data = 0;
+        ifs.read((char *)&data, sizeof(double));
+        if(std::isnan(data))
+        {
+          entries.emplace_back(LogType::None, record::unique_void_ptr{nullptr, internal::void_deleter<int>});
+        }
+        else
+        {
+          entries.emplace_back(LogType::Double,
+                               record::unique_void_ptr{new double(data), internal::void_deleter<double>});
+        }
+      }
+      else
+      {
+        size_t str_sz = 0;
+        ifs.read((char *)&str_sz, sizeof(size_t));
+        if(str_sz == 0)
+        {
+          entries.emplace_back(LogType::None, record::unique_void_ptr{nullptr, internal::void_deleter<int>});
+        }
+        else
+        {
+          std::string * str = new std::string(str_sz, '0');
+          ifs.read(&((*str)[0]), str_sz * sizeof(char));
+          entries.emplace_back(LogType::String, record::unique_void_ptr{str, internal::void_deleter<std::string>});
+        }
+      }
+    }
+    nsize = entries.size();
+  }
+  for(auto & e : data_)
+  {
+    e.records.resize(nsize);
   }
 }
 
