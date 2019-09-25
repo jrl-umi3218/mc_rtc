@@ -635,54 +635,27 @@ bool MCGlobalController::AddController(const std::string & name)
     {
       controllers[name]->logger().setup(config.log_policy, config.log_directory, config.log_template);
     }
-    // Controller-specific configuration
+
+    // Give each controller access to all observers
+    controllers[name]->observers = observers;
+    const auto & cc = config.controllers_configs[name];
+    controllers[name]->observersOrder = config.enabled_observers;
+    controllers[name]->updateObservers = config.update_observers;
+    // Use controller-specific configuration instead of global configuration
+    if(cc.has("UpdateObservers"))
     {
-      const auto & cc = config.controllers_configs[name];
-      // Set default list for updating observers. Can be overridden by
-      // controller-specific configuration
-      controllers[name]->observersOrder = config.enabled_observers;
-      controllers[name]->updateObservers = config.update_observers;
-      if(cc.has("EnabledObservers"))
+      controllers[name]->updateObservers = cc("UpdateObservers");
+    }
+
+    // Check that all update observers have been loaded
+    for(const auto & observerName : controllers[name]->updateObservers)
+    {
+      if(observers.count(observerName) == 0)
       {
-        controllers[name]->observersOrder.clear();
-        controllers[name]->observers.clear();
-        for(const auto & observerName : cc("EnabledObservers"))
-        {
-          if(observers.count(observerName) > 0)
-          {
-            controllers[name]->observersOrder.push_back(observerName);
-            controllers[name]->observers[observerName] = observers[observerName];
-          }
-          else
-          {
-            LOG_ERROR(
-                "Controller " << controller_name << " requested observer " << observerName
-                              << " but this observer is not available. Check your EnabledObservers configuration");
-          }
-        }
-      }
-      else
-      {
-        // Enable all observers by default
-        controllers[name]->observers = observers;
-      }
-      if(cc.has("UpdateObservers"))
-      {
-        controllers[name]->updateObservers.clear();
-        for(const auto & observerName : cc("UpdateObservers"))
-        {
-          if(controllers[name]->observers.count(observerName) > 0)
-          {
-            controllers[name]->updateObservers.push_back(observerName);
-          }
-          else
-          {
-            LOG_ERROR("Controller " << controller_name << " requested updating real robot from observer "
-                                    << observerName
-                                    << " but this observer is not active for this controller. Check your controller's "
-                                       "EnabledObservers configuration");
-          }
-        }
+        LOG_ERROR_AND_THROW(std::runtime_error,
+                            "Controller "
+                                << controller_name << " requested observer " << observerName
+                                << " but this observer is not available. Check your EnabledObservers configuration");
       }
     }
     return true;
