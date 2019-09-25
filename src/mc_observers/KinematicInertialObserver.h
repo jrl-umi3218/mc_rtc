@@ -65,6 +65,7 @@ private:
    **/
   LowPassVelocityFilter<sva::MotionVecd> velFilter_;
   sva::MotionVecd velW_;
+  sva::MotionVecd velWfd_;
 
 private:
   /** Prevent from resetting only the position */

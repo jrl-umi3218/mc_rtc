@@ -644,6 +644,8 @@ bool MCGlobalController::AddController(const std::string & name)
       controllers[name]->updateObservers = config.update_observers;
       if(cc.has("EnabledObservers"))
       {
+        controllers[name]->observersOrder.clear();
+        controllers[name]->observers.clear();
         for(const auto & observerName : cc("EnabledObservers"))
         {
           if(observers.count(observerName) > 0)
@@ -666,6 +668,7 @@ bool MCGlobalController::AddController(const std::string & name)
       }
       if(cc.has("UpdateObservers"))
       {
+        controllers[name]->updateObservers.clear();
         for(const auto & observerName : cc("UpdateObservers"))
         {
           if(controllers[name]->observers.count(observerName) > 0)

@@ -34,6 +34,7 @@ bool KinematicInertialObserver::run(const mc_rbdyn::Robot & realRobot)
   sva::MotionVecd errVel = sva::transformError(posWPrev_, posW) / dt();
   velFilter_.update(errVel);
   velW_ = velFilter_.vel();
+  velWfd_ = errVel;
   posWPrev_ = posW;
   return true;
 }
@@ -61,11 +62,13 @@ void KinematicInertialObserver::addToLogger(mc_rtc::Logger & logger)
 {
   KinematicInertialPoseObserver::addToLogger(logger);
   logger.addLogEntry("observer_" + name() + "_velW", [this]() { return velW_; });
+  logger.addLogEntry("observer_" + name() + "_velWfd", [this]() { return velWfd_; });
 }
 void KinematicInertialObserver::removeFromLogger(mc_rtc::Logger & logger)
 {
   KinematicInertialPoseObserver::removeFromLogger(logger);
   logger.removeLogEntry("observer_" + name() + "_velW");
+  logger.removeLogEntry("observer_" + name() + "_velWfd");
 }
 void KinematicInertialObserver::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
