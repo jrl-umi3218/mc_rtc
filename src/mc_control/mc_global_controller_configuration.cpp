@@ -138,12 +138,12 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   ///////////////
   mc_observers::ObserverLoader::enable_sandboxing(use_sandbox);
   mc_observers::ObserverLoader::set_verbosity(verbose_loader);
-  config("ObserversModulePaths", observers_module_paths);
-  if(observers_module_paths.size())
+  config("ObserversModulePaths", observer_module_paths);
+  if(!observer_module_paths.empty())
   {
     try
     {
-      mc_observers::ObserverLoader::update_module_path(observers_module_paths);
+      mc_observers::ObserverLoader::update_module_path(observer_module_paths);
     }
     catch(const mc_rtc::LoaderException & exc)
     {
@@ -160,11 +160,11 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     {
       if(oc.has(observerName))
       {
-        observers_configs[observerName] = oc(observerName);
+        observer_configs[observerName] = oc(observerName);
       }
       else
       {
-        observers_configs[observerName] = {};
+        observer_configs[observerName] = {};
       }
     }
   }

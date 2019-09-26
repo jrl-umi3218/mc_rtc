@@ -97,7 +97,7 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
     if(mc_observers::ObserverLoader::has_observer(observerName))
     {
       auto observer = mc_observers::ObserverLoader::get_observer(observerName, config.timestep,
-                                                                 config.observers_configs[observerName]);
+                                                                 config.observer_configs[observerName]);
 
       observers.push_back(observer);
       observersByName[observerName] = observer;
