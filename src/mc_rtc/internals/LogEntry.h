@@ -101,7 +101,7 @@ struct DataFromNode<std::string>
   }
 };
 
-double node_at(mpack_node_t node, size_t idx)
+inline double node_at(mpack_node_t node, size_t idx)
 {
   assert(mpack_node_type(node) == mpack_type_array && mpack_node_array_length(node) > idx);
   return mpack_node_double(mpack_node_array_at(node, idx));
@@ -268,7 +268,7 @@ struct PointerFromNode
   }
 };
 
-FlatLog::record::unique_void_ptr dataFromNode(const LogType & type, mpack_node_t node)
+inline FlatLog::record::unique_void_ptr dataFromNode(const LogType & type, mpack_node_t node)
 {
   switch(type)
   {
