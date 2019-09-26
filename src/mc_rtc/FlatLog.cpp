@@ -4,6 +4,7 @@
 
 #include <mc_rtc/log/FlatLog.h>
 #include <mc_rtc/log/Logger.h>
+#include <mc_rtc/log/iterate_binary_log.h>
 
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
@@ -45,90 +46,40 @@ void FlatLog::append(const std::string & f)
 
 void FlatLog::appendBin(const std::string & f)
 {
-  auto fpath = bfs::path(f);
-  if(!bfs::exists(f) || !bfs::is_regular(f))
-  {
-    LOG_ERROR("Could not open log " << f)
-    return;
-  }
-  std::ifstream ifs(f, std::ifstream::binary);
-  if(!ifs.is_open())
-  {
-    LOG_ERROR("Failed to open " << f)
-    return;
-  }
   std::vector<size_t> currentIndexes = {};
   std::vector<size_t> missingIndexes = {};
-  size_t size = 0;
-  if(data_.size())
-  {
-    size = data_[0].records.size();
-  }
-  std::vector<char> buffer(1024);
-  ifs.read(buffer.data(), sizeof(mc_rtc::Logger::magic));
-  if(memcmp(buffer.data(), &mc_rtc::Logger::magic, sizeof(mc_rtc::Logger::magic)) != 0)
-  {
-    LOG_ERROR("Log " << f << " is not a valid mc_rtc binary log")
-    return;
-  }
-  while(ifs)
-  {
-    size_t entrySize = 0;
-    ifs.read((char *)&entrySize, sizeof(size_t));
-    if(!ifs)
-    {
-      break;
-    }
-    while(buffer.size() < entrySize)
-    {
-      buffer.resize(2 * buffer.size());
-    }
-    ifs.read(buffer.data(), entrySize);
-    if(!ifs)
-    {
-      break;
-    }
-    internal::LogEntry log(buffer, entrySize);
-    if(!log.valid())
-    {
-      return;
-    }
-    if(log.keys().size())
+  size_t size = data_.size() ? data_[0].records.size() : 0;
+  auto callback = [&](const std::vector<std::string> & ks, std::vector<mc_rtc::log::FlatLog::record> & records,
+                      double) {
+    if(ks.size())
     {
       for(const auto & k : missingIndexes)
       {
         data_[k].records.resize(size);
       }
       currentIndexes.clear();
-      for(const auto & k : log.keys())
+      for(const auto & k : ks)
       {
         currentIndexes.push_back(index(k, size));
       }
       missingIndexes.clear();
+      for(size_t i = 0; i < data_.size(); ++i)
       {
-        size_t i = 0;
-        for(size_t j = 0; j < currentIndexes.size(); ++j)
-        {
-          while(i < currentIndexes[j])
-          {
-            missingIndexes.push_back(i);
-            i++;
-          }
-        }
-        for(size_t i = currentIndexes.back(); i < data_.size(); ++i)
+        if(std::find(currentIndexes.begin(), currentIndexes.end(), i) == currentIndexes.end())
         {
           missingIndexes.push_back(i);
         }
       }
     }
-    auto & recordsIn = log.records();
-    for(size_t i = 0; i < recordsIn.size(); ++i)
+    for(size_t i = 0; i < records.size(); ++i)
     {
-      auto & records = data_[currentIndexes[i]].records;
-      records.push_back(std::move(recordsIn[i]));
+      auto & out = data_[currentIndexes[i]].records;
+      out.push_back(std::move(records[i]));
     }
     size += 1;
-  }
+    return true;
+  };
+  iterate_binary_log(f, callback, true, "");
   for(const auto & k : missingIndexes)
   {
     data_[k].records.resize(size);
