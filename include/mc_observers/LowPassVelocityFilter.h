@@ -12,20 +12,12 @@ namespace mc_observers
 
 /** Low-pass velocity filter from series of velocity measurements.
  *
+ * Expects T to have:
+ * - T::Zero() static method
  */
 template<typename T>
 struct LowPassVelocityFilter
 {
-  /** Constructor.
-   *
-   * \param dt Sampling period.
-   *
-   */
-  LowPassVelocityFilter(double dt) : dt_(dt)
-  {
-    reset(T::Zero());
-  }
-
   /** Constructor with cutoff period.
    *
    * \param dt Sampling period.
@@ -33,10 +25,9 @@ struct LowPassVelocityFilter
    * \param period Cutoff period.
    *
    */
-  LowPassVelocityFilter(double dt, double period) : dt_(dt)
+  LowPassVelocityFilter(double dt, double period = 0) : dt_(dt), cutoffPeriod_(period)
   {
     reset(T::Zero());
-    cutoffPeriod(period);
   }
 
   /** Get cutoff period.
@@ -89,6 +80,8 @@ struct LowPassVelocityFilter
 private:
   T vel_;
   double cutoffPeriod_ = 0.;
+
+protected:
   double dt_ = 0.005; // [s]
 };
 

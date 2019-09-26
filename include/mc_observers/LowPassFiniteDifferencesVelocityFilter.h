@@ -8,20 +8,12 @@ namespace mc_observers
 {
 /** Low-pass velocity filter from series of position measurements.
  *
+ * Expects T to have:
+ * - T::Zero() static method
  */
 template<typename T>
-struct LowPassVelocityFilterFiniteDifferences : public LowPassVelocityFilter<T>
+struct LowPassFiniteDifferencesVelocityFilter : public LowPassVelocityFilter<T>
 {
-  /** Constructor.
-   *
-   * \param dt Sampling period.
-   *
-   */
-  LowPassFiniteDifferencesVelocityFilter(double dt) : LowPassVelocityFilter<T>(dt)
-  {
-    reset(T::Zero());
-  }
-
   /** Constructor with cutoff period.
    *
    * \param dt Sampling period.
@@ -29,10 +21,9 @@ struct LowPassVelocityFilterFiniteDifferences : public LowPassVelocityFilter<T>
    * \param period Cutoff period.
    *
    */
-  LowPassFiniteDifferencesVelocityFilter(double dt, double period) : LowPassVelocityFilter<T>(dt, period)
+  LowPassFiniteDifferencesVelocityFilter(double dt, double period = 0) : LowPassVelocityFilter<T>(dt, period)
   {
     reset(T::Zero());
-    LowPassVelocityFilter<T>::cutoffPeriod(period);
   }
 
   /** Reset position to an initial rest value.
@@ -79,6 +70,5 @@ struct LowPassVelocityFilterFiniteDifferences : public LowPassVelocityFilter<T>
 
 private:
   T pos_;
-  using LowPassVelocityFilter<T>::dt_;
 };
 } // namespace mc_observers
