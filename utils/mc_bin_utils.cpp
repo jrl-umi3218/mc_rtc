@@ -11,8 +11,8 @@
 
 #include <mc_rtc/config.h>
 #include <mc_rtc/log/FlatLog.h>
-#include <mc_rtc/log/iterate_binary_log.h>
 #include <mc_rtc/log/Logger.h>
+#include <mc_rtc/log/iterate_binary_log.h>
 
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
@@ -41,45 +41,19 @@ void usage()
   std::cout << "\nUse mc_bin_utils <command> --help for usage of each command\n";
 }
 
-void fill_options(int argc,
-                  char * argv[],
-                  po::variables_map & vm,
-                  const po::options_description & tool,
-                  const std::vector<std::string> & extra)
-{
-  po::options_description desc("mc_bin_utils options");
-  desc.add_options()("help", "Produce this message")("tool", po::value<std::string>(), "Select a tool");
-  desc.add(tool);
-  auto parsed = po::command_line_parser(argc, argv).options(desc).allow_unregistered().run();
-
-  po::positional_options_description pos;
-  auto positional_if_not_provided = [&](const std::string & e) {
-    auto it = std::find_if(parsed.options.begin(), parsed.options.end(),
-                           [&e](const po::option & o) { return o.string_key == e; });
-    if(it == parsed.options.end())
-    {
-      pos.add(e.c_str(), 1);
-    }
-  };
-  positional_if_not_provided("tool");
-  for(const auto & e : extra)
-  {
-    positional_if_not_provided(e);
-  }
-  if(extra.size() == 0)
-  {
-    pos.add("misc", -1);
-    desc.add_options()("misc", po::value<std::vector<std::string>>(), "Tool options");
-  }
-  po::store(po::command_line_parser(argc, argv).options(desc).positional(pos).allow_unregistered().run(), vm);
-}
-
 int show(int argc, char * argv[])
 {
   po::variables_map vm;
   po::options_description tool("mc_bin_utils show options");
-  tool.add_options()("in", po::value<std::string>(), "Input file");
-  fill_options(argc, argv, vm, tool, {"in"});
+  // clang-format off
+  tool.add_options()
+    ("help", "Produce this message")
+    ("in", po::value<std::string>(), "Input file");
+  // clang-format on
+  po::positional_options_description pos;
+  pos.add("in", 1);
+  po::store(po::command_line_parser(argc, argv).options(tool).positional(pos).run(), vm);
+  po::notify(vm);
 
   if(!vm.count("in") || vm.count("help"))
   {
@@ -92,10 +66,8 @@ int show(int argc, char * argv[])
   double start_t = 0;
   double end_t = 0;
   size_t n = 0;
-  auto callback = [&](const std::vector<std::string> & ks,
-                      const std::vector<mc_rtc::log::FlatLog::record> & records,
-                      double t)
-  {
+  auto callback = [&](const std::vector<std::string> & ks, const std::vector<mc_rtc::log::FlatLog::record> & records,
+                      double t) {
     if(n++ == 0)
     {
       start_t = t;
@@ -137,9 +109,19 @@ int split(int argc, char * argv[])
 {
   po::variables_map vm;
   po::options_description tool("mc_bin_utils split options");
-  tool.add_options()("in", po::value<std::string>(), "Input file")("out", po::value<std::string>(), "Output template")(
-      "parts", po::value<unsigned int>(), "Number of parts");
-  fill_options(argc, argv, vm, tool, {"in", "out", "parts"});
+  // clang-format off
+  tool.add_options()
+    ("help", "Produce this message")
+    ("in", po::value<std::string>(), "Input file")
+    ("out", po::value<std::string>(), "Output template")
+    ("parts", po::value<unsigned int>(), "Number of parts");
+  // clang-format on
+  po::positional_options_description pos;
+  pos.add("in", 1);
+  pos.add("out", 1);
+  pos.add("parts", 1);
+  po::store(po::command_line_parser(argc, argv).options(tool).positional(pos).run(), vm);
+  po::notify(vm);
   if(vm.count("help") || !vm.count("in") || !vm.count("out") || !vm.count("parts"))
   {
     std::cout << "Usage: mc_bin_utils split [in] [out] [parts]\n\n";
@@ -173,13 +155,8 @@ int split(int argc, char * argv[])
   size_t part = 0;
   size_t desired_size = part_size;
   std::ofstream ofs;
-  auto callback = [&](const std::vector<std::string> & ks,
-                      const std::vector<mc_rtc::log::FlatLog::record> &,
-                      double,
-                      const mc_rtc::log::copy_callback & copy,
-                      const char * data,
-                      size_t dataSize)
-  {
+  auto callback = [&](const std::vector<std::string> & ks, const std::vector<mc_rtc::log::FlatLog::record> &, double,
+                      const mc_rtc::log::copy_callback & copy, const char * data, size_t dataSize) {
     // Start a new part if no data has been written
     if(written == 0)
     {
@@ -234,20 +211,57 @@ int split(int argc, char * argv[])
 
 int extract(int argc, char * argv[])
 {
+  std::string in = "";
+  std::string out = "";
+  std::string key = "";
+  double from = 0;
+  double to = std::numeric_limits<double>::infinity();
   po::variables_map vm;
   po::options_description tool("mc_bin_utils extract options");
-  tool.add_options()("in", po::value<std::string>(), "Input file")("out", po::value<std::string>(), "Output template")(
-      "key", po::value<std::string>(), "Key to extract");
-  fill_options(argc, argv, vm, tool, {"in", "out", "key"});
-  if(vm.count("help") || !vm.count("in") || !vm.count("out") || !vm.count("key"))
+  // clang-format off
+  tool.add_options()
+    ("help", "Produce this message")
+    ("in", po::value<std::string>(&in), "Input file")
+    ("out", po::value<std::string>(&out), "Output template")
+    ("key", po::value<std::string>(&key)->default_value(""), "Key to extract")
+    ("from", po::value<double>(&from)->default_value(0), "Start time")
+    ("to", po::value<double>(&to)->default_value(std::numeric_limits<double>::infinity()), "End time");
+  // clang-format on
+  po::positional_options_description pos;
+  pos.add("in", 1);
+  pos.add("out", 1);
+  po::store(po::command_line_parser(argc, argv).options(tool).positional(pos).run(), vm);
+  po::notify(vm);
+  auto extract_usage = [&tool]() {
+    std::cout << "Usage: mc_bin_utils extract [in] [out]\n\n";
+    std::cout << tool << "\n\n";
+    std::cout << "Examples:\n\n";
+    std::cout << "  #Extract 10 seconds of in.bin\n";
+    std::cout << "  mc_bin_utils extract in.bin out --from 50 --to 60\n\n";
+    std::cout << "  #Extract parts of the log where MyKey appears\n";
+    std::cout << "  mc_bin_utils extract in.bin out --key MyKey\n";
+  };
+  if(vm.count("help") || !vm.count("in") || !vm.count("out")
+     || (!key.size() && from == 0 && to == std::numeric_limits<double>::infinity()))
   {
-    std::cout << "Usage: mc_bin_utils extract [in] [out] [key]\n\n";
-    std::cout << tool << "\n";
+    extract_usage();
     return !vm.count("help");
   }
-  auto in = vm["in"].as<std::string>();
-  auto out = vm["out"].as<std::string>();
-  auto key = vm["key"].as<std::string>();
+  if(key.size() && (from != 0 || to != std::numeric_limits<double>::infinity()))
+  {
+    std::cout << "key options and from/to options are exclusive\n";
+    return 1;
+  }
+  if(from < 0)
+  {
+    std::cout << "Starting time must be positive, acting as if you provided 0\n";
+    from = 0;
+  }
+  if(to <= from)
+  {
+    std::cout << "End time must be greater than starting time, acting as if you provided infinity\n";
+    to = std::numeric_limits<double>::infinity();
+  }
   size_t width = 0;
   size_t n = 0;
   auto rename_all = [&out](size_t prev_w, size_t w) {
@@ -284,48 +298,101 @@ int extract(int argc, char * argv[])
   };
   std::ofstream ofs;
   bool key_present = false;
-  auto callback = [&](const std::vector<std::string> & ks,
-                      const std::vector<mc_rtc::log::FlatLog::record> &,
-                      double,
-                      const mc_rtc::log::copy_callback &,
-                      const char * data,
-                      size_t dataSize)
-  {
-   if(ks.size())
-   {
-     bool key_was_present = key_present;
-     key_present = std::find_if(ks.begin(), ks.end(), [&key](const std::string & k) { return k == key; }) != ks.end();
-     if(key_present && !key_was_present)
-     {
-       std::string nfile = out_name(n);
-       ofs.open(nfile);
-       if(!ofs)
-       {
-         LOG_ERROR("Failed to open " << nfile << "for writing")
-         return false;
-       }
-       ofs.write((const char *)&mc_rtc::Logger::magic, sizeof(mc_rtc::Logger::magic));
-       n++;
-     }
-     if(key_was_present && !key_present)
-     {
-       ofs.close();
-     }
-   }
-   if(key_present)
-   {
-    ofs.write((char *)&dataSize, sizeof(size_t));
-    ofs.write(data, dataSize * sizeof(char));
-   }
-   return true;
+  auto callback_extract_key = [&](const std::vector<std::string> & ks,
+                                  const std::vector<mc_rtc::log::FlatLog::record> &, double,
+                                  const mc_rtc::log::copy_callback &, const char * data, size_t dataSize) {
+    if(ks.size())
+    {
+      bool key_was_present = key_present;
+      key_present = std::find_if(ks.begin(), ks.end(), [&key](const std::string & k) { return k == key; }) != ks.end();
+      if(key_present && !key_was_present)
+      {
+        std::string nfile = out_name(n);
+        ofs.open(nfile, std::ofstream::binary);
+        if(!ofs)
+        {
+          LOG_ERROR("Failed to open " << nfile << "for writing")
+          return false;
+        }
+        ofs.write((const char *)&mc_rtc::Logger::magic, sizeof(mc_rtc::Logger::magic));
+        n++;
+      }
+      if(key_was_present && !key_present)
+      {
+        ofs.close();
+      }
+    }
+    if(key_present)
+    {
+      ofs.write((char *)&dataSize, sizeof(size_t));
+      ofs.write(data, dataSize * sizeof(char));
+    }
+    return true;
   };
-  if(!mc_rtc::log::iterate_binary_log(in, callback, false))
+  std::vector<std::string> keys;
+  double final_t = 0;
+  auto callback_extract_from_to = [&](const std::vector<std::string> & ks,
+                                      const std::vector<mc_rtc::log::FlatLog::record> &, double t,
+                                      const mc_rtc::log::copy_callback & copy, const char * data, size_t dataSize) {
+    final_t = t;
+    if(ks.size())
+    {
+      keys = ks;
+    }
+    if(t >= from && t <= to)
+    {
+      if(!ofs.is_open())
+      {
+        std::stringstream ss;
+        ss << out << "_from_" << from << "_to_";
+        if(to == std::numeric_limits<double>::infinity())
+        {
+          ss << "end";
+        }
+        else
+        {
+          ss << to;
+        }
+        ss << ".bin";
+        ofs.open(ss.str(), std::ofstream::binary);
+        ofs.write((const char *)&mc_rtc::Logger::magic, sizeof(mc_rtc::Logger::magic));
+        if(!ks.size())
+        {
+          std::vector<char> data;
+          mc_rtc::MessagePackBuilder builder(data);
+          copy(builder, keys);
+          size_t s = builder.finish();
+          ofs.write((char *)(&s), sizeof(size_t));
+          ofs.write(data.data(), s);
+          return true;
+        }
+      }
+      ofs.write((char *)&dataSize, sizeof(size_t));
+      ofs.write(data, dataSize * sizeof(char));
+    }
+    return true;
+  };
+  if(key.size())
   {
-    return 1;
+    if(!mc_rtc::log::iterate_binary_log(in, callback_extract_key, false))
+    {
+      return 1;
+    }
+    if(n == 0)
+    {
+      std::cout << "No key " << key << " in this log file\n";
+    }
   }
-  if(n == 0)
+  if(from != 0 || to != std::numeric_limits<double>::infinity())
   {
-    std::cout << "No key " << key << " in this log file\n";
+    if(!mc_rtc::log::iterate_binary_log(in, callback_extract_from_to, false))
+    {
+      return 1;
+    }
+    if(!ofs.is_open())
+    {
+      std::cout << "Provided start time is higher than last time recorded: " << final_t << "\n";
+    }
   }
   return 0;
 }
@@ -335,14 +402,22 @@ int convert(int argc, char * argv[])
   po::variables_map vm;
   po::options_description tool("mc_bin_utils convert options");
   double dt = 0.005;
-  tool.add_options()("in", po::value<std::string>(), "Input file")("out", po::value<std::string>(),
-                                                                   "Output file or template")(
-      "format", po::value<std::string>(), "Log format (csv|flat|bag), can be deduced from [out]")(
-      "dt", po::value<double>(&dt), "Log timestep (only for bag conversion)");
-  fill_options(argc, argv, vm, tool, {"in", "out", "format", "dt"});
+  // clang-format off
+  tool.add_options()
+    ("help", "Produce this message")
+    ("in", po::value<std::string>(), "Input file")
+    ("out", po::value<std::string>(), "Output file or template")
+    ("format", po::value<std::string>(), "Log format (csv|flat|bag), can be deduced from [out]")
+    ("dt", po::value<double>(&dt), "Log timestep (only for bag conversion)");
+  // clang-format on
+  po::positional_options_description pos;
+  pos.add("in", 1);
+  pos.add("out", 1);
+  po::store(po::command_line_parser(argc, argv).options(tool).positional(pos).run(), vm);
+  po::notify(vm);
   if(vm.count("help") || !vm.count("in") || !vm.count("out"))
   {
-    std::cout << "Usage: mc_bin_utils convert [in] [out] ([format] [dt])\n\n";
+    std::cout << "Usage: mc_bin_utils convert [in] [out]\n\n";
     std::cout << tool << "\n";
     return !vm.count("help");
   }
@@ -441,16 +516,14 @@ int convert(int argc, char * argv[])
 
 int main(int argc, char * argv[])
 {
-  po::variables_map vm;
-  fill_options(argc, argv, vm, {}, {});
-
-  if(!vm.count("tool"))
+  if(argc < 2)
   {
     usage();
     return 0;
   }
-
-  auto tool = vm["tool"].as<std::string>();
+  std::string tool = argv[1];
+  argc = argc - 1;
+  argv = &argv[1];
   if(tool == "show")
   {
     return show(argc, argv);
