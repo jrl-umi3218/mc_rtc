@@ -142,16 +142,15 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
 
 bool MCController::runObservers()
 {
-  for(const auto & observerName : observersOrder)
+  for(const auto & observer : observers)
   {
-    auto observer = observers[observerName];
     bool r = observer->run(real_robots->robot());
     if(!r)
     {
-      LOG_ERROR("Observer " << observerName << " failed to run");
+      LOG_ERROR("Observer " << observer->name() << " failed to run");
       return false;
     }
-    if(std::find(updateObservers.begin(), updateObservers.end(), observerName) != updateObservers.end())
+    if(std::find(updateObservers.begin(), updateObservers.end(), observer) != updateObservers.end())
     {
       observer->updateRobot(real_robots->robot());
     }
@@ -201,18 +200,18 @@ void MCController::reset(const ControllerResetData & reset_data)
 
   for(const auto & observer : observers)
   {
-    const auto & observerName = observer.first;
-    observer.second->reset(real_robots->robot());
+    const auto & observerName = observer->name();
+    observer->reset(real_robots->robot());
     LOG_INFO("[Observers] Resetting observer " << observerName);
-    if(std::find(updateObservers.begin(), updateObservers.end(), observerName) != updateObservers.end())
+    if(std::find(updateObservers.begin(), updateObservers.end(), observer) != updateObservers.end())
     {
       LOG_INFO("[Observers] Will update real robot from observer " << observerName);
-      observer.second->updateRobot(real_robots->robot());
+      observer->updateRobot(real_robots->robot());
     }
-    observer.second->addToLogger(logger());
+    observer->addToLogger(logger());
     if(gui_)
     {
-      observer.second->addToGUI(*gui_);
+      observer->addToGUI(*gui_);
     }
   }
 }

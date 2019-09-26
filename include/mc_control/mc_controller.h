@@ -305,15 +305,13 @@ protected:
   /** Real robots provided by MCGlobalController, nullptr until ::reset */
   std::shared_ptr<mc_rbdyn::Robots> real_robots;
 
-  /** Observers provided by MCGlobalController */
-  std::map<std::string, std::shared_ptr<mc_observers::Observer>> observers;
   /** Observers order provided by MCGlobalController
    * Observers will be run and update real robot in that order
    **/
-  std::vector<std::string> observersOrder;
+  std::vector<mc_observers::ObserverPtr> observers;
   /** Observers that will be updating the realRobot provided by
    * MCGlobalController */
-  std::vector<std::string> updateObservers;
+  std::vector<mc_observers::ObserverPtr> updateObservers;
   /** Logger provided by MCGlobalController */
   std::shared_ptr<mc_rtc::Logger> logger_;
   /** GUI state builder */

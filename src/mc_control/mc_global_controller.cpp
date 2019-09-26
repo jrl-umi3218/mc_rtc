@@ -96,8 +96,11 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
   {
     if(mc_observers::ObserverLoader::has_observer(observerName))
     {
-      observers[observerName] = mc_observers::ObserverLoader::get_observer(observerName, config.timestep,
-                                                                           config.observers_configs[observerName]);
+      auto observer = mc_observers::ObserverLoader::get_observer(observerName, config.timestep,
+                                                                 config.observers_configs[observerName]);
+
+      observers.push_back(observer);
+      observersByName[observerName] = observer;
     }
     else
     {
@@ -132,7 +135,7 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
       // Update observers robots for initial controller
       for(auto & observer : observers)
       {
-        observer.second->robots_ = &controller_->robots();
+        observer->robots_ = &controller_->robots();
       }
     }
   }
@@ -437,12 +440,12 @@ bool MCGlobalController::run()
     // Update observers robots
     for(auto & observer : observers)
     {
-      observer.second->removeFromLogger(controller_->logger());
+      observer->removeFromLogger(controller_->logger());
       if(controller_->gui())
       {
-        observer.second->removeFromGUI(*controller_->gui());
+        observer->removeFromGUI(*controller_->gui());
       }
-      observer.second->robots_ = &controller_->robots();
+      observer->robots_ = &controller_->robots();
     }
     if(config.enable_log)
     {
@@ -639,23 +642,22 @@ bool MCGlobalController::AddController(const std::string & name)
     // Give each controller access to all observers
     controllers[name]->observers = observers;
     const auto & cc = config.controllers_configs[name];
-    controllers[name]->observersOrder = config.enabled_observers;
-    controllers[name]->updateObservers = config.update_observers;
     // Use controller-specific configuration instead of global configuration
     if(cc.has("UpdateObservers"))
     {
-      controllers[name]->updateObservers = cc("UpdateObservers");
-    }
-
-    // Check that all update observers have been loaded
-    for(const auto & observerName : controllers[name]->updateObservers)
-    {
-      if(observers.count(observerName) == 0)
+      for(const auto & observerName : cc("UpdateObservers"))
       {
-        LOG_ERROR_AND_THROW(std::runtime_error,
-                            "Controller "
-                                << controller_name << " requested observer " << observerName
-                                << " but this observer is not available. Check your EnabledObservers configuration");
+        if(observersByName.count(observerName) > 0)
+        {
+          controllers[name]->updateObservers.push_back(observersByName[observerName]);
+        }
+        else
+        {
+          LOG_ERROR_AND_THROW(std::runtime_error,
+                              "Controller "
+                                  << controller_name << " requested observer " << observerName
+                                  << " but this observer is not available. Check your EnabledObservers configuration");
+        }
       }
     }
     return true;

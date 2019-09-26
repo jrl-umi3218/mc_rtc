@@ -94,6 +94,8 @@ private:
   mc_rbdyn::Robots * robots_;
 };
 
+using ObserverPtr = std::shared_ptr<mc_observers::Observer>;
+
 } // namespace mc_observers
 
 /* Set of macros to assist with the writing of an Observer */
