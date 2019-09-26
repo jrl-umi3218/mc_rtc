@@ -38,6 +38,21 @@ macro(add_robot_simple robot_name)
   add_robot(${robot_name} ${robot_name}.cpp ${robot_name}.h)
 endmacro()
 
+# -- Observers --
+set(MC_OBSERVERS_INSTALL_PREFIX "${MC_RTC_LIBDIR}/mc_observers")
+
+macro(add_observer observer_name observer_SRC observer_HDR)
+  add_library(${observer_name} SHARED ${observer_SRC} ${observer_HDR})
+  set_target_properties(${observer_name} PROPERTIES COMPILE_FLAGS "-DMC_OBSERVERS_EXPORTS" PREFIX "")
+  target_link_libraries(${observer_name} PUBLIC mc_rbdyn mc_rtc_gui)
+  install(TARGETS ${observer_name} DESTINATION ${MC_OBSERVERS_INSTALL_PREFIX})
+endmacro()
+
+macro(add_observer_simple observer_base)
+  add_observer(${observer_base} ${observer_base}.cpp ${observer_base}.h)
+endmacro()
+
+
 # -- States --
 
 set(MC_STATES_DEFAULT_INSTALL_PREFIX "${MC_CONTROLLER_INSTALL_PREFIX}/fsm/states")
