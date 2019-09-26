@@ -26,12 +26,12 @@ EncoderObserver::EncoderObserver(const std::string & name, double dt, const mc_r
   }
   else
   {
-    posUpdate_ = Update::None;
-    LOG_WARNING("[EncoderObserver] Invalid configuration value for UpdatePosition, running without update of joint "
-                "position. (Valid values are [control, sensor, none])");
+    LOG_WARNING("[EncoderObserver] Invalid configuration value for UpdatePosition (valid values are [control, sensor, "
+                "none]), using default behaviour (updating joint velocity from estimator) ");
+    posUpdate_ = Update::Estimator;
   }
 
-  const std::string & velocity = config("UpdateVelocity", std::string());
+  const std::string & velocity = config("UpdateVelocity", std::string("estimator"));
   if(velocity == "control")
   {
     velUpdate_ = Update::Control;
@@ -46,9 +46,9 @@ EncoderObserver::EncoderObserver(const std::string & name, double dt, const mc_r
   }
   else
   {
-    LOG_WARNING("[EncoderObserver] Invalid configuration value for UpdateVelocity, running without update of joint "
-                "velocity. (Valid values are [control, sensor, none])");
-    velUpdate_ = Update::None;
+    LOG_WARNING("[EncoderObserver] Invalid configuration value for UpdateVelocity (valid values are [control, sensor, "
+                "none]), using default behaviour (updating joint velocity from estimator) ");
+    velUpdate_ = Update::Estimator;
   }
 
   logEstimation_ = config("Log", false);
