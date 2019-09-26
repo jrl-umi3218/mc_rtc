@@ -11,6 +11,7 @@
 
 #include <mc_rtc/config.h>
 #include <mc_rtc/log/FlatLog.h>
+#include <mc_rtc/log/iterate_binary_log.h>
 #include <mc_rtc/log/Logger.h>
 
 #include <boost/filesystem.hpp>
@@ -73,13 +74,6 @@ void fill_options(int argc,
   po::store(po::command_line_parser(argc, argv).options(desc).positional(pos).allow_unregistered().run(), vm);
 }
 
-// Given a bin file check that it has the correct magic number
-bool check_bin(std::ifstream & ifs, std::vector<char> & buffer)
-{
-  ifs.read(buffer.data(), sizeof(mc_rtc::Logger::magic));
-  return memcmp(buffer.data(), &mc_rtc::Logger::magic, sizeof(mc_rtc::Logger::magic)) == 0;
-}
-
 int show(int argc, char * argv[])
 {
   po::variables_map vm;
@@ -94,70 +88,33 @@ int show(int argc, char * argv[])
     return !vm.count("help");
   }
   std::string in = vm["in"].as<std::string>();
-  bfs::path in_p(in);
-  if(!bfs::exists(in_p) || !bfs::is_regular_file(in_p))
-  {
-    std::cerr << in << " does not exist or is not a file, aborting...\n";
-    return 1;
-  }
-  std::ifstream ifs(in, std::ifstream::binary);
-  std::vector<char> buffer(1024);
-  if(!check_bin(ifs, buffer))
-  {
-    std::cerr << in << " does not appear to be a valid bin file, aborting...\n";
-    return 1;
-  }
   std::set<std::pair<std::string, mc_rtc::log::LogType>> keys;
   double start_t = 0;
   double end_t = 0;
   size_t n = 0;
-  bool has_t = false;
-  size_t t_index = 0;
-  while(ifs)
+  auto callback = [&](const std::vector<std::string> & ks,
+                      const std::vector<mc_rtc::log::FlatLog::record> & records,
+                      double t)
   {
-    size_t entrySize = 0;
-    ifs.read((char *)&entrySize, sizeof(size_t));
-    if(!ifs)
+    if(n++ == 0)
     {
-      break;
+      start_t = t;
     }
-    while(buffer.size() < static_cast<size_t>(entrySize))
+    end_t = t;
+    if(ks.size())
     {
-      buffer.resize(2 * buffer.size());
-    }
-    ifs.read(buffer.data(), entrySize);
-    if(!ifs)
-    {
-      break;
-    }
-    mc_rtc::log::internal::LogEntry log(buffer, entrySize, false);
-    if(!log.valid())
-    {
-      return 1;
-    }
-    if(log.keys().size())
-    {
-      has_t = false;
-      for(size_t i = 0; i < log.keys().size(); ++i)
+      for(size_t i = 0; i < ks.size(); ++i)
       {
-        const auto & k = log.keys()[i];
-        if(k == "t")
-        {
-          has_t = true;
-          t_index = i;
-        }
-        keys.insert(std::make_pair(log.keys()[i], log.records()[i].type));
+        const std::string & k = ks[i];
+        const mc_rtc::log::FlatLog::record & r = records[i];
+        keys.insert(std::make_pair(k, r.type));
       }
     }
-    if(has_t && n == 0)
-    {
-      start_t = log.getTime(t_index);
-    }
-    else
-    {
-      end_t = log.getTime(t_index);
-    }
-    n++;
+    return true;
+  };
+  if(!mc_rtc::log::iterate_binary_log(in, callback, false))
+  {
+    return 1;
   }
   std::cout << in << " summary\n";
   std::cout << "Entries: " << keys.size() << "\n";
@@ -211,71 +168,66 @@ int split(int argc, char * argv[])
     return 1;
   }
   auto width = static_cast<int>(std::to_string(parts).size());
-  std::ifstream ifs(in, std::ifstream::binary);
-  std::vector<char> buffer(1024);
-  if(!check_bin(ifs, buffer))
-  {
-    std::cerr << in << " does not appear to be a valid bin file, aborting...\n";
-    return 1;
-  }
   std::vector<std::string> keys;
-  auto split_file = [&](unsigned int n, size_t desired_size) {
-    std::stringstream ss;
-    ss << out << "_" << std::setfill('0') << std::setw(static_cast<int>(width)) << (n + 1) << ".bin";
-    std::ofstream ofs(ss.str(), std::ofstream::binary);
-    if(!ofs)
+  size_t written = 0;
+  size_t part = 0;
+  size_t desired_size = part_size;
+  std::ofstream ofs;
+  auto callback = [&](const std::vector<std::string> & ks,
+                      const std::vector<mc_rtc::log::FlatLog::record> &,
+                      double,
+                      const mc_rtc::log::copy_callback & copy,
+                      const char * data,
+                      size_t dataSize)
+  {
+    // Start a new part if no data has been written
+    if(written == 0)
     {
-      LOG_ERROR("Failed to open " << ss.str() << " for writing")
-      return false;
+      if(ofs.is_open())
+      {
+        ofs.close();
+      }
+      std::stringstream ss;
+      ss << out << "_" << std::setfill('0') << std::setw(static_cast<int>(width)) << ++part << ".bin";
+      if(part == parts)
+      {
+        desired_size = size;
+      }
+      ofs.open(ss.str(), std::ofstream::binary);
+      if(!ofs)
+      {
+        LOG_ERROR("Failed to open " << ss.str() << " for writing")
+        return false;
+      }
+      ofs.write((const char *)&mc_rtc::Logger::magic, sizeof(mc_rtc::Logger::magic));
     }
-    ofs.write((const char *)&mc_rtc::Logger::magic, sizeof(mc_rtc::Logger::magic));
-    size_t written = 0;
-    while(ifs && written < desired_size)
+    if(ks.size())
     {
-      size_t entrySize = 0;
-      ifs.read((char *)&entrySize, sizeof(size_t));
-      if(!ifs)
-      {
-        break;
-      }
-      while(buffer.size() < static_cast<size_t>(entrySize))
-      {
-        buffer.resize(2 * buffer.size());
-      }
-      ifs.read(buffer.data(), entrySize);
-      if(!ifs)
-      {
-        break;
-      }
-      /** Update current keys */
-      auto log = mc_rtc::log::internal::LogEntry(buffer, entrySize, false);
-      if(log.keys().size())
-      {
-        keys = log.keys();
-      }
-      else if(written == 0)
-      {
-        std::vector<char> data;
-        mc_rtc::MessagePackBuilder builder(data);
-        log.copy(builder, keys);
-        size_t s = builder.finish();
-        ofs.write((char *)(&s), sizeof(size_t));
-        ofs.write(data.data(), s);
-        written += sizeof(size_t) + s;
-        continue;
-      }
-      ofs.write((char *)(&entrySize), sizeof(size_t));
-      ofs.write(buffer.data(), entrySize);
-      written += sizeof(size_t) + entrySize;
+      keys = ks;
+    }
+    else if(written == 0) // Started a new part but split on an entry with no keys
+    {
+      std::vector<char> data;
+      mc_rtc::MessagePackBuilder builder(data);
+      copy(builder, keys);
+      size_t s = builder.finish();
+      ofs.write((char *)(&s), sizeof(size_t));
+      ofs.write(data.data(), s);
+      written += sizeof(size_t) + s;
+      return true;
+    }
+    ofs.write((char *)&dataSize, sizeof(size_t));
+    ofs.write(data, dataSize * sizeof(char));
+    written += sizeof(size_t) + dataSize * sizeof(char);
+    if(written >= desired_size)
+    {
+      written = 0;
     }
     return true;
   };
-  for(unsigned int i = 0; i < parts; ++i)
+  if(!mc_rtc::log::iterate_binary_log(in, callback, false))
   {
-    if(!split_file(i, i != parts - 1 ? part_size : size))
-    {
-      return 1;
-    }
+    return 1;
   }
   return 0;
 }
@@ -296,19 +248,6 @@ int extract(int argc, char * argv[])
   auto in = vm["in"].as<std::string>();
   auto out = vm["out"].as<std::string>();
   auto key = vm["key"].as<std::string>();
-  bfs::path in_p(in);
-  if(!bfs::exists(in_p) || !bfs::is_regular_file(in_p))
-  {
-    std::cerr << in << " does not exist or is not file, aborting...\n";
-    return 1;
-  }
-  std::ifstream ifs(in, std::ifstream::binary);
-  std::vector<char> buffer(1024);
-  if(!check_bin(ifs, buffer))
-  {
-    std::cerr << in << " does not appear to be a valid bin file, aborting...\n";
-    return 1;
-  }
   size_t width = 0;
   size_t n = 0;
   auto rename_all = [&out](size_t prev_w, size_t w) {
@@ -345,46 +284,44 @@ int extract(int argc, char * argv[])
   };
   std::ofstream ofs;
   bool key_present = false;
-  while(ifs)
+  auto callback = [&](const std::vector<std::string> & ks,
+                      const std::vector<mc_rtc::log::FlatLog::record> &,
+                      double,
+                      const mc_rtc::log::copy_callback &,
+                      const char * data,
+                      size_t dataSize)
   {
-    size_t entrySize = 0;
-    ifs.read((char *)&entrySize, sizeof(size_t));
-    if(!ifs)
-    {
-      break;
-    }
-    while(buffer.size() < static_cast<size_t>(entrySize))
-    {
-      buffer.resize(2 * buffer.size());
-    }
-    ifs.read(buffer.data(), entrySize);
-    if(!ifs)
-    {
-      break;
-    }
-    auto log = mc_rtc::log::internal::LogEntry(buffer, entrySize);
-    if(log.keys().size())
-    {
-      bool key_was_present = key_present;
-      key_present =
-          std::find_if(log.keys().begin(), log.keys().end(), [&key](const std::string & k) { return k == key; })
-          != log.keys().end();
-      if(key_present && !key_was_present)
-      {
-        ofs.open(out_name(n));
-        ofs.write((const char *)&mc_rtc::Logger::magic, sizeof(mc_rtc::Logger::magic));
-        n++;
-      }
-      if(key_was_present && !key_present)
-      {
-        ofs.close();
-      }
-    }
-    if(key_present)
-    {
-      ofs.write((char *)&entrySize, sizeof(size_t));
-      ofs.write(buffer.data(), entrySize);
-    }
+   if(ks.size())
+   {
+     bool key_was_present = key_present;
+     key_present = std::find_if(ks.begin(), ks.end(), [&key](const std::string & k) { return k == key; }) != ks.end();
+     if(key_present && !key_was_present)
+     {
+       std::string nfile = out_name(n);
+       ofs.open(nfile);
+       if(!ofs)
+       {
+         LOG_ERROR("Failed to open " << nfile << "for writing")
+         return false;
+       }
+       ofs.write((const char *)&mc_rtc::Logger::magic, sizeof(mc_rtc::Logger::magic));
+       n++;
+     }
+     if(key_was_present && !key_present)
+     {
+       ofs.close();
+     }
+   }
+   if(key_present)
+   {
+    ofs.write((char *)&dataSize, sizeof(size_t));
+    ofs.write(data, dataSize * sizeof(char));
+   }
+   return true;
+  };
+  if(!mc_rtc::log::iterate_binary_log(in, callback, false))
+  {
+    return 1;
   }
   if(n == 0)
   {
