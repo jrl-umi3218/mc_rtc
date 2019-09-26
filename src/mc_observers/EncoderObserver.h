@@ -67,8 +67,6 @@ struct MC_OBSERVER_DLLAPI EncoderObserver : public Observer
 
   void addToLogger(mc_rtc::Logger &) override;
   void removeFromLogger(mc_rtc::Logger &) override;
-  void addToGUI(mc_rtc::gui::StateBuilder &) override;
-  void removeFromGUI(mc_rtc::gui::StateBuilder &) override;
 
 protected:
   /*! \brief Update source for the realRobot update */

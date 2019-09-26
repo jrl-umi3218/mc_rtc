@@ -99,7 +99,7 @@ void EncoderObserver::updateRobot(mc_rbdyn::Robot & realRobot)
     {
       if(robot().hasJoint(ref_joint))
       {
-        const auto joint_index = static_cast<size_t>(robot().mb().jointIndexByName(ref_joint));
+        const auto joint_index = robot().jointIndexInMBC(i);
         // Update position
         if(posUpdate_ == Update::Control)
         {
@@ -147,8 +147,6 @@ void EncoderObserver::removeFromLogger(mc_rtc::Logger & logger)
     logger.removeLogEntry("observer_" + name() + "_alpha");
   }
 }
-void EncoderObserver::addToGUI(mc_rtc::gui::StateBuilder & gui) {}
-void EncoderObserver::removeFromGUI(mc_rtc::gui::StateBuilder & gui) {}
 
 } // namespace mc_observers
 

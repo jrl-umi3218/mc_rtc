@@ -245,6 +245,20 @@ Robot::Robot(Robots & robots,
   }
 
   refJointOrder_ = module_.ref_joint_order();
+  refJointIndexToMBCIndex_.resize(refJointOrder_.size());
+  for(int i = 0; i < refJointOrder_.size(); ++i)
+  {
+    const auto & jN = refJointOrder_[i];
+    if(hasJoint(jN))
+    {
+      refJointIndexToMBCIndex_[i] = mb().jointIndexByName(jN);
+    }
+    else
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error,
+                          "[Robot] refJointOrder contains joint " << jN << " but the robot " << name_ << " does not");
+    }
+  }
 
   springs_ = module_.springs();
   flexibility_ = module_.flexibility();
@@ -330,6 +344,11 @@ bool Robot::hasBody(const std::string & name) const
 unsigned int Robot::jointIndexByName(const std::string & name) const
 {
   return mb().jointIndexByName().at(name);
+}
+
+unsigned int Robot::jointIndexInMBC(const unsigned int jointIndex) const
+{
+  return refJointIndexToMBCIndex_.at(jointIndex);
 }
 
 unsigned int Robot::bodyIndexByName(const std::string & name) const
