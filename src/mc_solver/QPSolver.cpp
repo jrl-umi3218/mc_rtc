@@ -282,7 +282,6 @@ bool QPSolver::run(FeedbackType fType)
 
 bool QPSolver::runOpenLoop()
 {
-  LOG_INFO("run openloop");
   for(auto & t : metaTasks_)
   {
     t->update();

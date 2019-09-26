@@ -92,6 +92,7 @@ set(mc_rbdyn_HDR
 ../include/mc_rbdyn/PolygonInterpolator.h
 ../include/mc_rbdyn/Robot.h
 ../include/mc_rbdyn/Robots.h
+../include/mc_rbdyn/RobotLoader.h
 ../include/mc_rbdyn/RobotModule.h
 ../include/mc_rbdyn/SCHAddon.h
 ../include/mc_rbdyn/Surface.h

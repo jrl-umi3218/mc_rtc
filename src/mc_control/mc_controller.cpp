@@ -161,7 +161,6 @@ bool MCController::runObservers()
 
 bool MCController::run()
 {
-  LOG_INFO("running QP");
   return run(mc_solver::FeedbackType::None);
 }
 
