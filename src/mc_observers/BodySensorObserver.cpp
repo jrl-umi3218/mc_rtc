@@ -22,6 +22,15 @@ BodySensorObserver::BodySensorObserver(const std::string & name, double dt, cons
   }
 
   fbSensorName_ = config("FloatingBaseSensor", std::string("FloatingBase"));
+  if(updateFrom_ == Update::Estimator)
+  {
+    if(!robot().hasBodySensor(fbSensorName_))
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, "[BodySensorObserver] Bodysensor "
+                                                  << fbSensorName_ << " is requested but does not exist in robot "
+                                                  << robot().name());
+    }
+  }
   LOG_SUCCESS("BodySensorObserver created");
 }
 

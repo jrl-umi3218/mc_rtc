@@ -97,9 +97,10 @@ void EncoderObserver::updateRobot(mc_rbdyn::Robot & realRobot)
     unsigned i = 0;
     for(const auto & ref_joint : realRobot.refJointOrder())
     {
-      if(robot().hasJoint(ref_joint))
+      LOG_INFO("Encoder estimator for joint " << ref_joint);
+      const auto joint_index = robot().jointIndexInMBC(i);
+      if(joint_index != -1 && robot().mb().joint(joint_index).dof() == 1)
       {
-        const auto joint_index = robot().jointIndexInMBC(i);
         // Update position
         if(posUpdate_ == Update::Control)
         {

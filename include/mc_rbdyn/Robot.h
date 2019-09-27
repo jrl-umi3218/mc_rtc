@@ -126,8 +126,12 @@ public:
    * \throws If the joint does not exist within the robot.
    */
   unsigned int jointIndexByName(const std::string & name) const;
+
   /** Returns the joint index in the mbc of the joint with index jointIndex in
    * refJointOrder
+   *
+   * @note Joint indices can be -1 for joints present in refJointOrder but not
+   * in the robot's mbc (such as filtered joints in some robot modules)
    *
    * @param jointIndex Joint index in refJointOrder
    *
@@ -135,7 +139,7 @@ public:
    *
    * @throws If jointIndex >= refJointOrder.size()
    */
-  unsigned int jointIndexInMBC(const unsigned int jointIndex) const;
+  int jointIndexInMBC(const unsigned int jointIndex) const;
 
   /** Returns the body index of joint named \name
    *
@@ -598,8 +602,8 @@ private:
   /** Reference joint order see mc_rbdyn::RobotModule */
   std::vector<std::string> refJointOrder_;
   /** Correspondance between refJointOrder (actuated joints) index and
-   * mbc index */
-  std::vector<unsigned int> refJointIndexToMBCIndex_;
+   * mbc index. **/
+  std::vector<int> refJointIndexToMBCIndex_;
   /** Encoder values provided by the low-level controller */
   std::vector<double> encoderValues_;
   /** Encoder velocities provided by the low-level controller or estimated from

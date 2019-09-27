@@ -255,8 +255,7 @@ Robot::Robot(Robots & robots,
     }
     else
     {
-      LOG_ERROR_AND_THROW(std::runtime_error,
-                          "[Robot] refJointOrder contains joint " << jN << " but the robot " << name_ << " does not");
+      refJointIndexToMBCIndex_[i] = -1;
     }
   }
 
@@ -346,7 +345,7 @@ unsigned int Robot::jointIndexByName(const std::string & name) const
   return mb().jointIndexByName().at(name);
 }
 
-unsigned int Robot::jointIndexInMBC(const unsigned int jointIndex) const
+int Robot::jointIndexInMBC(const unsigned int jointIndex) const
 {
   return refJointIndexToMBCIndex_.at(jointIndex);
 }
