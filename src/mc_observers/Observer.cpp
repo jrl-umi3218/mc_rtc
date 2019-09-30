@@ -6,21 +6,12 @@
 
 namespace mc_observers
 {
-Observer::Observer(const std::string & name, double dt, const mc_rtc::Configuration & config) : name_(name), dt_(dt) {}
+Observer::Observer(const std::string & name, double dt, const mc_rtc::Configuration & /* config */)
+: name_(name), dt_(dt)
+{
+}
 
 Observer::~Observer() {}
-
-const mc_rbdyn::Robots & Observer::robots() const
-{
-  assert(robots_);
-  return *robots_;
-}
-
-const mc_rbdyn::Robot & Observer::robot() const
-{
-  assert(robots_);
-  return robots_->robot();
-}
 
 const std::string & Observer::name() const
 {

@@ -7,32 +7,34 @@
 
 #include "KinematicInertialPoseObserver.h"
 
+#include <mc_control/mc_controller.h>
 #include <mc_rbdyn/rpy_utils.h>
 
 namespace mc_observers
 {
 KinematicInertialPoseObserver::KinematicInertialPoseObserver(const std::string & name,
                                                              double dt,
-                                                             const mc_rtc::Configuration & config)
+                                                             const mc_rtc::Configuration & /* config */)
 : Observer(name, dt), orientation_(Eigen::Matrix3d::Identity()), position_(Eigen::Vector3d::Zero()), leftFootRatio_(0.5)
 {
   LOG_SUCCESS("KinematicInertialPoseObserver created")
 }
 
-void KinematicInertialPoseObserver::reset(const mc_rbdyn::Robot & realRobot)
+void KinematicInertialPoseObserver::reset(const mc_control::MCController & ctl)
 {
-  run(realRobot);
+  run(ctl);
   LOG_SUCCESS("KinematicInertialPoseObserver reset");
 }
 
-bool KinematicInertialPoseObserver::run(const mc_rbdyn::Robot & realRobot)
+bool KinematicInertialPoseObserver::run(const mc_control::MCController & ctl)
 {
-  estimateOrientation(realRobot);
-  estimatePosition(realRobot);
+  estimateOrientation(ctl.robot(), ctl.realRobot());
+  estimatePosition(ctl.robot(), ctl.realRobot());
   return true;
 }
 
-void KinematicInertialPoseObserver::estimateOrientation(const mc_rbdyn::Robot & realRobot)
+void KinematicInertialPoseObserver::estimateOrientation(const mc_rbdyn::Robot & robot,
+                                                        const mc_rbdyn::Robot & realRobot)
 {
   // Prefixes:
   // c for control-robot model
@@ -41,17 +43,17 @@ void KinematicInertialPoseObserver::estimateOrientation(const mc_rbdyn::Robot & 
   sva::PTransformd X_0_rBase = realRobot.posW();
   sva::PTransformd X_0_rIMU = realRobot.bodyPosW(realRobot.bodySensor().parentBody());
   sva::PTransformd X_rIMU_rBase = X_0_rBase * X_0_rIMU.inv();
-  Eigen::Matrix3d E_0_mIMU = robot().bodySensor().orientation().toRotationMatrix();
-  Eigen::Matrix3d E_0_cBase = robot().posW().rotation();
+  Eigen::Matrix3d E_0_mIMU = robot.bodySensor().orientation().toRotationMatrix();
+  Eigen::Matrix3d E_0_cBase = robot.posW().rotation();
   Eigen::Matrix3d E_0_mBase = X_rIMU_rBase.rotation() * E_0_mIMU;
   Eigen::Vector3d cRPY = mc_rbdyn::rpyFromMat(E_0_cBase);
   Eigen::Vector3d mRPY = mc_rbdyn::rpyFromMat(E_0_mBase);
   orientation_ = mc_rbdyn::rpyToMat(mRPY(0), mRPY(1), cRPY(2));
 }
 
-void KinematicInertialPoseObserver::estimatePosition(const mc_rbdyn::Robot & realRobot)
+void KinematicInertialPoseObserver::estimatePosition(const mc_rbdyn::Robot & robot, const mc_rbdyn::Robot & realRobot)
 {
-  sva::PTransformd X_0_c = getAnchorFrame(robot());
+  sva::PTransformd X_0_c = getAnchorFrame(robot);
   sva::PTransformd X_0_s = getAnchorFrame(realRobot);
   const sva::PTransformd & X_0_real = realRobot.posW();
   sva::PTransformd X_real_s = X_0_s * X_0_real.inv();
@@ -67,12 +69,13 @@ sva::PTransformd KinematicInertialPoseObserver::getAnchorFrame(const mc_rbdyn::R
   return sva::interpolate(X_0_r, X_0_l, leftFootRatio_);
 }
 
-void KinematicInertialPoseObserver::updateRobot(mc_rbdyn::Robot & realRobot)
+void KinematicInertialPoseObserver::updateRobot(const mc_control::MCController & /* ctl */,
+                                                mc_rbdyn::Robots & realRobots)
 {
-  realRobot.posW(sva::PTransformd{orientation_, position_});
+  realRobots.robot().posW(sva::PTransformd{orientation_, position_});
 }
 
-void KinematicInertialPoseObserver::addToLogger(mc_rtc::Logger & logger)
+void KinematicInertialPoseObserver::addToLogger(const mc_control::MCController &, mc_rtc::Logger & logger)
 {
   logger.addLogEntry("observer_" + name() + "_posW", [this]() { return posW(); });
 }

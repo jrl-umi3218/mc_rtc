@@ -262,8 +262,19 @@ public:
     return gui_;
   }
 
-  /** Access real robots data */
+  /** Return the mc_rbdyn::Robots real robots instance
+   * \anchor mc_controller_real_robots_const_doc
+   */
   const mc_rbdyn::Robots & realRobots() const;
+  /** Non-const variant of \ref mc_controller_real_robots_const_doc "realRobots()" **/
+  mc_rbdyn::Robots & realRobots();
+
+  /** Return the main mc_rbdyn::Robot real robot instance
+   * \anchor mc_controller_real_robot_const_doc
+   */
+  const mc_rbdyn::Robot & realRobot() const;
+  /** Non-const variant of \ref mc_controller_real_robot_const_doc "realRobot()" */
+  mc_rbdyn::Robot & realRobot();
 
   /** Returns a list of robots supported by the controller.
    * \return Vector of supported robots designed by name (as returned by

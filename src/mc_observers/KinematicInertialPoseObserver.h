@@ -41,27 +41,21 @@ struct MC_OBSERVER_DLLAPI KinematicInertialPoseObserver : public Observer
 
   /** Reset floating base estimate from the current control robot state and
    * estimates the floating base position by calling run()
-   *
-   * \param realRobot Robot from which the initial pose is to be estimated
-   *
    */
-  void reset(const mc_rbdyn::Robot & realRobot) override;
+  void reset(const mc_control::MCController & ctl) override;
 
   /** Update floating-base transform of real robot
-   *
-   * \param realRobot Estimated robot state. Uses kinematic information only
-   *
    */
-  bool run(const mc_rbdyn::Robot & realRobot) override;
+  bool run(const mc_control::MCController & ctl) override;
 
   /** Write observed floating-base transform to the robot's configuration
    *
    * \param robot Robot state to write to
    *
    */
-  void updateRobot(mc_rbdyn::Robot & realRobot) override;
+  void updateRobot(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots) override;
 
-  void updateBodySensor(mc_rbdyn::Robot & robot, const std::string & sensorName = "FloatingBase");
+  void updateBodySensor(mc_rbdyn::Robots & robots, const std::string & sensorName = "FloatingBase");
 
   /** Set fraction of total weight sustained by the left foot.
    * To avoid state jumps, avoid sudden changes of this ratio. Typically, in
@@ -83,26 +77,28 @@ struct MC_OBSERVER_DLLAPI KinematicInertialPoseObserver : public Observer
     return {orientation_, position_};
   }
 
-  void addToLogger(mc_rtc::Logger &) override;
+  void addToLogger(const mc_control::MCController & ctl, mc_rtc::Logger &) override;
   void removeFromLogger(mc_rtc::Logger &) override;
 
 protected:
   /** Update floating-base orientation based on new observed gravity vector.
    *
+   * \param robot Control robot model.
    * \param realRobot Measured robot state.
    *
    */
-  void estimateOrientation(const mc_rbdyn::Robot & realRobot);
+  void estimateOrientation(const mc_rbdyn::Robot & robot, const mc_rbdyn::Robot & realRobot);
 
   /* Update floating-base position.
    *
+   * \param robot Control robot model.
    * \param realRobot Measurements robot model.
    *
    * The new position is chosen so that the origin of the real anchor frame
    * coincides with the control anchor frame.
    *
    */
-  void estimatePosition(const mc_rbdyn::Robot & realRobot);
+  void estimatePosition(const mc_rbdyn::Robot & robot, const mc_rbdyn::Robot & realRobot);
 
   /*! Get anchor frame of a robot for a given contact state.
    *

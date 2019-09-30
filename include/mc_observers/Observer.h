@@ -7,13 +7,12 @@
 /*! Interface used to load observers */
 
 #include <mc_observers/api.h>
-#include <mc_rbdyn/Robots.h>
 #include <mc_rtc/GUIState.h>
 #include <mc_rtc/log/Logger.h>
 
 namespace mc_control
 {
-struct MCGlobalController;
+struct MCController;
 } // namespace mc_control
 
 namespace mc_observers
@@ -21,10 +20,6 @@ namespace mc_observers
 
 struct MC_OBSERVER_DLLAPI Observer
 {
-  /** For realRobots_ pointer management **/
-  friend struct mc_control::MCGlobalController;
-
-public:
   Observer(const std::string & name, double dt, const mc_rtc::Configuration & config = {});
   virtual ~Observer();
   virtual const std::string & name() const;
@@ -32,33 +27,38 @@ public:
 
   /*! \brief Reset estimator.
    *
-   * \param robot real robot from which to reset (provided by the previous
-   * estimator in the pipeline)
-   *
+   * \param ctl Controller reference (const). Used to access information about
+   * the robot and the controller (anchor frame, contacts, desired contact
+   * force, etc).
    */
-  virtual void reset(const mc_rbdyn::Robot & realRobot) = 0;
+  virtual void reset(const mc_control::MCController & ctl) = 0;
 
   /*! \brief Compute observer state
    *
-   * \param realRobot Measured robot state (provided by the previous estimator
-   * in the pipeline)
-   *
+   * \param ctl Controller reference (const). Used to access information about
+   * the robot and the controller (anchor frame, contacts, desired contact
+   * force, etc).
    */
-  virtual bool run(const mc_rbdyn::Robot & realRobot) = 0;
+  virtual bool run(const mc_control::MCController & ctl) = 0;
 
   /*! \brief Update the real robot state from the observed state
    *
-   * \param robot Robot state to write to.
+   * \param ctl Controller reference (const). Used to access information about
+   * the robot and the controller (anchor frame, contacts, desired contact
+   * force, etc).
    *
+   * \param robot Robot state to write to. Each controller is expected to update
+   * the real robot instance with its estimates. The pipeline will only call the
+   * updateRobot() function if requested by the user.
    */
-  virtual void updateRobot(mc_rbdyn::Robot & realRobot) = 0;
+  virtual void updateRobot(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots) = 0;
 
   /*! \brief Add observer to the logger.
    *
    * Default implementation does nothing, each observer implementation is
    * responsible for logging its own data by overriding this function
    */
-  virtual void addToLogger(mc_rtc::Logger &) {}
+  virtual void addToLogger(const mc_control::MCController &, mc_rtc::Logger &) {}
   /*! \brief Remove observer from logger
    *
    * Default implementation does nothing, each observer implementation is
@@ -71,7 +71,7 @@ public:
    * responsible for adding its own elements to the GUI. Default observers will
    * be shown under the tab "Observers->observer name".
    */
-  virtual void addToGUI(mc_rtc::gui::StateBuilder &) {}
+  virtual void addToGUI(const mc_control::MCController &, mc_rtc::gui::StateBuilder &) {}
   /*! \brief Remove observer from gui
    *
    * Default implementation removes the category Observers->observer name
@@ -79,19 +79,8 @@ public:
   virtual void removeFromGUI(mc_rtc::gui::StateBuilder &);
 
 protected:
-  /*! \brief const accessor to the control robots */
-  const mc_rbdyn::Robots & robots() const;
-  /*! \brief const accessor to the main control robot */
-  const mc_rbdyn::Robot & robot() const;
-
-protected:
   std::string name_;
   double dt_;
-
-private:
-  /*! Control robot pointer provided by MCGlobalController.
-   * Should not be accessed directly, except by MCGlobalController. Use robots() and robot() accessors instead. **/
-  mc_rbdyn::Robots * robots_;
 };
 
 using ObserverPtr = std::shared_ptr<mc_observers::Observer>;

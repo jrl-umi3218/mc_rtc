@@ -31,7 +31,7 @@ namespace mc_observers
 struct MC_OBSERVER_DLLAPI BodySensorObserver : public Observer
 {
   BodySensorObserver(const std::string & name, double dt, const mc_rtc::Configuration & config = {});
-  void reset(const mc_rbdyn::Robot & realRobot) override;
+  void reset(const mc_control::MCController & ctl) override;
   /*! \brief  Compute the position of the floating base from either a
    * BodySensor. If the body-sensor is not directly attached to the floating
    * base link, the kinematic chain between the sensor and floating base is
@@ -41,18 +41,18 @@ struct MC_OBSERVER_DLLAPI BodySensorObserver : public Observer
    * \param realRobot Real robot state. Requires realRobot kinematics to be
    * known.
    */
-  bool run(const mc_rbdyn::Robot & realRobot) override;
+  bool run(const mc_control::MCController & ctl) override;
   /*! \brief Update realRobot from either BodySensor value or the control robot
    * depending on the update type.
    * Calls rbd::forwardKinematics and rbd::forwardVelocity
    *
    * \param realRobot robot to update
    */
-  void updateRobot(mc_rbdyn::Robot & realRobot) override;
+  void updateRobot(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots) override;
 
-  void addToLogger(mc_rtc::Logger &) override;
+  void addToLogger(const mc_control::MCController & ctl, mc_rtc::Logger &) override;
   void removeFromLogger(mc_rtc::Logger &) override;
-  void addToGUI(mc_rtc::gui::StateBuilder &) override;
+  void addToGUI(const mc_control::MCController & ctl, mc_rtc::gui::StateBuilder &) override;
 
 protected:
   enum class Update

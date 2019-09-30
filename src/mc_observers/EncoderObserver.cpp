@@ -4,7 +4,7 @@
 
 #include "EncoderObserver.h"
 
-#include <mc_rbdyn/rpy_utils.h>
+#include <mc_control/mc_controller.h>
 
 namespace mc_observers
 {
@@ -56,9 +56,9 @@ EncoderObserver::EncoderObserver(const std::string & name, double dt, const mc_r
   LOG_SUCCESS("EncoderObserver created")
 }
 
-void EncoderObserver::reset(const mc_rbdyn::Robot & realRobot)
+void EncoderObserver::reset(const mc_control::MCController & ctl)
 {
-  const auto & enc = robot().encoderValues();
+  const auto & enc = ctl.robot().encoderValues();
   if(enc.empty() && (posUpdate_ == Update::Estimator || velUpdate_ == Update::Estimator))
   {
     LOG_ERROR_AND_THROW(std::runtime_error, "[EncoderObserver] requires the robot to have encoder measurements")
@@ -75,9 +75,9 @@ void EncoderObserver::reset(const mc_rbdyn::Robot & realRobot)
   }
 }
 
-bool EncoderObserver::run(const mc_rbdyn::Robot & realRobot)
+bool EncoderObserver::run(const mc_control::MCController & ctl)
 {
-  const auto & enc = robot().encoderValues();
+  const auto & enc = ctl.robot().encoderValues();
   for(unsigned i = 0; i < enc.size(); ++i)
   {
     encodersVelocity_[i] = (enc[i] - prevEncoders_[i]) / dt();
@@ -86,25 +86,25 @@ bool EncoderObserver::run(const mc_rbdyn::Robot & realRobot)
   return true;
 }
 
-void EncoderObserver::updateRobot(mc_rbdyn::Robot & realRobot)
+void EncoderObserver::updateRobot(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots)
 {
-  const auto & q = robot().encoderValues();
-  const auto & alpha = robot().encoderVelocities();
+  const auto & robot = ctl.robot();
+  auto & realRobot = realRobots.robot();
+  const auto & q = robot.encoderValues();
 
-  if(q.size() == robot().refJointOrder().size())
+  if(q.size() == robot.refJointOrder().size())
   {
     // Set all joint values and velocities from encoders
     unsigned i = 0;
     for(const auto & ref_joint : realRobot.refJointOrder())
     {
-      LOG_INFO("Encoder estimator for joint " << ref_joint);
-      const auto joint_index = robot().jointIndexInMBC(i);
-      if(joint_index != -1 && robot().mb().joint(joint_index).dof() == 1)
+      const auto joint_index = robot.jointIndexInMBC(i);
+      if(joint_index != -1 && robot.mb().joint(joint_index).dof() == 1)
       {
         // Update position
         if(posUpdate_ == Update::Control)
         {
-          realRobot.mbc().q[joint_index][0] = robot().mbc().q[joint_index][0];
+          realRobot.mbc().q[joint_index][0] = robot.mbc().q[joint_index][0];
         }
         else if(posUpdate_ == Update::Estimator)
         {
@@ -114,7 +114,7 @@ void EncoderObserver::updateRobot(mc_rbdyn::Robot & realRobot)
         // Update velocity
         if(velUpdate_ == Update::Control)
         {
-          realRobot.mbc().alpha[joint_index][0] = robot().mbc().alpha[joint_index][0];
+          realRobot.mbc().alpha[joint_index][0] = robot.mbc().alpha[joint_index][0];
         }
         else if(velUpdate_ == Update::Estimator)
         {
@@ -134,7 +134,7 @@ void EncoderObserver::updateRobot(mc_rbdyn::Robot & realRobot)
   }
 }
 
-void EncoderObserver::addToLogger(mc_rtc::Logger & logger)
+void EncoderObserver::addToLogger(const mc_control::MCController & /* ctl */, mc_rtc::Logger & logger)
 {
   if(logEstimation_)
   {

@@ -132,11 +132,6 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
     {
       current_ctrl = c;
       controller_ = controllers[c].get();
-      // Update observers robots for initial controller
-      for(auto & observer : observers)
-      {
-        observer->robots_ = &controller_->robots();
-      }
     }
   }
   next_ctrl = current_ctrl;
@@ -437,7 +432,6 @@ bool MCGlobalController::run()
     }
     next_controller_ = 0;
     current_ctrl = next_ctrl;
-    // Update observers robots
     for(auto & observer : observers)
     {
       observer->removeFromLogger(controller_->logger());
@@ -445,7 +439,6 @@ bool MCGlobalController::run()
       {
         observer->removeFromGUI(*controller_->gui());
       }
-      observer->robots_ = &controller_->robots();
     }
     if(config.enable_log)
     {

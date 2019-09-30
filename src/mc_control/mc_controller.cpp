@@ -144,7 +144,7 @@ bool MCController::runObservers()
 {
   for(const auto & observer : observers)
   {
-    bool r = observer->run(real_robots->robot());
+    bool r = observer->run(*this);
     if(!r)
     {
       LOG_ERROR("Observer " << observer->name() << " failed to run");
@@ -152,7 +152,7 @@ bool MCController::runObservers()
     }
     if(std::find(updateObservers.begin(), updateObservers.end(), observer) != updateObservers.end())
     {
-      observer->updateRobot(real_robots->robot());
+      observer->updateRobot(*this, realRobots());
     }
   }
   return true;
@@ -201,17 +201,17 @@ void MCController::reset(const ControllerResetData & reset_data)
   for(const auto & observer : observers)
   {
     const auto & observerName = observer->name();
-    observer->reset(real_robots->robot());
+    observer->reset(*this);
     LOG_INFO("[Observers] Resetting observer " << observerName);
     if(std::find(updateObservers.begin(), updateObservers.end(), observer) != updateObservers.end())
     {
       LOG_INFO("[Observers] Will update real robot from observer " << observerName);
-      observer->updateRobot(real_robots->robot());
+      observer->updateRobot(*this, realRobots());
     }
-    observer->addToLogger(logger());
+    observer->addToLogger(*this, logger());
     if(gui_)
     {
-      observer->addToGUI(*gui_);
+      observer->addToGUI(*this, *gui_);
     }
   }
 }
@@ -337,6 +337,21 @@ std::vector<std::string> MCController::supported_robots() const
 const mc_rbdyn::Robots & MCController::realRobots() const
 {
   return *real_robots;
+}
+
+mc_rbdyn::Robots & MCController::realRobots()
+{
+  return *real_robots;
+}
+
+const mc_rbdyn::Robot & MCController::realRobot() const
+{
+  return real_robots->robot();
+}
+
+mc_rbdyn::Robot & MCController::realRobot()
+{
+  return real_robots->robot();
 }
 
 } // namespace mc_control

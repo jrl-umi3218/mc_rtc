@@ -27,9 +27,9 @@ struct MC_OBSERVER_DLLAPI KinematicInertialObserver : public KinematicInertialPo
    * floating base position, and initializes the velocity filter with robot's
    * floatingbase velocity realRobot.velW()
    *
-   * \param realRobot Robot state from which the observer is to be initialized.
+   * \param ctl Controller access
    */
-  void reset(const mc_rbdyn::Robot & realRobot) override;
+  void reset(const mc_control::MCController & ct) override;
 
   /*! \brief  Resets the estimator from given robot state
    * First calls FLoatingBasePosObserver::reset(realRobot) to estimate the
@@ -39,10 +39,10 @@ struct MC_OBSERVER_DLLAPI KinematicInertialObserver : public KinematicInertialPo
    * \param realRobot Robot state from which the observer is to be initialized.
    * \param velW Initial velocity
    */
-  void reset(const mc_rbdyn::Robot & realRobot, const sva::MotionVecd & velW);
-  bool run(const mc_rbdyn::Robot & realRobot) override;
-  void updateRobot(mc_rbdyn::Robot & realRobot) override;
-  void updateBodySensor(mc_rbdyn::Robot & realRobot, const std::string & sensorName = "FloatingBase");
+  void reset(const mc_control::MCController & ctl, const sva::MotionVecd & velW);
+  bool run(const mc_control::MCController & ctl) override;
+  void updateRobot(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots) override;
+  void updateBodySensor(mc_rbdyn::Robots & realRobot, const std::string & sensorName = "FloatingBase");
 
   /*! \brief Get floating-base velocity in the world frame.
    * The velocity is obtained by finite differences of the estimated position,
@@ -50,9 +50,9 @@ struct MC_OBSERVER_DLLAPI KinematicInertialObserver : public KinematicInertialPo
    **/
   const sva::MotionVecd & velW() const;
 
-  void addToLogger(mc_rtc::Logger &) override;
+  void addToLogger(const mc_control::MCController &, mc_rtc::Logger &) override;
   void removeFromLogger(mc_rtc::Logger &) override;
-  void addToGUI(mc_rtc::gui::StateBuilder &) override;
+  void addToGUI(const mc_control::MCController &, mc_rtc::gui::StateBuilder &) override;
   void removeFromGUI(mc_rtc::gui::StateBuilder &) override;
 
 private:

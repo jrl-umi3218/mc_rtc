@@ -36,16 +36,16 @@ struct MC_OBSERVER_DLLAPI EncoderObserver : public Observer
 
   /** Reset finite differences estimator from current encoder values and sets encoder velocity to zero
    *
-   * \param robot Robot from which the initial pose is to be estimated
+   * \param ctl Controller access
    *
    * \throw if the robot does not have encoder values
    */
-  void reset(const mc_rbdyn::Robot & robot) override;
+  void reset(const mc_control::MCController & ctl) override;
 
   /** Compute encoder velocity by finite differences of the sensor values
    * Uses robot()
    */
-  bool run(const mc_rbdyn::Robot & realRobot) override;
+  bool run(const mc_control::MCController & ctl) override;
 
   /** Update the real robot from the estimator state, depending on its
    * configuration:
@@ -60,12 +60,12 @@ struct MC_OBSERVER_DLLAPI EncoderObserver : public Observer
    * - UpdatePosition::None : joint position is not changed by this estimator
    * - UpdateVelocity::None : joint velocity is not changed by this estimator
    *
-   * \param robot Robot state to write to.
+   * \param realRobots Real robots state to write to.
    *
    */
-  void updateRobot(mc_rbdyn::Robot & robot) override;
+  void updateRobot(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots) override;
 
-  void addToLogger(mc_rtc::Logger &) override;
+  void addToLogger(const mc_control::MCController & ctl, mc_rtc::Logger &) override;
   void removeFromLogger(mc_rtc::Logger &) override;
 
 protected:

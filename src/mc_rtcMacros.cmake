@@ -45,7 +45,7 @@ macro(add_observer observer_name observer_SRC observer_HDR)
   add_library(${observer_name} SHARED ${observer_SRC} ${observer_HDR})
   set_target_properties(${observer_name} PROPERTIES COMPILE_FLAGS "-DMC_OBSERVERS_EXPORTS" PREFIX "")
   target_link_libraries(${observer_name} PUBLIC mc_rbdyn mc_rtc_gui)
-  install(TARGETS ${observer_name} DESTINATION ${MC_OBSERVERS_INSTALL_PREFIX})
+  install(TARGETS ${observer_name} DESTINATION "${MC_OBSERVERS_INSTALL_PREFIX}")
 endmacro()
 
 macro(add_observer_simple observer_base)

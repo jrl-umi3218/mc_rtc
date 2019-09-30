@@ -4,6 +4,8 @@
 
 #include "BodySensorObserver.h"
 
+#include <mc_control/mc_controller.h>
+
 namespace mc_observers
 {
 BodySensorObserver::BodySensorObserver(const std::string & name, double dt, const mc_rtc::Configuration & config)
@@ -22,25 +24,26 @@ BodySensorObserver::BodySensorObserver(const std::string & name, double dt, cons
   }
 
   fbSensorName_ = config("FloatingBaseSensor", std::string("FloatingBase"));
+}
+
+void BodySensorObserver::reset(const mc_control::MCController & ctl)
+{
   if(updateFrom_ == Update::Estimator)
   {
-    if(!robot().hasBodySensor(fbSensorName_))
+    if(!ctl.robot().hasBodySensor(fbSensorName_))
     {
       LOG_ERROR_AND_THROW(std::runtime_error, "[BodySensorObserver] Bodysensor "
                                                   << fbSensorName_ << " is requested but does not exist in robot "
-                                                  << robot().name());
+                                                  << ctl.robot().name());
     }
   }
-  LOG_SUCCESS("BodySensorObserver created");
+  run(ctl);
 }
 
-void BodySensorObserver::reset(const mc_rbdyn::Robot & realRobot)
+bool BodySensorObserver::run(const mc_control::MCController & ctl)
 {
-  run(realRobot);
-}
-
-bool BodySensorObserver::run(const mc_rbdyn::Robot & realRobot)
-{
+  const auto & robot = ctl.robot();
+  const auto & realRobot = ctl.realRobot();
   if(updateFrom_ == Update::Estimator)
   {
     // Update free flyer from body sensor
@@ -49,7 +52,7 @@ bool BodySensorObserver::run(const mc_rbdyn::Robot & realRobot)
     // floating base is used to obtain the floating base pose.
     // It is assumed here that the floating base sensor and encoders are
     // synchronized.
-    const auto & sensor = robot().bodySensor(fbSensorName_);
+    const auto & sensor = robot.bodySensor(fbSensorName_);
     const auto & fb = realRobot.mb().body(0).name();
     sva::PTransformd X_0_s(sensor.orientation(), sensor.position());
     const auto X_s_b = sensor.X_b_s().inv();
@@ -62,29 +65,23 @@ bool BodySensorObserver::run(const mc_rbdyn::Robot & realRobot)
   }
   else /* if(updateFrom_ == Update::Control) */
   {
-    posW_ = robot().posW();
-    velW_ = robot().velW();
+    posW_ = robot.posW();
+    velW_ = robot.velW();
   }
   return true;
 }
 
-void BodySensorObserver::updateRobot(mc_rbdyn::Robot & realRobot)
+void BodySensorObserver::updateRobot(const mc_control::MCController & /* ctl */, mc_rbdyn::Robots & realRobots)
 {
-  realRobot.posW(posW_);
-  realRobot.velW(velW_);
+  realRobots.robot().posW(posW_);
+  realRobots.robot().velW(velW_);
 }
 
-void BodySensorObserver::addToLogger(mc_rtc::Logger & logger)
+void BodySensorObserver::addToLogger(const mc_control::MCController & ctl, mc_rtc::Logger & logger)
 {
-  Observer::addToLogger(logger);
-  logger.addLogEntry("observer_" + name() + "_" + fbSensorName_ + "Sensor_posW", [this]() {
-    const auto & bs = robot().bodySensor(fbSensorName_);
-    return sva::PTransformd(bs.orientation(), bs.position());
-  });
-  logger.addLogEntry("observer_" + name() + "_" + fbSensorName_ + "Sensor_velW", [this]() {
-    const auto & bs = robot().bodySensor(fbSensorName_);
-    return sva::MotionVecd(bs.angularVelocity(), bs.linearVelocity());
-  });
+  Observer::addToLogger(ctl, logger);
+  logger.addLogEntry("observer_" + name() + "_posW", [this]() { return posW_; });
+  logger.addLogEntry("observer_" + name() + "_velW", [this]() { return velW_; });
 }
 void BodySensorObserver::removeFromLogger(mc_rtc::Logger & logger)
 {
@@ -93,17 +90,13 @@ void BodySensorObserver::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry("observer_" + name() + "_" + fbSensorName_ + "Sensor_velW");
 }
 
-void BodySensorObserver::addToGUI(mc_rtc::gui::StateBuilder & gui)
+void BodySensorObserver::addToGUI(const mc_control::MCController &, mc_rtc::gui::StateBuilder & gui)
 {
   gui.addElement({"Observers", name()},
                  mc_rtc::gui::Arrow("Velocity", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color{1., 0., 0.}),
-                                    [this]() {
-                                      const auto & bs = robot().bodySensor(fbSensorName_);
-                                      return bs.position();
-                                    },
+                                    [this]() -> const Eigen::Vector3d & { posW_.translation(); },
                                     [this]() -> Eigen::Vector3d {
-                                      const auto & bs = robot().bodySensor(fbSensorName_);
-                                      Eigen::Vector3d end = bs.position() + bs.linearVelocity();
+                                      Eigen::Vector3d end = posW_.translation() + velW_.linear();
                                       return end;
                                     }));
 }

@@ -4,6 +4,8 @@
 
 #include "KinematicInertialObserver.h"
 
+#include <mc_control/mc_controller.h>
+
 namespace mc_observers
 {
 KinematicInertialObserver::KinematicInertialObserver(const std::string & name,
@@ -14,22 +16,22 @@ KinematicInertialObserver::KinematicInertialObserver(const std::string & name,
   LOG_SUCCESS("KinematicInertialObserver created");
 }
 
-void KinematicInertialObserver::reset(const mc_rbdyn::Robot & realRobot)
+void KinematicInertialObserver::reset(const mc_control::MCController & ctl)
 {
-  reset(realRobot, realRobot.velW());
+  reset(ctl, ctl.realRobot().velW());
 }
 
-void KinematicInertialObserver::reset(const mc_rbdyn::Robot & realRobot, const sva::MotionVecd & velW)
+void KinematicInertialObserver::reset(const mc_control::MCController & ctl, const sva::MotionVecd & velW)
 {
-  KinematicInertialPoseObserver::reset(realRobot);
+  KinematicInertialPoseObserver::reset(ctl);
   posWPrev_ = KinematicInertialPoseObserver::posW();
   velW_ = velW;
   velFilter_.reset(velW);
 }
 
-bool KinematicInertialObserver::run(const mc_rbdyn::Robot & realRobot)
+bool KinematicInertialObserver::run(const mc_control::MCController & ctl)
 {
-  KinematicInertialPoseObserver::run(realRobot);
+  KinematicInertialPoseObserver::run(ctl);
   const sva::PTransformd posW = KinematicInertialPoseObserver::posW();
   sva::MotionVecd errVel = sva::transformError(posWPrev_, posW) / dt();
   velFilter_.update(errVel);
@@ -39,16 +41,16 @@ bool KinematicInertialObserver::run(const mc_rbdyn::Robot & realRobot)
   return true;
 }
 
-void KinematicInertialObserver::updateRobot(mc_rbdyn::Robot & realRobot)
+void KinematicInertialObserver::updateRobot(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots)
 {
-  KinematicInertialPoseObserver::updateRobot(realRobot);
-  realRobot.velW(velW_);
+  KinematicInertialPoseObserver::updateRobot(ctl, realRobots);
+  realRobots.robot().velW(velW_);
 }
 
-void KinematicInertialObserver::updateBodySensor(mc_rbdyn::Robot & realRobot, const std::string & sensorName)
+void KinematicInertialObserver::updateBodySensor(mc_rbdyn::Robots & realRobots, const std::string & sensorName)
 {
-  KinematicInertialPoseObserver::updateBodySensor(realRobot, sensorName);
-  auto & sensor = realRobot.bodySensor(sensorName);
+  KinematicInertialPoseObserver::updateBodySensor(realRobots, sensorName);
+  auto & sensor = realRobots.robot().bodySensor(sensorName);
   sensor.linearVelocity(velW_.linear());
   sensor.angularVelocity(velW_.angular());
 }
@@ -58,9 +60,9 @@ const sva::MotionVecd & KinematicInertialObserver::velW() const
   return velW_;
 }
 
-void KinematicInertialObserver::addToLogger(mc_rtc::Logger & logger)
+void KinematicInertialObserver::addToLogger(const mc_control::MCController & ctl, mc_rtc::Logger & logger)
 {
-  KinematicInertialPoseObserver::addToLogger(logger);
+  KinematicInertialPoseObserver::addToLogger(ctl, logger);
   logger.addLogEntry("observer_" + name() + "_velW", [this]() { return velW_; });
   logger.addLogEntry("observer_" + name() + "_velWfd", [this]() { return velWfd_; });
 }
@@ -70,9 +72,9 @@ void KinematicInertialObserver::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry("observer_" + name() + "_velW");
   logger.removeLogEntry("observer_" + name() + "_velWfd");
 }
-void KinematicInertialObserver::addToGUI(mc_rtc::gui::StateBuilder & gui)
+void KinematicInertialObserver::addToGUI(const mc_control::MCController & ctl, mc_rtc::gui::StateBuilder & gui)
 {
-  KinematicInertialPoseObserver::addToGUI(gui);
+  KinematicInertialPoseObserver::addToGUI(ctl, gui);
   gui.addElement({"Observers", name()}, mc_rtc::gui::Arrow("Velocity", [this]() { return posW().translation(); },
                                                            [this]() -> Eigen::Vector3d {
                                                              const Eigen::Vector3d p = posW().translation();
