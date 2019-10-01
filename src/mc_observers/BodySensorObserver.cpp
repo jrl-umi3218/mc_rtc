@@ -94,7 +94,7 @@ void BodySensorObserver::addToGUI(const mc_control::MCController &, mc_rtc::gui:
 {
   gui.addElement({"Observers", name()},
                  mc_rtc::gui::Arrow("Velocity", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color{1., 0., 0.}),
-                                    [this]() -> const Eigen::Vector3d & { posW_.translation(); },
+                                    [this]() -> const Eigen::Vector3d & { return posW_.translation(); },
                                     [this]() -> Eigen::Vector3d {
                                       Eigen::Vector3d end = posW_.translation() + velW_.linear();
                                       return end;
