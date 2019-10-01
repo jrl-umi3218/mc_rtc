@@ -91,7 +91,8 @@ public:
    */
   virtual bool runObservers();
 
-  /*! @brief Reset the observers
+  /*! @brief Reset the observers. This function is called after the reset()
+   * function.
    *
    * @returns True when all observers have been succesfully reset.
    */

@@ -217,7 +217,6 @@ void MCController::reset(const ControllerResetData & reset_data)
   postureTask->posture(reset_data.q);
   rbd::forwardKinematics(robot().mb(), robot().mbc());
   rbd::forwardVelocity(robot().mb(), robot().mbc());
-  resetObservers();
 }
 
 const mc_rbdyn::Robot & MCController::robot() const

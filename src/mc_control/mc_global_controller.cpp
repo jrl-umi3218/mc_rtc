@@ -255,6 +255,7 @@ void MCGlobalController::init(const std::vector<double> & initq, const std::arra
   }
   setGripperCurrentQ(gripperInit);
   controller_->reset({q});
+  controller_->resetObservers();
   init_publishers();
   initGUI();
 }
@@ -426,6 +427,7 @@ bool MCGlobalController::run()
         next_controller_->grippers[g.first]->setCurrentQ(g.second->curPosition());
       }
       next_controller_->reset({controller_->robot().mbc().q});
+      next_controller_->resetObservers();
       controller_ = next_controller_;
       /** Initialize publishers again if the environment changed */
       init_publishers();
