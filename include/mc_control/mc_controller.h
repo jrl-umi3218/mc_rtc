@@ -77,28 +77,36 @@ public:
    * This is meant to run in real-time hence some precaution should apply (e.g.
    * no i/o blocking calls, no thread instantiation and such)
    *
-   * \note Some estimators are likely to require extra information (such as
-   * contact location for the KinematicInertial-observers) etc. To provide it,
-   * override this method in your controller, call your observer-specific code,
-   * then, if the default behaviour suits you, call the default MCController::runObservers().
+   * \note Some estimators are likely to require extra information. For this, each observer
+   * has const access to the MCController instance, and can thus access all const information
+   * available from it. The default estimators provided by mc_rtc (currently)
+   * rely on robots() and realRobots() information. Additionally, the
+   * KinematicInertialObserver requires an anchor frame with the environement.
+   * This is to be provided by overriding the anchorFrame() method.
    *
-   * Example
-   * \code{.cpp}
-   * MyController::runObservers()
-   * {
-   *   // The kinematic inertial observer requires an anchor frame on the floor,
-   *   somewhere in-between the robot feet. For a walking controller, it is
-   *   advised to smoothly change the anchor frame in-between the feet, to avoid
-   *   state jumps when switching to the next single-support phase.
-   *   auto observer = static_pointer_cast<KinematicInertialObserver>(observers["KinematicInertial"]));
-   *   observer->leftFootRatio(percentageOfDoubleSupportTime);
-   *   MCController::runObservers();
-   * }
-   * \endcode
+   * \note If the default pipeline behaviour does not suit you, you may override
+   * this method.
    *
    * @returns true if all observers ran as expected, false otherwise
    */
   virtual bool runObservers();
+
+  /*! @brief Reset the observers
+   *
+   * @returns True when all observers have been succesfully reset.
+   */
+  virtual bool resetObservers();
+
+  /*! @brief Returns a kinematic anchor frame.
+   *  This is typically used by state observers such as mc_observers::KinematicInertialObserver to obtain a reference
+   * frame for the estimation. In the case of a biped robot, this is typically a frame in-between the feet of the robot.
+   * See the specific requirements for the active observers in your controller.
+   *
+   * @returns An anchor frame in-between the feet.
+   *
+   * @throws Default implemetation throws. Please override this function in your controller when required.
+   */
+  virtual sva::PTransformd anchorFrame(const mc_rbdyn::Robot & robot) const;
 
   /**
    * WARNING EXPERIMENTAL

@@ -57,20 +57,6 @@ struct MC_OBSERVER_DLLAPI KinematicInertialPoseObserver : public Observer
 
   void updateBodySensor(mc_rbdyn::Robots & robots, const std::string & sensorName = "FloatingBase");
 
-  /** Set fraction of total weight sustained by the left foot.
-   * To avoid state jumps, avoid sudden changes of this ratio. Typically, in
-   * case of a walking controller, one would smootly transition from left foot
-   * (ratio = 0) to right foot support (ratio = 1) according to the duration of
-   * the double support phase.
-   *
-   * \note This field is used in anchor frame computations.
-   *
-   */
-  void leftFootRatio(double ratio)
-  {
-    leftFootRatio_ = ratio;
-  }
-
   /*! \brief Get floating-base pose in the world frame. */
   sva::PTransformd posW() const
   {
@@ -98,14 +84,7 @@ protected:
    * coincides with the control anchor frame.
    *
    */
-  void estimatePosition(const mc_rbdyn::Robot & robot, const mc_rbdyn::Robot & realRobot);
-
-  /*! Get anchor frame of a robot for a given contact state.
-   *
-   * \param robot Robot state to read frames from.
-   *
-   */
-  sva::PTransformd getAnchorFrame(const mc_rbdyn::Robot & robot);
+  void estimatePosition(const mc_control::MCController & ctl);
 
 private:
   Eigen::Matrix3d orientation_; /**< Rotation from world to floating-base frame */

@@ -29,7 +29,7 @@ void KinematicInertialPoseObserver::reset(const mc_control::MCController & ctl)
 bool KinematicInertialPoseObserver::run(const mc_control::MCController & ctl)
 {
   estimateOrientation(ctl.robot(), ctl.realRobot());
-  estimatePosition(ctl.robot(), ctl.realRobot());
+  estimatePosition(ctl);
   return true;
 }
 
@@ -51,22 +51,17 @@ void KinematicInertialPoseObserver::estimateOrientation(const mc_rbdyn::Robot & 
   orientation_ = mc_rbdyn::rpyToMat(mRPY(0), mRPY(1), cRPY(2));
 }
 
-void KinematicInertialPoseObserver::estimatePosition(const mc_rbdyn::Robot & robot, const mc_rbdyn::Robot & realRobot)
+void KinematicInertialPoseObserver::estimatePosition(const mc_control::MCController & ctl)
 {
-  sva::PTransformd X_0_c = getAnchorFrame(robot);
-  sva::PTransformd X_0_s = getAnchorFrame(realRobot);
+  const auto & robot = ctl.robot();
+  const auto & realRobot = ctl.realRobot();
+  sva::PTransformd X_0_c = ctl.anchorFrame(robot);
+  sva::PTransformd X_0_s = ctl.anchorFrame(realRobot);
   const sva::PTransformd & X_0_real = realRobot.posW();
   sva::PTransformd X_real_s = X_0_s * X_0_real.inv();
   const Eigen::Vector3d & r_c_0 = X_0_c.translation();
   const Eigen::Vector3d & r_s_real = X_real_s.translation();
   position_ = r_c_0 - orientation_.transpose() * r_s_real;
-}
-
-sva::PTransformd KinematicInertialPoseObserver::getAnchorFrame(const mc_rbdyn::Robot & robot)
-{
-  sva::PTransformd X_0_l = robot.surface("LeftFoot").X_0_s(robot);
-  sva::PTransformd X_0_r = robot.surface("RightFoot").X_0_s(robot);
-  return sva::interpolate(X_0_r, X_0_l, leftFootRatio_);
 }
 
 void KinematicInertialPoseObserver::updateRobot(const mc_control::MCController & /* ctl */,

@@ -140,6 +140,26 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
   return r;
 }
 
+bool MCController::resetObservers()
+{
+  for(const auto & observer : observers)
+  {
+    const auto & observerName = observer->name();
+    observer->reset(*this);
+    LOG_INFO("[Observers] Resetting observer " << observerName);
+    if(std::find(updateObservers.begin(), updateObservers.end(), observer) != updateObservers.end())
+    {
+      LOG_INFO("[Observers] Will update real robot from observer " << observerName);
+      observer->updateRobot(*this, realRobots());
+    }
+    observer->addToLogger(*this, logger());
+    if(gui_)
+    {
+      observer->addToGUI(*this, *gui_);
+    }
+  }
+}
+
 bool MCController::runObservers()
 {
   for(const auto & observer : observers)
@@ -197,23 +217,7 @@ void MCController::reset(const ControllerResetData & reset_data)
   postureTask->posture(reset_data.q);
   rbd::forwardKinematics(robot().mb(), robot().mbc());
   rbd::forwardVelocity(robot().mb(), robot().mbc());
-
-  for(const auto & observer : observers)
-  {
-    const auto & observerName = observer->name();
-    observer->reset(*this);
-    LOG_INFO("[Observers] Resetting observer " << observerName);
-    if(std::find(updateObservers.begin(), updateObservers.end(), observer) != updateObservers.end())
-    {
-      LOG_INFO("[Observers] Will update real robot from observer " << observerName);
-      observer->updateRobot(*this, realRobots());
-    }
-    observer->addToLogger(*this, logger());
-    if(gui_)
-    {
-      observer->addToGUI(*this, *gui_);
-    }
-  }
+  resetObservers();
 }
 
 const mc_rbdyn::Robot & MCController::robot() const
@@ -352,6 +356,12 @@ const mc_rbdyn::Robot & MCController::realRobot() const
 mc_rbdyn::Robot & MCController::realRobot()
 {
   return real_robots->robot();
+}
+
+sva::PTransformd MCController::anchorFrame(const mc_rbdyn::Robot & robot) const
+{
+  LOG_ERROR_AND_THROW(std::runtime_error, "MCController::anchorFrame() requested but no implementation available. "
+                                          "Please override this function in your controller.");
 }
 
 } // namespace mc_control
