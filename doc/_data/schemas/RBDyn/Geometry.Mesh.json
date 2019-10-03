@@ -1,5 +1,5 @@
 {
-  "title": "mc_rbdyn_urdf::Geometry::Mesh",
+  "title": "rbd::parsers::Geometry::Mesh",
   "type": "object",
   "properties":
   {

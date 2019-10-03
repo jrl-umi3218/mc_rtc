@@ -1,0 +1,12 @@
+{
+  "title": "rbd::parsers::Geometry::Superellipsoid",
+  "type": "object",
+  "properties":
+  {
+    "size": { "type": "number" },
+    "epsilon1": { "type": "number" },
+    "epsilon2": { "type": "number" }
+  },
+  "required": ["size", "epsilon1", "epsilon2"],
+  "additionalProperties": false
+}

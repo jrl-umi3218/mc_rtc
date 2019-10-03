@@ -37,14 +37,27 @@ DevicePtrVector & DevicePtrVector::operator=(const DevicePtrVector & v)
   return *this;
 }
 
-RobotModule::RobotModule(const std::string & name, const mc_rbdyn_urdf::URDFParserResult & res)
+RobotModule::RobotModule(const std::string & name, const rbd::parsers::ParserResult & res)
 : RobotModule("/CREATED/BY/MC/RTC/", name)
 {
   rsdf_dir = "";
+  init(res);
+}
+
+void RobotModule::init(const rbd::parsers::ParserResult & res)
+{
   mb = res.mb;
   mbc = res.mbc;
   mbg = res.mbg;
-  _collisionTransforms = res.collision_tf;
+  for(const auto & col : res.collision)
+  {
+    const auto & body = col.first;
+    const auto & cols = col.second;
+    if(cols.size())
+    {
+      _collisionTransforms[body] = cols[0].origin;
+    }
+  }
   boundsFromURDF(res.limits);
   _visual = res.visual;
   make_default_ref_joint_order();
@@ -91,7 +104,7 @@ RobotModule::Gripper::Gripper(const std::string & name,
   }
 }
 
-void RobotModule::boundsFromURDF(const mc_rbdyn_urdf::Limits & limits)
+void RobotModule::boundsFromURDF(const rbd::parsers::Limits & limits)
 {
   auto neg_bound = [](const std::map<std::string, std::vector<double>> & v) {
     std::map<std::string, std::vector<double>> res;
@@ -133,7 +146,7 @@ void RobotModule::make_default_ref_joint_order()
   }
 }
 
-RobotModule::bounds_t urdf_limits_to_bounds(const mc_rbdyn_urdf::Limits & limits)
+RobotModule::bounds_t urdf_limits_to_bounds(const rbd::parsers::Limits & limits)
 {
   RobotModule::bounds_t ret = {};
   ret.reserve(6);

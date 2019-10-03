@@ -16,7 +16,7 @@
 
 #include <mc_rtc/constants.h>
 
-#include <mc_rbdyn_urdf/urdf.h>
+#include <RBDyn/parsers/common.h>
 
 #include <array>
 #include <map>
@@ -184,8 +184,19 @@ struct MC_RBDYN_DLLAPI RobotModule
   {
   }
 
-  /** Construct from the result of an URDF parse */
-  RobotModule(const std::string & name, const mc_rbdyn_urdf::URDFParserResult & res);
+  /** Construct from a parser result */
+  RobotModule(const std::string & name, const rbd::parsers::ParserResult & res);
+
+  /** Initialize the module from a parser resul
+   *
+   * - Initialize mb, mbc and mbg
+   * - Initial limits
+   * - Initialize _collisionTransforms
+   * - Initialize _visual
+   * - Create a default joint order
+   * - Create a default stance
+   */
+  void init(const rbd::parsers::ParserResult & res);
 
   /** Returns the robot's bounds
    *
@@ -374,7 +385,7 @@ struct MC_RBDYN_DLLAPI RobotModule
    * This function set _bounds to:
    * {lower, upper, -velocity, velocity, -torque, torque}
    */
-  void boundsFromURDF(const mc_rbdyn_urdf::Limits & limits);
+  void boundsFromURDF(const rbd::parsers::Limits & limits);
 
   /** Add missing elements to the current module stance
    *
@@ -451,7 +462,7 @@ struct MC_RBDYN_DLLAPI RobotModule
   /** \see stpbvHull() */
   std::map<std::string, std::pair<std::string, std::string>> _stpbvHull;
   /** Holds visual representation of bodies in the robot */
-  std::map<std::string, std::vector<mc_rbdyn_urdf::Visual>> _visual;
+  std::map<std::string, std::vector<rbd::parsers::Visual>> _visual;
   /** \see collisionTransforms() */
   std::map<std::string, sva::PTransformd> _collisionTransforms;
   /** \see flexibility() */
@@ -488,12 +499,12 @@ struct MC_RBDYN_DLLAPI RobotModule
 
 typedef std::shared_ptr<RobotModule> RobotModulePtr;
 
-/*! \brief Converts limits provided by mc_rbdyn_urdf to bounds
+/*! \brief Converts limits provided by RBDyn parsers to bounds
  *
- * \param limits Limits as provided by mc_rbdyn_urdf
+ * \param limits Limits as provided by RBDyn parsers
  *
  */
-RobotModule::bounds_t MC_RBDYN_DLLAPI urdf_limits_to_bounds(const mc_rbdyn_urdf::Limits & limits);
+RobotModule::bounds_t MC_RBDYN_DLLAPI urdf_limits_to_bounds(const rbd::parsers::Limits & limits);
 
 using RobotModuleVector = std::vector<RobotModule, Eigen::aligned_allocator<RobotModule>>;
 

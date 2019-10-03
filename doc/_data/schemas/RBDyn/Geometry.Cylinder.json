@@ -1,5 +1,5 @@
 {
-  "title": "mc_rbdyn_urdf::Geometry::Cylinder",
+  "title": "rbd::parsers::Geometry::Cylinder",
   "type": "object",
   "properties":
   {

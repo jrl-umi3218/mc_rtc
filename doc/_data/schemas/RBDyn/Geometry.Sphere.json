@@ -1,5 +1,5 @@
 {
-  "title": "mc_rbdyn_urdf::Geometry::Sphere",
+  "title": "rbd::parsers::Geometry::Sphere",
   "type": "object",
   "properties":
   {

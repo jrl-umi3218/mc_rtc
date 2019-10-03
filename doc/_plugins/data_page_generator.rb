@@ -161,7 +161,7 @@ module Jekyll
       }
       default_categories = ["mc_rbdyn", "ConstraintSet", "MetaTask", "State"]
       site.pages << AllSchemasPage.new(site, site.source, 'json.html', site.data["schemas"], default_categories, {"All objects" => 'json-full.html'})
-      site.pages << AllSchemasPage.new(site, site.source, 'json-full.html', site.data["schemas"], ["Eigen", "SpaceVecAlg", "RBDyn", "Tasks", "mc_rbdyn_urdf"] + default_categories)
+      site.pages << AllSchemasPage.new(site, site.source, 'json-full.html', site.data["schemas"], ["Eigen", "SpaceVecAlg", "RBDyn", "Tasks"] + default_categories)
     end
   end
 

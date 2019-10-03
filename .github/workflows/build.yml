@@ -122,7 +122,6 @@ jobs:
           - path: jrl-umi3218/sch-core-python
           - path: jrl-umi3218/RBDyn
           - path: jrl-umi3218/Tasks
-          - path: jrl-umi3218/mc_rbdyn_urdf
           - path: jrl-umi3218/mc_rtc_data
           - path: jrl-umi3218/eigen-quadprog
     - name: Build and test
@@ -172,7 +171,6 @@ jobs:
         find . -type f -print0 | xargs -0 sed -i -e's@/usr/local/share/doc/RBDyn/doxygen-html/@https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/@g'
         find . -type f -print0 | xargs -0 sed -i -e's@/usr/local/share/doc/Tasks/doxygen-html/@https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/@g'
         find . -type f -print0 | xargs -0 sed -i -e's@/usr/local/share/doc/sch-core/doxygen-html/@https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/@g'
-        find . -type f -print0 | xargs -0 sed -i -e's@/usr/local/share/doc/mc_rbdyn_urdf/doxygen-html/@https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/@g'
         sudo apt-get install -qq ruby-dev ruby-bundler libxml2-dev
         bundle install --path vendor
         git clone -b gh-pages https://gergondet:${{ secrets.GH_PAGES_TOKEN }}@github.com/jrl-umi3218/mc_rtc /tmp/website

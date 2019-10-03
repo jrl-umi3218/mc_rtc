@@ -1006,7 +1006,6 @@ then
 fi
 
 build_git_dependency jrl-umi3218/Tasks tasks
-build_git_dependency jrl-umi3218/mc_rbdyn_urdf mc_rbdyn_urdf
 
 if $WITH_ROS_SUPPORT
 then

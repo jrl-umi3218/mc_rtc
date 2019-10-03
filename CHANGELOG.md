@@ -8,6 +8,7 @@
 - `bodyWrench` and `surfaceWrench` can now be computed with joints between the sensor and body/surface
 - `Message` state can be used to display messages in the GUI as well as the CLI
 - Benchmarks can now be compiled and run with the `build_and_install.sh` script
+- Use RBDyn::Parsers instead of mc\_rbdyn\_urdf
 
 ### Added
 - New benchmark for task allocation performance
