@@ -53,7 +53,7 @@ EncoderObserver::EncoderObserver(const std::string & name, double dt, const mc_r
 
   logEstimation_ = config("Log", false);
 
-  LOG_SUCCESS("EncoderObserver created")
+  desc_ = name_ + " (position=" + position + ",velocity=" + velocity + ")";
 }
 
 void EncoderObserver::reset(const mc_control::MCController & ctl)

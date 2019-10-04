@@ -13,7 +13,7 @@ KinematicInertialObserver::KinematicInertialObserver(const std::string & name,
                                                      const mc_rtc::Configuration & config)
 : KinematicInertialPoseObserver(name, dt, config), velFilter_(dt, /* cutoff period = */ 0.01)
 {
-  LOG_SUCCESS("KinematicInertialObserver created");
+  desc_ = name_ + " (cutoff=" + std::to_string(velFilter_.cutoffPeriod()) + ")";
 }
 
 void KinematicInertialObserver::reset(const mc_control::MCController & ctl)

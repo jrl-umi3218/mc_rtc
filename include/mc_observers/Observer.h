@@ -78,9 +78,25 @@ struct MC_OBSERVER_DLLAPI Observer
    */
   virtual void removeFromGUI(mc_rtc::gui::StateBuilder &);
 
+  /*! \brief Short description of the observer
+   *
+   * Used to display a short summary of the observers pipeline to the user, the description should be as short as
+   * possible while showing the important information about the observer.
+   *
+   * The output might end up looking like:
+   * Observers: Encoders (Position+Velocity) -> KinematicInertial (cutoff=0.01) -> BodySensor
+   *
+   * \returns Short description of the observer. Default implementation returns
+   * its name.
+   */
+  virtual const std::string & desc() const;
+
 protected:
   std::string name_;
   double dt_;
+
+  /* Short descriptive description of the observer used for CLI logging */
+  std::string desc_;
 };
 
 using ObserverPtr = std::shared_ptr<mc_observers::Observer>;

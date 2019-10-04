@@ -142,21 +142,29 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
 
 bool MCController::resetObservers()
 {
+  auto pipelineDesc = std::string{};
   for(const auto & observer : observers)
   {
     const auto & observerName = observer->name();
     observer->reset(*this);
-    LOG_INFO("[Observers] Resetting observer " << observerName);
     if(std::find(updateObservers.begin(), updateObservers.end(), observer) != updateObservers.end())
     {
-      LOG_INFO("[Observers] Will update real robot from observer " << observerName);
       observer->updateRobot(*this, realRobots());
+      pipelineDesc += " -> " + observer->desc();
+    }
+    else
+    {
+      pipelineDesc += " -> [" + observer->desc() + "]";
     }
     observer->addToLogger(*this, logger());
     if(gui_)
     {
       observer->addToGUI(*this, *gui_);
     }
+  }
+  if(!observers.empty())
+  {
+    LOG_INFO("Observers: " << pipelineDesc);
   }
 }
 

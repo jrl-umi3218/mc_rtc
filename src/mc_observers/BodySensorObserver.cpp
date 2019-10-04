@@ -11,9 +11,10 @@ namespace mc_observers
 BodySensorObserver::BodySensorObserver(const std::string & name, double dt, const mc_rtc::Configuration & config)
 : Observer(name, dt, config)
 {
-  if(config.has("UpdateFrom"))
+  auto updateConfig = config("UpdateFrom", std::string{});
+  if(!updateConfig.empty())
   {
-    if(config("UpdateFrom") == "estimator")
+    if(updateConfig == "estimator")
     {
       updateFrom_ = Update::Estimator;
     }
@@ -24,6 +25,7 @@ BodySensorObserver::BodySensorObserver(const std::string & name, double dt, cons
   }
 
   fbSensorName_ = config("FloatingBaseSensor", std::string("FloatingBase"));
+  desc_ = name_ + " (sensor=" + fbSensorName_ + ",update=" + updateConfig + ")";
 }
 
 void BodySensorObserver::reset(const mc_control::MCController & ctl)

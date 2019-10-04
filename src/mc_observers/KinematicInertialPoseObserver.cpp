@@ -17,13 +17,11 @@ KinematicInertialPoseObserver::KinematicInertialPoseObserver(const std::string &
                                                              const mc_rtc::Configuration & /* config */)
 : Observer(name, dt), orientation_(Eigen::Matrix3d::Identity()), position_(Eigen::Vector3d::Zero()), leftFootRatio_(0.5)
 {
-  LOG_SUCCESS("KinematicInertialPoseObserver created")
 }
 
 void KinematicInertialPoseObserver::reset(const mc_control::MCController & ctl)
 {
   run(ctl);
-  LOG_SUCCESS("KinematicInertialPoseObserver reset");
 }
 
 bool KinematicInertialPoseObserver::run(const mc_control::MCController & ctl)
