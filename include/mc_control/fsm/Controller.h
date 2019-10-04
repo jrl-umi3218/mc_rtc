@@ -238,9 +238,6 @@ private:
   /** Map robots' names to index */
   std::map<std::string, size_t> robots_idx_;
 
-  /** Init pose */
-  std::vector<double> init_pos_ = {};
-
   /** Holds dynamics, kinematics and contact constraints that are added
    * from the start by the controller */
   std::vector<mc_solver::ConstraintSetPtr> constraints_;

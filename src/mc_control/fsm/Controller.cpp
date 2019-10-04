@@ -75,21 +75,7 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, con
       }
       auto & r = loadRobot(rm, name);
       robots_idx_[name] = r.robotIndex();
-
-      if(cr.second.has("init_pos"))
-      {
-        sva::PTransformd init_pos = cr.second("init_pos", sva::PTransformd::Identity());
-        Eigen::Quaterniond init_q(init_pos.rotation().inverse().eval());
-        Eigen::Vector3d init_t = init_pos.translation();
-        auto & q0 = r.mbc().q[0];
-        q0[0] = init_q.w();
-        q0[1] = init_q.x();
-        q0[2] = init_q.y();
-        q0[3] = init_q.z();
-        q0[4] = init_t.x();
-        q0[5] = init_t.y();
-        q0[6] = init_t.z();
-      }
+      r.posW(cr.second("init_pos", sva::PTransformd::Identity()));
     }
     LOG_INFO("Robots loaded in FSM controller:")
     for(const auto & r : robots())
@@ -177,25 +163,6 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, con
   }
   /** Setup executor */
   executor_.init(*this, config_);
-  /** Setup initial pos */
-  if(config.has("init_pos"))
-  {
-    sva::PTransformd init_pos = config("init_pos");
-    Eigen::Quaterniond init_q(init_pos.rotation().inverse().eval());
-    Eigen::Vector3d init_t = init_pos.translation();
-    init_pos_.resize(7);
-    init_pos_[0] = init_q.w();
-    init_pos_[1] = init_q.x();
-    init_pos_[2] = init_q.y();
-    init_pos_[3] = init_q.z();
-    init_pos_[4] = init_t.x();
-    init_pos_[5] = init_t.y();
-    init_pos_[6] = init_t.z();
-  }
-  else
-  {
-    init_pos_.resize(0);
-  }
 }
 
 bool Controller::run()
@@ -235,13 +202,13 @@ bool Controller::run(mc_solver::FeedbackType fType)
 
 void Controller::reset(const ControllerResetData & data)
 {
-  auto q = data.q;
-  if(init_pos_.size())
+  MCController::reset(data);
+  if(config().has("init_pos"))
   {
-    q[0] = init_pos_;
+    robot().posW(config()("init_pos"));
   }
   updateContacts();
-  MCController::reset({q});
+
   /** GUI information */
   if(gui_)
   {
