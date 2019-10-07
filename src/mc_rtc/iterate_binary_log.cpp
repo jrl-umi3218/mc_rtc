@@ -5,6 +5,7 @@
 namespace bfs = boost::filesystem;
 
 #include "internals/LogEntry.h"
+#include <fstream>
 
 namespace mc_rtc
 {
