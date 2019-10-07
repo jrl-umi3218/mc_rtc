@@ -67,15 +67,54 @@ set(controller_HDR
 )
 
 add_controller(${{PROJECT_NAME}} ${{controller_SRC}} ${{controller_HDR}})
+set_target_properties(${{PROJECT_NAME}} PROPERTIES COMPILE_FLAGS "-D{controller_class_name}_EXPORTS")
 {extra_libs}
 """.format(controller_class_name = controller_class_name, extra_libs = extra_libs))
+    with open(project_dir + '/src/' + 'api.h', 'w') as fd:
+        fd.write("""#pragma once
+
+#if defined _WIN32 || defined __CYGWIN__
+#  define {controller_class_name}_DLLIMPORT __declspec(dllimport)
+#  define {controller_class_name}_DLLEXPORT __declspec(dllexport)
+#  define {controller_class_name}_DLLLOCAL
+#else
+// On Linux, for GCC >= 4, tag symbols using GCC extension.
+#  if __GNUC__ >= 4
+#    define {controller_class_name}_DLLIMPORT __attribute__((visibility("default")))
+#    define {controller_class_name}_DLLEXPORT __attribute__((visibility("default")))
+#    define {controller_class_name}_DLLLOCAL __attribute__((visibility("hidden")))
+#  else
+// Otherwise (GCC < 4 or another compiler is used), export everything.
+#    define {controller_class_name}_DLLIMPORT
+#    define {controller_class_name}_DLLEXPORT
+#    define {controller_class_name}_DLLLOCAL
+#  endif // __GNUC__ >= 4
+#endif // defined _WIN32 || defined __CYGWIN__
+
+#ifdef {controller_class_name}_STATIC
+// If one is using the library statically, get rid of
+// extra information.
+#  define {controller_class_name}_DLLAPI
+#  define {controller_class_name}_LOCAL
+#else
+// Depending on whether one is building or using the
+// library define DLLAPI to import or export.
+#  ifdef {controller_class_name}_EXPORTS
+#    define {controller_class_name}_DLLAPI {controller_class_name}_DLLEXPORT
+#  else
+#    define {controller_class_name} {controller_class_name}_DLLIMPORT
+#  endif // {controller_class_name}_EXPORTS
+#  define {controller_class_name}_LOCAL {controller_class_name}_DLLLOCAL
+#endif // {controller_class_name}_STATIC""".format(controller_class_name = controller_class_name))
     with open(project_dir + '/src/' + controller_class_name + '.h', 'w') as fd:
         fd.write("""#pragma once
 
 #include <mc_control/mc_controller.h>
 {extra_includes}
 
-struct MC_CONTROL_DLLAPI {controller_class_name} : public {base_class}
+#include "api.h"
+
+struct {controller_class_name}_DLLAPI {controller_class_name} : public {base_class}
 {{
     {controller_class_name}(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration & config);
 
