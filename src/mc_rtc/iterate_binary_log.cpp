@@ -105,11 +105,12 @@ bool iterate_binary_log(const std::string & f,
                         bool extract,
                         const std::string & time)
 {
-  return iterate_binary_log(f,
-                            [&callback](const std::vector<std::string> & keys, std::vector<FlatLog::record> & data,
-                                        double t, const copy_callback &, const char *,
-                                        size_t) mutable { return callback(keys, data, t); },
-                            extract, time);
+  return iterate_binary_log(
+      f,
+      binary_log_copy_callback([&callback](const std::vector<std::string> & keys, std::vector<FlatLog::record> & data,
+                                           double t, const copy_callback &, const char *,
+                                           size_t) mutable { return callback(keys, data, t); }),
+      extract, time);
 }
 
 } // namespace log
