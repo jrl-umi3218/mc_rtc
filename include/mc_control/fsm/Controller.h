@@ -223,6 +223,9 @@ private:
   /** Reset all posture tasks */
   void resetPostures();
 
+  /** Update the contacts (or their DoFs) if needed */
+  void updateContacts();
+
   /** Start the idle state */
   void startIdleState();
 
@@ -235,15 +238,12 @@ private:
   /** Map robots' names to index */
   std::map<std::string, size_t> robots_idx_;
 
-  /** Init pose */
-  std::vector<double> init_pos_ = {};
-
   /** Holds dynamics, kinematics and contact constraints that are added
    * from the start by the controller */
   std::vector<mc_solver::ConstraintSetPtr> constraints_;
 
   /** Keep track of the contact constraint */
-  std::shared_ptr<mc_solver::ContactConstraint> contact_constraint_;
+  std::shared_ptr<mc_solver::ContactConstraint> contact_constraint_ = nullptr;
 
   /** Collision managers for robot-pair (r1, r2), if r1 == r2 this is
    * effectively a self-collision manager */
@@ -252,6 +252,7 @@ private:
   /** Creates a posture task for each actuated robots
    * (i.e. robot.dof() - robot.joint(0).dof() > 0 ) */
   std::map<std::string, std::shared_ptr<mc_tasks::PostureTask>> posture_tasks_;
+  std::map<std::string, double> saved_posture_weights_;
 
   /** Creates a free-flyer end-effector task for each robot with a free flyer */
   std::map<std::string, std::shared_ptr<mc_tasks::EndEffectorTask>> ff_tasks_;

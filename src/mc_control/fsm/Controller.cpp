@@ -75,6 +75,7 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, con
       }
       auto & r = loadRobot(rm, name);
       robots_idx_[name] = r.robotIndex();
+      r.posW(cr.second("init_pos", sva::PTransformd::Identity()));
     }
     LOG_INFO("Robots loaded in FSM controller:")
     for(const auto & r : robots())
@@ -162,17 +163,6 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, con
   }
   /** Setup executor */
   executor_.init(*this, config_);
-  /** Setup initial pos */
-  config("init_pos", init_pos_);
-  if(init_pos_.size())
-  {
-    if(init_pos_.size() != 7)
-    {
-      LOG_ERROR("Stored init_pos is not of size 7")
-      LOG_WARNING("Using default position")
-      init_pos_.resize(0);
-    }
-  }
 }
 
 bool Controller::run()
@@ -189,30 +179,7 @@ bool Controller::run(mc_solver::FeedbackType fType)
       robots_idx_[r.name()] = r.robotIndex();
     }
   }
-  if(contacts_changed_)
-  {
-    std::vector<mc_rbdyn::Contact> contacts;
-    contact_constraint_->contactConstr->resetDofContacts();
-    for(const auto & c : contacts_)
-    {
-      contacts.emplace_back(robots(), static_cast<unsigned int>(robots_idx_.at(c.r1)),
-                            static_cast<unsigned int>(robots_idx_.at(c.r2)), c.r1Surface, c.r2Surface);
-      auto cId = contacts.back().contactId(robots());
-      contact_constraint_->contactConstr->addDofContact(cId, c.dof.asDiagonal());
-    }
-    solver().setContacts(contacts);
-    if(gui_)
-    {
-      gui_->removeCategory({"Contacts", "Remove"});
-      for(const auto & c : contacts_)
-      {
-        std::string bName = c.r1 + "::" + c.r1Surface + " & " + c.r2 + "::" + c.r2Surface;
-        gui_->addElement({"Contacts", "Remove"}, mc_rtc::gui::Button(bName, [this, &c]() { removeContact(c); }));
-      }
-    }
-    contact_constraint_->contactConstr->updateDofContacts();
-    contacts_changed_ = false;
-  }
+  updateContacts();
   executor_.run(*this, idle_keep_state_);
   if(!executor_.running())
   {
@@ -235,12 +202,13 @@ bool Controller::run(mc_solver::FeedbackType fType)
 
 void Controller::reset(const ControllerResetData & data)
 {
-  auto q = data.q;
-  if(init_pos_.size())
+  MCController::reset(data);
+  if(config().has("init_pos"))
   {
-    q[0] = init_pos_;
+    robot().posW(config()("init_pos"));
   }
-  MCController::reset({q});
+  updateContacts();
+
   /** GUI information */
   if(gui_)
   {
@@ -294,6 +262,14 @@ void Controller::resetPostures()
 void Controller::startIdleState()
 {
   resetPostures();
+  // Save posture weights
+  saved_posture_weights_.clear();
+  for(auto & pt : posture_tasks_)
+  {
+    saved_posture_weights_[pt.first] = pt.second->weight();
+    // Set high weight to prevent the robot from changing configuration
+    pt.second->weight(10000);
+  }
   for(auto & fft : ff_tasks_)
   {
     fft.second->reset();
@@ -303,10 +279,44 @@ void Controller::startIdleState()
 
 void Controller::teardownIdleState()
 {
+  // Reset default posture weights
+  for(auto & pt : posture_tasks_)
+  {
+    pt.second->weight(saved_posture_weights_[pt.first]);
+  }
+
   for(auto & fft : ff_tasks_)
   {
     solver().removeTask(fft.second);
   }
+}
+
+void Controller::updateContacts()
+{
+  if(contacts_changed_ && contact_constraint_)
+  {
+    std::vector<mc_rbdyn::Contact> contacts;
+    contact_constraint_->contactConstr->resetDofContacts();
+    for(const auto & c : contacts_)
+    {
+      contacts.emplace_back(robots(), static_cast<unsigned int>(robots_idx_.at(c.r1)),
+                            static_cast<unsigned int>(robots_idx_.at(c.r2)), c.r1Surface, c.r2Surface);
+      auto cId = contacts.back().contactId(robots());
+      contact_constraint_->contactConstr->addDofContact(cId, c.dof.asDiagonal());
+    }
+    solver().setContacts(contacts);
+    if(gui_)
+    {
+      gui_->removeCategory({"Contacts", "Remove"});
+      for(const auto & c : contacts_)
+      {
+        std::string bName = c.r1 + "::" + c.r1Surface + " & " + c.r2 + "::" + c.r2Surface;
+        gui_->addElement({"Contacts", "Remove"}, mc_rtc::gui::Button(bName, [this, &c]() { removeContact(c); }));
+      }
+    }
+    contact_constraint_->contactConstr->updateDofContacts();
+  }
+  contacts_changed_ = false;
 }
 
 bool Controller::play_next_stance()
@@ -445,7 +455,8 @@ void Controller::addContact(const Contact & c)
   {
     if(it->dof != c.dof)
     {
-      LOG_INFO("[FSM] Changed contact DoF " << c.r1 << "::" << c.r1Surface << "/" << c.r2 << "::" << c.r2Surface)
+      LOG_INFO("[FSM] Changed contact DoF " << c.r1 << "::" << c.r1Surface << "/" << c.r2 << "::" << c.r2Surface
+                                            << " to " << c.dof.transpose())
       it->dof = c.dof;
       contacts_changed_ = true;
     }
