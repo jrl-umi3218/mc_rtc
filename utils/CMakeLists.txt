@@ -35,6 +35,12 @@ set(UTILS_SCRIPT
   mc_rtc_new_controller
   mc_rtc_new_fsm_controller
 )
-install(PROGRAMS ${UTILS_SCRIPT} DESTINATION bin)
+if(NOT WIN32)
+  install(PROGRAMS ${UTILS_SCRIPT} DESTINATION bin)
+else()
+  foreach(PGM ${UTILS_SCRIPT})
+    install(PROGRAMS ${PGM} DESTINATION bin RENAME ${PGM}.py)
+  endforeach()
+endif()
 
 add_subdirectory(mc_log_gui)
