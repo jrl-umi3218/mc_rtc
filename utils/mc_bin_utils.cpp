@@ -84,7 +84,7 @@ int show(int argc, char * argv[])
     }
     return true;
   };
-  if(!mc_rtc::log::iterate_binary_log(in, callback, false))
+  if(!mc_rtc::log::iterate_binary_log(in, mc_rtc::log::binary_log_callback(callback), false))
   {
     return 1;
   }
@@ -202,7 +202,7 @@ int split(int argc, char * argv[])
     }
     return true;
   };
-  if(!mc_rtc::log::iterate_binary_log(in, callback, false))
+  if(!mc_rtc::log::iterate_binary_log(in, mc_rtc::log::binary_log_copy_callback(callback), false))
   {
     return 1;
   }
@@ -374,7 +374,7 @@ int extract(int argc, char * argv[])
   };
   if(key.size())
   {
-    if(!mc_rtc::log::iterate_binary_log(in, callback_extract_key, false))
+    if(!mc_rtc::log::iterate_binary_log(in, mc_rtc::log::binary_log_copy_callback(callback_extract_key), false))
     {
       return 1;
     }
@@ -385,7 +385,7 @@ int extract(int argc, char * argv[])
   }
   if(from != 0 || to != std::numeric_limits<double>::infinity())
   {
-    if(!mc_rtc::log::iterate_binary_log(in, callback_extract_from_to, false))
+    if(!mc_rtc::log::iterate_binary_log(in, mc_rtc::log::binary_log_copy_callback(callback_extract_from_to), false))
     {
       return 1;
     }
