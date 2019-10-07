@@ -62,6 +62,7 @@ To compile you need the following tools and libraries:
  * [sch-core](https://github.com/jrl-umi3218/sch-core)
  * [Tasks](https://github.com/jrl-umi3218/Tasks)
  * [mc_rbdyn_urdf](https://github.com/jrl-umi3218/mc_rbdyn_urdf)
+ * [mc_rtc_ros_data](https://gite.lirmm.fr/multi-contact/mc_rtc_ros_data)
 
 If you wish to get Python bindings you will also need the following:
  * [Cython](http://cython.org/) >= 0.2
@@ -69,6 +70,7 @@ If you wish to get Python bindings you will also need the following:
  * [python-numpy]()
  * [python-nose]()
  * [python-coverage]()
+ * [python-git]() (pip name: `GitPython`)
  * [Eigen3ToPython](https://github.com/jrl-umi3218/Eigen3ToPython)
  * [sch-core-python](https://github.com/jrl-umi3218/sch-core-python)
 
