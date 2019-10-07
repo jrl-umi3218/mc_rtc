@@ -36,7 +36,7 @@ MCPostureController::MCPostureController(std::shared_ptr<mc_rbdyn::RobotModule> 
 
 bool MCPostureController::run()
 {
-  return mc_control::MCController::run(mc_solver::FeedbackType::Joints);
+  return mc_control::MCController::run();
 }
 
 } // namespace mc_control
