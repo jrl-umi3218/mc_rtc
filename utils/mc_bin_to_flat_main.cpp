@@ -4,20 +4,39 @@
 
 #include <mc_rtc/logging.h>
 
+#include <boost/filesystem.hpp>
+namespace bfs = boost::filesystem;
+
 #include "mc_bin_to_flat.h"
 
 void usage(const char * bin)
 {
-  LOG_ERROR("Usage: " << bin << " [bin] [flat]")
+  LOG_ERROR("Usage: " << bin << " [bin] ([flat])")
 }
 
 int main(int argc, char * argv[])
 {
-  if(argc != 3)
+  if(argc != 3 && argc != 2)
   {
     usage(argv[0]);
     return 1;
   }
-  mc_bin_to_flat(argv[1], argv[2]);
+  std::string in = argv[1];
+  std::string out = "";
+  if(argc == 3)
+  {
+    out = argv[2];
+  }
+  else
+  {
+    out = bfs::path(argv[1]).filename().replace_extension(".flat").string();
+    if(out == in)
+    {
+      LOG_ERROR("Please specify a different output name")
+      return 1;
+    }
+    LOG_INFO("Output converted log to " << out)
+  }
+  mc_bin_to_flat(in, out);
   return 0;
 }

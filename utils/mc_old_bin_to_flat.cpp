@@ -1,5 +1,8 @@
 #include <mc_rtc/logging.h>
 
+#include <boost/filesystem.hpp>
+namespace bfs = boost::filesystem;
+
 #include "mc_bin_flatbuffers/MCLog_generated.h"
 #include <cmath>
 #include <fstream>
@@ -377,37 +380,9 @@ void writeFlatLog(const std::unordered_map<std::string, std::shared_ptr<LogLine>
   }
 }
 
-std::unordered_map<std::string, std::shared_ptr<LogLine>> readFlatLog(const std::string & file)
-{
-  std::unordered_map<std::string, std::shared_ptr<LogLine>> ret;
-  std::ifstream ifs(file, std::ifstream::binary);
-  size_t nEntries = 0;
-  ifs.read((char *)&nEntries, sizeof(size_t));
-  bool is_numeric = false;
-  for(size_t i = 0; i < nEntries; ++i)
-  {
-    static_assert(sizeof(bool) == 1, "weird platform");
-    ifs.read((char *)&is_numeric, 1);
-    if(is_numeric)
-    {
-      auto line = std::make_shared<NumericLogLine>("", 0);
-      line->read(ifs);
-      ret[line->key_] = line;
-    }
-    else
-    {
-      auto line = std::make_shared<StringLogLine>("", 0);
-      line->read(ifs);
-      ret[line->key_] = line;
-    }
-  }
-  return ret;
-}
-
 void usage(const char * bin)
 {
-  LOG_ERROR("Usage: " << bin << " [bin] [flat]")
-  LOG_ERROR("Usage: " << bin << " [flat]")
+  LOG_ERROR("Usage: " << bin << " [bin] ([flat])")
 }
 
 int main(int argc, char * argv[])
@@ -417,14 +392,22 @@ int main(int argc, char * argv[])
     usage(argv[0]);
     return 1;
   }
+  std::string in = argv[1];
+  std::string out = "";
   if(argc == 3)
   {
-    auto data = readLog(argv[1]);
-    writeFlatLog(data, argv[2]);
+    out = argv[2];
   }
   else
   {
-    auto data = readFlatLog(argv[1]);
+    out = bfs::path(argv[1]).filename().replace_extension(".flat").string();
+    if(out == in)
+    {
+      LOG_ERROR("Please specify a different output name")
+      return 1;
+    }
+    LOG_INFO("Output converted log to " << out)
   }
+  writeFlatLog(readLog(in), out);
   return 0;
 }
