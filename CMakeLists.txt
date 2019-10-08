@@ -10,25 +10,27 @@ if(POLICY CMP0054)
   cmake_policy(SET CMP0054 NEW)
 endif()
 
-include(cmake/base.cmake)
-include(cmake/cython/cython.cmake)
-include(cmake/msvc-specific.cmake)
-include(cmake/version-script.cmake)
-
 set(PROJECT_NAME mc_rtc)
 set(PROJECT_DESCRIPTION mc_rtc)
 set(PROJECT_URL https://gite.lirmm.fr/multi-contact/mc_rtc)
 set(PROJECT_DEBUG_POSTFIX "_d")
 set(PROJECT_USE_KEYWORD_LINK_LIBRARIES TRUE)
+set(PROJECT_USE_CMAKE_EXPORT TRUE)
 
+set(DOXYGEN_USE_MATHJAX "YES")
 set(CXX_DISABLE_WERROR 1)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 11)
+
+include(cmake/base.cmake)
+include(cmake/cython/cython.cmake)
+include(cmake/msvc-specific.cmake)
+include(cmake/version-script.cmake)
+
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-set(DOXYGEN_USE_MATHJAX "YES")
-setup_project()
+project(${PROJECT_NAME} C CXX)
 
 option(GENERATE_COVERAGE "Generate coverage data" FALSE)
 if("${CMAKE_CXX_FLAGS}" MATCHES "--coverage")
@@ -143,9 +145,6 @@ install(
     etc/mc_rtc.conf
   DESTINATION etc
 )
-
-setup_project_finalize()
-setup_project_package_finalize()
 
 # Extra macros for mc_rtc
 install(FILES "src/mc_rtcMacros.cmake"
