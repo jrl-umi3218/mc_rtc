@@ -548,6 +548,8 @@ DataComboInputImpl<GetT, SetT> DataComboInput(const std::string & name,
 
 /** Point3D should display a 3D point in the environment
  *
+ * A PointConfig is provided to control how the point should be displayed
+ *
  * With this variant, the point cannot be edited
  *
  * It will also trigger an ArrayLabel with {"x", "y", "z"} labels
@@ -559,7 +561,8 @@ struct Point3DROImpl : public DataElement<GetT>
 {
   static constexpr auto type = Elements::Point3D;
 
-  Point3DROImpl(const std::string & name, GetT get_fn) : DataElement<GetT>(name, get_fn)
+  Point3DROImpl(const std::string & name, const PointConfig & config, GetT get_fn)
+  : DataElement<GetT>(name, get_fn), config_(config)
   {
     static_assert(details::CheckReturnType<GetT, Eigen::Vector3d>::value,
                   "Point3D element position callback must return an Eigen::Vector3d");
@@ -567,91 +570,21 @@ struct Point3DROImpl : public DataElement<GetT>
 
   static constexpr size_t write_size()
   {
-    return DataElement<GetT>::write_size() + 1;
+    return DataElement<GetT>::write_size() + 1 + PointConfig::write_size();
   }
 
   void write(mc_rtc::MessagePackBuilder & builder)
   {
     DataElement<GetT>::write(builder);
     builder.write(true); // Read-only
-  }
-
-  /** Invalid element */
-  Point3DROImpl() {}
-};
-
-/** Point3D should display a 3D point in the environment
- *
- * A PointConfig is provided to control how the point should be displayed
- *
- * With this variant, the point cannot be edited
- *
- * It will also trigger an ArrayLabel with {"x", "y", "z"} labels
- *
- * \tparam GetT Should return an Eigen::Vector3d
- */
-template<typename GetT>
-struct Point3DROWithConfigImpl : public Point3DROImpl<GetT>
-{
-  static constexpr auto type = Elements::Point3D;
-
-  Point3DROWithConfigImpl(const std::string & name, const PointConfig & config, GetT get_fn)
-  : Point3DROImpl<GetT>(name, get_fn), config_(config)
-  {
-  }
-
-  static constexpr size_t write_size()
-  {
-    return Point3DROImpl<GetT>::write_size() + PointConfig::write_size();
-  }
-
-  void write(mc_rtc::MessagePackBuilder & builder)
-  {
-    Point3DROImpl<GetT>::write(builder);
     config_.write(builder);
   }
 
   /** Invalid element */
-  Point3DROWithConfigImpl() {}
+  Point3DROImpl() {}
 
 private:
   PointConfig config_;
-};
-
-/** Point3D should display a 3D point in the environment
- *
- * With this variant, the point can be edited
- *
- * It will also trigger an ArrayInput with {"x", "y", "z"} labels
- *
- * \tparam GetT Should return an Eigen::Vector3d
- *
- * \tparam SetT Will be called when the point is moved or the ArrayInput is triggered
- */
-template<typename GetT, typename SetT>
-struct Point3DImpl : public CommonInputImpl<GetT, SetT>
-{
-  static constexpr auto type = Elements::Point3D;
-
-  Point3DImpl(const std::string & name, GetT get_fn, SetT set_fn) : CommonInputImpl<GetT, SetT>(name, get_fn, set_fn)
-  {
-    static_assert(details::CheckReturnType<GetT, Eigen::Vector3d>::value,
-                  "Point3D element position callback must return an Eigen::Vector3d");
-  }
-
-  /** Invalid element */
-  Point3DImpl() {}
-
-  static constexpr size_t write_size()
-  {
-    return CommonInputImpl<GetT, SetT>::write_size() + 1;
-  }
-
-  void write(mc_rtc::MessagePackBuilder & builder)
-  {
-    CommonInputImpl<GetT, SetT>::write(builder);
-    builder.write(false); // Not read-only
-  }
 };
 
 /** Point3D should display a 3D point in the environment
@@ -667,28 +600,29 @@ struct Point3DImpl : public CommonInputImpl<GetT, SetT>
  * \tparam SetT Will be called when the point is moved or the ArrayInput is triggered
  */
 template<typename GetT, typename SetT>
-struct Point3DWithConfigImpl : public Point3DImpl<GetT, SetT>
+struct Point3DImpl : public CommonInputImpl<GetT, SetT>
 {
   static constexpr auto type = Elements::Point3D;
 
-  Point3DWithConfigImpl(const std::string & name, const PointConfig & config, GetT get_fn, SetT set_fn)
-  : Point3DImpl<GetT, SetT>(name, get_fn, set_fn), config_(config)
+  Point3DImpl(const std::string & name, const PointConfig & config, GetT get_fn, SetT set_fn)
+  : CommonInputImpl<GetT, SetT>(name, get_fn, set_fn), config_(config)
   {
     static_assert(details::CheckReturnType<GetT, Eigen::Vector3d>::value,
                   "Point3D element position callback must return an Eigen::Vector3d");
   }
 
   /** Invalid element */
-  Point3DWithConfigImpl() {}
+  Point3DImpl() {}
 
   static constexpr size_t write_size()
   {
-    return Point3DImpl<GetT, SetT>::write_size() + PointConfig::write_size();
+    return CommonInputImpl<GetT, SetT>::write_size() + 1 + PointConfig::write_size();
   }
 
   void write(mc_rtc::MessagePackBuilder & builder)
   {
-    Point3DImpl<GetT, SetT>::write(builder);
+    CommonInputImpl<GetT, SetT>::write(builder);
+    builder.write(false); // Not read-only
     config_.write(builder);
   }
 
@@ -700,53 +634,29 @@ private:
 template<typename GetT>
 Point3DROImpl<GetT> Point3D(const std::string & name, GetT get_fn)
 {
-  return Point3DROImpl<GetT>(name, get_fn);
+  return Point3DROImpl<GetT>(name, {}, get_fn);
 }
 
 /** Helper function to create a Point3DImpl */
 template<typename GetT, typename SetT>
 Point3DImpl<GetT, SetT> Point3D(const std::string & name, GetT get_fn, SetT set_fn)
 {
-  return Point3DImpl<GetT, SetT>(name, get_fn, set_fn);
+  return Point3DImpl<GetT, SetT>(name, {}, get_fn, set_fn);
 }
 
 /** Helper function to create a Point3DROImpl with configuration */
 template<typename GetT>
 Point3DROImpl<GetT> Point3D(const std::string & name, const PointConfig & config, GetT get_fn)
 {
-  return Point3DROWithConfigImpl<GetT>(name, config, get_fn);
+  return Point3DROImpl<GetT>(name, config, get_fn);
 }
 
 /** Helper function to create a Point3DImpl with configuration */
 template<typename GetT, typename SetT>
 Point3DImpl<GetT, SetT> Point3D(const std::string & name, const PointConfig & config, GetT get_fn, SetT set_fn)
 {
-  return Point3DWithConfigImpl<GetT, SetT>(name, config, get_fn, set_fn);
+  return Point3DImpl<GetT, SetT>(name, config, get_fn, set_fn);
 }
-
-/** Trajectory can represent a pre-defined trajectory or a real-time trajectory
- * depending on type of data returned by the callback
- *
- * \tparam GetT Should return either an sva::PTransformd or an Eigen::Vector3d
- * (real-time trajectory) or a vector of these types (pre-defined trajectory)
- *
- */
-template<typename GetT>
-struct TrajectoryImpl : public DataElement<GetT>
-{
-  static constexpr auto type = Elements::Trajectory;
-
-  TrajectoryImpl(const std::string & name, GetT get_fn) : DataElement<GetT>(name, get_fn)
-  {
-    static_assert(details::CheckReturnType<GetT, Eigen::Vector3d, sva::PTransformd, std::vector<Eigen::Vector3d>,
-                                           std::vector<sva::PTransformd>>::value,
-                  "Trajectory element data callback must return either an Eigen::Vector3d, an sva::PTransformd or an "
-                  "std::vector of either types");
-  }
-
-  /** Invalid element */
-  TrajectoryImpl() {}
-};
 
 /** Trajectory can represent a pre-defined trajectory or a real-time trajectory
  * depending on type of data returned by the callback
@@ -758,24 +668,30 @@ struct TrajectoryImpl : public DataElement<GetT>
  *
  */
 template<typename GetT>
-struct TrajectoryWithStyleImpl : public TrajectoryImpl<GetT>
+struct TrajectoryImpl : public DataElement<GetT>
 {
-  TrajectoryWithStyleImpl(const std::string & name, const LineConfig & config, GetT get_fn)
-  : TrajectoryImpl<GetT>(name, get_fn), config_(config)
+  static constexpr auto type = Elements::Trajectory;
+
+  TrajectoryImpl(const std::string & name, const LineConfig & config, GetT get_fn)
+  : DataElement<GetT>(name, get_fn), config_(config)
   {
+    static_assert(details::CheckReturnType<GetT, Eigen::Vector3d, sva::PTransformd, std::vector<Eigen::Vector3d>,
+                                           std::vector<sva::PTransformd>>::value,
+                  "Trajectory element data callback must return either an Eigen::Vector3d, an sva::PTransformd or an "
+                  "std::vector of either types");
   }
 
   /** Invalid element */
-  TrajectoryWithStyleImpl() {}
+  TrajectoryImpl() {}
 
   constexpr static size_t write_size()
   {
-    return TrajectoryImpl<GetT>::write_size() + LineConfig::write_size();
+    return DataElement<GetT>::write_size() + LineConfig::write_size();
   }
 
   void write(mc_rtc::MessagePackBuilder & builder)
   {
-    TrajectoryImpl<GetT>::write(builder);
+    DataElement<GetT>::write(builder);
     config_.write(builder);
   }
 
@@ -787,38 +703,15 @@ private:
 template<typename GetT>
 TrajectoryImpl<GetT> Trajectory(const std::string & name, GetT get_fn)
 {
-  return TrajectoryImpl<GetT>(name, get_fn);
+  return TrajectoryImpl<GetT>(name, {}, get_fn);
 }
 
-/** Function helper to get a TrajectoryWithStyleImpl */
+/** Function helper to get a TrajectoryImpl */
 template<typename GetT>
-TrajectoryWithStyleImpl<GetT> Trajectory(const std::string & name, const LineConfig & config, GetT get_fn)
+TrajectoryImpl<GetT> Trajectory(const std::string & name, const LineConfig & config, GetT get_fn)
 {
-  return TrajectoryWithStyleImpl<GetT>(name, config, get_fn);
+  return TrajectoryImpl<GetT>(name, config, get_fn);
 }
-
-/** Polygon should display a polygon or a set of polygons
- *
- * \tparam GetT Should return an std::vector<Eigen::Vector3d> (one polygon) or an
- * std::vector<std::vector<Eigen:Vector3d>> (list of polygons)
- *
- */
-template<typename GetT>
-struct PolygonImpl : public DataElement<GetT>
-{
-  static constexpr auto type = Elements::Polygon;
-
-  PolygonImpl(const std::string & name, GetT get_fn) : DataElement<GetT>(name, get_fn)
-  {
-    static_assert(
-        details::CheckReturnType<GetT, std::vector<Eigen::Vector3d>, std::vector<std::vector<Eigen::Vector3d>>>::value,
-        "Polygon element data callback must return either an std::vector of Eigen::Vector3d or an std::vector of "
-        "std::vector3d of Eigen::Vector3d");
-  }
-
-  /** Invalid element */
-  PolygonImpl() {}
-};
 
 /** Polygon should display a polygon or a set of polygons
  *
@@ -829,24 +722,28 @@ struct PolygonImpl : public DataElement<GetT>
  *
  */
 template<typename GetT>
-struct PolygonWithColorImpl : public PolygonImpl<GetT>
+struct PolygonImpl : public DataElement<GetT>
 {
-  PolygonWithColorImpl(const std::string & name, const Color & color, GetT get_fn)
-  : PolygonImpl<GetT>(name, get_fn), color_(color)
+  PolygonImpl(const std::string & name, const Color & color, GetT get_fn)
+  : DataElement<GetT>(name, get_fn), color_(color)
   {
+    static_assert(
+        details::CheckReturnType<GetT, std::vector<Eigen::Vector3d>, std::vector<std::vector<Eigen::Vector3d>>>::value,
+        "Polygon element data callback must return either an std::vector of Eigen::Vector3d or an std::vector of "
+        "std::vector3d of Eigen::Vector3d");
   }
 
   /** Invalid element */
-  PolygonWithColorImpl() {}
+  PolygonImpl() {}
 
   static constexpr size_t write_size()
   {
-    return PolygonImpl<GetT>::write_size() + Color::write_size();
+    return DataElement<GetT>::write_size() + Color::write_size();
   }
 
   void write(mc_rtc::MessagePackBuilder & builder)
   {
-    PolygonImpl<GetT>::write(builder);
+    DataElement<GetT>::write(builder);
     color_.write(builder);
   }
 
@@ -858,56 +755,15 @@ private:
 template<typename GetT>
 PolygonImpl<GetT> Polygon(const std::string & name, GetT get_fn)
 {
-  return PolygonImpl<GetT>(name, get_fn);
+  return PolygonImpl<GetT>(name, {}, get_fn);
 }
 
-/** Helper function to build a PolygonWithColorImpl */
+/** Helper function to build a PolygonImpl */
 template<typename GetT>
-PolygonWithColorImpl<GetT> Polygon(const std::string & name, const Color & color, GetT get_fn)
+PolygonImpl<GetT> Polygon(const std::string & name, const Color & color, GetT get_fn)
 {
-  return PolygonWithColorImpl<GetT>(name, color, get_fn);
+  return PolygonImpl<GetT>(name, color, get_fn);
 }
-
-/** Force should display a force vector in 3D environment
- *
- * Additionally an ArrayLabel with labels {"cx", "cy", "cz", "fx", "fy", "fz"} is created
- *
- * \tparam GetForce Should return an sva::ForceVecd
- *
- * \tparam GetSurface Should return an sva::PTransformd where the force will be displayed
- */
-template<typename GetForce, typename GetSurface>
-struct ForceImpl : public Element
-{
-  static constexpr auto type = Elements::Force;
-
-  ForceImpl(const std::string & name, GetForce get_force_fn, GetSurface get_surface_fn)
-  : Element(name), get_force_fn_(get_force_fn), get_surface_fn_(get_surface_fn)
-  {
-    static_assert(details::CheckReturnType<GetForce, sva::ForceVecd>::value,
-                  "Force element force callback must return an sva::ForceVecd");
-    static_assert(details::CheckReturnType<GetSurface, sva::PTransformd>::value,
-                  "Force element surface callback must return an sva::PTransformd");
-  }
-
-  /** Invalid element */
-  ForceImpl() {}
-
-  constexpr static size_t write_size()
-  {
-    return Element::write_size() + 2;
-  }
-
-  void write(mc_rtc::MessagePackBuilder & builder)
-  {
-    builder.write(get_force_fn_());
-    builder.write(get_surface_fn_());
-  }
-
-private:
-  GetForce get_force_fn_;
-  GetSurface get_surface_fn_;
-};
 
 /** Force should display a force vector in 3D environment
  *
@@ -920,28 +776,35 @@ private:
  * \tparam GetSurface Should return an sva::PTransformd where the force will be displayed
  */
 template<typename GetForce, typename GetSurface>
-struct ForceWithConfigImpl : public ForceImpl<GetForce, GetSurface>
+struct ForceImpl : public Element
 {
-  ForceWithConfigImpl(const std::string & name,
-                      const ForceConfig & config,
-                      GetForce get_force_fn,
-                      GetSurface get_surface_fn)
-  : ForceImpl<GetForce, GetSurface>(name, get_force_fn, get_surface_fn), config_(config)
+  static constexpr auto type = Elements::Force;
+
+  ForceImpl(const std::string & name, const ForceConfig & config, GetForce get_force_fn, GetSurface get_surface_fn)
+  : Element(name), get_force_fn_(get_force_fn), get_surface_fn_(get_surface_fn), config_(config)
   {
+    static_assert(details::CheckReturnType<GetForce, sva::ForceVecd>::value,
+                  "Force element force callback must return an sva::ForceVecd");
+    static_assert(details::CheckReturnType<GetSurface, sva::PTransformd>::value,
+                  "Force element surface callback must return an sva::PTransformd");
   }
 
   static constexpr size_t write_size()
   {
-    return ForceImpl<GetForce, GetSurface>::write_size() + ForceConfig::write_size();
+    return Element::write_size() + 2 + ForceConfig::write_size();
   }
 
   void write(mc_rtc::MessagePackBuilder & builder)
   {
-    ForceImpl<GetForce, GetSurface>::write(builder);
+    Element::write(builder);
+    builder.write(get_force_fn_());
+    builder.write(get_surface_fn_());
     config_.write(builder);
   }
 
 private:
+  GetForce get_force_fn_;
+  GetSurface get_surface_fn_;
   ForceConfig config_;
 };
 
@@ -949,32 +812,35 @@ private:
 template<typename GetForce, typename GetSurface>
 ForceImpl<GetForce, GetSurface> Force(const std::string & name, GetForce get_force_fn, GetSurface get_surface_fn)
 {
-  return ForceImpl<GetForce, GetSurface>(name, get_force_fn, get_surface_fn);
+  return ForceImpl<GetForce, GetSurface>(name, {}, get_force_fn, get_surface_fn);
 }
 
-/** Helper function to get a ForceWithConfigImpl */
+/** Helper function to get a ForceImpl */
 template<typename GetForce, typename GetSurface>
-ForceWithConfigImpl<GetForce, GetSurface> Force(const std::string & name,
-                                                const ForceConfig & config,
-                                                GetForce get_force_fn,
-                                                GetSurface get_surface_fn)
+ForceImpl<GetForce, GetSurface> Force(const std::string & name,
+                                      const ForceConfig & config,
+                                      GetForce get_force_fn,
+                                      GetSurface get_surface_fn)
 {
-  return ForceWithConfigImpl<GetForce, GetSurface>(name, config, get_force_fn, get_surface_fn);
+  return ForceImpl<GetForce, GetSurface>(name, config, get_force_fn, get_surface_fn);
 }
 
 /** Arrow should display an arrow from the point at the start to the point at the end
  *
+ * An ArrowConfig can be provided to specify how the arrow should be displayed
+ *
  * \tparam GetStart Returns an Eigen::Vector3d representing the starting point
  *
  * \tparam GetEnd Returns an Eigen::Vector3d representing the end point
+ *
  */
 template<typename GetStart, typename GetEnd>
 struct ArrowImpl : public Element
 {
   static constexpr auto type = Elements::Arrow;
 
-  ArrowImpl(const std::string & name, GetStart get_start_fn, GetEnd get_end_fn)
-  : Element(name), get_start_fn_(get_start_fn), get_end_fn_(get_end_fn)
+  ArrowImpl(const std::string & name, const ArrowConfig & config, GetStart get_start_fn, GetEnd get_end_fn)
+  : Element(name), get_start_fn_(get_start_fn), get_end_fn_(get_end_fn), config_(config)
   {
     static_assert(details::CheckReturnType<GetStart, Eigen::Vector3d>::value,
                   "Arrow element start callback must return an Eigen::Vector3d");
@@ -983,11 +849,11 @@ struct ArrowImpl : public Element
   }
 
   /** Invalid element */
-  ArrowImpl() {}
+  ArrowImpl(){};
 
   constexpr static size_t write_size()
   {
-    return Element::write_size() + 2;
+    return Element::write_size() + 2 + ArrowConfig::write_size();
   }
 
   void write(mc_rtc::MessagePackBuilder & builder)
@@ -995,42 +861,12 @@ struct ArrowImpl : public Element
     Element::write(builder);
     builder.write(get_start_fn_());
     builder.write(get_end_fn_());
+    config_.write(builder);
   }
 
 private:
   GetStart get_start_fn_;
   GetEnd get_end_fn_;
-};
-
-/** \see ArrowImpl
- *
- * An ArrowConfig can be provided to specify how the arrow should be displayed
- */
-template<typename GetStart, typename GetEnd>
-struct ArrowWithConfigImpl : public ArrowImpl<GetStart, GetEnd>
-{
-  static constexpr auto type = Elements::Arrow;
-
-  ArrowWithConfigImpl(const std::string & name, const ArrowConfig & config, GetStart get_start_fn, GetEnd get_end_fn)
-  : ArrowImpl<GetStart, GetEnd>(name, get_start_fn, get_end_fn), config_(config)
-  {
-  }
-
-  /** Invalid element */
-  ArrowWithConfigImpl(){};
-
-  constexpr static size_t write_size()
-  {
-    return ArrowImpl<GetStart, GetEnd>::write_size() + ArrowConfig::write_size();
-  }
-
-  void write(mc_rtc::MessagePackBuilder & builder)
-  {
-    ArrowImpl<GetStart, GetEnd>::write(builder);
-    config_.write(builder);
-  }
-
-private:
   ArrowConfig config_;
 };
 
@@ -1038,17 +874,17 @@ private:
 template<typename GetStart, typename GetEnd>
 ArrowImpl<GetStart, GetEnd> Arrow(const std::string & name, GetStart get_start_fn, GetEnd get_end_fn)
 {
-  return ArrowImpl<GetStart, GetEnd>(name, get_start_fn, get_end_fn);
+  return ArrowImpl<GetStart, GetEnd>(name, {}, get_start_fn, get_end_fn);
 }
 
-/** Helper function to create an ArrowWithConfigImpl */
+/** Helper function to create an ArrowImpl */
 template<typename GetStart, typename GetEnd>
-ArrowWithConfigImpl<GetStart, GetEnd> Arrow(const std::string & name,
-                                            const ArrowConfig & config,
-                                            GetStart get_start_fn,
-                                            GetEnd get_end_fn)
+ArrowImpl<GetStart, GetEnd> Arrow(const std::string & name,
+                                  const ArrowConfig & config,
+                                  GetStart get_start_fn,
+                                  GetEnd get_end_fn)
 {
-  return ArrowWithConfigImpl<GetStart, GetEnd>(name, config, get_start_fn, get_end_fn);
+  return ArrowImpl<GetStart, GetEnd>(name, config, get_start_fn, get_end_fn);
 }
 
 /** Rotation display a widget that shows the rotation
