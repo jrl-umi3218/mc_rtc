@@ -585,11 +585,7 @@ struct MC_RTC_UTILS_DLLAPI Configuration
   {
     try
     {
-#ifdef WIN32
-      v = static_cast<T>((*this)(key));
-#else
       v = (*this)(key);
-#endif
     }
     catch(Exception & exc)
     {
