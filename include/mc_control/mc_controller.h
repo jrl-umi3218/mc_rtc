@@ -69,10 +69,14 @@ public:
    */
   virtual bool run();
 
-  /** This function is called before the run() funciton at each time step of the process
+  /** This function is called before the run() function at each time step of the process
    * driving the robot (i.e. simulation or robot's controller). The default
    * behaviour is to call the run() function of each loaded observer and update
-   * the realRobot instance from the desired list of estimators.
+   * the realRobot instance when desired.
+   *
+   * The default behaviour is determined by the following configuration entries:
+   * - "EnabledObservers": ["Encoder", "BodySensor", "KinematicInertial"],
+   * - "UpdateObservers": ["Encoder", "KinematicInertial"],
    *
    * This is meant to run in real-time hence some precaution should apply (e.g.
    * no i/o blocking calls, no thread instantiation and such)
@@ -94,6 +98,8 @@ public:
   /*! @brief Reset the observers. This function is called after the reset()
    * function.
    *
+   * \see runObservers()
+   *
    * @returns True when all observers have been succesfully reset.
    */
   virtual bool resetObservers();
@@ -105,7 +111,8 @@ public:
    *
    * @returns An anchor frame in-between the feet.
    *
-   * @throws Default implemetation throws. Please override this function in your controller when required.
+   * @throws std::runtime_error Default implemetation throws. Please override this function in your controller when
+   * required.
    */
   virtual sva::PTransformd anchorFrame(const mc_rbdyn::Robot & robot) const;
 
@@ -144,7 +151,7 @@ public:
    */
   virtual void reset(const ControllerResetData & reset_data);
 
-  /** Return the main robot (first robot provided in the constructor
+  /** Return the main robot (first robot provided in the constructor)
    * \anchor mc_controller_robot_const_doc
    */
   virtual const mc_rbdyn::Robot & robot() const;

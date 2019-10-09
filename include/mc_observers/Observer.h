@@ -18,6 +18,12 @@ struct MCController;
 namespace mc_observers
 {
 
+/**
+ * @brief State observation API
+ *
+ * All new observers must inherit from this Observer class, and implement the
+ * required virtual functions (at least reset, run, updateRobot)
+ */
 struct MC_OBSERVER_DLLAPI Observer
 {
   Observer(const std::string & name, double dt, const mc_rtc::Configuration & config = {});

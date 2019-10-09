@@ -10,13 +10,14 @@
 
 namespace mc_observers
 {
-/** Estimator of floating base position and velocity. Position is directly
- * obtained from sensor values, while velocity is computed by finite
- * differences.
+/*! Estimator of floating base position and velocity
  *
- * The default behaviour is to update the real robot from the estimated position
- * and velocity. You can configure the estimator with the following JSON
- * configuration
+ * Position is directly obtained from sensor values
+ * Velocity is then computed by finite differences
+ *
+ * The default behaviour is to update the real robot from the estimated position and velocity.
+ *
+ * You can configure the estimator with the following JSON configuration
  *
  * \code{.json}
  * "Encoder":
@@ -36,15 +37,13 @@ struct MC_OBSERVER_DLLAPI EncoderObserver : public Observer
 
   /** Reset finite differences estimator from current encoder values and sets encoder velocity to zero
    *
-   * \param ctl Controller access
+   * \param ctl Controller calling this observer
    *
-   * \throw if the robot does not have encoder values
+   * \throw std::runtime_error if the robot does not have encoder values
    */
   void reset(const mc_control::MCController & ctl) override;
 
-  /** Compute encoder velocity by finite differences of the sensor values
-   * Uses robot()
-   */
+  /*! \brief Computes encoder velocity by finite differences of position */
   bool run(const mc_control::MCController & ctl) override;
 
   /** Update the real robot from the estimator state, depending on its
@@ -69,12 +68,12 @@ struct MC_OBSERVER_DLLAPI EncoderObserver : public Observer
   void removeFromLogger(mc_rtc::Logger &) override;
 
 protected:
-  /*! \brief Update source for the realRobot update */
+  /*! \brief Update source for the update. */
   enum class Update
   {
-    Control,
-    Estimator,
-    None
+    Control, ///< Use encoder value from control robot
+    Estimator, ///< Estimates the encoder value from sensor
+    None ///< Do not compute/update value
   };
 
   Update posUpdate_ = Update::Estimator;
