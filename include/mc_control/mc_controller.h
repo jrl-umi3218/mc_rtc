@@ -336,9 +336,14 @@ protected:
    * Observers will be run and update real robot in that order
    **/
   std::vector<mc_observers::ObserverPtr> observers;
-  /** Observers that will be updating the realRobot provided by
-   * MCGlobalController */
-  std::vector<mc_observers::ObserverPtr> updateObservers;
+  /** Observers that will be run by the pipeline.
+   *
+   * The pair contains:
+   * - The observer to run
+   * - A boolean set to true if the observer updates the real robot instance
+   *
+   * Provided by MCGlobalController */
+  std::vector<std::pair<mc_observers::ObserverPtr, bool>> pipelineObservers;
   /** Logger provided by MCGlobalController */
   std::shared_ptr<mc_rtc::Logger> logger_;
   /** GUI state builder */

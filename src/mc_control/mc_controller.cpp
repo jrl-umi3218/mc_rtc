@@ -143,11 +143,14 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
 bool MCController::resetObservers()
 {
   auto pipelineDesc = std::string{};
-  for(const auto & observer : observers)
+  for(const auto & observerPair : pipelineObservers)
   {
+    auto observer = observerPair.first;
+    bool updateRobots = observerPair.second;
     const auto & observerName = observer->name();
     observer->reset(*this);
-    if(std::find(updateObservers.begin(), updateObservers.end(), observer) != updateObservers.end())
+
+    if(updateRobots)
     {
       observer->updateRobot(*this, realRobots());
       pipelineDesc += " -> " + observer->desc();
@@ -170,15 +173,17 @@ bool MCController::resetObservers()
 
 bool MCController::runObservers()
 {
-  for(const auto & observer : observers)
+  for(const auto & observerPair : pipelineObservers)
   {
+    auto observer = observerPair.first;
+    bool updateRobots = observerPair.second;
     bool r = observer->run(*this);
     if(!r)
     {
       LOG_ERROR("Observer " << observer->name() << " failed to run");
       return false;
     }
-    if(std::find(updateObservers.begin(), updateObservers.end(), observer) != updateObservers.end())
+    if(updateRobots)
     {
       observer->updateRobot(*this, realRobots());
     }

@@ -637,22 +637,31 @@ bool MCGlobalController::AddController(const std::string & name)
     // Give each controller access to all observers
     controllers[name]->observers = observers;
     const auto & cc = config.controllers_configs[name];
+    const auto runObservers = cc("RunObservers", std::vector<std::string>{});
+    const auto updateObservers = cc("UpdateObservers", std::vector<std::string>{});
     // Use controller-specific configuration instead of global configuration
-    if(cc.has("UpdateObservers"))
+    for(const auto & observerName : runObservers)
     {
-      for(const auto & observerName : cc("UpdateObservers"))
+      if(observersByName.count(observerName) > 0)
       {
-        if(observersByName.count(observerName) > 0)
+        auto observer = observersByName[observerName];
+        // If observer is in the "UpdateObserver" configuration, request for
+        // update
+        if(std::find(updateObservers.begin(), updateObservers.end(), observerName) != updateObservers.end())
         {
-          controllers[name]->updateObservers.push_back(observersByName[observerName]);
+          controllers[name]->pipelineObservers.push_back(std::make_pair(observer, true));
         }
         else
         {
-          LOG_ERROR_AND_THROW(std::runtime_error,
-                              "Controller "
-                                  << controller_name << " requested observer " << observerName
-                                  << " but this observer is not available. Check your EnabledObservers configuration");
+          controllers[name]->pipelineObservers.push_back(std::make_pair(observer, false));
         }
+      }
+      else
+      {
+        LOG_ERROR_AND_THROW(std::runtime_error,
+                            "Controller "
+                                << controller_name << " requested observer " << observerName
+                                << " but this observer is not available. Check your EnabledObservers configuration");
       }
     }
     return true;
