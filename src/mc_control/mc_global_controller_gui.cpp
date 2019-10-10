@@ -15,7 +15,7 @@ void MCGlobalController::initGUI()
   if(controller_ && controller_->gui())
   {
     auto gui = controller_->gui();
-    gui->removeElement({"Global"}, "Log");
+    gui->removeCategory({"Global", "Log"});
     gui->addElement({"Global", "Log"}, mc_rtc::gui::Button("Start a new log", [this]() { this->refreshLog(); }));
     auto addGripper = [this, gui](const std::string & gname) {
       gui->removeCategory({"Global", "Grippers", gname});
@@ -31,7 +31,7 @@ void MCGlobalController::initGUI()
     {
       addGripper(g.first);
     }
-    gui->removeElement({"Global"}, "Change controller");
+    gui->removeCategory({"Global", "Change controller"});
     gui->addElement({"Global", "Change controller"},
                     mc_rtc::gui::Label("Current controller", [this]() { return current_ctrl; }),
                     mc_rtc::gui::Form("Change controller",

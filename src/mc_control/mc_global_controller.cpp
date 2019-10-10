@@ -387,6 +387,14 @@ bool MCGlobalController::run()
   /* Check if we need to change the controller this time */
   if(next_controller_)
   {
+    for(auto & observer : observers)
+    {
+      observer->removeFromLogger(controller_->logger());
+      if(controller_->gui())
+      {
+        observer->removeFromGUI(*controller_->gui());
+      }
+    }
     LOG_INFO("Switching controllers")
     if(controller_)
     {
@@ -434,14 +442,6 @@ bool MCGlobalController::run()
     }
     next_controller_ = 0;
     current_ctrl = next_ctrl;
-    for(auto & observer : observers)
-    {
-      observer->removeFromLogger(controller_->logger());
-      if(controller_->gui())
-      {
-        observer->removeFromGUI(*controller_->gui());
-      }
-    }
     if(config.enable_log)
     {
       start_log();

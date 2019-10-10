@@ -165,7 +165,7 @@ bool MCController::resetObservers()
       observer->addToGUI(*this, *gui_);
     }
   }
-  if(!observers.empty())
+  if(!pipelineObservers.empty())
   {
     LOG_INFO("Observers: " << pipelineDesc);
   }

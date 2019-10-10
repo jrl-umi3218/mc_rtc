@@ -88,8 +88,8 @@ void BodySensorObserver::addToLogger(const mc_control::MCController & ctl, mc_rt
 void BodySensorObserver::removeFromLogger(mc_rtc::Logger & logger)
 {
   Observer::removeFromLogger(logger);
-  logger.removeLogEntry("observer_" + name() + "_" + fbSensorName_ + "Sensor_posW");
-  logger.removeLogEntry("observer_" + name() + "_" + fbSensorName_ + "Sensor_velW");
+  logger.removeLogEntry("observer_" + name() + "_posW");
+  logger.removeLogEntry("observer_" + name() + "_velW");
 }
 
 void BodySensorObserver::addToGUI(const mc_control::MCController &, mc_rtc::gui::StateBuilder & gui)
