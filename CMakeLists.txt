@@ -53,11 +53,12 @@ option(DISABLE_ROS "Do not build with ROS support (even if ROS was found)" OFF)
 add_project_dependency(Boost REQUIRED COMPONENTS filesystem timer)
 add_project_dependency(Tasks REQUIRED)
 add_project_dependency(mc_rbdyn_urdf REQUIRED)
-# https://github.com/humanoid-path-planner/hpp-spline
-add_required_dependency(hpp-spline)
 
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
+
+# hpp-spline (defines target: mc_rtc_3rd_party::hpp-spline)
+find_package(mc_rtc_3rd_party_hpp-spline REQUIRED)
 
 # LTDL (defines target: mc_rtc_3rd_party::ltdl)
 add_subdirectory(3rd-party/ltdl)

@@ -201,6 +201,7 @@ set(mc_trajectory_HDR
 add_library(mc_trajectory SHARED ${mc_trajectory_SRC} ${mc_trajectory_HDR})
 set_target_properties(mc_trajectory PROPERTIES COMPILE_FLAGS "-DMC_TRAJECTORY_EXPORTS")
 target_link_libraries(mc_trajectory PUBLIC SpaceVecAlg::SpaceVecAlg)
+target_link_libraries(mc_trajectory PUBLIC mc_rtc_3rd_party::hpp-spline)
 install_mc_rtc_lib(mc_trajectory)
 
 set(mc_tasks_SRC
