@@ -203,6 +203,28 @@ Configuration::operator unsigned int() const
   throw Exception("Stored Json value is not an unsigned int");
 }
 
+Configuration::operator int64_t() const
+{
+  assert(v.value_);
+  auto value = static_cast<const internal::RapidJSONValue *>(v.value_);
+  if(value->IsInt64())
+  {
+    return value->GetInt64();
+  }
+  throw Exception("Stored Json value is not an int64_t");
+}
+
+Configuration::operator uint64_t() const
+{
+  assert(v.value_);
+  auto value = static_cast<const internal::RapidJSONValue *>(v.value_);
+  if(value->IsUint64() || (value->IsInt64() && value->GetInt64() >= 0))
+  {
+    return value->GetUint64();
+  }
+  throw Exception("Stored Json value is not an uint64_t");
+}
+
 Configuration::operator double() const
 {
   assert(v.value_);
@@ -373,6 +395,13 @@ Configuration::operator sva::PTransformd() const
     return {Eigen::Quaterniond{config[0], config[1], config[2], config[3]}.normalized(),
             {config[4], config[5], config[6]}};
   }
+  else if(size() == 12)
+  {
+    auto & config = *this;
+    Eigen::Matrix3d rot;
+    rot << config[0], config[1], config[2], config[3], config[4], config[5], config[6], config[7], config[8];
+    return {rot, {config[9], config[10], config[11]}};
+  }
   throw Exception("Stored Json value is not a PTransformd");
 }
 
@@ -382,6 +411,11 @@ Configuration::operator sva::ForceVecd() const
   {
     return {(*this)("couple"), (*this)("force")};
   }
+  else if(size() == 6)
+  {
+    auto & config = *this;
+    return {{config[0], config[1], config[2]}, {config[3], config[4], config[5]}};
+  }
   throw Exception("Stored Json value is not a ForceVecd");
 }
 
@@ -390,6 +424,11 @@ Configuration::operator sva::MotionVecd() const
   if(has("angular") && has("linear"))
   {
     return {(*this)("angular"), (*this)("linear")};
+  }
+  else if(size() == 6)
+  {
+    auto & config = *this;
+    return {{config[0], config[1], config[2]}, {config[3], config[4], config[5]}};
   }
   throw Exception("Stored Json value is not a MotionVecd");
 }
@@ -411,6 +450,21 @@ Configuration Configuration::fromData(const char * data)
   mc_rtc::Configuration config;
   auto & target = *std::static_pointer_cast<internal::RapidJSONDocument>(config.v.doc_);
   mc_rtc::internal::loadData(data, target);
+  return config;
+}
+
+Configuration Configuration::rootArray()
+{
+  mc_rtc::Configuration config;
+  auto & target = *std::static_pointer_cast<internal::RapidJSONDocument>(config.v.doc_);
+  target.SetArray();
+  return config;
+}
+
+Configuration Configuration::fromMessagePack(const char * data, size_t size)
+{
+  mc_rtc::Configuration config;
+  mc_rtc::internal::fromMessagePack(config, data, size);
   return config;
 }
 
@@ -507,6 +561,19 @@ std::string Configuration::dump(bool pretty) const
   return mc_rtc::internal::dumpDocument(value, pretty);
 }
 
+size_t Configuration::toMessagePack(std::vector<char> & data) const
+{
+  MessagePackBuilder builder(data);
+  toMessagePack(builder);
+  return builder.finish();
+}
+
+void Configuration::toMessagePack(MessagePackBuilder & builder) const
+{
+  auto & value = *static_cast<internal::RapidJSONValue *>(v.value_);
+  mc_rtc::internal::toMessagePack(value, builder);
+}
+
 template<>
 void Configuration::operator()(const std::string & key, std::string & v) const
 {
@@ -561,10 +628,45 @@ void push_impl(T value, void * json_p, void * doc_p)
 }
 } // namespace
 
+void Configuration::add_null(const std::string & key)
+{
+  auto & json = *static_cast<internal::RapidJSONValue *>(v.value_);
+  auto & doc = *static_cast<internal::RapidJSONDocument *>(v.doc_.get());
+  auto & allocator = doc.GetAllocator();
+  internal::RapidJSONValue value_;
+  value_.SetNull();
+  auto member = json.FindMember(key.c_str());
+  if(member == json.MemberEnd())
+  {
+    internal::RapidJSONValue key_(key.c_str(), allocator);
+    json.AddMember(key_, value_, allocator);
+  }
+  else
+  {
+    member->value = value_;
+  }
+}
+
+void Configuration::push_null()
+{
+  auto & json = *static_cast<internal::RapidJSONValue *>(v.value_);
+  auto & doc = *static_cast<internal::RapidJSONDocument *>(v.doc_.get());
+  auto & allocator = doc.GetAllocator();
+  internal::RapidJSONValue value_;
+  value_.SetNull();
+  if(!json.IsArray())
+  {
+    throw Configuration::Exception("Trying to push data in a non-array value");
+  }
+  json.PushBack(value_, allocator);
+}
+
 // clang-format off
 void Configuration::add(const std::string & key, bool value) { add_impl(key, value, v.value_, v.doc_.get()); }
 void Configuration::add(const std::string & key, int value) { add_impl(key, value, v.value_, v.doc_.get()); }
 void Configuration::add(const std::string & key, unsigned int value) { add_impl(key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, int64_t value) { add_impl(key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, uint64_t value) { add_impl(key, value, v.value_, v.doc_.get()); }
 void Configuration::add(const std::string & key, double value) { add_impl(key, value, v.value_, v.doc_.get()); }
 void Configuration::add(const std::string & key, const char * value) { add(key, std::string(value)); }
 void Configuration::add(const std::string & key, const std::string & value) { add_impl(key, value, v.value_, v.doc_.get()); }
@@ -662,6 +764,8 @@ Configuration Configuration::object()
 void Configuration::push(bool value) { push_impl(value, v.value_, v.doc_.get()); }
 void Configuration::push(int value) { push_impl(value, v.value_, v.doc_.get()); }
 void Configuration::push(unsigned int value) { push_impl(value, v.value_, v.doc_.get()); }
+void Configuration::push(int64_t value) { push_impl(value, v.value_, v.doc_.get()); }
+void Configuration::push(uint64_t value) { push_impl(value, v.value_, v.doc_.get()); }
 void Configuration::push(double value) { push_impl(value, v.value_, v.doc_.get()); }
 void Configuration::push(const char * value) { push(std::string(value)); }
 void Configuration::push(const std::string & value) { push_impl(value, v.value_, v.doc_.get()); }

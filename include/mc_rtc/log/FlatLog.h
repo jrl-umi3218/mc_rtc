@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <mc_rtc/log/serialization/MCLog_generated.h>
+#include <mc_rtc/log/utils.h>
 #include <mc_rtc/utils_api.h>
 
 #include <SpaceVecAlg/SpaceVecAlg>
@@ -50,12 +50,12 @@ struct MC_RTC_UTILS_DLLAPI FlatLog
   bool has(const std::string & entry) const;
 
   /** Returns available types for an entry */
-  std::set<LogData> types(const std::string & entry) const;
+  std::set<LogType> types(const std::string & entry) const;
 
   /** Get the first non None type for an entry */
-  LogData type(const std::string & entry) const;
+  LogType type(const std::string & entry) const;
 
-  /** Get a type record entry. The returned type is a flatbuffer type
+  /** Get a type record entry.
    *
    * Get null pointer entry when the record data type does not match the
    * requested data type
@@ -94,7 +94,7 @@ struct MC_RTC_UTILS_DLLAPI FlatLog
 
   /** Get a typed record entry at a given index
    *
-   * When the record datat type does not match the requested data type, returns the default value provided.
+   * When the record type does not match the requested data type, returns the default value provided.
    *
    * \param entry Entry to get
    *
@@ -107,12 +107,29 @@ struct MC_RTC_UTILS_DLLAPI FlatLog
   template<typename T>
   T get(const std::string & entry, size_t i, const T & def) const;
 
+  /** Get a typed raw entry at a given index
+   *
+   * Returns nullptr when the requested type does not match the record type
+   *
+   * \param entry Entry to get
+   *
+   * \param i Index to get
+   *
+   */
+  template<typename T>
+  const T * getRaw(const std::string & entry, size_t i) const;
+
   struct record
   {
-    record() = default;
-    record(LogData t, const void * d) : type(t), data(d) {}
-    LogData type = LogData_NONE;
-    const void * data = nullptr;
+    using unique_void_ptr = std::unique_ptr<void, void (*)(void const *)>;
+    record();
+    record(LogType t, unique_void_ptr && d) : type(t), data(std::move(d)) {}
+    record(const record &) = delete;
+    record & operator=(const record &) = delete;
+    record(record &&) = default;
+    record & operator=(record &&) = default;
+    LogType type = mc_rtc::log::LogType::None;
+    unique_void_ptr data;
   };
   struct entry
   {
@@ -121,7 +138,6 @@ struct MC_RTC_UTILS_DLLAPI FlatLog
   };
 
 private:
-  std::vector<std::unique_ptr<char[]>> buffers_;
   std::vector<entry> data_;
 
   /** Retrieve records for a given entry */
@@ -129,6 +145,12 @@ private:
 
   /** Retrieve the index of a given entry, creates the entry if it doesn't exist */
   size_t index(const std::string & entry, size_t size);
+
+  /** Append a flat file to the log, all entries will be either double or strings */
+  void appendFlat(const std::string & fpath);
+
+  /** Append a binary file to the log */
+  void appendBin(const std::string & fpath);
 };
 
 } // namespace log

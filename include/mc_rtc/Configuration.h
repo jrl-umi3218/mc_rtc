@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <mc_rtc/utils_api.h>
+#include <mc_rtc/MessagePackBuilder.h>
 
 #include <SpaceVecAlg/SpaceVecAlg>
 
@@ -157,6 +157,23 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    * \throws If the underlying value does not hold an unsigned int
    */
   operator unsigned int() const;
+
+  /*! \brief Cast to int64_t
+   *
+   * Strictly for int64_t-typed entries
+   *
+   * \throws If the underlying value does not hold an int64_t
+   */
+  operator int64_t() const;
+
+  /*! \brief Cast to uint64_t
+   *
+   * Int entries that are strictly positive will be treated as
+   * uint64_t entries
+   *
+   * \throws If the underlying value does not hold an uint64_t
+   */
+  operator uint64_t() const;
 
   /*! \brief Cast to double
    *
@@ -402,6 +419,12 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    */
   Configuration(const char * path);
 
+  /*! \brief Returns a Configuration with an array as root entry
+   *
+   * This is not valid standard JSON
+   */
+  static Configuration rootArray();
+
   /*! \brief Static constructor to load from JSON data
    *
    * \param data JSON data to load
@@ -415,6 +438,15 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    *
    */
   static Configuration fromData(const char * data);
+
+  /*! \brief Static constructor to load from MessagePack data
+   *
+   * \param data MessagePack data to load
+   *
+   * \param size Size of data
+   *
+   */
+  static Configuration fromMessagePack(const char * data, size_t size);
 
   /*! \brief Load more data into the configuration
    *
@@ -465,6 +497,24 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    */
   std::string dump(bool pretty = false) const;
 
+  /*! \brief Convert to MessagePack
+   *
+   * \param data Will hold the message data
+   *
+   * \returns The size of the message, this is different from data.size()
+   *
+   */
+  size_t toMessagePack(std::vector<char> & data) const;
+
+  /*! \brief Append to an existing MessagePackBuilder
+   *
+   * The whole configuration will be stored in the MessagePack being built
+   *
+   * \param builder MessagePackBuilder instance
+   *
+   */
+  void toMessagePack(MessagePackBuilder & builder) const;
+
   /*! \brief Returns a Entry value stored within the
    * configuration
    *
@@ -497,6 +547,28 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    */
   Configuration operator[](size_t i) const;
 
+  /*! \brief Retrieve a given value from a JSON array
+   *
+   * Returns the default value if the index is too high or if the underlying value does not match the requested type.
+   *
+   * \param i Index to retrieve
+   *
+   * \param v The default value
+   */
+  template<typename T>
+  T at(size_t i, const T & v) const
+  {
+    try
+    {
+      return (*this)[i];
+    }
+    catch(Exception & exc)
+    {
+      exc.silence();
+      return v;
+    }
+  }
+
   /*! \brief Retrieve and store a given value stored within the
    * configuration
    *
@@ -513,11 +585,7 @@ struct MC_RTC_UTILS_DLLAPI Configuration
   {
     try
     {
-#ifdef WIN32
-      v = static_cast<T>((*this)(key));
-#else
       v = (*this)(key);
-#endif
     }
     catch(Exception & exc)
     {
@@ -566,6 +634,15 @@ struct MC_RTC_UTILS_DLLAPI Configuration
     return lhs == rhs;
   }
 
+  /*! \brief Add a null element to the configuration
+   *
+   * Overrides the existing value if it holds one for the given key
+   *
+   * \param key Key of the element
+   *
+   */
+  void add_null(const std::string & key);
+
   /*! \brief Add a bool element to the Configuration
    *
    * Overrides the existing value if it holds one for the given key.
@@ -587,6 +664,18 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    * \see add(const std::string&, bool)
    */
   void add(const std::string & key, unsigned int value);
+
+  /*! \brief Add a int64_t element to the Configuration
+   *
+   * \see add(const std::string&, bool)
+   */
+  void add(const std::string & key, int64_t value);
+
+  /*! \brief Add a uint64_t element to the Configuration
+   *
+   * \see add(const std::string&, bool)
+   */
+  void add(const std::string & key, uint64_t value);
 
   /*! \brief Add a double element to the Configuration
    *
@@ -697,6 +786,12 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    */
   Configuration array(const std::string & key, size_t size = 0);
 
+  /*! \brief Insert a null value into an array
+   *
+   * \throws If the underlying Json value is not an array.
+   */
+  void push_null();
+
   /*! \brief Insert a bool element into an array
    *
    * \param value Value to add
@@ -716,6 +811,18 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    * \see push(bool);
    */
   void push(unsigned int value);
+
+  /*! \brief Insert a int64_t element int64_to an array
+   *
+   * \see push(bool);
+   */
+  void push(int64_t value);
+
+  /*! \brief Insert a uint64_t element into an array
+   *
+   * \see push(bool);
+   */
+  void push(uint64_t value);
 
   /*! \brief Insert a double element into an array
    *
@@ -806,6 +913,18 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    * \see push(bool);
    */
   void push(const Configuration & value);
+
+  /*! \brief Push an empty array
+   *
+   * \see push(bool);
+   */
+  Configuration array(size_t reserve = 0);
+
+  /*! \brief Push an empty object
+   *
+   * \see push(bool);
+   */
+  Configuration object();
 
   /*! \brief User-defined conversion
    *
@@ -1030,11 +1149,6 @@ struct MC_RTC_UTILS_DLLAPI Configuration
   ConfigurationArrayIterator end() const;
 
 private:
-  /*! \brief Create an empty array */
-  Configuration array(size_t reserve);
-  /*! \brief Create an empty object */
-  Configuration object();
-
   /*! \brief Implementation details
    *
    * This structure is meant to hide the JSON library used by mc_rtc

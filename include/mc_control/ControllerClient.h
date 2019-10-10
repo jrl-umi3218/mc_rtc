@@ -106,14 +106,13 @@ protected:
   /** Kill the connection and data flow */
   void stop();
 
-  void handle_gui_state(const char * data);
+  void handle_gui_state(mc_rtc::Configuration state);
 
   void handle_category(const std::vector<std::string> & parent,
                        const std::string & category,
-                       const mc_rtc::Configuration & data,
-                       const mc_rtc::Configuration & gui);
+                       const mc_rtc::Configuration & data);
 
-  void handle_widget(const ElementId & id, const mc_rtc::Configuration & data, const mc_rtc::Configuration & gui);
+  void handle_widget(const ElementId & id, const mc_rtc::Configuration & data);
 
   /** Called when a message starts being processed, can be used to lock the GUI */
   virtual void started() {}
@@ -451,31 +450,31 @@ private:
   void default_impl(const std::string & type, const ElementId & id);
 
   /** Handle details of Point3D elements */
-  void handle_point3d(const ElementId & id, const mc_rtc::Configuration & gui, const mc_rtc::Configuration & data);
+  void handle_point3d(const ElementId & id, const mc_rtc::Configuration & data);
 
   /** Handle Trajectory and dispatch to 3D or Pose case */
-  void handle_trajectory(const ElementId & id, const mc_rtc::Configuration & gui, const mc_rtc::Configuration & data);
+  void handle_trajectory(const ElementId & id, const mc_rtc::Configuration & data);
 
   /** Hand details of DisplayPolygon elemets */
-  void handle_polygon(const ElementId & id, const mc_rtc::Configuration & gui, const mc_rtc::Configuration & data);
+  void handle_polygon(const ElementId & id, const mc_rtc::Configuration & data);
 
   /** Hand details of DisplayForce elemets */
-  void handle_force(const ElementId & id, const mc_rtc::Configuration & gui, const mc_rtc::Configuration & data);
+  void handle_force(const ElementId & id, const mc_rtc::Configuration & data);
 
   /** Hand details of DisplayArrow elemets */
-  void handle_arrow(const ElementId & id, const mc_rtc::Configuration & gui, const mc_rtc::Configuration & data);
+  void handle_arrow(const ElementId & id, const mc_rtc::Configuration & data);
 
   /** Handle details of Rotation elements */
-  void handle_rotation(const ElementId & id, const mc_rtc::Configuration & gui, const mc_rtc::Configuration & data);
+  void handle_rotation(const ElementId & id, const mc_rtc::Configuration & data);
 
   /** Handle details of Transform elements */
-  void handle_transform(const ElementId & id, const mc_rtc::Configuration & gui, const mc_rtc::Configuration & data);
+  void handle_transform(const ElementId & id, const mc_rtc::Configuration & data);
 
   /** Handle details of XYTheta elements */
-  void handle_xytheta(const ElementId & id, const mc_rtc::Configuration & gui, const mc_rtc::Configuration & data);
+  void handle_xytheta(const ElementId & id, const mc_rtc::Configuration & data);
 
   /** Handle details of Form elements */
-  void handle_form(const ElementId & id, const mc_rtc::Configuration & gui);
+  void handle_form(const ElementId & id, const mc_rtc::Configuration & data);
 };
 
 } // namespace mc_control

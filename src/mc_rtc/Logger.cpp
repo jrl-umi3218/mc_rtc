@@ -12,25 +12,42 @@
 
 namespace mc_rtc
 {
+
+const uint8_t Logger::magic[4] = {0x41, 0x4e, 0x4e, 0x45};
+
 struct LoggerImpl
 {
   LoggerImpl(const bfs::path & directory, const std::string & tmpl)
-  : builder_(1024 * 1024), directory(directory), tmpl(tmpl)
+  : data_(1024 * 1024), directory(directory), tmpl(tmpl)
   {
   }
 
   virtual ~LoggerImpl() {}
 
   virtual void initialize(const bfs::path & path) = 0;
-  virtual void write(uint8_t * data, int size) = 0;
+  virtual void write(char * data, size_t size) = 0;
 
-  flatbuffers::FlatBufferBuilder builder_;
+  std::vector<char> data_;
 
   bfs::path directory;
   std::string tmpl;
   double log_iter_ = 0;
   bool valid_ = true;
   std::ofstream log_;
+
+protected:
+  inline void fwrite(char * data, size_t size)
+  {
+    log_.write((char *)&size, sizeof(size_t));
+    log_.write(data, size);
+  }
+
+  // Open file and write magic number to it right away
+  void open(const std::string & path)
+  {
+    log_.open(path, std::ofstream::binary);
+    log_.write((const char *)&Logger::magic, sizeof(Logger::magic));
+  }
 };
 
 namespace
@@ -45,15 +62,14 @@ struct LoggerNonThreadedPolicyImpl : public LoggerImpl
     {
       log_.close();
     }
-    log_.open(path.string(), std::ofstream::binary);
+    open(path.string());
   }
 
-  virtual void write(uint8_t * data, int size) final
+  virtual void write(char * data, size_t size) final
   {
     if(valid_)
     {
-      log_.write((char *)&size, sizeof(int));
-      log_.write((char *)data, size);
+      fwrite(data, size);
     }
   }
 };
@@ -88,10 +104,9 @@ struct LoggerThreadedPolicyImpl : public LoggerImpl
   {
     if(data_.pop(pop_))
     {
-      uint8_t * data = pop_.first;
-      int size = pop_.second;
-      log_.write((char *)&size, sizeof(int));
-      log_.write((char *)data, size);
+      char * data = pop_.first;
+      size_t size = pop_.second;
+      fwrite(data, size);
       delete[] data;
       return false;
     }
@@ -109,20 +124,20 @@ struct LoggerThreadedPolicyImpl : public LoggerImpl
       }
       log_.close();
     }
-    log_.open(path.string(), std::ofstream::binary);
+    open(path.string());
   }
 
-  virtual void write(uint8_t * data, int size) final
+  virtual void write(char * data, size_t size) final
   {
-    uint8_t * ndata = new uint8_t[size];
+    char * ndata = new char[size];
     std::memcpy(ndata, data, size);
     data_.push({ndata, size});
   }
 
   std::thread log_sync_th_;
   bool log_sync_th_run_ = true;
-  CircularBuffer<std::pair<uint8_t *, int>, 512> data_;
-  std::pair<uint8_t *, int> pop_;
+  CircularBuffer<std::pair<char *, size_t>, 512> data_;
+  std::pair<char *, size_t> pop_;
 };
 } // namespace
 
@@ -215,46 +230,31 @@ void Logger::start(const std::string & ctl_name, double timestep, bool resume)
 
 void Logger::log()
 {
-  std::vector<uint8_t> types;
-  std::vector<flatbuffers::Offset<void>> values;
-  for(auto & e : log_entries_)
-  {
-    e.second(impl_->builder_, types, values);
-  }
-  auto s_keys = impl_->builder_.CreateVectorOfStrings({});
-  auto s_types = impl_->builder_.CreateVector(types);
-  auto s_values = impl_->builder_.CreateVector(values);
+  mc_rtc::MessagePackBuilder builder(impl_->data_);
+  builder.start_array(2);
   if(log_entries_changed_)
   {
-    std::vector<std::string> keys;
+    builder.start_array(log_entries_.size());
     for(auto & e : log_entries_)
     {
-      if(log_vector_entries_size_.count(e.first))
-      {
-        size_t k_size = log_vector_entries_size_.at(e.first);
-        for(size_t i = 0; i < k_size; ++i)
-        {
-          keys.push_back(e.first + "_" + std::to_string(i));
-        }
-      }
-      else
-      {
-        keys.push_back(e.first);
-      }
+      builder.write(e.first);
     }
-    s_keys = impl_->builder_.CreateVectorOfStrings(keys);
+    builder.finish_array();
     log_entries_changed_ = false;
   }
-  mc_rtc::log::LogBuilder log_builder(impl_->builder_);
-  log_builder.add_keys(s_keys);
-  log_builder.add_values_type(s_types);
-  log_builder.add_values(s_values);
-  auto log = log_builder.Finish();
-  impl_->builder_.Finish(log);
-  int size = impl_->builder_.GetSize();
-  uint8_t * data = impl_->builder_.GetBufferPointer();
-  impl_->write(data, size);
-  impl_->builder_.Clear();
+  else
+  {
+    builder.write();
+  }
+  builder.start_array(2 * log_entries_.size());
+  for(auto & e : log_entries_)
+  {
+    e.second(builder);
+  }
+  builder.finish_array();
+  builder.finish_array();
+  size_t s = builder.finish();
+  impl_->write(impl_->data_.data(), s);
 }
 
 void Logger::removeLogEntry(const std::string & name)
@@ -263,10 +263,6 @@ void Logger::removeLogEntry(const std::string & name)
   {
     log_entries_changed_ = true;
     log_entries_.erase(name);
-  }
-  if(log_vector_entries_size_.count(name))
-  {
-    log_vector_entries_size_.erase(name);
   }
 }
 

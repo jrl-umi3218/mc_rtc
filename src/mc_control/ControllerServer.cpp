@@ -16,8 +16,8 @@ ControllerServer::ControllerServer(double dt,
                                    const std::vector<std::string> & pub_bind_uri,
                                    const std::vector<std::string> & pull_bind_uri)
 {
-  iter = 0;
-  rate = static_cast<unsigned int>(ceil(server_dt / dt));
+  iter_ = 0;
+  rate_ = static_cast<unsigned int>(ceil(server_dt / dt));
   auto init_socket = [](int & socket, unsigned int proto, const std::vector<std::string> & uris,
                         const std::string & name) {
     socket = nn_socket(AF_SP, proto);
@@ -77,11 +77,10 @@ void ControllerServer::handle_requests(mc_rtc::gui::StateBuilder & gui_builder)
 
 void ControllerServer::publish(mc_rtc::gui::StateBuilder & gui_builder)
 {
-  if(iter++ % rate == 0)
+  if(iter_++ % rate_ == 0)
   {
-    const auto & state = gui_builder.update();
-    auto data = state.dump();
-    nn_send(pub_socket_, data.c_str(), data.size() + 1, 0);
+    auto s = gui_builder.update(buffer_);
+    nn_send(pub_socket_, buffer_.data(), s, 0);
   }
 }
 

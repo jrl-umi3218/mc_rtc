@@ -892,6 +892,7 @@ class MCLogUI(QtGui.QMainWindow):
     if 'perf_SolverBuildAndSolve' in self.data and 'perf_SolverSolve' in self.data:
       self.data['perf_SolverBuild'] = self.data['perf_SolverBuildAndSolve'] - self.data['perf_SolverSolve']
     self.update_data()
+    self.setWindowTitle("MC Log Plotter - {}".format(os.path.basename(fpath)))
 
   def update_data(self):
     self.update_menu()

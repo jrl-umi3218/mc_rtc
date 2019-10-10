@@ -10,24 +10,27 @@ if(POLICY CMP0054)
   cmake_policy(SET CMP0054 NEW)
 endif()
 
-include(cmake/base.cmake)
-include(cmake/cython/cython.cmake)
-include(cmake/msvc-specific.cmake)
-include(cmake/version-script.cmake)
-
 set(PROJECT_NAME mc_rtc)
 set(PROJECT_DESCRIPTION mc_rtc)
 set(PROJECT_URL https://gite.lirmm.fr/multi-contact/mc_rtc)
 set(PROJECT_DEBUG_POSTFIX "_d")
 set(PROJECT_USE_KEYWORD_LINK_LIBRARIES TRUE)
-
-set(CXX_DISABLE_WERROR 1)
-set(CMAKE_CXX_VISIBILITY_PRESET hidden)
-set(CMAKE_CXX_STANDARD 11)
-set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+set(PROJECT_USE_CMAKE_EXPORT TRUE)
 
 set(DOXYGEN_USE_MATHJAX "YES")
-setup_project()
+set(CXX_DISABLE_WERROR 1)
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_C_STANDARD 99)
+set(CMAKE_CXX_STANDARD 11)
+
+include(cmake/base.cmake)
+include(cmake/cython/cython.cmake)
+include(cmake/msvc-specific.cmake)
+include(cmake/version-script.cmake)
+
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+project(${PROJECT_NAME} C CXX)
 
 option(GENERATE_COVERAGE "Generate coverage data" FALSE)
 if("${CMAKE_CXX_FLAGS}" MATCHES "--coverage")
@@ -64,6 +67,9 @@ find_package(mc_rtc_3rd_party_nanomsg REQUIRED)
 
 # qhull (build re-entrant static version)
 add_subdirectory(3rd-party/qhull)
+
+# mpack (build static version)
+add_subdirectory(3rd-party/mpack)
 
 # RapidJSON
 # The code was copied from the 1.1.0 release tarball for RapidJSON
@@ -111,7 +117,6 @@ endif(MSVC)
 
 add_subdirectory(CMakeModules)
 add_subdirectory(doc)
-add_subdirectory(idl)
 add_subdirectory(src)
 if(NOT ${DISABLE_TESTS})
   add_subdirectory(tests)
@@ -141,11 +146,9 @@ install(
   DESTINATION etc
 )
 
-setup_project_finalize()
-setup_project_package_finalize()
-
 # Extra macros for mc_rtc
 install(FILES "src/mc_rtcMacros.cmake"
         DESTINATION "${CONFIG_INSTALL_DIR}")
-file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/generated/mc_rtcConfig.cmake" "include(\"\${CMAKE_CURRENT_LIST_DIR}/mc_rtcMacros.cmake\")\n")
-file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/generated/mc_rtcConfig.cmake" "include(\"\${CMAKE_CURRENT_LIST_DIR}/mc_rtc_fsm_states.cmake\")\n")
+set(PACKAGE_EXTRA_MACROS "${PACKAGE_EXTRA_MACROS}
+include(\"\${CMAKE_CURRENT_LIST_DIR}/mc_rtcMacros.cmake\")
+include(\"\${CMAKE_CURRENT_LIST_DIR}/mc_rtc_fsm_states.cmake\")")

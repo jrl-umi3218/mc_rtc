@@ -1,6 +1,6 @@
 set(JSON_DOC_INSTALL ${CMAKE_INSTALL_DOCDIR}/json)
 
-if(_INSTALL_DOC)
+if(INSTALL_DOCUMENTATION)
   install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/index.html
           DESTINATION ${JSON_DOC_INSTALL})
   foreach(dir css docson examples fonts js)

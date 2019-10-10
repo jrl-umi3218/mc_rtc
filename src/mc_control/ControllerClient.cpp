@@ -117,7 +117,7 @@ void ControllerClient::start()
           t_last_received = now;
           if(run_)
           {
-            handle_gui_state("{}");
+            handle_gui_state(mc_rtc::Configuration{});
           }
         }
         auto err = nn_errno();
@@ -137,7 +137,7 @@ void ControllerClient::start()
         t_last_received = now;
         if(run_)
         {
-          handle_gui_state(buff.data());
+          handle_gui_state(mc_rtc::Configuration::fromMessagePack(buff.data(), recv));
         }
       }
       std::this_thread::sleep_for(std::chrono::microseconds(500));
@@ -160,28 +160,38 @@ void ControllerClient::send_request(const ElementId & id)
   send_request(id, mc_rtc::Configuration{});
 }
 
-void ControllerClient::handle_gui_state(const char * data)
+void ControllerClient::handle_gui_state(mc_rtc::Configuration state)
 {
+  if(!state.size())
+  {
+    started();
+    handle_category({}, "", {});
+    stopped();
+    return;
+  }
   started();
-  auto state = mc_rtc::Configuration::fromData(data);
-  if(state.has("DATA"))
+  int version = state[0];
+  if(version != mc_rtc::gui::StateBuilder::PROTOCOL_VERSION)
   {
-    data_.load(state("DATA"));
-    state.remove("DATA");
+    LOG_ERROR("Receive message, version: " << version << " but I can only handle version: "
+                                           << mc_rtc::gui::StateBuilder::PROTOCOL_VERSION)
+    handle_category({}, "", {});
+    stopped();
+    return;
   }
-  else
-  {
-    data_ = mc_rtc::Configuration{};
-  }
-  handle_category({}, "", state("STATE", mc_rtc::Configuration{}), state("GUI", mc_rtc::Configuration{}));
+  data_ = state[1];
+  handle_category({}, "", state[2]);
   stopped();
 }
 
 void ControllerClient::handle_category(const std::vector<std::string> & parent,
                                        const std::string & category,
-                                       const mc_rtc::Configuration & data,
-                                       const mc_rtc::Configuration & gui)
+                                       const mc_rtc::Configuration & data)
 {
+  if(data.size() < 2)
+  {
+    return;
+  }
   if(category.size())
   {
     this->category(parent, category);
@@ -191,101 +201,93 @@ void ControllerClient::handle_category(const std::vector<std::string> & parent,
   {
     next_category.push_back(category);
   }
-  for(const auto & k : data.keys())
+  for(size_t i = 1; i < data.size() - 1; ++i)
   {
-    if(k == "_sub")
+    auto widget_data = data[i];
+    std::string widget_name = widget_data[0];
+    int sid = widget_data.at(2, -1);
+    handle_widget({next_category, widget_name, sid}, widget_data);
+  }
+  if(data[data.size() - 1].size())
+  {
+    auto cat_data = data[data.size() - 1];
+    for(size_t i = 0; i < cat_data.size(); ++i)
     {
-      auto subs = data(k);
-      for(const auto & s : subs.keys())
-      {
-        handle_category(next_category, s, subs(s), gui("_sub")(s));
-      }
-    }
-    else
-    {
-      int sid = gui(k)("sid", -1);
-      handle_widget({next_category, k, sid}, data(k), gui(k));
+      handle_category(next_category, cat_data[i][0], cat_data[i]);
     }
   }
 }
 
-void ControllerClient::handle_widget(const ElementId & id,
-                                     const mc_rtc::Configuration & data,
-                                     const mc_rtc::Configuration & gui)
+void ControllerClient::handle_widget(const ElementId & id, const mc_rtc::Configuration & data)
 {
-  if(!gui.has("_type"))
-  {
-    LOG_ERROR("GUI entry " << id.name << " in category " << cat2str(id.category) << " has no type")
-    return;
-  }
-  auto type = static_cast<mc_rtc::gui::Elements>(static_cast<int>(gui("_type")));
+  auto type = static_cast<mc_rtc::gui::Elements>(static_cast<int>(data[1]));
   try
   {
     using Elements = mc_rtc::gui::Elements;
     switch(type)
     {
       case Elements::Label:
-        label(id, std::string{data("data", data("data").dump())});
+        label(id, std::string{data.at(3, data[3].dump())});
         break;
       case Elements::ArrayLabel:
-        array_label(id, gui("labels", std::vector<std::string>{}), data("data"));
+        array_label(id, data.at(4, std::vector<std::string>{}), data[3]);
         break;
       case Elements::Button:
         button(id);
         break;
       case Elements::Checkbox:
-        checkbox(id, data("data"));
+        checkbox(id, data[3]);
         break;
       case Elements::StringInput:
-        string_input(id, data("data"));
+        string_input(id, data[3]);
         break;
       case Elements::IntegerInput:
-        integer_input(id, data("data"));
+        integer_input(id, data[3]);
         break;
       case Elements::NumberInput:
-        number_input(id, data("data"));
+        number_input(id, data[3]);
         break;
       case Elements::NumberSlider:
-        number_slider(id, data("data"), gui("min"), gui("max"));
+        number_slider(id, data[3], data[4], data[5]);
         break;
       case Elements::ArrayInput:
-        array_input(id, gui("labels", std::vector<std::string>{}), data("data"));
+        array_input(id, data.at(4, std::vector<std::string>{}), data[3]);
         break;
       case Elements::ComboInput:
-        combo_input(id, gui("values"), data("data"));
+        combo_input(id, data[4], data[3]);
         break;
       case Elements::DataComboInput:
-        data_combo_input(id, gui("ref"), data("data"));
+        data_combo_input(id, data[4], data[3]);
         break;
       case Elements::Point3D:
-        handle_point3d(id, gui, data);
+        handle_point3d(id, data);
         break;
       case Elements::Trajectory:
-        handle_trajectory(id, gui, data);
+        handle_trajectory(id, data);
         break;
       case Elements::Polygon:
-        handle_polygon(id, gui, data);
+        handle_polygon(id, data);
         break;
       case Elements::Force:
-        handle_force(id, gui, data);
+        handle_force(id, data);
         break;
       case Elements::Arrow:
-        handle_arrow(id, gui, data);
+        handle_arrow(id, data);
         break;
       case Elements::Rotation:
-        handle_rotation(id, gui, data);
+        handle_rotation(id, data);
         break;
       case Elements::Transform:
-        handle_transform(id, gui, data);
+        handle_transform(id, data);
         break;
       case Elements::Schema:
-        schema(id, gui("dir"));
+        schema(id, data[3]);
         break;
       case Elements::Form:
-        handle_form(id, gui("form"));
+        handle_form(id, data[3]);
         break;
       case Elements::XYTheta:
-        handle_xytheta(id, gui, data);
+        handle_xytheta(id, data);
         break;
       default:
         LOG_ERROR("Type " << static_cast<int>(type) << " is not handlded by this ControllerClient")
@@ -306,13 +308,15 @@ void ControllerClient::default_impl(const std::string & type, const ElementId & 
                                                                          << cat2str(id.category) << "/" << id.name)
 }
 
-void ControllerClient::handle_point3d(const ElementId & id,
-                                      const mc_rtc::Configuration & gui,
-                                      const mc_rtc::Configuration & data)
+void ControllerClient::handle_point3d(const ElementId & id, const mc_rtc::Configuration & data)
 {
-  bool ro = gui("ro", false);
-  Eigen::Vector3d pos = data("data");
-  const mc_rtc::gui::PointConfig & config = gui("config");
+  Eigen::Vector3d pos = data[3];
+  bool ro = data[4];
+  mc_rtc::gui::PointConfig config;
+  if(data.size() > 5)
+  {
+    config.load(data[5]);
+  }
   if(ro)
   {
     array_label(id, {"x", "y", "z"}, pos);
@@ -324,12 +328,14 @@ void ControllerClient::handle_point3d(const ElementId & id,
   point3d({id.category, id.name + "_point3d", id.sid}, id, ro, pos, config);
 }
 
-void ControllerClient::handle_trajectory(const ElementId & id,
-                                         const mc_rtc::Configuration & gui,
-                                         const mc_rtc::Configuration & data_)
+void ControllerClient::handle_trajectory(const ElementId & id, const mc_rtc::Configuration & data_)
 {
-  const auto & data = data_("data");
-  mc_rtc::gui::LineConfig config(gui);
+  const auto & data = data_[3];
+  mc_rtc::gui::LineConfig config;
+  if(data.size() > 4)
+  {
+    config = data_[3];
+  }
   if(data.size())
   {
     try
@@ -348,10 +354,6 @@ void ControllerClient::handle_trajectory(const ElementId & id,
       catch(mc_rtc::Configuration::Exception & exc)
       {
         exc.silence();
-        if(!gui.has("style"))
-        {
-          config.style = mc_rtc::gui::LineStyle::Dotted;
-        }
         Eigen::Vector3d p = data;
         trajectory(id, p, config);
       }
@@ -360,23 +362,22 @@ void ControllerClient::handle_trajectory(const ElementId & id,
   else
   {
     /** Default to dotted for real-time trajectories */
-    if(!gui.has("style"))
-    {
-      config.style = mc_rtc::gui::LineStyle::Dotted;
-    }
     sva::PTransformd pos = data;
     trajectory(id, pos, config);
   }
 }
 
-void ControllerClient::handle_polygon(const ElementId & id,
-                                      const mc_rtc::Configuration & gui,
-                                      const mc_rtc::Configuration & data)
+void ControllerClient::handle_polygon(const ElementId & id, const mc_rtc::Configuration & data_)
 {
-  const mc_rtc::gui::Color & color = gui("color");
+  const auto & data = data_[3];
+  mc_rtc::gui::Color color;
+  if(data_.size() > 4)
+  {
+    color.load(data_[4]);
+  }
   try
   {
-    const std::vector<std::vector<Eigen::Vector3d>> & points = data("data");
+    const std::vector<std::vector<Eigen::Vector3d>> & points = data;
     polygon(id, points, color);
   }
   catch(mc_rtc::Configuration::Exception & exc)
@@ -384,7 +385,7 @@ void ControllerClient::handle_polygon(const ElementId & id,
     exc.silence();
     try
     {
-      const std::vector<std::vector<Eigen::Vector3d>> p = {data("data")};
+      const std::vector<std::vector<Eigen::Vector3d>> p = {data};
       polygon(id, p, color);
     }
     catch(mc_rtc::Configuration::Exception & exc)
@@ -397,33 +398,35 @@ void ControllerClient::handle_polygon(const ElementId & id,
   }
 }
 
-void ControllerClient::handle_force(const ElementId & id,
-                                    const mc_rtc::Configuration & gui,
-                                    const mc_rtc::Configuration & data)
+void ControllerClient::handle_force(const ElementId & id, const mc_rtc::Configuration & data)
 {
-  const sva::ForceVecd & force_ = data("force");
-  const sva::PTransformd & surface = data("surface");
-  const mc_rtc::gui::ForceConfig & forceConfig = gui("config");
+  const sva::ForceVecd & force_ = data[3];
+  const sva::PTransformd & surface = data[4];
+  mc_rtc::gui::ForceConfig forceConfig;
+  if(data.size() > 5)
+  {
+    forceConfig.load(data[5]);
+  }
   array_label(id, {"cx", "cy", "cz", "fx", "fy", "fz"}, force_.vector());
   force({id.category, id.name + "_force", id.sid}, id, force_, surface, forceConfig);
 }
 
-void ControllerClient::handle_arrow(const ElementId & id,
-                                    const mc_rtc::Configuration & gui,
-                                    const mc_rtc::Configuration & data)
+void ControllerClient::handle_arrow(const ElementId & id, const mc_rtc::Configuration & data)
 {
-  const Eigen::Vector3d & arrow_start = data("start");
-  const Eigen::Vector3d & arrow_end = data("end");
-  const mc_rtc::gui::ArrowConfig & arrow_config = gui("config");
+  const Eigen::Vector3d & arrow_start = data[3];
+  const Eigen::Vector3d & arrow_end = data[4];
+  mc_rtc::gui::ArrowConfig arrow_config;
+  if(data.size() > 5)
+  {
+    arrow_config.load(data[5]);
+  }
   arrow(id, arrow_start, arrow_end, arrow_config);
 }
 
-void ControllerClient::handle_rotation(const ElementId & id,
-                                       const mc_rtc::Configuration & gui,
-                                       const mc_rtc::Configuration & data)
+void ControllerClient::handle_rotation(const ElementId & id, const mc_rtc::Configuration & data)
 {
-  bool ro = gui("ro", false);
-  sva::PTransformd pos = data("data");
+  sva::PTransformd pos = data[3];
+  bool ro = data[4];
   Eigen::Quaterniond q{pos.rotation()};
   if(ro)
   {
@@ -436,11 +439,10 @@ void ControllerClient::handle_rotation(const ElementId & id,
   rotation({id.category, id.name + "_rotation", id.sid}, id, ro, pos);
 }
 
-void ControllerClient::handle_transform(const ElementId & id,
-                                        const mc_rtc::Configuration & gui,
-                                        const mc_rtc::Configuration & data)
+void ControllerClient::handle_transform(const ElementId & id, const mc_rtc::Configuration & data)
 {
-  bool ro = gui("ro", false);
+  const sva::PTransformd & transform_ = data[3];
+  bool ro = data[4];
 
   auto publish_transform = [this](const sva::PTransformd & pos, const ElementId & id, bool ro) {
     Eigen::Quaterniond q{pos.rotation()};
@@ -457,45 +459,13 @@ void ControllerClient::handle_transform(const ElementId & id,
     transform({id.category, id.name + "_transform", id.sid}, id, ro, pos);
   };
 
-  try
-  {
-    const std::vector<sva::PTransformd> & transforms = data("data");
-    if(ro)
-    {
-      for(unsigned i = 0; i < transforms.size(); ++i)
-      {
-        ElementId idn{id.category, id.name + "_" + std::to_string(i), id.sid};
-        publish_transform(transforms[i], idn, ro);
-      }
-    }
-    else
-    {
-      LOG_ERROR("Error while handling Transform element " << id.name
-                                                          << " : transform arrays only supported in read-only");
-    }
-  }
-  catch(mc_rtc::Configuration::Exception & exc)
-  {
-    exc.silence();
-    try
-    {
-      const sva::PTransformd & transform = data("data");
-      publish_transform(transform, id, ro);
-    }
-    catch(mc_rtc::Configuration::Exception & exc)
-    {
-      exc.silence();
-      LOG_ERROR("Could not deserialize transform "
-                << id.name << ", value is neither an sva::PTransform nor an std::vector<sva::PTransformd>");
-    }
-  }
+  publish_transform(transform_, id, ro);
 }
 
-void ControllerClient::handle_xytheta(const ElementId & id,
-                                      const mc_rtc::Configuration & gui,
-                                      const mc_rtc::Configuration & data)
+void ControllerClient::handle_xytheta(const ElementId & id, const mc_rtc::Configuration & data)
 {
-  Eigen::VectorXd vec = data("data");
+  Eigen::VectorXd vec = data[3];
+  bool ro = data[4];
   if(vec.size() < 3)
   {
     LOG_ERROR("Could not deserialize xytheta element. Expected VectorXd of size 3 or 4 (x, y, theta, [altitude])");
@@ -509,8 +479,7 @@ void ControllerClient::handle_xytheta(const ElementId & id,
     altitude = vec(3);
   }
 
-  const std::vector<std::string> & label = {"X", "Y", "Theta"};
-  bool ro = gui("ro", false);
+  const std::vector<std::string> & label = {"X", "Y", "Theta", "Altitude"};
   if(ro)
   {
     array_label(id, label, vec);
@@ -525,34 +494,35 @@ void ControllerClient::handle_xytheta(const ElementId & id,
 void ControllerClient::handle_form(const ElementId & id, const mc_rtc::Configuration & gui)
 {
   form(id);
-  for(const auto & k : gui.keys())
+  for(size_t i = 0; i < gui.size(); ++i)
   {
-    auto el = gui(k);
-    auto type = static_cast<mc_rtc::gui::Elements>(static_cast<int>(el("_type")));
-    bool required = el("required", false);
+    auto el = gui[i];
+    std::string name = el[0];
+    auto type = static_cast<mc_rtc::gui::Elements>(static_cast<int>(el[1]));
+    bool required = el[2];
     using Elements = mc_rtc::gui::Elements;
     switch(type)
     {
       case Elements::Checkbox:
-        form_checkbox(id, k, required, el("default"));
+        form_checkbox(id, name, required, el[3]);
         break;
       case Elements::IntegerInput:
-        form_integer_input(id, k, required, el("default"));
+        form_integer_input(id, name, required, el[3]);
         break;
       case Elements::NumberInput:
-        form_number_input(id, k, required, el("default"));
+        form_number_input(id, name, required, el[3]);
         break;
       case Elements::StringInput:
-        form_string_input(id, k, required, el("default"));
+        form_string_input(id, name, required, el[3]);
         break;
       case Elements::ArrayInput:
-        form_array_input(id, k, required, el("default"), el("fixed_size"));
+        form_array_input(id, name, required, el[3], el[4]);
         break;
       case Elements::ComboInput:
-        form_combo_input(id, k, required, el("values"), el("send_index", false));
+        form_combo_input(id, name, required, el[3], el[4]);
         break;
       case Elements::DataComboInput:
-        form_data_combo_input(id, k, required, el("ref"), el("send_index", false));
+        form_data_combo_input(id, name, required, el[3], el[4]);
         break;
       default:
         LOG_ERROR("Form cannot handle element of type " << static_cast<int>(type))

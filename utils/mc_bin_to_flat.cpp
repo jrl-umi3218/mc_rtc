@@ -2,8 +2,7 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <mc_rtc/log/FlatLog.h>
-
+#include "mc_bin_utils.h"
 #include <fstream>
 #include <map>
 #include <type_traits>
@@ -11,98 +10,12 @@
 namespace utils
 {
 
-bool isValid(const mc_rtc::log::LogData & type)
-{
-  switch(type)
-  {
-    case mc_rtc::log::LogData_Bool:
-    case mc_rtc::log::LogData_Double:
-    case mc_rtc::log::LogData_UnsignedInt:
-    case mc_rtc::log::LogData_UInt64:
-    case mc_rtc::log::LogData_String:
-    case mc_rtc::log::LogData_Quaterniond:
-    case mc_rtc::log::LogData_Vector3d:
-    case mc_rtc::log::LogData_Vector2d:
-    case mc_rtc::log::LogData_PTransformd:
-    case mc_rtc::log::LogData_ForceVecd:
-    case mc_rtc::log::LogData_MotionVecd:
-    case mc_rtc::log::LogData_DoubleVector:
-      return true;
-    default:
-      return false;
-  }
-}
-
-std::map<std::string, mc_rtc::log::LogData> entries(const mc_rtc::log::FlatLog & log)
-{
-  std::map<std::string, mc_rtc::log::LogData> ret;
-  for(const auto & e : log.entries())
-  {
-    auto t = log.type(e);
-    if(isValid(t))
-    {
-      ret[e] = t;
-    }
-    else
-    {
-      LOG_WARNING(e << " cannot be converted into a flat log")
-    }
-  }
-  return ret;
-}
-
-size_t vectorEntrySize(const mc_rtc::log::FlatLog & log, const std::string & entry)
-{
-  size_t s = 0;
-  auto data = log.getRaw<mc_rtc::log::DoubleVector>(entry);
-  for(const auto & v : data)
-  {
-    if(v)
-    {
-      s = std::max<size_t>(s, v->v()->size());
-    }
-  }
-  return s;
-}
-
-size_t nEntries(const mc_rtc::log::FlatLog & log, const std::map<std::string, mc_rtc::log::LogData> & entries)
+size_t nEntries(const mc_rtc::log::FlatLog & log, const std::map<std::string, mc_rtc::log::LogType> & entries)
 {
   size_t s = 0;
   for(const auto & e : entries)
   {
-    const auto & entry = e.first;
-    const auto & type = e.second;
-    switch(type)
-    {
-      case mc_rtc::log::LogData_Bool:
-      case mc_rtc::log::LogData_Double:
-      case mc_rtc::log::LogData_UnsignedInt:
-      case mc_rtc::log::LogData_UInt64:
-      case mc_rtc::log::LogData_String:
-        s += 1;
-        break;
-      case mc_rtc::log::LogData_Quaterniond:
-        s += 4;
-        break;
-      case mc_rtc::log::LogData_Vector3d:
-        s += 3;
-        break;
-      case mc_rtc::log::LogData_Vector2d:
-        s += 2;
-        break;
-      case mc_rtc::log::LogData_PTransformd:
-        s += 7;
-        break;
-      case mc_rtc::log::LogData_ForceVecd:
-      case mc_rtc::log::LogData_MotionVecd:
-        s += 6;
-        break;
-      case mc_rtc::log::LogData_DoubleVector:
-        s += vectorEntrySize(log, entry);
-        break;
-      default:
-        break;
-    }
+    s += entrySize(log, e.first, e.second);
   }
   return s;
 }
@@ -160,14 +73,14 @@ void write<std::string>(const mc_rtc::log::FlatLog & log, const std::string & en
 template<>
 void write<Eigen::Quaterniond>(const mc_rtc::log::FlatLog & log, const std::string & entry, std::ostream & os)
 {
-  auto data = log.getRaw<mc_rtc::log::Quaterniond>(entry);
+  auto data = log.getRaw<Eigen::Quaterniond>(entry);
   std::vector<double> w(data.size(), nan);
   std::vector<double> x(data.size(), nan);
   std::vector<double> y(data.size(), nan);
   std::vector<double> z(data.size(), nan);
   for(size_t i = 0; i < data.size(); ++i)
   {
-    const mc_rtc::log::Quaterniond * v = data[i];
+    const Eigen::Quaterniond * v = data[i];
     if(v)
     {
       w[i] = v->w();
@@ -185,13 +98,13 @@ void write<Eigen::Quaterniond>(const mc_rtc::log::FlatLog & log, const std::stri
 template<>
 void write<Eigen::Vector3d>(const mc_rtc::log::FlatLog & log, const std::string & entry, std::ostream & os)
 {
-  auto data = log.getRaw<mc_rtc::log::Vector3d>(entry);
+  auto data = log.getRaw<Eigen::Vector3d>(entry);
   std::vector<double> x(data.size(), nan);
   std::vector<double> y(data.size(), nan);
   std::vector<double> z(data.size(), nan);
   for(size_t i = 0; i < data.size(); ++i)
   {
-    const mc_rtc::log::Vector3d * v = data[i];
+    const Eigen::Vector3d * v = data[i];
     if(v)
     {
       x[i] = v->x();
@@ -205,14 +118,46 @@ void write<Eigen::Vector3d>(const mc_rtc::log::FlatLog & log, const std::string 
 }
 
 template<>
+void write<Eigen::Vector6d>(const mc_rtc::log::FlatLog & log, const std::string & entry, std::ostream & os)
+{
+  auto data = log.getRaw<Eigen::Vector6d>(entry);
+  std::vector<double> v0(data.size(), nan);
+  std::vector<double> v1(data.size(), nan);
+  std::vector<double> v2(data.size(), nan);
+  std::vector<double> v3(data.size(), nan);
+  std::vector<double> v4(data.size(), nan);
+  std::vector<double> v5(data.size(), nan);
+  for(size_t i = 0; i < data.size(); ++i)
+  {
+    const Eigen::Vector6d * ptr = data[i];
+    if(ptr)
+    {
+      const auto & v = *ptr;
+      v0[i] = v(0);
+      v1[i] = v(1);
+      v2[i] = v(2);
+      v3[i] = v(3);
+      v4[i] = v(4);
+      v5[i] = v(5);
+    }
+  }
+  write(entry + "_0", v0, os);
+  write(entry + "_1", v1, os);
+  write(entry + "_2", v2, os);
+  write(entry + "_3", v3, os);
+  write(entry + "_4", v4, os);
+  write(entry + "_5", v5, os);
+}
+
+template<>
 void write<Eigen::Vector2d>(const mc_rtc::log::FlatLog & log, const std::string & entry, std::ostream & os)
 {
-  auto data = log.getRaw<mc_rtc::log::Vector2d>(entry);
+  auto data = log.getRaw<Eigen::Vector2d>(entry);
   std::vector<double> x(data.size(), nan);
   std::vector<double> y(data.size(), nan);
   for(size_t i = 0; i < data.size(); ++i)
   {
-    const mc_rtc::log::Vector2d * v = data[i];
+    const Eigen::Vector2d * v = data[i];
     if(v)
     {
       x[i] = v->x();
@@ -226,7 +171,7 @@ void write<Eigen::Vector2d>(const mc_rtc::log::FlatLog & log, const std::string 
 template<>
 void write<sva::PTransformd>(const mc_rtc::log::FlatLog & log, const std::string & entry, std::ostream & os)
 {
-  auto data = log.getRaw<mc_rtc::log::PTransformd>(entry);
+  auto data = log.getRaw<sva::PTransformd>(entry);
   std::vector<double> qw(data.size(), nan);
   std::vector<double> qx(data.size(), nan);
   std::vector<double> qy(data.size(), nan);
@@ -236,16 +181,17 @@ void write<sva::PTransformd>(const mc_rtc::log::FlatLog & log, const std::string
   std::vector<double> tz(data.size(), nan);
   for(size_t i = 0; i < data.size(); ++i)
   {
-    const mc_rtc::log::PTransformd * pt = data[i];
+    const sva::PTransformd * pt = data[i];
     if(pt)
     {
-      qw[i] = pt->ori()->w();
-      qx[i] = pt->ori()->x();
-      qy[i] = pt->ori()->y();
-      qz[i] = pt->ori()->z();
-      tx[i] = pt->pos()->x();
-      ty[i] = pt->pos()->y();
-      tz[i] = pt->pos()->z();
+      Eigen::Quaterniond q(pt->rotation());
+      qw[i] = q.w();
+      qx[i] = q.x();
+      qy[i] = q.y();
+      qz[i] = q.z();
+      tx[i] = pt->translation().x();
+      ty[i] = pt->translation().y();
+      tz[i] = pt->translation().z();
     }
   }
   write(entry + "_qw", qw, os);
@@ -260,7 +206,7 @@ void write<sva::PTransformd>(const mc_rtc::log::FlatLog & log, const std::string
 template<>
 void write<sva::ForceVecd>(const mc_rtc::log::FlatLog & log, const std::string & entry, std::ostream & os)
 {
-  auto data = log.getRaw<mc_rtc::log::ForceVecd>(entry);
+  auto data = log.getRaw<sva::ForceVecd>(entry);
   std::vector<double> cx(data.size(), nan);
   std::vector<double> cy(data.size(), nan);
   std::vector<double> cz(data.size(), nan);
@@ -269,15 +215,15 @@ void write<sva::ForceVecd>(const mc_rtc::log::FlatLog & log, const std::string &
   std::vector<double> fz(data.size(), nan);
   for(size_t i = 0; i < data.size(); ++i)
   {
-    const mc_rtc::log::ForceVecd * fv = data[i];
+    const sva::ForceVecd * fv = data[i];
     if(fv)
     {
-      cx[i] = fv->couple()->x();
-      cy[i] = fv->couple()->y();
-      cz[i] = fv->couple()->z();
-      fx[i] = fv->force()->x();
-      fy[i] = fv->force()->y();
-      fz[i] = fv->force()->z();
+      cx[i] = fv->couple().x();
+      cy[i] = fv->couple().y();
+      cz[i] = fv->couple().z();
+      fx[i] = fv->force().x();
+      fy[i] = fv->force().y();
+      fz[i] = fv->force().z();
     }
   }
   write(entry + "_cx", cx, os);
@@ -291,7 +237,7 @@ void write<sva::ForceVecd>(const mc_rtc::log::FlatLog & log, const std::string &
 template<>
 void write<sva::MotionVecd>(const mc_rtc::log::FlatLog & log, const std::string & entry, std::ostream & os)
 {
-  auto data = log.getRaw<mc_rtc::log::MotionVecd>(entry);
+  auto data = log.getRaw<sva::MotionVecd>(entry);
   std::vector<double> wx(data.size(), nan);
   std::vector<double> wy(data.size(), nan);
   std::vector<double> wz(data.size(), nan);
@@ -300,15 +246,15 @@ void write<sva::MotionVecd>(const mc_rtc::log::FlatLog & log, const std::string 
   std::vector<double> vz(data.size(), nan);
   for(size_t i = 0; i < data.size(); ++i)
   {
-    const mc_rtc::log::MotionVecd * mv = data[i];
+    const sva::MotionVecd * mv = data[i];
     if(mv)
     {
-      wx[i] = mv->angular()->x();
-      wy[i] = mv->angular()->y();
-      wz[i] = mv->angular()->z();
-      vx[i] = mv->linear()->x();
-      vy[i] = mv->linear()->y();
-      vz[i] = mv->linear()->z();
+      wx[i] = mv->angular().x();
+      wy[i] = mv->angular().y();
+      wz[i] = mv->angular().z();
+      vx[i] = mv->linear().x();
+      vy[i] = mv->linear().y();
+      vz[i] = mv->linear().z();
     }
   }
   write(entry + "_wx", wx, os);
@@ -322,7 +268,7 @@ void write<sva::MotionVecd>(const mc_rtc::log::FlatLog & log, const std::string 
 template<>
 void write<std::vector<double>>(const mc_rtc::log::FlatLog & log, const std::string & entry, std::ostream & os)
 {
-  auto data = log.getRaw<mc_rtc::log::DoubleVector>(entry);
+  auto data = log.getRaw<std::vector<double>>(entry);
   std::vector<double> vec{};
   size_t maxS = 0;
   for(size_t i = 0; i < data.size(); ++i)
@@ -330,7 +276,7 @@ void write<std::vector<double>>(const mc_rtc::log::FlatLog & log, const std::str
     auto * v = data[i];
     if(v)
     {
-      maxS = std::max<size_t>(maxS, v->v()->size());
+      maxS = std::max<size_t>(maxS, v->size());
     }
   }
   vec.resize(maxS * data.size());
@@ -340,8 +286,47 @@ void write<std::vector<double>>(const mc_rtc::log::FlatLog & log, const std::str
     size_t vSize = 0;
     if(v)
     {
-      vSize = v->v()->size();
-      const double * vData = v->v()->data();
+      vSize = v->size();
+      const double * vData = v->data();
+      for(size_t j = 0; j < vSize; ++j)
+      {
+        vec[j * data.size() + i] = vData[j];
+      }
+    }
+    for(size_t j = vSize; j < maxS; ++j)
+    {
+      vec[j * data.size() + i] = nan;
+    }
+  }
+  for(size_t i = 0; i < maxS; ++i)
+  {
+    write(entry + "_" + std::to_string(i), &vec[i * data.size()], data.size(), os);
+  }
+}
+
+template<>
+void write<Eigen::VectorXd>(const mc_rtc::log::FlatLog & log, const std::string & entry, std::ostream & os)
+{
+  auto data = log.getRaw<Eigen::VectorXd>(entry);
+  std::vector<double> vec{};
+  size_t maxS = 0;
+  for(size_t i = 0; i < data.size(); ++i)
+  {
+    auto * v = data[i];
+    if(v)
+    {
+      maxS = std::max<size_t>(maxS, v->size());
+    }
+  }
+  vec.resize(maxS * data.size());
+  for(size_t i = 0; i < data.size(); ++i)
+  {
+    auto * v = data[i];
+    size_t vSize = 0;
+    if(v)
+    {
+      vSize = v->size();
+      const double * vData = v->data();
       for(size_t j = 0; j < vSize; ++j)
       {
         vec[j * data.size() + i] = vData[j];
@@ -372,37 +357,51 @@ void mc_bin_to_flat(const std::string & in, const std::string & out)
     const auto & type = e.second;
     switch(type)
     {
-      case mc_rtc::log::LogData_Bool:
-      case mc_rtc::log::LogData_Double:
-      case mc_rtc::log::LogData_UnsignedInt:
-      case mc_rtc::log::LogData_UInt64:
+      case mc_rtc::log::LogType::Bool:
+      case mc_rtc::log::LogType::Int8_t:
+      case mc_rtc::log::LogType::Int16_t:
+      case mc_rtc::log::LogType::Int32_t:
+      case mc_rtc::log::LogType::Int64_t:
+      case mc_rtc::log::LogType::Uint8_t:
+      case mc_rtc::log::LogType::Uint16_t:
+      case mc_rtc::log::LogType::Uint32_t:
+      case mc_rtc::log::LogType::Uint64_t:
+      case mc_rtc::log::LogType::Float:
+      case mc_rtc::log::LogType::Double:
         utils::write<double>(log, entry, ofs);
         break;
-      case mc_rtc::log::LogData_String:
+      case mc_rtc::log::LogType::String:
         utils::write<std::string>(log, entry, ofs);
         break;
-      case mc_rtc::log::LogData_Quaterniond:
+      case mc_rtc::log::LogType::Quaterniond:
         utils::write<Eigen::Quaterniond>(log, entry, ofs);
         break;
-      case mc_rtc::log::LogData_Vector3d:
+      case mc_rtc::log::LogType::Vector3d:
         utils::write<Eigen::Vector3d>(log, entry, ofs);
         break;
-      case mc_rtc::log::LogData_Vector2d:
+      case mc_rtc::log::LogType::Vector2d:
         utils::write<Eigen::Vector2d>(log, entry, ofs);
         break;
-      case mc_rtc::log::LogData_PTransformd:
+      case mc_rtc::log::LogType::Vector6d:
+        utils::write<Eigen::Vector6d>(log, entry, ofs);
+        break;
+      case mc_rtc::log::LogType::VectorXd:
+        utils::write<Eigen::VectorXd>(log, entry, ofs);
+        break;
+      case mc_rtc::log::LogType::PTransformd:
         utils::write<sva::PTransformd>(log, entry, ofs);
         break;
-      case mc_rtc::log::LogData_ForceVecd:
+      case mc_rtc::log::LogType::ForceVecd:
         utils::write<sva::ForceVecd>(log, entry, ofs);
         break;
-      case mc_rtc::log::LogData_MotionVecd:
+      case mc_rtc::log::LogType::MotionVecd:
         utils::write<sva::MotionVecd>(log, entry, ofs);
         break;
-      case mc_rtc::log::LogData_DoubleVector:
+      case mc_rtc::log::LogType::VectorDouble:
         utils::write<std::vector<double>>(log, entry, ofs);
         break;
       default:
+        LOG_ERROR("Cannot convert " << entry << " into the flat format")
         break;
     }
   }

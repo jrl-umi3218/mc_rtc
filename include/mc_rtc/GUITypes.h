@@ -29,20 +29,26 @@ struct MC_RTC_GUI_DLLAPI Color
 
   void load(const mc_rtc::Configuration & config)
   {
-    config("r", r);
-    config("g", g);
-    config("b", b);
-    config("a", a);
+    std::array<double, 4> data = config;
+    r = data[0];
+    g = data[1];
+    b = data[2];
+    a = data[3];
   }
 
-  operator mc_rtc::Configuration() const
+  static constexpr size_t write_size()
   {
-    mc_rtc::Configuration config;
-    config.add("r", r);
-    config.add("g", g);
-    config.add("b", b);
-    config.add("a", a);
-    return config;
+    return 1;
+  }
+
+  void write(mc_rtc::MessagePackBuilder & builder) const
+  {
+    builder.start_array(4);
+    builder.write(r);
+    builder.write(g);
+    builder.write(b);
+    builder.write(a);
+    builder.finish_array();
   }
 };
 
@@ -70,44 +76,23 @@ struct MC_RTC_GUI_DLLAPI LineConfig
 
   void load(const mc_rtc::Configuration & config)
   {
-    config("color", color);
-    config("width", width);
-    std::string styleStr = config("style", std::string("solid"));
-    if(styleStr == "solid")
-    {
-      style = LineStyle::Solid;
-    }
-    else if(styleStr == "dotted")
-    {
-      style = LineStyle::Dotted;
-    }
-    else
-    {
-      LOG_WARNING("Unknown line style (" << styleStr << "), defaulting to solid")
-      style = LineStyle::Solid;
-    }
+    color.load(config[0]);
+    width = config[1];
+    style = LineStyle(static_cast<typename std::underlying_type<LineStyle>::type>(config[2]));
   }
 
-  void save(mc_rtc::Configuration & out) const
+  static constexpr size_t write_size()
   {
-    out.add("color", color);
-    out.add("width", width);
-    switch(style)
-    {
-      case LineStyle::Dotted:
-        out.add("style", "dotted");
-        break;
-      default:
-        out.add("style", "solid");
-        break;
-    }
+    return 1;
   }
 
-  operator mc_rtc::Configuration() const
+  void write(mc_rtc::MessagePackBuilder & out) const
   {
-    mc_rtc::Configuration out;
-    save(out);
-    return out;
+    out.start_array(3);
+    color.write(out);
+    out.write(width);
+    out.write(static_cast<typename std::underlying_type<LineStyle>::type>(style));
+    out.finish_array();
   }
 };
 
@@ -122,26 +107,31 @@ struct MC_RTC_GUI_DLLAPI ArrowConfig
 
   void load(const mc_rtc::Configuration & config)
   {
-    config("color", color);
-    config("shaft_diam", shaft_diam);
-    config("head_diam", head_diam);
-    config("head_len", head_len);
-    config("scale", scale);
-    config("start_point_scale", start_point_scale);
-    config("end_point_scale", end_point_scale);
+    head_diam = config[0];
+    head_len = config[1];
+    shaft_diam = config[2];
+    scale = config[3];
+    start_point_scale = config[4];
+    end_point_scale = config[5];
+    color.load(config[6]);
   }
 
-  operator mc_rtc::Configuration() const
+  static constexpr size_t write_size()
   {
-    mc_rtc::Configuration config;
-    config.add("color", color);
-    config.add("shaft_diam", shaft_diam);
-    config.add("head_diam", head_diam);
-    config.add("head_len", head_len);
-    config.add("scale", scale);
-    config.add("start_point_scale", start_point_scale);
-    config.add("end_point_scale", end_point_scale);
-    return config;
+    return 1;
+  }
+
+  void write(mc_rtc::MessagePackBuilder & out) const
+  {
+    out.start_array(7);
+    out.write(head_diam);
+    out.write(head_len);
+    out.write(shaft_diam);
+    out.write(scale);
+    out.write(start_point_scale);
+    out.write(end_point_scale);
+    color.write(out);
+    out.finish_array();
   }
 
   double head_diam = 0.015;
@@ -164,15 +154,21 @@ struct ForceConfig : public ArrowConfig
 
   void load(const mc_rtc::Configuration & config)
   {
-    ArrowConfig::load(config);
-    config("force_scale", force_scale);
+    ArrowConfig::load(config[0]);
+    force_scale = config[1];
   }
 
-  operator mc_rtc::Configuration() const
+  static constexpr size_t write_size()
   {
-    auto config = ArrowConfig::operator mc_rtc::Configuration();
-    config.add("force_scale", force_scale);
-    return config;
+    return 1;
+  }
+
+  void write(mc_rtc::MessagePackBuilder & out) const
+  {
+    out.start_array(2);
+    ArrowConfig::write(out);
+    out.write(force_scale);
+    out.finish_array();
   }
 
   double force_scale = 0.0015;
@@ -189,16 +185,21 @@ struct PointConfig
 
   void load(const mc_rtc::Configuration & config)
   {
-    config("color", color);
-    config("scale", scale);
+    color.load(config[0]);
+    scale = config[1];
   }
 
-  operator mc_rtc::Configuration() const
+  static constexpr size_t write_size()
   {
-    mc_rtc::Configuration config;
-    config.add("scale", scale);
-    config.add("color", color);
-    return config;
+    return 1;
+  }
+
+  void write(mc_rtc::MessagePackBuilder & out) const
+  {
+    out.start_array(2);
+    color.write(out);
+    out.write(scale);
+    out.finish_array();
   }
 
   Color color;

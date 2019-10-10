@@ -35,22 +35,28 @@ install_mc_rtc_lib(mc_rtc_loader)
 
 set(mc_rtc_utils_SRC
   mc_rtc/Configuration.cpp
-  mc_rtc/Logger.cpp
   mc_rtc/FlatLog.cpp
+  mc_rtc/iterate_binary_log.cpp
+  mc_rtc/Logger.cpp
+  mc_rtc/MessagePackBuilder.cpp
 )
 
 set(mc_rtc_utils_HDR
   ../include/mc_rtc/Configuration.h
+  ../include/mc_rtc/MessagePackBuilder.h
   ../include/mc_rtc/log/FlatLog.h
+  ../include/mc_rtc/log/iterate_binary_log.h
   ../include/mc_rtc/log/Logger.h
-  ../include/mc_rtc/log/serialization/MCLog_generated.h
   ../include/mc_rtc/utils.h
   ../include/mc_rtc/utils_api.h
 )
 
 add_library(mc_rtc_utils SHARED ${mc_rtc_utils_SRC} ${mc_rtc_utils_HDR})
 set_target_properties(mc_rtc_utils PROPERTIES COMPILE_FLAGS "-DMC_RTC_UTILS_EXPORTS")
-target_link_libraries(mc_rtc_utils PUBLIC SpaceVecAlg::SpaceVecAlg Boost::filesystem Boost::disable_autolinking PRIVATE mc_rtc_3rd_party::RapidJSON)
+target_link_libraries(mc_rtc_utils PUBLIC SpaceVecAlg::SpaceVecAlg Boost::filesystem Boost::disable_autolinking PRIVATE mc_rtc_3rd_party::RapidJSON mpack)
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+  target_link_libraries(mc_rtc_utils PUBLIC atomic)
+endif()
 install_mc_rtc_lib(mc_rtc_utils)
 
 set(mc_rbdyn_SRC
@@ -116,6 +122,7 @@ set(mc_rtc_gui_SRC
 )
 
 set(mc_rtc_gui_HDR
+  ../include/mc_rtc/GUIDetails.h
   ../include/mc_rtc/GUIState.h
   ../include/mc_rtc/GUIState.hpp
   ../include/mc_rtc/GUITypes.h
@@ -307,13 +314,5 @@ add_library(mc_control_client SHARED ${mc_control_client_SRC} ${mc_control_clien
 set_target_properties(mc_control_client PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_CLIENT_EXPORTS")
 target_link_libraries(mc_control_client PUBLIC mc_control)
 install_mc_rtc_lib(mc_control_client)
-
-if(FLATC)
-  set_source_files_properties(../include/mc_rtc/log/serialization/MCLog_generated.h PROPERTIES GENERATED 1)
-  add_dependencies(mc_rtc_utils generate_mc_log_code)
-  add_dependencies(mc_solver generate_mc_log_code)
-  add_dependencies(mc_tasks generate_mc_log_code)
-  add_dependencies(mc_control generate_mc_log_code)
-endif()
 
 add_subdirectory(mc_control)

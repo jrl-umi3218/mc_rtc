@@ -14,7 +14,10 @@ endmacro()
 add_mc_rtc_utils(mc_bin_to_log mc_bin_to_log.cpp mc_bin_to_log_main.cpp)
 
 add_mc_rtc_utils(mc_bin_to_flat mc_bin_to_flat.cpp mc_bin_to_flat_main.cpp)
-target_link_libraries(mc_bin_to_flat PUBLIC mc_control)
+
+add_mc_rtc_utils(mc_bin_perf mc_bin_perf.cpp)
+
+add_mc_rtc_utils(mc_old_bin_to_flat mc_old_bin_to_flat.cpp)
 
 if(${ROSCPP_FOUND})
   add_mc_rtc_utils(mc_bin_to_rosbag mc_bin_to_rosbag.cpp mc_bin_to_rosbag_main.cpp)
@@ -29,7 +32,7 @@ if(${ROSCPP_FOUND})
   list(APPEND mc_bin_utils_SRC mc_bin_to_rosbag.cpp)
 endif()
 add_mc_rtc_utils(mc_bin_utils ${mc_bin_utils_SRC})
-target_link_libraries(mc_bin_utils PUBLIC mc_control Boost::program_options Boost::disable_autolinking)
+target_link_libraries(mc_bin_utils PUBLIC Boost::program_options Boost::disable_autolinking PRIVATE mpack)
 
 set(UTILS_SCRIPT
   mc_rtc_new_controller

@@ -12,40 +12,6 @@ namespace gui
 
 Element::Element(const std::string & name) : name_(name) {}
 
-FormComboInput::FormComboInput(const std::string & name,
-                               bool required,
-                               const std::vector<std::string> & values,
-                               bool send_index)
-: FormInput<FormComboInput>(name, required), values_(values), send_index_(send_index)
-{
-}
-
-void FormComboInput::addGUI_(mc_rtc::Configuration & gui)
-{
-  gui.add("values", values_);
-  if(send_index_)
-  {
-    gui.add("send_index", true);
-  }
-}
-
-FormDataComboInput::FormDataComboInput(const std::string & name,
-                                       bool required,
-                                       const std::vector<std::string> & ref,
-                                       bool send_index)
-: FormInput<FormDataComboInput>(name, required), ref_(ref), send_index_(send_index)
-{
-}
-
-void FormDataComboInput::addGUI_(mc_rtc::Configuration & gui)
-{
-  gui.add("ref", ref_);
-  if(send_index_)
-  {
-    gui.add("send_index", true);
-  }
-}
-
 StateBuilder::StateBuilder()
 {
   reset();
@@ -55,10 +21,6 @@ void StateBuilder::reset()
 {
   elements_.elements.clear();
   elements_.sub.clear();
-  state_ = mc_rtc::Configuration{};
-  state_.add("DATA"); // static Data of the GUI
-  state_.add("GUI"); // GUI description of the GUI
-  state_.add("STATE"); // State data of the GUI
 }
 
 std::string StateBuilder::cat2str(const std::vector<std::string> & cat)
@@ -92,26 +54,6 @@ void StateBuilder::removeCategory(const std::vector<std::string> & category)
       return;
     }
     cat.second.sub.erase(it);
-    auto s = state_("STATE");
-    auto g = state_("GUI");
-    for(size_t i = 0; i < category.size() - 1; ++i)
-    {
-      const auto & c = category[i];
-      if(!s.has("_sub") || !s("_sub").has(c)) return;
-      s = s("_sub")(c);
-      g = g("_sub")(c);
-    }
-    if(!s.has("_sub") || !s("_sub").has(category.back()))
-    {
-      return;
-    }
-    s("_sub").remove(category.back());
-    g("_sub").remove(category.back());
-    if(s("_sub").empty())
-    {
-      s.remove("_sub");
-      g.remove("_sub");
-    }
   }
 }
 
@@ -128,80 +70,41 @@ void StateBuilder::removeElement(const std::vector<std::string> & category, cons
     if(it != cat.elements.end())
     {
       cat.elements.erase(it);
-      auto s = state_("STATE");
-      auto g = state_("GUI");
-      for(const auto & c : category)
-      {
-        if(!s.has("_sub") || !s("_sub").has(c)) return;
-        s = s("_sub")(c);
-        g = g("_sub")(c);
-      }
-      if(s.has(name))
-      {
-        auto g_details = g(name);
-        if(!g_details.has("_sub"))
-        {
-          s.remove(name);
-          g.remove(name);
-          return;
-        }
-        auto g_keys = g_details.keys();
-        for(const auto & k : g_keys)
-        {
-          if(k != "_sub")
-          {
-            g_details.remove(k);
-          }
-        }
-        auto s_details = s(name);
-        auto s_keys = s_details.keys();
-        for(const auto & k : s_keys)
-        {
-          if(k != "_sub")
-          {
-            s_details.remove(k);
-          }
-        }
-      }
     }
   }
 }
 
-const mc_rtc::Configuration & StateBuilder::update()
+size_t StateBuilder::update(std::vector<char> & buffer)
 {
-  update(elements_, state_("STATE"));
-  return state_;
+  mc_rtc::MessagePackBuilder builder(buffer);
+  builder.start_array(3);
+  builder.write(PROTOCOL_VERSION);
+  if(update_data_)
+  {
+    data_buffer_size_ = data_.toMessagePack(data_buffer_);
+    update_data_ = false;
+  }
+  builder.write_object(data_buffer_.data(), data_buffer_size_);
+  update(builder, elements_);
+  builder.finish_array();
+  return builder.finish();
 }
 
-void StateBuilder::update(Category & category, mc_rtc::Configuration out)
+void StateBuilder::update(mc_rtc::MessagePackBuilder & builder, Category & category)
 {
+  builder.start_array(1 + category.elements.size() + 1);
+  builder.write(category.name);
   for(auto & e : category.elements)
   {
-    auto & element = e();
-    if(!out.has(element.name()))
-    {
-      out.add(element.name());
-    }
-    auto c = out(element.name());
-    e.addData(element, c);
+    e.write(e.element(), builder);
   }
-  if(!category.sub.size())
+  builder.start_array(category.sub.size());
+  for(auto & s : category.sub)
   {
-    return;
+    update(builder, s);
   }
-  if(!out.has("_sub"))
-  {
-    out.add("_sub");
-  }
-  out = out("_sub");
-  for(auto & c : category.sub)
-  {
-    if(!out.has(c.name))
-    {
-      out.add(c.name);
-    }
-    update(c, out(c.name));
-  }
+  builder.finish_array();
+  builder.finish_array();
 }
 
 bool StateBuilder::handleRequest(const std::vector<std::string> & category,
@@ -240,7 +143,8 @@ bool StateBuilder::handleRequest(const std::vector<std::string> & category,
 
 mc_rtc::Configuration StateBuilder::data()
 {
-  return state_("DATA");
+  update_data_ = true;
+  return data_;
 }
 
 std::pair<bool, StateBuilder::Category &> StateBuilder::getCategory(const std::vector<std::string> & category,
@@ -303,31 +207,6 @@ std::vector<StateBuilder::Category>::iterator StateBuilder::Category::find(const
     }
   }
   return sub.end();
-}
-
-void StateBuilder::updateGUI(const std::vector<std::string> & category, StateBuilder::ElementStore & el)
-{
-  auto gui = state_("GUI");
-  for(const auto & c : category)
-  {
-    if(!gui.has("_sub"))
-    {
-      gui.add("_sub");
-    }
-    gui = gui("_sub");
-    if(!gui.has(c))
-    {
-      gui.add(c);
-    }
-    gui = gui(c);
-  }
-  auto & element = el();
-  if(!gui.has(element.name()))
-  {
-    gui.add(element.name());
-  }
-  gui = gui(element.name());
-  el.addGUI(element, gui);
 }
 
 } // namespace gui

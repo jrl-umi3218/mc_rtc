@@ -53,11 +53,13 @@ struct MC_CONTROL_DLLAPI ControllerServer
   void publish(mc_rtc::gui::StateBuilder & gui_builder);
 
 private:
-  unsigned int iter;
-  unsigned int rate;
+  unsigned int iter_;
+  unsigned int rate_;
 
   int pub_socket_;
   int pull_socket_;
+
+  std::vector<char> buffer_;
 };
 
 } // namespace mc_control
