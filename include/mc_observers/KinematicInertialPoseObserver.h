@@ -53,7 +53,7 @@ struct MC_OBSERVER_DLLAPI KinematicInertialPoseObserver : public Observer
    * \param robot Robot state to write to
    *
    */
-  void updateRobot(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots) override;
+  void updateRobots(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots) override;
 
   void updateBodySensor(mc_rbdyn::Robots & robots, const std::string & sensorName = "FloatingBase");
 

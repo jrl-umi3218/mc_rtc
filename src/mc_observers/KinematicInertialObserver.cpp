@@ -41,9 +41,9 @@ bool KinematicInertialObserver::run(const mc_control::MCController & ctl)
   return true;
 }
 
-void KinematicInertialObserver::updateRobot(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots)
+void KinematicInertialObserver::updateRobots(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots)
 {
-  KinematicInertialPoseObserver::updateRobot(ctl, realRobots);
+  KinematicInertialPoseObserver::updateRobots(ctl, realRobots);
   realRobots.robot().velW(velW_);
 }
 

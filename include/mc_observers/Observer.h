@@ -22,7 +22,7 @@ namespace mc_observers
  * @brief State observation API
  *
  * All new observers must inherit from this Observer class, and implement the
- * required virtual functions (at least reset, run, updateRobot)
+ * required virtual functions (at least reset, run, updateRobots)
  */
 struct MC_OBSERVER_DLLAPI Observer
 {
@@ -55,9 +55,9 @@ struct MC_OBSERVER_DLLAPI Observer
    *
    * \param robot Robot state to write to. Each controller is expected to update
    * the real robot instance with its estimates. The pipeline will only call the
-   * updateRobot() function if requested by the user.
+   * updateRobots() function if requested by the user.
    */
-  virtual void updateRobot(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots) = 0;
+  virtual void updateRobots(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots) = 0;
 
   /*! \brief Add observer to the logger.
    *

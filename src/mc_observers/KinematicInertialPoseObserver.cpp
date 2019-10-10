@@ -62,8 +62,8 @@ void KinematicInertialPoseObserver::estimatePosition(const mc_control::MCControl
   position_ = r_c_0 - orientation_.transpose() * r_s_real;
 }
 
-void KinematicInertialPoseObserver::updateRobot(const mc_control::MCController & /* ctl */,
-                                                mc_rbdyn::Robots & realRobots)
+void KinematicInertialPoseObserver::updateRobots(const mc_control::MCController & /* ctl */,
+                                                 mc_rbdyn::Robots & realRobots)
 {
   realRobots.robot().posW(sva::PTransformd{orientation_, position_});
 }

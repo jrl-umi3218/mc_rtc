@@ -41,7 +41,7 @@ struct MC_OBSERVER_DLLAPI KinematicInertialObserver : public KinematicInertialPo
    */
   void reset(const mc_control::MCController & ctl, const sva::MotionVecd & velW);
   bool run(const mc_control::MCController & ctl) override;
-  void updateRobot(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots) override;
+  void updateRobots(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots) override;
   void updateBodySensor(mc_rbdyn::Robots & realRobot, const std::string & sensorName = "FloatingBase");
 
   /*! \brief Get floating-base velocity in the world frame.

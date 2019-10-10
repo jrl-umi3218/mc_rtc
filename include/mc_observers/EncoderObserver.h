@@ -62,7 +62,7 @@ struct MC_OBSERVER_DLLAPI EncoderObserver : public Observer
    * \param realRobots Real robots state to write to.
    *
    */
-  void updateRobot(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots) override;
+  void updateRobots(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots) override;
 
   void addToLogger(const mc_control::MCController & ctl, mc_rtc::Logger &) override;
   void removeFromLogger(mc_rtc::Logger &) override;

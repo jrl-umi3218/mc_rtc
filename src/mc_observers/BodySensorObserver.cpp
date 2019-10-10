@@ -73,7 +73,7 @@ bool BodySensorObserver::run(const mc_control::MCController & ctl)
   return true;
 }
 
-void BodySensorObserver::updateRobot(const mc_control::MCController & /* ctl */, mc_rbdyn::Robots & realRobots)
+void BodySensorObserver::updateRobots(const mc_control::MCController & /* ctl */, mc_rbdyn::Robots & realRobots)
 {
   realRobots.robot().posW(posW_);
   realRobots.robot().velW(velW_);

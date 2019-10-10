@@ -86,7 +86,7 @@ bool EncoderObserver::run(const mc_control::MCController & ctl)
   return true;
 }
 
-void EncoderObserver::updateRobot(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots)
+void EncoderObserver::updateRobots(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots)
 {
   const auto & robot = ctl.robot();
   auto & realRobot = realRobots.robot();

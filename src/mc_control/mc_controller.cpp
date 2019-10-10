@@ -152,7 +152,7 @@ bool MCController::resetObservers()
 
     if(updateRobots)
     {
-      observer->updateRobot(*this, realRobots());
+      observer->updateRobots(*this, realRobots());
       pipelineDesc += " -> " + observer->desc();
     }
     else
@@ -185,7 +185,7 @@ bool MCController::runObservers()
     }
     if(updateRobots)
     {
-      observer->updateRobot(*this, realRobots());
+      observer->updateRobots(*this, realRobots());
     }
   }
   return true;

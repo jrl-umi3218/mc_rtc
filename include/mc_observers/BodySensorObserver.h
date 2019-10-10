@@ -68,7 +68,7 @@ struct MC_OBSERVER_DLLAPI BodySensorObserver : public Observer
    *
    * \param realRobots Current implementation updates realRobots.robot()
    */
-  void updateRobot(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots) override;
+  void updateRobots(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots) override;
 
   void addToLogger(const mc_control::MCController & ctl, mc_rtc::Logger &) override;
   void removeFromLogger(mc_rtc::Logger &) override;
