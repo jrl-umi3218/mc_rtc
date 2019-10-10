@@ -724,6 +724,8 @@ TrajectoryImpl<GetT> Trajectory(const std::string & name, const LineConfig & con
 template<typename GetT>
 struct PolygonImpl : public DataElement<GetT>
 {
+  static constexpr auto type = Elements::Polygon;
+
   PolygonImpl(const std::string & name, const Color & color, GetT get_fn)
   : DataElement<GetT>(name, get_fn), color_(color)
   {
