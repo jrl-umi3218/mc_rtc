@@ -44,12 +44,17 @@ struct TestServer
   sva::PTransformd interactive_{Eigen::Vector3d{0., 1., 0.}};
   Eigen::Vector3d xytheta_{0., 2., M_PI / 3};
   Eigen::VectorXd xythetaz_;
+  std::vector<Eigen::Vector3d> polygon_;
+  sva::ForceVecd force_{{0, 0, 0}, {0, 0, 100}};
 };
 
 TestServer::TestServer() : xythetaz_(4)
 {
   xythetaz_ << 1., 2., M_PI / 5, 1;
-  ;
+  polygon_.push_back({1, 1, 0});
+  polygon_.push_back({1, -1, 0});
+  polygon_.push_back({-1, -1, 0});
+  polygon_.push_back({-1, 1, 0});
 
   auto data = builder.data();
   data.add("DataComboInput", std::vector<std::string>{"Choice A", "Choice B", "Choice C", "Obiwan Kenobi"});
@@ -161,6 +166,13 @@ TestServer::TestServer() : xythetaz_(4)
                                           [this](const Eigen::VectorXd & vec) { xytheta_ = vec.head<3>(); }),
                      mc_rtc::gui::XYTheta("XYThetaAltitude", [this]() { return xythetaz_; },
                                           [this](const Eigen::VectorXd & vec) { xythetaz_ = vec; }));
+  builder.addElement({"Polygon"}, mc_rtc::gui::Polygon("Polygon", [this]() -> const std::vector<Eigen::Vector3d> & {
+                       return polygon_;
+                     }));
+  builder.addElement({"Force"}, mc_rtc::gui::Force("Force", [this]() { return force_; },
+                                                   []() { return sva::PTransformd::Identity(); }));
+  builder.addElement({"Arrow"}, mc_rtc::gui::Arrow("Arrow", []() { return Eigen::Vector3d(0, 0, 0); },
+                                                   []() { return Eigen::Vector3d(1, 0, 0); }));
 }
 
 void TestServer::publish()
