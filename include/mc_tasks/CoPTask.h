@@ -144,10 +144,14 @@ public:
     targetForce_ = targetForce;
   }
 
+  /*! \brief Set target force in the world frame
+   *
+   * \param targetForce 3D vector of target force in the world frame
+   */
   void targetForceW(const Eigen::Vector3d & targetForceW)
   {
     const auto & X_0_rh = robots_.robot(rIndex_).surface(surface_.name()).X_0_s(robots_.robot(rIndex_));
-    targetForce_ = X_0_rh.dualMul(sva::ForceVecd(Eigen::Vector3d::Zero(), targetForceW)).force();
+    targetForce(X_0_rh.dualMul(sva::ForceVecd(Eigen::Vector3d::Zero(), targetForceW)).force());
   }
 
   /*! \brief Get target wrench in the surface frame
