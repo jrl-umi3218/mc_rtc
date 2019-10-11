@@ -16,5 +16,7 @@
   "ClearControllerModulePath" : true,
   "ControllerModulePaths" : ["@CMAKE_BINARY_DIR@/src/mc_control"],
   "ClearRobotModulePath" : true,
-  "RobotModulePath" : "@CMAKE_BINARY_DIR@/tests/robots/@TEST_ROBOT_NAME@"
+  "RobotModulePaths" : ["@CMAKE_BINARY_DIR@/tests/robots/@TEST_ROBOT_NAME@"],
+  "ClearObserverModulePath": true,
+  "ObserverModulePaths": ["@OBSERVER_MODULE_PATH@"]
 }
