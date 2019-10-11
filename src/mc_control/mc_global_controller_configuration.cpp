@@ -34,23 +34,11 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   config("VerboseLoader", verbose_loader);
   mc_rbdyn::RobotLoader::set_verbosity(verbose_loader);
   config("RobotModulePaths", robot_module_paths);
-  {
-    std::string rmp = "";
-    config("RobotModulePath", rmp);
-    if(rmp.size())
-    {
-      robot_module_paths.push_back(rmp);
-    }
-  }
   config("UseSandbox", use_sandbox);
   mc_rbdyn::RobotLoader::enable_sandboxing(use_sandbox);
+  if(config("ClearRobotModulePath", false))
   {
-    bool clear_rmp = false;
-    config("ClearRobotModulePath", clear_rmp);
-    if(clear_rmp)
-    {
-      mc_rbdyn::RobotLoader::clear();
-    }
+    mc_rbdyn::RobotLoader::clear();
   }
   if(robot_module_paths.size())
   {
@@ -138,7 +126,11 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   ///////////////
   mc_observers::ObserverLoader::enable_sandboxing(use_sandbox);
   mc_observers::ObserverLoader::set_verbosity(verbose_loader);
-  config("ObserversModulePaths", observer_module_paths);
+  config("ObserverModulePaths", observer_module_paths);
+  if(config("ClearObserverModulePath", false))
+  {
+    mc_observers::ObserverLoader::clear();
+  }
   if(!observer_module_paths.empty())
   {
     try
@@ -168,28 +160,10 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     }
   }
 
-  controller_module_paths.resize(0);
-  bool clear_cmp = false;
-  config("ClearControllerModulePath", clear_cmp);
-  if(!clear_cmp)
+  config("ControllerModulePaths", controller_module_paths);
+  if(!config("ClearControllerModulePath", false))
   {
-    controller_module_paths.push_back(mc_rtc::MC_CONTROLLER_INSTALL_PREFIX);
-  }
-  {
-    std::vector<std::string> v;
-    config("ControllerModulePaths", v);
-    for(const auto & cv : v)
-    {
-      controller_module_paths.push_back(cv);
-    }
-  }
-  {
-    std::string v = "";
-    config("ControllerModulePaths", v);
-    if(v.size())
-    {
-      controller_module_paths.push_back(v);
-    }
+    controller_module_paths.insert(controller_module_paths.begin(), mc_rtc::MC_CONTROLLER_INSTALL_PREFIX);
   }
   config("Enabled", enabled_controllers);
   if(enabled_controllers.size())
