@@ -147,7 +147,6 @@ bool MCController::resetObservers()
   {
     auto observer = observerPair.first;
     bool updateRobots = observerPair.second;
-    const auto & observerName = observer->name();
     observer->reset(*this);
 
     if(updateRobots)
@@ -169,6 +168,7 @@ bool MCController::resetObservers()
   {
     LOG_INFO("Observers: " << pipelineDesc);
   }
+  return true;
 }
 
 bool MCController::runObservers()
