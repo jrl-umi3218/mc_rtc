@@ -102,7 +102,7 @@ set_target_properties(${{PROJECT_NAME}} PROPERTIES COMPILE_FLAGS "-D{controller_
 #  ifdef {controller_class_name}_EXPORTS
 #    define {controller_class_name}_DLLAPI {controller_class_name}_DLLEXPORT
 #  else
-#    define {controller_class_name} {controller_class_name}_DLLIMPORT
+#    define {controller_class_name}_DLLAPI {controller_class_name}_DLLIMPORT
 #  endif // {controller_class_name}_EXPORTS
 #  define {controller_class_name}_LOCAL {controller_class_name}_DLLLOCAL
 #endif // {controller_class_name}_STATIC""".format(controller_class_name = controller_class_name))
