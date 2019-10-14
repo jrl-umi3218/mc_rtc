@@ -61,11 +61,11 @@ void CoPTask::removeFromLogger(mc_rtc::Logger & logger)
 
 void CoPTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
-  gui.addElement(
-      {"Tasks", name_},
-      mc_rtc::gui::ArrayLabel("cop_measured", [this]() -> const Eigen::Vector2d & { return this->measuredCoP(); }),
-      mc_rtc::gui::ArrayInput("cop_target", [this]() -> const Eigen::Vector2d & { return this->targetCoP(); },
-                              [this](const Eigen::Vector2d & cop) { this->targetCoP(cop); }));
+  gui.addElement({"Tasks", name_},
+                 mc_rtc::gui::ArrayLabel("cop_measured", [this]() -> Eigen::Vector2d { return this->measuredCoP(); }),
+                 mc_rtc::gui::ArrayInput("cop_target",
+                                         [this]() -> const Eigen::Vector2d & { return this->targetCoP(); },
+                                         [this](const Eigen::Vector2d & cop) { this->targetCoP(cop); }));
   // Don't add SurfaceTransformTask as target configuration is different
   DampingTask::addToGUI(gui);
 }
