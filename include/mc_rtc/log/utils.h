@@ -46,7 +46,7 @@ inline const char ** LogTypeNames()
 
 inline const char * LogTypeName(LogType t)
 {
-  const size_t idx = static_cast<typename std::underlying_type<LogType>::type>(t);
+  const size_t idx = static_cast<size_t>(t);
   return LogTypeNames()[idx];
 }
 

@@ -21,7 +21,7 @@ struct MC_RBDYN_DLLAPI PlanarSurface : public Surface
                 const std::string & materialName,
                 const std::vector<std::pair<double, double>> & planarPoints);
 
-  ~PlanarSurface();
+  ~PlanarSurface() override;
 
   void computePoints() override;
 

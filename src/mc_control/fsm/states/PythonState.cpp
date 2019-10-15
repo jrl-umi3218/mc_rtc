@@ -6,10 +6,16 @@
 
 // clang-format off
 
+#pragma GCC diagnostic push
+#ifdef __clang__
+#pragma GCC diagnostic ignored "-Wdeprecated-register"
+#endif
 extern "C"
 {
 #include "Python.h"
 }
+#pragma GCC diagnostic pop
+
 #include "mc_control/fsm/fsm.h"
 
 extern "C"
@@ -24,7 +30,11 @@ FSM_STATE_API void MC_RTC_FSM_STATE(std::vector<std::string> & names)
 
 FSM_STATE_API void destroy(mc_control::fsm::State * ptr)
 {
+  delete ptr;
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-variable"
   auto gstate = PyGILState_Ensure();
+#pragma GCC diagnostic pop
   Py_Finalize();
 }
 
@@ -38,7 +48,10 @@ FSM_STATE_API mc_control::fsm::State * create(const std::string &, const std::st
     Py_Initialize();
     PyEval_SaveThread();
   }
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-variable"
   auto gstate = PyGILState_Ensure();
+#pragma GCC diagnostic pop
   PySys_SetArgvEx(0, {}, 0);
 
   std::string mod_name = "mc_python_states";

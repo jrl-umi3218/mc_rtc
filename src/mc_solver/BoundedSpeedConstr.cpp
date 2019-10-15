@@ -10,7 +10,7 @@ namespace mc_solver
 {
 
 BoundedSpeedConstr::BoundedSpeedConstr(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double dt)
-: constr(new tasks::qp::BoundedSpeedConstr(robots.mbs(), robotIndex, dt)), robotIndex(robotIndex)
+: constr(new tasks::qp::BoundedSpeedConstr(robots.mbs(), static_cast<int>(robotIndex), dt)), robotIndex(robotIndex)
 {
 }
 
@@ -45,8 +45,7 @@ void BoundedSpeedConstr::addBoundedSpeed(QPSolver & solver,
                                          const Eigen::VectorXd & lowerSpeed,
                                          const Eigen::VectorXd & upperSpeed)
 {
-  int index = solver.robots().robot(robotIndex).bodyIndexByName(bodyName);
-  if(index >= 0)
+  if(solver.robots().robot(robotIndex).hasBody(bodyName))
   {
     constr->addBoundedSpeed(solver.robots().mbs(), bodyName, bodyPoint, dof, lowerSpeed, upperSpeed);
     constr->updateBoundedSpeeds();
@@ -62,8 +61,7 @@ void BoundedSpeedConstr::addBoundedSpeed(QPSolver & solver,
 bool BoundedSpeedConstr::removeBoundedSpeed(QPSolver & solver, const std::string & bodyName)
 {
   bool r = false;
-  int index = solver.robots().robot(robotIndex).bodyIndexByName(bodyName);
-  if(index >= 0)
+  if(solver.robots().robot(robotIndex).hasBody(bodyName))
   {
     r = constr->removeBoundedSpeed(bodyName);
     constr->updateBoundedSpeeds();

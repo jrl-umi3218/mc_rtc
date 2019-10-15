@@ -1,4 +1,6 @@
-#pragma once
+/*
+ * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ */
 
 #include <mc_rtc/log/FlatLog.h>
 #include <mc_rtc/logging.h>
@@ -70,7 +72,7 @@ struct PrettyTable
     for(size_t i = 0; i < N; ++i)
     {
       auto & col = columns_[i];
-      os << ' ' << std::setw(col.max_size_) << std::setfill(' ') << col.name_ << " |";
+      os << ' ' << std::setw(static_cast<int>(col.max_size_)) << std::setfill(' ') << col.name_ << " |";
     }
     os << '\n' << std::string(s, '-') << '\n';
     for(size_t i = 0; i < columns_[0].data_.size(); ++i)
@@ -79,7 +81,7 @@ struct PrettyTable
       for(size_t j = 0; j < N; ++j)
       {
         auto & col = columns_[j];
-        os << ' ' << std::setw(col.max_size_) << std::setfill(' ') << col.data_[i] << " |";
+        os << ' ' << std::setw(static_cast<int>(col.max_size_)) << std::setfill(' ') << col.data_[i] << " |";
       }
       os << '\n';
     }

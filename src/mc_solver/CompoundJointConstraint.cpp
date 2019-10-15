@@ -37,7 +37,7 @@ void CompoundJointConstraint::addConstraint(const mc_rbdyn::Robots & robots,
       LOG_ERROR_AND_THROW(std::runtime_error, "No joint named " << jname << " in " << robot.name())
     }
     auto qIdx = robot.jointIndexByName(jname);
-    if(robot.mb().joint(qIdx).dof() != 1)
+    if(robot.mb().joint(static_cast<int>(qIdx)).dof() != 1)
     {
       LOG_ERROR_AND_THROW(std::runtime_error, "Joint " << jname << " does not have exactly one dof")
     }
@@ -45,22 +45,23 @@ void CompoundJointConstraint::addConstraint(const mc_rbdyn::Robots & robots,
   };
   auto q1Idx = check_joint(desc.j1);
   auto q2Idx = check_joint(desc.j2);
-  descs_.push_back({q1Idx, robot.mb().jointPosInDof(q1Idx), q2Idx, robot.mb().jointPosInDof(q2Idx), desc.p1.x(),
-                    desc.p1.y(), desc.p2.x() - desc.p1.x(), desc.p2.y() - desc.p1.y()});
+  descs_.push_back({q1Idx, robot.mb().jointPosInDof(static_cast<int>(q1Idx)), q2Idx,
+                    robot.mb().jointPosInDof(static_cast<int>(q2Idx)), desc.p1.x(), desc.p1.y(),
+                    desc.p2.x() - desc.p1.x(), desc.p2.y() - desc.p1.y()});
 }
 
 void CompoundJointConstraint::updateNrVars(const std::vector<rbd::MultiBody> &, const tasks::qp::SolverData & data)
 {
-  A_.setZero(descs_.size(), data.nrVars());
-  b_.setZero(descs_.size());
-  b_cst_.setZero(descs_.size());
-  auto ABegin = data.alphaDBegin(rIndex_);
+  A_.setZero(static_cast<int>(descs_.size()), data.nrVars());
+  b_.setZero(static_cast<int>(descs_.size()));
+  b_cst_.setZero(static_cast<int>(descs_.size()));
+  auto ABegin = data.alphaDBegin(static_cast<int>(rIndex_));
   for(size_t i = 0; i < descs_.size(); ++i)
   {
     const auto & d = descs_[i];
-    A_(i, ABegin + d.q1MatIdx) = dt_ * dt_ * d.P_y / 2;
-    A_(i, ABegin + d.q2MatIdx) = -dt_ * dt_ * d.P_x / 2;
-    b_cst_(i) = d.p1_x * d.P_y - d.p1_y * d.P_x;
+    A_(static_cast<int>(i), ABegin + d.q1MatIdx) = dt_ * dt_ * d.P_y / 2;
+    A_(static_cast<int>(i), ABegin + d.q2MatIdx) = -dt_ * dt_ * d.P_x / 2;
+    b_cst_(static_cast<int>(i)) = d.p1_x * d.P_y - d.p1_y * d.P_x;
   }
 }
 
@@ -75,7 +76,8 @@ void CompoundJointConstraint::update(const std::vector<rbd::MultiBody> &,
     const auto & alpha1 = mbcs[rIndex_].alpha[d.q1Idx][0];
     const auto & q2 = mbcs[rIndex_].q[d.q2Idx][0];
     const auto & alpha2 = mbcs[rIndex_].alpha[d.q2Idx][0];
-    b_(i) = b_cst_(i) + d.P_x * q2 - d.P_y * q1 + dt_ * (d.P_x * alpha2 - d.P_y * alpha1);
+    b_(static_cast<int>(i)) =
+        b_cst_(static_cast<int>(i)) + d.P_x * q2 - d.P_y * q1 + dt_ * (d.P_x * alpha2 - d.P_y * alpha1);
   }
 }
 

@@ -46,7 +46,7 @@ struct CompoundJointConstraint : public tasks::qp::ConstraintFunction<tasks::qp:
 
   inline int maxInEq() const override
   {
-    return descs_.size();
+    return static_cast<int>(descs_.size());
   }
 
   inline std::string nameInEq() const override

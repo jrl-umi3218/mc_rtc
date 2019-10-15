@@ -148,7 +148,7 @@ void MessagePackBuilder::write(double d)
 }
 void MessagePackBuilder::write(const std::string & s)
 {
-  mpack_write_str(impl_.get(), s.c_str(), s.size());
+  mpack_write_str(impl_.get(), s.c_str(), static_cast<uint32_t>(s.size()));
 }
 void MessagePackBuilder::write(const char * s)
 {
@@ -157,7 +157,7 @@ void MessagePackBuilder::write(const char * s)
 
 void MessagePackBuilder::write(const char * s, size_t len)
 {
-  mpack_write_str(impl_.get(), s, len);
+  mpack_write_str(impl_.get(), s, static_cast<uint32_t>(len));
 }
 
 namespace
@@ -209,7 +209,7 @@ void MessagePackBuilder::write(const Eigen::Vector6d & v)
 
 void MessagePackBuilder::write(const Eigen::VectorXd & v)
 {
-  start_array(v.size());
+  start_array(static_cast<size_t>(v.size()));
   write_vector(impl_.get(), v);
   finish_array();
 }
@@ -256,7 +256,7 @@ void MessagePackBuilder::write(const mc_rtc::Configuration & config)
 
 void MessagePackBuilder::start_array(size_t s)
 {
-  mpack_start_array(impl_.get(), s);
+  mpack_start_array(impl_.get(), static_cast<uint32_t>(s));
 }
 
 void MessagePackBuilder::finish_array()
@@ -266,7 +266,7 @@ void MessagePackBuilder::finish_array()
 
 void MessagePackBuilder::start_map(size_t s)
 {
-  mpack_start_map(impl_.get(), s);
+  mpack_start_map(impl_.get(), static_cast<uint32_t>(s));
 }
 
 void MessagePackBuilder::finish_map()

@@ -40,7 +40,7 @@ namespace mc_control
 namespace
 {
 
-void init_socket(int & socket, unsigned int proto, const std::string & uri, const std::string & name)
+void init_socket(int & socket, int proto, const std::string & uri, const std::string & name)
 {
   socket = nn_socket(AF_SP, proto);
   if(socket < 0)
@@ -137,7 +137,7 @@ void ControllerClient::start()
         t_last_received = now;
         if(run_)
         {
-          handle_gui_state(mc_rtc::Configuration::fromMessagePack(buff.data(), recv));
+          handle_gui_state(mc_rtc::Configuration::fromMessagePack(buff.data(), static_cast<size_t>(recv)));
         }
       }
       std::this_thread::sleep_for(std::chrono::microseconds(500));

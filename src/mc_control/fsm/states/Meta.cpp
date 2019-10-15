@@ -2,8 +2,6 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#pragma once
-
 #include <mc_control/fsm/Controller.h>
 #include <mc_control/fsm/states/Meta.h>
 

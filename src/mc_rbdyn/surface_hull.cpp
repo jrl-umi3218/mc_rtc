@@ -88,7 +88,7 @@ sch::S_Object * sch_polyhedron(const std::vector<sva::PTransformd> & points_pt)
   {
     auto v = new sch::S_PolyhedronVertex();
     v->setCoordinates(p.coordinates()[0], p.coordinates()[1], p.coordinates()[2]);
-    v->setNumber(p.id());
+    v->setNumber(static_cast<unsigned int>(p.id()));
     poly_algo.vertexes_.push_back(v);
   }
   auto facets = qhull.facetList();
@@ -102,9 +102,9 @@ sch::S_Object * sch_polyhedron(const std::vector<sva::PTransformd> & points_pt)
     sch::PolyhedronTriangle t;
     t.normal.Set(f.hyperplane().coordinates());
     t.normal.normalize();
-    t.a = f.vertices()[0].point().id();
-    t.b = f.vertices()[1].point().id();
-    t.c = f.vertices()[2].point().id();
+    t.a = static_cast<unsigned int>(f.vertices()[0].point().id());
+    t.b = static_cast<unsigned int>(f.vertices()[1].point().id());
+    t.c = static_cast<unsigned int>(f.vertices()[2].point().id());
     auto addNeighbors = [](std::vector<sch::S_PolyhedronVertex *> & vertexes_, unsigned int a, unsigned int b,
                            unsigned int c) {
       vertexes_[a]->addNeighbor(vertexes_[b]);

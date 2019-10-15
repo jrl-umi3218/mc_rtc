@@ -189,12 +189,12 @@ int split(int argc, char * argv[])
       copy(builder, keys);
       size_t s = builder.finish();
       ofs.write((char *)(&s), sizeof(size_t));
-      ofs.write(data.data(), s);
+      ofs.write(data.data(), static_cast<int>(s));
       written += sizeof(size_t) + s;
       return true;
     }
     ofs.write((char *)&dataSize, sizeof(size_t));
-    ofs.write(data, dataSize * sizeof(char));
+    ofs.write(data, static_cast<int>(dataSize * sizeof(char)));
     written += sizeof(size_t) + dataSize * sizeof(char);
     if(written >= desired_size)
     {
@@ -272,7 +272,8 @@ int extract(int argc, char * argv[])
       bfs::rename(old, new_);
       return;
     }
-    for(size_t i = 0; i < std::pow(10, prev_w); ++i)
+    size_t upper = static_cast<size_t>(std::pow(10.0, static_cast<double>(prev_w)));
+    for(size_t i = 0; i < upper; ++i)
     {
       std::stringstream ss_old;
       ss_old << out << "_" << std::setfill('0') << std::setw(static_cast<int>(prev_w)) << (i + 1) << ".bin";
@@ -325,7 +326,7 @@ int extract(int argc, char * argv[])
     if(key_present)
     {
       ofs.write((char *)&dataSize, sizeof(size_t));
-      ofs.write(data, dataSize * sizeof(char));
+      ofs.write(data, static_cast<int>(dataSize * sizeof(char)));
     }
     return true;
   };
@@ -363,12 +364,12 @@ int extract(int argc, char * argv[])
           copy(builder, keys);
           size_t s = builder.finish();
           ofs.write((char *)(&s), sizeof(size_t));
-          ofs.write(data.data(), s);
+          ofs.write(data.data(), static_cast<int>(s));
           return true;
         }
       }
       ofs.write((char *)&dataSize, sizeof(size_t));
-      ofs.write(data, dataSize * sizeof(char));
+      ofs.write(data, static_cast<int>(dataSize * sizeof(char)));
     }
     return true;
   };

@@ -161,17 +161,17 @@ void write_data<Eigen::Vector6d>(std::ofstream & ofs, const Eigen::Vector6d & da
 template<>
 void write_data<Eigen::VectorXd>(std::ofstream & ofs, const Eigen::VectorXd & data, size_t fsize)
 {
-  for(int i = 0; i < data.size(); ++i)
+  for(long i = 0; i < data.size(); ++i)
   {
     ofs << data(i);
-    if(i + 1 != static_cast<int>(fsize))
+    if(i + 1 != static_cast<long>(fsize))
     {
       ofs << ';';
     }
   }
-  for(int i = data.size(); i < static_cast<int>(fsize); ++i)
+  for(long i = data.size(); i < static_cast<long>(fsize); ++i)
   {
-    if(i + 1 != static_cast<int>(fsize))
+    if(i + 1 != static_cast<long>(fsize))
     {
       ofs << ';';
     }

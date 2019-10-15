@@ -136,7 +136,6 @@ void SlidingFootContactState::start(Controller & ctl)
 bool SlidingFootContactState::run(Controller & ctl)
 {
   controlCoM(ctl);
-  double fZ = 0;
   switch(phase_)
   {
     case Phase::REACH_SUPPORT:
@@ -173,7 +172,6 @@ bool SlidingFootContactState::run(Controller & ctl)
     case Phase::ADJUST_SLIDING_FORCE:
       tick_++;
       controlSlidingForce();
-      fZ = copSlidingFootTask_->measuredWrench().force().z();
       if((tick_ > tickAdjust_)) // && fZ < slidingForceTarget_) ||
                                 //(tick_ > 3*tickAdjust_) )
       {

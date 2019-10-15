@@ -287,7 +287,7 @@ Configuration::operator Eigen::VectorXd() const
     Eigen::VectorXd ret(v.size());
     for(size_t i = 0; i < v.size(); ++i)
     {
-      ret(i) = v[static_cast<int>(i)].asDouble();
+      ret(static_cast<int>(i)) = v[i].asDouble();
     }
     return ret;
   }
@@ -315,7 +315,7 @@ Configuration::operator Eigen::Matrix3d() const
       {
         for(size_t j = 0; j < 3; ++j)
         {
-          m(i, j) = v[3 * i + j].asDouble();
+          m(static_cast<int>(i), static_cast<int>(j)) = v[3 * i + j].asDouble();
         }
       }
       return m;
@@ -345,7 +345,7 @@ Configuration::operator Eigen::Matrix6d() const
     {
       for(size_t j = 0; j < 6; ++j)
       {
-        m(i, j) = v[6 * i + j].asDouble();
+        m(static_cast<int>(i), static_cast<int>(j)) = v[6 * i + j].asDouble();
       }
     }
     return m;
@@ -364,7 +364,7 @@ Configuration::operator Eigen::MatrixXd() const
       assert(row.size() == ret.cols());
       for(size_t j = 0; j < row.size(); ++j)
       {
-        ret(i, j) = row[j].asDouble();
+        ret(static_cast<int>(i), static_cast<int>(j)) = row[j].asDouble();
       }
     }
     return ret;

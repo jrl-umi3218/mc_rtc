@@ -10,7 +10,10 @@ struct SegfaultRobot : public mc_rbdyn::RobotModule
 {
   SegfaultRobot() : RobotModule(std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH), std::string("ground"))
   {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wnull-dereference"
     *(int *)0 = 0;
+#pragma GCC diagnostic pop
   }
 };
 

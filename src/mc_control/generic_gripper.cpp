@@ -276,7 +276,7 @@ const std::vector<double> & Gripper::q()
 
 double Gripper::opening() const
 {
-  return std::accumulate(percentOpen.begin(), percentOpen.end(), 0.0) / percentOpen.size();
+  return std::accumulate(percentOpen.begin(), percentOpen.end(), 0.0) / static_cast<double>(percentOpen.size());
 }
 
 } // namespace mc_control

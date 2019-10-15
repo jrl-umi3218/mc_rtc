@@ -66,7 +66,7 @@ void addQOutLogEntry(std::function<void(std::vector<double> &)> callback,
       {
         if(gripperToRef[i] != -1)
         {
-          qOut[gripperToRef[i]] = q[i];
+          qOut[static_cast<size_t>(gripperToRef[i])] = q[i];
         }
       }
     };
@@ -250,7 +250,7 @@ void MCGlobalController::init(const std::vector<double> & initq, const std::arra
     for(const auto & j : g.active_joints)
     {
       auto jIndex = refJointIndex(j);
-      gQ.push_back(jIndex != -1 ? initq[jIndex] : 0);
+      gQ.push_back(jIndex != -1 ? initq[static_cast<size_t>(jIndex)] : 0);
     }
   }
   setGripperCurrentQ(gripperInit);
@@ -808,10 +808,10 @@ void MCGlobalController::setup_log()
   {
     if(controller->robot().hasJoint(j))
     {
-      auto jIndex = controller->robot().jointIndexByName(j);
+      int jIndex = static_cast<int>(controller->robot().jointIndexByName(j));
       if(controller->robot().mb().joint(jIndex).dof() == 1)
       {
-        refToQ.push_back(controller->robot().jointIndexByName(j));
+        refToQ.push_back(jIndex);
         continue;
       }
     }
@@ -822,7 +822,7 @@ void MCGlobalController::setup_log()
     {
       if(refToQ[i] != -1)
       {
-        qOut[i] = controller->robot().mbc().q[refToQ[i]][0];
+        qOut[i] = controller->robot().mbc().q[static_cast<size_t>(refToQ[i])][0];
       }
     }
     return qOut;
@@ -852,7 +852,7 @@ void MCGlobalController::setup_log()
 
   // Log all other body sensors
   const auto & bodySensors = controller->robot().bodySensors();
-  for(int i = 1; i < bodySensors.size(); ++i)
+  for(size_t i = 1; i < bodySensors.size(); ++i)
   {
     const auto & name = bodySensors[i].name();
     controller->logger().addLogEntry(name + "_pIn", [controller, name]() -> const Eigen::Vector3d & {
@@ -894,9 +894,8 @@ void MCGlobalController::setup_log()
   controller->logger().addLogEntry("perf_Gui", [this]() { return gui_dt.count(); });
   controller->logger().addLogEntry("perf_FrameworkCost", [this]() { return framework_cost; });
   // Log system wall time as nanoseconds since epoch (can be used to manage synchronization with ros)
-  controller->logger().addLogEntry("timeWall", []() -> uint64_t {
-    uint64_t nanoseconds_since_epoch =
-        std::chrono::system_clock::now().time_since_epoch() / std::chrono::nanoseconds(1);
+  controller->logger().addLogEntry("timeWall", []() -> int64_t {
+    int64_t nanoseconds_since_epoch = std::chrono::system_clock::now().time_since_epoch() / std::chrono::nanoseconds(1);
     return nanoseconds_since_epoch;
   });
   setup_logger_[current_ctrl] = true;

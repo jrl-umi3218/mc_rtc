@@ -2,9 +2,8 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include "EncoderObserver.h"
-
 #include <mc_control/mc_controller.h>
+#include <mc_observers/EncoderObserver.h>
 
 namespace mc_observers
 {
@@ -95,33 +94,33 @@ void EncoderObserver::updateRobots(const mc_control::MCController & ctl, mc_rbdy
   if(q.size() == robot.refJointOrder().size())
   {
     // Set all joint values and velocities from encoders
-    unsigned i = 0;
-    for(const auto & ref_joint : realRobot.refJointOrder())
+    size_t nJoints = realRobot.refJointOrder().size();
+    for(size_t i = 0; i < nJoints; ++i)
     {
       const auto joint_index = robot.jointIndexInMBC(i);
       if(joint_index != -1 && robot.mb().joint(joint_index).dof() == 1)
       {
+        size_t jidx = static_cast<size_t>(joint_index);
         // Update position
         if(posUpdate_ == Update::Control)
         {
-          realRobot.mbc().q[joint_index][0] = robot.mbc().q[joint_index][0];
+          realRobot.mbc().q[jidx][0] = robot.mbc().q[jidx][0];
         }
         else if(posUpdate_ == Update::Estimator)
         {
-          realRobot.mbc().q[joint_index][0] = q[i];
+          realRobot.mbc().q[jidx][0] = q[i];
         }
 
         // Update velocity
         if(velUpdate_ == Update::Control)
         {
-          realRobot.mbc().alpha[joint_index][0] = robot.mbc().alpha[joint_index][0];
+          realRobot.mbc().alpha[jidx][0] = robot.mbc().alpha[jidx][0];
         }
         else if(velUpdate_ == Update::Estimator)
         {
-          realRobot.mbc().alpha[joint_index][0] = encodersVelocity_[i];
+          realRobot.mbc().alpha[jidx][0] = encodersVelocity_[i];
         }
       }
-      i++;
     }
   }
   if(posUpdate_ != Update::None)

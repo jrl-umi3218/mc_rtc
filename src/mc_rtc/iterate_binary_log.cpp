@@ -51,7 +51,7 @@ bool iterate_binary_log(const std::string & f,
     {
       buffer.resize(2 * buffer.size());
     }
-    ifs.read(buffer.data(), entrySize);
+    ifs.read(buffer.data(), static_cast<int>(entrySize));
     if(!ifs)
     {
       break;

@@ -29,7 +29,7 @@ public:
           const sva::PTransformd & X_b_s,
           const std::string & materialName);
 
-  ~Surface();
+  virtual ~Surface();
 
   const std::string & name() const;
 

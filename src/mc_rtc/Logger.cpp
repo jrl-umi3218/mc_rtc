@@ -39,7 +39,7 @@ protected:
   inline void fwrite(char * data, size_t size)
   {
     log_.write((char *)&size, sizeof(size_t));
-    log_.write(data, size);
+    log_.write(data, static_cast<int>(size));
   }
 
   // Open file and write magic number to it right away

@@ -46,7 +46,10 @@ struct MockTask : public mc_tasks::CoMTask
     {
       Eigen::Vector3d myCrit = config("MYCRITERIA");
       return [myCrit](const mc_tasks::MetaTask & t, std::string & out) {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-value"
         BOOST_REQUIRE_NO_THROW(dynamic_cast<const MockTask &>(t));
+#pragma GCC diagnostic pop
         const auto & self = static_cast<const MockTask &>(t);
         const auto & eval_ = self.eval_;
         if(eval_.x() < myCrit.x() && eval_.y() < myCrit.y() && eval_.z() < myCrit.z())
@@ -79,7 +82,7 @@ BOOST_AUTO_TEST_CASE(TestTimeout)
   config.add("timeout", timeout);
   mc_control::CompletionCriteria criteria;
   criteria.configure(task, dt, config);
-  unsigned int ticks = timeout / dt;
+  unsigned int ticks = static_cast<unsigned int>(std::floor(timeout / dt));
   for(size_t i = 0; i < ticks; ++i)
   {
     BOOST_REQUIRE(!criteria.completed(task));
@@ -228,7 +231,7 @@ BOOST_AUTO_TEST_CASE(TestEvalAndSpeedOrTimeout)
   BOOST_REQUIRE(criteria.completed(task)); // eval true, speed true, timeout false
   BOOST_REQUIRE(criteria.output() == "eval AND speed");
   task.eval_.z() = 1.0; // from now, eval always false, speed always true
-  unsigned int ticks = timeout / dt;
+  unsigned int ticks = static_cast<unsigned int>(std::floor(timeout / dt));
   for(size_t i = 3; i < ticks; ++i)
   {
     BOOST_REQUIRE(!criteria.completed(task));

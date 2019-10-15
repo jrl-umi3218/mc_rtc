@@ -253,7 +253,14 @@ void TestConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2)
     config("v6d", c);
     BOOST_CHECK_EQUAL(c, zero);
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused"
+#ifdef __clang__
+#  pragma GCC diagnostic ignored "-Wunknown-warning-option"
+#endif
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
     BOOST_CHECK_THROW(Eigen::Vector3d d = config("v6d"), mc_rtc::Configuration::Exception);
+#pragma GCC diagnostic pop
 
     Eigen::Vector3d e = Eigen::Vector3d::Zero();
     e = config("dict")("v3d");
@@ -281,7 +288,14 @@ void TestConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2)
     config("v3d", c);
     BOOST_CHECK_EQUAL(c, zero);
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused"
+#ifdef __clang__
+#  pragma GCC diagnostic ignored "-Wunknown-warning-option"
+#endif
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
     BOOST_CHECK_THROW(Eigen::Vector6d d = config("v3d"), mc_rtc::Configuration::Exception);
+#pragma GCC diagnostic pop
 
     Eigen::Vector6d e = Eigen::Vector6d::Zero();
     e = config("dict")("v6d");

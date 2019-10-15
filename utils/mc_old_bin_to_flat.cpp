@@ -3,7 +3,10 @@
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wsign-conversion"
 #include "mc_bin_flatbuffers/MCLog_generated.h"
+#pragma GCC diagnostic pop
 #include <cmath>
 #include <fstream>
 #include <sstream>
@@ -21,7 +24,7 @@ struct LogData
     {
       s_sz = s.size();
       os.write((char *)&s_sz, sizeof(size_t));
-      os.write(s.data(), s.size() * sizeof(char));
+      os.write(s.data(), static_cast<long>(s.size() * sizeof(char)));
     }
   }
 
@@ -32,7 +35,7 @@ struct LogData
     {
       is.read((char *)&s_sz, sizeof(size_t));
       data[i].resize(s_sz);
-      is.read(const_cast<char *>(data[i].data()), data[i].size() * sizeof(char));
+      is.read(const_cast<char *>(data[i].data()), static_cast<long>(data[i].size() * sizeof(char)));
     }
   }
 };
@@ -43,12 +46,12 @@ struct LogData<true>
   using data_t = std::vector<double>;
   static void write(const data_t & data, std::ofstream & os)
   {
-    os.write((char *)data.data(), data.size() * sizeof(double));
+    os.write((const char *)data.data(), static_cast<long>(data.size() * sizeof(double)));
   }
 
   static void read(std::ifstream & is, data_t & data)
   {
-    is.read((char *)data.data(), data.size() * sizeof(double));
+    is.read((char *)data.data(), static_cast<long>(data.size() * sizeof(double)));
   }
 };
 
@@ -84,7 +87,7 @@ struct NumericLogLine : public LogLine
     size_t key_s = key_.size();
     os.put(1);
     os.write((char *)&key_s, sizeof(size_t));
-    os.write(key_.data(), key_.size() * sizeof(char));
+    os.write(key_.data(), static_cast<long>(key_.size() * sizeof(char)));
     key_s = data_.size();
     os.write((char *)&key_s, sizeof(size_t));
     LogData<true>::write(data_, os);
@@ -95,7 +98,10 @@ struct NumericLogLine : public LogLine
     size_t key_s = 0;
     is.read((char *)&key_s, sizeof(size_t));
     key_.resize(key_s);
-    is.read((char *)key_.data(), key_s * sizeof(char));
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wcast-qual"
+    is.read((char *)key_.data(), static_cast<long>(key_s * sizeof(char)));
+#pragma GCC diagnostic pop
     is.read((char *)&key_s, sizeof(size_t));
     data_.resize(key_s);
     LogData<true>::read(is, data_);
@@ -133,7 +139,7 @@ struct StringLogLine : public LogLine
     ;
     os.put(0);
     os.write((char *)&key_s, sizeof(size_t));
-    os.write(key_.data(), key_.size() * sizeof(char));
+    os.write(key_.data(), static_cast<long>(key_.size() * sizeof(char)));
     key_s = data_.size();
     os.write((char *)&key_s, sizeof(size_t));
     LogData<false>::write(data_, os);
@@ -144,7 +150,10 @@ struct StringLogLine : public LogLine
     size_t key_s = 0;
     is.read((char *)&key_s, sizeof(size_t));
     key_.resize(key_s);
-    is.read((char *)key_.data(), key_s * sizeof(char));
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wcast-qual"
+    is.read((char *)key_.data(), static_cast<long>(key_s * sizeof(char)));
+#pragma GCC diagnostic pop
     is.read((char *)&key_s, sizeof(size_t));
     data_.resize(key_s);
     LogData<false>::read(is, data_);
@@ -237,9 +246,11 @@ std::unordered_map<std::string, std::shared_ptr<LogLine>> readLog(const std::str
           case mc_rtc::log::LogData_Quaterniond:
             addKey(k->str() + "_w", true);
             s += 1;
+            /* fall through */
           case mc_rtc::log::LogData_Vector3d:
             addKey(k->str() + "_z", true);
             s += 1;
+            /* fall through */
           case mc_rtc::log::LogData_Vector2d:
             addKey(k->str() + "_x", true);
             addKey(k->str() + "_y", true);

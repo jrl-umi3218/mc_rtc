@@ -22,7 +22,7 @@ struct MC_RBDYN_DLLAPI CylindricalSurface : public Surface
                      const double & radius,
                      const double & width);
 
-  ~CylindricalSurface();
+  ~CylindricalSurface() override;
 
   void computePoints() override;
 

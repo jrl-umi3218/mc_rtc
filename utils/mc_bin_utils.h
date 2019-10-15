@@ -33,7 +33,7 @@ inline size_t VectorXdEntrySize(const mc_rtc::log::FlatLog & log, const std::str
   {
     if(v)
     {
-      s = std::max<size_t>(s, v->size());
+      s = std::max<size_t>(s, static_cast<size_t>(v->size()));
     }
   }
   return s;
@@ -88,6 +88,7 @@ inline size_t entrySize(const mc_rtc::log::FlatLog & log, const std::string & en
     case mc_rtc::log::LogType::VectorDouble:
       return VectorEntrySize(log, entry);
     case mc_rtc::log::LogType::None:
+    default:
       return 0;
   }
 }
