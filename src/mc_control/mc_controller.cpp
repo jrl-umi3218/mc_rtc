@@ -143,7 +143,7 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
 bool MCController::resetObservers()
 {
   auto pipelineDesc = std::string{};
-  for(const auto & observerPair : pipelineObservers)
+  for(const auto & observerPair : pipelineObservers_)
   {
     auto observer = observerPair.first;
     bool updateRobots = observerPair.second;
@@ -164,7 +164,7 @@ bool MCController::resetObservers()
       observer->addToGUI(*this, *gui_);
     }
   }
-  if(!pipelineObservers.empty())
+  if(!pipelineObservers_.empty())
   {
     LOG_INFO("Observers: " << pipelineDesc);
   }
@@ -173,7 +173,7 @@ bool MCController::resetObservers()
 
 bool MCController::runObservers()
 {
-  for(const auto & observerPair : pipelineObservers)
+  for(const auto & observerPair : pipelineObservers_)
   {
     auto observer = observerPair.first;
     bool updateRobots = observerPair.second;

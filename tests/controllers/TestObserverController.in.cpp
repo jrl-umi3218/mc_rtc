@@ -110,7 +110,7 @@ public:
     // clang-format on
 
     auto hasObserver = [this](const std::string & name) {
-      for(const auto & obs : observers)
+      for(const auto & obs : observers_)
       {
         if(obs->name() == name)
         {
@@ -120,7 +120,7 @@ public:
       return false;
     };
     auto hasPipelineObserver = [this](const std::string & name, bool update) {
-      for(const auto & obs : pipelineObservers)
+      for(const auto & obs : pipelineObservers_)
       {
         if(obs.first->name() == name)
         {

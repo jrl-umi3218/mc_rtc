@@ -527,8 +527,8 @@ private:
   std::unique_ptr<mc_rtc::ObjectLoader<MCController>> controller_loader;
   std::map<std::string, std::shared_ptr<mc_control::MCController>> controllers;
 
-  std::vector<mc_observers::ObserverPtr> observers;
-  std::map<std::string, mc_observers::ObserverPtr> observersByName;
+  std::vector<mc_observers::ObserverPtr> observers_;
+  std::map<std::string, mc_observers::ObserverPtr> observersByName_;
   std::shared_ptr<mc_rbdyn::Robots> real_robots = nullptr;
 
   std::unique_ptr<mc_control::ControllerServer> server_ = nullptr;

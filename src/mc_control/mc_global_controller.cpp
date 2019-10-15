@@ -99,8 +99,8 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
       auto observer = mc_observers::ObserverLoader::get_observer(observerName, config.timestep,
                                                                  config.observer_configs[observerName]);
 
-      observers.push_back(observer);
-      observersByName[observerName] = observer;
+      observers_.push_back(observer);
+      observersByName_[observerName] = observer;
     }
     else
     {
@@ -387,7 +387,7 @@ bool MCGlobalController::run()
   /* Check if we need to change the controller this time */
   if(next_controller_)
   {
-    for(auto & observer : observers)
+    for(auto & observer : observers_)
     {
       observer->removeFromLogger(controller_->logger());
       if(controller_->gui())
@@ -635,25 +635,25 @@ bool MCGlobalController::AddController(const std::string & name)
     }
 
     // Give each controller access to all observers
-    controllers[name]->observers = observers;
+    controllers[name]->observers_ = observers_;
     const auto & cc = config.controllers_configs[name];
     const auto runObservers = cc("RunObservers", std::vector<std::string>{});
     const auto updateObservers = cc("UpdateObservers", std::vector<std::string>{});
     // Use controller-specific configuration instead of global configuration
     for(const auto & observerName : runObservers)
     {
-      if(observersByName.count(observerName) > 0)
+      if(observersByName_.count(observerName) > 0)
       {
-        auto observer = observersByName[observerName];
+        auto observer = observersByName_[observerName];
         // If observer is in the "UpdateObserver" configuration, request for
         // update
         if(std::find(updateObservers.begin(), updateObservers.end(), observerName) != updateObservers.end())
         {
-          controllers[name]->pipelineObservers.push_back(std::make_pair(observer, true));
+          controllers[name]->pipelineObservers_.push_back(std::make_pair(observer, true));
         }
         else
         {
-          controllers[name]->pipelineObservers.push_back(std::make_pair(observer, false));
+          controllers[name]->pipelineObservers_.push_back(std::make_pair(observer, false));
         }
       }
       else

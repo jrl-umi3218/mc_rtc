@@ -335,7 +335,7 @@ protected:
   /** Observers order provided by MCGlobalController
    * Observers will be run and update real robot in that order
    **/
-  std::vector<mc_observers::ObserverPtr> observers;
+  std::vector<mc_observers::ObserverPtr> observers_;
   /** Observers that will be run by the pipeline.
    *
    * The pair contains:
@@ -343,7 +343,7 @@ protected:
    * - A boolean set to true if the observer updates the real robot instance
    *
    * Provided by MCGlobalController */
-  std::vector<std::pair<mc_observers::ObserverPtr, bool>> pipelineObservers;
+  std::vector<std::pair<mc_observers::ObserverPtr, bool>> pipelineObservers_;
   /** Logger provided by MCGlobalController */
   std::shared_ptr<mc_rtc::Logger> logger_;
   /** GUI state builder */
