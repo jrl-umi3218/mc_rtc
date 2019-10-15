@@ -246,12 +246,13 @@ Robot::Robot(Robots & robots,
 
   refJointOrder_ = module_.ref_joint_order();
   refJointIndexToMBCIndex_.resize(refJointOrder_.size());
-  for(int i = 0; i < refJointOrder_.size(); ++i)
+  for(size_t i = 0; i < refJointOrder_.size(); ++i)
   {
     const auto & jN = refJointOrder_[i];
     if(hasJoint(jN))
     {
-      refJointIndexToMBCIndex_[i] = mb().jointIndexByName(jN);
+      auto jIndex = mb().jointIndexByName(jN);
+      refJointIndexToMBCIndex_[i] = mb().joint(jIndex).dof() != 0 ? jIndex : -1;
     }
     else
     {
