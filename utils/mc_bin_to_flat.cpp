@@ -29,14 +29,14 @@ void write(const std::string & entry, bool numeric, std::ostream & os)
 {
   os.put(numeric ? 1 : 0);
   write(entry.size(), os);
-  os.write(entry.data(), entry.size() * sizeof(char));
+  os.write(entry.data(), static_cast<int>(entry.size() * sizeof(char)));
 }
 
 void write(const std::string & entry, const double * data, size_t size, std::ostream & os)
 {
   write(entry, true, os);
   write(size, os);
-  os.write((const char *)data, size * sizeof(double));
+  os.write((const char *)data, static_cast<int>(size * sizeof(double)));
 }
 
 void write(const std::string & entry, const std::vector<double> & data, std::ostream & os)
@@ -51,7 +51,7 @@ void write(const std::string & entry, const std::vector<std::string> & data, std
   for(const auto & s : data)
   {
     write(s.size(), os);
-    os.write(s.data(), s.size() * sizeof(char));
+    os.write(s.data(), static_cast<int>(s.size() * sizeof(char)));
   }
 }
 
@@ -315,7 +315,7 @@ void write<Eigen::VectorXd>(const mc_rtc::log::FlatLog & log, const std::string 
     auto * v = data[i];
     if(v)
     {
-      maxS = std::max<size_t>(maxS, v->size());
+      maxS = std::max<size_t>(maxS, static_cast<size_t>(v->size()));
     }
   }
   vec.resize(maxS * data.size());
@@ -325,7 +325,7 @@ void write<Eigen::VectorXd>(const mc_rtc::log::FlatLog & log, const std::string 
     size_t vSize = 0;
     if(v)
     {
-      vSize = v->size();
+      vSize = static_cast<size_t>(v->size());
       const double * vData = v->data();
       for(size_t j = 0; j < vSize; ++j)
       {

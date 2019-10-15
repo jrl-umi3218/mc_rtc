@@ -22,7 +22,7 @@ public:
                  const sva::PTransformd & X_b_motor,
                  const double & motorMaxTorque);
 
-  ~GripperSurface();
+  ~GripperSurface() override;
 
   void computePoints() override;
 

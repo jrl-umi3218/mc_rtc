@@ -164,7 +164,7 @@ struct DataFromNode<Eigen::VectorXd>
     {
       return false;
     }
-    v.resize(mpack_node_array_length(node));
+    v.resize(static_cast<int>(mpack_node_array_length(node)));
     for(Eigen::DenseIndex i = 0; i < v.size(); ++i)
     {
       v(i) = node_at(node, static_cast<size_t>(i));

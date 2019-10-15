@@ -446,7 +446,7 @@ Eigen::Matrix<double, 6, Eigen::Dynamic> ConfigurationLoader<Eigen::Matrix<doubl
   {
     for(Eigen::DenseIndex j = 0; j < m.cols(); ++j)
     {
-      m(i, j) = data[m.cols() * i + j];
+      m(i, j) = data[static_cast<size_t>(m.cols() * i + j)];
     }
   }
   return m;
@@ -457,7 +457,7 @@ mc_rtc::Configuration ConfigurationLoader<Eigen::Matrix<double, 6, Eigen::Dynami
 {
   mc_rtc::Configuration config;
   config.add("cols", static_cast<int>(m.cols()));
-  auto data = config.array("data", 6 * m.cols());
+  auto data = config.array("data", static_cast<size_t>(6 * m.cols()));
   for(Eigen::DenseIndex i = 0; i < 6; ++i)
   {
     for(Eigen::DenseIndex j = 0; j < m.cols(); ++j)

@@ -51,7 +51,7 @@ struct ConstraintTester<mc_solver::BoundedSpeedConstr>
 {
   ConstraintTester<mc_solver::BoundedSpeedConstr>()
   {
-    for(size_t i = 0; i < 3; ++i)
+    for(int i = 0; i < 3; ++i)
     {
       if(lS(i) > 0)
       {

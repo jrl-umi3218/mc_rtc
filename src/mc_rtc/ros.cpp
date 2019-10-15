@@ -245,23 +245,25 @@ void RobotPublisherImpl::update(double,
       continue;
     } // unlikely
     /** Perform FK starting at the gripper */
-    int startIndex = robot.jointIndexByName(gJoints[0]);
-    for(int jIndex = startIndex; jIndex < mb.joints().size(); ++jIndex)
+    int startIndex = static_cast<int>(robot.jointIndexByName(gJoints[0]));
+    for(int jIndex = startIndex; jIndex < static_cast<int>(mb.joints().size()); ++jIndex)
     {
+      size_t jIdx = static_cast<size_t>(jIndex);
       auto pred = mb.predecessor(jIndex);
       if(pred < startIndex - 1 || pred > jIndex - 1)
       {
         break;
       }
-      mbc.jointConfig[jIndex] = mb.joints()[jIndex].pose(mbc.q[jIndex]);
-      mbc.parentToSon[jIndex] = mbc.jointConfig[jIndex] * mb.transforms()[jIndex];
+      mbc.jointConfig[jIdx] = mb.joints()[jIdx].pose(mbc.q[jIdx]);
+      mbc.parentToSon[jIdx] = mbc.jointConfig[jIdx] * mb.transforms()[jIdx];
       if(pred != -1)
       {
-        mbc.bodyPosW[mb.successor(jIndex)] = mbc.parentToSon[jIndex] * mbc.bodyPosW[pred];
+        mbc.bodyPosW[static_cast<size_t>(mb.successor(jIndex))] =
+            mbc.parentToSon[jIdx] * mbc.bodyPosW[static_cast<size_t>(pred)];
       }
       else
       {
-        mbc.bodyPosW[mb.successor(jIndex)] = mbc.parentToSon[jIndex];
+        mbc.bodyPosW[static_cast<size_t>(mb.successor(jIndex))] = mbc.parentToSon[static_cast<size_t>(jIndex)];
       }
     }
   }

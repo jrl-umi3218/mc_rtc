@@ -13,11 +13,6 @@ namespace mc_tasks
 namespace force
 {
 
-namespace
-{
-constexpr double MIN_PRESSURE = 0.5; // [N]
-}
-
 CoPTask::CoPTask(const std::string & surfaceName,
                  const mc_rbdyn::Robots & robots,
                  unsigned int robotIndex,

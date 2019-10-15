@@ -370,7 +370,7 @@ mc_rbdyn::Robot & MCController::realRobot()
   return real_robots->robot();
 }
 
-sva::PTransformd MCController::anchorFrame(const mc_rbdyn::Robot & robot) const
+sva::PTransformd MCController::anchorFrame(const mc_rbdyn::Robot &) const
 {
   LOG_ERROR_AND_THROW(std::runtime_error, "MCController::anchorFrame() requested but no implementation available. "
                                           "Please override this function in your controller.");

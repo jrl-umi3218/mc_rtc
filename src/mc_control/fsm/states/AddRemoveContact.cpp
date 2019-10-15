@@ -195,7 +195,8 @@ void AddRemoveContactStateImplHelper<mc_tasks::RemoveContactTask>::make_run_impl
         auto w = t->weight();
         auto s = t->stiffness();
         impl.task_ = std::make_shared<mc_tasks::EndEffectorTask>(
-            ctl.robots().robot(robotIndex_).mb().body(bodyIndex_).name(), ctl.robots(), robotIndex_, s, w);
+            ctl.robots().robot(robotIndex_).mb().body(static_cast<int>(bodyIndex_)).name(), ctl.robots(), robotIndex_,
+            s, w);
         ctl.solver().addTask(impl.task_);
       }
     }
@@ -214,7 +215,7 @@ void AddRemoveContactStateImplHelper<mc_tasks::AddContactTask>::make_run_impl(Ad
   auto envIndex_ = contact.r2Index();
   auto forceThreshold_ = impl.config_("forceThreshold", std::numeric_limits<double>::infinity());
   bool forceOnly_ = impl.config_("forceOnly", false);
-  size_t forceThresholdIter_ = impl.config_("forceThresholdIter", 3);
+  size_t forceThresholdIter_ = static_cast<size_t>(impl.config_("forceThresholdIter", 3));
   bool hasForceSensor_ = ctl.robot().bodyHasForceSensor(contact.r1Surface()->bodyName());
   auto forceSensorName_ = hasForceSensor_ ? ctl.robot().bodyForceSensor(contact.r1Surface()->bodyName()).name() : "";
   size_t forceIter_ = 0;

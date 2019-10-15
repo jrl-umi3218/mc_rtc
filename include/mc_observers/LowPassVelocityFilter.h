@@ -25,7 +25,7 @@ struct LowPassVelocityFilter
    * \param period Cutoff period.
    *
    */
-  LowPassVelocityFilter(double dt, double period = 0) : dt_(dt), cutoffPeriod_(period)
+  LowPassVelocityFilter(double dt, double period = 0) : cutoffPeriod_(period), dt_(dt)
   {
     reset(T::Zero());
   }

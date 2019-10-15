@@ -9,7 +9,7 @@ namespace mc_solver
 {
 
 CoMIncPlaneConstr::CoMIncPlaneConstr(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double dt)
-: constr(new tasks::qp::CoMIncPlaneConstr(robots.mbs(), robotIndex, dt))
+: constr(new tasks::qp::CoMIncPlaneConstr(robots.mbs(), static_cast<int>(robotIndex), dt))
 {
 }
 

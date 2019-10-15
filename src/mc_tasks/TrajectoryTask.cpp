@@ -288,8 +288,8 @@ void TrajectoryTask::selectActiveJoints(mc_solver::QPSolver & solver,
   const auto stiff = stiffness();
   const auto damp = damping();
   const auto & dimW = dimWeight();
-  selectorT = std::make_shared<tasks::qp::JointsSelector>(
-      tasks::qp::JointsSelector::ActiveJoints(robots.mbs(), rIndex, transTask.get(), activeJoints, activeDofs));
+  selectorT = std::make_shared<tasks::qp::JointsSelector>(tasks::qp::JointsSelector::ActiveJoints(
+      robots.mbs(), static_cast<int>(rIndex), transTask.get(), activeJoints, activeDofs));
   transTrajTask = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, selectorT.get(), stiff, damp, 1.0);
   transTrajTask->dimWeight(dimW);
   if(putBack)
@@ -310,8 +310,8 @@ void TrajectoryTask::selectUnactiveJoints(mc_solver::QPSolver & solver,
   const auto stiff = stiffness();
   const auto damp = damping();
   const auto & dimW = dimWeight();
-  selectorT = std::make_shared<tasks::qp::JointsSelector>(
-      tasks::qp::JointsSelector::UnactiveJoints(robots.mbs(), rIndex, transTask.get(), unactiveJoints, unactiveDofs));
+  selectorT = std::make_shared<tasks::qp::JointsSelector>(tasks::qp::JointsSelector::UnactiveJoints(
+      robots.mbs(), static_cast<int>(rIndex), transTask.get(), unactiveJoints, unactiveDofs));
   transTrajTask = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, selectorT.get(), stiff, damp, 1.0);
   transTrajTask->dimWeight(dimW);
   if(putBack)
@@ -421,7 +421,7 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
         {
           // Control points offsets defined wrt to the target surface frame
           const auto & controlPoints = c("controlPoints");
-          waypoints.resize(3, controlPoints.size());
+          waypoints.resize(3, static_cast<int>(controlPoints.size()));
           for(unsigned int i = 0; i < controlPoints.size(); ++i)
           {
             const Eigen::Vector3d wp = controlPoints[i];
@@ -449,8 +449,8 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
         {
           // Control points defined in world coordinates
           const auto & controlPoints = config("controlPoints");
-          waypoints.resize(3, controlPoints.size());
-          waypoints.resize(3, controlPoints.size());
+          waypoints.resize(3, static_cast<int>(controlPoints.size()));
+          waypoints.resize(3, static_cast<int>(controlPoints.size()));
           for(unsigned int i = 0; i < controlPoints.size(); ++i)
           {
             const Eigen::Vector3d wp = controlPoints[i];

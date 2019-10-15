@@ -48,7 +48,7 @@ public:
   virtual void reset(const ControllerResetData & reset_data) override
   {
     MCController::reset(reset_data);
-    set_joint_pos(robot().mb().joint(head_joint_index).name(), head_joint_target);
+    set_joint_pos(robot().mb().joint(static_cast<int>(head_joint_index)).name(), head_joint_target);
   }
 
 private:

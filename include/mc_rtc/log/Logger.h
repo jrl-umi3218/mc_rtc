@@ -123,7 +123,7 @@ public:
       return;
     }
     log_entries_changed_ = true;
-    log_entries_[name] = [this, get_fn](mc_rtc::MessagePackBuilder & builder) mutable {
+    log_entries_[name] = [get_fn](mc_rtc::MessagePackBuilder & builder) mutable {
       mc_rtc::log::LogWriter<base_t>::write(get_fn(), builder);
     };
   }

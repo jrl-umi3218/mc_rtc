@@ -18,8 +18,7 @@ ControllerServer::ControllerServer(double dt,
 {
   iter_ = 0;
   rate_ = static_cast<unsigned int>(ceil(server_dt / dt));
-  auto init_socket = [](int & socket, unsigned int proto, const std::vector<std::string> & uris,
-                        const std::string & name) {
+  auto init_socket = [](int & socket, int proto, const std::vector<std::string> & uris, const std::string & name) {
     socket = nn_socket(AF_SP, proto);
     if(socket < 0)
     {

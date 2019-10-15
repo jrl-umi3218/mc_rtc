@@ -115,7 +115,7 @@ void FlatLog::appendFlat(const std::string & f)
     size_t sz = 0;
     ifs.read((char *)&sz, sizeof(size_t));
     std::string key(sz, '0');
-    ifs.read(&key[0], sz * sizeof(char));
+    ifs.read(&key[0], static_cast<int>(sz * sizeof(char)));
     auto idx = index(key, size);
     ifs.read((char *)&sz, sizeof(size_t));
     auto & entries = data_[idx].records;
@@ -146,7 +146,7 @@ void FlatLog::appendFlat(const std::string & f)
         else
         {
           std::string * str = new std::string(str_sz, '0');
-          ifs.read(&((*str)[0]), str_sz * sizeof(char));
+          ifs.read(&((*str)[0]), static_cast<int>(str_sz * sizeof(char)));
           entries.emplace_back(LogType::String, record::unique_void_ptr{str, internal::void_deleter<std::string>});
         }
       }

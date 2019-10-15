@@ -18,6 +18,10 @@ namespace
 {
 jmp_buf jmp;
 
+#  pragma GCC diagnostic push
+#  ifdef __clang__
+#    pragma GCC diagnostic ignored "-Wunneeded-internal-declaration"
+#  endif
 void signal_handler(int signal)
 {
   if(signal == SIGSEGV || signal == SIGFPE || signal == SIGILL)
@@ -32,6 +36,7 @@ void signal_handler(int signal)
   }
   _exit(0);
 }
+#  pragma GCC diagnostic pop
 } // namespace
 
 #endif
@@ -134,8 +139,8 @@ T * sandbox_function_call(FunT create_fn, const Args &... args)
   data.fn = std::bind(create_fn, args...);
   unsigned int stack_size = 65536 * 100;
   char * stack = static_cast<char *>(malloc(stack_size * sizeof(char)));
-  clone(sandbox<T>, static_cast<void *>(stack + stack_size), CLONE_FILES | CLONE_FS | CLONE_IO | CLONE_VM | CLONE_VFORK,
-        static_cast<void *>(&data));
+  clone(sandbox<T>, static_cast<void *>(stack + stack_size),
+        static_cast<int>(CLONE_FILES | CLONE_FS | CLONE_IO | CLONE_VM | CLONE_VFORK), static_cast<void *>(&data));
   if(data.complete)
   {
     return data.ret;

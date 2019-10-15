@@ -78,8 +78,8 @@ struct DataToROS<std::vector<double>>
     ret_t msg;
     msg.layout.dim.resize(1);
     msg.layout.dim[0].label = "data";
-    msg.layout.dim[0].size = data.size();
-    msg.layout.dim[0].stride = data.size();
+    msg.layout.dim[0].size = static_cast<unsigned int>(data.size());
+    msg.layout.dim[0].stride = static_cast<unsigned int>(data.size());
     msg.data = data;
     return msg;
   }
@@ -115,8 +115,8 @@ struct DataToROS<Eigen::VectorXd>
     ret_t msg;
     msg.layout.dim.resize(1);
     msg.layout.dim[0].label = "data";
-    msg.layout.dim[0].size = data.size();
-    msg.layout.dim[0].stride = data.size();
+    msg.layout.dim[0].size = static_cast<unsigned int>(data.size());
+    msg.layout.dim[0].stride = static_cast<unsigned int>(data.size());
     for(int i = 0; i < data.size(); ++i)
     {
       msg.data.push_back(data(i));

@@ -43,7 +43,7 @@ bounds_t bounds(const rbd::MultiBody & mb, const rm_bounds_t & bounds)
   auto fill_bound = [&mb](const std::string & name, const rm_bound_t & bound_in, jt_method def_size, double def_value,
                           double ff_def_value) {
     bound_t res;
-    res.reserve(mb.nrJoints());
+    res.reserve(static_cast<size_t>(mb.nrJoints()));
     for(const auto & j : mb.joints())
     {
       res.emplace_back(((j).*(def_size))(), j.type() == rbd::Joint::Free ? ff_def_value : def_value);
@@ -346,7 +346,7 @@ unsigned int Robot::jointIndexByName(const std::string & name) const
   return mb().jointIndexByName().at(name);
 }
 
-int Robot::jointIndexInMBC(const unsigned int jointIndex) const
+int Robot::jointIndexInMBC(size_t jointIndex) const
 {
   return refJointIndexToMBCIndex_.at(jointIndex);
 }

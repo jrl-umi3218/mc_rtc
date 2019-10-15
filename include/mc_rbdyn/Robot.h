@@ -24,11 +24,7 @@ struct MC_RBDYN_DLLAPI Robot
 {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
   friend struct Robots;
-#if defined __GLIBC__
-  friend struct __gnu_cxx::new_allocator<Robot>;
-#else
-  friend class std::allocator<Robot>;
-#endif
+
 public:
   using S_ObjectPtr = std::shared_ptr<sch::S_Object>;
   using convex_pair_t = std::pair<std::string, S_ObjectPtr>;
@@ -139,7 +135,7 @@ public:
    *
    * @throws If jointIndex >= refJointOrder.size()
    */
-  int jointIndexInMBC(const unsigned int jointIndex) const;
+  int jointIndexInMBC(size_t jointIndex) const;
 
   /** Returns the body index of joint named \name
    *

@@ -4,10 +4,15 @@
 
 #include "python_controller.h"
 
+#pragma GCC diagnostic push
+#ifdef __clang__
+#  pragma GCC diagnostic ignored "-Wdeprecated-register"
+#endif
 extern "C"
 {
 #include <Python.h>
 }
+#pragma GCC diagnostic pop
 
 #include <mc_control/mc_python_controller.h>
 
@@ -25,7 +30,10 @@ extern "C"
     // The Python object should be garbage collected, so we only take care of
     // the C++ memory we allocated
     delete ptr;
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-variable"
     auto gstate = PyGILState_Ensure();
+#pragma GCC diagnostic pop
     Py_Finalize();
   }
   mc_control::MCController * create(const std::string &,
@@ -39,7 +47,10 @@ extern "C"
       Py_Initialize();
       PyEval_SaveThread();
     }
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-variable"
     auto gstate = PyGILState_Ensure();
+#pragma GCC diagnostic pop
     PySys_SetArgvEx(0, {}, 0);
 
     auto mc_rbdyn_mod = PyImport_ImportModule("mc_rbdyn");

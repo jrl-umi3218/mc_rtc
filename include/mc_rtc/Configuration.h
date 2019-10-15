@@ -285,7 +285,7 @@ struct MC_RTC_UTILS_DLLAPI Configuration
       std::vector<T, A> ret;
       for(size_t i = 0; i < v.size(); ++i)
       {
-        ret.push_back(Configuration(v[static_cast<int>(i)]));
+        ret.push_back(Configuration(v[i]));
       }
       return ret;
     }
@@ -309,7 +309,7 @@ struct MC_RTC_UTILS_DLLAPI Configuration
       std::array<T, N> ret;
       for(size_t i = 0; i < N; ++i)
       {
-        ret[i] = Configuration(v[static_cast<int>(i)]);
+        ret[i] = Configuration(v[i]);
       }
       return ret;
     }
@@ -377,7 +377,7 @@ struct MC_RTC_UTILS_DLLAPI Configuration
       std::set<T, C, A> ret;
       for(size_t i = 0; i < v.size(); ++i)
       {
-        auto ins = ret.insert(Configuration(v[static_cast<int>(i)]));
+        auto ins = ret.insert(Configuration(v[i]));
         if(!ins.second)
         {
           throw Configuration::Exception("Stored Json set does not hold unique values");

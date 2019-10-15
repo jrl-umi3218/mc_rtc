@@ -400,7 +400,7 @@ template<>
 inline RapidJSONValue toJSON(const Eigen::VectorXd & value, RapidJSONDocument::AllocatorType & allocator)
 {
   RapidJSONValue ret(rapidjson::kArrayType);
-  ret.Reserve(value.size(), allocator);
+  ret.Reserve(static_cast<size_t>(value.size()), allocator);
   for(Eigen::VectorXd::Index i = 0; i < value.size(); ++i)
   {
     ret.PushBack(value(i), allocator);
@@ -425,9 +425,9 @@ inline RapidJSONValue toJSON(const Eigen::Matrix3d & value, RapidJSONDocument::A
 {
   RapidJSONValue ret(rapidjson::kArrayType);
   ret.Reserve(9, allocator);
-  for(size_t i = 0; i < 3; ++i)
+  for(int i = 0; i < 3; ++i)
   {
-    for(size_t j = 0; j < 3; ++j)
+    for(int j = 0; j < 3; ++j)
     {
       ret.PushBack(value(i, j), allocator);
     }
@@ -440,9 +440,9 @@ inline RapidJSONValue toJSON(const Eigen::Matrix6d & value, RapidJSONDocument::A
 {
   RapidJSONValue ret(rapidjson::kArrayType);
   ret.Reserve(36, allocator);
-  for(size_t i = 0; i < 6; ++i)
+  for(int i = 0; i < 6; ++i)
   {
-    for(size_t j = 0; j < 6; ++j)
+    for(int j = 0; j < 6; ++j)
     {
       ret.PushBack(value(i, j), allocator);
     }
@@ -454,11 +454,11 @@ template<>
 inline RapidJSONValue toJSON(const Eigen::MatrixXd & value, RapidJSONDocument::AllocatorType & allocator)
 {
   RapidJSONValue ret(rapidjson::kArrayType);
-  ret.Reserve(value.rows(), allocator);
+  ret.Reserve(static_cast<size_t>(value.rows()), allocator);
   for(int i = 0; i < value.rows(); ++i)
   {
     RapidJSONValue row(rapidjson::kArrayType);
-    row.Reserve(value.cols(), allocator);
+    row.Reserve(static_cast<size_t>(value.cols()), allocator);
     for(int j = 0; j < value.cols(); ++j)
     {
       row.PushBack(value(i, j), allocator);

@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE(RUN)
   }
   BOOST_CHECK(argc >= argi + 2);
   std::string conf = argv[argi];
-  unsigned int nrIter = std::atoi(argv[argi + 1]);
+  unsigned int nrIter = static_cast<unsigned int>(std::atoi(argv[argi + 1]));
   std::string nextController = argc > argi + 2 ? argv[argi + 2] : "";
   BOOST_CHECK(nrIter > 0);
   mc_control::MCGlobalController controller(conf);
@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_CASE(RUN)
   std::vector<double> initq;
   for(const auto & jn : rjo)
   {
-    for(const auto & qi : mbc.q[mb.jointIndexByName(jn)])
+    for(const auto & qi : mbc.q[static_cast<unsigned int>(mb.jointIndexByName(jn))])
     {
       initq.push_back(qi);
     }
