@@ -5,9 +5,18 @@
 set(LOG_ENABLED "false")
 set(LOG_POLICY "non-threaded")
 set(USE_SANDBOX "true")
+set(ENABLED_OBSERVERS "")
+set(RUN_OBSERVERS "")
+set(UPDATE_OBSERVERS "")
 
 macro(controller_test_common NAME)
-  add_library(${NAME} SHARED ${NAME}.cpp)
+  if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${NAME}.in.cpp)
+    set(${NAME}_SRC ${CMAKE_CURRENT_BINARY_DIR}/${NAME}/${NAME}.cpp)
+    configure_file(${NAME}.in.cpp ${${NAME}_SRC})
+  else()
+    set(${NAME}_SRC ${NAME}.cpp)
+  endif()
+  add_library(${NAME} SHARED ${${NAME}_SRC})
   target_link_libraries(${NAME} PUBLIC mc_control Boost::unit_test_framework)
   set_target_properties(${NAME} PROPERTIES
     COMPILE_FLAGS "-DMC_CONTROL_EXPORTS"
@@ -100,6 +109,17 @@ controller_test_run(TestCoMTaskController 4001)
 controller_test_run(TestPositionTaskController 5000)
 controller_test_run(TestOrientationTaskController 6001)
 controller_test_run(TestEndEffectorTaskController 4001)
+
+set(ENABLED_OBSERVERS "\"Encoder\", \"BodySensor\", \"KinematicInertial\"")
+set(RUN_OBSERVERS "\"Encoder\", \"BodySensor\"")
+set(UPDATE_OBSERVERS "\"Encoder\"")
+
+# mc_observer test controllers
+controller_test_run(TestObserverController 2001)
+
+set(ENABLED_OBSERVERS "")
+set(RUN_OBSERVERS "")
+set(UPDATE_OBSERVERS "")
 
 # Test Python bindings
 if(${PYTHON_BINDING})

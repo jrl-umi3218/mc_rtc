@@ -4,6 +4,10 @@
 
   "Enabled"   : ["@TEST_CONTROLLER_NAME@"],
 
+  "EnabledObservers": [@ENABLED_OBSERVERS@],
+  "RunObservers": [@RUN_OBSERVERS@],
+  "UpdateObservers": [@UPDATE_OBSERVERS@],
+
   "PublishControlState" : false,
   "PublishRealState" : false,
 
