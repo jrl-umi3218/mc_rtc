@@ -3,6 +3,7 @@
  */
 
 #include <mc_control/mc_global_controller.h>
+#include <mc_observers/ObserverLoader.h>
 #include <mc_rbdyn/RobotLoader.h>
 
 /* Implementation file for mc_control::MCGlobalController::Configuration */
@@ -33,23 +34,11 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   config("VerboseLoader", verbose_loader);
   mc_rbdyn::RobotLoader::set_verbosity(verbose_loader);
   config("RobotModulePaths", robot_module_paths);
-  {
-    std::string rmp = "";
-    config("RobotModulePath", rmp);
-    if(rmp.size())
-    {
-      robot_module_paths.push_back(rmp);
-    }
-  }
   config("UseSandbox", use_sandbox);
   mc_rbdyn::RobotLoader::enable_sandboxing(use_sandbox);
+  if(config("ClearRobotModulePath", false))
   {
-    bool clear_rmp = false;
-    config("ClearRobotModulePath", clear_rmp);
-    if(clear_rmp)
-    {
-      mc_rbdyn::RobotLoader::clear();
-    }
+    mc_rbdyn::RobotLoader::clear();
   }
   if(robot_module_paths.size())
   {
@@ -132,47 +121,56 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     main_robot_module->make_default_ref_joint_order();
   }
 
-  controller_module_paths.resize(0);
-  bool clear_cmp = false;
-  config("ClearControllerModulePath", clear_cmp);
-  if(!clear_cmp)
+  ///////////////
+  // OBSERVERS
+  ///////////////
+  mc_observers::ObserverLoader::enable_sandboxing(use_sandbox);
+  mc_observers::ObserverLoader::set_verbosity(verbose_loader);
+  config("ObserverModulePaths", observer_module_paths);
+  if(config("ClearObserverModulePath", false))
   {
-    controller_module_paths.push_back(mc_rtc::MC_CONTROLLER_INSTALL_PREFIX);
+    mc_observers::ObserverLoader::clear();
   }
+  if(!observer_module_paths.empty())
   {
-    std::vector<std::string> v;
-    config("ControllerModulePaths", v);
-    for(const auto & cv : v)
+    try
     {
-      controller_module_paths.push_back(cv);
+      mc_observers::ObserverLoader::update_module_path(observer_module_paths);
+    }
+    catch(const mc_rtc::LoaderException & exc)
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, "Failed to update observer module path(s)")
     }
   }
+  config("EnabledObservers", enabled_observers);
+
+  if(config.has("Observers"))
   {
-    std::string v = "";
-    config("ControllerModulePaths", v);
-    if(v.size())
+    const auto & oc = config("Observers");
+    for(const auto & observerName : enabled_observers)
     {
-      controller_module_paths.push_back(v);
+      if(oc.has(observerName))
+      {
+        observer_configs[observerName] = oc(observerName);
+      }
+      else
+      {
+        observer_configs[observerName] = {};
+      }
     }
+  }
+
+  config("ControllerModulePaths", controller_module_paths);
+  if(!config("ClearControllerModulePath", false))
+  {
+    controller_module_paths.insert(controller_module_paths.begin(), mc_rtc::MC_CONTROLLER_INSTALL_PREFIX);
   }
   config("Enabled", enabled_controllers);
   if(enabled_controllers.size())
   {
     initial_controller = enabled_controllers[0];
   }
-  config("UpdateReal", update_real);
-  config("UpdateRealFromSensors", update_real_from_sensors);
-  if(config.has("UpdateRealSensorName"))
-  {
-    config("UpdateRealSensorName", update_real_sensor_name);
-  }
-  else
-  {
-    if(main_robot_module->bodySensors().size())
-    {
-      update_real_sensor_name = main_robot_module->bodySensors()[0].name();
-    }
-  }
+  config("LogReal", log_real);
   config("Default", initial_controller);
   config("Timestep", timestep);
   config("PublishControlState", publish_control_state);

@@ -6,6 +6,7 @@
 
 #include <mc_control/Configuration.h>
 #include <mc_control/generic_gripper.h>
+#include <mc_observers/ObserverLoader.h>
 #include <mc_rbdyn/Robots.h>
 #include <mc_rtc/GUIState.h>
 #include <mc_rtc/log/Logger.h>
@@ -67,6 +68,54 @@ public:
    * It is recommended to use it in your override.
    */
   virtual bool run();
+
+  /** This function is called before the run() function at each time step of the process
+   * driving the robot (i.e. simulation or robot's controller). The default
+   * behaviour is to call the run() function of each loaded observer and update
+   * the realRobot instance when desired.
+   *
+   * The default behaviour is determined by the following configuration entries:
+   * - "EnabledObservers": ["Encoder", "BodySensor", "KinematicInertial"],
+   * - "UpdateObservers": ["Encoder", "KinematicInertial"],
+   *
+   * This is meant to run in real-time hence some precaution should apply (e.g.
+   * no i/o blocking calls, no thread instantiation and such)
+   *
+   * \note Some estimators are likely to require extra information. For this, each observer
+   * has const access to the MCController instance, and can thus access all const information
+   * available from it. The default estimators provided by mc_rtc (currently)
+   * rely on robots() and realRobots() information. Additionally, the
+   * KinematicInertialObserver requires an anchor frame with the environement.
+   * This is to be provided by overriding the anchorFrame() method.
+   *
+   * \note If the default pipeline behaviour does not suit you, you may override
+   * this method.
+   *
+   * @returns true if all observers ran as expected, false otherwise
+   */
+  virtual bool runObservers();
+
+  /*! @brief Reset the observers. This function is called after the reset()
+   * function.
+   *
+   * \see runObservers()
+   *
+   * @returns True when all observers have been succesfully reset.
+   */
+  virtual bool resetObservers();
+
+  /*! @brief Returns a kinematic anchor frame.
+   *  This is typically used by state observers such as mc_observers::KinematicInertialObserver to obtain a reference
+   * frame for the estimation. In the case of a biped robot, this is typically a frame in-between the feet of the robot.
+   * See the specific requirements for the active observers in your controller.
+   *
+   * @returns An anchor frame in-between the feet.
+   *
+   * @throws std::runtime_error Default implemetation throws. Please override this function in your controller when
+   * required.
+   */
+  virtual sva::PTransformd anchorFrame(const mc_rbdyn::Robot & robot) const;
+
   /**
    * WARNING EXPERIMENTAL
    * Runs the QP on real_robot state
@@ -102,7 +151,7 @@ public:
    */
   virtual void reset(const ControllerResetData & reset_data);
 
-  /** Return the main robot (first robot provided in the constructor
+  /** Return the main robot (first robot provided in the constructor)
    * \anchor mc_controller_robot_const_doc
    */
   virtual const mc_rbdyn::Robot & robot() const;
@@ -229,8 +278,19 @@ public:
     return gui_;
   }
 
-  /** Access real robots data */
+  /** Return the mc_rbdyn::Robots real robots instance
+   * \anchor mc_controller_real_robots_const_doc
+   */
   const mc_rbdyn::Robots & realRobots() const;
+  /** Non-const variant of \ref mc_controller_real_robots_const_doc "realRobots()" **/
+  mc_rbdyn::Robots & realRobots();
+
+  /** Return the main mc_rbdyn::Robot real robot instance
+   * \anchor mc_controller_real_robot_const_doc
+   */
+  const mc_rbdyn::Robot & realRobot() const;
+  /** Non-const variant of \ref mc_controller_real_robot_const_doc "realRobot()" */
+  mc_rbdyn::Robot & realRobot();
 
   /** Returns a list of robots supported by the controller.
    * \return Vector of supported robots designed by name (as returned by
@@ -271,6 +331,19 @@ protected:
   std::shared_ptr<mc_solver::QPSolver> qpsolver;
   /** Real robots provided by MCGlobalController, nullptr until ::reset */
   std::shared_ptr<mc_rbdyn::Robots> real_robots;
+
+  /** Observers order provided by MCGlobalController
+   * Observers will be run and update real robot in that order
+   **/
+  std::vector<mc_observers::ObserverPtr> observers_;
+  /** Observers that will be run by the pipeline.
+   *
+   * The pair contains:
+   * - The observer to run
+   * - A boolean set to true if the observer updates the real robot instance
+   *
+   * Provided by MCGlobalController */
+  std::vector<std::pair<mc_observers::ObserverPtr, bool>> pipelineObservers_;
   /** Logger provided by MCGlobalController */
   std::shared_ptr<mc_rtc::Logger> logger_;
   /** GUI state builder */

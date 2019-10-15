@@ -37,6 +37,7 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   {
     loadRobot(rm, rm->name);
   }
+
   if(gui_)
   {
     gui_->addElement({"Global", "Add task"},
@@ -137,6 +138,57 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
     data("surfaces").add(r.name(), r.availableSurfaces());
   }
   return r;
+}
+
+bool MCController::resetObservers()
+{
+  auto pipelineDesc = std::string{};
+  for(const auto & observerPair : pipelineObservers_)
+  {
+    auto observer = observerPair.first;
+    bool updateRobots = observerPair.second;
+    observer->reset(*this);
+
+    if(updateRobots)
+    {
+      observer->updateRobots(*this, realRobots());
+      pipelineDesc += " -> " + observer->desc();
+    }
+    else
+    {
+      pipelineDesc += " -> [" + observer->desc() + "]";
+    }
+    observer->addToLogger(*this, logger());
+    if(gui_)
+    {
+      observer->addToGUI(*this, *gui_);
+    }
+  }
+  if(!pipelineObservers_.empty())
+  {
+    LOG_INFO("Observers: " << pipelineDesc);
+  }
+  return true;
+}
+
+bool MCController::runObservers()
+{
+  for(const auto & observerPair : pipelineObservers_)
+  {
+    auto observer = observerPair.first;
+    bool updateRobots = observerPair.second;
+    bool r = observer->run(*this);
+    if(!r)
+    {
+      LOG_ERROR("Observer " << observer->name() << " failed to run");
+      return false;
+    }
+    if(updateRobots)
+    {
+      observer->updateRobots(*this, realRobots());
+    }
+  }
+  return true;
 }
 
 bool MCController::run()
@@ -301,6 +353,27 @@ std::vector<std::string> MCController::supported_robots() const
 const mc_rbdyn::Robots & MCController::realRobots() const
 {
   return *real_robots;
+}
+
+mc_rbdyn::Robots & MCController::realRobots()
+{
+  return *real_robots;
+}
+
+const mc_rbdyn::Robot & MCController::realRobot() const
+{
+  return real_robots->robot();
+}
+
+mc_rbdyn::Robot & MCController::realRobot()
+{
+  return real_robots->robot();
+}
+
+sva::PTransformd MCController::anchorFrame(const mc_rbdyn::Robot & robot) const
+{
+  LOG_ERROR_AND_THROW(std::runtime_error, "MCController::anchorFrame() requested but no implementation available. "
+                                          "Please override this function in your controller.");
 }
 
 } // namespace mc_control

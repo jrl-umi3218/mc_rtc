@@ -4,6 +4,10 @@
 
   "Enabled"   : ["@TEST_CONTROLLER_NAME@"],
 
+  "EnabledObservers": [@ENABLED_OBSERVERS@],
+  "RunObservers": [@RUN_OBSERVERS@],
+  "UpdateObservers": [@UPDATE_OBSERVERS@],
+
   "PublishControlState" : false,
   "PublishRealState" : false,
 
@@ -18,5 +22,7 @@
   "ClearControllerModulePath" : true,
   "ControllerModulePaths" : ["@PYTHON_CONTROLLER_PATH@", "@TEST_CONTROLLER_PATH@"],
   "ClearRobotModulePath" : true,
-  "RobotModulePath" : "@ROBOT_MODULE_PATH@"
+  "RobotModulePaths" : ["@ROBOT_MODULE_PATH@"],
+  "ClearObserverModulePath": true,
+  "ObserverModulePaths": ["@OBSERVER_MODULE_PATH@"]
 }

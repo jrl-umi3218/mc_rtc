@@ -127,6 +127,20 @@ public:
    */
   unsigned int jointIndexByName(const std::string & name) const;
 
+  /** Returns the joint index in the mbc of the joint with index jointIndex in
+   * refJointOrder
+   *
+   * @note Joint indices can be -1 for joints present in refJointOrder but not
+   * in the robot's mbc (such as filtered joints in some robot modules)
+   *
+   * @param jointIndex Joint index in refJointOrder
+   *
+   * @returns joint index in the mbc
+   *
+   * @throws If jointIndex >= refJointOrder.size()
+   */
+  int jointIndexInMBC(const unsigned int jointIndex) const;
+
   /** Returns the body index of joint named \name
    *
    * \throws If the body does not exist within the robot.
@@ -562,14 +576,21 @@ public:
    * @param pt The new global pose
    *
    * @throws If joint(0) is neither free flyer nor fixed
+   *
+   * @note This function takes care of calling rbd::forwardKinematics
    */
   void posW(const sva::PTransformd & pt);
 
   /** Update the robot's base link velocity.
    *
    * \param alpha New base link velocity.
+   *
+   * @note This function takes care of calling rbd::forwardVelocity
    */
-  void setBaseLinkVelocity(const Eigen::Vector6d & alpha);
+  void velW(const sva::MotionVecd & alpha);
+
+  /** Return the robot's global velocity */
+  const sva::MotionVecd & velW() const;
 
 private:
   Robots * robots_;
@@ -590,6 +611,9 @@ private:
   std::map<std::string, std::vector<double>> stance_;
   /** Reference joint order see mc_rbdyn::RobotModule */
   std::vector<std::string> refJointOrder_;
+  /** Correspondance between refJointOrder (actuated joints) index and
+   * mbc index. **/
+  std::vector<int> refJointIndexToMBCIndex_;
   /** Encoder values provided by the low-level controller */
   std::vector<double> encoderValues_;
   /** Encoder velocities provided by the low-level controller or estimated from

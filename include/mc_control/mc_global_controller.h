@@ -486,15 +486,17 @@ public:
     std::vector<std::string> robot_module_paths = {};
     std::shared_ptr<mc_rbdyn::RobotModule> main_robot_module;
 
+    std::vector<std::string> observer_module_paths = {};
+    std::vector<std::string> enabled_observers = {};
+    std::unordered_map<std::string, mc_rtc::Configuration> observer_configs;
+
     std::vector<std::string> controller_module_paths = {};
     std::vector<std::string> enabled_controllers = {};
     std::string initial_controller = "";
     std::unordered_map<std::string, mc_rtc::Configuration> controllers_configs;
     double timestep = 0.002;
 
-    bool update_real = true;
-    bool update_real_from_sensors = false;
-    std::string update_real_sensor_name;
+    bool log_real = false;
 
     bool publish_control_state = true;
     bool publish_env_state = true;
@@ -525,6 +527,8 @@ private:
   std::unique_ptr<mc_rtc::ObjectLoader<MCController>> controller_loader;
   std::map<std::string, std::shared_ptr<mc_control::MCController>> controllers;
 
+  std::vector<mc_observers::ObserverPtr> observers_;
+  std::map<std::string, mc_observers::ObserverPtr> observersByName_;
   std::shared_ptr<mc_rbdyn::Robots> real_robots = nullptr;
 
   std::unique_ptr<mc_control::ControllerServer> server_ = nullptr;
