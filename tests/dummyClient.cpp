@@ -40,6 +40,7 @@ struct DummyControllerClient : public mc_control::ControllerClient
 DummyControllerClient::DummyControllerClient()
 : mc_control::ControllerClient("ipc:///tmp/mc_rtc_pub.ipc", "ipc:///tmp/mc_rtc_rep.ipc")
 {
+  start();
 }
 
 void DummyControllerClient::join()
@@ -48,6 +49,7 @@ void DummyControllerClient::join()
   {
     std::this_thread::sleep_for(std::chrono::seconds(1));
   }
+  stop();
 }
 
 void DummyControllerClient::category(const std::vector<std::string> & category, const std::string & name)
