@@ -34,8 +34,8 @@ struct TestServer
   double d_ = 0.;
   double slide_ = 0.;
   Eigen::VectorXd v_{Eigen::VectorXd::Ones(6)};
-  Eigen::Vector3d v3_{1., 2., 3.};
-  Eigen::Vector3d vInt_ = {0., 0., 0.};
+  Eigen::Vector3d v3_{-1., -1., 1.};
+  Eigen::Vector3d vInt_ = {0.2, 0.2, 0.};
   std::string combo_ = "b";
   std::string data_combo_;
   sva::PTransformd rotStatic_{sva::RotZ(-M_PI), Eigen::Vector3d(1., 1., 0.)};
@@ -45,7 +45,9 @@ struct TestServer
   Eigen::Vector3d xytheta_{0., 2., M_PI / 3};
   Eigen::VectorXd xythetaz_;
   std::vector<Eigen::Vector3d> polygon_;
-  sva::ForceVecd force_{{0, 0, 0}, {0, 0, 100}};
+  Eigen::Vector3d arrow_start_{0.5, 0.5, 0.};
+  Eigen::Vector3d arrow_end_{0.5, 1., -0.5};
+  sva::ForceVecd force_{{0., 0., 0.}, {-50., 50., 100.}};
 };
 
 TestServer::TestServer() : xythetaz_(4)
@@ -131,16 +133,6 @@ TestServer::TestServer() : xythetaz_(4)
                                                    data_combo_ = s;
                                                    std::cout << "data_combo_ changed to " << data_combo_ << std::endl;
                                                  }));
-  builder.addElement({"Point3D"}, mc_rtc::gui::Point3D("ReadOnly", [this]() { return v3_; }));
-  builder.addElement({"Point3D"}, mc_rtc::gui::Point3D("Interactive", [this]() { return vInt_; },
-                                                       [this](const Eigen::Vector3d & v) { vInt_ = v; }));
-  builder.addElement({"Rotation"}, mc_rtc::gui::Rotation("ReadOnly", [this]() { return rotStatic_; }));
-  builder.addElement({"Rotation"},
-                     mc_rtc::gui::Rotation("Interactive", [this]() { return rotInteractive_; },
-                                           [this](const Eigen::Quaterniond & q) { rotInteractive_.rotation() = q; }));
-  builder.addElement({"Transform"}, mc_rtc::gui::Transform("ReadOnly", [this]() { return static_; }));
-  builder.addElement({"Transform"}, mc_rtc::gui::Transform("Interactive", [this]() { return interactive_; },
-                                                           [this](const sva::PTransformd & p) { interactive_ = p; }));
   builder.addElement({"Schema"}, mc_rtc::gui::Schema("Add metatask", "metatask", [](const mc_rtc::Configuration & c) {
                        std::cout << "Got schema request:\n" << c.dump(true) << std::endl;
                      }));
@@ -161,18 +153,51 @@ TestServer::TestServer() : xythetaz_(4)
                         mc_rtc::gui::FormDataComboInput{"R0 surface", false, {"surfaces", "$R0"}},
                         mc_rtc::gui::FormDataComboInput{"R1", false, {"robots"}},
                         mc_rtc::gui::FormDataComboInput{"R1 surface", false, {"surfaces", "$R1"}}));
-  builder.addElement({"XYTheta"},
+  builder.addElement({"GUI Markers", "Transforms"},
+                     mc_rtc::gui::Transform("ReadOnly Transform", [this]() { return static_; }),
+                     mc_rtc::gui::Transform("Interactive Transform", [this]() { return interactive_; },
+                                            [this](const sva::PTransformd & p) { interactive_ = p; }),
                      mc_rtc::gui::XYTheta("XYTheta", [this]() { return xytheta_; },
                                           [this](const Eigen::VectorXd & vec) { xytheta_ = vec.head<3>(); }),
                      mc_rtc::gui::XYTheta("XYThetaAltitude", [this]() { return xythetaz_; },
-                                          [this](const Eigen::VectorXd & vec) { xythetaz_ = vec; }));
-  builder.addElement({"Polygon"}, mc_rtc::gui::Polygon("Polygon", [this]() -> const std::vector<Eigen::Vector3d> & {
-                       return polygon_;
-                     }));
-  builder.addElement({"Force"}, mc_rtc::gui::Force("Force", [this]() { return force_; },
-                                                   []() { return sva::PTransformd::Identity(); }));
-  builder.addElement({"Arrow"}, mc_rtc::gui::Arrow("Arrow", []() { return Eigen::Vector3d(0, 0, 0); },
-                                                   []() { return Eigen::Vector3d(1, 0, 0); }));
+                                          [this](const Eigen::VectorXd & vec) { xythetaz_ = vec; }),
+                     mc_rtc::gui::Rotation("ReadOnly Rotation", [this]() { return rotStatic_; }),
+                     mc_rtc::gui::Rotation("Interactive Rotation", [this]() { return rotInteractive_; },
+                                           [this](const Eigen::Quaterniond & q) { rotInteractive_.rotation() = q; }));
+
+  builder.addElement(
+      {"GUI Markers", "Point3D"},
+      mc_rtc::gui::Point3D("ReadOnly", mc_rtc::gui::PointConfig({1., 0., 0.}, 0.08), [this]() { return v3_; }),
+      mc_rtc::gui::Point3D("Interactive", mc_rtc::gui::PointConfig({0., 1., 0.}, 0.08), [this]() { return vInt_; },
+                           [this](const Eigen::Vector3d & v) { vInt_ = v; }));
+
+  mc_rtc::gui::ArrowConfig arrow_config({1., 0., 0.});
+  arrow_config.start_point_scale = 0.02;
+  arrow_config.end_point_scale = 0.02;
+  builder.addElement(
+      {"GUI Markers", "Arrows"},
+      mc_rtc::gui::Arrow("ArrowRO", arrow_config,
+                         []() {
+                           return Eigen::Vector3d{2, 2, 0};
+                         },
+                         []() {
+                           return Eigen::Vector3d{2.5, 2.5, 0.5};
+                         }),
+      mc_rtc::gui::Arrow("Arrow", arrow_config, [this]() { return arrow_start_; },
+                         [this](const Eigen::Vector3d & start) { arrow_start_ = start; },
+                         [this]() { return arrow_end_; }, [this](const Eigen::Vector3d & end) { arrow_end_ = end; }),
+      mc_rtc::gui::Force("ForceRO", mc_rtc::gui::ForceConfig(mc_rtc::gui::Color(1., 0., 0.)),
+                         []() {
+                           return sva::ForceVecd(Eigen::Vector3d{0., 0., 0.}, Eigen::Vector3d{10., 0., 100.});
+                         },
+                         []() {
+                           return sva::PTransformd{Eigen::Vector3d{2, 2, 0}};
+                         }),
+      mc_rtc::gui::Force("Force", mc_rtc::gui::ForceConfig(mc_rtc::gui::Color(0., 1., 0.)), [this]() { return force_; },
+                         [this](const sva::ForceVecd & force) { force_ = force; },
+                         []() {
+                           return sva::PTransformd{Eigen::Vector3d{2, 2, 0}};
+                         }));
 }
 
 void TestServer::publish()

@@ -6,6 +6,8 @@ variables:
   MASTER_PPA: "v-launchpad-jochen-sprickerhof-de/pcl hrg/daily"
   ROS_DISTRO: "indigo"
   CMAKE_ADDITIONAL_OPTIONS: "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
+  DO_COVERAGE_ON_BRANCH: ""
+  DO_CPPCHECK_ON_BRANCH: ""
 
 before_script:
   - git submodule update --quiet --init --recursive

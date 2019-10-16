@@ -402,25 +402,45 @@ void ControllerClient::handle_force(const ElementId & id, const mc_rtc::Configur
 {
   const sva::ForceVecd & force_ = data[3];
   const sva::PTransformd & surface = data[4];
+  bool ro = data[5];
   mc_rtc::gui::ForceConfig forceConfig;
-  if(data.size() > 5)
+  if(data.size() > 6)
   {
-    forceConfig.load(data[5]);
+    forceConfig.load(data[6]);
   }
-  array_label(id, {"cx", "cy", "cz", "fx", "fy", "fz"}, force_.vector());
-  force({id.category, id.name + "_force", id.sid}, id, force_, surface, forceConfig);
+  if(ro)
+  {
+    array_label(id, {"cx", "cy", "cz", "fx", "fy", "fz"}, force_.vector());
+  }
+  else
+  {
+    array_input(id, {"cx", "cy", "cz", "fx", "fy", "fz"}, force_.vector());
+  }
+  force({id.category, id.name + "_arrow", id.sid}, id, force_, surface, forceConfig, ro);
 }
 
 void ControllerClient::handle_arrow(const ElementId & id, const mc_rtc::Configuration & data)
 {
   const Eigen::Vector3d & arrow_start = data[3];
   const Eigen::Vector3d & arrow_end = data[4];
+  bool ro = data[5];
   mc_rtc::gui::ArrowConfig arrow_config;
-  if(data.size() > 5)
+  if(data.size() > 6)
   {
-    arrow_config.load(data[5]);
+    arrow_config.load(data[6]);
   }
-  arrow(id, arrow_start, arrow_end, arrow_config);
+  Eigen::Vector6d arrow_data;
+  arrow_data.head<3>() = arrow_start;
+  arrow_data.tail<3>() = arrow_end;
+  if(ro)
+  {
+    array_label(id, {"tx_0", "ty_0", "tz_0", "tx_1", "ty_1", "tz_1"}, arrow_data);
+  }
+  else
+  {
+    array_input(id, {"tx_0", "ty_0", "tz_0", "tx_1", "ty_1", "tz_1"}, arrow_data);
+  }
+  arrow({id.category, id.name + "_arrow", id.sid}, id, arrow_start, arrow_end, arrow_config, ro);
 }
 
 void ControllerClient::handle_rotation(const ElementId & id, const mc_rtc::Configuration & data)

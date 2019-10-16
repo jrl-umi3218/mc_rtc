@@ -778,11 +778,11 @@ PolygonImpl<GetT> Polygon(const std::string & name, const Color & color, GetT ge
  * \tparam GetSurface Should return an sva::PTransformd where the force will be displayed
  */
 template<typename GetForce, typename GetSurface>
-struct ForceImpl : public Element
+struct ForceROImpl : public Element
 {
   static constexpr auto type = Elements::Force;
 
-  ForceImpl(const std::string & name, const ForceConfig & config, GetForce get_force_fn, GetSurface get_surface_fn)
+  ForceROImpl(const std::string & name, const ForceConfig & config, GetForce get_force_fn, GetSurface get_surface_fn)
   : Element(name), get_force_fn_(get_force_fn), get_surface_fn_(get_surface_fn), config_(config)
   {
     static_assert(details::CheckReturnType<GetForce, sva::ForceVecd>::value,
@@ -793,14 +793,15 @@ struct ForceImpl : public Element
 
   static constexpr size_t write_size()
   {
-    return Element::write_size() + 2 + ForceConfig::write_size();
+    return Element::write_size() + 3 + ForceConfig::write_size();
   }
 
-  void write(mc_rtc::MessagePackBuilder & builder)
+  void write(mc_rtc::MessagePackBuilder & builder, bool ro = true)
   {
     Element::write(builder);
     builder.write(get_force_fn_());
     builder.write(get_surface_fn_());
+    builder.write(ro);
     config_.write(builder);
   }
 
@@ -810,21 +811,72 @@ private:
   ForceConfig config_;
 };
 
+template<typename GetForce, typename GetSurface, typename SetForce>
+struct ForceImpl : public ForceROImpl<GetForce, GetSurface>
+{
+  static constexpr auto type = Elements::Force;
+  using ForceRO = ForceROImpl<GetForce, GetSurface>;
+
+  ForceImpl(const std::string & name,
+            const ForceConfig & config,
+            GetForce get_force_fn,
+            SetForce set_force_fn,
+            GetSurface get_surface_fn)
+  : ForceRO(name, config, get_force_fn, get_surface_fn), set_force_fn_(set_force_fn)
+  {
+  }
+
+  void write(mc_rtc::MessagePackBuilder & builder)
+  {
+    ForceRO::write(builder, false);
+  }
+
+  bool handleRequest(const mc_rtc::Configuration & data)
+  {
+    set_force_fn_(data);
+    return true;
+  }
+
+private:
+  SetForce set_force_fn_;
+};
+
 /** Helper function to get a ForceImpl */
 template<typename GetForce, typename GetSurface>
-ForceImpl<GetForce, GetSurface> Force(const std::string & name, GetForce get_force_fn, GetSurface get_surface_fn)
+ForceROImpl<GetForce, GetSurface> Force(const std::string & name, GetForce get_force_fn, GetSurface get_surface_fn)
 {
-  return ForceImpl<GetForce, GetSurface>(name, {}, get_force_fn, get_surface_fn);
+  return ForceROImpl<GetForce, GetSurface>(name, {}, get_force_fn, get_surface_fn);
 }
 
 /** Helper function to get a ForceImpl */
 template<typename GetForce, typename GetSurface>
-ForceImpl<GetForce, GetSurface> Force(const std::string & name,
-                                      const ForceConfig & config,
-                                      GetForce get_force_fn,
-                                      GetSurface get_surface_fn)
+ForceROImpl<GetForce, GetSurface> Force(const std::string & name,
+                                        const ForceConfig & config,
+                                        GetForce get_force_fn,
+                                        GetSurface get_surface_fn)
 {
-  return ForceImpl<GetForce, GetSurface>(name, config, get_force_fn, get_surface_fn);
+  return ForceROImpl<GetForce, GetSurface>(name, config, get_force_fn, get_surface_fn);
+}
+
+/** Helper function to get a ForceImpl */
+template<typename GetForce, typename GetSurface, typename SetForce>
+ForceImpl<GetForce, GetSurface, SetForce> Force(const std::string & name,
+                                                GetForce get_force_fn,
+                                                SetForce set_force_fn,
+                                                GetSurface get_surface_fn)
+{
+  return ForceImpl<GetForce, GetSurface, SetForce>(name, ForceConfig{}, get_force_fn, set_force_fn, get_surface_fn);
+}
+
+/** Helper function to get a ForceImpl */
+template<typename GetForce, typename GetSurface, typename SetForce>
+ForceImpl<GetForce, GetSurface, SetForce> Force(const std::string & name,
+                                                const ForceConfig & config,
+                                                GetForce get_force_fn,
+                                                SetForce set_force_fn,
+                                                GetSurface get_surface_fn)
+{
+  return ForceImpl<GetForce, GetSurface, SetForce>(name, config, get_force_fn, set_force_fn, get_surface_fn);
 }
 
 /** Arrow should display an arrow from the point at the start to the point at the end
@@ -837,11 +889,11 @@ ForceImpl<GetForce, GetSurface> Force(const std::string & name,
  *
  */
 template<typename GetStart, typename GetEnd>
-struct ArrowImpl : public Element
+struct ArrowROImpl : public Element
 {
   static constexpr auto type = Elements::Arrow;
 
-  ArrowImpl(const std::string & name, const ArrowConfig & config, GetStart get_start_fn, GetEnd get_end_fn)
+  ArrowROImpl(const std::string & name, const ArrowConfig & config, GetStart get_start_fn, GetEnd get_end_fn)
   : Element(name), get_start_fn_(get_start_fn), get_end_fn_(get_end_fn), config_(config)
   {
     static_assert(details::CheckReturnType<GetStart, Eigen::Vector3d>::value,
@@ -851,18 +903,19 @@ struct ArrowImpl : public Element
   }
 
   /** Invalid element */
-  ArrowImpl(){};
+  ArrowROImpl(){};
 
   constexpr static size_t write_size()
   {
-    return Element::write_size() + 2 + ArrowConfig::write_size();
+    return Element::write_size() + 3 + ArrowConfig::write_size();
   }
 
-  void write(mc_rtc::MessagePackBuilder & builder)
+  void write(mc_rtc::MessagePackBuilder & builder, bool ro = true)
   {
     Element::write(builder);
     builder.write(get_start_fn_());
     builder.write(get_end_fn_());
+    builder.write(ro);
     config_.write(builder);
   }
 
@@ -872,21 +925,79 @@ private:
   ArrowConfig config_;
 };
 
+template<typename GetStart, typename SetStart, typename GetEnd, typename SetEnd>
+struct ArrowImpl : public ArrowROImpl<GetStart, GetEnd>
+{
+  ArrowImpl(const std::string & name,
+            const ArrowConfig & config,
+            GetStart get_start_fn,
+            SetStart set_start_fn,
+            GetEnd get_end_fn,
+            SetEnd set_end_fn)
+  : ArrowROImpl<GetStart, GetEnd>(name, config, get_start_fn, get_end_fn), set_start_fn_(set_start_fn),
+    set_end_fn_(set_end_fn)
+  {
+  }
+
+  /** Invalid element */
+  ArrowImpl(){};
+
+  void write(mc_rtc::MessagePackBuilder & builder)
+  {
+    ArrowROImpl<GetStart, GetEnd>::write(builder, false);
+  }
+
+  bool handleRequest(const mc_rtc::Configuration & data)
+  {
+    const Eigen::Vector6d & arrow = data;
+    set_start_fn_(arrow.head<3>());
+    set_end_fn_(arrow.tail<3>());
+    return true;
+  }
+
+private:
+  SetStart set_start_fn_;
+  SetEnd set_end_fn_;
+};
+
 /** Helper function to create an ArrowImpl */
 template<typename GetStart, typename GetEnd>
-ArrowImpl<GetStart, GetEnd> Arrow(const std::string & name, GetStart get_start_fn, GetEnd get_end_fn)
+ArrowROImpl<GetStart, GetEnd> Arrow(const std::string & name, GetStart get_start_fn, GetEnd get_end_fn)
 {
-  return ArrowImpl<GetStart, GetEnd>(name, {}, get_start_fn, get_end_fn);
+  return ArrowROImpl<GetStart, GetEnd>(name, {}, get_start_fn, get_end_fn);
 }
 
 /** Helper function to create an ArrowImpl */
 template<typename GetStart, typename GetEnd>
-ArrowImpl<GetStart, GetEnd> Arrow(const std::string & name,
-                                  const ArrowConfig & config,
-                                  GetStart get_start_fn,
-                                  GetEnd get_end_fn)
+ArrowROImpl<GetStart, GetEnd> Arrow(const std::string & name,
+                                    const ArrowConfig & config,
+                                    GetStart get_start_fn,
+                                    GetEnd get_end_fn)
 {
-  return ArrowImpl<GetStart, GetEnd>(name, config, get_start_fn, get_end_fn);
+  return ArrowROImpl<GetStart, GetEnd>(name, config, get_start_fn, get_end_fn);
+}
+
+template<typename GetStart, typename SetStart, typename GetEnd, typename SetEnd>
+ArrowImpl<GetStart, SetStart, GetEnd, SetEnd> Arrow(const std::string & name,
+                                                    GetStart get_start_fn,
+                                                    SetStart set_start_fn,
+                                                    GetEnd get_end_fn,
+                                                    SetEnd set_end_fn)
+{
+  return ArrowImpl<GetStart, SetStart, GetEnd, SetEnd>(name, ArrowConfig{}, get_start_fn, set_start_fn, get_end_fn,
+                                                       set_end_fn);
+}
+
+template<typename GetStart, typename SetStart, typename GetEnd, typename SetEnd>
+ArrowImpl<GetStart, SetStart, GetEnd, SetEnd> Arrow(const std::string & name,
+                                                    const ArrowConfig & config,
+                                                    GetStart get_start_fn,
+                                                    SetStart set_start_fn,
+                                                    GetEnd get_end_fn,
+                                                    SetEnd set_end_fn)
+{
+  return ArrowImpl<GetStart, SetStart, GetEnd, SetEnd>(name, config, get_start_fn, set_start_fn, get_end_fn,
+                                                       set_end_fn);
 }
 
 /** Rotation display a widget that shows the rotation
