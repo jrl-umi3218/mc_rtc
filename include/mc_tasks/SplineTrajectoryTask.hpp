@@ -43,7 +43,7 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> SplineTrajectoryT
     bool useDuration = config("timeElapsed");
     if(useDuration)
     {
-      return [useDuration](const mc_tasks::MetaTask & t, std::string & out) {
+      return [](const mc_tasks::MetaTask & t, std::string & out) {
         const auto & self = static_cast<const SplineTrajectoryBase &>(t);
         out += "duration";
         return self.timeElapsed();

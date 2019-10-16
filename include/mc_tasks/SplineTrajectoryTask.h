@@ -161,7 +161,7 @@ protected:
    * Interactive controls for the trajectory waypoints and end-endpoints
    * automatically updates the curve
    */
-  void addToGUI(mc_rtc::gui::StateBuilder & gui);
+  void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
 
   /*! \brief Add the task to a solver
    * \param solver Solver where to add the task

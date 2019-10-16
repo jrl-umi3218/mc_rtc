@@ -19,7 +19,7 @@ namespace mc_tasks
  */
 struct MC_TASKS_DLLAPI BSplineTrajectoryTask : public SplineTrajectoryTask<BSplineTrajectoryTask>
 {
-  friend class SplineTrajectoryTask<BSplineTrajectoryTask>;
+  friend struct SplineTrajectoryTask<BSplineTrajectoryTask>;
 
 public:
   using waypoints_t = mc_trajectory::BSpline::waypoints_t;

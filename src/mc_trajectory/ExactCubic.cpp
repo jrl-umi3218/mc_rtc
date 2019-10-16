@@ -40,7 +40,7 @@ void ExactCubic::update()
     }
     waypoints.push_back(std::make_pair(duration_, target_));
     spline_.reset(new spline_deriv_constraint_t(waypoints.begin(), waypoints.end(), constraints_));
-    samples_ = this->sampleTrajectory(samplingPoints_);
+    samples_ = this->sampleTrajectory();
     needsUpdate_ = false;
   }
 }
@@ -123,7 +123,7 @@ std::vector<point_t> ExactCubic::splev(double t, unsigned int der)
   return pts;
 }
 
-std::vector<Eigen::Vector3d> ExactCubic::sampleTrajectory(unsigned samples)
+std::vector<Eigen::Vector3d> ExactCubic::sampleTrajectory()
 {
   if(samplingPoints_ < 1)
   {

@@ -21,7 +21,7 @@ namespace mc_tasks
  */
 struct MC_TASKS_DLLAPI ExactCubicTrajectoryTask : public SplineTrajectoryTask<ExactCubicTrajectoryTask>
 {
-  friend class SplineTrajectoryTask<ExactCubicTrajectoryTask>;
+  friend struct SplineTrajectoryTask<ExactCubicTrajectoryTask>;
 
 public:
   using SplineTrajectoryBase = SplineTrajectoryTask<ExactCubicTrajectoryTask>;
@@ -85,7 +85,7 @@ public:
 
   /*! \brief Add interactive GUI elements to control the curve waypoints
    */
-  void addToGUI(mc_rtc::gui::StateBuilder & gui);
+  void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
 
   /** \brief Waypoints in position. The curve will pass exactly through these waypoints.
    */

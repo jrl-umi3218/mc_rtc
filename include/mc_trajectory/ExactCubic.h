@@ -132,11 +132,9 @@ public:
 
   /*! \brief Sample positions along the trajectory (for visualization purposes)
    *
-   * \param samples number of samples along the curve to compute [minimum = 1]
-   *
    * \returns Evenly sampled positions along the trajectory.
    */
-  std::vector<Eigen::Vector3d> sampleTrajectory(unsigned samples);
+  std::vector<Eigen::Vector3d> sampleTrajectory();
 
   /*! \brief Add GUI elements to control the curve's waypoints and targets
    *
