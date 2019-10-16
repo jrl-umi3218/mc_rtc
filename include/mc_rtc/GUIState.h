@@ -793,15 +793,15 @@ struct ForceROImpl : public Element
 
   static constexpr size_t write_size()
   {
-    return Element::write_size() + 2 + ForceConfig::write_size();
+    return Element::write_size() + 3 + ForceConfig::write_size();
   }
 
-  void write(mc_rtc::MessagePackBuilder & builder)
+  void write(mc_rtc::MessagePackBuilder & builder, bool ro = true)
   {
     Element::write(builder);
     builder.write(get_force_fn_());
     builder.write(get_surface_fn_());
-    builder.write(true); // read-only
+    builder.write(ro);
     config_.write(builder);
   }
 
@@ -824,6 +824,11 @@ struct ForceImpl : public ForceROImpl<GetForce, GetSurface>
             GetSurface get_surface_fn)
   : ForceRO(name, config, get_force_fn, get_surface_fn), set_force_fn_(set_force_fn)
   {
+  }
+
+  void write(mc_rtc::MessagePackBuilder & builder)
+  {
+    ForceRO::write(builder, false);
   }
 
   bool handleRequest(const mc_rtc::Configuration & data)
@@ -905,12 +910,12 @@ struct ArrowROImpl : public Element
     return Element::write_size() + 3 + ArrowConfig::write_size();
   }
 
-  void write(mc_rtc::MessagePackBuilder & builder)
+  void write(mc_rtc::MessagePackBuilder & builder, bool ro = true)
   {
     Element::write(builder);
     builder.write(get_start_fn_());
     builder.write(get_end_fn_());
-    builder.write(true); // read-only
+    builder.write(ro);
     config_.write(builder);
   }
 
@@ -936,6 +941,11 @@ struct ArrowImpl : public ArrowROImpl<GetStart, GetEnd>
 
   /** Invalid element */
   ArrowImpl(){};
+
+  void write(mc_rtc::MessagePackBuilder & builder)
+  {
+    ArrowROImpl<GetStart, GetEnd>::write(builder, false);
+  }
 
   bool handleRequest(const mc_rtc::Configuration & data)
   {
