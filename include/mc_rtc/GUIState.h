@@ -913,6 +913,7 @@ struct ArrowROImpl : public Element
     builder.write(true); // read-only
     config_.write(builder);
   }
+
 private:
   GetStart get_start_fn_;
   GetEnd get_end_fn_;
@@ -920,35 +921,21 @@ private:
 };
 
 template<typename GetStart, typename SetStart, typename GetEnd, typename SetEnd>
-struct ArrowImpl : public Element
+struct ArrowImpl : public ArrowROImpl<GetStart, GetEnd>
 {
-  static constexpr auto type = Elements::Arrow;
-
-  ArrowImpl(const std::string & name, const ArrowConfig & config, GetStart get_start_fn, SetStart set_start_fn, GetEnd get_end_fn, SetEnd set_end_fn)
-  : Element(name), get_start_fn_(get_start_fn), set_start_fn_(set_start_fn), get_end_fn_(get_end_fn), set_end_fn_(set_end_fn), config_(config)
+  ArrowImpl(const std::string & name,
+            const ArrowConfig & config,
+            GetStart get_start_fn,
+            SetStart set_start_fn,
+            GetEnd get_end_fn,
+            SetEnd set_end_fn)
+  : ArrowROImpl<GetStart, GetEnd>(name, config, get_start_fn, get_end_fn), set_start_fn_(set_start_fn),
+    set_end_fn_(set_end_fn)
   {
-    static_assert(details::CheckReturnType<GetStart, Eigen::Vector3d>::value,
-                  "Arrow element start callback must return an Eigen::Vector3d");
-    static_assert(details::CheckReturnType<GetEnd, Eigen::Vector3d>::value,
-                  "Arrow element end callback must return an Eigen::Vector3d");
   }
 
   /** Invalid element */
   ArrowImpl(){};
-
-  constexpr static size_t write_size()
-  {
-    return Element::write_size() + 3 + ArrowConfig::write_size();
-  }
-
-  void write(mc_rtc::MessagePackBuilder & builder)
-  {
-    Element::write(builder);
-    builder.write(get_start_fn_());
-    builder.write(get_end_fn_());
-    builder.write(false); // read-only
-    config_.write(builder);
-  }
 
   bool handleRequest(const mc_rtc::Configuration & data)
   {
@@ -957,12 +944,10 @@ struct ArrowImpl : public Element
     set_end_fn_(arrow.tail<3>());
     return true;
   }
+
 private:
-  GetStart get_start_fn_;
   SetStart set_start_fn_;
-  GetEnd get_end_fn_;
   SetEnd set_end_fn_;
-  ArrowConfig config_;
 };
 
 /** Helper function to create an ArrowImpl */
