@@ -243,7 +243,7 @@ cdef class BSplineTrajectoryTask(_SplineTrajectoryTask):
     if isinstance(surfaceName, unicode):
       surfaceName = surfaceName.encode(u'ascii')
     self.__own_impl = True
-    self.impl = self.mt_base = new c_mc_tasks.BSplineTrajectoryTask(deref(robots.impl), robotIndex, surfaceName, duration, stiffness, weight, deref(target.impl))
+    self.impl = self.ttg_base = self.mt_base = new c_mc_tasks.BSplineTrajectoryTask(deref(robots.impl), robotIndex, surfaceName, duration, stiffness, weight, deref(target.impl))
     self.posWaypoints(posWp)
     self.oriWaypoints(oriWp)
   def __cinit__(self, *args, **kwargs):
@@ -268,9 +268,9 @@ cdef class BSplineTrajectoryTask(_SplineTrajectoryTask):
   def displaySamples(self, samples = None):
     assert(self.impl)
     if samples is None:
-      return (<c_mc_tasks.SplineTrajectoryTask[c_mc_tasks.ExactCubicTrajectoryTask]*>self.impl).displaySamples()
+      return (<c_mc_tasks.SplineTrajectoryTask[c_mc_tasks.BSplineTrajectoryTask]*>self.impl).displaySamples()
     else:
-      (<c_mc_tasks.SplineTrajectoryTask[c_mc_tasks.ExactCubicTrajectoryTask]*>self.impl).displaySamples(samples)
+      (<c_mc_tasks.SplineTrajectoryTask[c_mc_tasks.BSplineTrajectoryTask]*>self.impl).displaySamples(samples)
 
 cdef class ExactCubicTrajectoryTask(_SplineTrajectoryTask):
   def __dealloc__(self):
@@ -281,9 +281,7 @@ cdef class ExactCubicTrajectoryTask(_SplineTrajectoryTask):
     if isinstance(surfaceName, unicode):
       surfaceName = surfaceName.encode(u'ascii')
     self.__own_impl = True
-    self.impl = self.mt_base = new c_mc_tasks.ExactCubicTrajectoryTask(deref(robots.impl), robotIndex, surfaceName, duration, stiffness, weight, deref(target.impl))
-    # self.posWaypoints(posWp)
-    # self.oriWaypoints(oriWp)
+    self.impl = self.ttg_base = self.mt_base = new c_mc_tasks.ExactCubicTrajectoryTask(deref(robots.impl), robotIndex, surfaceName, duration, stiffness, weight, deref(target.impl))
   def __cinit__(self, *args, **kwargs):
     genericInit[ExactCubicTrajectoryTask](self, 7, 'ExactCubicTrajectoryTask', *args, **kwargs)
   def posWaypoints(self, posWp):
