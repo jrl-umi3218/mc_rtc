@@ -715,7 +715,7 @@ const mc_rbdyn::Surface & Robot::surface(const std::string & sName) const
 {
   if(!hasSurface(sName))
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "No surface named " << sName << " found in this robot")
+    LOG_ERROR_AND_THROW(std::runtime_error, "No surface named " << sName << " found in robot " << this->name())
   }
   return *(surfaces_.at(sName));
 }

@@ -39,6 +39,20 @@ cdef class _VectorOrientationTrajectoryTask(MetaTask):
 cdef class _SurfaceTransformTask(MetaTask):
   cdef c_mc_tasks.TrajectoryTaskGeneric[c_qp.SurfaceTransformTask] * ttg_base
 
+cdef class _SplineTrajectoryTask(MetaTask):
+  cdef c_mc_tasks.TrajectoryTaskGeneric[c_qp.TransformTask] * ttg_base
+
+cdef class BSplineTrajectoryTask(_SplineTrajectoryTask):
+  cdef c_mc_tasks.BSplineTrajectoryTask * impl
+  cdef cppbool __own_impl
+
+cdef class ExactCubicTrajectoryTask(_SplineTrajectoryTask):
+  cdef c_mc_tasks.ExactCubicTrajectoryTask * impl
+  cdef cppbool __own_impl
+
+cdef class _TransformTask(MetaTask):
+  cdef c_mc_tasks.TrajectoryTaskGeneric[c_qp.TransformTask] * ttg_base
+
 cdef class CoMTask(_CoMTrajectoryTask):
   cdef c_mc_tasks.CoMTask * impl
   cdef cppbool __own_impl
@@ -88,3 +102,5 @@ ctypedef fused AnyTask:
   SurfaceTransformTask
   EndEffectorTask
   RelativeEndEffectorTask
+  BSplineTrajectoryTask
+  ExactCubicTrajectoryTask

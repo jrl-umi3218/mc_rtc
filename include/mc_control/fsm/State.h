@@ -30,7 +30,7 @@ struct MC_CONTROL_FSM_DLLAPI Controller;
  * - Posture tasks are handled at the global level, if a state removes a
  *   posture task from the solver, it should put it back afterwards
  *
- * Notably, a state should not keep constraints or tasks it created actives
+ * Notably, a state should not keep constraints or tasks it created active
  * after the state finished its execution.
  *
  * Every methods can be called in a real-time context. You should be aware of

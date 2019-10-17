@@ -57,6 +57,9 @@ add_project_dependency(mc_rbdyn_urdf REQUIRED)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
 
+# hpp-spline (defines target: mc_rtc_3rd_party::hpp-spline)
+find_package(mc_rtc_3rd_party_hpp-spline REQUIRED)
+
 # LTDL (defines target: mc_rtc_3rd_party::ltdl)
 add_subdirectory(3rd-party/ltdl)
 

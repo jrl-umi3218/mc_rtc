@@ -182,19 +182,26 @@ target_link_libraries(mc_solver PUBLIC mc_rbdyn mc_rtc_gui)
 install_mc_rtc_lib(mc_solver)
 
 set(mc_trajectory_SRC
-mc_trajectory/BSplineTrajectory.cpp
+mc_trajectory/BSpline.cpp
+mc_trajectory/InterpolatedRotation.cpp
 mc_trajectory/spline_utils.cpp
+mc_trajectory/ExactCubic.cpp
 )
 
 set(mc_trajectory_HDR
 ../include/mc_trajectory/api.h
-../include/mc_trajectory/BSplineTrajectory.h
+../include/mc_trajectory/Spline.h
+../include/mc_trajectory/Spline.hpp
+../include/mc_trajectory/BSpline.h
+../include/mc_trajectory/InterpolatedRotation.h
 ../include/mc_trajectory/spline_utils.h
+../include/mc_trajectory/ExactCubic.h
 )
 
 add_library(mc_trajectory SHARED ${mc_trajectory_SRC} ${mc_trajectory_HDR})
 set_target_properties(mc_trajectory PROPERTIES COMPILE_FLAGS "-DMC_TRAJECTORY_EXPORTS")
 target_link_libraries(mc_trajectory PUBLIC SpaceVecAlg::SpaceVecAlg)
+target_link_libraries(mc_trajectory PUBLIC mc_rtc_3rd_party::hpp-spline)
 install_mc_rtc_lib(mc_trajectory)
 
 set(mc_tasks_SRC
@@ -206,7 +213,8 @@ mc_tasks/EndEffectorTask.cpp
 mc_tasks/RelativeEndEffectorTask.cpp
 mc_tasks/CoMTask.cpp
 mc_tasks/AddRemoveContactTask.cpp
-mc_tasks/TrajectoryTask.cpp
+mc_tasks/BSplineTrajectoryTask.cpp
+mc_tasks/ExactCubicTrajectoryTask.cpp
 mc_tasks/ComplianceTask.cpp
 mc_tasks/AdmittanceTask.cpp
 mc_tasks/DampingTask.cpp
@@ -231,7 +239,10 @@ set(mc_tasks_HDR
 ../include/mc_tasks/SurfaceTransformTask.h
 ../include/mc_tasks/RelativeEndEffectorTask.h
 ../include/mc_tasks/SmoothTask.h
-../include/mc_tasks/TrajectoryTask.h
+../include/mc_tasks/SplineTrajectoryTask.h
+../include/mc_tasks/SplineTrajectoryTask.hpp
+../include/mc_tasks/BSplineTrajectoryTask.h
+../include/mc_tasks/ExactCubicTrajectoryTask.h
 ../include/mc_tasks/TrajectoryTaskGeneric.h
 ../include/mc_tasks/TrajectoryTaskGeneric.hpp
 ../include/mc_tasks/ComplianceTask.h
@@ -242,6 +253,7 @@ set(mc_tasks_HDR
 ../include/mc_tasks/PositionBasedVisServoTask.h
 ../include/mc_tasks/PostureTask.h
 ../include/mc_tasks/LookAtTask.h
+../include/mc_tasks/ExactCubicTrajectoryTask.h
 )
 
 if(NOT ${DISABLE_ROS})

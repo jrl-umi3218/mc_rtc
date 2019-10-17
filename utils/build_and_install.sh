@@ -426,7 +426,7 @@ then
     fi
   done
   cd $SOURCE_DIR/catkin_ws
-  catkin_make
+  catkin_make || exit 1
   . $SOURCE_DIR/catkin_ws/devel/setup.bash
 fi
 
@@ -479,7 +479,7 @@ then
     git_update
   fi
   cd $CATKIN_DIR
-  catkin_make
+  catkin_make || exit 1
   . $CATKIN_DIR/devel/setup.bash
 fi
 
