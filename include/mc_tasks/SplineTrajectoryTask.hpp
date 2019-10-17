@@ -180,7 +180,7 @@ void SplineTrajectoryTask<Derived>::addToLogger(mc_rtc::Logger & logger)
 {
   TrajectoryBase::addToLogger(logger);
   logger.addLogEntry(name_ + "_surfacePose", [this]() {
-    const auto & robot = robots.robot(rIndex_);
+    const auto & robot = this->robots.robot(rIndex_);
     return robot.surfacePose(surfaceName_);
   });
   logger.addLogEntry(name_ + "_targetPose", [this]() { return this->target(); });
@@ -205,10 +205,11 @@ void SplineTrajectoryTask<Derived>::addToGUI(mc_rtc::gui::StateBuilder & gui)
 
   auto & spline = static_cast<Derived &>(*this).spline();
   gui.addElement({"Tasks", name_}, mc_rtc::gui::Transform("Surface pose", [this]() {
-                   return robots.robot(rIndex_).surface(surfaceName_).X_0_s(robots.robot(rIndex_));
+                   const auto & robot = this->robots.robot(rIndex_);
+                   return robot.surface(surfaceName_).X_0_s(robot);
                  }));
 
-  gui.addElement({"Tasks", name_}, mc_rtc::gui::Rotation("Target Rotation", [this]() { return target(); },
+  gui.addElement({"Tasks", name_}, mc_rtc::gui::Rotation("Target Rotation", [this]() { return this->target(); },
                                                          [this](const Eigen::Quaterniond & ori) {
                                                            sva::PTransformd X_0_t(ori, this->target().translation());
                                                            this->target(X_0_t);
@@ -218,14 +219,15 @@ void SplineTrajectoryTask<Derived>::addToGUI(mc_rtc::gui::StateBuilder & gui)
   for(unsigned i = 0; i < oriSpline_.waypoints().size(); ++i)
   {
     gui.addElement({"Tasks", name_, "Orientation Waypoint"},
-                   mc_rtc::gui::Rotation(
-                       "Waypoint " + std::to_string(i),
-                       [this, i, &spline]() {
-                         // Get position of orientation waypoint along the spline
-                         const auto & wp = oriSpline_.waypoint(i);
-                         return sva::PTransformd(wp.second, spline.splev(wp.first, 0)[0]);
-                       },
-                       [this, i](const Eigen::Quaterniond & ori) { oriSpline_.waypoint(i, ori.toRotationMatrix()); }));
+                   mc_rtc::gui::Rotation("Waypoint " + std::to_string(i),
+                                         [this, i, &spline]() {
+                                           // Get position of orientation waypoint along the spline
+                                           const auto & wp = this->oriSpline_.waypoint(i);
+                                           return sva::PTransformd(wp.second, spline.splev(wp.first, 0)[0]);
+                                         },
+                                         [this, i](const Eigen::Quaterniond & ori) {
+                                           this->oriSpline_.waypoint(i, ori.toRotationMatrix());
+                                         }));
   }
 }
 
