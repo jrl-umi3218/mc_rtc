@@ -173,6 +173,7 @@ void {controller_name}_Initial::start(mc_control::fsm::Controller & ctl_)
 bool {controller_name}_Initial::run(mc_control::fsm::Controller & ctl_)
 {{
   auto & ctl = static_cast<{controller_class_name} &>(ctl_);
+  output("OK");
   return true;
 }}
 
