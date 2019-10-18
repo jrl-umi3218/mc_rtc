@@ -8,6 +8,7 @@
     "robotIndex": { "type": "integer", "minimum": 0 },
     "body": { "type": "string" },
     "relBody": { "type": "string" },
+    "bodyPoint": { "$ref": "/../../eigen/Vector3d.json" },
 
     "orientation": { "$ref": "/../../eigen/Matrix3d.json" },
     "position": { "$ref": "/../../eigen/Vector3d.json" },
