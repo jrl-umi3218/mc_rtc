@@ -151,9 +151,12 @@ mc_solver/CoMIncPlaneConstr.cpp
 mc_solver/CompoundJointConstraint.cpp
 mc_solver/ConstraintSetLoader.cpp
 mc_solver/ContactConstraint.cpp
+mc_solver/ContactWrenchMatrixToLambdaMatrix.cpp
 mc_solver/DynamicsConstraint.cpp
 mc_solver/KinematicsConstraint.cpp
 mc_solver/QPSolver.cpp
+mc_solver/Update.cpp
+mc_solver/UpdateNrVars.cpp
 mc_tasks/MetaTask.cpp
 )
 
@@ -162,6 +165,9 @@ set(mc_solver_HDR
 ../include/mc_solver/msg/Contact.h
 ../include/mc_solver/msg/QPResult.h
 ../include/mc_solver/msg/Robot.h
+../include/mc_solver/utils/ContactWrenchMatrixToLambdaMatrix.h
+../include/mc_solver/utils/Update.h
+../include/mc_solver/utils/UpdateNrVars.h
 ../include/mc_solver/BoundedSpeedConstr.h
 ../include/mc_solver/CollisionsConstraint.h
 ../include/mc_solver/CoMIncPlaneConstr.h
@@ -169,10 +175,11 @@ set(mc_solver_HDR
 ../include/mc_solver/ConstraintSet.h
 ../include/mc_solver/ContactConstraint.h
 ../include/mc_solver/DynamicsConstraint.h
+../include/mc_solver/EqualityConstraint.h
 ../include/mc_solver/KinematicsConstraint.h
-../include/mc_solver/QPSolver.h
 ../include/mc_solver/GenericLoader.h
 ../include/mc_solver/GenericLoader.hpp
+../include/mc_solver/QPSolver.h
 ../include/mc_tasks/MetaTask.h
 )
 
