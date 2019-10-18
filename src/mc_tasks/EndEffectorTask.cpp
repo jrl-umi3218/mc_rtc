@@ -28,7 +28,7 @@ EndEffectorTask::EndEffectorTask(const std::string & bodyName,
   bodyIndex = robot.bodyIndexByName(bodyName);
   sva::PTransformd bpw = robot.mbc().bodyPosW[bodyIndex];
 
-  curTransform = bpw;
+  curTransform = sva::PTransformd{bodyPoint} * bpw;
 
   positionTask.reset(new mc_tasks::PositionTask(bodyName, bodyPoint, robots, robotIndex, stiffness, weight));
   orientationTask.reset(new mc_tasks::OrientationTask(bodyName, robots, robotIndex, stiffness, weight));
@@ -42,7 +42,7 @@ EndEffectorTask::EndEffectorTask(const std::string & bodyName,
 void EndEffectorTask::reset()
 {
   const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
-  curTransform = robot.mbc().bodyPosW[bodyIndex];
+  curTransform = sva::PTransformd{positionTask->bodyPoint()} * robot.mbc().bodyPosW[bodyIndex];
   positionTask->position(curTransform.translation());
   orientationTask->orientation(curTransform.rotation());
 }

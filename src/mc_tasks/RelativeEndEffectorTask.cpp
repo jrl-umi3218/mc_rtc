@@ -38,7 +38,7 @@ RelativeEndEffectorTask::RelativeEndEffectorTask(const std::string & bodyName,
 void RelativeEndEffectorTask::reset()
 {
   const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
-  sva::PTransformd X_0_body = robot.mbc().bodyPosW[bodyIndex];
+  sva::PTransformd X_0_body = sva::PTransformd{positionTask->bodyPoint()} * robot.mbc().bodyPosW[bodyIndex];
   sva::PTransformd X_0_rel = robot.mbc().bodyPosW[relBodyIdx];
 
   curTransform = X_0_body * (X_0_rel.inv()); /* X_rel_body = X_0_body * X_rel_0 */
