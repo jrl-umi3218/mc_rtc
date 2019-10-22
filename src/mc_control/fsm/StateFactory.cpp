@@ -155,7 +155,7 @@ void StateFactory::load_files(const std::vector<std::string> & files)
   {
     if(bfs::is_directory(f))
     {
-      LOG_INFO("Looking for .json state files in " << f)
+      LOG_INFO("Looking for state files in " << f)
       load_dir(*this, f, ud_states, verbose);
     }
     else
