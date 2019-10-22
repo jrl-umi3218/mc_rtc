@@ -3,6 +3,7 @@
 #include <mc_rtc/Configuration.h>
 #include <mc_rtc/logging.h>
 
+#include <fstream>
 #include <yaml-cpp/yaml.h>
 
 /** Set of utilities function to work with YAML format in mc_rtc::Configuration */
@@ -313,6 +314,17 @@ inline std::string dumpYAML(const mc_rtc::Configuration & in)
     LOG_ERROR("YAML dump error:\n" << out.GetLastError())
   }
   return out.c_str();
+}
+
+inline void saveYAML(const std::string & path, const mc_rtc::Configuration & in)
+{
+  std::ofstream ofs(path);
+  if(!ofs)
+  {
+    LOG_ERROR("Failed to open " << path << " for writing")
+    return;
+  }
+  ofs << dumpYAML(in);
 }
 
 } // namespace internal

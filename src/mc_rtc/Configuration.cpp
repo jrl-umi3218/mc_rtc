@@ -603,8 +603,16 @@ void Configuration::loadYAMLData(const std::string & data)
 
 void Configuration::save(const std::string & path, bool pretty) const
 {
-  auto & value = *static_cast<internal::RapidJSONValue *>(v.value_);
-  mc_rtc::internal::saveDocument(path, value, pretty);
+  std::string extension = to_lower(bfs::path(path).extension().string());
+  if(extension == ".yml" || extension == ".yaml")
+  {
+    mc_rtc::internal::saveYAML(path, *this);
+  }
+  else
+  {
+    auto & value = *static_cast<internal::RapidJSONValue *>(v.value_);
+    mc_rtc::internal::saveDocument(path, value, pretty);
+  }
 }
 
 std::string Configuration::dump(bool pretty, bool yaml) const

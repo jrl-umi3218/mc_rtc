@@ -338,6 +338,11 @@ inline void fromMessagePack(mc_rtc::Configuration & config, const char * data, s
 inline void saveDocument(const std::string & path, RapidJSONValue & document, bool pretty = false)
 {
   std::ofstream ofs(path);
+  if(!ofs)
+  {
+    LOG_ERROR("Failed to open " << path << " for writing")
+    return;
+  }
   ofs << dumpDocument(document, pretty);
 }
 

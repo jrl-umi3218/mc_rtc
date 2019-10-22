@@ -506,6 +506,8 @@ struct MC_RTC_UTILS_DLLAPI Configuration
 
   /*! \brief Save the configuration to a file.
    *
+   * If the path extension is yaml or yml then save in YAML format
+   *
    * \param path Path to the configuration file
    *
    * \param pretty Writes a human-readable file, defaults to true
