@@ -19,6 +19,8 @@ add_mc_rtc_utils(mc_bin_perf mc_bin_perf.cpp)
 
 add_mc_rtc_utils(mc_old_bin_to_flat mc_old_bin_to_flat.cpp)
 
+add_mc_rtc_utils(mc_json_to_yaml mc_json_to_yaml.cpp)
+
 if(${ROSCPP_FOUND})
   add_mc_rtc_utils(mc_bin_to_rosbag mc_bin_to_rosbag.cpp mc_bin_to_rosbag_main.cpp)
 endif()

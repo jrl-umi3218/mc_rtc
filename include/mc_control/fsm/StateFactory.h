@@ -36,7 +36,7 @@ struct MC_CONTROL_FSM_DLLAPI StateFactory : public mc_rtc::ObjectLoader<State>
    *
    * \param paths List of paths to load states libraries from
    *
-   * \param states List of states files (json) to read states from
+   * \param states List of states files (json/yaml) to read states from
    *
    * \bool verbose If true, output some warning information
    */

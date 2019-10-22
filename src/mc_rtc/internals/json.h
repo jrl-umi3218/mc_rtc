@@ -30,6 +30,7 @@ typedef size_t SizeType;
 #include "rapidjson/prettywriter.h"
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/writer.h"
+#include "yaml.h"
 #include <Eigen/Geometry>
 #include <fstream>
 #include <sstream>
@@ -84,7 +85,7 @@ inline bool loadData(const char * data, RapidJSONDocument & document, const std:
  *
  * \param document Document instance to load the document
  *
- * \returns True if the document was succesfully loaded, returns false and
+ * \returns True if the document was successfully loaded, returns false and
  * display an error message otherwise
  *
  */
@@ -337,6 +338,11 @@ inline void fromMessagePack(mc_rtc::Configuration & config, const char * data, s
 inline void saveDocument(const std::string & path, RapidJSONValue & document, bool pretty = false)
 {
   std::ofstream ofs(path);
+  if(!ofs)
+  {
+    LOG_ERROR("Failed to open " << path << " for writing")
+    return;
+  }
   ofs << dumpDocument(document, pretty);
 }
 

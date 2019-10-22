@@ -63,9 +63,9 @@ std::string getTmpFile()
 }
 
 /** Make a temporary configuration file from the content provided */
-std::string makeConfigFile(const std::string & data)
+std::string makeConfigFile(const std::string & data, const std::string & ext = ".json")
 {
-  std::string fIn = getTmpFile();
+  std::string fIn = getTmpFile() + ext;
   std::ofstream ofs(fIn);
   ofs << data;
   return fIn;

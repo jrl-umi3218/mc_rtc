@@ -49,6 +49,9 @@ set(mc_rtc_utils_SRC
 )
 
 set(mc_rtc_utils_HDR
+  mc_rtc/internals/json.h
+  mc_rtc/internals/yaml.h
+  mc_rtc/internals/LogEntry.h
   ../include/mc_rtc/Configuration.h
   ../include/mc_rtc/MessagePackBuilder.h
   ../include/mc_rtc/log/FlatLog.h
@@ -60,7 +63,7 @@ set(mc_rtc_utils_HDR
 
 add_library(mc_rtc_utils SHARED ${mc_rtc_utils_SRC} ${mc_rtc_utils_HDR})
 set_target_properties(mc_rtc_utils PROPERTIES COMPILE_FLAGS "-DMC_RTC_UTILS_EXPORTS")
-target_link_libraries(mc_rtc_utils PUBLIC SpaceVecAlg::SpaceVecAlg Boost::filesystem Boost::disable_autolinking PRIVATE mc_rtc_3rd_party::RapidJSON mpack)
+target_link_libraries(mc_rtc_utils PUBLIC SpaceVecAlg::SpaceVecAlg Boost::filesystem Boost::disable_autolinking yaml-cpp PRIVATE mc_rtc_3rd_party::RapidJSON mpack)
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
   target_link_libraries(mc_rtc_utils PUBLIC atomic)
 endif()

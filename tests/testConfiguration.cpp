@@ -20,9 +20,58 @@ bool operator==(const Quaterniond & lhs, const Quaterniond & rhs)
 
 } // namespace Eigen
 
-std::string sampleConfig(bool fromDisk)
-{
-  std::string data = R"(
+static std::string YAML_DATA = R"(
+int: 42
+sint: -42
+double: 42.5
+doubleOrInt: 42.0
+string: sometext
+intV: [0, 1, 2, 3, 4, 5]
+stringV: [a, b, c, foo, bar]
+doubleA3: [1.1, 2.2, 3.3]
+v3d: [1.0, 2.3, -100]
+v6d: [1.0, -1.5, 2.0, -2.5, 3.0, -3.5]
+vXd: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+quat: [0.71, 0, 0.71, 0]
+emptyArray: []
+boolTrue: true
+boolFalse: false
+bool1: 1
+bool0: 0
+doubleDoublePair: [42.5, -42.5]
+doubleStringPair: [42.5, sometext]
+doubleDoublePairV: [[0.0, 1.1], [2.2, 3.3], [4.4, 5.5]]
+tuple: [true, 42.42, sometext, [1.2, 3.4, 5.6]]
+dict:
+  boolTrue: true
+  bool0: 0
+  int: 42
+  double: 42.5
+  string: sometext
+  intV: [0, 1, 2, 3, 4, 5]
+  stringV: [a, b, c, foo, bar]
+  v3d: [1.0, 2.3, -100]
+  v6d: [1.0, -1.5, 2.0, -2.5, 3.0, -3.5]
+  quat: [0.71, 0, 0.71, 0]
+  doubleDoublePair: [42.5, -42.5]
+  doubleStringPair: [42.5, sometext]
+mapStr:
+  str1: sometext1
+  str2: sometext2
+  str3: sometext3
+  str4: sometext4
+mapDouble:
+  str1: 1.1
+  str2: 2.2
+  str3: 3.3
+  str4: 4.4
+mapDoubleV:
+  str1: [1.0, 2.3, -100]
+  str2: [1.0, -1.5, 2.0, -2.5, 3.0, -3.5]
+  str3: [0.71, 0, 0.71, 0]
+)";
+
+static std::string JSON_DATA = R"(
 {
   "int": 42,
   "sint": -42,
@@ -82,21 +131,34 @@ std::string sampleConfig(bool fromDisk)
   }
 }
 )";
-  return fromDisk ? makeConfigFile(data) : data;
-}
 
-std::string sampleConfig2(bool fromDisk)
+std::string sampleConfig(bool fromDisk, bool json)
 {
-  std::string data = R"(
-  {
-    "stringV": ["a2", "b2", "c2"],
-    "int": 12
-  }
-  )";
-  return fromDisk ? makeConfigFile(data) : data;
+  const auto & data = json ? JSON_DATA : YAML_DATA;
+  const std::string ext = json ? ".json" : ".yaml";
+  return fromDisk ? makeConfigFile(data, ext) : data;
 }
 
-void TestConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2)
+static std::string YAML_DATA2 = R"(
+stringV: [a2, b2, c2]
+int: 12
+)";
+
+static std::string JSON_DATA2 = R"(
+{
+  "stringV": ["a2", "b2", "c2"],
+  "int": 12
+}
+)";
+
+std::string sampleConfig2(bool fromDisk, bool json)
+{
+  const auto & data = json ? JSON_DATA2 : YAML_DATA2;
+  const std::string ext = json ? ".json" : ".yaml";
+  return fromDisk ? makeConfigFile(data, ext) : data;
+}
+
+void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bool json2)
 {
   /*! Check that accessing a non-existing entry throws */
   BOOST_CHECK_THROW(config("NONE"), mc_rtc::Configuration::Exception);
@@ -581,11 +643,18 @@ void TestConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2)
   {
     if(fromDisk2)
     {
-      config.load(sampleConfig2(true));
+      config.load(sampleConfig2(true, json2));
     }
     else
     {
-      config.loadData(sampleConfig2(false));
+      if(json2)
+      {
+        config.loadData(sampleConfig2(false, json2));
+      }
+      else
+      {
+        config.loadYAMLData(sampleConfig2(false, json2));
+      }
     }
     int a = config("int");
     BOOST_CHECK_EQUAL(a, 12);
@@ -601,28 +670,50 @@ void TestConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2)
   }
 }
 
-BOOST_AUTO_TEST_CASE(TestConfigurationReadingDiskTwice)
+mc_rtc::Configuration makeConfig(bool fromDisk, bool json)
 {
-  mc_rtc::Configuration config(sampleConfig(true));
-  TestConfigurationReading(config, true);
+  if(fromDisk)
+  {
+    return mc_rtc::Configuration(sampleConfig(fromDisk, json));
+  }
+  else
+  {
+    const auto & data = sampleConfig(fromDisk, json);
+    if(json)
+    {
+      return mc_rtc::Configuration::fromData(data);
+    }
+    else
+    {
+      return mc_rtc::Configuration::fromYAMLData(data);
+    }
+  }
 }
 
-BOOST_AUTO_TEST_CASE(TestConfigurationReadingDiskData)
+void TestConfigurationLoadingAndReading(bool fromDisk, bool json, bool fromDisk2, bool json2)
 {
-  mc_rtc::Configuration config(sampleConfig(true));
-  TestConfigurationReading(config, false);
+  auto config = makeConfig(fromDisk, json);
+  testConfigurationReading(config, fromDisk2, json2);
 }
 
-BOOST_AUTO_TEST_CASE(TestConfigurationReadingDataDisk)
+BOOST_AUTO_TEST_CASE(TestConfigurationReading)
 {
-  auto config = mc_rtc::Configuration::fromData(sampleConfig(false));
-  TestConfigurationReading(config, true);
-}
-
-BOOST_AUTO_TEST_CASE(TestConfigurationReadingDataTwice)
-{
-  auto config = mc_rtc::Configuration::fromData(sampleConfig(false));
-  TestConfigurationReading(config, false);
+  TestConfigurationLoadingAndReading(false, false, false, false);
+  TestConfigurationLoadingAndReading(false, false, false, true);
+  TestConfigurationLoadingAndReading(false, false, true, false);
+  TestConfigurationLoadingAndReading(false, false, true, true);
+  TestConfigurationLoadingAndReading(false, true, false, false);
+  TestConfigurationLoadingAndReading(false, true, false, true);
+  TestConfigurationLoadingAndReading(false, true, true, false);
+  TestConfigurationLoadingAndReading(false, true, true, true);
+  TestConfigurationLoadingAndReading(true, false, false, false);
+  TestConfigurationLoadingAndReading(true, false, false, true);
+  TestConfigurationLoadingAndReading(true, false, true, false);
+  TestConfigurationLoadingAndReading(true, false, true, true);
+  TestConfigurationLoadingAndReading(true, true, false, false);
+  TestConfigurationLoadingAndReading(true, true, false, true);
+  TestConfigurationLoadingAndReading(true, true, true, false);
+  TestConfigurationLoadingAndReading(true, true, true, true);
 }
 
 BOOST_AUTO_TEST_CASE(TestConfigurationWriting)
@@ -871,7 +962,7 @@ BOOST_AUTO_TEST_CASE(TestLoadConfigurationInConfiguration)
 
 BOOST_AUTO_TEST_CASE(TestConfigurartionRemove)
 {
-  auto config = mc_rtc::Configuration::fromData(sampleConfig(false));
+  auto config = mc_rtc::Configuration::fromData(sampleConfig(false, true));
   BOOST_CHECK(!config.remove("NONE"));
   BOOST_CHECK(config.has("v3d"));
   BOOST_CHECK(config.remove("v3d"));
