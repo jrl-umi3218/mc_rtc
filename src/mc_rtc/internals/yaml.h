@@ -324,7 +324,7 @@ inline void saveYAML(const std::string & path, const mc_rtc::Configuration & in)
     LOG_ERROR("Failed to open " << path << " for writing")
     return;
   }
-  ofs << dumpYAML(in);
+  ofs << dumpYAML(in) << "\n";
 }
 
 } // namespace internal
