@@ -923,13 +923,20 @@ void Robot::posW(const sva::PTransformd & pt)
 
 void Robot::velW(const sva::MotionVecd & vel)
 {
-  alpha()[0][0] = vel.angular().x();
-  alpha()[0][1] = vel.angular().y();
-  alpha()[0][2] = vel.angular().z();
-  alpha()[0][3] = vel.linear().x();
-  alpha()[0][4] = vel.linear().x();
-  alpha()[0][5] = vel.linear().x();
-  forwardVelocity();
+  if(mb().joint(0).type() == rbd::Joint::Type::Free)
+  {
+    alpha()[0][0] = vel.angular().x();
+    alpha()[0][1] = vel.angular().y();
+    alpha()[0][2] = vel.angular().z();
+    alpha()[0][3] = vel.linear().x();
+    alpha()[0][4] = vel.linear().x();
+    alpha()[0][5] = vel.linear().x();
+    forwardVelocity();
+  }
+  else
+  {
+    LOG_WARNING("You cannot set the base velocity on a fixed-base robot")
+  }
 }
 
 const sva::MotionVecd & Robot::velW() const
