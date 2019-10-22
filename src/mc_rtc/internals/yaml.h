@@ -255,7 +255,17 @@ void dumpYAML(const mc_rtc::Configuration & in, YAML::Emitter & out)
   if(in.size())
   {
     size_t sz = in.size();
-    if(!(in[0].size() || in[0].keys().size()))
+    auto isScalar = [](const mc_rtc::Configuration & c) { return c.size() == 0 && c.keys().size() == 0; };
+    bool allScalar = true;
+    for(size_t i = 0; i < sz; ++i)
+    {
+      if(!isScalar(in[i]))
+      {
+        allScalar = false;
+        break;
+      }
+    }
+    if(allScalar)
     {
       out << YAML::Flow;
     }
