@@ -82,5 +82,5 @@ macro(add_fsm_state_simple state_name)
 endmacro()
 
 macro(add_fsm_data_directory directory)
-  install(DIRECTORY ${directory} DESTINATION "${MC_STATES_INSTALL_PREFIX}" FILES_MATCHING PATTERN "*.json")
+  install(DIRECTORY ${directory} DESTINATION "${MC_STATES_INSTALL_PREFIX}" FILES_MATCHING REGEX ".*(.json$|.yml$|.yaml$)")
 endmacro()
