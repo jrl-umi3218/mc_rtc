@@ -30,6 +30,7 @@ typedef size_t SizeType;
 #include "rapidjson/prettywriter.h"
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/writer.h"
+#include "yaml.h"
 #include <Eigen/Geometry>
 #include <fstream>
 #include <sstream>
@@ -84,7 +85,7 @@ inline bool loadData(const char * data, RapidJSONDocument & document, const std:
  *
  * \param document Document instance to load the document
  *
- * \returns True if the document was succesfully loaded, returns false and
+ * \returns True if the document was successfully loaded, returns false and
  * display an error message otherwise
  *
  */

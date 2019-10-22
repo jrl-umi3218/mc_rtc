@@ -439,6 +439,20 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    */
   static Configuration fromData(const char * data);
 
+  /*! \brief Static constructor to load from YAML data
+   *
+   * \param data YAML data to load
+   *
+   */
+  static Configuration fromYAMLData(const std::string & data);
+
+  /*! \brief Static constructor to load from YAML data (C overload)
+   *
+   * \param data YAML data to load
+   *
+   */
+  static Configuration fromYAMLData(const char * data);
+
   /*! \brief Static constructor to load from MessagePack data
    *
    * \param data MessagePack data to load
@@ -480,6 +494,15 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    *
    */
   void loadData(const std::string & data);
+
+  /*! \brief Load data from a YAML string
+   *
+   * Same rules apply as ::load methods
+   *
+   * \param data YAML data to load
+   *
+   */
+  void loadYAMLData(const std::string & data);
 
   /*! \brief Save the configuration to a file.
    *
