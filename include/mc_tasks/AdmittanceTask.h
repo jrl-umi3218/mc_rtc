@@ -146,7 +146,7 @@ public:
     return robots_.robot(rIndex_).surface(surfaceName).X_0_s(robots_.robot(rIndex_));
   }
 
-  /*! \brief Get the target pose for the position task
+  /*! \brief Get the target pose of the surface in the world frame.
    *
    */
   sva::PTransformd targetPose()
@@ -154,7 +154,8 @@ public:
     return this->target();
   }
 
-  /*! \brief Set target position and orientation
+  /*! \brief Set target pose (position and orientation) of the surface in the
+   * world frame.
    *
    * \param X_0_target Plucker transform to the target frame.
    *
