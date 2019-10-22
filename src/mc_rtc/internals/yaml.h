@@ -213,7 +213,7 @@ inline bool loadYAMLData(const char * data, Configuration & out)
   catch(const YAML::ParserException & exc)
   {
     LOG_ERROR("Encountered an error while parsing YAML data")
-    LOG_WARNING(exc.msg)
+    LOG_WARNING("Error on line " << (exc.mark.line + 1) << ", column " << (exc.mark.column + 1) << ": " << exc.msg)
   }
   return false;
 }
@@ -242,7 +242,7 @@ inline bool loadYAMLDocument(const std::string & path, Configuration & out)
   catch(const YAML::ParserException & exc)
   {
     LOG_ERROR("Encountered an error while parsing YAML file: " << path)
-    LOG_WARNING(exc.msg)
+    LOG_WARNING("Error on line " << (exc.mark.line + 1) << ", column " << (exc.mark.column + 1) << ": " << exc.msg)
   }
   return false;
 }
