@@ -517,8 +517,10 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    *
    * \param pretty Writes a human-readable string, defaults to false
    *
+   * \param yaml Writes YAML instead of JSON, defaults to false
+   *
    */
-  std::string dump(bool pretty = false) const;
+  std::string dump(bool pretty = false, bool yaml = false) const;
 
   /*! \brief Convert to MessagePack
    *

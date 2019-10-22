@@ -607,10 +607,17 @@ void Configuration::save(const std::string & path, bool pretty) const
   mc_rtc::internal::saveDocument(path, value, pretty);
 }
 
-std::string Configuration::dump(bool pretty) const
+std::string Configuration::dump(bool pretty, bool yaml) const
 {
-  auto & value = *static_cast<internal::RapidJSONValue *>(v.value_);
-  return mc_rtc::internal::dumpDocument(value, pretty);
+  if(yaml)
+  {
+    return mc_rtc::internal::dumpYAML(*this);
+  }
+  else
+  {
+    auto & value = *static_cast<internal::RapidJSONValue *>(v.value_);
+    return mc_rtc::internal::dumpDocument(value, pretty);
+  }
 }
 
 size_t Configuration::toMessagePack(std::vector<char> & data) const

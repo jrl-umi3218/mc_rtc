@@ -246,6 +246,75 @@ inline bool loadYAMLDocument(const std::string & path, Configuration & out)
   return false;
 }
 
+namespace
+{
+
+void dumpYAML(const mc_rtc::Configuration & in, YAML::Emitter & out)
+{
+  if(in.size())
+  {
+    size_t sz = in.size();
+    if(!(in[0].size() || in[0].keys().size()))
+    {
+      out << YAML::Flow;
+    }
+    out << YAML::BeginSeq;
+    for(size_t i = 0; i < sz; ++i)
+    {
+      dumpYAML(in[i], out);
+    }
+    out << YAML::EndSeq;
+  }
+  else
+  {
+    const auto & keys = in.keys();
+    if(keys.size())
+    {
+      out << YAML::BeginMap;
+      for(const auto & k : keys)
+      {
+        out << YAML::Key << k;
+        out << YAML::Value;
+        dumpYAML(in(k), out);
+      }
+      out << YAML::EndMap;
+    }
+    else
+    {
+      auto dump = in.dump();
+      if(dump == "[]")
+      {
+        out << YAML::Flow << YAML::BeginSeq << YAML::EndSeq;
+      }
+      else if(dump == "{}")
+      {
+        out << YAML::Flow << YAML::BeginMap << YAML::EndMap;
+      }
+      else if(dump[0] == '"' && dump[dump.size() - 1] == '"')
+      {
+        out << dump.substr(1, dump.size() - 2);
+      }
+      else
+      {
+        out << dump;
+      }
+    }
+  }
+}
+
+} // namespace
+
+inline std::string dumpYAML(const mc_rtc::Configuration & in)
+{
+  YAML::Emitter out;
+  dumpYAML(in, out);
+  if(!out.good())
+  {
+    LOG_ERROR("YAML dump error:\n" << out.GetLastError())
+  }
+  return out.c_str();
+}
+
 } // namespace internal
 
 } // namespace mc_rtc
