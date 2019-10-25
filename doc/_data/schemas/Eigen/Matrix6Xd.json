@@ -1,0 +1,9 @@
+{
+  "title": "Eigen::Matrix<double, 6, Eigen::Dynamic>",
+  "description": "Stored in row-major order. The array length should be a multiple of 6.",
+  "type": "array",
+  "items":
+  {
+    "type": "number"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "title": "mc_rbdyn::Collision",
+  "type": "object",
+  "properties":
+  {
+    "body1": { "type": "string" },
+    "body2": { "type": "string" },
+    "iDist": { "type": "number" },
+    "sDist": { "type": "number" },
+    "damping": { "type": "number" }
+  },
+  "required": ["body1", "body2", "iDist", "sDist", "damping"],
+  "additionalProperties": false
+}

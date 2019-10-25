@@ -1,0 +1,12 @@
+{
+  "title": "mc_rbdyn::RobotModule::Gripper",
+  "type": "object",
+  "properties":
+  {
+    "name": { "type": "string" },
+    "joints": { "type": "array", "items": { "type": "string" } },
+    "reverse_limits": { "type": "boolean" }
+  },
+  "required": ["name", "joints", "reverse_limits"],
+  "additionalProperties": false
+}

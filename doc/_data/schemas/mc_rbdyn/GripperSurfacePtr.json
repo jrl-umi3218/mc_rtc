@@ -1,0 +1,17 @@
+{
+  "title": "std::shared_ptr<mc_rbdyn::GripperSurface>",
+  "type": "object",
+  "properties":
+  {
+    "type": { "enum": ["gripper"] },
+    "name": { "type": "string" },
+    "bodyName": { "type": "string" },
+    "X_b_s": { "$ref": "/../../sva/PTransformd.json" },
+    "materialName": { "type": "string" },
+    "pointsFromOrigin": { "type": "array", "items": { "$ref": "/../../sva/PTransformd.json" } },
+    "X_b_motor": { "$ref": "/../../sva/PTransformd.json" },
+    "motorMaxTorque": { "type": "number" }
+  },
+  "required": ["type", "name", "bodyName", "X_b_s", "materialName", "pointsFromOrigin", "X_b_motor", "motorMaxTorque"],
+  "additionalProperties": false
+}

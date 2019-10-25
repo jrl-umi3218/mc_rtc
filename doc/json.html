@@ -1,0 +1,17 @@
+---
+layout: default
+title: JSON documentation
+---
+
+<div class="row">
+
+  <div class="offset-1 col-3">
+    {% for cat in site.data.schemas %}
+    <h5>{{ cat[0] }}</h5>
+    {% endfor %}
+  </div>
+  <div class="col-6">
+  {% include json_schema.html schema=site.data.schemas.Eigen.Matrix3d %}
+  </div>
+
+</div>

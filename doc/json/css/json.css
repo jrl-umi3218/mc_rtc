@@ -16,15 +16,11 @@
     border-top-width: 0;
 }
 
-.list-group.list-group-root > .list-group > .list-group-item {
+.list-group.list-group-root > .collapse > .list-group > .list-group-item {
     padding-left: 30px;
 }
 
-.list-group.list-group-root > .list-group > .list-group > .list-group-item {
-    padding-left: 45px;
-}
-
-.list-group-item .glyphicon {
+.list-group-item .octicon {
     margin-right: 5px;
 }
 

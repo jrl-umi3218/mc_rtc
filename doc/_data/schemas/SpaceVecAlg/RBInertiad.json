@@ -1,0 +1,12 @@
+{
+  "title": "sva::RBInertiad",
+  "type": "object",
+  "properties":
+  {
+    "mass": { "type": "numeric", "minimum": 0 },
+    "momentum": { "$ref": "/../../eigen/Vector3d.json" },
+    "inertia": { "$ref": "/../../eigen/Matrix3d.json" }
+  },
+  "required": ["mass", "momentum", "inertia"],
+  "additionalProperties": false
+}

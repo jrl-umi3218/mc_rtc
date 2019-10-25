@@ -1,0 +1,12 @@
+{
+  "title": "mc_rbdyn_urdf::Visual",
+  "type": "object",
+  "properties":
+  {
+    "name": { "type": "string" },
+    "origin": { "$ref": "/../../sva/PTransformd.json" },
+    "geometry": { "$ref": "/../../mc_rbdyn_urdf/Geometry.json" }
+  },
+  "required": ["name", "origin", "geometry"],
+  "additionalProperties": false
+}

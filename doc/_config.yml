@@ -5,4 +5,4 @@ name: CNRS-AIST JRL
 plugins:
     - jekyll-octicons
     - jekyll-sitemap
-exclude: ['Gemfile', 'Gemfile.lock', 'LICENSE', 'README.md']
+exclude: ['Gemfile', 'Gemfile.lock', 'LICENSE', 'README.md', 'vendor', 'CMakeLists.txt', 'Doxyfile.extra.in']

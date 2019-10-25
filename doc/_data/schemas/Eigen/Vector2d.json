@@ -1,0 +1,10 @@
+{
+  "title": "Eigen::Vector2d",
+  "type": "array",
+  "items":
+  {
+    "type": "number"
+  },
+  "minItems": 2,
+  "maxItems": 2
+}
