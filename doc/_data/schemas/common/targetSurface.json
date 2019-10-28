@@ -5,8 +5,8 @@
   {
     "robotIndex" : { "type": "integer", "minimum": 0 },
     "surface" : { "type": "string" },
-    "offset_translation": { "$ref": "/../../eigen/Vector3d.json" },
-    "offset_rotation": { "$ref": "/../../eigen/Matrix3d.json" }
+    "offset_translation": { "$ref": "/../../Eigen/Vector3d.json" },
+    "offset_rotation": { "$ref": "/../../Eigen/Matrix3d.json" }
   },
   "required": ["robotIndex", "targetSurface"]
 }

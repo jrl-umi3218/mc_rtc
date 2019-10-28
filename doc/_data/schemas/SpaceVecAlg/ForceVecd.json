@@ -1,10 +1,10 @@
 {
-  "title": "sva::ForceVecd",
+  "title": "SpaceVecAlg::ForceVecd",
   "type": "object",
   "properties":
   {
-    "couple": { "$ref": "/../../eigen/Vector3d.json" },
-    "force": { "$ref": "/../../eigen/Vector3d.json" }
+    "couple": { "$ref": "/../../Eigen/Vector3d.json" },
+    "force": { "$ref": "/../../Eigen/Vector3d.json" }
   },
   "required": ["couple", "force"],
   "additionalProperties": false

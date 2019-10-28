@@ -1,10 +1,10 @@
 {
-  "title": "rbd::Joint",
+  "title": "RBDyn::Joint",
   "type": "object",
   "properties":
   {
-    "type": { "$ref": "/../../rbd/Joint.Type.json" },
-    "axis": { "$ref": "/../../eigen/Vector3d.json" },
+    "type": { "$ref": "/../../RBDyn/Joint.Type.json" },
+    "axis": { "$ref": "/../../Eigen/Vector3d.json" },
     "forward": { "type": "boolean" },
     "name": { "type": "string" },
     "isMimic": { "type": "boolean" },

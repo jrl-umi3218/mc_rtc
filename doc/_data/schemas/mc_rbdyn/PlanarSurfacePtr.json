@@ -6,7 +6,7 @@
     "type": { "enum": ["planar"] },
     "name": { "type": "string" },
     "bodyName": { "type": "string" },
-    "X_b_s": { "$ref": "/../../sva/PTransformd.json" },
+    "X_b_s": { "$ref": "/../../SpaceVecAlg/PTransformd.json" },
     "materialName": { "type": "string" },
     "planarPoints": { "type": "array", "items": { "$ref": "#/definitions/number_pair" } }
   },

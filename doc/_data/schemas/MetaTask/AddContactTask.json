@@ -9,7 +9,7 @@
     "speed": { "type": "number", "minimum": 0},
     "stiffness": { "type": "number", "minimum": 0},
     "weight": { "type": "number", "minimum": 0},
-    "T_0_s": { "$ref": "/../../eigen/Vector3d.json" }
+    "T_0_s": { "$ref": "/../../Eigen/Vector3d.json" }
   },
   "required": ["type", "contact", "speed", "stiffness", "weight"]
 }

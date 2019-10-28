@@ -40,6 +40,20 @@ module Jekyll
   class SchemaPagesGenerator < Generator
     safe true
 
+    def resolveRef(site, schema)
+      if schema.key?("properties")
+        schema["properties"].each{ | prop, value |
+          if value.key?("$ref")
+            category = value["$ref"].split('/')[-2]
+            name = value["$ref"].split('/')[-1].gsub(".json", "").gsub(".", "")
+            resolveRef(site, site.data["schemas"][category][name])
+            schema["properties"][prop] = site.data["schemas"][category][name]
+            schema["properties"][prop]["REF"] = "#{category}/#{name}"
+          end
+        }
+      end
+    end
+
     def generate(site)
       menu = {}
       site.data["schemas"].each { |category, schemas|
@@ -54,6 +68,7 @@ module Jekyll
         if category != "common"
           schemas.each { |name, schema|
             menu[category][name] = true
+            resolveRef(site, schema)
             site.pages << SchemaPage.new(site, site.source, File.join("schemas", category), name, schema, menu, category)
             menu[category][name] = false
           }

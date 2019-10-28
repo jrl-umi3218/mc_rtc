@@ -6,7 +6,7 @@
     "type": { "enum": ["cylindrical"] },
     "name": { "type": "string" },
     "bodyName": { "type": "string" },
-    "X_b_s": { "$ref": "/../../sva/PTransformd.json" },
+    "X_b_s": { "$ref": "/../../SpaceVecAlg/PTransformd.json" },
     "materialName": { "type": "string" },
     "radius": { "type": "number" },
     "width": { "type": "number" }
