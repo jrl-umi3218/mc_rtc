@@ -1,0 +1,7 @@
+<span class="text-secondary">array{% if include.minItems != "" and include.minItems == include.maxItems %}[{{ include.minItems}}]{% endif %}</span>&nbsp;
+{% assign type = include.items.type %}
+{% if type == "string" or type == "number" or type == "integer" or type == "boolean" %}
+  <span class="text-primary">{{type}}</span>
+{% else %}
+  <span class="text-danger">Cannot handle object type: {{type}}</span>
+{% endif %}

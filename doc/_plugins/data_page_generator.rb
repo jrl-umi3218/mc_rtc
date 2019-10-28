@@ -48,7 +48,7 @@ module Jekyll
             name = value["$ref"].split('/')[-1].gsub(".json", "").gsub(".", "")
             resolveRef(site, site.data["schemas"][category][name])
             schema["properties"][prop] = site.data["schemas"][category][name]
-            schema["properties"][prop]["REF"] = "#{category}/#{name}"
+            schema["properties"][prop]["REF"] = "#{category}.#{name}"
           end
         }
       end

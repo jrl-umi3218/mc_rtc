@@ -1,0 +1,21 @@
+{% for prop in include.properties %}
+<div class="row">
+  {% assign required = false %}
+  {% for req in include.required %}
+    {% if prop[0] == req %}
+      {% assign required = true %}
+    {% endif %}
+  {% endfor %}
+  <div class="col-3">{% if required %}<strong>{% endif %}{{prop[0]}}{% if required %}</strong>{% endif %}</div>
+  <div class="col-9">
+    {% if prop[1] contains "REF" %}
+      {% assign REF = prop[1] %}
+      {% include json_schema.html schema=REF %}
+    {% elsif prop[1] contains "type" %}
+      {{ prop[1].type }}
+    {% else %}
+      <span class="text-danger">Don't know how to display {{prop[1]}}</span>
+    {% endif %}
+  </div>
+</div>
+{% endfor %}

@@ -1,14 +1,20 @@
 <div class="card">
   <div class="card-header">
-    <div class="row">
-      <div class="col-6">
-        <h6 class="text-primary font-weight-bold">{{ include.schema.title }}</h6>
-      </div>
-      <div class="col-6">
-        <small class="text-muted text-right">{{ include.schema.description }}</small>
-      </div>
+    <h6 class="text-primary font-weight-bold">{{ include.schema.title }}</h6>
+    <div class="float-right">
+      <small class="text-muted text-right">{{ include.schema.description }}</small>
     </div>
   </div>
   <div class="card-body">
+    {% if include.schema.type == "array" %}
+      {% capture minItems %}{{ include.schema.minItems | default: "" }}{% endcapture %}
+      {% include json_schema_array.html minItems=minItems maxItems=include.schema.maxItems items=include.schema.items %}
+    {% elsif include.schema.type == "object" %}
+      {% include json_schema_object.html properties=include.schema.properties required=include.schema.required %}
+    {% else %}
+    <div class="alert alert-danger" role="alert">
+      Cannot handle type: {{include.schema.type}}
+    </div>
+    {% endif %}
   </div>
 </div>
