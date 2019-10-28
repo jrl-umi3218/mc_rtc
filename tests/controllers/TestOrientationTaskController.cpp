@@ -29,7 +29,7 @@ public:
     // Check that the default constructor loads the robot + ground environment
     BOOST_CHECK_EQUAL(robots().robots().size(), 2);
     // Check that JVRC-1 was loaded
-    BOOST_CHECK_EQUAL(robot().name(), "jvrc-1");
+    BOOST_CHECK_EQUAL(robot().name(), "jvrc1");
     solver().addConstraintSet(contactConstraint);
     solver().addConstraintSet(dynamicsConstraint);
     postureTask->stiffness(1);

@@ -47,20 +47,20 @@
   "contacts":
   [
     {
-      "r1": "jvrc-1",
+      "r1": "jvrc1",
       "r2": "ground",
       "r1Surface": "LeftFoot",
       "r2Surface": "AllGround"
     },
     {
-      "r1": "jvrc-1",
+      "r1": "jvrc1",
       "r2": "ground",
       "r1Surface": "RightFoot",
       "r2Surface": "AllGround"
     }
   ],
   // Some options for a specific robot
-  "jvrc-1":
+  "jvrc1":
   {
     "posture":
     {

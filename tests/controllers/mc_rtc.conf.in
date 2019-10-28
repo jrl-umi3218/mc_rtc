@@ -1,6 +1,6 @@
 // This configuration file is used to run controller tests
 {
-  "MainRobot" : "JVRC-1",
+  "MainRobot" : "JVRC1",
 
   "Enabled"   : ["@TEST_CONTROLLER_NAME@"],
 
