@@ -282,7 +282,7 @@ template<>
 mc_rbdyn::RobotModule make_ref()
 {
   configureRobotLoader();
-  auto rm_ptr = mc_rbdyn::RobotLoader::get_robot_module("JVRC-1");
+  auto rm_ptr = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
   mc_rbdyn::RobotModule rm = *rm_ptr;
   rm.expand_stance();
   return rm;

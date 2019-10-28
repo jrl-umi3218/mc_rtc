@@ -20,7 +20,7 @@ mc_rbdyn::Robots & get_robots()
     return *robots_ptr;
   }
   configureRobotLoader();
-  auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC-1");
+  auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
   robots_ptr = mc_rbdyn::loadRobot(*rm);
   return *robots_ptr;
 }

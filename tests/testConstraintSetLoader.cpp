@@ -18,7 +18,7 @@
 
 static bool configured = configureRobotLoader();
 /* Create Robots with one robot and an environment for the purpose of the test */
-static auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC-1");
+static auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
 static auto em =
     mc_rbdyn::RobotLoader::get_robot_module("env", std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH), std::string("ground"));
 static auto robots = mc_rbdyn::loadRobotAndEnv(*rm, *em);

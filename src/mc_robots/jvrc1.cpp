@@ -9,7 +9,7 @@
 #define JVRC_VAL(x) #x
 #define JVRC_VAL_VAL(x) JVRC_VAL(x)
 
-#include "jvrc-1.h"
+#include "jvrc1.h"
 
 #include <mc_rtc/logging.h>
 
@@ -21,7 +21,7 @@ namespace bfs = boost::filesystem;
 namespace mc_robots
 {
 
-JVRC1RobotModule::JVRC1RobotModule() : RobotModule(std::string(JVRC_VAL_VAL(JVRC_DESCRIPTION_PATH)), "jvrc-1")
+JVRC1RobotModule::JVRC1RobotModule() : RobotModule(std::string(JVRC_VAL_VAL(JVRC_DESCRIPTION_PATH)), "jvrc1")
 {
   std::ifstream ifs(urdf_path);
   if(ifs.is_open())
