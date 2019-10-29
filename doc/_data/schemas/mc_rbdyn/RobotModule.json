@@ -71,7 +71,7 @@
       "type": "object",
       "patternProperties":
       {
-        "*": { "type": "array", "items": { "$ref": "#/definitions/string_pair" } }
+        "*": { "$ref": "#/definitions/string_pair" }
       }
     },
     "stpbvHulls":
@@ -80,7 +80,7 @@
       "type": "object",
       "patternProperties":
       {
-        "*": { "type": "array", "items": { "$ref": "#/definitions/string_pair" } }
+        "*": { "$ref": "#/definitions/string_pair" }
       }
     },
     "flexibilities":

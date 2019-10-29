@@ -4,7 +4,7 @@
   "type": "object",
   "properties":
   {
-    "type": { "enum": ["bspline_trajectory"] },
+    "type": { "enum": ["bspline_trajectory"], "type": "string" },
     "name": { "type": "string" },
     "robotIndex": { "type": "integer", "minimum": 0 },
     "surface": { "type": "string" },

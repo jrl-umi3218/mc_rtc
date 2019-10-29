@@ -1,5 +1,5 @@
 {
-  "title": "SpaceVecAlg::PTransformd",
+  "title": "sva::PTransformd",
   "type": "object",
   "description": "Either rotation or translation can be ommited if the other is present",
   "properties":

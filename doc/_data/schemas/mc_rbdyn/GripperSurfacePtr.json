@@ -1,5 +1,5 @@
 {
-  "title": "std::shared_ptr<mc_rbdyn::GripperSurface>",
+  "title": "mc_rbdyn::GripperSurfacePtr",
   "type": "object",
   "properties":
   {

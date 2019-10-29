@@ -1,5 +1,5 @@
 {
-  "title": "std::shared_ptr<mc_rbdyn::CylindricalSurface>",
+  "title": "mc_rbdyn::CylindricalSurfacePtr",
   "type": "object",
   "properties":
   {

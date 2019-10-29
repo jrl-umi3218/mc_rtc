@@ -3,7 +3,7 @@
   "type": "object",
   "properties":
   {
-    "type": { "enum": ["collision"] },
+    "type": { "enum": ["collision"], "type": "string" },
     "r1Index": { "type": "number", "minimum": 0 },
     "r2Index": { "type": "number", "minimum": 0 },
     "useCommon":

@@ -1,5 +1,5 @@
 {
-  "title": "RBDyn::Body",
+  "title": "rbd::Body",
   "type": "object",
   "properties":
   {

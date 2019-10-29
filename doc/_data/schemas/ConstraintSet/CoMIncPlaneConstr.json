@@ -3,7 +3,7 @@
   "type": "object",
   "properties":
   {
-    "type": { "enum": ["CoMIncPlane"] },
+    "type": { "enum": ["CoMIncPlane"], "type": "string" },
     "robotIndex": { "type": "integer", "minimum": 0 }
   },
   "required": ["type", "robotIndex"]

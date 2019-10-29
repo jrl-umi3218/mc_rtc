@@ -1,5 +1,5 @@
 {
-  "title": "RBDyn::Joint",
+  "title": "rbd::Joint",
   "type": "object",
   "properties":
   {

@@ -1,5 +1,6 @@
 {
   "title": "mc_rbdyn_urdf::Geometry",
+  "description": "Only one of the possible entries",
   "type": "object",
   "properties":
   {

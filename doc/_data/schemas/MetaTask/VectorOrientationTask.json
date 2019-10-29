@@ -3,7 +3,7 @@
   "type": "object",
   "properties":
   {
-    "type": { "enum": ["vectorOrientation"] },
+    "type": { "enum": ["vectorOrientation"], "type": "string" },
     "name": { "type": "string" },
     "robotIndex": { "type": "integer", "minimum": 0 },
     "body": { "type": "string" },

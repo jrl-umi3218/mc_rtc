@@ -1,9 +1,9 @@
 {
-  "title": "SpaceVecAlg::RBInertiad",
+  "title": "sva::RBInertiad",
   "type": "object",
   "properties":
   {
-    "mass": { "type": "numeric", "minimum": 0 },
+    "mass": { "type": "number", "minimum": 0 },
     "momentum": { "$ref": "/../../Eigen/Vector3d.json" },
     "inertia": { "$ref": "/../../Eigen/Matrix3d.json" }
   },

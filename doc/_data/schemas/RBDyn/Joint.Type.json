@@ -1,12 +1,12 @@
 {
-  "title": "RBDyn::Joint::Type",
+  "title": "rbd::Joint::Type",
   "type": "object",
   "properties":
   {
     "type" :
     {
-      "type": "string",
-      "enum": ["rev", "prism", "spherical", "planar", "cylindrical", "free", "fixed"]
+      "enum": ["rev", "prism", "spherical", "planar", "cylindrical", "free", "fixed"],
+      "type": "string"
     }
   },
   "required": ["type"],

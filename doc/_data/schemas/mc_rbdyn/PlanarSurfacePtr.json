@@ -1,5 +1,5 @@
 {
-  "title": "std::shared_ptr<mc_rbdyn::PlanarSurface>",
+  "title": "mc_rbdyn::PlanarSurfacePtr",
   "type": "object",
   "properties":
   {

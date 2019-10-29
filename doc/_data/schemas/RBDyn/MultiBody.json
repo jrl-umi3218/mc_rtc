@@ -1,5 +1,5 @@
 {
-  "title": "RBDyn::MultiBody",
+  "title": "rbd::MultiBody",
   "type": "object",
   "properties":
   {

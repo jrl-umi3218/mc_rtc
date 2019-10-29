@@ -3,7 +3,7 @@
   "type": "object",
   "properties":
   {
-    "type": { "enum": ["com"] },
+    "type": { "enum": ["com"], "type": "string" },
     "name": { "type": "string" },
     "robotIndex": { "type": "integer", "minimum": 0 },
     "com": { "$ref": "/../../Eigen/Vector3d.json" },
