@@ -30,7 +30,11 @@ module Jekyll
 
       self.process(@name)
       self.read_yaml(File.join(base, '_layouts'), "json.html")
-      self.data['title']  = 'Schema documentation for ' + schema['title']
+      if schema and schema.key?('title')
+        self.data['title']  = 'Schema documentation for ' + schema['title']
+      else
+        self.data['title'] = 'Schema documentation'
+      end
       self.data['schema'] = schema
       self.data['menu'] = Marshal.load(Marshal.dump(menu))
       self.data['category'] = category
@@ -107,6 +111,7 @@ module Jekyll
           }
         end
       }
+      site.pages << SchemaPage.new(site, site.source, "", "json", nil, menu, "")
     end
   end
 

@@ -1,3 +1,4 @@
+{% if include.schema %}
 <div class="card card-schema">
   <div class="card-header">
     <h6 class="text-primary font-weight-bold">{{ include.schema.title | default: "object" }}</h6>
@@ -22,3 +23,10 @@
     {% endif %}
   </div>
 </div>
+{% else %}
+<div class="card card-schema">
+  <div class="card-body">
+    <p>Select an object on the right to see the exepected JSON format</p>
+  </div>
+</div>
+{% endif %}
