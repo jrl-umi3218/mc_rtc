@@ -1,21 +1,21 @@
+{% assign OLD_REF = REF %}
+{% assign OLD_ID = ID %}
+{% assign OLD_HAS_DESC = HAS_DESC %}
+{% assign OLD_DESC = DESC %}
+{% capture INCLUDE_AFTER %}{% endcapture %}
+<table class="table table-borderless table-hover object-property">
+<tbody>
 {% for prop in include.properties %}
-<div class="row">
-  {% assign required = false %}
-  {% for req in include.required %}
-    {% if prop[0] == req %}
-      {% assign required = true %}
-    {% endif %}
-  {% endfor %}
-  <div class="col-3">{% if required %}<strong>{% endif %}{{prop[0]}}{% if required %}</strong>{% endif %}</div>
-  <div class="col-9">
-    {% if prop[1] contains "REF" %}
-      {% assign REF = prop[1] %}
-      {% include json_schema.html schema=REF %}
-    {% elsif prop[1] contains "type" %}
-      {{ prop[1].type }}
-    {% else %}
-      <span class="text-danger">Don't know how to display {{prop[1]}}</span>
-    {% endif %}
-  </div>
-</div>
+  {% assign REF = prop[1] %}
+  {% include json_schema_object_property.html id=include.id required=include.required pattern=false %}
 {% endfor %}
+{% for prop in include.patternProperties %}
+  {% assign REF = prop[1] %}
+  {% include json_schema_object_property.html id=include.id required=include.required pattern=true %}
+{% endfor %}
+</tbody>
+</table>
+{% assign REF = OLD_REF %}
+{% assign ID = OLD_ID %}
+{% assign DESC = OLD_DESC %}
+{% assign HAS_DESC = OLD_HAS_DESC %}

@@ -67,3 +67,59 @@ body
     margin-right: 5px;
 }
 
+.card-schema
+{
+  margin-bottom: 10px;
+}
+
+.object-property
+{
+  margin-bottom: 10px;
+}
+
+.object-property td
+{
+  padding-bottom: 6px;
+  padding-top: 6px;
+}
+
+.text-enum
+{
+  color: purple;
+}
+
+.text-string
+{
+  color: green;
+}
+
+.text-boolean
+{
+  color: orangered;
+}
+
+.text-number
+{
+  color: blue;
+}
+
+.text-integer
+{
+  color: blueviolet;
+}
+
+.card-schema > .card-header
+{
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.card-schema > .card-body
+{
+  padding-bottom: 5px;
+}
+
+.object-property-description
+{
+  float: right;
+}

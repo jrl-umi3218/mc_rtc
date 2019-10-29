@@ -1,0 +1,59 @@
+{% if include.data contains "enum" %}
+  {% capture enum_size %}{{ include.data.enum | size }}{% endcapture %}
+  {% if enum_size == "1" %}
+    <span class="text-secondary">constant&nbsp;</span>
+  {% else %}
+    <span class="text-secondary">enum&nbsp;</span>
+  {% endif %}
+  {% if include.data contains "type" %}
+    <span class="text-{{include.data.type}}">{{include.data.type}}</span>&nbsp;
+  {% endif %}
+  {% for e in include.data.enum %}
+    <span class="text-enum">{{e}}</span>&nbsp;
+  {% endfor %}
+{% elsif include.data contains "REF" %}
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapse{{include.id}}" aria-expanded="false" aria-controls="collapse{{include.id}}">{{include.data.title}}</a>
+  {% capture INCLUDE_AFTER %}
+  <tr class="collapse" id="collapse{{include.id}}">
+    <td colspan="3">
+      {% include json_schema.html schema=include.data id=include.id %}
+    </td>
+  </tr>
+  {% endcapture %}
+{% elsif include.data contains "type" %}
+  {% assign type = include.data.type %}
+  {% if type == "string" or type == "number" or type == "integer" or type == "boolean" %}
+    {% if include.data contains "minimum" and include.data contains "maximum" %}
+      <span class="text-{{type}}">{{include.data.minimum}} &le; {{type}} &le; {{include.data.maximum}}</span>
+    {% elsif include.data contains "minimum" %}
+      <span class="text-{{type}}">{{type}} &ge; {{include.data.minimum}}</span>
+    {% elsif include.data contains "maximum" %}
+      <span class="text-{{type}}">{{type}} &le; {{include.data.maximum}}</span>
+    {% else %}
+      <span class="text-{{type}}">{{type}}</span>
+    {% endif %}
+    {% if include.data contains "default" %}
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-{{type}}">{{include.data.default}}</span>
+    {% endif %}
+  {% elsif type == "array" %}
+    {% if include.data contains "minItems" %}
+      {% assign minItems = include.data.minItems %}
+    {% else %}
+      {% assign minItems = "" %}
+    {% endif %}
+    {% include json_schema_array.html minItems=minItems maxItems=include.data.maxItems items=include.data.items id=include.id %}
+  {% elsif type == "object" %}
+    <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapse{{include.id}}" aria-expanded="false" aria-controls="collapse{{include.id}}">object</a>
+    {% capture INCLUDE_AFTER %}
+    <tr class="collapse" id="collapse{{include.id}}">
+      <td colspan="3">
+        {% include json_schema.html schema=include.data id=include.id %}
+      </td>
+    </tr>
+    {% endcapture %}
+  {% else %}
+    <span class="text-danger">Cannot handle object type: {{type}}</span>
+  {% endif %}
+{% else %}
+  <span class="text-danger">Cannot handle data: {{include.data}}</span>
+{% endif %}

@@ -3,24 +3,10 @@ layout: default
 ---
 
 <div class="row">
-  <p>
-    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-      Link with href
-    </a>
-  </p>
-  <div class="collapse" id="collapseExample">
-    <div class="card card-body">
-      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-    </div>
-  </div>
-</div>
-
-<div class="row">
 
   <div class="offset-1 col-3">
     <div class="list-group list-group-root well">
-    {% assign sorted_menu = page.menu | sort %}
-    {% for cat in sorted_menu %}
+    {% for cat in page.menu %}
     <a href="#{{ cat[0] }}-objects" class="list-group-item {% if page.category != cat[0] %}collapsed{% endif %}" data-toggle="collapse" role="button">
       <svg class="octicon octicon-chevron-right octicon octicon-chevron-right" viewBox="0 0 8 16" version="1.1" width="8" height="16" aria-hidden="true" style="{% if page.category == cat[0] %}display:none{% endif %}"><path fill-rule="evenodd" d="M7.5 8l-5 5L1 11.5 4.75 8 1 4.5 2.5 3l5 5z"></path></svg><svg class="octicon octicon-chevron-down octicon octicon-chevron-down" viewBox="0 0 10 16" version="1.1" width="10" height="16" aria-hidden="true" style="{% if page.category != cat[0] %}display:none{% endif %}"><path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"></path></svg>{{ cat[0] }} objects
     </a>
@@ -28,7 +14,7 @@ layout: default
       <div class="list-group" id="">
         {% assign sorted_objects = cat[1] | sort %}
         {% for obj in sorted_objects %}
-          <a href="/schemas/{{ cat[0] }}/{{ obj[0] }}.html" class="list-group-item{% if obj[1] %} active{% endif %}">{{ obj[0] }}</a>
+          <a href="/schemas/{{ cat[0] }}/{{ obj[0] }}.html" class="list-group-item{% if obj[1].active %} active{% endif %}">{{ obj[1].display }}</a>
         {% endfor %}
       </div>
     </div>
@@ -36,7 +22,7 @@ layout: default
     </div>
   </div>
   <div class="col-6">
-    {% include json_schema.html schema=page.schema %}
+    {% include json_schema.html schema=page.schema id=page.schema.title %}
   </div>
 
 </div>

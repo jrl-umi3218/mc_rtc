@@ -1,7 +1,11 @@
 <span class="text-secondary">array{% if include.minItems != "" and include.minItems == include.maxItems %}[{{ include.minItems}}]{% endif %}</span>&nbsp;
-{% assign type = include.items.type %}
-{% if type == "string" or type == "number" or type == "integer" or type == "boolean" %}
-  <span class="text-primary">{{type}}</span>
+{% if include.items[0] %}
+  [
+  {% for itm in include.items %}
+    {% capture id %}{{include.id}}{{forloop.index0}}{% endcapture %}
+    {% include json_schema_item.html data=itm id=id %}{% unless forloop.last %},{% endunless %}
+  {% endfor %}
+  ]
 {% else %}
-  <span class="text-danger">Cannot handle object type: {{type}}</span>
+  {% include json_schema_item.html data=include.items id=include.id %}
 {% endif %}
