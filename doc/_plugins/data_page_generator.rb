@@ -40,18 +40,45 @@ module Jekyll
   class SchemaPagesGenerator < Generator
     safe true
 
-    def resolveRef(site, schema)
-      if schema.key?("properties")
-        schema["properties"].each{ | prop, value |
-          if value.key?("$ref")
-            category = value["$ref"].split('/')[-2]
-            name = value["$ref"].split('/')[-1].gsub(".json", "").gsub(".", "")
-            resolveRef(site, site.data["schemas"][category][name])
-            schema["properties"][prop] = site.data["schemas"][category][name]
-            schema["properties"][prop]["REF"] = "#{category}.#{name}"
-          end
-        }
+    def resolveRef(site, schema, parent = nil, key_out = nil, root = nil)
+      if root == nil
+        root = schema
       end
+      if not schema.is_a?(Hash)
+        if schema.is_a?(Array)
+          schema.each_index{ | index |
+            resolveRef(site, schema[index], schema, index, root)
+          }
+        end
+        return
+      end
+      schema.each{ | key, value |
+        if key == "$ref"
+          category = value.split('/')[-2]
+          name = value.split('/')[-1].gsub(".json", "").gsub(".", "")
+          if category != "definitions"
+            resolveRef(site, site.data["schemas"][category][name])
+          else
+            resolveRef(site, root[category][name], nil, nil, root)
+          end
+          has_desc = false
+          if parent[key_out].key?("description")
+            has_desc = true
+            desc = parent[key_out]["description"].dup()
+          end
+          if category != "definitions"
+            parent[key_out] = site.data["schemas"][category][name].dup()
+            parent[key_out]["REF"] = "#{category}.#{name}"
+          else
+            parent[key_out] = root[category][name].dup()
+          end
+          if has_desc
+            parent[key_out]["DESC"] = desc
+          end
+        else
+          resolveRef(site, value, schema, key, root)
+        end
+      }
     end
 
     def generate(site)
