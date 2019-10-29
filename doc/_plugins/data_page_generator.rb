@@ -56,21 +56,27 @@ module Jekyll
 
     def generate(site)
       menu = {}
+      default_order = ["Eigen", "SpaceVecAlg", "RBDyn", "Tasks", "mc_rbdyn_urdf", "mc_rbdyn", "ConstraintSet", "MetaTask"]
+      default_order.each { |name|
+        menu[name] = {}
+      }
       site.data["schemas"].each { |category, schemas|
         if category != "common"
           menu[category] = {}
           schemas.each { |name, schema|
-            menu[category][name] = false
+            menu[category][name] = {}
+            menu[category][name]["active"] = false
+            menu[category][name]["display"] = schema["title"].split("::").drop(1).join("::")
           }
         end
       }
       site.data["schemas"].each { |category, schemas|
         if category != "common"
           schemas.each { |name, schema|
-            menu[category][name] = true
+            menu[category][name]["active"] = true
             resolveRef(site, schema)
             site.pages << SchemaPage.new(site, site.source, File.join("schemas", category), name, schema, menu, category)
-            menu[category][name] = false
+            menu[category][name]["active"] = false
           }
         end
       }
