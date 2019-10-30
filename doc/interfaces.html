@@ -17,13 +17,13 @@ title: Interfaces
 
 {% for itf in site.data.interfaces %}
 <div class="media features">
-  <img class="mr-3" src="/assets/interfaces/{{itf.icon}}" alt="{{itf.name}}" width="125" height="125"/>
+  <img class="mr-3" src="{{site.baseurl}}/assets/interfaces/{{itf.icon}}" alt="{{itf.name}}" width="125" height="125"/>
   <div class="media-body">
     <h5 class="mt-0">{{itf.name}}</h5>
     <p>{{itf.desc}}</p>
     <dl class="row">
       <dt class="offset-1 col-3">Interface package</dt>
-      <dd class="col-8"><a href="{{itf.pkg}}" target="blank_">{% octicon globe %} {{itf.pkg}}</a></dd>
+      <dd class="col-8"><a href="{{itf.pkg.url}}" target="blank_">{% octicon globe %} {{itf.pkg.name}}</a></dd>
     </dl>
   </div>
 </div>

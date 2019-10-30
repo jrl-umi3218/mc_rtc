@@ -1,8 +1,12 @@
-- name: "ROS"
-  desc: "ROS is a..."
-  icon: "ros.png"
-  pkg: "https://gite.lirmm.fr/multi-contact/mc_rtc_ros"
-- name: "V-REP"
-  desc: "V-REP is a..."
-  icon: "vrep.png"
-  pkg: "https://gite.lirmm.fr/multi-contact/mc_vrep"
+- name: ROS
+  desc: ROS is a...
+  icon: ros.png
+  pkg:
+    name: mc_rtc_ros
+    url: https://gite.lirmm.fr/multi-contact/mc_rtc_ros
+- name: V-REP
+  desc: V-REP is a...
+  icon: vrep.png
+  pkg:
+    name: mc_vrep
+    url: https://gite.lirmm.fr/multi-contact/mc_vrep

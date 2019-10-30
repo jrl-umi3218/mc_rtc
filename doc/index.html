@@ -57,7 +57,7 @@ title: Overview
 
 {% for itm in site.data.features %}
 <div class="media features">
-  <img class="mr-3" src="/assets/icons/{{itm.icon}}" alt="{{itm.heading}}" width="64" height="64"/>
+  <img class="mr-3" src="{{site.baseurl}}/assets/icons/{{itm.icon}}" alt="{{itm.heading}}" width="64" height="64"/>
   <div class="media-body">
     <h5 class="mt-0">{{itm.heading}}</h5>
     {{itm.desc}}

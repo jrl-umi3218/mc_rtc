@@ -3,7 +3,6 @@ layout: default
 ---
 
 <div class="row">
-
   <div class="offset-1 col-3">
     <div class="list-group list-group-root well">
     {% for cat in page.menu %}
@@ -14,7 +13,7 @@ layout: default
       <div class="list-group" id="">
         {% assign sorted_objects = cat[1] | sort %}
         {% for obj in sorted_objects %}
-          <a href="/schemas/{{ cat[0] }}/{{ obj[0] }}.html" class="list-group-item{% if obj[1].active %} active{% endif %}">{{ obj[1].display }}</a>
+          <a href="{{site.baseurl}}/schemas/{{ cat[0] }}/{{ obj[0] }}.html" class="list-group-item{% if obj[1].active %} active{% endif %}">{{ obj[1].display }}</a>
         {% endfor %}
       </div>
     </div>
