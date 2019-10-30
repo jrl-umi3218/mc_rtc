@@ -1,4 +1,2 @@
-{
-  "type": "CoMIncPlane",
-  "robotIndex": 0
-}
+type: CoMIncPlane
+robotIndex: 0

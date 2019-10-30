@@ -1,7 +1,3 @@
-{
-  "mesh":
-  {
-    "filename": "/some/path",
-    "scale": 1.0
-  }
-}
+mesh:
+  filename: /some/path
+  scale: 1.0

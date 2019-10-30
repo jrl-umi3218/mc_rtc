@@ -1,4 +1,2 @@
-{
-  "name": "J0",
-  "stiffness": 5.0
-}
+name: J0
+stiffness: 5.0

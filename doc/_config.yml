@@ -1,6 +1,6 @@
 name: CNRS-AIST JRL
 # Set to true to skip CDN usage
-use_local_libraries: false
+use_local_libraries: true
 # Note: GitHub only supports pygments, while rouge is the default highlighter.
 # Thus, we comment it and simply rely on the default highlighter.
 # highlighter: pygments
