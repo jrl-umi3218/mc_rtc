@@ -1,0 +1,25 @@
+<div class="card bg-light">
+  <div class="card-body">
+{% if include.lang == "json" %}
+{% highlight json %}{{ include.source }}{% endhighlight %}
+{% elsif include.lang == "yaml" %}
+{% highlight yaml %}{{ include.source }}{% endhighlight %}
+{% elsif include.lang == "cpp" %}
+{% highlight cpp %}{{ include.source }}{% endhighlight %}
+{% elsif include.lang == "cmake" %}
+{% highlight cmake %}{{ include.source }}{% endhighlight %}
+{% elsif include.lang == "python" %}
+{% highlight python %}{{ include.source }}{% endhighlight %}
+{% else %}
+  {% if include.lang %}
+    <div class="text-danger">Cannot handle requested lang: {{include.lang}}</div>
+  {% endif %}
+{% highlight text %}{{ include.source }}{% endhighlight %}
+{% endif %}
+  </div>
+</div>
+{% if include.copy %}
+  {% capture id %}{{ include.id }}{{ include.lang }}CopySource{% endcapture %}
+  <pre id="{{id}}" class="offscreen" aria-hidden=true>{{ include.source }}</pre>
+  <button class="btn btn-primary copy-button" data-clipboard-target="#{{id}}">Copy to clipboard</button>
+{% endif %}

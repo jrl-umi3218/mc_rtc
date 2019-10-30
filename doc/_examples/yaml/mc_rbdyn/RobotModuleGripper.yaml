@@ -1,0 +1,5 @@
+{
+  "name": "l_gripper",
+  "joints": ["j0", "j1", "j2"],
+  "reverse_limits": false
+}

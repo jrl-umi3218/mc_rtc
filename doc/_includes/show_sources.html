@@ -1,0 +1,14 @@
+<ul class="nav nav-tabs" id="{{include.id}}Tab" role="tablist">
+  {% for src in include.sources %}
+    <li class="nav-item">
+      <a class="nav-link{% if forloop.index0 == 0 %} active{% endif %}" id="{{include.id}}{{src.lang}}Tab" data-toggle="tab" href="#{{include.id}}{{src.lang}}TabContent" role="tab" aria-controls="{{include.id}}{{src.lang}}TabContent" aria-selected="{% if forloop.index0 == 0 %}true{% else %}false{% endif %}">{{src.name}}</a>
+    </li>
+  {% endfor %}
+</ul>
+<div class="tab-content" id="{{include.id}}TabContent">
+  {% for src in include.sources %}
+    <div class="tab-pane{% if forloop.index0 == 0 %} show active{% endif %}" id="{{include.id}}{{src.lang}}TabContent" role="tabpanel" arial-labelledby="{{include.id}}{{src.lang}}Tab">
+      {% include show_source.html source=src.source lang=src.lang copy=include.copy id=include.id %}
+    </div>
+  {% endfor %}
+</div>

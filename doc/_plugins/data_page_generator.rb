@@ -38,6 +38,17 @@ module Jekyll
       self.data['schema'] = schema
       self.data['menu'] = Marshal.load(Marshal.dump(menu))
       self.data['category'] = category
+      example_json = {}
+      if schema and schema.key?('title')
+        example_json["lang"] = "json"
+        example_json["name"] = "JSON"
+        example_json["source"] = File.read(File.join(base, '_examples', 'json', category, name + '.json'))
+        example_yaml = {}
+        example_yaml["lang"] = "yaml"
+        example_yaml["name"] = "YAML"
+        example_yaml["source"] = File.read(File.join(base, '_examples', 'yaml', category, name + '.yaml'))
+      end
+      self.data['example_sources'] = [example_json, example_yaml]
     end
   end
 

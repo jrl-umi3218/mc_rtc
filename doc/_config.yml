@@ -16,3 +16,4 @@ exclude:
     - CMakeLists.txt
     - Doxyfile.extra.in
     - setup-local-assets.sh
+    - _examples

@@ -1,0 +1,7 @@
+{
+  "type": "rev",
+  "axis": [0.0, 0.0, 1.0],
+  "forward": true,
+  "name": "J0",
+  "isMimic": false
+}

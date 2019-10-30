@@ -22,8 +22,19 @@ layout: default
   </div>
   <div class="col-6">
     {% include json_schema.html schema=page.schema id=page.schema.title %}
+    {% if page.schema %}
+      <div class="card">
+        <div class="card-header">
+          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Example</button>
+        </div>
+        <div id="collapseExample" class="collapse">
+          <div class="card-body">
+            {% include show_sources.html sources=page.example_sources copy=true id="example" %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
   </div>
-
 </div>
 
 <script type="text/javascript">
@@ -34,5 +45,7 @@ $(document).ready(function()
             $('.octicon-chevron-down', this).toggle();
             $('.octicon-chevron-right', this).toggle();
   });
+
+  new ClipboardJS('.copy-button');
 });
 </script>
