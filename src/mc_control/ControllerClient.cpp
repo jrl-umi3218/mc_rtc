@@ -332,9 +332,9 @@ void ControllerClient::handle_trajectory(const ElementId & id, const mc_rtc::Con
 {
   const auto & data = data_[3];
   mc_rtc::gui::LineConfig config;
-  if(data.size() > 4)
+  if(data_.size() > 4)
   {
-    config = data_[3];
+    config.load(data_[4]);
   }
   if(data.size())
   {
