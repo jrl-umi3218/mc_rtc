@@ -1,0 +1,15 @@
+{% include json_schema.html schema=page.schema id=page.schema.title %}
+{% if page.schema %}
+  {% capture exampleId %}{{page.schema.title | replace: "::", "_"}}Example{% endcapture %}
+  {% capture collapseExampleId %}collapse{{exampleId}}{% endcapture %}
+  <div class="card">
+    <div class="card-header">
+      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{collapseExampleId}}" aria-expanded="false" aria-controls="{{collapseExampleId}}">Example</button>
+    </div>
+    <div id="{{collapseExampleId}}" class="collapse">
+      <div class="card-body">
+        {% include show_sources.html sources=page.example_sources copy=true id=exampleId %}
+      </div>
+    </div>
+  </div>
+{% endif %}

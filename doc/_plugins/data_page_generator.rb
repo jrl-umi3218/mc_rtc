@@ -18,39 +18,41 @@ module Jekyll
     end
   end
 
-  # this class is used to tell Jekyll to generate a page
-  class SchemaPage < Page
+  class AllSchemasPage < Page
     include Sanitizer
 
-    def initialize(site, base, dir, name, schema, menu, category)
+    def initialize(site, base, menu, schemas)
       @site = site
       @base = base
-      @dir  = dir
-      @name = name + ".html"
+      @dir = '/'
+      @name = 'json.html'
 
       self.process(@name)
       self.read_yaml(File.join(base, '_layouts'), "json.html")
-      if schema and schema.key?('title')
-        self.data['title']  = 'Schema documentation for ' + schema['title']
-      else
-        self.data['title'] = 'Schema documentation'
-      end
-      self.data['schema'] = schema
-      self.data['menu'] = Marshal.load(Marshal.dump(menu))
-      self.data['category'] = category
-      example_json = {}
-      if schema and schema.key?('title')
-        example_json["lang"] = "json"
-        example_json["name"] = "JSON"
-        example_json["source"] = File.read(File.join(base, '_examples', 'json', category, name + '.json'))
-        example_yaml = {}
-        example_yaml["lang"] = "yaml"
-        example_yaml["name"] = "YAML"
-        example_yaml["source"] = File.read(File.join(base, '_examples', 'yaml', category, name + '.yaml'))
-      end
-      self.data['example_sources'] = [example_json, example_yaml]
+      self.data['title'] = 'Schema documentation'
+      self.data['menu'] = menu
+      self.data['all_schemas'] = {}
+      schemas.each { |category, cat_schemas|
+        if category != "common"
+          self.data['all_schemas'][category] = {}
+          cat_schemas.each { |name, schema|
+            self.data['all_schemas'][category][name] = {}
+            self.data['all_schemas'][category][name]["schema"] = schema;
+            example_json = {}
+            example_json["lang"] = "json"
+            example_json["name"] = "JSON"
+            example_json["source"] = File.read(File.join(base, '_examples', 'json', category, name + '.json'))
+            example_yaml = {}
+            example_yaml["lang"] = "yaml"
+            example_yaml["name"] = "YAML"
+            example_yaml["source"] = File.read(File.join(base, '_examples', 'yaml', category, name + '.yaml'))
+            self.data['all_schemas'][category][name]["example"] = [example_json, example_yaml]
+          }
+        end
+      }
     end
   end
+
 
   class SchemaPagesGenerator < Generator
     safe true
@@ -106,23 +108,14 @@ module Jekyll
         if category != "common"
           menu[category] = {}
           schemas.each { |name, schema|
+            resolveRef(site, schema)
             menu[category][name] = {}
             menu[category][name]["active"] = false
             menu[category][name]["display"] = schema["title"].split("::").drop(1).join("::")
           }
         end
       }
-      site.data["schemas"].each { |category, schemas|
-        if category != "common"
-          schemas.each { |name, schema|
-            menu[category][name]["active"] = true
-            resolveRef(site, schema)
-            site.pages << SchemaPage.new(site, site.source, File.join("schemas", category), name, schema, menu, category)
-            menu[category][name]["active"] = false
-          }
-        end
-      }
-      site.pages << SchemaPage.new(site, site.source, "", "json", nil, menu, "")
+      site.pages << AllSchemasPage.new(site, site.source, menu, site.data["schemas"])
     end
   end
 

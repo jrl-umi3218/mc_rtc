@@ -1,0 +1,19 @@
+{% if include.schema %}
+  {% capture id %}{{include.schema.title | replace: "::", "_"}}{% endcapture %}
+  {% capture collapseId %}collapse{{id}}{% endcapture %}
+  {% capture exampleId %}{{id}}Example{% endcapture %}
+  {% capture collapseExampleId %}collapse{{exampleId}}{% endcapture %}
+  <div id="{{collapseId}}" class="collapse collapseSchema">
+    {% include json_schema.html schema=include.schema id=id %}
+    <div class="card">
+      <div class="card-header">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{collapseExampleId}}" aria-expanded="false" aria-controls="{{collapseExampleId}}">Example</button>
+      </div>
+      <div id="{{collapseExampleId}}" class="collapse">
+        <div class="card-body">
+          {% include show_sources.html sources=include.example_sources copy=true id=exampleId %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
