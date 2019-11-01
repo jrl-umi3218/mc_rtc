@@ -1,8 +1,7 @@
 {% if include.schema %}
-  {% capture id %}{{include.schema.title | replace: "::", "_"}}{% endcapture %}
-  {% capture collapseId %}collapse{{id}}{% endcapture %}
-  {% capture exampleId %}{{id}}Example{% endcapture %}
-  {% capture collapseExampleId %}collapse{{exampleId}}{% endcapture %}
+  {% capture collapseId %}collapse_{{include.id}}{% endcapture %}
+  {% capture exampleId %}{{include.id}}_example{% endcapture %}
+  {% capture collapseExampleId %}collapse_{{exampleId}}{% endcapture %}
   <div id="{{collapseId}}" class="collapse collapseSchema">
     {% include json_schema.html schema=include.schema id=id %}
     <div class="card">
