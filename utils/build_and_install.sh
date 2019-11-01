@@ -280,11 +280,18 @@ then
   fi
 else
   export OS=$(lsb_release -si)
+  export UBUNTU_MAJOR=0
   if [ $OS = Ubuntu ]
   then
+    UBUNTU_VERSION=`lsb_release -rs`
+    export UBUNTU_MAJOR=${UBUNTU_VERSION%%.*}
     yaml_to_env "APT_DEPENDENCIES" $gitlab_ci_yml
     APT_DEPENDENCIES=`echo $APT_DEPENDENCIES|sed -e's/libspacevecalg-dev//'|sed -e's/librbdyn-dev//'|sed -e's/libeigen-qld-dev//'|sed -e's/libsch-core-dev//'|sed -e's/libtasks-qld-dev//'|sed -e's/libmc-rbdyn-urdf-dev//'|sed -e's/python-tasks//'|sed -e's/python-mc-rbdyn-urdf//'`
-    APT_DEPENDENCIES="cmake build-essential gfortran doxygen libeigen3-dev python-pip python3-pip wget cython3 python3-numpy python3-nose python3-coverage $APT_DEPENDENCIES"
+    APT_DEPENDENCIES="cmake build-essential gfortran doxygen libeigen3-dev python-pip python3-pip wget cython3 python3-numpy python3-nose python3-coverage python-git python-pyside $APT_DEPENDENCIES"
+    if [ $UBUNTU_MAJOR -ge 16 ]
+    then
+      APT_DEPENDENCIES="libyaml-cpp-dev $APT_DEPENDENCIES"
+    fi
     if $INSTALL_APT_DEPENDENCIES
     then
         sudo apt-get update
@@ -374,20 +381,32 @@ then
 else
   GIT_DEPENDENCIES="jrl-umi3218/SpaceVecAlg jrl-umi3218/RBDyn jrl-umi3218/eigen-qld jrl-umi3218/sch-core jrl-umi3218/mc_rbdyn_urdf ${GIT_DEPENDENCIES}"
 fi
-if $WITH_ROS
+if [ $UBUNTU_MAJOR -ge 16 ]
+then
+  GIT_DEPENDENCIES=`echo $GIT_DEPENDENCIES|sed -e's@jbeder/yaml-cpp@@'`
+fi
+if $WITH_ROS_SUPPORT
 then
   ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data#master"
   if $WITH_HRP2
   then
-    ROS_GIT_DEPENDENCIES="$ROS_GIT_DEPENDENCIES git@gite.lirmm.fr:mc-hrp2/hrp2_drc#master"
+    ROS_GIT_DEPENDENCIES="$ROS_GIT_DEPENDENCIES git@gite.lirmm.fr:mc-hrp2/hrp2_drc"
   fi
   if $WITH_HRP4
   then
-    ROS_GIT_DEPENDENCIES="$ROS_GIT_DEPENDENCIES git@gite.lirmm.fr:mc-hrp4/hrp4#master"
+    ROS_GIT_DEPENDENCIES="$ROS_GIT_DEPENDENCIES git@gite.lirmm.fr:mc-hrp4/hrp4"
   fi
 else
   ROS_GIT_DEPENDENCIES=""
-  GIT_DEPENDENCIES="${GIT_DEPENDENCIES} git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data#master"
+  GIT_DEPENDENCIES="$GIT_DEPENDENCIES git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data"
+  if $WITH_HRP2
+  then
+    GIT_DEPENDENCIES="$GIT_DEPENDENCIES git@gite.lirmm.fr:mc-hrp2/hrp2_drc"
+  fi
+  if $WITH_HRP4
+  then
+    GIT_DEPENDENCIES="$GIT_DEPENDENCIES git@gite.lirmm.fr:mc-hrp4/hrp4"
+  fi
 fi
 for package in ${GIT_DEPENDENCIES}; do
   build_git_dependency "$package"
@@ -402,6 +421,7 @@ then
   then
     if [ $OS = Ubuntu ]
     then
+      sudo mkdir -p /etc/apt/sources.list.d/
       sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu `lsb_release -c -s` main" > /etc/apt/sources.list.d/ros-latest.list'
       wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
       sudo apt-get update
@@ -454,7 +474,7 @@ else
             ${CMAKE_ADDITIONAL_OPTIONS} \
             -DDISABLE_ROS=ON
 fi
-make -j$BUILD_CORE
+make -j$BUILD_CORE || exit 1
 ${SUDO_CMD} make install
 
 ##############################
@@ -462,15 +482,6 @@ ${SUDO_CMD} make install
 ##############################
 if $WITH_ROS_SUPPORT
 then
-  if $INSTALL_APT_DEPENDENCIES
-  then
-    if [ `apt-cache search libglfw3-dev|wc -l` -eq 0 ]
-    then
-      sudo add-apt-repository ppa:keithw/glfw3
-      sudo apt-get update
-    fi
-    sudo apt-get install -y libglfw3-dev
-  fi
   CATKIN_DIR=$SOURCE_DIR/catkin_ws
   cd $CATKIN_DIR/src
   if [ ! -d mc_rtc_ros/.git ]
@@ -490,19 +501,11 @@ fi
 ################################
 if $WITH_HRP2
 then
-  if ! $WITH_ROS_SUPPORT
-  then
-    build_git_dependency git@gite.lirmm.fr:mc-hrp2/hrp2_drc.git
-  fi
   build_git_dependency git@gite.lirmm.fr:mc-hrp2/mc-hrp2.git
 fi
 
 if $WITH_HRP4
 then
-  if ! $WITH_ROS_SUPPORT
-  then
-    build_git_dependency git@gite.lirmm.fr:mc-hrp4/hrp4.git
-  fi
   build_git_dependency git@gite.lirmm.fr:mc-hrp4/mc-hrp4.git
 fi
 
