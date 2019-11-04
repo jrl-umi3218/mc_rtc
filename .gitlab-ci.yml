@@ -9,259 +9,123 @@ variables:
   DO_COVERAGE_ON_BRANCH: ""
   DO_CPPCHECK_ON_BRANCH: ""
 
-before_script:
-  - git submodule update --quiet --init --recursive
-  - add-apt-repository ppa:pierre-gergondet+ppa/multi-contact-unstable && apt-get update && apt-get upgrade cmake libeigen3-dev -qq
+  #before_script:
+  #  - git submodule update --quiet --init --recursive
+  #  - add-apt-repository ppa:pierre-gergondet+ppa/multi-contact-unstable && apt-get update && apt-get upgrade cmake libeigen3-dev -qq
+  #
+  #clang-format:
+  #  stage: clang-format
+  #  before_script: []
+  #  script:
+  #    - ./.clang-format-check.sh
+  #  tags:
+  #    - clang-format
+  #
+  #build_debian:
+  #  stage: build
+  #  before_script: []
+  #  script:
+  #    - git submodule update --quiet --init --recursive
+  #    - apt-get update && apt-get install -qq wget python-pip
+  #    - wget --quiet https://cmake.org/files/v3.5/cmake-3.5.2-Linux-i386.sh && chmod +x cmake-3.5.2-Linux-i386.sh && ./cmake-3.5.2-Linux-i386.sh --prefix=/usr --skip-license
+  #    - pip install --upgrade cython numpy coverage nose
+  #    - ./.jrl-ci/dependencies/eigen-3.3
+  #    - rm -rf $HOME/.cmake/packages/Eigen3/
+  #    - export APT_DEPENDENCIES="cython python-pip python-coverage python-numpy python-nose libtinyxml2-dev libboost-all-dev libgeos++-dev libgeos-dev qhull-bin libqhull-dev libltdl-dev"
+  #    - export GIT_DEPENDENCIES="jrl-umi3218/Eigen3ToPython jrl-umi3218/SpaceVecAlg jrl-umi3218/eigen-qld git@gite.lirmm.fr:multi-contact/eigen-lssol.git jrl-umi3218/sch-core jrl-umi3218/sch-core-python jrl-umi3218/RBDyn jrl-umi3218/Tasks jrl-umi3218/mc_rbdyn_urdf nanomsg/nanomsg humanoid-path-planner/hpp-spline jbeder/yaml-cpp#yaml-cpp-0.5.3"
+  #    - export MASTER_PPA=""
+  #    - export ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data"
+  #    - mkdir -p /tmp/_ci/catkin_dep_ws/src
+  #    - ./.jrl-ci/run before_install
+  #    - ./.jrl-ci/run build
+  #    - ./.jrl-ci/run after_success
+  #  tags:
+  #    - debian
+  #
+  #build_gcc_noros:
+  #  stage: build
+  #  script:
+  #    - export ROS_DISTRO=""
+  #    - export GIT_DEPENDENCIES="$GIT_DEPENDENCIES git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data"
+  #    - ./.jrl-ci/run before_install
+  #    - ./.jrl-ci/run build
+  #    - ./.jrl-ci/run after_success
+  #  tags:
+  #    - GCC
+  #
+  #build_gcc_ros:
+  #  stage: build
+  #  script:
+  #    - ./.jrl-ci/run before_install
+  #    - ./.jrl-ci/dependencies/catkin
+  #    - export MASTER_PPA=""
+  #    - export APT_DEPENDENCIES="ros-indigo-common-msgs ros-indigo-tf2-ros ros-indigo-xacro ros-indigo-rviz-animated-view-controller"
+  #    - export GIT_DEPENDENCIES=""
+  #    - export ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data"
+  #    - ./.jrl-ci/run before_install
+  #    - ./.jrl-ci/run build
+  #    - ./.jrl-ci/run after_success
+  #  tags:
+  #    - GCC
+  #
+  #build_gcc_ros_debug:
+  #  stage: build
+  #  script:
+  #    - export APT_DEPENDENCIES="cython python-pip python-coverage python-numpy python-nose libtinyxml2-dev libboost-all-dev libjsoncpp-dev libgeos++-dev libgeos-dev qhull-bin libqhull-dev libltdl-dev libeigen3-dev"
+  #    - export CMAKE_ADDITIONAL_OPTIONS="-DCMAKE_BUILD_TYPE=Debug -DBUILD_PYTHON_INTERFACE:BOOL=OFF -DYAML_BUILD_SHARED_LIBS:BOOL=ON"
+  #    - export GIT_DEPENDENCIES="jrl-umi3218/Eigen3ToPython jrl-umi3218/SpaceVecAlg jrl-umi3218/eigen-qld git@gite.lirmm.fr:multi-contact/eigen-lssol.git jrl-umi3218/sch-core jrl-umi3218/sch-core-python jrl-umi3218/RBDyn jrl-umi3218/Tasks jrl-umi3218/mc_rbdyn_urdf nanomsg/nanomsg humanoid-path-planner/hpp-spline jbeder/yaml-cpp"
+  #    - ./.jrl-ci/run before_install
+  #    - ./.jrl-ci/dependencies/catkin
+  #    - export MASTER_PPA=""
+  #    - export APT_DEPENDENCIES="ros-indigo-common-msgs ros-indigo-tf2-ros ros-indigo-xacro ros-indigo-rviz-animated-view-controller"
+  #    - export GIT_DEPENDENCIES=""
+  #    - export ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data"
+  #    - ./.jrl-ci/run before_install
+  #    - ./.jrl-ci/run build
+  #    - ./.jrl-ci/run after_success
+  #  tags:
+  #    - GCC
+  #
+  #build_clang_ros:
+  #  stage: build
+  #  script:
+  #    - sed -i -e's/EIGEN_MAKE_ALIGNED_OPERATOR_NEW_IF(IsAligned)/EIGEN_MAKE_ALIGNED_OPERATOR_NEW_IF(bool(IsAligned))/' /usr/include/eigen3/Eigen/src/Geometry/Quaternion.h
+  #    - ./.jrl-ci/run before_install
+  #    - ./.jrl-ci/dependencies/catkin
+  #    - export MASTER_PPA=""
+  #    - export APT_DEPENDENCIES="ros-indigo-common-msgs ros-indigo-tf2-ros ros-indigo-xacro ros-indigo-rviz-animated-view-controller"
+  #    - export GIT_DEPENDENCIES=""
+  #    - export ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data"
+  #    - ./.jrl-ci/run before_install
+  #    - ./.jrl-ci/run build
+  #    - ./.jrl-ci/run after_success
+  #  tags:
+  #    - clang
+  #
+  #build_with_script:
+  #  stage: build
+  #  script:
+  #    - cd utils
+  #    - ./build_and_install.sh
+  #  tags:
+  #    - GCC
+  #  allow_failure: true
 
-clang-format:
-  stage: clang-format
-  before_script: []
+pages:
+  stage: pages
+  before_script:
+    - apt-get update && apt-get install -qq ruby-dev ruby-bundler libxml2-dev
+    - cd $CI_PROJECT_DIR/doc
+    - bundle install --path vendor
   script:
-    - ./.clang-format-check.sh
+    - bundle exec jekyll build -d $CI_PROJECT_DIR/public -b /mc_rtc
   tags:
     - clang-format
-
-build_debian:
-  stage: build
-  before_script: []
-  script:
-    - git submodule update --quiet --init --recursive
-    - apt-get update && apt-get install -qq wget python-pip
-    - wget --quiet https://cmake.org/files/v3.5/cmake-3.5.2-Linux-i386.sh && chmod +x cmake-3.5.2-Linux-i386.sh && ./cmake-3.5.2-Linux-i386.sh --prefix=/usr --skip-license
-    - pip install --upgrade cython numpy coverage nose
-    - ./.jrl-ci/dependencies/eigen-3.3
-    - rm -rf $HOME/.cmake/packages/Eigen3/
-    - export APT_DEPENDENCIES="cython python-pip python-coverage python-numpy python-nose libtinyxml2-dev libboost-all-dev libgeos++-dev libgeos-dev qhull-bin libqhull-dev libltdl-dev"
-    - export GIT_DEPENDENCIES="jrl-umi3218/Eigen3ToPython jrl-umi3218/SpaceVecAlg jrl-umi3218/eigen-qld git@gite.lirmm.fr:multi-contact/eigen-lssol.git jrl-umi3218/sch-core jrl-umi3218/sch-core-python jrl-umi3218/RBDyn jrl-umi3218/Tasks jrl-umi3218/mc_rbdyn_urdf nanomsg/nanomsg humanoid-path-planner/hpp-spline jbeder/yaml-cpp#yaml-cpp-0.5.3"
-    - export MASTER_PPA=""
-    - export ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data"
-    - mkdir -p /tmp/_ci/catkin_dep_ws/src
-    - ./.jrl-ci/run before_install
-    - ./.jrl-ci/run build
-    - ./.jrl-ci/run after_success
-  tags:
-    - debian
-
-build_gcc_noros:
-  stage: build
-  script:
-    - export ROS_DISTRO=""
-    - export GIT_DEPENDENCIES="$GIT_DEPENDENCIES git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data"
-    - ./.jrl-ci/run before_install
-    - ./.jrl-ci/run build
-    - ./.jrl-ci/run after_success
-  tags:
-    - GCC
-
-build_gcc_ros:
-  stage: build
-  script:
-    - ./.jrl-ci/run before_install
-    - ./.jrl-ci/dependencies/catkin
-    - export MASTER_PPA=""
-    - export APT_DEPENDENCIES="ros-indigo-common-msgs ros-indigo-tf2-ros ros-indigo-xacro ros-indigo-rviz-animated-view-controller"
-    - export GIT_DEPENDENCIES=""
-    - export ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data"
-    - ./.jrl-ci/run before_install
-    - ./.jrl-ci/run build
-    - ./.jrl-ci/run after_success
-  tags:
-    - GCC
-
-build_gcc_ros_debug:
-  stage: build
-  script:
-    - export APT_DEPENDENCIES="cython python-pip python-coverage python-numpy python-nose libtinyxml2-dev libboost-all-dev libjsoncpp-dev libgeos++-dev libgeos-dev qhull-bin libqhull-dev libltdl-dev libeigen3-dev"
-    - export CMAKE_ADDITIONAL_OPTIONS="-DCMAKE_BUILD_TYPE=Debug -DBUILD_PYTHON_INTERFACE:BOOL=OFF -DYAML_BUILD_SHARED_LIBS:BOOL=ON"
-    - export GIT_DEPENDENCIES="jrl-umi3218/Eigen3ToPython jrl-umi3218/SpaceVecAlg jrl-umi3218/eigen-qld git@gite.lirmm.fr:multi-contact/eigen-lssol.git jrl-umi3218/sch-core jrl-umi3218/sch-core-python jrl-umi3218/RBDyn jrl-umi3218/Tasks jrl-umi3218/mc_rbdyn_urdf nanomsg/nanomsg humanoid-path-planner/hpp-spline jbeder/yaml-cpp"
-    - ./.jrl-ci/run before_install
-    - ./.jrl-ci/dependencies/catkin
-    - export MASTER_PPA=""
-    - export APT_DEPENDENCIES="ros-indigo-common-msgs ros-indigo-tf2-ros ros-indigo-xacro ros-indigo-rviz-animated-view-controller"
-    - export GIT_DEPENDENCIES=""
-    - export ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data"
-    - ./.jrl-ci/run before_install
-    - ./.jrl-ci/run build
-    - ./.jrl-ci/run after_success
-  tags:
-    - GCC
-
-build_clang_ros:
-  stage: build
-  script:
-    - sed -i -e's/EIGEN_MAKE_ALIGNED_OPERATOR_NEW_IF(IsAligned)/EIGEN_MAKE_ALIGNED_OPERATOR_NEW_IF(bool(IsAligned))/' /usr/include/eigen3/Eigen/src/Geometry/Quaternion.h
-    - ./.jrl-ci/run before_install
-    - ./.jrl-ci/dependencies/catkin
-    - export MASTER_PPA=""
-    - export APT_DEPENDENCIES="ros-indigo-common-msgs ros-indigo-tf2-ros ros-indigo-xacro ros-indigo-rviz-animated-view-controller"
-    - export GIT_DEPENDENCIES=""
-    - export ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data"
-    - ./.jrl-ci/run before_install
-    - ./.jrl-ci/run build
-    - ./.jrl-ci/run after_success
-  tags:
-    - clang
-
-build_with_script:
-  stage: build
-  script:
-    - cd utils
-    - ./build_and_install.sh
-  tags:
-    - GCC
-  allow_failure: true
-
-#package_trusty_amd64_noros:
-#  stage: package
-#  before_script:
-#    - export ROS_DISTRO=""
-#    - export GITE_PACKAGES="$GITE_PACKAGES multi-contact/mc_rtc_ros_data@noros"
-#    - git submodule update --quiet --init --recursive
-#    - ./.packaging/setup_pbuilder.sh trusty amd64
-#    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc.recipe
-#    - mkdir -p 3rd-party/ext && git clone https://github.com/nanomsg/nanomsg 3rd-party/ext/nanomsg
-#  script:
-#    - ./.packaging/build_recipe.sh .mc-rtc.recipe trusty amd64
-#  artifacts:
-#    name: "mc_rtc_trusty_amd64"
-#    paths:
-#      - "*.deb"
-#    expire_in: '30d'
-#  tags:
-#    - GCC
-#
-#package_trusty_amd64_ros:
-#  stage: package
-#  before_script:
-#    - export GITE_PACKAGES="$GITE_PACKAGES multi-contact/mc_rtc_ros_data@withros"
-#    - git submodule update --quiet --init --recursive
-#    - ./.packaging/setup_pbuilder.sh trusty amd64
-#    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc-ros.recipe
-#    - mkdir -p 3rd-party/ext && git clone https://github.com/nanomsg/nanomsg 3rd-party/ext/nanomsg
-#  script:
-#    - ./.packaging/build_recipe.sh .mc-rtc-ros.recipe trusty amd64
-#  artifacts:
-#    name: "mc_rtc_trusty_amd64"
-#    paths:
-#      - "*.deb"
-#    expire_in: '30d'
-#  tags:
-#    - GCC
-#
-#package_trusty_i386_noros:
-#  stage: package
-#  before_script:
-#    - export ROS_DISTRO=""
-#    - export GITE_PACKAGES="$GITE_PACKAGES multi-contact/mc_rtc_ros_data@noros"
-#    - git submodule update --quiet --init --recursive
-#    - ./.packaging/setup_pbuilder.sh trusty i386
-#    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc.recipe
-#    - mkdir -p 3rd-party/ext && git clone https://github.com/nanomsg/nanomsg 3rd-party/ext/nanomsg
-#  script:
-#    - ./.packaging/build_recipe.sh .mc-rtc.recipe trusty i386
-#  artifacts:
-#    name: "mc_rtc_trusty_i386"
-#    paths:
-#      - "*.deb"
-#    expire_in: '30d'
-#  tags:
-#    - GCC
-#
-#package_trusty_i386_ros:
-#  stage: package
-#  before_script:
-#    - export GITE_PACKAGES="$GITE_PACKAGES multi-contact/mc_rtc_ros_data@withros"
-#    - git submodule update --quiet --init --recursive
-#    - ./.packaging/setup_pbuilder.sh trusty i386
-#    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc-ros.recipe
-#    - mkdir -p 3rd-party/ext && git clone https://github.com/nanomsg/nanomsg 3rd-party/ext/nanomsg
-#  script:
-#    - ./.packaging/build_recipe.sh .mc-rtc-ros.recipe trusty i386
-#  artifacts:
-#    name: "mc_rtc_trusty_i386"
-#    paths:
-#      - "*.deb"
-#    expire_in: '30d'
-#  tags:
-#    - GCC
-#
-#package_xenial_amd64_noros:
-#  stage: package
-#  before_script:
-#    - export ROS_DISTRO=""
-#    - export GITE_PACKAGES="$GITE_PACKAGES multi-contact/mc_rtc_ros_data@noros"
-#    - git submodule update --quiet --init --recursive
-#    - ./.packaging/setup_pbuilder.sh xenial amd64
-#    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc.recipe
-#    - mkdir -p 3rd-party/ext && git clone https://github.com/nanomsg/nanomsg 3rd-party/ext/nanomsg
-#  script:
-#    - ./.packaging/build_recipe.sh .mc-rtc.recipe xenial amd64
-#  artifacts:
-#    name: "mc_rtc_xenial_amd64"
-#    paths:
-#      - "*.deb"
-#    expire_in: '30d'
-#  tags:
-#    - GCC
-#
-#package_xenial_amd64_ros:
-#  stage: package
-#  before_script:
-#    - export ROS_DISTRO="kinetic"
-#    - export GITE_PACKAGES="$GITE_PACKAGES multi-contact/mc_rtc_ros_data@withros"
-#    - git submodule update --quiet --init --recursive
-#    - ./.packaging/setup_pbuilder.sh xenial amd64
-#    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc-ros.recipe
-#    - mkdir -p 3rd-party/ext && git clone https://github.com/nanomsg/nanomsg 3rd-party/ext/nanomsg
-#  script:
-#    - ./.packaging/build_recipe.sh .mc-rtc-ros.recipe xenial amd64
-#  artifacts:
-#    name: "mc_rtc_xenial_amd64"
-#    paths:
-#      - "*.deb"
-#    expire_in: '30d'
-#  tags:
-#    - GCC
-#
-#package_xenial_i386_noros:
-#  stage: package
-#  before_script:
-#    - export ROS_DISTRO=""
-#    - export GITE_PACKAGES="$GITE_PACKAGES multi-contact/mc_rtc_ros_data@noros"
-#    - git submodule update --quiet --init --recursive
-#    - ./.packaging/setup_pbuilder.sh xenial i386
-#    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc.recipe
-#    - mkdir -p 3rd-party/ext && git clone https://github.com/nanomsg/nanomsg 3rd-party/ext/nanomsg
-#  script:
-#    - ./.packaging/build_recipe.sh .mc-rtc.recipe xenial i386
-#  artifacts:
-#    name: "mc_rtc_xenial_i386"
-#    paths:
-#      - "*.deb"
-#    expire_in: '30d'
-#  tags:
-#    - GCC
-#
-#package_xenial_i386_ros:
-#  stage: package
-#  before_script:
-#    - export ROS_DISTRO="kinetic"
-#    - export GITE_PACKAGES="$GITE_PACKAGES multi-contact/mc_rtc_ros_data@withros"
-#    - git submodule update --quiet --init --recursive
-#    - ./.packaging/setup_pbuilder.sh xenial i386
-#    - sed -i -e"s@mc_rtc master@mc_rtc ${CI_BUILD_REF_NAME}@" .mc-rtc-ros.recipe
-#    - mkdir -p 3rd-party/ext && git clone https://github.com/nanomsg/nanomsg 3rd-party/ext/nanomsg
-#  script:
-#    - ./.packaging/build_recipe.sh .mc-rtc-ros.recipe xenial i386
-#  artifacts:
-#    name: "mc_rtc_xenial_i386"
-#    paths:
-#      - "*.deb"
-#    expire_in: '30d'
-#  tags:
-#    - GCC
+  artifacts:
+    paths:
+      - public
 
 stages:
-  - clang-format
-  - build
-#  - package
+  #  - clang-format
+  #  - build
+  - pages

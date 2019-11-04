@@ -4,10 +4,10 @@ Testing locally
 Pre-requisites
 --
 
-You must have gem and bundle installed on your system:
+You must have some dependencies installed on your system:
 
 ```bash
-sudo apt install ruby-bundler
+sudo apt install ruby-dev ruby-bundler libxml2-dev
 ```
 
 Then install the required packages:
