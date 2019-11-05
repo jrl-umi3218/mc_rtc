@@ -55,6 +55,8 @@ To compile you need the following tools and libraries:
  * [GEOS](https://trac.osgeo.org/geos) (With C++ bindings)
  * [LTDL](https://www.gnu.org/software/libtool/manual/html_node/Libltdl-interface.html) (Not required for Windows users)
  * [nanomsg](https://nanomsg.org/)
+ * [yaml-cpp](https://github.com/jbeder/yaml-cpp)
+ * [hpp-spline](https://github.com/humanoid-path-planner/hpp-spline)
  * [SpaceVecAlg](https://github.com/jrl-umi3218/SpaceVecAlg)
  * [RBDyn](https://github.com/jrl-umi3218/RBDyn)
  * [eigen-qld](https://github.com/jrl-umi3218/eigen-qld)
