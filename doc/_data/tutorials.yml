@@ -1,0 +1,101 @@
+-
+  id: introduction
+  title : Introduction
+  desc: The following tutorials will help you with the installation of the framework, learning to run controllers in the interface of your choice and start programming your own controllers.
+  tutorials:
+    -
+      id: installation-guide
+      title: Installation guide
+    -
+      id: running-a-controller
+      title: Running a controller
+    -
+      id: first-controller
+      title: Writing a first controller with mc_rtc
+    -
+      id: com-controller
+      title: Controlling the CoM
+    -
+      id: ef-controller
+      title: Controlling an end-effector
+    -
+      id: multi-robot-controller
+      title: Multi-robot controller
+-
+  id: usage
+  title: Framework usage
+  desc: The following tutorials cover broad topics concerning the framework that are not specifically related to a controller's implementation
+  tutorials:
+    -
+      id: configuration
+      title: Configuration of mc_rtc
+    -
+      id: mc_rtc_configuration
+      title: mc_rtc::Configuration general purpose configuration
+    -
+      id: logging
+      title: Logging data and visualizing it
+    -
+      id: gui
+      title: Graphical User Interface (GUI)
+    -
+      id: console-logging
+      title: Printing informative data to the screen
+    -
+      id: ros
+      title: ROS integration
+-
+  id: recipes
+  title: Control recipes
+  desc: The following tutorials introduce recipes useful in complex controllers. Either methodology (e.g. FSM) or behaviours (e.g free a contact degree-of-freedom)
+  tutorials:
+    -
+      id: fsm
+      title: Using the FSM facilities
+    -
+      id: observers
+      title: Using the observers pipeline
+    -
+      id: trajectory-tracking
+      title: Trajectory tracking
+    -
+      id: moving-a-contact
+      title: Moving a contact
+    -
+      id: contact-dof
+      title: Change the DoF constraints on a contact
+    -
+      id: joint-select
+      title: Select specific joints for a task
+    -
+      id: dim-weight
+      title: Affect different weight to different axis in the task space
+    -
+      id: speed-constraint
+      title: Constraint the speed of a body
+    -
+      id: joint-stiffness
+      title: Joints Stiffness
+    -
+      id: com-constraint
+      title: Constraining the accessible region of the CoM
+    -
+      id: advanced-logs
+      title: Advanced logs manipulation
+-
+  id: advanced
+  title: Advanced topics
+  desc: These tutorials cover specific topics that most user should not have to deal with.
+  tutorials:
+    -
+      id: new-interface
+      title: Implementation a new mc_rtc interface
+    -
+      id: new-environment
+      title: Environment creation for mc_rtc
+    -
+      id: new-robot-module
+      title: Implementing a new robot module
+    -
+      id: new-cnoid-project
+      title: Creating a new Choreonoid project

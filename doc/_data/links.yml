@@ -1,0 +1,10 @@
+SpaceVecAlg:
+  url: https://github.com/jrl-umi3218/SpaceVecAlg
+RBDyn:
+  url: https://github.com/jrl-umi3218/RBDyn
+Tasks:
+  url: https://github.com/jrl-umi3218/Tasks
+SpaceVecAlg and RBDyn tutorials:
+  https://github.com/jorisv/sva_rbdyn_tutorials
+SpaceVecAlg and RBDyn presentations:
+  https://github.com/jorisv/sva_rbdyn_presentation
