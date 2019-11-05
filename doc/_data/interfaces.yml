@@ -1,11 +1,11 @@
 - name: ROS
-  desc: ROS is a...
+  desc: ROS, the Robot Operating System, is a set of software libraries and tools to help you build robot applications. mc_rtc_ros is a set of tools integrated with the ROS environment to provide a simulation-free interface and various GUI tools
   icon: ros.png
   pkg:
     name: mc_rtc_ros
     url: https://gite.lirmm.fr/multi-contact/mc_rtc_ros
 - name: V-REP
-  desc: V-REP is a...
+  desc: V-REP is a robot simulator by Coppelia Robotics. mc_vrep allows to use mc_rtc as a controller for your robot(s) inside the V-REP simulator environment.
   icon: vrep.png
   pkg:
     name: mc_vrep
