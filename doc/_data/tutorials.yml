@@ -20,7 +20,7 @@
       title: Controlling the CoM
     -
       id: ef-controller
-      title: Controlling an end-effector
+      title: Controlling an end-effector (and loading)
     -
       id: multi-robot-controller
       title: Multi-robot controller

@@ -1,0 +1,113 @@
+---
+layout: tutorials
+create_ef_task_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      // Include the EF task header (header)
+      #include <mc_tasks/EndEffectorTask.h>
+      // In the class private members (header)
+      std::shared_ptr<mc_tasks::EndEffectorTask> efTask;
+      // In the constructor, create the task and add it to the problem
+      efTask = std::make_shared<mc_tasks::EndEffectorTask>("l_wrist", robots(), 0, 5.0, 500.0);
+      solver().addTask(efTask);
+      // In the reset function, reset the task to the current EF position
+      efTask->reset();
+  - name: Python
+    lang: python
+    source: |
+      # Import the mc_tasks module
+      import mc_tasks
+      # In the constructor, create the task and add it to the problem
+      self.efTask = mc_tasks.EndEffectorTask("l_wrist", self.robots(), 0, 10.0, 1000.0)
+      self.qpsolver.addTask(self.efTask)
+      # In the reset callback, reset the task to the current EF position
+      self.efTask.reset()
+update_ef_task_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      // Get the current objective
+      auto pt = efTask->get_ef_pose();
+      // Update the rotation and position objective
+      efTask->set_ef_pose(sva::PTransformd{sva::RotY(-M_PI/2), Eigen::Vector3d{0.5, -0.5, 1.2}});
+  - name: Python
+    lang: python
+    source: |
+      # Get the current objective
+      pt = efTask.get_ef_pose()
+      # Update the rotation and position objective
+      efTask.set_ef_pose(sva.PTransformd(sva.RotY(-math.pi/2), eigen.Vector3d(0.5, -0.5, 1.2)))
+description_task_sources:
+  - name: JSON
+    lang: json
+    source: |
+      {
+        "type": "body6d",
+        "robotIndex": 0,
+        "body": "l_wrist",
+        "orientation": [0.71, 0, 0.71, 0],
+        "position": [0.4, 0.4, 1.0]
+      }
+  - name: YAML
+    lang: yaml
+    source: |
+      type: body6d,
+      robotIndex: 0,
+      body: l_wrist,
+      orientation: [0.71, 0, 0.71, 0]
+      position: [0.4, 0.4, 1.0]
+get_task_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      // Get the task loader in there
+      #include <mc_tasks/MetaTaskLoader.h>
+
+      // Get the task from the JSON file
+      auto task = mc_tasks::MetaTaskLoader::load(solver(), "/my/path/task.json");
+
+      // Get the task from the YAML file
+      auto task = mc_tasks::MetaTaskLoader::load(solver(), "/my/path/task.yaml");
+
+      // Actually you can get the task from any mc_rtc::Configuration entries
+      auto task = mc_tasks::MetaTaskLoader::load(solver(), config("task"));
+
+      // In all the cases above, task is an std::shared_ptr<mc_tasks::MetaTask>
+      // but you can retrieve a more precise type, mc_rtc will check that the
+      // task that was retrieved from disk is compatible with the task you
+      // requested
+      auto task = mc_tasks::MetaTaskLoader::load<mc_tasks::EndEffectorTask>(solver(), config("task"));
+---
+
+<h3>The short story</h3>
+
+<p>You can create an end-effector task and manipulate its objective:</p>
+
+{% include show_sources.html sources=page.create_ef_task_sources copy=false id="create_ef_task" %}
+
+<p>This will create a task on the body named <code>l_wrist</code> for the main robot. You can then modify its objective:</p>
+
+{% include show_sources.html sources=page.update_ef_task_sources copy=false id="update_ef_task" %}
+
+<p>Instead of repeating a similar experience as in the previous tutorials, this tutorial will show how we can load the task from a configuration file written in JSON or YAML. In fact, this will be applicable to any task in the framework.</p>
+
+<h3>Loading the task from disk</h3>
+
+<p><em>Note: for now, this is only available on the C++ side.</em></p>
+
+<p>To simplify this tutorial, we will consider that you have created a file <code>task.json</code> (resp. <code>task.yaml</code>) that is available in the directory <code>/my/path/</code>. In real-life, you could use CMake to install the file and provide the installation directory to your controller but this would make the tutorial more complex that it needs to be.</p>
+
+<p>The taks description file we will use will look like this:</p>
+
+{% include show_sources.html sources=page.description_task_sources copy=false id="description_task" %}
+
+<p>You can then obtain the task object this way:</p>
+
+{% include show_sources.html sources=page.get_task_sources copy=false id="get_task" %}
+
+<p>You can use this task as if you had created it manually, this is a great way to experiment with task settings.</p>
+
+<h3>Give me more tasks</h3>
+
+<p>The <a href="{{site.baseurl}}/json.html">JSON/YAML documentation</a> on this website shows all the tasks that can be loaded by the framework and what is expected in their JSON/YAML representation to be loaded correctly.</p>
