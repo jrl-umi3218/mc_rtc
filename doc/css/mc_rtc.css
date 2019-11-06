@@ -197,3 +197,13 @@ body
 {
   margin-top: 10px;
 }
+
+.highlight-inline figure
+{
+  display: inline !important;
+}
+
+.highlight-inline pre
+{
+  display: inline !important;
+}

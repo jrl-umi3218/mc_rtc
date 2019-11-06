@@ -1,0 +1,68 @@
+<p>We will start by creating a new Python package:</p>
+
+{% highlight bash %}
+$ mkdir -p my_first_controller
+$ touch my_first_controller/__init__.py
+{% endhighlight %}
+
+<p><em>Note: this assumes you are using a posix shell</em></p>
+
+<p>Then we will create a file <code>my_first_controller.py</code> in the <code>my_first_controller</code> folder:</p>
+
+{% highlight python linenos %}
+import mc_control
+import mc_rbdyn
+import mc_rtc
+
+class MyFirstController(mc_control.MCPythonController):
+    def __init__(self, rm, dt):
+        self.qpsolver.addConstraintSet(self.kinematicsConstraint)
+        self.qpsolver.addConstraintSet(self.contactConstraint)
+        self.qpsolver.addTask(self.postureTask)
+        self.qpsolver.setContacts([])
+    def run_callback(self):
+        return True
+    def reset_callback(self, data):
+        pass
+    @staticmethod
+    def create(robot, dt):
+        env = mc_rbdyn.get_robot_module("env", mc_rtc.MC_ENV_DESCRIPTION_PATH, "ground")
+        return MyFirstController([robot,env], dt)
+{% endhighlight %}
+
+<p>We also need to edit <code>__init__.py</code> so that the controller is available in the module:</p>
+
+{% highlight python %}
+from .my_first_controller import MyFirstController
+{% endhighlight %}
+
+<h4>Running the controller</h4>
+
+<p>Modify your mc_rtc configuration file so that we use the JVRC1 robot and our new controller:</p>
+
+{% highlight json %}
+{
+  "MainRobot": "JVRC1",
+  "Enabled": ["Python#my_first_controller.MyFirstController"]
+}
+{% endhighlight %}
+
+<p><em>Note: if you have enforced Python 2 or Python 3 or if you have installed both then you should explicitly choose <code>Python2</code> or <code>Python3</code>.</em></p>
+
+<p>For this to work, we need to make sure the <code>my_first_controller</code> folder is on the Python path. In fact, given this configuration, mc_rtc will create your controller this way:</p>
+
+{% highlight python %}
+from my_first_controller import MyFirstController
+controller = MyFirstController.create(rm, dt)
+return controller
+{% endhighlight %}
+
+<p>Typically, if you run <code>mc_rtc_ticker</code> and the <code>my_first_controller</code> folder is in <code>$HOME/my_python_controllers</code>, then you should run as follows:</p>
+
+{% highlight bash %}
+$ PYTHONPATH=$HOME/my_python_controllers:$PYTHONPATH rosrun mc_rtc_ticker mc_rtc_ticker
+{% endhighlight %}
+
+<h4>Key difference with C++</h4>
+
+<p>A key difference between the C++ controller and the Python controller is that the C++ controller let you bypass the call to <code>mc_control::MCController::run()</code> and <code>mc_control::MCController::reset()</code> functions if you like. Whereas in Python, <code>run_callback(self)</code> and <code>reset_callback(self, data)</code> will always be called <strong>after</strong> its C++ counterpart.</p>
