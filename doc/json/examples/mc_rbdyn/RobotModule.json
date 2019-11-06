@@ -1,5 +1,0 @@
-{
-  "path": "/path/to/robot",
-  "name": "robot",
-  "urdf_path": "urdf/robot.urdf"
-}

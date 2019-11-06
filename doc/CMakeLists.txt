@@ -2,10 +2,8 @@
 # Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-if(INSTALL_DOCUMENTATION)
-  install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/index.html
-                ${CMAKE_CURRENT_SOURCE_DIR}/robots.txt
-          DESTINATION ${CMAKE_INSTALL_DOCDIR})
-endif()
+set(JSON_DOC_INSTALL ${CMAKE_INSTALL_DOCDIR}/json)
 
-add_subdirectory(json)
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/_data/schemas
+  DESTINATION ${JSON_DOC_INSTALL}
+  FILES_MATCHING PATTERN "*.json")

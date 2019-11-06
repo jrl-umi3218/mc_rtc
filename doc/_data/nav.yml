@@ -10,5 +10,5 @@
   page: "tutorials.html"
 - name: "Doxygen"
   page: "doxygen.html"
-- name: "JSON documentation"
+- name: "JSON/YAML documentation"
   page: "json.html"
