@@ -1,8 +1,16 @@
 {% capture category %}{{page.dir | split: '/' | last}}{% endcapture %}
+{% assign is_sources = false %}
+{% if category == "sources" %}
+  {% capture category %}{{page.dir | replace: '/sources', '' | split: '/' | last}}{% endcapture %}
+  {% assign is_sources = true %}
+{% endif %}
 {% capture tutorial %}{{page.name | replace: '.html', '' | replace: '.md', ''}}{% endcapture %}
 {% for cat in site.data.tutorials %}
   {% if cat.id == category %}
     {% assign category = cat %}
+    {% unless forloop.last %}
+      {% assign next_category = site.data.tutorials[forloop.index] %}
+    {% endunless %}
     {% break %}
   {% endif %}
 {% endfor %}
@@ -11,6 +19,8 @@
     {% assign tutorial = tuto %}
     {% unless forloop.last %}
       {% assign next_tutorial = category.tutorials[forloop.index] %}
+    {% elsif next_category %}
+      {% assign next_tutorial = next_category.tutorials[0] %}
     {% endunless %}
   {% endif %}
 {% endfor %}
@@ -57,7 +67,7 @@
       <div class="collapse navbar-collapse" id="navbarText">
         <div class="navbar-nav mr-auto">
           {% for itm in site.data.nav %}
-          {% if page.title == itm.name %}
+          {% if itm.name == "Tutorials" %}
             {% assign active = "active" %}
           {% else %}
             {% assign active = "" %}
@@ -92,6 +102,11 @@
             {% for tuto in cat.tutorials %}
               {% if category.id == cat.id and tuto.id == tutorial.id %}
               <li><strong>{{tuto.title}}</strong></li>
+                {% if is_sources %}
+                  <ul>
+                    <li><a href="{{site.baseurl}}/tutorials/{{cat.id}}/{{tuto.id}}.html">Back to tutorial</a></li>
+                  </ul>
+                {% endif %}
               {% else %}
               <li><a href="{{site.baseurl}}/tutorials/{{cat.id}}/{{tuto.id}}.html">{{tuto.title}}</a></li>
               {% endif %}
@@ -101,7 +116,7 @@
         </ul>
       </div>
       <div class="col-9">
-        <h1>{{tutorial.title}}</h1>
+        <h1>{{tutorial.title}}{% if is_sources %} (sources){% endif %}</h1>
 
         {{content}}
 
