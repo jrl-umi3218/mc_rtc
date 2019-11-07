@@ -7,7 +7,7 @@ source .clang-format-common.sh
 
 out=0
 tmpfile=$(mktemp /tmp/clang-format-check.XXXXXX)
-for f in `git diff --cached --name-only --diff-filter=ACM`; do
+for f in `git diff --cached --name-only --diff-filter=ACM|grep -v "^doc"`; do
   case "$f" in
     *.cpp | *.h | *.hpp)
       $clang_format -style=file $f > $tmpfile
