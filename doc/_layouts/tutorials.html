@@ -18,6 +18,7 @@
   {% if tuto.id == tutorial %}
     {% assign tutorial = tuto %}
     {% unless forloop.last %}
+      {% assign next_category = category %}
       {% assign next_tutorial = category.tutorials[forloop.index] %}
     {% elsif next_category %}
       {% assign next_tutorial = next_category.tutorials[0] %}
@@ -123,7 +124,7 @@
         <hr/>
         {% if next_tutorial %}
         <div class="text-right">
-        <a href="{{site.baseurl}}/tutorials/{{category.id}}/{{next_tutorial.id}}.html">Next tutorial: {{next_tutorial.title}}</a>
+        <a href="{{site.baseurl}}/tutorials/{{next_category.id}}/{{next_tutorial.id}}.html">Next tutorial: {{next_tutorial.title}}</a>
         </div>
         {% endif %}
       </div>
