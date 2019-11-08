@@ -66,6 +66,9 @@
       id: fsm
       title: Using the FSM facilities
     -
+      id: fsm-example
+      title: FSM controller in practice
+    -
       id: observers
       title: Using the observers pipeline
     -

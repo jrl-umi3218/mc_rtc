@@ -22,3 +22,5 @@ V-REP:
   url: http://coppeliarobotics.com/
 Choreonoid:
   url: https://choreonoid.org/en/
+mc_rtc_ros_data:
+  url: https://gite.lirmm.fr/multi-contact/mc_rtc_ros_data
