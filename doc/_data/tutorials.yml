@@ -36,11 +36,11 @@
       id: logging
       title: Logging data
     -
+      id: console-logging
+      title: Printing information to the screen
+    -
       id: gui
       title: Graphical User Interface (GUI)
-    -
-      id: console-logging
-      title: Printing informative data to the screen
     -
       id: ros
       title: ROS integration
@@ -49,8 +49,15 @@
   title: Framework tools
   desc: These tutorials introduce useful tools developed around mc_rtc
   tutorials:
-    - id: mc_log_ui_and_mc_log_visualization
-      title: Log plotting and replay visualization
+    -
+      id: mc_log_utils
+      title: Log manipulation
+    -
+      id: mc_log_ui
+      title: Log plotting
+    -
+      id: mc_log_visualization
+      title: Replay visualization
     -
       id: mc_surfaces_visualization
       title: Visualizing surfaces
