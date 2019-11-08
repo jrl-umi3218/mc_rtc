@@ -21,9 +21,11 @@ title: Robots
     <div class="media-body">
       <h5 class="mt-0">{{bot.name}}</h5>
       <dl class="row">
-        <dt class="offset-1 col-2">Description</dt>
+        <dt class="col">Description</dt>
         <dd class="col-9"><a href="{{bot.pkg.desc}}" target="blank_">{% octicon globe %} {{bot.pkg.desc}}</a></dd>
-        <dt class="offset-1 col-2">Module</dt>
+      </dl>
+      <dl class="row">
+        <dt class="col">Module</dt>
         <dd class="col-9"><a href="{{bot.pkg.module}}" target="blank_">{% octicon globe %} {{bot.pkg.module}}</a></dd>
       </dl>
     </div>
