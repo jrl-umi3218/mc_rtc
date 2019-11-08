@@ -279,6 +279,11 @@ cdef class QPSolver(object):
     self.impl.updateNrVars()
   def setContacts(self, contacts):
     self.impl.setContacts(deref(mc_rbdyn.ContactVector(contacts).v))
+  def contacts(self):
+    ret = []
+    for i in range(self.impl.contacts().size()):
+      ret.append(mc_rbdyn.ContactFromC(self.impl.contacts()[i]))
+    return ret
   def addTask(self, task):
     if isinstance(task, qp.Task):
       self.impl.addTask((<qp.Task>task).base)
