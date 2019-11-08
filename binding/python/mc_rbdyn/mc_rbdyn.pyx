@@ -784,6 +784,10 @@ cdef class Robot(object):
     if isinstance(name, unicode):
       name = name.encode(u'ascii')
     return SurfaceFromC(self.impl.copySurface(sName, name))
+  def surfacePose(self, surface):
+    if isinstance(surface, unicode):
+      surface = surface.encode(u'ascii')
+    return sva.PTransformdFromC(deref(self.impl).surfacePose(surface))
 
   def convex(self, name):
     self.__is_valid()
