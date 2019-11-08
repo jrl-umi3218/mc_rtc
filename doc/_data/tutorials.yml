@@ -31,7 +31,7 @@
   tutorials:
     -
       id: mc_rtc_configuration
-      title: mc_rtc::Configuration general purpose configuration
+      title: <code>mc_rtc::Configuration</code> general purpose configuration
     -
       id: logging
       title: Logging data
