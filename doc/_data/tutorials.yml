@@ -82,8 +82,8 @@
       id: observers
       title: Using the observers pipeline
     -
-      id: trajectory-tracking
-      title: Trajectory tracking
+      id: speed-constraint
+      title: Constraint the speed of a body
     -
       id: moving-a-contact
       title: Moving a contact
@@ -97,17 +97,11 @@
       id: dim-weight
       title: Affect different weight to different axis in the task space
     -
-      id: speed-constraint
-      title: Constraint the speed of a body
-    -
       id: joint-stiffness
       title: Joints Stiffness
     -
       id: com-constraint
       title: Constraining the accessible region of the CoM
-    -
-      id: advanced-logs
-      title: Advanced logs manipulation
 -
   id: advanced
   title: Advanced topics
@@ -122,6 +116,3 @@
     -
       id: new-robot-module
       title: Implementing a new robot module
-    -
-      id: new-cnoid-project
-      title: Creating a new Choreonoid project
