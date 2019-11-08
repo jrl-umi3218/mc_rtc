@@ -76,6 +76,9 @@
       id: fsm-example
       title: FSM controller in practice
     -
+      id: derived-fsm
+      title: Deriving the FSM controller
+    -
       id: observers
       title: Using the observers pipeline
     -
