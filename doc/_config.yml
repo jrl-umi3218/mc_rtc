@@ -17,3 +17,4 @@ exclude:
     - Doxyfile.extra.in
     - setup-local-assets.sh
     - _examples
+    - .gitignore

@@ -41,7 +41,7 @@
       <div class="collapse navbar-collapse" id="navbarText">
         <div class="navbar-nav mr-auto">
           {% for itm in site.data.nav %}
-          {% if page.title == itm.name %}
+          {% if page.name == itm.page %}
             {% assign active = "active" %}
           {% else %}
             {% assign active = "" %}
