@@ -114,7 +114,28 @@ variables:
 pages:
   stage: pages
   before_script:
-    - apt-get update && apt-get install -qq ruby-dev ruby-bundler libxml2-dev
+    - git submodule update --quiet --init --recursive
+    # In Docker dpkg is setup to remove all documentation :-D
+    - rm -f /etc/dpkg/dpkg.cfg.d/excludes
+    - apt-get update && apt-get install -qq software-properties-common && add-apt-repository -y ppa:pierre-gergondet+ppa/multi-contact-unstable && apt-get install -qq ruby-dev ruby-bundler libxml2-dev doxygen libboost-test-dev libboost-timer-dev libboost-program-options-dev libboost-filesystem-dev libgeos++-dev libgeos-dev libltdl-dev libtasks-qld-dev libmc-rbdyn-urdf-dev libnanomsg-dev libyaml-cpp-dev wget || exit 1
+    - mkdir -p /usr/share/doc/SpaceVecAlg/doxygen-html && cd /usr/share/doc/SpaceVecAlg/doxygen-html && wget https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag
+    - mkdir -p /usr/share/doc/RBDyn/doxygen-html && cd /usr/share/doc/RBDyn/doxygen-html && wget https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag
+    - mkdir -p /usr/share/doc/Tasks/doxygen-html && cd /usr/share/doc/Tasks/doxygen-html && wget https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag
+    - mkdir -p /usr/share/doc/sch-core/doxygen-html && cd /usr/share/doc/sch-core/doxygen-html && wget https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag
+    - mkdir -p /usr/share/doc/mc_rbdyn_urdf/doxygen-html && cd /usr/share/doc/mc_rbdyn_urdf/doxygen-html && wget https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/mc_rbdyn_urdf.doxytag
+    - mkdir -p /tmp/_ci/src
+    - cd /tmp/_ci/src && git clone --recursive https://github.com/humanoid-path-planner/hpp-spline && mkdir -p hpp-spline/build && cd hpp-spline/build && cmake ../ -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_TESTING:BOOL=OFF -DBUILD_PYTHON_INTERFACE:BOOL=OFF && make install || exit 1
+    - cd /tmp/_ci/src && git clone --recursive git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data && mkdir -p mc_rtc_ros_data/build && cd mc_rtc_ros_data/build && cmake ../ -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_TESTING:BOOL=OFF && make install || exit 1
+    - mkdir -p /tmp/_ci/build && cd /tmp/_ci/build
+    - cmake $CI_PROJECT_DIR -DPYTHON_BINDING=OFF -DBUILD_TESTING=OFF
+    - make doc
+    - cp -r doc/doxygen-html $CI_PROJECT_DIR/doc/
+    - cd $CI_PROJECT_DIR/doc/doxygen-html
+    - find . -type f -print0 | xargs -0 sed -i -e's@/usr/share/doc/SpaceVecAlg/doxygen-html/@https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/@g'
+    - find . -type f -print0 | xargs -0 sed -i -e's@/usr/share/doc/RBDyn/doxygen-html/@https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/@g'
+    - find . -type f -print0 | xargs -0 sed -i -e's@/usr/share/doc/Tasks/doxygen-html/@https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/@g'
+    - find . -type f -print0 | xargs -0 sed -i -e's@/usr/share/doc/sch-core/doxygen-html/@https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/@g'
+    - find . -type f -print0 | xargs -0 sed -i -e's@/usr/share/doc/mc_rbdyn_urdf/doxygen-html/@https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/@g'
     - cd $CI_PROJECT_DIR/doc
     - bundle install --path vendor
   script:
