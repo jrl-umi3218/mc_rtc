@@ -124,8 +124,9 @@ update_target_sources:
 
 <p>The goal of this tutorial is to show you how to create a new controller for mc_rtc. We will use the JVRC1 robot in our example and we will simply try to shake the head left and right</p>
 
-
 <h3>Creating and running the controller skeleton</h3>
+
+<p><em>Note:</em> in mc_rtc, every controller derives from the <code>MCController</code> class. To write a simple controller you can also derive from it and write the required functionnality. This is what we will do in these tutorials. However, for more complex controllers we advise you to use the <a href="{{site.baseurl}}/tutorials/recipes/fsm.html">FMS facilties</a></p>
 
 <ul class="nav nav-tabs" id="createTab" role="tablist">
   <li class="nav-item">

@@ -29,7 +29,7 @@ If the script fails, please open up an issue on mc\_rtc issue tracker, providing
 - Script output
 - Any detail you might think relevant
 
-Once the script has succeded, you are finished. You can jump to the next [section](#test-your-installation)
+Once the script has succeeded, you are finished. You can jump to the next [section]({{site.baseurl}}/tutorials/introduction/configuration.html).
 
 #### Building from source (no script)
 

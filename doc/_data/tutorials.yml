@@ -109,10 +109,10 @@
   tutorials:
     -
       id: new-interface
-      title: Implementation a new mc_rtc interface
+      title: Implement a new mc_rtc interface
     -
       id: new-environment
       title: Environment creation for mc_rtc
     -
       id: new-robot-module
-      title: Implementing a new robot module
+      title: Implement a new robot module
