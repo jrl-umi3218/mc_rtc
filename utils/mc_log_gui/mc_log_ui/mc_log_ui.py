@@ -874,7 +874,7 @@ class MCLogUI(QtGui.QMainWindow):
     self.data = read_log(fpath)
     i = 0
     while "qIn_{}".format(i) in self.data and "qOut_{}".format(i) in self.data:
-      self.data["error_{}".format(i)] = self.data["qOut_{}".format(i)] - self.data["qIn_{}".format(i)]
+      self.data["error_q_{}".format(i)] = self.data["qOut_{}".format(i)] - self.data["qIn_{}".format(i)]
       self.data["qIn_limits_lower_{}".format(i)] = np.full_like(self.data["qIn_{}".format(i)], 0)
       self.data["qIn_limits_upper_{}".format(i)] = np.full_like(self.data["qIn_{}".format(i)], 0)
       self.data["qOut_limits_lower_{}".format(i)] = self.data["qIn_limits_lower_{}".format(i)]
@@ -908,11 +908,11 @@ class MCLogUI(QtGui.QMainWindow):
     menuEntries = [
         ("Encoders", "qIn", None, None, None),
         ("Commands", "qOut", None, None, None),
-        ("Error", "error", None, None, None),
+        ("Error", "error_q", None, None, None),
         ("Sensor torques", "tauIn", None, None, None),
         ("Command torques", "tauOut", None, None, None),
         ("Encoders/Commands", "qIn", "qOut", None, None),
-        ("Error/Torque", "error", "tauIn", None, None),
+        ("Error/Torque", "error_q", "tauIn", None, None),
         ("Encoders velocity", None, None, "qIn", None),
         ("Command velocity", None, None, "qOut", None),
         ("Encoders/Commands velocity", None, None, "qIn", "qOut"),
