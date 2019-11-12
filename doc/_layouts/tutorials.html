@@ -37,6 +37,14 @@
 
     <title>Tutorials - {{tutorial.title}} - mc_rtc</title>
 
+    <link rel="apple-touch-icon" sizes="180x180" href="{{site.baseurl}}/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{site.baseurl}}/assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{site.baseurl}}/assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="{{site.baseurl}}/assets/favicons/site.webmanifest">
+    <link rel="mask-icon" href="{{site.baseurl}}/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
     {% if site.use_local_libraries %}
     <link rel="stylesheet" href="{{site.baseurl}}/assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="{{site.baseurl}}/assets/css/octicons.css" />
@@ -139,7 +147,7 @@
             Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2018
           </div>
           <div class="col-4 col-lg-2 text-right">
-            <a href="credits.html">Credits</a>
+            <a href="{{site.baseurl}}/credits.html">Credits</a>
           </div>
         </div>
       </footer>
