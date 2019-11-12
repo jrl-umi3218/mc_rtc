@@ -156,7 +156,7 @@ int split(int argc, char * argv[])
   size_t desired_size = part_size;
   std::ofstream ofs;
   auto callback = [&](const std::vector<std::string> & ks, const std::vector<mc_rtc::log::FlatLog::record> &, double,
-                      const mc_rtc::log::copy_callback & copy, const char * data, size_t dataSize) {
+                      const mc_rtc::log::copy_callback & copy, const char * data, uint64_t dataSize) {
     // Start a new part if no data has been written
     if(written == 0)
     {
@@ -187,15 +187,15 @@ int split(int argc, char * argv[])
       std::vector<char> data;
       mc_rtc::MessagePackBuilder builder(data);
       copy(builder, keys);
-      size_t s = builder.finish();
-      ofs.write((char *)(&s), sizeof(size_t));
+      uint64_t s = builder.finish();
+      ofs.write((char *)(&s), sizeof(uint64_t));
       ofs.write(data.data(), static_cast<int>(s));
-      written += sizeof(size_t) + s;
+      written += sizeof(uint64_t) + s;
       return true;
     }
-    ofs.write((char *)&dataSize, sizeof(size_t));
+    ofs.write((char *)&dataSize, sizeof(uint64_t));
     ofs.write(data, static_cast<int>(dataSize * sizeof(char)));
-    written += sizeof(size_t) + dataSize * sizeof(char);
+    written += sizeof(uint64_t) + dataSize * sizeof(char);
     if(written >= desired_size)
     {
       written = 0;
@@ -301,7 +301,7 @@ int extract(int argc, char * argv[])
   bool key_present = false;
   auto callback_extract_key = [&](const std::vector<std::string> & ks,
                                   const std::vector<mc_rtc::log::FlatLog::record> &, double,
-                                  const mc_rtc::log::copy_callback &, const char * data, size_t dataSize) {
+                                  const mc_rtc::log::copy_callback &, const char * data, uint64_t dataSize) {
     if(ks.size())
     {
       bool key_was_present = key_present;
@@ -325,7 +325,7 @@ int extract(int argc, char * argv[])
     }
     if(key_present)
     {
-      ofs.write((char *)&dataSize, sizeof(size_t));
+      ofs.write((char *)&dataSize, sizeof(uint64_t));
       ofs.write(data, static_cast<int>(dataSize * sizeof(char)));
     }
     return true;
@@ -334,7 +334,7 @@ int extract(int argc, char * argv[])
   double final_t = 0;
   auto callback_extract_from_to = [&](const std::vector<std::string> & ks,
                                       const std::vector<mc_rtc::log::FlatLog::record> &, double t,
-                                      const mc_rtc::log::copy_callback & copy, const char * data, size_t dataSize) {
+                                      const mc_rtc::log::copy_callback & copy, const char * data, uint64_t dataSize) {
     final_t = t;
     if(ks.size())
     {
@@ -362,13 +362,13 @@ int extract(int argc, char * argv[])
           std::vector<char> data;
           mc_rtc::MessagePackBuilder builder(data);
           copy(builder, keys);
-          size_t s = builder.finish();
-          ofs.write((char *)(&s), sizeof(size_t));
+          uint64_t s = builder.finish();
+          ofs.write((char *)(&s), sizeof(uint64_t));
           ofs.write(data.data(), static_cast<int>(s));
           return true;
         }
       }
-      ofs.write((char *)&dataSize, sizeof(size_t));
+      ofs.write((char *)&dataSize, sizeof(uint64_t));
       ofs.write(data, static_cast<int>(dataSize * sizeof(char)));
     }
     return true;

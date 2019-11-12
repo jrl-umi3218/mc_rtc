@@ -105,19 +105,19 @@ void FlatLog::appendFlat(const std::string & f)
   {
     size = data_[0].records.size();
   }
-  size_t nEntries = 0;
-  ifs.read((char *)&nEntries, sizeof(size_t));
+  uint64_t nEntries = 0;
+  ifs.read((char *)&nEntries, sizeof(uint64_t));
   size_t nsize = 0;
   for(size_t i = 0; i < nEntries; ++i)
   {
     bool is_numeric = false;
     ifs.read((char *)&is_numeric, sizeof(bool));
-    size_t sz = 0;
-    ifs.read((char *)&sz, sizeof(size_t));
+    uint64_t sz = 0;
+    ifs.read((char *)&sz, sizeof(uint64_t));
     std::string key(sz, '0');
     ifs.read(&key[0], static_cast<int>(sz * sizeof(char)));
     auto idx = index(key, size);
-    ifs.read((char *)&sz, sizeof(size_t));
+    ifs.read((char *)&sz, sizeof(uint64_t));
     auto & entries = data_[idx].records;
     for(size_t i = 0; i < sz; ++i)
     {
@@ -137,8 +137,8 @@ void FlatLog::appendFlat(const std::string & f)
       }
       else
       {
-        size_t str_sz = 0;
-        ifs.read((char *)&str_sz, sizeof(size_t));
+        uint64_t str_sz = 0;
+        ifs.read((char *)&str_sz, sizeof(uint64_t));
         if(str_sz == 0)
         {
           entries.emplace_back(LogType::None, record::unique_void_ptr{nullptr, internal::void_deleter<int>});

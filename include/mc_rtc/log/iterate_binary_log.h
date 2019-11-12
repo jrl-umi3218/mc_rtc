@@ -23,7 +23,7 @@ using binary_log_copy_callback = std::function<bool(const std::vector<std::strin
                                                     double,
                                                     const copy_callback &,
                                                     const char *,
-                                                    size_t)>;
+                                                    uint64_t)>;
 
 /** Iterate over a given binary log data
  *

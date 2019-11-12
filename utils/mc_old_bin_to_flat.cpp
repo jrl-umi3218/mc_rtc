@@ -19,21 +19,21 @@ struct LogData
   using data_t = std::vector<std::string>;
   static void write(const data_t & data, std::ofstream & os)
   {
-    size_t s_sz = 0;
+    uint64_t s_sz = 0;
     for(const auto & s : data)
     {
       s_sz = s.size();
-      os.write((char *)&s_sz, sizeof(size_t));
+      os.write((char *)&s_sz, sizeof(uint64_t));
       os.write(s.data(), static_cast<long>(s.size() * sizeof(char)));
     }
   }
 
   static void read(std::ifstream & is, data_t & data)
   {
-    size_t s_sz = 0;
-    for(size_t i = 0; i < data.size(); ++i)
+    uint64_t s_sz = 0;
+    for(uint64_t i = 0; i < data.size(); ++i)
     {
-      is.read((char *)&s_sz, sizeof(size_t));
+      is.read((char *)&s_sz, sizeof(uint64_t));
       data[i].resize(s_sz);
       is.read(const_cast<char *>(data[i].data()), static_cast<long>(data[i].size() * sizeof(char)));
     }
@@ -80,29 +80,29 @@ struct NumericLogLine : public LogLine
     return true;
   }
 
-  NumericLogLine(const std::string & k, size_t s) : key_(k), data_(s, std::numeric_limits<double>::quiet_NaN()) {}
+  NumericLogLine(const std::string & k, uint64_t s) : key_(k), data_(s, std::numeric_limits<double>::quiet_NaN()) {}
 
   void write(std::ofstream & os) const override
   {
-    size_t key_s = key_.size();
+    uint64_t key_s = key_.size();
     os.put(1);
-    os.write((char *)&key_s, sizeof(size_t));
+    os.write((char *)&key_s, sizeof(uint64_t));
     os.write(key_.data(), static_cast<long>(key_.size() * sizeof(char)));
     key_s = data_.size();
-    os.write((char *)&key_s, sizeof(size_t));
+    os.write((char *)&key_s, sizeof(uint64_t));
     LogData<true>::write(data_, os);
   }
 
   void read(std::ifstream & is) override
   {
-    size_t key_s = 0;
-    is.read((char *)&key_s, sizeof(size_t));
+    uint64_t key_s = 0;
+    is.read((char *)&key_s, sizeof(uint64_t));
     key_.resize(key_s);
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wcast-qual"
     is.read((char *)key_.data(), static_cast<long>(key_s * sizeof(char)));
 #pragma GCC diagnostic pop
-    is.read((char *)&key_s, sizeof(size_t));
+    is.read((char *)&key_s, sizeof(uint64_t));
     data_.resize(key_s);
     LogData<true>::read(is, data_);
   }
@@ -131,30 +131,29 @@ struct StringLogLine : public LogLine
   std::string key_;
   data_t data_;
 
-  StringLogLine(const std::string & k, size_t s) : key_(k), data_(s, "") {}
+  StringLogLine(const std::string & k, uint64_t s) : key_(k), data_(s, "") {}
 
   void write(std::ofstream & os) const override
   {
-    size_t key_s = key_.size();
-    ;
+    uint64_t key_s = key_.size();
     os.put(0);
-    os.write((char *)&key_s, sizeof(size_t));
+    os.write((char *)&key_s, sizeof(uint64_t));
     os.write(key_.data(), static_cast<long>(key_.size() * sizeof(char)));
     key_s = data_.size();
-    os.write((char *)&key_s, sizeof(size_t));
+    os.write((char *)&key_s, sizeof(uint64_t));
     LogData<false>::write(data_, os);
   }
 
   void read(std::ifstream & is) override
   {
-    size_t key_s = 0;
-    is.read((char *)&key_s, sizeof(size_t));
+    uint64_t key_s = 0;
+    is.read((char *)&key_s, sizeof(uint64_t));
     key_.resize(key_s);
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wcast-qual"
     is.read((char *)key_.data(), static_cast<long>(key_s * sizeof(char)));
 #pragma GCC diagnostic pop
-    is.read((char *)&key_s, sizeof(size_t));
+    is.read((char *)&key_s, sizeof(uint64_t));
     data_.resize(key_s);
     LogData<false>::read(is, data_);
   }
@@ -383,8 +382,8 @@ std::unordered_map<std::string, std::shared_ptr<LogLine>> readLog(const std::str
 void writeFlatLog(const std::unordered_map<std::string, std::shared_ptr<LogLine>> & data, const std::string & file)
 {
   std::ofstream ofs(file, std::ofstream::binary);
-  size_t s = data.size();
-  ofs.write((char *)&s, sizeof(size_t));
+  uint64_t s = data.size();
+  ofs.write((char *)&s, sizeof(uint64_t));
   for(const auto & d : data)
   {
     d.second->write(ofs);

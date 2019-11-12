@@ -20,9 +20,9 @@ size_t nEntries(const mc_rtc::log::FlatLog & log, const std::map<std::string, mc
   return s;
 }
 
-void write(size_t s, std::ostream & os)
+void write(uint64_t s, std::ostream & os)
 {
-  os.write((char *)&s, sizeof(size_t));
+  os.write((char *)&s, sizeof(uint64_t));
 }
 
 void write(const std::string & entry, bool numeric, std::ostream & os)

@@ -41,8 +41,8 @@ bool iterate_binary_log(const std::string & f,
   bool extract_t = time.size() != 0;
   while(ifs)
   {
-    size_t entrySize = 0;
-    ifs.read((char *)&entrySize, sizeof(size_t));
+    uint64_t entrySize = 0;
+    ifs.read((char *)&entrySize, sizeof(uint64_t));
     if(!ifs)
     {
       break;
