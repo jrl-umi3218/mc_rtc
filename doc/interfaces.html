@@ -17,7 +17,7 @@ title: Interfaces
 
 {% for itf in site.data.interfaces %}
 <div class="media features">
-  <img class="mr-3" src="{{site.baseurl}}/assets/interfaces/{{itf.icon}}" alt="{{itf.name}}" width="125" height="125"/>
+  <a href="{{itf.url}}" target="blank_"><img class="mr-3" src="{{site.baseurl}}/assets/interfaces/{{itf.icon}}" alt="{{itf.name}}" width="125" height="125"/></a>
   <div class="media-body">
     <h5 class="mt-0">{{itf.name}}</h5>
     <p>{{itf.desc}}</p>
@@ -35,7 +35,7 @@ title: Interfaces
 
 <h3>Add a new interface</h3>
 
-<p>Check-out this <a href="/tutorials/Add_your_interface.html">tutorial</a> to get started.</p>
+<p>You can easily program a new interface for mc_rtc using C++ or Python. Check-out this <a href="{{site.baseurl}}/tutorials/advanced/new-interface.html">tutorial</a> to get started.</p>
 
 </div>
 
