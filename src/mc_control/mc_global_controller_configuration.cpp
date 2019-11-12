@@ -6,6 +6,9 @@
 #include <mc_observers/ObserverLoader.h>
 #include <mc_rbdyn/RobotLoader.h>
 
+#include <boost/filesystem.hpp>
+namespace bfs = boost::filesystem;
+
 /* Implementation file for mc_control::MCGlobalController::Configuration */
 
 namespace mc_control
@@ -213,7 +216,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
       log_policy = mc_rtc::Logger::Policy::NON_THREADED;
     }
   }
-  log_directory = bfs::temp_directory_path();
+  log_directory = bfs::temp_directory_path().string();
   {
     std::string v = "";
     config("LogDirectory", v);

@@ -5,6 +5,9 @@
 #include <mc_rtc/log/Logger.h>
 #include <mc_rtc/utils.h>
 
+#include <boost/filesystem.hpp>
+namespace bfs = boost::filesystem;
+
 #include <chrono>
 #include <fstream>
 #include <iomanip>
@@ -17,7 +20,7 @@ const uint8_t Logger::magic[4] = {0x41, 0x4e, 0x4e, 0x45};
 
 struct LoggerImpl
 {
-  LoggerImpl(const bfs::path & directory, const std::string & tmpl)
+  LoggerImpl(const std::string & directory, const std::string & tmpl)
   : data_(1024 * 1024), directory(directory), tmpl(tmpl)
   {
   }
@@ -54,7 +57,7 @@ namespace
 {
 struct LoggerNonThreadedPolicyImpl : public LoggerImpl
 {
-  LoggerNonThreadedPolicyImpl(const bfs::path & directory, const std::string & tmpl) : LoggerImpl(directory, tmpl) {}
+  LoggerNonThreadedPolicyImpl(const std::string & directory, const std::string & tmpl) : LoggerImpl(directory, tmpl) {}
 
   virtual void initialize(const bfs::path & path) final
   {
@@ -76,7 +79,7 @@ struct LoggerNonThreadedPolicyImpl : public LoggerImpl
 
 struct LoggerThreadedPolicyImpl : public LoggerImpl
 {
-  LoggerThreadedPolicyImpl(const bfs::path & directory, const std::string & tmpl) : LoggerImpl(directory, tmpl)
+  LoggerThreadedPolicyImpl(const std::string & directory, const std::string & tmpl) : LoggerImpl(directory, tmpl)
   {
     log_sync_th_ = std::thread([this]() {
       while(log_sync_th_run_ && valid_)
@@ -141,14 +144,14 @@ struct LoggerThreadedPolicyImpl : public LoggerImpl
 };
 } // namespace
 
-Logger::Logger(const Policy & policy, const bfs::path & directory, const std::string & tmpl)
+Logger::Logger(const Policy & policy, const std::string & directory, const std::string & tmpl)
 {
   setup(policy, directory, tmpl);
 }
 
 Logger::~Logger() {}
 
-void Logger::setup(const Policy & policy, const bfs::path & directory, const std::string & tmpl)
+void Logger::setup(const Policy & policy, const std::string & directory, const std::string & tmpl)
 {
   switch(policy)
   {
