@@ -4,7 +4,7 @@ layout: tutorials
 
 ## Overview
 
-mc\_rtc is an interface for simulation and robot control systems. These systems should provide the state of a given robot (joints' values, sensor readings...) and in return mc\_rtc will provide the desired robot's state (command). This is done through the `mc_control::MCGlobalController` class. This class does not perform control by itself but rather delegates this task to the `mc_control::MCController` derived objects that it holds. Writing a controller within the mc\_rtc framework is done by writing a class that inherits from the `mc_control::MCController` base class and implements the required functionnality. We implement such a controller in [another article](FirstController). The present article simply explains how to build/install the framework on your machine.
+mc\_rtc is an interface for simulation and robot control systems. These systems should provide the state of a given robot (joints' values, sensor readings...) and in return mc\_rtc will provide the desired robot's state (command). This is done through the `mc_control::MCGlobalController` class. This class does not perform control by itself but rather delegates this task to the `mc_control::MCController` derived objects that it holds. Writing a controller within the mc\_rtc framework is done by writing a class that inherits from the `mc_control::MCController` base class and implements the required functionnality. We implement such a controller in the following tutorials. The present tutorial simply explains how to build/install the framework on your machine.
 
 ![architecture overview](img/mc_rtc_architecture.jpg)
 
@@ -49,7 +49,7 @@ Building from sources on other platforms is not well documented at the moment. I
 - [eigen-lssol](https://gite.lirmm.fr/multi-contact/eigen-lssol)
 - [sch-core](https://github.com/jrl-umi3218/sch-core)
 - [Tasks](https://github.com/jrl-umi3218/Tasks)
-- [mc\_rbdyn\_urdf](https://github.com/jrl-umi3218/mc_rbdyn\_urdf)
+- [mc\_rbdyn\_urdf](https://github.com/jrl-umi3218/mc_rbdyn_urdf)
 - [mc\_rtc\_ros\_data](https://gite.lirmm.fr/multi-contact/mc_rtc_ros_data)
 
 If you wish to get Python bindings you will also need the following:

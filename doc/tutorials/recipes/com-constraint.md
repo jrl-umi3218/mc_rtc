@@ -39,7 +39,7 @@ Thus, to constrain the CoM to a static region, one only needs to construct a few
 
 Example
 ---
-Let's go back to the CoM controller we [constructed before](/CoMController): the robot fell in a dynamic simulation because we asked it to go to far to the sides.
+Let's go back to the CoM controller we [constructed before]({{site.baseurl}}/tutorials/introduction/com-controller.html): the robot fell in a dynamic simulation because we asked it to go to far to the sides.
 Let us now restrict its motion to a square, of sides 8cm. This can be expressed as:
 ```
 -0.08 \leq x \leq 0.08

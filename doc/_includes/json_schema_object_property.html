@@ -27,7 +27,6 @@
     {% capture PROP_NAME %}<i>{{PROP_NAME}}</i>&nbsp;&nbsp;<small class="text-secondary">(pattern)</small>{% endcapture %}
   {% endif %}
   <td>{{PROP_NAME}}</td>
-  </td>
   {% if HAS_DESC %}
   <td>
     {% include json_schema_item.html data=REF id=ID %}

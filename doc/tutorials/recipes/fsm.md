@@ -333,7 +333,7 @@ struct Contact
 };
 ```
 
-The `dof` vector will be transformed to a diagonal matrix and added as a [dof constraint](DoFContact).
+The `dof` vector will be transformed to a diagonal matrix and added as a [dof constraint](contact-dof.html).
 
 To add/remove contacts in the FSM controller, simply call:
 

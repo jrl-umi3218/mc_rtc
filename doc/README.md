@@ -37,3 +37,12 @@ Doxygen integration is made in CI. If you want to browse it locally simply copy 
 ```bash
 $ cp -r ${CMAKE_INSTALL_PREFIX}/share/doc/mc_rtc/doxygen-html .
 ```
+
+HTML proofer
+--
+
+You can run the generated site through the HTML proofer tool to check for errors:
+
+```bash
+bundle exec htmlproofer ./_site --only-4xx --check-favicon --check-html --allow-hash-href --url-ignore "/gite.lirmm.fr/"
+```

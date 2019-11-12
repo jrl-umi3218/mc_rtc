@@ -50,7 +50,7 @@ Note that `speed` is expressed in the body's frame.
 
 #### About the DoF matrix
 
-The requirements for the DoF matrix are pretty close to those of the [DoFContact](DoFContact). These requirements are:
+The requirements for the DoF matrix are pretty close to those of the [DoFContact](contact-dof.html). These requirements are:
 - it should be a square 6x6 matrix;
 - only the diagonal elements should be set;
 - a 0 represents a DoF that is not affected by the constraint, while a 1 represents a DoF affected by the constraint;
