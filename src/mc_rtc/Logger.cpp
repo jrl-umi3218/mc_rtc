@@ -36,9 +36,9 @@ struct LoggerImpl
   std::ofstream log_;
 
 protected:
-  inline void fwrite(char * data, size_t size)
+  inline void fwrite(char * data, uint64_t size)
   {
-    log_.write((char *)&size, sizeof(size_t));
+    log_.write((char *)&size, sizeof(uint64_t));
     log_.write(data, static_cast<int>(size));
   }
 
