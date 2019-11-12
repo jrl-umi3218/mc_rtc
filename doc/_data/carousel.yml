@@ -1,9 +1,6 @@
-- desc: "Autonomous car driving by a humanoid robot"
-  youtube: "SYHI2JmJ-lk"
-- desc: "HRP-4 climbing up stairs"
-  element: '<div class="embed-responsive embed-responsive-16by9"><video controls="" width="95%">
-              <source src="https://scaron.info/videos/stair-climbing.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-            </video></div>'
+- desc: Autonomous car driving by a humanoid robot
+  youtube: SYHI2JmJ-lk
+- desc: HRP-4 climbing up stairs
+  youtube: vFCFKAunsYM
 - desc: "Humanoid in aircraft manufacturing: operating a circuit-breaker"
-  youtube: "C3Y2Xc6sEY4"
+  youtube: C3Y2Xc6sEY4

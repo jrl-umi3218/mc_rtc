@@ -14,7 +14,7 @@
       title: Running a controller
     -
       id: first-controller
-      title: Writing a first controller with mc_rtc
+      title: Your first controller with mc_rtc
     -
       id: com-controller
       title: Controlling the CoM

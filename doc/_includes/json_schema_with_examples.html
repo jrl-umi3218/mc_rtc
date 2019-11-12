@@ -2,7 +2,7 @@
   {% capture collapseId %}collapse_{{include.id}}{% endcapture %}
   {% capture exampleId %}{{include.id}}_example{% endcapture %}
   {% capture collapseExampleId %}collapse_{{exampleId}}{% endcapture %}
-  <div id="{{collapseId}}" class="collapse collapseSchema">
+  <div id="{{collapseId}}" class="collapse collapseSchema" style="position:sticky; top: 65px;">
     {% include json_schema.html schema=include.schema id=id %}
     <div class="card">
       <div class="card-header">
