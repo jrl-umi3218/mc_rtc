@@ -71,7 +71,7 @@ struct MC_OBSERVER_DLLAPI BodySensorObserver : public Observer
   void updateRobots(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots) override;
 
   /*! \brief Get floating-base pose in the world frame. */
-  const sva::PTransformd posW() const
+  const sva::PTransformd & posW() const
   {
     return posW_;
   }
