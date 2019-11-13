@@ -7,13 +7,20 @@
 /*! Interface used to load observers */
 
 #include <mc_observers/api.h>
-#include <mc_rtc/GUIState.h>
+
+#include <mc_rtc/gui/StateBuilder.h>
 #include <mc_rtc/log/Logger.h>
 
 namespace mc_control
 {
 struct MCController;
 } // namespace mc_control
+
+namespace mc_rbdyn
+{
+
+struct Robots;
+}
 
 namespace mc_observers
 {

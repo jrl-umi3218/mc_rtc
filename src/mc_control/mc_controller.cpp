@@ -3,9 +3,13 @@
  */
 
 #include <mc_control/mc_controller.h>
+
 #include <mc_rbdyn/RobotLoader.h>
+
 #include <mc_rtc/config.h>
+#include <mc_rtc/gui/Schema.h>
 #include <mc_rtc/logging.h>
+
 #include <mc_tasks/MetaTaskLoader.h>
 
 #include <RBDyn/FK.h>

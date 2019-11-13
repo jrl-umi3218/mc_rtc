@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include <mc_control/client_api.h>
 #include <mc_control/mc_controller.h>
-#include <mc_rtc/GUIState.h>
+
+#include <mc_rtc/gui/StateBuilder.h>
 
 #include <nanomsg/nn.h>
 #include <nanomsg/pubsub.h>

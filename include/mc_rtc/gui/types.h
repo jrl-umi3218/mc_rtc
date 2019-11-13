@@ -4,8 +4,11 @@
 
 #pragma once
 
+/** This file contains classes that are used to configure the visual styles of
+ * various elements in the GUI */
+
 #include <mc_rtc/Configuration.h>
-#include <mc_rtc/gui_api.h>
+#include <mc_rtc/gui/api.h>
 #include <mc_rtc/logging.h>
 
 namespace mc_rtc

@@ -2,7 +2,7 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <mc_rtc/GUIState.h>
+#include <mc_rtc/gui/StateBuilder.h>
 
 namespace mc_rtc
 {

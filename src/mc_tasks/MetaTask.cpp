@@ -5,6 +5,10 @@
 #include <mc_rtc/logging.h>
 #include <mc_tasks/MetaTask.h>
 
+#include <mc_rtc/gui/ArrayInput.h>
+#include <mc_rtc/gui/ArrayLabel.h>
+#include <mc_rtc/gui/Button.h>
+
 namespace mc_tasks
 {
 

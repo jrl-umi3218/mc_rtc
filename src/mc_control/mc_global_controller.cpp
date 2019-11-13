@@ -3,8 +3,16 @@
  */
 
 #include <mc_control/mc_global_controller.h>
+
+#include "mc_global_controller_ros_services.h"
+
 #include <mc_rbdyn/RobotLoader.h>
+
 #include <mc_rtc/config.h>
+#include <mc_rtc/gui/Button.h>
+#include <mc_rtc/gui/Form.h>
+#include <mc_rtc/gui/Label.h>
+#include <mc_rtc/gui/NumberInput.h>
 #include <mc_rtc/logging.h>
 #include <mc_rtc/ros.h>
 
@@ -14,7 +22,6 @@
 
 #include <boost/chrono.hpp>
 
-#include "mc_global_controller_ros_services.h"
 #include <algorithm>
 #include <cstdlib>
 #include <fstream>

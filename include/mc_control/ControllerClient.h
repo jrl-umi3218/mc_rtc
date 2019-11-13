@@ -5,8 +5,9 @@
 #pragma once
 
 #include <mc_control/client_api.h>
+
 #include <mc_rtc/Configuration.h>
-#include <mc_rtc/GUITypes.h>
+#include <mc_rtc/gui/types.h>
 
 #include <nanomsg/nn.h>
 #include <nanomsg/pubsub.h>

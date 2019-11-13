@@ -15,7 +15,7 @@ cdef extern from "<memory>" namespace "std" nogil:
     shared_ptr(const shared_ptr[T]&)
     T * get()
 
-cdef extern from "<mc_rtc/GUIState.h>" namespace "mc_rtc::gui":
+cdef extern from "<mc_rtc/gui.h>" namespace "mc_rtc::gui":
 
   cdef cppclass Element:
     Element()

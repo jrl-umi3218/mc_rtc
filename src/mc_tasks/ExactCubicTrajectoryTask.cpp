@@ -3,9 +3,13 @@
  */
 
 #include <mc_tasks/ExactCubicTrajectoryTask.h>
+
 #include <mc_tasks/MetaTaskLoader.h>
+
 #include <mc_trajectory/ExactCubic.h>
 #include <mc_trajectory/InterpolatedRotation.h>
+
+#include <mc_rtc/gui/Arrow.h>
 
 namespace mc_tasks
 {

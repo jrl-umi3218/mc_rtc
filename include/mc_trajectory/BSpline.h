@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <mc_rtc/GUIState.h>
+#include <mc_rtc/gui/StateBuilder.h>
 #include <mc_trajectory/Spline.h>
 #include <mc_trajectory/api.h>
 

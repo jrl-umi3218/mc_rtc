@@ -4,6 +4,9 @@
 
 #include <mc_trajectory/BSpline.h>
 
+#include <mc_rtc/gui/Point3D.h>
+#include <mc_rtc/gui/Trajectory.h>
+
 #include <sstream>
 
 namespace mc_trajectory

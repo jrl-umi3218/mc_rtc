@@ -6,6 +6,9 @@
 
 #include <mc_tasks/TrajectoryTaskGeneric.h>
 
+#include <mc_rtc/gui/ArrayInput.h>
+#include <mc_rtc/gui/NumberInput.h>
+
 #include <cmath>
 
 namespace mc_tasks

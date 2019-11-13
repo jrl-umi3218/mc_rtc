@@ -4,6 +4,8 @@
 
 #include <mc_tasks/OrientationTask.h>
 
+#include <mc_rtc/gui/Rotation.h>
+
 namespace mc_tasks
 {
 

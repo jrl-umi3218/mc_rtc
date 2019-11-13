@@ -3,7 +3,8 @@
  */
 
 #include <mc_control/ControllerClient.h>
-#include <mc_rtc/GUIState.h>
+
+#include <mc_rtc/gui/StateBuilder.h>
 #include <mc_rtc/logging.h>
 
 #include <nanomsg/nn.h>

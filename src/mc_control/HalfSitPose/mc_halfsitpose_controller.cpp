@@ -5,6 +5,8 @@
 #include "mc_halfsitpose_controller.h"
 
 #include <mc_rbdyn/RobotModule.h>
+
+#include <mc_rtc/gui/Button.h>
 #include <mc_rtc/logging.h>
 
 #include <RBDyn/EulerIntegration.h>

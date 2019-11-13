@@ -6,6 +6,9 @@
 
 #include <mc_tasks/SplineTrajectoryTask.h>
 
+#include <mc_rtc/gui/Rotation.h>
+#include <mc_rtc/gui/Transform.h>
+
 namespace mc_tasks
 {
 template<typename Derived>

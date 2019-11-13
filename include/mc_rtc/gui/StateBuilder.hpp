@@ -4,7 +4,8 @@
 
 #pragma once
 
-#include <mc_rtc/GUIState.h>
+#include <mc_rtc/gui/StateBuilder.h>
+#include <mc_rtc/logging.h>
 
 namespace mc_rtc
 {

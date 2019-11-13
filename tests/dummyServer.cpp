@@ -3,7 +3,8 @@
  */
 
 #include <mc_control/ControllerServer.h>
-#include <mc_rtc/GUIState.h>
+
+#include <mc_rtc/gui.h>
 
 #include <chrono>
 #include <thread>

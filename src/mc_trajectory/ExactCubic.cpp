@@ -5,6 +5,10 @@
 #include <mc_rtc/logging.h>
 #include <mc_trajectory/ExactCubic.h>
 
+#include <mc_rtc/gui/NumberInput.h>
+#include <mc_rtc/gui/Point3D.h>
+#include <mc_rtc/gui/Trajectory.h>
+
 namespace mc_trajectory
 {
 using point_t = ExactCubic::point_t;

@@ -4,6 +4,8 @@
 
 #include <mc_tasks/PositionTask.h>
 
+#include <mc_rtc/gui/Point3D.h>
+
 namespace mc_tasks
 {
 
