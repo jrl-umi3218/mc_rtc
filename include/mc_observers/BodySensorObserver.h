@@ -70,6 +70,18 @@ struct MC_OBSERVER_DLLAPI BodySensorObserver : public Observer
    */
   void updateRobots(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots) override;
 
+  /*! \brief Get floating-base pose in the world frame. */
+  const sva::PTransformd & posW() const
+  {
+    return posW_;
+  }
+
+  /*! \brief Get floating-base velocity in the world frame. */
+  const sva::MotionVecd & velW() const
+  {
+    return velW_;
+  }
+
   void addToLogger(const mc_control::MCController & ctl, mc_rtc::Logger &) override;
   void removeFromLogger(mc_rtc::Logger &) override;
   void addToGUI(const mc_control::MCController & ctl, mc_rtc::gui::StateBuilder &) override;
