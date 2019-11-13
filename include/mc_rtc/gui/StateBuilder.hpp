@@ -99,6 +99,49 @@ StateBuilder::ElementStore::ElementStore(T self, const Category & category, Elem
   };
 }
 
+template<typename T, typename... Args>
+void StateBuilder::addPlot(const std::string & name, T abscissa, Args... args)
+{
+  // XXX Should check that T is an impl::Abscissa<Something> and that Args are not
+  if(plots_.count(name) != 0)
+  {
+    LOG_ERROR("A plot titled " << name << " is still active")
+    LOG_WARNING("Discarding request to add this plot")
+    return;
+  }
+  // One entry for the type, the plot id, the name and the abscissa plus one entry per plot
+  uint64_t sz = 4 + sizeof...(args);
+  uint64_t id = ++plot_id_;
+  plot_callback_t cb = [abscissa, id, sz](mc_rtc::MessagePackBuilder & builder, const std::string & name) {
+    builder.start_array(sz);
+    builder.write(static_cast<uint64_t>(Plot::Standard));
+    builder.write(id);
+    builder.write(name);
+    abscissa.write(builder);
+  };
+  plots_[name] = makePlotCallback(cb, args...);
+}
+
+template<typename T>
+StateBuilder::plot_callback_t StateBuilder::makePlotCallback(plot_callback_t callback, T plot)
+{
+  return [callback, plot](mc_rtc::MessagePackBuilder & builder, const std::string & name) {
+    callback(builder, name);
+    plot.write(builder);
+    builder.finish_array();
+  };
+}
+
+template<typename T, typename... Args>
+StateBuilder::plot_callback_t StateBuilder::makePlotCallback(plot_callback_t callback, T plot, Args... args)
+{
+  plot_callback_t cb = [callback, plot](mc_rtc::MessagePackBuilder & builder, const std::string & name) {
+    callback(builder, name);
+    plot.write(builder);
+  };
+  return makePlotCallback(cb, args...);
+}
+
 } // namespace gui
 
 } // namespace mc_rtc

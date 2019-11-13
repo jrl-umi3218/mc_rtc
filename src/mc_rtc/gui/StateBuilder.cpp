@@ -4,11 +4,20 @@
 
 #include <mc_rtc/gui/StateBuilder.h>
 
+#include <mc_rtc/gui/plot/options.h>
+
 namespace mc_rtc
 {
 
 namespace gui
 {
+
+namespace plot
+{
+
+constexpr double Range::inf;
+
+} // namespace plot
 
 Element::Element(const std::string & name) : name_(name) {}
 
@@ -35,6 +44,15 @@ std::string StateBuilder::cat2str(const std::vector<std::string> & cat)
     }
   }
   return ret;
+}
+
+void StateBuilder::removePlot(const std::string & name)
+{
+  auto it = plots_.find(name);
+  if(it != plots_.end())
+  {
+    plots_.erase(it);
+  }
 }
 
 void StateBuilder::removeCategory(const std::vector<std::string> & category)
@@ -77,15 +95,30 @@ void StateBuilder::removeElement(const std::vector<std::string> & category, cons
 size_t StateBuilder::update(std::vector<char> & buffer)
 {
   mc_rtc::MessagePackBuilder builder(buffer);
-  builder.start_array(3);
+  builder.start_array(4);
+
+  // Write protocol version
   builder.write(PROTOCOL_VERSION);
+
+  // Write static data
   if(update_data_)
   {
     data_buffer_size_ = data_.toMessagePack(data_buffer_);
     update_data_ = false;
   }
   builder.write_object(data_buffer_.data(), data_buffer_size_);
+
+  // Write elements
   update(builder, elements_);
+
+  // Write plots
+  builder.start_array(plots_.size());
+  for(auto & p : plots_)
+  {
+    p.second(builder, p.first);
+  }
+  builder.finish_array();
+
   builder.finish_array();
   return builder.finish();
 }

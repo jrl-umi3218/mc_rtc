@@ -148,6 +148,11 @@ set(mc_rtc_gui_HDR
   ../include/mc_rtc/gui/Label.h
   ../include/mc_rtc/gui/NumberInput.h
   ../include/mc_rtc/gui/NumberSlider.h
+  ../include/mc_rtc/gui/plot/Abscissa.h
+  ../include/mc_rtc/gui/plot.h
+  ../include/mc_rtc/gui/plot/options.h
+  ../include/mc_rtc/gui/plot/Ordinate.h
+  ../include/mc_rtc/gui/plot/Polygon.h
   ../include/mc_rtc/gui/Point3D.h
   ../include/mc_rtc/gui/Polygon.h
   ../include/mc_rtc/gui/Rotation.h

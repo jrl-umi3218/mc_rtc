@@ -6,6 +6,9 @@
 
 #include <mc_rtc/Configuration.h>
 #include <mc_rtc/gui/elements.h>
+#include <mc_rtc/gui/plot.h>
+
+#include <unordered_map>
 
 namespace mc_rtc
 {
@@ -18,6 +21,15 @@ enum class ElementsStacking
 {
   Vertical = 0,
   Horizontal
+};
+
+/** Describe plot types for the client */
+enum class Plot
+{
+  /** Identify a plot that provides an abscissa */
+  Standard = 0,
+  /** Identify a plot that provides XY legends */
+  XY
 };
 
 /** Used to build a GUI state from multiple objects */
@@ -33,7 +45,7 @@ struct MC_RTC_GUI_DLLAPI StateBuilder
    * - Adding fields to an existing Element
    * - Adding an Element type
    */
-  static constexpr int8_t PROTOCOL_VERSION = 1;
+  static constexpr int8_t PROTOCOL_VERSION = 2;
 
   /** Constructor */
   StateBuilder();
@@ -95,6 +107,19 @@ struct MC_RTC_GUI_DLLAPI StateBuilder
   /** Remove a single element */
   void removeElement(const std::vector<std::string> & category, const std::string & name);
 
+  /** Add a plot identified by the provided name
+   *
+   * In this form, T is expected to provide an abscissa, the other parameters
+   * are expected to provide Y-axis or XY-axis data
+   *
+   * \param name Name of the plot, this is a unique identifier
+   */
+  template<typename T, typename... Args>
+  void addPlot(const std::string & name, T abscissa, Args... args);
+
+  /** Remove a plot identified by the provided name */
+  void removePlot(const std::string & name);
+
   /** Update the GUI message
    *
    * \param data Will hold binary data representing the GUI
@@ -123,6 +148,15 @@ private:
 
   /** Holds static data for the GUI */
   mc_rtc::Configuration data_;
+  /** Callback used to write plot data into the GUI message */
+  using plot_callback_t = std::function<void(mc_rtc::MessagePackBuilder &, const std::string &)>;
+  /** A unique plot id used to identify plots with the same name
+   *
+   * This is mainly useful to restart a plot with the same name in a single iteration
+   */
+  uint64_t plot_id_ = 0;
+  /** Holds all currently active plots */
+  std::unordered_map<std::string, plot_callback_t> plots_;
   /** True if data binary form needs to be generated again */
   bool update_data_ = true;
   /** Holds data's binary form */
@@ -173,6 +207,12 @@ private:
   void update(mc_rtc::MessagePackBuilder & builder, Category & category);
 
   std::string cat2str(const std::vector<std::string> & category);
+
+  template<typename T>
+  plot_callback_t makePlotCallback(plot_callback_t callback, T plot);
+
+  template<typename T, typename... Args>
+  plot_callback_t makePlotCallback(plot_callback_t callback, T plot, Args... args);
 };
 
 } // namespace gui

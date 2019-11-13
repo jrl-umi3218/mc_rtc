@@ -49,6 +49,7 @@ struct TestServer
   Eigen::Vector3d arrow_start_{0.5, 0.5, 0.};
   Eigen::Vector3d arrow_end_{0.5, 1., -0.5};
   sva::ForceVecd force_{{0., 0., 0.}, {-50., 50., 100.}};
+  double t_ = 0.0;
 };
 
 TestServer::TestServer() : xythetaz_(4)
@@ -199,12 +200,20 @@ TestServer::TestServer() : xythetaz_(4)
                          []() {
                            return sva::PTransformd{Eigen::Vector3d{2, 2, 0}};
                          }));
+  builder.addPlot("sin(t)", mc_rtc::gui::plot::X("t", [this]() { return t_; }),
+                  mc_rtc::gui::plot::Y("t", [this]() { return std::sin(t_); }, mc_rtc::gui::Color(1.0, 0.0, 0.0)));
+  builder.addPlot("cos(t)", mc_rtc::gui::plot::X("t", [this]() { return t_; }),
+                  mc_rtc::gui::plot::Y("t", [this]() { return std::cos(t_); }, mc_rtc::gui::Color(1.0, 0.0, 0.0)));
+  builder.addPlot("sin(t)/cos(t)", mc_rtc::gui::plot::X("t", [this]() { return t_; }),
+                  mc_rtc::gui::plot::Y("t", [this]() { return std::sin(t_); }, mc_rtc::gui::Color(1.0, 0.0, 0.0)),
+                  mc_rtc::gui::plot::Y("t", [this]() { return std::cos(t_); }, mc_rtc::gui::Color(0.0, 0.0, 1.0)));
 }
 
 void TestServer::publish()
 {
   server.handle_requests(builder);
   server.publish(builder);
+  t_ += 0.05;
 }
 
 int main()

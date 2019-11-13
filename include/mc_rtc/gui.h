@@ -29,3 +29,5 @@
 #include <mc_rtc/gui/Trajectory.h>
 #include <mc_rtc/gui/Transform.h>
 #include <mc_rtc/gui/XYTheta.h>
+
+#include <mc_rtc/gui/plot.h>
