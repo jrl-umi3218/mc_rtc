@@ -100,6 +100,60 @@ StateBuilder::ElementStore::ElementStore(T self, const Category & category, Elem
 }
 
 template<typename T, typename... Args>
+void StateBuilder::addXYPlot(const std::string & name, T data, Args... args)
+{
+  addXYPlot(name, {}, {}, {}, data, args...);
+}
+
+template<typename T, typename... Args>
+void StateBuilder::addXYPlot(const std::string & name, plot::AxisConfiguration xConfig, T data, Args... args)
+{
+  addXYPlot(name, xConfig, {}, {}, data, args...);
+}
+
+template<typename T, typename... Args>
+void StateBuilder::addXYPlot(const std::string & name,
+                             plot::AxisConfiguration xConfig,
+                             plot::AxisConfiguration yLeftConfig,
+                             T data,
+                             Args... args)
+{
+  addXYPlot(name, xConfig, yLeftConfig, {}, data, args...);
+}
+
+template<typename T, typename... Args>
+void StateBuilder::addXYPlot(const std::string & name,
+                             plot::AxisConfiguration xConfig,
+                             plot::AxisConfiguration yLeftConfig,
+                             plot::AxisConfiguration yRightConfig,
+                             T data,
+                             Args... args)
+{
+  // XXX Should check that T is an impl::Abscissa<Something> and that Args are not
+  if(plots_.count(name) != 0)
+  {
+    LOG_ERROR("A plot titled " << name << " is still active")
+    LOG_WARNING("Discarding request to add this plot")
+    return;
+  }
+  // One entry for the type, the plot id, the name, the x and y axis configs, the data and one entry per plot
+  uint64_t sz = 7 + sizeof...(args);
+  uint64_t id = ++plot_id_;
+  plot_callback_t cb = [data, id, sz, xConfig, yLeftConfig, yRightConfig](mc_rtc::MessagePackBuilder & builder,
+                                                                          const std::string & name) {
+    builder.start_array(sz);
+    builder.write(static_cast<uint64_t>(plot::Plot::XY));
+    builder.write(id);
+    builder.write(name);
+    xConfig.write(builder);
+    yLeftConfig.write(builder);
+    yRightConfig.write(builder);
+    data.write(builder);
+  };
+  plots_[name] = makePlotCallback(cb, args...);
+}
+
+template<typename T, typename... Args>
 void StateBuilder::addPlot(const std::string & name, T abscissa, Args... args)
 {
   addPlot(name, abscissa, {}, {}, args...);

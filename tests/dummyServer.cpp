@@ -221,6 +221,8 @@ TestServer::TestServer() : xythetaz_(4)
                   mc_rtc::gui::plot::Y("sin(t)", [this]() { return std::sin(t_); }, Color(1.0, 0.0, 0.0)),
                   mc_rtc::gui::plot::Y("cos(t)", [this]() { return std::cos(t_); }, Color(0.0, 0.0, 1.0), Style::Solid,
                                        Side::Right));
+  builder.addXYPlot("Circle", mc_rtc::gui::plot::XY("Round", [this]() { return std::cos(t_); },
+                                                    [this]() { return std::sin(t_); }, Color(1.0, 0.0, 0.0)));
 }
 
 void TestServer::publish()

@@ -5,5 +5,6 @@
 #pragma once
 
 #include <mc_rtc/gui/plot/Abscissa.h>
+#include <mc_rtc/gui/plot/AbscissaOrdinate.h>
 #include <mc_rtc/gui/plot/Ordinate.h>
 #include <mc_rtc/gui/plot/Polygon.h>

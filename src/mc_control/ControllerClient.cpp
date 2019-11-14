@@ -644,15 +644,20 @@ void ControllerClient::handle_standard_plot(const mc_rtc::Configuration & plot)
   {
     const auto & y_ = plot[i];
     auto type = static_cast<mc_rtc::gui::plot::Type>(static_cast<uint64_t>(y_[0]));
-    if(type == mc_rtc::gui::plot::Type::Ordinate)
+    using Type = mc_rtc::gui::plot::Type;
+    if(type == Type::Ordinate)
     {
       Y y(y_);
       plot_point(id, i - 6, y.legend, x.value, y.value, y.color, y.style, y.side);
     }
-    else if(type == mc_rtc::gui::plot::Type::AbscissaOrdinate)
+    else if(type == Type::AbscissaOrdinate)
     {
       XY xy(y_);
       plot_point(id, i - 6, xy.legend, xy.x, xy.y, xy.color, xy.style, xy.side);
+    }
+    else if(type == Type::Polygon)
+    {
+      // XXX Implement
     }
     else
     {
@@ -663,9 +668,41 @@ void ControllerClient::handle_standard_plot(const mc_rtc::Configuration & plot)
   end_plot(id);
 }
 
-void ControllerClient::handle_xy_plot(const mc_rtc::Configuration & /*plot*/)
+void ControllerClient::handle_xy_plot(const mc_rtc::Configuration & plot)
 {
-  // XXX Implement me
+  uint64_t id = plot[1];
+  std::string title = plot[2];
+  start_plot(id, title);
+  mc_rtc::gui::plot::AxisConfiguration xConfig;
+  xConfig.load(plot[3]);
+  plot_setup_xaxis(id, xConfig.name, xConfig.range);
+  mc_rtc::gui::plot::AxisConfiguration y1Config;
+  y1Config.load(plot[4]);
+  plot_setup_yaxis_left(id, y1Config.name, y1Config.range);
+  mc_rtc::gui::plot::AxisConfiguration y2Config;
+  y2Config.load(plot[5]);
+  plot_setup_yaxis_right(id, y2Config.name, y2Config.range);
+  for(size_t i = 6; i < plot.size(); ++i)
+  {
+    const auto & y_ = plot[i];
+    auto type = static_cast<mc_rtc::gui::plot::Type>(static_cast<uint64_t>(y_[0]));
+    using Type = mc_rtc::gui::plot::Type;
+    if(type == Type::AbscissaOrdinate)
+    {
+      XY xy(y_);
+      plot_point(id, i - 6, xy.legend, xy.x, xy.y, xy.color, xy.style, xy.side);
+    }
+    else if(type == Type::Polygon)
+    {
+      // XXX Implement
+    }
+    else
+    {
+      LOG_ERROR("Cannot handle provided data in " << title << ":")
+      LOG_WARNING(y_.dump(true, true))
+    }
+  }
+  end_plot(id);
 }
 
 } // namespace mc_control

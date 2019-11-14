@@ -100,6 +100,73 @@ struct MC_RTC_GUI_DLLAPI StateBuilder
 
   /** Add a plot identified by the provided name
    *
+   * In this form, T and other Args are expected to provide XY-data
+   *
+   * \param name Name of the plot
+   *
+   * \param xConfig Configuration for the left axis
+   *
+   * \param yLeftConfig Configuration for the left axis
+   *
+   * \param yRightConfig Configuration for the right axis
+   *
+   */
+  template<typename T, typename... Args>
+  void addXYPlot(const std::string & name,
+                 plot::AxisConfiguration xConfig,
+                 plot::AxisConfiguration yLeftConfig,
+                 plot::AxisConfiguration yRightConfig,
+                 T data,
+                 Args... args);
+
+  /** Add a plot identified by the provided name
+   *
+   * In this form, T and other Args are expected to provide XY-data
+   *
+   * \param name Name of the plot
+   *
+   * \param xConfig Configuration for the left axis
+   *
+   * \param yLeftConfig Configuration for the left axis
+   *
+   */
+  template<typename T, typename... Args>
+  void addXYPlot(const std::string & name,
+                 plot::AxisConfiguration xConfig,
+                 plot::AxisConfiguration yLeftConfig,
+                 T data,
+                 Args... args);
+
+  /** Add a plot identified by the provided name
+   *
+   * In this form, T and other Args are expected to provide XY-data
+   *
+   * \param name Name of the plot
+   *
+   * \param xConfig Configuration for the left axis
+   *
+   * \param yLeftConfig Configuration for the left axis
+   *
+   */
+  template<typename T, typename... Args>
+  void addXYPlot(const std::string & name, plot::AxisConfiguration xConfig, T data, Args... args);
+
+  /** Add a plot identified by the provided name
+   *
+   * In this form, T and other Args are expected to provide XY-data
+   *
+   * \param name Name of the plot
+   *
+   * \param xConfig Configuration for the left axis
+   *
+   * \param yLeftConfig Configuration for the left axis
+   *
+   */
+  template<typename T, typename... Args>
+  void addXYPlot(const std::string & name, T data, Args... args);
+
+  /** Add a plot identified by the provided name
+   *
    * In this form, T is expected to provide an abscissa, the other parameters
    * are expected to provide Y-axis or XY-axis data
    *
@@ -234,6 +301,11 @@ private:
   void update(mc_rtc::MessagePackBuilder & builder, Category & category);
 
   std::string cat2str(const std::vector<std::string> & category);
+
+  inline plot_callback_t makePlotCallback(plot_callback_t callback)
+  {
+    return callback;
+  }
 
   template<typename T>
   plot_callback_t makePlotCallback(plot_callback_t callback, T plot);
