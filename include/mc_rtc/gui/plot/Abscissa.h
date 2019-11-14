@@ -24,9 +24,9 @@ namespace impl
 template<typename GetT>
 struct Abscissa
 {
-  static constexpr PlotType type = PlotType::Ordinate;
+  static constexpr Type type = Type::Abscissa;
 
-  Abscissa(const std::string & name, GetT get_fn, Range range) : name_(name), get_fn_(get_fn), range_(range)
+  Abscissa(AxisConfiguration config, GetT get_fn) : config_(config), get_fn_(get_fn)
   {
     static_assert(details::CheckReturnType<GetT, double>::value,
                   "Abscissa should return a single floating-point value");
@@ -34,26 +34,24 @@ struct Abscissa
 
   void write(mc_rtc::MessagePackBuilder & builder) const
   {
-    builder.start_array(3);
-    builder.write(name_);
+    builder.start_array(2);
+    config_.write(builder);
     builder.write(get_fn_());
-    range_.write(builder);
     builder.finish_array();
   }
 
 private:
-  std::string name_;
+  AxisConfiguration config_;
   GetT get_fn_;
-  Range range_;
 };
 
 } // namespace impl
 
 /** Helper to create an impl::Abscissa */
 template<typename GetT>
-impl::Abscissa<GetT> X(const std::string & name, GetT get_fn, Range range = {})
+impl::Abscissa<GetT> X(AxisConfiguration config, GetT get_fn)
 {
-  return impl::Abscissa<GetT>(name, get_fn, range);
+  return impl::Abscissa<GetT>(config, get_fn);
 }
 
 } // namespace plot

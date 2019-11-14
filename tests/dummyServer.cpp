@@ -135,7 +135,7 @@ TestServer::TestServer() : xythetaz_(4)
                                                    data_combo_ = s;
                                                    std::cout << "data_combo_ changed to " << data_combo_ << std::endl;
                                                  }));
-  builder.addElement({"Schema"}, mc_rtc::gui::Schema("Add metatask", "metatask", [](const mc_rtc::Configuration & c) {
+  builder.addElement({"Schema"}, mc_rtc::gui::Schema("Add metatask", "MetaTask", [](const mc_rtc::Configuration & c) {
                        std::cout << "Got schema request:\n" << c.dump(true) << std::endl;
                      }));
   builder.addElement(
@@ -200,13 +200,27 @@ TestServer::TestServer() : xythetaz_(4)
                          []() {
                            return sva::PTransformd{Eigen::Vector3d{2, 2, 0}};
                          }));
-  builder.addPlot("sin(t)", mc_rtc::gui::plot::X("t", [this]() { return t_; }),
-                  mc_rtc::gui::plot::Y("t", [this]() { return std::sin(t_); }, mc_rtc::gui::Color(1.0, 0.0, 0.0)));
-  builder.addPlot("cos(t)", mc_rtc::gui::plot::X("t", [this]() { return t_; }),
-                  mc_rtc::gui::plot::Y("t", [this]() { return std::cos(t_); }, mc_rtc::gui::Color(1.0, 0.0, 0.0)));
-  builder.addPlot("sin(t)/cos(t)", mc_rtc::gui::plot::X("t", [this]() { return t_; }),
-                  mc_rtc::gui::plot::Y("t", [this]() { return std::sin(t_); }, mc_rtc::gui::Color(1.0, 0.0, 0.0)),
-                  mc_rtc::gui::plot::Y("t", [this]() { return std::cos(t_); }, mc_rtc::gui::Color(0.0, 0.0, 1.0)));
+  using Color = mc_rtc::gui::Color;
+  using Range = mc_rtc::gui::plot::Range;
+  using Style = mc_rtc::gui::plot::Style;
+  using Side = mc_rtc::gui::plot::Side;
+  builder.addPlot("sin(t)/cos(t)", mc_rtc::gui::plot::X({"t"}, [this]() { return t_; }),
+                  mc_rtc::gui::plot::Y("sin(t)", [this]() { return std::sin(t_); }, Color(1.0, 0.0, 0.0)),
+                  mc_rtc::gui::plot::Y("cos(t)", [this]() { return std::cos(t_); }, Color(0.0, 0.0, 1.0)));
+  builder.addPlot(
+      "Demo style", mc_rtc::gui::plot::X({"t"}, [this]() { return t_; }),
+      mc_rtc::gui::plot::Y("Solid", [this]() { return std::cos(t_); }, Color(1.0, 0.0, 0.0), Style::Solid),
+      mc_rtc::gui::plot::Y("Dashed", [this]() { return 2 - std::cos(t_); }, Color(0.0, 0.0, 1.0), Style::Dashed),
+      mc_rtc::gui::plot::Y("Dotted", [this]() { return std::sin(t_); }, Color(0.0, 1.0, 0.0), Style::Dotted,
+                           Side::Right),
+      mc_rtc::gui::plot::Y("Scatter", [this]() { return 2 - std::sin(t_); }, Color(1.0, 0.0, 1.0), Style::Scatter,
+                           Side::Right));
+  builder.addPlot("Fix axis", mc_rtc::gui::plot::X({"t"}, [this]() { return t_; }),
+                  {"Y1", {0, 1}}, // Fix both min and max
+                  {"Y2", {-Range::inf, 0}}, // Only fix max
+                  mc_rtc::gui::plot::Y("sin(t)", [this]() { return std::sin(t_); }, Color(1.0, 0.0, 0.0)),
+                  mc_rtc::gui::plot::Y("cos(t)", [this]() { return std::cos(t_); }, Color(0.0, 0.0, 1.0), Style::Solid,
+                                       Side::Right));
 }
 
 void TestServer::publish()

@@ -45,7 +45,7 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   if(gui_)
   {
     gui_->addElement({"Global", "Add task"},
-                     mc_rtc::gui::Schema("Add MetaTask", "metatask", [this](const mc_rtc::Configuration & config) {
+                     mc_rtc::gui::Schema("Add MetaTask", "MetaTask", [this](const mc_rtc::Configuration & config) {
                        try
                        {
                          auto t = mc_tasks::MetaTaskLoader::load(this->solver(), config);

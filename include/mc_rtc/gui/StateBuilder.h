@@ -23,15 +23,6 @@ enum class ElementsStacking
   Horizontal
 };
 
-/** Describe plot types for the client */
-enum class Plot
-{
-  /** Identify a plot that provides an abscissa */
-  Standard = 0,
-  /** Identify a plot that provides XY legends */
-  XY
-};
-
 /** Used to build a GUI state from multiple objects */
 struct MC_RTC_GUI_DLLAPI StateBuilder
 {
@@ -113,6 +104,42 @@ struct MC_RTC_GUI_DLLAPI StateBuilder
    * are expected to provide Y-axis or XY-axis data
    *
    * \param name Name of the plot, this is a unique identifier
+   *
+   * \param abscissa Describe the abscissa axis
+   *
+   * \param yLeftConfig Configuration for the left axis
+   *
+   * \param yRightConfig Configuration for the right axis
+   */
+  template<typename T, typename... Args>
+  void addPlot(const std::string & name,
+               T abscissa,
+               plot::AxisConfiguration yLeftConfig,
+               plot::AxisConfiguration yRightConfig,
+               Args... args);
+
+  /** Add a plot identified by the provided name
+   *
+   * In this form, T is expected to provide an abscissa, the other parameters
+   * are expected to provide Y-axis or XY-axis data
+   *
+   * \param name Name of the plot, this is a unique identifier
+   *
+   * \param abscissa Describe the abscissa axis
+   *
+   * \param yLeftConfig Configuration for the left axis
+   */
+  template<typename T, typename... Args>
+  void addPlot(const std::string & name, T abscissa, plot::AxisConfiguration yLeftConfig, Args... args);
+
+  /** Add a plot identified by the provided name
+   *
+   * In this form, T is expected to provide an abscissa, the other parameters
+   * are expected to provide Y-axis or XY-axis data
+   *
+   * \param name Name of the plot, this is a unique identifier
+   *
+   * \param abscissa Describe the abscissa axis
    */
   template<typename T, typename... Args>
   void addPlot(const std::string & name, T abscissa, Args... args);

@@ -17,8 +17,17 @@ namespace gui
 namespace plot
 {
 
+/** Describe plot types for the client */
+enum class Plot
+{
+  /** Identify a plot that provides an abscissa */
+  Standard = 0,
+  /** Identify a plot that provides XY legends */
+  XY
+};
+
 /** Distinguish plot types */
-enum class PlotType
+enum class Type
 {
   /** This plot type is expected to return X values only */
   Abscissa,
@@ -41,6 +50,9 @@ struct MC_RTC_GUI_DLLAPI Range
   double min = -inf;
   double max = inf;
 
+  Range() = default;
+  Range(double min, double max) : min(min), max(max) {}
+
   void load(const mc_rtc::Configuration & config)
   {
     std::array<double, 2> data = config;
@@ -57,8 +69,34 @@ struct MC_RTC_GUI_DLLAPI Range
   }
 };
 
+/** Describe the configuration of an axis */
+struct MC_RTC_GUI_DLLAPI AxisConfiguration
+{
+  std::string name;
+  Range range;
+
+  AxisConfiguration() = default;
+  AxisConfiguration(const std::string & name) : AxisConfiguration(name, {}) {}
+  AxisConfiguration(Range range) : AxisConfiguration("", range) {}
+  AxisConfiguration(const std::string & name, Range range) : name(name), range(range) {}
+
+  void load(const mc_rtc::Configuration & config)
+  {
+    name = static_cast<std::string>(config[0]);
+    range.load(config[1]);
+  }
+
+  void write(mc_rtc::MessagePackBuilder & builder) const
+  {
+    builder.start_array(2);
+    builder.write(name);
+    range.write(builder);
+    builder.finish_array();
+  }
+};
+
 /** How to display the plot */
-enum class PlotStyle
+enum class MC_RTC_GUI_DLLAPI Style
 {
   /** Solid lines */
   Solid,

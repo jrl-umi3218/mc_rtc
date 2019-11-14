@@ -182,6 +182,11 @@ void ControllerClient::handle_gui_state(mc_rtc::Configuration state)
   }
   data_ = state[1];
   handle_category({}, "", state[2]);
+  auto plots = state[3];
+  for(size_t i = 0; i < plots.size(); ++i)
+  {
+    handle_plot(plots[i]);
+  }
   stopped();
 }
 
@@ -549,6 +554,118 @@ void ControllerClient::handle_form(const ElementId & id, const mc_rtc::Configura
         LOG_ERROR("Form cannot handle element of type " << static_cast<int>(type))
     }
   }
+}
+
+void ControllerClient::handle_plot(const mc_rtc::Configuration & plot)
+{
+  auto pType = static_cast<mc_rtc::gui::plot::Plot>(static_cast<uint64_t>(plot[0]));
+  switch(pType)
+  {
+    case mc_rtc::gui::plot::Plot::Standard:
+      handle_standard_plot(plot);
+      break;
+    case mc_rtc::gui::plot::Plot::XY:
+      handle_xy_plot(plot);
+      break;
+    default:
+      LOG_ERROR("This client implementation only handles standard and XY plots")
+  }
+}
+
+namespace
+{
+
+struct X
+{
+  mc_rtc::gui::plot::AxisConfiguration config;
+  double value;
+
+  X(const mc_rtc::Configuration & data)
+  {
+    config.load(data[0]);
+    value = data[1];
+  }
+};
+
+struct Y
+{
+  std::string legend;
+  double value;
+  mc_rtc::gui::Color color;
+  mc_rtc::gui::plot::Style style;
+  mc_rtc::gui::plot::Side side;
+
+  Y(const mc_rtc::Configuration & data)
+  {
+    legend = static_cast<std::string>(data[1]);
+    value = data[2];
+    color.load(data[3]);
+    style = static_cast<mc_rtc::gui::plot::Style>(static_cast<uint64_t>(data[4]));
+    side = static_cast<mc_rtc::gui::plot::Side>(static_cast<uint64_t>(data[5]));
+  }
+};
+
+struct XY
+{
+  std::string legend;
+  double x;
+  double y;
+  mc_rtc::gui::Color color;
+  mc_rtc::gui::plot::Style style;
+  mc_rtc::gui::plot::Side side;
+
+  XY(const mc_rtc::Configuration & data)
+  {
+    legend = static_cast<std::string>(data[1]);
+    x = data[2];
+    y = data[3];
+    color.load(data[4]);
+    style = static_cast<mc_rtc::gui::plot::Style>(static_cast<uint64_t>(data[5]));
+    side = static_cast<mc_rtc::gui::plot::Side>(static_cast<uint64_t>(data[6]));
+  }
+};
+
+} // namespace
+
+void ControllerClient::handle_standard_plot(const mc_rtc::Configuration & plot)
+{
+  uint64_t id = plot[1];
+  std::string title = plot[2];
+  start_plot(id, title);
+  X x(plot[3]);
+  plot_setup_xaxis(id, x.config.name, x.config.range);
+  mc_rtc::gui::plot::AxisConfiguration y1Config;
+  y1Config.load(plot[4]);
+  plot_setup_yaxis_left(id, y1Config.name, y1Config.range);
+  mc_rtc::gui::plot::AxisConfiguration y2Config;
+  y2Config.load(plot[5]);
+  plot_setup_yaxis_right(id, y2Config.name, y2Config.range);
+  for(size_t i = 6; i < plot.size(); ++i)
+  {
+    const auto & y_ = plot[i];
+    auto type = static_cast<mc_rtc::gui::plot::Type>(static_cast<uint64_t>(y_[0]));
+    if(type == mc_rtc::gui::plot::Type::Ordinate)
+    {
+      Y y(y_);
+      plot_point(id, i - 6, y.legend, x.value, y.value, y.color, y.style, y.side);
+    }
+    else if(type == mc_rtc::gui::plot::Type::AbscissaOrdinate)
+    {
+      XY xy(y_);
+      plot_point(id, i - 6, xy.legend, xy.x, xy.y, xy.color, xy.style, xy.side);
+    }
+    else
+    {
+      LOG_ERROR("Cannot handle provided data in " << title << ":")
+      LOG_WARNING(y_.dump(true, true))
+    }
+  }
+  end_plot(id);
+}
+
+void ControllerClient::handle_xy_plot(const mc_rtc::Configuration & /*plot*/)
+{
+  // XXX Implement me
 }
 
 } // namespace mc_control

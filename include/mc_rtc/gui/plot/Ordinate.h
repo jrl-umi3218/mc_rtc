@@ -24,10 +24,10 @@ namespace impl
 template<typename GetT>
 struct Ordinate
 {
-  static constexpr PlotType type = PlotType::Ordinate;
+  static constexpr Type type = Type::Ordinate;
 
-  Ordinate(const std::string & name, GetT get_fn, Color color, PlotStyle style, Side side, Range range)
-  : name_(name), get_fn_(get_fn), color_(color), style_(style), side_(side), range_(range)
+  Ordinate(const std::string & name, GetT get_fn, Color color, Style style, Side side)
+  : name_(name), get_fn_(get_fn), color_(color), style_(style), side_(side)
   {
     static_assert(details::CheckReturnType<GetT, double>::value,
                   "Ordinate should return a single floating-point value");
@@ -35,14 +35,13 @@ struct Ordinate
 
   void write(mc_rtc::MessagePackBuilder & builder) const
   {
-    builder.start_array(7);
-    builder.write(static_cast<uint64_t>(PlotType::Ordinate));
+    builder.start_array(6);
+    builder.write(static_cast<uint64_t>(type));
     builder.write(name_);
     builder.write(get_fn_());
     color_.write(builder);
     builder.write(static_cast<uint64_t>(style_));
     builder.write(static_cast<uint64_t>(side_));
-    range_.write(builder);
     builder.finish_array();
   }
 
@@ -50,9 +49,8 @@ private:
   std::string name_;
   GetT get_fn_;
   Color color_;
-  PlotStyle style_;
+  Style style_;
   Side side_;
-  Range range_;
 };
 
 } // namespace impl
@@ -62,11 +60,10 @@ template<typename GetT>
 impl::Ordinate<GetT> Y(const std::string & name,
                        GetT get_fn,
                        Color color,
-                       PlotStyle style = PlotStyle::Solid,
-                       Side side = Side::Left,
-                       Range range = {})
+                       Style style = Style::Solid,
+                       Side side = Side::Left)
 {
-  return impl::Ordinate<GetT>(name, get_fn, color, style, side, range);
+  return impl::Ordinate<GetT>(name, get_fn, color, style, side);
 }
 
 } // namespace plot

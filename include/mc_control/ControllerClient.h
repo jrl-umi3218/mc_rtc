@@ -7,6 +7,7 @@
 #include <mc_control/client_api.h>
 
 #include <mc_rtc/Configuration.h>
+#include <mc_rtc/gui/plot/options.h>
 #include <mc_rtc/gui/types.h>
 
 #include <nanomsg/nn.h>
@@ -439,6 +440,100 @@ protected:
   {
   }
 
+  /** Called when new plot data arrives
+   *
+   * This should open a new plotting window with the provided title.
+   *
+   * \p id The plot id, this serves to disambiguate plots with the same title that are started right after closing the
+   * previous one
+   *
+   * \p title Title of the plot
+   *
+   */
+  virtual void start_plot(uint64_t /*id*/, const std::string & /*title*/) {}
+
+  /** Setup the X-axis
+   *
+   * \p id Plot id
+   *
+   * \p legend Legend on the X-axis
+   *
+   * \p range Range on the X-axis plot
+   *
+   */
+  virtual void plot_setup_xaxis(uint64_t /*id*/,
+                                const std::string & /*legend*/,
+                                const mc_rtc::gui::plot::Range & /*range*/)
+  {
+  }
+
+  /** Setup the Y-axis on the left side
+   *
+   * \p id Plot id
+   *
+   * \p legend Legend on the Y-axis
+   *
+   * \p range Range on the Y-axis plot
+   *
+   */
+  virtual void plot_setup_yaxis_left(uint64_t /*id*/,
+                                     const std::string & /*legend*/,
+                                     const mc_rtc::gui::plot::Range & /*range*/)
+  {
+  }
+
+  /** Setup the Y-axis on the right side
+   *
+   * \p id Plot id
+   *
+   * \p legend Legend on the Y-axis
+   *
+   * \p range Range on the Y-axis plot
+   *
+   */
+  virtual void plot_setup_yaxis_right(uint64_t /*id*/,
+                                      const std::string & /*legend*/,
+                                      const mc_rtc::gui::plot::Range & /*range*/)
+  {
+  }
+
+  /** Add data to be displayed on a plot
+   *
+   * \p id Plot id
+   *
+   * \p did Id for this data, this is strictly increasing from 0 to the
+   * number of plots - 1 and you can assume that only one data point is added
+   * in one iteration
+   *
+   * \p legend Legend for this data
+   *
+   * \p x X value
+   *
+   * \p y Y value
+   *
+   * \p style How to link data points together
+   *
+   * \p side Add on the Y left or right side
+   *
+   */
+  virtual void plot_point(uint64_t /* id */,
+                          uint64_t /* did */,
+                          const std::string & /*legend*/,
+                          double /*x*/,
+                          double /*y*/,
+                          mc_rtc::gui::Color /*color*/,
+                          mc_rtc::gui::plot::Style /*style*/,
+                          mc_rtc::gui::plot::Side /*side*/)
+  {
+  }
+
+  /** Called when no more data for a plot will come this iteration
+   *
+   * This typically should refresh the log display
+   *
+   */
+  virtual void end_plot(uint64_t /*id*/) {}
+
   /* Network elements */
   bool run_ = true;
   int sub_socket_;
@@ -479,6 +574,15 @@ private:
 
   /** Handle details of Form elements */
   void handle_form(const ElementId & id, const mc_rtc::Configuration & data);
+
+  /** Handle details of a plot */
+  void handle_plot(const mc_rtc::Configuration & plot);
+
+  /** Handle standard plot */
+  void handle_standard_plot(const mc_rtc::Configuration & plot);
+
+  /** Handle XY plot */
+  void handle_xy_plot(const mc_rtc::Configuration & plot);
 };
 
 } // namespace mc_control

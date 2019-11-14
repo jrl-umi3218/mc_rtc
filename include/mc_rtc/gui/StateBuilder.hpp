@@ -102,6 +102,22 @@ StateBuilder::ElementStore::ElementStore(T self, const Category & category, Elem
 template<typename T, typename... Args>
 void StateBuilder::addPlot(const std::string & name, T abscissa, Args... args)
 {
+  addPlot(name, abscissa, {}, {}, args...);
+}
+
+template<typename T, typename... Args>
+void StateBuilder::addPlot(const std::string & name, T abscissa, plot::AxisConfiguration yLeftConfig, Args... args)
+{
+  addPlot(name, abscissa, yLeftConfig, {}, args...);
+}
+
+template<typename T, typename... Args>
+void StateBuilder::addPlot(const std::string & name,
+                           T abscissa,
+                           plot::AxisConfiguration yLeftConfig,
+                           plot::AxisConfiguration yRightConfig,
+                           Args... args)
+{
   // XXX Should check that T is an impl::Abscissa<Something> and that Args are not
   if(plots_.count(name) != 0)
   {
@@ -109,15 +125,18 @@ void StateBuilder::addPlot(const std::string & name, T abscissa, Args... args)
     LOG_WARNING("Discarding request to add this plot")
     return;
   }
-  // One entry for the type, the plot id, the name and the abscissa plus one entry per plot
-  uint64_t sz = 4 + sizeof...(args);
+  // One entry for the type, the plot id, the name, the abscissa and both axis configs plus one entry per plot
+  uint64_t sz = 6 + sizeof...(args);
   uint64_t id = ++plot_id_;
-  plot_callback_t cb = [abscissa, id, sz](mc_rtc::MessagePackBuilder & builder, const std::string & name) {
+  plot_callback_t cb = [abscissa, id, sz, yLeftConfig, yRightConfig](mc_rtc::MessagePackBuilder & builder,
+                                                                     const std::string & name) {
     builder.start_array(sz);
-    builder.write(static_cast<uint64_t>(Plot::Standard));
+    builder.write(static_cast<uint64_t>(plot::Plot::Standard));
     builder.write(id);
     builder.write(name);
     abscissa.write(builder);
+    yLeftConfig.write(builder);
+    yRightConfig.write(builder);
   };
   plots_[name] = makePlotCallback(cb, args...);
 }
