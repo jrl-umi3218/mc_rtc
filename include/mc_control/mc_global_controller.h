@@ -126,13 +126,21 @@ public:
    * @{
    */
 
-  /*! \brief A robot's position given by a sensor */
+  /*! \brief Sets the main robot position sensor (control+real)
+   *
+   * \param pos Position given by a sensor
+   */
   void setSensorPosition(const Eigen::Vector3d & pos);
-
+  /*! \brief Set multiple body sensors' position for the main robot
+   * (control+real)
+   */
+  void setSensorPositions(const std::map<std::string, Eigen::Vector3d> & poses);
   /*! \brief Set multiple body sensors' position for a given robot */
   void setSensorPositions(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Vector3d> & poses);
 
-  /*! \brief A robot's orientation given by a sensor
+  /*! \brief Sets the main robot orientation sensor (control + real)
+   *
+   * \param ori Orientation given by a sensor
    *
    * \note By convention, this rotation should be given from the inertial frame
    * (i.e. a fixed frame in the real world) to a body frame of the robot. For
@@ -141,59 +149,83 @@ public:
    *
    */
   void setSensorOrientation(const Eigen::Quaterniond & ori);
-
+  /*! \brief Set multiple body sensors' orientation for the main robot
+   * (control+real) */
+  void setSensorOrientations(const std::map<std::string, Eigen::Quaterniond> & oris);
   /*! \brief Set multiple body sensors' orientation for a given robot */
   void setSensorOrientations(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Quaterniond> & oris);
 
-  /*! \brief A robot's linear velocity given by a sensor */
+  /*! \brief Sets the main robot linear velocity sensor (control+real)
+   *
+   * \param vel Linear velocity given by a sensor
+   */
   void setSensorLinearVelocity(const Eigen::Vector3d & vel);
-
+  /*! \brief Set multiple body sensor's linear velocities for the main robot
+   * (control+real) */
+  void setSensorLinearVelocities(const std::map<std::string, Eigen::Vector3d> & linearVels);
   /*! \brief Set multiple body sensor's linear velocities for a given robot */
   void setSensorLinearVelocities(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Vector3d> & linearVels);
 
-  /*! \brief A robot's angular velocity given by a sensor */
+  /*! \brief Sets the main robot angular velocity sensor (control+real)
+   *
+   * \param vel Angular velocity given by a sensor
+   */
   void setSensorAngularVelocity(const Eigen::Vector3d & vel);
-
+  /*! \brief Set multiple body sensor's angular velocities for the main robot
+   * (control + real)*/
+  void setSensorAngularVelocities(const std::map<std::string, Eigen::Vector3d> & angularVels);
   /*! \brief Set multiple body sensor's angular velocities for a given robot */
   void setSensorAngularVelocities(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Vector3d> & angularVels);
 
-  /*! \brief A robot's acceleration given by a sensor */
+  /*! \brief Sets the main robot acceleration (control+real)
+   *
+   * \param acc Acceleration given by a sensor
+   */
   void setSensorAcceleration(const Eigen::Vector3d & acc);
-
+  /*! \brief Set multiple body sensors' acceleration for a given robot for the
+   * main robot (control+real) */
+  void setSensorAccelerations(const std::map<std::string, Eigen::Vector3d> & accels);
   /*! \brief Set multiple body sensors' acceleration for a given robot */
   void setSensorAccelerations(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Vector3d> & accels);
 
-  /*! \brief A robot's actual joints' values provided by encoders
+  /*! \brief Sets the main robot actual joints' values (control+real)
+   *
+   * \param eValues Actual joint values provided by encoders
    *
    * \note It is expected that these values follow the order given by
    * ref_joint_order
    */
   void setEncoderValues(const std::vector<double> & eValues);
 
-  /*! \brief A robot's actual joints' velocities
+  /*! \brief Sets the main robot's actual joint velocities (control+real)
+   *
+   * \param eVelocities Actual joint velocities
    *
    * \note It is expected that these values follow the order given by
    * ref_joint_order
    */
   void setEncoderVelocities(const std::vector<double> & eVelocities);
 
-  /*! \brief A robot's flexible joints' values provided by an estimator
+  /*! \brief Sets the main robot's flexible joint values (control+real)
+   *
+   * \param eValues Flexible joint values (provided by an estimator)
    *
    * \note It is expected that these values follow the order given by
    * robot.flexibility()
    */
   void setFlexibilityValues(const std::vector<double> & fValues);
 
-  /*! \brief A robot's actual joints' torques provided by sensors
+  /*! \brief Sets the main robot's actual joint torques (control+real)
+   *
+   * \param tValues  Actual joint torques (provided by sensors)
    *
    * \note It is expected that these values follow the order given by
    * ref_joint_order
    */
   void setJointTorques(const std::vector<double> & tValues);
 
-  /*! \brief Force sensors' readings provided by the sensors */
+  /*! \brief Force sensors' readings provided by the sensors (sets control+real)*/
   void setWrenches(const std::map<std::string, sva::ForceVecd> & wrenches);
-
   /*! \brief Force sensors' readings for another robot than the main robot */
   void setWrenches(unsigned int robotIndex, const std::map<std::string, sva::ForceVecd> & wrenches);
 
@@ -461,6 +493,9 @@ public:
    * robots than the main robot.
    */
   mc_rbdyn::Robots & realRobots();
+
+  /*! \brief Get access to the main real robot instance. */
+  mc_rbdyn::Robot & realRobot();
 
 public:
   /*! \brief Returns true if the controller is running
