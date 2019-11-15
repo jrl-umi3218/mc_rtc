@@ -527,6 +527,48 @@ protected:
   {
   }
 
+  /** Plot a polygon
+   *
+   * \p id Id for the plot
+   *
+   * \p did Id for this polygon
+   *
+   * \p legen Legend to describe this polygon
+   *
+   * \p polygon Description of the polygon
+   *
+   * \p side Side where the polygon should be displayed
+   *
+   */
+  virtual void plot_polygon(uint64_t /*id*/,
+                            uint64_t /* did */,
+                            const std::string & /*legend*/,
+                            const mc_rtc::gui::plot::PolygonDescription & /*polygon*/,
+                            mc_rtc::gui::plot::Side /*side*/)
+  {
+  }
+
+  /** Plot several polygons under the same legend
+   *
+   * \p id Id for the plot
+   *
+   * \p did Id for these polygons
+   *
+   * \p legen Legend to describe these polygons
+   *
+   * \p polygons Description of the polygons
+   *
+   * \p side Side where the polygons should be displayed
+   *
+   */
+  virtual void plot_polygons(uint64_t /*id*/,
+                             uint64_t /* did */,
+                             const std::string & /*legend*/,
+                             const std::vector<mc_rtc::gui::plot::PolygonDescription> & /*polygons*/,
+                             mc_rtc::gui::plot::Side /*side*/)
+  {
+  }
+
   /** Called when no more data for a plot will come this iteration
    *
    * This typically should refresh the log display

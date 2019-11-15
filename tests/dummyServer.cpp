@@ -26,6 +26,9 @@ struct TestServer
 
   void publish();
 
+  template<typename T>
+  void add_demo_plot(const std::string & name, T callback);
+
   mc_control::ControllerServer server{1.0, 1.0, {"ipc:///tmp/mc_rtc_pub.ipc"}, {"ipc:///tmp/mc_rtc_rep.ipc"}};
   DummyProvider provider;
   mc_rtc::gui::StateBuilder builder;
@@ -204,25 +207,68 @@ TestServer::TestServer() : xythetaz_(4)
   using Range = mc_rtc::gui::plot::Range;
   using Style = mc_rtc::gui::plot::Style;
   using Side = mc_rtc::gui::plot::Side;
-  builder.addPlot("sin(t)/cos(t)", mc_rtc::gui::plot::X({"t"}, [this]() { return t_; }),
-                  mc_rtc::gui::plot::Y("sin(t)", [this]() { return std::sin(t_); }, Color(1.0, 0.0, 0.0)),
-                  mc_rtc::gui::plot::Y("cos(t)", [this]() { return std::cos(t_); }, Color(0.0, 0.0, 1.0)));
-  builder.addPlot(
-      "Demo style", mc_rtc::gui::plot::X({"t"}, [this]() { return t_; }),
-      mc_rtc::gui::plot::Y("Solid", [this]() { return std::cos(t_); }, Color(1.0, 0.0, 0.0), Style::Solid),
-      mc_rtc::gui::plot::Y("Dashed", [this]() { return 2 - std::cos(t_); }, Color(0.0, 0.0, 1.0), Style::Dashed),
-      mc_rtc::gui::plot::Y("Dotted", [this]() { return std::sin(t_); }, Color(0.0, 1.0, 0.0), Style::Dotted,
-                           Side::Right),
-      mc_rtc::gui::plot::Y("Scatter", [this]() { return 2 - std::sin(t_); }, Color(1.0, 0.0, 1.0), Style::Scatter,
-                           Side::Right));
-  builder.addPlot("Fix axis", mc_rtc::gui::plot::X({"t"}, [this]() { return t_; }),
-                  {"Y1", {0, 1}}, // Fix both min and max
-                  {"Y2", {-Range::inf, 0}}, // Only fix max
-                  mc_rtc::gui::plot::Y("sin(t)", [this]() { return std::sin(t_); }, Color(1.0, 0.0, 0.0)),
-                  mc_rtc::gui::plot::Y("cos(t)", [this]() { return std::cos(t_); }, Color(0.0, 0.0, 1.0), Style::Solid,
-                                       Side::Right));
-  builder.addXYPlot("Circle", mc_rtc::gui::plot::XY("Round", [this]() { return std::cos(t_); },
-                                                    [this]() { return std::sin(t_); }, Color(1.0, 0.0, 0.0)));
+  auto sin_cos_plot = [this](const std::string & name) {
+    builder.addPlot(name, mc_rtc::gui::plot::X({"t"}, [this]() { return t_; }),
+                    mc_rtc::gui::plot::Y("sin(t)", [this]() { return std::sin(t_); }, Color(1.0, 0.0, 0.0)),
+                    mc_rtc::gui::plot::Y("cos(t)", [this]() { return std::cos(t_); }, Color(0.0, 0.0, 1.0)));
+  };
+  add_demo_plot("sin(t)/cos(t)", sin_cos_plot);
+  auto demo_style_plot = [this](const std::string & name) {
+    builder.addPlot(
+        name, mc_rtc::gui::plot::X({"t"}, [this]() { return t_; }),
+        mc_rtc::gui::plot::Y("Solid", [this]() { return std::cos(t_); }, Color(1.0, 0.0, 0.0), Style::Solid),
+        mc_rtc::gui::plot::Y("Dashed", [this]() { return 2 - std::cos(t_); }, Color(0.0, 0.0, 1.0), Style::Dashed),
+        mc_rtc::gui::plot::Y("Dotted", [this]() { return std::sin(t_); }, Color(0.0, 1.0, 0.0), Style::Dotted,
+                             Side::Right),
+        mc_rtc::gui::plot::Y("Scatter", [this]() { return 2 - std::sin(t_); }, Color(1.0, 0.0, 1.0), Style::Scatter,
+                             Side::Right));
+  };
+  add_demo_plot("Demo style", demo_style_plot);
+  auto fix_axis_plot = [this](const std::string & name) {
+    builder.addPlot(name, mc_rtc::gui::plot::X({"t"}, [this]() { return t_; }), {"Y1", {0, 1}}, // Fix both min and max
+                    {"Y2", {-Range::inf, 0}}, // Only fix max
+                    mc_rtc::gui::plot::Y("sin(t)", [this]() { return std::sin(t_); }, Color(1.0, 0.0, 0.0)),
+                    mc_rtc::gui::plot::Y("cos(t)", [this]() { return std::cos(t_); }, Color(0.0, 0.0, 1.0),
+                                         Style::Solid, Side::Right));
+  };
+  add_demo_plot("Fix axis", fix_axis_plot);
+  using PolygonDescription = mc_rtc::gui::plot::PolygonDescription;
+  auto circle_plot = [this](const std::string & name) {
+    builder.addXYPlot(name,
+                      mc_rtc::gui::plot::XY("Round", [this]() { return std::cos(t_); },
+                                            [this]() { return std::sin(t_); }, Color(1.0, 0.0, 0.0)),
+                      mc_rtc::gui::plot::Polygon("Square", []() {
+                        return PolygonDescription({{-1, -1}, {-1, 1}, {1, 1}, {1, -1}}, Color(0.0, 0.0, 1.0));
+                      }));
+  };
+  add_demo_plot("Circle in square", circle_plot);
+  auto redSquareBlueFill =
+      PolygonDescription({{-1, -1}, {-1, 1}, {1, 1}, {1, -1}}, Color(1, 0, 0)).fill(Color(0, 0, 1));
+  auto purpleTriangleYellowFill = PolygonDescription({{1, 0}, {1.5, 2}, {2, -2}}, Color(1, 0, 1)).fill(Color(1, 1, 0));
+  auto blueRectangle = PolygonDescription({{-2, -2}, {2, -2}, {2, -3}, {-2, -3}}, Color(0, 0, 1));
+  std::vector<PolygonDescription> polygons = {redSquareBlueFill, purpleTriangleYellowFill, blueRectangle};
+  auto polygons_plot = [this, polygons](const std::string & name) {
+    builder.addXYPlot(name, mc_rtc::gui::plot::Polygons("Polygons", [polygons]() { return polygons; }));
+  };
+  add_demo_plot("Polygons demo", polygons_plot);
+}
+
+template<typename T>
+void TestServer::add_demo_plot(const std::string & name, T callback)
+{
+  bool has_plot = false;
+  builder.addElement({}, mc_rtc::gui::Button("Add " + name + " plot", [has_plot, callback, name, this]() mutable {
+                       if(has_plot)
+                       {
+                         has_plot = false;
+                         builder.removePlot(name);
+                       }
+                       else
+                       {
+                         has_plot = true;
+                         callback(name);
+                       }
+                     }));
 }
 
 void TestServer::publish()

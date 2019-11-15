@@ -30,6 +30,16 @@ struct MC_RTC_GUI_DLLAPI Color
   double b = 0.0;
   double a = 1.0;
 
+  bool operator==(const Color & rhs) const
+  {
+    return r == rhs.r && g == rhs.g && b == rhs.b && a == rhs.a;
+  }
+
+  bool operator!=(const Color & rhs) const
+  {
+    return !(*this == rhs);
+  }
+
   void load(const mc_rtc::Configuration & config)
   {
     std::array<double, 4> data = config;

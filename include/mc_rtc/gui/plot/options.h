@@ -35,6 +35,8 @@ enum class Type
   Ordinate,
   /** This plot type is expected to return a list of points to plot */
   Polygon,
+  /** This plot type is expected to return a list of polygons */
+  Polygons,
   /** This plot type return (X, Y) couples */
   AbscissaOrdinate
 };
@@ -113,6 +115,78 @@ enum class MC_RTC_GUI_DLLAPI Side
 {
   Left,
   Right
+};
+
+/** Describe a polygon to be plotted */
+struct MC_RTC_GUI_DLLAPI PolygonDescription
+{
+  PolygonDescription() : PolygonDescription({}, {}) {}
+
+  PolygonDescription(const std::vector<std::array<double, 2>> & points, Color outline)
+  : points_(points), outline_(outline)
+  {
+  }
+
+  bool operator==(const PolygonDescription & rhs) const
+  {
+    return points_ == rhs.points_ && outline_ == rhs.outline_ && style_ == rhs.style_ && fill_ == rhs.fill_
+           && closed_ == rhs.closed_;
+  };
+
+  bool operator!=(const PolygonDescription & rhs) const
+  {
+    return !(*this == rhs);
+  }
+
+  // clang-format off
+  std::vector<std::array<double, 2>> & points() { return points_; }
+  Color & outline() { return outline_; };
+  Style & style() { return style_; };
+  Color & fill() { return fill_; };
+  bool closed() { return closed_; };
+
+  const std::vector<std::array<double, 2>> & points() const { return points_; }
+  const Color & outline() const { return outline_; };
+  const Style & style() const { return style_; };
+  const Color & fill() const { return fill_; };
+  bool closed() const { return closed_; };
+
+  PolygonDescription & style(const Style & style) { style_ = style; return *this; };
+  PolygonDescription & fill(const Color & fill) { fill_ = fill; return *this; };
+  PolygonDescription & closed(bool closed) { closed_ = closed; return *this; };
+  // clang-format on
+
+  void load(const mc_rtc::Configuration & data)
+  {
+    points_ = data[0];
+    outline_.load(data[1]);
+    style_ = static_cast<Style>(static_cast<uint64_t>(data[2]));
+    fill_.load(data[3]);
+    closed_ = data[4];
+  }
+
+  void write(mc_rtc::MessagePackBuilder & builder) const
+  {
+    builder.start_array(5);
+    builder.write(points_);
+    outline_.write(builder);
+    builder.write(static_cast<uint64_t>(style_));
+    fill_.write(builder);
+    builder.write(closed_);
+    builder.finish_array();
+  }
+
+private:
+  /** List of points in the polygon */
+  std::vector<std::array<double, 2>> points_;
+  /** Outline color */
+  Color outline_;
+  /** Outline style */
+  Style style_ = Style::Solid;
+  /** Fill-color, setting alpha to 0 should disable filling */
+  Color fill_ = Color(0, 0, 0, 0);
+  /** If true, close the polygon */
+  bool closed_ = true;
 };
 
 } // namespace plot

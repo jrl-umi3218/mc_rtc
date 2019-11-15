@@ -166,6 +166,7 @@ set(mc_rtc_gui_HDR
   ../include/mc_rtc/gui/plot/options.h
   ../include/mc_rtc/gui/plot/Ordinate.h
   ../include/mc_rtc/gui/plot/Polygon.h
+  ../include/mc_rtc/gui/plot/Polygons.h
 )
 
 add_library(mc_rtc_gui SHARED ${mc_rtc_gui_SRC} ${mc_rtc_gui_HDR})

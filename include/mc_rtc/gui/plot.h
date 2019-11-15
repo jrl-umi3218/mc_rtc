@@ -8,3 +8,4 @@
 #include <mc_rtc/gui/plot/AbscissaOrdinate.h>
 #include <mc_rtc/gui/plot/Ordinate.h>
 #include <mc_rtc/gui/plot/Polygon.h>
+#include <mc_rtc/gui/plot/Polygons.h>

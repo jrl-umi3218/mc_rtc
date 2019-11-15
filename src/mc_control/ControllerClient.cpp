@@ -625,6 +625,38 @@ struct XY
   }
 };
 
+struct Polygon
+{
+  std::string legend;
+  mc_rtc::gui::plot::PolygonDescription polygon;
+  mc_rtc::gui::plot::Side side;
+
+  Polygon(const mc_rtc::Configuration & data)
+  {
+    legend = static_cast<std::string>(data[1]);
+    polygon.load(data[2]);
+    side = static_cast<mc_rtc::gui::plot::Side>(static_cast<uint64_t>(data[3]));
+  }
+};
+
+struct Polygons
+{
+  std::string legend;
+  std::vector<mc_rtc::gui::plot::PolygonDescription> polygons;
+  mc_rtc::gui::plot::Side side;
+
+  Polygons(const mc_rtc::Configuration & data)
+  {
+    legend = static_cast<std::string>(data[1]);
+    for(size_t i = 0; i < data[2].size(); ++i)
+    {
+      polygons.emplace_back();
+      polygons.back().load(data[2][i]);
+    }
+    side = static_cast<mc_rtc::gui::plot::Side>(static_cast<uint64_t>(data[3]));
+  }
+};
+
 } // namespace
 
 void ControllerClient::handle_standard_plot(const mc_rtc::Configuration & plot)
@@ -657,7 +689,13 @@ void ControllerClient::handle_standard_plot(const mc_rtc::Configuration & plot)
     }
     else if(type == Type::Polygon)
     {
-      // XXX Implement
+      Polygon polygon(y_);
+      plot_polygon(id, i - 6, polygon.legend, polygon.polygon, polygon.side);
+    }
+    else if(type == Type::Polygons)
+    {
+      Polygons polygons(y_);
+      plot_polygons(id, i - 6, polygons.legend, polygons.polygons, polygons.side);
     }
     else
     {
@@ -694,7 +732,13 @@ void ControllerClient::handle_xy_plot(const mc_rtc::Configuration & plot)
     }
     else if(type == Type::Polygon)
     {
-      // XXX Implement
+      Polygon polygon(y_);
+      plot_polygon(id, i - 6, polygon.legend, polygon.polygon, polygon.side);
+    }
+    else if(type == Type::Polygons)
+    {
+      Polygons polygons(y_);
+      plot_polygons(id, i - 6, polygons.legend, polygons.polygons, polygons.side);
     }
     else
     {
