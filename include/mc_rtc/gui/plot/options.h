@@ -151,6 +151,7 @@ struct MC_RTC_GUI_DLLAPI PolygonDescription
   const Color & fill() const { return fill_; };
   bool closed() const { return closed_; };
 
+  PolygonDescription & outline(const Color & outline) { outline_ = outline; return *this; };
   PolygonDescription & style(const Style & style) { style_ = style; return *this; };
   PolygonDescription & fill(const Color & fill) { fill_ = fill; return *this; };
   PolygonDescription & closed(bool closed) { closed_ = closed; return *this; };

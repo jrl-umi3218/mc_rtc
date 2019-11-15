@@ -30,7 +30,7 @@ struct Ordinate
   : name_(name), get_fn_(get_fn), color_(color), style_(style), side_(side)
   {
     static_assert(details::CheckReturnType<GetT, double>::value,
-                  "Ordinate should return a single floating-point value");
+                  "Ordinate callback should return a single floating-point value");
   }
 
   void write(mc_rtc::MessagePackBuilder & builder) const
@@ -45,12 +45,32 @@ struct Ordinate
     builder.finish_array();
   }
 
-private:
+protected:
   std::string name_;
   GetT get_fn_;
-  Color color_;
+  mutable Color color_;
   Style style_;
   Side side_;
+};
+
+/** Allows to provide an ordinate with changing color */
+template<typename GetT, typename GetColor>
+struct OrdinateWithColor : public Ordinate<GetT>
+{
+  OrdinateWithColor(const std::string & name, GetT get_fn, GetColor color, Style style, Side side)
+  : Ordinate<GetT>(name, get_fn, color(), style, side), get_color_(color)
+  {
+    static_assert(details::CheckReturnType<GetColor, Color>::value, "Ordinate color callback should return a color");
+  }
+
+  void write(mc_rtc::MessagePackBuilder & builder) const
+  {
+    this->color_ = get_color_();
+    Ordinate<GetT>::write(builder);
+  }
+
+private:
+  GetColor get_color_;
 };
 
 } // namespace impl
@@ -64,6 +84,17 @@ impl::Ordinate<GetT> Y(const std::string & name,
                        Side side = Side::Left)
 {
   return impl::Ordinate<GetT>(name, get_fn, color, style, side);
+}
+
+/** Helper to create an impl::OrdinateWithColor */
+template<typename GetT, typename GetColor>
+impl::OrdinateWithColor<GetT, GetColor> Y(const std::string & name,
+                                          GetT get_fn,
+                                          GetColor get_color,
+                                          Style style = Style::Solid,
+                                          Side side = Side::Left)
+{
+  return impl::OrdinateWithColor<GetT, GetColor>(name, get_fn, get_color, style, side);
 }
 
 } // namespace plot

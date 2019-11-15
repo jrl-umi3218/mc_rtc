@@ -48,15 +48,35 @@ struct AbscissaOrdinate
     builder.finish_array();
   }
 
-private:
+protected:
   std::string name_;
   GetXT get_x_fn_;
   GetYT get_y_fn_;
-  Color color_;
+  mutable Color color_;
   Style style_;
   Side side_;
 };
 
+/** Allows to provide an ordinate with changing color */
+template<typename GetXT, typename GetYT, typename GetColor>
+struct AbscissaOrdinateWithColor : public AbscissaOrdinate<GetXT, GetYT>
+{
+  AbscissaOrdinateWithColor(const std::string & name, GetXT get_x, GetYT get_y, GetColor color, Style style, Side side)
+  : AbscissaOrdinate<GetXT, GetYT>(name, get_x, get_y, color(), style, side), get_color_(color)
+  {
+    static_assert(details::CheckReturnType<GetColor, Color>::value,
+                  "AbscissaOrdinate color callback should return a color");
+  }
+
+  void write(mc_rtc::MessagePackBuilder & builder) const
+  {
+    this->color_ = get_color_();
+    AbscissaOrdinate<GetXT, GetYT>::write(builder);
+  }
+
+private:
+  GetColor get_color_;
+};
 } // namespace impl
 
 /** Helper to create an impl::Ordinate */
@@ -69,6 +89,18 @@ impl::AbscissaOrdinate<GetXT, GetYT> XY(const std::string & name,
                                         Side side = Side::Left)
 {
   return impl::AbscissaOrdinate<GetXT, GetYT>(name, get_x_fn, get_y_fn, color, style, side);
+}
+
+/** Helper to create an impl::OrdinateWithColor */
+template<typename GetXT, typename GetYT, typename GetColor>
+impl::AbscissaOrdinateWithColor<GetXT, GetYT, GetColor> XY(const std::string & name,
+                                                           GetXT get_x_fn,
+                                                           GetYT get_y_fn,
+                                                           GetColor get_color_fn,
+                                                           Style style = Style::Solid,
+                                                           Side side = Side::Left)
+{
+  return impl::AbscissaOrdinateWithColor<GetXT, GetYT, GetColor>(name, get_x_fn, get_y_fn, get_color_fn, style, side);
 }
 
 } // namespace plot

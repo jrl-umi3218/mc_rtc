@@ -20,6 +20,129 @@ struct DummyProvider
   Eigen::Vector3d point = Eigen::Vector3d(0., 1., 2.);
 };
 
+struct FakeZMPGraph
+{
+  using Color = mc_rtc::gui::Color;
+  using PolygonDescription = mc_rtc::gui::plot::PolygonDescription;
+  void update(double t_)
+  {
+    auto t = 0.5 * (t_ - t0);
+    zmp_x += speed / 2;
+    zmp_y = sin(M_PI * zmp_x);
+    if(t < 0.2)
+    {
+      if(start_ds)
+      {
+        // Reset the style of both feet
+        start_ds = false;
+        feet.back() = makeFoot(rfoot_x, -0.5);
+        feet[feet.size() - 2].outline(Color(0, 0, 0)).fill(Color(1, 1, 1, 1));
+      }
+      start_ss = true;
+    }
+    else if(t < 1.0)
+    {
+      if(start_ss)
+      {
+        // Left foot flying:
+        //   - support foot gets red outline with blue filling
+        //   - flying foot moves and gets grayed
+        start_ss = false;
+        feet.push_back(makeFoot(lfoot_x, 0.5, Color(0.5, 0.5, 0.5)));
+        feet[feet.size() - 2].outline(Color(1, 0, 0)).fill(Color(0, 0, 1));
+        if(start_walk)
+        {
+          speed = speed / 2;
+        }
+      }
+      lfoot_x += speed;
+      for(auto & points : feet.back().points())
+      {
+        points[0] += speed;
+      }
+      start_ds = true;
+    }
+    else if(t < 1.2)
+    {
+      if(start_ds)
+      {
+        // Reset the style of both feet
+        if(start_walk)
+        {
+          speed = speed * 2;
+          start_walk = false;
+        }
+        start_ds = false;
+        feet.back() = makeFoot(lfoot_x, 0.5);
+        feet[feet.size() - 2].outline(Color(0, 0, 0)).fill(Color(1, 1, 1, 1));
+      }
+      start_ss = true;
+    }
+    else if(t < 2)
+    {
+      if(start_ss)
+      {
+        // Left foot flying:
+        //   - support foot gets red outline with blue filling
+        //   - flying foot moves and gets grayed
+        start_ss = false;
+        feet.push_back(makeFoot(rfoot_x, -0.5, Color(0.5, 0.5, 0.5)));
+        feet[feet.size() - 2].outline(Color(1, 0, 0)).fill(Color(0, 0, 1));
+      }
+      rfoot_x += speed;
+      for(auto & points : feet.back().points())
+      {
+        points[0] += speed;
+      }
+      start_ds = true;
+    }
+    else
+    {
+      t0 = t_;
+    }
+  }
+  void reset(double t)
+  {
+    t0 = t;
+    zmp_x = 0;
+    zmp_y = 0;
+    lfoot_x = 0;
+    rfoot_x = 0;
+    feet = {makeFoot(0, 0.5), makeFoot(0, -0.5)};
+    start_walk = true;
+    start_ss = false;
+    start_ds = false;
+    speed = 0.05;
+  }
+  bool start_walk = true;
+  bool start_ss = false;
+  bool start_ds = false;
+  double t0 = 0;
+  double zmp_x = 0;
+  double zmp_y = 0;
+  double lfoot_x = 0;
+  double rfoot_x = 0;
+  double speed = 0.05;
+  static PolygonDescription makeFoot(double x, double y, Color color = Color(0, 0, 0))
+  {
+    return {{{x - 0.15, y - 0.15}, {x - 0.15, y + 0.15}, {x + 0.15, y + 0.15}, {x + 0.15, y - 0.15}}, color};
+  }
+
+  std::vector<PolygonDescription> feet = {makeFoot(0, 0.5), makeFoot(0, -0.5)};
+
+  Color color() const
+  {
+    if(std::abs(zmp_y) > 0.9)
+    {
+      return Color(1, 0, 0);
+    }
+    else
+    {
+      return Color(0, 0, 0);
+    }
+  }
+};
+
 struct TestServer
 {
   TestServer();
@@ -53,6 +176,7 @@ struct TestServer
   Eigen::Vector3d arrow_end_{0.5, 1., -0.5};
   sva::ForceVecd force_{{0., 0., 0.}, {-50., 50., 100.}};
   double t_ = 0.0;
+  FakeZMPGraph graph_;
 };
 
 TestServer::TestServer() : xythetaz_(4)
@@ -251,6 +375,14 @@ TestServer::TestServer() : xythetaz_(4)
     builder.addXYPlot(name, mc_rtc::gui::plot::Polygons("Polygons", [polygons]() { return polygons; }));
   };
   add_demo_plot("Polygons demo", polygons_plot);
+  auto fake_zmp_plot = [this](const std::string & name) {
+    graph_.reset(t_);
+    builder.addXYPlot(name,
+                      mc_rtc::gui::plot::XY("ZMP", [this]() { return graph_.zmp_x; }, [this] { return graph_.zmp_y; },
+                                            [this]() { return graph_.color(); }),
+                      mc_rtc::gui::plot::Polygons("feet", [this]() { return graph_.feet; }));
+  };
+  add_demo_plot("Fake ZMP", fake_zmp_plot);
 }
 
 template<typename T>
@@ -273,6 +405,7 @@ void TestServer::add_demo_plot(const std::string & name, T callback)
 
 void TestServer::publish()
 {
+  graph_.update(t_);
   server.handle_requests(builder);
   server.publish(builder);
   t_ += 0.05;
