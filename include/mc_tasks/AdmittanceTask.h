@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <mc_signal/utils/clamp.h>
 #include <mc_tasks/SurfaceTransformTask.h>
 
 namespace mc_tasks
@@ -12,55 +13,7 @@ namespace mc_tasks
 namespace force
 {
 
-/** Saturate integrator outputs.
- *
- * \param taskName Name of caller AdmittanceTask.
- *
- * \param vector Integrator output vector.
- *
- * \param bound Output (symmetric) bounds.
- *
- * \param label Name of output vector.
- *
- * \param isClamping Map of booleans describing the clamping state for each
- * direction in ['x', 'y', 'z'].
- *
- */
-inline void clampAndWarn(const std::string & taskName,
-                         Eigen::Vector3d & vector,
-                         const Eigen::Vector3d & bound,
-                         const std::string & label,
-                         std::map<char, bool> & isClamping)
-{
-  const char dirName[] = {'x', 'y', 'z'};
-  for(unsigned i = 0; i < 3; i++)
-  {
-    char dir = dirName[i];
-    if(vector(i) < -bound(i))
-    {
-      vector(i) = -bound(i);
-      if(!isClamping[dir])
-      {
-        LOG_WARNING(taskName << ": clamping " << dir << " " << label << " to " << -bound(i));
-        isClamping[dir] = true;
-      }
-    }
-    else if(vector(i) > bound(i))
-    {
-      vector(i) = bound(i);
-      if(!isClamping[dir])
-      {
-        LOG_WARNING(taskName << ": clamping " << dir << " " << label << " to " << bound(i));
-        isClamping[dir] = true;
-      }
-    }
-    else if(isClamping[dir])
-    {
-      LOG_WARNING(taskName << ": " << dir << " " << label << " back within range");
-      isClamping[dir] = false;
-    }
-  }
-}
+using mc_signal::utils::clampAndWarn;
 
 /*! \brief Hybrid position-force control on a contacting end-effector.
  *

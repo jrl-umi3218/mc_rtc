@@ -36,6 +36,9 @@ LIPMStabilizerTask::LIPMStabilizerTask(const mc_rbdyn::Robots & robots,
 {
   type_ = "lipm_stabilizer";
   name_ = "lipm_stabilizer";
+
+  gravity_ = robots.robot(robotIndex).mbc().gravity;
+  vertical_ = gravity_ / gravity_.norm();
 }
 
 LIPMStabilizerTask::~LIPMStabilizerTask() {}

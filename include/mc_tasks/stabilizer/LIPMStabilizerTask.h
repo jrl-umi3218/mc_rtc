@@ -17,6 +17,16 @@ namespace mc_tasks
 namespace stabilizer
 {
 
+/** Foot sole properties.
+ *
+ */
+struct Sole
+{
+  double friction = 0.7;
+  double halfLength = 0.112; // [m]
+  double halfWidth = 0.065; // [m]
+};
+
 /** Walking stabilization based on linear inverted pendulum tracking.
  *
  * Stabilization bridges the gap between the open-loop behavior of the
@@ -108,9 +118,40 @@ protected:
   std::shared_ptr<mc_tasks::force::CoPTask> rightFootTask;
   const mc_rbdyn::Robots & robots_;
   unsigned int robotIndex_;
+
+protected:
+  Eigen::Vector3d gravity_; /**< Gravity vector from mbc().gravity */
+  Eigen::Vector3d vertical_; /**< Vertical vector (normalized gravity) */
 };
 
 using LIPMStabilizerTaskPtr = std::shared_ptr<LIPMStabilizerTask>;
 
 } // namespace stabilizer
 } // namespace mc_tasks
+
+namespace mc_rtc
+{
+using Sole = mc_tasks::stabilizer::Sole;
+
+template<>
+struct ConfigurationLoader<mc_tasks::stabilizer::Sole>
+{
+  static Sole load(const mc_rtc::Configuration & config)
+  {
+    Sole sole;
+    config("friction", sole.friction);
+    config("half_length", sole.halfLength);
+    config("half_width", sole.halfWidth);
+    return sole;
+  }
+
+  static mc_rtc::Configuration save(const Sole & sole)
+  {
+    mc_rtc::Configuration config;
+    config.add("friction", sole.friction);
+    config.add("half_length", sole.halfLength);
+    config.add("half_width", sole.halfWidth);
+    return config;
+  }
+};
+} // namespace mc_rtc
