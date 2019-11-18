@@ -23,6 +23,7 @@ struct DummyProvider
 struct FakeZMPGraph
 {
   using Color = mc_rtc::gui::Color;
+  using Points = std::vector<std::array<double, 2>>;
   using PolygonDescription = mc_rtc::gui::plot::PolygonDescription;
   void update(double t_)
   {
@@ -125,7 +126,7 @@ struct FakeZMPGraph
   double speed = 0.05;
   static PolygonDescription makeFoot(double x, double y, Color color = Color(0, 0, 0))
   {
-    return {{{x - 0.15, y - 0.15}, {x - 0.15, y + 0.15}, {x + 0.15, y + 0.15}, {x + 0.15, y - 0.15}}, color};
+    return {Points{{x - 0.15, y - 0.15}, {x - 0.15, y + 0.15}, {x + 0.15, y + 0.15}, {x + 0.15, y - 0.15}}, color};
   }
 
   std::vector<PolygonDescription> feet = {makeFoot(0, 0.5), makeFoot(0, -0.5)};
@@ -357,19 +358,21 @@ TestServer::TestServer() : xythetaz_(4)
   };
   add_demo_plot("Fix axis", fix_axis_plot);
   using PolygonDescription = mc_rtc::gui::plot::PolygonDescription;
+  using Points = std::vector<std::array<double, 2>>;
   auto circle_plot = [this](const std::string & name) {
     builder.addXYPlot(name,
                       mc_rtc::gui::plot::XY("Round", [this]() { return std::cos(t_); },
                                             [this]() { return std::sin(t_); }, Color(1.0, 0.0, 0.0)),
                       mc_rtc::gui::plot::Polygon("Square", []() {
-                        return PolygonDescription({{-1, -1}, {-1, 1}, {1, 1}, {1, -1}}, Color(0.0, 0.0, 1.0));
+                        return PolygonDescription(Points{{-1, -1}, {-1, 1}, {1, 1}, {1, -1}}, Color(0.0, 0.0, 1.0));
                       }));
   };
   add_demo_plot("Circle in square", circle_plot);
   auto redSquareBlueFill =
-      PolygonDescription({{-1, -1}, {-1, 1}, {1, 1}, {1, -1}}, Color(1, 0, 0)).fill(Color(0, 0, 1));
-  auto purpleTriangleYellowFill = PolygonDescription({{1, 0}, {1.5, 2}, {2, -2}}, Color(1, 0, 1)).fill(Color(1, 1, 0));
-  auto blueRectangle = PolygonDescription({{-2, -2}, {2, -2}, {2, -3}, {-2, -3}}, Color(0, 0, 1));
+      PolygonDescription(Points{{-1, -1}, {-1, 1}, {1, 1}, {1, -1}}, Color(1, 0, 0)).fill(Color(0, 0, 1));
+  auto purpleTriangleYellowFill =
+      PolygonDescription(Points{{1, 0}, {1.5, 2}, {2, -2}}, Color(1, 0, 1)).fill(Color(1, 1, 0));
+  auto blueRectangle = PolygonDescription(Points{{-2, -2}, {2, -2}, {2, -3}, {-2, -3}}, Color(0, 0, 1));
   std::vector<PolygonDescription> polygons = {redSquareBlueFill, purpleTriangleYellowFill, blueRectangle};
   auto polygons_plot = [this, polygons](const std::string & name) {
     builder.addXYPlot(name, mc_rtc::gui::plot::Polygons("Polygons", [polygons]() { return polygons; }));
