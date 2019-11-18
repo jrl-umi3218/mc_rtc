@@ -32,7 +32,7 @@ layout: tutorials
       </th>
       <td colspan="2">These entries cover most needs you might have</td>
     </tr>
-    {% include mc_rtc_configuration_row.html entry="MainRobot" desc="This entry dictates the main robot used by all controllers. Most interface cannot infer the correct module to use based on the simulation environment so this is the user responsibility to make sure the two matches." example="\"MainRobot\": \"JVRC1\"" %}
+    {% include mc_rtc_configuration_row.html entry="MainRobot" desc="This entry dictates the main robot used by all controllers. Most interface cannot infer the correct module to use based on the simulation environment so this is the user's responsibility to make sure the two match." example="\"MainRobot\": \"JVRC1\"" %}
     {% include mc_rtc_configuration_row.html entry="Enabled" desc="Provides a list of enabled controllers." example="\"Enabled\" : [\"Posture\", \"Body6d\", \"CoM\"]" %}
     {% include mc_rtc_configuration_row.html entry="Default" desc="Select which of the enabled controllers will be started first. Note that if the default controller is not enabled or if no default entry is provided then the first enabled controller in the list is chosen as a default controller." example="\"Default\" : \"Posture\"" %}
     {% include mc_rtc_configuration_row.html entry="Timestep" desc="The controller's timestep." example="\"Timestep\" : 0.005" %}
