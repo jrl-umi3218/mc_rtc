@@ -2,6 +2,7 @@ mc_rtc
 ======
 
 [![License](https://img.shields.io/badge/License-BSD%202--Clause-green.svg)](https://opensource.org/licenses/BSD-2-Clause)
+[![Website](https://img.shields.io/badge/website-online-brightgreen?logo=read-the-docs&style=flat)](http://multi-contact.lirmm.net/mc_rtc/)
 
 Introduction
 ------------
