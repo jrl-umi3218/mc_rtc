@@ -1,0 +1,11 @@
+{
+  "title": "rbd::Body",
+  "type": "object",
+  "properties":
+  {
+    "name": { "type": "string" },
+    "inertia": { "$ref": "/../../SpaceVecAlg/RBInertiad.json" }
+  },
+  "required": ["name", "inertia"],
+  "additionalProperties": false
+}

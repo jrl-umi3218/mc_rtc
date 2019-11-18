@@ -28,7 +28,7 @@ namespace mc_observers
  *   "UpdateVelocity": "estimator",
  *   "Log" : true
  * }
- * \encode
+ * \endcode
  */
 struct MC_OBSERVER_DLLAPI EncoderObserver : public Observer
 {

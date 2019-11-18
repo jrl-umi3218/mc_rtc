@@ -1,0 +1,29 @@
+{
+  "title": "mc_solver::DynamicsConstraint",
+  "type": "object",
+  "properties":
+  {
+    "type": { "enum": ["dynamics"], "type": "string" },
+    "robotIndex": { "type": "integer", "minimum": 0 },
+    "damper":
+    {
+      "type": "array",
+      "items":
+      {
+        "type": "number"
+      }
+    },
+    "velocityPercent":
+    {
+      "description": "Ignored if damper is absent.",
+      "type": "number",
+      "default": "0.5"
+    },
+    "infTorque":
+    {
+      "type": "boolean",
+      "default": "false"
+    }
+  },
+  "required": ["type", "robotIndex"]
+}

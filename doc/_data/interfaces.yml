@@ -1,0 +1,28 @@
+- name: OpenRTM
+  desc: OpenRTM is a software platform for component based development of robot systems. It is used in the HRP robots and in the Choreonoid simulator. The interface is an OpenRTM component that can be integrated in a control system.
+  url: https://openrtm.org/openrtm/
+  icon: openrtm.png
+  pkg:
+    name: mc_openrtm
+    url: https://gite.lirmm.fr/multi-contact/mc_openrtm
+- name: ROS
+  desc: ROS, the Robot Operating System, is a set of software libraries and tools to help you build robot applications. mc_rtc_ros is a set of tools integrated with the ROS environment to provide a simulation-free interface and various GUI tools
+  icon: ros.png
+  url: https://www.ros.org/
+  pkg:
+    name: mc_rtc_ros
+    url: https://gite.lirmm.fr/multi-contact/mc_rtc_ros
+- name: V-REP
+  desc: V-REP is a robot simulator by Coppelia Robotics. mc_vrep allows to use mc_rtc as a controller for your robot(s) inside the V-REP simulator environment.
+  url: http://coppeliarobotics.com/
+  icon: vrep.png
+  pkg:
+    name: mc_vrep
+    url: https://gite.lirmm.fr/multi-contact/mc_vrep
+- name: NAOqi
+  desc: NAOqi is the programming framework used to program Softbank Robotics robots. The interface allows to use mc_rtc for the whole-body control of the NAO and Pepper robots.
+  url: http://doc.aldebaran.com/2-5/index_dev_guide.html
+  icon: naoqi.png
+  pkg:
+    name: mc_rtc_naoqi
+    url: https://gite.lirmm.fr/multi-contact/mc_rtc_naoqi

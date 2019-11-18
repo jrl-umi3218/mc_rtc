@@ -1,0 +1,34 @@
+LeftHandTrajectory:
+  type: bspline_trajectory
+  surface: LeftHand
+  robotIndex: 0
+  stiffness: 10000.0
+  duration: 15.0
+  weight: 100
+  dimWeight: [0.5, 0.5, 0.5, 1.0, 1.0, 1.0]
+  displaySamples: 100
+  completion:
+    OR:
+      - eval: 1e-3
+      - AND:
+        - timeout: 3.0
+        - speed: 1e-2
+  targetSurface:
+    robotIndex: 1
+    surface: Left
+    translation: [0.05, -0.05, -0.025]
+    rotation: [0.0, -1.57, 0.0]
+    # control points in target surface frame
+    controlPoints:
+    [
+      [-0.25, -0.35, 0.1]
+      [-0.08, -0.13, 0.1]
+    ]
+    oriWaypoints:
+    [
+      [13.0, [0.0, -1.57, 0.0]]
+    ]
+    init_vel : [0.0,0.0,0.0]
+    init_acc : [0.0,0.0,0.0]
+    end_vel : [0.05,0.0,0.0]
+    end_acc : [0.0,0.0,0.0]

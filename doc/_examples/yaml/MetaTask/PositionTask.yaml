@@ -1,0 +1,4 @@
+type: position
+robotIndex: 0
+body: bodyName
+position: [0.0, 0.0, 0.0]

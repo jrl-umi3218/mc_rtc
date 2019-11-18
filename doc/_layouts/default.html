@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{% if page.title %}{{page.title}} - {% else if layout.title %}{{layout.title}} - {% endif %}mc_rtc</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{{site.baseurl}}/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{site.baseurl}}/assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{site.baseurl}}/assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="{{site.baseurl}}/assets/favicons/site.webmanifest">
+    <link rel="mask-icon" href="{{site.baseurl}}/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    {% if site.use_local_libraries %}
+    <link rel="stylesheet" href="{{site.baseurl}}/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="{{site.baseurl}}/assets/css/octicons.css" />
+
+    <script src="{{site.baseurl}}/assets/js/jquery.min.js"></script>
+    <script src="{{site.baseurl}}/assets/js/popper.min.js"></script>
+    <script src="{{site.baseurl}}/assets/js/bootstrap.min.js"></script>
+    <script src="{{site.baseurl}}/assets/js/clipboard.min.js"></script>
+    {% else %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.0.0/build.css" integrity="sha256-iPUhChwurLRCrDCM1+2a2LDe9pfW6Je29o/oA5VPr28=" crossorigin="anonymous" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+    {% endif %}
+
+    <link href="{{site.baseurl}}/css/mc_rtc.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+      <a class="navbar-brand" href="{{site.baseurl}}/index.html"><img src="{{site.baseurl}}/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <div class="navbar-nav mr-auto">
+          {% for itm in site.data.nav %}
+          {% if page.name == itm.page %}
+            {% assign active = "active" %}
+          {% else %}
+            {% assign active = "" %}
+          {% endif %}
+          {% if itm.items %}
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle {{active}}" href="#" id="{{itm.id}}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{itm.name}}</a>
+            <div class="dropdown-menu" arial-labelledby="{{itm.id}}">
+              <a class="dropdown-item" href="{{site.baseurl}}/{{itm.page}}">{{itm.name}}</a>
+              <div class="dropdown-divider"></div>
+              {% for subitm in itm.items %}
+                <a class="dropdown-item" href="{{site.baseurl}}/{{subitm.page}}">{{subitm.name}}</a>
+              {% endfor %}
+            </div>
+          </div>
+          {% else %}
+          <a class="nav-item nav-link {{active}}" href="{{site.baseurl}}/{{itm.page}}">{{itm.name}}</a>
+          {% endif %}
+          {% endfor %}
+        </div>
+        <a href="https://gite.lirmm.fr/multi-contact/mc_rtc" target="blank_"><img src="{{site.baseurl}}/assets/gitlab-logo.svg" alt="GitLab logo" width="25" height="25" /></a>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+    {{ content }}
+    </div>
+
+    <div class="container-fluid">
+      <footer>
+        <hr>
+        <div class="row">
+          <div class="col-8 offset-lg-2 col-lg-6">
+            Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2019
+          </div>
+          <div class="col-4 col-lg-2 text-right">
+            <a href="{{site.baseurl}}/credits.html">Credits</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+
+</html>

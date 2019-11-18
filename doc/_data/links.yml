@@ -1,0 +1,26 @@
+SpaceVecAlg:
+  url: https://github.com/jrl-umi3218/SpaceVecAlg
+RBDyn:
+  url: https://github.com/jrl-umi3218/RBDyn
+Tasks:
+  url: https://github.com/jrl-umi3218/Tasks
+SpaceVecAlg and RBDyn tutorials:
+  url: https://github.com/jorisv/sva_rbdyn_tutorials
+SpaceVecAlg and RBDyn presentations:
+  url: https://github.com/jorisv/sva_rbdyn_presentation
+mc_rtc_ros:
+  url: https://gite.lirmm.fr/multi-contact/mc_rtc_ros
+mc_vrep:
+  url: https://gite.lirmm.fr/multi-contact/mc_vrep
+mc_openrtm:
+  url: https://gite.lirmm.fr/multi-contact/mc_openrtm
+jvrc_choreonoid:
+  url: https://gite.lirmm.fr/multi-contact/jvrc_choreonoid
+Qt:
+  url: https://www.qt.io/
+V-REP:
+  url: http://coppeliarobotics.com/
+Choreonoid:
+  url: https://choreonoid.org/en/
+mc_rtc_ros_data:
+  url: https://gite.lirmm.fr/multi-contact/mc_rtc_ros_data

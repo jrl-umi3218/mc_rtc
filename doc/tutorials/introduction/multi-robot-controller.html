@@ -1,0 +1,314 @@
+---
+layout: tutorials
+constructor_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      #include <mc_rbdyn/RobotLoader.h>
+
+      MyFirstController::MyFirstController(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration & config)
+      : mc_control::MCController({rm,
+          mc_rbdyn::RobotLoader::get_robot_module("env", std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH) + "/../mc_int_obj_description", std::string("door")),
+          mc_rbdyn::RobotLoader::get_robot_module("env", std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH), std::string("ground"))}, dt)
+  - name: Python
+    lang: python
+    source: |
+      @staticmethod
+      def create(robot, dt):
+          door = mc_rbdyn.get_robot_module("env", mc_rtc.MC_ENV_DESCRIPTION_PATH + "/../mc_int_obj_description", "door")
+          ground = mc_rbdyn.get_robot_module("env", mc_rtc.MC_ENV_DESCRIPTION_PATH, "ground")
+          return MyFirstController([robot, door, ground], dt)
+set_contact_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      solver().setContacts({
+        {robots(), 0, 2, "LeftFoot", "AllGround"},
+        {robots(), 0, 2, "RightFoot", "AllGround"}
+      });
+  - name: Python
+    lang: python
+    source: |
+      self.qpsolver.setContacts([
+        mc_rbdyn.Contact(self.robots(), 0, 2, "LeftFoot", "AllGround"),
+        mc_rbdyn.Contact(self.robots(), 0, 2, "RightFoot", "AllGround")
+      ])
+reposition_door_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      // In the reset function
+      robots().robot(1).posW(sva::PTransformd(sva::RotZ(M_PI), Eigen::Vector3d(0.7, 0.5, 0)));
+  - name: Python
+    lang: python
+    source: |
+      # In the reset callback
+      self.robots().robot(1).posW(sva.PTransformd(sva.RotZ(math.pi), eigen.Vector3d(0.7, 0.5, 0)))
+add_door_tasks_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      // In the header
+      std::shared_ptr<mc_solver::KinematicsConstraint> doorKinematics;
+      std::shared_ptr<mc_tasks::PostureTask> doorPosture;
+      // In the reset function
+      doorKinematics = std::make_shared<mc_solver::KinematicsConstraint>(robots(), 1, solver().dt());
+      solver().addConstraintSet(*doorKinematics);
+      doorPosture = std::make_shared<mc_tasks::PostureTask>(solver(), 1, 5.0, 1000.0);
+      solver().addTask(doorPosture)
+  - name: Python
+    lang: python
+    source: |
+      # In the reset callback
+      self.robots().robot(1).posW(sva.PTransformd(sva.RotZ(math.pi), eigen.Vector3d(0.7, 0.5, 0)))
+      self.doorKinematics = mc_solver.KinematicsConstraint(self.robots(), 1, self.qpsolver.timeStep)
+      self.qpsolver.addConstraintSet(self.doorKinematics)
+      self.doorPosture = mc_tasks.PostureTask(self.qpsolver, 1, 5.0, 1000.0)
+      self.qpsolver.addTask(self.doorPosture)
+logic_setup_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      // In the header
+      enum DoorPhase
+      {
+            APPROACH = 0,
+            HANDLE,
+            OPEN
+      };
+      // A private property of our controller
+      DoorPhase phase = APPROACH;
+      // A new method for our controller
+      void switch_phase()
+      {
+        if(phase == APPROACH && 0 /** we write this condition later */)
+        {
+          /** Setup the HANDLE phase */
+          phase = HANDLE;
+        }
+        else if(phase == HANDLE && 0 /** we write this condition later */)
+        {
+          /** Setup the OPEN phase */
+          phase = OPEN;
+        }
+      }
+      // Call this in the run function
+      bool MyFirstController::run()
+      {
+        switch_phase();
+        return mc_control::MCController::run();
+      }
+  - name: Python
+    lang: python
+    source: |
+      # Declare constants
+      APPROACH = 0
+      HANDLE = 1
+      OPEN = 2
+      # In constructor
+      self.phase = APPROACH
+      # New method for our controller
+      def switch_phase(self):
+        if self.phase == APPROACH and False: # We write this condition later
+          # Setup the HANDLE phase
+          self.phase = HANDLE
+        elif self.phase == HANDLE and False: # We write this condition later
+          # Setup the OPEN phase
+          self.phase = OPEN
+      # Call this in the run callback
+      def run_callback(self):
+          self.switch_phase()
+          return True
+p1_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      // In the header
+      #include <mc_tasks/SurfaceTransformTask.h>
+      // In the private members
+      std::shared_ptr<mc_tasks::SurfaceTransformTask> handTask;
+      // In the reset function
+      // Create the task and add it to the solver
+      handTask = std::make_shared<mc_tasks::SurfaceTransformTask>("RightGripper", robots(), 0, 5.0, 1000.0);
+      solver().addTask(handTask);
+      // Set a target relative to the handle position
+      handTask->target(sva::PTransformd(Eigen::Vector3d(0, 0, -0.025)) * robots().robot(1).surfacePose("Handle"));
+  - name: Python
+    lang: python
+    source: |
+      # In the reset callback
+      # Create the task and add it to the solver
+      self.handTask = mc_tasks.SurfaceTransformTask("RightGripper", self.robots(), 0, 5.0, 1000.0)
+      self.qpsolver.addTask(self.handTask)
+      # Set a target relative to the handle position
+      self.handTask.target(sva.PTransformd(eigen.Vector3d(0, 0, -0.025)) * self.robots().robot(1).surfacePose("Handle"))
+p2_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      # Modify MyFirstController::switch_phase()
+      if(phase == APPROACH && handTask->eval().norm < 0.05 && handTask->speed().norm() < 1e-4)
+      {
+        // Add a new contact
+        auto contacts = solver().contacts();
+        contacts.emplace_back(robots(), 0, 1, "RightGripper", "Handle");
+        solver().setContacts(contacts);
+        // Remove the surface transform task
+        solver().removeTask(handTask);
+        // Keep the robot in its current posture
+        postureTask->reset();
+        comTask->reset();
+        // Switch phase
+        phase = HANDLE;
+      }
+  - name: Python
+    lang: python
+    source: |
+      # Modify switch_phase(self)
+      if self.phase == APPROACH and self.handTask.eval().norm() < 0.05 and self.handTask.speed().norm() < 1e-4:
+        # Add a new contact
+        contacts = self.qpsolver.contacts()
+        contacts.append(mc_rbdyn.Contact(self.robots(), 0, 1, "RightGripper", "Handle"))
+        self.qpsolver.setContacts(contacts)
+        # Remove the surface transform task
+        self.qpsolver.removeTask(self.handTask)
+        # Keep the robot in its current posture
+        self.postureTask.reset()
+        self.comTask.reset()
+        # Target new handle position
+        self.doorPosture.target({"handle": {-1.0}})
+        # Switch phase
+        self.phase = HANDLE
+p3_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      else if(phase == HANDLE && doorPosture->eval().norm() < 0.01)
+      {
+        // Update door opening target
+        doorPosture->target({{"door", {0.5}}});
+        // Switch phase
+        phase = OPEN;
+      }
+  - name: Python
+    lang: python
+    source: |
+      elif self.phase == HANDLE and self.doorPosture.eval().norm() < 0.01:
+        # Update door opening target
+        self.doorPosture.target({"door": [0.5]})
+        # Switch phase
+        self.phase = OPEN
+---
+
+<h3>Why should we use multiple robots?</h3>
+
+<p>The objective in this section is to control not only one robot, but multiple at the same time. This technique, although computationally expensive when controlling many DoFs, allows us to:</p>
+
+<ul>
+  <li>Specify constraints (contacts, collisions) between robots</li>
+  <li>Achieve tasks in cooperation</li>
+  <li>Manipulate articulated objects</li>
+</ul>
+
+<p>All of this without having to perform explicit inverse kinematics.</p>
+
+<p>To do this, our QP controller will minimize under constraints an objective function that takes into account the whole system of robots.</p>
+
+<p>In our example we will focus on manipulating a simple object with two degrees of freedom: a door. Our goal is to move the robot's hand to the door handle, turn the handle and open the door.</p>
+
+<p><em>Note: this article assumes you are able to run and visualize the controller using ROS.</em></p>
+
+
+<h3>Example</h3>
+
+<p>We will build a simple controller that will load JVRC1 and a door. This door is part of the {% link mc_rtc_ros_data %} package that you should already have.</p>
+
+<p>Now, let's build a controller that takes multiple robots as input:</p>
+
+<ul>
+  <li>JVRC1</li>
+  <li>The door itself</li>
+  <li>The ground</li>
+</ul>
+
+<p>To do so, we will modify the constructor:</p>
+
+{% include show_sources.html sources=page.constructor_sources copy=false id="constructor" %}
+
+<h4>Robot index</h4>
+
+<p>In this new example, we have loaded an extra robot: the door. We have done so by proviing a list of robot modules to load. The loaded robots are then indexed according to the order in which the modules were provided. It means that our main robot still has the index 0, however we now have the door at index 1 and the ground at index 2. It means that the contacts setting must be updated as follows:</p>
+
+{% include show_sources.html sources=page.set_contact_sources copy=false id="set_contact" %}
+
+<h4>Initial position of the door</h4>
+
+<p>If you start the controller now, you will notice that the door and the robot are in the same location, for the purpose of this tutorial, we will manually reposition the door:</p>
+
+{% include show_sources.html sources=page.reposition_door_sources copy=false id="reposition_door" %}
+
+<h4>Tasks and constraints on the door</h4>
+
+<p>Since we have added a new articulated robot, we should add some constraints on it. We will only add a kinematics constraint and a posture task:</p>
+
+{% include show_sources.html sources=page.add_door_tasks_sources copy=false id="add_door_tasks" %}
+
+<p><em>Note: we don't add contact for the door yet as it has a fixed base. However, note that the contact constraint is directly available for every robots in the controller.</em>
+
+<h4>Setting up the controller logic</h4>
+
+<p>In that part of the tutorial we will setup the logic of our controller. We want to:</p>
+
+<ol>
+  <li>Reach the door's handle with the robot's hand</li>
+  <li>Rotate the door handle</li>
+  <li>Open the door</li>
+</ol>
+
+<p>So, our code will reflect that:</p>
+
+{% include show_sources.html sources=page.logic_setup_sources copy=false id="logic_setup" %}
+
+<h4>Phase 1: reach the handle</h4>
+
+<p>For this phase, we will introduce the <code>SurfaceTransformTask</code>. It is very similar to the <code>EndEffectorTask</code> we used except that the task is controlling a surface of the robot instead of an end-effector. This usually makes it easier to express the objective. Furthermore, we will define the target using the position of the door's handle so that we don't have to adapt our code if we decide to move the door or change the hand.</p>
+
+{% include show_sources.html sources=page.p1_sources copy=false id="p1" %}
+
+<h4>Phase 2: moving the handle</h4>
+
+<p>We need to settle two things for phase 2:</p>
+
+<ol>
+  <li>When to trigger phase 2</li>
+  <li>What to do</li>
+</ol>
+
+<p>The first point will be to monitor the execution of the <code>SurfaceTransformTask</code>. For the second point, we will add a contact between the door and the robot's gripper, remove the task on the robot's gripper (it is now handled by the contact) and change the target for the handle position.</p>
+
+{% include show_sources.html sources=page.p2_sources copy=false id="p2" %}
+
+<h4>Phase 3: open the door</h4>
+
+<p>This phase is very similar to the previous one. We will check the handle position that has been reached to trigger the transition and then set an objective for the door opening.</p>
+
+{% include show_sources.html sources=page.p3_sources copy=false id="p3" %}
+
+<h3>Play time</h3>
+
+<p>At this point you can play around with some of the parameters and see the benefits of the multi-robot approach as you can change the following without changing anything else:</p>
+
+<ul>
+  <li>Change the door position</li>
+  <li>Change the handle opening angle</li>
+  <li>Change the door opening angle</li>
+  <li>Change the robot's hand used to open the door</li>
+</ul>
+
+<p><em>Note: of course, you may end up with an unfeasible setup. For example, if you put the door 10 meters away from the robot it won't be able to reach the handle.</em></p>
+
+<h3>Introducing the FSM facilities</h3>
+
+<p>This tutorial concludes the introduction of mc_rtc controllers. The next tutorials are focused on the advanced tools available in the framework to help you program and debug complex controllers. However, you might have noticed we have used a very crude approach to program the logic of our controller. The framework provides a much more powerful way to deal with such scenarios as introduced in the <a href="{{site.baseurl}}/tutorials/recipes/fsm.html">tutorial introducing the FSM facilties</a> and the <a href="{{site.baseurl}}/tutorials/recipes/fsm-example.html">FSM in practice tutorial</a>. The later will re-program this tutorial using the FSM facilities.</p>
+
+<p>The full sources for this controller are available <a href="sources/multi-robot-controller.html">here</a>.</p>

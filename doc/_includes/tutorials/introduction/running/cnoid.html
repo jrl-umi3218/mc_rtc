@@ -1,0 +1,22 @@
+<h4>Pre-requisites</h4>
+
+<p>To run this interface you need to have installed {% link mc_openrtm %} on your system. Furthermore, you will need {% link Choreonoid %} and a related simulation file for your robot. An example is provided for JVRC-1 in {% link jvrc_choreonoid %}.</p>
+
+<h4>Running the controller</h4>
+
+<p>Open the simulation file with Choreonoid. For example, using the example from {% link jvrc_choreonoid %}:</p>
+
+{% highlight bash %}
+# Go to the directory where the simulation file has been installed
+$ cd /usr/local/share/hrpsys/samples/JVRC1
+# Open the simulation file
+$ choreonoid sim_mc.cnoid
+{% endhighlight %}
+
+<p>Then click the button to start the simulation in Choreonoid. This will also start your controller. Note that you can directly start the simulation from the command line:</p>
+
+{% highlight bash %}
+$ choreonoid sim_mc.cnoid --start-simulation
+{% endhighlight %}
+
+{% include tutorials/introduction/running/feedback.html %}

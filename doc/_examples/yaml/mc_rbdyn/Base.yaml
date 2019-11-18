@@ -1,0 +1,13 @@
+name: root
+X_0_s:
+  rotation: [1.0, 0.0, 0.0,
+             0.0, 1.0, 0.0,
+             0.0, 0.0, 1.0]
+  translation: [0.0, 0.0, 0.0]
+X_b0_s:
+  rotation: [1.0, 0.0, 0.0,
+             0.0, 1.0, 0.0,
+             0.0, 0.0, 1.0]
+  translation: [0.0, 0.0, 0.0]
+type:
+  type: fixed

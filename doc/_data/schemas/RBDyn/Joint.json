@@ -1,0 +1,34 @@
+{
+  "title": "rbd::Joint",
+  "type": "object",
+  "properties":
+  {
+    "type": { "$ref": "/../../RBDyn/Joint.Type.json" },
+    "axis": { "$ref": "/../../Eigen/Vector3d.json" },
+    "forward": { "type": "boolean" },
+    "name": { "type": "string" },
+    "isMimic": { "type": "boolean" },
+    "mimicName": { "type": "string" },
+    "mimicMultiplier": { "type": "number" },
+    "mimicOffset": { "type": "number" }
+  },
+  "required": ["type", "axis", "forward", "name", "isMimic"],
+  "additionalProperties": false,
+  "anyOf" : [
+  {
+    "title": "Required elements if isMimic",
+    "properties":
+    {
+      "isMimic": {"enum": [true] }
+    },
+    "required": ["mimicName", "mimicMultiplier", "mimicOffset"]
+  },
+  {
+    "title": "",
+    "properties":
+    {
+      "isMimic": {"enum": [false] }
+    }
+  }
+  ]
+}

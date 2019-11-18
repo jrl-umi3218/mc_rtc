@@ -1,0 +1,12 @@
+{% for cat in site.data.tutorials %}
+  {% if cat.id == include.category %}
+    {% assign category = cat %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+{% for tuto in category.tutorials %}
+  {% if tuto.id == include.tutorial %}
+    <a href="{{site.baseurl}}/tutorials/{{category.id}}/{{tuto.id}}.html">{{tuto.title}}</a>
+    {% break %}
+  {% endif %}
+{% endfor %}

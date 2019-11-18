@@ -1,0 +1,32 @@
+type: planar
+name: surface
+bodyName: body
+X_b_s:
+  rotation: [1.0, 0.0, 0.0,
+             0.0, 1.0, 0.0,
+             0.0, 0.0, 1.0]
+  translation: [0.0, 0.0, 0.0]
+materialName: plastic
+pointsFromOrigin:
+  - rotation: [1.0, 0.0, 0.0,
+               0.0, 1.0, 0.0,
+               0.0, 0.0, 1.0]
+    translation: [0.0, 0.0, 0.0]
+  - rotation: [1.0, 0.0, 0.0,
+               0.0, 1.0, 0.0,
+               0.0, 0.0, 1.0]
+    translation: [0.0, 0.0, 0.0]
+  - rotation: [1.0, 0.0, 0.0,
+               0.0, 1.0, 0.0,
+               0.0, 0.0, 1.0]
+    translation: [0.0, 0.0, 0.0]
+  - rotation: [1.0, 0.0, 0.0,
+               0.0, 1.0, 0.0,
+               0.0, 0.0, 1.0]
+    translation: [0.0, 0.0, 0.0]
+X_b_motor:
+  rotation: [1.0, 0.0, 0.0,
+             0.0, 1.0, 0.0,
+             0.0, 0.0, 1.0]
+  translation: [0.0, 0.0, 0.0]
+motorMaxTorque: 5.0

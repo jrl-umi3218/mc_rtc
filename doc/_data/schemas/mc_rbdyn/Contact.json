@@ -1,0 +1,18 @@
+{
+  "title": "mc_rbdyn::Contact",
+  "description": "Requires an mc_rbdyn::Robots instance to be loaded",
+  "type": "object",
+  "properties":
+  {
+    "r1Surface": { "type": "string" },
+    "r2Surface": { "type": "string" },
+    "r1Index": { "type": "number", "default": "0" },
+    "r2Index": { "type": "number", "default": "1" },
+    "isFixed": { "type": "boolean" },
+    "X_r2s_r1s": { "$ref": "/../../SpaceVecAlg/PTransformd.json" },
+    "X_b_s": { "$ref": "/../../SpaceVecAlg/PTransformd.json" },
+    "ambiguityId": { "type": "integer" }
+  },
+  "required": ["r1Surface", "r2Surface", "isFixed"],
+  "additionalProperties": false
+}

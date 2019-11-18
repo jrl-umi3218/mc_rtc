@@ -1,0 +1,11 @@
+{
+  "title": "mc_rbdyn::Plane",
+  "type": "object",
+  "properties":
+  {
+    "normal": { "$ref": "/../../Eigen/Vector3d.json" },
+    "offset": { "type": "number" }
+  },
+  "required": ["normal", "offset"],
+  "additionalProperties": false
+}

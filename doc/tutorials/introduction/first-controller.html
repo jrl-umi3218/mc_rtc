@@ -1,0 +1,244 @@
+---
+layout: tutorials
+constructor_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      solver().addConstraintSet(contactConstraint);
+      solver().addConstraintSet(kinematicsConstraint);
+      solver().addTask(postureTask);
+      solver().setContacts({{}});
+  - name: Python
+    lang: python
+    source: |
+      self.qpsolver.addConstraintSet(self.kinematicsConstraint)
+      self.qpsolver.addConstraintSet(self.contactConstraint)
+      self.qpsolver.addTask(self.postureTask)
+      self.qpsolver.setContacts([])
+reset_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      void MyFirstController::reset(const mc_control::ControllerResetData & reset_data)
+      {
+        mc_control::MCController::reset(reset_data);
+      }
+  - name: Python
+    lang: python
+    source: |
+      def reset_callback(self, data):
+          pass
+run_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      bool MyFirstController::run()
+      {
+        return mc_control::MCController::run();
+      }
+  - name: Python
+    lang: python
+    source: |
+      def run_callback(self):
+          return True
+create_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      // Should not be in any namespace
+      CONTROLLER_CONSTRUCTOR("MyFirstController", MyFirstController)
+  - name: Python
+    lang: python
+    source: |
+      @staticmethod
+      def create(robot, dt):
+          env = mc_rbdyn.get_robot_module("env", mc_rtc.MC_ENV_DESCRIPTION_PATH, "ground")
+          return MyFirstController([robot,env], dt)
+properties_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      // Added to MyFirstController.h in the private members
+      int jointIndex = 0;
+      bool goingLeft = true;
+  - name: Python
+    lang: python
+    source: |
+      # Added inside MyFirstController __init__ method
+      self.jointIndex = 0
+      self.goingLeft = True
+init_jindex_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      jointIndex = robot().jointIndexByName("NECK_Y");
+  - name: Python
+    lang: python
+    source: |
+      self.jointIndex = self.robot().jointIndexByName("NECK_Y")
+switch_target_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      void MyFirstController::switch_target()
+      {
+        if(goingLeft)
+        {
+          postureTask->target({{"NECK_Y", robot().qu()[jointIndex]}});
+        }
+        else
+        {
+          postureTask->target({{"NECK_Y", robot().ql()[jointIndex]}});
+        }
+        goingLeft = !goingLeft;
+      }
+  - name: Python
+    lang: python
+    source: |
+      def switch_target(self):
+          if self.goingLeft:
+              self.postureTask.target({"NECK_Y": self.robot().qu[self.jointIndex]})
+          else:
+              self.postureTask.target({"NECK_Y": self.robot().ql[self.jointIndex]})
+          self.goingLeft = not self.goingLeft
+update_target_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      bool MyFirstController::run()
+      {
+        if(std::abs(postureTask->posture()[jointIndex][0] - robot().mbc().q[jointIndex][0]) < 0.05)
+        {
+          switch_target();
+        }
+        return mc_control::MCController::run();
+      }
+  - name: Python
+    lang: python
+    source: |
+      def run_callback(self):
+          if abs(self.postureTask.posture()[self.jointIndex][0] - self.robot().mbc.q[self.jointIndex][0]) < 0.05:
+              self.switch_target()
+          return True
+show_joints_sources:
+  - name: Python
+    lang: python
+    source: |
+      import mc_rbdyn
+      # Here you can change the robot module name with your own robot
+      rm = mc_rbdyn.get_robot_module("JVRC1")
+      print("\n".join(["- {}".format(j.name()) for j in rm.mb.joints() if j.dof() == 1]))
+  - name: C++
+    lang: cpp
+    source: |
+      #include <mc_rbdyn/RobotLoader.h>
+      int main()
+      {
+        // Here you can change the robot module name with your own robot
+        auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
+        for(const auto & j : rm->mb.joints())
+        {
+          if(j.dof() == 1 && !j.isMimic())
+          {
+            std::cout << "- " << j.name() << "\n";
+          }
+        }
+        return 0;
+      }
+---
+
+<p>The goal of this tutorial is to show you how to create a new controller for mc_rtc. We will use the JVRC1 robot in our example and we will simply try to shake the head left and right</p>
+
+<h3>Creating and running the controller skeleton</h3>
+
+<p><em>Note:</em> in mc_rtc, every controller derives from the <code>MCController</code> class. To write a simple controller you can also derive from it and write the required functionnality. This is what we will do in these tutorials. However, for more complex controllers we advise you to use the <a href="{{site.baseurl}}/tutorials/recipes/fsm.html">FSM facilties</a></p>
+
+<ul class="nav nav-tabs" id="createTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="cppCreateTab" data-toggle="tab" href="#cppCreateTabContent" role="tab" aria-controls="cppCreateTabContent" aria-selected="true">C++</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="pythonCreateTab" data-toggle="tab" href="#pythonCreateTabContent" role="tab" aria-controls="pythonCreateTabContent" aria-selected="false">Python</a>
+  </li>
+</ul>
+<div class="tab-content" id="interfaceTabContent">
+  <div class="tab-pane show active" id="cppCreateTabContent" role="tabpanel" arial-labelledby="cppCreateTab">
+    <div class="card bg-light">
+      <div class="card-body">
+        {% include tutorials/introduction/first-controller/create-cpp.html %}
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" id="pythonCreateTabContent" role="tabpanel" arial-labelledby="pythonCreateTab">
+    <div class="card bg-light">
+      <div class="card-body">
+        {% include tutorials/introduction/first-controller/create-python.html %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3>Understanding the skeleton code step-by-step</h3>
+
+<p>Let's first have a look at the constructor:</p>
+
+{% include show_sources.html sources=page.constructor_sources copy=false id="constructor" %}
+
+<p>They are very similar. We use existing objects in the base class to setup a basic controller:</p>
+
+<ol>
+  <li>We add a contact constraint. This is ensuring that contacts surfaces don't move once they are set;</li>
+  <li>We add a kinematics constraint. This is ensuring the robot is subject to joint position and velocity limits;</li>
+  <li>We add a posture task to control the robot posture;</li>
+  <li>We set the contacts. For now we set an empty set of contacts as the control does not include dynamics;</li>
+</ol>
+
+<p>Now let's look at the <code>reset</code> function. This function is called when the controller is started (either when the interface starts or when the controllers are switched online).</p>
+
+{% include show_sources.html sources=page.reset_sources copy=false id="reset" %}
+
+<p>Here we are simply delegating to the <code>MCController</code> class (implicitly in the Python case). <code>reset_data</code> contains the initial robot configuration provided by the interface. The default implementation makes sure that the robot is correctly initialized and that the posture task objective is set to the current robot's posture.</p>
+
+<p>Then we have the <code>run</code> function. This function is going to be called for every iteration of the controller.</p>
+
+{% include show_sources.html sources=page.run_sources copy=false id="run" %}
+
+<p>Here we are also delegating the call to the <code>MCController</code> class (also implicitly in the Python case). The function should return true if everything goes well and false if the control should be interrupted. The default implementation runs the QP solver with the tasks and constraints provided by your program and use the resulting acceleration to update the desired robot's state.</p>
+
+<p>Finally, the last piece of code allows mc_rtc to load your controller:</p>
+
+{% include show_sources.html sources=page.create_sources copy=false id="createController" %}
+
+<p>It's unlikely you would need to modify this but it's vital not to forget it so we are mentioning it here.</p>
+
+<h3>Shaking the head left and right</h3>
+
+<p>We will start by adding two properties to our controller, one will hold the joint index for the head joint we are going to move, the other will tell us in which direction we are going.</p>
+
+{% include show_sources.html sources=page.properties_sources copy=false id="properties" %}
+
+<p>To initialize the joint index, we need to ask the robot class. In JVRC1, the head yaw joint is called <code>NECK_Y</code>, hence the following code in our controller constructors:</p>
+
+{% include show_sources.html sources=page.init_jindex_sources copy=false id="init_jindex" %}
+
+<p>Next we will write a function to update the target accordingly if we want the robot to look left or right:</p>
+
+{% include show_sources.html sources=page.switch_target_sources copy=false id="switch_target" %}
+
+<p><em>Note: it's also possible to update the full posture target by using <code>postureTask->posture()</code> to get the current target and <code>postureTask->posture(new_posture)</code> to change the target but we use a more readable version here.</em></p>
+
+<p>Finally, we modify the <code>run</code> function to update the robot's behaviour according to the current task error:</p>
+
+{% include show_sources.html sources=page.update_target_sources copy=false id="update_target" %}
+
+<p><em>Note: alternatively, we could monitor <code>postureTask->eval().norm()</code> which gives the total error of the task. However here we are only concerned with the head yaw joint.</em></p>
+
+<p>Et voil&agrave;! You can run this controller and see that the robot is moving its head from left to right. For the next tutorial we will continue using this controller, however, the code samples will not reflect the existing head-moving code.</p>
+
+<p>The full sources for this controller are available <a href="sources/first-controller.html">here</a>.</p>
+
+<h4>Find out available joints in a robot</h4>
+
+<p>You might be tempted to try this controller with different robots but not knowing which joints are available in your robot, the following snippet will print out a list of one dof joint that can be used in the sample code interchangeably with <code>NECK_Y</code>:</p>
+
+{% include show_sources.html sources=page.show_joints_sources copy=false id="show_joints" %}

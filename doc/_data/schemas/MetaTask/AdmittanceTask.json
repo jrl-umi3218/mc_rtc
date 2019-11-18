@@ -1,0 +1,24 @@
+{
+  "title": "mc_tasks::AdmittanceTask",
+  "type": "object",
+  "properties":
+  {
+    "type": { "enum": ["admittance"], "type": "string" },
+    "name": { "type": "string" },
+    "robotIndex": { "type": "integer", "minimum": 0 },
+    "surface": { "type": "string" },
+
+    "pose": { "$ref": "/../../SpaceVecAlg/PTransformd.json" },
+    "targetSurface": { "$ref" : "/../../common/targetSurface.json" },
+    "wrench": { "$ref": "/../../SpaceVecAlg/ForceVecd.json" },
+    "admittance": { "$ref": "/../../SpaceVecAlg/ForceVecd.json" },
+
+    "stiffness": { "type": "number", "minimum": 0},
+    "damping": { "type": "number", "minimum": 0},
+    "weight": { "type": "number", "minimum": 0},
+    "dimWeight": { "$ref": "/../../Eigen/Vector6d.json" },
+    "activeJoints": { "type": "array", "items": { "type": "string" } },
+    "unactiveJoints": { "type": "array", "items": { "type": "string" } }
+  },
+  "required": ["type", "robotIndex", "surface"]
+}

@@ -1,0 +1,15 @@
+{
+  "title": "mc_tasks::RemoveContactTask",
+  "type": "object",
+  "properties":
+  {
+    "type": { "enum": ["removeContact"], "type": "string" },
+    "name": { "type": "string" },
+    "contact": { "$ref": "/../../mc_rbdyn/Contact.json" },
+    "speed": { "type": "number", "minimum": 0},
+    "stiffness": { "type": "number", "minimum": 0},
+    "weight": { "type": "number", "minimum": 0},
+    "T_0_s": { "$ref": "/../../Eigen/Vector3d.json" }
+  },
+  "required": ["type", "contact", "speed", "stiffness", "weight"]
+}

@@ -1,0 +1,45 @@
+---
+layout: default
+title: Robots
+---
+
+<div class="row">
+
+<div class="col-12 offset-lg-2 col-lg-8">
+
+<h1>Robots</h1>
+
+<p>This page lists the robots that are currently available to be used in mc_rtc as well as a link to the relevant repository for the robot description package and the robot module package. In some cases you may need to request access to it.</p>
+
+</div>
+
+<div class="offset-1 col-10 offset-lg-3 col-lg-6">
+
+{% for bot in site.data.robots %}
+  <div class="media features">
+    <img class="mr-3 img-fluid rounded-circle" src="{{site.baseurl}}/assets/robots/{{bot.icon}}" alt="{{bot.name}}" width="75" height="75"/>
+    <div class="media-body">
+      <h5 class="mt-0">{{bot.name}}</h5>
+      <dl class="row">
+        <dt class="col">Description</dt>
+        <dd class="col-9"><a href="{{bot.pkg.desc.url}}" target="blank_">{% octicon globe %} <span class="d-none d-sm-inline">{{bot.pkg.desc.name}}</span><span class="d-inline d-sm-none">Link</span></a></dd>
+      </dl>
+      <dl class="row">
+        <dt class="col">Module</dt>
+        <dd class="col-9"><a href="{{bot.pkg.module.url}}" target="blank_">{% octicon globe %} <span class="d-none d-sm-inline">{{bot.pkg.module.name}}</span><span class="d-inline d-sm-none">Link</span></a></dd>
+      </dl>
+    </div>
+  </div>
+{% endfor %}
+
+</div>
+
+<div class="col-12 offset-lg-2 col-lg-8">
+
+<h3>Use your own robot</h3>
+
+<p>All you need to get started is an URDF file. Check-out this <a href="{{site.baseurl}}/tutorials/advanced/new-robot.html">tutorial</a> for more information.</p>
+
+</div>
+
+</div>

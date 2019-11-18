@@ -1,0 +1,15 @@
+{
+  "title": "rbd::MultiBody",
+  "type": "object",
+  "properties":
+  {
+    "bodies": { "type": "array", "items": { "$ref": "/../../RBDyn/Body.json" } },
+    "joints": { "type": "array", "items": { "$ref": "/../../RBDyn/Joint.json" } },
+    "preds": { "type": "array", "items": { "type": "integer" } },
+    "succs": { "type": "array", "items": { "type": "integer" } },
+    "parents": { "type": "array", "items": { "type": "integer" } },
+    "transforms": { "type": "array", "items": { "$ref": "/../../SpaceVecAlg/PTransformd.json" } }
+  },
+  "required": ["bodies", "joints", "preds", "succs", "parents", "transforms"],
+  "additionalProperties": false
+}

@@ -1,0 +1,32 @@
+{% if include.schema %}
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">{{ include.schema.title | default: "object" }}</h6>
+    <div class="float-right">
+      <small class="text-muted text-right">{{ include.schema.description }}</small>
+    </div>
+  </div>
+  <div class="card-body">
+    {% if include.schema.type == "array" %}
+      {% if include.schema contains "minItems" %}
+        {% assign minItems = include.schema.minItems %}
+      {% else %}
+        {% assign minItems = "" %}
+      {% endif %}
+      {% include json_schema_array.html minItems=minItems maxItems=include.schema.maxItems items=include.schema.items id=include.id %}
+    {% elsif include.schema.type == "object" %}
+      {% include json_schema_object.html properties=include.schema.properties required=include.schema.required id=include.id patternProperties=include.schema.patternProperties %}
+    {% else %}
+    <div class="alert alert-danger" role="alert">
+      Cannot handle type: {{include.schema.type}}
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% else %}
+<div class="card card-schema">
+  <div class="card-body">
+    <p>Select an object on the right to see the exepected JSON format</p>
+  </div>
+</div>
+{% endif %}

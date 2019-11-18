@@ -1,0 +1,9 @@
+type: posture
+robotIndex: 0
+stiffness: 1.0
+weight: 1.0
+posture:
+  - [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.7]
+  - [0]
+  - []
+  - [1.5]

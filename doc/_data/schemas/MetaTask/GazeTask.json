@@ -1,0 +1,20 @@
+{
+  "title": "mc_tasks::GazeTask",
+  "type": "object",
+  "properties":
+  {
+    "type": { "enum": ["gaze"], "type": "string" },
+    "name": { "type": "string" },
+    "robotIndex": { "type": "integer", "minimum": 0 },
+    "body": { "type": "string" },
+    "X_b_gaze": { "$ref": "/../../SpaceVecAlg/PTransformd.json" },
+
+    "stiffness": { "type": "number", "minimum": 0},
+    "damping": { "type": "number", "minimum": 0},
+    "weight": { "type": "number", "minimum": 0},
+    "dimWeight": { "$ref": "/../../Eigen/Vector6d.json" },
+    "activeJoints": { "type": "array", "items": { "type": "string" } },
+    "unactiveJoints": { "type": "array", "items": { "type": "string" } }
+  },
+  "required": ["type", "robotIndex", "body", "X_b_gaze"]
+}

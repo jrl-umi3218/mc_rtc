@@ -1,0 +1,24 @@
+{
+  "title": "mc_solver::KinematicsConstraint",
+  "type": "object",
+  "properties":
+  {
+    "type": { "enum": ["kinematics"], "type": "string" },
+    "robotIndex": { "type": "integer", "minimum": 0 },
+    "damper":
+    {
+      "type": "array",
+      "items":
+      {
+        "type": "number"
+      }
+    },
+    "velocityPercent":
+    {
+      "description": "Ignored if damper is absent.",
+      "type": "number",
+      "default": "0.5"
+    }
+  },
+  "required": ["type", "robotIndex"]
+}

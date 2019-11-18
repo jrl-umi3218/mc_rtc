@@ -1,0 +1,43 @@
+{
+  "title": "mc_tasks::EndEffectorTask",
+  "type": "object",
+  "properties":
+  {
+    "type": { "enum": ["body6d"], "type": "string" },
+    "name": { "type": "string" },
+    "robotIndex": { "type": "integer", "minimum": 0 },
+    "body": { "type": "string" },
+    "bodyPoint": { "$ref": "/../../Eigen/Vector3d.json" },
+
+    "orientation": { "$ref": "/../../Eigen/Matrix3d.json" },
+    "position": { "$ref": "/../../Eigen/Vector3d.json" },
+
+    "relative":
+    {
+      "type": "object",
+      "description": "Relative target specification, the target is specified relatively to the middle point between two surfaces s1 and s2",
+      "properties":
+      {
+        "s1": { "type": "string" },
+        "s2": { "type": "string" },
+        "orientation": { "$ref": "/../../Eigen/Matrix3d.json" },
+        "position": { "$ref": "/../../Eigen/Vector3d.json" }
+      },
+      "required": ["s1", "s2"]
+    },
+
+    "orientationStiffness": { "type": "number", "minimum": 0},
+    "orientationWeight": { "type": "number", "minimum": 0},
+
+    "positionStiffness": { "type": "number", "minimum": 0},
+    "positionWeight": { "type": "number", "minimum": 0},
+
+    "stiffness": { "type": "number", "minimum": 0},
+    "damping": { "type": "number", "minimum": 0},
+    "weight": { "type": "number", "minimum": 0},
+    "dimWeight": { "$ref": "/../../Eigen/Vector6d.json" },
+    "activeJoints": { "type": "array", "items": { "type": "string" } },
+    "unactiveJoints": { "type": "array", "items": { "type": "string" } }
+  },
+  "required": ["type", "robotIndex", "body"]
+}

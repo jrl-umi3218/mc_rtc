@@ -1,0 +1,31 @@
+---
+layout: default
+title: Doxygen
+---
+
+<div class="embed-responsive embed-responsive-1by1">
+  <iframe id="doxygen" class="embed-responsive-item" src="doxygen-html/index.html"></iframe>
+</div>
+
+<script type="text/javascript">
+var baseURI = new String(window.location);
+baseURI = baseURI.replace(window.location.hash, '').substring(0, baseURI.lastIndexOf('/') + 1) + 'doxygen-html/';
+var param = window.location.hash.substring(1);
+if(param.length > 0)
+{
+  $('#doxygen').attr('src', 'doxygen-html/' + param + '.html');
+}
+$('#doxygen').on("load", function()
+  {
+    var uri = new String(document.getElementById('doxygen').contentDocument.baseURI);
+    uri = uri.replace(baseURI, '').replace('.html', '');
+    if( uri != "index")
+    {
+      window.location.hash = uri;
+    }
+    else
+    {
+      window.location.hash = "";
+    }
+  });
+</script>

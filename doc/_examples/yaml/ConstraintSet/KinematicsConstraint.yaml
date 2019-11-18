@@ -1,0 +1,4 @@
+type: kinematics
+robotIndex: 0
+damper: [0.1, 0.01, 0.5]
+velocityPercent: 0.5

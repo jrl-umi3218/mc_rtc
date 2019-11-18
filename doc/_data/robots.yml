@@ -1,0 +1,45 @@
+- name: HRP-2-Kai
+  icon: hrp2.png
+  pkg:
+    desc:
+      url: https://gite.lirmm.fr/mc-hrp2/hrp2_drc
+      name: hrp2_drc
+    module:
+      url: https://gite.lirmm.fr/mc-hrp2/mc-hrp2
+      name: mc-hrp2
+- name: HRP-4-LIRMM
+  icon: hrp4.png
+  pkg:
+    desc:
+      url: https://gite.lirmm.fr/mc-hrp4/hrp4
+      name: hrp4
+    module:
+      url: https://gite.lirmm.fr/mc-hrp4/mc-hrp4
+      name: mc-hrp4
+- name: HRP-4J
+  icon: hrp4.png
+  pkg:
+    desc:
+      url: https://gite.lirmm.fr/mc-hrp4/hrp4j_description
+      name: hrp4j_description
+    module:
+      url: https://gite.lirmm.fr/mc-hrp4/mc_hrp4j
+      name: mc_hrp4j
+- name: Nao
+  icon: nao.jpg
+  pkg:
+    desc:
+      url: https://gite.lirmm.fr/softbankrobotics/nao_description
+      name: nao_description
+    module:
+      url: https://gite.lirmm.fr/multi-contact/mc_nao
+      name: mc_nao
+- name: Pepper
+  icon: pepper.jpg
+  pkg:
+    desc:
+      url: https://gite.lirmm.fr/softbankrobotics/pepper_description
+      name: pepper_description
+    module:
+      url: https://gite.lirmm.fr/multi-contact/mc_pepper
+      name: mc_pepper

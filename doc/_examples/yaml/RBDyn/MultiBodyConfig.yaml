@@ -1,0 +1,200 @@
+q:
+- []
+- - 0
+alpha:
+- []
+- - 0
+alphaD:
+- []
+- - 0
+force:
+- couple:
+  - 0
+  - 0
+  - 0
+  force:
+  - 0
+  - 1
+  - 0
+- couple:
+  - 0
+  - 0
+  - 1
+  force:
+  - 0
+  - 0
+  - 0
+jointConfig:
+- translation:
+  - 0
+  - 0
+  - 0
+  rotation:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+- translation:
+  - 0
+  - 0
+  - 0
+  rotation:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+jointVelocity:
+- angular:
+  - 0
+  - 0
+  - 0
+  linear:
+  - 0
+  - 0
+  - 0
+- angular:
+  - 0
+  - 0
+  - 0
+  linear:
+  - 0
+  - 0
+  - 0
+jointTorque:
+- []
+- - 0
+motionSubspace:
+- cols: 0
+  data: []
+- cols: 1
+  data:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+bodyPosW:
+- translation:
+  - 0
+  - 0
+  - 0
+  rotation:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+- translation:
+  - 0
+  - 0
+  - 0
+  rotation:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+parentToSon:
+- translation:
+  - 0
+  - 0
+  - 0
+  rotation:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+- translation:
+  - 0
+  - 0
+  - 0
+  rotation:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+bodyVelW:
+- angular:
+  - 0
+  - 0
+  - 0
+  linear:
+  - 0
+  - 0
+  - 0
+- angular:
+  - 0
+  - 0
+  - 0
+  linear:
+  - 0
+  - 0
+  - 0
+bodyVelB:
+- angular:
+  - 0
+  - 0
+  - 0
+  linear:
+  - 0
+  - 0
+  - 0
+- angular:
+  - 0
+  - 0
+  - 0
+  linear:
+  - 0
+  - 0
+  - 0
+bodyAccB:
+- angular:
+  - 0
+  - 0
+  - 0
+  linear:
+  - 0
+  - 0
+  - 0
+- angular:
+  - 0
+  - 0
+  - 0
+  linear:
+  - 0
+  - 0
+  - 0
+gravity:
+- 0
+- 0
+- 9.81
+

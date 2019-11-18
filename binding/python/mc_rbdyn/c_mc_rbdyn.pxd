@@ -194,6 +194,7 @@ cdef extern from "<mc_rbdyn/Robot.h>" namespace "mc_rbdyn":
     Vector3d comVelocity()
     Vector3d comAcceleration()
 
+    PTransformd surfacePose(string)
     ForceVecd surfaceWrench(string)
     Vector2d cop(string,double)
     Vector3d copW(string,double)

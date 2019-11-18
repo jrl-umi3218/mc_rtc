@@ -1,0 +1,11 @@
+<span class="text-secondary">array{% if include.minItems != "" and include.minItems == include.maxItems %}[{{ include.minItems}}]{% endif %}</span>&nbsp;
+{% if include.items[0] %}
+  [
+  {% for itm in include.items %}
+    {% capture id %}{{include.id}}{{forloop.index0}}{% endcapture %}
+    {% include json_schema_item.html data=itm id=id %}{% unless forloop.last %},{% endunless %}
+  {% endfor %}
+  ]
+{% else %}
+  {% include json_schema_item.html data=include.items id=include.id %}
+{% endif %}

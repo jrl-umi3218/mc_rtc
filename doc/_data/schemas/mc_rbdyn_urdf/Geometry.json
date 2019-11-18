@@ -1,0 +1,18 @@
+{
+  "title": "mc_rbdyn_urdf::Geometry",
+  "description": "Only one of the possible entries",
+  "type": "object",
+  "properties":
+  {
+    "box" : { "$ref": "/../../mc_rbdyn_urdf/Geometry.Box.json" },
+    "cylinder": { "$ref": "/../../mc_rbdyn_urdf/Geometry.Cylinder.json" },
+    "mesh": { "$ref": "/../../mc_rbdyn_urdf/Geometry.Mesh.json" },
+    "sphere": { "$ref": "/../../mc_rbdyn_urdf/Geometry.Sphere.json" }
+  },
+  "oneOf": [
+    { "required": ["box"] },
+    { "required": ["cylinder"] },
+    { "required": ["mesh"] },
+    { "required": ["sphere"] }
+  ]
+}

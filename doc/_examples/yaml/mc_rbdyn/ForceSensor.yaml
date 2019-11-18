@@ -1,0 +1,7 @@
+name: RightFootForceSensor
+parentBody: r_foot
+X_p_f:
+  rotation: [1.0, 0.0, 0.0,
+             0.0, 1.0, 0.0,
+             0.0, 0.0, 1.0]
+  translation: [0.0, 0.0, 0.0]

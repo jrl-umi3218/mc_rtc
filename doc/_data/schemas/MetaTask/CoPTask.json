@@ -1,0 +1,32 @@
+{
+  "title": "mc_tasks::CoPTask",
+  "type": "object",
+  "properties":
+  {
+    "type": { "enum": ["cop"], "type": "string" },
+    "name": { "type": "string" },
+    "robotIndex": { "type": "integer", "minimum": 0 },
+    "surface": { "type": "string" },
+
+    "admittance": { "$ref": "/../../SpaceVecAlg/ForceVecd.json" },
+    "cop": { "$ref": "/../../Eigen/Vector2d.json" },
+    "force": { "$ref": "/../../Eigen/Vector3d.json" },
+    "targetPose":
+    {
+      "description": "Ignored if targetSurface is specified",
+      "$ref": "/../../SpaceVecAlg/PTransformd.json"
+    },
+    "targetSurface":
+    {
+      "$ref" : "/../../common/targetSurface.json"
+    },
+
+    "stiffness": { "type": "number", "minimum": 0},
+    "damping": { "type": "number", "minimum": 0},
+    "weight": { "type": "number", "minimum": 0},
+    "dimWeight": { "$ref": "/../../Eigen/Vector6d.json" },
+    "activeJoints": { "type": "array", "items": { "type": "string" } },
+    "unactiveJoints": { "type": "array", "items": { "type": "string" } }
+  },
+  "required": ["type", "robotIndex", "surface"]
+}

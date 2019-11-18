@@ -1,0 +1,10 @@
+name: visual
+origin:
+  rotation: [1.0, 0.0, 0.0,
+             0.0, 1.0, 0.0,
+             0.0, 0.0, 1.0]
+  translation: [0.0, 0.0, 0.0]
+geometry:
+  cylinder:
+    radius: 0.5
+    length: 1.0

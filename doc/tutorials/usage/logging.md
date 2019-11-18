@@ -1,0 +1,82 @@
+---
+layout: tutorials
+---
+
+File logging is enabled/disable through the [global
+configuration]({{site.baseurl}}/tutorials/introduction/configuration.html). However, a controller implementation does
+not need to worry about the logging options and will go through a single
+interface for all file logging operations. Each controller instance uses a
+separate log and each time a controller switch happens, a new log is created.
+For convenience purpose, on platforms that support symbolic links, a `latest`
+log file is created pointing to the latest created log.
+
+By default, the following information are logged by all controllers:
+- Iteration time (starting from 0, increasing by the configured timestep)
+- Encoder values for the main robot (stored in the robot's reference joint order)
+- Free-flyer orientation (as a quaternion) and position for the main robot (controller reference)
+- Joint command for the main robot (controller reference, stored in the robot's reference joint order)
+- Joint torques (stored in the robot's reference joint order)
+- Force sensors readings (stored as torque,force)
+- Sensor free-flyer position (provided by some interface only)
+- Sensor orientation (RPY)
+- Sensor free-flyer linear velocity (provided by some interface only)
+- Sensor angular velocity
+- Sensor acceleration
+
+### Add logging entries
+
+Add log entries in your controller's code:
+
+```cpp
+logger().addLogEntry("entry_name", [this]() { /* compute, say x; */ return x; });
+```
+
+The provided callback will run after your controller `run()` method.
+
+You can log most types that your controller could manipulate as-is (e.g. `sva::PTransformd` or `sva::ForceVecd`) and strings. You can also logs vectors of these types.
+
+Normally, an `addLogEntry` call should have a corresponding `removeLogEntry` call, e.g.:
+
+```cpp
+logger().removeLogEntry("entry_name");
+```
+
+#### Python interface
+
+The Python interface is very similar:
+
+```python
+# Add a log entry
+self.logger().addLogEntry("my_entry", lambda: self.data)
+# Remove data
+self.logger().removeLogEntry("my_entry")
+# Using partial to invoke a controller method
+self.logger().addLogEntry("my_entry", partial(self.get_data))
+```
+
+#### Performance concern
+
+By default, lambda expressions return by value. When possible, you might want to return a const reference to the object you are saving:
+
+```cpp
+logger().addLogEntry("entry", [this]() -> const sva::PTransformd & { return trans_; }
+```
+
+### Getting the log
+
+Your controller will show the following message telling you what the latest log
+is, the message should look like the following:
+
+```console
+Will log controller outputs to "/tmp/mc-control-MyControllerName-DATE.bin"
+```
+
+On systems that support symbolic links, it will also be available as `/tmp/mc-control-MyControllerName-latest.bin`
+
+### Working with the log
+
+See the following pages for tools that work with the log your controller generates:
+
+- {% include link_tutorial.html category="tools" tutorial="mc_log_utils" %}
+- {% include link_tutorial.html category="tools" tutorial="mc_log_ui" %}
+- {% include link_tutorial.html category="tools" tutorial="mc_log_visualization" %}

@@ -1,0 +1,21 @@
+{% assign OLD_REF = REF %}
+{% assign OLD_ID = ID %}
+{% assign OLD_HAS_DESC = HAS_DESC %}
+{% assign OLD_DESC = DESC %}
+{% capture INCLUDE_AFTER %}{% endcapture %}
+<table class="table table-borderless table-hover object-property">
+<tbody>
+{% for prop in include.properties %}
+  {% assign REF = prop[1] %}
+  {% include json_schema_object_property.html id=include.id required=include.required pattern=false %}
+{% endfor %}
+{% for prop in include.patternProperties %}
+  {% assign REF = prop[1] %}
+  {% include json_schema_object_property.html id=include.id required=include.required pattern=true %}
+{% endfor %}
+</tbody>
+</table>
+{% assign REF = OLD_REF %}
+{% assign ID = OLD_ID %}
+{% assign DESC = OLD_DESC %}
+{% assign HAS_DESC = OLD_HAS_DESC %}

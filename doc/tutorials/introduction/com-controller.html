@@ -1,0 +1,157 @@
+---
+layout: tutorials
+add_contact_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      // In the constructor
+      solver().setContacts({
+        {robots(), 0, 1, "LeftFoot", "AllGround"},
+        {robots(), 0, 1, "RightFoot", "AllGround"}
+      });
+  - name: Python
+    lang: python
+    source: |
+      # In the constructor
+      self.qpsolver.setContacts([
+        mc_rbdyn.Contact(self.robots(), 0, 1, "LeftFoot", "AllGround"),
+        mc_rbdyn.Contact(self.robots(), 0, 1, "RightFoot", "AllGround")
+      ])
+create_com_task_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      // Include the CoM task header (header)
+      #include <mc_tasks/CoMTask.h>
+      // In the class private members (header)
+      std::shared_ptr<mc_tasks::CoMTask> comTask;
+      // In the constructor, create the task and add it to the problem
+      comTask = std::make_shared<mc_tasks::CoMTask>(robots(), 0, 10.0, 1000.0);
+      solver().addTask(comTask);
+      // Reduce the posture task stiffness
+      postureTask->stiffness(1);
+      // In the reset function, reset the task to the current CoM
+      comTask->reset();
+  - name: Python
+    lang: python
+    source: |
+      # Import the mc_tasks module
+      import mc_tasks
+      # In the constructor, create the task and add it to the problem
+      self.comTask = mc_tasks.CoMTask(self.robots(), 0, 10.0, 1000.0)
+      self.qpsolver.addTask(self.comTask)
+      # Reduce the posture task stiffness
+      self.postureTask.stiffness(1)
+      # In the reset callback, reset the task to the current CoM
+      self.comTask.reset()
+switch_com_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      void MyFirstController::switch_com_target()
+      {
+        // comZero is obtained by doing:
+        // comZero = comTask->com();
+        // in the reset function
+        if(comDown)
+        {
+          com->com(comZero - Eigen::Vector3d{0, 0, 0.2});
+        }
+        else
+        {
+          com->com(comZero);
+        }
+        comDown = !comDown;
+      }
+  - name: Python
+    lang: python
+    source: |
+      def switch_com_target(self):
+          # self.comZero is obtained by doing:
+          # self.comZero = self.comTask.com()
+          # in the reset function after doing the CoM task reset
+          if self.comDown:
+              self.comTask.com(self.comZero - eigen.Vector3d(0, 0, 0.2))
+          else:
+              self.comTask.com(self.comZero)
+          self.comDown = not self.comDown
+run_sources:
+  - name: C++
+    lang: cpp
+    source: |
+      bool MyFirstController::run()
+      {
+        if(comTask->eval().norm() < 0.01)
+        {
+          switch_com_target();
+        }
+        return mc_control::MCController::run();
+      }
+  - name: Python
+    lang: python
+    source: |
+      def run_callback(self):
+          if self.comTask.eval().norm() < 0.01:
+              self.switch_com_target()
+          return True
+---
+
+<p>The objective of this tutorial is to control the robot's center of mass (CoM). As in the previous tutorial, we will write a function that moves the CoM down 20 centimeters and then moves it back to its original position.</p>
+
+<h3>Contacts</h3>
+
+<p>Before we start moving the CoM we need to consider contacts. In fact, in our previous controller we decided to keep an empty contact set and everything worked well. However, if we were trying to control the CoM now, the robot would simply sink into the ground or float in the air to follow our command. The reason is simply that without contacts, this is a perfect solution to moving the CoM while keeping a minimal posture error.</p>
+
+<p>Therefore, we will add contacts between the robot's feet and the ground:</p>
+
+{% include show_sources.html sources=page.add_contact_sources copy=false id="add_contact" %}
+
+<p><em>Note: see the <a href="{{site.baseurl}}/tutorials/tools/mc_surfaces_visualization.html">tutorial on surfaces visualization</a> to check out how you can "discover" existing surfaces in a robot.</em></p>
+
+<h3>Dynamics constraint</h3>
+
+<p>Until now we have run the controller in kinematics mode. We can switch to dynamics mode, this will enable us to:</p>
+
+<ul>
+  <li>Compute external forces and associated torques;</li>
+  <li>These forces remain in the contact friction cone;</li>
+  <li>The torques remain within the robot's torque limits;</li>
+</ul>
+
+<p>To switch, simply change <code>kinematicsConstraint</code> into <code>dynamicsConstraint</code> in your code. All constraints enabled by <code>kinematicsConstraints</code> are also enabled by <code>dynamicsConstraint</code>.</p>
+
+<h3>Create the CoM task and add it to the problem</h3>
+
+<p>We need to take care of a few things:</p>
+
+<ol>
+  <li>Create the CoM task;</li>
+  <li>Add it to the optimization problem;</li>
+  <li>Make sure its objective is correctly set;</li>
+</ol>
+
+{% include show_sources.html sources=page.create_com_task_sources copy=false id="create_com_task" %}
+
+<p>In that particular example, we can say a few things about the task creation:</p>
+
+<ol>
+  <li>It depends on <code>robots()</code>;</li>
+  <li>It will be applied to the robot with index 0, this is always the main robot loaded by mc_rtc;</li>
+  <li>It is attracted to the objective with a stiffness of <code>10.0</code>; this parameter governs the strength of the "spring" that pulls the robot towards the objective;</li>
+  <li>It is associated a weight of <code>1000</code>; this weight is the priority of the task in the optimization problem. In our case, the default posture weight is <code>5.0</code>, thus the CoM task will have high priority. Please note that task errors are not normalized, and thus weights have to be tuned accordingly;</li>
+  <li>The posture task stiffness is decreased to make sure it doens't interfere with the CoM task;</li>
+</ol>
+
+<h3>Moving the CoM up and down</h3>
+
+<p>We will implement a method similar to the previous tutorial, using a <code>switch_com_target()</code> function. We will assume we have added a <code>comDown</code> boolean and a <code>comZero</code> which is an <code>Eigen::Vector3d</code> representing the initial CoM position.</p>
+
+{% include show_sources.html sources=page.switch_com_sources copy=false id="switch_com" %}
+
+<p>Finally, we will monitor the CoM task error to trigger target changes:</p>
+
+{% include show_sources.html sources=page.run_sources copy=false id="run" %}
+
+<p>Et voil&agrave;! You can run this controller and see that the robot is moving down and up. In the next tutorial we will see how to move an end-effector and to load the task configuration from the disk.</p>
+
+<p>The full sources for this controller are available <a href="sources/com-controller.html">here</a>.</p>

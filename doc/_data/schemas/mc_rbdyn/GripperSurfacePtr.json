@@ -1,0 +1,17 @@
+{
+  "title": "mc_rbdyn::GripperSurfacePtr",
+  "type": "object",
+  "properties":
+  {
+    "type": { "enum": ["gripper"] },
+    "name": { "type": "string" },
+    "bodyName": { "type": "string" },
+    "X_b_s": { "$ref": "/../../SpaceVecAlg/PTransformd.json" },
+    "materialName": { "type": "string" },
+    "pointsFromOrigin": { "type": "array", "items": { "$ref": "/../../SpaceVecAlg/PTransformd.json" } },
+    "X_b_motor": { "$ref": "/../../SpaceVecAlg/PTransformd.json" },
+    "motorMaxTorque": { "type": "number" }
+  },
+  "required": ["type", "name", "bodyName", "X_b_s", "materialName", "pointsFromOrigin", "X_b_motor", "motorMaxTorque"],
+  "additionalProperties": false
+}

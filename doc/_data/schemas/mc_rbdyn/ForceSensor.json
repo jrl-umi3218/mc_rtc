@@ -1,0 +1,12 @@
+{
+  "title": "mc_rbdyn::ForceSensor",
+  "type": "object",
+  "properties":
+  {
+    "name": { "type": "string" },
+    "parentBody": { "type": "string" },
+    "X_p_f": { "$ref": "/../../SpaceVecAlg/PTransformd.json" }
+  },
+  "required": ["name", "parentBody", "X_p_f"],
+  "additionalProperties": false
+}

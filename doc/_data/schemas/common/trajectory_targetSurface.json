@@ -1,0 +1,29 @@
+{
+  "title": "Target surface specification",
+  "type": "object",
+  "properties":
+  {
+    "robotIndex" : { "type": "integer", "minimum": 0 },
+    "surface" : { "type": "string" },
+    "offset_translation": { "$ref": "/../../Eigen/Vector3d.json" },
+    "offset_rotation": { "$ref": "/../../Eigen/Matrix3d.json" },
+    "controlPoints": { "type": "array", "items": { "$ref": "/../../Eigen/Vector3d.json" } },
+    "oriWaypoints":
+    {
+      "type": "array",
+      "description": "List of pair of time point and orientation relative to the surface",
+      "items":
+      [
+        {
+          "type": "number"
+        },
+        {
+          "$ref": "/../../Eigen/Matrix3d.json"
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    }
+  },
+  "required": ["robotIndex", "surface"]
+}

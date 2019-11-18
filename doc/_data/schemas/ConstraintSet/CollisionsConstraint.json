@@ -1,0 +1,32 @@
+{
+  "title": "mc_solver::CollisionsConstraint",
+  "type": "object",
+  "properties":
+  {
+    "type": { "enum": ["collision"], "type": "string" },
+    "r1Index": { "type": "number", "minimum": 0 },
+    "r2Index": { "type": "number", "minimum": 0 },
+    "useCommon":
+    {
+      "type": "boolean",
+      "default": false,
+      "description": "If true and r1Index == r2Index, add the common self-collisions set"
+    },
+    "useMinimal":
+    {
+      "type": "boolean",
+      "default": false,
+      "description": "If true and r1Index == r2Index, add the minimal self-collisions set"
+    },
+    "collisions":
+    {
+      "type": "array",
+      "description": "List of collisions in the constraint",
+      "items":
+      {
+        "$ref": "/../../mc_rbdyn/Collision.json"
+      }
+    }
+  },
+  "required": ["type", "r1Index", "r2Index"]
+}

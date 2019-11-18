@@ -1,0 +1,93 @@
+bodies:
+- name: b0
+  inertia:
+    mass: 0
+    momentum:
+    - 0
+    - 0
+    - 0
+    inertia:
+    - 1
+    - 0
+    - 0
+    - 0
+    - 1
+    - 0
+    - 0
+    - 0
+    - 1
+- name: b1
+  inertia:
+    mass: 0
+    momentum:
+    - 0
+    - 0
+    - 0
+    inertia:
+    - 1
+    - 0
+    - 0
+    - 0
+    - 1
+    - 0
+    - 0
+    - 0
+    - 1
+joints:
+- type:
+    type: fixed
+  axis:
+  - 0
+  - 0
+  - 1
+  forward: true
+  isMimic: false
+  name: Root
+- type:
+    type: rev
+  axis:
+  - 0
+  - 0
+  - 1
+  forward: true
+  isMimic: false
+  name: j0
+preds:
+- -1
+- 0
+succs:
+- 0
+- 1
+parents:
+- -1
+- 0
+transforms:
+- translation:
+  - 0
+  - 0
+  - 0
+  rotation:
+  - 1
+  - 0
+  - 0
+  - 0
+  - 1
+  - 0
+  - 0
+  - 0
+  - 1
+- translation:
+  - 0
+  - 0
+  - 0
+  rotation:
+  - 1
+  - 0
+  - 0
+  - 0
+  - 1
+  - 0
+  - 0
+  - 0
+  - 1
+

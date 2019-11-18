@@ -1,0 +1,76 @@
+---
+layout: default
+---
+
+<div class="row">
+  <div class="col offset-md-1 col-md-3">
+    <div class="list-group list-group-root well">
+    {% for cat in page.menu %}
+      {% assign category = cat[0] %}
+      <a id="{{category}}_link" href="#{{ cat[0] }}-objects" class="list-group-item list-group-item-category collapsed" data-toggle="collapse" role="button">
+        <span class="chevron-right">{% octicon chevron-right %}</span>
+        <span class="chevron-down" style="display:none;">{% octicon chevron-down %}</span>
+        {{ cat[0] }} objects
+      </a>
+      <div class="collapse" id="{{ cat[0] }}-objects">
+        <div class="list-group">
+          {% assign sorted_objects = cat[1] | sort %}
+          {% for obj in sorted_objects %}
+            {% assign name = obj[0] %}
+            {% capture id %}collapse_{{category}}_{{name}}{% endcapture %}
+            <a id="{{category}}_{{name}}_link" href="#{{id}}" class="list-group-item list-group-item-schema" data-toggle="collapse" role="button" aria-expanded="false" data-permalink="{{cat[0]}}/{{obj[0]}}" aria-controls="{{id}}">{{obj[1].display}}</a>
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+  </div>
+  <div class="col">
+    {% for cat in page.all_schemas %}
+      {% for obj in cat[1] %}
+        {% assign schema = obj[1].schema %}
+        {% assign example = obj[1].example %}
+        {% assign category = cat[0] %}
+        {% assign name = obj[0] %}
+        {% capture id %}{{category}}_{{name}}{% endcapture %}
+        {% include json_schema_with_examples.html schema=schema example_sources=example id=id %}
+      {% endfor %}
+    {% endfor %}
+  </div>
+  <div class="col-md-1 col-0"></div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function()
+{
+  $('.collapseSchema').collapse('hide');
+
+  var param=window.location.hash.substring(1);
+  if(param.length)
+  {
+    var category = param.split('/')[0];
+    var name = param.split('/')[1];
+    $('#collapse_' + category + '_' + name).collapse('show');
+    $('.chevron-down', $('#' + category + '_link')).toggle();
+    $('.chevron-right', $('#' + category + '_link')).toggle();
+    $('#' + category + '_' + name + '_link').toggleClass('active', true);
+    $('#' + category + '-objects').collapse();
+  }
+
+  $('.list-group-item-category').on('click', function() {
+            var $this = $(this);
+            $('.chevron-down', this).toggle();
+            $('.chevron-right', this).toggle();
+  });
+
+  $('.list-group-item-schema').on('click', function() {
+            var $this = $(this);
+            $('.collapseSchema').collapse('hide');
+            $('.list-group-item-schema').toggleClass('active', false);
+            $this.toggleClass('active', true);
+            window.location.hash = $this.data("permalink");
+  });
+
+  new ClipboardJS('.copy-button');
+});
+</script>
