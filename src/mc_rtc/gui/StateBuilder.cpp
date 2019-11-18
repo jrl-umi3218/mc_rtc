@@ -4,7 +4,7 @@
 
 #include <mc_rtc/gui/StateBuilder.h>
 
-#include <mc_rtc/gui/plot/options.h>
+#include <mc_rtc/gui/plot/types.h>
 
 namespace mc_rtc
 {

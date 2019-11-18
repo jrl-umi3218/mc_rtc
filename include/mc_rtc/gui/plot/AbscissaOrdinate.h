@@ -5,7 +5,7 @@
 #pragma once
 
 #include <mc_rtc/gui/details/traits.h>
-#include <mc_rtc/gui/plot/options.h>
+#include <mc_rtc/gui/plot/types.h>
 
 namespace mc_rtc
 {

@@ -7,7 +7,7 @@
 #include <mc_control/client_api.h>
 
 #include <mc_rtc/Configuration.h>
-#include <mc_rtc/gui/plot/options.h>
+#include <mc_rtc/gui/plot/types.h>
 #include <mc_rtc/gui/types.h>
 
 #include <nanomsg/nn.h>
