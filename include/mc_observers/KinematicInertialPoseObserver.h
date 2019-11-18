@@ -1,7 +1,7 @@
 /*
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  *
- * This file is  inspired by Stephane's Caron implementation as part of
+ * This file is inspired by Stephane's Caron implementation as part of
  * lipm_walking_controller <https://github.com/stephane-caron/lipm_walking_controller>
  */
 

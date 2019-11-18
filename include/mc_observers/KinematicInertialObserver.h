@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <mc_observers/LowPassVelocityFilter.h>
 #include <mc_observers/api.h>
+#include <mc_signal/LowPassVelocityFilter.h>
 
 #include "KinematicInertialPoseObserver.h"
 
