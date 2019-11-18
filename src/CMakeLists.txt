@@ -292,6 +292,7 @@ mc_tasks/LookAtTask.cpp
 mc_tasks/LookAtSurfaceTask.cpp
 mc_tasks/MetaTaskLoader.cpp
 mc_tasks/stabilizer/LIPMStabilizerTask.cpp
+mc_tasks/stabilizer/Pendulum.cpp
 )
 
 set(mc_tasks_HDR

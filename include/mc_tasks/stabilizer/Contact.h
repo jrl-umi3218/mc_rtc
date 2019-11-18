@@ -15,7 +15,9 @@
 
 #include <cmath>
 
-namespace lipm_walking
+namespace mc_tasks
+{
+namespace stabilizer
 {
 using HrepXd = std::pair<Eigen::MatrixXd, Eigen::VectorXd>;
 
@@ -312,16 +314,17 @@ inline Contact operator*(const sva::PTransformd & X, const Contact & contact)
   result.pose = X * contact.pose;
   return result;
 }
-} // namespace lipm_walking
+} // namespace stabilizer
+} // namespace mc_tasks
 
 namespace mc_rtc
 {
 template<>
-struct ConfigurationLoader<lipm_walking::Contact>
+struct ConfigurationLoader<mc_tasks::stabilizer::Contact>
 {
-  static lipm_walking::Contact load(const mc_rtc::Configuration & config)
+  static mc_tasks::stabilizer::Contact load(const mc_rtc::Configuration & config)
   {
-    lipm_walking::Contact contact;
+    mc_tasks::stabilizer::Contact contact;
     contact.pose = config("pose");
     config("half_length", contact.halfLength);
     config("half_width", contact.halfWidth);
@@ -334,7 +337,7 @@ struct ConfigurationLoader<lipm_walking::Contact>
     return contact;
   }
 
-  static mc_rtc::Configuration save(const lipm_walking::Contact & contact)
+  static mc_rtc::Configuration save(const mc_tasks::stabilizer::Contact & contact)
   {
     mc_rtc::Configuration config;
     config.add("half_length", contact.halfLength);
