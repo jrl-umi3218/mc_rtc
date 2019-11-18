@@ -113,6 +113,8 @@ build_with_script:
 
 pages:
   stage: pages
+  only:
+    - master
   before_script:
     - git submodule update --quiet --init --recursive
     # In Docker dpkg is setup to remove all documentation :-D
