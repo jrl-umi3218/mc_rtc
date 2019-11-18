@@ -498,7 +498,7 @@ int convert(int argc, char * argv[])
   }
   else if(format == ".csv" || format == ".log")
   {
-    mc_bin_to_flat(in, out_p.string());
+    mc_bin_to_log(in, out_p.string());
   }
   else if(format == ".bag")
   {

@@ -37,6 +37,6 @@ int main(int argc, char * argv[])
     }
     LOG_INFO("Output converted log to " << out)
   }
-  mc_bin_to_log(argv[1], argv[2]);
+  mc_bin_to_log(in, out);
   return 0;
 }
