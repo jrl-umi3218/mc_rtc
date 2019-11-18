@@ -106,8 +106,8 @@ enum class MC_RTC_GUI_DLLAPI Style
   Dotted,
   /** Dashed lines */
   Dashed,
-  /** Point display */
-  Scatter
+  /** Point display: display a single value */
+  Point
 };
 
 /** Which side an ordinate should be attached to (default: Left) */

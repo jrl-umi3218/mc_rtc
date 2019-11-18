@@ -345,7 +345,7 @@ TestServer::TestServer() : xythetaz_(4)
         mc_rtc::gui::plot::Y("Dashed", [this]() { return 2 - std::cos(t_); }, Color(0.0, 0.0, 1.0), Style::Dashed),
         mc_rtc::gui::plot::Y("Dotted", [this]() { return std::sin(t_); }, Color(0.0, 1.0, 0.0), Style::Dotted,
                              Side::Right),
-        mc_rtc::gui::plot::Y("Scatter", [this]() { return 2 - std::sin(t_); }, Color(1.0, 0.0, 1.0), Style::Scatter,
+        mc_rtc::gui::plot::Y("Point", [this]() { return 2 - std::sin(t_); }, Color(1.0, 0.0, 1.0), Style::Point,
                              Side::Right));
   };
   add_demo_plot("Demo style", demo_style_plot);
