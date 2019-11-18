@@ -17,16 +17,16 @@ title: Robots
 
 {% for bot in site.data.robots %}
   <div class="media features">
-    <img class="mr-3 rounded-circle" src="{{site.baseurl}}/assets/robots/{{bot.icon}}" alt="{{bot.name}}" width="75" height="75"/>
+    <img class="mr-3 img-fluid rounded-circle" src="{{site.baseurl}}/assets/robots/{{bot.icon}}" alt="{{bot.name}}" width="75" height="75"/>
     <div class="media-body">
       <h5 class="mt-0">{{bot.name}}</h5>
       <dl class="row">
         <dt class="col">Description</dt>
-        <dd class="col-9"><a href="{{bot.pkg.desc}}" target="blank_">{% octicon globe %} {{bot.pkg.desc}}</a></dd>
+        <dd class="col-9"><a href="{{bot.pkg.desc.url}}" target="blank_">{% octicon globe %} <span class="d-none d-sm-inline">{{bot.pkg.desc.name}}</span><span class="d-inline d-sm-none">Link</span></a></dd>
       </dl>
       <dl class="row">
         <dt class="col">Module</dt>
-        <dd class="col-9"><a href="{{bot.pkg.module}}" target="blank_">{% octicon globe %} {{bot.pkg.module}}</a></dd>
+        <dd class="col-9"><a href="{{bot.pkg.module.url}}" target="blank_">{% octicon globe %} <span class="d-none d-sm-inline">{{bot.pkg.module.name}}</span><span class="d-inline d-sm-none">Link</span></a></dd>
       </dl>
     </div>
   </div>
