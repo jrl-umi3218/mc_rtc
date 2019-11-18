@@ -2,9 +2,9 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <mc_observers/LowPassVelocityFilter.h>
+#include <mc_signal/LowPassVelocityFilter.h>
 
-namespace mc_observers
+namespace mc_signal
 {
 /** Low-pass velocity filter from series of position measurements.
  *
@@ -71,4 +71,4 @@ struct LowPassFiniteDifferencesVelocityFilter : public LowPassVelocityFilter<T>
 private:
   T pos_;
 };
-} // namespace mc_observers
+} // namespace mc_signal

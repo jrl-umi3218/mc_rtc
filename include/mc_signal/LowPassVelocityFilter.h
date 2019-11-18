@@ -7,13 +7,13 @@
 
 #pragma once
 
-namespace mc_observers
+namespace mc_signal
 {
 
 /** Low-pass velocity filter from series of velocity measurements.
  *
  * Expects T to have:
- * - T::Zero() static method
+ * - T::Zero() static method (e.g Eigen::Vector3d, etc)
  */
 template<typename T>
 struct LowPassVelocityFilter
@@ -85,4 +85,4 @@ protected:
   double dt_ = 0.005; // [s]
 };
 
-} // namespace mc_observers
+} // namespace mc_signal

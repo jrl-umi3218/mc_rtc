@@ -333,6 +333,9 @@ install_mc_rtc_lib(mc_tasks)
 set(mc_signal_HDR
 ../include/mc_signal/LowPassVelocityFilter.h
 ../include/mc_signal/LowPassFiniteDifferencesVelocityFilter.h
+../include/mc_signal/ExponentialMovingAverage.h
+../include/mc_signal/LeakyIntegrator.h
+../include/mc_signal/StationaryOffsetFilter.h
 )
 
 # header-only
