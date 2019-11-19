@@ -238,6 +238,27 @@ public:
    */
   void updateState(const Eigen::Vector3d & com, const Eigen::Vector3d & comd, double leftFootRatio);
 
+  /**
+   * @brief Access the left foot ratio parameter
+   *
+   * @return Left foot ratio
+   */
+  double leftFootRatio() const
+  {
+    return leftFootRatio_;
+  }
+
+  /**
+   * @brief computes the anchorFrame compatible with the state observers
+   * (KinematicInertial)
+   *
+   * @return Anchor frame in-between the feet according to leftFootRatio()
+   */
+  sva::PTransformd anchorFrame() const
+  {
+    return sva::interpolate(leftFootTask->surfacePose(), rightFootTask->surfacePose(), leftFootRatio_);
+  }
+
   /** Update H-representation of contact wrench cones.
    *
    * \param sole Sole parameters.
