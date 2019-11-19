@@ -129,7 +129,7 @@ void StateBuilder::addXYPlot(const std::string & name,
                              T data,
                              Args... args)
 {
-  // XXX Should check that T is an impl::Abscissa<Something> and that Args are not
+  static_assert(plot::is_2d<T, Args...>(), "All provided plots in an XY plot must provide 2d data");
   if(plots_.count(name) != 0)
   {
     LOG_ERROR("A plot titled " << name << " is still active")
@@ -172,7 +172,8 @@ void StateBuilder::addPlot(const std::string & name,
                            plot::AxisConfiguration yRightConfig,
                            Args... args)
 {
-  // XXX Should check that T is an impl::Abscissa<Something> and that Args are not
+  static_assert(plot::is_Abscissa<T>(), "You must provide an Abscissa instance first");
+  static_assert(plot::is_not_Abscissa<Args...>(), "Only one Abscissa can be provided to addPlot");
   if(plots_.count(name) != 0)
   {
     LOG_ERROR("A plot titled " << name << " is still active")

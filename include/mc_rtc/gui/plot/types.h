@@ -41,6 +41,36 @@ enum class Type
   AbscissaOrdinate
 };
 
+template<typename T>
+constexpr bool is_Abscissa()
+{
+  return T::type == Type::Abscissa;
+}
+
+template<typename T>
+constexpr bool is_not_Abscissa()
+{
+  return T::type != Type::Abscissa;
+}
+
+template<typename T, typename T2, typename... Args>
+constexpr bool is_not_Abscissa()
+{
+  return is_not_Abscissa<T>() && is_not_Abscissa<T2, Args...>();
+}
+
+template<typename T>
+constexpr bool is_2d()
+{
+  return T::type != Type::Abscissa && T::type != Type::Ordinate;
+}
+
+template<typename T, typename T2, typename... Args>
+constexpr bool is_2d()
+{
+  return is_2d<T>() && is_2d<T2, Args...>();
+}
+
 /** Range for abscissa or ordinate display
  *
  * Setting the min to -inf or max to +inf tells the client to compute the
