@@ -12,6 +12,17 @@ namespace mc_rtc
 namespace gui
 {
 
+const Color Color::White = Color(1, 1, 1, 1);
+const Color Color::Black = Color(0, 0, 0, 1);
+const Color Color::Red = Color(1, 0, 0, 1);
+const Color Color::Green = Color(0, 1, 0, 1);
+const Color Color::Blue = Color(0, 0, 1, 1);
+const Color Color::Cyan = Color(0, 1, 1, 1);
+const Color Color::Magenta = Color(1, 0, 1, 1);
+const Color Color::Yellow = Color(1, 1, 0, 1);
+const Color Color::Gray = Color(0.6, 0.6, 0.6, 1);
+const Color Color::LightGray = Color(0.75, 0.75, 0.75, 1);
+
 namespace plot
 {
 

@@ -63,6 +63,17 @@ struct MC_RTC_GUI_DLLAPI Color
     builder.write(a);
     builder.finish_array();
   }
+
+  static const Color White;
+  static const Color Black;
+  static const Color Red;
+  static const Color Green;
+  static const Color Blue;
+  static const Color Cyan;
+  static const Color Magenta;
+  static const Color Yellow;
+  static const Color Gray;
+  static const Color LightGray;
 };
 
 enum class LineStyle
