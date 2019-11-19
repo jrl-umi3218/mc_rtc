@@ -29,6 +29,8 @@ namespace mc_signal
 template<typename VectorT>
 struct LeakyIntegrator
 {
+  LeakyIntegrator() : integral_(VectorT::Zero()), rate_(0.1), saturation_(-1.) {}
+
   /** Add constant input for a fixed duration.
    *
    * \param value Constant input.
@@ -106,8 +108,8 @@ private:
   }
 
 private:
-  VectorT integral_ = VectorT::Zero();
-  double rate_ = 0.1;
-  double saturation_ = -1.;
+  VectorT integral_;
+  double rate_;
+  double saturation_;
 };
 } // namespace mc_signal
