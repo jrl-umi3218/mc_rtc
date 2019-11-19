@@ -33,6 +33,7 @@ constexpr double LIPMStabilizerTask::MAX_FDC_RY_VEL;
 constexpr double LIPMStabilizerTask::MAX_FDC_RZ_VEL;
 constexpr double LIPMStabilizerTask::MAX_ZMPCC_COM_OFFSET;
 constexpr double LIPMStabilizerTask::MIN_DS_PRESSURE;
+constexpr double LIPMStabilizerTask::MIN_NET_TOTAL_FORCE_ZMP;
 
 namespace
 {
@@ -179,6 +180,9 @@ void LIPMStabilizerTask::removeFromSolver(mc_solver::QPSolver & solver)
 
 void LIPMStabilizerTask::update()
 {
+  // Run stabilizer
+  run();
+
   MetaTask::update(*comTask);
   MetaTask::update(*leftFootTask);
   MetaTask::update(*rightFootTask);
@@ -564,23 +568,12 @@ void LIPMStabilizerTask::updateZMPFrame()
       zmpFrame_ = X_0_rc;
       break;
   }
-  measuredZMP_ = computeZMP(measuredWrench_);
+  measuredZMP_ = computeZMP(robots_.robot(robotIndex_).netWrench(sensorNames_)); // computeZMP
 }
 
 Eigen::Vector3d LIPMStabilizerTask::computeZMP(const sva::ForceVecd & wrench) const
 {
-  Eigen::Vector3d n = zmpFrame_.rotation().row(2);
-  Eigen::Vector3d p = zmpFrame_.translation();
-  const Eigen::Vector3d & force = wrench.force();
-  double pressure = n.dot(force);
-  if(pressure < 1.)
-  {
-    double lambda = std::pow(pendulum_.omega(), 2);
-    return measuredCoM_ + gravity_ / lambda; // default for logging
-  }
-  const Eigen::Vector3d & moment_0 = wrench.couple();
-  Eigen::Vector3d moment_p = moment_0 - p.cross(force);
-  return p + n.cross(moment_p) / pressure;
+  return robots_.robot(robotIndex_).zmp(wrench, zmpFrame_, MIN_NET_TOTAL_FORCE_ZMP);
 }
 
 void LIPMStabilizerTask::run()
@@ -618,15 +611,11 @@ void LIPMStabilizerTask::run()
   runTime_ = 1000. * duration_cast<duration<double>>(endTime - startTime).count();
 }
 
-void LIPMStabilizerTask::updateState(const Eigen::Vector3d & com,
-                                     const Eigen::Vector3d & comd,
-                                     const sva::ForceVecd & wrench,
-                                     double leftFootRatio)
+void LIPMStabilizerTask::updateState(const Eigen::Vector3d & com, const Eigen::Vector3d & comd, double leftFootRatio)
 {
   leftFootRatio_ = leftFootRatio;
   measuredCoM_ = com;
   measuredCoMd_ = comd;
-  measuredWrench_ = wrench;
 }
 
 sva::ForceVecd LIPMStabilizerTask::computeDesiredWrench()

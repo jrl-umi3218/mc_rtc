@@ -69,6 +69,8 @@ struct MC_TASKS_DLLAPI LIPMStabilizerTask : public MetaTask
   static constexpr double MAX_ZMPCC_COM_OFFSET = 0.05; /**< Maximum CoM offset due to admittance control in [m] */
   static constexpr double MIN_DS_PRESSURE = 15.; /**< Minimum normal contact force in DSP, used to avoid low-pressure
                                                     targets when close to contact switches. */
+  /**< Minimum force for valid ZMP computation (throws otherwise) */
+  static constexpr double MIN_NET_TOTAL_FORCE_ZMP = 1.;
 
 public:
   LIPMStabilizerTask(const mc_rbdyn::Robots & robots,
@@ -231,15 +233,10 @@ public:
    *
    * \param comd Velocity of the center of mass.
    *
-   * \param wrench Net contact wrench in the inertial frame.
-   *
    * \param leftFootRatio Desired pressure distribution ratio for left foot.
    *
    */
-  void updateState(const Eigen::Vector3d & com,
-                   const Eigen::Vector3d & comd,
-                   const sva::ForceVecd & wrench,
-                   double leftFootRatio);
+  void updateState(const Eigen::Vector3d & com, const Eigen::Vector3d & comd, double leftFootRatio);
 
   /** Update H-representation of contact wrench cones.
    *
@@ -444,7 +441,13 @@ protected:
   mc_rtc::Configuration config_; /**< Stabilizer configuration dictionary */
   std::vector<std::string> comActiveJoints_; /**< Joints used by CoM IK task */
   sva::ForceVecd distribWrench_ = sva::ForceVecd::Zero();
-  sva::ForceVecd measuredWrench_; /**< Net contact wrench measured from sensors */
+  // XXX removed wrt to Stephane's version. Was only used to compute the ZMP, we
+  // use Robot::zmp instead
+  // sva::ForceVecd measuredWrench_; /**< Net contact wrench measured from sensors */
+
+  // XXX should be the sensors in contact only (same issue in stephane's code),
+  // otherwise while walking we're sensible to swing foot sensor noise
+  std::vector<std::string> sensorNames_ = {"LeftFootForceSensor", "RightFootForceSensor"};
   sva::MotionVecd contactDamping_;
   sva::MotionVecd contactStiffness_;
   sva::PTransformd zmpFrame_;
