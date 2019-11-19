@@ -121,13 +121,6 @@ public:
    */
   void addGUIElements(std::shared_ptr<mc_rtc::gui::StateBuilder> gui);
 
-  /** Log stabilizer entries.
-   *
-   * \param logger Logger.
-   *
-   */
-  void addLogEntries(mc_rtc::Logger & logger);
-
   /** Add tasks to QP solver.
    *
    * \param solver QP solver to add tasks to.
@@ -381,10 +374,15 @@ protected:
   void addToSolver(mc_solver::QPSolver & solver) override;
   void removeFromSolver(mc_solver::QPSolver & solver) override;
   void update() override;
+
+  /** Log stabilizer entries.
+   *
+   * \param logger Logger.
+   *
+   */
   void addToLogger(mc_rtc::Logger &) override;
   void removeFromLogger(mc_rtc::Logger &) override;
   void addToGUI(mc_rtc::gui::StateBuilder &) override;
-  void removeFromGUI(mc_rtc::gui::StateBuilder &) override;
 
 protected:
   Contact leftFootContact;
@@ -423,7 +421,8 @@ protected:
   mc_signal::StationaryOffsetFilter<Eigen::Vector3d> dcmDerivator_;
   bool inTheAir_ = false; /**< Is the robot in the air? */
   bool zmpccOnlyDS_ = true; /**< Apply CoM admittance control only in double support? */
-  const Pendulum & pendulum_; /**< Reference to desired reduced-model state */
+  // XXX Modified from Stephane's version
+  Pendulum pendulum_; /**< Reference to desired reduced-model state */
   double comWeight_ = 1000.; /**< Weight of CoM IK task */
   double contactWeight_ = 100000.; /**< Weight of contact IK tasks */
   double dcmDerivGain_ = 0.; /**< Derivative gain on DCM error */

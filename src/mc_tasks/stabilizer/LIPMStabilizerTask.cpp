@@ -55,28 +55,65 @@ LIPMStabilizerTask::LIPMStabilizerTask(const mc_rbdyn::Robots & robots,
 : robots_(robots), robotIndex_(robotIndex), dcmIntegrator_(dt, /* timeConstant = */ 5.),
   dcmDerivator_(dt, /* timeConstant = */ 1.), pendulum_(pendulum), dt_(dt), mass_(robots.robot(robotIndex).mass())
 {
-  type_ = "lipm_stabilizer";
-  name_ = "lipm_stabilizer";
+  type_ = "Stabilizer";
+  name_ = "Stabilizer";
 
-  gravity_ = robots.robot(robotIndex).mbc().gravity;
+  gravity_ = robots.robot(robotIndex_).mbc().gravity;
   vertical_ = gravity_ / gravity_.norm();
 
-  comTask.reset(new mc_tasks::CoMTask(robots, robotIndex));
+  comTask.reset(new mc_tasks::CoMTask(robots, robotIndex_));
   comTask->selectActiveJoints(comActiveJoints_);
   comTask->setGains(comStiffness_, 2 * comStiffness_.cwiseSqrt());
   comTask->weight(comWeight_);
 
-  leftFootTask.reset(new mc_tasks::force::CoPTask("LeftFootCenter", robots, robotIndex));
-  rightFootTask.reset(new mc_tasks::force::CoPTask("RightFootCenter", robots, robotIndex));
+  leftFootTask.reset(new mc_tasks::force::CoPTask("LeftFootCenter", robots, robotIndex_));
+  rightFootTask.reset(new mc_tasks::force::CoPTask("RightFootCenter", robots, robotIndex_));
   leftFootTask->maxAngularVel({MAX_FDC_RX_VEL, MAX_FDC_RY_VEL, MAX_FDC_RZ_VEL});
   rightFootTask->maxAngularVel({MAX_FDC_RX_VEL, MAX_FDC_RY_VEL, MAX_FDC_RZ_VEL});
   setContact(leftFootTask, leftFootTask->surfacePose());
   setContact(rightFootTask, rightFootTask->surfacePose());
+
+  comTask.reset(new mc_tasks::CoMTask(robots, robotIndex_));
+  leftFootTask.reset(new mc_tasks::force::CoPTask("LeftFootCenter", robots, robotIndex_));
+  rightFootTask.reset(new mc_tasks::force::CoPTask("RightFootCenter", robots, robotIndex_));
+
+  reset();
 }
 
 LIPMStabilizerTask::~LIPMStabilizerTask() {}
 
-void LIPMStabilizerTask::reset() {}
+void LIPMStabilizerTask::reset()
+{
+  comTask->selectActiveJoints(comActiveJoints_);
+  comTask->setGains(comStiffness_, 2 * comStiffness_.cwiseSqrt());
+  comTask->weight(comWeight_);
+
+  leftFootTask->maxAngularVel({MAX_FDC_RX_VEL, MAX_FDC_RY_VEL, MAX_FDC_RZ_VEL});
+  rightFootTask->maxAngularVel({MAX_FDC_RX_VEL, MAX_FDC_RY_VEL, MAX_FDC_RZ_VEL});
+  setContact(leftFootTask, leftFootTask->surfacePose());
+  setContact(rightFootTask, rightFootTask->surfacePose());
+
+  dcmDerivator_.setZero();
+  dcmIntegrator_.saturation(MAX_AVERAGE_DCM_ERROR);
+  dcmIntegrator_.setZero();
+  zmpccIntegrator_.saturation(MAX_ZMPCC_COM_OFFSET);
+  zmpccIntegrator_.setZero();
+
+  Eigen::Vector3d staticForce = -mass_ * gravity_;
+
+  dcmAverageError_ = Eigen::Vector3d::Zero();
+  dcmError_ = Eigen::Vector3d::Zero();
+  dcmVelError_ = Eigen::Vector3d::Zero();
+  dfzForceError_ = 0.;
+  dfzHeightError_ = 0.;
+  distribWrench_ = {pendulum_.com().cross(staticForce), staticForce};
+  vdcHeightError_ = 0.;
+  zmpError_ = Eigen::Vector3d::Zero();
+  zmpccCoMAccel_ = Eigen::Vector3d::Zero();
+  zmpccCoMOffset_ = Eigen::Vector3d::Zero();
+  zmpccCoMVel_ = Eigen::Vector3d::Zero();
+  zmpccError_ = Eigen::Vector3d::Zero();
+}
 
 void LIPMStabilizerTask::dimWeight(const Eigen::VectorXd & dim)
 {
@@ -115,11 +152,6 @@ Eigen::VectorXd LIPMStabilizerTask::eval() const
   LOG_ERROR_AND_THROW(std::runtime_error, "eval not implemented for task " << type_);
 }
 
-/*! \brief Returns the task velocity
- *
- * The vector's dimensions depend on the underlying task
- *
- */
 Eigen::VectorXd LIPMStabilizerTask::speed() const
 {
   LOG_ERROR_AND_THROW(std::runtime_error, "speed not implemented for task " << type_);
@@ -127,7 +159,8 @@ Eigen::VectorXd LIPMStabilizerTask::speed() const
 
 void LIPMStabilizerTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
-  LOG_ERROR_AND_THROW(std::runtime_error, "load not implemented for task " << type_);
+  configure(config);
+  // XXX make sure this is reset as expected
 }
 
 void LIPMStabilizerTask::addToSolver(mc_solver::QPSolver & solver)
@@ -151,15 +184,7 @@ void LIPMStabilizerTask::update()
   MetaTask::update(*rightFootTask);
 }
 
-void LIPMStabilizerTask::addToLogger(mc_rtc::Logger &) {}
-
-void LIPMStabilizerTask::removeFromLogger(mc_rtc::Logger &) {}
-
-void LIPMStabilizerTask::addToGUI(mc_rtc::gui::StateBuilder &) {}
-
-void LIPMStabilizerTask::removeFromGUI(mc_rtc::gui::StateBuilder &) {}
-
-void LIPMStabilizerTask::addLogEntries(mc_rtc::Logger & logger)
+void LIPMStabilizerTask::addToLogger(mc_rtc::Logger & logger)
 {
   logger.addLogEntry("stabilizer_contactState", [this]() -> double {
     switch(contactState_)
@@ -208,98 +233,134 @@ void LIPMStabilizerTask::addLogEntries(mc_rtc::Logger & logger)
   logger.addLogEntry("stabilizer_zmpcc_leakRate", [this]() { return zmpccIntegrator_.rate(); });
 }
 
-void LIPMStabilizerTask::addGUIElements(std::shared_ptr<mc_rtc::gui::StateBuilder> gui)
+void LIPMStabilizerTask::removeFromLogger(mc_rtc::Logger & logger)
+{
+  logger.removeLogEntry("stabilizer_contactState");
+  logger.removeLogEntry("error_dcm_average");
+  logger.removeLogEntry("error_dcm_pos");
+  logger.removeLogEntry("error_dcm_vel");
+  logger.removeLogEntry("error_dfz_force");
+  logger.removeLogEntry("error_dfz_height");
+  logger.removeLogEntry("error_vdc");
+  logger.removeLogEntry("error_zmp");
+  logger.removeLogEntry("perf_Stabilizer");
+  logger.removeLogEntry("stabilizer_admittance_com");
+  logger.removeLogEntry("stabilizer_admittance_cop");
+  logger.removeLogEntry("stabilizer_admittance_dfz");
+  logger.removeLogEntry("stabilizer_dcmDerivator_filtered");
+  logger.removeLogEntry("stabilizer_dcmDerivator_raw");
+  logger.removeLogEntry("stabilizer_dcmDerivator_timeConstant");
+  logger.removeLogEntry("stabilizer_dcmIntegrator_timeConstant");
+  logger.removeLogEntry("stabilizer_dcmTracking_derivGain");
+  logger.removeLogEntry("stabilizer_dcmTracking_integralGain");
+  logger.removeLogEntry("stabilizer_dcmTracking_propGain");
+  logger.removeLogEntry("stabilizer_dfz_damping");
+  logger.removeLogEntry("stabilizer_fdqp_weights_ankleTorque");
+  logger.removeLogEntry("stabilizer_fdqp_weights_netWrench");
+  logger.removeLogEntry("stabilizer_fdqp_weights_pressure");
+  logger.removeLogEntry("stabilizer_vdc_frequency");
+  logger.removeLogEntry("stabilizer_vdc_stiffness");
+  logger.removeLogEntry("stabilizer_wrench");
+  logger.removeLogEntry("stabilizer_zmp");
+  logger.removeLogEntry("stabilizer_zmpcc_comAccel");
+  logger.removeLogEntry("stabilizer_zmpcc_comOffset");
+  logger.removeLogEntry("stabilizer_zmpcc_comVel");
+  logger.removeLogEntry("stabilizer_zmpcc_error");
+  logger.removeLogEntry("stabilizer_zmpcc_leakRate");
+}
+
+void LIPMStabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   using namespace mc_rtc::gui;
-  gui->addElement({"Stabilizer", "Main"}, Button("Disable stabilizer", [this]() { disable(); }),
-                  Button("Reconfigure", [this]() { reconfigure(); }),
-                  Button("Reset DCM integrator", [this]() { dcmIntegrator_.setZero(); }),
-                  ArrayInput("Foot admittance", {"CoPx", "CoPy"},
-                             [this]() -> Eigen::Vector2d {
-                               return {copAdmittance_.x(), copAdmittance_.y()};
-                             },
-                             [this](const Eigen::Vector2d & a) {
-                               copAdmittance_.x() = clamp(a(0), 0., MAX_COP_ADMITTANCE);
-                               copAdmittance_.y() = clamp(a(1), 0., MAX_COP_ADMITTANCE);
-                             }),
-                  ArrayInput("Foot force difference", {"Admittance", "Damping"},
-                             [this]() -> Eigen::Vector2d {
-                               return {dfzAdmittance_, dfzDamping_};
-                             },
-                             [this](const Eigen::Vector2d & a) {
-                               dfzAdmittance_ = clamp(a(0), 0., MAX_DFZ_ADMITTANCE);
-                               dfzDamping_ = clamp(a(1), 0., MAX_DFZ_DAMPING);
-                             }),
-                  ArrayInput("DCM gains", {"Prop.", "Integral", "Deriv."},
-                             [this]() -> Eigen::Vector3d {
-                               return {dcmPropGain_, dcmIntegralGain_, dcmDerivGain_};
-                             },
-                             [this](const Eigen::Vector3d & gains) {
-                               dcmPropGain_ = clamp(gains(0), 0., MAX_DCM_P_GAIN);
-                               dcmIntegralGain_ = clamp(gains(1), 0., MAX_DCM_I_GAIN);
-                               dcmDerivGain_ = clamp(gains(2), 0., MAX_DCM_D_GAIN);
-                             }),
-                  ArrayInput("DCM filters", {"Integrator T [s]", "Derivator T [s]"},
-                             [this]() -> Eigen::Vector2d {
-                               return {dcmIntegrator_.timeConstant(), dcmDerivator_.timeConstant()};
-                             },
-                             [this](const Eigen::Vector2d & T) {
-                               dcmIntegrator_.timeConstant(T(0));
-                               dcmDerivator_.timeConstant(T(1));
-                             }));
-  gui->addElement({"Stabilizer", "Advanced"}, Button("Disable stabilizer", [this]() { disable(); }),
-                  Button("Reconfigure", [this]() { reconfigure(); }),
-                  Button("Reset CoM integrator", [this]() { zmpccIntegrator_.setZero(); }),
-                  ArrayInput("CoM admittance", {"Ax", "Ay"}, [this]() { return comAdmittance_; },
-                             [this](const Eigen::Vector2d & a) {
-                               comAdmittance_.x() = clamp(a.x(), 0., MAX_COM_ADMITTANCE);
-                               comAdmittance_.y() = clamp(a.y(), 0., MAX_COM_ADMITTANCE);
-                             }),
-                  Checkbox("Apply CoM admittance only in double support?", [this]() { return zmpccOnlyDS_; },
-                           [this]() { zmpccOnlyDS_ = !zmpccOnlyDS_; }),
-                  NumberInput("CoM integrator leak rate [Hz]", [this]() { return zmpccIntegrator_.rate(); },
-                              [this](double T) { zmpccIntegrator_.rate(T); }),
-                  ArrayInput("DCM pole placement", {"Pole1", "Pole2", "Pole3", "Lag [Hz]"},
-                             [this]() -> Eigen::VectorXd { return polePlacement_; },
-                             [this](const Eigen::VectorXd & polePlacement) {
-                               double alpha = clamp(polePlacement(0), -20., -0.1);
-                               double beta = clamp(polePlacement(1), -20., -0.1);
-                               double gamma = clamp(polePlacement(2), -20., -0.1);
-                               double lagFreq = clamp(polePlacement(3), 1., 200.);
-                               polePlacement_ = {alpha, beta, gamma, lagFreq};
+  gui.addElement({"Stabilizer", "Main"}, Button("Disable stabilizer", [this]() { disable(); }),
+                 Button("Reconfigure", [this]() { reconfigure(); }),
+                 Button("Reset DCM integrator", [this]() { dcmIntegrator_.setZero(); }),
+                 ArrayInput("Foot admittance", {"CoPx", "CoPy"},
+                            [this]() -> Eigen::Vector2d {
+                              return {copAdmittance_.x(), copAdmittance_.y()};
+                            },
+                            [this](const Eigen::Vector2d & a) {
+                              copAdmittance_.x() = clamp(a(0), 0., MAX_COP_ADMITTANCE);
+                              copAdmittance_.y() = clamp(a(1), 0., MAX_COP_ADMITTANCE);
+                            }),
+                 ArrayInput("Foot force difference", {"Admittance", "Damping"},
+                            [this]() -> Eigen::Vector2d {
+                              return {dfzAdmittance_, dfzDamping_};
+                            },
+                            [this](const Eigen::Vector2d & a) {
+                              dfzAdmittance_ = clamp(a(0), 0., MAX_DFZ_ADMITTANCE);
+                              dfzDamping_ = clamp(a(1), 0., MAX_DFZ_DAMPING);
+                            }),
+                 ArrayInput("DCM gains", {"Prop.", "Integral", "Deriv."},
+                            [this]() -> Eigen::Vector3d {
+                              return {dcmPropGain_, dcmIntegralGain_, dcmDerivGain_};
+                            },
+                            [this](const Eigen::Vector3d & gains) {
+                              dcmPropGain_ = clamp(gains(0), 0., MAX_DCM_P_GAIN);
+                              dcmIntegralGain_ = clamp(gains(1), 0., MAX_DCM_I_GAIN);
+                              dcmDerivGain_ = clamp(gains(2), 0., MAX_DCM_D_GAIN);
+                            }),
+                 ArrayInput("DCM filters", {"Integrator T [s]", "Derivator T [s]"},
+                            [this]() -> Eigen::Vector2d {
+                              return {dcmIntegrator_.timeConstant(), dcmDerivator_.timeConstant()};
+                            },
+                            [this](const Eigen::Vector2d & T) {
+                              dcmIntegrator_.timeConstant(T(0));
+                              dcmDerivator_.timeConstant(T(1));
+                            }));
+  gui.addElement({"Stabilizer", "Advanced"}, Button("Disable stabilizer", [this]() { disable(); }),
+                 Button("Reconfigure", [this]() { reconfigure(); }),
+                 Button("Reset CoM integrator", [this]() { zmpccIntegrator_.setZero(); }),
+                 ArrayInput("CoM admittance", {"Ax", "Ay"}, [this]() { return comAdmittance_; },
+                            [this](const Eigen::Vector2d & a) {
+                              comAdmittance_.x() = clamp(a.x(), 0., MAX_COM_ADMITTANCE);
+                              comAdmittance_.y() = clamp(a.y(), 0., MAX_COM_ADMITTANCE);
+                            }),
+                 Checkbox("Apply CoM admittance only in double support?", [this]() { return zmpccOnlyDS_; },
+                          [this]() { zmpccOnlyDS_ = !zmpccOnlyDS_; }),
+                 NumberInput("CoM integrator leak rate [Hz]", [this]() { return zmpccIntegrator_.rate(); },
+                             [this](double T) { zmpccIntegrator_.rate(T); }),
+                 ArrayInput("DCM pole placement", {"Pole1", "Pole2", "Pole3", "Lag [Hz]"},
+                            [this]() -> Eigen::VectorXd { return polePlacement_; },
+                            [this](const Eigen::VectorXd & polePlacement) {
+                              double alpha = clamp(polePlacement(0), -20., -0.1);
+                              double beta = clamp(polePlacement(1), -20., -0.1);
+                              double gamma = clamp(polePlacement(2), -20., -0.1);
+                              double lagFreq = clamp(polePlacement(3), 1., 200.);
+                              polePlacement_ = {alpha, beta, gamma, lagFreq};
 
-                               double omega = pendulum_.omega();
-                               double denom = pendulum_.omega() * lagFreq;
-                               double T_integ = dcmIntegrator_.timeConstant();
+                              double omega = pendulum_.omega();
+                              double denom = pendulum_.omega() * lagFreq;
+                              double T_integ = dcmIntegrator_.timeConstant();
 
-                               // Gains K_z for the ZMP feedback (Delta ZMP = K_z * Delta DCM)
-                               double zmpPropGain =
-                                   (alpha * beta + beta * gamma + gamma * alpha + omega * lagFreq) / denom;
-                               double zmpIntegralGain = -(alpha * beta * gamma) / denom;
-                               double zmpDerivGain = -(alpha + beta + gamma + lagFreq - omega) / denom;
+                              // Gains K_z for the ZMP feedback (Delta ZMP = K_z * Delta DCM)
+                              double zmpPropGain =
+                                  (alpha * beta + beta * gamma + gamma * alpha + omega * lagFreq) / denom;
+                              double zmpIntegralGain = -(alpha * beta * gamma) / denom;
+                              double zmpDerivGain = -(alpha + beta + gamma + lagFreq - omega) / denom;
 
-                               // Our gains K are for closed-loop DCM (Delta dot(DCM) = -K * Delta DCM)
-                               dcmPropGain_ = omega * (zmpPropGain - 1.);
-                               dcmIntegralGain_ = omega * T_integ * zmpIntegralGain; // our integrator is an EMA
-                               dcmDerivGain_ = omega * zmpDerivGain;
-                             }),
-                  ArrayInput("Vertical drift compensation", {"frequency", "stiffness"},
-                             [this]() -> Eigen::Vector2d {
-                               return {vdcFrequency_, vdcStiffness_};
-                             },
-                             [this](const Eigen::Vector2d & v) {
-                               vdcFrequency_ = clamp(v(0), 0., 10.);
-                               vdcStiffness_ = clamp(v(1), 0., 1e4);
-                             }));
-  gui->addElement({"Stabilizer", "Debug"}, Button("Disable stabilizer", [this]() { disable(); }),
-                  Button("Reconfigure", [this]() { reconfigure(); }),
-                  ArrayLabel("CoM offset [mm]", {"x", "y"}, [this]() { return vecFromError(zmpccCoMOffset_); }),
-                  ArrayLabel("DCM average error [mm]", {"x", "y"}, [this]() { return vecFromError(dcmAverageError_); }),
-                  ArrayLabel("DCM error [mm]", {"x", "y"}, [this]() { return vecFromError(dcmError_); }),
-                  ArrayLabel("Foot force difference error [mm]", {"force", "height"}, [this]() {
-                    Eigen::Vector3d dfzError = {dfzForceError_, dfzHeightError_, 0.};
-                    return vecFromError(dfzError);
-                  }));
+                              // Our gains K are for closed-loop DCM (Delta dot(DCM) = -K * Delta DCM)
+                              dcmPropGain_ = omega * (zmpPropGain - 1.);
+                              dcmIntegralGain_ = omega * T_integ * zmpIntegralGain; // our integrator is an EMA
+                              dcmDerivGain_ = omega * zmpDerivGain;
+                            }),
+                 ArrayInput("Vertical drift compensation", {"frequency", "stiffness"},
+                            [this]() -> Eigen::Vector2d {
+                              return {vdcFrequency_, vdcStiffness_};
+                            },
+                            [this](const Eigen::Vector2d & v) {
+                              vdcFrequency_ = clamp(v(0), 0., 10.);
+                              vdcStiffness_ = clamp(v(1), 0., 1e4);
+                            }));
+  gui.addElement({"Stabilizer", "Debug"}, Button("Disable stabilizer", [this]() { disable(); }),
+                 Button("Reconfigure", [this]() { reconfigure(); }),
+                 ArrayLabel("CoM offset [mm]", {"x", "y"}, [this]() { return vecFromError(zmpccCoMOffset_); }),
+                 ArrayLabel("DCM average error [mm]", {"x", "y"}, [this]() { return vecFromError(dcmAverageError_); }),
+                 ArrayLabel("DCM error [mm]", {"x", "y"}, [this]() { return vecFromError(dcmError_); }),
+                 ArrayLabel("Foot force difference error [mm]", {"force", "height"}, [this]() {
+                   Eigen::Vector3d dfzError = {dfzForceError_, dfzHeightError_, 0.};
+                   return vecFromError(dfzError);
+                 }));
 }
 
 void LIPMStabilizerTask::disable()
@@ -375,44 +436,6 @@ void LIPMStabilizerTask::reconfigure()
     auto zmpcc = config_("zmpcc");
     zmpccIntegrator_.rate(zmpcc("integrator_leak_rate"));
   }
-}
-
-void LIPMStabilizerTask::reset(const mc_rbdyn::Robots & robots)
-{
-  unsigned robotIndex = robots.robotIndex();
-
-  comTask.reset(new mc_tasks::CoMTask(robots, robotIndex));
-  comTask->selectActiveJoints(comActiveJoints_);
-  comTask->setGains(comStiffness_, 2 * comStiffness_.cwiseSqrt());
-  comTask->weight(comWeight_);
-
-  leftFootTask.reset(new mc_tasks::force::CoPTask("LeftFootCenter", robots, robotIndex));
-  rightFootTask.reset(new mc_tasks::force::CoPTask("RightFootCenter", robots, robotIndex));
-  leftFootTask->maxAngularVel({MAX_FDC_RX_VEL, MAX_FDC_RY_VEL, MAX_FDC_RZ_VEL});
-  rightFootTask->maxAngularVel({MAX_FDC_RX_VEL, MAX_FDC_RY_VEL, MAX_FDC_RZ_VEL});
-  setContact(leftFootTask, leftFootTask->surfacePose());
-  setContact(rightFootTask, rightFootTask->surfacePose());
-
-  dcmDerivator_.setZero();
-  dcmIntegrator_.saturation(MAX_AVERAGE_DCM_ERROR);
-  dcmIntegrator_.setZero();
-  zmpccIntegrator_.saturation(MAX_ZMPCC_COM_OFFSET);
-  zmpccIntegrator_.setZero();
-
-  Eigen::Vector3d staticForce = -mass_ * gravity_;
-
-  dcmAverageError_ = Eigen::Vector3d::Zero();
-  dcmError_ = Eigen::Vector3d::Zero();
-  dcmVelError_ = Eigen::Vector3d::Zero();
-  dfzForceError_ = 0.;
-  dfzHeightError_ = 0.;
-  distribWrench_ = {pendulum_.com().cross(staticForce), staticForce};
-  vdcHeightError_ = 0.;
-  zmpError_ = Eigen::Vector3d::Zero();
-  zmpccCoMAccel_ = Eigen::Vector3d::Zero();
-  zmpccCoMOffset_ = Eigen::Vector3d::Zero();
-  zmpccCoMVel_ = Eigen::Vector3d::Zero();
-  zmpccError_ = Eigen::Vector3d::Zero();
 }
 
 void LIPMStabilizerTask::checkGains()
