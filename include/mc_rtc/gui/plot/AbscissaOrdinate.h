@@ -48,6 +48,18 @@ struct AbscissaOrdinate
     builder.finish_array();
   }
 
+  AbscissaOrdinate & style(Style style)
+  {
+    style_ = style;
+    return *this;
+  }
+
+  AbscissaOrdinate & side(Side side)
+  {
+    side_ = side;
+    return *this;
+  }
+
 protected:
   std::string name_;
   GetXT get_x_fn_;

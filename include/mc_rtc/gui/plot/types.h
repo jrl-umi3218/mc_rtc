@@ -112,6 +112,18 @@ struct MC_RTC_GUI_DLLAPI AxisConfiguration
   AxisConfiguration(Range range) : AxisConfiguration("", range) {}
   AxisConfiguration(const std::string & name, Range range) : name(name), range(range) {}
 
+  AxisConfiguration & min(double min)
+  {
+    range.min = min;
+    return *this;
+  }
+
+  AxisConfiguration & max(double max)
+  {
+    range.max = max;
+    return *this;
+  }
+
   void load(const mc_rtc::Configuration & config)
   {
     name = static_cast<std::string>(config[0]);

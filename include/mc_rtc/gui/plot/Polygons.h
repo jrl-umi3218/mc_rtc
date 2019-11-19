@@ -47,6 +47,12 @@ struct Polygons
     builder.finish_array();
   }
 
+  Polygons & side(Side side)
+  {
+    side_ = side;
+    return *this;
+  }
+
 private:
   std::string name_;
   GetT get_fn_;

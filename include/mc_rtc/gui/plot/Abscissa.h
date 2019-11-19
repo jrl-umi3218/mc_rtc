@@ -40,6 +40,24 @@ struct Abscissa
     builder.finish_array();
   }
 
+  Abscissa & range(const Range & range)
+  {
+    config_.range = range;
+    return *this;
+  }
+
+  Abscissa & min(double min)
+  {
+    config_.range.min = min;
+    return *this;
+  }
+
+  Abscissa & max(double max)
+  {
+    config_.range.max = max;
+    return *this;
+  }
+
 private:
   AxisConfiguration config_;
   GetT get_fn_;
@@ -52,6 +70,20 @@ template<typename GetT>
 impl::Abscissa<GetT> X(AxisConfiguration config, GetT get_fn)
 {
   return impl::Abscissa<GetT>(config, get_fn);
+}
+
+/** Helper to create an impl::Abscissa without limits */
+template<typename GetT>
+impl::Abscissa<GetT> X(const std::string & legend, GetT get_fn)
+{
+  return impl::Abscissa<GetT>(AxisConfiguration(legend), get_fn);
+}
+
+/** Helper to create an impl::Abscissa without limits (C-string overload) */
+template<typename GetT>
+impl::Abscissa<GetT> X(const char * legend, GetT get_fn)
+{
+  return impl::Abscissa<GetT>(std::string(legend), get_fn);
 }
 
 } // namespace plot

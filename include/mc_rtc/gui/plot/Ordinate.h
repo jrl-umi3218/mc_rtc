@@ -45,6 +45,18 @@ struct Ordinate
     builder.finish_array();
   }
 
+  Ordinate & style(Style style)
+  {
+    style_ = style;
+    return *this;
+  }
+
+  Ordinate & side(Side side)
+  {
+    side_ = side;
+    return *this;
+  }
+
 protected:
   std::string name_;
   GetT get_fn_;
