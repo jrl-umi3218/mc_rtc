@@ -279,21 +279,44 @@ public:
 
   /** Computes the ZMP from gravity-free force sensor measurements
    *
-   * @param sensorsName List of sensor name to consider
-   * @param plane_p A point on the ZMP plane
-   * @param plane_n Normal vector to the ZMP plane
-   * @param forceThreshold Threshold below which the force is ignored
+   * @param sensorNames Names of all sensors attached to a link in contact with the environment
+   * @param plane_p A point on the ZMP plane.
+   * @param plane_n Normal vector to the ZMP plane.
+   * @param minimalSensorNormalForce[N] Only consider sensors that have more than this force threshold for the net
+   * wrench computation.
+   * @param minimalNetNormalForce[N] Minimal normal force allowed for ZMP computation.
+   * (>0). Note that this prevents a division by zero.
    *
    * @return The ZMP measured from force sensors in a desired plane.
    *
-   * @throws To prevent dividing by zero, throws if the projected force is below 1 Newton.
-   * This is highly unlikely and would likely indicate indicate that you are computing a ZMP from
-   * invalid forces.
+   * @throws To prevent dividing by zero, throws if the projected force is below minimalNetNormalForce newton.
+   * This is highly unlikely to happen and would likely indicate indicate that you are computing a ZMP from
+   * invalid forces (such as with the robot in the air).
    */
-  Eigen::Vector3d zmp(const std::vector<std::string> & sensorsName,
+  Eigen::Vector3d zmp(const std::vector<std::string> & sensorNames,
                       const Eigen::Vector3d & plane_p,
                       const Eigen::Vector3d & plane_n,
-                      double forceThreshold = 5.) const;
+                      double minimalSensorNormalForce = 5.,
+                      double minimalNetNormalForce = 1.) const;
+
+  /**
+   * @brief Computes the ZMP from gravity-free force sensor measurements
+   *
+   * @param sensorNames Names of all sensors attached to a link in contact with the environment
+   * @param contactFrame Frame used for ZMP computation. The convention here is
+   * that the contact frame should have its z-axis pointing in the normal
+   * direction of the contact towards the robot.
+   * @param minimalSensorNormalForce
+   * @param minimalNetNormalForce
+   *
+   * @return ZMP computed in frame contactFrame
+   *
+   * @throws If the sensor measurments do not meet the minimal force thresholds
+   */
+  Eigen::Vector3d zmp(const std::vector<std::string> & sensorNames,
+                      const sva::PTransformd & contactFrame,
+                      double minimalSensorNormalForce = 5.,
+                      double minimalNetNormalForce = 1.) const;
 
   /** Access the robot's angular lower limits (const) */
   const std::vector<std::vector<double>> & ql() const;
