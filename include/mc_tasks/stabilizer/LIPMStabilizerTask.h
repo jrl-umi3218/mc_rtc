@@ -417,10 +417,10 @@ protected:
   Eigen::Vector3d zmpccCoMVel_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d zmpccError_ = Eigen::Vector3d::Zero();
   Eigen::Vector4d polePlacement_ = {-10., -5., -1., 10.}; /**< Pole placement with ZMP delay (Morisawa et al., 2014) */
-  mc_signal::ExponentialMovingAverage dcmIntegrator_;
+  mc_signal::ExponentialMovingAverage<Eigen::Vector3d> dcmIntegrator_;
   FDQPWeights fdqpWeights_;
-  mc_signal::LeakyIntegrator zmpccIntegrator_;
-  mc_signal::StationaryOffsetFilter dcmDerivator_;
+  mc_signal::LeakyIntegrator<Eigen::Vector3d> zmpccIntegrator_;
+  mc_signal::StationaryOffsetFilter<Eigen::Vector3d> dcmDerivator_;
   bool inTheAir_ = false; /**< Is the robot in the air? */
   bool zmpccOnlyDS_ = true; /**< Apply CoM admittance control only in double support? */
   const Pendulum & pendulum_; /**< Reference to desired reduced-model state */

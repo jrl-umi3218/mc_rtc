@@ -19,7 +19,14 @@ namespace mc_signal
  * but it is homogeneous to the integral of the input signal (rather than the
  * signal itself). See <https://en.wikipedia.org/wiki/Leaky_integrator>.
  *
+ * Expects VectorT to act as a vector (typically Eigen::Vector3d), supporting:
+ * - VectorT::Zero() static member function
+ * - VectorT::setZero() member
+ * - Component-wise math operator *
+ * - Access operator ()
+ * - VectorT::size()
  */
+template<typename VectorT>
 struct LeakyIntegrator
 {
   /** Add constant input for a fixed duration.
@@ -29,7 +36,7 @@ struct LeakyIntegrator
    * \param dt Fixed duration.
    *
    */
-  inline void add(const Eigen::Vector3d & value, double dt)
+  inline void add(const VectorT & value, double dt)
   {
     integral_ = (1. - rate_ * dt) * integral_ + dt * value;
     if(saturation_ > 0.)
@@ -41,7 +48,7 @@ struct LeakyIntegrator
   /** Evaluate the output of the integrator.
    *
    */
-  inline const Eigen::Vector3d & eval() const
+  inline const VectorT & eval() const
   {
     return integral_;
   }
@@ -85,7 +92,7 @@ struct LeakyIntegrator
 private:
   inline void saturate()
   {
-    for(unsigned i = 0; i < 3; i++)
+    for(unsigned i = 0; i < integral_.size(); i++)
     {
       if(integral_(i) < -saturation_)
       {
@@ -99,7 +106,7 @@ private:
   }
 
 private:
-  Eigen::Vector3d integral_ = Eigen::Vector3d::Zero();
+  VectorT integral_ = VectorT::Zero();
   double rate_ = 0.1;
   double saturation_ = -1.;
 };

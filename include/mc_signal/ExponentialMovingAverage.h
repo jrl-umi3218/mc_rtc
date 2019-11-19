@@ -6,6 +6,8 @@
  */
 
 #pragma once
+#include <algorithm>
+#include <cmath>
 
 namespace mc_signal
 {
@@ -24,7 +26,12 @@ namespace mc_signal
  * to a low-pass filter <https://en.wikipedia.org/wiki/Low-pass_filter> applied
  * to the integral of the input signal.
  *
+ * Expects type VectorT to have:
+ * - VectorT::Zero() static function
+ * - VectorT::setZero()
+ * Common types: Eigen::Vector3d, Eigen::Vector6d, etc.
  */
+template<typename VectorT>
 struct ExponentialMovingAverage
 {
   /** Constructor.
@@ -36,8 +43,7 @@ struct ExponentialMovingAverage
    * \param initValue Initial value of the output average.
    *
    */
-  ExponentialMovingAverage(double dt, double timeConstant, const Eigen::Vector3d & initValue = Eigen::Vector3d::Zero())
-  : dt_(dt)
+  ExponentialMovingAverage(double dt, double timeConstant, const VectorT & initValue = VectorT::Zero()) : dt_(dt)
   {
     average_ = initValue;
     this->timeConstant(timeConstant);
@@ -46,9 +52,8 @@ struct ExponentialMovingAverage
   /** Append a new reading to the series.
    *
    * \param value New value.
-   *
    */
-  void append(const Eigen::Vector3d & value)
+  void append(const VectorT & value)
   {
     average_ += alpha_ * (value - average_);
     if(saturation_ > 0.)
@@ -60,7 +65,7 @@ struct ExponentialMovingAverage
   /** Evaluate the smoothed statistic.
    *
    */
-  const Eigen::Vector3d & eval() const
+  const VectorT & eval() const
   {
     return average_;
   }
@@ -123,7 +128,7 @@ private:
   }
 
 protected:
-  Eigen::Vector3d average_ = Eigen::Vector3d::Zero();
+  VectorT average_ = VectorT::Zero();
   double alpha_;
   double dt_;
   double timeConstant_;

@@ -13,7 +13,12 @@ namespace mc_signal
 {
 /** Remove stationary offset from an input signal.
  *
+ * Expects VectorT to act as a vector (typically Eigen::Vector3d), supporting:
+ * - VectorT::Zero() static member function
+ * - VectorT::setZero() member
+ * - VectorT should also respect the requirements of ExponentialMovingAverage
  */
+template<typename VectorT>
 struct StationaryOffsetFilter
 {
   /** Constructor.
@@ -26,7 +31,7 @@ struct StationaryOffsetFilter
    * \param initValue Initial value of the input signal.
    *
    */
-  StationaryOffsetFilter(double dt, double timeConstant, const Eigen::Vector3d & initValue = Eigen::Vector3d::Zero())
+  StationaryOffsetFilter(double dt, double timeConstant, const VectorT & initValue = VectorT::Zero())
   : average_(dt, timeConstant, initValue)
   {
     filteredValue_ = initValue;
@@ -38,7 +43,7 @@ struct StationaryOffsetFilter
    * \param value New value.
    *
    */
-  void update(const Eigen::Vector3d & value)
+  void update(const VectorT & value)
   {
     average_.append(value);
     filteredValue_ = value - average_.eval();
@@ -48,7 +53,7 @@ struct StationaryOffsetFilter
   /** Get output value where the stationary offset has been filtered.
    *
    */
-  const Eigen::Vector3d & eval() const
+  const VectorT & eval() const
   {
     return filteredValue_;
   }
@@ -56,7 +61,7 @@ struct StationaryOffsetFilter
   /** Get raw value of input signal.
    *
    */
-  const Eigen::Vector3d & raw() const
+  const VectorT & raw() const
   {
     return rawValue_;
   }
@@ -90,8 +95,8 @@ struct StationaryOffsetFilter
   }
 
 private:
-  Eigen::Vector3d filteredValue_;
-  Eigen::Vector3d rawValue_;
-  ExponentialMovingAverage average_;
+  VectorT filteredValue_;
+  VectorT rawValue_;
+  ExponentialMovingAverage<VectorT> average_;
 };
 } // namespace mc_signal
