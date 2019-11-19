@@ -131,6 +131,16 @@ public:
    */
   bool run(mc_solver::FeedbackType fType);
 
+  /** This function is called when the controller is stopped.
+   *
+   * The default implementation does nothing.
+   *
+   * For example, it can be overriden to signal threads launched by the
+   * controller to pause.
+   *
+   */
+  virtual void stop();
+
   /** Gives access to the result of the QP execution
    * \param t Unused at the moment
    */

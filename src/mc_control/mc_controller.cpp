@@ -376,4 +376,6 @@ sva::PTransformd MCController::anchorFrame(const mc_rbdyn::Robot &) const
                                           "Please override this function in your controller.");
 }
 
+void MCController::stop() {}
+
 } // namespace mc_control
