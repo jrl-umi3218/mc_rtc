@@ -38,7 +38,7 @@ struct FakeZMPGraph
         // Reset the style of both feet
         start_ds = false;
         feet.back() = makeFoot(rfoot_x, -0.5);
-        feet[feet.size() - 2].outline(Color(0, 0, 0)).fill(Color(1, 1, 1, 1));
+        feet[feet.size() - 2].outline(Color::Black).fill(Color(0, 0, 0, 0));
       }
       start_ss = true;
     }
@@ -51,7 +51,7 @@ struct FakeZMPGraph
         //   - flying foot moves and gets grayed
         start_ss = false;
         feet.push_back(makeFoot(lfoot_x, 0.5, Color(0.5, 0.5, 0.5)));
-        feet[feet.size() - 2].outline(Color(1, 0, 0)).fill(Color(0, 0, 1));
+        feet[feet.size() - 2].outline(Color::Red).fill(Color::Blue);
         if(start_walk)
         {
           speed = speed / 2;
@@ -76,7 +76,7 @@ struct FakeZMPGraph
         }
         start_ds = false;
         feet.back() = makeFoot(lfoot_x, 0.5);
-        feet[feet.size() - 2].outline(Color(0, 0, 0)).fill(Color(1, 1, 1, 1));
+        feet[feet.size() - 2].outline(Color::Black).fill(Color(0, 0, 0, 0));
       }
       start_ss = true;
     }
@@ -89,7 +89,7 @@ struct FakeZMPGraph
         //   - flying foot moves and gets grayed
         start_ss = false;
         feet.push_back(makeFoot(rfoot_x, -0.5, Color(0.5, 0.5, 0.5)));
-        feet[feet.size() - 2].outline(Color(1, 0, 0)).fill(Color(0, 0, 1));
+        feet[feet.size() - 2].outline(Color::Red).fill(Color::Blue);
       }
       rfoot_x += speed;
       for(auto & points : feet.back().points())
@@ -138,11 +138,11 @@ struct FakeZMPGraph
   {
     if(std::abs(zmp_y) > 0.9)
     {
-      return Color(1, 0, 0);
+      return Color::Red;
     }
     else
     {
-      return Color(0, 0, 0);
+      return Color::Black;
     }
   }
 };
@@ -336,50 +336,50 @@ TestServer::TestServer() : xythetaz_(4)
   using Style = mc_rtc::gui::plot::Style;
   using Side = mc_rtc::gui::plot::Side;
   auto sin_cos_plot = [this](const std::string & name) {
-    builder.addPlot(name, mc_rtc::gui::plot::X({"t"}, [this]() { return t_; }),
-                    mc_rtc::gui::plot::Y("sin(t)", [this]() { return std::sin(t_); }, Color(1.0, 0.0, 0.0)),
-                    mc_rtc::gui::plot::Y("cos(t)", [this]() { return std::cos(t_); }, Color(0.0, 0.0, 1.0)));
+    builder.addPlot(name, mc_rtc::gui::plot::X("t", [this]() { return t_; }),
+                    mc_rtc::gui::plot::Y("sin(t)", [this]() { return std::sin(t_); }, Color::Red),
+                    mc_rtc::gui::plot::Y("cos(t)", [this]() { return std::cos(t_); }, Color::Blue));
   };
   add_demo_plot("sin(t)/cos(t)", sin_cos_plot);
   auto demo_style_plot = [this](const std::string & name) {
-    builder.addPlot(
-        name, mc_rtc::gui::plot::X({"t"}, [this]() { return t_; }),
-        mc_rtc::gui::plot::Y("Solid", [this]() { return std::cos(t_); }, Color(1.0, 0.0, 0.0), Style::Solid),
-        mc_rtc::gui::plot::Y("Dashed", [this]() { return 2 - std::cos(t_); }, Color(0.0, 0.0, 1.0), Style::Dashed),
-        mc_rtc::gui::plot::Y("Dotted", [this]() { return std::sin(t_); }, Color(0.0, 1.0, 0.0), Style::Dotted,
-                             Side::Right),
-        mc_rtc::gui::plot::Y("Point", [this]() { return 2 - std::sin(t_); }, Color(1.0, 0.0, 1.0), Style::Point,
-                             Side::Right));
+    builder.addPlot(name, mc_rtc::gui::plot::X("t", [this]() { return t_; }),
+                    mc_rtc::gui::plot::Y("Solid", [this]() { return std::cos(t_); }, Color::Red).style(Style::Solid),
+                    mc_rtc::gui::plot::Y("Dashed", [this]() { return 2 - std::cos(t_); }, Color::Blue, Style::Dashed),
+                    mc_rtc::gui::plot::Y("Dotted", [this]() { return std::sin(t_); }, Color::Green)
+                        .style(Style::Dotted)
+                        .side(Side::Right),
+                    mc_rtc::gui::plot::Y("Point", [this]() { return 2 - std::sin(t_); }, Color::Magenta, Style::Point,
+                                         Side::Right));
   };
   add_demo_plot("Demo style", demo_style_plot);
   auto fix_axis_plot = [this](const std::string & name) {
-    builder.addPlot(name, mc_rtc::gui::plot::X({"t"}, [this]() { return t_; }), {"Y1", {0, 1}}, // Fix both min and max
-                    {"Y2", {-Range::inf, 0}}, // Only fix max
-                    mc_rtc::gui::plot::Y("sin(t)", [this]() { return std::sin(t_); }, Color(1.0, 0.0, 0.0)),
-                    mc_rtc::gui::plot::Y("cos(t)", [this]() { return std::cos(t_); }, Color(0.0, 0.0, 1.0),
-                                         Style::Solid, Side::Right));
+    builder.addPlot(
+        name, mc_rtc::gui::plot::X("t", [this]() { return t_; }), {"Y1", {0, 1}}, // Fix both min and max
+        {"Y2", {-Range::inf, 0}}, // Only fix max
+        mc_rtc::gui::plot::Y("sin(t)", [this]() { return std::sin(t_); }, Color::Red),
+        mc_rtc::gui::plot::Y("cos(t)", [this]() { return std::cos(t_); }, Color::Blue, Style::Solid, Side::Right));
   };
   add_demo_plot("Fix axis", fix_axis_plot);
   using PolygonDescription = mc_rtc::gui::plot::PolygonDescription;
   using Point = std::array<double, 2>;
   using Points = std::vector<Point>;
   auto circle_plot = [this](const std::string & name) {
-    builder.addXYPlot(name,
+    builder.addXYPlot(name, {"X (m)", {-1, 1}}, {"Y (m)", {-1, 1}},
                       mc_rtc::gui::plot::XY("Round", [this]() { return std::cos(t_); },
-                                            [this]() { return std::sin(t_); }, Color(1.0, 0.0, 0.0)),
+                                            [this]() { return std::sin(t_); }, Color::Red),
                       mc_rtc::gui::plot::Polygon("Square", []() {
                         return PolygonDescription(Points{Point{-1, -1}, Point{-1, 1}, Point{1, 1}, Point{1, -1}},
-                                                  Color(0.0, 0.0, 1.0));
+                                                  Color::Blue)
+                            .fill(Color(0, 1, 0, 0.75));
                       }));
   };
   add_demo_plot("Circle in square", circle_plot);
   auto redSquareBlueFill =
-      PolygonDescription(Points{Point{-1, -1}, Point{-1, 1}, Point{1, 1}, Point{1, -1}}, Color(1, 0, 0))
-          .fill(Color(0, 0, 1));
+      PolygonDescription(Points{Point{-1, -1}, Point{-1, 1}, Point{1, 1}, Point{1, -1}}, Color::Red).fill(Color::Blue);
   auto purpleTriangleYellowFill =
-      PolygonDescription(Points{Point{1, 0}, Point{1.5, 2}, Point{2, -2}}, Color(1, 0, 1)).fill(Color(1, 1, 0));
-  auto blueRectangle =
-      PolygonDescription(Points{Point{-2, -2}, Point{2, -2}, Point{2, -3}, Point{-2, -3}}, Color(0, 0, 1));
+      PolygonDescription(Points{Point{1, 0}, Point{1.5, 2}, Point{2, -2}}, Color::Magenta).fill(Color::Yellow);
+  auto blueRectangle = PolygonDescription(Points{Point{-2, -2}, Point{2, -2}, Point{2, -3}, Point{-2, -3}}, Color::Blue)
+                           .style(Style::Dotted);
   std::vector<PolygonDescription> polygons = {redSquareBlueFill, purpleTriangleYellowFill, blueRectangle};
   auto polygons_plot = [this, polygons](const std::string & name) {
     builder.addXYPlot(name, mc_rtc::gui::plot::Polygons("Polygons", [polygons]() { return polygons; }));
