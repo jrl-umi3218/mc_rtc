@@ -523,10 +523,21 @@ Eigen::Vector3d Robot::copW(const std::string & surfaceName, double min_pressure
   return X_0_s.translation() + X_0_s.rotation().transpose() * cop_s;
 }
 
-Eigen::Vector3d Robot::zmp(const std::vector<std::string> & sensorNames,
+sva::ForceVecd Robot::netWrench(const std::vector<std::string> & sensorNames) const
+{
+  // Compute net total wrench from all sensors in contact
+  sva::ForceVecd netTotalWrench{Eigen::Vector6d::Zero()};
+  for(const auto & sensorName : sensorNames)
+  {
+    const auto & sensor = forceSensor(sensorName);
+    netTotalWrench += sensor.worldWrenchWithoutGravity(*this);
+  }
+  return netTotalWrench;
+}
+
+Eigen::Vector3d Robot::zmp(const sva::ForceVecd & netTotalWrench,
                            const Eigen::Vector3d & plane_p,
                            const Eigen::Vector3d & plane_n,
-                           double minimalSensorNormalForce,
                            double minimalNetNormalForce) const
 {
   if(minimalNetNormalForce <= 0)
@@ -534,20 +545,7 @@ Eigen::Vector3d Robot::zmp(const std::vector<std::string> & sensorNames,
     LOG_ERROR_AND_THROW(std::runtime_error,
                         "ZMP cannot be computed: the minimalNetNormalForce must be >0 (divide by zero)");
   }
-  // Compute net total wrench from all sensors in contact
-  sva::ForceVecd netTotalWrench{Eigen::Vector6d::Zero()};
-  for(const auto & sensorName : sensorNames)
-  {
-    const auto & sensor = forceSensor(sensorName);
-    // Only take sensor into account when projected force along the normal direction
-    // is significant enough
-    if(sensor.force().dot(plane_n) > minimalSensorNormalForce)
-    {
-      netTotalWrench += sensor.worldWrenchWithoutGravity(*this);
-    }
-  }
 
-  // Compute net zmp
   const Eigen::Vector3d & force = netTotalWrench.force();
   const Eigen::Vector3d & moment_0 = netTotalWrench.couple();
   Eigen::Vector3d moment_p = moment_0 - plane_p.cross(force);
@@ -561,14 +559,30 @@ Eigen::Vector3d Robot::zmp(const std::vector<std::string> & sensorNames,
   return zmp;
 }
 
-Eigen::Vector3d Robot::zmp(const std::vector<std::string> & sensorNames,
+Eigen::Vector3d Robot::zmp(const sva::ForceVecd & netWrench,
                            const sva::PTransformd & zmpFrame,
-                           double minimalSensorNormalForce,
                            double minimalNetNormalForce) const
 {
   Eigen::Vector3d n = zmpFrame.rotation().row(2);
   Eigen::Vector3d p = zmpFrame.translation();
-  return zmp(sensorNames, p, n, minimalSensorNormalForce, minimalNetNormalForce);
+  return zmp(netWrench, zmpFrame, minimalNetNormalForce);
+}
+
+Eigen::Vector3d Robot::zmp(const std::vector<std::string> & sensorNames,
+                           const Eigen::Vector3d & plane_p,
+                           const Eigen::Vector3d & plane_n,
+                           double minimalNetNormalForce) const
+{
+  return zmp(netWrench(sensorNames), plane_p, plane_n, minimalNetNormalForce);
+}
+
+Eigen::Vector3d Robot::zmp(const std::vector<std::string> & sensorNames,
+                           const sva::PTransformd & zmpFrame,
+                           double minimalNetNormalForce) const
+{
+  Eigen::Vector3d n = zmpFrame.rotation().row(2);
+  Eigen::Vector3d p = zmpFrame.translation();
+  return zmp(sensorNames, p, n, minimalNetNormalForce);
 }
 
 const std::vector<std::vector<double>> & Robot::ql() const
