@@ -459,6 +459,7 @@ bool MCGlobalController::run()
     {
       /*XXX Need to be careful here */
       /*XXX Need to get the current contacts from the controller when needed */
+      controller_->stop();
       LOG_INFO("Reset with q[0]")
       std::cout << controller_->robot().mbc().q[0][0] << " ";
       std::cout << controller_->robot().mbc().q[0][1] << " ";
