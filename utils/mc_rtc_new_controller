@@ -34,11 +34,11 @@ def new_controller(project_dir, controller_class_name, controller_name, base_cla
     with open(project_dir + '/CMakeLists.txt', 'w') as fd:
         if configure_conf:
             configure_config = """set(AROBASE "@")
-configure_file(etc/{controller_name}.in.conf "${{CMAKE_CURRENT_BINARY_DIR}}/etc/{controller_name}.conf")
-install(FILES "${{CMAKE_CURRENT_BINARY_DIR}}/etc/{controller_name}.conf" DESTINATION "${{MC_CONTROLLER_INSTALL_PREFIX}}/etc")
+configure_file(etc/{controller_name}.in.yaml "${{CMAKE_CURRENT_BINARY_DIR}}/etc/{controller_name}.yaml")
+install(FILES "${{CMAKE_CURRENT_BINARY_DIR}}/etc/{controller_name}.yaml" DESTINATION "${{MC_CONTROLLER_INSTALL_PREFIX}}/etc")
 """.format(controller_name = controller_name)
         else:
-            configure_config = """install(FILES etc/{controller_name}.conf DESTINATION "${{MC_CONTROLLER_INSTALL_PREFIX}}/etc")
+            configure_config = """install(FILES etc/{controller_name}.yaml DESTINATION "${{MC_CONTROLLER_INSTALL_PREFIX}}/etc")
 """.format(controller_name = controller_name)
         fd.write("""cmake_minimum_required(VERSION 3.1)
 
@@ -164,9 +164,9 @@ void {controller_class_name}::reset(const mc_control::ControllerResetData & rese
 
 {controller_constructor}
 """.format(controller_class_name = controller_class_name, controller_name = controller_name, base_class = base_class, base_init = base_init, min_code = min_code, controller_constructor = controller_constructor))
-    with open(project_dir + '/etc/' + controller_name + '.conf', 'w') as fd:
-        fd.write("{\n}")
-    repo.index.add([s.format(controller_class_name) for s in ['CMakeLists.txt', 'src/CMakeLists.txt', 'etc/' + controller_name + '.conf', 'src/{}.h', 'src/{}.cpp']])
+    with open(project_dir + '/etc/' + controller_name + '.yaml', 'w') as fd:
+        fd.write("---\n")
+    repo.index.add([s.format(controller_class_name) for s in ['CMakeLists.txt', 'src/CMakeLists.txt', 'etc/' + controller_name + '.yaml', 'src/{}.h', 'src/{}.cpp']])
     return repo
 
 if __name__ == "__main__":

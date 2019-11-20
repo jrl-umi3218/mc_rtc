@@ -150,7 +150,7 @@ install(
 )
 install(
   FILES
-    etc/mc_rtc.conf
+    etc/mc_rtc.yaml
   DESTINATION etc
 )
 
