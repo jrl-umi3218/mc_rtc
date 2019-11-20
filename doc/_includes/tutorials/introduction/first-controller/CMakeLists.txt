@@ -13,5 +13,5 @@ find_package(mc_rtc REQUIRED)
 
 add_subdirectory(src)
 
-install(FILES etc/MyFirstController.conf DESTINATION "${MC_CONTROLLER_INSTALL_PREFIX}/etc")
+install(FILES etc/MyFirstController.yaml DESTINATION "${MC_CONTROLLER_INSTALL_PREFIX}/etc")
 

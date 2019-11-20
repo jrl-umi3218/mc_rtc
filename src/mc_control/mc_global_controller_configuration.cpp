@@ -13,19 +13,32 @@ namespace mc_control
 
 MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string & conf,
                                                              std::shared_ptr<mc_rbdyn::RobotModule> rm)
-: config(mc_rtc::CONF_PATH)
 {
+  // Load default configuration file
+  std::string globalPath(mc_rtc::CONF_PATH);
+  if(bfs::exists(globalPath))
+  {
+    LOG_INFO("Loading default global configuration " << globalPath);
+    config.load(globalPath);
+  }
+
 #ifndef WIN32
-  bfs::path config_path = bfs::path(std::getenv("HOME")) / ".config/mc_rtc/mc_rtc.conf";
+  auto config_path = bfs::path(std::getenv("HOME")) / ".config/mc_rtc/mc_rtc.conf";
 #else
   // Should work for Windows Vista and up
-  bfs::path config_path = bfs::path(std::getenv("APPDATA")) / "mc_rtc/mc_rtc.conf";
+  auto config_path = bfs::path(std::getenv("APPDATA")) / "mc_rtc/mc_rtc.conf";
 #endif
+  // Load user's local configuration if it exists
+  if(!bfs::exists(config_path))
+  {
+    config_path.replace_extension(".yaml");
+  }
   if(bfs::exists(config_path))
   {
     LOG_INFO("Loading additional global configuration " << config_path)
     config.load(config_path.string());
   }
+  // Load extra configuration
   if(bfs::exists(conf))
   {
     LOG_INFO("Loading additional global configuration " << conf)
@@ -298,6 +311,10 @@ void MCGlobalController::GlobalConfiguration::load_controllers_configs()
     mc_rtc::Configuration conf;
     conf.load(config);
     bfs::path global = bfs::path(mc_rtc::MC_CONTROLLER_INSTALL_PREFIX) / "/etc" / (c + ".conf");
+    if(!bfs::exists(global))
+    {
+      global.replace_extension(".yaml");
+    }
     if(bfs::exists(global))
     {
       LOG_INFO("Loading additional controller configuration" << global)
@@ -308,6 +325,10 @@ void MCGlobalController::GlobalConfiguration::load_controllers_configs()
 #else
     bfs::path local = bfs::path(std::getenv("APPDATA")) / "mc_rtc/controllers" / (c + ".conf");
 #endif
+    if(!bfs::exists(local))
+    {
+      local.replace_extension(".yaml");
+    }
     if(bfs::exists(local))
     {
       LOG_INFO("Loading additional controller configuration" << local)

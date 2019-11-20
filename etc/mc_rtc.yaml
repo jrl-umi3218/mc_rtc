@@ -1,0 +1,115 @@
+---
+# What robot is being controlled
+MainRobot: JVRC1
+# Enabled controllers
+Enabled: [CoM]
+
+# Load and run state observers.
+# Order matters here, estimators will be run after each other.
+
+# Available estimators in mc_rtc are:
+# - Encoder: Estimate encoder position from sensor and velocity by finite differences
+# - BodySensor: Uses a BodySensor to compute the state of the floating base. This estimator will
+# typically be used to obtained groundtruth information (e.g the FloatingBase body sensor contains the groundtruth floating base state when running in choreonoid)
+# - KinematicInertial: Estimates the position and orientation of the floating base from the IMU orientation and assumed contacts. Note that this estimator requires to manually set the leftFootRatio  parameter to specify its anchor point, the default value is configured in-between the feet and is suitable for double-support only.
+#
+# To run the observers, please add in your controller-specific configuration file. For example
+# RunObservers: [Encoder, BodySensor, KinematicInertial]
+# UpdateObservers: [Encoder, KinematicInertial]
+#
+# Only the estimators in the "UpdateObservers" list will affect the state of the real robot. 
+# The other estimators will only be run and logged, such that they may be used for comparison purposes.
+EnabledObservers: [Encoder, BodySensor, KinematicInertial]
+
+# Specific configuration for each observer
+Observers:
+  Encoder:
+    # Valid values are [estimator, control, none]
+    UpdatePositionFrom: estimator
+    UpdateVelocityFrom: estimator
+    Log: true
+  BodySensor:
+    # Valid entries are [control, estimator, none]
+    UpdateFrom: estimator
+    FloatingBaseSensor: FloatingBase
+
+# Publish the state of the controlled robot (ROS)
+PublishControlState: true
+# Publish the state of the other robots (ROS)
+PublishEnvState: true
+# Publish the state of the real robot (ROS)
+PublishRealState: true
+# Timestep of publication (ROS)
+PublishTimestep: 0.01
+# Controller timestep
+Timestep: 0.005
+# Set to true or false to enable/disable respectively
+Log: true
+
+# LogPolicy dictates whether logging-related disk operations happen in a
+# separate thread ("threaded") or in the same thread as the run() loop
+# ("non-threaded"). This defaults to the non-threaded policy. On real-time
+# systems, the threaded policy is advised
+# LogPolicy: threaded
+
+# LogDirectory dictates where the log files will be stored, defaults to
+# system temp directory
+# LogDirectory: /tmp
+
+# The log file will have the name [LogTemplate]-[ControllerName]-[date].log
+LogTemplate: mc-control
+
+# GUIServer section
+GUIServer:
+  # If true, enable the GUI server, otherwise or if absent, disable this
+  # feature
+  Enable: true
+  # Publication timestep, actual rate is rounded up depending on the
+  # controller timestep
+  Timestep: 0.05
+  # IPC (inter-process communication) section, if the section is absent
+  # this disables the protocol, if the section is empty it is configured
+  # to its default settings.
+  IPC: {}
+    # If the GUI server IPC protocol is enabled, this is used as a base
+    # to create the sockets, the actual sockets name will be formed by
+    # adding _sub.ipc and _rep.ipc to the provided path. The file will
+    # be created if required. This defaults to $SYSTEM_TMP/mc_rtc
+    # Socket: /tmp/mc_rtc
+  # TCP section, the same remarks apply as IPC
+  TCP:
+    # Binding host, * binds to all interfaces
+    Host: "*"
+    # Binding ports, the first is used for PUB socket and the second for
+    # the PULL socket
+    Ports: [4242, 4343]
+  # # WS (websocket) section, the same remarks apply as IPC
+  # WS:
+  #   # Binding host, * binds to all interfaces
+  #   Host: "*"
+  #   # Binding ports, the first is used for PUB socket and the second for
+  #   # the PULL socket
+  #   Ports: [8080, 8081]
+
+# The following option change the verbosity of the controller and robot
+# loader
+VerboseLoader: false
+
+# The following option is used to disable controller/robot creation sandboxing
+# This option only affects Linux
+# UseSandbox: true
+
+# The following options are used to control the location of the
+# controllers', robots' and observers' modules (libraries)
+# The paths added by this option are added to the default path
+# ControllerModulePaths: [/one/path/to/controller/, /another/path/]
+# RobotModulePaths: [/one/path/to/robot/, /another/path/]
+# ObserverModulePaths: [/one/path/to/observer/, /another/path/]
+
+# The following options are used to clear the default loading path
+# for controllers, robots and observers respectively
+# This is only useful to run test on a machine where mc_rtc has
+# already been installed
+# ClearControllerModulePath: false
+# ClearRobotModulePath: false
+# ClearObserverModulePath: false

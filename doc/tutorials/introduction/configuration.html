@@ -11,8 +11,8 @@ layout: tutorials
 <p>The following two files will be systematically read by mc_rtc:</p>
 
 <ol class="highlight-inline">
-  <li>{% highlight bash %}$INSTALL_PREFIX/etc/mc_rtc.conf{% endhighlight %}</li>
-  <li>{% highlight bash %}$HOME/.config/mc_rtc/mc_rtc.conf{% endhighlight %} on Linux/MacOS or {% highlight msshell %}%APPDATA%/mc_rtc/mc_rtc.conf{% endhighlight %} on Windows</li>
+  <li>{% highlight bash %}$INSTALL_PREFIX/etc/mc_rtc.yaml{% endhighlight %}</li>
+  <li>{% highlight bash %}$HOME/.config/mc_rtc/mc_rtc.yaml{% endhighlight %} on Linux/MacOS or {% highlight msshell %}%APPDATA%/mc_rtc/mc_rtc.conf{% endhighlight %} on Windows</li>
 </ol>
 
 <p>The interface might load additional configuration file(s). Please refer to the interface documentation to find out about that.</p>
@@ -32,20 +32,20 @@ layout: tutorials
       </th>
       <td colspan="2">These entries cover most needs you might have</td>
     </tr>
-    {% include mc_rtc_configuration_row.html entry="MainRobot" desc="This entry dictates the main robot used by all controllers. Most interface cannot infer the correct module to use based on the simulation environment so this is the user's responsibility to make sure the two match." example="\"MainRobot\": \"JVRC1\"" %}
-    {% include mc_rtc_configuration_row.html entry="Enabled" desc="Provides a list of enabled controllers." example="\"Enabled\" : [\"Posture\", \"Body6d\", \"CoM\"]" %}
-    {% include mc_rtc_configuration_row.html entry="Default" desc="Select which of the enabled controllers will be started first. Note that if the default controller is not enabled or if no default entry is provided then the first enabled controller in the list is chosen as a default controller." example="\"Default\" : \"Posture\"" %}
-    {% include mc_rtc_configuration_row.html entry="Timestep" desc="The controller's timestep." example="\"Timestep\" : 0.005" %}
-    {% include mc_rtc_configuration_row.html entry="Log" desc="Dictate whether or not controllers will log their output." example="\"Log\" : true" %}
+    {% include mc_rtc_configuration_row.html entry="MainRobot" desc="This entry dictates the main robot used by all controllers. Most interface cannot infer the correct module to use based on the simulation environment so this is the user's responsibility to make sure the two match." example="MainRobot: JVRC1" %}
+    {% include mc_rtc_configuration_row.html entry="Enabled" desc="Provides a list of enabled controllers." example="Enabled: [Posture, Body6d, CoM]" %}
+    {% include mc_rtc_configuration_row.html entry="Default" desc="Select which of the enabled controllers will be started first. Note that if the default controller is not enabled or if no default entry is provided then the first enabled controller in the list is chosen as a default controller." example="Default: Posture" %}
+    {% include mc_rtc_configuration_row.html entry="Timestep" desc="The controller's timestep." example="Timestep: 0.005" %}
+    {% include mc_rtc_configuration_row.html entry="Log" desc="Dictate whether or not controllers will log their output." example="Log: true" %}
     <tr class="table-active">
       <th scope="row">
         Logging&nbsp;options
       </th>
       <td colspan="2">The following options affect the way mc_rtc deals with controller activity logging. They have no effect if logging is disabled.</td>
     </tr>
-    {% include mc_rtc_configuration_row.html entry="LogDirectory" desc="This option dictates where the log files will be stored, defaults to a system temporary directory" example="\"LogDirectory\" : \"/tmp\"" %}
-    {% include mc_rtc_configuration_row.html entry="LogTemplate" desc="This option dictates the prefix of the log. The log file will then have the name: <pre>[LogTemplate]-[ControllerName]-[date].log</pre>" example="\"LogTemplate\" : \"mc-control\"" %}
-    {% include mc_rtc_configuration_row.html entry="LogPolicy" desc="This option dictates whether logging-related disk operations happen in a separate thread (\"threaded\") or in the same thread as the run() loop (\"non-threaded\"). This defaults to the non-threaded policy. On real-time systems, the threaded policy is strongly advised." example="\"LogPolicy\" : \"non-threaded\"" %}
+    {% include mc_rtc_configuration_row.html entry="LogDirectory" desc="This option dictates where the log files will be stored, defaults to a system temporary directory" example="LogDirectory: \"/tmp\"" %}
+    {% include mc_rtc_configuration_row.html entry="LogTemplate" desc="This option dictates the prefix of the log. The log file will then have the name: <pre>[LogTemplate]-[ControllerName]-[date].log</pre>" example="LogTemplate: \"mc-control\"" %}
+    {% include mc_rtc_configuration_row.html entry="LogPolicy" desc="This option dictates whether logging-related disk operations happen in a separate thread (\"threaded\") or in the same thread as the run() loop (\"non-threaded\"). This defaults to the non-threaded policy. On real-time systems, the threaded policy is strongly advised." example="LogPolicy: \"non-threaded\"" %}
     <tr class="table-active">
       <th scope="row">
         ROS&nbsp;options
@@ -54,9 +54,9 @@ layout: tutorials
 The following options only affect the publication of the robot's state in ROS. It has no effect if ROS support is not built in mc_rtc.
       </td>
     </tr>
-    {% include mc_rtc_configuration_row.html entry="PublishControlState" desc="Publish the robot's control state (mc_rtc controller output)." example="\"PublishControlState\" : true" %}
-    {% include mc_rtc_configuration_row.html entry="PublishRealState" desc="Publish the robot's observed state (i.e. the robot's state obtained from the observer pipeline)." example="\"PublishRealState\" : true" %}
-    {% include mc_rtc_configuration_row.html entry="PublishTimeStep" desc="Control the publication rate of the robot's controlled and real state." example="\"PublishTimestep\" : 0.01" %}
+    {% include mc_rtc_configuration_row.html entry="PublishControlState" desc="Publish the robot's control state (mc_rtc controller output)." example="PublishControlState: true" %}
+    {% include mc_rtc_configuration_row.html entry="PublishRealState" desc="Publish the robot's observed state (i.e. the robot's state obtained from the observer pipeline)." example="PublishRealState: true" %}
+    {% include mc_rtc_configuration_row.html entry="PublishTimeStep" desc="Control the publication rate of the robot's controlled and real state." example="PublishTimestep: 0.01" %}
     <tr class="table-active">
       <th scope="row">
         Module loading options
@@ -65,7 +65,7 @@ The following options only affect the publication of the robot's state in ROS. I
 The following options control the way mc_rtc loads additional controller and robot modules.
       </td>
     </tr>
-    {% include mc_rtc_configuration_row.html entry="ControllerModulePaths" desc="This option allow you to specify <strong>additional</strong> directory where mc_rtc will look for controller modules." example="\"ControllerModulePaths\" : [\"/one/path/to/controller/\", \"/another/path/\"]" %}
-    {% include mc_rtc_configuration_row.html entry="RobotModulePaths" desc="This option allow you to specify <strong>additional</strong> directory where mc_rtc will look for robot modules." example="\"RobotModulePaths\" : [\"/one/path/to/robot/\", \"/another/path/\"]" %}
+    {% include mc_rtc_configuration_row.html entry="ControllerModulePaths" desc="This option allow you to specify <strong>additional</strong> directory where mc_rtc will look for controller modules." example="ControllerModulePaths: [\"/one/path/to/controller/\", \"/another/path/\"]" %}
+    {% include mc_rtc_configuration_row.html entry="RobotModulePaths" desc="This option allow you to specify <strong>additional</strong> directory where mc_rtc will look for robot modules." example="RobotModulePaths: [\"/one/path/to/robot/\", \"/another/path/\"]" %}
   </tbody>
 </table>

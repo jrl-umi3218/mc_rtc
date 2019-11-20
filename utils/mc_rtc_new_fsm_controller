@@ -17,95 +17,75 @@ def new_fsm_controller(project_dir, controller_class_name, controller_name):
         return new_fsm_controller(os.path.abspath(project_dir), controller_class_name, controller_name)
     if controller_name is None:
         return new_fsm_controller(project_dir, controller_class_name, controller_class_name)
-    repo = new_controller(project_dir, controller_class_name, controller_name, base_class = 'mc_control::fsm::Controller', base_use_conf = True, extra_includes = ['mc_control/fsm/Controller.h'], extra_libs = 'mc_rtc::mc_control_fsm', min_code = False, configure_conf = True, controller_constructor = False)
-    with open(project_dir + '/etc/{}.in.conf'.format(controller_name), 'w') as fd:
-        fd.write("""{{
-  // If true, the FSM transitions are managed by an external tool
-  "Managed": false,
-  // If true and the FSM is self-managed, transitions should be triggered
-  "StepByStep": true,
-  // Change idle behaviour, if true the state is kept until transition,
-  // otherwise the FSM holds the last state until transition
-  "IdleKeepState": false,
-  // Where to look for state libraries
-  "StatesLibraries": ["@MC_STATES_DEFAULT_INSTALL_PREFIX@","@MC_STATES_INSTALL_PREFIX@"],
-  // Where to look for state files
-  "StatesFiles": ["@MC_STATES_DEFAULT_INSTALL_PREFIX@/data","@MC_STATES_INSTALL_PREFIX@/data"],
-  // If true, state factory will be more verbose
-  "VerboseStateFactory": false,
-  // Additional robots to load
-  "robots":
-  {{
-    "ground":
-    {{
-      "module": "env",
-      "params": ["@AROBASE@MC_ENV_DESCRIPTION@AROBASE@", "ground"]
-    }}
-  }},
-  // General constraints, always on
-  "constraints":
-  [
-    {{
-      "type": "contact"
-    }},
-    {{
-      "type": "dynamics",
-      "robotIndex": 0,
-      "damper": [0.1, 0.01, 0.5]
-    }}
-  ],
-  // Collision constraint
-  "collisions":
-  [
-    {{
-      "type": "collision",
-      "r1Index": 0,
-      "r2Index": 0,
-      "useMinimal": true
-    }}
-  ],
-  // Initial set of contacts
-  "contacts":
-  [
-    {{
-      "r1": "jvrc1",
-      "r2": "ground",
-      "r1Surface": "LeftFoot",
-      "r2Surface": "AllGround"
-    }},
-    {{
-      "r1": "jvrc1",
-      "r2": "ground",
-      "r1Surface": "RightFoot",
-      "r2Surface": "AllGround"
-    }}
-  ],
-  // Some options for a specific robot
-  "jvrc1":
-  {{
-    "posture":
-    {{
-      "stiffness": 1.0,
-      "weight": 10.0
-    }},
-    "ff":
-    {{
-      "stiffness": 2.0,
-      "weight": 100.0
-    }}
-  }},
-  // Implement some additional text states
-  "states":
-  {{
-  }},
-  // Transitions map
-  "transitions":
-  [
-    ["{controller_name}_Initial", "OK", "{controller_name}_Initial", "Strict" ]
-  ],
-  // Initial state
-  "init": "{controller_name}_Initial"
-}}""".format(controller_name = controller_name, controller_class_name = controller_class_name))
+    repo = new_controller(project_dir, controller_class_name, controller_name, base_class = 'mc_control::fsm::Controller', base_use_conf = True, extra_includes = ['mc_control/fsm/Controller.h'], extra_libs = 'mc_rtc::mc_control_fsm', min_code = False, controller_constructor = False)
+    with open(project_dir + '/etc/{}.in.yaml'.format(controller_name), 'w') as fd:
+        fd.write("""---
+# If true, the FSM transitions are managed by an external tool
+Managed: false
+# If true and the FSM is self-managed, transitions should be triggered
+StepByStep: true
+# Change idle behaviour, if true the state is kept until transition,
+# otherwise the FSM holds the last state until transition
+IdleKeepState: false
+# Where to look for state libraries
+StatesLibraries:
+- "@MC_STATES_DEFAULT_INSTALL_PREFIX@"
+- "@MC_STATES_INSTALL_PREFIX@"
+# Where to look for state files
+StatesFiles:
+- "@MC_STATES_DEFAULT_INSTALL_PREFIX@/data"
+- "@MC_STATES_INSTALL_PREFIX@/data"
+# If true, state factory will be more verbose
+VerboseStateFactory: false
+# Additional robots to load
+robots:
+  ground:
+    module: env
+    params:
+    - "@AROBASE@MC_ENV_DESCRIPTION@AROBASE@"
+    - ground
+# General constraints, always on
+constraints:
+-  type: contact
+   type: dynamics
+   robotIndex: 0
+   damper: [0.1, 0.01, 0.5]
+# Collision constraint
+collisions:
+- type: collision
+  r1Index: 0
+  r2Index: 0
+  useMinimal: true
+# Initial set of contacts
+contacts:
+- r1: jvrc1
+  r2: ground
+  r1Surface: LeftFoot
+  r2Surface: AllGround
+- r1: jvrc1
+  r2: ground
+  r1Surface: RightFoot
+  r2Surface: AllGround
+
+# Some options for a specific robot
+jvrc1:
+  posture:
+    stiffness: 1
+    weight: 10
+  ff:
+    stiffness: 2
+    weight: 100
+# Implement some additional text states
+states: {{}}
+# Transitions map
+transitions:
+- - {controller_name}_Initial
+  - OK
+  - {controller_name}_Initial
+  - Strict
+# Initial state
+init: {controller_name}_Initial
+""".format(controller_name = controller_name, controller_class_name = controller_class_name))
     with open(project_dir + '/src/CMakeLists.txt', 'w') as fd:
         fd.write("""set(controller_SRC
   {controller_class_name}.cpp
@@ -184,7 +164,7 @@ void {controller_name}_Initial::teardown(mc_control::fsm::Controller & ctl_)
 
 EXPORT_SINGLE_STATE("{controller_name}_Initial", {controller_name}_Initial)
 """.format(controller_name = controller_name, controller_class_name = controller_class_name))
-    repo.index.add([(project_dir + f).format(controller_name) for f in ['/etc/{}.conf', '/src/CMakeLists.txt', '/src/states/data/states.json', '/src/states/CMakeLists.txt', '/src/states/{}_Initial.h', '/src/states/{}_Initial.cpp']])
+    repo.index.add([(project_dir + f).format(controller_name) for f in ['/etc/{}.in.yaml', '/src/CMakeLists.txt', '/src/lib.cpp', '/src/states/data/states.json', '/src/states/CMakeLists.txt', '/src/states/{}_Initial.h', '/src/states/{}_Initial.cpp']])
     return repo
 
 if __name__ == "__main__":
