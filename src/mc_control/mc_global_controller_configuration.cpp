@@ -15,10 +15,11 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
                                                              std::shared_ptr<mc_rbdyn::RobotModule> rm)
 {
   // Load default configuration file
-  if(bfs::exists(conf))
+  std::string globalPath(mc_rtc::CONF_PATH);
+  if(bfs::exists(globalPath))
   {
-    LOG_INFO("Loading default global configuration " << conf)
-    config.load(conf);
+    LOG_INFO("Loading default global configuration " << globalPath);
+    config.load(globalPath);
   }
 
 #ifndef WIN32
