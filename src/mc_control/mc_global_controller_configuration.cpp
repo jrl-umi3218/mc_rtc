@@ -14,23 +14,18 @@ namespace mc_control
 MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string & conf,
                                                              std::shared_ptr<mc_rbdyn::RobotModule> rm)
 {
-  bfs::path config_path = bfs::path(mc_rtc::CONF_PATH);
   // Load default configuration file
-  if(!bfs::exists(config_path))
+  if(bfs::exists(conf))
   {
-    config_path.replace_extension(".yaml");
-  }
-  if(bfs::exists(config_path))
-  {
-    LOG_INFO("Loading default global configuration " << config_path)
-    config.load(config_path.string());
+    LOG_INFO("Loading default global configuration " << conf)
+    config.load(conf);
   }
 
 #ifndef WIN32
-  config_path = bfs::path(std::getenv("HOME")) / ".config/mc_rtc/mc_rtc.conf";
+  auto config_path = bfs::path(std::getenv("HOME")) / ".config/mc_rtc/mc_rtc.conf";
 #else
   // Should work for Windows Vista and up
-  config_path = bfs::path(std::getenv("APPDATA")) / "mc_rtc/mc_rtc.conf";
+  auto config_path = bfs::path(std::getenv("APPDATA")) / "mc_rtc/mc_rtc.conf";
 #endif
   // Load user's local configuration if it exists
   if(!bfs::exists(config_path))
