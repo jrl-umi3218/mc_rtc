@@ -21,6 +21,10 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   // Should work for Windows Vista and up
   bfs::path config_path = bfs::path(std::getenv("APPDATA")) / "mc_rtc/mc_rtc.conf";
 #endif
+  if(!bfs::exists(config_path))
+  {
+    config_path.replace_extension(".yaml");
+  }
   if(bfs::exists(config_path))
   {
     LOG_INFO("Loading additional global configuration " << config_path)
@@ -298,6 +302,10 @@ void MCGlobalController::GlobalConfiguration::load_controllers_configs()
     mc_rtc::Configuration conf;
     conf.load(config);
     bfs::path global = bfs::path(mc_rtc::MC_CONTROLLER_INSTALL_PREFIX) / "/etc" / (c + ".conf");
+    if(!bfs::exists(global))
+    {
+      global.replace_extension(".yaml");
+    }
     if(bfs::exists(global))
     {
       LOG_INFO("Loading additional controller configuration" << global)
@@ -308,6 +316,10 @@ void MCGlobalController::GlobalConfiguration::load_controllers_configs()
 #else
     bfs::path local = bfs::path(std::getenv("APPDATA")) / "mc_rtc/controllers" / (c + ".conf");
 #endif
+    if(!bfs::exists(local))
+    {
+      local.replace_extension(".yaml");
+    }
     if(bfs::exists(local))
     {
       LOG_INFO("Loading additional controller configuration" << local)
