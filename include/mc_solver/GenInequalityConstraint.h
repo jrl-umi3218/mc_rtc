@@ -77,6 +77,8 @@ struct GenInequalityConstraint : public Constraint<tasks::qp::GenInequality, Upd
  *
  * This implements \f$L \le A * \ddot{\mathbf{q}}_{rI} \le U\f$
  *
+ * Where \f$rI\f$ is the robot index you provide at construction.
+ *
  * You must implement the following functions:
  * - `const Eigen::MatrixXd & A() const override;` returns \f$A\f$, must be of size (nrLines, alphaD.size())
  * - `void compute() override;` update constraint matrix and bounds
@@ -96,18 +98,28 @@ struct MC_SOLVER_DLLAPI GenInequalityConstraintRobot : public utils::GenInequali
 
 /** \class GenInequalityConstraintLambda
  *
- * Helper class to write a general inequality constraint for Tasks. This constraint
- * applies to the lambda associated to a given contact.
+ * Helper class to write a general inequality constraint for
+ * Tasks. This constraint applies to the vector of positive
+ * multipliers (lambda) associated with a given contact
  *
  * This implements \f$L \le A * \lambda_{cI} \le U\f$
  *
+ * Where \f$cI\f$ is the contact id you provide at
+ * construction.
+ *
  * You must implement the following functions:
- * - `const Eigen::MatrixXd & A() const override;` returns \f$A\f$, must be of size (nrLines, nrLambda)
- * - `void compute() override;` update constraint matrix and bounds
- * - `int maxGenInEq() const override;` number of inequality lines
- * - `std::string nameGenInEq() const override;` desriptive name of the constraint
- * - `const Eigen::VectorXd & LowerGenInEq() const override;` returns the lower bound \f$L\f$
- * - `const Eigen::VectorXd & UpperGenInEq() const override;` returns the upper bound \f$U\f$
+ * - `const Eigen::MatrixXd & A() const override;` returns
+ *   \f$A\f$, must be of size (nrLines, nrLambda)
+ * - `void compute() override;` update constraint matrix and
+ *   bounds
+ * - `int maxGenInEq() const override;` number of inequality
+ *   lines
+ * - `std::string nameGenInEq() const override;` desriptive
+ *   name of the constraint
+ * - `const Eigen::VectorXd & LowerGenInEq() const override;`
+ *   returns the lower bound \f$L\f$
+ * - `const Eigen::VectorXd & UpperGenInEq() const override;`
+ *   returns the upper bound \f$U\f$
  *
  */
 struct MC_SOLVER_DLLAPI GenInequalityConstraintLambda : public utils::GenInequalityConstraint<utils::UpdateLambda>
@@ -121,9 +133,11 @@ struct MC_SOLVER_DLLAPI GenInequalityConstraintLambda : public utils::GenInequal
 /** \class GenInequalityConstraintForce
  *
  * Helper class to write a general inequality constraint for Tasks. This constraint
- * applies to the wrench associated to a given contact.
+ * applies to the wrench associated with a given contact.
  *
  * This implements \f$ L \le A * \mathbf{f}_{cI} \le U \f$
+ *
+ * Where \f$cI\f$ is the contact id you provide at construction.
  *
  * You must implement the following functions:
  * - `const Eigen::MatrixXd & A() const override;` returns \f$A\f$, must be of size (nrLines, 6)

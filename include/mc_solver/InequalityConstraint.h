@@ -76,6 +76,8 @@ struct InequalityConstraint : public Constraint<tasks::qp::Inequality, UpdateT>
  *
  * This implements \f$ A * \ddot{\mathbf{q}}_{rI} \le b \f$
  *
+ * Where \f$rI\f$ is the robot index you provide at construction.
+ *
  * You must implement the following functions:
  * - `const Eigen::MatrixXd & A() const override;` returns \f$A\f$, must be of size (nrLines, alphaD.size())
  * - `void compute() override;` update constraint matrix and bounds
@@ -91,17 +93,26 @@ struct MC_SOLVER_DLLAPI InequalityConstraintRobot : public utils::InequalityCons
 
 /** \class InequalityConstraintLambda
  *
- * Helper class to write an inequality constraint for Tasks. This constraint
- * applies to the lambda associated to a given contact.
+ * Helper class to write an inequality constraint for Tasks.
+ * This constraint applies to the vector of positive
+ * multipliers (lambda) associated with a given contact
  *
  * This implements \f$ A * \lambda_{cI} \le b \f$
  *
+ * Where \f$cI\f$ is the contact id you provide at
+ * construction.
+ *
  * You must implement the following functions:
- * - `const Eigen::MatrixXd & A() const override;` returns \f$A\f$, must be of size (nrLines, nrLambda)
- * - `void compute() override;` update constraint matrix and bounds
- * - `int maxInEq() const override;` number of inequality lines
- * - `std::string nameInEq() const override;` desriptive name of the constraint
- * - `const Eigen::VectorXd & bInEq() const override;` returns \f$b\f$
+ * - `const Eigen::MatrixXd & A() const override;` returns
+ *   \f$A\f$, must be of size (nrLines, nrLambda)
+ * - `void compute() override;` update constraint matrix and
+ *   bounds
+ * - `int maxInEq() const override;` number of inequality
+ *   lines
+ * - `std::string nameInEq() const override;` desriptive name
+ *   of the constraint
+ * - `const Eigen::VectorXd & bInEq() const override;` returns
+ *   \f$b\f$
  *
  */
 struct MC_SOLVER_DLLAPI InequalityConstraintLambda : public utils::InequalityConstraint<utils::UpdateLambda>
@@ -115,9 +126,11 @@ struct MC_SOLVER_DLLAPI InequalityConstraintLambda : public utils::InequalityCon
 /** \class InequalityConstraintForce
  *
  * Helper class to write an inequality constraint for Tasks. This constraint
- * applies to the wrench associated to a given contact.
+ * applies to the wrench associated with a given contact.
  *
  * This implements \f$ A * \mathbf{f}_{cI} \le b \f$
+ *
+ * Where \f$cI\f$ is the contact id you provide at construction.
  *
  * You must implement the following functions:
  * - `const Eigen::MatrixXd & A() const override;` returns \f$A\f$, must be of size (nrLines, 6)
