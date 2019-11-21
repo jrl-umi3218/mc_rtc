@@ -565,7 +565,7 @@ Eigen::Vector3d Robot::zmp(const sva::ForceVecd & netWrench,
 {
   Eigen::Vector3d n = zmpFrame.rotation().row(2);
   Eigen::Vector3d p = zmpFrame.translation();
-  return zmp(netWrench, zmpFrame, minimalNetNormalForce);
+  return zmp(netWrench, p, n, minimalNetNormalForce);
 }
 
 Eigen::Vector3d Robot::zmp(const std::vector<std::string> & sensorNames,
