@@ -4,16 +4,19 @@
 
 #pragma once
 
-#include <mc_solver/Constraint.h>
+#include <mc_solver/utils/Constraint.h>
 
 namespace mc_solver
+{
+
+namespace utils
 {
 
 /** \class InequalityConstraint
  *
  * Helper class to write an inequality constraint for Tasks.
  *
- * This implements \f$ A * x <= b \f$
+ * This implements \f$ A * x \le b \f$
  *
  * You must implement the following functions:
  * - const Eigen::MatrixXd & A() const override; // Return A
@@ -64,8 +67,72 @@ struct InequalityConstraint : public Constraint<tasks::qp::Inequality, UpdateT>
   }
 };
 
-using InequalityConstraintRobot = InequalityConstraint<utils::UpdateRobot>;
-using InequalityConstraintLambda = InequalityConstraint<utils::UpdateLambda>;
-using InequalityConstraintForce = InequalityConstraint<utils::UpdateForce>;
+} // namespace utils
+
+/** \class InequalityConstraintRobot
+ *
+ * Helper class to write an inequality constraint for Tasks. This constraint
+ * applies to alphaD for a given robot.
+ *
+ * This implements \f$ A * \ddot{\mathbf{q}}_{rI} \le b \f$
+ *
+ * You must implement the following functions:
+ * - `const Eigen::MatrixXd & A() const override;` returns \f$A\f$, must be of size (nrLines, alphaD.size())
+ * - `void compute() override;` update constraint matrix and bounds
+ * - `int maxInEq() const override;` number of inequality lines
+ * - `std::string nameInEq() const override;` desriptive name of the constraint
+ * - `const Eigen::VectorXd & bInEq() const override;` returns \f$b\f$
+ *
+ */
+struct MC_SOLVER_DLLAPI InequalityConstraintRobot : public utils::InequalityConstraint<utils::UpdateRobot>
+{
+  explicit InequalityConstraintRobot(unsigned int rIndex) : utils::InequalityConstraint<utils::UpdateRobot>(rIndex) {}
+};
+
+/** \class InequalityConstraintLambda
+ *
+ * Helper class to write an inequality constraint for Tasks. This constraint
+ * applies to the lambda associated to a given contact.
+ *
+ * This implements \f$ A * \lambda_{cI} \le b \f$
+ *
+ * You must implement the following functions:
+ * - `const Eigen::MatrixXd & A() const override;` returns \f$A\f$, must be of size (nrLines, nrLambda)
+ * - `void compute() override;` update constraint matrix and bounds
+ * - `int maxInEq() const override;` number of inequality lines
+ * - `std::string nameInEq() const override;` desriptive name of the constraint
+ * - `const Eigen::VectorXd & bInEq() const override;` returns \f$b\f$
+ *
+ */
+struct MC_SOLVER_DLLAPI InequalityConstraintLambda : public utils::InequalityConstraint<utils::UpdateLambda>
+{
+  explicit InequalityConstraintLambda(const tasks::qp::ContactId & cid)
+  : utils::InequalityConstraint<utils::UpdateLambda>(cid)
+  {
+  }
+};
+
+/** \class InequalityConstraintForce
+ *
+ * Helper class to write an inequality constraint for Tasks. This constraint
+ * applies to the wrench associated to a given contact.
+ *
+ * This implements \f$ A * \mathbf{f}_{cI} \le b \f$
+ *
+ * You must implement the following functions:
+ * - `const Eigen::MatrixXd & A() const override;` returns \f$A\f$, must be of size (nrLines, 6)
+ * - `void compute() override;` update constraint matrix and bounds
+ * - `int maxInEq() const override;` number of inequality lines
+ * - `std::string nameInEq() const override;` desriptive name of the constraint
+ * - `const Eigen::VectorXd & bInEq() const override;` returns \f$b\f$
+ *
+ */
+struct MC_SOLVER_DLLAPI InequalityConstraintForce : public utils::InequalityConstraint<utils::UpdateForce>
+{
+  InequalityConstraintForce(const mc_solver::QPSolver & solver, const tasks::qp::ContactId & cid)
+  : utils::InequalityConstraint<utils::UpdateForce>(solver, cid)
+  {
+  }
+};
 
 } // namespace mc_solver

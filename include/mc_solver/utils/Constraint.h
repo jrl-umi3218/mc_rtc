@@ -9,6 +9,9 @@
 namespace mc_solver
 {
 
+namespace utils
+{
+
 /** \class Constraint
  *
  * Generic helper class to write a new constraint for Tasks. \see
@@ -64,5 +67,7 @@ protected:
     UpdateT::updateImpl(mbs, mbcs, data);
   }
 };
+
+} // namespace utils
 
 } // namespace mc_solver

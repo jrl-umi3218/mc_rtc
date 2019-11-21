@@ -4,9 +4,12 @@
 
 #pragma once
 
-#include <mc_solver/Constraint.h>
+#include <mc_solver/utils/Constraint.h>
 
 namespace mc_solver
+{
+
+namespace utils
 {
 
 /** \class EqualityConstraint
@@ -22,7 +25,7 @@ namespace mc_solver
  * - std::string nameEq() const override; // Desriptive name of the constraint
  * - const Eigen::VectorXd & bEq() const override; // Return the right-side b
  *
- * Depending on what the constraint apply to you have to make sure A has the
+ * Depending on what the constraint applies to you have to make sure A has the
  * following size:
  * - (nrLines, alphaD.size()) for a constraint on a robot's state
  * - (nrLines, nrLambda) for a constraint on the lambdas of a contact
@@ -64,8 +67,72 @@ struct EqualityConstraint : public Constraint<tasks::qp::Equality, UpdateT>
   }
 };
 
-using EqualityConstraintRobot = EqualityConstraint<utils::UpdateRobot>;
-using EqualityConstraintLambda = EqualityConstraint<utils::UpdateLambda>;
-using EqualityConstraintForce = EqualityConstraint<utils::UpdateForce>;
+} // namespace utils
+
+/** \class EqualityConstraintRobot
+ *
+ * Helper class to write an equality constraint for Tasks. This constraint
+ * applies to alphaD for a given robot.
+ *
+ * This implements \f$ A * \ddot{\mathbf{q}}_{rI} = b \f$
+ *
+ * You must implement the following functions:
+ * - `const Eigen::MatrixXd & A() const override;` returns \f$A\f$, must be of size (nrLines, alphaD.size())
+ * - `void compute() override;` update constraint matrix and bounds
+ * - `int maxEq() const override;` number of equality lines
+ * - `std::string nameEq() const override;` desriptive name of the constraint
+ * - `const Eigen::VectorXd & bEq() const override;` returns \f$b\f$
+ *
+ */
+struct MC_SOLVER_DLLAPI EqualityConstraintRobot : public utils::EqualityConstraint<utils::UpdateRobot>
+{
+  explicit EqualityConstraintRobot(unsigned int rIndex) : utils::EqualityConstraint<utils::UpdateRobot>(rIndex) {}
+};
+
+/** \class EqualityConstraintLambda
+ *
+ * Helper class to write an equality constraint for Tasks. This constraint
+ * applies to the lambda associated to a given contact.
+ *
+ * This implements \f$ A * \lambda_{cI} = b \f$
+ *
+ * You must implement the following functions:
+ * - `const Eigen::MatrixXd & A() const override;` returns \f$A\f$, must be of size (nrLines, nrLambda)
+ * - `void compute() override;` update constraint matrix and bounds
+ * - `int maxEq() const override;` number of equality lines
+ * - `std::string nameEq() const override;` desriptive name of the constraint
+ * - `const Eigen::VectorXd & bEq() const override;` returns \f$b\f$
+ *
+ */
+struct MC_SOLVER_DLLAPI EqualityConstraintLambda : public utils::EqualityConstraint<utils::UpdateLambda>
+{
+  explicit EqualityConstraintLambda(const tasks::qp::ContactId & cid)
+  : utils::EqualityConstraint<utils::UpdateLambda>(cid)
+  {
+  }
+};
+
+/** \class EqualityConstraintForce
+ *
+ * Helper class to write an equality constraint for Tasks. This constraint
+ * applies to the wrench associated to a given contact.
+ *
+ * This implements \f$ A * \mathbf{f}_{cI} = b \f$
+ *
+ * You must implement the following functions:
+ * - `const Eigen::MatrixXd & A() const override;` returns \f$A\f$, must be of size (nrLines, 6)
+ * - `void compute() override;` update constraint matrix and bounds
+ * - `int maxEq() const override;` number of equality lines
+ * - `std::string nameEq() const override;` desriptive name of the constraint
+ * - `const Eigen::VectorXd & bEq() const override;` returns \f$b\f$
+ *
+ */
+struct MC_SOLVER_DLLAPI EqualityConstraintForce : public utils::EqualityConstraint<utils::UpdateForce>
+{
+  EqualityConstraintForce(const mc_solver::QPSolver & solver, const tasks::qp::ContactId & cid)
+  : utils::EqualityConstraint<utils::UpdateForce>(solver, cid)
+  {
+  }
+};
 
 } // namespace mc_solver
