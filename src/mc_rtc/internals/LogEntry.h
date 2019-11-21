@@ -47,13 +47,14 @@ struct DataFromNode
   }
 };
 
-#define IMPL_DATAFROM_NODE(CPPT, MPACKT, MPACKGET)     \
+#define IMPL_DATAFROM_NODE(CPPT, CONDITION, MPACKGET)  \
   template<>                                           \
   struct DataFromNode<CPPT>                            \
   {                                                    \
     static bool convert(mpack_node_t node, CPPT & out) \
     {                                                  \
-      if(mpack_node_type(node) != MPACKT)              \
+      const auto t = mpack_node_type(node);            \
+      if(CONDITION)                                    \
       {                                                \
         return false;                                  \
       }                                                \
@@ -61,16 +62,16 @@ struct DataFromNode
       return true;                                     \
     }                                                  \
   };
-IMPL_DATAFROM_NODE(bool, mpack_type_bool, mpack_node_bool)
-IMPL_DATAFROM_NODE(int8_t, mpack_type_int, mpack_node_i8)
-IMPL_DATAFROM_NODE(int16_t, mpack_type_int, mpack_node_i16)
-IMPL_DATAFROM_NODE(int32_t, mpack_type_int, mpack_node_i32)
-IMPL_DATAFROM_NODE(int64_t, mpack_type_int, mpack_node_i64)
-IMPL_DATAFROM_NODE(uint8_t, mpack_type_uint, mpack_node_u8)
-IMPL_DATAFROM_NODE(uint16_t, mpack_type_uint, mpack_node_u16)
-IMPL_DATAFROM_NODE(uint32_t, mpack_type_uint, mpack_node_u32)
-IMPL_DATAFROM_NODE(uint64_t, mpack_type_uint, mpack_node_u64)
-IMPL_DATAFROM_NODE(float, mpack_type_float, mpack_node_float)
+IMPL_DATAFROM_NODE(bool, t != mpack_type_bool, mpack_node_bool)
+IMPL_DATAFROM_NODE(int8_t, t != mpack_type_int && t != mpack_type_uint, mpack_node_i8)
+IMPL_DATAFROM_NODE(int16_t, t != mpack_type_int && t != mpack_type_uint, mpack_node_i16)
+IMPL_DATAFROM_NODE(int32_t, t != mpack_type_int && t != mpack_type_uint, mpack_node_i32)
+IMPL_DATAFROM_NODE(int64_t, t != mpack_type_int && t != mpack_type_uint, mpack_node_i64)
+IMPL_DATAFROM_NODE(uint8_t, t != mpack_type_int && t != mpack_type_uint, mpack_node_u8)
+IMPL_DATAFROM_NODE(uint16_t, t != mpack_type_int && t != mpack_type_uint, mpack_node_u16)
+IMPL_DATAFROM_NODE(uint32_t, t != mpack_type_int && t != mpack_type_uint, mpack_node_u32)
+IMPL_DATAFROM_NODE(uint64_t, t != mpack_type_int && t != mpack_type_uint, mpack_node_u64)
+IMPL_DATAFROM_NODE(float, t != mpack_type_float, mpack_node_float)
 #undef IMPL_DATAFROM_NODE
 
 template<>

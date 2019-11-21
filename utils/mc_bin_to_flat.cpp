@@ -55,13 +55,25 @@ void write(const std::string & entry, const std::vector<std::string> & data, std
   }
 }
 
-static double nan = std::numeric_limits<double>::quiet_NaN();
+template<typename T>
+void write(const std::string & entry, const std::vector<T> & data, std::ostream & os)
+{
+  std::vector<double> out(data.size());
+  for(size_t i = 0; i < data.size(); ++i)
+  {
+    out[i] = static_cast<double>(data[i]);
+  }
+  write(entry, out, os);
+}
+
+static const double nan = std::numeric_limits<double>::quiet_NaN();
 
 template<typename T>
 void write(const mc_rtc::log::FlatLog & log, const std::string & entry, std::ostream & os)
 {
   static_assert(std::is_arithmetic<T>::value, "This default implementation only works for numeric types");
-  write(entry, log.get<double>(entry, nan), os);
+  static const T nan = std::numeric_limits<T>::quiet_NaN();
+  write(entry, log.get<T>(entry, nan), os);
 }
 
 template<>
@@ -358,15 +370,35 @@ void mc_bin_to_flat(const std::string & in, const std::string & out)
     switch(type)
     {
       case mc_rtc::log::LogType::Bool:
+        utils::write<bool>(log, entry, ofs);
+        break;
       case mc_rtc::log::LogType::Int8_t:
+        utils::write<int8_t>(log, entry, ofs);
+        break;
       case mc_rtc::log::LogType::Int16_t:
+        utils::write<int16_t>(log, entry, ofs);
+        break;
       case mc_rtc::log::LogType::Int32_t:
+        utils::write<int32_t>(log, entry, ofs);
+        break;
       case mc_rtc::log::LogType::Int64_t:
+        utils::write<int64_t>(log, entry, ofs);
+        break;
       case mc_rtc::log::LogType::Uint8_t:
+        utils::write<uint8_t>(log, entry, ofs);
+        break;
       case mc_rtc::log::LogType::Uint16_t:
+        utils::write<uint16_t>(log, entry, ofs);
+        break;
       case mc_rtc::log::LogType::Uint32_t:
+        utils::write<uint32_t>(log, entry, ofs);
+        break;
       case mc_rtc::log::LogType::Uint64_t:
+        utils::write<uint64_t>(log, entry, ofs);
+        break;
       case mc_rtc::log::LogType::Float:
+        utils::write<float>(log, entry, ofs);
+        break;
       case mc_rtc::log::LogType::Double:
         utils::write<double>(log, entry, ofs);
         break;

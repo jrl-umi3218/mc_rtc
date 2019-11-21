@@ -84,6 +84,27 @@ std::vector<T> FlatLog::get(const std::string & entry, const T & def) const
   return ret;
 }
 
+template<>
+inline std::vector<bool> FlatLog::get(const std::string & entry, const bool & def) const
+{
+  if(!has(entry))
+  {
+    LOG_ERROR("No entry named " << entry << " in the loaded log")
+    return {};
+  }
+  const auto & data = at(entry);
+  std::vector<bool> ret(data.size(), def);
+  for(size_t i = 0; i < data.size(); ++i)
+  {
+    const bool * ptr = details::record_cast<bool>(data[i]);
+    if(ptr)
+    {
+      ret[i] = *ptr;
+    }
+  }
+  return ret;
+}
+
 template<typename T>
 std::vector<T> FlatLog::get(const std::string & entry) const
 {
