@@ -116,6 +116,8 @@ void LIPMStabilizerTask::reset()
   zmpccCoMOffset_ = Eigen::Vector3d::Zero();
   zmpccCoMVel_ = Eigen::Vector3d::Zero();
   zmpccError_ = Eigen::Vector3d::Zero();
+
+  pendulum_.reset(robots_.robot(robotIndex_).com());
 }
 
 void LIPMStabilizerTask::dimWeight(const Eigen::VectorXd & /* dim */)
@@ -183,6 +185,9 @@ void LIPMStabilizerTask::removeFromSolver(mc_solver::QPSolver & solver)
 void LIPMStabilizerTask::update()
 {
   updateState(realRobots_.robot().com(), realRobots_.robot().comVelocity(), leftFootRatio());
+
+  LOG_INFO("real com: " << realRobots_.robot().com());
+  LOG_INFO("foot stiffness: " << rightFootTask->stiffness());
 
   // Run stabilizer
   run();
@@ -369,6 +374,84 @@ void LIPMStabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                    Eigen::Vector3d dfzError = {dfzForceError_, dfzHeightError_, 0.};
                    return vecFromError(dfzError);
                  }));
+
+  ///// GUI MARKERS
+  constexpr double ARROW_HEAD_DIAM = 0.015;
+  constexpr double ARROW_HEAD_LEN = 0.05;
+  constexpr double ARROW_SHAFT_DIAM = 0.015;
+  constexpr double FORCE_SCALE = 0.0015;
+
+  const std::map<char, Color> COLORS = {{'r', Color{1.0, 0.0, 0.0}}, {'g', Color{0.0, 1.0, 0.0}},
+                                        {'b', Color{0.0, 0.0, 1.0}}, {'y', Color{1.0, 0.5, 0.0}},
+                                        {'c', Color{0.0, 0.5, 1.0}}, {'m', Color{1.0, 0.0, 0.5}}};
+
+  ArrowConfig pendulumArrowConfig;
+  pendulumArrowConfig.color = COLORS.at('y');
+  pendulumArrowConfig.end_point_scale = 0.02;
+  pendulumArrowConfig.head_diam = .1 * ARROW_HEAD_DIAM;
+  pendulumArrowConfig.head_len = .1 * ARROW_HEAD_LEN;
+  pendulumArrowConfig.scale = 1.;
+  pendulumArrowConfig.shaft_diam = .1 * ARROW_SHAFT_DIAM;
+  pendulumArrowConfig.start_point_scale = 0.02;
+
+  ArrowConfig pendulumForceArrowConfig;
+  pendulumForceArrowConfig.shaft_diam = 1 * ARROW_SHAFT_DIAM;
+  pendulumForceArrowConfig.head_diam = 1 * ARROW_HEAD_DIAM;
+  pendulumForceArrowConfig.head_len = 1 * ARROW_HEAD_LEN;
+  pendulumForceArrowConfig.scale = 1.;
+  pendulumForceArrowConfig.start_point_scale = 0.02;
+  pendulumForceArrowConfig.end_point_scale = 0.;
+
+  ArrowConfig netWrenchForceArrowConfig = pendulumForceArrowConfig;
+  netWrenchForceArrowConfig.color = COLORS.at('r');
+
+  ArrowConfig refPendulumForceArrowConfig = pendulumForceArrowConfig;
+  refPendulumForceArrowConfig = COLORS.at('y');
+
+  ForceConfig copForceConfig(COLORS.at('g'));
+  copForceConfig.start_point_scale = 0.02;
+  copForceConfig.end_point_scale = 0.;
+
+  constexpr double COM_POINT_SIZE = 0.02;
+  constexpr double DCM_POINT_SIZE = 0.015;
+
+  auto footStepPolygon = [](const Contact & contact) {
+    std::vector<Eigen::Vector3d> polygon;
+    polygon.push_back(contact.vertex0());
+    polygon.push_back(contact.vertex1());
+    polygon.push_back(contact.vertex2());
+    polygon.push_back(contact.vertex3());
+    return polygon;
+  };
+
+  gui.addElement(
+      {"Walking", "Markers", "CoM-DCM"},
+      Arrow("Pendulum_CoM", pendulumArrowConfig, [this]() -> Eigen::Vector3d { return this->pendulum_.zmp(); },
+            [this]() -> Eigen::Vector3d { return this->pendulum_.com(); }),
+      Point3D("Measured_CoM", PointConfig(COLORS.at('g'), COM_POINT_SIZE), [this]() { return measuredCoM_; }),
+      Point3D("Pendulum_DCM", PointConfig(COLORS.at('y'), DCM_POINT_SIZE), [this]() { return pendulum_.dcm(); }),
+      Point3D("Measured_DCM", PointConfig(COLORS.at('g'), DCM_POINT_SIZE),
+              [this]() -> Eigen::Vector3d { return measuredCoM_ + measuredCoMd_ / pendulum_.omega(); }));
+
+  gui.addElement(
+      {"Walking", "Markers", "Net wrench"},
+      Point3D("Stabilizer_ZMP", PointConfig(COLORS.at('m'), 0.02), [this]() { return this->zmp(); }),
+      Point3D("Measured_ZMP", PointConfig(COLORS.at('r'), 0.02), [this]() -> Eigen::Vector3d { return measuredZMP_; }),
+      Arrow("Measured_ZMPForce", netWrenchForceArrowConfig, [this]() -> Eigen::Vector3d { return measuredZMP_; },
+            [this, FORCE_SCALE]() -> Eigen::Vector3d {
+              return measuredZMP_ + FORCE_SCALE * measuredNetWrench_.force();
+            }));
+
+  gui.addElement(
+      {"Walking", "Markers", "Foot wrenches"},
+      Point3D("Stabilizer_LeftCoP", PointConfig(COLORS.at('m'), 0.01), [this]() { return leftFootTask->targetCoPW(); }),
+      Force("Measured_LeftCoPForce", copForceConfig, [this]() { return this->robot().surfaceWrench("LeftFootCenter"); },
+            [this]() { return sva::PTransformd(this->robot().copW("LeftFootCenter")); }),
+      Point3D("Stabilizer_RightCoP", PointConfig(COLORS.at('m'), 0.01),
+              [this]() { return rightFootTask->targetCoPW(); }),
+      Force("Measured_RightCoPForce", copForceConfig,
+            [this]() { return this->robot().surfaceWrench("RightFootCenter"); },
+            [this]() { return sva::PTransformd(this->robot().copW("RightFootCenter")); }));
 }
 
 void LIPMStabilizerTask::disable()
@@ -606,7 +689,8 @@ void LIPMStabilizerTask::updateZMPFrame()
       break;
   }
   LOG_INFO("updateZMPFrame::computeZMP");
-  measuredZMP_ = computeZMP(robots_.robot(robotIndex_).netWrench(sensorNames_)); // computeZMP
+  measuredNetWrench_ = robots_.robot(robotIndex_).netWrench(sensorNames_);
+  measuredZMP_ = computeZMP(measuredNetWrench_); // computeZMP
 }
 
 Eigen::Vector3d LIPMStabilizerTask::computeZMP(const sva::ForceVecd & wrench) const

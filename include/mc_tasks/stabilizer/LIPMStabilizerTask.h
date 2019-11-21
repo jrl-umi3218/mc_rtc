@@ -402,6 +402,11 @@ protected:
   void removeFromLogger(mc_rtc::Logger &) override;
   void addToGUI(mc_rtc::gui::StateBuilder &) override;
 
+  const mc_rbdyn::Robot & robot() const
+  {
+    return robots_.robot(robotIndex_);
+  }
+
 protected:
   Contact leftFootContact;
   Contact rightFootContact;
@@ -430,6 +435,7 @@ protected:
   Eigen::Vector3d measuredCoM_;
   Eigen::Vector3d measuredCoMd_;
   Eigen::Vector3d measuredZMP_;
+  sva::ForceVecd measuredNetWrench_;
   Eigen::Vector3d zmpError_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d zmpccCoMAccel_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d zmpccCoMOffset_ = Eigen::Vector3d::Zero();
