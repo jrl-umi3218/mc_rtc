@@ -73,12 +73,7 @@ struct MC_TASKS_DLLAPI LIPMStabilizerTask : public MetaTask
   static constexpr double MIN_NET_TOTAL_FORCE_ZMP = 1.;
 
 public:
-  LIPMStabilizerTask(const mc_rbdyn::Robots & robots,
-                     unsigned int robotIndex,
-                     double dt,
-                     const Pendulum & pendulum,
-                     const std::string & leftFootSurface,
-                     const std::string & rightFootSurface);
+  LIPMStabilizerTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double dt);
   ~LIPMStabilizerTask() override;
 
   void reset() override;
@@ -442,6 +437,9 @@ protected:
   // XXX Modified from Stephane's version
   Pendulum pendulum_; /**< Reference to desired reduced-model state */
   double comWeight_ = 1000.; /**< Weight of CoM IK task */
+  double comHeight_ = 0.84; /**< Desired height of the CoM */
+  double maxCoMHeight_ = 0.92; /**< Maximum height of the CoM */
+  double minCoMHeight_ = 0.6; /**< Minimum height of the CoM */
   double contactWeight_ = 100000.; /**< Weight of contact IK tasks */
   double dcmDerivGain_ = 0.; /**< Derivative gain on DCM error */
   double dcmIntegralGain_ = 5.; /**< Integral gain on DCM error */

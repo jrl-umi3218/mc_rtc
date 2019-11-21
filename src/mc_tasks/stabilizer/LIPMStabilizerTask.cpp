@@ -5,6 +5,7 @@
  * lipm_walking_controller <https://github.com/stephane-caron/lipm_walking_controller>
  */
 
+#include <mc_tasks/MetaTaskLoader.h>
 #include <mc_tasks/stabilizer/LIPMStabilizerTask.h>
 
 #include <chrono>
@@ -47,14 +48,10 @@ inline Eigen::Vector2d vecFromError(const Eigen::Vector3d & error)
 const Eigen::Vector3d e_z{0., 0., 1.};
 } // namespace
 
-LIPMStabilizerTask::LIPMStabilizerTask(const mc_rbdyn::Robots & robots,
-                                       unsigned int robotIndex,
-                                       double dt,
-                                       const Pendulum & pendulum,
-                                       const std::string & leftFootSurface,
-                                       const std::string & rightFootSurface)
+LIPMStabilizerTask::LIPMStabilizerTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double dt)
 : robots_(robots), robotIndex_(robotIndex), dcmIntegrator_(dt, /* timeConstant = */ 5.),
-  dcmDerivator_(dt, /* timeConstant = */ 1.), pendulum_(pendulum), dt_(dt), mass_(robots.robot(robotIndex).mass())
+  dcmDerivator_(dt, /* timeConstant = */ 1.), pendulum_(robots.robot(robotIndex).mbc().gravity), dt_(dt),
+  mass_(robots.robot(robotIndex).mass())
 {
   type_ = "Stabilizer";
   name_ = "Stabilizer";
@@ -385,6 +382,7 @@ void LIPMStabilizerTask::configure(const mc_rtc::Configuration & config)
   reconfigure();
 }
 
+// XXX use ConfigurationLoader with a struct for the stabilizer config instead
 void LIPMStabilizerTask::reconfigure()
 {
   fdqpWeights_.configure(config_("fdqp_weights"));
@@ -413,6 +411,9 @@ void LIPMStabilizerTask::reconfigure()
       tasks("com")("active_joints", comActiveJoints_);
       tasks("com")("stiffness", comStiffness_);
       tasks("com")("weight", comWeight_);
+      tasks("com")("height", comHeight_);
+      tasks("com")("max_height", maxCoMHeight_);
+      tasks("com")("min_height", minCoMHeight_);
     }
     if(tasks.has("contact"))
     {
@@ -871,3 +872,25 @@ void LIPMStabilizerTask::updateFootForceDifferenceControl()
 
 } // namespace stabilizer
 } // namespace mc_tasks
+
+namespace
+{
+
+static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
+    "lipm_stabilizer",
+    [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
+      unsigned robotIndex = config("robotIndex");
+      auto & robot = solver.robots().robot(robotIndex);
+
+      auto t = std::make_shared<mc_tasks::stabilizer::LIPMStabilizerTask>(solver.robots(), robotIndex, solver.dt());
+
+      if(!config.has(robot.name()))
+      {
+        LOG_ERROR_AND_THROW(std::runtime_error, "Stabilizer: configuration does not exist for robot " << robot.name());
+      }
+
+      const auto & conf = config(robot.name());
+      t->load(solver, conf);
+      return t;
+    });
+}
