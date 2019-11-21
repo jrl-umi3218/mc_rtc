@@ -288,24 +288,30 @@ std::vector<std::string> MCController::supported_robots() const
   return {};
 }
 
+void MCController::realRobots(std::shared_ptr<mc_rbdyn::Robots> realRobots)
+{
+  solver().realRobots(realRobots);
+  real_robots = realRobots;
+}
+
 const mc_rbdyn::Robots & MCController::realRobots() const
 {
-  return *real_robots;
+  return solver().realRobots();
 }
 
 mc_rbdyn::Robots & MCController::realRobots()
 {
-  return *real_robots;
+  return solver().realRobots();
 }
 
 const mc_rbdyn::Robot & MCController::realRobot() const
 {
-  return real_robots->robot();
+  return realRobots().robot();
 }
 
 mc_rbdyn::Robot & MCController::realRobot()
 {
-  return real_robots->robot();
+  return realRobots().robot();
 }
 
 sva::PTransformd MCController::anchorFrame(const mc_rbdyn::Robot &) const

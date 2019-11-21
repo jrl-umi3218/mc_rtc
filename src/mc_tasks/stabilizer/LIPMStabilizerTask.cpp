@@ -49,13 +49,15 @@ const Eigen::Vector3d e_z{0., 0., 1.};
 } // namespace
 
 LIPMStabilizerTask::LIPMStabilizerTask(const mc_rbdyn::Robots & robots,
+                                       const mc_rbdyn::Robots & realRobots,
                                        unsigned int robotIndex,
                                        const std::string & leftSurface,
                                        const std::string & rightSurface,
                                        double dt)
-: robots_(robots), robotIndex_(robotIndex), leftFootSurface_(leftSurface), rightFootSurface_(rightSurface),
-  dcmIntegrator_(dt, /* timeConstant = */ 5.), dcmDerivator_(dt, /* timeConstant = */ 1.),
-  pendulum_(robots.robot(robotIndex).mbc().gravity), dt_(dt), mass_(robots.robot(robotIndex).mass())
+: robots_(robots), realRobots_(realRobots), robotIndex_(robotIndex), leftFootSurface_(leftSurface),
+  rightFootSurface_(rightSurface), dcmIntegrator_(dt, /* timeConstant = */ 5.),
+  dcmDerivator_(dt, /* timeConstant = */ 1.), pendulum_(robots.robot(robotIndex).mbc().gravity), dt_(dt),
+  mass_(robots.robot(robotIndex).mass())
 {
   type_ = "Stabilizer";
   name_ = "Stabilizer";
@@ -180,8 +182,7 @@ void LIPMStabilizerTask::removeFromSolver(mc_solver::QPSolver & solver)
 
 void LIPMStabilizerTask::update()
 {
-  // FIXME should be realRobot() but it is not accessible from within tasks now
-  updateState(robots_.robot().com(), robots_.robot().comVelocity(), leftFootRatio());
+  updateState(realRobots_.robot().com(), realRobots_.robot().comVelocity(), leftFootRatio());
 
   // Run stabilizer
   run();
@@ -932,8 +933,8 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
       std::string left = config("surfaces")("left");
       std::string right = config("surfaces")("right");
 
-      auto t = std::make_shared<mc_tasks::stabilizer::LIPMStabilizerTask>(solver.robots(), robotIndex, left, right,
-                                                                          solver.dt());
+      auto t = std::make_shared<mc_tasks::stabilizer::LIPMStabilizerTask>(solver.robots(), solver.realRobots(),
+                                                                          robotIndex, left, right, solver.dt());
       const auto & conf = config(robot.name());
       t->load(solver, conf);
       return t;

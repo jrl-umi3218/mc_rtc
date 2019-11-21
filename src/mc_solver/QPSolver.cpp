@@ -484,6 +484,21 @@ mc_rbdyn::Robots & QPSolver::robots()
   return *robots_p;
 }
 
+void QPSolver::realRobots(std::shared_ptr<mc_rbdyn::Robots> realRobots)
+{
+  realRobots_p = realRobots;
+}
+const mc_rbdyn::Robots & QPSolver::realRobots() const
+{
+  assert(realRobots_p);
+  return *realRobots_p;
+}
+mc_rbdyn::Robots & QPSolver::realRobots()
+{
+  assert(realRobots_p);
+  return *realRobots_p;
+}
+
 void QPSolver::updateConstrSize()
 {
   solver.updateConstrSize();

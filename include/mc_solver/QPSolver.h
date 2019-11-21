@@ -249,6 +249,16 @@ public:
   /** Gives access to the robots controlled by this solver */
   mc_rbdyn::Robots & robots();
 
+  /** Allows to set the real robots used by this solver
+   * XXX could be dangerous / misleading if users set it but tasks have stored
+   * it too
+   */
+  void realRobots(std::shared_ptr<mc_rbdyn::Robots> realRobots);
+  /** Gives access to the real robots used by this solver */
+  const mc_rbdyn::Robots & realRobots() const;
+  /** Gives access to the real robots used by this solver */
+  mc_rbdyn::Robots & realRobots();
+
   /** Update number of variables
    *
    * This should be called when/if you add new robots into the scene after the
@@ -294,6 +304,7 @@ public:
 
 private:
   std::shared_ptr<mc_rbdyn::Robots> robots_p;
+  std::shared_ptr<mc_rbdyn::Robots> realRobots_p;
   double timeStep;
 
   /** Holds mc_rbdyn::Contact in the solver */

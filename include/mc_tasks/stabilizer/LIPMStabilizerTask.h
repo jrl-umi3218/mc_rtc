@@ -74,6 +74,7 @@ struct MC_TASKS_DLLAPI LIPMStabilizerTask : public MetaTask
 
 public:
   LIPMStabilizerTask(const mc_rbdyn::Robots & robots,
+                     const mc_rbdyn::Robots & realRobots,
                      unsigned int robotIndex,
                      const std::string & leftSurface,
                      const std::string & rightSurface,
@@ -408,6 +409,7 @@ protected:
   std::shared_ptr<mc_tasks::force::CoPTask> leftFootTask;
   std::shared_ptr<mc_tasks::force::CoPTask> rightFootTask;
   const mc_rbdyn::Robots & robots_;
+  const mc_rbdyn::Robots & realRobots_;
   unsigned int robotIndex_;
   std::string leftFootSurface_ = "LeftFootCenter";
   std::string rightFootSurface_ = "RightFootCenter";

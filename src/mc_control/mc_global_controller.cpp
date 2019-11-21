@@ -711,11 +711,14 @@ bool MCGlobalController::AddController(const std::string & name)
       controllers[name] = controller_loader->create_object(name, config.main_robot_module, config.timestep,
                                                            config.controllers_configs[name]);
     }
-    controllers[name]->real_robots = real_robots;
+    controllers[name]->realRobots(real_robots); // real_robots = real_robots;
     if(config.enable_log)
     {
       controllers[name]->logger().setup(config.log_policy, config.log_directory, config.log_template);
     }
+
+    // Give access to real robots to each enabled controller
+    controllers[name]->realRobots(real_robots);
 
     // Give each controller access to all observers
     controllers[name]->observers_ = observers_;
@@ -774,7 +777,7 @@ bool MCGlobalController::AddController(const std::string & name, std::shared_ptr
     return false;
   }
   controllers[name] = controller;
-  controllers[name]->real_robots = real_robots;
+  controllers[name]->realRobots(real_robots);
   if(config.enable_log)
   {
     controllers[name]->logger().setup(config.log_policy, config.log_directory, config.log_template);
