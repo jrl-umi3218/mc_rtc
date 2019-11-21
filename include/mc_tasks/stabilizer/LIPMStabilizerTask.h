@@ -73,7 +73,11 @@ struct MC_TASKS_DLLAPI LIPMStabilizerTask : public MetaTask
   static constexpr double MIN_NET_TOTAL_FORCE_ZMP = 1.;
 
 public:
-  LIPMStabilizerTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double dt);
+  LIPMStabilizerTask(const mc_rbdyn::Robots & robots,
+                     unsigned int robotIndex,
+                     const std::string & leftSurface,
+                     const std::string & rightSurface,
+                     double dt);
   ~LIPMStabilizerTask() override;
 
   void reset() override;
@@ -405,6 +409,8 @@ protected:
   std::shared_ptr<mc_tasks::force::CoPTask> rightFootTask;
   const mc_rbdyn::Robots & robots_;
   unsigned int robotIndex_;
+  std::string leftFootSurface_ = "LeftFootCenter";
+  std::string rightFootSurface_ = "RightFootCenter";
 
 protected:
   Eigen::Vector3d gravity_; /**< Gravity vector from mbc().gravity */

@@ -546,14 +546,20 @@ Eigen::Vector3d Robot::zmp(const sva::ForceVecd & netTotalWrench,
                         "ZMP cannot be computed: the minimalNetNormalForce must be >0 (divide by zero)");
   }
 
+  LOG_INFO("n: " << plane_n.transpose());
+  LOG_INFO("p: " << plane_p.transpose());
+
   const Eigen::Vector3d & force = netTotalWrench.force();
   const Eigen::Vector3d & moment_0 = netTotalWrench.couple();
   Eigen::Vector3d moment_p = moment_0 - plane_p.cross(force);
   double floorn_dot_force = plane_n.dot(force);
+  LOG_INFO("force: " << netTotalWrench.force().transpose());
+  LOG_INFO("force normal: " << floorn_dot_force);
   // Prevent potential division by zero
   if(floorn_dot_force < minimalNetNormalForce)
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "ZMP cannot be computed, projected force too small " << floorn_dot_force);
+    // LOG_ERROR_AND_THROW(std::runtime_error, "ZMP cannot be computed, projected force too small " << floorn_dot_force);
+    LOG_ERROR("ZMP cannot be computed, projected force too small " << floorn_dot_force);
   }
   Eigen::Vector3d zmp = plane_p + plane_n.cross(moment_p) / floorn_dot_force;
   return zmp;

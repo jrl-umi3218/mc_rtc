@@ -48,10 +48,14 @@ inline Eigen::Vector2d vecFromError(const Eigen::Vector3d & error)
 const Eigen::Vector3d e_z{0., 0., 1.};
 } // namespace
 
-LIPMStabilizerTask::LIPMStabilizerTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double dt)
-: robots_(robots), robotIndex_(robotIndex), dcmIntegrator_(dt, /* timeConstant = */ 5.),
-  dcmDerivator_(dt, /* timeConstant = */ 1.), pendulum_(robots.robot(robotIndex).mbc().gravity), dt_(dt),
-  mass_(robots.robot(robotIndex).mass())
+LIPMStabilizerTask::LIPMStabilizerTask(const mc_rbdyn::Robots & robots,
+                                       unsigned int robotIndex,
+                                       const std::string & leftSurface,
+                                       const std::string & rightSurface,
+                                       double dt)
+: robots_(robots), robotIndex_(robotIndex), leftFootSurface_(leftSurface), rightFootSurface_(rightSurface),
+  dcmIntegrator_(dt, /* timeConstant = */ 5.), dcmDerivator_(dt, /* timeConstant = */ 1.),
+  pendulum_(robots.robot(robotIndex).mbc().gravity), dt_(dt), mass_(robots.robot(robotIndex).mass())
 {
   type_ = "Stabilizer";
   name_ = "Stabilizer";
@@ -64,16 +68,14 @@ LIPMStabilizerTask::LIPMStabilizerTask(const mc_rbdyn::Robots & robots, unsigned
   comTask->setGains(comStiffness_, 2 * comStiffness_.cwiseSqrt());
   comTask->weight(comWeight_);
 
-  leftFootTask.reset(new mc_tasks::force::CoPTask("LeftFootCenter", robots, robotIndex_));
-  rightFootTask.reset(new mc_tasks::force::CoPTask("RightFootCenter", robots, robotIndex_));
+  leftFootTask.reset(new mc_tasks::force::CoPTask(leftFootSurface_, robots, robotIndex_));
+  rightFootTask.reset(new mc_tasks::force::CoPTask(rightFootSurface_, robots, robotIndex_));
   leftFootTask->maxAngularVel({MAX_FDC_RX_VEL, MAX_FDC_RY_VEL, MAX_FDC_RZ_VEL});
   rightFootTask->maxAngularVel({MAX_FDC_RX_VEL, MAX_FDC_RY_VEL, MAX_FDC_RZ_VEL});
-  setContact(leftFootTask, leftFootTask->surfacePose());
-  setContact(rightFootTask, rightFootTask->surfacePose());
 
   comTask.reset(new mc_tasks::CoMTask(robots, robotIndex_));
-  leftFootTask.reset(new mc_tasks::force::CoPTask("LeftFootCenter", robots, robotIndex_));
-  rightFootTask.reset(new mc_tasks::force::CoPTask("RightFootCenter", robots, robotIndex_));
+  leftFootTask.reset(new mc_tasks::force::CoPTask(leftFootSurface_, robots, robotIndex_));
+  rightFootTask.reset(new mc_tasks::force::CoPTask(rightFootSurface_, robots, robotIndex_));
 
   reset();
 }
@@ -90,6 +92,7 @@ void LIPMStabilizerTask::reset()
   rightFootTask->maxAngularVel({MAX_FDC_RX_VEL, MAX_FDC_RY_VEL, MAX_FDC_RZ_VEL});
   setContact(leftFootTask, leftFootTask->surfacePose());
   setContact(rightFootTask, rightFootTask->surfacePose());
+  contactState(ContactState::DoubleSupport);
 
   dcmDerivator_.setZero();
   dcmIntegrator_.saturation(MAX_AVERAGE_DCM_ERROR);
@@ -113,7 +116,7 @@ void LIPMStabilizerTask::reset()
   zmpccError_ = Eigen::Vector3d::Zero();
 }
 
-void LIPMStabilizerTask::dimWeight(const Eigen::VectorXd & dim)
+void LIPMStabilizerTask::dimWeight(const Eigen::VectorXd & /* dim */)
 {
   LOG_ERROR_AND_THROW(std::runtime_error, "dimWeight not implemented for task " << type_);
 }
@@ -177,6 +180,9 @@ void LIPMStabilizerTask::removeFromSolver(mc_solver::QPSolver & solver)
 
 void LIPMStabilizerTask::update()
 {
+  // FIXME should be realRobot() but it is not accessible from within tasks now
+  updateState(robots_.robot().com(), robots_.robot().comVelocity(), leftFootRatio());
+
   // Run stabilizer
   run();
 
@@ -441,6 +447,33 @@ void LIPMStabilizerTask::reconfigure()
     auto zmpcc = config_("zmpcc");
     zmpccIntegrator_.rate(zmpcc("integrator_leak_rate"));
   }
+
+  if(config_.has("contacts"))
+  {
+    for(const std::string contact : config_("contacts"))
+    {
+      if(contact == "left")
+      {
+        // XXX check with stephane
+        mc_tasks::stabilizer::Contact contact(robots_.robot(robotIndex_).surfacePose(leftFootSurface_));
+        contact.surfaceName = leftFootSurface_;
+        setContact(leftFootTask, contact);
+      }
+      else if(contact == "right")
+      {
+        // XXX check with stephane
+        mc_tasks::stabilizer::Contact contact(robots_.robot(robotIndex_).surfacePose(rightFootSurface_));
+        contact.surfaceName = rightFootSurface_;
+        setContact(rightFootTask, contact);
+      }
+      else
+      {
+        LOG_ERROR_AND_THROW(
+            std::runtime_error,
+            "[LIPMStabilizerTask] Invalid entry in \"contacts\" configuration, should be LEFT or RIGHT");
+      }
+    }
+  }
 }
 
 void LIPMStabilizerTask::checkGains()
@@ -476,12 +509,14 @@ void LIPMStabilizerTask::setContact(std::shared_ptr<mc_tasks::force::CoPTask> fo
   footTask->setGains(contactStiffness_, contactDamping_);
   footTask->targetPose(contact.pose);
   footTask->weight(contactWeight_);
-  if(footTask->surface() == "LeftFootCenter")
+  if(footTask->surface() == leftFootSurface_)
   {
+    LOG_INFO("setting left foot contact for surface " << contact.surfaceName);
     leftFootContact = contact;
   }
-  else if(footTask->surface() == "RightFootCenter")
+  else if(footTask->surface() == rightFootSurface_)
   {
+    LOG_INFO("setting right foot contact for surface " << contact.surfaceName);
     rightFootContact = contact;
   }
   else
@@ -569,6 +604,7 @@ void LIPMStabilizerTask::updateZMPFrame()
       zmpFrame_ = X_0_rc;
       break;
   }
+  LOG_INFO("updateZMPFrame::computeZMP");
   measuredZMP_ = computeZMP(robots_.robot(robotIndex_).netWrench(sensorNames_)); // computeZMP
 }
 
@@ -820,6 +856,7 @@ void LIPMStabilizerTask::updateCoMTaskZMPCC()
   }
   else
   {
+    LOG_INFO("updateCoMTaskZMPCC::computeZMP");
     auto distribZMP = computeZMP(distribWrench_);
     zmpccError_ = distribZMP - measuredZMP_;
     const Eigen::Matrix3d & R_0_c = zmpFrame_.rotation();
@@ -882,13 +919,21 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
       unsigned robotIndex = config("robotIndex");
       auto & robot = solver.robots().robot(robotIndex);
 
-      auto t = std::make_shared<mc_tasks::stabilizer::LIPMStabilizerTask>(solver.robots(), robotIndex, solver.dt());
-
       if(!config.has(robot.name()))
       {
-        LOG_ERROR_AND_THROW(std::runtime_error, "Stabilizer: configuration does not exist for robot " << robot.name());
+        LOG_ERROR_AND_THROW(std::runtime_error,
+                            "[LIPMStabilizerTask] Configuration does not exist for robot " << robot.name());
       }
 
+      if(!config.has("surfaces"))
+      {
+        LOG_ERROR_AND_THROW(std::runtime_error, "[LIPMStabilizerTask] Missing \"surfaces\" configuration entry");
+      }
+      std::string left = config("surfaces")("left");
+      std::string right = config("surfaces")("right");
+
+      auto t = std::make_shared<mc_tasks::stabilizer::LIPMStabilizerTask>(solver.robots(), robotIndex, left, right,
+                                                                          solver.dt());
       const auto & conf = config(robot.name());
       t->load(solver, conf);
       return t;
