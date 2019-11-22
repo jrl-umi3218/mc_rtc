@@ -57,8 +57,7 @@ LIPMStabilizerTask::LIPMStabilizerTask(const mc_rbdyn::Robots & robots,
                                        double dt)
 : robots_(robots), realRobots_(realRobots), robotIndex_(robotIndex), leftFootSurface_(leftSurface),
   rightFootSurface_(rightSurface), dcmIntegrator_(dt, /* timeConstant = */ 5.),
-  dcmDerivator_(dt, /* timeConstant = */ 1.), pendulum_(robots.robot(robotIndex).mbc().gravity), dt_(dt),
-  mass_(robots.robot(robotIndex).mass())
+  dcmDerivator_(dt, /* timeConstant = */ 1.), dt_(dt), mass_(robots.robot(robotIndex).mass())
 {
   type_ = "Stabilizer";
   name_ = "Stabilizer";
@@ -66,18 +65,13 @@ LIPMStabilizerTask::LIPMStabilizerTask(const mc_rbdyn::Robots & robots,
   vertical_ = gravity_ / gravity_.norm();
 
   comTask.reset(new mc_tasks::CoMTask(robots, robotIndex_));
-  comTask->selectActiveJoints(comActiveJoints_);
-  comTask->setGains(comStiffness_, 2 * comStiffness_.cwiseSqrt());
-  comTask->weight(comWeight_);
-
   leftFootTask.reset(new mc_tasks::force::CoPTask(leftFootSurface_, robots, robotIndex_));
   rightFootTask.reset(new mc_tasks::force::CoPTask(rightFootSurface_, robots, robotIndex_));
-  leftFootTask->maxAngularVel({MAX_FDC_RX_VEL, MAX_FDC_RY_VEL, MAX_FDC_RZ_VEL});
-  rightFootTask->maxAngularVel({MAX_FDC_RX_VEL, MAX_FDC_RY_VEL, MAX_FDC_RZ_VEL});
 
-  comTask.reset(new mc_tasks::CoMTask(robots, robotIndex_));
-  leftFootTask.reset(new mc_tasks::force::CoPTask(leftFootSurface_, robots, robotIndex_));
-  rightFootTask.reset(new mc_tasks::force::CoPTask(rightFootSurface_, robots, robotIndex_));
+  std::string pelvisBodyName = robot().mb().body(0).name();
+  pelvisTask = std::make_shared<mc_tasks::OrientationTask>(pelvisBodyName, robots_, robotIndex_);
+  std::string torsoName = "CHEST_LINK1";
+  torsoTask = std::make_shared<mc_tasks::OrientationTask>(torsoName, robots_, robotIndex_);
 
   reset();
 }
@@ -86,6 +80,23 @@ LIPMStabilizerTask::~LIPMStabilizerTask() {}
 
 void LIPMStabilizerTask::reset()
 {
+  comTask->reset();
+  rightFootTask->reset();
+  leftFootTask->reset();
+  pelvisTask->reset();
+  torsoTask->reset();
+
+  // Add upper-body tasks
+  double pelvisStiffness = 10;
+  double pelvisWeight = 100;
+  pelvisTask->stiffness(pelvisStiffness);
+  pelvisTask->weight(pelvisWeight);
+
+  double torsoStiffness = 10;
+  double torsoWeight = 100;
+  torsoTask->stiffness(torsoStiffness);
+  torsoTask->weight(torsoWeight);
+
   comTask->selectActiveJoints(comActiveJoints_);
   comTask->setGains(comStiffness_, 2 * comStiffness_.cwiseSqrt());
   comTask->weight(comWeight_);
@@ -109,7 +120,7 @@ void LIPMStabilizerTask::reset()
   dcmVelError_ = Eigen::Vector3d::Zero();
   dfzForceError_ = 0.;
   dfzHeightError_ = 0.;
-  distribWrench_ = {pendulum_.com().cross(staticForce), staticForce};
+  distribWrench_ = {comTarget_.cross(staticForce), staticForce};
   vdcHeightError_ = 0.;
   zmpError_ = Eigen::Vector3d::Zero();
   zmpccCoMAccel_ = Eigen::Vector3d::Zero();
@@ -117,7 +128,7 @@ void LIPMStabilizerTask::reset()
   zmpccCoMVel_ = Eigen::Vector3d::Zero();
   zmpccError_ = Eigen::Vector3d::Zero();
 
-  pendulum_.reset(robots_.robot(robotIndex_).com());
+  omega_ = std::sqrt(robot().mbc().gravity.z() / robot().com().z());
 }
 
 void LIPMStabilizerTask::dimWeight(const Eigen::VectorXd & /* dim */)
@@ -173,6 +184,8 @@ void LIPMStabilizerTask::addToSolver(mc_solver::QPSolver & solver)
   MetaTask::addToSolver(*comTask, solver);
   MetaTask::addToSolver(*leftFootTask, solver);
   MetaTask::addToSolver(*rightFootTask, solver);
+  MetaTask::addToSolver(*pelvisTask, solver);
+  MetaTask::addToSolver(*torsoTask, solver);
 }
 
 void LIPMStabilizerTask::removeFromSolver(mc_solver::QPSolver & solver)
@@ -180,6 +193,8 @@ void LIPMStabilizerTask::removeFromSolver(mc_solver::QPSolver & solver)
   MetaTask::removeFromSolver(*comTask, solver);
   MetaTask::removeFromSolver(*leftFootTask, solver);
   MetaTask::removeFromSolver(*rightFootTask, solver);
+  MetaTask::removeFromSolver(*pelvisTask, solver);
+  MetaTask::removeFromSolver(*torsoTask, solver);
 }
 
 void LIPMStabilizerTask::update()
@@ -195,6 +210,8 @@ void LIPMStabilizerTask::update()
   MetaTask::update(*comTask);
   MetaTask::update(*leftFootTask);
   MetaTask::update(*rightFootTask);
+  MetaTask::update(*pelvisTask);
+  MetaTask::update(*torsoTask);
 }
 
 void LIPMStabilizerTask::addToLogger(mc_rtc::Logger & logger)
@@ -244,6 +261,35 @@ void LIPMStabilizerTask::addToLogger(mc_rtc::Logger & logger)
   logger.addLogEntry("stabilizer_zmpcc_comVel", [this]() { return zmpccCoMVel_; });
   logger.addLogEntry("stabilizer_zmpcc_error", [this]() { return zmpccError_; });
   logger.addLogEntry("stabilizer_zmpcc_leakRate", [this]() { return zmpccIntegrator_.rate(); });
+
+  logger.addLogEntry("controlRobot_LeftFoot", [this]() { return robot().surfacePose("LeftFoot"); });
+  logger.addLogEntry("controlRobot_LeftFootCenter", [this]() { return robot().surfacePose("LeftFootCenter"); });
+  logger.addLogEntry("controlRobot_RightFoot", [this]() { return robot().surfacePose("RightFoot"); });
+  logger.addLogEntry("controlRobot_RightFootCenter", [this]() { return robot().surfacePose("RightFootCenter"); });
+  logger.addLogEntry("controlRobot_com", [this]() { return robot().com(); });
+  logger.addLogEntry("controlRobot_comd", [this]() { return robot().comVelocity(); });
+  logger.addLogEntry("controlRobot_posW", [this]() { return robot().posW(); });
+  logger.addLogEntry("left_foot_ratio", [this]() { return leftFootRatio_; });
+  logger.addLogEntry("pendulum_com", [this]() { return comTarget_; });
+  logger.addLogEntry("pendulum_comd", [this]() { return comdTarget_; });
+  logger.addLogEntry("pendulum_comdd", [this]() { return comddTarget_; });
+  logger.addLogEntry("pendulum_dcm", [this]() { return dcmTarget_; });
+  logger.addLogEntry("pendulum_omega", [this]() { return omega_; });
+  logger.addLogEntry("pendulum_zmp", [this]() { return zmpTarget_; });
+  logger.addLogEntry("realRobot_LeftFoot", [this]() { return realRobot().surfacePose("LeftFoot"); });
+  logger.addLogEntry("realRobot_LeftFootCenter", [this]() { return realRobot().surfacePose("LeftFootCenter"); });
+  logger.addLogEntry("realRobot_RightFoot", [this]() { return realRobot().surfacePose("RightFoot"); });
+  logger.addLogEntry("realRobot_RightFootCenter", [this]() { return realRobot().surfacePose("RightFootCenter"); });
+  logger.addLogEntry("realRobot_com", [this]() { return measuredCoM_; });
+  logger.addLogEntry("realRobot_comd", [this]() { return measuredCoMd_; });
+  logger.addLogEntry("realRobot_dcm", [this]() -> Eigen::Vector3d { return measuredCoM_ + measuredCoMd_ / omega_; });
+  logger.addLogEntry("realRobot_posW", [this]() { return realRobot().posW(); });
+  logger.addLogEntry("realRobot_wrench", [this]() { return measuredNetWrench_; });
+  logger.addLogEntry("realRobot_zmp", [this]() { return measuredZMP_; });
+
+  comTask->addToLogger(logger);
+  leftFootTask->addToLogger(logger);
+  rightFootTask->addToLogger(logger);
 }
 
 void LIPMStabilizerTask::removeFromLogger(mc_rtc::Logger & logger)
@@ -342,20 +388,19 @@ void LIPMStabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                               double lagFreq = clamp(polePlacement(3), 1., 200.);
                               polePlacement_ = {alpha, beta, gamma, lagFreq};
 
-                              double omega = pendulum_.omega();
-                              double denom = pendulum_.omega() * lagFreq;
+                              double denom = omega_ * lagFreq;
                               double T_integ = dcmIntegrator_.timeConstant();
 
                               // Gains K_z for the ZMP feedback (Delta ZMP = K_z * Delta DCM)
                               double zmpPropGain =
-                                  (alpha * beta + beta * gamma + gamma * alpha + omega * lagFreq) / denom;
+                                  (alpha * beta + beta * gamma + gamma * alpha + omega_ * lagFreq) / denom;
                               double zmpIntegralGain = -(alpha * beta * gamma) / denom;
-                              double zmpDerivGain = -(alpha + beta + gamma + lagFreq - omega) / denom;
+                              double zmpDerivGain = -(alpha + beta + gamma + lagFreq - omega_) / denom;
 
                               // Our gains K are for closed-loop DCM (Delta dot(DCM) = -K * Delta DCM)
-                              dcmPropGain_ = omega * (zmpPropGain - 1.);
-                              dcmIntegralGain_ = omega * T_integ * zmpIntegralGain; // our integrator is an EMA
-                              dcmDerivGain_ = omega * zmpDerivGain;
+                              dcmPropGain_ = omega_ * (zmpPropGain - 1.);
+                              dcmIntegralGain_ = omega_ * T_integ * zmpIntegralGain; // our integrator is an EMA
+                              dcmDerivGain_ = omega_ * zmpDerivGain;
                             }),
                  ArrayInput("Vertical drift compensation", {"frequency", "stiffness"},
                             [this]() -> Eigen::Vector2d {
@@ -426,12 +471,12 @@ void LIPMStabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 
   gui.addElement(
       {"Walking", "Markers", "CoM-DCM"},
-      Arrow("Pendulum_CoM", pendulumArrowConfig, [this]() -> Eigen::Vector3d { return this->pendulum_.zmp(); },
-            [this]() -> Eigen::Vector3d { return this->pendulum_.com(); }),
+      Arrow("Pendulum_CoM", pendulumArrowConfig, [this]() -> Eigen::Vector3d { return zmpTarget_; },
+            [this]() -> Eigen::Vector3d { return comTarget_; }),
       Point3D("Measured_CoM", PointConfig(COLORS.at('g'), COM_POINT_SIZE), [this]() { return measuredCoM_; }),
-      Point3D("Pendulum_DCM", PointConfig(COLORS.at('y'), DCM_POINT_SIZE), [this]() { return pendulum_.dcm(); }),
+      Point3D("Pendulum_DCM", PointConfig(COLORS.at('y'), DCM_POINT_SIZE), [this]() { return dcmTarget_; }),
       Point3D("Measured_DCM", PointConfig(COLORS.at('g'), DCM_POINT_SIZE),
-              [this]() -> Eigen::Vector3d { return measuredCoM_ + measuredCoMd_ / pendulum_.omega(); }));
+              [this]() -> Eigen::Vector3d { return measuredCoM_ + measuredCoMd_ / omega_; }));
 
   gui.addElement(
       {"Walking", "Markers", "Net wrench"},
@@ -532,6 +577,9 @@ void LIPMStabilizerTask::reconfigure()
     zmpccIntegrator_.rate(zmpcc("integrator_leak_rate"));
   }
 
+  reset();
+
+  bool hasContact = false;
   if(config_.has("contacts"))
   {
     for(const std::string contact : config_("contacts"))
@@ -542,6 +590,7 @@ void LIPMStabilizerTask::reconfigure()
         mc_tasks::stabilizer::Contact contact(robots_.robot(robotIndex_).surfacePose(leftFootSurface_));
         contact.surfaceName = leftFootSurface_;
         setContact(leftFootTask, contact);
+        hasContact = true;
       }
       else if(contact == "right")
       {
@@ -549,14 +598,19 @@ void LIPMStabilizerTask::reconfigure()
         mc_tasks::stabilizer::Contact contact(robots_.robot(robotIndex_).surfacePose(rightFootSurface_));
         contact.surfaceName = rightFootSurface_;
         setContact(rightFootTask, contact);
+        hasContact = true;
       }
       else
       {
         LOG_ERROR_AND_THROW(
             std::runtime_error,
-            "[LIPMStabilizerTask] Invalid entry in \"contacts\" configuration, should be LEFT or RIGHT");
+            "[LIPMStabilizerTask] Invalid entry in \"contacts\" configuration, should be \"left\" or \"right\"");
       }
     }
+  }
+  if(!hasContact)
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "[LIPMStabilizerTask] Attempting to use stabilizer with no contact!");
   }
 }
 
@@ -570,20 +624,6 @@ void LIPMStabilizerTask::checkGains()
   clampInPlace(dcmIntegralGain_, 0., MAX_DCM_I_GAIN, "DCM integral x-gain");
   clampInPlace(dcmPropGain_, 0., MAX_DCM_P_GAIN, "DCM prop x-gain");
   clampInPlace(dfzAdmittance_, 0., MAX_DFZ_ADMITTANCE, "DFz admittance");
-}
-
-void LIPMStabilizerTask::addTasks(mc_solver::QPSolver & solver)
-{
-  solver.addTask(comTask);
-  solver.addTask(leftFootTask);
-  solver.addTask(rightFootTask);
-}
-
-void LIPMStabilizerTask::removeTasks(mc_solver::QPSolver & solver)
-{
-  solver.removeTask(comTask);
-  solver.removeTask(leftFootTask);
-  solver.removeTask(rightFootTask);
 }
 
 void LIPMStabilizerTask::setContact(std::shared_ptr<mc_tasks::force::CoPTask> footTask, const Contact & contact)
@@ -698,6 +738,16 @@ Eigen::Vector3d LIPMStabilizerTask::computeZMP(const sva::ForceVecd & wrench) co
   return robots_.robot(robotIndex_).zmp(wrench, zmpFrame_, MIN_NET_TOTAL_FORCE_ZMP);
 }
 
+void LIPMStabilizerTask::staticTarget(const Eigen::Vector3d & com)
+{
+  comTarget_ = com;
+  comdTarget_ = Eigen::Vector3d::Zero();
+  comddTarget_ = Eigen::Vector3d::Zero();
+  // XXX should compute height, omega
+  zmpTarget_ = Eigen::Vector3d{com.x(), com.y(), 0.};
+  dcmTarget_ = comTarget_;
+}
+
 void LIPMStabilizerTask::run()
 {
   using namespace std::chrono;
@@ -742,10 +792,9 @@ void LIPMStabilizerTask::updateState(const Eigen::Vector3d & com, const Eigen::V
 
 sva::ForceVecd LIPMStabilizerTask::computeDesiredWrench()
 {
-  double omega = pendulum_.omega();
-  Eigen::Vector3d comError = pendulum_.com() - measuredCoM_;
-  Eigen::Vector3d comdError = pendulum_.comd() - measuredCoMd_;
-  dcmError_ = comError + comdError / omega;
+  Eigen::Vector3d comError = comTarget_ - measuredCoM_;
+  Eigen::Vector3d comdError = comdTarget_ - measuredCoMd_;
+  dcmError_ = comError + comdError / omega_;
   dcmError_.z() = 0.;
 
   if(inTheAir_)
@@ -755,20 +804,20 @@ sva::ForceVecd LIPMStabilizerTask::computeDesiredWrench()
   }
   else
   {
-    zmpError_ = pendulum_.zmp() - measuredZMP_; // XXX: both in same plane?
+    zmpError_ = zmpTarget_ - measuredZMP_; // XXX: both in same plane?
     zmpError_.z() = 0.;
-    dcmDerivator_.update(omega * (dcmError_ - zmpError_));
+    dcmDerivator_.update(omega_ * (dcmError_ - zmpError_));
     dcmIntegrator_.append(dcmError_);
   }
   dcmAverageError_ = dcmIntegrator_.eval();
   dcmVelError_ = dcmDerivator_.eval();
 
-  Eigen::Vector3d desiredCoMAccel = pendulum_.comdd();
-  desiredCoMAccel += omega * (dcmPropGain_ * dcmError_ + comdError);
-  desiredCoMAccel += omega * dcmIntegralGain_ * dcmAverageError_;
-  desiredCoMAccel += omega * dcmDerivGain_ * dcmVelError_;
+  Eigen::Vector3d desiredCoMAccel = comddTarget_;
+  desiredCoMAccel += omega_ * (dcmPropGain_ * dcmError_ + comdError);
+  desiredCoMAccel += omega_ * dcmIntegralGain_ * dcmAverageError_;
+  desiredCoMAccel += omega_ * dcmDerivGain_ * dcmVelError_;
   auto desiredForce = mass_ * (desiredCoMAccel - gravity_);
-  return {pendulum_.com().cross(desiredForce), desiredForce};
+  return {comTarget_.cross(desiredForce), desiredForce};
 }
 
 void LIPMStabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
@@ -954,9 +1003,9 @@ void LIPMStabilizerTask::updateCoMTaskZMPCC()
     zmpccCoMVel_ = newVel;
   }
   zmpccCoMOffset_ = zmpccIntegrator_.eval();
-  comTask->com(pendulum_.com() + zmpccCoMOffset_);
-  comTask->refVel(pendulum_.comd() + zmpccCoMVel_);
-  comTask->refAccel(pendulum_.comdd() + zmpccCoMAccel_);
+  comTask->com(comTarget_ + zmpccCoMOffset_);
+  comTask->refVel(comdTarget_ + zmpccCoMVel_);
+  comTask->refAccel(comddTarget_ + zmpccCoMAccel_);
 }
 
 void LIPMStabilizerTask::updateFootForceDifferenceControl()
@@ -1021,6 +1070,7 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
                                                                           robotIndex, left, right, solver.dt());
       const auto & conf = config(robot.name());
       t->load(solver, conf);
+      t->staticTarget(robot.com());
       return t;
     });
 }

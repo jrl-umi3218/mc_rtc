@@ -52,14 +52,13 @@ public:
    */
   Eigen::Vector3d com();
 
-protected:
   void addToGUI(mc_rtc::gui::StateBuilder &) override;
+  void addToLogger(mc_rtc::Logger & logger) override;
+  void removeFromLogger(mc_rtc::Logger & logger) override;
 
 private:
   unsigned int robot_index_;
   Eigen::Vector3d cur_com_;
-  void addToLogger(mc_rtc::Logger & logger) override;
-  void removeFromLogger(mc_rtc::Logger & logger) override;
 };
 
 } // namespace mc_tasks

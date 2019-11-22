@@ -13,6 +13,7 @@
 #include <mc_tasks/CoMTask.h>
 #include <mc_tasks/CoPTask.h>
 #include <mc_tasks/MetaTask.h>
+#include <mc_tasks/OrientationTask.h>
 #include <mc_tasks/stabilizer/Contact.h>
 #include <mc_tasks/stabilizer/Pendulum.h>
 
@@ -126,13 +127,6 @@ public:
    */
   void addGUIElements(std::shared_ptr<mc_rtc::gui::StateBuilder> gui);
 
-  /** Add tasks to QP solver.
-   *
-   * \param solver QP solver to add tasks to.
-   *
-   */
-  void addTasks(mc_solver::QPSolver & solver);
-
   /** Disable all feedback components.
    *
    */
@@ -163,13 +157,6 @@ public:
    *
    */
   void reconfigure();
-
-  /** Remove tasks from QP solver.
-   *
-   * \param solver QP solver to remove tasks from.
-   *
-   */
-  void removeTasks(mc_solver::QPSolver & solver);
 
   /** Reset CoM and foot CoP tasks.
    *
@@ -293,6 +280,21 @@ public:
     return computeZMP(distribWrench_);
   }
 
+  /** Provides a static target to the stabilizer.
+   * - CoM target : user-provided
+   * - CoM velocity target: zero (static)
+   * - CoM acceleration target: zero (static)
+   * - ZMP: computed under the CoM
+   *
+   * @param com desired com position
+   *
+   * \see dynamicTarget for dynamic motions.
+   */
+  void staticTarget(const Eigen::Vector3d & com);
+
+  // void dynamicTarget(const Eigen::Vector3d & com, const Eigen::Vector3d & comd, const Eigen::Vector3d & comdd, const
+  // Eigen::Vector3d & zmp);
+
 private:
   /** Weights for force distribution quadratic program (FDQP).
    *
@@ -410,17 +412,31 @@ protected:
     return robots_.robot(robotIndex_);
   }
 
+  const mc_rbdyn::Robot & realRobot() const
+  {
+    return realRobots_.robot(robotIndex_);
+  }
+
 protected:
   Contact leftFootContact;
   Contact rightFootContact;
   std::shared_ptr<mc_tasks::CoMTask> comTask;
   std::shared_ptr<mc_tasks::force::CoPTask> leftFootTask;
   std::shared_ptr<mc_tasks::force::CoPTask> rightFootTask;
+  std::shared_ptr<mc_tasks::OrientationTask> pelvisTask; /**< Pelvis orientation task */
+  std::shared_ptr<mc_tasks::OrientationTask> torsoTask; /**< Torso orientation task */
   const mc_rbdyn::Robots & robots_;
   const mc_rbdyn::Robots & realRobots_;
   unsigned int robotIndex_;
   std::string leftFootSurface_ = "LeftFootCenter";
   std::string rightFootSurface_ = "RightFootCenter";
+
+  Eigen::Vector3d comTarget_ = Eigen::Vector3d::Zero();
+  Eigen::Vector3d comdTarget_ = Eigen::Vector3d::Zero();
+  Eigen::Vector3d comddTarget_ = Eigen::Vector3d::Zero();
+  Eigen::Vector3d zmpTarget_ = Eigen::Vector3d::Zero();
+  Eigen::Vector3d dcmTarget_ = Eigen::Vector3d::Zero();
+  double omega_;
 
 protected:
   Eigen::Vector3d gravity_ = {0., 0., -GRAVITY}; // ISO 80000-3}; /**< Gravity vector */
@@ -451,8 +467,6 @@ protected:
   mc_signal::StationaryOffsetFilter<Eigen::Vector3d> dcmDerivator_;
   bool inTheAir_ = false; /**< Is the robot in the air? */
   bool zmpccOnlyDS_ = true; /**< Apply CoM admittance control only in double support? */
-  // XXX Modified from Stephane's version
-  Pendulum pendulum_; /**< Reference to desired reduced-model state */
   double comWeight_ = 1000.; /**< Weight of CoM IK task */
   double comHeight_ = 0.84; /**< Desired height of the CoM */
   double maxCoMHeight_ = 0.92; /**< Maximum height of the CoM */

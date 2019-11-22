@@ -558,8 +558,7 @@ Eigen::Vector3d Robot::zmp(const sva::ForceVecd & netTotalWrench,
   // Prevent potential division by zero
   if(floorn_dot_force < minimalNetNormalForce)
   {
-    // LOG_ERROR_AND_THROW(std::runtime_error, "ZMP cannot be computed, projected force too small " << floorn_dot_force);
-    LOG_ERROR("ZMP cannot be computed, projected force too small " << floorn_dot_force);
+    LOG_ERROR_AND_THROW(std::runtime_error, "ZMP cannot be computed, projected force too small " << floorn_dot_force);
   }
   Eigen::Vector3d zmp = plane_p + plane_n.cross(moment_p) / floorn_dot_force;
   return zmp;
