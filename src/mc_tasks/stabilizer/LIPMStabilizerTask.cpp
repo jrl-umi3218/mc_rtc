@@ -35,6 +35,7 @@ constexpr double LIPMStabilizerTask::MAX_FDC_RZ_VEL;
 constexpr double LIPMStabilizerTask::MAX_ZMPCC_COM_OFFSET;
 constexpr double LIPMStabilizerTask::MIN_DS_PRESSURE;
 constexpr double LIPMStabilizerTask::MIN_NET_TOTAL_FORCE_ZMP;
+constexpr double LIPMStabilizerTask::GRAVITY;
 
 namespace
 {
@@ -62,7 +63,6 @@ LIPMStabilizerTask::LIPMStabilizerTask(const mc_rbdyn::Robots & robots,
   type_ = "Stabilizer";
   name_ = "Stabilizer";
 
-  gravity_ = robots.robot(robotIndex_).mbc().gravity;
   vertical_ = gravity_ / gravity_.norm();
 
   comTask.reset(new mc_tasks::CoMTask(robots, robotIndex_));

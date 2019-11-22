@@ -72,6 +72,9 @@ struct MC_TASKS_DLLAPI LIPMStabilizerTask : public MetaTask
   /**< Minimum force for valid ZMP computation (throws otherwise) */
   static constexpr double MIN_NET_TOTAL_FORCE_ZMP = 1.;
 
+  /**< Gravity (ISO 80000-3) */
+  static constexpr double GRAVITY = 9.80665;
+
 public:
   LIPMStabilizerTask(const mc_rbdyn::Robots & robots,
                      const mc_rbdyn::Robots & realRobots,
@@ -420,7 +423,7 @@ protected:
   std::string rightFootSurface_ = "RightFootCenter";
 
 protected:
-  Eigen::Vector3d gravity_; /**< Gravity vector from mbc().gravity */
+  Eigen::Vector3d gravity_ = {0., 0., -GRAVITY}; // ISO 80000-3}; /**< Gravity vector */
   Eigen::Vector3d vertical_; /**< Vertical vector (normalized gravity) */
 
   ContactState contactState_ = ContactState::DoubleSupport;
