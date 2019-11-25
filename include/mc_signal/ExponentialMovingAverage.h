@@ -114,7 +114,7 @@ private:
    */
   void saturate_()
   {
-    for(unsigned i = 0; i < 3; i++)
+    for(unsigned i = 0; i < average_.size(); i++)
     {
       if(average_(i) < -saturation_)
       {

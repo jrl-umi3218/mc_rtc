@@ -120,3 +120,10 @@ target_link_libraries(dummyClient PUBLIC mc_control_client)
 add_executable(dummyServer dummyServer.cpp)
 set_target_properties(dummyServer PROPERTIES FOLDER tests/GUI)
 target_link_libraries(dummyServer PUBLIC mc_control)
+
+######################
+# -- Signal test --  #
+######################
+add_executable(test_signal testSignal.cpp)
+target_link_libraries(test_signal PUBLIC mc_signal SpaceVecAlg::SpaceVecAlg Boost::unit_test_framework Boost::disable_autolinking)
+target_compile_definitions(test_signal PRIVATE -DBOOST_TEST_DYN_LINK -DBOOST_TEST_MAIN)
