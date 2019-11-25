@@ -802,7 +802,7 @@ sva::ForceVecd LIPMStabilizerTask::computeDesiredWrench()
   desiredCoMAccel += omega_ * dcmIntegralGain_ * dcmAverageError_;
   desiredCoMAccel += omega_ * dcmDerivGain_ * dcmVelError_;
   auto desiredForce = mass_ * (desiredCoMAccel - gravity_);
-  return {comTarget_.cross(desiredForce), desiredForce};
+  return {measuredCoM_.cross(desiredForce), desiredForce};
 }
 
 void LIPMStabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
