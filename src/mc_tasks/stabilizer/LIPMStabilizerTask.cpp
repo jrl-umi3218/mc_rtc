@@ -103,8 +103,8 @@ void LIPMStabilizerTask::reset()
 
   leftFootTask->maxAngularVel({MAX_FDC_RX_VEL, MAX_FDC_RY_VEL, MAX_FDC_RZ_VEL});
   rightFootTask->maxAngularVel({MAX_FDC_RX_VEL, MAX_FDC_RY_VEL, MAX_FDC_RZ_VEL});
-  setContact(leftFootTask, leftFootTask->surfacePose());
-  setContact(rightFootTask, rightFootTask->surfacePose());
+  addContact(leftFootTask->surface(), leftFootTask->surfacePose());
+  addContact(rightFootTask->surface(), rightFootTask->surfacePose());
   contactState(ContactState::DoubleSupport);
 
   dcmDerivator_.setZero();
@@ -129,6 +129,8 @@ void LIPMStabilizerTask::reset()
   zmpccError_ = Eigen::Vector3d::Zero();
 
   omega_ = std::sqrt(robot().mbc().gravity.z() / robot().com().z());
+
+  wrenchFaceMatrix(sole_);
 }
 
 void LIPMStabilizerTask::dimWeight(const Eigen::VectorXd & /* dim */)
@@ -200,9 +202,6 @@ void LIPMStabilizerTask::removeFromSolver(mc_solver::QPSolver & solver)
 void LIPMStabilizerTask::update()
 {
   updateState(realRobots_.robot().com(), realRobots_.robot().comVelocity(), leftFootRatio());
-
-  LOG_INFO("real com: " << realRobots_.robot().com());
-  LOG_INFO("foot stiffness: " << rightFootTask->stiffness());
 
   // Run stabilizer
   run();
@@ -460,15 +459,6 @@ void LIPMStabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   constexpr double COM_POINT_SIZE = 0.02;
   constexpr double DCM_POINT_SIZE = 0.015;
 
-  auto footStepPolygon = [](const Contact & contact) {
-    std::vector<Eigen::Vector3d> polygon;
-    polygon.push_back(contact.vertex0());
-    polygon.push_back(contact.vertex1());
-    polygon.push_back(contact.vertex2());
-    polygon.push_back(contact.vertex3());
-    return polygon;
-  };
-
   gui.addElement(
       {"Walking", "Markers", "CoM-DCM"},
       Arrow("Pendulum_CoM", pendulumArrowConfig, [this]() -> Eigen::Vector3d { return zmpTarget_; },
@@ -497,6 +487,9 @@ void LIPMStabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
       Force("Measured_RightCoPForce", copForceConfig,
             [this]() { return this->robot().surfaceWrench("RightFootCenter"); },
             [this]() { return sva::PTransformd(this->robot().copW("RightFootCenter")); }));
+
+  gui.addElement({"Walking", "Markers", "Contacts"},
+                 Polygon("SupportContacts", mc_rtc::gui::Color(0., 1., 0.), [this]() { return supportPolygons_; }));
 }
 
 void LIPMStabilizerTask::disable()
@@ -577,41 +570,15 @@ void LIPMStabilizerTask::reconfigure()
     zmpccIntegrator_.rate(zmpcc("integrator_leak_rate"));
   }
 
-  reset();
+  sole_ = config_("sole");
 
-  bool hasContact = false;
-  if(config_.has("contacts"))
-  {
-    for(const std::string contact : config_("contacts"))
-    {
-      if(contact == "left")
-      {
-        // XXX check with stephane
-        mc_tasks::stabilizer::Contact contact(robots_.robot(robotIndex_).surfacePose(leftFootSurface_));
-        contact.surfaceName = leftFootSurface_;
-        setContact(leftFootTask, contact);
-        hasContact = true;
-      }
-      else if(contact == "right")
-      {
-        // XXX check with stephane
-        mc_tasks::stabilizer::Contact contact(robots_.robot(robotIndex_).surfacePose(rightFootSurface_));
-        contact.surfaceName = rightFootSurface_;
-        setContact(rightFootTask, contact);
-        hasContact = true;
-      }
-      else
-      {
-        LOG_ERROR_AND_THROW(
-            std::runtime_error,
-            "[LIPMStabilizerTask] Invalid entry in \"contacts\" configuration, should be \"left\" or \"right\"");
-      }
-    }
-  }
-  if(!hasContact)
-  {
-    LOG_ERROR_AND_THROW(std::runtime_error, "[LIPMStabilizerTask] Attempting to use stabilizer with no contact!");
-  }
+  // Configure contacts
+  leftFootContact.surfaceName = leftFootTask->surface();
+  leftFootContact.halfLength = sole_.halfLength;
+  leftFootContact.halfWidth = sole_.halfWidth;
+  rightFootContact.surfaceName = rightFootTask->surface();
+  rightFootContact.halfLength = sole_.halfLength;
+  rightFootContact.halfWidth = sole_.halfWidth;
 }
 
 void LIPMStabilizerTask::checkGains()
@@ -626,26 +593,58 @@ void LIPMStabilizerTask::checkGains()
   clampInPlace(dfzAdmittance_, 0., MAX_DFZ_ADMITTANCE, "DFz admittance");
 }
 
-void LIPMStabilizerTask::setContact(std::shared_ptr<mc_tasks::force::CoPTask> footTask, const Contact & contact)
+void LIPMStabilizerTask::addContact(const std::string & footSurface, const sva::PTransformd & pose)
 {
-  footTask->reset();
-  footTask->admittance(contactAdmittance());
-  footTask->setGains(contactStiffness_, contactDamping_);
-  footTask->targetPose(contact.pose);
-  footTask->weight(contactWeight_);
-  if(footTask->surface() == leftFootSurface_)
+  std::shared_ptr<mc_tasks::force::CoPTask> footTask = nullptr;
+
+  if(footSurface == leftFootTask->surface())
   {
-    LOG_INFO("setting left foot contact for surface " << contact.surfaceName);
-    leftFootContact = contact;
+    footTask = leftFootTask;
+    leftFootContact.pose = pose;
   }
-  else if(footTask->surface() == rightFootSurface_)
+  else if(footSurface == rightFootTask->surface())
   {
-    LOG_INFO("setting right foot contact for surface " << contact.surfaceName);
-    rightFootContact = contact;
+    footTask = rightFootTask;
+    rightFootContact.pose = pose;
   }
   else
   {
-    LOG_ERROR("Unknown foot surface: " << footTask->surface());
+    LOG_ERROR_AND_THROW(std::runtime_error,
+                        "[LIPMStabilizerTask] Failed to set contact (invalid foot surface: " << footSurface << ")");
+  }
+  footTask->reset();
+  footTask->admittance(contactAdmittance());
+  footTask->setGains(contactStiffness_, contactDamping_);
+  footTask->targetPose(pose);
+  footTask->weight(contactWeight_);
+}
+
+void LIPMStabilizerTask::contactState(ContactState contactState)
+{
+  contactState_ = contactState;
+
+  auto footStepPolygon = [](const Contact & contact) {
+    std::vector<Eigen::Vector3d> polygon;
+    polygon.push_back(contact.vertex0());
+    polygon.push_back(contact.vertex1());
+    polygon.push_back(contact.vertex2());
+    polygon.push_back(contact.vertex3());
+    return polygon;
+  };
+
+  supportPolygons_.clear();
+  if(contactState_ == ContactState::DoubleSupport)
+  {
+    supportPolygons_.push_back(footStepPolygon(leftFootContact));
+    supportPolygons_.push_back(footStepPolygon(rightFootContact));
+  }
+  else if(contactState_ == ContactState::LeftFoot)
+  {
+    supportPolygons_.push_back(footStepPolygon(leftFootContact));
+  }
+  else
+  {
+    supportPolygons_.push_back(footStepPolygon(leftFootContact));
   }
 }
 
@@ -728,7 +727,6 @@ void LIPMStabilizerTask::updateZMPFrame()
       zmpFrame_ = X_0_rc;
       break;
   }
-  LOG_INFO("updateZMPFrame::computeZMP");
   measuredNetWrench_ = robots_.robot(robotIndex_).netWrench(sensorNames_);
   measuredZMP_ = computeZMP(measuredNetWrench_); // computeZMP
 }
@@ -990,7 +988,6 @@ void LIPMStabilizerTask::updateCoMTaskZMPCC()
   }
   else
   {
-    LOG_INFO("updateCoMTaskZMPCC::computeZMP");
     auto distribZMP = computeZMP(distribWrench_);
     zmpccError_ = distribZMP - measuredZMP_;
     const Eigen::Matrix3d & R_0_c = zmpFrame_.rotation();
@@ -1070,6 +1067,7 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
                                                                           robotIndex, left, right, solver.dt());
       const auto & conf = config(robot.name());
       t->load(solver, conf);
+      t->reset();
       t->staticTarget(robot.com());
       return t;
     });

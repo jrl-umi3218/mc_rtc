@@ -185,12 +185,12 @@ public:
 
   /** Configure foot task for contact at a given location.
    *
-   * \param footTask One of leftFootTask or rightFootTask.
-   *
    * \param contact Target contact location.
    *
+   * \note contactState(ContactState) should be called after all contacts have
+   * been added
    */
-  void setContact(std::shared_ptr<mc_tasks::force::CoPTask> footTask, const Contact & contact);
+  void addContact(const std::string & footSurface, const sva::PTransformd & pose);
 
   /** Configure foot task for swinging.
    *
@@ -212,10 +212,7 @@ public:
   /** Set desired contact state.
    *
    */
-  void contactState(ContactState contactState)
-  {
-    contactState_ = contactState;
-  }
+  void contactState(ContactState contactState);
 
   /** Update real-robot state.
    *
@@ -420,6 +417,7 @@ protected:
 protected:
   Contact leftFootContact;
   Contact rightFootContact;
+  std::vector<std::vector<Eigen::Vector3d>> supportPolygons_; /**< For GUI display */
   std::shared_ptr<mc_tasks::CoMTask> comTask;
   std::shared_ptr<mc_tasks::force::CoPTask> leftFootTask;
   std::shared_ptr<mc_tasks::force::CoPTask> rightFootTask;
@@ -445,6 +443,7 @@ protected:
   ContactState contactState_ = ContactState::DoubleSupport;
   Eigen::LSSOL_LS wrenchSolver_; /**< Least-squares solver for wrench distribution */
   Eigen::Matrix<double, 16, 6> wrenchFaceMatrix_; /**< Matrix of single-contact wrench cone inequalities */
+  Sole sole_;
   Eigen::Vector2d comAdmittance_ = Eigen::Vector2d::Zero(); /**< Admittance gains for CoM admittance control */
   Eigen::Vector2d copAdmittance_ = Eigen::Vector2d::Zero(); /**< Admittance gains for foot damping control */
   Eigen::Vector3d comStiffness_ = {1000., 1000., 100.}; /**< Stiffness of CoM IK task */

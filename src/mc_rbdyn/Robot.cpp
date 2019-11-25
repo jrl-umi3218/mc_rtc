@@ -546,15 +546,10 @@ Eigen::Vector3d Robot::zmp(const sva::ForceVecd & netTotalWrench,
                         "ZMP cannot be computed: the minimalNetNormalForce must be >0 (divide by zero)");
   }
 
-  LOG_INFO("n: " << plane_n.transpose());
-  LOG_INFO("p: " << plane_p.transpose());
-
   const Eigen::Vector3d & force = netTotalWrench.force();
   const Eigen::Vector3d & moment_0 = netTotalWrench.couple();
   Eigen::Vector3d moment_p = moment_0 - plane_p.cross(force);
   double floorn_dot_force = plane_n.dot(force);
-  LOG_INFO("force: " << netTotalWrench.force().transpose());
-  LOG_INFO("force normal: " << floorn_dot_force);
   // Prevent potential division by zero
   if(floorn_dot_force < minimalNetNormalForce)
   {
