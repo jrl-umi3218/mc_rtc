@@ -11,7 +11,7 @@
 
 #include <mc_rbdyn/Robots.h>
 
-#include <mc_rtc/gui/StateBuilder.h>
+#include <mc_rtc/gui.h>
 #include <mc_rtc/log/Logger.h>
 
 #include <mc_solver/CollisionsConstraint.h>
