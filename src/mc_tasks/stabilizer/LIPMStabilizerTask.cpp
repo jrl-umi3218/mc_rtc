@@ -103,9 +103,6 @@ void LIPMStabilizerTask::reset()
 
   leftFootTask->maxAngularVel({MAX_FDC_RX_VEL, MAX_FDC_RY_VEL, MAX_FDC_RZ_VEL});
   rightFootTask->maxAngularVel({MAX_FDC_RX_VEL, MAX_FDC_RY_VEL, MAX_FDC_RZ_VEL});
-  addContact(leftFootTask->surface(), leftFootTask->surfacePose());
-  addContact(rightFootTask->surface(), rightFootTask->surfacePose());
-  contactState(ContactState::DoubleSupport);
 
   dcmDerivator_.setZero();
   dcmIntegrator_.saturation(MAX_AVERAGE_DCM_ERROR);
@@ -593,35 +590,9 @@ void LIPMStabilizerTask::checkGains()
   clampInPlace(dfzAdmittance_, 0., MAX_DFZ_ADMITTANCE, "DFz admittance");
 }
 
-void LIPMStabilizerTask::addContact(const std::string & footSurface, const sva::PTransformd & pose)
+void LIPMStabilizerTask::setContacts(ContactState state)
 {
-  std::shared_ptr<mc_tasks::force::CoPTask> footTask = nullptr;
-
-  if(footSurface == leftFootTask->surface())
-  {
-    footTask = leftFootTask;
-    leftFootContact.pose = pose;
-  }
-  else if(footSurface == rightFootTask->surface())
-  {
-    footTask = rightFootTask;
-    rightFootContact.pose = pose;
-  }
-  else
-  {
-    LOG_ERROR_AND_THROW(std::runtime_error,
-                        "[LIPMStabilizerTask] Failed to set contact (invalid foot surface: " << footSurface << ")");
-  }
-  footTask->reset();
-  footTask->admittance(contactAdmittance());
-  footTask->setGains(contactStiffness_, contactDamping_);
-  footTask->targetPose(pose);
-  footTask->weight(contactWeight_);
-}
-
-void LIPMStabilizerTask::contactState(ContactState contactState)
-{
-  contactState_ = contactState;
+  contactState_ = state;
 
   auto footStepPolygon = [](const Contact & contact) {
     std::vector<Eigen::Vector3d> polygon;
@@ -632,27 +603,43 @@ void LIPMStabilizerTask::contactState(ContactState contactState)
     return polygon;
   };
 
+  std::vector<mc_rbdyn::Contact> contacts;
+
+  auto configureFootSupport = [this, &contacts](std::shared_ptr<mc_tasks::force::CoPTask> footTask, Contact & contact) {
+    footTask->reset();
+    footTask->admittance(contactAdmittance());
+    footTask->setGains(contactStiffness_, contactDamping_);
+    footTask->weight(contactWeight_);
+    // set contact pose as well
+    contact.pose = footTask->surfacePose();
+  };
+
+  auto configureSwingFoot = [this](std::shared_ptr<mc_tasks::force::CoPTask> footTask) {
+    footTask->reset();
+    footTask->stiffness(swingFootStiffness_); // sets damping as well
+    footTask->weight(swingFootWeight_);
+  };
+
   supportPolygons_.clear();
-  if(contactState_ == ContactState::DoubleSupport)
+  if(state == ContactState::DoubleSupport)
   {
     supportPolygons_.push_back(footStepPolygon(leftFootContact));
     supportPolygons_.push_back(footStepPolygon(rightFootContact));
+    configureFootSupport(leftFootTask, leftFootContact);
+    configureFootSupport(rightFootTask, rightFootContact);
   }
-  else if(contactState_ == ContactState::LeftFoot)
+  else if(state == ContactState::LeftFoot)
   {
     supportPolygons_.push_back(footStepPolygon(leftFootContact));
+    configureFootSupport(leftFootTask, leftFootContact);
+    configureSwingFoot(rightFootTask);
   }
   else
   {
     supportPolygons_.push_back(footStepPolygon(leftFootContact));
+    configureFootSupport(rightFootTask, rightFootContact);
+    configureSwingFoot(leftFootTask);
   }
-}
-
-void LIPMStabilizerTask::setSwingFoot(std::shared_ptr<mc_tasks::force::CoPTask> footTask)
-{
-  footTask->reset();
-  footTask->stiffness(swingFootStiffness_); // sets damping as well
-  footTask->weight(swingFootWeight_);
 }
 
 bool LIPMStabilizerTask::detectTouchdown(const std::shared_ptr<mc_tasks::force::CoPTask> footTask,
@@ -1068,6 +1055,7 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
       const auto & conf = config(robot.name());
       t->load(solver, conf);
       t->reset();
+      t->setContacts(mc_tasks::stabilizer::ContactState::DoubleSupport);
       t->staticTarget(robot.com());
       return t;
     });

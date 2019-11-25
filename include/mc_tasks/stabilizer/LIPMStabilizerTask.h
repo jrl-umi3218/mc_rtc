@@ -183,36 +183,27 @@ public:
    */
   void seekTouchdown(std::shared_ptr<mc_tasks::force::CoPTask> footTask);
 
-  /** Configure foot task for contact at a given location.
+  /** Configure foot tasks for contact at a given location, and add contacts to
+   * the solver.
    *
-   * \param contact Target contact location.
+   * - For all feet in contact, the current control foot position will be used as the contact frame
+   * - When in ContactState::LeftFoot or ContactState::RightFoot, the free foot is configured as a position task
+   * allowing to track a trajectory
    *
-   * \note contactState(ContactState) should be called after all contacts have
-   * been added
-   */
-  void addContact(const std::string & footSurface, const sva::PTransformd & pose);
-
-  /** Configure foot task for swinging.
-   *
-   * \param footTask One of leftFootTask or rightFootTask.
-   *
-   * Foot target is reset to the current frame pose.
+   * \note To use the stabilizer with dynamics constraint, you need to add the
+   * corresponding mc_rbdyn::Contact to the solver and free the roll/pitch rotation and z translation (in contact
+   * frame). This assumes the foot surfaces to have x pointing towards the front of the foot, and z from the ground up.
    *
    */
-  void setSwingFoot(std::shared_ptr<mc_tasks::force::CoPTask> footTask);
+  void setContacts(ContactState state);
 
   /** Get contact state.
    *
    */
-  ContactState contactState()
+  ContactState contactState() const
   {
     return contactState_;
   }
-
-  /** Set desired contact state.
-   *
-   */
-  void contactState(ContactState contactState);
 
   /** Update real-robot state.
    *
