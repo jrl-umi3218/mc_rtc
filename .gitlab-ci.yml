@@ -1,7 +1,7 @@
 variables:
   CI_TOOL: gitlab-ci
   APT_DEPENDENCIES: "cython python-pip python-coverage python-numpy python-nose libtinyxml2-dev libboost-all-dev libjsoncpp-dev libgeos++-dev libgeos-dev qhull-bin libqhull-dev libltdl-dev libtasks-qld-dev libmc-rbdyn-urdf-dev python-tasks python-mc-rbdyn-urdf python-enum34"
-  GIT_DEPENDENCIES: "git@gite.lirmm.fr:multi-contact/eigen-lssol.git jrl-umi3218/Tasks nanomsg/nanomsg humanoid-path-planner/hpp-spline#v4.7.0 jbeder/yaml-cpp"
+  GIT_DEPENDENCIES: "git@gite.lirmm.fr:multi-contact/eigen-lssol.git jrl-umi3218/eigen-quadprog jrl-umi3218/Tasks nanomsg/nanomsg humanoid-path-planner/hpp-spline#v4.7.0 jbeder/yaml-cpp"
   GITE_PACKAGES: "multi-contact/eigen-lssol multi-contact/tasks-packaging#topic/CIPackaging multi-contact/mc_env_description#karim_drc"
   MASTER_PPA: "v-launchpad-jochen-sprickerhof-de/pcl hrg/daily"
   ROS_DISTRO: "indigo"
@@ -32,7 +32,11 @@ build_debian:
     - ./.jrl-ci/dependencies/eigen-3.3
     - rm -rf $HOME/.cmake/packages/Eigen3/
     - export APT_DEPENDENCIES="cython python-pip python-coverage python-numpy python-nose libtinyxml2-dev libboost-all-dev libgeos++-dev libgeos-dev qhull-bin libqhull-dev libltdl-dev"
+<<<<<<< HEAD
     - export GIT_DEPENDENCIES="jrl-umi3218/Eigen3ToPython jrl-umi3218/SpaceVecAlg jrl-umi3218/eigen-qld git@gite.lirmm.fr:multi-contact/eigen-lssol.git jrl-umi3218/sch-core jrl-umi3218/sch-core-python jrl-umi3218/RBDyn jrl-umi3218/Tasks jrl-umi3218/mc_rbdyn_urdf nanomsg/nanomsg humanoid-path-planner/hpp-spline#v4.7.0 jbeder/yaml-cpp#yaml-cpp-0.5.3"
+=======
+    - export GIT_DEPENDENCIES="jrl-umi3218/Eigen3ToPython jrl-umi3218/SpaceVecAlg jrl-umi3218/eigen-qld git@gite.lirmm.fr:multi-contact/eigen-lssol.git jrl-umi3218/eigen-quadprog jrl-umi3218/sch-core jrl-umi3218/sch-core-python jrl-umi3218/RBDyn jrl-umi3218/Tasks jrl-umi3218/mc_rbdyn_urdf nanomsg/nanomsg humanoid-path-planner/hpp-spline jbeder/yaml-cpp#yaml-cpp-0.5.3"
+>>>>>>> [stabilizer][CI] Add eigen-quadprog dependency
     - export MASTER_PPA=""
     - export ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data"
     - mkdir -p /tmp/_ci/catkin_dep_ws/src
@@ -73,7 +77,11 @@ build_gcc_ros_debug:
   script:
     - export APT_DEPENDENCIES="cython python-pip python-coverage python-numpy python-nose libtinyxml2-dev libboost-all-dev libjsoncpp-dev libgeos++-dev libgeos-dev qhull-bin libqhull-dev libltdl-dev libeigen3-dev"
     - export CMAKE_ADDITIONAL_OPTIONS="-DCMAKE_BUILD_TYPE=Debug -DBUILD_PYTHON_INTERFACE:BOOL=OFF -DYAML_BUILD_SHARED_LIBS:BOOL=ON"
+<<<<<<< HEAD
     - export GIT_DEPENDENCIES="jrl-umi3218/Eigen3ToPython jrl-umi3218/SpaceVecAlg jrl-umi3218/eigen-qld git@gite.lirmm.fr:multi-contact/eigen-lssol.git jrl-umi3218/sch-core jrl-umi3218/sch-core-python jrl-umi3218/RBDyn jrl-umi3218/Tasks jrl-umi3218/mc_rbdyn_urdf nanomsg/nanomsg humanoid-path-planner/hpp-spline#v4.7.0 jbeder/yaml-cpp"
+=======
+    - export GIT_DEPENDENCIES="jrl-umi3218/Eigen3ToPython jrl-umi3218/SpaceVecAlg jrl-umi3218/eigen-qld git@gite.lirmm.fr:multi-contact/eigen-lssol.git jrl-umi3218/eigen-quadprog jrl-umi3218/sch-core jrl-umi3218/sch-core-python jrl-umi3218/RBDyn jrl-umi3218/Tasks jrl-umi3218/mc_rbdyn_urdf nanomsg/nanomsg humanoid-path-planner/hpp-spline jbeder/yaml-cpp"
+>>>>>>> [stabilizer][CI] Add eigen-quadprog dependency
     - ./.jrl-ci/run before_install
     - ./.jrl-ci/dependencies/catkin
     - export MASTER_PPA=""
