@@ -929,8 +929,8 @@ void Robot::velW(const sva::MotionVecd & vel)
     alpha()[0][1] = vel.angular().y();
     alpha()[0][2] = vel.angular().z();
     alpha()[0][3] = vel.linear().x();
-    alpha()[0][4] = vel.linear().x();
-    alpha()[0][5] = vel.linear().x();
+    alpha()[0][4] = vel.linear().y();
+    alpha()[0][5] = vel.linear().z();
     forwardVelocity();
   }
   else
