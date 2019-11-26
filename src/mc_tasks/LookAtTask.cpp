@@ -3,7 +3,10 @@
  */
 
 #include <mc_tasks/LookAtTask.h>
+
 #include <mc_tasks/MetaTaskLoader.h>
+
+#include <mc_rtc/gui/Point3D.h>
 
 namespace mc_tasks
 {

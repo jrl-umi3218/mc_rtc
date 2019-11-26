@@ -3,7 +3,8 @@
  */
 
 #include <mc_control/ControllerServer.h>
-#include <mc_rtc/GUIState.h>
+
+#include <mc_rtc/gui.h>
 
 #include <chrono>
 #include <thread>
@@ -19,11 +20,141 @@ struct DummyProvider
   Eigen::Vector3d point = Eigen::Vector3d(0., 1., 2.);
 };
 
+struct FakeZMPGraph
+{
+  using Color = mc_rtc::gui::Color;
+  using Point = std::array<double, 2>;
+  using Points = std::vector<Point>;
+  using PolygonDescription = mc_rtc::gui::plot::PolygonDescription;
+  void update(double t_)
+  {
+    auto t = 0.5 * (t_ - t0);
+    zmp_x += speed / 2;
+    zmp_y = sin(M_PI * zmp_x);
+    if(t < 0.2)
+    {
+      if(start_ds)
+      {
+        // Reset the style of both feet
+        start_ds = false;
+        feet.back() = makeFoot(rfoot_x, -0.5);
+        feet[feet.size() - 2].outline(Color::Black).fill(Color(0, 0, 0, 0));
+      }
+      start_ss = true;
+    }
+    else if(t < 1.0)
+    {
+      if(start_ss)
+      {
+        // Left foot flying:
+        //   - support foot gets red outline with blue filling
+        //   - flying foot moves and gets grayed
+        start_ss = false;
+        feet.push_back(makeFoot(lfoot_x, 0.5, Color(0.5, 0.5, 0.5)));
+        feet[feet.size() - 2].outline(Color::Red).fill(Color::Blue);
+        if(start_walk)
+        {
+          speed = speed / 2;
+        }
+      }
+      lfoot_x += speed;
+      for(auto & points : feet.back().points())
+      {
+        points[0] += speed;
+      }
+      start_ds = true;
+    }
+    else if(t < 1.2)
+    {
+      if(start_ds)
+      {
+        // Reset the style of both feet
+        if(start_walk)
+        {
+          speed = speed * 2;
+          start_walk = false;
+        }
+        start_ds = false;
+        feet.back() = makeFoot(lfoot_x, 0.5);
+        feet[feet.size() - 2].outline(Color::Black).fill(Color(0, 0, 0, 0));
+      }
+      start_ss = true;
+    }
+    else if(t < 2)
+    {
+      if(start_ss)
+      {
+        // Left foot flying:
+        //   - support foot gets red outline with blue filling
+        //   - flying foot moves and gets grayed
+        start_ss = false;
+        feet.push_back(makeFoot(rfoot_x, -0.5, Color(0.5, 0.5, 0.5)));
+        feet[feet.size() - 2].outline(Color::Red).fill(Color::Blue);
+      }
+      rfoot_x += speed;
+      for(auto & points : feet.back().points())
+      {
+        points[0] += speed;
+      }
+      start_ds = true;
+    }
+    else
+    {
+      t0 = t_;
+    }
+  }
+  void reset(double t)
+  {
+    t0 = t;
+    zmp_x = 0;
+    zmp_y = 0;
+    lfoot_x = 0;
+    rfoot_x = 0;
+    feet = {makeFoot(0, 0.5), makeFoot(0, -0.5)};
+    start_walk = true;
+    start_ss = false;
+    start_ds = false;
+    speed = 0.05;
+  }
+  bool start_walk = true;
+  bool start_ss = false;
+  bool start_ds = false;
+  double t0 = 0;
+  double zmp_x = 0;
+  double zmp_y = 0;
+  double lfoot_x = 0;
+  double rfoot_x = 0;
+  double speed = 0.05;
+  static PolygonDescription makeFoot(double x, double y, Color color = Color(0, 0, 0))
+  {
+    return {Points{Point{x - 0.15, y - 0.15}, Point{x - 0.15, y + 0.15}, Point{x + 0.15, y + 0.15},
+                   Point{x + 0.15, y - 0.15}},
+            color};
+  }
+
+  std::vector<PolygonDescription> feet = {makeFoot(0, 0.5), makeFoot(0, -0.5)};
+
+  Color color() const
+  {
+    if(std::abs(zmp_y) > 0.9)
+    {
+      return Color::Red;
+    }
+    else
+    {
+      return Color::Black;
+    }
+  }
+};
+
 struct TestServer
 {
   TestServer();
 
   void publish();
+
+  template<typename T>
+  void add_demo_plot(const std::string & name, T callback);
 
   mc_control::ControllerServer server{1.0, 1.0, {"ipc:///tmp/mc_rtc_pub.ipc"}, {"ipc:///tmp/mc_rtc_rep.ipc"}};
   DummyProvider provider;
@@ -48,6 +179,8 @@ struct TestServer
   Eigen::Vector3d arrow_start_{0.5, 0.5, 0.};
   Eigen::Vector3d arrow_end_{0.5, 1., -0.5};
   sva::ForceVecd force_{{0., 0., 0.}, {-50., 50., 100.}};
+  double t_ = 0.0;
+  FakeZMPGraph graph_;
 };
 
 TestServer::TestServer() : xythetaz_(4)
@@ -133,7 +266,7 @@ TestServer::TestServer() : xythetaz_(4)
                                                    data_combo_ = s;
                                                    std::cout << "data_combo_ changed to " << data_combo_ << std::endl;
                                                  }));
-  builder.addElement({"Schema"}, mc_rtc::gui::Schema("Add metatask", "metatask", [](const mc_rtc::Configuration & c) {
+  builder.addElement({"Schema"}, mc_rtc::gui::Schema("Add metatask", "MetaTask", [](const mc_rtc::Configuration & c) {
                        std::cout << "Got schema request:\n" << c.dump(true) << std::endl;
                      }));
   builder.addElement(
@@ -198,12 +331,94 @@ TestServer::TestServer() : xythetaz_(4)
                          []() {
                            return sva::PTransformd{Eigen::Vector3d{2, 2, 0}};
                          }));
+  using Color = mc_rtc::gui::Color;
+  using Range = mc_rtc::gui::plot::Range;
+  using Style = mc_rtc::gui::plot::Style;
+  using Side = mc_rtc::gui::plot::Side;
+  auto sin_cos_plot = [this](const std::string & name) {
+    builder.addPlot(name, mc_rtc::gui::plot::X("t", [this]() { return t_; }),
+                    mc_rtc::gui::plot::Y("sin(t)", [this]() { return std::sin(t_); }, Color::Red),
+                    mc_rtc::gui::plot::Y("cos(t)", [this]() { return std::cos(t_); }, Color::Blue));
+  };
+  add_demo_plot("sin(t)/cos(t)", sin_cos_plot);
+  auto demo_style_plot = [this](const std::string & name) {
+    builder.addPlot(name, mc_rtc::gui::plot::X("t", [this]() { return t_; }),
+                    mc_rtc::gui::plot::Y("Solid", [this]() { return std::cos(t_); }, Color::Red).style(Style::Solid),
+                    mc_rtc::gui::plot::Y("Dashed", [this]() { return 2 - std::cos(t_); }, Color::Blue, Style::Dashed),
+                    mc_rtc::gui::plot::Y("Dotted", [this]() { return std::sin(t_); }, Color::Green)
+                        .style(Style::Dotted)
+                        .side(Side::Right),
+                    mc_rtc::gui::plot::Y("Point", [this]() { return 2 - std::sin(t_); }, Color::Magenta, Style::Point,
+                                         Side::Right));
+  };
+  add_demo_plot("Demo style", demo_style_plot);
+  auto fix_axis_plot = [this](const std::string & name) {
+    builder.addPlot(
+        name, mc_rtc::gui::plot::X("t", [this]() { return t_; }), {"Y1", {0, 1}}, // Fix both min and max
+        {"Y2", {-Range::inf, 0}}, // Only fix max
+        mc_rtc::gui::plot::Y("sin(t)", [this]() { return std::sin(t_); }, Color::Red),
+        mc_rtc::gui::plot::Y("cos(t)", [this]() { return std::cos(t_); }, Color::Blue, Style::Solid, Side::Right));
+  };
+  add_demo_plot("Fix axis", fix_axis_plot);
+  using PolygonDescription = mc_rtc::gui::plot::PolygonDescription;
+  using Point = std::array<double, 2>;
+  using Points = std::vector<Point>;
+  auto circle_plot = [this](const std::string & name) {
+    builder.addXYPlot(name, {"X (m)", {-1, 1}}, {"Y (m)", {-1, 1}},
+                      mc_rtc::gui::plot::XY("Round", [this]() { return std::cos(t_); },
+                                            [this]() { return std::sin(t_); }, Color::Red),
+                      mc_rtc::gui::plot::Polygon("Square", []() {
+                        return PolygonDescription(Points{Point{-1, -1}, Point{-1, 1}, Point{1, 1}, Point{1, -1}},
+                                                  Color::Blue)
+                            .fill(Color(0, 1, 0, 0.75));
+                      }));
+  };
+  add_demo_plot("Circle in square", circle_plot);
+  auto redSquareBlueFill =
+      PolygonDescription(Points{Point{-1, -1}, Point{-1, 1}, Point{1, 1}, Point{1, -1}}, Color::Red).fill(Color::Blue);
+  auto purpleTriangleYellowFill =
+      PolygonDescription(Points{Point{1, 0}, Point{1.5, 2}, Point{2, -2}}, Color::Magenta).fill(Color::Yellow);
+  auto blueRectangle = PolygonDescription(Points{Point{-2, -2}, Point{2, -2}, Point{2, -3}, Point{-2, -3}}, Color::Blue)
+                           .style(Style::Dotted);
+  std::vector<PolygonDescription> polygons = {redSquareBlueFill, purpleTriangleYellowFill, blueRectangle};
+  auto polygons_plot = [this, polygons](const std::string & name) {
+    builder.addXYPlot(name, mc_rtc::gui::plot::Polygons("Polygons", [polygons]() { return polygons; }));
+  };
+  add_demo_plot("Polygons demo", polygons_plot);
+  auto fake_zmp_plot = [this](const std::string & name) {
+    graph_.reset(t_);
+    builder.addXYPlot(name,
+                      mc_rtc::gui::plot::XY("ZMP", [this]() { return graph_.zmp_x; }, [this] { return graph_.zmp_y; },
+                                            [this]() { return graph_.color(); }),
+                      mc_rtc::gui::plot::Polygons("feet", [this]() { return graph_.feet; }));
+  };
+  add_demo_plot("Fake ZMP", fake_zmp_plot);
+}
+
+template<typename T>
+void TestServer::add_demo_plot(const std::string & name, T callback)
+{
+  bool has_plot = false;
+  builder.addElement({}, mc_rtc::gui::Button("Add " + name + " plot", [has_plot, callback, name, this]() mutable {
+                       if(has_plot)
+                       {
+                         has_plot = false;
+                         builder.removePlot(name);
+                       }
+                       else
+                       {
+                         has_plot = true;
+                         callback(name);
+                       }
+                     }));
 }
 
 void TestServer::publish()
 {
+  graph_.update(t_);
   server.handle_requests(builder);
   server.publish(builder);
+  t_ += 0.05;
 }
 
 int main()

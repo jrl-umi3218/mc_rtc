@@ -1,25 +1,26 @@
-<div class="card bg-light">
+{% capture source %}{{ include.source | strip }}{% endcapture %}
+<div class="card bg-light card-source">
   <div class="card-body">
 {% if include.lang == "json" %}
-{% highlight json %}{{ include.source }}{% endhighlight %}
+{% highlight json %}{{ source }}{% endhighlight %}
 {% elsif include.lang == "yaml" %}
-{% highlight yaml %}{{ include.source }}{% endhighlight %}
+{% highlight yaml %}{{ source }}{% endhighlight %}
 {% elsif include.lang == "cpp" %}
-{% highlight cpp %}{{ include.source }}{% endhighlight %}
+{% highlight cpp %}{{ source }}{% endhighlight %}
 {% elsif include.lang == "cmake" %}
-{% highlight cmake %}{{ include.source }}{% endhighlight %}
+{% highlight cmake %}{{ source }}{% endhighlight %}
 {% elsif include.lang == "python" %}
-{% highlight python %}{{ include.source }}{% endhighlight %}
+{% highlight python %}{{ source }}{% endhighlight %}
 {% else %}
   {% if include.lang %}
     <div class="text-danger">Cannot handle requested lang: {{include.lang}}</div>
   {% endif %}
-{% highlight text %}{{ include.source }}{% endhighlight %}
+{% highlight text %}{{ source }}{% endhighlight %}
 {% endif %}
   </div>
 </div>
 {% if include.copy %}
   {% capture id %}{{ include.id }}{{ include.lang }}CopySource{% endcapture %}
-  <pre id="{{id}}" class="offscreen" aria-hidden=true>{{ include.source }}</pre>
+  <pre id="{{id}}" class="offscreen" aria-hidden=true>{{ source }}</pre>
   <button class="btn btn-primary copy-button" data-clipboard-target="#{{id}}">Copy to clipboard</button>
 {% endif %}

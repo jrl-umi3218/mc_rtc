@@ -5,6 +5,9 @@
 #include <mc_tasks/MetaTaskLoader.h>
 #include <mc_tasks/VectorOrientationTask.h>
 
+#include <mc_rtc/gui/Arrow.h>
+#include <mc_rtc/gui/Point3D.h>
+
 namespace mc_tasks
 {
 

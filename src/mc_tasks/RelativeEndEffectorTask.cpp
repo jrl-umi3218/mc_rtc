@@ -5,6 +5,8 @@
 #include <mc_tasks/MetaTaskLoader.h>
 #include <mc_tasks/RelativeEndEffectorTask.h>
 
+#include <mc_rtc/gui/Transform.h>
+
 namespace mc_tasks
 {
 

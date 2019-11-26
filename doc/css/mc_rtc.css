@@ -197,3 +197,18 @@ body
 {
   margin-top: 10px;
 }
+
+.card-source
+{
+  margin-bottom: 20px;
+}
+
+.card-source pre
+{
+  margin-bottom: 0;
+}
+
+.card-source figure
+{
+  margin-bottom: 0;
+}

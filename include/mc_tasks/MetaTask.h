@@ -5,7 +5,7 @@
 #pragma once
 
 #include <mc_rtc/Configuration.h>
-#include <mc_rtc/GUIState.h>
+#include <mc_rtc/gui/StateBuilder.h>
 #include <mc_rtc/log/Logger.h>
 #include <mc_solver/QPSolver.h>
 #include <mc_solver/api.h>

@@ -4,6 +4,8 @@
 
 #include <mc_tasks/EndEffectorTask.h>
 
+#include <mc_rtc/gui/Transform.h>
+
 namespace mc_tasks
 {
 

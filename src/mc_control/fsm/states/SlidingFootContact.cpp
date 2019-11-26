@@ -2,9 +2,14 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <mc_control/fsm/Controller.h>
 #include <mc_control/fsm/states/SlidingFootContact.h>
+
+#include <mc_control/fsm/Controller.h>
+
 #include <mc_tasks/MetaTaskLoader.h>
+
+#include <mc_rtc/gui/Button.h>
+#include <mc_rtc/gui/ComboInput.h>
 
 namespace mc_control
 {

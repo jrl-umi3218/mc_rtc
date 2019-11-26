@@ -8,9 +8,6 @@
 #include <mc_rtc/logging.h>
 #include <mc_rtc/utils_api.h>
 
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
-
 #include <memory>
 #include <unordered_map>
 
@@ -63,7 +60,7 @@ public:
    *
    * \param tmpl Log file template
    */
-  Logger(const Policy & policy, const bfs::path & directory, const std::string & tmpl);
+  Logger(const Policy & policy, const std::string & directory, const std::string & tmpl);
 
   /*! \brief Destructor */
   ~Logger();
@@ -76,7 +73,7 @@ public:
    *
    * \param tmpl Log file template
    */
-  void setup(const Policy & policy, const bfs::path & directory, const std::string & tmpl);
+  void setup(const Policy & policy, const std::string & directory, const std::string & tmpl);
 
   /*! \brief Start logging
    *

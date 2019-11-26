@@ -4,6 +4,11 @@
 
 #include <mc_control/mc_global_controller.h>
 
+#include <mc_rtc/gui/Button.h>
+#include <mc_rtc/gui/Form.h>
+#include <mc_rtc/gui/Label.h>
+#include <mc_rtc/gui/NumberInput.h>
+
 /** This file implements GUI elements related to the global controller instance
  *  and available for each controller */
 

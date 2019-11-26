@@ -2,9 +2,11 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include "KinematicInertialObserver.h"
+#include <mc_observers/KinematicInertialObserver.h>
 
 #include <mc_control/mc_controller.h>
+
+#include <mc_rtc/gui/Arrow.h>
 
 namespace mc_observers
 {

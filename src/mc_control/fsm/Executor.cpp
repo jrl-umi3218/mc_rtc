@@ -2,8 +2,13 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <mc_control/fsm/Controller.h>
 #include <mc_control/fsm/Executor.h>
+
+#include <mc_control/fsm/Controller.h>
+
+#include <mc_rtc/gui/Button.h>
+#include <mc_rtc/gui/Form.h>
+#include <mc_rtc/gui/Label.h>
 
 namespace mc_control
 {

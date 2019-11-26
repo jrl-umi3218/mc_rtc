@@ -2,10 +2,14 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
+#include <mc_tasks/CoPTask.h>
+
+#include <mc_tasks/MetaTaskLoader.h>
+
 #include <mc_rbdyn/configuration_io.h>
 #include <mc_rbdyn/rpy_utils.h>
-#include <mc_tasks/CoPTask.h>
-#include <mc_tasks/MetaTaskLoader.h>
+
+#include <mc_rtc/gui/ArrayLabel.h>
 
 namespace mc_tasks
 {

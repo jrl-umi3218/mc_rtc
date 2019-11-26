@@ -42,6 +42,9 @@
       id: gui
       title: Graphical User Interface (GUI)
     -
+      id: live-plotting
+      title: Display plots live from the controller
+    -
       id: ros
       title: ROS integration
 -

@@ -2,8 +2,14 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <mc_tasks/MetaTaskLoader.h>
 #include <mc_tasks/PostureTask.h>
+
+#include <mc_tasks/MetaTaskLoader.h>
+
+#include <mc_rbdyn/configuration_io.h>
+
+#include <mc_rtc/gui/NumberInput.h>
+#include <mc_rtc/gui/NumberSlider.h>
 
 #ifndef M_PI
 #  include <boost/math/constants/constants.hpp>

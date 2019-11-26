@@ -128,15 +128,45 @@ target_link_libraries(mc_rbdyn PRIVATE qhullcpp qhullstatic_r)
 install_mc_rtc_lib(mc_rbdyn)
 
 set(mc_rtc_gui_SRC
-  mc_rtc/GUIState.cpp
+  mc_rtc/gui/StateBuilder.cpp
 )
 
 set(mc_rtc_gui_HDR
-  ../include/mc_rtc/GUIDetails.h
-  ../include/mc_rtc/GUIState.h
-  ../include/mc_rtc/GUIState.hpp
-  ../include/mc_rtc/GUITypes.h
-  ../include/mc_rtc/gui_api.h
+  ../include/mc_rtc/gui/api.h
+  ../include/mc_rtc/gui/StateBuilder.h
+  ../include/mc_rtc/gui/StateBuilder.hpp
+  ../include/mc_rtc/gui/ArrayInput.h
+  ../include/mc_rtc/gui/ArrayLabel.h
+  ../include/mc_rtc/gui/Arrow.h
+  ../include/mc_rtc/gui/Button.h
+  ../include/mc_rtc/gui/Checkbox.h
+  ../include/mc_rtc/gui/ComboInput.h
+  ../include/mc_rtc/gui/DataComboInput.h
+  ../include/mc_rtc/gui/elements.h
+  ../include/mc_rtc/gui/Force.h
+  ../include/mc_rtc/gui/Form.h
+  ../include/mc_rtc/gui/IntegerInput.h
+  ../include/mc_rtc/gui/Label.h
+  ../include/mc_rtc/gui/NumberInput.h
+  ../include/mc_rtc/gui/NumberSlider.h
+  ../include/mc_rtc/gui/Point3D.h
+  ../include/mc_rtc/gui/Polygon.h
+  ../include/mc_rtc/gui/Rotation.h
+  ../include/mc_rtc/gui/Schema.h
+  ../include/mc_rtc/gui/StringInput.h
+  ../include/mc_rtc/gui/Trajectory.h
+  ../include/mc_rtc/gui/Transform.h
+  ../include/mc_rtc/gui/types.h
+  ../include/mc_rtc/gui/XYTheta.h
+  ../include/mc_rtc/gui/details/traits.h
+
+  ../include/mc_rtc/gui/plot.h
+  ../include/mc_rtc/gui/plot/Abscissa.h
+  ../include/mc_rtc/gui/plot/AbscissaOrdinate.h
+  ../include/mc_rtc/gui/plot/types.h
+  ../include/mc_rtc/gui/plot/Ordinate.h
+  ../include/mc_rtc/gui/plot/Polygon.h
+  ../include/mc_rtc/gui/plot/Polygons.h
 )
 
 add_library(mc_rtc_gui SHARED ${mc_rtc_gui_SRC} ${mc_rtc_gui_HDR})

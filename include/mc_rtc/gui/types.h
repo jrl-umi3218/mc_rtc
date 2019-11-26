@@ -4,8 +4,11 @@
 
 #pragma once
 
+/** This file contains classes that are used to configure the visual styles of
+ * various elements in the GUI */
+
 #include <mc_rtc/Configuration.h>
-#include <mc_rtc/gui_api.h>
+#include <mc_rtc/gui/api.h>
 #include <mc_rtc/logging.h>
 
 namespace mc_rtc
@@ -26,6 +29,16 @@ struct MC_RTC_GUI_DLLAPI Color
   double g = 0.0;
   double b = 0.0;
   double a = 1.0;
+
+  bool operator==(const Color & rhs) const
+  {
+    return r == rhs.r && g == rhs.g && b == rhs.b && a == rhs.a;
+  }
+
+  bool operator!=(const Color & rhs) const
+  {
+    return !(*this == rhs);
+  }
 
   void load(const mc_rtc::Configuration & config)
   {
@@ -50,6 +63,17 @@ struct MC_RTC_GUI_DLLAPI Color
     builder.write(a);
     builder.finish_array();
   }
+
+  static const Color White;
+  static const Color Black;
+  static const Color Red;
+  static const Color Green;
+  static const Color Blue;
+  static const Color Cyan;
+  static const Color Magenta;
+  static const Color Yellow;
+  static const Color Gray;
+  static const Color LightGray;
 };
 
 enum class LineStyle

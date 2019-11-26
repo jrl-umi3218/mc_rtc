@@ -6,16 +6,21 @@
 
 #include <mc_control/Configuration.h>
 #include <mc_control/generic_gripper.h>
+
 #include <mc_observers/ObserverLoader.h>
+
 #include <mc_rbdyn/Robots.h>
-#include <mc_rtc/GUIState.h>
+
+#include <mc_rtc/gui.h>
 #include <mc_rtc/log/Logger.h>
+
 #include <mc_solver/CollisionsConstraint.h>
 #include <mc_solver/ContactConstraint.h>
 #include <mc_solver/DynamicsConstraint.h>
 #include <mc_solver/KinematicsConstraint.h>
 #include <mc_solver/QPSolver.h>
 #include <mc_solver/msg/QPResult.h>
+
 #include <mc_tasks/PostureTask.h>
 
 namespace mc_rbdyn

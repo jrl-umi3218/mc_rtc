@@ -3,7 +3,9 @@
  */
 
 #include <mc_tasks/BSplineTrajectoryTask.h>
+
 #include <mc_tasks/MetaTaskLoader.h>
+
 #include <mc_trajectory/BSpline.h>
 #include <mc_trajectory/InterpolatedRotation.h>
 

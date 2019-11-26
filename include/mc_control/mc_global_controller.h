@@ -11,9 +11,6 @@
 #include <mc_rtc/loader.h>
 #include <mc_rtc/log/Logger.h>
 
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
-
 #include <array>
 #include <fstream>
 #include <sstream>
@@ -540,7 +537,7 @@ public:
 
     bool enable_log = true;
     mc_rtc::Logger::Policy log_policy = mc_rtc::Logger::Policy::NON_THREADED;
-    bfs::path log_directory;
+    std::string log_directory;
     std::string log_template = "mc-control";
 
     bool enable_gui_server = true;

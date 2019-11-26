@@ -3,10 +3,17 @@
  */
 
 #include <mc_control/fsm/Controller.h>
+
 #include <mc_rbdyn/RobotLoader.h>
 #include <mc_rbdyn/configuration_io.h>
+
 #include <mc_solver/ConstraintSetLoader.h>
+
 #include <mc_tasks/MetaTaskLoader.h>
+
+#include <mc_rtc/gui/Button.h>
+#include <mc_rtc/gui/Form.h>
+#include <mc_rtc/gui/Label.h>
 
 namespace mc_rtc
 {
