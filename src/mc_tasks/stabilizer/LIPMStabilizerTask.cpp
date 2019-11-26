@@ -72,8 +72,6 @@ LIPMStabilizerTask::LIPMStabilizerTask(const mc_rbdyn::Robots & robots,
   pelvisTask = std::make_shared<mc_tasks::OrientationTask>(pelvisBodyName, robots_, robotIndex_);
   std::string torsoName = "CHEST_LINK1";
   torsoTask = std::make_shared<mc_tasks::OrientationTask>(torsoName, robots_, robotIndex_);
-
-  reset();
 }
 
 LIPMStabilizerTask::~LIPMStabilizerTask() {}
@@ -761,7 +759,6 @@ void LIPMStabilizerTask::run()
   }
 
   updateCoMTaskZMPCC();
-
   updateFootForceDifferenceControl();
 
   auto endTime = high_resolution_clock::now();

@@ -14,9 +14,9 @@ BOOST_AUTO_TEST_CASE(TestExponentialMovingAverage)
   double dt = 0.005;
   const double T = 15;
   const double C = 100;
-  const Eigen::Vector3d constant{C, C, C};
   size_t iter = ceil(T / dt);
 
+  const Eigen::Vector3d constant{C, C, C};
   ExponentialMovingAverage<Eigen::Vector3d> average(dt, T);
   for(int i = 0; i < iter; ++i)
   {
