@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <mc_rbdyn/lipm_stabilizer/Contact.h>
+#include <mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h>
 #include <mc_signal/ExponentialMovingAverage.h>
 #include <mc_signal/LeakyIntegrator.h>
 #include <mc_signal/StationaryOffsetFilter.h>
@@ -14,8 +16,6 @@
 #include <mc_tasks/CoPTask.h>
 #include <mc_tasks/MetaTask.h>
 #include <mc_tasks/OrientationTask.h>
-#include <mc_tasks/stabilizer/Contact.h>
-#include <mc_tasks/stabilizer/Pendulum.h>
 
 #include <Eigen/QR>
 #include <eigen-quadprog/QuadProg.h>
@@ -23,18 +23,12 @@
 namespace mc_tasks
 {
 
-namespace stabilizer
+namespace lipm_stabilizer
 {
 
-/** Foot sole properties.
- *
- */
-struct Sole
-{
-  double friction = 0.7;
-  double halfLength = 0.112; // [m]
-  double halfWidth = 0.065; // [m]
-};
+using ContactState = mc_rbdyn::lipm_stabilizer::ContactState;
+using Contact = mc_rbdyn::lipm_stabilizer::Contact;
+using Sole = mc_rbdyn::lipm_stabilizer::Sole;
 
 /** Walking stabilization based on linear inverted pendulum tracking.
  *
@@ -49,7 +43,7 @@ struct Sole
  * Which boils down into corresponding formulas for the CoP and CoM
  * acceleration targets.
  */
-struct MC_TASKS_DLLAPI LIPMStabilizerTask : public MetaTask
+struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
 {
 
   static constexpr double MAX_AVERAGE_DCM_ERROR = 0.05; /**< Maximum average (integral) DCM error in [m] */
@@ -78,13 +72,13 @@ struct MC_TASKS_DLLAPI LIPMStabilizerTask : public MetaTask
   static constexpr double GRAVITY = 9.80665;
 
 public:
-  LIPMStabilizerTask(const mc_rbdyn::Robots & robots,
-                     const mc_rbdyn::Robots & realRobots,
-                     unsigned int robotIndex,
-                     const std::string & leftSurface,
-                     const std::string & rightSurface,
-                     double dt);
-  ~LIPMStabilizerTask() override;
+  StabilizerTask(const mc_rbdyn::Robots & robots,
+                 const mc_rbdyn::Robots & realRobots,
+                 unsigned int robotIndex,
+                 const std::string & leftSurface,
+                 const std::string & rightSurface,
+                 double dt);
+  ~StabilizerTask() override;
 
   void reset() override;
 
@@ -285,32 +279,6 @@ public:
   // Eigen::Vector3d & zmp);
 
 private:
-  /** Weights for force distribution quadratic program (FDQP).
-   *
-   */
-  struct FDQPWeights
-  {
-    /** Read force distribution QP weights from configuration.
-     *
-     * \param config Configuration dictionary.
-     *
-     */
-    void configure(const mc_rtc::Configuration & config)
-    {
-      double ankleTorqueWeight = config("ankle_torque");
-      double netWrenchWeight = config("net_wrench");
-      double pressureWeight = config("pressure");
-      ankleTorqueSqrt = std::sqrt(ankleTorqueWeight);
-      netWrenchSqrt = std::sqrt(netWrenchWeight);
-      pressureSqrt = std::sqrt(pressureWeight);
-    }
-
-  public:
-    double ankleTorqueSqrt;
-    double netWrenchSqrt;
-    double pressureSqrt;
-  };
-
   /** Check that all gains are within boundaries.
    *
    */
@@ -378,7 +346,7 @@ private:
    */
   sva::ForceVecd contactAdmittance()
   {
-    return {{copAdmittance_.y(), copAdmittance_.x(), 0.}, {0., 0., 0.}};
+    return {{c_.copAdmittance.y(), c_.copAdmittance.x(), 0.}, {0., 0., 0.}};
   }
 
   /* Task-related properties */
@@ -407,8 +375,8 @@ protected:
   }
 
 protected:
-  Contact leftFootContact;
-  Contact rightFootContact;
+  Contact leftFootContact_;
+  Contact rightFootContact_;
   std::vector<std::vector<Eigen::Vector3d>> supportPolygons_; /**< For GUI display */
   std::shared_ptr<mc_tasks::CoMTask> comTask;
   std::shared_ptr<mc_tasks::force::CoPTask> leftFootTask;
@@ -431,14 +399,11 @@ protected:
 protected:
   Eigen::Vector3d gravity_ = {0., 0., -GRAVITY}; // ISO 80000-3}; /**< Gravity vector */
   Eigen::Vector3d vertical_; /**< Vertical vector (normalized gravity) */
-
+  mc_rbdyn::lipm_stabilizer::StabilizerConfiguration
+      c_; /* Stabilizer configuration (weights, stiffness, filters, etc) */
   ContactState contactState_ = ContactState::DoubleSupport;
   Eigen::QuadProgDense qpSolver_; /**< Least-squares solver for wrench distribution */
   Eigen::Matrix<double, 16, 6> wrenchFaceMatrix_; /**< Matrix of single-contact wrench cone inequalities */
-  Sole sole_;
-  Eigen::Vector2d comAdmittance_ = Eigen::Vector2d::Zero(); /**< Admittance gains for CoM admittance control */
-  Eigen::Vector2d copAdmittance_ = Eigen::Vector2d::Zero(); /**< Admittance gains for foot damping control */
-  Eigen::Vector3d comStiffness_ = {1000., 1000., 100.}; /**< Stiffness of CoM IK task */
   Eigen::Vector3d dcmAverageError_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d dcmError_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d dcmVelError_ = Eigen::Vector3d::Zero();
@@ -453,34 +418,18 @@ protected:
   Eigen::Vector3d zmpccError_ = Eigen::Vector3d::Zero();
   Eigen::Vector4d polePlacement_ = {-10., -5., -1., 10.}; /**< Pole placement with ZMP delay (Morisawa et al., 2014) */
   mc_signal::ExponentialMovingAverage<Eigen::Vector3d> dcmIntegrator_;
-  FDQPWeights fdqpWeights_;
   mc_signal::LeakyIntegrator<Eigen::Vector3d> zmpccIntegrator_;
   mc_signal::StationaryOffsetFilter<Eigen::Vector3d> dcmDerivator_;
   bool inTheAir_ = false; /**< Is the robot in the air? */
   bool zmpccOnlyDS_ = true; /**< Apply CoM admittance control only in double support? */
-  double comWeight_ = 1000.; /**< Weight of CoM IK task */
-  double comHeight_ = 0.84; /**< Desired height of the CoM */
-  double maxCoMHeight_ = 0.92; /**< Maximum height of the CoM */
-  double minCoMHeight_ = 0.6; /**< Minimum height of the CoM */
-  double contactWeight_ = 100000.; /**< Weight of contact IK tasks */
-  double dcmDerivGain_ = 0.; /**< Derivative gain on DCM error */
-  double dcmIntegralGain_ = 5.; /**< Integral gain on DCM error */
-  double dcmPropGain_ = 1.; /**< Proportional gain on DCM error */
-  double dfzAdmittance_ = 1e-4; /**< Admittance for foot force difference control */
-  double dfzDamping_ = 0.; /**< Damping term in foot force difference control */
   double dfzForceError_ = 0.; /**< Force error in foot force difference control */
   double dfzHeightError_ = 0.; /**< Height error in foot force difference control */
   double dt_ = 0.005; /**< Controller cycle in [s] */
   double leftFootRatio_ = 0.5; /**< Weight distribution ratio (0: all weight on right foot, 1: all on left foot) */
   double mass_ = 38.; /**< Robot mass in [kg] */
   double runTime_ = 0.;
-  double swingFootStiffness_ = 2000.; /**< Stiffness of swing foot IK task */
-  double swingFootWeight_ = 500.; /**< Weight of swing foot IK task */
-  double vdcFrequency_ = 1.; /**< Frequency used in double-support vertical drift compensation */
   double vdcHeightError_ = 0.; /**< Average height error used in vertical drift compensation */
-  double vdcStiffness_ = 1000.; /**< Stiffness used in single-support vertical drift compensation */
   mc_rtc::Configuration config_; /**< Stabilizer configuration dictionary */
-  std::vector<std::string> comActiveJoints_; /**< Joints used by CoM IK task */
   sva::ForceVecd distribWrench_ = sva::ForceVecd::Zero();
   // XXX removed wrt to Stephane's version. Was only used to compute the ZMP, we
   // use Robot::zmp instead
@@ -489,37 +438,8 @@ protected:
   // XXX should be the sensors in contact only (same issue in stephane's code),
   // otherwise while walking we're sensible to swing foot sensor noise
   std::vector<std::string> sensorNames_ = {"LeftFootForceSensor", "RightFootForceSensor"};
-  sva::MotionVecd contactDamping_;
-  sva::MotionVecd contactStiffness_;
   sva::PTransformd zmpFrame_;
 };
 
-} // namespace stabilizer
+} // namespace lipm_stabilizer
 } // namespace mc_tasks
-
-namespace mc_rtc
-{
-using Sole = mc_tasks::stabilizer::Sole;
-
-template<>
-struct ConfigurationLoader<mc_tasks::stabilizer::Sole>
-{
-  static Sole load(const mc_rtc::Configuration & config)
-  {
-    Sole sole;
-    config("friction", sole.friction);
-    config("half_length", sole.halfLength);
-    config("half_width", sole.halfWidth);
-    return sole;
-  }
-
-  static mc_rtc::Configuration save(const Sole & sole)
-  {
-    mc_rtc::Configuration config;
-    config.add("friction", sole.friction);
-    config.add("half_length", sole.halfLength);
-    config.add("half_width", sole.halfWidth);
-    return config;
-  }
-};
-} // namespace mc_rtc

@@ -15,9 +15,9 @@
 
 #include <cmath>
 
-namespace mc_tasks
+namespace mc_rbdyn
 {
-namespace stabilizer
+namespace lipm_stabilizer
 {
 using HrepXd = std::pair<Eigen::MatrixXd, Eigen::VectorXd>;
 
@@ -314,17 +314,17 @@ inline Contact operator*(const sva::PTransformd & X, const Contact & contact)
   result.pose = X * contact.pose;
   return result;
 }
-} // namespace stabilizer
-} // namespace mc_tasks
+} // namespace lipm_stabilizer
+} // namespace mc_rbdyn
 
 namespace mc_rtc
 {
 template<>
-struct ConfigurationLoader<mc_tasks::stabilizer::Contact>
+struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::Contact>
 {
-  static mc_tasks::stabilizer::Contact load(const mc_rtc::Configuration & config)
+  static mc_rbdyn::lipm_stabilizer::Contact load(const mc_rtc::Configuration & config)
   {
-    mc_tasks::stabilizer::Contact contact;
+    mc_rbdyn::lipm_stabilizer::Contact contact;
     contact.pose = config("pose");
     config("half_length", contact.halfLength);
     config("half_width", contact.halfWidth);
@@ -337,7 +337,7 @@ struct ConfigurationLoader<mc_tasks::stabilizer::Contact>
     return contact;
   }
 
-  static mc_rtc::Configuration save(const mc_tasks::stabilizer::Contact & contact)
+  static mc_rtc::Configuration save(const mc_rbdyn::lipm_stabilizer::Contact & contact)
   {
     mc_rtc::Configuration config;
     config.add("half_length", contact.halfLength);

@@ -5,14 +5,14 @@
  * lipm_walking_controller <https://github.com/stephane-caron/lipm_walking_controller>
  */
 
+#include <mc_tasks/LIPMStabilizerTask.h>
 #include <mc_tasks/MetaTaskLoader.h>
-#include <mc_tasks/stabilizer/LIPMStabilizerTask.h>
 
 #include <chrono>
 
 namespace mc_tasks
 {
-namespace stabilizer
+namespace lipm_stabilizer
 {
 
 using mc_signal::utils::clamp;
@@ -21,21 +21,21 @@ using mc_signal::utils::clampInPlace;
 // Repeat static constexpr declarations
 // Fixes https://github.com/stephane-caron/lipm_walking_controller/issues/21
 // See also https://stackoverflow.com/q/8016780
-constexpr double LIPMStabilizerTask::MAX_AVERAGE_DCM_ERROR;
-constexpr double LIPMStabilizerTask::MAX_COM_ADMITTANCE;
-constexpr double LIPMStabilizerTask::MAX_COP_ADMITTANCE;
-constexpr double LIPMStabilizerTask::MAX_DCM_D_GAIN;
-constexpr double LIPMStabilizerTask::MAX_DCM_I_GAIN;
-constexpr double LIPMStabilizerTask::MAX_DCM_P_GAIN;
-constexpr double LIPMStabilizerTask::MAX_DFZ_ADMITTANCE;
-constexpr double LIPMStabilizerTask::MAX_DFZ_DAMPING;
-constexpr double LIPMStabilizerTask::MAX_FDC_RX_VEL;
-constexpr double LIPMStabilizerTask::MAX_FDC_RY_VEL;
-constexpr double LIPMStabilizerTask::MAX_FDC_RZ_VEL;
-constexpr double LIPMStabilizerTask::MAX_ZMPCC_COM_OFFSET;
-constexpr double LIPMStabilizerTask::MIN_DS_PRESSURE;
-constexpr double LIPMStabilizerTask::MIN_NET_TOTAL_FORCE_ZMP;
-constexpr double LIPMStabilizerTask::GRAVITY;
+constexpr double StabilizerTask::MAX_AVERAGE_DCM_ERROR;
+constexpr double StabilizerTask::MAX_COM_ADMITTANCE;
+constexpr double StabilizerTask::MAX_COP_ADMITTANCE;
+constexpr double StabilizerTask::MAX_DCM_D_GAIN;
+constexpr double StabilizerTask::MAX_DCM_I_GAIN;
+constexpr double StabilizerTask::MAX_DCM_P_GAIN;
+constexpr double StabilizerTask::MAX_DFZ_ADMITTANCE;
+constexpr double StabilizerTask::MAX_DFZ_DAMPING;
+constexpr double StabilizerTask::MAX_FDC_RX_VEL;
+constexpr double StabilizerTask::MAX_FDC_RY_VEL;
+constexpr double StabilizerTask::MAX_FDC_RZ_VEL;
+constexpr double StabilizerTask::MAX_ZMPCC_COM_OFFSET;
+constexpr double StabilizerTask::MIN_DS_PRESSURE;
+constexpr double StabilizerTask::MIN_NET_TOTAL_FORCE_ZMP;
+constexpr double StabilizerTask::GRAVITY;
 
 namespace
 {
@@ -49,14 +49,14 @@ inline Eigen::Vector2d vecFromError(const Eigen::Vector3d & error)
 const Eigen::Vector3d e_z{0., 0., 1.};
 } // namespace
 
-LIPMStabilizerTask::LIPMStabilizerTask(const mc_rbdyn::Robots & robots,
-                                       const mc_rbdyn::Robots & realRobots,
-                                       unsigned int robotIndex,
-                                       const std::string & leftSurface,
-                                       const std::string & rightSurface,
-                                       double dt)
+StabilizerTask::StabilizerTask(const mc_rbdyn::Robots & robots,
+                               const mc_rbdyn::Robots & realRobots,
+                               unsigned int robotIndex,
+                               const std::string & leftSurface,
+                               const std::string & rightSurface,
+                               double dt)
 : robots_(robots), realRobots_(realRobots), robotIndex_(robotIndex), leftFootSurface_(leftSurface),
-  rightFootSurface_(rightSurface), dcmIntegrator_(dt, /* timeConstant = */ 5.),
+  rightFootSurface_(rightSurface), dcmIntegrator_(dt, /* timeConstant = */ 15.),
   dcmDerivator_(dt, /* timeConstant = */ 1.), dt_(dt), mass_(robots.robot(robotIndex).mass())
 {
   type_ = "Stabilizer";
@@ -74,9 +74,9 @@ LIPMStabilizerTask::LIPMStabilizerTask(const mc_rbdyn::Robots & robots,
   torsoTask = std::make_shared<mc_tasks::OrientationTask>(torsoName, robots_, robotIndex_);
 }
 
-LIPMStabilizerTask::~LIPMStabilizerTask() {}
+StabilizerTask::~StabilizerTask() {}
 
-void LIPMStabilizerTask::reset()
+void StabilizerTask::reset()
 {
   comTask->reset();
   rightFootTask->reset();
@@ -95,9 +95,9 @@ void LIPMStabilizerTask::reset()
   torsoTask->stiffness(torsoStiffness);
   torsoTask->weight(torsoWeight);
 
-  comTask->selectActiveJoints(comActiveJoints_);
-  comTask->setGains(comStiffness_, 2 * comStiffness_.cwiseSqrt());
-  comTask->weight(comWeight_);
+  comTask->selectActiveJoints(c_.comActiveJoints);
+  comTask->setGains(c_.comStiffness, 2 * c_.comStiffness.cwiseSqrt());
+  comTask->weight(c_.comWeight);
 
   leftFootTask->maxAngularVel({MAX_FDC_RX_VEL, MAX_FDC_RY_VEL, MAX_FDC_RZ_VEL});
   rightFootTask->maxAngularVel({MAX_FDC_RX_VEL, MAX_FDC_RY_VEL, MAX_FDC_RZ_VEL});
@@ -125,58 +125,57 @@ void LIPMStabilizerTask::reset()
 
   omega_ = std::sqrt(robot().mbc().gravity.z() / robot().com().z());
 
-  wrenchFaceMatrix(sole_);
+  wrenchFaceMatrix(c_.sole);
 }
 
-void LIPMStabilizerTask::dimWeight(const Eigen::VectorXd & /* dim */)
+void StabilizerTask::dimWeight(const Eigen::VectorXd & /* dim */)
 {
   LOG_ERROR_AND_THROW(std::runtime_error, "dimWeight not implemented for task " << type_);
 }
 
-Eigen::VectorXd LIPMStabilizerTask::dimWeight() const
+Eigen::VectorXd StabilizerTask::dimWeight() const
 {
   LOG_ERROR_AND_THROW(std::runtime_error, "dimWeight not implemented for task " << type_);
 }
 
-void LIPMStabilizerTask::selectActiveJoints(mc_solver::QPSolver & solver,
-                                            const std::vector<std::string> & activeJointsName,
-                                            const std::map<std::string, std::vector<std::array<int, 2>>> & activeDofs)
+void StabilizerTask::selectActiveJoints(mc_solver::QPSolver & solver,
+                                        const std::vector<std::string> & activeJointsName,
+                                        const std::map<std::string, std::vector<std::array<int, 2>>> & activeDofs)
 {
   LOG_ERROR_AND_THROW(std::runtime_error, "Task " << name_ << " does not implement selectActiveJoints");
 }
 
-void LIPMStabilizerTask::selectUnactiveJoints(
-    mc_solver::QPSolver & solver,
-    const std::vector<std::string> & unactiveJointsName,
-    const std::map<std::string, std::vector<std::array<int, 2>>> & unactiveDofs)
+void StabilizerTask::selectUnactiveJoints(mc_solver::QPSolver & solver,
+                                          const std::vector<std::string> & unactiveJointsName,
+                                          const std::map<std::string, std::vector<std::array<int, 2>>> & unactiveDofs)
 {
   LOG_ERROR_AND_THROW(std::runtime_error, "Task " << name_ << " does not implement selectUnactiveJoints");
 }
 
-void LIPMStabilizerTask::resetJointsSelector(mc_solver::QPSolver & solver)
+void StabilizerTask::resetJointsSelector(mc_solver::QPSolver & solver)
 {
   comTask->resetJointsSelector(solver);
   leftFootTask->resetJointsSelector(solver);
   rightFootTask->resetJointsSelector(solver);
 }
 
-Eigen::VectorXd LIPMStabilizerTask::eval() const
+Eigen::VectorXd StabilizerTask::eval() const
 {
   LOG_ERROR_AND_THROW(std::runtime_error, "eval not implemented for task " << type_);
 }
 
-Eigen::VectorXd LIPMStabilizerTask::speed() const
+Eigen::VectorXd StabilizerTask::speed() const
 {
   LOG_ERROR_AND_THROW(std::runtime_error, "speed not implemented for task " << type_);
 }
 
-void LIPMStabilizerTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+void StabilizerTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
   configure(config);
   // XXX make sure this is reset as expected
 }
 
-void LIPMStabilizerTask::addToSolver(mc_solver::QPSolver & solver)
+void StabilizerTask::addToSolver(mc_solver::QPSolver & solver)
 {
   MetaTask::addToSolver(*comTask, solver);
   MetaTask::addToSolver(*leftFootTask, solver);
@@ -185,7 +184,7 @@ void LIPMStabilizerTask::addToSolver(mc_solver::QPSolver & solver)
   MetaTask::addToSolver(*torsoTask, solver);
 }
 
-void LIPMStabilizerTask::removeFromSolver(mc_solver::QPSolver & solver)
+void StabilizerTask::removeFromSolver(mc_solver::QPSolver & solver)
 {
   MetaTask::removeFromSolver(*comTask, solver);
   MetaTask::removeFromSolver(*leftFootTask, solver);
@@ -194,7 +193,7 @@ void LIPMStabilizerTask::removeFromSolver(mc_solver::QPSolver & solver)
   MetaTask::removeFromSolver(*torsoTask, solver);
 }
 
-void LIPMStabilizerTask::update()
+void StabilizerTask::update()
 {
   updateState(realRobots_.robot().com(), realRobots_.robot().comVelocity(), leftFootRatio());
 
@@ -208,7 +207,7 @@ void LIPMStabilizerTask::update()
   MetaTask::update(*torsoTask);
 }
 
-void LIPMStabilizerTask::addToLogger(mc_rtc::Logger & logger)
+void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
 {
   logger.addLogEntry("stabilizer_contactState", [this]() -> double {
     switch(contactState_)
@@ -231,23 +230,24 @@ void LIPMStabilizerTask::addToLogger(mc_rtc::Logger & logger)
   logger.addLogEntry("error_vdc", [this]() { return vdcHeightError_; });
   logger.addLogEntry("error_zmp", [this]() { return zmpError_; });
   logger.addLogEntry("perf_Stabilizer", [this]() { return runTime_; });
-  logger.addLogEntry("stabilizer_admittance_com", [this]() { return comAdmittance_; });
-  logger.addLogEntry("stabilizer_admittance_cop", [this]() { return copAdmittance_; });
-  logger.addLogEntry("stabilizer_admittance_dfz", [this]() { return dfzAdmittance_; });
+  logger.addLogEntry("stabilizer_admittance_com", [this]() { return c_.comAdmittance; });
+  logger.addLogEntry("stabilizer_admittance_cop", [this]() { return c_.copAdmittance; });
+  logger.addLogEntry("stabilizer_admittance_dfz", [this]() { return c_.dfzAdmittance; });
   logger.addLogEntry("stabilizer_dcmDerivator_filtered", [this]() { return dcmDerivator_.eval(); });
   logger.addLogEntry("stabilizer_dcmDerivator_raw", [this]() { return dcmDerivator_.raw(); });
   logger.addLogEntry("stabilizer_dcmDerivator_timeConstant", [this]() { return dcmDerivator_.timeConstant(); });
   logger.addLogEntry("stabilizer_dcmIntegrator_timeConstant", [this]() { return dcmIntegrator_.timeConstant(); });
-  logger.addLogEntry("stabilizer_dcmTracking_derivGain", [this]() { return dcmDerivGain_; });
-  logger.addLogEntry("stabilizer_dcmTracking_integralGain", [this]() { return dcmIntegralGain_; });
-  logger.addLogEntry("stabilizer_dcmTracking_propGain", [this]() { return dcmPropGain_; });
-  logger.addLogEntry("stabilizer_dfz_damping", [this]() { return dfzDamping_; });
+  logger.addLogEntry("stabilizer_dcmTracking_derivGain", [this]() { return c_.dcmDerivGain; });
+  logger.addLogEntry("stabilizer_dcmTracking_integralGain", [this]() { return c_.dcmIntegralGain; });
+  logger.addLogEntry("stabilizer_dcmTracking_propGain", [this]() { return c_.dcmPropGain; });
+  logger.addLogEntry("stabilizer_dfz_damping", [this]() { return c_.dfzDamping; });
   logger.addLogEntry("stabilizer_fdqp_weights_ankleTorque",
-                     [this]() { return std::pow(fdqpWeights_.ankleTorqueSqrt, 2); });
-  logger.addLogEntry("stabilizer_fdqp_weights_netWrench", [this]() { return std::pow(fdqpWeights_.netWrenchSqrt, 2); });
-  logger.addLogEntry("stabilizer_fdqp_weights_pressure", [this]() { return std::pow(fdqpWeights_.pressureSqrt, 2); });
-  logger.addLogEntry("stabilizer_vdc_frequency", [this]() { return vdcFrequency_; });
-  logger.addLogEntry("stabilizer_vdc_stiffness", [this]() { return vdcStiffness_; });
+                     [this]() { return std::pow(c_.fdqpWeights.ankleTorqueSqrt, 2); });
+  logger.addLogEntry("stabilizer_fdqp_weights_netWrench",
+                     [this]() { return std::pow(c_.fdqpWeights.netWrenchSqrt, 2); });
+  logger.addLogEntry("stabilizer_fdqp_weights_pressure", [this]() { return std::pow(c_.fdqpWeights.pressureSqrt, 2); });
+  logger.addLogEntry("stabilizer_vdc_frequency", [this]() { return c_.vdcFrequency; });
+  logger.addLogEntry("stabilizer_vdc_stiffness", [this]() { return c_.vdcStiffness; });
   logger.addLogEntry("stabilizer_wrench", [this]() { return distribWrench_; });
   logger.addLogEntry("stabilizer_zmp", [this]() { return zmp(); });
   logger.addLogEntry("stabilizer_zmpcc_comAccel", [this]() { return zmpccCoMAccel_; });
@@ -286,7 +286,7 @@ void LIPMStabilizerTask::addToLogger(mc_rtc::Logger & logger)
   rightFootTask->addToLogger(logger);
 }
 
-void LIPMStabilizerTask::removeFromLogger(mc_rtc::Logger & logger)
+void StabilizerTask::removeFromLogger(mc_rtc::Logger & logger)
 {
   logger.removeLogEntry("stabilizer_contactState");
   logger.removeLogEntry("error_dcm_average");
@@ -322,7 +322,7 @@ void LIPMStabilizerTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry("stabilizer_zmpcc_leakRate");
 }
 
-void LIPMStabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
+void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   using namespace mc_rtc::gui;
   gui.addElement({"Stabilizer", "Main"}, Button("Disable stabilizer", [this]() { disable(); }),
@@ -330,28 +330,28 @@ void LIPMStabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                  Button("Reset DCM integrator", [this]() { dcmIntegrator_.setZero(); }),
                  ArrayInput("Foot admittance", {"CoPx", "CoPy"},
                             [this]() -> Eigen::Vector2d {
-                              return {copAdmittance_.x(), copAdmittance_.y()};
+                              return {c_.copAdmittance.x(), c_.copAdmittance.y()};
                             },
                             [this](const Eigen::Vector2d & a) {
-                              copAdmittance_.x() = clamp(a(0), 0., MAX_COP_ADMITTANCE);
-                              copAdmittance_.y() = clamp(a(1), 0., MAX_COP_ADMITTANCE);
+                              c_.copAdmittance.x() = clamp(a(0), 0., MAX_COP_ADMITTANCE);
+                              c_.copAdmittance.y() = clamp(a(1), 0., MAX_COP_ADMITTANCE);
                             }),
                  ArrayInput("Foot force difference", {"Admittance", "Damping"},
                             [this]() -> Eigen::Vector2d {
-                              return {dfzAdmittance_, dfzDamping_};
+                              return {c_.dfzAdmittance, c_.dfzDamping};
                             },
                             [this](const Eigen::Vector2d & a) {
-                              dfzAdmittance_ = clamp(a(0), 0., MAX_DFZ_ADMITTANCE);
-                              dfzDamping_ = clamp(a(1), 0., MAX_DFZ_DAMPING);
+                              c_.dfzAdmittance = clamp(a(0), 0., MAX_DFZ_ADMITTANCE);
+                              c_.dfzDamping = clamp(a(1), 0., MAX_DFZ_DAMPING);
                             }),
                  ArrayInput("DCM gains", {"Prop.", "Integral", "Deriv."},
                             [this]() -> Eigen::Vector3d {
-                              return {dcmPropGain_, dcmIntegralGain_, dcmDerivGain_};
+                              return {c_.dcmPropGain, c_.dcmIntegralGain, c_.dcmDerivGain};
                             },
                             [this](const Eigen::Vector3d & gains) {
-                              dcmPropGain_ = clamp(gains(0), 0., MAX_DCM_P_GAIN);
-                              dcmIntegralGain_ = clamp(gains(1), 0., MAX_DCM_I_GAIN);
-                              dcmDerivGain_ = clamp(gains(2), 0., MAX_DCM_D_GAIN);
+                              c_.dcmPropGain = clamp(gains(0), 0., MAX_DCM_P_GAIN);
+                              c_.dcmIntegralGain = clamp(gains(1), 0., MAX_DCM_I_GAIN);
+                              c_.dcmDerivGain = clamp(gains(2), 0., MAX_DCM_D_GAIN);
                             }),
                  ArrayInput("DCM filters", {"Integrator T [s]", "Derivator T [s]"},
                             [this]() -> Eigen::Vector2d {
@@ -364,10 +364,10 @@ void LIPMStabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   gui.addElement({"Stabilizer", "Advanced"}, Button("Disable stabilizer", [this]() { disable(); }),
                  Button("Reconfigure", [this]() { reconfigure(); }),
                  Button("Reset CoM integrator", [this]() { zmpccIntegrator_.setZero(); }),
-                 ArrayInput("CoM admittance", {"Ax", "Ay"}, [this]() { return comAdmittance_; },
+                 ArrayInput("CoM admittance", {"Ax", "Ay"}, [this]() { return c_.comAdmittance; },
                             [this](const Eigen::Vector2d & a) {
-                              comAdmittance_.x() = clamp(a.x(), 0., MAX_COM_ADMITTANCE);
-                              comAdmittance_.y() = clamp(a.y(), 0., MAX_COM_ADMITTANCE);
+                              c_.comAdmittance.x() = clamp(a.x(), 0., MAX_COM_ADMITTANCE);
+                              c_.comAdmittance.y() = clamp(a.y(), 0., MAX_COM_ADMITTANCE);
                             }),
                  Checkbox("Apply CoM admittance only in double support?", [this]() { return zmpccOnlyDS_; },
                           [this]() { zmpccOnlyDS_ = !zmpccOnlyDS_; }),
@@ -392,17 +392,17 @@ void LIPMStabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                               double zmpDerivGain = -(alpha + beta + gamma + lagFreq - omega_) / denom;
 
                               // Our gains K are for closed-loop DCM (Delta dot(DCM) = -K * Delta DCM)
-                              dcmPropGain_ = omega_ * (zmpPropGain - 1.);
-                              dcmIntegralGain_ = omega_ * T_integ * zmpIntegralGain; // our integrator is an EMA
-                              dcmDerivGain_ = omega_ * zmpDerivGain;
+                              c_.dcmPropGain = omega_ * (zmpPropGain - 1.);
+                              c_.dcmIntegralGain = omega_ * T_integ * zmpIntegralGain; // our integrator is an EMA
+                              c_.dcmDerivGain = omega_ * zmpDerivGain;
                             }),
                  ArrayInput("Vertical drift compensation", {"frequency", "stiffness"},
                             [this]() -> Eigen::Vector2d {
-                              return {vdcFrequency_, vdcStiffness_};
+                              return {c_.vdcFrequency, c_.vdcStiffness};
                             },
                             [this](const Eigen::Vector2d & v) {
-                              vdcFrequency_ = clamp(v(0), 0., 10.);
-                              vdcStiffness_ = clamp(v(1), 0., 1e4);
+                              c_.vdcFrequency = clamp(v(0), 0., 10.);
+                              c_.vdcStiffness = clamp(v(1), 0., 1e4);
                             }));
   gui.addElement({"Stabilizer", "Debug"}, Button("Disable stabilizer", [this]() { disable(); }),
                  Button("Reconfigure", [this]() { reconfigure(); }),
@@ -487,108 +487,56 @@ void LIPMStabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                  Polygon("SupportContacts", mc_rtc::gui::Color(0., 1., 0.), [this]() { return supportPolygons_; }));
 }
 
-void LIPMStabilizerTask::disable()
+void StabilizerTask::disable()
 {
-  comAdmittance_.setZero();
-  copAdmittance_.setZero();
-  dcmDerivGain_ = 0.;
-  dcmIntegralGain_ = 0.;
-  dcmPropGain_ = 0.;
-  dfzAdmittance_ = 0.;
-  vdcFrequency_ = 0.;
-  vdcStiffness_ = 0.;
+  c_.comAdmittance.setZero();
+  c_.copAdmittance.setZero();
+  c_.dcmDerivGain = 0.;
+  c_.dcmIntegralGain = 0.;
+  c_.dcmPropGain = 0.;
+  c_.dfzAdmittance = 0.;
+  c_.vdcFrequency = 0.;
+  c_.vdcStiffness = 0.;
 }
 
-void LIPMStabilizerTask::configure(const mc_rtc::Configuration & config)
+void StabilizerTask::configure(const mc_rtc::Configuration & config)
 {
   config_ = config;
   reconfigure();
 }
 
-// XXX use ConfigurationLoader with a struct for the stabilizer config instead
-void LIPMStabilizerTask::reconfigure()
+void StabilizerTask::reconfigure()
 {
-  fdqpWeights_.configure(config_("fdqp_weights"));
-  if(config_.has("admittance"))
-  {
-    auto admittance = config_("admittance");
-    comAdmittance_ = admittance("com");
-    copAdmittance_ = admittance("cop");
-    dfzAdmittance_ = admittance("dfz");
-    dfzDamping_ = admittance("dfz_damping");
-  }
-  if(config_.has("dcm_tracking"))
-  {
-    auto dcmTracking = config_("dcm_tracking");
-    dcmPropGain_ = dcmTracking("gains")("prop");
-    dcmIntegralGain_ = dcmTracking("gains")("integral");
-    dcmDerivGain_ = dcmTracking("gains")("deriv");
-    dcmDerivator_.timeConstant(dcmTracking("derivator_time_constant"));
-    dcmIntegrator_.timeConstant(dcmTracking("integrator_time_constant"));
-  }
-  if(config_.has("tasks"))
-  {
-    auto tasks = config_("tasks");
-    if(tasks.has("com"))
-    {
-      tasks("com")("active_joints", comActiveJoints_);
-      tasks("com")("stiffness", comStiffness_);
-      tasks("com")("weight", comWeight_);
-      tasks("com")("height", comHeight_);
-      tasks("com")("max_height", maxCoMHeight_);
-      tasks("com")("min_height", minCoMHeight_);
-    }
-    if(tasks.has("contact"))
-    {
-      double d = tasks("contact")("damping");
-      double k = tasks("contact")("stiffness");
-      contactDamping_ = sva::MotionVecd({d, d, d}, {d, d, d});
-      contactStiffness_ = sva::MotionVecd({k, k, k}, {k, k, k});
-      tasks("contact")("stiffness", contactStiffness_);
-      tasks("contact")("weight", contactWeight_);
-    }
-    if(tasks.has("swing_foot"))
-    {
-      tasks("swing_foot")("stiffness", swingFootStiffness_);
-      tasks("swing_foot")("weight", swingFootWeight_);
-    }
-  }
-  if(config_.has("vdc"))
-  {
-    auto vdc = config_("vdc");
-    vdcFrequency_ = vdc("frequency");
-    vdcStiffness_ = vdc("stiffness");
-  }
-  if(config_.has("zmpcc"))
-  {
-    auto zmpcc = config_("zmpcc");
-    zmpccIntegrator_.rate(zmpcc("integrator_leak_rate"));
-  }
+  // Load stabilizer configuration
+  c_.load(config_);
 
-  sole_ = config_("sole");
+  dcmDerivator_.timeConstant(c_.dcmDerivatorTimeConstant);
+  dcmIntegrator_.timeConstant(c_.dcmIntegratorTimeConstant);
 
   // Configure contacts
-  leftFootContact.surfaceName = leftFootTask->surface();
-  leftFootContact.halfLength = sole_.halfLength;
-  leftFootContact.halfWidth = sole_.halfWidth;
-  rightFootContact.surfaceName = rightFootTask->surface();
-  rightFootContact.halfLength = sole_.halfLength;
-  rightFootContact.halfWidth = sole_.halfWidth;
+  double hw = c_.sole.halfWidth;
+  double hl = c_.sole.halfLength;
+  leftFootContact_.surfaceName = leftFootTask->surface();
+  leftFootContact_.halfLength = hl;
+  leftFootContact_.halfWidth = hw;
+  rightFootContact_.surfaceName = rightFootTask->surface();
+  rightFootContact_.halfLength = hl;
+  rightFootContact_.halfWidth = hw;
 }
 
-void LIPMStabilizerTask::checkGains()
+void StabilizerTask::checkGains()
 {
-  clampInPlace(comAdmittance_.x(), 0., MAX_COM_ADMITTANCE, "CoM x-admittance");
-  clampInPlace(comAdmittance_.y(), 0., MAX_COM_ADMITTANCE, "CoM y-admittance");
-  clampInPlace(copAdmittance_.x(), 0., MAX_COP_ADMITTANCE, "CoP x-admittance");
-  clampInPlace(copAdmittance_.y(), 0., MAX_COP_ADMITTANCE, "CoP y-admittance");
-  clampInPlace(dcmDerivGain_, 0., MAX_DCM_D_GAIN, "DCM deriv x-gain");
-  clampInPlace(dcmIntegralGain_, 0., MAX_DCM_I_GAIN, "DCM integral x-gain");
-  clampInPlace(dcmPropGain_, 0., MAX_DCM_P_GAIN, "DCM prop x-gain");
-  clampInPlace(dfzAdmittance_, 0., MAX_DFZ_ADMITTANCE, "DFz admittance");
+  clampInPlace(c_.comAdmittance.x(), 0., MAX_COM_ADMITTANCE, "CoM x-admittance");
+  clampInPlace(c_.comAdmittance.y(), 0., MAX_COM_ADMITTANCE, "CoM y-admittance");
+  clampInPlace(c_.copAdmittance.x(), 0., MAX_COP_ADMITTANCE, "CoP x-admittance");
+  clampInPlace(c_.copAdmittance.y(), 0., MAX_COP_ADMITTANCE, "CoP y-admittance");
+  clampInPlace(c_.dcmDerivGain, 0., MAX_DCM_D_GAIN, "DCM deriv x-gain");
+  clampInPlace(c_.dcmIntegralGain, 0., MAX_DCM_I_GAIN, "DCM integral x-gain");
+  clampInPlace(c_.dcmPropGain, 0., MAX_DCM_P_GAIN, "DCM prop x-gain");
+  clampInPlace(c_.dfzAdmittance, 0., MAX_DFZ_ADMITTANCE, "DFz admittance");
 }
 
-void LIPMStabilizerTask::setContacts(ContactState state)
+void StabilizerTask::setContacts(ContactState state)
 {
   contactState_ = state;
 
@@ -606,42 +554,41 @@ void LIPMStabilizerTask::setContacts(ContactState state)
   auto configureFootSupport = [this, &contacts](std::shared_ptr<mc_tasks::force::CoPTask> footTask, Contact & contact) {
     footTask->reset();
     footTask->admittance(contactAdmittance());
-    footTask->setGains(contactStiffness_, contactDamping_);
-    footTask->weight(contactWeight_);
+    footTask->setGains(c_.contactStiffness, c_.contactDamping);
+    footTask->weight(c_.contactWeight);
     // set contact pose as well
     contact.pose = footTask->surfacePose();
   };
 
   auto configureSwingFoot = [this](std::shared_ptr<mc_tasks::force::CoPTask> footTask) {
     footTask->reset();
-    footTask->stiffness(swingFootStiffness_); // sets damping as well
-    footTask->weight(swingFootWeight_);
+    footTask->stiffness(c_.swingFootStiffness); // sets damping as well
+    footTask->weight(c_.swingFootWeight);
   };
 
   supportPolygons_.clear();
   if(state == ContactState::DoubleSupport)
   {
-    supportPolygons_.push_back(footStepPolygon(leftFootContact));
-    supportPolygons_.push_back(footStepPolygon(rightFootContact));
-    configureFootSupport(leftFootTask, leftFootContact);
-    configureFootSupport(rightFootTask, rightFootContact);
+    supportPolygons_.push_back(footStepPolygon(leftFootContact_));
+    supportPolygons_.push_back(footStepPolygon(rightFootContact_));
+    configureFootSupport(leftFootTask, leftFootContact_);
+    configureFootSupport(rightFootTask, rightFootContact_);
   }
   else if(state == ContactState::LeftFoot)
   {
-    supportPolygons_.push_back(footStepPolygon(leftFootContact));
-    configureFootSupport(leftFootTask, leftFootContact);
+    supportPolygons_.push_back(footStepPolygon(leftFootContact_));
+    configureFootSupport(leftFootTask, leftFootContact_);
     configureSwingFoot(rightFootTask);
   }
   else
   {
-    supportPolygons_.push_back(footStepPolygon(leftFootContact));
-    configureFootSupport(rightFootTask, rightFootContact);
+    supportPolygons_.push_back(footStepPolygon(leftFootContact_));
+    configureFootSupport(rightFootTask, rightFootContact_);
     configureSwingFoot(leftFootTask);
   }
 }
 
-bool LIPMStabilizerTask::detectTouchdown(const std::shared_ptr<mc_tasks::force::CoPTask> footTask,
-                                         const Contact & contact)
+bool StabilizerTask::detectTouchdown(const std::shared_ptr<mc_tasks::force::CoPTask> footTask, const Contact & contact)
 {
   const sva::PTransformd X_0_s = footTask->surfacePose();
   const sva::PTransformd & X_0_c = contact.pose;
@@ -653,7 +600,7 @@ bool LIPMStabilizerTask::detectTouchdown(const std::shared_ptr<mc_tasks::force::
   return (xDist < 0.03 && yDist < 0.03 && zDist < 0.03 && pressure > 50.);
 }
 
-void LIPMStabilizerTask::seekTouchdown(std::shared_ptr<mc_tasks::force::CoPTask> footTask)
+void StabilizerTask::seekTouchdown(std::shared_ptr<mc_tasks::force::CoPTask> footTask)
 {
   constexpr double MAX_VEL = 0.01; // [m] / [s]
   constexpr double TOUCHDOWN_PRESSURE = 50.; // [N]
@@ -667,39 +614,40 @@ void LIPMStabilizerTask::seekTouchdown(std::shared_ptr<mc_tasks::force::CoPTask>
   }
 }
 
-void LIPMStabilizerTask::setSupportFootGains()
+void StabilizerTask::setSupportFootGains()
 {
-  sva::MotionVecd vdcContactStiffness = {contactStiffness_.angular(), {vdcStiffness_, vdcStiffness_, vdcStiffness_}};
+  sva::MotionVecd vdcContactStiffness = {c_.contactStiffness.angular(),
+                                         {c_.vdcStiffness, c_.vdcStiffness, c_.vdcStiffness}};
   switch(contactState_)
   {
     case ContactState::DoubleSupport:
       leftFootTask->admittance(contactAdmittance());
-      leftFootTask->setGains(contactStiffness_, contactDamping_);
+      leftFootTask->setGains(c_.contactStiffness, c_.contactDamping);
       rightFootTask->admittance(contactAdmittance());
-      rightFootTask->setGains(contactStiffness_, contactDamping_);
+      rightFootTask->setGains(c_.contactStiffness, c_.contactDamping);
       break;
     case ContactState::LeftFoot:
       leftFootTask->admittance(contactAdmittance());
-      leftFootTask->setGains(vdcContactStiffness, contactDamping_);
+      leftFootTask->setGains(vdcContactStiffness, c_.contactDamping);
       break;
     case ContactState::RightFoot:
       rightFootTask->admittance(contactAdmittance());
-      rightFootTask->setGains(vdcContactStiffness, contactDamping_);
+      rightFootTask->setGains(vdcContactStiffness, c_.contactDamping);
       break;
   }
 }
 
-void LIPMStabilizerTask::checkInTheAir()
+void StabilizerTask::checkInTheAir()
 {
   double LFz = leftFootTask->measuredWrench().force().z();
   double RFz = rightFootTask->measuredWrench().force().z();
   inTheAir_ = (LFz < MIN_DS_PRESSURE && RFz < MIN_DS_PRESSURE);
 }
 
-void LIPMStabilizerTask::updateZMPFrame()
+void StabilizerTask::updateZMPFrame()
 {
-  const sva::PTransformd & X_0_lc = leftFootContact.pose;
-  const sva::PTransformd & X_0_rc = rightFootContact.pose;
+  const sva::PTransformd & X_0_lc = leftFootContact_.pose;
+  const sva::PTransformd & X_0_rc = rightFootContact_.pose;
   switch(contactState_)
   {
     case ContactState::DoubleSupport:
@@ -716,12 +664,12 @@ void LIPMStabilizerTask::updateZMPFrame()
   measuredZMP_ = computeZMP(measuredNetWrench_); // computeZMP
 }
 
-Eigen::Vector3d LIPMStabilizerTask::computeZMP(const sva::ForceVecd & wrench) const
+Eigen::Vector3d StabilizerTask::computeZMP(const sva::ForceVecd & wrench) const
 {
   return robots_.robot(robotIndex_).zmp(wrench, zmpFrame_, MIN_NET_TOTAL_FORCE_ZMP);
 }
 
-void LIPMStabilizerTask::staticTarget(const Eigen::Vector3d & com)
+void StabilizerTask::staticTarget(const Eigen::Vector3d & com)
 {
   comTarget_ = com;
   comdTarget_ = Eigen::Vector3d::Zero();
@@ -731,7 +679,7 @@ void LIPMStabilizerTask::staticTarget(const Eigen::Vector3d & com)
   dcmTarget_ = comTarget_;
 }
 
-void LIPMStabilizerTask::run()
+void StabilizerTask::run()
 {
   using namespace std::chrono;
   auto startTime = high_resolution_clock::now();
@@ -765,14 +713,14 @@ void LIPMStabilizerTask::run()
   runTime_ = 1000. * duration_cast<duration<double>>(endTime - startTime).count();
 }
 
-void LIPMStabilizerTask::updateState(const Eigen::Vector3d & com, const Eigen::Vector3d & comd, double leftFootRatio)
+void StabilizerTask::updateState(const Eigen::Vector3d & com, const Eigen::Vector3d & comd, double leftFootRatio)
 {
   leftFootRatio_ = leftFootRatio;
   measuredCoM_ = com;
   measuredCoMd_ = comd;
 }
 
-sva::ForceVecd LIPMStabilizerTask::computeDesiredWrench()
+sva::ForceVecd StabilizerTask::computeDesiredWrench()
 {
   Eigen::Vector3d comError = comTarget_ - measuredCoM_;
   Eigen::Vector3d comdError = comdTarget_ - measuredCoMd_;
@@ -795,14 +743,14 @@ sva::ForceVecd LIPMStabilizerTask::computeDesiredWrench()
   dcmVelError_ = dcmDerivator_.eval();
 
   Eigen::Vector3d desiredCoMAccel = comddTarget_;
-  desiredCoMAccel += omega_ * (dcmPropGain_ * dcmError_ + comdError);
-  desiredCoMAccel += omega_ * dcmIntegralGain_ * dcmAverageError_;
-  desiredCoMAccel += omega_ * dcmDerivGain_ * dcmVelError_;
+  desiredCoMAccel += omega_ * (c_.dcmPropGain * dcmError_ + comdError);
+  desiredCoMAccel += omega_ * c_.dcmIntegralGain * dcmAverageError_;
+  desiredCoMAccel += omega_ * c_.dcmDerivGain * dcmVelError_;
   auto desiredForce = mass_ * (desiredCoMAccel - gravity_);
   return {measuredCoM_.cross(desiredForce), desiredForce};
 }
 
-void LIPMStabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
+void StabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
 {
   // Variables
   // ---------
@@ -825,10 +773,10 @@ void LIPMStabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
   // (X_0_lc* w_l_0).z() > minPressure  -- minimum left foot contact pressure
   // (X_0_rc* w_r_0).z() > minPressure  -- minimum right foot contact pressure
 
-  const sva::PTransformd & X_0_lc = leftFootContact.pose;
-  const sva::PTransformd & X_0_rc = rightFootContact.pose;
-  sva::PTransformd X_0_lankle = leftFootContact.anklePose();
-  sva::PTransformd X_0_rankle = rightFootContact.anklePose();
+  const sva::PTransformd & X_0_lc = leftFootContact_.pose;
+  const sva::PTransformd & X_0_rc = rightFootContact_.pose;
+  sva::PTransformd X_0_lankle = leftFootContact_.anklePose();
+  sva::PTransformd X_0_rankle = rightFootContact_.anklePose();
 
   constexpr unsigned NB_VAR = 6 + 6;
   constexpr unsigned COST_DIM = 6 + NB_VAR + 1;
@@ -860,13 +808,13 @@ void LIPMStabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
   A_pressure.block<1, 6>(0, 6) = -lfr * X_0_rc.dualMatrix().bottomRows<1>();
 
   // Apply weights
-  A_net *= fdqpWeights_.netWrenchSqrt;
-  b_net *= fdqpWeights_.netWrenchSqrt;
-  A_lankle *= fdqpWeights_.ankleTorqueSqrt;
-  A_rankle *= fdqpWeights_.ankleTorqueSqrt;
+  A_net *= c_.fdqpWeights.netWrenchSqrt;
+  b_net *= c_.fdqpWeights.netWrenchSqrt;
+  A_lankle *= c_.fdqpWeights.ankleTorqueSqrt;
+  A_rankle *= c_.fdqpWeights.ankleTorqueSqrt;
   // b_lankle = 0
   // b_rankle = 0
-  A_pressure *= fdqpWeights_.pressureSqrt;
+  A_pressure *= c_.fdqpWeights.pressureSqrt;
   // b_pressure = 0
 
   Eigen::MatrixXd Q = A.transpose() * A;
@@ -898,7 +846,7 @@ void LIPMStabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
   bool solutionFound = qpSolver_.solve(Q, c, A_eq, b_eq, A_ineq, b_ineq, /* isDecomp = */ false);
   if(!solutionFound)
   {
-    LOG_ERROR("DS force distribution QP: solver found no solution");
+    LOG_ERROR("[StabilizerTask] DS force distribution QP: solver found no solution");
     return;
   }
 
@@ -917,8 +865,8 @@ void LIPMStabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
   rightFootTask->targetForce(w_r_rc.force());
 }
 
-void LIPMStabilizerTask::saturateWrench(const sva::ForceVecd & desiredWrench,
-                                        std::shared_ptr<mc_tasks::force::CoPTask> & footTask)
+void StabilizerTask::saturateWrench(const sva::ForceVecd & desiredWrench,
+                                    std::shared_ptr<mc_tasks::force::CoPTask> & footTask)
 {
   constexpr unsigned NB_CONS = 16;
   constexpr unsigned NB_VAR = 6;
@@ -953,7 +901,7 @@ void LIPMStabilizerTask::saturateWrench(const sva::ForceVecd & desiredWrench,
   bool solutionFound = qpSolver_.solve(Q, c, A_eq, b_eq, A_ineq, b_ineq, /* isDecomp = */ true);
   if(!solutionFound)
   {
-    LOG_ERROR("SS force distribution QP: solver found no solution");
+    LOG_ERROR("[StabilizerTask] SS force distribution QP: solver found no solution");
     return;
   }
 
@@ -966,7 +914,7 @@ void LIPMStabilizerTask::saturateWrench(const sva::ForceVecd & desiredWrench,
   distribWrench_ = w_0;
 }
 
-void LIPMStabilizerTask::updateCoMTaskZMPCC()
+void StabilizerTask::updateCoMTaskZMPCC()
 {
   if(zmpccOnlyDS_ && contactState_ != ContactState::DoubleSupport)
   {
@@ -980,7 +928,7 @@ void LIPMStabilizerTask::updateCoMTaskZMPCC()
     zmpccError_ = distribZMP - measuredZMP_;
     const Eigen::Matrix3d & R_0_c = zmpFrame_.rotation();
     const Eigen::Transpose<const Eigen::Matrix3d> R_c_0 = R_0_c.transpose();
-    Eigen::Vector3d comAdmittance = {comAdmittance_.x(), comAdmittance_.y(), 0.};
+    Eigen::Vector3d comAdmittance = {c_.comAdmittance.x(), c_.comAdmittance.y(), 0.};
     Eigen::Vector3d newVel = -R_c_0 * comAdmittance.cwiseProduct(R_0_c * zmpccError_);
     Eigen::Vector3d newAccel = (newVel - zmpccCoMVel_) / dt_;
     zmpccIntegrator_.add(newVel, dt_);
@@ -993,7 +941,7 @@ void LIPMStabilizerTask::updateCoMTaskZMPCC()
   comTask->refAccel(comddTarget_ + zmpccCoMAccel_);
 }
 
-void LIPMStabilizerTask::updateFootForceDifferenceControl()
+void StabilizerTask::updateFootForceDifferenceControl()
 {
   if(contactState_ != ContactState::DoubleSupport || inTheAir_)
   {
@@ -1018,15 +966,15 @@ void LIPMStabilizerTask::updateFootForceDifferenceControl()
   dfzHeightError_ = (LTz_d - RTz_d) - (LTz - RTz);
   vdcHeightError_ = (LTz_d + RTz_d) - (LTz + RTz);
 
-  double dz_ctrl = dfzAdmittance_ * dfzForceError_ - dfzDamping_ * dfzHeightError_;
-  double dz_vdc = vdcFrequency_ * vdcHeightError_;
+  double dz_ctrl = c_.dfzAdmittance * dfzForceError_ - c_.dfzDamping * dfzHeightError_;
+  double dz_vdc = c_.vdcFrequency * vdcHeightError_;
   sva::MotionVecd velF = {{0., 0., 0.}, {0., 0., dz_ctrl}};
   sva::MotionVecd velT = {{0., 0., 0.}, {0., 0., dz_vdc}};
   leftFootTask->refVelB(0.5 * (velT - velF));
   rightFootTask->refVelB(0.5 * (velT + velF));
 }
 
-} // namespace stabilizer
+} // namespace lipm_stabilizer
 } // namespace mc_tasks
 
 namespace
@@ -1041,22 +989,22 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
       if(!config.has(robot.name()))
       {
         LOG_ERROR_AND_THROW(std::runtime_error,
-                            "[LIPMStabilizerTask] Configuration does not exist for robot " << robot.name());
+                            "[StabilizerTask] Configuration does not exist for robot " << robot.name());
       }
 
       if(!config.has("surfaces"))
       {
-        LOG_ERROR_AND_THROW(std::runtime_error, "[LIPMStabilizerTask] Missing \"surfaces\" configuration entry");
+        LOG_ERROR_AND_THROW(std::runtime_error, "[StabilizerTask] Missing \"surfaces\" configuration entry");
       }
       std::string left = config("surfaces")("left");
       std::string right = config("surfaces")("right");
 
-      auto t = std::make_shared<mc_tasks::stabilizer::LIPMStabilizerTask>(solver.robots(), solver.realRobots(),
-                                                                          robotIndex, left, right, solver.dt());
+      auto t = std::make_shared<mc_tasks::lipm_stabilizer::StabilizerTask>(solver.robots(), solver.realRobots(),
+                                                                           robotIndex, left, right, solver.dt());
       const auto & conf = config(robot.name());
       t->load(solver, conf);
       t->reset();
-      t->setContacts(mc_tasks::stabilizer::ContactState::DoubleSupport);
+      t->setContacts(mc_tasks::lipm_stabilizer::ContactState::DoubleSupport);
       t->staticTarget(robot.com());
       return t;
     });

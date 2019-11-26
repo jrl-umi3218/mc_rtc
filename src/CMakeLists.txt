@@ -141,6 +141,8 @@ set(mc_rbdyn_HDR
 ../include/mc_rbdyn/Base.h
 ../include/mc_rbdyn/BodySensor.h
 ../include/mc_rbdyn/configuration_io.h
+../include/mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h
+../include/mc_rbdyn/lipm_stabilizer/Contact.h
 )
 
 add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC} ${mc_rbdyn_HDR})
@@ -291,8 +293,7 @@ mc_tasks/PostureTask.cpp
 mc_tasks/LookAtTask.cpp
 mc_tasks/LookAtSurfaceTask.cpp
 mc_tasks/MetaTaskLoader.cpp
-mc_tasks/stabilizer/LIPMStabilizerTask.cpp
-mc_tasks/stabilizer/Pendulum.cpp
+mc_tasks/LIPMStabilizerTask.cpp
 )
 
 set(mc_tasks_HDR
@@ -322,7 +323,7 @@ set(mc_tasks_HDR
 ../include/mc_tasks/PostureTask.h
 ../include/mc_tasks/LookAtTask.h
 ../include/mc_tasks/ExactCubicTrajectoryTask.h
-../include/mc_tasks/stabilizer/LIPMStabilizerTask.h
+../include/mc_tasks/LIPMStabilizerTask.h
 )
 
 add_library(mc_tasks SHARED ${mc_tasks_SRC} ${mc_tasks_HDR})
