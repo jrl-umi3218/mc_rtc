@@ -110,6 +110,12 @@ public:
    */
   Eigen::VectorXd speed() const override;
 
+  /*! \brief Load parameters from a StabilizerConfiguration object
+   *
+   * Should be used to initialize the stabilizer from a default configuration
+   */
+  void resetConfiguration(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & config);
+
   /*! \brief Load parameters from a Configuration object */
   void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) override;
 

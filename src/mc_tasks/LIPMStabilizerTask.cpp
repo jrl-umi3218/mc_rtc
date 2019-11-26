@@ -5,6 +5,7 @@
  * lipm_walking_controller <https://github.com/stephane-caron/lipm_walking_controller>
  */
 
+#include <mc_rtc/gui.h>
 #include <mc_tasks/LIPMStabilizerTask.h>
 #include <mc_tasks/MetaTaskLoader.h>
 
@@ -169,10 +170,14 @@ Eigen::VectorXd StabilizerTask::speed() const
   LOG_ERROR_AND_THROW(std::runtime_error, "speed not implemented for task " << type_);
 }
 
+void StabilizerTask::resetConfiguration(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & config)
+{
+  c_ = config;
+}
+
 void StabilizerTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
   configure(config);
-  // XXX make sure this is reset as expected
 }
 
 void StabilizerTask::addToSolver(mc_solver::QPSolver & solver)
@@ -1002,6 +1007,7 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
       auto t = std::make_shared<mc_tasks::lipm_stabilizer::StabilizerTask>(solver.robots(), solver.realRobots(),
                                                                            robotIndex, left, right, solver.dt());
       const auto & conf = config(robot.name());
+      t->resetConfiguration(robot.module().defaultLIPMStabilizerConfiguration());
       t->load(solver, conf);
       t->reset();
       t->setContacts(mc_tasks::lipm_stabilizer::ContactState::DoubleSupport);
