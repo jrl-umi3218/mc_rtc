@@ -227,6 +227,7 @@ auto cyanRectangle =
   PolygonDescription({{-2, -2}, {2, -2}, {2, -3}, {-2, -3}}, Color::Cyan);
 {% endraw %}
 {% endcapture %}
+{% include show_source.html lang="cpp" source=source %}
 
 _Note: since `mc_rtc::gui::plot::Polygon` callback returns a `PolygonDescription` you are free to change the display style of this polygon anytime while the plot is active._
 
