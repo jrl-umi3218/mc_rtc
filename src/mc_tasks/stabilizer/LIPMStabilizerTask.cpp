@@ -869,38 +869,40 @@ void LIPMStabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
   A_pressure *= fdqpWeights_.pressureSqrt;
   // b_pressure = 0
 
-  constexpr unsigned CONS_DIM = 16 + 16 + 2;
-  Eigen::Matrix<double, CONS_DIM, NB_VAR> C;
-  Eigen::VectorXd bl, bu;
-  C.setZero(CONS_DIM, NB_VAR);
-  bl.setConstant(NB_VAR + CONS_DIM, -1e5);
-  bu.setConstant(NB_VAR + CONS_DIM, +1e5);
-  auto blCons = bl.tail<CONS_DIM>();
-  auto buCons = bu.tail<CONS_DIM>();
-  // CWC * w_l_lc <= 0
-  C.block<16, 6>(0, 0) = wrenchFaceMatrix_ * X_0_lc.dualMatrix();
-  buCons.segment<16>(0).setZero();
-  // CWC * w_r_rc <= 0
-  C.block<16, 6>(16, 6) = wrenchFaceMatrix_ * X_0_rc.dualMatrix();
-  buCons.segment<16>(16).setZero();
-  // w_l_lc.force().z() >= MIN_DS_PRESSURE
-  // w_r_rc.force().z() >= MIN_DS_PRESSURE
-  C.block<1, 6>(32, 0) = X_0_lc.dualMatrix().bottomRows<1>();
-  C.block<1, 6>(33, 6) = X_0_rc.dualMatrix().bottomRows<1>();
-  blCons.segment<2>(32).setConstant(MIN_DS_PRESSURE);
-  buCons.segment<2>(32).setConstant(+1e5);
+  Eigen::MatrixXd Q = A.transpose() * A;
+  Eigen::VectorXd c = -A.transpose() * b;
 
-  // Eigen::MatrixXd A0 = A; // A is modified by solve()
-  // Eigen::VectorXd b0 = b; // b is modified by solve()
-  bool solverSuccess = wrenchSolver_.solve(A, b, C, bl, bu);
-  Eigen::VectorXd x = wrenchSolver_.result();
-  if(!solverSuccess)
+  constexpr unsigned NB_CONS = 16 + 16 + 2;
+  Eigen::Matrix<double, NB_CONS, NB_VAR> A_ineq;
+  Eigen::VectorXd b_ineq;
+  A_ineq.setZero(NB_CONS, NB_VAR);
+  b_ineq.setZero(NB_CONS);
+  // CWC * w_l_lc <= 0
+  A_ineq.block<16, 6>(0, 0) = wrenchFaceMatrix_ * X_0_lc.dualMatrix();
+  // b_ineq.segment<16>(0) is already zero
+  // CWC * w_r_rc <= 0
+  A_ineq.block<16, 6>(16, 6) = wrenchFaceMatrix_ * X_0_rc.dualMatrix();
+  // b_ineq.segment<16>(16) is already zero
+  // w_l_lc.force().z() >= MIN_DS_PRESSURE
+  A_ineq.block<1, 6>(32, 0) = -X_0_lc.dualMatrix().bottomRows<1>();
+  b_ineq(32) = -MIN_DS_PRESSURE;
+  // w_r_rc.force().z() >= MIN_DS_PRESSURE
+  A_ineq.block<1, 6>(33, 6) = -X_0_rc.dualMatrix().bottomRows<1>();
+  b_ineq(33) = -MIN_DS_PRESSURE;
+
+  qpSolver_.problem(NB_VAR, 0, NB_CONS);
+  Eigen::MatrixXd A_eq(0, 0);
+  Eigen::VectorXd b_eq;
+  b_eq.resize(0);
+
+  bool solutionFound = qpSolver_.solve(Q, c, A_eq, b_eq, A_ineq, b_ineq, /* isDecomp = */ false);
+  if(!solutionFound)
   {
-    LOG_ERROR("DS force distribution QP failed to run");
-    wrenchSolver_.print_inform();
+    LOG_ERROR("DS force distribution QP: solver found no solution");
     return;
   }
 
+  Eigen::VectorXd x = qpSolver_.result();
   sva::ForceVecd w_l_0(x.segment<3>(0), x.segment<3>(3));
   sva::ForceVecd w_r_0(x.segment<3>(6), x.segment<3>(9));
   distribWrench_ = w_l_0 + w_r_0;
@@ -936,24 +938,26 @@ void LIPMStabilizerTask::saturateWrench(const sva::ForceVecd & desiredWrench,
 
   const sva::PTransformd & X_0_c = footTask->targetPose();
 
-  Eigen::Matrix6d A = Eigen::Matrix6d::Identity();
-  Eigen::Vector6d b = desiredWrench.vector();
+  Eigen::Matrix6d Q = Eigen::Matrix6d::Identity();
+  Eigen::Vector6d c = -desiredWrench.vector();
 
-  Eigen::MatrixXd C = wrenchFaceMatrix_ * X_0_c.dualMatrix();
-  Eigen::VectorXd bl, bu;
-  bl.setConstant(NB_VAR + NB_CONS, -1e5);
-  bu.setConstant(NB_VAR + NB_CONS, +1e5);
-  bu.tail<NB_CONS>().setZero();
+  Eigen::MatrixXd A_ineq = wrenchFaceMatrix_ * X_0_c.dualMatrix();
+  Eigen::VectorXd b_ineq;
+  b_ineq.setZero(NB_CONS);
 
-  wrenchSolver_.solve(A, b, C, bl, bu); // A and b are modified by solve()
-  Eigen::VectorXd x = wrenchSolver_.result();
-  if(wrenchSolver_.inform() != Eigen::lssol::eStatus::STRONG_MINIMUM)
+  qpSolver_.problem(NB_VAR, 0, NB_CONS);
+  Eigen::MatrixXd A_eq(0, 0);
+  Eigen::VectorXd b_eq;
+  b_eq.resize(0);
+
+  bool solutionFound = qpSolver_.solve(Q, c, A_eq, b_eq, A_ineq, b_ineq, /* isDecomp = */ true);
+  if(!solutionFound)
   {
-    LOG_ERROR("SS force distribution QP failed to run");
-    wrenchSolver_.print_inform();
+    LOG_ERROR("SS force distribution QP: solver found no solution");
     return;
   }
 
+  Eigen::VectorXd x = qpSolver_.result();
   sva::ForceVecd w_0(x.head<3>(), x.tail<3>());
   sva::ForceVecd w_c = X_0_c.dualMul(w_0);
   Eigen::Vector2d cop = (e_z.cross(w_c.couple()) / w_c.force()(2)).head<2>();

@@ -17,7 +17,8 @@
 #include <mc_tasks/stabilizer/Contact.h>
 #include <mc_tasks/stabilizer/Pendulum.h>
 
-#include <eigen-lssol/LSSOL_LS.h>
+#include <Eigen/QR>
+#include <eigen-quadprog/QuadProg.h>
 
 namespace mc_tasks
 {
@@ -432,7 +433,7 @@ protected:
   Eigen::Vector3d vertical_; /**< Vertical vector (normalized gravity) */
 
   ContactState contactState_ = ContactState::DoubleSupport;
-  Eigen::LSSOL_LS wrenchSolver_; /**< Least-squares solver for wrench distribution */
+  Eigen::QuadProgDense qpSolver_; /**< Least-squares solver for wrench distribution */
   Eigen::Matrix<double, 16, 6> wrenchFaceMatrix_; /**< Matrix of single-contact wrench cone inequalities */
   Sole sole_;
   Eigen::Vector2d comAdmittance_ = Eigen::Vector2d::Zero(); /**< Admittance gains for CoM admittance control */
