@@ -402,6 +402,8 @@ protected:
   Eigen::Vector3d dcmTarget_ = Eigen::Vector3d::Zero();
   double omega_;
 
+  double t_ = 0.; /**< Time elapsed since the task is running */
+
 protected:
   Eigen::Vector3d gravity_ = {0., 0., -GRAVITY}; // ISO 80000-3}; /**< Gravity vector */
   Eigen::Vector3d vertical_; /**< Vertical vector (normalized gravity) */
@@ -413,9 +415,10 @@ protected:
   Eigen::Vector3d dcmAverageError_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d dcmError_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d dcmVelError_ = Eigen::Vector3d::Zero();
-  Eigen::Vector3d measuredCoM_;
-  Eigen::Vector3d measuredCoMd_;
-  Eigen::Vector3d measuredZMP_;
+  Eigen::Vector3d measuredCoM_ = Eigen::Vector3d::Zero();
+  Eigen::Vector3d measuredCoMd_ = Eigen::Vector3d::Zero();
+  Eigen::Vector3d measuredZMP_ = Eigen::Vector3d::Zero();
+  Eigen::Vector3d measuredDCM_ = Eigen::Vector3d::Zero();
   sva::ForceVecd measuredNetWrench_;
   Eigen::Vector3d zmpError_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d zmpccCoMAccel_ = Eigen::Vector3d::Zero();

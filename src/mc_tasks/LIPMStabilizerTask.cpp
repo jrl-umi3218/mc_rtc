@@ -6,6 +6,7 @@
  */
 
 #include <mc_rtc/gui.h>
+#include <mc_rtc/gui/plot.h>
 #include <mc_tasks/LIPMStabilizerTask.h>
 #include <mc_tasks/MetaTaskLoader.h>
 
@@ -210,6 +211,8 @@ void StabilizerTask::update()
   MetaTask::update(*rightFootTask);
   MetaTask::update(*pelvisTask);
   MetaTask::update(*torsoTask);
+
+  t_ += dt_;
 }
 
 void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
@@ -281,7 +284,7 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   logger.addLogEntry("realRobot_RightFootCenter", [this]() { return realRobot().surfacePose("RightFootCenter"); });
   logger.addLogEntry("realRobot_com", [this]() { return measuredCoM_; });
   logger.addLogEntry("realRobot_comd", [this]() { return measuredCoMd_; });
-  logger.addLogEntry("realRobot_dcm", [this]() -> Eigen::Vector3d { return measuredCoM_ + measuredCoMd_ / omega_; });
+  logger.addLogEntry("realRobot_dcm", [this]() -> Eigen::Vector3d { return measuredDCM_; });
   logger.addLogEntry("realRobot_posW", [this]() { return realRobot().posW(); });
   logger.addLogEntry("realRobot_wrench", [this]() { return measuredNetWrench_; });
   logger.addLogEntry("realRobot_zmp", [this]() { return measuredZMP_; });
@@ -330,6 +333,7 @@ void StabilizerTask::removeFromLogger(mc_rtc::Logger & logger)
 void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   using namespace mc_rtc::gui;
+
   gui.addElement({"Stabilizer", "Main"}, Button("Disable stabilizer", [this]() { disable(); }),
                  Button("Reconfigure", [this]() { reconfigure(); }),
                  Button("Reset DCM integrator", [this]() { dcmIntegrator_.setZero(); }),
@@ -409,15 +413,35 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                               c_.vdcFrequency = clamp(v(0), 0., 10.);
                               c_.vdcStiffness = clamp(v(1), 0., 1e4);
                             }));
-  gui.addElement({"Stabilizer", "Debug"}, Button("Disable stabilizer", [this]() { disable(); }),
-                 Button("Reconfigure", [this]() { reconfigure(); }),
-                 ArrayLabel("CoM offset [mm]", {"x", "y"}, [this]() { return vecFromError(zmpccCoMOffset_); }),
-                 ArrayLabel("DCM average error [mm]", {"x", "y"}, [this]() { return vecFromError(dcmAverageError_); }),
-                 ArrayLabel("DCM error [mm]", {"x", "y"}, [this]() { return vecFromError(dcmError_); }),
-                 ArrayLabel("Foot force difference error [mm]", {"force", "height"}, [this]() {
-                   Eigen::Vector3d dfzError = {dfzForceError_, dfzHeightError_, 0.};
-                   return vecFromError(dfzError);
-                 }));
+
+  gui.addElement(
+      {"Stabilizer", "Debug"}, Button("Disable stabilizer", [this]() { disable(); }),
+      Button("Reconfigure", [this]() { reconfigure(); }),
+      Button("Add Plot DCM-ZMP Tracking (x)",
+             [this, &gui]() {
+               gui.addPlot("DCM-ZMP Tracking (x)", mc_rtc::gui::plot::X("t", [this]() { return t_; }),
+                           mc_rtc::gui::plot::Y("dcm_ref", [this]() { return dcmTarget_.x(); }, Color::Red),
+                           mc_rtc::gui::plot::Y("dcm_mes", [this]() { return measuredDCM_.x(); }, Color::Magenta),
+                           mc_rtc::gui::plot::Y("zmp_ref", [this]() { return zmpTarget_.x(); }, Color::Blue),
+                           mc_rtc::gui::plot::Y("zmp_mes", [this]() { return measuredZMP_.x(); }, Color::Cyan));
+             }),
+      Button("Remove Plot DCM-ZMP Tracking (x)", [&gui]() { gui.removePlot("DCM-ZMP Tracking (x)"); }),
+      Button("Plot DCM-ZMP Tracking (y)",
+             [this, &gui]() {
+               gui.addPlot("DCM-ZMP Tracking (y)", mc_rtc::gui::plot::X("t", [this]() { return t_; }),
+                           mc_rtc::gui::plot::Y("dcm_ref", [this]() { return dcmTarget_.y(); }, Color::Red),
+                           mc_rtc::gui::plot::Y("dcm_mes", [this]() { return measuredDCM_.y(); }, Color::Magenta),
+                           mc_rtc::gui::plot::Y("zmp_ref", [this]() { return zmpTarget_.y(); }, Color::Blue),
+                           mc_rtc::gui::plot::Y("zmp_mes", [this]() { return measuredZMP_.y(); }, Color::Cyan));
+             }),
+      Button("Remove Plot DCM-ZMP Tracking (y)", [&gui]() { gui.removePlot("DCM-ZMP Tracking (y)"); }),
+      ArrayLabel("CoM offset [mm]", {"x", "y"}, [this]() { return vecFromError(zmpccCoMOffset_); }),
+      ArrayLabel("DCM average error [mm]", {"x", "y"}, [this]() { return vecFromError(dcmAverageError_); }),
+      ArrayLabel("DCM error [mm]", {"x", "y"}, [this]() { return vecFromError(dcmError_); }),
+      ArrayLabel("Foot force difference error [mm]", {"force", "height"}, [this]() {
+        Eigen::Vector3d dfzError = {dfzForceError_, dfzHeightError_, 0.};
+        return vecFromError(dfzError);
+      }));
 
   ///// GUI MARKERS
   constexpr double ARROW_HEAD_DIAM = 0.015;
@@ -425,12 +449,8 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   constexpr double ARROW_SHAFT_DIAM = 0.015;
   constexpr double FORCE_SCALE = 0.0015;
 
-  const std::map<char, Color> COLORS = {{'r', Color{1.0, 0.0, 0.0}}, {'g', Color{0.0, 1.0, 0.0}},
-                                        {'b', Color{0.0, 0.0, 1.0}}, {'y', Color{1.0, 0.5, 0.0}},
-                                        {'c', Color{0.0, 0.5, 1.0}}, {'m', Color{1.0, 0.0, 0.5}}};
-
   ArrowConfig pendulumArrowConfig;
-  pendulumArrowConfig.color = COLORS.at('y');
+  pendulumArrowConfig.color = Color::Yellow;
   pendulumArrowConfig.end_point_scale = 0.02;
   pendulumArrowConfig.head_diam = .1 * ARROW_HEAD_DIAM;
   pendulumArrowConfig.head_len = .1 * ARROW_HEAD_LEN;
@@ -447,48 +467,47 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   pendulumForceArrowConfig.end_point_scale = 0.;
 
   ArrowConfig netWrenchForceArrowConfig = pendulumForceArrowConfig;
-  netWrenchForceArrowConfig.color = COLORS.at('r');
+  netWrenchForceArrowConfig.color = Color::Red;
 
   ArrowConfig refPendulumForceArrowConfig = pendulumForceArrowConfig;
-  refPendulumForceArrowConfig = COLORS.at('y');
+  refPendulumForceArrowConfig = Color::Yellow;
 
-  ForceConfig copForceConfig(COLORS.at('g'));
+  ForceConfig copForceConfig(Color::Green);
   copForceConfig.start_point_scale = 0.02;
   copForceConfig.end_point_scale = 0.;
 
   constexpr double COM_POINT_SIZE = 0.02;
   constexpr double DCM_POINT_SIZE = 0.015;
 
-  gui.addElement(
-      {"Walking", "Markers", "CoM-DCM"},
-      Arrow("Pendulum_CoM", pendulumArrowConfig, [this]() -> Eigen::Vector3d { return zmpTarget_; },
-            [this]() -> Eigen::Vector3d { return comTarget_; }),
-      Point3D("Measured_CoM", PointConfig(COLORS.at('g'), COM_POINT_SIZE), [this]() { return measuredCoM_; }),
-      Point3D("Pendulum_DCM", PointConfig(COLORS.at('y'), DCM_POINT_SIZE), [this]() { return dcmTarget_; }),
-      Point3D("Measured_DCM", PointConfig(COLORS.at('g'), DCM_POINT_SIZE),
-              [this]() -> Eigen::Vector3d { return measuredCoM_ + measuredCoMd_ / omega_; }));
+  gui.addElement({"Stabilizer", "Markers", "CoM-DCM"},
+                 Arrow("Pendulum_CoM", pendulumArrowConfig, [this]() -> Eigen::Vector3d { return zmpTarget_; },
+                       [this]() -> Eigen::Vector3d { return comTarget_; }),
+                 Point3D("Measured_CoM", PointConfig(Color::Green, COM_POINT_SIZE), [this]() { return measuredCoM_; }),
+                 Point3D("Pendulum_DCM", PointConfig(Color::Yellow, DCM_POINT_SIZE), [this]() { return dcmTarget_; }),
+                 Point3D("Measured_DCM", PointConfig(Color::Green, DCM_POINT_SIZE),
+                         [this]() -> Eigen::Vector3d { return measuredCoM_ + measuredCoMd_ / omega_; }));
 
   gui.addElement(
-      {"Walking", "Markers", "Net wrench"},
-      Point3D("Stabilizer_ZMP", PointConfig(COLORS.at('m'), 0.02), [this]() { return this->zmp(); }),
-      Point3D("Measured_ZMP", PointConfig(COLORS.at('r'), 0.02), [this]() -> Eigen::Vector3d { return measuredZMP_; }),
+      {"Stabilizer", "Markers", "Net wrench"},
+      Point3D("Stabilizer_ZMP", PointConfig(Color::Magenta, 0.02), [this]() { return this->zmp(); }),
+      Point3D("Measured_ZMP", PointConfig(Color::Red, 0.02), [this]() -> Eigen::Vector3d { return measuredZMP_; }),
       Arrow("Measured_ZMPForce", netWrenchForceArrowConfig, [this]() -> Eigen::Vector3d { return measuredZMP_; },
             [this, FORCE_SCALE]() -> Eigen::Vector3d {
               return measuredZMP_ + FORCE_SCALE * measuredNetWrench_.force();
             }));
 
   gui.addElement(
-      {"Walking", "Markers", "Foot wrenches"},
-      Point3D("Stabilizer_LeftCoP", PointConfig(COLORS.at('m'), 0.01), [this]() { return leftFootTask->targetCoPW(); }),
+      {"Stabilizer", "Markers", "Foot wrenches"},
+      Point3D("Stabilizer_LeftCoP", PointConfig(Color::Magenta, 0.01), [this]() { return leftFootTask->targetCoPW(); }),
       Force("Measured_LeftCoPForce", copForceConfig, [this]() { return this->robot().surfaceWrench("LeftFootCenter"); },
             [this]() { return sva::PTransformd(this->robot().copW("LeftFootCenter")); }),
-      Point3D("Stabilizer_RightCoP", PointConfig(COLORS.at('m'), 0.01),
+      Point3D("Stabilizer_RightCoP", PointConfig(Color::Magenta, 0.01),
               [this]() { return rightFootTask->targetCoPW(); }),
       Force("Measured_RightCoPForce", copForceConfig,
             [this]() { return this->robot().surfaceWrench("RightFootCenter"); },
             [this]() { return sva::PTransformd(this->robot().copW("RightFootCenter")); }));
 
-  gui.addElement({"Walking", "Markers", "Contacts"},
+  gui.addElement({"Stabilizer", "Markers", "Contacts"},
                  Polygon("SupportContacts", mc_rtc::gui::Color(0., 1., 0.), [this]() { return supportPolygons_; }));
 }
 
@@ -691,7 +710,6 @@ void StabilizerTask::run()
   checkInTheAir();
   setSupportFootGains();
   updateZMPFrame();
-
   auto desiredWrench = computeDesiredWrench();
 
   switch(contactState_)
@@ -721,6 +739,7 @@ void StabilizerTask::updateState(const Eigen::Vector3d & com, const Eigen::Vecto
   leftFootRatio_ = leftFootRatio;
   measuredCoM_ = com;
   measuredCoMd_ = comd;
+  measuredDCM_ = measuredCoM_ + measuredCoMd_ / omega_;
 }
 
 sva::ForceVecd StabilizerTask::computeDesiredWrench()
