@@ -554,9 +554,7 @@ void StabilizerTask::setContacts(ContactState state)
     return polygon;
   };
 
-  std::vector<mc_rbdyn::Contact> contacts;
-
-  auto configureFootSupport = [this, &contacts](std::shared_ptr<mc_tasks::force::CoPTask> footTask, Contact & contact) {
+  auto configureFootSupport = [this](std::shared_ptr<mc_tasks::force::CoPTask> footTask, Contact & contact) {
     footTask->reset();
     footTask->admittance(contactAdmittance());
     footTask->setGains(c_.contactStiffness, c_.contactDamping);
@@ -574,21 +572,21 @@ void StabilizerTask::setContacts(ContactState state)
   supportPolygons_.clear();
   if(state == ContactState::DoubleSupport)
   {
-    supportPolygons_.push_back(footStepPolygon(leftFootContact_));
-    supportPolygons_.push_back(footStepPolygon(rightFootContact_));
     configureFootSupport(leftFootTask, leftFootContact_);
     configureFootSupport(rightFootTask, rightFootContact_);
+    supportPolygons_.push_back(footStepPolygon(leftFootContact_));
+    supportPolygons_.push_back(footStepPolygon(rightFootContact_));
   }
   else if(state == ContactState::LeftFoot)
   {
-    supportPolygons_.push_back(footStepPolygon(leftFootContact_));
     configureFootSupport(leftFootTask, leftFootContact_);
+    supportPolygons_.push_back(footStepPolygon(leftFootContact_));
     configureSwingFoot(rightFootTask);
   }
   else
   {
-    supportPolygons_.push_back(footStepPolygon(leftFootContact_));
     configureFootSupport(rightFootTask, rightFootContact_);
+    supportPolygons_.push_back(footStepPolygon(leftFootContact_));
     configureSwingFoot(leftFootTask);
   }
 }
