@@ -414,34 +414,38 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                               c_.vdcStiffness = clamp(v(1), 0., 1e4);
                             }));
 
-  gui.addElement(
-      {"Stabilizer", "Debug"}, Button("Disable stabilizer", [this]() { disable(); }),
-      Button("Reconfigure", [this]() { reconfigure(); }),
-      Button("Add Plot DCM-ZMP Tracking (x)",
-             [this, &gui]() {
-               gui.addPlot("DCM-ZMP Tracking (x)", mc_rtc::gui::plot::X("t", [this]() { return t_; }),
-                           mc_rtc::gui::plot::Y("dcm_ref", [this]() { return dcmTarget_.x(); }, Color::Red),
-                           mc_rtc::gui::plot::Y("dcm_mes", [this]() { return measuredDCM_.x(); }, Color::Magenta),
-                           mc_rtc::gui::plot::Y("zmp_ref", [this]() { return zmpTarget_.x(); }, Color::Blue),
-                           mc_rtc::gui::plot::Y("zmp_mes", [this]() { return measuredZMP_.x(); }, Color::Cyan));
-             }),
-      Button("Remove Plot DCM-ZMP Tracking (x)", [&gui]() { gui.removePlot("DCM-ZMP Tracking (x)"); }),
-      Button("Plot DCM-ZMP Tracking (y)",
-             [this, &gui]() {
-               gui.addPlot("DCM-ZMP Tracking (y)", mc_rtc::gui::plot::X("t", [this]() { return t_; }),
-                           mc_rtc::gui::plot::Y("dcm_ref", [this]() { return dcmTarget_.y(); }, Color::Red),
-                           mc_rtc::gui::plot::Y("dcm_mes", [this]() { return measuredDCM_.y(); }, Color::Magenta),
-                           mc_rtc::gui::plot::Y("zmp_ref", [this]() { return zmpTarget_.y(); }, Color::Blue),
-                           mc_rtc::gui::plot::Y("zmp_mes", [this]() { return measuredZMP_.y(); }, Color::Cyan));
-             }),
-      Button("Remove Plot DCM-ZMP Tracking (y)", [&gui]() { gui.removePlot("DCM-ZMP Tracking (y)"); }),
-      ArrayLabel("CoM offset [mm]", {"x", "y"}, [this]() { return vecFromError(zmpccCoMOffset_); }),
-      ArrayLabel("DCM average error [mm]", {"x", "y"}, [this]() { return vecFromError(dcmAverageError_); }),
-      ArrayLabel("DCM error [mm]", {"x", "y"}, [this]() { return vecFromError(dcmError_); }),
-      ArrayLabel("Foot force difference error [mm]", {"force", "height"}, [this]() {
-        Eigen::Vector3d dfzError = {dfzForceError_, dfzHeightError_, 0.};
-        return vecFromError(dfzError);
-      }));
+  gui.addElement({"Stabilizer", "Debug"}, Button("Disable stabilizer", [this]() { disable(); }),
+                 Button("Reconfigure", [this]() { reconfigure(); }));
+
+  gui.addElement({"Stabilizer", "Debug"}, ElementsStacking::Horizontal,
+                 Button("Start plot DCM-ZMP Tracking (x)",
+                        [this, &gui]() {
+                          gui.addPlot("DCM-ZMP Tracking (x)", plot::X("t", [this]() { return t_; }),
+                                      plot::Y("dcm_ref", [this]() { return dcmTarget_.x(); }, Color::Red),
+                                      plot::Y("dcm_mes", [this]() { return measuredDCM_.x(); }, Color::Magenta),
+                                      plot::Y("zmp_ref", [this]() { return zmpTarget_.x(); }, Color::Blue),
+                                      plot::Y("zmp_mes", [this]() { return measuredZMP_.x(); }, Color::Cyan));
+                        }),
+                 Button("Stop (x)", [&gui]() { gui.removePlot("DCM-ZMP Tracking (x)"); }));
+
+  gui.addElement({"Stabilizer", "Debug"}, ElementsStacking::Horizontal,
+                 Button("Start plot DCM-ZMP Tracking (y)",
+                        [this, &gui]() {
+                          gui.addPlot("DCM-ZMP Tracking (y)", plot::X("t", [this]() { return t_; }),
+                                      plot::Y("dcm_ref", [this]() { return dcmTarget_.y(); }, Color::Red),
+                                      plot::Y("dcm_mes", [this]() { return measuredDCM_.y(); }, Color::Magenta),
+                                      plot::Y("zmp_ref", [this]() { return zmpTarget_.y(); }, Color::Blue),
+                                      plot::Y("zmp_mes", [this]() { return measuredZMP_.y(); }, Color::Cyan));
+                        }),
+                 Button("Stop (y)", [&gui]() { gui.removePlot("DCM-ZMP Tracking (y)"); }));
+  gui.addElement({"Stabilizer", "Debug"},
+                 ArrayLabel("CoM offset [mm]", {"x", "y"}, [this]() { return vecFromError(zmpccCoMOffset_); }),
+                 ArrayLabel("DCM average error [mm]", {"x", "y"}, [this]() { return vecFromError(dcmAverageError_); }),
+                 ArrayLabel("DCM error [mm]", {"x", "y"}, [this]() { return vecFromError(dcmError_); }),
+                 ArrayLabel("Foot force difference error [mm]", {"force", "height"}, [this]() {
+                   Eigen::Vector3d dfzError = {dfzForceError_, dfzHeightError_, 0.};
+                   return vecFromError(dfzError);
+                 }));
 
   ///// GUI MARKERS
   constexpr double ARROW_HEAD_DIAM = 0.015;
@@ -508,7 +512,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
             [this]() { return sva::PTransformd(this->robot().copW("RightFootCenter")); }));
 
   gui.addElement({"Stabilizer", "Markers", "Contacts"},
-                 Polygon("SupportContacts", mc_rtc::gui::Color(0., 1., 0.), [this]() { return supportPolygons_; }));
+                 Polygon("SupportContacts", Color::Green, [this]() { return supportPolygons_; }));
 }
 
 void StabilizerTask::disable()
