@@ -326,60 +326,6 @@ void Controller::updateContacts()
   contacts_changed_ = false;
 }
 
-bool Controller::play_next_stance()
-{
-  return executor_.next();
-}
-
-bool Controller::read_msg(std::string & msg)
-{
-  std::string token;
-  std::stringstream ss;
-  ss << msg;
-  ss >> token;
-  if(token == "interrupt")
-  {
-    interrupt();
-    return true;
-  }
-  if(token == "play")
-  {
-    std::string state;
-    ss >> state;
-    return resume(state);
-  }
-  return executor_.read_msg(msg) || MCController::read_msg(msg);
-}
-
-bool Controller::read_write_msg(std::string & msg, std::string & out)
-{
-  std::string token;
-  std::stringstream ss;
-  ss << msg;
-  ss >> token;
-  if(token == "current_state")
-  {
-    out = executor_.state();
-    return true;
-  }
-  if(token == "output")
-  {
-    out = executor_.output();
-    return true;
-  }
-  if(token == "running")
-  {
-    out = executor_.running() ? "1" : "0";
-    return true;
-  }
-  if(token == "ready")
-  {
-    out = executor_.ready() ? "1" : "0";
-    return true;
-  }
-  return executor_.read_write_msg(msg, out) || MCController::read_write_msg(msg, out);
-}
-
 void Controller::addCollisions(const std::string & r1,
                                const std::string & r2,
                                const std::vector<mc_rbdyn::Collision> & collisions)
@@ -496,16 +442,6 @@ bool Controller::hasContact(const Contact & c) const
     {
       return true;
     }
-  }
-  return false;
-}
-
-bool Controller::set_joint_pos(const std::string & jname, const double & pos)
-{
-  if(robot().hasJoint(jname))
-  {
-    getPostureTask(robot().name())->target({{jname, {pos}}});
-    return true;
   }
   return false;
 }

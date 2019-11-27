@@ -71,20 +71,6 @@ cdef class MCController(object):
     return mc_rbdyn.RobotFromC(self.base.env())
   def robots(self):
     return mc_rbdyn.RobotsFromRawPtr(&(self.base.robots()))
-  def set_joint_pos(self, jname, pos):
-    if isinstance(jname, unicode):
-      jname = jname.encode(u'ascii')
-    return self.base.set_joint_pos(jname, pos)
-  def play_next_stance(self):
-    return self.base.play_next_stance()
-  def read_msg(self, msg):
-    if isinstance(msg, unicode):
-      msg = msg.encode(u'ascii')
-    return self.base.read_msg(msg)
-  def read_write_msg(self, msg, out):
-    if isinstance(msg, unicode):
-      msg = msg.encode(u'ascii')
-    return self.base.read_write_msg(msg, out)
   def supported_robots(self):
     return self.base.supported_robots()
   def logger(self):
@@ -142,13 +128,6 @@ cdef cppbool python_to_run_callback(void * f) with gil:
 cdef void python_to_reset_callback(const c_mc_control.ControllerResetData & crd, void * f) with gil:
   (<object>f).reset_callback(ControllerResetDataFromPtr(&(c_mc_control.const_cast_crd(crd))))
 
-cdef cppbool python_to_read_msg_callback(string & msg, void * f) with gil:
-  return (<object>f).read_msg_callback(msg)
-
-cdef c_mc_control.PythonRWCallback python_to_read_write_msg_callback(string & msg, void * f) with gil:
-  cdef PythonRWCallback ret = PythonRWCallback(*(<object>f).read_write_msg_callback(msg))
-  return ret.impl
-
 cdef class MCPythonController(MCController):
   def __dealloc__(self):
     del self.impl
@@ -164,16 +143,6 @@ cdef class MCPythonController(MCController):
     try:
       self.reset_callback
       c_mc_control.set_reset_callback(deref(self.impl), &python_to_reset_callback, <void*>(self))
-    except AttributeError:
-      pass
-    try:
-      self.read_msg_callback
-      c_mc_control.set_read_msg_callback(deref(self.impl), &python_to_read_msg_callback, <void*>(self))
-    except AttributeError:
-      pass
-    try:
-      self.read_write_msg_callback
-      c_mc_control.set_read_write_msg_callback(deref(self.impl), &python_to_read_write_msg_callback, <void*>(self))
     except AttributeError:
       pass
 

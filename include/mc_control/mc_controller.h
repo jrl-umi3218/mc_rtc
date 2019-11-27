@@ -169,7 +169,7 @@ public:
   /** Return the main robot (first robot provided in the constructor)
    * \anchor mc_controller_robot_const_doc
    */
-  virtual const mc_rbdyn::Robot & robot() const;
+  const mc_rbdyn::Robot & robot() const;
 
   /** Return the env "robot"
    * \note
@@ -178,21 +178,21 @@ public:
    *   2. The last robot provided at construction
    * \anchor mc_controller_env_const_doc
    */
-  virtual const mc_rbdyn::Robot & env() const;
+  const mc_rbdyn::Robot & env() const;
 
   /** Return the mc_rbdyn::Robots controlled by this controller
    * \anchor mc_controller_robots_const_doc
    */
-  virtual const mc_rbdyn::Robots & robots() const;
+  const mc_rbdyn::Robots & robots() const;
 
   /** Non-const variant of \ref mc_controller_robots_const_doc "robots()" */
-  virtual mc_rbdyn::Robots & robots();
+  mc_rbdyn::Robots & robots();
 
   /** Non-const variant of \ref mc_controller_robot_const_doc "robot()" */
-  virtual mc_rbdyn::Robot & robot();
+  mc_rbdyn::Robot & robot();
 
   /** Non-const variant of \ref mc_controller_env_const_doc "env()" */
-  virtual mc_rbdyn::Robot & env();
+  mc_rbdyn::Robot & env();
 
   /** Return the mc_solver::QPSolver instance attached to this controller
    * \anchor mc_controller_qpsolver_const_doc
@@ -201,88 +201,6 @@ public:
 
   /** Non-const variant of \ref mc_controller_qpsolver_const_doc "solver()" */
   mc_solver::QPSolver & solver();
-
-  /** Set a joint position to the desired value
-   * \param jname Name of the joint to control
-   * \param pos Desired position (radians)
-   * \return True if jname is valid, false otherwise
-   * \note
-   * No control is made on the value of pos to ensure it is within the joints'
-   * limits of jname. It is assumed that this is done via the controller own
-   * constraint set
-   *
-   * \note
-   * The default implementation only works on the main robot.
-   */
-  virtual bool set_joint_pos(const std::string & jname, const double & pos);
-
-  /** Get a joint position
-   * \param jname Name of the desired joint
-   * \param position position of jname joint (radians)
-   * \return True if jname is valid, false otherwise
-   * \note
-   * Due to the overhead of checks on joint validity, it is not recommended
-   * to use this function to repeatedly access a specific joint value.
-   *
-   * \note
-   * The default implementation only works on the main robot.
-   */
-  bool get_joint_pos(const std::string & jname, double & pos);
-
-  /** Change the currently controlled end-effector
-   * \param name End of the name effector
-   * \return False if the controller does not implement this kind of control or
-   * if name is not a end-effector, true otherwise
-   */
-  virtual bool change_ef(const std::string & name);
-
-  /** Move the currently controlled end-effector
-   * \param t Translation amount
-   * \param m Rotation applied to current orientation
-   * \return False if the controller does not implement this control, true
-   * otherwise
-   */
-  virtual bool move_ef(const Eigen::Vector3d & t, const Eigen::Matrix3d & m);
-
-  /** Move the CoM
-   * \param t CoM translation
-   * \return False if the controller does not implement this control, true
-   */
-  virtual bool move_com(const Eigen::Vector3d & t);
-
-  /** Trigger next step in a FSM controller
-   * \return False if the controller does not implement this or if the switch
-   * cannot happen, true otherwise
-   */
-  virtual bool play_next_stance();
-
-  /** Driving service
-   * \param wheel Wheel rotation angle
-   * \param ankle Ankle angle (related to acceleration)
-   * \param pan Head pan angle
-   * \param tilt Head tilt angle
-   * \return False if the controller does not implement this, true otherwise
-   */
-  virtual bool driving_service(double wheel, double ankle, double pan, double tilt);
-
-  /** Generic message passing interface, write-only version
-   * \param msg A message passed to the controller
-   * \return True if the controller was able to do something out of msg, false
-   * otherwise
-   * \note
-   * The default implementation does nothing and always return false.
-   */
-  virtual bool read_msg(std::string & msg);
-
-  /** Generic message passing interface, read/write version
-   * \param msg A message passed to the controller
-   * \param out A message passed back to the caller
-   * \return True if the controller was able to do something out of msg, false
-   * otherwise
-   * \note
-   * The default implementation does nothing and always return false.
-   */
-  virtual bool read_write_msg(std::string & msg, std::string & out);
 
   /** Returns mc_rtc::Logger instance */
   mc_rtc::Logger & logger();

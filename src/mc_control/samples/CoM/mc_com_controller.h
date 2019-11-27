@@ -19,9 +19,6 @@ public:
 
   virtual void reset(const ControllerResetData & reset_data) override;
 
-  /* Services */
-  virtual bool move_com(const Eigen::Vector3d & v) override;
-
   /* observers */
   sva::PTransformd anchorFrame(const mc_rbdyn::Robot & robot) const override;
 

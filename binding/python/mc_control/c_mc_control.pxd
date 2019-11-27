@@ -43,10 +43,6 @@ cdef extern from "<mc_control/mc_controller.h>" namespace "mc_control":
     Robot& robot()
     Robot& env()
     Robots& robots()
-    cppbool set_joint_pos(string, double)
-    cppbool play_next_stance()
-    cppbool read_msg(string)
-    cppbool read_write_msg(string, string)
     vector[string] supported_robots()
     c_mc_rtc.Logger & logger()
     shared_ptr[c_mc_rtc_gui.StateBuilder] gui()
@@ -113,10 +109,6 @@ cdef extern from "mc_control_wrapper.hpp" namespace "mc_control":
 
   ctypedef cppbool (*run_callback_t)(void*)
   ctypedef void (*reset_callback_t)(const ControllerResetData&, void*)
-  ctypedef cppbool (*read_msg_callback_t)(string, void*)
-  ctypedef PythonRWCallback (*read_write_msg_callback_t)(string, void*)
 
   void set_run_callback(MCPythonController&, run_callback_t fn, void*)
   void set_reset_callback(MCPythonController&, reset_callback_t fn, void *)
-  void set_read_msg_callback(MCPythonController&, read_msg_callback_t, void*)
-  void set_read_write_msg_callback(MCPythonController&, read_write_msg_callback_t, void*)

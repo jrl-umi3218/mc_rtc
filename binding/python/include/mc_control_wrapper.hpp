@@ -23,8 +23,6 @@ ControllerResetData & const_cast_crd(const ControllerResetData & in)
 
 typedef bool (*run_callback_t)(void *);
 typedef void (*reset_callback_t)(const ControllerResetData &, void *);
-typedef bool (*read_msg_callback_t)(std::string &, void *);
-typedef PythonRWCallback (*read_write_msg_callback_t)(std::string &, void *);
 
 void set_run_callback(MCPythonController & ctl, run_callback_t fn, void * data)
 {
@@ -34,16 +32,6 @@ void set_run_callback(MCPythonController & ctl, run_callback_t fn, void * data)
 void set_reset_callback(MCPythonController & ctl, reset_callback_t fn, void * data)
 {
   ctl.reset_callback = std::bind(fn, std::placeholders::_1, data);
-}
-
-void set_read_msg_callback(MCPythonController & ctl, read_msg_callback_t fn, void * data)
-{
-  ctl.read_msg_callback = std::bind(fn, std::placeholders::_1, data);
-}
-
-void set_read_write_msg_callback(MCPythonController & ctl, read_write_msg_callback_t fn, void * data)
-{
-  ctl.read_write_msg_callback = std::bind(fn, std::placeholders::_1, data);
 }
 
 } // namespace mc_control
