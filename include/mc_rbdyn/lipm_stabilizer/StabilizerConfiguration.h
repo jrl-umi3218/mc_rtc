@@ -190,6 +190,54 @@ struct StabilizerConfiguration
 
     config("sole", sole);
   }
+
+  mc_rtc::Configuration save() const
+  {
+    mc_rtc::Configuration conf;
+    conf.add("fdqp_weights", fdqpWeights);
+
+    conf.add("admittance");
+    conf("admittance").add("com", comAdmittance);
+    conf("admittance")("cop", copAdmittance);
+    conf("admittance")("dfz", dfzAdmittance);
+    conf("admittance")("dfz_damping", dfzDamping);
+
+    conf.add("dcm_tracking");
+    conf("dcm_tracking").add("gains");
+    conf("dcm_tracking")("gains").add("prop", dcmPropGain);
+    conf("dcm_tracking")("gains").add("integral", dcmIntegralGain);
+    conf("dcm_tracking")("gains").add("deriv", dcmDerivGain);
+    conf("dcm_tracking").add("derivator_time_constant", dcmDerivatorTimeConstant);
+    conf("dcm_tracking").add("integrator_time_constant", dcmIntegratorTimeConstant);
+
+    conf.add("tasks");
+    conf("tasks").add("com");
+    conf("tasks")("com").add("active_joints", comActiveJoints);
+    conf("tasks")("com").add("stiffness", comStiffness);
+    conf("tasks")("com").add("weight", comWeight);
+    conf("tasks")("com").add("height", comHeight);
+    conf("tasks")("com").add("max_height", maxCoMHeight);
+    conf("tasks")("com").add("min_height", minCoMHeight);
+
+    conf("tasks").add("contact");
+    conf("tasks")("contact").add("damping", contactDamping);
+    conf("tasks")("contact").add("stiffness", contactStiffness);
+    conf("tasks")("contact").add("weight", contactWeight);
+
+    conf("tasks").add("swing_foot");
+    conf("tasks")("swing_foot").add("stiffness", swingFootStiffness);
+    conf("tasks")("swing_foot").add("weight", swingFootWeight);
+
+    conf.add("vdc");
+    conf("vdc")("frequency", vdcFrequency);
+    conf("vdc")("stiffness", vdcStiffness);
+
+    conf.add("zmpcc");
+    conf("zmpcc").add("integrator_leak_rate", zmpccIntegratorLeakRate);
+
+    conf.add("sole", sole);
+    return conf;
+  }
 };
 } // namespace lipm_stabilizer
 } // namespace mc_rbdyn
@@ -208,10 +256,9 @@ struct ConfigurationLoader<StabilizerConfiguration>
     return stabi;
   }
 
-  static mc_rtc::Configuration save(const StabilizerConfiguration &)
+  static mc_rtc::Configuration save(const StabilizerConfiguration & stabiConf)
   {
-    LOG_ERROR("Attempting to save the lipm stabilizer configuration but this feature has not been implemented yet.");
-    return mc_rtc::Configuration{};
+    return stabiConf.save();
   }
 };
 } // namespace mc_rtc

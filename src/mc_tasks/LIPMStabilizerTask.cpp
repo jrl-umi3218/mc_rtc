@@ -415,7 +415,10 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                             }));
 
   gui.addElement({"Stabilizer", "Debug"}, Button("Disable stabilizer", [this]() { disable(); }),
-                 Button("Reconfigure", [this]() { reconfigure(); }));
+                 Button("Reconfigure", [this]() { reconfigure(); }), Button("Dump configuration", [this]() {
+                   LOG_INFO("[LIPMStabilizerTask] configuration (YAML)");
+                   LOG_INFO(c_.save().dump(true, true));
+                 }));
 
   gui.addElement({"Stabilizer", "Debug"}, ElementsStacking::Horizontal,
                  Button("Start plot DCM-ZMP Tracking (x)",
