@@ -69,11 +69,6 @@ StabilizerTask::StabilizerTask(const mc_rbdyn::Robots & robots,
   comTask.reset(new mc_tasks::CoMTask(robots, robotIndex_));
   leftFootTask.reset(new mc_tasks::force::CoPTask(leftFootSurface_, robots, robotIndex_));
   rightFootTask.reset(new mc_tasks::force::CoPTask(rightFootSurface_, robots, robotIndex_));
-
-  std::string pelvisBodyName = robot().mb().body(0).name();
-  pelvisTask = std::make_shared<mc_tasks::OrientationTask>(pelvisBodyName, robots_, robotIndex_);
-  std::string torsoName = "CHEST_LINK1";
-  torsoTask = std::make_shared<mc_tasks::OrientationTask>(torsoName, robots_, robotIndex_);
 }
 
 StabilizerTask::~StabilizerTask() {}
@@ -83,19 +78,6 @@ void StabilizerTask::reset()
   comTask->reset();
   rightFootTask->reset();
   leftFootTask->reset();
-  pelvisTask->reset();
-  torsoTask->reset();
-
-  // Add upper-body tasks
-  double pelvisStiffness = 10;
-  double pelvisWeight = 100;
-  pelvisTask->stiffness(pelvisStiffness);
-  pelvisTask->weight(pelvisWeight);
-
-  double torsoStiffness = 10;
-  double torsoWeight = 100;
-  torsoTask->stiffness(torsoStiffness);
-  torsoTask->weight(torsoWeight);
 
   comTask->selectActiveJoints(c_.comActiveJoints);
   comTask->setGains(c_.comStiffness, 2 * c_.comStiffness.cwiseSqrt());
@@ -140,16 +122,17 @@ Eigen::VectorXd StabilizerTask::dimWeight() const
   LOG_ERROR_AND_THROW(std::runtime_error, "dimWeight not implemented for task " << type_);
 }
 
-void StabilizerTask::selectActiveJoints(mc_solver::QPSolver & solver,
-                                        const std::vector<std::string> & activeJointsName,
-                                        const std::map<std::string, std::vector<std::array<int, 2>>> & activeDofs)
+void StabilizerTask::selectActiveJoints(mc_solver::QPSolver & /* solver */,
+                                        const std::vector<std::string> & /* activeJointsName */,
+                                        const std::map<std::string, std::vector<std::array<int, 2>>> & /* activeDofs */)
 {
   LOG_ERROR_AND_THROW(std::runtime_error, "Task " << name_ << " does not implement selectActiveJoints");
 }
 
-void StabilizerTask::selectUnactiveJoints(mc_solver::QPSolver & solver,
-                                          const std::vector<std::string> & unactiveJointsName,
-                                          const std::map<std::string, std::vector<std::array<int, 2>>> & unactiveDofs)
+void StabilizerTask::selectUnactiveJoints(
+    mc_solver::QPSolver & /* solver */,
+    const std::vector<std::string> & /* unactiveJointsName */,
+    const std::map<std::string, std::vector<std::array<int, 2>>> & /* unactiveDofs */)
 {
   LOG_ERROR_AND_THROW(std::runtime_error, "Task " << name_ << " does not implement selectUnactiveJoints");
 }
@@ -176,7 +159,7 @@ void StabilizerTask::resetConfiguration(const mc_rbdyn::lipm_stabilizer::Stabili
   c_ = config;
 }
 
-void StabilizerTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+void StabilizerTask::load(mc_solver::QPSolver & /* solver */, const mc_rtc::Configuration & config)
 {
   configure(config);
 }
@@ -186,8 +169,6 @@ void StabilizerTask::addToSolver(mc_solver::QPSolver & solver)
   MetaTask::addToSolver(*comTask, solver);
   MetaTask::addToSolver(*leftFootTask, solver);
   MetaTask::addToSolver(*rightFootTask, solver);
-  MetaTask::addToSolver(*pelvisTask, solver);
-  MetaTask::addToSolver(*torsoTask, solver);
 }
 
 void StabilizerTask::removeFromSolver(mc_solver::QPSolver & solver)
@@ -195,8 +176,6 @@ void StabilizerTask::removeFromSolver(mc_solver::QPSolver & solver)
   MetaTask::removeFromSolver(*comTask, solver);
   MetaTask::removeFromSolver(*leftFootTask, solver);
   MetaTask::removeFromSolver(*rightFootTask, solver);
-  MetaTask::removeFromSolver(*pelvisTask, solver);
-  MetaTask::removeFromSolver(*torsoTask, solver);
 }
 
 void StabilizerTask::update()

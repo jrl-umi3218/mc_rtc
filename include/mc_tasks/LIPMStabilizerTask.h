@@ -251,14 +251,26 @@ public:
     double X = sole.halfLength;
     double Y = sole.halfWidth;
     double mu = sole.friction;
+    // clang-format off
     wrenchFaceMatrix_ <<
-        // mx,  my,  mz,  fx,  fy,            fz,
-        0,
-        0, 0, -1, 0, -mu, 0, 0, 0, +1, 0, -mu, 0, 0, 0, 0, -1, -mu, 0, 0, 0, 0, +1, -mu, -1, 0, 0, 0, 0, -Y, +1, 0, 0,
-        0, 0, -Y, 0, -1, 0, 0, 0, -X, 0, +1, 0, 0, 0, -X, +mu, +mu, -1, -Y, -X, -(X + Y) * mu, +mu, -mu, -1, -Y, +X,
-        -(X + Y) * mu, -mu, +mu, -1, +Y, -X, -(X + Y) * mu, -mu, -mu, -1, +Y, +X, -(X + Y) * mu, +mu, +mu, +1, +Y, +X,
-        -(X + Y) * mu, +mu, -mu, +1, +Y, -X, -(X + Y) * mu, -mu, +mu, +1, -Y, +X, -(X + Y) * mu, -mu, -mu, +1, -Y, -X,
-        -(X + Y) * mu;
+      // mx,  my,  mz,  fx,  fy,            fz,
+          0,   0,   0,  -1,   0,           -mu,
+          0,   0,   0,  +1,   0,           -mu,
+          0,   0,   0,   0,  -1,           -mu,
+          0,   0,   0,   0,  +1,           -mu,
+         -1,   0,   0,   0,   0,            -Y,
+         +1,   0,   0,   0,   0,            -Y,
+          0,  -1,   0,   0,   0,            -X,
+          0,  +1,   0,   0,   0,            -X,
+        +mu, +mu,  -1,  -Y,  -X, -(X + Y) * mu,
+        +mu, -mu,  -1,  -Y,  +X, -(X + Y) * mu,
+        -mu, +mu,  -1,  +Y,  -X, -(X + Y) * mu,
+        -mu, -mu,  -1,  +Y,  +X, -(X + Y) * mu,
+        +mu, +mu,  +1,  +Y,  +X, -(X + Y) * mu,
+        +mu, -mu,  +1,  +Y,  -X, -(X + Y) * mu,
+        -mu, +mu,  +1,  -Y,  +X, -(X + Y) * mu,
+        -mu, -mu,  +1,  -Y,  -X, -(X + Y) * mu;
+    // clang-format on
   }
 
   /** ZMP target after force distribution.
@@ -387,8 +399,6 @@ protected:
   std::shared_ptr<mc_tasks::CoMTask> comTask;
   std::shared_ptr<mc_tasks::force::CoPTask> leftFootTask;
   std::shared_ptr<mc_tasks::force::CoPTask> rightFootTask;
-  std::shared_ptr<mc_tasks::OrientationTask> pelvisTask; /**< Pelvis orientation task */
-  std::shared_ptr<mc_tasks::OrientationTask> torsoTask; /**< Torso orientation task */
   const mc_rbdyn::Robots & robots_;
   const mc_rbdyn::Robots & realRobots_;
   unsigned int robotIndex_;
