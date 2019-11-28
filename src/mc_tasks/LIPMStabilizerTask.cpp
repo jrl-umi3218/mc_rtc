@@ -313,7 +313,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   using namespace mc_rtc::gui;
 
   gui.addElement({"Stabilizer", "Main"}, Button("Disable stabilizer", [this]() { disable(); }),
-                 Button("Reconfigure", [this]() { reconfigure(); }),
+                 Button("Reconfigure / Enable Stabilizer", [this]() { reconfigure(); }),
                  Button("Reset DCM integrator", [this]() { dcmIntegrator_.setZero(); }),
                  ArrayInput("Foot admittance", {"CoPx", "CoPy"},
                             [this]() -> Eigen::Vector2d {
@@ -438,6 +438,15 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                       plot::Y("z", [this]() { return dcmIntegrator_.eval().z(); }, Color::Blue));
                         }),
                  Button("Stop DCM Integrator", [&gui]() { gui.removePlot("DCM Integrator"); }));
+  gui.addElement({"Stabilizer", "Debug"}, ElementsStacking::Horizontal,
+                 Button("Plot DCM Derivator",
+                        [this, &gui]() {
+                          gui.addPlot("DCM Derivator", plot::X("t", [this]() { return t_; }),
+                                      plot::Y("x", [this]() { return dcmDerivator_.eval().x(); }, Color::Red),
+                                      plot::Y("y", [this]() { return dcmDerivator_.eval().y(); }, Color::Green),
+                                      plot::Y("z", [this]() { return dcmDerivator_.eval().z(); }, Color::Blue));
+                        }),
+                 Button("Stop DCM Derivator", [&gui]() { gui.removePlot("DCM Derivator"); }));
 
   gui.addElement({"Stabilizer", "Debug"},
                  ArrayLabel("CoM offset [mm]", {"x", "y"}, [this]() { return vecFromError(zmpccCoMOffset_); }),
@@ -551,6 +560,12 @@ void StabilizerTask::reconfigure()
   rightFootContact_.surfaceName = rightFootTask->surface();
   rightFootContact_.halfLength = hl;
   rightFootContact_.halfWidth = hw;
+
+  // Reset DCM integrator when enabling the stabilizer.
+  // While idle, it will accumulate a lot of error, and would case the robot to
+  // move suddently to compensate it otherwise
+  dcmIntegrator_.setZero();
+  dcmDerivator_.setZero();
 }
 
 void StabilizerTask::checkGains()
