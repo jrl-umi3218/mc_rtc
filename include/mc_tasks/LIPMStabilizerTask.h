@@ -401,6 +401,8 @@ protected:
   std::shared_ptr<mc_tasks::CoMTask> comTask;
   std::shared_ptr<mc_tasks::force::CoPTask> leftFootTask;
   std::shared_ptr<mc_tasks::force::CoPTask> rightFootTask;
+  std::shared_ptr<mc_tasks::OrientationTask> pelvisTask; /**< Pelvis orientation task */
+  std::shared_ptr<mc_tasks::OrientationTask> torsoTask; /**< Torso orientation task */
   const mc_rbdyn::Robots & robots_;
   const mc_rbdyn::Robots & realRobots_;
   unsigned int robotIndex_;
