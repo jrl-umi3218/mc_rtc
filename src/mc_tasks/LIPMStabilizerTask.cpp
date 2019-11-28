@@ -550,6 +550,7 @@ void StabilizerTask::reconfigure()
 
   dcmDerivator_.timeConstant(c_.dcmDerivatorTimeConstant);
   dcmIntegrator_.timeConstant(c_.dcmIntegratorTimeConstant);
+  zmpccIntegrator_.rate(c_.zmpccIntegratorLeakRate);
 
   // Configure contacts
   double hw = c_.sole.halfWidth;
@@ -799,6 +800,10 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
   desiredCoMAccel += omega_ * c_.dcmIntegralGain * dcmAverageError_;
   desiredCoMAccel += omega_ * c_.dcmDerivGain * dcmVelError_;
   auto desiredForce = mass_ * (desiredCoMAccel - gravity_);
+
+  // Previous implementation (up to v1.3):
+  // return {pendulum_.com().cross(desiredForce), desiredForce};
+  // See https://github.com/stephane-caron/lipm_walking_controller/issues/28
   return {measuredCoM_.cross(desiredForce), desiredForce};
 }
 
