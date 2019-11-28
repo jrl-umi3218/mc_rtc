@@ -2,7 +2,7 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <mc_signal/LowPassVelocityFilter.h>
+#include <mc_signal/LowPassFilter.h>
 
 namespace mc_signal
 {
@@ -12,8 +12,10 @@ namespace mc_signal
  * - T::Zero() static method
  */
 template<typename T>
-struct LowPassFiniteDifferencesVelocityFilter : public LowPassVelocityFilter<T>
+struct LowPassFiniteDifferencesVelocityFilter : public LowPassFilter<T>
 {
+  using LowPassFilterT = LowPassFilter<T>;
+
   /** Constructor with cutoff period.
    *
    * \param dt Sampling period.
@@ -21,31 +23,21 @@ struct LowPassFiniteDifferencesVelocityFilter : public LowPassVelocityFilter<T>
    * \param period Cutoff period.
    *
    */
-  LowPassFiniteDifferencesVelocityFilter(double dt, double period = 0) : LowPassVelocityFilter<T>(dt, period)
+  LowPassFiniteDifferencesVelocityFilter(double dt, double period) : LowPassFilterT(dt, period)
   {
-    reset(T::Zero());
+    LowPassFilterT::reset(T::Zero());
+    prevValue_ = T::Zero();
   }
 
-  /** Reset position to an initial rest value.
+  /** Reset filter to initial rest value.
    *
-   * \param pos New position.
-   *
-   */
-  void reset(T pos)
-  {
-    LowPassVelocityFilter<T>::reset(T::Zero());
-    pos_ = pos;
-  }
-
-  /** Reset position to an initial rest value.
-   *
-   * \param pos New position.
-   * \param vel New velocity.
+   * \param pos Initial position.
+   * \param vel Initial velocity.
    */
   void reset(T pos, T vel)
   {
-    LowPassVelocityFilter<T>::reset(vel);
-    pos_ = pos;
+    LowPassFilterT::reset(vel);
+    prevValue_ = pos;
   }
 
   /** Update velocity estimate from new position value.
@@ -55,20 +47,21 @@ struct LowPassFiniteDifferencesVelocityFilter : public LowPassVelocityFilter<T>
    */
   void update(const T & newPos)
   {
-    T discVel = (newPos - pos_) / dt_;
-    pos_ = newPos;
-    LowPassVelocityFilter<T>::update(discVel);
+    T discVel = (newPos - prevValue_) / LowPassFilterT::dt();
+    LowPassFilterT::update(discVel);
+    prevValue_ = newPos;
   }
 
-  /** Update position only.
-   *
-   */
-  void updatePositionOnly(const T & newPos)
+  const T & prevValue() const
   {
-    pos_ = newPos;
+    return prevValue_;
   }
+
+protected:
+  T prevValue_;
 
 private:
-  T pos_;
+  // Prevent calling the single-argument reset from parent's LowPassFilter<T>
+  using LowPassFilter<T>::reset;
 };
 } // namespace mc_signal

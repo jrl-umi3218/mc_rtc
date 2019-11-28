@@ -10,13 +10,13 @@
 namespace mc_signal
 {
 
-/** Low-pass velocity filter from series of velocity measurements.
+/** Low-pass filter from series of velocity measurements.
  *
  * Expects T to have:
  * - T::Zero() static method (e.g Eigen::Vector3d, etc)
  */
 template<typename T>
-struct LowPassVelocityFilter
+struct LowPassFilter
 {
   /** Constructor with cutoff period.
    *
@@ -25,7 +25,7 @@ struct LowPassVelocityFilter
    * \param period Cutoff period.
    *
    */
-  LowPassVelocityFilter(double dt, double period = 0) : cutoffPeriod_(period), dt_(dt)
+  LowPassFilter(double dt, double period = 0) : cutoffPeriod_(period), dt_(dt)
   {
     reset(T::Zero());
   }
@@ -45,6 +45,10 @@ struct LowPassVelocityFilter
    */
   void cutoffPeriod(double period)
   {
+    // XXX @caron why?
+    // XXX new (breaking) change
+    period = std::max(period, 2 * dt_);
+
     cutoffPeriod_ = period;
   }
 
@@ -53,9 +57,9 @@ struct LowPassVelocityFilter
    * \param pos New position.
    *
    */
-  void reset(T vel)
+  void reset(const T & value)
   {
-    vel_ = vel;
+    eval_ = value;
   }
 
   /** Update velocity estimate from new position value.
@@ -63,22 +67,27 @@ struct LowPassVelocityFilter
    * \param newPos New observed position.
    *
    */
-  void update(const T & newVel)
+  void update(const T & newValue)
   {
     double x = (cutoffPeriod_ <= dt_) ? 1. : dt_ / cutoffPeriod_;
-    vel_ = x * newVel + (1. - x) * vel_;
+    eval_ = x * newValue + (1. - x) * eval_;
   }
 
   /** Get filtered velocity.
    *
    */
-  const T & vel()
+  const T & eval() const
   {
-    return vel_;
+    return eval_;
+  }
+
+  double dt() const
+  {
+    return dt_;
   }
 
 private:
-  T vel_;
+  T eval_;
   double cutoffPeriod_ = 0.;
 
 protected:

@@ -67,13 +67,13 @@ void KinematicInertialObserver::addToLogger(const mc_control::MCController & ctl
 {
   KinematicInertialPoseObserver::addToLogger(ctl, logger);
   logger.addLogEntry("observer_" + name() + "_velW", [this]() { return velW_; });
-  logger.addLogEntry("observer_" + name() + "_velWfd", [this]() { return velWfd_; });
+  logger.addLogEntry("observer_" + name() + "_filter_cutoffPeriod", [this]() { return velFilter_.cutoffPeriod(); });
 }
 void KinematicInertialObserver::removeFromLogger(mc_rtc::Logger & logger)
 {
   KinematicInertialPoseObserver::removeFromLogger(logger);
   logger.removeLogEntry("observer_" + name() + "_velW");
-  logger.removeLogEntry("observer_" + name() + "_velWfd");
+  logger.removeLogEntry("observer_" + name() + "_filter_cutoffPeriod");
 }
 void KinematicInertialObserver::addToGUI(const mc_control::MCController & ctl, mc_rtc::gui::StateBuilder & gui)
 {
