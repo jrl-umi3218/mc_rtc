@@ -5,7 +5,7 @@ macro(add_observer observer_base)
   set_target_properties(${observer_base} PROPERTIES FOLDER observers)
   set_target_properties(${observer_base} PROPERTIES COMPILE_FLAGS "-DMC_OBSERVER_EXPORTS" PREFIX "")
   target_link_libraries(${observer_base} PUBLIC mc_rbdyn mc_rtc_gui mc_control mc_signal)
-  target_include_directories(${observer_base} PUBLIC "../../include/mc_observers")
+  target_include_directories(${observer_base} PUBLIC $<INSTALL_INTERFACE:include> $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include/mc_observers>)
   install(TARGETS ${observer_base} DESTINATION ${MC_OBSERVERS_INSTALL_PREFIX})
 endmacro()
 

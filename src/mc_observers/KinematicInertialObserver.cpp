@@ -38,7 +38,7 @@ bool KinematicInertialObserver::run(const mc_control::MCController & ctl)
   const sva::PTransformd posW = KinematicInertialPoseObserver::posW();
   sva::MotionVecd errVel = sva::transformError(posWPrev_, posW) / dt();
   velFilter_.update(errVel);
-  velW_ = velFilter_.vel();
+  velW_ = velFilter_.eval();
   velWfd_ = errVel;
   posWPrev_ = posW;
   return true;
