@@ -16,7 +16,7 @@ namespace mc_observers
 KinematicInertialPoseObserver::KinematicInertialPoseObserver(const std::string & name,
                                                              double dt,
                                                              const mc_rtc::Configuration & /* config */)
-: Observer(name, dt), orientation_(Eigen::Matrix3d::Identity()), position_(Eigen::Vector3d::Zero()), leftFootRatio_(0.5)
+: Observer(name, dt), orientation_(Eigen::Matrix3d::Identity()), position_(Eigen::Vector3d::Zero())
 {
 }
 

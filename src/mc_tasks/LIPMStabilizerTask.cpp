@@ -1036,6 +1036,14 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
       t->reset();
       t->setContacts(mc_tasks::lipm_stabilizer::ContactState::DoubleSupport);
       t->staticTarget(robot.com());
+
+      // Allow to start in disabled state
+      bool enabled = true;
+      config("enabled", enabled);
+      if(!enabled)
+      {
+        t->disable();
+      }
       return t;
     });
 }

@@ -89,7 +89,6 @@ protected:
 private:
   Eigen::Matrix3d orientation_; /**< Rotation from world to floating-base frame */
   Eigen::Vector3d position_; /**< Translation of floating-base in world frame */
-  double leftFootRatio_; /**< Fraction of total weight sustained by the left foot */
 };
 
 } // namespace mc_observers
