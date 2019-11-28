@@ -396,6 +396,8 @@ protected:
   Contact leftFootContact_;
   Contact rightFootContact_;
   std::vector<std::vector<Eigen::Vector3d>> supportPolygons_; /**< For GUI display */
+  Eigen::Vector3d supportMin_ = Eigen::Vector3d::Zero();
+  Eigen::Vector3d supportMax_ = Eigen::Vector3d::Zero();
   std::shared_ptr<mc_tasks::CoMTask> comTask;
   std::shared_ptr<mc_tasks::force::CoPTask> leftFootTask;
   std::shared_ptr<mc_tasks::force::CoPTask> rightFootTask;
@@ -405,6 +407,7 @@ protected:
   std::string leftFootSurface_ = "LeftFootCenter";
   std::string rightFootSurface_ = "RightFootCenter";
 
+  /** Stabilizer targets */
   Eigen::Vector3d comTarget_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d comdTarget_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d comddTarget_ = Eigen::Vector3d::Zero();
@@ -416,7 +419,6 @@ protected:
 
 protected:
   Eigen::Vector3d gravity_ = {0., 0., -GRAVITY}; // ISO 80000-3}; /**< Gravity vector */
-  Eigen::Vector3d vertical_; /**< Vertical vector (normalized gravity) */
   mc_rbdyn::lipm_stabilizer::StabilizerConfiguration
       c_; /* Stabilizer configuration (weights, stiffness, filters, etc) */
   ContactState contactState_ = ContactState::DoubleSupport;

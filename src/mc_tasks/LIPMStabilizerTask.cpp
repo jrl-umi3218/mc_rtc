@@ -64,8 +64,6 @@ StabilizerTask::StabilizerTask(const mc_rbdyn::Robots & robots,
   type_ = "Stabilizer";
   name_ = "Stabilizer";
 
-  vertical_ = gravity_ / gravity_.norm();
-
   comTask.reset(new mc_tasks::CoMTask(robots, robotIndex_));
   leftFootTask.reset(new mc_tasks::force::CoPTask(leftFootSurface_, robots, robotIndex_));
   rightFootTask.reset(new mc_tasks::force::CoPTask(rightFootSurface_, robots, robotIndex_));
@@ -188,8 +186,6 @@ void StabilizerTask::update()
   MetaTask::update(*comTask);
   MetaTask::update(*leftFootTask);
   MetaTask::update(*rightFootTask);
-  MetaTask::update(*pelvisTask);
-  MetaTask::update(*torsoTask);
 
   t_ += dt_;
 }
@@ -242,6 +238,9 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   logger.addLogEntry("stabilizer_zmpcc_comVel", [this]() { return zmpccCoMVel_; });
   logger.addLogEntry("stabilizer_zmpcc_error", [this]() { return zmpccError_; });
   logger.addLogEntry("stabilizer_zmpcc_leakRate", [this]() { return zmpccIntegrator_.rate(); });
+
+  logger.addLogEntry("stabilizer_support_min", [this]() { return supportMin_; });
+  logger.addLogEntry("stabilizer_support_max", [this]() { return supportMax_; });
 
   logger.addLogEntry("controlRobot_LeftFoot", [this]() { return robot().surfacePose("LeftFoot"); });
   logger.addLogEntry("controlRobot_LeftFootCenter", [this]() { return robot().surfacePose("LeftFootCenter"); });
@@ -400,7 +399,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                  }));
 
   gui.addElement({"Stabilizer", "Debug"}, ElementsStacking::Horizontal,
-                 Button("Start plot DCM-ZMP Tracking (x)",
+                 Button("Plot DCM-ZMP Tracking (x)",
                         [this, &gui]() {
                           gui.addPlot("DCM-ZMP Tracking (x)", plot::X("t", [this]() { return t_; }),
                                       plot::Y("dcm_ref", [this]() { return dcmTarget_.x(); }, Color::Red),
@@ -408,10 +407,10 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                       plot::Y("zmp_ref", [this]() { return zmpTarget_.x(); }, Color::Blue),
                                       plot::Y("zmp_mes", [this]() { return measuredZMP_.x(); }, Color::Cyan));
                         }),
-                 Button("Stop (x)", [&gui]() { gui.removePlot("DCM-ZMP Tracking (x)"); }));
+                 Button("Stop DCM-ZMP (x)", [&gui]() { gui.removePlot("DCM-ZMP Tracking (x)"); }));
 
   gui.addElement({"Stabilizer", "Debug"}, ElementsStacking::Horizontal,
-                 Button("Start plot DCM-ZMP Tracking (y)",
+                 Button("Plot DCM-ZMP Tracking (y)",
                         [this, &gui]() {
                           gui.addPlot("DCM-ZMP Tracking (y)", plot::X("t", [this]() { return t_; }),
                                       plot::Y("dcm_ref", [this]() { return dcmTarget_.y(); }, Color::Red),
@@ -419,7 +418,27 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                       plot::Y("zmp_ref", [this]() { return zmpTarget_.y(); }, Color::Blue),
                                       plot::Y("zmp_mes", [this]() { return measuredZMP_.y(); }, Color::Cyan));
                         }),
-                 Button("Stop (y)", [&gui]() { gui.removePlot("DCM-ZMP Tracking (y)"); }));
+                 Button("Stop DCM-ZMP (y)", [&gui]() { gui.removePlot("DCM-ZMP Tracking (y)"); }));
+
+  gui.addElement({"Stabilizer", "Debug"}, ElementsStacking::Horizontal,
+                 Button("Plot CoM Tracking (x)",
+                        [this, &gui]() {
+                          gui.addPlot("CoM Tracking (x)", plot::X("t", [this]() { return t_; }),
+                                      plot::Y("com_ref", [this]() { return comTarget_.x(); }, Color::Red),
+                                      plot::Y("com_mes", [this]() { return measuredCoM_.y(); }, Color::Magenta));
+                        }),
+                 Button("Stop CoM (x)", [&gui]() { gui.removePlot("CoM Tracking (x)"); }));
+
+  gui.addElement({"Stabilizer", "Debug"}, ElementsStacking::Horizontal,
+                 Button("Plot DCM Integrator",
+                        [this, &gui]() {
+                          gui.addPlot("DCM Integrator", plot::X("t", [this]() { return t_; }),
+                                      plot::Y("x", [this]() { return dcmIntegrator_.eval().x(); }, Color::Red),
+                                      plot::Y("y", [this]() { return dcmIntegrator_.eval().y(); }, Color::Green),
+                                      plot::Y("z", [this]() { return dcmIntegrator_.eval().z(); }, Color::Blue));
+                        }),
+                 Button("Stop DCM Integrator", [&gui]() { gui.removePlot("DCM Integrator"); }));
+
   gui.addElement({"Stabilizer", "Debug"},
                  ArrayLabel("CoM offset [mm]", {"x", "y"}, [this]() { return vecFromError(zmpccCoMOffset_); }),
                  ArrayLabel("DCM average error [mm]", {"x", "y"}, [this]() { return vecFromError(dcmAverageError_); }),
@@ -559,13 +578,26 @@ void StabilizerTask::setContacts(ContactState state)
     return polygon;
   };
 
-  auto configureFootSupport = [this](std::shared_ptr<mc_tasks::force::CoPTask> footTask, Contact & contact) {
+  supportMin_ = std::numeric_limits<double>::max() * Eigen::Vector3d::Ones();
+  supportMax_ = -supportMin_;
+
+  auto configureFootSupport = [this, &footStepPolygon](std::shared_ptr<mc_tasks::force::CoPTask> footTask,
+                                                       Contact & contact) {
     footTask->reset();
     footTask->admittance(contactAdmittance());
     footTask->setGains(c_.contactStiffness, c_.contactDamping);
     footTask->weight(c_.contactWeight);
     // set contact pose as well
     contact.pose = footTask->surfacePose();
+
+    supportMin_.x() = std::min(contact.xmin(), supportMin_.x());
+    supportMin_.y() = std::min(contact.ymin(), supportMin_.y());
+    supportMin_.z() = std::min(contact.zmin(), supportMin_.z());
+    supportMax_.x() = std::max(contact.xmax(), supportMax_.x());
+    supportMax_.y() = std::max(contact.ymax(), supportMax_.y());
+    supportMax_.z() = std::max(contact.zmax(), supportMax_.z());
+
+    supportPolygons_.push_back(footStepPolygon(contact));
   };
 
   auto configureSwingFoot = [this](std::shared_ptr<mc_tasks::force::CoPTask> footTask) {
@@ -579,19 +611,15 @@ void StabilizerTask::setContacts(ContactState state)
   {
     configureFootSupport(leftFootTask, leftFootContact_);
     configureFootSupport(rightFootTask, rightFootContact_);
-    supportPolygons_.push_back(footStepPolygon(leftFootContact_));
-    supportPolygons_.push_back(footStepPolygon(rightFootContact_));
   }
   else if(state == ContactState::LeftFoot)
   {
     configureFootSupport(leftFootTask, leftFootContact_);
-    supportPolygons_.push_back(footStepPolygon(leftFootContact_));
     configureSwingFoot(rightFootTask);
   }
   else
   {
     configureFootSupport(rightFootTask, rightFootContact_);
-    supportPolygons_.push_back(footStepPolygon(leftFootContact_));
     configureSwingFoot(leftFootTask);
   }
 }
@@ -685,6 +713,7 @@ void StabilizerTask::staticTarget(const Eigen::Vector3d & com)
   // XXX should compute height, omega
   zmpTarget_ = Eigen::Vector3d{com.x(), com.y(), 0.};
   dcmTarget_ = comTarget_;
+  omega_ = std::sqrt(robot().mbc().gravity.z() / com.z());
 }
 
 void StabilizerTask::run()
@@ -992,7 +1021,7 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
     "lipm_stabilizer",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
       unsigned robotIndex = config("robotIndex");
-      auto & robot = solver.robots().robot(robotIndex);
+      const auto & robot = solver.robots().robot(robotIndex);
 
       if(!config.has(robot.name()))
       {
@@ -1014,7 +1043,17 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
       t->load(solver, conf);
       t->reset();
       t->setContacts(mc_tasks::lipm_stabilizer::ContactState::DoubleSupport);
-      t->staticTarget(robot.com());
+
+      // Target robot com by default
+      Eigen::Vector3d comTarget = robot.com();
+      if(config.has("staticTarget"))
+      {
+        if(config.has("com"))
+        {
+          comTarget = config("staticTarget")("com");
+        }
+      }
+      t->staticTarget(comTarget);
 
       // Allow to start in disabled state
       bool enabled = true;
