@@ -104,6 +104,11 @@ if(NOT DISABLE_ROBOT_TESTS)
   add_subdirectory(robots)
 endif()
 
+#######################
+# -- mc_rbdyn test -- #
+#######################
+mc_rtc_test(test_mc_rbdyn mc_rbdyn)
+
 ######################
 # -- Network test -- #
 ######################
