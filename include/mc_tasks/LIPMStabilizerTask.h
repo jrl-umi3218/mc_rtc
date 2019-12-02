@@ -77,6 +77,7 @@ public:
                  unsigned int robotIndex,
                  const std::string & leftSurface,
                  const std::string & rightSurface,
+                 const std::string & torsoBodyName,
                  double dt);
   ~StabilizerTask() override;
 
@@ -110,15 +111,6 @@ public:
    */
   Eigen::VectorXd speed() const override;
 
-  /*! \brief Load parameters from a StabilizerConfiguration object
-   *
-   * Should be used to initialize the stabilizer from a default configuration
-   */
-  void resetConfiguration(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & config);
-
-  /*! \brief Load parameters from a Configuration object */
-  void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) override;
-
   /** Stabilizer specific */
 public:
   /** Add GUI panel.
@@ -140,10 +132,10 @@ public:
    */
   Eigen::Vector3d computeZMP(const sva::ForceVecd & wrench) const;
 
-  /** Read configuration from dictionary.
+  /** Setup stabilizer configuration
    *
    */
-  void configure(const mc_rtc::Configuration &);
+  void configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & config);
 
   /** Detect foot touchdown based on both force and distance.
    *
@@ -153,11 +145,6 @@ public:
    *
    */
   bool detectTouchdown(const std::shared_ptr<mc_tasks::force::CoPTask> footTask, const Contact & contact);
-
-  /** Apply stored configuration.
-   *
-   */
-  void reconfigure();
 
   /** Reset CoM and foot CoP tasks.
    *
@@ -422,7 +409,10 @@ protected:
 protected:
   Eigen::Vector3d gravity_ = {0., 0., -GRAVITY}; // ISO 80000-3}; /**< Gravity vector */
   mc_rbdyn::lipm_stabilizer::StabilizerConfiguration
-      c_; /* Stabilizer configuration (weights, stiffness, filters, etc) */
+      defaultConfig_; /**< Default (user-provided) configuration for the stabilizer. This configuration is superseeded
+                         by the parameters set in the GUI */
+  mc_rbdyn::lipm_stabilizer::StabilizerConfiguration
+      c_; /* Online stabilizer configuration, can be set from the GUI. Defaults to defaultConfig_ */
   ContactState contactState_ = ContactState::DoubleSupport;
   Eigen::QuadProgDense qpSolver_; /**< Least-squares solver for wrench distribution */
   Eigen::Matrix<double, 16, 6> wrenchFaceMatrix_; /**< Matrix of single-contact wrench cone inequalities */
@@ -452,7 +442,6 @@ protected:
   double mass_ = 38.; /**< Robot mass in [kg] */
   double runTime_ = 0.;
   double vdcHeightError_ = 0.; /**< Average height error used in vertical drift compensation */
-  mc_rtc::Configuration config_; /**< Stabilizer configuration dictionary */
   sva::ForceVecd distribWrench_ = sva::ForceVecd::Zero();
   // XXX removed wrt to Stephane's version. Was only used to compute the ZMP, we
   // use Robot::zmp instead

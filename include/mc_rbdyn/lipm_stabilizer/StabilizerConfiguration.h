@@ -100,34 +100,58 @@ namespace lipm_stabilizer
 struct StabilizerConfiguration
 {
   FDQPWeights fdqpWeights;
+
   Sole sole;
+  std::string leftFootSurface;
+  std::string rightFootSurface;
+
   Eigen::Vector2d comAdmittance = Eigen::Vector2d::Zero(); /**< Admittance gains for CoM admittance control */
   Eigen::Vector2d copAdmittance = Eigen::Vector2d::Zero(); /**< Admittance gains for foot damping control */
+
   double dfzAdmittance = 1e-4; /**< Admittance for foot force difference control */
   double dfzDamping = 0.; /**< Damping term in foot force difference control */
+
   double dcmPropGain = 1.; /**< Proportional gain on DCM error */
   double dcmIntegralGain = 5.; /**< Integral gain on DCM error */
   double dcmDerivGain = 0.; /**< Derivative gain on DCM error */
   double dcmIntegratorTimeConstant = 15.;
   double dcmDerivatorTimeConstant = 1.;
+
   std::vector<std::string> comActiveJoints; /**< Joints used by CoM IK task */
   Eigen::Vector3d comStiffness = {1000., 1000., 100.}; /**< Stiffness of CoM IK task */
   double comWeight = 1000.; /**< Weight of CoM IK task */
   double comHeight = 0.84; /**< Desired height of the CoM */
   double maxCoMHeight = 0.92; /**< Maximum height of the CoM */
   double minCoMHeight = 0.6; /**< Minimum height of the CoM */
+
+  std::string torsoBodyName;
+  double torsoPitch = 0;
+  double minTorsoPitch = 0;
+  double maxTorsoPitch = 0;
+  double torsoStiffness = 1;
+  double torsoWeight = 10;
+  double pelvisStiffness = 1;
+  double pelvisWeight = 10;
+
   sva::MotionVecd contactDamping = sva::MotionVecd::Zero();
   sva::MotionVecd contactStiffness = sva::MotionVecd::Zero();
   double contactWeight = 100000.; /**< Weight of contact IK tasks */
+
   double swingFootStiffness = 2000.; /**< Stiffness of swing foot IK task */
   double swingFootWeight = 500.; /**< Weight of swing foot IK task */
+
   double vdcFrequency = 1.; /**< Frequency used in double-support vertical drift compensation */
   double vdcStiffness = 1000.; /**< Stiffness used in single-support vertical drift compensation */
+
   double zmpccIntegratorLeakRate = 0.1;
 
   void load(const mc_rtc::Configuration & config)
   {
     fdqpWeights = config("fdqp_weights");
+
+    config("leftFootSurface", leftFootSurface);
+    config("rightFootSurface", rightFootSurface);
+    config("torsoBodyName", torsoBodyName);
 
     if(config.has("admittance"))
     {
@@ -161,6 +185,23 @@ struct StabilizerConfiguration
         tasks("com")("max_height", maxCoMHeight);
         tasks("com")("min_height", minCoMHeight);
       }
+
+      if(tasks.has("torso"))
+      {
+
+        tasks("torso")("pitch", torsoPitch);
+        tasks("torso")("min_pitch", minTorsoPitch);
+        tasks("torso")("max_pitch", maxTorsoPitch);
+        tasks("torso")("stiffness", torsoStiffness);
+        tasks("torso")("weight", torsoWeight);
+      }
+
+      if(tasks.has("pelvis"))
+      {
+        tasks("pelvis")("stiffness", pelvisStiffness);
+        tasks("pelvis")("weight", pelvisWeight);
+      }
+
       if(tasks.has("contact"))
       {
         double d = tasks("contact")("damping");
@@ -170,6 +211,7 @@ struct StabilizerConfiguration
         tasks("contact")("stiffness", contactStiffness);
         tasks("contact")("weight", contactWeight);
       }
+
       if(tasks.has("swing_foot"))
       {
         tasks("swing_foot")("stiffness", swingFootStiffness);
@@ -196,6 +238,10 @@ struct StabilizerConfiguration
     mc_rtc::Configuration conf;
     conf.add("fdqp_weights", fdqpWeights);
 
+    conf.add("torsoBodyName", torsoBodyName);
+    conf.add("leftFootSurface", leftFootSurface);
+    conf.add("rightFootSurface", rightFootSurface);
+
     conf.add("admittance");
     conf("admittance").add("com", comAdmittance);
     conf("admittance")("cop", copAdmittance);
@@ -218,6 +264,15 @@ struct StabilizerConfiguration
     conf("tasks")("com").add("height", comHeight);
     conf("tasks")("com").add("max_height", maxCoMHeight);
     conf("tasks")("com").add("min_height", minCoMHeight);
+
+    conf("tasks")("torso").add("pitch", torsoPitch);
+    conf("tasks")("torso").add("min_pitch", minTorsoPitch);
+    conf("tasks")("torso").add("max_pitch", maxTorsoPitch);
+    conf("tasks")("torso").add("stiffness", torsoStiffness);
+    conf("tasks")("torso").add("weight", torsoWeight);
+
+    conf("tasks")("pelvis").add("stiffness", pelvisStiffness);
+    conf("tasks")("pelvis").add("weight", pelvisWeight);
 
     conf("tasks").add("contact");
     conf("tasks")("contact").add("damping", contactDamping);
