@@ -51,11 +51,38 @@ struct MC_RBDYN_DLLAPI RobotModule
     bool reverse_limits;
   };
 
+  /** Construct from a provided path and name
+   *
+   * As a result:
+   * - name is defined as \p name
+   * - path is defined as \p path
+   * - urdf_path is path + /urdf/ + name + .urdf
+   * - rsdf_dir is path + /rsdf/ + name
+   * - calib_dir is path + /calib/ + name:q
+   *
+   * No further action is taken. This constructor is useful to inherit from
+   *
+   * \param path Path to the robot description
+   *
+   * \param name Name of the robot
+   */
   RobotModule(const std::string & path, const std::string & name)
   : RobotModule(path, name, path + "/urdf/" + name + ".urdf")
   {
   }
 
+  /** Construct from a provided path, name and urdf_path
+   *
+   * \see RobotModule(const std::string &, const std::string &)
+   *
+   * The different is that urdf_path is defined to \p urdf_path
+   *
+   * \param path Path to the robot description
+   *
+   * \param name Name of the robot
+   *
+   * \param urdf_path Path to the robot URDF
+   */
   RobotModule(const std::string & path, const std::string & name, const std::string & urdf_path)
   : path(path), name(name), urdf_path(urdf_path), rsdf_dir(path + "/rsdf/" + name), calib_dir(path + "/calib/" + name)
   {
@@ -64,79 +91,146 @@ struct MC_RBDYN_DLLAPI RobotModule
   /** Construct from the result of an URDF parse */
   RobotModule(const std::string & name, const mc_rbdyn_urdf::URDFParserResult & res);
 
-  virtual ~RobotModule() {}
-
-  /* If implemented, returns limits in this order:
-      - joint limits (lower/upper)
-      - velocity limits (lower/upper)
-      - torque limits (lower/upper)
-    Limits are maps of (jointName, limit)
-  */
-  virtual const std::vector<std::map<std::string, std::vector<double>>> & bounds() const
+  /** Returns the robot's bounds
+   *
+   * The vector should hold 6 string -> vector<double> map
+   *
+   * Each map's keys are joint names and values are joint limits.
+   *
+   * They should be provided in the following order:
+   * - joint limits (lower/upper)
+   * - velocity limits (lower/upper)
+   * - torque limits (lower/upper)
+   */
+  const std::vector<std::map<std::string, std::vector<double>>> & bounds() const
   {
     return _bounds;
   }
 
-  /* return the initial configuration of the robot as a map (jointName, jointPos) */
-  virtual const std::map<std::string, std::vector<double>> & stance() const
+  /** Returns a default configuration for the robot
+   *
+   * Keys are joint names and values are joint configurations.
+   *
+   * It should be ok to include joints that are not in the robot (e.g. generate
+   * the same default stance for variants of a robot. However, each actuated
+   * joint in the robot should have a valid entry, see \ref expand_stance
+   *
+   * For the floating base see \ref default_attitude
+   */
+  const std::map<std::string, std::vector<double>> & stance() const
   {
     return _stance;
   }
 
-  /* return a map (name, (bodyName, PolyhedronURL)) */
-  virtual const std::map<std::string, std::pair<std::string, std::string>> & convexHull() const
+  /** Returns a map describing the convex hulls for the robot
+   *
+   * A key defines a valid collision name, a value is composed of two strings:
+   *
+   * 1. the name of the body the convex is attached to
+   *
+   * 2. the path to the file containing the convex description
+   *
+   * The transformation between the convex and the body it's attached to are
+   * provided in a separate map see \ref collisionTransforms()
+   */
+  const std::map<std::string, std::pair<std::string, std::string>> & convexHull() const
   {
     return _convexHull;
   }
 
-  /* return a map (name, (bodyName, STPBVURL)) */
-  virtual const std::map<std::string, std::pair<std::string, std::string>> & stpbvHull() const
+  /** Returns a map describing the STPBV hulls for the robot
+   *
+   * A key defines a valid collision name, a value is composed of two strings:
+   *
+   * 1. the name of the body the convex is attached to
+   *
+   * 2. the path to the file containing the STPBV description
+   *
+   * The transformation between the STPBV and the body it's attached to are
+   * provided in a separate map see \ref collisionTransforms()
+   */
+  const std::map<std::string, std::pair<std::string, std::string>> & stpbvHull() const
   {
     return _stpbvHull;
   }
 
-  /* return a map (bodyName, sva::PTransformd) */
-  virtual const std::map<std::string, sva::PTransformd> & collisionTransforms() const
+  /** Returns a map describing the transformation between convex/STPBV hulls
+   * and their parent bodies
+   *
+   * A key defines the collision name. The value is the transformation between
+   * this collision object and its parent body
+   */
+  const std::map<std::string, sva::PTransformd> & collisionTransforms() const
   {
     return _collisionTransforms;
   }
 
-  /* return flexibilities */
-  virtual const std::vector<Flexibility> & flexibility() const
+  /** Return the flexibilities of the robot
+   *
+   * \see mc_rbdyn::Flexibility for details on the expected data
+   */
+  const std::vector<Flexibility> & flexibility() const
   {
     return _flexibility;
   }
 
-  /* return force sensors */
-  virtual const std::vector<ForceSensor> & forceSensors() const
+  /** Return the force sensors of the robot
+   *
+   * \see mc_rbdyn::ForceSensor for details on the expected data
+   */
+  const std::vector<ForceSensor> & forceSensors() const
   {
     return _forceSensors;
   }
 
-  /* return body sensors */
-  virtual const BodySensorVector & bodySensors() const
+  /** Return the body sensors of the robot
+   *
+   * \see mc_rbdyn::BodySensor for details on the expected data
+   */
+  const BodySensorVector & bodySensors() const
   {
     return _bodySensors;
   }
 
-  virtual const Springs & springs() const
+  /** Return the springs of a robot
+   *
+   * \see mc_rbdyn::Spring for details on the expected data
+   */
+  const Springs & springs() const
   {
     return _springs;
   }
 
-  /** Return a minimal self-collision set */
-  virtual const std::vector<mc_rbdyn::Collision> & minimalSelfCollisions() const
+  /** Return a minimal self-collision set
+   *
+   * This set of collision describe self-collisions that you always want to
+   * enable regardless of the application
+   *
+   * \see mc_rbdyn::Collision for details on the expected data
+   */
+  const std::vector<mc_rbdyn::Collision> & minimalSelfCollisions() const
   {
     return _minimalSelfCollisions;
   }
-  /** Return a broader set of the most common self-collisions */
-  virtual const std::vector<mc_rbdyn::Collision> & commonSelfCollisions() const
+
+  /** Return a common self-collision set
+   *
+   * This set of collision describe self-collisions that you want to enable for
+   * general applications. Generally this is a super-set of \ref
+   * minimalSelfCollisions
+   *
+   * \see mc_rbdyn::Collision for details on the expected data
+   */
+  const std::vector<mc_rbdyn::Collision> & commonSelfCollisions() const
   {
     return _commonSelfCollisions;
   }
 
-  /** Return a map of gripper. Keys represents the gripper name. Values indicate the active joints in the gripper. */
-  virtual const std::vector<Gripper> & grippers() const
+  /** Return the grippers in the robot
+   *
+   * \see mc_rbdyn::Gripper for details on the expected data
+   */
+  const std::vector<Gripper> & grippers() const
   {
     return _grippers;
   }
@@ -145,19 +239,26 @@ struct MC_RBDYN_DLLAPI RobotModule
    *
    * If this is empty, the mimics are deduced from the URDF.
    */
-  virtual const std::map<std::string, std::vector<Mimic>> & gripperMimics() const
+  const std::map<std::string, std::vector<Mimic>> & gripperMimics() const
   {
     return _gripperMimics;
   }
 
-  /** Return the reference (native controller) joint order of the robot */
-  virtual const std::vector<std::string> & ref_joint_order() const
+  /** Return the reference (native controller) joint order of the robot
+   *
+   * If it is empty, \ref make_default_ref_joint_order() will be used to
+   * generate one
+   */
+  const std::vector<std::string> & ref_joint_order() const
   {
     return _ref_joint_order;
   }
 
-  /** Return default attitude of the robot */
-  virtual const std::array<double, 7> & default_attitude() const
+  /** Return the default attitude of the floating base
+   *
+   * This attitute is associated to the \ref stance() configuration
+   */
+  const std::array<double, 7> & default_attitude() const
   {
     return _default_attitude;
   }
@@ -173,7 +274,6 @@ struct MC_RBDYN_DLLAPI RobotModule
 
   /** Add missing elements to the current module stance
    *
-   *
    * If joints are present in the MultiBody but absent from the default stance,
    * this will add a default value for this joint to the stance (the joint's
    * zero configuration).
@@ -181,38 +281,72 @@ struct MC_RBDYN_DLLAPI RobotModule
    */
   void expand_stance();
 
-  /** Make a valid ref_joint_order */
+  /** Make a valid ref_joint_order
+   *
+   * If \ref ref_joint_order() is empty, this will generate a list of actuated
+   * joints in the order they appear in the kinematic tree
+   *
+   */
   void make_default_ref_joint_order();
 
+  /** Returns a list of compound joint constraint description
+   *
+   * \see mc_rbdyn::CompoundJointConstraintDescription for details on the expected data
+   */
   inline const std::vector<CompoundJointConstraintDescription> & compoundJoints() const
   {
     return _compoundJoints;
   }
 
+  /** Path to the robot's description package */
   std::string path;
+  /** (default) Name of the robot */
   std::string name;
+  /** Path to the robot's URDF file */
   std::string urdf_path;
+  /** Path to the robot's RSDF folder */
   std::string rsdf_dir;
+  /** Path to the robot's calib folder */
   std::string calib_dir;
+  /** RBDyn representation of this robot */
   rbd::MultiBody mb;
+  /** RBDyn configuration of this robot */
   rbd::MultiBodyConfig mbc;
+  /** RBDyn graph representation of this robot */
   rbd::MultiBodyGraph mbg;
+  /** \see bounds() */
   bounds_t _bounds;
+  /** \see stance() */
   std::map<std::string, std::vector<double>> _stance;
+  /** \see convexHull() */
   std::map<std::string, std::pair<std::string, std::string>> _convexHull;
+  /** \see stpbvHull() */
   std::map<std::string, std::pair<std::string, std::string>> _stpbvHull;
+  /** Holds visual representation of bodies in the robot */
   std::map<std::string, std::vector<mc_rbdyn_urdf::Visual>> _visual;
+  /** \see collisionTransforms() */
   std::map<std::string, sva::PTransformd> _collisionTransforms;
+  /** \see flexibility() */
   std::vector<Flexibility> _flexibility;
+  /** \see forceSensors() */
   std::vector<ForceSensor> _forceSensors;
+  /** \see bodySensors() */
   BodySensorVector _bodySensors;
+  /** \see springs() */
   Springs _springs;
+  /** \see minimalSelfCollisions() */
   std::vector<mc_rbdyn::Collision> _minimalSelfCollisions;
+  /** \see commonSelfCollisions() */
   std::vector<mc_rbdyn::Collision> _commonSelfCollisions;
+  /** \see grippers() */
   std::vector<Gripper> _grippers;
+  /** \see gripperMimics() */
   std::map<std::string, std::vector<Mimic>> _gripperMimics;
+  /** \see ref_joint_order() */
   std::vector<std::string> _ref_joint_order;
+  /** \see default_attitude() */
   std::array<double, 7> _default_attitude = {{1., 0., 0., 0., 0., 0., 0.}};
+  /** \see compoundJoints() */
   std::vector<CompoundJointConstraintDescription> _compoundJoints;
 };
 
