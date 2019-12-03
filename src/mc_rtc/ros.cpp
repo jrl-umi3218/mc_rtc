@@ -20,6 +20,7 @@
 #  include <sensor_msgs/JointState.h>
 #  include <tf2_ros/transform_broadcaster.h>
 
+#  include <fstream>
 #  include <thread>
 #endif
 
@@ -200,6 +201,17 @@ void RobotPublisherImpl::init(const mc_rbdyn::Robot & robot)
     const auto & surf = s.second;
     data.tfs.push_back(PT2TF(surf->X_b_s(), tm, prefix + surf->bodyName(), prefix + "surfaces/" + surf->name(), 0));
   }
+
+  nh.setParam(prefix + "/robot_module", robot.module().parameters());
+  std::ifstream ifs(robot.module().urdf_path);
+  if(!ifs.is_open())
+  {
+    LOG_ERROR(robot.name() << " URDF: " << robot.module().urdf_path << " is not readable")
+    return;
+  }
+  std::stringstream urdf;
+  urdf << ifs.rdbuf();
+  nh.setParam(prefix + "/robot_description", urdf.str());
 }
 
 void RobotPublisherImpl::update(double,

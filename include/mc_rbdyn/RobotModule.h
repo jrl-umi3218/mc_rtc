@@ -298,6 +298,12 @@ struct MC_RBDYN_DLLAPI RobotModule
     return _compoundJoints;
   }
 
+  /** Returns the list of parameters passed to mc_rbdyn::RobotLoader::get_robot_module to obtain this module */
+  inline const std::vector<std::string> & parameters() const
+  {
+    return _parameters;
+  }
+
   /** Path to the robot's description package */
   std::string path;
   /** (default) Name of the robot */
@@ -348,6 +354,8 @@ struct MC_RBDYN_DLLAPI RobotModule
   std::array<double, 7> _default_attitude = {{1., 0., 0., 0., 0., 0., 0.}};
   /** \see compoundJoints() */
   std::vector<CompoundJointConstraintDescription> _compoundJoints;
+  /** \see parameters() */
+  std::vector<std::string> _parameters;
 };
 
 typedef std::shared_ptr<RobotModule> RobotModulePtr;

@@ -31,11 +31,14 @@ public:
    * the module
    */
   template<typename... Args>
-  static std::shared_ptr<mc_rbdyn::RobotModule> get_robot_module(const std::string & name, const Args &... args)
+  static mc_rbdyn::RobotModulePtr get_robot_module(const std::string & name, const Args &... args)
   {
     std::lock_guard<std::mutex> guard{mtx};
     init();
-    return robot_loader->create_object(name, args...);
+    auto rm = robot_loader->create_object(name, args...);
+    rm->_parameters = {name};
+    fill_rm_parameters(rm, args...);
+    return rm;
   }
 
   /** Add additional directories to the robot module path
@@ -119,6 +122,16 @@ private:
       }
     }
   }
+
+  template<typename... Args>
+  static void fill_rm_parameters(mc_rbdyn::RobotModulePtr & rm, const std::string & arg0, const Args &... args)
+  {
+    rm->_parameters.push_back(arg0);
+    fill_rm_parameters(rm, args...);
+  }
+
+  static void fill_rm_parameters(mc_rbdyn::RobotModulePtr &) {}
+
   static std::unique_ptr<mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>> robot_loader;
   static bool enable_sandbox_;
   static bool verbose_;
