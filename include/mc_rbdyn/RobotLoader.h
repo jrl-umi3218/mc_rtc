@@ -17,6 +17,27 @@
 namespace mc_rbdyn
 {
 
+namespace details
+{
+
+template<typename... Args>
+struct are_strings : std::true_type {};
+
+template<typename T>
+struct are_strings<T> : std::is_same<std::string, T> {};
+
+template<typename T, typename ... Args>
+struct are_strings<T, Args...> : std::integral_constant<bool, are_strings<T>::value && are_strings<Args...>::value> {};
+
+static_assert(are_strings<>::value, "OK");
+static_assert(are_strings<std::string>::value, "OK");
+static_assert(are_strings<std::string, std::string>::value, "OK");
+static_assert(are_strings<std::string, std::string, std::string>::value, "OK");
+static_assert(!are_strings<const char *>::value, "OK");
+static_assert(!are_strings<std::string, std::string, bool>::value, "OK");
+
+} // namespace
+
 /*! \class RobotLoader
  * \brief Load RobotModule instances from shared libraries
  */
@@ -33,6 +54,7 @@ public:
   template<typename... Args>
   static mc_rbdyn::RobotModulePtr get_robot_module(const std::string & name, const Args &... args)
   {
+    static_assert(details::are_strings<Args...>::value, "get_robot_module expects all arguments to be std::string");
     std::lock_guard<std::mutex> guard{mtx};
     init();
     auto rm = robot_loader->create_object(name, args...);
