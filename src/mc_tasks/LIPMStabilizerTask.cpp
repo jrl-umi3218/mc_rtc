@@ -583,6 +583,15 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                  Polygon("SupportContacts", Color::Green, [this]() { return supportPolygons_; }));
 }
 
+void StabilizerTask::removeFromGUI(mc_rtc::gui::StateBuilder & gui)
+{
+  MetaTask::removeFromGUI(gui);
+  gui.removePlot("DCM-ZMP Tracking (x)");
+  gui.removePlot("DCM-ZMP Tracking (y)");
+  gui.removePlot("CoM Tracking (x)");
+  gui.removePlot("DCM Integrator");
+}
+
 void StabilizerTask::disable()
 {
   c_.comAdmittance.setZero();
