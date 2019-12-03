@@ -327,13 +327,45 @@ void StabilizerTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry("stabilizer_zmpcc_comVel");
   logger.removeLogEntry("stabilizer_zmpcc_error");
   logger.removeLogEntry("stabilizer_zmpcc_leakRate");
+  logger.removeLogEntry("stabilizer_support_min");
+  logger.removeLogEntry("stabilizer_support_max");
+  logger.removeLogEntry("controlRobot_LeftFoot");
+  logger.removeLogEntry("controlRobot_LeftFootCenter");
+  logger.removeLogEntry("controlRobot_RightFoot");
+  logger.removeLogEntry("controlRobot_RightFootCenter");
+  logger.removeLogEntry("controlRobot_com");
+  logger.removeLogEntry("controlRobot_comd");
+  logger.removeLogEntry("controlRobot_posW");
+  logger.removeLogEntry("left_foot_ratio");
+  logger.removeLogEntry("pendulum_com");
+  logger.removeLogEntry("pendulum_comd");
+  logger.removeLogEntry("pendulum_comdd");
+  logger.removeLogEntry("pendulum_dcm");
+  logger.removeLogEntry("pendulum_omega");
+  logger.removeLogEntry("pendulum_zmp");
+  logger.removeLogEntry("realRobot_LeftFoot");
+  logger.removeLogEntry("realRobot_LeftFootCenter");
+  logger.removeLogEntry("realRobot_RightFoot");
+  logger.removeLogEntry("realRobot_RightFootCenter");
+  logger.removeLogEntry("realRobot_com");
+  logger.removeLogEntry("realRobot_comd");
+  logger.removeLogEntry("realRobot_dcm");
+  logger.removeLogEntry("realRobot_posW");
+  logger.removeLogEntry("realRobot_wrench");
+  logger.removeLogEntry("realRobot_zmp");
+
+  comTask->removeFromLogger(logger);
+  leftFootTask->removeFromLogger(logger);
+  rightFootTask->removeFromLogger(logger);
+  pelvisTask->removeFromLogger(logger);
+  torsoTask->removeFromLogger(logger);
 }
 
 void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   using namespace mc_rtc::gui;
 
-  gui.addElement({"Stabilizer", "Main"}, Button("Disable stabilizer", [this]() { disable(); }),
+  gui.addElement({"Tasks", "Stabilizer", "Main"}, Button("Disable stabilizer", [this]() { disable(); }),
                  Button("Reconfigure / Enable Stabilizer", [this]() { configure(defaultConfig_); }),
                  Button("Reset DCM integrator", [this]() { dcmIntegrator_.setZero(); }),
                  ArrayInput("Foot admittance", {"CoPx", "CoPy"},
@@ -369,7 +401,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                               dcmIntegrator_.timeConstant(T(0));
                               dcmDerivator_.timeConstant(T(1));
                             }));
-  gui.addElement({"Stabilizer", "Advanced"}, Button("Disable stabilizer", [this]() { disable(); }),
+  gui.addElement({"Tasks", "Stabilizer", "Advanced"}, Button("Disable stabilizer", [this]() { disable(); }),
                  Button("Reconfigure", [this]() { configure(defaultConfig_); }),
                  Button("Reset CoM integrator", [this]() { zmpccIntegrator_.setZero(); }),
                  ArrayInput("CoM admittance", {"Ax", "Ay"}, [this]() { return c_.comAdmittance; },
@@ -418,13 +450,13 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                c_.torsoPitch = pitch;
                              }));
 
-  gui.addElement({"Stabilizer", "Debug"}, Button("Disable stabilizer", [this]() { disable(); }),
+  gui.addElement({"Tasks", "Stabilizer", "Debug"}, Button("Disable stabilizer", [this]() { disable(); }),
                  Button("Reconfigure", [this]() { configure(defaultConfig_); }), Button("Dump configuration", [this]() {
                    LOG_INFO("[LIPMStabilizerTask] configuration (YAML)");
                    LOG_INFO(c_.save().dump(true, true));
                  }));
 
-  gui.addElement({"Stabilizer", "Debug"}, ElementsStacking::Horizontal,
+  gui.addElement({"Tasks", "Stabilizer", "Debug"}, ElementsStacking::Horizontal,
                  Button("Plot DCM-ZMP Tracking (x)",
                         [this, &gui]() {
                           gui.addPlot("DCM-ZMP Tracking (x)", plot::X("t", [this]() { return t_; }),
@@ -435,7 +467,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                         }),
                  Button("Stop DCM-ZMP (x)", [&gui]() { gui.removePlot("DCM-ZMP Tracking (x)"); }));
 
-  gui.addElement({"Stabilizer", "Debug"}, ElementsStacking::Horizontal,
+  gui.addElement({"Tasks", "Stabilizer", "Debug"}, ElementsStacking::Horizontal,
                  Button("Plot DCM-ZMP Tracking (y)",
                         [this, &gui]() {
                           gui.addPlot("DCM-ZMP Tracking (y)", plot::X("t", [this]() { return t_; }),
@@ -446,7 +478,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                         }),
                  Button("Stop DCM-ZMP (y)", [&gui]() { gui.removePlot("DCM-ZMP Tracking (y)"); }));
 
-  gui.addElement({"Stabilizer", "Debug"}, ElementsStacking::Horizontal,
+  gui.addElement({"Tasks", "Stabilizer", "Debug"}, ElementsStacking::Horizontal,
                  Button("Plot CoM Tracking (x)",
                         [this, &gui]() {
                           gui.addPlot("CoM Tracking (x)", plot::X("t", [this]() { return t_; }),
@@ -455,7 +487,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                         }),
                  Button("Stop CoM (x)", [&gui]() { gui.removePlot("CoM Tracking (x)"); }));
 
-  gui.addElement({"Stabilizer", "Debug"}, ElementsStacking::Horizontal,
+  gui.addElement({"Tasks", "Stabilizer", "Debug"}, ElementsStacking::Horizontal,
                  Button("Plot DCM Integrator",
                         [this, &gui]() {
                           gui.addPlot("DCM Integrator", plot::X("t", [this]() { return t_; }),
@@ -464,7 +496,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                       plot::Y("z", [this]() { return dcmIntegrator_.eval().z(); }, Color::Blue));
                         }),
                  Button("Stop DCM Integrator", [&gui]() { gui.removePlot("DCM Integrator"); }));
-  gui.addElement({"Stabilizer", "Debug"}, ElementsStacking::Horizontal,
+  gui.addElement({"Tasks", "Stabilizer", "Debug"}, ElementsStacking::Horizontal,
                  Button("Plot DCM Derivator",
                         [this, &gui]() {
                           gui.addPlot("DCM Derivator", plot::X("t", [this]() { return t_; }),
@@ -474,7 +506,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                         }),
                  Button("Stop DCM Derivator", [&gui]() { gui.removePlot("DCM Derivator"); }));
 
-  gui.addElement({"Stabilizer", "Debug"},
+  gui.addElement({"Tasks", "Stabilizer", "Debug"},
                  ArrayLabel("CoM offset [mm]", {"x", "y"}, [this]() { return vecFromError(zmpccCoMOffset_); }),
                  ArrayLabel("DCM average error [mm]", {"x", "y"}, [this]() { return vecFromError(dcmAverageError_); }),
                  ArrayLabel("DCM error [mm]", {"x", "y"}, [this]() { return vecFromError(dcmError_); }),
@@ -519,7 +551,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   constexpr double COM_POINT_SIZE = 0.02;
   constexpr double DCM_POINT_SIZE = 0.015;
 
-  gui.addElement({"Stabilizer", "Markers", "CoM-DCM"},
+  gui.addElement({"Tasks", "Stabilizer", "Markers", "CoM-DCM"},
                  Arrow("Pendulum_CoM", pendulumArrowConfig, [this]() -> Eigen::Vector3d { return zmpTarget_; },
                        [this]() -> Eigen::Vector3d { return comTarget_; }),
                  Point3D("Measured_CoM", PointConfig(Color::Green, COM_POINT_SIZE), [this]() { return measuredCoM_; }),
@@ -528,7 +560,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                          [this]() -> Eigen::Vector3d { return measuredCoM_ + measuredCoMd_ / omega_; }));
 
   gui.addElement(
-      {"Stabilizer", "Markers", "Net wrench"},
+      {"Tasks", "Stabilizer", "Markers", "Net wrench"},
       Point3D("Stabilizer_ZMP", PointConfig(Color::Magenta, 0.02), [this]() { return this->zmp(); }),
       Point3D("Measured_ZMP", PointConfig(Color::Red, 0.02), [this]() -> Eigen::Vector3d { return measuredZMP_; }),
       Arrow("Measured_ZMPForce", netWrenchForceArrowConfig, [this]() -> Eigen::Vector3d { return measuredZMP_; },
@@ -537,7 +569,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
             }));
 
   gui.addElement(
-      {"Stabilizer", "Markers", "Foot wrenches"},
+      {"Tasks", "Stabilizer", "Markers", "Foot wrenches"},
       Point3D("Stabilizer_LeftCoP", PointConfig(Color::Magenta, 0.01), [this]() { return leftFootTask->targetCoPW(); }),
       Force("Measured_LeftCoPForce", copForceConfig, [this]() { return this->robot().surfaceWrench("LeftFootCenter"); },
             [this]() { return sva::PTransformd(this->robot().copW("LeftFootCenter")); }),
@@ -547,7 +579,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
             [this]() { return this->robot().surfaceWrench("RightFootCenter"); },
             [this]() { return sva::PTransformd(this->robot().copW("RightFootCenter")); }));
 
-  gui.addElement({"Stabilizer", "Markers", "Contacts"},
+  gui.addElement({"Tasks", "Stabilizer", "Markers", "Contacts"},
                  Polygon("SupportContacts", Color::Green, [this]() { return supportPolygons_; }));
 }
 

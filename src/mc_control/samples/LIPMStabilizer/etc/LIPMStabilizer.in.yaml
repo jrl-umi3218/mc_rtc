@@ -1,0 +1,163 @@
+---
+## If true, the FSM transitions are managed by an external tool
+Managed: false
+# If true and the FSM is self-managed, transitions should be triggered
+StepByStep: true
+# Change idle behaviour, if true the state is kept until transition,
+# otherwise the FSM holds the last state until transition
+IdleKeepState: true
+# Where to look for state libraries
+StatesLibraries: 
+- "@MC_CONTROLLER_INSTALL_PREFIX@/fsm/states"
+# Where to look for state files
+StatesFiles: 
+- "@MC_CONTROLLER_INSTALL_PREFIX@/fsm/states/data"
+# If true, state factory will be more verbose
+VerboseStateFactory: false
+# Additional robots to load
+robots:
+  ground:
+    module: env
+    params:
+    - "@AROBASE@MC_ENV_DESCRIPTION@AROBASE@"
+    - ground
+# General constraints, always on
+constraints:
+-  type: contact
+-  type: kinematics
+   robotIndex: 0
+   damper: [0.1, 0.01, 0.5]
+# Collision constraint
+collisions:
+- type: collision
+  r1Index: 0
+  r2Index: 0
+  useMinimal: true
+# Initial set of contacts
+contacts: {}
+hrp2_drc:
+  posture:
+    stiffness: 1.0
+    weight: 10.0
+# Implement some additional text states
+states:
+  MinimalStabilizerState:
+    base: MetaTasks
+    tasks:
+      StabilizerTask:
+        type: lipm_stabilizer
+        robotIndex: 0
+        # start in enabled/disabled state
+        enabled: true
+
+  ComplexStabilizerState:
+    base: MetaTasks
+
+    # Add contacts to the solver.
+    # Note that in order for the stabilizer to work, roll and pitch DoF need to be free to allow for admittance
+    # control of the feet, and vertical DoF to allow for foot force-difference control.
+    AddContacts:
+    - r1: hrp2_drc
+      r2: ground
+      r1Surface: LeftFootCenter
+      r2Surface: AllGround
+      dof: [0, 0, 1, 1, 1, 0]
+    - r1: hrp2_drc
+      r2: ground
+      r1Surface: RightFootCenter
+      r2Surface: AllGround
+      dof: [0, 0, 1, 1, 1, 0]
+
+    tasks:
+      StabilizerTask:
+        type: lipm_stabilizer
+        robotIndex: 0
+        enabled: true
+
+        ###########################
+        ## Stabilizer configuration
+        ###########################
+        # Default values for these robot-specific parameters are set in the corresponding robot module. 
+        # You may choose to override any of them here, with due caution.
+        hrp2_drc:
+          leftFootSurface: LeftFootCenter
+          rightFootSurface": RightFootCenter
+          torsoBodyName: CHEST_LINK1
+          # Configuration  of the QP tasks used by the stabilizer
+          tasks:           
+            com:
+              stiffness: [1000, 1000, 100]
+              weight: 1000
+              active_joints: [Root, RLEG_JOINT0, RLEG_JOINT1, RLEG_JOINT2, RLEG_JOINT3, RLEG_JOINT4, RLEG_JOINT5, LLEG_JOINT0, LLEG_JOINT1, LLEG_JOINT2, LLEG_JOINT3, LLEG_JOINT4, LLEG_JOINT5]
+              height: 0.87
+              max_height: 0.92
+              min_height: 0.6
+            contact:
+              damping: 300
+              stiffness: 1
+              weight: 10000
+            swing_foot:
+              stiffness: 2000
+              weight: 500
+  
+          # Weights for the force-distribution QP
+          fdqp_weights:
+            net_wrench: 10000
+            ankle_torque: 100
+            pressure: 1
+  
+          # Vertical drift frequency
+          vdc:
+            frequency: 1
+            stiffness: 1000
+  
+          zmpcc:
+            integrator_leak_rate: 0.1
+  
+          # Admittance coefficients (force-control)
+          admittance:
+            com: [0, 0]
+            cop: [0.001, 0.001]
+            dfz: 0.0001
+            dfz_damping: 0
+  
+          ########################
+          # Gains for DCM tracking
+          ########################
+          # These are the main gains of the stabilizer.
+          dcm_tracking:
+            gains:
+              prop: 3
+              integral: 20 
+              deriv: 0.5
+            derivator_time_constant: 5
+            integrator_time_constant: 30 
+  
+          # Properties of the robot sole
+          sole:
+            half_length: 0.108
+            half_width: 0.07
+            friction: 0.7
+
+# Transitions map
+transitions:
+- - MinimalStabilizerState
+  - OK
+  - ComplexStabilizerState
+  - Strict
+# Initial state
+init: MinimalStabilizerState
+
+
+# Specific configuration for each observer
+Observers:
+  Encoder:
+    # Valid values are [estimator, control, none]
+    UpdatePositionFrom: estimator
+    UpdateVelocityFrom: estimator
+  BodySensor:
+    # Valid entries are [control, estimator, none]
+    UpdateFrom: estimator
+    FloatingBaseSensor: FloatingBase
+RunObservers: [Encoder, KinematicInertial, CoMVelocity]
+UpdateObservers: [Encoder, KinematicInertial]
