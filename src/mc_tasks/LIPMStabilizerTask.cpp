@@ -460,6 +460,8 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                  Button("Plot DCM-ZMP Tracking (x)",
                         [this, &gui]() {
                           gui.addPlot("DCM-ZMP Tracking (x)", plot::X("t", [this]() { return t_; }),
+                                      plot::Y("support_min", [this]() { return supportMin_.x(); }, Color::Red),
+                                      plot::Y("support_max", [this]() { return supportMax_.x(); }, Color::Red),
                                       plot::Y("dcm_ref", [this]() { return dcmTarget_.x(); }, Color::Red),
                                       plot::Y("dcm_mes", [this]() { return measuredDCM_.x(); }, Color::Magenta),
                                       plot::Y("zmp_ref", [this]() { return zmpTarget_.x(); }, Color::Blue),
@@ -471,6 +473,8 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                  Button("Plot DCM-ZMP Tracking (y)",
                         [this, &gui]() {
                           gui.addPlot("DCM-ZMP Tracking (y)", plot::X("t", [this]() { return t_; }),
+                                      plot::Y("support_min", [this]() { return supportMin_.y(); }, Color::Red),
+                                      plot::Y("support_max", [this]() { return supportMax_.y(); }, Color::Red),
                                       plot::Y("dcm_ref", [this]() { return dcmTarget_.y(); }, Color::Red),
                                       plot::Y("dcm_mes", [this]() { return measuredDCM_.y(); }, Color::Magenta),
                                       plot::Y("zmp_ref", [this]() { return zmpTarget_.y(); }, Color::Blue),

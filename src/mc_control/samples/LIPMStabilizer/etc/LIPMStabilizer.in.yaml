@@ -48,7 +48,7 @@ states:
         type: lipm_stabilizer
         robotIndex: 0
         # start in enabled/disabled state
-        enabled: true
+        enabled: false
 
   ComplexStabilizerState:
     base: MetaTasks
