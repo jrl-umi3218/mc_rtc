@@ -1105,8 +1105,8 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
       auto t = std::make_shared<mc_tasks::lipm_stabilizer::StabilizerTask>(
           solver.robots(), solver.realRobots(), robotIndex, stabiConf.leftFootSurface, stabiConf.rightFootSurface,
           stabiConf.torsoBodyName, solver.dt());
-      t->reset();
       t->configure(stabiConf);
+      t->reset();
       t->setContacts(mc_tasks::lipm_stabilizer::ContactState::DoubleSupport);
 
       // Target robot com by default
