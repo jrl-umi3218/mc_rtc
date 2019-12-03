@@ -577,15 +577,15 @@ public:
    */
   void posW(const sva::PTransformd & pt);
 
-  /** Update the robot's base link velocity.
+  /** Update the robot's floating base velocity.
    *
-   * \param alpha New base link velocity.
+   * \param vel New floating base velocity in the inertial frame.
    *
    * @note This function takes care of calling rbd::forwardVelocity
    */
-  void velW(const sva::MotionVecd & alpha);
+  void velW(const sva::MotionVecd & vel);
 
-  /** Return the robot's global velocity */
+  /** Return the robot's floating base velocity expressed in the inertial frame */
   const sva::MotionVecd & velW() const;
 
 private:

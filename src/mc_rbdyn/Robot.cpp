@@ -925,12 +925,13 @@ void Robot::velW(const sva::MotionVecd & vel)
 {
   if(mb().joint(0).type() == rbd::Joint::Type::Free)
   {
-    alpha()[0][0] = vel.angular().x();
-    alpha()[0][1] = vel.angular().y();
-    alpha()[0][2] = vel.angular().z();
-    alpha()[0][3] = vel.linear().x();
-    alpha()[0][4] = vel.linear().y();
-    alpha()[0][5] = vel.linear().z();
+    auto vB = sva::PTransformd(mbc().bodyPosW[0].rotation()) * vel;
+    alpha()[0][0] = vB.angular().x();
+    alpha()[0][1] = vB.angular().y();
+    alpha()[0][2] = vB.angular().z();
+    alpha()[0][3] = vB.linear().x();
+    alpha()[0][4] = vB.linear().y();
+    alpha()[0][5] = vB.linear().z();
     forwardVelocity();
   }
   else
