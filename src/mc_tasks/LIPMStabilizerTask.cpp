@@ -5,6 +5,7 @@
  * lipm_walking_controller <https://github.com/stephane-caron/lipm_walking_controller>
  */
 
+#include <mc_rbdyn/rpy_utils.h>
 #include <mc_rtc/gui.h>
 #include <mc_rtc/gui/plot.h>
 #include <mc_tasks/LIPMStabilizerTask.h>
@@ -1072,8 +1073,8 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
       auto t = std::make_shared<mc_tasks::lipm_stabilizer::StabilizerTask>(
           solver.robots(), solver.realRobots(), robotIndex, stabiConf.leftFootSurface, stabiConf.rightFootSurface,
           stabiConf.torsoBodyName, solver.dt());
-      t->configure(stabiConf);
       t->reset();
+      t->configure(stabiConf);
       t->setContacts(mc_tasks::lipm_stabilizer::ContactState::DoubleSupport);
 
       // Target robot com by default

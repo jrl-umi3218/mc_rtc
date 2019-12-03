@@ -265,12 +265,14 @@ struct StabilizerConfiguration
     conf("tasks")("com").add("max_height", maxCoMHeight);
     conf("tasks")("com").add("min_height", minCoMHeight);
 
+    conf("tasks").add("torso");
     conf("tasks")("torso").add("pitch", torsoPitch);
     conf("tasks")("torso").add("min_pitch", minTorsoPitch);
     conf("tasks")("torso").add("max_pitch", maxTorsoPitch);
     conf("tasks")("torso").add("stiffness", torsoStiffness);
     conf("tasks")("torso").add("weight", torsoWeight);
 
+    conf("tasks").add("pelvis");
     conf("tasks")("pelvis").add("stiffness", pelvisStiffness);
     conf("tasks")("pelvis").add("weight", pelvisWeight);
 
