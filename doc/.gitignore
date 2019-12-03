@@ -5,3 +5,4 @@ _site
 assets/css
 assets/js
 doxygen-html
+_plugins/doxygen.rb

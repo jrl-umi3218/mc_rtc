@@ -1,0 +1,39 @@
+require 'nokogiri'
+
+doxytag = "@CMAKE_CURRENT_BINARY_DIR@/mc_rtc.doxytag";
+if File.file?(doxytag) then
+  $doc = Nokogiri::XML(File.new(doxytag));
+else
+  $doc = Nokogiri::XML("");
+end
+
+def get_page(struct)
+  $doc.xpath("/tagfile/compound[@kind='struct']").each do |e|
+    name = e.at_xpath('name').content;
+    if name == struct then
+      return e.at_xpath('filename').content.sub('.html', '');
+    end
+  end
+  return "";
+end
+
+module Jekyll
+  class RenderTimeTag < Liquid::Tag
+
+    def initialize(tag_name, text, tokens)
+      super
+      @text = text.strip()
+    end
+
+    def render(context)
+      path = get_page(@text);
+      if(path != "") then
+        "<a href=\"#{context.registers[:site].config['baseurl']}/doxygen.html##{path}\" target=\"blank_\">#{@text}</a>"
+      else
+        "#{@text}"
+      end
+    end
+  end
+end
+
+Liquid::Template.register_tag('doxygen', Jekyll::RenderTimeTag)
