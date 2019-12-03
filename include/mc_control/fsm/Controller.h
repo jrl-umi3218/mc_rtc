@@ -97,12 +97,6 @@ struct MC_CONTROL_FSM_DLLAPI Controller : public MCController
 
   void reset(const ControllerResetData & data) override;
 
-  bool play_next_stance() override;
-
-  bool read_msg(std::string & msg) override;
-
-  bool read_write_msg(std::string & msg, std::string & out) override;
-
   /** Stop the current state's execution
    *
    * The controller will switch to its idle behaviour which maintains current
@@ -216,8 +210,6 @@ struct MC_CONTROL_FSM_DLLAPI Controller : public MCController
   {
     return config_;
   }
-
-  bool set_joint_pos(const std::string & jname, const double & pos) override;
 
 private:
   /** Reset all posture tasks */

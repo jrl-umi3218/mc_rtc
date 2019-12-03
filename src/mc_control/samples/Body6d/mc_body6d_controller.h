@@ -19,14 +19,6 @@ public:
 
   virtual void reset(const ControllerResetData & reset_data) override;
 
-  virtual bool change_ef(const std::string & ef_name) override;
-
-  virtual bool move_ef(const Eigen::Vector3d & t, const Eigen::Matrix3d & m) override;
-
-  bool translate_ef(const Eigen::Vector3d & t);
-
-  bool rotate_ef(const Eigen::Matrix3d & m);
-
 public:
   std::shared_ptr<mc_tasks::EndEffectorTask> efTask;
   std::shared_ptr<mc_tasks::CoMTask> comTask;

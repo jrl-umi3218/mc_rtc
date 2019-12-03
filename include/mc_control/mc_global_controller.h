@@ -349,79 +349,9 @@ public:
    * These functions acts as a proxy between the caller and the current
    * controller.
    *
-   * These services can be active or inactive for each individual controller.
-   * You will find some information in this document that only pertains to the
-   * default implementation of the service call.
-   *
    * @{
    *
    */
-
-  /*! \brief Set a given joint position
-   *
-   * The value of pos is not checked w.r.t the angular limits of the given
-   * joint as this should be insured by the controller.
-   *
-   * \param name Name of the joint
-   *
-   * \param pos Position value
-   *
-   * \returns True if successful (the joint exists and has one dof), false
-   * otherwise
-   */
-  bool set_joint_pos(const std::string & jname, const double & pos);
-
-  /*! \brief Get a given joint position
-   *
-   * \param name Name of the joint
-   *
-   * \param pos Will retrieve the given joint value
-   *
-   * \returns True if successful
-   */
-  bool get_joint_pos(const std::string & jname, double & pos);
-
-  /*! \brief Change the end-effector controlled by the service
-   *
-   * \param ef_name Name of the end-effector
-   *
-   * \returns True if successful (the body exists within the robot), false
-   * otherwise
-   *
-   */
-  bool change_ef(const std::string & ef_name);
-
-  /*! \brief Translate the current end-effector by a given amount
-   *
-   * \param t Translation to apply (in world frame)
-   *
-   * \returns True if successful
-   *
-   */
-  bool translate_ef(const Eigen::Vector3d & t);
-
-  /*! \brief Rotate the current end-effector by a given amount
-   *
-   * \param m Rotation matrix to apply (in world frame)
-   *
-   * \returns True if successful
-   */
-  bool rotate_ef(const Eigen::Matrix3d & m);
-
-  /*! \brief Move the main robot's CoM by a given amount
-   *
-   * \param v Translation to apply to the CoM (in world frame)
-   *
-   * \returns True is succesful
-   *
-   */
-  bool move_com(const Eigen::Vector3d & v);
-
-  /*! \brief Trigger the next step in an FSM
-   *
-   * \returns True if successful
-   */
-  bool play_next_stance();
 
   /*! \brief Returns to half-sit pose after an experiment
    *
@@ -432,46 +362,6 @@ public:
   bool GoToHalfSitPose_service();
   /*! \brief See mc_rtc::MCGlobalController::GoToHalfSitPose_service */
   bool GoToHalfSitPose();
-
-  /*! \brief Used to control driving controller
-   *
-   * \param w Wheel angle
-   *
-   * \param a Ankle angle
-   *
-   * \param p Pan angle
-   *
-   * \param t Tilt angle
-   *
-   * \returns True if successful
-   *
-   */
-  bool driving_service(double w, double a, double p, double t);
-
-  /*! \brief Send a message to the controller instance
-   *
-   * This method should be the preferred way to pass message to the controller
-   *
-   * \param msg Message passed to the controller
-   *
-   * \returns True if the controller successfully handled the message
-   *
-   */
-  bool send_msg(const std::string & msg);
-
-  /*! \brief Send a message and receive an answer from the controller
-   *
-   * This method should be the preferred way to pass/receive message to/from
-   * the controller
-   *
-   * \param msg Message passed to the controller
-   *
-   * \param out Message received from the controller
-   *
-   * \returns True if the controller successfully handled the message
-   *
-   */
-  bool send_recv_msg(const std::string & msg, std::string & out);
 
   /** @} */
 

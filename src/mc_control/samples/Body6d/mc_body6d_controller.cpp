@@ -64,42 +64,4 @@ void MCBody6dController::reset(const ControllerResetData & reset_data)
   comTask->reset();
 }
 
-bool MCBody6dController::change_ef(const std::string & ef_name)
-{
-  if(robot().hasBody(ef_name))
-  {
-    solver().removeTask(efTask);
-    postureTask->posture(robot().mbc().q);
-    efTask.reset(new mc_tasks::EndEffectorTask(ef_name, robots(), robots().robotIndex()));
-    solver().addTask(efTask);
-    return true;
-  }
-  else
-  {
-    LOG_ERROR("Invalid link name: " << ef_name << ", control unchanged")
-    return false;
-  }
-}
-
-bool MCBody6dController::translate_ef(const Eigen::Vector3d & t)
-{
-  sva::PTransformd dtr(Eigen::Matrix3d::Identity(), t);
-  efTask->add_ef_pose(dtr);
-  return true;
-}
-
-bool MCBody6dController::rotate_ef(const Eigen::Matrix3d & m)
-{
-  sva::PTransformd dtr(m, Eigen::Vector3d(0, 0, 0));
-  efTask->add_ef_pose(dtr);
-  return true;
-}
-
-bool MCBody6dController::move_ef(const Eigen::Vector3d & t, const Eigen::Matrix3d & m)
-{
-  rotate_ef(m);
-  translate_ef(t);
-  return true;
-}
-
 } // namespace mc_control

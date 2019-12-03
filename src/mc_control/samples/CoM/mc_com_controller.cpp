@@ -50,12 +50,6 @@ void MCCoMController::reset(const ControllerResetData & reset_data)
   }
 }
 
-bool MCCoMController::move_com(const Eigen::Vector3d & v)
-{
-  comTask->move_com(v);
-  return true;
-}
-
 sva::PTransformd MCCoMController::anchorFrame(const mc_rbdyn::Robot & robot) const
 {
   sva::PTransformd X_0_anchor;
