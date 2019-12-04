@@ -81,6 +81,16 @@ public:
                  double dt);
   ~StabilizerTask() override;
 
+  /**
+   * @brief Resets the stabilizer tasks and parameters to their default configuration.
+   *
+   * Resets all tasks and errors/integrator/derivators to their initial
+   * configuration. Configures the default stabilizer parameters from the robot
+   * module.
+   *
+   * You can configure the stabilizer parameters (DCM tacking gains, task gains, etc) by calling
+   * configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & config)
+   */
   void reset() override;
 
   void dimWeight(const Eigen::VectorXd & dimW) override;
@@ -120,6 +130,14 @@ public:
    */
   void addGUIElements(std::shared_ptr<mc_rtc::gui::StateBuilder> gui);
 
+  /**
+   * @brief Enables stabilizer
+   *
+   * This will reinitialize all integrators, and set the stabilizer gains
+   * according to the last call to configure()
+   */
+  void enable();
+
   /** Disable all feedback components.
    *
    */
@@ -134,8 +152,22 @@ public:
 
   /** Setup stabilizer configuration
    *
+   * @param config Stabilizer configuration. Default values can be found in the
+   * RobotModule, and modified from YAML configuration or manually.
    */
   void configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & config);
+
+  /**
+   * @brief Get current stabilizer's configuration
+   *
+   * @return Stabilizer configuration
+   */
+  const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & config() const;
+
+  /**
+   * Reset stabilizer configuration from last valid default configuration set by configure()
+   */
+  void reconfigure();
 
   /** Detect foot touchdown based on both force and distance.
    *
@@ -145,13 +177,6 @@ public:
    *
    */
   bool detectTouchdown(const std::shared_ptr<mc_tasks::force::CoPTask> footTask, const Contact & contact);
-
-  /** Reset CoM and foot CoP tasks.
-   *
-   * \param robots Robots where the task will be applied.
-   *
-   */
-  void reset(const mc_rbdyn::Robots & robots);
 
   /** Update QP task targets.
    *

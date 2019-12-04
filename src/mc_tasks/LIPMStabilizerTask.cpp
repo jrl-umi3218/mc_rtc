@@ -73,6 +73,8 @@ StabilizerTask::StabilizerTask(const mc_rbdyn::Robots & robots,
   std::string pelvisBodyName = robot().mb().body(0).name();
   pelvisTask = std::make_shared<mc_tasks::OrientationTask>(pelvisBodyName, robots_, robotIndex_);
   torsoTask = std::make_shared<mc_tasks::OrientationTask>(torsoBodyName, robots_, robotIndex_);
+
+  configure(robot().module().defaultLIPMStabilizerConfiguration());
 }
 
 StabilizerTask::~StabilizerTask() {}
@@ -80,32 +82,15 @@ StabilizerTask::~StabilizerTask() {}
 void StabilizerTask::reset()
 {
   comTask->reset();
+  comTarget_ = comTask->com();
+
   rightFootTask->reset();
   leftFootTask->reset();
-
-  pelvisTask->reset();
-  torsoTask->reset();
-
-  // Add upper-body tasks
-  pelvisTask->stiffness(c_.pelvisStiffness);
-  pelvisTask->weight(c_.pelvisWeight);
-
-  torsoTask->stiffness(c_.torsoStiffness);
-  torsoTask->weight(c_.torsoWeight);
-  torsoTask->orientation(mc_rbdyn::rpyToMat({0, c_.torsoPitch, 0}));
-
-  comTask->selectActiveJoints(c_.comActiveJoints);
-  comTask->setGains(c_.comStiffness, 2 * c_.comStiffness.cwiseSqrt());
-  comTask->weight(c_.comWeight);
-
   leftFootTask->maxAngularVel({MAX_FDC_RX_VEL, MAX_FDC_RY_VEL, MAX_FDC_RZ_VEL});
   rightFootTask->maxAngularVel({MAX_FDC_RX_VEL, MAX_FDC_RY_VEL, MAX_FDC_RZ_VEL});
 
-  dcmDerivator_.setZero();
-  dcmIntegrator_.saturation(MAX_AVERAGE_DCM_ERROR);
-  dcmIntegrator_.setZero();
-  zmpccIntegrator_.saturation(MAX_ZMPCC_COM_OFFSET);
-  zmpccIntegrator_.setZero();
+  pelvisTask->reset();
+  torsoTask->reset();
 
   Eigen::Vector3d staticForce = -mass_ * gravity_;
 
@@ -122,9 +107,13 @@ void StabilizerTask::reset()
   zmpccCoMVel_ = Eigen::Vector3d::Zero();
   zmpccError_ = Eigen::Vector3d::Zero();
 
-  omega_ = std::sqrt(robot().mbc().gravity.z() / robot().com().z());
+  dcmDerivator_.setZero();
+  dcmIntegrator_.saturation(MAX_AVERAGE_DCM_ERROR);
+  dcmIntegrator_.setZero();
+  zmpccIntegrator_.saturation(MAX_ZMPCC_COM_OFFSET);
+  zmpccIntegrator_.setZero();
 
-  wrenchFaceMatrix(c_.sole);
+  omega_ = std::sqrt(robot().mbc().gravity.z() / robot().com().z());
 }
 
 void StabilizerTask::dimWeight(const Eigen::VectorXd & /* dim */)
@@ -366,7 +355,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   using namespace mc_rtc::gui;
 
   gui.addElement({"Tasks", "Stabilizer", "Main"}, Button("Disable stabilizer", [this]() { disable(); }),
-                 Button("Reconfigure / Enable Stabilizer", [this]() { configure(defaultConfig_); }),
+                 Button("Reconfigure / Enable Stabilizer", [this]() { reconfigure(); }),
                  Button("Reset DCM integrator", [this]() { dcmIntegrator_.setZero(); }),
                  ArrayInput("Foot admittance", {"CoPx", "CoPy"},
                             [this]() -> Eigen::Vector2d {
@@ -402,7 +391,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                               dcmDerivator_.timeConstant(T(1));
                             }));
   gui.addElement({"Tasks", "Stabilizer", "Advanced"}, Button("Disable stabilizer", [this]() { disable(); }),
-                 Button("Reconfigure", [this]() { configure(defaultConfig_); }),
+                 Button("Reconfigure", [this]() { reconfigure(); }),
                  Button("Reset CoM integrator", [this]() { zmpccIntegrator_.setZero(); }),
                  ArrayInput("CoM admittance", {"Ax", "Ay"}, [this]() { return c_.comAdmittance; },
                             [this](const Eigen::Vector2d & a) {
@@ -451,7 +440,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                              }));
 
   gui.addElement({"Tasks", "Stabilizer", "Debug"}, Button("Disable stabilizer", [this]() { disable(); }),
-                 Button("Reconfigure", [this]() { configure(defaultConfig_); }), Button("Dump configuration", [this]() {
+                 Button("Reconfigure", [this]() { reconfigure(); }), Button("Dump configuration", [this]() {
                    LOG_INFO("[LIPMStabilizerTask] configuration (YAML)");
                    LOG_INFO(c_.save().dump(true, true));
                  }));
@@ -596,6 +585,17 @@ void StabilizerTask::removeFromGUI(mc_rtc::gui::StateBuilder & gui)
   gui.removePlot("DCM Integrator");
 }
 
+void StabilizerTask::enable()
+{
+  // Reset DCM integrator when enabling the stabilizer.
+  // While idle, it will accumulate a lot of error, and would case the robot to
+  // move suddently to compensate it otherwise
+  dcmIntegrator_.setZero();
+  dcmDerivator_.setZero();
+
+  reconfigure();
+}
+
 void StabilizerTask::disable()
 {
   c_.comAdmittance.setZero();
@@ -608,10 +608,18 @@ void StabilizerTask::disable()
   c_.vdcStiffness = 0.;
 }
 
+void StabilizerTask::reconfigure()
+{
+  c_ = defaultConfig_;
+  configure(c_);
+}
+
 void StabilizerTask::configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & config)
 {
   defaultConfig_ = config;
   c_ = defaultConfig_;
+
+  wrenchFaceMatrix(c_.sole);
 
   dcmDerivator_.timeConstant(c_.dcmDerivatorTimeConstant);
   dcmIntegrator_.timeConstant(c_.dcmIntegratorTimeConstant);
@@ -627,11 +635,25 @@ void StabilizerTask::configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfig
   rightFootContact_.halfLength = hl;
   rightFootContact_.halfWidth = hw;
 
-  // Reset DCM integrator when enabling the stabilizer.
-  // While idle, it will accumulate a lot of error, and would case the robot to
-  // move suddently to compensate it otherwise
-  dcmIntegrator_.setZero();
-  dcmDerivator_.setZero();
+  // Configure upper-body tasks
+  pelvisTask->stiffness(c_.pelvisStiffness);
+  pelvisTask->weight(c_.pelvisWeight);
+
+  torsoTask->stiffness(c_.torsoStiffness);
+  torsoTask->weight(c_.torsoWeight);
+  torsoTask->orientation(mc_rbdyn::rpyToMat({0, c_.torsoPitch, 0}));
+
+  if(!c_.comActiveJoints.empty())
+  {
+    comTask->selectActiveJoints(c_.comActiveJoints);
+  }
+  comTask->setGains(c_.comStiffness, 2 * c_.comStiffness.cwiseSqrt());
+  comTask->weight(c_.comWeight);
+}
+
+const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & StabilizerTask::config() const
+{
+  return c_;
 }
 
 void StabilizerTask::checkGains()
@@ -1118,8 +1140,8 @@ static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
       auto t = std::make_shared<mc_tasks::lipm_stabilizer::StabilizerTask>(
           solver.robots(), solver.realRobots(), robotIndex, stabiConf.leftFootSurface, stabiConf.rightFootSurface,
           stabiConf.torsoBodyName, solver.dt());
-      t->configure(stabiConf);
       t->reset();
+      t->configure(stabiConf);
       t->setContacts(mc_tasks::lipm_stabilizer::ContactState::DoubleSupport);
 
       // Target robot com by default

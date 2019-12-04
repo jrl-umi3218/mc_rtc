@@ -128,10 +128,10 @@ struct StabilizerConfiguration
   double torsoPitch = 0;
   double minTorsoPitch = 0;
   double maxTorsoPitch = 0;
-  double torsoStiffness = 1;
-  double torsoWeight = 10;
-  double pelvisStiffness = 1;
-  double pelvisWeight = 10;
+  double torsoStiffness = 10;
+  double torsoWeight = 100;
+  double pelvisStiffness = 10;
+  double pelvisWeight = 100;
 
   sva::MotionVecd contactDamping = sva::MotionVecd::Zero();
   sva::MotionVecd contactStiffness = sva::MotionVecd::Zero();
