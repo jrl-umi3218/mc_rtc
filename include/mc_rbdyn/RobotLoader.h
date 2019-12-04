@@ -87,6 +87,18 @@ public:
     }
     else
     {
+      if(!robot_loader->has_object(name))
+      {
+        LOG_ERROR("Cannot load the requested robot: " << name
+                                                      << "\nIt is neither a valid alias nor a known exported robot")
+        std::cout << "Available robots:\n";
+        mtx.unlock();
+        for(const auto & r : available_robots())
+        {
+          std::cout << "- " << r << "\n";
+        }
+        LOG_ERROR_AND_THROW(mc_rtc::LoaderException, "Cannot load the requested robot: " << name)
+      }
       rm = robot_loader->create_object(name, args...);
     }
     rm->_parameters = {name};
