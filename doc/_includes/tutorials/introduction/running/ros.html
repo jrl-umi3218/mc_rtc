@@ -9,20 +9,10 @@
 <p>Run the following command to start RViZ along with mc_rtc dedicated panel and the robot model you need:</p>
 
 {% highlight bash %}
-$ roslaunch mc_rtc_ticker control_display.launch robot:=jvrc1
+$ roslaunch mc_rtc_ticker display.launch
 {% endhighlight %}
 
-<p>Where the robot parameter points to an existing file (without the XML extension) in the `rospack find mc_scenario`/robot folder.</p>
-
-<p>By default, this will load the ground environment (default) but you can override this:</p>
-
-{% highlight bash %}
-$ roslaunch mc_rtc_ticker control_display.launch robot:=jvrc1 env:=door
-{% endhighlight %}
-
-<p>Where the env parameter points to an existing file (without the XML extension) in the `rospack find mc_scenario`/env folder.</p>
-
-<p>For more complex scenarios (multiple environment) you will have to create your own launch file and RViZ configuration. You are advised to use the existing ones as examples.</p>
+<p>If your simulation has more than two robots, you should add a new RobotModel to the scene. The description of the robot is published in the parameter <code>/control/env_N</code> where N is the robot index.</p>
 
 <h4>Running the controller</h4>
 

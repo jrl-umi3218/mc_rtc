@@ -6,29 +6,29 @@ layout: tutorials
 
 ### Launching the visualization
 
-First you should launch the visualization interface, as you would when running a controller through the `mc_rtc_ticker`:
+The replay is launched as follows:
 
 ```bash
-$ roslaunch mc_rtc_ticker control_display.launch robot:=jvrc1
-```
-
-Then you should launch the replay itself:
-
-```bash
-$ roslaunch mc_log_visualization log_visualizer.launch robot:=robot/jvrc1 log:=/tmp/mc-control-MyController-latest.bin
+$ roslaunch mc_log_visualization log_visualizer.launch robot:=JVRC1 log:=/tmp/mc-control-MyController-latest.bin
 ```
 
 <em>Note: you <strong>must</strong> give a full path to the log here due to ROS limitations</em>
+
+You then launch the visualization:
+
+```bash
+$ roslaunch mc_rtc_ticker display.launch
+```
 
 The interface should look like this:
 
 <img src="img/mc_log_visualization.png" alt="mc_log_visualization in action" class="img-fluid" />
 
-#### Time range selector
+### Time range selector
 
 This selector lets you select a time range for the visualization. Currently you should have saved this range in your log.
 
-#### Add extra information
+### Add extra information
 
 This menu lets you select extra information to display in the interface, based on the type of data was logged the tool will choose how to display the data.
 

@@ -38,6 +38,13 @@ macro(add_robot_simple robot_name)
   add_robot(${robot_name} ${robot_name}.cpp ${robot_name}.h)
 endmacro()
 
+set(MC_ROBOTS_ALIASES_DIRECTORY "${MC_ROBOTS_INSTALL_PREFIX}/aliases/")
+if(WIN32)
+  set(MC_ROBOTS_USER_ALIASES_DIRECTORY "$ENV{APPDATA}/mc_rtc/aliases/")
+else()
+  set(MC_ROBOTS_USER_ALIASES_DIRECTORY "$ENV{HOME}/.config/mc_rtc/aliases/")
+endif()
+
 # -- Observers --
 set(MC_OBSERVERS_INSTALL_PREFIX "${MC_RTC_LIBDIR}/mc_observers")
 
