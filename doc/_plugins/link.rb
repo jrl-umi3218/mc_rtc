@@ -1,5 +1,5 @@
 module Jekyll
-  class RenderTimeTag < Liquid::Tag
+  class LinkTag < Liquid::Tag
 
     def initialize(tag_name, text, tokens)
       super
@@ -13,4 +13,4 @@ module Jekyll
   end
 end
 
-Liquid::Template.register_tag('link', Jekyll::RenderTimeTag)
+Liquid::Template.register_tag('link', Jekyll::LinkTag)
