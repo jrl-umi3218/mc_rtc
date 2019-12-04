@@ -113,7 +113,7 @@ void StabilizerTask::reset()
   zmpccIntegrator_.saturation(MAX_ZMPCC_COM_OFFSET);
   zmpccIntegrator_.setZero();
 
-  omega_ = std::sqrt(robot().mbc().gravity.z() / robot().com().z());
+  omega_ = std::sqrt(-gravity_.z() / robot().com().z());
 }
 
 void StabilizerTask::dimWeight(const Eigen::VectorXd & /* dim */)
@@ -130,7 +130,9 @@ void StabilizerTask::selectActiveJoints(mc_solver::QPSolver & /* solver */,
                                         const std::vector<std::string> & /* activeJointsName */,
                                         const std::map<std::string, std::vector<std::array<int, 2>>> & /* activeDofs */)
 {
-  LOG_ERROR_AND_THROW(std::runtime_error, "Task " << name_ << " does not implement selectActiveJoints");
+  LOG_ERROR_AND_THROW(std::runtime_error, "Task " << name_
+                                                  << " does not implement selectActiveJoints. Please configure it "
+                                                     "through the stabilizer configuration instead");
 }
 
 void StabilizerTask::selectUnactiveJoints(
@@ -138,24 +140,30 @@ void StabilizerTask::selectUnactiveJoints(
     const std::vector<std::string> & /* unactiveJointsName */,
     const std::map<std::string, std::vector<std::array<int, 2>>> & /* unactiveDofs */)
 {
-  LOG_ERROR_AND_THROW(std::runtime_error, "Task " << name_ << " does not implement selectUnactiveJoints");
+  LOG_ERROR_AND_THROW(std::runtime_error, "Task " << name_
+                                                  << " does not implement selectUnactiveJoints. Please configure it "
+                                                     "through the stabilizer configuration instead.");
 }
 
 void StabilizerTask::resetJointsSelector(mc_solver::QPSolver & solver)
 {
-  comTask->resetJointsSelector(solver);
-  leftFootTask->resetJointsSelector(solver);
-  rightFootTask->resetJointsSelector(solver);
+  LOG_ERROR_AND_THROW(std::runtime_error, "Task " << name_
+                                                  << " does not implement resetJointsSelector. Please configure it "
+                                                     "through the stabilizer configuration instead.");
 }
 
 Eigen::VectorXd StabilizerTask::eval() const
 {
-  LOG_ERROR_AND_THROW(std::runtime_error, "eval not implemented for task " << type_);
+  Eigen::VectorXd res;
+  res << comTask->eval(), leftFootTask->eval(), rightFootTask->eval();
+  return res;
 }
 
 Eigen::VectorXd StabilizerTask::speed() const
 {
-  LOG_ERROR_AND_THROW(std::runtime_error, "speed not implemented for task " << type_);
+  Eigen::VectorXd res;
+  res << comTask->speed(), leftFootTask->speed(), rightFootTask->speed();
+  return res;
 }
 
 void StabilizerTask::addToSolver(mc_solver::QPSolver & solver)
@@ -240,7 +248,7 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   logger.addLogEntry("stabilizer_vdc_frequency", [this]() { return c_.vdcFrequency; });
   logger.addLogEntry("stabilizer_vdc_stiffness", [this]() { return c_.vdcStiffness; });
   logger.addLogEntry("stabilizer_wrench", [this]() { return distribWrench_; });
-  logger.addLogEntry("stabilizer_zmp", [this]() { return zmp(); });
+  logger.addLogEntry("stabilizer_zmp", [this]() { return distribZMP_; });
   logger.addLogEntry("stabilizer_zmpcc_comAccel", [this]() { return zmpccCoMAccel_; });
   logger.addLogEntry("stabilizer_zmpcc_comOffset", [this]() { return zmpccCoMOffset_; });
   logger.addLogEntry("stabilizer_zmpcc_comVel", [this]() { return zmpccCoMVel_; });
@@ -813,10 +821,10 @@ void StabilizerTask::staticTarget(const Eigen::Vector3d & com)
   comTarget_ = com;
   comdTarget_ = Eigen::Vector3d::Zero();
   comddTarget_ = Eigen::Vector3d::Zero();
-  // XXX should compute height, omega
+  // XXX should use height above ground
   zmpTarget_ = Eigen::Vector3d{com.x(), com.y(), 0.};
   dcmTarget_ = comTarget_;
-  omega_ = std::sqrt(robot().mbc().gravity.z() / com.z());
+  omega_ = std::sqrt(-gravity_.z() / comTarget_.z());
 }
 
 void StabilizerTask::run()
@@ -1068,8 +1076,8 @@ void StabilizerTask::updateCoMTaskZMPCC()
   }
   else
   {
-    auto distribZMP = computeZMP(distribWrench_);
-    zmpccError_ = distribZMP - measuredZMP_;
+    distribZMP_ = computeZMP(distribWrench_);
+    zmpccError_ = distribZMP_ - measuredZMP_;
     const Eigen::Matrix3d & R_0_c = zmpFrame_.rotation();
     const Eigen::Transpose<const Eigen::Matrix3d> R_c_0 = R_0_c.transpose();
     Eigen::Vector3d comAdmittance = {c_.comAdmittance.x(), c_.comAdmittance.y(), 0.};

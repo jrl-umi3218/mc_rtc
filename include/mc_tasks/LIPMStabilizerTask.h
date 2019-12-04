@@ -109,15 +109,19 @@ public:
 
   /*! \brief Returns the task error
    *
-   * The vector's dimensions depend on the underlying task
+   * Since the StabilizerTask is a MetaTask, the vector is a concatenation of each
+   * sub-tasks. The vector's dimensions depend on the underlying task.
    *
+   * [CoM eval = CoMTask::eval(), Left foot eval = CoPTask::eval(), Right foot eval = CoPTask::eval()]
    */
   Eigen::VectorXd eval() const override;
 
   /*! \brief Returns the task velocity
    *
-   * The vector's dimensions depend on the underlying task
+   * Since the StabilizerTask is a MetaTask, the vector is a concatenation of each
+   * sub-tasks. The vector's dimensions depend on the underlying task.
    *
+   * [CoM speed = CoMTask::speed(), Left foot speed = CoPTask::speed(), Right foot speed = CoPTask::speed()]
    */
   Eigen::VectorXd speed() const override;
 
@@ -142,13 +146,6 @@ public:
    *
    */
   void disable();
-
-  /** Compute ZMP of a wrench in the output frame.
-   *
-   * \param wrench Wrench at the origin of the world frame.
-   *
-   */
-  Eigen::Vector3d computeZMP(const sva::ForceVecd & wrench) const;
 
   /** Setup stabilizer configuration
    *
@@ -290,7 +287,7 @@ public:
    */
   Eigen::Vector3d zmp() const
   {
-    return computeZMP(distribWrench_);
+    return distribZMP_;
   }
 
   /** Provides a static target to the stabilizer.
@@ -323,6 +320,13 @@ private:
    *
    */
   sva::ForceVecd computeDesiredWrench();
+
+  /** Compute ZMP of a wrench in the output frame.
+   *
+   * \param wrench Wrench at the origin of the world frame.
+   *
+   */
+  Eigen::Vector3d computeZMP(const sva::ForceVecd & wrench) const;
 
   /** Distribute a desired wrench in double support.
    *
@@ -455,6 +459,7 @@ protected:
   Eigen::Vector3d zmpccCoMOffset_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d zmpccCoMVel_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d zmpccError_ = Eigen::Vector3d::Zero();
+  Eigen::Vector3d distribZMP_ = Eigen::Vector3d::Zero();
   Eigen::Vector4d polePlacement_ = {-10., -5., -1., 10.}; /**< Pole placement with ZMP delay (Morisawa et al., 2014) */
   mc_signal::ExponentialMovingAverage<Eigen::Vector3d> dcmIntegrator_;
   mc_signal::LeakyIntegrator<Eigen::Vector3d> zmpccIntegrator_;
