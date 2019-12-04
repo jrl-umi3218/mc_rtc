@@ -827,6 +827,19 @@ void StabilizerTask::staticTarget(const Eigen::Vector3d & com)
   omega_ = std::sqrt(-gravity_.z() / comTarget_.z());
 }
 
+void StabilizerTask::dynamicTarget(const Eigen::Vector3d & com,
+                                   const Eigen::Vector3d & comd,
+                                   const Eigen::Vector3d & comdd,
+                                   const Eigen::Vector3d & zmp)
+{
+  comTarget_ = com;
+  comdTarget_ = comd;
+  comddTarget_ = comdd;
+  zmpTarget_ = zmp;
+  omega_ = std::sqrt(-gravity_.z() / comTarget_.z());
+  dcmTarget_ = comTarget_ + comdTarget_ / omega_;
+}
+
 void StabilizerTask::run()
 {
   using namespace std::chrono;
