@@ -43,6 +43,16 @@ static_assert(are_strings<std::string, std::string, std::string>::value, "OK");
 static_assert(!are_strings<const char *>::value, "OK");
 static_assert(!are_strings<std::string, std::string, bool>::value, "OK");
 
+// Construct a string from a provided argument if it's not one, otherwise just return the string
+template<typename T>
+typename std::conditional<std::is_same<std::string, T>::value, const std::string &, std::string>::type to_string(
+    const T & value)
+{
+  static_assert(!std::is_integral<T>::value,
+                "Passing integral value here would create empty strings of the provided size");
+  return value;
+}
+
 } // namespace details
 
 /*! \class RobotLoader
@@ -61,7 +71,10 @@ public:
   template<typename... Args>
   static mc_rbdyn::RobotModulePtr get_robot_module(const std::string & name, const Args &... args)
   {
-    static_assert(details::are_strings<Args...>::value, "get_robot_module expects all arguments to be std::string");
+    if(!details::are_strings<Args...>::value)
+    {
+      return get_robot_module(name, details::to_string(args)...);
+    }
     std::lock_guard<std::mutex> guard{mtx};
     init();
     mc_rbdyn::RobotModulePtr rm = nullptr;
