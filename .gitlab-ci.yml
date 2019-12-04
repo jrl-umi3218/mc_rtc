@@ -141,7 +141,7 @@ pages:
     - cd $CI_PROJECT_DIR/doc
     - bundle install --path vendor
   script:
-    - bundle exec jekyll build -d $CI_PROJECT_DIR/public -b /mc_rtc
+    - bundle exec jekyll build --trace -d $CI_PROJECT_DIR/public -b /mc_rtc
   tags:
     - clang-format
   artifacts:
