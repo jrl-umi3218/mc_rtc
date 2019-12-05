@@ -22,9 +22,6 @@
 namespace mc_control
 {
 
-/** pimpl to provide ROS services if ROS is available */
-struct ROSServicesImpl;
-
 struct MC_CONTROL_DLLAPI MCGlobalController
 {
 public:
@@ -433,11 +430,6 @@ public:
 
     bool log_real = false;
 
-    bool publish_control_state = true;
-    bool publish_env_state = true;
-    bool publish_real_state = true;
-    double publish_timestep = 0.01;
-
     bool enable_log = true;
     mc_rtc::Logger::Policy log_policy = mc_rtc::Logger::Policy::NON_THREADED;
     std::string log_directory;
@@ -501,9 +493,6 @@ private:
   double solver_build_and_solve_t = 0;
   double solver_solve_t = 0;
   double framework_cost = 0;
-
-  /** ROS services */
-  std::unique_ptr<ROSServicesImpl> ros_services_;
 };
 
 } // namespace mc_control

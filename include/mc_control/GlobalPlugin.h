@@ -37,7 +37,7 @@ struct MC_CONTROL_DLLAPI GlobalPlugin
    * \param config Plugin configuration
    *
    */
-  virtual void init(const mc_control::MCGlobalController & controller, const mc_rtc::Configuration & config) = 0;
+  virtual void init(mc_control::MCGlobalController & controller, const mc_rtc::Configuration & config) = 0;
 
   /** Reset the plugin
    *
@@ -46,21 +46,21 @@ struct MC_CONTROL_DLLAPI GlobalPlugin
    * \param controller MCGlobalController instance that owns this plugin
    *
    */
-  virtual void reset(const mc_control::MCGlobalController & controller) = 0;
+  virtual void reset(mc_control::MCGlobalController & controller) = 0;
 
   /** Run before \ref mc_control::MCGlobalController::run()
    *
    * \param controller MCGlobalController instance that owns this plugin
    *
    */
-  virtual void before(const mc_control::MCGlobalController & controller) = 0;
+  virtual void before(mc_control::MCGlobalController & controller) = 0;
 
   /** Run after \ref mc_control::MCGlobalController::run()
    *
    * \param controller MCGlobalController instance that owns this plugin
    *
    */
-  virtual void after(const mc_control::MCGlobalController & controller) = 0;
+  virtual void after(mc_control::MCGlobalController & controller) = 0;
 };
 
 } // namespace mc_control

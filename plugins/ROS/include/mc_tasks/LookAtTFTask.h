@@ -5,6 +5,7 @@
 #pragma once
 
 #include <mc_tasks/LookAtTask.h>
+#include <mc_tasks/ros_api.h>
 
 #include <tf2_ros/buffer.h>
 #include <tf2_ros/transform_listener.h>
@@ -14,7 +15,7 @@ namespace mc_tasks
 /*! \brief Control the gaze vector of a body to look towards a world position
  * updated at each iteration from a ROS TF Frame.
  */
-struct MC_TASKS_DLLAPI LookAtTFTask : public LookAtTask
+struct MC_TASKS_ROS_DLLAPI LookAtTFTask : public LookAtTask
 {
   /*! \brief Constructor
    *

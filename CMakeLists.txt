@@ -12,6 +12,7 @@ endif()
 
 set(PROJECT_NAME mc_rtc)
 set(PROJECT_DESCRIPTION mc_rtc)
+set(PROJECT_VERSION 1.0.0)
 set(PROJECT_URL https://gite.lirmm.fr/multi-contact/mc_rtc)
 set(PROJECT_DEBUG_POSTFIX "_d")
 set(PROJECT_USE_KEYWORD_LINK_LIBRARIES TRUE)
@@ -85,13 +86,6 @@ add_library(mc_rtc_3rd_party::RapidJSON INTERFACE IMPORTED)
 set_target_properties(mc_rtc_3rd_party::RapidJSON PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR}/3rd-party/RapidJSON
 )
-
-# ROS (defines target: mc_rtc_3rd_party::ROS)
-if(NOT ${DISABLE_ROS})
-  find_package(mc_rtc_3rd_party_ros REQUIRED)
-else()
-  set(ROSCPP_FOUND False)
-endif()
 
 macro(find_description_package PACKAGE)
   set(PACKAGE_PATH_VAR "${PACKAGE}_PATH")

@@ -94,8 +94,6 @@ private:
   static ROSBridgeImpl & impl_();
 };
 
-#ifdef MC_RTC_HAS_ROS
-
 struct RobotPublisherImpl;
 
 /*! \brief This structure is able to publish a Robot's state to ROS
@@ -134,7 +132,5 @@ public:
 private:
   std::unique_ptr<RobotPublisherImpl> impl;
 };
-
-#endif
 
 } // namespace mc_rtc

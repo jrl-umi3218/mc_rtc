@@ -33,23 +33,6 @@ MC_CONTROLLER_INSTALL_PREFIX = c_mc_rtc.MC_CONTROLLER_INSTALL_PREFIX
 DATA_PATH = c_mc_rtc.DATA_PATH
 CONF_PATH = c_mc_rtc.CONF_PATH
 
-include "mc_rtc_config.pxi"
-IF MC_RTC_HAS_ROS == 1:
-  cdef class RobotPublisher(object):
-    cdef c_mc_rtc.RobotPublisher * impl
-
-    def __cinit__(self, prefix, rate, dt):
-      if isinstance(prefix, unicode):
-        prefix = prefix.encode(u'ascii')
-      self.impl = new c_mc_rtc.RobotPublisher(prefix, rate, dt)
-
-    def update(self, dt, mc_rbdyn.Robot robot, grippersIn):
-      cdef c_mc_control.GripperMap grippers
-      for name, gripper in grippersIn.items():
-        assert(isinstance(gripper, mc_control.Gripper))
-        grippers[name] = (<mc_control.Gripper>gripper).impl
-      self.impl.update(dt, deref(robot.impl), grippers)
-
 cdef c_eigen.Vector3d python_log_v3d(get_fn) with gil:
   cdef eigen.Vector3d ret = get_fn()
   return ret.impl

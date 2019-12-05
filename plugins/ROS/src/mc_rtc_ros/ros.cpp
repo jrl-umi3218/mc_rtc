@@ -10,21 +10,17 @@
 
 #include <RBDyn/FK.h>
 
-#ifdef MC_RTC_HAS_ROS
-#  include <mc_control/generic_gripper.h>
+#include <mc_control/generic_gripper.h>
 
-#  include <geometry_msgs/WrenchStamped.h>
-#  include <nav_msgs/Odometry.h>
-#  include <ros/ros.h>
-#  include <sensor_msgs/Imu.h>
-#  include <sensor_msgs/JointState.h>
-#  include <tf2_ros/transform_broadcaster.h>
+#include <geometry_msgs/WrenchStamped.h>
+#include <nav_msgs/Odometry.h>
+#include <ros/ros.h>
+#include <sensor_msgs/Imu.h>
+#include <sensor_msgs/JointState.h>
+#include <tf2_ros/transform_broadcaster.h>
 
-#  include <fstream>
-#  include <thread>
-#endif
-
-#ifdef MC_RTC_HAS_ROS
+#include <fstream>
+#include <thread>
 
 namespace mc_rtc
 {
@@ -512,47 +508,3 @@ void ROSBridge::shutdown()
 }
 
 } // namespace mc_rtc
-#else
-namespace ros
-{
-class NodeHandle
-{
-};
-} // namespace ros
-
-namespace mc_rtc
-{
-
-struct ROSBridgeImpl
-{
-  ROSBridgeImpl() : nh(nullptr) {}
-  std::shared_ptr<ros::NodeHandle> nh;
-};
-
-ROSBridgeImpl & ROSBridge::impl_()
-{
-  static std::unique_ptr<ROSBridgeImpl> impl{new ROSBridgeImpl()};
-  return *impl;
-}
-
-std::shared_ptr<ros::NodeHandle> ROSBridge::get_node_handle()
-{
-  static auto & impl = impl_();
-  return impl.nh;
-}
-
-void ROSBridge::set_publisher_timestep(double /*timestep*/) {}
-
-void ROSBridge::init_robot_publisher(const std::string &, double, const mc_rbdyn::Robot &) {}
-
-void ROSBridge::update_robot_publisher(const std::string &,
-                                       double,
-                                       const mc_rbdyn::Robot &,
-                                       const std::map<std::string, std::shared_ptr<mc_control::Gripper>> &)
-{
-}
-
-void ROSBridge::shutdown() {}
-
-} // namespace mc_rtc
-#endif

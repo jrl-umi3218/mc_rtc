@@ -6,8 +6,6 @@
 
 #include <mc_control/GlobalPlugin.h>
 
-#include "mc_global_controller_ros_services.h"
-
 #include <mc_rbdyn/RobotLoader.h>
 
 #include <mc_rtc/config.h>
@@ -16,7 +14,6 @@
 #include <mc_rtc/gui/Label.h>
 #include <mc_rtc/gui/NumberInput.h>
 #include <mc_rtc/logging.h>
-#include <mc_rtc/ros.h>
 
 #include <RBDyn/EulerIntegration.h>
 #include <RBDyn/FK.h>
@@ -85,8 +82,6 @@ void addQOutLogEntry(std::function<void(std::vector<double> &)> callback,
 }
 
 } // namespace
-
-/* Note all service calls except for controller switches are implemented in mc_global_controller_services.cpp */
 
 namespace mc_control
 {
@@ -197,7 +192,6 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
                                                      config.gui_server_rep_uris));
     }
   }
-  ros_services_.reset(new ROSServicesImpl(mc_rtc::ROSBridge::get_node_handle(), *this));
 }
 
 MCGlobalController::~MCGlobalController() {}

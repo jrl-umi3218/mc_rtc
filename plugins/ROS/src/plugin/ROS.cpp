@@ -2,10 +2,10 @@
 
 #include <mc_rtc/ros.h>
 
-namespace mc_plugins
+namespace mc_plugin
 {
 
-void ROSPlugin::init(const mc_control::MCGlobalController & controller, const mc_rtc::Configuration & config)
+void ROSPlugin::init(mc_control::MCGlobalController & controller, const mc_rtc::Configuration & config)
 {
   if(config.has("publish"))
   {
@@ -16,10 +16,11 @@ void ROSPlugin::init(const mc_control::MCGlobalController & controller, const mc
     conf("timestep", publish_timestep);
   }
   mc_rtc::ROSBridge::set_publisher_timestep(publish_timestep);
+  services_.reset(new ROSServices(mc_rtc::ROSBridge::get_node_handle(), controller));
   reset(controller);
 }
 
-void ROSPlugin::reset(const mc_control::MCGlobalController & controller)
+void ROSPlugin::reset(mc_control::MCGlobalController & controller)
 {
   if(publish_control)
   {
@@ -41,7 +42,7 @@ void ROSPlugin::reset(const mc_control::MCGlobalController & controller)
   }
 }
 
-void ROSPlugin::after(const mc_control::MCGlobalController & controller)
+void ROSPlugin::after(mc_control::MCGlobalController & controller)
 {
   if(publish_control)
   {
@@ -67,6 +68,6 @@ void ROSPlugin::after(const mc_control::MCGlobalController & controller)
   }
 }
 
-} // namespace mc_plugins
+} // namespace mc_plugin
 
-EXPORT_MC_RTC_PLUGIN("ROS", mc_plugins::ROSPlugin)
+EXPORT_MC_RTC_PLUGIN("ROS", mc_plugin::ROSPlugin)

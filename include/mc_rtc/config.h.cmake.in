@@ -4,8 +4,6 @@
 
 #pragma once
 
-${DEFINE_HAS_ROS_MACRO}
-
 #include <string>
 
 namespace mc_rtc

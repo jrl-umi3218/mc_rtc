@@ -109,3 +109,15 @@ macro(find_description_package PACKAGE)
   endif()
   message("-- Found ${PACKAGE}: ${${PACKAGE_PATH_VAR}}")
 endmacro()
+
+# -- Helper to create a new mc_rtc plugin
+
+set(MC_PLUGINS_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/lib/mc_plugins)
+
+macro(add_plugin plugin plugin_SRC plugin_HDR)
+  add_library(${plugin} SHARED ${plugin_SRC} ${plugin_HDR})
+  set_target_properties(${plugin} PROPERTIES PREFIX "")
+  target_link_libraries(${plugin} PUBLIC mc_rtc::mc_control)
+  install(TARGETS ${plugin} DESTINATION ${MC_PLUGINS_INSTALL_PREFIX})
+  set(plugin_CFG "${CMAKE_CURRENT_SOURCE_DIR}/etc/${plugin}.yaml")
+endmacro()
