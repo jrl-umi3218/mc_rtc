@@ -4,6 +4,8 @@
 
 #include <mc_control/mc_global_controller.h>
 
+#include <mc_control/GlobalPlugin.h>
+
 #include "mc_global_controller_ros_services.h"
 
 #include <mc_rbdyn/RobotLoader.h>
@@ -89,6 +91,8 @@ void addQOutLogEntry(std::function<void(std::vector<double> &)> callback,
 namespace mc_control
 {
 
+MCGlobalController::PluginHandle::~PluginHandle() {}
+
 MCGlobalController::MCGlobalController(const std::string & conf, std::shared_ptr<mc_rbdyn::RobotModule> rm)
 : MCGlobalController(GlobalConfiguration(conf, rm))
 {
@@ -113,6 +117,23 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
     {
       LOG_ERROR("Observer " << observerName << " requested in configuration but not available");
     }
+  }
+
+  // Loading plugins
+  config.load_plugin_configs();
+  try
+  {
+    plugin_loader.reset(new mc_rtc::ObjectLoader<mc_control::GlobalPlugin>(
+        "MC_RTC_GLOBAL_PLUGIN", config.global_plugin_paths, config.use_sandbox, config.verbose_loader));
+  }
+  catch(mc_rtc::LoaderException & exc)
+  {
+    LOG_ERROR("Failed to initialize plugin loader")
+    LOG_ERROR_AND_THROW(std::runtime_error, "Failed to initialize plugin loader")
+  }
+  for(const auto & plugin : config.global_plugins)
+  {
+    plugins_.emplace_back(plugin, plugin_loader->create_unique_object(plugin));
   }
 
   // Loading controller modules
@@ -265,6 +286,10 @@ void MCGlobalController::init(const std::vector<double> & initq, const std::arra
   controller_->resetObservers();
   init_publishers();
   initGUI();
+  for(auto & plugin : plugins_)
+  {
+    plugin.plugin->init(*this, config.global_plugin_configs[plugin.name]);
+  }
 }
 
 void MCGlobalController::setSensorPosition(const Eigen::Vector3d & pos)
@@ -464,8 +489,6 @@ bool MCGlobalController::run()
     }
     else
     {
-      /*XXX Need to be careful here */
-      /*XXX Need to get the current contacts from the controller when needed */
       controller_->stop();
       LOG_INFO("Reset with q[0]")
       std::cout << controller_->robot().mbc().q[0][0] << " ";
@@ -484,6 +507,11 @@ bool MCGlobalController::run()
       controller_ = next_controller_;
       /** Initialize publishers again if the environment changed */
       init_publishers();
+      /** Reset plugins */
+      for(auto & plugin : plugins_)
+      {
+        plugin.plugin->reset(*this);
+      }
     }
     next_controller_ = 0;
     current_ctrl = next_ctrl;
@@ -492,6 +520,12 @@ bool MCGlobalController::run()
       start_log();
     }
     initGUI();
+  }
+  for(auto & plugin : plugins_)
+  {
+    auto start_t = clock::now();
+    plugin.plugin->before(*this);
+    plugin.plugin_before_dt = clock::now() - start_t;
   }
   if(running)
   {
@@ -528,8 +562,14 @@ bool MCGlobalController::run()
     server_->publish(*controller_->gui_);
     gui_dt = clock::now() - start_gui_t;
   }
+  for(auto & plugin : plugins_)
+  {
+    auto start_t = clock::now();
+    plugin.plugin->after(*this);
+    plugin.plugin_after_dt = clock::now() - start_t;
+  }
   global_run_dt = clock::now() - start_run_t;
-  // Percentage of time spent not updating/solving the QP
+  // Percentage of time not spent inside the user code
   framework_cost = 100 * (1 - controller_run_dt.count() / global_run_dt.count());
   return running;
 }
@@ -938,6 +978,16 @@ void MCGlobalController::setup_log()
   controller->logger().addLogEntry("perf_Publish", [this]() { return publish_dt.count(); });
   controller->logger().addLogEntry("perf_Gui", [this]() { return gui_dt.count(); });
   controller->logger().addLogEntry("perf_FrameworkCost", [this]() { return framework_cost; });
+  for(const auto & plugin : plugins_)
+  {
+    controller->logger().addLogEntry("perf_Plugins_" + plugin.name, [&plugin]() {
+      return plugin.plugin_before_dt.count() + plugin.plugin_after_dt.count();
+    });
+    controller->logger().addLogEntry("perf_Plugins_" + plugin.name + "_before",
+                                     [&plugin]() { return plugin.plugin_before_dt.count(); });
+    controller->logger().addLogEntry("perf_Plugins_" + plugin.name + "_after",
+                                     [&plugin]() { return plugin.plugin_after_dt.count(); });
+  }
   // Log system wall time as nanoseconds since epoch (can be used to manage synchronization with ros)
   controller->logger().addLogEntry("timeWall", []() -> int64_t {
     int64_t nanoseconds_since_epoch = std::chrono::system_clock::now().time_since_epoch() / std::chrono::nanoseconds(1);

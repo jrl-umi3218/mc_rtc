@@ -369,6 +369,8 @@ set(mc_control_HDR
 ../include/mc_control/CompletionCriteria.h
 ../include/mc_control/Configuration.h
 ../include/mc_control/ControllerServer.h
+../include/mc_control/GlobalPlugin.h
+../include/mc_control/GlobalPlugin_fwd.h
 ../include/mc_control/generic_gripper.h
 ../include/mc_control/mc_controller.h
 ../include/mc_control/mc_python_controller.h

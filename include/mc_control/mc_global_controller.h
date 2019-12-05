@@ -5,9 +5,12 @@
 #pragma once
 
 #include <mc_control/ControllerServer.h>
+#include <mc_control/GlobalPlugin_fwd.h>
 #include <mc_control/api.h>
 #include <mc_control/mc_controller.h>
+
 #include <mc_rbdyn/RobotModule.h>
+
 #include <mc_rtc/loader.h>
 #include <mc_rtc/log/Logger.h>
 
@@ -75,7 +78,7 @@ public:
   MCGlobalController(const GlobalConfiguration & conf);
 
   /*! \brief Destructor */
-  virtual ~MCGlobalController();
+  ~MCGlobalController();
 
   /*! \brief Returns a list of enabled controllers */
   std::vector<std::string> enabled_controllers() const;
@@ -412,6 +415,10 @@ public:
     std::vector<std::string> enabled_observers = {};
     std::unordered_map<std::string, mc_rtc::Configuration> observer_configs;
 
+    std::vector<std::string> global_plugin_paths = {};
+    std::vector<std::string> global_plugins = {};
+    std::unordered_map<std::string, mc_rtc::Configuration> global_plugin_configs;
+
     std::vector<std::string> controller_module_paths = {};
     std::vector<std::string> enabled_controllers = {};
     std::string initial_controller = "";
@@ -438,9 +445,12 @@ public:
     Configuration config;
 
     void load_controllers_configs();
+
+    void load_plugin_configs();
   };
 
 private:
+  using duration_ms = std::chrono::duration<double, std::milli>;
   GlobalConfiguration config;
   std::string current_ctrl = "";
   std::string next_ctrl = "";
@@ -455,6 +465,22 @@ private:
 
   std::unique_ptr<mc_control::ControllerServer> server_ = nullptr;
 
+  std::unique_ptr<mc_rtc::ObjectLoader<GlobalPlugin>> plugin_loader;
+  struct PluginHandle
+  {
+    PluginHandle(const std::string & name, GlobalPluginPtr plugin) : name(name), plugin(std::move(plugin)) {}
+    PluginHandle(const PluginHandle &) = delete;
+    PluginHandle & operator=(const PluginHandle &) = delete;
+    PluginHandle(PluginHandle &&) = default;
+    PluginHandle & operator=(PluginHandle &&) = default;
+    ~PluginHandle();
+    std::string name;
+    GlobalPluginPtr plugin;
+    duration_ms plugin_before_dt{0};
+    duration_ms plugin_after_dt{0};
+  };
+  std::vector<PluginHandle> plugins_;
+
   void init_publishers();
 
   void publish_robots();
@@ -466,7 +492,6 @@ private:
   std::map<std::string, bool> setup_logger_ = {};
 
   /** Timers and performance measure */
-  using duration_ms = std::chrono::duration<double, std::milli>;
   duration_ms global_run_dt{0};
   duration_ms controller_run_dt{0};
   duration_ms log_dt{0};
