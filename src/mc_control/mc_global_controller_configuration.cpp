@@ -47,10 +47,19 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     LOG_INFO("Loading additional global configuration " << conf)
     config.load(conf);
   }
+
+  ///////////////////////
+  //  General options  //
+  ///////////////////////
   config("VerboseLoader", verbose_loader);
+  config("UseSandbox", use_sandbox);
+  config("Timestep", timestep);
+
+  //////////////
+  //  Robots  //
+  //////////////
   mc_rbdyn::RobotLoader::set_verbosity(verbose_loader);
   config("RobotModulePaths", robot_module_paths);
-  config("UseSandbox", use_sandbox);
   mc_rbdyn::RobotLoader::enable_sandboxing(use_sandbox);
   if(config("ClearRobotModulePath", false))
   {
@@ -137,9 +146,9 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     main_robot_module->make_default_ref_joint_order();
   }
 
-  ///////////////
-  // OBSERVERS
-  ///////////////
+  /////////////////
+  //  Observers  //
+  /////////////////
   mc_observers::ObserverLoader::enable_sandboxing(use_sandbox);
   mc_observers::ObserverLoader::set_verbosity(verbose_loader);
   config("ObserverModulePaths", observer_module_paths);
@@ -176,6 +185,9 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     }
   }
 
+  ///////////////////
+  //  Controllers  //
+  ///////////////////
   config("ControllerModulePaths", controller_module_paths);
   if(!config("ClearControllerModulePath", false))
   {
@@ -186,9 +198,25 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   {
     initial_controller = enabled_controllers[0];
   }
-  config("LogReal", log_real);
+  else
+  {
+    std::string enabled = config("Enabled", std::string(""));
+    if(enabled.size())
+    {
+      initial_controller = enabled;
+      enabled_controllers = {enabled};
+    }
+    else
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, "Enabled entry in mc_rtc configuration is not valid it should be a "
+                                              "vector of enabled controllers or a single controller name")
+    }
+  }
   config("Default", initial_controller);
-  config("Timestep", timestep);
+
+  //////////////////////////////
+  //  ROS publication options //
+  //////////////////////////////
   config("PublishControlState", publish_control_state);
   config("PublishEnvState", publish_env_state);
   config("PublishRealState", publish_real_state);
@@ -198,7 +226,12 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     LOG_WARNING("Your ROS publication timestep is lower than your control timestep, your publication timestep will be "
                 "effectively set to the control timestep")
   }
+
+  ///////////////
+  //  Logging  //
+  ///////////////
   config("Log", enable_log);
+  config("LogReal", log_real);
   {
     std::string log_policy_str = "non-threaded";
     config("LogPolicy", log_policy_str);
@@ -226,7 +259,10 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     }
   }
   config("LogTemplate", log_template);
-  /** GUI server options */
+
+  /////////////////////////
+  //  GUI server options //
+  /////////////////////////
   if(config.has("GUIServer"))
   {
     auto gui_config = config("GUIServer");
@@ -298,11 +334,6 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   else
   {
     LOG_INFO("GUI server disabled")
-  }
-  /* Allow the user not to worry about Default if only one controller is enabled */
-  if(enabled_controllers.size() == 1)
-  {
-    initial_controller = enabled_controllers[0];
   }
 }
 
