@@ -487,10 +487,6 @@ private:
   };
   std::vector<PluginHandle> plugins_;
 
-  void init_publishers();
-
-  void publish_robots();
-
   void initGUI();
 
   void start_log();
@@ -501,7 +497,6 @@ private:
   duration_ms global_run_dt{0};
   duration_ms controller_run_dt{0};
   duration_ms log_dt{0};
-  duration_ms publish_dt{0};
   duration_ms gui_dt{0};
   double solver_build_and_solve_t = 0;
   double solver_solve_t = 0;

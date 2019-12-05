@@ -33,14 +33,6 @@ Observers:
     UpdateFrom: estimator
     FloatingBaseSensor: FloatingBase
 
-# Publish the state of the controlled robot (ROS)
-PublishControlState: true
-# Publish the state of the other robots (ROS)
-PublishEnvState: true
-# Publish the state of the real robot (ROS)
-PublishRealState: true
-# Timestep of publication (ROS)
-PublishTimestep: 0.01
 # Controller timestep
 Timestep: 0.005
 # Set to true or false to enable/disable respectively

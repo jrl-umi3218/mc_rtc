@@ -178,7 +178,6 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
     real_robots->load(*config.main_robot_module);
   }
 
-  mc_rtc::ROSBridge::set_publisher_timestep(config.publish_timestep);
   if(config.enable_log)
   {
     for(auto c : controllers)
@@ -284,7 +283,6 @@ void MCGlobalController::init(const std::vector<double> & initq, const std::arra
   setGripperCurrentQ(gripperInit);
   controller_->reset({q});
   controller_->resetObservers();
-  init_publishers();
   initGUI();
   for(auto & plugin : plugins_)
   {
@@ -505,8 +503,6 @@ bool MCGlobalController::run()
       next_controller_->reset({controller_->robot().mbc().q});
       next_controller_->resetObservers();
       controller_ = next_controller_;
-      /** Initialize publishers again if the environment changed */
-      init_publishers();
       /** Reset plugins */
       for(auto & plugin : plugins_)
       {
@@ -552,9 +548,6 @@ bool MCGlobalController::run()
     solver_build_and_solve_t = 0;
     solver_solve_t = 0;
   }
-  auto start_publish_t = clock::now();
-  publish_robots();
-  publish_dt = clock::now() - start_publish_t;
   if(server_)
   {
     auto start_gui_t = clock::now();
@@ -817,54 +810,6 @@ bool MCGlobalController::EnableController(const std::string & name)
   }
 }
 
-void MCGlobalController::init_publishers()
-{
-  // Publish controlled robot
-  if(config.publish_control_state)
-  {
-    mc_rtc::ROSBridge::init_robot_publisher("control", timestep(), robot());
-  }
-  // Publish environment state
-  if(config.publish_env_state)
-  {
-    const auto & robots = controller_->robots();
-    for(size_t i = 1; i < robots.robots().size(); ++i)
-    {
-      mc_rtc::ROSBridge::init_robot_publisher("control/env_" + std::to_string(i), timestep(), robots.robot(i));
-    }
-  }
-  // Publish real robot
-  if(config.publish_real_state)
-  {
-    auto & real_robot = real_robots->robot();
-    mc_rtc::ROSBridge::init_robot_publisher("real", timestep(), real_robot);
-  }
-}
-
-void MCGlobalController::publish_robots()
-{
-  // Publish controlled robot
-  if(config.publish_control_state)
-  {
-    mc_rtc::ROSBridge::update_robot_publisher("control", timestep(), robot(), controller_->grippers);
-  }
-  // Publish environment state
-  if(config.publish_env_state)
-  {
-    const auto & robots = controller_->robots();
-    for(size_t i = 1; i < robots.robots().size(); ++i)
-    {
-      mc_rtc::ROSBridge::update_robot_publisher("control/env_" + std::to_string(i), timestep(), robots.robot(i));
-    }
-  }
-  // Publish real robot
-  if(config.publish_real_state)
-  {
-    auto & real_robot = real_robots->robot();
-    mc_rtc::ROSBridge::update_robot_publisher("real", timestep(), real_robot, controller_->grippers);
-  }
-}
-
 bool MCGlobalController::GoToHalfSitPose()
 {
   if(current_ctrl != std::string("HalfSitPose"))
@@ -986,7 +931,6 @@ void MCGlobalController::setup_log()
   controller->logger().addLogEntry("perf_SolverBuildAndSolve", [this]() { return solver_build_and_solve_t; });
   controller->logger().addLogEntry("perf_SolverSolve", [this]() { return solver_solve_t; });
   controller->logger().addLogEntry("perf_Log", [this]() { return log_dt.count(); });
-  controller->logger().addLogEntry("perf_Publish", [this]() { return publish_dt.count(); });
   controller->logger().addLogEntry("perf_Gui", [this]() { return gui_dt.count(); });
   controller->logger().addLogEntry("perf_FrameworkCost", [this]() { return framework_cost; });
   for(const auto & plugin : plugins_)

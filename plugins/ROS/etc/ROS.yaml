@@ -1,0 +1,10 @@
+# Controler which data we publish and at what rate
+publish:
+  # Publish the state of the controlled robot (ROS)
+  control: true
+  # Publish the state of the other robots (ROS)
+  env: true
+  # Publish the state of the real robot (ROS)
+  real: true
+  # Timestep of publication (ROS)
+  timestep: 0.01
