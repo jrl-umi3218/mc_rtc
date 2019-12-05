@@ -85,7 +85,7 @@ states:
         # You may choose to override any of them here, with due caution.
         hrp2_drc:
           leftFootSurface: LeftFootCenter
-          rightFootSurface": RightFootCenter
+          rightFootSurface: RightFootCenter
           torsoBodyName: CHEST_LINK1
           # Configuration  of the QP tasks used by the stabilizer
           tasks:
