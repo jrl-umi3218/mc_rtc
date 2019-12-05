@@ -298,7 +298,7 @@ public:
    *
    * @param com desired com position
    *
-   * \see dynamicTarget for dynamic motions.
+   * \see target for dynamic motions.
    */
   void staticTarget(const Eigen::Vector3d & com);
 
@@ -315,11 +315,14 @@ public:
    * @param comd Desired CoM velocity
    * @param comdd Desired CoM acceleration
    * @param zmp Desired ZMP
+   *
+   * \see staticTarget for a helper to define the stabilizer target when the CoM
+   * is state
    */
-  void dynamicTarget(const Eigen::Vector3d & com,
-                     const Eigen::Vector3d & comd,
-                     const Eigen::Vector3d & comdd,
-                     const Eigen::Vector3d & zmp);
+  void target(const Eigen::Vector3d & com,
+              const Eigen::Vector3d & comd,
+              const Eigen::Vector3d & comdd,
+              const Eigen::Vector3d & zmp);
 
 private:
   /** Check that all gains are within boundaries.

@@ -54,7 +54,7 @@ states:
         # start in enabled/disabled state
         enabled: true
 
-  ComplexStabilizerState:
+  CustomConfigurationStabilizerState:
     base: MetaTasks
 
     # Add contacts to the solver.
@@ -151,13 +151,10 @@ states:
               integral: 10
               deriv: 0.5
 
-
 # Transitions map
 transitions:
-- - MinimalStabilizerState
-  - OK
-  - ComplexStabilizerState
-  - Strict
+- [MinimalStabilizerState, Custom, CustomConfigurationStabilizerState]
+- [MinimalStabilizerState, Standing, StabilizerStanding]
 # Initial state
 init: MinimalStabilizerState
 

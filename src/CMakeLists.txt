@@ -331,6 +331,19 @@ set_target_properties(mc_tasks PROPERTIES COMPILE_FLAGS "-DMC_TASKS_EXPORTS")
 target_link_libraries(mc_tasks PUBLIC mc_solver mc_rbdyn mc_trajectory mc_signal mc_rtc_utils eigen-quadprog::eigen-quadprog)
 install_mc_rtc_lib(mc_tasks)
 
+set(mc_planning_SRC
+mc_planning/Pendulum.cpp
+)
+
+set(mc_planning_HDR
+../include/mc_planning/Pendulum.h
+../include/mc_planning/api.h
+)
+
+add_library(mc_planning SHARED ${mc_planning_SRC} ${mc_planning_HDR})
+set_target_properties(mc_planning PROPERTIES COMPILE_FLAGS "-DMC_PLANNING_EXPORTS")
+target_link_libraries(mc_planning PUBLIC mc_rbdyn)
+install_mc_rtc_lib(mc_planning)
 
 set(mc_signal_HDR
 ../include/mc_signal/LowPassVelocityFilter.h

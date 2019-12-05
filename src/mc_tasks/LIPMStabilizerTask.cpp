@@ -145,7 +145,7 @@ void StabilizerTask::selectUnactiveJoints(
                                                      "through the stabilizer configuration instead.");
 }
 
-void StabilizerTask::resetJointsSelector(mc_solver::QPSolver & solver)
+void StabilizerTask::resetJointsSelector(mc_solver::QPSolver & /* solver */)
 {
   LOG_ERROR_AND_THROW(std::runtime_error, "Task " << name_
                                                   << " does not implement resetJointsSelector. Please configure it "
@@ -818,19 +818,16 @@ Eigen::Vector3d StabilizerTask::computeZMP(const sva::ForceVecd & wrench) const
 
 void StabilizerTask::staticTarget(const Eigen::Vector3d & com)
 {
-  comTarget_ = com;
-  comdTarget_ = Eigen::Vector3d::Zero();
-  comddTarget_ = Eigen::Vector3d::Zero();
   // XXX should use height above ground
-  zmpTarget_ = Eigen::Vector3d{com.x(), com.y(), 0.};
-  dcmTarget_ = comTarget_;
-  omega_ = std::sqrt(-gravity_.z() / comTarget_.z());
+  Eigen::Vector3d zmp = Eigen::Vector3d{com.x(), com.y(), 0.};
+
+  target(com, Eigen::Vector3d::Zero(), Eigen::Vector3d::Zero(), zmp);
 }
 
-void StabilizerTask::dynamicTarget(const Eigen::Vector3d & com,
-                                   const Eigen::Vector3d & comd,
-                                   const Eigen::Vector3d & comdd,
-                                   const Eigen::Vector3d & zmp)
+void StabilizerTask::target(const Eigen::Vector3d & com,
+                            const Eigen::Vector3d & comd,
+                            const Eigen::Vector3d & comdd,
+                            const Eigen::Vector3d & zmp)
 {
   comTarget_ = com;
   comdTarget_ = comd;
