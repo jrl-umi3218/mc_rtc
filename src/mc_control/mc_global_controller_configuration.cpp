@@ -377,7 +377,7 @@ void load_configs(const std::string & desc,
   {
     mc_rtc::Configuration c;
     c.load(default_config);
-    bfs::path global = conf_or_yaml(default_path / "etc" / (name + ".conf"));
+    bfs::path global = conf_or_yaml(default_path / (name + ".conf"));
     if(bfs::exists(global))
     {
       LOG_INFO("Loading additional " << desc << " configuration: " << global)
