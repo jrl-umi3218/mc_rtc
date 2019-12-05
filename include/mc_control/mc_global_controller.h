@@ -251,11 +251,17 @@ public:
   /*! \brief Access the current controller */
   MCController & controller();
 
+  /*! \brief Const access to current controller */
+  const MCController & controller() const;
+
   /*! \brief Access the main robot */
   mc_rbdyn::Robot & robot();
 
+  /*! \brief Const access to the main robot */
+  const mc_rbdyn::Robot & robot() const;
+
   /*! \brief Get the controller timestep */
-  double timestep();
+  double timestep() const;
 
   /*! \brief Access the reference joint order
    *

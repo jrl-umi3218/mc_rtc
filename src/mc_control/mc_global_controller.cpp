@@ -585,7 +585,18 @@ MCController & MCGlobalController::controller()
   return *controller_;
 }
 
+const MCController & MCGlobalController::controller() const
+{
+  assert(controller_ != nullptr);
+  return *controller_;
+}
+
 mc_rbdyn::Robot & MCGlobalController::robot()
+{
+  return controller_->robot();
+}
+
+const mc_rbdyn::Robot & MCGlobalController::robot() const
 {
   return controller_->robot();
 }
@@ -674,7 +685,7 @@ void MCGlobalController::setGripperOpenPercent(const std::string & name, double 
   }
 }
 
-double MCGlobalController::timestep()
+double MCGlobalController::timestep() const
 {
   return config.timestep;
 }
