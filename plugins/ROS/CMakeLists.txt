@@ -19,6 +19,9 @@ endif()
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
 find_package(mc_rtc_3rd_party_ros REQUIRED)
+if(NOT ${ROSCPP_FOUND})
+  return()
+endif()
 install(FILES "${PROJECT_SOURCE_DIR}/CMakeModules/Findmc_rtc_3rd_party_ros.cmake"
   DESTINATION "${CONFIG_INSTALL_DIR}")
 set(PACKAGE_EXTRA_MACROS "${PACKAGE_EXTRA_MACROS}
