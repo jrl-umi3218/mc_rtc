@@ -79,10 +79,7 @@ jvrc1:
 states: {{}}
 # Transitions map
 transitions:
-- - {controller_name}_Initial
-  - OK
-  - {controller_name}_Initial
-  - Strict
+- [{controller_name}_Initial, OK, {controller_name}_Initial, Strict]
 # Initial state
 init: {controller_name}_Initial
 """.format(controller_name = controller_name, controller_class_name = controller_class_name))
