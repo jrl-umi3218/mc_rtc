@@ -143,6 +143,11 @@ const sva::PTransformd & ForceSensor::X_p_f() const
   return X_p_f_;
 }
 
+const sva::PTransformd ForceSensor::X_0_f(const mc_rbdyn::Robot & robot) const
+{
+  return X_p_f() * robot.bodyPosW(parentBody_);
+}
+
 const sva::ForceVecd & ForceSensor::wrench() const
 {
   return wrench_;

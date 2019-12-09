@@ -56,6 +56,9 @@ public:
   /** Return the transformation from the parent body to the sensor (model) */
   const sva::PTransformd & X_p_f() const;
 
+  /** Return the sensor pose in the inertial frame (convenience function) */
+  const sva::PTransformd X_0_f(const mc_rbdyn::Robot & robot) const;
+
   /** Return the current wrench */
   const sva::ForceVecd & wrench() const;
 
