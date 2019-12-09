@@ -48,7 +48,7 @@ void LookAtSurfaceTask::offset(const sva::PTransformd & off)
 namespace
 {
 
-static bool registered_lookat_surface = mc_tasks::MetaTaskLoader::register_load_function(
+static auto registered_lookat_surface = mc_tasks::MetaTaskLoader::register_load_function(
     "lookAtSurface",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
       auto t = std::make_shared<mc_tasks::LookAtSurfaceTask>(solver.robots(), config("robotIndex"), config("body"),

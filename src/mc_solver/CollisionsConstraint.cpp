@@ -299,7 +299,7 @@ std::set<std::string> RobotEnvCollisionsConstraint::__bodiesFromContacts(const m
 namespace
 {
 
-static bool registered = mc_solver::ConstraintSetLoader::register_load_function(
+static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
     "collision",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
       auto ret = std::make_shared<mc_solver::CollisionsConstraint>(solver.robots(), config("r1Index"),

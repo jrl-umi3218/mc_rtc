@@ -48,7 +48,7 @@ void DampingTask::update()
 namespace
 {
 
-static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
+static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "damping",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
       auto t = std::make_shared<mc_tasks::force::DampingTask>(config("surface"), solver.robots(), config("robotIndex"));

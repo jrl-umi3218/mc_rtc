@@ -159,7 +159,7 @@ void AdmittanceTask::addToSolver(mc_solver::QPSolver & solver)
 namespace
 {
 
-static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
+static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "admittance",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
       auto t =

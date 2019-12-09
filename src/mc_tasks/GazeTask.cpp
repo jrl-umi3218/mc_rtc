@@ -59,7 +59,7 @@ void GazeTask::error(const Eigen::Vector3d & point3d, const Eigen::Vector2d & po
 namespace
 {
 
-static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
+static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "gaze",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
       auto t = std::make_shared<mc_tasks::GazeTask>(config("body"), Eigen::Vector3d::Zero(), config("X_b_gaze"),

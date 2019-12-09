@@ -35,6 +35,25 @@ struct GenericLoader
   /** Storage type, actual storage location is returned by Derived::storage() */
   using storage_t = std::map<std::string, load_fun>;
 
+  /** Handle returned by \ref register_laod_function
+   *
+   * This handle takes care of unregistering a load function
+   *
+   */
+  struct Handle
+  {
+    Handle() = default;
+    Handle(const std::string & type);
+    ~Handle();
+    Handle(const Handle &) = delete;
+    Handle & operator=(const Handle &) = delete;
+    Handle(Handle && h);
+    Handle & operator=(Handle && h);
+
+  private:
+    std::string type_ = "";
+  };
+
   /** Register a new loading function
    *
    * \param type Type of the object this function handles. It should match
@@ -42,7 +61,17 @@ struct GenericLoader
    *
    * \param fn Function that will be registered
    */
-  static bool register_load_function(const std::string & type, load_fun fn);
+  static Handle register_load_function(const std::string & type, load_fun fn);
+
+  /** Remove a registered loading function
+   *
+   * This is mostly called automatically by the handle returned by \ref
+   * register_load_function
+   *
+   * \param type Type of the object to un-register
+   *
+   */
+  static void unregister_load_function(const std::string & type);
 
   /** Load an object from a file
    *

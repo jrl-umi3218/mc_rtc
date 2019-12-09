@@ -204,10 +204,11 @@ mc_tasks::MetaTaskPtr load_add_remove_contact_task(mc_solver::QPSolver & solver,
   return std::make_shared<T>(solver, contact, config("speed"), config("stiffness"), config("weight"), userT_0_s);
 }
 
-static bool registered =
+static auto ac_registered =
     mc_tasks::MetaTaskLoader::register_load_function("addContact",
-                                                     &load_add_remove_contact_task<mc_tasks::AddContactTask>)
-    && mc_tasks::MetaTaskLoader::register_load_function("removeContact",
-                                                        &load_add_remove_contact_task<mc_tasks::RemoveContactTask>);
+                                                     &load_add_remove_contact_task<mc_tasks::AddContactTask>);
+static auto rc_registered =
+    mc_tasks::MetaTaskLoader::register_load_function("removeContact",
+                                                     &load_add_remove_contact_task<mc_tasks::RemoveContactTask>);
 
 } // namespace

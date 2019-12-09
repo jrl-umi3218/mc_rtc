@@ -80,7 +80,7 @@ void PositionBasedVisServoTask::removeFromLogger(mc_rtc::Logger & logger)
 namespace
 {
 
-static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
+static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "pbvs",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
       std::shared_ptr<mc_tasks::PositionBasedVisServoTask> t;

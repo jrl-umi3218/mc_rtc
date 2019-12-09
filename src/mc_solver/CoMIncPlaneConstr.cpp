@@ -68,7 +68,7 @@ void CoMIncPlaneConstr::set_planes(QPSolver & solver,
 namespace
 {
 
-static bool registered = mc_solver::ConstraintSetLoader::register_load_function(
+static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
     "CoMIncPlane",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
       auto ret = std::make_shared<mc_solver::CoMIncPlaneConstr>(solver.robots(), config("robotIndex"), solver.dt());
