@@ -189,11 +189,48 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   //  Plugins  //
   ///////////////
   config("GlobalPluginPaths", global_plugin_paths);
+  std::string plugin_str = "";
+  auto append_plugin = [&plugin_str](const std::string & p, bool autoload) {
+    if(plugin_str.size())
+    {
+      plugin_str += ", ";
+    }
+    plugin_str += p;
+    if(autoload)
+    {
+      plugin_str += " (autoload)";
+    }
+  };
   if(!config("ClearGlobalPluginPath", false))
   {
     global_plugin_paths.insert(global_plugin_paths.begin(), mc_rtc::MC_PLUGINS_INSTALL_PREFIX);
+    auto autoload_path = bfs::path(mc_rtc::MC_PLUGINS_INSTALL_PREFIX) / "autoload";
+    if(bfs::exists(autoload_path) && bfs::is_directory(autoload_path))
+    {
+      bfs::directory_iterator dit(autoload_path), endit;
+      std::vector<bfs::path> drange;
+      std::copy(dit, endit, std::back_inserter(drange));
+      for(const auto & p : drange)
+      {
+        std::ifstream ifs(p.string());
+        std::stringstream ss;
+        ss << ifs.rdbuf();
+        global_plugins.push_back(ss.str());
+        append_plugin(global_plugins.back(), true);
+      }
+    }
   }
-  config("Plugins", global_plugins);
+  std::vector<std::string> plugins;
+  config("Plugins", plugins);
+  for(const auto & p : plugins)
+  {
+    if(std::find(global_plugins.begin(), global_plugins.end(), p) == global_plugins.end())
+    {
+      global_plugins.push_back(p);
+      append_plugin(p, false);
+    }
+  }
+  LOG_INFO("Enabled plugins: " << plugin_str)
 
   ///////////////////
   //  Controllers  //

@@ -36,6 +36,24 @@ target_include_directories(mc_rtc_ros PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_S
 set_target_properties(mc_rtc_ros PROPERTIES SOVERSION ${PROJECT_VERSION_MAJOR} VERSION ${PROJECT_VERSION})
 install(FILES ${mc_rtc_ros_HDR} DESTINATION include/mc_rtc)
 
+set(mc_tasks_ros_SRC
+  src/mc_tasks/LookAtTFTask.cpp)
+set(mc_tasks_ros_HDR
+  include/mc_tasks/LookAtTFTask.h
+  include/mc_tasks/ros_api.h)
+add_library(mc_tasks_ros SHARED ${mc_tasks_ros_SRC} ${mc_tasks_ros_HDR})
+set_target_properties(mc_rtc_ros PROPERTIES COMPILE_FLAGS "-DMC_TASKS_ROS_EXPORTS")
+target_link_libraries(mc_tasks_ros PUBLIC mc_rtc_ros mc_rtc::mc_tasks)
+set_target_properties(mc_tasks_ros PROPERTIES SOVERSION ${PROJECT_VERSION_MAJOR} VERSION ${PROJECT_VERSION})
+install(FILES ${mc_tasks_ros_HDR} DESTINATION include/mc_tasks)
+
+install(TARGETS mc_rtc_ros mc_tasks_ros
+  EXPORT "${TARGETS_EXPORT_NAME}"
+  RUNTIME DESTINATION bin
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+)
+
 set(plugin_SRC
   "${CMAKE_CURRENT_SOURCE_DIR}/src/plugin/ROS.cpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/src/plugin/Services.cpp")
@@ -46,27 +64,8 @@ add_plugin(ROS "${plugin_SRC}" "${plugin_HDR}")
 set_target_properties(ROS PROPERTIES COMPILE_FLAGS "-DMC_RTC_ROS_PLUGIN_EXPORTS")
 target_link_libraries(ROS PUBLIC mc_rtc_ros)
 install(FILES etc/ROS.yaml DESTINATION "${MC_PLUGINS_INSTALL_PREFIX}/etc")
-
-set(mc_tasks_ros_SRC
-  src/mc_tasks/LookAtTFTask.cpp)
-set(mc_tasks_ros_HDR
-  include/mc_tasks/LookAtTFTask.h
-  include/mc_tasks/ros_api.h)
-add_library(mc_tasks_ros SHARED ${mc_tasks_ros_SRC} ${mc_tasks_ros_HDR})
-set_target_properties(mc_rtc_ros PROPERTIES COMPILE_FLAGS "-DMC_TASKS_ROS_EXPORTS")
-target_link_libraries(mc_tasks_ros PUBLIC mc_rtc_ros mc_rtc::mc_tasks)
-set_target_properties(mc_tasks_ros PROPERTIES SOVERSION ${PROJECT_VERSION_MAJOR} VERSION ${PROJECT_VERSION})
-
 if(HAS_AS_NEEDED_LINKER_FLAG)
   target_link_libraries(ROS PRIVATE -Wl,--no-as-needed mc_tasks_ros -Wl,--as-needed)
 else()
   target_link_libraries(ROS PRIVATE mc_tasks_ros)
 endif()
-install(FILES ${mc_tasks_ros_HDR} DESTINATION include/mc_tasks)
-
-install(TARGETS mc_rtc_ros mc_tasks_ros
-  EXPORT "${TARGETS_EXPORT_NAME}"
-  RUNTIME DESTINATION bin
-  LIBRARY DESTINATION lib
-  ARCHIVE DESTINATION lib
-)
