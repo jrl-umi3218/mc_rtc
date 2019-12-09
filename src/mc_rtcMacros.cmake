@@ -127,3 +127,8 @@ macro(add_plugin plugin plugin_SRC plugin_HDR)
       DESTINATION "${MC_PLUGINS_INSTALL_PREFIX}/autoload/")
   endif()
 endmacro()
+
+file(GLOB plugin_targets "${CMAKE_CURRENT_LIST_DIR}/plugins/*Targets.cmake")
+foreach(plugin ${plugin_targets})
+  include(${plugin})
+endforeach()

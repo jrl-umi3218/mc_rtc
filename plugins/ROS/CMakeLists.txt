@@ -9,23 +9,26 @@ project(mc_rtc_ros_plugin LANGUAGES CXX VERSION ${PROJECT_VERSION})
 if(NOT TARGET mc_rtc::mc_control)
   find_package(mc_rtc REQUIRED)
   set(CONFIG_INSTALL_DIR "lib/cmake/mc_rtc/")
-  set(TARGETS_EXPORT_NAME "mc_rtc_rosTargets")
 else()
   if(DISABLE_ROS)
     # Stop right here
     return()
   endif()
 endif()
+set(TARGETS_EXPORT_NAME "mc_rtc_rosTargets")
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
 find_package(mc_rtc_3rd_party_ros REQUIRED)
 if(NOT ${ROSCPP_FOUND})
   return()
 endif()
-install(FILES "${PROJECT_SOURCE_DIR}/CMakeModules/Findmc_rtc_3rd_party_ros.cmake"
-  DESTINATION "${CONFIG_INSTALL_DIR}")
-set(PACKAGE_EXTRA_MACROS "${PACKAGE_EXTRA_MACROS}
-include(\"\${CMAKE_CURRENT_LIST_DIR}/Findmc_rtc_3rd_party_ros.cmake\")" PARENT_SCOPE)
+
+include(CheckCXXCompilerFlag)
+function(check_as_needed_linker_flag)
+  check_cxx_compiler_flag("-Wl,--as-needed" HAS_AS_NEEDED_LINKER_FLAG)
+  set(HAS_AS_NEEDED_LINKER_FLAG ${HAS_AS_NEEDED_LINKER_FLAG} CACHE INTERNAL "Linker support --as-needed")
+endfunction()
+check_as_needed_linker_flag()
 
 set(mc_rtc_ros_SRC src/mc_rtc_ros/ros.cpp)
 set(mc_rtc_ros_HDR include/mc_rtc/ros.h include/mc_rtc/ros_api.h)
@@ -52,6 +55,16 @@ install(TARGETS mc_rtc_ros mc_tasks_ros
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib
+)
+
+install(FILES "${PROJECT_SOURCE_DIR}/CMakeModules/Findmc_rtc_3rd_party_ros.cmake"
+  DESTINATION "${CONFIG_INSTALL_DIR}/plugins/"
+  RENAME "mc_rtc_3rd_party_rosTargets.cmake")
+
+install(
+  EXPORT "${TARGETS_EXPORT_NAME}"
+  NAMESPACE "mc_rtc::"
+  DESTINATION "${CONFIG_INSTALL_DIR}/plugins/"
 )
 
 set(plugin_SRC
