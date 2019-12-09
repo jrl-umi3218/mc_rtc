@@ -9,6 +9,14 @@ macro(add_plugin plugin plugin_SRC plugin_HDR)
   install(TARGETS ${plugin} DESTINATION ${MC_PLUGINS_INSTALL_PREFIX})
 endmacro()
 
+function(check_as_needed_linker_flag)
+  set(CMAKE_REQUIRED_FLAGS "-Wl,--as-needed")
+  CHECK_C_COMPILER_FLAG("" HAS_AS_NEEDED_LINKER_FLAG)
+  set(HAS_AS_NEEDED_LINKER_FLAG ${HAS_AS_NEEDED_LINKER_FLAG} CACHE INTERNAL "Linker support --as-needed")
+endfunction()
+
+check_as_needed_linker_flag()
+
 file(GLOB plugin_dirs "*")
 foreach(plugin_dir ${plugin_dirs})
   if(EXISTS ${plugin_dir}/CMakeLists.txt)

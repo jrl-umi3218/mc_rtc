@@ -56,6 +56,12 @@ add_library(mc_tasks_ros SHARED ${mc_tasks_ros_SRC} ${mc_tasks_ros_HDR})
 set_target_properties(mc_rtc_ros PROPERTIES COMPILE_FLAGS "-DMC_TASKS_ROS_EXPORTS")
 target_link_libraries(mc_tasks_ros PUBLIC mc_rtc_ros mc_rtc::mc_tasks)
 set_target_properties(mc_tasks_ros PROPERTIES SOVERSION ${PROJECT_VERSION_MAJOR} VERSION ${PROJECT_VERSION})
+
+if(HAS_AS_NEEDED_LINKER_FLAG)
+  target_link_libraries(ROS PRIVATE -Wl,--no-as-needed mc_tasks_ros -Wl,--as-needed)
+else()
+  target_link_libraries(ROS PRIVATE mc_tasks_ros)
+endif()
 install(FILES ${mc_tasks_ros_HDR} DESTINATION include/mc_tasks)
 
 install(TARGETS mc_rtc_ros mc_tasks_ros
