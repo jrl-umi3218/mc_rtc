@@ -132,8 +132,8 @@ JVRC1RobotModule::JVRC1RobotModule() : RobotModule(std::string(JVRC_VAL_VAL(JVRC
         "  derivator_time_constant: 1                                                                            \n"
         "  integrator_time_constant: 10                                                                          \n"
         "sole:                                                                                                   \n"
-        "  half_length: 0.112                                                                                    \n"
-        "  half_width: 0.065                                                                                     \n"
+        "  half_length: 0.11                                                                                     \n"
+        "  half_width: 0.05                                                                                      \n"
         "  friction: 0.7                                                                                         ");
     _lipmStabilizerConfig.load(lipmConf);
   }

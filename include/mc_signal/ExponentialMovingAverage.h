@@ -100,10 +100,11 @@ struct ExponentialMovingAverage
    *
    * \param T New time constant of the filter.
    *
+   * \note T is explicitely enforced to respect the Nyquist–Shannon sampling theorem, that is T is at least 2*timestep.
    */
   void timeConstant(double T)
   {
-    T = std::max(T, 2 * dt_);
+    T = std::max(T, 2 * dt_); // Nyquist–Shannon sampling theorem
     alpha_ = 1. - std::exp(-dt_ / T);
     timeConstant_ = T;
   }

@@ -11,7 +11,7 @@
 
 namespace mc_planning
 {
-/** Inverted pendulum model.
+/** State of the inverted pendulum model.
  *
  */
 struct MC_PLANNING_DLLAPI Pendulum
@@ -19,23 +19,24 @@ struct MC_PLANNING_DLLAPI Pendulum
   using Contact = mc_rbdyn::lipm_stabilizer::Contact;
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-  /** Initialize state.
+  /** Initialize state from CoM position and its derivatives.
    *
-   * \param com Initial CoM position.
+   * \param com CoM position.
    *
-   * \param comd Initial CoM velocity.
+   * \param comd CoM velocity.
    *
-   * \param comdd Initial CoM acceleration.
-   *
+   * \param comdd CoM acceleration.
    */
   Pendulum(const Eigen::Vector3d & com = Eigen::Vector3d::Zero(),
            const Eigen::Vector3d & comd = Eigen::Vector3d::Zero(),
            const Eigen::Vector3d & comdd = Eigen::Vector3d::Zero());
 
-  /** Complete IPM inputs (ZMP and omega) from CoM and contact plane.
+  /** Complete inverted pendulum inputs (ZMP and natural frequency) from contact plane.
    *
-   * \param plane Contact plane.
+   * \param plane Contact plane in which the ZMP is considered.
    *
+   * \note The current CoM position and acceleration are used to compute the
+   * ZMP in the desired plane.
    */
   void completeIPM(const Contact & plane);
 
@@ -44,7 +45,6 @@ struct MC_PLANNING_DLLAPI Pendulum
    * \param comddd CoM jerk.
    *
    * \param dt Integration step.
-   *
    */
   void integrateCoMJerk(const Eigen::Vector3d & comddd, double dt);
 
@@ -55,18 +55,16 @@ struct MC_PLANNING_DLLAPI Pendulum
    * \param lambda Normalized stiffness of the pendulum.
    *
    * \param dt Duration of integration step.
-   *
    */
   void integrateIPM(Eigen::Vector3d zmp, double lambda, double dt);
 
-  /** Reset to a new state.
+  /** Reset to a new state from CoM position and its derivatives.
    *
-   * \param com New CoM position.
+   * \param com CoM position.
    *
-   * \param comd New CoM velocity.
+   * \param comd CoM velocity.
    *
-   * \param comdd Initial CoM acceleration.
-   *
+   * \param comdd CoM acceleration.
    */
   void reset(const Eigen::Vector3d & com,
              const Eigen::Vector3d & comd = Eigen::Vector3d::Zero(),
@@ -77,55 +75,43 @@ struct MC_PLANNING_DLLAPI Pendulum
    * \param height CoM height above contact plane.
    *
    * \param contact Contact plane.
-   *
    */
   void resetCoMHeight(double height, const Contact & contact);
 
-  /** Get CoM position of the inverted pendulum model.
-   *
-   */
+  /** CoM position in the world frame. */
   const Eigen::Vector3d & com() const
   {
     return com_;
   }
 
-  /** Get CoM velocity of the inverted pendulum model.
-   *
-   */
+  /** CoM velocity in the world frame. */
   const Eigen::Vector3d & comd() const
   {
     return comd_;
   }
 
-  /** Get CoM acceleration of the inverted pendulum.
-   *
-   */
+  /** CoM acceleration in the world frame. */
   const Eigen::Vector3d & comdd() const
   {
     return comdd_;
   }
 
-  /** Instantaneous Divergent Component of Motion.
-   *
-   */
+  /** Divergent component of motion. */
   Eigen::Vector3d dcm() const
   {
     return com_ + comd_ / omega_;
   }
 
-  /** Natural frequency of last IPM integration.
-   *
-   */
+  /** Natural frequency. */
   double omega() const
   {
     return omega_;
   }
 
-  /** Zero-tilting moment point from last integration.
+  /** Zero-tilting moment point.
    *
    * \note In the linear inverted pendulum mode, the ZMP coincides with the
    * centroidal moment pivot (CMP) or its extended version (eCMP).
-   *
    */
   const Eigen::Vector3d & zmp() const
   {
@@ -133,7 +119,6 @@ struct MC_PLANNING_DLLAPI Pendulum
   }
 
   /** Velocity of the zero-tilting moment point.
-   *
    */
   const Eigen::Vector3d & zmpd() const
   {
@@ -147,6 +132,6 @@ protected:
   Eigen::Vector3d comddd_; /**< Jerk of the center of mass */
   Eigen::Vector3d zmp_; /**< Position of the zero-tilting moment point */
   Eigen::Vector3d zmpd_; /**< Velocity of the zero-tilting moment point */
-  double omega_; /**< Natural frequency of the linear inverted pendulum */
+  double omega_; /**< Natural frequency in [Hz] */
 };
 } // namespace mc_planning

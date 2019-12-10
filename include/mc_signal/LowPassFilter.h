@@ -42,13 +42,12 @@ struct LowPassFilter
    *
    * \param period New cutoff period.
    *
+   * \note period is explicitely enforced to respect the Nyquist–Shannon sampling theorem, that is T is at least
+   * 2*timestep.
    */
   void cutoffPeriod(double period)
   {
-    // XXX @caron why?
-    // XXX new (breaking) change
-    period = std::max(period, 2 * dt_);
-
+    period = std::max(period, 2 * dt_); // Nyquist–Shannon sampling theorem
     cutoffPeriod_ = period;
   }
 
