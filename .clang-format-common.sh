@@ -11,4 +11,4 @@ else
 fi
 
 # Find all source files in the project minus those that are auto-generated or we do not maintain
-src_files=`find benchmarks binding/python/include include src tests utils  -name '*.cpp' -or -name '*.h' -or -name '*.hpp'|grep -Ev "utils/mc_bin_flatbuffers/"`
+src_files=`find benchmarks binding/python/include include src tests utils plugins -name '*.cpp' -or -name '*.h' -or -name '*.hpp'|grep -Ev "utils/mc_bin_flatbuffers/"`

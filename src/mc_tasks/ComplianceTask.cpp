@@ -162,7 +162,7 @@ void ComplianceTask::resetJointsSelector(mc_solver::QPSolver & solver)
 namespace
 {
 
-static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
+static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "compliance",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
       Eigen::Matrix6d dof = Eigen::Matrix6d::Identity();

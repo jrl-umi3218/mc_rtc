@@ -106,7 +106,7 @@ void ObjectLoader<T>::set_verbosity(bool verbose)
 
 template<typename T>
 template<typename... Args>
-std::shared_ptr<T> ObjectLoader<T>::create_object(const std::string & name, Args... args)
+T * ObjectLoader<T>::create(const std::string & name, Args... args)
 {
   if(!has_object(name))
   {
@@ -153,7 +153,23 @@ std::shared_ptr<T> ObjectLoader<T>::create_object(const std::string & name, Args
     }
     deleters_[name] = ObjectDeleter(delete_fn);
   }
+  return ptr;
+}
+
+template<typename T>
+template<typename... Args>
+std::shared_ptr<T> ObjectLoader<T>::create_object(const std::string & name, Args... args)
+{
+  T * ptr = create(name, std::forward<Args>(args)...);
   return std::shared_ptr<T>(ptr, deleters_[name]);
+}
+
+template<typename T>
+template<typename... Args>
+typename ObjectLoader<T>::unique_ptr ObjectLoader<T>::create_unique_object(const std::string & name, Args... args)
+{
+  T * ptr = create(name, std::forward<Args>(args)...);
+  return unique_ptr(ptr, deleters_[name]);
 }
 
 } // namespace mc_rtc

@@ -85,7 +85,7 @@ void LookAtTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 
 namespace
 {
-static bool registered_lookat = mc_tasks::MetaTaskLoader::register_load_function(
+static auto registered_lookat = mc_tasks::MetaTaskLoader::register_load_function(
     "lookAt",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
       auto t = std::make_shared<mc_tasks::LookAtTask>(config("body"), config("bodyVector"), solver.robots(),

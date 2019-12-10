@@ -24,8 +24,9 @@ macro(install_mc_rtc_lib MC_LIB)
     target_compile_options(${MC_LIB} PRIVATE "--coverage")
     set_target_properties(${MC_LIB} PROPERTIES LINK_FLAGS "--coverage")
   endif()
-  set_target_properties(${MC_LIB} PROPERTIES SOVERSION 1 VERSION 1.0.0)
+  set_target_properties(${MC_LIB} PROPERTIES SOVERSION ${PROJECT_VERSION_MAJOR} VERSION ${PROJECT_VERSION})
   add_version_script(${MC_LIB} "${VERSION_SCRIPT_LOCATION}")
+  add_library(mc_rtc::${MC_LIB} ALIAS ${MC_LIB})
   install(TARGETS ${MC_LIB}
     EXPORT "${TARGETS_EXPORT_NAME}"
     RUNTIME DESTINATION bin
@@ -296,27 +297,9 @@ set(mc_tasks_HDR
 ../include/mc_tasks/ExactCubicTrajectoryTask.h
 )
 
-if(NOT ${DISABLE_ROS})
-  if(${ROSCPP_FOUND})
-    set(mc_tasks_SRC
-      ${mc_tasks_SRC}
-      mc_tasks/LookAtTFTask.cpp
-      )
-    set(mc_tasks_HDR
-      ${mc_tasks_HDR}
-      ../include/mc_tasks/LookAtTFTask.h
-      )
-  endif()
-endif()
-
 add_library(mc_tasks SHARED ${mc_tasks_SRC} ${mc_tasks_HDR})
 set_target_properties(mc_tasks PROPERTIES COMPILE_FLAGS "-DMC_TASKS_EXPORTS")
 target_link_libraries(mc_tasks PUBLIC mc_solver mc_rbdyn mc_trajectory mc_rtc_utils)
-if(NOT ${DISABLE_ROS})
-  if(${ROSCPP_FOUND})
-    target_link_libraries(mc_tasks PUBLIC mc_rtc_3rd_party::ROS)
-  endif()
-endif()
 install_mc_rtc_lib(mc_tasks)
 
 
@@ -338,17 +321,6 @@ set_target_properties(mc_observers PROPERTIES COMPILE_FLAGS "-DMC_OBSERVERS_EXPO
 target_link_libraries(mc_observers PUBLIC mc_rbdyn mc_rtc_gui)
 install_mc_rtc_lib(mc_observers)
 
-
-add_library(mc_rtc_ros SHARED mc_rtc/ros.cpp ../include/mc_rtc/ros.h ../include/mc_rtc/ros_api.h)
-set_target_properties(mc_rtc_ros PROPERTIES COMPILE_FLAGS "-DMC_RTC_ROS_EXPORTS")
-target_link_libraries(mc_rtc_ros PUBLIC mc_rbdyn)
-if(NOT ${DISABLE_ROS})
-  if(${ROSCPP_FOUND})
-    target_link_libraries(mc_rtc_ros PUBLIC mc_rtc_3rd_party::ROS nanomsg)
-  endif()
-endif()
-install_mc_rtc_lib(mc_rtc_ros)
-
 set(mc_control_SRC
 mc_control/CompletionCriteria.cpp
 mc_control/ControllerServer.cpp
@@ -360,8 +332,6 @@ mc_control/mc_global_controller.cpp
 mc_control/mc_global_controller_configuration.cpp
 mc_control/mc_global_controller_gui.cpp
 mc_control/mc_global_controller_services.cpp
-mc_control/mc_global_controller_ros_services.h
-mc_control/mc_global_controller_ros_services.cpp
 )
 
 set(mc_control_HDR
@@ -369,6 +339,8 @@ set(mc_control_HDR
 ../include/mc_control/CompletionCriteria.h
 ../include/mc_control/Configuration.h
 ../include/mc_control/ControllerServer.h
+../include/mc_control/GlobalPlugin.h
+../include/mc_control/GlobalPlugin_fwd.h
 ../include/mc_control/generic_gripper.h
 ../include/mc_control/mc_controller.h
 ../include/mc_control/mc_python_controller.h
@@ -378,7 +350,7 @@ set(mc_control_HDR
 
 add_library(mc_control SHARED ${mc_control_SRC} ${mc_control_HDR})
 set_target_properties(mc_control PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_EXPORTS")
-target_link_libraries(mc_control PUBLIC mc_tasks mc_solver mc_rtc_ros mc_rtc_loader mc_observers mc_rtc_utils mc_rtc_gui nanomsg)
+target_link_libraries(mc_control PUBLIC mc_tasks mc_solver mc_rtc_loader mc_observers mc_rtc_utils mc_rtc_gui nanomsg)
 install_mc_rtc_lib(mc_control)
 
 set(mc_control_client_SRC

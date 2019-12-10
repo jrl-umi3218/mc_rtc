@@ -47,10 +47,19 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     LOG_INFO("Loading additional global configuration " << conf)
     config.load(conf);
   }
+
+  ///////////////////////
+  //  General options  //
+  ///////////////////////
   config("VerboseLoader", verbose_loader);
+  config("UseSandbox", use_sandbox);
+  config("Timestep", timestep);
+
+  //////////////
+  //  Robots  //
+  //////////////
   mc_rbdyn::RobotLoader::set_verbosity(verbose_loader);
   config("RobotModulePaths", robot_module_paths);
-  config("UseSandbox", use_sandbox);
   mc_rbdyn::RobotLoader::enable_sandboxing(use_sandbox);
   if(config("ClearRobotModulePath", false))
   {
@@ -137,9 +146,9 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     main_robot_module->make_default_ref_joint_order();
   }
 
-  ///////////////
-  // OBSERVERS
-  ///////////////
+  /////////////////
+  //  Observers  //
+  /////////////////
   mc_observers::ObserverLoader::enable_sandboxing(use_sandbox);
   mc_observers::ObserverLoader::set_verbosity(verbose_loader);
   config("ObserverModulePaths", observer_module_paths);
@@ -176,6 +185,56 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     }
   }
 
+  ///////////////
+  //  Plugins  //
+  ///////////////
+  config("GlobalPluginPaths", global_plugin_paths);
+  std::string plugin_str = "";
+  auto append_plugin = [&plugin_str](const std::string & p, bool autoload) {
+    if(plugin_str.size())
+    {
+      plugin_str += ", ";
+    }
+    plugin_str += p;
+    if(autoload)
+    {
+      plugin_str += " (autoload)";
+    }
+  };
+  if(!config("ClearGlobalPluginPath", false))
+  {
+    global_plugin_paths.insert(global_plugin_paths.begin(), mc_rtc::MC_PLUGINS_INSTALL_PREFIX);
+    auto autoload_path = bfs::path(mc_rtc::MC_PLUGINS_INSTALL_PREFIX) / "autoload";
+    if(bfs::exists(autoload_path) && bfs::is_directory(autoload_path))
+    {
+      bfs::directory_iterator dit(autoload_path), endit;
+      std::vector<bfs::path> drange;
+      std::copy(dit, endit, std::back_inserter(drange));
+      for(const auto & p : drange)
+      {
+        std::ifstream ifs(p.string());
+        std::stringstream ss;
+        ss << ifs.rdbuf();
+        global_plugins.push_back(ss.str());
+        append_plugin(global_plugins.back(), true);
+      }
+    }
+  }
+  std::vector<std::string> plugins;
+  config("Plugins", plugins);
+  for(const auto & p : plugins)
+  {
+    if(std::find(global_plugins.begin(), global_plugins.end(), p) == global_plugins.end())
+    {
+      global_plugins.push_back(p);
+      append_plugin(p, false);
+    }
+  }
+  LOG_INFO("Enabled plugins: " << plugin_str)
+
+  ///////////////////
+  //  Controllers  //
+  ///////////////////
   config("ControllerModulePaths", controller_module_paths);
   if(!config("ClearControllerModulePath", false))
   {
@@ -186,19 +245,27 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   {
     initial_controller = enabled_controllers[0];
   }
-  config("LogReal", log_real);
-  config("Default", initial_controller);
-  config("Timestep", timestep);
-  config("PublishControlState", publish_control_state);
-  config("PublishEnvState", publish_env_state);
-  config("PublishRealState", publish_real_state);
-  config("PublishTimestep", publish_timestep);
-  if(publish_timestep < timestep)
+  else
   {
-    LOG_WARNING("Your ROS publication timestep is lower than your control timestep, your publication timestep will be "
-                "effectively set to the control timestep")
+    std::string enabled = config("Enabled", std::string(""));
+    if(enabled.size())
+    {
+      initial_controller = enabled;
+      enabled_controllers = {enabled};
+    }
+    else
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, "Enabled entry in mc_rtc configuration is not valid it should be a "
+                                              "vector of enabled controllers or a single controller name")
+    }
   }
+  config("Default", initial_controller);
+
+  ///////////////
+  //  Logging  //
+  ///////////////
   config("Log", enable_log);
+  config("LogReal", log_real);
   {
     std::string log_policy_str = "non-threaded";
     config("LogPolicy", log_policy_str);
@@ -226,7 +293,10 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     }
   }
   config("LogTemplate", log_template);
-  /** GUI server options */
+
+  /////////////////////////
+  //  GUI server options //
+  /////////////////////////
   if(config.has("GUIServer"))
   {
     auto gui_config = config("GUIServer");
@@ -299,46 +369,78 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   {
     LOG_INFO("GUI server disabled")
   }
-  /* Allow the user not to worry about Default if only one controller is enabled */
-  if(enabled_controllers.size() == 1)
+}
+
+namespace
+{
+
+bfs::path conf_or_yaml(bfs::path in)
+{
+  if(bfs::exists(in))
   {
-    initial_controller = enabled_controllers[0];
+    return in;
+  }
+  in.replace_extension(".yaml");
+  if(bfs::exists(in))
+  {
+    return in;
+  }
+  in.replace_extension(".yml");
+  return in;
+}
+
+/** Load configurations */
+void load_configs(const std::string & desc,
+                  const std::vector<std::string> & names,
+                  const bfs::path & default_path,
+                  const bfs::path & user_path,
+                  std::unordered_map<std::string, mc_rtc::Configuration> & configs,
+                  const mc_rtc::Configuration & default_config = {})
+{
+  for(const auto & name : names)
+  {
+    mc_rtc::Configuration c;
+    c.load(default_config);
+    bfs::path global = conf_or_yaml(default_path / (name + ".conf"));
+    if(bfs::exists(global))
+    {
+      LOG_INFO("Loading additional " << desc << " configuration: " << global)
+      c.load(global.string());
+    }
+    bfs::path local = conf_or_yaml(user_path / (name + ".conf"));
+    if(bfs::exists(local))
+    {
+      LOG_INFO("Loading additional " << desc << " configuration: " << local)
+      c.load(local.string());
+    }
+    configs[name] = c;
   }
 }
+
+} // namespace
 
 void MCGlobalController::GlobalConfiguration::load_controllers_configs()
 {
   // Load controller-specific configuration
-  for(const auto & c : enabled_controllers)
-  {
-    mc_rtc::Configuration conf;
-    conf.load(config);
-    bfs::path global = bfs::path(mc_rtc::MC_CONTROLLER_INSTALL_PREFIX) / "/etc" / (c + ".conf");
-    if(!bfs::exists(global))
-    {
-      global.replace_extension(".yaml");
-    }
-    if(bfs::exists(global))
-    {
-      LOG_INFO("Loading additional controller configuration" << global)
-      conf.load(global.string());
-    }
+  load_configs("controller", enabled_controllers, bfs::path(mc_rtc::MC_CONTROLLER_INSTALL_PREFIX) / "etc",
 #ifndef WIN32
-    bfs::path local = bfs::path(std::getenv("HOME")) / ".config/mc_rtc/controllers" / (c + ".conf");
+               bfs::path(std::getenv("HOME")) / ".config/mc_rtc/controllers",
 #else
-    bfs::path local = bfs::path(std::getenv("APPDATA")) / "mc_rtc/controllers" / (c + ".conf");
+               bfs::path(std::getenv("APPDATA")) / "mc_rtc/controllers",
 #endif
-    if(!bfs::exists(local))
-    {
-      local.replace_extension(".yaml");
-    }
-    if(bfs::exists(local))
-    {
-      LOG_INFO("Loading additional controller configuration" << local)
-      conf.load(local.string());
-    }
-    controllers_configs[c] = conf;
-  }
+               controllers_configs, config);
+}
+
+void MCGlobalController::GlobalConfiguration::load_plugin_configs()
+{
+  // Load plugins configurations
+  load_configs("plugin", global_plugins, bfs::path(mc_rtc::MC_PLUGINS_INSTALL_PREFIX) / "etc",
+#ifndef WIN32
+               bfs::path(std::getenv("HOME")) / ".config/mc_rtc/plugins",
+#else
+               bfs::path(std::getenv("APPDATA")) / "mc_rtc/plugins",
+#endif
+               global_plugin_configs);
 }
 
 bool MCGlobalController::GlobalConfiguration::enabled(const std::string & ctrl)

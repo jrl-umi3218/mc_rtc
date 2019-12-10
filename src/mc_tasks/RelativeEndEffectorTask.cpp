@@ -240,9 +240,10 @@ mc_tasks::MetaTaskPtr load_relef_task(mc_solver::QPSolver & solver, const mc_rtc
   return t;
 }
 
-static bool registered = mc_tasks::MetaTaskLoader::register_load_function("orientation", &load_orientation_task)
-                         && mc_tasks::MetaTaskLoader::register_load_function("position", &load_position_task)
-                         && mc_tasks::MetaTaskLoader::register_load_function("body6d", &load_ef_task)
-                         && mc_tasks::MetaTaskLoader::register_load_function("relBody6d", &load_relef_task);
+static auto orientation_registered =
+    mc_tasks::MetaTaskLoader::register_load_function("orientation", &load_orientation_task);
+static auto position_registered = mc_tasks::MetaTaskLoader::register_load_function("position", &load_position_task);
+static auto body6d_registered = mc_tasks::MetaTaskLoader::register_load_function("body6d", &load_ef_task);
+static auto relbody6d_registered = mc_tasks::MetaTaskLoader::register_load_function("relBody6d", &load_relef_task);
 
 } // namespace

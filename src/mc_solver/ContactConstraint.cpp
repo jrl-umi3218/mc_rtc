@@ -63,7 +63,7 @@ void ContactConstraint::removeFromSolver(tasks::qp::QPSolver & solver)
 namespace
 {
 
-static bool registered = mc_solver::ConstraintSetLoader::register_load_function(
+static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
     "contact",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
       std::string cTypeStr = config("contactType", std::string{"velocity"});

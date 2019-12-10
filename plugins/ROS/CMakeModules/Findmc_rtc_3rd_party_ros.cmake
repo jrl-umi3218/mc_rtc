@@ -6,7 +6,6 @@
 #
 # If everything if found:
 # - ROSCPP_FOUND is true
-# - DEFINE_HAS_ROS_MACRO is "#define MC_RTC_HAS_ROS 1"
 # - you can link with mc_rtc_3rd_party::ROS
 #
 
@@ -43,7 +42,6 @@ if(NOT TARGET mc_rtc_3rd_party::ROS)
       endif()
     endforeach()
     list(REMOVE_DUPLICATES MC_RTC_ROS_FULL_LIBRARIES)
-    set(DEFINE_HAS_ROS_MACRO "#define MC_RTC_HAS_ROS 1")
     add_library(mc_rtc_3rd_party::ROS INTERFACE IMPORTED)
     set_target_properties(mc_rtc_3rd_party::ROS PROPERTIES
       INTERFACE_LINK_LIBRARIES "${MC_RTC_ROS_FULL_LIBRARIES}"
@@ -53,6 +51,5 @@ if(NOT TARGET mc_rtc_3rd_party::ROS)
     message("-- Found ROS include directories: ${MC_RTC_ROS_INCLUDE_DIRS}")
   else()
     set(ROSCPP_FOUND False)
-    set(DEFINE_HAS_ROS_MACRO "")
   endif()
 endif()

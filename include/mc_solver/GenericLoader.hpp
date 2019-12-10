@@ -12,6 +12,34 @@ namespace mc_solver
 {
 
 template<typename Derived, typename T>
+GenericLoader<Derived, T>::Handle::Handle(const std::string & type) : type_(type)
+{
+}
+
+template<typename Derived, typename T>
+GenericLoader<Derived, T>::Handle::Handle(Handle && h) : type_("")
+{
+  std::swap(h.type_, type_);
+}
+
+template<typename Derived, typename T>
+typename GenericLoader<Derived, T>::Handle & GenericLoader<Derived, T>::Handle::operator=(Handle && h)
+{
+  if(&h == this)
+  {
+    return *this;
+  }
+  std::swap(h.type_, type_);
+  return *this;
+}
+
+template<typename Derived, typename T>
+GenericLoader<Derived, T>::Handle::~Handle()
+{
+  GenericLoader<Derived, T>::unregister_load_function(type_);
+}
+
+template<typename Derived, typename T>
 typename GenericLoader<Derived, T>::T_ptr GenericLoader<Derived, T>::load(mc_solver::QPSolver & solver,
                                                                           const std::string & file)
 {
@@ -68,16 +96,26 @@ std::shared_ptr<U> GenericLoader<Derived, T>::cast(const GenericLoader<Derived, 
 }
 
 template<typename Derived, typename T>
-bool GenericLoader<Derived, T>::register_load_function(const std::string & type, load_fun fn)
+typename GenericLoader<Derived, T>::Handle GenericLoader<Derived, T>::register_load_function(const std::string & type,
+                                                                                             load_fun fn)
 {
   static auto & fns = get_fns();
   if(fns.count(type) == 0)
   {
     fns[type] = fn;
-    return true;
+    return Handle(type);
   }
   LOG_ERROR_AND_THROW(std::runtime_error, type << " is already handled by another loading function")
-  return false;
+}
+
+template<typename Derived, typename T>
+void GenericLoader<Derived, T>::unregister_load_function(const std::string & type)
+{
+  static auto & fns = get_fns();
+  if(fns.count(type))
+  {
+    fns.erase(type);
+  }
 }
 
 } // namespace mc_solver

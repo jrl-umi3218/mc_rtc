@@ -3,7 +3,6 @@
  */
 
 #include <mc_control/mc_global_controller.h>
-#include <mc_rtc/ros.h>
 
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>

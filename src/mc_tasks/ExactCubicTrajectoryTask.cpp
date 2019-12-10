@@ -94,7 +94,7 @@ void ExactCubicTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 
 namespace
 {
-static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
+static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "exact_cubic_trajectory",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
       sva::PTransformd finalTarget_;

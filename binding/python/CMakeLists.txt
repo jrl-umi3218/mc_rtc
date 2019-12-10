@@ -2,12 +2,6 @@
 # Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-if(${ROSCPP_FOUND})
-  set(DEFINE_HAS_ROS_PYTHON_MACRO "DEF MC_RTC_HAS_ROS = 1")
-else()
-  set(DEFINE_HAS_ROS_PYTHON_MACRO "DEF MC_RTC_HAS_ROS = 0")
-endif()
-
 set(BINDINGS_LIBRARIES
   mc_control_fsm
   mc_control
@@ -18,7 +12,6 @@ set(BINDINGS_LIBRARIES
   mc_solver
   mc_tasks
   mc_trajectory
-  mc_rtc_ros
   mc_control_client
 )
 if(WIN32)
@@ -82,7 +75,6 @@ add_cython_bindings(mc_rtc
     mc_tasks/vector_orientation_trajectory_task.pxi
     tests/test_mc_rtc.py
   GENERATE_SOURCES
-    mc_rtc/mc_rtc_config.pxi
     tests/test_mc_tasks.py
 )
 

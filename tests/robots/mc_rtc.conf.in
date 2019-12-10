@@ -14,9 +14,10 @@
   "UseSandbox" : true,
 
   "ClearControllerModulePath" : true,
-  "ControllerModulePaths" : ["@CMAKE_BINARY_DIR@/src/mc_control"],
+  "ControllerModulePaths" : ["@PROJECT_BINARY_DIR@/src/mc_control"],
   "ClearRobotModulePath" : true,
-  "RobotModulePaths" : ["@CMAKE_BINARY_DIR@/tests/robots/@TEST_ROBOT_NAME@"],
+  "RobotModulePaths" : ["@PROJECT_BINARY_DIR@/tests/robots/@TEST_ROBOT_NAME@"],
   "ClearObserverModulePath": true,
-  "ObserverModulePaths": ["@OBSERVER_MODULE_PATH@"]
+  "ObserverModulePaths": ["@OBSERVER_MODULE_PATH@"],
+  "ClearGlobalPluginPath": true
 }

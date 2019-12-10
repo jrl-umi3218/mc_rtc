@@ -4,7 +4,7 @@
 
 #include <mc_control/mc_global_controller.h>
 
-#include "mc_global_controller_ros_services.h"
+#include <mc_control/GlobalPlugin.h>
 
 #include <mc_rbdyn/RobotLoader.h>
 
@@ -14,7 +14,6 @@
 #include <mc_rtc/gui/Label.h>
 #include <mc_rtc/gui/NumberInput.h>
 #include <mc_rtc/logging.h>
-#include <mc_rtc/ros.h>
 
 #include <RBDyn/EulerIntegration.h>
 #include <RBDyn/FK.h>
@@ -84,10 +83,10 @@ void addQOutLogEntry(std::function<void(std::vector<double> &)> callback,
 
 } // namespace
 
-/* Note all service calls except for controller switches are implemented in mc_global_controller_services.cpp */
-
 namespace mc_control
 {
+
+MCGlobalController::PluginHandle::~PluginHandle() {}
 
 MCGlobalController::MCGlobalController(const std::string & conf, std::shared_ptr<mc_rbdyn::RobotModule> rm)
 : MCGlobalController(GlobalConfiguration(conf, rm))
@@ -113,6 +112,23 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
     {
       LOG_ERROR("Observer " << observerName << " requested in configuration but not available");
     }
+  }
+
+  // Loading plugins
+  config.load_plugin_configs();
+  try
+  {
+    plugin_loader.reset(new mc_rtc::ObjectLoader<mc_control::GlobalPlugin>(
+        "MC_RTC_GLOBAL_PLUGIN", config.global_plugin_paths, config.use_sandbox, config.verbose_loader));
+  }
+  catch(mc_rtc::LoaderException & exc)
+  {
+    LOG_ERROR("Failed to initialize plugin loader")
+    LOG_ERROR_AND_THROW(std::runtime_error, "Failed to initialize plugin loader")
+  }
+  for(const auto & plugin : config.global_plugins)
+  {
+    plugins_.emplace_back(plugin, plugin_loader->create_unique_object(plugin));
   }
 
   // Loading controller modules
@@ -157,7 +173,6 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
     real_robots->load(*config.main_robot_module);
   }
 
-  mc_rtc::ROSBridge::set_publisher_timestep(config.publish_timestep);
   if(config.enable_log)
   {
     for(auto c : controllers)
@@ -177,7 +192,6 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
                                                      config.gui_server_rep_uris));
     }
   }
-  ros_services_.reset(new ROSServicesImpl(mc_rtc::ROSBridge::get_node_handle(), *this));
 }
 
 MCGlobalController::~MCGlobalController() {}
@@ -263,8 +277,11 @@ void MCGlobalController::init(const std::vector<double> & initq, const std::arra
   setGripperCurrentQ(gripperInit);
   controller_->reset({q});
   controller_->resetObservers();
-  init_publishers();
   initGUI();
+  for(auto & plugin : plugins_)
+  {
+    plugin.plugin->init(*this, config.global_plugin_configs[plugin.name]);
+  }
 }
 
 void MCGlobalController::setSensorPosition(const Eigen::Vector3d & pos)
@@ -464,8 +481,6 @@ bool MCGlobalController::run()
     }
     else
     {
-      /*XXX Need to be careful here */
-      /*XXX Need to get the current contacts from the controller when needed */
       controller_->stop();
       LOG_INFO("Reset with q[0]")
       std::cout << controller_->robot().mbc().q[0][0] << " ";
@@ -482,8 +497,11 @@ bool MCGlobalController::run()
       next_controller_->reset({controller_->robot().mbc().q});
       next_controller_->resetObservers();
       controller_ = next_controller_;
-      /** Initialize publishers again if the environment changed */
-      init_publishers();
+      /** Reset plugins */
+      for(auto & plugin : plugins_)
+      {
+        plugin.plugin->reset(*this);
+      }
     }
     next_controller_ = 0;
     current_ctrl = next_ctrl;
@@ -492,6 +510,12 @@ bool MCGlobalController::run()
       start_log();
     }
     initGUI();
+  }
+  for(auto & plugin : plugins_)
+  {
+    auto start_t = clock::now();
+    plugin.plugin->before(*this);
+    plugin.plugin_before_dt = clock::now() - start_t;
   }
   if(running)
   {
@@ -518,9 +542,6 @@ bool MCGlobalController::run()
     solver_build_and_solve_t = 0;
     solver_solve_t = 0;
   }
-  auto start_publish_t = clock::now();
-  publish_robots();
-  publish_dt = clock::now() - start_publish_t;
   if(server_)
   {
     auto start_gui_t = clock::now();
@@ -528,8 +549,14 @@ bool MCGlobalController::run()
     server_->publish(*controller_->gui_);
     gui_dt = clock::now() - start_gui_t;
   }
+  for(auto & plugin : plugins_)
+  {
+    auto start_t = clock::now();
+    plugin.plugin->after(*this);
+    plugin.plugin_after_dt = clock::now() - start_t;
+  }
   global_run_dt = clock::now() - start_run_t;
-  // Percentage of time spent not updating/solving the QP
+  // Percentage of time not spent inside the user code
   framework_cost = 100 * (1 - controller_run_dt.count() / global_run_dt.count());
   return running;
 }
@@ -545,7 +572,18 @@ MCController & MCGlobalController::controller()
   return *controller_;
 }
 
+const MCController & MCGlobalController::controller() const
+{
+  assert(controller_ != nullptr);
+  return *controller_;
+}
+
 mc_rbdyn::Robot & MCGlobalController::robot()
+{
+  return controller_->robot();
+}
+
+const mc_rbdyn::Robot & MCGlobalController::robot() const
 {
   return controller_->robot();
 }
@@ -634,7 +672,7 @@ void MCGlobalController::setGripperOpenPercent(const std::string & name, double 
   }
 }
 
-double MCGlobalController::timestep()
+double MCGlobalController::timestep() const
 {
   return config.timestep;
 }
@@ -766,54 +804,6 @@ bool MCGlobalController::EnableController(const std::string & name)
   }
 }
 
-void MCGlobalController::init_publishers()
-{
-  // Publish controlled robot
-  if(config.publish_control_state)
-  {
-    mc_rtc::ROSBridge::init_robot_publisher("control", timestep(), robot());
-  }
-  // Publish environment state
-  if(config.publish_env_state)
-  {
-    const auto & robots = controller_->robots();
-    for(size_t i = 1; i < robots.robots().size(); ++i)
-    {
-      mc_rtc::ROSBridge::init_robot_publisher("control/env_" + std::to_string(i), timestep(), robots.robot(i));
-    }
-  }
-  // Publish real robot
-  if(config.publish_real_state)
-  {
-    auto & real_robot = real_robots->robot();
-    mc_rtc::ROSBridge::init_robot_publisher("real", timestep(), real_robot);
-  }
-}
-
-void MCGlobalController::publish_robots()
-{
-  // Publish controlled robot
-  if(config.publish_control_state)
-  {
-    mc_rtc::ROSBridge::update_robot_publisher("control", timestep(), robot(), controller_->grippers);
-  }
-  // Publish environment state
-  if(config.publish_env_state)
-  {
-    const auto & robots = controller_->robots();
-    for(size_t i = 1; i < robots.robots().size(); ++i)
-    {
-      mc_rtc::ROSBridge::update_robot_publisher("control/env_" + std::to_string(i), timestep(), robots.robot(i));
-    }
-  }
-  // Publish real robot
-  if(config.publish_real_state)
-  {
-    auto & real_robot = real_robots->robot();
-    mc_rtc::ROSBridge::update_robot_publisher("real", timestep(), real_robot, controller_->grippers);
-  }
-}
-
 bool MCGlobalController::GoToHalfSitPose()
 {
   if(current_ctrl != std::string("HalfSitPose"))
@@ -935,9 +925,18 @@ void MCGlobalController::setup_log()
   controller->logger().addLogEntry("perf_SolverBuildAndSolve", [this]() { return solver_build_and_solve_t; });
   controller->logger().addLogEntry("perf_SolverSolve", [this]() { return solver_solve_t; });
   controller->logger().addLogEntry("perf_Log", [this]() { return log_dt.count(); });
-  controller->logger().addLogEntry("perf_Publish", [this]() { return publish_dt.count(); });
   controller->logger().addLogEntry("perf_Gui", [this]() { return gui_dt.count(); });
   controller->logger().addLogEntry("perf_FrameworkCost", [this]() { return framework_cost; });
+  for(const auto & plugin : plugins_)
+  {
+    controller->logger().addLogEntry("perf_Plugins_" + plugin.name, [&plugin]() {
+      return plugin.plugin_before_dt.count() + plugin.plugin_after_dt.count();
+    });
+    controller->logger().addLogEntry("perf_Plugins_" + plugin.name + "_before",
+                                     [&plugin]() { return plugin.plugin_before_dt.count(); });
+    controller->logger().addLogEntry("perf_Plugins_" + plugin.name + "_after",
+                                     [&plugin]() { return plugin.plugin_after_dt.count(); });
+  }
   // Log system wall time as nanoseconds since epoch (can be used to manage synchronization with ros)
   controller->logger().addLogEntry("timeWall", []() -> int64_t {
     int64_t nanoseconds_since_epoch = std::chrono::system_clock::now().time_since_epoch() / std::chrono::nanoseconds(1);

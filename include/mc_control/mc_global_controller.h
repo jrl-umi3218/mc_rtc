@@ -5,9 +5,12 @@
 #pragma once
 
 #include <mc_control/ControllerServer.h>
+#include <mc_control/GlobalPlugin_fwd.h>
 #include <mc_control/api.h>
 #include <mc_control/mc_controller.h>
+
 #include <mc_rbdyn/RobotModule.h>
+
 #include <mc_rtc/loader.h>
 #include <mc_rtc/log/Logger.h>
 
@@ -18,9 +21,6 @@
 
 namespace mc_control
 {
-
-/** pimpl to provide ROS services if ROS is available */
-struct ROSServicesImpl;
 
 struct MC_CONTROL_DLLAPI MCGlobalController
 {
@@ -75,7 +75,7 @@ public:
   MCGlobalController(const GlobalConfiguration & conf);
 
   /*! \brief Destructor */
-  virtual ~MCGlobalController();
+  ~MCGlobalController();
 
   /*! \brief Returns a list of enabled controllers */
   std::vector<std::string> enabled_controllers() const;
@@ -248,11 +248,17 @@ public:
   /*! \brief Access the current controller */
   MCController & controller();
 
+  /*! \brief Const access to current controller */
+  const MCController & controller() const;
+
   /*! \brief Access the main robot */
   mc_rbdyn::Robot & robot();
 
+  /*! \brief Const access to the main robot */
+  const mc_rbdyn::Robot & robot() const;
+
   /*! \brief Get the controller timestep */
-  double timestep();
+  double timestep() const;
 
   /*! \brief Access the reference joint order
    *
@@ -412,6 +418,10 @@ public:
     std::vector<std::string> enabled_observers = {};
     std::unordered_map<std::string, mc_rtc::Configuration> observer_configs;
 
+    std::vector<std::string> global_plugin_paths = {};
+    std::vector<std::string> global_plugins = {};
+    std::unordered_map<std::string, mc_rtc::Configuration> global_plugin_configs;
+
     std::vector<std::string> controller_module_paths = {};
     std::vector<std::string> enabled_controllers = {};
     std::string initial_controller = "";
@@ -419,11 +429,6 @@ public:
     double timestep = 0.002;
 
     bool log_real = false;
-
-    bool publish_control_state = true;
-    bool publish_env_state = true;
-    bool publish_real_state = true;
-    double publish_timestep = 0.01;
 
     bool enable_log = true;
     mc_rtc::Logger::Policy log_policy = mc_rtc::Logger::Policy::NON_THREADED;
@@ -438,9 +443,12 @@ public:
     Configuration config;
 
     void load_controllers_configs();
+
+    void load_plugin_configs();
   };
 
 private:
+  using duration_ms = std::chrono::duration<double, std::milli>;
   GlobalConfiguration config;
   std::string current_ctrl = "";
   std::string next_ctrl = "";
@@ -455,9 +463,21 @@ private:
 
   std::unique_ptr<mc_control::ControllerServer> server_ = nullptr;
 
-  void init_publishers();
-
-  void publish_robots();
+  std::unique_ptr<mc_rtc::ObjectLoader<GlobalPlugin>> plugin_loader;
+  struct PluginHandle
+  {
+    PluginHandle(const std::string & name, GlobalPluginPtr plugin) : name(name), plugin(std::move(plugin)) {}
+    PluginHandle(const PluginHandle &) = delete;
+    PluginHandle & operator=(const PluginHandle &) = delete;
+    PluginHandle(PluginHandle &&) = default;
+    PluginHandle & operator=(PluginHandle &&) = default;
+    ~PluginHandle();
+    std::string name;
+    GlobalPluginPtr plugin;
+    duration_ms plugin_before_dt{0};
+    duration_ms plugin_after_dt{0};
+  };
+  std::vector<PluginHandle> plugins_;
 
   void initGUI();
 
@@ -466,18 +486,13 @@ private:
   std::map<std::string, bool> setup_logger_ = {};
 
   /** Timers and performance measure */
-  using duration_ms = std::chrono::duration<double, std::milli>;
   duration_ms global_run_dt{0};
   duration_ms controller_run_dt{0};
   duration_ms log_dt{0};
-  duration_ms publish_dt{0};
   duration_ms gui_dt{0};
   double solver_build_and_solve_t = 0;
   double solver_solve_t = 0;
   double framework_cost = 0;
-
-  /** ROS services */
-  std::unique_ptr<ROSServicesImpl> ros_services_;
 };
 
 } // namespace mc_control

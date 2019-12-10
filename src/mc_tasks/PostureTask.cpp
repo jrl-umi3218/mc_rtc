@@ -229,7 +229,7 @@ void PostureTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 namespace
 {
 
-static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
+static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "posture",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
       auto t =

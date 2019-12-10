@@ -29,15 +29,6 @@ cdef extern from "<memory>" namespace "std" nogil:
     shared_ptr(T*)
     T* get()
 
-include "mc_rtc_config.pxi"
-IF MC_RTC_HAS_ROS == 1:
-  cdef extern from "<mc_rtc/ros.h>" namespace "mc_rtc":
-    cdef cppclass RobotPublisher:
-      RobotPublisher(const string& prefix, double rate, double dt)
-
-      void update(double dt, const c_mc_rbdyn.Robot & robot,
-                  const cppmap[string, shared_ptr[c_mc_control.Gripper]]  &)
-
 cdef extern from "<mc_rtc/log/Logger.h>" namespace "mc_rtc":
   cdef cppclass Logger:
     # Simplified from C++

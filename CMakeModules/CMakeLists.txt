@@ -8,10 +8,6 @@ set(MODULE_FILES
   Findmc_rtc_3rd_party_nanomsg.cmake
 )
 
-if(${ROSCPP_FOUND} AND NOT ${DISABLE_ROS})
-  list(APPEND MODULE_FILES Findmc_rtc_3rd_party_ros.cmake)
-endif()
-
 if(NOT WIN32)
   list(APPEND MODULE_FILES Findmc_rtc_3rd_party_ltdl.cmake)
 endif()

@@ -125,7 +125,7 @@ mc_solver::ConstraintSetPtr load_dyn_constr(mc_solver::QPSolver & solver, const 
   }
 }
 
-static bool registered = mc_solver::ConstraintSetLoader::register_load_function("kinematics", &load_kin_constr)
-                         && mc_solver::ConstraintSetLoader::register_load_function("dynamics", &load_dyn_constr);
+static auto kin_registered = mc_solver::ConstraintSetLoader::register_load_function("kinematics", &load_kin_constr);
+static auto dyn_registered = mc_solver::ConstraintSetLoader::register_load_function("dynamics", &load_dyn_constr);
 
 } // namespace
