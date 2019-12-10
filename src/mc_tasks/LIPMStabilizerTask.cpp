@@ -1142,7 +1142,7 @@ void StabilizerTask::updateFootForceDifferenceControl()
 namespace
 {
 
-static bool registered = mc_tasks::MetaTaskLoader::register_load_function(
+static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "lipm_stabilizer",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
       unsigned robotIndex = config("robotIndex");
