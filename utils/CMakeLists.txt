@@ -21,19 +21,14 @@ add_mc_rtc_utils(mc_old_bin_to_flat mc_old_bin_to_flat.cpp)
 
 add_mc_rtc_utils(mc_json_to_yaml mc_json_to_yaml.cpp)
 
-if(${ROSCPP_FOUND})
-  add_mc_rtc_utils(mc_bin_to_rosbag mc_bin_to_rosbag.cpp mc_bin_to_rosbag_main.cpp)
-endif()
-
+configure_file(mc_bin_utils.in.cpp "${CMAKE_CURRENT_BINARY_DIR}/mc_bin_utils.cpp")
 set(mc_bin_utils_SRC
-  mc_bin_utils.cpp
+  "${CMAKE_CURRENT_BINARY_DIR}/mc_bin_utils.cpp"
   mc_bin_to_log.cpp
   mc_bin_to_flat.cpp
 )
-if(${ROSCPP_FOUND})
-  list(APPEND mc_bin_utils_SRC mc_bin_to_rosbag.cpp)
-endif()
 add_mc_rtc_utils(mc_bin_utils ${mc_bin_utils_SRC})
+target_include_directories(mc_bin_utils PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 target_link_libraries(mc_bin_utils PUBLIC Boost::program_options Boost::disable_autolinking PRIVATE mpack)
 
 set(UTILS_SCRIPT

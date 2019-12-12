@@ -24,11 +24,13 @@ namespace po = boost::program_options;
 #include <fstream>
 #include <iomanip>
 #include <iostream>
-#ifdef MC_RTC_HAS_ROS
-#  include "mc_bin_to_rosbag.h"
-#endif
 
 #include "../src/mc_rtc/internals/LogEntry.h"
+
+namespace
+{
+static bfs::path MC_BIN_TO_ROSBAG = "@CMAKE_INSTALL_PREFIX@/bin/mc_bin_to_rosbag@CMAKE_EXECUTABLE_SUFFIX@";
+} // namespace
 
 void usage()
 {
@@ -502,15 +504,19 @@ int convert(int argc, char * argv[])
   }
   else if(format == ".bag")
   {
-#ifdef MC_RTC_HAS_ROS
-    if(vm.count("dt"))
+    if(bfs::exists(MC_BIN_TO_ROSBAG))
     {
-      dt = vm["dt"].as<double>();
+      if(vm.count("dt"))
+      {
+        dt = vm["dt"].as<double>();
+      }
+      std::string cmd = MC_BIN_TO_ROSBAG.string() + " " + in + " " + out_p.string() + " " + std::to_string(dt);
+      system(cmd.c_str());
     }
-    mc_bin_to_rosbag(in, out_p.string(), dt);
-#else
-    LOG_ERROR("mc_rtc is not build with ROS support, bag conversion is not available")
-#endif
+    else
+    {
+      LOG_ERROR("mc_rtc is not build with ROS support, bag conversion is not available")
+    }
   }
   return 0;
 }

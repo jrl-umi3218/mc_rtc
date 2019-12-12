@@ -5,6 +5,10 @@ if(NOT DEFINED PROJECT_VERSION)
 endif()
 project(mc_rtc_ros_plugin LANGUAGES CXX VERSION ${PROJECT_VERSION})
 
+if(POLICY CMP0063)
+  cmake_policy(SET CMP0063 NEW)
+endif()
+
 # Detect if we are building inside mc_rtc
 if(NOT TARGET mc_rtc::mc_control)
   find_package(mc_rtc REQUIRED)
@@ -49,6 +53,15 @@ set_target_properties(mc_rtc_ros PROPERTIES COMPILE_FLAGS "-DMC_TASKS_ROS_EXPORT
 target_link_libraries(mc_tasks_ros PUBLIC mc_rtc_ros mc_rtc::mc_tasks)
 set_target_properties(mc_tasks_ros PROPERTIES SOVERSION ${PROJECT_VERSION_MAJOR} VERSION ${PROJECT_VERSION})
 install(FILES ${mc_tasks_ros_HDR} DESTINATION include/mc_tasks)
+
+set(mc_bin_to_rosbag_SRC
+  utils/mc_bin_to_rosbag.cpp
+  utils/mc_bin_to_rosbag.h
+  utils/mc_bin_to_rosbag_main.cpp)
+add_executable(mc_bin_to_rosbag ${mc_bin_to_rosbag_SRC})
+set_target_properties(mc_bin_to_rosbag PROPERTIES FOLDER utils)
+target_link_libraries(mc_bin_to_rosbag PUBLIC mc_rtc::mc_control mc_rtc_ros)
+install(TARGETS mc_bin_to_rosbag DESTINATION bin)
 
 install(TARGETS mc_rtc_ros mc_tasks_ros
   EXPORT "${TARGETS_EXPORT_NAME}"
