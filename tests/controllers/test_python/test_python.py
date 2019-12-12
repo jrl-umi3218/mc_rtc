@@ -47,7 +47,6 @@ class TestPythonController(mc_control.MCPythonController):
   def reset_callback(self, reset_data):
     self.positionTask.reset()
     self.positionTask.position(self.positionTask.position() + eigen.Vector3d(0.1, 0, 0))
-    self.set_joint_pos(self.hj1_name, self.hj1_q)
     self.logger().addLogEntry("PYTHONDOUBLE", lambda: self.d_data)
     self.logger().addLogEntry("PYTHONDOUBLEV", lambda: self.dv_data)
     self.logger().addLogEntry("PYTHONQUAT", lambda: self.quat_data)

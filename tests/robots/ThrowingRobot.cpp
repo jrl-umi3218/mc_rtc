@@ -10,7 +10,7 @@ struct ThrowingRobot : public mc_rbdyn::RobotModule
 {
   ThrowingRobot() : RobotModule(std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH), std::string("ground"))
   {
-    throw("bye");
+    throw std::runtime_error("bye");
   }
 };
 
