@@ -77,7 +77,7 @@ set(LOG_ENABLED "true")
 controller_test_run(TestPostureController 400)
 # These tests require a /tmp LogDirectory and symlinks to access the
 # *-latest.log symlink created by mc_rtc
-if(UNIX)
+if(UNIX AND NOT DEFINED PYTHON_DEB_ROOT)
   set(UTILS_BIN_DIR ${CMAKE_CURRENT_BINARY_DIR}/../../utils)
   add_test(TestPostureControllerLog ${CMAKE_CURRENT_SOURCE_DIR}/check_log.py "TestPostureController" 400 "${UTILS_BIN_DIR}")
 
@@ -156,7 +156,7 @@ if(${PYTHON_BINDING})
     endif()
     set(LDPATH "$<TARGET_FILE_DIR:mc_control_fsm>")
     add_test(NAME "Test${PYTHON}Controller" COMMAND ${CMAKE_COMMAND} -E env "PYTHONPATH=${PYTHONPATH}${PATH_SEP}$ENV{PYTHONPATH}" ${CMAKE_COMMAND} -E env "${LDPATH_VAR}=${LDPATH}${PATH_SEP}$ENV{${LDPATH_VAR}}" $<TARGET_FILE:test_controller_ticker> --run_test=RUN -- "${CONFIG_OUT}" 400 "")
-    if(UNIX)
+    if(UNIX AND NOT DEFINED PYTHON_DEB_ROOT)
       add_test(Test${PYTHON}Log "${CMAKE_CURRENT_SOURCE_DIR}/check_log.py" "${TEST_CONTROLLER_NAME}" 400 "${UTILS_BIN_DIR}")
     endif()
   endforeach()

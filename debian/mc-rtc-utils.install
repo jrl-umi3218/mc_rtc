@@ -1,0 +1,11 @@
+usr/lib/python2.7/dist-packages/mc_log_ui/*
+usr/bin/mc_bin_to_log
+usr/bin/mc_bin_to_flat
+usr/bin/mc_bin_perf
+usr/bin/mc_old_bin_to_flat
+usr/bin/mc_json_to_yaml
+usr/bin/mc_bin_utils
+usr/bin/mc_rtc_new_controller
+usr/bin/mc_rtc_new_fsm_controller
+usr/bin/mc_log_ui
+usr/bin/mc_plot_logs

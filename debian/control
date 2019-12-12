@@ -1,0 +1,141 @@
+Source: mc-rtc
+Priority: optional
+Maintainer: Pierre Gergondet <pierre.gergondet+ppa@gmail.com>
+Standards-Version: 3.9.5
+Section: libs
+Homepage: https://github.com/jrl-umi3218/mc_rtc
+Vcs-Git: https://github.com/jrl-umi3218/mc_rtc
+Vcs-Browser: https://github.com/jrl-umi3218/mc_rtc
+Build-Depends: debhelper (>= 9),
+               cmake,
+               doxygen,
+               libboost-filesystem-dev,
+               libboost-program-options-dev,
+               libboost-regex-dev,
+               libboost-system-dev,
+               libboost-test-dev,
+               libboost-thread-dev,
+               libboost-timer-dev,
+               libtasks-qld-dev|libtasks-dev,
+               libmc-rbdyn-urdf-dev,
+               libgeos++-dev,
+               mc-rtc-data,
+               python,
+               python-all,
+               python-dev,
+               python-enum34,
+               python-nose,
+               python-setuptools,
+               cython,
+               python3-all,
+               python3-dev,
+               python3-nose,
+               python3-setuptools,
+               cython3,
+               python-tasks,
+               python3-tasks,
+               python-mc-rbdyn-urdf,
+               python3-mc-rbdyn-urdf,
+               libnanomsg-dev,
+               libhpp-spline-dev,
+               libyaml-cpp-dev,
+# ros-@ROS_DISTRO@-ros-base,
+# ros-@ROS_DISTRO@-roscpp,
+# ros-@ROS_DISTRO@-sensor-msgs,
+# ros-@ROS_DISTRO@-common-msgs,
+# ros-@ROS_DISTRO@-tf2-ros,
+# ros-@ROS_DISTRO@-rosbag,
+# ros-@ROS_DISTRO@-mc-rtc-msgs,
+               libltdl-dev
+
+Package: libmc-rtc-dev
+Section: libdevel
+Architecture: any
+Depends: cmake,
+         libboost-filesystem-dev,
+         libboost-system-dev,
+         libboost-thread-dev,
+         libboost-timer-dev,
+         libtasks-qld-dev|libtasks-dev,
+         libmc-rbdyn-urdf-dev,
+         libgeos++-dev,
+         libmc-rtc1 (= ${binary:Version}),
+         ${misc:Depends}
+Suggests: libmc-rtc-doc
+Description: mc-rtc - Development files
+ mc_rtc is an interface for simulated and real robotic systems suitable for
+ real-time control.  It provides programmers with a simple interface to build
+ versatile controllers as well as a set of tools to help with the development of
+ said controllers.
+ .
+ This package contains development files (headers and shared library
+ symbolic link).
+
+Package: libmc-rtc1
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
+Description: mc-rtc - Real-time control of robots
+ mc_rtc is an interface for simulated and real robotic systems suitable for
+ real-time control.  It provides programmers with a simple interface to build
+ versatile controllers as well as a set of tools to help with the development of
+ said controllers.
+ .
+ This package contains the essential files for a working system (shared
+ libraries)
+
+Package: mc-rtc-utils
+Section: science
+Architecture: any
+Depends: libmc-rtc1 (= ${binary:Version}),
+         python-mc-rtc,
+         python-matplotlib,
+         python-pyside,
+         ${shlibs:Depends},
+         ${misc:Depends}
+Description: mc-rtc - Utilities
+ mc_rtc is an interface for simulated and real robotic systems suitable for
+ real-time control.  It provides programmers with a simple interface to build
+ versatile controllers as well as a set of tools to help with the development of
+ said controllers.
+ .
+ This package contains essential utilities provided by mc_rtc (executables)
+
+Package: libmc-rtc-doc
+Section: doc
+Architecture: all
+Depends: ${misc:Depends}
+Multi-Arch: foreign
+Suggests: libmc-rtc-dev
+Description: mc-rtc - API documentation
+ mc_rtc is an interface for simulated and real robotic systems suitable for
+ real-time control.  It provides programmers with a simple interface to build
+ versatile controllers as well as a set of tools to help with the development of
+ said controllers.
+ .
+ This package provides the complete API documentation in HTML format.
+
+Package: python-mc-rtc
+Section: python
+Architecture: any
+Depends: ${python:Depends}, ${misc:Depends}, ${shlibs:Depends}, python-all, python-tasks, python-mc-rbdyn-urdf
+Description: mc_rtc - Python bindings
+ mc_rtc is an interface for simulated and real robotic systems suitable for
+ real-time control.  It provides programmers with a simple interface to build
+ versatile controllers as well as a set of tools to help with the development of
+ said controllers.
+ .
+ Python bindings for the mc_rtc libraries. Compatible with Python 2.
+
+Package: python3-mc-rtc
+Section: python
+Architecture: any
+Depends: ${python3:Depends}, ${misc:Depends}, ${shlibs:Depends}, python3-all, python3-tasks, python3-mc-rbdyn-urdf
+Description: mc_rtc - Python bindings
+ mc_rtc is an interface for simulated and real robotic systems suitable for
+ real-time control.  It provides programmers with a simple interface to build
+ versatile controllers as well as a set of tools to help with the development of
+ said controllers.
+ .
+ Python bindings for the mc_rtc library. Compatible with Python 3.

@@ -1,0 +1,5 @@
+mc-rtc (1.0.0-1ubuntu1) unstable; urgency=medium
+
+  * Initial release
+
+ -- Pierre Gergondet <pierre.gergondet+ppa@gmail.com>  Tue, 10 Dec 2019 13:51:25 +0800

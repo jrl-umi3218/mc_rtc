@@ -4,6 +4,3 @@
 [submodule ".jrl-ci"]
 	path = .jrl-ci
 	url = https://github.com/jrl-umi3218/jrl-travis.git
-[submodule ".packaging"]
-	path = .packaging
-	url = git@gite.lirmm.fr:idh/gitlab-ci-packaging

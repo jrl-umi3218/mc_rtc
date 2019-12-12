@@ -1,0 +1,8 @@
+Document: libmc-rtc-api-documentation
+Title: API documentation for mc_rtc
+Author: mc_rtc authors
+Section: Programming/C++
+
+Format: HTML
+Index: /usr/share/doc/mc_rtc/doxygen-html/index.html
+Files: /usr/share/doc/mc_rtc/doxygen-html/*.html

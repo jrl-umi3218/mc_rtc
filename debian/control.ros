@@ -1,0 +1,18 @@
+
+Package: ros-@ROS_DISTRO@-mc-rtc-plugin
+Section: libs
+Architecture: any
+Depends: libmc-rtc-dev,
+         ros-@ROS_DISTRO@-roscpp,
+         ros-@ROS_DISTRO@-common-msgs,
+         ros-@ROS_DISTRO@-tf2-ros,
+         ros-@ROS_DISTRO@-rosbag,
+         ${misc:Depends}
+Description: mc_rtc - ROS plugin
+ mc_rtc is an interface for simulated and real robotic systems suitable for
+ real-time control.  It provides programmers with a simple interface to build
+ versatile controllers as well as a set of tools to help with the development of
+ said controllers.
+ .
+ ROS plugin for mc_rtc. It will enable the publication of the robot's state by
+ mc_rtc controllers
