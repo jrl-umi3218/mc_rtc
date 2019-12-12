@@ -4,6 +4,8 @@
 
 #include <mc_rbdyn/PolygonInterpolator.h>
 
+#include <geos/version.h>
+
 #include <geos/geom/CoordinateSequence.h>
 #include <geos/geom/CoordinateSequenceFactory.h>
 #include <geos/geom/GeometryFactory.h>
@@ -43,17 +45,25 @@ std::shared_ptr<geos::geom::Geometry> PolygonInterpolator::fast_interpolate(doub
     perc = 1 + perc;
   }
   std::vector<tuple_t> points;
-  geos::geom::CoordinateSequence * seq = geom_factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0), 0);
+  auto seq = geom_factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0), 0);
+  std::vector<geos::geom::Coordinate> seq_points;
   for(const auto & p : tuple_pairs_)
   {
-    seq->add(geos::geom::Coordinate(static_cast<float>(p.first[0] * (1 - perc) + p.second[0] * perc),
-                                    static_cast<float>(p.first[1] * (1 - perc) + p.second[1] * perc)));
+    seq_points.push_back(geos::geom::Coordinate(static_cast<float>(p.first[0] * (1 - perc) + p.second[0] * perc),
+                                                static_cast<float>(p.first[1] * (1 - perc) + p.second[1] * perc)));
   }
-  seq->add(seq->getAt(0));
-  geos::geom::LinearRing * shell = geom_factory.createLinearRing(seq);
+  seq_points.push_back(seq_points[0]);
+  seq->setPoints(seq_points);
+  auto shell = geom_factory.createLinearRing(std::move(seq));
+#if GEOS_VERSION_MAJOR >= 3 && GEOS_VERSION_MINOR >= 7
+  auto poly = geom_factory.createPolygon(std::move(shell));
+  std::shared_ptr<geos::geom::Geometry> ret(poly->convexHull().release(), geom_deleter);
+  geom_factory.destroyGeometry(poly.release());
+#else
   geos::geom::Polygon * poly = geom_factory.createPolygon(shell, 0);
   std::shared_ptr<geos::geom::Geometry> ret(poly->convexHull(), geom_deleter);
   geom_factory.destroyGeometry(poly);
+#endif
   return ret;
 }
 
@@ -70,24 +80,35 @@ std::vector<PolygonInterpolator::tuple_t> PolygonInterpolator::midpoint_derivati
 std::vector<PolygonInterpolator::tuple_t> PolygonInterpolator::normal_derivative(double epsilon_derivative)
 {
   std::vector<tuple_t> res;
-  geos::geom::CoordinateSequence * seq_s =
-      geom_factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0), 2);
-  geos::geom::CoordinateSequence * seq_d =
-      geom_factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0), 2);
+  auto seq_s = geom_factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0), 2);
+  auto seq_d = geom_factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0), 2);
+  std::vector<geos::geom::Coordinate> points_s;
+  std::vector<geos::geom::Coordinate> points_d;
   for(const auto & p : tuple_pairs_)
   {
-    seq_s->add(geos::geom::Coordinate(static_cast<float>(p.first[0]), static_cast<float>(p.first[1])));
-    seq_d->add(geos::geom::Coordinate(static_cast<float>(p.second[0]), static_cast<float>(p.second[1])));
+    points_s.push_back(geos::geom::Coordinate(static_cast<float>(p.first[0]), static_cast<float>(p.first[1])));
+    points_d.push_back(geos::geom::Coordinate(static_cast<float>(p.second[0]), static_cast<float>(p.second[1])));
   }
-  seq_s->add(seq_s->getAt(0));
-  seq_d->add(seq_d->getAt(0));
-  geos::geom::LinearRing * shell_s = geom_factory.createLinearRing(seq_s);
-  geos::geom::LinearRing * shell_d = geom_factory.createLinearRing(seq_d);
+  points_s.push_back(points_s[0]);
+  points_d.push_back(points_d[0]);
+  seq_s->setPoints(points_s);
+  seq_d->setPoints(points_d);
+  auto shell_s = geom_factory.createLinearRing(std::move(seq_s));
+  auto shell_d = geom_factory.createLinearRing(std::move(seq_d));
+#if GEOS_VERSION_MAJOR >= 3 && GEOS_VERSION_MINOR >= 7
+  auto poly_s = geom_factory.createPolygon(std::move(shell_s));
+  auto poly_d = geom_factory.createPolygon(std::move(shell_d));
+#else
   geos::geom::Polygon * poly_s = geom_factory.createPolygon(shell_s, 0);
   geos::geom::Polygon * poly_d = geom_factory.createPolygon(shell_d, 0);
+#endif
+#if GEOS_VERSION_MAJOR >= 3 && GEOS_VERSION_MINOR >= 7
+  auto normals = [](std::unique_ptr<geos::geom::Polygon> & poly) {
+#else
   auto normals = [](geos::geom::Polygon * poly) {
+#endif
     std::vector<tuple_t> _res;
-    const geos::geom::CoordinateSequence * seq = poly->getExteriorRing()->getCoordinates();
+    auto seq = poly->getExteriorRing()->getCoordinates();
     for(size_t i = 0; i < seq->size() - 1; ++i)
     {
       const geos::geom::Coordinate & p = seq->getAt(i);
@@ -107,8 +128,11 @@ std::vector<PolygonInterpolator::tuple_t> PolygonInterpolator::normal_derivative
   };
   auto n_strt = normals(poly_s);
   auto n_dest = normals(poly_d);
+#if GEOS_VERSION_MAJOR >= 3 && GEOS_VERSION_MINOR >= 7
+#else
   geom_factory.destroyGeometry(poly_s);
   geom_factory.destroyGeometry(poly_d);
+#endif
   for(size_t i = 0; i < std::min(n_strt.size(), n_dest.size()); ++i)
   {
     if(n_strt[i][0] == 0 && n_strt[i][1] == 0 && n_dest[i][0] == 0 && n_dest[i][1] == 0)

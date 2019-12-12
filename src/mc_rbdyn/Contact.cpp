@@ -9,6 +9,8 @@
 #include <mc_rbdyn/contact_transform.h>
 #include <mc_rtc/logging.h>
 
+#include <geos/version.h>
+
 #include <geos/geom/CoordinateSequenceFactory.h>
 #include <geos/geom/GeometryFactory.h>
 #include <geos/geom/LinearRing.h>
@@ -66,36 +68,48 @@ std::vector<sva::PTransformd> computePoints(const mc_rbdyn::Surface & robotSurfa
     const geos::geom::GeometryFactory & factory = *factory_ptr;
 
     // Create robot surf polygon
-    geos::geom::CoordinateSequence * robotPoints2dseq =
-        factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0), 0);
+    auto robotPoints2dseq = factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0), 0);
+    std::vector<geos::geom::Coordinate> points;
     for(const std::pair<double, double> & p : robotPoints2d)
     {
-      robotPoints2dseq->add(geos::geom::Coordinate(p.first, p.second));
+      points.push_back(geos::geom::Coordinate(p.first, p.second));
     }
-    robotPoints2dseq->add(geos::geom::Coordinate(robotPoints2d[0].first, robotPoints2d[0].second));
-    geos::geom::LinearRing * robotPoints2dshell = factory.createLinearRing(robotPoints2dseq);
-    geos::geom::Polygon * robotSurfPoly = factory.createPolygon(robotPoints2dshell, 0);
+    points.push_back(geos::geom::Coordinate(robotPoints2d[0].first, robotPoints2d[0].second));
+    robotPoints2dseq->setPoints(points);
+    auto robotPoints2dshell = factory.createLinearRing(std::move(robotPoints2dseq));
+#if GEOS_VERSION_MAJOR >= 3 && GEOS_VERSION_MINOR >= 7
+    auto robotSurfPoly = factory.createPolygon(std::move(robotPoints2dshell));
+#else
+    auto robotSurfPoly = factory.createPolygon(std::move(robotPoints2dshell), nullptr);
+#endif
 
     // Create env surf polygon
-    geos::geom::CoordinateSequence * envPoints2dseq =
-        factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0), 0);
+    auto envPoints2dseq = factory.getCoordinateSequenceFactory()->create(static_cast<size_t>(0), 0);
+    points.clear();
     for(const std::pair<double, double> & p : envPoints2d)
     {
-      envPoints2dseq->add(geos::geom::Coordinate(p.first, p.second));
+      points.push_back(geos::geom::Coordinate(p.first, p.second));
     }
-    envPoints2dseq->add(geos::geom::Coordinate(envPoints2d[0].first, envPoints2d[0].second));
-    geos::geom::LinearRing * envPoints2dshell = factory.createLinearRing(envPoints2dseq);
-    geos::geom::Polygon * envSurfPoly = factory.createPolygon(envPoints2dshell, 0);
+    points.push_back(geos::geom::Coordinate(envPoints2d[0].first, envPoints2d[0].second));
+    envPoints2dseq->setPoints(points);
+    auto envPoints2dshell = factory.createLinearRing(std::move(envPoints2dseq));
+#if GEOS_VERSION_MAJOR >= 3 && GEOS_VERSION_MINOR >= 7
+    auto envSurfPoly = factory.createPolygon(std::move(envPoints2dshell));
+    auto newRobotSurfGeom = robotSurfPoly->intersection(envSurfPoly.get());
+    auto newRobotSurfPoly = dynamic_cast<geos::geom::Polygon *>(newRobotSurfGeom.get());
+#else
+    auto envSurfPoly = factory.createPolygon(std::move(envPoints2dshell), nullptr);
+    auto newRobotSurfGeom = robotSurfPoly->intersection(envSurfPoly);
+    auto newRobotSurfPoly = dynamic_cast<geos::geom::Polygon *>(newRobotSurfGeom);
+#endif
 
-    geos::geom::Geometry * newRobotSurfGeom = robotSurfPoly->intersection(envSurfPoly);
-    geos::geom::Polygon * newRobotSurfPoly = dynamic_cast<geos::geom::Polygon *>(newRobotSurfGeom);
     if(newRobotSurfPoly == 0)
     {
       LOG_INFO(robotSurface.name() << " and " << envSurface.name() << " surfaces don't intersect")
       return robotSurface.points();
     }
     std::vector<sva::PTransformd> res;
-    const geos::geom::CoordinateSequence * newPoints = newRobotSurfPoly->getExteriorRing()->getCoordinates();
+    auto newPoints = newRobotSurfPoly->getExteriorRing()->getCoordinates();
     for(size_t i = 0; i < newPoints->getSize() - 1; ++i)
     {
       const geos::geom::Coordinate & p = newPoints->getAt(i);

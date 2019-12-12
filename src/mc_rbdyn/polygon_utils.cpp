@@ -5,6 +5,8 @@
 #include <mc_rbdyn/polygon_utils.h>
 #include <mc_rtc/logging.h>
 
+#include <geos/version.h>
+
 #include <geos/geom/CoordinateSequence.h>
 #include <geos/geom/LinearRing.h>
 #include <geos/geom/Polygon.h>
@@ -70,7 +72,7 @@ std::vector<Plane> planes_from_polygon(const std::shared_ptr<geos::geom::Geometr
     LOG_ERROR("Could not cast geos::geom::Geometry to geos::geom::Polygon");
     return res;
   }
-  const geos::geom::CoordinateSequence * seq = polygon->getExteriorRing()->getCoordinates();
+  auto seq = polygon->getExteriorRing()->getCoordinates();
   for(size_t i = 0; i < seq->size() - 1; ++i)
   {
     Plane plane;
@@ -98,7 +100,7 @@ std::vector<Eigen::Vector3d> points_from_polygon(std::shared_ptr<geos::geom::Geo
   geos::geom::Polygon * polyIn = dynamic_cast<geos::geom::Polygon *>(geometry.get());
   if(polyIn)
   {
-    const geos::geom::CoordinateSequence * seq = polyIn->getExteriorRing()->getCoordinates();
+    auto seq = polyIn->getExteriorRing()->getCoordinates();
     for(size_t i = 0; i < seq->size(); ++i)
     {
       const geos::geom::Coordinate & p = seq->getAt(i);
