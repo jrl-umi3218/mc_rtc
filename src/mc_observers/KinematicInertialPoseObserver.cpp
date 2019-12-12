@@ -5,7 +5,7 @@
  * lipm_walking_controller <https://github.com/stephane-caron/lipm_walking_controller>
  */
 
-#include "KinematicInertialPoseObserver.h"
+#include <mc_observers/KinematicInertialPoseObserver.h>
 
 #include <mc_control/mc_controller.h>
 #include <mc_rbdyn/rpy_utils.h>
@@ -66,6 +66,13 @@ void KinematicInertialPoseObserver::updateRobots(const mc_control::MCController 
                                                  mc_rbdyn::Robots & realRobots)
 {
   realRobots.robot().posW(sva::PTransformd{orientation_, position_});
+}
+
+void KinematicInertialPoseObserver::updateBodySensor(mc_rbdyn::Robots & robots, const std::string & sensorName)
+{
+  auto & sensor = robots.robot().bodySensor(sensorName);
+  sensor.orientation(Eigen::Quaterniond(orientation_));
+  sensor.position(position_);
 }
 
 void KinematicInertialPoseObserver::addToLogger(const mc_control::MCController &, mc_rtc::Logger & logger)
