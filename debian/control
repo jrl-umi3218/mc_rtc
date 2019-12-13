@@ -59,6 +59,9 @@ Depends: cmake,
          libtasks-qld-dev|libtasks-dev,
          libmc-rbdyn-urdf-dev,
          libgeos++-dev,
+         libnanomsg-dev,
+         libhpp-spline-dev,
+         libyaml-cpp-dev,
          libmc-rtc1 (= ${binary:Version}),
          ${misc:Depends}
 Suggests: libmc-rtc-doc
@@ -75,7 +78,8 @@ Package: libmc-rtc1
 Section: libs
 Architecture: any
 Depends: ${shlibs:Depends},
-         ${misc:Depends}
+         ${misc:Depends},
+         mc-rtc-data
 Description: mc-rtc - Real-time control of robots
  mc_rtc is an interface for simulated and real robotic systems suitable for
  real-time control.  It provides programmers with a simple interface to build
