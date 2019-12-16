@@ -75,7 +75,7 @@ jobs:
             - path: leethomason/tinyxml2
               ref: 7.1.0
             - path: libgeos/geos
-              options: -DDISABLE_GEOS_INLINE:BOOL=ON
+              ref: 3.6.3
             - path: nanomsg/nanomsg
               ref: 1.1.5
             - path: jbeder/yaml-cpp
