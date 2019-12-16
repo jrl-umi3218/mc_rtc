@@ -58,7 +58,7 @@ typename GenericLoader<Derived, T>::T_ptr GenericLoader<Derived, T>::load(mc_sol
     {
       return fns[type](solver, config);
     }
-    LOG_ERROR_AND_THROW(std::runtime_error, "GenericLoader cannot handle object type " << type)
+    LOG_ERROR_AND_THROW(std::runtime_error, "GenericLoader cannot handle object type \"" << type << "\"")
   }
   LOG_ERROR_AND_THROW(std::runtime_error, "Attempted to load an object without a type property")
 }

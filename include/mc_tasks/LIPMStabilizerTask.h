@@ -493,13 +493,8 @@ protected:
   double runTime_ = 0.;
   double vdcHeightError_ = 0.; /**< Average height error used in vertical drift compensation */
   sva::ForceVecd distribWrench_ = sva::ForceVecd::Zero();
-  // XXX removed wrt to Stephane's version. Was only used to compute the ZMP, we
-  // use Robot::zmp instead
-  // sva::ForceVecd measuredWrench_; /**< Net contact wrench measured from sensors */
-
-  // XXX should be the sensors in contact only (same issue in stephane's code),
-  // otherwise while walking we're sensible to swing foot sensor noise
-  std::vector<std::string> sensorNames_ = {"LeftFootForceSensor", "RightFootForceSensor"};
+  std::vector<std::string> sensorNames_ = {
+      "LeftFootForceSensor", "RightFootForceSensor"}; /** Force sensors corresponding to established contacts */
   sva::PTransformd zmpFrame_;
 };
 

@@ -27,8 +27,8 @@ using HrepXd = std::pair<Eigen::MatrixXd, Eigen::VectorXd>;
 enum class ContactState
 {
   DoubleSupport,
-  LeftFoot,
-  RightFoot
+  Left,
+  Right
 };
 
 /** Contacts wrap foot frames with extra info from the footstep plan.
@@ -349,6 +349,46 @@ struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::Contact>
     {
       config("swing") = contact.swingConfig;
     }
+    return config;
+  }
+};
+
+template<>
+struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::ContactState>
+{
+  static mc_rbdyn::lipm_stabilizer::ContactState load(const mc_rtc::Configuration & config)
+  {
+    using ContactState = mc_rbdyn::lipm_stabilizer::ContactState;
+    const std::string & s = config;
+    if(s == "DoubleSupport")
+    {
+      return ContactState::DoubleSupport;
+    }
+    else if(s == "Left")
+    {
+      return ContactState::Left;
+    }
+    else if(s == "Right")
+    {
+      return ContactState::Right;
+    }
+    else
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error,
+                          "ContactState should be one of [DoubleSupport, Left, Right], " << s << " requested.");
+    }
+  }
+
+  static mc_rtc::Configuration save(const mc_rbdyn::lipm_stabilizer::ContactState & contact)
+  {
+    using ContactState = mc_rbdyn::lipm_stabilizer::ContactState;
+    mc_rtc::Configuration config;
+    if(contact == ContactState::DoubleSupport)
+      config = "DoubleSupport";
+    else if(contact == ContactState::Left)
+      config = "Left";
+    else if(contact == ContactState::Right)
+      config = "Right";
     return config;
   }
 };

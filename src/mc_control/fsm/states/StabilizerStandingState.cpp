@@ -9,6 +9,7 @@ namespace fsm
 {
 
 namespace world = mc_rbdyn::world;
+using ContactState = mc_rbdyn::lipm_stabilizer::ContactState;
 
 StabilizerStandingState::StabilizerStandingState() {}
 
@@ -29,14 +30,22 @@ void StabilizerStandingState::start(Controller & ctl)
       ctl.solver(), config_("StabilizerTask"));
   ctl.solver().addTask(stabilizerTask_);
 
-  ctl.gui()->addElement({"Standing"}, mc_rtc::gui::Button("Left foot", [this, &ctl]() { target(ctl, 0); }),
-                        mc_rtc::gui::Button("Center", [this, &ctl]() { target(ctl, 0.5); }),
-                        mc_rtc::gui::Button("Right foot", [this, &ctl]() { target(ctl, 1); }));
   pendulum_.reset(ctl.robot().com(), ctl.robot().comVelocity(), ctl.robot().comAcceleration());
 
   config_("comStiffness", K_);
+  config_("target", leftFootRatio_);
+  mc_rbdyn::lipm_stabilizer::ContactState contactState = mc_rbdyn::lipm_stabilizer::ContactState::DoubleSupport;
+  config_("contactState", contactState);
+  stabilizerTask_->setContacts(contactState);
   D_ = 2 * std::sqrt(K_);
   target(ctl, leftFootRatio_);
+
+  if(contactState_ == ContactState::DoubleSupport)
+  {
+    ctl.gui()->addElement({"Standing"}, mc_rtc::gui::Button("Left foot", [this, &ctl]() { target(ctl, 0); }),
+                          mc_rtc::gui::Button("Center", [this, &ctl]() { target(ctl, 0.5); }),
+                          mc_rtc::gui::Button("Right foot", [this, &ctl]() { target(ctl, 1); }));
+  }
 }
 
 void StabilizerStandingState::target(const Controller & ctl, double leftFootRatio)
@@ -73,6 +82,7 @@ bool StabilizerStandingState::run(Controller & ctl)
 void StabilizerStandingState::teardown(Controller & ctl)
 {
   ctl.solver().removeTask(stabilizerTask_);
+  ctl.gui()->removeCategory({"Standing"});
 }
 
 } // namespace fsm

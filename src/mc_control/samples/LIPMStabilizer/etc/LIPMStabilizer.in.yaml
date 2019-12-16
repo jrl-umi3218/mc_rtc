@@ -14,6 +14,7 @@ StatesFiles:
 - "@MC_CONTROLLER_INSTALL_PREFIX@/fsm/states/data"
 # If true, state factory will be more verbose
 VerboseStateFactory: false
+
 # Additional robots to load
 robots:
   ground:
@@ -151,10 +152,120 @@ states:
               integral: 10
               deriv: 0.5
 
+  ####
+  # States to handle the various support configuration of the stabilizer:
+  # - DoubleSupport to move from left to right foot freely
+  # - Left foot support to lift the right foot
+  # - Right foot support to lift the left foot
+  # Note that when swithing from double support to single support, it is the user'r responsibility to
+  # ensure that a suitable tasks is added to the solver to control the free foot.
+  ####
+  StabilizerGoLeft:
+    base: StabilizerStanding
+    # left foot ratio
+    # 0: on left foot
+    # 1: on right foot
+    target: 0
+    contactState: DoubleSupport 
+
+  StabilizerGoRight:
+    base: StabilizerStanding
+    target: 1
+    contactState: DoubleSupport 
+
+  StabilizerLeftSupport:
+    base: StabilizerGoLeft
+    contactState: Left
+
+  StabilizerRightSupport:
+    base: StabilizerGoRight
+    contactState: Right
+
+  ####
+  # Tasks to handle the free foot
+  # - Lift up phase: surface transform moving above the current position
+  # - Put down phase: admittance tasks looking for a positive force above a threshold
+  ####
+  LiftRightSwingFoot:
+    base: MetaTasks
+    tasks:
+      LiftFootTask:
+        type: surfaceTransform
+        stiffness: 10
+        weight: 500
+        robotIndex: 0
+        surface: "RightFootCenter"
+        moveWorld:
+          translation: [0,0,0.1]
+
+  LiftLeftSwingFoot:
+    base: LiftRightSwingFoot
+    tasks:
+      LiftFootTask:
+        surface: "LeftFootCenter"
+
+  PutRightSwingFootDown:
+    base: MetaTasks
+    tasks:
+      RightFootAdmittance:
+        type: admittance
+        robotIndex: 0
+        surface: "RightFootCenter"
+        admittance: [0,0,0,0,0,0.005]
+        completion:
+          AND:
+            - eval: 0.03
+            - wrench:
+               force: [0, 0, 20] 
+               couple: [0, 0, 0]
+  
+  PutLeftSwingFootDown:
+    base: PutRightSwingFootDown
+    tasks:
+      RightFootAdmittance:
+        surface: "LeftFootCenter"
+
+  ####
+  # The suitable stabilization mode are put in parallel to free foot motion tasks
+  # to achieve stabilized motions
+  ####
+  
+  # Lift and put down the right foot
+  StabilizerLiftRightFoot:
+    base: Parallel
+    states: [LiftRightSwingFoot, StabilizerLeftSupport]  
+  StabilizerPutRightFoot:
+    base: Parallel
+    states: [PutRightSwingFootDown, StabilizerLeftSupport]  
+
+  # Lift and put down the left foot
+  StabilizerLiftLeftFoot:
+    base: Parallel
+    states: [LiftLeftSwingFoot, StabilizerRightSupport]  
+  StabilizerPutLeftFoot:
+    base: Parallel
+    states: [PutLeftSwingFootDown, StabilizerRightSupport]  
+    
+###
 # Transitions map
+# We rely here on the forced transitions to let the user choose what state to execute next
+# from a predefined list of suitable states
+#
+# Note: Handle with caution, but by forcing the transitions early, notably while putting the foot down, this transition map may be used to test disturbances to the stabilizer (eg early contact, early lift-off, etc). Be cautious that if triggered too early, this may result in high impact on the feet.
+###
 transitions:
 - [MinimalStabilizerState, Custom, CustomConfigurationStabilizerState]
 - [MinimalStabilizerState, Standing, StabilizerStanding]
+  # FSM to move to left foot and lift the right one
+- [StabilizerStanding, Go Left, StabilizerGoLeft]
+- [StabilizerGoLeft, Lift foot, StabilizerLiftRightFoot]
+- [StabilizerLiftRightFoot, Put foot down, StabilizerPutRightFoot]
+- [StabilizerPutRightFoot, Center, StabilizerStanding]
+  # FSM to move to the right foot and lift the left one
+- [StabilizerStanding, Go Right, StabilizerGoRight]
+- [StabilizerGoRight, Lift foot, StabilizerLiftLeftFoot]
+- [StabilizerLiftLeftFoot, Put foot down, StabilizerPutLeftFoot]
+- [StabilizerPutLeftFoot, Center, StabilizerStanding]
 # Initial state
 init: MinimalStabilizerState
 

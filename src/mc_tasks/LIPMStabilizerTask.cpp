@@ -213,9 +213,9 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
     {
       case ContactState::DoubleSupport:
         return 0;
-      case ContactState::LeftFoot:
+      case ContactState::Left:
         return 1;
-      case ContactState::RightFoot:
+      case ContactState::Right:
         return -1;
       default:
         return -3;
@@ -715,6 +715,7 @@ void StabilizerTask::setContacts(ContactState state)
     footTask->reset();
     footTask->stiffness(c_.swingFootStiffness); // sets damping as well
     footTask->weight(c_.swingFootWeight);
+    footTask->weight(0);
   };
 
   supportPolygons_.clear();
@@ -723,7 +724,7 @@ void StabilizerTask::setContacts(ContactState state)
     configureFootSupport(leftFootTask, leftFootContact_);
     configureFootSupport(rightFootTask, rightFootContact_);
   }
-  else if(state == ContactState::LeftFoot)
+  else if(state == ContactState::Left)
   {
     configureFootSupport(leftFootTask, leftFootContact_);
     configureSwingFoot(rightFootTask);
@@ -773,11 +774,11 @@ void StabilizerTask::setSupportFootGains()
       rightFootTask->admittance(contactAdmittance());
       rightFootTask->setGains(c_.contactStiffness, c_.contactDamping);
       break;
-    case ContactState::LeftFoot:
+    case ContactState::Left:
       leftFootTask->admittance(contactAdmittance());
       leftFootTask->setGains(vdcContactStiffness, c_.contactDamping);
       break;
-    case ContactState::RightFoot:
+    case ContactState::Right:
       rightFootTask->admittance(contactAdmittance());
       rightFootTask->setGains(vdcContactStiffness, c_.contactDamping);
       break;
@@ -800,10 +801,10 @@ void StabilizerTask::updateZMPFrame()
     case ContactState::DoubleSupport:
       zmpFrame_ = sva::interpolate(X_0_lc, X_0_rc, 0.5);
       break;
-    case ContactState::LeftFoot:
+    case ContactState::Left:
       zmpFrame_ = X_0_lc;
       break;
-    case ContactState::RightFoot:
+    case ContactState::Right:
       zmpFrame_ = X_0_rc;
       break;
   }
@@ -853,11 +854,11 @@ void StabilizerTask::run()
     case ContactState::DoubleSupport:
       distributeWrench(desiredWrench);
       break;
-    case ContactState::LeftFoot:
+    case ContactState::Left:
       saturateWrench(desiredWrench, leftFootTask);
       rightFootTask->setZeroTargetWrench();
       break;
-    case ContactState::RightFoot:
+    case ContactState::Right:
       saturateWrench(desiredWrench, rightFootTask);
       leftFootTask->setZeroTargetWrench();
       break;
