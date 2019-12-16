@@ -7,6 +7,7 @@ Depends: libmc-rtc-dev,
          ros-@ROS_DISTRO@-common-msgs,
          ros-@ROS_DISTRO@-tf2-ros,
          ros-@ROS_DISTRO@-rosbag,
+         ros-@ROS_DISTRO@-mc-rtc-msgs,
          ${misc:Depends}
 Description: mc_rtc - ROS plugin
  mc_rtc is an interface for simulated and real robotic systems suitable for
