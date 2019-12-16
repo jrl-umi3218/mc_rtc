@@ -75,7 +75,6 @@ jobs:
             - path: leethomason/tinyxml2
               ref: 7.1.0
             - path: libgeos/geos
-              ref: 3.6.3
               options: -DGEOS_ENABLE_TESTS=False
             - path: nanomsg/nanomsg
               ref: 1.1.5
