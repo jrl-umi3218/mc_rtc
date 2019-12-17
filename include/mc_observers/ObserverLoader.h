@@ -20,7 +20,7 @@ namespace mc_observers
 /*! \class ObserverLoader
  * \brief Load Observer instances from shared libraries
  */
-struct MC_OBSERVER_DLLAPI ObserverLoader
+struct MC_OBSERVERS_DLLAPI ObserverLoader
 {
 public:
   /** Return an Observer constructed with the provided Args

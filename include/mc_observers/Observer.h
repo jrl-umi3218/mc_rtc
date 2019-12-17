@@ -31,7 +31,7 @@ namespace mc_observers
  * All new observers must inherit from this Observer class, and implement the
  * required virtual functions (at least reset, run, updateRobots)
  */
-struct MC_OBSERVER_DLLAPI Observer
+struct MC_OBSERVERS_DLLAPI Observer
 {
   Observer(const std::string & name, double dt, const mc_rtc::Configuration & config = {});
   virtual ~Observer();
