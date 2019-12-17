@@ -93,6 +93,7 @@ Package: mc-rtc-utils
 Section: science
 Architecture: any
 Depends: libmc-rtc1 (= ${binary:Version}),
+         python-git,
          python-mc-rtc,
          python-matplotlib,
          python-pyside,
