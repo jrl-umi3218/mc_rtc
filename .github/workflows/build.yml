@@ -116,10 +116,14 @@ jobs:
         bundle exec jekyll build --trace -b /mc_rtc -d /tmp/website
         cd /tmp/website
         git init
-        git add .
-        git commit -m "Website from commit ${GITHUB_SHA}"
         git remote add origin https://gergondet:${{ secrets.GH_PAGES_TOKEN }}@github.com/jrl-umi3218/mc_rtc
-        git push --force origin master:gh-pages
+        git remote update
+        git checkout -b gh-pages origin/gh-pages
+        git add .
+        git config --global user.email "pierre.gergondet@gmail.com"
+        git config --global user.name "Pierre Gergondet (Automated CI update)"
+        git commit -m "Website from commit ${GITHUB_SHA}"
+        git push origin gh-pages
         popd
     - name: Slack Notification
       if: failure()
