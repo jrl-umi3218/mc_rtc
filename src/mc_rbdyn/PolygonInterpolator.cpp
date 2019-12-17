@@ -55,7 +55,7 @@ std::shared_ptr<geos::geom::Geometry> PolygonInterpolator::fast_interpolate(doub
   seq_points.push_back(seq_points[0]);
   seq->setPoints(seq_points);
   auto shell = geom_factory.createLinearRing(std::move(seq));
-#if GEOS_VERSION_MAJOR >= 3 && GEOS_VERSION_MINOR >= 7
+#if GEOS_VERSION_MAJOR >= 3 && GEOS_VERSION_MINOR >= 8
   auto poly = geom_factory.createPolygon(std::move(shell));
   std::shared_ptr<geos::geom::Geometry> ret(poly->convexHull().release(), geom_deleter);
   geom_factory.destroyGeometry(poly.release());
@@ -95,14 +95,14 @@ std::vector<PolygonInterpolator::tuple_t> PolygonInterpolator::normal_derivative
   seq_d->setPoints(points_d);
   auto shell_s = geom_factory.createLinearRing(std::move(seq_s));
   auto shell_d = geom_factory.createLinearRing(std::move(seq_d));
-#if GEOS_VERSION_MAJOR >= 3 && GEOS_VERSION_MINOR >= 7
+#if GEOS_VERSION_MAJOR >= 3 && GEOS_VERSION_MINOR >= 8
   auto poly_s = geom_factory.createPolygon(std::move(shell_s));
   auto poly_d = geom_factory.createPolygon(std::move(shell_d));
 #else
   geos::geom::Polygon * poly_s = geom_factory.createPolygon(shell_s, 0);
   geos::geom::Polygon * poly_d = geom_factory.createPolygon(shell_d, 0);
 #endif
-#if GEOS_VERSION_MAJOR >= 3 && GEOS_VERSION_MINOR >= 7
+#if GEOS_VERSION_MAJOR >= 3 && GEOS_VERSION_MINOR >= 8
   auto normals = [](std::unique_ptr<geos::geom::Polygon> & poly) {
 #else
   auto normals = [](geos::geom::Polygon * poly) {
@@ -128,7 +128,7 @@ std::vector<PolygonInterpolator::tuple_t> PolygonInterpolator::normal_derivative
   };
   auto n_strt = normals(poly_s);
   auto n_dest = normals(poly_d);
-#if GEOS_VERSION_MAJOR >= 3 && GEOS_VERSION_MINOR >= 7
+#if GEOS_VERSION_MAJOR >= 3 && GEOS_VERSION_MINOR >= 8
 #else
   geom_factory.destroyGeometry(poly_s);
   geom_factory.destroyGeometry(poly_d);
