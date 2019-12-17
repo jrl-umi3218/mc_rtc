@@ -101,10 +101,25 @@ jobs:
     - name: Upload documentation
       # Only run on master branch and for one configuration
       if: matrix.os == 'ubuntu-18.04' && matrix.build-type == 'RelWithDebInfo' && matrix.compiler == 'gcc' && github.ref == 'refs/heads/master'
-      uses: jrl-umi3218/github-actions/upload-documentation@master
-      with:
-        GH_USER: gergondet
-        GH_PAGES_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
+      run: |
+        set -x
+        pushd .
+        cd doc
+        cp -r /usr/local/share/doc/mc_rtc/doxygen-html .
+        find . -type f -print0 | xargs -0 sed -i -e's@/usr/local/share/doc/SpaceVecAlg/doxygen-html/@https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/@g'
+        find . -type f -print0 | xargs -0 sed -i -e's@/usr/local/share/doc/RBDyn/doxygen-html/@https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/@g'
+        find . -type f -print0 | xargs -0 sed -i -e's@/usr/local/share/doc/Tasks/doxygen-html/@https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/@g'
+        find . -type f -print0 | xargs -0 sed -i -e's@/usr/local/share/doc/sch-core/doxygen-html/@https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/@g'
+        find . -type f -print0 | xargs -0 sed -i -e's@/usr/local/share/doc/mc_rbdyn_urdf/doxygen-html/@https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/@g'
+        bundle install --path vendor
+        bundle exec jekyll build --trace -b /mc_rtc -d /tmp/website
+        cd /tmp/website
+        git init
+        git add .
+        git commit -m "Website from commit ${GITHUB_SHA}"
+        git remote add origin https://gergondet:${{ secrets.GH_PAGES_TOKEN }}@github.com/jrl-umi3218/mc_rtc
+        git push --force origin master:gh-pages
+        popd
     - name: Slack Notification
       if: failure()
       uses: archive/github-actions-slack@master
