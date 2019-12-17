@@ -66,9 +66,12 @@ struct MC_RTC_LOADER_DLLAPI LTDLHandle
    *
    * \param path Path to the library
    *
+   * \param rpath Path(s) used to search for libraries, this is only used on Windows,
+   *        on Linux/macOS one is advised to use RPATH capabilties
+   *
    * \param verbose If true, output debug information
    */
-  LTDLHandle(const std::string & class_name, const std::string & path, bool verbose);
+  LTDLHandle(const std::string & class_name, const std::string & path, const std::string & rpath, bool verbose);
 
   ~LTDLHandle();
 
@@ -102,6 +105,7 @@ struct MC_RTC_LOADER_DLLAPI LTDLHandle
 
 private:
   std::string path_;
+  std::string rpath_;
   bool verbose_;
   lt_dlhandle handle_;
   bool valid_ = false;

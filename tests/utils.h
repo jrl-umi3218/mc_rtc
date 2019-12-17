@@ -18,8 +18,13 @@
 
 bool configureRobotLoader()
 {
-  mc_rbdyn::RobotLoader::clear();
-  mc_rbdyn::RobotLoader::update_robot_module_path({std::string(ROBOTS_BUILD_DIR)});
+  static bool done = false;
+  if(!done)
+  {
+    done = true;
+    mc_rbdyn::RobotLoader::clear();
+    mc_rbdyn::RobotLoader::update_robot_module_path({std::string(ROBOTS_BUILD_DIR)});
+  }
   return true;
 }
 
