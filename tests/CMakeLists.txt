@@ -34,7 +34,7 @@ target_link_libraries(testQuadraticGenerator PUBLIC mc_rbdyn)
 #################################
 
 set(ROBOTS_BUILD_DIR src/mc_robots)
-if(NOT DEFINED CMAKE_BUILD_TYPE)
+if(CMAKE_CONFIGURATION_TYPES)
   set(ROBOTS_BUILD_DIR "${ROBOTS_BUILD_DIR}/$<CONFIGURATION>")
 endif()
 set(CONFIG_HEADER_INCLUDE_DIR "${CMAKE_CURRENT_BINARY_DIR}/include/$<CONFIGURATION>")
