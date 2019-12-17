@@ -15,6 +15,22 @@ StabilizerStandingState::StabilizerStandingState() {}
 
 void StabilizerStandingState::configure(const mc_rtc::Configuration & config)
 {
+  config("target", leftFootRatio_);
+  config("stiffness", K_);
+  if(config.has("damping"))
+  {
+    D_ = config("damping");
+  }
+  else
+  {
+    D_ = 2*std::sqrt(K_);
+  }
+  config("contactState", contactState_);
+  if(config.has("completion"))
+  {
+    hasCompletion_ = true;
+    config("completion")("dcmEval", dcmThreshold_);
+  }
   config_.load(config);
 }
 
@@ -32,11 +48,7 @@ void StabilizerStandingState::start(Controller & ctl)
 
   pendulum_.reset(ctl.robot().com(), ctl.robot().comVelocity(), ctl.robot().comAcceleration());
 
-  config_("comStiffness", K_);
-  config_("target", leftFootRatio_);
-  config_("contactState", contactState_);
   stabilizerTask_->setContacts(contactState_);
-  D_ = 2 * std::sqrt(K_);
   target(ctl, leftFootRatio_);
 
   if(contactState_ == ContactState::DoubleSupport)
@@ -75,7 +87,18 @@ bool StabilizerStandingState::run(Controller & ctl)
   stabilizerTask_->target(pendulum_.com(), pendulum_.comd(), pendulum_.comdd(), pendulum_.zmp());
 
   output("OK");
-  return true;
+  if(!hasCompletion_)
+  {
+    return true;
+  }
+  if(  std::fabs(stabilizerTask_->measuredDCM().x()-comTarget_.x()) < dcmThreshold_.x()
+    && std::fabs(stabilizerTask_->measuredDCM().y()-comTarget_.y()) < dcmThreshold_.y()
+    && std::fabs(stabilizerTask_->measuredDCM().z()-comTarget_.z()) < dcmThreshold_.z())
+  {
+     output("OK");
+     return true;
+  }
+  return false;
 }
 
 void StabilizerStandingState::teardown(Controller & ctl)

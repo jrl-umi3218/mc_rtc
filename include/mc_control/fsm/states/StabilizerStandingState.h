@@ -37,6 +37,10 @@ protected:
 protected:
   std::shared_ptr<mc_tasks::lipm_stabilizer::StabilizerTask> stabilizerTask_ = nullptr;
   mc_rtc::Configuration config_;
+
+  double hasCompletion_ = false;
+  Eigen::Vector3d dcmThreshold_ = Eigen::Vector3d{0.01, 0.01, 0.01};
+
   mc_rbdyn::lipm_stabilizer::ContactState contactState_ = mc_rbdyn::lipm_stabilizer::ContactState::DoubleSupport;
 
   mc_planning::Pendulum pendulum_; /** LIPM Pendulum model */

@@ -160,18 +160,29 @@ states:
   # Note that when swithing from double support to single support, it is the user'r responsibility to
   # ensure that a suitable tasks is added to the solver to control the free foot.
   ####
-  StabilizerGoLeft:
+  StabilizerGoStanding:
     base: StabilizerStanding
     # left foot ratio
     # 0: on left foot
     # 1: on right foot
+    target: 0.5
+    contactState: DoubleSupport
+    completion:
+      dcmEval: [0.005, 0.005, 0.05]
+
+  StabilizerGoLeft:
+    base: StabilizerGoStanding
     target: 0
-    contactState: DoubleSupport 
 
   StabilizerGoRight:
-    base: StabilizerStanding
+    base: StabilizerGoStanding
     target: 1
-    contactState: DoubleSupport 
+
+  StabilizerStayLeft:
+    base: StabilizerGoLeft
+
+  StabilizerStayRight:
+    base: StabilizerGoRight
 
   StabilizerLeftSupport:
     base: StabilizerGoLeft
@@ -197,6 +208,8 @@ states:
         surface: "RightFootCenter"
         moveWorld:
           translation: [0,0,0.1]
+        completion:
+          eval: 0.01
 
   LiftLeftSwingFoot:
     base: LiftRightSwingFoot
@@ -216,9 +229,9 @@ states:
           AND:
             - eval: 0.03
             - wrench:
-               force: [0, 0, 20] 
+               force: [0, 0, 20]
                couple: [0, 0, 0]
-  
+
   PutLeftSwingFootDown:
     base: PutRightSwingFootDown
     tasks:
@@ -229,47 +242,84 @@ states:
   # The suitable stabilization mode are put in parallel to free foot motion tasks
   # to achieve stabilized motions
   ####
-  
+
   # Lift and put down the right foot
   StabilizerLiftRightFoot:
     base: Parallel
-    states: [LiftRightSwingFoot, StabilizerLeftSupport]  
+    states: [LiftRightSwingFoot, StabilizerLeftSupport]
   StabilizerPutRightFoot:
     base: Parallel
-    states: [PutRightSwingFootDown, StabilizerLeftSupport]  
+    states: [PutRightSwingFootDown, StabilizerLeftSupport]
 
   # Lift and put down the left foot
   StabilizerLiftLeftFoot:
     base: Parallel
-    states: [LiftLeftSwingFoot, StabilizerRightSupport]  
+    states: [LiftLeftSwingFoot, StabilizerRightSupport]
   StabilizerPutLeftFoot:
     base: Parallel
-    states: [PutLeftSwingFootDown, StabilizerRightSupport]  
-    
+    states: [PutLeftSwingFootDown, StabilizerRightSupport]
+
+  FSMLiftRightFootAuto:
+    base: "Meta"
+    StepByStep: false,
+    transitions:
+    - [StabilizerStanding, OK, StabilizerGoLeft, Auto]
+    - [StabilizerGoLeft, OK, StabilizerLiftRightFoot, Auto]
+    - [StabilizerLiftRightFoot, OK, StabilizerPutRightFoot, Auto]
+
+  FSMLiftRightFootManual:
+    base: "Meta"
+    transitions:
+    - [StabilizerStanding, OK, StabilizerGoLeft, Strict]
+    - [StabilizerGoLeft, OK, StabilizerLiftRightFoot, Strict]
+    - [StabilizerLiftRightFoot, OK, StabilizerPutRightFoot, Strict]
+      # This transition occurs automatically as you want to be reverting back to foot force difference control as soon as the foot touches the floor. Here the admittance task is only used to look for contact, not to control the post contact phase.
+    - [StabilizerPutRightFoot, OK, StabilizerStayLeft, Auto]
+
+  FSMLiftLeftFootAuto:
+    base: "Meta"
+    transitions:
+    - [StabilizerStanding, OK, StabilizerGoRight, Auto]
+    - [StabilizerGoRight, OK, StabilizerLiftLeftFoot, Auto]
+    - [StabilizerLiftLeftFoot, OK, StabilizerPutLeftFoot, Auto]
+
+  FSMLiftLeftFootManual:
+    base: "Meta"
+    transitions:
+    - [StabilizerStanding, OK, StabilizerGoRight, Strict]
+    - [StabilizerGoRight, OK, StabilizerLiftLeftFoot, Strict]
+    - [StabilizerLiftLeftFoot, OK, StabilizerPutLeftFoot, Strict]
+    - [StabilizerPutLeftFoot, OK, StabilizerStayRight, Auto]
+
+  FSMAlternateFeetLiftingAuto:
+    base: "Meta"
+    transitions:
+    - [FSMLiftLeftFootAuto, OK, FSMLiftRightFootAuto]
+
 ###
 # Transitions map
 # We rely here on the forced transitions to let the user choose what state to execute next
-# from a predefined list of suitable states
+# from a predefined list of suitable states all reachable safely from the StabilizerStanding state
 #
-# Note: Handle with caution, but by forcing the transitions early, notably while putting the foot down, this transition map may be used to test disturbances to the stabilizer (eg early contact, early lift-off, etc). Be cautious that if triggered too early, this may result in high impact on the feet.
+# Note: Handle with caution, but by forcing the transitions early, notably while putting the foot down, this FSM may be used to test disturbances to the stabilizer (eg early contact, early lift-off, etc). Be cautious that if triggered too early, this may result in high impact on the feet.
 ###
 transitions:
-- [MinimalStabilizerState, Custom, CustomConfigurationStabilizerState]
-- [MinimalStabilizerState, Standing, StabilizerStanding]
-  # FSM to move to left foot and lift the right one
-- [StabilizerStanding, Go Left, StabilizerGoLeft]
-- [StabilizerGoLeft, Lift foot, StabilizerLiftRightFoot]
-- [StabilizerLiftRightFoot, Put foot down, StabilizerPutRightFoot]
-  # This automatic transition is important. You want to be reverting back to foot force difference control as soon as the
-  # free foot establishes control with the ground.
-- [StabilizerPutRightFoot, OK, StabilizerGoLeft]
-- [StabilizerGoLeft, Center, StabilizerStanding]
-  # FSM to move to the right foot and lift the left one
-- [StabilizerStanding, Go Right, StabilizerGoRight]
-- [StabilizerGoRight, Lift foot, StabilizerLiftLeftFoot]
-- [StabilizerLiftLeftFoot, Put foot down, StabilizerPutLeftFoot]
-- [StabilizerPutLeftFoot, OK, StabilizerGoRight]
-- [StabilizerGoRight, Center, StabilizerStanding]
+- [MinimalStabilizerState, Custom, CustomConfigurationStabilizerState, Strict]
+- [MinimalStabilizerState, Standing, StabilizerStanding, Strict]
+  # FSM to move CoM to right foot and lift the left one
+- [StabilizerStanding, Lift left foot (Auto), FSMLiftLeftFootAuto, Strict]
+- [FSMLiftLeftFootAuto, OK, StabilizerStanding, Auto]
+- [StabilizerStanding, Lift left foot (Manual), FSMLiftLeftFootManual, Strict]
+- [FSMLiftLeftFootManual, OK, StabilizerStanding, Strict]
+  # FSM to move CoM to right foot and lift the left one
+- [StabilizerStanding, Lift right foot (Auto), FSMLiftRightFootAuto, Strict]
+- [FSMLiftRightFootAuto, OK, StabilizerStanding, Auto]
+- [StabilizerStanding, Lift right foot (Manual), FSMLiftRightFootManual, Strict]
+- [FSMLiftRightFootManual, OK, StabilizerStanding, Strict]
+  # Alternate between lifting left and right foot
+- [StabilizerStanding, Alternate between feet (Auto), FSMAlternateFeetLiftingAuto, Auto]
+- [FSMAlternateFeetLiftingAuto, OK, StabilizerStanding, Auto]
+
 # Initial state
 init: MinimalStabilizerState
 

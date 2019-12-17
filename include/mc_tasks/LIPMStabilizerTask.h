@@ -293,6 +293,26 @@ public:
               const Eigen::Vector3d & comdd,
               const Eigen::Vector3d & zmp);
 
+  const Eigen::Vector3d & measuredDCM()
+  {
+    return measuredDCM_;
+  }
+
+  const Eigen::Vector3d & measuredZMP()
+  {
+    return measuredZMP_;
+  }
+
+  const Eigen::Vector3d & measuredCoM()
+  {
+    return measuredCoM_;
+  }
+
+  const Eigen::Vector3d & measuredCoMd()
+  {
+    return measuredCoM_;
+  }
+
 private:
   /** Check that all gains are within boundaries.
    *
