@@ -166,32 +166,12 @@ public:
    */
   void reconfigure();
 
-  /** Detect foot touchdown based on both force and distance.
-   *
-   * \param footTask Swing foot task.
-   *
-   * \param contact Target contact.
-   *
-   */
-  bool detectTouchdown(const std::shared_ptr<mc_tasks::force::CoPTask> footTask, const Contact & contact);
-
   /** Update QP task targets.
    *
    * This function is called once the reference has been updated.
    *
    */
   void run();
-
-  /** Configure foot task for contact seeking.
-   *
-   * \param footTask One of leftFootTask or rightFootTask.
-   *
-   * This function has no effect when the measured pressure is already higher
-   * than the target. Otherwise, it will set a positive admittance along the
-   * z-axis of the contact frame.
-   *
-   */
-  void seekTouchdown(std::shared_ptr<mc_tasks::force::CoPTask> footTask);
 
   /** Configure foot tasks for contact at a given location, and add contacts to
    * the solver.
@@ -214,17 +194,6 @@ public:
   {
     return contactState_;
   }
-
-  /** Update real-robot state.
-   *
-   * \param com Position of the center of mass.
-   *
-   * \param comd Velocity of the center of mass.
-   *
-   * \param leftFootRatio Desired pressure distribution ratio for left foot.
-   *
-   */
-  void updateState(const Eigen::Vector3d & com, const Eigen::Vector3d & comd, double leftFootRatio);
 
   /**
    * @brief Access the left foot ratio parameter
@@ -334,6 +303,17 @@ private:
    *
    */
   void checkInTheAir();
+
+  /** Update real-robot state.
+   *
+   * \param com Position of the center of mass.
+   *
+   * \param comd Velocity of the center of mass.
+   *
+   * \param leftFootRatio Desired pressure distribution ratio for left foot.
+   *
+   */
+  void updateState(const Eigen::Vector3d & com, const Eigen::Vector3d & comd, double leftFootRatio);
 
   /** Compute desired wrench based on DCM error.
    *

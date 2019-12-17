@@ -137,9 +137,6 @@ struct StabilizerConfiguration
   sva::MotionVecd contactStiffness = sva::MotionVecd::Zero();
   double contactWeight = 100000.; /**< Weight of contact IK tasks */
 
-  double swingFootStiffness = 2000.; /**< Stiffness of swing foot IK task */
-  double swingFootWeight = 500.; /**< Weight of swing foot IK task */
-
   double vdcFrequency = 1.; /**< Frequency used in double-support vertical drift compensation */
   double vdcStiffness = 1000.; /**< Stiffness used in single-support vertical drift compensation */
 
@@ -211,12 +208,6 @@ struct StabilizerConfiguration
         tasks("contact")("stiffness", contactStiffness);
         tasks("contact")("weight", contactWeight);
       }
-
-      if(tasks.has("swing_foot"))
-      {
-        tasks("swing_foot")("stiffness", swingFootStiffness);
-        tasks("swing_foot")("weight", swingFootWeight);
-      }
     }
     if(config.has("vdc"))
     {
@@ -280,10 +271,6 @@ struct StabilizerConfiguration
     conf("tasks")("contact").add("damping", contactDamping);
     conf("tasks")("contact").add("stiffness", contactStiffness);
     conf("tasks")("contact").add("weight", contactWeight);
-
-    conf("tasks").add("swing_foot");
-    conf("tasks")("swing_foot").add("stiffness", swingFootStiffness);
-    conf("tasks")("swing_foot").add("weight", swingFootWeight);
 
     conf.add("vdc");
     conf("vdc")("frequency", vdcFrequency);

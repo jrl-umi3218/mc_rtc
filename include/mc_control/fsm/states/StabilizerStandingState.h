@@ -37,7 +37,7 @@ protected:
 protected:
   std::shared_ptr<mc_tasks::lipm_stabilizer::StabilizerTask> stabilizerTask_ = nullptr;
   mc_rtc::Configuration config_;
-  mc_rbdyn::lipm_stabilizer::ContactState contactState_;
+  mc_rbdyn::lipm_stabilizer::ContactState contactState_ = mc_rbdyn::lipm_stabilizer::ContactState::DoubleSupport;
 
   mc_planning::Pendulum pendulum_; /** LIPM Pendulum model */
 

@@ -2,7 +2,7 @@
 ## If true, the FSM transitions are managed by an external tool
 Managed: false
 # If true and the FSM is self-managed, transitions should be triggered
-StepByStep: true
+StepByStep: false
 # Change idle behaviour, if true the state is kept until transition,
 # otherwise the FSM holds the last state until transition
 IdleKeepState: true
@@ -207,7 +207,7 @@ states:
   PutRightSwingFootDown:
     base: MetaTasks
     tasks:
-      RightFootAdmittance:
+      PutFootAdmittance:
         type: admittance
         robotIndex: 0
         surface: "RightFootCenter"
@@ -222,7 +222,7 @@ states:
   PutLeftSwingFootDown:
     base: PutRightSwingFootDown
     tasks:
-      RightFootAdmittance:
+      PutFootAdmittance:
         surface: "LeftFootCenter"
 
   ####
@@ -260,12 +260,16 @@ transitions:
 - [StabilizerStanding, Go Left, StabilizerGoLeft]
 - [StabilizerGoLeft, Lift foot, StabilizerLiftRightFoot]
 - [StabilizerLiftRightFoot, Put foot down, StabilizerPutRightFoot]
-- [StabilizerPutRightFoot, Center, StabilizerStanding]
+  # This automatic transition is important. You want to be reverting back to foot force difference control as soon as the
+  # free foot establishes control with the ground.
+- [StabilizerPutRightFoot, OK, StabilizerGoLeft]
+- [StabilizerGoLeft, Center, StabilizerStanding]
   # FSM to move to the right foot and lift the left one
 - [StabilizerStanding, Go Right, StabilizerGoRight]
 - [StabilizerGoRight, Lift foot, StabilizerLiftLeftFoot]
 - [StabilizerLiftLeftFoot, Put foot down, StabilizerPutLeftFoot]
-- [StabilizerPutLeftFoot, Center, StabilizerStanding]
+- [StabilizerPutLeftFoot, OK, StabilizerGoRight]
+- [StabilizerGoRight, Center, StabilizerStanding]
 # Initial state
 init: MinimalStabilizerState
 

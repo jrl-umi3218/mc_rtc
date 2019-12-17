@@ -711,13 +711,6 @@ void StabilizerTask::setContacts(ContactState state)
     supportPolygons_.push_back(footStepPolygon(contact));
   };
 
-  auto configureSwingFoot = [this](std::shared_ptr<mc_tasks::force::CoPTask> footTask) {
-    footTask->reset();
-    footTask->stiffness(c_.swingFootStiffness); // sets damping as well
-    footTask->weight(c_.swingFootWeight);
-    footTask->weight(0);
-  };
-
   supportPolygons_.clear();
   if(state == ContactState::DoubleSupport)
   {
@@ -727,38 +720,12 @@ void StabilizerTask::setContacts(ContactState state)
   else if(state == ContactState::Left)
   {
     configureFootSupport(leftFootTask, leftFootContact_);
-    configureSwingFoot(rightFootTask);
+    rightFootTask->weight(0);
   }
   else
   {
     configureFootSupport(rightFootTask, rightFootContact_);
-    configureSwingFoot(leftFootTask);
-  }
-}
-
-bool StabilizerTask::detectTouchdown(const std::shared_ptr<mc_tasks::force::CoPTask> footTask, const Contact & contact)
-{
-  const sva::PTransformd X_0_s = footTask->surfacePose();
-  const sva::PTransformd & X_0_c = contact.pose;
-  sva::PTransformd X_c_s = X_0_s * X_0_c.inv();
-  double xDist = std::abs(X_c_s.translation().x());
-  double yDist = std::abs(X_c_s.translation().y());
-  double zDist = std::abs(X_c_s.translation().z());
-  double pressure = footTask->measuredWrench().force().z();
-  return (xDist < 0.03 && yDist < 0.03 && zDist < 0.03 && pressure > 50.);
-}
-
-void StabilizerTask::seekTouchdown(std::shared_ptr<mc_tasks::force::CoPTask> footTask)
-{
-  constexpr double MAX_VEL = 0.01; // [m] / [s]
-  constexpr double TOUCHDOWN_PRESSURE = 50.; // [N]
-  constexpr double DESIRED_AFZ = MAX_VEL / TOUCHDOWN_PRESSURE;
-  if(footTask->measuredWrench().force().z() < TOUCHDOWN_PRESSURE)
-  {
-    auto a = footTask->admittance();
-    double AFz = clamp(DESIRED_AFZ, 0., 1e-2, "Contact seeking admittance");
-    footTask->admittance({a.couple(), {a.force().x(), a.force().y(), AFz}});
-    footTask->targetForce({0., 0., TOUCHDOWN_PRESSURE});
+    leftFootTask->weight(0);
   }
 }
 

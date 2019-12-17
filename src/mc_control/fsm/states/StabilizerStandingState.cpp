@@ -34,9 +34,8 @@ void StabilizerStandingState::start(Controller & ctl)
 
   config_("comStiffness", K_);
   config_("target", leftFootRatio_);
-  mc_rbdyn::lipm_stabilizer::ContactState contactState = mc_rbdyn::lipm_stabilizer::ContactState::DoubleSupport;
-  config_("contactState", contactState);
-  stabilizerTask_->setContacts(contactState);
+  config_("contactState", contactState_);
+  stabilizerTask_->setContacts(contactState_);
   D_ = 2 * std::sqrt(K_);
   target(ctl, leftFootRatio_);
 
