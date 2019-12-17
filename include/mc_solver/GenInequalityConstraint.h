@@ -30,7 +30,7 @@ namespace mc_solver
  * - (nrLines, 6) for a constraint on a wrench
  */
 template<typename UpdateT>
-struct MC_SOLVER_DLLAPI GenInequalityConstraint : public Constraint<tasks::qp::GenInequality, UpdateT>
+struct GenInequalityConstraint : public Constraint<tasks::qp::GenInequality, UpdateT>
 {
   using Base = Constraint<tasks::qp::GenInequality, UpdateT>;
 

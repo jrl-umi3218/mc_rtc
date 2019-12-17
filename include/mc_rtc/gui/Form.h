@@ -175,7 +175,7 @@ private:
   bool fixed_size_;
 };
 
-struct MC_RTC_GUI_DLLAPI FormComboInput : public FormElement<FormComboInput, Elements::ComboInput>
+struct FormComboInput : public FormElement<FormComboInput, Elements::ComboInput>
 {
   inline FormComboInput(const std::string & name,
                         bool required,
@@ -204,7 +204,7 @@ private:
   bool send_index_ = false;
 };
 
-struct MC_RTC_GUI_DLLAPI FormDataComboInput : public FormElement<FormDataComboInput, Elements::DataComboInput>
+struct FormDataComboInput : public FormElement<FormDataComboInput, Elements::DataComboInput>
 {
   static constexpr auto type = Elements::DataComboInput;
 

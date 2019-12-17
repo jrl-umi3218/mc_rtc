@@ -18,7 +18,7 @@ struct MC_SOLVER_DLLAPI UpdateTag
 };
 
 template<typename UpdateNrVars>
-struct MC_SOLVER_DLLAPI Update : public UpdateNrVars, UpdateTag
+struct Update : public UpdateNrVars, UpdateTag
 {
   static_assert(std::is_same<UpdateNrVars, UpdateNrVarsRobot>::value
                     || std::is_same<UpdateNrVars, UpdateNrVarsLambda>::value,

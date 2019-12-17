@@ -29,7 +29,7 @@ namespace mc_solver
  * - (nrLines, 6) for a constraint on a wrench
  */
 template<typename UpdateT>
-struct MC_SOLVER_DLLAPI EqualityConstraint : public Constraint<tasks::qp::Equality, UpdateT>
+struct EqualityConstraint : public Constraint<tasks::qp::Equality, UpdateT>
 {
   using Base = Constraint<tasks::qp::Equality, UpdateT>;
 

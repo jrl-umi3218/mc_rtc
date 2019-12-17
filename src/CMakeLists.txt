@@ -206,10 +206,13 @@ set(mc_solver_HDR
 ../include/mc_solver/CollisionsConstraint.h
 ../include/mc_solver/CoMIncPlaneConstr.h
 ../include/mc_solver/CompoundJointConstraint.h
+../include/mc_solver/Constraint.h
 ../include/mc_solver/ConstraintSet.h
 ../include/mc_solver/ContactConstraint.h
 ../include/mc_solver/DynamicsConstraint.h
 ../include/mc_solver/EqualityConstraint.h
+../include/mc_solver/GenInequalityConstraint.h
+../include/mc_solver/InequalityConstraint.h
 ../include/mc_solver/KinematicsConstraint.h
 ../include/mc_solver/GenericLoader.h
 ../include/mc_solver/GenericLoader.hpp

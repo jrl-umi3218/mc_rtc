@@ -22,7 +22,7 @@ namespace mc_solver
  */
 
 template<typename ConstraintT, typename UpdateT>
-struct MC_SOLVER_DLLAPI Constraint : public tasks::qp::ConstraintFunction<ConstraintT>, UpdateT
+struct Constraint : public tasks::qp::ConstraintFunction<ConstraintT>, UpdateT
 {
   static_assert(std::is_same<ConstraintT, tasks::qp::Equality>::value
                     || std::is_same<ConstraintT, tasks::qp::Inequality>::value

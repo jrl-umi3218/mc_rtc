@@ -11,7 +11,7 @@ namespace mc_trajectory
 {
 
 template<typename T, typename WaypointsT>
-struct MC_TRAJECTORY_DLLAPI Spline
+struct Spline
 {
 public:
   Spline(double duration, const T & start, const T & target, const WaypointsT & waypoints = {});
