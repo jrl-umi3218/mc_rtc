@@ -15,7 +15,24 @@
 namespace bfs = boost::filesystem;
 
 #ifdef WIN32
-#  include "libloaderapi.h"
+namespace
+{
+
+/** Get the PATH variable at the program start */
+char * getPATH()
+{
+  static std::unique_ptr<char> PATH;
+  if(PATH)
+  {
+    return PATH.get();
+  }
+  int plen = GetEnvironmentVariable("PATH", nullptr, 0);
+  PATH.reset(new char[plen]);
+  GetEnvironmentVariable("PATH", PATH.get(), plen);
+  return PATH.get();
+};
+
+} // namespace
 #endif
 
 namespace mc_rtc
@@ -95,6 +112,9 @@ bool LTDLHandle::open()
       LOG_WARNING("Failed to load " << path_ << "\n" << error)
     }
   }
+#ifdef WIN32
+  SetEnvironmentVariable("PATH", getPATH());
+#endif
   return open_;
 }
 
@@ -148,17 +168,13 @@ void Loader::load_libraries(const std::string & class_name,
                             Loader::callback_t cb)
 {
 #ifdef WIN32
-  int plen = GetEnvironmentVariable("PATH", nullptr, 0);
-  char * PATH = new char[plen];
-  GetEnvironmentVariable("PATH", PATH, plen);
   std::stringstream ss;
   for(const auto & path : paths)
   {
     ss << path << ";";
   }
-  ss << PATH;
+  ss << getPATH();
   std::string rpath = ss.str();
-  delete[] PATH;
 #else
   std::string rpath = "";
 #endif
