@@ -35,7 +35,6 @@ constexpr double StabilizerTask::MAX_DFZ_DAMPING;
 constexpr double StabilizerTask::MAX_FDC_RX_VEL;
 constexpr double StabilizerTask::MAX_FDC_RY_VEL;
 constexpr double StabilizerTask::MAX_FDC_RZ_VEL;
-constexpr double StabilizerTask::MAX_ZMPCC_COM_OFFSET;
 constexpr double StabilizerTask::MIN_DS_PRESSURE;
 constexpr double StabilizerTask::MIN_NET_TOTAL_FORCE_ZMP;
 constexpr double StabilizerTask::GRAVITY;
@@ -102,16 +101,10 @@ void StabilizerTask::reset()
   distribWrench_ = {comTarget_.cross(staticForce), staticForce};
   vdcHeightError_ = 0.;
   zmpError_ = Eigen::Vector3d::Zero();
-  zmpccCoMAccel_ = Eigen::Vector3d::Zero();
-  zmpccCoMOffset_ = Eigen::Vector3d::Zero();
-  zmpccCoMVel_ = Eigen::Vector3d::Zero();
-  zmpccError_ = Eigen::Vector3d::Zero();
 
   dcmDerivator_.setZero();
   dcmIntegrator_.saturation(MAX_AVERAGE_DCM_ERROR);
   dcmIntegrator_.setZero();
-  zmpccIntegrator_.saturation(MAX_ZMPCC_COM_OFFSET);
-  zmpccIntegrator_.setZero();
 
   omega_ = std::sqrt(-gravity_.z() / robot().com().z());
 }
@@ -249,12 +242,6 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   logger.addLogEntry("stabilizer_vdc_stiffness", [this]() { return c_.vdcStiffness; });
   logger.addLogEntry("stabilizer_wrench", [this]() { return distribWrench_; });
   logger.addLogEntry("stabilizer_zmp", [this]() { return distribZMP_; });
-  logger.addLogEntry("stabilizer_zmpcc_comAccel", [this]() { return zmpccCoMAccel_; });
-  logger.addLogEntry("stabilizer_zmpcc_comOffset", [this]() { return zmpccCoMOffset_; });
-  logger.addLogEntry("stabilizer_zmpcc_comVel", [this]() { return zmpccCoMVel_; });
-  logger.addLogEntry("stabilizer_zmpcc_error", [this]() { return zmpccError_; });
-  logger.addLogEntry("stabilizer_zmpcc_leakRate", [this]() { return zmpccIntegrator_.rate(); });
-
   logger.addLogEntry("stabilizer_support_min", [this]() { return supportMin_; });
   logger.addLogEntry("stabilizer_support_max", [this]() { return supportMax_; });
 
@@ -319,11 +306,6 @@ void StabilizerTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry("stabilizer_vdc_stiffness");
   logger.removeLogEntry("stabilizer_wrench");
   logger.removeLogEntry("stabilizer_zmp");
-  logger.removeLogEntry("stabilizer_zmpcc_comAccel");
-  logger.removeLogEntry("stabilizer_zmpcc_comOffset");
-  logger.removeLogEntry("stabilizer_zmpcc_comVel");
-  logger.removeLogEntry("stabilizer_zmpcc_error");
-  logger.removeLogEntry("stabilizer_zmpcc_leakRate");
   logger.removeLogEntry("stabilizer_support_min");
   logger.removeLogEntry("stabilizer_support_max");
   logger.removeLogEntry("controlRobot_LeftFoot");
@@ -400,16 +382,11 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                             }));
   gui.addElement({"Tasks", "Stabilizer", "Advanced"}, Button("Disable stabilizer", [this]() { disable(); }),
                  Button("Reconfigure", [this]() { reconfigure(); }),
-                 Button("Reset CoM integrator", [this]() { zmpccIntegrator_.setZero(); }),
                  ArrayInput("CoM admittance", {"Ax", "Ay"}, [this]() { return c_.comAdmittance; },
                             [this](const Eigen::Vector2d & a) {
                               c_.comAdmittance.x() = clamp(a.x(), 0., MAX_COM_ADMITTANCE);
                               c_.comAdmittance.y() = clamp(a.y(), 0., MAX_COM_ADMITTANCE);
                             }),
-                 Checkbox("Apply CoM admittance only in double support?", [this]() { return zmpccOnlyDS_; },
-                          [this]() { zmpccOnlyDS_ = !zmpccOnlyDS_; }),
-                 NumberInput("CoM integrator leak rate [Hz]", [this]() { return zmpccIntegrator_.rate(); },
-                             [this](double T) { zmpccIntegrator_.rate(T); }),
                  ArrayInput("DCM pole placement", {"Pole1", "Pole2", "Pole3", "Lag [Hz]"},
                             [this]() -> Eigen::VectorXd { return polePlacement_; },
                             [this](const Eigen::VectorXd & polePlacement) {
@@ -508,7 +485,6 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                  Button("Stop DCM Derivator", [&gui]() { gui.removePlot("DCM Derivator"); }));
 
   gui.addElement({"Tasks", "Stabilizer", "Debug"},
-                 ArrayLabel("CoM offset [mm]", {"x", "y"}, [this]() { return vecFromError(zmpccCoMOffset_); }),
                  ArrayLabel("DCM average error [mm]", {"x", "y"}, [this]() { return vecFromError(dcmAverageError_); }),
                  ArrayLabel("DCM error [mm]", {"x", "y"}, [this]() { return vecFromError(dcmError_); }),
                  ArrayLabel("Foot force difference error [mm]", {"force", "height"}, [this]() {
@@ -631,7 +607,6 @@ void StabilizerTask::configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfig
 
   dcmDerivator_.timeConstant(c_.dcmDerivatorTimeConstant);
   dcmIntegrator_.timeConstant(c_.dcmIntegratorTimeConstant);
-  zmpccIntegrator_.rate(c_.zmpccIntegratorLeakRate);
 
   // Configure contacts
   double hw = c_.sole.halfWidth;
@@ -831,7 +806,11 @@ void StabilizerTask::run()
       break;
   }
 
-  updateCoMTaskZMPCC();
+  distribZMP_ = computeZMP(distribWrench_);
+  comTask->com(comTarget_);
+  comTask->refVel(comdTarget_);
+  comTask->refAccel(comddTarget_);
+
   updateFootForceDifferenceControl();
 
   auto endTime = high_resolution_clock::now();
@@ -1042,33 +1021,6 @@ void StabilizerTask::saturateWrench(const sva::ForceVecd & desiredWrench,
   footTask->targetCoP(cop);
   footTask->targetForce(w_c.force());
   distribWrench_ = w_0;
-}
-
-void StabilizerTask::updateCoMTaskZMPCC()
-{
-  if(zmpccOnlyDS_ && contactState_ != ContactState::DoubleSupport)
-  {
-    zmpccCoMAccel_.setZero();
-    zmpccCoMVel_.setZero();
-    zmpccIntegrator_.add(Eigen::Vector3d::Zero(), dt_); // leak to zero
-  }
-  else
-  {
-    distribZMP_ = computeZMP(distribWrench_);
-    zmpccError_ = distribZMP_ - measuredZMP_;
-    const Eigen::Matrix3d & R_0_c = zmpFrame_.rotation();
-    const Eigen::Transpose<const Eigen::Matrix3d> R_c_0 = R_0_c.transpose();
-    Eigen::Vector3d comAdmittance = {c_.comAdmittance.x(), c_.comAdmittance.y(), 0.};
-    Eigen::Vector3d newVel = -R_c_0 * comAdmittance.cwiseProduct(R_0_c * zmpccError_);
-    Eigen::Vector3d newAccel = (newVel - zmpccCoMVel_) / dt_;
-    zmpccIntegrator_.add(newVel, dt_);
-    zmpccCoMAccel_ = newAccel;
-    zmpccCoMVel_ = newVel;
-  }
-  zmpccCoMOffset_ = zmpccIntegrator_.eval();
-  comTask->com(comTarget_ + zmpccCoMOffset_);
-  comTask->refVel(comdTarget_ + zmpccCoMVel_);
-  comTask->refAccel(comddTarget_ + zmpccCoMAccel_);
 }
 
 void StabilizerTask::updateFootForceDifferenceControl()

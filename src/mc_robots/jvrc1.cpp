@@ -114,8 +114,6 @@ JVRC1RobotModule::JVRC1RobotModule() : RobotModule(std::string(JVRC_VAL_VAL(JVRC
         "vdc:                                                                                                    \n"
         "  frequency: 1                                                                                          \n"
         "  stiffness: 1000                                                                                       \n"
-        "zmpcc:                                                                                                  \n"
-        "  integrator_leak_rate: 0.1                                                                             \n"
         "admittance:                                                                                             \n"
         "  com: [0, 0]                                                                                           \n"
         "  cop: [0.01, 0.01]                                                                                     \n"

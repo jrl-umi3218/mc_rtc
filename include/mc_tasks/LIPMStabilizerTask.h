@@ -62,7 +62,6 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
       0.2; /**< Maximum y-axis angular velocity in [rad] / [s] for foot damping control. */
   static constexpr double MAX_FDC_RZ_VEL =
       0.2; /**< Maximum z-axis angular velocity in [rad] / [s] for foot damping control. */
-  static constexpr double MAX_ZMPCC_COM_OFFSET = 0.05; /**< Maximum CoM offset due to admittance control in [m] */
   static constexpr double MIN_DS_PRESSURE = 15.; /**< Minimum normal contact force in DSP, used to avoid low-pressure
                                                     targets when close to contact switches. */
   /**< Minimum force for valid ZMP computation (throws otherwise) */
@@ -368,18 +367,6 @@ private:
    */
   void setSupportFootGains();
 
-  /** Update CoM task with ZMP Compensation Control.
-   *
-   * This approach is based on Section 6.2.2 of Dr Nagasaka's PhD thesis
-   * "体幹位置コンプライアンス制御によるモデル誤差吸収" (1999) from
-   * <https://sites.google.com/site/humanoidchannel/home/publication>.
-   * The main differences is that the CoM offset is (1) implemented as CoM
-   * damping control with an internal leaky integrator and (2) computed from
-   * the distributed rather than reference ZMP.
-   *
-   */
-  void updateCoMTaskZMPCC();
-
   /** Apply foot force difference control.
    *
    * This method is described in Section III.E of "Biped walking
@@ -474,17 +461,11 @@ protected:
   Eigen::Vector3d measuredDCM_ = Eigen::Vector3d::Zero();
   sva::ForceVecd measuredNetWrench_;
   Eigen::Vector3d zmpError_ = Eigen::Vector3d::Zero();
-  Eigen::Vector3d zmpccCoMAccel_ = Eigen::Vector3d::Zero();
-  Eigen::Vector3d zmpccCoMOffset_ = Eigen::Vector3d::Zero();
-  Eigen::Vector3d zmpccCoMVel_ = Eigen::Vector3d::Zero();
-  Eigen::Vector3d zmpccError_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d distribZMP_ = Eigen::Vector3d::Zero();
   Eigen::Vector4d polePlacement_ = {-10., -5., -1., 10.}; /**< Pole placement with ZMP delay (Morisawa et al., 2014) */
   mc_signal::ExponentialMovingAverage<Eigen::Vector3d> dcmIntegrator_;
-  mc_signal::LeakyIntegrator<Eigen::Vector3d> zmpccIntegrator_;
   mc_signal::StationaryOffsetFilter<Eigen::Vector3d> dcmDerivator_;
   bool inTheAir_ = false; /**< Is the robot in the air? */
-  bool zmpccOnlyDS_ = true; /**< Apply CoM admittance control only in double support? */
   double dfzForceError_ = 0.; /**< Force error in foot force difference control */
   double dfzHeightError_ = 0.; /**< Height error in foot force difference control */
   double dt_ = 0.005; /**< Controller cycle in [s] */

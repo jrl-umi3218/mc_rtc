@@ -140,8 +140,6 @@ struct StabilizerConfiguration
   double vdcFrequency = 1.; /**< Frequency used in double-support vertical drift compensation */
   double vdcStiffness = 1000.; /**< Stiffness used in single-support vertical drift compensation */
 
-  double zmpccIntegratorLeakRate = 0.1;
-
   void load(const mc_rtc::Configuration & config)
   {
     fdqpWeights = config("fdqp_weights");
@@ -215,12 +213,6 @@ struct StabilizerConfiguration
       vdc("frequency", vdcFrequency);
       vdc("stiffness", vdcStiffness);
     }
-    if(config.has("zmpcc"))
-    {
-      auto zmpcc = config("zmpcc");
-      zmpcc("integrator_leak_rate", zmpccIntegratorLeakRate);
-    }
-
     config("sole", sole);
   }
 
@@ -275,9 +267,6 @@ struct StabilizerConfiguration
     conf.add("vdc");
     conf("vdc")("frequency", vdcFrequency);
     conf("vdc")("stiffness", vdcStiffness);
-
-    conf.add("zmpcc");
-    conf("zmpcc").add("integrator_leak_rate", zmpccIntegratorLeakRate);
 
     conf.add("sole", sole);
     return conf;
