@@ -83,6 +83,7 @@ JVRC1RobotModule::JVRC1RobotModule() : RobotModule(std::string(JVRC_VAL_VAL(JVRC
     auto lipmConf = mc_rtc::Configuration::fromYAMLData(
         "leftFootSurface: LeftFootCenter                                                                         \n"
         "rightFootSurface: RightFootCenter                                                                       \n"
+        "friction: 0.7                                                                                           \n"
         "torsoBodyName: WAIST_R_S                                                                                \n"
         "tasks:                                                                                                  \n"
         "  com:                                                                                                  \n"
@@ -125,11 +126,7 @@ JVRC1RobotModule::JVRC1RobotModule() : RobotModule(std::string(JVRC_VAL_VAL(JVRC
         "    integral: 10                                                                                        \n"
         "    deriv: 0.5                                                                                          \n"
         "  derivator_time_constant: 1                                                                            \n"
-        "  integrator_time_constant: 10                                                                          \n"
-        "sole:                                                                                                   \n"
-        "  half_length: 0.11                                                                                     \n"
-        "  half_width: 0.05                                                                                      \n"
-        "  friction: 0.7                                                                                         ");
+        "  integrator_time_constant: 10                                                                          ");
     _lipmStabilizerConfig.load(lipmConf);
   }
   else

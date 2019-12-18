@@ -87,6 +87,7 @@ states:
         hrp2_drc:
           leftFootSurface: LeftFootCenter
           rightFootSurface: RightFootCenter
+          friction: 0.8
           torsoBodyName: CHEST_LINK1
           # Configuration  of the QP tasks used by the stabilizer
           tasks:
@@ -116,9 +117,6 @@ states:
             frequency: 1
             stiffness: 1000
 
-          zmpcc:
-            integrator_leak_rate: 0.1
-
           # Admittance coefficients (force-control)
           admittance:
             com: [0, 0]
@@ -137,12 +135,6 @@ states:
               deriv: 0.5
             derivator_time_constant: 5
             integrator_time_constant: 30
-
-          # Properties of the robot sole
-          sole:
-            half_length: 0.108
-            half_width: 0.07
-            friction: 0.7
 
         # Change some parameters for another robot
         jvrc1:

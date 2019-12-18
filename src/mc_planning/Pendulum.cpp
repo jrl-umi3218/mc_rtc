@@ -51,15 +51,6 @@ void Pendulum::integrateCoMJerk(const Eigen::Vector3d & comddd, double dt)
   comddd_ = comddd;
 }
 
-void Pendulum::resetCoMHeight(double height, const Contact & plane)
-{
-  auto n = plane.normal();
-  com_ += (height + n.dot(plane.p() - com_)) * n;
-  comd_ -= n.dot(comd_) * n;
-  comdd_ -= n.dot(comdd_) * n;
-  comddd_ -= n.dot(comddd_) * n;
-}
-
 void Pendulum::completeIPM(const Contact & plane)
 {
   auto n = plane.normal();

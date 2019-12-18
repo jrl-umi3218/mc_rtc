@@ -12,15 +12,6 @@ namespace mc_rbdyn
 
 namespace lipm_stabilizer
 {
-/** Foot sole properties.
- *
- */
-struct Sole
-{
-  double friction = 0.7;
-  double halfLength = 0.112; // [m]
-  double halfWidth = 0.065; // [m]
-};
 
 /** Weights for force distribution quadratic program (FDQP).
  *
@@ -37,31 +28,6 @@ struct FDQPWeights
 namespace mc_rtc
 {
 using FDQPWeights = mc_rbdyn::lipm_stabilizer::FDQPWeights;
-using Sole = mc_rbdyn::lipm_stabilizer::Sole;
-/**
- * @brief Load Sole properties
- */
-template<>
-struct ConfigurationLoader<Sole>
-{
-  static Sole load(const mc_rtc::Configuration & config)
-  {
-    Sole sole;
-    config("friction", sole.friction);
-    config("half_length", sole.halfLength);
-    config("half_width", sole.halfWidth);
-    return sole;
-  }
-
-  static mc_rtc::Configuration save(const Sole & sole)
-  {
-    mc_rtc::Configuration config;
-    config.add("friction", sole.friction);
-    config.add("half_length", sole.halfLength);
-    config.add("half_width", sole.halfWidth);
-    return config;
-  }
-};
 
 /**
  * @brief Read force distribution QP weights from configuration.
@@ -101,7 +67,7 @@ struct StabilizerConfiguration
 {
   FDQPWeights fdqpWeights;
 
-  Sole sole;
+  double friction = 0.7;
   std::string leftFootSurface;
   std::string rightFootSurface;
 
@@ -146,6 +112,7 @@ struct StabilizerConfiguration
 
     config("leftFootSurface", leftFootSurface);
     config("rightFootSurface", rightFootSurface);
+    config("friction", friction);
     config("torsoBodyName", torsoBodyName);
 
     if(config.has("admittance"))
@@ -213,7 +180,6 @@ struct StabilizerConfiguration
       vdc("frequency", vdcFrequency);
       vdc("stiffness", vdcStiffness);
     }
-    config("sole", sole);
   }
 
   mc_rtc::Configuration save() const
@@ -267,8 +233,6 @@ struct StabilizerConfiguration
     conf.add("vdc");
     conf("vdc")("frequency", vdcFrequency);
     conf("vdc")("stiffness", vdcStiffness);
-
-    conf.add("sole", sole);
     return conf;
   }
 };

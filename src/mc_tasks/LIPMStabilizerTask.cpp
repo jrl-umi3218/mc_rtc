@@ -603,20 +603,8 @@ void StabilizerTask::configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfig
   defaultConfig_ = config;
   c_ = defaultConfig_;
 
-  wrenchFaceMatrix(c_.sole);
-
   dcmDerivator_.timeConstant(c_.dcmDerivatorTimeConstant);
   dcmIntegrator_.timeConstant(c_.dcmIntegratorTimeConstant);
-
-  // Configure contacts
-  double hw = c_.sole.halfWidth;
-  double hl = c_.sole.halfLength;
-  leftFootContact_.surfaceName = leftFootTask->surface();
-  leftFootContact_.halfLength = hl;
-  leftFootContact_.halfWidth = hw;
-  rightFootContact_.surfaceName = rightFootTask->surface();
-  rightFootContact_.halfLength = hl;
-  rightFootContact_.halfWidth = hw;
 
   // Configure upper-body tasks
   pelvisTask->stiffness(c_.pelvisStiffness);
@@ -653,55 +641,56 @@ void StabilizerTask::checkGains()
 
 void StabilizerTask::setContacts(ContactState state)
 {
-  contactState_ = state;
+  supportPolygons_.clear();
+  contacts_.clear();
 
-  auto footStepPolygon = [](const Contact & contact) {
-    std::vector<Eigen::Vector3d> polygon;
-    polygon.push_back(contact.vertex0());
-    polygon.push_back(contact.vertex1());
-    polygon.push_back(contact.vertex2());
-    polygon.push_back(contact.vertex3());
-    return polygon;
-  };
-
-  supportMin_ = std::numeric_limits<double>::max() * Eigen::Vector3d::Ones();
+  supportMin_ = std::numeric_limits<double>::max() * Eigen::Vector2d::Ones();
   supportMax_ = -supportMin_;
 
-  auto configureFootSupport = [this, &footStepPolygon](std::shared_ptr<mc_tasks::force::CoPTask> footTask,
-                                                       Contact & contact) {
+  auto configureFootSupport = [this](std::shared_ptr<mc_tasks::force::CoPTask> footTask,
+                                     const ContactState contactState, bool wrenchFace = true) {
     footTask->reset();
     footTask->admittance(contactAdmittance());
     footTask->setGains(c_.contactStiffness, c_.contactDamping);
     footTask->weight(c_.contactWeight);
-    // set contact pose as well
-    contact.pose = footTask->surfacePose();
+
+    // Use real robot's surface pose as contact
+    contacts_.emplace(std::make_pair(contactState, Contact{realRobot(), footTask->surface()}));
+    const auto & contact = contacts_.at(contactState);
 
     supportMin_.x() = std::min(contact.xmin(), supportMin_.x());
     supportMin_.y() = std::min(contact.ymin(), supportMin_.y());
-    supportMin_.z() = std::min(contact.zmin(), supportMin_.z());
     supportMax_.x() = std::max(contact.xmax(), supportMax_.x());
     supportMax_.y() = std::max(contact.ymax(), supportMax_.y());
-    supportMax_.z() = std::max(contact.zmax(), supportMax_.z());
 
-    supportPolygons_.push_back(footStepPolygon(contact));
+    supportPolygons_.push_back(contact.polygon());
+
+    if(wrenchFace)
+    {
+      wrenchFaceMatrix(contact.halfLength(), contact.halfWidth(), c_.friction);
+    }
   };
 
-  supportPolygons_.clear();
   if(state == ContactState::DoubleSupport)
   {
-    configureFootSupport(leftFootTask, leftFootContact_);
-    configureFootSupport(rightFootTask, rightFootContact_);
+    configureFootSupport(leftFootTask, ContactState::Left, false);
+    // Only compute wrenchFaceMatrix with the right sole properties. Assumes
+    // both feet to be the same. If that is not the case, the code should be
+    // modified to use two different wrenchFaceMatrix for Left and Right
+    configureFootSupport(rightFootTask, ContactState::Right, true);
   }
   else if(state == ContactState::Left)
   {
-    configureFootSupport(leftFootTask, leftFootContact_);
+    configureFootSupport(leftFootTask, ContactState::Left);
     rightFootTask->weight(0);
   }
   else
   {
-    configureFootSupport(rightFootTask, rightFootContact_);
+    configureFootSupport(rightFootTask, ContactState::Right);
     leftFootTask->weight(0);
   }
+
+  contactState_ = state;
 }
 
 void StabilizerTask::setSupportFootGains()
@@ -736,18 +725,17 @@ void StabilizerTask::checkInTheAir()
 
 void StabilizerTask::updateZMPFrame()
 {
-  const sva::PTransformd & X_0_lc = leftFootContact_.pose;
-  const sva::PTransformd & X_0_rc = rightFootContact_.pose;
   switch(contactState_)
   {
     case ContactState::DoubleSupport:
-      zmpFrame_ = sva::interpolate(X_0_lc, X_0_rc, 0.5);
+      zmpFrame_ = sva::interpolate(contacts_.at(ContactState::Left).surfacePose(),
+                                   contacts_.at(ContactState::Right).surfacePose(), 0.5);
       break;
     case ContactState::Left:
-      zmpFrame_ = X_0_lc;
+      zmpFrame_ = contacts_.at(ContactState::Left).surfacePose();
       break;
     case ContactState::Right:
-      zmpFrame_ = X_0_rc;
+      zmpFrame_ = contacts_.at(ContactState::Right).surfacePose();
       break;
   }
   measuredNetWrench_ = robots_.robot(robotIndex_).netWrench(sensorNames_);
@@ -882,10 +870,10 @@ void StabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
   // (X_0_lc* w_l_0).z() > minPressure  -- minimum left foot contact pressure
   // (X_0_rc* w_r_0).z() > minPressure  -- minimum right foot contact pressure
 
-  const sva::PTransformd & X_0_lc = leftFootContact_.pose;
-  const sva::PTransformd & X_0_rc = rightFootContact_.pose;
-  sva::PTransformd X_0_lankle = leftFootContact_.anklePose();
-  sva::PTransformd X_0_rankle = rightFootContact_.anklePose();
+  const sva::PTransformd & X_0_lc = contacts_.at(ContactState::Left).surfacePose();
+  const sva::PTransformd & X_0_rc = contacts_.at(ContactState::Right).surfacePose();
+  sva::PTransformd X_0_lankle = contacts_.at(ContactState::Left).anklePose();
+  sva::PTransformd X_0_rankle = contacts_.at(ContactState::Right).anklePose();
 
   constexpr unsigned NB_VAR = 6 + 6;
   constexpr unsigned COST_DIM = 6 + NB_VAR + 1;
@@ -1061,7 +1049,6 @@ void StabilizerTask::updateFootForceDifferenceControl()
 
 namespace
 {
-
 static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "lipm_stabilizer",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {

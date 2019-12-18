@@ -28,7 +28,6 @@ namespace lipm_stabilizer
 
 using ContactState = mc_rbdyn::lipm_stabilizer::ContactState;
 using Contact = mc_rbdyn::lipm_stabilizer::Contact;
-using Sole = mc_rbdyn::lipm_stabilizer::Sole;
 
 /** Walking stabilization based on linear inverted pendulum tracking.
  *
@@ -217,17 +216,19 @@ public:
 
   /** Update H-representation of contact wrench cones.
    *
-   * \param sole Sole parameters.
+   * \param halfLength sole half length
+   * \param halfWidth sole half width
+   * \param friction sole friction
    *
    * See <https://hal.archives-ouvertes.fr/hal-02108449/document> for
    * technical details on the derivation of this formula.
    *
    */
-  void wrenchFaceMatrix(const Sole & sole)
+  void wrenchFaceMatrix(double halfLength, double halfWidth, double friction)
   {
-    double X = sole.halfLength;
-    double Y = sole.halfWidth;
-    double mu = sole.friction;
+    double X = halfLength;
+    double Y = halfWidth;
+    double mu = friction;
     // clang-format off
     wrenchFaceMatrix_ <<
       // mx,  my,  mz,  fx,  fy,            fz,
@@ -416,11 +417,10 @@ protected:
   }
 
 protected:
-  Contact leftFootContact_;
-  Contact rightFootContact_;
+  std::map<ContactState, Contact> contacts_;
   std::vector<std::vector<Eigen::Vector3d>> supportPolygons_; /**< For GUI display */
-  Eigen::Vector3d supportMin_ = Eigen::Vector3d::Zero();
-  Eigen::Vector3d supportMax_ = Eigen::Vector3d::Zero();
+  Eigen::Vector2d supportMin_ = Eigen::Vector2d::Zero();
+  Eigen::Vector2d supportMax_ = Eigen::Vector2d::Zero();
   std::shared_ptr<mc_tasks::CoMTask> comTask;
   std::shared_ptr<mc_tasks::force::CoPTask> leftFootTask;
   std::shared_ptr<mc_tasks::force::CoPTask> rightFootTask;
@@ -431,6 +431,7 @@ protected:
   unsigned int robotIndex_;
   std::string leftFootSurface_ = "LeftFootCenter";
   std::string rightFootSurface_ = "RightFootCenter";
+  double friction_ = 0.7;
 
   /** Stabilizer targets */
   Eigen::Vector3d comTarget_ = Eigen::Vector3d::Zero();
