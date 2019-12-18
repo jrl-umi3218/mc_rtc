@@ -17,7 +17,7 @@
 
   "Log" : @LOG_ENABLED@,
   "LogPolicy" : "@LOG_POLICY@",
-  "LogDirectory": "/tmp",
+  "LogDirectory": "@LOG_DIRECTORY@",
   "LogTemplate" : "mc-rtc-test",
 
   "ClearControllerModulePath" : true,
