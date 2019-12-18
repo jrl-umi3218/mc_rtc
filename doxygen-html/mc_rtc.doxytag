@@ -12575,8 +12575,8 @@
       <type></type>
       <name>LTDLHandle</name>
       <anchorfile>a02337.html</anchorfile>
-      <anchor>a2bee3c575a69075e4f9923bb02c658b2</anchor>
-      <arglist>(const std::string &amp;class_name, const std::string &amp;path, bool verbose)</arglist>
+      <anchor>a1d2ebbcff7e52decbb18a9dc96b7671b</anchor>
+      <arglist>(const std::string &amp;class_name, const std::string &amp;path, const std::string &amp;rpath, bool verbose)</arglist>
     </member>
     <member kind="function">
       <type></type>

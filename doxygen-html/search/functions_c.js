@@ -48,5 +48,5 @@ var searchData=
   ['lowpassfinitedifferencesvelocityfilter',['LowPassFiniteDifferencesVelocityFilter',['../a01917.html#ad511ff377bd68590ea8eeae83a6e4fc6',1,'mc_observers::LowPassFiniteDifferencesVelocityFilter']]],
   ['lowpassvelocityfilter',['LowPassVelocityFilter',['../a01921.html#a8f893b576b75b884e0232e2c2a15bf43',1,'mc_observers::LowPassVelocityFilter']]],
   ['lssolqpsolver',['LSSOLQPSolver',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00888.html#aa645ba408bf6eb66104caf2c95b2ea44',1,'tasks::qp::LSSOLQPSolver']]],
-  ['ltdlhandle',['LTDLHandle',['../a02337.html#a2bee3c575a69075e4f9923bb02c658b2',1,'mc_rtc::LTDLHandle::LTDLHandle(const std::string &amp;class_name, const std::string &amp;path, bool verbose)'],['../a02337.html#aeb254d88dad0c357ba003eb2ef458556',1,'mc_rtc::LTDLHandle::LTDLHandle(const LTDLHandle &amp;)=delete']]]
+  ['ltdlhandle',['LTDLHandle',['../a02337.html#a1d2ebbcff7e52decbb18a9dc96b7671b',1,'mc_rtc::LTDLHandle::LTDLHandle(const std::string &amp;class_name, const std::string &amp;path, const std::string &amp;rpath, bool verbose)'],['../a02337.html#aeb254d88dad0c357ba003eb2ef458556',1,'mc_rtc::LTDLHandle::LTDLHandle(const LTDLHandle &amp;)=delete']]]
 ];
