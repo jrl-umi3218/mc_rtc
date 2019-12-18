@@ -1,0 +1,340 @@
+
+
+
+
+
+  
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Tutorials - Log manipulation - mc_rtc</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.0.0/build.css" integrity="sha256-iPUhChwurLRCrDCM1+2a2LDe9pfW6Je29o/oA5VPr28=" crossorigin="anonymous" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+    
+
+    <link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+      <a class="navbar-brand" href="/mc_rtc/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <div class="navbar-nav mr-auto">
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/interfaces.html">Interfaces</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/robots.html">Robots</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link active" href="/mc_rtc/tutorials.html">Tutorials</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/doxygen.html">API documentation</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/json.html">JSON/YAML documentation</a>
+          
+          
+        </div>
+        <a href="https://gite.lirmm.fr/multi-contact/mc_rtc" target="blank_"><img src="/mc_rtc/assets/gitlab-logo.svg" alt="GitLab logo" width="25" height="25" /></a>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col">
+        <ul>
+          
+          <li>Introduction</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/installation-guide.html">Installation guide</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/configuration.html">Configuring mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/running-a-controller.html">Running a controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/first-controller.html">Your first controller with mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/com-controller.html">Controlling the CoM</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/ef-controller.html">Controlling an end-effector (and loading)</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/multi-robot-controller.html">Multi-robot controller</a></li>
+              
+            
+          </ul>
+          
+          <li>Framework usage</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> general purpose configuration</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/logging.html">Logging data</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/console-logging.html">Printing information to the screen</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/gui.html">Graphical User Interface (GUI)</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/live-plotting.html">Display plots live from the controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/ros.html">ROS integration</a></li>
+              
+            
+          </ul>
+          
+          <li>Framework tools</li>
+          <ul>
+            
+              
+              <li><strong>Log manipulation</strong></li>
+                
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_ui.html">Log plotting</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_visualization.html">Replay visualization</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_surfaces_visualization.html">Visualizing surfaces</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_convex_visualization.html">Visualizing convexes</a></li>
+              
+            
+          </ul>
+          
+          <li>Control recipes</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/fsm.html">Using the FSM facilities</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/fsm-example.html">FSM controller in practice</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/derived-fsm.html">Deriving the FSM controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/observers.html">Using the observers pipeline</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/speed-constraint.html">Constraint the speed of a body</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/moving-a-contact.html">Moving a contact</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/contact-dof.html">Change the DoF constraints on a contact</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/joint-select.html">Select specific joints for a task</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/dim-weight.html">Affect different weight to different axis in the task space</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/joint-stiffness.html">Joints Stiffness</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/com-constraint.html">Constraining the accessible region of the CoM</a></li>
+              
+            
+          </ul>
+          
+          <li>Advanced topics</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-interface.html">Implement a new mc_rtc interface</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-environment.html">Environment creation for mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-robot.html">Integrate a new robot in mc_rtc</a></li>
+              
+            
+          </ul>
+          
+        </ul>
+      </div>
+      <div class="col-9">
+        <h1>Log manipulation</h1>
+
+        <p>In this document we will assume you have a log at <code class="highlighter-rouge">~/my_log.bin</code>.</p>
+
+<h3 id="mc_bin_utils-a-general-manipulation-tool"><code class="highlighter-rouge">mc_bin_utils</code>: a general manipulation tool</h3>
+
+<p><code class="highlighter-rouge">mc_bin_utils</code> lets you perform a number of operations on a binary log:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_bin_utils <span class="nt">--help</span>
+mc_bin_utils is a command-line tool to work with mc_rtc bin logs
+
+Available commands:
+    show      Display information about the log
+    <span class="nb">split     </span>Split a log into N part
+    extract   Extra part of a log
+    convert   Convert binary logs to various formats
+
+Use mc_bin_utils &lt;<span class="nb">command</span><span class="o">&gt;</span> <span class="nt">--help</span> <span class="k">for </span>usage of each <span class="nb">command</span>
+</code></pre></div></div>
+
+<p>We will covert the <code class="highlighter-rouge">extract</code> and <code class="highlighter-rouge">convert</code> commands. <code class="highlighter-rouge">show</code> and <code class="highlighter-rouge">split</code> are self-explanatory.</p>
+
+<h4 id="mc_bin_utils-extract"><code class="highlighter-rouge">mc_bin_utils extract</code></h4>
+
+<p><code class="highlighter-rouge">mc_bin_utils extract</code> has two operation mode.</p>
+
+<p>The first one extract all parts of a log where a given key is present:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_bin_utils extract ~/my_log.bin my_log_out <span class="nt">--key</span> com_task_target
+</code></pre></div></div>
+
+<p>This will generate one log for each section where the key <code class="highlighter-rouge">com_task_target</code> was present. For example, if the key was present at the 5 seconds mark until the 15 seconds mark and again from the 30 seconds mark to the 60 seconds mark you will get <code class="highlighter-rouge">my_log_out_1.bin</code> and <code class="highlighter-rouge">my_log_out_2.bin</code>.</p>
+
+<p>The second form lets directly extract a time-range based on the <code class="highlighter-rouge">t</code> entry:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_bin_utils extract ~/my_log.bin my_log_out <span class="nt">--from</span> 50 <span class="nt">--to</span> 100
+</code></pre></div></div>
+
+<p>This example will generate <code class="highlighter-rouge">my_log_out.bin</code> with time <code class="highlighter-rouge">t</code> ranging from 50 seconds to 100 seconds. You can omit either <code class="highlighter-rouge">from</code> or <code class="highlighter-rouge">to</code> in which case the output log will start at 0 second and end at the end of the log respectively.</p>
+
+<h4 id="mc_bin_utils-convert"><code class="highlighter-rouge">mc_bin_utils convert</code></h4>
+
+<p>This tool will let you convert a <code class="highlighter-rouge">.bin</code> log to one of three formats (two without ROS support)</p>
+
+<ul>
+  <li><code class="highlighter-rouge">.flat</code> is the actual format expected by <code class="highlighter-rouge">mc_log_ui</code> if you find yourself opening the same log frequently you may convert it once to save time;</li>
+  <li><code class="highlighter-rouge">.csv</code> is a well-known data format that is understood by a lot of tools (notably MATLAB and Excel) and can be convenient to share data with external collaborators;</li>
+  <li><code class="highlighter-rouge">.bag</code> is the format expected by the <code class="highlighter-rouge">rosbag</code> tool;</li>
+</ul>
+
+<h3 id="opening-the-log-in-python">Opening the log in Python</h3>
+
+<p>You can also open the log in Python:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">mc_log_ui</span>
+<span class="n">log</span> <span class="o">=</span> <span class="n">mc_log_ui</span><span class="o">.</span><span class="n">read_log</span><span class="p">(</span><span class="s">'/tmp/mylog.bin'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Then <code class="highlighter-rouge">log</code> is a Python dictionary where the keys are the entries you see in the tree of mc_log_ui (e.g. if you logged an <code class="highlighter-rouge">Eigen::Vector3d</code> called <code class="highlighter-rouge">v3d</code> then you get <code class="highlighter-rouge">v3d_x</code>, <code class="highlighter-rouge">v3d_y</code> and <code class="highlighter-rouge">v3d_z</code>) and the values are numpy arrays so you can do anything with it.</p>
+
+<h3 id="the-mc_rtcflatlog-class">The <code class="highlighter-rouge">mc_rtc::FlatLog</code> class</h3>
+
+<p>The <code class="highlighter-rouge">mc_rtc::FlatLog</code> class is part of the <code class="highlighter-rouge">mc_rtc_utils</code> library. It lets you open a log and iterate through the data using their original type. For example, if you have logged a force sensor’s reading as an <code class="highlighter-rouge">sva::ForceVecd</code> object you can retrieve it as-is through the <code class="highlighter-rouge">mc_rtc::FlatLog</code>. See the class documentation for more details on the usage and API. This is only available in C++.</p>
+
+
+        <hr/>
+        
+        <div class="text-right">
+        <a href="/mc_rtc/tutorials/tools/mc_log_ui.html">Next tutorial: Log plotting</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <footer>
+        <hr>
+        <div class="row">
+          <div class="col-8 offset-lg-2 col-lg-6">
+            Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2019
+          </div>
+          <div class="col-4 col-lg-2 text-right">
+            <a href="/mc_rtc/credits.html">Credits</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+
+</html>

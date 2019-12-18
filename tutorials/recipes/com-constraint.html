@@ -1,0 +1,372 @@
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Tutorials - Constraining the accessible region of the CoM - mc_rtc</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.0.0/build.css" integrity="sha256-iPUhChwurLRCrDCM1+2a2LDe9pfW6Je29o/oA5VPr28=" crossorigin="anonymous" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+    
+
+    <link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+      <a class="navbar-brand" href="/mc_rtc/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <div class="navbar-nav mr-auto">
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/interfaces.html">Interfaces</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/robots.html">Robots</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link active" href="/mc_rtc/tutorials.html">Tutorials</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/doxygen.html">API documentation</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/json.html">JSON/YAML documentation</a>
+          
+          
+        </div>
+        <a href="https://gite.lirmm.fr/multi-contact/mc_rtc" target="blank_"><img src="/mc_rtc/assets/gitlab-logo.svg" alt="GitLab logo" width="25" height="25" /></a>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col">
+        <ul>
+          
+          <li>Introduction</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/installation-guide.html">Installation guide</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/configuration.html">Configuring mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/running-a-controller.html">Running a controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/first-controller.html">Your first controller with mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/com-controller.html">Controlling the CoM</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/ef-controller.html">Controlling an end-effector (and loading)</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/multi-robot-controller.html">Multi-robot controller</a></li>
+              
+            
+          </ul>
+          
+          <li>Framework usage</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> general purpose configuration</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/logging.html">Logging data</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/console-logging.html">Printing information to the screen</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/gui.html">Graphical User Interface (GUI)</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/live-plotting.html">Display plots live from the controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/ros.html">ROS integration</a></li>
+              
+            
+          </ul>
+          
+          <li>Framework tools</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_utils.html">Log manipulation</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_ui.html">Log plotting</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_visualization.html">Replay visualization</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_surfaces_visualization.html">Visualizing surfaces</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_convex_visualization.html">Visualizing convexes</a></li>
+              
+            
+          </ul>
+          
+          <li>Control recipes</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/fsm.html">Using the FSM facilities</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/fsm-example.html">FSM controller in practice</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/derived-fsm.html">Deriving the FSM controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/observers.html">Using the observers pipeline</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/speed-constraint.html">Constraint the speed of a body</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/moving-a-contact.html">Moving a contact</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/contact-dof.html">Change the DoF constraints on a contact</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/joint-select.html">Select specific joints for a task</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/dim-weight.html">Affect different weight to different axis in the task space</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/joint-stiffness.html">Joints Stiffness</a></li>
+              
+            
+              
+              <li><strong>Constraining the accessible region of the CoM</strong></li>
+                
+              
+            
+          </ul>
+          
+          <li>Advanced topics</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-interface.html">Implement a new mc_rtc interface</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-environment.html">Environment creation for mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-robot.html">Integrate a new robot in mc_rtc</a></li>
+              
+            
+          </ul>
+          
+        </ul>
+      </div>
+      <div class="col-9">
+        <h1>Constraining the accessible region of the CoM</h1>
+
+        <p>In many cases, one may want to limit the accessible region of the Center of Mass. To do so, we will introduce a new constraint, <code class="highlighter-rouge">CoMIncPlaneConstr</code> that can be used to constrain the CoM to a convex region.</p>
+
+<p>Let us present the API of this constraint:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">CoMIncPlaneConstr</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Robots</span> <span class="o">&amp;</span> <span class="n">robots</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">robotIndex</span><span class="p">,</span> <span class="kt">double</span> <span class="n">dt</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">set_planes</span><span class="p">(</span><span class="n">QPSolver</span> <span class="o">&amp;</span> <span class="n">solver</span><span class="p">,</span>
+                <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Plane</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">planes</span><span class="p">,</span>
+                <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">speeds</span> <span class="o">=</span> <span class="p">{},</span>
+                <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">normalsDots</span> <span class="o">=</span> <span class="p">{},</span>
+                <span class="kt">double</span> <span class="n">iDist</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
+                <span class="kt">double</span> <span class="n">sDist</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
+                <span class="kt">double</span> <span class="n">damping</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+                <span class="kt">double</span> <span class="n">dampingOff</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">);</span>
+</code></pre></div></div>
+<p>This means that you can:</p>
+<ul>
+  <li>Build a constraint applied on a given robot, with a given timestep.</li>
+  <li>Set the planes of the constraint, i.e. update the actual region constraining the Center of Mass</li>
+</ul>
+
+<h2 id="how-to-set-planes">How to “set planes”</h2>
+<p>First, a quick reminder on convex sets: they can be equivalently described by their vertices or by a set of linear inequalities.
+That is to say, any point p inside a convex set can be expressed as the barycenter of the vertices, i.e. there exists a set of weights <code class="highlighter-rouge">\lambda_i</code>:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>p = \sum_i \lambda_i v_i
+\sum_i \lambda_i = 0
+\forall i \lambda_i \geq 0
+</code></pre></div></div>
+<p>However, this is not very efficient for testing if a vertex is inside, as it requires basically solving a linear program. To actually test membership, the hyperplane representation is much better as it allows to test in a single matrix operation:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>A p + b \geq 0
+</code></pre></div></div>
+<p>Where A is a matrix of stacked normals to each plane, and b is a vector of offsets.</p>
+
+<p>Thus, to constrain the CoM to a static region, one only needs to construct a few normals and offsets, and put it in the constraint.</p>
+
+<h2 id="example">Example</h2>
+<p>Let’s go back to the CoM controller we <a href="/mc_rtc/tutorials/introduction/com-controller.html">constructed before</a>: the robot fell in a dynamic simulation because we asked it to go to far to the sides.
+Let us now restrict its motion to a square, of sides 8cm. This can be expressed as:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-0.08 \leq x \leq 0.08
+-0.08 \leq y \leq 0.08
+</code></pre></div></div>
+
+<p>Thus, in matrix form:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>⎡ -1 0 0 ⎤ ⎡ x ⎤   ⎡ 0.08 ⎤
+⎢ 1  0 0 ⎥ ⎢ y ⎥ + ⎢ 0.08 ⎥ \leq 0
+⎢ 0 -1 0 ⎥ ⎣ z ⎦   ⎢ 0.08 ⎥
+⎣ 0  1 0 ⎦         ⎣ 0.08 ⎦
+</code></pre></div></div>
+
+<p>We now only need to include this in the constraint:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1">//In the header:</span>
+<span class="cp"># include &lt;mc_solver/CoMIncPlaneConstr.h&gt;
+</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_solver</span><span class="o">::</span><span class="n">CoMIncPlaneConstr</span><span class="o">&gt;</span> <span class="n">comIncPlaneConstraintPtr_</span><span class="p">;</span>
+
+
+<span class="c1">//In the cpp, in the controller's initializer list:</span>
+<span class="n">comIncPlaneConstraintPtr_</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="k">new</span> <span class="n">mc_solver</span><span class="o">::</span><span class="n">CoMIncPlaneConstr</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span> <span class="n">robots</span><span class="p">().</span><span class="n">robotIndex</span><span class="p">(),</span> <span class="n">dt</span><span class="p">)</span> <span class="p">);</span>
+
+<span class="c1">//In the constructor itself:</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Plane</span><span class="o">&gt;</span> <span class="n">planes</span> <span class="o">=</span>
+    <span class="p">{{{</span><span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">},</span> <span class="mf">0.08</span><span class="p">},</span>
+     <span class="p">{{</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">},</span> <span class="mf">0.08</span><span class="p">},</span>
+     <span class="p">{{</span><span class="mf">0.</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">},</span> <span class="mf">0.08</span><span class="p">},</span>
+     <span class="p">{{</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">},</span> <span class="mf">0.08</span><span class="p">},</span>
+    <span class="p">};</span>
+ <span class="n">solver</span><span class="p">().</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="o">*</span><span class="n">comIncPlaneConstraintPtr_</span><span class="p">);</span>
+ <span class="n">comIncPlaneConstraintPtr_</span><span class="o">-&gt;</span><span class="n">set_planes</span><span class="p">(</span><span class="n">solver</span><span class="p">(),</span> <span class="n">planes</span><span class="p">);</span>
+
+</code></pre></div></div>
+
+<p>Now if you launch the controller, you will see that the robot hits an invisible “wall”, and is unable to accomplish the task.</p>
+
+<h2 id="additional-parameters">Additional parameters</h2>
+
+<p>The additional parameters passed to <code class="highlighter-rouge">set_planes</code> fall in two categories:</p>
+
+<ul>
+  <li>Dealing with moving planes</li>
+  <li>Changing the interaction behaviour</li>
+</ul>
+
+<p>For the first one, one can pass in the planes’ speeds and plane normal’s derivatives with respect to time as extra parameters to provide extra information.
+Note that as when tracking a trajectory, the planes and their derivatives must be set at each timestep.</p>
+
+<p>Then, one can tune the:</p>
+
+<ul>
+  <li>Interaction distance: the planes will push away the CoM as soon as it gets closer to that distance.</li>
+  <li>Safety distance: the distance from the CoM to the planes cannot get smaller than this.</li>
+  <li>Damping and damping offset that govern how the repulsion behaves.</li>
+</ul>
+
+
+        <hr/>
+        
+        <div class="text-right">
+        <a href="/mc_rtc/tutorials/advanced/new-interface.html">Next tutorial: Implement a new mc_rtc interface</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <footer>
+        <hr>
+        <div class="row">
+          <div class="col-8 offset-lg-2 col-lg-6">
+            Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2019
+          </div>
+          <div class="col-4 col-lg-2 text-right">
+            <a href="/mc_rtc/credits.html">Credits</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+
+</html>

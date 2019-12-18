@@ -1,0 +1,564 @@
+
+
+
+
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Tutorials - Display plots live from the controller - mc_rtc</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.0.0/build.css" integrity="sha256-iPUhChwurLRCrDCM1+2a2LDe9pfW6Je29o/oA5VPr28=" crossorigin="anonymous" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+    
+
+    <link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+      <a class="navbar-brand" href="/mc_rtc/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <div class="navbar-nav mr-auto">
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/interfaces.html">Interfaces</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/robots.html">Robots</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link active" href="/mc_rtc/tutorials.html">Tutorials</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/doxygen.html">API documentation</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/json.html">JSON/YAML documentation</a>
+          
+          
+        </div>
+        <a href="https://gite.lirmm.fr/multi-contact/mc_rtc" target="blank_"><img src="/mc_rtc/assets/gitlab-logo.svg" alt="GitLab logo" width="25" height="25" /></a>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col">
+        <ul>
+          
+          <li>Introduction</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/installation-guide.html">Installation guide</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/configuration.html">Configuring mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/running-a-controller.html">Running a controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/first-controller.html">Your first controller with mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/com-controller.html">Controlling the CoM</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/ef-controller.html">Controlling an end-effector (and loading)</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/multi-robot-controller.html">Multi-robot controller</a></li>
+              
+            
+          </ul>
+          
+          <li>Framework usage</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> general purpose configuration</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/logging.html">Logging data</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/console-logging.html">Printing information to the screen</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/gui.html">Graphical User Interface (GUI)</a></li>
+              
+            
+              
+              <li><strong>Display plots live from the controller</strong></li>
+                
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/ros.html">ROS integration</a></li>
+              
+            
+          </ul>
+          
+          <li>Framework tools</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_utils.html">Log manipulation</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_ui.html">Log plotting</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_visualization.html">Replay visualization</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_surfaces_visualization.html">Visualizing surfaces</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_convex_visualization.html">Visualizing convexes</a></li>
+              
+            
+          </ul>
+          
+          <li>Control recipes</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/fsm.html">Using the FSM facilities</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/fsm-example.html">FSM controller in practice</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/derived-fsm.html">Deriving the FSM controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/observers.html">Using the observers pipeline</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/speed-constraint.html">Constraint the speed of a body</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/moving-a-contact.html">Moving a contact</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/contact-dof.html">Change the DoF constraints on a contact</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/joint-select.html">Select specific joints for a task</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/dim-weight.html">Affect different weight to different axis in the task space</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/joint-stiffness.html">Joints Stiffness</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/com-constraint.html">Constraining the accessible region of the CoM</a></li>
+              
+            
+          </ul>
+          
+          <li>Advanced topics</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-interface.html">Implement a new mc_rtc interface</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-environment.html">Environment creation for mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-robot.html">Integrate a new robot in mc_rtc</a></li>
+              
+            
+          </ul>
+          
+        </ul>
+      </div>
+      <div class="col-9">
+        <h1>Display plots live from the controller</h1>
+
+        <p>In some instances, you may want to display graphs while a controller is running (for example, when tuning the gains of a stabilizer). One option to do this is to open the on-going log and plot the data you’re interested in. With long running experiments this can become cumbersome as the log size grows as does the time needed to open the log and process it.</p>
+
+<p>The better option, presented in this tutorial, is to let your controller display an on-going log.</p>
+
+<h5 id="note">Note</h5>
+
+<p>For the sake of clarity, in the examples, we will assume the following code snippet is present:</p>
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// Brings in every type we need</span>
+<span class="cp">#include &lt;mc_rtc/gui/plot.h&gt;
+</span>
+<span class="c1">// Make shorter names for types we will use a lot</span>
+<span class="k">using</span> <span class="n">Color</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">Color</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">PolygonDescription</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">PolygonDescription</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">Range</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">Range</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">Style</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">Style</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">Side</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">Side</span><span class="p">;</span></code></pre></figure>
+
+
+  </div>
+</div>
+
+<h2 id="two-simple-examples-to-get-started">Two simple examples to get started</h2>
+
+<p>The two examples show how to create a graph with a shared abscissa and a graph without a shared abscissa.</p>
+
+<p>In the first case, we must provide an absicssa constructed by <code class="highlighter-rouge">mc_rtc::gui::plot::X</code> and plot data constructed by <code class="highlighter-rouge">mc_rtc::gui::plot::Y</code>, <code class="highlighter-rouge">mc_rtc::gui::plot::XY</code> or <code class="highlighter-rouge">mc_rtc::gui::plot::Polygon(s)</code>. For the remainder of this document we will call this type of plots “regular plots”.</p>
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addPlot</span><span class="p">(</span>
+  <span class="s">"sin(t)"</span><span class="p">,</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">X</span><span class="p">(</span><span class="s">"t"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">t</span><span class="p">;</span> <span class="p">}),</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">Y</span><span class="p">(</span><span class="s">"sin(t)"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="p">},</span> <span class="n">Color</span><span class="o">::</span><span class="n">Red</span><span class="p">)</span>
+<span class="p">);</span></code></pre></figure>
+
+
+  </div>
+</div>
+
+<p>In the second case, we only need to proivde data constructed by <code class="highlighter-rouge">mc_rtc::gui::plot::XY</code> or <code class="highlighter-rouge">mc_rtc::gui::plot::Polygon(s)</code>. For the remainder of this document we will call this type of pots “XY plots”.</p>
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addXYPlot</span><span class="p">(</span>
+  <span class="s">"Circle in a square"</span><span class="p">,</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">XY</span><span class="p">(</span><span class="s">"Circle"</span><span class="p">,</span>
+                        <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">cos</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="p">},</span>
+                        <span class="n">Color</span><span class="o">::</span><span class="n">Red</span><span class="p">),</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">Polygon</span><span class="p">(</span><span class="s">"Square"</span><span class="p">,</span>
+                             <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">PolygonDescription</span><span class="p">({{</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">}},</span> <span class="n">Color</span><span class="o">::</span><span class="n">Blue</span><span class="p">);</span> <span class="p">})</span>
+<span class="p">);</span></code></pre></figure>
+
+
+  </div>
+</div>
+
+<p>Both types of plots can be removed in the same way:</p>
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">removePlot</span><span class="p">(</span><span class="s">"sin(t)"</span><span class="p">);</span>
+<span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">removePlot</span><span class="p">(</span><span class="s">"Circle in a square"</span><span class="p">);</span></code></pre></figure>
+
+
+  </div>
+</div>
+
+<p>That’s the gist of it! In the next sections we will take a closer look at each of the elements introduced in the examples.</p>
+
+<h2 id="mc_rtcguiplotaxisconfiguration"><code class="highlighter-rouge">mc_rtc::gui::plot::AxisConfiguration</code></h2>
+
+<p>This class lets you manipulate the name and the range of a given axis. By default the range is <code class="highlighter-rouge">[-inf, +inf]</code> which tells the GUI client to automatically guess the limits.</p>
+
+<h3 id="configuring-the-abscissa-x-axis">Configuring the abscissa (X axis)</h3>
+
+<h4 id="in-a-regular-plot">In a regular plot</h4>
+
+<p>In a regular plot, the abscissa configuration is provided by <code class="highlighter-rouge">mc_rtc::gui::plot::X</code>. In our first example, we only provided the name as the first argument but it can also accept a full configuration. For example:</p>
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="kt">double</span> <span class="n">t0</span> <span class="o">=</span> <span class="n">t</span><span class="p">;</span>
+<span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addPlot</span><span class="p">(</span>
+  <span class="s">"sin(t)"</span><span class="p">,</span>
+  <span class="c1">// Minimum value on the axis will be t0</span>
+  <span class="c1">// Maximum value on the axis will be t0 + 10</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">X</span><span class="p">({</span><span class="s">"t"</span><span class="p">,</span> <span class="p">{</span><span class="n">t</span><span class="p">,</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">10</span><span class="p">}},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">t</span><span class="p">;</span> <span class="p">}),</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">Y</span><span class="p">(</span><span class="s">"sin(t)"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="p">},</span> <span class="n">Color</span><span class="o">::</span><span class="n">Red</span><span class="p">)</span>
+<span class="p">);</span></code></pre></figure>
+
+
+  </div>
+</div>
+
+<h4 id="in-a-xy-plot">In a XY plot</h4>
+
+<p>In a XY plot, the abscissa configuration is optional, if you wish to provide it then an <code class="highlighter-rouge">mc_rtc::gui::plot::AxisConfiguration</code> must be provided as the first argument of <code class="highlighter-rouge">addXYPlot</code>. For example:</p>
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addXYPlot</span><span class="p">(</span>
+  <span class="s">"Circle"</span><span class="p">,</span>
+  <span class="c1">// Shows an alternative way to set the limits</span>
+  <span class="n">AxisConfiguration</span><span class="p">(</span><span class="s">"X"</span><span class="p">).</span><span class="n">min</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">).</span><span class="n">max</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">XY</span><span class="p">(</span><span class="s">"Circle"</span><span class="p">,</span>
+                        <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">cos</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="p">},</span>
+                        <span class="n">Color</span><span class="o">::</span><span class="n">Red</span><span class="p">)</span>
+<span class="p">);</span></code></pre></figure>
+
+
+  </div>
+</div>
+
+<h3 id="configuring-the-ordinates-left-y-axis-and-right-y-axis">Configuring the ordinates (Left Y axis and right Y axis)</h3>
+
+<p>The ordinates can be configured by providing an <code class="highlighter-rouge">AxisConfiguration</code> object for the left and right axis:</p>
+
+<h4 id="left-y-axis">Left Y axis</h4>
+
+<ul>
+  <li>in a regular plot, the left Y axis configuration must be provided after the abscissa.</li>
+  <li>in a XY plot, the left Y axis configuration must be provided after the X axis configuration</li>
+</ul>
+
+<h4 id="right-y-axis">Right Y axis</h4>
+
+<p>In both cases, the right Y axis configuration must be provided after the left Y axis configuration.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// Providing only the left Y axis configuration</span>
+<span class="kt">double</span> <span class="n">t0</span> <span class="o">=</span> <span class="n">t</span><span class="p">;</span>
+<span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addPlot</span><span class="p">(</span>
+  <span class="s">"sin(t)"</span><span class="p">,</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">X</span><span class="p">({</span><span class="s">"t"</span><span class="p">,</span> <span class="p">{</span><span class="n">t</span><span class="p">,</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">10</span><span class="p">}},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">t</span><span class="p">;</span> <span class="p">}),</span>
+  <span class="n">AxisConfiguration</span><span class="p">(</span><span class="s">"Y"</span><span class="p">,</span> <span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">}),</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">Y</span><span class="p">(</span><span class="s">"sin(t)"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="p">},</span> <span class="n">Color</span><span class="o">::</span><span class="n">Red</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="c1">// Providing both</span>
+<span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addXYPlot</span><span class="p">(</span>
+  <span class="s">"Circle"</span><span class="p">,</span>
+  <span class="c1">// Shows an alternative way to set the limits</span>
+  <span class="n">AxisConfiguration</span><span class="p">(</span><span class="s">"X"</span><span class="p">).</span><span class="n">min</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">).</span><span class="n">max</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+  <span class="n">AxisConfiguration</span><span class="p">(</span><span class="s">"Left Y"</span><span class="p">),</span>
+  <span class="n">AxisConfiguration</span><span class="p">(</span><span class="s">"Right Y"</span><span class="p">).</span><span class="n">max</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">XY</span><span class="p">(</span><span class="s">"Circle"</span><span class="p">,</span>
+                        <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">cos</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="p">},</span>
+                        <span class="n">Color</span><span class="o">::</span><span class="n">Red</span><span class="p">)</span>
+<span class="p">);</span></code></pre></figure>
+
+
+  </div>
+</div>
+
+<h2 id="mc_rtcguiplotx"><code class="highlighter-rouge">mc_rtc::gui::plot::X</code></h2>
+
+<p>There is not much to add at this point, you must provide two elements:</p>
+<ol>
+  <li>the name or the <code class="highlighter-rouge">AxisConfiguration</code> for the abscissa</li>
+  <li>a callback that returns a <code class="highlighter-rouge">double</code></li>
+</ol>
+
+<h2 id="mc_rtcguiploty"><code class="highlighter-rouge">mc_rtc::gui::plot::Y</code></h2>
+
+<p>This has three required arguments and two optional arguments:</p>
+
+<ol>
+  <li>a name that will be used for the plot legend (<strong>required</strong>)</li>
+  <li>a callback that returns a <code class="highlighter-rouge">double</code> (<strong>required</strong>)</li>
+  <li>a <code class="highlighter-rouge">Color</code> or a callback that returns a <code class="highlighter-rouge">Color</code> (<strong>required</strong>)</li>
+  <li>a line <code class="highlighter-rouge">Style</code>, this defaults to <code class="highlighter-rouge">Style::Solid</code></li>
+  <li>a <code class="highlighter-rouge">Side</code> to put the data on left Y axis or right Y axis, this defaults to <code class="highlighter-rouge">Side::Left</code></li>
+</ol>
+
+<p>Convenience functions are provided to specify the <code class="highlighter-rouge">Style</code> and <code class="highlighter-rouge">Side</code> after constructing the object.</p>
+
+<h4 id="about-mc_rtcguiplotstyle">About <code class="highlighter-rouge">mc_rtc::gui::plot::Style</code></h4>
+
+<p>Four line styles are available:</p>
+
+<ol>
+  <li><code class="highlighter-rouge">Style::Solid</code> is a solid line;</li>
+  <li><code class="highlighter-rouge">Style::Dashed</code> is a dashed line;</li>
+  <li><code class="highlighter-rouge">Style::Dotted</code> is a dotted line;</li>
+  <li><code class="highlighter-rouge">Style::Point</code> replaces the line with a single point;</li>
+</ol>
+
+<h4 id="example-1">Example</h4>
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addPlot</span><span class="p">(</span>
+  <span class="s">"cos(t)/sin(t)"</span><span class="p">,</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">X</span><span class="p">(</span><span class="s">"t"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">t</span><span class="p">;</span> <span class="p">}),</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">Y</span><span class="p">(</span><span class="s">"cos(t)"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">cos</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="p">},</span> <span class="n">Color</span><span class="o">::</span><span class="n">Red</span><span class="p">,</span> <span class="n">Style</span><span class="o">::</span><span class="n">Dotted</span><span class="p">),</span>
+  <span class="c1">// Specify the side without changing the default style</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">Y</span><span class="p">(</span><span class="s">"sin(t)"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="p">},</span> <span class="n">Color</span><span class="o">::</span><span class="n">Blue</span><span class="p">).</span><span class="n">side</span><span class="p">(</span><span class="n">Side</span><span class="o">::</span><span class="n">Right</span><span class="p">)</span>
+<span class="p">);</span></code></pre></figure>
+
+
+  </div>
+</div>
+
+<h2 id="mc_rtcguiplotxy"><code class="highlighter-rouge">mc_rtc::gui::plot::XY</code></h2>
+
+<p>This has four required arguments and two optional arguments:</p>
+
+<ol>
+  <li>a name that will be used for the plot legend (<strong>required</strong>)</li>
+  <li>a callback that returns a <code class="highlighter-rouge">double</code> for the abscissa value (x) (<strong>required</strong>)</li>
+  <li>a callback that returns a <code class="highlighter-rouge">double</code> for the ordinate value (y) (<strong>required</strong>)</li>
+  <li>a <code class="highlighter-rouge">Color</code> or a callback that returns a <code class="highlighter-rouge">Color</code> (<strong>required</strong>)</li>
+  <li>a line <code class="highlighter-rouge">Style</code>, this defaults to <code class="highlighter-rouge">Style::Solid</code></li>
+  <li>a <code class="highlighter-rouge">Side</code> to put the data on left Y axis or right Y axis, this defaults to <code class="highlighter-rouge">Side::Left</code></li>
+</ol>
+
+<p>Convenience functions are provided to specify the <code class="highlighter-rouge">Style</code> and <code class="highlighter-rouge">Side</code> after constructing the object.</p>
+
+<h2 id="mc_rtcguiplotpolygon"><code class="highlighter-rouge">mc_rtc::gui::plot::Polygon</code></h2>
+
+<p>This has two required arguments and one optional argument:</p>
+
+<ol>
+  <li>a name that will be used for the plot legend (<strong>required</strong>)</li>
+  <li>a callback that returns a <code class="highlighter-rouge">PolygonDescription</code>, we introduce this next (<strong>required</strong>)</li>
+  <li>a <code class="highlighter-rouge">Side</code> to put the data on left Y axis or right Y axis, this defaults to <code class="highlighter-rouge">Side::Left</code></li>
+</ol>
+
+<p>A convenience function is provided to specify the <code class="highlighter-rouge">Side</code> after constructing the object.</p>
+
+<h3 id="mc_rtcguiplotpolygondescription"><code class="highlighter-rouge">mc_rtc::gui::plot::PolygonDescription</code></h3>
+
+<p>This object holds the following information:</p>
+<ul>
+  <li><code class="highlighter-rouge">points()</code> is a list of points (i.e. an <code class="highlighter-rouge">std::vector&lt;std::array&lt;double, 2&gt;&gt;</code>)</li>
+  <li><code class="highlighter-rouge">outline()</code> is the <code class="highlighter-rouge">Color</code> of the polygon outline</li>
+  <li><code class="highlighter-rouge">style()</code> is the line <code class="highlighter-rouge">Style</code> of the polygon outline (defaults to <code class="highlighter-rouge">Style::Solid</code>)</li>
+  <li><code class="highlighter-rouge">fill()</code> is the <code class="highlighter-rouge">Color</code> used to fill the polygon when it is closed (defaults to transparent, i.e. no filling)</li>
+  <li><code class="highlighter-rouge">closed()</code> tells whether the polygon is closed (defaults to true)</li>
+</ul>
+
+<p><em>Note: if the polygon is closed, you don’t need to repeat the first point at the end of <code class="highlighter-rouge">points()</code>, this will be handled by the client.</em></p>
+
+<h4 id="example-2">Example</h4>
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="k">auto</span> <span class="n">redSquareBlueFill</span> <span class="o">=</span>
+  <span class="n">PolygonDescription</span><span class="p">({{</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">}},</span> <span class="n">Color</span><span class="o">::</span><span class="n">Red</span><span class="p">).</span><span class="n">fill</span><span class="p">(</span><span class="n">Color</span><span class="o">::</span><span class="n">Blue</span><span class="p">);</span>
+<span class="k">auto</span> <span class="n">purpleTriangleYellowFill</span> <span class="o">=</span>
+  <span class="n">PolygonDescription</span><span class="p">({{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">},</span> <span class="p">{</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">},</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">}},</span> <span class="n">Color</span><span class="o">::</span><span class="n">Magenta</span><span class="p">).</span><span class="n">fill</span><span class="p">(</span><span class="n">Color</span><span class="o">::</span><span class="n">Yellow</span><span class="p">);</span>
+<span class="k">auto</span> <span class="n">cyanRectangle</span> <span class="o">=</span>
+  <span class="n">PolygonDescription</span><span class="p">({{</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">},</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">},</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">},</span> <span class="p">{</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">}},</span> <span class="n">Color</span><span class="o">::</span><span class="n">Cyan</span><span class="p">);</span></code></pre></figure>
+
+
+  </div>
+</div>
+
+<p><em>Note: since <code class="highlighter-rouge">mc_rtc::gui::plot::Polygon</code> callback returns a <code class="highlighter-rouge">PolygonDescription</code> you are free to change the display style of this polygon anytime while the plot is active.</em></p>
+
+<h2 id="mc_rtcguiplotpolygons"><code class="highlighter-rouge">mc_rtc::gui::plot::Polygons</code></h2>
+
+<p>This is similar to <code class="highlighter-rouge">mc_rtc::gui::plot::Polygon</code> but the callback must return an <code class="highlighter-rouge">std::vector&lt;PolygonDescription&gt;</code>. This allows you to provide a changing set of polygons while the plot is active to create simple animations.</p>
+
+
+        <hr/>
+        
+        <div class="text-right">
+        <a href="/mc_rtc/tutorials/usage/ros.html">Next tutorial: ROS integration</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <footer>
+        <hr>
+        <div class="row">
+          <div class="col-8 offset-lg-2 col-lg-6">
+            Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2019
+          </div>
+          <div class="col-4 col-lg-2 text-right">
+            <a href="/mc_rtc/credits.html">Credits</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+
+</html>

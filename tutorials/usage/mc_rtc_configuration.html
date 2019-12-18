@@ -1,0 +1,561 @@
+
+
+
+
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Tutorials - <code>mc_rtc::Configuration</code> general purpose configuration - mc_rtc</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.0.0/build.css" integrity="sha256-iPUhChwurLRCrDCM1+2a2LDe9pfW6Je29o/oA5VPr28=" crossorigin="anonymous" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+    
+
+    <link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+      <a class="navbar-brand" href="/mc_rtc/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <div class="navbar-nav mr-auto">
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/interfaces.html">Interfaces</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/robots.html">Robots</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link active" href="/mc_rtc/tutorials.html">Tutorials</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/doxygen.html">API documentation</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/json.html">JSON/YAML documentation</a>
+          
+          
+        </div>
+        <a href="https://gite.lirmm.fr/multi-contact/mc_rtc" target="blank_"><img src="/mc_rtc/assets/gitlab-logo.svg" alt="GitLab logo" width="25" height="25" /></a>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col">
+        <ul>
+          
+          <li>Introduction</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/installation-guide.html">Installation guide</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/configuration.html">Configuring mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/running-a-controller.html">Running a controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/first-controller.html">Your first controller with mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/com-controller.html">Controlling the CoM</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/ef-controller.html">Controlling an end-effector (and loading)</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/multi-robot-controller.html">Multi-robot controller</a></li>
+              
+            
+          </ul>
+          
+          <li>Framework usage</li>
+          <ul>
+            
+              
+              <li><strong><code>mc_rtc::Configuration</code> general purpose configuration</strong></li>
+                
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/logging.html">Logging data</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/console-logging.html">Printing information to the screen</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/gui.html">Graphical User Interface (GUI)</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/live-plotting.html">Display plots live from the controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/ros.html">ROS integration</a></li>
+              
+            
+          </ul>
+          
+          <li>Framework tools</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_utils.html">Log manipulation</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_ui.html">Log plotting</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_visualization.html">Replay visualization</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_surfaces_visualization.html">Visualizing surfaces</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_convex_visualization.html">Visualizing convexes</a></li>
+              
+            
+          </ul>
+          
+          <li>Control recipes</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/fsm.html">Using the FSM facilities</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/fsm-example.html">FSM controller in practice</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/derived-fsm.html">Deriving the FSM controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/observers.html">Using the observers pipeline</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/speed-constraint.html">Constraint the speed of a body</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/moving-a-contact.html">Moving a contact</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/contact-dof.html">Change the DoF constraints on a contact</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/joint-select.html">Select specific joints for a task</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/dim-weight.html">Affect different weight to different axis in the task space</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/joint-stiffness.html">Joints Stiffness</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/com-constraint.html">Constraining the accessible region of the CoM</a></li>
+              
+            
+          </ul>
+          
+          <li>Advanced topics</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-interface.html">Implement a new mc_rtc interface</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-environment.html">Environment creation for mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-robot.html">Integrate a new robot in mc_rtc</a></li>
+              
+            
+          </ul>
+          
+        </ul>
+      </div>
+      <div class="col-9">
+        <h1><code>mc_rtc::Configuration</code> general purpose configuration</h1>
+
+        <p>This page provides information about the following topics:</p>
+
+<ol>
+  <li>How to read data from an <code class="highlighter-rouge">mc_rtc::Configuration</code> object</li>
+  <li>How to write data to an <code class="highlighter-rouge">mc_rtc::Configuration</code> object</li>
+  <li>Which C++/Python types are supported out of the box</li>
+  <li>How to write your own function to load/save C++ objects
+from/to an <code class="highlighter-rouge">mc_rtc::Configuration</code> object</li>
+</ol>
+
+<p>In every example on this page, we assume that <code class="highlighter-rouge">config</code> is a C++
+object of type <code class="highlighter-rouge">mc_rtc::Configuration</code> in C++ examples and a
+Python object of type <code class="highlighter-rouge">mc_rtc.Configuration</code> in Python
+examples.</p>
+
+<h3 id="data-source">Data source</h3>
+
+<p><code class="highlighter-rouge">mc_rtc::Configuration</code> provides an abstraction over a JSONor a YAML object to easily manipulate the object and retrieve C++/Python data from it.</p>
+
+<p>To load data into the configuration object you can use the following:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Load from a file, assume it's JSON data</span>
+<span class="k">auto</span> <span class="n">config</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span><span class="p">(</span><span class="s">"myfile.conf"</span><span class="p">);</span>
+<span class="c1">// Load from a YAML file, the extension must be yml or yaml</span>
+<span class="k">auto</span> <span class="n">config</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span><span class="p">(</span><span class="s">"myfile.yaml"</span><span class="p">);</span>
+<span class="c1">// Load from already loaded JSON data</span>
+<span class="k">auto</span> <span class="n">config</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span><span class="o">::</span><span class="n">fromData</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<span class="c1">// Load from already loaded YAML data</span>
+<span class="k">auto</span> <span class="n">config</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span><span class="o">::</span><span class="n">fromYAMLData</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="read-data-from-the-configuration">Read data from the configuration</h3>
+
+<p>Several methods are proposed to access the data in the
+configuration, you can mix them in your program depending on
+the most appropriate. The three methods are:</p>
+
+<ol>
+  <li>Strict access: the key must exist and match the type you
+are retrieving</li>
+  <li>Optional strict access: a way to work around the existence
+rquirement of the strict access approach</li>
+  <li>Default access: completely relax the constraints of strict
+access</li>
+</ol>
+
+<h4 id="strict-access">Strict access</h4>
+
+<p>The first method we present will throw if the configuration
+entries you are accessing do not exist in the configuration
+file that was loaded or if the stored type does not fit the
+value you are trying to retrieve.</p>
+
+<p>Accessing an entry is then done in this way:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">v</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"MyVector3d"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>You can also access a sub-section of the configuration:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="n">v</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"section"</span><span class="p">)(</span><span class="s">"MyVectorXd"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>And those can be nested:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">v</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"section"</span><span class="p">)(</span><span class="s">"sub1"</span><span class="p">)(</span><span class="s">"sub2"</span><span class="p">)(</span><span class="s">"SomeStrings"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h4 id="optional-strict-access">Optional strict access</h4>
+
+<p>This is simply done as so:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span><span class="p">(</span><span class="n">conf</span><span class="p">.</span><span class="n">has</span><span class="p">(</span><span class="s">"MyQuaternion"</span><span class="p">))</span>
+<span class="p">{</span>
+  <span class="n">Eigen</span><span class="o">::</span><span class="n">Quaterniond</span> <span class="n">q</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"MyQuaternion"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The above code only throws if the <code class="highlighter-rouge">MyQuaternion</code> entry is part
+of the configuration but does not contain the required data to
+obtain an <code class="highlighter-rouge">Eigen::Quaterniond</code> object (see the previous
+section).</p>
+
+<h4 id="default-access-method">Default access method</h4>
+
+<p>This method can be used safely to retrieve configuration entries. It will not
+throw if the configuration entry does not exist or does not match the required
+type.</p>
+
+<p>Accessing an entry is done in this way:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="n">b</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+<span class="n">config</span><span class="p">(</span><span class="s">"MyBool"</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>You can also simplify the code above like so:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="n">b</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"MyBool"</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>If the entry does not exist or does not match the required type, the provided variable is simply not modified. Otherwise, the value stored in the configuration is copied into the provided variable. This is particularly important to understand when retrieving a vector:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">v</span> <span class="o">=</span> <span class="p">{</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">};</span>
+<span class="n">config</span><span class="p">(</span><span class="s">"MyVector"</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span> <span class="c1">// if MyVector is a valid entry, the initial content of v is lost</span>
+</code></pre></div></div>
+
+<p>Similarly to the previous method, you can access sub-sections of the configuration:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">double</span> <span class="n">d</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">;</span>
+<span class="n">config</span><span class="p">(</span><span class="s">"section"</span><span class="p">)(</span><span class="s">"sub1"</span><span class="p">)(</span><span class="s">"sub2"</span><span class="p">)(</span><span class="s">"MyDouble"</span><span class="p">,</span> <span class="n">d</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>However, the previous code <strong>will throw</strong> if any of the section/sub-section does not exist in the configuration file.</p>
+
+<h4 id="sub-section-access">Sub-section access</h4>
+
+<p>The strict/default access methods presented above can be applied to access a sub-section of an <code class="highlighter-rouge">mc_rtc::Configuration</code> object, e.g.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// throws if conf is not an object or section does not exist in conf</span>
+<span class="k">auto</span> <span class="n">sub</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"section"</span><span class="p">);</span>
+
+<span class="c1">// returns an empty object if the call above would fail</span>
+<span class="k">auto</span> <span class="n">sub</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"section"</span><span class="p">,</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span><span class="p">{});</span>
+</code></pre></div></div>
+
+<p>Note that copies are shallow so any changes you make to a
+sub-section can be seen from the parent.</p>
+
+<h4 id="python-differences">Python differences</h4>
+
+<p>In Python, we cannot deduce the type of the requested element so one has to provide a Python type or value to retrieve data:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># c is an mc_rtc.Configuration object
+</span><span class="n">c</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"key"</span><span class="p">)</span>
+<span class="c1"># retrieve a bool
+</span><span class="n">b</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"b"</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+<span class="c1"># v is an eigen.Vector3d object
+</span><span class="n">v</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"v"</span><span class="p">,</span> <span class="n">eigen</span><span class="o">.</span><span class="n">Vector3d</span><span class="p">)</span>
+<span class="c1"># retrieve a bool with a default value of False
+</span><span class="n">b</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"b"</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+<span class="c1"># retrieve a list of eigen.Vector3d objects
+</span><span class="n">vlist</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"vlist"</span><span class="p">,</span> <span class="p">[</span><span class="n">eigen</span><span class="o">.</span><span class="n">Vector3d</span><span class="p">])</span>
+<span class="c1"># retrieve a list of float with a default value
+</span><span class="n">flist</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"flist"</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">])</span>
+</code></pre></div></div>
+
+<h3 id="write-data-to-an-mc_rtcconfiguration-object">Write data to an <code class="highlighter-rouge">mc_rtc::Configuration</code> object</h3>
+
+<p>Here are some writing examples that demonstrate the difference in object or array APIs.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// -- Objects --</span>
+
+<span class="c1">// Create a new empty object with the section key</span>
+<span class="k">auto</span> <span class="n">section</span> <span class="o">=</span> <span class="n">conf</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">"section"</span><span class="p">);</span>
+
+<span class="c1">// Add data to the section</span>
+<span class="n">section</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">"v1"</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">});</span>
+<span class="n">section</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">"isFixed"</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+<span class="c1">// Here data is of a type supported by mc_rtc::Configuration</span>
+<span class="n">section</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">"data"</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+
+<span class="c1">// -- Arrays --</span>
+
+<span class="c1">// Creates a new empty array</span>
+<span class="k">auto</span> <span class="n">array</span> <span class="o">=</span> <span class="n">conf</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="s">"array"</span><span class="p">);</span>
+<span class="c1">// Creates a new empty array and reserves memory for 10 elements</span>
+<span class="k">auto</span> <span class="n">array10</span> <span class="o">=</span> <span class="n">conf</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="s">"array10"</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+
+<span class="c1">// Add data to the array</span>
+<span class="n">array</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">});</span>
+<span class="n">array</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+<span class="n">array</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>The Python API is identical.</p>
+
+<h3 id="supported-types">Supported types</h3>
+
+<p>As you saw in the previous examples, the <code class="highlighter-rouge">Configuration</code> object can be used to
+retrieve various types of object. The following table shows the supported types
+and JSON requirements.</p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Type</th>
+      <th scope="col">JSON requirement</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row"><code>bool</code></th>
+      <td>Either a boolean (<code>true</code>/<code>false</code>) or an integer (0 is false, anything else is true)</td>
+    </tr>
+    <tr>
+      <th scope="row"><code>int</code></th>
+      <td>An integer</td>
+    </tr>
+    <tr>
+      <th scope="row"><code>unsigned int</code></th>
+      <td>An unsigned integer or an integer that is &ge; 0</td>
+    </tr>
+    <tr>
+      <th scope="row"><code>double</code></th>
+      <td>A numeric entry</td>
+    </tr>
+    <tr>
+      <th scope="row"><code>std::string</code></th>
+      <td>A string entry</td>
+    </tr>
+    <tr>
+      <th scope="row"><code>Eigen::Vector3d</code></th>
+      <td>An array of size 3 composed of numeric elements</td>
+    </tr>
+    <tr>
+      <th scope="row"><code>Eigen::Quaterniond</code></th>
+      <td>An array of size 4 composed of numeric elements, the returned quaternion is normalized.</td>
+    </tr>
+    <tr>
+      <th scope="row"><code>Eigen::Vector6d</code></th>
+      <td>An array of size 6 composed of numeric elements</td>
+    </tr>
+    <tr>
+      <th scope="row"><code>Eigen::VectorXd</code></th>
+      <td>An array of any size composed of numeric elements</td>
+    </tr>
+    <tr>
+      <th scope="row"><code>Eigen::Matrix3d</code></th>
+      <td>An array of size 9 composed of numeric elements. Two alternatives representations are supported to support rotation It can also be an array of size 3 representing RPY angles or an array of size 4 representing a quaternion</td>
+    </tr>
+    <tr>
+      <th scope="row"><code>std::vector&lt;T&gt;</code> where <code>T</code> is any of the above types</th>
+      <td>An array for which each element satisfies the requirements of type <code>T</code></td>
+    </tr>
+    <tr>
+      <th scope="row"><code>std::array&lt;T, N&gt;</code> where <code>T</code> is any of the above types and `N` a fixed size</th>
+      <td>An array of size <code>N</code> for which each elements satisfies the requirements of type <code>T</code></td>
+    </tr>
+    <tr>
+      <th scope="row"><code>std::pair&lt;U, V&gt;</code> where <code>U</code> and <code>V</code> are any of the above types</th>
+      <td>An array of size 2 whose elements satisfy the requirements of types <code>U</code> and `V` respectively</td>
+    </tr>
+    <tr>
+      <th scope="row"><code>std::map&lt;std::string, T&gt;</code> where <code>T</code> is any of the above types</th>
+      <td>A map indexed by string whose elements satisfy the requirements of types <code>T</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>We support a lot more types, including tasks and constraints, for each object that can be loaded by mc_rtc you can find a documentation <a href="/mc_rtc/json.html">on this website</a>.</p>
+
+<h4 id="types-composability">Types’ composability</h4>
+
+<p>The generic types supported by the configuration can be composed in any way you can imagine. For example, the following example is perfectly valid:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&gt;</span> <span class="n">inequalities</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"inequalities"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="support-for-your-own-types">Support for your own types</h3>
+
+<p>This feature allows you to specialize <code class="highlighter-rouge">mc_rtc::Configuration</code>
+to support loading/save to/from your own type. This feature is
+a C++ only feature for now.</p>
+
+<p>It works by adding a specialization template in the <code class="highlighter-rouge">mc_rtc</code>
+namespace of the following form:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;&gt;</span>
+<span class="k">struct</span> <span class="n">ConfigurationLoader</span><span class="o">&lt;</span><span class="n">MyType</span><span class="o">&gt;</span>
+<span class="p">{</span>
+  <span class="k">static</span> <span class="n">MyType</span> <span class="n">load</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">config</span><span class="p">);</span>
+
+  <span class="k">static</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="n">save</span><span class="p">(</span><span class="k">const</span> <span class="n">MyType</span> <span class="o">&amp;</span> <span class="n">object</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>This feature is used extensively in <code class="highlighter-rouge">mc_rtc</code> to provide
+support for many <code class="highlighter-rouge">SpaceVecAlg</code>, <code class="highlighter-rouge">RBDyn</code> and <code class="highlighter-rouge">mc_rbdyn</code> types.
+All declarations can be found in
+<code class="highlighter-rouge">mc_rbdyn/configuration_io.h</code>.</p>
+
+<p>The saving function supports optional arguments so, the
+following is a valid specialization:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;&gt;</span>
+<span class="k">struct</span> <span class="n">ConfigurationLoader</span><span class="o">&lt;</span><span class="n">MyType</span><span class="o">&gt;</span>
+<span class="p">{</span>
+  <span class="k">static</span> <span class="n">MyType</span> <span class="n">load</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">config</span><span class="p">);</span>
+
+  <span class="k">static</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="n">save</span><span class="p">(</span><span class="k">const</span> <span class="n">MyType</span> <span class="o">&amp;</span> <span class="n">object</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">verbose</span> <span class="o">=</span> <span class="nb">false</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+
+        <hr/>
+        
+        <div class="text-right">
+        <a href="/mc_rtc/tutorials/usage/logging.html">Next tutorial: Logging data</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <footer>
+        <hr>
+        <div class="row">
+          <div class="col-8 offset-lg-2 col-lg-6">
+            Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2019
+          </div>
+          <div class="col-4 col-lg-2 text-right">
+            <a href="/mc_rtc/credits.html">Credits</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+
+</html>

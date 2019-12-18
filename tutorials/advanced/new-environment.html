@@ -1,0 +1,447 @@
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Tutorials - Environment creation for mc_rtc - mc_rtc</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.0.0/build.css" integrity="sha256-iPUhChwurLRCrDCM1+2a2LDe9pfW6Je29o/oA5VPr28=" crossorigin="anonymous" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+    
+
+    <link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+      <a class="navbar-brand" href="/mc_rtc/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <div class="navbar-nav mr-auto">
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/interfaces.html">Interfaces</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/robots.html">Robots</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link active" href="/mc_rtc/tutorials.html">Tutorials</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/doxygen.html">API documentation</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/json.html">JSON/YAML documentation</a>
+          
+          
+        </div>
+        <a href="https://gite.lirmm.fr/multi-contact/mc_rtc" target="blank_"><img src="/mc_rtc/assets/gitlab-logo.svg" alt="GitLab logo" width="25" height="25" /></a>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col">
+        <ul>
+          
+          <li>Introduction</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/installation-guide.html">Installation guide</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/configuration.html">Configuring mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/running-a-controller.html">Running a controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/first-controller.html">Your first controller with mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/com-controller.html">Controlling the CoM</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/ef-controller.html">Controlling an end-effector (and loading)</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/multi-robot-controller.html">Multi-robot controller</a></li>
+              
+            
+          </ul>
+          
+          <li>Framework usage</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> general purpose configuration</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/logging.html">Logging data</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/console-logging.html">Printing information to the screen</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/gui.html">Graphical User Interface (GUI)</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/live-plotting.html">Display plots live from the controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/ros.html">ROS integration</a></li>
+              
+            
+          </ul>
+          
+          <li>Framework tools</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_utils.html">Log manipulation</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_ui.html">Log plotting</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_visualization.html">Replay visualization</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_surfaces_visualization.html">Visualizing surfaces</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_convex_visualization.html">Visualizing convexes</a></li>
+              
+            
+          </ul>
+          
+          <li>Control recipes</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/fsm.html">Using the FSM facilities</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/fsm-example.html">FSM controller in practice</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/derived-fsm.html">Deriving the FSM controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/observers.html">Using the observers pipeline</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/speed-constraint.html">Constraint the speed of a body</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/moving-a-contact.html">Moving a contact</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/contact-dof.html">Change the DoF constraints on a contact</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/joint-select.html">Select specific joints for a task</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/dim-weight.html">Affect different weight to different axis in the task space</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/joint-stiffness.html">Joints Stiffness</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/com-constraint.html">Constraining the accessible region of the CoM</a></li>
+              
+            
+          </ul>
+          
+          <li>Advanced topics</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-interface.html">Implement a new mc_rtc interface</a></li>
+              
+            
+              
+              <li><strong>Environment creation for mc_rtc</strong></li>
+                
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-robot.html">Integrate a new robot in mc_rtc</a></li>
+              
+            
+          </ul>
+          
+        </ul>
+      </div>
+      <div class="col-9">
+        <h1>Environment creation for mc_rtc</h1>
+
+        <p>This guide will help you to create environment that are compatible with mc_rtc and other JRL/LIRMM softwares.</p>
+
+<p>The screen captures of this guide are taken from Blender 2.78 but it should apply to any recent enough Blender version.</p>
+
+<h1 id="before-starting">Before starting</h1>
+
+<h2 id="required-softwares">Required softwares</h2>
+
+<ol>
+  <li>Blender</li>
+  <li><a href="https://gite.lirmm.fr/multi-contact/robot_script">robot_script</a></li>
+</ol>
+
+<p>Concerning Blender, on Ubuntu systems, it is advised to use <a href="https://launchpad.net/~thomas-schiex/+archive/ubuntu/blender">Thomas Schiex’s PPA</a> in order to get a fully featured Blender installation. In particular, collada (<code class="highlighter-rouge">.dae</code> files) import is not supported in the repository version of Blender.i</p>
+
+<p><code class="highlighter-rouge">robot_script</code> is a collection of Blender and shell scripts we will be using to go from a Blender file to a fully functional environment for mc_rtc.</p>
+
+<h2 id="install-our-blender-addon">Install our Blender addon</h2>
+
+<ol>
+  <li><code class="highlighter-rouge">mkdir -p $HOME/.config/blender/$(blender -v|awk '{print $2}')/scripts/addons</code></li>
+  <li>Clone <code class="highlighter-rouge">robot_script</code> and navigate to the <code class="highlighter-rouge">robot_script</code> folder</li>
+  <li><code class="highlighter-rouge">cp -r blender_addons/io_qconvex/ $HOME/.config/blender/$(blender -v|awk '{print $2}')/scripts/addons</code></li>
+  <li>Start Blender</li>
+  <li>Activate the addon: “Import-Export: qconvex cloud format” as shown in the image below</li>
+</ol>
+
+<p><img src="img/blender_addon_activation.gif" alt="blender_addon_activation" class="img-fluid" /></p>
+
+<p>Step 1 creates an empty folder to put our addon in while Step 3 simply copy that addon to that folder.</p>
+
+<h1 id="obtain-your-environment-model">Obtain your environment model</h1>
+
+<p>We will not go into the detail of modeling a 3D environment here. For the remainder of this documentation we will be working on the model provided <a href="data/blender_model_start.blend">here</a>. When you open this in Blender you should see a large flat surface (named “ground”) with a vertical cylinder in the middle (named “pole”).</p>
+
+<p><img src="img/blender_model_start.png" alt="blender_model_start" class="img-fluid" /></p>
+
+<h2 id="a-note-on-scale">A note on scale</h2>
+
+<p>Make sure your model meshes have a unary scale. You can do so by applying the scale parameter of every objects in your scene:</p>
+
+<ol>
+  <li>Select all scene objects (Shortcut: A)</li>
+  <li>Apply (Shortcut: Ctrl + A)</li>
+  <li>Select scale</li>
+</ol>
+
+<h1 id="create-a-planar-surface">Create a planar surface</h1>
+
+<p>We will create two surfaces in this section, the first will showcase the basics to create a surface, the second will allow us to show an important issue about orientation.</p>
+
+<h2 id="creation-of-the-ground-surface">Creation of the Ground surface</h2>
+
+<p>For this first surface, we will create a surface corresponding to the ground.</p>
+
+<ol>
+  <li>Select the “ground” object (Right click on the ground mesh)</li>
+  <li>Go into Edit mode (Shortcut: Tab)</li>
+  <li>Select the upper face (Choose the face selection tool then right click on the face)</li>
+  <li>Duplicate the face (Shortcut: Shift + D) then hit escape to keep the face at its original position</li>
+  <li>Separate the face from the “ground” object (Shortcut: P, then choose “Selection”)</li>
+  <li>This should have created a new object named “ground.001”, rename this object Ground</li>
+  <li>Change the origin of the “Ground” object to its geometry</li>
+  <li>Select the “Ground” object then select the “ground” object (First click “Ground” in the scene hierarchy, then click “ground” while holding Shift)</li>
+  <li>Set “ground” as a parent to “Ground” (Shortcut: Ctrl + P, then choose “Keep transform”)</li>
+  <li>Add a custom property named “surface” without any value to the “Ground” object</li>
+</ol>
+
+<p>Congratulations you created you very first surface!</p>
+
+<p>This <a href="https://gite.lirmm.fr/multi-contact/mc_rtc/wikis/videos/blender_planar_surface.mp4">movie</a> will show this process.</p>
+
+<h4 id="a-note-on-naming-conventions">A note on naming conventions</h4>
+
+<p>The following conventions are followed and recommended for most environments in mc_rtc:</p>
+
+<ol>
+  <li>Bodies’ names should be in lower-case (e.g. “ground” or “stair_step_1”)</li>
+  <li>Surfaces’ names should be in CamelCase (e.g. “Ground” or “StairStep1”)</li>
+  <li>Collision hulls should be in lower-case with the “_hull” prefix (e.g. “ground_hull” or “stair_step_1_hull”)</li>
+</ol>
+
+<h2 id="creation-of-the-groundside-surface">Creation of the GroundSide surface</h2>
+
+<p>For this second surface, we will create a surface corresponding to one of the side of the ground. While it does not have any practical purpose, it will serve to illustrate the importance of orientation and how to change it. First, reproduce all the steps above but with a side of the ground mesh to create the surface “GroundSide”.</p>
+
+<p>If you were to generate the environment now, you would notice that surface is not oriented as you expect. This is because the local frame of the object is not correct. We need to make the Z-axis (blue in Blender) match the normal of the surface.</p>
+
+<ol>
+  <li>Select the “GroundSide” object</li>
+  <li>Make sure to enable the local frame display rather than global</li>
+  <li>Rotate the object 90 degrees around the Y-axis (Shortcut: R, then Y to lock the Y axis, then hit 90 on the numeric pad of your keyboard, then hit Enter)</li>
+  <li>Go into Edit mode (Shortcut: Tab)</li>
+  <li>Select all points in the mesh (Shortcut: A)</li>
+  <li>Rotate the points -90 degrees around the Y-axis</li>
+</ol>
+
+<p>Congratulations, you fixed the orientation issue!</p>
+
+<p>This <a href="https://gite.lirmm.fr/multi-contact/mc_rtc/wikis/videos/blender_rotate_surface.mp4">movie</a> will show this process.</p>
+
+<h2 id="planar-surface-creation-caveats">Planar surface creation caveats</h2>
+
+<p>Some caveats apply when designing a planar surface.</p>
+
+<p>When creating a contact between the surface you designed and another surface, mc_rtc will generate contact forces at the points of your surface. This means that the more points you put into a surface, the more variable will be added to the problem. Thus, it is best to keep your surface design simple (i.e. a single quadrilater), especially when you are designing a robot surface.</p>
+
+<p>The points need to be co-planar otherwise the environment generation will fail.</p>
+
+<h1 id="create-a-cylindrical-surface">Create a cylindrical surface</h1>
+
+<p>In this section we will create a single cylindrical surface. The same orientation issue applies than with planar surface. Here the convention is that the Z-axis is the cylinder’s axis and the X-axis is the cylinder’s polar axis.</p>
+
+<ol>
+  <li>Select the “pole” object</li>
+  <li>Snap the cursor to the object origin (Shortcut: Shift + S, then Cursor to selected)</li>
+  <li>Add a plain axes object and rename it “Pole”</li>
+  <li>Make “pole” the parent of “Pole”</li>
+  <li>Add a custom property named “surface” to the object with the value “cylindrical”</li>
+  <li>Add a custom property named “radius”, the value of this property will be the radius of the cylinder</li>
+  <li>Add a custom property named “width”, the value of this property will be the length of the cylinder</li>
+</ol>
+
+<p>Congratulations, you created your first cylindrical surface!</p>
+
+<p>This <a href="https://gite.lirmm.fr/multi-contact/mc_rtc/wikis/videos/blender_create_cylindrical.mp4">movie</a> will show this process.</p>
+
+<p>Note that by default, Blender constrains custom properties value in the [0, 1] range. Be careful when setting your cylinder “width” property as this might be a problem.</p>
+
+<h1 id="add-a-collision-hull">Add a collision hull</h1>
+
+<p>To add a collision hull simply add a new mesh and add an empty property named “hull”.</p>
+
+<p>Note that the generation script will create convex hulls for each body in the model, you don’t need to create specific hulls for those.</p>
+
+<p>Before going into the next step, you can get the result of the tutorial <a href="data/blender_model_final.blend">here</a>.</p>
+
+<h1 id="generate-the-environment">Generate the environment</h1>
+
+<p>Go into the robot_script folder and launch the do_all.sh script as such:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./do_all.sh my_file.blend /path/to/ros/package env_name package_name
+</code></pre></div></div>
+
+<p>The package_name is optional if you are adding the environment to the <code class="highlighter-rouge">mc_env_description</code> package.</p>
+
+<h1 id="testing-the-environment">Testing the environment</h1>
+
+<p>See the tutorial about <a href="/mc_rtc/tutorials/tools/mc_surfaces_visualization.html">visualizing surfaces</a>.</p>
+
+<h2 id="common-problems">Common problems</h2>
+
+<h4 id="the-surface-location-is-wrong">The surface location is wrong</h4>
+
+<p>Make sure the origin of the surface object in the Blender project corresponds to what you expect.</p>
+
+<h4 id="the-surface-orientation-is-wrong">The surface orientation is wrong</h4>
+
+<p>Make sure the surface normal is facing the right direction in the Blender project. Make sure that you are viewing the local frame of the object.</p>
+
+<h1 id="add-a-surface-to-a-robot">Add a surface to a robot</h1>
+
+<p>To add a surface to a robot, you would follow the same steps as with an environment but the environment model is the robot’s body where you want to add a surface. Then generate the “environment” into a temporary directory and use the generated rsdf file in your original robot’s description folder.</p>
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+        <a href="/mc_rtc/tutorials/advanced/new-robot.html">Next tutorial: Integrate a new robot in mc_rtc</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <footer>
+        <hr>
+        <div class="row">
+          <div class="col-8 offset-lg-2 col-lg-6">
+            Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2019
+          </div>
+          <div class="col-4 col-lg-2 text-right">
+            <a href="/mc_rtc/credits.html">Credits</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+
+</html>

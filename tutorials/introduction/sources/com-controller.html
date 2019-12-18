@@ -1,0 +1,592 @@
+
+
+
+
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Tutorials - Controlling the CoM - mc_rtc</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.0.0/build.css" integrity="sha256-iPUhChwurLRCrDCM1+2a2LDe9pfW6Je29o/oA5VPr28=" crossorigin="anonymous" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+    
+
+    <link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+      <a class="navbar-brand" href="/mc_rtc/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <div class="navbar-nav mr-auto">
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/interfaces.html">Interfaces</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/robots.html">Robots</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link active" href="/mc_rtc/tutorials.html">Tutorials</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/doxygen.html">API documentation</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/json.html">JSON/YAML documentation</a>
+          
+          
+        </div>
+        <a href="https://gite.lirmm.fr/multi-contact/mc_rtc" target="blank_"><img src="/mc_rtc/assets/gitlab-logo.svg" alt="GitLab logo" width="25" height="25" /></a>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col">
+        <ul>
+          
+          <li>Introduction</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/installation-guide.html">Installation guide</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/configuration.html">Configuring mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/running-a-controller.html">Running a controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/first-controller.html">Your first controller with mc_rtc</a></li>
+              
+            
+              
+              <li><strong>Controlling the CoM</strong></li>
+                
+                  <ul>
+                    <li><a href="/mc_rtc/tutorials/introduction/com-controller.html">Back to tutorial</a></li>
+                  </ul>
+                
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/ef-controller.html">Controlling an end-effector (and loading)</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/multi-robot-controller.html">Multi-robot controller</a></li>
+              
+            
+          </ul>
+          
+          <li>Framework usage</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> general purpose configuration</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/logging.html">Logging data</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/console-logging.html">Printing information to the screen</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/gui.html">Graphical User Interface (GUI)</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/live-plotting.html">Display plots live from the controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/ros.html">ROS integration</a></li>
+              
+            
+          </ul>
+          
+          <li>Framework tools</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_utils.html">Log manipulation</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_ui.html">Log plotting</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_visualization.html">Replay visualization</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_surfaces_visualization.html">Visualizing surfaces</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_convex_visualization.html">Visualizing convexes</a></li>
+              
+            
+          </ul>
+          
+          <li>Control recipes</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/fsm.html">Using the FSM facilities</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/fsm-example.html">FSM controller in practice</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/derived-fsm.html">Deriving the FSM controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/observers.html">Using the observers pipeline</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/speed-constraint.html">Constraint the speed of a body</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/moving-a-contact.html">Moving a contact</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/contact-dof.html">Change the DoF constraints on a contact</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/joint-select.html">Select specific joints for a task</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/dim-weight.html">Affect different weight to different axis in the task space</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/joint-stiffness.html">Joints Stiffness</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/com-constraint.html">Constraining the accessible region of the CoM</a></li>
+              
+            
+          </ul>
+          
+          <li>Advanced topics</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-interface.html">Implement a new mc_rtc interface</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-environment.html">Environment creation for mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-robot.html">Integrate a new robot in mc_rtc</a></li>
+              
+            
+          </ul>
+          
+        </ul>
+      </div>
+      <div class="col-9">
+        <h1>Controlling the CoM (sources)</h1>
+
+        <ul class="nav nav-tabs" id="createTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="cppCreateTab" data-toggle="tab" href="#cppCreateTabContent" role="tab" aria-controls="cppCreateTabContent" aria-selected="true">C++</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="pythonCreateTab" data-toggle="tab" href="#pythonCreateTabContent" role="tab" aria-controls="pythonCreateTabContent" aria-selected="false">Python</a>
+  </li>
+</ul>
+<div class="tab-content" id="interfaceTabContent">
+  <div class="tab-pane show active" id="cppCreateTabContent" role="tabpanel" arial-labelledby="cppCreateTab">
+    <div class="card bg-light">
+      <div class="card-body">
+        <p><em>Note: <code>api.h</code>, <code>CMakeLists.txt</code> and <code>src/CMakeLists.txt</code> are the same as in the previous example</em></p>
+        <h3><code>MyFirstController.h</code></h3>
+        <figure class="highlight"><pre><code class="language-c--" data-lang="c++"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+</pre></td><td class="code"><pre><span class="cp">#pragma once
+</span>
+<span class="cp">#include &lt;mc_control/mc_controller.h&gt;
+#include &lt;mc_tasks/CoMTask.h&gt;
+</span>
+
+<span class="cp">#include "api.h"
+</span>
+<span class="k">struct</span> <span class="n">MyFirstController_DLLAPI</span> <span class="n">MyFirstController</span> <span class="o">:</span> <span class="k">public</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span>
+<span class="p">{</span>
+    <span class="n">MyFirstController</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModulePtr</span> <span class="n">rm</span><span class="p">,</span> <span class="kt">double</span> <span class="n">dt</span><span class="p">,</span> <span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">config</span><span class="p">);</span>
+
+    <span class="kt">bool</span> <span class="n">run</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span>
+
+    <span class="kt">void</span> <span class="n">reset</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">ControllerResetData</span> <span class="o">&amp;</span> <span class="n">reset_data</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
+
+    <span class="kt">void</span> <span class="n">switch_target</span><span class="p">();</span>
+
+    <span class="kt">void</span> <span class="n">switch_com_target</span><span class="p">();</span>
+<span class="nl">private:</span>
+    <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="n">config_</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">jointIndex</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">goingLeft</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">CoMTask</span><span class="o">&gt;</span> <span class="n">comTask</span><span class="p">;</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">comZero</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">comDown</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+        <h3><code>MyFirstController.cpp</code></h3>
+        <figure class="highlight"><pre><code class="language-c--" data-lang="c++"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+</pre></td><td class="code"><pre><span class="cp">#include "MyFirstController.h"
+</span>
+<span class="n">MyFirstController</span><span class="o">::</span><span class="n">MyFirstController</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModulePtr</span> <span class="n">rm</span><span class="p">,</span> <span class="kt">double</span> <span class="n">dt</span><span class="p">,</span> <span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">config</span><span class="p">)</span>
+<span class="o">:</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span><span class="p">(</span><span class="n">rm</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">config_</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="n">config</span><span class="p">);</span>
+  <span class="n">solver</span><span class="p">().</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="n">contactConstraint</span><span class="p">);</span>
+  <span class="n">solver</span><span class="p">().</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="n">dynamicsConstraint</span><span class="p">);</span>
+  <span class="n">solver</span><span class="p">().</span><span class="n">addTask</span><span class="p">(</span><span class="n">postureTask</span><span class="p">);</span>
+  <span class="n">solver</span><span class="p">().</span><span class="n">setContacts</span><span class="p">({</span>
+    <span class="p">{</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"LeftFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">},</span>
+    <span class="p">{</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">}</span>
+  <span class="p">});</span>
+  <span class="n">comTask</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">CoMTask</span><span class="o">&gt;</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">1000.0</span><span class="p">);</span>
+  <span class="n">solver</span><span class="p">().</span><span class="n">addTask</span><span class="p">(</span><span class="n">comTask</span><span class="p">);</span>
+  <span class="n">postureTask</span><span class="o">-&gt;</span><span class="n">stiffness</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+  <span class="n">LOG_SUCCESS</span><span class="p">(</span><span class="s">"MyFirstController init done "</span> <span class="o">&lt;&lt;</span> <span class="k">this</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">MyFirstController</span><span class="o">::</span><span class="n">run</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">abs</span><span class="p">(</span><span class="n">postureTask</span><span class="o">-&gt;</span><span class="n">posture</span><span class="p">()[</span><span class="n">jointIndex</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">robot</span><span class="p">().</span><span class="n">mbc</span><span class="p">().</span><span class="n">q</span><span class="p">[</span><span class="n">jointIndex</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mf">0.05</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">switch_target</span><span class="p">();</span>
+  <span class="p">}</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">comTask</span><span class="o">-&gt;</span><span class="n">eval</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">switch_com_target</span><span class="p">();</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span><span class="o">::</span><span class="n">run</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">MyFirstController</span><span class="o">::</span><span class="n">reset</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">ControllerResetData</span> <span class="o">&amp;</span> <span class="n">reset_data</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span><span class="o">::</span><span class="n">reset</span><span class="p">(</span><span class="n">reset_data</span><span class="p">);</span>
+  <span class="n">comTask</span><span class="o">-&gt;</span><span class="n">reset</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">MyFirstController</span><span class="o">::</span><span class="n">switch_target</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">goingLeft</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">postureTask</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">(</span><span class="n">NECK_Y</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">else</span>
+  <span class="p">{</span>
+    <span class="n">postureTask</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">(</span><span class="n">NECK_Y</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="n">goingLeft</span> <span class="o">=</span> <span class="o">!</span><span class="n">goingLeft</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">MyFirstController</span><span class="o">::</span><span class="n">switch_com_target</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">comDown</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">com</span><span class="o">-&gt;</span><span class="n">com</span><span class="p">(</span><span class="n">comZero</span> <span class="o">-</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">});</span>
+  <span class="p">}</span>
+  <span class="k">else</span>
+  <span class="p">{</span>
+    <span class="n">com</span><span class="o">-&gt;</span><span class="n">com</span><span class="p">(</span><span class="n">comZero</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="n">comDown</span> <span class="o">=</span> <span class="o">!</span><span class="n">comDown</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">CONTROLLER_CONSTRUCTOR</span><span class="p">(</span><span class="s">"MyFirstController"</span><span class="p">,</span> <span class="n">MyFirstController</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" id="pythonCreateTabContent" role="tabpanel" arial-labelledby="pythonCreateTab">
+    <div class="card bg-light">
+      <div class="card-body">
+        <h3><code>my_first_controller.py</code></h3>
+        <figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+</pre></td><td class="code"><pre><span class="kn">import</span> <span class="nn">eigen</span>
+<span class="kn">import</span> <span class="nn">mc_control</span>
+<span class="kn">import</span> <span class="nn">mc_rbdyn</span>
+<span class="kn">import</span> <span class="nn">mc_rtc</span>
+<span class="kn">import</span> <span class="nn">mc_tasks</span>
+
+<span class="k">class</span> <span class="nc">MyFirstController</span><span class="p">(</span><span class="n">mc_control</span><span class="o">.</span><span class="n">MCPythonController</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rm</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qpsolver</span><span class="o">.</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dynamicsConstraint</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qpsolver</span><span class="o">.</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">contactConstraint</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qpsolver</span><span class="o">.</span><span class="n">addTask</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">postureTask</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qpsolver</span><span class="o">.</span><span class="n">setContacts</span><span class="p">([</span>
+          <span class="n">mc_rbdyn</span><span class="o">.</span><span class="n">Contact</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"LeftFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">),</span>
+          <span class="n">mc_rbdyn</span><span class="o">.</span><span class="n">Contact</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">)</span>
+        <span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comTask</span> <span class="o">=</span> <span class="n">mc_tasks</span><span class="o">.</span><span class="n">CoMTask</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">1000.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qpsolver</span><span class="o">.</span><span class="n">addTask</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">comTask</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">postureTask</span><span class="o">.</span><span class="n">stiffness</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jointIndex</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">robot</span><span class="p">()</span><span class="o">.</span><span class="n">jointIndexByName</span><span class="p">(</span><span class="s">"NECK_Y"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">goingLeft</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comDown</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comZero</span> <span class="o">=</span> <span class="n">eigen</span><span class="o">.</span><span class="n">Vector3d</span><span class="o">.</span><span class="n">Zero</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">run_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">postureTask</span><span class="o">.</span><span class="n">posture</span><span class="p">()[</span><span class="bp">self</span><span class="o">.</span><span class="n">jointIndex</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">robot</span><span class="p">()</span><span class="o">.</span><span class="n">mbc</span><span class="o">.</span><span class="n">q</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">jointIndex</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mf">0.05</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">switch_target</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">comTask</span><span class="o">.</span><span class="nb">eval</span><span class="p">()</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">switch_com_target</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">True</span>
+    <span class="k">def</span> <span class="nf">reset_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comTask</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comZero</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">comTask</span><span class="o">.</span><span class="n">com</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">switch_target</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">goingLeft</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">postureTask</span><span class="o">.</span><span class="n">target</span><span class="p">({</span><span class="s">"NECK_Y"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">robot</span><span class="p">()</span><span class="o">.</span><span class="n">qu</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">jointIndex</span><span class="p">]})</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">postureTask</span><span class="o">.</span><span class="n">target</span><span class="p">({</span><span class="s">"NECK_Y"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">robot</span><span class="p">()</span><span class="o">.</span><span class="n">ql</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">jointIndex</span><span class="p">]})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">goingLeft</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">goingLeft</span>
+    <span class="k">def</span> <span class="nf">switch_com_target</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">comDown</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">comTask</span><span class="o">.</span><span class="n">com</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">comZero</span> <span class="o">-</span> <span class="n">eigen</span><span class="o">.</span><span class="n">Vector3d</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">comTask</span><span class="o">.</span><span class="n">com</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">comZero</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comDown</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">comDown</span>
+    <span class="o">@</span><span class="nb">staticmethod</span>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="n">robot</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="o">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env"</span><span class="p">,</span> <span class="n">mc_rtc</span><span class="o">.</span><span class="n">MC_ENV_DESCRIPTION_PATH</span><span class="p">,</span> <span class="s">"ground"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">MyFirstController</span><span class="p">([</span><span class="n">robot</span><span class="p">,</span><span class="n">env</span><span class="p">],</span> <span class="n">dt</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+        <h3><code>__init__.py</code></h3>
+        <figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+</pre></td><td class="code"><pre><span class="kn">from</span> <span class="nn">my_first_controller</span> <span class="kn">import</span> <span class="n">MyFirstController</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+        <hr/>
+        
+        <div class="text-right">
+        <a href="/mc_rtc/tutorials/introduction/ef-controller.html">Next tutorial: Controlling an end-effector (and loading)</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <footer>
+        <hr>
+        <div class="row">
+          <div class="col-8 offset-lg-2 col-lg-6">
+            Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2019
+          </div>
+          <div class="col-4 col-lg-2 text-right">
+            <a href="/mc_rtc/credits.html">Credits</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+
+</html>

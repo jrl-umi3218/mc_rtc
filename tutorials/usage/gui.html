@@ -1,0 +1,536 @@
+
+
+
+
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Tutorials - Graphical User Interface (GUI) - mc_rtc</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.0.0/build.css" integrity="sha256-iPUhChwurLRCrDCM1+2a2LDe9pfW6Je29o/oA5VPr28=" crossorigin="anonymous" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+    
+
+    <link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+      <a class="navbar-brand" href="/mc_rtc/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <div class="navbar-nav mr-auto">
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/interfaces.html">Interfaces</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/robots.html">Robots</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link active" href="/mc_rtc/tutorials.html">Tutorials</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/doxygen.html">API documentation</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/json.html">JSON/YAML documentation</a>
+          
+          
+        </div>
+        <a href="https://gite.lirmm.fr/multi-contact/mc_rtc" target="blank_"><img src="/mc_rtc/assets/gitlab-logo.svg" alt="GitLab logo" width="25" height="25" /></a>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col">
+        <ul>
+          
+          <li>Introduction</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/installation-guide.html">Installation guide</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/configuration.html">Configuring mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/running-a-controller.html">Running a controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/first-controller.html">Your first controller with mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/com-controller.html">Controlling the CoM</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/ef-controller.html">Controlling an end-effector (and loading)</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/multi-robot-controller.html">Multi-robot controller</a></li>
+              
+            
+          </ul>
+          
+          <li>Framework usage</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> general purpose configuration</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/logging.html">Logging data</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/console-logging.html">Printing information to the screen</a></li>
+              
+            
+              
+              <li><strong>Graphical User Interface (GUI)</strong></li>
+                
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/live-plotting.html">Display plots live from the controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/ros.html">ROS integration</a></li>
+              
+            
+          </ul>
+          
+          <li>Framework tools</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_utils.html">Log manipulation</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_ui.html">Log plotting</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_visualization.html">Replay visualization</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_surfaces_visualization.html">Visualizing surfaces</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_convex_visualization.html">Visualizing convexes</a></li>
+              
+            
+          </ul>
+          
+          <li>Control recipes</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/fsm.html">Using the FSM facilities</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/fsm-example.html">FSM controller in practice</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/derived-fsm.html">Deriving the FSM controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/observers.html">Using the observers pipeline</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/speed-constraint.html">Constraint the speed of a body</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/moving-a-contact.html">Moving a contact</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/contact-dof.html">Change the DoF constraints on a contact</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/joint-select.html">Select specific joints for a task</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/dim-weight.html">Affect different weight to different axis in the task space</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/joint-stiffness.html">Joints Stiffness</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/com-constraint.html">Constraining the accessible region of the CoM</a></li>
+              
+            
+          </ul>
+          
+          <li>Advanced topics</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-interface.html">Implement a new mc_rtc interface</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-environment.html">Environment creation for mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-robot.html">Integrate a new robot in mc_rtc</a></li>
+              
+            
+          </ul>
+          
+        </ul>
+      </div>
+      <div class="col-9">
+        <h1>Graphical User Interface (GUI)</h1>
+
+        <p>The GUI feature allows to build a dynamic graphical interface to interact with your controller remotely. In some regards, the feature implementation and the way you will use it in your controller is close to the approach to <a href="/mc_rtc/tutorials/usage/logging.html">logging</a>.</p>
+
+<p>This page covers the following topic:</p>
+<ul>
+  <li>Access the GUI from the controller</li>
+  <li>Add elements to the GUI</li>
+  <li>Remove elements from the GUI</li>
+</ul>
+
+<h3 id="access-to-the-gui">Access to the GUI</h3>
+
+<p>The GUI works with a server/client model. The controller being the server and the client being remote interfaces. As such, on the controller side, your code will only provide data that is sent by the GUI server to the clients. This data is added through the <code class="highlighter-rouge">mc_rtc::gui::StateBuilder</code> interface.</p>
+
+<p>To access the GUI builder, you simply call <code class="highlighter-rouge">gui()</code> from your controller code. Much like the logging interface, the GUI builder interface is always enabled so you don’t have to worry about the state of the feature.</p>
+
+<h3 id="add-elements-to-the-gui">Add elements to the GUI</h3>
+
+<p>The GUI is organized into category so that when you add multiple elements to the same category they appear together in the GUI.</p>
+
+<p>Categories are represented by vector of strings (list of strings in Python) and elements are represented by a simple object that wraps a description of the element’s type and accesors to the data your controller is providing.</p>
+
+<p>To add an element one simply calls <code class="highlighter-rouge">gui()-&gt;addElement(...)</code> with a category an one or more elements, e.g.:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Add a single button named "Push" in the a/b category</span>
+<span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addElement</span><span class="p">({</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">},</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">Button</span><span class="p">(</span><span class="s">"Push"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Hello!"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span> <span class="p">})</span>
+<span class="p">);</span>
+
+<span class="c1">// Add multiple elements at once, they will appear in the order they are added in the function</span>
+<span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addElement</span><span class="p">({</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">},</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">Button</span><span class="p">(</span><span class="s">"Button 1"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}),</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">Button</span><span class="p">(</span><span class="s">"Button 2"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}),</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">Button</span><span class="p">(</span><span class="s">"Button 3"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">})</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<h5 id="a-note-on-data">A note on data</h5>
+
+<p>The state builder also holds some “static” data that can be used to reference commonly refered elements. By default, the following entries are already into data:</p>
+<ul>
+  <li><code class="highlighter-rouge">robots</code> is a list of robots’ names in the controller</li>
+  <li><code class="highlighter-rouge">surfaces</code> is a map of robot’s names to robot’s surfaces</li>
+  <li><code class="highlighter-rouge">bodies</code> is a map of robot’s names to robot’s bodies</li>
+</ul>
+
+<p>The data can be accessed by calling <code class="highlighter-rouge">gui()-&gt;data()</code> and modifying it. It is strongly advised not to modify the default data as it is used by the GUI clients to display some elements nicely.</p>
+
+<h4 id="simple-elements">Simple elements</h4>
+
+<p>In this section we present every element that can be added to the GUI, every sample assumes they are included as part of a <code class="highlighter-rouge">gui()-&gt;addElement(...)</code> call. For every functions you provide to the GUI to read data from your controller or pass data back to your controller you don’t need to worry about exporting/importing the data to/from a specific format, this will be handled by the GUI.</p>
+
+<h5 id="labelarraylabel"><code class="highlighter-rouge">Label</code>/<code class="highlighter-rouge">ArrayLabel</code></h5>
+
+<p>These elements can be used to display simple text or numeric data.</p>
+
+<p>Examples</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// String label</span>
+<span class="n">Label</span><span class="p">(</span><span class="s">"LabelText"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span> <span class="s">"some text"</span><span class="p">;</span> <span class="p">});</span>
+
+<span class="c1">// Display a value</span>
+<span class="n">Label</span><span class="p">(</span><span class="s">"Some value"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">value_</span><span class="p">;</span> <span class="p">});</span>
+
+<span class="c1">// Display a vector of strings</span>
+<span class="n">ArrayLabel</span><span class="p">(</span><span class="s">"Some strings"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span> <span class="p">{</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">,</span> <span class="s">"c"</span><span class="p">};</span> <span class="p">});</span>
+
+<span class="c1">// Display a vector with labels</span>
+<span class="n">ArrayLabel</span><span class="p">(</span><span class="s">"Vector"</span><span class="p">,</span> <span class="p">{</span><span class="s">"x"</span><span class="p">,</span> <span class="s">"y"</span><span class="p">,</span> <span class="s">"z"</span><span class="p">},</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">Zero</span><span class="p">();</span> <span class="p">});</span>
+
+<span class="c1">// Some elements have associated labels, e.g. Force also adds an ArrayLabel</span>
+<span class="n">Force</span><span class="p">(</span><span class="s">"LeftFoot"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfaceWrench</span><span class="p">(</span><span class="s">"LFullSole"</span><span class="p">);</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"LFullSole"</span><span class="p">);</span> <span class="p">}),</span>
+<span class="n">Force</span><span class="p">(</span><span class="s">"RightFoot"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfaceWrench</span><span class="p">(</span><span class="s">"RFullSole"</span><span class="p">);</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"RFullSole"</span><span class="p">);</span> <span class="p">}),</span>
+<span class="n">Force</span><span class="p">(</span><span class="s">"LeftHand"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfaceWrench</span><span class="p">(</span><span class="s">"LeftFingers"</span><span class="p">);</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"LeftFingers"</span><span class="p">);</span> <span class="p">}),</span>
+<span class="n">Force</span><span class="p">(</span><span class="s">"RightHand"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfaceWrench</span><span class="p">(</span><span class="s">"RightFingers"</span><span class="p">);</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"RightFingers"</span><span class="p">);</span> <span class="p">})</span>
+</code></pre></div></div>
+
+<p>Note that in Python, the labels go at the end of the parameter list:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ArrayLabel</span><span class="p">(</span><span class="s">"Vector"</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">v3d</span><span class="p">,</span> <span class="p">[</span><span class="s">"x"</span><span class="p">,</span> <span class="s">"y"</span><span class="p">,</span> <span class="s">"z"</span><span class="p">])</span>
+</code></pre></div></div>
+
+<h5 id="button"><code class="highlighter-rouge">Button</code></h5>
+
+<p>This element simply display a button. Clicking the button triggers a call to the callback you provided.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Button</span><span class="p">(</span><span class="s">"Push me"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Hello!"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<h5 id="checkbox"><code class="highlighter-rouge">Checkbox</code></h5>
+
+<p>This element display a checkbox. Its status depends on the value you provide, when you click it that value will be flipped.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Checkbox</span><span class="p">(</span><span class="s">"Check me"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">status_</span><span class="p">;</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="kt">bool</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="n">status_</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<h5 id="stringinputintegerinputnumberarrayinput"><code class="highlighter-rouge">StringInput</code>/<code class="highlighter-rouge">IntegerInput</code>/<code class="highlighter-rouge">Number</code>/<code class="highlighter-rouge">ArrayInput</code></h5>
+
+<p>These elements provide inputs for the user. You should use the representation that is most relevant to your data.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">StringInput</span><span class="p">(</span><span class="s">"Your name"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">name_</span><span class="p">;</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">n</span><span class="p">){</span> <span class="n">name_</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span> <span class="p">});</span>
+
+<span class="n">NumberInput</span><span class="p">(</span><span class="s">"Weight"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">w_</span><span class="p">;</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="kt">double</span> <span class="n">w</span><span class="p">){</span> <span class="n">w_</span> <span class="o">=</span> <span class="n">w</span><span class="p">;</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">ArrayInput</code> accepts an additional parameter to add labels to the data. It also assumes that the array size is fixed.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ArrayInput</span><span class="p">(</span><span class="s">"Your array"</span><span class="p">,</span> <span class="p">{</span><span class="s">"x"</span><span class="p">,</span> <span class="s">"y"</span><span class="p">,</span> <span class="s">"z"</span><span class="p">},</span>
+           <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">v3_</span><span class="p">;</span> <span class="p">},</span>
+           <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&amp;</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span> <span class="n">v3_</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<p>In Python, the labels go at the end of the parameter list.</p>
+
+<h5 id="comboinputdatacomboinput"><code class="highlighter-rouge">ComboInput</code>/<code class="highlighter-rouge">DataComboInput</code></h5>
+
+<p>These elements create a dialog to choose a value from a list of string, in <code class="highlighter-rouge">ComboInput</code> you provide this list of strings, in <code class="highlighter-rouge">DataComboInput</code>, you provide a reference to an entry in the GUI state data map.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ComboInput</span><span class="p">(</span><span class="s">"Choose from list"</span><span class="p">,</span> <span class="p">{</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">,</span> <span class="s">"c"</span><span class="p">},</span>
+           <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">choice_</span><span class="p">;</span> <span class="p">},</span>
+           <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">c</span><span class="p">)</span> <span class="p">{</span> <span class="n">choice_</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span> <span class="p">});</span>
+
+<span class="n">DataComboInput</span><span class="p">(</span><span class="s">"Choose a robot"</span><span class="p">,</span> <span class="p">{</span><span class="s">"robots"</span><span class="p">},</span>
+               <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">robot_</span><span class="p">;</span> <span class="p">}</span>
+               <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">r</span><span class="p">)</span> <span class="p">{</span> <span class="n">robot_</span> <span class="o">=</span> <span class="n">r</span><span class="p">;</span> <span class="p">});</span>
+
+<span class="n">DataComboInput</span><span class="p">(</span><span class="s">"Choose a surface"</span><span class="p">,</span> <span class="p">{</span><span class="s">"surfaces"</span><span class="p">,</span> <span class="n">robot</span><span class="p">().</span><span class="n">name</span><span class="p">()},</span>
+               <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">surface_</span><span class="p">;</span> <span class="p">}</span>
+               <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span> <span class="n">surface_</span> <span class="o">=</span> <span class="n">s</span><span class="p">;</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<h5 id="point3drotationtransform"><code class="highlighter-rouge">Point3D</code>/<code class="highlighter-rouge">Rotation</code>/<code class="highlighter-rouge">Transform</code></h5>
+
+<p>These elements will display two things:</p>
+<ul>
+  <li>an <code class="highlighter-rouge">ArrayInput</code> suited for the element you are adding</li>
+  <li>an (optionally) interactive element to display the data in a 3D environment such as RViZ</li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Read-only variant does not provide a callback to set the data</span>
+<span class="n">Point3d</span><span class="p">(</span><span class="s">"Point"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">v3_</span><span class="p">;</span> <span class="p">});</span>
+
+<span class="c1">// Read-write variant</span>
+
+<span class="c1">// Note that even though we want to display a rotation, we need to provide a</span>
+<span class="c1">// full transform otherwise the GUI could not guess where to display the element</span>
+<span class="n">Rotation</span><span class="p">(</span><span class="s">"Rot"</span><span class="p">,</span>
+         <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="p">{</span><span class="n">rot_</span><span class="p">,</span> <span class="n">pos_</span><span class="p">}</span> <span class="p">},</span>
+         <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix3d</span> <span class="o">&amp;</span> <span class="n">rot</span><span class="p">)</span> <span class="p">{</span> <span class="n">rot_</span> <span class="o">=</span> <span class="n">rot</span><span class="p">;</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<h5 id="trajectory"><code class="highlighter-rouge">Trajectory</code></h5>
+
+<p>This element displays a trajectory in the 3D environment: depending on the type of data it returns it can be interpreted as a real-time trajectory display (e.g. to show the path taken by a surface) or a pre-planned trajectory.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Real-time trajectory, returns a single point (either Eigen::Vector3d or sva::PTransformd)</span>
+<span class="n">Trajectory</span><span class="p">(</span><span class="s">"RealTimeTrajectory"</span><span class="p">,</span>
+           <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">robot</span><span class="p">().</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"LeftGripper"</span><span class="p">);</span> <span class="p">});</span>
+
+<span class="c1">// Pre-planned trajectory returns a vector of points</span>
+<span class="n">Trajectory</span><span class="p">(</span><span class="s">"Trajectory"</span><span class="p">,</span>
+           <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">traj_</span><span class="p">;</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<h5 id="polygon"><code class="highlighter-rouge">Polygon</code></h5>
+
+<p>This element displays a single polygon (e.g. a planar surface) or list of polygon (e.g. a walking steps-plan).</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// A single polygon is a vector of Eigen::Vector3d</span>
+<span class="n">Polygon</span><span class="p">(</span><span class="s">"Polygon"</span>
+        <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="o">-&gt;</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">return</span> <span class="p">{</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">};</span> <span class="p">});</span>
+
+<span class="c1">// A list of polygon is a vector of vector of Eigen::Vector3d</span>
+<span class="n">Polygon</span><span class="p">(</span><span class="s">"Step plan"</span><span class="p">,</span>
+        <span class="p">[</span><span class="k">this</span><span class="p">]]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">step_plan_display_</span><span class="p">;</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<h5 id="force"><code class="highlighter-rouge">Force</code></h5>
+
+<p>This element displays a force vector in the 3D environment. You need to provide the force value as an <code class="highlighter-rouge">sva::ForceVecd</code> as well as the frame where the force is applied as an <code class="highlighter-rouge">sva::PTransformd</code>.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Force</span><span class="p">(</span><span class="s">"LeftFoot"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfaceWrench</span><span class="p">(</span><span class="s">"LFullSole"</span><span class="p">);</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"LFullSole"</span><span class="p">);</span> <span class="p">}),</span>
+</code></pre></div></div>
+
+<h5 id="arrow"><code class="highlighter-rouge">Arrow</code></h5>
+
+<p>This element displays an arrow in the 3D environment. You need to provide the starting point and the end point of the arrow. It is possible to provide an editable arrow.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Read-only</span>
+<span class="n">Arrow</span><span class="p">(</span><span class="s">"ArrowRO"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">start_</span><span class="p">;</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">end_</span><span class="p">;</span> <span class="p">});</span>
+
+<span class="c1">// Editable arrow</span>
+<span class="n">Arrow</span><span class="p">(</span><span class="s">"Arrow"</span><span class="p">,</span>
+      <span class="p">[</span><span class="k">this</span><span class="p">](){</span> <span class="k">return</span> <span class="n">start_</span><span class="p">;</span> <span class="p">},</span>
+      <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&amp;</span> <span class="n">start</span><span class="p">)</span> <span class="p">{</span> <span class="n">start_</span> <span class="o">=</span> <span class="n">start</span><span class="p">;</span> <span class="p">},</span>
+      <span class="p">[</span><span class="k">this</span><span class="p">](){</span> <span class="k">return</span> <span class="n">end_</span><span class="p">;</span> <span class="p">},</span>
+      <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&amp;</span> <span class="n">end</span><span class="p">)</span> <span class="p">{</span> <span class="n">end_</span> <span class="o">=</span> <span class="n">end</span><span class="p">;</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<h5 id="xytheta"><code class="highlighter-rouge">XYTheta</code></h5>
+
+<p>This element is a special case of the <code class="highlighter-rouge">Transform</code> element where only X/Y translation and Z rotation are editable.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Returns a vector with 3 elements representing the X/Y position and the theta angle</span>
+<span class="n">XYTheta</span><span class="p">(</span><span class="s">"XYThetaOnGround"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span> <span class="mi">3</span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">return</span> <span class="p">{</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">theta</span><span class="p">};</span> <span class="p">});</span>
+
+<span class="c1">// Specify the height with a 4th element</span>
+<span class="n">XYTheta</span><span class="p">(</span><span class="s">"XYTheta"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span> <span class="mi">4</span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">return</span> <span class="p">{</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">z</span><span class="p">};</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<h4 id="form"><code class="highlighter-rouge">Form</code></h4>
+
+<p>The <code class="highlighter-rouge">Form</code> element allows to build a more complexe dialog for interaction with the user. A form is itself composed of elements, the <code class="highlighter-rouge">Form</code> creation looks like the following:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Form</span><span class="p">(</span><span class="s">"Push to send"</span><span class="p">,</span> <span class="c1">// This will be shown on the "send" button for the form</span>
+     <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span> <span class="p">{},</span>
+     <span class="p">...</span> <span class="c1">// list of element</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<p>The available elements are:</p>
+<ul>
+  <li><code class="highlighter-rouge">FormCheckbox(name, required, default)</code></li>
+  <li><code class="highlighter-rouge">FormIntegerInput(name, required, default)</code></li>
+  <li><code class="highlighter-rouge">FormNumberInput(name, required, default)</code></li>
+  <li><code class="highlighter-rouge">FormStringInput(name, required, default)</code></li>
+  <li><code class="highlighter-rouge">FormArrayInput(name, required, default, fixed_size (true))</code></li>
+  <li><code class="highlighter-rouge">FormComboInput(name, required, values)</code></li>
+  <li><code class="highlighter-rouge">FormDataComboInput(name, required, reference)</code></li>
+</ul>
+
+<p>In all those, <code class="highlighter-rouge">name</code> will be used to display the name of the element and to retrieve the data in the callback, <code class="highlighter-rouge">required</code> indicates whether the user must provide a value for this field or not and <code class="highlighter-rouge">default</code> is optional and provides a default value for the field.</p>
+
+<p>In <code class="highlighter-rouge">FormArrayInput</code>, <code class="highlighter-rouge">fixed_size</code> indicates whether the default value you are providing is of a fixed size or can be expanded/shrinked by the user.</p>
+
+<p>In <code class="highlighter-rouge">FormComboInput</code>, <code class="highlighter-rouge">values</code> is the list of values provided to the user in the combo box.</p>
+
+<p>In <code class="highlighter-rouge">FormDataComboInput</code>, <code class="highlighter-rouge">reference</code> is a reference to the data entry. Additionally, it can reference another field of the form by using the <code class="highlighter-rouge">$</code> symbol. For example:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Form</span><span class="p">(</span><span class="s">"Button name"</span><span class="p">,</span>
+     <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span> <span class="p">{},</span>
+     <span class="n">FormDataComboInput</span><span class="p">(</span><span class="s">"Robot"</span><span class="p">,</span> <span class="nb">true</span><span class="p">,</span> <span class="p">{</span><span class="s">"robots"</span><span class="p">}),</span>
+     <span class="n">FormDataComboInput</span><span class="p">(</span><span class="s">"Surface"</span><span class="p">,</span> <span class="nb">true</span><span class="p">,</span> <span class="p">{</span><span class="s">"surfaces"</span><span class="p">,</span> <span class="s">"$Robot"</span><span class="p">})</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<p>In that example, the content of the <code class="highlighter-rouge">Surface</code> combo box will change depending on the selection the user makes in <code class="highlighter-rouge">Robot</code>.</p>
+
+<h5 id="a-note-on-callbacks">A note on callbacks</h5>
+
+<p>Every callback call triggered by the user interaction happens after an iteration of the controller and before the next. You don’t have to worry about concurrency here.</p>
+
+<h3 id="remove-elements-from-the-gui">Remove elements from the GUI</h3>
+
+<p>Two functions are provided to remove elements from the GUI:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Remove a single element by name</span>
+<span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">removeElement</span><span class="p">({</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">},</span> <span class="s">"element"</span><span class="p">);</span>
+<span class="c1">// Remove a category and all its sub-categories</span>
+<span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">removeCategory</span><span class="p">({</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">});</span>
+</code></pre></div></div>
+
+
+        <hr/>
+        
+        <div class="text-right">
+        <a href="/mc_rtc/tutorials/usage/live-plotting.html">Next tutorial: Display plots live from the controller</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <footer>
+        <hr>
+        <div class="row">
+          <div class="col-8 offset-lg-2 col-lg-6">
+            Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2019
+          </div>
+          <div class="col-4 col-lg-2 text-right">
+            <a href="/mc_rtc/credits.html">Credits</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+
+</html>

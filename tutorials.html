@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Tutorials - mc_rtc</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.0.0/build.css" integrity="sha256-iPUhChwurLRCrDCM1+2a2LDe9pfW6Je29o/oA5VPr28=" crossorigin="anonymous" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+    
+
+    <link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+      <a class="navbar-brand" href="/mc_rtc/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <div class="navbar-nav mr-auto">
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/interfaces.html">Interfaces</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/robots.html">Robots</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link active" href="/mc_rtc/tutorials.html">Tutorials</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/doxygen.html">API documentation</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/json.html">JSON/YAML documentation</a>
+          
+          
+        </div>
+        <a href="https://gite.lirmm.fr/multi-contact/mc_rtc" target="blank_"><img src="/mc_rtc/assets/gitlab-logo.svg" alt="GitLab logo" width="25" height="25" /></a>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+    <div class="row">
+<div class="col-12 offset-lg-2 col-lg-8">
+
+<h1>Tutorials</h1>
+
+<p>Welcome to mc_rtc tutorials. You will hopefully find useful information on this page to get started with the framework and use it to its full extent.</p>
+
+<p>mc_rtc is a super-set of the <a href="https://github.com/jrl-umi3218/SpaceVecAlg" target="blank_">SpaceVecAlg</a>, <a href="https://github.com/jrl-umi3218/RBDyn" target="blank_">RBDyn</a> and <a href="https://github.com/jrl-umi3218/Tasks" target="blank_">Tasks</a> libraries which provides a friendlier and easier interface for the user. You can write your controller code either in C++ or Python. When applicable, examples will be provided in both languages.</p>
+
+<p>The tutorials presented here assume some familiarity with the <a href="https://github.com/jrl-umi3218/SpaceVecAlg" target="blank_">SpaceVecAlg</a> and <a href="https://github.com/jrl-umi3218/RBDyn" target="blank_">RBDyn</a> libraries as well as a basic understanding of QP-based control such as implemented in <a href="https://github.com/jrl-umi3218/Tasks" target="blank_">Tasks</a>. Unfamiliar users can refer to the <a href="https://github.com/jorisv/sva_rbdyn_presentation" target="blank_">SpaceVecAlg and RBDyn presentations</a> and the <a href="https://github.com/jorisv/sva_rbdyn_tutorials" target="blank_">SpaceVecAlg and RBDyn tutorials</a> by Joris Vaillant.</p>
+
+
+
+<h3 id="tutorials-introduction">Introduction</h3>
+
+<p>The following tutorials will help you with the installation of the framework, learning to run controllers in the interface of your choice and start programming your own controllers.</p>
+
+<ul>
+  
+  <li><a href="/mc_rtc/tutorials/introduction/installation-guide.html">Installation guide</a></li>
+  
+  <li><a href="/mc_rtc/tutorials/introduction/configuration.html">Configuring mc_rtc</a></li>
+  
+  <li><a href="/mc_rtc/tutorials/introduction/running-a-controller.html">Running a controller</a></li>
+  
+  <li><a href="/mc_rtc/tutorials/introduction/first-controller.html">Your first controller with mc_rtc</a></li>
+  
+  <li><a href="/mc_rtc/tutorials/introduction/com-controller.html">Controlling the CoM</a></li>
+  
+  <li><a href="/mc_rtc/tutorials/introduction/ef-controller.html">Controlling an end-effector (and loading)</a></li>
+  
+  <li><a href="/mc_rtc/tutorials/introduction/multi-robot-controller.html">Multi-robot controller</a></li>
+  
+</ul>
+
+
+
+<h3 id="tutorials-usage">Framework usage</h3>
+
+<p>The following tutorials cover broad topics concerning the framework that are not specifically related to a controller's implementation</p>
+
+<ul>
+  
+  <li><a href="/mc_rtc/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> general purpose configuration</a></li>
+  
+  <li><a href="/mc_rtc/tutorials/usage/logging.html">Logging data</a></li>
+  
+  <li><a href="/mc_rtc/tutorials/usage/console-logging.html">Printing information to the screen</a></li>
+  
+  <li><a href="/mc_rtc/tutorials/usage/gui.html">Graphical User Interface (GUI)</a></li>
+  
+  <li><a href="/mc_rtc/tutorials/usage/live-plotting.html">Display plots live from the controller</a></li>
+  
+  <li><a href="/mc_rtc/tutorials/usage/ros.html">ROS integration</a></li>
+  
+</ul>
+
+
+
+<h3 id="tutorials-tools">Framework tools</h3>
+
+<p>These tutorials introduce useful tools developed around mc_rtc</p>
+
+<ul>
+  
+  <li><a href="/mc_rtc/tutorials/tools/mc_log_utils.html">Log manipulation</a></li>
+  
+  <li><a href="/mc_rtc/tutorials/tools/mc_log_ui.html">Log plotting</a></li>
+  
+  <li><a href="/mc_rtc/tutorials/tools/mc_log_visualization.html">Replay visualization</a></li>
+  
+  <li><a href="/mc_rtc/tutorials/tools/mc_surfaces_visualization.html">Visualizing surfaces</a></li>
+  
+  <li><a href="/mc_rtc/tutorials/tools/mc_convex_visualization.html">Visualizing convexes</a></li>
+  
+</ul>
+
+
+
+<h3 id="tutorials-recipes">Control recipes</h3>
+
+<p>The following tutorials introduce recipes useful in complex controllers. Either methodology (e.g. FSM) or behaviours (e.g free a contact degree-of-freedom)</p>
+
+<ul>
+  
+  <li><a href="/mc_rtc/tutorials/recipes/fsm.html">Using the FSM facilities</a></li>
+  
+  <li><a href="/mc_rtc/tutorials/recipes/fsm-example.html">FSM controller in practice</a></li>
+  
+  <li><a href="/mc_rtc/tutorials/recipes/derived-fsm.html">Deriving the FSM controller</a></li>
+  
+  <li><a href="/mc_rtc/tutorials/recipes/observers.html">Using the observers pipeline</a></li>
+  
+  <li><a href="/mc_rtc/tutorials/recipes/speed-constraint.html">Constraint the speed of a body</a></li>
+  
+  <li><a href="/mc_rtc/tutorials/recipes/moving-a-contact.html">Moving a contact</a></li>
+  
+  <li><a href="/mc_rtc/tutorials/recipes/contact-dof.html">Change the DoF constraints on a contact</a></li>
+  
+  <li><a href="/mc_rtc/tutorials/recipes/joint-select.html">Select specific joints for a task</a></li>
+  
+  <li><a href="/mc_rtc/tutorials/recipes/dim-weight.html">Affect different weight to different axis in the task space</a></li>
+  
+  <li><a href="/mc_rtc/tutorials/recipes/joint-stiffness.html">Joints Stiffness</a></li>
+  
+  <li><a href="/mc_rtc/tutorials/recipes/com-constraint.html">Constraining the accessible region of the CoM</a></li>
+  
+</ul>
+
+
+
+<h3 id="tutorials-advanced">Advanced topics</h3>
+
+<p>These tutorials cover specific topics that most user should not have to deal with.</p>
+
+<ul>
+  
+  <li><a href="/mc_rtc/tutorials/advanced/new-interface.html">Implement a new mc_rtc interface</a></li>
+  
+  <li><a href="/mc_rtc/tutorials/advanced/new-environment.html">Environment creation for mc_rtc</a></li>
+  
+  <li><a href="/mc_rtc/tutorials/advanced/new-robot.html">Integrate a new robot in mc_rtc</a></li>
+  
+</ul>
+
+
+
+</div>
+</div>
+
+    </div>
+
+    <div class="container-fluid">
+      <footer>
+        <hr>
+        <div class="row">
+          <div class="col-8 offset-lg-2 col-lg-6">
+            Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2019
+          </div>
+          <div class="col-4 col-lg-2 text-right">
+            <a href="/mc_rtc/credits.html">Credits</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+
+</html>

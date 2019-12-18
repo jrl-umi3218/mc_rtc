@@ -1,0 +1,364 @@
+
+
+
+
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Tutorials - Logging data - mc_rtc</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.0.0/build.css" integrity="sha256-iPUhChwurLRCrDCM1+2a2LDe9pfW6Je29o/oA5VPr28=" crossorigin="anonymous" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+    
+
+    <link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+      <a class="navbar-brand" href="/mc_rtc/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <div class="navbar-nav mr-auto">
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/interfaces.html">Interfaces</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/robots.html">Robots</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link active" href="/mc_rtc/tutorials.html">Tutorials</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/doxygen.html">API documentation</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/json.html">JSON/YAML documentation</a>
+          
+          
+        </div>
+        <a href="https://gite.lirmm.fr/multi-contact/mc_rtc" target="blank_"><img src="/mc_rtc/assets/gitlab-logo.svg" alt="GitLab logo" width="25" height="25" /></a>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col">
+        <ul>
+          
+          <li>Introduction</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/installation-guide.html">Installation guide</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/configuration.html">Configuring mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/running-a-controller.html">Running a controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/first-controller.html">Your first controller with mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/com-controller.html">Controlling the CoM</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/ef-controller.html">Controlling an end-effector (and loading)</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/multi-robot-controller.html">Multi-robot controller</a></li>
+              
+            
+          </ul>
+          
+          <li>Framework usage</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> general purpose configuration</a></li>
+              
+            
+              
+              <li><strong>Logging data</strong></li>
+                
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/console-logging.html">Printing information to the screen</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/gui.html">Graphical User Interface (GUI)</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/live-plotting.html">Display plots live from the controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/ros.html">ROS integration</a></li>
+              
+            
+          </ul>
+          
+          <li>Framework tools</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_utils.html">Log manipulation</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_ui.html">Log plotting</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_visualization.html">Replay visualization</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_surfaces_visualization.html">Visualizing surfaces</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_convex_visualization.html">Visualizing convexes</a></li>
+              
+            
+          </ul>
+          
+          <li>Control recipes</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/fsm.html">Using the FSM facilities</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/fsm-example.html">FSM controller in practice</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/derived-fsm.html">Deriving the FSM controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/observers.html">Using the observers pipeline</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/speed-constraint.html">Constraint the speed of a body</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/moving-a-contact.html">Moving a contact</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/contact-dof.html">Change the DoF constraints on a contact</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/joint-select.html">Select specific joints for a task</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/dim-weight.html">Affect different weight to different axis in the task space</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/joint-stiffness.html">Joints Stiffness</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/com-constraint.html">Constraining the accessible region of the CoM</a></li>
+              
+            
+          </ul>
+          
+          <li>Advanced topics</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-interface.html">Implement a new mc_rtc interface</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-environment.html">Environment creation for mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-robot.html">Integrate a new robot in mc_rtc</a></li>
+              
+            
+          </ul>
+          
+        </ul>
+      </div>
+      <div class="col-9">
+        <h1>Logging data</h1>
+
+        <p>File logging is enabled/disable through the <a href="/mc_rtc/tutorials/introduction/configuration.html">global
+configuration</a>. However, a controller implementation does
+not need to worry about the logging options and will go through a single
+interface for all file logging operations. Each controller instance uses a
+separate log and each time a controller switch happens, a new log is created.
+For convenience purpose, on platforms that support symbolic links, a <code class="highlighter-rouge">latest</code>
+log file is created pointing to the latest created log.</p>
+
+<p>By default, the following information are logged by all controllers:</p>
+<ul>
+  <li>Iteration time (starting from 0, increasing by the configured timestep)</li>
+  <li>Encoder values for the main robot (stored in the robot’s reference joint order)</li>
+  <li>Free-flyer orientation (as a quaternion) and position for the main robot (controller reference)</li>
+  <li>Joint command for the main robot (controller reference, stored in the robot’s reference joint order)</li>
+  <li>Joint torques (stored in the robot’s reference joint order)</li>
+  <li>Force sensors readings (stored as torque,force)</li>
+  <li>Sensor free-flyer position (provided by some interface only)</li>
+  <li>Sensor orientation (RPY)</li>
+  <li>Sensor free-flyer linear velocity (provided by some interface only)</li>
+  <li>Sensor angular velocity</li>
+  <li>Sensor acceleration</li>
+</ul>
+
+<h3 id="add-logging-entries">Add logging entries</h3>
+
+<p>Add log entries in your controller’s code:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logger</span><span class="p">().</span><span class="n">addLogEntry</span><span class="p">(</span><span class="s">"entry_name"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="cm">/* compute, say x; */</span> <span class="k">return</span> <span class="n">x</span><span class="p">;</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<p>The provided callback will run after your controller <code class="highlighter-rouge">run()</code> method.</p>
+
+<p>You can log most types that your controller could manipulate as-is (e.g. <code class="highlighter-rouge">sva::PTransformd</code> or <code class="highlighter-rouge">sva::ForceVecd</code>) and strings. You can also logs vectors of these types.</p>
+
+<p>Normally, an <code class="highlighter-rouge">addLogEntry</code> call should have a corresponding <code class="highlighter-rouge">removeLogEntry</code> call, e.g.:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logger</span><span class="p">().</span><span class="n">removeLogEntry</span><span class="p">(</span><span class="s">"entry_name"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h4 id="python-interface">Python interface</h4>
+
+<p>The Python interface is very similar:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Add a log entry
+</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">()</span><span class="o">.</span><span class="n">addLogEntry</span><span class="p">(</span><span class="s">"my_entry"</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="c1"># Remove data
+</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">()</span><span class="o">.</span><span class="n">removeLogEntry</span><span class="p">(</span><span class="s">"my_entry"</span><span class="p">)</span>
+<span class="c1"># Using partial to invoke a controller method
+</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">()</span><span class="o">.</span><span class="n">addLogEntry</span><span class="p">(</span><span class="s">"my_entry"</span><span class="p">,</span> <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_data</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h4 id="performance-concern">Performance concern</h4>
+
+<p>By default, lambda expressions return by value. When possible, you might want to return a const reference to the object you are saving:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logger</span><span class="p">().</span><span class="n">addLogEntry</span><span class="p">(</span><span class="s">"entry"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="o">-&gt;</span> <span class="k">const</span> <span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span> <span class="o">&amp;</span> <span class="p">{</span> <span class="k">return</span> <span class="n">trans_</span><span class="p">;</span> <span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="getting-the-log">Getting the log</h3>
+
+<p>Your controller will show the following message telling you what the latest log
+is, the message should look like the following:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Will log controller outputs to "/tmp/mc-control-MyControllerName-DATE.bin"
+</span></code></pre></div></div>
+
+<p>On systems that support symbolic links, it will also be available as <code class="highlighter-rouge">/tmp/mc-control-MyControllerName-latest.bin</code></p>
+
+<h3 id="working-with-the-log">Working with the log</h3>
+
+<p>See the following pages for tools that work with the log your controller generates:</p>
+
+<ul>
+  <li>
+
+    <p><a href="/mc_rtc/tutorials/tools/mc_log_utils.html">Log manipulation</a></p>
+  </li>
+  <li>
+
+    <p><a href="/mc_rtc/tutorials/tools/mc_log_ui.html">Log plotting</a></p>
+  </li>
+  <li>
+
+    <p><a href="/mc_rtc/tutorials/tools/mc_log_visualization.html">Replay visualization</a></p>
+  </li>
+</ul>
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+        <a href="/mc_rtc/tutorials/usage/console-logging.html">Next tutorial: Printing information to the screen</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <footer>
+        <hr>
+        <div class="row">
+          <div class="col-8 offset-lg-2 col-lg-6">
+            Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2019
+          </div>
+          <div class="col-4 col-lg-2 text-right">
+            <a href="/mc_rtc/credits.html">Credits</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+
+</html>

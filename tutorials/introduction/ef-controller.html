@@ -1,0 +1,523 @@
+
+
+
+
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Tutorials - Controlling an end-effector (and loading) - mc_rtc</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.0.0/build.css" integrity="sha256-iPUhChwurLRCrDCM1+2a2LDe9pfW6Je29o/oA5VPr28=" crossorigin="anonymous" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+    
+
+    <link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+      <a class="navbar-brand" href="/mc_rtc/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <div class="navbar-nav mr-auto">
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/interfaces.html">Interfaces</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/robots.html">Robots</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link active" href="/mc_rtc/tutorials.html">Tutorials</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/doxygen.html">API documentation</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/json.html">JSON/YAML documentation</a>
+          
+          
+        </div>
+        <a href="https://gite.lirmm.fr/multi-contact/mc_rtc" target="blank_"><img src="/mc_rtc/assets/gitlab-logo.svg" alt="GitLab logo" width="25" height="25" /></a>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col">
+        <ul>
+          
+          <li>Introduction</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/installation-guide.html">Installation guide</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/configuration.html">Configuring mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/running-a-controller.html">Running a controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/first-controller.html">Your first controller with mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/com-controller.html">Controlling the CoM</a></li>
+              
+            
+              
+              <li><strong>Controlling an end-effector (and loading)</strong></li>
+                
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/multi-robot-controller.html">Multi-robot controller</a></li>
+              
+            
+          </ul>
+          
+          <li>Framework usage</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> general purpose configuration</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/logging.html">Logging data</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/console-logging.html">Printing information to the screen</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/gui.html">Graphical User Interface (GUI)</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/live-plotting.html">Display plots live from the controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/ros.html">ROS integration</a></li>
+              
+            
+          </ul>
+          
+          <li>Framework tools</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_utils.html">Log manipulation</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_ui.html">Log plotting</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_visualization.html">Replay visualization</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_surfaces_visualization.html">Visualizing surfaces</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_convex_visualization.html">Visualizing convexes</a></li>
+              
+            
+          </ul>
+          
+          <li>Control recipes</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/fsm.html">Using the FSM facilities</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/fsm-example.html">FSM controller in practice</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/derived-fsm.html">Deriving the FSM controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/observers.html">Using the observers pipeline</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/speed-constraint.html">Constraint the speed of a body</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/moving-a-contact.html">Moving a contact</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/contact-dof.html">Change the DoF constraints on a contact</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/joint-select.html">Select specific joints for a task</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/dim-weight.html">Affect different weight to different axis in the task space</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/joint-stiffness.html">Joints Stiffness</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/com-constraint.html">Constraining the accessible region of the CoM</a></li>
+              
+            
+          </ul>
+          
+          <li>Advanced topics</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-interface.html">Implement a new mc_rtc interface</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-environment.html">Environment creation for mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-robot.html">Integrate a new robot in mc_rtc</a></li>
+              
+            
+          </ul>
+          
+        </ul>
+      </div>
+      <div class="col-9">
+        <h1>Controlling an end-effector (and loading)</h1>
+
+        <h3>The short story</h3>
+
+<p>You can create an end-effector task and manipulate its objective:</p>
+
+<ul class="nav nav-tabs" id="create_ef_taskTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="create_ef_taskC++cppTab" data-toggle="tab" href="#create_ef_taskC++cppTabContent" role="tab" aria-controls="create_ef_taskC++cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="create_ef_taskPythonpythonTab" data-toggle="tab" href="#create_ef_taskPythonpythonTabContent" role="tab" aria-controls="create_ef_taskPythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="create_ef_taskTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="create_ef_taskC++cppTabContent" role="tabpanel" arial-labelledby="create_ef_taskC++cppTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// Include the EF task header (header)</span>
+<span class="cp">#include &lt;mc_tasks/EndEffectorTask.h&gt;
+</span><span class="c1">// In the class private members (header)</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">EndEffectorTask</span><span class="o">&gt;</span> <span class="n">efTask</span><span class="p">;</span>
+<span class="c1">// In the constructor, create the task and add it to the problem</span>
+<span class="n">efTask</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">EndEffectorTask</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"l_wrist"</span><span class="p">,</span> <span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">500.0</span><span class="p">);</span>
+<span class="n">solver</span><span class="p">().</span><span class="n">addTask</span><span class="p">(</span><span class="n">efTask</span><span class="p">);</span>
+<span class="c1">// In the reset function, reset the task to the current EF position</span>
+<span class="n">efTask</span><span class="o">-&gt;</span><span class="n">reset</span><span class="p">();</span></code></pre></figure>
+
+  </div>
+</div>
+
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="create_ef_taskPythonpythonTabContent" role="tabpanel" arial-labelledby="create_ef_taskPythonpythonTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># Import the mc_tasks module
+</span><span class="kn">import</span> <span class="nn">mc_tasks</span>
+<span class="c1"># In the constructor, create the task and add it to the problem
+</span><span class="bp">self</span><span class="o">.</span><span class="n">efTask</span> <span class="o">=</span> <span class="n">mc_tasks</span><span class="o">.</span><span class="n">EndEffectorTask</span><span class="p">(</span><span class="s">"l_wrist"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">1000.0</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">qpsolver</span><span class="o">.</span><span class="n">addTask</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">efTask</span><span class="p">)</span>
+<span class="c1"># In the reset callback, reset the task to the current EF position
+</span><span class="bp">self</span><span class="o">.</span><span class="n">efTask</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></code></pre></figure>
+
+  </div>
+</div>
+
+
+    </div>
+  
+</div>
+
+
+<p>This will create a task on the body named <code>l_wrist</code> for the main robot. You can then modify its objective:</p>
+
+<ul class="nav nav-tabs" id="update_ef_taskTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="update_ef_taskC++cppTab" data-toggle="tab" href="#update_ef_taskC++cppTabContent" role="tab" aria-controls="update_ef_taskC++cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="update_ef_taskPythonpythonTab" data-toggle="tab" href="#update_ef_taskPythonpythonTabContent" role="tab" aria-controls="update_ef_taskPythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="update_ef_taskTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="update_ef_taskC++cppTabContent" role="tabpanel" arial-labelledby="update_ef_taskC++cppTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// Get the current objective</span>
+<span class="k">auto</span> <span class="n">pt</span> <span class="o">=</span> <span class="n">efTask</span><span class="o">-&gt;</span><span class="n">get_ef_pose</span><span class="p">();</span>
+<span class="c1">// Update the rotation and position objective</span>
+<span class="n">efTask</span><span class="o">-&gt;</span><span class="n">set_ef_pose</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="p">{</span><span class="n">sva</span><span class="o">::</span><span class="n">RotY</span><span class="p">(</span><span class="o">-</span><span class="n">M_PI</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">{</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">}});</span></code></pre></figure>
+
+  </div>
+</div>
+
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="update_ef_taskPythonpythonTabContent" role="tabpanel" arial-labelledby="update_ef_taskPythonpythonTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># Get the current objective
+</span><span class="n">pt</span> <span class="o">=</span> <span class="n">efTask</span><span class="o">.</span><span class="n">get_ef_pose</span><span class="p">()</span>
+<span class="c1"># Update the rotation and position objective
+</span><span class="n">efTask</span><span class="o">.</span><span class="n">set_ef_pose</span><span class="p">(</span><span class="n">sva</span><span class="o">.</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">sva</span><span class="o">.</span><span class="n">RotY</span><span class="p">(</span><span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="n">eigen</span><span class="o">.</span><span class="n">Vector3d</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)))</span></code></pre></figure>
+
+  </div>
+</div>
+
+
+    </div>
+  
+</div>
+
+
+<p>Instead of repeating a similar experience as in the previous tutorials, this tutorial will show how we can load the task from a configuration file written in JSON or YAML. In fact, this will be applicable to any task in the framework.</p>
+
+<h3>Loading the task from disk</h3>
+
+<p><em>Note: for now, this is only available on the C++ side.</em></p>
+
+<p>To simplify this tutorial, we will consider that you have created a file <code>task.json</code> (resp. <code>task.yaml</code>) that is available in the directory <code>/my/path/</code>. In real-life, you could use CMake to install the file and provide the installation directory to your controller but this would make the tutorial more complex that it needs to be.</p>
+
+<p>The taks description file we will use will look like this:</p>
+
+<ul class="nav nav-tabs" id="description_taskTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="description_taskJSONjsonTab" data-toggle="tab" href="#description_taskJSONjsonTabContent" role="tab" aria-controls="description_taskJSONjsonTabContent" aria-selected="true">JSON</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="description_taskYAMLyamlTab" data-toggle="tab" href="#description_taskYAMLyamlTabContent" role="tab" aria-controls="description_taskYAMLyamlTabContent" aria-selected="false">YAML</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="description_taskTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="description_taskJSONjsonTabContent" role="tabpanel" arial-labelledby="description_taskJSONjsonTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"body6d"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"l_wrist"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"orientation"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.71</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.71</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"position"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.4</span><span class="p">,</span><span class="w"> </span><span class="mf">0.4</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+  </div>
+</div>
+
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="description_taskYAMLyamlTabContent" role="tabpanel" arial-labelledby="description_taskYAMLyamlTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">body6d,</span>
+<span class="na">robotIndex</span><span class="pi">:</span> <span class="s">0,</span>
+<span class="na">body</span><span class="pi">:</span> <span class="s">l_wrist,</span>
+<span class="na">orientation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.71</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">0.71</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">]</span>
+<span class="na">position</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.4</span><span class="pi">,</span> <span class="nv">0.4</span><span class="pi">,</span> <span class="nv">1.0</span><span class="pi">]</span></code></pre></figure>
+
+  </div>
+</div>
+
+
+    </div>
+  
+</div>
+
+
+<p>You can then obtain the task object this way:</p>
+
+<ul class="nav nav-tabs" id="get_taskTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="get_taskC++cppTab" data-toggle="tab" href="#get_taskC++cppTabContent" role="tab" aria-controls="get_taskC++cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="get_taskTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="get_taskC++cppTabContent" role="tabpanel" arial-labelledby="get_taskC++cppTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// Get the task loader in there</span>
+<span class="cp">#include &lt;mc_tasks/MetaTaskLoader.h&gt;
+</span>
+<span class="c1">// Get the task from the JSON file</span>
+<span class="k">auto</span> <span class="n">task</span> <span class="o">=</span> <span class="n">mc_tasks</span><span class="o">::</span><span class="n">MetaTaskLoader</span><span class="o">::</span><span class="n">load</span><span class="p">(</span><span class="n">solver</span><span class="p">(),</span> <span class="s">"/my/path/task.json"</span><span class="p">);</span>
+
+<span class="c1">// Get the task from the YAML file</span>
+<span class="k">auto</span> <span class="n">task</span> <span class="o">=</span> <span class="n">mc_tasks</span><span class="o">::</span><span class="n">MetaTaskLoader</span><span class="o">::</span><span class="n">load</span><span class="p">(</span><span class="n">solver</span><span class="p">(),</span> <span class="s">"/my/path/task.yaml"</span><span class="p">);</span>
+
+<span class="c1">// Actually you can get the task from any mc_rtc::Configuration entries</span>
+<span class="k">auto</span> <span class="n">task</span> <span class="o">=</span> <span class="n">mc_tasks</span><span class="o">::</span><span class="n">MetaTaskLoader</span><span class="o">::</span><span class="n">load</span><span class="p">(</span><span class="n">solver</span><span class="p">(),</span> <span class="n">config</span><span class="p">(</span><span class="s">"task"</span><span class="p">));</span>
+
+<span class="c1">// In all the cases above, task is an std::shared_ptr&lt;mc_tasks::MetaTask&gt;</span>
+<span class="c1">// but you can retrieve a more precise type, mc_rtc will check that the</span>
+<span class="c1">// task that was retrieved from disk is compatible with the task you</span>
+<span class="c1">// requested</span>
+<span class="k">auto</span> <span class="n">task</span> <span class="o">=</span> <span class="n">mc_tasks</span><span class="o">::</span><span class="n">MetaTaskLoader</span><span class="o">::</span><span class="n">load</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">EndEffectorTask</span><span class="o">&gt;</span><span class="p">(</span><span class="n">solver</span><span class="p">(),</span> <span class="n">config</span><span class="p">(</span><span class="s">"task"</span><span class="p">));</span></code></pre></figure>
+
+  </div>
+</div>
+
+
+    </div>
+  
+</div>
+
+
+<p>You can use this task as if you had created it manually, this is a great way to experiment with task settings.</p>
+
+<h3>Give me more tasks</h3>
+
+<p>The <a href="/mc_rtc/json.html">JSON/YAML documentation</a> on this website shows all the tasks that can be loaded by the framework and what is expected in their JSON/YAML representation to be loaded correctly.</p>
+
+
+        <hr/>
+        
+        <div class="text-right">
+        <a href="/mc_rtc/tutorials/introduction/multi-robot-controller.html">Next tutorial: Multi-robot controller</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <footer>
+        <hr>
+        <div class="row">
+          <div class="col-8 offset-lg-2 col-lg-6">
+            Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2019
+          </div>
+          <div class="col-4 col-lg-2 text-right">
+            <a href="/mc_rtc/credits.html">Credits</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+
+</html>

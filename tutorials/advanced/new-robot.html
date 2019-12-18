@@ -1,0 +1,711 @@
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Tutorials - Integrate a new robot in mc_rtc - mc_rtc</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.0.0/build.css" integrity="sha256-iPUhChwurLRCrDCM1+2a2LDe9pfW6Je29o/oA5VPr28=" crossorigin="anonymous" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+    
+
+    <link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+      <a class="navbar-brand" href="/mc_rtc/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <div class="navbar-nav mr-auto">
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/interfaces.html">Interfaces</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/robots.html">Robots</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link active" href="/mc_rtc/tutorials.html">Tutorials</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/doxygen.html">API documentation</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/json.html">JSON/YAML documentation</a>
+          
+          
+        </div>
+        <a href="https://gite.lirmm.fr/multi-contact/mc_rtc" target="blank_"><img src="/mc_rtc/assets/gitlab-logo.svg" alt="GitLab logo" width="25" height="25" /></a>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col">
+        <ul>
+          
+          <li>Introduction</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/installation-guide.html">Installation guide</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/configuration.html">Configuring mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/running-a-controller.html">Running a controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/first-controller.html">Your first controller with mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/com-controller.html">Controlling the CoM</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/ef-controller.html">Controlling an end-effector (and loading)</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/multi-robot-controller.html">Multi-robot controller</a></li>
+              
+            
+          </ul>
+          
+          <li>Framework usage</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> general purpose configuration</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/logging.html">Logging data</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/console-logging.html">Printing information to the screen</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/gui.html">Graphical User Interface (GUI)</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/live-plotting.html">Display plots live from the controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/ros.html">ROS integration</a></li>
+              
+            
+          </ul>
+          
+          <li>Framework tools</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_utils.html">Log manipulation</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_ui.html">Log plotting</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_visualization.html">Replay visualization</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_surfaces_visualization.html">Visualizing surfaces</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_convex_visualization.html">Visualizing convexes</a></li>
+              
+            
+          </ul>
+          
+          <li>Control recipes</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/fsm.html">Using the FSM facilities</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/fsm-example.html">FSM controller in practice</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/derived-fsm.html">Deriving the FSM controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/observers.html">Using the observers pipeline</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/speed-constraint.html">Constraint the speed of a body</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/moving-a-contact.html">Moving a contact</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/contact-dof.html">Change the DoF constraints on a contact</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/joint-select.html">Select specific joints for a task</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/dim-weight.html">Affect different weight to different axis in the task space</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/joint-stiffness.html">Joints Stiffness</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/com-constraint.html">Constraining the accessible region of the CoM</a></li>
+              
+            
+          </ul>
+          
+          <li>Advanced topics</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-interface.html">Implement a new mc_rtc interface</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-environment.html">Environment creation for mc_rtc</a></li>
+              
+            
+              
+              <li><strong>Integrate a new robot in mc_rtc</strong></li>
+                
+              
+            
+          </ul>
+          
+        </ul>
+      </div>
+      <div class="col-9">
+        <h1>Integrate a new robot in mc_rtc</h1>
+
+        <p>There is three ways to integrate your robot to mc_rtc:</p>
+
+<ol>
+  <li>Using the <code>env</code>/<code>object</code> loader</li>
+  <li>Using a JSON/YAML file and the <code>json</code> loader</li>
+  <li>Write a C++ <code>RobotModule</code> implementation</li>
+</ol>
+
+<p>The first approach is well suited for simple robots that don't have sensors attached to them (i.e. objects and environments as the name suggest). The requirements for such robots are provided in the following section.</p>
+
+<p>The second approach allow you to provide more information about the robot.</p>
+
+<p>The last option has the most flexibility. The main benefits are that your robot will be extremely easy to load and you can easily provide several variants of your robot with minimal efforts.</p>
+
+<h2>Using the <code>env</code>/<code>object</code> loader</h2>
+
+<p>When loading the robot, use the following invokation:</p>
+
+<ul class="nav nav-tabs" id="env_object_exampleTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="env_object_exampleC++cppTab" data-toggle="tab" href="#env_object_exampleC++cppTabContent" role="tab" aria-controls="env_object_exampleC++cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="env_object_examplePythonpythonTab" data-toggle="tab" href="#env_object_examplePythonpythonTabContent" role="tab" aria-controls="env_object_examplePythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="env_object_exampleJSONjsonTab" data-toggle="tab" href="#env_object_exampleJSONjsonTabContent" role="tab" aria-controls="env_object_exampleJSONjsonTabContent" aria-selected="false">JSON</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="env_object_exampleYAMLyamlTab" data-toggle="tab" href="#env_object_exampleYAMLyamlTabContent" role="tab" aria-controls="env_object_exampleYAMLyamlTabContent" aria-selected="false">YAML</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="env_object_exampleTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="env_object_exampleC++cppTabContent" role="tabpanel" arial-labelledby="env_object_exampleC++cppTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#include &lt;mc_rbdyn/RobotLoader.h&gt;
+</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">path</span> <span class="o">=</span> <span class="s">"/path/to/description"</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">name</span> <span class="o">=</span> <span class="s">"name"</span><span class="p">;</span>
+<span class="k">auto</span> <span class="n">env</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotLoader</span><span class="o">::</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env"</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">name</span><span class="p">);</span>
+
+<span class="c1">// object will load the robot with a floating base</span>
+<span class="k">auto</span> <span class="n">object</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotLoader</span><span class="o">::</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"object"</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">name</span><span class="p">);</span></code></pre></figure>
+
+  </div>
+</div>
+
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="env_object_examplePythonpythonTabContent" role="tabpanel" arial-labelledby="env_object_examplePythonpythonTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">mc_rbdyn</span>
+
+<span class="n">path</span> <span class="o">=</span> <span class="s">"/path/to/description"</span>
+<span class="n">name</span> <span class="o">=</span> <span class="s">"name"</span>
+<span class="n">env</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="o">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env"</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+<span class="c1"># object will load the robot with a floating base
+</span><span class="nb">object</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="o">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"object"</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></code></pre></figure>
+
+  </div>
+</div>
+
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="env_object_exampleJSONjsonTabContent" role="tabpanel" arial-labelledby="env_object_exampleJSONjsonTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">[</span><span class="s2">"env"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/path/to/description"</span><span class="p">,</span><span class="w"> </span><span class="s2">"name"</span><span class="p">]</span><span class="w">
+
+</span><span class="err">//</span><span class="w"> </span><span class="err">object</span><span class="w"> </span><span class="err">will</span><span class="w"> </span><span class="err">load</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">robot</span><span class="w"> </span><span class="err">with</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">floating</span><span class="w"> </span><span class="err">base</span><span class="w">
+</span><span class="p">[</span><span class="s2">"object"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/path/to/description"</span><span class="p">,</span><span class="w"> </span><span class="s2">"name"</span><span class="p">]</span></code></pre></figure>
+
+  </div>
+</div>
+
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="env_object_exampleYAMLyamlTabContent" role="tabpanel" arial-labelledby="env_object_exampleYAMLyamlTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="pi">[</span><span class="nv">env</span><span class="pi">,</span> <span class="nv">/path/to/description</span><span class="pi">,</span> <span class="nv">name</span><span class="pi">]</span>
+
+<span class="c1"># object will load the robot with a floating base</span>
+<span class="pi">[</span><span class="nv">object</span><span class="pi">,</span> <span class="nv">/path/to/description</span><span class="pi">,</span> <span class="nv">name</span><span class="pi">]</span></code></pre></figure>
+
+  </div>
+</div>
+
+
+    </div>
+  
+</div>
+
+
+<h3>Organization of your robot description package</h3>
+
+<p>Given a robot's description folder located at <code>LOCATION</code> and a robot named <code>NAME</code>, mc_rtc expects your data to be organized as follows:</p>
+
+<ul>
+  <li>the URDF is located at <code>$LOCATION/urdf/$NAME.urdf</code></li>
+  <li>the RSDF files are in the folder <code>$LOCATION/rsdf/$NAME/</code></li>
+  <li>the convex files are in the folder <code>$LOCATION/convex/$NAME/</code> and for a given body: <code>BODY</code>, it's collision convex is in <code>$BODY-ch.txt</code></li>
+</ul>
+
+<p>Furthermore:</p>
+
+<ul>
+  <li>the RSDF folder can be empty or not exist</li>
+  <li>some (or all) bodies don't have to have an associated convex file</li>
+  <li>convex files that cannot be associated to a body automatically will be ignored</li>
+</ul>
+
+<h2>Using the <code>json</code> loader</h2>
+
+<p>When loading the robot, use the following invokation:</p>
+
+<ul class="nav nav-tabs" id="json_exampleTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="json_exampleC++cppTab" data-toggle="tab" href="#json_exampleC++cppTabContent" role="tab" aria-controls="json_exampleC++cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="json_examplePythonpythonTab" data-toggle="tab" href="#json_examplePythonpythonTabContent" role="tab" aria-controls="json_examplePythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="json_exampleJSONjsonTab" data-toggle="tab" href="#json_exampleJSONjsonTabContent" role="tab" aria-controls="json_exampleJSONjsonTabContent" aria-selected="false">JSON</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="json_exampleYAMLyamlTab" data-toggle="tab" href="#json_exampleYAMLyamlTabContent" role="tab" aria-controls="json_exampleYAMLyamlTabContent" aria-selected="false">YAML</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="json_exampleTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="json_exampleC++cppTabContent" role="tabpanel" arial-labelledby="json_exampleC++cppTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#include &lt;mc_rbdyn/RobotLoader.h&gt;
+</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">json_path</span> <span class="o">=</span> <span class="s">"/path/to/file.json"</span><span class="p">;</span>
+<span class="k">auto</span> <span class="n">rm_json</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotLoader</span><span class="o">::</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"json"</span><span class="p">,</span> <span class="n">json_path</span><span class="p">);</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">yaml_path</span> <span class="o">=</span> <span class="s">"/path/to/file.yaml"</span><span class="p">;</span>
+<span class="k">auto</span> <span class="n">rm_yaml</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotLoader</span><span class="o">::</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"json"</span><span class="p">,</span> <span class="n">yaml_path</span><span class="p">);</span></code></pre></figure>
+
+  </div>
+</div>
+
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="json_examplePythonpythonTabContent" role="tabpanel" arial-labelledby="json_examplePythonpythonTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">mc_rbdyn</span>
+
+<span class="n">json_path</span> <span class="o">=</span> <span class="s">"/path/to/file.json"</span>
+<span class="n">rm_json</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="o">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"json"</span><span class="p">,</span> <span class="n">json_path</span><span class="p">)</span>
+
+<span class="n">yaml_path</span> <span class="o">=</span> <span class="s">"/path/to/file.yaml"</span>
+<span class="n">rm_yaml</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="o">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"json"</span><span class="p">,</span> <span class="n">yaml_path</span><span class="p">)</span></code></pre></figure>
+
+  </div>
+</div>
+
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="json_exampleJSONjsonTabContent" role="tabpanel" arial-labelledby="json_exampleJSONjsonTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">[</span><span class="s2">"json"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/path/to/file.json"</span><span class="p">]</span><span class="w">
+
+</span><span class="p">[</span><span class="s2">"json"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/path/to/file.yaml"</span><span class="p">]</span></code></pre></figure>
+
+  </div>
+</div>
+
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="json_exampleYAMLyamlTabContent" role="tabpanel" arial-labelledby="json_exampleYAMLyamlTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="pi">[</span><span class="nv">json</span><span class="pi">,</span> <span class="nv">/path/to/file.json</span><span class="pi">]</span>
+
+<span class="pi">[</span><span class="nv">json</span><span class="pi">,</span> <span class="nv">/path/to/file.yaml</span><span class="pi">]</span></code></pre></figure>
+
+  </div>
+</div>
+
+
+    </div>
+  
+</div>
+
+
+<h3>Data expected in the JSON/YAML file</h3>
+
+<p>The <code>json</code> module expects your data to be organized as the <code>env</code> module. However, you can override some expectations by providing the data yourself. Furthermore, you can provide data for force sensors, body sensors, minimal self-collisions set and so-on.</p>
+
+<p>See the <a href="/mc_rtc/json.html#mc_rbdyn/RobotModule" target="blank_">JSON/YAML documentation</a> for details on the data expected by the <code>json</code> loader.</p>
+
+<h2>Implementing your own <code>RobotModule</code></h2>
+
+<p>In this approach, we will write a C++ class to provide a <code>RobotModule</code> for our robot and overwrite the data members that we wish to provide. As in the minimal example below:</p>
+
+<ul class="nav nav-tabs" id="robot_module_exampleTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="robot_module_exampleCMakeLists_txtcmakeTab" data-toggle="tab" href="#robot_module_exampleCMakeLists_txtcmakeTabContent" role="tab" aria-controls="robot_module_exampleCMakeLists_txtcmakeTabContent" aria-selected="true">CMakeLists.txt</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="robot_module_exampleMyRobot_hcppTab" data-toggle="tab" href="#robot_module_exampleMyRobot_hcppTabContent" role="tab" aria-controls="robot_module_exampleMyRobot_hcppTabContent" aria-selected="false">MyRobot.h</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="robot_module_exampleMyRobot_cppcppTab" data-toggle="tab" href="#robot_module_exampleMyRobot_cppcppTabContent" role="tab" aria-controls="robot_module_exampleMyRobot_cppcppTabContent" aria-selected="false">MyRobot.cpp</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="robot_module_exampleTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="robot_module_exampleCMakeLists_txtcmakeTabContent" role="tabpanel" arial-labelledby="robot_module_exampleCMakeLists_txtcmakeTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-cmake" data-lang="cmake"><span class="nb">cmake_minimum_required</span><span class="p">(</span>VERSION 3.1<span class="p">)</span>
+
+<span class="nb">find_package</span><span class="p">(</span>mc_rtc REQUIRED<span class="p">)</span>
+
+<span class="nf">add_robot_simple</span><span class="p">(</span>MyRobot<span class="p">)</span>
+<span class="c1"># Shortcut for:</span>
+<span class="c1"># add_robot(MyRobot MyRobot.h MyRobot.cpp)</span></code></pre></figure>
+
+  </div>
+</div>
+
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="robot_module_exampleMyRobot_hcppTabContent" role="tabpanel" arial-labelledby="robot_module_exampleMyRobot_hcppTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#pragma once
+</span>
+<span class="cp">#include &lt;mc_rbdyn/RobotModule.h&gt;
+#include &lt;mc_robots/api.h&gt;
+</span>
+<span class="k">struct</span> <span class="n">MC_ROBOTS_DLLAPI</span> <span class="n">MyRobotModule</span> <span class="o">:</span> <span class="k">public</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModule</span>
+<span class="p">{</span>
+<span class="nl">public:</span>
+  <span class="n">MyRobotModule</span><span class="p">(</span><span class="kt">bool</span> <span class="n">fixed</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="k">extern</span> <span class="s">"C"</span>
+<span class="p">{</span>
+  <span class="n">ROBOT_MODULE_API</span> <span class="kt">void</span> <span class="n">MC_RTC_ROBOT_MODULE</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">names</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="c1">// Names of the robots exported by this module</span>
+    <span class="n">names</span> <span class="o">=</span> <span class="p">{</span><span class="s">"MyRobot"</span><span class="p">,</span> <span class="s">"MyRobotFixed"</span><span class="p">};</span>
+  <span class="p">}</span>
+  <span class="n">ROBOT_MODULE_API</span> <span class="kt">void</span> <span class="n">destroy</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModule</span> <span class="o">*</span> <span class="n">ptr</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">delete</span> <span class="n">ptr</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">ROBOT_MODULE_API</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModule</span> <span class="o">*</span> <span class="n">create</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">name</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="c1">// At this point name must be one of the supported robots</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">name</span> <span class="o">==</span> <span class="s">"MyRobot"</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="k">return</span> <span class="k">new</span> <span class="n">MyRobot</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+      <span class="k">return</span> <span class="k">new</span> <span class="n">MyRobot</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+  </div>
+</div>
+
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="robot_module_exampleMyRobot_cppcppTabContent" role="tabpanel" arial-labelledby="robot_module_exampleMyRobot_cppcppTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#include "MyRobot.h"
+</span>
+<span class="cp">#include &lt;fstream&gt;
+</span>
+<span class="c1">// MY_PATH can be provided by CMake for example</span>
+<span class="n">MyRobotModule</span><span class="o">::</span><span class="n">MyRobotModule</span><span class="p">(</span><span class="kt">bool</span> <span class="n">fixed</span><span class="p">)</span> <span class="o">:</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModule</span><span class="p">(</span><span class="n">MY_PATH</span><span class="p">,</span> <span class="s">"my_robot"</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">ifstream</span> <span class="n">ifs</span><span class="p">(</span><span class="n">urdf_path</span><span class="p">);</span>
+  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">ifs</span><span class="p">.</span><span class="n">is_open</span><span class="p">())</span>
+  <span class="p">{</span>
+    <span class="n">LOG_ERROR_AND_THROW</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">,</span> <span class="s">"Could not load MyRobot model at "</span> <span class="o">&lt;&lt;</span> <span class="n">urdf_path</span><span class="p">)</span>
+  <span class="p">}</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">stringstream</span> <span class="n">urdf</span><span class="p">;</span>
+  <span class="n">urdf</span> <span class="o">&lt;&lt;</span> <span class="n">ifs</span><span class="p">.</span><span class="n">rdbuf</span><span class="p">();</span>
+  <span class="n">mc_rbdyn_urdf</span><span class="o">::</span><span class="n">URDFParserResult</span> <span class="n">res</span> <span class="o">=</span> <span class="n">mc_rbdyn_urdf</span><span class="o">::</span><span class="n">rbdyn_from_urdf</span><span class="p">(</span><span class="n">urdf</span><span class="p">.</span><span class="n">str</span><span class="p">(),</span> <span class="n">fixed</span><span class="p">);</span>
+  <span class="n">mb</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="n">mb</span><span class="p">;</span>
+  <span class="n">mbc</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="n">mbc</span><span class="p">;</span>
+  <span class="n">mbg</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="n">mbg</span><span class="p">;</span>
+  <span class="n">boundsFromURDF</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">limits</span><span class="p">);</span>
+  <span class="n">_collisionTransforms</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="n">collision_tf</span><span class="p">;</span>
+
+  <span class="n">expand_stance</span><span class="p">();</span>
+  <span class="n">make_default_ref_joint_order</span><span class="p">();</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">default_q</span> <span class="o">=</span> <span class="p">{</span><span class="o">-</span><span class="mf">0.38</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.72</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.01</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.33</span><span class="p">,</span>  <span class="o">-</span><span class="mf">0.38</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>    <span class="mf">0.72</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.02</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.33</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>
+                                   <span class="mf">0.13</span><span class="p">,</span>  <span class="mf">0.</span><span class="p">,</span>    <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>   <span class="mf">0.</span><span class="p">,</span>    <span class="o">-</span><span class="mf">0.052</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.17</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>   <span class="o">-</span><span class="mf">0.52</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>   <span class="mf">0.</span><span class="p">,</span>    <span class="mf">0.</span><span class="p">,</span>    <span class="mf">0.</span><span class="p">,</span>
+                                   <span class="mf">0.</span><span class="p">,</span>    <span class="mf">0.</span><span class="p">,</span>    <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>   <span class="mf">0.</span><span class="p">,</span>    <span class="o">-</span><span class="mf">0.052</span><span class="p">,</span> <span class="mf">0.17</span><span class="p">,</span>  <span class="mf">0.</span><span class="p">,</span>   <span class="o">-</span><span class="mf">0.52</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>   <span class="mf">0.</span><span class="p">,</span>    <span class="mf">0.</span><span class="p">,</span>    <span class="mf">0.</span><span class="p">,</span>
+                                   <span class="mf">0.</span><span class="p">,</span>    <span class="mf">0.</span><span class="p">,</span>    <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>   <span class="mf">0.</span><span class="p">,</span>    <span class="mf">0.</span><span class="p">,</span>     <span class="mf">0.</span><span class="p">,</span>    <span class="mf">0.</span><span class="p">,</span>   <span class="mf">0.</span><span class="p">,</span>    <span class="mf">0.</span><span class="p">,</span>   <span class="mf">0.</span><span class="p">};</span>
+  <span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span> <span class="n">rjo</span> <span class="o">=</span> <span class="n">ref_joint_order</span><span class="p">();</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">rjo</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">_stance</span><span class="p">[</span><span class="n">rjo</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span><span class="n">default_q</span><span class="p">[</span><span class="n">i</span><span class="p">]};</span>
+  <span class="p">}</span>
+  <span class="n">_default_attitude</span> <span class="o">=</span> <span class="p">{{</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.8275</span><span class="p">}};</span>
+  <span class="n">_forceSensors</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">ForceSensor</span><span class="p">(</span><span class="s">"RightFootForceSensor"</span><span class="p">,</span> <span class="s">"R_ANKLE_P_S"</span><span class="p">,</span> <span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="o">::</span><span class="n">Identity</span><span class="p">()));</span>
+  <span class="n">_forceSensors</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">ForceSensor</span><span class="p">(</span><span class="s">"LeftFootForceSensor"</span><span class="p">,</span> <span class="s">"L_ANKLE_P_S"</span><span class="p">,</span> <span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="o">::</span><span class="n">Identity</span><span class="p">()));</span>
+  <span class="n">_forceSensors</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">ForceSensor</span><span class="p">(</span><span class="s">"RightHandForceSensor"</span><span class="p">,</span> <span class="s">"R_WRIST_Y_S"</span><span class="p">,</span> <span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="o">::</span><span class="n">Identity</span><span class="p">()));</span>
+  <span class="n">_forceSensors</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">ForceSensor</span><span class="p">(</span><span class="s">"LeftHandForceSensor"</span><span class="p">,</span> <span class="s">"L_WRIST_Y_S"</span><span class="p">,</span> <span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="o">::</span><span class="n">Identity</span><span class="p">()));</span>
+
+  <span class="n">_bodySensors</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="s">"Accelerometer"</span><span class="p">,</span> <span class="s">"PELVIS_S"</span><span class="p">,</span> <span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span><span class="o">-</span><span class="mf">0.0325</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.1095</span><span class="p">)));</span>
+  <span class="n">_bodySensors</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="s">"FloatingBase"</span><span class="p">,</span> <span class="s">"PELVIS_S"</span><span class="p">,</span> <span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="o">::</span><span class="n">Identity</span><span class="p">());</span>
+
+  <span class="n">_minimalSelfCollisions</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="p">{</span><span class="s">"WAIST_R_S"</span><span class="p">,</span> <span class="s">"L_SHOULDER_Y_S"</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.</span><span class="p">},</span> <span class="p">{</span><span class="s">"WAIST_R_S"</span><span class="p">,</span> <span class="s">"R_SHOULDER_Y_S"</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.</span><span class="p">},</span>
+      <span class="p">{</span><span class="s">"PELVIS_S"</span><span class="p">,</span> <span class="s">"R_ELBOW_P_S"</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.</span><span class="p">},</span>     <span class="p">{</span><span class="s">"PELVIS_S"</span><span class="p">,</span> <span class="s">"L_ELBOW_P_S"</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.</span><span class="p">},</span>
+      <span class="p">{</span><span class="s">"R_WRIST_Y_S"</span><span class="p">,</span> <span class="s">"R_HIP_Y_S"</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.025</span><span class="p">,</span> <span class="mf">0.</span><span class="p">},</span>    <span class="p">{</span><span class="s">"L_WRIST_Y_S"</span><span class="p">,</span> <span class="s">"L_HIP_Y_S"</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.025</span><span class="p">,</span> <span class="mf">0.</span><span class="p">}};</span>
+  <span class="n">_commonSelfCollisions</span> <span class="o">=</span> <span class="n">_minimalSelfCollisions</span><span class="p">;</span>
+  <span class="n">_grippers</span> <span class="o">=</span> <span class="p">{{</span><span class="s">"l_gripper"</span><span class="p">,</span> <span class="p">{</span><span class="s">"L_UTHUMB"</span><span class="p">},</span> <span class="nb">true</span><span class="p">},</span> <span class="p">{</span><span class="s">"r_gripper"</span><span class="p">,</span> <span class="p">{</span><span class="s">"R_UTHUMB"</span><span class="p">},</span> <span class="nb">false</span><span class="p">}};</span>
+<span class="p">}</span></code></pre></figure>
+
+  </div>
+</div>
+
+
+    </div>
+  
+</div>
+
+
+<p>See <a href="/mc_rtc/doxygen.html#a02033" target="blank_">mc_rbdyn::RobotModule</a> documentation for all members that can be provided.</p>
+
+<p></p>
+
+
+        <hr/>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <footer>
+        <hr>
+        <div class="row">
+          <div class="col-8 offset-lg-2 col-lg-6">
+            Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2019
+          </div>
+          <div class="col-4 col-lg-2 text-right">
+            <a href="/mc_rtc/credits.html">Credits</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+
+</html>

@@ -1,0 +1,751 @@
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Tutorials - Using the FSM facilities - mc_rtc</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.0.0/build.css" integrity="sha256-iPUhChwurLRCrDCM1+2a2LDe9pfW6Je29o/oA5VPr28=" crossorigin="anonymous" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+    
+
+    <link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+      <a class="navbar-brand" href="/mc_rtc/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <div class="navbar-nav mr-auto">
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/interfaces.html">Interfaces</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/robots.html">Robots</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link active" href="/mc_rtc/tutorials.html">Tutorials</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/doxygen.html">API documentation</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/json.html">JSON/YAML documentation</a>
+          
+          
+        </div>
+        <a href="https://gite.lirmm.fr/multi-contact/mc_rtc" target="blank_"><img src="/mc_rtc/assets/gitlab-logo.svg" alt="GitLab logo" width="25" height="25" /></a>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col">
+        <ul>
+          
+          <li>Introduction</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/installation-guide.html">Installation guide</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/configuration.html">Configuring mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/running-a-controller.html">Running a controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/first-controller.html">Your first controller with mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/com-controller.html">Controlling the CoM</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/ef-controller.html">Controlling an end-effector (and loading)</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/multi-robot-controller.html">Multi-robot controller</a></li>
+              
+            
+          </ul>
+          
+          <li>Framework usage</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> general purpose configuration</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/logging.html">Logging data</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/console-logging.html">Printing information to the screen</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/gui.html">Graphical User Interface (GUI)</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/live-plotting.html">Display plots live from the controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/ros.html">ROS integration</a></li>
+              
+            
+          </ul>
+          
+          <li>Framework tools</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_utils.html">Log manipulation</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_ui.html">Log plotting</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_visualization.html">Replay visualization</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_surfaces_visualization.html">Visualizing surfaces</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_convex_visualization.html">Visualizing convexes</a></li>
+              
+            
+          </ul>
+          
+          <li>Control recipes</li>
+          <ul>
+            
+              
+              <li><strong>Using the FSM facilities</strong></li>
+                
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/fsm-example.html">FSM controller in practice</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/derived-fsm.html">Deriving the FSM controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/observers.html">Using the observers pipeline</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/speed-constraint.html">Constraint the speed of a body</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/moving-a-contact.html">Moving a contact</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/contact-dof.html">Change the DoF constraints on a contact</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/joint-select.html">Select specific joints for a task</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/dim-weight.html">Affect different weight to different axis in the task space</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/joint-stiffness.html">Joints Stiffness</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/com-constraint.html">Constraining the accessible region of the CoM</a></li>
+              
+            
+          </ul>
+          
+          <li>Advanced topics</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-interface.html">Implement a new mc_rtc interface</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-environment.html">Environment creation for mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-robot.html">Integrate a new robot in mc_rtc</a></li>
+              
+            
+          </ul>
+          
+        </ul>
+      </div>
+      <div class="col-9">
+        <h1>Using the FSM facilities</h1>
+
+        <p>A finite-state machine (FSM) is an abstract machine that can be in one of a finite set of states. Based on conditions internal or external to the current state, the machine’s state can change. Such a state is known as a transition. Such machines are ubiquitous in programming and are particularly well-suited to implement robotic scenarios due to the simplicity and the composability it offers.</p>
+
+<p>The state chart formalism extends the finite state machine formalism and introduce two key principles:</p>
+<ul>
+  <li><strong>Hierarchy</strong> allows to nest a state chart within a state chart;</li>
+  <li><strong>Concurrency</strong> (also known as orthogonality) allows the parallel execution of two or more states.</li>
+</ul>
+
+<p>mc_rtc provides a controller implementation to implement the state chart formalism. This page covers the ins and outs of this implementation to help you work with it.</p>
+
+<h2 id="state-transitions-and-fsm-run">State, transitions and FSM run</h2>
+
+<h3 id="state">State</h3>
+
+<p>We will discuss the state implementation later. For now we will simply describe the four main methods of a state:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">configure</code> is used to configure the state; one important feature to consider and understand with the FSM implementation is that new states can be created by specifying a different configuration of an existing state. This function will thus be called multiple times;</li>
+  <li><code class="highlighter-rouge">init</code> is used to perform initialization; it is called only once;</li>
+  <li><code class="highlighter-rouge">run</code> is the main function implemented by a state; it is called once per iteration loop until the state is over or until the state changes. When the run is completed, the state will set an output to an arbitrary value that must be documented by the state;</li>
+  <li><code class="highlighter-rouge">teardown</code> is a cleanup function that is called when the state changes.</li>
+</ul>
+
+<h3 id="transition">Transition</h3>
+
+<p>A transition is formed by a 4-uplet representing:</p>
+
+<ol>
+  <li>The transit-from state;</li>
+  <li>The output of the state;</li>
+  <li>The transit-to state;</li>
+  <li>An optional parameter that influences how the FSM handles the transition. The possible values are: <code class="highlighter-rouge">StepByStep</code> (default), <code class="highlighter-rouge">Auto</code> and <code class="highlighter-rouge">Strict</code>, we will see their respective meaning shortly.</li>
+</ol>
+
+<h3 id="fsm-run">FSM run</h3>
+
+<p>The FSM controller can run in two distinct modes: managed and non-managed. We will focus first on the non-managed mode.</p>
+
+<h4 id="non-managed-mode">Non-managed mode</h4>
+
+<p>In this mode, the FSM takes care of the state creation and execution as well as transitions between the states.</p>
+
+<p>One iteration of the FSM uses the following logic:</p>
+
+<ul>
+  <li>A state is already running
+    <ul>
+      <li>Run the state run method</li>
+      <li>If its returns true, check the state output and find the associated transition
+        <ul>
+          <li>Teardown the state</li>
+          <li>If the transition type is <code class="highlighter-rouge">Auto</code> or if it is <code class="highlighter-rouge">StepByStep</code> and the <code class="highlighter-rouge">StepByStep</code> setting of the FSM is <code class="highlighter-rouge">false</code>
+            <ul>
+              <li>Configure and initialize the next state</li>
+            </ul>
+          </li>
+          <li>Else
+            <ul>
+              <li>Setup idle state</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>A state is not running
+    <ul>
+      <li>A transition has been triggered
+        <ul>
+          <li>Undo idle state, configure and initialize the next state</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>A few details were left out of this overview to simplify the logic flow:</p>
+<ol>
+  <li>State execution can be interrupted by an external trigger. In this case, before anything else, the state is teardown and the FSM waits for a transition command;</li>
+  <li>If no transition is available for a given pair of state/output, the FSM considers it completed its run. It can be restarted by sending a transition command;</li>
+  <li>Idle state is optional, if it is disabled in the case when the idle state would be started, the previous state run method continues being called until the transition is triggered.</li>
+</ol>
+
+<h5 id="about-idle-state">About idle state</h5>
+
+<p>Idle state (when enabled) attempts to leave the robot in the state that was last achieved by the previously running state. To do so it uses two tasks:</p>
+<ul>
+  <li>A posture task where the objective is set to the current posture;</li>
+  <li>An end-effector task for the free-flyer where the object is set to the current attitude. This task is not active for fixed-base robots.</li>
+</ul>
+
+<p>This “state” will always be used when an interruption has been triggered.</p>
+
+<h4 id="managed-mode">Managed mode</h4>
+
+<p>There is not much to say about this mode. In managed mode, the FSM does not take care of transitions, this is strictly handled by an external tool. A state lifetime is similar to that described above but <strong>all</strong> transitions are triggered by an external tool.</p>
+
+<h2 id="text-based-inheritance">Text-based inheritance</h2>
+
+<p>The states we describe here are C++ objects and they provide many configuration options. However, it would be tedious to repeat the complete set of options when one wants to define two (or more) subtly different states. Therefore, the interface provides a way to inherit configuration set.</p>
+
+<p>Assuming we have a C++ state named <code class="highlighter-rouge">StateBase</code>, we can do the following:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">MyFirstState</span><span class="pi">:</span> <span class="c1"># &lt;-- Name of the new state</span>
+  <span class="na">base</span><span class="pi">:</span> <span class="s">StateBase</span> <span class="c1"># &lt;-- Name of the C++ state we are based on</span>
+  <span class="c1"># other options</span>
+<span class="na">MySecondState</span><span class="pi">:</span> <span class="c1"># &lt;-- Name of the new state</span>
+  <span class="na">base</span><span class="pi">:</span> <span class="s">MyFirstState</span> <span class="c1"># &lt;-- This time we use a state we defined before only in text form</span>
+  <span class="c1"># other options</span>
+</code></pre></div></div>
+
+<p>The way options are combined depends on the C++ state implementation and should be documented by it. However, the general rule applies for mc_rtc provided states and they are based on the defalt loading rule for <code class="highlighter-rouge">mc_rtc::Configuration</code> objects:</p>
+<ul>
+  <li>“raw” values (boolean, numbers and strings) and vectors are overwritten</li>
+  <li>objects are merged following the rule:
+    <ul>
+      <li>if the key does not exist in the destination object, the source object value is used</li>
+      <li>if the key exists in both and their types match, the rules are applied (recursively in case of an object)</li>
+      <li>otherwise, the source object value overwrite the destination object value</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="states-already-implemented-in-mc_rtc">States already implemented in mc_rtc</h2>
+
+<p>This section covers states that are provided as part of mc_rtc.</p>
+
+<ul class="nav nav-tabs" id="statesTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="PauseTab" data-toggle="tab" href="#PauseTabContent" role="tab" aria-controls="PauseTabContent" aria-selected="true">Pause</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="MetaTasksTab" data-toggle="tab" href="#MetaTasksTabContent" role="tab" aria-controls="MetaTasksTabContent" aria-selected="false">MetaTasks</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="AddRemoveContactTab" data-toggle="tab" href="#AddRemoveContactTabContent" role="tab" aria-controls="AddRemoveContactTabContent" aria-selected="false">AddRemoveContact</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="ParallelTab" data-toggle="tab" href="#ParallelTabContent" role="tab" aria-controls="ParallelTabContent" aria-selected="false">Parallel</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="MetaTab" data-toggle="tab" href="#MetaTabContent" role="tab" aria-controls="MetaTabContent" aria-selected="false">Meta</a>
+  </li>
+</ul>
+<div class="tab-content" id="statesTabContent">
+  <div class="tab-pane show active" id="PauseTabContent" role="tabpanel" arial-labelledby="PauseTab">
+    <div class="card bg-light">
+      <div class="card-body">
+        <p>This states simply waits for a while and outputs <code>OK</code>.</p>
+
+        <h5>Options</h5>
+
+        <ul>
+          <li><code>duration</code>: duration of the pause in seconds as a floating point value, defaults to 0.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" id="MetaTasksTabContent" role="tabpanel" arial-labelledby="MetaTasksTab">
+    <div class="card bg-light">
+      <div class="card-body">
+        <p>This state creates an arbitrary number of MetaTasks and executes them until completion criteria are fullfiled for each tasks.</p>
+
+        <p>The tasks in the state are configured through the <code>tasks</code> entry which is a JSON object.</p>
+
+        <p>The keys are the name of the tasks and values are MetaTask objects as expected by MetaTaskLoader plus an optional "completion" criteria that represents one or more completion criteria.</p>
+
+        <p>The names of the tasks are only relevant for the state. You can override the actual task's name using the name entry in the Task's configuration.</p>
+
+        <p>If the <code>completion</code> entry is absent and if there is no existing completion entry for the related task then this task is added but not considered as part of the completion criteria (e.g. you can add a CoMTask and an EndEffectorTask but only care for the completion of the later).</p>
+
+        <p>When the <code>tasks</code> entry is read multiple times, the following ensues:</p>
+        <ul>
+        <li>if a new tasks appears then it is added</li>
+        <li>if an existing task is not repeated, nothing happens for this task</li>
+        <li>if a task already exists, existing configuration entries are overwriten by the new entry, non-existing configuration entries are simply added to the existing configuration</li>
+        </ul>
+
+        <h5>Example</h5>
+
+        
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml">        <span class="c1"># We simplify task entries for the sake of the example</span>
+
+        <span class="c1"># First pass</span>
+        <span class="na">tasks</span><span class="pi">:</span>
+          <span class="na">t1</span><span class="pi">:</span>
+            <span class="na">objectiveA</span><span class="pi">:</span> <span class="s">0.5,</span>
+            <span class="na">objectiveB</span><span class="pi">:</span> <span class="s">1.0,</span>
+            <span class="na">completion</span><span class="pi">:</span> <span class="pi">{</span> <span class="nv">timeout</span><span class="pi">:</span> <span class="nv">5.0</span> <span class="pi">}</span>
+
+        <span class="c1"># After this pass, one task is considered</span>
+
+        <span class="c1"># Second pass</span>
+        <span class="na">tasks</span><span class="pi">:</span>
+          <span class="na">t1</span><span class="pi">:</span>
+            <span class="na">objectiveA</span><span class="pi">:</span> <span class="s">1.0,</span>
+            <span class="na">completion</span><span class="pi">:</span> <span class="pi">{</span> <span class="nv">eval</span><span class="pi">:</span> <span class="nv">1e-6</span> <span class="pi">}</span>
+          <span class="na">t2</span><span class="pi">:</span>
+            <span class="na">objective</span><span class="pi">:</span> <span class="m">0.5</span>
+
+        <span class="c1"># We now have two tasks, and:</span>
+        <span class="c1"># - t1's objectiveA is changed to 1.0, objectiveB is the same</span>
+        <span class="c1"># - t1 completion criteria is replaced</span>
+
+        <span class="c1"># Third pass</span>
+        <span class="na">tasks</span><span class="pi">:</span>
+          <span class="na">t1</span><span class="pi">:</span>
+            <span class="na">completion</span><span class="pi">:</span> <span class="pi">{}</span>
+          <span class="na">t2</span><span class="pi">:</span>
+            <span class="na">completion</span><span class="pi">:</span> <span class="pi">{</span> <span class="nv">eval</span><span class="pi">:</span> <span class="nv">1e-6</span> <span class="pi">}</span>
+
+        <span class="c1"># We still have two tasks, objectives are unchanged but:</span>
+        <span class="c1"># - t1 has no more completion criteria</span>
+        <span class="c1"># - t2 has a completion criteria</span>
+        </code></pre></figure>
+
+
+        <h5>Options</h5>
+
+        <ul>
+          <li><code>tasks</code>: object describing the tasks to add to the controller for this state;</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" id="AddRemoveContactTabContent" role="tabpanel" arial-labelledby="AddRemoveContactTab">
+    <div class="card bg-light">
+      <div class="card-body">
+        <p>Implements a state that is able to remove or add a contact.</p>
+
+        <h5>Options</h5>
+
+        <p>The folowing two entries are required to configure the state:</p>
+
+        <ul>
+          <li><code>type</code>: one of [<code>addContact</code>, <code>removeContact</code>, <code>compliance</code>]</li>
+          <li><code>contact</code>: contact to be removed or added</li>
+        </ul>
+
+        <h5>Remove contact options</h5>
+
+        <ul>
+          <li><code>distance</code>: when the contact body has moved this distance away from the contact, the state is finished. Default is 0.1 (10 cm).</li>
+        </ul>
+
+        <h5>Compliant add contact options</h5>
+
+        <ul>
+          <li><code>velocity</code>: velocity threshold for the ComplianceTask. Default is 1e-4.</li>
+        </ul>
+
+        <p>Other options depend on the type of task used to add/remove the contact. For the compliance task, the <code>body</code> entry is overwritten based on the contact value.</p>
+
+        <p>If you use a compliance task to remove a contact that has no force sensor attached the state will automatically fallback to <code>addContact</code>.</p>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" id="ParallelTabContent" role="tabpanel" arial-labelledby="ParallelTab">
+    <div class="card bg-light">
+      <div class="card-body">
+        <p>Implements parallel states.</p>
+
+        <p>This states plays multiple states at once. Strictly speaking those states are not played in parallel but rather sequentially.</p>
+
+        <p>If this state plays <code>{state_1, ..., state_N}</code>. The state is completed when all <code>state_i::run()</code> function returns true and its output is <code>state_N</code> output.</p>
+
+        <h5>Options</h5>
+
+        <ul>
+          <li><code>states</code>: list of states run by this state</li>
+          <li><code>configs</code>: for each state in states, configs(state) is used to further configure the states</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" id="MetaTabContent" role="tabpanel" arial-labelledby="MetaTab">
+    <div class="card bg-light">
+      <div class="card-body">
+        <p>Implements a "meta" state.</p>
+
+        <p>This states plays its own FSM.</p>
+
+        <h5>Options</h5>
+
+        <ul>
+          <li><code>Managed</code>: if true, does not handle transitions</li>
+          <li><code>transitions</code>: a transition map, similiar to the FSM controller (required if Managed is false)</li>
+          <li><code>StepByStep</code>: same as FSM for the internal FSM (default to the parent FSM <code>StepByStep</code> setting)</li>
+
+          <li><code>configs</code>: can contain additional configuration for the states in the FSM</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3 id="common-options">Common options</h3>
+
+<p>Some options are common to all states:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">AddContacts</code>/<code class="highlighter-rouge">RemoveContacts</code>: allows to add/remove contacts <strong>before</strong> the state is executed, this should be a vector of <code class="highlighter-rouge">fsm::Contact</code> objects;</li>
+  <li><code class="highlighter-rouge">AddContactsAfter</code>/<code class="highlighter-rouge">RemoveContactsAfter</code>: allows to add/remove contacts <strong>after</strong> the state is executed, this should be a vector of <code class="highlighter-rouge">fsm::Contact</code> objects;</li>
+  <li><code class="highlighter-rouge">RemovePostureTask</code>: if set to true, the default posture tasks will be removed.</li>
+</ul>
+
+<h2 id="new-state-creation">New state creation</h2>
+
+<p>The minimal interface for a State is the following:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">namespace</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span>
+<span class="p">{</span>
+  <span class="k">struct</span> <span class="n">MyState</span> <span class="o">:</span> <span class="k">public</span> <span class="n">State</span>
+  <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">configure</span><span class="p">(</span><span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
+
+    <span class="kt">void</span> <span class="n">start</span><span class="p">(</span><span class="n">Controller</span> <span class="o">&amp;</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
+
+    <span class="kt">bool</span> <span class="n">run</span><span class="p">(</span><span class="n">Controller</span> <span class="o">&amp;</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
+
+    <span class="kt">void</span> <span class="n">teardown</span><span class="p">(</span><span class="n">Controller</span> <span class="o">&amp;</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="n">EXPORT_SINGLE_STATE</span><span class="p">(</span><span class="s">"MyState"</span><span class="p">,</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">MyState</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>In all functions where a <code class="highlighter-rouge">Controller</code> instance is passed it is an <code class="highlighter-rouge">mc_control::fsm::Controller</code> instance.</p>
+
+<h3 id="void-configuremc_rtcconfiguration-"><code class="highlighter-rouge">void configure(mc_rtc::Configuration &amp;)</code></h3>
+
+<p>This function is called <strong>multiple</strong> times. It is very important to remember that as you should only “accumulate” configuration entries in this function and not create any tasks.</p>
+
+<h3 id="void-startcontroller-"><code class="highlighter-rouge">void start(Controller &amp;)</code></h3>
+
+<p>This function is called once to initialize the state. This is where you’ll want to transform your accumulated configuration into a runnable state.</p>
+
+<h3 id="bool-runcontroller-"><code class="highlighter-rouge">bool run(Controller &amp;)</code></h3>
+
+<p>This function will be called on every iteration following the <code class="highlighter-rouge">start</code> iteration, i.e. there will be no call to <code class="highlighter-rouge">run</code> in the same iteration as <code class="highlighter-rouge">start</code> unless you manually call <code class="highlighter-rouge">run</code> from your <code class="highlighter-rouge">start</code> implementation.</p>
+
+<p>This function should return <code class="highlighter-rouge">true</code> when the state is completed. At this point you should also set the state’s output by calling <code class="highlighter-rouge">output(const std::string &amp;)</code>.</p>
+
+<h3 id="void-teardowncontroller-"><code class="highlighter-rouge">void teardown(Controller &amp;)</code></h3>
+
+<p>This function will be called once before the state is destroyed. This should be used to cleanup the effect of the state on the controller.</p>
+
+<h3 id="fsm-controller-specificities">FSM controller specificities</h3>
+
+<p>The FSM has some differences with regular mc_rtc controllers.</p>
+
+<h4 id="contacts">Contacts</h4>
+
+<p>The FSM uses a lighter form of the contact structure which has the following definition:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">Contact</span>
+<span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">r1</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">r2</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">r1Surface</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">r2Surface</span><span class="p">;</span>
+  <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">dof</span><span class="p">;</span> <span class="c1">// defauls to Eigen::Vector6d::Ones()</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>The <code class="highlighter-rouge">dof</code> vector will be transformed to a diagonal matrix and added as a <a href="contact-dof.html">dof constraint</a>.</p>
+
+<p>To add/remove contacts in the FSM controller, simply call:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">addContact</span><span class="p">(</span><span class="k">const</span> <span class="n">Contact</span> <span class="o">&amp;</span><span class="p">);</span>
+
+<span class="kt">void</span> <span class="nf">removeContact</span><span class="p">(</span><span class="k">const</span> <span class="n">Contact</span> <span class="o">&amp;</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h4 id="collisions">Collisions</h4>
+
+<p>To add/remove collisions, simply call:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">addCollisions</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">r1</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">r2</span><span class="p">,</span>
+                   <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Collision</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">collisions</span><span class="p">);</span>
+
+<span class="kt">void</span> <span class="nf">removeCollisions</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">r1</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">r2</span><span class="p">,</span>
+                   <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Collision</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">collisions</span><span class="p">);</span>
+
+<span class="c1">// Remove all collisions between r1 and r2</span>
+<span class="kt">void</span> <span class="nf">removeCollisions</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">r1</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">r2</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>The FSM will create and add the necessary collision constraints if necessary.</p>
+
+<h5 id="posture-tasks">Posture tasks</h5>
+
+<p>The FSM controller creates a posture task for every actuated robot. You can access this task by calling:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">PostureTask</span><span class="o">&gt;</span> <span class="n">getPostureTask</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">robot</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>This task is normally kept in the solver during the state’s lifetime. If this is not desired, you can remove it and put it back in the <code class="highlighter-rouge">teardown</code> call.</p>
+
+<h3 id="other-methods">Other methods</h3>
+
+<p>The following methods are virtual in the <code class="highlighter-rouge">State</code> interface and can be optionally overriden.</p>
+
+<h4 id="void-stopcontroller-"><code class="highlighter-rouge">void stop(Controller &amp;)</code></h4>
+
+<p>This is called if the state is interrupted.</p>
+
+<h4 id="bool-read_msgstdstring-bool-read_write_msgstdstring--stdstring-"><code class="highlighter-rouge">bool read_msg(std::string &amp;)</code>/<code class="highlighter-rouge">bool read_write_msg(std::string &amp;, std::string &amp;)</code></h4>
+
+<p>Can be used to communicate with the state using the same interface as the controller.</p>
+
+<h2 id="fsm-configuration">FSM configuration</h2>
+
+<p>The following options can be used to configure the FSM:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">Managed</code>: if true, the FSM is managed, otherwise it is not;</li>
+  <li><code class="highlighter-rouge">StepByStep</code>: if true, transitions that are tagged as <code class="highlighter-rouge">StepByStep</code> will behave as <code class="highlighter-rouge">Strict</code> transitions, otherwise they behave as <code class="highlighter-rouge">Auto</code> transitions;</li>
+  <li><code class="highlighter-rouge">IdleKeepState</code>: if true, the state is kept alive until the transition is triggered by the user;</li>
+  <li><code class="highlighter-rouge">StatesLibraries</code>: where to look for states libraries;</li>
+  <li><code class="highlighter-rouge">StatesFiles</code>: where to look for states configuration files;</li>
+  <li><code class="highlighter-rouge">VerboseStateFactory</code>: if true, the state factory will provide more information while loading libraries, this is useful for debugging;</li>
+  <li><code class="highlighter-rouge">robots</code>: JSON object, each key is the name of a robot and the value is an object representing a robot module to load in addition to the main robot module;</li>
+</ul>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">//</span><span class="w"> </span><span class="err">Example</span><span class="w"> </span><span class="err">robots</span><span class="w"> </span><span class="err">entry</span><span class="w">
+</span><span class="nl">"robots"</span><span class="p">:</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="nl">"ground"</span><span class="p">:</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"module"</span><span class="p">:</span><span class="w"> </span><span class="s2">"env"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"@MC_ENV_DESCRIPTION@"</span><span class="p">,</span><span class="w"> </span><span class="s2">"ground"</span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">constraints</code>: array of constraints, each object is a JSON representation of a <code class="highlighter-rouge">mc_solver::ConstraintSet</code> object as specified by the JSON schemas;</li>
+  <li><code class="highlighter-rouge">collisions</code>: array of collision constraints following the <code class="highlighter-rouge">mc_solver::CollisionConstraint</code> sJSON schema;</li>
+  <li><code class="highlighter-rouge">contacts</code>: array of initial contacts;</li>
+</ul>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">//</span><span class="w"> </span><span class="err">Example</span><span class="w"> </span><span class="err">contacts</span><span class="w"> </span><span class="err">entry</span><span class="w">
+</span><span class="nl">"contacts"</span><span class="p">:</span><span class="w">
+</span><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"r1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jvrc1"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"r2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ground"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"r1Surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LeftFoot"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"r2Surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AllGround"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"r1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jvrc1"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"r2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ground"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"r1Surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RightFoot"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"r2Surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AllGround"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
+
+<ul>
+  <li>for each robot, named <code>r</code>, an entry <code>r</code> can be used to configure the posture and free-flyer task usd in the idle state;</li>
+  <li><code class="highlighter-rouge">states</code>: object, each key is the name of a state, the value is this state configuration;</li>
+  <li><code class="highlighter-rouge">configs</code>: object, each key is the name of a state, the value is additional configuration to pass to this state when it is played in the main FSM;</li>
+  <li><code class="highlighter-rouge">transitions</code>: an array, each elements of the array is a transition</li>
+  <li><code class="highlighter-rouge">init</code>: the initial state to start the FSM;</li>
+  <li><code class="highlighter-rouge">init_pos</code>: initial position of the main robot (7d array);</li>
+</ul>
+
+<p>In the next tutorial we will implement a practical example of the FSM controller.</p>
+
+
+        <hr/>
+        
+        <div class="text-right">
+        <a href="/mc_rtc/tutorials/recipes/fsm-example.html">Next tutorial: FSM controller in practice</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <footer>
+        <hr>
+        <div class="row">
+          <div class="col-8 offset-lg-2 col-lg-6">
+            Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2019
+          </div>
+          <div class="col-4 col-lg-2 text-right">
+            <a href="/mc_rtc/credits.html">Credits</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+
+</html>

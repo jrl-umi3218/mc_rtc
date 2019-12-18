@@ -1,0 +1,361 @@
+
+
+
+
+
+  
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Tutorials - Log plotting - mc_rtc</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.0.0/build.css" integrity="sha256-iPUhChwurLRCrDCM1+2a2LDe9pfW6Je29o/oA5VPr28=" crossorigin="anonymous" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+    
+
+    <link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+      <a class="navbar-brand" href="/mc_rtc/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <div class="navbar-nav mr-auto">
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/interfaces.html">Interfaces</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/robots.html">Robots</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link active" href="/mc_rtc/tutorials.html">Tutorials</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/doxygen.html">API documentation</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/json.html">JSON/YAML documentation</a>
+          
+          
+        </div>
+        <a href="https://gite.lirmm.fr/multi-contact/mc_rtc" target="blank_"><img src="/mc_rtc/assets/gitlab-logo.svg" alt="GitLab logo" width="25" height="25" /></a>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col">
+        <ul>
+          
+          <li>Introduction</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/installation-guide.html">Installation guide</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/configuration.html">Configuring mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/running-a-controller.html">Running a controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/first-controller.html">Your first controller with mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/com-controller.html">Controlling the CoM</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/ef-controller.html">Controlling an end-effector (and loading)</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/multi-robot-controller.html">Multi-robot controller</a></li>
+              
+            
+          </ul>
+          
+          <li>Framework usage</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> general purpose configuration</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/logging.html">Logging data</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/console-logging.html">Printing information to the screen</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/gui.html">Graphical User Interface (GUI)</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/live-plotting.html">Display plots live from the controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/ros.html">ROS integration</a></li>
+              
+            
+          </ul>
+          
+          <li>Framework tools</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_utils.html">Log manipulation</a></li>
+              
+            
+              
+              <li><strong>Log plotting</strong></li>
+                
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_visualization.html">Replay visualization</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_surfaces_visualization.html">Visualizing surfaces</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_convex_visualization.html">Visualizing convexes</a></li>
+              
+            
+          </ul>
+          
+          <li>Control recipes</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/fsm.html">Using the FSM facilities</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/fsm-example.html">FSM controller in practice</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/derived-fsm.html">Deriving the FSM controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/observers.html">Using the observers pipeline</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/speed-constraint.html">Constraint the speed of a body</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/moving-a-contact.html">Moving a contact</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/contact-dof.html">Change the DoF constraints on a contact</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/joint-select.html">Select specific joints for a task</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/dim-weight.html">Affect different weight to different axis in the task space</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/joint-stiffness.html">Joints Stiffness</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/com-constraint.html">Constraining the accessible region of the CoM</a></li>
+              
+            
+          </ul>
+          
+          <li>Advanced topics</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-interface.html">Implement a new mc_rtc interface</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-environment.html">Environment creation for mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-robot.html">Integrate a new robot in mc_rtc</a></li>
+              
+            
+          </ul>
+          
+        </ul>
+      </div>
+      <div class="col-9">
+        <h1>Log plotting</h1>
+
+        <p>A simple GUI is provided in mc_rtc to read the logs after an experiment
+has been performed. This tool is installed as <code class="highlighter-rouge">mc_log_ui</code></p>
+
+<p>Provided you have obtained a log (e.g. <code class="highlighter-rouge">~/my_log.bin</code>) then you can open it in the GUI with:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_log_ui ~/my_log.bin
+</code></pre></div></div>
+
+<p>It should look like this:</p>
+
+<p><img src="img/mc_log_ui.png" class="img-fluid" alt="mc_log_ui default" /></p>
+
+<p><em>Note: some menus and operations described in the next sections are only available if you have mc_rtc Python bindings</em></p>
+
+<h3 id="basic-operations">Basic operations</h3>
+
+<p>The panels on the left and the right of the plot let you select which data to display. You can select a grouped entry (e.g. <code class="highlighter-rouge">LeftFootForceSensor</code>) or a single entry (e.g. <code class="highlighter-rouge">LeftForceSensors -&gt; fz</code>).</p>
+
+<p>The selector under the plot let you select the abscissa for the graph. It defaults to <code class="highlighter-rouge">t</code> (i.e. the controller time). The buttons next to this selector let you lock the X axis, the left side Y axis and the right side Y axis respectively. Otherwise the limits adapt to the selected data. Note that the GUI doesn’t try to align the left and right side Y-axes even when the ranges are similar.</p>
+
+<p>You can open a new graph by clicking the <code class="highlighter-rouge">+</code> button next to the current tab title.</p>
+
+<h3 id="changing-the-axis-limits">Changing the axis limits</h3>
+
+<p>The button above the abscissa selector let you manipulate the graph view.</p>
+
+<p>For more precise manipulations, you can change the range of the X and Y axis by using the <code class="highlighter-rouge">Ctrl+A</code> shortcut to open an axis menu. Setting manual limits will automatically lock the appropriate axis.</p>
+
+<h3 id="common-plots-menu">Common plots menu</h3>
+
+<p>This menu contains a selection of common and useful plots for joint-level inputs/outputs and force sensors. When applicable, a second menu will let you select which joints to display, whether to display the appropriate limits and whether to generate one plot per joint.</p>
+
+<h3 id="user-plots-menu">User plots menu</h3>
+
+<p>During the development of a controller you probably plot the same graph for different iterations of your controller. To save time, you can save your data selection. This is called a “User plot”.</p>
+
+<p>To create such a plot, you must setup the plot once manually. Then go the <code class="highlighter-rouge">User plots</code> menu and select <code class="highlighter-rouge">Save current plot</code>. You will be prompted for a name. This will then create a new entry in the <code class="highlighter-rouge">User plots</code> menu with this name.</p>
+
+<p>After loading a new log, select this new entry in the <code class="highlighter-rouge">User plots</code> menu and it will redo the same selection and styling (it doesn’t save axis limits or abscissa selection as they are likely to change).</p>
+
+<p>Such plots are saved in a JSON format under <code class="highlighter-rouge">$HOME/.config/mc_log_ui/custom_plots.json</code>. This file can be stored in your controller repository to setup the log ui quickly on a new machine. It can also be passed to the <code class="highlighter-rouge">mc_plot_logs</code> tool (see below).</p>
+
+<h3 id="robot-menu">Robot menu</h3>
+
+<p>This menu lets you select with which robot the plot was generated. The main effect is to display user-friendly names in joint-related entries (e.g. instead of <code class="highlighter-rouge">qIn_0</code> you will get <code class="highlighter-rouge">qIn_R_HIP_P</code> with JVRC1 but <code class="highlighter-rouge">qIn_RLEG_JOINT0</code> with HRP2DRC.</p>
+
+<p>The robot selection is saved upon change and restored when you open the UI again. Unless you work with a lot of robots it is likely you will change it once.</p>
+
+<h3 id="style-menu">Style menu</h3>
+
+<p>The style menu lets you set many styling options for your graph, it has several entries:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">Graph</code>: lets you choose the line color and line style for each plot;</li>
+  <li><code class="highlighter-rouge">Grid</code>: lets you enable a grid aligned with the left and/or right axis;</li>
+  <li><code class="highlighter-rouge">Labels/Title/Fonts</code>: lets you add labels to the axes, a title to the graph and choose the police size for those;</li>
+</ul>
+
+<p><em>Note: style options are also saved when you save a user plot</em></p>
+
+<h3 id="other-shortcuts">Other shortcuts</h3>
+
+<p>Additional shortcuts are provided to navigate through tabs:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">Ctrl+T</code>: create a new tab</li>
+  <li><code class="highlighter-rouge">Ctrl+W</code>: close the current tab</li>
+  <li><code class="highlighter-rouge">Ctrl+PageDown</code>: next tab</li>
+  <li><code class="highlighter-rouge">Ctrl+PageUp</code>: previous tab</li>
+</ul>
+
+<h3 id="saving-a-figure">Saving a figure</h3>
+
+<p>After choosing the fields you want and setting up the graph as you wish you can export by clicking the save button:</p>
+
+<p><img src="img/mc_log_ui_save.png" class="img-fluid" alt="mc_log_ui save button" /></p>
+
+<p>You can choose to save as a variety of formats. If you save to SVG (Scalable Vector Graphics) you can further edit the file in a vector graphics editor such as <a href="https://inkscape.org">Inkscape</a>.</p>
+
+<h3 id="automated-figure-plotting">Automated figure plotting</h3>
+
+<p>The final tool introduced here is <code class="highlighter-rouge">mc_plot_logs</code>. It expects a binary log and a JSON file describing the logs that you wish to plot (the format is the same as user plots from <code class="highlighter-rouge">mc_log_ui</code>). It will output a figure for each plot in the provided file.</p>
+
+
+        <hr/>
+        
+        <div class="text-right">
+        <a href="/mc_rtc/tutorials/tools/mc_log_visualization.html">Next tutorial: Replay visualization</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <footer>
+        <hr>
+        <div class="row">
+          <div class="col-8 offset-lg-2 col-lg-6">
+            Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2019
+          </div>
+          <div class="col-4 col-lg-2 text-right">
+            <a href="/mc_rtc/credits.html">Credits</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+
+</html>
