@@ -23,7 +23,7 @@ void StabilizerStandingState::configure(const mc_rtc::Configuration & config)
   }
   else
   {
-    D_ = 2*std::sqrt(K_);
+    D_ = 2 * std::sqrt(K_);
   }
   config("contactState", contactState_);
   if(config.has("completion"))
@@ -91,12 +91,12 @@ bool StabilizerStandingState::run(Controller & ctl)
   {
     return true;
   }
-  if(  std::fabs(stabilizerTask_->measuredDCM().x()-comTarget_.x()) < dcmThreshold_.x()
-    && std::fabs(stabilizerTask_->measuredDCM().y()-comTarget_.y()) < dcmThreshold_.y()
-    && std::fabs(stabilizerTask_->measuredDCM().z()-comTarget_.z()) < dcmThreshold_.z())
+  if(std::fabs(stabilizerTask_->measuredDCM().x() - comTarget_.x()) < dcmThreshold_.x()
+     && std::fabs(stabilizerTask_->measuredDCM().y() - comTarget_.y()) < dcmThreshold_.y()
+     && std::fabs(stabilizerTask_->measuredDCM().z() - comTarget_.z()) < dcmThreshold_.z())
   {
-     output("OK");
-     return true;
+    output("OK");
+    return true;
   }
   return false;
 }
