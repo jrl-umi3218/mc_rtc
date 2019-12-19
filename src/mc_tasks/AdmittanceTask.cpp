@@ -71,6 +71,33 @@ void AdmittanceTask::reset()
   wrenchError_ = sva::ForceVecd(Eigen::Vector6d::Zero());
 }
 
+/*! \brief Load parameters from a Configuration object */
+void AdmittanceTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+{
+  if(config.has("admittance"))
+  {
+    admittance(config("admittance"));
+  }
+  if(config.has("damping"))
+  {
+    double d = config("damping");
+    damping(d);
+  }
+  else if(config.has("targetPose"))
+  {
+    targetPose(config("targetPose"));
+  }
+  if(config.has("wrench"))
+  {
+    targetWrench(config("wrench"));
+  }
+  if(config.has("refVelB"))
+  {
+    refVelB(config("refVelB"));
+  }
+  SurfaceTransformTask::load(solver, config);
+}
+
 void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
 {
   SurfaceTransformTask::addToLogger(logger);
@@ -164,35 +191,6 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
       auto t =
           std::make_shared<mc_tasks::force::AdmittanceTask>(config("surface"), solver.robots(), config("robotIndex"));
-      if(config.has("admittance"))
-      {
-        t->admittance(config("admittance"));
-      }
-      if(config.has("damping"))
-      {
-        double d = config("damping");
-        t->damping(d);
-      }
-
-      if(config.has("targetSurface"))
-      {
-        const auto & c = config("targetSurface");
-        t->targetSurface(c("robotIndex"), c("surface"),
-                         {c("offset_rotation", Eigen::Matrix3d::Identity().eval()),
-                          c("offset_translation", Eigen::Vector3d::Zero().eval())});
-      }
-      else if(config.has("targetPose"))
-      {
-        t->targetPose(config("targetPose"));
-      }
-      if(config.has("weight"))
-      {
-        t->weight(config("weight"));
-      }
-      if(config.has("wrench"))
-      {
-        t->targetWrench(config("wrench"));
-      }
       t->load(solver, config);
       return t;
     });

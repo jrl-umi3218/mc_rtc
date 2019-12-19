@@ -36,9 +36,76 @@ void SurfaceTransformTask::reset()
   errorT->target(curPos);
 }
 
-sva::PTransformd SurfaceTransformTask::target()
+/*! \brief Load parameters from a Configuration object */
+void SurfaceTransformTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+{
+
+  // Current surface position
+  sva::PTransformd X_0_t = surfacePose();
+
+  // Apply global world transformations first
+  if(config.has("targetSurface"))
+  {
+    const auto & c = config("targetSurface");
+    targetSurface(c("robotIndex"), c("surface"),
+                  {c("offset_rotation", Eigen::Matrix3d::Identity().eval()),
+                   c("offset_translation", Eigen::Vector3d::Zero().eval())});
+    X_0_t = this->target();
+  }
+  else if(config.has("target"))
+  {
+    X_0_t = config("target");
+  }
+  else if(config.has("relative"))
+  {
+    const auto & robot = solver.robot(config("robotIndex"));
+    std::string s1 = config("relative")("s1");
+    std::string s2 = config("relative")("s2");
+    sva::PTransformd target = config("relative")("target");
+    auto X_0_s1 = robot.surfacePose(s1);
+    auto X_0_s2 = robot.surfacePose(s2);
+    auto X_s1_s2 = X_0_s2 * X_0_s1.inv();
+    X_s1_s2.translation() = X_s1_s2.translation() / 2;
+    auto X_0_relative = X_s1_s2 * X_0_s1;
+    this->target(target * X_0_relative);
+  }
+  else
+  {
+    if(config.has("targetPosition"))
+    {
+      X_0_t.translation() = config("targetPosition");
+    }
+    if(config.has("targetRotation"))
+    {
+      X_0_t.rotation() = config("targetRotation");
+    }
+  }
+
+  if(config.has("moveWorld"))
+  {
+    sva::PTransformd move = config("moveWorld");
+    X_0_t = X_0_t * move;
+  }
+
+  if(config.has("move"))
+  {
+    sva::PTransformd move = config("move");
+    X_0_t = move * X_0_t;
+  }
+
+  this->target(X_0_t);
+
+  TrajectoryBase::load(solver, config);
+}
+
+sva::PTransformd SurfaceTransformTask::target() const
 {
   return errorT->target();
+}
+
+const sva::PTransformd SurfaceTransformTask::surfacePose() const
+{
+  return robots.robot(rIndex).surfacePose(surfaceName);
 }
 
 void SurfaceTransformTask::target(const sva::PTransformd & pose)
@@ -94,41 +161,6 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
       auto t =
           std::make_shared<mc_tasks::SurfaceTransformTask>(config("surface"), solver.robots(), config("robotIndex"));
-
-      if(config.has("targetSurface"))
-      {
-        const auto & c = config("targetSurface");
-        t->targetSurface(c("robotIndex"), c("surface"),
-                         {c("offset_rotation", Eigen::Matrix3d::Identity().eval()),
-                          c("offset_translation", Eigen::Vector3d::Zero().eval())});
-      }
-      else if(config.has("target"))
-      {
-        t->target(config("target"));
-      }
-      else if(config.has("move"))
-      {
-        sva::PTransformd move = config("move");
-        t->target(move * t->target());
-      }
-      else if(config.has("moveWorld"))
-      {
-        sva::PTransformd move = config("moveWorld");
-        t->target(t->target() * move);
-      }
-      else if(config.has("relative"))
-      {
-        const auto & robot = solver.robot(config("robotIndex"));
-        std::string s1 = config("relative")("s1");
-        std::string s2 = config("relative")("s2");
-        sva::PTransformd target = config("relative")("target");
-        auto X_0_s1 = robot.surfacePose(s1);
-        auto X_0_s2 = robot.surfacePose(s2);
-        auto X_s1_s2 = X_0_s2 * X_0_s1.inv();
-        X_s1_s2.translation() = X_s1_s2.translation() / 2;
-        auto X_0_relative = X_s1_s2 * X_0_s1;
-        t->target(target * X_0_relative);
-      }
       t->load(solver, config);
       return t;
     });

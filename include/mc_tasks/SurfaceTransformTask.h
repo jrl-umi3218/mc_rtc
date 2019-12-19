@@ -16,6 +16,8 @@ namespace mc_tasks
  */
 struct MC_TASKS_DLLAPI SurfaceTransformTask : public TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>
 {
+  using TrajectoryBase = TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>;
+
 public:
   /*! \brief Constructor
    *
@@ -45,7 +47,7 @@ public:
   virtual void reset() override;
 
   /*! \brief Get the body Surface target */
-  sva::PTransformd target();
+  sva::PTransformd target() const;
 
   /*! \brief Set the body Surface target
    *
@@ -72,6 +74,9 @@ public:
   {
     return surfaceName;
   }
+
+  /** Returns the pose of the surface in the iniertial frame */
+  const sva::PTransformd surfacePose() const;
 
   void addToLogger(mc_rtc::Logger & logger) override;
 
@@ -154,6 +159,9 @@ public:
   {
     return TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::refAccel(accel.vector());
   }
+
+  /*! \brief Load parameters from a Configuration object */
+  void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) override;
 
 protected:
   std::string surfaceName;

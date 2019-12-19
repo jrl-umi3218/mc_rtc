@@ -204,6 +204,9 @@ public:
     feedforwardVelB_ = velB;
   }
 
+  /*! \brief Load parameters from a Configuration object */
+  void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) override;
+
 protected:
   Eigen::Vector3d maxAngularVel_ = {0.1, 0.1, 0.1}; // [rad] / [s]
   Eigen::Vector3d maxLinearVel_ = {0.1, 0.1, 0.1}; // [m] / [s]
