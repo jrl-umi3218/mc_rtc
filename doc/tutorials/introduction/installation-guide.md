@@ -10,13 +10,34 @@ mc\_rtc is an interface for simulation and robot control systems. These systems 
 
 ## Installation instruction
 
-We provide a source release using an easy-to-use script for Linux (Debian variants and other assuming a bit of work on your side) and MacOSX (based on brew). Building from source on Windows should be possible but tedious and sparsely documented.
+We provide binary installation for current Ubuntu LTS releases. We also provide a source release using an easy-to-use script for Linux (Debian variants and other assuming a bit of work on your side) and MacOSX (based on brew). Building from source on Windows is also possible but no script is provided.
+
+#### Ubuntu LTS (16.04, 18.04, 20.04)
+
+```bash
+# Make sure you have required tools
+sudo apt install apt-transport-https lsb-release ca-certificates gnupg
+# Add our key
+sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key 892EA6EE273707C6495A6FB6220D644C64666806
+# Add our repository (stable versions)
+sudo sh -c 'echo "deb https://dl.bintray.com/gergondet/multi-contact-release $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/multi-contact.list'
+# Use this to setup the HEAD version
+# sudo sh -c 'echo "deb https://dl.bintray.com/gergondet/multi-contact-head $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/multi-contact.list'
+# Update packages list
+sudo apt update
+# Install packages
+sudo apt install libmc-rtc-dev mc-rtc-utils python3-mc-rtc
+# Assuming you have a ROS distribution mirror setup
+sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin
+```
+
+*Note: the distributed version of mc\_rtc runs with the QLD QP solver through [eigen-qld](https://github.com/jrl-umi3218/eigen-qld). If you have access to the LSSOL solver and thus can install [eigen-lssol](https://gite.lirmm.fr/multi-contact/eigen-lssol) then you can build [Tasks](https://github.com/jrl-umi3218/Tasks) with LSSOL support and install it in `/usr`. The two versions are binary compatible.*
 
 #### Building from source (Linux/MacOSX script)
 
-*Note: when using this script to build mc_rtc, we will also take care of setting up [mc_vrep](https://gite.lirmm.fr/multi-contact/mc_vrep) and VREP itself on your system*
+*Note: when using this script to build mc_rtc, we will also take care of setting up [mc_vrep](https://github.com/jrl-umi3218/mc_vrep) and VREP itself on your system*
 
-1. Clone the [mc\_rtc](https://gite.lirmm.fr/multi-contact/mc_rtc) repository;
+1. Clone the [mc\_rtc](https://github.com/jrl-umi3218/mc_rtc) repository;
 2. Go into the mc\_rtc directory and update submodules `git submodule update --init`;
 3. Go into the `utils` directory and locate the file named `build_and_install.sh`;
 4. Edit some of the options to your liking: `INSTALL_PREFIX`, `WITH_ROS_SUPPORT`, `ROS_DISTRO`. On Ubuntu, ROS will be installed if you enable ROS support and it was not already installed. Otherwise, you are required to install ROS by yourself before attempting to install mc\_rtc with ROS support;
@@ -50,7 +71,11 @@ Building from sources on other platforms is not well documented at the moment. I
 - [sch-core](https://github.com/jrl-umi3218/sch-core)
 - [Tasks](https://github.com/jrl-umi3218/Tasks)
 - [mc\_rbdyn\_urdf](https://github.com/jrl-umi3218/mc_rbdyn_urdf)
-- [mc\_rtc\_ros\_data](https://gite.lirmm.fr/multi-contact/mc_rtc_ros_data)
+- [mc_rtc_data](https://github.com/jrl-umi3218/mc_rtc_data)
+
+mc\_rtc also has a ROS plugin that enables automated robot's status publication as ROS topics and facilitate the integration with ROS tools (e.g. RViZ), to build this you will need:
+
+ * [mc_rtc_msgs](https://github.com/jrl-umi3218/mc_rtc_msgs)
 
 If you wish to get Python bindings you will also need the following:
  * [Cython](http://cython.org/) >= 0.2
@@ -58,12 +83,15 @@ If you wish to get Python bindings you will also need the following:
  * [python-numpy]()
  * [python-nose]()
  * [python-coverage]()
- * [python-git]() (pip name: `GitPython`)
  * [Eigen3ToPython](https://github.com/jrl-umi3218/Eigen3ToPython)
  * [sch-core-python](https://github.com/jrl-umi3218/sch-core-python)
 
+Additional Python libraries are required to run mc\_rtc tools:
+ * [python-git]() (pip name: `GitPython`)
+ * [python-pyside]()
+
 The following packages are not required but bring additionnal features:
 - [ROS](http://www.ros.org/)
-- [mc\_rtc\_ros](https://gite.lirmm.fr/multi-contact/mc_rtc_ros)
+- [mc\_rtc\_ros](https://github.com/jrl-umi3218/mc_rtc_ros)
 
 If `roscpp` is available during build then `tf2_ros` and `sensor_msgs` are also required. This will add some integration between the `ROS` framework and `mc_rtc` (e.g. robot's state publication) and allow controllers to use ROS functionnalities (provides a `ros::NodeHandle` instance that can be used anywhere in `mc_rtc`).
