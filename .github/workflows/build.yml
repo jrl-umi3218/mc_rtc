@@ -132,11 +132,12 @@ jobs:
         catkin_init_workspace
         git clone --recursive https://github.com/jrl-umi3218/mc_rtc_msgs
         cd ../
-        catkin_make
+        catkin_make || exit 1
+        . devel/setup.bash
         popd
         pushd .
         cd build
-        cmake ../ && make -j2 && sudo make install
+        cmake ../ && make -j2 && sudo make install || exit 1
         popd
     - name: Upload documentation
       # Only run on master branch and for one configuration
