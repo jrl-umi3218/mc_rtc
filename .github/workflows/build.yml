@@ -113,6 +113,7 @@ jobs:
     - name: Build with ROS
       if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04'
       run: |
+        set -e
         set -x
         pushd .
         if [ "${{ matrix.os }}" = "ubuntu-16.04" ]
@@ -124,7 +125,7 @@ jobs:
         sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
         wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
         sudo apt-get update -qq
-        sudo apt-get install -qq ros-${ROS_DISTRO}-ros-base
+        sudo apt-get install -qq ros-${ROS_DISTRO}-ros-base ros-${ROS_DISTRO}-tf2-ros
         . /opt/ros/${ROS_DISTRO}/setup.bash
         mkdir -p /tmp/_ci/catkin_ws/src/
         cd /tmp/_ci/catkin_ws/src
