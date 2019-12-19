@@ -110,7 +110,33 @@ jobs:
         compiler: ${{ matrix.compiler }}
         build-type: ${{ matrix.build-type }}
         windows-options: -DPYTHON_BINDING:BOOL=OFF
-    # FIXME Add a step to test ROS plugin on Ubuntu
+    - name: Build with ROS
+      if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04'
+      run: |
+        set -x
+        pushd .
+        if [ "${{ matrix.os }}" = "ubuntu-16.04" ]
+        then
+          export ROS_DISTRO="kinetic"
+        else
+          export ROS_DISTRO="melodic"
+        fi
+        sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+        wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
+        sudo apt-get update -qq
+        sudo apt-get install -qq ros-${ROS_DISTRO}-ros-base
+        . /opt/ros/${ROS_DISTRO}/setup.bash
+        mkdir -p /tmp/_ci/catkin_ws/src/
+        cd /tmp/_ci/catkin_ws/src
+        catkin_init_workspace
+        git clone --recursive https://github.com/jrl-umi3218/mc_rtc_msgs
+        cd ../
+        catkin_make
+        popd
+        pushd .
+        cd build
+        cmake ../ && make -j2 && sudo make install
+        popd
     - name: Upload documentation
       # Only run on master branch and for one configuration
       if: matrix.os == 'ubuntu-18.04' && matrix.build-type == 'RelWithDebInfo' && matrix.compiler == 'gcc' && github.ref == 'refs/heads/master'
