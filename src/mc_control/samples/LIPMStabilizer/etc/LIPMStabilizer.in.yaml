@@ -216,13 +216,18 @@ states:
         type: admittance
         robotIndex: 0
         surface: "RightFootCenter"
-        admittance: [0,0,0,0,0,0.005]
+        stiffness: 5
+        admittance: [0,0,0,0,0,0.001]
+        wrench:
+         force: [0, 0, 20]
+         couple: [0, 0, 0]
+        moveWorld:
+          translation: [0, 0, -0.1]
+        targetRotation: [0, 0, 0]
         completion:
-          AND:
-            - eval: 0.03
-            - wrench:
-               force: [0, 0, 20]
-               couple: [0, 0, 0]
+          wrench:
+           force: [0, 0, 20]
+           couple: [0, 0, 0]
 
   PutLeftSwingFootDown:
     base: PutRightSwingFootDown
