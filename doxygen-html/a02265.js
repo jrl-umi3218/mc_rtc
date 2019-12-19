@@ -1,8 +1,8 @@
 var a02265 =
 [
-    [ "RotationImpl", "a02265.html#a7661413981acb1ca272bd40dcbdfec76", null ],
-    [ "RotationImpl", "a02265.html#ad38cdbde21b335061f261683a3540046", null ],
-    [ "write", "a02265.html#a5db74bd06e02788dcf943ecb1ba51267", null ],
-    [ "write_size", "a02265.html#a90964aa0cd30be5f543ca7a75433d17a", null ],
-    [ "type", "a02265.html#acc77cdef75bb1767eb3e80c2db36afc0", null ]
+    [ "Point3DImpl", "a02265.html#aebb2b0f65583cdb425856d7589a325d9", null ],
+    [ "Point3DImpl", "a02265.html#a81ef40f7c6064e0c1888601141f88cfd", null ],
+    [ "write", "a02265.html#a9101fdc36b843f5a6e93eb033095de14", null ],
+    [ "write_size", "a02265.html#a0c1fd00806f16e62c3ee1140799ac02c", null ],
+    [ "type", "a02265.html#a0471c69344137b9065b0c26db9d43639", null ]
 ];

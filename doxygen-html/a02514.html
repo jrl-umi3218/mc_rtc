@@ -70,24 +70,32 @@ $(document).ready(function(){initNavTree('a02517.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">mc_solver::utils::UpdateNrVarsLambda Member List</div>  </div>
+<div class="title">mc_solver::utils::UpdateForce Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="a02517.html">mc_solver::utils::UpdateNrVarsLambda</a>, including all inherited members.</p>
+<p>This is the complete list of members for <a class="el" href="a02517.html">mc_solver::utils::UpdateForce</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="a02509.html#ac7940f913dbc5037ed042609f685bfaa">ABegin_</a></td><td class="entry"><a class="el" href="a02509.html">mc_solver::utils::UpdateNrVarsData</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02517.html#a855dd9e41399b5a6271e9b4e02576b23">cid_</a></td><td class="entry"><a class="el" href="a02517.html">mc_solver::utils::UpdateNrVarsLambda</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02509.html#a3c4a15ad329aedecdfd932aaffe4ff76">nrVars_</a></td><td class="entry"><a class="el" href="a02509.html">mc_solver::utils::UpdateNrVarsData</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02517.html#a3c7ce960742e1844186550b503af6207">updateNrVarsImpl</a>(const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, const tasks::qp::SolverData &amp;data)</td><td class="entry"><a class="el" href="a02517.html">mc_solver::utils::UpdateNrVarsLambda</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02517.html#a9d6f46e4b6e93b51903495758aecd406">UpdateNrVarsLambda</a>(const tasks::qp::ContactId &amp;cid)</td><td class="entry"><a class="el" href="a02517.html">mc_solver::utils::UpdateNrVarsLambda</a></td><td class="entry"><span class="mlabel">explicit</span><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02509.html#adcc1dc8dc0563b2e14f962f26afbfa5f">A</a>() const=0</td><td class="entry"><a class="el" href="a02509.html">mc_solver::utils::Update&lt; UpdateNrVarsLambda &gt;</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02521.html#ac7940f913dbc5037ed042609f685bfaa">ABegin_</a></td><td class="entry"><a class="el" href="a02521.html">mc_solver::utils::UpdateNrVarsData</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02509.html#a6ba3138c342b7e4efa2328ac11930706">AFull_</a></td><td class="entry"><a class="el" href="a02509.html">mc_solver::utils::Update&lt; UpdateNrVarsLambda &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02529.html#a855dd9e41399b5a6271e9b4e02576b23">cid_</a></td><td class="entry"><a class="el" href="a02529.html">mc_solver::utils::UpdateNrVarsLambda</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02509.html#a8f658eb01d91768ab6a4e9b095a894de">compute</a>()=0</td><td class="entry"><a class="el" href="a02509.html">mc_solver::utils::Update&lt; UpdateNrVarsLambda &gt;</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02521.html#a3c4a15ad329aedecdfd932aaffe4ff76">nrVars_</a></td><td class="entry"><a class="el" href="a02521.html">mc_solver::utils::UpdateNrVarsData</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02509.html#ad172325243564a16279d9392bd86efa5">Update</a>(unsigned int rIndex)</td><td class="entry"><a class="el" href="a02509.html">mc_solver::utils::Update&lt; UpdateNrVarsLambda &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02509.html#a806d3dc017b28e570dfa268a32a55600">Update</a>(const tasks::qp::ContactId &amp;cid)</td><td class="entry"><a class="el" href="a02509.html">mc_solver::utils::Update&lt; UpdateNrVarsLambda &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02517.html#ac7cfe8520ea50dc9cbf285f433769d11">UpdateForce</a>(const mc_solver::QPSolver &amp;solver, const tasks::qp::ContactId &amp;cid)</td><td class="entry"><a class="el" href="a02517.html">mc_solver::utils::UpdateForce</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02517.html#a147dd26742af4a2879ffdead8b3ab93d">updateImpl</a>(const std::vector&lt; rbd::MultiBody &gt; &amp;, const std::vector&lt; rbd::MultiBodyConfig &gt; &amp;, const tasks::qp::SolverData &amp;)</td><td class="entry"><a class="el" href="a02517.html">mc_solver::utils::UpdateForce</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02529.html#a3c7ce960742e1844186550b503af6207">updateNrVarsImpl</a>(const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, const tasks::qp::SolverData &amp;data)</td><td class="entry"><a class="el" href="a02529.html">mc_solver::utils::UpdateNrVarsLambda</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02529.html#a9d6f46e4b6e93b51903495758aecd406">UpdateNrVarsLambda</a>(const tasks::qp::ContactId &amp;cid)</td><td class="entry"><a class="el" href="a02529.html">mc_solver::utils::UpdateNrVarsLambda</a></td><td class="entry"><span class="mlabel">explicit</span><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02509.html#ab8ad71dd3414ee8bccc766c7bc8b4dc3">~Update</a>()</td><td class="entry"><a class="el" href="a02509.html">mc_solver::utils::Update&lt; UpdateNrVarsLambda &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Dec 19 2019 08:43:55 for mc_rtc by
+    <li class="footer">Generated on Thu Dec 19 2019 10:00:54 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

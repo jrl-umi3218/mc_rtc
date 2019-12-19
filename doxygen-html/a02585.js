@@ -1,13 +1,8 @@
 var a02585 =
 [
-    [ "OrientationTask", "a02585.html#aed570ad6882e85529777864cc33d58ed", null ],
-    [ "addToGUI", "a02585.html#ac5953577c61c0b6943106f08851f562c", null ],
-    [ "addToLogger", "a02585.html#ae0f93ea2baa6813562b79f74658bf561", null ],
-    [ "orientation", "a02585.html#a8b10f7f275eec4a245cf826c90f9aca7", null ],
-    [ "orientation", "a02585.html#ada80fbd5aaf53369618630495e92a175", null ],
-    [ "removeFromLogger", "a02585.html#a05e73e60e317fb0d0e0fa7a9149b5be1", null ],
-    [ "reset", "a02585.html#a3230ff70e491adbeea990dc62bf0d069", null ],
-    [ "EndEffectorTask", "a02585.html#ab333c1b08462c2014c404b1b2b886246", null ],
-    [ "bIndex", "a02585.html#abfd25888b1dc814b280d5443506fe258", null ],
-    [ "bodyName", "a02585.html#a97da00bdf087f04a99473553efaa6390", null ]
+    [ "LookAtTask", "a02585.html#aa8ac514e5194309507f7032f47c0cbd4", null ],
+    [ "LookAtTask", "a02585.html#a6ab5055c130fd2813d825c7bcd508fb9", null ],
+    [ "reset", "a02585.html#abe25dfb65d85b23932ca41150a9f97a6", null ],
+    [ "target", "a02585.html#a99e4cc8d6d381936d58bc7675dea901a", null ],
+    [ "target", "a02585.html#acdb7b5c10685b0a725af082547b473c9", null ]
 ];

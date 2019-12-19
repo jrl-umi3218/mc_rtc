@@ -70,29 +70,41 @@ $(document).ready(function(){initNavTree('a01917.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">mc_observers::LowPassFiniteDifferencesVelocityFilter&lt; T &gt; Member List</div>  </div>
+<div class="title">mc_observers::EncoderObserver Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="a01917.html">mc_observers::LowPassFiniteDifferencesVelocityFilter&lt; T &gt;</a>, including all inherited members.</p>
+<p>This is the complete list of members for <a class="el" href="a01917.html">mc_observers::EncoderObserver</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="a01921.html#a580423f5879c9cdc13d04662b3b9eef5">cutoffPeriod</a>() const</td><td class="entry"><a class="el" href="a01921.html">mc_observers::LowPassVelocityFilter&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01921.html#a0289dfde7f6f9d0c17ebdef6e23100c2">cutoffPeriod</a>(double period)</td><td class="entry"><a class="el" href="a01921.html">mc_observers::LowPassVelocityFilter&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01921.html#adb91663b0f8437252d13c89c22ea84e3">dt_</a></td><td class="entry"><a class="el" href="a01921.html">mc_observers::LowPassVelocityFilter&lt; T &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01917.html#ad511ff377bd68590ea8eeae83a6e4fc6">LowPassFiniteDifferencesVelocityFilter</a>(double dt, double period=0)</td><td class="entry"><a class="el" href="a01917.html">mc_observers::LowPassFiniteDifferencesVelocityFilter&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01921.html#a8f893b576b75b884e0232e2c2a15bf43">LowPassVelocityFilter</a>(double dt, double period=0)</td><td class="entry"><a class="el" href="a01921.html">mc_observers::LowPassVelocityFilter&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01917.html#afae69fd13d96d0120d6600462877f2c9">reset</a>(T pos)</td><td class="entry"><a class="el" href="a01917.html">mc_observers::LowPassFiniteDifferencesVelocityFilter&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01917.html#aa4d93106063d1c2d950dca11bf75384e">reset</a>(T pos, T vel)</td><td class="entry"><a class="el" href="a01917.html">mc_observers::LowPassFiniteDifferencesVelocityFilter&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01917.html#a0846c84416e33bb74bb69cef5b44693f">update</a>(const T &amp;newPos)</td><td class="entry"><a class="el" href="a01917.html">mc_observers::LowPassFiniteDifferencesVelocityFilter&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01917.html#ab624dd632cc9af153c1032d999fde378">updatePositionOnly</a>(const T &amp;newPos)</td><td class="entry"><a class="el" href="a01917.html">mc_observers::LowPassFiniteDifferencesVelocityFilter&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01921.html#a560817473f5a15c987776014001519b6">vel</a>()</td><td class="entry"><a class="el" href="a01921.html">mc_observers::LowPassVelocityFilter&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01937.html#a0957402752e8564b876c86f305ebbe2f">addToGUI</a>(const mc_control::MCController &amp;, mc_rtc::gui::StateBuilder &amp;)</td><td class="entry"><a class="el" href="a01937.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01917.html#a2a2f2d12d8ea8643e3a2ad1e910aa892">addToLogger</a>(const mc_control::MCController &amp;ctl, mc_rtc::Logger &amp;) override</td><td class="entry"><a class="el" href="a01917.html">mc_observers::EncoderObserver</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01937.html#ae17bf0ca1911dea768788e63bf0d45b0">desc</a>() const</td><td class="entry"><a class="el" href="a01937.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01937.html#a09b5945fa09bf14489d9796d43df60b9">desc_</a></td><td class="entry"><a class="el" href="a01937.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01937.html#a862e1f350e7b57da34f15824d21d1d37">dt</a>() const</td><td class="entry"><a class="el" href="a01937.html">mc_observers::Observer</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01937.html#adde90bcccecab614f391f6d515d435fa">dt_</a></td><td class="entry"><a class="el" href="a01937.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01917.html#ae041a35fb0a73ebdbe7bbea9e1346155">EncoderObserver</a>(const std::string &amp;name, double dt, const mc_rtc::Configuration &amp;config={})</td><td class="entry"><a class="el" href="a01917.html">mc_observers::EncoderObserver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01917.html#a836476dda18a176da54e14ede5f0eabd">encodersVelocity_</a></td><td class="entry"><a class="el" href="a01917.html">mc_observers::EncoderObserver</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01917.html#a53abfb8ea362389b0a08a268bc9ac268">logEstimation_</a></td><td class="entry"><a class="el" href="a01917.html">mc_observers::EncoderObserver</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01937.html#a5faf70047c2be78645564f90a8053bff">name</a>() const</td><td class="entry"><a class="el" href="a01937.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01937.html#a2e3f65fb8549873b71b1eeda29c1b363">name_</a></td><td class="entry"><a class="el" href="a01937.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01937.html#a0f9f2d8b07a93f2fe3b55e48406835d3">Observer</a>(const std::string &amp;name, double dt, const mc_rtc::Configuration &amp;config={})</td><td class="entry"><a class="el" href="a01937.html">mc_observers::Observer</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01917.html#a8b1666591ee20b8a1f45f7766b5ec694">posUpdate_</a></td><td class="entry"><a class="el" href="a01917.html">mc_observers::EncoderObserver</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01917.html#a81e5682d74e14df7b3b65c6344b49cb0">prevEncoders_</a></td><td class="entry"><a class="el" href="a01917.html">mc_observers::EncoderObserver</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01937.html#a261f51b20ca1d1a57500ae40b6e4093b">removeFromGUI</a>(mc_rtc::gui::StateBuilder &amp;)</td><td class="entry"><a class="el" href="a01937.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01917.html#af71d87a052f0e72a00198643ab760a11">removeFromLogger</a>(mc_rtc::Logger &amp;) override</td><td class="entry"><a class="el" href="a01917.html">mc_observers::EncoderObserver</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01917.html#a2934c6f44a6b49aae0e8e412b04d37c1">reset</a>(const mc_control::MCController &amp;ctl) override</td><td class="entry"><a class="el" href="a01917.html">mc_observers::EncoderObserver</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01917.html#ad65144731e89fc2d6ba40c39e9d5b691">run</a>(const mc_control::MCController &amp;ctl) override</td><td class="entry"><a class="el" href="a01917.html">mc_observers::EncoderObserver</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01917.html#ab23dff7bf325e5a4a3fcf84d13fa62b2">Update</a> enum name</td><td class="entry"><a class="el" href="a01917.html">mc_observers::EncoderObserver</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01917.html#af72093790abd36ada558ed00cb0414a0">updateRobots</a>(const mc_control::MCController &amp;ctl, mc_rbdyn::Robots &amp;realRobots) override</td><td class="entry"><a class="el" href="a01917.html">mc_observers::EncoderObserver</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01917.html#a6da1c395f9ebe746776910c6713c21d4">velUpdate_</a></td><td class="entry"><a class="el" href="a01917.html">mc_observers::EncoderObserver</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01937.html#afe80cec7744a72c627f17990a74e890b">~Observer</a>()</td><td class="entry"><a class="el" href="a01937.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Dec 19 2019 08:43:55 for mc_rtc by
+    <li class="footer">Generated on Thu Dec 19 2019 10:00:54 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

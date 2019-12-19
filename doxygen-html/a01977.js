@@ -1,7 +1,5 @@
 var a01977 =
 [
-    [ "C", "a01977.html#a6937033e6a1e29165b7a1f9b2005232a", null ],
-    [ "jointName", "a01977.html#aae8d1a8eaa685b5efc3eb22b95fbb892", null ],
-    [ "K", "a01977.html#ad9fa8b3ad657cbfd784a906f80e2a493", null ],
-    [ "O", "a01977.html#aea9ed4cd59fb673fdac0d4f252d90987", null ]
+    [ "points", "a01977.html#a0b18450a98acf02d8b5b56b0c74e84a1", null ],
+    [ "qpcontact_ptr", "a01977.html#a18f4220244dc364488e15a5b6fc7bdf6", null ]
 ];

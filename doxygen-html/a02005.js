@@ -1,10 +1,11 @@
 var a02005 =
 [
-    [ "tuple_pair_t", "a02005.html#adda7bb6a81b142d132c7772fe7b1672c", null ],
-    [ "tuple_t", "a02005.html#a8667e5bd25c0215d10ce8e139028207d", null ],
-    [ "PolygonInterpolator", "a02005.html#a279595aaf7f350b0247920b77efb8040", null ],
-    [ "fast_interpolate", "a02005.html#a41490869f7df5826143477c52ac3f236", null ],
-    [ "midpoint_derivative", "a02005.html#a5dbd705039482f156583eadaa91bd51a", null ],
-    [ "normal_derivative", "a02005.html#a8692430f5c1315d38bbc1a1f4798907c", null ],
-    [ "tuple_pairs", "a02005.html#a8c6e2f6234920055ea5c7ab8e32434ee", null ]
+    [ "PlanarSurface", "a02005.html#a129e3603625f117dc8199b89bf43cd22", null ],
+    [ "~PlanarSurface", "a02005.html#a14cef1c49d935db2d1e30c9a54180f84", null ],
+    [ "computePoints", "a02005.html#a99d226753ea56cc0df9678db6550e0b4", null ],
+    [ "copy", "a02005.html#a798203ec1bf48a3390f89f3586b6ea85", null ],
+    [ "planarPoints", "a02005.html#a8d6d8fdf89e2a53cfaf933d2f4d70e7c", null ],
+    [ "planarPoints", "a02005.html#a0eab075507f287b7127f484f23fe3039", null ],
+    [ "planarTransform", "a02005.html#ab49f9384bc47d3f19bcce47d4c22ca5c", null ],
+    [ "type", "a02005.html#a183b940ce2bf200eed3056d5996588d3", null ]
 ];

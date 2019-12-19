@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_solver::ZMP Struct Reference</title>
+<title>mc_solver::ContactMsg Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -73,58 +73,170 @@ $(document).ready(function(){initNavTree('a02481.html','');});
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="a02478.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_solver::ZMP Struct Reference</div>  </div>
+<div class="title">mc_solver::ContactMsg Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;mc_solver/msg/ZMP.h&gt;</code></p>
+<p><code>#include &lt;mc_solver/msg/Contact.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:aa979cfc7765a146ead01123e495c5975"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02481.html#aa979cfc7765a146ead01123e495c5975">x</a></td></tr>
-<tr class="separator:aa979cfc7765a146ead01123e495c5975"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ebbc2b867780670fbc08d80f4aea2cb"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02481.html#a8ebbc2b867780670fbc08d80f4aea2cb">y</a></td></tr>
-<tr class="separator:a8ebbc2b867780670fbc08d80f4aea2cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0eedbcf95ebb3248a39c8c66e92d7b77"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02481.html#a0eedbcf95ebb3248a39c8c66e92d7b77">z</a></td></tr>
-<tr class="separator:a0eedbcf95ebb3248a39c8c66e92d7b77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91f4355799d2e97441538f28adf25071"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02481.html#a91f4355799d2e97441538f28adf25071">r1_index</a></td></tr>
+<tr class="separator:a91f4355799d2e97441538f28adf25071"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaaa28b666db138b8073c87f0367408ea"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02481.html#aaaa28b666db138b8073c87f0367408ea">r2_index</a></td></tr>
+<tr class="separator:aaaa28b666db138b8073c87f0367408ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8c4a5aae685b15b8dffeddcb01aa9f7"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02481.html#ad8c4a5aae685b15b8dffeddcb01aa9f7">r1_body</a></td></tr>
+<tr class="separator:ad8c4a5aae685b15b8dffeddcb01aa9f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30084dbbeaca445a811e2b169344919d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02481.html#a30084dbbeaca445a811e2b169344919d">r2_body</a></td></tr>
+<tr class="separator:a30084dbbeaca445a811e2b169344919d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7af4dca57bbecf5e3397e7ea4f11a360"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02481.html#a7af4dca57bbecf5e3397e7ea4f11a360">r1_surface</a></td></tr>
+<tr class="separator:a7af4dca57bbecf5e3397e7ea4f11a360"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d179ea79ffefc9a499c3300b4fba396"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02481.html#a7d179ea79ffefc9a499c3300b4fba396">r2_surface</a></td></tr>
+<tr class="separator:a7d179ea79ffefc9a499c3300b4fba396"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ffb13c3e88fdefbdf8ad51aab184c16"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02481.html#a7ffb13c3e88fdefbdf8ad51aab184c16">r1_points</a></td></tr>
+<tr class="separator:a7ffb13c3e88fdefbdf8ad51aab184c16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c97419447f414150d56fb8cc8ea791e"><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02481.html#a0c97419447f414150d56fb8cc8ea791e">X_b1_b2</a></td></tr>
+<tr class="separator:a0c97419447f414150d56fb8cc8ea791e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c34937b82f901be184a1de7ae8d1dd9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02481.html#a5c34937b82f901be184a1de7ae8d1dd9">nr_generators</a></td></tr>
+<tr class="separator:a5c34937b82f901be184a1de7ae8d1dd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e1941c9323f825326c7f8d64fac14ac"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02481.html#a9e1941c9323f825326c7f8d64fac14ac">mu</a></td></tr>
+<tr class="separator:a9e1941c9323f825326c7f8d64fac14ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="aa979cfc7765a146ead01123e495c5975"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa979cfc7765a146ead01123e495c5975">&#9670;&nbsp;</a></span>x</h2>
+<a id="a9e1941c9323f825326c7f8d64fac14ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e1941c9323f825326c7f8d64fac14ac">&#9670;&nbsp;</a></span>mu</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double mc_solver::ZMP::x</td>
+          <td class="memname">double mc_solver::ContactMsg::mu</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a8ebbc2b867780670fbc08d80f4aea2cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ebbc2b867780670fbc08d80f4aea2cb">&#9670;&nbsp;</a></span>y</h2>
+<a id="a5c34937b82f901be184a1de7ae8d1dd9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c34937b82f901be184a1de7ae8d1dd9">&#9670;&nbsp;</a></span>nr_generators</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double mc_solver::ZMP::y</td>
+          <td class="memname">uint16_t mc_solver::ContactMsg::nr_generators</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a0eedbcf95ebb3248a39c8c66e92d7b77"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0eedbcf95ebb3248a39c8c66e92d7b77">&#9670;&nbsp;</a></span>z</h2>
+<a id="ad8c4a5aae685b15b8dffeddcb01aa9f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8c4a5aae685b15b8dffeddcb01aa9f7">&#9670;&nbsp;</a></span>r1_body</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double mc_solver::ZMP::z</td>
+          <td class="memname">std::string mc_solver::ContactMsg::r1_body</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a91f4355799d2e97441538f28adf25071"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91f4355799d2e97441538f28adf25071">&#9670;&nbsp;</a></span>r1_index</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t mc_solver::ContactMsg::r1_index</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7ffb13c3e88fdefbdf8ad51aab184c16"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ffb13c3e88fdefbdf8ad51aab184c16">&#9670;&nbsp;</a></span>r1_points</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a>&gt; mc_solver::ContactMsg::r1_points</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7af4dca57bbecf5e3397e7ea4f11a360"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7af4dca57bbecf5e3397e7ea4f11a360">&#9670;&nbsp;</a></span>r1_surface</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string mc_solver::ContactMsg::r1_surface</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a30084dbbeaca445a811e2b169344919d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30084dbbeaca445a811e2b169344919d">&#9670;&nbsp;</a></span>r2_body</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string mc_solver::ContactMsg::r2_body</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aaaa28b666db138b8073c87f0367408ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaaa28b666db138b8073c87f0367408ea">&#9670;&nbsp;</a></span>r2_index</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t mc_solver::ContactMsg::r2_index</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7d179ea79ffefc9a499c3300b4fba396"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d179ea79ffefc9a499c3300b4fba396">&#9670;&nbsp;</a></span>r2_surface</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string mc_solver::ContactMsg::r2_surface</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0c97419447f414150d56fb8cc8ea791e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c97419447f414150d56fb8cc8ea791e">&#9670;&nbsp;</a></span>X_b1_b2</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> mc_solver::ContactMsg::X_b1_b2</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -137,8 +249,8 @@ Public Attributes</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00624.html">mc_solver</a></li><li class="navelem"><a class="el" href="a02481.html">ZMP</a></li>
-    <li class="footer">Generated on Thu Dec 19 2019 08:43:55 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00636.html">mc_solver</a></li><li class="navelem"><a class="el" href="a02481.html">ContactMsg</a></li>
+    <li class="footer">Generated on Thu Dec 19 2019 10:00:54 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

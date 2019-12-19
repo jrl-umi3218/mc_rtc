@@ -1,11 +1,8 @@
 var a02337 =
 [
-    [ "LTDLHandle", "a02337.html#a1d2ebbcff7e52decbb18a9dc96b7671b", null ],
-    [ "~LTDLHandle", "a02337.html#ac3f676e1ef23ac13767069ebf1018af7", null ],
-    [ "LTDLHandle", "a02337.html#aeb254d88dad0c357ba003eb2ef458556", null ],
-    [ "classes", "a02337.html#a5027f7059635b26c598d8547787c70da", null ],
-    [ "get_symbol", "a02337.html#ac9e807398c51fe641aa12610ee1d35fc", null ],
-    [ "operator=", "a02337.html#ab5ad49d16629787bd61589dbf4924c4e", null ],
-    [ "path", "a02337.html#aab506987ae59f5623e4875126b3ad06b", null ],
-    [ "valid", "a02337.html#aad84c0ae1a67095338adf0205ee6cbfe", null ]
+    [ "XYThetaImpl", "a02337.html#a6de2e9a332b75b696ddbd1167dc31d1b", null ],
+    [ "XYThetaImpl", "a02337.html#ad69684bdac6275e7cd47e84f786cac2d", null ],
+    [ "write", "a02337.html#a247757b0f4f2f7537cd966304f6395fc", null ],
+    [ "write_size", "a02337.html#ada9a5e8aafdff45f17263ae02a574970", null ],
+    [ "type", "a02337.html#a3db5a65e4c481b435a71e15ac8715c26", null ]
 ];

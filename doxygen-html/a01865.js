@@ -1,8 +1,10 @@
 var a01865 =
 [
-    [ "~GlobalPlugin", "a01865.html#ae68386345dfc2a1820747a566d37c4af", null ],
-    [ "after", "a01865.html#ab661e381f418ad5f9afa4adf25b4f282", null ],
-    [ "before", "a01865.html#a83ce36f99de7b4a3e7af152ed88e0f5b", null ],
-    [ "init", "a01865.html#acd8832c0335bbf2493bd04697b721bd7", null ],
-    [ "reset", "a01865.html#a034ddfcb8958c36c5812cdb7e0a2e9ca", null ]
+    [ "Type", "a01865.html#ad0d49171493519fb008c73e58696edc1", [
+      [ "StepByStep", "a01865.html#ad0d49171493519fb008c73e58696edc1a68d8c641ebe12c46d077d8ff720c3bbd", null ],
+      [ "Auto", "a01865.html#ad0d49171493519fb008c73e58696edc1a06b9281e396db002010bde1de57262eb", null ],
+      [ "Strict", "a01865.html#ad0d49171493519fb008c73e58696edc1a2e979835dd62324f5bfe217449ba4974", null ]
+    ] ],
+    [ "state", "a01865.html#a9fc7e260a07a8da86ee5724d47f9664a", null ],
+    [ "type", "a01865.html#aeb7c3f9f5d60af38b50cbd0caa1b2b65", null ]
 ];

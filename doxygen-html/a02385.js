@@ -1,4 +1,4 @@
 var a02385 =
 [
-    [ "write", "a02385.html#ac76dfb54b68fb04d65d6fcb1cb6e061d", null ]
+    [ "type", "a02385.html#af37730234c3db7fedadf42ef4699c090", null ]
 ];

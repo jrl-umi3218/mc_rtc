@@ -1,7 +1,10 @@
 var a01933 =
 [
-    [ "baseName", "a01933.html#a29e3501c76c5f562000ea4c144bcb92e", null ],
-    [ "baseType", "a01933.html#aefd54756f82332b9155a61cea33d8cc3", null ],
-    [ "X_0_s", "a01933.html#ae50130e4a7f74e88220617d3080c65ec", null ],
-    [ "X_b0_s", "a01933.html#a4fed34226bcc4165ddc6f39fab4dfacb", null ]
+    [ "LowPassVelocityFilter", "a01933.html#a8f893b576b75b884e0232e2c2a15bf43", null ],
+    [ "cutoffPeriod", "a01933.html#a580423f5879c9cdc13d04662b3b9eef5", null ],
+    [ "cutoffPeriod", "a01933.html#a0289dfde7f6f9d0c17ebdef6e23100c2", null ],
+    [ "reset", "a01933.html#a8c90822395b78ffc631219d82a739b2c", null ],
+    [ "update", "a01933.html#a8aa25cea604315f0f2e79a81691f3fb0", null ],
+    [ "vel", "a01933.html#a560817473f5a15c987776014001519b6", null ],
+    [ "dt_", "a01933.html#adb91663b0f8437252d13c89c22ea84e3", null ]
 ];

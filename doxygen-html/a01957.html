@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rtc::ConfigurationLoader&lt; mc_rbdyn::Contact &gt; Struct Template Reference</title>
+<title>mc_rbdyn::CompoundJointConstraintDescription Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,81 +70,92 @@ $(document).ready(function(){initNavTree('a01957.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="a01954.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::Contact &gt; Struct Template Reference</div>  </div>
+<div class="title">mc_rbdyn::CompoundJointConstraintDescription Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;mc_rbdyn/configuration_io.h&gt;</code></p>
+<p>Describe a compound joint constraint.  
+ <a href="a01957.html#details">More...</a></p>
+
+<p><code>#include &lt;mc_rbdyn/CompoundJointConstraintDescription.h&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a1693666583895fbbd09a39081383914e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a01969.html">mc_rbdyn::Contact</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01957.html#a1693666583895fbbd09a39081383914e">load</a> (const <a class="el" href="a02077.html">mc_rtc::Configuration</a> &amp;, const <a class="el" href="a02041.html">mc_rbdyn::Robots</a> &amp;)</td></tr>
-<tr class="separator:a1693666583895fbbd09a39081383914e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bd43b00507933f99b76646f50ed0fde"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a02077.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01957.html#a5bd43b00507933f99b76646f50ed0fde">save</a> (const <a class="el" href="a01969.html">mc_rbdyn::Contact</a> &amp;)</td></tr>
-<tr class="separator:a5bd43b00507933f99b76646f50ed0fde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a4fc963a5996bfafc4e1e0675e9db6b6a"><td class="memItemLeft" align="right" valign="top">EIGEN_MAKE_ALIGNED_OPERATOR_NEW std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01957.html#a4fc963a5996bfafc4e1e0675e9db6b6a">j1</a></td></tr>
+<tr class="separator:a4fc963a5996bfafc4e1e0675e9db6b6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9819775fec0daea6ce39b6979ef153d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01957.html#ac9819775fec0daea6ce39b6979ef153d">j2</a></td></tr>
+<tr class="separator:ac9819775fec0daea6ce39b6979ef153d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c937c01687684763d1d040626ca9dcb"><td class="memItemLeft" align="right" valign="top">Eigen::Vector2d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01957.html#a8c937c01687684763d1d040626ca9dcb">p1</a></td></tr>
+<tr class="separator:a8c937c01687684763d1d040626ca9dcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cc1f94178b76862c60dd6d6c86ddb07"><td class="memItemLeft" align="right" valign="top">Eigen::Vector2d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01957.html#a0cc1f94178b76862c60dd6d6c86ddb07">p2</a></td></tr>
+<tr class="separator:a0cc1f94178b76862c60dd6d6c86ddb07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a1693666583895fbbd09a39081383914e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1693666583895fbbd09a39081383914e">&#9670;&nbsp;</a></span>load()</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Describe a compound joint constraint. </p>
+<p>This defines:</p><ol type="1">
+<li>a pair of joint names (q1, q2)</li>
+<li>a pair of 2D points (p1, p2)</li>
+</ol>
+<p>The constraint is that: </p><p class="formulaDsp">
+\[ (q - p1) \times (p2 - p1) \leqslant 0 \]
+</p>
+<p>Where \( q = \begin{bmatrix} q1 q2 \end{bmatrix} \) </p>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="a4fc963a5996bfafc4e1e0675e9db6b6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fc963a5996bfafc4e1e0675e9db6b6a">&#9670;&nbsp;</a></span>j1</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="a01969.html">mc_rbdyn::Contact</a> <a class="el" href="a02053.html">mc_rtc::ConfigurationLoader</a>&lt; <a class="el" href="a01969.html">mc_rbdyn::Contact</a> &gt;::load </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a02077.html">mc_rtc::Configuration</a> &amp;&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a02041.html">mc_rbdyn::Robots</a> &amp;&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">EIGEN_MAKE_ALIGNED_OPERATOR_NEW std::string mc_rbdyn::CompoundJointConstraintDescription::j1</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a5bd43b00507933f99b76646f50ed0fde"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5bd43b00507933f99b76646f50ed0fde">&#9670;&nbsp;</a></span>save()</h2>
+<a id="ac9819775fec0daea6ce39b6979ef153d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9819775fec0daea6ce39b6979ef153d">&#9670;&nbsp;</a></span>j2</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="a02077.html">mc_rtc::Configuration</a> <a class="el" href="a02053.html">mc_rtc::ConfigurationLoader</a>&lt; <a class="el" href="a01969.html">mc_rbdyn::Contact</a> &gt;::save </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a01969.html">mc_rbdyn::Contact</a> &amp;&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td class="memname">std::string mc_rbdyn::CompoundJointConstraintDescription::j2</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8c937c01687684763d1d040626ca9dcb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c937c01687684763d1d040626ca9dcb">&#9670;&nbsp;</a></span>p1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Vector2d mc_rbdyn::CompoundJointConstraintDescription::p1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0cc1f94178b76862c60dd6d6c86ddb07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0cc1f94178b76862c60dd6d6c86ddb07">&#9670;&nbsp;</a></span>p2</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Vector2d mc_rbdyn::CompoundJointConstraintDescription::p2</td>
+        </tr>
+      </table>
 </div><div class="memdoc">
 
 </div>
@@ -155,8 +166,8 @@ Static Public Member Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00621.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a01957.html">ConfigurationLoader&lt; mc_rbdyn::Contact &gt;</a></li>
-    <li class="footer">Generated on Thu Dec 19 2019 08:43:55 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00634.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a01957.html">CompoundJointConstraintDescription</a></li>
+    <li class="footer">Generated on Thu Dec 19 2019 10:00:54 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_solver::QPContactPtr Struct Reference</title>
+<title>mc_rtc::ConfigurationLoader&lt; mc_rbdyn::RobotModule &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,31 +70,25 @@ $(document).ready(function(){initNavTree('a01961.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="a01958.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_solver::QPContactPtr Struct Reference</div>  </div>
+<div class="title">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::RobotModule &gt; Struct Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;mc_rbdyn/Contact.h&gt;</code></p>
+<p><code>#include &lt;mc_rbdyn/configuration_io.h&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:ae43784e3317dd1ab1d0d8f42926e5de7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01961.html#ae43784e3317dd1ab1d0d8f42926e5de7">QPContactPtr</a> ()</td></tr>
-<tr class="separator:ae43784e3317dd1ab1d0d8f42926e5de7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a8edb8058d39c00e880534c7d416819f2"><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01016.html">tasks::qp::UnilateralContact</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01961.html#a8edb8058d39c00e880534c7d416819f2">unilateralContact</a></td></tr>
-<tr class="separator:a8edb8058d39c00e880534c7d416819f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31a08f61bfa921fa79dde45a30f72aa9"><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01020.html">tasks::qp::BilateralContact</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01961.html#a31a08f61bfa921fa79dde45a30f72aa9">bilateralContact</a></td></tr>
-<tr class="separator:a31a08f61bfa921fa79dde45a30f72aa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:ab398e7053d2dd2b218a40ee608a8657c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a02045.html">mc_rbdyn::RobotModule</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01961.html#ab398e7053d2dd2b218a40ee608a8657c">load</a> (const <a class="el" href="a02089.html">mc_rtc::Configuration</a> &amp;)</td></tr>
+<tr class="separator:ab398e7053d2dd2b218a40ee608a8657c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae55ea4ba484aaf84aa2fbf822084281c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a02089.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01961.html#ae55ea4ba484aaf84aa2fbf822084281c">save</a> (const <a class="el" href="a02045.html">mc_rbdyn::RobotModule</a> &amp;, bool save_mbc=true, const std::vector&lt; std::string &gt; &amp;filteredLinks={}, bool fixed=false)</td></tr>
+<tr class="separator:ae55ea4ba484aaf84aa2fbf822084281c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ae43784e3317dd1ab1d0d8f42926e5de7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae43784e3317dd1ab1d0d8f42926e5de7">&#9670;&nbsp;</a></span>QPContactPtr()</h2>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="ab398e7053d2dd2b218a40ee608a8657c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab398e7053d2dd2b218a40ee608a8657c">&#9670;&nbsp;</a></span>load()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -103,46 +97,66 @@ Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">mc_solver::QPContactPtr::QPContactPtr </td>
+          <td class="memname">static <a class="el" href="a02045.html">mc_rbdyn::RobotModule</a> <a class="el" href="a02065.html">mc_rtc::ConfigurationLoader</a>&lt; <a class="el" href="a02045.html">mc_rbdyn::RobotModule</a> &gt;::load </td>
           <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02089.html">mc_rtc::Configuration</a> &amp;&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="a31a08f61bfa921fa79dde45a30f72aa9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a31a08f61bfa921fa79dde45a30f72aa9">&#9670;&nbsp;</a></span>bilateralContact</h2>
+<a id="ae55ea4ba484aaf84aa2fbf822084281c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae55ea4ba484aaf84aa2fbf822084281c">&#9670;&nbsp;</a></span>save()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01020.html">tasks::qp::BilateralContact</a>* mc_solver::QPContactPtr::bilateralContact</td>
+          <td class="memname">static <a class="el" href="a02089.html">mc_rtc::Configuration</a> <a class="el" href="a02065.html">mc_rtc::ConfigurationLoader</a>&lt; <a class="el" href="a02045.html">mc_rbdyn::RobotModule</a> &gt;::save </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02045.html">mc_rbdyn::RobotModule</a> &amp;&#160;</td>
+          <td class="paramname">, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a8edb8058d39c00e880534c7d416819f2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8edb8058d39c00e880534c7d416819f2">&#9670;&nbsp;</a></span>unilateralContact</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname"><a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01016.html">tasks::qp::UnilateralContact</a>* mc_solver::QPContactPtr::unilateralContact</td>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>save_mbc</em> = <code>true</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>filteredLinks</em> = <code>{}</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>fixed</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
@@ -153,8 +167,8 @@ Public Attributes</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00624.html">mc_solver</a></li><li class="navelem"><a class="el" href="a01961.html">QPContactPtr</a></li>
-    <li class="footer">Generated on Thu Dec 19 2019 08:43:55 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00633.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a01961.html">ConfigurationLoader&lt; mc_rbdyn::RobotModule &gt;</a></li>
+    <li class="footer">Generated on Thu Dec 19 2019 10:00:54 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

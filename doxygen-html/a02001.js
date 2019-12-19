@@ -1,5 +1,7 @@
 var a02001 =
 [
-    [ "normal", "a02001.html#ad8cba2015c957fc2f09367e269b33a07", null ],
-    [ "offset", "a02001.html#a8c864cca3648d188ffc463ee9cdb2fc6", null ]
+    [ "joint", "a02001.html#a4d23695d0cbacd0471313e1323d9e4b1", null ],
+    [ "multiplier", "a02001.html#acae914e7c2302757339b3f4624394c11", null ],
+    [ "name", "a02001.html#a461c2efe0da4d17cc75ce43837a0503f", null ],
+    [ "offset", "a02001.html#a07938e029fb7d951388c0b1ad64642b5", null ]
 ];

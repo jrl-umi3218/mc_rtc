@@ -1,12 +1,11 @@
 var a01985 =
 [
-    [ "GripperSurface", "a01985.html#acee39c73b63b2e7f72ae116002bb42ad", null ],
-    [ "~GripperSurface", "a01985.html#aeae1f456b4be7ed9cce2cda368f01ed8", null ],
-    [ "computePoints", "a01985.html#a1b4a58b8831e412fdc7b7cd31fcf94dc", null ],
-    [ "copy", "a01985.html#aa40c47e1fd7799f7dec70ad283f1bc5e", null ],
-    [ "motorMaxTorque", "a01985.html#a88a3339b86716f672000736fefbb267a", null ],
-    [ "originTransform", "a01985.html#a8df89e1076a2b0962ea1892b5db0070e", null ],
-    [ "pointsFromOrigin", "a01985.html#a027aa5e8df99bc421791c350e2793213", null ],
-    [ "type", "a01985.html#a8c620aadf02e4692a512bc250643df80", null ],
-    [ "X_b_motor", "a01985.html#a754909a2d87e053e76c070df2f5c876b", null ]
+    [ "CylindricalSurface", "a01985.html#ac3eef75ab4cf0a7808e37ce6bd60e171", null ],
+    [ "~CylindricalSurface", "a01985.html#a94041ce7602917987e5829eff07f5ad4", null ],
+    [ "computePoints", "a01985.html#a0c548d2b3f2f16066e260b9e0a89d56c", null ],
+    [ "copy", "a01985.html#af7ea1fd2bee8c3d0dacbae34d5242422", null ],
+    [ "radius", "a01985.html#abd86a4d9aef83ff0a5fd7a9540d81a8a", null ],
+    [ "type", "a01985.html#a221eebcca494033504b7898f95396b73", null ],
+    [ "width", "a01985.html#ad4b8a89811ebfc71a3793db69282626a", null ],
+    [ "width", "a01985.html#ae129c776f6d6bdc8b84151121747a46f", null ]
 ];

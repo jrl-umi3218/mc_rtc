@@ -1,14 +1,9 @@
 var a02437 =
 [
-    [ "ContactType", "a02437.html#aa1038fc325c517503d2f68a3feec1c30", [
-      [ "Acceleration", "a02437.html#aa1038fc325c517503d2f68a3feec1c30acbc392a30777e1fa953eea2c011ea2c3", null ],
-      [ "Velocity", "a02437.html#aa1038fc325c517503d2f68a3feec1c30a15d06b5b0997a0a5e17eccd053c7c652", null ],
-      [ "Position", "a02437.html#aa1038fc325c517503d2f68a3feec1c30a75ced229938828d7cf205928657fd137", null ]
-    ] ],
-    [ "ContactConstraint", "a02437.html#a2226b4449ee6faeb3f6d70cfdfb13b4f", null ],
-    [ "ContactConstraint", "a02437.html#ad4a4d2baaacb8b1d914d66a0110c99ab", null ],
-    [ "addToSolver", "a02437.html#a3e94d3c790da36671345692cbf14e81d", null ],
-    [ "removeFromSolver", "a02437.html#af72efeda2c9cd6af2e4626f32ab7583d", null ],
-    [ "contactConstr", "a02437.html#ad8b6359d4d1a771db2fd8bad433acf1f", null ],
-    [ "posLambdaConstr", "a02437.html#a4456741f8ae0b07c199415fda9b9aecf", null ]
+    [ "Constraint", "a02437.html#a5f53df98dfe7328369bbfe15f4bb9aed", null ],
+    [ "Constraint", "a02437.html#a42512ff3b1c596c500348c607444d7ff", null ],
+    [ "Constraint", "a02437.html#af2c17e08e27070e50fdb203cf865b02f", null ],
+    [ "~Constraint", "a02437.html#ad65252d1edd926b2edc96fba46cc0b53", null ],
+    [ "update", "a02437.html#ae883e5f921bde3c707ebb5295beb4457", null ],
+    [ "updateNrVars", "a02437.html#a2015fa0aa91c55c557862e2d415ebe3e", null ]
 ];

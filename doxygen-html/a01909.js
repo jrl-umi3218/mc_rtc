@@ -1,14 +1,10 @@
 var a01909 =
 [
-    [ "KinematicInertialObserver", "a01909.html#a165a77caf0652ffe0388127ceafe7ba6", null ],
-    [ "addToGUI", "a01909.html#a8d79052ede7702b4e1271aa45f8c17e4", null ],
-    [ "addToLogger", "a01909.html#a70349dda9da00837225afa919fdc9ce7", null ],
-    [ "removeFromGUI", "a01909.html#aee19bc2e4f9457e9df7e60fa5f562769", null ],
-    [ "removeFromLogger", "a01909.html#ab7a34a69d1337573093b19cce5f4442e", null ],
-    [ "reset", "a01909.html#ae964341c760e3f942152f39d4d596432", null ],
-    [ "reset", "a01909.html#a218d679b8851235ad18b2a49b2c71e01", null ],
-    [ "run", "a01909.html#a2c4b4fe83ab2ad282f02ad6c093e1be6", null ],
-    [ "updateBodySensor", "a01909.html#a70199d5e62d4869778cd91e5e1f1bdee", null ],
-    [ "updateRobots", "a01909.html#ae46ba5b39b85a8b8e271b8b9c63a9a3b", null ],
-    [ "velW", "a01909.html#a2c973c62cabf96b73042047669579a64", null ]
+    [ "SimulationContactPair", "a01909.html#a074d699740f8b69b15c5fdbdde5519c0", null ],
+    [ "update", "a01909.html#aeb88b53261805f73d79e348835e44c65", null ],
+    [ "envSch", "a01909.html#a4a31ea1a5854da861e8a4f1c827386d8", null ],
+    [ "envSurface", "a01909.html#a2b50f1a3fa514431d9c5552bf88f0181", null ],
+    [ "pair", "a01909.html#a1b9a7de72470d0d2d433a7c3f9843ad0", null ],
+    [ "robotSch", "a01909.html#ac7198289925ffc6917bcdf14848bcde8", null ],
+    [ "robotSurface", "a01909.html#a6580a421bf730ccc06b9a3777d480466", null ]
 ];

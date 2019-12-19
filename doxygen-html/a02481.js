@@ -1,6 +1,13 @@
 var a02481 =
 [
-    [ "x", "a02481.html#aa979cfc7765a146ead01123e495c5975", null ],
-    [ "y", "a02481.html#a8ebbc2b867780670fbc08d80f4aea2cb", null ],
-    [ "z", "a02481.html#a0eedbcf95ebb3248a39c8c66e92d7b77", null ]
+    [ "mu", "a02481.html#a9e1941c9323f825326c7f8d64fac14ac", null ],
+    [ "nr_generators", "a02481.html#a5c34937b82f901be184a1de7ae8d1dd9", null ],
+    [ "r1_body", "a02481.html#ad8c4a5aae685b15b8dffeddcb01aa9f7", null ],
+    [ "r1_index", "a02481.html#a91f4355799d2e97441538f28adf25071", null ],
+    [ "r1_points", "a02481.html#a7ffb13c3e88fdefbdf8ad51aab184c16", null ],
+    [ "r1_surface", "a02481.html#a7af4dca57bbecf5e3397e7ea4f11a360", null ],
+    [ "r2_body", "a02481.html#a30084dbbeaca445a811e2b169344919d", null ],
+    [ "r2_index", "a02481.html#aaaa28b666db138b8073c87f0367408ea", null ],
+    [ "r2_surface", "a02481.html#a7d179ea79ffefc9a499c3300b4fba396", null ],
+    [ "X_b1_b2", "a02481.html#a0c97419447f414150d56fb8cc8ea791e", null ]
 ];

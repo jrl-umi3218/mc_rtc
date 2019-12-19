@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rtc::log::LogWriter&lt; T &gt; Struct Template Reference</title>
+<title>mc_rtc::log::GetLogType&lt; std::vector&lt; double, A &gt; &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,68 +70,42 @@ $(document).ready(function(){initNavTree('a02385.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="a02382.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rtc::log::LogWriter&lt; T &gt; Struct Template Reference</div>  </div>
+<div class="title">mc_rtc::log::GetLogType&lt; std::vector&lt; double, A &gt; &gt; Struct Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>For a given type, writes to the log.  
- <a href="a02385.html#details">More...</a></p>
-
 <p><code>#include &lt;mc_rtc/log/utils.h&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ac76dfb54b68fb04d65d6fcb1cb6e061d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02385.html#ac76dfb54b68fb04d65d6fcb1cb6e061d">write</a> (const T &amp;data, <a class="el" href="a02389.html">mc_rtc::MessagePackBuilder</a> &amp;builder)</td></tr>
-<tr class="separator:ac76dfb54b68fb04d65d6fcb1cb6e061d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:af37730234c3db7fedadf42ef4699c090"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="a00648.html#ae623e7dc6e6722fd48752713664b3549">mc_rtc::log::LogType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02385.html#af37730234c3db7fedadf42ef4699c090">type</a> = <a class="el" href="a00648.html#ae623e7dc6e6722fd48752713664b3549a18f1829c8dab599745c7d5bc84585aa2">mc_rtc::log::LogType::VectorDouble</a></td></tr>
+<tr class="separator:af37730234c3db7fedadf42ef4699c090"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename T&gt;<br />
-struct mc_rtc::log::LogWriter&lt; T &gt;</h3>
-
-<p>For a given type, writes to the log. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="ac76dfb54b68fb04d65d6fcb1cb6e061d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac76dfb54b68fb04d65d6fcb1cb6e061d">&#9670;&nbsp;</a></span>write()</h2>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="af37730234c3db7fedadf42ef4699c090"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af37730234c3db7fedadf42ef4699c090">&#9670;&nbsp;</a></span>type</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T &gt; </div>
+template&lt;typename A &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void <a class="el" href="a02385.html">mc_rtc::log::LogWriter</a>&lt; T &gt;::write </td>
-          <td>(</td>
-          <td class="paramtype">const T &amp;&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a02389.html">mc_rtc::MessagePackBuilder</a> &amp;&#160;</td>
-          <td class="paramname"><em>builder</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">constexpr <a class="el" href="a00648.html#ae623e7dc6e6722fd48752713664b3549">mc_rtc::log::LogType</a> <a class="el" href="a02381.html">mc_rtc::log::GetLogType</a>&lt; std::vector&lt; double, A &gt; &gt;::type = <a class="el" href="a00648.html#ae623e7dc6e6722fd48752713664b3549a18f1829c8dab599745c7d5bc84585aa2">mc_rtc::log::LogType::VectorDouble</a></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p class="reference">References <a class="el" href="a02389.html#ab7c6cb64330027b2fec8e69d218a866d">mc_rtc::MessagePackBuilder::write()</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="a02365.html#a1fe9ebf879c471ae7741170c9e0d6933">mc_rtc::Logger::addLogEntry()</a>.</p>
 
 </div>
 </div>
@@ -141,8 +115,8 @@ template&lt;typename T &gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00621.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00636.html">log</a></li><li class="navelem"><a class="el" href="a02385.html">LogWriter</a></li>
-    <li class="footer">Generated on Thu Dec 19 2019 08:43:55 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00633.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00648.html">log</a></li><li class="navelem"><a class="el" href="a02385.html">GetLogType&lt; std::vector&lt; double, A &gt; &gt;</a></li>
+    <li class="footer">Generated on Thu Dec 19 2019 10:00:54 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

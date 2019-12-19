@@ -1,8 +1,6 @@
 var a02205 =
 [
-    [ "NumberSliderImpl", "a02205.html#ad32d76eae5aae6d20a58743e4744947d", null ],
-    [ "NumberSliderImpl", "a02205.html#a63a81dc88237bae8b029eaf615b0acdb", null ],
-    [ "write", "a02205.html#a8e216317bf0a49f9f776b0a81d708c71", null ],
-    [ "write_size", "a02205.html#a3a7ce274a193ddbde40a23f4391e38eb", null ],
-    [ "type", "a02205.html#ad6ef847b456858e8283667379b82dda0", null ]
+    [ "IntegerInputImpl", "a02205.html#abb43e816875fdb07339135c65fa7982e", null ],
+    [ "IntegerInputImpl", "a02205.html#a5b3e150b460bd7c5b4fc426a1d08e370", null ],
+    [ "type", "a02205.html#ad03092ac48c1ea07ce3ee119e000229b", null ]
 ];

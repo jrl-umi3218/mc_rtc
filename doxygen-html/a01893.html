@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_control::MCPythonController Struct Reference</title>
+<title>mc_control::MCGlobalController::GlobalConfiguration Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -74,180 +74,99 @@ $(document).ready(function(){initNavTree('a01893.html','');});
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="a01890.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_control::MCPythonController Struct Reference</div>  </div>
+<div class="title">mc_control::MCGlobalController::GlobalConfiguration Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;mc_control/mc_python_controller.h&gt;</code></p>
-<div class="dynheader">
-Inheritance diagram for mc_control::MCPythonController:</div>
-<div class="dyncontent">
- <div class="center">
-  <img src="a01893.png" usemap="#mc_5Fcontrol::MCPythonController_map" alt=""/>
-  <map id="mc_5Fcontrol::MCPythonController_map" name="mc_5Fcontrol::MCPythonController_map">
-<area href="a01873.html" title="MCController is the base class to implement all controllers. " alt="mc_control::MCController" shape="rect" coords="0,0,195,24"/>
-</map>
- </div></div>
+<p>Store the controller configuration.  
+ <a href="a01893.html#details">More...</a></p>
+
+<p><code>#include &lt;mc_control/mc_global_controller.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a032e887f83331f4138a8b4125010930a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#a032e887f83331f4138a8b4125010930a">MCPythonController</a> (const std::vector&lt; std::shared_ptr&lt; <a class="el" href="a02033.html">mc_rbdyn::RobotModule</a> &gt;&gt; &amp;<a class="el" href="a01873.html#adc557ecb7d64eb2d8be551f7cf6678cd">robots</a>, double dt)</td></tr>
-<tr class="separator:a032e887f83331f4138a8b4125010930a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f6c69c9b96a4fadd5f94d7500d633d7"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#a9f6c69c9b96a4fadd5f94d7500d633d7">reset</a> (const <a class="el" href="a01869.html">ControllerResetData</a> &amp;reset_data) override</td></tr>
-<tr class="memdesc:a9f6c69c9b96a4fadd5f94d7500d633d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the controller with data provided by <a class="el" href="a01869.html" title="Contains information allowing the controller to start smoothly from the current state of the robot...">ControllerResetData</a>.  <a href="#a9f6c69c9b96a4fadd5f94d7500d633d7">More...</a><br /></td></tr>
-<tr class="separator:a9f6c69c9b96a4fadd5f94d7500d633d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3700ef59c7492c0be19158e991ccf6e6"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#a3700ef59c7492c0be19158e991ccf6e6">run</a> () override</td></tr>
-<tr class="memdesc:a3700ef59c7492c0be19158e991ccf6e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is called at each time step of the process driving the robot (i.e.  <a href="#a3700ef59c7492c0be19158e991ccf6e6">More...</a><br /></td></tr>
-<tr class="separator:a3700ef59c7492c0be19158e991ccf6e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_a01873"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a01873')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a01873.html">mc_control::MCController</a></td></tr>
-<tr class="memitem:adbb448aeae9565e56d32cf50067dc9ee inherit pub_methods_a01873"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#adbb448aeae9565e56d32cf50067dc9ee">~MCController</a> ()</td></tr>
-<tr class="separator:adbb448aeae9565e56d32cf50067dc9ee inherit pub_methods_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb7a2057852e29a82fa8c2a6a2d5df0f inherit pub_methods_a01873"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#afb7a2057852e29a82fa8c2a6a2d5df0f">runObservers</a> ()</td></tr>
-<tr class="memdesc:afb7a2057852e29a82fa8c2a6a2d5df0f inherit pub_methods_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is called before the <a class="el" href="a01873.html#a9fcbf5dd454a9300a4d16e75549e22b3" title="This function is called at each time step of the process driving the robot (i.e. ">run()</a> function at each time step of the process driving the robot (i.e.  <a href="a01873.html#afb7a2057852e29a82fa8c2a6a2d5df0f">More...</a><br /></td></tr>
-<tr class="separator:afb7a2057852e29a82fa8c2a6a2d5df0f inherit pub_methods_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac5a69bf551c7acc2230058c6929b0b3 inherit pub_methods_a01873"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#aac5a69bf551c7acc2230058c6929b0b3">resetObservers</a> ()</td></tr>
-<tr class="memdesc:aac5a69bf551c7acc2230058c6929b0b3 inherit pub_methods_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the observers. This function is called after the <a class="el" href="a01873.html#a3c4ebbba1c40f48c3e9f3d35e2f7e432" title="Reset the controller with data provided by ControllerResetData. ">reset()</a> function.  <a href="a01873.html#aac5a69bf551c7acc2230058c6929b0b3">More...</a><br /></td></tr>
-<tr class="separator:aac5a69bf551c7acc2230058c6929b0b3 inherit pub_methods_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a66a42fbe49d017c33d8710639a9089eb inherit pub_methods_a01873"><td class="memItemLeft" align="right" valign="top">virtual <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#a66a42fbe49d017c33d8710639a9089eb">anchorFrame</a> (const <a class="el" href="a02013.html">mc_rbdyn::Robot</a> &amp;<a class="el" href="a01873.html#a3d0a5351228f1b62ad1268339020d230">robot</a>) const</td></tr>
-<tr class="memdesc:a66a42fbe49d017c33d8710639a9089eb inherit pub_methods_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a kinematic anchor frame. This is typically used by state observers such as <a class="el" href="a01909.html" title="Kinematics-inertial observer of the floating base position with finite differences estimation of the ...">mc_observers::KinematicInertialObserver</a> to obtain a reference frame for the estimation. In the case of a biped robot, this is typically a frame in-between the feet of the robot. See the specific requirements for the active observers in your controller.  <a href="a01873.html#a66a42fbe49d017c33d8710639a9089eb">More...</a><br /></td></tr>
-<tr class="separator:a66a42fbe49d017c33d8710639a9089eb inherit pub_methods_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e823bc69796964a6868ee5c30f0e382 inherit pub_methods_a01873"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#a2e823bc69796964a6868ee5c30f0e382">runClosedLoop</a> ()</td></tr>
-<tr class="memdesc:a2e823bc69796964a6868ee5c30f0e382 inherit pub_methods_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">WARNING EXPERIMENTAL Runs the QP on real_robot state ONLY SUPPORTS ONE ROBOT FOR NOW.  <a href="a01873.html#a2e823bc69796964a6868ee5c30f0e382">More...</a><br /></td></tr>
-<tr class="separator:a2e823bc69796964a6868ee5c30f0e382 inherit pub_methods_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d9a2ee7d9c553bc3ced736b7ee9a3e7 inherit pub_methods_a01873"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#a7d9a2ee7d9c553bc3ced736b7ee9a3e7">run</a> (mc_solver::FeedbackType fType)</td></tr>
-<tr class="memdesc:a7d9a2ee7d9c553bc3ced736b7ee9a3e7 inherit pub_methods_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Can be called in derived class instead of run to use a feedback strategy different from the default one.  <a href="a01873.html#a7d9a2ee7d9c553bc3ced736b7ee9a3e7">More...</a><br /></td></tr>
-<tr class="separator:a7d9a2ee7d9c553bc3ced736b7ee9a3e7 inherit pub_methods_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94ad5bc971729e691d57c711f6fac88f inherit pub_methods_a01873"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#a94ad5bc971729e691d57c711f6fac88f">stop</a> ()</td></tr>
-<tr class="memdesc:a94ad5bc971729e691d57c711f6fac88f inherit pub_methods_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is called when the controller is stopped.  <a href="a01873.html#a94ad5bc971729e691d57c711f6fac88f">More...</a><br /></td></tr>
-<tr class="separator:a94ad5bc971729e691d57c711f6fac88f inherit pub_methods_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18dee7f61bad6646fe684c0e4ae424cb inherit pub_methods_a01873"><td class="memItemLeft" align="right" valign="top">virtual const <a class="el" href="a02473.html">mc_solver::QPResultMsg</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#a18dee7f61bad6646fe684c0e4ae424cb">send</a> (const double &amp;t)</td></tr>
-<tr class="memdesc:a18dee7f61bad6646fe684c0e4ae424cb inherit pub_methods_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gives access to the result of the QP execution.  <a href="a01873.html#a18dee7f61bad6646fe684c0e4ae424cb">More...</a><br /></td></tr>
-<tr class="separator:a18dee7f61bad6646fe684c0e4ae424cb inherit pub_methods_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d0a5351228f1b62ad1268339020d230 inherit pub_methods_a01873"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a02013.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#a3d0a5351228f1b62ad1268339020d230">robot</a> () const</td></tr>
-<tr class="memdesc:a3d0a5351228f1b62ad1268339020d230 inherit pub_methods_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the main robot (first robot provided in the constructor)  <a href="a01873.html#a3d0a5351228f1b62ad1268339020d230">More...</a><br /></td></tr>
-<tr class="separator:a3d0a5351228f1b62ad1268339020d230 inherit pub_methods_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94eed9012e3dab581b9ad63a4e525343 inherit pub_methods_a01873"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a02013.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#a94eed9012e3dab581b9ad63a4e525343">env</a> () const</td></tr>
-<tr class="memdesc:a94eed9012e3dab581b9ad63a4e525343 inherit pub_methods_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the env "robot".  <a href="a01873.html#a94eed9012e3dab581b9ad63a4e525343">More...</a><br /></td></tr>
-<tr class="separator:a94eed9012e3dab581b9ad63a4e525343 inherit pub_methods_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc557ecb7d64eb2d8be551f7cf6678cd inherit pub_methods_a01873"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a02041.html">mc_rbdyn::Robots</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#adc557ecb7d64eb2d8be551f7cf6678cd">robots</a> () const</td></tr>
-<tr class="memdesc:adc557ecb7d64eb2d8be551f7cf6678cd inherit pub_methods_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the <a class="el" href="a02041.html">mc_rbdyn::Robots</a> controlled by this controller.  <a href="a01873.html#adc557ecb7d64eb2d8be551f7cf6678cd">More...</a><br /></td></tr>
-<tr class="separator:adc557ecb7d64eb2d8be551f7cf6678cd inherit pub_methods_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef59bf32cd83b177201962e7a7325928 inherit pub_methods_a01873"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02041.html">mc_rbdyn::Robots</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#aef59bf32cd83b177201962e7a7325928">robots</a> ()</td></tr>
-<tr class="memdesc:aef59bf32cd83b177201962e7a7325928 inherit pub_methods_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-const variant of <a class="el" href="a01873.html#mc_controller_robots_const_doc">robots()</a>.  <a href="a01873.html#aef59bf32cd83b177201962e7a7325928">More...</a><br /></td></tr>
-<tr class="separator:aef59bf32cd83b177201962e7a7325928 inherit pub_methods_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01afa1d8da9cc41b34f8119023102f65 inherit pub_methods_a01873"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02013.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#a01afa1d8da9cc41b34f8119023102f65">robot</a> ()</td></tr>
-<tr class="memdesc:a01afa1d8da9cc41b34f8119023102f65 inherit pub_methods_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-const variant of <a class="el" href="a01873.html#mc_controller_robot_const_doc">robot()</a>.  <a href="a01873.html#a01afa1d8da9cc41b34f8119023102f65">More...</a><br /></td></tr>
-<tr class="separator:a01afa1d8da9cc41b34f8119023102f65 inherit pub_methods_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a589dbcbbd52d3218012802800834926d inherit pub_methods_a01873"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02013.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#a589dbcbbd52d3218012802800834926d">env</a> ()</td></tr>
-<tr class="memdesc:a589dbcbbd52d3218012802800834926d inherit pub_methods_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-const variant of <a class="el" href="a01873.html#mc_controller_env_const_doc">env()</a>.  <a href="a01873.html#a589dbcbbd52d3218012802800834926d">More...</a><br /></td></tr>
-<tr class="separator:a589dbcbbd52d3218012802800834926d inherit pub_methods_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6a9b2cd350ec94a1f1bda12c3133c28 inherit pub_methods_a01873"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a02485.html">mc_solver::QPSolver</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#aa6a9b2cd350ec94a1f1bda12c3133c28">solver</a> () const</td></tr>
-<tr class="memdesc:aa6a9b2cd350ec94a1f1bda12c3133c28 inherit pub_methods_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the <a class="el" href="a02485.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> instance attached to this controller.  <a href="a01873.html#aa6a9b2cd350ec94a1f1bda12c3133c28">More...</a><br /></td></tr>
-<tr class="separator:aa6a9b2cd350ec94a1f1bda12c3133c28 inherit pub_methods_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc7651033ec24b18d662797fc3bb48fa inherit pub_methods_a01873"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02485.html">mc_solver::QPSolver</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#abc7651033ec24b18d662797fc3bb48fa">solver</a> ()</td></tr>
-<tr class="memdesc:abc7651033ec24b18d662797fc3bb48fa inherit pub_methods_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-const variant of <a class="el" href="a01873.html#mc_controller_qpsolver_const_doc">solver()</a>.  <a href="a01873.html#abc7651033ec24b18d662797fc3bb48fa">More...</a><br /></td></tr>
-<tr class="separator:abc7651033ec24b18d662797fc3bb48fa inherit pub_methods_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9542a86bbb7baaf4d40c879b01a4073 inherit pub_methods_a01873"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02365.html">mc_rtc::Logger</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#ac9542a86bbb7baaf4d40c879b01a4073">logger</a> ()</td></tr>
-<tr class="memdesc:ac9542a86bbb7baaf4d40c879b01a4073 inherit pub_methods_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns <a class="el" href="a02365.html" title="Logs controller data to disk. ">mc_rtc::Logger</a> instance.  <a href="a01873.html#ac9542a86bbb7baaf4d40c879b01a4073">More...</a><br /></td></tr>
-<tr class="separator:ac9542a86bbb7baaf4d40c879b01a4073 inherit pub_methods_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb942edc92a7d47993ea5d1ad78e58e9 inherit pub_methods_a01873"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="a02273.html">mc_rtc::gui::StateBuilder</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#abb942edc92a7d47993ea5d1ad78e58e9">gui</a> ()</td></tr>
-<tr class="memdesc:abb942edc92a7d47993ea5d1ad78e58e9 inherit pub_methods_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns <a class="el" href="a02273.html" title="Used to build a GUI state from multiple objects. ">mc_rtc::gui::StateBuilder</a> ptr.  <a href="a01873.html#abb942edc92a7d47993ea5d1ad78e58e9">More...</a><br /></td></tr>
-<tr class="separator:abb942edc92a7d47993ea5d1ad78e58e9 inherit pub_methods_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1443aed08b26c319294465b1caa1e221 inherit pub_methods_a01873"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a02041.html">mc_rbdyn::Robots</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#a1443aed08b26c319294465b1caa1e221">realRobots</a> () const</td></tr>
-<tr class="memdesc:a1443aed08b26c319294465b1caa1e221 inherit pub_methods_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the <a class="el" href="a02041.html">mc_rbdyn::Robots</a> real robots instance.  <a href="a01873.html#a1443aed08b26c319294465b1caa1e221">More...</a><br /></td></tr>
-<tr class="separator:a1443aed08b26c319294465b1caa1e221 inherit pub_methods_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a47636696fa5be9a4e8c0d10d6dae1a20 inherit pub_methods_a01873"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02041.html">mc_rbdyn::Robots</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#a47636696fa5be9a4e8c0d10d6dae1a20">realRobots</a> ()</td></tr>
-<tr class="memdesc:a47636696fa5be9a4e8c0d10d6dae1a20 inherit pub_methods_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-const variant of <a class="el" href="a01873.html#mc_controller_real_robots_const_doc">realRobots()</a>.  <a href="a01873.html#a47636696fa5be9a4e8c0d10d6dae1a20">More...</a><br /></td></tr>
-<tr class="separator:a47636696fa5be9a4e8c0d10d6dae1a20 inherit pub_methods_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab491ba1a03ccfd4b3fe37079ed4f03b1 inherit pub_methods_a01873"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a02013.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#ab491ba1a03ccfd4b3fe37079ed4f03b1">realRobot</a> () const</td></tr>
-<tr class="memdesc:ab491ba1a03ccfd4b3fe37079ed4f03b1 inherit pub_methods_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the main <a class="el" href="a02013.html">mc_rbdyn::Robot</a> real robot instance.  <a href="a01873.html#ab491ba1a03ccfd4b3fe37079ed4f03b1">More...</a><br /></td></tr>
-<tr class="separator:ab491ba1a03ccfd4b3fe37079ed4f03b1 inherit pub_methods_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a545cbd53e4486c535a4e4ffcd2ad0d6e inherit pub_methods_a01873"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02013.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#a545cbd53e4486c535a4e4ffcd2ad0d6e">realRobot</a> ()</td></tr>
-<tr class="memdesc:a545cbd53e4486c535a4e4ffcd2ad0d6e inherit pub_methods_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-const variant of <a class="el" href="a01873.html#mc_controller_real_robot_const_doc">realRobot()</a>.  <a href="a01873.html#a545cbd53e4486c535a4e4ffcd2ad0d6e">More...</a><br /></td></tr>
-<tr class="separator:a545cbd53e4486c535a4e4ffcd2ad0d6e inherit pub_methods_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22ae41d5d06f23a8012cd99518549ef5 inherit pub_methods_a01873"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#a22ae41d5d06f23a8012cd99518549ef5">supported_robots</a> () const</td></tr>
-<tr class="memdesc:a22ae41d5d06f23a8012cd99518549ef5 inherit pub_methods_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of robots supported by the controller.  <a href="a01873.html#a22ae41d5d06f23a8012cd99518549ef5">More...</a><br /></td></tr>
-<tr class="separator:a22ae41d5d06f23a8012cd99518549ef5 inherit pub_methods_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca1189c364441ad5d5fa5a1f7b53a4bd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#aca1189c364441ad5d5fa5a1f7b53a4bd">GlobalConfiguration</a> (const std::string &amp;conf, std::shared_ptr&lt; <a class="el" href="a02045.html">mc_rbdyn::RobotModule</a> &gt; rm)</td></tr>
+<tr class="separator:aca1189c364441ad5d5fa5a1f7b53a4bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2d357671c1f2ba1c316a128a6bf6549"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#ac2d357671c1f2ba1c316a128a6bf6549">enabled</a> (const std::string &amp;ctrl)</td></tr>
+<tr class="separator:ac2d357671c1f2ba1c316a128a6bf6549"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25be914af3f8f7543109624e44f820f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#a25be914af3f8f7543109624e44f820f2">load_controllers_configs</a> ()</td></tr>
+<tr class="separator:a25be914af3f8f7543109624e44f820f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a03b269639f6f50e2b43ecfb7434c6d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#a4a03b269639f6f50e2b43ecfb7434c6d">load_plugin_configs</a> ()</td></tr>
+<tr class="separator:a4a03b269639f6f50e2b43ecfb7434c6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:ac76e53f48809f9cede138425a0b7aac9"><td class="memItemLeft" align="right" valign="top">std::function&lt; bool()&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#ac76e53f48809f9cede138425a0b7aac9">run_callback</a></td></tr>
-<tr class="separator:ac76e53f48809f9cede138425a0b7aac9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a912a0dc9659948113b9eca0605c2cd12"><td class="memItemLeft" align="right" valign="top">std::function&lt; void(const <a class="el" href="a01869.html">ControllerResetData</a> &amp;)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#a912a0dc9659948113b9eca0605c2cd12">reset_callback</a></td></tr>
-<tr class="separator:a912a0dc9659948113b9eca0605c2cd12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_attribs_a01873"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_a01873')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="a01873.html">mc_control::MCController</a></td></tr>
-<tr class="memitem:ae5f48849d9e4d7ed3a1f02a1380a7fee inherit pub_attribs_a01873"><td class="memItemLeft" align="right" valign="top">const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#ae5f48849d9e4d7ed3a1f02a1380a7fee">timeStep</a></td></tr>
-<tr class="memdesc:ae5f48849d9e4d7ed3a1f02a1380a7fee inherit pub_attribs_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controller timestep.  <a href="a01873.html#ae5f48849d9e4d7ed3a1f02a1380a7fee">More...</a><br /></td></tr>
-<tr class="separator:ae5f48849d9e4d7ed3a1f02a1380a7fee inherit pub_attribs_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af22b7ebf2d129819c82af474067b3766 inherit pub_attribs_a01873"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, std::shared_ptr&lt; <a class="el" href="a01861.html">mc_control::Gripper</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#af22b7ebf2d129819c82af474067b3766">grippers</a></td></tr>
-<tr class="memdesc:af22b7ebf2d129819c82af474067b3766 inherit pub_attribs_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Grippers.  <a href="a01873.html#af22b7ebf2d129819c82af474067b3766">More...</a><br /></td></tr>
-<tr class="separator:af22b7ebf2d129819c82af474067b3766 inherit pub_attribs_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a765929daba315c7ec7d455486f2817b3 inherit pub_attribs_a01873"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02437.html">mc_solver::ContactConstraint</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#a765929daba315c7ec7d455486f2817b3">contactConstraint</a></td></tr>
-<tr class="memdesc:a765929daba315c7ec7d455486f2817b3 inherit pub_attribs_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contact constraint for the main robot.  <a href="a01873.html#a765929daba315c7ec7d455486f2817b3">More...</a><br /></td></tr>
-<tr class="separator:a765929daba315c7ec7d455486f2817b3 inherit pub_attribs_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a828b8724c182053e6d0aed8a28f368bf inherit pub_attribs_a01873"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02441.html">mc_solver::DynamicsConstraint</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#a828b8724c182053e6d0aed8a28f368bf">dynamicsConstraint</a></td></tr>
-<tr class="memdesc:a828b8724c182053e6d0aed8a28f368bf inherit pub_attribs_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dynamics constraints for the main robot.  <a href="a01873.html#a828b8724c182053e6d0aed8a28f368bf">More...</a><br /></td></tr>
-<tr class="separator:a828b8724c182053e6d0aed8a28f368bf inherit pub_attribs_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af77baae76ef5af0d4ca6bec07172a3a4 inherit pub_attribs_a01873"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02465.html">mc_solver::KinematicsConstraint</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#af77baae76ef5af0d4ca6bec07172a3a4">kinematicsConstraint</a></td></tr>
-<tr class="memdesc:af77baae76ef5af0d4ca6bec07172a3a4 inherit pub_attribs_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kinematics constraints for the main robot.  <a href="a01873.html#af77baae76ef5af0d4ca6bec07172a3a4">More...</a><br /></td></tr>
-<tr class="separator:af77baae76ef5af0d4ca6bec07172a3a4 inherit pub_attribs_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad67e0621398628a6b8f4f700a7455b67 inherit pub_attribs_a01873"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02401.html">mc_solver::CollisionsConstraint</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#ad67e0621398628a6b8f4f700a7455b67">selfCollisionConstraint</a></td></tr>
-<tr class="memdesc:ad67e0621398628a6b8f4f700a7455b67 inherit pub_attribs_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Self collisions constraint for the main robot.  <a href="a01873.html#ad67e0621398628a6b8f4f700a7455b67">More...</a><br /></td></tr>
-<tr class="separator:ad67e0621398628a6b8f4f700a7455b67 inherit pub_attribs_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d17bb7e20af4d312617d7d5f6288889 inherit pub_attribs_a01873"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="a02597.html">mc_tasks::PostureTask</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#a3d17bb7e20af4d312617d7d5f6288889">postureTask</a></td></tr>
-<tr class="memdesc:a3d17bb7e20af4d312617d7d5f6288889 inherit pub_attribs_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Posture task for the main robot.  <a href="a01873.html#a3d17bb7e20af4d312617d7d5f6288889">More...</a><br /></td></tr>
-<tr class="separator:a3d17bb7e20af4d312617d7d5f6288889 inherit pub_attribs_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
-<tr class="inherit_header pro_methods_a01873"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_a01873')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="a01873.html">mc_control::MCController</a></td></tr>
-<tr class="memitem:a0a5a9b4670e467fa2eabd8f2342e0846 inherit pro_methods_a01873"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#a0a5a9b4670e467fa2eabd8f2342e0846">MCController</a> (std::shared_ptr&lt; <a class="el" href="a02033.html">mc_rbdyn::RobotModule</a> &gt; <a class="el" href="a01873.html#a3d0a5351228f1b62ad1268339020d230">robot</a>, double dt)</td></tr>
-<tr class="memdesc:a0a5a9b4670e467fa2eabd8f2342e0846 inherit pro_methods_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds a controller base with an empty environment.  <a href="a01873.html#a0a5a9b4670e467fa2eabd8f2342e0846">More...</a><br /></td></tr>
-<tr class="separator:a0a5a9b4670e467fa2eabd8f2342e0846 inherit pro_methods_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ac3cbc244e98473e90b06e4c187aec0 inherit pro_methods_a01873"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#a1ac3cbc244e98473e90b06e4c187aec0">MCController</a> (const std::vector&lt; std::shared_ptr&lt; <a class="el" href="a02033.html">mc_rbdyn::RobotModule</a> &gt;&gt; &amp;robot_modules, double dt)</td></tr>
-<tr class="memdesc:a1ac3cbc244e98473e90b06e4c187aec0 inherit pro_methods_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds a multi-robot controller base.  <a href="a01873.html#a1ac3cbc244e98473e90b06e4c187aec0">More...</a><br /></td></tr>
-<tr class="separator:a1ac3cbc244e98473e90b06e4c187aec0 inherit pro_methods_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3110512ea26812d8a58d3945e739c751 inherit pro_methods_a01873"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02013.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#a3110512ea26812d8a58d3945e739c751">loadRobot</a> (<a class="el" href="a00622.html#af67e459a90b9a864418fca7d55d959a3">mc_rbdyn::RobotModulePtr</a> rm, const std::string &amp;name)</td></tr>
-<tr class="memdesc:a3110512ea26812d8a58d3945e739c751 inherit pro_methods_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load an additional robot into the controller.  <a href="a01873.html#a3110512ea26812d8a58d3945e739c751">More...</a><br /></td></tr>
-<tr class="separator:a3110512ea26812d8a58d3945e739c751 inherit pro_methods_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_attribs_a01873"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_a01873')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="a01873.html">mc_control::MCController</a></td></tr>
-<tr class="memitem:a4523facc71906c6622227d0fa2597963 inherit pro_attribs_a01873"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="a02485.html">mc_solver::QPSolver</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#a4523facc71906c6622227d0fa2597963">qpsolver</a></td></tr>
-<tr class="memdesc:a4523facc71906c6622227d0fa2597963 inherit pro_attribs_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">QP solver.  <a href="a01873.html#a4523facc71906c6622227d0fa2597963">More...</a><br /></td></tr>
-<tr class="separator:a4523facc71906c6622227d0fa2597963 inherit pro_attribs_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada71de0674724e0136ec360054d3b702 inherit pro_attribs_a01873"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="a02041.html">mc_rbdyn::Robots</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#ada71de0674724e0136ec360054d3b702">real_robots</a></td></tr>
-<tr class="memdesc:ada71de0674724e0136ec360054d3b702 inherit pro_attribs_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Real robots provided by <a class="el" href="a01877.html">MCGlobalController</a>, nullptr until ::reset.  <a href="a01873.html#ada71de0674724e0136ec360054d3b702">More...</a><br /></td></tr>
-<tr class="separator:ada71de0674724e0136ec360054d3b702 inherit pro_attribs_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac131a31714e368146f4d9f1e04d7fdf1 inherit pro_attribs_a01873"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="a00623.html#a45c5f50ee1e5bcc4959faef24b334643">mc_observers::ObserverPtr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#ac131a31714e368146f4d9f1e04d7fdf1">observers_</a></td></tr>
-<tr class="memdesc:ac131a31714e368146f4d9f1e04d7fdf1 inherit pro_attribs_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Observers order provided by <a class="el" href="a01877.html">MCGlobalController</a> Observers will be run and update real robot in that order.  <a href="a01873.html#ac131a31714e368146f4d9f1e04d7fdf1">More...</a><br /></td></tr>
-<tr class="separator:ac131a31714e368146f4d9f1e04d7fdf1 inherit pro_attribs_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa863c3c2ff400e0e0a4de1c9a1568d57 inherit pro_attribs_a01873"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::pair&lt; <a class="el" href="a00623.html#a45c5f50ee1e5bcc4959faef24b334643">mc_observers::ObserverPtr</a>, bool &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#aa863c3c2ff400e0e0a4de1c9a1568d57">pipelineObservers_</a></td></tr>
-<tr class="memdesc:aa863c3c2ff400e0e0a4de1c9a1568d57 inherit pro_attribs_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Observers that will be run by the pipeline.  <a href="a01873.html#aa863c3c2ff400e0e0a4de1c9a1568d57">More...</a><br /></td></tr>
-<tr class="separator:aa863c3c2ff400e0e0a4de1c9a1568d57 inherit pro_attribs_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5de6a08cbbe04ccc032bc4ebbd2773dc inherit pro_attribs_a01873"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="a02365.html">mc_rtc::Logger</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#a5de6a08cbbe04ccc032bc4ebbd2773dc">logger_</a></td></tr>
-<tr class="memdesc:a5de6a08cbbe04ccc032bc4ebbd2773dc inherit pro_attribs_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logger provided by <a class="el" href="a01877.html">MCGlobalController</a>.  <a href="a01873.html#a5de6a08cbbe04ccc032bc4ebbd2773dc">More...</a><br /></td></tr>
-<tr class="separator:a5de6a08cbbe04ccc032bc4ebbd2773dc inherit pro_attribs_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5761e783caf225454e03628b2533fc13 inherit pro_attribs_a01873"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="a02273.html">mc_rtc::gui::StateBuilder</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html#a5761e783caf225454e03628b2533fc13">gui_</a></td></tr>
-<tr class="memdesc:a5761e783caf225454e03628b2533fc13 inherit pro_attribs_a01873"><td class="mdescLeft">&#160;</td><td class="mdescRight">GUI state builder.  <a href="a01873.html#a5761e783caf225454e03628b2533fc13">More...</a><br /></td></tr>
-<tr class="separator:a5761e783caf225454e03628b2533fc13 inherit pro_attribs_a01873"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5832a5143cdcc747a8936a509d04113f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#a5832a5143cdcc747a8936a509d04113f">use_sandbox</a> = false</td></tr>
+<tr class="separator:a5832a5143cdcc747a8936a509d04113f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02a37bf8e560cc576b7fd7579aeeaf64"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#a02a37bf8e560cc576b7fd7579aeeaf64">verbose_loader</a> = true</td></tr>
+<tr class="separator:a02a37bf8e560cc576b7fd7579aeeaf64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac21e4689082d5955c94ec95eadfc9479"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#ac21e4689082d5955c94ec95eadfc9479">robot_module_paths</a> = {}</td></tr>
+<tr class="separator:ac21e4689082d5955c94ec95eadfc9479"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f8466a2f2e104ed4fd266c5d50a1390"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="a02045.html">mc_rbdyn::RobotModule</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#a0f8466a2f2e104ed4fd266c5d50a1390">main_robot_module</a></td></tr>
+<tr class="separator:a0f8466a2f2e104ed4fd266c5d50a1390"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa294a1ad2731835821d3669f7bd770ed"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#aa294a1ad2731835821d3669f7bd770ed">observer_module_paths</a> = {}</td></tr>
+<tr class="separator:aa294a1ad2731835821d3669f7bd770ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a152f6370edf16234c20d0331612da476"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#a152f6370edf16234c20d0331612da476">enabled_observers</a> = {}</td></tr>
+<tr class="separator:a152f6370edf16234c20d0331612da476"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc2d75f57779ba23d2c7d3522a38ca6b"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; std::string, <a class="el" href="a02089.html">mc_rtc::Configuration</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#afc2d75f57779ba23d2c7d3522a38ca6b">observer_configs</a></td></tr>
+<tr class="separator:afc2d75f57779ba23d2c7d3522a38ca6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66adac4c10fc9599308e15741a15f0a6"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#a66adac4c10fc9599308e15741a15f0a6">global_plugin_paths</a> = {}</td></tr>
+<tr class="separator:a66adac4c10fc9599308e15741a15f0a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b7cb460139df0aa576f76bfb45e4bc2"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#a9b7cb460139df0aa576f76bfb45e4bc2">global_plugins</a> = {}</td></tr>
+<tr class="separator:a9b7cb460139df0aa576f76bfb45e4bc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71b30a62cbfd288deb840dd294a181ec"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; std::string, <a class="el" href="a02089.html">mc_rtc::Configuration</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#a71b30a62cbfd288deb840dd294a181ec">global_plugin_configs</a></td></tr>
+<tr class="separator:a71b30a62cbfd288deb840dd294a181ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe307dbd38d3487b7ef154f35333cb5b"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#afe307dbd38d3487b7ef154f35333cb5b">controller_module_paths</a> = {}</td></tr>
+<tr class="separator:afe307dbd38d3487b7ef154f35333cb5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e0f82cdd3da14f8caf29a201d4f7d71"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#a6e0f82cdd3da14f8caf29a201d4f7d71">enabled_controllers</a> = {}</td></tr>
+<tr class="separator:a6e0f82cdd3da14f8caf29a201d4f7d71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a160c16f13781fc249731c80cb25b9dad"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#a160c16f13781fc249731c80cb25b9dad">initial_controller</a> = &quot;&quot;</td></tr>
+<tr class="separator:a160c16f13781fc249731c80cb25b9dad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59375fa06c589ffb9616139fbecd9426"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; std::string, <a class="el" href="a02089.html">mc_rtc::Configuration</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#a59375fa06c589ffb9616139fbecd9426">controllers_configs</a></td></tr>
+<tr class="separator:a59375fa06c589ffb9616139fbecd9426"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a570a304a795594860cfd5733a04588c6"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#a570a304a795594860cfd5733a04588c6">timestep</a> = 0.002</td></tr>
+<tr class="separator:a570a304a795594860cfd5733a04588c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7594f385b7a26375665cfe2b4b7624c1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#a7594f385b7a26375665cfe2b4b7624c1">log_real</a> = false</td></tr>
+<tr class="separator:a7594f385b7a26375665cfe2b4b7624c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fa58d70b7f6aea1d24376d1e2263adc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#a1fa58d70b7f6aea1d24376d1e2263adc">enable_log</a> = true</td></tr>
+<tr class="separator:a1fa58d70b7f6aea1d24376d1e2263adc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbde34fb861228455a925e57f38b2e6d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02377.html#a0fefb36635930cf5a9db966442756b9b">mc_rtc::Logger::Policy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#acbde34fb861228455a925e57f38b2e6d">log_policy</a> = <a class="el" href="a02377.html#a0fefb36635930cf5a9db966442756b9ba1515271d5edd3952e5aa146109a98e78">mc_rtc::Logger::Policy::NON_THREADED</a></td></tr>
+<tr class="separator:acbde34fb861228455a925e57f38b2e6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8eedde988acfcfba5942a52d69f2b1b8"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#a8eedde988acfcfba5942a52d69f2b1b8">log_directory</a></td></tr>
+<tr class="separator:a8eedde988acfcfba5942a52d69f2b1b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ca07c26b98991be2e1036a78c5f9702"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#a0ca07c26b98991be2e1036a78c5f9702">log_template</a> = &quot;mc-control&quot;</td></tr>
+<tr class="separator:a0ca07c26b98991be2e1036a78c5f9702"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10a18732116f39ff9f8bce06edf764a6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#a10a18732116f39ff9f8bce06edf764a6">enable_gui_server</a> = true</td></tr>
+<tr class="separator:a10a18732116f39ff9f8bce06edf764a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefc4cb0145c34e7595b346186ed8a2d6"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#aefc4cb0145c34e7595b346186ed8a2d6">gui_timestep</a> = 0.05</td></tr>
+<tr class="separator:aefc4cb0145c34e7595b346186ed8a2d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a669bd8f5926553a0091c2f2118d5d5cb"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#a669bd8f5926553a0091c2f2118d5d5cb">gui_server_pub_uris</a> {}</td></tr>
+<tr class="separator:a669bd8f5926553a0091c2f2118d5d5cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86b0d00d5943bf98a345f513b03f5388"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#a86b0d00d5943bf98a345f513b03f5388">gui_server_rep_uris</a> {}</td></tr>
+<tr class="separator:a86b0d00d5943bf98a345f513b03f5388"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa22943a039c650dcc7f6b338506380a7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00631.html#a6e724381ca619d4c38da5fd7cdbfe9c0">Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html#aa22943a039c650dcc7f6b338506380a7">config</a></td></tr>
+<tr class="separator:aa22943a039c650dcc7f6b338506380a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a032e887f83331f4138a8b4125010930a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a032e887f83331f4138a8b4125010930a">&#9670;&nbsp;</a></span>MCPythonController()</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Store the controller configuration. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="aca1189c364441ad5d5fa5a1f7b53a4bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca1189c364441ad5d5fa5a1f7b53a4bd">&#9670;&nbsp;</a></span>GlobalConfiguration()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">mc_control::MCPythonController::MCPythonController </td>
+          <td class="memname">mc_control::MCGlobalController::GlobalConfiguration::GlobalConfiguration </td>
           <td>(</td>
-          <td class="paramtype">const std::vector&lt; std::shared_ptr&lt; <a class="el" href="a02033.html">mc_rbdyn::RobotModule</a> &gt;&gt; &amp;&#160;</td>
-          <td class="paramname"><em>robots</em>, </td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>conf</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>dt</em>&#160;</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="a02045.html">mc_rbdyn::RobotModule</a> &gt;&#160;</td>
+          <td class="paramname"><em>rm</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -260,8 +179,8 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a9f6c69c9b96a4fadd5f94d7500d633d7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9f6c69c9b96a4fadd5f94d7500d633d7">&#9670;&nbsp;</a></span>reset()</h2>
+<a id="ac2d357671c1f2ba1c316a128a6bf6549"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac2d357671c1f2ba1c316a128a6bf6549">&#9670;&nbsp;</a></span>enabled()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -270,93 +189,401 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void mc_control::MCPythonController::reset </td>
+          <td class="memname">bool mc_control::MCGlobalController::GlobalConfiguration::enabled </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a01869.html">ControllerResetData</a> &amp;&#160;</td>
-          <td class="paramname"><em>reset_data</em></td><td>)</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>ctrl</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reset the controller with data provided by <a class="el" href="a01869.html" title="Contains information allowing the controller to start smoothly from the current state of the robot...">ControllerResetData</a>. </p>
-<p>This is called at two possible points during a simulation/live execution:</p><ol type="1">
-<li>Actual start</li>
-<li>Switch from a previous (MCController-like) controller In the first case, the data comes from the simulation/controller. In the second case, the data comes from the previous <a class="el" href="a01873.html" title="MCController is the base class to implement all controllers. ">MCController</a> instance. <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">reset_data</td><td>Contains information allowing to reset the controller properly </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>The default implementation reset the main robot's state to that provided by reset_data (with a null speed/acceleration). It maintains the contacts as they were set by the controller previously. </dd></dl>
-</li>
-</ol>
-
-<p>Reimplemented from <a class="el" href="a01873.html#a3c4ebbba1c40f48c3e9f3d35e2f7e432">mc_control::MCController</a>.</p>
-
 </div>
 </div>
-<a id="a3700ef59c7492c0be19158e991ccf6e6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3700ef59c7492c0be19158e991ccf6e6">&#9670;&nbsp;</a></span>run()</h2>
+<a id="a25be914af3f8f7543109624e44f820f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25be914af3f8f7543109624e44f820f2">&#9670;&nbsp;</a></span>load_controllers_configs()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool mc_control::MCPythonController::run </td>
+          <td class="memname">void mc_control::MCGlobalController::GlobalConfiguration::load_controllers_configs </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>This function is called at each time step of the process driving the robot (i.e. </p>
-<p>simulation or robot's controller). This function is the most likely to be overriden for complex controller behaviours. </p><dl class="section return"><dt>Returns</dt><dd>True if the solver succeeded, false otherwise </dd></dl>
-<dl class="section note"><dt>Note</dt><dd>This is meant to run in real-time hence some precaution should apply (e.g. no i/o blocking calls, no thread instantiation and such)</dd>
-<dd>
-The default implementation does the bare minimum (i.e. call run on QPSolver) It is recommended to use it in your override. </dd></dl>
-
-<p>Reimplemented from <a class="el" href="a01873.html#a9fcbf5dd454a9300a4d16e75549e22b3">mc_control::MCController</a>.</p>
-
 </div>
 </div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="a912a0dc9659948113b9eca0605c2cd12"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a912a0dc9659948113b9eca0605c2cd12">&#9670;&nbsp;</a></span>reset_callback</h2>
+<a id="a4a03b269639f6f50e2b43ecfb7434c6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a03b269639f6f50e2b43ecfb7434c6d">&#9670;&nbsp;</a></span>load_plugin_configs()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::function&lt;void(const <a class="el" href="a01869.html">ControllerResetData</a> &amp;)&gt; mc_control::MCPythonController::reset_callback</td>
+          <td class="memname">void mc_control::MCGlobalController::GlobalConfiguration::load_plugin_configs </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="ac76e53f48809f9cede138425a0b7aac9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac76e53f48809f9cede138425a0b7aac9">&#9670;&nbsp;</a></span>run_callback</h2>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="aa22943a039c650dcc7f6b338506380a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa22943a039c650dcc7f6b338506380a7">&#9670;&nbsp;</a></span>config</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::function&lt;bool()&gt; mc_control::MCPythonController::run_callback</td>
+          <td class="memname"><a class="el" href="a00631.html#a6e724381ca619d4c38da5fd7cdbfe9c0">Configuration</a> mc_control::MCGlobalController::GlobalConfiguration::config</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afe307dbd38d3487b7ef154f35333cb5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe307dbd38d3487b7ef154f35333cb5b">&#9670;&nbsp;</a></span>controller_module_paths</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::string&gt; mc_control::MCGlobalController::GlobalConfiguration::controller_module_paths = {}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a59375fa06c589ffb9616139fbecd9426"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59375fa06c589ffb9616139fbecd9426">&#9670;&nbsp;</a></span>controllers_configs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;std::string, <a class="el" href="a02089.html">mc_rtc::Configuration</a>&gt; mc_control::MCGlobalController::GlobalConfiguration::controllers_configs</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a10a18732116f39ff9f8bce06edf764a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10a18732116f39ff9f8bce06edf764a6">&#9670;&nbsp;</a></span>enable_gui_server</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_control::MCGlobalController::GlobalConfiguration::enable_gui_server = true</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1fa58d70b7f6aea1d24376d1e2263adc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fa58d70b7f6aea1d24376d1e2263adc">&#9670;&nbsp;</a></span>enable_log</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_control::MCGlobalController::GlobalConfiguration::enable_log = true</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6e0f82cdd3da14f8caf29a201d4f7d71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e0f82cdd3da14f8caf29a201d4f7d71">&#9670;&nbsp;</a></span>enabled_controllers</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::string&gt; mc_control::MCGlobalController::GlobalConfiguration::enabled_controllers = {}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a152f6370edf16234c20d0331612da476"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a152f6370edf16234c20d0331612da476">&#9670;&nbsp;</a></span>enabled_observers</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::string&gt; mc_control::MCGlobalController::GlobalConfiguration::enabled_observers = {}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a71b30a62cbfd288deb840dd294a181ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71b30a62cbfd288deb840dd294a181ec">&#9670;&nbsp;</a></span>global_plugin_configs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;std::string, <a class="el" href="a02089.html">mc_rtc::Configuration</a>&gt; mc_control::MCGlobalController::GlobalConfiguration::global_plugin_configs</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a66adac4c10fc9599308e15741a15f0a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66adac4c10fc9599308e15741a15f0a6">&#9670;&nbsp;</a></span>global_plugin_paths</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::string&gt; mc_control::MCGlobalController::GlobalConfiguration::global_plugin_paths = {}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9b7cb460139df0aa576f76bfb45e4bc2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b7cb460139df0aa576f76bfb45e4bc2">&#9670;&nbsp;</a></span>global_plugins</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::string&gt; mc_control::MCGlobalController::GlobalConfiguration::global_plugins = {}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a669bd8f5926553a0091c2f2118d5d5cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a669bd8f5926553a0091c2f2118d5d5cb">&#9670;&nbsp;</a></span>gui_server_pub_uris</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::string&gt; mc_control::MCGlobalController::GlobalConfiguration::gui_server_pub_uris {}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a86b0d00d5943bf98a345f513b03f5388"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86b0d00d5943bf98a345f513b03f5388">&#9670;&nbsp;</a></span>gui_server_rep_uris</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::string&gt; mc_control::MCGlobalController::GlobalConfiguration::gui_server_rep_uris {}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aefc4cb0145c34e7595b346186ed8a2d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefc4cb0145c34e7595b346186ed8a2d6">&#9670;&nbsp;</a></span>gui_timestep</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mc_control::MCGlobalController::GlobalConfiguration::gui_timestep = 0.05</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a160c16f13781fc249731c80cb25b9dad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a160c16f13781fc249731c80cb25b9dad">&#9670;&nbsp;</a></span>initial_controller</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string mc_control::MCGlobalController::GlobalConfiguration::initial_controller = &quot;&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8eedde988acfcfba5942a52d69f2b1b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8eedde988acfcfba5942a52d69f2b1b8">&#9670;&nbsp;</a></span>log_directory</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string mc_control::MCGlobalController::GlobalConfiguration::log_directory</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acbde34fb861228455a925e57f38b2e6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbde34fb861228455a925e57f38b2e6d">&#9670;&nbsp;</a></span>log_policy</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02377.html#a0fefb36635930cf5a9db966442756b9b">mc_rtc::Logger::Policy</a> mc_control::MCGlobalController::GlobalConfiguration::log_policy = <a class="el" href="a02377.html#a0fefb36635930cf5a9db966442756b9ba1515271d5edd3952e5aa146109a98e78">mc_rtc::Logger::Policy::NON_THREADED</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7594f385b7a26375665cfe2b4b7624c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7594f385b7a26375665cfe2b4b7624c1">&#9670;&nbsp;</a></span>log_real</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_control::MCGlobalController::GlobalConfiguration::log_real = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0ca07c26b98991be2e1036a78c5f9702"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ca07c26b98991be2e1036a78c5f9702">&#9670;&nbsp;</a></span>log_template</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string mc_control::MCGlobalController::GlobalConfiguration::log_template = &quot;mc-control&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0f8466a2f2e104ed4fd266c5d50a1390"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f8466a2f2e104ed4fd266c5d50a1390">&#9670;&nbsp;</a></span>main_robot_module</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="a02045.html">mc_rbdyn::RobotModule</a>&gt; mc_control::MCGlobalController::GlobalConfiguration::main_robot_module</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afc2d75f57779ba23d2c7d3522a38ca6b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc2d75f57779ba23d2c7d3522a38ca6b">&#9670;&nbsp;</a></span>observer_configs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;std::string, <a class="el" href="a02089.html">mc_rtc::Configuration</a>&gt; mc_control::MCGlobalController::GlobalConfiguration::observer_configs</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa294a1ad2731835821d3669f7bd770ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa294a1ad2731835821d3669f7bd770ed">&#9670;&nbsp;</a></span>observer_module_paths</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::string&gt; mc_control::MCGlobalController::GlobalConfiguration::observer_module_paths = {}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac21e4689082d5955c94ec95eadfc9479"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac21e4689082d5955c94ec95eadfc9479">&#9670;&nbsp;</a></span>robot_module_paths</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::string&gt; mc_control::MCGlobalController::GlobalConfiguration::robot_module_paths = {}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a570a304a795594860cfd5733a04588c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a570a304a795594860cfd5733a04588c6">&#9670;&nbsp;</a></span>timestep</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mc_control::MCGlobalController::GlobalConfiguration::timestep = 0.002</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5832a5143cdcc747a8936a509d04113f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5832a5143cdcc747a8936a509d04113f">&#9670;&nbsp;</a></span>use_sandbox</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_control::MCGlobalController::GlobalConfiguration::use_sandbox = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a02a37bf8e560cc576b7fd7579aeeaf64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02a37bf8e560cc576b7fd7579aeeaf64">&#9670;&nbsp;</a></span>verbose_loader</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_control::MCGlobalController::GlobalConfiguration::verbose_loader = true</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -369,8 +596,8 @@ The default implementation does the bare minimum (i.e. call run on QPSolver) It 
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00619.html">mc_control</a></li><li class="navelem"><a class="el" href="a01893.html">MCPythonController</a></li>
-    <li class="footer">Generated on Thu Dec 19 2019 08:43:55 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00631.html">mc_control</a></li><li class="navelem"><a class="el" href="a01889.html">MCGlobalController</a></li><li class="navelem"><a class="el" href="a01893.html">GlobalConfiguration</a></li>
+    <li class="footer">Generated on Thu Dec 19 2019 10:00:54 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

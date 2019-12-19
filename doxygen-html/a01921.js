@@ -1,10 +1,14 @@
 var a01921 =
 [
-    [ "LowPassVelocityFilter", "a01921.html#a8f893b576b75b884e0232e2c2a15bf43", null ],
-    [ "cutoffPeriod", "a01921.html#a580423f5879c9cdc13d04662b3b9eef5", null ],
-    [ "cutoffPeriod", "a01921.html#a0289dfde7f6f9d0c17ebdef6e23100c2", null ],
-    [ "reset", "a01921.html#a8c90822395b78ffc631219d82a739b2c", null ],
-    [ "update", "a01921.html#a8aa25cea604315f0f2e79a81691f3fb0", null ],
-    [ "vel", "a01921.html#a560817473f5a15c987776014001519b6", null ],
-    [ "dt_", "a01921.html#adb91663b0f8437252d13c89c22ea84e3", null ]
+    [ "KinematicInertialObserver", "a01921.html#a165a77caf0652ffe0388127ceafe7ba6", null ],
+    [ "addToGUI", "a01921.html#a8d79052ede7702b4e1271aa45f8c17e4", null ],
+    [ "addToLogger", "a01921.html#a70349dda9da00837225afa919fdc9ce7", null ],
+    [ "removeFromGUI", "a01921.html#aee19bc2e4f9457e9df7e60fa5f562769", null ],
+    [ "removeFromLogger", "a01921.html#ab7a34a69d1337573093b19cce5f4442e", null ],
+    [ "reset", "a01921.html#ae964341c760e3f942152f39d4d596432", null ],
+    [ "reset", "a01921.html#a218d679b8851235ad18b2a49b2c71e01", null ],
+    [ "run", "a01921.html#a2c4b4fe83ab2ad282f02ad6c093e1be6", null ],
+    [ "updateBodySensor", "a01921.html#a70199d5e62d4869778cd91e5e1f1bdee", null ],
+    [ "updateRobots", "a01921.html#ae46ba5b39b85a8b8e271b8b9c63a9a3b", null ],
+    [ "velW", "a01921.html#a2c973c62cabf96b73042047669579a64", null ]
 ];

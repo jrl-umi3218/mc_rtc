@@ -1,10 +1,10 @@
 var a02465 =
 [
-    [ "KinematicsConstraint", "a02465.html#ae4fa119dd4f6643ea9bfd6e71d100e48", null ],
-    [ "KinematicsConstraint", "a02465.html#a89801271d9d8e8288c6be32b13970f3f", null ],
-    [ "KinematicsConstraint", "a02465.html#a9772713ef63997c2ff16a754cdf34401", null ],
-    [ "addToSolver", "a02465.html#af5b445df5cd29d199cfda9031d5a468f", null ],
-    [ "removeFromSolver", "a02465.html#a559d44b398969ebc1c69f0ffd80a3569", null ],
-    [ "damperJointLimitsConstr", "a02465.html#a3febf798804706fce1efe1eac46c16f9", null ],
-    [ "jointLimitsConstr", "a02465.html#ab113d21083add766566decba27631820", null ]
+    [ "Handle", "a02465.html#a38ff1a03e3d23844851fbb6945052b6e", null ],
+    [ "Handle", "a02465.html#a3abf3568270608f66c2f3d8f42b158c5", null ],
+    [ "~Handle", "a02465.html#acb9b93dfdd948310129a694363b1d018", null ],
+    [ "Handle", "a02465.html#ad1354d6ec1298c55743594d5f7e959d7", null ],
+    [ "Handle", "a02465.html#a8d34eedd99c2441236c01717b2ec7291", null ],
+    [ "operator=", "a02465.html#a7bcd67bfff206e0063212e99dca891bc", null ],
+    [ "operator=", "a02465.html#a1002f0272ae3957fe636d3b06dc34148", null ]
 ];

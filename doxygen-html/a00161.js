@@ -1,7 +1,7 @@
 var a00161 =
 [
-    [ "RobotModule", "a02033.html", "a02033" ],
-    [ "Gripper", "a02037.html", "a02037" ],
+    [ "RobotModule", "a02045.html", "a02045" ],
+    [ "Gripper", "a02049.html", "a02049" ],
     [ "ROBOT_MODULE_API", "a00161.html#a983157fccbdda235351228ec75cbd167", null ],
     [ "ROBOT_MODULE_CANONIC_CONSTRUCTOR", "a00161.html#a835eb9cb28d7a07e5fb285241d7e7b08", null ],
     [ "ROBOT_MODULE_COMMON", "a00161.html#aefdd7a13affe8001b4bf38b8e94fcd50", null ],

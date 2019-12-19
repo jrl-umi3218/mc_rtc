@@ -1,13 +1,14 @@
 var a02449 =
 [
-    [ "Handle", "a02453.html", "a02453" ],
-    [ "load_fun", "a02449.html#a02dbea2e4a083ed146cea53d7b648483", null ],
-    [ "storage_t", "a02449.html#afc58a28dae04a63aa3ed180a654ec223", null ],
-    [ "T_ptr", "a02449.html#adb735279d914086553de0a21285126e4", null ],
-    [ "load", "a02449.html#a5da6be5874e61bd328a5452dda08950c", null ],
-    [ "load", "a02449.html#a13b1f947ca0b22d2985f580ec57caf85", null ],
-    [ "load", "a02449.html#a5236104825bda3a24cc3645e0e3bf448", null ],
-    [ "load", "a02449.html#ab10c87faa2a1fb4721163c6a479fdd78", null ],
-    [ "register_load_function", "a02449.html#ac24012d951d6a04490b05a64f5ccf620", null ],
-    [ "unregister_load_function", "a02449.html#a35fcd3b9f4280a31049089aa57b54330", null ]
+    [ "ContactType", "a02449.html#aa1038fc325c517503d2f68a3feec1c30", [
+      [ "Acceleration", "a02449.html#aa1038fc325c517503d2f68a3feec1c30acbc392a30777e1fa953eea2c011ea2c3", null ],
+      [ "Velocity", "a02449.html#aa1038fc325c517503d2f68a3feec1c30a15d06b5b0997a0a5e17eccd053c7c652", null ],
+      [ "Position", "a02449.html#aa1038fc325c517503d2f68a3feec1c30a75ced229938828d7cf205928657fd137", null ]
+    ] ],
+    [ "ContactConstraint", "a02449.html#a2226b4449ee6faeb3f6d70cfdfb13b4f", null ],
+    [ "ContactConstraint", "a02449.html#ad4a4d2baaacb8b1d914d66a0110c99ab", null ],
+    [ "addToSolver", "a02449.html#a3e94d3c790da36671345692cbf14e81d", null ],
+    [ "removeFromSolver", "a02449.html#af72efeda2c9cd6af2e4626f32ab7583d", null ],
+    [ "contactConstr", "a02449.html#ad8b6359d4d1a771db2fd8bad433acf1f", null ],
+    [ "posLambdaConstr", "a02449.html#a4456741f8ae0b07c199415fda9b9aecf", null ]
 ];

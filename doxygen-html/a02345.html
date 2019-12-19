@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rtc::ObjectLoader&lt; T &gt;::ObjectDeleter Struct Reference</title>
+<title>mc_rtc::LoaderException Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -73,37 +73,47 @@ $(document).ready(function(){initNavTree('a02345.html','');});
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="a02342.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rtc::ObjectLoader&lt; T &gt;::ObjectDeleter Struct Reference</div>  </div>
+<div class="title">mc_rtc::LoaderException Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
+<p>Exception thrown by loader interface.  
+ <a href="a02345.html#details">More...</a></p>
+
 <p><code>#include &lt;mc_rtc/loader.h&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for mc_rtc::LoaderException:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="a02345.png" usemap="#mc_5Frtc::LoaderException_map" alt=""/>
+  <map id="mc_5Frtc::LoaderException_map" name="mc_5Frtc::LoaderException_map">
+</map>
+ </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad9d8c7bebf11fd046f3264f25d73f56d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02345.html#ad9d8c7bebf11fd046f3264f25d73f56d">ObjectDeleter</a> ()</td></tr>
-<tr class="separator:ad9d8c7bebf11fd046f3264f25d73f56d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3527e6200ab7ef9bf24606c987072039"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02345.html#a3527e6200ab7ef9bf24606c987072039">ObjectDeleter</a> (void(*fn)(T *))</td></tr>
-<tr class="separator:a3527e6200ab7ef9bf24606c987072039"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7cd3bbddec0b057af90444eb5794ad80"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02345.html#a7cd3bbddec0b057af90444eb5794ad80">operator()</a> (T *ptr)</td></tr>
-<tr class="separator:a7cd3bbddec0b057af90444eb5794ad80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52e22f0a82bd6634d02ca30961643c25"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02345.html#a52e22f0a82bd6634d02ca30961643c25">LoaderException</a> (const std::string &amp;<a class="el" href="a02345.html#a2db77040caace4fc6f15e231a328a608">what</a>)</td></tr>
+<tr class="separator:a52e22f0a82bd6634d02ca30961643c25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2db77040caace4fc6f15e231a328a608"><td class="memItemLeft" align="right" valign="top">virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02345.html#a2db77040caace4fc6f15e231a328a608">what</a> () const noexcept override</td></tr>
+<tr class="separator:a2db77040caace4fc6f15e231a328a608"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ad9d8c7bebf11fd046f3264f25d73f56d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad9d8c7bebf11fd046f3264f25d73f56d">&#9670;&nbsp;</a></span>ObjectDeleter() <span class="overload">[1/2]</span></h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Exception thrown by loader interface. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a52e22f0a82bd6634d02ca30961643c25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52e22f0a82bd6634d02ca30961643c25">&#9670;&nbsp;</a></span>LoaderException()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename T&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a02329.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::ObjectDeleter::ObjectDeleter </td>
+          <td class="memname">mc_rtc::LoaderException::LoaderException </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>what</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -116,44 +126,31 @@ template&lt;typename T&gt; </div>
 
 </div>
 </div>
-<a id="a3527e6200ab7ef9bf24606c987072039"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3527e6200ab7ef9bf24606c987072039">&#9670;&nbsp;</a></span>ObjectDeleter() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a02329.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::ObjectDeleter::ObjectDeleter </td>
-          <td>(</td>
-          <td class="paramtype">void(*)(T *)&#160;</td>
-          <td class="paramname"><em>fn</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a7cd3bbddec0b057af90444eb5794ad80"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7cd3bbddec0b057af90444eb5794ad80">&#9670;&nbsp;</a></span>operator()()</h2>
+<a id="a2db77040caace4fc6f15e231a328a608"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2db77040caace4fc6f15e231a328a608">&#9670;&nbsp;</a></span>what()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="a02329.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::ObjectDeleter::operator() </td>
+          <td class="memname">virtual const char* mc_rtc::LoaderException::what </td>
           <td>(</td>
-          <td class="paramtype">T *&#160;</td>
-          <td class="paramname"><em>ptr</em></td><td>)</td>
-          <td></td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
+
+<p class="reference">Referenced by <a class="el" href="a01941.html#ac104339befa76e8673940c1a86ad2847">mc_observers::ObserverLoader::available_observers()</a>.</p>
 
 </div>
 </div>
@@ -163,8 +160,8 @@ template&lt;typename T&gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00621.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a02329.html">ObjectLoader</a></li><li class="navelem"><a class="el" href="a02345.html">ObjectDeleter</a></li>
-    <li class="footer">Generated on Thu Dec 19 2019 08:43:55 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00633.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a02345.html">LoaderException</a></li>
+    <li class="footer">Generated on Thu Dec 19 2019 10:00:54 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

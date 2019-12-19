@@ -70,26 +70,42 @@ $(document).ready(function(){initNavTree('a01921.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">mc_observers::LowPassVelocityFilter&lt; T &gt; Member List</div>  </div>
+<div class="title">mc_observers::KinematicInertialObserver Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="a01921.html">mc_observers::LowPassVelocityFilter&lt; T &gt;</a>, including all inherited members.</p>
+<p>This is the complete list of members for <a class="el" href="a01921.html">mc_observers::KinematicInertialObserver</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="a01921.html#a580423f5879c9cdc13d04662b3b9eef5">cutoffPeriod</a>() const</td><td class="entry"><a class="el" href="a01921.html">mc_observers::LowPassVelocityFilter&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01921.html#a0289dfde7f6f9d0c17ebdef6e23100c2">cutoffPeriod</a>(double period)</td><td class="entry"><a class="el" href="a01921.html">mc_observers::LowPassVelocityFilter&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01921.html#adb91663b0f8437252d13c89c22ea84e3">dt_</a></td><td class="entry"><a class="el" href="a01921.html">mc_observers::LowPassVelocityFilter&lt; T &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01921.html#a8f893b576b75b884e0232e2c2a15bf43">LowPassVelocityFilter</a>(double dt, double period=0)</td><td class="entry"><a class="el" href="a01921.html">mc_observers::LowPassVelocityFilter&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01921.html#a8c90822395b78ffc631219d82a739b2c">reset</a>(T vel)</td><td class="entry"><a class="el" href="a01921.html">mc_observers::LowPassVelocityFilter&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01921.html#a8aa25cea604315f0f2e79a81691f3fb0">update</a>(const T &amp;newVel)</td><td class="entry"><a class="el" href="a01921.html">mc_observers::LowPassVelocityFilter&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01921.html#a560817473f5a15c987776014001519b6">vel</a>()</td><td class="entry"><a class="el" href="a01921.html">mc_observers::LowPassVelocityFilter&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01921.html#a8d79052ede7702b4e1271aa45f8c17e4">addToGUI</a>(const mc_control::MCController &amp;, mc_rtc::gui::StateBuilder &amp;) override</td><td class="entry"><a class="el" href="a01921.html">mc_observers::KinematicInertialObserver</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01921.html#a70349dda9da00837225afa919fdc9ce7">addToLogger</a>(const mc_control::MCController &amp;, mc_rtc::Logger &amp;) override</td><td class="entry"><a class="el" href="a01921.html">mc_observers::KinematicInertialObserver</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01937.html#ae17bf0ca1911dea768788e63bf0d45b0">desc</a>() const</td><td class="entry"><a class="el" href="a01937.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01937.html#a09b5945fa09bf14489d9796d43df60b9">desc_</a></td><td class="entry"><a class="el" href="a01937.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01937.html#a862e1f350e7b57da34f15824d21d1d37">dt</a>() const</td><td class="entry"><a class="el" href="a01937.html">mc_observers::Observer</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01937.html#adde90bcccecab614f391f6d515d435fa">dt_</a></td><td class="entry"><a class="el" href="a01937.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01925.html#a6b6a2d32b41691feec87fbff77276731">estimateOrientation</a>(const mc_rbdyn::Robot &amp;robot, const mc_rbdyn::Robot &amp;realRobot)</td><td class="entry"><a class="el" href="a01925.html">mc_observers::KinematicInertialPoseObserver</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01925.html#af4516c687fb2683eea570e5afc926165">estimatePosition</a>(const mc_control::MCController &amp;ctl)</td><td class="entry"><a class="el" href="a01925.html">mc_observers::KinematicInertialPoseObserver</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01921.html#a165a77caf0652ffe0388127ceafe7ba6">KinematicInertialObserver</a>(const std::string &amp;name, double dt, const mc_rtc::Configuration &amp;config={})</td><td class="entry"><a class="el" href="a01921.html">mc_observers::KinematicInertialObserver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01925.html#a0fe74faab4da1913b5e271bbf6a7d1ed">KinematicInertialPoseObserver</a>(const std::string &amp;name, double dt, const mc_rtc::Configuration &amp;config={})</td><td class="entry"><a class="el" href="a01925.html">mc_observers::KinematicInertialPoseObserver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01937.html#a5faf70047c2be78645564f90a8053bff">name</a>() const</td><td class="entry"><a class="el" href="a01937.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01937.html#a2e3f65fb8549873b71b1eeda29c1b363">name_</a></td><td class="entry"><a class="el" href="a01937.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01937.html#a0f9f2d8b07a93f2fe3b55e48406835d3">Observer</a>(const std::string &amp;name, double dt, const mc_rtc::Configuration &amp;config={})</td><td class="entry"><a class="el" href="a01937.html">mc_observers::Observer</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01925.html#ae0059d688bf9a9864199b4f8bece7e3e">posW</a>() const</td><td class="entry"><a class="el" href="a01925.html">mc_observers::KinematicInertialPoseObserver</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01921.html#aee19bc2e4f9457e9df7e60fa5f562769">removeFromGUI</a>(mc_rtc::gui::StateBuilder &amp;) override</td><td class="entry"><a class="el" href="a01921.html">mc_observers::KinematicInertialObserver</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01921.html#ab7a34a69d1337573093b19cce5f4442e">removeFromLogger</a>(mc_rtc::Logger &amp;) override</td><td class="entry"><a class="el" href="a01921.html">mc_observers::KinematicInertialObserver</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01921.html#ae964341c760e3f942152f39d4d596432">reset</a>(const mc_control::MCController &amp;ct) override</td><td class="entry"><a class="el" href="a01921.html">mc_observers::KinematicInertialObserver</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01921.html#a218d679b8851235ad18b2a49b2c71e01">reset</a>(const mc_control::MCController &amp;ctl, const sva::MotionVecd &amp;velW)</td><td class="entry"><a class="el" href="a01921.html">mc_observers::KinematicInertialObserver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01921.html#a2c4b4fe83ab2ad282f02ad6c093e1be6">run</a>(const mc_control::MCController &amp;ctl) override</td><td class="entry"><a class="el" href="a01921.html">mc_observers::KinematicInertialObserver</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01921.html#a70199d5e62d4869778cd91e5e1f1bdee">updateBodySensor</a>(mc_rbdyn::Robots &amp;realRobot, const std::string &amp;sensorName=&quot;FloatingBase&quot;)</td><td class="entry"><a class="el" href="a01921.html">mc_observers::KinematicInertialObserver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01921.html#ae46ba5b39b85a8b8e271b8b9c63a9a3b">updateRobots</a>(const mc_control::MCController &amp;ctl, mc_rbdyn::Robots &amp;realRobots) override</td><td class="entry"><a class="el" href="a01921.html">mc_observers::KinematicInertialObserver</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01921.html#a2c973c62cabf96b73042047669579a64">velW</a>() const</td><td class="entry"><a class="el" href="a01921.html">mc_observers::KinematicInertialObserver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01937.html#afe80cec7744a72c627f17990a74e890b">~Observer</a>()</td><td class="entry"><a class="el" href="a01937.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Dec 19 2019 08:43:55 for mc_rtc by
+    <li class="footer">Generated on Thu Dec 19 2019 10:00:54 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>
