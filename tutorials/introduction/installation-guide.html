@@ -77,7 +77,7 @@
           
           
         </div>
-        <a href="https://gite.lirmm.fr/multi-contact/mc_rtc" target="blank_"><img src="/mc_rtc/assets/gitlab-logo.svg" alt="GitLab logo" width="25" height="25" /></a>
+        <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
       </div>
     </header>
 
@@ -253,14 +253,34 @@
 
 <h2 id="installation-instruction">Installation instruction</h2>
 
-<p>We provide a source release using an easy-to-use script for Linux (Debian variants and other assuming a bit of work on your side) and MacOSX (based on brew). Building from source on Windows should be possible but tedious and sparsely documented.</p>
+<p>We provide binary installation for current Ubuntu LTS releases. We also provide a source release using an easy-to-use script for Linux (Debian variants and other assuming a bit of work on your side) and MacOSX (based on brew). Building from source on Windows is also possible but no script is provided.</p>
+
+<h4 id="ubuntu-lts-1604-1804-2004">Ubuntu LTS (16.04, 18.04, 20.04)</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Make sure you have required tools</span>
+<span class="nb">sudo </span>apt <span class="nb">install </span>apt-transport-https lsb-release ca-certificates gnupg
+<span class="c"># Add our key</span>
+<span class="nb">sudo </span>apt-key adv <span class="nt">--keyserver</span> <span class="s1">'hkp://keyserver.ubuntu.com:80'</span> <span class="nt">--recv-key</span> 892EA6EE273707C6495A6FB6220D644C64666806
+<span class="c"># Add our repository (stable versions)</span>
+<span class="nb">sudo </span>sh <span class="nt">-c</span> <span class="s1">'echo "deb https://dl.bintray.com/gergondet/multi-contact-release $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/multi-contact.list'</span>
+<span class="c"># Use this to setup the HEAD version</span>
+<span class="c"># sudo sh -c 'echo "deb https://dl.bintray.com/gergondet/multi-contact-head $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/multi-contact.list'</span>
+<span class="c"># Update packages list</span>
+<span class="nb">sudo </span>apt update
+<span class="c"># Install packages</span>
+<span class="nb">sudo </span>apt <span class="nb">install </span>libmc-rtc-dev mc-rtc-utils python3-mc-rtc
+<span class="c"># Assuming you have a ROS distribution mirror setup</span>
+<span class="nb">sudo </span>apt <span class="nb">install </span>ros-<span class="k">${</span><span class="nv">ROS_DISTRO</span><span class="k">}</span><span class="nt">-mc-rtc-plugin</span>
+</code></pre></div></div>
+
+<p><em>Note: the distributed version of mc_rtc runs with the QLD QP solver through <a href="https://github.com/jrl-umi3218/eigen-qld">eigen-qld</a>. If you have access to the LSSOL solver and thus can install <a href="https://gite.lirmm.fr/multi-contact/eigen-lssol">eigen-lssol</a> then you can build <a href="https://github.com/jrl-umi3218/Tasks">Tasks</a> with LSSOL support and install it in <code class="highlighter-rouge">/usr</code>. The two versions are binary compatible.</em></p>
 
 <h4 id="building-from-source-linuxmacosx-script">Building from source (Linux/MacOSX script)</h4>
 
-<p><em>Note: when using this script to build mc_rtc, we will also take care of setting up <a href="https://gite.lirmm.fr/multi-contact/mc_vrep">mc_vrep</a> and VREP itself on your system</em></p>
+<p><em>Note: when using this script to build mc_rtc, we will also take care of setting up <a href="https://github.com/jrl-umi3218/mc_vrep">mc_vrep</a> and VREP itself on your system</em></p>
 
 <ol>
-  <li>Clone the <a href="https://gite.lirmm.fr/multi-contact/mc_rtc">mc_rtc</a> repository;</li>
+  <li>Clone the <a href="https://github.com/jrl-umi3218/mc_rtc">mc_rtc</a> repository;</li>
   <li>Go into the mc_rtc directory and update submodules <code class="highlighter-rouge">git submodule update --init</code>;</li>
   <li>Go into the <code class="highlighter-rouge">utils</code> directory and locate the file named <code class="highlighter-rouge">build_and_install.sh</code>;</li>
   <li>Edit some of the options to your liking: <code class="highlighter-rouge">INSTALL_PREFIX</code>, <code class="highlighter-rouge">WITH_ROS_SUPPORT</code>, <code class="highlighter-rouge">ROS_DISTRO</code>. On Ubuntu, ROS will be installed if you enable ROS support and it was not already installed. Otherwise, you are required to install ROS by yourself before attempting to install mc_rtc with ROS support;</li>
@@ -298,7 +318,13 @@
   <li><a href="https://github.com/jrl-umi3218/sch-core">sch-core</a></li>
   <li><a href="https://github.com/jrl-umi3218/Tasks">Tasks</a></li>
   <li><a href="https://github.com/jrl-umi3218/mc_rbdyn_urdf">mc_rbdyn_urdf</a></li>
-  <li><a href="https://gite.lirmm.fr/multi-contact/mc_rtc_ros_data">mc_rtc_ros_data</a></li>
+  <li><a href="https://github.com/jrl-umi3218/mc_rtc_data">mc_rtc_data</a></li>
+</ul>
+
+<p>mc_rtc also has a ROS plugin that enables automated robot’s status publication as ROS topics and facilitate the integration with ROS tools (e.g. RViZ), to build this you will need:</p>
+
+<ul>
+  <li><a href="https://github.com/jrl-umi3218/mc_rtc_msgs">mc_rtc_msgs</a></li>
 </ul>
 
 <p>If you wish to get Python bindings you will also need the following:</p>
@@ -308,15 +334,20 @@
   <li><a href="">python-numpy</a></li>
   <li><a href="">python-nose</a></li>
   <li><a href="">python-coverage</a></li>
-  <li><a href="">python-git</a> (pip name: <code class="highlighter-rouge">GitPython</code>)</li>
   <li><a href="https://github.com/jrl-umi3218/Eigen3ToPython">Eigen3ToPython</a></li>
   <li><a href="https://github.com/jrl-umi3218/sch-core-python">sch-core-python</a></li>
+</ul>
+
+<p>Additional Python libraries are required to run mc_rtc tools:</p>
+<ul>
+  <li><a href="">python-git</a> (pip name: <code class="highlighter-rouge">GitPython</code>)</li>
+  <li><a href="">python-pyside</a></li>
 </ul>
 
 <p>The following packages are not required but bring additionnal features:</p>
 <ul>
   <li><a href="http://www.ros.org/">ROS</a></li>
-  <li><a href="https://gite.lirmm.fr/multi-contact/mc_rtc_ros">mc_rtc_ros</a></li>
+  <li><a href="https://github.com/jrl-umi3218/mc_rtc_ros">mc_rtc_ros</a></li>
 </ul>
 
 <p>If <code class="highlighter-rouge">roscpp</code> is available during build then <code class="highlighter-rouge">tf2_ros</code> and <code class="highlighter-rouge">sensor_msgs</code> are also required. This will add some integration between the <code class="highlighter-rouge">ROS</code> framework and <code class="highlighter-rouge">mc_rtc</code> (e.g. robot’s state publication) and allow controllers to use ROS functionnalities (provides a <code class="highlighter-rouge">ros::NodeHandle</code> instance that can be used anywhere in <code class="highlighter-rouge">mc_rtc</code>).</p>
