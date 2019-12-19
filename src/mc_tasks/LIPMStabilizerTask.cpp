@@ -648,7 +648,7 @@ void StabilizerTask::setContacts(ContactState state)
   supportMax_ = -supportMin_;
 
   auto configureFootSupport = [this](std::shared_ptr<mc_tasks::force::CoPTask> footTask,
-                                     const ContactState contactState, bool wrenchFace = true) {
+                                     const ContactState contactState, bool wrenchFace) {
     footTask->reset();
     footTask->admittance(contactAdmittance());
     footTask->setGains(c_.contactStiffness, c_.contactDamping);
@@ -681,12 +681,12 @@ void StabilizerTask::setContacts(ContactState state)
   }
   else if(state == ContactState::Left)
   {
-    configureFootSupport(leftFootTask, ContactState::Left);
+    configureFootSupport(leftFootTask, ContactState::Left, true);
     rightFootTask->weight(0);
   }
   else
   {
-    configureFootSupport(rightFootTask, ContactState::Right);
+    configureFootSupport(rightFootTask, ContactState::Right, true);
     leftFootTask->weight(0);
   }
 

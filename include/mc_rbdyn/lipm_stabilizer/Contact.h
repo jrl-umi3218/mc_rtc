@@ -111,12 +111,28 @@ struct MC_RBDYN_DLLAPI Contact
     return halfLength_;
   }
 
-  /** Position of ankle frame
-   *
+  /**
+   * World position of projected ankle frame into surface frame
    */
   const Eigen::Vector3d & anklePos() const
   {
+    // Project ankle frame into surface frame
     return anklePose_.translation();
+  }
+
+  Eigen::Vector3d sagital()
+  {
+    return surfacePose_.rotation().row(0);
+  }
+
+  Eigen::Vector3d lateral()
+  {
+    return surfacePose_.rotation().row(1);
+  }
+
+  Eigen::Vector3d vertical()
+  {
+    return surfacePose_.rotation().row(2);
   }
 
   /** Get frame rooted at the ankle.

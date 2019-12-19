@@ -23,7 +23,13 @@ Contact::Contact(const mc_rbdyn::Robot & robot, const std::string & surfaceName,
   }
 
   surfacePose_ = surfacePose;
-  anklePose_ = surface.X_b_s().inv() * surfacePose;
+
+  // Compute anke pos
+  Eigen::Vector3d t_s_b = surface.X_b_s().inv().translation();
+  double sagitalProj = t_s_b.dot(sagital());
+  double lateralProj = t_s_b.dot(lateral());
+  anklePose_.translation() = surfacePose_.translation() + sagitalProj * sagital() + lateralProj * lateral();
+  anklePose_.rotation() = surfacePose_.rotation();
 
   findSurfaceBoundaries(surface);
 }
