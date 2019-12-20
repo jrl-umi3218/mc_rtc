@@ -30,12 +30,13 @@ jobs:
       run: |
         ./.clang-format-check.sh
   build:
-    needs: clang-format
+    #    needs: clang-format
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-16.04, ubuntu-18.04, macos-latest, windows-latest]
-        build-type: [Debug, RelWithDebInfo]
+        #build-type: [Debug, RelWithDebInfo, script]
+        build-type: [script]
         compiler: [gcc, clang]
         exclude:
           # Only default compiler on macos-latest and windows-latest
@@ -43,24 +44,46 @@ jobs:
             compiler: clang
           - os: windows-latest
             compiler: clang
+          # Script always use default compiler
+          - build-type: script
+            compiler: clang
           # FIXME Getting strange linking errors on Xenial with clang
           - os: ubuntu-16.04
             compiler: clang
           # FIXME Windows Debug CI fails: tests are failing
           - os: windows-latest
             build-type: Debug
-
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v1
       with:
         submodules: recursive
     - name: Temporary APT mirrors cleanup
-      run: |
-        sudo rm -f /etc/apt/sources.list.d/dotnetdev.list /etc/apt/sources.list.d/microsoft-prod.list
       if: startsWith(runner.os, 'Linux')
+      run: |
+        set -e
+        sudo rm -f /etc/apt/sources.list.d/dotnetdev.list /etc/apt/sources.list.d/microsoft-prod.list
+    - name: Clear environment (script)
+      uses: jrl-umi3218/github-actions/install-dependencies@master
+      if: matrix.build-type == 'script'
+      with:
+        compiler: ${{ matrix.compiler }}
+        build-type: RelWithDebInfo
+    - name: Build with script
+      if: matrix.build-type == 'script'
+      shell: bash
+      run: |
+        set -x
+        cd utils
+        if [[ "${{ matrix.os }}" == "windows-latest" ]]
+        then
+          ./build_and_install.sh --with-python-support false --build-testing false
+        else
+          ./build_and_install.sh
+        fi
     - name: Install dependencies
       uses: jrl-umi3218/github-actions/install-dependencies@master
+      if: matrix.build-type != 'script'
       with:
         compiler: ${{ matrix.compiler }}
         build-type: ${{ matrix.build-type }}
@@ -105,13 +128,14 @@ jobs:
           - path: jrl-umi3218/mc_rtc_data
     # FIXME We disable Python bindings on Windows because it cannot find Python.h, should investigate the CI environment
     - name: Build and test
+      if: matrix.build-type != 'script'
       uses: jrl-umi3218/github-actions/build-cmake-project@master
       with:
         compiler: ${{ matrix.compiler }}
         build-type: ${{ matrix.build-type }}
         windows-options: -DPYTHON_BINDING:BOOL=OFF
     - name: Build with ROS
-      if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04'
+      if: (matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04') && matrix.build-type != 'script'
       run: |
         set -e
         set -x
