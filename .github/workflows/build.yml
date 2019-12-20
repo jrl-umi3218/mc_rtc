@@ -35,8 +35,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-16.04, ubuntu-18.04, macos-latest, windows-latest]
-        #build-type: [Debug, RelWithDebInfo, script]
-        build-type: [script]
+        build-type: [Debug, RelWithDebInfo, script]
         compiler: [gcc, clang]
         exclude:
           # Only default compiler on macos-latest and windows-latest
