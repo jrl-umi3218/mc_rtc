@@ -180,7 +180,7 @@ void StabilizerTask::removeFromSolver(mc_solver::QPSolver & solver)
 
 void StabilizerTask::update()
 {
-  updateState(realRobots_.robot().com(), realRobots_.robot().comVelocity(), leftFootRatio());
+  updateState(realRobots_.robot().com(), realRobots_.robot().comVelocity());
 
   // Update orientation tasks according to feet orientation
   sva::PTransformd X_0_a = anchorFrame();
@@ -723,6 +723,28 @@ void StabilizerTask::checkInTheAir()
   inTheAir_ = (LFz < MIN_DS_PRESSURE && RFz < MIN_DS_PRESSURE);
 }
 
+void StabilizerTask::computeLeftFootRatio()
+{
+  if(contactState_ == ContactState::Left)
+  {
+    leftFootRatio_ = 0;
+  }
+  else if(contactState_ == ContactState::Right)
+  {
+    leftFootRatio_ = 1;
+  }
+  else
+  {
+    // Project desired CoM in-between foot-sole ankle frames and compute ratio along the line in-beween the two surfaces
+    const Eigen::Vector3d & lankle = contacts_.at(ContactState::Left).anklePose().translation();
+    const Eigen::Vector3d & rankle = contacts_.at(ContactState::Right).anklePose().translation();
+    Eigen::Vector3d t_lankle_com = comTarget_ - lankle;
+    Eigen::Vector3d t_lankle_rankle = rankle - lankle;
+    double d_proj = t_lankle_com.dot(t_lankle_rankle.normalized());
+    leftFootRatio_ = clamp(d_proj / t_lankle_rankle.norm(), 0, 1);
+  }
+}
+
 void StabilizerTask::updateZMPFrame()
 {
   switch(contactState_)
@@ -770,6 +792,7 @@ void StabilizerTask::run()
 
   checkGains();
   checkInTheAir();
+  computeLeftFootRatio();
   setSupportFootGains();
   updateZMPFrame();
   auto desiredWrench = computeDesiredWrench();
@@ -799,9 +822,8 @@ void StabilizerTask::run()
   runTime_ = 1000. * duration_cast<duration<double>>(endTime - startTime).count();
 }
 
-void StabilizerTask::updateState(const Eigen::Vector3d & com, const Eigen::Vector3d & comd, double leftFootRatio)
+void StabilizerTask::updateState(const Eigen::Vector3d & com, const Eigen::Vector3d & comd)
 {
-  leftFootRatio_ = leftFootRatio;
   measuredCoM_ = com;
   measuredCoMd_ = comd;
   measuredDCM_ = measuredCoM_ + measuredCoMd_ / omega_;

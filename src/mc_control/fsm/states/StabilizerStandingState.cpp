@@ -49,24 +49,36 @@ void StabilizerStandingState::start(Controller & ctl)
   pendulum_.reset(ctl.robot().com(), ctl.robot().comVelocity(), ctl.robot().comAcceleration());
 
   stabilizerTask_->contactState(contactState_);
-  target(ctl, leftFootRatio_);
+  target(leftFootRatio_);
 
   if(contactState_ == ContactState::DoubleSupport)
   {
-    ctl.gui()->addElement({"Standing"}, mc_rtc::gui::Button("Left foot", [this, &ctl]() { target(ctl, 0); }),
-                          mc_rtc::gui::Button("Center", [this, &ctl]() { target(ctl, 0.5); }),
-                          mc_rtc::gui::Button("Right foot", [this, &ctl]() { target(ctl, 1); }));
+    ctl.gui()->addElement({"Standing"}, mc_rtc::gui::Button("Left foot", [this, &ctl]() { target(0); }),
+                          mc_rtc::gui::Button("Center", [this, &ctl]() { target(0.5); }),
+                          mc_rtc::gui::Button("Right foot", [this, &ctl]() { target(1); }));
   }
 }
 
-void StabilizerStandingState::target(const Controller & ctl, double leftFootRatio)
+void StabilizerStandingState::target(double leftFootRatio)
 {
   leftFootRatio_ = leftFootRatio;
 
-  const auto & lf = stabilizerTask_->config().leftFootSurface;
-  const auto & rf = stabilizerTask_->config().rightFootSurface;
-  sva::PTransformd X_0_lfr = sva::interpolate(ctl.robot().surfacePose(lf), ctl.robot().surfacePose(rf), leftFootRatio_);
-  copTarget_ = X_0_lfr.translation();
+  if(contactState_ == ContactState::DoubleSupport)
+  {
+    const auto & lf = stabilizerTask_->leftContactAnklePose();
+    const auto & rf = stabilizerTask_->rightContactAnklePose();
+    sva::PTransformd X_0_lfr = sva::interpolate(lf, rf, leftFootRatio_);
+    copTarget_ = X_0_lfr.translation();
+  }
+  else if(contactState_ == ContactState::Left)
+  {
+    copTarget_ = stabilizerTask_->leftContactAnklePose().translation();
+  }
+  else
+  {
+    copTarget_ = stabilizerTask_->rightContactAnklePose().translation();
+  }
+
   comTarget_ = copTarget_ + Eigen::Vector3d{0., 0., stabilizerTask_->config().comHeight};
 }
 

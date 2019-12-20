@@ -111,12 +111,12 @@ struct MC_TASKS_DLLAPI Contact
   }
 
   /**
-   * World position of projected ankle frame into surface frame
+   * World position of projected ankle frame into surface frame.
+   * Orientation is that of the target contact frame.
    */
-  const Eigen::Vector3d & anklePos() const
+  const sva::PTransformd & anklePose() const
   {
-    // Project ankle frame into surface frame
-    return anklePose_.translation();
+    return anklePose_;
   }
 
   Eigen::Vector3d sagital()
@@ -132,11 +132,6 @@ struct MC_TASKS_DLLAPI Contact
   Eigen::Vector3d vertical()
   {
     return surfacePose_.rotation().row(2);
-  }
-
-  sva::PTransformd anklePose() const
-  {
-    return {surfacePose_.rotation(), anklePos()};
   }
 
   const sva::PTransformd & surfacePose() const

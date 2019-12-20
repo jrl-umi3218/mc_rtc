@@ -33,7 +33,7 @@ struct StabilizerStandingState : State
   void teardown(Controller &) override;
 
 protected:
-  void target(const Controller &, double leftFootRatio);
+  void target(double leftFootRatio);
 
 protected:
   std::shared_ptr<mc_tasks::lipm_stabilizer::StabilizerTask> stabilizerTask_ = nullptr;

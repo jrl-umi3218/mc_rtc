@@ -191,6 +191,16 @@ public:
     return contactState_;
   }
 
+  const sva::PTransformd & leftContactAnklePose() const
+  {
+    return contacts_.at(ContactState::Left).anklePose();
+  }
+
+  const sva::PTransformd & rightContactAnklePose() const
+  {
+    return contacts_.at(ContactState::Right).anklePose();
+  }
+
   /**
    * @brief Interpolation paremeter between left and right foot
    *
@@ -322,16 +332,19 @@ private:
    */
   void checkInTheAir();
 
+  /** Computes the ratio of force distribution between the feet based on
+   * the reference CoM and contact ankle positions.
+   */
+  void computeLeftFootRatio();
+
   /** Update real-robot state.
    *
    * \param com Position of the center of mass.
    *
    * \param comd Velocity of the center of mass.
    *
-   * \param leftFootRatio Desired pressure distribution ratio for left foot.
-   *
    */
-  void updateState(const Eigen::Vector3d & com, const Eigen::Vector3d & comd, double leftFootRatio);
+  void updateState(const Eigen::Vector3d & com, const Eigen::Vector3d & comd);
 
   /** Compute desired wrench based on DCM error.
    *
