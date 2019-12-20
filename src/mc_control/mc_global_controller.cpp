@@ -110,7 +110,12 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
     }
     else
     {
-      LOG_ERROR("Observer " << observerName << " requested in configuration but not available");
+      LOG_ERROR("Observer " << observerName << " requested in \"EnabledObservers\" configuration but not available");
+      LOG_INFO("Note common reasons for this error include:\n"
+               "\t- The observer name does not match the name exported by EXPORT_OBSERVER_MODULE\n"
+               "\t- The library is not in a path read by mc_rtc\n"
+               "\t- The constuctor segfaults\n"
+               "\t- The library hasn't been properly linked");
     }
   }
 
@@ -162,10 +167,11 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
   if(current_ctrl == "" || controller_ == nullptr)
   {
     LOG_ERROR("No controller selected or selected controller is not enabled, please check your configuration file")
-    LOG_INFO("Note common reasons for this error include:\n\
-             \t- The controller library is not in a path read by mc_rtc\n\
-             \t- The controller constuctor segfaults\n\
-             \t- The controller library hasn't been properly linked");
+    LOG_INFO("Note common reasons for this error include:\n"
+             "\t- The controller name does not match the name exported by CONTROLLER_CONSTRUCTOR\n"
+             "\t- The controller library is not in a path read by mc_rtc\n"
+             "\t- The controller constuctor segfaults\n"
+             "\t- The controller library hasn't been properly linked");
     LOG_ERROR_AND_THROW(std::runtime_error, "No controller enabled")
   }
   else
@@ -711,7 +717,7 @@ bool MCGlobalController::AddController(const std::string & name)
       controllers[name] = controller_loader->create_object(name, config.main_robot_module, config.timestep,
                                                            config.controllers_configs[name]);
     }
-    controllers[name]->realRobots(real_robots); // real_robots = real_robots;
+    controllers[name]->realRobots(real_robots);
     if(config.enable_log)
     {
       controllers[name]->logger().setup(config.log_policy, config.log_directory, config.log_template);
@@ -723,8 +729,25 @@ bool MCGlobalController::AddController(const std::string & name)
     // Give each controller access to all observers
     controllers[name]->observers_ = observers_;
     const auto & cc = config.controllers_configs[name];
-    const auto runObservers = cc("RunObservers", std::vector<std::string>{});
-    const auto updateObservers = cc("UpdateObservers", std::vector<std::string>{});
+    auto runObservers = cc("RunObservers", std::vector<std::string>{});
+    if(runObservers.empty())
+    {
+      std::string observerName = cc("RunObservers", std::string{""});
+      if(!observerName.empty())
+      {
+        runObservers = {observerName};
+      }
+    }
+
+    auto updateObservers = cc("UpdateObservers", std::vector<std::string>{});
+    if(updateObservers.empty())
+    {
+      std::string observerName = cc("UpdateObservers", std::string{""});
+      if(!observerName.empty())
+      {
+        updateObservers = {observerName};
+      }
+    }
     // Use controller-specific configuration instead of global configuration
     for(const auto & observerName : runObservers)
     {
@@ -745,9 +768,9 @@ bool MCGlobalController::AddController(const std::string & name)
       else
       {
         LOG_ERROR_AND_THROW(std::runtime_error,
-                            "Controller "
-                                << controller_name << " requested observer " << observerName
-                                << " but this observer is not available. Check your EnabledObservers configuration");
+                            "Controller " << controller_name << " requested observer " << observerName
+                                          << " but this observer is not available. Please make sure that it is in your "
+                                             "\"EnabledObservers\" configuration, and that is was properly loaded.");
       }
     }
     return true;

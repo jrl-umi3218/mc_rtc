@@ -148,7 +148,7 @@ bool MCController::resetObservers()
 {
   auto pipelineDesc = std::string{};
 
-  for(int i = 0; i < pipelineObservers_.size(); ++i)
+  for(size_t i = 0; i < pipelineObservers_.size(); ++i)
   {
     const auto & observerPair = pipelineObservers_[i];
     auto observer = observerPair.first;
@@ -178,7 +178,7 @@ bool MCController::resetObservers()
   }
   if(!pipelineObservers_.empty())
   {
-    LOG_INFO("Observers: " << pipelineDesc);
+    LOG_SUCCESS("Observers: " << pipelineDesc);
   }
   return true;
 }
