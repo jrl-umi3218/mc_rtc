@@ -77,7 +77,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 <h2>Introduction </h2>
 <p><code><a class="el" href="a00633.html" title="This file holds all mc_rtc::Configuration based serialization operation for mc_rbdyn objects...">mc_rtc</a></code> is an interface for simulation and robot control systems. These systems should provide the state of a given robot (joints' values, sensor readings...) and in return <code><a class="el" href="a00633.html" title="This file holds all mc_rtc::Configuration based serialization operation for mc_rbdyn objects...">mc_rtc</a></code> will provide the desired robot's state (command). This is done through the <code><a class="el" href="a01889.html">mc_control::MCGlobalController</a></code> class. This class does not perform control by itself but rather delegates this task to the <code><a class="el" href="a01885.html" title="MCController is the base class to implement all controllers. ">mc_control::MCController</a></code> derived objects that it holds. Writing a controller within the <code><a class="el" href="a00633.html" title="This file holds all mc_rtc::Configuration based serialization operation for mc_rbdyn objects...">mc_rtc</a></code> framework is done by writing a class that inherits from the <code><a class="el" href="a01885.html" title="MCController is the base class to implement all controllers. ">mc_control::MCController</a></code> base class and implements the required functionnality. The details of this process can be found in the project documentation.</p>
 <p><code><a class="el" href="a00633.html" title="This file holds all mc_rtc::Configuration based serialization operation for mc_rbdyn objects...">mc_rtc</a></code> is a super-set of SpaceVecAlg/RBDyn/Tasks libraries which provides a friendlier/easier interface for the user.</p>
-<p>This document assumes some familiarity with the <a href="https://github.com/jrl-umi3218/SpaceVecAlg">SpaceVecAlg</a>, <a href="https://github.com/jrl-umi3218/RBDyn">RBDyn</a> and <a href="https://github.com/jrl-umi3218/Tasks">Tasks</a> although the libraries in the <code><a class="el" href="a00633.html" title="This file holds all mc_rtc::Configuration based serialization operation for mc_rbdyn objects...">mc_rtc</a></code> package abstract most of these libraries inner-workings. Unfamiliar users may refer to the <a href="https://github.com/jorisv/sva_rbdyn_tutorials">SpaceVecAlg and RBDyn tutorials</a> and the <a href="https://github.com/jorisv/sva_rbdyn_presentation">SpaceVecAlg and RBDyn presentations</a> authored by Joris Vaillant.</p>
+<p>This framework assumes some familiarity with the <a href="https://github.com/jrl-umi3218/SpaceVecAlg">SpaceVecAlg</a>, <a href="https://github.com/jrl-umi3218/RBDyn">RBDyn</a> and <a href="https://github.com/jrl-umi3218/Tasks">Tasks</a> although the libraries in the <code><a class="el" href="a00633.html" title="This file holds all mc_rtc::Configuration based serialization operation for mc_rbdyn objects...">mc_rtc</a></code> package abstract most of these libraries inner-workings. Unfamiliar users may refer to the <a href="https://github.com/jorisv/sva_rbdyn_tutorials">SpaceVecAlg and RBDyn tutorials</a> and the <a href="https://github.com/jorisv/sva_rbdyn_presentation">SpaceVecAlg and RBDyn presentations</a> authored by Joris Vaillant.</p>
 <p>The <a href="https://jrl-umi3218.github.io/mc_rtc/">project website</a> provides a somewhat complete introduction of the framework functionalities.</p>
 <p>Feel free to <a href="https://github.com/jrl-umi3218/mc_rtc/issues/new">open an issue</a> for questions, feature requests or problems you might encounter.</p>
 <h2>Available interfaces </h2>
@@ -88,54 +88,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 <li><a href="https://github.com/jrl-umi3218/mc_rtc_naoqi">mc_rtc_naoqi</a> interface with the NAOqi framework (Softbank Robotics robots);</li>
 </ul>
 <h2>Installing </h2>
-<h2>Ubuntu LTS (16.04, 18.04, 20.04)</h2>
-<div class="fragment"><div class="line"># Make sure you have required tools</div><div class="line">sudo apt install apt-transport-https lsb-release ca-certificates gnupg</div><div class="line"># Add our key</div><div class="line">sudo apt-key adv --keyserver &#39;hkp://keyserver.ubuntu.com:80&#39; --recv-key 892EA6EE273707C6495A6FB6220D644C64666806</div><div class="line"># Add our repository (stable versions)</div><div class="line">sudo sh -c &#39;echo &quot;deb https://dl.bintray.com/gergondet/multi-contact-release $(lsb_release -sc) main&quot; | sudo tee /etc/apt/sources.list.d/multi-contact.list&#39;</div><div class="line"># Use this to setup the HEAD version</div><div class="line"># sudo sh -c &#39;echo &quot;deb https://dl.bintray.com/gergondet/multi-contact-head $(lsb_release -sc) main&quot; | sudo tee /etc/apt/sources.list.d/multi-contact.list&#39;</div><div class="line"># Update packages list</div><div class="line">sudo apt update</div><div class="line"># Install packages</div><div class="line">sudo apt install libmc-rtc-dev mc-rtc-utils python3-mc-rtc</div><div class="line"># Assuming you have a ROS distribution mirror setup</div><div class="line">sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin</div></div><!-- fragment --><p>Note: the distributed version of <a class="el" href="a00633.html" title="This file holds all mc_rtc::Configuration based serialization operation for mc_rbdyn objects...">mc_rtc</a> runs with the QLD QP solver through <a href="https://github.com/jrl-umi3218/eigen-qld">eigen-qld</a>. If you have access to the LSSOL solver and thus can install <a href="https://gite.lirmm.fr/multi-contact/eigen-lssol">eigen-lssol</a> then you can build <a href="https://github.com/jrl-umi3218/Tasks">Tasks</a> with LSSOL support and install it in <code>/usr</code>. The two versions are binary compatible.</p>
-<h2>Build from source</h2>
-<h3>Using a script (Ubuntu/MacOS)</h3>
-<p>After cloning the repository, cd into the utils directory then:</p>
-<div class="fragment"><div class="line">./build_and_install.sh --help</div><div class="line"># Adjust options according to your needs</div><div class="line">./build_and_install.sh</div></div><!-- fragment --><p>The script can also be used to update your installation.</p>
-<h3>From sources</h3>
-<h4>Dependencies</h4>
-<p>To compile you need the following tools and libraries:</p>
-<ul>
-<li><a href="https://cmake.org/">CMake</a> &gt;= 3.1</li>
-<li><a href="https://www.boost.org/">Boost</a> &gt;= 1.49</li>
-<li><a href="http://eigen.tuxfamily.org/index.php?title=Main_Page">Eigen</a> &gt;= 3.2</li>
-<li><a href="https://github.com/leethomason/tinyxml2">tinyxml2</a></li>
-<li><a href="https://trac.osgeo.org/geos">GEOS</a> (With C++ bindings)</li>
-<li><a href="https://www.gnu.org/software/libtool/manual/html_node/Libltdl-interface.html">LTDL</a> (Not required for Windows users)</li>
-<li><a href="https://nanomsg.org/">nanomsg</a></li>
-<li><a href="https://github.com/jbeder/yaml-cpp">yaml-cpp</a></li>
-<li><a href="https://github.com/humanoid-path-planner/hpp-spline">hpp-spline</a></li>
-<li><a href="https://github.com/jrl-umi3218/SpaceVecAlg">SpaceVecAlg</a></li>
-<li><a href="https://github.com/jrl-umi3218/RBDyn">RBDyn</a></li>
-<li><a href="https://github.com/jrl-umi3218/eigen-qld">eigen-qld</a></li>
-<li>[eigen-lssol]() (Optional, if you have the LSSOL licence ask us this library)</li>
-<li><a href="https://github.com/jrl-umi3218/sch-core">sch-core</a></li>
-<li><a href="https://github.com/jrl-umi3218/Tasks">Tasks</a></li>
-<li><a href="https://github.com/jrl-umi3218/mc_rbdyn_urdf">mc_rbdyn_urdf</a></li>
-<li><a href="https://github.com/jrl-umi3218/mc_rtc_data">mc_rtc_data</a></li>
-</ul>
-<p><a class="el" href="a00633.html" title="This file holds all mc_rtc::Configuration based serialization operation for mc_rbdyn objects...">mc_rtc</a> also has a ROS plugin that enables automated robot's status publication as ROS topics and facilitate the integration with ROS tools (e.g. RViZ), to build this you will need:</p>
-<ul>
-<li><a href="https://github.com/jrl-umi3218/mc_rtc_msgs">mc_rtc_msgs</a></li>
-</ul>
-<p>If you wish to get Python bindings you will also need the following:</p><ul>
-<li><a href="http://cython.org/">Cython</a> &gt;= 0.2</li>
-<li>[python-pip]()</li>
-<li>[python-numpy]()</li>
-<li>[python-nose]()</li>
-<li>[python-coverage]()</li>
-<li><a href="https://github.com/jrl-umi3218/Eigen3ToPython">Eigen3ToPython</a></li>
-<li><a href="https://github.com/jrl-umi3218/sch-core-python">sch-core-python</a></li>
-</ul>
-<p>Additional Python libraries are required to run <a class="el" href="a00633.html" title="This file holds all mc_rtc::Configuration based serialization operation for mc_rbdyn objects...">mc_rtc</a> tools:</p><ul>
-<li>[python-git]() (pip name: <code>GitPython</code>)</li>
-<li>[python-pyside]()</li>
-</ul>
-<p>If you are building benchmarks you will also need:</p><ul>
-<li><a href="https://github.com/google/benchmark">benchmark</a></li>
-</ul>
+<p>Please see <a href="https://jrl-umi3218.github.io/mc_rtc/tutorials/introduction/installation-guide.html">mc_rtc installation guide</a> for details.</p>
 <p><a class="el" href="a00633.html" title="This file holds all mc_rtc::Configuration based serialization operation for mc_rbdyn objects...">mc_rtc</a> also uses the following great 3rd party libraries but does not require you to get or install them:</p>
 <ul>
 <li><a href="http://www.qhull.org/">Qhull</a> under the <a href="http://www.qhull.org/COPYING.txt">Qhull license</a></li>
@@ -148,7 +101,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Dec 19 2019 10:00:55 for mc_rtc by
+    <li class="footer">Generated on Fri Dec 20 2019 12:11:12 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>
