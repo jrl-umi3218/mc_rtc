@@ -7,7 +7,7 @@
 
 #pragma once
 #include <mc_planning/api.h>
-#include <mc_rbdyn/lipm_stabilizer/Contact.h>
+#include <SpaceVecAlg/SpaceVecAlg>
 
 namespace mc_planning
 {
@@ -16,7 +16,6 @@ namespace mc_planning
  */
 struct MC_PLANNING_DLLAPI Pendulum
 {
-  using Contact = mc_rbdyn::lipm_stabilizer::Contact;
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
   /** Initialize state from CoM position and its derivatives.
@@ -33,12 +32,12 @@ struct MC_PLANNING_DLLAPI Pendulum
 
   /** Complete inverted pendulum inputs (ZMP and natural frequency) from contact plane.
    *
-   * \param plane Contact plane in which the ZMP is considered.
+   * \param p,n Contact plane in which the ZMP is considered.
    *
    * \note The current CoM position and acceleration are used to compute the
    * ZMP in the desired plane.
    */
-  void completeIPM(const Contact & plane);
+  void completeIPM(const Eigen::Vector3d & p, const Eigen::Vector3d & n);
 
   /** Integrate constant CoM jerk for a given duration.
    *

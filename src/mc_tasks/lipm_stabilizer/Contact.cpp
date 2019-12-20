@@ -1,9 +1,18 @@
-#include <mc_rbdyn/PlanarSurface.h>
-#include <mc_rbdyn/lipm_stabilizer/Contact.h>
+/*
+ * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ *
+ * This file is inspired by Stephane's Caron original implementation as part of
+ * lipm_walking_controller <https://github.com/stephane-caron/lipm_walking_controller>
+ */
 
-namespace mc_rbdyn
+#include <mc_tasks/lipm_stabilizer/Contact.h>
+
+namespace mc_tasks
 {
 namespace lipm_stabilizer
+{
+
+namespace internal
 {
 
 Contact::Contact(const mc_rbdyn::Robot & robot, const std::string & surfaceName)
@@ -82,5 +91,6 @@ HrepXd Contact::hrep(const Eigen::Vector3d & vertical) const
   return HrepXd(worldHrepMat, worldHrepVec);
 }
 
+} // namespace internal
 } // namespace lipm_stabilizer
-} // namespace mc_rbdyn
+} // namespace mc_tasks

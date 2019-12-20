@@ -8,3 +8,4 @@ build/
 *.pos
 utils/mc_log_gui/*.png
 compile_commands.json
+.vscode/

@@ -9,7 +9,7 @@ namespace fsm
 {
 
 namespace world = mc_rbdyn::world;
-using ContactState = mc_rbdyn::lipm_stabilizer::ContactState;
+using ContactState = mc_tasks::lipm_stabilizer::ContactState;
 
 StabilizerStandingState::StabilizerStandingState() {}
 
@@ -48,7 +48,7 @@ void StabilizerStandingState::start(Controller & ctl)
 
   pendulum_.reset(ctl.robot().com(), ctl.robot().comVelocity(), ctl.robot().comAcceleration());
 
-  stabilizerTask_->setContacts(contactState_);
+  stabilizerTask_->contactState(contactState_);
   target(ctl, leftFootRatio_);
 
   if(contactState_ == ContactState::DoubleSupport)

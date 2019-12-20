@@ -6,7 +6,8 @@
 
 #include <mc_control/fsm/State.h>
 #include <mc_planning/Pendulum.h>
-#include <mc_tasks/LIPMStabilizerTask.h>
+#include <mc_tasks/lipm_stabilizer/Contact.h>
+#include <mc_tasks/lipm_stabilizer/StabilizerTask.h>
 
 namespace mc_control
 {
@@ -41,7 +42,7 @@ protected:
   double hasCompletion_ = false;
   Eigen::Vector3d dcmThreshold_ = Eigen::Vector3d{0.01, 0.01, 0.01};
 
-  mc_rbdyn::lipm_stabilizer::ContactState contactState_ = mc_rbdyn::lipm_stabilizer::ContactState::DoubleSupport;
+  mc_tasks::lipm_stabilizer::ContactState contactState_ = mc_tasks::lipm_stabilizer::ContactState::DoubleSupport;
 
   mc_planning::Pendulum pendulum_; /** LIPM Pendulum model */
 

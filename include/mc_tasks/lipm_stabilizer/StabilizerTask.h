@@ -7,8 +7,6 @@
 
 #pragma once
 
-#include <mc_rbdyn/lipm_stabilizer/Contact.h>
-#include <mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h>
 #include <mc_signal/ExponentialMovingAverage.h>
 #include <mc_signal/LeakyIntegrator.h>
 #include <mc_signal/StationaryOffsetFilter.h>
@@ -16,6 +14,9 @@
 #include <mc_tasks/CoPTask.h>
 #include <mc_tasks/MetaTask.h>
 #include <mc_tasks/OrientationTask.h>
+
+#include <mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h>
+#include <mc_tasks/lipm_stabilizer/Contact.h>
 
 #include <Eigen/QR>
 #include <eigen-quadprog/QuadProg.h>
@@ -25,9 +26,6 @@ namespace mc_tasks
 
 namespace lipm_stabilizer
 {
-
-using ContactState = mc_rbdyn::lipm_stabilizer::ContactState;
-using Contact = mc_rbdyn::lipm_stabilizer::Contact;
 
 /** Walking stabilization based on linear inverted pendulum tracking.
  *
@@ -153,14 +151,14 @@ public:
   void configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & config);
 
   /**
-   * @brief Get current stabilizer's configuration
-   *
-   * @return Stabilizer configuration
+   * @brief Get current stabilizer's configuration (including changes from GUI)
    */
   const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & config() const;
 
   /**
-   * Reset stabilizer configuration from last valid default configuration set by configure()
+   * Reset stabilizer configuration from last configuration set by configure()
+   *
+   * Does not include changes made from the GUI.
    */
   void reconfigure();
 
@@ -183,10 +181,10 @@ public:
    * frame). This assumes the foot surfaces to have x pointing towards the front of the foot, and z from the ground up.
    *
    */
-  void setContacts(ContactState state);
+  void contactState(ContactState state);
 
-  /** Get contact state.
-   *
+  /**
+   * @brief Get contact state.
    */
   ContactState contactState() const
   {
@@ -194,9 +192,9 @@ public:
   }
 
   /**
-   * @brief Access the left foot ratio parameter
+   * @brief Interpolation paremeter between left and right foot
    *
-   * @return Left foot ratio
+   * @return Left foot ratio between [0,1]
    */
   double leftFootRatio() const
   {
@@ -340,13 +338,6 @@ private:
    */
   sva::ForceVecd computeDesiredWrench();
 
-  /** Compute ZMP of a wrench in the output frame.
-   *
-   * \param wrench Wrench at the origin of the world frame.
-   *
-   */
-  Eigen::Vector3d computeZMP(const sva::ForceVecd & wrench) const;
-
   /** Distribute a desired wrench in double support.
    *
    * \param desiredWrench Desired resultant reaction wrench.
@@ -417,7 +408,7 @@ protected:
   }
 
 protected:
-  std::map<ContactState, Contact> contacts_;
+  std::map<ContactState, internal::Contact> contacts_;
   std::vector<std::vector<Eigen::Vector3d>> supportPolygons_; /**< For GUI display */
   Eigen::Vector2d supportMin_ = Eigen::Vector2d::Zero();
   Eigen::Vector2d supportMax_ = Eigen::Vector2d::Zero();

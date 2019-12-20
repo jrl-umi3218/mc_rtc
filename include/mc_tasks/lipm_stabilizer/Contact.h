@@ -10,32 +10,36 @@
 #include <mc_rbdyn/Robot.h>
 #include <mc_rtc/Configuration.h>
 #include <mc_rtc/logging.h>
+#include <mc_tasks/api.h>
 
 #include <SpaceVecAlg/SpaceVecAlg>
 
 #include <cmath>
 
-namespace mc_rbdyn
+namespace mc_tasks
 {
 namespace lipm_stabilizer
 {
+
 using HrepXd = std::pair<Eigen::MatrixXd, Eigen::VectorXd>;
 
 /** Contact state: set of feet in contact.
  *
  */
-enum class ContactState
+enum class MC_TASKS_DLLAPI ContactState
 {
   DoubleSupport,
   Left,
   Right
 };
 
+namespace internal
+{
+
 /**
- * @brief This class wraps additional information about contact surfaces used by
- * the stabilizer.
+ * @brief This class wraps information about contact surfaces used by the stabilizer.
  */
-struct MC_RBDYN_DLLAPI Contact
+struct MC_TASKS_DLLAPI Contact
 {
   /**
    * @brief Constructs a contact from a surface attached to the ankle frame of a robot
@@ -96,11 +100,6 @@ struct MC_RBDYN_DLLAPI Contact
     return surfacePose_.translation();
   }
 
-  const Eigen::Vector3d & p() const
-  {
-    return position();
-  }
-
   double halfWidth() const
   {
     return halfWidth_;
@@ -135,9 +134,6 @@ struct MC_RBDYN_DLLAPI Contact
     return surfacePose_.rotation().row(2);
   }
 
-  /** Get frame rooted at the ankle.
-   *
-   */
   sva::PTransformd anklePose() const
   {
     return {surfacePose_.rotation(), anklePos()};
@@ -146,30 +142,6 @@ struct MC_RBDYN_DLLAPI Contact
   const sva::PTransformd & surfacePose() const
   {
     return surfacePose_;
-  }
-
-  /** Shorthand for world x-coordinate.
-   *
-   */
-  double x() const
-  {
-    return position()(0);
-  }
-
-  /** Shorthand for world y-coordinate.
-   *
-   */
-  double y() const
-  {
-    return position()(1);
-  }
-
-  /** Shorthand for world z-coordinate.
-   *
-   */
-  double z() const
-  {
-    return position()(2);
   }
 
   /**
@@ -181,21 +153,37 @@ struct MC_RBDYN_DLLAPI Contact
     return contactPolygon_;
   }
 
+  /**
+   * @brief World coordinates of the point furthest back in the surface's
+   * sagital direction
+   */
   double xmin() const
   {
     return contactPolygon_[0].x();
   }
 
+  /**
+   * @brief World coordinates of the point furthest front in the surface's
+   * sagital direction
+   */
   double xmax() const
   {
     return contactPolygon_[1].x();
   }
 
+  /**
+   * @brief World coordinates of the point furthest right in the surface's
+   * lateral direction
+   */
   double ymin() const
   {
     return contactPolygon_[3].y();
   }
 
+  /**
+   * @brief World coordinates of the point furthest left in the surface's
+   * lateral direction
+   */
   double ymax() const
   {
     return contactPolygon_[0].y();
@@ -220,18 +208,19 @@ private:
       contactPolygon_; /**< Polygon of the surface boundaries along the sagital/lateral plane */
 };
 
+} // namespace internal
 } // namespace lipm_stabilizer
-} // namespace mc_rbdyn
+} // namespace mc_tasks
 
 namespace mc_rtc
 {
 
 template<>
-struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::ContactState>
+struct ConfigurationLoader<mc_tasks::lipm_stabilizer::ContactState>
 {
-  static mc_rbdyn::lipm_stabilizer::ContactState load(const mc_rtc::Configuration & config)
+  static mc_tasks::lipm_stabilizer::ContactState load(const mc_rtc::Configuration & config)
   {
-    using ContactState = mc_rbdyn::lipm_stabilizer::ContactState;
+    using ContactState = mc_tasks::lipm_stabilizer::ContactState;
     const std::string & s = config;
     if(s == "DoubleSupport")
     {
@@ -252,9 +241,9 @@ struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::ContactState>
     }
   }
 
-  static mc_rtc::Configuration save(const mc_rbdyn::lipm_stabilizer::ContactState & contact)
+  static mc_rtc::Configuration save(const mc_tasks::lipm_stabilizer::ContactState & contact)
   {
-    using ContactState = mc_rbdyn::lipm_stabilizer::ContactState;
+    using ContactState = mc_tasks::lipm_stabilizer::ContactState;
     mc_rtc::Configuration config;
     if(contact == ContactState::DoubleSupport)
       config = "DoubleSupport";

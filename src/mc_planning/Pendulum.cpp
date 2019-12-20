@@ -3,7 +3,6 @@
 
 namespace mc_planning
 {
-using Contact = mc_rbdyn::lipm_stabilizer::Contact;
 namespace world = mc_rbdyn::world;
 
 Pendulum::Pendulum(const Eigen::Vector3d & com, const Eigen::Vector3d & comd, const Eigen::Vector3d & comdd)
@@ -51,11 +50,10 @@ void Pendulum::integrateCoMJerk(const Eigen::Vector3d & comddd, double dt)
   comddd_ = comddd;
 }
 
-void Pendulum::completeIPM(const Contact & plane)
+void Pendulum::completeIPM(const Eigen::Vector3d & p, const Eigen::Vector3d & n)
 {
-  auto n = plane.normal();
   auto gravitoInertial = world::gravity - comdd_;
-  double lambda = n.dot(gravitoInertial) / n.dot(plane.p() - com_);
+  double lambda = n.dot(gravitoInertial) / n.dot(p - com_);
   zmp_ = com_ + gravitoInertial / lambda;
   zmpd_ = comd_ - comddd_ / lambda;
   omega_ = std::sqrt(lambda);

@@ -3,20 +3,19 @@
  */
 
 #pragma once
-
+#include <mc_rbdyn/api.h>
 #include <mc_rtc/Configuration.h>
 #include <mc_rtc/logging.h>
 
 namespace mc_rbdyn
 {
-
 namespace lipm_stabilizer
 {
 
 /** Weights for force distribution quadratic program (FDQP).
  *
  */
-struct FDQPWeights
+struct MC_RBDYN_DLLAPI FDQPWeights
 {
   double ankleTorqueSqrt;
   double netWrenchSqrt;
@@ -63,7 +62,7 @@ namespace mc_rbdyn
 namespace lipm_stabilizer
 {
 
-struct StabilizerConfiguration
+struct MC_RBDYN_DLLAPI StabilizerConfiguration
 {
   FDQPWeights fdqpWeights;
 

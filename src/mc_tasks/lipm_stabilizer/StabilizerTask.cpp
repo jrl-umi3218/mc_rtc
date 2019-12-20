@@ -8,8 +8,8 @@
 #include <mc_rbdyn/rpy_utils.h>
 #include <mc_rtc/gui.h>
 #include <mc_rtc/gui/plot.h>
-#include <mc_tasks/LIPMStabilizerTask.h>
 #include <mc_tasks/MetaTaskLoader.h>
+#include <mc_tasks/lipm_stabilizer/StabilizerTask.h>
 
 #include <chrono>
 
@@ -18,8 +18,9 @@ namespace mc_tasks
 namespace lipm_stabilizer
 {
 
-using mc_signal::utils::clamp;
-using mc_signal::utils::clampInPlace;
+using internal::Contact;
+using ::mc_signal::utils::clamp;
+using ::mc_signal::utils::clampInPlace;
 
 // Repeat static constexpr declarations
 // Fixes https://github.com/stephane-caron/lipm_walking_controller/issues/21
@@ -241,7 +242,6 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   logger.addLogEntry("stabilizer_vdc_frequency", [this]() { return c_.vdcFrequency; });
   logger.addLogEntry("stabilizer_vdc_stiffness", [this]() { return c_.vdcStiffness; });
   logger.addLogEntry("stabilizer_wrench", [this]() { return distribWrench_; });
-  logger.addLogEntry("stabilizer_zmp", [this]() { return distribZMP_; });
   logger.addLogEntry("stabilizer_support_min", [this]() { return supportMin_; });
   logger.addLogEntry("stabilizer_support_max", [this]() { return supportMax_; });
 
@@ -639,7 +639,7 @@ void StabilizerTask::checkGains()
   clampInPlace(c_.dfzAdmittance, 0., MAX_DFZ_ADMITTANCE, "DFz admittance");
 }
 
-void StabilizerTask::setContacts(ContactState state)
+void StabilizerTask::contactState(ContactState state)
 {
   supportPolygons_.clear();
   contacts_.clear();
@@ -739,12 +739,7 @@ void StabilizerTask::updateZMPFrame()
       break;
   }
   measuredNetWrench_ = robots_.robot(robotIndex_).netWrench(sensorNames_);
-  measuredZMP_ = computeZMP(measuredNetWrench_); // computeZMP
-}
-
-Eigen::Vector3d StabilizerTask::computeZMP(const sva::ForceVecd & wrench) const
-{
-  return robots_.robot(robotIndex_).zmp(wrench, zmpFrame_, MIN_NET_TOTAL_FORCE_ZMP);
+  measuredZMP_ = robots_.robot(robotIndex_).zmp(measuredNetWrench_, zmpFrame_, MIN_NET_TOTAL_FORCE_ZMP);
 }
 
 void StabilizerTask::staticTarget(const Eigen::Vector3d & com)
@@ -794,7 +789,6 @@ void StabilizerTask::run()
       break;
   }
 
-  distribZMP_ = computeZMP(distribWrench_);
   comTask->com(comTarget_);
   comTask->refVel(comdTarget_);
   comTask->refAccel(comddTarget_);
@@ -1067,7 +1061,7 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
           stabiConf.torsoBodyName, solver.dt());
       t->reset();
       t->configure(stabiConf);
-      t->setContacts(mc_tasks::lipm_stabilizer::ContactState::DoubleSupport);
+      t->contactState(mc_tasks::lipm_stabilizer::ContactState::DoubleSupport);
 
       // Target robot com by default
       Eigen::Vector3d comTarget = robot.com();

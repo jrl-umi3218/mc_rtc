@@ -111,7 +111,6 @@ mc_rbdyn/Collision.cpp
 mc_rbdyn/ForceSensor.cpp
 mc_rbdyn/RobotModule.cpp
 mc_rbdyn/configuration_io.cpp
-mc_rbdyn/lipm_stabilizer/Contact.cpp
 )
 
 set(mc_rbdyn_HDR
@@ -143,7 +142,6 @@ set(mc_rbdyn_HDR
 ../include/mc_rbdyn/BodySensor.h
 ../include/mc_rbdyn/configuration_io.h
 ../include/mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h
-../include/mc_rbdyn/lipm_stabilizer/Contact.h
 )
 
 add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC} ${mc_rbdyn_HDR})
@@ -294,7 +292,8 @@ mc_tasks/PostureTask.cpp
 mc_tasks/LookAtTask.cpp
 mc_tasks/LookAtSurfaceTask.cpp
 mc_tasks/MetaTaskLoader.cpp
-mc_tasks/LIPMStabilizerTask.cpp
+mc_tasks/lipm_stabilizer/StabilizerTask.cpp
+mc_tasks/lipm_stabilizer/Contact.cpp
 )
 
 set(mc_tasks_HDR
@@ -324,7 +323,8 @@ set(mc_tasks_HDR
 ../include/mc_tasks/PostureTask.h
 ../include/mc_tasks/LookAtTask.h
 ../include/mc_tasks/ExactCubicTrajectoryTask.h
-../include/mc_tasks/LIPMStabilizerTask.h
+../include/mc_tasks/lipm_stabilizer/StabilizerTask.h
+../include/mc_tasks/lipm_stabilizer/Contact.h
 )
 
 add_library(mc_tasks SHARED ${mc_tasks_SRC} ${mc_tasks_HDR})
