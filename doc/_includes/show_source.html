@@ -11,6 +11,8 @@
 {% highlight cmake %}{{ source }}{% endhighlight %}
 {% elsif include.lang == "python" %}
 {% highlight python %}{{ source }}{% endhighlight %}
+{% elsif include.lang == "bash" %}
+{% highlight bash %}{{ source }}{% endhighlight %}
 {% else %}
   {% if include.lang %}
     <div class="text-danger">Cannot handle requested lang: {{include.lang}}</div>

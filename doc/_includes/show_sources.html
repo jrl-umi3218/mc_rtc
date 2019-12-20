@@ -3,6 +3,7 @@
     <li class="nav-item">
       {% capture id %}{{include.id}}{{src.name}}{{src.lang}}{% endcapture %}
       {% capture id %}{{ id | replace: ".","_" }}{% endcapture %}
+      {% capture id %}{{ id | replace: " ","_" }}{% endcapture %}
       <a class="nav-link{% if forloop.index0 == 0 %} active{% endif %}" id="{{id}}Tab" data-toggle="tab" href="#{{id}}TabContent" role="tab" aria-controls="{{id}}TabContent" aria-selected="{% if forloop.index0 == 0 %}true{% else %}false{% endif %}">{{src.name}}</a>
     </li>
   {% endfor %}
@@ -11,6 +12,7 @@
   {% for src in include.sources %}
     {% capture id %}{{include.id}}{{src.name}}{{src.lang}}{% endcapture %}
     {% capture id %}{{ id | replace: ".","_" }}{% endcapture %}
+    {% capture id %}{{ id | replace: " ","_" }}{% endcapture %}
     <div class="tab-pane{% if forloop.index0 == 0 %} show active{% endif %}" id="{{id}}TabContent" role="tabpanel" arial-labelledby="{{id}}Tab">
       {% include show_source.html source=src.source lang=src.lang copy=include.copy id=include.id %}
     </div>
