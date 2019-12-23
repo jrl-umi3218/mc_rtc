@@ -29,6 +29,7 @@ WITH_HRP4="false"
 BUILD_TYPE="RelWithDebInfo"
 BUILD_TESTING="true"
 INSTALL_APT_DEPENDENCIES="true"
+CLONE_ONLY="false"
 if command -v nproc > /dev/null
 then
    BUILD_CORE=`nproc`
@@ -76,6 +77,7 @@ readonly HELP_STRING="$(basename $0) [OPTIONS] ...
     --with-ros-support              {true, false} : whether to build with ROS support                (default $WITH_ROS_SUPPORT)
     --ros-distro                    NAME          : the ros distro to use                            (default $ROS_DISTRO)
     --install-system-dependencies      {true, false} : whether to install system packages            (default $INSTALL_APT_DEPENDENCIES)
+    --clone-only                       {true, false} : only perform cloning                          (default $CLONE_ONLY)
 "
 
 #helper for parsing
@@ -168,6 +170,12 @@ do
         check_true_false --install-apt-dependencies "$INSTALL_APT_DEPENDENCIES"
         ;;
 
+        --clone-only)
+        i=$(($i+1))
+        CLONE_ONLY="${!i}"
+        check_true_false --clone-only "$CLONE_ONLY"
+        ;;
+
         -j|--build-core)
         i=$(($i+1))
         BUILD_CORE="${!i}"
@@ -228,6 +236,13 @@ readonly BUILD_TYPE
 readonly INSTALL_APT_DEPENDENCIES
 readonly BUILD_CORE
 readonly BUILD_TESTING
+readonly CLONE_ONLY
+if $CLONE_ONLY
+then
+  readonly NOT_CLONE_ONLY=false
+else
+  readonly NOT_CLONE_ONLY=true
+fi
 
 readonly ROS_APT_DEPENDENCIES="ros-${ROS_DISTRO}-common-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-rviz"
 
@@ -258,7 +273,7 @@ if [[ $OSTYPE == "darwin"* ]]
 then
   export OS=macOS
   # Install brew on the system
-  if $INSTALL_APT_DEPENDENCIES
+  if $INSTALL_APT_DEPENDENCIES && $NOT_CLONE_ONLY
   then
     if ! command -v brew
     then
@@ -267,7 +282,7 @@ then
     brew update
     brew cask install $CASK_DEPENDENCIES
     brew install $BREW_DEPENDENCIES
-    if [ "x$WITH_PYTHON_SUPPORT" == xON ]
+    if [ "x$WITH_PYTHON_SUPPORT" == xON ] && $NOT_CLONE_ONLY
     then
       if [ "x$PYTHON_BUILD_PYTHON2_AND_PYTHON3" == xON ]
       then
@@ -282,8 +297,8 @@ then
       else
         sudo pip install $PIP_DEPENDENCIES
       fi
-      mc_rtc_extra_steps
     fi
+    mc_rtc_extra_steps
   else
     echo "Skip installation of system dependencies"
   fi
@@ -292,7 +307,7 @@ then
   export OS=$(lsb_release -si)
   if [ $OS = Ubuntu ]
   then
-    if $INSTALL_APT_DEPENDENCIES
+    if $INSTALL_APT_DEPENDENCIES && $NOT_CLONE_ONLY
     then
       sudo apt-get update
       sudo apt-get -y install ${APT_DEPENDENCIES}
@@ -305,7 +320,7 @@ then
   fi
 else
   export OS=Windows
-  if [ "x$WITH_PYTHON_SUPPORT" == xON ]
+  if [ "x$WITH_PYTHON_SUPPORT" == xON ] && $NOT_CLONE_ONLY
   then
     pip install ${PIP_DEPENDENCIES}
   fi
@@ -393,6 +408,10 @@ build_project()
 build_git_dependency_configure_and_build()
 {
   clone_git_dependency $1 "$SOURCE_DIR"
+  if $CLONE_ONLY
+  then
+    return
+  fi
   echo "--> Compiling $git_dep (branch $git_dep_branch)"
   mkdir -p "$SOURCE_DIR/$git_dep/build"
   cd "$SOURCE_DIR/$git_dep/build"
@@ -426,6 +445,10 @@ build_git_dependency()
   if $BUILD_TESTING
   then
     build_git_dependency_configure_and_build $1
+    if $CLONE_ONLY
+    then
+      return
+    fi
     ctest -C ${BUILD_TYPE}
     if [ $? -ne 0 ]
     then
@@ -448,6 +471,10 @@ build_git_dependency_no_test()
 build_catkin_git_dependency()
 {
   clone_git_dependency $1 "$2/src"
+  if $CLONE_ONLY
+  then
+    return
+  fi
   echo "--> Compiling $git_dep (branch $git_dep_branch)"
   cd $2
   catkin_make || (echo "catkin build failed for $git_dep" && exit 1)
@@ -459,7 +486,7 @@ build_catkin_git_dependency()
 
 if $WITH_ROS_SUPPORT
 then
-  if [ ! -e /opt/ros/${ROS_DISTRO}/setup.bash ]
+  if [ ! -e /opt/ros/${ROS_DISTRO}/setup.bash ] && $NOT_CLONE_ONLY
   then
     if [ $OS = Ubuntu ]
     then
@@ -473,23 +500,32 @@ then
       exit 1
     fi
   fi
-  . /opt/ros/${ROS_DISTRO}/setup.bash
+  if $NOT_CLONE_ONLY
+  then
+    . /opt/ros/${ROS_DISTRO}/setup.bash
+  fi
   CATKIN_DATA_WORKSPACE=$SOURCE_DIR/catkin_data_ws
   CATKIN_DATA_WORKSPACE_SRC=${CATKIN_DATA_WORKSPACE}/src/
   mkdir -p ${CATKIN_DATA_WORKSPACE_SRC}
-  cd ${CATKIN_DATA_WORKSPACE_SRC}
-  catkin_init_workspace || true
-  cd ${CATKIN_DATA_WORKSPACE}
-  catkin_make
-  . $CATKIN_DATA_WORKSPACE/devel/setup.bash
+  if $NOT_CLONE_ONLY
+  then
+    cd ${CATKIN_DATA_WORKSPACE_SRC}
+    catkin_init_workspace || true
+    cd ${CATKIN_DATA_WORKSPACE}
+    catkin_make
+    . $CATKIN_DATA_WORKSPACE/devel/setup.bash
+  fi
   CATKIN_WORKSPACE=$SOURCE_DIR/catkin_ws
   CATKIN_WORKSPACE_SRC=${CATKIN_WORKSPACE}/src/
   mkdir -p ${CATKIN_WORKSPACE_SRC}
-  cd ${CATKIN_WORKSPACE_SRC}
-  catkin_init_workspace || true
-  cd ${CATKIN_WORKSPACE}
-  catkin_make
-  . $CATKIN_WORKSPACE/devel/setup.bash
+  if $NOT_CLONE_ONLY
+  then
+    cd ${CATKIN_WORKSPACE_SRC}
+    catkin_init_workspace || true
+    cd ${CATKIN_WORKSPACE}
+    catkin_make
+    . $CATKIN_WORKSPACE/devel/setup.bash
+  fi
 fi
 
 ###############################
@@ -517,6 +553,12 @@ then
   build_catkin_git_dependency jrl-umi3218/mc_rtc_msgs $CATKIN_DATA_WORKSPACE
 else
   build_git_dependency jrl-umi3218/mc_rtc_data
+fi
+
+if $CLONE_ONLY
+then
+  echo "Cloned every mc_rtc dependencies"
+  exit 0
 fi
 
 ##########################

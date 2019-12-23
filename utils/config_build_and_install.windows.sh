@@ -13,10 +13,14 @@ build_system_dependency()
     if [ ! -d $SRC ]
     then
       git clone --recursive https://github.com/$REPO $SRC
+      cd $SRC
+      git checkout $REF
+    fi
+    if $CLONE_ONLY
+    then
+      return
     fi
     mkdir -p $SRC/build
-    cd $SRC
-    git checkout $REF
     cd $SRC/build
     cmake ../ -DCMAKE_BUILD_TYPE=$BUILD_TYPE         \
               -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX \
