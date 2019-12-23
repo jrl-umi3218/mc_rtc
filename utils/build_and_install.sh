@@ -30,6 +30,7 @@ BUILD_TYPE="RelWithDebInfo"
 BUILD_TESTING="true"
 INSTALL_APT_DEPENDENCIES="true"
 CLONE_ONLY="false"
+SKIP_UPDATE="false"
 if command -v nproc > /dev/null
 then
    BUILD_CORE=`nproc`
@@ -78,6 +79,7 @@ readonly HELP_STRING="$(basename $0) [OPTIONS] ...
     --ros-distro                    NAME          : the ros distro to use                            (default $ROS_DISTRO)
     --install-system-dependencies      {true, false} : whether to install system packages            (default $INSTALL_APT_DEPENDENCIES)
     --clone-only                       {true, false} : only perform cloning                          (default $CLONE_ONLY)
+    --skip-update                      {true, false} : skip git update                               (default $SKIP_UPDATE)
 "
 
 #helper for parsing
@@ -174,6 +176,12 @@ do
         i=$(($i+1))
         CLONE_ONLY="${!i}"
         check_true_false --clone-only "$CLONE_ONLY"
+        ;;
+
+        --skip-update)
+        i=$(($i+1))
+        SKIP_UPDATE="${!i}"
+        check_true_false --skip-update "$SKIP_UPDATE"
         ;;
 
         -j|--build-core)
@@ -358,6 +366,10 @@ clone_git_dependency()
   then
     git_clone -b $git_dep_branch "$git_dep_uri" "$git_dep"
   else
+    if $SKIP_UPDATE
+    then
+      return
+    fi
     pushd .
     cd "$git_dep"
     git_update
@@ -565,8 +577,11 @@ fi
 #  --  Build mc_rtc  --  #
 ##########################
 cd $mc_rtc_dir
-git submodule sync || true
-git submodule update --init
+if $SKIP_UPDATE
+then
+  git submodule sync || true
+  git submodule update --init
+fi
 mkdir -p build
 cd build
 if $BUILD_TESTING
