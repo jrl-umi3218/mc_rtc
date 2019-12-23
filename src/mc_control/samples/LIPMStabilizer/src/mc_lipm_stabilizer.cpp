@@ -20,9 +20,3 @@ void LIPMStabilizerController::reset(const mc_control::ControllerResetData & res
 {
   mc_control::fsm::Controller::reset(reset_data);
 }
-
-sva::PTransformd LIPMStabilizerController::anchorFrame(const mc_rbdyn::Robot & robot) const
-{
-  // XXX should be querying anchor frame from Stabilizer instead
-  return sva::interpolate(robot.surfacePose("LeftFootCenter"), robot.surfacePose("RightFootCenter"), 0.5);
-}

@@ -16,8 +16,6 @@ struct MC_CONTROL_DLLAPI LIPMStabilizerController : public mc_control::fsm::Cont
 
   void reset(const mc_control::ControllerResetData & reset_data) override;
 
-  sva::PTransformd anchorFrame(const mc_rbdyn::Robot &) const override;
-
 private:
   mc_rtc::Configuration config_;
 };

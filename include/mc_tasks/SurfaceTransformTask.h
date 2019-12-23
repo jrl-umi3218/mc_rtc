@@ -70,7 +70,7 @@ public:
   void targetSurface(unsigned int robotIndex, const std::string & surfaceName, const sva::PTransformd & offset);
 
   /*! \brief Retrieve the controlled surface name */
-  std::string surface()
+  const std::string & surface()
   {
     return surfaceName;
   }

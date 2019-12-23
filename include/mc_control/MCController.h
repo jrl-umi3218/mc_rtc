@@ -115,11 +115,30 @@ public:
    * See the specific requirements for the active observers in your controller.
    *
    * @returns An anchor frame in-between the feet.
-   *
-   * @throws std::runtime_error Default implemetation throws. Please override this function in your controller when
-   * required.
    */
-  virtual sva::PTransformd anchorFrame(const mc_rbdyn::Robot & robot) const;
+  const sva::PTransformd & anchorFrame() const;
+
+  /**
+   * @brief Sets the anchor frame
+   * @param anchor Anchor frame
+   *
+   * \see const sva::PTransformd & anchorFrame() const;
+   */
+  void anchorFrame(const sva::PTransformd & anchor);
+
+  /**
+   * @brief Returns the anchor frame computed from the real robot
+   *
+   * \see const sva::PTransformd & anchorFrame() const;
+   */
+  const sva::PTransformd & anchorFrameReal() const;
+  /**
+   * @brief Sets the real robot's anchor frame
+   * @param anchor Anchor frame
+   *
+   * \see const sva::PTransformd & anchorFrameReal() const;
+   */
+  void anchorFrameReal(const sva::PTransformd & anchor);
 
   /**
    * WARNING EXPERIMENTAL
@@ -283,6 +302,15 @@ protected:
    *
    * Provided by MCGlobalController */
   std::vector<std::pair<mc_observers::ObserverPtr, bool>> pipelineObservers_;
+
+  /**
+   * Anchor frame used by the kinematic observers
+   *
+   * \note To be replaced in the future by a more generic message-passing mechanism
+   */
+  sva::PTransformd anchorFrame_ = sva::PTransformd::Identity();
+  sva::PTransformd anchorFrameReal_ = sva::PTransformd::Identity();
+
   /** Logger provided by MCGlobalController */
   std::shared_ptr<mc_rtc::Logger> logger_;
   /** GUI state builder */

@@ -201,6 +201,16 @@ public:
     return contacts_.at(ContactState::Right).anklePose();
   }
 
+  const std::string & leftFootSurface() const
+  {
+    return leftFootTask->surface();
+  }
+
+  const std::string & rightFootSurface() const
+  {
+    return rightFootTask->surface();
+  }
+
   /**
    * @brief Interpolation paremeter between left and right foot
    *
@@ -219,7 +229,17 @@ public:
    */
   sva::PTransformd anchorFrame() const
   {
-    return sva::interpolate(leftFootTask->surfacePose(), rightFootTask->surfacePose(), leftFootRatio_);
+    return sva::interpolate(robot().surfacePose(leftFootTask->surface()), robot().surfacePose(rightFootTask->surface()),
+                            leftFootRatio_);
+  }
+
+  /**
+   * @brief Returns the anchor frame computed from real robot
+   */
+  sva::PTransformd anchorFrameReal() const
+  {
+    return sva::interpolate(realRobot().surfacePose(leftFootTask->surface()),
+                            realRobot().surfacePose(rightFootTask->surface()), leftFootRatio_);
   }
 
   /** Update H-representation of contact wrench cones.

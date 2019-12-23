@@ -47,16 +47,15 @@ jvrc1:
 # Implement some additional text states
 states:
   MinimalStabilizerState:
-    base: MetaTasks
-    tasks:
-      StabilizerTask:
-        type: lipm_stabilizer
-        robotIndex: 0
-        # start in enabled/disabled state
-        enabled: true
+    base: StabilizerStanding
+    StabilizerConfig:
+      type: lipm_stabilizer
+      robotIndex: 0
+      # start in enabled/disabled state
+      enabled: true
 
   CustomConfigurationStabilizerState:
-    base: MetaTasks
+    base: MinimalStabilizerState
 
     # Add contacts to the solver.
     # Note that in order for the stabilizer to work, roll and pitch DoF need to be free to allow for admittance
@@ -73,76 +72,69 @@ states:
       r2Surface: AllGround
       dof: [0, 0, 1, 1, 1, 0]
 
-    tasks:
-      StabilizerTask:
-        type: lipm_stabilizer
-        robotIndex: 0
-        enabled: true
+    StabilizerConfig:
+      robotIndex: 0
+      enabled: true
 
-        ###########################
-        ## Stabilizer configuration
-        ###########################
-        # Default values for these robot-specific parameters are set in the corresponding robot module.
-        # You may choose to override any of them here, with due caution.
-        hrp2_drc:
-          leftFootSurface: LeftFootCenter
-          rightFootSurface: RightFootCenter
-          friction: 0.8
-          torsoBodyName: CHEST_LINK1
-          # Configuration  of the QP tasks used by the stabilizer
-          tasks:
-            com:
-              stiffness: [1000, 1000, 100]
-              weight: 1000
-              active_joints: [Root, RLEG_JOINT0, RLEG_JOINT1, RLEG_JOINT2, RLEG_JOINT3, RLEG_JOINT4, RLEG_JOINT5, LLEG_JOINT0, LLEG_JOINT1, LLEG_JOINT2, LLEG_JOINT3, LLEG_JOINT4, LLEG_JOINT5]
-              height: 0.87
-              max_height: 0.92
-              min_height: 0.6
-            contact:
-              damping: 300
-              stiffness: 1
-              weight: 10000
-            swing_foot:
-              stiffness: 2000
-              weight: 500
+      ###########################
+      ## Stabilizer configuration
+      ###########################
+      # Default values for these robot-specific parameters are set in the corresponding robot module.
+      # You may choose to override any of them here, with due caution.
+      hrp2_drc:
+        leftFootSurface: LeftFootCenter
+        rightFootSurface: RightFootCenter
+        friction: 0.8
+        torsoBodyName: CHEST_LINK1
+        # Configuration  of the QP tasks used by the stabilizer
+        tasks:
+          com:
+            stiffness: [1000, 1000, 100]
+            weight: 1000
+            active_joints: [Root, RLEG_JOINT0, RLEG_JOINT1, RLEG_JOINT2, RLEG_JOINT3, RLEG_JOINT4, RLEG_JOINT5, LLEG_JOINT0, LLEG_JOINT1, LLEG_JOINT2, LLEG_JOINT3, LLEG_JOINT4, LLEG_JOINT5]
+            height: 0.87
+            max_height: 0.92
+            min_height: 0.6
+          contact:
+            damping: 300
+            stiffness: 1
+            weight: 10000
 
-          # Weights for the force-distribution QP
-          fdqp_weights:
-            net_wrench: 10000
-            ankle_torque: 100
-            pressure: 1
+        # Weights for the force-distribution QP
+        fdqp_weights:
+          net_wrench: 10000
+          ankle_torque: 100
+          pressure: 1
 
-          # Vertical drift frequency
-          vdc:
-            frequency: 1
-            stiffness: 1000
+        # Vertical drift frequency
+        vdc:
+          frequency: 1
+          stiffness: 1000
 
-          # Admittance coefficients (force-control)
-          admittance:
-            com: [0, 0]
-            cop: [0.001, 0.001]
-            dfz: 0.0001
-            dfz_damping: 0
+        # Admittance coefficients (force-control)
+        admittance:
+          com: [0, 0]
+          cop: [0.001, 0.001]
 
-          ########################
-          # Gains for DCM tracking
-          ########################
-          # These are the main gains of the stabilizer.
-          dcm_tracking:
-            gains:
-              prop: 3
-              integral: 20
-              deriv: 0.5
-            derivator_time_constant: 5
-            integrator_time_constant: 30
+        ########################
+        # Gains for DCM tracking
+        ########################
+        # These are the main gains of the stabilizer.
+        dcm_tracking:
+          gains:
+            prop: 3
+            integral: 20
+            deriv: 0.5
+          derivator_time_constant: 5
+          integrator_time_constant: 30
 
-        # Change some parameters for another robot
-        jvrc1:
-          dcm_tracking:
-            gains:
-              prop: 4
-              integral: 10
-              deriv: 0.5
+      # Change some parameters for another robot
+      jvrc1:
+        dcm_tracking:
+          gains:
+            prop: 4
+            integral: 10
+            deriv: 0.5
 
   ####
   # States to handle the various support configuration of the stabilizer:
@@ -153,7 +145,7 @@ states:
   # ensure that a suitable tasks is added to the solver to control the free foot.
   ####
   StabilizerGoStanding:
-    base: StabilizerStanding
+    base: MinimalStabilizerState
     # left foot ratio
     # 0: on left foot
     # 1: on right foot
@@ -179,10 +171,12 @@ states:
   StabilizerLeftSupport:
     base: StabilizerGoLeft
     contactState: Left
+    completion: {}
 
   StabilizerRightSupport:
     base: StabilizerGoRight
     contactState: Right
+    completion: {}
 
   ####
   # Tasks to handle the free foot
@@ -216,8 +210,9 @@ states:
         type: admittance
         robotIndex: 0
         surface: "RightFootCenter"
-        stiffness: 5
-        admittance: [0,0,0,0,0,0.001]
+        stiffness: [10, 10, 10, 10, 10, 10]
+        damping: [6.3, 6.3, 6.3, 6.3, 6.3, 300]
+        admittance: [0,0,0,0,0,0.005]
         wrench:
          force: [0, 0, 20]
          couple: [0, 0, 0]
@@ -226,8 +221,8 @@ states:
         targetRotation: [0, 0, 0]
         completion:
           wrench:
-           force: [0, 0, 20]
-           couple: [0, 0, 0]
+            force: [.nan, .nan, 20]
+            couple: [.nan, .nan, .nan]
 
   PutLeftSwingFootDown:
     base: PutRightSwingFootDown
@@ -243,10 +238,11 @@ states:
   # Lift and put down the right foot
   StabilizerLiftRightFoot:
     base: Parallel
-    states: [LiftRightSwingFoot, StabilizerLeftSupport]
+    states: [StabilizerLeftSupport, LiftRightSwingFoot]
+
   StabilizerPutRightFoot:
     base: Parallel
-    states: [PutRightSwingFootDown, StabilizerLeftSupport]
+    states: [StabilizerLeftSupport, PutRightSwingFootDown]
 
   # Lift and put down the left foot
   StabilizerLiftLeftFoot:
@@ -303,6 +299,7 @@ states:
 transitions:
 - [MinimalStabilizerState, Custom, CustomConfigurationStabilizerState, Strict]
 - [MinimalStabilizerState, Standing, StabilizerStanding, Strict]
+- [CustomConfigurationStabilizerState, Custom, MinimalStabilizerState, Strict]
   # FSM to move CoM to right foot and lift the left one
 - [StabilizerStanding, Lift left foot (Auto), FSMLiftLeftFootAuto, Strict]
 - [FSMLiftLeftFootAuto, OK, StabilizerStanding, Auto]

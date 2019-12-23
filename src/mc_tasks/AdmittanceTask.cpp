@@ -78,11 +78,6 @@ void AdmittanceTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurat
   {
     admittance(config("admittance"));
   }
-  if(config.has("damping"))
-  {
-    double d = config("damping");
-    damping(d);
-  }
   else if(config.has("targetPose"))
   {
     targetPose(config("targetPose"));
