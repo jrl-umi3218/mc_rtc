@@ -1,7 +1,7 @@
 StabilizerStanding:
   base: StabilizerStandingState
-  comStiffness: 5
-  StabilizerTask:
+  stiffness: 5
+  StabilizerConfig:
     type: lipm_stabilizer
     robotIndex: 0
     enabled: true

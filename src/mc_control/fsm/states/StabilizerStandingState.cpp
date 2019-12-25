@@ -2,6 +2,7 @@
 #include <mc_control/fsm/states/StabilizerStandingState.h>
 #include <mc_rbdyn/World.h>
 #include <mc_tasks/MetaTaskLoader.h>
+#include <mc_tasks/lipm_stabilizer/StabilizerTask.h>
 
 namespace mc_control
 {
@@ -21,76 +22,140 @@ StabilizerStandingState::StabilizerStandingState()
 
 void StabilizerStandingState::configure(const mc_rtc::Configuration & config)
 {
-  config("target", leftFootRatio_);
-  config("stiffness", K_);
-  if(config.has("damping"))
-  {
-    D_ = config("damping");
-  }
-  else
-  {
-    D_ = 2 * std::sqrt(K_);
-  }
   if(config.has("completion"))
   {
-    if(config("completion").empty())
-    {
-      hasCompletion_ = false;
-    }
-    else
-    {
-      hasCompletion_ = true;
-      config("completion")("dcmEval", dcmThreshold_);
-    }
+    hasCompletion_ = !config("completion").empty();
+    config("completion")("dcmEval", dcmThreshold_);
   }
-  config("contactState", contactState_);
+
   config_.load(config);
 }
 
 void StabilizerStandingState::start(Controller & ctl)
 {
+  config_("stiffness", K_);
+  D_ = config_("damping", 2 * std::sqrt(K_));
+  config_("contactState", contactState_);
 
+  using namespace std::chrono;
+  auto startTime = high_resolution_clock::now();
   // create stabilizer task from config
   stabilizerTask_ = mc_tasks::MetaTaskLoader::load<mc_tasks::lipm_stabilizer::StabilizerTask>(
       ctl.solver(), config_("StabilizerConfig", mc_rtc::Configuration{}));
+  auto endTime = high_resolution_clock::now();
+  double runTime = 1000. * duration_cast<duration<double>>(endTime - startTime).count();
+  LOG_INFO("Allocation time: " << runTime);
+  stabilizerTask_->contactState(contactState_);
   ctl.solver().addTask(stabilizerTask_);
 
+  // Reset linear inverted pendulum model, used here to compute stabilizer
+  // references
   pendulum_.reset(ctl.robot().com(), ctl.robot().comVelocity(), ctl.robot().comAcceleration());
 
-  stabilizerTask_->contactState(contactState_);
-  target(leftFootRatio_);
-
-  if(contactState_ == ContactState::DoubleSupport)
+  // Initialize stabilizer targets. Defaults to current CoM/CoP
+  config_("comHeight", stabilizerTask_->config().comHeight);
+  if(config_.has("above"))
   {
-    ctl.gui()->addElement({"Standing"}, mc_rtc::gui::Button("Left foot", [this, &ctl]() { target(0); }),
-                          mc_rtc::gui::Button("Center", [this, &ctl]() { target(0.5); }),
-                          mc_rtc::gui::Button("Right foot", [this, &ctl]() { target(1); }));
+    const std::string above = config_("above");
+    if(above == "LeftAnkle")
+    {
+      targetCoP(stabilizerTask_->leftContactAnklePose().translation());
+    }
+    else if(above == "RightAnkle")
+    {
+      targetCoP(stabilizerTask_->rightContactAnklePose().translation());
+    }
+    else if(above == "Center")
+    {
+      targetCoP(sva::interpolate(stabilizerTask_->leftContactAnklePose(), stabilizerTask_->rightContactAnklePose(), 0.5)
+                    .translation());
+    }
+    else if(ctl.realRobot().hasSurface(above))
+    {
+      targetCoP(ctl.realRobot().surfacePose(above).translation());
+    }
+    else
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, "[StabilizerStandingState] Requested standing above "
+                                                  << above
+                                                  << " but this is neither one of the state target (LeftAnkle, "
+                                                     "RightAnkle, Center), nor a valid robot surface");
+    }
   }
-
-  output("OK");
-}
-
-void StabilizerStandingState::target(double leftFootRatio)
-{
-  leftFootRatio_ = leftFootRatio;
-
-  if(contactState_ == ContactState::DoubleSupport)
+  else if(config_.has("com"))
   {
-    const auto & lf = stabilizerTask_->leftContactAnklePose();
-    const auto & rf = stabilizerTask_->rightContactAnklePose();
-    sva::PTransformd X_0_lfr = sva::interpolate(lf, rf, leftFootRatio_);
-    copTarget_ = X_0_lfr.translation();
-  }
-  else if(contactState_ == ContactState::Left)
-  {
-    copTarget_ = stabilizerTask_->leftContactAnklePose().translation();
+    targetCoM(config_("com"));
   }
   else
   {
-    copTarget_ = stabilizerTask_->rightContactAnklePose().translation();
+    targetCoM(ctl.realRobot().com());
   }
 
-  comTarget_ = copTarget_ + Eigen::Vector3d{0., 0., stabilizerTask_->config().comHeight};
+  if(contactState_ == ContactState::DoubleSupport)
+  {
+    ctl.gui()->addElement(
+        {"FSM", "Standing", "Move"}, mc_rtc::gui::ElementsStacking::Horizontal,
+        mc_rtc::gui::Button("Left foot",
+                            [this]() { targetCoP(stabilizerTask_->leftContactAnklePose().translation()); }),
+        mc_rtc::gui::Button("Center",
+                            [this]() {
+                              targetCoP(sva::interpolate(stabilizerTask_->leftContactAnklePose(),
+                                                         stabilizerTask_->rightContactAnklePose(), 0.5)
+                                            .translation());
+                            }),
+        mc_rtc::gui::Button("Right foot",
+                            [this]() { targetCoP(stabilizerTask_->rightContactAnklePose().translation()); }));
+    ctl.gui()->addElement(
+        {"FSM", "Standing", "Move"},
+        mc_rtc::gui::ArrayInput("CoM Target", [this]() -> const Eigen::Vector3d & { return comTarget_; },
+                                [this](const Eigen::Vector3d & com) { targetCoM(com); }),
+        mc_rtc::gui::ArrayInput("Move CoM", []() -> Eigen::Vector3d { return Eigen::Vector3d::Zero(); },
+                                [this](const Eigen::Vector3d & com) { targetCoM(comTarget_ + com); }));
+  }
+
+  ctl.gui()->addElement(
+      {"FSM", "Standing", "Gains"},
+      mc_rtc::gui::NumberInput("CoM stiffness", [this]() { return K_; }, [this](const double & s) { K_ = s; }),
+      mc_rtc::gui::NumberInput("CoM damping", [this]() { return D_; }, [this](const double & d) { D_ = d; }),
+      mc_rtc::gui::NumberInput("CoM stiffness & damping", [this]() { return K_; },
+                               [this](const double & g) {
+                                 K_ = g;
+                                 D_ = 2 * std::sqrt(K_);
+                               }));
+
+  ctl.logger().addLogEntry(name() + "_stiffness", [this]() { return K_; });
+  ctl.logger().addLogEntry(name() + "_damping", [this]() { return D_; });
+  ctl.logger().addLogEntry(name() + "_targetCoM", [this]() -> const Eigen::Vector3d & { return comTarget_; });
+  ctl.logger().addLogEntry(name() + "_targetCoP", [this]() -> const Eigen::Vector3d & { return copTarget_; });
+}
+
+void StabilizerStandingState::targetCoP(const Eigen::Vector3d & cop)
+{
+  comTarget_ = cop + Eigen::Vector3d{0., 0., stabilizerTask_->config().comHeight};
+  copTarget_ = cop;
+}
+
+void StabilizerStandingState::targetCoM(const Eigen::Vector3d & com)
+{
+  double copHeight = 0;
+  if(contactState_ == ContactState::DoubleSupport)
+  {
+    copHeight = (stabilizerTask_->leftContactAnklePose().translation().z()
+                 + stabilizerTask_->rightContactAnklePose().translation().z())
+                / 2;
+  }
+  else if(contactState_ == ContactState::Left)
+  {
+    copHeight = stabilizerTask_->leftContactAnklePose().translation().z();
+  }
+  else
+  {
+    copHeight = stabilizerTask_->rightContactAnklePose().translation().z();
+  }
+
+  // Initialize stabilizer at current CoM position
+  comTarget_ = com;
+  copTarget_ = Eigen::Vector3d{comTarget_.x(), comTarget_.y(), copHeight};
 }
 
 bool StabilizerStandingState::run(Controller & ctl)
@@ -99,7 +164,7 @@ bool StabilizerStandingState::run(Controller & ctl)
   const Eigen::Vector3d & comd_ = pendulum_.comd();
 
   Eigen::Vector3d comdd = K_ * (comTarget_ - com_) - D_ * comd_;
-  Eigen::Vector3d n = Eigen::Vector3d{0., 0., 1.};
+  Eigen::Vector3d n = mc_rbdyn::world::vertical;
   double lambda = n.dot(comdd - world::gravity) / n.dot(com_ - copTarget_);
   Eigen::Vector3d zmp = com_ + (world::gravity - comdd) / lambda;
 
@@ -113,12 +178,14 @@ bool StabilizerStandingState::run(Controller & ctl)
 
   if(!hasCompletion_)
   {
+    output("OK");
     return true;
   }
   if(std::fabs(stabilizerTask_->measuredDCM().x() - comTarget_.x()) < dcmThreshold_.x()
      && std::fabs(stabilizerTask_->measuredDCM().y() - comTarget_.y()) < dcmThreshold_.y()
      && std::fabs(stabilizerTask_->measuredDCM().z() - comTarget_.z()) < dcmThreshold_.z())
   {
+    output("OK");
     return true;
   }
   return false;
@@ -127,7 +194,11 @@ bool StabilizerStandingState::run(Controller & ctl)
 void StabilizerStandingState::teardown(Controller & ctl)
 {
   ctl.solver().removeTask(stabilizerTask_);
-  ctl.gui()->removeCategory({"Standing"});
+  ctl.gui()->removeCategory({"FSM", "Standing"});
+  ctl.logger().removeLogEntry(name() + "_stiffness");
+  ctl.logger().removeLogEntry(name() + "_damping");
+  ctl.logger().removeLogEntry(name() + "_targetCoM");
+  ctl.logger().removeLogEntry(name() + "_targetCoP");
 }
 
 } // namespace fsm

@@ -149,18 +149,18 @@ states:
     # left foot ratio
     # 0: on left foot
     # 1: on right foot
-    target: 0.5
+    above: Center
     contactState: DoubleSupport
     completion:
       dcmEval: [0.005, 0.005, 0.05]
 
   StabilizerGoLeft:
     base: StabilizerGoStanding
-    target: 0
+    above: LeftAnkle
 
   StabilizerGoRight:
     base: StabilizerGoStanding
-    target: 1
+    above: RightAnkle
 
   StabilizerStayLeft:
     base: StabilizerGoLeft
@@ -214,14 +214,14 @@ states:
         damping: [6.3, 6.3, 6.3, 6.3, 6.3, 300]
         admittance: [0,0,0,0,0,0.005]
         wrench:
-         force: [0, 0, 20]
+         force: [0, 0, 30]
          couple: [0, 0, 0]
         moveWorld:
           translation: [0, 0, -0.1]
         targetRotation: [0, 0, 0]
         completion:
           wrench:
-            force: [.nan, .nan, 20]
+            force: [.nan, .nan, 30]
             couple: [.nan, .nan, .nan]
 
   PutLeftSwingFootDown:
@@ -287,7 +287,8 @@ states:
   FSMAlternateFeetLiftingAuto:
     base: "Meta"
     transitions:
-    - [FSMLiftLeftFootAuto, OK, FSMLiftRightFootAuto]
+    - [FSMLiftLeftFootAuto, OK, FSMLiftRightFootAuto, Auto]
+    - [FSMLiftRightFootAuto, OK, StabilizerGoStanding, Auto]
 
 ###
 # Transitions map
@@ -302,17 +303,19 @@ transitions:
 - [CustomConfigurationStabilizerState, Custom, MinimalStabilizerState, Strict]
   # FSM to move CoM to right foot and lift the left one
 - [StabilizerStanding, Lift left foot (Auto), FSMLiftLeftFootAuto, Strict]
-- [FSMLiftLeftFootAuto, OK, StabilizerStanding, Auto]
+- [FSMLiftLeftFootAuto, OK, StabilizerGoStanding, Auto]
 - [StabilizerStanding, Lift left foot (Manual), FSMLiftLeftFootManual, Strict]
-- [FSMLiftLeftFootManual, OK, StabilizerStanding, Strict]
+- [FSMLiftLeftFootManual, OK, StabilizerGoStanding, Strict]
   # FSM to move CoM to right foot and lift the left one
 - [StabilizerStanding, Lift right foot (Auto), FSMLiftRightFootAuto, Strict]
-- [FSMLiftRightFootAuto, OK, StabilizerStanding, Auto]
+- [FSMLiftRightFootAuto, OK, StabilizerGoStanding, Auto]
 - [StabilizerStanding, Lift right foot (Manual), FSMLiftRightFootManual, Strict]
-- [FSMLiftRightFootManual, OK, StabilizerStanding, Strict]
+- [FSMLiftRightFootManual, OK, StabilizerGoStanding, Strict]
   # Alternate between lifting left and right foot
 - [StabilizerStanding, Alternate between feet (Auto), FSMAlternateFeetLiftingAuto, Auto]
 - [FSMAlternateFeetLiftingAuto, OK, StabilizerStanding, Auto]
+  # Go back to list of choices
+- [StabilizerGoStanding, OK, StabilizerStanding]
 
 # Initial state
 init: MinimalStabilizerState
