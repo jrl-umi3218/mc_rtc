@@ -181,9 +181,23 @@ public:
    * corresponding mc_rbdyn::Contact to the solver and free the roll/pitch rotation and z translation (in contact
    * frame). This assumes the foot surfaces to have x pointing towards the front of the foot, and z from the ground up.
    *
+   * \param solver The QP solver to which the contact tasks will be added. Note
+   * that this method will not add contact constraints to the QPSolver. If you
+   * wish to do so, bear in mind that for the stabilizer to work properly, the
+   * contact's dofs along the x and y rotations and z translation need to be
+   * free.
    */
   void setContacts(mc_solver::QPSolver & solver,
                    const std::vector<std::pair<ContactState, sva::PTransformd>> & contacts);
+
+  /** Helper to set contacts from the current surface pose
+   *
+   * @param contacts Contacts to add. Their pose will be determined set from the
+   * realRobot estimate of the foot surface pose. Use with caution.
+   *
+   * \see void setContacts(mc_solver::QPSolver &, const std::vector<std::pair<ContactState, sva::PTransformd>> &);
+   */
+  void setContacts(mc_solver::QPSolver & solver, const std::vector<ContactState> & contacts);
 
   const sva::PTransformd & leftContactAnklePose() const
   {

@@ -700,6 +700,16 @@ void StabilizerTask::checkGains()
   clampInPlace(c_.dfzAdmittance, 0., MAX_DFZ_ADMITTANCE, "DFz admittance");
 }
 
+void StabilizerTask::setContacts(mc_solver::QPSolver & solver, const std::vector<ContactState> & contacts)
+{
+  std::vector<std::pair<ContactState, sva::PTransformd>> addContacts;
+  for(const auto contact : contacts)
+  {
+    addContacts.push_back({contact, realRobot().surfacePose(footTasks[contact]->surface())});
+  }
+  setContacts(solver, addContacts);
+}
+
 void StabilizerTask::setContacts(mc_solver::QPSolver & solver,
                                  const std::vector<std::pair<ContactState, sva::PTransformd>> & contacts)
 {
