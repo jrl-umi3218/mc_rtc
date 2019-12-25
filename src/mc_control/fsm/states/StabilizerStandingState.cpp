@@ -35,17 +35,10 @@ void StabilizerStandingState::start(Controller & ctl)
 {
   config_("stiffness", K_);
   D_ = config_("damping", 2 * std::sqrt(K_));
-  config_("contactState", contactState_);
 
-  using namespace std::chrono;
-  auto startTime = high_resolution_clock::now();
   // create stabilizer task from config
   stabilizerTask_ = mc_tasks::MetaTaskLoader::load<mc_tasks::lipm_stabilizer::StabilizerTask>(
       ctl.solver(), config_("StabilizerConfig", mc_rtc::Configuration{}));
-  auto endTime = high_resolution_clock::now();
-  double runTime = 1000. * duration_cast<duration<double>>(endTime - startTime).count();
-  LOG_INFO("Allocation time: " << runTime);
-  stabilizerTask_->contactState(contactState_);
   ctl.solver().addTask(stabilizerTask_);
 
   // Reset linear inverted pendulum model, used here to compute stabilizer
@@ -91,7 +84,7 @@ void StabilizerStandingState::start(Controller & ctl)
     targetCoM(ctl.realRobot().com());
   }
 
-  if(contactState_ == ContactState::DoubleSupport)
+  if(stabilizerTask_->inDoubleSupport())
   {
     ctl.gui()->addElement(
         {"FSM", "Standing", "Move"}, mc_rtc::gui::ElementsStacking::Horizontal,
@@ -138,13 +131,13 @@ void StabilizerStandingState::targetCoP(const Eigen::Vector3d & cop)
 void StabilizerStandingState::targetCoM(const Eigen::Vector3d & com)
 {
   double copHeight = 0;
-  if(contactState_ == ContactState::DoubleSupport)
+  if(stabilizerTask_->inDoubleSupport())
   {
     copHeight = (stabilizerTask_->leftContactAnklePose().translation().z()
                  + stabilizerTask_->rightContactAnklePose().translation().z())
                 / 2;
   }
-  else if(contactState_ == ContactState::Left)
+  else if(stabilizerTask_->inContact(ContactState::Left))
   {
     copHeight = stabilizerTask_->leftContactAnklePose().translation().z();
   }

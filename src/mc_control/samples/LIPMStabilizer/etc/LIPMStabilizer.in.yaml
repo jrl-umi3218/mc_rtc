@@ -46,16 +46,8 @@ jvrc1:
     weight: 10.0
 # Implement some additional text states
 states:
-  MinimalStabilizerState:
-    base: StabilizerStanding
-    StabilizerConfig:
-      type: lipm_stabilizer
-      robotIndex: 0
-      # start in enabled/disabled state
-      enabled: true
-
   CustomConfigurationStabilizerState:
-    base: MinimalStabilizerState
+    base: StabilizerStanding
 
     # Add contacts to the solver.
     # Note that in order for the stabilizer to work, roll and pitch DoF need to be free to allow for admittance
@@ -145,12 +137,11 @@ states:
   # ensure that a suitable tasks is added to the solver to control the free foot.
   ####
   StabilizerGoStanding:
-    base: MinimalStabilizerState
+    base: StabilizerStanding
     # left foot ratio
     # 0: on left foot
     # 1: on right foot
     above: Center
-    contactState: DoubleSupport
     completion:
       dcmEval: [0.005, 0.005, 0.05]
 
@@ -170,13 +161,15 @@ states:
 
   StabilizerLeftSupport:
     base: StabilizerGoLeft
-    contactState: Left
     completion: {}
+    StabilizerConfig:
+      contacts: [Left]
 
   StabilizerRightSupport:
     base: StabilizerGoRight
-    contactState: Right
     completion: {}
+    StabilizerConfig:
+      contacts: [Right]
 
   ####
   # Tasks to handle the free foot
@@ -214,14 +207,14 @@ states:
         damping: [6.3, 6.3, 6.3, 6.3, 6.3, 300]
         admittance: [0,0,0,0,0,0.005]
         wrench:
-         force: [0, 0, 30]
+         force: [0, 0, 20]
          couple: [0, 0, 0]
         moveWorld:
           translation: [0, 0, -0.1]
         targetRotation: [0, 0, 0]
         completion:
           wrench:
-            force: [.nan, .nan, 30]
+            force: [.nan, .nan, 20]
             couple: [.nan, .nan, .nan]
 
   PutLeftSwingFootDown:
@@ -284,11 +277,17 @@ states:
     - [StabilizerLiftLeftFoot, OK, StabilizerPutLeftFoot, Strict]
     - [StabilizerPutLeftFoot, OK, StabilizerStayRight, Auto]
 
-  FSMAlternateFeetLiftingAuto:
+  FSMLiftLeftRightFeetAuto:
     base: "Meta"
     transitions:
     - [FSMLiftLeftFootAuto, OK, FSMLiftRightFootAuto, Auto]
     - [FSMLiftRightFootAuto, OK, StabilizerGoStanding, Auto]
+
+  FSMLiftRightLeftFeetAuto:
+    base: "Meta"
+    transitions:
+    - [FSMLiftRightFootAuto, OK, FSMLiftLeftFootAuto, Auto]
+    - [FSMLiftLeftFootAuto, OK, StabilizerGoStanding, Auto]
 
 ###
 # Transitions map
@@ -298,9 +297,8 @@ states:
 # Note: Handle with caution, but by forcing the transitions early, notably while putting the foot down, this FSM may be used to test disturbances to the stabilizer (eg early contact, early lift-off, etc). Be cautious that if triggered too early, this may result in high impact on the feet.
 ###
 transitions:
-- [MinimalStabilizerState, Custom, CustomConfigurationStabilizerState, Strict]
-- [MinimalStabilizerState, Standing, StabilizerStanding, Strict]
-- [CustomConfigurationStabilizerState, Custom, MinimalStabilizerState, Strict]
+- [StabilizerStanding, Custom, CustomConfigurationStabilizerState, Strict]
+- [CustomConfigurationStabilizerState, Custom, StabilizerStanding, Strict]
   # FSM to move CoM to right foot and lift the left one
 - [StabilizerStanding, Lift left foot (Auto), FSMLiftLeftFootAuto, Strict]
 - [FSMLiftLeftFootAuto, OK, StabilizerGoStanding, Auto]
@@ -312,8 +310,11 @@ transitions:
 - [StabilizerStanding, Lift right foot (Manual), FSMLiftRightFootManual, Strict]
 - [FSMLiftRightFootManual, OK, StabilizerGoStanding, Strict]
   # Alternate between lifting left and right foot
-- [StabilizerStanding, Alternate between feet (Auto), FSMAlternateFeetLiftingAuto, Auto]
-- [FSMAlternateFeetLiftingAuto, OK, StabilizerStanding, Auto]
+- [StabilizerStanding, Lift left then right (Auto), FSMLiftLeftRightFeetAuto, Auto]
+- [FSMLiftLeftRightFeetAuto, OK, StabilizerStanding, Auto]
+  # Alternate between lifting right and left foot
+- [StabilizerStanding, Alternate between feet (Auto), FSMLiftRightLeftFeetAuto, Auto]
+- [FSMLiftRightLeftFeetAuto, OK, StabilizerStanding, Auto]
   # Go back to list of choices
 - [StabilizerGoStanding, OK, StabilizerStanding]
 

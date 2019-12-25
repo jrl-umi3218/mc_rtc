@@ -70,7 +70,6 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
   std::string leftFootSurface;
   std::string rightFootSurface;
 
-  Eigen::Vector2d comAdmittance = Eigen::Vector2d::Zero(); /**< Admittance gains for CoM admittance control */
   Eigen::Vector2d copAdmittance = Eigen::Vector2d::Zero(); /**< Admittance gains for foot damping control */
 
   double dfzAdmittance = 1e-4; /**< Admittance for foot force difference control */
@@ -107,7 +106,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
 
   void load(const mc_rtc::Configuration & config)
   {
-    fdqpWeights = config("fdqp_weights");
+    config("fdqp_weights", fdqpWeights);
 
     config("leftFootSurface", leftFootSurface);
     config("rightFootSurface", rightFootSurface);
@@ -117,7 +116,6 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
     if(config.has("admittance"))
     {
       auto admittance = config("admittance");
-      admittance("com", comAdmittance);
       admittance("cop", copAdmittance);
       admittance("dfz", dfzAdmittance);
       admittance("dfz_damping", dfzDamping);
@@ -165,10 +163,16 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
 
       if(tasks.has("contact"))
       {
-        double d = tasks("contact")("damping");
-        double k = tasks("contact")("stiffness");
-        contactDamping = sva::MotionVecd({d, d, d}, {d, d, d});
-        contactStiffness = sva::MotionVecd({k, k, k}, {k, k, k});
+        if(tasks("contact").has("damping"))
+        {
+          double d = tasks("contact")("damping");
+          contactDamping = sva::MotionVecd({d, d, d}, {d, d, d});
+        }
+        if(tasks("contact").has("stiffness"))
+        {
+          double k = tasks("contact")("stiffness");
+          contactStiffness = sva::MotionVecd({k, k, k}, {k, k, k});
+        }
         tasks("contact")("stiffness", contactStiffness);
         tasks("contact")("weight", contactWeight);
       }
@@ -191,7 +195,6 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
     conf.add("rightFootSurface", rightFootSurface);
 
     conf.add("admittance");
-    conf("admittance").add("com", comAdmittance);
     conf("admittance")("cop", copAdmittance);
     conf("admittance")("dfz", dfzAdmittance);
     conf("admittance")("dfz_damping", dfzDamping);
@@ -230,8 +233,8 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
     conf("tasks")("contact").add("weight", contactWeight);
 
     conf.add("vdc");
-    conf("vdc")("frequency", vdcFrequency);
-    conf("vdc")("stiffness", vdcStiffness);
+    conf("vdc").add("frequency", vdcFrequency);
+    conf("vdc").add("stiffness", vdcStiffness);
     return conf;
   }
 };

@@ -86,9 +86,6 @@ protected:
 
   Eigen::Vector3d dcmThreshold_ = Eigen::Vector3d{0.01, 0.01, 0.01}; /**< Completion criteria threshold */
 
-  mc_tasks::lipm_stabilizer::ContactState contactState_ =
-      mc_tasks::lipm_stabilizer::ContactState::DoubleSupport; /**< Default contact state */
-
   mc_planning::Pendulum pendulum_; /** LIPM Pendulum model */
 
   double K_ = 5; /**< CoM tracking stiffness (set-point) */

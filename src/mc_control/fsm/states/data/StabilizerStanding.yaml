@@ -4,4 +4,13 @@ StabilizerStanding:
   StabilizerConfig:
     type: lipm_stabilizer
     robotIndex: 0
+    leftFootSurface: LeftFootCenter
+    rightFootSurface: RightFootCenter
     enabled: true
+    contacts: [Left, Right]
+    Left:
+      rotation: [0,0,0]
+      height: 0
+    Right:
+      rotation: [0,0,0]
+      height: 0

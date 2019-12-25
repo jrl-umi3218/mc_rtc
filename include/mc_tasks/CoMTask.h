@@ -52,6 +52,7 @@ public:
    */
   Eigen::Vector3d com();
 
+protected:
   void addToGUI(mc_rtc::gui::StateBuilder &) override;
   void addToLogger(mc_rtc::Logger & logger) override;
   void removeFromLogger(mc_rtc::Logger & logger) override;

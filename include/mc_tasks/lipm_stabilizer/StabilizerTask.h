@@ -143,12 +143,18 @@ public:
    */
   void disable();
 
-  /** Setup stabilizer configuration
+  /** Configure stabilizer's parameters from a stabilizer's configuration object
    *
    * @param config Stabilizer configuration. Default values can be found in the
    * RobotModule, and modified from YAML configuration or manually.
+   *
+   * \see load(mc_solver::QPSolver &, const mc_rtc::Configuration &) to set
+   * stabilizer targets and contacts from configuration
    */
   void configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & config);
+
+  /*! \brief Load targets and contacts from configuration */
+  void load(mc_solver::QPSolver &, const mc_rtc::Configuration & config) override;
 
   /**
    * @brief Get current stabilizer's configuration (including changes from GUI)
@@ -169,27 +175,15 @@ public:
    */
   void run();
 
-  /** Configure foot tasks for contact at a given location, and add contacts to
-   * the solver.
-   *
-   * - For all feet in contact, the current control foot position will be used as the contact frame
-   * - When in ContactState::LeftFoot or ContactState::RightFoot, the free foot is configured as a position task
-   * allowing to track a trajectory
+  /** Configure foot tasks for contact at a given location, and add contacts to the solver.
    *
    * \note To use the stabilizer with dynamics constraint, you need to add the
    * corresponding mc_rbdyn::Contact to the solver and free the roll/pitch rotation and z translation (in contact
    * frame). This assumes the foot surfaces to have x pointing towards the front of the foot, and z from the ground up.
    *
    */
-  void contactState(ContactState state);
-
-  /**
-   * @brief Get contact state.
-   */
-  ContactState contactState() const
-  {
-    return contactState_;
-  }
+  void setContacts(mc_solver::QPSolver & solver,
+                   const std::vector<std::pair<ContactState, sva::PTransformd>> & contacts);
 
   const sva::PTransformd & leftContactAnklePose() const
   {
@@ -201,14 +195,9 @@ public:
     return contacts_.at(ContactState::Right).anklePose();
   }
 
-  const std::string & leftFootSurface() const
+  const std::string & footSurface(ContactState s)
   {
-    return leftFootTask->surface();
-  }
-
-  const std::string & rightFootSurface() const
-  {
-    return rightFootTask->surface();
+    return footTasks[s]->surface();
   }
 
   /**
@@ -227,20 +216,11 @@ public:
    *
    * @return Anchor frame in-between the feet according to leftFootRatio()
    */
-  sva::PTransformd anchorFrame() const
-  {
-    return sva::interpolate(robot().surfacePose(leftFootTask->surface()), robot().surfacePose(rightFootTask->surface()),
-                            leftFootRatio_);
-  }
-
+  sva::PTransformd anchorFrame() const;
   /**
    * @brief Returns the anchor frame computed from real robot
    */
-  sva::PTransformd anchorFrameReal() const
-  {
-    return sva::interpolate(realRobot().surfacePose(leftFootTask->surface()),
-                            realRobot().surfacePose(rightFootTask->surface()), leftFootRatio_);
-  }
+  sva::PTransformd anchorFrameReal() const;
 
   /** Update H-representation of contact wrench cones.
    *
@@ -341,6 +321,16 @@ public:
     return measuredCoM_;
   }
 
+  bool inContact(ContactState state) const
+  {
+    return contacts_.count(state);
+  }
+
+  bool inDoubleSupport() const
+  {
+    return inContact(ContactState::Left) && inContact(ContactState::Right);
+  }
+
 private:
   /** Check that all gains are within boundaries.
    *
@@ -409,7 +399,7 @@ private:
   /** Get 6D contact admittance vector from 2D CoP admittance.
    *
    */
-  sva::ForceVecd contactAdmittance()
+  sva::ForceVecd contactAdmittance() const
   {
     return {{c_.copAdmittance.y(), c_.copAdmittance.x(), 0.}, {0., 0., 0.}};
   }
@@ -440,22 +430,23 @@ protected:
     return realRobots_.robot(robotIndex_);
   }
 
+private:
+  void addContact(mc_solver::QPSolver & solver, ContactState contactState, const sva::PTransformd & pose);
+
 protected:
-  std::map<ContactState, internal::Contact> contacts_;
+  std::unordered_map<ContactState, internal::Contact> contacts_;
+  std::unordered_map<ContactState, std::shared_ptr<mc_tasks::force::CoPTask>> footTasks;
+  std::vector<std::shared_ptr<mc_tasks::force::CoPTask>> contactTasks;
+
   std::vector<std::vector<Eigen::Vector3d>> supportPolygons_; /**< For GUI display */
   Eigen::Vector2d supportMin_ = Eigen::Vector2d::Zero();
   Eigen::Vector2d supportMax_ = Eigen::Vector2d::Zero();
   std::shared_ptr<mc_tasks::CoMTask> comTask;
-  std::shared_ptr<mc_tasks::force::CoPTask> leftFootTask;
-  std::shared_ptr<mc_tasks::force::CoPTask> rightFootTask;
   std::shared_ptr<mc_tasks::OrientationTask> pelvisTask; /**< Pelvis orientation task */
   std::shared_ptr<mc_tasks::OrientationTask> torsoTask; /**< Torso orientation task */
   const mc_rbdyn::Robots & robots_;
   const mc_rbdyn::Robots & realRobots_;
   unsigned int robotIndex_;
-  std::string leftFootSurface_ = "LeftFootCenter";
-  std::string rightFootSurface_ = "RightFootCenter";
-  double friction_ = 0.7;
 
   /** Stabilizer targets */
   Eigen::Vector3d comTarget_ = Eigen::Vector3d::Zero();
@@ -474,7 +465,6 @@ protected:
                          by the parameters set in the GUI */
   mc_rbdyn::lipm_stabilizer::StabilizerConfiguration
       c_; /* Online stabilizer configuration, can be set from the GUI. Defaults to defaultConfig_ */
-  ContactState contactState_ = ContactState::DoubleSupport;
   Eigen::QuadProgDense qpSolver_; /**< Least-squares solver for wrench distribution */
   Eigen::Matrix<double, 16, 6> wrenchFaceMatrix_; /**< Matrix of single-contact wrench cone inequalities */
   Eigen::Vector3d dcmAverageError_ = Eigen::Vector3d::Zero();

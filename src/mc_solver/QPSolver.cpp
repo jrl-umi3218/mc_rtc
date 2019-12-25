@@ -568,6 +568,11 @@ void QPSolver::logger(std::shared_ptr<mc_rtc::Logger> logger)
   }
 }
 
+std::shared_ptr<mc_rtc::Logger> QPSolver::logger() const
+{
+  return logger_;
+}
+
 void QPSolver::gui(std::shared_ptr<mc_rtc::gui::StateBuilder> gui)
 {
   if(gui_)
@@ -615,6 +620,12 @@ void QPSolver::gui(std::shared_ptr<mc_rtc::gui::StateBuilder> gui)
                                        mc_rtc::gui::FormDataComboInput{"R1", true, {"robots"}},
                                        mc_rtc::gui::FormDataComboInput{"R1 surface", true, {"surfaces", "$R1"}}));
   }
+}
+
+/** Access to the gui instance */
+std::shared_ptr<mc_rtc::gui::StateBuilder> QPSolver::gui() const
+{
+  return gui_;
 }
 
 void QPSolver::addTaskToGUI(mc_tasks::MetaTask * t)

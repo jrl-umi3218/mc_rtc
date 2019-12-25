@@ -28,7 +28,6 @@ using HrepXd = std::pair<Eigen::MatrixXd, Eigen::VectorXd>;
  */
 enum class MC_TASKS_DLLAPI ContactState
 {
-  DoubleSupport,
   Left,
   Right
 };
@@ -217,11 +216,7 @@ struct ConfigurationLoader<mc_tasks::lipm_stabilizer::ContactState>
   {
     using ContactState = mc_tasks::lipm_stabilizer::ContactState;
     const std::string & s = config;
-    if(s == "DoubleSupport")
-    {
-      return ContactState::DoubleSupport;
-    }
-    else if(s == "Left")
+    if(s == "Left")
     {
       return ContactState::Left;
     }
@@ -240,9 +235,7 @@ struct ConfigurationLoader<mc_tasks::lipm_stabilizer::ContactState>
   {
     using ContactState = mc_tasks::lipm_stabilizer::ContactState;
     mc_rtc::Configuration config;
-    if(contact == ContactState::DoubleSupport)
-      config = "DoubleSupport";
-    else if(contact == ContactState::Left)
+    if(contact == ContactState::Left)
       config = "Left";
     else if(contact == ContactState::Right)
       config = "Right";

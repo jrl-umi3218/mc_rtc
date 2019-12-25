@@ -298,9 +298,13 @@ public:
 
   /** Set the logger for this solver instance */
   void logger(std::shared_ptr<mc_rtc::Logger> logger);
+  /** Access to the logger instance */
+  std::shared_ptr<mc_rtc::Logger> logger() const;
 
   /** Set the GUI helper for this solver instance */
   void gui(std::shared_ptr<mc_rtc::gui::StateBuilder> gui);
+  /** Access to the gui instance */
+  std::shared_ptr<mc_rtc::gui::StateBuilder> gui() const;
 
 private:
   std::shared_ptr<mc_rbdyn::Robots> robots_p;
