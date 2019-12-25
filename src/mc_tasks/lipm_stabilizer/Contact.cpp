@@ -15,13 +15,16 @@ namespace lipm_stabilizer
 namespace internal
 {
 
-Contact::Contact(const mc_rbdyn::Robot & robot, const std::string & surfaceName)
-: Contact(robot, surfaceName, robot.surfacePose(surfaceName))
+Contact::Contact(const mc_rbdyn::Robot & robot, const std::string & surfaceName, double friction)
+: Contact(robot, surfaceName, robot.surfacePose(surfaceName), friction)
 {
 }
 
-Contact::Contact(const mc_rbdyn::Robot & robot, const std::string & surfaceName, const sva::PTransformd & surfacePose)
-: surfaceName_(surfaceName)
+Contact::Contact(const mc_rbdyn::Robot & robot,
+                 const std::string & surfaceName,
+                 const sva::PTransformd & surfacePose,
+                 const double friction)
+: surfaceName_(surfaceName), friction_(friction)
 {
   const auto & surface = robot.surface(surfaceName);
   if(surface.type() != "planar")
@@ -41,6 +44,30 @@ Contact::Contact(const mc_rbdyn::Robot & robot, const std::string & surfaceName,
   anklePose_.rotation() = surfacePose_.rotation();
 
   findSurfaceBoundaries(surface);
+
+  double X = halfLength_;
+  double Y = halfWidth_;
+  double mu = friction;
+  // clang-format off
+  wrenchFaceMatrix_ <<
+    // mx,  my,  mz,  fx,  fy,            fz,
+        0,   0,   0,  -1,   0,           -mu,
+        0,   0,   0,  +1,   0,           -mu,
+        0,   0,   0,   0,  -1,           -mu,
+        0,   0,   0,   0,  +1,           -mu,
+       -1,   0,   0,   0,   0,            -Y,
+       +1,   0,   0,   0,   0,            -Y,
+        0,  -1,   0,   0,   0,            -X,
+        0,  +1,   0,   0,   0,            -X,
+      +mu, +mu,  -1,  -Y,  -X, -(X + Y) * mu,
+      +mu, -mu,  -1,  -Y,  +X, -(X + Y) * mu,
+      -mu, +mu,  -1,  +Y,  -X, -(X + Y) * mu,
+      -mu, -mu,  -1,  +Y,  +X, -(X + Y) * mu,
+      +mu, +mu,  +1,  +Y,  +X, -(X + Y) * mu,
+      +mu, -mu,  +1,  +Y,  -X, -(X + Y) * mu,
+      -mu, +mu,  +1,  -Y,  +X, -(X + Y) * mu,
+      -mu, -mu,  +1,  -Y,  -X, -(X + Y) * mu;
+  // clang-format on
 }
 
 void Contact::findSurfaceBoundaries(const mc_rbdyn::Surface & surface)

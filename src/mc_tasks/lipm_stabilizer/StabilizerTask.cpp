@@ -636,7 +636,7 @@ void StabilizerTask::configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfig
 void StabilizerTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
   // Load contacts
-  std::vector<std::pair<ContactState, sva::PTransformd>> contactsToAdd;
+  std::vector<std::pair<ContactState, Contact>> contactsToAdd;
   if(config.has("contacts"))
   {
     const auto & contacts = config("contacts");
@@ -660,7 +660,7 @@ void StabilizerTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurat
           contactPose.translation().z() = c("height");
         }
       }
-      contactsToAdd.push_back({s, contactPose});
+      contactsToAdd.push_back({s, {robot(), footTasks[s]->surface(), contactPose, c_.friction}});
     }
   }
   this->setContacts(solver, contactsToAdd);
@@ -702,16 +702,21 @@ void StabilizerTask::checkGains()
 
 void StabilizerTask::setContacts(mc_solver::QPSolver & solver, const std::vector<ContactState> & contacts)
 {
-  std::vector<std::pair<ContactState, sva::PTransformd>> addContacts;
+  std::vector<std::pair<ContactState, Contact>> addContacts;
   for(const auto contact : contacts)
   {
-    addContacts.push_back({contact, realRobot().surfacePose(footTasks[contact]->surface())});
+    addContacts.push_back(
+        {contact,
+         {
+             robot(), footTasks[contact]->surface(), realRobot().surfacePose(footTasks[contact]->surface()),
+             c_.friction // XXX
+         }});
   }
   setContacts(solver, addContacts);
 }
 
 void StabilizerTask::setContacts(mc_solver::QPSolver & solver,
-                                 const std::vector<std::pair<ContactState, sva::PTransformd>> & contacts)
+                                 const std::vector<std::pair<ContactState, Contact>> & contacts)
 {
   if(contacts.empty())
   {
@@ -739,15 +744,12 @@ void StabilizerTask::setContacts(mc_solver::QPSolver & solver,
   }
 }
 
-void StabilizerTask::addContact(mc_solver::QPSolver & solver, ContactState contactState, const sva::PTransformd & pose)
+void StabilizerTask::addContact(mc_solver::QPSolver & solver, ContactState contactState, const Contact & contact)
 {
   auto footTask = footTasks[contactState];
   // Use real robot's surface pose as contact
-  contacts_.emplace(std::make_pair(contactState, Contact{realRobot(), footTask->surface(), pose}));
-  const auto & contact = contacts_.at(contactState);
+  contacts_.emplace(std::make_pair(contactState, contact));
   contactTasks.push_back(footTask);
-
-  wrenchFaceMatrix(contact.halfLength(), contact.halfWidth(), c_.friction);
 
   supportMin_.x() = std::min(contact.xmin(), supportMin_.x());
   supportMin_.y() = std::min(contact.ymin(), supportMin_.y());
@@ -763,9 +765,7 @@ void StabilizerTask::addContact(mc_solver::QPSolver & solver, ContactState conta
   MetaTask::addToSolver(*footTask, solver);
   MetaTask::addToLogger(*footTask, *solver.logger());
 
-  LOG_INFO(name() << ":  Added contact " << footTask->surface() << " at position (" << pose.translation().transpose()
-                  << ") [m] with orientation (" << mc_rbdyn::rpyFromMat(pose.rotation().inverse()).transpose()
-                  << ") [rad]");
+  LOG_INFO(name() << ":  Added contact " << contact.surfaceName());
 }
 
 void StabilizerTask::setSupportFootGains()
@@ -891,12 +891,12 @@ void StabilizerTask::run()
   }
   else if(inContact(ContactState::Left))
   {
-    saturateWrench(desiredWrench, footTasks[ContactState::Left]);
+    saturateWrench(desiredWrench, footTasks[ContactState::Left], contacts_.at(ContactState::Left));
     footTasks[ContactState::Right]->setZeroTargetWrench();
   }
   else
   {
-    saturateWrench(desiredWrench, footTasks[ContactState::Right]);
+    saturateWrench(desiredWrench, footTasks[ContactState::Right], contacts_.at(ContactState::Right));
     footTasks[ContactState::Left]->setZeroTargetWrench();
   }
 
@@ -974,10 +974,12 @@ void StabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
   // (X_0_lc* w_l_0).z() > minPressure  -- minimum left foot contact pressure
   // (X_0_rc* w_r_0).z() > minPressure  -- minimum right foot contact pressure
 
-  const sva::PTransformd & X_0_lc = contacts_.at(ContactState::Left).surfacePose();
-  const sva::PTransformd & X_0_rc = contacts_.at(ContactState::Right).surfacePose();
-  sva::PTransformd X_0_lankle = contacts_.at(ContactState::Left).anklePose();
-  sva::PTransformd X_0_rankle = contacts_.at(ContactState::Right).anklePose();
+  const auto & leftContact = contacts_.at(ContactState::Left);
+  const auto & rightContact = contacts_.at(ContactState::Right);
+  const sva::PTransformd & X_0_lc = leftContact.surfacePose();
+  const sva::PTransformd & X_0_rc = rightContact.surfacePose();
+  const sva::PTransformd & X_0_lankle = leftContact.anklePose();
+  const sva::PTransformd & X_0_rankle = rightContact.anklePose();
 
   constexpr unsigned NB_VAR = 6 + 6;
   constexpr unsigned COST_DIM = 6 + NB_VAR + 1;
@@ -1027,10 +1029,10 @@ void StabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
   A_ineq.setZero(NB_CONS, NB_VAR);
   b_ineq.setZero(NB_CONS);
   // CWC * w_l_lc <= 0
-  A_ineq.block<16, 6>(0, 0) = wrenchFaceMatrix_ * X_0_lc.dualMatrix();
+  A_ineq.block<16, 6>(0, 0) = leftContact.wrenchFaceMatrix() * X_0_lc.dualMatrix();
   // b_ineq.segment<16>(0) is already zero
   // CWC * w_r_rc <= 0
-  A_ineq.block<16, 6>(16, 6) = wrenchFaceMatrix_ * X_0_rc.dualMatrix();
+  A_ineq.block<16, 6>(16, 6) = rightContact.wrenchFaceMatrix() * X_0_rc.dualMatrix();
   // b_ineq.segment<16>(16) is already zero
   // w_l_lc.force().z() >= MIN_DS_PRESSURE
   A_ineq.block<1, 6>(32, 0) = -X_0_lc.dualMatrix().bottomRows<1>();
@@ -1067,7 +1069,8 @@ void StabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
 }
 
 void StabilizerTask::saturateWrench(const sva::ForceVecd & desiredWrench,
-                                    std::shared_ptr<mc_tasks::force::CoPTask> & footTask)
+                                    std::shared_ptr<mc_tasks::force::CoPTask> & footTask,
+                                    const Contact & contact)
 {
   constexpr unsigned NB_CONS = 16;
   constexpr unsigned NB_VAR = 6;
@@ -1085,12 +1088,12 @@ void StabilizerTask::saturateWrench(const sva::ForceVecd & desiredWrench,
   // -----------
   // F X_0_c* w_0 <= 0    -- contact stability
 
-  const sva::PTransformd & X_0_c = footTask->targetPose();
+  const sva::PTransformd & X_0_c = contact.surfacePose();
 
   Eigen::Matrix6d Q = Eigen::Matrix6d::Identity();
   Eigen::Vector6d c = -desiredWrench.vector();
 
-  Eigen::MatrixXd A_ineq = wrenchFaceMatrix_ * X_0_c.dualMatrix();
+  Eigen::MatrixXd A_ineq = contact.wrenchFaceMatrix() * X_0_c.dualMatrix();
   Eigen::VectorXd b_ineq;
   b_ineq.setZero(NB_CONS);
 

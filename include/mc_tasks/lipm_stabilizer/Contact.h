@@ -49,16 +49,21 @@ struct MC_TASKS_DLLAPI Contact
    * - z axis going from the environment towards the robot
    * - x aligned with the sagital direction
    * - y axis aligned with the lateral direction
+   *
+   * @param friction sole friction
    */
-  Contact(const mc_rbdyn::Robot & robot, const std::string & surfaceName);
+  Contact(const mc_rbdyn::Robot & robot, const std::string & surfaceName, double friction);
 
   /**
    * @brief Constructs a Contact with user-specified surface pose
    * @param surfacePose Pose of the contact surface frame
    *
-   * \see Contact(const mc_rbdyn::Robot&, const std::string &);
+   * \see Contact(const mc_rbdyn::Robot&, const std::string &, double);
    */
-  Contact(const mc_rbdyn::Robot & robot, const std::string & surfaceName, const sva::PTransformd & surfacePose);
+  Contact(const mc_rbdyn::Robot & robot,
+          const std::string & surfaceName,
+          const sva::PTransformd & surfacePose,
+          double friction);
 
   /**
    * @brief Halfspace representation of contact area in world frame.
@@ -66,6 +71,20 @@ struct MC_TASKS_DLLAPI Contact
    * @param vertical Normalized vector parallel to gravity
    */
   HrepXd hrep(const Eigen::Vector3d & vertical) const;
+
+  /** H-representation of contact wrench cones.
+   *
+   * \param Uses halfLength_, halfWidth_ computed from the surface points in findSurfaceBoundaries()
+   * \param Uses friction_: sole friction
+   *
+   * See <https://hal.archives-ouvertes.fr/hal-02108449/document> for
+   * technical details on the derivation of this formula.
+   *
+   */
+  const Eigen::Matrix<double, 16, 6> & wrenchFaceMatrix() const
+  {
+    return wrenchFaceMatrix_;
+  }
 
   /** Sagittal unit vector of the contact frame.
    *
@@ -90,7 +109,6 @@ struct MC_TASKS_DLLAPI Contact
   {
     return surfacePose_.rotation().row(2);
   }
-
   /** Shorthand for position.
    *
    */
@@ -131,6 +149,11 @@ struct MC_TASKS_DLLAPI Contact
   Eigen::Vector3d vertical()
   {
     return surfacePose_.rotation().row(2);
+  }
+
+  const std::string & surfaceName() const
+  {
+    return surfaceName_;
   }
 
   const sva::PTransformd & surfacePose() const
@@ -197,6 +220,9 @@ private:
 
   double halfLength_ = 0.; /**< Half-length of the contact rectangle in [m]. */
   double halfWidth_ = 0.; /**< Half-width of the contact rectangle in [m]. */
+  double friction_ = 0.7; /**< Friction coefficient for the contact surface */
+
+  Eigen::Matrix<double, 16, 6> wrenchFaceMatrix_; /**< Matrix of single-contact wrench cone inequalities */
 
   std::vector<Eigen::Vector3d>
       contactPolygon_; /**< Polygon of the surface boundaries along the sagital/lateral plane */

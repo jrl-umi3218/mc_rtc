@@ -188,7 +188,7 @@ public:
    * free.
    */
   void setContacts(mc_solver::QPSolver & solver,
-                   const std::vector<std::pair<ContactState, sva::PTransformd>> & contacts);
+                   const std::vector<std::pair<ContactState, internal::Contact>> & contacts);
 
   /** Helper to set contacts from the current surface pose
    *
@@ -235,43 +235,6 @@ public:
    * @brief Returns the anchor frame computed from real robot
    */
   sva::PTransformd anchorFrameReal() const;
-
-  /** Update H-representation of contact wrench cones.
-   *
-   * \param halfLength sole half length
-   * \param halfWidth sole half width
-   * \param friction sole friction
-   *
-   * See <https://hal.archives-ouvertes.fr/hal-02108449/document> for
-   * technical details on the derivation of this formula.
-   *
-   */
-  void wrenchFaceMatrix(double halfLength, double halfWidth, double friction)
-  {
-    double X = halfLength;
-    double Y = halfWidth;
-    double mu = friction;
-    // clang-format off
-    wrenchFaceMatrix_ <<
-      // mx,  my,  mz,  fx,  fy,            fz,
-          0,   0,   0,  -1,   0,           -mu,
-          0,   0,   0,  +1,   0,           -mu,
-          0,   0,   0,   0,  -1,           -mu,
-          0,   0,   0,   0,  +1,           -mu,
-         -1,   0,   0,   0,   0,            -Y,
-         +1,   0,   0,   0,   0,            -Y,
-          0,  -1,   0,   0,   0,            -X,
-          0,  +1,   0,   0,   0,            -X,
-        +mu, +mu,  -1,  -Y,  -X, -(X + Y) * mu,
-        +mu, -mu,  -1,  -Y,  +X, -(X + Y) * mu,
-        -mu, +mu,  -1,  +Y,  -X, -(X + Y) * mu,
-        -mu, -mu,  -1,  +Y,  +X, -(X + Y) * mu,
-        +mu, +mu,  +1,  +Y,  +X, -(X + Y) * mu,
-        +mu, -mu,  +1,  +Y,  -X, -(X + Y) * mu,
-        -mu, +mu,  +1,  -Y,  +X, -(X + Y) * mu,
-        -mu, -mu,  +1,  -Y,  -X, -(X + Y) * mu;
-    // clang-format on
-  }
 
   /** ZMP target after force distribution.
    *
@@ -388,8 +351,12 @@ private:
    *
    * \param footTask Target foot.
    *
+   * \param target contact
+   *
    */
-  void saturateWrench(const sva::ForceVecd & desiredWrench, std::shared_ptr<mc_tasks::force::CoPTask> & footTask);
+  void saturateWrench(const sva::ForceVecd & desiredWrench,
+                      std::shared_ptr<mc_tasks::force::CoPTask> & footTask,
+                      const internal::Contact & contact);
 
   /** Reset admittance, damping and stiffness for every foot in contact.
    *
@@ -445,7 +412,7 @@ protected:
   }
 
 private:
-  void addContact(mc_solver::QPSolver & solver, ContactState contactState, const sva::PTransformd & pose);
+  void addContact(mc_solver::QPSolver & solver, ContactState contactState, const internal::Contact & contact);
 
 protected:
   std::unordered_map<ContactState, internal::Contact> contacts_;
@@ -480,7 +447,6 @@ protected:
   mc_rbdyn::lipm_stabilizer::StabilizerConfiguration
       c_; /* Online stabilizer configuration, can be set from the GUI. Defaults to defaultConfig_ */
   Eigen::QuadProgDense qpSolver_; /**< Least-squares solver for wrench distribution */
-  Eigen::Matrix<double, 16, 6> wrenchFaceMatrix_; /**< Matrix of single-contact wrench cone inequalities */
   Eigen::Vector3d dcmAverageError_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d dcmError_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d dcmVelError_ = Eigen::Vector3d::Zero();
