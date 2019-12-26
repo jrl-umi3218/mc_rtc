@@ -139,228 +139,231 @@ states:
 # - Lift up phase: surface transform moving above the current position
 # - Put down phase: admittance tasks looking for a positive force above a threshold
 ###
-LIPMStabilizer::LiftRightFoot:
-  base: MetaTasks
-  tasks:
-    LiftFootTask:
-      type: surfaceTransform
-      stiffness: 10
-      weight: 500
-      robotIndex: 0
-      surface: "RightFootCenter"
-      moveWorld:
-        translation: [0,0,0.1]
-      completion:
-        eval: 0.01
-
-LIPMStabilizer::LiftLeftFoot:
-  base: LIPMStabilizer::LiftRightFoot
-  tasks:
-    LiftFootTask:
-      surface: "LeftFootCenter"
-
-LIPMStabilizer::PutRightFoot:
-  base: MetaTasks
-  tasks:
-    PutFootAdmittance:
-      type: admittance
-      robotIndex: 0
-      surface: "RightFootCenter"
-      stiffness: [10, 10, 10, 10, 10, 10]
-      damping: [6.3, 6.3, 6.3, 6.3, 6.3, 300]
-      admittance: [0,0,0,0,0,0.005]
-      wrench:
-       force: [0, 0, 20]
-       couple: [0, 0, 0]
-      moveWorld:
-        translation: [0, 0, -0.1]
-      targetRotation: [0, 0, 0]
-      completion:
+states:
+  LIPMStabilizer::LiftRightFoot:
+    base: MetaTasks
+    tasks:
+      LiftFootTask:
+        type: surfaceTransform
+        stiffness: 10
+        weight: 500
+        robotIndex: 0
+        surface: "RightFootCenter"
+        moveWorld:
+          translation: [0,0,0.1]
+        completion:
+          eval: 0.01
+  
+  LIPMStabilizer::LiftLeftFoot:
+    base: LIPMStabilizer::LiftRightFoot
+    tasks:
+      LiftFootTask:
+        surface: "LeftFootCenter"
+  
+  LIPMStabilizer::PutRightFoot:
+    base: MetaTasks
+    tasks:
+      PutFootAdmittance:
+        type: admittance
+        robotIndex: 0
+        surface: "RightFootCenter"
+        stiffness: [10, 10, 10, 10, 10, 10]
+        damping: [6.3, 6.3, 6.3, 6.3, 6.3, 300]
+        admittance: [0,0,0,0,0,0.005]
         wrench:
-          force: [.nan, .nan, 20]
-          couple: [.nan, .nan, .nan]
-
-LIPMStabilizer::PutLeftFoot:
-  base: LIPMStabilizer::PutRightFoot
-  tasks:
-    PutFootAdmittance:
-      surface: "LeftFootCenter"
-
-LIPMStabilizer::Stabilized::LiftRightFoot:
-  base: Parallel
-  states: [Stabilizer::LeftSupport, LIPMStabilizer::LiftRightFoot]
-
-LIPMStabilizer::Stabilized::LiftLeftFoot:
-  base: Parallel
-  states: [Stabilizer::RightSupport, LIPMStabilizer::LiftLeftFoot]
-
-LIPMStabilizer::Stabilized::PutRightFoot:
-  base: Parallel
-  states: [Stabilizer::LeftSupport, LIPMStabilizer::PutRightFoot]
-
-LIPMStabilizer::Stabilized::PutLeftFoot:
-  base: Parallel
-  states: [Stabilizer::RightSupport, LIPMStabilizer::PutLeftFoot]
-
-LIPMStabilizer::Stabilized::StayLeft:
-  base: Stabilizer::GoLeft
-
-LIPMStabilizer::Stabilized::StayRight:
-  base: Stabilizer::GoRight
-
-LIPMStabilizer::StandingFSM::LiftRightFoot:
-  base: Meta
-  transitions:
-    - [Stabilizer::GoLeft, OK, LIPMStabilizer::Stabilized::LiftRightFoot]
-    - [LIPMStabilizer::Stabilized::LiftRightFoot, OK, LIPMStabilizer::Stabilized::PutRightFoot]
-    - [LIPMStabilizer::Stabilized::PutRightFoot, OK, LIPMStabilizer::Stabilized::StayLeft, Auto]
-
-LIPMStabilizer::StandingFSM::LiftLeftFoot:
-  base: Meta
-  transitions:
-    - [Stabilizer::GoRight, OK, LIPMStabilizer::Stabilized::LiftLeftFoot]
-    - [LIPMStabilizer::Stabilized::LiftLeftFoot, OK, LIPMStabilizer::Stabilized::PutLeftFoot]
-    - [LIPMStabilizer::Stabilized::PutLeftFoot, OK, LIPMStabilizer::Stabilized::StayRight, Auto]
-
-LIPMStabilizer::StandingFSM::LiftRightFootManual:
-  base: LIPMStabilizer::StandingFSM::LiftRightFoot
-  StepByStep: true
-
-LIPMStabilizer::StandingFSM::LiftLeftFootManual:
-  base: LIPMStabilizer::StandingFSM::LiftLeftFoot
-  StepByStep: true
-
-LIPMStabilizer::StandingFSM::AlternateFeetLifting:
-  base: Meta
-  transitions:
-    - [LIPMStabilizer::StandingFSM::LiftRightFoot, OK, LIPMStabilizer::StandingFSM::LiftLeftFoot]
-    - [LIPMStabilizer::StandingFSM::LiftLeftFoot, OK, Stabilizer::GoCenter]
-
-LIPMStabilizer::StandingFSM::AlternateFeetLiftingManual:
-  base: Meta
-  StepByStep: true
-  transitions:
-    - [Stabilizer::GoCenter, OK, LIPMStabilizer::StandingFSM::LiftRightFootManual]
-    - [LIPMStabilizer::StandingFSM::LiftRightFootManual, OK, LIPMStabilizer::StandingFSM::LiftLeftFootManual]
-    - [LIPMStabilizer::StandingFSM::LiftLeftFootManual, OK, Stabilizer::GoCenter]
-
-###
-# Simple forward walking FSM
-###
-LIPMStabilizer::RightFootTrajectory:
-  base: MetaTasks
-  tasks:
-    SwingFootTrajectory:
-      type: exact_cubic_trajectory
-      surface: RightFootCenter
-      robotIndex: 0
-      stiffness: 10000.0
-      duration: 5.0
-      weight: 100
-      displaySamples: 20
-      completion:
-        timeElapsed: true
-      targetSurface:
+         force: [0, 0, 20]
+         couple: [0, 0, 0]
+        moveWorld:
+          translation: [0, 0, -0.1]
+        targetRotation: [0, 0, 0]
+        completion:
+          wrench:
+            force: [.nan, .nan, 20]
+            couple: [.nan, .nan, .nan]
+  
+  LIPMStabilizer::PutLeftFoot:
+    base: LIPMStabilizer::PutRightFoot
+    tasks:
+      PutFootAdmittance:
+        surface: "LeftFootCenter"
+  
+  LIPMStabilizer::Stabilized::LiftRightFoot:
+    base: Parallel
+    states: [Stabilizer::LeftSupport, LIPMStabilizer::LiftRightFoot]
+  
+  LIPMStabilizer::Stabilized::LiftLeftFoot:
+    base: Parallel
+    states: [Stabilizer::RightSupport, LIPMStabilizer::LiftLeftFoot]
+  
+  LIPMStabilizer::Stabilized::PutRightFoot:
+    base: Parallel
+    states: [Stabilizer::LeftSupport, LIPMStabilizer::PutRightFoot]
+  
+  LIPMStabilizer::Stabilized::PutLeftFoot:
+    base: Parallel
+    states: [Stabilizer::RightSupport, LIPMStabilizer::PutLeftFoot]
+  
+  LIPMStabilizer::Stabilized::StayLeft:
+    base: Stabilizer::GoLeft
+    completion: {}
+  
+  LIPMStabilizer::Stabilized::StayRight:
+    base: Stabilizer::GoRight
+    completion: {}
+  
+  LIPMStabilizer::StandingFSM::LiftRightFoot:
+    base: Meta
+    transitions:
+      - [Stabilizer::GoLeft, OK, LIPMStabilizer::Stabilized::LiftRightFoot]
+      - [LIPMStabilizer::Stabilized::LiftRightFoot, OK, LIPMStabilizer::Stabilized::PutRightFoot]
+      - [LIPMStabilizer::Stabilized::PutRightFoot, OK, LIPMStabilizer::Stabilized::StayLeft, Auto]
+  
+  LIPMStabilizer::StandingFSM::LiftLeftFoot:
+    base: Meta
+    transitions:
+      - [Stabilizer::GoRight, OK, LIPMStabilizer::Stabilized::LiftLeftFoot]
+      - [LIPMStabilizer::Stabilized::LiftLeftFoot, OK, LIPMStabilizer::Stabilized::PutLeftFoot]
+      - [LIPMStabilizer::Stabilized::PutLeftFoot, OK, LIPMStabilizer::Stabilized::StayRight, Auto]
+  
+  LIPMStabilizer::StandingFSM::LiftRightFootManual:
+    base: LIPMStabilizer::StandingFSM::LiftRightFoot
+    StepByStep: true
+  
+  LIPMStabilizer::StandingFSM::LiftLeftFootManual:
+    base: LIPMStabilizer::StandingFSM::LiftLeftFoot
+    StepByStep: true
+  
+  LIPMStabilizer::StandingFSM::AlternateFeetLifting:
+    base: Meta
+    transitions:
+      - [LIPMStabilizer::StandingFSM::LiftRightFoot, OK, LIPMStabilizer::StandingFSM::LiftLeftFoot]
+      - [LIPMStabilizer::StandingFSM::LiftLeftFoot, OK, Stabilizer::GoCenter]
+  
+  LIPMStabilizer::StandingFSM::AlternateFeetLiftingManual:
+    base: Meta
+    StepByStep: true
+    transitions:
+      - [Stabilizer::GoCenter, OK, LIPMStabilizer::StandingFSM::LiftRightFootManual]
+      - [LIPMStabilizer::StandingFSM::LiftRightFootManual, OK, LIPMStabilizer::StandingFSM::LiftLeftFootManual]
+      - [LIPMStabilizer::StandingFSM::LiftLeftFootManual, OK, Stabilizer::GoCenter]
+  
+  ###
+  # Simple forward walking FSM
+  ###
+  LIPMStabilizer::RightFootTrajectory:
+    base: MetaTasks
+    tasks:
+      SwingFootTrajectory:
+        type: exact_cubic_trajectory
         surface: RightFootCenter
         robotIndex: 0
-        translation: [0.2, 0.0, 0.0]
-        rotation: [0,0,0]
-        # control points in target surface frame
-        controlPoints:
-          - [1, [0.01, 0.0, 0.01]]
-
-LIPMStabilizer::LeftFootTrajectory:
-  base: LIPMStabilizer::RightFootTrajectory
-  tasks:
-    SwingFootTrajectory:
-      surface: LeftFootCenter
-      targetSurface:
+        stiffness: 10000.0
+        duration: 5.0
+        weight: 100
+        displaySamples: 20
+        completion:
+          timeElapsed: true
+        targetSurface:
+          surface: RightFootCenter
+          robotIndex: 0
+          translation: [0.2, 0.0, 0.0]
+          rotation: [0,0,0]
+          # control points in target surface frame
+          controlPoints:
+            - [1, [0.01, 0.0, 0.01]]
+  
+  LIPMStabilizer::LeftFootTrajectory:
+    base: LIPMStabilizer::RightFootTrajectory
+    tasks:
+      SwingFootTrajectory:
         surface: LeftFootCenter
-        translation: [0.2, 0.0, 0.0]
-        rotation: [0,0,0]
-        # control points in target surface frame
-        controlPoints:
-          - [1., [0.01, 0.0, 0.01]]
-
-
-LIPMStabilizer::Stabilized::LeftFootTrajectory:
-  base: Parallel
-  states: [Stabilizer::RightSupport, LIPMStabilizer::LeftFootTrajectory]
-
-LIPMStabilizer::Stabilized::RightFootTrajectory:
-  base: Parallel
-  states: [Stabilizer::LeftSupport, LIPMStabilizer::RightFootTrajectory]
-
-LIPMStabilizer::WalkingFSM::RightStep:
-  base: Meta
-  transitions:
-  - [Stabilizer::GoLeft, OK, LIPMStabilizer::Stabilized::RightFootTrajectory, Auto]
-
-LIPMStabilizer::WalkingFSM::LeftStep:
-  base: LIPMStabilizer::WalkingFSM::RightStep
-  transitions:
-  - [Stabilizer::GoRight, OK, LIPMStabilizer::Stabilized::LeftFootTrajectory, Auto]
-
-
-LIPMStabilizer::WalkingFSM::StepForward:
-  base: Meta
-  transitions:
-  - [LIPMStabilizer::WalkingFSM::LeftStep, OK, LIPMStabilizer::WalkingFSM::RightStep, Auto]
-  - [LIPMStabilizer::WalkingFSM::RightStep, OK, Stabilizer::GoCenter, Auto]
-
-
-###
-# FSM to walk backwards
-###
-LIPMStabilizer::RightFootBackwardTrajectory:
-  base: LIPMStabilizer::RightFootTrajectory
-  tasks:
-    SwingFootTrajectory:
-      targetSurface:
-        surface: RightFootCenter
-        robotIndex: 0
-        translation: [-0.1, 0.0, 0.0]
-        rotation: [0, 0, 0]
-        # control points in target surface frame
-        controlPoints:
-          - [1, [-0.01, 0.0, 0.01]]
-
-LIPMStabilizer::LeftFootBackwardTrajectory:
-  base: LIPMStabilizer::RightFootBackwardTrajectory
-  tasks:
-    SwingFootTrajectory:
-      surface: LeftFootCenter
-      targetSurface:
+        targetSurface:
+          surface: LeftFootCenter
+          translation: [0.2, 0.0, 0.0]
+          rotation: [0,0,0]
+          # control points in target surface frame
+          controlPoints:
+            - [1., [0.01, 0.0, 0.01]]
+  
+  
+  LIPMStabilizer::Stabilized::LeftFootTrajectory:
+    base: Parallel
+    states: [Stabilizer::RightSupport, LIPMStabilizer::LeftFootTrajectory]
+  
+  LIPMStabilizer::Stabilized::RightFootTrajectory:
+    base: Parallel
+    states: [Stabilizer::LeftSupport, LIPMStabilizer::RightFootTrajectory]
+  
+  LIPMStabilizer::WalkingFSM::RightStep:
+    base: Meta
+    transitions:
+    - [Stabilizer::GoLeft, OK, LIPMStabilizer::Stabilized::RightFootTrajectory, Auto]
+  
+  LIPMStabilizer::WalkingFSM::LeftStep:
+    base: LIPMStabilizer::WalkingFSM::RightStep
+    transitions:
+    - [Stabilizer::GoRight, OK, LIPMStabilizer::Stabilized::LeftFootTrajectory, Auto]
+  
+  
+  LIPMStabilizer::WalkingFSM::StepForward:
+    base: Meta
+    transitions:
+    - [LIPMStabilizer::WalkingFSM::LeftStep, OK, LIPMStabilizer::WalkingFSM::RightStep, Auto]
+    - [LIPMStabilizer::WalkingFSM::RightStep, OK, Stabilizer::GoCenter, Auto]
+  
+  
+  ###
+  # FSM to walk backwards
+  ###
+  LIPMStabilizer::RightFootBackwardTrajectory:
+    base: LIPMStabilizer::RightFootTrajectory
+    tasks:
+      SwingFootTrajectory:
+        targetSurface:
+          surface: RightFootCenter
+          robotIndex: 0
+          translation: [-0.1, 0.0, 0.0]
+          rotation: [0, 0, 0]
+          # control points in target surface frame
+          controlPoints:
+            - [1, [-0.01, 0.0, 0.01]]
+  
+  LIPMStabilizer::LeftFootBackwardTrajectory:
+    base: LIPMStabilizer::RightFootBackwardTrajectory
+    tasks:
+      SwingFootTrajectory:
         surface: LeftFootCenter
-        translation: [-0.1, 0.0, 0.0]
-        rotation: [0,0,0]
-        # control points in target surface frame
-        controlPoints:
-          - [1., [-0.01, 0.0, 0.01]]
-
-LIPMStabilizer::Stabilized::LeftFootBackwardTrajectory:
-  base: Parallel
-  states: [Stabilizer::RightSupport, LIPMStabilizer::LeftFootBackwardTrajectory]
-
-LIPMStabilizer::Stabilized::RightFootBackwardTrajectory:
-  base: Parallel
-  states: [Stabilizer::LeftSupport, LIPMStabilizer::RightFootBackwardTrajectory]
-
-LIPMStabilizer::WalkingFSM::RightBackwardStep:
-  base: Meta
-  transitions:
-  - [Stabilizer::GoLeft, OK, LIPMStabilizer::Stabilized::RightFootBackwardTrajectory, Auto]
-
-LIPMStabilizer::WalkingFSM::LeftBackwardStep:
-  base: LIPMStabilizer::WalkingFSM::RightStep
-  transitions:
-  - [Stabilizer::GoRight, OK, LIPMStabilizer::Stabilized::LeftFootBackwardTrajectory, Auto]
-
-LIPMStabilizer::WalkingFSM::StepBackward:
-  base: Meta
-  transitions:
-  - [LIPMStabilizer::WalkingFSM::LeftBackwardStep, OK, LIPMStabilizer::WalkingFSM::RightBackwardStep, Auto]
-  - [LIPMStabilizer::WalkingFSM::RightBackwardStep, OK, Stabilizer::GoCenter, Auto]
+        targetSurface:
+          surface: LeftFootCenter
+          translation: [-0.1, 0.0, 0.0]
+          rotation: [0,0,0]
+          # control points in target surface frame
+          controlPoints:
+            - [1., [-0.01, 0.0, 0.01]]
+  
+  LIPMStabilizer::Stabilized::LeftFootBackwardTrajectory:
+    base: Parallel
+    states: [Stabilizer::RightSupport, LIPMStabilizer::LeftFootBackwardTrajectory]
+  
+  LIPMStabilizer::Stabilized::RightFootBackwardTrajectory:
+    base: Parallel
+    states: [Stabilizer::LeftSupport, LIPMStabilizer::RightFootBackwardTrajectory]
+  
+  LIPMStabilizer::WalkingFSM::RightBackwardStep:
+    base: Meta
+    transitions:
+    - [Stabilizer::GoLeft, OK, LIPMStabilizer::Stabilized::RightFootBackwardTrajectory, Auto]
+  
+  LIPMStabilizer::WalkingFSM::LeftBackwardStep:
+    base: LIPMStabilizer::WalkingFSM::RightStep
+    transitions:
+    - [Stabilizer::GoRight, OK, LIPMStabilizer::Stabilized::LeftFootBackwardTrajectory, Auto]
+  
+  LIPMStabilizer::WalkingFSM::StepBackward:
+    base: Meta
+    transitions:
+    - [LIPMStabilizer::WalkingFSM::LeftBackwardStep, OK, LIPMStabilizer::WalkingFSM::RightBackwardStep, Auto]
+    - [LIPMStabilizer::WalkingFSM::RightBackwardStep, OK, Stabilizer::GoCenter, Auto]
 
 ###
 # This FSM is meant to test and tune the LIPMStabilizer, use it with appropriate caution.

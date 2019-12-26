@@ -66,12 +66,24 @@ StabilizerTask::StabilizerTask(const mc_rbdyn::Robots & robots,
   name_ = "Stabilizer";
 
   comTask.reset(new mc_tasks::CoMTask(robots, robotIndex_));
-  footTasks[ContactState::Left] = std::make_shared<mc_tasks::force::CoPTask>(leftSurface, robots, robotIndex_);
-  footTasks[ContactState::Right] = std::make_shared<mc_tasks::force::CoPTask>(rightSurface, robots, robotIndex_);
+  auto leftCoP = std::make_shared<mc_tasks::force::CoPTask>(leftSurface, robots, robotIndex_);
+  auto rightCoP = std::make_shared<mc_tasks::force::CoPTask>(rightSurface, robots, robotIndex_);
+  footTasks[ContactState::Left] = leftCoP;
+  footTasks[ContactState::Right] = rightCoP;
 
   std::string pelvisBodyName = robot().mb().body(0).name();
   pelvisTask = std::make_shared<mc_tasks::OrientationTask>(pelvisBodyName, robots_, robotIndex_);
   torsoTask = std::make_shared<mc_tasks::OrientationTask>(torsoBodyName, robots_, robotIndex_);
+
+  // Rename the tasks managed by the stabilizer
+  // Doing so helps making the logs more consistent, and having a fixed name
+  // allows for predifined custom plots in the log ui.
+  const auto n = name_ + "Tasks";
+  comTask->name(n + "_com");
+  leftCoP->name(n + "_cop_left");
+  rightCoP->name(n + "_cop_right");
+  pelvisTask->name(n + "_pelvis");
+  torsoTask->name(n + "_torso");
 
   configure(robot().module().defaultLIPMStabilizerConfiguration());
 }
@@ -215,32 +227,16 @@ void StabilizerTask::update()
 
 void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
 {
-  logger.addLogEntry("stabilizer_contactState", [this]() -> double {
-    if(inDoubleSupport())
-    {
-      return 0;
-    }
-    else if(inContact(ContactState::Left))
-    {
-      return 1;
-    }
-    else if(inContact(ContactState::Right))
-    {
-      return -1;
-    }
-    else
-    { // In the air
-      return -3;
-    }
-  });
-  logger.addLogEntry("error_dcm_average", [this]() { return dcmAverageError_; });
-  logger.addLogEntry("error_dcm_pos", [this]() { return dcmError_; });
-  logger.addLogEntry("error_dcm_vel", [this]() { return dcmVelError_; });
-  logger.addLogEntry("error_dfz_force", [this]() { return dfzForceError_; });
-  logger.addLogEntry("error_dfz_height", [this]() { return dfzHeightError_; });
-  logger.addLogEntry("error_vdc", [this]() { return vdcHeightError_; });
-  logger.addLogEntry("error_zmp", [this]() { return zmpError_; });
+  // Globbal log entries added to other categories
   logger.addLogEntry("perf_Stabilizer", [this]() { return runTime_; });
+
+  logger.addLogEntry("stabilizer_error_dcm_average", [this]() { return dcmAverageError_; });
+  logger.addLogEntry("stabilizer_error_dcm_pos", [this]() { return dcmError_; });
+  logger.addLogEntry("stabilizer_error_dcm_vel", [this]() { return dcmVelError_; });
+  logger.addLogEntry("stabilizer_error_dfz_force", [this]() { return dfzForceError_; });
+  logger.addLogEntry("stabilizer_error_dfz_height", [this]() { return dfzHeightError_; });
+  logger.addLogEntry("stabilizer_error_vdc", [this]() { return vdcHeightError_; });
+  logger.addLogEntry("stabilizer_error_zmp", [this]() { return zmpError_; });
   logger.addLogEntry("stabilizer_admittance_cop", [this]() { return c_.copAdmittance; });
   logger.addLogEntry("stabilizer_admittance_dfz", [this]() { return c_.dfzAdmittance; });
   logger.addLogEntry("stabilizer_dcmDerivator_filtered", [this]() { return dcmDerivator_.eval(); });
@@ -261,31 +257,50 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   logger.addLogEntry("stabilizer_wrench", [this]() { return distribWrench_; });
   logger.addLogEntry("stabilizer_support_min", [this]() { return supportMin_; });
   logger.addLogEntry("stabilizer_support_max", [this]() { return supportMax_; });
+  logger.addLogEntry("stabilizer_left_foot_ratio", [this]() { return leftFootRatio_; });
 
-  logger.addLogEntry("controlRobot_LeftFoot", [this]() { return robot().surfacePose("LeftFoot"); });
-  logger.addLogEntry("controlRobot_LeftFootCenter", [this]() { return robot().surfacePose("LeftFootCenter"); });
-  logger.addLogEntry("controlRobot_RightFoot", [this]() { return robot().surfacePose("RightFoot"); });
-  logger.addLogEntry("controlRobot_RightFootCenter", [this]() { return robot().surfacePose("RightFootCenter"); });
-  logger.addLogEntry("controlRobot_com", [this]() { return robot().com(); });
-  logger.addLogEntry("controlRobot_comd", [this]() { return robot().comVelocity(); });
-  logger.addLogEntry("controlRobot_posW", [this]() { return robot().posW(); });
-  logger.addLogEntry("left_foot_ratio", [this]() { return leftFootRatio_; });
-  logger.addLogEntry("pendulum_com", [this]() { return comTarget_; });
-  logger.addLogEntry("pendulum_comd", [this]() { return comdTarget_; });
-  logger.addLogEntry("pendulum_comdd", [this]() { return comddTarget_; });
-  logger.addLogEntry("pendulum_dcm", [this]() { return dcmTarget_; });
-  logger.addLogEntry("pendulum_omega", [this]() { return omega_; });
-  logger.addLogEntry("pendulum_zmp", [this]() { return zmpTarget_; });
-  logger.addLogEntry("realRobot_LeftFoot", [this]() { return realRobot().surfacePose("LeftFoot"); });
-  logger.addLogEntry("realRobot_LeftFootCenter", [this]() { return realRobot().surfacePose("LeftFootCenter"); });
-  logger.addLogEntry("realRobot_RightFoot", [this]() { return realRobot().surfacePose("RightFoot"); });
-  logger.addLogEntry("realRobot_RightFootCenter", [this]() { return realRobot().surfacePose("RightFootCenter"); });
-  logger.addLogEntry("realRobot_com", [this]() { return measuredCoM_; });
-  logger.addLogEntry("realRobot_comd", [this]() { return measuredCoMd_; });
-  logger.addLogEntry("realRobot_dcm", [this]() -> Eigen::Vector3d { return measuredDCM_; });
-  logger.addLogEntry("realRobot_posW", [this]() { return realRobot().posW(); });
-  logger.addLogEntry("realRobot_wrench", [this]() { return measuredNetWrench_; });
-  logger.addLogEntry("realRobot_zmp", [this]() { return measuredZMP_; });
+  // Stabilizer targets
+  logger.addLogEntry("stabilizer_target_pendulum_com", [this]() { return comTarget_; });
+  logger.addLogEntry("stabilizer_target_pendulum_comd", [this]() { return comdTarget_; });
+  logger.addLogEntry("stabilizer_target_pendulum_comdd", [this]() { return comddTarget_; });
+  logger.addLogEntry("stabilizer_target_pendulum_dcm", [this]() { return dcmTarget_; });
+  logger.addLogEntry("stabilizer_target_pendulum_omega", [this]() { return omega_; });
+  logger.addLogEntry("stabilizer_target_pendulum_zmp", [this]() { return zmpTarget_; });
+
+  logger.addLogEntry("stabilizer_contactState", [this]() -> double {
+    if(inDoubleSupport())
+      return 0;
+    else if(inContact(ContactState::Left))
+      return 1;
+    else if(inContact(ContactState::Right))
+      return -1;
+    else
+      return -3;
+  });
+
+  // Log computed robot properties
+  logger.addLogEntry("stabilizer_controlRobot_LeftFoot", [this]() { return robot().surfacePose("LeftFoot"); });
+  logger.addLogEntry("stabilizer_controlRobot_LeftFootCenter",
+                     [this]() { return robot().surfacePose("LeftFootCenter"); });
+  logger.addLogEntry("stabilizer_controlRobot_RightFoot", [this]() { return robot().surfacePose("RightFoot"); });
+  logger.addLogEntry("stabilizer_controlRobot_RightFootCenter",
+                     [this]() { return robot().surfacePose("RightFootCenter"); });
+  logger.addLogEntry("stabilizer_controlRobot_com", [this]() { return robot().com(); });
+  logger.addLogEntry("stabilizer_controlRobot_comd", [this]() { return robot().comVelocity(); });
+  logger.addLogEntry("stabilizer_controlRobot_posW", [this]() { return robot().posW(); });
+
+  logger.addLogEntry("stabilizer_realRobot_LeftFoot", [this]() { return realRobot().surfacePose("LeftFoot"); });
+  logger.addLogEntry("stabilizer_realRobot_LeftFootCenter",
+                     [this]() { return realRobot().surfacePose("LeftFootCenter"); });
+  logger.addLogEntry("stabilizer_realRobot_RightFoot", [this]() { return realRobot().surfacePose("RightFoot"); });
+  logger.addLogEntry("stabilizer_realRobot_RightFootCenter",
+                     [this]() { return realRobot().surfacePose("RightFootCenter"); });
+  logger.addLogEntry("stabilizer_realRobot_com", [this]() { return measuredCoM_; });
+  logger.addLogEntry("stabilizer_realRobot_comd", [this]() { return measuredCoMd_; });
+  logger.addLogEntry("stabilizer_realRobot_dcm", [this]() -> Eigen::Vector3d { return measuredDCM_; });
+  logger.addLogEntry("stabilizer_realRobot_posW", [this]() { return realRobot().posW(); });
+  logger.addLogEntry("stabilizer_realRobot_wrench", [this]() { return measuredNetWrench_; });
+  logger.addLogEntry("stabilizer_realRobot_zmp", [this]() { return measuredZMP_; });
 
   MetaTask::addToLogger(*comTask, logger);
   MetaTask::addToLogger(*pelvisTask, logger);
@@ -294,15 +309,15 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
 
 void StabilizerTask::removeFromLogger(mc_rtc::Logger & logger)
 {
-  logger.removeLogEntry("stabilizer_contactState");
-  logger.removeLogEntry("error_dcm_average");
-  logger.removeLogEntry("error_dcm_pos");
-  logger.removeLogEntry("error_dcm_vel");
-  logger.removeLogEntry("error_dfz_force");
-  logger.removeLogEntry("error_dfz_height");
-  logger.removeLogEntry("error_vdc");
-  logger.removeLogEntry("error_zmp");
   logger.removeLogEntry("perf_Stabilizer");
+  logger.removeLogEntry("stabilizer_contactState");
+  logger.removeLogEntry("stabilizer_error_dcm_average");
+  logger.removeLogEntry("stabilizer_error_dcm_pos");
+  logger.removeLogEntry("stabilizer_error_dcm_vel");
+  logger.removeLogEntry("stabilizer_error_dfz_force");
+  logger.removeLogEntry("stabilizer_error_dfz_height");
+  logger.removeLogEntry("stabilizer_error_vdc");
+  logger.removeLogEntry("stabilizer_error_zmp");
   logger.removeLogEntry("stabilizer_admittance_com");
   logger.removeLogEntry("stabilizer_admittance_cop");
   logger.removeLogEntry("stabilizer_admittance_dfz");
@@ -323,30 +338,30 @@ void StabilizerTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry("stabilizer_zmp");
   logger.removeLogEntry("stabilizer_support_min");
   logger.removeLogEntry("stabilizer_support_max");
-  logger.removeLogEntry("controlRobot_LeftFoot");
-  logger.removeLogEntry("controlRobot_LeftFootCenter");
-  logger.removeLogEntry("controlRobot_RightFoot");
-  logger.removeLogEntry("controlRobot_RightFootCenter");
-  logger.removeLogEntry("controlRobot_com");
-  logger.removeLogEntry("controlRobot_comd");
-  logger.removeLogEntry("controlRobot_posW");
-  logger.removeLogEntry("left_foot_ratio");
-  logger.removeLogEntry("pendulum_com");
-  logger.removeLogEntry("pendulum_comd");
-  logger.removeLogEntry("pendulum_comdd");
-  logger.removeLogEntry("pendulum_dcm");
-  logger.removeLogEntry("pendulum_omega");
-  logger.removeLogEntry("pendulum_zmp");
-  logger.removeLogEntry("realRobot_LeftFoot");
-  logger.removeLogEntry("realRobot_LeftFootCenter");
-  logger.removeLogEntry("realRobot_RightFoot");
-  logger.removeLogEntry("realRobot_RightFootCenter");
-  logger.removeLogEntry("realRobot_com");
-  logger.removeLogEntry("realRobot_comd");
-  logger.removeLogEntry("realRobot_dcm");
-  logger.removeLogEntry("realRobot_posW");
-  logger.removeLogEntry("realRobot_wrench");
-  logger.removeLogEntry("realRobot_zmp");
+  logger.removeLogEntry("stabilizer_left_foot_ratio");
+  logger.removeLogEntry("stabilizer_target_pendulum_com");
+  logger.removeLogEntry("stabilizer_target_pendulum_comd");
+  logger.removeLogEntry("stabilizer_target_pendulum_comdd");
+  logger.removeLogEntry("stabilizer_target_pendulum_dcm");
+  logger.removeLogEntry("stabilizer_target_pendulum_omega");
+  logger.removeLogEntry("stabilizer_target_pendulum_zmp");
+  logger.removeLogEntry("stabilizer_controlRobot_LeftFoot");
+  logger.removeLogEntry("stabilizer_controlRobot_LeftFootCenter");
+  logger.removeLogEntry("stabilizer_controlRobot_RightFoot");
+  logger.removeLogEntry("stabilizer_controlRobot_RightFootCenter");
+  logger.removeLogEntry("stabilizer_controlRobot_com");
+  logger.removeLogEntry("stabilizer_controlRobot_comd");
+  logger.removeLogEntry("stabilizer_controlRobot_posW");
+  logger.removeLogEntry("stabilizer_realRobot_LeftFoot");
+  logger.removeLogEntry("stabilizer_realRobot_LeftFootCenter");
+  logger.removeLogEntry("stabilizer_realRobot_RightFoot");
+  logger.removeLogEntry("stabilizer_realRobot_RightFootCenter");
+  logger.removeLogEntry("stabilizer_realRobot_com");
+  logger.removeLogEntry("stabilizer_realRobot_comd");
+  logger.removeLogEntry("stabilizer_realRobot_dcm");
+  logger.removeLogEntry("stabilizer_realRobot_posW");
+  logger.removeLogEntry("stabilizer_realRobot_wrench");
+  logger.removeLogEntry("stabilizer_realRobot_zmp");
 
   MetaTask::removeFromLogger(*comTask, logger);
   MetaTask::removeFromLogger(*pelvisTask, logger);
