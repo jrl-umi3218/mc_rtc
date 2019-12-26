@@ -446,10 +446,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                               c_.vdcStiffness = clamp(v(1), 0., 1e4);
                             }),
                  NumberInput("Torso pitch [rad]", [this]() { return c_.torsoPitch; },
-                             [this](double pitch) {
-                               pitch = clamp(pitch, c_.minTorsoPitch, c_.maxTorsoPitch);
-                               c_.torsoPitch = pitch;
-                             }));
+                             [this](double pitch) { c_.torsoPitch = pitch; }));
 
   gui.addElement({"Tasks", "Stabilizer", "Debug"}, Button("Disable stabilizer", [this]() { disable(); }),
                  Button("Reconfigure", [this]() { reconfigure(); }), Button("Dump configuration", [this]() {

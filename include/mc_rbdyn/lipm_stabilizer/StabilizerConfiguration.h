@@ -85,13 +85,9 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
   Eigen::Vector3d comStiffness = {1000., 1000., 100.}; /**< Stiffness of CoM IK task */
   double comWeight = 1000.; /**< Weight of CoM IK task */
   double comHeight = 0.84; /**< Desired height of the CoM */
-  double maxCoMHeight = 0.92; /**< Maximum height of the CoM */
-  double minCoMHeight = 0.6; /**< Minimum height of the CoM */
 
   std::string torsoBodyName;
   double torsoPitch = 0;
-  double minTorsoPitch = 0;
-  double maxTorsoPitch = 0;
   double torsoStiffness = 10;
   double torsoWeight = 100;
   double pelvisStiffness = 10;
@@ -141,16 +137,12 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
         tasks("com")("stiffness", comStiffness);
         tasks("com")("weight", comWeight);
         tasks("com")("height", comHeight);
-        tasks("com")("max_height", maxCoMHeight);
-        tasks("com")("min_height", minCoMHeight);
       }
 
       if(tasks.has("torso"))
       {
 
         tasks("torso")("pitch", torsoPitch);
-        tasks("torso")("min_pitch", minTorsoPitch);
-        tasks("torso")("max_pitch", maxTorsoPitch);
         tasks("torso")("stiffness", torsoStiffness);
         tasks("torso")("weight", torsoWeight);
       }
@@ -213,13 +205,9 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
     conf("tasks")("com").add("stiffness", comStiffness);
     conf("tasks")("com").add("weight", comWeight);
     conf("tasks")("com").add("height", comHeight);
-    conf("tasks")("com").add("max_height", maxCoMHeight);
-    conf("tasks")("com").add("min_height", minCoMHeight);
 
     conf("tasks").add("torso");
     conf("tasks")("torso").add("pitch", torsoPitch);
-    conf("tasks")("torso").add("min_pitch", minTorsoPitch);
-    conf("tasks")("torso").add("max_pitch", maxTorsoPitch);
     conf("tasks")("torso").add("stiffness", torsoStiffness);
     conf("tasks")("torso").add("weight", torsoWeight);
 

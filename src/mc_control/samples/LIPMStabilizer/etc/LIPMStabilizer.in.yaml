@@ -49,6 +49,7 @@ jvrc1:
   posture:
     stiffness: 1.0
     weight: 10.0
+
 # Implement some additional text states
 states:
   LIPMStabilizer::CustomConfiguration:
@@ -133,13 +134,12 @@ states:
             integral: 10
             deriv: 0.5
 
-###
-# Simple foot lifting
-# Tasks to handle the free foot
-# - Lift up phase: surface transform moving above the current position
-# - Put down phase: admittance tasks looking for a positive force above a threshold
-###
-states:
+  ###
+  # Simple foot lifting
+  # Tasks to handle the free foot
+  # - Lift up phase: surface transform moving above the current position
+  # - Put down phase: admittance tasks looking for a positive force above a threshold
+  ###
   LIPMStabilizer::LiftRightFoot:
     base: MetaTasks
     tasks:
@@ -409,5 +409,5 @@ Observers:
     # Valid entries are [control, estimator, none]
     UpdateFrom: estimator
     FloatingBaseSensor: FloatingBase
-RunObservers: [Encoder, KinematicInertial, CoMVelocity]
+RunObservers: [Encoder, KinematicInertial]
 UpdateObservers: [Encoder, KinematicInertial]
