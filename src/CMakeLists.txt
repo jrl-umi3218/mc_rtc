@@ -329,7 +329,7 @@ set(mc_tasks_HDR
 
 add_library(mc_tasks SHARED ${mc_tasks_SRC} ${mc_tasks_HDR})
 set_target_properties(mc_tasks PROPERTIES COMPILE_FLAGS "-DMC_TASKS_EXPORTS")
-target_link_libraries(mc_tasks PUBLIC mc_solver mc_rbdyn mc_trajectory mc_signal mc_rtc_utils eigen-quadprog::eigen-quadprog)
+target_link_libraries(mc_tasks PUBLIC mc_solver mc_rbdyn mc_trajectory mc_filter mc_rtc_utils eigen-quadprog::eigen-quadprog)
 install_mc_rtc_lib(mc_tasks)
 
 set(mc_planning_SRC
@@ -346,19 +346,19 @@ set_target_properties(mc_planning PROPERTIES COMPILE_FLAGS "-DMC_PLANNING_EXPORT
 target_link_libraries(mc_planning PUBLIC mc_rbdyn)
 install_mc_rtc_lib(mc_planning)
 
-set(mc_signal_HDR
-../include/mc_signal/LowPassVelocityFilter.h
-../include/mc_signal/LowPassFiniteDifferencesVelocityFilter.h
-../include/mc_signal/ExponentialMovingAverage.h
-../include/mc_signal/LeakyIntegrator.h
-../include/mc_signal/StationaryOffsetFilter.h
-../include/mc_signal/utils/clamp.h
+set(mc_filter_HDR
+../include/mc_filter/LowPassVelocity.h
+../include/mc_filter/LowPassFiniteDifferences.h
+../include/mc_filter/ExponentialMovingAverage.h
+../include/mc_filter/LeakyIntegrator.h
+../include/mc_filter/StationaryOffset.h
+../include/mc_filter/utils/clamp.h
 )
 
 # header-only
-add_library(mc_signal INTERFACE)
-target_include_directories(mc_signal INTERFACE $<INSTALL_INTERFACE:include> $<BUILD_INTERFACE:${MC_RTC_INCLUDE_DIR}>)
-install(TARGETS mc_signal 
+add_library(mc_filter INTERFACE)
+target_include_directories(mc_filter INTERFACE $<INSTALL_INTERFACE:include> $<BUILD_INTERFACE:${MC_RTC_INCLUDE_DIR}>)
+install(TARGETS mc_filter 
         EXPORT  ${TARGETS_EXPORT_NAME})
 
 
@@ -376,7 +376,7 @@ set(mc_observers_HDR
 
 add_library(mc_observers SHARED ${mc_observers_SRC} ${mc_observers_HDR})
 set_target_properties(mc_observers PROPERTIES COMPILE_FLAGS "-DMC_OBSERVERS_EXPORTS")
-target_link_libraries(mc_observers PUBLIC mc_signal mc_rbdyn mc_rtc_gui)
+target_link_libraries(mc_observers PUBLIC mc_filter mc_rbdyn mc_rtc_gui)
 install_mc_rtc_lib(mc_observers)
 
 set(mc_control_SRC

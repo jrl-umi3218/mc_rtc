@@ -7,7 +7,7 @@
 
 #pragma once
 
-namespace mc_signal
+namespace mc_filter
 {
 /** Leaky integrator.
  *
@@ -112,4 +112,4 @@ private:
   double rate_;
   double saturation_;
 };
-} // namespace mc_signal
+} // namespace mc_filter

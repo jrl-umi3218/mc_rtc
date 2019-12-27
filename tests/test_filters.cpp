@@ -2,7 +2,7 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <mc_signal/ExponentialMovingAverage.h>
+#include <mc_filter/ExponentialMovingAverage.h>
 
 #include <boost/test/unit_test.hpp>
 
@@ -10,7 +10,7 @@
 
 BOOST_AUTO_TEST_CASE(TestExponentialMovingAverage)
 {
-  using namespace mc_signal;
+  using namespace mc_filter;
   double dt = 0.005;
   const double T = 15;
   const double C = 100;

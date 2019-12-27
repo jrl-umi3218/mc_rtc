@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <mc_signal/utils/clamp.h>
+#include <mc_filter/utils/clamp.h>
 #include <mc_tasks/SurfaceTransformTask.h>
 
 namespace mc_tasks
@@ -13,7 +13,7 @@ namespace mc_tasks
 namespace force
 {
 
-using mc_signal::utils::clampAndWarn;
+using mc_filter::utils::clampAndWarn;
 
 /*! \brief Hybrid position-force control on a contacting end-effector.
  *

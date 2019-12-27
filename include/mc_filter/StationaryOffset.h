@@ -7,9 +7,9 @@
 
 #pragma once
 
-#include <mc_signal/ExponentialMovingAverage.h>
+#include <mc_filter/ExponentialMovingAverage.h>
 
-namespace mc_signal
+namespace mc_filter
 {
 /** Remove stationary offset from an input signal.
  *
@@ -19,7 +19,7 @@ namespace mc_signal
  * - VectorT should also respect the requirements of ExponentialMovingAverage
  */
 template<typename VectorT>
-struct StationaryOffsetFilter
+struct StationaryOffset
 {
   /** Constructor.
    *
@@ -31,7 +31,7 @@ struct StationaryOffsetFilter
    * \param initValue Initial value of the input signal.
    *
    */
-  StationaryOffsetFilter(double dt, double timeConstant, const VectorT & initValue = VectorT::Zero())
+  StationaryOffset(double dt, double timeConstant, const VectorT & initValue = VectorT::Zero())
   : average_(dt, timeConstant, initValue)
   {
     filteredValue_ = initValue;
@@ -99,4 +99,4 @@ private:
   VectorT rawValue_;
   ExponentialMovingAverage<VectorT> average_;
 };
-} // namespace mc_signal
+} // namespace mc_filter

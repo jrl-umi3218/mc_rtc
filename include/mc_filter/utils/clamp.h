@@ -15,7 +15,7 @@
 /** Utility functions and classes.
  *
  */
-namespace mc_signal
+namespace mc_filter
 {
 
 namespace utils
@@ -171,4 +171,4 @@ inline void clampAndWarn(const std::string & taskName,
 }
 
 } // namespace utils
-} // namespace mc_signal
+} // namespace mc_filter

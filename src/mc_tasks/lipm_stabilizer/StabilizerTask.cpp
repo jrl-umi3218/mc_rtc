@@ -19,8 +19,8 @@ namespace lipm_stabilizer
 {
 
 using internal::Contact;
-using ::mc_signal::utils::clamp;
-using ::mc_signal::utils::clampInPlace;
+using ::mc_filter::utils::clamp;
+using ::mc_filter::utils::clampInPlace;
 
 // Repeat static constexpr declarations
 // Fixes https://github.com/stephane-caron/lipm_walking_controller/issues/21

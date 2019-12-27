@@ -2,9 +2,9 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <mc_signal/LowPassFilter.h>
+#include <mc_filter/LowPass.h>
 
-namespace mc_signal
+namespace mc_filter
 {
 /** Low-pass velocity filter from series of position measurements.
  *
@@ -12,9 +12,9 @@ namespace mc_signal
  * - T::Zero() static method
  */
 template<typename T>
-struct LowPassFiniteDifferencesVelocityFilter : public LowPassFilter<T>
+struct LowPassFiniteDifferences : public LowPass<T>
 {
-  using LowPassFilterT = LowPassFilter<T>;
+  using LowPassT = LowPass<T>;
 
   /** Constructor with cutoff period.
    *
@@ -23,9 +23,9 @@ struct LowPassFiniteDifferencesVelocityFilter : public LowPassFilter<T>
    * \param period Cutoff period.
    *
    */
-  LowPassFiniteDifferencesVelocityFilter(double dt, double period) : LowPassFilterT(dt, period)
+  LowPassFiniteDifferences(double dt, double period) : LowPassT(dt, period)
   {
-    LowPassFilterT::reset(T::Zero());
+    LowPassT::reset(T::Zero());
     prevValue_ = T::Zero();
   }
 
@@ -36,7 +36,7 @@ struct LowPassFiniteDifferencesVelocityFilter : public LowPassFilter<T>
    */
   void reset(T pos, T vel)
   {
-    LowPassFilterT::reset(vel);
+    LowPassT::reset(vel);
     prevValue_ = pos;
   }
 
@@ -47,8 +47,8 @@ struct LowPassFiniteDifferencesVelocityFilter : public LowPassFilter<T>
    */
   void update(const T & newPos)
   {
-    T discVel = (newPos - prevValue_) / LowPassFilterT::dt();
-    LowPassFilterT::update(discVel);
+    T discVel = (newPos - prevValue_) / LowPassT::dt();
+    LowPassT::update(discVel);
     prevValue_ = newPos;
   }
 
@@ -61,7 +61,7 @@ protected:
   T prevValue_;
 
 private:
-  // Prevent calling the single-argument reset from parent's LowPassFilter<T>
-  using LowPassFilter<T>::reset;
+  // Prevent calling the single-argument reset from parent's LowPass<T>
+  using LowPass<T>::reset;
 };
-} // namespace mc_signal
+} // namespace mc_filter

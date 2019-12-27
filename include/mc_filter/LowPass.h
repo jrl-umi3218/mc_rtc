@@ -7,7 +7,7 @@
 
 #pragma once
 
-namespace mc_signal
+namespace mc_filter
 {
 
 /** Low-pass filter from series of velocity measurements.
@@ -16,7 +16,7 @@ namespace mc_signal
  * - T::Zero() static method (e.g Eigen::Vector3d, etc)
  */
 template<typename T>
-struct LowPassFilter
+struct LowPass
 {
   /** Constructor with cutoff period.
    *
@@ -25,7 +25,7 @@ struct LowPassFilter
    * \param period Cutoff period.
    *
    */
-  LowPassFilter(double dt, double period = 0) : cutoffPeriod_(period), dt_(dt)
+  LowPass(double dt, double period = 0) : cutoffPeriod_(period), dt_(dt)
   {
     reset(T::Zero());
   }
@@ -93,4 +93,4 @@ protected:
   double dt_ = 0.005; // [s]
 };
 
-} // namespace mc_signal
+} // namespace mc_filter

@@ -7,9 +7,9 @@
 
 #pragma once
 
-#include <mc_signal/ExponentialMovingAverage.h>
-#include <mc_signal/LeakyIntegrator.h>
-#include <mc_signal/StationaryOffsetFilter.h>
+#include <mc_filter/ExponentialMovingAverage.h>
+#include <mc_filter/LeakyIntegrator.h>
+#include <mc_filter/StationaryOffset.h>
 #include <mc_tasks/CoMTask.h>
 #include <mc_tasks/CoPTask.h>
 #include <mc_tasks/MetaTask.h>
@@ -461,8 +461,8 @@ protected:
   Eigen::Vector3d zmpError_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d distribZMP_ = Eigen::Vector3d::Zero();
   Eigen::Vector4d polePlacement_ = {-10., -5., -1., 10.}; /**< Pole placement with ZMP delay (Morisawa et al., 2014) */
-  mc_signal::ExponentialMovingAverage<Eigen::Vector3d> dcmIntegrator_;
-  mc_signal::StationaryOffsetFilter<Eigen::Vector3d> dcmDerivator_;
+  mc_filter::ExponentialMovingAverage<Eigen::Vector3d> dcmIntegrator_;
+  mc_filter::StationaryOffset<Eigen::Vector3d> dcmDerivator_;
   bool inTheAir_ = false; /**< Is the robot in the air? */
   double dfzForceError_ = 0.; /**< Force error in foot force difference control */
   double dfzHeightError_ = 0.; /**< Height error in foot force difference control */

@@ -9,7 +9,7 @@
 #include <algorithm>
 #include <cmath>
 
-namespace mc_signal
+namespace mc_filter
 {
 /** Exponential Moving Average.
  *
@@ -136,4 +136,4 @@ protected:
   double saturation_ = -1.;
 };
 
-} // namespace mc_signal
+} // namespace mc_filter

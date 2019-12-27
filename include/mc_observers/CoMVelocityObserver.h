@@ -7,10 +7,10 @@
 
 #pragma once
 
+#include <mc_filter/LowPassFiniteDifferences.h>
 #include <mc_observers/Observer.h>
 #include <mc_observers/api.h>
 #include <mc_rbdyn/Robot.h>
-#include <mc_signal/LowPassFiniteDifferencesVelocityFilter.h>
 
 namespace mc_observers
 {
@@ -48,7 +48,7 @@ struct MC_OBSERVER_DLLAPI CoMVelocityObserver : public Observer
   void removeFromLogger(mc_rtc::Logger &) override;
 
 private:
-  mc_signal::LowPassFiniteDifferencesVelocityFilter<Eigen::Vector3d>
+  mc_filter::LowPassFiniteDifferences<Eigen::Vector3d>
       comVelFilter_; /**< Low-pass filter used to estimate the CoM velocity */
   Eigen::Vector3d realComd_ = Eigen::Vector3d::Zero();
 };

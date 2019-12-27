@@ -4,9 +4,9 @@
 
 #pragma once
 
+#include <mc_filter/LowPass.h>
 #include <mc_observers/KinematicInertialPoseObserver.h>
 #include <mc_observers/api.h>
-#include <mc_signal/LowPassFilter.h>
 
 namespace mc_observers
 {
@@ -62,7 +62,7 @@ private:
   /**
    * Estimated velocity through finite differences and low-pass filtering
    **/
-  mc_signal::LowPassFilter<sva::MotionVecd> velFilter_;
+  mc_filter::LowPass<sva::MotionVecd> velFilter_;
   sva::MotionVecd velW_;
   sva::MotionVecd velWfd_;
 
