@@ -1,6 +1,7 @@
 {
-  "title": "targetSurface",
   "type": "object",
+  "title": "targetSurface",
+  "description": "Target as a robot surface",
   "properties":
   {
     "robotIndex" : { "type": "integer", "minimum": 0 },

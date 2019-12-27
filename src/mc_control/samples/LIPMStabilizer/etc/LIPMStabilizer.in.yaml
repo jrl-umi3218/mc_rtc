@@ -91,8 +91,6 @@ states:
             weight: 1000
             active_joints: [Root, RLEG_JOINT0, RLEG_JOINT1, RLEG_JOINT2, RLEG_JOINT3, RLEG_JOINT4, RLEG_JOINT5, LLEG_JOINT0, LLEG_JOINT1, LLEG_JOINT2, LLEG_JOINT3, LLEG_JOINT4, LLEG_JOINT5]
             height: 0.87
-            max_height: 0.92
-            min_height: 0.6
           contact:
             damping: 300
             stiffness: 1
@@ -111,7 +109,6 @@ states:
 
         # Admittance coefficients (force-control)
         admittance:
-          com: [0, 0]
           cop: [0.001, 0.001]
 
         ########################

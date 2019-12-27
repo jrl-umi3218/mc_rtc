@@ -13,15 +13,7 @@
     "orientation": { "$ref": "/../../Eigen/Matrix3d.json" },
     "position": { "$ref": "/../../Eigen/Vector3d.json" },
 
-    "relative":
-    {
-      "type": "object",
-      "description": "Relative target specification, the target is specified relatively to the middle point between two surfaces s1 and s2",
-      "s1": { "type": "string" },
-      "s2": { "type": "string" },
-      "orientation": { "$ref": "/../../Eigen/Matrix3d.json" },
-      "position": { "$ref": "/../../Eigen/Vector3d.json" }
-    },
+    "relative": { "$ref": "/../../common/relative.json" },
 
     "orientationStiffness": { "type": "number", "minimum": 0},
     "orientationWeight": { "type": "number", "minimum": 0},

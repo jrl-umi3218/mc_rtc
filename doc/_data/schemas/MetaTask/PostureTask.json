@@ -12,7 +12,25 @@
     "activeJoints": { "type": "array", "items": { "type": "string" } },
     "unactiveJoints": { "type": "array", "items": { "type": "string" } },
     "jointGains": { "type": "array", "items": { "$ref": "/../../Tasks/JointGains.json" } },
-    "target": { "type": "object" }
+    "target":
+    {
+      "type": "array",
+      "description": "Map of joint names -> vector of joint values",
+      "items":
+      {
+        "type": "array",
+        "items":
+        [
+          { "type": "string" },
+          {
+            "type": "array",
+            "items": [
+              {"type": "number"}
+            ]
+          }
+        ]
+      }
+    }
   },
   "required": ["type", "robotIndex", "stiffness", "weight"]
 }

@@ -1,0 +1,114 @@
+###
+# Stabilizer MetaTask configuration
+#
+# This task is initialized in the following order:
+# - Default configuration is loaded from the 
+#   robot module (gains, default surface names, joint names, etc). 
+# - Then general configuration is loaded from this YAML task configuration
+# - Then robot-specific configuration is loaded from the `robot_name` group
+#   in which you may override any of the previous configuration
+#
+# In most cases, the user will not need to care about the general stabilizer configuration, 
+# and is only expected to provide information about how the statbilizer is meant to be used:
+# - contacts: list of established contacts (one of [Left, Right])
+#   By default the current estimated contact surface pose from the real robot
+#   is used as the reference contact frame. You may override this behaviour by providing 
+#   `Left` or `Right` entries with the desired contact targets. 
+###
+---
+type: lipm_stabilizer
+robotIndex: 0
+contacts: [Left, Right]
+Left:
+  rotation: [0,0,0]
+  height: 0
+Right:
+  rotation: [0,0,0]
+  height: 0
+
+jvrc1:
+  dcm_tracking:
+    gains:
+      prop: 4
+      integral: 10
+      deriv: 0.5
+    derivator_time_constant: 1
+    integrator_time_constant: 10
+
+
+###
+# More complete example with most of the possible configurations.
+# See the JSON schema for a full list of available members
+#
+# Note: than in practice, most users will not need to provide 
+# all these configuration parameters as the default 
+# should be good-enough in most use-cases.
+#
+# Note2: the gains provided here are just meant as an example on how to override 
+# the default gains with your own, do not expect those to behave well. 
+# Please refer to the RobotModule for valid default gains. 
+###
+---
+type: lipm_stabilizer
+robotIndex: 0
+enabled: true
+
+# Global configuration
+friction: 0.8
+
+# Weights for the force-distribution QP
+fdqp_weights:
+  net_wrench: 10000
+  ankle_torque: 100
+  pressure: 1
+tasks:
+  com:
+    stiffness: [1000, 1000, 100]
+    weight: 1000
+    height: 0.87
+
+contact:
+  damping: 300
+  stiffness: 1
+  weight: 10000
+
+# Vertical drift frequency
+vdc:
+  frequency: 1
+  stiffness: 1000
+
+
+# Configuration specific to jvrc1.
+jvrc1:
+  leftFootSurface: LeftFootCenter
+  rightFootSurface: RightFootCenter
+  torsoBodyName: CHEST_LINK1
+  tasks:
+    com:
+      active_joints: 
+      [
+        Root, 
+        RLEG_JOINT0, RLEG_JOINT1, RLEG_JOINT2, RLEG_JOINT3, RLEG_JOINT4, RLEG_JOINT5, 
+        LLEG_JOINT0, LLEG_JOINT1, LLEG_JOINT2, LLEG_JOINT3, LLEG_JOINT4, LLEG_JOINT5
+      ]
+      height: 0.75
+
+  admittance:
+    cop: [0.005, 0.005]
+
+  dcm_tracking:
+    gains:
+      prop: 4
+      integral: 10
+      deriv: 0.5
+    derivator_time_constant: 1
+    integrator_time_constant: 10
+
+# Configuration specific to other_robot
+other_robot:
+  leftFootSurface: YourLeftFootCenter
+  rightFootSurface: YourRightFootCenter
+  torsoBodyName: torso
+
+  admittance:
+    cop: [0.001, 0.001]

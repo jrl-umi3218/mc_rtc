@@ -1,0 +1,165 @@
+{
+  "title": "mc_tasks::lipm_stabilizer::StabilizerTask",
+  "type": "object",
+  "definitions":
+  {
+    "com":
+    {
+      "type": "object",
+      "title": "CoM task parameters",
+      "description": "CoM task parameters",
+      "properties":
+      {
+        "stiffness":  { "$ref": "/../../Eigen/Vector3d.json" },
+        "weight": { "type": "number", "minimum": 0 },
+        "height": { "type": "number", "minimum": 0 },
+        "activeJoints": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "contact":
+    {
+      "type": "object",
+      "title": "Contact tasks parameters",
+      "description": "Contact tasks parameters (CoP tasks)",
+      "properties":
+      {
+        "weight": { "type": "number", "minimum": 0 },
+        "stiffness": { "type": "number", "minimum": 0 },
+        "damping": { "type": "number", "minimum": 0 }
+      }
+    },
+    "pelvis":
+    {
+      "type": "object",
+      "title": "Pelvis task parameters",
+      "description": "Pelvis task parameters (regularization)",
+      "properties":
+      {
+        "weight": { "type": "number", "minimum": 0 },
+        "stiffness": { "type": "number", "minimum": 0 },
+        "pitch": { "type": "number" }
+      }
+    },
+    "torso":
+    {
+      "type": "object",
+      "title": "Torso task parameters",
+      "description": "Toso task parameters (regularization)",
+      "properties":
+      {
+        "weight": { "type": "number", "minimum": 0 },
+        "stiffness": { "type": "number", "minimum": 0 }
+      }
+    },
+    "fdqp_weights":
+    {
+      "type": "object",
+      "title": "Force distribution QP parameters",
+      "description": "Force distribution QP parameters",
+      "properties":
+      {
+        "net_wrench": { "type": "number", "minimum": 0 },
+        "ankle_torque": { "type": "number", "minimum": 0 },
+        "pressure": { "type": "number", "minimum": 0 }
+      }
+    },
+    "vdc":
+    {
+      "type": "object",
+      "title": "Vertical drift compensation parameters",
+      "description": "Vertical drift compensation parameters",
+      "properties":
+      {
+        "frequency": { "type": "number", "minimum": 0 },
+        "stiffness": { "type": "number", "minimum": 0 }
+      }
+    },
+    "admittance":
+    {
+      "type": "object",
+      "title": "Admittance Parameters",
+      "description": "Admittance parameters",
+      "properties":
+      {
+        "cop":  { "$ref": "/../../Eigen/Vector2d.json" },
+        "dfz": { "type": "number", "minimum": 0 },
+        "dfz_damping": { "type": "number", "minimum": 0 }
+      }
+    },
+    "dcm_tracking":
+    {
+      "type": "object",
+      "title": "DCM Tracking Parameters",
+      "description": "DCM Tracking parameters",
+      "properties":
+      {
+        "gains":
+        {
+          "type": "object",
+          "prop": { "type": "number", "minimum": 0 },
+          "integral": { "type": "number", "minimum": 0 },
+          "deriv": { "type": "number", "minimum": 0 }
+        },
+        "derivator_time_constant": { "type": "number", "minimum": 0 },
+        "integrator_time_constant": { "type": "number", "minimum": 0 }
+      }
+    }
+  },
+  "properties":
+  {
+    "type": { "enum": ["lipm_stabilizer"], "type": "string" },
+    "name": { "type": "string" },
+
+    "robotIndex": { "type": "integer", "minimum": 0 },
+    "leftFootSurface": { "type": "string" },
+    "rightFootSurface": { "type": "string" },
+    "torsoBodyName": { "type": "string" },
+
+    "friction": { "type": "number", "minimum": 0 },
+    "tasks":
+    {
+      "type": "object",
+      "title": "Tasks configuration",
+      "description": "Configuration of the tasks managed by the stabilizer: CoM, left and right contact CoP tasks, and torso and pelvis regularization tasks",
+      "properties":
+      {
+        "com": {"$ref": "#/definitions/com"},
+        "contact": {"$ref": "#/definitions/contact"},
+        "pelvis": {"$ref": "#/definitions/pelvis"},
+        "torso": {"$ref": "#/definitions/torso"}
+      }
+    },
+    "fdqp_weights": {"$ref": "#/definitions/fdqp_weights"},
+    "vdc": {"$ref": "#/definitions/vdc"},
+    "admittance": {"$ref": "#/definitions/admittance"},
+    "dcm_tracking": {"$ref": "#/definitions/dcm_tracking"},
+
+    "robot_name" :
+    {
+      "type": "object",
+      "title": "Robot-specific stabilizer configuration",
+      "description": "Per-robot configuration, entries specidied here will overwite the global stabilizer configuration entries",
+      "properties":
+      {
+        "tasks":
+        {
+          "type": "object",
+          "title": "Tasks configuration",
+          "description": "Configuration of the tasks managed by the stabilizer: CoM, left and right contact CoP tasks, and torso and pelvis regularization tasks",
+          "properties":
+          {
+            "com": {"$ref": "#/definitions/com"},
+            "contact": {"$ref": "#/definitions/contact"},
+            "pelvis": {"$ref": "#/definitions/pelvis"},
+            "torso": {"$ref": "#/definitions/torso"}
+          }
+        },
+        "fdqp_weights": {"$ref": "#/definitions/fdqp_weights"},
+        "vdc": {"$ref": "#/definitions/vdc"},
+        "admittance": {"$ref": "#/definitions/admittance"},
+        "dcm_tracking": {"$ref": "#/definitions/dcm_tracking"}
+      }
+    }
+  },
+  "required": ["type"]
+}

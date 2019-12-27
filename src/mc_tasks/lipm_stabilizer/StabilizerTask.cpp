@@ -1176,7 +1176,9 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
       unsigned robotIndex = config("robotIndex", 0u);
       const auto & robot = solver.robots().robot(robotIndex);
 
+      // Load default configuration from robot module
       auto stabiConf = robot.module().defaultLIPMStabilizerConfiguration();
+      // Load user-specified configuration
       stabiConf.load(config);
       // Load user-specified stabilizer configuration for this robot
       if(config.has(robot.name()))

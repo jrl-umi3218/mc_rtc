@@ -1,0 +1,98 @@
+{
+   "type": "lipm_stabilizer",
+   "robotIndex": 0,
+   "contacts": [ "Left", "Right" ],
+   "Left": {
+      "rotation": [ 0, 0, 0 ],
+      "height": 0
+   },
+   "Right": {
+      "rotation": [ 0, 0, 0 ],
+      "height": 0
+   },
+   "jvrc1": {
+      "dcm_tracking": {
+         "gains": {
+            "prop": 4,
+            "integral": 10,
+            "deriv": 0.5
+         },
+         "derivator_time_constant": 1,
+         "integrator_time_constant": 10
+      }
+   }
+},
+
+
+{
+   "type": "lipm_stabilizer",
+   "robotIndex": 0,
+   "enabled": true,
+   "friction": 0.8,
+   "fdqp_weights": {
+      "net_wrench": 10000,
+      "ankle_torque": 100,
+      "pressure": 1
+   },
+   "tasks": {
+      "com": {
+         "stiffness": [ 1000, 1000, 100 ],
+         "weight": 1000,
+         "height": 0.87
+      }
+   },
+   "contact": {
+      "damping": 300,
+      "stiffness": 1,
+      "weight": 10000
+   },
+   "vdc": {
+      "frequency": 1,
+      "stiffness": 1000
+   },
+   "jvrc1": {
+      "leftFootSurface": "LeftFootCenter",
+      "rightFootSurface": "RightFootCenter",
+      "torsoBodyName": "CHEST_LINK1",
+      "tasks": {
+         "com": {
+            "active_joints": [
+               "Root",
+               "RLEG_JOINT0",
+               "RLEG_JOINT1",
+               "RLEG_JOINT2",
+               "RLEG_JOINT3",
+               "RLEG_JOINT4",
+               "RLEG_JOINT5",
+               "LLEG_JOINT0",
+               "LLEG_JOINT1",
+               "LLEG_JOINT2",
+               "LLEG_JOINT3",
+               "LLEG_JOINT4",
+               "LLEG_JOINT5"
+            ],
+            "height": 0.75
+         }
+      },
+      "admittance": {
+         "cop": [ 0.005, 0.005 ]
+      },
+      "dcm_tracking": {
+         "gains": {
+            "prop": 4,
+            "integral": 10,
+            "deriv": 0.5
+         },
+         "derivator_time_constant": 1,
+         "integrator_time_constant": 10
+      }
+   },
+   "other_robot": {
+      "leftFootSurface": "YourLeftFootCenter",
+      "rightFootSurface": "YourRightFootCenter",
+      "torsoBodyName": "torso",
+      "admittance": {
+         "cop": [ 0.001, 0.001 ]
+      }
+   }
+}
