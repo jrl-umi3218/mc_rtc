@@ -4,7 +4,7 @@
   "description": "Admittance parameters",
   "properties":
   {
-    "cop":  { "$ref": "/../../../Eigen/Vector2d.json" },
+    "cop":  { "$ref": "/../../Eigen/Vector2d.json" },
     "dfz": { "type": "number", "minimum": 0 },
     "dfz_damping": { "type": "number", "minimum": 0 }
   }

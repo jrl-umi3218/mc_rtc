@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <algorithm>
+
 namespace mc_filter
 {
 
