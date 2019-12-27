@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "title": "Torso task parameters",
+  "description": "Toso task parameters (regularization)",
+  "properties":
+  {
+    "weight": { "type": "number", "minimum": 0 },
+    "stiffness": { "type": "number", "minimum": 0 }
+  }
+}

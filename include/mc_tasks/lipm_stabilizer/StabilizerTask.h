@@ -252,9 +252,12 @@ public:
    *
    * @param com desired com position
    *
+   * @param zmpHeight[=0] optional height of the ZMP plane (eg contacts), used to compute the
+   * pendulums omega.
+   *
    * \see target for dynamic motions.
    */
-  void staticTarget(const Eigen::Vector3d & com);
+  void staticTarget(const Eigen::Vector3d & com, double zmpHeight = 0);
 
   /**
    * @brief Provides a dynamic target to the stabilizer.

@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "title": "CoM task parameters",
+  "description": "CoM task parameters",
+  "properties":
+  {
+    "stiffness":  { "$ref": "/../../Eigen/Vector3d.json" },
+    "weight": { "type": "number", "minimum": 0 },
+    "height": { "type": "number", "minimum": 0 },
+    "activeJoints": { "type": "array", "items": { "type": "string" } }
+  }
+}

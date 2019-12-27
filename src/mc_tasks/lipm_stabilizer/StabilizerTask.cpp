@@ -647,6 +647,7 @@ void StabilizerTask::configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfig
 
 void StabilizerTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
+  double height = 0;
   // Load contacts
   std::vector<std::pair<ContactState, Contact>> contactsToAdd;
   if(config.has("contacts"))
@@ -669,7 +670,9 @@ void StabilizerTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurat
         }
         if(c.has("height"))
         {
+          double h = c("height");
           contactPose.translation().z() = c("height");
+          height = (height + h) / 2;
         }
       }
       contactsToAdd.push_back({s, {robot(), footTasks[s]->surface(), contactPose, c_.friction}});
@@ -686,7 +689,7 @@ void StabilizerTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurat
       comTarget = config("staticTarget")("com");
     }
   }
-  this->staticTarget(comTarget);
+  this->staticTarget(comTarget, height);
 
   // Allow to start in disabled state
   bool enabled = true;
@@ -864,10 +867,9 @@ void StabilizerTask::updateZMPFrame()
   measuredZMP_ = robots_.robot(robotIndex_).zmp(measuredNetWrench_, zmpFrame_, MIN_NET_TOTAL_FORCE_ZMP);
 }
 
-void StabilizerTask::staticTarget(const Eigen::Vector3d & com)
+void StabilizerTask::staticTarget(const Eigen::Vector3d & com, double zmpHeight)
 {
-  // XXX should use height above ground
-  Eigen::Vector3d zmp = Eigen::Vector3d{com.x(), com.y(), 0.};
+  Eigen::Vector3d zmp = Eigen::Vector3d{com.x(), com.y(), zmpHeight};
 
   target(com, Eigen::Vector3d::Zero(), Eigen::Vector3d::Zero(), zmp);
 }
