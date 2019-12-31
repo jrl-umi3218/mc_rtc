@@ -36,8 +36,29 @@ macro(install_mc_rtc_lib MC_LIB)
 endmacro()
 
 configure_file(mc_rtc/loader.in.cpp "${CMAKE_CURRENT_BINARY_DIR}/mc_rtc/loader.cpp")
-add_library(mc_rtc_loader SHARED "${CMAKE_CURRENT_BINARY_DIR}/mc_rtc/loader.cpp" ../include/mc_rtc/loader.h ../include/mc_rtc/loader_api.h)
+
+set(VERSION_HEADER "${PROJECT_BINARY_DIR}/include/mc_rtc/version.h")
+add_custom_command(OUTPUT ALWAYS_RUN ${VERSION_HEADER}
+  COMMAND ${CMAKE_COMMAND} -DPROJECT_SOURCE_DIR="${PROJECT_SOURCE_DIR}"
+                           -DPROJECT_BINARY_DIR="${PROJECT_BINARY_DIR}"
+                           -DPROJECT_VERSION="${PROJECT_VERSION}"
+                           -P "${PROJECT_SOURCE_DIR}/CMakeModules/MakeVersionHeader.cmake"
+)
+
+set(mc_rtc_loader_SRC
+  "${CMAKE_CURRENT_BINARY_DIR}/mc_rtc/loader.cpp"
+  mc_rtc/version.cpp
+)
+
+set(mc_rtc_loader_HDR
+  "${VERSION_HEADER}"
+  ../include/mc_rtc/loader.h
+  ../include/mc_rtc/loader_api.h
+)
+
+add_library(mc_rtc_loader SHARED ${mc_rtc_loader_SRC} ${mc_rtc_loader_HDR})
 set_target_properties(mc_rtc_loader PROPERTIES COMPILE_FLAGS "-DMC_RTC_LOADER_EXPORTS")
+target_include_directories(mc_rtc_loader PRIVATE "${PROJECT_BINARY_DIR}/include/mc_rtc")
 target_link_libraries(mc_rtc_loader PUBLIC Boost::filesystem Boost::disable_autolinking ${LTDL})
 install_mc_rtc_lib(mc_rtc_loader)
 
