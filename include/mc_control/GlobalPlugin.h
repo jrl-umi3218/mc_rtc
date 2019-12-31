@@ -65,6 +65,10 @@ struct MC_CONTROL_DLLAPI GlobalPlugin
 
 } // namespace mc_control
 
+#ifndef MC_RTC_NO_INCLUDE_VERSION
+#  include <mc_rtc/version.h>
+#endif
+
 #ifdef WIN32
 #  define GLOBAL_PLUGIN_API __declspec(dllexport)
 #else
@@ -75,11 +79,25 @@ struct MC_CONTROL_DLLAPI GlobalPlugin
 #  endif
 #endif
 
+/** A simple compile-time versus run-time version checking macro
+ *
+ * If you are not relying on EXPORT_MC_RTC_PLUGIN you should use this in your
+ * MC_RTC_GLOBAL_PLUGIN implementation
+ *
+ */
+#define MC_RTC_GLOBAL_PLUGIN_CHECK_VERSION(NAME)                                                                  \
+  if(mc_rtc::MC_RTC_VERSION != mc_rtc::version())                                                                 \
+  {                                                                                                               \
+    LOG_ERROR(NAME << " was compiled with " << mc_rtc::MC_RTC_VERSION << " but mc_rtc is currently at version "   \
+                   << mc_rtc::version() << ", you might experience subtle issues and should recompile your code") \
+  }
+
 #define EXPORT_MC_RTC_PLUGIN(NAME, TYPE)                                          \
   extern "C"                                                                      \
   {                                                                               \
     GLOBAL_PLUGIN_API void MC_RTC_GLOBAL_PLUGIN(std::vector<std::string> & names) \
     {                                                                             \
+      MC_RTC_GLOBAL_PLUGIN_CHECK_VERSION(NAME)                                    \
       names = {NAME};                                                             \
     }                                                                             \
                                                                                   \

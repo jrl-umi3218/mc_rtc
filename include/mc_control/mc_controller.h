@@ -301,6 +301,10 @@ public:
 
 } // namespace mc_control
 
+#ifndef MC_RTC_NO_INCLUDE_VERSION
+#  include <mc_rtc/version.h>
+#endif
+
 #ifdef WIN32
 #  define CONTROLLER_MODULE_API __declspec(dllexport)
 #else
@@ -311,12 +315,27 @@ public:
 #  endif
 #endif
 
+/** A simple compile-time versus run-time version checking macro
+ *
+ * If you are not relying on CONTROLLER_CONSTRUCTOR or
+ * SIMPLE_CONTROLLER_CONSTRUCTOR you should use this in your MC_RTC_CONTROLLER
+ * implementation
+ *
+ */
+#define CONTROLLER_CHECK_VERSION(NAME)                                                                            \
+  if(mc_rtc::MC_RTC_VERSION != mc_rtc::version())                                                                 \
+  {                                                                                                               \
+    LOG_ERROR(NAME << " was compiled with " << mc_rtc::MC_RTC_VERSION << " but mc_rtc is currently at version "   \
+                   << mc_rtc::version() << ", you might experience subtle issues and should recompile your code") \
+  }
+
 /** Provides a handle to construct the controller with Json config */
 #define CONTROLLER_CONSTRUCTOR(NAME, TYPE)                                                                        \
   extern "C"                                                                                                      \
   {                                                                                                               \
     CONTROLLER_MODULE_API void MC_RTC_CONTROLLER(std::vector<std::string> & names)                                \
     {                                                                                                             \
+      CONTROLLER_CHECK_VERSION(NAME)                                                                              \
       names = {NAME};                                                                                             \
     }                                                                                                             \
     CONTROLLER_MODULE_API void destroy(mc_control::MCController * ptr)                                            \
@@ -338,6 +357,7 @@ public:
   {                                                                                                               \
     CONTROLLER_MODULE_API void MC_RTC_CONTROLLER(std::vector<std::string> & names)                                \
     {                                                                                                             \
+      CONTROLLER_CHECK_VERSION(NAME)                                                                              \
       names = {NAME};                                                                                             \
     }                                                                                                             \
     CONTROLLER_MODULE_API void destroy(mc_control::MCController * ptr)                                            \
