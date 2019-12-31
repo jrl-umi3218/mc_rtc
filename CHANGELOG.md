@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- `mc_rtc::MC_RTC_VERSION` and `mc_rtc::version()` for compile/run-time discrepancies checking
+
 ### Fixes
 
 - [mc\_rbdyn] Allow aliases to specify a string
