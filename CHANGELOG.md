@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Fixes
+
+- [mc\_rbdyn] Allow aliases to specify a string
+
 ## [1.0.0] - 2019-12-23
 
 Initial release

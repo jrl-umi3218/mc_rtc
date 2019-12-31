@@ -49,7 +49,7 @@ void mc_rbdyn::RobotLoader::load_aliases(const std::string & fname)
   mc_rtc::Configuration data(fname);
   try
   {
-    std::map<std::string, std::vector<std::string>> new_aliases = data;
+    std::map<std::string, mc_rtc::Configuration> new_aliases = data;
     for(const auto & a : new_aliases)
     {
       if(robot_loader->has_object(a.first))
@@ -62,7 +62,14 @@ void mc_rbdyn::RobotLoader::load_aliases(const std::string & fname)
       {
         LOG_WARNING("Aliases " << a.first << " was already declared, new declaration from " << fname << " will prevail")
       }
-      aliases[a.first] = a.second;
+      if(a.second.size())
+      {
+        aliases[a.first] = a.second;
+      }
+      else
+      {
+        aliases[a.first] = {static_cast<std::string>(a.second)};
+      }
       if(verbose_)
       {
         LOG_INFO("New alias " << a.first << ": " << data(a.first).dump(true, true))
