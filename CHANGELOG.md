@@ -5,6 +5,7 @@
 ### Fixes
 
 - [mc\_rbdyn] Allow aliases to specify a string
+- [mc\_rbdyn] Allow loading aliases of aliases
 
 ## [1.0.0] - 2019-12-23
 

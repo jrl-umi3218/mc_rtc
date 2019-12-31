@@ -75,7 +75,7 @@ public:
     {
       return get_robot_module(name, details::to_string(args)...);
     }
-    std::lock_guard<std::mutex> guard{mtx};
+    std::unique_lock<std::mutex> guard{mtx};
     init();
     mc_rbdyn::RobotModulePtr rm = nullptr;
     if(aliases.count(name))
@@ -83,15 +83,18 @@ public:
       const auto & params = aliases[name];
       if(params.size() == 1)
       {
-        rm = robot_loader->create_object(params[0]);
+        guard.unlock();
+        return get_robot_module(params[0]);
       }
       else if(params.size() == 2)
       {
-        rm = robot_loader->create_object(params[0], params[1]);
+        guard.unlock();
+        return get_robot_module(params[0], params[1]);
       }
       else if(params.size() == 3)
       {
-        rm = robot_loader->create_object(params[0], params[1], params[2]);
+        guard.unlock();
+        return get_robot_module(params[0], params[1], params[2]);
       }
       else
       {
