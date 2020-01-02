@@ -191,9 +191,15 @@ jobs:
         if [ $REF == "master" ]
         then
           echo "::set-env name=BINTRAY_REPO::multi-contact-head"
+          echo "::set-env name=PACKAGE_JOB::package-master"
         else
           echo "::set-env name=BINTRAY_REPO::multi-contact-release"
+          echo "::set-env name=PACKAGE_JOB::package-release"
         fi
     - name: Request mirror sync
       run: |
         curl -ugergondet:${{ secrets.BINTRAY_API_KEY }} --header "X-GPG-PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}" -X POST https://api.bintray.com/calc_metadata/gergondet/${{ env.BINTRAY_REPO }}
+    - name: Trigger dependents rebuild
+      run: |
+        curl -H "Accept: application/vnd.github.everest-preview+json" -H "Authorization: token ${{ secrets.GH_PAGES_TOKEN }}" --request POST --data "{\"event_type\": \"${PACKAGE_JOB}\"}" https://api.github.com/repos/jrl-umi3218/mc_rtc_ros/dispatches
+        curl -H "Accept: application/vnd.github.everest-preview+json" -H "Authorization: token ${{ secrets.GH_PAGES_TOKEN }}" --request POST --data "{\"event_type\": \"${PACKAGE_JOB}\"}" https://api.github.com/repos/jrl-umi3218/mc_openrtm/dispatches
