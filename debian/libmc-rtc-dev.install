@@ -16,6 +16,7 @@ usr/include/mc_rtc/loader_sandbox.h
 usr/include/mc_rtc/utils_api.h
 usr/include/mc_rtc/gui.h
 usr/include/mc_rtc/loader.hpp
+usr/include/mc_rtc/version.h
 usr/include/mc_solver/*
 usr/include/mc_tasks/MetaTaskLoader.h
 usr/include/mc_tasks/SmoothTask.h
