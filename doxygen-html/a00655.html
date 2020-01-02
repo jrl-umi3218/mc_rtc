@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_trajectory Namespace Reference</title>
+<title>mc_solver::utils Namespace Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -71,59 +71,65 @@ $(document).ready(function(){initNavTree('a00655.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">mc_trajectory Namespace Reference</div>  </div>
+<div class="title">mc_solver::utils Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02637.html">BSpline</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02504.html">ContactWrenchMatrixToLambdaMatrix</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transform contact wrench matrix to lambda matrix.  <a href="a02504.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02641.html">ExactCubic</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents an Exact Cubic spline : a curve that passes exactly through waypoints in position, while respecting optional constraints on its initial and final velocity and acceleration.  <a href="a02641.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02516.html">IsUpdate</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02645.html">InterpolatedRotation</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes a trajectory with smoothly interpolate rotation between waypoints.  <a href="a02645.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02512.html">Update</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02649.html">Spline</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02520.html">UpdateForce</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02524.html">UpdateNrVarsData</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This struct provides common data for UpdateNrVars* classes.  <a href="a02524.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02532.html">UpdateNrVarsLambda</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This struct provides an implement for updateNrVars for a lambda-based constraint.  <a href="a02532.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02528.html">UpdateNrVarsRobot</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This struct provides an implementation for updateNrVars for a robot-based constraint.  <a href="a02528.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02508.html">UpdateTag</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a9fbcf4dd49d2e09b5d33208fae44f11b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03516.html#adff5a6c1e965ae6fdc756a2c5187f9c9">MC_TRAJECTORY_DLLAPI</a> Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00655.html#a9fbcf4dd49d2e09b5d33208fae44f11b">generateInterpolatedWaypoints</a> (const Eigen::Vector3d &amp;start, const Eigen::Vector3d &amp;stop, unsigned int nrWP)</td></tr>
-<tr class="separator:a9fbcf4dd49d2e09b5d33208fae44f11b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a3fef857fcf6a819b7f8061f33248d0b5"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00655.html#a3fef857fcf6a819b7f8061f33248d0b5">UpdateRobot</a> = <a class="el" href="a02512.html">Update</a>&lt; <a class="el" href="a02528.html">UpdateNrVarsRobot</a> &gt;</td></tr>
+<tr class="separator:a3fef857fcf6a819b7f8061f33248d0b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51609ca39a4099935af3983ff08a0c50"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00655.html#a51609ca39a4099935af3983ff08a0c50">UpdateLambda</a> = <a class="el" href="a02512.html">Update</a>&lt; <a class="el" href="a02532.html">UpdateNrVarsLambda</a> &gt;</td></tr>
+<tr class="separator:a51609ca39a4099935af3983ff08a0c50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a9fbcf4dd49d2e09b5d33208fae44f11b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9fbcf4dd49d2e09b5d33208fae44f11b">&#9670;&nbsp;</a></span>generateInterpolatedWaypoints()</h2>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="a51609ca39a4099935af3983ff08a0c50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51609ca39a4099935af3983ff08a0c50">&#9670;&nbsp;</a></span>UpdateLambda</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a03516.html#adff5a6c1e965ae6fdc756a2c5187f9c9">MC_TRAJECTORY_DLLAPI</a> Eigen::MatrixXd mc_trajectory::generateInterpolatedWaypoints </td>
-          <td>(</td>
-          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
-          <td class="paramname"><em>start</em>, </td>
+          <td class="memname">using <a class="el" href="a00655.html#a51609ca39a4099935af3983ff08a0c50">mc_solver::utils::UpdateLambda</a> = typedef <a class="el" href="a02512.html">Update</a>&lt;<a class="el" href="a02532.html">UpdateNrVarsLambda</a>&gt;</td>
         </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3fef857fcf6a819b7f8061f33248d0b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fef857fcf6a819b7f8061f33248d0b5">&#9670;&nbsp;</a></span>UpdateRobot</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
         <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
-          <td class="paramname"><em>stop</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>nrWP</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">using <a class="el" href="a00655.html#a3fef857fcf6a819b7f8061f33248d0b5">mc_solver::utils::UpdateRobot</a> = typedef <a class="el" href="a02512.html">Update</a>&lt;<a class="el" href="a02528.html">UpdateNrVarsRobot</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -136,8 +142,8 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00655.html">mc_trajectory</a></li>
-    <li class="footer">Generated on Tue Dec 31 2019 05:48:18 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00639.html">mc_solver</a></li><li class="navelem"><a class="el" href="a00655.html">utils</a></li>
+    <li class="footer">Generated on Thu Jan 2 2020 05:10:13 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

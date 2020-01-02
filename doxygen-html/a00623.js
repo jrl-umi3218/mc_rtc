@@ -1,11 +1,19 @@
 var a00623 =
 [
-    [ "BodySensorObserver", "a01901.html", "a01901" ],
-    [ "EncoderObserver", "a01905.html", "a01905" ],
-    [ "KinematicInertialObserver", "a01909.html", "a01909" ],
-    [ "KinematicInertialPoseObserver", "a01913.html", "a01913" ],
-    [ "LowPassFiniteDifferencesVelocityFilter", "a01917.html", "a01917" ],
-    [ "LowPassVelocityFilter", "a01921.html", "a01921" ],
-    [ "Observer", "a01925.html", "a01925" ],
-    [ "ObserverLoader", "a01929.html", "a01929" ]
+    [ "AddRemoveContactState", "a01820.html", "a01820" ],
+    [ "Contact", "a01792.html", "a01792" ],
+    [ "Controller", "a01796.html", "a01796" ],
+    [ "Executor", "a01804.html", "a01804" ],
+    [ "Grippers", "a01824.html", "a01824" ],
+    [ "HalfSittingState", "a01828.html", "a01828" ],
+    [ "MetaState", "a01832.html", "a01832" ],
+    [ "MetaTasksState", "a01836.html", "a01836" ],
+    [ "ParallelState", "a01840.html", "a01840" ],
+    [ "PauseState", "a01848.html", "a01848" ],
+    [ "PythonState", "a01808.html", "a01808" ],
+    [ "SlidingFootContactState", "a01852.html", "a01852" ],
+    [ "State", "a01812.html", "a01812" ],
+    [ "StateFactory", "a01816.html", "a01816" ],
+    [ "Transition", "a01856.html", "a01856" ],
+    [ "TransitionMap", "a01860.html", "a01860" ]
 ];

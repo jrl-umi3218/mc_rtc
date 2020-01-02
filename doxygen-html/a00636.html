@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_solver Namespace Reference</title>
+<title>mc_rtc Namespace Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -72,255 +72,303 @@ $(document).ready(function(){initNavTree('a00636.html','');});
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">mc_solver Namespace Reference</div>  </div>
+<div class="title">mc_rtc Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>This file holds all <a class="el" href="a02092.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00637.html">mc_rbdyn</a> objects.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:a00650"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00650.html">details</a></td></tr>
+<tr class="memitem:a00647"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00647.html">gui</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00652"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00652.html">utils</a></td></tr>
+<tr class="memitem:a00646"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00646.html">internal</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00651"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00651.html">log</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02409.html">BoundedSpeedConstr</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper around <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00956.html">tasks::qp::BoundedSpeedConstr</a>.  <a href="a02409.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02092.html">Configuration</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simplify access to values hold within a JSON file.  <a href="a02092.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02413.html">CollisionsConstraint</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a collision constraint between two robots.  <a href="a02413.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02104.html">ConfigurationArrayIterator</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02421.html">CoMIncPlaneConstr</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper around <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00940.html">tasks::qp::CoMIncPlaneConstr</a>.  <a href="a02421.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html">ConfigurationLoader</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This structure should be specialized to implement serialization for a new type.  <a href="a02068.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02433.html">CompoundJointConstraint</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper for mc_solver::details::CompundJointConstraint.  <a href="a02433.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01812.html">ConfigurationLoader&lt; mc_control::fsm::Contact &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02437.html">Constraint</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic helper class to write a new constraint for Tasks.  <a href="a02437.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01972.html">ConfigurationLoader&lt; mc_rbdyn::Contact &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02441.html">ConstraintSet</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This class is a basis to wrap <a class="el" href="a02437.html" title="Generic helper class to write a new constraint for Tasks. ">Constraint</a> functions from Tasks.  <a href="a02441.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01964.html">ConfigurationLoader&lt; mc_rbdyn::RobotModule &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02445.html">ConstraintSetLoader</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01968.html">ConfigurationLoader&lt; mc_rbdyn::RobotModulePtr &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02449.html">ContactConstraint</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wraps multiple constraints related to Contact.  <a href="a02449.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02072.html">ConfigurationLoader&lt; void &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02481.html">ContactMsg</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02356.html">Loader</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">General wrapper for ltdl functionnalities.  <a href="a02356.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02453.html">DynamicsConstraint</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds dynamics constraints for a robot.  <a href="a02453.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html">LoaderException</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exception thrown by loader interface.  <a href="a02348.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02457.html">EqualityConstraint</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper class to write an equality constraint for Tasks.  <a href="a02457.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02364.html">LoaderSandboxData</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds sandbox data.  <a href="a02364.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02461.html">GenericLoader</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve an object using a JSON configuration object and a solver instance.  <a href="a02461.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02380.html">Logger</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs controller data to disk.  <a href="a02380.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02469.html">GenInequalityConstraint</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper class to write an equality constraint for Tasks.  <a href="a02469.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02352.html">LTDLHandle</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper around lt_dlhandle.  <a href="a02352.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02473.html">InequalityConstraint</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper class to write an inequality constraint for Tasks.  <a href="a02473.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html">MessagePackBuilder</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper class to build a MessagePack message.  <a href="a02404.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02477.html">KinematicsConstraint</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds kinematic constraints (joint limits) for the robot.  <a href="a02477.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01973.html">QPContactPtr</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01977.html">QPContactPtrWPoints</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02485.html">QPResultMsg</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02497.html">QPSolver</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wraps a <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01060.html">tasks::qp::QPSolver</a> instance.  <a href="a02497.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02417.html">RobotEnvCollisionsConstraint</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Utility class for the very common-case of (robot,env) scenarios.  <a href="a02417.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02489.html">RobotMsg</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02493.html">ZMP</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02344.html">ObjectLoader</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">ltdl wrapper for factory-like classes  <a href="a02344.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:afa4d95156100f691a3f35392f403217f"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00636.html#afa4d95156100f691a3f35392f403217f">CompoundJointConstraintDescription</a> = <a class="el" href="a01957.html">mc_rbdyn::CompoundJointConstraintDescription</a></td></tr>
-<tr class="separator:afa4d95156100f691a3f35392f403217f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9bce96d8d352ebedfffce2e42e0300ab"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00636.html#a9bce96d8d352ebedfffce2e42e0300ab">ConstraintSetPtr</a> = std::shared_ptr&lt; <a class="el" href="a02441.html">ConstraintSet</a> &gt;</td></tr>
-<tr class="separator:a9bce96d8d352ebedfffce2e42e0300ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17602a72509b520fc967c3b55868d28f"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00636.html#a17602a72509b520fc967c3b55868d28f">EqualityConstraintRobot</a> = <a class="el" href="a02457.html">EqualityConstraint</a>&lt; <a class="el" href="a00652.html#a3fef857fcf6a819b7f8061f33248d0b5">utils::UpdateRobot</a> &gt;</td></tr>
-<tr class="separator:a17602a72509b520fc967c3b55868d28f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea7ab23b8e38e9c02e6b71d418fd167f"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00636.html#aea7ab23b8e38e9c02e6b71d418fd167f">EqualityConstraintLambda</a> = <a class="el" href="a02457.html">EqualityConstraint</a>&lt; <a class="el" href="a00652.html#a51609ca39a4099935af3983ff08a0c50">utils::UpdateLambda</a> &gt;</td></tr>
-<tr class="separator:aea7ab23b8e38e9c02e6b71d418fd167f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e427d1f0a009404c8630c4be1941233"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00636.html#a3e427d1f0a009404c8630c4be1941233">EqualityConstraintForce</a> = <a class="el" href="a02457.html">EqualityConstraint</a>&lt; <a class="el" href="a02517.html">utils::UpdateForce</a> &gt;</td></tr>
-<tr class="separator:a3e427d1f0a009404c8630c4be1941233"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b9b3a884016b4ffe867e77a1de0c4f6"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00636.html#a7b9b3a884016b4ffe867e77a1de0c4f6">GenInequalityConstraintRobot</a> = <a class="el" href="a02469.html">GenInequalityConstraint</a>&lt; <a class="el" href="a00652.html#a3fef857fcf6a819b7f8061f33248d0b5">utils::UpdateRobot</a> &gt;</td></tr>
-<tr class="separator:a7b9b3a884016b4ffe867e77a1de0c4f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88641035a1140728f08fe56f4ea2ab2e"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00636.html#a88641035a1140728f08fe56f4ea2ab2e">GenInequalityConstraintLambda</a> = <a class="el" href="a02469.html">GenInequalityConstraint</a>&lt; <a class="el" href="a00652.html#a51609ca39a4099935af3983ff08a0c50">utils::UpdateLambda</a> &gt;</td></tr>
-<tr class="separator:a88641035a1140728f08fe56f4ea2ab2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3a2a9e53a0e42ba39f5255e94ffd48d4"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00636.html#a3a2a9e53a0e42ba39f5255e94ffd48d4">GenInequalityConstraintForce</a> = <a class="el" href="a02469.html">GenInequalityConstraint</a>&lt; <a class="el" href="a02517.html">utils::UpdateForce</a> &gt;</td></tr>
-<tr class="separator:a3a2a9e53a0e42ba39f5255e94ffd48d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d212e2c69c3cf5edef6a36f1891d604"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00636.html#a8d212e2c69c3cf5edef6a36f1891d604">InequalityConstraintRobot</a> = <a class="el" href="a02473.html">InequalityConstraint</a>&lt; <a class="el" href="a00652.html#a3fef857fcf6a819b7f8061f33248d0b5">utils::UpdateRobot</a> &gt;</td></tr>
-<tr class="separator:a8d212e2c69c3cf5edef6a36f1891d604"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a838c8b597a9a2d8a2355daab56b545f0"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00636.html#a838c8b597a9a2d8a2355daab56b545f0">InequalityConstraintLambda</a> = <a class="el" href="a02473.html">InequalityConstraint</a>&lt; <a class="el" href="a00652.html#a51609ca39a4099935af3983ff08a0c50">utils::UpdateLambda</a> &gt;</td></tr>
-<tr class="separator:a838c8b597a9a2d8a2355daab56b545f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf28dab0adf44ed4844214536edf1799"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00636.html#aaf28dab0adf44ed4844214536edf1799">InequalityConstraintForce</a> = <a class="el" href="a02473.html">InequalityConstraint</a>&lt; <a class="el" href="a02517.html">utils::UpdateForce</a> &gt;</td></tr>
-<tr class="separator:aaf28dab0adf44ed4844214536edf1799"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04f4430d990b320f494b3a21112c7e3a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00636.html#a04f4430d990b320f494b3a21112c7e3a">LTDLHandlePtr</a> = std::shared_ptr&lt; <a class="el" href="a02352.html">LTDLHandle</a> &gt;</td></tr>
+<tr class="separator:a04f4430d990b320f494b3a21112c7e3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a299e6b1f00e482f61b89988dc5b395fb"><td class="memTemplParams" colspan="2">template&lt;typename T , typename FunT , typename... Args&gt; </td></tr>
+<tr class="memitem:a299e6b1f00e482f61b89988dc5b395fb"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00636.html#a299e6b1f00e482f61b89988dc5b395fb">no_sandbox_function_call</a> (FunT create_fn, const Args &amp;... args)</td></tr>
+<tr class="memdesc:a299e6b1f00e482f61b89988dc5b395fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls a function without sandboxing.  <a href="#a299e6b1f00e482f61b89988dc5b395fb">More...</a><br /></td></tr>
+<tr class="separator:a299e6b1f00e482f61b89988dc5b395fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a810352dfb9fa4299b85fa19ac258a308"><td class="memTemplParams" colspan="2">template&lt;typename T , typename FunT , typename... Args&gt; </td></tr>
+<tr class="memitem:a810352dfb9fa4299b85fa19ac258a308"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00636.html#a810352dfb9fa4299b85fa19ac258a308">sandbox_function_call</a> (FunT create_fn, const Args &amp;... args)</td></tr>
+<tr class="memdesc:a810352dfb9fa4299b85fa19ac258a308"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls a function in a sandbox.  <a href="#a810352dfb9fa4299b85fa19ac258a308">More...</a><br /></td></tr>
+<tr class="separator:a810352dfb9fa4299b85fa19ac258a308"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a781ea11d3b3f97742187d5910b74edfd"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="a00305.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00636.html#a781ea11d3b3f97742187d5910b74edfd">ConfigurationArrayIterator</a></td></tr>
+<tr class="separator:a781ea11d3b3f97742187d5910b74edfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b620c9005d103e65363b518ba6dca23"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="a00305.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00636.html#a9b620c9005d103e65363b518ba6dca23">Configuration</a></td></tr>
+<tr class="separator:a9b620c9005d103e65363b518ba6dca23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab85e3cb123f11bf1f9290abe17a7d49e"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00636.html#ab85e3cb123f11bf1f9290abe17a7d49e">OUT_NONE</a> = &quot;\033[00m&quot;</td></tr>
+<tr class="separator:ab85e3cb123f11bf1f9290abe17a7d49e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15b005678017d9608ff8f599e34e41de"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00636.html#a15b005678017d9608ff8f599e34e41de">OUT_BLUE</a> = &quot;\033[01;34m&quot;</td></tr>
+<tr class="separator:a15b005678017d9608ff8f599e34e41de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ab584d4904b2b1695ae2cb04ca984ca"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00636.html#a7ab584d4904b2b1695ae2cb04ca984ca">OUT_GREEN</a> = &quot;\033[01;32m&quot;</td></tr>
+<tr class="separator:a7ab584d4904b2b1695ae2cb04ca984ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb1d99e566cb5c454074579fcfa712f4"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00636.html#aeb1d99e566cb5c454074579fcfa712f4">OUT_PURPLE</a> = &quot;\033[01;35m&quot;</td></tr>
+<tr class="separator:aeb1d99e566cb5c454074579fcfa712f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9003469324d75c8934d51654d98ef862"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00636.html#a9003469324d75c8934d51654d98ef862">OUT_RED</a> = &quot;\033[01;31m&quot;</td></tr>
+<tr class="separator:a9003469324d75c8934d51654d98ef862"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a id="afa4d95156100f691a3f35392f403217f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afa4d95156100f691a3f35392f403217f">&#9670;&nbsp;</a></span>CompoundJointConstraintDescription</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>This file holds all <a class="el" href="a02092.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00637.html">mc_rbdyn</a> objects. </p>
+<p>This file contains classes that are used to configure the visual styles of various elements in the GUI.</p>
+<p>This header contains the base block of all elements in the GUI system.</p>
+<p>This file contains some utility template metaprogramming functions for the GUI.</p>
+<p>For the implementation details of specific elements look into their dedicated header </p>
+</div><h2 class="groupheader">Typedef Documentation</h2>
+<a id="a04f4430d990b320f494b3a21112c7e3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04f4430d990b320f494b3a21112c7e3a">&#9670;&nbsp;</a></span>LTDLHandlePtr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="a00636.html#afa4d95156100f691a3f35392f403217f">mc_solver::CompoundJointConstraintDescription</a> = typedef <a class="el" href="a01957.html">mc_rbdyn::CompoundJointConstraintDescription</a></td>
+          <td class="memname">using <a class="el" href="a00636.html#a04f4430d990b320f494b3a21112c7e3a">mc_rtc::LTDLHandlePtr</a> = typedef std::shared_ptr&lt;<a class="el" href="a02352.html">LTDLHandle</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a9bce96d8d352ebedfffce2e42e0300ab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9bce96d8d352ebedfffce2e42e0300ab">&#9670;&nbsp;</a></span>ConstraintSetPtr</h2>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a299e6b1f00e482f61b89988dc5b395fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a299e6b1f00e482f61b89988dc5b395fb">&#9670;&nbsp;</a></span>no_sandbox_function_call()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename FunT , typename... Args&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">T * mc_rtc::no_sandbox_function_call </td>
+          <td>(</td>
+          <td class="paramtype">FunT&#160;</td>
+          <td class="paramname"><em>create_fn</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Args &amp;...&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calls a function without sandboxing. </p>
+<p>Only catches exceptions</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Return type of the function</td></tr>
+    <tr><td class="paramname">FunT</td><td>Type of the create function</td></tr>
+    <tr><td class="paramname">Args</td><td>Arguments passed to the creation function </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a810352dfb9fa4299b85fa19ac258a308"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a810352dfb9fa4299b85fa19ac258a308">&#9670;&nbsp;</a></span>sandbox_function_call()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename FunT , typename... Args&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">T* mc_rtc::sandbox_function_call </td>
+          <td>(</td>
+          <td class="paramtype">FunT&#160;</td>
+          <td class="paramname"><em>create_fn</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Args &amp;...&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calls a function in a sandbox. </p>
+<p>Allows a function call to fail horribly without crashing the main program, allowing us to survive the event, report and throw.</p>
+<p>Only works on Linux.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Return type of the function</td></tr>
+    <tr><td class="paramname">FunT</td><td>Type of the create function</td></tr>
+    <tr><td class="paramname">Args</td><td>Arguments passed to the creation function </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="reference">References <a class="el" href="a02364.html#aecb02006f5f0cd5aeabf7965973d3542">mc_rtc::LoaderSandboxData&lt; T &gt;::complete</a>, <a class="el" href="a02364.html#adf4719d80846e018c3de0290164048ac">mc_rtc::LoaderSandboxData&lt; T &gt;::fn</a>, and <a class="el" href="a02364.html#a0bd1edac4d08d70b609b18efb6942d44">mc_rtc::LoaderSandboxData&lt; T &gt;::ret</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a9b620c9005d103e65363b518ba6dca23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b620c9005d103e65363b518ba6dca23">&#9670;&nbsp;</a></span>Configuration</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="a00636.html#a9bce96d8d352ebedfffce2e42e0300ab">mc_solver::ConstraintSetPtr</a> = typedef std::shared_ptr&lt;<a class="el" href="a02441.html">ConstraintSet</a>&gt;</td>
+          <td class="memname">struct <a class="el" href="a00305.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> <a class="el" href="a02092.html">mc_rtc::Configuration</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="reference">Referenced by <a class="el" href="a02092.html#aa4af8f372da0ca5bc835588c737c5877">mc_rtc::Configuration::operator std::array&lt; T, N &gt;()</a>, <a class="el" href="a02092.html#ac26424cf2ed968f1999a3277ab4f7835">mc_rtc::Configuration::operator std::map&lt; std::string, T, C, A &gt;()</a>, <a class="el" href="a02092.html#a552f9761ab8458992b1ef20ad9019602">mc_rtc::Configuration::operator std::pair&lt; T1, T2 &gt;()</a>, <a class="el" href="a02092.html#a7cb85c50202da3906f0af969eb4af6d9">mc_rtc::Configuration::operator std::set&lt; T, C, A &gt;()</a>, <a class="el" href="a02092.html#ab06d6d358eef19d9c4c8748bc7767064">mc_rtc::Configuration::operator std::vector&lt; T, A &gt;()</a>, <a class="el" href="a02092.html#a60d258128cadfb8b4cc30229d169991b">mc_rtc::Configuration::operator T()</a>, and <a class="el" href="a02092.html#ab8cc8b0acc61a5bcf4befd1752691e97">mc_rtc::Configuration::push()</a>.</p>
+
+</div>
+</div>
+<a id="a781ea11d3b3f97742187d5910b74edfd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a781ea11d3b3f97742187d5910b74edfd">&#9670;&nbsp;</a></span>ConfigurationArrayIterator</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="a00305.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> <a class="el" href="a02104.html">mc_rtc::ConfigurationArrayIterator</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a3e427d1f0a009404c8630c4be1941233"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3e427d1f0a009404c8630c4be1941233">&#9670;&nbsp;</a></span>EqualityConstraintForce</h2>
+<a id="a15b005678017d9608ff8f599e34e41de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15b005678017d9608ff8f599e34e41de">&#9670;&nbsp;</a></span>OUT_BLUE</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="a00636.html#a3e427d1f0a009404c8630c4be1941233">mc_solver::EqualityConstraintForce</a> = typedef <a class="el" href="a02457.html">EqualityConstraint</a>&lt;<a class="el" href="a02517.html">utils::UpdateForce</a>&gt;</td>
+          <td class="memname">constexpr auto mc_rtc::OUT_BLUE = &quot;\033[01;34m&quot;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="aea7ab23b8e38e9c02e6b71d418fd167f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aea7ab23b8e38e9c02e6b71d418fd167f">&#9670;&nbsp;</a></span>EqualityConstraintLambda</h2>
+<a id="a7ab584d4904b2b1695ae2cb04ca984ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ab584d4904b2b1695ae2cb04ca984ca">&#9670;&nbsp;</a></span>OUT_GREEN</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="a00636.html#aea7ab23b8e38e9c02e6b71d418fd167f">mc_solver::EqualityConstraintLambda</a> = typedef <a class="el" href="a02457.html">EqualityConstraint</a>&lt;<a class="el" href="a00652.html#a51609ca39a4099935af3983ff08a0c50">utils::UpdateLambda</a>&gt;</td>
+          <td class="memname">constexpr auto mc_rtc::OUT_GREEN = &quot;\033[01;32m&quot;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a17602a72509b520fc967c3b55868d28f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a17602a72509b520fc967c3b55868d28f">&#9670;&nbsp;</a></span>EqualityConstraintRobot</h2>
+<a id="ab85e3cb123f11bf1f9290abe17a7d49e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab85e3cb123f11bf1f9290abe17a7d49e">&#9670;&nbsp;</a></span>OUT_NONE</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="a00636.html#a17602a72509b520fc967c3b55868d28f">mc_solver::EqualityConstraintRobot</a> = typedef <a class="el" href="a02457.html">EqualityConstraint</a>&lt;<a class="el" href="a00652.html#a3fef857fcf6a819b7f8061f33248d0b5">utils::UpdateRobot</a>&gt;</td>
+          <td class="memname">constexpr auto mc_rtc::OUT_NONE = &quot;\033[00m&quot;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a3a2a9e53a0e42ba39f5255e94ffd48d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3a2a9e53a0e42ba39f5255e94ffd48d4">&#9670;&nbsp;</a></span>GenInequalityConstraintForce</h2>
+<a id="aeb1d99e566cb5c454074579fcfa712f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb1d99e566cb5c454074579fcfa712f4">&#9670;&nbsp;</a></span>OUT_PURPLE</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="a00636.html#a3a2a9e53a0e42ba39f5255e94ffd48d4">mc_solver::GenInequalityConstraintForce</a> = typedef <a class="el" href="a02469.html">GenInequalityConstraint</a>&lt;<a class="el" href="a02517.html">utils::UpdateForce</a>&gt;</td>
+          <td class="memname">constexpr auto mc_rtc::OUT_PURPLE = &quot;\033[01;35m&quot;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a88641035a1140728f08fe56f4ea2ab2e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a88641035a1140728f08fe56f4ea2ab2e">&#9670;&nbsp;</a></span>GenInequalityConstraintLambda</h2>
+<a id="a9003469324d75c8934d51654d98ef862"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9003469324d75c8934d51654d98ef862">&#9670;&nbsp;</a></span>OUT_RED</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="a00636.html#a88641035a1140728f08fe56f4ea2ab2e">mc_solver::GenInequalityConstraintLambda</a> = typedef <a class="el" href="a02469.html">GenInequalityConstraint</a>&lt;<a class="el" href="a00652.html#a51609ca39a4099935af3983ff08a0c50">utils::UpdateLambda</a>&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a7b9b3a884016b4ffe867e77a1de0c4f6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7b9b3a884016b4ffe867e77a1de0c4f6">&#9670;&nbsp;</a></span>GenInequalityConstraintRobot</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="a00636.html#a7b9b3a884016b4ffe867e77a1de0c4f6">mc_solver::GenInequalityConstraintRobot</a> = typedef <a class="el" href="a02469.html">GenInequalityConstraint</a>&lt;<a class="el" href="a00652.html#a3fef857fcf6a819b7f8061f33248d0b5">utils::UpdateRobot</a>&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aaf28dab0adf44ed4844214536edf1799"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaf28dab0adf44ed4844214536edf1799">&#9670;&nbsp;</a></span>InequalityConstraintForce</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="a00636.html#aaf28dab0adf44ed4844214536edf1799">mc_solver::InequalityConstraintForce</a> = typedef <a class="el" href="a02473.html">InequalityConstraint</a>&lt;<a class="el" href="a02517.html">utils::UpdateForce</a>&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a838c8b597a9a2d8a2355daab56b545f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a838c8b597a9a2d8a2355daab56b545f0">&#9670;&nbsp;</a></span>InequalityConstraintLambda</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="a00636.html#a838c8b597a9a2d8a2355daab56b545f0">mc_solver::InequalityConstraintLambda</a> = typedef <a class="el" href="a02473.html">InequalityConstraint</a>&lt;<a class="el" href="a00652.html#a51609ca39a4099935af3983ff08a0c50">utils::UpdateLambda</a>&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a8d212e2c69c3cf5edef6a36f1891d604"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8d212e2c69c3cf5edef6a36f1891d604">&#9670;&nbsp;</a></span>InequalityConstraintRobot</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="a00636.html#a8d212e2c69c3cf5edef6a36f1891d604">mc_solver::InequalityConstraintRobot</a> = typedef <a class="el" href="a02473.html">InequalityConstraint</a>&lt;<a class="el" href="a00652.html#a3fef857fcf6a819b7f8061f33248d0b5">utils::UpdateRobot</a>&gt;</td>
+          <td class="memname">constexpr auto mc_rtc::OUT_RED = &quot;\033[01;31m&quot;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -333,8 +381,8 @@ Typedefs</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00636.html">mc_solver</a></li>
-    <li class="footer">Generated on Tue Dec 31 2019 05:48:17 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00636.html">mc_rtc</a></li>
+    <li class="footer">Generated on Thu Jan 2 2020 05:10:13 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

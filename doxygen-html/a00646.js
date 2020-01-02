@@ -1,7 +1,7 @@
 var a00646 =
 [
-    [ "impl", "a00647.html", "a00647" ],
-    [ "AxisConfiguration", "a02253.html", "a02253" ],
-    [ "PolygonDescription", "a02257.html", "a02257" ],
-    [ "Range", "a02249.html", "a02249" ]
+    [ "_has_configuration_load_object", "a02076.html", "a02076" ],
+    [ "_has_configuration_save_object", "a02084.html", "a02084" ],
+    [ "has_configuration_load_object", "a02080.html", null ],
+    [ "has_configuration_save_object", "a02088.html", null ]
 ];
