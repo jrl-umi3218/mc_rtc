@@ -7,6 +7,7 @@ set(MC_RTC_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../include")
 set(VERSION_SCRIPT_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/version-script.lds")
 macro(install_mc_rtc_lib MC_LIB)
   set_target_properties(${MC_LIB} PROPERTIES FOLDER mc_libraries/${MC_LIB})
+  target_compile_definitions(${MC_LIB} PRIVATE MC_RTC_NO_INCLUDE_VERSION)
   target_include_directories(${MC_LIB} INTERFACE $<INSTALL_INTERFACE:include> $<BUILD_INTERFACE:${MC_RTC_INCLUDE_DIR}>)
   if(WIN32)
     target_compile_definitions(${MC_LIB} PUBLIC "-DNOMINMAX"  "-D_ENABLE_EXTENDED_ALIGNED_STORAGE")
@@ -36,8 +37,29 @@ macro(install_mc_rtc_lib MC_LIB)
 endmacro()
 
 configure_file(mc_rtc/loader.in.cpp "${CMAKE_CURRENT_BINARY_DIR}/mc_rtc/loader.cpp")
-add_library(mc_rtc_loader SHARED "${CMAKE_CURRENT_BINARY_DIR}/mc_rtc/loader.cpp" ../include/mc_rtc/loader.h ../include/mc_rtc/loader_api.h)
+
+set(VERSION_HEADER "${PROJECT_BINARY_DIR}/include/mc_rtc/version.h")
+add_custom_command(OUTPUT ALWAYS_RUN ${VERSION_HEADER}
+  COMMAND ${CMAKE_COMMAND} -DPROJECT_SOURCE_DIR="${PROJECT_SOURCE_DIR}"
+                           -DPROJECT_BINARY_DIR="${PROJECT_BINARY_DIR}"
+                           -DPROJECT_VERSION="${PROJECT_VERSION}"
+                           -P "${PROJECT_SOURCE_DIR}/CMakeModules/MakeVersionHeader.cmake"
+)
+
+set(mc_rtc_loader_SRC
+  "${CMAKE_CURRENT_BINARY_DIR}/mc_rtc/loader.cpp"
+  mc_rtc/version.cpp
+)
+
+set(mc_rtc_loader_HDR
+  "${VERSION_HEADER}"
+  ../include/mc_rtc/loader.h
+  ../include/mc_rtc/loader_api.h
+)
+
+add_library(mc_rtc_loader SHARED ${mc_rtc_loader_SRC} ${mc_rtc_loader_HDR})
 set_target_properties(mc_rtc_loader PROPERTIES COMPILE_FLAGS "-DMC_RTC_LOADER_EXPORTS")
+target_include_directories(mc_rtc_loader PRIVATE "${PROJECT_BINARY_DIR}/include/mc_rtc")
 target_link_libraries(mc_rtc_loader PUBLIC Boost::filesystem Boost::disable_autolinking ${LTDL})
 install_mc_rtc_lib(mc_rtc_loader)
 

@@ -118,6 +118,10 @@ using ObserverPtr = std::shared_ptr<mc_observers::Observer>;
 
 /* Set of macros to assist with the writing of an Observer */
 
+#ifndef MC_RTC_NO_INCLUDE_VERSION
+#  include <mc_rtc/version.h>
+#endif
+
 #ifdef WIN32
 #  define OBSERVER_MODULE_API __declspec(dllexport)
 #else
@@ -128,11 +132,25 @@ using ObserverPtr = std::shared_ptr<mc_observers::Observer>;
 #  endif
 #endif
 
+/** A simple compile-time versus run-time version checking macro
+ *
+ * If you are not relying on EXPORT_OBSERVER_MODULE you should use this in your
+ * MC_RTC_OBSERVER_MODULE implementation
+ *
+ */
+#define OBSERVER_MODULE_CHECK_VERSION(NAME)                                                                       \
+  if(mc_rtc::MC_RTC_VERSION != mc_rtc::version())                                                                 \
+  {                                                                                                               \
+    LOG_ERROR(NAME << " was compiled with " << mc_rtc::MC_RTC_VERSION << " but mc_rtc is currently at version "   \
+                   << mc_rtc::version() << ", you might experience subtle issues and should recompile your code") \
+  }
+
 #define EXPORT_OBSERVER_MODULE(NAME, TYPE)                                                    \
   extern "C"                                                                                  \
   {                                                                                           \
     OBSERVER_MODULE_API void MC_RTC_OBSERVER_MODULE(std::vector<std::string> & names)         \
     {                                                                                         \
+      OBSERVER_MODULE_CHECK_VERSION(NAME)                                                     \
       names = {NAME};                                                                         \
     }                                                                                         \
     OBSERVER_MODULE_API void destroy(mc_observers::Observer * ptr)                            \

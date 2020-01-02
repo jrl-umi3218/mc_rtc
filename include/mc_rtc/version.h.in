@@ -1,0 +1,24 @@
+/*
+ * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ */
+
+#pragma once
+
+#include <mc_rtc/loader_api.h>
+
+#include <string>
+
+/* !!! WARNING !!!
+ * version.h is a generated file
+ * if you wish to change this file, edit:
+ * @PROJECT_SOURCE_DIR@/include/mc_rtc/version.h.in
+ */
+
+namespace mc_rtc
+{
+
+  constexpr auto MC_RTC_VERSION = "@MC_RTC_VERSION@";
+
+  std::string MC_RTC_LOADER_DLLAPI version();
+
+} // namespace mc_rtc

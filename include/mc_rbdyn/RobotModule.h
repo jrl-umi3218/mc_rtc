@@ -371,6 +371,10 @@ RobotModule::bounds_t MC_RBDYN_DLLAPI urdf_limits_to_bounds(const mc_rbdyn_urdf:
 
 /* Set of macros to assist with the writing of a RobotModule */
 
+#ifndef MC_RTC_NO_INCLUDE_VERSION
+#  include <mc_rtc/version.h>
+#endif
+
 #ifdef WIN32
 #  define ROBOT_MODULE_API __declspec(dllexport)
 #else
@@ -381,6 +385,20 @@ RobotModule::bounds_t MC_RBDYN_DLLAPI urdf_limits_to_bounds(const mc_rbdyn_urdf:
 #  endif
 #endif
 
+/** A simple compile-time versus run-time version checking macro
+ *
+ * If you are not relying on ROBOT_MODULE_DEFAULT_CONSTRUCTOR or
+ * ROBOT_MODULE_CANONIC_CONSTRUCTOR you should use this in your
+ * MC_RTC_ROBOT_MODULE implementation
+ *
+ */
+#define ROBOT_MODULE_CHECK_VERSION(NAME)                                                                          \
+  if(mc_rtc::MC_RTC_VERSION != mc_rtc::version())                                                                 \
+  {                                                                                                               \
+    LOG_ERROR(NAME << " was compiled with " << mc_rtc::MC_RTC_VERSION << " but mc_rtc is currently at version "   \
+                   << mc_rtc::version() << ", you might experience subtle issues and should recompile your code") \
+  }
+
 /*! ROBOT_MODULE_COMMON
  * Declare a destroy symbol and CLASS_NAME symbol
  * Constructor should be declared by the user
@@ -388,6 +406,7 @@ RobotModule::bounds_t MC_RBDYN_DLLAPI urdf_limits_to_bounds(const mc_rbdyn_urdf:
 #define ROBOT_MODULE_COMMON(NAME)                                             \
   ROBOT_MODULE_API void MC_RTC_ROBOT_MODULE(std::vector<std::string> & names) \
   {                                                                           \
+    ROBOT_MODULE_CHECK_VERSION(NAME)                                          \
     names = {NAME};                                                           \
   }                                                                           \
   ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr)                  \
