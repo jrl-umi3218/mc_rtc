@@ -34,6 +34,7 @@ JVRC1RobotModule::JVRC1RobotModule() : RobotModule(std::string(JVRC_VAL_VAL(JVRC
     mbg = res.mbg;
     boundsFromURDF(res.limits);
     _collisionTransforms = res.collision_tf;
+    _visual = res.visual;
 
     std::string convexPath = path + "/convex/" + name + "/";
     bfs::path p(convexPath);

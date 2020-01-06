@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Fixes
+
+- JVRC1 and env modules now correctly set `_visual`
+
 ## [1.0.1] - 2020-20-02
 
 ### Added

@@ -28,6 +28,7 @@ EnvRobotModule::EnvRobotModule(const std::string & env_path, const std::string &
     mbg = res.mbg;
     boundsFromURDF(res.limits);
     _collisionTransforms = res.collision_tf;
+    _visual = res.visual;
 
     std::string convexPath = path + "/convex/" + name + "/";
     bfs::path p(convexPath);
