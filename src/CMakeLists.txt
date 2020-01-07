@@ -5,21 +5,34 @@
 set(MC_RTC_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../include")
 
 set(VERSION_SCRIPT_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/version-script.lds")
-macro(install_mc_rtc_lib MC_LIB)
-  set_target_properties(${MC_LIB} PROPERTIES FOLDER mc_libraries/${MC_LIB})
+
+macro(install_mc_rtc_lib_common MC_LIB KWD)
   target_include_directories(${MC_LIB} INTERFACE $<INSTALL_INTERFACE:include> $<BUILD_INTERFACE:${MC_RTC_INCLUDE_DIR}>)
   if(WIN32)
-    target_compile_definitions(${MC_LIB} PUBLIC "-DNOMINMAX"  "-D_ENABLE_EXTENDED_ALIGNED_STORAGE")
+    target_compile_definitions(${MC_LIB} ${KWD} "-DNOMINMAX"  "-D_ENABLE_EXTENDED_ALIGNED_STORAGE")
   else()
-    target_compile_options(${MC_LIB} PUBLIC "-mfpmath=sse" "-msse2")
+    target_compile_options(${MC_LIB} ${KWD} "-mfpmath=sse" "-msse2")
   endif()
   if(TREAT_WARNINGS_AS_ERRORS)
     if(WIN32)
-      target_compile_options(${MC_LIB} PUBLIC $<BUILD_INTERFACE:/WX>)
+      target_compile_options(${MC_LIB} ${KWD} $<BUILD_INTERFACE:/WX>)
     else()
-      target_compile_options(${MC_LIB} PUBLIC $<BUILD_INTERFACE:-Werror>)
+      target_compile_options(${MC_LIB} ${KWD} $<BUILD_INTERFACE:-Werror>)
     endif()
   endif()
+  add_library(mc_rtc::${MC_LIB} ALIAS ${MC_LIB})
+endmacro()
+
+macro(install_mc_rtc_header_lib MC_LIB)
+  install_mc_rtc_lib_common(${MC_LIB} INTERFACE)
+  install(TARGETS ${MC_LIB}
+    EXPORT "${TARGETS_EXPORT_NAME}"
+  )
+endmacro()
+
+macro(install_mc_rtc_lib MC_LIB)
+  set_target_properties(${MC_LIB} PROPERTIES FOLDER mc_libraries/${MC_LIB})
+  install_mc_rtc_lib_common(${MC_LIB} PUBLIC)
   if(GENERATE_COVERAGE)
     target_compile_options(${MC_LIB} PRIVATE "--coverage")
     set_target_properties(${MC_LIB} PROPERTIES LINK_FLAGS "--coverage")
@@ -346,21 +359,24 @@ set_target_properties(mc_planning PROPERTIES COMPILE_FLAGS "-DMC_PLANNING_EXPORT
 target_link_libraries(mc_planning PUBLIC mc_rbdyn)
 install_mc_rtc_lib(mc_planning)
 
+set(mc_filter_HDR_DIR
+  $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include/mc_filter>$<INSTALL_INTERFACE:include/mc_filter>)
+
 set(mc_filter_HDR
-../include/mc_filter/LowPassVelocity.h
-../include/mc_filter/LowPassFiniteDifferences.h
-../include/mc_filter/ExponentialMovingAverage.h
-../include/mc_filter/LeakyIntegrator.h
-../include/mc_filter/StationaryOffset.h
-../include/mc_filter/utils/clamp.h
+  ${mc_filter_HDR_DIR}/LowPass.h
+  ${mc_filter_HDR_DIR}/LowPassFiniteDifferences.h
+  ${mc_filter_HDR_DIR}/ExponentialMovingAverage.h
+  ${mc_filter_HDR_DIR}/LeakyIntegrator.h
+  ${mc_filter_HDR_DIR}/StationaryOffset.h
+  ${mc_filter_HDR_DIR}/utils/clamp.h
 )
 
 # header-only
 add_library(mc_filter INTERFACE)
-target_include_directories(mc_filter INTERFACE $<INSTALL_INTERFACE:include> $<BUILD_INTERFACE:${MC_RTC_INCLUDE_DIR}>)
-install(TARGETS mc_filter 
-        EXPORT  ${TARGETS_EXPORT_NAME})
-
+if(COMMAND target_sources)
+  target_sources(mc_filter INTERFACE ${mc_filter_HDR})
+endif()
+install_mc_rtc_header_lib(mc_filter)
 
 set(mc_observers_SRC
 mc_observers/ObserverLoader.cpp
