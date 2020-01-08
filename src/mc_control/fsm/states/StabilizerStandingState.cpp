@@ -50,15 +50,16 @@ void StabilizerStandingState::start(Controller & ctl)
     const std::string above = config_("above");
     if(above == "LeftAnkle")
     {
-      targetCoP(stabilizerTask_->leftContactAnklePose().translation());
+      targetCoP(stabilizerTask_->contactAnklePose(ContactState::Left).translation());
     }
     else if(above == "RightAnkle")
     {
-      targetCoP(stabilizerTask_->rightContactAnklePose().translation());
+      targetCoP(stabilizerTask_->contactAnklePose(ContactState::Right).translation());
     }
     else if(above == "Center")
     {
-      targetCoP(sva::interpolate(stabilizerTask_->leftContactAnklePose(), stabilizerTask_->rightContactAnklePose(), 0.5)
+      targetCoP(sva::interpolate(stabilizerTask_->contactAnklePose(ContactState::Left),
+                                 stabilizerTask_->contactAnklePose(ContactState::Right), 0.5)
                     .translation());
     }
     else if(ctl.realRobot().hasSurface(above))
@@ -86,16 +87,17 @@ void StabilizerStandingState::start(Controller & ctl)
   {
     ctl.gui()->addElement(
         {"FSM", "Standing", "Move"}, mc_rtc::gui::ElementsStacking::Horizontal,
-        mc_rtc::gui::Button("Left foot",
-                            [this]() { targetCoP(stabilizerTask_->leftContactAnklePose().translation()); }),
+        mc_rtc::gui::Button(
+            "Left foot", [this]() { targetCoP(stabilizerTask_->contactAnklePose(ContactState::Left).translation()); }),
         mc_rtc::gui::Button("Center",
                             [this]() {
-                              targetCoP(sva::interpolate(stabilizerTask_->leftContactAnklePose(),
-                                                         stabilizerTask_->rightContactAnklePose(), 0.5)
+                              targetCoP(sva::interpolate(stabilizerTask_->contactAnklePose(ContactState::Left),
+                                                         stabilizerTask_->contactAnklePose(ContactState::Right), 0.5)
                                             .translation());
                             }),
-        mc_rtc::gui::Button("Right foot",
-                            [this]() { targetCoP(stabilizerTask_->rightContactAnklePose().translation()); }));
+        mc_rtc::gui::Button("Right foot", [this]() {
+          targetCoP(stabilizerTask_->contactAnklePose(ContactState::Right).translation());
+        }));
     ctl.gui()->addElement(
         {"FSM", "Standing", "Move"},
         mc_rtc::gui::ArrayInput("CoM Target", [this]() -> const Eigen::Vector3d & { return comTarget_; },
@@ -131,17 +133,17 @@ void StabilizerStandingState::targetCoM(const Eigen::Vector3d & com)
   double copHeight = 0;
   if(stabilizerTask_->inDoubleSupport())
   {
-    copHeight = (stabilizerTask_->leftContactAnklePose().translation().z()
-                 + stabilizerTask_->rightContactAnklePose().translation().z())
+    copHeight = (stabilizerTask_->contactAnklePose(ContactState::Left).translation().z()
+                 + stabilizerTask_->contactAnklePose(ContactState::Right).translation().z())
                 / 2;
   }
   else if(stabilizerTask_->inContact(ContactState::Left))
   {
-    copHeight = stabilizerTask_->leftContactAnklePose().translation().z();
+    copHeight = stabilizerTask_->contactAnklePose(ContactState::Left).translation().z();
   }
   else
   {
-    copHeight = stabilizerTask_->rightContactAnklePose().translation().z();
+    copHeight = stabilizerTask_->contactAnklePose(ContactState::Right).translation().z();
   }
 
   comTarget_ = com;

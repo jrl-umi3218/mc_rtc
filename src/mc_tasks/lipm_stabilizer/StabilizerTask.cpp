@@ -41,7 +41,6 @@ constexpr double StabilizerTask::MAX_FDC_RY_VEL;
 constexpr double StabilizerTask::MAX_FDC_RZ_VEL;
 constexpr double StabilizerTask::MIN_DS_PRESSURE;
 constexpr double StabilizerTask::MIN_NET_TOTAL_FORCE_ZMP;
-constexpr double StabilizerTask::GRAVITY;
 
 namespace
 {
@@ -80,7 +79,7 @@ StabilizerTask::StabilizerTask(const mc_rbdyn::Robots & robots,
   // Rename the tasks managed by the stabilizer
   // Doing so helps making the logs more consistent, and having a fixed name
   // allows for predifined custom plots in the log ui.
-  const auto n = name_ + "Tasks";
+  const auto n = name_ + "_Tasks";
   comTask->name(n + "_com");
   leftCoP->name(n + "_cop_left");
   rightCoP->name(n + "_cop_right");
@@ -90,11 +89,10 @@ StabilizerTask::StabilizerTask(const mc_rbdyn::Robots & robots,
   configure(robot().module().defaultLIPMStabilizerConfiguration());
 }
 
-StabilizerTask::~StabilizerTask() {}
-
 void StabilizerTask::reset()
 {
   t_ = 0;
+  configure(robot().module().defaultLIPMStabilizerConfiguration());
   comTask->reset();
   comTarget_ = comTask->com();
 
@@ -107,7 +105,7 @@ void StabilizerTask::reset()
   pelvisTask->reset();
   torsoTask->reset();
 
-  Eigen::Vector3d staticForce = -mass_ * gravity_;
+  Eigen::Vector3d staticForce = -mass_ * constants::gravity;
 
   dcmAverageError_ = Eigen::Vector3d::Zero();
   dcmError_ = Eigen::Vector3d::Zero();
@@ -118,11 +116,11 @@ void StabilizerTask::reset()
   vdcHeightError_ = 0.;
   zmpError_ = Eigen::Vector3d::Zero();
 
-  dcmDerivator_.setZero();
+  dcmDerivator_.reset(Eigen::Vector3d::Zero());
   dcmIntegrator_.saturation(MAX_AVERAGE_DCM_ERROR);
-  dcmIntegrator_.setZero();
+  dcmIntegrator_.reset(Eigen::Vector3d::Zero());
 
-  omega_ = std::sqrt(-gravity_.z() / robot().com().z());
+  omega_ = std::sqrt(-constants::gravity.z() / robot().com().z());
 }
 
 void StabilizerTask::dimWeight(const Eigen::VectorXd & /* dim */)
@@ -163,21 +161,24 @@ void StabilizerTask::resetJointsSelector(mc_solver::QPSolver & /* solver */)
 
 Eigen::VectorXd StabilizerTask::eval() const
 {
-  Eigen::VectorXd res;
-  res << comTask->eval();
-  for(const auto footTask : footTasks)
+  Eigen::VectorXd res(3 + 3 * footTasks.size());
+  res.head(3) = comTask->eval();
+  int i = 0;
+  for(const auto & footTask : footTasks)
   {
-    res << footTask.second->eval();
+    res.segment(3 + 3 * i++, 3) = footTask.second->eval();
   }
   return res;
 }
 
 Eigen::VectorXd StabilizerTask::speed() const
 {
-  Eigen::VectorXd res;
-  for(const auto footTask : footTasks)
+  Eigen::VectorXd res(3 + 3 * footTasks.size());
+  res.head(3) = comTask->eval();
+  int i = 0;
+  for(const auto & footTask : footTasks)
   {
-    res << footTask.second->speed();
+    res.segment(3 + 3 * i++, 3) = footTask.second->speed();
   }
   return res;
 }
@@ -237,7 +238,6 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   logger.addLogEntry(name_ + "_admittance_cop", [this]() { return c_.copAdmittance; });
   logger.addLogEntry(name_ + "_admittance_dfz", [this]() { return c_.dfzAdmittance; });
   logger.addLogEntry(name_ + "_dcmDerivator_filtered", [this]() { return dcmDerivator_.eval(); });
-  logger.addLogEntry(name_ + "_dcmDerivator_raw", [this]() { return dcmDerivator_.raw(); });
   logger.addLogEntry(name_ + "_dcmDerivator_timeConstant", [this]() { return dcmDerivator_.timeConstant(); });
   logger.addLogEntry(name_ + "_dcmIntegrator_timeConstant", [this]() { return dcmIntegrator_.timeConstant(); });
   logger.addLogEntry(name_ + "_dcmTracking_derivGain", [this]() { return c_.dcmDerivGain; });
@@ -318,7 +318,6 @@ void StabilizerTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry(name_ + "_admittance_cop");
   logger.removeLogEntry(name_ + "_admittance_dfz");
   logger.removeLogEntry(name_ + "_dcmDerivator_filtered");
-  logger.removeLogEntry(name_ + "_dcmDerivator_raw");
   logger.removeLogEntry(name_ + "_dcmDerivator_timeConstant");
   logger.removeLogEntry(name_ + "_dcmIntegrator_timeConstant");
   logger.removeLogEntry(name_ + "_dcmTracking_derivGain");
@@ -374,7 +373,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 
   gui.addElement({"Tasks", name_, "Main"}, Button("Disable stabilizer", [this]() { disable(); }),
                  Button("Reconfigure / Enable Stabilizer", [this]() { reconfigure(); }),
-                 Button("Reset DCM integrator", [this]() { dcmIntegrator_.setZero(); }),
+                 Button("Reset DCM integrator", [this]() { dcmIntegrator_.reset(Eigen::Vector3d::Zero()); }),
                  ArrayInput("Foot admittance", {"CoPx", "CoPy"},
                             [this]() -> Eigen::Vector2d {
                               return {c_.copAdmittance.x(), c_.copAdmittance.y()};
@@ -591,8 +590,8 @@ void StabilizerTask::enable()
   // Reset DCM integrator when enabling the stabilizer.
   // While idle, it will accumulate a lot of error, and would case the robot to
   // move suddently to compensate it otherwise
-  dcmIntegrator_.setZero();
-  dcmDerivator_.setZero();
+  dcmIntegrator_.reset(Eigen::Vector3d::Zero());
+  dcmDerivator_.reset(Eigen::Vector3d::Zero());
 
   reconfigure();
 }
@@ -869,7 +868,7 @@ void StabilizerTask::target(const Eigen::Vector3d & com,
   comdTarget_ = comd;
   comddTarget_ = comdd;
   zmpTarget_ = zmp;
-  omega_ = std::sqrt(-gravity_.z() / comTarget_.z());
+  omega_ = std::sqrt(-constants::gravity.z() / comTarget_.z());
   dcmTarget_ = comTarget_ + comdTarget_ / omega_;
 }
 
@@ -934,7 +933,7 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
 
   if(inTheAir_)
   {
-    dcmDerivator_.setZero();
+    dcmDerivator_.reset(Eigen::Vector3d::Zero());
     dcmIntegrator_.append(Eigen::Vector3d::Zero());
   }
   else
@@ -951,7 +950,7 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
   desiredCoMAccel += omega_ * (c_.dcmPropGain * dcmError_ + comdError);
   desiredCoMAccel += omega_ * c_.dcmIntegralGain * dcmAverageError_;
   desiredCoMAccel += omega_ * c_.dcmDerivGain * dcmVelError_;
-  auto desiredForce = mass_ * (desiredCoMAccel - gravity_);
+  auto desiredForce = mass_ * (desiredCoMAccel - constants::gravity);
 
   // Previous implementation (up to v1.3):
   // return {pendulum_.com().cross(desiredForce), desiredForce};

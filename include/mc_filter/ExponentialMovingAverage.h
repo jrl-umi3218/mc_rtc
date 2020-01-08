@@ -49,7 +49,7 @@ struct ExponentialMovingAverage
    */
   ExponentialMovingAverage(double dt, double timeConstant, const VectorT & initValue = VectorT::Zero()) : dt_(dt)
   {
-    average_ = initValue;
+    this->reset(initValue);
     this->timeConstant(timeConstant);
   }
 
@@ -77,19 +77,19 @@ struct ExponentialMovingAverage
   /** Set output saturation; disable by providing a negative value.
    *
    * \param limit Output will saturate between -limit and +limit.
-   *
    */
   void saturation(double limit)
   {
     saturation_ = limit;
   }
 
-  /** Reset average to zero.
+  /** Reset average to provided value.
    *
+   * \param initVal initial value of the average
    */
-  void setZero()
+  void reset(const VectorT & initVal)
   {
-    average_.setZero();
+    average_ = initVal;
   }
 
   /** Get time constant of the filter.

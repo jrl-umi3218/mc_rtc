@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <mc_rtc/logging.h>
 #include <algorithm>
 
 namespace mc_filter
@@ -49,7 +50,11 @@ struct LowPass
    */
   void cutoffPeriod(double period)
   {
-    period = std::max(period, 2 * dt_); // Nyquist–Shannon sampling theorem
+    if(period < 2 * dt_)
+    {
+      LOG_WARNING("Time constant must be at least twice the timestep (Nyquist–Shannon sampling theorem)");
+      period = 2 * dt_;
+    }
     cutoffPeriod_ = period;
   }
 

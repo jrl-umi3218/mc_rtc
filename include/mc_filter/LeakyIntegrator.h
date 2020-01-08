@@ -90,7 +90,7 @@ struct LeakyIntegrator
   /** Reset integral to zero.
    *
    */
-  inline void setZero()
+  inline void reset()
   {
     integral_.setZero();
   }

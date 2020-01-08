@@ -74,12 +74,11 @@ struct MC_TASKS_DLLAPI Contact
 
   /** H-representation of contact wrench cones.
    *
-   * \param Uses halfLength_, halfWidth_ computed from the surface points in findSurfaceBoundaries()
-   * \param Uses friction_: sole friction
-   *
    * See <https://hal.archives-ouvertes.fr/hal-02108449/document> for
    * technical details on the derivation of this formula.
    *
+   * \note Uses halfLength_, halfWidth_ computed from the surface points in findSurfaceBoundaries(), friction_: sole
+   * friction
    */
   const Eigen::Matrix<double, 16, 6> & wrenchFaceMatrix() const
   {
@@ -252,8 +251,7 @@ struct ConfigurationLoader<mc_tasks::lipm_stabilizer::ContactState>
     }
     else
     {
-      LOG_ERROR_AND_THROW(std::runtime_error,
-                          "ContactState should be one of [DoubleSupport, Left, Right], " << s << " requested.");
+      LOG_ERROR_AND_THROW(std::runtime_error, "ContactState should be one of [Left, Right], " << s << " requested.");
     }
   }
 
@@ -261,10 +259,15 @@ struct ConfigurationLoader<mc_tasks::lipm_stabilizer::ContactState>
   {
     using ContactState = mc_tasks::lipm_stabilizer::ContactState;
     mc_rtc::Configuration config;
-    if(contact == ContactState::Left)
-      config = "Left";
-    else if(contact == ContactState::Right)
-      config = "Right";
+    switch(contact)
+    {
+      case ContactState::Left:
+        config = "Left";
+        break;
+      case ContactState::Right:
+        config = "Right";
+        break;
+    }
     return config;
   }
 };

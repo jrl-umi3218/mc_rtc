@@ -31,17 +31,15 @@ struct MC_RBDYN_DLLAPI FDQPWeights
 
 namespace mc_rtc
 {
-using FDQPWeights = mc_rbdyn::lipm_stabilizer::FDQPWeights;
-
 /**
  * @brief Read force distribution QP weights from configuration.
  */
 template<>
-struct ConfigurationLoader<FDQPWeights>
+struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::FDQPWeights>
 {
-  static FDQPWeights load(const mc_rtc::Configuration & config)
+  static mc_rbdyn::lipm_stabilizer::FDQPWeights load(const mc_rtc::Configuration & config)
   {
-    FDQPWeights weights;
+    mc_rbdyn::lipm_stabilizer::FDQPWeights weights;
     double ankleTorqueWeight = config("ankle_torque");
     double netWrenchWeight = config("net_wrench");
     double pressureWeight = config("pressure");
@@ -51,7 +49,7 @@ struct ConfigurationLoader<FDQPWeights>
     return weights;
   }
 
-  static mc_rtc::Configuration save(const FDQPWeights & weights)
+  static mc_rtc::Configuration save(const mc_rbdyn::lipm_stabilizer::FDQPWeights & weights)
   {
     mc_rtc::Configuration config;
     config.add("ankle_torque", std::pow(weights.ankleTorqueSqrt, 2));
@@ -80,9 +78,9 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
 {
   FDQPWeights fdqpWeights;
 
-  double friction = 0.7;
-  std::string leftFootSurface;
-  std::string rightFootSurface;
+  double friction = 0.7; /**< Friction coefficient. Same for both feet */
+  std::string leftFootSurface; /**< Surface name for the left foot. Origin should be at foot's center */
+  std::string rightFootSurface; /**< Surface name for the right foot. Origin should be at foot's center */
 
   Eigen::Vector2d copAdmittance = Eigen::Vector2d::Zero(); /**< Admittance gains for foot damping control */
 
@@ -100,15 +98,15 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
   double comWeight = 1000.; /**< Weight of CoM IK task */
   double comHeight = 0.84; /**< Desired height of the CoM */
 
-  std::string torsoBodyName;
-  double torsoPitch = 0;
-  double torsoStiffness = 10;
-  double torsoWeight = 100;
-  double pelvisStiffness = 10;
-  double pelvisWeight = 100;
+  std::string torsoBodyName; /**< Name of the torso body */
+  double torsoPitch = 0; /**< Target world pitch angle for the torso */
+  double torsoStiffness = 10; /**< Stiffness of the torso task. */
+  double torsoWeight = 100; /**< Weight of the torso task. Should be much lower than CoM and Contacts */
+  double pelvisStiffness = 10; /**< Stiffness of the pelvis task. */
+  double pelvisWeight = 100; /**< Weight of the torso task. Should be much lower than CoM and Contacts */
 
-  sva::MotionVecd contactDamping = sva::MotionVecd::Zero();
-  sva::MotionVecd contactStiffness = sva::MotionVecd::Zero();
+  sva::MotionVecd contactDamping{{300, 300, 300}, {300, 300, 300}};
+  sva::MotionVecd contactStiffness = {{1, 1, 1}, {1, 1, 1}};
   double contactWeight = 100000.; /**< Weight of contact IK tasks */
 
   double vdcFrequency = 1.; /**< Frequency used in double-support vertical drift compensation */
@@ -245,19 +243,17 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
 
 namespace mc_rtc
 {
-using StabilizerConfiguration = mc_rbdyn::lipm_stabilizer::StabilizerConfiguration;
-
 template<>
-struct ConfigurationLoader<StabilizerConfiguration>
+struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::StabilizerConfiguration>
 {
-  static StabilizerConfiguration load(const mc_rtc::Configuration & config)
+  static mc_rbdyn::lipm_stabilizer::StabilizerConfiguration load(const mc_rtc::Configuration & config)
   {
-    StabilizerConfiguration stabi;
+    mc_rbdyn::lipm_stabilizer::StabilizerConfiguration stabi;
     stabi.load(config);
     return stabi;
   }
 
-  static mc_rtc::Configuration save(const StabilizerConfiguration & stabiConf)
+  static mc_rtc::Configuration save(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & stabiConf)
   {
     return stabiConf.save();
   }

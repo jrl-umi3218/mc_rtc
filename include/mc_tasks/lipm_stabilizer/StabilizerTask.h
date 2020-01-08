@@ -64,10 +64,19 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   /**< Minimum force for valid ZMP computation (throws otherwise) */
   static constexpr double MIN_NET_TOTAL_FORCE_ZMP = 1.;
 
-  /**< Gravity (ISO 80000-3) */
-  static constexpr double GRAVITY = 9.80665;
-
 public:
+  /**
+   * @brief Creates a stabilizer meta task
+   *
+   * @param robots Robots on which the task acts
+   * @param realRobots Corresponding real robot instances
+   * @param robotIndex Index of the robot to stabilize
+   * @param leftSurface Left foot surface name. Its origin should be the center of the foot sole
+   * @param rightSurface Left foot surface name. Its origin should be the center of the foot sole
+   * @param torsoBodyName Body name of the robot's torso (i.e a link above the
+   * floating base)
+   * @param dt Controller's timestep
+   */
   StabilizerTask(const mc_rbdyn::Robots & robots,
                  const mc_rbdyn::Robots & realRobots,
                  unsigned int robotIndex,
@@ -75,7 +84,6 @@ public:
                  const std::string & rightSurface,
                  const std::string & torsoBodyName,
                  double dt);
-  ~StabilizerTask() override;
 
   /**
    * @brief Resets the stabilizer tasks and parameters to their default configuration.
@@ -89,45 +97,21 @@ public:
    */
   void reset() override;
 
-  void dimWeight(const Eigen::VectorXd & dimW) override;
-  Eigen::VectorXd dimWeight() const override;
-
-  void selectActiveJoints(mc_solver::QPSolver & solver,
-                          const std::vector<std::string> & activeJointsName,
-                          const std::map<std::string, std::vector<std::array<int, 2>>> & activeDofs = {}) override;
-
-  virtual void selectUnactiveJoints(
-      mc_solver::QPSolver & solver,
-      const std::vector<std::string> & unactiveJointsName,
-      const std::map<std::string, std::vector<std::array<int, 2>>> & unactiveDofs = {}) override;
-
-  void resetJointsSelector(mc_solver::QPSolver & solver) override;
-
   /*! \brief Returns the task error
    *
    * Since the StabilizerTask is a MetaTask, the vector is a concatenation of each
-   * sub-tasks. The vector's dimensions depend on the underlying task.
-   *
-   * [CoM eval = CoMTask::eval(), Left foot eval = CoPTask::eval(), Right foot eval = CoPTask::eval()]
+   * sub-tasks. The vector's dimensions depend on the underlying task, and the
+   * sub-tasks evaluation depends on their order of insertion.
    */
   Eigen::VectorXd eval() const override;
 
   /*! \brief Returns the task velocity
    *
    * Since the StabilizerTask is a MetaTask, the vector is a concatenation of each
-   * sub-tasks. The vector's dimensions depend on the underlying task.
-   *
-   * [CoM speed = CoMTask::speed(), Left foot speed = CoPTask::speed(), Right foot speed = CoPTask::speed()]
+   * sub-tasks. The vector's dimensions depend on the underlying task, and the
+   * sub-tasks evaluation depends on their order of insertion.
    */
   Eigen::VectorXd speed() const override;
-
-  /** Stabilizer specific */
-public:
-  /** Add GUI panel.
-   *
-   * \param gui GUI handle.
-   */
-  void addGUIElements(std::shared_ptr<mc_rtc::gui::StateBuilder> gui);
 
   /**
    * @brief Enables stabilizer
@@ -195,19 +179,21 @@ public:
    */
   void setContacts(mc_solver::QPSolver & solver, const std::vector<ContactState> & contacts);
 
-  const sva::PTransformd & leftContactAnklePose() const
+  /**
+   * @brief Projected pose of the ankle frame in the contact frame.
+   *
+   * @param s Contact for which the frame is requested
+   *
+   * @return The projected ankle frame expressed in world frame.
+   */
+  const sva::PTransformd & contactAnklePose(ContactState s) const
   {
-    return contacts_.at(ContactState::Left).anklePose();
+    return contacts_.at(s).anklePose();
   }
 
-  const sva::PTransformd & rightContactAnklePose() const
+  const std::string & footSurface(ContactState s) const
   {
-    return contacts_.at(ContactState::Right).anklePose();
-  }
-
-  const std::string & footSurface(ContactState s)
-  {
-    return footTasks[s]->surface();
+    return footTasks.at(s)->surface();
   }
 
   /**
@@ -270,7 +256,7 @@ public:
    * @param zmp Desired ZMP
    *
    * \see staticTarget for a helper to define the stabilizer target when the CoM
-   * is state
+   * is static
    */
   void target(const Eigen::Vector3d & com,
               const Eigen::Vector3d & comd,
@@ -304,10 +290,26 @@ public:
 
   bool inDoubleSupport() const
   {
-    return inContact(ContactState::Left) && inContact(ContactState::Right);
+    return contacts_.size() == 2;
   }
 
 private:
+  void dimWeight(const Eigen::VectorXd & dimW) override;
+  Eigen::VectorXd dimWeight() const override;
+
+  void selectActiveJoints(mc_solver::QPSolver & solver,
+                          const std::vector<std::string> & activeJointsName,
+                          const std::map<std::string, std::vector<std::array<int, 2>>> & activeDofs = {}) override;
+
+  virtual void selectUnactiveJoints(
+      mc_solver::QPSolver & solver,
+      const std::vector<std::string> & unactiveJointsName,
+      const std::map<std::string, std::vector<std::array<int, 2>>> & unactiveDofs = {}) override;
+
+  void resetJointsSelector(mc_solver::QPSolver & solver) override;
+
+  void addContact(mc_solver::QPSolver & solver, ContactState contactState, const internal::Contact & contact);
+
   /** Check that all gains are within boundaries.
    *
    */
@@ -399,9 +401,6 @@ protected:
     return realRobots_.robot(robotIndex_);
   }
 
-private:
-  void addContact(mc_solver::QPSolver & solver, ContactState contactState, const internal::Contact & contact);
-
 protected:
   std::unordered_map<ContactState, internal::Contact> contacts_;
   std::unordered_map<ContactState, std::shared_ptr<mc_tasks::force::CoPTask>> footTasks;
@@ -428,7 +427,6 @@ protected:
   double t_ = 0.; /**< Time elapsed since the task is running */
 
 protected:
-  Eigen::Vector3d gravity_ = {0., 0., -GRAVITY}; // ISO 80000-3}; /**< Gravity vector */
   mc_rbdyn::lipm_stabilizer::StabilizerConfiguration
       defaultConfig_; /**< Default (user-provided) configuration for the stabilizer. This configuration is superseeded
                          by the parameters set in the GUI */

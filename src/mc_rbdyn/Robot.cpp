@@ -7,6 +7,7 @@
 #include <mc_rbdyn/Robots.h>
 #include <mc_rbdyn/SCHAddon.h>
 #include <mc_rbdyn/Surface.h>
+#include <mc_rbdyn/constants.h>
 #include <mc_rbdyn/surface_utils.h>
 #include <mc_rtc/logging.h>
 
@@ -136,7 +137,7 @@ Robot::Robot(Robots & robots,
     mbc() = rbd::MultiBodyConfig(mb());
   }
 
-  mbc().gravity = Eigen::Vector3d{0, 0, 9.81};
+  mbc().gravity = constants::gravity;
   mbc().zero(mb());
   {
     auto initQ = mbc().q;

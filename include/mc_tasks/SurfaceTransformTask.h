@@ -70,12 +70,12 @@ public:
   void targetSurface(unsigned int robotIndex, const std::string & surfaceName, const sva::PTransformd & offset);
 
   /*! \brief Retrieve the controlled surface name */
-  const std::string & surface()
+  const std::string & surface() const
   {
     return surfaceName;
   }
 
-  /** Returns the pose of the surface in the iniertial frame */
+  /** Returns the pose of the surface in the inertial frame */
   const sva::PTransformd surfacePose() const;
 
   void addToLogger(mc_rtc::Logger & logger) override;

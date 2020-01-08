@@ -34,8 +34,7 @@ struct StationaryOffset
   StationaryOffset(double dt, double timeConstant, const VectorT & initValue = VectorT::Zero())
   : average_(dt, timeConstant, initValue)
   {
-    filteredValue_ = initValue;
-    rawValue_ = initValue;
+    this->reset(initValue);
   }
 
   /** Update input signal value.
@@ -47,7 +46,6 @@ struct StationaryOffset
   {
     average_.append(value);
     filteredValue_ = value - average_.eval();
-    rawValue_ = value;
   }
 
   /** Get output value where the stationary offset has been filtered.
@@ -58,22 +56,14 @@ struct StationaryOffset
     return filteredValue_;
   }
 
-  /** Get raw value of input signal.
+  /** Reset everything to an initial value
    *
+   * \param initValue Initial value from which to restart the filter.
    */
-  const VectorT & raw() const
+  void reset(const VectorT & initValue)
   {
-    return rawValue_;
-  }
-
-  /** Reset everything to zero.
-   *
-   */
-  void setZero()
-  {
-    average_.setZero();
-    filteredValue_.setZero();
-    rawValue_.setZero();
+    average_.reset(initValue);
+    filteredValue_ = initValue;
   }
 
   /** Get time constant of the filter.
@@ -96,7 +86,6 @@ struct StationaryOffset
 
 private:
   VectorT filteredValue_;
-  VectorT rawValue_;
   ExponentialMovingAverage<VectorT> average_;
 };
 } // namespace mc_filter

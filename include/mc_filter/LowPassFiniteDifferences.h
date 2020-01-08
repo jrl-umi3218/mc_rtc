@@ -25,8 +25,7 @@ struct LowPassFiniteDifferences : public LowPass<T>
    */
   LowPassFiniteDifferences(double dt, double period) : LowPassT(dt, period)
   {
-    LowPassT::reset(T::Zero());
-    prevValue_ = T::Zero();
+    LowPassT::reset(T::Zero(), T::Zero());
   }
 
   /** Reset filter to initial rest value.
@@ -34,7 +33,7 @@ struct LowPassFiniteDifferences : public LowPass<T>
    * \param pos Initial position.
    * \param vel Initial velocity.
    */
-  void reset(T pos, T vel)
+  void reset(const T & pos, const T & vel)
   {
     LowPassT::reset(vel);
     prevValue_ = pos;
