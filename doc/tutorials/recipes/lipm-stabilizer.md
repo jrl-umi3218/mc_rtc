@@ -4,7 +4,7 @@ layout: tutorials
 
 ## A bit of history
 
-The stabilizer presented in this tutorial was originally implemented as part of Dr. Stéphane Caron's [LIPM Walking Controller](https://github.com/stephane-caron/lipm_walking_controller). This implementation has been intensively used for walking, including stair climbing and extensive locomotion, notably as part of an Airbus' manufacturing use-case performed in-situ at their industrial factory. The implementation proposed in `mc_tasks::lipm_stabilizer::StabilizerTask` is an integration of the method proposed in Dr. Caron's original implementation. No significant conceptual alteration to the stabilization algorithm were made. Note that currently, walking hasn't yet been integrated within the framework, but can be achieved by using our maintained version of the LIPM Walking Controller can be found on our [Github repository](https://github.com/jrl-umi3218/lipm_walking_controller).
+The stabilizer presented in this tutorial was originally implemented as part of Dr. Stéphane Caron's [LIPM Walking Controller](https://github.com/stephane-caron/lipm_walking_controller). This implementation has been intensively used for walking, including stair climbing and extensive locomotion, notably as part of an Airbus' manufacturing use-case performed in-situ at their industrial factory. The implementation proposed in `mc_tasks::lipm_stabilizer::StabilizerTask` is an integration of the method proposed in Dr. Caron's original implementation. No significant conceptual alteration to the stabilization algorithm were made. Walking is currently provided in a separate  [controller](https://github.com/jrl-umi3218/lipm_walking_controller).
 
 <div class="embed-responsive embed-responsive-16by9">
   <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/vFCFKAunsYM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -15,7 +15,7 @@ The stabilizer presented in this tutorial was originally implemented as part of 
 
 For details on the stabilization algorithm, please refer to the original publication by Stéphane Caron, Abderrahmane Kheddar and Olivier Tempier: [Stair Climbing Stabilization of the HRP-4 Humanoid Robot using Whole-body Admittance Control](https://scaron.info/publications/icra-2019.html) published at *ICRA 2019, Montreal, Canada, May 2019.*
 
-This stabilizer is implemented here in `mc_tasks::lipm_stabilizer::StabilizerTask` as a `MetaTask`, e.g a task that manages the following additional tasks:
+This stabilizer is implemented here in `mc_tasks::lipm_stabilizer::StabilizerTask` as a `MetaTask`, i.e a task that manages the following additional tasks:
 
 - A `CoMTask` to track the desired CoM position computed by the stabilizer
 - Two `CoPTask` to track desired wrench under each of the robot's feet
@@ -43,7 +43,7 @@ For convenience, a helper function is provided to give appropriate pendulum targ
 void StabilizerTask::staticTarget(const Eigen::Vector3d & com, double zmpHeight = 0);
 ```
 
-It is **your responsibility** to provide a valid reference state. In case of walking, this is typically computed by a Model Predictive Controller (MPC) such that dynamic stability is ensured in-between footsteps.
+It is your responsibility to provide a valid reference state. In case of walking, this is typically computed by a Model Predictive Controller (MPC) such that dynamic stability is ensured in-between footsteps.
 
 ## State observation
 
@@ -53,7 +53,7 @@ The aim of the stabilizer is to make the real system track the desired reference
 - Velocity of the `CoM`
 - Contact wrenches
 
-Contrary to the original implementation, in `mc_rtc` state observation is decoupled from the stabilizer's implementation. As such, you may choose to use any suitable [observer pipeline](observers.html) to estimate this state. The following recommended pipeline is equivalent to the state estimation used in the original implementation:
+You must setup a suitable [observer pipeline](observers.html) to estimate the required quantities. The following pipeline can be used, it is equivalent to the original implementation:
 
 ```yaml
 # Observes real robot state
@@ -91,8 +91,8 @@ See [Stephane's documentaion](https://jrl-umi3218.github.io/lipm_walking_control
 ```yaml
 ####
 # Sample stabilizer configuration for the JVRC robot
-# The most important entries are the 
-# - dcm_tracking: controls how stabilizer reacts to perturbation of the DCM 
+# The most important entries are the
+# - dcm_tracking: controls how the stabilizer reacts to perturbation of the DCM
 # - admittance: controls the contact admittance
 ###
 # Sole-floor friction coefficient
@@ -136,20 +136,20 @@ dcm_tracking:
   derivator_time_constant: 1
   integrator_time_constant: 10
 
-# In case you have multiple main robots, you can override some configuration parameters for this robot
+# If you are using the same configuration file with different robots, you can provide per-robot configuration as well
 jvrc1:
   admittance:
     cop: [0.02, 0.02]
-  
+
   ```
 
-Looks daunting? Don't worry, you most likely won't need to provide those gains explicitely, unless you are tuning the stabilizer for a new robot. A default stabilizer configuration must be provided by the `RobotModule` and can be accessed within your controller by  
+Looks daunting? Don't worry, you most likely won't need to provide those gains explicitely, unless you are tuning the stabilizer for a new robot. A default stabilizer configuration must be provided by the `RobotModule` and can be accessed within your controller by
 
 ```cpp
 mc_rbdyn::lipm_stabilizer::StabilizerConfiguration stabiConf = robot().module().defaultLIPMStabilizerConfiguration();
 ```
 
-You can easily load the task from configuration: 
+You can easily load the task from configuration:
 
 ```cpp
 auto stabilizerTask = mc_tasks::MetaTaskLoader::load<mc_tasks::lipm_stabilizer::StabilizerTask>(ctl.solver(), config);
@@ -158,7 +158,7 @@ ctl.solver().addTask(stabilizerTask);
 
 When doing so, the stabilizer is configured in the following way:
 
-- Default configuration from the `RobotModule::defaultLIPMStabilizerConfiguration()`. A valid configuration is provided for all [robots](robots.html) supported by `mc_rtc`.
+- Default configuration from the `RobotModule::defaultLIPMStabilizerConfiguration()`. A valid configuration is provided for all [robots]({{site.baseurl}}/robots.html) supported by `mc_rtc`.
 - YAML configuration for the task
 - Per-robot YAML configuration can be used to modify any of these values for a specific robot.
 
@@ -170,7 +170,7 @@ The previous sections have introduced generalities about the stabilizer, how to 
 
 A default FSM state `StabilizerStandingState` is provided. This state automatically creates a stabilizer task from configuration, and provides simple targets to the `CoM` and `Contacts`. The trajectory of the CoM is computed according to a simple spring-damper, and dynamic pendulum references are computed using a LIPM pendulum model. This reference is given to the stabilizer at every timestep.
 
-You can configure the state in `YAML` as follows 
+You can configure the state in `YAML` as follows
 
 ```yaml
 ##
@@ -189,12 +189,6 @@ Stabilizer::Standing:
     rightFootSurface: RightFootCenter
     enabled: true
     contacts: [Left, Right]
-    Left:
-      rotation: [0,0,0]
-      height: 0
-    Right:
-      rotation: [0,0,0]
-      height: 0
 ```
 
 Using this state, it is very easy to move the CoM (or keep it at a desired position)
@@ -208,9 +202,6 @@ Using this state, it is very easy to move the CoM (or keep it at a desired posit
 ##
 Stabilizer::GoCenter:
   base: Stabilizer::Standing
-  # left foot ratio
-  # 0: on left foot
-  # 1: on right foot
   above: Center
   completion:
     dcmEval: [0.005, 0.005, 0.05]
@@ -249,17 +240,3 @@ And run an interface supporting dynamic simulation (such as `mc_vrep` or `choreo
 - `AlternateFeetLiftingManual`: same as above, but transitions are triggered by the user. Useful to tune the stabilizer's behaviour
 - `StepForward`: performs one `20cm` step foward using a quasi-static motion. If using on a real robot, be careful as the swing foot trajectory is merly a spline with no early/late impact handling.
 - `StepBackward`: performs one `10cm` step backward using a quasi-static motion.
-
-
-## Future
-
-This stabilizer implementation is restricted to the use of two stabilizing contacts. In the future, this should be extended to a multi-contact setting. Here is a rough outline of what this entails.
-
-There are three main components in the stabilizer, we can upgrade them when going to N > 2 contacts following ideas from the following publication: "Multi-Contact Stabilization of a Humanoid Robot for Realizing Dynamic Contact Transitions on Non-coplanar Surfaces" - Mitsuharu Morisawa et al.
-
-- DCM control (computeDesiredWrench()): not changed
-
-- Wrench distribution (saturate/distributeWrench()): changed, basically we could make a single QP (saturateWrench is already a special case of distributeWrench, it remains in use because of historical legacy) with variable number of contacts. Instead of leftFootRatio we would move to force distribution ratios: these are the alpha vectors detailed in Morisawa Humanoids 2018.pdf
-
-
-- Admittance control: end-effector tasks stay the same, but foot force difference control should be generalized to nullspace control as in Equations (20)-(21) of Morisawa's paper

@@ -1,9 +1,9 @@
 #include <mc_planning/Pendulum.h>
-#include <mc_rbdyn/World.h>
+#include <mc_rbdyn/constants.h>
 
 namespace mc_planning
 {
-namespace world = mc_rbdyn::world;
+namespace constants = mc_rbdyn::constants;
 
 Pendulum::Pendulum() {}
 
@@ -25,7 +25,7 @@ void Pendulum::reset(double lambda,
   comdd_ = comdd;
   comddd_ = Eigen::Vector3d::Zero();
   omega_ = std::sqrt(lambda);
-  zmp_ = com + (world::gravity - comdd) / lambda;
+  zmp_ = com + (constants::gravity - comdd) / lambda;
   zmpd_ = comd_ - comddd_ / lambda;
 }
 
@@ -36,10 +36,10 @@ void Pendulum::integrateIPM(Eigen::Vector3d zmp, double lambda, double dt)
   omega_ = std::sqrt(lambda);
   zmp_ = zmp;
 
-  Eigen::Vector3d vrp = zmp_ - world::gravity / lambda;
+  Eigen::Vector3d vrp = zmp_ - constants::gravity / lambda;
   double ch = std::cosh(omega_ * dt);
   double sh = std::sinh(omega_ * dt);
-  comdd_ = lambda * (com_prev - zmp_) + world::gravity;
+  comdd_ = lambda * (com_prev - zmp_) + constants::gravity;
   comd_ = comd_prev * ch + omega_ * (com_prev - vrp) * sh;
   com_ = com_prev * ch + comd_prev * sh / omega_ - vrp * (ch - 1.0);
 
@@ -58,7 +58,7 @@ void Pendulum::integrateCoMJerk(const Eigen::Vector3d & comddd, double dt)
 
 void Pendulum::completeIPM(const Eigen::Vector3d & p, const Eigen::Vector3d & n)
 {
-  auto gravitoInertial = world::gravity - comdd_;
+  auto gravitoInertial = constants::gravity - comdd_;
   double lambda = n.dot(gravitoInertial) / n.dot(p - com_);
   zmp_ = com_ + gravitoInertial / lambda;
   zmpd_ = comd_ - comddd_ / lambda;

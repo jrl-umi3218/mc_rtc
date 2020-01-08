@@ -281,12 +281,7 @@ protected:
 protected:
   /** QP solver */
   std::shared_ptr<mc_solver::QPSolver> qpsolver;
-  /** Real robots provided by MCGlobalController
-   *
-   * \note real_robots pointer is kept here to ensure compatibility with older
-   * controllers. It is now stored within qpsolver instead. New controllers should access it through the realRobots()
-   * accessors.
-   **/
+  /** Real robots provided by MCGlobalController **/
   std::shared_ptr<mc_rbdyn::Robots> real_robots;
   void realRobots(std::shared_ptr<mc_rbdyn::Robots> realRobots);
 

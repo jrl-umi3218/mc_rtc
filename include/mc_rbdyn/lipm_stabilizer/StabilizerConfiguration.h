@@ -17,6 +17,11 @@ namespace lipm_stabilizer
  */
 struct MC_RBDYN_DLLAPI FDQPWeights
 {
+  FDQPWeights() : ankleTorqueSqrt(std::sqrt(100)), netWrenchSqrt(std::sqrt(10000)), pressureSqrt(std::sqrt(1)) {}
+  FDQPWeights(double netWrench, double ankleTorque, double pressure)
+  : ankleTorqueSqrt(std::sqrt(ankleTorque)), netWrenchSqrt(std::sqrt(netWrench)), pressureSqrt(std::sqrt(pressure))
+  {
+  }
   double ankleTorqueSqrt;
   double netWrenchSqrt;
   double pressureSqrt;
@@ -62,6 +67,15 @@ namespace mc_rbdyn
 namespace lipm_stabilizer
 {
 
+/**
+ * @brief Configuration of the LIPMStabilizer. This configuration is meant to be
+ * overriden from the RobotModule, and the user YAML configuration of the
+ * stabilizer task.
+ *
+ * \note Developper note: Do not change the default gains here, it is likely
+ * that robot modules and users do not override every single parameter value,
+ * and modifying their default might have serious consequences.
+ */
 struct MC_RBDYN_DLLAPI StabilizerConfiguration
 {
   FDQPWeights fdqpWeights;

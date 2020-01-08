@@ -56,20 +56,21 @@
       "torsoBodyName": "CHEST_LINK1",
       "tasks": {
          "com": {
+
             "active_joints": [
                "Root",
-               "RLEG_JOINT0",
-               "RLEG_JOINT1",
-               "RLEG_JOINT2",
-               "RLEG_JOINT3",
-               "RLEG_JOINT4",
-               "RLEG_JOINT5",
-               "LLEG_JOINT0",
-               "LLEG_JOINT1",
-               "LLEG_JOINT2",
-               "LLEG_JOINT3",
-               "LLEG_JOINT4",
-               "LLEG_JOINT5"
+               "R_HIP_Y",
+               "R_HIP_R",
+               "R_HIP_P",
+               "R_KNEE",
+               "R_ANKLE_P",
+               "R_ANKLE_R",
+               "L_HIP_Y",
+               "L_HIP_R",
+               "L_HIP_P",
+               "L_KNEE",
+               "L_ANKLE_P",
+               "L_ANKLE_R"
             ],
             "height": 0.75
          }

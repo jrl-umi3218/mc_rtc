@@ -6,6 +6,7 @@
  */
 
 #include <mc_filter/utils/clamp.h>
+#include <mc_rbdyn/constants.h>
 #include <mc_rbdyn/rpy_utils.h>
 #include <mc_rtc/gui.h>
 #include <mc_rtc/gui/plot.h>
@@ -22,6 +23,7 @@ namespace lipm_stabilizer
 using internal::Contact;
 using ::mc_filter::utils::clamp;
 using ::mc_filter::utils::clampInPlaceAndWarn;
+namespace constants = ::mc_rbdyn::constants;
 
 // Repeat static constexpr declarations
 // Fixes https://github.com/stephane-caron/lipm_walking_controller/issues/21
@@ -50,7 +52,6 @@ inline Eigen::Vector2d vecFromError(const Eigen::Vector3d & error)
   return Eigen::Vector2d{x, y};
 }
 
-const Eigen::Vector3d e_z{0., 0., 1.};
 } // namespace
 
 StabilizerTask::StabilizerTask(const mc_rbdyn::Robots & robots,
@@ -63,8 +64,8 @@ StabilizerTask::StabilizerTask(const mc_rbdyn::Robots & robots,
 : robots_(robots), realRobots_(realRobots), robotIndex_(robotIndex), dcmIntegrator_(dt, /* timeConstant = */ 15.),
   dcmDerivator_(dt, /* timeConstant = */ 1.), dt_(dt), mass_(robots.robot(robotIndex).mass())
 {
-  type_ = "Stabilizer";
-  name_ = "Stabilizer";
+  type_ = "lipm_stabilizer";
+  name_ = type_ + "_" + robots.robot(robotIndex).name();
 
   comTask.reset(new mc_tasks::CoMTask(robots, robotIndex_));
   auto leftCoP = std::make_shared<mc_tasks::force::CoPTask>(leftSurface, robots, robotIndex_);
@@ -93,6 +94,7 @@ StabilizerTask::~StabilizerTask() {}
 
 void StabilizerTask::reset()
 {
+  t_ = 0;
   comTask->reset();
   comTarget_ = comTask->com();
 
@@ -206,12 +208,6 @@ void StabilizerTask::update()
 {
   updateState(realRobots_.robot().com(), realRobots_.robot().comVelocity());
 
-  // Update orientation tasks according to feet orientation
-  sva::PTransformd X_0_a = anchorFrame();
-  Eigen::Matrix3d pelvisOrientation = X_0_a.rotation();
-  pelvisTask->orientation(pelvisOrientation);
-  torsoTask->orientation(mc_rbdyn::rpyToMat({0, c_.torsoPitch, 0}) * pelvisOrientation);
-
   // Run stabilizer
   run();
 
@@ -231,44 +227,43 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   // Globbal log entries added to other categories
   logger.addLogEntry("perf_Stabilizer", [this]() { return runTime_; });
 
-  logger.addLogEntry("stabilizer_error_dcm_average", [this]() { return dcmAverageError_; });
-  logger.addLogEntry("stabilizer_error_dcm_pos", [this]() { return dcmError_; });
-  logger.addLogEntry("stabilizer_error_dcm_vel", [this]() { return dcmVelError_; });
-  logger.addLogEntry("stabilizer_error_dfz_force", [this]() { return dfzForceError_; });
-  logger.addLogEntry("stabilizer_error_dfz_height", [this]() { return dfzHeightError_; });
-  logger.addLogEntry("stabilizer_error_vdc", [this]() { return vdcHeightError_; });
-  logger.addLogEntry("stabilizer_error_zmp", [this]() { return zmpError_; });
-  logger.addLogEntry("stabilizer_admittance_cop", [this]() { return c_.copAdmittance; });
-  logger.addLogEntry("stabilizer_admittance_dfz", [this]() { return c_.dfzAdmittance; });
-  logger.addLogEntry("stabilizer_dcmDerivator_filtered", [this]() { return dcmDerivator_.eval(); });
-  logger.addLogEntry("stabilizer_dcmDerivator_raw", [this]() { return dcmDerivator_.raw(); });
-  logger.addLogEntry("stabilizer_dcmDerivator_timeConstant", [this]() { return dcmDerivator_.timeConstant(); });
-  logger.addLogEntry("stabilizer_dcmIntegrator_timeConstant", [this]() { return dcmIntegrator_.timeConstant(); });
-  logger.addLogEntry("stabilizer_dcmTracking_derivGain", [this]() { return c_.dcmDerivGain; });
-  logger.addLogEntry("stabilizer_dcmTracking_integralGain", [this]() { return c_.dcmIntegralGain; });
-  logger.addLogEntry("stabilizer_dcmTracking_propGain", [this]() { return c_.dcmPropGain; });
-  logger.addLogEntry("stabilizer_dfz_damping", [this]() { return c_.dfzDamping; });
-  logger.addLogEntry("stabilizer_fdqp_weights_ankleTorque",
+  logger.addLogEntry(name_ + "_error_dcm_average", [this]() { return dcmAverageError_; });
+  logger.addLogEntry(name_ + "_error_dcm_pos", [this]() { return dcmError_; });
+  logger.addLogEntry(name_ + "_error_dcm_vel", [this]() { return dcmVelError_; });
+  logger.addLogEntry(name_ + "_error_dfz_force", [this]() { return dfzForceError_; });
+  logger.addLogEntry(name_ + "_error_dfz_height", [this]() { return dfzHeightError_; });
+  logger.addLogEntry(name_ + "_error_vdc", [this]() { return vdcHeightError_; });
+  logger.addLogEntry(name_ + "_error_zmp", [this]() { return zmpError_; });
+  logger.addLogEntry(name_ + "_admittance_cop", [this]() { return c_.copAdmittance; });
+  logger.addLogEntry(name_ + "_admittance_dfz", [this]() { return c_.dfzAdmittance; });
+  logger.addLogEntry(name_ + "_dcmDerivator_filtered", [this]() { return dcmDerivator_.eval(); });
+  logger.addLogEntry(name_ + "_dcmDerivator_raw", [this]() { return dcmDerivator_.raw(); });
+  logger.addLogEntry(name_ + "_dcmDerivator_timeConstant", [this]() { return dcmDerivator_.timeConstant(); });
+  logger.addLogEntry(name_ + "_dcmIntegrator_timeConstant", [this]() { return dcmIntegrator_.timeConstant(); });
+  logger.addLogEntry(name_ + "_dcmTracking_derivGain", [this]() { return c_.dcmDerivGain; });
+  logger.addLogEntry(name_ + "_dcmTracking_integralGain", [this]() { return c_.dcmIntegralGain; });
+  logger.addLogEntry(name_ + "_dcmTracking_propGain", [this]() { return c_.dcmPropGain; });
+  logger.addLogEntry(name_ + "_dfz_damping", [this]() { return c_.dfzDamping; });
+  logger.addLogEntry(name_ + "_fdqp_weights_ankleTorque",
                      [this]() { return std::pow(c_.fdqpWeights.ankleTorqueSqrt, 2); });
-  logger.addLogEntry("stabilizer_fdqp_weights_netWrench",
-                     [this]() { return std::pow(c_.fdqpWeights.netWrenchSqrt, 2); });
-  logger.addLogEntry("stabilizer_fdqp_weights_pressure", [this]() { return std::pow(c_.fdqpWeights.pressureSqrt, 2); });
-  logger.addLogEntry("stabilizer_vdc_frequency", [this]() { return c_.vdcFrequency; });
-  logger.addLogEntry("stabilizer_vdc_stiffness", [this]() { return c_.vdcStiffness; });
-  logger.addLogEntry("stabilizer_wrench", [this]() { return distribWrench_; });
-  logger.addLogEntry("stabilizer_support_min", [this]() { return supportMin_; });
-  logger.addLogEntry("stabilizer_support_max", [this]() { return supportMax_; });
-  logger.addLogEntry("stabilizer_left_foot_ratio", [this]() { return leftFootRatio_; });
+  logger.addLogEntry(name_ + "_fdqp_weights_netWrench", [this]() { return std::pow(c_.fdqpWeights.netWrenchSqrt, 2); });
+  logger.addLogEntry(name_ + "_fdqp_weights_pressure", [this]() { return std::pow(c_.fdqpWeights.pressureSqrt, 2); });
+  logger.addLogEntry(name_ + "_vdc_frequency", [this]() { return c_.vdcFrequency; });
+  logger.addLogEntry(name_ + "_vdc_stiffness", [this]() { return c_.vdcStiffness; });
+  logger.addLogEntry(name_ + "_wrench", [this]() { return distribWrench_; });
+  logger.addLogEntry(name_ + "_support_min", [this]() { return supportMin_; });
+  logger.addLogEntry(name_ + "_support_max", [this]() { return supportMax_; });
+  logger.addLogEntry(name_ + "_left_foot_ratio", [this]() { return leftFootRatio_; });
 
   // Stabilizer targets
-  logger.addLogEntry("stabilizer_target_pendulum_com", [this]() { return comTarget_; });
-  logger.addLogEntry("stabilizer_target_pendulum_comd", [this]() { return comdTarget_; });
-  logger.addLogEntry("stabilizer_target_pendulum_comdd", [this]() { return comddTarget_; });
-  logger.addLogEntry("stabilizer_target_pendulum_dcm", [this]() { return dcmTarget_; });
-  logger.addLogEntry("stabilizer_target_pendulum_omega", [this]() { return omega_; });
-  logger.addLogEntry("stabilizer_target_pendulum_zmp", [this]() { return zmpTarget_; });
+  logger.addLogEntry(name_ + "_target_pendulum_com", [this]() { return comTarget_; });
+  logger.addLogEntry(name_ + "_target_pendulum_comd", [this]() { return comdTarget_; });
+  logger.addLogEntry(name_ + "_target_pendulum_comdd", [this]() { return comddTarget_; });
+  logger.addLogEntry(name_ + "_target_pendulum_dcm", [this]() { return dcmTarget_; });
+  logger.addLogEntry(name_ + "_target_pendulum_omega", [this]() { return omega_; });
+  logger.addLogEntry(name_ + "_target_pendulum_zmp", [this]() { return zmpTarget_; });
 
-  logger.addLogEntry("stabilizer_contactState", [this]() -> double {
+  logger.addLogEntry(name_ + "_contactState", [this]() -> double {
     if(inDoubleSupport())
       return 0;
     else if(inContact(ContactState::Left))
@@ -280,28 +275,28 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   });
 
   // Log computed robot properties
-  logger.addLogEntry("stabilizer_controlRobot_LeftFoot", [this]() { return robot().surfacePose("LeftFoot"); });
-  logger.addLogEntry("stabilizer_controlRobot_LeftFootCenter",
+  logger.addLogEntry(name_ + "_controlRobot_LeftFoot", [this]() { return robot().surfacePose("LeftFoot"); });
+  logger.addLogEntry(name_ + "_controlRobot_LeftFootCenter",
                      [this]() { return robot().surfacePose("LeftFootCenter"); });
-  logger.addLogEntry("stabilizer_controlRobot_RightFoot", [this]() { return robot().surfacePose("RightFoot"); });
-  logger.addLogEntry("stabilizer_controlRobot_RightFootCenter",
+  logger.addLogEntry(name_ + "_controlRobot_RightFoot", [this]() { return robot().surfacePose("RightFoot"); });
+  logger.addLogEntry(name_ + "_controlRobot_RightFootCenter",
                      [this]() { return robot().surfacePose("RightFootCenter"); });
-  logger.addLogEntry("stabilizer_controlRobot_com", [this]() { return robot().com(); });
-  logger.addLogEntry("stabilizer_controlRobot_comd", [this]() { return robot().comVelocity(); });
-  logger.addLogEntry("stabilizer_controlRobot_posW", [this]() { return robot().posW(); });
+  logger.addLogEntry(name_ + "_controlRobot_com", [this]() { return robot().com(); });
+  logger.addLogEntry(name_ + "_controlRobot_comd", [this]() { return robot().comVelocity(); });
+  logger.addLogEntry(name_ + "_controlRobot_posW", [this]() { return robot().posW(); });
 
-  logger.addLogEntry("stabilizer_realRobot_LeftFoot", [this]() { return realRobot().surfacePose("LeftFoot"); });
-  logger.addLogEntry("stabilizer_realRobot_LeftFootCenter",
+  logger.addLogEntry(name_ + "_realRobot_LeftFoot", [this]() { return realRobot().surfacePose("LeftFoot"); });
+  logger.addLogEntry(name_ + "_realRobot_LeftFootCenter",
                      [this]() { return realRobot().surfacePose("LeftFootCenter"); });
-  logger.addLogEntry("stabilizer_realRobot_RightFoot", [this]() { return realRobot().surfacePose("RightFoot"); });
-  logger.addLogEntry("stabilizer_realRobot_RightFootCenter",
+  logger.addLogEntry(name_ + "_realRobot_RightFoot", [this]() { return realRobot().surfacePose("RightFoot"); });
+  logger.addLogEntry(name_ + "_realRobot_RightFootCenter",
                      [this]() { return realRobot().surfacePose("RightFootCenter"); });
-  logger.addLogEntry("stabilizer_realRobot_com", [this]() { return measuredCoM_; });
-  logger.addLogEntry("stabilizer_realRobot_comd", [this]() { return measuredCoMd_; });
-  logger.addLogEntry("stabilizer_realRobot_dcm", [this]() -> Eigen::Vector3d { return measuredDCM_; });
-  logger.addLogEntry("stabilizer_realRobot_posW", [this]() { return realRobot().posW(); });
-  logger.addLogEntry("stabilizer_realRobot_wrench", [this]() { return measuredNetWrench_; });
-  logger.addLogEntry("stabilizer_realRobot_zmp", [this]() { return measuredZMP_; });
+  logger.addLogEntry(name_ + "_realRobot_com", [this]() { return measuredCoM_; });
+  logger.addLogEntry(name_ + "_realRobot_comd", [this]() { return measuredCoMd_; });
+  logger.addLogEntry(name_ + "_realRobot_dcm", [this]() -> Eigen::Vector3d { return measuredDCM_; });
+  logger.addLogEntry(name_ + "_realRobot_posW", [this]() { return realRobot().posW(); });
+  logger.addLogEntry(name_ + "_realRobot_wrench", [this]() { return measuredNetWrench_; });
+  logger.addLogEntry(name_ + "_realRobot_zmp", [this]() { return measuredZMP_; });
 
   MetaTask::addToLogger(*comTask, logger);
   MetaTask::addToLogger(*pelvisTask, logger);
@@ -311,58 +306,58 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
 void StabilizerTask::removeFromLogger(mc_rtc::Logger & logger)
 {
   logger.removeLogEntry("perf_Stabilizer");
-  logger.removeLogEntry("stabilizer_contactState");
-  logger.removeLogEntry("stabilizer_error_dcm_average");
-  logger.removeLogEntry("stabilizer_error_dcm_pos");
-  logger.removeLogEntry("stabilizer_error_dcm_vel");
-  logger.removeLogEntry("stabilizer_error_dfz_force");
-  logger.removeLogEntry("stabilizer_error_dfz_height");
-  logger.removeLogEntry("stabilizer_error_vdc");
-  logger.removeLogEntry("stabilizer_error_zmp");
-  logger.removeLogEntry("stabilizer_admittance_com");
-  logger.removeLogEntry("stabilizer_admittance_cop");
-  logger.removeLogEntry("stabilizer_admittance_dfz");
-  logger.removeLogEntry("stabilizer_dcmDerivator_filtered");
-  logger.removeLogEntry("stabilizer_dcmDerivator_raw");
-  logger.removeLogEntry("stabilizer_dcmDerivator_timeConstant");
-  logger.removeLogEntry("stabilizer_dcmIntegrator_timeConstant");
-  logger.removeLogEntry("stabilizer_dcmTracking_derivGain");
-  logger.removeLogEntry("stabilizer_dcmTracking_integralGain");
-  logger.removeLogEntry("stabilizer_dcmTracking_propGain");
-  logger.removeLogEntry("stabilizer_dfz_damping");
-  logger.removeLogEntry("stabilizer_fdqp_weights_ankleTorque");
-  logger.removeLogEntry("stabilizer_fdqp_weights_netWrench");
-  logger.removeLogEntry("stabilizer_fdqp_weights_pressure");
-  logger.removeLogEntry("stabilizer_vdc_frequency");
-  logger.removeLogEntry("stabilizer_vdc_stiffness");
-  logger.removeLogEntry("stabilizer_wrench");
-  logger.removeLogEntry("stabilizer_zmp");
-  logger.removeLogEntry("stabilizer_support_min");
-  logger.removeLogEntry("stabilizer_support_max");
-  logger.removeLogEntry("stabilizer_left_foot_ratio");
-  logger.removeLogEntry("stabilizer_target_pendulum_com");
-  logger.removeLogEntry("stabilizer_target_pendulum_comd");
-  logger.removeLogEntry("stabilizer_target_pendulum_comdd");
-  logger.removeLogEntry("stabilizer_target_pendulum_dcm");
-  logger.removeLogEntry("stabilizer_target_pendulum_omega");
-  logger.removeLogEntry("stabilizer_target_pendulum_zmp");
-  logger.removeLogEntry("stabilizer_controlRobot_LeftFoot");
-  logger.removeLogEntry("stabilizer_controlRobot_LeftFootCenter");
-  logger.removeLogEntry("stabilizer_controlRobot_RightFoot");
-  logger.removeLogEntry("stabilizer_controlRobot_RightFootCenter");
-  logger.removeLogEntry("stabilizer_controlRobot_com");
-  logger.removeLogEntry("stabilizer_controlRobot_comd");
-  logger.removeLogEntry("stabilizer_controlRobot_posW");
-  logger.removeLogEntry("stabilizer_realRobot_LeftFoot");
-  logger.removeLogEntry("stabilizer_realRobot_LeftFootCenter");
-  logger.removeLogEntry("stabilizer_realRobot_RightFoot");
-  logger.removeLogEntry("stabilizer_realRobot_RightFootCenter");
-  logger.removeLogEntry("stabilizer_realRobot_com");
-  logger.removeLogEntry("stabilizer_realRobot_comd");
-  logger.removeLogEntry("stabilizer_realRobot_dcm");
-  logger.removeLogEntry("stabilizer_realRobot_posW");
-  logger.removeLogEntry("stabilizer_realRobot_wrench");
-  logger.removeLogEntry("stabilizer_realRobot_zmp");
+  logger.removeLogEntry(name_ + "_contactState");
+  logger.removeLogEntry(name_ + "_error_dcm_average");
+  logger.removeLogEntry(name_ + "_error_dcm_pos");
+  logger.removeLogEntry(name_ + "_error_dcm_vel");
+  logger.removeLogEntry(name_ + "_error_dfz_force");
+  logger.removeLogEntry(name_ + "_error_dfz_height");
+  logger.removeLogEntry(name_ + "_error_vdc");
+  logger.removeLogEntry(name_ + "_error_zmp");
+  logger.removeLogEntry(name_ + "_admittance_com");
+  logger.removeLogEntry(name_ + "_admittance_cop");
+  logger.removeLogEntry(name_ + "_admittance_dfz");
+  logger.removeLogEntry(name_ + "_dcmDerivator_filtered");
+  logger.removeLogEntry(name_ + "_dcmDerivator_raw");
+  logger.removeLogEntry(name_ + "_dcmDerivator_timeConstant");
+  logger.removeLogEntry(name_ + "_dcmIntegrator_timeConstant");
+  logger.removeLogEntry(name_ + "_dcmTracking_derivGain");
+  logger.removeLogEntry(name_ + "_dcmTracking_integralGain");
+  logger.removeLogEntry(name_ + "_dcmTracking_propGain");
+  logger.removeLogEntry(name_ + "_dfz_damping");
+  logger.removeLogEntry(name_ + "_fdqp_weights_ankleTorque");
+  logger.removeLogEntry(name_ + "_fdqp_weights_netWrench");
+  logger.removeLogEntry(name_ + "_fdqp_weights_pressure");
+  logger.removeLogEntry(name_ + "_vdc_frequency");
+  logger.removeLogEntry(name_ + "_vdc_stiffness");
+  logger.removeLogEntry(name_ + "_wrench");
+  logger.removeLogEntry(name_ + "_zmp");
+  logger.removeLogEntry(name_ + "_support_min");
+  logger.removeLogEntry(name_ + "_support_max");
+  logger.removeLogEntry(name_ + "_left_foot_ratio");
+  logger.removeLogEntry(name_ + "_target_pendulum_com");
+  logger.removeLogEntry(name_ + "_target_pendulum_comd");
+  logger.removeLogEntry(name_ + "_target_pendulum_comdd");
+  logger.removeLogEntry(name_ + "_target_pendulum_dcm");
+  logger.removeLogEntry(name_ + "_target_pendulum_omega");
+  logger.removeLogEntry(name_ + "_target_pendulum_zmp");
+  logger.removeLogEntry(name_ + "_controlRobot_LeftFoot");
+  logger.removeLogEntry(name_ + "_controlRobot_LeftFootCenter");
+  logger.removeLogEntry(name_ + "_controlRobot_RightFoot");
+  logger.removeLogEntry(name_ + "_controlRobot_RightFootCenter");
+  logger.removeLogEntry(name_ + "_controlRobot_com");
+  logger.removeLogEntry(name_ + "_controlRobot_comd");
+  logger.removeLogEntry(name_ + "_controlRobot_posW");
+  logger.removeLogEntry(name_ + "_realRobot_LeftFoot");
+  logger.removeLogEntry(name_ + "_realRobot_LeftFootCenter");
+  logger.removeLogEntry(name_ + "_realRobot_RightFoot");
+  logger.removeLogEntry(name_ + "_realRobot_RightFootCenter");
+  logger.removeLogEntry(name_ + "_realRobot_com");
+  logger.removeLogEntry(name_ + "_realRobot_comd");
+  logger.removeLogEntry(name_ + "_realRobot_dcm");
+  logger.removeLogEntry(name_ + "_realRobot_posW");
+  logger.removeLogEntry(name_ + "_realRobot_wrench");
+  logger.removeLogEntry(name_ + "_realRobot_zmp");
 
   MetaTask::removeFromLogger(*comTask, logger);
   MetaTask::removeFromLogger(*pelvisTask, logger);
@@ -377,7 +372,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   using namespace mc_rtc::gui;
 
-  gui.addElement({"Tasks", "Stabilizer", "Main"}, Button("Disable stabilizer", [this]() { disable(); }),
+  gui.addElement({"Tasks", name_, "Main"}, Button("Disable stabilizer", [this]() { disable(); }),
                  Button("Reconfigure / Enable Stabilizer", [this]() { reconfigure(); }),
                  Button("Reset DCM integrator", [this]() { dcmIntegrator_.setZero(); }),
                  ArrayInput("Foot admittance", {"CoPx", "CoPy"},
@@ -410,7 +405,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                               dcmIntegrator_.timeConstant(T(0));
                               dcmDerivator_.timeConstant(T(1));
                             }));
-  gui.addElement({"Tasks", "Stabilizer", "Advanced"}, Button("Disable stabilizer", [this]() { disable(); }),
+  gui.addElement({"Tasks", name_, "Advanced"}, Button("Disable stabilizer", [this]() { disable(); }),
                  Button("Reconfigure", [this]() { reconfigure(); }),
                  ArrayInput("DCM pole placement", {"Pole1", "Pole2", "Pole3", "Lag [Hz]"},
                             [this]() -> Eigen::VectorXd { return polePlacement_; },
@@ -446,13 +441,13 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                  NumberInput("Torso pitch [rad]", [this]() { return c_.torsoPitch; },
                              [this](double pitch) { c_.torsoPitch = pitch; }));
 
-  gui.addElement({"Tasks", "Stabilizer", "Debug"}, Button("Disable stabilizer", [this]() { disable(); }),
+  gui.addElement({"Tasks", name_, "Debug"}, Button("Disable stabilizer", [this]() { disable(); }),
                  Button("Reconfigure", [this]() { reconfigure(); }), Button("Dump configuration", [this]() {
                    LOG_INFO("[LIPMStabilizerTask] configuration (YAML)");
                    LOG_INFO(c_.save().dump(true, true));
                  }));
 
-  gui.addElement({"Tasks", "Stabilizer", "Debug"}, ElementsStacking::Horizontal,
+  gui.addElement({"Tasks", name_, "Debug"}, ElementsStacking::Horizontal,
                  Button("Plot DCM-ZMP Tracking (x)",
                         [this, &gui]() {
                           gui.addPlot("DCM-ZMP Tracking (x)", plot::X("t", [this]() { return t_; }),
@@ -465,7 +460,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                         }),
                  Button("Stop DCM-ZMP (x)", [&gui]() { gui.removePlot("DCM-ZMP Tracking (x)"); }));
 
-  gui.addElement({"Tasks", "Stabilizer", "Debug"}, ElementsStacking::Horizontal,
+  gui.addElement({"Tasks", name_, "Debug"}, ElementsStacking::Horizontal,
                  Button("Plot DCM-ZMP Tracking (y)",
                         [this, &gui]() {
                           gui.addPlot("DCM-ZMP Tracking (y)", plot::X("t", [this]() { return t_; }),
@@ -478,7 +473,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                         }),
                  Button("Stop DCM-ZMP (y)", [&gui]() { gui.removePlot("DCM-ZMP Tracking (y)"); }));
 
-  gui.addElement({"Tasks", "Stabilizer", "Debug"}, ElementsStacking::Horizontal,
+  gui.addElement({"Tasks", name_, "Debug"}, ElementsStacking::Horizontal,
                  Button("Plot CoM Tracking (x)",
                         [this, &gui]() {
                           gui.addPlot("CoM Tracking (x)", plot::X("t", [this]() { return t_; }),
@@ -487,7 +482,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                         }),
                  Button("Stop CoM (x)", [&gui]() { gui.removePlot("CoM Tracking (x)"); }));
 
-  gui.addElement({"Tasks", "Stabilizer", "Debug"}, ElementsStacking::Horizontal,
+  gui.addElement({"Tasks", name_, "Debug"}, ElementsStacking::Horizontal,
                  Button("Plot DCM Integrator",
                         [this, &gui]() {
                           gui.addPlot("DCM Integrator", plot::X("t", [this]() { return t_; }),
@@ -496,7 +491,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                       plot::Y("z", [this]() { return dcmIntegrator_.eval().z(); }, Color::Blue));
                         }),
                  Button("Stop DCM Integrator", [&gui]() { gui.removePlot("DCM Integrator"); }));
-  gui.addElement({"Tasks", "Stabilizer", "Debug"}, ElementsStacking::Horizontal,
+  gui.addElement({"Tasks", name_, "Debug"}, ElementsStacking::Horizontal,
                  Button("Plot DCM Derivator",
                         [this, &gui]() {
                           gui.addPlot("DCM Derivator", plot::X("t", [this]() { return t_; }),
@@ -506,7 +501,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                         }),
                  Button("Stop DCM Derivator", [&gui]() { gui.removePlot("DCM Derivator"); }));
 
-  gui.addElement({"Tasks", "Stabilizer", "Debug"},
+  gui.addElement({"Tasks", name_, "Debug"},
                  ArrayLabel("DCM average error [mm]", {"x", "y"}, [this]() { return vecFromError(dcmAverageError_); }),
                  ArrayLabel("DCM error [mm]", {"x", "y"}, [this]() { return vecFromError(dcmError_); }),
                  ArrayLabel("Foot force difference error [mm]", {"force", "height"}, [this]() {
@@ -550,7 +545,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   constexpr double COM_POINT_SIZE = 0.02;
   constexpr double DCM_POINT_SIZE = 0.015;
 
-  gui.addElement({"Tasks", "Stabilizer", "Markers", "CoM-DCM"},
+  gui.addElement({"Tasks", name_, "Markers", "CoM-DCM"},
                  Arrow("Pendulum_CoM", pendulumArrowConfig, [this]() -> Eigen::Vector3d { return zmpTarget_; },
                        [this]() -> Eigen::Vector3d { return comTarget_; }),
                  Point3D("Measured_CoM", PointConfig(Color::Green, COM_POINT_SIZE), [this]() { return measuredCoM_; }),
@@ -559,7 +554,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                          [this]() -> Eigen::Vector3d { return measuredCoM_ + measuredCoMd_ / omega_; }));
 
   gui.addElement(
-      {"Tasks", "Stabilizer", "Markers", "Net wrench"},
+      {"Tasks", name_, "Markers", "Net wrench"},
       Point3D("Stabilizer_ZMP", PointConfig(Color::Magenta, 0.02), [this]() { return this->zmp(); }),
       Point3D("Measured_ZMP", PointConfig(Color::Red, 0.02), [this]() -> Eigen::Vector3d { return measuredZMP_; }),
       Arrow("Measured_ZMPForce", netWrenchForceArrowConfig, [this]() -> Eigen::Vector3d { return measuredZMP_; },
@@ -570,7 +565,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   for(const auto footTask : footTasks)
   {
     auto footT = footTask.second;
-    gui.addElement({"Tasks", "Stabilizer", "Markers", "Foot wrenches"},
+    gui.addElement({"Tasks", name_, "Markers", "Foot wrenches"},
                    Point3D("Stabilizer_" + footT->surface() + "CoP", PointConfig(Color::Magenta, 0.01),
                            [footT]() { return footT->targetCoPW(); }),
                    Force("Measured_" + footT->surface() + "CoPForce", copForceConfig,
@@ -578,7 +573,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                          [footT]() { return sva::PTransformd(footT->measuredCoPW()); }));
   }
 
-  gui.addElement({"Tasks", "Stabilizer", "Markers", "Contacts"},
+  gui.addElement({"Tasks", name_, "Markers", "Contacts"},
                  Polygon("SupportContacts", Color::Green, [this]() { return supportPolygons_; }));
 }
 
@@ -615,8 +610,7 @@ void StabilizerTask::disable()
 
 void StabilizerTask::reconfigure()
 {
-  c_ = defaultConfig_;
-  configure(c_);
+  configure(defaultConfig_);
 }
 
 void StabilizerTask::configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & config)
@@ -690,9 +684,7 @@ void StabilizerTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurat
   this->staticTarget(comTarget, height);
 
   // Allow to start in disabled state
-  bool enabled = true;
-  config("enabled", enabled);
-  if(!enabled)
+  if(!config("enabled", true))
   {
     this->disable();
   }
@@ -718,12 +710,9 @@ void StabilizerTask::setContacts(mc_solver::QPSolver & solver, const std::vector
   std::vector<std::pair<ContactState, Contact>> addContacts;
   for(const auto contact : contacts)
   {
-    addContacts.push_back(
-        {contact,
-         {
-             robot(), footTasks[contact]->surface(), realRobot().surfacePose(footTasks[contact]->surface()),
-             c_.friction // XXX
-         }});
+    addContacts.push_back({contact,
+                           {robot(), footTasks[contact]->surface(),
+                            realRobot().surfacePose(footTasks[contact]->surface()), c_.friction}});
   }
   setContacts(solver, addContacts);
 }
@@ -740,7 +729,6 @@ void StabilizerTask::setContacts(mc_solver::QPSolver & solver,
   for(const auto contactT : contactTasks)
   {
     MetaTask::removeFromLogger(*contactT, *solver.logger());
-    MetaTask::removeFromGUI(*contactT, *solver.gui());
     MetaTask::removeFromSolver(*contactT, solver);
   }
 
@@ -888,7 +876,9 @@ void StabilizerTask::target(const Eigen::Vector3d & com,
 void StabilizerTask::run()
 {
   using namespace std::chrono;
-  auto startTime = high_resolution_clock::now();
+  using clock = typename std::conditional<std::chrono::high_resolution_clock::is_steady,
+                                          std::chrono::high_resolution_clock, std::chrono::steady_clock>::type;
+  auto startTime = clock::now();
 
   checkGains();
   checkInTheAir();
@@ -912,13 +902,19 @@ void StabilizerTask::run()
     footTasks[ContactState::Left]->setZeroTargetWrench();
   }
 
+  updateFootForceDifferenceControl();
+
   comTask->com(comTarget_);
   comTask->refVel(comdTarget_);
   comTask->refAccel(comddTarget_);
 
-  updateFootForceDifferenceControl();
+  // Update orientation tasks according to feet orientation
+  sva::PTransformd X_0_a = anchorFrame();
+  Eigen::Matrix3d pelvisOrientation = X_0_a.rotation();
+  pelvisTask->orientation(pelvisOrientation);
+  torsoTask->orientation(mc_rbdyn::rpyToMat({0, c_.torsoPitch, 0}) * pelvisOrientation);
 
-  auto endTime = high_resolution_clock::now();
+  auto endTime = clock::now();
   runTime_ = 1000. * duration_cast<duration<double>>(endTime - startTime).count();
 }
 
@@ -1072,8 +1068,8 @@ void StabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
 
   sva::ForceVecd w_l_lc = X_0_lc.dualMul(w_l_0);
   sva::ForceVecd w_r_rc = X_0_rc.dualMul(w_r_0);
-  Eigen::Vector2d leftCoP = (e_z.cross(w_l_lc.couple()) / w_l_lc.force()(2)).head<2>();
-  Eigen::Vector2d rightCoP = (e_z.cross(w_r_rc.couple()) / w_r_rc.force()(2)).head<2>();
+  Eigen::Vector2d leftCoP = (constants::vertical.cross(w_l_lc.couple()) / w_l_lc.force()(2)).head<2>();
+  Eigen::Vector2d rightCoP = (constants::vertical.cross(w_r_rc.couple()) / w_r_rc.force()(2)).head<2>();
   footTasks[ContactState::Left]->targetCoP(leftCoP);
   footTasks[ContactState::Left]->targetForce(w_l_lc.force());
   footTasks[ContactState::Right]->targetCoP(rightCoP);
@@ -1124,7 +1120,7 @@ void StabilizerTask::saturateWrench(const sva::ForceVecd & desiredWrench,
   Eigen::VectorXd x = qpSolver_.result();
   sva::ForceVecd w_0(x.head<3>(), x.tail<3>());
   sva::ForceVecd w_c = X_0_c.dualMul(w_0);
-  Eigen::Vector2d cop = (e_z.cross(w_c.couple()) / w_c.force()(2)).head<2>();
+  Eigen::Vector2d cop = (constants::vertical.cross(w_c.couple()) / w_c.force()(2)).head<2>();
   footTask->targetCoP(cop);
   footTask->targetForce(w_c.force());
   distribWrench_ = w_0;

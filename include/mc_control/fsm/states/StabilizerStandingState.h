@@ -38,8 +38,6 @@ namespace fsm
  */
 struct StabilizerStandingState : State
 {
-  StabilizerStandingState();
-
   void configure(const mc_rtc::Configuration & config) override;
 
   void start(Controller &) override;
@@ -94,6 +92,8 @@ protected:
   double comHeight_ = 0; /**< Desired height of the CoM above the CoP target */
   Eigen::Vector3d comTarget_ = Eigen::Vector3d::Zero(); /**< World target for the CoM */
   Eigen::Vector3d copTarget_ = Eigen::Vector3d::Zero(); /**< World target for the CoP */
+
+  bool optionalGUI_ = true; /**< Controls whether optional GUI elements are displayed */
 };
 
 } // namespace fsm

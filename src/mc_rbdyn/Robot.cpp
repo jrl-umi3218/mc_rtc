@@ -526,7 +526,7 @@ Eigen::Vector3d Robot::copW(const std::string & surfaceName, double min_pressure
 sva::ForceVecd Robot::netWrench(const std::vector<std::string> & sensorNames) const
 {
   // Compute net total wrench from all sensors in contact
-  sva::ForceVecd netTotalWrench{Eigen::Vector6d::Zero()};
+  sva::ForceVecd netTotalWrench{sva::ForceVecd::Zero()};
   for(const auto & sensorName : sensorNames)
   {
     const auto & sensor = forceSensor(sensorName);

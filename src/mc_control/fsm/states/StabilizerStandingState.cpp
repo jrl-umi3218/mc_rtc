@@ -1,6 +1,6 @@
 #include <mc_control/fsm/Controller.h>
 #include <mc_control/fsm/states/StabilizerStandingState.h>
-#include <mc_rbdyn/World.h>
+#include <mc_rbdyn/constants.h>
 #include <mc_tasks/MetaTaskLoader.h>
 #include <mc_tasks/lipm_stabilizer/StabilizerTask.h>
 
@@ -9,16 +9,8 @@ namespace mc_control
 namespace fsm
 {
 
-namespace world = mc_rbdyn::world;
+namespace constants = mc_rbdyn::constants;
 using ContactState = mc_tasks::lipm_stabilizer::ContactState;
-
-StabilizerStandingState::StabilizerStandingState()
-{
-  // XXX, it would be nicer if calling mc_tasks::MetaTaskLoader::load<mc_tasks::lipm_stabilizer::StabilizerTask>() would
-  // not require the configuration to have a type element as it is redundant in that case
-  config_.add("StabilizerConfig");
-  config_("StabilizerConfig").add("type", "lipm_stabilizer");
-}
 
 void StabilizerStandingState::configure(const mc_rtc::Configuration & config)
 {
@@ -51,7 +43,7 @@ void StabilizerStandingState::start(Controller & ctl)
   // Initialize stabilizer targets. Defaults to current CoM/CoP
   config_("comHeight", stabilizerTask_->config().comHeight);
   // Reset linear inverted pendulum model, used here to compute stabilizer references
-  double lambda = mc_rbdyn::world::GRAVITY / stabilizerTask_->config().comHeight;
+  double lambda = mc_rbdyn::constants::GRAVITY / stabilizerTask_->config().comHeight;
   pendulum_.reset(lambda, ctl.robot().com(), ctl.robot().comVelocity(), ctl.robot().comAcceleration());
   if(config_.has("above"))
   {
@@ -90,7 +82,7 @@ void StabilizerStandingState::start(Controller & ctl)
     targetCoM(ctl.realRobot().com());
   }
 
-  if(stabilizerTask_->inDoubleSupport())
+  if(optionalGUI_ && stabilizerTask_->inDoubleSupport())
   {
     ctl.gui()->addElement(
         {"FSM", "Standing", "Move"}, mc_rtc::gui::ElementsStacking::Horizontal,
@@ -152,7 +144,6 @@ void StabilizerStandingState::targetCoM(const Eigen::Vector3d & com)
     copHeight = stabilizerTask_->rightContactAnklePose().translation().z();
   }
 
-  // Initialize stabilizer at current CoM position
   comTarget_ = com;
   copTarget_ = Eigen::Vector3d{comTarget_.x(), comTarget_.y(), copHeight};
 }
@@ -163,9 +154,9 @@ bool StabilizerStandingState::run(Controller & ctl)
   const Eigen::Vector3d & comd_ = pendulum_.comd();
 
   Eigen::Vector3d comdd = K_ * (comTarget_ - com_) - D_ * comd_;
-  Eigen::Vector3d n = mc_rbdyn::world::vertical;
-  double lambda = n.dot(comdd - world::gravity) / n.dot(com_ - copTarget_);
-  Eigen::Vector3d zmp = com_ + (world::gravity - comdd) / lambda;
+  Eigen::Vector3d n = mc_rbdyn::constants::vertical;
+  double lambda = n.dot(comdd - constants::gravity) / n.dot(com_ - copTarget_);
+  Eigen::Vector3d zmp = com_ + (constants::gravity - comdd) / lambda;
 
   pendulum_.integrateIPM(zmp, lambda, ctl.timeStep);
 
@@ -180,9 +171,8 @@ bool StabilizerStandingState::run(Controller & ctl)
     output("OK");
     return true;
   }
-  if(std::fabs(stabilizerTask_->measuredDCM().x() - comTarget_.x()) < dcmThreshold_.x()
-     && std::fabs(stabilizerTask_->measuredDCM().y() - comTarget_.y()) < dcmThreshold_.y()
-     && std::fabs(stabilizerTask_->measuredDCM().z() - comTarget_.z()) < dcmThreshold_.z())
+  const auto & dcm = stabilizerTask_->measuredDCM();
+  if((((dcm - comTarget_).cwiseAbs() - dcmThreshold_).array() < 0.).all())
   {
     output("OK");
     return true;

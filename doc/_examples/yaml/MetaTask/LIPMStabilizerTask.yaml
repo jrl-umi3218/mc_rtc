@@ -2,18 +2,18 @@
 # Stabilizer MetaTask configuration
 #
 # This task is initialized in the following order:
-# - Default configuration is loaded from the 
-#   robot module (gains, default surface names, joint names, etc). 
+# - Default configuration is loaded from the
+#   robot module (gains, default surface names, joint names, etc).
 # - Then general configuration is loaded from this YAML task configuration
 # - Then robot-specific configuration is loaded from the `robot_name` group
 #   in which you may override any of the previous configuration
 #
-# In most cases, the user will not need to care about the general stabilizer configuration, 
+# In most cases, the user will not need to care about the general stabilizer configuration,
 # and is only expected to provide information about how the statbilizer is meant to be used:
 # - contacts: list of established contacts (one of [Left, Right])
 #   By default the current estimated contact surface pose from the real robot
-#   is used as the reference contact frame. You may override this behaviour by providing 
-#   `Left` or `Right` entries with the desired contact targets. 
+#   is used as the reference contact frame. You may override this behaviour by providing
+#   `Left` or `Right` entries with the desired contact targets.
 ###
 ---
 type: lipm_stabilizer
@@ -40,13 +40,13 @@ jvrc1:
 # More complete example with most of the possible configurations.
 # See the JSON schema for a full list of available members
 #
-# Note: than in practice, most users will not need to provide 
-# all these configuration parameters as the default 
+# Note: than in practice, most users will not need to provide
+# all these configuration parameters as the default
 # should be good-enough in most use-cases.
 #
-# Note2: the gains provided here are just meant as an example on how to override 
-# the default gains with your own, do not expect those to behave well. 
-# Please refer to the RobotModule for valid default gains. 
+# Note2: the gains provided here are just meant as an example on how to override
+# the default gains with your own, do not expect those to behave well.
+# Please refer to the RobotModule for valid default gains.
 ###
 ---
 type: lipm_stabilizer
@@ -85,11 +85,11 @@ jvrc1:
   torsoBodyName: CHEST_LINK1
   tasks:
     com:
-      active_joints: 
+      active_joints:
       [
-        Root, 
-        RLEG_JOINT0, RLEG_JOINT1, RLEG_JOINT2, RLEG_JOINT3, RLEG_JOINT4, RLEG_JOINT5, 
-        LLEG_JOINT0, LLEG_JOINT1, LLEG_JOINT2, LLEG_JOINT3, LLEG_JOINT4, LLEG_JOINT5
+       Root,
+       R_HIP_Y, R_HIP_R, R_HIP_P, R_KNEE, R_ANKLE_P, R_ANKLE_R,
+       L_HIP_Y, L_HIP_R, L_HIP_P, L_KNEE, L_ANKLE_P, L_ANKLE_R
       ]
       height: 0.75
 
