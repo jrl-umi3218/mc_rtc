@@ -80,49 +80,23 @@ JVRC1RobotModule::JVRC1RobotModule() : RobotModule(std::string(JVRC_VAL_VAL(JVRC
     _commonSelfCollisions = _minimalSelfCollisions;
     _grippers = {{"l_gripper", {"L_UTHUMB"}, true}, {"r_gripper", {"R_UTHUMB"}, false}};
 
-    auto lipmConf = mc_rtc::Configuration::fromYAMLData(
-        "leftFootSurface: LeftFootCenter                                               \n"
-        "rightFootSurface: RightFootCenter                                             \n"
-        "friction: 0.7                                                                 \n"
-        "torsoBodyName: WAIST_R_S                                                      \n"
-        "tasks:                                                                        \n"
-        "  com:                                                                        \n"
-        "    stiffness: [1000, 1000, 100]                                              \n"
-        "    weight: 1000                                                              \n"
-        "    active_joints: [Root,                                                       "
-        "                    R_HIP_Y, R_HIP_R, R_HIP_P, R_KNEE, R_ANKLE_P, R_ANKLE_R,    "
-        "                    L_HIP_Y, L_HIP_R, L_HIP_P, L_KNEE, L_ANKLE_P, L_ANKLE_R]  \n"
-        "    height: 0.85                                                              \n"
-        "  contact:                                                                    \n"
-        "    damping: 300                                                              \n"
-        "    stiffness: 1                                                              \n"
-        "    weight: 10000                                                             \n"
-        "  pelvis:                                                                     \n"
-        "    stiffness: 10                                                             \n"
-        "    weight: 100                                                               \n"
-        "  torso:                                                                      \n"
-        "    stiffness: 10                                                             \n"
-        "    weight: 100                                                               \n"
-        "    pitch: 0                                                                  \n"
-        "fdqp_weights:                                                                 \n"
-        "  net_wrench: 10000                                                           \n"
-        "  ankle_torque: 100                                                           \n"
-        "  pressure: 1                                                                 \n"
-        "vdc:                                                                          \n"
-        "  frequency: 1                                                                \n"
-        "  stiffness: 1000                                                             \n"
-        "admittance:                                                                   \n"
-        "  cop: [0.01, 0.01]                                                           \n"
-        "  dfz: 0.0001                                                                 \n"
-        "  dfz_damping: 0                                                              \n"
-        "dcm_tracking:                                                                 \n"
-        "  gains:                                                                      \n"
-        "    prop: 5.0                                                                 \n"
-        "    integral: 10                                                              \n"
-        "    deriv: 0.5                                                                \n"
-        "  derivator_time_constant: 1                                                  \n"
-        "  integrator_time_constant: 10                                                ");
-    _lipmStabilizerConfig.load(lipmConf);
+    // Configure the statbilizer. Uses the default values of the
+    // StabilizerConfiguration except for where values specific to the JVRC
+    // robot are required.
+    auto stabi = mc_rbdyn::lipm_stabilizer::StabilizerConfiguration{};
+    stabi.leftFootSurface = "LeftFootCenter";
+    stabi.rightFootSurface = "RightFootCenter";
+    stabi.torsoBodyName = "WAIST_R_S";
+    stabi.comHeight = 0.85;
+    stabi.comActiveJoints = {"Root",    "R_HIP_Y", "R_HIP_R", "R_HIP_P", "R_KNEE",    "R_ANKLE_P", "R_ANKLE_R",
+                             "L_HIP_Y", "L_HIP_R", "L_HIP_P", "L_KNEE",  "L_ANKLE_P", "L_ANKLE_R"};
+    stabi.torsoPitch = 0;
+    stabi.copAdmittance = Eigen::Vector2d{0.01, 0.01};
+    stabi.dcmPropGain = 5.0;
+    stabi.dcmIntegralGain = 10;
+    stabi.dcmDerivGain = 0.5;
+    stabi.dcmDerivatorTimeConstant = 1;
+    stabi.dcmIntegratorTimeConstant = 10;
   }
   else
   {
