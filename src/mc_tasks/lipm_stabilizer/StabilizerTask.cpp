@@ -5,6 +5,7 @@
  * lipm_walking_controller <https://github.com/stephane-caron/lipm_walking_controller>
  */
 
+#include <mc_filter/utils/clamp.h>
 #include <mc_rbdyn/rpy_utils.h>
 #include <mc_rtc/gui.h>
 #include <mc_rtc/gui/plot.h>
@@ -20,7 +21,7 @@ namespace lipm_stabilizer
 
 using internal::Contact;
 using ::mc_filter::utils::clamp;
-using ::mc_filter::utils::clampInPlace;
+using ::mc_filter::utils::clampInPlaceAndWarn;
 
 // Repeat static constexpr declarations
 // Fixes https://github.com/stephane-caron/lipm_walking_controller/issues/21
@@ -383,10 +384,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                             [this]() -> Eigen::Vector2d {
                               return {c_.copAdmittance.x(), c_.copAdmittance.y()};
                             },
-                            [this](const Eigen::Vector2d & a) {
-                              c_.copAdmittance.x() = clamp(a(0), 0., MAX_COP_ADMITTANCE);
-                              c_.copAdmittance.y() = clamp(a(1), 0., MAX_COP_ADMITTANCE);
-                            }),
+                            [this](const Eigen::Vector2d & a) { c_.copAdmittance = clamp(a, 0., MAX_COP_ADMITTANCE); }),
                  ArrayInput("Foot force difference", {"Admittance", "Damping"},
                             [this]() -> Eigen::Vector2d {
                               return {c_.dfzAdmittance, c_.dfzDamping};
@@ -707,12 +705,12 @@ const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & StabilizerTask::confi
 
 void StabilizerTask::checkGains()
 {
-  clampInPlace(c_.copAdmittance.x(), 0., MAX_COP_ADMITTANCE, "CoP x-admittance");
-  clampInPlace(c_.copAdmittance.y(), 0., MAX_COP_ADMITTANCE, "CoP y-admittance");
-  clampInPlace(c_.dcmDerivGain, 0., MAX_DCM_D_GAIN, "DCM deriv x-gain");
-  clampInPlace(c_.dcmIntegralGain, 0., MAX_DCM_I_GAIN, "DCM integral x-gain");
-  clampInPlace(c_.dcmPropGain, 0., MAX_DCM_P_GAIN, "DCM prop x-gain");
-  clampInPlace(c_.dfzAdmittance, 0., MAX_DFZ_ADMITTANCE, "DFz admittance");
+  clampInPlaceAndWarn(c_.copAdmittance.x(), 0., MAX_COP_ADMITTANCE, "CoP x-admittance");
+  clampInPlaceAndWarn(c_.copAdmittance.y(), 0., MAX_COP_ADMITTANCE, "CoP y-admittance");
+  clampInPlaceAndWarn(c_.dcmDerivGain, 0., MAX_DCM_D_GAIN, "DCM deriv x-gain");
+  clampInPlaceAndWarn(c_.dcmIntegralGain, 0., MAX_DCM_I_GAIN, "DCM integral x-gain");
+  clampInPlaceAndWarn(c_.dcmPropGain, 0., MAX_DCM_P_GAIN, "DCM prop x-gain");
+  clampInPlaceAndWarn(c_.dfzAdmittance, 0., MAX_DFZ_ADMITTANCE, "DFz admittance");
 }
 
 void StabilizerTask::setContacts(mc_solver::QPSolver & solver, const std::vector<ContactState> & contacts)
@@ -824,7 +822,7 @@ void StabilizerTask::computeLeftFootRatio()
     Eigen::Vector3d t_lankle_com = comTarget_ - lankle;
     Eigen::Vector3d t_lankle_rankle = rankle - lankle;
     double d_proj = t_lankle_com.dot(t_lankle_rankle.normalized());
-    leftFootRatio_ = clamp(d_proj / t_lankle_rankle.norm(), 0, 1);
+    leftFootRatio_ = clamp(d_proj / t_lankle_rankle.norm(), 0., 1.);
   }
   else if(inContact(ContactState::Left))
   {

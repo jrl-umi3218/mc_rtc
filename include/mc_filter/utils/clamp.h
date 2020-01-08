@@ -12,161 +12,169 @@
 #include <Eigen/Core>
 #include <map>
 
-/** Utility functions and classes.
- *
- */
 namespace mc_filter
 {
 
 namespace utils
 {
-/** Clamp a value in a given interval.
- *
- * \param v Value.
- *
- * \param vMin Lower bound.
- *
- * \param vMax Upper bound.
- *
- */
-inline double clamp(double v, double vMin, double vMax)
-{
-  if(v > vMax)
-  {
-    return vMax;
-  }
-  else if(v < vMin)
-  {
-    return vMin;
-  }
-  else
-  {
-    return v;
-  }
-}
 
 /** Clamp a value in a given interval.
  *
- * \param v Reference to value.
+ * \param value Value to clamp.
+ * \param lower Lower bound.
+ * \param upper Upper bound.
  *
- * \param vMin Lower bound.
- *
- * \param vMax Upper bound.
- *
+ * \returns clamped value
  */
-inline void clampInPlace(double & v, double vMin, double vMax)
+inline double clamp(double value, double lower, double upper)
 {
-  if(v > vMax)
-  {
-    v = vMax;
-  }
-  else if(v < vMin)
-  {
-    v = vMin;
-  }
+  return std::max(lower, std::min(value, upper));
+}
+
+/** Clamp a value in-place in a given interval.
+ *
+ * \see clamp(double value, double lower, double upper)
+ */
+inline void clampInPlace(double & value, double lower, double upper)
+{
+  value = clamp(value, lower, upper);
 }
 
 /** Clamp a value in a given interval, issuing a warning when bounds are hit.
  *
- * \param v Value.
+ * \see clamp(double value, double lower, double upper)
  *
- * \param vMin Lower bound.
- *
- * \param vMax Upper bound.
- *
- * \param label Name of clamped value.
- *
+ * \return clamped value
  */
-inline double clamp(double v, double vMin, double vMax, const char * label)
+inline double clampAndWarn(double value, double lower, double upper, const std::string & label)
 {
-  if(v > vMax)
+  if(value > upper)
   {
-    LOG_WARNING(label << " clamped to " << vMax);
-    return vMax;
+    LOG_WARNING(label << " clamped to " << upper);
+    return upper;
   }
-  else if(v < vMin)
+  else if(value < lower)
   {
-    LOG_WARNING(label << " clamped to " << vMin);
-    return vMin;
+    LOG_WARNING(label << " clamped to " << lower);
+    return lower;
   }
   else
   {
-    return v;
+    return value;
   }
 }
 
-/** Clamp a value in a given interval, issuing a warning when bounds are hit.
+/** Clamp value in-place in a given interval, issuing a warning when bounds are hit.
  *
- * \param v Reference to value.
- *
- * \param vMin Lower bound.
- *
- * \param vMax Upper bound.
- *
- * \param label Name of clamped value.
- *
+ * \see clampAndWarn(double value, double lower, double upper, const std::string & label)
  */
-inline void clampInPlace(double & v, double vMin, double vMax, const char * label)
+inline void clampInPlaceAndWarn(double & value, double lower, double upper, const std::string & label)
 {
-  if(v > vMax)
+  value = clampAndWarn(value, lower, upper, label);
+}
+
+/**
+ * @brief Clamps each component of a vector in a given interval. The same lower
+ * and upper bounds will be used for each element of the vector.
+ *
+ * @param v Vector of values
+ * @param lower Lower bound
+ * @param upper Upper bound
+ *
+ * VectorT must meet the following requirements:
+ * - Read-write element access operator(size_t)
+ * - The value type of VectorT must meet the requirements of std::max and std::min
+ *
+ * \see clamp(const VectorT& v, const VectorT & lower, const VectorT & upper)
+ */
+template<typename VectorT>
+inline VectorT clamp(const VectorT & v, double lower, double upper)
+{
+  VectorT result(v.size());
+  for(unsigned i = 0; i < v.size(); i++)
   {
-    LOG_WARNING(label << " clamped to " << vMax);
-    v = vMax;
+    result(i) = clamp(v(i), lower, upper);
   }
-  else if(v < vMin)
+  return result;
+}
+
+/**
+ * @brief Clamps each component of a vector in a given interval with
+ * vector bounds
+ *
+ * VectorT requirements: \see VectorT clamp(const VectorT& v, double lower, double upper)
+ */
+template<typename VectorT>
+inline VectorT clamp(const VectorT & v, const VectorT & lower, const VectorT & upper)
+{
+  VectorT result(v.size());
+  for(unsigned i = 0; i < v.size(); i++)
   {
-    LOG_WARNING(label << " clamped to " << vMin);
-    v = vMin;
+    result(i) = clamp(v(i), lower(i), upper(i));
+  }
+  return result;
+}
+
+/**
+ * @brief Clamps each component of a vector in a given interval with
+ * vector bounds issuing a warning when bounds are hit
+ *
+ * \see clamp(const VectorT& v, const VectorT & lower, const VectorT & upper)
+ */
+template<typename VectorT>
+inline VectorT clampAndWarn(const VectorT & v, const VectorT & lower, const VectorT & upper, const std::string & label)
+{
+  VectorT result(v.size());
+  for(unsigned i = 0; i < v.size(); i++)
+  {
+    result(i) = clampAndWarn(v(i), lower(i), upper(i), label + " (" + std::to_string(i) + ")");
+  }
+  return result;
+}
+
+/**
+ * @brief Clamps each component of a vector in a given interval
+ *
+ * \see clamp(const VectorT& v, const VectorT & lower, const VectorT & upper)
+ */
+template<typename VectorT>
+inline void clampInPlace(VectorT & v, const VectorT & lower, const VectorT & upper)
+{
+  for(unsigned i = 0; i < v.size(); i++)
+  {
+    v(i) = clamp(v(i), lower(i), upper(i));
   }
 }
 
-/** Saturate integrator outputs.
+/**
+ * @brief Clamps in-place each component of a vector in a given interval
  *
- * \param taskName Name of caller AdmittanceTask.
- *
- * \param vector Integrator output vector.
- *
- * \param bound Output (symmetric) bounds.
- *
- * \param label Name of output vector.
- *
- * \param isClamping Map of booleans describing the clamping state for each
- * direction in ['x', 'y', 'z'].
- *
+ * \see clamp(const VectorT& v, double lower, double upper)
  */
-inline void clampAndWarn(const std::string & taskName,
-                         Eigen::Vector3d & vector,
-                         const Eigen::Vector3d & bound,
-                         const std::string & label,
-                         std::map<char, bool> & isClamping)
+template<typename VectorT>
+inline void clampInPlace(VectorT & v, double lower, double upper)
 {
-  const char dirName[] = {'x', 'y', 'z'};
-  for(unsigned i = 0; i < 3; i++)
+  for(unsigned i = 0; i < v.size(); i++)
   {
-    char dir = dirName[i];
-    if(vector(i) < -bound(i))
-    {
-      vector(i) = -bound(i);
-      if(!isClamping[dir])
-      {
-        LOG_WARNING(taskName << ": clamping " << dir << " " << label << " to " << -bound(i));
-        isClamping[dir] = true;
-      }
-    }
-    else if(vector(i) > bound(i))
-    {
-      vector(i) = bound(i);
-      if(!isClamping[dir])
-      {
-        LOG_WARNING(taskName << ": clamping " << dir << " " << label << " to " << bound(i));
-        isClamping[dir] = true;
-      }
-    }
-    else if(isClamping[dir])
-    {
-      LOG_WARNING(taskName << ": " << dir << " " << label << " back within range");
-      isClamping[dir] = false;
-    }
+    v(i) = clamp(v(i), lower, upper);
+  }
+}
+
+/**
+ * @brief Clamps in-place each component of a vector in a given interval,
+ * issuing a warning when bounds are hit
+ *
+ * \see clampInPlace(VectorT& v, const VectorT & lower, const VectorT & upper)
+ */
+template<typename VectorT>
+inline void clampInPlaceAndWarn(VectorT & vector,
+                                const VectorT & lower,
+                                const VectorT & upper,
+                                const std::string & label)
+{
+  for(unsigned i = 0; i < vector.size(); i++)
+  {
+    clampInPlaceAndWarn(vector(i), lower(i), upper(i), label + " (" + std::to_string(i) + ")");
   }
 }
 

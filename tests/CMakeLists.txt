@@ -124,6 +124,6 @@ target_link_libraries(dummyServer PUBLIC mc_control)
 ######################
 # -- Filters test -- #
 ######################
-add_executable(test_signal test_filters.cpp)
-target_link_libraries(test_signal PUBLIC mc_filter SpaceVecAlg::SpaceVecAlg Boost::unit_test_framework Boost::disable_autolinking)
-target_compile_definitions(test_signal PRIVATE -DBOOST_TEST_DYN_LINK -DBOOST_TEST_MAIN)
+add_executable(test_filters test_filters.cpp)
+target_link_libraries(test_filters PUBLIC mc_filter SpaceVecAlg::SpaceVecAlg Boost::unit_test_framework Boost::disable_autolinking)
+target_compile_definitions(test_filters PRIVATE -DBOOST_TEST_DYN_LINK -DBOOST_TEST_MAIN)

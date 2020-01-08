@@ -6,6 +6,8 @@
  */
 
 #pragma once
+#include <mc_filter/utils/clamp.h>
+#include <mc_rtc/logging.h>
 #include <algorithm>
 #include <cmath>
 
@@ -15,7 +17,9 @@ namespace mc_filter
  *
  * This filter can be seen as an integrator:
  *
- *    y(t) = 1/T int_{u=0}^t x(u) e^{(u - t) / T} d{u}
+ * \f[
+ *    y(t) = \frac{1}{T} \int_{u=0}^t x(u) e^{(u - t) / T} {\rm d}{\tau}
+ * \f]
  *
  * with T > 0 a reset period acting as anti-windup. It can also (informally) be
  * interpreted as the average value of the input signal x(t) over the last T
@@ -58,7 +62,7 @@ struct ExponentialMovingAverage
     average_ += alpha_ * (value - average_);
     if(saturation_ > 0.)
     {
-      saturate_();
+      utils::clampInPlace(average_, -saturation_, saturation_);
     }
   }
 
@@ -104,28 +108,13 @@ struct ExponentialMovingAverage
    */
   void timeConstant(double T)
   {
-    T = std::max(T, 2 * dt_); // Nyquist–Shannon sampling theorem
+    if(T < 2 * dt_)
+    {
+      LOG_WARNING("Time constant must be at least twice the timestep (Nyquist–Shannon sampling theorem)");
+      T = 2 * dt_;
+    }
     alpha_ = 1. - std::exp(-dt_ / T);
     timeConstant_ = T;
-  }
-
-private:
-  /** Saturate averaged values.
-   *
-   */
-  void saturate_()
-  {
-    for(unsigned i = 0; i < average_.size(); i++)
-    {
-      if(average_(i) < -saturation_)
-      {
-        average_(i) = -saturation_;
-      }
-      else if(average_(i) > saturation_)
-      {
-        average_(i) = saturation_;
-      }
-    }
   }
 
 protected:

@@ -9,6 +9,8 @@
 #include <mc_rbdyn/configuration_io.h>
 #include <mc_rbdyn/rpy_utils.h>
 
+#include <mc_filter/utils/clamp.h>
+
 #include <mc_rtc/gui/ArrayLabel.h>
 #include <mc_rtc/gui/Transform.h>
 
@@ -17,6 +19,8 @@ namespace mc_tasks
 
 namespace force
 {
+
+using mc_filter::utils::clampInPlaceAndWarn;
 
 AdmittanceTask::AdmittanceTask(const std::string & surfaceName,
                                const mc_rbdyn::Robots & robots,
@@ -40,8 +44,8 @@ void AdmittanceTask::update()
   Eigen::Vector3d angularVel = admittance_.couple().cwiseProduct(wrenchError_.couple());
 
   // Clamp both values in order to have a 'security'
-  clampAndWarn(name_, linearVel, maxLinearVel_, "linear velocity", isClampingLinearVel_);
-  clampAndWarn(name_, angularVel, maxAngularVel_, "angular velocity", isClampingAngularVel_);
+  clampInPlaceAndWarn(linearVel, (-maxLinearVel_).eval(), maxLinearVel_, name_ + " linear velocity");
+  clampInPlaceAndWarn(angularVel, (-maxAngularVel_).eval(), maxAngularVel_, name_ + " angular velocity");
 
   // Filter
   refVelB_ = 0.8 * refVelB_ + 0.2 * sva::MotionVecd(angularVel, linearVel);

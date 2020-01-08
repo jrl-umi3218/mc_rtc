@@ -7,13 +7,17 @@
 
 #pragma once
 
+#include <mc_filter/utils/clamp.h>
+
 namespace mc_filter
 {
 /** Leaky integrator.
  *
  * The output satisfies the differential equation:
  *
- *     yd(t) = x(t) - leakRate * y(t)
+ * \f[
+ *     \dot{y}(t) = x(t) - leakRate * y(t)
+ * \f]
  *
  * A leaky integrator is implemented exactly as an exponential moving average,
  * but it is homogeneous to the integral of the input signal (rather than the
@@ -43,7 +47,7 @@ struct LeakyIntegrator
     integral_ = (1. - rate_ * dt) * integral_ + dt * value;
     if(saturation_ > 0.)
     {
-      saturate();
+      utils::clampInPlace(integral_, -saturation_, saturation_);
     }
   }
 
@@ -89,22 +93,6 @@ struct LeakyIntegrator
   inline void setZero()
   {
     integral_.setZero();
-  }
-
-private:
-  inline void saturate()
-  {
-    for(unsigned i = 0; i < integral_.size(); i++)
-    {
-      if(integral_(i) < -saturation_)
-      {
-        integral_(i) = -saturation_;
-      }
-      else if(integral_(i) > saturation_)
-      {
-        integral_(i) = saturation_;
-      }
-    }
   }
 
 private:

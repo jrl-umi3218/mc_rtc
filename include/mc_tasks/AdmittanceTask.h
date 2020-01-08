@@ -4,7 +4,6 @@
 
 #pragma once
 
-#include <mc_filter/utils/clamp.h>
 #include <mc_tasks/SurfaceTransformTask.h>
 
 namespace mc_tasks
@@ -12,8 +11,6 @@ namespace mc_tasks
 
 namespace force
 {
-
-using mc_filter::utils::clampAndWarn;
 
 /*! \brief Hybrid position-force control on a contacting end-effector.
  *
@@ -214,8 +211,6 @@ protected:
   unsigned int rIndex_;
   double timestep_;
   const mc_rbdyn::Surface & surface_;
-  std::map<char, bool> isClampingAngularVel_ = {{'x', false}, {'y', false}, {'z', false}};
-  std::map<char, bool> isClampingLinearVel_ = {{'x', false}, {'y', false}, {'z', false}};
   sva::ForceVecd admittance_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   sva::ForceVecd targetWrench_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   sva::ForceVecd wrenchError_ = sva::ForceVecd(Eigen::Vector6d::Zero());
