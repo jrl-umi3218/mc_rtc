@@ -5,22 +5,28 @@ namespace mc_planning
 {
 namespace world = mc_rbdyn::world;
 
-Pendulum::Pendulum(const Eigen::Vector3d & com, const Eigen::Vector3d & comd, const Eigen::Vector3d & comdd)
+Pendulum::Pendulum() {}
+
+Pendulum::Pendulum(double lambda,
+                   const Eigen::Vector3d & com,
+                   const Eigen::Vector3d & comd,
+                   const Eigen::Vector3d & comdd)
 {
-  reset(com, comd, comdd);
+  reset(lambda, com, comd, comdd);
 }
 
-void Pendulum::reset(const Eigen::Vector3d & com, const Eigen::Vector3d & comd, const Eigen::Vector3d & comdd)
+void Pendulum::reset(double lambda,
+                     const Eigen::Vector3d & com,
+                     const Eigen::Vector3d & comd,
+                     const Eigen::Vector3d & comdd)
 {
-  constexpr double DEFAULT_HEIGHT = 0.8; // [m]
-  constexpr double DEFAULT_LAMBDA = world::GRAVITY / DEFAULT_HEIGHT;
   com_ = com;
   comd_ = comd;
   comdd_ = comdd;
   comddd_ = Eigen::Vector3d::Zero();
-  omega_ = std::sqrt(DEFAULT_LAMBDA);
-  zmp_ = com_ + (world::gravity - comdd_) / DEFAULT_LAMBDA;
-  zmpd_ = comd_ - comddd_ / DEFAULT_LAMBDA;
+  omega_ = std::sqrt(lambda);
+  zmp_ = com + (world::gravity - comdd) / lambda;
+  zmpd_ = comd_ - comddd_ / lambda;
 }
 
 void Pendulum::integrateIPM(Eigen::Vector3d zmp, double lambda, double dt)

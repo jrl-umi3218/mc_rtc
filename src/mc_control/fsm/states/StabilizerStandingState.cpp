@@ -27,26 +27,32 @@ void StabilizerStandingState::configure(const mc_rtc::Configuration & config)
     hasCompletion_ = !config("completion").empty();
     config("completion")("dcmEval", dcmThreshold_);
   }
+  config("optionalGUI", optionalGUI_);
 
   config_.load(config);
 }
 
 void StabilizerStandingState::start(Controller & ctl)
 {
+  if(!config_.has("StabilizerConfig"))
+  {
+    config_.add("StabilizerConfig");
+  }
+  config_("StabilizerConfig").add("type", "lipm_stabilizer");
+
   config_("stiffness", K_);
   D_ = config_("damping", 2 * std::sqrt(K_));
 
   // create stabilizer task from config
   stabilizerTask_ = mc_tasks::MetaTaskLoader::load<mc_tasks::lipm_stabilizer::StabilizerTask>(
-      ctl.solver(), config_("StabilizerConfig", mc_rtc::Configuration{}));
+      ctl.solver(), config_("StabilizerConfig"));
   ctl.solver().addTask(stabilizerTask_);
-
-  // Reset linear inverted pendulum model, used here to compute stabilizer
-  // references
-  pendulum_.reset(ctl.robot().com(), ctl.robot().comVelocity(), ctl.robot().comAcceleration());
 
   // Initialize stabilizer targets. Defaults to current CoM/CoP
   config_("comHeight", stabilizerTask_->config().comHeight);
+  // Reset linear inverted pendulum model, used here to compute stabilizer references
+  double lambda = mc_rbdyn::world::GRAVITY / stabilizerTask_->config().comHeight;
+  pendulum_.reset(lambda, ctl.robot().com(), ctl.robot().comVelocity(), ctl.robot().comAcceleration());
   if(config_.has("above"))
   {
     const std::string above = config_("above");

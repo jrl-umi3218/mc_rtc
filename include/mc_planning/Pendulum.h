@@ -18,15 +18,22 @@ struct MC_PLANNING_DLLAPI Pendulum
 {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
+  /**
+   * @brief Creates an empty pendulum. Call reset
+   *
+   * Call reset(double, const Eigen::Vector3d &, const Eigen::Vector3d &, const Eigen::Vector3d &) before use
+   */
+  Pendulum();
+
   /** Initialize state from CoM position and its derivatives.
    *
+   * \param lambda Pendulum constant. lambda = gravity/(height above ground)
    * \param com CoM position.
-   *
    * \param comd CoM velocity.
-   *
    * \param comdd CoM acceleration.
    */
-  Pendulum(const Eigen::Vector3d & com = Eigen::Vector3d::Zero(),
+  Pendulum(double lamda,
+           const Eigen::Vector3d & com = Eigen::Vector3d::Zero(),
            const Eigen::Vector3d & comd = Eigen::Vector3d::Zero(),
            const Eigen::Vector3d & comdd = Eigen::Vector3d::Zero());
 
@@ -59,13 +66,13 @@ struct MC_PLANNING_DLLAPI Pendulum
 
   /** Reset to a new state from CoM position and its derivatives.
    *
+   * \param lambda Pendulum constant. lambda = gravity/(height above ground)
    * \param com CoM position.
-   *
    * \param comd CoM velocity.
-   *
    * \param comdd CoM acceleration.
    */
-  void reset(const Eigen::Vector3d & com,
+  void reset(double lambda,
+             const Eigen::Vector3d & com,
              const Eigen::Vector3d & comd = Eigen::Vector3d::Zero(),
              const Eigen::Vector3d & comdd = Eigen::Vector3d::Zero());
 
@@ -117,12 +124,12 @@ struct MC_PLANNING_DLLAPI Pendulum
   }
 
 protected:
-  Eigen::Vector3d com_; /**< Position of the center of mass */
-  Eigen::Vector3d comd_; /**< Velocity of the center of mass */
-  Eigen::Vector3d comdd_; /**< Acceleration of the center of mass */
-  Eigen::Vector3d comddd_; /**< Jerk of the center of mass */
-  Eigen::Vector3d zmp_; /**< Position of the zero-tilting moment point */
-  Eigen::Vector3d zmpd_; /**< Velocity of the zero-tilting moment point */
-  double omega_; /**< Natural frequency in [Hz] */
+  Eigen::Vector3d com_ = Eigen::Vector3d::Zero(); /**< Position of the center of mass */
+  Eigen::Vector3d comd_ = Eigen::Vector3d::Zero(); /**< Velocity of the center of mass */
+  Eigen::Vector3d comdd_ = Eigen::Vector3d::Zero(); /**< Acceleration of the center of mass */
+  Eigen::Vector3d comddd_ = Eigen::Vector3d::Zero(); /**< Jerk of the center of mass */
+  Eigen::Vector3d zmp_ = Eigen::Vector3d::Zero(); /**< Position of the zero-tilting moment point */
+  Eigen::Vector3d zmpd_ = Eigen::Vector3d::Zero(); /**< Velocity of the zero-tilting moment point */
+  double omega_ = 0; /**< Natural frequency in [Hz] */
 };
 } // namespace mc_planning
