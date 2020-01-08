@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE(TestExponentialMovingAverage)
     // Check that averaging a constant for the characteristic time T gives the
     // expected theoratical value 1-1/e
     Eigen::Vector3d expected = C * (1 - std::exp(-1)) * Eigen::Vector3d::Ones();
-    BOOST_CHECK(allclose(average.eval(), expected, 10e-6));
+    BOOST_CHECK(allclose(average.eval(), expected, 1e-10));
   }
 
   {
@@ -53,7 +53,7 @@ BOOST_AUTO_TEST_CASE(TestExponentialMovingAverage)
     // Check that averaging a constant for the characteristic time T gives the
     // expected theoratical value 1-1/e
     Vector6d expected = C * (1 - std::exp(-1)) * Vector6d::Ones();
-    BOOST_CHECK(allclose(average.eval(), expected, 10e-6));
+    BOOST_CHECK(allclose(average.eval(), expected, 1e-10));
   }
 }
 
