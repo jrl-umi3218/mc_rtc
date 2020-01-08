@@ -126,7 +126,6 @@ public:
   /** Add GUI panel.
    *
    * \param gui GUI handle.
-   *
    */
   void addGUIElements(std::shared_ptr<mc_rtc::gui::StateBuilder> gui);
 
@@ -138,9 +137,7 @@ public:
    */
   void enable();
 
-  /** Disable all feedback components.
-   *
-   */
+  /** Disable all feedback components. */
   void disable();
 
   /** Configure stabilizer's parameters from a stabilizer's configuration object
@@ -171,7 +168,6 @@ public:
   /** Update QP task targets.
    *
    * This function is called once the reference has been updated.
-   *
    */
   void run();
 
@@ -332,7 +328,6 @@ private:
    * \param com Position of the center of mass.
    *
    * \param comd Velocity of the center of mass.
-   *
    */
   void updateState(const Eigen::Vector3d & com, const Eigen::Vector3d & comd);
 
@@ -344,7 +339,6 @@ private:
   /** Distribute a desired wrench in double support.
    *
    * \param desiredWrench Desired resultant reaction wrench.
-   *
    */
   void distributeWrench(const sva::ForceVecd & desiredWrench);
 
@@ -355,15 +349,12 @@ private:
    * \param footTask Target foot.
    *
    * \param target contact
-   *
    */
   void saturateWrench(const sva::ForceVecd & desiredWrench,
                       std::shared_ptr<mc_tasks::force::CoPTask> & footTask,
                       const internal::Contact & contact);
 
-  /** Reset admittance, damping and stiffness for every foot in contact.
-   *
-   */
+  /** Reset admittance, damping and stiffness for every foot in contact. */
   void setSupportFootGains();
 
   /** Apply foot force difference control.
@@ -371,18 +362,13 @@ private:
    * This method is described in Section III.E of "Biped walking
    * stabilization based on linear inverted pendulum tracking" (Kajita et
    * al., IROS 2010).
-   *
    */
   void updateFootForceDifferenceControl();
 
-  /** Update ZMP frame from contact state.
-   *
-   */
+  /** Update ZMP frame from contact state. */
   void updateZMPFrame();
 
-  /** Get 6D contact admittance vector from 2D CoP admittance.
-   *
-   */
+  /** Get 6D contact admittance vector from 2D CoP admittance. */
   sva::ForceVecd contactAdmittance() const
   {
     return {{c_.copAdmittance.y(), c_.copAdmittance.x(), 0.}, {0., 0., 0.}};
@@ -398,7 +384,6 @@ protected:
   /** Log stabilizer entries.
    *
    * \param logger Logger.
-   *
    */
   void addToLogger(mc_rtc::Logger &) override;
   void removeFromLogger(mc_rtc::Logger &) override;
