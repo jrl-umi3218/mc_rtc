@@ -1,0 +1,10 @@
+---
+Pause_1s:
+  base: Pause
+  duration: 1
+Pause_2s:
+  base: Pause_5s
+  duration: 2
+Pause_5s:
+  base: Pause
+  duration: 5

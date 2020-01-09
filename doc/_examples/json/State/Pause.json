@@ -1,0 +1,21 @@
+{
+
+  // Pause 1s
+  "Pause_1s":
+  {
+    "base": "Pause",
+    "duration": 1.0
+  },
+  // Pause 2s
+  "Pause_2s":
+  {
+    "base": "Pause_5s",
+    "duration": 2.0
+  },
+  // Pause 5s
+  "Pause_5s":
+  {
+    "base": "Pause",
+    "duration": 5.0
+  }
+}

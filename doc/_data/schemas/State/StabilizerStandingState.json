@@ -1,0 +1,24 @@
+{
+  "title": "State::StabilizerStandingState",
+  "description": "Simple state managing the LIPM Stabilizer",
+  "type": "object",
+  "properties":
+  {
+    "StabilizerConfig": { "$ref": "/../common/StabilizerTask.json" },
+    "stiffness": { "type": "number", "minimum": 0, "description": "Stiffness of CoM target" },
+    "damping": { "type": "number", "minimum": 0, "description": "Damping of CoM target (default=2*sqrt(stiffness))" },
+    "above": { "type": "string", "description": "Put CoM over the special frames LeftAnkle, RightAnkle or Center, or any other valid surface on the robot"},
+    "com": { "$ref": "/../../Eigen/Vector3d.json", "description": "Target CoM position"},
+    "completion": 
+    {
+      "type": "object",
+      "title": "Completion criteria for the state",
+      "description": "Completion criteria for the state",
+      "properties":
+      {
+        "dcmEval": { "$ref": "/../../Eigen/Vector3d.json", "description": "Outputs 'OK' when the dcm error is under this threshold."}
+      }
+    }
+  },
+  "required": []
+}

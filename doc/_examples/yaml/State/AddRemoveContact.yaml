@@ -1,0 +1,13 @@
+---
+AddContact:
+  base: AddRemoveContact
+  type: addContact
+  speed: 0.5
+  weight: 1000
+  stiffness: 2
+RemoveContact:
+  base: AddContact
+  type: removeContact
+AddContactCompliant:
+  base: AddRemoveContact
+  type: compliance

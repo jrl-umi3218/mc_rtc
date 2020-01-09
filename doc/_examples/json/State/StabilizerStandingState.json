@@ -1,0 +1,58 @@
+{
+  "Stabilizer::Standing": {
+    "base": "StabilizerStandingState",
+    "stiffness": 5,
+    "StabilizerConfig": {
+      "type": "lipm_stabilizer",
+      "robotIndex": 0,
+      "leftFootSurface": "LeftFootCenter",
+      "rightFootSurface": "RightFootCenter",
+      "enabled": true,
+      "contacts": [ "Left", "Right" ],
+      "Left": {
+        "rotation": [ 0, 0, 0 ],
+        "height": 0
+      },
+      "Right": {
+        "rotation": [ 0, 0, 0 ],
+        "height": 0
+      }
+    }
+  },
+  "Stabilizer::GoCenter": {
+    "base": "Stabilizer::Standing",
+    "above": "Center",
+    "completion": {
+      "dcmEval": [ 0.005, 0.005, 0.05 ]
+    }
+  },
+  "Stabilizer::GoLeft": {
+    "base": "Stabilizer::GoCenter",
+    "above": "LeftAnkle"
+  },
+  "Stabilizer::GoRight": {
+    "base": "Stabilizer::GoLeft",
+    "above": "RightAnkle"
+  },
+  "Stabilizer::LeftSupport": {
+    "base": "Stabilizer::GoLeft",
+    "completion": {},
+    "StabilizerConfig": {
+      "contacts": [ "Left" ]
+    }
+  },
+  "Stabilizer::RightSupport": {
+    "base": "Stabilizer::GoRight",
+    "completion": {},
+    "StabilizerConfig": {
+      "contacts": [ "Right" ]
+    }
+  },
+  "Stabilizer::GoHalfSitting": {
+    "base": "Parallel",
+    "states": [
+      "Stabilizer::GoCenter",
+      "HalfSitting"
+    ]
+  }
+}

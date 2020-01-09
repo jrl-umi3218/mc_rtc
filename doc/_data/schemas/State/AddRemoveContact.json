@@ -1,0 +1,14 @@
+{
+  "title": "State::AddRemoveContact",
+  "description": "Add or remove a contact",
+  "type": "object",
+  "properties":
+  {
+    "type": { "enum": ["addContact", "removeContact", "compliance"], "description": "Type of contact action"}, 
+    "speed": { "type": "number", "minimum": 0 },
+    "weight": { "type": "number", "minimum": 0 },
+    "stiffness": { "type": "number", "minimum": 0 },
+    "contact": { "$ref": "/../../mc_rbdyn/Contact.json" }
+  },
+  "required": ["type"] 
+}
