@@ -83,20 +83,20 @@ JVRC1RobotModule::JVRC1RobotModule() : RobotModule(std::string(JVRC_VAL_VAL(JVRC
     // Configure the statbilizer. Uses the default values of the
     // StabilizerConfiguration except for where values specific to the JVRC
     // robot are required.
-    auto stabi = mc_rbdyn::lipm_stabilizer::StabilizerConfiguration{};
-    stabi.leftFootSurface = "LeftFootCenter";
-    stabi.rightFootSurface = "RightFootCenter";
-    stabi.torsoBodyName = "WAIST_R_S";
-    stabi.comHeight = 0.85;
-    stabi.comActiveJoints = {"Root",    "R_HIP_Y", "R_HIP_R", "R_HIP_P", "R_KNEE",    "R_ANKLE_P", "R_ANKLE_R",
-                             "L_HIP_Y", "L_HIP_R", "L_HIP_P", "L_KNEE",  "L_ANKLE_P", "L_ANKLE_R"};
-    stabi.torsoPitch = 0;
-    stabi.copAdmittance = Eigen::Vector2d{0.01, 0.01};
-    stabi.dcmPropGain = 5.0;
-    stabi.dcmIntegralGain = 10;
-    stabi.dcmDerivGain = 0.5;
-    stabi.dcmDerivatorTimeConstant = 1;
-    stabi.dcmIntegratorTimeConstant = 10;
+    _lipmStabilizerConfig.leftFootSurface = "LeftFootCenter";
+    _lipmStabilizerConfig.rightFootSurface = "RightFootCenter";
+    _lipmStabilizerConfig.torsoBodyName = "WAIST_R_S";
+    _lipmStabilizerConfig.comHeight = 0.85;
+    _lipmStabilizerConfig.comActiveJoints = {"Root",      "R_HIP_Y",   "R_HIP_R",  "R_HIP_P", "R_KNEE",
+                                             "R_ANKLE_P", "R_ANKLE_R", "L_HIP_Y",  "L_HIP_R", "L_HIP_P",
+                                             "L_KNEE",    "L_ANKLE_P", "L_ANKLE_R"};
+    _lipmStabilizerConfig.torsoPitch = 0;
+    _lipmStabilizerConfig.copAdmittance = Eigen::Vector2d{0.01, 0.01};
+    _lipmStabilizerConfig.dcmPropGain = 5.0;
+    _lipmStabilizerConfig.dcmIntegralGain = 10;
+    _lipmStabilizerConfig.dcmDerivGain = 0.5;
+    _lipmStabilizerConfig.dcmDerivatorTimeConstant = 1;
+    _lipmStabilizerConfig.dcmIntegratorTimeConstant = 10;
   }
   else
   {
