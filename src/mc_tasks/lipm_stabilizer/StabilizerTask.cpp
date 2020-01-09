@@ -658,6 +658,12 @@ void StabilizerTask::configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfig
   }
   comTask->setGains(c_.comStiffness, 2 * c_.comStiffness.cwiseSqrt());
   comTask->weight(c_.comWeight);
+
+  for(const auto & footTask : footTasks)
+  {
+    footTask.second->maxLinearVel(c_.copMaxVel.linear());
+    footTask.second->maxAngularVel(c_.copMaxVel.angular());
+  }
 }
 
 void StabilizerTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)

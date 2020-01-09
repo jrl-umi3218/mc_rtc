@@ -94,6 +94,12 @@ void AdmittanceTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurat
   {
     refVelB(config("refVelB"));
   }
+  if(config.has("maxVel"))
+  {
+    sva::MotionVecd maxVel = config("maxVel");
+    maxLinearVel(maxVel.linear());
+    maxAngularVel(maxVel.angular());
+  }
   SurfaceTransformTask::load(solver, config);
 }
 

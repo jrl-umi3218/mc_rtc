@@ -11,6 +11,10 @@ Stabilizer::Standing:
     rightFootSurface: RightFootCenter
     enabled: true
     contacts: [Left, Right]
+    admittance:
+      maxVel:
+        linear: [0.3,0.3,0.3]
+        angular: [0.5,0.5,0.5]
     Left:
       rotation: [0,0,0]
       height: 0

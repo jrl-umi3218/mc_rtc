@@ -167,6 +167,9 @@ states:
         stiffness: [10, 10, 10, 10, 10, 10]
         damping: [6.3, 6.3, 6.3, 6.3, 6.3, 300]
         admittance: [0,0,0,0,0,0.005]
+        maxVel:
+          linear: [0.2, 0.2, 0.5]
+          angular: [0.2, 0.2, 0.2]
         wrench:
          force: [0, 0, 20]
          couple: [0, 0, 0]

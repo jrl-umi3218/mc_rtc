@@ -83,6 +83,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
   std::string rightFootSurface; /**< Surface name for the right foot. Origin should be at foot's center */
 
   Eigen::Vector2d copAdmittance = Eigen::Vector2d::Zero(); /**< Admittance gains for foot damping control */
+  sva::MotionVecd copMaxVel{{0.3, 0.3, 0.3}, {0.1, 0.1, 0.1}}; /**< Maximal velocity of the cop tasks */
 
   double dfzAdmittance = 1e-4; /**< Admittance for foot force difference control */
   double dfzDamping = 0.; /**< Damping term in foot force difference control */
@@ -125,6 +126,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
     {
       auto admittance = config("admittance");
       admittance("cop", copAdmittance);
+      admittance("maxVel", copMaxVel);
       admittance("dfz", dfzAdmittance);
       admittance("dfz_damping", dfzDamping);
     }
