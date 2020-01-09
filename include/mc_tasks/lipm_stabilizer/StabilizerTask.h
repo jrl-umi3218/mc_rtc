@@ -308,16 +308,17 @@ private:
 
   void resetJointsSelector(mc_solver::QPSolver & solver) override;
 
+  /**
+   * @brief Add contact to the task (set tasks target, update support area).
+   * This function does not immediately add contact tasks to the solver, this
+   * will be done by update() when the task is added to the solver.
+   */
   void addContact(mc_solver::QPSolver & solver, ContactState contactState, const internal::Contact & contact);
 
-  /** Check that all gains are within boundaries.
-   *
-   */
+  /** Check that all gains are within boundaries. */
   void checkGains();
 
-  /** Check whether the robot is in the air.
-   *
-   */
+  /** Check whether the robot is in the air. */
   void checkInTheAir();
 
   /** Computes the ratio of force distribution between the feet based on
@@ -332,6 +333,13 @@ private:
    * \param comd Velocity of the center of mass.
    */
   void updateState(const Eigen::Vector3d & com, const Eigen::Vector3d & comd);
+
+  /**
+   * @brief Update contact tasks in the solver
+   *
+   * @param solver QPSolver holding the tasks
+   */
+  void updateContacts(mc_solver::QPSolver & solver);
 
   /** Compute desired wrench based on DCM error.
    *
@@ -403,6 +411,7 @@ protected:
 
 protected:
   std::unordered_map<ContactState, internal::Contact> contacts_;
+  std::vector<ContactState> addContacts_; /**< Contacts to add to the QPSolver when the task is inserted */
   std::unordered_map<ContactState, std::shared_ptr<mc_tasks::force::CoPTask>> footTasks;
   std::vector<std::shared_ptr<mc_tasks::force::CoPTask>> contactTasks;
 

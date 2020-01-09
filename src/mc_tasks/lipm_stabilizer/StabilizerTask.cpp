@@ -185,13 +185,10 @@ Eigen::VectorXd StabilizerTask::speed() const
 
 void StabilizerTask::addToSolver(mc_solver::QPSolver & solver)
 {
+  // Feet tasks are added in update() instead, add all other tasks now
   MetaTask::addToSolver(*comTask, solver);
   MetaTask::addToSolver(*pelvisTask, solver);
   MetaTask::addToSolver(*torsoTask, solver);
-  for(const auto footTask : contactTasks)
-  {
-    MetaTask::addToSolver(*footTask, solver);
-  }
 }
 
 void StabilizerTask::removeFromSolver(mc_solver::QPSolver & solver)
@@ -205,8 +202,35 @@ void StabilizerTask::removeFromSolver(mc_solver::QPSolver & solver)
   }
 }
 
+void StabilizerTask::updateContacts(mc_solver::QPSolver & solver)
+{
+  if(!addContacts_.empty())
+  {
+    // Remove previous contacts
+    for(const auto contactT : contactTasks)
+    {
+      MetaTask::removeFromLogger(*contactT, *solver.logger());
+      MetaTask::removeFromSolver(*contactT, solver);
+    }
+    contactTasks.clear();
+
+    // Add new contacts
+    for(const auto contactState : addContacts_)
+    {
+      auto footTask = footTasks[contactState];
+      MetaTask::addToSolver(*footTask, solver);
+      MetaTask::addToLogger(*footTask, *solver.logger());
+      contactTasks.push_back(footTask);
+    }
+    addContacts_.clear();
+  }
+}
+
 void StabilizerTask::update(mc_solver::QPSolver & solver)
 {
+  // Update contacts if they have changed
+  updateContacts(solver);
+
   updateState(realRobots_.robot().com(), realRobots_.robot().comVelocity());
 
   // Run stabilizer
@@ -719,19 +743,12 @@ void StabilizerTask::setContacts(mc_solver::QPSolver & solver, const std::vector
 void StabilizerTask::setContacts(mc_solver::QPSolver & solver,
                                  const std::vector<std::pair<ContactState, Contact>> & contacts)
 {
+  LOG_INFO("StabilizerTask::setContacts2");
   if(contacts.empty())
   {
     LOG_ERROR_AND_THROW(std::runtime_error, "[StabilizerTask] Cannot set contacts from an empty list, the stabilizer "
                                             "requires at least one contact to be set.");
   }
-
-  for(const auto contactT : contactTasks)
-  {
-    MetaTask::removeFromLogger(*contactT, *solver.logger());
-    MetaTask::removeFromSolver(*contactT, solver);
-  }
-
-  contactTasks.clear();
 
   // Reset support area boundaries
   supportMin_ = std::numeric_limits<double>::max() * Eigen::Vector2d::Ones();
@@ -762,10 +779,8 @@ void StabilizerTask::addContact(mc_solver::QPSolver & solver, ContactState conta
   footTask->reset();
   footTask->weight(c_.contactWeight);
   footTask->targetPose(contact.surfacePose());
-  MetaTask::addToSolver(*footTask, solver);
-  MetaTask::addToLogger(*footTask, *solver.logger());
 
-  LOG_INFO(name() << ":  Added contact " << contact.surfaceName());
+  addContacts_.push_back(contactState);
 }
 
 void StabilizerTask::setSupportFootGains()
