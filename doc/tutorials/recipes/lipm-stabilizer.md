@@ -19,6 +19,7 @@ This stabilizer is implemented here in `mc_tasks::lipm_stabilizer::StabilizerTas
 
 - A `CoMTask` to track the desired CoM position computed by the stabilizer
 - Two `CoPTask` to track desired wrench under each of the robot's feet
+- Two `OrientationTasks` on respectively the waist and torso bodies, used for regularization of the upper-body behaviour
 
 The `StabilizerTask` role is to compute targets to provide to these tasks such that the real robot system tracks as-best-as-possible the behaviour of a reference linear inverted pendulum model. As such, to stabilize dynamic trajectories, the user must provide the following inputs to the stabilizer:
 
@@ -164,7 +165,59 @@ When doing so, the stabilizer is configured in the following way:
 
 See the [JSON schema](../../json.html#MetaTask/LIPMStabilizerTask) for details on the YAML configuration format.
 
-## Using the Stabilizer
+## Using the Stabilizer (Manually)
+
+To create a stabilizer task within your own controller, you simply need to instanciate the `mc_tasks::lipm_stabilizer::StabilizerTask`, and
+
+```cpp
+// Load default configuration from robot module
+auto StabiConf = robot.module().defaultLIPMStabilizerConfiguration();
+// Create the stabilizer task
+auto t = std::make_shared<mc_tasks::lipm_stabilizer::StabilizerTask>(
+          solver.robots(),
+          solver.realRobots(),
+          robotIndex,
+          stabiConf.leftFootSurface,
+          stabiConf.rightFootSurface,
+          stabiConf.torsoBodyName,
+          solver.dt());
+// Reset the task targets and default configuration
+t->reset();
+// Apply stabilizer configuration (optional, if not provided the default configuration from the RobotModule will be used)
+t->configure(stabiConf);
+// Set contacts (optional, the stabilizer will be configured in double support using the current foot pose as target for each contact by default)
+t->setContacts(solver, {ContactState::Left, ContactState::Right});
+```
+
+Additionally, you may load additional configuration settings and targets from an `mc_rtc::Configuration` object:
+
+```cpp
+// Load default configuration from robot module
+auto StabiConf = robot.module().defaultLIPMStabilizerConfiguration();
+// mc_rtc::Configuration object containing valid stabilizer configuration (see JSON schema documentation)
+auto conf = ...
+// Optional: Load additional configuration from an mc_rtc::Configuration object
+stabiConf.load(config);
+// Create the stabilizer task
+auto t = std::make_shared<mc_tasks::lipm_stabilizer::StabilizerTask>(
+          solver.robots(),
+          solver.realRobots(),
+          robotIndex,
+          stabiConf.leftFootSurface,
+          stabiConf.rightFootSurface,
+          stabiConf.torsoBodyName,
+          solver.dt());
+// Reset the task
+t->reset();
+// Apply stabilizer configuration
+t->configure(stabiConf);
+// Load additional properties from configuration (contact targets, com target, etc)
+t->load(solver, config);
+```
+
+By default, if no contacts and targets are specified, the task will start in double support and attempt to maintain the current feet pose and CoM position of the control robot. You may give targets to the stabilizer using `StabilizerTask::target(com, comd, comdd, zmp)` (see above).
+
+## Using the Stabilizer (FSM)
 
 The previous sections have introduced generalities about the stabilizer, how to create it and configure its gains. Using it is now as simple as selecting the appropriate contact mode (left support, right support, double support), and providing a valid reference state. Additionally, for the most common use-cases, `FSM` facilities are provided to help with its use.
 
