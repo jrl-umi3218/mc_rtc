@@ -125,6 +125,8 @@ jobs:
           - path: jrl-umi3218/mc_rbdyn_urdf
             windows-options: -DPYTHON_BINDING:BOOL=OFF
           - path: jrl-umi3218/mc_rtc_data
+          - path: jrl-umi3218/eigen-quadprog
+            windows-options: -DPYTHON_BINDING:BOOL=OFF
     # FIXME We disable Python bindings on Windows because it cannot find Python.h, should investigate the CI environment
     - name: Build and test
       if: matrix.build-type != 'script'
