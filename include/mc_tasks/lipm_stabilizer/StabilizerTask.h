@@ -381,7 +381,7 @@ protected:
   void addToSolver(mc_solver::QPSolver & solver) override;
   void removeFromSolver(mc_solver::QPSolver & solver) override;
   void removeFromGUI(mc_rtc::gui::StateBuilder &) override;
-  void update() override;
+  void update(mc_solver::QPSolver &) override;
 
   /** Log stabilizer entries.
    *

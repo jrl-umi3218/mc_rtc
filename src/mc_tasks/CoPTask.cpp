@@ -34,12 +34,12 @@ void CoPTask::reset()
   DampingTask::reset();
 }
 
-void CoPTask::update()
+void CoPTask::update(mc_solver::QPSolver & solver)
 {
   double pressure = std::max(0., measuredWrench().force().z());
   Eigen::Vector3d targetTorque = {+targetCoP_.y() * pressure, -targetCoP_.x() * pressure, 0.};
   DampingTask::targetWrench({targetTorque, targetForce_});
-  DampingTask::update();
+  DampingTask::update(solver);
 }
 
 void CoPTask::addToLogger(mc_rtc::Logger & logger)

@@ -104,7 +104,7 @@ void PostureTask::removeFromSolver(mc_solver::QPSolver & solver)
   }
 }
 
-void PostureTask::update()
+void PostureTask::update(mc_solver::QPSolver &)
 {
   speed_ = (pt_.eval() - eval_) / dt_;
   eval_ = pt_.eval();

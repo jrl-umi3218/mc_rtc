@@ -34,7 +34,7 @@ AdmittanceTask::AdmittanceTask(const std::string & surfaceName,
   reset();
 }
 
-void AdmittanceTask::update()
+void AdmittanceTask::update(mc_solver::QPSolver &)
 {
   // Compute wrench error
   wrenchError_ = measuredWrench() - targetWrench_;

@@ -26,7 +26,7 @@ LookAtTFTask::LookAtTFTask(const std::string & bodyName,
   name_ = "look_at_TF_" + robot.name() + "_" + bodyName + "_" + targetFrame;
 }
 
-void LookAtTFTask::update()
+void LookAtTFTask::update(mc_solver::QPSolver &)
 {
   geometry_msgs::TransformStamped transformStamped;
   try

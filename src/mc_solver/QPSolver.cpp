@@ -287,7 +287,7 @@ bool QPSolver::runOpenLoop()
 {
   for(auto & t : metaTasks_)
   {
-    t->update();
+    t->update(*this);
   }
   if(solver.solveNoMbcUpdate(robots_p->mbs(), robots_p->mbcs()))
   {
@@ -361,7 +361,7 @@ bool QPSolver::runJointsFeedback(bool wVelocity)
   }
   for(auto & t : metaTasks_)
   {
-    t->update();
+    t->update(*this);
   }
   if(solver.solveNoMbcUpdate(robots_p->mbs(), robots_p->mbcs()))
   {
@@ -399,7 +399,7 @@ bool QPSolver::runClosedLoop(std::shared_ptr<mc_rbdyn::Robots> real_robots)
   // COMPUTE QP on estimated robot
   for(auto & t : metaTasks_)
   {
-    t->update();
+    t->update(*this);
   }
   bool success = solver.solveNoMbcUpdate(robots().mbs(), robots().mbcs());
   solver.updateMbc(robot().mbc(), static_cast<int>(robots().robotIndex()));

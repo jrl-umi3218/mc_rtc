@@ -171,7 +171,7 @@ private:
   Eigen::Vector2d targetCoP_ = Eigen::Vector2d::Zero();
   Eigen::Vector3d targetForce_ = Eigen::Vector3d::Zero();
 
-  void update() override;
+  void update(mc_solver::QPSolver &) override;
 
   using AdmittanceTask::targetWrench;
   using AdmittanceTask::targetWrenchW;

@@ -27,7 +27,7 @@ LookAtSurfaceTask::LookAtSurfaceTask(const mc_rbdyn::Robots & robots,
   name_ = "look_at_surface_" + robot.name() + "_" + bodyName + "_" + surfaceName;
 }
 
-void LookAtSurfaceTask::update()
+void LookAtSurfaceTask::update(mc_solver::QPSolver &)
 {
   auto & robot = robots.robot(sRobotIndex);
   LookAtTask::target((offset_ * robot.surfacePose(sName)).translation());

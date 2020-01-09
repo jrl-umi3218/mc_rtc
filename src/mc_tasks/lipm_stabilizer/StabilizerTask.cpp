@@ -205,19 +205,19 @@ void StabilizerTask::removeFromSolver(mc_solver::QPSolver & solver)
   }
 }
 
-void StabilizerTask::update()
+void StabilizerTask::update(mc_solver::QPSolver & solver)
 {
   updateState(realRobots_.robot().com(), realRobots_.robot().comVelocity());
 
   // Run stabilizer
   run();
 
-  MetaTask::update(*comTask);
-  MetaTask::update(*pelvisTask);
-  MetaTask::update(*torsoTask);
+  MetaTask::update(*comTask, solver);
+  MetaTask::update(*pelvisTask, solver);
+  MetaTask::update(*torsoTask, solver);
   for(const auto footTask : contactTasks)
   {
-    MetaTask::update(*footTask);
+    MetaTask::update(*footTask, solver);
   }
 
   t_ += dt_;

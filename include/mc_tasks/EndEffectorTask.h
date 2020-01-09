@@ -117,7 +117,7 @@ protected:
 
   virtual void addToSolver(mc_solver::QPSolver & solver) override;
 
-  virtual void update() override;
+  void update(mc_solver::QPSolver &) override;
 
   virtual void addToLogger(mc_rtc::Logger & logger) override;
   virtual void removeFromLogger(mc_rtc::Logger & logger) override;

@@ -61,10 +61,10 @@ void EndEffectorTask::addToSolver(mc_solver::QPSolver & solver)
   MetaTask::addToSolver(*orientationTask, solver);
 }
 
-void EndEffectorTask::update()
+void EndEffectorTask::update(mc_solver::QPSolver & solver)
 {
-  MetaTask::update(*positionTask);
-  MetaTask::update(*orientationTask);
+  MetaTask::update(*positionTask, solver);
+  MetaTask::update(*orientationTask, solver);
 }
 
 void EndEffectorTask::add_ef_pose(const sva::PTransformd & dtr)

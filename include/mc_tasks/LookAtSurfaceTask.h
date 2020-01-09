@@ -40,7 +40,7 @@ public:
                     double weight = 200);
 
   /*! \brief Update the gaze target from TF position */
-  void update() override;
+  void update(mc_solver::QPSolver &) override;
 
   /*! \brief Access offset relative to the surface */
   const sva::PTransformd & offset() const;

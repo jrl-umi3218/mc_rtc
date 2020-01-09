@@ -62,7 +62,7 @@ public:
               double weight = 1000.0);
 
 protected:
-  void update() override;
+  void update(mc_solver::QPSolver &) override;
 };
 
 } // namespace force

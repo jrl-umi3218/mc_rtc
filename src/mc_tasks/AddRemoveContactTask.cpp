@@ -117,7 +117,7 @@ void AddRemoveContactTask::removeFromSolver(mc_solver::QPSolver & solver)
   constSpeedConstr->removeBoundedSpeed(solver, bodyId);
 }
 
-void AddRemoveContactTask::update()
+void AddRemoveContactTask::update(mc_solver::QPSolver &)
 {
   linVelTaskPid->error(velError());
   linVelTaskPid->weight(std::min(linVelTaskPid->weight() + 0.5, targetVelWeight));

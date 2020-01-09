@@ -256,7 +256,7 @@ private:
 
   void removeFromSolver(mc_solver::QPSolver & solver) override;
 
-  void update() override;
+  void update(mc_solver::QPSolver &) override;
 };
 
 } // namespace force

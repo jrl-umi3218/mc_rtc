@@ -217,7 +217,7 @@ protected:
   sva::MotionVecd feedforwardVelB_ = sva::MotionVecd(Eigen::Vector6d::Zero());
   sva::MotionVecd refVelB_ = sva::MotionVecd(Eigen::Vector6d::Zero());
 
-  void update() override;
+  void update(mc_solver::QPSolver &) override;
 
   /** Add support for the following criterias:
    *

@@ -178,7 +178,7 @@ protected:
 
   /*! \brief Update trajectory target
    */
-  void update() override;
+  void update(mc_solver::QPSolver &) override;
 
 protected:
   unsigned int rIndex_;

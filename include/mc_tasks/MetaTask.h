@@ -173,13 +173,14 @@ protected:
    * This function (usually) has to be called at every iteration of the solver
    * once it has been added. It should update the state of the task.
    *
+   * \param solver Solver in which the task is inserted
    */
-  virtual void update() = 0;
+  virtual void update(mc_solver::QPSolver & solver) = 0;
 
   /*! Helper function when using another MetaTask inside a MetaTask */
-  static inline void update(MetaTask & t)
+  static inline void update(MetaTask & t, mc_solver::QPSolver & solver)
   {
-    t.update();
+    t.update(solver);
   }
 
   /** Add entries to the logger

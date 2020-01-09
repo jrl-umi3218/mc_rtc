@@ -27,7 +27,7 @@ DampingTask::DampingTask(const std::string & surfaceName,
   reset();
 }
 
-void DampingTask::update()
+void DampingTask::update(mc_solver::QPSolver &)
 {
   wrenchError_ = measuredWrench() - targetWrench_;
 

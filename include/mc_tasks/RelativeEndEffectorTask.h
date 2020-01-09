@@ -71,7 +71,7 @@ protected:
 private:
   unsigned int relBodyIdx;
 
-  virtual void update() override;
+  void update(mc_solver::QPSolver &) override;
 };
 
 } // namespace mc_tasks
