@@ -167,8 +167,15 @@ public:
    * contact's dofs along the x and y rotations and z translation need to be
    * free.
    */
-  void setContacts(mc_solver::QPSolver & solver,
-                   const std::vector<std::pair<ContactState, internal::Contact>> & contacts);
+  void setContacts(const std::vector<std::pair<ContactState, internal::Contact>> & contacts);
+
+  /**
+   * @brief Helper to set contacts with a provided target pose
+   *
+   * @param contacts vectors of contacts defined by their ContactState and a
+   * desired pose
+   */
+  void setContacts(const std::vector<std::pair<ContactState, sva::PTransformd>> & contacts);
 
   /** Helper to set contacts from the current surface pose
    *
@@ -177,7 +184,7 @@ public:
    *
    * \see void setContacts(mc_solver::QPSolver &, const std::vector<std::pair<ContactState, sva::PTransformd>> &);
    */
-  void setContacts(mc_solver::QPSolver & solver, const std::vector<ContactState> & contacts);
+  void setContacts(const std::vector<ContactState> & contacts);
 
   /**
    * @brief Projected pose of the ankle frame in the contact frame.

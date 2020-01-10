@@ -19,4 +19,3 @@ set_target_properties(${CONTROLLER_NAME}_controller PROPERTIES OUTPUT_NAME "${CO
   RUNTIME_OUTPUT_DIRECTORY "lib/$<CONFIGURATION>"
 )
 target_link_libraries(${CONTROLLER_NAME}_controller PUBLIC ${CONTROLLER_NAME})
-

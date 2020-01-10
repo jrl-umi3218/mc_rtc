@@ -699,7 +699,7 @@ void StabilizerTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurat
       contactsToAdd.push_back({s, {robot(), footTasks[s]->surface(), contactPose, c_.friction}});
     }
   }
-  this->setContacts(solver, contactsToAdd);
+  this->setContacts(contactsToAdd);
 
   // Target robot com by default
   Eigen::Vector3d comTarget = robot().com();
@@ -734,7 +734,7 @@ void StabilizerTask::checkGains()
   clampInPlaceAndWarn(c_.dfzAdmittance, 0., MAX_DFZ_ADMITTANCE, "DFz admittance");
 }
 
-void StabilizerTask::setContacts(mc_solver::QPSolver & solver, const std::vector<ContactState> & contacts)
+void StabilizerTask::setContacts(const std::vector<ContactState> & contacts)
 {
   std::vector<std::pair<ContactState, Contact>> addContacts;
   for(const auto contact : contacts)
@@ -743,13 +743,21 @@ void StabilizerTask::setContacts(mc_solver::QPSolver & solver, const std::vector
                            {robot(), footTasks[contact]->surface(),
                             realRobot().surfacePose(footTasks[contact]->surface()), c_.friction}});
   }
-  setContacts(solver, addContacts);
+  setContacts(addContacts);
 }
 
-void StabilizerTask::setContacts(mc_solver::QPSolver & solver,
-                                 const std::vector<std::pair<ContactState, Contact>> & contacts)
+void StabilizerTask::setContacts(const std::vector<std::pair<ContactState, sva::PTransformd>> & contacts)
 {
-  LOG_INFO("StabilizerTask::setContacts2");
+  std::vector<std::pair<ContactState, Contact>> addContacts;
+  for(const auto contact : contacts)
+  {
+    addContacts.push_back({contact.first, {robot(), footTasks[contact.first]->surface(), contact.second, c_.friction}});
+  }
+  setContacts(addContacts);
+}
+
+void StabilizerTask::setContacts(const std::vector<std::pair<ContactState, Contact>> & contacts)
+{
   if(contacts.empty())
   {
     LOG_ERROR_AND_THROW(std::runtime_error, "[StabilizerTask] Cannot set contacts from an empty list, the stabilizer "

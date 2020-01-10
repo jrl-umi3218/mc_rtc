@@ -186,7 +186,7 @@ t->reset();
 // Apply stabilizer configuration (optional, if not provided the default configuration from the RobotModule will be used)
 t->configure(stabiConf);
 // Set contacts (optional, the stabilizer will be configured in double support using the current foot pose as target for each contact by default)
-t->setContacts(solver, {ContactState::Left, ContactState::Right});
+t->setContacts({ContactState::Left, ContactState::Right});
 ```
 
 Additionally, you may load additional configuration settings and targets from an `mc_rtc::Configuration` object:
