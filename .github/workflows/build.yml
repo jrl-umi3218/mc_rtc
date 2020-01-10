@@ -109,32 +109,21 @@ jobs:
             ref: v4.7.0
             options: -DBUILD_PYTHON_INTERFACE:BOOL=OFF
           - path: jrl-umi3218/Eigen3ToPython
-            windows-options: -DPYTHON_BINDING:BOOL=OFF
           - path: jrl-umi3218/SpaceVecAlg
-            windows-options: -DPYTHON_BINDING:BOOL=OFF
           - path: jrl-umi3218/sch-core
-            windows-options: -DPYTHON_BINDING:BOOL=OFF
           - path: jrl-umi3218/eigen-qld
-            windows-options: -DPYTHON_BINDING:BOOL=OFF
           - path: jrl-umi3218/sch-core-python
-            windows-options: -DPYTHON_BINDING:BOOL=OFF
           - path: jrl-umi3218/RBDyn
-            windows-options: -DPYTHON_BINDING:BOOL=OFF
           - path: jrl-umi3218/Tasks
-            windows-options: -DPYTHON_BINDING:BOOL=OFF
           - path: jrl-umi3218/mc_rbdyn_urdf
-            windows-options: -DPYTHON_BINDING:BOOL=OFF
           - path: jrl-umi3218/mc_rtc_data
           - path: jrl-umi3218/eigen-quadprog
-            windows-options: -DPYTHON_BINDING:BOOL=OFF
-    # FIXME We disable Python bindings on Windows because it cannot find Python.h, should investigate the CI environment
     - name: Build and test
       if: matrix.build-type != 'script'
       uses: jrl-umi3218/github-actions/build-cmake-project@master
       with:
         compiler: ${{ matrix.compiler }}
         build-type: ${{ matrix.build-type }}
-        windows-options: -DPYTHON_BINDING:BOOL=OFF
     - name: Build with ROS
       if: (matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04') && matrix.build-type != 'script'
       run: |
