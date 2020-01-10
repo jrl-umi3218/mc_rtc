@@ -79,7 +79,7 @@ protected:
 protected:
   std::shared_ptr<mc_tasks::lipm_stabilizer::StabilizerTask> stabilizerTask_ = nullptr;
   mc_rtc::Configuration config_; /**< Full state configuration */
-  double hasCompletion_ = false; /**< If the latest definition of the state configuration has an empty "completion"
+  bool hasCompletion_ = false; /**< If the latest definition of the state configuration has an empty "completion"
                                    element, no completion rule will be used */
 
   Eigen::Vector3d dcmThreshold_ = Eigen::Vector3d{0.01, 0.01, 0.01}; /**< Completion criteria threshold */
