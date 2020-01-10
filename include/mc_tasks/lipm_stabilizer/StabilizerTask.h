@@ -313,7 +313,7 @@ private:
    * This function does not immediately add contact tasks to the solver, this
    * will be done by update() when the task is added to the solver.
    */
-  void addContact(mc_solver::QPSolver & solver, ContactState contactState, const internal::Contact & contact);
+  void addContact(ContactState contactState, const internal::Contact & contact);
 
   /** Check that all gains are within boundaries. */
   void checkGains();
@@ -410,9 +410,24 @@ protected:
   }
 
 protected:
-  std::unordered_map<ContactState, internal::Contact> contacts_;
+  /**
+   * @brief Workaround a C++11 standard bug: no specialization of the hash
+   * functor exists for enum types.
+   * Fixed in GCC 6.1 and clang's libc++ in 2013
+   *
+   * See http://www.open-std.org/jtc1/sc22/wg21/docs/lwg-defects.html#2148
+   */
+  struct EnumClassHash
+  {
+    template<typename T>
+    std::size_t operator()(T t) const
+    {
+      return static_cast<std::size_t>(t);
+    }
+  };
+  std::unordered_map<ContactState, internal::Contact, EnumClassHash> contacts_;
   std::vector<ContactState> addContacts_; /**< Contacts to add to the QPSolver when the task is inserted */
-  std::unordered_map<ContactState, std::shared_ptr<mc_tasks::force::CoPTask>> footTasks;
+  std::unordered_map<ContactState, std::shared_ptr<mc_tasks::force::CoPTask>, EnumClassHash> footTasks;
   std::vector<std::shared_ptr<mc_tasks::force::CoPTask>> contactTasks;
 
   std::vector<std::vector<Eigen::Vector3d>> supportPolygons_; /**< For GUI display */

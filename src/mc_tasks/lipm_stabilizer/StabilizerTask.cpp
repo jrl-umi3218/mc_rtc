@@ -763,11 +763,11 @@ void StabilizerTask::setContacts(mc_solver::QPSolver & solver,
 
   for(const auto & contact : contacts)
   {
-    addContact(solver, contact.first, contact.second);
+    addContact(contact.first, contact.second);
   }
 }
 
-void StabilizerTask::addContact(mc_solver::QPSolver & solver, ContactState contactState, const Contact & contact)
+void StabilizerTask::addContact(ContactState contactState, const Contact & contact)
 {
   auto footTask = footTasks[contactState];
   // Use real robot's surface pose as contact
