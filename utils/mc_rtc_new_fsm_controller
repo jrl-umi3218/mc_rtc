@@ -9,7 +9,10 @@ import argparse
 import imp
 import os
 
-mod = imp.load_source('mc_rtc_new_controller', os.path.dirname(__file__) + '/mc_rtc_new_controller')
+try:
+  mod = imp.load_source('mc_rtc_new_controller', os.path.dirname(__file__) + '/mc_rtc_new_controller')
+except FileNotFoundError:
+  mod = imp.load_source('mc_rtc_new_controller', os.path.dirname(__file__) + '/mc_rtc_new_controller.py')
 new_controller = mod.new_controller
 
 def new_fsm_controller(project_dir, controller_class_name, controller_name):
@@ -93,11 +96,19 @@ set(controller_HDR
 )
 
 add_library(${{PROJECT_NAME}} SHARED ${{controller_SRC}} ${{controller_HDR}})
+set_target_properties(${{PROJECT_NAME}} PROPERTIES COMPILE_FLAGS "-D{controller_class_name}_EXPORTS")
 target_link_libraries(${{PROJECT_NAME}} PUBLIC mc_rtc::mc_control_fsm)
-install(TARGETS ${{PROJECT_NAME}} DESTINATION "${{MC_RTC_LIBDIR}}")
+install(TARGETS ${{PROJECT_NAME}}
+  ARCHIVE DESTINATION "${{MC_RTC_LIBDIR}}"
+  LIBRARY DESTINATION "${{MC_RTC_LIBDIR}}"
+  RUNTIME DESTINATION bin)
 
 add_controller(${{PROJECT_NAME}}_controller lib.cpp "")
 set_target_properties(${{PROJECT_NAME}}_controller PROPERTIES OUTPUT_NAME "${{PROJECT_NAME}}")
+set_target_properties(${{PROJECT_NAME}}_controller PROPERTIES
+  ARCHIVE_OUTPUT_DIRECTORY lib/$<CONFIGURATION>
+  LIBRARY_OUTPUT_DIRECTORY lib/$<CONFIGURATION>
+  RUNTIME_OUTPUT_DIRECTORY lib/$<CONFIGURATION>)
 target_link_libraries(${{PROJECT_NAME}}_controller PUBLIC ${{PROJECT_NAME}})
 """.format(controller_class_name = controller_class_name))
     with open(project_dir + '/src/lib.cpp', 'w') as fd:
@@ -161,7 +172,7 @@ void {controller_name}_Initial::teardown(mc_control::fsm::Controller & ctl_)
 
 EXPORT_SINGLE_STATE("{controller_name}_Initial", {controller_name}_Initial)
 """.format(controller_name = controller_name, controller_class_name = controller_class_name))
-    repo.index.add([(project_dir + f).format(controller_name) for f in ['/etc/{}.in.yaml', '/src/CMakeLists.txt', '/src/lib.cpp', '/src/states/data/states.json', '/src/states/CMakeLists.txt', '/src/states/{}_Initial.h', '/src/states/{}_Initial.cpp']])
+    repo.index.add([f.format(controller_name) for f in ['etc/{}.in.yaml', 'src/CMakeLists.txt', 'src/lib.cpp', 'src/states/data/states.json', 'src/states/CMakeLists.txt', 'src/states/{}_Initial.h', 'src/states/{}_Initial.cpp']])
     return repo
 
 if __name__ == "__main__":
