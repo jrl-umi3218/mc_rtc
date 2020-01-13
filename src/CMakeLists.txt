@@ -39,11 +39,12 @@ endmacro()
 configure_file(mc_rtc/loader.in.cpp "${CMAKE_CURRENT_BINARY_DIR}/mc_rtc/loader.cpp")
 
 set(VERSION_HEADER "${PROJECT_BINARY_DIR}/include/mc_rtc/version.h")
-add_custom_command(OUTPUT ALWAYS_RUN ${VERSION_HEADER}
+add_custom_command(OUTPUT ${VERSION_HEADER}
   COMMAND ${CMAKE_COMMAND} -DPROJECT_SOURCE_DIR="${PROJECT_SOURCE_DIR}"
                            -DPROJECT_BINARY_DIR="${PROJECT_BINARY_DIR}"
                            -DPROJECT_VERSION="${PROJECT_VERSION}"
                            -P "${PROJECT_SOURCE_DIR}/CMakeModules/MakeVersionHeader.cmake"
+  DEPENDS ${MC_RTC_ALL_FILES}
 )
 
 set(mc_rtc_loader_SRC

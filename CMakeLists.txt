@@ -119,6 +119,8 @@ if(MSVC)
   set(CMAKE_MSVCIDE_RUN_PATH "\$(SolutionDir)/3rd-party/ltdl/\$(Configuration);\$(SolutionDir)/src/\$(Configuration);\$(SolutionDir)/src/mc_control/fsm/\$(Configuration)")
 endif(MSVC)
 
+include(CMakeModules/ListAllFiles.cmake)
+
 add_subdirectory(CMakeModules)
 add_subdirectory(doc)
 add_subdirectory(src)
