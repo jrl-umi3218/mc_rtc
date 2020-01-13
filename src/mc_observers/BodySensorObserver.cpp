@@ -4,7 +4,9 @@
 
 #include <mc_observers/BodySensorObserver.h>
 
-#include <mc_control/mc_controller.h>
+#include <mc_observers/ObserverMacros.h>
+
+#include <mc_control/MCController.h>
 
 #include <mc_rtc/gui/Arrow.h>
 

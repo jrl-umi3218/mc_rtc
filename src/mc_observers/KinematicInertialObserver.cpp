@@ -3,8 +3,9 @@
  */
 
 #include <mc_observers/KinematicInertialObserver.h>
+#include <mc_observers/ObserverMacros.h>
 
-#include <mc_control/mc_controller.h>
+#include <mc_control/MCController.h>
 
 #include <mc_rtc/gui/Arrow.h>
 

@@ -4,8 +4,8 @@
 
 #pragma once
 
+#include <mc_control/MCController.h>
 #include <mc_control/api.h>
-#include <mc_control/mc_controller.h>
 
 namespace mc_control
 {
