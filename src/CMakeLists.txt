@@ -7,7 +7,6 @@ set(MC_RTC_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../include")
 set(VERSION_SCRIPT_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/version-script.lds")
 macro(install_mc_rtc_lib MC_LIB)
   set_target_properties(${MC_LIB} PROPERTIES FOLDER mc_libraries/${MC_LIB})
-  target_compile_definitions(${MC_LIB} PRIVATE MC_RTC_NO_INCLUDE_VERSION)
   target_include_directories(${MC_LIB} INTERFACE $<INSTALL_INTERFACE:include> $<BUILD_INTERFACE:${MC_RTC_INCLUDE_DIR}>)
   if(WIN32)
     target_compile_definitions(${MC_LIB} PUBLIC "-DNOMINMAX"  "-D_ENABLE_EXTENDED_ALIGNED_STORAGE")
@@ -128,6 +127,7 @@ set(mc_rbdyn_HDR
 ../include/mc_rbdyn/Robots.h
 ../include/mc_rbdyn/RobotLoader.h
 ../include/mc_rbdyn/RobotModule.h
+../include/mc_rbdyn/RobotModuleMacros.h
 ../include/mc_rbdyn/SCHAddon.h
 ../include/mc_rbdyn/Surface.h
 ../include/mc_rbdyn/rpy_utils.h
@@ -337,6 +337,7 @@ set(mc_observers_HDR
 ../include/mc_observers/api.h
 ../include/mc_observers/ObserverLoader.h
 ../include/mc_observers/Observer.h
+../include/mc_observers/ObserverMacros.h
 ../include/mc_observers/LowPassVelocityFilter.h
 ../include/mc_observers/LowPassFiniteDifferencesVelocityFilter.h
 )
@@ -351,7 +352,7 @@ mc_control/CompletionCriteria.cpp
 mc_control/ControllerServer.cpp
 mc_control/SimulationContactPair.cpp
 mc_control/generic_gripper.cpp
-mc_control/mc_controller.cpp
+mc_control/MCController.cpp
 mc_control/mc_python_controller.cpp
 mc_control/mc_global_controller.cpp
 mc_control/mc_global_controller_configuration.cpp
@@ -365,8 +366,10 @@ set(mc_control_HDR
 ../include/mc_control/Configuration.h
 ../include/mc_control/ControllerServer.h
 ../include/mc_control/GlobalPlugin.h
+../include/mc_control/GlobalPluginMacros.h
 ../include/mc_control/GlobalPlugin_fwd.h
 ../include/mc_control/generic_gripper.h
+../include/mc_control/MCController.h
 ../include/mc_control/mc_controller.h
 ../include/mc_control/mc_python_controller.h
 ../include/mc_control/SimulationContactPair.h

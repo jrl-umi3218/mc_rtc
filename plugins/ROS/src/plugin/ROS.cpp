@@ -2,6 +2,8 @@
 
 #include <mc_rtc/ros.h>
 
+#include <mc_control/GlobalPluginMacros.h>
+
 namespace mc_plugin
 {
 

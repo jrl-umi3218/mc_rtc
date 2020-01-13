@@ -2,8 +2,9 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <mc_control/mc_controller.h>
+#include <mc_control/MCController.h>
 #include <mc_observers/EncoderObserver.h>
+#include <mc_observers/ObserverMacros.h>
 
 namespace mc_observers
 {

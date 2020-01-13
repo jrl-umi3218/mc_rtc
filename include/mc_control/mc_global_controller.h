@@ -6,8 +6,8 @@
 
 #include <mc_control/ControllerServer.h>
 #include <mc_control/GlobalPlugin_fwd.h>
+#include <mc_control/MCController.h>
 #include <mc_control/api.h>
-#include <mc_control/mc_controller.h>
 
 #include <mc_rbdyn/RobotModule.h>
 

@@ -6,8 +6,9 @@
  */
 
 #include <mc_observers/KinematicInertialPoseObserver.h>
+#include <mc_observers/ObserverMacros.h>
 
-#include <mc_control/mc_controller.h>
+#include <mc_control/MCController.h>
 #include <mc_rbdyn/rpy_utils.h>
 
 namespace mc_observers

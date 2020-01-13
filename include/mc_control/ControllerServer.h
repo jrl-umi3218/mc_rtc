@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <mc_control/mc_controller.h>
+#include <mc_control/MCController.h>
 
 #include <mc_rtc/gui/StateBuilder.h>
 
