@@ -64,7 +64,6 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   /**< Minimum force for valid ZMP computation (throws otherwise) */
   static constexpr double MIN_NET_TOTAL_FORCE_ZMP = 1.;
 
-public:
   /**
    * @brief Creates a stabilizer meta task
    *
@@ -94,6 +93,11 @@ public:
    *
    * You can configure the stabilizer parameters (DCM tacking gains, task gains, etc) by calling
    * configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & config)
+   *
+   * \note If you wish to reset the stabilizer from it's current configuration,
+   * you can do so by storing its current configuration as accessed by config()
+   * or commitedConfig() and set it explitely after calling reset by calling
+   * configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration &);
    */
   void reset() override;
 
@@ -139,8 +143,21 @@ public:
 
   /**
    * @brief Get current stabilizer's configuration (including changes from GUI)
+   *
+   * \see commitedConfig()
    */
   const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & config() const;
+
+  /**
+   * @brief Get last commited configuration (not including latest changes from
+   * the GUI)
+   *
+   * Commited configuration is corresponds to the latest one set by calling configure(const
+   * mc_rbdyn::lipm_stabilizer::StabilizerConfiguration &)
+   *
+   * \see config()
+   */
+  const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & commitedConfig() const;
 
   /**
    * Reset stabilizer configuration from last configuration set by configure()
@@ -471,10 +488,9 @@ protected:
   Eigen::Vector3d measuredCoMd_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d measuredZMP_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d measuredDCM_ = Eigen::Vector3d::Zero();
-  sva::ForceVecd measuredNetWrench_;
+  sva::ForceVecd measuredNetWrench_ = sva::ForceVecd::Zero();
   Eigen::Vector3d zmpError_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d distribZMP_ = Eigen::Vector3d::Zero();
-  Eigen::Vector4d polePlacement_ = {-10., -5., -1., 10.}; /**< Pole placement with ZMP delay (Morisawa et al., 2014) */
   mc_filter::ExponentialMovingAverage<Eigen::Vector3d> dcmIntegrator_;
   mc_filter::StationaryOffset<Eigen::Vector3d> dcmDerivator_;
   bool inTheAir_ = false; /**< Is the robot in the air? */

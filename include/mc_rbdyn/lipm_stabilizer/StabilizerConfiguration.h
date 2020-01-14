@@ -91,8 +91,9 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
   double dcmPropGain = 1.; /**< Proportional gain on DCM error */
   double dcmIntegralGain = 5.; /**< Integral gain on DCM error */
   double dcmDerivGain = 0.; /**< Derivative gain on DCM error */
-  double dcmIntegratorTimeConstant = 15.;
-  double dcmDerivatorTimeConstant = 1.;
+  double dcmIntegratorTimeConstant =
+      15.; /**< Time window for exponential moving average filter of the DCM integrator */
+  double dcmDerivatorTimeConstant = 1.; /**< Time window for the stationary offset filter of the DCM derivator */
 
   std::vector<std::string> comActiveJoints; /**< Joints used by CoM IK task */
   Eigen::Vector3d comStiffness = {1000., 1000., 100.}; /**< Stiffness of CoM IK task */
@@ -106,8 +107,9 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
   double pelvisStiffness = 10; /**< Stiffness of the pelvis task. */
   double pelvisWeight = 100; /**< Weight of the torso task. Should be much lower than CoM and Contacts */
 
-  sva::MotionVecd contactDamping{{300, 300, 300}, {300, 300, 300}};
-  sva::MotionVecd contactStiffness = {{1, 1, 1}, {1, 1, 1}};
+  sva::MotionVecd contactDamping{{300, 300, 300},
+                                 {300, 300, 300}}; /**< Damping coefficients of the contacts CoP tasks */
+  sva::MotionVecd contactStiffness = {{1, 1, 1}, {1, 1, 1}}; /**< Stiffness coefficients of the contacts CoP tasks */
   double contactWeight = 100000.; /**< Weight of contact IK tasks */
 
   double vdcFrequency = 1.; /**< Frequency used in double-support vertical drift compensation */

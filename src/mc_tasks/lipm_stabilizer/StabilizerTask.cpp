@@ -161,24 +161,24 @@ void StabilizerTask::resetJointsSelector(mc_solver::QPSolver & /* solver */)
 
 Eigen::VectorXd StabilizerTask::eval() const
 {
-  Eigen::VectorXd res(3 + 3 * footTasks.size());
+  Eigen::VectorXd res(3 + 3 * contactTasks.size());
   res.head(3) = comTask->eval();
   int i = 0;
-  for(const auto & footTask : footTasks)
+  for(const auto & task : contactTasks)
   {
-    res.segment(3 + 3 * i++, 3) = footTask.second->eval();
+    res.segment(3 + 3 * i++, 3) = task->eval();
   }
   return res;
 }
 
 Eigen::VectorXd StabilizerTask::speed() const
 {
-  Eigen::VectorXd res(3 + 3 * footTasks.size());
+  Eigen::VectorXd res(3 + 3 * contactTasks.size());
   res.head(3) = comTask->eval();
   int i = 0;
-  for(const auto & footTask : footTasks)
+  for(const auto & task : contactTasks)
   {
-    res.segment(3 + 3 * i++, 3) = footTask.second->speed();
+    res.segment(3 + 3 * i++, 3) = task->speed();
   }
   return res;
 }
@@ -250,7 +250,7 @@ void StabilizerTask::update(mc_solver::QPSolver & solver)
 void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
 {
   // Globbal log entries added to other categories
-  logger.addLogEntry("perf_Stabilizer", [this]() { return runTime_; });
+  logger.addLogEntry("perf_" + name_, [this]() { return runTime_; });
 
   logger.addLogEntry(name_ + "_error_dcm_average", [this]() { return dcmAverageError_; });
   logger.addLogEntry(name_ + "_error_dcm_pos", [this]() { return dcmError_; });
@@ -430,29 +430,6 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                             }));
   gui.addElement({"Tasks", name_, "Advanced"}, Button("Disable stabilizer", [this]() { disable(); }),
                  Button("Reconfigure", [this]() { reconfigure(); }),
-                 ArrayInput("DCM pole placement", {"Pole1", "Pole2", "Pole3", "Lag [Hz]"},
-                            [this]() -> Eigen::VectorXd { return polePlacement_; },
-                            [this](const Eigen::VectorXd & polePlacement) {
-                              double alpha = clamp(polePlacement(0), -20., -0.1);
-                              double beta = clamp(polePlacement(1), -20., -0.1);
-                              double gamma = clamp(polePlacement(2), -20., -0.1);
-                              double lagFreq = clamp(polePlacement(3), 1., 200.);
-                              polePlacement_ = {alpha, beta, gamma, lagFreq};
-
-                              double denom = omega_ * lagFreq;
-                              double T_integ = dcmIntegrator_.timeConstant();
-
-                              // Gains K_z for the ZMP feedback (Delta ZMP = K_z * Delta DCM)
-                              double zmpPropGain =
-                                  (alpha * beta + beta * gamma + gamma * alpha + omega_ * lagFreq) / denom;
-                              double zmpIntegralGain = -(alpha * beta * gamma) / denom;
-                              double zmpDerivGain = -(alpha + beta + gamma + lagFreq - omega_) / denom;
-
-                              // Our gains K are for closed-loop DCM (Delta dot(DCM) = -K * Delta DCM)
-                              c_.dcmPropGain = omega_ * (zmpPropGain - 1.);
-                              c_.dcmIntegralGain = omega_ * T_integ * zmpIntegralGain; // our integrator is an EMA
-                              c_.dcmDerivGain = omega_ * zmpDerivGain;
-                            }),
                  ArrayInput("Vertical drift compensation", {"frequency", "stiffness"},
                             [this]() -> Eigen::Vector2d {
                               return {c_.vdcFrequency, c_.vdcStiffness};
@@ -722,6 +699,11 @@ void StabilizerTask::load(mc_solver::QPSolver &, const mc_rtc::Configuration & c
 const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & StabilizerTask::config() const
 {
   return c_;
+}
+
+const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & StabilizerTask::commitedConfig() const
+{
+  return defaultConfig_;
 }
 
 void StabilizerTask::checkGains()

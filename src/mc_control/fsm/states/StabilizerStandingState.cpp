@@ -86,7 +86,7 @@ void StabilizerStandingState::start(Controller & ctl)
   if(optionalGUI_ && stabilizerTask_->inDoubleSupport())
   {
     ctl.gui()->addElement(
-        {"FSM", "Standing", "Move"}, mc_rtc::gui::ElementsStacking::Horizontal,
+        {"FSM", name(), "Move"}, mc_rtc::gui::ElementsStacking::Horizontal,
         mc_rtc::gui::Button(
             "Left foot", [this]() { targetCoP(stabilizerTask_->contactAnklePose(ContactState::Left).translation()); }),
         mc_rtc::gui::Button("Center",
@@ -99,7 +99,7 @@ void StabilizerStandingState::start(Controller & ctl)
           targetCoP(stabilizerTask_->contactAnklePose(ContactState::Right).translation());
         }));
     ctl.gui()->addElement(
-        {"FSM", "Standing", "Move"},
+        {"FSM", name(), "Move"},
         mc_rtc::gui::ArrayInput("CoM Target", [this]() -> const Eigen::Vector3d & { return comTarget_; },
                                 [this](const Eigen::Vector3d & com) { targetCoM(com); }),
         mc_rtc::gui::ArrayInput("Move CoM", []() -> Eigen::Vector3d { return Eigen::Vector3d::Zero(); },
@@ -107,7 +107,7 @@ void StabilizerStandingState::start(Controller & ctl)
   }
 
   ctl.gui()->addElement(
-      {"FSM", "Standing", "Gains"},
+      {"FSM", name(), "Gains"},
       mc_rtc::gui::NumberInput("CoM stiffness", [this]() { return K_; }, [this](const double & s) { K_ = s; }),
       mc_rtc::gui::NumberInput("CoM damping", [this]() { return D_; }, [this](const double & d) { D_ = d; }),
       mc_rtc::gui::NumberInput("CoM stiffness & damping", [this]() { return K_; },
@@ -185,7 +185,7 @@ bool StabilizerStandingState::run(Controller & ctl)
 void StabilizerStandingState::teardown(Controller & ctl)
 {
   ctl.solver().removeTask(stabilizerTask_);
-  ctl.gui()->removeCategory({"FSM", "Standing"});
+  ctl.gui()->removeCategory({"FSM", name()});
   ctl.logger().removeLogEntry(name() + "_stiffness");
   ctl.logger().removeLogEntry(name() + "_damping");
   ctl.logger().removeLogEntry(name() + "_targetCoM");
