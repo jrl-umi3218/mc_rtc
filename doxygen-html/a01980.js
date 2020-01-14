@@ -1,5 +1,5 @@
 var a01980 =
 [
-    [ "points", "a01980.html#a0b18450a98acf02d8b5b56b0c74e84a1", null ],
-    [ "qpcontact_ptr", "a01980.html#a18f4220244dc364488e15a5b6fc7bdf6", null ]
+    [ "load", "a01980.html#a27d2d736e80c235652f7576f9bd95e2a", null ],
+    [ "save", "a01980.html#a6081d5cb189f9b7439d8eced06fce954", null ]
 ];

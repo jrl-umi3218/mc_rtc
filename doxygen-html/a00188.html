@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>ArrayLabel.h File Reference</title>
+<title>Surface.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -72,37 +72,32 @@ $(document).ready(function(){initNavTree('a00188.html','');});
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">ArrayLabel.h File Reference</div>  </div>
+<div class="title">Surface.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a00221.html">mc_rtc/gui/Label.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a03516.html">mc_rbdyn/api.h</a>&gt;</code><br />
+<code>#include &lt;RBDyn/MultiBodyConfig.h&gt;</code><br />
+<code>#include &lt;SpaceVecAlg/SpaceVecAlg&gt;</code><br />
+<code>#include &lt;memory&gt;</code><br />
+<code>#include &lt;string&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02112.html">mc_rtc::gui::ArrayLabelImpl&lt; GetT &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">ArrayLabel should display data in an array form.  <a href="a02112.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02076.html">mc_rbdyn::Surface</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:a00636"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00636.html">mc_rtc</a></td></tr>
-<tr class="memdesc:a00636"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a02092.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00637.html">mc_rbdyn</a> objects. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00647"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00647.html">mc_rtc::gui</a></td></tr>
+<tr class="memitem:a00649"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00649.html">mc_rbdyn</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a308b0967f9f6dc43f0f27bcc7d1c2b69"><td class="memTemplParams" colspan="2">template&lt;typename GetT &gt; </td></tr>
-<tr class="memitem:a308b0967f9f6dc43f0f27bcc7d1c2b69"><td class="memTemplItemLeft" align="right" valign="top">ArrayLabelImpl&lt; GetT &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00647.html#a308b0967f9f6dc43f0f27bcc7d1c2b69">mc_rtc::gui::ArrayLabel</a> (const std::string &amp;name, GetT get_fn)</td></tr>
-<tr class="memdesc:a308b0967f9f6dc43f0f27bcc7d1c2b69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to build an <a class="el" href="a02112.html" title="ArrayLabel should display data in an array form. ">ArrayLabelImpl</a> (no labels)  <a href="a00647.html#a308b0967f9f6dc43f0f27bcc7d1c2b69">More...</a><br /></td></tr>
-<tr class="separator:a308b0967f9f6dc43f0f27bcc7d1c2b69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab51ab91bf57f9e53c1b5c69ab3d8bc61"><td class="memTemplParams" colspan="2">template&lt;typename GetT &gt; </td></tr>
-<tr class="memitem:ab51ab91bf57f9e53c1b5c69ab3d8bc61"><td class="memTemplItemLeft" align="right" valign="top">ArrayLabelImpl&lt; GetT &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00647.html#ab51ab91bf57f9e53c1b5c69ab3d8bc61">mc_rtc::gui::ArrayLabel</a> (const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;labels, GetT get_fn)</td></tr>
-<tr class="memdesc:ab51ab91bf57f9e53c1b5c69ab3d8bc61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to build an <a class="el" href="a02112.html" title="ArrayLabel should display data in an array form. ">ArrayLabelImpl</a> (with labels)  <a href="a00647.html#ab51ab91bf57f9e53c1b5c69ab3d8bc61">More...</a><br /></td></tr>
-<tr class="separator:ab51ab91bf57f9e53c1b5c69ab3d8bc61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a848cf0b2e8f6ca6f18ceba1769d9a426"><td class="memItemLeft" align="right" valign="top">typedef std::shared_ptr&lt; Surface &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00649.html#a848cf0b2e8f6ca6f18ceba1769d9a426">mc_rbdyn::SurfacePtr</a></td></tr>
+<tr class="separator:a848cf0b2e8f6ca6f18ceba1769d9a426"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -110,8 +105,8 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="dir_dda95c61bc807ada3674ae2fc67687f0.html">gui</a></li><li class="navelem"><a class="el" href="a00188.html">ArrayLabel.h</a></li>
-    <li class="footer">Generated on Mon Jan 6 2020 12:40:14 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_314ec80f2fc36a4630429f4d5408038e.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a00188.html">Surface.h</a></li>
+    <li class="footer">Generated on Tue Jan 14 2020 02:20:47 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

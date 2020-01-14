@@ -1,6 +1,8 @@
 var a02172 =
 [
-    [ "VoidCallbackElement", "a02172.html#a9d063c0de86c3ba0f038908d146ca298", null ],
-    [ "VoidCallbackElement", "a02172.html#a350d19023027682fb550a84099cd96da", null ],
-    [ "handleRequest", "a02172.html#ab8cda0e74e03f5e56ae5bd42bb7b9b41", null ]
+    [ "DataElement", "a02172.html#a65d486d790fd684f1fdd422a36a4b662", null ],
+    [ "DataElement", "a02172.html#a16c128617f3f6e4bc2257f811721e92d", null ],
+    [ "write", "a02172.html#a9f5405a5613389910551ed9e86e35b9b", null ],
+    [ "write_size", "a02172.html#af0401db3e91435848055af583ec602f4", null ],
+    [ "get_fn_", "a02172.html#a8a959ac2e5e7551b29b81b77034ea255", null ]
 ];

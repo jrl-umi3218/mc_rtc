@@ -1,5 +1,6 @@
 var a02376 =
 [
-    [ "name", "a02376.html#a67fbc08c9538e65ac214472f795e8dc9", null ],
-    [ "records", "a02376.html#abf3c8af81db34096910a6167aa54266c", null ]
+    [ "complete", "a02376.html#aecb02006f5f0cd5aeabf7965973d3542", null ],
+    [ "fn", "a02376.html#adf4719d80846e018c3de0290164048ac", null ],
+    [ "ret", "a02376.html#a0bd1edac4d08d70b609b18efb6942d44", null ]
 ];

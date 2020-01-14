@@ -1,6 +1,5 @@
 var a00188 =
 [
-    [ "ArrayLabelImpl", "a02112.html", "a02112" ],
-    [ "ArrayLabel", "a00188.html#a308b0967f9f6dc43f0f27bcc7d1c2b69", null ],
-    [ "ArrayLabel", "a00188.html#ab51ab91bf57f9e53c1b5c69ab3d8bc61", null ]
+    [ "Surface", "a02076.html", "a02076" ],
+    [ "SurfacePtr", "a00188.html#a848cf0b2e8f6ca6f18ceba1769d9a426", null ]
 ];

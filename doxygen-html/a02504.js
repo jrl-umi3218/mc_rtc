@@ -1,6 +1,6 @@
 var a02504 =
 [
-    [ "ContactWrenchMatrixToLambdaMatrix", "a02504.html#a023d5ba6b69792d96db4ca6e8fd20e2c", null ],
-    [ "transform", "a02504.html#a3024b20e8f098756d24cd2082469c055", null ],
-    [ "transform", "a02504.html#ae56a8607e4c339c9a345155ec613032d", null ]
+    [ "alphaDVec", "a02504.html#a006a571037b605b0b5c9e749fac3e06c", null ],
+    [ "alphaVec", "a02504.html#ab4e17120478e2a800aa790e32be96e84", null ],
+    [ "q", "a02504.html#a2266d5ca2aace35d45464180feda1768", null ]
 ];

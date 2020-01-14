@@ -1,11 +1,6 @@
 var a01988 =
 [
-    [ "CylindricalSurface", "a01988.html#ac3eef75ab4cf0a7808e37ce6bd60e171", null ],
-    [ "~CylindricalSurface", "a01988.html#a94041ce7602917987e5829eff07f5ad4", null ],
-    [ "computePoints", "a01988.html#a0c548d2b3f2f16066e260b9e0a89d56c", null ],
-    [ "copy", "a01988.html#af7ea1fd2bee8c3d0dacbae34d5242422", null ],
-    [ "radius", "a01988.html#abd86a4d9aef83ff0a5fd7a9540d81a8a", null ],
-    [ "type", "a01988.html#a221eebcca494033504b7898f95396b73", null ],
-    [ "width", "a01988.html#ad4b8a89811ebfc71a3793db69282626a", null ],
-    [ "width", "a01988.html#ae129c776f6d6bdc8b84151121747a46f", null ]
+    [ "QPContactPtr", "a01988.html#ae43784e3317dd1ab1d0d8f42926e5de7", null ],
+    [ "bilateralContact", "a01988.html#a31a08f61bfa921fa79dde45a30f72aa9", null ],
+    [ "unilateralContact", "a01988.html#a8edb8058d39c00e880534c7d416819f2", null ]
 ];

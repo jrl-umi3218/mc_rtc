@@ -1,6 +1,5 @@
 var a01976 =
 [
-    [ "QPContactPtr", "a01976.html#ae43784e3317dd1ab1d0d8f42926e5de7", null ],
-    [ "bilateralContact", "a01976.html#a31a08f61bfa921fa79dde45a30f72aa9", null ],
-    [ "unilateralContact", "a01976.html#a8edb8058d39c00e880534c7d416819f2", null ]
+    [ "load", "a01976.html#ab398e7053d2dd2b218a40ee608a8657c", null ],
+    [ "save", "a01976.html#ae55ea4ba484aaf84aa2fbf822084281c", null ]
 ];

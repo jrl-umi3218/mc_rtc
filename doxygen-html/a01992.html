@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rbdyn::Flexibility Struct Reference</title>
+<title>mc_solver::QPContactPtrWPoints Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -73,97 +73,45 @@ $(document).ready(function(){initNavTree('a01992.html','');});
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="a01989.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rbdyn::Flexibility Struct Reference</div>  </div>
+<div class="title">mc_solver::QPContactPtrWPoints Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This structure holds a flexible joint, if such a joint is part of a robot, then the following dynamic constraint will be applied for the flexible joint torques:  
- <a href="a01992.html#details">More...</a></p>
-
-<p><code>#include &lt;mc_rbdyn/Flexibility.h&gt;</code></p>
+<p><code>#include &lt;mc_rbdyn/Contact.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:aae8d1a8eaa685b5efc3eb22b95fbb892"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01992.html#aae8d1a8eaa685b5efc3eb22b95fbb892">jointName</a></td></tr>
-<tr class="memdesc:aae8d1a8eaa685b5efc3eb22b95fbb892"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of the joint.  <a href="#aae8d1a8eaa685b5efc3eb22b95fbb892">More...</a><br /></td></tr>
-<tr class="separator:aae8d1a8eaa685b5efc3eb22b95fbb892"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9fa8b3ad657cbfd784a906f80e2a493"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01992.html#ad9fa8b3ad657cbfd784a906f80e2a493">K</a></td></tr>
-<tr class="memdesc:ad9fa8b3ad657cbfd784a906f80e2a493"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stiffness.  <a href="#ad9fa8b3ad657cbfd784a906f80e2a493">More...</a><br /></td></tr>
-<tr class="separator:ad9fa8b3ad657cbfd784a906f80e2a493"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6937033e6a1e29165b7a1f9b2005232a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01992.html#a6937033e6a1e29165b7a1f9b2005232a">C</a></td></tr>
-<tr class="memdesc:a6937033e6a1e29165b7a1f9b2005232a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Damping.  <a href="#a6937033e6a1e29165b7a1f9b2005232a">More...</a><br /></td></tr>
-<tr class="separator:a6937033e6a1e29165b7a1f9b2005232a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea9ed4cd59fb673fdac0d4f252d90987"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01992.html#aea9ed4cd59fb673fdac0d4f252d90987">O</a></td></tr>
-<tr class="memdesc:aea9ed4cd59fb673fdac0d4f252d90987"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bias.  <a href="#aea9ed4cd59fb673fdac0d4f252d90987">More...</a><br /></td></tr>
-<tr class="separator:aea9ed4cd59fb673fdac0d4f252d90987"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18f4220244dc364488e15a5b6fc7bdf6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01988.html">QPContactPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01992.html#a18f4220244dc364488e15a5b6fc7bdf6">qpcontact_ptr</a></td></tr>
+<tr class="separator:a18f4220244dc364488e15a5b6fc7bdf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b18450a98acf02d8b5b56b0c74e84a1"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01992.html#a0b18450a98acf02d8b5b56b0c74e84a1">points</a></td></tr>
+<tr class="separator:a0b18450a98acf02d8b5b56b0c74e84a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This structure holds a flexible joint, if such a joint is part of a robot, then the following dynamic constraint will be applied for the flexible joint torques: </p>
-<p class="formulaDsp">
-\begin{align} \underline{\mathbf{\tau}} = \overline{\mathbf{\tau}} = -K\mathbf{q} -C\dot{\mathbf{q}} - O \end{align}
-</p>
- </div><h2 class="groupheader">Member Data Documentation</h2>
-<a id="a6937033e6a1e29165b7a1f9b2005232a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6937033e6a1e29165b7a1f9b2005232a">&#9670;&nbsp;</a></span>C</h2>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a0b18450a98acf02d8b5b56b0c74e84a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b18450a98acf02d8b5b56b0c74e84a1">&#9670;&nbsp;</a></span>points</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double mc_rbdyn::Flexibility::C</td>
+          <td class="memname">std::vector&lt;<a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a>&gt; mc_solver::QPContactPtrWPoints::points</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Damping. </p>
-
 </div>
 </div>
-<a id="aae8d1a8eaa685b5efc3eb22b95fbb892"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae8d1a8eaa685b5efc3eb22b95fbb892">&#9670;&nbsp;</a></span>jointName</h2>
+<a id="a18f4220244dc364488e15a5b6fc7bdf6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18f4220244dc364488e15a5b6fc7bdf6">&#9670;&nbsp;</a></span>qpcontact_ptr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string mc_rbdyn::Flexibility::jointName</td>
+          <td class="memname"><a class="el" href="a01988.html">QPContactPtr</a> mc_solver::QPContactPtrWPoints::qpcontact_ptr</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Name of the joint. </p>
-
-</div>
-</div>
-<a id="ad9fa8b3ad657cbfd784a906f80e2a493"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad9fa8b3ad657cbfd784a906f80e2a493">&#9670;&nbsp;</a></span>K</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">double mc_rbdyn::Flexibility::K</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Stiffness. </p>
-
-</div>
-</div>
-<a id="aea9ed4cd59fb673fdac0d4f252d90987"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aea9ed4cd59fb673fdac0d4f252d90987">&#9670;&nbsp;</a></span>O</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">double mc_rbdyn::Flexibility::O</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Bias. </p>
 
 </div>
 </div>
@@ -173,8 +121,8 @@ Public Attributes</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00637.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a01992.html">Flexibility</a></li>
-    <li class="footer">Generated on Mon Jan 6 2020 12:40:14 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00651.html">mc_solver</a></li><li class="navelem"><a class="el" href="a01992.html">QPContactPtrWPoints</a></li>
+    <li class="footer">Generated on Tue Jan 14 2020 02:20:47 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

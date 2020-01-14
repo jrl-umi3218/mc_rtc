@@ -70,26 +70,29 @@ $(document).ready(function(){initNavTree('a01944.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">mc_observers::ObserverLoader Member List</div>  </div>
+<div class="title">mc_observers::LowPassFiniteDifferencesVelocityFilter&lt; T &gt; Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="a01944.html">mc_observers::ObserverLoader</a>, including all inherited members.</p>
+<p>This is the complete list of members for <a class="el" href="a01944.html">mc_observers::LowPassFiniteDifferencesVelocityFilter&lt; T &gt;</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="a01944.html#ac104339befa76e8673940c1a86ad2847">available_observers</a>()</td><td class="entry"><a class="el" href="a01944.html">mc_observers::ObserverLoader</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01944.html#a8649f98bfdfa69a7b1c76bea9897c933">clear</a>()</td><td class="entry"><a class="el" href="a01944.html">mc_observers::ObserverLoader</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01944.html#a8182bc3bc5952e68b6dd9d7ea8435478">enable_sandboxing</a>(bool enable_sandbox)</td><td class="entry"><a class="el" href="a01944.html">mc_observers::ObserverLoader</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01944.html#a3d1ff69617f71a1eb0aea7aedc13caa9">get_observer</a>(const std::string &amp;name, const Args &amp;... args)</td><td class="entry"><a class="el" href="a01944.html">mc_observers::ObserverLoader</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01944.html#aac203ca60191fa7e4041339a52baf625">has_observer</a>(const std::string &amp;name)</td><td class="entry"><a class="el" href="a01944.html">mc_observers::ObserverLoader</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01944.html#afc7d5d833c4d4ce520be8fa81a0b1b63">set_verbosity</a>(bool verbose)</td><td class="entry"><a class="el" href="a01944.html">mc_observers::ObserverLoader</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01944.html#a56fc6c53c0487328ed16473706e82df6">update_module_path</a>(const std::vector&lt; std::string &gt; &amp;paths)</td><td class="entry"><a class="el" href="a01944.html">mc_observers::ObserverLoader</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01948.html#a580423f5879c9cdc13d04662b3b9eef5">cutoffPeriod</a>() const</td><td class="entry"><a class="el" href="a01948.html">mc_observers::LowPassVelocityFilter&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01948.html#a0289dfde7f6f9d0c17ebdef6e23100c2">cutoffPeriod</a>(double period)</td><td class="entry"><a class="el" href="a01948.html">mc_observers::LowPassVelocityFilter&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01948.html#adb91663b0f8437252d13c89c22ea84e3">dt_</a></td><td class="entry"><a class="el" href="a01948.html">mc_observers::LowPassVelocityFilter&lt; T &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01944.html#ad511ff377bd68590ea8eeae83a6e4fc6">LowPassFiniteDifferencesVelocityFilter</a>(double dt, double period=0)</td><td class="entry"><a class="el" href="a01944.html">mc_observers::LowPassFiniteDifferencesVelocityFilter&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01948.html#a8f893b576b75b884e0232e2c2a15bf43">LowPassVelocityFilter</a>(double dt, double period=0)</td><td class="entry"><a class="el" href="a01948.html">mc_observers::LowPassVelocityFilter&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01944.html#afae69fd13d96d0120d6600462877f2c9">reset</a>(T pos)</td><td class="entry"><a class="el" href="a01944.html">mc_observers::LowPassFiniteDifferencesVelocityFilter&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01944.html#aa4d93106063d1c2d950dca11bf75384e">reset</a>(T pos, T vel)</td><td class="entry"><a class="el" href="a01944.html">mc_observers::LowPassFiniteDifferencesVelocityFilter&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01944.html#a0846c84416e33bb74bb69cef5b44693f">update</a>(const T &amp;newPos)</td><td class="entry"><a class="el" href="a01944.html">mc_observers::LowPassFiniteDifferencesVelocityFilter&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01944.html#ab624dd632cc9af153c1032d999fde378">updatePositionOnly</a>(const T &amp;newPos)</td><td class="entry"><a class="el" href="a01944.html">mc_observers::LowPassFiniteDifferencesVelocityFilter&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01948.html#a560817473f5a15c987776014001519b6">vel</a>()</td><td class="entry"><a class="el" href="a01948.html">mc_observers::LowPassVelocityFilter&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Mon Jan 6 2020 12:40:14 for mc_rtc by
+    <li class="footer">Generated on Tue Jan 14 2020 02:20:47 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

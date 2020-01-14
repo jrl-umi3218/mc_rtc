@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rtc::ConfigurationLoader&lt; T &gt; Struct Template Reference</title>
+<title>mc_rbdyn::Robots Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,90 +70,1615 @@ $(document).ready(function(){initNavTree('a02068.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="a02065.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rtc::ConfigurationLoader&lt; T &gt; Struct Template Reference</div>  </div>
+<div class="title">mc_rbdyn::Robots Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This structure should be specialized to implement serialization for a new type.  
- <a href="a02068.html#details">More...</a></p>
-
-<p><code>#include &lt;mc_rtc/Configuration.h&gt;</code></p>
+<p><code>#include &lt;mc_rbdyn/Robots.h&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a3e8685e2cdb83f2ec06ab4e231a653ae"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a3e8685e2cdb83f2ec06ab4e231a653ae">load</a> (const <a class="el" href="a02092.html">mc_rtc::Configuration</a> &amp;)</td></tr>
-<tr class="separator:a3e8685e2cdb83f2ec06ab4e231a653ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac516ceb726f94bd4e5a32ad25f1178c2"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#ac516ceb726f94bd4e5a32ad25f1178c2">save</a> (const T &amp;)</td></tr>
-<tr class="separator:ac516ceb726f94bd4e5a32ad25f1178c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a52932f4a6548f1b47f3e57423af136fa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a52932f4a6548f1b47f3e57423af136fa">Robots</a> ()</td></tr>
+<tr class="separator:a52932f4a6548f1b47f3e57423af136fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e8b223f84189c50bf163d3648811422"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a5e8b223f84189c50bf163d3648811422">Robots</a> (const <a class="el" href="a02068.html">Robots</a> &amp;rhs)</td></tr>
+<tr class="separator:a5e8b223f84189c50bf163d3648811422"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3090013b978cf1dd68e0b4ca5279cc18"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02068.html">Robots</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a3090013b978cf1dd68e0b4ca5279cc18">operator=</a> (const <a class="el" href="a02068.html">Robots</a> &amp;rhs)</td></tr>
+<tr class="separator:a3090013b978cf1dd68e0b4ca5279cc18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcd2485c334658f2c83b7f1e343963ae"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="a02060.html">mc_rbdyn::RobotModule</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#adcd2485c334658f2c83b7f1e343963ae">robotModules</a> () const</td></tr>
+<tr class="memdesc:adcd2485c334658f2c83b7f1e343963ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Give access to the underlying list of <a class="el" href="a02060.html">RobotModule</a> objects.  <a href="#adcd2485c334658f2c83b7f1e343963ae">More...</a><br /></td></tr>
+<tr class="separator:adcd2485c334658f2c83b7f1e343963ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a983b7d961886e155c660d77a71be0553"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="a02040.html">Robot</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a983b7d961886e155c660d77a71be0553">robots</a> ()</td></tr>
+<tr class="memdesc:a983b7d961886e155c660d77a71be0553"><td class="mdescLeft">&#160;</td><td class="mdescRight">Give access to the underlying list of <a class="el" href="a02040.html">Robot</a> objects.  <a href="#a983b7d961886e155c660d77a71be0553">More...</a><br /></td></tr>
+<tr class="separator:a983b7d961886e155c660d77a71be0553"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f9e3200bd791886a6e2742b3970a0da"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="a02040.html">Robot</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a8f9e3200bd791886a6e2742b3970a0da">robots</a> () const</td></tr>
+<tr class="memdesc:a8f9e3200bd791886a6e2742b3970a0da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Give access to the underlying list of <a class="el" href="a02040.html">Robot</a> objects (const)  <a href="#a8f9e3200bd791886a6e2742b3970a0da">More...</a><br /></td></tr>
+<tr class="separator:a8f9e3200bd791886a6e2742b3970a0da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc4af4449c285c66835c5e511cd424d6"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01003.html">rbd::MultiBody</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#adc4af4449c285c66835c5e511cd424d6">mbs</a> ()</td></tr>
+<tr class="memdesc:adc4af4449c285c66835c5e511cd424d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Give access to the underlying list of <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01003.html">rbd::MultiBody</a> objects.  <a href="#adc4af4449c285c66835c5e511cd424d6">More...</a><br /></td></tr>
+<tr class="separator:adc4af4449c285c66835c5e511cd424d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a968bbc1fc61e7a992a7759c8b920a72f"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01003.html">rbd::MultiBody</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a968bbc1fc61e7a992a7759c8b920a72f">mbs</a> () const</td></tr>
+<tr class="memdesc:a968bbc1fc61e7a992a7759c8b920a72f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Give access to the underlying list of <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01003.html">rbd::MultiBody</a> objects (const)  <a href="#a968bbc1fc61e7a992a7759c8b920a72f">More...</a><br /></td></tr>
+<tr class="separator:a968bbc1fc61e7a992a7759c8b920a72f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa4805f358230c5c30680e14a1d036cf"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01007.html">rbd::MultiBodyConfig</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#aaa4805f358230c5c30680e14a1d036cf">mbcs</a> ()</td></tr>
+<tr class="memdesc:aaa4805f358230c5c30680e14a1d036cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Give access to the underlying list of <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01007.html">rbd::MultiBodyConfig</a> objects.  <a href="#aaa4805f358230c5c30680e14a1d036cf">More...</a><br /></td></tr>
+<tr class="separator:aaa4805f358230c5c30680e14a1d036cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3cc8d1971325b497614377e6a6383b6"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01007.html">rbd::MultiBodyConfig</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#ad3cc8d1971325b497614377e6a6383b6">mbcs</a> () const</td></tr>
+<tr class="memdesc:ad3cc8d1971325b497614377e6a6383b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Give access to the underlying list of <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01007.html">rbd::MultiBodyConfig</a> objects (const)  <a href="#ad3cc8d1971325b497614377e6a6383b6">More...</a><br /></td></tr>
+<tr class="separator:ad3cc8d1971325b497614377e6a6383b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b8424f1c2946197d3f2528a8fba02b5"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a6b8424f1c2946197d3f2528a8fba02b5">robotIndex</a> () const</td></tr>
+<tr class="memdesc:a6b8424f1c2946197d3f2528a8fba02b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of the main robot.  <a href="#a6b8424f1c2946197d3f2528a8fba02b5">More...</a><br /></td></tr>
+<tr class="separator:a6b8424f1c2946197d3f2528a8fba02b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a450727e6fa924ffe64088165bacac5ec"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a450727e6fa924ffe64088165bacac5ec">envIndex</a> () const</td></tr>
+<tr class="memdesc:a450727e6fa924ffe64088165bacac5ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of the first non-actuated robot (or the last actuated robot if no unactuated robot are loaded)  <a href="#a450727e6fa924ffe64088165bacac5ec">More...</a><br /></td></tr>
+<tr class="separator:a450727e6fa924ffe64088165bacac5ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9369f09e1f26a46c62a0a0dab3f5a6f4"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a02060.html">RobotModule</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a9369f09e1f26a46c62a0a0dab3f5a6f4">robotModule</a> (size_t idx) const</td></tr>
+<tr class="separator:a9369f09e1f26a46c62a0a0dab3f5a6f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a570c3637d3567b90bfedb8156b4f8f87"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02040.html">Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a570c3637d3567b90bfedb8156b4f8f87">robot</a> ()</td></tr>
+<tr class="separator:a570c3637d3567b90bfedb8156b4f8f87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ad3d599f48c5ebf62add75a4da29ab9"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a02040.html">Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a1ad3d599f48c5ebf62add75a4da29ab9">robot</a> () const</td></tr>
+<tr class="separator:a1ad3d599f48c5ebf62add75a4da29ab9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fad514c57d731873b3d4395f58ced2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02040.html">Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a3fad514c57d731873b3d4395f58ced2d">env</a> ()</td></tr>
+<tr class="separator:a3fad514c57d731873b3d4395f58ced2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cfc417942dcc3a73ee5b9cfbbf862fa"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a02040.html">Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a8cfc417942dcc3a73ee5b9cfbbf862fa">env</a> () const</td></tr>
+<tr class="separator:a8cfc417942dcc3a73ee5b9cfbbf862fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8756bc3dcfdd1d5fb0a9fda13322835b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02040.html">Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a8756bc3dcfdd1d5fb0a9fda13322835b">robot</a> (size_t idx)</td></tr>
+<tr class="separator:a8756bc3dcfdd1d5fb0a9fda13322835b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e160f2c75f75740bcec75b3a2f2a881"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a02040.html">Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a3e160f2c75f75740bcec75b3a2f2a881">robot</a> (size_t idx) const</td></tr>
+<tr class="separator:a3e160f2c75f75740bcec75b3a2f2a881"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebe182308c2902e6b5f5df2be921d6d1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02040.html">Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#aebe182308c2902e6b5f5df2be921d6d1">robot</a> (const std::string &amp;name)</td></tr>
+<tr class="separator:aebe182308c2902e6b5f5df2be921d6d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea26684de58321f309fc79f9c91d5161"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a02040.html">Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#aea26684de58321f309fc79f9c91d5161">robot</a> (const std::string &amp;name) const</td></tr>
+<tr class="separator:aea26684de58321f309fc79f9c91d5161"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fe7360e8745aa349a770d489d5585ee"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02068.html#a264d2ce2a02a54afc9ecf14a06f0f268">size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a0fe7360e8745aa349a770d489d5585ee">size</a> () const noexcept</td></tr>
+<tr class="memdesc:a0fe7360e8745aa349a770d489d5585ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of robots.  <a href="#a0fe7360e8745aa349a770d489d5585ee">More...</a><br /></td></tr>
+<tr class="separator:a0fe7360e8745aa349a770d489d5585ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa353ea3d25202a5870a7f65e503a1b2a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#aa353ea3d25202a5870a7f65e503a1b2a">reserve</a> (<a class="el" href="a02068.html#a264d2ce2a02a54afc9ecf14a06f0f268">size_type</a> new_cap)</td></tr>
+<tr class="memdesc:aa353ea3d25202a5870a7f65e503a1b2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reserves space for a total number of new_cap <a class="el" href="a02068.html">Robots</a>.  <a href="#aa353ea3d25202a5870a7f65e503a1b2a">More...</a><br /></td></tr>
+<tr class="separator:aa353ea3d25202a5870a7f65e503a1b2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Robot(s) loading/unloading functions</div></td></tr>
+<tr><td colspan="2"><div class="groupText"><p>These functions allow to load or unload robot(s) from the <a class="el" href="a02068.html">Robots</a> class </p>
+</div></td></tr>
+<tr class="memitem:aff5d4cb6dbea1f169c866ec6004793ee"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02040.html">Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#aff5d4cb6dbea1f169c866ec6004793ee">load</a> (const <a class="el" href="a02060.html">RobotModule</a> &amp;module, <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> *base=nullptr, const std::string &amp;bName=&quot;&quot;)</td></tr>
+<tr class="memdesc:aff5d4cb6dbea1f169c866ec6004793ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load a single robot from a <a class="el" href="a02060.html">RobotModule</a> with an optional base.  <a href="#aff5d4cb6dbea1f169c866ec6004793ee">More...</a><br /></td></tr>
+<tr class="separator:aff5d4cb6dbea1f169c866ec6004793ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a560aec7c6ac306acd1e9eb9e2048cb5e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a560aec7c6ac306acd1e9eb9e2048cb5e">load</a> (const <a class="el" href="a02060.html">RobotModule</a> &amp;module, const <a class="el" href="a02060.html">RobotModule</a> &amp;envModule, <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> *base=nullptr, const std::string &amp;bName=&quot;&quot;)</td></tr>
+<tr class="memdesc:a560aec7c6ac306acd1e9eb9e2048cb5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load a robot and an environment from <a class="el" href="a02060.html">RobotModule</a> instances with an optional base.  <a href="#a560aec7c6ac306acd1e9eb9e2048cb5e">More...</a><br /></td></tr>
+<tr class="separator:a560aec7c6ac306acd1e9eb9e2048cb5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae89485349d26868e40117fcaf670ddc4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#ae89485349d26868e40117fcaf670ddc4">load</a> (const std::vector&lt; std::shared_ptr&lt; <a class="el" href="a02060.html">RobotModule</a> &gt;&gt; &amp;modules)</td></tr>
+<tr class="memdesc:ae89485349d26868e40117fcaf670ddc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load multiple robots from as many <a class="el" href="a02060.html">RobotModule</a> instances.  <a href="#ae89485349d26868e40117fcaf670ddc4">More...</a><br /></td></tr>
+<tr class="separator:ae89485349d26868e40117fcaf670ddc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af75cbe7bed91ed0d48c5896a0f99aa71"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02040.html">Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#af75cbe7bed91ed0d48c5896a0f99aa71">loadFromUrdf</a> (const std::string &amp;name, const std::string &amp;urdf, bool withVirtualLinks=true, const std::vector&lt; std::string &gt; &amp;filteredLinks={}, bool fixed=false, <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
+<tr class="separator:af75cbe7bed91ed0d48c5896a0f99aa71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ee7fb2f2bdb6fcaefcbbdf62971a290"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a2ee7fb2f2bdb6fcaefcbbdf62971a290">robotCopy</a> (const <a class="el" href="a02040.html">Robot</a> &amp;<a class="el" href="a02068.html#a570c3637d3567b90bfedb8156b4f8f87">robot</a>)</td></tr>
+<tr class="separator:a2ee7fb2f2bdb6fcaefcbbdf62971a290"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3882c33b607d637474ad14d7f6b540b7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a3882c33b607d637474ad14d7f6b540b7">createRobotWithBase</a> (<a class="el" href="a02068.html">Robots</a> &amp;<a class="el" href="a02068.html#a983b7d961886e155c660d77a71be0553">robots</a>, unsigned int robots_idx, const <a class="el" href="a01960.html">Base</a> &amp;base, const Eigen::Vector3d &amp;baseAxis=Eigen::Vector3d::UnitZ())</td></tr>
+<tr class="separator:a3882c33b607d637474ad14d7f6b540b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe0d347ac71a45399ef83b0417cd4204"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#abe0d347ac71a45399ef83b0417cd4204">createRobotWithBase</a> (<a class="el" href="a02040.html">Robot</a> &amp;<a class="el" href="a02068.html#a570c3637d3567b90bfedb8156b4f8f87">robot</a>, const <a class="el" href="a01960.html">Base</a> &amp;base, const Eigen::Vector3d &amp;baseAxis=Eigen::Vector3d::UnitZ())</td></tr>
+<tr class="separator:abe0d347ac71a45399ef83b0417cd4204"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a661cd23a4aec4c17e0c6edbbbecec720"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a661cd23a4aec4c17e0c6edbbbecec720">removeRobot</a> (const std::string &amp;name)</td></tr>
+<tr class="separator:a661cd23a4aec4c17e0c6edbbbecec720"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a344e4ad7f16f3d41dea30e93e5486087"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a344e4ad7f16f3d41dea30e93e5486087">removeRobot</a> (unsigned int idx)</td></tr>
+<tr class="separator:a344e4ad7f16f3d41dea30e93e5486087"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Deprecated</div></td></tr>
+<tr><td colspan="2"><div class="groupText"><p>These loading functions are deprecated, do not use them in your code </p>
+</div></td></tr>
+<tr class="memitem:ad651f8e7c889ab9d32b932afaa0a1088"><td class="memItemLeft" align="right" valign="top">MC_RTC_DEPRECATED <a class="el" href="a02040.html">Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#ad651f8e7c889ab9d32b932afaa0a1088">load</a> (const <a class="el" href="a02060.html">RobotModule</a> &amp;module, const std::string &amp;surfaceDir, <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> *base=nullptr, const std::string &amp;bName=&quot;&quot;)</td></tr>
+<tr class="separator:ad651f8e7c889ab9d32b932afaa0a1088"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5517d600a4bee40ca47150d2ec857865"><td class="memItemLeft" align="right" valign="top">MC_RTC_DEPRECATED void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a5517d600a4bee40ca47150d2ec857865">load</a> (const <a class="el" href="a02060.html">RobotModule</a> &amp;module, const std::string &amp;surfaceDir, const <a class="el" href="a02060.html">RobotModule</a> &amp;envModule, const std::string &amp;envSurfaceDir, <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
+<tr class="separator:a5517d600a4bee40ca47150d2ec857865"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae46599c49aa8ea2bd68be14c906ea215"><td class="memItemLeft" align="right" valign="top">MC_RTC_DEPRECATED void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#ae46599c49aa8ea2bd68be14c906ea215">load</a> (const std::vector&lt; std::shared_ptr&lt; <a class="el" href="a02060.html">RobotModule</a> &gt;&gt; &amp;modules, const std::vector&lt; std::string &gt; &amp;surfaceDirs)</td></tr>
+<tr class="separator:ae46599c49aa8ea2bd68be14c906ea215"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a577b02e4a3e2384c60bfe983ad362448"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a577b02e4a3e2384c60bfe983ad362448">updateIndexes</a> ()</td></tr>
+<tr class="separator:a577b02e4a3e2384c60bfe983ad362448"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a77e5ac668f50ab58f3513fd60cbfc2ed"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="a02060.html">mc_rbdyn::RobotModule</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a77e5ac668f50ab58f3513fd60cbfc2ed">robot_modules_</a></td></tr>
+<tr class="separator:a77e5ac668f50ab58f3513fd60cbfc2ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc9294aa220cbbee47b28ec1322237b3"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="a02040.html">mc_rbdyn::Robot</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#acc9294aa220cbbee47b28ec1322237b3">robots_</a></td></tr>
+<tr class="separator:acc9294aa220cbbee47b28ec1322237b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a898afa6275886be6bd9ed57346d02cef"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01003.html">rbd::MultiBody</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a898afa6275886be6bd9ed57346d02cef">mbs_</a></td></tr>
+<tr class="separator:a898afa6275886be6bd9ed57346d02cef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa146e9e579f283e5bc64acc3fc40807"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01007.html">rbd::MultiBodyConfig</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#afa146e9e579f283e5bc64acc3fc40807">mbcs_</a></td></tr>
+<tr class="separator:afa146e9e579f283e5bc64acc3fc40807"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b3262231180412489be91286feae99d"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01015.html">rbd::MultiBodyGraph</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a6b3262231180412489be91286feae99d">mbgs_</a></td></tr>
+<tr class="separator:a6b3262231180412489be91286feae99d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad61b4c8a27b1c5cf841bbeae8ae9cb8b"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#ad61b4c8a27b1c5cf841bbeae8ae9cb8b">robotIndex_</a></td></tr>
+<tr class="separator:ad61b4c8a27b1c5cf841bbeae8ae9cb8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af035c10ad185cddd84fdd05611b88bae"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#af035c10ad185cddd84fdd05611b88bae">envIndex_</a></td></tr>
+<tr class="separator:af035c10ad185cddd84fdd05611b88bae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:ad03b49f51df2ba1d492ced03d923fdd0"><td class="memItemLeft" align="right" valign="top">struct&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#ad03b49f51df2ba1d492ced03d923fdd0">Robot</a></td></tr>
+<tr class="separator:ad03b49f51df2ba1d492ced03d923fdd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Iterators</h2></td></tr>
+<tr><td class="ititle" colspan="2"><p><a class="anchor" id="amgrp523a8681903bcf53bace35316c86fe33"></a>These functions provide an iterator interface to <a class="el" href="a02068.html">Robots</a> </p>
+</td></tr>
+<tr class="memitem:a5c5a80393f128789275bf1a722068ac9"><td class="memItemLeft" align="right" valign="top">typedef std::vector&lt; <a class="el" href="a02040.html">mc_rbdyn::Robot</a> &gt;::<a class="el" href="a02068.html#a5c5a80393f128789275bf1a722068ac9">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a5c5a80393f128789275bf1a722068ac9">iterator</a></td></tr>
+<tr class="separator:a5c5a80393f128789275bf1a722068ac9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c367ec34b94d945c42020ed21dfe103"><td class="memItemLeft" align="right" valign="top">typedef std::vector&lt; <a class="el" href="a02040.html">mc_rbdyn::Robot</a> &gt;::<a class="el" href="a02068.html#a2c367ec34b94d945c42020ed21dfe103">const_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a2c367ec34b94d945c42020ed21dfe103">const_iterator</a></td></tr>
+<tr class="separator:a2c367ec34b94d945c42020ed21dfe103"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1869fe884d98ff31d558ae3fea4420db"><td class="memItemLeft" align="right" valign="top">typedef std::vector&lt; <a class="el" href="a02040.html">mc_rbdyn::Robot</a> &gt;::<a class="el" href="a02068.html#a1869fe884d98ff31d558ae3fea4420db">reverse_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a1869fe884d98ff31d558ae3fea4420db">reverse_iterator</a></td></tr>
+<tr class="separator:a1869fe884d98ff31d558ae3fea4420db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3db2fb8b4476c17f61b8e86c10bfeb3"><td class="memItemLeft" align="right" valign="top">typedef std::vector&lt; <a class="el" href="a02040.html">mc_rbdyn::Robot</a> &gt;::<a class="el" href="a02068.html#ad3db2fb8b4476c17f61b8e86c10bfeb3">const_reverse_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#ad3db2fb8b4476c17f61b8e86c10bfeb3">const_reverse_iterator</a></td></tr>
+<tr class="separator:ad3db2fb8b4476c17f61b8e86c10bfeb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a264d2ce2a02a54afc9ecf14a06f0f268"><td class="memItemLeft" align="right" valign="top">typedef std::vector&lt; <a class="el" href="a02040.html">mc_rbdyn::Robot</a> &gt;::<a class="el" href="a02068.html#a264d2ce2a02a54afc9ecf14a06f0f268">size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a264d2ce2a02a54afc9ecf14a06f0f268">size_type</a></td></tr>
+<tr class="separator:a264d2ce2a02a54afc9ecf14a06f0f268"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f2c4bc6ea6bb34ca3ef4e5d275662ca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02068.html#a5c5a80393f128789275bf1a722068ac9">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a8f2c4bc6ea6bb34ca3ef4e5d275662ca">begin</a> () noexcept</td></tr>
+<tr class="separator:a8f2c4bc6ea6bb34ca3ef4e5d275662ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09f6546226fbe07a290f4bcfcb33f264"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02068.html#a2c367ec34b94d945c42020ed21dfe103">const_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a09f6546226fbe07a290f4bcfcb33f264">begin</a> () const noexcept</td></tr>
+<tr class="separator:a09f6546226fbe07a290f4bcfcb33f264"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4587be460f55daf6554325fde6c0b310"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02068.html#a2c367ec34b94d945c42020ed21dfe103">const_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a4587be460f55daf6554325fde6c0b310">cbegin</a> () const noexcept</td></tr>
+<tr class="separator:a4587be460f55daf6554325fde6c0b310"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0230b7c453f04f0198b6a3ba5913d105"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02068.html#a5c5a80393f128789275bf1a722068ac9">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a0230b7c453f04f0198b6a3ba5913d105">end</a> () noexcept</td></tr>
+<tr class="separator:a0230b7c453f04f0198b6a3ba5913d105"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1921af851c0b4138dee79b1ebc17c52b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02068.html#a2c367ec34b94d945c42020ed21dfe103">const_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a1921af851c0b4138dee79b1ebc17c52b">end</a> () const noexcept</td></tr>
+<tr class="separator:a1921af851c0b4138dee79b1ebc17c52b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af142da97b6512f79162efc33ace70e45"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02068.html#a2c367ec34b94d945c42020ed21dfe103">const_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#af142da97b6512f79162efc33ace70e45">cend</a> () const noexcept</td></tr>
+<tr class="separator:af142da97b6512f79162efc33ace70e45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa37c7715d7c713f0334363dd26452d38"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02068.html#a1869fe884d98ff31d558ae3fea4420db">reverse_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#aa37c7715d7c713f0334363dd26452d38">rbegin</a> () noexcept</td></tr>
+<tr class="separator:aa37c7715d7c713f0334363dd26452d38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ed7a640a3cc1e1eda61613e89fd7486"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02068.html#ad3db2fb8b4476c17f61b8e86c10bfeb3">const_reverse_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a2ed7a640a3cc1e1eda61613e89fd7486">rbegin</a> () const noexcept</td></tr>
+<tr class="separator:a2ed7a640a3cc1e1eda61613e89fd7486"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e4985f868d855ec5153a210fa22f555"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02068.html#ad3db2fb8b4476c17f61b8e86c10bfeb3">const_reverse_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a8e4985f868d855ec5153a210fa22f555">crbegin</a> () const noexcept</td></tr>
+<tr class="separator:a8e4985f868d855ec5153a210fa22f555"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa05a25568265c5e17388f1c4e300d41e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02068.html#a1869fe884d98ff31d558ae3fea4420db">reverse_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#aa05a25568265c5e17388f1c4e300d41e">rend</a> () noexcept</td></tr>
+<tr class="separator:aa05a25568265c5e17388f1c4e300d41e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02be61ed3972aeae42d94bbe242a839c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02068.html#ad3db2fb8b4476c17f61b8e86c10bfeb3">const_reverse_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a02be61ed3972aeae42d94bbe242a839c">rend</a> () const noexcept</td></tr>
+<tr class="separator:a02be61ed3972aeae42d94bbe242a839c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54a0069d6ac9debe385ba1f1f311ee51"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02068.html#ad3db2fb8b4476c17f61b8e86c10bfeb3">const_reverse_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html#a54a0069d6ac9debe385ba1f1f311ee51">crend</a> () const noexcept</td></tr>
+<tr class="separator:a54a0069d6ac9debe385ba1f1f311ee51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename T&gt;<br />
-struct mc_rtc::ConfigurationLoader&lt; T &gt;</h3>
-
-<p>This structure should be specialized to implement serialization for a new type. </p>
-<p>load return type should be T</p>
-<p>save return type should be <a class="el" href="a02092.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a3e8685e2cdb83f2ec06ab4e231a653ae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3e8685e2cdb83f2ec06ab4e231a653ae">&#9670;&nbsp;</a></span>load()</h2>
+<h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a2c367ec34b94d945c42020ed21dfe103"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c367ec34b94d945c42020ed21dfe103">&#9670;&nbsp;</a></span>const_iterator</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::vector&lt;<a class="el" href="a02040.html">mc_rbdyn::Robot</a>&gt;::<a class="el" href="a02068.html#a2c367ec34b94d945c42020ed21dfe103">const_iterator</a> <a class="el" href="a02068.html#a2c367ec34b94d945c42020ed21dfe103">mc_rbdyn::Robots::const_iterator</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad3db2fb8b4476c17f61b8e86c10bfeb3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3db2fb8b4476c17f61b8e86c10bfeb3">&#9670;&nbsp;</a></span>const_reverse_iterator</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::vector&lt;<a class="el" href="a02040.html">mc_rbdyn::Robot</a>&gt;::<a class="el" href="a02068.html#ad3db2fb8b4476c17f61b8e86c10bfeb3">const_reverse_iterator</a> <a class="el" href="a02068.html#ad3db2fb8b4476c17f61b8e86c10bfeb3">mc_rbdyn::Robots::const_reverse_iterator</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5c5a80393f128789275bf1a722068ac9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c5a80393f128789275bf1a722068ac9">&#9670;&nbsp;</a></span>iterator</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::vector&lt;<a class="el" href="a02040.html">mc_rbdyn::Robot</a>&gt;::<a class="el" href="a02068.html#a5c5a80393f128789275bf1a722068ac9">iterator</a> <a class="el" href="a02068.html#a5c5a80393f128789275bf1a722068ac9">mc_rbdyn::Robots::iterator</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1869fe884d98ff31d558ae3fea4420db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1869fe884d98ff31d558ae3fea4420db">&#9670;&nbsp;</a></span>reverse_iterator</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::vector&lt;<a class="el" href="a02040.html">mc_rbdyn::Robot</a>&gt;::<a class="el" href="a02068.html#a1869fe884d98ff31d558ae3fea4420db">reverse_iterator</a> <a class="el" href="a02068.html#a1869fe884d98ff31d558ae3fea4420db">mc_rbdyn::Robots::reverse_iterator</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a264d2ce2a02a54afc9ecf14a06f0f268"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a264d2ce2a02a54afc9ecf14a06f0f268">&#9670;&nbsp;</a></span>size_type</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::vector&lt;<a class="el" href="a02040.html">mc_rbdyn::Robot</a>&gt;::<a class="el" href="a02068.html#a264d2ce2a02a54afc9ecf14a06f0f268">size_type</a> <a class="el" href="a02068.html#a264d2ce2a02a54afc9ecf14a06f0f268">mc_rbdyn::Robots::size_type</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a52932f4a6548f1b47f3e57423af136fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52932f4a6548f1b47f3e57423af136fa">&#9670;&nbsp;</a></span>Robots() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rbdyn::Robots::Robots </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5e8b223f84189c50bf163d3648811422"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e8b223f84189c50bf163d3648811422">&#9670;&nbsp;</a></span>Robots() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rbdyn::Robots::Robots </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02068.html">Robots</a> &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a8f2c4bc6ea6bb34ca3ef4e5d275662ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f2c4bc6ea6bb34ca3ef4e5d275662ca">&#9670;&nbsp;</a></span>begin() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void <a class="el" href="a02068.html">mc_rtc::ConfigurationLoader</a>&lt; T &gt;::load </td>
+          <td class="memname"><a class="el" href="a02068.html#a5c5a80393f128789275bf1a722068ac9">iterator</a> mc_rbdyn::Robots::begin </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a02092.html">mc_rtc::Configuration</a> &amp;&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p class="reference">Referenced by <a class="el" href="a02092.html#a60d258128cadfb8b4cc30229d169991b">mc_rtc::Configuration::operator T()</a>.</p>
-
 </div>
 </div>
-<a id="ac516ceb726f94bd4e5a32ad25f1178c2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac516ceb726f94bd4e5a32ad25f1178c2">&#9670;&nbsp;</a></span>save()</h2>
+<a id="a09f6546226fbe07a290f4bcfcb33f264"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09f6546226fbe07a290f4bcfcb33f264">&#9670;&nbsp;</a></span>begin() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void <a class="el" href="a02068.html">mc_rtc::ConfigurationLoader</a>&lt; T &gt;::save </td>
+          <td class="memname"><a class="el" href="a02068.html#a2c367ec34b94d945c42020ed21dfe103">const_iterator</a> mc_rbdyn::Robots::begin </td>
           <td>(</td>
-          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4587be460f55daf6554325fde6c0b310"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4587be460f55daf6554325fde6c0b310">&#9670;&nbsp;</a></span>cbegin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02068.html#a2c367ec34b94d945c42020ed21dfe103">const_iterator</a> mc_rbdyn::Robots::cbegin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af142da97b6512f79162efc33ace70e45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af142da97b6512f79162efc33ace70e45">&#9670;&nbsp;</a></span>cend()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02068.html#a2c367ec34b94d945c42020ed21dfe103">const_iterator</a> mc_rbdyn::Robots::cend </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8e4985f868d855ec5153a210fa22f555"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e4985f868d855ec5153a210fa22f555">&#9670;&nbsp;</a></span>crbegin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02068.html#ad3db2fb8b4476c17f61b8e86c10bfeb3">const_reverse_iterator</a> mc_rbdyn::Robots::crbegin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3882c33b607d637474ad14d7f6b540b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3882c33b607d637474ad14d7f6b540b7">&#9670;&nbsp;</a></span>createRobotWithBase() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_rbdyn::Robots::createRobotWithBase </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02068.html">Robots</a> &amp;&#160;</td>
+          <td class="paramname"><em>robots</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>robots_idx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a01960.html">Base</a> &amp;&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
+          <td class="paramname"><em>baseAxis</em> = <code>Eigen::Vector3d::UnitZ()</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abe0d347ac71a45399ef83b0417cd4204"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe0d347ac71a45399ef83b0417cd4204">&#9670;&nbsp;</a></span>createRobotWithBase() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_rbdyn::Robots::createRobotWithBase </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02040.html">Robot</a> &amp;&#160;</td>
+          <td class="paramname"><em>robot</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a01960.html">Base</a> &amp;&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
+          <td class="paramname"><em>baseAxis</em> = <code>Eigen::Vector3d::UnitZ()</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a54a0069d6ac9debe385ba1f1f311ee51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54a0069d6ac9debe385ba1f1f311ee51">&#9670;&nbsp;</a></span>crend()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02068.html#ad3db2fb8b4476c17f61b8e86c10bfeb3">const_reverse_iterator</a> mc_rbdyn::Robots::crend </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0230b7c453f04f0198b6a3ba5913d105"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0230b7c453f04f0198b6a3ba5913d105">&#9670;&nbsp;</a></span>end() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02068.html#a5c5a80393f128789275bf1a722068ac9">iterator</a> mc_rbdyn::Robots::end </td>
+          <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p class="reference">Referenced by <a class="el" href="a02092.html#a60d258128cadfb8b4cc30229d169991b">mc_rtc::Configuration::operator T()</a>.</p>
+</div>
+</div>
+<a id="a1921af851c0b4138dee79b1ebc17c52b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1921af851c0b4138dee79b1ebc17c52b">&#9670;&nbsp;</a></span>end() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02068.html#a2c367ec34b94d945c42020ed21dfe103">const_iterator</a> mc_rbdyn::Robots::end </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3fad514c57d731873b3d4395f58ced2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fad514c57d731873b3d4395f58ced2d">&#9670;&nbsp;</a></span>env() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02040.html">Robot</a>&amp; mc_rbdyn::Robots::env </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8cfc417942dcc3a73ee5b9cfbbf862fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8cfc417942dcc3a73ee5b9cfbbf862fa">&#9670;&nbsp;</a></span>env() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="a02040.html">Robot</a>&amp; mc_rbdyn::Robots::env </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a450727e6fa924ffe64088165bacac5ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a450727e6fa924ffe64088165bacac5ec">&#9670;&nbsp;</a></span>envIndex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int mc_rbdyn::Robots::envIndex </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Index of the first non-actuated robot (or the last actuated robot if no unactuated robot are loaded) </p>
+
+</div>
+</div>
+<a id="aff5d4cb6dbea1f169c866ec6004793ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff5d4cb6dbea1f169c866ec6004793ee">&#9670;&nbsp;</a></span>load() <span class="overload">[1/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02040.html">Robot</a>&amp; mc_rbdyn::Robots::load </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02060.html">RobotModule</a> &amp;&#160;</td>
+          <td class="paramname"><em>module</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> *&#160;</td>
+          <td class="paramname"><em>base</em> = <code>nullptr</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>bName</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Load a single robot from a <a class="el" href="a02060.html">RobotModule</a> with an optional base. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">module</td><td>The <a class="el" href="a02060.html">RobotModule</a> to fetch data from for this robot</td></tr>
+    <tr><td class="paramname">base</td><td>If non-null, used as the initial transformation between the base and the world</td></tr>
+    <tr><td class="paramname">bName</td><td>If empty, use the "normal" base, otherwise use body bName as base</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>a reference to the robot that was just loaded </dd></dl>
+
+</div>
+</div>
+<a id="a560aec7c6ac306acd1e9eb9e2048cb5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a560aec7c6ac306acd1e9eb9e2048cb5e">&#9670;&nbsp;</a></span>load() <span class="overload">[2/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_rbdyn::Robots::load </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02060.html">RobotModule</a> &amp;&#160;</td>
+          <td class="paramname"><em>module</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a02060.html">RobotModule</a> &amp;&#160;</td>
+          <td class="paramname"><em>envModule</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> *&#160;</td>
+          <td class="paramname"><em>base</em> = <code>nullptr</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>bName</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Load a robot and an environment from <a class="el" href="a02060.html">RobotModule</a> instances with an optional base. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">module</td><td><a class="el" href="a02060.html">RobotModule</a> for the robot</td></tr>
+    <tr><td class="paramname">envModule</td><td><a class="el" href="a02060.html">RobotModule</a> for the environment</td></tr>
+    <tr><td class="paramname">base</td><td>If non-null, used as the initial transformation between the base and the world</td></tr>
+    <tr><td class="paramname">bName</td><td>If empty, use the "normal" base, otherwise use body bName as base </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae89485349d26868e40117fcaf670ddc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae89485349d26868e40117fcaf670ddc4">&#9670;&nbsp;</a></span>load() <span class="overload">[3/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_rbdyn::Robots::load </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; std::shared_ptr&lt; <a class="el" href="a02060.html">RobotModule</a> &gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>modules</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Load multiple robots from as many <a class="el" href="a02060.html">RobotModule</a> instances. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">modules</td><td>List of <a class="el" href="a02060.html">RobotModule</a> to load the robots from </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad651f8e7c889ab9d32b932afaa0a1088"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad651f8e7c889ab9d32b932afaa0a1088">&#9670;&nbsp;</a></span>load() <span class="overload">[4/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MC_RTC_DEPRECATED <a class="el" href="a02040.html">Robot</a>&amp; mc_rbdyn::Robots::load </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02060.html">RobotModule</a> &amp;&#160;</td>
+          <td class="paramname"><em>module</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>surfaceDir</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> *&#160;</td>
+          <td class="paramname"><em>base</em> = <code>nullptr</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>bName</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5517d600a4bee40ca47150d2ec857865"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5517d600a4bee40ca47150d2ec857865">&#9670;&nbsp;</a></span>load() <span class="overload">[5/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MC_RTC_DEPRECATED void mc_rbdyn::Robots::load </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02060.html">RobotModule</a> &amp;&#160;</td>
+          <td class="paramname"><em>module</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>surfaceDir</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a02060.html">RobotModule</a> &amp;&#160;</td>
+          <td class="paramname"><em>envModule</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>envSurfaceDir</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> *&#160;</td>
+          <td class="paramname"><em>base</em> = <code>nullptr</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>baseName</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae46599c49aa8ea2bd68be14c906ea215"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae46599c49aa8ea2bd68be14c906ea215">&#9670;&nbsp;</a></span>load() <span class="overload">[6/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MC_RTC_DEPRECATED void mc_rbdyn::Robots::load </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; std::shared_ptr&lt; <a class="el" href="a02060.html">RobotModule</a> &gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>modules</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>surfaceDirs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af75cbe7bed91ed0d48c5896a0f99aa71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af75cbe7bed91ed0d48c5896a0f99aa71">&#9670;&nbsp;</a></span>loadFromUrdf()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02040.html">Robot</a>&amp; mc_rbdyn::Robots::loadFromUrdf </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>urdf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>withVirtualLinks</em> = <code>true</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>filteredLinks</em> = <code>{}</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>fixed</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> *&#160;</td>
+          <td class="paramname"><em>base</em> = <code>nullptr</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>baseName</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aaa4805f358230c5c30680e14a1d036cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa4805f358230c5c30680e14a1d036cf">&#9670;&nbsp;</a></span>mbcs() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01007.html">rbd::MultiBodyConfig</a>&gt;&amp; mc_rbdyn::Robots::mbcs </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Give access to the underlying list of <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01007.html">rbd::MultiBodyConfig</a> objects. </p>
+
+</div>
+</div>
+<a id="ad3cc8d1971325b497614377e6a6383b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3cc8d1971325b497614377e6a6383b6">&#9670;&nbsp;</a></span>mbcs() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt;<a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01007.html">rbd::MultiBodyConfig</a>&gt;&amp; mc_rbdyn::Robots::mbcs </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Give access to the underlying list of <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01007.html">rbd::MultiBodyConfig</a> objects (const) </p>
+
+</div>
+</div>
+<a id="adc4af4449c285c66835c5e511cd424d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc4af4449c285c66835c5e511cd424d6">&#9670;&nbsp;</a></span>mbs() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01003.html">rbd::MultiBody</a>&gt;&amp; mc_rbdyn::Robots::mbs </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Give access to the underlying list of <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01003.html">rbd::MultiBody</a> objects. </p>
+
+</div>
+</div>
+<a id="a968bbc1fc61e7a992a7759c8b920a72f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a968bbc1fc61e7a992a7759c8b920a72f">&#9670;&nbsp;</a></span>mbs() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt;<a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01003.html">rbd::MultiBody</a>&gt;&amp; mc_rbdyn::Robots::mbs </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Give access to the underlying list of <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01003.html">rbd::MultiBody</a> objects (const) </p>
+
+</div>
+</div>
+<a id="a3090013b978cf1dd68e0b4ca5279cc18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3090013b978cf1dd68e0b4ca5279cc18">&#9670;&nbsp;</a></span>operator=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02068.html">Robots</a>&amp; mc_rbdyn::Robots::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02068.html">Robots</a> &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa37c7715d7c713f0334363dd26452d38"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa37c7715d7c713f0334363dd26452d38">&#9670;&nbsp;</a></span>rbegin() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02068.html#a1869fe884d98ff31d558ae3fea4420db">reverse_iterator</a> mc_rbdyn::Robots::rbegin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2ed7a640a3cc1e1eda61613e89fd7486"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ed7a640a3cc1e1eda61613e89fd7486">&#9670;&nbsp;</a></span>rbegin() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02068.html#ad3db2fb8b4476c17f61b8e86c10bfeb3">const_reverse_iterator</a> mc_rbdyn::Robots::rbegin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a661cd23a4aec4c17e0c6edbbbecec720"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a661cd23a4aec4c17e0c6edbbbecec720">&#9670;&nbsp;</a></span>removeRobot() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_rbdyn::Robots::removeRobot </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a344e4ad7f16f3d41dea30e93e5486087"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a344e4ad7f16f3d41dea30e93e5486087">&#9670;&nbsp;</a></span>removeRobot() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_rbdyn::Robots::removeRobot </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>idx</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa05a25568265c5e17388f1c4e300d41e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa05a25568265c5e17388f1c4e300d41e">&#9670;&nbsp;</a></span>rend() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02068.html#a1869fe884d98ff31d558ae3fea4420db">reverse_iterator</a> mc_rbdyn::Robots::rend </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a02be61ed3972aeae42d94bbe242a839c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02be61ed3972aeae42d94bbe242a839c">&#9670;&nbsp;</a></span>rend() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02068.html#ad3db2fb8b4476c17f61b8e86c10bfeb3">const_reverse_iterator</a> mc_rbdyn::Robots::rend </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa353ea3d25202a5870a7f65e503a1b2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa353ea3d25202a5870a7f65e503a1b2a">&#9670;&nbsp;</a></span>reserve()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_rbdyn::Robots::reserve </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02068.html#a264d2ce2a02a54afc9ecf14a06f0f268">size_type</a>&#160;</td>
+          <td class="paramname"><em>new_cap</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reserves space for a total number of new_cap <a class="el" href="a02068.html">Robots</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">new_cap</td><td>Reserve size</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Has no effect if size &gt; new_cap </p>
+
+</div>
+</div>
+<a id="a570c3637d3567b90bfedb8156b4f8f87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a570c3637d3567b90bfedb8156b4f8f87">&#9670;&nbsp;</a></span>robot() <span class="overload">[1/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02040.html">Robot</a>&amp; mc_rbdyn::Robots::robot </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1ad3d599f48c5ebf62add75a4da29ab9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ad3d599f48c5ebf62add75a4da29ab9">&#9670;&nbsp;</a></span>robot() <span class="overload">[2/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="a02040.html">Robot</a>&amp; mc_rbdyn::Robots::robot </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8756bc3dcfdd1d5fb0a9fda13322835b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8756bc3dcfdd1d5fb0a9fda13322835b">&#9670;&nbsp;</a></span>robot() <span class="overload">[3/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02040.html">Robot</a>&amp; mc_rbdyn::Robots::robot </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>idx</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3e160f2c75f75740bcec75b3a2f2a881"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e160f2c75f75740bcec75b3a2f2a881">&#9670;&nbsp;</a></span>robot() <span class="overload">[4/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="a02040.html">Robot</a>&amp; mc_rbdyn::Robots::robot </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>idx</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aebe182308c2902e6b5f5df2be921d6d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebe182308c2902e6b5f5df2be921d6d1">&#9670;&nbsp;</a></span>robot() <span class="overload">[5/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02040.html">Robot</a>&amp; mc_rbdyn::Robots::robot </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aea26684de58321f309fc79f9c91d5161"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea26684de58321f309fc79f9c91d5161">&#9670;&nbsp;</a></span>robot() <span class="overload">[6/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="a02040.html">Robot</a>&amp; mc_rbdyn::Robots::robot </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2ee7fb2f2bdb6fcaefcbbdf62971a290"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ee7fb2f2bdb6fcaefcbbdf62971a290">&#9670;&nbsp;</a></span>robotCopy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_rbdyn::Robots::robotCopy </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02040.html">Robot</a> &amp;&#160;</td>
+          <td class="paramname"><em>robot</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6b8424f1c2946197d3f2528a8fba02b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b8424f1c2946197d3f2528a8fba02b5">&#9670;&nbsp;</a></span>robotIndex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int mc_rbdyn::Robots::robotIndex </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Index of the main robot. </p>
+
+</div>
+</div>
+<a id="a9369f09e1f26a46c62a0a0dab3f5a6f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9369f09e1f26a46c62a0a0dab3f5a6f4">&#9670;&nbsp;</a></span>robotModule()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="a02060.html">RobotModule</a>&amp; mc_rbdyn::Robots::robotModule </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>idx</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="adcd2485c334658f2c83b7f1e343963ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adcd2485c334658f2c83b7f1e343963ae">&#9670;&nbsp;</a></span>robotModules()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt;<a class="el" href="a02060.html">mc_rbdyn::RobotModule</a>&gt;&amp; mc_rbdyn::Robots::robotModules </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Give access to the underlying list of <a class="el" href="a02060.html">RobotModule</a> objects. </p>
+
+</div>
+</div>
+<a id="a983b7d961886e155c660d77a71be0553"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a983b7d961886e155c660d77a71be0553">&#9670;&nbsp;</a></span>robots() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="a02040.html">Robot</a>&gt;&amp; mc_rbdyn::Robots::robots </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Give access to the underlying list of <a class="el" href="a02040.html">Robot</a> objects. </p>
+
+</div>
+</div>
+<a id="a8f9e3200bd791886a6e2742b3970a0da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f9e3200bd791886a6e2742b3970a0da">&#9670;&nbsp;</a></span>robots() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt;<a class="el" href="a02040.html">Robot</a>&gt;&amp; mc_rbdyn::Robots::robots </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Give access to the underlying list of <a class="el" href="a02040.html">Robot</a> objects (const) </p>
+
+</div>
+</div>
+<a id="a0fe7360e8745aa349a770d489d5585ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0fe7360e8745aa349a770d489d5585ee">&#9670;&nbsp;</a></span>size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02068.html#a264d2ce2a02a54afc9ecf14a06f0f268">size_type</a> mc_rbdyn::Robots::size </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Number of robots. </p>
+<dl class="section return"><dt>Returns</dt><dd>The number of robots </dd></dl>
+
+</div>
+</div>
+<a id="a577b02e4a3e2384c60bfe983ad362448"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a577b02e4a3e2384c60bfe983ad362448">&#9670;&nbsp;</a></span>updateIndexes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_rbdyn::Robots::updateIndexes </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Function Documentation</h2>
+<a id="ad03b49f51df2ba1d492ced03d923fdd0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad03b49f51df2ba1d492ced03d923fdd0">&#9670;&nbsp;</a></span>Robot</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend struct <a class="el" href="a02040.html">Robot</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="af035c10ad185cddd84fdd05611b88bae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af035c10ad185cddd84fdd05611b88bae">&#9670;&nbsp;</a></span>envIndex_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int mc_rbdyn::Robots::envIndex_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afa146e9e579f283e5bc64acc3fc40807"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa146e9e579f283e5bc64acc3fc40807">&#9670;&nbsp;</a></span>mbcs_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01007.html">rbd::MultiBodyConfig</a>&gt; mc_rbdyn::Robots::mbcs_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6b3262231180412489be91286feae99d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b3262231180412489be91286feae99d">&#9670;&nbsp;</a></span>mbgs_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01015.html">rbd::MultiBodyGraph</a>&gt; mc_rbdyn::Robots::mbgs_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a898afa6275886be6bd9ed57346d02cef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a898afa6275886be6bd9ed57346d02cef">&#9670;&nbsp;</a></span>mbs_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01003.html">rbd::MultiBody</a>&gt; mc_rbdyn::Robots::mbs_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a77e5ac668f50ab58f3513fd60cbfc2ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77e5ac668f50ab58f3513fd60cbfc2ed">&#9670;&nbsp;</a></span>robot_modules_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="a02060.html">mc_rbdyn::RobotModule</a>&gt; mc_rbdyn::Robots::robot_modules_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad61b4c8a27b1c5cf841bbeae8ae9cb8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad61b4c8a27b1c5cf841bbeae8ae9cb8b">&#9670;&nbsp;</a></span>robotIndex_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int mc_rbdyn::Robots::robotIndex_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acc9294aa220cbbee47b28ec1322237b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc9294aa220cbbee47b28ec1322237b3">&#9670;&nbsp;</a></span>robots_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="a02040.html">mc_rbdyn::Robot</a>&gt; mc_rbdyn::Robots::robots_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -163,8 +1688,8 @@ template&lt;typename T &gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00636.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a02068.html">ConfigurationLoader</a></li>
-    <li class="footer">Generated on Mon Jan 6 2020 12:40:14 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00649.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a02068.html">Robots</a></li>
+    <li class="footer">Generated on Tue Jan 14 2020 02:20:47 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

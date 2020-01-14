@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_trajectory Namespace Reference</title>
+<title>mc_rtc::internal Namespace Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,74 +70,33 @@ $(document).ready(function(){initNavTree('a00658.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#nested-classes">Classes</a>  </div>
   <div class="headertitle">
-<div class="title">mc_trajectory Namespace Reference</div>  </div>
+<div class="title">mc_rtc::internal Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02640.html">BSpline</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02088.html">_has_configuration_load_object</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper trait to determine whether: T <a class="el" href="a02080.html#a3e8685e2cdb83f2ec06ab4e231a653ae">ConfigurationLoader&lt;T&gt;::load(const mc_rtc::Configuration &amp;)</a>; is a valid function or not.  <a href="a02088.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02644.html">ExactCubic</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents an Exact Cubic spline : a curve that passes exactly through waypoints in position, while respecting optional constraints on its initial and final velocity and acceleration.  <a href="a02644.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02096.html">_has_configuration_save_object</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper trait to determine whether: <a class="el" href="a02104.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> <a class="el" href="a02080.html#ac516ceb726f94bd4e5a32ad25f1178c2">mc_rtc::ConfigurationLoader&lt;T&gt;::save</a>(const T&amp;, Args ...); is a valid construct or not.  <a href="a02096.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02648.html">InterpolatedRotation</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes a trajectory with smoothly interpolate rotation between waypoints.  <a href="a02648.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02092.html">has_configuration_load_object</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02652.html">Spline</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02100.html">has_configuration_save_object</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a9fbcf4dd49d2e09b5d33208fae44f11b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03519.html#adff5a6c1e965ae6fdc756a2c5187f9c9">MC_TRAJECTORY_DLLAPI</a> Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00658.html#a9fbcf4dd49d2e09b5d33208fae44f11b">generateInterpolatedWaypoints</a> (const Eigen::Vector3d &amp;start, const Eigen::Vector3d &amp;stop, unsigned int nrWP)</td></tr>
-<tr class="separator:a9fbcf4dd49d2e09b5d33208fae44f11b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a9fbcf4dd49d2e09b5d33208fae44f11b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9fbcf4dd49d2e09b5d33208fae44f11b">&#9670;&nbsp;</a></span>generateInterpolatedWaypoints()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a03519.html#adff5a6c1e965ae6fdc756a2c5187f9c9">MC_TRAJECTORY_DLLAPI</a> Eigen::MatrixXd mc_trajectory::generateInterpolatedWaypoints </td>
-          <td>(</td>
-          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
-          <td class="paramname"><em>start</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
-          <td class="paramname"><em>stop</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>nrWP</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00658.html">mc_trajectory</a></li>
-    <li class="footer">Generated on Mon Jan 6 2020 12:40:15 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00648.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00658.html">internal</a></li>
+    <li class="footer">Generated on Tue Jan 14 2020 02:20:47 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

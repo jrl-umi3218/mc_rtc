@@ -1,6 +1,7 @@
 var a00284 =
 [
-    [ "LoaderSandboxData", "a02364.html", "a02364" ],
-    [ "no_sandbox_function_call", "a00284.html#a299e6b1f00e482f61b89988dc5b395fb", null ],
-    [ "sandbox_function_call", "a00284.html#a810352dfb9fa4299b85fa19ac258a308", null ]
+    [ "XYThetaROImpl", "a02348.html", "a02348" ],
+    [ "XYThetaImpl", "a02352.html", "a02352" ],
+    [ "XYTheta", "a00284.html#aaaa2ebe2ecb490f266fe541318646561", null ],
+    [ "XYTheta", "a00284.html#a98fa40132858d1d9c0091acb36ce9f32", null ]
 ];

@@ -1,7 +1,7 @@
 var a02004 =
 [
-    [ "joint", "a02004.html#a4d23695d0cbacd0471313e1323d9e4b1", null ],
-    [ "multiplier", "a02004.html#acae914e7c2302757339b3f4624394c11", null ],
-    [ "name", "a02004.html#a461c2efe0da4d17cc75ce43837a0503f", null ],
-    [ "offset", "a02004.html#a07938e029fb7d951388c0b1ad64642b5", null ]
+    [ "C", "a02004.html#a6937033e6a1e29165b7a1f9b2005232a", null ],
+    [ "jointName", "a02004.html#aae8d1a8eaa685b5efc3eb22b95fbb892", null ],
+    [ "K", "a02004.html#ad9fa8b3ad657cbfd784a906f80e2a493", null ],
+    [ "O", "a02004.html#aea9ed4cd59fb673fdac0d4f252d90987", null ]
 ];

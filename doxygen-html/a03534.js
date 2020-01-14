@@ -1,5 +1,4 @@
 var a03534 =
 [
-    [ "Polygon", "a02244.html", "a02244" ],
-    [ "Polygon", "a03534.html#a455aeb83363d1c76669333ae6827f638", null ]
+    [ "Configuration", "a03534.html#a6e724381ca619d4c38da5fd7cdbfe9c0", null ]
 ];

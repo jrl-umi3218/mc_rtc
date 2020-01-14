@@ -1,13 +1,9 @@
 var a02236 =
 [
-    [ "Ordinate", "a02236.html#afe2f931b5577ee78af7623eee61496e3", null ],
-    [ "side", "a02236.html#a3247e32aaba3a8e62bbcc61e9b172ec7", null ],
-    [ "style", "a02236.html#a9f8bf84f326b02b180223b983089e84e", null ],
-    [ "write", "a02236.html#afd2006099d5d013adab3798f84e088c7", null ],
-    [ "color_", "a02236.html#ae207af9008ec8b5da6db891ea0ebd79c", null ],
-    [ "get_fn_", "a02236.html#a6e0a97eb4969b6d697f5e3d4f957d886", null ],
-    [ "name_", "a02236.html#af79677e0c449d72b34a329ace9814390", null ],
-    [ "side_", "a02236.html#a73f245b506213662fd3d5f3deb1eb837", null ],
-    [ "style_", "a02236.html#a859f99683fcc0f5acf120cd6e0f84dbc", null ],
-    [ "type", "a02236.html#a327093cadc488b62d7a62480f3ca4959", null ]
+    [ "Abscissa", "a02236.html#a57a4c02713024e53ec4043123cab4c50", null ],
+    [ "max", "a02236.html#a190355057411d2e31f821dbb45afcf96", null ],
+    [ "min", "a02236.html#aabf95601f4cd3af4b63249bd327f2148", null ],
+    [ "range", "a02236.html#a86d5bd8a471e0f85217fd8a6872c89ca", null ],
+    [ "write", "a02236.html#ad46e2e46e2c4e130880c831cf3df8d07", null ],
+    [ "type", "a02236.html#a74de98c8a1157861357192b66f451241", null ]
 ];

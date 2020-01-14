@@ -1,7 +1,7 @@
 var a00658 =
 [
-    [ "BSpline", "a02640.html", "a02640" ],
-    [ "ExactCubic", "a02644.html", "a02644" ],
-    [ "InterpolatedRotation", "a02648.html", "a02648" ],
-    [ "Spline", "a02652.html", "a02652" ]
+    [ "_has_configuration_load_object", "a02088.html", "a02088" ],
+    [ "_has_configuration_save_object", "a02096.html", "a02096" ],
+    [ "has_configuration_load_object", "a02092.html", null ],
+    [ "has_configuration_save_object", "a02100.html", null ]
 ];

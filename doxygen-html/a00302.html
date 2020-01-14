@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>MessagePackBuilder.h File Reference</title>
+<title>iterate_binary_log.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,34 +70,41 @@ $(document).ready(function(){initNavTree('a00302.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a>  </div>
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">MessagePackBuilder.h File Reference</div>  </div>
+<div class="title">iterate_binary_log.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a00305.html">mc_rtc/utils_api.h</a>&gt;</code><br />
-<code>#include &lt;SpaceVecAlg/SpaceVecAlg&gt;</code><br />
-<code>#include &lt;Eigen/Core&gt;</code><br />
-<code>#include &lt;array&gt;</code><br />
-<code>#include &lt;exception&gt;</code><br />
-<code>#include &lt;map&gt;</code><br />
-<code>#include &lt;memory&gt;</code><br />
-<code>#include &lt;set&gt;</code><br />
-<code>#include &lt;string&gt;</code><br />
-<code>#include &lt;vector&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a00314.html">mc_rtc/MessagePackBuilder.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00299.html">mc_rtc/log/FlatLog.h</a>&gt;</code><br />
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02404.html">mc_rtc::MessagePackBuilder</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper class to build a MessagePack message.  <a href="a02404.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:a00636"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00636.html">mc_rtc</a></td></tr>
-<tr class="memdesc:a00636"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a02092.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00637.html">mc_rbdyn</a> objects. <br /></td></tr>
+<tr class="memitem:a00648"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00648.html">mc_rtc</a></td></tr>
+<tr class="memdesc:a00648"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a02104.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00649.html">mc_rbdyn</a> objects. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00663"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00663.html">mc_rtc::log</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a2e5bbb4664bc287ec78732a63a7cd646"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00663.html#a2e5bbb4664bc287ec78732a63a7cd646">mc_rtc::log::binary_log_callback</a> = std::function&lt; bool(const std::vector&lt; std::string &gt; &amp;, std::vector&lt; FlatLog::record &gt; &amp;, double)&gt;</td></tr>
+<tr class="separator:a2e5bbb4664bc287ec78732a63a7cd646"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c09aed839e3ee87a5be3e286a3e8903"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00663.html#a9c09aed839e3ee87a5be3e286a3e8903">mc_rtc::log::copy_callback</a> = std::function&lt; void(<a class="el" href="a02416.html">mc_rtc::MessagePackBuilder</a> &amp;, const std::vector&lt; std::string &gt; &amp;)&gt;</td></tr>
+<tr class="separator:a9c09aed839e3ee87a5be3e286a3e8903"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c86e8f30b914960080029679897a749"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00663.html#a1c86e8f30b914960080029679897a749">mc_rtc::log::binary_log_copy_callback</a> = std::function&lt; bool(const std::vector&lt; std::string &gt; &amp;, std::vector&lt; FlatLog::record &gt; &amp;, double, const copy_callback &amp;, const char *, uint64_t)&gt;</td></tr>
+<tr class="separator:a1c86e8f30b914960080029679897a749"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ae939074ac3cce1fde0bb5e0ea7e90c86"><td class="memItemLeft" align="right" valign="top">bool <a class="el" href="a00317.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00663.html#ae939074ac3cce1fde0bb5e0ea7e90c86">mc_rtc::log::iterate_binary_log</a> (const std::string &amp;fpath, const binary_log_copy_callback &amp;callback, bool extract, const std::string &amp;time=&quot;t&quot;)</td></tr>
+<tr class="memdesc:ae939074ac3cce1fde0bb5e0ea7e90c86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over a given binary log data.  <a href="a00663.html#ae939074ac3cce1fde0bb5e0ea7e90c86">More...</a><br /></td></tr>
+<tr class="separator:ae939074ac3cce1fde0bb5e0ea7e90c86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51b18863af2ea7f3e981b32be6b2174f"><td class="memItemLeft" align="right" valign="top">bool <a class="el" href="a00317.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00663.html#a51b18863af2ea7f3e981b32be6b2174f">mc_rtc::log::iterate_binary_log</a> (const std::string &amp;fpath, const binary_log_callback &amp;callback, bool extract, const std::string &amp;time=&quot;t&quot;)</td></tr>
+<tr class="memdesc:a51b18863af2ea7f3e981b32be6b2174f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over a given binary log data.  <a href="a00663.html#a51b18863af2ea7f3e981b32be6b2174f">More...</a><br /></td></tr>
+<tr class="separator:a51b18863af2ea7f3e981b32be6b2174f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -105,8 +112,8 @@ Namespaces</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00302.html">MessagePackBuilder.h</a></li>
-    <li class="footer">Generated on Mon Jan 6 2020 12:40:14 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="dir_b6742d8caace21cd527a100fbd03062c.html">log</a></li><li class="navelem"><a class="el" href="a00302.html">iterate_binary_log.h</a></li>
+    <li class="footer">Generated on Tue Jan 14 2020 02:20:47 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

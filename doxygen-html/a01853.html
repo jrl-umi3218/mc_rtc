@@ -70,22 +70,45 @@ $(document).ready(function(){initNavTree('a01856.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">mc_control::fsm::ParallelState::DelayedState Member List</div>  </div>
+<div class="title">mc_control::fsm::MetaState Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="a01856.html">mc_control::fsm::ParallelState::DelayedState</a>, including all inherited members.</p>
+<p>This is the complete list of members for <a class="el" href="a01856.html">mc_control::fsm::MetaState</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="a01856.html#a217adbd0ad2da8c746df98646c67ffcb">DelayedState</a>(Controller &amp;ctl, const std::string &amp;name, double delay, mc_rtc::Configuration config)</td><td class="entry"><a class="el" href="a01856.html">mc_control::fsm::ParallelState::DelayedState</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a01856.html#a0069412544d7a76f5c724b570342918b">run</a>(Controller &amp;ctl, double time)</td><td class="entry"><a class="el" href="a01856.html">mc_control::fsm::ParallelState::DelayedState</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01856.html#a4fcc3ba3af0b760e0a62253e625ec3b6">state</a>()</td><td class="entry"><a class="el" href="a01856.html">mc_control::fsm::ParallelState::DelayedState</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01836.html#ac82605212b9b9341bebc091bd24922d3">add_collisions_after_config_</a></td><td class="entry"><a class="el" href="a01836.html">mc_control::fsm::State</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01836.html#a6f84b8e24821763df3524fa551df0875">add_collisions_config_</a></td><td class="entry"><a class="el" href="a01836.html">mc_control::fsm::State</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01836.html#a57c8d5de04fd74feef0699a82a72123f">add_contacts_after_config_</a></td><td class="entry"><a class="el" href="a01836.html">mc_control::fsm::State</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01836.html#ad5e8acab9275900efb0a32ffaf155bed">add_contacts_config_</a></td><td class="entry"><a class="el" href="a01836.html">mc_control::fsm::State</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01856.html#a807d3ec145ef893dd722fedf1f53c1af">config_</a></td><td class="entry"><a class="el" href="a01856.html">mc_control::fsm::MetaState</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01856.html#a9568343c27495f95dcf538d8fc71539e">configure</a>(const mc_rtc::Configuration &amp;config) override</td><td class="entry"><a class="el" href="a01856.html">mc_control::fsm::MetaState</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01836.html#a32a8ea03359d52b9c7b096c3b9c6a890">configure_</a>(const mc_rtc::Configuration &amp;config)</td><td class="entry"><a class="el" href="a01836.html">mc_control::fsm::State</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01856.html#a9666773e74f14ce95d27e0215d1146f8">executor_</a></td><td class="entry"><a class="el" href="a01856.html">mc_control::fsm::MetaState</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01836.html#a6a5b441d6b4c08f462903b243484e02e">name</a>()</td><td class="entry"><a class="el" href="a01836.html">mc_control::fsm::State</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01836.html#af62e0496fbbe60350808ba3cfe574fd1">name</a>(const std::string &amp;n)</td><td class="entry"><a class="el" href="a01836.html">mc_control::fsm::State</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01836.html#a0a94b4c21887b3bc710d040a31c5a2dc">output</a>()</td><td class="entry"><a class="el" href="a01836.html">mc_control::fsm::State</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01836.html#a1e115a009309410f0eadabf118a6fb49">output</a>(const std::string &amp;o)</td><td class="entry"><a class="el" href="a01836.html">mc_control::fsm::State</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01856.html#a92a3be690dc783cb7f77f7fd39ec1cdf">read_msg</a>(std::string &amp;msg) override</td><td class="entry"><a class="el" href="a01856.html">mc_control::fsm::MetaState</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01836.html#a870b4c681a830419af9f482d1891893f">read_write_msg</a>(std::string &amp;, std::string &amp;)</td><td class="entry"><a class="el" href="a01836.html">mc_control::fsm::State</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01836.html#a0b2e5163abce708367767793befab639">remove_collisions_after_config_</a></td><td class="entry"><a class="el" href="a01836.html">mc_control::fsm::State</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01836.html#abb0a79ae8a940e3138f9bbce2a508b60">remove_collisions_config_</a></td><td class="entry"><a class="el" href="a01836.html">mc_control::fsm::State</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01836.html#a68a4a86a3ee1b873a53add96ead9c064">remove_contacts_after_config_</a></td><td class="entry"><a class="el" href="a01836.html">mc_control::fsm::State</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01836.html#a902a5522347fbb8aa78872ae4ee0042c">remove_contacts_config_</a></td><td class="entry"><a class="el" href="a01836.html">mc_control::fsm::State</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01836.html#a0a086f5c210f8149fc3cc6627bd2dd74">remove_posture_task_</a></td><td class="entry"><a class="el" href="a01836.html">mc_control::fsm::State</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01856.html#a9b808dc76539033d70da8117b889a71e">run</a>(Controller &amp;) override</td><td class="entry"><a class="el" href="a01856.html">mc_control::fsm::MetaState</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01856.html#aa9271d4d0cc82bf5dee97093242f2a30">start</a>(Controller &amp;) override</td><td class="entry"><a class="el" href="a01856.html">mc_control::fsm::MetaState</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01836.html#acb573a0d4be2001f1e6820d9d75d3a94">start_</a>(Controller &amp;ctl)</td><td class="entry"><a class="el" href="a01836.html">mc_control::fsm::State</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01856.html#a7f3dee5b3328e795f56374e1f6a710d1">stop</a>(Controller &amp;) override</td><td class="entry"><a class="el" href="a01856.html">mc_control::fsm::MetaState</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01856.html#a53ae3a72e0ae0eb99d74025e11a55686">teardown</a>(Controller &amp;) override</td><td class="entry"><a class="el" href="a01856.html">mc_control::fsm::MetaState</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01836.html#a70d93ac4ef5012911b48890e8108141f">teardown_</a>(Controller &amp;ctl)</td><td class="entry"><a class="el" href="a01836.html">mc_control::fsm::State</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01836.html#a361292f4c1af52fb11fb081142832e06">~State</a>()</td><td class="entry"><a class="el" href="a01836.html">mc_control::fsm::State</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Mon Jan 6 2020 12:40:14 for mc_rtc by
+    <li class="footer">Generated on Tue Jan 14 2020 02:20:47 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

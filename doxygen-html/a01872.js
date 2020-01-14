@@ -1,9 +1,10 @@
 var a01872 =
 [
-    [ "origin_t", "a01872.html#ae92ec157ad130676dc1caff84eebae94", null ],
-    [ "init", "a01872.html#a961cc6df4c21830bb75f60de6f5904d2", null ],
-    [ "initState", "a01872.html#a85cfacc20b7ca6c22181193031a0f922", null ],
-    [ "print", "a01872.html#a0e247cf49772c5bade453bd823a75923", null ],
-    [ "transition", "a01872.html#ae22a9f786f98b01fe50849d23d690c93", null ],
-    [ "transitions", "a01872.html#ac57f4e0666b325b21f0ed076fd75fe75", null ]
+    [ "configure", "a01872.html#ae794e4997ff266a2e709b3a9cf2ba687", null ],
+    [ "run", "a01872.html#a21910e5c2ee0eb49560345113ae9b6be", null ],
+    [ "start", "a01872.html#a21cbe60a2692a0eede28cd09a0510084", null ],
+    [ "teardown", "a01872.html#a15a4573c025bf929bd7416b132b8a5c4", null ],
+    [ "duration_", "a01872.html#abf66f94f4a86433976e52ba2751cb60f", null ],
+    [ "goal_", "a01872.html#aabaccc34e1562ea3f396dc2105274b44", null ],
+    [ "tick_", "a01872.html#abecdfc22b00a1fa457f6beadadf3a069", null ]
 ];

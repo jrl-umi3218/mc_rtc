@@ -1,13 +1,9 @@
 var a02484 =
 [
-    [ "mu", "a02484.html#a9e1941c9323f825326c7f8d64fac14ac", null ],
-    [ "nr_generators", "a02484.html#a5c34937b82f901be184a1de7ae8d1dd9", null ],
-    [ "r1_body", "a02484.html#ad8c4a5aae685b15b8dffeddcb01aa9f7", null ],
-    [ "r1_index", "a02484.html#a91f4355799d2e97441538f28adf25071", null ],
-    [ "r1_points", "a02484.html#a7ffb13c3e88fdefbdf8ad51aab184c16", null ],
-    [ "r1_surface", "a02484.html#a7af4dca57bbecf5e3397e7ea4f11a360", null ],
-    [ "r2_body", "a02484.html#a30084dbbeaca445a811e2b169344919d", null ],
-    [ "r2_index", "a02484.html#aaaa28b666db138b8073c87f0367408ea", null ],
-    [ "r2_surface", "a02484.html#a7d179ea79ffefc9a499c3300b4fba396", null ],
-    [ "X_b1_b2", "a02484.html#a0c97419447f414150d56fb8cc8ea791e", null ]
+    [ "Base", "a02484.html#a9317cdb48284a24cd98ca728d981adef", null ],
+    [ "GenInequalityConstraint", "a02484.html#ab05cc6d357d5272385629c2e1aa3c662", null ],
+    [ "GenInequalityConstraint", "a02484.html#a353280809d22c3923117949fa696b1f6", null ],
+    [ "GenInequalityConstraint", "a02484.html#ab028528b1669e88d8ccd1c017285ff7e", null ],
+    [ "AGenInEq", "a02484.html#ac9c6f77d4ba3bb3985ffc21cee36e4f3", null ],
+    [ "descGenInEq", "a02484.html#a63ab0a2bcace9695b3a664ad8fce54d5", null ]
 ];

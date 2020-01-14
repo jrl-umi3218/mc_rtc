@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_control::fsm::Contact Class Reference</title>
+<title>mc_control::ElementId Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -71,56 +71,52 @@ $(document).ready(function(){initNavTree('a01804.html','');});
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="a01801.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_control::fsm::Contact Class Reference</div>  </div>
+<div class="title">mc_control::ElementId Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>A lightweight variant of <a class="el" href="a01984.html">mc_rbdyn::Contact</a> meant to simplify contact manipulation in the FSM.  
+<p>Used to uniquely identify an element.  
  <a href="a01804.html#details">More...</a></p>
 
-<p><code>#include &lt;mc_control/fsm/Controller.h&gt;</code></p>
+<p><code>#include &lt;mc_control/ControllerClient.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a6637fcb7f8ac4a04f730f5ffed87cc55"><td class="memItemLeft" align="right" valign="top">EIGEN_MAKE_ALIGNED_OPERATOR_NEW&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01804.html#a6637fcb7f8ac4a04f730f5ffed87cc55">Contact</a> (const std::string &amp;<a class="el" href="a01804.html#a9984ba81a2a54cc3216911a4a7c23bb7">r1</a>, const std::string &amp;<a class="el" href="a01804.html#a426b803fa1191501cc273d05b2f4d7e7">r2</a>, const std::string &amp;<a class="el" href="a01804.html#ac21f685a8adc12fb0a3015851023ae08">r1Surface</a>, const std::string &amp;<a class="el" href="a01804.html#a19bb1febaf343d980f6de167b004d8bb">r2Surface</a>, const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00069.html#acdb6a5c038a9c26a61b0187b696b2630">Eigen::Vector6d</a> &amp;<a class="el" href="a01804.html#abf05b8825daf19dd4cff5630b7268e7e">dof</a>=Eigen::Vector6d::Ones())</td></tr>
-<tr class="separator:a6637fcb7f8ac4a04f730f5ffed87cc55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63027fea5b27ea98fb1c39aa78c56fed"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01804.html#a63027fea5b27ea98fb1c39aa78c56fed">operator&lt;</a> (const <a class="el" href="a01804.html">Contact</a> &amp;rhs) const</td></tr>
-<tr class="separator:a63027fea5b27ea98fb1c39aa78c56fed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a19a8a477e8c16ad944a32c12401ceb25"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01804.html#a19a8a477e8c16ad944a32c12401ceb25">operator==</a> (const <a class="el" href="a01804.html">Contact</a> &amp;rhs) const</td></tr>
-<tr class="separator:a19a8a477e8c16ad944a32c12401ceb25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a770914b6bd76f3cd0b4c42c950073328"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01804.html#a770914b6bd76f3cd0b4c42c950073328">operator!=</a> (const <a class="el" href="a01804.html">Contact</a> &amp;rhs) const</td></tr>
-<tr class="separator:a770914b6bd76f3cd0b4c42c950073328"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46d54c4d75fe306846531e8c436fa6f7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01804.html#a46d54c4d75fe306846531e8c436fa6f7">Contact</a> ()=default</td></tr>
-<tr class="memdesc:a46d54c4d75fe306846531e8c436fa6f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor, invalid contact.  <a href="#a46d54c4d75fe306846531e8c436fa6f7">More...</a><br /></td></tr>
-<tr class="separator:a46d54c4d75fe306846531e8c436fa6f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a6936e7692e199d18b9c7906c70414313"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a01804.html">Contact</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01804.html#a6936e7692e199d18b9c7906c70414313">from_mc_rbdyn</a> (const <a class="el" href="a01808.html">Controller</a> &amp;, const <a class="el" href="a01984.html">mc_rbdyn::Contact</a> &amp;)</td></tr>
-<tr class="separator:a6936e7692e199d18b9c7906c70414313"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17c9c3f1700bd2f02814ca219844c934"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01804.html#a17c9c3f1700bd2f02814ca219844c934">ElementId</a> ()=default</td></tr>
+<tr class="separator:a17c9c3f1700bd2f02814ca219844c934"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84ad794dcfc845476f05d2cb1c283351"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01804.html#a84ad794dcfc845476f05d2cb1c283351">ElementId</a> (const <a class="el" href="a01804.html">ElementId</a> &amp;)=default</td></tr>
+<tr class="separator:a84ad794dcfc845476f05d2cb1c283351"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a566ba8033fa8a7f50b016947ac5002d3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01804.html#a566ba8033fa8a7f50b016947ac5002d3">ElementId</a> (<a class="el" href="a01804.html">ElementId</a> &amp;&amp;)=default</td></tr>
+<tr class="separator:a566ba8033fa8a7f50b016947ac5002d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a781c1eac4041ede096f3fae9b0c775b2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01804.html">ElementId</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01804.html#a781c1eac4041ede096f3fae9b0c775b2">operator=</a> (const <a class="el" href="a01804.html">ElementId</a> &amp;)=default</td></tr>
+<tr class="separator:a781c1eac4041ede096f3fae9b0c775b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24f027cf01658b8e6c701bab7d33f728"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01804.html">ElementId</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01804.html#a24f027cf01658b8e6c701bab7d33f728">operator=</a> (<a class="el" href="a01804.html">ElementId</a> &amp;&amp;)=default</td></tr>
+<tr class="separator:a24f027cf01658b8e6c701bab7d33f728"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a232678c79a8f6faa8923330bd50ec053"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01804.html#a232678c79a8f6faa8923330bd50ec053">ElementId</a> (const std::vector&lt; std::string &gt; &amp;<a class="el" href="a01804.html#a72f672dd6379b02c13838974b2b04f50">category</a>, const std::string &amp;<a class="el" href="a01804.html#afa0ea7e8ec08b383d992e9a8b408a879">name</a>, int <a class="el" href="a01804.html#a5753e9c679e8109c6bce7c9a02dd5c37">sid</a>)</td></tr>
+<tr class="separator:a232678c79a8f6faa8923330bd50ec053"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a200df31dd4025e687962b95ec3f7810d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01804.html#a200df31dd4025e687962b95ec3f7810d">ElementId</a> (const std::vector&lt; std::string &gt; &amp;<a class="el" href="a01804.html#a72f672dd6379b02c13838974b2b04f50">category</a>, const std::string &amp;<a class="el" href="a01804.html#afa0ea7e8ec08b383d992e9a8b408a879">name</a>)</td></tr>
+<tr class="separator:a200df31dd4025e687962b95ec3f7810d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a9984ba81a2a54cc3216911a4a7c23bb7"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01804.html#a9984ba81a2a54cc3216911a4a7c23bb7">r1</a></td></tr>
-<tr class="separator:a9984ba81a2a54cc3216911a4a7c23bb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a426b803fa1191501cc273d05b2f4d7e7"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01804.html#a426b803fa1191501cc273d05b2f4d7e7">r2</a></td></tr>
-<tr class="separator:a426b803fa1191501cc273d05b2f4d7e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac21f685a8adc12fb0a3015851023ae08"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01804.html#ac21f685a8adc12fb0a3015851023ae08">r1Surface</a></td></tr>
-<tr class="separator:ac21f685a8adc12fb0a3015851023ae08"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a19bb1febaf343d980f6de167b004d8bb"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01804.html#a19bb1febaf343d980f6de167b004d8bb">r2Surface</a></td></tr>
-<tr class="separator:a19bb1febaf343d980f6de167b004d8bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf05b8825daf19dd4cff5630b7268e7e"><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00069.html#acdb6a5c038a9c26a61b0187b696b2630">Eigen::Vector6d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01804.html#abf05b8825daf19dd4cff5630b7268e7e">dof</a></td></tr>
-<tr class="separator:abf05b8825daf19dd4cff5630b7268e7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72f672dd6379b02c13838974b2b04f50"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01804.html#a72f672dd6379b02c13838974b2b04f50">category</a> = {}</td></tr>
+<tr class="memdesc:a72f672dd6379b02c13838974b2b04f50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Category the element belongs to.  <a href="#a72f672dd6379b02c13838974b2b04f50">More...</a><br /></td></tr>
+<tr class="separator:a72f672dd6379b02c13838974b2b04f50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa0ea7e8ec08b383d992e9a8b408a879"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01804.html#afa0ea7e8ec08b383d992e9a8b408a879">name</a> = {}</td></tr>
+<tr class="memdesc:afa0ea7e8ec08b383d992e9a8b408a879"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of the element.  <a href="#afa0ea7e8ec08b383d992e9a8b408a879">More...</a><br /></td></tr>
+<tr class="separator:afa0ea7e8ec08b383d992e9a8b408a879"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5753e9c679e8109c6bce7c9a02dd5c37"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01804.html#a5753e9c679e8109c6bce7c9a02dd5c37">sid</a> = -1</td></tr>
+<tr class="memdesc:a5753e9c679e8109c6bce7c9a02dd5c37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stack id, the elements that share the same stack id should be displayed on the same line.  <a href="#a5753e9c679e8109c6bce7c9a02dd5c37">More...</a><br /></td></tr>
+<tr class="separator:a5753e9c679e8109c6bce7c9a02dd5c37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A lightweight variant of <a class="el" href="a01984.html">mc_rbdyn::Contact</a> meant to simplify contact manipulation in the FSM. </p>
+<div class="textblock"><p>Used to uniquely identify an element. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a6637fcb7f8ac4a04f730f5ffed87cc55"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6637fcb7f8ac4a04f730f5ffed87cc55">&#9670;&nbsp;</a></span>Contact() <span class="overload">[1/2]</span></h2>
+<a id="a17c9c3f1700bd2f02814ca219844c934"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17c9c3f1700bd2f02814ca219844c934">&#9670;&nbsp;</a></span>ElementId() <span class="overload">[1/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -129,61 +125,7 @@ Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">EIGEN_MAKE_ALIGNED_OPERATOR_NEW mc_control::fsm::Contact::Contact </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>r1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>r2</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>r1Surface</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>r2Surface</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00069.html#acdb6a5c038a9c26a61b0187b696b2630">Eigen::Vector6d</a> &amp;&#160;</td>
-          <td class="paramname"><em>dof</em> = <code>Eigen::Vector6d::Ones()</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a46d54c4d75fe306846531e8c436fa6f7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a46d54c4d75fe306846531e8c436fa6f7">&#9670;&nbsp;</a></span>Contact() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">mc_control::fsm::Contact::Contact </td>
+          <td class="memname">mc_control::ElementId::ElementId </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -196,13 +138,10 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Default constructor, invalid contact. </p>
-
 </div>
 </div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a6936e7692e199d18b9c7906c70414313"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6936e7692e199d18b9c7906c70414313">&#9670;&nbsp;</a></span>from_mc_rbdyn()</h2>
+<a id="a84ad794dcfc845476f05d2cb1c283351"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84ad794dcfc845476f05d2cb1c283351">&#9670;&nbsp;</a></span>ElementId() <span class="overload">[2/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -211,16 +150,74 @@ Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="a01804.html">Contact</a> mc_control::fsm::Contact::from_mc_rbdyn </td>
+          <td class="memname">mc_control::ElementId::ElementId </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a01808.html">Controller</a> &amp;&#160;</td>
-          <td class="paramname">, </td>
+          <td class="paramtype">const <a class="el" href="a01804.html">ElementId</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a566ba8033fa8a7f50b016947ac5002d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a566ba8033fa8a7f50b016947ac5002d3">&#9670;&nbsp;</a></span>ElementId() <span class="overload">[3/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_control::ElementId::ElementId </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a01804.html">ElementId</a> &amp;&amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a232678c79a8f6faa8923330bd50ec053"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a232678c79a8f6faa8923330bd50ec053">&#9670;&nbsp;</a></span>ElementId() <span class="overload">[4/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_control::ElementId::ElementId </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>category</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a01984.html">mc_rbdyn::Contact</a> &amp;&#160;</td>
-          <td class="paramname">&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>sid</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -230,15 +227,15 @@ Public Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a770914b6bd76f3cd0b4c42c950073328"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a770914b6bd76f3cd0b4c42c950073328">&#9670;&nbsp;</a></span>operator!=()</h2>
+<a id="a200df31dd4025e687962b95ec3f7810d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a200df31dd4025e687962b95ec3f7810d">&#9670;&nbsp;</a></span>ElementId() <span class="overload">[5/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -247,11 +244,21 @@ Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool mc_control::fsm::Contact::operator!= </td>
+          <td class="memname">mc_control::ElementId::ElementId </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a01804.html">Contact</a> &amp;&#160;</td>
-          <td class="paramname"><em>rhs</em></td><td>)</td>
-          <td> const</td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>category</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -263,8 +270,9 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a63027fea5b27ea98fb1c39aa78c56fed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a63027fea5b27ea98fb1c39aa78c56fed">&#9670;&nbsp;</a></span>operator<()</h2>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a781c1eac4041ede096f3fae9b0c775b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a781c1eac4041ede096f3fae9b0c775b2">&#9670;&nbsp;</a></span>operator=() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -273,26 +281,24 @@ Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool mc_control::fsm::Contact::operator&lt; </td>
+          <td class="memname"><a class="el" href="a01804.html">ElementId</a>&amp; mc_control::ElementId::operator= </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a01804.html">Contact</a> &amp;&#160;</td>
-          <td class="paramname"><em>rhs</em></td><td>)</td>
-          <td> const</td>
+          <td class="paramtype">const <a class="el" href="a01804.html">ElementId</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">default</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p class="reference">References <a class="el" href="a01804.html#a9984ba81a2a54cc3216911a4a7c23bb7">r1</a>, <a class="el" href="a01804.html#ac21f685a8adc12fb0a3015851023ae08">r1Surface</a>, <a class="el" href="a01804.html#a426b803fa1191501cc273d05b2f4d7e7">r2</a>, and <a class="el" href="a01804.html#a19bb1febaf343d980f6de167b004d8bb">r2Surface</a>.</p>
-
 </div>
 </div>
-<a id="a19a8a477e8c16ad944a32c12401ceb25"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a19a8a477e8c16ad944a32c12401ceb25">&#9670;&nbsp;</a></span>operator==()</h2>
+<a id="a24f027cf01658b8e6c701bab7d33f728"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24f027cf01658b8e6c701bab7d33f728">&#9670;&nbsp;</a></span>operator=() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -301,108 +307,68 @@ Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool mc_control::fsm::Contact::operator== </td>
+          <td class="memname"><a class="el" href="a01804.html">ElementId</a>&amp; mc_control::ElementId::operator= </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a01804.html">Contact</a> &amp;&#160;</td>
-          <td class="paramname"><em>rhs</em></td><td>)</td>
-          <td> const</td>
+          <td class="paramtype"><a class="el" href="a01804.html">ElementId</a> &amp;&amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">default</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p class="reference">References <a class="el" href="a01804.html#a9984ba81a2a54cc3216911a4a7c23bb7">r1</a>, <a class="el" href="a01804.html#ac21f685a8adc12fb0a3015851023ae08">r1Surface</a>, <a class="el" href="a01804.html#a426b803fa1191501cc273d05b2f4d7e7">r2</a>, and <a class="el" href="a01804.html#a19bb1febaf343d980f6de167b004d8bb">r2Surface</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="abf05b8825daf19dd4cff5630b7268e7e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abf05b8825daf19dd4cff5630b7268e7e">&#9670;&nbsp;</a></span>dof</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00069.html#acdb6a5c038a9c26a61b0187b696b2630">Eigen::Vector6d</a> mc_control::fsm::Contact::dof</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">mutable</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a9984ba81a2a54cc3216911a4a7c23bb7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9984ba81a2a54cc3216911a4a7c23bb7">&#9670;&nbsp;</a></span>r1</h2>
+<a id="a72f672dd6379b02c13838974b2b04f50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72f672dd6379b02c13838974b2b04f50">&#9670;&nbsp;</a></span>category</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string mc_control::fsm::Contact::r1</td>
+          <td class="memname">std::vector&lt;std::string&gt; mc_control::ElementId::category = {}</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="reference">Referenced by <a class="el" href="a01804.html#a63027fea5b27ea98fb1c39aa78c56fed">operator&lt;()</a>, and <a class="el" href="a01804.html#a19a8a477e8c16ad944a32c12401ceb25">operator==()</a>.</p>
+<p>Category the element belongs to. </p>
 
 </div>
 </div>
-<a id="ac21f685a8adc12fb0a3015851023ae08"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac21f685a8adc12fb0a3015851023ae08">&#9670;&nbsp;</a></span>r1Surface</h2>
+<a id="afa0ea7e8ec08b383d992e9a8b408a879"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa0ea7e8ec08b383d992e9a8b408a879">&#9670;&nbsp;</a></span>name</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string mc_control::fsm::Contact::r1Surface</td>
+          <td class="memname">std::string mc_control::ElementId::name = {}</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="reference">Referenced by <a class="el" href="a01804.html#a63027fea5b27ea98fb1c39aa78c56fed">operator&lt;()</a>, and <a class="el" href="a01804.html#a19a8a477e8c16ad944a32c12401ceb25">operator==()</a>.</p>
+<p>Name of the element. </p>
 
 </div>
 </div>
-<a id="a426b803fa1191501cc273d05b2f4d7e7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a426b803fa1191501cc273d05b2f4d7e7">&#9670;&nbsp;</a></span>r2</h2>
+<a id="a5753e9c679e8109c6bce7c9a02dd5c37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5753e9c679e8109c6bce7c9a02dd5c37">&#9670;&nbsp;</a></span>sid</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string mc_control::fsm::Contact::r2</td>
+          <td class="memname">int mc_control::ElementId::sid = -1</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="reference">Referenced by <a class="el" href="a01804.html#a63027fea5b27ea98fb1c39aa78c56fed">operator&lt;()</a>, and <a class="el" href="a01804.html#a19a8a477e8c16ad944a32c12401ceb25">operator==()</a>.</p>
-
-</div>
-</div>
-<a id="a19bb1febaf343d980f6de167b004d8bb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a19bb1febaf343d980f6de167b004d8bb">&#9670;&nbsp;</a></span>r2Surface</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string mc_control::fsm::Contact::r2Surface</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="reference">Referenced by <a class="el" href="a01804.html#a63027fea5b27ea98fb1c39aa78c56fed">operator&lt;()</a>, and <a class="el" href="a01804.html#a19a8a477e8c16ad944a32c12401ceb25">operator==()</a>.</p>
+<p>Stack id, the elements that share the same stack id should be displayed on the same line. </p>
 
 </div>
 </div>
@@ -412,8 +378,8 @@ Public Attributes</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00634.html">mc_control</a></li><li class="navelem"><a class="el" href="a00635.html">fsm</a></li><li class="navelem"><a class="el" href="a01804.html">Contact</a></li>
-    <li class="footer">Generated on Mon Jan 6 2020 12:40:14 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00646.html">mc_control</a></li><li class="navelem"><a class="el" href="a01804.html">ElementId</a></li>
+    <li class="footer">Generated on Tue Jan 14 2020 02:20:47 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

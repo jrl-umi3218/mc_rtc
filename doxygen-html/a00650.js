@@ -1,10 +1,11 @@
 var a00650 =
 [
-    [ "Abscissa", "a02224.html", "a02224" ],
-    [ "AbscissaOrdinate", "a02228.html", "a02228" ],
-    [ "AbscissaOrdinateWithColor", "a02232.html", "a02232" ],
-    [ "Ordinate", "a02236.html", "a02236" ],
-    [ "OrdinateWithColor", "a02240.html", "a02240" ],
-    [ "Polygon", "a02244.html", "a02244" ],
-    [ "Polygons", "a02248.html", "a02248" ]
+    [ "BodySensorObserver", "a01928.html", "a01928" ],
+    [ "EncoderObserver", "a01932.html", "a01932" ],
+    [ "KinematicInertialObserver", "a01936.html", "a01936" ],
+    [ "KinematicInertialPoseObserver", "a01940.html", "a01940" ],
+    [ "LowPassFiniteDifferencesVelocityFilter", "a01944.html", "a01944" ],
+    [ "LowPassVelocityFilter", "a01948.html", "a01948" ],
+    [ "Observer", "a01952.html", "a01952" ],
+    [ "ObserverLoader", "a01956.html", "a01956" ]
 ];

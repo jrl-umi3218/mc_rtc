@@ -1,9 +1,9 @@
 var a03504 =
 [
-    [ "MC_RBDYN_DLLAPI", "a03504.html#a5f64edebd03a669545de1ba699d6cb49", null ],
-    [ "MC_RBDYN_DLLEXPORT", "a03504.html#ae269070c4054c9fa40053b5e28ea074f", null ],
-    [ "MC_RBDYN_DLLIMPORT", "a03504.html#a529cb71c3827899033a1e94d10552a38", null ],
-    [ "MC_RBDYN_DLLLOCAL", "a03504.html#a2956eb566ae27b5965f64bc3c422c703", null ],
-    [ "MC_RBDYN_LOCAL", "a03504.html#a830b69e4ab5049ef14b25b9a3dd872cb", null ],
-    [ "MC_RBDYN_VERSION", "a03504.html#a552577349e8efdac2745cbdd3898f85e", null ]
+    [ "MC_CONTROL_DLLAPI", "a03504.html#a167861c5d95139886801b242d6d0115f", null ],
+    [ "MC_CONTROL_DLLEXPORT", "a03504.html#a3ab2eb8965ce5e6d787aecf3e46d3be0", null ],
+    [ "MC_CONTROL_DLLIMPORT", "a03504.html#a93d9bb1f3f36bbffb00cf015b0bb0e37", null ],
+    [ "MC_CONTROL_DLLLOCAL", "a03504.html#a5fd14ed2320e3cbe50d19d4ada5b64a7", null ],
+    [ "MC_CONTROL_LOCAL", "a03504.html#aaef3a5c95b86a2ae0592bfafaec89185", null ],
+    [ "MC_CONTROL_VERSION", "a03504.html#a22df2857d14ed04f3b639527d08f7740", null ]
 ];

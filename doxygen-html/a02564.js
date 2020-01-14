@@ -1,16 +1,13 @@
 var a02564 =
 [
-    [ "CoPTask", "a02564.html#a3dedcf002fe1b00d9245ebfa8991e203", null ],
-    [ "buildCompletionCriteria", "a02564.html#a7467766fa42546e99c0d253aac7af98d", null ],
-    [ "measuredCoP", "a02564.html#acf756c0e7e6aa1fbb60feb6491427411", null ],
-    [ "measuredCoPW", "a02564.html#a16f95e7ea6a037950ea6b8eb5e57b58d", null ],
-    [ "reset", "a02564.html#a08e79c703fb2f70db56a7c64e27acd02", null ],
-    [ "setZeroTargetWrench", "a02564.html#ae95ca91c45eb45a1946e84377ddffa8b", null ],
-    [ "targetCoP", "a02564.html#a4ace3b81e36d8ac60271b68b78c4f58a", null ],
-    [ "targetCoP", "a02564.html#ac56ea4b1b75de8e99ed5e51bf919c7fb", null ],
-    [ "targetCoPW", "a02564.html#a62f7869ba91d79176a54e1c8a8cf5aaf", null ],
-    [ "targetForce", "a02564.html#aa452d416c7f6df4f3b5ddc511db246a2", null ],
-    [ "targetForce", "a02564.html#af250603b7c162ce5dd654825dea2af7e", null ],
-    [ "targetForceW", "a02564.html#a9f7344de19e35fda42d0dc3c493b8f11", null ],
-    [ "targetWrench", "a02564.html#a58ef8d30ea6ea9f78d7d36340975d985", null ]
+    [ "waypoints_t", "a02564.html#a669d5fdec2578c135db701bba1727403", null ],
+    [ "BSplineTrajectoryTask", "a02564.html#aeb967476c50f3838e13951e0f3d9527c", null ],
+    [ "addToGUI", "a02564.html#a5c4c24081d3cfc9ba7d61097f97c968e", null ],
+    [ "posWaypoints", "a02564.html#a60f2ef40ea951b8d1b9235dbfda346ca", null ],
+    [ "spline", "a02564.html#a81a378c092ca9206ea9fa9e14448e979", null ],
+    [ "spline", "a02564.html#a57429fbfc25ba22a34d9881f54b76121", null ],
+    [ "target", "a02564.html#ae2a69e202d8310602cea726d33d4590d", null ],
+    [ "target", "a02564.html#aef4438f25173e530e1c08205c4e5b9fc", null ],
+    [ "SplineTrajectoryTask< BSplineTrajectoryTask >", "a02564.html#ac5eeec3b2af2e5d3a329daf981453a2e", null ],
+    [ "bspline", "a02564.html#ac881b5b505b63c5e89bec2e598c767e0", null ]
 ];

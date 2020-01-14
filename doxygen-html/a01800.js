@@ -1,7 +1,6 @@
 var a01800 =
 [
-    [ "ControllerServer", "a01800.html#ac13be9e36cf38cb6bdde4cc8b4b19250", null ],
-    [ "~ControllerServer", "a01800.html#aa4ef79cfb9afe739ee67b64b66969f97", null ],
-    [ "handle_requests", "a01800.html#a734ffb48f73a37374b9b51c4c7655507", null ],
-    [ "publish", "a01800.html#a38c2d4255f3f4db5c9315f3c7468b87f", null ]
+    [ "completed", "a01800.html#a6b2c61033f0f8d2d7f45aeb6e8fb028e", null ],
+    [ "configure", "a01800.html#a7cf119e44a4a74ad734dc2fe34f2fff6", null ],
+    [ "output", "a01800.html#a2485b806e905c84cd087fb47287f2240", null ]
 ];

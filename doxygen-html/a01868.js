@@ -1,10 +1,6 @@
 var a01868 =
 [
-    [ "Type", "a01868.html#ad0d49171493519fb008c73e58696edc1", [
-      [ "StepByStep", "a01868.html#ad0d49171493519fb008c73e58696edc1a68d8c641ebe12c46d077d8ff720c3bbd", null ],
-      [ "Auto", "a01868.html#ad0d49171493519fb008c73e58696edc1a06b9281e396db002010bde1de57262eb", null ],
-      [ "Strict", "a01868.html#ad0d49171493519fb008c73e58696edc1a2e979835dd62324f5bfe217449ba4974", null ]
-    ] ],
-    [ "state", "a01868.html#a9fc7e260a07a8da86ee5724d47f9664a", null ],
-    [ "type", "a01868.html#aeb7c3f9f5d60af38b50cbd0caa1b2b65", null ]
+    [ "DelayedState", "a01868.html#a217adbd0ad2da8c746df98646c67ffcb", null ],
+    [ "run", "a01868.html#a0069412544d7a76f5c724b570342918b", null ],
+    [ "state", "a01868.html#a4fcc3ba3af0b760e0a62253e625ec3b6", null ]
 ];

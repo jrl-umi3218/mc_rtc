@@ -1,7 +1,13 @@
 var a02248 =
 [
-    [ "Polygons", "a02248.html#af5c1dd31a2d012206f2915a07a9f792c", null ],
-    [ "side", "a02248.html#ac8a95deed7837d208505cbe7d949844b", null ],
-    [ "write", "a02248.html#a881d4f1ec50acb6bb79e8db1605ac1ac", null ],
-    [ "type", "a02248.html#a9bac28b142bf3360b5d6a15aa09197fa", null ]
+    [ "Ordinate", "a02248.html#afe2f931b5577ee78af7623eee61496e3", null ],
+    [ "side", "a02248.html#a3247e32aaba3a8e62bbcc61e9b172ec7", null ],
+    [ "style", "a02248.html#a9f8bf84f326b02b180223b983089e84e", null ],
+    [ "write", "a02248.html#afd2006099d5d013adab3798f84e088c7", null ],
+    [ "color_", "a02248.html#ae207af9008ec8b5da6db891ea0ebd79c", null ],
+    [ "get_fn_", "a02248.html#a6e0a97eb4969b6d697f5e3d4f957d886", null ],
+    [ "name_", "a02248.html#af79677e0c449d72b34a329ace9814390", null ],
+    [ "side_", "a02248.html#a73f245b506213662fd3d5f3deb1eb837", null ],
+    [ "style_", "a02248.html#a859f99683fcc0f5acf120cd6e0f84dbc", null ],
+    [ "type", "a02248.html#a327093cadc488b62d7a62480f3ca4959", null ]
 ];

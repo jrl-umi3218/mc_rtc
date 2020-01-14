@@ -1,8 +1,10 @@
 var a02264 =
 [
-    [ "Point3DROImpl", "a02264.html#adbfe7a2b3ff83932027e08f0c95d663b", null ],
-    [ "Point3DROImpl", "a02264.html#a3a11467db7f88a9eab78a93aee90227b", null ],
-    [ "write", "a02264.html#a2b4d2003ac770437919c754325d04134", null ],
-    [ "write_size", "a02264.html#abe5261acb5b704491064407a9b734b6b", null ],
-    [ "type", "a02264.html#a91b7374b66df426ff377ec34f124e73b", null ]
+    [ "Range", "a02264.html#aead20688a3c041cd852dd71c98cfc15b", null ],
+    [ "Range", "a02264.html#ae57efd48b0202aac88fd98578af24993", null ],
+    [ "load", "a02264.html#ad303c48ab81bc362a13995c1b2464d0b", null ],
+    [ "write", "a02264.html#aa6b749d005afc464c84b138a2d72ae79", null ],
+    [ "inf", "a02264.html#ab995e2707a19a7b8beb6b05bbeffa3b9", null ],
+    [ "max", "a02264.html#a85f2d2500191f058985f2d32ea40583d", null ],
+    [ "min", "a02264.html#a3626d90084b55cd8a94307e620a09062", null ]
 ];

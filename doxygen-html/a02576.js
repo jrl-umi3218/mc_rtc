@@ -1,15 +1,16 @@
 var a02576 =
 [
-    [ "SplineTrajectoryBase", "a02576.html#adc53d700518e4c9bf22a193cd0115a2a", null ],
-    [ "ExactCubicTrajectoryTask", "a02576.html#ad27477a0f30c373765213f5e8288963e", null ],
-    [ "addToGUI", "a02576.html#a1f68add7b8b70b9b6878bb0d72c0c6e7", null ],
-    [ "constraints", "a02576.html#a14e12359f28675ec224ec009ae75b174", null ],
-    [ "posWaypoints", "a02576.html#ad8ed139887005e36a8ae46295ebecf60", null ],
-    [ "spline", "a02576.html#a9e72a177388b55ed2773d1906bd28f9e", null ],
-    [ "spline", "a02576.html#a1aa0b41fae9369d28c6d1b7240a5df6f", null ],
-    [ "target", "a02576.html#ad67859df04ed0798685ebac9fbe56f95", null ],
-    [ "target", "a02576.html#a75a88ee3535fe98bd5206d8c4a7a4f54", null ],
-    [ "SplineTrajectoryTask< ExactCubicTrajectoryTask >", "a02576.html#a9bf87cb2f5679ce3181d696adad0a9d6", null ],
-    [ "bspline", "a02576.html#a825212a1055ad43955b8284562905f13", null ],
-    [ "initialPose_", "a02576.html#a7468619f2b047add1ee8a018daafb4f5", null ]
+    [ "CoPTask", "a02576.html#a3dedcf002fe1b00d9245ebfa8991e203", null ],
+    [ "buildCompletionCriteria", "a02576.html#a7467766fa42546e99c0d253aac7af98d", null ],
+    [ "measuredCoP", "a02576.html#acf756c0e7e6aa1fbb60feb6491427411", null ],
+    [ "measuredCoPW", "a02576.html#a16f95e7ea6a037950ea6b8eb5e57b58d", null ],
+    [ "reset", "a02576.html#a08e79c703fb2f70db56a7c64e27acd02", null ],
+    [ "setZeroTargetWrench", "a02576.html#ae95ca91c45eb45a1946e84377ddffa8b", null ],
+    [ "targetCoP", "a02576.html#a4ace3b81e36d8ac60271b68b78c4f58a", null ],
+    [ "targetCoP", "a02576.html#ac56ea4b1b75de8e99ed5e51bf919c7fb", null ],
+    [ "targetCoPW", "a02576.html#a62f7869ba91d79176a54e1c8a8cf5aaf", null ],
+    [ "targetForce", "a02576.html#aa452d416c7f6df4f3b5ddc511db246a2", null ],
+    [ "targetForce", "a02576.html#af250603b7c162ce5dd654825dea2af7e", null ],
+    [ "targetForceW", "a02576.html#a9f7344de19e35fda42d0dc3c493b8f11", null ],
+    [ "targetWrench", "a02576.html#a58ef8d30ea6ea9f78d7d36340975d985", null ]
 ];

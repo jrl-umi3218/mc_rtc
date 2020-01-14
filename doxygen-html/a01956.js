@@ -1,13 +1,10 @@
 var a01956 =
 [
-    [ "Collision", "a01956.html#afaef9be2f1209c8cc63876f13b8da184", null ],
-    [ "Collision", "a01956.html#a212f22fc390d0f873dc67244cdbdbce7", null ],
-    [ "isNone", "a01956.html#a664a8719f81b8fee2d2b26cd3cf645ab", null ],
-    [ "operator!=", "a01956.html#a4f990041663f252046812111a6791048", null ],
-    [ "operator==", "a01956.html#aab32d2891597a9ec0d7f76e3dd0723a9", null ],
-    [ "body1", "a01956.html#a169addbd06a09743b06287121884f027", null ],
-    [ "body2", "a01956.html#afde353de6419a4e248eec0851f664968", null ],
-    [ "damping", "a01956.html#affd388406c44197c32f6685e64d7bdb9", null ],
-    [ "iDist", "a01956.html#a4e96ac27cda155ffddb1222ff08f012c", null ],
-    [ "sDist", "a01956.html#a2853ab9ab669747303ccda6b22bb7d77", null ]
+    [ "available_observers", "a01956.html#ac104339befa76e8673940c1a86ad2847", null ],
+    [ "clear", "a01956.html#a8649f98bfdfa69a7b1c76bea9897c933", null ],
+    [ "enable_sandboxing", "a01956.html#a8182bc3bc5952e68b6dd9d7ea8435478", null ],
+    [ "get_observer", "a01956.html#a3d1ff69617f71a1eb0aea7aedc13caa9", null ],
+    [ "has_observer", "a01956.html#aac203ca60191fa7e4041339a52baf625", null ],
+    [ "set_verbosity", "a01956.html#afc7d5d833c4d4ce520be8fa81a0b1b63", null ],
+    [ "update_module_path", "a01956.html#a56fc6c53c0487328ed16473706e82df6", null ]
 ];

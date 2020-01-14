@@ -1,7 +1,5 @@
 var a02244 =
 [
-    [ "Polygon", "a02244.html#af7e96bad2cd93f2b0eaecbf94e8ce4c2", null ],
-    [ "side", "a02244.html#ab7683b7758fdcb4c826c57eb7ef37800", null ],
-    [ "write", "a02244.html#a5cad8ea3b30915d71a70df177591e536", null ],
-    [ "type", "a02244.html#a5c7df3c2bb038af2fd07bc822c1af1bc", null ]
+    [ "AbscissaOrdinateWithColor", "a02244.html#abd61cc0d2ea75882f75a5f54f9047a0f", null ],
+    [ "write", "a02244.html#a3d6f033510ac8d8a5a05b56adf3c19e2", null ]
 ];
