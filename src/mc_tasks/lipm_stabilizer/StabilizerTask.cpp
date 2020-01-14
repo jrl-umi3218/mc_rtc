@@ -329,7 +329,7 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
 
 void StabilizerTask::removeFromLogger(mc_rtc::Logger & logger)
 {
-  logger.removeLogEntry("perf_Stabilizer");
+  logger.removeLogEntry("perf_" + name_);
   logger.removeLogEntry(name_ + "_contactState");
   logger.removeLogEntry(name_ + "_error_dcm_average");
   logger.removeLogEntry(name_ + "_error_dcm_pos");
