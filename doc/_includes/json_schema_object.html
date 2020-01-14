@@ -1,21 +1,33 @@
-{% assign OLD_REF = REF %}
-{% assign OLD_ID = ID %}
-{% assign OLD_HAS_DESC = HAS_DESC %}
-{% assign OLD_DESC = DESC %}
 {% capture INCLUDE_AFTER %}{% endcapture %}
 <table class="table table-borderless table-hover object-property">
 <tbody>
 {% for prop in include.properties %}
+  {% assign NAME = prop[0] %}
   {% assign REF = prop[1] %}
-  {% include json_schema_object_property.html id=include.id required=include.required pattern=false %}
+  {% capture ID %}{{include.id | replace: "::", "_"}}_PROP_{{prop[0] | replace: "*", "STAR"}}{% endcapture %}
+  {% assign HAS_DESC = false %}
+  {% if REF.DESC %}
+    {% assign HAS_DESC = true %}
+    {% capture DESC %}{{REF.DESC}}{% endcapture %}
+  {% elsif REF.description and REF.description != "" %}
+    {% assign HAS_DESC = true %}
+    {% capture DESC %}{{REF.description}}{% endcapture %}
+  {% endif %}
+  {% include json_schema_object_property.html id=ID name=NAME data=REF required=include.required has_description=HAS_DESC description=DESC pattern=false %}
 {% endfor %}
 {% for prop in include.patternProperties %}
+  {% assign NAME = prop[0] %}
   {% assign REF = prop[1] %}
-  {% include json_schema_object_property.html id=include.id required=include.required pattern=true %}
+  {% capture ID %}{{include.id | replace: "::", "_"}}_PROP_{{prop[0] | replace: "*", "STAR"}}{% endcapture %}
+  {% assign HAS_DESC = false %}
+  {% if REF.DESC %}
+    {% assign HAS_DESC = true %}
+    {% capture DESC %}{{REF.DESC}}{% endcapture %}
+  {% elsif REF.description and REF.description != "" %}
+    {% assign HAS_DESC = true %}
+    {% capture DESC %}{{REF.description}}{% endcapture %}
+  {% endif %}
+  {% include json_schema_object_property.html id=ID name=NAME data=REF required=include.required has_description=HAS_DESC description=DESC pattern=true %}
 {% endfor %}
 </tbody>
 </table>
-{% assign REF = OLD_REF %}
-{% assign ID = OLD_ID %}
-{% assign DESC = OLD_DESC %}
-{% assign HAS_DESC = OLD_HAS_DESC %}
