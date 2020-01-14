@@ -1,5 +1,7 @@
 var a00269 =
 [
-    [ "SchemaImpl", "a02296.html", "a02296" ],
-    [ "Schema", "a00269.html#a0c892f6b2ba9e06d4bda32a16b76b75b", null ]
+    [ "AbscissaOrdinate", "a02322.html", "a02322" ],
+    [ "AbscissaOrdinateWithColor", "a02326.html", "a02326" ],
+    [ "XY", "a00269.html#aff7557ff1a45292b67d02328c81bdde6", null ],
+    [ "XY", "a00269.html#a93ee6aaded7dfd640df87a78e649062d", null ]
 ];

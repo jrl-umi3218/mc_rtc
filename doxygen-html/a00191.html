@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>surface_hull.h File Reference</title>
+<title>RobotLoader.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,36 +70,45 @@ $(document).ready(function(){initNavTree('a00191.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">surface_hull.h File Reference</div>  </div>
+<div class="title">RobotLoader.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;Eigen/Core&gt;</code><br />
-<code>#include &lt;<a class="el" href="a03516.html">mc_rbdyn/api.h</a>&gt;</code><br />
-<code>#include &lt;SpaceVecAlg/SpaceVecAlg&gt;</code><br />
-<code>#include &lt;vector&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a00194.html">mc_rbdyn/RobotModule.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a03645.html">mc_rbdyn/api.h</a>&gt;</code><br />
+<code>#include &lt;mc_rtc/config.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00314.html">mc_rtc/loader.h</a>&gt;</code><br />
+<code>#include &lt;map&gt;</code><br />
+<code>#include &lt;memory&gt;</code><br />
+<code>#include &lt;mutex&gt;</code><br />
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02126.html">mc_rbdyn::details::are_strings&lt; Args &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02130.html">mc_rbdyn::details::are_strings&lt; T &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02134.html">mc_rbdyn::details::are_strings&lt; T, Args... &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02138.html">mc_rbdyn::RobotLoader</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load <a class="el" href="a02142.html">RobotModule</a> instances from shared libraries.  <a href="a02138.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:a00656"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00656.html">sch</a></td></tr>
+<tr class="memitem:a00681"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00681.html">mc_rbdyn</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00649"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00649.html">mc_rbdyn</a></td></tr>
+<tr class="memitem:a00692"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00692.html">mc_rbdyn::details</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:adf1399b68c68126e373f564e95bc7531"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03516.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00831.html">sch::S_Object</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00649.html#adf1399b68c68126e373f564e95bc7531">mc_rbdyn::surface_to_sch</a> (const <a class="el" href="a02076.html">mc_rbdyn::Surface</a> &amp;surface, const double &amp;depth=0.01, const unsigned int &amp;slice=8)</td></tr>
-<tr class="separator:adf1399b68c68126e373f564e95bc7531"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3db1776d4f8f36e1eb2a8c51bc157867"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03516.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00831.html">sch::S_Object</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00649.html#a3db1776d4f8f36e1eb2a8c51bc157867">mc_rbdyn::sch_polyhedron</a> (const std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &gt; &amp;points)</td></tr>
-<tr class="separator:a3db1776d4f8f36e1eb2a8c51bc157867"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96cab2abc78656a41b2b56987c5fbbfa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03516.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00831.html">sch::S_Object</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00649.html#a96cab2abc78656a41b2b56987c5fbbfa">mc_rbdyn::planar_hull</a> (const <a class="el" href="a02020.html">mc_rbdyn::PlanarSurface</a> &amp;surface, const double &amp;depth)</td></tr>
-<tr class="separator:a96cab2abc78656a41b2b56987c5fbbfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adcd59f0c2e8c9cd94a6f9800c164e723"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03516.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00831.html">sch::S_Object</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00649.html#adcd59f0c2e8c9cd94a6f9800c164e723">mc_rbdyn::cylindrical_hull</a> (const <a class="el" href="a02000.html">mc_rbdyn::CylindricalSurface</a> &amp;surface, const unsigned int &amp;slice)</td></tr>
-<tr class="separator:adcd59f0c2e8c9cd94a6f9800c164e723"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70b7277a0499a32774e608f8def99043"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03516.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00831.html">sch::S_Object</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00649.html#a70b7277a0499a32774e608f8def99043">mc_rbdyn::gripper_hull</a> (const <a class="el" href="a02012.html">mc_rbdyn::GripperSurface</a> &amp;surface, const double &amp;depth)</td></tr>
-<tr class="separator:a70b7277a0499a32774e608f8def99043"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71fcd7fe46e75452f9c6302bb1c40412"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a71fcd7fe46e75452f9c6302bb1c40412"><td class="memTemplItemLeft" align="right" valign="top">std::conditional&lt; std::is_same&lt; std::string, T &gt;::value, const std::string &amp;, std::string &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00692.html#a71fcd7fe46e75452f9c6302bb1c40412">mc_rbdyn::details::to_string</a> (const T &amp;value)</td></tr>
+<tr class="separator:a71fcd7fe46e75452f9c6302bb1c40412"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -107,8 +116,8 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_314ec80f2fc36a4630429f4d5408038e.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a00191.html">surface_hull.h</a></li>
-    <li class="footer">Generated on Tue Jan 14 2020 02:20:47 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_314ec80f2fc36a4630429f4d5408038e.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a00191.html">RobotLoader.h</a></li>
+    <li class="footer">Generated on Tue Jan 14 2020 12:26:59 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

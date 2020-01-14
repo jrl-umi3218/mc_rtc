@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>StateBuilder.h File Reference</title>
+<title>Ordinate.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -72,41 +72,45 @@ $(document).ready(function(){initNavTree('a00272.html','');});
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">StateBuilder.h File Reference</div>  </div>
+<div class="title">Ordinate.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a03537.html">mc_rtc/Configuration.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00221.html">mc_rtc/gui/elements.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00260.html">mc_rtc/gui/plot.h</a>&gt;</code><br />
-<code>#include &lt;unordered_map&gt;</code><br />
-<code>#include &quot;StateBuilder.hpp&quot;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a00242.html">mc_rtc/gui/details/traits.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a03687.html">mc_rtc/gui/plot/types.h</a>&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02300.html">mc_rtc::gui::StateBuilder</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to build a GUI state from multiple objects.  <a href="a02300.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02330.html">mc_rtc::gui::plot::impl::Ordinate&lt; GetT &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">For a given plot, this holds options on the ordinate plot and a callback that returns the current value.  <a href="a02330.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02334.html">mc_rtc::gui::plot::impl::OrdinateWithColor&lt; GetT, GetColor &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to provide an ordinate with changing color.  <a href="a02334.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:a00648"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00648.html">mc_rtc</a></td></tr>
-<tr class="memdesc:a00648"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a02104.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00649.html">mc_rbdyn</a> objects. <br /></td></tr>
+<tr class="memitem:a00678"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00678.html">mc_rtc</a></td></tr>
+<tr class="memdesc:a00678"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a02186.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00681.html">mc_rbdyn</a> objects. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00659"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00659.html">mc_rtc::gui</a></td></tr>
+<tr class="memitem:a00696"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00696.html">mc_rtc::gui</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00698"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00698.html">mc_rtc::gui::plot</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00699"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00699.html">mc_rtc::gui::plot::impl</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:a649ddcaedb769dede3922fa845e71ca4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00659.html#a649ddcaedb769dede3922fa845e71ca4">mc_rtc::gui::ElementsStacking</a> { <br />
-&#160;&#160;<a class="el" href="a00659.html#a649ddcaedb769dede3922fa845e71ca4a06ce2a25e5d12c166a36f654dbea6012">mc_rtc::gui::ElementsStacking::Vertical</a> = 0, 
-<br />
-&#160;&#160;<a class="el" href="a00659.html#a649ddcaedb769dede3922fa845e71ca4ac1b5fa03ecdb95d4a45dd1c40b02527f">mc_rtc::gui::ElementsStacking::Horizontal</a>
-<br />
- }<tr class="memdesc:a649ddcaedb769dede3922fa845e71ca4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describe elements stacking policy for the client.  <a href="a00659.html#a649ddcaedb769dede3922fa845e71ca4">More...</a><br /></td></tr>
-</td></tr>
-<tr class="separator:a649ddcaedb769dede3922fa845e71ca4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:aa288bbda415eb4c0d8c5d6fd8fd00f12"><td class="memTemplParams" colspan="2">template&lt;typename GetT &gt; </td></tr>
+<tr class="memitem:aa288bbda415eb4c0d8c5d6fd8fd00f12"><td class="memTemplItemLeft" align="right" valign="top">impl::Ordinate&lt; GetT &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00698.html#aa288bbda415eb4c0d8c5d6fd8fd00f12">mc_rtc::gui::plot::Y</a> (const std::string &amp;name, GetT get_fn, Color color, Style style=<a class="el" href="a03687.html#ae070f931bda093c33a301115abc450b1">Style::Solid</a>, Side side=<a class="el" href="a03675.html#aa149c1d1da2ae1c94f1ae91f4919625a">Side::Left</a>)</td></tr>
+<tr class="memdesc:aa288bbda415eb4c0d8c5d6fd8fd00f12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper to create an <a class="el" href="a02330.html" title="For a given plot, this holds options on the ordinate plot and a callback that returns the current val...">impl::Ordinate</a>.  <a href="a00698.html#aa288bbda415eb4c0d8c5d6fd8fd00f12">More...</a><br /></td></tr>
+<tr class="separator:aa288bbda415eb4c0d8c5d6fd8fd00f12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5957f379abaa61742baef9909ae18990"><td class="memTemplParams" colspan="2">template&lt;typename GetT , typename GetColor &gt; </td></tr>
+<tr class="memitem:a5957f379abaa61742baef9909ae18990"><td class="memTemplItemLeft" align="right" valign="top">impl::OrdinateWithColor&lt; GetT, GetColor &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00698.html#a5957f379abaa61742baef9909ae18990">mc_rtc::gui::plot::Y</a> (const std::string &amp;name, GetT get_fn, GetColor get_color, Style style=<a class="el" href="a03687.html#ae070f931bda093c33a301115abc450b1">Style::Solid</a>, Side side=<a class="el" href="a03675.html#aa149c1d1da2ae1c94f1ae91f4919625a">Side::Left</a>)</td></tr>
+<tr class="memdesc:a5957f379abaa61742baef9909ae18990"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper to create an <a class="el" href="a02334.html" title="Allows to provide an ordinate with changing color. ">impl::OrdinateWithColor</a>.  <a href="a00698.html#a5957f379abaa61742baef9909ae18990">More...</a><br /></td></tr>
+<tr class="separator:a5957f379abaa61742baef9909ae18990"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -114,8 +118,8 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="dir_dda95c61bc807ada3674ae2fc67687f0.html">gui</a></li><li class="navelem"><a class="el" href="a00272.html">StateBuilder.h</a></li>
-    <li class="footer">Generated on Tue Jan 14 2020 02:20:47 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="dir_dda95c61bc807ada3674ae2fc67687f0.html">gui</a></li><li class="navelem"><a class="el" href="dir_db09ff38bdf4a48089498df3a23be2f9.html">plot</a></li><li class="navelem"><a class="el" href="a00272.html">Ordinate.h</a></li>
+    <li class="footer">Generated on Tue Jan 14 2020 12:26:59 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

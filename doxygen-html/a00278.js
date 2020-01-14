@@ -1,6 +1,5 @@
 var a00278 =
 [
-    [ "TrajectoryImpl", "a02316.html", "a02316" ],
-    [ "Trajectory", "a00278.html#a062a5442d4cabf7a31d7f83008751a6a", null ],
-    [ "Trajectory", "a00278.html#aa175899f8868d419050975dc9f79ed97", null ]
+    [ "Polygons", "a02342.html", "a02342" ],
+    [ "Polygons", "a00278.html#a2bfb0562e6093e2274530cb22f523030", null ]
 ];

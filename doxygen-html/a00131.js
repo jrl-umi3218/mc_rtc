@@ -1,7 +1,5 @@
 var a00131 =
 [
-    [ "ConfigurationLoader< mc_rbdyn::RobotModule >", "a01976.html", "a01976" ],
-    [ "ConfigurationLoader< mc_rbdyn::RobotModulePtr >", "a01980.html", "a01980" ],
-    [ "ConfigurationLoader< mc_rbdyn::Contact >", "a01984.html", "a01984" ],
-    [ "DECLARE_IO", "a00131.html#a839325e1d657147f6c746b3043b0b1b0", null ]
+    [ "EXPORT_OBSERVER_MODULE", "a00131.html#af6dc028023a125205a51522a9667d755", null ],
+    [ "OBSERVER_MODULE_CHECK_VERSION", "a00131.html#aee019e14ca218a864623e4ecbf736679", null ]
 ];

@@ -1,9 +1,5 @@
 var a00263 =
 [
-    [ "Point3DROImpl", "a02276.html", "a02276" ],
-    [ "Point3DImpl", "a02280.html", "a02280" ],
-    [ "Point3D", "a00263.html#ac40c7c59cc19e0fe7be9d8a5a8564f74", null ],
-    [ "Point3D", "a00263.html#a0c1802e2d8623ee22fffc408e69eaf56", null ],
-    [ "Point3D", "a00263.html#ad2db10f53541f7b6a925d724023de7ee", null ],
-    [ "Point3D", "a00263.html#a6a9e684830b60a463c848a290d2b910b", null ]
+    [ "NumberSliderImpl", "a02314.html", "a02314" ],
+    [ "NumberSlider", "a00263.html#a5c6714af47a8cb199c7345ed1c2e8ffe", null ]
 ];

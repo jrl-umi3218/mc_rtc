@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>EqualityConstraint.h File Reference</title>
+<title>CollisionsConstraint.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -71,33 +71,31 @@ $(document).ready(function(){initNavTree('a00347.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle">
-<div class="title">EqualityConstraint.h File Reference</div>  </div>
+<div class="title">CollisionsConstraint.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a00332.html">mc_solver/Constraint.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a00143.html">mc_rbdyn/Collision.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a03669.html">mc_rbdyn/Contact.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00200.html">mc_rbdyn/Robots.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00359.html">mc_solver/ConstraintSet.h</a>&gt;</code><br />
+<code>#include &lt;<a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00038.html">Tasks/QPConstr.h</a>&gt;</code><br />
+<code>#include &lt;set&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02472.html">mc_solver::EqualityConstraint&lt; UpdateT &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper class to write an equality constraint for Tasks.  <a href="a02472.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02510.html">mc_solver::CollisionsConstraint</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a collision constraint between two robots.  <a href="a02510.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02514.html">mc_solver::RobotEnvCollisionsConstraint</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Utility class for the very common-case of (robot,env) scenarios.  <a href="a02514.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:a00651"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00651.html">mc_solver</a></td></tr>
+<tr class="memitem:a00687"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00687.html">mc_solver</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:a17602a72509b520fc967c3b55868d28f"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00651.html#a17602a72509b520fc967c3b55868d28f">mc_solver::EqualityConstraintRobot</a> = EqualityConstraint&lt; utils::UpdateRobot &gt;</td></tr>
-<tr class="separator:a17602a72509b520fc967c3b55868d28f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea7ab23b8e38e9c02e6b71d418fd167f"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00651.html#aea7ab23b8e38e9c02e6b71d418fd167f">mc_solver::EqualityConstraintLambda</a> = EqualityConstraint&lt; utils::UpdateLambda &gt;</td></tr>
-<tr class="separator:aea7ab23b8e38e9c02e6b71d418fd167f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e427d1f0a009404c8630c4be1941233"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00651.html#a3e427d1f0a009404c8630c4be1941233">mc_solver::EqualityConstraintForce</a> = EqualityConstraint&lt; utils::UpdateForce &gt;</td></tr>
-<tr class="separator:a3e427d1f0a009404c8630c4be1941233"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -105,8 +103,8 @@ Typedefs</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_fad12f0f0b10f75a80792b958ab0d808.html">mc_solver</a></li><li class="navelem"><a class="el" href="a00347.html">EqualityConstraint.h</a></li>
-    <li class="footer">Generated on Tue Jan 14 2020 02:20:47 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_fad12f0f0b10f75a80792b958ab0d808.html">mc_solver</a></li><li class="navelem"><a class="el" href="a00347.html">CollisionsConstraint.h</a></li>
+    <li class="footer">Generated on Tue Jan 14 2020 12:26:59 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

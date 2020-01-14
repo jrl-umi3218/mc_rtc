@@ -1,7 +1,7 @@
 var a00182 =
 [
-    [ "distance", "a00182.html#a8e193a456c2d3dab3ad5f12ed049e3b1", null ],
-    [ "Polyhedron", "a00182.html#a1d8bc5539da072c12d1f76bc317f8af3", null ],
-    [ "STPBV", "a00182.html#a30354c6b845b9f2c2bf59342c84f9e0d", null ],
-    [ "transform", "a00182.html#a3c0ffcdf6b05980ab8ca56474c431bc7", null ]
+    [ "QuadraticGenerator", "a02106.html", "a02106" ],
+    [ "Plane", "a02110.html", "a02110" ],
+    [ "planes_from_polygon", "a00182.html#a3313c1739e7847d2155cd1e8eb248c1e", null ],
+    [ "points_from_polygon", "a00182.html#a8b64034329a5f248185cf1904c0732a0", null ]
 ];

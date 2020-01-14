@@ -1,8 +1,7 @@
 var a00272 =
 [
-    [ "StateBuilder", "a02300.html", "a02300" ],
-    [ "ElementsStacking", "a00272.html#a649ddcaedb769dede3922fa845e71ca4", [
-      [ "Vertical", "a00272.html#a649ddcaedb769dede3922fa845e71ca4a06ce2a25e5d12c166a36f654dbea6012", null ],
-      [ "Horizontal", "a00272.html#a649ddcaedb769dede3922fa845e71ca4ac1b5fa03ecdb95d4a45dd1c40b02527f", null ]
-    ] ]
+    [ "Ordinate", "a02330.html", "a02330" ],
+    [ "OrdinateWithColor", "a02334.html", "a02334" ],
+    [ "Y", "a00272.html#aa288bbda415eb4c0d8c5d6fd8fd00f12", null ],
+    [ "Y", "a00272.html#a5957f379abaa61742baef9909ae18990", null ]
 ];

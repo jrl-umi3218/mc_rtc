@@ -1,6 +1,8 @@
 var a00296 =
 [
-    [ "LoaderSandboxData", "a02376.html", "a02376" ],
-    [ "no_sandbox_function_call", "a00296.html#a299e6b1f00e482f61b89988dc5b395fb", null ],
-    [ "sandbox_function_call", "a00296.html#a810352dfb9fa4299b85fa19ac258a308", null ]
+    [ "StateBuilder", "a02382.html", "a02382" ],
+    [ "ElementsStacking", "a00296.html#a649ddcaedb769dede3922fa845e71ca4", [
+      [ "Vertical", "a00296.html#a649ddcaedb769dede3922fa845e71ca4a06ce2a25e5d12c166a36f654dbea6012", null ],
+      [ "Horizontal", "a00296.html#a649ddcaedb769dede3922fa845e71ca4ac1b5fa03ecdb95d4a45dd1c40b02527f", null ]
+    ] ]
 ];

@@ -1,5 +1,5 @@
 var a00254 =
 [
-    [ "Polygons", "a02260.html", "a02260" ],
-    [ "Polygons", "a00254.html#a2bfb0562e6093e2274530cb22f523030", null ]
+    [ "IntegerInputImpl", "a02302.html", "a02302" ],
+    [ "IntegerInput", "a00254.html#ac4f13804b0853d4e3ee9d53afed5b06c", null ]
 ];

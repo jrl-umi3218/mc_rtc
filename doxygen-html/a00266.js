@@ -1,7 +1,7 @@
 var a00266 =
 [
-    [ "RotationROImpl", "a02288.html", "a02288" ],
-    [ "RotationImpl", "a02292.html", "a02292" ],
-    [ "Rotation", "a00266.html#a9dc809d7e99978fe3f5e2439d1a20771", null ],
-    [ "Rotation", "a00266.html#a6440392ea4b48778f6d4012e0400ee5b", null ]
+    [ "Abscissa", "a02318.html", "a02318" ],
+    [ "X", "a00266.html#a13155e82e2012b946c5c973369b1db56", null ],
+    [ "X", "a00266.html#ac22eeca55379fb5c66be97b783a8bd32", null ],
+    [ "X", "a00266.html#ac2f689ceed9f080a4ccc49a6a70aeb4c", null ]
 ];

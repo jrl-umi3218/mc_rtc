@@ -1,9 +1,9 @@
 var a00317 =
 [
-    [ "MC_RTC_UTILS_DLLAPI", "a00317.html#a797d67eb3213978212928ed90cf0dff2", null ],
-    [ "MC_RTC_UTILS_DLLEXPORT", "a00317.html#a59b21389e495a6b42899eea7452bde3c", null ],
-    [ "MC_RTC_UTILS_DLLIMPORT", "a00317.html#a8c714e5ec4642ad2fbeb874ec1ea290c", null ],
-    [ "MC_RTC_UTILS_DLLLOCAL", "a00317.html#ac847eca5b9bc55005276d08214aad7ff", null ],
-    [ "MC_RTC_UTILS_LOCAL", "a00317.html#af3c7cdf1557399d0a6334aef3b20a746", null ],
-    [ "MC_RTC_UTILS_VERSION", "a00317.html#a46af0212489d0be9e68321c07f865e45", null ]
+    [ "MC_RTC_LOADER_DLLAPI", "a00317.html#a4b7b7ab74d91ada84566764639f2f8c5", null ],
+    [ "MC_RTC_LOADER_DLLEXPORT", "a00317.html#a6d2514a2d7cbf1461637d19c84d4e190", null ],
+    [ "MC_RTC_LOADER_DLLIMPORT", "a00317.html#ab10c7ea7ab2d8c66f1766d42f4271e07", null ],
+    [ "MC_RTC_LOADER_DLLLOCAL", "a00317.html#a124acbd88de464891bac5a0d4753f3b1", null ],
+    [ "MC_RTC_LOADER_LOCAL", "a00317.html#acf2b4c50e45b046a77958363021c3f17", null ],
+    [ "MC_RTC_LOADER_VERSION", "a00317.html#a20b4289ae8266a5d45b7799ebc1c2cb9", null ]
 ];

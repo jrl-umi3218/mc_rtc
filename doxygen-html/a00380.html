@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>AddRemoveContactTask.h File Reference</title>
+<title>InequalityConstraint.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -71,35 +71,33 @@ $(document).ready(function(){initNavTree('a00380.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a>  </div>
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">AddRemoveContactTask.h File Reference</div>  </div>
+<div class="title">InequalityConstraint.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a00176.html">mc_rbdyn/Robots.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00320.html">mc_solver/BoundedSpeedConstr.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00416.html">mc_tasks/MetaTask.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a03528.html">mc_tasks/api.h</a>&gt;</code><br />
-<code>#include &lt;<a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00056.html">Tasks/QPTasks.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a00356.html">mc_solver/Constraint.h</a>&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02548.html">mc_tasks::AddRemoveContactTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add or remove a contact.  <a href="a02548.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02552.html">mc_tasks::AddContactTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a contact.  <a href="a02552.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02556.html">mc_tasks::RemoveContactTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a contact.  <a href="a02556.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02570.html">mc_solver::InequalityConstraint&lt; UpdateT &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper class to write an inequality constraint for Tasks.  <a href="a02570.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:a00649"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00649.html">mc_rbdyn</a></td></tr>
+<tr class="memitem:a00687"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00687.html">mc_solver</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00666"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00666.html">mc_tasks</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a8d212e2c69c3cf5edef6a36f1891d604"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00687.html#a8d212e2c69c3cf5edef6a36f1891d604">mc_solver::InequalityConstraintRobot</a> = InequalityConstraint&lt; utils::UpdateRobot &gt;</td></tr>
+<tr class="separator:a8d212e2c69c3cf5edef6a36f1891d604"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a838c8b597a9a2d8a2355daab56b545f0"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00687.html#a838c8b597a9a2d8a2355daab56b545f0">mc_solver::InequalityConstraintLambda</a> = InequalityConstraint&lt; utils::UpdateLambda &gt;</td></tr>
+<tr class="separator:a838c8b597a9a2d8a2355daab56b545f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf28dab0adf44ed4844214536edf1799"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00687.html#aaf28dab0adf44ed4844214536edf1799">mc_solver::InequalityConstraintForce</a> = InequalityConstraint&lt; utils::UpdateForce &gt;</td></tr>
+<tr class="separator:aaf28dab0adf44ed4844214536edf1799"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -107,8 +105,8 @@ Namespaces</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_c5d9ba9e59fcda315855869f4a23a264.html">mc_tasks</a></li><li class="navelem"><a class="el" href="a00380.html">AddRemoveContactTask.h</a></li>
-    <li class="footer">Generated on Tue Jan 14 2020 02:20:46 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_fad12f0f0b10f75a80792b958ab0d808.html">mc_solver</a></li><li class="navelem"><a class="el" href="a00380.html">InequalityConstraint.h</a></li>
+    <li class="footer">Generated on Tue Jan 14 2020 12:26:59 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

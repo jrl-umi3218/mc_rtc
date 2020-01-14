@@ -200,6 +200,10 @@
               
             
               
+              <li><a href="/mc_rtc/tutorials/recipes/lipm-stabilizer.html">Using the LIPM Stabilizer</a></li>
+              
+            
+              
               <li><a href="/mc_rtc/tutorials/recipes/speed-constraint.html">Constraint the speed of a body</a></li>
               
             
@@ -251,22 +255,329 @@
       <div class="col-9">
         <h1>Using the observers pipeline</h1>
 
-        <p>Observers have been introduced with the <a href="https://gite.lirmm.fr/multi-contact/mc_rtc/merge_requests/168">merge request 168</a>.</p>
+        <p>When dealing with robotic systems, it is common to need an estimation of the state of the system being controlled. Doing so requires writing some form of state observer, that takes as input sensor measurements (joint encoders, force-torque sensors, IMU, cameras, etc) and additional knowledge about the system (contacts, etc) and infers all or part of the system’s state. To simplify this estimation process, the framework provide a facility refered to as the <code class="highlighter-rouge">Observers pipeline</code>. The main concept is to consider the observation of the full robot state as a sequence of simple estimators that each observe a specific part of the state (floating base position, encoder kinematics, etc) and update the robot state accordingly. The framework makes the distinction between two set of robot instances:</p>
 
-<p>In order to use the default observer, in your mc_rtc.conf add</p>
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">"RunObservers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Encoder"</span><span class="p">]</span><span class="err">,</span><span class="w">
-</span><span class="nl">"UpdateObservers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Encoder"</span><span class="p">]</span><span class="err">,</span><span class="w">
-</span></code></pre></div></div>
+<ul>
+  <li><code class="highlighter-rouge">robots()</code> represents the control state (desired) of the system.</li>
+  <li><code class="highlighter-rouge">realRobots()</code> represents the state of the real system. The point of the <code class="highlighter-rouge">Observers pipeline</code> is to simplify the observation of its state.</li>
+</ul>
 
-<p>In Rviz, create a new robot, give it the same Robot Description path as for your “normal robot” (for example “/control/robot_description”), set TF Prefix to “/real” and choose transparency Alpha = 0.5.
-Both robot visualizations should overlap each other in the beginning, but may diverge during runtime.
-For example, just let the HRP4 run against an obstacle and you will see the “observed robot” fall, while your “normal robot” stays upright.</p>
+<p>For example, in case of a humanoid robot, one needs the full dynamic properties of the robot, that is the position, orientation and velocity of each body, including the floating base. Considering common sensors available on a humanoid robot, these can be estimated from encoder measurements and an IMU using a simple kinematic-inertial estimator. Using the facilities described in this tutorial, such as estimator can be achieved through the following pipeline:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Observers: Encoder (position=estimator,velocity=estimator) -&gt; [BodySensor (sensor=FloatingBase,update=estimator)] -&gt; KinematicInertial (cutoff=0.01)
+</code></pre></div></div>
+
+<p>Note that the above short description of the pipeline will be displayed when starting your controller. It provides a short description of the pipeline and its options, and reads as follows:</p>
+
+<ul>
+  <li>Observers are executed in sequential order (separated by <code class="highlighter-rouge">-&gt;</code>)</li>
+  <li>Relevant details of each observer configuration are shown between parenthesis <code class="highlighter-rouge">(...)</code></li>
+  <li>Observers shown between brackets (<code class="highlighter-rouge">[...]</code>) are run, but do not affect the state of the <code class="highlighter-rouge">realRobots()</code> instance. This allows to have several observers estimating the same state simultaneously, for comparison purposes. Here both <code class="highlighter-rouge">BodySensor</code> (groundtruth) and <code class="highlighter-rouge">KinematicInertial</code> estimate the state of the floating base, but only <code class="highlighter-rouge">KinematicInertial</code> observer result is used to update the <code class="highlighter-rouge">realRobots()</code> instances.</li>
+</ul>
+
+<p>Each observer is allowed to modify properties of the <code class="highlighter-rouge">realRobots()</code> instance. In the above example:</p>
+<ul>
+  <li>The <code class="highlighter-rouge">Encoder</code> observer will compute the encoder velocity through finite differences of the encoder position sensor, and use this estimate for the kinematic properties of the real robot instance (e.g set <code class="highlighter-rouge">realRobot().mbc().q, realRobot().mbc().alpha</code> and compute forward kinematics and forward velocity to update each body pose and velocity).</li>
+  <li>Then the <code class="highlighter-rouge">BodySensor</code> observer will be run, and only compute the pose of the floating base from <code class="highlighter-rouge">BodySensor</code> information (typically groundtruth from a simulator). It will however not update any properties of the <code class="highlighter-rouge">realRobots()</code> instance.</li>
+  <li>Finally, the <code class="highlighter-rouge">KinematicInertial</code> observer is run, and estimates the floating base pose and velocity (through filtered finite differences) based on IMU measurement. This estimate is in turn used to update the floating base (i.e <code class="highlighter-rouge">realRobot().posW(...)</code> and <code class="highlighter-rouge">realRobot().velW(...)</code>).</li>
+</ul>
+
+<p>Thus in the end the <code class="highlighter-rouge">realRobot()</code> instance will contain a full estimate of the afformentioned state, that is floating base position and velocity, encoder position and velocity. This estimated robot is widely available throughout your controller, and allows you to access any property of the real system in the same way you would access the control instance. For example, you can access:</p>
+
+<ul>
+  <li>Body pose: <code class="highlighter-rouge">realRobot().bodyPosW("bodyName");</code></li>
+  <li>Body velocity: <code class="highlighter-rouge">realRobot().bodyVelW("bodyName");</code></li>
+  <li>Compute the CoM position and velocity <code class="highlighter-rouge">realRobot().com() / realRobot().comVelocity()</code></li>
+  <li>…</li>
+</ul>
+
+<p>The end-result for this example pipeline looks like this <em>(left: choreonoid simulation, right: control state [transparent], observed state [solid])</em></p>
+
+<div class="embed-responsive embed-responsive-16by9">
+  <video src="https://gite.lirmm.fr/multi-contact/mc_rtc/uploads/bd05951bc324f2e367e9626f458371cb/screencast_observers.mp4" controls="" />
+</div>
+
+<h1 id="default-observers">Default observers</h1>
+
+<p>Several common observers are provided with the framework. Their role and requirements will be described in this section, along with a sample JSON/YAML configuration.</p>
+
+<h2 id="encoder">Encoder</h2>
+
+<ul>
+  <li><strong>Prerequisites</strong>: encoder position sensor</li>
+  <li><strong>Run</strong>: keeps the encoder position from sensor unchanged, computes encoder velocity by finite differences of the position sensor</li>
+  <li><strong>Update</strong>:
+    <ul>
+      <li><code class="highlighter-rouge">UpdatePositionFrom</code>: updates <code class="highlighter-rouge">realRobot().mbc().q</code>
+        <ul>
+          <li><code class="highlighter-rouge">"estimator"</code> :  from encoder position.</li>
+          <li><code class="highlighter-rouge">"control"</code> : from <code class="highlighter-rouge">robot().mbc().q</code> values (eg copies the control state instead of using sensors).</li>
+          <li><code class="highlighter-rouge">"none"</code>: does not update the encoder position</li>
+        </ul>
+      </li>
+      <li><code class="highlighter-rouge">"UpdateVelocityFrom":</code> : updates <code class="highlighter-rouge">realRobot().mbc().alpha</code>
+        <ul>
+          <li><code class="highlighter-rouge">"estimator"</code>: from estimated encoder velocity.</li>
+          <li><code class="highlighter-rouge">"control"</code>: from <code class="highlighter-rouge">robot().mbc().alpha</code> values (eg copies the control state instead of using sensors).</li>
+          <li><code class="highlighter-rouge">"none"</code>: does not update the encoder velocity</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><strong>Computes</strong>: forward kinematics, forward velocity for the <code class="highlighter-rouge">estimator|control</code> updates.</li>
+</ul>
+
+<ul class="nav nav-tabs" id="createTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="yamlCreateTab" data-toggle="tab" href="#yamlCreateTabContent" role="tab" aria-controls="yamlCreateTabContent" aria-selected="true">YAML</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="jsonCreateTab" data-toggle="tab" href="#jsonCreateTabContent" role="tab" aria-controls="jsonCreateTabContent" aria-selected="false">JSON</a>
+  </li>
+</ul>
+<div class="tab-content" id="interfaceTabContent">
+  <div class="tab-pane show active" id="yamlCreateTabContent" role="tabpanel" arial-labelledby="yamlCreateTab">
+    <div class="card bg-light">
+      <div class="card-body">
+<p>
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">Encoder</span><span class="pi">:</span>
+  <span class="c1"># Valid values are [estimator, control, none]</span>
+  <span class="na">UpdatePositionFrom</span><span class="pi">:</span> <span class="s">estimator</span>
+  <span class="na">UpdateVelocityFrom</span><span class="pi">:</span> <span class="s">estimator</span>
+  <span class="na">Log </span><span class="pi">:</span> <span class="no">true</span></code></pre></figure>
+
+</p>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" id="jsonCreateTabContent" role="tabpanel" arial-labelledby="jsonCreateTab">
+    <div class="card bg-light">
+      <div class="card-body">
+<p>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="nl">"Encoder"</span><span class="p">:</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="nl">"UpdatePositionFrom"</span><span class="p">:</span><span class="w"> </span><span class="s2">"estimator"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"UpdateVelocityFrom"</span><span class="p">:</span><span class="w"> </span><span class="s2">"estimator"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"Log"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2 id="bodysensor">BodySensor</h2>
+
+<ul>
+  <li><strong>Prerequisites</strong>:
+    <ul>
+      <li>Up to date kinematic information (typically obtained by the <code class="highlighter-rouge">Encoder</code> observer)</li>
+      <li>The <code class="highlighter-rouge">BodySensor</code> must contain position, orientation, linear and angular velocity</li>
+    </ul>
+  </li>
+  <li><strong>Run</strong>:
+    <ul>
+      <li>If <code class="highlighter-rouge">"UpdateFrom": "estimator"</code>: Computes the floating base pose and velocity from a <code class="highlighter-rouge">BodySensor</code>. If the body sensor is not directly attached to the floating base link, the transformation between the sensor frame and the floating base frame is taken into account using their relative pose obtained by kinematics.</li>
+      <li>If <code class="highlighter-rouge">"UpdateFrom": "control"</code>: Use the control robot floating base (`robot().posW(), robot().velW()) instead</li>
+    </ul>
+  </li>
+  <li><strong>Update</strong>:
+    <ul>
+      <li>sets the real robot floating base state</li>
+      <li>computes forward kinematics/velocity when necessary</li>
+    </ul>
+  </li>
+</ul>
+
+<ul class="nav nav-tabs" id="createTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="bodySensorYAMLCreateTab" data-toggle="tab" href="#bodySensorYAMLCreateTabContent" role="tab" aria-controls="bodySensorYAMLCreateTabContent" aria-selected="true">YAML</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="bodySensorJSONCreateTab" data-toggle="tab" href="#bodySensorJSONCreateTabContent" role="tab" aria-controls="bodySensorJSONCreateTabContent" aria-selected="false">JSON</a>
+  </li>
+</ul>
+<div class="tab-content" id="interfaceTabContent">
+  <div class="tab-pane show active" id="bodySensorYAMLCreateTabContent" role="tabpanel" arial-labelledby="bodySensorYAMLCreateTab">
+    <div class="card bg-light">
+      <div class="card-body">
+<p>
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">BodySensor</span><span class="pi">:</span>
+  <span class="c1"># Valid entries are [control, estimator]</span>
+  <span class="na">UpdateFrom</span><span class="pi">:</span> <span class="s">estimator</span>
+  <span class="s">FloatingBaseSensor"</span><span class="pi">:</span> <span class="s">FloatingBase</span></code></pre></figure>
+
+</p>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" id="bodySensorJSONCreateTabContent" role="tabpanel" arial-labelledby="bodySensorJSONCreateTab">
+    <div class="card bg-light">
+      <div class="card-body">
+<p>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="nl">"BodySensor"</span><span class="p">:</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="nl">"UpdateFrom"</span><span class="p">:</span><span class="w"> </span><span class="s2">"estimator"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"FloatingBaseSensor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FloatingBase"</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2 id="kinematicinertial">KinematicInertial</h2>
+
+<p>Observes the state of the robot’s floating base (pose and velocity) based on IMU measurements, kinematics information, and a reference anchor point. A full explanation of the method implemented here can be found on <a href="https://scaron.info/teaching/floating-base-estimation.html">Stéphane Caron’s website</a>. Note that this observer has been extensively used in practice in the <a href="https://github.com/jrl-umi3218/lipm_walking_controller">LIPM Walking Controller</a>.</p>
+
+<ul>
+  <li><strong>Prerequisites</strong>:
+    <ul>
+      <li>IMU sensor</li>
+      <li>Accurate kinematics (body position)</li>
+      <li>A known anchor frame, to be provided by calling</li>
+    </ul>
+
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">anchorFrame</span><span class="p">(</span><span class="k">const</span> <span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span> <span class="o">&amp;</span> <span class="p">);</span>
+<span class="kt">void</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">anchorFrameReal</span><span class="p">(</span><span class="k">const</span> <span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span> <span class="o">&amp;</span> <span class="p">);</span>
+</code></pre></div>    </div>
+    <p>The anchor frame is a point in-between the robot feet used to estimate the position of the floating base from its orientation and the robot kinematics between the anchor sole and the floating base frame.</p>
+  </li>
+  <li><strong>Run</strong>
+    <ul>
+      <li>Computes the floating base pose from IMU, kinematics and the anchor frame</li>
+      <li>Computes the floating base velocity by finite differences of the estimated pose, filtered with a low-pass filter.</li>
+    </ul>
+  </li>
+  <li><strong>Update</strong>
+    <ul>
+      <li>The floating base pose and velocity</li>
+      <li>Computes forward kinematics/veloctiy</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Default configuration</strong>: no configuration options implemented</p>
+
+<h2 id="setting-up-the-observers-pipeline">Setting-up the observers pipeline</h2>
+
+<p>The observer pipeline can be configured directly from your controller’s configuration file as follows.</p>
+
+<ul class="nav nav-tabs" id="createTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="confYAMLCreateTab" data-toggle="tab" href="#confYAMLCreateTabContent" role="tab" aria-controls="confYAMLCreateTabContent" aria-selected="true">YAML</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="confJSONCreateTab" data-toggle="tab" href="#confJSONCreateTabContent" role="tab" aria-controls="confJSONCreateTabContent" aria-selected="false">JSON</a>
+  </li>
+</ul>
+<div class="tab-content" id="interfaceTabContent">
+  <div class="tab-pane show active" id="confYAMLCreateTabContent" role="tabpanel" arial-labelledby="confYAMLCreateTab">
+    <div class="card bg-light">
+      <div class="card-body">
+<p>
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="c1"># Defines which observer libraries will be loaded by the framework</span>
+<span class="na">EnabledObservers</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">Encoder</span><span class="pi">,</span> <span class="nv">BodySensor</span><span class="pi">,</span> <span class="nv">KinematicInertial</span><span class="pi">]</span>
+<span class="c1"># List of observers to run</span>
+<span class="na">RunObservers</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">Encoder</span><span class="pi">,</span> <span class="nv">BodySensor</span><span class="pi">,</span> <span class="nv">KinematicInertial</span><span class="pi">]</span>
+<span class="c1"># List of observers used to update realRobots() from</span>
+<span class="na">UpdateObservers</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">Encoder</span><span class="pi">,</span> <span class="nv">KinematicInertial</span><span class="pi">]</span>
+
+<span class="c1"># Specific configuration for each observer (optional)</span>
+<span class="na">Observers</span><span class="pi">:</span>
+  <span class="na">Encoder</span><span class="pi">:</span>
+    <span class="na">UpdatePositionFrom</span><span class="pi">:</span> <span class="s">estimator</span>
+    <span class="na">UpdateVelocityFrom</span><span class="pi">:</span> <span class="s">estimator</span>
+    <span class="na">Log </span><span class="pi">:</span> <span class="no">true</span>
+
+  <span class="na">BodySensor</span><span class="pi">:</span>
+    <span class="na">UpdateFrom</span><span class="pi">:</span> <span class="s">estimator</span>
+    <span class="na">FloatingBaseSensor</span><span class="pi">:</span> <span class="s">FloatingBase</span>
+
+<span class="c1"># These observers are loaded from libraries (similarely to the controllers and metatasks).</span>
+<span class="c1"># The default path is `&lt;INSTALL_PREFIX&gt;/lib/mc_observers/ObserverName.so`.</span>
+<span class="c1"># Optionally, you can specify additional paths for your observer libraries as</span>
+<span class="c1"># ObserverModulePaths: ["/one/path/to/observer/", "/another/path/"]</span></code></pre></figure>
+
+</p>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" id="confJSONCreateTabContent" role="tabpanel" arial-labelledby="confJSONCreateTab">
+    <div class="card bg-light">
+      <div class="card-body">
+<p>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+</span><span class="nl">"EnabledObservers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Encoder"</span><span class="p">,</span><span class="w"> </span><span class="s2">"BodySensor"</span><span class="p">,</span><span class="w"> </span><span class="s2">"KinematicInertial"</span><span class="p">],</span><span class="w">
+</span><span class="nl">"RunObservers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Encoder"</span><span class="p">,</span><span class="w"> </span><span class="s2">"BodySensor"</span><span class="p">,</span><span class="w"> </span><span class="s2">"KinematicInertial"</span><span class="p">],</span><span class="w">
+</span><span class="nl">"UpdateObservers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Encoder"</span><span class="p">,</span><span class="w"> </span><span class="s2">"KinematicInertial"</span><span class="p">],</span><span class="w">
+
+</span><span class="nl">"Observers"</span><span class="p">:</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="nl">"Encoder"</span><span class="p">:</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"UpdatePositionFrom"</span><span class="p">:</span><span class="w"> </span><span class="s2">"estimator"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"UpdateVelocityFrom"</span><span class="p">:</span><span class="w"> </span><span class="s2">"estimator"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"Log"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+
+  </span><span class="nl">"BodySensor"</span><span class="p">:</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"UpdateFrom"</span><span class="p">:</span><span class="w"> </span><span class="s2">"estimator"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"FloatingBaseSensor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FloatingBase"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p>Note that most of the configuration used in this example is already the default. The only required fields are <code class="highlighter-rouge">EnabledObservers</code>, <code class="highlighter-rouge">RunObservers</code> and <code class="highlighter-rouge">UpdateObservers</code>. Only use observer-specific configuration when needed. The above example will set-up the pipeline described at the begining of this tutorial. When running your controller, you should now see this line in the terminal, and the log file will contain <code class="highlighter-rouge">observers_...</code> entries.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Observers: Encoder (position=estimator,velocity=estimator) -&gt; [BodySensor (sensor=FloatingBase,update=estimator)] -&gt; KinematicInertial (cutoff=0.01)
+</code></pre></div></div>
+
+<p>If that’s not the case, there is something wrong with your observers set-up. Please check that your configuration file is correct, and that all observers were successfully loaded.</p>
+
+<h2 id="visualizing-the-estimated-robot">Visualizing the estimated robot</h2>
+
+<p>In Rviz, create a new robot with the following parameters:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">Robot Description path: /real/robot_description</code></li>
+</ul>
+
+<h1 id="creating-your-own-observer">Creating your own Observer</h1>
+
+<p>All observers must inherit from <code class="highlighter-rouge">mc_observers::Observer</code> (<a href="/mc_rtc/doxygen.html#a01940">doc</a>) and implement the following <code class="highlighter-rouge">virtual</code> functions:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">virtual void reset (const mc_control::MCController &amp;ctl)</code> : reset the observers state</li>
+  <li><code class="highlighter-rouge">virtual bool run (const mc_control::MCController &amp;ctl)</code> : estimate the state, but does not update the real robot instance</li>
+  <li><code class="highlighter-rouge">virtual void	updateRobots (const mc_control::MCController &amp;ctl, mc_rbdyn::Robots &amp;realRobots)</code> : update the robot state from the estimated state</li>
+</ul>
+
+<p>To compile your own observer, you can use the provided macro</p>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">add_observer</span><span class="p">(</span>YourObserverName YourObserver.cpp YourObserver.h<span class="p">)</span>
+</code></pre></div></div>
 
 
         <hr/>
         
         <div class="text-right">
-        <a href="/mc_rtc/tutorials/recipes/speed-constraint.html">Next tutorial: Constraint the speed of a body</a>
+        <a href="/mc_rtc/tutorials/recipes/lipm-stabilizer.html">Next tutorial: Using the LIPM Stabilizer</a>
         </div>
         
       </div>
@@ -278,7 +589,7 @@ For example, just let the HRP4 run against an obstacle and you will see the “o
         <hr>
         <div class="row">
           <div class="col-8 offset-lg-2 col-lg-6">
-            Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2019
+            Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
           </div>
           <div class="col-4 col-lg-2 text-right">
             <a href="/mc_rtc/credits.html">Credits</a>

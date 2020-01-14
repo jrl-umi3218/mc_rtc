@@ -1,5 +1,6 @@
 var a00275 =
 [
-    [ "StringInputImpl", "a02312.html", "a02312" ],
-    [ "StringInput", "a00275.html#a4f8c1eb018c71e856f48cee90d7ea65d", null ]
+    [ "PolygonImpl", "a02366.html", "a02366" ],
+    [ "Polygon", "a00275.html#ac7c7c596bdb09e8c01e26e8fb53ce360", null ],
+    [ "Polygon", "a00275.html#a2b137bae8372a9a84cdb28508e7de1dd", null ]
 ];
