@@ -46,6 +46,10 @@ struct StationaryOffset
   {
     average_.append(value);
     filteredValue_ = value - average_.eval();
+    if(saturation_ > 0.)
+    {
+      utils::clampInPlace(filteredValue_, -saturation_, saturation_);
+    }
   }
 
   /** Get output value where the stationary offset has been filtered.
@@ -84,8 +88,18 @@ struct StationaryOffset
     average_.timeConstant(T);
   }
 
+  /** Set output saturation; disable by providing a negative value.
+   *
+   * \param limit Output will saturate between -limit and +limit.
+   */
+  void saturation(double limit)
+  {
+    saturation_ = limit;
+  }
+
 private:
-  VectorT filteredValue_;
+  VectorT filteredValue_ = VectorT::Zero();
   ExponentialMovingAverage<VectorT> average_;
+  double saturation_ = -1;
 };
 } // namespace mc_filter
