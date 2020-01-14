@@ -128,6 +128,7 @@ pages:
     - mkdir -p /tmp/_ci/src
     - cd /tmp/_ci/src && git clone --recursive https://github.com/humanoid-path-planner/hpp-spline && mkdir -p hpp-spline/build && cd hpp-spline/build && cmake ../ -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_TESTING:BOOL=OFF -DBUILD_PYTHON_INTERFACE:BOOL=OFF && make install || exit 1
     - cd /tmp/_ci/src && git clone --recursive git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data && mkdir -p mc_rtc_ros_data/build && cd mc_rtc_ros_data/build && cmake ../ -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_TESTING:BOOL=OFF && make install || exit 1
+    - cd /tmp/_ci/src && git clone --recursive https://github.com/jrl-umi3218/eigen-quadprog && mkdir -p eigen-quadprog/build && cd eigen-quadprog/build && cmake ../ -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_TESTING:BOOL=OFF && make install || exit 1
     - mkdir -p /tmp/_ci/build && cd /tmp/_ci/build
     - cmake $CI_PROJECT_DIR -DPYTHON_BINDING=OFF -DBUILD_TESTING=OFF
     - make doc
