@@ -666,7 +666,7 @@ void StabilizerTask::configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfig
   }
 }
 
-void StabilizerTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+void StabilizerTask::load(mc_solver::QPSolver &, const mc_rtc::Configuration & config)
 {
   double height = 0;
   // Load contacts
