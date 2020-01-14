@@ -147,8 +147,10 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
 bool MCController::resetObservers()
 {
   auto pipelineDesc = std::string{};
-  for(const auto & observerPair : pipelineObservers_)
+
+  for(size_t i = 0; i < pipelineObservers_.size(); ++i)
   {
+    const auto & observerPair = pipelineObservers_[i];
     auto observer = observerPair.first;
     bool updateRobots = observerPair.second;
     observer->reset(*this);
@@ -156,12 +158,18 @@ bool MCController::resetObservers()
     if(updateRobots)
     {
       observer->updateRobots(*this, realRobots());
-      pipelineDesc += " -> " + observer->desc();
+      pipelineDesc += observer->desc();
     }
     else
     {
-      pipelineDesc += " -> [" + observer->desc() + "]";
+      pipelineDesc += "[" + observer->desc() + "]";
     }
+
+    if(i < pipelineObservers_.size() - 1)
+    {
+      pipelineDesc += " -> ";
+    }
+
     observer->addToLogger(*this, logger());
     if(gui_)
     {
@@ -170,7 +178,7 @@ bool MCController::resetObservers()
   }
   if(!pipelineObservers_.empty())
   {
-    LOG_INFO("Observers: " << pipelineDesc);
+    LOG_SUCCESS("Observers: " << pipelineDesc);
   }
   return true;
 }
@@ -288,30 +296,50 @@ std::vector<std::string> MCController::supported_robots() const
   return {};
 }
 
+void MCController::realRobots(std::shared_ptr<mc_rbdyn::Robots> realRobots)
+{
+  solver().realRobots(realRobots);
+  real_robots = realRobots;
+}
+
 const mc_rbdyn::Robots & MCController::realRobots() const
 {
-  return *real_robots;
+  return solver().realRobots();
 }
 
 mc_rbdyn::Robots & MCController::realRobots()
 {
-  return *real_robots;
+  return solver().realRobots();
 }
 
 const mc_rbdyn::Robot & MCController::realRobot() const
 {
-  return real_robots->robot();
+  return realRobots().robot();
 }
 
 mc_rbdyn::Robot & MCController::realRobot()
 {
-  return real_robots->robot();
+  return realRobots().robot();
 }
 
-sva::PTransformd MCController::anchorFrame(const mc_rbdyn::Robot &) const
+const sva::PTransformd & MCController::anchorFrame() const
 {
-  LOG_ERROR_AND_THROW(std::runtime_error, "MCController::anchorFrame() requested but no implementation available. "
-                                          "Please override this function in your controller.");
+  return anchorFrame_;
+}
+
+void MCController::anchorFrame(const sva::PTransformd & anchor)
+{
+  anchorFrame_ = anchor;
+}
+
+const sva::PTransformd & MCController::anchorFrameReal() const
+{
+  return anchorFrameReal_;
+}
+
+void MCController::anchorFrameReal(const sva::PTransformd & anchor)
+{
+  anchorFrameReal_ = anchor;
 }
 
 void MCController::stop() {}

@@ -1,7 +1,7 @@
 /*
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  *
- * This file is  inspired by Stephane's Caron implementation as part of
+ * This file is inspired by Stephane's Caron implementation as part of
  * lipm_walking_controller <https://github.com/stephane-caron/lipm_walking_controller>
  */
 
@@ -89,7 +89,6 @@ protected:
 private:
   Eigen::Matrix3d orientation_; /**< Rotation from world to floating-base frame */
   Eigen::Vector3d position_; /**< Translation of floating-base in world frame */
-  double leftFootRatio_; /**< Fraction of total weight sustained by the left foot */
 };
 
 } // namespace mc_observers

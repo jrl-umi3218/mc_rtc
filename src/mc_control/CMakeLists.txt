@@ -16,6 +16,7 @@ if(${BUILD_CONTROLLER_SAMPLES})
   add_subdirectory(samples/Body6d)
   add_subdirectory(samples/CoM)
   add_subdirectory(samples/Text)
+  add_subdirectory(samples/LIPMStabilizer)
 endif()
 
 add_subdirectory(HalfSitPose)

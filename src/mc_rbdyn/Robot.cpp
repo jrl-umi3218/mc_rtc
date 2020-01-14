@@ -7,6 +7,7 @@
 #include <mc_rbdyn/Robots.h>
 #include <mc_rbdyn/SCHAddon.h>
 #include <mc_rbdyn/Surface.h>
+#include <mc_rbdyn/constants.h>
 #include <mc_rbdyn/surface_utils.h>
 #include <mc_rtc/logging.h>
 
@@ -136,7 +137,7 @@ Robot::Robot(Robots & robots,
     mbc() = rbd::MultiBodyConfig(mb());
   }
 
-  mbc().gravity = Eigen::Vector3d{0, 0, 9.81};
+  mbc().gravity = constants::gravity;
   mbc().zero(mb());
   {
     auto initQ = mbc().q;
@@ -523,33 +524,66 @@ Eigen::Vector3d Robot::copW(const std::string & surfaceName, double min_pressure
   return X_0_s.translation() + X_0_s.rotation().transpose() * cop_s;
 }
 
-Eigen::Vector3d Robot::zmp(const std::vector<std::string> & sensorsName,
-                           const Eigen::Vector3d & plane_p,
-                           const Eigen::Vector3d & plane_n,
-                           double forceThreshold) const
+sva::ForceVecd Robot::netWrench(const std::vector<std::string> & sensorNames) const
 {
-  sva::ForceVecd measuredWrench{Eigen::Vector6d::Zero()};
-  for(const auto & sensorName : sensorsName)
+  // Compute net total wrench from all sensors in contact
+  sva::ForceVecd netTotalWrench{sva::ForceVecd::Zero()};
+  for(const auto & sensorName : sensorNames)
   {
     const auto & sensor = forceSensor(sensorName);
-    if(sensor.force().norm() > forceThreshold)
-    {
-      measuredWrench += sensor.worldWrenchWithoutGravity(*this);
-    }
+    netTotalWrench += sensor.worldWrenchWithoutGravity(*this);
+  }
+  return netTotalWrench;
+}
+
+Eigen::Vector3d Robot::zmp(const sva::ForceVecd & netTotalWrench,
+                           const Eigen::Vector3d & plane_p,
+                           const Eigen::Vector3d & plane_n,
+                           double minimalNetNormalForce) const
+{
+  if(minimalNetNormalForce <= 0)
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error,
+                        "ZMP cannot be computed: the minimalNetNormalForce must be >0 (divide by zero)");
   }
 
-  const Eigen::Vector3d & force = measuredWrench.force();
-  const Eigen::Vector3d & moment_0 = measuredWrench.couple();
-
+  const Eigen::Vector3d & force = netTotalWrench.force();
+  const Eigen::Vector3d & moment_0 = netTotalWrench.couple();
   Eigen::Vector3d moment_p = moment_0 - plane_p.cross(force);
   double floorn_dot_force = plane_n.dot(force);
   // Prevent potential division by zero
-  if(floorn_dot_force < 1.)
+  if(floorn_dot_force < minimalNetNormalForce)
   {
     LOG_ERROR_AND_THROW(std::runtime_error, "ZMP cannot be computed, projected force too small " << floorn_dot_force);
   }
   Eigen::Vector3d zmp = plane_p + plane_n.cross(moment_p) / floorn_dot_force;
   return zmp;
+}
+
+Eigen::Vector3d Robot::zmp(const sva::ForceVecd & netWrench,
+                           const sva::PTransformd & zmpFrame,
+                           double minimalNetNormalForce) const
+{
+  Eigen::Vector3d n = zmpFrame.rotation().row(2);
+  Eigen::Vector3d p = zmpFrame.translation();
+  return zmp(netWrench, p, n, minimalNetNormalForce);
+}
+
+Eigen::Vector3d Robot::zmp(const std::vector<std::string> & sensorNames,
+                           const Eigen::Vector3d & plane_p,
+                           const Eigen::Vector3d & plane_n,
+                           double minimalNetNormalForce) const
+{
+  return zmp(netWrench(sensorNames), plane_p, plane_n, minimalNetNormalForce);
+}
+
+Eigen::Vector3d Robot::zmp(const std::vector<std::string> & sensorNames,
+                           const sva::PTransformd & zmpFrame,
+                           double minimalNetNormalForce) const
+{
+  Eigen::Vector3d n = zmpFrame.rotation().row(2);
+  Eigen::Vector3d p = zmpFrame.translation();
+  return zmp(sensorNames, p, n, minimalNetNormalForce);
 }
 
 const std::vector<std::vector<double>> & Robot::ql() const

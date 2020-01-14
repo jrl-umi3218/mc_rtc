@@ -12,6 +12,7 @@
 #include <mc_rbdyn/Mimic.h>
 #include <mc_rbdyn/Springs.h>
 #include <mc_rbdyn/api.h>
+#include <mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h>
 
 #include <mc_rbdyn_urdf/urdf.h>
 
@@ -263,6 +264,12 @@ struct MC_RBDYN_DLLAPI RobotModule
     return _default_attitude;
   }
 
+  /** Return default configuration for the lipm stabilizer */
+  const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & defaultLIPMStabilizerConfiguration() const
+  {
+    return _lipmStabilizerConfig;
+  }
+
   /** Generate correct bounds from URDF bounds
    *
    * URDF outputs bounds in {lower, upper, velocity, torque} forms
@@ -356,6 +363,8 @@ struct MC_RBDYN_DLLAPI RobotModule
   std::vector<CompoundJointConstraintDescription> _compoundJoints;
   /** \see parameters() */
   std::vector<std::string> _parameters;
+  /** \see defaultLIPMStabilizerConfiguration() */
+  mc_rbdyn::lipm_stabilizer::StabilizerConfiguration _lipmStabilizerConfig;
 };
 
 typedef std::shared_ptr<RobotModule> RobotModulePtr;

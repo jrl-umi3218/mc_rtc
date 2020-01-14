@@ -173,13 +173,14 @@ protected:
    * This function (usually) has to be called at every iteration of the solver
    * once it has been added. It should update the state of the task.
    *
+   * \param solver Solver in which the task is inserted
    */
-  virtual void update() = 0;
+  virtual void update(mc_solver::QPSolver & solver) = 0;
 
   /*! Helper function when using another MetaTask inside a MetaTask */
-  static inline void update(MetaTask & t)
+  static inline void update(MetaTask & t, mc_solver::QPSolver & solver)
   {
-    t.update();
+    t.update(solver);
   }
 
   /** Add entries to the logger
@@ -189,8 +190,14 @@ protected:
    *
    * The default implementation adds nothing to the log.
    */
-
   virtual void addToLogger(mc_rtc::Logger &) {}
+
+  /*! Helper function to add a task to the logger when using another MetaTask
+   * inside a MetaTask */
+  static inline void addToLogger(MetaTask & t, mc_rtc::Logger & logger)
+  {
+    t.addToLogger(logger);
+  }
 
   /** Remove entries from the logger
    *
@@ -199,6 +206,13 @@ protected:
    * The default implementation removes nothing from the log.
    */
   virtual void removeFromLogger(mc_rtc::Logger &) {}
+
+  /*! Helper function to remove a task from the logger when using another MetaTask
+   * inside a MetaTask */
+  static inline void removeFromLogger(MetaTask & t, mc_rtc::Logger & logger)
+  {
+    t.removeFromLogger(logger);
+  }
 
   /** Add elements to the GUI through the helper
    *
@@ -210,6 +224,13 @@ protected:
    */
   virtual void addToGUI(mc_rtc::gui::StateBuilder &);
 
+  /*! Helper function to add a task to the gui when using another MetaTask
+   * inside a MetaTask */
+  static inline void addToGUI(MetaTask & t, mc_rtc::gui::StateBuilder & gui)
+  {
+    t.addToGUI(gui);
+  }
+
   /** Remove elements from the GUI through the helper
    *
    * This will be called by the solver when the task is removed.
@@ -218,6 +239,13 @@ protected:
    *
    */
   virtual void removeFromGUI(mc_rtc::gui::StateBuilder &);
+
+  /*! Helper function to remove a task from the gui when using another MetaTask
+   * inside a MetaTask */
+  static inline void removeFromGUI(MetaTask & t, mc_rtc::gui::StateBuilder & gui)
+  {
+    t.removeFromGUI(gui);
+  }
 
   /** Add additional completion criterias to mc_control::CompletionCriteria
    * object

@@ -12,56 +12,6 @@ namespace mc_tasks
 namespace force
 {
 
-/** Saturate integrator outputs.
- *
- * \param taskName Name of caller AdmittanceTask.
- *
- * \param vector Integrator output vector.
- *
- * \param bound Output (symmetric) bounds.
- *
- * \param label Name of output vector.
- *
- * \param isClamping Map of booleans describing the clamping state for each
- * direction in ['x', 'y', 'z'].
- *
- */
-inline void clampAndWarn(const std::string & taskName,
-                         Eigen::Vector3d & vector,
-                         const Eigen::Vector3d & bound,
-                         const std::string & label,
-                         std::map<char, bool> & isClamping)
-{
-  const char dirName[] = {'x', 'y', 'z'};
-  for(unsigned i = 0; i < 3; i++)
-  {
-    char dir = dirName[i];
-    if(vector(i) < -bound(i))
-    {
-      vector(i) = -bound(i);
-      if(!isClamping[dir])
-      {
-        LOG_WARNING(taskName << ": clamping " << dir << " " << label << " to " << -bound(i));
-        isClamping[dir] = true;
-      }
-    }
-    else if(vector(i) > bound(i))
-    {
-      vector(i) = bound(i);
-      if(!isClamping[dir])
-      {
-        LOG_WARNING(taskName << ": clamping " << dir << " " << label << " to " << bound(i));
-        isClamping[dir] = true;
-      }
-    }
-    else if(isClamping[dir])
-    {
-      LOG_WARNING(taskName << ": " << dir << " " << label << " back within range");
-      isClamping[dir] = false;
-    }
-  }
-}
-
 /*! \brief Hybrid position-force control on a contacting end-effector.
  *
  * The AdmittanceTask is by default a SurfaceTransformTask, i.e. pure position
@@ -251,6 +201,9 @@ public:
     feedforwardVelB_ = velB;
   }
 
+  /*! \brief Load parameters from a Configuration object */
+  void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) override;
+
 protected:
   Eigen::Vector3d maxAngularVel_ = {0.1, 0.1, 0.1}; // [rad] / [s]
   Eigen::Vector3d maxLinearVel_ = {0.1, 0.1, 0.1}; // [m] / [s]
@@ -258,15 +211,13 @@ protected:
   unsigned int rIndex_;
   double timestep_;
   const mc_rbdyn::Surface & surface_;
-  std::map<char, bool> isClampingAngularVel_ = {{'x', false}, {'y', false}, {'z', false}};
-  std::map<char, bool> isClampingLinearVel_ = {{'x', false}, {'y', false}, {'z', false}};
   sva::ForceVecd admittance_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   sva::ForceVecd targetWrench_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   sva::ForceVecd wrenchError_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   sva::MotionVecd feedforwardVelB_ = sva::MotionVecd(Eigen::Vector6d::Zero());
   sva::MotionVecd refVelB_ = sva::MotionVecd(Eigen::Vector6d::Zero());
 
-  void update() override;
+  void update(mc_solver::QPSolver &) override;
 
   /** Add support for the following criterias:
    *

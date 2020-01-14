@@ -9,6 +9,8 @@
 #include <mc_rbdyn/configuration_io.h>
 #include <mc_rbdyn/rpy_utils.h>
 
+#include <mc_filter/utils/clamp.h>
+
 #include <mc_rtc/gui/ArrayLabel.h>
 #include <mc_rtc/gui/Transform.h>
 
@@ -17,6 +19,8 @@ namespace mc_tasks
 
 namespace force
 {
+
+using mc_filter::utils::clampInPlaceAndWarn;
 
 AdmittanceTask::AdmittanceTask(const std::string & surfaceName,
                                const mc_rbdyn::Robots & robots,
@@ -30,7 +34,7 @@ AdmittanceTask::AdmittanceTask(const std::string & surfaceName,
   reset();
 }
 
-void AdmittanceTask::update()
+void AdmittanceTask::update(mc_solver::QPSolver &)
 {
   // Compute wrench error
   wrenchError_ = measuredWrench() - targetWrench_;
@@ -40,8 +44,8 @@ void AdmittanceTask::update()
   Eigen::Vector3d angularVel = admittance_.couple().cwiseProduct(wrenchError_.couple());
 
   // Clamp both values in order to have a 'security'
-  clampAndWarn(name_, linearVel, maxLinearVel_, "linear velocity", isClampingLinearVel_);
-  clampAndWarn(name_, angularVel, maxAngularVel_, "angular velocity", isClampingAngularVel_);
+  clampInPlaceAndWarn(linearVel, (-maxLinearVel_).eval(), maxLinearVel_, name_ + " linear velocity");
+  clampInPlaceAndWarn(angularVel, (-maxAngularVel_).eval(), maxAngularVel_, name_ + " angular velocity");
 
   // Filter
   refVelB_ = 0.8 * refVelB_ + 0.2 * sva::MotionVecd(angularVel, linearVel);
@@ -69,6 +73,34 @@ void AdmittanceTask::reset()
   feedforwardVelB_ = sva::MotionVecd(Eigen::Vector6d::Zero());
   targetWrench_ = sva::ForceVecd(Eigen::Vector6d::Zero());
   wrenchError_ = sva::ForceVecd(Eigen::Vector6d::Zero());
+}
+
+/*! \brief Load parameters from a Configuration object */
+void AdmittanceTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+{
+  if(config.has("admittance"))
+  {
+    admittance(config("admittance"));
+  }
+  else if(config.has("targetPose"))
+  {
+    targetPose(config("targetPose"));
+  }
+  if(config.has("wrench"))
+  {
+    targetWrench(config("wrench"));
+  }
+  if(config.has("refVelB"))
+  {
+    refVelB(config("refVelB"));
+  }
+  if(config.has("maxVel"))
+  {
+    sva::MotionVecd maxVel = config("maxVel");
+    maxLinearVel(maxVel.linear());
+    maxAngularVel(maxVel.angular());
+  }
+  SurfaceTransformTask::load(solver, config);
 }
 
 void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
@@ -164,35 +196,6 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
       auto t =
           std::make_shared<mc_tasks::force::AdmittanceTask>(config("surface"), solver.robots(), config("robotIndex"));
-      if(config.has("admittance"))
-      {
-        t->admittance(config("admittance"));
-      }
-      if(config.has("damping"))
-      {
-        double d = config("damping");
-        t->damping(d);
-      }
-
-      if(config.has("targetSurface"))
-      {
-        const auto & c = config("targetSurface");
-        t->targetSurface(c("robotIndex"), c("surface"),
-                         {c("offset_rotation", Eigen::Matrix3d::Identity().eval()),
-                          c("offset_translation", Eigen::Vector3d::Zero().eval())});
-      }
-      else if(config.has("targetPose"))
-      {
-        t->targetPose(config("targetPose"));
-      }
-      if(config.has("weight"))
-      {
-        t->weight(config("weight"));
-      }
-      if(config.has("wrench"))
-      {
-        t->targetWrench(config("wrench"));
-      }
       t->load(solver, config);
       return t;
     });

@@ -162,14 +162,16 @@ public:
     return AdmittanceTask::targetWrench();
   }
 
+protected:
+  void addToLogger(mc_rtc::Logger & logger) override;
+  void removeFromLogger(mc_rtc::Logger & logger) override;
+  void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
+
 private:
   Eigen::Vector2d targetCoP_ = Eigen::Vector2d::Zero();
   Eigen::Vector3d targetForce_ = Eigen::Vector3d::Zero();
 
-  void addToLogger(mc_rtc::Logger & logger) override;
-  void removeFromLogger(mc_rtc::Logger & logger) override;
-  void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
-  void update() override;
+  void update(mc_solver::QPSolver &) override;
 
   using AdmittanceTask::targetWrench;
   using AdmittanceTask::targetWrenchW;

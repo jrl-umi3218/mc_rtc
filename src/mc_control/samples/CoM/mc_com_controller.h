@@ -19,9 +19,6 @@ public:
 
   virtual void reset(const ControllerResetData & reset_data) override;
 
-  /* observers */
-  sva::PTransformd anchorFrame(const mc_rbdyn::Robot & robot) const override;
-
 public:
   std::shared_ptr<mc_tasks::CoMTask> comTask;
 };

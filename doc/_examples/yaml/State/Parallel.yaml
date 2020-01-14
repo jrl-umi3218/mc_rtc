@@ -1,0 +1,10 @@
+base: Parallel
+# This state runs StateA, StateB and StateC until they are all completed
+# Its output is StateC's output
+states: [StateA, StateB, StateC]
+delay:
+  # StateB starts 4.5 seconds after the state is started
+  StateB: 4.5
+configs:
+  StateA:
+    stiffness: 100

@@ -58,7 +58,7 @@ void RelativeEndEffectorTask::set_ef_pose(const sva::PTransformd & tf)
   curTransform = tf;
 }
 
-void RelativeEndEffectorTask::update()
+void RelativeEndEffectorTask::update(mc_solver::QPSolver &)
 {
   const sva::PTransformd & X_0_rel = robots.robot(robotIndex).mbc().bodyPosW[relBodyIdx];
   sva::PTransformd X_0_bodyDes = curTransform * X_0_rel; /* X_0_body = X_rel_body * X_0_rel */

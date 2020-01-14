@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "title": "Stabilizer Contact Target",
+  "description": "Stabilizer Contact Target",
+  "properties":
+  {
+    "rotation": { "$ref": "/../../Eigen/Vector3d.json" },
+    "translation": { "$ref": "/../../Eigen/Vector3d.json" },
+    "height": { "type": "number", "minimum": 0 }
+  }
+}

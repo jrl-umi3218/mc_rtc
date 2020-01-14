@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "title": "Vertical drift compensation parameters",
+  "description": "Vertical drift compensation parameters",
+  "properties":
+  {
+    "frequency": { "type": "number", "minimum": 0 },
+    "stiffness": { "type": "number", "minimum": 0 }
+  }
+}

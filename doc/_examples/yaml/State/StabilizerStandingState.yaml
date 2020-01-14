@@ -1,0 +1,73 @@
+############################################
+# Example use of the StabilizerStandingState
+# See also mc_control/fsm/states/data/StabilizerStanding.yaml for useful default states configuration
+# See also mc_control/samples/LIPMStabilizer/etc/LIPMStabilizer.in.yaml for a full FSM sample
+############################################
+
+##
+# This state keeps the robot standing at it's current position in double support.
+# It targets a contact at the current foot position, but with identity world orientation and nominal height 0.
+##
+Stabilizer::Standing:
+  base: StabilizerStandingState
+  stiffness: 5
+  StabilizerConfig:
+    type: lipm_stabilizer
+    robotIndex: 0
+    leftFootSurface: LeftFootCenter
+    rightFootSurface: RightFootCenter
+    enabled: true
+    contacts: [Left, Right]
+    Left:
+      rotation: [0,0,0]
+      height: 0
+    Right:
+      rotation: [0,0,0]
+      height: 0
+
+Stabilizer::GoCenter:
+  base: Stabilizer::Standing
+  above: Center
+  completion:
+    dcmEval: [0.005, 0.005, 0.05]
+
+##
+# Make the CoM move to a point above the left foot ankle
+##
+Stabilizer::GoLeft:
+  base: Stabilizer::GoCenter
+  above: LeftAnkle
+
+##
+# Make the CoM move to a point above the right foot ankle
+##
+Stabilizer::GoRight:
+  base: Stabilizer::GoLeft
+  above: RightAnkle
+
+##
+# Single support state that keeps the CoM above the left foot contact
+##
+Stabilizer::LeftSupport:
+  base: Stabilizer::GoLeft
+  completion: {}
+  StabilizerConfig:
+    contacts: [Left]
+
+##
+# Single support state that keeps the CoM above the right foot contact
+##
+Stabilizer::RightSupport:
+  base: Stabilizer::GoRight
+  completion: {}
+  StabilizerConfig:
+    contacts: [Right]
+
+###
+# Go to half sitting posture in parallel to the stabilizer
+# Note that the final posture may not be the default halfsitting depending on CoM height,
+# but the joints posture target will be that of halfsitting
+###
+Stabilizer::GoHalfSitting:
+  base: Parallel
+  states: [Stabilizer::GoCenter, HalfSitting]

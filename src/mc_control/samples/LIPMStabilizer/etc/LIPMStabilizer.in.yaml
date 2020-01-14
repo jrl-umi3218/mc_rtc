@@ -1,0 +1,413 @@
+###
+# This FSM is meant to test and tune the LIPMStabilizer
+#
+# See the transition map description for details
+###
+---
+## If true, the FSM transitions are managed by an external tool
+Managed: false
+# If true and the FSM is self-managed, transitions should be triggered
+StepByStep: false
+# Change idle behaviour, if true the state is kept until transition,
+# otherwise the FSM holds the last state until transition
+IdleKeepState: true
+# Where to look for state libraries
+StatesLibraries:
+- "@MC_CONTROLLER_INSTALL_PREFIX@/fsm/states"
+# Where to look for state files
+StatesFiles:
+- "@MC_CONTROLLER_INSTALL_PREFIX@/fsm/states/data"
+# If true, state factory will be more verbose
+VerboseStateFactory: false
+
+# Additional robots to load
+robots:
+  ground:
+    module: env
+    params:
+    - "@AROBASE@MC_ENV_DESCRIPTION@AROBASE@"
+    - ground
+# General constraints, always on
+constraints:
+-  type: contact
+-  type: kinematics
+   robotIndex: 0
+   damper: [0.1, 0.01, 0.5]
+# Collision constraint
+collisions:
+- type: collision
+  r1Index: 0
+  r2Index: 0
+  useMinimal: true
+# Initial set of contacts
+contacts: {}
+hrp2_drc:
+  posture:
+    stiffness: 1.0
+    weight: 10.0
+jvrc1:
+  posture:
+    stiffness: 1.0
+    weight: 10.0
+
+# Implement some additional text states
+states:
+  LIPMStabilizer::CustomConfiguration:
+    base: Stabilizer::Standing
+
+    # Add contacts to the solver.
+    # Note that in order for the stabilizer to work, roll and pitch DoF need to be free to allow for admittance
+    # control of the feet, and vertical DoF to allow for foot force-difference control.
+    AddContacts:
+    - r1: hrp2_drc
+      r2: ground
+      r1Surface: LeftFootCenter
+      r2Surface: AllGround
+      dof: [0, 0, 1, 1, 1, 0]
+    - r1: hrp2_drc
+      r2: ground
+      r1Surface: RightFootCenter
+      r2Surface: AllGround
+      dof: [0, 0, 1, 1, 1, 0]
+
+    StabilizerConfig:
+      robotIndex: 0
+      enabled: true
+
+      ###########################
+      ## Stabilizer configuration
+      ###########################
+      # Default values for these robot-specific parameters are set in the corresponding robot module.
+      # You may choose to override any of them here, with due caution.
+      hrp2_drc:
+        leftFootSurface: LeftFootCenter
+        rightFootSurface: RightFootCenter
+        friction: 0.8
+        torsoBodyName: CHEST_LINK1
+        # Configuration  of the QP tasks used by the stabilizer
+        tasks:
+          com:
+            stiffness: [1000, 1000, 100]
+            weight: 1000
+            active_joints: [Root, RLEG_JOINT0, RLEG_JOINT1, RLEG_JOINT2, RLEG_JOINT3, RLEG_JOINT4, RLEG_JOINT5, LLEG_JOINT0, LLEG_JOINT1, LLEG_JOINT2, LLEG_JOINT3, LLEG_JOINT4, LLEG_JOINT5]
+            height: 0.87
+          contact:
+            damping: 300
+            stiffness: 1
+            weight: 10000
+
+        # Weights for the force-distribution QP
+        fdqp_weights:
+          net_wrench: 10000
+          ankle_torque: 100
+          pressure: 1
+
+        # Vertical drift frequency
+        vdc:
+          frequency: 1
+          stiffness: 1000
+
+        # Admittance coefficients (force-control)
+        admittance:
+          cop: [0.001, 0.001]
+
+        ########################
+        # Gains for DCM tracking
+        ########################
+        # These are the main gains of the stabilizer.
+        dcm_tracking:
+          gains:
+            prop: 3
+            integral: 20
+            deriv: 0.5
+          derivator_time_constant: 5
+          integrator_time_constant: 30
+
+      # Change some parameters for another robot
+      jvrc1:
+        dcm_tracking:
+          gains:
+            prop: 4
+            integral: 10
+            deriv: 0.5
+
+  ###
+  # Simple foot lifting
+  # Tasks to handle the free foot
+  # - Lift up phase: surface transform moving above the current position
+  # - Put down phase: admittance tasks looking for a positive force above a threshold
+  ###
+  LIPMStabilizer::LiftRightFoot:
+    base: MetaTasks
+    tasks:
+      LiftFootTask:
+        type: surfaceTransform
+        stiffness: 10
+        weight: 500
+        robotIndex: 0
+        surface: "RightFootCenter"
+        moveWorld:
+          translation: [0,0,0.1]
+        completion:
+          eval: 0.01
+  
+  LIPMStabilizer::LiftLeftFoot:
+    base: LIPMStabilizer::LiftRightFoot
+    tasks:
+      LiftFootTask:
+        surface: "LeftFootCenter"
+  
+  LIPMStabilizer::PutRightFoot:
+    base: MetaTasks
+    tasks:
+      PutFootAdmittance:
+        type: admittance
+        robotIndex: 0
+        surface: "RightFootCenter"
+        stiffness: [10, 10, 10, 10, 10, 10]
+        damping: [6.3, 6.3, 6.3, 6.3, 6.3, 300]
+        admittance: [0,0,0,0,0,0.005]
+        maxVel:
+          linear: [0.2, 0.2, 0.5]
+          angular: [0.2, 0.2, 0.2]
+        wrench:
+         force: [0, 0, 20]
+         couple: [0, 0, 0]
+        moveWorld:
+          translation: [0, 0, -0.1]
+        targetRotation: [0, 0, 0]
+        completion:
+          wrench:
+            force: [.nan, .nan, 20]
+            couple: [.nan, .nan, .nan]
+  
+  LIPMStabilizer::PutLeftFoot:
+    base: LIPMStabilizer::PutRightFoot
+    tasks:
+      PutFootAdmittance:
+        surface: "LeftFootCenter"
+  
+  LIPMStabilizer::Stabilized::LiftRightFoot:
+    base: Parallel
+    states: [Stabilizer::LeftSupport, LIPMStabilizer::LiftRightFoot]
+  
+  LIPMStabilizer::Stabilized::LiftLeftFoot:
+    base: Parallel
+    states: [Stabilizer::RightSupport, LIPMStabilizer::LiftLeftFoot]
+  
+  LIPMStabilizer::Stabilized::PutRightFoot:
+    base: Parallel
+    states: [Stabilizer::LeftSupport, LIPMStabilizer::PutRightFoot]
+  
+  LIPMStabilizer::Stabilized::PutLeftFoot:
+    base: Parallel
+    states: [Stabilizer::RightSupport, LIPMStabilizer::PutLeftFoot]
+  
+  LIPMStabilizer::Stabilized::StayLeft:
+    base: Stabilizer::GoLeft
+    completion: {}
+  
+  LIPMStabilizer::Stabilized::StayRight:
+    base: Stabilizer::GoRight
+    completion: {}
+  
+  LIPMStabilizer::StandingFSM::LiftRightFoot:
+    base: Meta
+    transitions:
+      - [Stabilizer::GoLeft, OK, LIPMStabilizer::Stabilized::LiftRightFoot]
+      - [LIPMStabilizer::Stabilized::LiftRightFoot, OK, LIPMStabilizer::Stabilized::PutRightFoot]
+      - [LIPMStabilizer::Stabilized::PutRightFoot, OK, LIPMStabilizer::Stabilized::StayLeft, Auto]
+  
+  LIPMStabilizer::StandingFSM::LiftLeftFoot:
+    base: Meta
+    transitions:
+      - [Stabilizer::GoRight, OK, LIPMStabilizer::Stabilized::LiftLeftFoot]
+      - [LIPMStabilizer::Stabilized::LiftLeftFoot, OK, LIPMStabilizer::Stabilized::PutLeftFoot]
+      - [LIPMStabilizer::Stabilized::PutLeftFoot, OK, LIPMStabilizer::Stabilized::StayRight, Auto]
+  
+  LIPMStabilizer::StandingFSM::LiftRightFootManual:
+    base: LIPMStabilizer::StandingFSM::LiftRightFoot
+    StepByStep: true
+  
+  LIPMStabilizer::StandingFSM::LiftLeftFootManual:
+    base: LIPMStabilizer::StandingFSM::LiftLeftFoot
+    StepByStep: true
+  
+  LIPMStabilizer::StandingFSM::AlternateFeetLifting:
+    base: Meta
+    transitions:
+      - [LIPMStabilizer::StandingFSM::LiftRightFoot, OK, LIPMStabilizer::StandingFSM::LiftLeftFoot]
+      - [LIPMStabilizer::StandingFSM::LiftLeftFoot, OK, Stabilizer::GoCenter]
+  
+  LIPMStabilizer::StandingFSM::AlternateFeetLiftingManual:
+    base: Meta
+    StepByStep: true
+    transitions:
+      - [Stabilizer::GoCenter, OK, LIPMStabilizer::StandingFSM::LiftRightFootManual]
+      - [LIPMStabilizer::StandingFSM::LiftRightFootManual, OK, LIPMStabilizer::StandingFSM::LiftLeftFootManual]
+      - [LIPMStabilizer::StandingFSM::LiftLeftFootManual, OK, Stabilizer::GoCenter]
+  
+  ###
+  # Simple forward walking FSM
+  ###
+  LIPMStabilizer::RightFootTrajectory:
+    base: MetaTasks
+    tasks:
+      SwingFootTrajectory:
+        type: exact_cubic_trajectory
+        surface: RightFootCenter
+        robotIndex: 0
+        stiffness: 10000.0
+        duration: 5.0
+        weight: 100
+        displaySamples: 20
+        completion:
+          timeElapsed: true
+        targetSurface:
+          surface: RightFootCenter
+          robotIndex: 0
+          translation: [0.2, 0.0, 0.0]
+          rotation: [0,0,0]
+          # control points in target surface frame
+          controlPoints:
+            - [1, [0.01, 0.0, 0.01]]
+  
+  LIPMStabilizer::LeftFootTrajectory:
+    base: LIPMStabilizer::RightFootTrajectory
+    tasks:
+      SwingFootTrajectory:
+        surface: LeftFootCenter
+        targetSurface:
+          surface: LeftFootCenter
+          translation: [0.2, 0.0, 0.0]
+          rotation: [0,0,0]
+          # control points in target surface frame
+          controlPoints:
+            - [1., [0.01, 0.0, 0.01]]
+  
+  
+  LIPMStabilizer::Stabilized::LeftFootTrajectory:
+    base: Parallel
+    states: [Stabilizer::RightSupport, LIPMStabilizer::LeftFootTrajectory]
+  
+  LIPMStabilizer::Stabilized::RightFootTrajectory:
+    base: Parallel
+    states: [Stabilizer::LeftSupport, LIPMStabilizer::RightFootTrajectory]
+  
+  LIPMStabilizer::WalkingFSM::RightStep:
+    base: Meta
+    transitions:
+    - [Stabilizer::GoLeft, OK, LIPMStabilizer::Stabilized::RightFootTrajectory, Auto]
+  
+  LIPMStabilizer::WalkingFSM::LeftStep:
+    base: LIPMStabilizer::WalkingFSM::RightStep
+    transitions:
+    - [Stabilizer::GoRight, OK, LIPMStabilizer::Stabilized::LeftFootTrajectory, Auto]
+  
+  
+  LIPMStabilizer::WalkingFSM::StepForward:
+    base: Meta
+    transitions:
+    - [LIPMStabilizer::WalkingFSM::LeftStep, OK, LIPMStabilizer::WalkingFSM::RightStep, Auto]
+    - [LIPMStabilizer::WalkingFSM::RightStep, OK, Stabilizer::GoCenter, Auto]
+  
+  
+  ###
+  # FSM to walk backwards
+  ###
+  LIPMStabilizer::RightFootBackwardTrajectory:
+    base: LIPMStabilizer::RightFootTrajectory
+    tasks:
+      SwingFootTrajectory:
+        targetSurface:
+          surface: RightFootCenter
+          robotIndex: 0
+          translation: [-0.1, 0.0, 0.0]
+          rotation: [0, 0, 0]
+          # control points in target surface frame
+          controlPoints:
+            - [1, [-0.01, 0.0, 0.01]]
+  
+  LIPMStabilizer::LeftFootBackwardTrajectory:
+    base: LIPMStabilizer::RightFootBackwardTrajectory
+    tasks:
+      SwingFootTrajectory:
+        surface: LeftFootCenter
+        targetSurface:
+          surface: LeftFootCenter
+          translation: [-0.1, 0.0, 0.0]
+          rotation: [0,0,0]
+          # control points in target surface frame
+          controlPoints:
+            - [1., [-0.01, 0.0, 0.01]]
+  
+  LIPMStabilizer::Stabilized::LeftFootBackwardTrajectory:
+    base: Parallel
+    states: [Stabilizer::RightSupport, LIPMStabilizer::LeftFootBackwardTrajectory]
+  
+  LIPMStabilizer::Stabilized::RightFootBackwardTrajectory:
+    base: Parallel
+    states: [Stabilizer::LeftSupport, LIPMStabilizer::RightFootBackwardTrajectory]
+  
+  LIPMStabilizer::WalkingFSM::RightBackwardStep:
+    base: Meta
+    transitions:
+    - [Stabilizer::GoLeft, OK, LIPMStabilizer::Stabilized::RightFootBackwardTrajectory, Auto]
+  
+  LIPMStabilizer::WalkingFSM::LeftBackwardStep:
+    base: LIPMStabilizer::WalkingFSM::RightStep
+    transitions:
+    - [Stabilizer::GoRight, OK, LIPMStabilizer::Stabilized::LeftFootBackwardTrajectory, Auto]
+  
+  LIPMStabilizer::WalkingFSM::StepBackward:
+    base: Meta
+    transitions:
+    - [LIPMStabilizer::WalkingFSM::LeftBackwardStep, OK, LIPMStabilizer::WalkingFSM::RightBackwardStep, Auto]
+    - [LIPMStabilizer::WalkingFSM::RightBackwardStep, OK, Stabilizer::GoCenter, Auto]
+
+###
+# This FSM is meant to test and tune the LIPMStabilizer, use it with appropriate caution.
+# It can:
+# - In the initial state Stabilizer::Standing, you can use the GUI to freely move the CoM in-between the feet. Go to the Tasks->Stabilizer tab to see the stabilizer parameters. You may also add live plots from there to help with tuning.
+# - Two FSM are provided to make the robot stand on a single foot:
+#   - AlternateFeetLifting: Alternates between lifting the left and right foot automatically
+#   - AlternateFeetLiftingManual: Step by step FSM
+# - Two FSMs are provided as an example of quasi-static walking.
+#   Note that these FSM implementation do not handle early impact.
+#   - StepForward: steps 20cm forward
+#   - StepBackward: steps 10cm backward
+#
+# - See StabilizerStanding.yaml for a library of simple states to deal with the stabilizer
+###
+transitions:
+  # Stand from left to right support and lift and put down feet
+- [Stabilizer::Standing, Lift feet, LIPMStabilizer::StandingFSM::AlternateFeetLifting, Auto]
+- [LIPMStabilizer::StandingFSM::AlternateFeetLifting, OK, Stabilizer::Standing, Auto]
+  # Stand from left to right support and lift and put down feet (manual user input)
+- [Stabilizer::Standing, Lift feet (Manual), LIPMStabilizer::StandingFSM::AlternateFeetLiftingManual, Auto]
+- [LIPMStabilizer::StandingFSM::AlternateFeetLiftingManual, OK, Stabilizer::Standing, Auto]
+  # Walk one step forward in a stabilized semi quasi-static way
+- [Stabilizer::Standing, Step Forward, LIPMStabilizer::WalkingFSM::StepForward, Auto]
+- [LIPMStabilizer::WalkingFSM::StepForward, OK, Stabilizer::Standing, Auto]
+  # Walk one step backwards in a stabilized semi quasi-static way
+- [Stabilizer::Standing, Step Backward, LIPMStabilizer::WalkingFSM::StepBackward, Auto]
+- [LIPMStabilizer::WalkingFSM::StepBackward, OK, Stabilizer::Standing, Auto]
+#   # Go back to list of choices
+- [Stabilizer::GoCenter, OK, Stabilizer::Standing]
+
+# # Initial state
+init: Stabilizer::Standing
+
+
+# Specific configuration for each observer
+Observers:
+  Encoder:
+    # Valid values are [estimator, control, none]
+    UpdatePositionFrom: estimator
+    UpdateVelocityFrom: estimator
+  BodySensor:
+    # Valid entries are [control, estimator, none]
+    UpdateFrom: estimator
+    FloatingBaseSensor: FloatingBase
+RunObservers: [Encoder, KinematicInertial]
+UpdateObservers: [Encoder, KinematicInertial]

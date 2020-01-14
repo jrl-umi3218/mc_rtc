@@ -1,17 +1,3 @@
-{% capture ID %}{{include.id | replace: "::", "_"}}_PROP_{{prop[0] | replace: "*", "STAR"}}{% endcapture %}
-{% if REF.DESC %}
-  {% assign HAS_DESC = true %}
-  {% capture DESC %}{{REF.DESC}}{% endcapture %}
-{% elsif REF.description and REF.description != "" %}
-  {% if REF contains "REF" %}
-    {% assign HAS_DESC = false %}
-  {% else %}
-    {% assign HAS_DESC = true %}
-    {% capture DESC %}{{REF.description}}{% endcapture %}
-  {% endif %}
-{% else %}
-  {% assign HAS_DESC = false %}
-{% endif %}
 <tr>
   {% assign required = false %}
   {% for req in include.required %}
@@ -19,7 +5,7 @@
       {% assign required = true %}
     {% endif %}
   {% endfor %}
-  {% capture PROP_NAME %}{{prop[0]}}{% endcapture %}
+  {% capture PROP_NAME %}{{include.name}}{% endcapture %}
   {% if required %}
     {% capture PROP_NAME %}<strong>{{PROP_NAME}}</strong>{% endcapture %}
   {% endif %}
@@ -27,16 +13,16 @@
     {% capture PROP_NAME %}<i>{{PROP_NAME}}</i>&nbsp;&nbsp;<small class="text-secondary">(pattern)</small>{% endcapture %}
   {% endif %}
   <td>{{PROP_NAME}}</td>
-  {% if HAS_DESC %}
+  {% if include.has_description %}
   <td>
-    {% include json_schema_item.html data=REF id=ID %}
+    {% include json_schema_item.html data=include.data id=include.id %}
   </td>
   <td>
-    <span class="text-secondary"><small>{{DESC}}</small></span>
+    <span class="text-secondary"><small>{{include.description}}</small></span>
   </td>
   {% else %}
   <td colspan="2">
-    {% include json_schema_item.html data=REF id=ID %}
+    {% include json_schema_item.html data=include.data id=include.id %}
   </td>
   {% endif %}
 </tr>
@@ -44,4 +30,3 @@
   {{ INCLUDE_AFTER }}
 {% endif %}
 {% capture INCLUDE_AFTER %}{% endcapture %}
-

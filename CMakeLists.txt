@@ -54,6 +54,7 @@ option(DISABLE_ROS "Do not build with ROS support (even if ROS was found)" OFF)
 add_project_dependency(Boost REQUIRED COMPONENTS filesystem timer)
 add_project_dependency(Tasks REQUIRED)
 add_project_dependency(mc_rbdyn_urdf REQUIRED)
+add_project_dependency(eigen-quadprog REQUIRED)
 
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)

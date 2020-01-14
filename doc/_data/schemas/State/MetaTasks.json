@@ -1,0 +1,27 @@
+{
+  "title": "fsm::MetaTasks",
+  "description": "Create and run multiple tasks until their completion criteria is reached",
+  "type": "object",
+  "properties":
+  {
+    "tasks": { "type": "object", "description": "Keys are the name of the tasks and values are MetaTask objects with an optional completion criteria" },
+    "AddContacts": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
+                     "description": "Add the specified contacts during the state's start"  },
+    "RemoveContacts": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
+                        "description": "Remove the specified contacts during the state's start"  },
+    "AddContactsAfter": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
+                          "description": "Add the specified contacts during the state's teardown"  },
+    "RemoveContactsAfter": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
+                             "description": "Remove the specified contacts during the state's teardown"  },
+    "AddColissions": { "type": "array", "items": { "$ref": "/../../common/fsm_collision.json" },
+                       "description": "Add the specified collisions during the state's start" },
+    "RemoveColissions": { "type": "array", "items": { "$ref": "/../../common/fsm_collision.json" },
+                          "description": "Remove the specified collisions during the state's start" },
+    "AddColissionsAfter": { "type": "array", "items": { "$ref": "/../../common/fsm_collision.json" },
+                            "description": "Add the specified collisions during the state's teardown" },
+    "RemoveColissionsAfter": { "type": "array", "items": { "$ref": "/../../common/fsm_collision.json" },
+                               "description": "Remove the specified collisions during the state's teardown" },
+    "RemovePostureTask": { "type": "boolean", "default": false, "description": "If true, remove the main robot posture task at the state's start"}
+  },
+  "required": []
+}

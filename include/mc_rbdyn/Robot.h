@@ -277,23 +277,74 @@ public:
    */
   Eigen::Vector3d copW(const std::string & surfaceName, double min_pressure = 0.5) const;
 
-  /** Computes the ZMP from gravity-free force sensor measurements
+  /**
+   * @brief Computes net total wrench from a list of sensors
    *
-   * @param sensorsName List of sensor name to consider
-   * @param plane_p A point on the ZMP plane
-   * @param plane_n Normal vector to the ZMP plane
-   * @param forceThreshold Threshold below which the force is ignored
+   * @param sensorNames Names of all sensors used to compute the net wrench
    *
-   * @return The ZMP measured from force sensors in a desired plane.
-   *
-   * @throws To prevent dividing by zero, throws if the projected force is below 1 Newton.
-   * This is highly unlikely and would likely indicate indicate that you are computing a ZMP from
-   * invalid forces.
+   * @return Net total wrench (without gravity) in the inertial frame
    */
-  Eigen::Vector3d zmp(const std::vector<std::string> & sensorsName,
+  sva::ForceVecd netWrench(const std::vector<std::string> & sensorNames) const;
+
+  /**
+   * @brief Actual ZMP computation from net total wrench and the ZMP plane
+   *
+   * @param netTotalWrench Total wrench for all links in contact
+   * @param plane_p Arbitrary point on the ZMP plane
+   * @param plane_n Normal to the ZMP plane (normalized)
+   * @param minimalNetNormalForce[N] Mininal force above which the ZMP computation
+   * is considered valid. Must be >0 (prevents a divide by zero).
+   *
+   * @return zmp expressed in the requested plane
+   *
+   * @throws To prevent dividing by zero, throws if the projected force is below minimalNetNormalForce newton.
+   * This is highly unlikely to happen and would likely indicate indicate that you are computing a ZMP from
+   * invalid forces (such as with the robot in the air).
+   *
+   * \anchor zmpDoc
+   */
+  Eigen::Vector3d zmp(const sva::ForceVecd & netTotalWrench,
                       const Eigen::Vector3d & plane_p,
                       const Eigen::Vector3d & plane_n,
-                      double forceThreshold = 5.) const;
+                      double minimalNetNormalForce = 1.) const;
+
+  /**
+   * @brief ZMP computation from net total wrench and a frame
+   *
+   * See \ref zmpDoc
+   *
+   * @param netTotalWrench
+   * @param zmpFrame Frame used for ZMP computation. The convention here is
+   * that the contact frame should have its z-axis pointing in the normal
+   * direction of the contact towards the robot.
+   *
+   * @return ZMP expressed in the plane defined by the zmpFrame frame.
+   */
+  Eigen::Vector3d zmp(const sva::ForceVecd & netTotalWrench,
+                      const sva::PTransformd & zmpFrame,
+                      double minimalNetNormalForce = 1.) const;
+
+  /** Computes the ZMP from sensor names and a plane
+   *
+   * See \ref zmpDoc
+   *
+   * @param sensorNames Names of all sensors attached to a link in contact with the environment
+   */
+  Eigen::Vector3d zmp(const std::vector<std::string> & sensorNames,
+                      const Eigen::Vector3d & plane_p,
+                      const Eigen::Vector3d & plane_n,
+                      double minimalNetNormalForce = 1.) const;
+
+  /**
+   * @brief Computes the ZMP from sensor names and a frame
+   *
+   * See \ref zmpDoc
+   *
+   * @param sensorNames Names of all sensors attached to a link in contact with the environment
+   */
+  Eigen::Vector3d zmp(const std::vector<std::string> & sensorNames,
+                      const sva::PTransformd & zmpFrame,
+                      double minimalNetNormalForce = 1.) const;
 
   /** Access the robot's angular lower limits (const) */
   const std::vector<std::vector<double>> & ql() const;

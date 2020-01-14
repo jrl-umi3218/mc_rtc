@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "title": "FSM collisions",
+  "description": "Collisions constraint specification used by the FSM",
+  "properties":
+  {
+    "r1": { "type": "string", "description": "Name of the first robot in the collision constraint" },
+    "r2": { "type": "string", "description": "Name of the second robot in the collision constraint", "default": "r1" },
+    "collisions": { "type": "array", "items": { "$ref": "/../../mc_rbdyn/Collision.json" },
+                    "description": "Required if collisions are added.<br/>Otherwise, if empty, all collisions between r1 and r2 are disabled" }
+  },
+  "required": ["r1"]
+}

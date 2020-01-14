@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "title": "Pelvis task parameters",
+  "description": "Pelvis task parameters (regularization)",
+  "properties":
+  {
+    "weight": { "type": "number", "minimum": 0 },
+    "stiffness": { "type": "number", "minimum": 0 },
+    "pitch": { "type": "number" }
+  }
+}

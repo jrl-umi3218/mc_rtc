@@ -13,6 +13,9 @@
   {% endfor %}
 {% elsif include.data contains "REF" %}
   <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapse{{include.id}}" aria-expanded="false" aria-controls="collapse{{include.id}}">{{include.data.title}}</a>
+  {% if include.data contains "default" %}
+    &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-{{type}}">{{include.data.default}}</span>
+  {% endif %}
   {% capture INCLUDE_AFTER %}
   <tr class="collapse" id="collapse{{include.id}}">
     <td colspan="3">
@@ -43,7 +46,12 @@
     {% endif %}
     {% include json_schema_array.html minItems=minItems maxItems=include.data.maxItems items=include.data.items id=include.id %}
   {% elsif type == "object" %}
-    <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapse{{include.id}}" aria-expanded="false" aria-controls="collapse{{include.id}}">object</a>
+    {% if include.data.title %}
+      {% capture TITLE %}{{ include.data.title }}{% endcapture %}
+    {% else %}
+      {% capture TITLE %}object{% endcapture %}
+    {% endif %}
+    <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapse{{include.id}}" aria-expanded="false" aria-controls="collapse{{include.id}}">{{TITLE}}</a>
     {% capture INCLUDE_AFTER %}
     <tr class="collapse" id="collapse{{include.id}}">
       <td colspan="3">

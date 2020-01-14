@@ -19,7 +19,9 @@ endmacro()
 
 install(DIRECTORY data
   DESTINATION ${FSM_STATES_INSTALL_DIR}
-  FILES_MATCHING PATTERN "*.json")
+  FILES_MATCHING 
+  PATTERN "*.json"
+  PATTERN "*.yaml")
 
 macro(add_fsm_state_simple state_name)
   add_fsm_state(${state_name} ${state_name}.cpp ${FSM_HDR_DIR}/${state_name}.h)
@@ -33,6 +35,8 @@ add_fsm_state_simple(AddRemoveContact)
 add_fsm_state_simple(SlidingFootContact)
 add_fsm_state_simple(Meta)
 add_fsm_state_simple(Parallel)
+add_fsm_state_simple(StabilizerStandingState)
+target_link_libraries(StabilizerStandingState PUBLIC mc_planning)
 
 # PythonState
 if(${PYTHON_BINDING})

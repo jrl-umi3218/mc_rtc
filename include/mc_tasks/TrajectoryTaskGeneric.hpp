@@ -77,7 +77,7 @@ void TrajectoryTaskGeneric<T>::reset()
 }
 
 template<typename T>
-void TrajectoryTaskGeneric<T>::update()
+void TrajectoryTaskGeneric<T>::update(mc_solver::QPSolver &)
 {
 }
 

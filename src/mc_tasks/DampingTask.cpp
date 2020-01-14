@@ -2,6 +2,7 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
+#include <mc_filter/utils/clamp.h>
 #include <mc_rbdyn/configuration_io.h>
 #include <mc_rbdyn/rpy_utils.h>
 #include <mc_tasks/DampingTask.h>
@@ -12,6 +13,8 @@ namespace mc_tasks
 
 namespace force
 {
+
+using mc_filter::utils::clampInPlaceAndWarn;
 
 DampingTask::DampingTask(const std::string & surfaceName,
                          const mc_rbdyn::Robots & robots,
@@ -24,14 +27,14 @@ DampingTask::DampingTask(const std::string & surfaceName,
   reset();
 }
 
-void DampingTask::update()
+void DampingTask::update(mc_solver::QPSolver &)
 {
   wrenchError_ = measuredWrench() - targetWrench_;
 
   Eigen::Vector3d linearVel = admittance_.force().cwiseProduct(wrenchError_.force());
   Eigen::Vector3d angularVel = admittance_.couple().cwiseProduct(wrenchError_.couple());
-  clampAndWarn(name_, linearVel, maxLinearVel_, "linear velocity", isClampingLinearVel_);
-  clampAndWarn(name_, angularVel, maxAngularVel_, "angular velocity", isClampingAngularVel_);
+  clampInPlaceAndWarn(linearVel, (-maxLinearVel_).eval(), maxLinearVel_, name_ + " linear velocity");
+  clampInPlaceAndWarn(angularVel, (-maxAngularVel_).eval(), maxAngularVel_, name_ + " angular velocity");
   refVelB_ = feedforwardVelB_ + sva::MotionVecd{angularVel, linearVel};
 
   // SC: we could do add an anti-windup strategy here, e.g. back-calculation.

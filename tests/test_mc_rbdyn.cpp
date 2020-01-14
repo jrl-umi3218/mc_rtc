@@ -3,6 +3,8 @@
 #include <mc_rbdyn/rpy_utils.h>
 #include <boost/test/unit_test.hpp>
 #include "utils.h"
+#include <chrono>
+#include <random>
 
 mc_rbdyn::Robots & get_robots()
 {
@@ -44,5 +46,55 @@ BOOST_AUTO_TEST_CASE(TestRobotPosWVelW)
                                                                        << "\nGot:"
                                                                        << "\nangular:" << actual.angular().transpose()
                                                                        << "\nlinear :" << actual.linear().transpose());
+  }
+}
+
+BOOST_AUTO_TEST_CASE(TestRobotZMPSimple)
+{
+  auto robots = get_robots();
+  auto & robot = robots.robot();
+
+  // Put all mass on the left foot, ZMP should be under the sensor
+  const auto normalForce = robot.mass() * 10;
+  const auto sensorNames = std::vector<std::string>{"LeftFootForceSensor", "RightFootForceSensor"};
+  auto & lfs = robot.forceSensor("LeftFootForceSensor");
+  auto & rfs = robot.forceSensor("RightFootForceSensor");
+
+  {
+    // ZMP under left sensor
+    const auto forceLeftSurface = sva::ForceVecd{Eigen::Vector3d::Zero(), {0., 0., normalForce}};
+    sva::PTransformd X_0_ls = lfs.X_0_f(robot);
+    X_0_ls.translation().z() = 0;
+    auto X_ls_f = lfs.X_0_f(robot) * X_0_ls.inv();
+    lfs.wrench(X_ls_f.dualMul(forceLeftSurface));
+    rfs.wrench(sva::ForceVecd::Zero());
+
+    auto zmpIdeal = X_0_ls.translation();
+    auto zmpComputed = robot.zmp(sensorNames, Eigen::Vector3d::Zero(), {0., 0., 1.});
+    BOOST_CHECK_MESSAGE(zmpComputed.isApprox(zmpIdeal, 1e-10), "Error in Robot::zmp computation with leftFootRatio="
+                                                                   << "\nExpected: " << zmpIdeal.transpose()
+                                                                   << "\nGot: " << zmpComputed.transpose());
+  }
+
+  {
+    // ZMP under right sensor
+    const auto forceRightSurface = sva::ForceVecd{Eigen::Vector3d::Zero(), {0., 0., normalForce}};
+    sva::PTransformd X_0_rs = rfs.X_0_f(robot);
+    X_0_rs.translation().z() = 0;
+    auto X_rs_f = lfs.X_0_f(robot) * X_0_rs.inv();
+    lfs.wrench(X_rs_f.dualMul(forceRightSurface));
+    rfs.wrench(sva::ForceVecd::Zero());
+
+    auto zmpIdeal = X_0_rs.translation();
+    auto zmpComputed = robot.zmp(sensorNames, Eigen::Vector3d::Zero(), {0., 0., 1.});
+    BOOST_CHECK_MESSAGE(zmpComputed.isApprox(zmpIdeal, 1e-10), "Error in Robot::zmp computation with leftFootRatio="
+                                                                   << "\nExpected: " << zmpIdeal.transpose()
+                                                                   << "\nGot: " << zmpComputed.transpose());
+  }
+
+  { // checks that zmp throws if used with null force
+    rfs.wrench(sva::ForceVecd::Zero());
+    lfs.wrench(sva::ForceVecd::Zero());
+    BOOST_CHECK_THROW(robot.zmp(sensorNames, Eigen::Vector3d::Zero(), {0., 0., 1.}), std::runtime_error);
   }
 }

@@ -104,7 +104,7 @@ sva::PTransformd ComplianceTask::computePose()
   return ((X_f_ds * X_p_f).inv() * move * (X_f_ds * X_p_f)) * X_0_p;
 }
 
-void ComplianceTask::update()
+void ComplianceTask::update(mc_solver::QPSolver & solver)
 {
   error_ = wrench_;
   /* Get wrench, remove gravity, use dof_ to deactivate some axis */
@@ -113,7 +113,7 @@ void ComplianceTask::update()
   errorD_ = (wrench_ - error_) / timestep_;
   efTask_->set_ef_pose(computePose());
   /* Does nothing for now, but is here in case of changes */
-  MetaTask::update(*efTask_);
+  MetaTask::update(*efTask_, solver);
 }
 
 void ComplianceTask::reset()

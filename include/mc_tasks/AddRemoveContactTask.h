@@ -178,7 +178,7 @@ private:
 
   virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
 
-  virtual void update() override;
+  void update(mc_solver::QPSolver &) override;
 
   bool manageConstraint = false;
 };

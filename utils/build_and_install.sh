@@ -557,6 +557,7 @@ then
 fi
 build_git_dependency jrl-umi3218/RBDyn
 build_git_dependency jrl-umi3218/eigen-qld
+build_git_dependency jrl-umi3218/eigen-quadprog
 build_git_dependency jrl-umi3218/Tasks
 build_git_dependency jrl-umi3218/mc_rbdyn_urdf
 if $WITH_ROS_SUPPORT

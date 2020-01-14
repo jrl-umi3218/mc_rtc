@@ -167,7 +167,17 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
       LOG_ERROR_AND_THROW(std::runtime_error, "Failed to update observer module path(s)")
     }
   }
+
+  // Vector of observers module names (or single observer name)
   config("EnabledObservers", enabled_observers);
+  if(enabled_observers.empty())
+  {
+    std::string enabled = config("EnabledObservers", std::string{""});
+    if(!enabled.empty())
+    {
+      enabled_observers = {enabled};
+    }
+  }
 
   if(config.has("Observers"))
   {

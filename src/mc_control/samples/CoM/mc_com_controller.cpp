@@ -50,22 +50,4 @@ void MCCoMController::reset(const ControllerResetData & reset_data)
   }
 }
 
-sva::PTransformd MCCoMController::anchorFrame(const mc_rbdyn::Robot & robot) const
-{
-  sva::PTransformd X_0_anchor;
-  const auto & contacts = solver().contacts();
-
-  if(contacts.size() == 2)
-  {
-    sva::PTransformd X_0_c1 = contacts[0].X_0_r2s(robot);
-    sva::PTransformd X_0_c2 = contacts[1].X_0_r2s(robot);
-    return sva::interpolate(X_0_c1, X_0_c2, 0.5);
-  }
-  else
-  {
-    LOG_ERROR_AND_THROW(std::runtime_error,
-                        "anchorFrame implementation expects two contacts, " << contacts.size() << " set");
-  }
-}
-
 } // namespace mc_control

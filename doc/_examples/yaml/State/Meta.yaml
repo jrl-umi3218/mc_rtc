@@ -1,0 +1,10 @@
+base: Meta
+Managed: false
+StepByStep: true
+transitions:
+  - [ StateA, OK, StateB, Strict ]
+  - [ StateB, REPEAT, StateB, Auto ]
+  - [ StateB, OK, StateC ]
+configs:
+  StateA:
+    stiffness: 100

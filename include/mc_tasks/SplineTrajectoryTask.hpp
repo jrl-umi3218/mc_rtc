@@ -57,7 +57,7 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> SplineTrajectoryT
 }
 
 template<typename Derived>
-void SplineTrajectoryTask<Derived>::update()
+void SplineTrajectoryTask<Derived>::update(mc_solver::QPSolver &)
 {
   auto & spline = static_cast<Derived &>(*this).spline();
   spline.samplingPoints(samples_);

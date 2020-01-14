@@ -41,7 +41,7 @@ struct MC_TASKS_ROS_DLLAPI LookAtTFTask : public LookAtTask
                double weight = 200);
 
   /*! \brief Update the gaze target from TF position */
-  void update() override;
+  void update(mc_solver::QPSolver &) override;
 
 private:
   tf2_ros::Buffer tfBuffer;

@@ -11,6 +11,8 @@
     "pose": { "$ref": "/../../SpaceVecAlg/PTransformd.json" },
     "targetSurface": { "$ref" : "/../../common/targetSurface.json" },
     "wrench": { "$ref": "/../../SpaceVecAlg/ForceVecd.json" },
+    "refVelB": { "$ref": "/../../SpaceVecAlg/MotionVecd.json" },
+    "maxVel": { "$ref": "/../../SpaceVecAlg/MotionVecd.json" },
     "admittance": { "$ref": "/../../SpaceVecAlg/ForceVecd.json" },
 
     "stiffness": { "type": "number", "minimum": 0},

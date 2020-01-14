@@ -1,0 +1,5 @@
+grippers:
+  l_gripper:
+    target: [0.7, 0.5]
+  r_gripper:
+    opening: 0.5
