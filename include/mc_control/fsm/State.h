@@ -58,6 +58,7 @@ struct MC_CONTROL_FSM_DLLAPI State
    * - AddContacts/RemoveContacts: add and remove contacts during the state's
    *   start
    * - AddContactsAfter/RemoveContactsAfter: add and remove contacts during the
+   *   state's teardown
    * - AddCollisions/RemoveCollisions: add and remove collisions during the state's
    *   start
    * - AddCollisionsAfter/RemoveCollisionsAfter: add and remove collisions during the

@@ -1,24 +1,10 @@
 {
-  "title": "fsm::StabilizerStandingState",
-  "description": "Simple state managing the LIPM Stabilizer",
+  "title": "fsm::MetaTasks",
+  "description": "Create and run multiple tasks until their completion criteria is reached",
   "type": "object",
   "properties":
   {
-    "StabilizerConfig": { "$ref": "/../common/StabilizerTask.json" },
-    "stiffness": { "type": "number", "minimum": 0, "description": "Stiffness of CoM target" },
-    "damping": { "type": "number", "minimum": 0, "description": "Damping of CoM target (default=2*sqrt(stiffness))" },
-    "above": { "type": "string", "description": "Put CoM over the special frames LeftAnkle, RightAnkle or Center, or any other valid surface on the robot"},
-    "com": { "$ref": "/../../Eigen/Vector3d.json", "description": "Target CoM position"},
-    "completion":
-    {
-      "type": "object",
-      "title": "Completion criteria for the state",
-      "description": "Completion criteria for the state",
-      "properties":
-      {
-        "dcmEval": { "$ref": "/../../Eigen/Vector3d.json", "description": "Outputs 'OK' when the dcm error is under this threshold."}
-      }
-    },
+    "tasks": { "type": "object", "description": "Keys are the name of the tasks and values are MetaTask objects with an optional completion criteria" },
     "AddContacts": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
                      "description": "Add the specified contacts during the state's start"  },
     "RemoveContacts": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },

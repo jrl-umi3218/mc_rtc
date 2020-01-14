@@ -1,24 +1,12 @@
 {
-  "title": "fsm::StabilizerStandingState",
-  "description": "Simple state managing the LIPM Stabilizer",
+  "title": "fsm::ParallelState",
+  "description": "Play multiple states in parallel<br/>The state is completed when all the states it's running are completed<br/>The state's output is the output of the last state it's running",
   "type": "object",
   "properties":
   {
-    "StabilizerConfig": { "$ref": "/../common/StabilizerTask.json" },
-    "stiffness": { "type": "number", "minimum": 0, "description": "Stiffness of CoM target" },
-    "damping": { "type": "number", "minimum": 0, "description": "Damping of CoM target (default=2*sqrt(stiffness))" },
-    "above": { "type": "string", "description": "Put CoM over the special frames LeftAnkle, RightAnkle or Center, or any other valid surface on the robot"},
-    "com": { "$ref": "/../../Eigen/Vector3d.json", "description": "Target CoM position"},
-    "completion":
-    {
-      "type": "object",
-      "title": "Completion criteria for the state",
-      "description": "Completion criteria for the state",
-      "properties":
-      {
-        "dcmEval": { "$ref": "/../../Eigen/Vector3d.json", "description": "Outputs 'OK' when the dcm error is under this threshold."}
-      }
-    },
+    "states": { "type": "array", "items": { "type": "string" }, "description": "List of states run by this state" },
+    "delays": { "type": "object", "description": "Delay the start of specified states (in seconds)" },
+    "configs": { "type": "object", "description": "Override configuration for the state running inside this FSM" },
     "AddContacts": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
                      "description": "Add the specified contacts during the state's start"  },
     "RemoveContacts": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },

@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "title": "Gripper target",
+  "description": "Gripper target, one of target or opening is required",
+  "properties":
+  {
+    "target": { "type": "array", "items": { "type": "number" }, "description": "Target of active joints in the gripper" },
+    "opening": { "type": "number", "mininimum": 0, "maximum": 1, "description": "Target opening of the gripper" }
+  }
+}

@@ -1,0 +1,54 @@
+// First example, we simplify task entries for the sake of the example
+"Example1":
+{
+  "base": "MetaTasks",
+  "tasks":
+  {
+     "t1":
+     {
+       "objectiveA": 0.5,
+       "objectiveB": 1.0,
+       "completion": { "timeout": 5.0 }
+     }
+  }
+}
+// In Example1, one task is added and it will run for 5 seconds
+// Second example
+"Example2":
+{
+  "base": "Example1",
+  "tasks":
+  {
+    "t1":
+    {
+      "objectiveA": 1.0,
+      "completion": { "eval": 1e-6 }
+    },
+    "t2":
+    {
+      "objective": 0.5
+    }
+  }
+}
+// Example2 has two tasks, and:
+// - t1's objectiveA is changed to 1.0, objectiveB is the same
+// - t1 completion criteria is replaced
+// Third example
+"Example3":
+{
+  "base": "Example2",
+  "tasks":
+  {
+    "t1":
+    {
+      "completion": {}
+    },
+    "t2":
+    {
+      "completion": { "eval": 1e-6 }
+    }
+  }
+}
+// Example3 still have two tasks, objectives are unchanged but:
+// - t1 has no more completion criteria
+// - t2 has a completion criteria

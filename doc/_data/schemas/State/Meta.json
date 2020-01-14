@@ -1,24 +1,25 @@
 {
-  "title": "fsm::StabilizerStandingState",
-  "description": "Simple state managing the LIPM Stabilizer",
+  "title": "fsm::Meta",
+  "description": "Plays its own FSM",
   "type": "object",
   "properties":
   {
-    "StabilizerConfig": { "$ref": "/../common/StabilizerTask.json" },
-    "stiffness": { "type": "number", "minimum": 0, "description": "Stiffness of CoM target" },
-    "damping": { "type": "number", "minimum": 0, "description": "Damping of CoM target (default=2*sqrt(stiffness))" },
-    "above": { "type": "string", "description": "Put CoM over the special frames LeftAnkle, RightAnkle or Center, or any other valid surface on the robot"},
-    "com": { "$ref": "/../../Eigen/Vector3d.json", "description": "Target CoM position"},
-    "completion":
-    {
-      "type": "object",
-      "title": "Completion criteria for the state",
-      "description": "Completion criteria for the state",
-      "properties":
+    "Managed": { "type": "boolean", "default": false, "description": "If true, this state does not handle transitions by itself"},
+    "StepByStep": { "type": "boolean", "description": "Affects the StepByStep transition behaviour<br/>If not set, inherits the setting from its parent FSM" },
+    "transitions": { "type": "array", "description": "A transition map, required if Managed is false",
+      "items":
       {
-        "dcmEval": { "$ref": "/../../Eigen/Vector3d.json", "description": "Outputs 'OK' when the dcm error is under this threshold."}
+        "type": "array",
+        "items":
+        {
+          "type": "string"
+        },
+        "minItems": 3,
+        "maxItems": 4
       }
     },
+    "category": { "type": "array", "items": { "type": "string" }, "description": "Overrides the default GUI category (i.e. {\"FSM\", name})" },
+    "configs": { "type": "object", "description": "Override configuration for the state running inside this FSM" },
     "AddContacts": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
                      "description": "Add the specified contacts during the state's start"  },
     "RemoveContacts": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },

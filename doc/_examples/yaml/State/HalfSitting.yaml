@@ -1,0 +1,3 @@
+base: HalfSitting
+stiffness: 10
+completion: 0.001

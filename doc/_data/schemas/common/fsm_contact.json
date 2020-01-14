@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "title": "mc_control::fsm::Contact",
+  "description": "Contact representation used by the FSM",
+  "properties":
+  {
+    "r1": { "type": "string", "description": "Name of the first robot in the contact" },
+    "r2": { "type": "string", "description": "Name of the second robot in the contact" },
+    "r1Surface": { "type": "string", "description": "Name of the first robot's surface in the contact" },
+    "r2Surface": { "type": "string", "description": "Name of the second robot's surface in the contact" },
+    "dof": { "$ref": "/../../Eigen/Vector6d.json", "description": "Contact DoF", "default": "[1, 1, 1, 1, 1, 1]" }
+  },
+  "required": ["r1", "r2", "r1Surface", "r2Surface"]
+}
