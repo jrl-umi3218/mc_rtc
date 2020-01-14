@@ -83,6 +83,11 @@ module Jekyll
             has_desc = true
             desc = parent[key_out]["description"].dup()
           end
+          has_default = false
+          if parent[key_out].key?("default")
+            has_default = true
+            default = parent[key_out]["default"].dup()
+          end
           if category != "definitions"
             parent[key_out] = site.data["schemas"][category][name].dup()
             parent[key_out]["REF"] = "#{category}.#{name}"
@@ -91,6 +96,9 @@ module Jekyll
           end
           if has_desc
             parent[key_out]["DESC"] = desc
+          end
+          if has_default
+            parent[key_out]["default"] = default
           end
         else
           resolveRef(site, value, schema, key, root)
