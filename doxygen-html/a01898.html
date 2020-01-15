@@ -138,13 +138,15 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a51cc3872c0fa57d4f65d0e3b2dc45687"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01898.html#a51cc3872c0fa57d4f65d0e3b2dc45687">has_stiffness_</a></td></tr>
+<tr class="memitem:a51cc3872c0fa57d4f65d0e3b2dc45687"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01898.html#a51cc3872c0fa57d4f65d0e3b2dc45687">has_stiffness_</a> = false</td></tr>
 <tr class="separator:a51cc3872c0fa57d4f65d0e3b2dc45687"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb6c686695985c1e5d79e8c966d33b0d"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01898.html#abb6c686695985c1e5d79e8c966d33b0d">stiffness_</a></td></tr>
+<tr class="memitem:abb6c686695985c1e5d79e8c966d33b0d"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01898.html#abb6c686695985c1e5d79e8c966d33b0d">stiffness_</a> = 1</td></tr>
 <tr class="separator:abb6c686695985c1e5d79e8c966d33b0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a93bf204a6601aa3294f2759817dc71e0"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01898.html#a93bf204a6601aa3294f2759817dc71e0">eval_threshold_</a></td></tr>
+<tr class="memitem:a93bf204a6601aa3294f2759817dc71e0"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01898.html#a93bf204a6601aa3294f2759817dc71e0">eval_threshold_</a> = 0.01</td></tr>
 <tr class="separator:a93bf204a6601aa3294f2759817dc71e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a84f53c91784c88fd59a7863dba0c2a30"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01898.html#a84f53c91784c88fd59a7863dba0c2a30">default_stiffness_</a></td></tr>
+<tr class="memitem:a02976f70bd545c5e8a2a461f854fd616"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01898.html#a02976f70bd545c5e8a2a461f854fd616">has_eval_</a> = false</td></tr>
+<tr class="separator:a02976f70bd545c5e8a2a461f854fd616"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84f53c91784c88fd59a7863dba0c2a30"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01898.html#a84f53c91784c88fd59a7863dba0c2a30">default_stiffness_</a> = 1</td></tr>
 <tr class="separator:a84f53c91784c88fd59a7863dba0c2a30"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_a01882"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_a01882')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="a01882.html">mc_control::fsm::State</a></td></tr>
 <tr class="memitem:ad5e8acab9275900efb0a32ffaf155bed inherit pro_attribs_a01882"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02186.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01882.html#ad5e8acab9275900efb0a32ffaf155bed">add_contacts_config_</a></td></tr>
@@ -315,7 +317,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double mc_control::fsm::HalfSittingState::default_stiffness_</td>
+          <td class="memname">double mc_control::fsm::HalfSittingState::default_stiffness_ = 1</td>
         </tr>
       </table>
   </td>
@@ -337,7 +339,29 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double mc_control::fsm::HalfSittingState::eval_threshold_</td>
+          <td class="memname">double mc_control::fsm::HalfSittingState::eval_threshold_ = 0.01</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a02976f70bd545c5e8a2a461f854fd616"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02976f70bd545c5e8a2a461f854fd616">&#9670;&nbsp;</a></span>has_eval_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_control::fsm::HalfSittingState::has_eval_ = false</td>
         </tr>
       </table>
   </td>
@@ -359,7 +383,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool mc_control::fsm::HalfSittingState::has_stiffness_</td>
+          <td class="memname">bool mc_control::fsm::HalfSittingState::has_stiffness_ = false</td>
         </tr>
       </table>
   </td>
@@ -381,7 +405,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double mc_control::fsm::HalfSittingState::stiffness_</td>
+          <td class="memname">double mc_control::fsm::HalfSittingState::stiffness_ = 1</td>
         </tr>
       </table>
   </td>
@@ -400,7 +424,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00676.html">mc_control</a></li><li class="navelem"><a class="el" href="a00677.html">fsm</a></li><li class="navelem"><a class="el" href="a01898.html">HalfSittingState</a></li>
-    <li class="footer">Generated on Wed Jan 15 2020 02:55:51 for mc_rtc by
+    <li class="footer">Generated on Wed Jan 15 2020 03:22:28 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

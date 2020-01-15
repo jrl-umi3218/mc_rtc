@@ -6,6 +6,7 @@ var a01898 =
     [ "teardown", "a01898.html#a653b1d0395c408a264a954a4d8ba77be", null ],
     [ "default_stiffness_", "a01898.html#a84f53c91784c88fd59a7863dba0c2a30", null ],
     [ "eval_threshold_", "a01898.html#a93bf204a6601aa3294f2759817dc71e0", null ],
+    [ "has_eval_", "a01898.html#a02976f70bd545c5e8a2a461f854fd616", null ],
     [ "has_stiffness_", "a01898.html#a51cc3872c0fa57d4f65d0e3b2dc45687", null ],
     [ "stiffness_", "a01898.html#abb6c686695985c1e5d79e8c966d33b0d", null ]
 ];

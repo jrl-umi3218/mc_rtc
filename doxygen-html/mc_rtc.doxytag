@@ -12406,6 +12406,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>has_eval_</name>
+      <anchorfile>a01898.html</anchorfile>
+      <anchor>a02976f70bd545c5e8a2a461f854fd616</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
       <type>double</type>
       <name>default_stiffness_</name>
       <anchorfile>a01898.html</anchorfile>
