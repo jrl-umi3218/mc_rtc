@@ -18,7 +18,11 @@ void HalfSittingState::configure(const mc_rtc::Configuration & config)
     has_stiffness_ = true;
     stiffness_ = config("stiffness");
   }
-  config("eval", eval_threshold_);
+  if(config.has("eval"))
+  {
+    has_eval_ = true;
+    eval_threshold_ = config("eval");
+  }
 }
 
 void HalfSittingState::start(Controller & ctl)
@@ -46,7 +50,7 @@ void HalfSittingState::start(Controller & ctl)
 bool HalfSittingState::run(Controller & ctl)
 {
   auto postureTask = ctl.getPostureTask(ctl.robot().name());
-  if(postureTask->eval().norm() < eval_threshold_)
+  if(!has_eval_ || postureTask->eval().norm() < eval_threshold_)
   {
     postureTask->stiffness(default_stiffness_);
     output("OK");

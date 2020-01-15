@@ -85,54 +85,42 @@
         {
           "type": "com",
           "robotIndex": 0,
-          "stiffness": 5.0,
+          "stiffness": 10.0,
           "weight": 1000,
           "completion": { "OR": [ { "eval": 1e-3 },
-                                  {"AND": [ { "timeout": 1.0 }, { "speed": 1e-2 } ] } ] }
+                                  {"AND": [ { "timeout": 3.0 }, { "speed": 1e-2 } ] } ] }
         }
       }
     },
-    "RelativeEndEffector":
+    "MoveFoot":
     {
-      "base": "CoM",
+      "base": "MetaTasks",
       "tasks":
       {
-        "RelativeEndEffector":
+        "MoveFoot":
         {
-          "type": "relBody6d",
+          "type": "surfaceTransform",
           "robotIndex": 0,
-          "positionStiffness": 5.0,
-          "positionWeight": 2000,
-          "orientationStiffness": 100.0,
-          "orientationWeight": 0,
+          "stiffness": 5.0,
+          "weight": 500,
           "completion": { "OR": [ { "eval": 1e-3 },
-                                  {"AND": [ { "timeout": 1.0 }, { "speed": 1e-2 } ] } ] }
-        },
-        "Orientation":
-        {
-          "type": "orientation",
-          "robotIndex": 0,
-          "orientationStiffness": 100.0,
-          "orientationWeight": 10000.0
+                                  {"AND": [ { "timeout": 5.0 }, { "speed": 1e-2 } ] } ] }
         }
       }
     },
     "GoHalfSitting":
     {
-      "base": "MiddleCoM",
-      "tasks":
+      "base": "Parallel",
+      "states": ["HalfSitting", "MiddleCoM"],
+      "configs":
       {
-        "Posture":
+        "HalfSitting":
         {
-          "type": "posture",
-          "robotIndex": 0,
-          "stiffness": 2.0,
-          "weight": 100,
-          "posture": [[1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.773], [0.0], [0.0], [-0.4537856055185257], [0.8726646259971648], [-0.41887902047863906], [0.0], [0.0], [0.0], [-0.4537856055185257], [0.8726646259971648], [-0.41887902047863906], [0.0], [0.0], [0.0], [0.0], [0.0], [0.7853981633974483], [-0.3490658503988659], [0.0], [-1.3089969389957472], [0.0], [0.0], [0.0], [0.3490658503988659], [-0.3490658503988659], [0.3490658503988659], [-0.3490658503988659], [0.3490658503988659], [-0.3490658503988659], [0.7853981633974483], [0.3490658503988659], [0.0], [-1.3089969389957472], [0.0], [0.0], [0.0], [0.3490658503988659], [-0.3490658503988659], [0.3490658503988659], [-0.3490658503988659], [0.3490658503988659], [-0.3490658503988659], []]
+          "stiffness": 10,
+          "completion": 0.1
         }
       }
     },
-    "GoHalfSitting2": { "base": "GoHalfSitting" },
     "LeftCoM":
     {
       "base": "CoM",
@@ -140,18 +128,18 @@
       {
         "CoM":
         {
-          "above": ["LFullSole"]
+          "above": ["LeftFoot"]
         }
       }
     },
     "RightCoM":
     {
-      "base": "CoM",
+      "base": "LeftCoM",
       "tasks":
       {
         "CoM":
         {
-          "above": ["RFullSole"]
+          "above": ["RightFoot"]
         }
       }
     },
@@ -162,79 +150,99 @@
       {
         "CoM":
         {
-          "above": ["LFullSole", "RFullSole"]
+          "above": ["LeftFoot", "RightFoot"]
         }
       }
     },
-    "RemoveLFullSole":
-    {
-      "base": "RemoveContact",
-      "contact":
-      {
-        "r1Surface": "LFullSole",
-        "r2Surface": "AllGround",
-        "isFixed": false
-      }
-    },
-    "AddLFullSole":
+    "AddLeftFoot":
     {
       "base": "AddContact",
       "contact":
       {
-        "r1Surface": "LFullSole",
+        "r1Surface": "LeftFoot",
         "r2Surface": "AllGround",
         "isFixed": false
       }
     },
-    "RemoveRFullSole":
+    "AddLeftFootCoM":
     {
-      "base": "RemoveContact",
-      "contact":
-      {
-        "r1Surface": "RFullSole",
-        "r2Surface": "AllGround",
-        "isFixed": false
-      }
+      "base": "Parallel",
+      "states": ["AddLeftFoot", "RightCoM"]
     },
-    "AddRFullSole":
+    "AddRightFoot":
     {
       "base": "AddContact",
       "contact":
       {
-        "r1Surface": "RFullSole",
+        "r1Surface": "RightFoot",
         "r2Surface": "AllGround",
         "isFixed": false
       }
     },
-    "MoveLFullSole":
+    "AddRightFootCoM":
     {
-      "base": "RelativeEndEffector",
+      "base": "Parallel",
+      "states": ["AddRightFoot", "LeftCoM"]
+    },
+    "MoveLeftFoot":
+    {
+      "base": "MoveFoot",
       "tasks":
       {
-        "RelativeEndEffector":
+        "MoveFoot":
         {
-          "body": "LLEG_LINK5",
-          "relBody": "RLEG_LINK5",
-          "position": [0.25, 0.19, 0.1]
-        },
-        "Orientation": { "body": "LLEG_LINK5" }
-      }
+          "surface": "LeftFoot",
+          "moveWorld":
+          {
+            "translation": [0.0, 0.0, 0.1]
+          }
+        }
+      },
+      "RemoveContacts":
+      [
+        {
+          "r1": "jvrc1",
+          "r2": "ground",
+          "r1Surface": "LeftFoot",
+          "r2Surface": "AllGround",
+          "isFixed": false
+        }
+      ]
     },
-    "MoveRFullSole":
+    "MoveLeftFootCoM":
     {
-      "base": "RelativeEndEffector",
+      "base": "Parallel",
+      "states": ["MoveLeftFoot", "RightCoM", "HalfSitting"]
+    },
+    "MoveRightFoot":
+    {
+      "base": "MoveFoot",
       "tasks":
       {
-        "RelativeEndEffector":
+        "MoveFoot":
         {
-          "body": "RLEG_LINK5",
-          "relBody": "LLEG_LINK5",
-          "position": [0.25, -0.19, 0.1]
-        },
-        "Orientation": { "body": "RLEG_LINK5" }
-      }
+          "surface": "RightFoot",
+          "moveWorld":
+          {
+            "translation": [0.0, 0.0, 0.1]
+          }
+        }
+      },
+      "RemoveContacts":
+      [
+        {
+          "r1": "jvrc1",
+          "r2": "ground",
+          "r1Surface": "RightFoot",
+          "r2Surface": "AllGround"
+        }
+      ]
     },
-    "GoHalfSitting3": { "base": "GoHalfSitting2" },
+    "MoveRightFootCoM":
+    {
+      "base": "Parallel",
+      "states": ["MoveRightFoot", "LeftCoM", "HalfSitting"]
+    },
     "HeadUp":
     {
       "base": "MetaTasks",
@@ -247,10 +255,10 @@
           "stiffness": 0.0,
           "weight": 50,
           "jointGains": [
-            {"jointName": "HEAD_JOINT0", "stiffness": 5.0},
-            {"jointName": "HEAD_JOINT1", "stiffness": 5.0}
+            {"jointName": "NECK_Y", "stiffness": 5.0},
+            {"jointName": "NECK_P", "stiffness": 5.0}
           ],
-          "target": { "HEAD_JOINT1": [-0.5] },
+          "target": { "NECK_P": [-0.5] },
           "completion": { "OR": [ { "eval": 1e-3 },
                                   {"AND": [ { "timeout": 1.0 }, { "speed": 5e-3 } ] } ] }
         }
@@ -263,7 +271,7 @@
       {
         "HeadPosture":
         {
-          "target": { "HEAD_JOINT1": [0.5] }
+          "target": { "NECK_P": [0.5] }
         }
       }
     },
@@ -274,7 +282,7 @@
       {
         "HeadPosture":
         {
-          "target": { "HEAD_JOINT1": [0.0] }
+          "target": { "NECK_P": [0.0] }
         }
       }
     },
@@ -285,18 +293,14 @@
       "StepByStep": false,
       "transitions":
       [
-        ["Pause", "OK", "GoHalfSitting", "Strict"],
-        ["GoHalfSitting", "OK", "LeftCoM"],
-        ["GoHalfSitting2", "OK", "RightCoM"],
-        ["LeftCoM", "OK", "RemoveRFullSole"],
-        ["RemoveRFullSole", "OK", "MoveRFullSole"],
-        ["MoveRFullSole", "OK", "AddRFullSole"],
-        ["AddRFullSole", "OK", "GoHalfSitting2"],
-        ["RightCoM", "OK", "RemoveLFullSole"],
-        ["RemoveLFullSole", "OK", "MoveLFullSole"],
-        ["MoveLFullSole", "OK", "AddLFullSole"],
-        ["AddLFullSole", "OK", "GoHalfSitting3"],
-        ["GoHalfSitting3", "OK", "Pause"]
+        ["Pause", "OK", "LeftCoM", "Strict"],
+        ["LeftCoM", "OK", "MoveRightFootCoM"],
+        ["MoveRightFootCoM", "OK", "AddRightFootCoM"],
+        ["AddRightFootCoM", "OK", "RightCoM"],
+        ["RightCoM", "OK", "MoveLeftFootCoM"],
+        ["MoveLeftFootCoM", "OK", "AddLeftFootCoM"],
+        ["AddLeftFootCoM", "OK", "GoHalfSitting"],
+        ["GoHalfSitting", "OK", "Pause"]
       ]
     },
     "HeadFSM":

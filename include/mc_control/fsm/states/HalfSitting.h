@@ -33,10 +33,11 @@ struct MC_CONTROL_FSM_STATE_DLLAPI HalfSittingState : State
   void teardown(Controller &) override {}
 
 protected:
-  bool has_stiffness_;
-  double stiffness_;
-  double eval_threshold_;
-  double default_stiffness_;
+  bool has_stiffness_ = false;
+  double stiffness_ = 1;
+  double eval_threshold_ = 0.01;
+  bool has_eval_ = false;
+  double default_stiffness_ = 1;
 };
 
 } // namespace fsm
