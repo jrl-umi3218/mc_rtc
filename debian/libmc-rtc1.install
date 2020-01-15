@@ -14,3 +14,4 @@ usr/lib/libmc_observers.so.1*
 usr/lib/libmc_control.so.1*
 usr/lib/libmc_control_client.so.1*
 usr/lib/libmc_control_fsm.so.1*
+usr/lib/libmc_planning.so.1*

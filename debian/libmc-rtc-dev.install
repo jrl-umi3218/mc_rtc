@@ -45,7 +45,10 @@ usr/include/mc_tasks/PositionTask.h
 usr/include/mc_tasks/api.h
 usr/include/mc_tasks/VectorOrientationTask.h
 usr/include/mc_tasks/SplineTrajectoryTask.hpp
+usr/include/mc_tasks/lipm_stabilizer/*
 usr/include/mc_trajectory/*
+usr/include/mc_planning/*
+usr/include/mc_filter/*
 usr/lib/*/pkgconfig/*
 usr/lib/cmake/mc_rtc/*.cmake
 usr/lib/libmc_rtc_loader.so
