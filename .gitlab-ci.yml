@@ -119,7 +119,7 @@ pages:
     - git submodule update --quiet --init --recursive
     # In Docker dpkg is setup to remove all documentation :-D
     - rm -f /etc/dpkg/dpkg.cfg.d/excludes
-    - apt-get update && apt-get install -qq software-properties-common && add-apt-repository -y ppa:pierre-gergondet+ppa/multi-contact-unstable && apt-get install -qq ruby-dev ruby-bundler libxml2-dev doxygen libboost-test-dev libboost-timer-dev libboost-program-options-dev libboost-filesystem-dev libgeos++-dev libgeos-dev libltdl-dev libtasks-qld-dev libmc-rbdyn-urdf-dev libnanomsg-dev libyaml-cpp-dev wget || exit 1
+    - apt-get update && apt-get install -qq software-properties-common && add-apt-repository -y ppa:pierre-gergondet+ppa/multi-contact-unstable && apt-get install -qq ruby-dev ruby-bundler libxml2-dev doxygen libboost-test-dev libboost-timer-dev libboost-program-options-dev libboost-filesystem-dev libgeos++-dev libgeos-dev libltdl-dev libtasks-qld-dev libmc-rbdyn-urdf-dev libnanomsg-dev libyaml-cpp-dev wget gfortran || exit 1
     - mkdir -p /usr/share/doc/SpaceVecAlg/doxygen-html && cd /usr/share/doc/SpaceVecAlg/doxygen-html && wget https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag
     - mkdir -p /usr/share/doc/RBDyn/doxygen-html && cd /usr/share/doc/RBDyn/doxygen-html && wget https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag
     - mkdir -p /usr/share/doc/Tasks/doxygen-html && cd /usr/share/doc/Tasks/doxygen-html && wget https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag
