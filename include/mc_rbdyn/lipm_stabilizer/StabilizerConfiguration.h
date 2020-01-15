@@ -76,6 +76,8 @@ namespace lipm_stabilizer
  */
 struct MC_RBDYN_DLLAPI StabilizerConfiguration
 {
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
   FDQPWeights fdqpWeights;
 
   double friction = 0.7; /**< Friction coefficient. Same for both feet */

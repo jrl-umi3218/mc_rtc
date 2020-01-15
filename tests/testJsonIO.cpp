@@ -15,6 +15,8 @@ namespace bfs = boost::filesystem;
 #include <iostream>
 #include <random>
 
+#include <Eigen/StdVector>
+
 template<typename T, typename A>
 bool compare_vectors(const std::vector<T, A> & lhs, const std::vector<T, A> & rhs)
 {
@@ -442,6 +444,12 @@ struct AllocatorHelper<mc_rbdyn::BodySensor>
   using Allocator = Eigen::aligned_allocator<mc_rbdyn::BodySensor>;
 };
 
+template<>
+struct AllocatorHelper<mc_rbdyn::RobotModule>
+{
+  using Allocator = Eigen::aligned_allocator<mc_rbdyn::RobotModule>;
+};
+
 BOOST_AUTO_TEST_CASE_TEMPLATE(TestJsonIO, T, test_types)
 {
   static_assert(mc_rtc::internal::has_configuration_load_object<T>::value,
@@ -481,7 +489,7 @@ BOOST_AUTO_TEST_CASE(TestRobotModuleAltSave)
   auto rm = make_ref<mc_rbdyn::RobotModule>();
   mc_rtc::Configuration config;
   config.add("rm", rm, false);
-  std::vector<mc_rbdyn::RobotModule> rmV = {rm, rm, rm};
+  std::vector<mc_rbdyn::RobotModule, Eigen::aligned_allocator<mc_rbdyn::RobotModule>> rmV = {rm, rm, rm};
   config.add("rmV", rmV, false, std::vector<std::string>{}, true);
   std::array<mc_rbdyn::RobotModule, 2> rmA = {{rm, rm}};
   config.add("rmA", rmA, false, std::vector<std::string>{"RARM_LINK6", "LARM_LINK6"});
