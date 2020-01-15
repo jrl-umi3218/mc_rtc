@@ -75,7 +75,7 @@ jobs:
       if: github.ref != 'refs/heads/master'
   # This job build binary packages for Ubuntu
   build-packages:
-    #needs: check-tag
+    needs: check-tag
     strategy:
       fail-fast: true
       matrix:

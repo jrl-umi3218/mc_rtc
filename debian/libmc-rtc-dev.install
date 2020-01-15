@@ -62,3 +62,4 @@ usr/lib/libmc_observers.so
 usr/lib/libmc_control.so
 usr/lib/libmc_control_client.so
 usr/lib/libmc_control_fsm.so
+usr/lib/libmc_planning.so
