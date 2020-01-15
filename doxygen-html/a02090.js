@@ -18,7 +18,7 @@ var a02090 =
     [ "dcmPropGain", "a02090.html#aaae1753ce0d0a7154330565e0788ffb1", null ],
     [ "dfzAdmittance", "a02090.html#ad3f20459a99d3de2b16e882b592bffbd", null ],
     [ "dfzDamping", "a02090.html#ac97586a249bbe2430e958b9fa1e7f7d7", null ],
-    [ "fdqpWeights", "a02090.html#aa9d26f0bb6e592ef0f94549e30da5972", null ],
+    [ "fdqpWeights", "a02090.html#a39b284b68673264191221eca6778d189", null ],
     [ "friction", "a02090.html#a2711f393aa208d546265f1ccdaa4f927", null ],
     [ "leftFootSurface", "a02090.html#a30cc86b398c8b84bb07fd032e35d76e9", null ],
     [ "pelvisStiffness", "a02090.html#a42b1aa4d6be73c7a9986292e8ca1e3e2", null ],

@@ -22787,10 +22787,10 @@
       <arglist>() const</arglist>
     </member>
     <member kind="variable">
-      <type>FDQPWeights</type>
+      <type>EIGEN_MAKE_ALIGNED_OPERATOR_NEW FDQPWeights</type>
       <name>fdqpWeights</name>
       <anchorfile>a02090.html</anchorfile>
-      <anchor>aa9d26f0bb6e592ef0f94549e30da5972</anchor>
+      <anchor>a39b284b68673264191221eca6778d189</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
