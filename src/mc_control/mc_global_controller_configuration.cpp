@@ -250,6 +250,15 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   {
     controller_module_paths.insert(controller_module_paths.begin(), mc_rtc::MC_CONTROLLER_INSTALL_PREFIX);
   }
+  controller_user_configuration_path =
+      config("ControllerConfigurationPath", std::string(mc_rtc::MC_CONTROLLER_INSTALL_PREFIX) + "etc");
+#ifndef WIN32
+  controller_user_configuration_path = std::string(std::getenv("HOME")) + ".config/mc_rtc/controllers";
+#else
+  controller_user_configuration_path = std::string(std::getenv("APPDATA")) / "mc_rtc/controllers";
+#endif
+  config("ControllerConfigurationPath", controller_user_configuration_path);
+
   config("Enabled", enabled_controllers);
   if(enabled_controllers.size())
   {
@@ -432,13 +441,8 @@ void load_configs(const std::string & desc,
 void MCGlobalController::GlobalConfiguration::load_controllers_configs()
 {
   // Load controller-specific configuration
-  load_configs("controller", enabled_controllers, bfs::path(mc_rtc::MC_CONTROLLER_INSTALL_PREFIX) / "etc",
-#ifndef WIN32
-               bfs::path(std::getenv("HOME")) / ".config/mc_rtc/controllers",
-#else
-               bfs::path(std::getenv("APPDATA")) / "mc_rtc/controllers",
-#endif
-               controllers_configs, config);
+  load_configs("controller", enabled_controllers, std::string(mc_rtc::MC_CONTROLLER_INSTALL_PREFIX) + "etc",
+               controller_user_configuration_path, controllers_configs, config);
 }
 
 void MCGlobalController::GlobalConfiguration::load_plugin_configs()
