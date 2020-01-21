@@ -11,6 +11,6 @@ var annotated_dup =
     [ "mc_tasks", "a00679.html", "a00679" ],
     [ "mc_trajectory", "a00707.html", "a00707" ],
     [ "sch", "a00693.html", null ],
-    [ "Collision", "a02770.html", null ],
-    [ "Global", "a02766.html", null ]
+    [ "Collision", "a02743.html", null ],
+    [ "Global", "a02739.html", null ]
 ];

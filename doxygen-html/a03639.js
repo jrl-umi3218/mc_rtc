@@ -1,13 +1,15 @@
 var a03639 =
 [
-    [ "MC_OBSERVER_DLLAPI", "a03639.html#a5f92e3e5bb50345181ceaa0fdc4ed310", null ],
-    [ "MC_OBSERVER_DLLEXPORT", "a03639.html#a71f5d19aecb89bc7ff66ea90cbec91d3", null ],
-    [ "MC_OBSERVER_DLLIMPORT", "a03639.html#a5ec028a59707a198d06a6b92110d7ee1", null ],
-    [ "MC_OBSERVER_DLLLOCAL", "a03639.html#a933db9b3406c8c221ba3ee7f689e7511", null ],
-    [ "MC_OBSERVER_LOCAL", "a03639.html#ad87f4c4e93529fdbfdd4a95ef34bbd7a", null ],
-    [ "MC_OBSERVERS_DLLAPI", "a03639.html#adde8be25d8f40acd541ed21395a5c73a", null ],
-    [ "MC_OBSERVERS_DLLEXPORT", "a03639.html#a584f0147ac169a854c258384854bd841", null ],
-    [ "MC_OBSERVERS_DLLIMPORT", "a03639.html#a0193ed43a7a8a2bca1082d339d28651e", null ],
-    [ "MC_OBSERVERS_DLLLOCAL", "a03639.html#a55268a03db41d5270bf2614681e1eb51", null ],
-    [ "MC_OBSERVERS_LOCAL", "a03639.html#a094cf177ee9875b67aca0d123880fe86", null ]
+    [ "ConfigurationLoader", "a02135.html", "a02135" ],
+    [ "ConfigurationLoader< void >", "a02139.html", "a02139" ],
+    [ "_has_configuration_load_object", "a02143.html", "a02143" ],
+    [ "has_configuration_load_object", "a02147.html", null ],
+    [ "_has_configuration_save_object", "a02151.html", "a02151" ],
+    [ "has_configuration_save_object", "a02155.html", null ],
+    [ "Configuration", "a02159.html", "a02159" ],
+    [ "Exception", "a02163.html", "a02163" ],
+    [ "ConfigurationArrayIterator", "a02171.html", "a02171" ],
+    [ "operator<<", "a03639.html#a24679a5c44564f7b7426cca4533300bf", null ],
+    [ "Configuration", "a03639.html#a9b620c9005d103e65363b518ba6dca23", null ],
+    [ "ConfigurationArrayIterator", "a03639.html#a781ea11d3b3f97742187d5910b74edfd", null ]
 ];

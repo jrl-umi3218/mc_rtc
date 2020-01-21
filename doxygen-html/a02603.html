@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Member List</title>
+<title>mc_tasks::AddRemoveContactTask Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a02606.html','');});
+$(document).ready(function(){initNavTree('a02603.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,27 +69,872 @@ $(document).ready(function(){initNavTree('a02606.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="a02600.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_solver::utils::Update&lt; UpdateNrVars &gt; Member List</div>  </div>
+<div class="title">mc_tasks::AddRemoveContactTask Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="a02606.html">mc_solver::utils::Update&lt; UpdateNrVars &gt;</a>, including all inherited members.</p>
-<table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="a02606.html#adcc1dc8dc0563b2e14f962f26afbfa5f">A</a>() const =0</td><td class="entry"><a class="el" href="a02606.html">mc_solver::utils::Update&lt; UpdateNrVars &gt;</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02606.html#a6ba3138c342b7e4efa2328ac11930706">AFull_</a></td><td class="entry"><a class="el" href="a02606.html">mc_solver::utils::Update&lt; UpdateNrVars &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02606.html#a8f658eb01d91768ab6a4e9b095a894de">compute</a>()=0</td><td class="entry"><a class="el" href="a02606.html">mc_solver::utils::Update&lt; UpdateNrVars &gt;</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02606.html#ad172325243564a16279d9392bd86efa5">Update</a>(unsigned int rIndex)</td><td class="entry"><a class="el" href="a02606.html">mc_solver::utils::Update&lt; UpdateNrVars &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02606.html#a806d3dc017b28e570dfa268a32a55600">Update</a>(const tasks::qp::ContactId &amp;cid)</td><td class="entry"><a class="el" href="a02606.html">mc_solver::utils::Update&lt; UpdateNrVars &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02606.html#ab889dcd5361a420fe976146c40f56533">updateImpl</a>(const std::vector&lt; rbd::MultiBody &gt; &amp;, const std::vector&lt; rbd::MultiBodyConfig &gt; &amp;, const tasks::qp::SolverData &amp;)</td><td class="entry"><a class="el" href="a02606.html">mc_solver::utils::Update&lt; UpdateNrVars &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02606.html#ab8ad71dd3414ee8bccc766c7bc8b4dc3">~Update</a>()</td><td class="entry"><a class="el" href="a02606.html">mc_solver::utils::Update&lt; UpdateNrVars &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
-</table></div><!-- contents -->
+<p>Add or remove a contact.  
+ <a href="a02603.html#details">More...</a></p>
+
+<p><code>#include &lt;mc_tasks/AddRemoveContactTask.h&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for mc_tasks::AddRemoveContactTask:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="a02603.png" usemap="#mc_5Ftasks::AddRemoveContactTask_map" alt=""/>
+  <map id="mc_5Ftasks::AddRemoveContactTask_map" name="mc_5Ftasks::AddRemoveContactTask_map">
+<area href="a02675.html" title="Represents a generic task. " alt="mc_tasks::MetaTask" shape="rect" coords="108,0,314,24"/>
+<area href="a02607.html" title="Add a contact. " alt="mc_tasks::AddContactTask" shape="rect" coords="0,112,206,136"/>
+<area href="a02611.html" title="Remove a contact. " alt="mc_tasks::RemoveContactTask" shape="rect" coords="216,112,422,136"/>
+</map>
+ </div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a27af872f37053c50aace18c9ec857a57"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#a27af872f37053c50aace18c9ec857a57">AddRemoveContactTask</a> (<a class="el" href="a02123.html">mc_rbdyn::Robots</a> &amp;<a class="el" href="a02603.html#ac370293e74d26c6c14fe3ff593de45f2">robots</a>, std::shared_ptr&lt; <a class="el" href="a02479.html">mc_solver::BoundedSpeedConstr</a> &gt; <a class="el" href="a02603.html#ab421f9378ae251f53925cf179825626e">constSpeedConstr</a>, <a class="el" href="a02035.html">mc_rbdyn::Contact</a> &amp;contact, double <a class="el" href="a02603.html#a6cc87c0025db4a70501d92f6c24b09e8">direction</a>, double <a class="el" href="a02603.html#a92268af15885043be699e14dc3683fda">speed</a>, double <a class="el" href="a02603.html#a48baadecb63cdda817bda05f6e8f1bfa">stiffness</a>, double <a class="el" href="a02603.html#a94e15cb317d7a258015b7eabfb2a1109">weight</a>, Eigen::Vector3d *userT_0_s=nullptr)</td></tr>
+<tr class="memdesc:a27af872f37053c50aace18c9ec857a57"><td class="mdescLeft">&#160;</td><td class="mdescRight">General constructor.  <a href="#a27af872f37053c50aace18c9ec857a57">More...</a><br /></td></tr>
+<tr class="separator:a27af872f37053c50aace18c9ec857a57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e9ce2e7a0c065683ee4f2098f0d0fbd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#a3e9ce2e7a0c065683ee4f2098f0d0fbd">AddRemoveContactTask</a> (<a class="el" href="a02567.html">mc_solver::QPSolver</a> &amp;solver, <a class="el" href="a02035.html">mc_rbdyn::Contact</a> &amp;contact, double <a class="el" href="a02603.html#a6cc87c0025db4a70501d92f6c24b09e8">direction</a>, double <a class="el" href="a02603.html#a92268af15885043be699e14dc3683fda">speed</a>, double <a class="el" href="a02603.html#a48baadecb63cdda817bda05f6e8f1bfa">stiffness</a>, double <a class="el" href="a02603.html#a94e15cb317d7a258015b7eabfb2a1109">weight</a>, Eigen::Vector3d *userT_0_s=nullptr)</td></tr>
+<tr class="memdesc:a3e9ce2e7a0c065683ee4f2098f0d0fbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">General constructor with self-managed bounded speed constraint.  <a href="#a3e9ce2e7a0c065683ee4f2098f0d0fbd">More...</a><br /></td></tr>
+<tr class="separator:a3e9ce2e7a0c065683ee4f2098f0d0fbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6cc87c0025db4a70501d92f6c24b09e8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#a6cc87c0025db4a70501d92f6c24b09e8">direction</a> (double direction)</td></tr>
+<tr class="memdesc:a6cc87c0025db4a70501d92f6c24b09e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the displacement direction.  <a href="#a6cc87c0025db4a70501d92f6c24b09e8">More...</a><br /></td></tr>
+<tr class="separator:a6cc87c0025db4a70501d92f6c24b09e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92268af15885043be699e14dc3683fda"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#a92268af15885043be699e14dc3683fda">speed</a> ()</td></tr>
+<tr class="memdesc:a92268af15885043be699e14dc3683fda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the desired dislacement speed.  <a href="#a92268af15885043be699e14dc3683fda">More...</a><br /></td></tr>
+<tr class="separator:a92268af15885043be699e14dc3683fda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae60e21511e6e1379af325184a7459781"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#ae60e21511e6e1379af325184a7459781">speed</a> (double s)</td></tr>
+<tr class="memdesc:ae60e21511e6e1379af325184a7459781"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the desired dislacement speed.  <a href="#ae60e21511e6e1379af325184a7459781">More...</a><br /></td></tr>
+<tr class="separator:ae60e21511e6e1379af325184a7459781"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48baadecb63cdda817bda05f6e8f1bfa"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#a48baadecb63cdda817bda05f6e8f1bfa">stiffness</a> ()</td></tr>
+<tr class="memdesc:a48baadecb63cdda817bda05f6e8f1bfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the task stiffness.  <a href="#a48baadecb63cdda817bda05f6e8f1bfa">More...</a><br /></td></tr>
+<tr class="separator:a48baadecb63cdda817bda05f6e8f1bfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94e15cb317d7a258015b7eabfb2a1109"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#a94e15cb317d7a258015b7eabfb2a1109">weight</a> ()</td></tr>
+<tr class="memdesc:a94e15cb317d7a258015b7eabfb2a1109"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the task weight.  <a href="#a94e15cb317d7a258015b7eabfb2a1109">More...</a><br /></td></tr>
+<tr class="separator:a94e15cb317d7a258015b7eabfb2a1109"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac356d531abfb403e1d7f66fcb3189bce"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#ac356d531abfb403e1d7f66fcb3189bce">velError</a> ()</td></tr>
+<tr class="memdesc:ac356d531abfb403e1d7f66fcb3189bce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the velocity error.  <a href="#ac356d531abfb403e1d7f66fcb3189bce">More...</a><br /></td></tr>
+<tr class="separator:ac356d531abfb403e1d7f66fcb3189bce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83923c85bfda96b94c2d2a8b793ab798"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#a83923c85bfda96b94c2d2a8b793ab798">dimWeight</a> (const Eigen::VectorXd &amp;dimW) override</td></tr>
+<tr class="memdesc:a83923c85bfda96b94c2d2a8b793ab798"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the task's dimension weight vector.  <a href="#a83923c85bfda96b94c2d2a8b793ab798">More...</a><br /></td></tr>
+<tr class="separator:a83923c85bfda96b94c2d2a8b793ab798"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ca17fc43a9a8acce7e7e1d975d33385"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#a2ca17fc43a9a8acce7e7e1d975d33385">dimWeight</a> () const override</td></tr>
+<tr class="memdesc:a2ca17fc43a9a8acce7e7e1d975d33385"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current task's dim weight vector.  <a href="#a2ca17fc43a9a8acce7e7e1d975d33385">More...</a><br /></td></tr>
+<tr class="separator:a2ca17fc43a9a8acce7e7e1d975d33385"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af45fc0604c6dbf8742fcbf5f29555b7e"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#af45fc0604c6dbf8742fcbf5f29555b7e">eval</a> () const override</td></tr>
+<tr class="memdesc:af45fc0604c6dbf8742fcbf5f29555b7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the task error.  <a href="#af45fc0604c6dbf8742fcbf5f29555b7e">More...</a><br /></td></tr>
+<tr class="separator:af45fc0604c6dbf8742fcbf5f29555b7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e14709c98129124ee03c631274b6afe"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#a8e14709c98129124ee03c631274b6afe">speed</a> () const override</td></tr>
+<tr class="memdesc:a8e14709c98129124ee03c631274b6afe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the task velocity.  <a href="#a8e14709c98129124ee03c631274b6afe">More...</a><br /></td></tr>
+<tr class="separator:a8e14709c98129124ee03c631274b6afe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_a02675"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a02675')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a02675.html">mc_tasks::MetaTask</a></td></tr>
+<tr class="memitem:aea3e513dfe137830b38272336451b8cc inherit pub_methods_a02675"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02675.html#aea3e513dfe137830b38272336451b8cc">~MetaTask</a> ()</td></tr>
+<tr class="separator:aea3e513dfe137830b38272336451b8cc inherit pub_methods_a02675"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac090b29eae1954585e32572d40731ca1 inherit pub_methods_a02675"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02675.html#ac090b29eae1954585e32572d40731ca1">type</a> () const</td></tr>
+<tr class="memdesc:ac090b29eae1954585e32572d40731ca1 inherit pub_methods_a02675"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the type of the task.  <a href="a02675.html#ac090b29eae1954585e32572d40731ca1">More...</a><br /></td></tr>
+<tr class="separator:ac090b29eae1954585e32572d40731ca1 inherit pub_methods_a02675"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa98468771424ad14d60915a6b52e927b inherit pub_methods_a02675"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02675.html#aa98468771424ad14d60915a6b52e927b">name</a> (const std::string &amp;name)</td></tr>
+<tr class="memdesc:aa98468771424ad14d60915a6b52e927b inherit pub_methods_a02675"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a name for the task.  <a href="a02675.html#aa98468771424ad14d60915a6b52e927b">More...</a><br /></td></tr>
+<tr class="separator:aa98468771424ad14d60915a6b52e927b inherit pub_methods_a02675"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94831a7f067fdd5b05e03e83bfc4166b inherit pub_methods_a02675"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02675.html#a94831a7f067fdd5b05e03e83bfc4166b">name</a> () const</td></tr>
+<tr class="memdesc:a94831a7f067fdd5b05e03e83bfc4166b inherit pub_methods_a02675"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the name of the task.  <a href="a02675.html#a94831a7f067fdd5b05e03e83bfc4166b">More...</a><br /></td></tr>
+<tr class="separator:a94831a7f067fdd5b05e03e83bfc4166b inherit pub_methods_a02675"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27dbee0df32ae7f803184cb6222fc427 inherit pub_methods_a02675"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02675.html#a27dbee0df32ae7f803184cb6222fc427">load</a> (<a class="el" href="a02567.html">mc_solver::QPSolver</a> &amp;solver, const <a class="el" href="a02159.html">mc_rtc::Configuration</a> &amp;config)</td></tr>
+<tr class="memdesc:a27dbee0df32ae7f803184cb6222fc427 inherit pub_methods_a02675"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load parameters from a Configuration object.  <a href="a02675.html#a27dbee0df32ae7f803184cb6222fc427">More...</a><br /></td></tr>
+<tr class="separator:a27dbee0df32ae7f803184cb6222fc427 inherit pub_methods_a02675"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:ac370293e74d26c6c14fe3ff593de45f2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02123.html">mc_rbdyn::Robots</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#ac370293e74d26c6c14fe3ff593de45f2">robots</a></td></tr>
+<tr class="separator:ac370293e74d26c6c14fe3ff593de45f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf9b93ac2b2b32e8e3f12d6ed84b5d01"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02095.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#aaf9b93ac2b2b32e8e3f12d6ed84b5d01">robot</a></td></tr>
+<tr class="separator:aaf9b93ac2b2b32e8e3f12d6ed84b5d01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98b07421e0322187bb0e5fae5b595f1d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02095.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#a98b07421e0322187bb0e5fae5b595f1d">env</a></td></tr>
+<tr class="separator:a98b07421e0322187bb0e5fae5b595f1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab421f9378ae251f53925cf179825626e"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="a02479.html">mc_solver::BoundedSpeedConstr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#ab421f9378ae251f53925cf179825626e">constSpeedConstr</a></td></tr>
+<tr class="separator:ab421f9378ae251f53925cf179825626e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03082e63152e83579e4cb7aed4bc05bd"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="a02131.html">mc_rbdyn::Surface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#a03082e63152e83579e4cb7aed4bc05bd">robotSurf</a></td></tr>
+<tr class="separator:a03082e63152e83579e4cb7aed4bc05bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fe42ac857795cdd634819a17a5238b5"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#a9fe42ac857795cdd634819a17a5238b5">robotBodyIndex</a></td></tr>
+<tr class="separator:a9fe42ac857795cdd634819a17a5238b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7dac96a0da2ff21be423cc30af924827"><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#a7dac96a0da2ff21be423cc30af924827">targetTf</a></td></tr>
+<tr class="separator:a7dac96a0da2ff21be423cc30af924827"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8846f1a33c20ed70bf425b49027aba12"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#a8846f1a33c20ed70bf425b49027aba12">bodyId</a></td></tr>
+<tr class="separator:a8846f1a33c20ed70bf425b49027aba12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0fae793050143ac0f684c83e8146b23"><td class="memItemLeft" align="right" valign="top">Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#ae0fae793050143ac0f684c83e8146b23">dofMat</a></td></tr>
+<tr class="separator:ae0fae793050143ac0f684c83e8146b23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae14972bb1047cfc306dc198a6cb2a09a"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#ae14972bb1047cfc306dc198a6cb2a09a">speedMat</a></td></tr>
+<tr class="separator:ae14972bb1047cfc306dc198a6cb2a09a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac46066f1cc163f34fcbb8c45e7593536"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#ac46066f1cc163f34fcbb8c45e7593536">normal</a></td></tr>
+<tr class="separator:ac46066f1cc163f34fcbb8c45e7593536"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4c4be286affbb126d787a5356e7bf96"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#ad4c4be286affbb126d787a5356e7bf96">stiffness_</a></td></tr>
+<tr class="separator:ad4c4be286affbb126d787a5356e7bf96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24cf1f1758dde72e116fc9038e9ccf3d"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#a24cf1f1758dde72e116fc9038e9ccf3d">weight_</a></td></tr>
+<tr class="separator:a24cf1f1758dde72e116fc9038e9ccf3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcdad65af3391e9059dbfac1db885679"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#afcdad65af3391e9059dbfac1db885679">speed_</a></td></tr>
+<tr class="separator:afcdad65af3391e9059dbfac1db885679"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa408d0703b72d18dc3337fe383bcd840"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#aa408d0703b72d18dc3337fe383bcd840">direction_</a></td></tr>
+<tr class="separator:aa408d0703b72d18dc3337fe383bcd840"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdd2290d6e07d8778d1bb92feb96d973"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#acdd2290d6e07d8778d1bb92feb96d973">targetSpeed</a></td></tr>
+<tr class="separator:acdd2290d6e07d8778d1bb92feb96d973"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e1fc72abbc657ece8ae16faafaffeff"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01227.html">tasks::qp::LinVelocityTask</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#a3e1fc72abbc657ece8ae16faafaffeff">linVelTask</a></td></tr>
+<tr class="separator:a3e1fc72abbc657ece8ae16faafaffeff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a114af5b6d97905968a79dce1bc86f0ed"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01135.html">tasks::qp::PIDTask</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#a114af5b6d97905968a79dce1bc86f0ed">linVelTaskPid</a></td></tr>
+<tr class="separator:a114af5b6d97905968a79dce1bc86f0ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b3721e007480a543c292855d83ee315"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html#a2b3721e007480a543c292855d83ee315">targetVelWeight</a></td></tr>
+<tr class="separator:a2b3721e007480a543c292855d83ee315"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pro_methods_a02675"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_a02675')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="a02675.html">mc_tasks::MetaTask</a></td></tr>
+<tr class="memitem:a19bd5d3b7b1b36dae48b516457de16a8 inherit pro_methods_a02675"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02675.html#a19bd5d3b7b1b36dae48b516457de16a8">addToLogger</a> (<a class="el" href="a02447.html">mc_rtc::Logger</a> &amp;)</td></tr>
+<tr class="memdesc:a19bd5d3b7b1b36dae48b516457de16a8 inherit pro_methods_a02675"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add entries to the logger.  <a href="a02675.html#a19bd5d3b7b1b36dae48b516457de16a8">More...</a><br /></td></tr>
+<tr class="separator:a19bd5d3b7b1b36dae48b516457de16a8 inherit pro_methods_a02675"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1db4ea4e03d00823e7ee10b444a697b1 inherit pro_methods_a02675"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02675.html#a1db4ea4e03d00823e7ee10b444a697b1">removeFromLogger</a> (<a class="el" href="a02447.html">mc_rtc::Logger</a> &amp;)</td></tr>
+<tr class="memdesc:a1db4ea4e03d00823e7ee10b444a697b1 inherit pro_methods_a02675"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove entries from the logger.  <a href="a02675.html#a1db4ea4e03d00823e7ee10b444a697b1">More...</a><br /></td></tr>
+<tr class="separator:a1db4ea4e03d00823e7ee10b444a697b1 inherit pro_methods_a02675"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6be5d66b0aba0cac4f65093d5d3b7c7f inherit pro_methods_a02675"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02675.html#a6be5d66b0aba0cac4f65093d5d3b7c7f">addToGUI</a> (<a class="el" href="a02355.html">mc_rtc::gui::StateBuilder</a> &amp;)</td></tr>
+<tr class="memdesc:a6be5d66b0aba0cac4f65093d5d3b7c7f inherit pro_methods_a02675"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add elements to the GUI through the helper.  <a href="a02675.html#a6be5d66b0aba0cac4f65093d5d3b7c7f">More...</a><br /></td></tr>
+<tr class="separator:a6be5d66b0aba0cac4f65093d5d3b7c7f inherit pro_methods_a02675"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44d85f3f65abc8a5f8965efec40ebe7d inherit pro_methods_a02675"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02675.html#a44d85f3f65abc8a5f8965efec40ebe7d">removeFromGUI</a> (<a class="el" href="a02355.html">mc_rtc::gui::StateBuilder</a> &amp;)</td></tr>
+<tr class="memdesc:a44d85f3f65abc8a5f8965efec40ebe7d inherit pro_methods_a02675"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove elements from the GUI through the helper.  <a href="a02675.html#a44d85f3f65abc8a5f8965efec40ebe7d">More...</a><br /></td></tr>
+<tr class="separator:a44d85f3f65abc8a5f8965efec40ebe7d inherit pro_methods_a02675"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a753237535cc3e200e44ae0fa276f733e inherit pro_methods_a02675"><td class="memItemLeft" align="right" valign="top">virtual std::function&lt; bool(const <a class="el" href="a02675.html">mc_tasks::MetaTask</a> &amp;task, std::string &amp;)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02675.html#a753237535cc3e200e44ae0fa276f733e">buildCompletionCriteria</a> (double dt, const <a class="el" href="a02159.html">mc_rtc::Configuration</a> &amp;config) const</td></tr>
+<tr class="memdesc:a753237535cc3e200e44ae0fa276f733e inherit pro_methods_a02675"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add additional completion criterias to <a class="el" href="a01819.html" title="A generic MetaTask completion criteria. ">mc_control::CompletionCriteria</a> object.  <a href="a02675.html#a753237535cc3e200e44ae0fa276f733e">More...</a><br /></td></tr>
+<tr class="separator:a753237535cc3e200e44ae0fa276f733e inherit pro_methods_a02675"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_static_methods_a02675"><td colspan="2" onclick="javascript:toggleInherit('pro_static_methods_a02675')"><img src="closed.png" alt="-"/>&#160;Static Protected Member Functions inherited from <a class="el" href="a02675.html">mc_tasks::MetaTask</a></td></tr>
+<tr class="memitem:a6f753630a5e0aca76308b4d652e62277 inherit pro_static_methods_a02675"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02675.html#a6f753630a5e0aca76308b4d652e62277">addToSolver</a> (<a class="el" href="a02675.html">MetaTask</a> &amp;t, <a class="el" href="a02567.html">mc_solver::QPSolver</a> &amp;solver)</td></tr>
+<tr class="separator:a6f753630a5e0aca76308b4d652e62277 inherit pro_static_methods_a02675"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af374c0658624a4cb7a6a9f900ab9f69a inherit pro_static_methods_a02675"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02675.html#af374c0658624a4cb7a6a9f900ab9f69a">removeFromSolver</a> (<a class="el" href="a02675.html">MetaTask</a> &amp;t, <a class="el" href="a02567.html">mc_solver::QPSolver</a> &amp;solver)</td></tr>
+<tr class="separator:af374c0658624a4cb7a6a9f900ab9f69a inherit pro_static_methods_a02675"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a570ef153c01abad5d5642b7a16f44d79 inherit pro_static_methods_a02675"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02675.html#a570ef153c01abad5d5642b7a16f44d79">update</a> (<a class="el" href="a02675.html">MetaTask</a> &amp;t, <a class="el" href="a02567.html">mc_solver::QPSolver</a> &amp;solver)</td></tr>
+<tr class="separator:a570ef153c01abad5d5642b7a16f44d79 inherit pro_static_methods_a02675"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac29af31e9eb526d06b6d4ec1d2f3d5bb inherit pro_static_methods_a02675"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02675.html#ac29af31e9eb526d06b6d4ec1d2f3d5bb">addToLogger</a> (<a class="el" href="a02675.html">MetaTask</a> &amp;t, <a class="el" href="a02447.html">mc_rtc::Logger</a> &amp;logger)</td></tr>
+<tr class="separator:ac29af31e9eb526d06b6d4ec1d2f3d5bb inherit pro_static_methods_a02675"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a256b3b8d5c00bc81ef7726f536f79bfb inherit pro_static_methods_a02675"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02675.html#a256b3b8d5c00bc81ef7726f536f79bfb">removeFromLogger</a> (<a class="el" href="a02675.html">MetaTask</a> &amp;t, <a class="el" href="a02447.html">mc_rtc::Logger</a> &amp;logger)</td></tr>
+<tr class="separator:a256b3b8d5c00bc81ef7726f536f79bfb inherit pro_static_methods_a02675"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73ce0e373c9cf7f5b8db6745c46c3ef4 inherit pro_static_methods_a02675"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02675.html#a73ce0e373c9cf7f5b8db6745c46c3ef4">addToGUI</a> (<a class="el" href="a02675.html">MetaTask</a> &amp;t, <a class="el" href="a02355.html">mc_rtc::gui::StateBuilder</a> &amp;gui)</td></tr>
+<tr class="separator:a73ce0e373c9cf7f5b8db6745c46c3ef4 inherit pro_static_methods_a02675"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a780d496b8148d863b2aa0462abcba525 inherit pro_static_methods_a02675"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02675.html#a780d496b8148d863b2aa0462abcba525">removeFromGUI</a> (<a class="el" href="a02675.html">MetaTask</a> &amp;t, <a class="el" href="a02355.html">mc_rtc::gui::StateBuilder</a> &amp;gui)</td></tr>
+<tr class="separator:a780d496b8148d863b2aa0462abcba525 inherit pro_static_methods_a02675"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_a02675"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_a02675')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="a02675.html">mc_tasks::MetaTask</a></td></tr>
+<tr class="memitem:addf8dbe10befa2b37c8e7ea386561775 inherit pro_attribs_a02675"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02675.html#addf8dbe10befa2b37c8e7ea386561775">type_</a></td></tr>
+<tr class="separator:addf8dbe10befa2b37c8e7ea386561775 inherit pro_attribs_a02675"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e55f0bff9a3d49ba0b92e0a4dff9a6f inherit pro_attribs_a02675"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02675.html#a6e55f0bff9a3d49ba0b92e0a4dff9a6f">name_</a></td></tr>
+<tr class="separator:a6e55f0bff9a3d49ba0b92e0a4dff9a6f inherit pro_attribs_a02675"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Add or remove a contact. </p>
+<p>The goal of this task is to move a robot's surface towards a contact or away from a contact depending on construction parameters.</p>
+<p>The robot's surface will move along its normal axis. It is the programmer responsibility to stop the task when the desired destination has been reached. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a27af872f37053c50aace18c9ec857a57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27af872f37053c50aace18c9ec857a57">&#9670;&nbsp;</a></span>AddRemoveContactTask() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_tasks::AddRemoveContactTask::AddRemoveContactTask </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02123.html">mc_rbdyn::Robots</a> &amp;&#160;</td>
+          <td class="paramname"><em>robots</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="a02479.html">mc_solver::BoundedSpeedConstr</a> &gt;&#160;</td>
+          <td class="paramname"><em>constSpeedConstr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a02035.html">mc_rbdyn::Contact</a> &amp;&#160;</td>
+          <td class="paramname"><em>contact</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>direction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>speed</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>stiffness</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>weight</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::Vector3d *&#160;</td>
+          <td class="paramname"><em>userT_0_s</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>General constructor. </p>
+<p>Constructs an <a class="el" href="a02603.html" title="Add or remove a contact. ">AddRemoveContactTask</a> using information passed by the programmer</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">robots</td><td>Robots involved in the task</td></tr>
+    <tr><td class="paramname">constSpeedConstr</td><td>Used by the solver to constraint the surface movement</td></tr>
+    <tr><td class="paramname">contact</td><td>Contact that will be added/removed</td></tr>
+    <tr><td class="paramname">direction</td><td>Direction of displacement</td></tr>
+    <tr><td class="paramname">speed</td><td>Speed of the displacement</td></tr>
+    <tr><td class="paramname">stiffness</td><td>Stiffness of the task</td></tr>
+    <tr><td class="paramname">weight</td><td>Weight of the task</td></tr>
+    <tr><td class="paramname">userT_0_s</td><td>If provided, overrides the chosen normal direction </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a3e9ce2e7a0c065683ee4f2098f0d0fbd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e9ce2e7a0c065683ee4f2098f0d0fbd">&#9670;&nbsp;</a></span>AddRemoveContactTask() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_tasks::AddRemoveContactTask::AddRemoveContactTask </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02567.html">mc_solver::QPSolver</a> &amp;&#160;</td>
+          <td class="paramname"><em>solver</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a02035.html">mc_rbdyn::Contact</a> &amp;&#160;</td>
+          <td class="paramname"><em>contact</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>direction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>speed</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>stiffness</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>weight</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::Vector3d *&#160;</td>
+          <td class="paramname"><em>userT_0_s</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>General constructor with self-managed bounded speed constraint. </p>
+<p>Constructs an <a class="el" href="a02603.html" title="Add or remove a contact. ">AddRemoveContactTask</a> using information passed by the programmer. No <a class="el" href="a02479.html" title="Wrapper around tasks::qp::BoundedSpeedConstr. ">mc_solver::BoundedSpeedConstr</a> has to be passed. Instead the constraint is created and managed by the task.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">solver</td><td>Solver where the task will be used</td></tr>
+    <tr><td class="paramname">contact</td><td>Contact that will be added/removed</td></tr>
+    <tr><td class="paramname">direction</td><td>Direction of displacement</td></tr>
+    <tr><td class="paramname">speed</td><td>Speed of the displacement</td></tr>
+    <tr><td class="paramname">stiffness</td><td>Stiffness of the task</td></tr>
+    <tr><td class="paramname">weight</td><td>Weight of the task</td></tr>
+    <tr><td class="paramname">userT_0_s</td><td>if provided, overrides the chosen normal direction </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a83923c85bfda96b94c2d2a8b793ab798"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83923c85bfda96b94c2d2a8b793ab798">&#9670;&nbsp;</a></span>dimWeight() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void mc_tasks::AddRemoveContactTask::dimWeight </td>
+          <td>(</td>
+          <td class="paramtype">const Eigen::VectorXd &amp;&#160;</td>
+          <td class="paramname"><em>dimW</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the task's dimension weight vector. </p>
+<p>It is the caller responsibility to ensure the dimensionality fits the underlying tasks' error function</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dimW</td><td>The new tasks's dimension weight vector </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="a02675.html#a98221b876dab3cc67fbd60036213eb46">mc_tasks::MetaTask</a>.</p>
+
+</div>
+</div>
+<a id="a2ca17fc43a9a8acce7e7e1d975d33385"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ca17fc43a9a8acce7e7e1d975d33385">&#9670;&nbsp;</a></span>dimWeight() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual Eigen::VectorXd mc_tasks::AddRemoveContactTask::dimWeight </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the current task's dim weight vector. </p>
+
+<p>Implements <a class="el" href="a02675.html#ae6437fb02541a7c63e177ee13170b5a4">mc_tasks::MetaTask</a>.</p>
+
+</div>
+</div>
+<a id="a6cc87c0025db4a70501d92f6c24b09e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6cc87c0025db4a70501d92f6c24b09e8">&#9670;&nbsp;</a></span>direction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::AddRemoveContactTask::direction </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>direction</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the displacement direction. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">direction</td><td>Direction of the displacement </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af45fc0604c6dbf8742fcbf5f29555b7e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af45fc0604c6dbf8742fcbf5f29555b7e">&#9670;&nbsp;</a></span>eval()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual Eigen::VectorXd mc_tasks::AddRemoveContactTask::eval </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the task error. </p>
+<p>The vector's dimensions depend on the underlying task </p>
+
+<p>Implements <a class="el" href="a02675.html#ad6451130cee8c71e4045d48f7b8b7a18">mc_tasks::MetaTask</a>.</p>
+
+</div>
+</div>
+<a id="a92268af15885043be699e14dc3683fda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92268af15885043be699e14dc3683fda">&#9670;&nbsp;</a></span>speed() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mc_tasks::AddRemoveContactTask::speed </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the desired dislacement speed. </p>
+
+</div>
+</div>
+<a id="ae60e21511e6e1379af325184a7459781"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae60e21511e6e1379af325184a7459781">&#9670;&nbsp;</a></span>speed() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::AddRemoveContactTask::speed </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the desired dislacement speed. </p>
+
+</div>
+</div>
+<a id="a8e14709c98129124ee03c631274b6afe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e14709c98129124ee03c631274b6afe">&#9670;&nbsp;</a></span>speed() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual Eigen::VectorXd mc_tasks::AddRemoveContactTask::speed </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the task velocity. </p>
+<p>The vector's dimensions depend on the underlying task </p>
+
+<p>Implements <a class="el" href="a02675.html#a2f04c2bc3c4806a13bd383826127f7e1">mc_tasks::MetaTask</a>.</p>
+
+</div>
+</div>
+<a id="a48baadecb63cdda817bda05f6e8f1bfa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48baadecb63cdda817bda05f6e8f1bfa">&#9670;&nbsp;</a></span>stiffness()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mc_tasks::AddRemoveContactTask::stiffness </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the task stiffness. </p>
+
+</div>
+</div>
+<a id="ac356d531abfb403e1d7f66fcb3189bce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac356d531abfb403e1d7f66fcb3189bce">&#9670;&nbsp;</a></span>velError()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Vector3d mc_tasks::AddRemoveContactTask::velError </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the velocity error. </p>
+<dl class="section return"><dt>Returns</dt><dd>Velocity error of the LinVelocity task </dd></dl>
+
+</div>
+</div>
+<a id="a94e15cb317d7a258015b7eabfb2a1109"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94e15cb317d7a258015b7eabfb2a1109">&#9670;&nbsp;</a></span>weight()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mc_tasks::AddRemoveContactTask::weight </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the task weight. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a8846f1a33c20ed70bf425b49027aba12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8846f1a33c20ed70bf425b49027aba12">&#9670;&nbsp;</a></span>bodyId</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string mc_tasks::AddRemoveContactTask::bodyId</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab421f9378ae251f53925cf179825626e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab421f9378ae251f53925cf179825626e">&#9670;&nbsp;</a></span>constSpeedConstr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="a02479.html">mc_solver::BoundedSpeedConstr</a>&gt; mc_tasks::AddRemoveContactTask::constSpeedConstr</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa408d0703b72d18dc3337fe383bcd840"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa408d0703b72d18dc3337fe383bcd840">&#9670;&nbsp;</a></span>direction_</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mc_tasks::AddRemoveContactTask::direction_</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae0fae793050143ac0f684c83e8146b23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0fae793050143ac0f684c83e8146b23">&#9670;&nbsp;</a></span>dofMat</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::MatrixXd mc_tasks::AddRemoveContactTask::dofMat</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a98b07421e0322187bb0e5fae5b595f1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98b07421e0322187bb0e5fae5b595f1d">&#9670;&nbsp;</a></span>env</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02095.html">mc_rbdyn::Robot</a>&amp; mc_tasks::AddRemoveContactTask::env</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3e1fc72abbc657ece8ae16faafaffeff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e1fc72abbc657ece8ae16faafaffeff">&#9670;&nbsp;</a></span>linVelTask</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01227.html">tasks::qp::LinVelocityTask</a>&gt; mc_tasks::AddRemoveContactTask::linVelTask</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a114af5b6d97905968a79dce1bc86f0ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a114af5b6d97905968a79dce1bc86f0ed">&#9670;&nbsp;</a></span>linVelTaskPid</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01135.html">tasks::qp::PIDTask</a>&gt; mc_tasks::AddRemoveContactTask::linVelTaskPid</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac46066f1cc163f34fcbb8c45e7593536"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac46066f1cc163f34fcbb8c45e7593536">&#9670;&nbsp;</a></span>normal</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Vector3d mc_tasks::AddRemoveContactTask::normal</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aaf9b93ac2b2b32e8e3f12d6ed84b5d01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf9b93ac2b2b32e8e3f12d6ed84b5d01">&#9670;&nbsp;</a></span>robot</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02095.html">mc_rbdyn::Robot</a>&amp; mc_tasks::AddRemoveContactTask::robot</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9fe42ac857795cdd634819a17a5238b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9fe42ac857795cdd634819a17a5238b5">&#9670;&nbsp;</a></span>robotBodyIndex</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int mc_tasks::AddRemoveContactTask::robotBodyIndex</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac370293e74d26c6c14fe3ff593de45f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac370293e74d26c6c14fe3ff593de45f2">&#9670;&nbsp;</a></span>robots</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02123.html">mc_rbdyn::Robots</a>&amp; mc_tasks::AddRemoveContactTask::robots</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a03082e63152e83579e4cb7aed4bc05bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03082e63152e83579e4cb7aed4bc05bd">&#9670;&nbsp;</a></span>robotSurf</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="a02131.html">mc_rbdyn::Surface</a>&gt; mc_tasks::AddRemoveContactTask::robotSurf</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afcdad65af3391e9059dbfac1db885679"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afcdad65af3391e9059dbfac1db885679">&#9670;&nbsp;</a></span>speed_</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mc_tasks::AddRemoveContactTask::speed_</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae14972bb1047cfc306dc198a6cb2a09a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae14972bb1047cfc306dc198a6cb2a09a">&#9670;&nbsp;</a></span>speedMat</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::VectorXd mc_tasks::AddRemoveContactTask::speedMat</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad4c4be286affbb126d787a5356e7bf96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4c4be286affbb126d787a5356e7bf96">&#9670;&nbsp;</a></span>stiffness_</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mc_tasks::AddRemoveContactTask::stiffness_</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acdd2290d6e07d8778d1bb92feb96d973"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acdd2290d6e07d8778d1bb92feb96d973">&#9670;&nbsp;</a></span>targetSpeed</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Vector3d mc_tasks::AddRemoveContactTask::targetSpeed</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7dac96a0da2ff21be423cc30af924827"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7dac96a0da2ff21be423cc30af924827">&#9670;&nbsp;</a></span>targetTf</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> mc_tasks::AddRemoveContactTask::targetTf</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2b3721e007480a543c292855d83ee315"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b3721e007480a543c292855d83ee315">&#9670;&nbsp;</a></span>targetVelWeight</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mc_tasks::AddRemoveContactTask::targetVelWeight</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a24cf1f1758dde72e116fc9038e9ccf3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24cf1f1758dde72e116fc9038e9ccf3d">&#9670;&nbsp;</a></span>weight_</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mc_tasks::AddRemoveContactTask::weight_</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jan 15 2020 07:18:16 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00679.html">mc_tasks</a></li><li class="navelem"><a class="el" href="a02603.html">AddRemoveContactTask</a></li>
+    <li class="footer">Generated on Tue Jan 21 2020 07:40:56 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>
