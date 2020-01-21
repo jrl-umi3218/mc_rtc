@@ -35,6 +35,7 @@ void MyFirstController::reset(const mc_control::ControllerResetData & reset_data
 {
   mc_control::MCController::reset(reset_data);
   comTask->reset();
+  comZero = comTask->com();
 }
 
 void MyFirstController::switch_target()
@@ -54,11 +55,11 @@ void MyFirstController::switch_com_target()
 {
   if(comDown)
   {
-    com->com(comZero - Eigen::Vector3d{0, 0, 0.2});
+    comTask->com(comZero - Eigen::Vector3d{0, 0, 0.2});
   }
   else
   {
-    com->com(comZero);
+    comTask->com(comZero);
   }
   comDown = !comDown;
 }
