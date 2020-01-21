@@ -389,6 +389,7 @@
 64
 65
 66
+67
 </pre></td><td class="code"><pre><span class="cp">#include "MyFirstController.h"
 </span>
 <span class="n">MyFirstController</span><span class="o">::</span><span class="n">MyFirstController</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModulePtr</span> <span class="n">rm</span><span class="p">,</span> <span class="kt">double</span> <span class="n">dt</span><span class="p">,</span> <span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">config</span><span class="p">)</span>
@@ -426,6 +427,7 @@
 <span class="p">{</span>
   <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span><span class="o">::</span><span class="n">reset</span><span class="p">(</span><span class="n">reset_data</span><span class="p">);</span>
   <span class="n">comTask</span><span class="o">-&gt;</span><span class="n">reset</span><span class="p">();</span>
+  <span class="n">comZero</span> <span class="o">=</span> <span class="n">comTask</span><span class="o">-&gt;</span><span class="n">com</span><span class="p">();</span>
 <span class="p">}</span>
 
 <span class="kt">void</span> <span class="n">MyFirstController</span><span class="o">::</span><span class="n">switch_target</span><span class="p">()</span>
@@ -445,11 +447,11 @@
 <span class="p">{</span>
   <span class="k">if</span><span class="p">(</span><span class="n">comDown</span><span class="p">)</span>
   <span class="p">{</span>
-    <span class="n">com</span><span class="o">-&gt;</span><span class="n">com</span><span class="p">(</span><span class="n">comZero</span> <span class="o">-</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">});</span>
+    <span class="n">comTask</span><span class="o">-&gt;</span><span class="n">com</span><span class="p">(</span><span class="n">comZero</span> <span class="o">-</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">});</span>
   <span class="p">}</span>
   <span class="k">else</span>
   <span class="p">{</span>
-    <span class="n">com</span><span class="o">-&gt;</span><span class="n">com</span><span class="p">(</span><span class="n">comZero</span><span class="p">);</span>
+    <span class="n">comTask</span><span class="o">-&gt;</span><span class="n">com</span><span class="p">(</span><span class="n">comZero</span><span class="p">);</span>
   <span class="p">}</span>
   <span class="n">comDown</span> <span class="o">=</span> <span class="o">!</span><span class="n">comDown</span><span class="p">;</span>
 <span class="p">}</span>

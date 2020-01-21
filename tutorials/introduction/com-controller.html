@@ -463,11 +463,11 @@
   <span class="c1">// in the reset function</span>
   <span class="k">if</span><span class="p">(</span><span class="n">comDown</span><span class="p">)</span>
   <span class="p">{</span>
-    <span class="n">com</span><span class="o">-&gt;</span><span class="n">com</span><span class="p">(</span><span class="n">comZero</span> <span class="o">-</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">});</span>
+    <span class="n">comTask</span><span class="o">-&gt;</span><span class="n">com</span><span class="p">(</span><span class="n">comZero</span> <span class="o">-</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">});</span>
   <span class="p">}</span>
   <span class="k">else</span>
   <span class="p">{</span>
-    <span class="n">com</span><span class="o">-&gt;</span><span class="n">com</span><span class="p">(</span><span class="n">comZero</span><span class="p">);</span>
+    <span class="n">comTask</span><span class="o">-&gt;</span><span class="n">com</span><span class="p">(</span><span class="n">comZero</span><span class="p">);</span>
   <span class="p">}</span>
   <span class="n">comDown</span> <span class="o">=</span> <span class="o">!</span><span class="n">comDown</span><span class="p">;</span>
 <span class="p">}</span></code></pre></figure>

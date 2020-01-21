@@ -774,6 +774,8 @@
   <span class="c1">// Keep the robot in its current posture</span>
   <span class="n">postureTask</span><span class="o">-&gt;</span><span class="n">reset</span><span class="p">();</span>
   <span class="n">comTask</span><span class="o">-&gt;</span><span class="n">reset</span><span class="p">();</span>
+  <span class="c1">// Target new handle position</span>
+  <span class="n">doorPosture</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">({{</span><span class="s">"handle"</span><span class="p">,</span> <span class="p">{</span><span class="o">-</span><span class="mf">1.0</span><span class="p">}}});</span>
   <span class="c1">// Switch phase</span>
   <span class="n">phase</span> <span class="o">=</span> <span class="n">HANDLE</span><span class="p">;</span>
 <span class="p">}</span></code></pre></figure>
@@ -900,7 +902,7 @@
 
 <h3>Introducing the FSM facilities</h3>
 
-<p>This tutorial concludes the introduction of mc_rtc controllers. The next tutorials are focused on the advanced tools available in the framework to help you program and debug complex controllers. However, you might have noticed we have used a very crude approach to program the logic of our controller. The framework provides a much more powerful way to deal with such scenarios as introduced in the <a href="/mc_rtc/tutorials/recipes/fsm.html">tutorial introducing the FSM facilties</a> and the <a href="/mc_rtc/tutorials/recipes/fsm-example.html">FSM in practice tutorial</a>. The later will re-program this tutorial using the FSM facilities.</p>
+<p>This tutorial concludes the introduction of mc_rtc controllers. The next tutorials are focused on the advanced tools available in the framework to help you program and debug complex controllers. However, you might have noticed we have used a very crude approach to program the logic of our controller. The framework provides a much more powerful way to deal with such scenarios as introduced in the <a href="/mc_rtc/tutorials/recipes/fsm.html">tutorial introducing the FSM facilties</a> and the <a href="/mc_rtc/tutorials/recipes/fsm-example.html">FSM in practice tutorial</a>. The latter will re-program this tutorial using the FSM facilities.</p>
 
 <p>The full sources for this controller are available <a href="sources/multi-robot-controller.html">here</a>.</p>
 
