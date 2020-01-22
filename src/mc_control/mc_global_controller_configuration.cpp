@@ -255,7 +255,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
 #ifndef WIN32
   controller_user_configuration_path = std::string(std::getenv("HOME")) + ".config/mc_rtc/controllers";
 #else
-  controller_user_configuration_path = std::string(std::getenv("APPDATA")) / "mc_rtc/controllers";
+  controller_user_configuration_path = std::string(std::getenv("APPDATA")) + "mc_rtc/controllers";
 #endif
   config("ControllerConfigurationPath", controller_user_configuration_path);
 
