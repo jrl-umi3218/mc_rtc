@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <mc_rtc/logging.h>
 #include <mc_rtc/utils_api.h>
 
 #include <functional>
@@ -44,12 +45,13 @@ struct MC_RTC_UTILS_DLLAPI DataStore
     auto it = datas_.find(name);
     if(it == datas_.end())
     {
-      throw std::runtime_error("No such key");
+      LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] No key \"" << name << "\" in data store");
     }
     auto & data = it->second;
     if(!data.same(typeid(T).hash_code()))
     {
-      throw std::runtime_error("Not the same type as the stored type");
+      LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] Object for key \"" << name
+                                                  << "\" does not have the same type as the stored type");
     }
     return *(reinterpret_cast<const T *>(data.buffer.get()));
   }
@@ -60,12 +62,13 @@ struct MC_RTC_UTILS_DLLAPI DataStore
     auto it = datas_.find(name);
     if(it == datas_.end())
     {
-      throw std::runtime_error("No such key");
+      LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] No key \"" << name << "\"");
     }
     auto & data = it->second;
     if(!data.same(typeid(T).hash_code()))
     {
-      throw std::runtime_error("Not the same type as the stored type");
+      LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] Object for key \"" << name
+                                                  << "\" does not have the same type as the stored type");
     }
     return *(reinterpret_cast<T *>(data.buffer.get()));
   }
@@ -82,6 +85,16 @@ struct MC_RTC_UTILS_DLLAPI DataStore
     new(data.buffer.get()) T(std::forward<Args>(args)...);
     data.same = &is_valid_hash<T, ArgsT...>;
     data.destroy = [](Data & self) { reinterpret_cast<T *>(self.buffer.get())->~T(); };
+  }
+
+  const std::string & name() const
+  {
+    return name_;
+  }
+
+  std::string name(const std::string & name)
+  {
+    name_ = name;
   }
 
 private:
@@ -103,6 +116,7 @@ private:
     }
   };
   std::unordered_map<std::string, Data> datas_;
+  std::string name_ = "DataStore";
 };
 
 } // namespace datastore

@@ -30,7 +30,7 @@ struct B : public A
   }
 };
 
-BOOST_AUTO_TEST_CASE(TestDataStoreInheritance)
+BOOST_AUTO_TEST_CASE(TestDataStore)
 {
   DataStore store;
   store.make<std::vector<double>>("data", 4, 42.0);
@@ -40,6 +40,9 @@ BOOST_AUTO_TEST_CASE(TestDataStoreInheritance)
   BOOST_CHECK_CLOSE(data[1], 42, 1e-10);
   BOOST_CHECK_CLOSE(data[2], 42, 1e-10);
   BOOST_CHECK_CLOSE(data[3], 42, 1e-10);
+  BOOST_CHECK_THROW(store.get<double>("data"), std::runtime_error);
+  BOOST_CHECK_THROW(store.get<std::vector<int>>("data"), std::runtime_error);
+  BOOST_CHECK_THROW(store.get<std::vector<double>>("non-existing key"), std::runtime_error);
   std::cout << "data.size() " << data.size() << "\n";
   for(const auto & d : data)
   {
