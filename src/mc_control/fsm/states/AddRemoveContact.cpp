@@ -67,25 +67,7 @@ struct AddRemoveContactStateImpl
     if(config_.has("com"))
     {
       com_task_ = std::make_shared<mc_tasks::CoMTask>(ctl.robots(), contact.r1Index());
-      auto com_c = config_("com");
-      if(com_c.has("weight"))
-      {
-        com_task_->weight(com_c("weight"));
-      }
-      if(com_c.has("stiffness"))
-      {
-        double s = com_c("stiffness");
-        com_task_->stiffness(s);
-      }
-      if(com_c.has("com"))
-      {
-        com_task_->com(com_c("com"));
-      }
-      if(com_c.has("offset"))
-      {
-        Eigen::Vector3d offset = com_c("offset");
-        com_task_->com(com_task_->com() + offset);
-      }
+      com_task_->load(ctl.solver(), config_("com"));
     }
     std::string type = config_("type");
     bool removeContact = (type == "removeContact");
