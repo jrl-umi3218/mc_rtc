@@ -423,7 +423,6 @@ public:
     std::unordered_map<std::string, mc_rtc::Configuration> global_plugin_configs;
 
     std::vector<std::string> controller_module_paths = {};
-    std::string controller_user_configuration_path;
     std::vector<std::string> enabled_controllers = {};
     std::string initial_controller = "";
     std::unordered_map<std::string, mc_rtc::Configuration> controllers_configs;

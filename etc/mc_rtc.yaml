@@ -105,4 +105,3 @@ VerboseLoader: false
 # ClearControllerModulePath: false
 # ClearRobotModulePath: false
 # ClearObserverModulePath: false
-# ControllerConfigurationPaths: "/path/to/user/configuration/folder"
