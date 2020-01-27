@@ -26,6 +26,5 @@
   "RobotModulePaths" : ["@ROBOT_MODULE_PATH@"],
   "ClearObserverModulePath": true,
   "ObserverModulePaths": ["@OBSERVER_MODULE_PATH@"],
-  "ClearGlobalPluginPath": true,
-  @TEST_ADDITIONAL_JSON_CONF@
+  "ClearGlobalPluginPath": true
 }

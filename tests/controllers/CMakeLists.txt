@@ -174,17 +174,7 @@ controller_sample_test_run(Posture "" 1000)
 controller_sample_test_run(Text "" 1000)
 
 # Test sample FSM controller
-# set(SAVE_MC_CONTROLLER_INSTALL_PREFIX ${MC_CONTROLLER_INSTALL_PREFIX})
-# set(MC_CONTROLLER_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/src/mc_control)
-# set(TEST_CONTROLLER_CONFIGURATION_PATH ${CMAKE_CURRENT_BINARY_DIR}/FSM/etc)
-# set(TEST_ADDITIONAL_JSON_CONF "\"ControllerConfigurationPath\": \"${TEST_CONTROLLER_CONFIGURATION_PATH}\"")
-# set(AROBASE "@")
-# configure_file(${CMAKE_SOURCE_DIR}/src/mc_control/samples/FSM/etc/FSM.conf.cmake ${CMAKE_CURRENT_BINARY_DIR}/FSM/etc/FSM.conf)
-# unset(AROBASE)
 controller_sample_test_run(FSM "/src" 8000)
-# set(MC_CONTROLLER_INSTALL_PREFIX ${SAVE_MC_CONTROLLER_INSTALL_PREFIX})
-# unset(TEST_ADDITIONAL_JSON_CONF)
-
 
 set(ENABLED_OBSERVERS "")
 set(RUN_OBSERVERS "")

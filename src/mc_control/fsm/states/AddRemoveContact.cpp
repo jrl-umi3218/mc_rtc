@@ -58,16 +58,22 @@ struct AddRemoveContactStateImpl
   mc_rtc::Configuration config_;
   std::shared_ptr<mc_tasks::MetaTask> task_ = nullptr;
   std::shared_ptr<mc_tasks::CoMTask> com_task_ = nullptr;
+  bool useCoM_ = true;
   std::function<bool(AddRemoveContactStateImpl &, Controller &)> run_ = [](AddRemoveContactStateImpl &, Controller &) {
     return true;
   };
   void start(Controller & ctl)
   {
     auto contact = mc_rbdyn::Contact::load(ctl.robots(), config_("contact"));
-    if(config_.has("com"))
+    config_("useCoM", useCoM_);
+    if(useCoM_)
     {
       com_task_ = std::make_shared<mc_tasks::CoMTask>(ctl.robots(), contact.r1Index());
-      com_task_->load(ctl.solver(), config_("com"));
+      com_task_->reset();
+      if(config_.has("com"))
+      {
+        com_task_->load(ctl.solver(), config_("com"));
+      }
     }
     std::string type = config_("type");
     bool removeContact = (type == "removeContact");
@@ -131,7 +137,7 @@ struct AddRemoveContactStateImpl
       {
         name = "AddContact_" + name;
       }
-      if(com_task_ != nullptr)
+      if(useCoM_)
       {
         com_task_->name(name);
         ctl.solver().addTask(com_task_);
@@ -295,7 +301,7 @@ void AddRemoveContactState::teardown(Controller & ctl)
   if(impl_->task_)
   {
     ctl.solver().removeTask(impl_->task_);
-    if(impl_->com_task_ != nullptr)
+    if(impl_->useCoM_)
     {
       ctl.solver().removeTask(impl_->com_task_);
     }

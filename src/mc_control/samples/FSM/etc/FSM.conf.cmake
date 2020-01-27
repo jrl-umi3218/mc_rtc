@@ -170,6 +170,7 @@
     "AddLeftFoot":
     {
       "base": "AddContact",
+      "useCoM": false,
       "contact":
       {
         "r1Surface": "LeftFoot",
@@ -185,6 +186,7 @@
     "AddRightFoot":
     {
       "base": "AddContact",
+      "useCoM": false,
       "contact":
       {
         "r1Surface": "RightFoot",
