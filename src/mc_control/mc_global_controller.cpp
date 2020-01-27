@@ -38,8 +38,7 @@ MCGlobalController::MCGlobalController(const std::string & conf, std::shared_ptr
 }
 
 MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
-: config(conf), current_ctrl(""), next_ctrl(""), controller_(nullptr), next_controller_(nullptr),
-  real_robots(std::make_shared<mc_rbdyn::Robots>())
+: config(conf), current_ctrl(""), next_ctrl(""), controller_(nullptr), next_controller_(nullptr)
 {
   // Loading observer modules
   for(const auto & observerName : config.enabled_observers)
@@ -124,10 +123,6 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
                       "\t- The controller constuctor segfaults\n"
                       "\t- The controller library hasn't been properly linked");
     mc_rtc::log::error_and_throw<std::runtime_error>("No controller enabled");
-  }
-  else
-  {
-    real_robots->load(*config.main_robot_module);
   }
 
   if(config.enable_log)
@@ -389,10 +384,11 @@ void MCGlobalController::setWrenches(const std::map<std::string, sva::ForceVecd>
 void MCGlobalController::setWrenches(unsigned int robotIndex, const std::map<std::string, sva::ForceVecd> & wrenches)
 {
   auto & robot = controller_->robots().robot(robotIndex);
+  auto & realRobot = controller_->realRobots().robot(robotIndex);
   for(const auto & w : wrenches)
   {
     robot.forceSensor(w.first).wrench(w.second);
-    realRobots().robot(robotIndex).forceSensor(w.first).wrench(w.second);
+    realRobot.forceSensor(w.first).wrench(w.second);
   }
 }
 
@@ -428,11 +424,19 @@ bool MCGlobalController::run()
         bs.angularVelocity(current.angularVelocity());
         bs.acceleration(current.acceleration());
       }
+      next_controller_->anchorFrame(controller_->anchorFrame());
+      next_controller_->anchorFrameReal(controller_->anchorFrameReal());
       next_controller_->robot().encoderValues(controller_->robot().encoderValues());
+      next_controller_->realRobot().encoderValues(controller_->robot().encoderValues());
       next_controller_->robot().jointTorques(controller_->robot().jointTorques());
+      next_controller_->realRobot().jointTorques(controller_->robot().jointTorques());
       for(auto & fs : next_controller_->robot().forceSensors())
       {
         fs.wrench(controller_->robot().forceSensor(fs.name()).wrench());
+      }
+      for(auto & fs : next_controller_->realRobot().forceSensors())
+      {
+        fs.wrench(controller_->realRobot().forceSensor(fs.name()).wrench());
       }
     }
     if(!running)
@@ -567,6 +571,16 @@ const mc_rbdyn::Robot & MCGlobalController::robot() const
   return controller_->robot();
 }
 
+mc_rbdyn::Robot & MCGlobalController::realRobot()
+{
+  return controller_->realRobot();
+}
+
+const mc_rbdyn::Robot & MCGlobalController::realRobot() const
+{
+  return controller_->realRobot();
+}
+
 void MCGlobalController::setGripperTargetQ(const std::string & robot,
                                            const std::string & name,
                                            const std::vector<double> & q)
@@ -643,14 +657,10 @@ bool MCGlobalController::AddController(const std::string & name)
       controllers[name] = controller_loader->create_object(name, config.main_robot_module, config.timestep,
                                                            config.controllers_configs[name]);
     }
-    controllers[name]->realRobots(real_robots);
     if(config.enable_log)
     {
       controllers[name]->logger().setup(config.log_policy, config.log_directory, config.log_template);
     }
-
-    // Give access to real robots to each enabled controller
-    controllers[name]->realRobots(real_robots);
 
     // Give each controller access to all observers
     controllers[name]->observers_ = observers_;
@@ -726,7 +736,6 @@ bool MCGlobalController::AddController(const std::string & name, std::shared_ptr
     return false;
   }
   controllers[name] = controller;
-  controllers[name]->realRobots(real_robots);
   if(config.enable_log)
   {
     controllers[name]->logger().setup(config.log_policy, config.log_directory, config.log_template);
@@ -894,16 +903,6 @@ void MCGlobalController::setup_log()
     return nanoseconds_since_epoch;
   });
   setup_logger_[current_ctrl] = true;
-}
-
-mc_rbdyn::Robots & MCGlobalController::realRobots()
-{
-  return *real_robots;
-}
-
-mc_rbdyn::Robot & MCGlobalController::realRobot()
-{
-  return real_robots->robot();
 }
 
 } // namespace mc_control

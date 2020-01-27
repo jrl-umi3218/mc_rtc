@@ -141,13 +141,6 @@ public:
    */
   void anchorFrameReal(const sva::PTransformd & anchor);
 
-  /**
-   * WARNING EXPERIMENTAL
-   * Runs the QP on real_robot state
-   * ONLY SUPPORTS ONE ROBOT FOR NOW
-   */
-  virtual bool runClosedLoop();
-
   /** Can be called in derived class instead of run to use a feedback strategy
    * different from the default one
    *
@@ -334,12 +327,19 @@ protected:
                double dt,
                const mc_rtc::Configuration & config);
 
+  /** Load an additional robot into the controller
+   *
+   * \param name Name of the robot
+   * \param rm RobotModule used to load the robot
+   * \param robots Robots in which this robot will be loaded
+   *
+   * \returns The loaded robot
+   */
+  mc_rbdyn::Robot & loadRobot(const std::string & name, const mc_rbdyn::RobotModulePtr rm, mc_rbdyn::Robots & robots);
+
 protected:
   /** QP solver */
   std::shared_ptr<mc_solver::QPSolver> qpsolver;
-  /** Real robots provided by MCGlobalController **/
-  std::shared_ptr<mc_rbdyn::Robots> real_robots;
-  void realRobots(std::shared_ptr<mc_rbdyn::Robots> realRobots);
 
   /** Observers order provided by MCGlobalController
    * Observers will be run and update real robot in that order

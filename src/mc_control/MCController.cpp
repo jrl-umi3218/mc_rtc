@@ -54,7 +54,8 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   qpsolver->gui(gui_);
   for(auto rm : robots_modules)
   {
-    loadRobot(rm, rm->name);
+    loadRobot(rm->name, rm, robots());
+    loadRobot(rm->name, rm, realRobots());
   }
 
   if(gui_)
@@ -86,10 +87,12 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
 
 MCController::~MCController() {}
 
-mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std::string & name)
+mc_rbdyn::Robot & MCController::loadRobot(const std::string & name,
+                                          const mc_rbdyn::RobotModulePtr rm,
+                                          mc_rbdyn::Robots & robots)
 {
   assert(rm);
-  auto & r = robots().load(*rm);
+  auto & r = robots.load(*rm);
   r.name(name);
   r.mbc().gravity = mc_rtc::constants::gravity;
   r.forwardKinematics();
@@ -202,17 +205,6 @@ bool MCController::run(mc_solver::FeedbackType fType)
   return true;
 }
 
-bool MCController::runClosedLoop()
-{
-  if(!qpsolver->runClosedLoop(real_robots))
-  {
-    mc_rtc::log::error("QP failed to run()");
-    return false;
-  }
-  qpsolver->fillTorque(dynamicsConstraint);
-  return true;
-}
-
 const mc_solver::QPResultMsg & MCController::send(const double & t)
 {
   return qpsolver->send(t);
@@ -286,12 +278,6 @@ mc_rtc::Logger & MCController::logger()
 void MCController::supported_robots(std::vector<std::string> & out) const
 {
   out = {};
-}
-
-void MCController::realRobots(std::shared_ptr<mc_rbdyn::Robots> realRobots)
-{
-  solver().realRobots(realRobots);
-  real_robots = realRobots;
 }
 
 const mc_rbdyn::Robots & MCController::realRobots() const
