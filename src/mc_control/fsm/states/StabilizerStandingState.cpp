@@ -83,6 +83,10 @@ void StabilizerStandingState::start(Controller & ctl)
     targetCoM(ctl.realRobot().com());
   }
 
+  // Update anchor frame for the KinematicInertial observer
+  ctl.anchorFrame(stabilizerTask_->anchorFrame());
+  ctl.anchorFrameReal(stabilizerTask_->anchorFrameReal());
+
   if(optionalGUI_ && stabilizerTask_->inDoubleSupport())
   {
     ctl.gui()->addElement(
