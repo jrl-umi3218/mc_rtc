@@ -155,7 +155,7 @@ jobs:
         popd
     - name: Upload documentation
       # Only run on master branch and for one configuration
-      if: matrix.os == 'ubuntu-18.04' && matrix.build-type == 'RelWithDebInfo' && matrix.compiler == 'gcc' && github.ref == 'refs/heads/master'
+      if: matrix.os == 'ubuntu-18.04' && matrix.build-type == 'RelWithDebInfo' && matrix.compiler == 'gcc' && github.ref == 'refs/heads/master' && github.repository == 'jrl-umi3218/mc_rtc'
       run: |
         set -x
         pushd .

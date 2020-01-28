@@ -1,11 +1,9 @@
 {
-  "title": "mc_tasks::CoMTask",
+  "title": "CoM",
+  "description": "CoM Task properties",
   "type": "object",
   "properties":
   {
-    "type": { "enum": ["com"], "type": "string" },
-    "name": { "type": "string" },
-    "robotIndex": { "type": "integer", "minimum": 0 },
     "com": { "$ref": "/../../Eigen/Vector3d.json" },
     "move_com": { "$ref": "/../../Eigen/Vector3d.json" },
     "offset": { "$ref": "/../../Eigen/Vector3d.json" },
@@ -15,6 +13,5 @@
     "dimWeight": { "$ref": "/../../Eigen/Vector3d.json" },
     "activeJoints": { "type": "array", "items": { "type": "string" } },
     "unactiveJoints": { "type": "array", "items": { "type": "string" } }
-  },
-  "required": ["type", "robotIndex"]
+  }
 }
