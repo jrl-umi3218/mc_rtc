@@ -1511,99 +1511,6 @@ orientation: [1.0, 0.0, 0.0,
   
   
   
-  <td>stiffness</td>
-  
-  <td colspan="2">
-    
-  
-  
-    
-      <span class="text-number">number &ge; 0</span>
-    
-    
-  
-
-
-  </td>
-  
-</tr>
-
-
-
-
-  
-  
-  
-  
-  
-  <tr>
-  
-  
-  
-  
-  
-  <td>damping</td>
-  
-  <td colspan="2">
-    
-  
-  
-    
-      <span class="text-number">number &ge; 0</span>
-    
-    
-  
-
-
-  </td>
-  
-</tr>
-
-
-
-
-  
-  
-  
-  
-  
-  <tr>
-  
-  
-  
-  
-  
-  <td>weight</td>
-  
-  <td colspan="2">
-    
-  
-  
-    
-      <span class="text-number">number &ge; 0</span>
-    
-    
-  
-
-
-  </td>
-  
-</tr>
-
-
-
-
-  
-  
-  
-  
-  
-  <tr>
-  
-  
-  
-  
-  
   <td>offset</td>
   
   <td colspan="2">
@@ -1653,6 +1560,99 @@ orientation: [1.0, 0.0, 0.0,
     </td>
   </tr>
   
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>weight</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>stiffness</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>damping</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
 
 
 
@@ -43871,7 +43871,7 @@ Example3:
   
   
   
-  <td>contact</td>
+  <td><strong>contact</strong></td>
   
   <td>
     
@@ -44466,6 +44466,535 @@ Example3:
       <span class="text-integer">integer</span>
     
     
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>useCoM</td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-boolean">boolean</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-boolean">true</span>
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>When true, this state will add a CoM task configured with the parameters in the "com" section</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>com</td>
+  
+  <td>
+    
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_AddRemoveContact_PROP_com" aria-expanded="false" aria-controls="collapseState_AddRemoveContact_PROP_com">CoM</a>
+  
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Optional: If useCoM=true, adds a CoM task with these parameters, otherwise no CoM task will be added</small></span>
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_AddRemoveContact_PROP_com">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">CoM</h6>
+    <div class="float-right">
+      <small class="text-muted text-right">CoM Task properties</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>com</td>
+  
+  <td colspan="2">
+    
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_AddRemoveContact_PROP_com_PROP_com" aria-expanded="false" aria-controls="collapseState_AddRemoveContact_PROP_com_PROP_com">Eigen::Vector3d</a>
+  
+  
+
+
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_AddRemoveContact_PROP_com_PROP_com">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">Eigen::Vector3d</h6>
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>move_com</td>
+  
+  <td colspan="2">
+    
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_AddRemoveContact_PROP_com_PROP_move_com" aria-expanded="false" aria-controls="collapseState_AddRemoveContact_PROP_com_PROP_move_com">Eigen::Vector3d</a>
+  
+  
+
+
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_AddRemoveContact_PROP_com_PROP_move_com">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">Eigen::Vector3d</h6>
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>offset</td>
+  
+  <td colspan="2">
+    
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_AddRemoveContact_PROP_com_PROP_offset" aria-expanded="false" aria-controls="collapseState_AddRemoveContact_PROP_com_PROP_offset">Eigen::Vector3d</a>
+  
+  
+
+
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_AddRemoveContact_PROP_com_PROP_offset">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">Eigen::Vector3d</h6>
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>weight</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>stiffness</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>damping</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>dimWeight</td>
+  
+  <td colspan="2">
+    
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_AddRemoveContact_PROP_com_PROP_dimWeight" aria-expanded="false" aria-controls="collapseState_AddRemoveContact_PROP_com_PROP_dimWeight">Eigen::Vector3d</a>
+  
+  
+
+
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_AddRemoveContact_PROP_com_PROP_dimWeight">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">Eigen::Vector3d</h6>
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>activeJoints</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+
+
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>unactiveJoints</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+
+
   
 
 

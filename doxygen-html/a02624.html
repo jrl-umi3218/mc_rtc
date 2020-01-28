@@ -98,7 +98,7 @@ $(document).ready(function(){initNavTree('a02627.html','');});
   <tr><td class="entry"><a class="el" href="a02715.html#a57652be181ca173ac4a7fa8e8fa33509">finalize</a>(Args &amp;&amp;... args)</td><td class="entry"><a class="el" href="a02715.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::CoMTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="a02715.html#adea0ae231ddadbfdffa3f5355a3c9aab">inSolver_</a></td><td class="entry"><a class="el" href="a02715.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::CoMTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
   <tr><td class="entry"><a class="el" href="a02715.html#a446992512e198c8292d758d5ec6c044b">jac</a>() const</td><td class="entry"><a class="el" href="a02715.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::CoMTask &gt;</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02715.html#a8de1586c9761e5f14d1d66c7e6a09fbf">load</a>(mc_solver::QPSolver &amp;solver, const mc_rtc::Configuration &amp;config) override</td><td class="entry"><a class="el" href="a02715.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::CoMTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02627.html#a1e128a33ad470c85099edc2f64409a25">load</a>(mc_solver::QPSolver &amp;, const mc_rtc::Configuration &amp;config) override</td><td class="entry"><a class="el" href="a02627.html">mc_tasks::CoMTask</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
   <tr><td class="entry"><a class="el" href="a02627.html#ad6a83e7e89cbae657665c8815c558f4d">move_com</a>(const Eigen::Vector3d &amp;com)</td><td class="entry"><a class="el" href="a02627.html">mc_tasks::CoMTask</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="a02675.html#aa98468771424ad14d60915a6b52e927b">name</a>(const std::string &amp;name)</td><td class="entry"><a class="el" href="a02675.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="a02675.html#a94831a7f067fdd5b05e03e83bfc4166b">name</a>() const</td><td class="entry"><a class="el" href="a02675.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
@@ -130,7 +130,7 @@ $(document).ready(function(){initNavTree('a02627.html','');});
   <tr><td class="entry"><a class="el" href="a02715.html#a38374ba4bc699b91a3f49cbc9bcf2f11">stiffness</a>(double stiffness)</td><td class="entry"><a class="el" href="a02715.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::CoMTask &gt;</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="a02715.html#ae901348ef6b40b04af30f6796714b4ff">stiffness</a>(const Eigen::VectorXd &amp;stiffness)</td><td class="entry"><a class="el" href="a02715.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::CoMTask &gt;</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="a02715.html#abb15c105235008d7c43b813f581c1c92">stiffness</a>() const</td><td class="entry"><a class="el" href="a02715.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::CoMTask &gt;</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02715.html#a477fb8de593f7ccaaea505e9e11229f7">TrajectoryBase</a> typedef</td><td class="entry"><a class="el" href="a02715.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::CoMTask &gt;</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02627.html#a51467f7e3f362d7aaa1b6ddb48b5d41a">TrajectoryBase</a> typedef</td><td class="entry"><a class="el" href="a02627.html">mc_tasks::CoMTask</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="a02715.html#a779f644750cc4acd6692681dd255ea06">trajectoryT_</a></td><td class="entry"><a class="el" href="a02715.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::CoMTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="a02715.html#a3b341ee69d33864500eb7e0f68ffe599">TrajectoryTaskGeneric</a>(const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double stiffness, double weight)</td><td class="entry"><a class="el" href="a02715.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::CoMTask &gt;</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="a02675.html#ac090b29eae1954585e32572d40731ca1">type</a>() const</td><td class="entry"><a class="el" href="a02675.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
@@ -146,7 +146,7 @@ $(document).ready(function(){initNavTree('a02627.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jan 21 2020 08:01:01 for mc_rtc by
+    <li class="footer">Generated on Tue Jan 28 2020 09:42:15 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

@@ -6440,6 +6440,13 @@
     <name>mc_tasks::CoMTask</name>
     <filename>a02627.html</filename>
     <base>TrajectoryTaskGeneric&lt; tasks::qp::CoMTask &gt;</base>
+    <member kind="typedef">
+      <type>TrajectoryTaskGeneric&lt; tasks::qp::CoMTask &gt;</type>
+      <name>TrajectoryBase</name>
+      <anchorfile>a02627.html</anchorfile>
+      <anchor>a51467f7e3f362d7aaa1b6ddb48b5d41a</anchor>
+      <arglist></arglist>
+    </member>
     <member kind="function">
       <type></type>
       <name>CoMTask</name>
@@ -6474,6 +6481,13 @@
       <anchorfile>a02627.html</anchorfile>
       <anchor>a825a00f6cfbe2d75909daf1e14b1833a</anchor>
       <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>load</name>
+      <anchorfile>a02627.html</anchorfile>
+      <anchor>a1e128a33ad470c85099edc2f64409a25</anchor>
+      <arglist>(mc_solver::QPSolver &amp;, const mc_rtc::Configuration &amp;config) override</arglist>
     </member>
     <member kind="function" protection="protected">
       <type>void</type>
