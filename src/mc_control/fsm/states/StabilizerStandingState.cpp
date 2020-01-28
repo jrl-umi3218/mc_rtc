@@ -80,7 +80,7 @@ void StabilizerStandingState::start(Controller & ctl)
   }
   else
   {
-    targetCoM(ctl.realRobot().com());
+    targetCoM(ctl.robot().com());
   }
 
   // Update anchor frame for the KinematicInertial observer

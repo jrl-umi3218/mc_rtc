@@ -8,6 +8,7 @@
 
 #include <SpaceVecAlg/SpaceVecAlg>
 
+#include <mc_rbdyn/rpy_utils.h>
 #include <Eigen/Core>
 #include <array>
 #include <exception>
@@ -238,6 +239,7 @@ struct MC_RTC_UTILS_DLLAPI Configuration
   operator Eigen::Quaterniond() const;
 
   /*! \brief Retrieve as a Eigen::Matrix3d instance
+   * \anchor Matrix3d_operator
    *
    * \throws If the underlying value does not hold a numeric sequence of size 9
    */
@@ -628,6 +630,7 @@ struct MC_RTC_UTILS_DLLAPI Configuration
 
   /*! \brief Retrieve and store a given value stored within the
    * configuration
+   * \anchor retrieve_and_store_template
    *
    * If they key is not stored in the Configuration, the value is
    * unchanged.
@@ -647,6 +650,53 @@ struct MC_RTC_UTILS_DLLAPI Configuration
     catch(Exception & exc)
     {
       exc.silence();
+    }
+  }
+
+  /**
+   * @brief Overload for the retrive and store operator for rotation elements.
+   * Attempts to retrived the value stored within the configuration as a
+   * Matrix3d.
+   * - If the element exists and is a valid matrix representation (see \ref
+   *   Matrix3d_operator), the rotation reference will be fully overwitten with the value from the
+   * configuration.
+   * - The configuration element can also contain a partial roll/pitch/yaw representation:
+   *   \code{.yaml}
+   *   roll: 0.5
+   *   pitch: 0.3
+   *   \code{.yaml}
+   *   In this case, only the specified axes will be overwritten from configuration and the other axes will remain
+   * unaffected.
+   *
+   * \ref retrieve_and_store_template
+   *
+   * @param key The key used to store the value
+   * @param rotation The rotation to retrieve. Allows for overwritting only specific RPY axes as well as a full
+   * rotation.
+   */
+  void operator()(const std::string & key, Eigen::Matrix3d & rotation) const
+  {
+    auto c = (*this)(key);
+    if(c.has("roll") || c.has("pitch") || c.has("yaw"))
+    {
+      Eigen::Vector3d rpy = mc_rbdyn::rpyFromMat(rotation);
+      if(has("roll"))
+      {
+        rpy.x() = (*this)("roll");
+      }
+      if(has("pitch"))
+      {
+        rpy.x() = (*this)("pitch");
+      }
+      if(has("yaw"))
+      {
+        rpy.x() = (*this)("yaw");
+      }
+      rotation = mc_rbdyn::rpyToMat(rpy);
+    }
+    else
+    {
+      (*this)(key, rotation);
     }
   }
 
