@@ -15,6 +15,7 @@
 #
 #     mc_rtc_3rd_party::hpp-spline
 
+if(NOT TARGET mc_rtc_3rd_party::hpp-spline)
 find_package(PkgConfig)
 pkg_check_modules(hpp-spline QUIET hpp-spline)
 
@@ -41,4 +42,5 @@ if(hpp-spline_FOUND)
   message("-- Found hpp-spline include directories: ${hpp-spline_INCLUDE_DIRS}")
 else()
   message(FATAL_ERROR "Could not find hpp-spline")
+endif()
 endif()
