@@ -52,6 +52,9 @@ jvrc1:
 
 # Implement some additional text states
 states:
+  LIPMStabilizer::Pause_2s:
+    base: Pause
+    duration: 2
   LIPMStabilizer::CustomConfiguration:
     base: Stabilizer::Standing
 
@@ -149,8 +152,12 @@ states:
         moveWorld:
           translation: [0,0,0.1]
         completion:
-          eval: 0.01
-  
+          OR:
+          - eval: 0.01
+          - AND:
+            - timeout: 3
+            - speed: 0.005
+
   LIPMStabilizer::LiftLeftFoot:
     base: LIPMStabilizer::LiftRightFoot
     tasks:
@@ -164,9 +171,9 @@ states:
         type: admittance
         robotIndex: 0
         surface: "RightFootCenter"
-        stiffness: [10, 10, 10, 10, 10, 10]
+        stiffness: [10, 10, 10, 10, 10, 3]
         damping: [6.3, 6.3, 6.3, 6.3, 6.3, 300]
-        admittance: [0,0,0,0,0,0.005]
+        admittance: [0,0,0,0,0,0.001]
         maxVel:
           linear: [0.2, 0.2, 0.5]
           angular: [0.2, 0.2, 0.2]
@@ -266,7 +273,8 @@ states:
         targetSurface:
           surface: RightFootCenter
           robotIndex: 0
-          translation: [0.2, 0.0, 0.0]
+          # Aim 5mm above ground as the FSM does not have early-impact detection
+          translation: [0.1, 0.0, 0.005]
           rotation: [0,0,0]
           # control points in target surface frame
           controlPoints:
@@ -279,7 +287,7 @@ states:
         surface: LeftFootCenter
         targetSurface:
           surface: LeftFootCenter
-          translation: [0.2, 0.0, 0.0]
+          translation: [0.1, 0.0, 0.005]
           rotation: [0,0,0]
           # control points in target surface frame
           controlPoints:
@@ -322,7 +330,7 @@ states:
         targetSurface:
           surface: RightFootCenter
           robotIndex: 0
-          translation: [-0.1, 0.0, 0.0]
+          translation: [-0.1, 0.0, 0.005]
           rotation: [0, 0, 0]
           # control points in target surface frame
           controlPoints:
@@ -335,7 +343,7 @@ states:
         surface: LeftFootCenter
         targetSurface:
           surface: LeftFootCenter
-          translation: [-0.1, 0.0, 0.0]
+          translation: [-0.1, 0.0, 0.005]
           rotation: [0,0,0]
           # control points in target surface frame
           controlPoints:
@@ -381,6 +389,7 @@ states:
 ###
 transitions:
   # Stand from left to right support and lift and put down feet
+- [Pause_2s, OK, Stabilizer::Standing, Auto]
 - [Stabilizer::Standing, Lift feet, LIPMStabilizer::StandingFSM::AlternateFeetLifting, Auto]
 - [LIPMStabilizer::StandingFSM::AlternateFeetLifting, OK, Stabilizer::Standing, Auto]
   # Stand from left to right support and lift and put down feet (manual user input)
@@ -396,7 +405,7 @@ transitions:
 - [Stabilizer::GoCenter, OK, Stabilizer::Standing]
 
 # # Initial state
-init: Stabilizer::Standing
+init: Pause_2s
 
 
 # Specific configuration for each observer
