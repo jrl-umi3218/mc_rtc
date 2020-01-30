@@ -24,8 +24,8 @@ PYTHON_USER_INSTALL="false"
 PYTHON_FORCE_PYTHON2="false"
 PYTHON_FORCE_PYTHON3="false"
 PYTHON_BUILD_PYTHON2_AND_PYTHON3="false"
-WITH_HRP2="false"
-WITH_HRP4="false"
+WITH_HRP2="true"
+WITH_HRP4="true"
 BUILD_TYPE="RelWithDebInfo"
 BUILD_TESTING="true"
 INSTALL_APT_DEPENDENCIES="true"
@@ -38,6 +38,30 @@ else
    BUILD_CORE=`sysctl -n hw.ncpu`
 fi
 export CMAKE_BUILD_PARALLEL_LEVEL=${BUILD_CORE}
+BUILD_LOGFILE="/tmp/build_and_install_warnings-`date +%Y-%m-%d-%H-%M-%S`.log"
+ASK_USER_INPUT="true"
+
+echo_log()
+{
+  echo $1 | tee -a $BUILD_LOGFILE
+}
+
+exit_failure()
+{
+  echo_log "Installation failed."
+  echo "Installation log has been written to $BUILD_LOGFILE"
+  echo_log "Please fix the issues and re-run the script."
+  exit 1
+}
+
+exit_if_error()
+{
+  if [ $? -ne 0 ]
+  then
+    echo_log "$1"
+    exit_failure
+  fi
+}
 
 mc_rtc_extra_steps()
 {
@@ -80,15 +104,15 @@ readonly HELP_STRING="$(basename $0) [OPTIONS] ...
     --install-system-dependencies      {true, false} : whether to install system packages            (default $INSTALL_APT_DEPENDENCIES)
     --clone-only                       {true, false} : only perform cloning                          (default $CLONE_ONLY)
     --skip-update                      {true, false} : skip git update                               (default $SKIP_UPDATE)
+    --user-input                       {true, false} : ask the user confirmation                     (default ${ASK_USER_INPUT})
 "
-
 #helper for parsing
 check_true_false()
 {
     if [ "true" != "$2" ] && [ "false" != "$2" ]
     then
         echo "passed parameter '$2' as flag for '$1'. the parameter has to be 'true' or 'false'"
-        exit 1
+        exit_failure
     fi
 }
 #parse arguments
@@ -184,6 +208,12 @@ do
         check_true_false --skip-update "$SKIP_UPDATE"
         ;;
 
+        --user-input)
+        i=$(($i+1))
+        ASK_USER_INPUT="${!i}"
+        check_true_false --ASK_USER_INPUT "$ASK_USER_INPUT"
+        ;;
+
         -j|--build-core)
         i=$(($i+1))
         BUILD_CORE="${!i}"
@@ -196,7 +226,7 @@ do
 
         *)
         echo "unknown parameter $i ($key)"
-        exit 1
+        exit_failure
         ;;
     esac
 
@@ -255,7 +285,10 @@ fi
 readonly ROS_APT_DEPENDENCIES="ros-${ROS_DISTRO}-common-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-rviz"
 
 alias git_clone="git clone --recursive"
-alias git_update="git pull && git submodule sync && git submodule update"
+git_update()
+{
+  git pull origin $1 && git submodule sync && git submodule update
+}
 
 SUDO_CMD='sudo -E'
 if [ ! -d $INSTALL_PREFIX ]
@@ -274,9 +307,14 @@ export DYLD_LIBRARY_PATH=$INSTALL_PREFIX/lib:$DYLD_LIBRARY_PATH
 export PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH
 export PYTHONPATH=$INSTALL_PREFIX/lib/python$PYTHON_VERSION/site-packages:$PYTHONPATH
 
-##############################
+###################################
 #  --  APT/Brew dependencies  --  #
-##############################
+###################################
+echo_log ""
+echo_log "================================="
+echo_log "== Installing APT dependencies =="
+echo_log "================================="
+echo_log
 if [[ $OSTYPE == "darwin"* ]]
 then
   export OS=macOS
@@ -308,7 +346,7 @@ then
     fi
     mc_rtc_extra_steps
   else
-    echo "Skip installation of system dependencies"
+    echo_log "-- Skip installation of system dependencies"
   fi
 elif [[ $OSTYPE == "linux-gnu" ]]
 then
@@ -321,10 +359,10 @@ then
       sudo apt-get -y install ${APT_DEPENDENCIES}
       mc_rtc_extra_steps
     else
-      echo "Skip installation of system dependencies"
+      echo_log "-- Skip installation of system dependencies"
     fi
   else
-    echo "This script does not support your OS: ${OS}, assuming you have installed the required system dependencies already"
+    echo_log "-- [WARNING] This script does not support your OS: ${OS}, assuming you have installed the required system dependencies already"
   fi
 else
   export OS=Windows
@@ -334,6 +372,73 @@ else
   fi
   mc_rtc_extra_steps
 fi
+
+echo_log "-- [OK] Successfully installed APT dependencies"
+
+########################
+##  -- Install ROS --  #
+########################
+
+if $WITH_ROS_SUPPORT
+then
+  echo "================================"
+  echo "== Setting up ROS environment =="
+  echo "================================"
+  if [ ! -e /opt/ros/${ROS_DISTRO}/setup.bash ] && $NOT_CLONE_ONLY
+  then
+    if [ $OS = Ubuntu ]
+    then
+      sudo mkdir -p /etc/apt/sources.list.d/
+      sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu `lsb_release -c -s` main" > /etc/apt/sources.list.d/ros-latest.list'
+      wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
+      sudo apt-get update
+      sudo apt-get install -y ros-${ROS_DISTRO}-ros-base ros-${ROS_DISTRO}-rosdoc-lite python-catkin-lint ${ROS_APT_DEPENDENCIES}
+    else
+      echo_log "Please install ROS and the required dependencies (${ROS_APT_DEPENDENCIES}) before continuing your installation or disable ROS support"
+      exit_failure
+    fi
+  fi
+  if $NOT_CLONE_ONLY
+  then
+    . /opt/ros/${ROS_DISTRO}/setup.bash
+  fi
+  CATKIN_DATA_WORKSPACE=$SOURCE_DIR/catkin_data_ws
+  CATKIN_DATA_WORKSPACE_SRC=${CATKIN_DATA_WORKSPACE}/src
+  if [[ ! -d $CATKIN_DATA_WORKSPACE_SRC ]]
+  then
+    mkdir -p ${CATKIN_DATA_WORKSPACE_SRC}
+    if $NOT_CLONE_ONLY
+    then
+      cd ${CATKIN_DATA_WORKSPACE_SRC}
+      catkin_init_workspace || true
+      cd ${CATKIN_DATA_WORKSPACE}
+      catkin_make
+      . $CATKIN_DATA_WORKSPACE/devel/setup.bash
+    fi
+  fi
+  CATKIN_WORKSPACE=$SOURCE_DIR/catkin_ws
+  CATKIN_WORKSPACE_SRC=${CATKIN_WORKSPACE}/src
+  if [[ ! -d $CATKIN_WORKSPACE_SRC ]]
+  then
+    mkdir -p ${CATKIN_WORKSPACE_SRC}
+    if $NOT_CLONE_ONLY
+    then
+      cd ${CATKIN_WORKSPACE_SRC}
+      catkin_init_workspace || true
+      cd ${CATKIN_WORKSPACE}
+      catkin_make
+      . $CATKIN_WORKSPACE/devel/setup.bash
+    fi
+  fi
+fi
+
+echo
+echo_log "-- [OK] ROS environment setup completed"
+echo
+
+#########################################
+## -- Check local git repositoriees -- ##
+#########################################
 
 git_dependency_parsing()
 {
@@ -359,23 +464,180 @@ git_dependency_parsing()
 
 clone_git_dependency()
 {
-  git_dependency_parsing $1
   cd "$2"
   mkdir -p "$git_dep"
   if [ ! -d "$git_dep/.git" ]
   then
-    git_clone -b $git_dep_branch "$git_dep_uri" "$git_dep"
+    # Doing git clone -b tag uri dep directly results in detached HEAD state
+    # Hence doing it in two steps instead
+    if ! git_clone "$git_dep_uri" "$git_dep"; then
+      echo_log "[ERROR] Failed to clone ${git_dep_uri}"
+      exit_failure
+    fi
+    cd "$2/$git_dep"
+
+    if ! git checkout "$git_dep_branch" -B $git_dep_branch; then
+      echo_log "[ERROR] Failed to checkout branch ${git_dep_branch}"
+    fi
   else
     if $SKIP_UPDATE
     then
       return
     fi
-    pushd .
-    cd "$git_dep"
-    git_update
-    popd
+    pushd . > /dev/null
+    cd "$2/$git_dep"
+    git_update $git_dep_branch
+    exit_if_error "Git Update failed for ${git_dep}"
+    popd > /dev/null
   fi
 }
+
+check_clean_work_tree ()
+{
+  err=0
+  # Update the index
+  git update-index -q --ignore-submodules --refresh
+
+  branch_name="`git rev-parse --abbrev-ref HEAD`"
+  if [[ $git_dep_branch != $branch_name ]] && [[ "heads/$git_dep_branch" != $branch_name ]]; then
+    echo_log "-- [ERROR] Expected branch $git_dep_branch but you are currently on $branch_name"
+    err=1
+  fi
+
+  # Disallow unstaged changes in the working tree
+  if ! git diff-files --quiet --ignore-submodules --
+  then
+      echo_log "-- [ERROR] You have unstaged changes. Please commit or stash them."
+      git diff-files --name-status -r --ignore-submodules -- >&2
+      err=1
+  fi
+
+  # Disallow uncommitted changes in the index
+  if ! git diff-index --cached --quiet HEAD --ignore-submodules --
+  then
+      echo_log "-- [ERROR] Your index contains uncommitted changes. Please commit or stash them"
+      git diff-index --cached --name-status -r --ignore-submodules HEAD -- >&2
+      err=1
+  fi
+  return $err
+}
+
+# Checks if the repository has already been cloned, in which case determine if
+# the local state is clean (no uncommited changes, correct branch).
+# If necessary, attempts to update the repository
+check_and_clone_git_dependency()
+{
+  repo=$1
+  git_dependency_parsing $repo
+  source_dir="$2"
+  repo_dir="$2/$git_dep"
+  echo
+  echo "-- Fetching changes in repository $git_dep (branch ${git_dep_branch}, uri: ${git_dep_uri})"
+  if [[ -d $repo_dir ]]; then
+    cd $repo_dir
+    if [[ ! -d ".git" ]]; then
+      echo_log "-- [ERROR]: local folder ${repo_dir} exists but is not a git repository. Please delete it an retry the script."
+      exit_failure
+    fi
+    echo_log "-- [OK] Found local repository for ${git_dep} in ${repo_dir}"
+
+    if check_clean_work_tree; then
+      prev_commit=`git rev-parse HEAD`
+      echo_log "-- [OK] repository is clean"
+      echo_log "-- Attempting to update local repository from remote branch ${git_dep_branch}..."
+      clone_git_dependency $repo $source_dir
+      cd $repo_dir
+      echo_log "-- [OK] Repository ${git_dep} updated from commit $prev_commit to `git rev-parse HEAD`"
+    else
+      echo_log "-- [ERROR] Your local repository for $git_dep is dirty"
+      echo_log "   Please ensure that you have no local uncommited changes and that you are on the expected branch ($git_dep_branch)"
+      exit_failure
+    fi
+  else
+    echo_log "-- Cloning ${git_dep} from ${git_dep_uri}"
+    clone_git_dependency $repo $source_dir
+    echo_log "-- [OK] Successfully cloned repository ${repo} with branch ${git_dep_branch} from ${git_dep_uri} to ${repo_dir}"
+  fi
+  echo
+}
+
+echo_log ""
+echo_log "==================================================="
+echo_log "== Checking/updating/cloning local repositories  =="
+echo_log "==================================================="
+echo_log
+echo "The script will ensure that already cloned local repository:"
+echo "- You have unstaged changes"
+echo "- Your index contains uncommited changes"
+echo "- You are not on expected branch"
+echo
+
+# If the dependencies have already been cloned, check if the local state of the repository is clean before upgrading
+GIT_DEPENDENCIES="humanoid-path-planner/hpp-spline#v4.7.0 jrl-umi3218/SpaceVecAlg jrl-umi3218/sch-core jrl-umi3218/RBDyn jrl-umi3218/eigen-qld jrl-umi3218/eigen-quadprog jrl-umi3218/Tasks jrl-umi3218/mc_rbdyn_urdf"
+for repo in $GIT_DEPENDENCIES; do
+  check_and_clone_git_dependency $repo $SOURCE_DIR
+done
+
+if [ "x$WITH_PYTHON_SUPPORT" == xON ]
+then
+  check_and_clone_git_dependency jrl-umi3218/Eigen3ToPython $SOURCE_DIR
+  check_and_clone_git_dependency jrl-umi3218/sch-core-python $SOURCE_DIR
+fi
+
+if $WITH_ROS_SUPPORT
+then
+  check_and_clone_git_dependency jrl-umi3218/mc_rtc_data $CATKIN_DATA_WORKSPACE_SRC
+  check_and_clone_git_dependency jrl-umi3218/mc_rtc_msgs $CATKIN_DATA_WORKSPACE_SRC
+  check_and_clone_git_dependency jrl-umi3218/mc_rtc_ros $CATKIN_WORKSPACE_SRC
+else
+  check_and_clone_git_dependency jrl-umi3218/mc_rtc_data $SOURCE_DIR
+fi
+
+################################
+#  --  Fetch extra modules  -- #
+################################
+if $WITH_HRP2
+then
+  if $WITH_ROS_SUPPORT
+  then
+    check_and_clone_git_dependency git@gite.lirmm.fr:mc-hrp2/hrp2_drc $CATKIN_DATA_WORKSPACE_SRC
+    echo_log "-- [OK] Successfully cloned and updated $git_dep to $repo_dir"
+  else
+    check_and_clone_git_dependency git@gite.lirmm.fr:mc-hrp2/hrp2_drc $SOURCE_DIR
+    echo_log "-- [OK] Successfully cloned and updated $git_dep to $repo_dir"
+  fi
+  check_and_clone_git_dependency git@gite.lirmm.fr:mc-hrp2/mc-hrp2 $SOURCE_DIR
+  echo_log "-- [OK] Successfully cloned and updated $git_dep to $repo_dir"
+fi
+
+if $WITH_HRP4
+then
+  if $WITH_ROS_SUPPORT
+  then
+    check_and_clone_git_dependency git@gite.lirmm.fr:mc-hrp4/hrp4 $CATKIN_DATA_WORKSPACE_SRC
+    echo_log "-- [OK] Successfully cloned and updated $git_dep to $repo_dir"
+  else
+    check_and_clone_git_dependency git@gite.lirmm.fr:mc-hrp4/hrp4 $SOURCE_DIR
+    echo_log "-- [OK] Successfully cloned and updated $git_dep to $repo_dir"
+  fi
+  check_and_clone_git_dependency git@gite.lirmm.fr:mc-hrp4/mc-hrp4 $SOURCE_DIR
+  echo_log "-- [OK] Successfully cloned and updated $git_dep to $repo_dir"
+fi
+
+
+echo_log "-- [OK] All repositories have been successfully cloned or updated"
+if $CLONE_ONLY
+then
+  echo_log "-- [INFO] The script was executed with CLONE_ONLY=true, stopping now."
+  echo_log "   Use CLONE_ONLY=false if you wish to build and install."
+  return
+fi
+
+echo_log ""
+echo_log "=================================="
+echo_log "== Buiding all git dependencies =="
+echo_log "=================================="
+echo_log ""
 
 # This function is used in Windows to hide sh from the PATH
 hide_sh()
@@ -400,30 +662,22 @@ restore_path()
 build_project()
 {
   cmake --build . --config ${BUILD_TYPE}
-  if [ $? -ne 0 ]
-  then
-    echo "Build failed for $1"
-    exit 1
-  fi
+  exit_if_error "[ERROR] Build failed for $1"
   if [ -f install_manifest.txt ]
   then
     ${SUDO_CMD} cmake --build . --target uninstall --config ${BUILD_TYPE}
+    if [ $? -ne 0 ]
+    then
+      echo_log "-- [WARNING] Uninstallation failed for $1"
+    fi
   fi
   ${SUDO_CMD} cmake --build . --target install --config ${BUILD_TYPE}
-  if [ $? -ne 0 ]
-  then
-    echo "Installation failed for $1"
-    exit 1
-  fi
+  exit_if_error "-- [ERROR] Installation failed for $1"
 }
 
 build_git_dependency_configure_and_build()
 {
-  clone_git_dependency $1 "$SOURCE_DIR"
-  if $CLONE_ONLY
-  then
-    return
-  fi
+  git_dependency_parsing $1
   echo "--> Compiling $git_dep (branch $git_dep_branch)"
   mkdir -p "$SOURCE_DIR/$git_dep/build"
   cd "$SOURCE_DIR/$git_dep/build"
@@ -440,11 +694,7 @@ build_git_dependency_configure_and_build()
            -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
            -DBUILD_PYTHON_INTERFACE:BOOL=OFF \
            ${CMAKE_ADDITIONAL_OPTIONS}
-  if [ $? -ne 0 ]
-  then
-    echo "CMake configuration failed for $git_dep"
-    exit 1
-  fi
+  exit_if_error "-- [ERROR] CMake configuration failed for $git_dep"
   build_project $git_dep
   if [[ $OS == "Windows" ]]
   then
@@ -457,16 +707,8 @@ build_git_dependency()
   if $BUILD_TESTING
   then
     build_git_dependency_configure_and_build $1
-    if $CLONE_ONLY
-    then
-      return
-    fi
     ctest -C ${BUILD_TYPE}
-    if [ $? -ne 0 ]
-    then
-      echo "Testing failed for $git_dep"
-      exit 1
-    fi
+    exit_if_error "-- [ERROR] Testing failed for $git_dep"
   else
     build_git_dependency_no_test $1
   fi
@@ -489,53 +731,10 @@ build_catkin_git_dependency()
   fi
   echo "--> Compiling $git_dep (branch $git_dep_branch)"
   cd $2
-  catkin_make || (echo "catkin build failed for $git_dep" && exit 1)
+  catkin_make || (echo "catkin build failed for $git_dep" && exit_failure)
 }
 
-########################
-##  -- Install ROS --  #
-########################
 
-if $WITH_ROS_SUPPORT
-then
-  if [ ! -e /opt/ros/${ROS_DISTRO}/setup.bash ] && $NOT_CLONE_ONLY
-  then
-    if [ $OS = Ubuntu ]
-    then
-      sudo mkdir -p /etc/apt/sources.list.d/
-      sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu `lsb_release -c -s` main" > /etc/apt/sources.list.d/ros-latest.list'
-      wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
-      sudo apt-get update
-      sudo apt-get install -y ros-${ROS_DISTRO}-ros-base ros-${ROS_DISTRO}-rosdoc-lite python-catkin-lint ${ROS_APT_DEPENDENCIES}
-    fi
-  fi
-  if [ -e /opt/ros/${ROS_DISTRO}/setup.bash ] && $NOT_CLONE_ONLY
-  then
-    . /opt/ros/${ROS_DISTRO}/setup.bash
-  fi
-  CATKIN_DATA_WORKSPACE=$SOURCE_DIR/catkin_data_ws
-  CATKIN_DATA_WORKSPACE_SRC=${CATKIN_DATA_WORKSPACE}/src/
-  mkdir -p ${CATKIN_DATA_WORKSPACE_SRC}
-  if $NOT_CLONE_ONLY
-  then
-    cd ${CATKIN_DATA_WORKSPACE_SRC}
-    catkin_init_workspace || true
-    cd ${CATKIN_DATA_WORKSPACE}
-    catkin_make
-    . $CATKIN_DATA_WORKSPACE/devel/setup.bash
-  fi
-  CATKIN_WORKSPACE=$SOURCE_DIR/catkin_ws
-  CATKIN_WORKSPACE_SRC=${CATKIN_WORKSPACE}/src/
-  mkdir -p ${CATKIN_WORKSPACE_SRC}
-  if $NOT_CLONE_ONLY
-  then
-    cd ${CATKIN_WORKSPACE_SRC}
-    catkin_init_workspace || true
-    cd ${CATKIN_WORKSPACE}
-    catkin_make
-    . $CATKIN_WORKSPACE/devel/setup.bash
-  fi
-fi
 
 ###############################
 ##  --  GIT dependencies  --  #
@@ -557,6 +756,7 @@ build_git_dependency jrl-umi3218/eigen-qld
 build_git_dependency jrl-umi3218/eigen-quadprog
 build_git_dependency jrl-umi3218/Tasks
 build_git_dependency jrl-umi3218/mc_rbdyn_urdf
+
 if $WITH_ROS_SUPPORT
 then
   build_catkin_git_dependency jrl-umi3218/mc_rtc_data $CATKIN_DATA_WORKSPACE
@@ -565,20 +765,42 @@ else
   build_git_dependency jrl-umi3218/mc_rtc_data
 fi
 
-if $CLONE_ONLY
-then
-  echo "Cloned every mc_rtc dependencies"
-  exit 0
-fi
+echo_log "-- [OK] All dependencies have been successfully built, tested and installed"
 
 ##########################
 #  --  Build mc_rtc  --  #
 ##########################
+echo_log ""
+echo_log "====================="
+echo_log "== Building mc_rtc =="
+echo_log "====================="
+echo_log ""
+
 cd $mc_rtc_dir
+git remote update
+current_commit=`git rev-parse HEAD`
+remote_commit=`git rev-parse master@{upstream}`
+if [[ "$current_commit" != "$remote_commit"  ]]
+then
+  echo "-- [WARNING] Would compile mc_rtc from commit $current_commit but the remote master branch is at $remote_commit"
+  if $ASK_USER_INPUT
+  then
+    read -r -p "Are you sure? [y/N] " response
+    if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]
+    then
+      echo_log "-- Building mc_rtc from commit $current_commit"
+    else
+      echo_log "-- Installation manually cancelled because mc_rtc would have been built from commit $current_commit but the remote master branch is at $remote_commit"
+      echo_log "   Please make sure mc_rtc is up-to date with the remote master branch and try again."
+      exit_failure
+    fi
+  fi
+fi
 if $SKIP_UPDATE
 then
   git submodule sync || true
   git submodule update --init
+  exit_if_error "-- [ERROR] Failed to update submodules"
 fi
 mkdir -p build
 cd build
@@ -611,11 +833,7 @@ else
             ${CMAKE_ADDITIONAL_OPTIONS} \
             -DDISABLE_ROS=ON
 fi
-if [ $? -ne 0 ]
-then
-  echo "CMake configuration failed for mc_rtc"
-  exit 1
-fi
+exit_if_error "CMake configuration failed for mc_rtc"
 build_project mc_rtc
 if $BUILD_TESTING
 then
@@ -625,7 +843,7 @@ if [ $? -ne 0 ]
 then
   if [ "x$WITH_PYTHON_SUPPORT" == xON ]
   then
-    echo "mc_rtc testing failed, asssuming you need to rebuild your Python bindings"
+    echo_log "mc_rtc testing failed, asssuming you need to rebuild your Python bindings"
     if [ "x$PYTHON_BUILD_PYTHON2_AND_PYTHON3" == xON ]
     then
       make force-mc_rtc-python2-bindings
@@ -640,15 +858,21 @@ then
       make force-mc_rtc-python-bindings
     fi
     ${SUDO_CMD} make install
+    if [ $? -ne 0 ]
+    then
+      echo_log "mc_rtc failed to install"
+    else
+      echo_log "mc_rtc successfully installed"
+    fi
     make test
     if [ $? -ne 0 ]
     then
-      echo "mc_rtc is still failing"
-      exit 1
+      echo_log "mc_rtc is still failing"
+      exit_failure
     fi
   else
-    echo "Testing failed for mc_rtc"
-    exit 1
+    echo_log "Testing failed for mc_rtc"
+    exit_failure
   fi
 fi
 
@@ -668,10 +892,13 @@ then
   if $WITH_ROS_SUPPORT
   then
     build_catkin_git_dependency git@gite.lirmm.fr:mc-hrp2/hrp2_drc $CATKIN_DATA_WORKSPACE
+    echo_log "-- [OK] Successfully built $git_dep"
   else
     build_git_dependency git@gite.lirmm.fr:mc-hrp2/hrp2_drc
+    echo_log "-- [OK] Successfully built $git_dep"
   fi
   build_git_dependency git@gite.lirmm.fr:mc-hrp2/mc-hrp2.git
+  echo_log "-- [OK] Successfully built $git_dep"
 fi
 
 if $WITH_HRP4
@@ -679,24 +906,33 @@ then
   if $WITH_ROS_SUPPORT
   then
     build_catkin_git_dependency git@gite.lirmm.fr:mc-hrp4/hrp4 $CATKIN_DATA_WORKSPACE
+    echo_log "-- [OK] Successfully built $git_dep"
   else
     build_git_dependency git@gite.lirmm.fr:mc-hrp4/hrp4
+    echo_log "-- [OK] Successfully built $git_dep"
   fi
   build_git_dependency git@gite.lirmm.fr:mc-hrp4/mc-hrp4.git
+  echo_log "-- [OK] Successfully built $git_dep"
 fi
 
-echo "Installation finished, please add the following lines to your .bashrc/.zshrc"
-echo ""
+echo_log ""
+echo_log "=========================="
+echo_log "== Installation success =="
+echo_log "=========================="
+echo "-- Installation log has been written to $BUILD_LOGFILE"
+echo_log ""
+echo_log "Please add the following lines to your .bashrc/.zshrc"
+echo_log ""
 if [[ $OSTYPE == "darwin"* ]]
 then
-  echo """
+  echo_log """
   export PATH=$INSTALL_PREFIX/bin:\$PATH
   export DYLD_LIBRARY_PATH=$INSTALL_PREFIX/lib:\$DYLD_LIBRARY_PATH
   export PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig:\$PKG_CONFIG_PATH
   export PYTHONPATH=$INSTALL_PREFIX/lib/python$PYTHON_VERSION/site-packages:\$PYTHONPATH
   """
 else
-  echo """
+  echo_log """
   export PATH=$INSTALL_PREFIX/bin:\$PATH
   export LD_LIBRARY_PATH=$INSTALL_PREFIX/lib:\$LD_LIBRARY_PATH
   export PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig:\$PKG_CONFIG_PATH
@@ -704,8 +940,9 @@ else
   """
   if $WITH_ROS_SUPPORT
   then
-    echo "source $CATKIN_WORKSPACE/devel/setup.bash"
-    echo ""
-    echo "If you are running zsh, replace setup.bash with setup.zsh in that last line"
+    echo_log "source $CATKIN_DATA_WORKSPACE/devel/setup.bash"
+    echo_log "source $CATKIN_WORKSPACE/devel/setup.bash"
+    echo_log ""
+    echo_log "If you are running zsh, replace setup.bash with setup.zsh in that last line"
   fi
 fi

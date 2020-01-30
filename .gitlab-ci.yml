@@ -108,7 +108,7 @@ build_with_script:
   stage: build
   script:
     - cd utils
-    - ./build_and_install.sh
+    - ./build_and_install.sh --user_input false
   tags:
     - GCC
   allow_failure: true
