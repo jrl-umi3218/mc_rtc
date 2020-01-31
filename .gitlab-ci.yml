@@ -108,7 +108,7 @@ build_with_script:
   stage: build
   script:
     - cd utils
-    - ./build_and_install.sh --user_input false
+    - ./build_and_install.sh --user-input false --with-hrp4 true --with-hrp2 true --with-hrp5 true
   tags:
     - GCC
   allow_failure: true
