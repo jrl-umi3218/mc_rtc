@@ -43,7 +43,8 @@ else
    BUILD_CORE=`sysctl -n hw.ncpu`
 fi
 export CMAKE_BUILD_PARALLEL_LEVEL=${BUILD_CORE}
-BUILD_LOGFILE="/tmp/build_and_install_warnings-`date +%Y-%m-%d-%H-%M-%S`.log"
+LOG_PATH="/tmp"
+BUILD_LOGFILE="$LOG_PATH/build_and_install_warnings-`date +%Y-%m-%d-%H-%M-%S`.log"
 ASK_USER_INPUT="true"
 
 echo_log()
@@ -339,12 +340,17 @@ export DYLD_LIBRARY_PATH=$INSTALL_PREFIX/lib:$DYLD_LIBRARY_PATH
 export PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH
 export PYTHONPATH=$INSTALL_PREFIX/lib/python$PYTHON_VERSION/site-packages:$PYTHONPATH
 
+touch $BUILD_LOGFILE
+exit_if_error "-- [ERROR] Could not create log file $BUILD_LOGFILE"
+ln -s $BUILD_LOGFILE "$LOG_PATH/build_and_install_warnings-latest.log"
+
 echo_log ""
 echo_log "========================================"
 echo_log "== mc_rtc build_and_install.sh script =="
 echo_log "========================================"
 echo_log
 echo_log "-- Build and install log for mc_rtc generated on `date +%Y-%m-%d-%H:%M:%S`"
+echo "-- Log file will be written to $BUILD_LOGFILE "
 echo_log "-- Building with the following options:"
 echo_log "   INSTALL_PREFIX=$INSTALL_PREFIX"
 echo_log "   WITH_ROS_SUPPORT=$WITH_ROS_SUPPORT"
@@ -572,12 +578,6 @@ check_clean_work_tree ()
   # Update the index
   git update-index -q --ignore-submodules --refresh
 
-  branch_name="`git rev-parse --abbrev-ref HEAD`"
-  if [[ $git_dep_branch != $branch_name ]] && [[ "heads/$git_dep_branch" != $branch_name ]]; then
-    echo_log "-- [ERROR] Expected branch $git_dep_branch but you are currently on $branch_name"
-    err=1
-  fi
-
   # Disallow unstaged changes in the working tree
   if ! git diff-files --quiet --ignore-submodules --
   then
@@ -592,6 +592,21 @@ check_clean_work_tree ()
       echo_log "-- [ERROR] Your index contains uncommitted changes. Please commit or stash them"
       git diff-index --cached --name-status -r --ignore-submodules HEAD -- >&2
       err=1
+  fi
+
+  branch_name="`git rev-parse --abbrev-ref HEAD`"
+  if [[ $git_dep_branch != $branch_name ]] && [[ "heads/$git_dep_branch" != $branch_name ]]; then
+    if [ $err == 0 ]
+    then
+      echo_log "-- [WARNING] You were previously on branch $branch_name but the required branch is $git_dep_branch"
+      echo_log "             Local repository is clean with no uncommited or unstashed changes, switching to branch $git_deb_branch"
+      git checkout $git_dep_branch -B $git_dep_branch
+      exit_if_error "-- [ERROR] Failed to change to required branch $git_dep_branch of repository $git_dep"
+      err=0
+    else
+      echo_log "-- [ERROR] Expected branch $git_dep_branch but you are currently on $branch_name. Please commit or stash your local changes and switch to branch $git_dep_branch"
+      err=1
+    fi
   fi
   return $err
 }
@@ -645,7 +660,7 @@ check_and_clone_git_dependency()
 }
 
 # If the dependencies have already been cloned, check if the local state of the repository is clean before upgrading
-GIT_DEPENDENCIES="humanoid-path-planner/hpp-spline#v4.7.0 jrl-umi3218/SpaceVecAlg jrl-umi3218/sch-core jrl-umi3218/RBDyn jrl-umi3218/eigen-qld jrl-umi3218/eigen-quadprog jrl-umi3218/Tasks jrl-umi3218/mc_rbdyn_urdf"
+GIT_DEPENDENCIES="humanoid-path-planner/hpp-spline#v4.8.1 jrl-umi3218/SpaceVecAlg jrl-umi3218/sch-core jrl-umi3218/RBDyn jrl-umi3218/eigen-qld jrl-umi3218/eigen-quadprog jrl-umi3218/Tasks jrl-umi3218/mc_rbdyn_urdf"
 for repo in $GIT_DEPENDENCIES; do
   check_and_clone_git_dependency $repo $SOURCE_DIR
 done
