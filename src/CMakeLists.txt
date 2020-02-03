@@ -95,6 +95,7 @@ set(mc_rtc_utils_HDR
   ../include/mc_rtc/log/Logger.h
   ../include/mc_rtc/utils.h
   ../include/mc_rtc/utils_api.h
+  ../include/mc_rtc/DataStore.h
 )
 
 add_library(mc_rtc_utils SHARED ${mc_rtc_utils_SRC} ${mc_rtc_utils_HDR})

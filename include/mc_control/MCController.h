@@ -11,6 +11,7 @@
 
 #include <mc_rbdyn/Robots.h>
 
+#include <mc_rtc/DataStore.h>
 #include <mc_rtc/gui.h>
 #include <mc_rtc/log/Logger.h>
 
@@ -231,6 +232,12 @@ public:
     return gui_;
   }
 
+  /** Provides access to the shared datastore */
+  mc_rtc::datastore::DataStore & datastore()
+  {
+    return datastore_;
+  }
+
   /** Return the mc_rbdyn::Robots real robots instance
    * \anchor mc_controller_real_robots_const_doc
    */
@@ -310,6 +317,10 @@ protected:
   std::shared_ptr<mc_rtc::Logger> logger_;
   /** GUI state builder */
   std::shared_ptr<mc_rtc::gui::StateBuilder> gui_;
+
+  /** DataStore to share variables/objects between different parts of the
+   * framework (states...) */
+  mc_rtc::datastore::DataStore datastore_;
 
 public:
   /** Controller timestep */

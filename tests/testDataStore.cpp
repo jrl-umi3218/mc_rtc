@@ -2,7 +2,7 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <mc_rtc/datastore.h>
+#include <mc_rtc/DataStore.h>
 #include <boost/test/unit_test.hpp>
 
 using DataStore = mc_rtc::datastore::DataStore;

@@ -39,6 +39,11 @@ struct MC_RTC_UTILS_DLLAPI DataStore
   DataStore(DataStore &&) = default;
   DataStore & operator=(DataStore &&) = default;
 
+  bool has(const std::string & name) const
+  {
+    return datas_.find(name) != datas_.end();
+  }
+
   template<typename T>
   const T & get(const std::string & name) const
   {
@@ -87,12 +92,38 @@ struct MC_RTC_UTILS_DLLAPI DataStore
     data.destroy = [](Data & self) { reinterpret_cast<T *>(self.buffer.get())->~T(); };
   }
 
+  void remove(const std::string & name)
+  {
+    auto it = datas_.find(name);
+    if(it == datas_.end())
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error,
+                          "[" << name_ << "] Failed to remove element \"" << name << "\" (element does not exist)");
+      return;
+    }
+    datas_.erase(it);
+  }
+
+  template<typename T>
+  T & make_or_assign(const std::string & name, const T & value)
+  {
+    if(has(name))
+    {
+      get<T>(name) = value;
+    }
+    else
+    {
+      make<T, T>(name, value);
+      return get<T>(name);
+    }
+  }
+
   const std::string & name() const
   {
     return name_;
   }
 
-  std::string name(const std::string & name)
+  void name(const std::string & name)
   {
     name_ = name;
   }

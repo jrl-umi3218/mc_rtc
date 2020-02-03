@@ -152,6 +152,13 @@ void StabilizerStandingState::targetCoM(const Eigen::Vector3d & com)
 
 bool StabilizerStandingState::run(Controller & ctl)
 {
+  // Read target from the datastore if available
+  if(ctl.datastore().has("Desired::com"))
+  {
+    comTarget_ = ctl.datastore().get<Eigen::Vector3d>("Desired::com");
+    LOG_INFO("Using com target from datastore: " << comTarget_.transpose());
+  }
+
   const Eigen::Vector3d & com_ = pendulum_.com();
   const Eigen::Vector3d & comd_ = pendulum_.comd();
 
