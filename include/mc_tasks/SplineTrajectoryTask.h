@@ -61,6 +61,10 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformT
    *
    * - timeElapsed When true, the task will stop when the trajectory duration is
    *   reached
+   *
+   * - wrench: completed when the measured wrench reaches the given wrench, if
+   *   some values are NaN, this direction is ignored
+   *   @throws if the surface does not have an associated force sensor
    */
   std::function<bool(const mc_tasks::MetaTask &, std::string &)> buildCompletionCriteria(
       double dt,

@@ -48,10 +48,45 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> SplineTrajectoryT
     {
       return [](const mc_tasks::MetaTask & t, std::string & out) {
         const auto & self = static_cast<const SplineTrajectoryBase &>(t);
-        out += "duration";
-        return self.timeElapsed();
+        if(self.timeElapsed())
+        {
+          out += "duration";
+          return true;
+        }
+        return false;
       };
     }
+  }
+  if(config.has("wrench"))
+  {
+    sva::ForceVecd target_w = config("wrench");
+    Eigen::Vector6d target = target_w.vector();
+    Eigen::Vector6d dof = Eigen::Vector6d::Ones();
+    for(int i = 0; i < 6; ++i)
+    {
+      if(std::isnan(target(i)))
+      {
+        dof(i) = 0.;
+        target(i) = 0.;
+      }
+      else if(target(i) < 0)
+      {
+        dof(i) = -1.;
+      }
+    }
+    return [dof, target](const mc_tasks::MetaTask & t, std::string & out) {
+      const auto & self = static_cast<const SplineTrajectoryTask &>(t);
+      Eigen::Vector6d w = self.robots.robot(self.rIndex).surfaceWrench(self.surfaceName_).vector();
+      for(int i = 0; i < 6; ++i)
+      {
+        if(dof(i) * fabs(w(i)) < target(i))
+        {
+          return false;
+        }
+      }
+      out += "wrench";
+      return true;
+    };
   }
   return TrajectoryBase::buildCompletionCriteria(dt, config);
 }
