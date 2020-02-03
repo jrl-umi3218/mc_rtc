@@ -27,6 +27,8 @@ private:
   bool publish_real = true;
   double publish_timestep = 0.01;
   std::unique_ptr<ROSServices> services_;
+
+  void build(mc_control::MCGlobalController & controller);
 };
 
 } // namespace mc_plugin
