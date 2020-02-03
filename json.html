@@ -13275,11 +13275,7 @@ targetVector: [0.0, 0.0, 0.0]</pre>
       </span><span class="nl">"oriWaypoints"</span><span class="p">:</span><span class="w">
       </span><span class="p">[</span><span class="w">
         </span><span class="p">[</span><span class="mf">13.0</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">-1.57</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]]</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-      </span><span class="nl">"init_vel"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w">
-      </span><span class="nl">"init_acc"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w">
-      </span><span class="nl">"end_vel"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.05</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w">
-      </span><span class="nl">"end_acc"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">]</span><span class="w">
+      </span><span class="p">]</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span></code></pre></figure>
@@ -13316,11 +13312,7 @@ targetVector: [0.0, 0.0, 0.0]</pre>
       "oriWaypoints":
       [
         [13.0, [0.0, -1.57, 0.0]]
-      ],
-      "init_vel" : [0.0,0.0,0.0],
-      "init_acc" : [0.0,0.0,0.0],
-      "end_vel" : [0.05,0.0,0.0],
-      "end_acc" : [0.0,0.0,0.0]
+      ]
     }
   }
 }</pre>
@@ -13366,11 +13358,7 @@ targetVector: [0.0, 0.0, 0.0]</pre>
     <span class="na">oriWaypoints</span><span class="pi">:</span>
     <span class="pi">[</span>
       <span class="pi">[</span><span class="nv">13.0</span><span class="pi">,</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">-1.57</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]]</span>
-    <span class="pi">]</span>
-    <span class="na">init_vel </span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span><span class="nv">0.0</span><span class="pi">,</span><span class="nv">0.0</span><span class="pi">]</span>
-    <span class="na">init_acc </span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span><span class="nv">0.0</span><span class="pi">,</span><span class="nv">0.0</span><span class="pi">]</span>
-    <span class="na">end_vel </span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.05</span><span class="pi">,</span><span class="nv">0.0</span><span class="pi">,</span><span class="nv">0.0</span><span class="pi">]</span>
-    <span class="na">end_acc </span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span><span class="nv">0.0</span><span class="pi">,</span><span class="nv">0.0</span><span class="pi">]</span></code></pre></figure>
+    <span class="pi">]</span></code></pre></figure>
 
   </div>
 </div>
@@ -13405,11 +13393,7 @@ targetVector: [0.0, 0.0, 0.0]</pre>
     oriWaypoints:
     [
       [13.0, [0.0, -1.57, 0.0]]
-    ]
-    init_vel : [0.0,0.0,0.0]
-    init_acc : [0.0,0.0,0.0]
-    end_vel : [0.05,0.0,0.0]
-    end_acc : [0.0,0.0,0.0]</pre>
+    ]</pre>
   <button class="btn btn-primary copy-button" data-clipboard-target="#MetaTask_BSplineTrajectoryTask_exampleyamlCopySource">Copy to clipboard</button>
 
 
@@ -59012,7 +58996,8 @@ Pause_5s:
 <div class="card bg-light card-source">
   <div class="card-body">
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">grippers</span><span class="pi">:</span>
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">base</span><span class="pi">:</span> <span class="s">Grippers</span>
+<span class="na">grippers</span><span class="pi">:</span>
   <span class="na">l_gripper</span><span class="pi">:</span>
     <span class="na">target</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.7</span><span class="pi">,</span> <span class="nv">0.5</span><span class="pi">]</span>
   <span class="na">r_gripper</span><span class="pi">:</span>
@@ -59022,7 +59007,8 @@ Pause_5s:
 </div>
 
   
-  <pre id="State_Grippers_exampleyamlCopySource" class="offscreen" aria-hidden=true>grippers:
+  <pre id="State_Grippers_exampleyamlCopySource" class="offscreen" aria-hidden=true>base: Grippers
+grippers:
   l_gripper:
     target: [0.7, 0.5]
   r_gripper:
