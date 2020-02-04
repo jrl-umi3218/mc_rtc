@@ -91,7 +91,6 @@ protected:
 private:
   Eigen::Matrix3d orientation_; /**< Rotation from world to floating-base frame */
   Eigen::Vector3d position_; /**< Translation of floating-base in world frame */
-
   bool showAnchorFrame_ = false; /**< Whether to show the anchor frames in the GUI */
 };
 

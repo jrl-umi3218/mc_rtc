@@ -686,11 +686,11 @@ struct MC_RTC_UTILS_DLLAPI Configuration
       }
       if(has("pitch"))
       {
-        rpy.x() = (*this)("pitch");
+        rpy.y() = (*this)("pitch");
       }
       if(has("yaw"))
       {
-        rpy.x() = (*this)("yaw");
+        rpy.z() = (*this)("yaw");
       }
       rotation = mc_rbdyn::rpyToMat(rpy);
     }

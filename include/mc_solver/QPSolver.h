@@ -48,7 +48,7 @@ enum class MC_SOLVER_DLLAPI FeedbackType
   JointsWVelocity,
   /** Run in closed loop w.r.t realRobots. The user is responsible for ensuring
    * that the observed state of the real robots is valid */
-  RealRobots
+  ObservedRobots
 };
 
 #pragma GCC diagnostic pop
@@ -70,14 +70,6 @@ public:
    * \note The real robots will be created by copying the provided robots
    */
   QPSolver(std::shared_ptr<mc_rbdyn::Robots> robots, double timeStep);
-
-  /** Constructor
-   * \param robots Set of robots managed by this solver
-   * \param realRobots Real robots corresponding to the managed robots (robots
-   * parameter)
-   * \param timeStep Timestep of the solver
-   */
-  QPSolver(std::shared_ptr<mc_rbdyn::Robots> robots, std::shared_ptr<mc_rbdyn::Robots> realRobots, double timeStep);
 
   /** Constructor (the solver creates its own Robots instance)
    * \param timeStep Timestep of the solver

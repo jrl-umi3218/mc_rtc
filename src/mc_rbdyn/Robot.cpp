@@ -1083,6 +1083,7 @@ void Robot::copy(Robots & robots, unsigned int robots_idx, const Base & base) co
 {
   robots.robots_.emplace_back(Robot(robots, robots_idx, false, &base.X_0_s, base.baseName));
   auto & robot = robots.robots_.back();
+  robot.name_ = name_;
   for(const auto & s : surfaces_)
   {
     robot.surfaces_[s.first] = s.second->copy();

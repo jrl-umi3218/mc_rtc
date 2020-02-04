@@ -248,6 +248,18 @@ public:
   /*! \brief Const access to current controller */
   const MCController & controller() const;
 
+  /*! \brief Access to the real robots instance. */
+  mc_rbdyn::Robots & robots();
+
+  /*! \brief Const access to the real robots instance. */
+  const mc_rbdyn::Robots & robots() const;
+
+  /*! \brief Access to the real robots instance. */
+  mc_rbdyn::Robots & realRobots();
+
+  /*! \brief Const access to the real robots instance. */
+  const mc_rbdyn::Robots & realRobots() const;
+
   /*! \brief Access the main robot */
   mc_rbdyn::Robot & robot();
 

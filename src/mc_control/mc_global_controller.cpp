@@ -561,6 +561,26 @@ const MCController & MCGlobalController::controller() const
   return *controller_;
 }
 
+mc_rbdyn::Robots & MCGlobalController::realRobots()
+{
+  return controller_->realRobots();
+}
+
+const mc_rbdyn::Robots & MCGlobalController::realRobots() const
+{
+  return controller_->realRobots();
+}
+
+mc_rbdyn::Robots & MCGlobalController::robots()
+{
+  return controller_->robots();
+}
+
+const mc_rbdyn::Robots & MCGlobalController::robots() const
+{
+  return controller_->robots();
+}
+
 mc_rbdyn::Robot & MCGlobalController::robot()
 {
   return controller_->robot();

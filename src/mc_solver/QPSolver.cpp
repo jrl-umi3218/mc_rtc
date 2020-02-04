@@ -62,6 +62,10 @@ namespace mc_solver
 {
 QPSolver::QPSolver(std::shared_ptr<mc_rbdyn::Robots> robots, double timeStep) : robots_p(robots), timeStep(timeStep)
 {
+  if(timeStep <= 0)
+  {
+    mc_rtc::log::error_and_throw<std::invalid_argument>("timeStep has to be > 0! timeStep = {}", timeStep);
+  }
   realRobots_p = std::make_shared<mc_rbdyn::Robots>();
   for(const auto & robot : robots->robots())
   {
@@ -69,21 +73,7 @@ QPSolver::QPSolver(std::shared_ptr<mc_rbdyn::Robots> robots, double timeStep) : 
   }
 }
 
-QPSolver::QPSolver(std::shared_ptr<mc_rbdyn::Robots> robots,
-                   std::shared_ptr<mc_rbdyn::Robots> realRobots,
-                   double timeStep)
-: robots_p(robots), realRobots_p(realRobots), timeStep(timeStep), solver()
-{
-  if(timeStep <= 0)
-  {
-    mc_rtc::log::error_and_throw<std::invalid_argument>("timeStep has to be > 0! timeStep = {}", timeStep);
-  }
-}
-
-QPSolver::QPSolver(double timeStep)
-: QPSolver{std::make_shared<mc_rbdyn::Robots>(), std::make_shared<mc_rbdyn::Robots>(), timeStep}
-{
-}
+QPSolver::QPSolver(double timeStep) : QPSolver{std::make_shared<mc_rbdyn::Robots>(), timeStep} {}
 
 void QPSolver::addConstraintSet(ConstraintSet & cs)
 {
@@ -298,7 +288,7 @@ bool QPSolver::run(FeedbackType fType)
     case FeedbackType::JointsWVelocity:
       success = runJointsFeedback(true);
       break;
-    case FeedbackType::RealRobots:
+    case FeedbackType::ObservedRobots:
       success = runClosedLoop();
       break;
     default:
