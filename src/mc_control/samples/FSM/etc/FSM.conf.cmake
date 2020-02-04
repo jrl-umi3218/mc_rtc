@@ -7,9 +7,9 @@
   // otherwise the FSM holds the last state until transition
   "IdleKeepState": false,
   // Where to look for state libraries
-  "StatesLibraries": ["@MC_CONTROLLER_INSTALL_PREFIX@/fsm/states"],
+  "StatesLibraries": ["@FSM_STATES_INSTALL_PREFIX@"],
   // Where to look for state files
-  "StatesFiles": ["@MC_CONTROLLER_INSTALL_PREFIX@/fsm/states/data"],
+  "StatesFiles": ["@FSM_STATES_DATA_INSTALL_PREFIX@"],
   // If true, state factory will be more verbose
   "VerboseStateFactory": false,
   // Additional robots to load
